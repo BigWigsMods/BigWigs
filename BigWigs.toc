@@ -1,0 +1,30 @@
+## Interface: 11000
+## Author: Tekkub
+## Title: Big Wigs |cff007fff -Ace-|r
+## Notes: Boss Mods with Timex bars. |cffff4488By Tekkub|r
+## Dependencies: Ace, Timex
+## SavedVariables: BigWigsDB
+
+Core.lua
+Anchor.xml
+Anchor.lua
+
+ZG\Jeklik.lua
+ZG\Marli.lua
+ZG\Venoxis.lua
+ZG\Hakkar.lua
+
+AQ20\GeneralRajaxx.lua
+
+AQ40\Skeram.lua
+AQ40\BugFamily.lua
+AQ40\Sartura.lua
+AQ40\Fankriss.lua
+AQ40\Huhuran.lua
+
+BWL\Chromaggus.lua
+BWL\Ebonroc.lua
+BWL\Firemaw.lua
+BWL\Flamegor.lua
+BWL\Nefarian.lua
+BWL\Vaelastrasz.lua
