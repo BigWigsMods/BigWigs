@@ -63,6 +63,8 @@ function BigWigsGeneralRajaxx:Disable()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 30)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 45)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 75)
+	self:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:UnregisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self.warnsets = nil
 end
 
