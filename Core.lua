@@ -22,7 +22,18 @@ BigWigs = AceAddon:new({
 		Purple = {1, 0, 1}, White  = {1, 1, 1},   Black  = {0, 0, 0},
 	},
 
-	loc = {
+	loc = GetLocale() == "deDE" and {
+		ModuleEnable = "%s mod enabled",
+		TargetEnable = "Target monitoring enabled",
+		TargetDisable = "Target monitoring disabled",
+
+		MC = "Der geschmolzene Kern",
+		BWL = "Pechschwingenhort",
+		Onyxia = "Onyxias Hort",
+		ZG = "Zul'Gurub",
+		AQ20 = "Ruinen von Ahn'Qiraj",
+		AQ40 = "Ahn'Qiraj",
+	} or {
 		ModuleEnable = "%s mod enabled",
 		TargetEnable = "Target monitoring enabled",
 		TargetDisable = "Target monitoring disabled",
