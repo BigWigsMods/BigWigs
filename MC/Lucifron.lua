@@ -22,18 +22,22 @@ BigWigsLucifron = AceAddon:new({
 	},
 })
 
+
 function BigWigsLucifron:Initialize()
 	self.disabled = true
 	BigWigs:RegisterModule(self)
 end
 
+
 function BigWigsLucifron:Enable()
 	self.disabled = nil
+	self:RegisterEvent("BIGWIGS_MESSAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
+
 
 function BigWigsLucifron:Disable()
 	self.disabled = true
@@ -48,21 +52,23 @@ function BigWigsLucifron:Disable()
 	self:UnregisterAllEvents()
 end
 
+
 function BigWigsLucifron:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger) then
+	if arg1 == self.loc.disabletrigger then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
 		self:Disable()
 	end
 end
 
+
 function BigWigsLucifron:Event()
-	if (string.find(arg1, self.loc.trigger1)) then
+	if (not self.prior1 and string.find(arg1, self.loc.trigger1)) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Red")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 15, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 20, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_BlackPlague")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 15, "Red")
-	elseif (string.find(arg1, self.loc.trigger2)) then
+	elseif (not self.prior2 and string.find(arg1, self.loc.trigger2)) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 15, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar2text, 20, 2, "Yellow", "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
@@ -70,6 +76,14 @@ function BigWigsLucifron:Event()
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar2text, 15, "Red")
 	end
 end
+
+
+function BigWigsLucifron:BIGWIGS_MESSAGE(text)
+	if text == self.loc.warn1 then self.prior1 = nil
+	elseif text == self.loc.warn3 then self.prior2 = nil end
+end
+
+
 --------------------------------
 --			Load this bitch!			--
 --------------------------------

@@ -18,18 +18,22 @@ BigWigsGehennas = AceAddon:new({
 	},
 })
 
+
 function BigWigsGehennas:Initialize()
 	self.disabled = true
 	BigWigs:RegisterModule(self)
 end
 
+
 function BigWigsGehennas:Enable()
 	self.disabled = nil
+	self:RegisterEvent("BIGWIGS_MESSAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
+
 
 function BigWigsGehennas:Disable()
 	self.disabled = true
@@ -40,15 +44,17 @@ function BigWigsGehennas:Disable()
 	self:UnregisterAllEvents()
 end
 
+
 function BigWigsGehennas:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger) then
+	if arg1 == self.loc.disabletrigger then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
 		self:Disable()
 	end
 end
 
+
 function BigWigsGehennas:Event()
-	if (string.find(arg1, self.loc.trigger1)) then
+	if (not self.prior and string.find(arg1, self.loc.trigger1)) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Red")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 25, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_BlackPlague")
@@ -58,7 +64,12 @@ function BigWigsGehennas:Event()
 end
 
 
+function BigWigsGehennas:BIGWIGS_MESSAGE(text)
+	if text == self.loc.warn1 then self.prior = nil end
+end
+
+
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsGehennas:RegisterForLoad()
