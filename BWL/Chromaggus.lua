@@ -15,7 +15,10 @@ BigWigsChromaggus = AceAddon:new({
 		trigger4 = "goes into a killing frenzy!",
 		trigger5 = "flinches as its skin shimmers.",
 
-		warn1 = "%s in 10 seconds!", 
+		hit = "hits",
+		crit = "crits",
+
+		warn1 = "%s in 10 seconds!",
 		warn2 = "%s is casting!",
 		warn3 = "New spell vulnerability: %s",
 		warn4 = "Spell vulnerability changed!",
@@ -43,7 +46,7 @@ function BigWigsChromaggus:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE", "PlayerDamageEvents")
-	self:RegisterEvent("CHAT_MSG_SPELL_PET_DAMAGE", "PlayerDamageEvents")	
+	self:RegisterEvent("CHAT_MSG_SPELL_PET_DAMAGE", "PlayerDamageEvents")
 	self:RegisterEvent("CHAT_MSG_SPELL_PARTY_DAMAGE", "PlayerDamageEvents")
 	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE", "PlayerDamageEvents")
 end
@@ -53,12 +56,13 @@ function BigWigsChromaggus:Disable()
 	self:Reset()
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.breath1)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.breath2)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL",  format(self.loc.warn1, self.loc.breath1))
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL",  format(self.loc.warn1, self.loc.breath2))
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", format(self.loc.warn1, self.loc.breath1))
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", format(self.loc.warn1, self.loc.breath2))
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath1, 30)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath1, 50)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 30)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 50)
+	self:UnregisterAllEvents()
 end
 
 function BigWigsChromaggus:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -76,7 +80,7 @@ function BigWigsChromaggus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 		elseif (not self.loc.breath2) then
 			self.loc.breath2 = SpellName
 		end
-		
+
 		Timex:ChangeDuration("BigWigsChromaggusResetTimer", 60)
 		self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.warn2, SpellName), "Red")
 
@@ -108,8 +112,8 @@ end
 function BigWigsChromaggus:PlayerDamageEvents()
 	if (not self.loc.vulnerability) then
 		local _,_, Type, Dmg, School = string.find(arg1, self.loc.trigger2)
-		if (Type == ("hits" or "crits") and tonumber(Dmg or "") and School) then
-			if ((tonumber(Dmg) >= 550 and Type == "hits") or (tonumber(Dmg) >= 1100 and Type == "crits")) then
+		if (Type == (self.loc.hit or self.loc.crit) and tonumber(Dmg or "") and School) then
+			if ((tonumber(Dmg) >= 550 and Type == self.loc.hit) or (tonumber(Dmg) >= 1100 and Type == self.loc.crit)) then
 				self.loc.vulnerability = School
 				self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.warn3, School), "White")
 			end
@@ -123,7 +127,6 @@ function BigWigsChromaggus:Reset()
 	self.loc.breath1 = nil
 	self.loc.breath2 = nil
 end
-
 --------------------------------
 --			Load this bitch!			--
 --------------------------------

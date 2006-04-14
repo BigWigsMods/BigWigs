@@ -19,7 +19,7 @@ BigWigsFlamegor = AceAddon:new({
 		warn4 = "Shadow Flame incoming!",
 		warn5 = "Frenzy - Tranq Shot!",
 		bosskill = "Flamegor has been defeated!",
-		
+
 		bar1text = "Wing Buffet",
 	},
 })
@@ -40,9 +40,10 @@ end
 function BigWigsFlamegor:Disable()
 	self.disabled = true
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn1)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn3)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 10)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 20)
+	self:UnregisterAllEvents()
 end
 
 function BigWigsFlamegor:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -70,7 +71,6 @@ function BigWigsFlamegor:CHAT_MSG_MONSTER_EMOTE()
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red")
 	end
 end
-
 --------------------------------
 --			Load this bitch!			--
 --------------------------------

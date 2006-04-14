@@ -17,7 +17,7 @@ BigWigsFiremaw = AceAddon:new({
 		warn3 = "3 seconds before Firemaw casts Wing Buffet!",
 		warn4 = "Shadow Flame Incoming!",
 		bosskill = "Firemaw has been defeated!",
-		
+
 		bar1text = "Wing Buffet",
 	},
 })
@@ -37,9 +37,10 @@ end
 function BigWigsFiremaw:Disable()
 	self.disabled = true
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn1)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 10)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 20)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn3)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 10)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 20)
+	self:UnregisterAllEvents()
 end
 
 function BigWigsFiremaw:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -61,7 +62,6 @@ function BigWigsFiremaw:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red")
 	end
 end
-
 --------------------------------
 --			Load this bitch!			--
 --------------------------------

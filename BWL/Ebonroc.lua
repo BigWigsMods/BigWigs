@@ -13,14 +13,17 @@ BigWigsEbonroc = AceAddon:new({
 		trigger2 = "Ebonroc begins to cast Shadow Flame.",
 		trigger3 = "^([^%s]+) ([^%s]+) afflicted by Shadow of Ebonroc",
 
+		you = "You",
+		are = "are",
+
 		warn1 = "Ebonroc begins to cast Wing Buffet!",
 		warn2 = "30 seconds till next Wing Buffet!",
 		warn3 = "3 seconds before Ebonroc casts Wing Buffet!",
 		warn4 = "Shadow Flame incoming!",
 		warn5 = "You have Shadow of Ebonroc!",
-		warn6 = " has Shadow of Ebonroc!", 
+		warn6 = " has Shadow of Ebonroc!",
 		bosskill = "Ebonroc has been defeated!",
-		
+
 		bar1text = "Wing Buffet",
 	},
 })
@@ -43,9 +46,10 @@ end
 function BigWigsEbonroc:Disable()
 	self.disabled = true
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn1)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn3)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 10)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 20)
+	self:UnregisterAllEvents()
 end
 
 function BigWigsEbonroc:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -71,7 +75,7 @@ end
 function BigWigsEbonroc:Event()
 	local _,_, EPlayer, EType = string.find(arg1, self.loc.trigger3)
 	if (EPlayer and EType) then
-		if (EPlayer == "You" and EType == "are") then
+		if (EPlayer == self.loc.you and EType == self.loc.are) then
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red", true)
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red", true)
 		else
@@ -79,7 +83,6 @@ function BigWigsEbonroc:Event()
 		end
 	end
 end
-
 --------------------------------
 --			Load this bitch!			--
 --------------------------------

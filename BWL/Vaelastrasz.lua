@@ -11,6 +11,9 @@ BigWigsVaelastrasz = AceAddon:new({
 
 		trigger1 = "^([^%s]+) ([^%s]+) afflicted by Burning Adrenaline",
 
+		you = "You",
+		are = "are",
+
 		warn1 = "You are burning!",
 		warn2 = " is burning!",
 		bosskill = "Vaelastrasz the Corrupt has been defeated!",
@@ -32,6 +35,7 @@ end
 
 function BigWigsVaelastrasz:Disable()
 	self.disabled = true
+	self:UnregisterAllEvents()
 end
 
 function BigWigsVaelastrasz:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -44,7 +48,7 @@ end
 function BigWigsVaelastrasz:Event()
 	local _,_, EPlayer, EType = string.find(arg1, self.loc.trigger1)
 	if (EPlayer and EType) then
-		if (EPlayer == "You" and EType == "are") then
+		if (EPlayer == self.loc.you and EType == self.loc.are) then
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
 		else
@@ -52,7 +56,6 @@ function BigWigsVaelastrasz:Event()
 		end
 	end
 end
-
 --------------------------------
 --			Load this bitch!			--
 --------------------------------

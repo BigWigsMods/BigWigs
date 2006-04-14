@@ -41,7 +41,7 @@ BigWigsNefarian = AceAddon:new({
 		warnmage	= "Mages - Incoming polymorphs!",
 		bosskill = "Nefarian has been defeated!",
 
-		bar1text = "Next class call",
+		bar1text = "Class call",
 	},
 })
 
@@ -63,6 +63,7 @@ function BigWigsNefarian:Disable()
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn6)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 10)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 20)
+	self:UnregisterAllEvents()
 end
 
 function BigWigsNefarian:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -73,39 +74,27 @@ function BigWigsNefarian:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 end
 
 function BigWigsNefarian:CHAT_MSG_MONSTER_YELL()
-	if (string.find(arg1, self.loc.triggershamans)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warnshaman, "Red")
-		BigWigsNefarian:ClassCallBar()
-	elseif (string.find(arg1, self.loc.triggerdruid)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warndruid, "Red")
-		BigWigsNefarian:ClassCallBar()
-	elseif (string.find(arg1, self.loc.triggerwarlock)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warnwarlock, "Red")
-		BigWigsNefarian:ClassCallBar()
-	elseif (string.find(arg1, self.loc.triggerpriest)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warnpriest, "Red")
-		BigWigsNefarian:ClassCallBar()
-	elseif (string.find(arg1, self.loc.triggerhunter)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warnhunter, "Red")
-		BigWigsNefarian:ClassCallBar()
-	elseif (string.find(arg1, self.loc.triggerwarrior)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warnwarrior, "Red")
-		BigWigsNefarian:ClassCallBar()
-	elseif (string.find(arg1, self.loc.triggerrogue)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warnrogue, "Red")
-		BigWigsNefarian:ClassCallBar()
-	elseif (string.find(arg1, self.loc.triggerpaladin)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warnpaladin, "Red")
-		BigWigsNefarian:ClassCallBar()
-	elseif (string.find(arg1, self.loc.triggermage)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warnmage, "Red")
-		BigWigsNefarian:ClassCallBar()
-	elseif (string.find(arg1, self.loc.trigger1)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
-	elseif (string.find(arg1, self.loc.trigger2)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Red")
-	elseif (string.find(arg1, self.loc.trigger3)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "Red")
+	if not self.warnpairs then self.warnpairs = {
+		[self.loc.triggershamans] = {self.loc.warnshaman, true},
+		[self.loc.triggerdruid] = {self.loc.warndruid, true},
+		[self.loc.triggerwarlock] = {self.loc.warnwarlock, true},
+		[self.loc.triggerpriest] = {self.loc.warnpriest, true},
+		[self.loc.triggerhunter] = {self.loc.warnhunter, true},
+		[self.loc.triggerwarrior] = {self.loc.warnwarrior, true},
+		[self.loc.triggerrogue] = {self.loc.warnrogue, true},
+		[self.loc.triggerpaladin] = {self.loc.warnpaladin, true},
+		[self.loc.triggermage] = {self.loc.warnmage, true},
+		[self.loc.trigger1] = {self.loc.warn1},
+		[self.loc.trigger2] = {self.loc.warn2},
+		[self.loc.trigger3] = {self.loc.warn3},
+	} end
+
+	for i,v in pairs(self.warnpairs) do
+		if string.find(arg1, i) then
+			self:TriggerEvent("BIGWIGS_MESSAGE", v[1], "Red")
+			if v[2] then self:ClassCallBar()end
+			return
+		end
 	end
 end
 
