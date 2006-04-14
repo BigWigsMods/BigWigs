@@ -57,7 +57,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						BigWigsAnchor:Test()
+						BigWigs:Test()
 					</OnClick>
 				</Scripts>
 			</Button>

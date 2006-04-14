@@ -14,7 +14,6 @@ BigWigs = AceAddon:new({
 	modules = {},
 	enablezones = {},
 	enablemobs  = {},
-	bars = {},
 
 	color = {
 		Red    = {1, 0, 0}, Orange = {1, 0.5, 0}, Yellow = {1, 1, 0},
@@ -45,20 +44,18 @@ BigWigs = AceAddon:new({
 		AQ20 = "Ruins of Ahn'Qiraj",
 		AQ40 = "Ahn'Qiraj",
 	},
-
---	sendtoraid = true,
---	sendtoraidsay = true,
 })
 
 
 function BigWigs:Initialize()
+	if not BigWigsDB then BigWigsDB = {} end
+	self.sv = BigWigsDB
 end
 
 
 function BigWigs:Enable()
 	self:RegisterEvent("BIGWIGS_BAR_START")
 	self:RegisterEvent("BIGWIGS_BAR_CANCEL")
-	self:RegisterEvent("BIGWIGS_MESSAGE")
 	self:RegisterEvent("BIGWIGS_DELAYEDMESSAGE_START")
 	self:RegisterEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL")
 	self:RegisterEvent("BIGWIGS_BAR_SETCOLOR")
@@ -69,6 +66,7 @@ end
 
 
 function BigWigs:Disable()
+	self:UnregisterAllEvents()
 end
 
 
@@ -138,27 +136,28 @@ function BigWigs:GetColor(color)
 end
 
 
-function BigWigs:BIGWIGS_BAR_START(text, time, bar, color, texture)
-	if not text or not time then return end
+---------------------------
+--      Test method      --
+---------------------------
 
-	local red, green, blue = self:GetColor(color)
-	local id = "BigWigsBar "..text
-	TimexBar:Get(id)
-	TimexBar:SetText(id, text)
-	TimexBar:SetTexture(id, texture)
-	TimexBar:SetColor(id, red or 0, green or 0, blue or 0)
-	TimexBar:SetPoint(id, "TOP", "BigWigsAnchorFrame", "TOP", 0, ((bar or 0) * (-15) + 5))
-	self.bars[text] = TimexBar:Start(id, time)
+function BigWigs:Test()
+	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar", 15, 1, "Green", "Interface\\Icons\\Spell_Nature_ResistNature")
+	self:TriggerEvent("BIGWIGS_MESSAGE", "Test", "Green")
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", "OMG Bear!", 5, "Yellow")
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", "*RAWR*", 10, "Orange")
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", "Test Bar", 5, "Yellow")
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", "Test Bar", 7, "Orange")
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", "Test Bar", 10, "Red")
+
+	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar 2", 6, 2, "Green", "Interface\\Icons\\Spell_Nature_ResistNature")
+	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar 3", 7, 3, "Yellow", "Interface\\Icons\\Spell_Nature_ResistNature")
+	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar 4", 7, 4, "Red", "Interface\\Icons\\Spell_Nature_ResistNature")
 end
 
 
-function BigWigs:BIGWIGS_BAR_CANCEL(text)
-	if not text then return end
-
-	TimexBar:Stop("BigWigsBar "..text)
-	self.bars[text] = nil
-end
-
+------------------------------
+--      Delay Handlers      --
+------------------------------
 
 function BigWigs:BIGWIGS_BAR_DELAYEDSETCOLOR_START(text, time, color)
 	if not text or not time then return end
@@ -170,24 +169,6 @@ end
 function BigWigs:BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL(text, time)
 	if not text or not time then return end
 	Timex:DeleteSchedule("BIGWIGS_BAR_DELAYEDSETCOLOR "..text..time)
-end
-
-
-function BigWigs:BIGWIGS_BAR_SETCOLOR(text, color)
-	if not text or not self.bars[text] then return end
-	self:debug(string.format("BIGWIGS_BAR_SETCOLOR | %s | %s", text, type(color) == "string" and color or type(color)))
-
-	local red, green, blue = self:GetColor(color)
-	local bar = getglobal(self.bars[text].."StatusBar")
-	if bar then bar:SetStatusBarColor(red or 0, green or 0, blue or 0) end
---	TimexBar:SetColor("BigWigsBar "..text, red or 1, green or 1, blue or 1)
-end
-
-
-function BigWigs:BIGWIGS_MESSAGE(text, color, noraidsay)
-	if not text then return end
-	if self.sendtoraid then SendChatMessage("<BigWigs> "..text, "RAID") end
-	if not noraidsay and self.sendtoraidsay and CT_RA_AddMessage then CT_RA_AddMessage("MS " .. text) end
 end
 
 
@@ -204,6 +185,6 @@ end
 
 
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigs:RegisterForLoad()

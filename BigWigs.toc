@@ -6,8 +6,10 @@
 ## SavedVariables: BigWigsDB
 
 Core.lua
-Anchor.xml
-Anchor.lua
+Bars.lua
+Bars.xml
+Messages.lua
+Messages.xml
 
 ZG\Jeklik.lua
 ZG\Marli.lua
