@@ -27,6 +27,7 @@ BigWigsHakkar = AceAddon:new({
 	},
 })
 
+
 function BigWigsHakkar:Initialize()
 	self.disabled = true
 	BigWigs:RegisterModule(self)
@@ -45,6 +46,12 @@ end
 
 function BigWigsHakkar:Disable()
 	self.disabled = true
+	self:Reset()
+	self:UnregisterAllEvents()
+end
+
+
+function BigWigsHakkar:Reset()
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar2text)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn1)
@@ -67,8 +74,10 @@ end
 function BigWigsHakkar:CHAT_MSG_MONSTER_YELL()
 	if string.find(arg1, self.loc.trigger1) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.start, "Green")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 600, 1, "Purple", "Interface\\Icons\\Spell_Nature_ResistNature")
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 600, 1, "Purple", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
 		self:BeginTimers(true)
+	elseif string.find(arg1, self.loc.flee) then
+		self:Reset()
 	end
 end
 
@@ -81,9 +90,14 @@ function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE()
 end
 
 
+function BigWigsHakkar:BIGWIGS_MESSAGE(text)
+	if text == self.loc.warn1 then self.prior = nil end
+end
+
+
 function BigWigsHakkar:BeginTimers(first)
 	if not first then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Green") end
-	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar2text, 90, 2, "Green", "Interface\\Icons\\Spell_Nature_ResistNature")
+	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar2text, 90, 2, "Green", "Interface\\Icons\\Spell_Shadow_LifeDrain")
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 30, "Yellow")
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 45, "Orange")
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 75, "Red")
@@ -92,9 +106,7 @@ function BigWigsHakkar:BeginTimers(first)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar2text, 75, "Red")
 end
 
-function BigWigsHakkar:BIGWIGS_MESSAGE(text)
-	if text == self.loc.warn1 then self.prior = nil end
-end
+
 
 --------------------------------
 --			Load this bitch!			--

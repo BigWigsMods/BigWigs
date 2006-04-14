@@ -13,6 +13,7 @@ ZG\Jeklik.lua
 ZG\Marli.lua
 ZG\Venoxis.lua
 ZG\Hakkar.lua
+ZG\Mandokir.lua
 
 AQ20\GeneralRajaxx.lua
 

@@ -4,22 +4,48 @@ BigWigsJeklik = AceAddon:new({
 	name          = "BigWigsJeklik",
 	cmd           = AceChatCmd:new({}, {}),
 
+	zonename = "ZG",
+	enabletrigger = "High Priestess Jeklik",
+
+
 	loc = {
 		trigger1 = "I command you to rain fire down upon these invaders!$",
 		trigger2 = "begins to cast a Great Heal!$",
 		warn1 = "Incoming bomb bats!",
 		warn2 = "Casting heal - interrupt it!",
+
+		disabletrigger = "High Priestess Jeklik dies.",
+
+		bosskill = "High Priestess Jeklik has been defeated!",
 	},
 })
 
 
+function BigWigsJeklik:Initialize()
+	self.disabled = true
+	BigWigs:RegisterModule(self)
+end
+
+
 function BigWigsJeklik:Enable()
+	self.disabled = nil
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
 
 function BigWigsJeklik:Disable()
+	self.disabled = true
+	self:UnregisterAllEvents()
+end
+
+
+function BigWigsJeklik:CHAT_MSG_COMBAT_HOSTILE_DEATH()
+	if arg1 == self.loc.disabletrigger then
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:Disable()
+	end
 end
 
 
