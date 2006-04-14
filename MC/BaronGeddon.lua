@@ -58,6 +58,6 @@ end
 
 
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsBaronGeddon:RegisterForLoad()

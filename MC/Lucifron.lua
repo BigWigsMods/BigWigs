@@ -50,6 +50,8 @@ function BigWigsLucifron:Disable()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 10)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 15)
 	self:UnregisterAllEvents()
+	self.prior1 = nil
+	self.prior2 = nil
 end
 
 
@@ -68,12 +70,14 @@ function BigWigsLucifron:Event()
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 20, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_BlackPlague")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 15, "Red")
+		self.prior1 = true
 	elseif (not self.prior2 and string.find(arg1, self.loc.trigger2)) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 15, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar2text, 20, 2, "Yellow", "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar2text, 10, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar2text, 15, "Red")
+		self.prior2 = true
 	end
 end
 
@@ -85,6 +89,6 @@ end
 
 
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsLucifron:RegisterForLoad()
