@@ -39,3 +39,7 @@ MC\Magmadar.lua
 MC\Majordomo.lua
 MC\Ragnaros.lua
 MC\Shazzrah.lua
+
+Other\Azuregos.lua
+Other\Emeriss.lua
+Other\Onyxia.lua
