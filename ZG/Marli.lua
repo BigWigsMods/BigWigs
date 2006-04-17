@@ -10,7 +10,7 @@ BigWigsMarli = AceAddon:new({
 		trigger2 = "^High Priestess Mar'li's Drain Life heals High Priestess Mar'li for (.+).",
 
 		warn1 = "Spiders spawned!",
-		warn2 = "High Priestess Mar'li is draining life! Interupt it!",
+		warn2 = "High Priestess Mar'li is draining life! Interrupt it!",
 
 		disabletrigger = "High Priestess Mar'li dies.",
 
