@@ -6,7 +6,7 @@ BigWigsSkeram = AceAddon:new({
 	enabletrigger = "The Prophet Skeram",
 
 	loc = {
-		bossnname = "The Prophet Skeram",
+		bossname = "The Prophet Skeram",
 		disabletrigger = "The Prophet Skeram dies.",
 		bosskill = "The Prophet Skeram has been defeated.",
 

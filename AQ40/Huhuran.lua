@@ -71,7 +71,7 @@ function BigWigsHuhuran:CHAT_MONSTER_EMOTE()
 end
 
 function BigWigsHuhuran:UNIT_HEALTH()
-	if( arg1 and arg1 ~= nil ) then
+	if( arg1 ) then
 		if( UnitName( arg1 ) == self.loc.bossname ) then
 			local health = UnitHealth( arg1 )
 			if( health > 30 and health <= 33 ) then
@@ -85,7 +85,7 @@ function BigWigsHuhuran:UNIT_HEALTH()
 end
 
 function BigWigsHuhuran:checkSting()
-	if( arg1 and arg1 ~= nil ) then
+	if( arg1 ) then
 		local _,_,player,isare = string.find( arg1, self.loc.stingtrigger )
 		if( player and isare ) then
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.stingwarn, "Orange")

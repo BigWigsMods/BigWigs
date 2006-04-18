@@ -59,8 +59,8 @@ function BigWigsSartura:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
 end
 
 function BigWigsSartura:CHAT_MSG_MONSTER_YELL()
-	if( arg1 and arg1 ~= nil ) then
-		if( string.find(arg1, self.loc.starttrigger ) ) then
+	if( arg1 ) then
+		if( arg1 == self.loc.starttrigger ) then
 			self:BeginTimers()
 		elseif( string.find(arg1, self.loc.disabletrigger ) ) then
 			self:StopTimers()
@@ -72,7 +72,7 @@ end
 
 
 function BigWigsSartura:CHAT_MSG_MONSTER_EMOTE()
-	if( arg1 and arg1 ~= nil ) then 
+	if( arg1 ) then 
 		if( arg2 == self.loc.bossname and string.find(arg1, self.loc.enragetrigger) ) then
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.enragewarn, "Yellow")
 		end
