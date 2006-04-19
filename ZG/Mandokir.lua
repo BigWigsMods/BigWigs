@@ -14,7 +14,6 @@ BigWigsMandokir = AceAddon:new({
 		warn1 = "You are being watched - stop all actions!",
 		warn2 = " is being watched!",
 		bosskill = "Bloodlord Mandokir has been defeated!",
-
 	},
 })
 
@@ -53,6 +52,7 @@ function BigWigsMandokir:CHAT_MSG_MONSTER_YELL()
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
 		else
 			self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
+			self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
 		end
 	end
 end

@@ -7,9 +7,8 @@ BigWigsVenoxis = AceAddon:new({
 	zonename = "ZG",
 	enabletrigger = "High Priest Venoxis",
 
-
-
 	loc = {
+		bossname = "High Priest Venoxis",
 		disabletrigger = "High Priest Venoxis dies.",
 
 		trigger1 = "High Priest Venoxis gains Renew.",

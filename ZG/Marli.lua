@@ -6,6 +6,8 @@ BigWigsMarli = AceAddon:new({
 	enabletrigger = "High Priestess Mar'li",
 
 	loc = {
+		bossname = "High Priestess Mar'li",
+
 		trigger1 = "Aid me my brood!$",
 		trigger2 = "^High Priestess Mar'li's Drain Life heals High Priestess Mar'li for (.+).",
 

@@ -9,6 +9,8 @@ BigWigsJeklik = AceAddon:new({
 
 
 	loc = {
+		bossname = "High Priestess Jeklik",
+
 		trigger1 = "I command you to rain fire down upon these invaders!$",
 		trigger2 = "begins to cast a Great Heal!$",
 		warn1 = "Incoming bomb bats!",
