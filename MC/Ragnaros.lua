@@ -40,6 +40,10 @@ function BigWigsRagnaros:Enable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_PARTY_HITS", "Event")
 	self:RegisterEvent("CHAT_MSG_COMBAT_FRIENDLYPLAYER_HITS", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_PET_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_PARTY_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
@@ -78,18 +82,17 @@ function BigWigsRagnaros:CHAT_MSG_MONSTER_YELL()
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 28, 1, "Yellow", "Interface\\Icons\\Spell_Fire_SoulBurn")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
-		Timex:ChangeDuration("BigWigsRagnarosReset", 90)
+		self:ResetResetTimer()
 	elseif string.find(arg1, self.loc.trigger2) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "Red")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn4, 75, "Red")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar2text, 90, 2, "Yellow", "Interface\\Icons\\Spell_Fire_Volcano")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar2text, 30, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar2text, 60, "Red")
-		Timex:AddSchedule("BigWigsRagnarosEmerge", 90, false, 1, BigWigsRagnaros.Emerge, BigWigsRagnaros)
-		Timex:ChangeDuration("BigWigsRagnarosReset", 90)
+		Timex:AddSchedule("BigWigsRagnarosEmerge", 90, false, 1, self.Emerge, self)
+		self:ResetResetTimer()
 	elseif string.find(arg1, self.loc.trigger3) then
 		self:Emerge()
-		Timex:ChangeDuration("BigWigsRagnarosReset", 90)
 	end
 end
 
@@ -101,16 +104,30 @@ function BigWigsRagnaros:Emerge()
 	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar3text, 180, 3, "Yellow", "Interface\\Icons\\Spell_Fire_SelfDestruct")
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar3text, 60, "Orange")
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar3text, 120, "Red")
+	self:ResetResetTimer()
 end
 
 
 function BigWigsRagnaros:Event()
-	if not Timex:ScheduleCheck("BigWigsRagnarosReset") and string.find(arg1, self.loc.bossname) then
-		self:Emerge()
-		Timex:AddSchedule("BigWigsRagnarosReset", 90, false, 1, function()
-			Timex:DeleteNamedSchedule("BigWigsRagnarosEmerge")
-		end)
+	if (string.find(arg1, self.loc.bossname)) then
+		if (not Timex:ScheduleCheck("BigWigsRagnarosReset")) then
+			self:Emerge()
+			Timex:AddSchedule("BigWigsRagnarosReset", 95, false, 1, self.Reset, self)
+		else
+			self:ResetResetTimer()
+		end
 	end
+end
+
+
+function BigWigsRagnaros:Reset()
+	Timex:DeleteNamedSchedule("BigWigsRagnarosEmerge")
+end
+
+
+function BigWigsRagnaros:ResetResetTimer()
+	Timex:DeleteSchedule("BigWigsRagnarosReset")
+	Timex:AddSchedule("BigWigsRagnarosReset", 95, false, 1, self.Reset, self)
 end
 
 

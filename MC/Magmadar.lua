@@ -65,7 +65,7 @@ end
 
 
 function BigWigsMagmadar:Fear()
-	if (not self.prior1 and string.find(arg1, self.loc.trigger2)) then
+	if (not self.prior and string.find(arg1, self.loc.trigger2)) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "Red")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 25, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_PsychicScream")
