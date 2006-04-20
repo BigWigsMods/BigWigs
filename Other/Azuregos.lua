@@ -15,7 +15,7 @@ BigWigsAzuregos = AceAddon:new({
 
 		warn1 = "Teleport!",
 		warn2 = "Magic Shield down!",
-		warn2 = "Magic Shield up - Do not cast spells!",
+		warn3 = "Magic Shield up - Do not cast spells!",
 		bosskill = "Azuregos has been defeated!",
 	},
 })

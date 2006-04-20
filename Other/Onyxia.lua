@@ -15,17 +15,15 @@ BigWigsOnyxia = AceAddon:new({
 
 		warn1 = "Onyxia Deep Breath AoE incoming, move to sides!",
 		warn2 = "Onyxia phase 2 incoming!",
-		warn2 = "Onyxia phase 3 incoming!",
+		warn3 = "Onyxia phase 3 incoming!",
 		bosskill = "Onyxia has been defeated!",
 	},
 })
-
 
 function BigWigsOnyxia:Initialize()
 	self.disabled = true
 	BigWigs:RegisterModule(self)
 end
-
 
 function BigWigsOnyxia:Enable()
 	self.disabled = nil
@@ -34,12 +32,10 @@ function BigWigsOnyxia:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
-
 function BigWigsOnyxia:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
 end
-
 
 function BigWigsOnyxia:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
@@ -48,13 +44,11 @@ function BigWigsOnyxia:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	end
 end
 
-
 function BigWigsOnyxia:CHAT_MSG_MONSTER_EMOTE()
 	if (arg1 == self.loc.trigger1) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
 	end
 end
-
 
 function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL()
 	if (string.find(arg1, self.loc.trigger2)) then
@@ -63,7 +57,6 @@ function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL()
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "White")
 	end
 end
-
 
 --------------------------------
 --      Load this bitch!      --
