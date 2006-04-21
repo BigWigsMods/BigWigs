@@ -76,7 +76,7 @@ function BigWigsMagmadar:Fear()
 end
 
 
-function BigWigsLucifron:BIGWIGS_MESSAGE(text)
+function BigWigsMagmadar:BIGWIGS_MESSAGE(text)
 	if text == self.loc.warn2 then self.prior = nil end
 end
 
