@@ -20,12 +20,10 @@ BigWigsMagmadar = AceAddon:new({
 	},
 })
 
-
 function BigWigsMagmadar:Initialize()
 	self.disabled = true
 	BigWigs:RegisterModule(self)
 end
-
 
 function BigWigsMagmadar:Enable()
 	self.disabled = nil
@@ -37,17 +35,15 @@ function BigWigsMagmadar:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
-
 function BigWigsMagmadar:Disable()
 	self.disabled = true
+	self:UnregisterAllEvents()
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn2)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 10)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 20)
-	self:UnregisterAllEvents()
 	self.prior = nil
 end
-
 
 function BigWigsMagmadar:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
@@ -56,13 +52,11 @@ function BigWigsMagmadar:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	end
 end
 
-
 function BigWigsMagmadar:CHAT_MSG_MONSTER_EMOTE()
 	if (arg1 == self.loc.trigger1) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
 	end
 end
-
 
 function BigWigsMagmadar:Fear()
 	if (not self.prior and string.find(arg1, self.loc.trigger2)) then
@@ -75,12 +69,9 @@ function BigWigsMagmadar:Fear()
 	end
 end
 
-
 function BigWigsMagmadar:BIGWIGS_MESSAGE(text)
 	if text == self.loc.warn2 then self.prior = nil end
 end
-
-
 --------------------------------
 --      Load this bitch!      --
 --------------------------------

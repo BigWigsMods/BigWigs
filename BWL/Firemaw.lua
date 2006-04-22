@@ -36,11 +36,11 @@ end
 
 function BigWigsFiremaw:Disable()
 	self.disabled = true
+	self:UnregisterAllEvents()
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn3)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 10)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 20)
-	self:UnregisterAllEvents()
 end
 
 function BigWigsFiremaw:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -63,6 +63,6 @@ function BigWigsFiremaw:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	end
 end
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsFiremaw:RegisterForLoad()

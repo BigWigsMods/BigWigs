@@ -57,7 +57,6 @@ function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL()
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "White")
 	end
 end
-
 --------------------------------
 --      Load this bitch!      --
 --------------------------------

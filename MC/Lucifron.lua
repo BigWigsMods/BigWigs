@@ -22,12 +22,10 @@ BigWigsLucifron = AceAddon:new({
 	},
 })
 
-
 function BigWigsLucifron:Initialize()
 	self.disabled = true
 	BigWigs:RegisterModule(self)
 end
-
 
 function BigWigsLucifron:Enable()
 	self.disabled = nil
@@ -38,9 +36,9 @@ function BigWigsLucifron:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
-
 function BigWigsLucifron:Disable()
 	self.disabled = true
+	self:UnregisterAllEvents()
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar2text)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn1)
@@ -49,11 +47,9 @@ function BigWigsLucifron:Disable()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 15)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 10)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 15)
-	self:UnregisterAllEvents()
 	self.prior1 = nil
 	self.prior2 = nil
 end
-
 
 function BigWigsLucifron:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
@@ -61,7 +57,6 @@ function BigWigsLucifron:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 		self:Disable()
 	end
 end
-
 
 function BigWigsLucifron:Event()
 	if (not self.prior1 and string.find(arg1, self.loc.trigger1)) then
@@ -81,13 +76,10 @@ function BigWigsLucifron:Event()
 	end
 end
 
-
 function BigWigsLucifron:BIGWIGS_MESSAGE(text)
 	if text == self.loc.warn1 then self.prior1 = nil
 	elseif text == self.loc.warn3 then self.prior2 = nil end
 end
-
-
 --------------------------------
 --      Load this bitch!      --
 --------------------------------

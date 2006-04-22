@@ -53,6 +53,7 @@ end
 
 function BigWigsChromaggus:Disable()
 	self.disabled = true
+	self:UnregisterAllEvents()
 	self:Reset()
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.breath1)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.breath2)
@@ -62,7 +63,6 @@ function BigWigsChromaggus:Disable()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath1, 50)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 30)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 50)
-	self:UnregisterAllEvents()
 end
 
 function BigWigsChromaggus:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -128,6 +128,6 @@ function BigWigsChromaggus:Reset()
 	self.loc.breath2 = nil
 end
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsChromaggus:RegisterForLoad()

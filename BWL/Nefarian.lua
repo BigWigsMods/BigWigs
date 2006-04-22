@@ -59,11 +59,11 @@ end
 
 function BigWigsNefarian:Disable()
 	self.disabled = true
+	self:UnregisterAllEvents()
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn6)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 10)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 20)
-	self:UnregisterAllEvents()
 end
 
 function BigWigsNefarian:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -108,11 +108,11 @@ end
 
 function BigWigsNefarian:ClassCallBar()
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn6, 27, "Red")
-	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Ability_Druid_ChallangingRoar")
+	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_Charm")
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
 end
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsNefarian:RegisterForLoad()

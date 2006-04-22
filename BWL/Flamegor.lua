@@ -39,11 +39,11 @@ end
 
 function BigWigsFlamegor:Disable()
 	self.disabled = true
+	self:UnregisterAllEvents()
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn3)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 10)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 20)
-	self:UnregisterAllEvents()
 end
 
 function BigWigsFlamegor:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -72,6 +72,6 @@ function BigWigsFlamegor:CHAT_MSG_MONSTER_EMOTE()
 	end
 end
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsFlamegor:RegisterForLoad()

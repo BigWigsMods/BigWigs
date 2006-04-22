@@ -20,12 +20,10 @@ BigWigsAzuregos = AceAddon:new({
 	},
 })
 
-
 function BigWigsAzuregos:Initialize()
 	self.disabled = true
 	BigWigs:RegisterModule(self)
 end
-
 
 function BigWigsAzuregos:Enable()
 	self.disabled = nil
@@ -35,12 +33,10 @@ function BigWigsAzuregos:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
-
 function BigWigsAzuregos:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
 end
-
 
 function BigWigsAzuregos:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
@@ -48,7 +44,6 @@ function BigWigsAzuregos:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 		self:Disable()
 	end
 end
-
 
 function BigWigsAzuregos:CHAT_MSG_MONSTER_YELL()
 	if (string.find(arg1, self.loc.trigger1)) then
@@ -62,14 +57,11 @@ function BigWigsAzuregos:CHAT_MSG_SPELL_AURA_GONE_OTHER()
 	end
 end
 
-
 function BigWigsAzuregos:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
 	if (string.find(arg1, self.loc.trigger3)) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "Red")
 	end
 end
-
-
 --------------------------------
 --      Load this bitch!      --
 --------------------------------

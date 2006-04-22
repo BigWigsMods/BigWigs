@@ -55,8 +55,6 @@ function BigWigsBaronGeddon:Event()
 		end
 	end
 end
-
-
 --------------------------------
 --      Load this bitch!      --
 --------------------------------

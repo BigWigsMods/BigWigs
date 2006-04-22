@@ -22,12 +22,10 @@ BigWigsEmeriss = AceAddon:new({
 	},
 })
 
-
 function BigWigsEmeriss:Initialize()
 	self.disabled = true
 	BigWigs:RegisterModule(self)
 end
-
 
 function BigWigsEmeriss:Enable()
 	self.disabled = nil
@@ -38,17 +36,15 @@ function BigWigsEmeriss:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
-
 function BigWigsEmeriss:Disable()
 	self.disabled = true
+	self:UnregisterAllEvents()
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn3)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 10)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 20)
-	self:UnregisterAllEvents()
 	self.prior = nil
 end
-
 
 function BigWigsEmeriss:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
@@ -56,7 +52,6 @@ function BigWigsEmeriss:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 		self:Disable()
 	end
 end
-
 
 function BigWigsEmeriss:Event()
 	if (not self.prior and string.find(arg1, self.loc.trigger2)) then
@@ -78,12 +73,9 @@ function BigWigsEmeriss:Event()
 	end
 end
 
-
 function BigWigsLucifron:BIGWIGS_MESSAGE(text)
 	if text == self.loc.warn3 then self.prior = nil end
 end
-
-
 --------------------------------
 --      Load this bitch!      --
 --------------------------------

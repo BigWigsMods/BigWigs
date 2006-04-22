@@ -57,6 +57,6 @@ function BigWigsVaelastrasz:Event()
 	end
 end
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsVaelastrasz:RegisterForLoad()

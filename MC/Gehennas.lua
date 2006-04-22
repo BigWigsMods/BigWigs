@@ -18,12 +18,10 @@ BigWigsGehennas = AceAddon:new({
 	},
 })
 
-
 function BigWigsGehennas:Initialize()
 	self.disabled = true
 	BigWigs:RegisterModule(self)
 end
-
 
 function BigWigsGehennas:Enable()
 	self.disabled = nil
@@ -34,17 +32,15 @@ function BigWigsGehennas:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
-
 function BigWigsGehennas:Disable()
 	self.disabled = true
+	self:UnregisterAllEvents()
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn1)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 10)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 20)
-	self:UnregisterAllEvents()
 	self.prior = nil
 end
-
 
 function BigWigsGehennas:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
@@ -52,7 +48,6 @@ function BigWigsGehennas:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 		self:Disable()
 	end
 end
-
 
 function BigWigsGehennas:Event()
 	if (not self.prior and string.find(arg1, self.loc.trigger1)) then
@@ -65,12 +60,9 @@ function BigWigsGehennas:Event()
 	end
 end
 
-
 function BigWigsGehennas:BIGWIGS_MESSAGE(text)
 	if text == self.loc.warn1 then self.prior = nil end
 end
-
-
 --------------------------------
 --      Load this bitch!      --
 --------------------------------

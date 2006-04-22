@@ -47,15 +47,14 @@ end
 
 function BigWigsMajordomo:Disable()
 	self.disabled = true
+	self:UnregisterAllEvents()
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar2text)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar3text)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn3)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar3text, 10)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar3text, 20)
-	self:UnregisterAllEvents()
 end
-
 
 function BigWigsMajordomo:CHAT_MSG_MONSTER_YELL()
 	if (arg1 == self.loc.disabletrigger) then
@@ -64,20 +63,17 @@ function BigWigsMajordomo:CHAT_MSG_MONSTER_YELL()
 	end
 end
 
-
 function BigWigsMajordomo:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
-	if string.find(arg1, self.loc.trigger1) then self:NewPowers(1)
-	elseif string.find(arg1, self.loc.trigger2) then self:NewPowers(2) end
+	if (string.find(arg1, self.loc.trigger1) and not self.aura) then self:NewPowers(1)
+	elseif (string.find(arg1, self.loc.trigger2) and not self.aura) then self:NewPowers(2) end
 end
 
-
 function BigWigsMajordomo:CHAT_MSG_SPELL_AURA_GONE_OTHER()
-	if string.find(arg1, self.loc.trigger3) or string.find(arg1, self.loc.trigger4) then
+	if ((string.find(arg1, self.loc.trigger3) or string.find(arg1, self.loc.trigger4)) and self.aura) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.aura == 1 and self.loc.warn4 or self.loc.warn5, "Yellow")
 		self.aura = nil
 	end
 end
-
 
 function BigWigsMajordomo:NewPowers(power)
 	self.aura = power
@@ -88,8 +84,6 @@ function BigWigsMajordomo:NewPowers(power)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar3text, 10, "Orange")
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar3text, 20, "Red")
 end
-
-
 --------------------------------
 --      Load this bitch!      --
 --------------------------------

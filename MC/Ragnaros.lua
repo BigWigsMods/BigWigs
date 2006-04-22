@@ -28,12 +28,10 @@ BigWigsRagnaros = AceAddon:new({
 	},
 })
 
-
 function BigWigsRagnaros:Initialize()
 	self.disabled = true
 	BigWigs:RegisterModule(self)
 end
-
 
 function BigWigsRagnaros:Enable()
 	self.disabled = nil
@@ -47,11 +45,12 @@ function BigWigsRagnaros:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
-
 function BigWigsRagnaros:Disable()
 	self.disabled = true
+	self:UnregisterAllEvents()
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar2text)
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar3text)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn2)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn4)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn6)
@@ -63,9 +62,7 @@ function BigWigsRagnaros:Disable()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar3text, 60)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar3text, 120)
 	Timex:DeleteSchedule("BigWigsRagnarosEmerge")
-	self:UnregisterAllEvents()
 end
-
 
 function BigWigsRagnaros:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
@@ -73,7 +70,6 @@ function BigWigsRagnaros:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 		self:Disable()
 	end
 end
-
 
 function BigWigsRagnaros:CHAT_MSG_MONSTER_YELL()
 	if string.find(arg1, self.loc.trigger1) then
@@ -96,7 +92,6 @@ function BigWigsRagnaros:CHAT_MSG_MONSTER_YELL()
 	end
 end
 
-
 function BigWigsRagnaros:Emerge()
 	self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Yellow")
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn6, 120, "Red")
@@ -107,30 +102,21 @@ function BigWigsRagnaros:Emerge()
 	self:ResetResetTimer()
 end
 
-
 function BigWigsRagnaros:Event()
 	if (string.find(arg1, self.loc.bossname)) then
 		if (not Timex:ScheduleCheck("BigWigsRagnarosReset")) then
 			self:Emerge()
-			Timex:AddSchedule("BigWigsRagnarosReset", 95, false, 1, self.Reset, self)
+			Timex:AddSchedule("BigWigsRagnarosReset", 90, false, 1, function() Timex:DeleteNamedSchedule("BigWigsRagnarosEmerge") end)
 		else
 			self:ResetResetTimer()
 		end
 	end
 end
 
-
-function BigWigsRagnaros:Reset()
-	Timex:DeleteNamedSchedule("BigWigsRagnarosEmerge")
-end
-
-
 function BigWigsRagnaros:ResetResetTimer()
 	Timex:DeleteSchedule("BigWigsRagnarosReset")
 	Timex:AddSchedule("BigWigsRagnarosReset", 95, false, 1, self.Reset, self)
 end
-
-
 --------------------------------
 --      Load this bitch!      --
 --------------------------------
