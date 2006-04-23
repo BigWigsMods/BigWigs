@@ -30,7 +30,7 @@ end
 function BigWigsHuhuran:Enable()
 	self.disabled = nil
 	self:RegisterEvent("BIGWIGS_MESSAGE")
-	self:RegisterEvent("CHAT_MONSTER_EMOTE")
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "checkSting")
@@ -55,7 +55,7 @@ function BigWigsHuhuran:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 end
 
 
-function BigWigsHuhuran:CHAT_MONSTER_EMOTE()
+function BigWigsHuhuran:CHAT_MSG_MONSTER_EMOTE()
 	if( arg2 == self.loc.bossname ) then
 		if( arg1 == self.loc.frenzytrigger ) then
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.frenzywarn, "Orange")
