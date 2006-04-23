@@ -3,11 +3,11 @@ BigWigsFankriss = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ40",
-	enabletrigger = "Fankriess the Unyielding",
+	enabletrigger = "Fankriss the Unyielding",
 
 	loc = {	
 		bossname = "Fankriss the Unyielding",
-		disabletrigger = "Fankriess the Unyielding dies.",		
+		disabletrigger = "Fankriss the Unyielding dies.",		
 		bosskill = "Fankriss the Unyielding has been defeated!",
 
 		wormtrigger = "Fankriss the Unyielding casts Summon Worm.",

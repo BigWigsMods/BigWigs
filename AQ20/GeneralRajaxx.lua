@@ -5,7 +5,7 @@ BigWigsGeneralRajaxx = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ20",
-	enabletrigger = "General Rajaxx",
+	enabletrigger = "Lieutenant General Andorov",
 
 	loc = {
 		bossname = "General Rajaxx",
@@ -55,14 +55,6 @@ end
 
 function BigWigsGeneralRajaxx:Disable()
 	self.disabled = true
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar2text)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn1)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn2)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn3)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 30)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 45)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 75)
 	self:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:UnregisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self.warnsets = nil

@@ -30,9 +30,7 @@ end
 function BigWigsSkeram:Enable()
 	self.disabled = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "checkForMCPlayer" )
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "checkForMCPlayer" )
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "checkForMCPlayer" )
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE", "checkForMCPlayer" )
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH" )
 end
 
@@ -40,9 +38,7 @@ end
 function BigWigsSkeram:Disable()
 	self.disabled = true
 	self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "checkForMCPlayer" )
-	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "checkForMCPlayer" )
-	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "checkForMCPlayer" )
+	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE")
 	self:UnregisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH" )
 end
 

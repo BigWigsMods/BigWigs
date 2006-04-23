@@ -17,13 +17,19 @@ ZG\Venoxis.lua
 ZG\Hakkar.lua
 ZG\Mandokir.lua
 
+AQ20\Ayamiss.lua
+AQ20\Buru.lua
 AQ20\GeneralRajaxx.lua
+AQ20\Guardians.lua
+AQ20\Ossirian.lua
 
 AQ40\Skeram.lua
 AQ40\BugFamily.lua
 AQ40\Sartura.lua
 AQ40\Fankriss.lua
 AQ40\Huhuran.lua
+AQ40\Defenders.lua
+AQ40\Twins.lua
 
 BWL\Chromaggus.lua
 BWL\Ebonroc.lua
