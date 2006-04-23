@@ -1,0 +1,143 @@
+BigWigsOuro = AceAddon:new({
+	name          = "BigWigsOuro",
+	cmd           = AceChatCmd:new({}, {}),
+
+	zonename = "AQ40",
+	enabletrigger = "Ouro",
+
+	loc = {
+		bossname = "Ouro",
+		disabletrigger = "Ouro dies.",
+
+		sweeptrigger = "Ouro begins to cast Sweep",
+		sweepannounce = "Sweep!",
+		sweepwarn = "5 seconds until Sweep! GET OUT",
+		sweepbartext = "Sweep",
+
+		sandblasttrigger = "Ouro begins to cast Sweep",
+		sandblastannounce = "Incoming Sand Blast!",
+		sandblastwarn = "5 seconds until Sand Blast",
+		sandblastbartext = "Sand Blast",
+
+		emergetrigger = "Dirt Mound casts Summon Ouro Scarabs.",
+		emergeannounce = "Ouro has emerged! Kill them bugs!",
+		emergewarn1 = "15 seconds until Ouro submerges!",
+		emergebartext = "Ouro submerge",
+
+		berserksoonwarn = "Berserk Soon - Get Ready!",
+		bosskill = "Ouro has been defeated!",
+	},
+})
+
+
+function BigWigsOuro:Initialize()
+	self.disabled = true
+	self.berserkannounced = false
+	BigWigs:RegisterModule(self)
+end
+
+
+function BigWigsOuro:Enable()
+	self.disabled = nil
+	--self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+	self:RegisterEvent("UNIT_HEALTH")
+	self:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_PARTY_HITS", "Event")
+	self:RegisterEvent("CHAT_MSG_COMBAT_FRIENDLYPLAYER_HITS", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_PET_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_PARTY_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+end
+
+
+function BigWigsOuro:Disable()
+	self.disabled = true
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.sweepbartext)
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.sandblastbartext)
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.emergebartext)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.sweepwarn)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.sandblastwarn)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.emergewarn)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.sweepbartext, 10)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.sweepbartext, 15)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.sandblastbartext, 5)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.sandblastbartext, 10)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.emergebartext, 30)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.emergebartext, 40)
+	Timex:DeleteSchedule("BigWigsOuroEmerge")
+	self:UnregisterAllEvents()
+end
+
+
+function BigWigsOuro:CHAT_MSG_COMBAT_HOSTILE_DEATH()
+	if (arg1 == self.loc.disabletrigger) then
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:Disable()
+	end
+end
+
+function BigWigsOuro:UNIT_HEALTH()
+	if( arg1 ) then
+		if( UnitName( arg1 ) == self.loc.bossname ) then
+			local health = UnitHealth( arg1 )
+			if( health > 20 and health <= 23 ) then
+				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.berserksoonwarn, "Red")
+				self.berserkannounced = true
+			elseif( health > 30 and self.berserkannounced ) then
+				self.berserkannounced = false
+			end
+		end
+	end
+end
+
+function BigWigsOuro:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
+	if string.find(arg1, self.loc.sweeptrigger) then
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.sweepannounce, "Red")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.sweepwarn, 15, "Red")
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.sweepbartext, 20, 1, "Yellow", "Interface\\Icons\\Spell_Fire_SoulBurn")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sweepbartext, 10, "Orange")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sweepbartext, 15, "Red")
+	elseif string.find(arg1, self.loc.sandblasttrigger) then
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.sandblastannounce, "Red")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.sandblastwarn, 15, "Red")
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.sandblastbartext, 20, 1, "Yellow", "Interface\\Icons\\Spell_Fire_SoulBurn")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sandblastbartext, 5, "Orange")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sandblastbartext, 10, "Red")
+	elseif string.find(arg1, self.loc.emergetrigger) then
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.emergeannounce, "Red")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.emergewarn, 15, "Red")
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.emergebartext, 20, 1, "Yellow", "Interface\\Icons\\Spell_Fire_SoulBurn")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.emergebartext, 5, "Orange")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.emergebartext, 10, "Red")
+	end
+end
+
+function BigWigsOuro:Event()
+	if (string.find(arg1, self.loc.bossname)) then
+		if (not Timex:ScheduleCheck("BigWigsOuroReset")) then
+			self:Emerge()
+			Timex:AddSchedule("BigWigsOuroReset", 30, false, 1, self.Reset, self)
+		else
+			self:ResetResetTimer()
+		end
+	end
+end
+
+
+function BigWigsOuro:Reset()
+	Timex:DeleteNamedSchedule("BigWigsOuroEmerge")
+end
+
+
+function BigWigsOuro:ResetResetTimer()
+	Timex:DeleteSchedule("BigWigsOuroReset")
+	Timex:AddSchedule("BigWigsOuroReset", 30, false, 1, self.Reset, self)
+end
+
+
+--------------------------------
+--      Load this bitch!      --
+--------------------------------
+BigWigsOuro:RegisterForLoad()
