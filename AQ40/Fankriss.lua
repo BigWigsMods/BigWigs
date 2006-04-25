@@ -27,11 +27,9 @@ function BigWigsFankriss:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
-
 function BigWigsFankriss:Disable()
 	self.disabled = true
-	self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:UnregisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:UnregisterAllEvents()
 end
 
 function BigWigsFankriss:CHAT_MSG_COMBAT_HOSTILE_DEATH()

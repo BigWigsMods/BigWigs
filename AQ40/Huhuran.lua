@@ -66,28 +66,25 @@ function BigWigsHuhuran:CHAT_MSG_MONSTER_EMOTE()
 end
 
 function BigWigsHuhuran:UNIT_HEALTH()
-	if( arg1 ) then
-		if( UnitName( arg1 ) == self.loc.bossname ) then
-			local health = UnitHealth( arg1 )
-			if( health > 30 and health <= 33 ) then
-				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.berserksoonwarn, "Red")
-				self.berserkannounced = true
-			elseif( health > 40 and self.berserkannounced ) then
-				self.berserkannounced = false
-			end
+	if( arg1 and UnitName( arg1 ) == self.loc.bossname ) then
+		local health = UnitHealth( arg1 )
+		if( health > 30 and health <= 33 ) then
+			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.berserksoonwarn, "Red")
+			self.berserkannounced = true
+		elseif( health > 40 and self.berserkannounced ) then
+			self.berserkannounced = nil
 		end
 	end
 end
 
 function BigWigsHuhuran:checkSting()
-	if not self.prior and arg1 then
-		local _,_,player,isare = string.find( arg1, self.loc.stingtrigger )
-		if player and isare then
-			self.prior = true
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.stingwarn, "Orange")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.stingdelaywarn, 22, "Orange")
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bartext, 25, 1, "Green", "Interface\\Icons\\INV_Spear_02")
-		end
+	if not self.prior and arg1 and string.find( arg1, self.loc.stingtrigger ) then
+		self.prior = true
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.stingwarn, "Orange")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.stingdelaywarn, 22, "Orange")
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bartext, 25, 1, "Green", "Interface\\Icons\\INV_Spear_02")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bartext, 10, "Orange")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bartext, 20, "Red")
 	end
 end
 

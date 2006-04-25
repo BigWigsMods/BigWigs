@@ -37,13 +37,11 @@ end
 
 function BigWigsSkeram:Disable()
 	self.disabled = true
-	self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE")
-	self:UnregisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH" )
+	self:UnregisterAllEvents()
 end
 
 function BigWigsSkeram:checkForMCPlayer()
-	if( arg1 and arg1 ~= nil ) then
+	if( arg1 ) then
 		local _,_,player,isare =  string.find( arg1, self.loc.mcplayer )
 		if( player and isare ) then	
 			local text = ""
