@@ -44,7 +44,10 @@ function BigWigsHuhuran:Disable()
 	self.berserkannounced = nil
 	self.prior = nil
 	self:UnregisterAllEvents()
-	
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bartext)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.stingdelaywarn)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bartext, 10)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bartext, 20)
 end
 
 function BigWigsHuhuran:CHAT_MSG_COMBAT_HOSTILE_DEATH()
