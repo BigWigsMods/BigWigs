@@ -2,7 +2,7 @@ BigWigsEmeriss = AceAddon:new({
 	name          = "BigWigsEmeriss",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = {"Duskwood", "The Hinterlands", "Ashenvale", "Feralas"},
+	zonename = {"Duskwood", "Hinterlands", "Ashenvale", "Feralas"},
 	enabletrigger = "Emeriss",
 
 	loc = {
@@ -55,6 +55,7 @@ end
 
 function BigWigsEmeriss:Event()
 	if (not self.prior and string.find(arg1, self.loc.trigger2)) then
+		self.prior = true
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 25, "Red")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_LifeDrain02")

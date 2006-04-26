@@ -1,4 +1,4 @@
-﻿
+
 
 BigWigs = AceAddon:new({
 	name          = "BigWigs",
@@ -43,6 +43,11 @@ BigWigs = AceAddon:new({
 		ZG = "Zul'Gurub",
 		AQ20 = "Ruins of Ahn'Qiraj",
 		AQ40 = "Ahn'Qiraj",
+		Ashenvale = "Ashenvale",
+		Azshara = "Azshara",
+		Duskwood = "Duskwood", 
+		Feralas = "Feralas",
+		Hinterlands = "The Hinterlands", 
 	},
 })
 
@@ -78,8 +83,11 @@ function BigWigs:RegisterModule(module)
 	if not module or not module.name then return end
 	self.modules[module.name] = module
 
-	if module.zonename and self.loc[module.zonename] then
-		self.enablezones[self.loc[module.zonename]] = true
+	local z = module.zonename
+	if type(z) == "string" then
+		if self.loc[z] then self.enablezones[self.loc[z]] = true end
+	elseif type(z) == "table" then
+		for _,zone in pairs(z) do self.enablezones[self.loc[zone]] = true end
 	end
 
 	local t = module.enabletrigger
