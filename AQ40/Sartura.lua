@@ -7,10 +7,11 @@ BigWigsSartura = AceAddon:new({
 
 	loc = {
 		bossname = "Battleguard Sartura",
-		disabletrigger = "I served to the last!",
+		disabletrigger = "I served to the last",
 		bosskill = "Battleguard Sartura has been defeated!",
 
-		starttrigger = "You will be judged for defiling these sacred grounds! The laws of the Ancients will not be challenged! Trespassers will be annihilated!",
+		-- starttrigger = "You will be judged for defiling these sacred grounds! The laws of the Ancients will not be challenged! Trespassers will be annihilated!",
+		starttrigger = "defiling these sacred grounds",
 		startwarn = "Sartura engaged - 10 minutes until Enrage",
 		enragetrigger = "becomes enraged",
 		enragewarn = "Enrage - Enrage - Enrage",
@@ -58,7 +59,7 @@ end
 
 function BigWigsSartura:CHAT_MSG_MONSTER_YELL()
 	if( arg1 ) then
-		if( arg1 == self.loc.starttrigger ) then
+		if( string.find( arg1, self.loc.starttrigger ) ) then
 			self:BeginTimers()
 		elseif( string.find(arg1, self.loc.disabletrigger ) ) then
 			self:StopTimers()
