@@ -38,9 +38,7 @@ end
 
 function BigWigsTwins:Disable()
 	self.disabled = true
-	self:UnregisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
-	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
-	self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+	self:UnregisterAllEvents()
 	
 end
 

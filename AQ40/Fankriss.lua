@@ -11,7 +11,7 @@ BigWigsFankriss = AceAddon:new({
 		bosskill = "Fankriss the Unyielding has been defeated!",
 
 		wormtrigger = "Fankriss the Unyielding casts Summon Worm.",
-		wormwarn = "Incoming Worm in 3 seconds - Kill it!",
+		wormwarn = "Incoming Worm - Kill it!",
 	},
 })
 

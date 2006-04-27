@@ -31,7 +31,7 @@ end
 
 function BigWigsDefenders:Enable()
 	self.disabled = nil
-	self:UnregisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "checkPlague")
@@ -42,13 +42,7 @@ end
 
 function BigWigsDefenders:Disable()
 	self.disabled = true
-	self:UnregisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
-	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
-	self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
-	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE")
-	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE")
-	
+	self:UnregisterAllEvents()
 end
 
 function BigWigsDefenders:CHAT_MSG_COMBAT_HOSTILE_DEATH()

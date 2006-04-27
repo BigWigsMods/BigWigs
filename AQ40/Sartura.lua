@@ -45,9 +45,7 @@ end
 
 function BigWigsSartura:Disable()
 	self.disabled = true
-	self:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:UnregisterEvent("CHAT_MSG_MONSTER_EMOTE")
-	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
+	self:UnregisterAllEvents()
 end
 
 function BigWigsSartura:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
