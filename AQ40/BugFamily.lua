@@ -28,12 +28,10 @@ function BigWigsBugFamily:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 end
 
-
 function BigWigsBugFamily:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
 end
-
 
 function BigWigsBugFamily:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if ( arg1 == self.loc.disabletrigger1 
@@ -49,8 +47,6 @@ function BigWigsBugFamily:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.healwarn, "Orange")
 	end
 end
-
-
 --------------------------------
 --			Load this bitch!			--
 --------------------------------

@@ -15,7 +15,6 @@ BigWigsFankriss = AceAddon:new({
 	},
 })
 
-
 function BigWigsFankriss:Initialize()
 	self.disabled = true
 	BigWigs:RegisterModule(self)
@@ -33,20 +32,18 @@ function BigWigsFankriss:Disable()
 end
 
 function BigWigsFankriss:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if ( arg1 == self.loc.disabletrigger ) then
+	if (arg1 == self.loc.disabletrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
 		self:Disable()
 	end
 end
 
 function BigWigsFankriss:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
-	if ( arg1 == self.loc.wormtrigger ) then
+	if (arg1 == self.loc.wormtrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.wormwarn, "Orange")
 	end
 end
-
-
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsFankriss:RegisterForLoad()

@@ -15,7 +15,7 @@ BigWigsHuhuran = AceAddon:new({
 		frenzywarn = "Frenzy - Tranq Shot!",
 		berserkwarn = "Berserk - Give it all you got!",
 		berserksoonwarn = "Berserk Soon - Get Ready!",
-		stingtrigger = "^([^%s]+) ([^%s]+) afflicted by Wyvern Sting",
+		stingtrigger = "afflicted by Wyvern Sting",
 		stingwarn = "Wyvern Sting - Dispel Tanks!",
 		stingdelaywarn = "Possible Wyvern Sting in 3 seconds!",
 		bartext = "Wyvern Sting",
@@ -38,7 +38,6 @@ function BigWigsHuhuran:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "checkSting")
 end
 
-
 function BigWigsHuhuran:Disable()
 	self.disabled = true
 	self.berserkannounced = nil
@@ -51,51 +50,47 @@ function BigWigsHuhuran:Disable()
 end
 
 function BigWigsHuhuran:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-    if ( arg1 == self.loc.disabletrigger ) then
+    if (arg1 == self.loc.disabletrigger) then
         self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
         self:Disable()
     end
 end
 
-
 function BigWigsHuhuran:CHAT_MSG_MONSTER_EMOTE()
-	if( arg2 == self.loc.bossname ) then
-		if( arg1 == self.loc.frenzytrigger ) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.frenzywarn, "Orange")
-		elseif( arg1 == self.loc.berserktrigger ) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.berserkwarn, "Red")
-		end
+	if (arg1 == self.loc.frenzytrigger) then
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.frenzywarn, "Orange")
+	elseif (arg1 == self.loc.berserktrigger) then
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.berserkwarn, "Red")
 	end
 end
 
 function BigWigsHuhuran:UNIT_HEALTH()
-	if( arg1 and UnitName( arg1 ) == self.loc.bossname ) then
-		local health = UnitHealth( arg1 )
-		if( health > 30 and health <= 33 ) then
+	if (UnitName(arg1) == self.loc.bossname) then
+		local health = UnitHealth(arg1)
+		if (health > 30 and health <= 33) then
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.berserksoonwarn, "Red")
 			self.berserkannounced = true
-		elseif( health > 40 and self.berserkannounced ) then
+		elseif (health > 40 and self.berserkannounced) then
 			self.berserkannounced = nil
 		end
 	end
 end
 
 function BigWigsHuhuran:checkSting()
-	if not self.prior and arg1 and string.find( arg1, self.loc.stingtrigger ) then
-		self.prior = true
+	if (not self.prior and string.find(arg1, self.loc.stingtrigger)) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.stingwarn, "Orange")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.stingdelaywarn, 22, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bartext, 25, 1, "Green", "Interface\\Icons\\INV_Spear_02")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bartext, 10, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bartext, 20, "Red")
+		self.prior = true
 	end
 end
 
 function BigWigsHuhuran:BIGWIGS_MESSAGE(text)
 	if text == self.loc.stingdelaywarn then self.prior = nil end
 end
-
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsHuhuran:RegisterForLoad()
