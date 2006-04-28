@@ -48,8 +48,8 @@ function BigWigsBaronGeddon:Event()
 	local _, _, EPlayer, EType = string.find(arg1, self.loc.trigger1)
 	if (EPlayer and EType) then
 		if (EPlayer == self.loc.you and EType == self.loc.are) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
+			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
+			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
 		else
 			self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
 		end
