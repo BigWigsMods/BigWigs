@@ -44,7 +44,6 @@ end
 
 function BigWigsSartura:Disable()
 	self.disabled = true
-	self:UnregisterAllEvents()
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn4)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn5)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn6)
@@ -52,10 +51,11 @@ function BigWigsSartura:Disable()
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn8)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn9)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn10)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 300)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 510)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 570)
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bartext, 300)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bartext, 510)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bartext, 570)
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bartext)
+	self:UnregisterAllEvents()
 end
 
 function BigWigsSartura:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
