@@ -32,6 +32,22 @@ BigWigs = AceAddon:new({
 		ZG = "Zul'Gurub",
 		AQ20 = "Ruinen von Ahn'Qiraj",
 		AQ40 = "Ahn'Qiraj",
+	} or GetLocale() == "koKR" and {
+		ModuleEnable = "%s 모듈을 시작",
+		TargetEnable = "타겟 확인 시작",
+		TargetDisable = "타겟 확인 꺼짐",
+
+		MC = "화산 심장부",
+		BWL = "검은날개 둥지",		
+		Onyxia = "오닉시아의 둥지",
+		ZG = "줄구룹",
+		AQ20 = "안퀴라즈 폐허",
+		AQ40 = "안퀴라즈", 	
+		Ashenvale = "잿빛 골짜기",
+		Azshara = "아즈샤라",
+		Duskwood = "그늘숲", 
+		Feralas = "페랄라스",
+		Hinterlands = "저주받은 땅", 
 	} or {
 		ModuleEnable = "%s mod enabled",
 		TargetEnable = "Target monitoring enabled",
@@ -80,10 +96,12 @@ end
 -------------------------------
 
 function BigWigs:RegisterModule(module)
+
 	if not module or not module.name then return end
 	self.modules[module.name] = module
 
 	local z = module.zonename
+
 	if type(z) == "string" then
 		if self.loc[z] then self.enablezones[self.loc[z]] = true end
 	elseif type(z) == "table" then
@@ -109,7 +127,9 @@ end
 
 
 function BigWigs:ZONE_CHANGED_NEW_AREA()
+
 	if self.enablezones[GetRealZoneText()] then
+	
 		self.monitoring = true
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.TargetEnable, "LtBlue", true)
 		self:RegisterEvent("PLAYER_TARGET_CHANGED")
