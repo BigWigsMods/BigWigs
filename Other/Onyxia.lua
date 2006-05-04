@@ -3,9 +3,23 @@ BigWigsOnyxia = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "Onyxia",
-	enabletrigger = "Onyxia",
+	enabletrigger = GetLocale() == "koKR" and "오닉시아" 
+		or "Onyxia"	,
 
-	loc = {
+	loc = GetLocale() == "koKR" and 
+	{
+		bossname = "오닉시아",
+		disabletrigger = "오닉시아|1이;가; 죽었습니다.",
+
+		trigger1 = "깊은 숨을 들이쉽니다...",
+		trigger2 = "머리 위에서 모조리",
+		trigger3 = "혼이 더 나야 정신을 차리겠구나!",
+
+		warn1 = "경고 : 오닉시아 딥 브레스, 구석으로 피하십시오!",
+		warn2 = "오닉시아 2단계 시작!",
+		warn3 = "오닉시아 3단계 시작!",
+		bosskill = "오닉시아를 물리쳤습니다!",
+	} or {
 		bossname = "Onyxia",
 		disabletrigger = "Onyxia dies.",
 
