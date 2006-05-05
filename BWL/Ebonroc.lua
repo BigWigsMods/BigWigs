@@ -3,9 +3,29 @@ BigWigsEbonroc = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "BWL",
-	enabletrigger = "Ebonroc",
+	enabletrigger = GetLocale() == "deDE" and "Schattenschwinge" or "Ebonroc",
 
-	loc = {
+	loc = GetLocale() == "deDE" and {
+		bossname = "Schattenschwinge",
+		disabletrigger = "Schattenschwinge stirbt.",
+	
+		trigger1 = "Schattenschwinge beginnt Fl\195\188gelsto\195\159 zu wirken.",
+		trigger2 = "Schattenschwinge beginnt Schattenflamme zu wirken.",
+		trigger3 = "^([^%s]+) ([^%s]+) betroffen von Schattenschwinges Schatten",
+		
+		you = "Ihr",
+		are = "seid",
+	
+		warn1 = "Schattenschwinge beginnt Fl\195\188gelsto\195\159 zu wirken!",
+		warn2 = "30 Sekunden bis zum n\195\164chsten Fl\195\188gelsto\195\159!",
+		warn3 = "3 Sekunden bis Schattenschwinge Fl\195\188gelsto\195\159 zaubert!",
+		warn4 = "Schattenflamme kommt!",
+		warn5 = "Du hast Schattenschwinges Schatten!",
+		warn6 = " hat Schattenschwinges Schatten!",
+		bosskill = "Schattenschwinge wurde besiegt!",
+			
+		bar1text = "Fluegelgelstoss",
+	} or {
 		bossname = "Ebonroc",
 		disabletrigger = "Ebonroc dies.",
 

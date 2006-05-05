@@ -3,9 +3,22 @@ BigWigsVaelastrasz = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "BWL",
-	enabletrigger = "Vaelastrasz the Corrupt",
+	enabletrigger = GetLocale() == "deDE" and "Vaelastrasz der Verdorbene" 
+		or "Vaelastrasz the Corrupt",
 
-	loc = {
+	loc = GetLocale == "deDE" and {
+		bossname = "Vaelastrasz der Verdorbene",
+		disabletrigger = "Vaelastrasz der Verdorbene stirbt.",
+
+		trigger1 = "^([^%s]+) ([^%s]+) von Brennendes Adrenalin betroffen",
+
+		you = "Ihr",
+		are = "seid",
+
+		warn1 = "Du brennst!",
+		warn2 = " brennt!",
+		bosskill = "Vaelastrasz der Korrupte wurde besiegt!",
+	}	or {
 		bossname = "Vaelastrasz the Corrupt",
 		disabletrigger = "Vaelastrasz the Corrupt dies.",
 

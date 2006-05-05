@@ -3,9 +3,25 @@ BigWigsFlamegor = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "BWL",
-	enabletrigger = "Flamegor",
+	enabletrigger = GetLocale() == "deDE" and "Flammenmaul" or "Flamegore",
 
-	loc = {
+	loc = GetLocale() == "deDE" and {
+		bossname = "Flammenmaul",
+		disabletrigger = "Flammenmaul stirbt.",
+
+		trigger1 = "Flammenmaul beginnt Fl\195\188gelsto\195\159 zu wirken.",
+		trigger2 = "Flammenmaul beginnt Schattenflamme zu wirken.",
+		trigger3 = "ger\195\164t in Raserei!",
+
+		warn1 = "Flammenmaul beginnt Fl\195\188gelsto\195\159 zu wirken!",
+		warn2 = "30 Sekunden bis zum n\195\64chsten Fl\195\188gelsto\195\159!",
+		warn3 = "3 Sekunden bis Flammenmaul Fl\195\188gelsto\195\159 wirkt!",
+		warn4 = "Schattenflamme kommt!",
+		warn5 = "Raserei - Einlullender Schuss!",
+		bosskill = "Flammenmaul wurde besiegt!",
+
+		bar1text = "Fluegelgelstoss",
+	}	or {
 		bossname = "Flamegor",
 		disabletrigger = "Flamegor dies.",
 

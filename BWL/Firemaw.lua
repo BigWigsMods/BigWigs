@@ -3,9 +3,23 @@ BigWigsFiremaw = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "BWL",
-	enabletrigger = "Firemaw",
+	enabletrigger = GetLocale() == "deDE" and "Feuerschwinge" or "Firemaw",
 
-	loc = {
+	loc = GetLocale() == "deDE" and {
+		bossname = "Feuerschwinge",
+		disabletrigger = "Feuerschwinge stirbt.",
+	
+		trigger1 = "Feuerschwinge beginnt Fl\195\188gelsto\195\159 zu wirken.",
+		trigger2 = "Feuerschwinge beginnt Schattenflamme zu wirken.",
+	
+		warn1 = "Feuerschwinge beginnt Fl\195\188gelsto\195\159 zu wirken!",
+		warn2 = "30 Sekunden bis zum n\195\164chsten Fl\195\188gelsto\195\159!",
+		warn3 = "3 Sekunden bis Feuerschwinge Fl\195\188gelsto\195\159 zaubert!",
+		warn4 = "Schattenflamme kommt!",
+		bosskill = "Feuerschwinge wurde besiegt!",
+			
+		bar1text = "Fluegelgelstoss",
+	} or {
 		bossname = "Firemaw",
 		disabletrigger = "Firemaw dies.",
 

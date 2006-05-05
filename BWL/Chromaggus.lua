@@ -5,7 +5,34 @@ BigWigsChromaggus = AceAddon:new({
 	zonename = "BWL",
 	enabletrigger = "Chromaggus",
 
-	loc = {
+	loc = GetLocale() == "deDE" and {
+		bossname = "Chromaggus",
+		disabletrigger = "Chromaggus stirbt.",
+
+		trigger1 = "^Chromaggus wirkt ([%w ]+)\.",
+		trigger2 = "^[%w']+ [%w' ]+ ([%w]+) Chromaggus f\195\188r ([%d]+) ([%w ]+) Schaden%..*",
+		trigger3 = "Chromaggus's Zeitraffer wurde von ([%w]+)% wiederstanden.",
+		trigger4 = "ger\195\164t in t\195\182dliche Raserei!",
+		trigger5 = "als die Haut schimmert",
+
+		hit = "trifft",
+		crit = "trifft kritisch",
+
+		warn1 = "%s in 10 Sekunden!",
+		warn2 = "%s wirkt!",
+		warn3 = "Neue Zauberspruchverwundbarkeit: %s",
+		warn4 = "Zauberspruchverwundbarkeit hat sich ge\195\164ndert!",
+		warn5 = "Raserei - Einlullender Schuss!",
+		bosskill = "Chromaggus wurde besiegt!",
+
+		breathsicons = {
+			["Zeitraffer"] = "Interface\\Icons\\Spell_Arcane_PortalOrgrimmar",
+			["Corrosive Acid"] = "Interface\\Icons\\Spell_Nature_Acid_01",
+			["Fleisch entz\195\188nden"] = "Interface\\Icons\\Spell_Fire_Fire",
+			["Incinerate"] = "Interface\\Icons\\Spell_Shadow_ChillTouch",
+			["Frostbeulen"] = "Interface\\Icons\\Spell_Frost_ChillingBlast",
+		}
+	}	or {
 		bossname = "Chromaggus",
 		disabletrigger = "Chromaggus dies.",
 
