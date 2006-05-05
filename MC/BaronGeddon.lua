@@ -3,15 +3,29 @@ BigWigsBaronGeddon = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "MC",
-	enabletrigger = "Baron Geddon",
+	enabletrigger = GetLocale() == "koKR" and "남작 게돈" 
+		or "Baron Geddon",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "남작 게돈",
+		disabletrigger = "남작 게돈|1이;가; 죽었습니다.",
+
+		trigger1 = "^(.+)살아있는 폭탄에 걸렸습니다.";		
+		whopattern = "(.+)|1이;가; " ; 		
+
+		you = "당신은",
+		are = "은",
+
+		warn1 = "당신은 폭탄입니다!",
+		warn2 = "님이 폭탄입니다!",	
+	} or {
 		bossname = "Baron Geddon",
 		disabletrigger = "Baron Geddon dies.",
 
-		trigger1 = "^([^%s]+) ([^%s]+) afflicted by Living Bomb",
+		trigger1 = "^([.*])afflicted by Living Bomb",
+		whopattern = "^([^%s]+) ([^%s]+)", 
 
-		you = "You",
+		you = "You are",
 		are = "are",
 
 		warn1 = "You are the bomb!",
@@ -45,6 +59,19 @@ function BigWigsBaronGeddon:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 end
 
 function BigWigsBaronGeddon:Event()
+	local _, _, EPlayer = string.find(arg1, self.loc.trigger1)
+	if (EPlayer) then
+		if (EPlayer == self.loc.you) then
+			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
+			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
+		else
+			local _, _, EWho = string.find(EPlayer, self.loc.whopattern)
+			self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn2, "Yellow")
+		end
+	end
+end 
+--[[ Original routine that is not applied by korean patch
+function BigWigsBaronGeddon:Event()
 	local _, _, EPlayer, EType = string.find(arg1, self.loc.trigger1)
 	if (EPlayer and EType) then
 		if (EPlayer == self.loc.you and EType == self.loc.are) then
@@ -54,7 +81,7 @@ function BigWigsBaronGeddon:Event()
 			self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
 		end
 	end
-end
+end ]]
 --------------------------------
 --      Load this bitch!      --
 --------------------------------

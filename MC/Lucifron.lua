@@ -3,9 +3,24 @@ BigWigsLucifron = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "MC",
-	enabletrigger = "Lucifron",
+	enabletrigger = GetLocale() == "koKR" and "루시프론"
+		or "Lucifron",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "루시프론",
+		disabletrigger = "루시프론|1이;가; 죽었습니다.",
+
+		trigger1 = "루시프론의 저주에 걸렸습니다.",
+		trigger2 = "파멸의 예언에 걸렸습니다.",
+
+		warn1 = "5초후 루시프론의 저주!",
+		warn2 = "루시프론의 저주 - 다음 저주는 20초후!",
+		warn3 = "5초후 파멸의 예언!",
+		warn4 = "파멸의 예언 - 다음 예언은 20초후!",	
+
+		bar1text = "루시프론의 저주",
+		bar2text = "파멸의 예언",		
+	} or {
 		bossname = "Lucifron",
 		disabletrigger = "Lucifron dies.",
 

@@ -3,9 +3,32 @@ BigWigsMajordomo = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "MC",
-	enabletrigger = "Majordomo Executus",
+	enabletrigger = GetLocale() == "koKR" and "청지기"
+		or "Majordomo Executus",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "청지기",
+		disabletrigger = "Impossible! Stay your attack, mortals... I submit! I submit!",
+
+		trigger1 = "마법 반사 효과를 얻었습니다.",
+		trigger2 = "피해 보호막 효과를 얻었습니다.",
+		trigger3 = "마법 반사 효과가 사라졌습니다.",
+		trigger4 = "피해 보호막 효과가 사라졌습니다.",
+
+		warn1 = "마법 보호막 - 10초간!",
+		warn2 = "피해 보호막 - 10초간!",
+		warn3 = "5초후 버프!",
+		warn4 = "마법 반사 사라짐!",
+		warn5 = "피해 보호 사라짐!",
+		bosskill = "청지기를 물리쳤습니다!",
+
+		bar1text = "마법 반사",
+		bar2text = "피해 보호막",
+		bar3text = "새로운 버프",
+
+		texture1 = "Interface\\Icons\\Spell_Frost_FrostShock",
+		texture2 = "Interface\\Icons\\Spell_Shadow_AntiShadow",	
+	} or {
 		bossname = "Majordomo Executus",
 		disabletrigger = "Impossible! Stay your attack, mortals... I submit! I submit!",
 

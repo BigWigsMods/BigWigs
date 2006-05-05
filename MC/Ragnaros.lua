@@ -3,9 +3,30 @@ BigWigsRagnaros = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "MC",
-	enabletrigger = "Ragnaros",
+	enabletrigger = GetLocale() == "koKR" and "라그나로스"
+		or "Ragnaros",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {	
+		bossname = "라그나로스",
+		disabletrigger = "라그나로스|1이;가; 죽었습니다.",
+
+		trigger1 = "설퍼론의 유황",
+		trigger2 = "이제 너희,",
+		trigger3 = "나의 종들아,",
+
+		warn1 = "광역 튕겨냄!",
+		warn2 = "5초후 광역 튕겨냄!",
+		warn3 = "90초간 라그나로스 사라짐. 피조물 등장!",
+		warn4 = "15초후 라고나로스 재등장!",
+		warn5 = "라그나로스가 등장했습니다. 3분후 피조물 등장!",
+		warn6 = "60초후 피조물 등장 & 라그나로스 사라짐!",
+		warn7 = "20초후 피조물 등장 & 라그라로스 사라짐!",
+		bosskill = "라고르나로스를 물리쳤습니다!",
+
+		bar1text = "광역 튕겨냄",
+		bar2text = "라그나로스 등장",
+		bar3text = "피조물 등장",
+	} or {
 		bossname = "Ragnaros",
 		disabletrigger = "Ragnaros dies.",
 

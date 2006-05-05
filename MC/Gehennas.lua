@@ -3,9 +3,20 @@ BigWigsGehennas = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "MC",
-	enabletrigger = "Gehennas",
+	enabletrigger = GetLocale() == "koKR" and "게헨나스"
+		or "Gehennas",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "게헨나스",
+		disabletrigger = "게헨나스|1이;가; 죽었습니다.",
+
+		trigger1 = "게헨나스의 저주에 걸렸습니다.",
+
+		warn1 = "5초후 게헨나스의 저주!",
+		warn2 = "게헨나스의 저주 - 다음 저주 30초후!",
+
+		bar1text = "게헨나스의 저주",	
+	} or {
 		bossname = "Gehennas",
 		disabletrigger = "Gehennas dies.",
 

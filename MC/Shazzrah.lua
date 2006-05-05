@@ -3,9 +3,22 @@ BigWigsShazzrah = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "MC",
-	enabletrigger = "Shazzrah",
+	enabletrigger = GetLocale() == "koKR" and "샤즈라"
+		or "Shazzrah",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {	
+		bossname = "샤즈라",
+		disabletrigger = "샤즈라|1이;가; 죽었습니다.",
+
+		trigger1 = "샤즈라|1이;가; 샤즈라의 문|1을;를; 시전합니다.",
+		trigger2 = "샤즈라|1이;가; 마법 약화 효과를 얻었습니다.",
+
+		warn1 = "점멸 - 30초후 재점멸!",
+		warn2 = "5초후 점멸!",
+		warn3 = "마법 약화 버프 - 마법 무효화를 사용하세요!",
+
+		bar1text = "점멸",
+	} or {
 		bossname = "Shazzrah",
 		disabletrigger = "Shazzrah dies.",
 

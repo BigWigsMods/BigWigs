@@ -3,9 +3,22 @@ BigWigsMagmadar = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "MC",
-	enabletrigger = "Magmadar",
+	enabletrigger = GetLocale() == "koKR" and "마그다마르"
+		or "Magmadar",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "마그다마르",
+		disabletrigger = "마그다마르|1이;가; 죽었습니다.",
+
+		trigger1 = "살기를 띤 듯한 광란의 상태에 빠집니다!",
+		trigger2 = "공황에 걸렸습니다.",
+
+		warn1 = "광폭화 경보 - 사냥꾼의 평정 사격을 쏘세요!",
+		warn2 = "5초후 광역 공포!",
+		warn3 = "광역 공포 경보 - 다음 공포까지 30초!",
+
+		bar1text = "광역 공포",	
+	} or {
 		bossname = "Magmadar",
 		disabletrigger = "Magmadar dies.",
 
