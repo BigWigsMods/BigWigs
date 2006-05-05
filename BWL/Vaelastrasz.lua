@@ -3,10 +3,9 @@ BigWigsVaelastrasz = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "BWL",
-	enabletrigger = GetLocale() == "deDE" and "Vaelastrasz der Verdorbene" 
-		or "Vaelastrasz the Corrupt",
+	enabletrigger = GetLocale() == "deDE" and "Vaelastrasz der Verdorbene" or "Vaelastrasz the Corrupt",
 
-	loc = GetLocale == "deDE" and {
+	loc = GetLocale() == "deDE" and {
 		bossname = "Vaelastrasz der Verdorbene",
 		disabletrigger = "Vaelastrasz der Verdorbene stirbt.",
 
