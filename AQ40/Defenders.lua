@@ -75,7 +75,7 @@ function BigWigsDefenders:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
 end
 
 function BigWigsDefenders:checkPlague()
-	local _,_, Player, Type = string.find(arg1, self.loc.trigger6)
+	local _,_, Player, Type = string.find(arg1, self.loc.plaguetrigger)
 	if (Player and Type) then	
 		if (Player == self.loc.plagueyou and Type == self.loc.plagueare) then
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.plagueyouwarn, "Red", true)
