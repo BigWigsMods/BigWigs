@@ -32,6 +32,11 @@ BigWigs = AceAddon:new({
 		ZG = "Zul'Gurub",
 		AQ20 = "Ruinen von Ahn'Qiraj",
 		AQ40 = "Ahn'Qiraj",
+		Ashenvale = "Ashenvale",
+		Azshara = "Azshara",
+		Duskwood = "Duskwood", 
+		Feralas = "Feralas",
+		Hinterlands = "Das Hinterland", 
 	} or GetLocale() == "koKR" and {
 		ModuleEnable = "%s 모듈을 시작",
 		TargetEnable = "타겟 확인 시작",
