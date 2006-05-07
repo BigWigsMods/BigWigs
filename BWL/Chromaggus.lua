@@ -9,7 +9,7 @@ BigWigsChromaggus = AceAddon:new({
 		bossname = "Chromaggus",
 		disabletrigger = "Chromaggus stirbt.",
 
-		trigger1 = "^Chromaggus wirkt ([%w ]+)\.",
+		trigger1 = "^Chromaggus beginnt ([%w ]+) zu wirken.",
 		trigger2 = "^[%w']+ [%w' ]+ ([%w]+) Chromaggus f\195\188r ([%d]+) ([%w ]+) Schaden%..*",
 		trigger3 = "Chromaggus's Zeitraffer wurde von ([%w]+)% wiederstanden.",
 		trigger4 = "ger\195\164t in t\195\182dliche Raserei!",

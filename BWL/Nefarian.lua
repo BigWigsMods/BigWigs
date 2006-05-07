@@ -7,7 +7,44 @@ BigWigsNefarian = AceAddon:new({
 		{"군주 빅터 네파리우스", "네파리안"} or 
 		{"Lord Victor Nefarius", "Nefarian"}, 
 
-	loc = GetLocale() == "koKR" and {	
+	loc = GetLocale() == "deDE" and { 
+		bossname = "Nefarian",
+		disabletrigger = "Nefarian stirbt.",
+
+		trigger1 = "Sehr gut, meine Diener.",
+		trigger2 = "BRENNT! Ihr Elenden!",
+		trigger3 = "Unm\195\182glich!",
+		trigger4 = "Nefarian beginnt Dr\195\182hnendes Gebr\195\188ll zu wirken.",
+		trigger5 = "Nefarian beginnt Schattenflamme zu wirken.",
+		triggershamans	= "Schamane, zeigt mir was",
+		triggerdruid	= "Druiden und ihre l\195\164cherliche",
+		triggerwarlock	= "Hexenmeister, ihr solltet nicht mit Magie",
+		triggerpriest	= "Priester! Wenn ihr weiterhin so heilt,",
+		triggerhunter	= "J\195\164ger und ihre l\195\164stigen",
+		triggerwarrior	= "Krieger, Ich bin mir sicher",
+		triggerrogue	= "Schurken%? Kommt aus den Schatten",
+		triggerpaladin	= "Paladine",
+		triggermage		= "Auch Magier%? Ihr solltet vorsichtiger",
+
+		warn1 = "Nefarian landet in 10 Sekunden!",
+		warn2 = "Nefarian landet!",
+		warn3 = "Zerg kommt!",
+		warn4 = "Furcht in 2 Sekunden!",
+		warn5 = "Schattenflamme kommt!",
+		warn6 = "Klassenruf kommt!",
+		warnshaman	= "Schamanen - Totems sind gesetzt!",
+		warndruid	= "Druiden - Gefangen in Katzenform!",
+		warnwarlock	= "Hexenmeister - Infernals kommen!",
+		warnpriest	= "Priester - Stoppt Heilung!",
+		warnhunter	= "J\195\164ger - B\195\182gen/Schusswaffen defekt!",
+		warnwarrior	= "Krieger - Gefangen in Berserkerhaltung!",
+		warnrogue	= "Schurken - Teleportiert und festgewurzelt!",
+		warnpaladin	= "Paladine - Blessing of Protection!",
+		warnmage	= "Magier - Verwandlung kommt!",
+		bosskill = "Nefarian wurde besiegt!",
+
+		bar1text = "Klassenruf",
+		} or GetLocale() == "koKR" and {	
 		bossname = "네파리안",
 		disabletrigger = "네파리안|1이;가; 죽었습니다.",
 
