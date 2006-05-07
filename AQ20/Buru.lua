@@ -3,9 +3,18 @@ BigWigsBuru = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ20",
-	enabletrigger = "Buru the Gorger",
+	enabletrigger = GetLocale() == "koKR" and "먹보 부루"
+		or "Buru the Gorger",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "먹보 부루",
+		disabletrigger = "먹보 부루|1이;가; 죽었습니다.",
+		bosskill = "먹보 부루를 물리쳤습니다.",
+
+		watchtrigger = ""(.+)%|1을;를; 노려봅니다!",
+		watchwarn = "님을 노려봅니다!",
+		you = UnitName("player"),	
+	} or {
 		bossname = "Buru the Gorger",
 		disabletrigger = "Buru the Gorger dies.",
 		bosskill = "Buru the Gorger has been defeated.",

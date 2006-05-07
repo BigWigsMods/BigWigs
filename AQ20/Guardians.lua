@@ -3,9 +3,28 @@ BigWigsGuardians = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ40",
-	enabletrigger = "Anubisath Guardian",
+	enabletrigger = GetLocale() == "koKR" and "아누비사스 감시자"
+		or "Anubisath Guardian",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "아누비사스 감시자",
+		disabletrigger = "아누비사스 감시자|1이;가; 죽었습니다.",
+		bosskill = "아누비사스 감시자를 물리쳤습니다.",
+
+		explodetrigger = "아누비사스 감시자|1이;가; 폭파 효과를 얻었습니다.",
+		explodewarn = "폭파! 피하세요!",
+		enragetrigger = "아누비사스 감시자|1이;가; 분노 효과를 얻었습니다.",
+		enragewarn = "분노!",
+		summonguardtrigger = "아누비사스 감시자|1이;가; 아누비사스 감시병 소환|1을;를; 시전합니다.",
+		summonguardwarn = "감시병 소환",
+		summonwarriortrigger = "아누비사스 감시자|1이;가; 아누비사스 전사 소환|1을;를; 시전합니다.",
+		summonwarriorwarn = "전사 소환",		
+		
+		plaguetrigger = "^(.*)역병에 걸렸습니다%.$", 
+		plaguewarn = "님이 역병에 걸렸습니다. 피하세요!",
+		plagueyou = "",	
+		whopattern = "(.+)%|1이;가; "
+	} or {
 		bossname = "Anubisath Guardian",
 		disabletrigger = "Anubisath Guardian dies.",
 		bosskill = "Anubisath Guardian has been defeated.",
@@ -18,9 +37,10 @@ BigWigsGuardians = AceAddon:new({
 		summonguardwarn = "Swarmguard Summoned",
 		summonwarriortrigger = "Anubisath Guardian casts Summon Anubisath Warrior.",
 		summonwarriorwarn = "Warrior Summoned",
-		plaguetrigger = "^([^%s]+) ([^%s]+) afflicted by Plague%.$",
+		plaguetrigger = "^(.*)afflicted by Plague%.$",
 		plaguewarn = " has the Plague! Keep away!",
-		plagueyou = "You",
+		plagueyou = "You are ",
+		whopattern = "([^%s]+) ([^%s]+) "
 	},
 })
 
@@ -77,13 +97,13 @@ end
 
 function BigWigsGuardians:checkPlague()
 	if( arg1 ) then
-		local _,_,player,isare = string.find( arg1, self.loc.plaguetrigger )
-		if( player and isare ) then
+		local _,_,player = string.find( arg1, self.loc.plaguetrigger )
+		if( player ) then
 			local text = ""
 			if( player == self.loc.plagueyou ) then
 				text = UnitName("player")
 			else
-				text = player
+				text = string.find( player, self.loc.whopattern )
 			end
 			text = text .. self.loc.plaguewarn
 			self:TriggerEvent("BIGWIGS_MESSAGE", text, "Red")

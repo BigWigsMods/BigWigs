@@ -3,16 +3,29 @@ BigWigsAyamiss = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ20",
-	enabletrigger = "Ayamiss the Hunter",
+	enabletrigger = GetLocale() == "koKR" and "사냥꾼 아야미스"
+		or "Ayamiss the Hunter",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "사냥꾼 아야미스",
+		disabletrigger = "사냥꾼 아야미스|1이;가; 죽었습니다.",
+		bosskill = "사냥꾼 아야미스를 물리쳤습니다.",
+
+		sacrificetrigger = "^(.*)마비에 걸렸습니다.",
+		sacrificewarn = "님이 마비에 걸렸습니다!",
+		
+		you = "",
+		whopattern = "(.+)%|1이;가; ",
+	} or {
 		bossname = "Ayamiss the Hunter",
 		disabletrigger = "Ayamiss the Hunter dies.",
 		bosskill = "Ayamiss the Hunter has been defeated.",
 
-		sacrificetrigger = "^([^%s]+) ([^%s]+) afflicted by Paralyze",
+		sacrificetrigger = "^(.*)afflicted by Paralyze",
 		sacrificewarn = " is being Sacrificed!",
-		you = "You",
+		
+		you = "You are ",
+		whopattern = "([^%s]+) ([^%s]+) ", 
 	},
 })
 
@@ -41,13 +54,13 @@ end
 
 function BigWigsAyamiss:checkSacrifice()
 	if( arg1 and arg1 ~= nil ) then
-		local _, _, player, isare = string.find(arg1, self.loc.sacrificetrigger);
-		if( player and isare  ) then	
+		local _, _, player = string.find(arg1, self.loc.sacrificetrigger);
+		if( player ) then	
 			local text = ""
 			if( player == self.loc.you ) then
 				text = UnitName("player")
 			else
-				text = player
+				text = string.find( player, self.loc.whopattern ) 
 			end
 			text = text .. self.loc.sacrificewarn
 			self:TriggerEvent("BIGWIGS_MESSAGE", text, "Red")

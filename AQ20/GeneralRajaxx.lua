@@ -5,9 +5,36 @@ BigWigsGeneralRajaxx = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ20",
-	enabletrigger = "Lieutenant General Andorov",
+	enabletrigger = GetLocale() == "koKR" and "사령관 안도로브"
+		or "Lieutenant General Andorov",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "장군 라작스",
+		disabletrigger = "장군 라작스|1이;가; 죽었습니다.",
+
+--		lieutenant = "Lieutenant General Andorov",
+--		general = "General Rajaxx",
+
+		trigger1 = "그들이 오고 있다. 자신의 몸을 지키도록 하라!",
+		trigger2 = "?????",  -- 2단계 외침은 없음 ><
+		trigger3 = "응보의 날이 다가왔다! 암흑이 적들의 마음을 지배하게 되리라!",
+		trigger4 = "‘더는’ 돌벽과 성문 뒤에서 기다릴 수 없다! 복수의 기회를 놓칠 수 없다. 우리가 분노를 터뜨리는 날 용족은 두려움에 떨리라.",
+		trigger5 = "적에게 공포와 죽음의 향연을!",
+		trigger6 = "스테그헬름은 흐느끼며 목숨을 구걸하리라. 그 아들놈이 그랬던 것처럼! 천 년의 한을 풀리라! 오늘에서야!",
+		trigger7 = "판드랄! 때가 왔다! 에메랄드의 꿈속에 숨어서 기도나 올려라!",
+		trigger8 = "건방진...  내 친히 너희를 처치해주마!",
+
+		warn1 = "1/8 단계",
+		warn2 = "2/8 단계",
+		warn3 = "3/8 단계",
+		warn4 = "4/8 단계",
+		warn5 = "5/8 단계",
+		warn6 = "6/8 단계",
+		warn7 = "7/8 단계",
+		warn8 = "장군 라작스 등장",
+
+		bosskill = "장군 라작스를 물리쳤습니다!",	
+	} or {
 		bossname = "General Rajaxx",
 		disabletrigger = "General Rajaxx dies.",
 

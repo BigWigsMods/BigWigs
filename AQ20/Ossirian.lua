@@ -3,9 +3,22 @@ BigWigsOssirian = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ40",
-	enabletrigger = "Ossirian the Unscarred",
+	enabletrigger = GetLocale() == "koKR" and "무적의 오시리안"
+		or "Ossirian the Unscarred",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "무적의 오시리안",
+		disabletrigger1 = "내가... 졌다.",
+		disabletrigger2 = "무적의 오시리안|1이;가; 죽었습니다.",
+		bosskill = "오시리안을 물리쳤습니다!",
+
+		supremetrigger = "무적의 오시리안|1이;가; 오시리안의 힘 효과를 얻었습니다.",
+		supremewarn = "오시리안 무적 상태!",
+		supremedelaywarn = "%d초후 무적 상태 돌입!",
+		debufftrigger = "^무적의 오시리안|1이;가; (.+) 약점에 걸렸습니다%.$",
+		debuffwarn = "오시리안이 %s 계열 마법에 약해졌습니다.",
+		bartext = "무적 상태",	
+	} or {
 		bossname = "Ossirian the Unscarred",
 		disabletrigger1 = "I...have...failed.",
 		disabletrigger2 = "Ossirian the Unscarred dies.",
