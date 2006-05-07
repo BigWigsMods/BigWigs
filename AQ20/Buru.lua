@@ -11,7 +11,7 @@ BigWigsBuru = AceAddon:new({
 		disabletrigger = "먹보 부루|1이;가; 죽었습니다.",
 		bosskill = "먹보 부루를 물리쳤습니다.",
 
-		watchtrigger = ""(.+)%|1을;를; 노려봅니다!",
+		watchtrigger = "(.+)%|1을;를; 노려봅니다!",
 		watchwarn = "님을 노려봅니다!",
 		you = UnitName("player"),	
 	} or {
