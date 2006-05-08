@@ -22,11 +22,10 @@ BigWigsBaronGeddon = AceAddon:new({
 		bossname = "Baron Geddon",
 		disabletrigger = "Baron Geddon dies.",
 
-		trigger1 = "^(.*)afflicted by Living Bomb",
-		whopattern = "^([^%s]+) ([^%s]+) ",
+		trigger1 = "^([^%s]+) ([^%s]+) afflicted by Living Bomb",
 
-		you = "You are ",
-		are = "are",		
+		you = "You",
+		are = "are",
 
 		warn1 = "You are the bomb!",
 		warn2 = " is the bomb!",
