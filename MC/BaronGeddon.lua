@@ -43,7 +43,7 @@ BigWigsBaronGeddon = AceAddon:new({
 
 		you = "You are ",
 		are = "are",
-		whopattern = "([^%s]+) ([^%s]+) "
+		whopattern = "([^%s]+) ([^%s]+) ",
 
 		warn1 = "You are the bomb!",
 		warn2 = " is the bomb!",
