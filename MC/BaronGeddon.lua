@@ -10,8 +10,8 @@ BigWigsBaronGeddon = AceAddon:new({
 		bossname = "남작 게돈",
 		disabletrigger = "남작 게돈|1이;가; 죽었습니다.",
 
-		trigger1 = "^(.*)살아있는 폭탄에 걸렸습니다.";		
-		whopattern = "(.+)|1이;가; " ; 		
+		trigger1 = "^(.*)살아있는 폭탄에 걸렸습니다.",
+		whopattern = "(.+)|1이;가; ",
 
 		you = "당신은 ",
 		are = "은",
@@ -23,7 +23,7 @@ BigWigsBaronGeddon = AceAddon:new({
 		disabletrigger = "Baron Geddon dies.",
 
 		trigger1 = "^(.*)afflicted by Living Bomb",
-		whopattern "^([^%s]+) ([^%s]+) ",
+		whopattern = "^([^%s]+) ([^%s]+) ",
 
 		you = "You are ",
 		are = "are",		
