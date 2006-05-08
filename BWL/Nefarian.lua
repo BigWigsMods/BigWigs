@@ -7,7 +7,8 @@ BigWigsNefarian = AceAddon:new({
 		{"군주 빅터 네파리우스", "네파리안"} or 
 		{"Lord Victor Nefarius", "Nefarian"}, 
 
-	loc = GetLocale() == "deDE" and { 
+	loc = GetLocale() == "deDE" and 
+	{ 
 		bossname = "Nefarian",
 		disabletrigger = "Nefarian stirbt.",
 
@@ -44,7 +45,9 @@ BigWigsNefarian = AceAddon:new({
 		bosskill = "Nefarian wurde besiegt!",
 
 		bar1text = "Klassenruf",
-		} or GetLocale() == "koKR" and {	
+	} 
+		or GetLocale() == "koKR" and 
+	{	
 		bossname = "네파리안",
 		disabletrigger = "네파리안|1이;가; 죽었습니다.",
 
@@ -81,7 +84,9 @@ BigWigsNefarian = AceAddon:new({
 		bosskill = "네파리안을 물리쳤습니다!",		
 
 		bar1text = "직업 지목",
-	} or {	
+	} 
+		or 
+	{	
 		bossname = "Nefarian",
 		disabletrigger = "Nefarian dies.",
 

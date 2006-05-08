@@ -5,7 +5,8 @@ BigWigsVaelastrasz = AceAddon:new({
 	zonename = "BWL",
 	enabletrigger = GetLocale() == "deDE" and "Vaelastrasz der Verdorbene" or "Vaelastrasz the Corrupt",
 
-	loc = GetLocale() == "deDE" and {
+	loc = GetLocale() == "deDE" and 
+	{
 		bossname = "Vaelastrasz der Verdorbene",
 		disabletrigger = "Vaelastrasz der Verdorbene stirbt.",
 
@@ -17,7 +18,9 @@ BigWigsVaelastrasz = AceAddon:new({
 		warn1 = "Du brennst!",
 		warn2 = " brennt!",
 		bosskill = "Vaelastrasz der Verdorbene wurde besiegt!",
-	}	or {
+	}	
+		or 
+	{
 		bossname = "Vaelastrasz the Corrupt",
 		disabletrigger = "Vaelastrasz the Corrupt dies.",
 

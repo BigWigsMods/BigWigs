@@ -5,7 +5,8 @@ BigWigsFlamegor = AceAddon:new({
 	zonename = "BWL",
 	enabletrigger = GetLocale() == "deDE" and "Flammenmaul" or "Flamegore",
 
-	loc = GetLocale() == "deDE" and {
+	loc = GetLocale() == "deDE" and 
+	{
 		bossname = "Flammenmaul",
 		disabletrigger = "Flammenmaul stirbt.",
 
@@ -21,7 +22,9 @@ BigWigsFlamegor = AceAddon:new({
 		bosskill = "Flammenmaul wurde besiegt!",
 
 		bar1text = "Fluegelgelstoss",
-	}	or {
+	}	
+		or 
+	{
 		bossname = "Flamegor",
 		disabletrigger = "Flamegor dies.",
 

@@ -5,7 +5,8 @@ BigWigsEbonroc = AceAddon:new({
 	zonename = "BWL",
 	enabletrigger = GetLocale() == "deDE" and "Schattenschwinge" or "Ebonroc",
 
-	loc = GetLocale() == "deDE" and {
+	loc = GetLocale() == "deDE" and 
+	{
 		bossname = "Schattenschwinge",
 		disabletrigger = "Schattenschwinge stirbt.",
 	
@@ -25,7 +26,9 @@ BigWigsEbonroc = AceAddon:new({
 		bosskill = "Schattenschwinge wurde besiegt!",
 			
 		bar1text = "Fluegelgelstoss",
-	} or {
+	} 
+		or 
+	{
 		bossname = "Ebonroc",
 		disabletrigger = "Ebonroc dies.",
 

@@ -6,7 +6,30 @@ BigWigsRagnaros = AceAddon:new({
 	enabletrigger = GetLocale() == "koKR" and "라그나로스"
 		or "Ragnaros",
 
-	loc = GetLocale() == "koKR" and {	
+	loc = GetLocale() == "deDE" and 
+	{ 
+		bossname = "Ragnaros",
+		disabletrigger = "Ragnaros stirbt.",
+
+		trigger1 = "^SP\195\156RT",
+		trigger2 = "^VORW\195\134RTS,",
+		trigger3 = "^UND JETZT ZU EUCH,",
+
+		warn1 = "AoE Knockback!",
+		warn2 = "5 Sekunden bis AoE Knockback!",
+		warn3 = "Ragnaros ist f\105\188r 90 Sekunden untergetaucht. S\195\162hne der Flamme kommen!",
+		warn4 = "15 Sekunden bis Ragnaros auftaucht!",
+		warn5 = "Ragnaros ist aufgetaucht. 3 Minuten bis zum Untertuachen!",
+		warn6 = "60 Sekunden bis Ragnaros untertaucht & S\195\162hne der Flamme!",
+		warn7 = "20 Sekunden bis Ragnaros untertaucht & S\195\162hne der Flamme!",
+		bosskill = "Ragnaros wurde besiegt!",
+
+		bar1text = "AoE Knockback",
+		bar2text = "Auftauchen Ragnaros",
+		bar3text = "Untertauchen Ragnaros",
+	}
+		or GetLocale() == "koKR" and 
+	{	
 		bossname = "라그나로스",
 		disabletrigger = "라그나로스|1이;가; 죽었습니다.",
 
@@ -26,7 +49,9 @@ BigWigsRagnaros = AceAddon:new({
 		bar1text = "광역 튕겨냄",
 		bar2text = "라그나로스 등장",
 		bar3text = "피조물 등장",
-	} or {
+	} 
+		or 
+	{
 		bossname = "Ragnaros",
 		disabletrigger = "Ragnaros dies.",
 

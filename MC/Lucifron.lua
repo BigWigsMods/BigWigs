@@ -6,7 +6,24 @@ BigWigsLucifron = AceAddon:new({
 	enabletrigger = GetLocale() == "koKR" and "루시프론"
 		or "Lucifron",
 
-	loc = GetLocale() == "koKR" and {
+	loc = GetLocale() == "deDE" and
+	{		
+		bossname = "Lucifron",
+		disabletrigger = "Lucifron stirbt.",
+
+		trigger1 = "betroffen von Lucifron",
+		trigger2 = "betroffen von Impending Verdammnis",
+
+		warn1 = "5 Sekunden bis Lucifrons Fluch!",
+		warn2 = "Lucifrons Fluch - 20 Sekunden bis zum n\195\164chsten!",
+		warn3 = "5 Sekunden bis Impending Verdammnis!",
+		warn4 = "Impending Verdammnis - 20 Sekunden bis zum n\195\164chsten!",
+
+		bar1text = "Lucifrons Fluch",
+		bar2text = "Impending Verdammnis",
+	}
+		or GetLocale() == "koKR" and 
+	{
 		bossname = "루시프론",
 		disabletrigger = "루시프론|1이;가; 죽었습니다.",
 
@@ -20,7 +37,9 @@ BigWigsLucifron = AceAddon:new({
 
 		bar1text = "루시프론의 저주",
 		bar2text = "파멸의 예언",		
-	} or {
+	} 
+		or 
+	{
 		bossname = "Lucifron",
 		disabletrigger = "Lucifron dies.",
 

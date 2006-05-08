@@ -5,7 +5,8 @@ BigWigsFiremaw = AceAddon:new({
 	zonename = "BWL",
 	enabletrigger = GetLocale() == "deDE" and "Feuerschwinge" or "Firemaw",
 
-	loc = GetLocale() == "deDE" and {
+	loc = GetLocale() == "deDE" and 
+	{
 		bossname = "Feuerschwinge",
 		disabletrigger = "Feuerschwinge stirbt.",
 	
@@ -19,7 +20,9 @@ BigWigsFiremaw = AceAddon:new({
 		bosskill = "Feuerschwinge wurde besiegt!",
 			
 		bar1text = "Fluegelgelstoss",
-	} or {
+	} 
+		or 
+	{
 		bossname = "Firemaw",
 		disabletrigger = "Firemaw dies.",
 

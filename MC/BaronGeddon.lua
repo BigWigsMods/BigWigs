@@ -6,7 +6,21 @@ BigWigsBaronGeddon = AceAddon:new({
 	enabletrigger = GetLocale() == "koKR" and "남작 게돈" 
 		or "Baron Geddon",
 
-	loc = GetLocale() == "koKR" and {
+	loc = GetLocale() == "deDE" and
+	{	
+		bossname = "Baron Geddon",
+		disabletrigger = "Baron Geddon stirbt.",
+
+		trigger1 = "^([^%s]+) ([^%s]+) betroffen von Lebende Bombe",
+
+		you = "Ihr",
+		are = "seid",
+
+		warn1 = "Du bist die Bombe!",
+		warn2 = " ist die Bombe!",
+	} 
+		or GetLocale() == "koKR" and 
+	{
 		bossname = "남작 게돈",
 		disabletrigger = "남작 게돈|1이;가; 죽었습니다.",
 
@@ -18,7 +32,9 @@ BigWigsBaronGeddon = AceAddon:new({
 
 		warn1 = "당신은 폭탄입니다!",
 		warn2 = "님이 폭탄입니다!",	
-	} or {
+	} 
+		or 
+	{
 		bossname = "Baron Geddon",
 		disabletrigger = "Baron Geddon dies.",
 

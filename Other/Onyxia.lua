@@ -6,8 +6,22 @@ BigWigsOnyxia = AceAddon:new({
 	enabletrigger = GetLocale() == "koKR" and "오닉시아" 
 		or "Onyxia"	,
 
-	loc = GetLocale() == "koKR" and 
-	{
+	loc = GetLocale() == "deDE" and 
+	{ 
+		bossname = "Onyxia",
+		disabletrigger = "Onyxia stirbt.",
+
+		trigger1 = "atmet tief ein...",
+		trigger2 = "von oben",
+		trigger3 = "Es sieht so aus",
+
+		warn1 = "Onyxia Tiefer Atem kommt, rennt zu den Seiten!",
+		warn2 = "Onyxia Phase 2 kommt!",
+		warn3 = "Onyxia Phase 3 kommt!",
+		bosskill = "Onyxia wurde besiegt!",
+	} 
+		or GetLocale() == "koKR" and 
+	{ 
 		bossname = "오닉시아",
 		disabletrigger = "오닉시아|1이;가; 죽었습니다.",
 
@@ -19,7 +33,9 @@ BigWigsOnyxia = AceAddon:new({
 		warn2 = "오닉시아 2단계 시작!",
 		warn3 = "오닉시아 3단계 시작!",
 		bosskill = "오닉시아를 물리쳤습니다!",
-	} or {
+	} 
+		or 
+	{ 
 		bossname = "Onyxia",
 		disabletrigger = "Onyxia dies.",
 
@@ -31,7 +47,7 @@ BigWigsOnyxia = AceAddon:new({
 		warn2 = "Onyxia phase 2 incoming!",
 		warn3 = "Onyxia phase 3 incoming!",
 		bosskill = "Onyxia has been defeated!",
-	},
+	}
 })
 
 function BigWigsOnyxia:Initialize()
