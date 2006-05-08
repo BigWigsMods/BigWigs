@@ -3,12 +3,12 @@ BigWigsMajordomo = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "MC",
-	enabletrigger = GetLocale() == "koKR" and "청지기"
+	enabletrigger = GetLocale() == "koKR" and "청지기 이그젝큐투스"
 		or "Majordomo Executus",
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "청지기",
-		disabletrigger = "Impossible! Stay your attack, mortals... I submit! I submit!",
+		bossname = "청지기 이그젝큐투스",
+		disabletrigger = "이럴 수가! 그만! 제발 그만! 내가 졌다! 내가 졌어!",		
 
 		trigger1 = "마법 반사 효과를 얻었습니다.",
 		trigger2 = "피해 보호막 효과를 얻었습니다.",
