@@ -1,4 +1,16 @@
-
+BIGWIGS_CMD_OPT = GetLocale() == "koKR" and {
+	{
+		option = "위치",
+		desc   = "메시지 및 바 위치를 변경.",
+		method = "SlashAnchor",		
+	},
+} or {
+	{
+		option = "anchor",
+		desc   = "Shows the draggable anchor.",
+		method = "SlashAnchor",		
+	},
+}
 
 BigWigs = AceAddon:new({
 	name          = "BigWigs",
@@ -9,7 +21,11 @@ BigWigs = AceAddon:new({
 	author        = "Tekkub Stoutwrithe",
 	email 		    = "tekkub@gmail.com",
 	category      = "inventory",
-	cmd           = AceChatCmd:new({"/bw", "/BigWigs"}, {}),
+	cmd           = AceChatCmd:new(
+										{"/bw", "/BigWigs"}, 
+										BIGWIGS_CMD_OPT
+									),
+	db            = AceDatabase:new("BigWigs"),
 
 	modules = {},
 	enablezones = {},
@@ -80,6 +96,8 @@ end
 
 
 function BigWigs:Enable()
+	if ( self:GetOpt("bAnchorShow") ) then BigWigs:Show() end
+	
 	self:RegisterEvent("BIGWIGS_BAR_START")
 	self:RegisterEvent("BIGWIGS_BAR_CANCEL")
 	self:RegisterEvent("BIGWIGS_DELAYEDMESSAGE_START")
@@ -216,7 +234,28 @@ function BigWigs:BIGWIGS_DELAYEDMESSAGE_CANCEL(text)
 	Timex:DeleteSchedule("BIGWIGS_DELAYEDMESSAGE "..text)
 end
 
-
+--------------------------------
+--        Slash Handler       --
+--------------------------------
+function BigWigs:SlashAnchor()
+	if ( self:TogOpt("bAnchorShow") ) then 
+		BigWigsAnchorFrame:Show()
+	else
+		BigWigsAnchorFrame:Hide()
+	end	
+end
+--------------------------------
+--      Utility Function      --
+--------------------------------
+function BigWigs:GetOpt(OptName) 
+	return self.db:get(self.profilePath,OptName)    
+end
+function BigWigs:SetOpt(OptName, OptVal)
+	self.db:set(self.profilePath,OptName,OptVal)   
+end
+function BigWigs:TogOpt(OptName) 
+	return self.db:toggle(self.profilePath,OptName) 
+end
 --------------------------------
 --      Load this bitch!      --
 --------------------------------
