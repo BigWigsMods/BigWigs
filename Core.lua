@@ -16,7 +16,8 @@ BigWigs = AceAddon:new({
 	name          = "BigWigs",
 	description   = "Boss Mods with Timex bars.",
 	version       = "0",
-	releaseDate   = "12-11-2005",
+	build         = tonumber(string.sub("$Revision$", 12, -3)),
+	releaseDate   = string.sub("$Date$", 8, 17),
 	aceCompatible = 102,
 	author        = "Tekkub Stoutwrithe",
 	email 		    = "tekkub@gmail.com",
@@ -38,9 +39,9 @@ BigWigs = AceAddon:new({
 	},
 
 	loc = GetLocale() == "deDE" and {
-		ModuleEnable = "%s mod enabled",
-		TargetEnable = "Target monitoring enabled",
-		TargetDisable = "Target monitoring disabled",
+		ModuleEnable = "%s mod aktiviert",
+		TargetEnable = "Ziel\195\188berwachung aktiviert",
+		TargetDisable = "Ziel\195\188berwachung deaktiviert",
 
 		MC = "Der geschmolzene Kern",
 		BWL = "Pechschwingenhort",

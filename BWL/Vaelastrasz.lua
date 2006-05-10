@@ -19,7 +19,9 @@ BigWigsVaelastrasz = AceAddon:new({
 		warn1 = "당신은 불타는 아드레날린에 걸렸습니다!",
 		warn2 = "님이 불타는 아드레날린에 걸렸습니다!",
 		bosskill = "타락의 벨라스트라즈를 물리쳤습니다!",		
-	} or GetLocale() == "deDE" and {
+	} 
+		or GetLocale() == "deDE" and 
+	{
 		bossname = "Vaelastrasz der Verdorbene",
 		disabletrigger = "Vaelastrasz der Verdorbene stirbt.",
 
