@@ -3,9 +3,22 @@ BigWigsAzuregos = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "Azshara",
-	enabletrigger = "Azuregos",
+	enabletrigger = GetLocale() == "koKR" and "아주어고스"
+		or "Azuregos",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "Azuregos",
+		disabletrigger = "아주어고스|1이;가; 죽었습니다.",
+
+		trigger1 = "오너라, 조무래기들아! 덤벼봐라!",
+		trigger2 = "아주어고스의 몸에서 반사 효과가 사라졌습니다.",
+		trigger3 = "아주어고스|1이;가; 반사 효과를",
+
+		warn1 = "강제 소환!",
+		warn2 = "마법 보호막 소멸!",
+		warn3 = "마법 보호막 동작 - 마법 공격 금지!",
+		bosskill = "아주어고스를 물리쳤습니다!",
+	} or {
 		bossname = "Azuregos",
 		disabletrigger = "Azuregos dies.",
 
