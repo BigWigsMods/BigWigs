@@ -11,11 +11,10 @@ BigWigsBaronGeddon = AceAddon:new({
 		bossname = "Baron Geddon",
 		disabletrigger = "Baron Geddon stirbt.",
 
-		trigger1 = "^(.*)betroffen von Lebende Bombe",
+		trigger1 = "^([^%s]+) ([^%s]+) betroffen von Lebende Bombe",
 
-		you = "Ihr seid ",
+		you = "Ihr",
 		are = "seid",
-		whopattern = "([^%s]+) ([^%s]+) ", 
 
 		warn1 = "Du bist die Bombe!",
 		warn2 = " ist die Bombe!",
@@ -39,11 +38,10 @@ BigWigsBaronGeddon = AceAddon:new({
 		bossname = "Baron Geddon",
 		disabletrigger = "Baron Geddon dies.",
 
-		trigger1 = "^(.*)afflicted by Living Bomb",
+		trigger1 = "^([^%s]+) ([^%s]+) afflicted by Living Bomb",
 
-		you = "You are ",
+		you = "You",
 		are = "are",
-		whopattern = "([^%s]+) ([^%s]+) ",
 
 		warn1 = "You are the bomb!",
 		warn2 = " is the bomb!",
@@ -75,15 +73,27 @@ function BigWigsBaronGeddon:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	end
 end
 
-
-function BigWigsBaronGeddon:Event()
-	local _, _, EPlayer = string.find(arg1, self.loc.trigger1)
-	if (EPlayer) then
-		if (EPlayer == self.loc.you) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
-		else
-			local _, _, EWho = string.find(EPlayer, self.loc.whopattern)
-			self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn2, "Yellow")
+if (GetLocale() == "koKR") then
+	function BigWigsBaronGeddon:Event()
+		local _, _, EPlayer = string.find(arg1, self.loc.trigger1)
+		if (EPlayer) then
+			if (EPlayer == self.loc.you) then
+				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
+			else
+				local _, _, EWho = string.find(EPlayer, self.loc.whopattern)
+				self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn2, "Yellow")
+			end
+		end
+	end
+else
+	function BigWigsBaronGeddon:Event()
+		local _, _, EPlayer, EType = string.find(arg1, self.loc.trigger1)
+		if (EPlayer and EType) then
+			if (EPlayer == self.loc.you and EType == self.loc.are) then
+				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
+			else
+				self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
+			end
 		end
 	end
 end

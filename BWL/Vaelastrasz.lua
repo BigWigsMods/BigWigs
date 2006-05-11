@@ -25,11 +25,10 @@ BigWigsVaelastrasz = AceAddon:new({
 		bossname = "Vaelastrasz der Verdorbene",
 		disabletrigger = "Vaelastrasz der Verdorbene stirbt.",
 
-		trigger1 = "^(.*)von Brennendes Adrenalin betroffen",
+		trigger1 = "^([^%s]+) ([^%s]+) von Brennendes Adrenalin betroffen",
 
-		you = "Ihr seid ",
+		you = "Ihr",
 		are = "seid",
-		whopattern = "([^%s]+) ([^%s]+) ",
 
 		warn1 = "Du brennst!",
 		warn2 = " brennt!",
@@ -40,11 +39,10 @@ BigWigsVaelastrasz = AceAddon:new({
 		bossname = "Vaelastrasz the Corrupt",
 		disabletrigger = "Vaelastrasz the Corrupt dies.",
 
-		trigger1 = "^(.*)afflicted by Burning Adrenaline",
+		trigger1 = "^([^%s]+) ([^%s]+) afflicted by Burning Adrenaline",
 
-		you = "You are ",
+		you = "You",
 		are = "are",
-		whopattern = "([^%s]+) ([^%s]+) ", 
 
 		warn1 = "You are burning!",
 		warn2 = " is burning!",
@@ -77,28 +75,27 @@ function BigWigsVaelastrasz:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	end
 end
 
---[[
-function BigWigsVaelastrasz:Event()
-	local _,_, EPlayer, EType = string.find(arg1, self.loc.trigger1)
-	if (EPlayer and EType) then
-		if (EPlayer == self.loc.you and EType == self.loc.are) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
-		else
-			self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
+if (GetLocale() == "koKR") then
+	function BigWigsVaelastrasz:Event()
+		local _, _, EPlayer = string.find(arg1, self.loc.trigger1)
+		if (EPlayer) then
+			if (EPlayer == self.loc.you) then
+				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
+			else
+				local _, _, EWho = string.find(EPlayer, self.loc.whopattern)
+				self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn2, "Yellow")
+			end
 		end
 	end
-end]] 
-
-function BigWigsVaelastrasz:Event()
-	local _,_, EPlayer = string.find(arg1, self.loc.trigger1)
-	if (EPlayer) then
-		if (EPlayer == self.loc.you) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
-		else
-			local _,_, EWho = string.find(EPlayer, self.loc.whopattern)
-			self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn2, "Yellow")
+else
+	function BigWigsVaelastrasz:Event()
+		local _, _, EPlayer, EType = string.find(arg1, self.loc.trigger1)
+		if (EPlayer and EType) then
+			if (EPlayer == self.loc.you and EType == self.loc.are) then
+				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
+			else
+				self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
+			end
 		end
 	end
 end
