@@ -126,56 +126,6 @@ BigWigsNefarian = AceAddon:new({
 	},
 })
 
---[[
-
-BigWigsNefarian = AceAddon:new({
-	name          = "BigWigsNefarian",
-	cmd           = AceChatCmd:new({}, {}),
-
-	zonename = "BWL",
-	enabletrigger = {"Lord Victor Nefarius", "Nefarian"},
-
-	loc = {
-		bossname = "Nefarian",
-		disabletrigger = "Nefarian dies.",
-
-		trigger1 = "Well done, my minions",
-		trigger2 = "BURN! You wretches",
-		trigger3 = "Impossible! Rise my",
-		trigger4 = "Nefarian begins to cast Bellowing Roar",
-		trigger5 = "Nefarian begins to cast Shadow Flame",
-		triggershamans	= "Shamans, show me",
-		triggerdruid	= "Druids and your silly",
-		triggerwarlock	= "Warlocks, you shouldn't be playing",
-		triggerpriest	= "Priests! If you're going to keep",
-		triggerhunter	= "Hunters and your annoying",
-		triggerwarrior	= "Warriors, I know you can hit harder",
-		triggerrogue	= "Rogues%? Stop hiding",
-		triggerpaladin	= "Paladins",
-		triggermage		= "Mages too%?",
-
-		warn1 = "Nefarian landing in 10 seconds!",
-		warn2 = "Nefarian is landing!",
-		warn3 = "Zerg incoming!",
-		warn4 = "Fear in 2 seconds!",
-		warn5 = "Shadow Flame incoming!",
-		warn6 = "Class call incoming!",
-		warnshaman	= "Shamans - Totems spawned!",
-		warndruid	= "Druids - Stuck in cat form!",
-		warnwarlock	= "Warlocks - Incoming Infernals!",
-		warnpriest	= "Priests - Stop Healing!",
-		warnhunter	= "Hunters - Bows/Guns broken!",
-		warnwarrior	= "Warriors - Stuck in berserking stance!",
-		warnrogue	= "Rogues - Ported and rooted!",
-		warnpaladin	= "Paladins - Blessing of Protection!",
-		warnmage	= "Mages - Incoming polymorphs!",
-		bosskill = "Nefarian has been defeated!",
-
-		bar1text = "Class call",
-	},
-})
-]]
-
 function BigWigsNefarian:Initialize()
 	self.disabled = true
 	BigWigs:RegisterModule(self)

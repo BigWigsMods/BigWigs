@@ -3,9 +3,34 @@ BigWigsEbonroc = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "BWL",
-	enabletrigger = GetLocale() == "deDE" and "Schattenschwinge" or "Ebonroc",
+	enabletrigger = GetLocale() == "koKR" and "에본로크"
+		or GetLocale() == "deDE" and "Schattenschwinge" 
+		or "Ebonroc",
 
-	loc = GetLocale() == "deDE" and 
+	loc = GetLocale() == "koKR" and {
+		bossname = "에본로크",
+		disabletrigger = "에본로크|1이;가; 죽었습니다.",		
+		
+		trigger1 = "에본로크|1이;가; 폭풍 날개|1을;를; 시전합니다.",
+		trigger2 = "에본로크|1이;가; 암흑의 불길|1을;를; 시전합니다.",
+		trigger3 = "^(.*)에본로크의 그림자에 걸렸습니다.",
+
+		you = "",
+		are = "are",
+		whopattern = "(.+)|1이;가; ", 
+
+		warn1 = "에본로크가 폭풍 날개를 시전합니다!",
+		warn2 = "30초후 폭풍 날개!",
+		warn3 = "3초후 폭풍 날개!",
+		warn4 = "암흑의 불길 경고!",
+		warn5 = "당신은 에본로크의 그림자에 걸렸습니다!",
+		warn6 = "님이 에본로크의 그림자에 걸렸습니다!",
+		bosskill = "에본로크를 물리쳤습니다!",
+
+		bar1text = "폭풍 날개",
+	
+	} 
+		or GetLocale() == "deDE" and 
 	{
 		bossname = "Schattenschwinge",
 		disabletrigger = "Schattenschwinge stirbt.",
@@ -15,7 +40,7 @@ BigWigsEbonroc = AceAddon:new({
 		trigger3 = "^([^%s]+) ([^%s]+) betroffen von Schattenschwinges Schatten",
 		
 		you = "Ihr",
-		are = "seid",
+		are = "seid",	
 	
 		warn1 = "Schattenschwinge beginnt Fl\195\188gelsto\195\159 zu wirken!",
 		warn2 = "30 Sekunden bis zum n\195\164chsten Fl\195\188gelsto\195\159!",
@@ -86,8 +111,8 @@ function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	if (string.find(arg1, self.loc.trigger1)) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Yellow")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 27, "Red")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Fire_SelfDestruct")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 29, "Red")
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 32, 1, "Yellow", "Interface\\Icons\\Spell_Fire_SelfDestruct")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
 	elseif (arg1 == self.loc.trigger2) then
@@ -95,14 +120,29 @@ function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	end
 end
 
-function BigWigsEbonroc:Event()
-	local _,_, EPlayer, EType = string.find(arg1, self.loc.trigger3)
-	if (EPlayer and EType) then
-		if (EPlayer == self.loc.you and EType == self.loc.are) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red", true)
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red", true)
-		else
-			self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn6, "Yellow")
+if ( GetLocale() == "koKR" ) then 
+	function BigWigsEbonroc:Event()
+		local _,_, EPlayer = string.find(arg1, self.loc.trigger3)
+		if (EPlayer) then
+			if (EPlayer == self.loc.you) then
+				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red", true)
+				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red", true)
+			else
+				local _,_, EWho = string.find(EPlayer, self.loc.whopattern)
+				self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn6, "Yellow")
+			end
+		end
+	end
+else	
+	function BigWigsEbonroc:Event()
+		local _,_, EPlayer, EType = string.find(arg1, self.loc.trigger3)
+		if (EPlayer and EType) then
+			if (EPlayer == self.loc.you and EType == self.loc.are) then
+				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red", true)
+				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red", true)
+			else
+				self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn6, "Yellow")
+			end
 		end
 	end
 end

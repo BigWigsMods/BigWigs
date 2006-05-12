@@ -3,9 +3,40 @@ BigWigsChromaggus = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "BWL",
-	enabletrigger = "Chromaggus",
+	enabletrigger = GetLocale() == "koKR" and "크로마구스" 
+		or "Chromaggus",
 
-	loc = GetLocale() == "deDE" and {
+	loc = GetLocale() == "koKR" and {
+		bossname = "크로마구스",
+		disabletrigger = "크로마구스|1이;가; 죽었습니다.",
+
+		trigger1 = "크로마구스|1이;가; (.+)|1을;를; 시전합니다.",
+		trigger2 = "(.+)|1이;가; (.+)|1으로;로; 크로마구스에게 (%d+)의 (.+) 입혔습니다.",
+		trigger3 = "크로마구스|1이;가; 시간의 쇠퇴|1으로;로; (.+)|1을;를; 공격했지만 저항했습니다.",
+		
+		trigger4 = "광란의 상태에 빠집니다!",
+		trigger5 = "가죽이 점점 빛나면서 물러서기 시작합니다.",
+
+		hit = "피해를",
+		crit = "치명상을",
+		
+		warn1 = "%s 10초전!",
+		warn2 = "%s를 시전합니다!",
+		warn3 = "새로운 취약 속성: %s",
+		warn4 = "취약 속성이 변경되었습니다!",
+		warn5 = "광폭화 - 평정 사격!",
+		bosskill = "크로마구스를 물리쳤습니다!",
+
+		breathsicons = {
+			["시간의 쇠퇴"] = "Interface\\Icons\\Spell_Arcane_PortalOrgrimmar",
+			["부식성 산"] = "Interface\\Icons\\Spell_Nature_Acid_01",
+			["살점 태우기"] = "Interface\\Icons\\Spell_Fire_Fire",
+			["소각"] = "Interface\\Icons\\Spell_Shadow_ChillTouch",
+			["동결"] = "Interface\\Icons\\Spell_Frost_ChillingBlast",
+		}
+	} 
+		or GetLocale() == "deDE" and 
+	{
 		bossname = "Chromaggus",
 		disabletrigger = "Chromaggus stirbt.",
 
@@ -136,18 +167,33 @@ function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE()
 	end
 end
 
-function BigWigsChromaggus:PlayerDamageEvents()
-	if (not self.loc.vulnerability) then
-		local _,_, Type, Dmg, School = string.find(arg1, self.loc.trigger2)
-		if (Type == (self.loc.hit or self.loc.crit) and tonumber(Dmg or "") and School) then
-			if ((tonumber(Dmg) >= 550 and Type == self.loc.hit) or (tonumber(Dmg) >= 1100 and Type == self.loc.crit)) then
-				self.loc.vulnerability = School
-				self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.warn3, School), "White")
+if ( GetLocale() == "koKR" ) then 
+	function BigWigsChromaggus:PlayerDamageEvents()
+		if (not self.loc.vulnerability) then
+			local _, School, Dmg, Type = string.find(arg1, self.loc.trigger2)
+			if (Type == (self.loc.hit or self.loc.crit) and tonumber(Dmg or "") and School) then
+				if ((tonumber(Dmg) >= 550 and Type == self.loc.hit) or (tonumber(Dmg) >= 1100 and Type == self.loc.crit)) then
+					self.loc.vulnerability = School
+					self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.warn3, School), "White")
+				end
 			end
+			Timex:ChangeDuration("BigWigsChromaggusResetTimer", 60)
 		end
-		Timex:ChangeDuration("BigWigsChromaggusResetTimer", 60)
 	end
-end
+else 
+	function BigWigsChromaggus:PlayerDamageEvents()
+		if (not self.loc.vulnerability) then
+			local _,_, Type, Dmg, School = string.find(arg1, self.loc.trigger2)
+			if (Type == (self.loc.hit or self.loc.crit) and tonumber(Dmg or "") and School) then
+				if ((tonumber(Dmg) >= 550 and Type == self.loc.hit) or (tonumber(Dmg) >= 1100 and Type == self.loc.crit)) then
+					self.loc.vulnerability = School
+					self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.warn3, School), "White")
+				end
+			end
+			Timex:ChangeDuration("BigWigsChromaggusResetTimer", 60)
+		end
+	end
+end 
 
 function BigWigsChromaggus:Reset()
 	self.loc.vulnerability = nil
