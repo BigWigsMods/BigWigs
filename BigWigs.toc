@@ -5,6 +5,8 @@
 ## Dependencies: Ace, Timex
 ## SavedVariables: BigWigsDB
 
+MetrognomeLib\MetrognomeLib.lua
+
 Core.lua
 Bars.lua
 Bars.xml
