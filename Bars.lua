@@ -47,8 +47,9 @@ function BigWigsBars:BIGWIGS_BAR_START(text, time, bar, color, texture)
 	TimexBar:SetText(id, text)
 	TimexBar:SetTexture(id, texture)
 	TimexBar:SetColor(id, red or 0, green or 0, blue or 0)
-	TimexBar:SetPoint(id, "TOP", "BigWigsAnchorFrame", "TOP", 0, ((bar or 0) * (-15) + 5))
-	TimexBar:Start(id, time)
+	TimexBar:SetPoint(id, "TOPLEFT", "BigWigsAnchorFrame", "TOPLEFT", 0, ((bar or 0) * (-15) + 5))
+	TimexBar:SetScale(id, BigWigs:GetOpt("nScale"))
+	TimexBar:Start(id, time)	
 end
 
 

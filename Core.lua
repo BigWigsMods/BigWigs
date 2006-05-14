@@ -1,15 +1,27 @@
-BIGWIGS_CMD_OPT = GetLocale() == "koKR" and {
+﻿BIGWIGS_CMD_OPT = GetLocale() == "koKR" and {
 	{
-		option = "위치",
-		desc   = "메시지 및 바 위치를 변경.",
-		method = "SlashAnchor",		
+		option	= "위치",
+		desc	= "메시지 및 바 위치를 변경.",
+		method	= "SlashAnchor",		
 	},
+	{
+		option	= "크기",
+		desc	= "메시지 및 바 크기를 변경.", 
+		method  = "SlashScale",
+		input	= "true", 
+	}
 } or {
 	{
-		option = "anchor",
-		desc   = "Shows the draggable anchor.",
-		method = "SlashAnchor",		
+		option	= "anchor",
+		desc	= "Shows the draggable anchor.",
+		method	= "SlashAnchor",		
 	},
+	{
+		option	= "scale",
+		desc	= "Set the scale of TimerBar and Message.", 
+		method  = "SlashScale",
+		input	= "true",
+	}
 }
 
 BigWigs = AceAddon:new({
@@ -26,7 +38,7 @@ BigWigs = AceAddon:new({
 										{"/bw", "/BigWigs"}, 
 										BIGWIGS_CMD_OPT
 									),
-	db            = AceDatabase:new("BigWigs"),
+	db            = AceDatabase:new("BigWigsDB"),
 
 	modules = {},
 	enablezones = {},
@@ -92,11 +104,12 @@ BigWigs = AceAddon:new({
 
 function BigWigs:Initialize()
 	if not BigWigsDB then BigWigsDB = {} end
-	self.sv = BigWigsDB
+		self.sv = BigWigsDB
 end
 
 
 function BigWigs:Enable()
+	if ( self:GetOpt("nScale") ) then self:SetScale( self:GetOpt("nScale") ) end
 	if ( self:GetOpt("bAnchorShow") ) then BigWigs:Show() end
 	
 	self:RegisterEvent("BIGWIGS_BAR_START")
@@ -110,7 +123,7 @@ function BigWigs:Enable()
 end
 
 
-function BigWigs:Disable()
+function BigWigs:Disable()	
 	self:UnregisterAllEvents()
 end
 
@@ -236,6 +249,21 @@ function BigWigs:BIGWIGS_DELAYEDMESSAGE_CANCEL(text)
 end
 
 --------------------------------
+--      Interface Handler     --
+--------------------------------
+function BigWigs:SetScale(nScale)	
+	if ( nScale and nScale >= 0.25 and nScale <= 5 ) then					
+		-- 55 is height of BigWigsAnchorFrame 
+		local yOfM = 55 - ( 55 * nScale ) 
+		BigWigsTextFrame:SetPoint("TOP", BigWigsAnchorFrame, "BOTTOM", 0, yOfM)
+		BigWigsTextFrame:SetScale(nScale)
+		
+		self:SetOpt("nScale", nScale)
+		self.cmd:result( format("Scale is set to %s", nScale ) )		
+	end
+end
+
+--------------------------------
 --        Slash Handler       --
 --------------------------------
 function BigWigs:SlashAnchor()
@@ -245,14 +273,22 @@ function BigWigs:SlashAnchor()
 		BigWigsAnchorFrame:Hide()
 	end	
 end
+function BigWigs:SlashScale(ScaleValue)
+	local args = ace.ParseWords(ScaleValue)
+	scale = tonumber(args[1])
+
+	self:SetScale(scale)
+end
+
+
 --------------------------------
 --      Utility Function      --
 --------------------------------
 function BigWigs:GetOpt(OptName) 
-	return self.db:get(self.profilePath,OptName)    
+	return self.db:get(self.profilePath,OptName) 
 end
 function BigWigs:SetOpt(OptName, OptVal)
-	self.db:set(self.profilePath,OptName,OptVal)   
+	self.db:set(self.profilePath,OptName,OptVal) 
 end
 function BigWigs:TogOpt(OptName) 
 	return self.db:toggle(self.profilePath,OptName) 
