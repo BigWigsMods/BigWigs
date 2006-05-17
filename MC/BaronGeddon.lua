@@ -93,6 +93,7 @@ else
 				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
 			else
 				self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
+				self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
 			end
 		end
 	end
