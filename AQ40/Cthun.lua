@@ -48,7 +48,7 @@ function BigWigsCThun:CheckString()
 	if (not self.prior and string.find(arg1, self.loc.trigger1)) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 40, "Orange")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 35, "Orange")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 35, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 45, 1, "Green", "Interface\\Icons\\Spell_Nature_CorrosiveBreath")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 15, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 30, "Red")
