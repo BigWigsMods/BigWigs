@@ -81,6 +81,7 @@ function BigWigsDefenders:checkPlague()
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.plagueyouwarn, "Red", true)
 		else
 			self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.plaguewarn, "Yellow")
+			self:TriggerEvent("BIGWIGS_SENDTELL", Player, self.loc.plagueyouwarn)
 		end
 	end
 end
