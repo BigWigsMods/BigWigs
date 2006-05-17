@@ -33,6 +33,8 @@ AQ40\Huhuran.lua
 AQ40\Ouro.lua
 AQ40\Defenders.lua
 AQ40\Twins.lua
+AQ40\Cthun.lua
+AQ40\Viscidus.lua
 
 BWL\Chromaggus.lua
 BWL\Ebonroc.lua
