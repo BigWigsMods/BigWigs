@@ -2,7 +2,7 @@ BigWigsGuardians = AceAddon:new({
 	name          = "BigWigsGuardians",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "AQ40",
+	zonename = "AQ20",
 	enabletrigger = GetLocale() == "koKR" and "아누비사스 감시자"
 		or "Anubisath Guardian",
 
@@ -103,7 +103,7 @@ function BigWigsGuardians:checkPlague()
 			if( player == self.loc.plagueyou ) then
 				text = UnitName("player")
 			else
-				text = string.find( player, self.loc.whopattern )
+				_,_,text = string.find( player, self.loc.whopattern )
 			end
 			text = text .. self.loc.plaguewarn
 			self:TriggerEvent("BIGWIGS_MESSAGE", text, "Red")
