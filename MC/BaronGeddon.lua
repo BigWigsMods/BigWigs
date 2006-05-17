@@ -82,6 +82,7 @@ if (GetLocale() == "koKR") then
 			else
 				local _, _, EWho = string.find(EPlayer, self.loc.whopattern)
 				self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn2, "Yellow")
+				self:TriggerEvent("BIGWIGS_SENDTELL", EWho, self.loc.warn1)
 			end
 		end
 	end
