@@ -14,6 +14,7 @@ BigWigsBuru = AceAddon:new({
 		watchtrigger = "(.+)%|1을;를; 노려봅니다!",
 		watchwarn = "님을 노려봅니다!",
 		you = UnitName("player"),	
+		watchtell = "You are being watched! Kite!",
 	} or {
 		bossname = "Buru the Gorger",
 		disabletrigger = "Buru the Gorger dies.",
@@ -21,6 +22,7 @@ BigWigsBuru = AceAddon:new({
 
 		watchtrigger = "sets eyes on (.+)!",
 		watchwarn = " is being watched!",
+		watchtell = "You are being watched! Kite!",
 		you = "You",
 	},
 })
@@ -49,11 +51,10 @@ function BigWigsBuru:CHAT_MSG_MONSTER_EMOTE()
 	if( player ) then	
 		local text = ""
 		if( player == self.loc.you ) then
-			text = UnitName("player")
-		else
-			text = player
+			player = UnitName("player")
 		end
-		text = text .. self.loc.watchwarn
+		text = player .. self.loc.watchwarn
+		self:TriggerEvent("BIGWIGS_SENDTELL", text , self.loc.watchtell )
 		self:TriggerEvent("BIGWIGS_MESSAGE", text, "Red")
 	end
 end
