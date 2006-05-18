@@ -5,9 +5,22 @@ BigWigsVenoxis = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "ZG",
-	enabletrigger = "High Priest Venoxis",
+	enabletrigger = GetLocale() == "koKR" and "대사제 베녹시스" 
+		or "High Priest Venoxis",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "대사제 베녹시스",
+		disabletrigger = "대사제 베녹시스|1이;가; 죽었습니다.",
+		-- "이제서야... 안식을...!"
+
+		trigger1 = "대사제 베녹시스|1이;가; 소생 효과를 얻었습니다.",
+		trigger2 = "Let the coils of hate unfurl!",
+
+		warn1 = "소생 - 마법 해제해주세요!",
+		warn2 = "2단계 시작 - 독구름을 조심하세요!",
+
+		bosskill = "대사제 베녹시스를 물리쳤습니다!",
+	} or {
 		bossname = "High Priest Venoxis",
 		disabletrigger = "High Priest Venoxis dies.",
 

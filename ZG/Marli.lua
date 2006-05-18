@@ -3,9 +3,23 @@ BigWigsMarli = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "ZG",
-	enabletrigger = "High Priestess Mar'li",
+	enabletrigger = GetLocale() == "koKR" and "대여사제 말리"
+		or "High Priestess Mar'li",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "대여사제 말리",
+
+		trigger1 = "어미를 도와라!$",
+		trigger2 = "^High Priestess Mar'li's Drain Life heals High Priestess Mar'li for (.+).",
+
+		warn1 = "거미 소환!",
+		warn2 = "High Priestess Mar'li is draining life! Interrupt it!",
+
+		disabletrigger = "대여사제 말리|1이;가; 죽었습니다.",
+
+		bosskill = "대여사제 말리를 물리쳤습니다!",
+	
+	} or { 
 		bossname = "High Priestess Mar'li",
 
 		trigger1 = "Aid me my brood!$",

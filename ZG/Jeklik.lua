@@ -5,10 +5,22 @@ BigWigsJeklik = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "ZG",
-	enabletrigger = "High Priestess Jeklik",
+	enabletrigger = GetLocale() == "koKR" and "대여사제 제클릭" 
+		or "High Priestess Jeklik",
 
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "대여사제 제클릭",
+
+		trigger1 = "침략자들에게 뜨거운 맛을 보여줘라!$",
+		trigger2 = "상급 치유를 시전하기 시작합니다!$",
+		warn1 = "박쥐 소환!",
+		warn2 = "치유 시전 - 시전 방해해주세요!",
+
+		disabletrigger = "대여사제 제클릭|1이;가; 죽었습니다.",
+
+		bosskill = "대여사제 제클릭을 물리쳤습니다!",	
+	} or {
 		bossname = "High Priestess Jeklik",
 
 		trigger1 = "I command you to rain fire down upon these invaders!$",

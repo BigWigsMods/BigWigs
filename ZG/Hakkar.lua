@@ -1,13 +1,30 @@
-﻿
-
-BigWigsHakkar = AceAddon:new({
+﻿BigWigsHakkar = AceAddon:new({
 	name          = "BigWigsHakkar",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "ZG",
-	enabletrigger = "Hakkar",
+	enabletrigger = GetLocale() == "koKR" and "학카르"
+		or "Hakkar",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "학카르",
+		disabletrigger = "학카르|1이;가; 죽었습니다.",
+
+		trigger1 = "자만심은 세상의 종말을 불러올 뿐이다. 오너라! 건방진 피조물들이여! 와서 신의 진노에 맞서 보아라!",
+		trigger2 = "학카르|1이;가; (.+)의 피의 착취에 의해 (.+) 피해를 입었습니다.",
+		flee = "Fleeing will do you no good mortals!",
+	
+		start = "학카르 시작 - 90초후 생명력 흡수 - 10분후 격노",
+		warn1 = "생명력 흡수 60초전",
+		warn2 = "생명력 흡수 45초전",
+		warn3 = "생명력 흡수 15초전",
+		warn4 = "생명력 흡수 - 다음 시전은 90초후",
+		bosskill = "학카르를 물리쳤습니다!",
+
+		bar1text = "격노",
+		bar2text = "생명력 흡수",
+	
+	} or {
 		bossname = "Hakkar",
 		disabletrigger = "Hakkar dies.",
 
