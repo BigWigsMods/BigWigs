@@ -3,9 +3,31 @@ BigWigsOuro = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ40",
-	enabletrigger = "Ouro",
+	enabletrigger = GetLocale() == "koKR" and "아우로"
+		or "Ouro",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "아우로",
+		disabletrigger = "아우로|1이;가; 죽었습니다.",
+
+		sweeptrigger = "아우로|1이;가; 휩쓸기|1을;를; 시전합니다.",
+		sweepannounce = "휩쓸기!",
+		sweepwarn = "5초후 휩쓸기! 대피",
+		sweepbartext = "휩쓸기",
+
+		sandblasttrigger = "아우로|1이;가; 모래 돌풍|1을;를; 시전합니다.",
+		sandblastannounce = "모래 돌풍 경보!",
+		sandblastwarn = "5초후 모래 돌풍",
+		sandblastbartext = "모래 돌풍",
+
+		emergetrigger = "흙더미|1이;가; 아우로 스카라베 소환|1을;를; 시전합니다.",
+		emergeannounce = "아우로 등장! 벌레들 제거!",
+		emergewarn1 = "15초후 아우로 잠수!",
+		emergebartext = "아우로 잠수",
+
+		berserksoonwarn = "광폭화 예고 - 준비하세요!",
+		bosskill = "아우로를 물리쳤습니다!",
+	} or { 
 		bossname = "Ouro",
 		disabletrigger = "Ouro dies.",
 

@@ -3,9 +3,28 @@ BigWigsTwins = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ40",
-	enabletrigger = {"Emperor Vek'lor", "Emperor Vek'nilash"},
+	enabletrigger = GetLocale() == "koKR" and {"제왕 베클로어", "제왕 베크닐라쉬"} 
+		or {"Emperor Vek'lor", "Emperor Vek'nilash"},		
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "쌍둥이 제왕 - 제왕 베클로어, 제왕 베크닐라쉬",
+		veklor = "제왕 베클로어",
+		veknilash = "제왕 베크닐라쉬",
+		disabletrigger = "|1이;가; 죽었습니다.",
+		bosskill = "쌍둥이 제왕을 물리쳤습니다!",
+
+		porttrigger = "(.+)|1이;가; 쌍둥이 순간이동|1을;를; 시전합니다.",
+		portwarn = "순간 이동!",
+		portdelaywarn = "5초후 순간 이동!",
+		bartext = "순간 이동",
+		explodebugtrigger = "gains Explode Bug%.$",
+		explodebugwarn = "Bug Exploding Nearby!",
+		enragetrigger = "becomes enraged.",
+		enragewarn = "Twins are Enraged",
+		healtrigger1 = "'s Heal Brother heals",
+		healtrigger2 = " Heal Brother heals",
+		healwarn = "Casting Heal Brother - Separate them fast!",		
+	} or {
 		bossname = "Twin Emperors - Emperor Vek'lor and Emperor Vek'nilash",
 		veklor = "Emperor Vek'lor",
 		veknilash = "Emperor Vek'nilash",

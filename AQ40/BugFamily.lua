@@ -3,9 +3,19 @@ BigWigsBugFamily = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ40",
-	enabletrigger = { "Lord Kri", "Princess Yauj", "Vem" },
+	enabletrigger = GetLocale() == "koKR" and { "군주 크리", "공주 야우즈", "벰" } 
+		or { "Lord Kri", "Princess Yauj", "Vem" },
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "벌레 무리 - 군주 크리, 공주 야우즈, 벰",
+		disabletrigger1 = "군주 크리|1이;가; 죽었습니다.",
+		disabletrigger2 = "공주 야우즈|1이;가; 죽었습니다.",
+		disabletrigger3 = "벰|1이;가; 죽었습니다.",
+		bosskill = "벌레 무리 중 하나를 물리쳤습니다!",
+
+		healtrigger = "공주 야우즈|1이;가; 상급 치유|1을;를; 시전합니다.",
+		healwarn = "치유 시전 - 시전 방해!",	
+	} or { 
 		bossname = "Bug Family - Lord Kri, Princess Yauj and Vem",
 		disabletrigger1 = "Lord Kri dies.",
 		disabletrigger2 = "Princess Yauj dies.",

@@ -3,9 +3,24 @@ BigWigsHuhuran = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ40",
-	enabletrigger = "Princess Huhuran",
+	enabletrigger = GetLocale() == "koKR" and "공주 후후란"
+		or "Princess Huhuran",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "공주 후후란",
+		disabletrigger = "공주 후후란|1이;가; 죽었습니다.",
+		bosskill = "공주 후후란을 물리쳤습니다.",
+
+		frenzytrigger = "광란의 상태에 빠집니다!",
+		berserktrigger = "광폭해집니다!",
+		frenzywarn = "광폭화 - 평정 사격!",
+		berserkwarn = "광기 - 독 빈도 증가!",
+		berserksoonwarn = "광폭화 경보 - 준비!",
+		stingtrigger = "공주 후후란|1이;가; 비룡 쐐기|1으로;로;",
+		stingwarn = "비룡 쐐기 - 메인탱커 해제!",
+		stingdelaywarn = "비룡 쐐기 3초전!",
+		bartext = "비룡 쐐기",	
+	} or {
 		bossname = "Princess Huhuran",
 		disabletrigger = "Princess Huhuran dies.",
 		bosskill = "Princess Huhuran has been defeated.",
@@ -57,6 +72,7 @@ function BigWigsHuhuran:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 end
 
 function BigWigsHuhuran:CHAT_MSG_MONSTER_EMOTE()
+	DEFAULT_CHAT_FRAME:AddMessage("BWMessage" .. arg1 )
 	if (arg1 == self.loc.frenzytrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.frenzywarn, "Orange")
 	elseif (arg1 == self.loc.berserktrigger) then
@@ -78,6 +94,7 @@ end
 
 function BigWigsHuhuran:checkSting()
 	if (not self.prior and string.find(arg1, self.loc.stingtrigger)) then
+		DEFAULT_CHAT_FRAME:AddMessage("BWMessage CheckSting" )
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.stingwarn, "Orange")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.stingdelaywarn, 22, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bartext, 25, 1, "Green", "Interface\\Icons\\INV_Spear_02")

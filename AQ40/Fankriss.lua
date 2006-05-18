@@ -3,9 +3,17 @@ BigWigsFankriss = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ40",
-	enabletrigger = "Fankriss the Unyielding",
+	enabletrigger = GetLocale() == "koKR" and "불굴의 판크리스"
+		or "Fankriss the Unyielding",
 
-	loc = {	
+	loc = GetLocale() == "koKR" and {	
+		bossname = "불굴의 판크리스",
+		disabletrigger = "불굴의 판크리스|1이;가; 죽었습니다.",		
+		bosskill = "불굴의 판크리스를 물리쳤습니다!",
+
+		wormtrigger = "불굴의 판크리스|1이;가; 벌레 소환|1을;를; 시전합니다.",
+		wormwarn = "벌레 소환 - 제거!",
+	} or { 
 		bossname = "Fankriss the Unyielding",
 		disabletrigger = "Fankriss the Unyielding dies.",		
 		bosskill = "Fankriss the Unyielding has been defeated!",

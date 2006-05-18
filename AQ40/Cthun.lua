@@ -3,9 +3,25 @@ BigWigsCThun = AceAddon:new({
 	cmd           	= AceChatCmd:new({}, {}),
 
 	zonename 	= "AQ40",
-	enabletrigger 	= "Eye of C'Thun",
+	enabletrigger	= GetLocale() == "koKR" and "쑨의 눈"
+		or "Eye of C'Thun",
 
-	loc 		= {
+	loc 		= GetLocale() == "koKR" and {
+			bossname 	= "쑨의 눈",
+			disabletrigger 	= "쑨|1이;가; 죽었습니다.",
+			bosskill 	= "쑨을 물리쳤습니다.",
+			
+			trigger1 	= "눈 달린 거대한 촉수|1이;가; 지표 균열|1으로;로;",
+			trigger2 	= "약해졌습니다!",
+			
+			warn1		= "눈달린 촉수 등장 - 촉수 처리!",
+			warn2		= "5초후 눈달린 촉수 등장!",
+			warn3		= "10초후 눈달린 촉수 등장!",
+			warn4		= "쑨이 약화되었습니다 - 45초간 최대 공격!",
+			
+			bar1text	= "눈달린 촉수!",
+			bar2text	= "쑨 약화!",	
+	} or {
 			bossname 	= "Eye of C'Thun",
 			disabletrigger 	= "C'Thun dies.",
 			bosskill 	= "C'Thun has been defeated.",

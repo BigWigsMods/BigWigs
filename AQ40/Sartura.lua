@@ -3,9 +3,32 @@ BigWigsSartura = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ40",
-	enabletrigger = "Battleguard Sartura",
+	enabletrigger = GetLocale() == "koKR" and "전투감시병 살투라" 
+		or "Battleguard Sartura",
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "전투감시병 살투라",
+		disabletrigger = "최후의 그날까지!",
+		bosskill = "전투감시병 살투라를 물리쳤습니다!",
+
+		-- starttrigger = "You will be judged for defiling these sacred grounds! The laws of the Ancients will not be challenged! Trespassers will be annihilated!",
+		starttrigger = "성스러운 땅을 더럽힌 죄값을 받게 되리라. 고대의 법률은 거스를 수 없다! 침입자들을 처단하라!",
+		startwarn = "살투라 격노 - 10분후 다음 격노",
+		enragetrigger = "becomes enraged",
+		enragewarn = "격노 - 격노 - 격노",
+		bartext = "격노",
+		warn1 = "격노 - 8분후",
+		warn2 = "격노 - 5분후",
+		warn3 = "격노 - 3분후",
+		warn4 = "격노 - 90초",
+		warn5 = "격노 - 60초",
+		warn6 = "격노 - 30초",
+		warn7 = "격노 - 10초",
+		whirlwindon = "전투감시병 살투라|1이;가; 소용돌이 효과를 얻었습니다.",
+		whirlwindoff = "전투감시병 살투라의 몸에서 소용돌이 효과가 사라졌습니다.",
+		whirlwindonwarn = "소용돌이 - 전투감시병 살투라 - 소용돌이",
+		whirlwindoffwarn = "소용돌이 사라짐. 스턴! 스턴! 스턴!",	
+	} or { 
 		bossname = "Battleguard Sartura",
 		disabletrigger = "I serve to the last",
 		bosskill = "Battleguard Sartura has been defeated!",
