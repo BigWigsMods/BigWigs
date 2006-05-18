@@ -87,7 +87,7 @@ function BigWigsViscidus:Disable()
 	self:UnregisterAllEvents()
 end
 
-if ( GetLocale() == "koKR) then 
+if ( GetLocale() == "koKR") then 
 	function BigWigsViscidus:CheckSting()
 		if (not self.prior1 and string.find(arg1, self.loc.trigger6)) then
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn6, "Orange")
