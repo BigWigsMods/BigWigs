@@ -55,7 +55,7 @@ BigWigs = AceAddon:new({
 		TargetEnable = "Ziel\195\188berwachung aktiviert",
 		TargetDisable = "Ziel\195\188berwachung deaktiviert",
 
-		MC = "Der geschmolzene Kern",
+		MC = "Geschmolzener Kern",
 		BWL = "Pechschwingenhort",
 		Onyxia = "Onyxias Hort",
 		ZG = "Zul'Gurub",
