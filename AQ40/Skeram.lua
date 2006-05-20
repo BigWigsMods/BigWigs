@@ -61,7 +61,7 @@ function BigWigsSkeram:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	end
 end
 
-if ( GetLocale() == "koKR" ) then 
+if (GetLocale() == "koKR") then 
 	function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE()
 		local _,_, Player = string.find(arg1, self.loc.mcplayer)
 		if (Player) then	

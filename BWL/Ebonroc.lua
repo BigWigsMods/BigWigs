@@ -120,16 +120,16 @@ function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	end
 end
 
-if ( GetLocale() == "koKR" ) then 
+if (GetLocale() == "koKR") then 
 	function BigWigsEbonroc:Event()
 		local _,_, EPlayer = string.find(arg1, self.loc.trigger3)
 		if (EPlayer) then
 			if (EPlayer == self.loc.you) then
 				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red", true)
-				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red", true)
 			else
 				local _,_, EWho = string.find(EPlayer, self.loc.whopattern)
 				self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn6, "Yellow")
+				self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn5)
 			end
 		end
 	end
@@ -139,9 +139,9 @@ else
 		if (EPlayer and EType) then
 			if (EPlayer == self.loc.you and EType == self.loc.are) then
 				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red", true)
-				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red", true)
 			else
 				self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn6, "Yellow")
+				self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn5)
 			end
 		end
 	end

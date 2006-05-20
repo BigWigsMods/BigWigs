@@ -33,7 +33,7 @@ BigWigsSartura = AceAddon:new({
 		disabletrigger = "I serve to the last",
 		bosskill = "Battleguard Sartura has been defeated!",
 
-		-- starttrigger = "You will be judged for defiling these sacred grounds! The laws of the Ancients will not be challenged! Trespassers will be annihilated!",
+		-- starttrigger = "You will be judged for defiling these sacred grounds!  The laws of the Ancients will not be challenged!  Trespassers will be annihilated!\n",
 		starttrigger = "defiling these sacred grounds",
 		startwarn = "Sartura engaged - 10 minutes until Enrage",
 		enragetrigger = "becomes enraged",

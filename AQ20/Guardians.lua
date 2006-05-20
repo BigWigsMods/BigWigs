@@ -23,7 +23,7 @@ BigWigsGuardians = AceAddon:new({
 		plaguetrigger = "^(.*)역병에 걸렸습니다%.$", 
 		plaguewarn = "님이 역병에 걸렸습니다. 피하세요!",
 		plagueyou = "",	
-		whopattern = "(.+)%|1이;가; "
+		whopattern = "(.+)%|1이;가; ",
 	} or {
 		bossname = "Anubisath Guardian",
 		disabletrigger = "Anubisath Guardian dies.",
@@ -36,11 +36,12 @@ BigWigsGuardians = AceAddon:new({
 		summonguardtrigger = "Anubisath Guardian casts Summon Anubisath Swarmguard.",
 		summonguardwarn = "Swarmguard Summoned",
 		summonwarriortrigger = "Anubisath Guardian casts Summon Anubisath Warrior.",
-		summonwarriorwarn = "Warrior Summoned",
-		plaguetrigger = "^(.*)afflicted by Plague%.$",
+		summonwarriorwarn = "Warrior Summoned",		
+		plaguetrigger = "^([^%s]+) ([^%s]+) afflicted by Plague%.$",
 		plaguewarn = " has the Plague! Keep away!",
-		plagueyou = "You are ",
-		whopattern = "([^%s]+) ([^%s]+) "
+		plaguewarnyou = "You got the Plague!",
+		plagueyou = "You",
+		plagueare = "are",
 	},
 })
 
@@ -59,59 +60,61 @@ function BigWigsGuardians:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "checkPlague")
 end
 
-
 function BigWigsGuardians:Disable()
 	self.disabled = true
-	self:UnregisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
-	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
-	self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
-	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE")
-	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE")
-	
+	self:UnregisterAllEvents()
 end
 
 function BigWigsGuardians:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-    if ( arg1 == self.loc.disabletrigger ) then
+    if (arg1 == self.loc.disabletrigger) then
         self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
         self:Disable()
     end
 end
 
-
 function BigWigsGuardians:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
-	if( arg1 == self.loc.explodetrigger ) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.explodewarn, "Red" )
-	elseif( arg1 == self.loc.enragetrigger ) then
+	if (arg1 == self.loc.explodetrigger) then
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.explodewarn, "Red")
+	elseif (arg1 == self.loc.enragetrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.enragewarn, "Red")
 	end
 end
 
 function BigWigsGuardians:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
-	if( arg1 == self.loc.summonguardtrigger ) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.summonguardwarn, "Yellow" )
-	elseif( arg1 == self.loc.summonwarriortrigger ) then
+	if (arg1 == self.loc.summonguardtrigger) then
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.summonguardwarn, "Yellow")
+	elseif (arg1 == self.loc.summonwarriortrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.summonwarriorwarn, "Yellow")
 	end
 end
 
-function BigWigsGuardians:checkPlague()
-	if( arg1 ) then
-		local _,_,player = string.find( arg1, self.loc.plaguetrigger )
-		if( player ) then
-			local text = ""
-			if( player == self.loc.plagueyou ) then
-				text = UnitName("player")
+if (GetLocale() == "koKR") then
+	function BigWigsGuardians:checkPlague()
+		local _,_,Player = string.find(arg1, self.loc.plaguetrigger)
+		if (Player) then
+			if (Player == self.loc.plagueyou) then
+				Player = UnitName("player")
 			else
-				_,_,text = string.find( player, self.loc.whopattern )
+				_,_,Player = string.find(player, self.loc.whopattern)
 			end
-			text = text .. self.loc.plaguewarn
-			self:TriggerEvent("BIGWIGS_MESSAGE", text, "Red")
+			self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.plaguewarn, "Red")
+--			self:TriggerEvent("BIGWIGS_SENDTELL", Player, self.loc.plaguetell)
+		end
+	end
+else
+	function BigWigsGuardians:checkPlague()
+		local _,_,Player, Type = string.find(arg1, self.loc.plaguetrigger)
+		if (Player and Type) then
+			if (Player == self.loc.plagueyou and Type == self.loc.plagueare) then
+				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.plaguewarnyou, "Red", true)
+			else
+				self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.plaguewarn, "Yellow")
+				self:TriggerEvent("BIGWIGS_SENDTELL", Player, self.loc.plaguetell)
+			end
 		end
 	end
 end
-
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsGuardians:RegisterForLoad()

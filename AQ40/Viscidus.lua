@@ -6,7 +6,7 @@ BigWigsViscidus = AceAddon:new({
 	enabletrigger 	= GetLocale() == "koKR" and "비시디우스"
 		or "Viscidus",
 
-	loc 		= GetLocale() == "koKR" and {
+	loc = GetLocale() == "koKR" and {
 			bossname = "비시디우스",
 			disabletrigger = "비시디우스|1이;가; 죽었습니다.",
 			bosskill = "비시디우스를 물리쳤습니다.",
@@ -61,6 +61,7 @@ BigWigsViscidus = AceAddon:new({
 			warn6		= "Poison Bolt Volley - Cleanse Poison!",
 			warn7		= "Incoming Poison Bolt Volley in 3~ sec!",
 			warn8		= "is in a toxin cloud - MOVE!",
+			warn9		= "You are in the toxin cloud - Move it!",
 			
 			bar1text	= "Poison Bolt Volley",
 	},
@@ -80,14 +81,13 @@ function BigWigsViscidus:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CheckSting")
 end
 
-
 function BigWigsViscidus:Disable()
 	self.disabled = true
 	self.prior1 = nil
 	self:UnregisterAllEvents()
 end
 
-if ( GetLocale() == "koKR") then 
+if (GetLocale() == "koKR") then 
 	function BigWigsViscidus:CheckSting()
 		if (not self.prior1 and string.find(arg1, self.loc.trigger6)) then
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn6, "Orange")
@@ -120,26 +120,26 @@ else
 			if (pl and ty) then	
 				if (pl == self.loc.you and ty == self.loc.are) then
 					pl = UnitName("player")
+					self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn9, "Red", true)
+				else
+					self:TriggerEvent("BIGWIGS_MESSAGE", pl .. self.loc.warn8, "Red")
+					self:TriggerEvent("BIGWIGS_SENDTELL", pl, self.loc.warn9)
 				end
-				self:TriggerEvent("BIGWIGS_MESSAGE", pl .. self.loc.warn8, "Red")
 			end	
 		end
 	end
-
-
-
 end 
 
 function BigWigsViscidus:CHAT_MSG_MONSTER_EMOTE()
-	if( arg1 == self.loc.trigger1 ) then
+	if (arg1 == self.loc.trigger1) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Yellow")
-	elseif( arg1 == self.loc.trigger2 ) then
+	elseif (arg1 == self.loc.trigger2) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Orange")
-	elseif( arg1 == self.loc.trigger3 ) then
+	elseif (arg1 == self.loc.trigger3) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "Red")
-	elseif( arg1 == self.loc.trigger4 ) then
+	elseif (arg1 == self.loc.trigger4) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Orange")
-	elseif( arg1 == self.loc.trigger5 ) then
+	elseif (arg1 == self.loc.trigger5) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red")
 	end
 end
@@ -147,8 +147,7 @@ end
 function BigWigsViscidus:BIGWIGS_MESSAGE(text)
 	if text == self.loc.warn6 then self.prior1 = nil end
 end
-
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsViscidus:RegisterForLoad()

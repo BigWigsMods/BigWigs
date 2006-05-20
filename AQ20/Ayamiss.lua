@@ -21,14 +21,12 @@ BigWigsAyamiss = AceAddon:new({
 		disabletrigger = "Ayamiss the Hunter dies.",
 		bosskill = "Ayamiss the Hunter has been defeated.",
 
-		sacrificetrigger = "^(.*)afflicted by Paralyze",
+		sacrificetrigger = "^([^%s]+) ([^%s]+) afflicted by Paralyze",
 		sacrificewarn = " is being Sacrificed!",
-		
-		you = "You are ",
-		whopattern = "([^%s]+) ([^%s]+) ", 
+		you = "You",
+		are = "are",
 	},
 })
-
 
 function BigWigsAyamiss:Initialize()
     self.disabled = true
@@ -38,45 +36,47 @@ end
 function BigWigsAyamiss:Enable()
 	self.disabled = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH" )
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE","checkSacrifice")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE","checkSacrifice")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE","checkSacrifice")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "checkSacrifice")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "checkSacrifice")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "checkSacrifice")
 end
-
 
 function BigWigsAyamiss:Disable()
 	self.disabled = true
-	self:UnregisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH" )
-	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
-	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE")
-	self:UnregisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE")
-end
-
-function BigWigsAyamiss:checkSacrifice()
-	if( arg1 and arg1 ~= nil ) then
-		local _, _, player = string.find(arg1, self.loc.sacrificetrigger);
-		if( player ) then	
-			local text = ""
-			if( player == self.loc.you ) then
-				text = UnitName("player")
-			else
-				text = string.find( player, self.loc.whopattern ) 
-			end
-			text = text .. self.loc.sacrificewarn
-			self:TriggerEvent("BIGWIGS_MESSAGE", text, "Red")
-		end
-	end
+	self:UnregisterAllEvents()
 end
 
 function BigWigsAyamiss:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if ( arg1 == self.loc.disabletrigger ) then
+	if (arg1 == self.loc.disabletrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
 		self:Disable()
 	end
 end
 
-
+if (GetLocale() == "koKR") then
+	function BigWigsAyamiss:checkSacrifice()
+		local _, _, Player = string.find(arg1, self.loc.sacrificetrigger)
+		if (Player) then	
+			if (Player == self.loc.you) then
+				Player = UnitName("player")
+			else
+				Player = string.find(player, self.loc.whopattern) 
+			end
+			self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.sacrificewarn, "Red")
+		end
+	end
+else
+	function BigWigsAyamiss:checkSacrifice()
+		local _, _, Player, Type = string.find(arg1, self.loc.sacrificetrigger)
+		if (Player and Type) then	
+			if (Player == self.loc.you and Type == self.loc.are) then
+				Player = UnitName("player")
+			end
+			self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.sacrificewarn, "Red")
+		end
+	end
+end
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsAyamiss:RegisterForLoad()

@@ -44,20 +44,20 @@ function BigWigsBugFamily:Disable()
 end
 
 function BigWigsBugFamily:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if ( arg1 == self.loc.disabletrigger1 
+	if (arg1 == self.loc.disabletrigger1 
 	or arg1 == self.loc.disabletrigger2
-	or arg1 == self.loc.disabletrigger3 ) then
+	or arg1 == self.loc.disabletrigger3) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
 		self:Disable()
 	end
 end
 
 function BigWigsBugFamily:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
-	if ( arg1 == self.loc.healtrigger ) then
+	if (arg1 == self.loc.healtrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.healwarn, "Orange")
 	end
 end
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsBugFamily:RegisterForLoad()

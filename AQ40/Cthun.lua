@@ -6,7 +6,7 @@ BigWigsCThun = AceAddon:new({
 	enabletrigger	= GetLocale() == "koKR" and "쑨의 눈"
 		or "Eye of C'Thun",
 
-	loc 		= GetLocale() == "koKR" and {
+	loc = GetLocale() == "koKR" and {
 			bossname 	= "쑨의 눈",
 			disabletrigger 	= "쑨|1이;가; 죽었습니다.",
 			bosskill 	= "쑨을 물리쳤습니다.",
@@ -29,7 +29,7 @@ BigWigsCThun = AceAddon:new({
 			trigger1 	= "Eye Tentacle's Ground Rupture",
 			trigger2 	= "is weakened!",
 			
-			warn1		= "Incoming Tentacle Rape Party - Pleasure~~!",
+			warn1		= "Incoming Tentacle Rape Party - Pleasure!",
 			warn2		= "Incoming Tentacle Rape Party - 5~ sec!",
 			warn3		= "Incoming Tentacle Rape Party - 10~ sec!",
 			warn4		= "C'Thun is weakened - DPS Party for 45~ sec!",
@@ -53,7 +53,6 @@ function BigWigsCThun:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "CheckString")
 end
 
-
 function BigWigsCThun:Disable()
 	self.disabled = true
 	self.prior = nil
@@ -73,21 +72,18 @@ function BigWigsCThun:CheckString()
 end
 
 function BigWigsCThun:BIGWIGS_MESSAGE(text)
-	if text == self.loc.warn1 then
-		self.prior = nil
-	elseif text == self.loc.warn2 then
+	if text == self.loc.warn1 or text == self.loc.warn2 then
 		self.prior = nil
 	end
 end
 
 function BigWigsCThun:CHAT_MSG_MONSTER_EMOTE()
-	if( arg1 == self.loc.trigger2 ) then
+	if (arg1 == self.loc.trigger2) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "red")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar2text, 45, 1, "Red", "Interface\\Icons\\Spell_Nature_CorrosiveBreath")
 	end
 end
-
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsCThun:RegisterForLoad()

@@ -53,12 +53,10 @@ BigWigsMajordomo = AceAddon:new({
 	},
 })
 
-
 function BigWigsMajordomo:Initialize()
 	self.disabled = true
 	BigWigs:RegisterModule(self)
 end
-
 
 function BigWigsMajordomo:Enable()
 	self.disabled = nil
@@ -66,7 +64,6 @@ function BigWigsMajordomo:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
-
 
 function BigWigsMajordomo:Disable()
 	self.disabled = true

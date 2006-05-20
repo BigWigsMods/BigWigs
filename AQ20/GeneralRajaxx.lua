@@ -63,12 +63,10 @@ BigWigsGeneralRajaxx = AceAddon:new({
 	},
 })
 
-
 function BigWigsGeneralRajaxx:Initialize()
 	self.disabled = true
 	BigWigs:RegisterModule(self)
 end
-
 
 function BigWigsGeneralRajaxx:Enable()
 	self.disabled = nil
@@ -79,32 +77,25 @@ function BigWigsGeneralRajaxx:Enable()
 	for i=1,8 do self.warnsets[self.loc["trigger"..i]] = self.loc["warn"..i] end
 end
 
-
 function BigWigsGeneralRajaxx:Disable()
 	self.disabled = true
-	self:UnregisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:UnregisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:UnregisterAllEvents()
 	self.warnsets = nil
 end
 
-
 function BigWigsGeneralRajaxx:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if arg1 == self.loc.disabletrigger then
+	if (arg1 == self.loc.disabletrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
 		self:Disable()
 	end
 end
 
-
 function BigWigsGeneralRajaxx:CHAT_MSG_MONSTER_YELL()
-	if arg1 and self.warnsets[arg1] then
+	if (arg1 and self.warnsets[arg1]) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.warnsets[arg1], "Orange")
 	end
 end
-
-
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsGeneralRajaxx:RegisterForLoad()
-

@@ -72,7 +72,6 @@ function BigWigsHuhuran:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 end
 
 function BigWigsHuhuran:CHAT_MSG_MONSTER_EMOTE()
-	DEFAULT_CHAT_FRAME:AddMessage("BWMessage" .. arg1 )
 	if (arg1 == self.loc.frenzytrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.frenzywarn, "Orange")
 	elseif (arg1 == self.loc.berserktrigger) then

@@ -167,7 +167,7 @@ function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE()
 	end
 end
 
-if ( GetLocale() == "koKR" ) then 
+if (GetLocale() == "koKR") then 
 	function BigWigsChromaggus:PlayerDamageEvents()
 		if (not self.loc.vulnerability) then
 			local _, School, Dmg, Type = string.find(arg1, self.loc.trigger2)

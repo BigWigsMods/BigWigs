@@ -97,8 +97,7 @@ function BigWigsDefenders:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
 	end
 end
 
-if ( GetLocale() == "koKR" ) then
-
+if (GetLocale() == "koKR") then
 	function BigWigsDefenders:checkPlague()
 		local _,_, Player = string.find(arg1, self.loc.plaguetrigger)		
 		if (Player) then	
@@ -111,9 +110,7 @@ if ( GetLocale() == "koKR" ) then
 			end
 		end
 	end
-	
 else 
-	
 	function BigWigsDefenders:checkPlague()
 		local _,_, Player, Type = string.find(arg1, self.loc.plaguetrigger)
 		if (Player and Type) then	
@@ -125,7 +122,6 @@ else
 			end
 		end
 	end
-	
 end
 
 function BigWigsDefenders:Thunderclap()

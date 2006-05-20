@@ -33,12 +33,12 @@ BigWigsOuro = AceAddon:new({
 
 		sweeptrigger = "Ouro begins to cast Sweep",
 		sweepannounce = "Sweep!",
-		sweepwarn = "5 seconds until Sweep! GET OUT",
+		sweepwarn = "5 seconds until Sweep! Get out!",
 		sweepbartext = "Sweep",
 
 		sandblasttrigger = "Ouro begins to cast Sand Blast",
 		sandblastannounce = "Incoming Sand Blast!",
-		sandblastwarn = "5 seconds until Sand Blast",
+		sandblastwarn = "5 seconds until Sand Blast!",
 		sandblastbartext = "Sand Blast",
 
 		emergetrigger = "Dirt Mound casts Summon Ouro Scarabs.",

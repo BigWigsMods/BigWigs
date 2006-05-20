@@ -74,7 +74,7 @@ function BigWigsEmeriss:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	end
 end
 
-if ( GetLocale() == "koKR" ) then 
+if (GetLocale() == "koKR") then 
 	function BigWigsEmeriss:Event()
 		if (not self.prior and string.find(arg1, self.loc.trigger2)) then
 			self.prior = true
@@ -87,7 +87,6 @@ if ( GetLocale() == "koKR" ) then
 			local _,_, EPlayer = string.find(arg1, self.loc.trigger1)
 			if (EPlayer) then
 				if (EPlayer == self.loc.isyou ) then
-					self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
 					self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
 				else
 					local _,_, EWho = string.find(EPlayer, self.loc.whopattern)
@@ -110,14 +109,13 @@ else
 			if (EPlayer and EType) then
 				if (EPlayer == self.loc.isyou and EType == self.loc.isare) then
 					self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
-					self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
 				else
 					self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
+					self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
 				end
 			end
 		end
 	end
-
 end
 
 function BigWigsLucifron:BIGWIGS_MESSAGE(text)

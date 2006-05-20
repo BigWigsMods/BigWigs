@@ -22,11 +22,10 @@ BigWigsBuru = AceAddon:new({
 
 		watchtrigger = "sets eyes on (.+)!",
 		watchwarn = " is being watched!",
-		watchtell = "You are being watched! Kite!",
+		watchwarnyou = "You are being watched! Kite!",
 		you = "You",
 	},
 })
-
 
 function BigWigsBuru:Initialize()
     self.disabled = true
@@ -36,38 +35,33 @@ end
 function BigWigsBuru:Enable()
 	self.disabled = nil
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH" )
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
-
 
 function BigWigsBuru:Disable()
 	self.disabled = true
-	self:UnregisterEvent("CHAT_MSG_MONSTER_EMOTE")
-	self:UnregisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH" )
+	self:UnregisterAllEvents()
 end
 
 function BigWigsBuru:CHAT_MSG_MONSTER_EMOTE()
-	local _, _, player = string.find(arg1, self.loc.watchtrigger);
-	if( player ) then	
-		local text = ""
-		if( player == self.loc.you ) then
-			player = UnitName("player")
+	local _, _, Player = string.find(arg1, self.loc.watchtrigger)
+	if (Player) then
+		if (Player == self.loc.you) then
+			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.watchwarnyou, "Red", true)
+		else
+			self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.watchwarn, "Yellow")
+			self:TriggerEvent("BIGWIGS_SENDTELL", Player, self.loc.watchwarnyou)
 		end
-		text = player .. self.loc.watchwarn
-		self:TriggerEvent("BIGWIGS_SENDTELL", text , self.loc.watchtell )
-		self:TriggerEvent("BIGWIGS_MESSAGE", text, "Red")
 	end
 end
 
 function BigWigsBuru:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if ( arg1 == self.loc.disabletrigger ) then
+	if (arg1 == self.loc.disabletrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
 		self:Disable()
 	end
 end
-
-
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsBuru:RegisterForLoad()
