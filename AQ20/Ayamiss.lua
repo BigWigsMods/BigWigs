@@ -11,11 +11,11 @@ BigWigsAyamiss = AceAddon:new({
 		disabletrigger = "사냥꾼 아야미스|1이;가; 죽었습니다.",
 		bosskill = "사냥꾼 아야미스를 물리쳤습니다.",
 
-		sacrificetrigger = "^(.*)마비에 걸렸습니다.",
+		sacrificetrigger = "(.*)마비에 걸렸습니다.",
 		sacrificewarn = "님이 마비에 걸렸습니다!",
 		
 		you = "",
-		whopattern = "(.+)%|1이;가; ",
+		whopattern = "(.+)|1이;가; ",
 	} or {
 		bossname = "Ayamiss the Hunter",
 		disabletrigger = "Ayamiss the Hunter dies.",
@@ -60,7 +60,7 @@ if (GetLocale() == "koKR") then
 			if (Player == self.loc.you) then
 				Player = UnitName("player")
 			else
-				Player = string.find(player, self.loc.whopattern) 
+				Player = string.find(Player, self.loc.whopattern) 
 			end
 			self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.sacrificewarn, "Red")
 		end

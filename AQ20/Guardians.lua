@@ -20,10 +20,10 @@ BigWigsGuardians = AceAddon:new({
 		summonwarriortrigger = "아누비사스 감시자|1이;가; 아누비사스 전사 소환|1을;를; 시전합니다.",
 		summonwarriorwarn = "전사 소환",		
 		
-		plaguetrigger = "^(.*)역병에 걸렸습니다%.$", 
+		plaguetrigger = "(.*)역병에 걸렸습니다.", 
 		plaguewarn = "님이 역병에 걸렸습니다. 피하세요!",
 		plagueyou = "",	
-		whopattern = "(.+)%|1이;가; ",
+		whopattern = "(.+)|1이;가; "
 	} or {
 		bossname = "Anubisath Guardian",
 		disabletrigger = "Anubisath Guardian dies.",
@@ -88,17 +88,17 @@ function BigWigsGuardians:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
 	end
 end
 
-if (GetLocale() == "koKR") then
+if ( GetLocale() == "koKR" ) then
 	function BigWigsGuardians:checkPlague()
 		local _,_,Player = string.find(arg1, self.loc.plaguetrigger)
 		if (Player) then
 			if (Player == self.loc.plagueyou) then
-				Player = UnitName("player")
+				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.plaguewarnyou, "Red", true)
 			else
-				_,_,Player = string.find(player, self.loc.whopattern)
+				Player = string.find(Player, self.loc.whopattern)
+				self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.plaguewarn, "Yellow")
+				self:TriggerEvent("BIGWIGS_SENDTELL", Player, self.loc.plaguetell)
 			end
-			self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.plaguewarn, "Red")
---			self:TriggerEvent("BIGWIGS_SENDTELL", Player, self.loc.plaguetell)
 		end
 	end
 else
@@ -114,6 +114,7 @@ else
 		end
 	end
 end
+
 --------------------------------
 --      Load this bitch!      --
 --------------------------------

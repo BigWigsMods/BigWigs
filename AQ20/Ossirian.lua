@@ -15,7 +15,7 @@ BigWigsOssirian = AceAddon:new({
 		supremetrigger = "무적의 오시리안|1이;가; 오시리안의 힘 효과를 얻었습니다.",
 		supremewarn = "오시리안 무적 상태!",
 		supremedelaywarn = "%d초후 무적 상태 돌입!",
-		debufftrigger = "^무적의 오시리안|1이;가; (.+) 약점에 걸렸습니다%.$",
+		debufftrigger = "무적의 오시리안|1이;가; (.+) 약점에 걸렸습니다.",
 		debuffwarn = "오시리안이 %s 계열 마법에 약해졌습니다.",
 		bartext = "무적 상태",	
 	} or {
