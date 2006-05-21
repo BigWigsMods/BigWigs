@@ -13,7 +13,7 @@ BigWigsEbonroc = AceAddon:new({
 		
 		trigger1 = "에본로크|1이;가; 폭풍 날개|1을;를; 시전합니다.",
 		trigger2 = "에본로크|1이;가; 암흑의 불길|1을;를; 시전합니다.",
-		trigger3 = "^(.*)에본로크의 그림자에 걸렸습니다.",
+		trigger3 = "(.*)에본로크의 그림자에 걸렸습니다.",
 
 		you = "",
 		are = "are",
@@ -129,7 +129,7 @@ if (GetLocale() == "koKR") then
 			else
 				local _,_, EWho = string.find(EPlayer, self.loc.whopattern)
 				self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn6, "Yellow")
-				self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn5)
+				self:TriggerEvent("BIGWIGS_SENDTELL", EWho, self.loc.warn5)
 			end
 		end
 	end

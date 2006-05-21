@@ -20,7 +20,7 @@ BigWigsEmeriss = AceAddon:new({
 		bosskill = "에메리스를 물리쳤습니다!",
 		
 		isyou = "", 
-		whopattern = "(.+)%|1이;가; ", 
+		whopattern = "(.+)|1이;가; ", 
 
 		bar1text = "산성 숨결",
 	} or {
@@ -91,6 +91,7 @@ if (GetLocale() == "koKR") then
 				else
 					local _,_, EWho = string.find(EPlayer, self.loc.whopattern)
 					self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn2, "Yellow")
+					self:TriggerEvent("BIGWIGS_SENDTELL", EWho, self.loc.warn1)
 				end
 			end
 		end
