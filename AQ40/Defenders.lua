@@ -3,8 +3,8 @@ BigWigsDefenders = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ40",
-	enabletrigger = GetLocale() == "koKR" and "Anubisath Defender"
-		or "아누비사스 문지기",
+	enabletrigger = GetLocale() == "koKR" and "아누비사스 문지기"
+	 	or "Anubisath Defender",		
 	
 	loc = GetLocale() == "koKR" and {
 		bossname = "아누비사스 문지기",
