@@ -1,21 +1,31 @@
 ﻿BIGWIGS_CMD_OPT = GetLocale() == "koKR" and {
 	{
-		option	= "위치",
-		desc	= "메시지 및 바 위치를 변경.",
-		method	= "SlashAnchor",		
+		option	= "잠금",
+		desc	= "타이머 바와 메시지를 고정시키거나 풀어줌.",
+		method	= "SlashLock",		
 	},
+	{
+		option	= "테스트",
+		desc	= "시험용 바와 메시지를 출력.",
+		method	= "SlashTest",		
+	},	
 	{
 		option	= "크기",
 		desc	= "메시지 및 바 크기를 변경.", 
 		method  = "SlashScale",
 		input	= "true", 
 	}
-} or {
+} or {	
 	{
-		option	= "anchor",
-		desc	= "Shows the draggable anchor.",
-		method	= "SlashAnchor",		
+		option	= "lock",
+		desc	= "Lock/unlock bar and message frame.",
+		method	= "SlashLock",		
 	},
+	{
+		option	= "test",
+		desc	= "Shows the test message and bar.",
+		method	= "SlashTest",		
+	},	
 	{
 		option	= "scale",
 		desc	= "Set the scale of TimerBar and Message.", 
@@ -109,8 +119,8 @@ end
 
 
 function BigWigs:Enable()
-	if ( self:GetOpt("nScale") ) then self:SetScale( self:GetOpt("nScale") ) end
-	if ( self:GetOpt("bAnchorShow") ) then BigWigs:Show() end
+	if ( self:GetOpt("nScale") ) then self:SetScale( self:GetOpt("nScale") ) end		
+	self:TogOpt("bLock") 	self:SlashLock() 
 	
 	self:RegisterEvent("BIGWIGS_BAR_START")
 	self:RegisterEvent("BIGWIGS_BAR_CANCEL")
@@ -254,8 +264,8 @@ end
 function BigWigs:SetScale(nScale)	
 	if ( nScale and nScale >= 0.25 and nScale <= 5 ) then					
 		-- 55 is height of BigWigsAnchorFrame 
-		local yOfM = 55 - ( 55 * nScale ) 
-		BigWigsTextFrame:SetPoint("TOP", BigWigsAnchorFrame, "BOTTOM", 0, yOfM)
+		-- local yOfM = 55 - ( 55 * nScale ) 
+		-- BigWigsTextFrame:SetPoint("TOP", BigWigsAnchorFrame, "BOTTOM", 0, yOfM)
 		BigWigsTextFrame:SetScale(nScale)
 		
 		self:SetOpt("nScale", nScale)
@@ -266,12 +276,17 @@ end
 --------------------------------
 --        Slash Handler       --
 --------------------------------
-function BigWigs:SlashAnchor()
-	if ( self:TogOpt("bAnchorShow") ) then 
-		BigWigsAnchorFrame:Show()
+function BigWigs:SlashLock()
+	if ( self:TogOpt("bLock") ) then 
+		BW_BarAnchorButton:Show()
+		BW_MsgAnchorButton:Show()
 	else
-		BigWigsAnchorFrame:Hide()
+		BW_BarAnchorButton:Hide()
+		BW_MsgAnchorButton:Hide()
 	end	
+end
+function BigWigs:SlashTest()
+	self:Test()	
 end
 function BigWigs:SlashScale(ScaleValue)
 	local args = ace.ParseWords(ScaleValue)

@@ -13,18 +13,18 @@ function BigWigsMessages:Initialize()
 	self.uierrorsframe = getglobal("UIErrorsFrame")
 
 	self.msgframe = getglobal("BigWigsTextFrame")
-	self.msgframe:SetWidth(512)
-	self.msgframe:SetHeight(200)
+	-- self.msgframe:SetWidth(512)
+	-- self.msgframe:SetHeight(200)
 	
 	local nScale = 1 
 	if ( BigWigs:GetOpt("nScale") ) then nScale = BigWigs:GetOpt("nScale") end	
 	-- 55 is height of BigWigsAnchorFrame 
 	local yOfM = 55 - ( 55 * nScale ) 
-	self.msgframe:SetPoint("TOP", BigWigsAnchorFrame, "BOTTOM", 0, yOfM)
+	-- self.msgframe:SetPoint("TOP", BigWigsAnchorFrame, "BOTTOM", 0, yOfM)
 	self.msgframe:SetScale(nScale)	
 	
-	self.msgframe:SetJustifyV("TOP")
-	self.msgframe:SetFrameStrata("HIGH")
+	-- self.msgframe:SetJustifyV("TOP")
+	-- self.msgframe:SetFrameStrata("HIGH")
 	self.msgframe:SetFontObject(ErrorFont)
 	self.msgframe:Show()
 end
