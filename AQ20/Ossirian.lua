@@ -49,6 +49,9 @@ end
 function BigWigsOssirian:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", format(self.loc.supremedelaywarn, 30))
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", format(self.loc.supremedelaywarn, 40))
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bartext)
 end
 
 function BigWigsOssirian:checkEnd()
