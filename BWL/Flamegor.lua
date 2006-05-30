@@ -5,7 +5,7 @@ BigWigsFlamegor = AceAddon:new({
 	zonename = "BWL",
 	enabletrigger = GetLocale() == "koKR" and "플레임고르"
 		or GetLocale() == "deDE" and "Flammenmaul" 
-		or "Flamegore",
+		or "Flamegor",
 
 	loc = GetLocale() == "koKR" and {	
 		bossname = "플레임고르",
