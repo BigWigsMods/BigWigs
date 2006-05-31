@@ -23,7 +23,16 @@ BigWigsTwins = AceAddon:new({
 		enragewarn = "Twins are Enraged",
 		healtrigger1 = "'s Heal Brother heals",
 		healtrigger2 = " Heal Brother heals",
-		healwarn = "Casting Heal Brother - Separate them fast!",		
+		healwarn = "Casting Heal Brother - Separate them fast!",
+		startwarn = "Twin Emperors Engaged! Enrage in 15 minutes!",
+		enragebartext = "Enrage",
+		warn1 = "Enrage in 10 minutes",
+		warn2 = "Enrage in 5 minutes",
+		warn3 = "Enrage in 3 minutes",
+		warn4 = "Enrage in 90 seconds",
+		warn5 = "Enrage in 60 seconds",
+		warn6 = "Enrage in 30 seconds",
+		warn7 = "Enrage in 10 seconds",
 	} or {
 		bossname = "Twin Emperors - Emperor Vek'lor and Emperor Vek'nilash",
 		veklor = "Emperor Vek'lor",
@@ -42,6 +51,15 @@ BigWigsTwins = AceAddon:new({
 		healtrigger1 = "'s Heal Brother heals",
 		healtrigger2 = " Heal Brother heals",
 		healwarn = "Casting Heal Brother - Separate them fast!",
+		startwarn = "Twin Emperors Engaged! Enrage in 15 minutes!",
+		enragebartext = "Enrage",
+		warn1 = "Enrage in 10 minutes",
+		warn2 = "Enrage in 5 minutes",
+		warn3 = "Enrage in 3 minutes",
+		warn4 = "Enrage in 90 seconds",
+		warn5 = "Enrage in 60 seconds",
+		warn6 = "Enrage in 30 seconds",
+		warn7 = "Enrage in 10 seconds",
 	},
 })
 
@@ -55,6 +73,8 @@ function BigWigsTwins:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED")
 end
 
 function BigWigsTwins:Disable()
@@ -64,6 +84,42 @@ function BigWigsTwins:Disable()
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.portdelaywarn)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bartext, 10)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bartext, 20)
+
+	self:PLAYER_REGEN_ENABLED()
+end
+
+function BigWigsTwins:PLAYER_REGEN_ENABLED()
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.enragebartext )
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn1 )
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn2 )
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn3 )
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn4 )
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn5 )
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn6 )
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn7 )
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebartext, 580 )
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebartext, 790 )
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebartext, 870 )
+end
+
+function BigWigsTwins:PLAYER_REGEN_DISABLED()
+	if( UnitName("target") and not UnitIsCorpse("target") and not UnitIsDead("target") ) then
+		local unitname = UnitName("target")
+		if( unitname == self.loc.veklor or unitname == self.loc.veknilash ) then
+			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Red" )
+			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.enragebartext, 900, 2, "Green", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy" )
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 300, "Green")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 580, "Yellow")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 700, "Yellow")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn4, 790, "Orange")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn5, 840, "Orange")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn6, 870, "Red")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn7, 890, "Red")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 580, "Yellow")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 790, "Orange")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 870, "Red")			
+		end
+	end
 end
 
 function BigWigsTwins:CHAT_MSG_COMBAT_HOSTILE_DEATH()
