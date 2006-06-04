@@ -12,6 +12,7 @@ Bars.lua
 Bars.xml
 Messages.lua
 Messages.xml
+Sound.lua
 
 ZG\Jeklik.lua
 ZG\Marli.lua
