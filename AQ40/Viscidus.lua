@@ -60,7 +60,7 @@ BigWigsViscidus = AceAddon:new({
 			warn5 		= "Cracking up - almost there!",
 			warn6		= "Poison Bolt Volley - Cleanse Poison!",
 			warn7		= "Incoming Poison Bolt Volley in 3~ sec!",
-			warn8		= "is in a toxin cloud - MOVE!",
+			warn8		= " is in a toxin cloud - MOVE!",
 			warn9		= "You are in the toxin cloud - Move it!",
 			
 			bar1text	= "Poison Bolt Volley",
