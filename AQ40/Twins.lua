@@ -109,12 +109,12 @@ function BigWigsTwins:PLAYER_REGEN_DISABLED()
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Red" )
 			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.enragebartext, 900, 2, "Green", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy" )
 			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 300, "Green")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 580, "Yellow")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 700, "Yellow")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn4, 790, "Orange")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 600, "Yellow")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 720, "Yellow")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn4, 810, "Orange")
 			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn5, 840, "Orange")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn6, 870, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn7, 890, "Red")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn6, 870, "Red")    
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn7, 890, "Red")    
 			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 580, "Yellow")
 			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 790, "Orange")
 			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 870, "Red")			
@@ -141,7 +141,7 @@ end
 
 function BigWigsTwins:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
 	if (string.find(arg1, self.loc.explodebugtrigger)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.explodebugwarn, "Yellow")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.explodebugwarn, "Yellow", true)
 	end
 end
 
