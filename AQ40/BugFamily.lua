@@ -34,8 +34,10 @@ end
 
 function BigWigsBugFamily:Enable()
 	self.disabled = nil
+	self.deaths = 0
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 end
 
 function BigWigsBugFamily:Disable()
@@ -44,12 +46,19 @@ function BigWigsBugFamily:Disable()
 end
 
 function BigWigsBugFamily:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger1 
+	if (arg1 == self.loc.disabletrigger1
 	or arg1 == self.loc.disabletrigger2
 	or arg1 == self.loc.disabletrigger3) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
-		self:Disable()
+		self.deaths = self.deaths + 1
+		if ( self.deaths == 3 ) then
+			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+			self:Disable()
+		end
 	end
+end
+
+function BigWigsBugFamily:PLAYER_REGEN_ENABLED()
+	self.deaths = 0
 end
 
 function BigWigsBugFamily:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
