@@ -75,6 +75,7 @@ function BigWigsTwins:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
+	self:RegisterEvent("CHAT_MSG_COMBAT_FRIENDLY_DEATH", "PLAYER_REGEN_ENABLED")
 end
 
 function BigWigsTwins:Disable()
@@ -84,42 +85,66 @@ function BigWigsTwins:Disable()
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.portdelaywarn)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bartext, 10)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bartext, 20)
-
-	self:PLAYER_REGEN_ENABLED()
-end
-
-function BigWigsTwins:PLAYER_REGEN_ENABLED()
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.enragebartext )
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn1 )
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn2 )
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn3 )
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn4 )
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn5 )
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn6 )
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn7 )
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebartext, 580 )
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebartext, 790 )
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebartext, 870 )
+	self:StopEnrage()
 end
 
 function BigWigsTwins:PLAYER_REGEN_DISABLED()
-	if( UnitName("target") and not UnitIsCorpse("target") and not UnitIsDead("target") ) then
-		local unitname = UnitName("target")
-		if( unitname == self.loc.veklor or unitname == self.loc.veknilash ) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Red" )
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.enragebartext, 900, 2, "Green", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy" )
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 300, "Green")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 600, "Yellow")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 720, "Yellow")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn4, 810, "Orange")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn5, 840, "Orange")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn6, 870, "Red")    
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn7, 890, "Red")    
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 580, "Yellow")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 790, "Orange")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 870, "Red")			
+	local go = self:Scan()
+	if (go) then
+		self:StartEnrage()
+	end
+end
+
+function BigWigsTwins:PLAYER_REGEN_ENABLED()
+	local go = self:Scan()
+	if (not go) then
+		self:StopEnrage()
+	end
+end
+
+function BigWigsTwins:Scan()
+	if (UnitName("target") == (self.loc.veklor or self.loc.veknilash) and UnitAffectingCombat("target")) then
+		return true
+	elseif (UnitName("playertarget") == (self.loc.veklor or self.loc.veknilash) and UnitAffectingCombat("playertarget")) then
+		return true
+	else
+		local i
+		for i = 1, GetNumRaidMembers(), 1 do
+			if (UnitName("Raid"..i.."target") == (self.loc.veklor or self.loc.veknilash) and UnitAffectingCombat("Raid"..i.."target")) then
+				return true
+			end
 		end
 	end
+	return false
+end
+
+function BigWigsTwins:StartEnrage()
+	self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Red")
+	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.enragebartext, 900, 2, "Green", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 300, "Green")
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 600, "Yellow")
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 720, "Yellow")
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn4, 810, "Orange")
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn5, 840, "Orange")
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn6, 870, "Red")
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn7, 890, "Red")
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 580, "Yellow")
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 790, "Orange")
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 870, "Red")			
+end
+
+function BigWigsTwins:StopEnrage()
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.enragebartext)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn1)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn2)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn3)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn4)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn5)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn6)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn7)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebartext, 580)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebartext, 790)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebartext, 870)
 end
 
 function BigWigsTwins:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -131,7 +156,7 @@ end
 
 function BigWigsTwins:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	if (string.find(arg1, self.loc.porttrigger)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.portwarn, "Red")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.portwarn, "Yellow")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.portdelaywarn, 25, "Red")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bartext, 30, 1, "Yellow", "Interface\\Icons\\Spell_Arcane_Blink")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bartext, 10, "Orange")
@@ -141,7 +166,7 @@ end
 
 function BigWigsTwins:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
 	if (string.find(arg1, self.loc.explodebugtrigger)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.explodebugwarn, "Yellow", true)
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.explodebugwarn, "Red", true)
 	end
 end
 
