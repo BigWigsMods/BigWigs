@@ -24,6 +24,12 @@ BigWigsBugFamily = AceAddon:new({
 
 		healtrigger = "Princess Yauj begins to cast Great Heal.",
 		healwarn = "Casting heal - interrupt it!",
+
+		feartrigger = "is afflicted by Fear%.",
+    fearstatus = false,
+    fearbar = "AE Fear",
+    fearwarn1 = "AE Fear! Next in 20 Seconds!",
+    fearwarn2 = "AE Fear in 5 Seconds!",
 	},
 })
 
@@ -38,11 +44,32 @@ function BigWigsBugFamily:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE","FearEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE","FearEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE","FearEvent")
+	self:RegisterEvent("BIGWIGS_MESSAGE","FearEvent")
 end
 
 function BigWigsBugFamily:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
+end
+
+function BigWigsBugFamily:FearEvent(msgtxt)
+    if (msgtxt) then
+        if ( self.fearstatus and msgtxt == self.loc.fearwarn2) then
+            self.fearstatus = false
+        end
+    else
+        if (not self.fearstatus and string.find(arg1, self.loc.feartrigger)) then
+            self.fearstatus = true
+        self:TriggerEvent("BIGWIGS_BAR_START", self.loc.fearbar, 20, 2, "Green", "Interface\\Icons\\Spell_Shadow_Possession")
+            self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.fearbar, 10, "Yellow")
+            self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.fearbar, 15, "Red")
+            self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.fearwarn1, "Red")
+            self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.fearwarn2, 15, "Orange")
+        end
+    end
 end
 
 function BigWigsBugFamily:CHAT_MSG_COMBAT_HOSTILE_DEATH()
