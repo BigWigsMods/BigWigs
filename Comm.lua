@@ -7,7 +7,7 @@ BigWigsComm = AceAddon:new({
 
 
 function BigWigsComm:Enable()
-	oRA_Core:AddCheck("BIGWIGS_SYNC_RECV","BIGWIGSSYNC")
+	if oRA_Core then oRA_Core:AddCheck("BIGWIGS_SYNC_RECV","BIGWIGSSYNC") end
 	self:RegisterEvent("BIGWIGS_SYNC_RECV")
 	self:RegisterEvent("BIGWIGS_SYNC_SEND")
 end
@@ -35,7 +35,7 @@ end
 
 
 function BigWigsComm:BIGWIGS_SYNC_SEND(msg)
-	oRA_Core:Send("BIGWIGSSYNC " .. msg)
+	if oRA_Core then oRA_Core:Send("BIGWIGSSYNC " .. msg) end
 end
 
 
