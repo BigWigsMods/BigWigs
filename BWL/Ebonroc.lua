@@ -1,10 +1,11 @@
-BigWigsEbonroc = AceAddon:new({
+﻿BigWigsEbonroc = AceAddon:new({
 	name          = "BigWigsEbonroc",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "BWL",
 	enabletrigger = GetLocale() == "koKR" and "에본로크"
 		or GetLocale() == "deDE" and "Schattenschwinge" 
+		or GetLocale() == "zhCN" and "埃博诺克"
 		or "Ebonroc",
 
 	loc = GetLocale() == "koKR" and {
@@ -52,6 +53,28 @@ BigWigsEbonroc = AceAddon:new({
 			
 		bar1text = "Fluegelgelstoss",
 	} 
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "埃博诺克",
+		disabletrigger = "埃博诺克死亡了。",
+
+		trigger1 = "埃博诺克开始施放龙翼打击。",
+		trigger2 = "埃博诺克开始施放暗影烈焰。",
+		trigger3 = "^(.+)受(.+)了埃博诺克之影",
+
+		you = "你",
+		are = "到",
+
+		warn1 = "埃博诺克开始施放龙翼打击！",
+		warn2 = "龙翼打击 - 30秒后再次发动",
+		warn3 = "3秒后发动龙翼打击！",
+		warn4 = "暗影烈焰发动！",
+		warn5 = "你中了埃博诺克之影！",
+		warn6 = "中了埃博诺克之影！",
+		bosskill = "埃博诺克被击败了！",
+
+		bar1text = "龙翼打击",
+	}
 		or 
 	{
 		bossname = "Ebonroc",

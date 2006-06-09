@@ -6,6 +6,7 @@ BigWigsVenoxis = AceAddon:new({
 
 	zonename = "ZG",
 	enabletrigger = GetLocale() == "koKR" and "대사제 베녹시스" 
+		or GetLocale() == "zhCN" and "高阶祭司温诺希斯"
 		or "High Priest Venoxis",
 
 	loc = GetLocale() == "koKR" and {
@@ -20,7 +21,22 @@ BigWigsVenoxis = AceAddon:new({
 		warn2 = "2단계 시작 - 독구름을 조심하세요!",
 
 		bosskill = "대사제 베녹시스를 물리쳤습니다!",
-	} or {
+	} 
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "高阶祭司温诺希斯",
+		disabletrigger = "高阶祭司温诺希斯死亡了。",
+
+		trigger1 = "高阶祭司温诺希斯获得了恢复的效果。",
+		trigger2 = "让仇恨的",
+
+		warn1 = "恢复 - 立即驱散！",
+		warn2 = "进入第二阶段，小心毒云！",
+
+		bosskill = "高阶祭司温诺希斯被击败了！",
+	}
+		or 
+	{
 		bossname = "High Priest Venoxis",
 		disabletrigger = "High Priest Venoxis dies.",
 

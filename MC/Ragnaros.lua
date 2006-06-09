@@ -1,9 +1,10 @@
-BigWigsRagnaros = AceAddon:new({
+﻿BigWigsRagnaros = AceAddon:new({
 	name          = "BigWigsRagnaros",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "MC",
 	enabletrigger = GetLocale() == "koKR" and "라그나로스"
+		or GetLocale() == "zhCN" and "拉格纳罗斯"
 		or "Ragnaros",
 
 	loc = GetLocale() == "deDE" and 
@@ -50,6 +51,28 @@ BigWigsRagnaros = AceAddon:new({
 		bar2text = "라그나로스 등장",
 		bar3text = "피조물 등장",
 	} 
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "拉格纳罗斯",
+		disabletrigger = "拉格纳罗斯死亡了。",
+
+		trigger1 = "^尝尝萨弗隆的火焰吧",
+		trigger2 = "^出现吧，我的奴仆",
+		trigger3 = "^现在轮到你们了",
+
+		warn1 = "群体击退！",
+		warn2 = "5秒后发动群体击退！",
+		warn3 = "拉格纳罗斯消失90秒。烈焰之子出现！",
+		warn4 = "15秒后拉格纳罗斯重新出现！",
+		warn5 = "拉格纳罗斯已经激活，将在3分钟后暂时消失并召唤烈焰之子！",
+		warn6 = "60秒后拉格纳罗斯将暂时消失并召唤烈焰之子！",
+		warn7 = "20秒后拉格纳罗斯将暂时消失并召唤烈焰之子！",
+		bosskill = "拉格纳罗斯被击败了！",
+
+		bar1text = "群体击退",
+		bar2text = "拉格纳罗斯出现",
+		bar3text = "拉格纳罗斯消失",
+	}
 		or 
 	{
 		bossname = "Ragnaros",

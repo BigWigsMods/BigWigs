@@ -1,10 +1,11 @@
-BigWigsVaelastrasz = AceAddon:new({
+﻿BigWigsVaelastrasz = AceAddon:new({
 	name          = "BigWigsVaelastrasz",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "BWL",
 	enabletrigger = GetLocale() == "koKR" and "타락한 밸라스트라즈"
 		or GetLocale() == "deDE" and "Vaelastrasz der Verdorbene" 
+		or GetLocale() == "zhCN" and "堕落的瓦拉斯塔兹" 
 		or "Vaelastrasz the Corrupt",
 
 	loc = GetLocale() == "koKR" and {
@@ -34,6 +35,20 @@ BigWigsVaelastrasz = AceAddon:new({
 		warn2 = " brennt!",
 		bosskill = "Vaelastrasz der Verdorbene wurde besiegt!",
 	}	
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "堕落的瓦拉斯塔兹",
+		disabletrigger = "堕落的瓦拉斯塔兹死亡了。",
+
+		trigger1 = "^(.+)受(.+)了燃烧刺激",
+
+		you = "你",
+		are = "到",
+
+		warn1 = "你在燃烧！",
+		warn2 = "在燃烧！",
+		bosskill = "堕落的瓦拉斯塔兹被击败了！",
+	}
 		or 
 	{
 		bossname = "Vaelastrasz the Corrupt",

@@ -1,9 +1,10 @@
-BigWigsOssirian = AceAddon:new({
+﻿BigWigsOssirian = AceAddon:new({
 	name          = "BigWigsOssirian",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ40",
 	enabletrigger = GetLocale() == "koKR" and "무적의 오시리안"
+		or GetLocale() == "zhCN" and "无疤者奥斯里安"
 		or "Ossirian the Unscarred",
 
 	loc = GetLocale() == "koKR" and {
@@ -18,7 +19,23 @@ BigWigsOssirian = AceAddon:new({
 		debufftrigger = "무적의 오시리안|1이;가; (.+) 약점에 걸렸습니다.",
 		debuffwarn = "오시리안이 %s 계열 마법에 약해졌습니다.",
 		bartext = "무적 상태",	
-	} or {
+	} 
+		or GetLocale() == "zhCN" and 
+	{
+		bossname = "无疤者奥斯里安",
+		disabletrigger1 = "我……败……了。",
+		disabletrigger2 = "无疤者奥斯里安死亡了。",
+		bosskill = "无疤者奥斯里安被击败了！",
+
+		supremetrigger = "无疤者奥斯里安获得了奥斯里安之力的效果。",
+		supremewarn = "无疤者奥斯里安无敌了！速退！",
+		supremedelaywarn = "%d秒后奥斯里安无敌",
+		debufftrigger = "^无疤者奥斯里安受到了(.+)虚弱效果的影响。$",
+		debuffwarn = "奥斯里安新法术弱点: %s",
+		bartext = "无敌",
+	}
+		or 
+	{
 		bossname = "Ossirian the Unscarred",
 		disabletrigger1 = "I...have...failed.",
 		disabletrigger2 = "Ossirian the Unscarred dies.",

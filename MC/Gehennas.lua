@@ -1,9 +1,10 @@
-BigWigsGehennas = AceAddon:new({
+﻿BigWigsGehennas = AceAddon:new({
 	name          = "BigWigsGehennas",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "MC",
 	enabletrigger = GetLocale() == "koKR" and "게헨나스"
+		or GetLocale() == "zhCN" and "基赫纳斯" 
 		or "Gehennas",
 
 	loc = GetLocale() == "koKR" and {
@@ -16,6 +17,18 @@ BigWigsGehennas = AceAddon:new({
 		warn2 = "게헨나스의 저주 - 다음 저주 30초후!",
 
 		bar1text = "게헨나스의 저주",	
+	} 
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "基赫纳斯",
+		disabletrigger = "基赫纳斯死亡了。",
+
+		trigger1 = "受到了基赫纳斯的诅咒",
+
+		warn1 = "5秒后发动基赫纳斯的诅咒！",
+		warn2 = "基赫纳斯的诅咒 - 30秒后再次发动",
+
+		bar1text = "基赫纳斯的诅咒",
 	} or {
 		bossname = "Gehennas",
 		disabletrigger = "Gehennas dies.",

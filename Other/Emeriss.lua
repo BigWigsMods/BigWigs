@@ -1,9 +1,10 @@
-BigWigsEmeriss = AceAddon:new({
+﻿BigWigsEmeriss = AceAddon:new({
 	name          = "BigWigsEmeriss",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = {"Duskwood", "Hinterlands", "Ashenvale", "Feralas"},
 	enabletrigger = GetLocale() == "koKR" and "에메리스"
+		or GetLocale() == "zhCN" and "艾莫莉丝"
 		or "Emeriss",
 
 	loc = GetLocale() == "koKR" and {	
@@ -23,7 +24,28 @@ BigWigsEmeriss = AceAddon:new({
 		whopattern = "(.+)|1이;가; ", 
 
 		bar1text = "산성 숨결",
-	} or {
+	} 
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "艾莫莉丝",
+		disabletrigger = "艾莫莉丝死亡了。",
+
+		trigger1 = "^(.+)受(.+)了快速传染效果",
+		trigger2 = "受到了毒性吐息效果的影响。",
+
+		warn1 = "你中了快速传染！",
+		warn2 = "中了快速传染！",
+		warn3 = "5秒后发动毒性吐息！",
+		warn4 = "毒性吐息 - 30秒后再次发动",
+		bosskill = "艾莫莉丝被击败了！",
+		
+		isyou = "你", 
+		isare = "到",
+
+		bar1text = "毒性吐息",
+	}	
+		or 
+	{
 		bossname = "Emeriss",
 		disabletrigger = "Emeriss dies.",
 

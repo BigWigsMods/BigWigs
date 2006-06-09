@@ -1,9 +1,10 @@
-BigWigsAzuregos = AceAddon:new({
+﻿BigWigsAzuregos = AceAddon:new({
 	name          = "BigWigsAzuregos",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "Azshara",
 	enabletrigger = GetLocale() == "koKR" and "아주어고스"
+		or GetLocale() == "zhCN" and "艾索雷葛斯"
 		or "Azuregos",
 
 	loc = GetLocale() == "koKR" and {
@@ -18,7 +19,23 @@ BigWigsAzuregos = AceAddon:new({
 		warn2 = "마법 보호막 소멸!",
 		warn3 = "마법 보호막 동작 - 마법 공격 금지!",
 		bosskill = "아주어고스를 물리쳤습니다!",
-	} or {
+	} 
+		or GetLocale() == "zhCN" and 
+	{
+		bossname = "艾索雷葛斯",
+		disabletrigger = "艾索雷葛斯死亡了。",
+
+		trigger1 = "来吧，小子。面对我！",
+		trigger2 = "^反射效果从艾索雷葛斯身上消失",
+		trigger3 = "^艾索雷葛斯获得了反射",
+
+		warn1 = "传送发动！",
+		warn2 = "魔法护盾消失！",
+		warn3 = "魔法护盾开启 - 不要施放法术！",
+		bosskill = "艾索雷葛斯被击败了！",
+	}
+		or 
+	{
 		bossname = "Azuregos",
 		disabletrigger = "Azuregos dies.",
 

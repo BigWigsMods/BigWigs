@@ -15,7 +15,28 @@
 		method  = "SlashScale",
 		input	= "true", 
 	}
-} or {	
+} 
+	or GetLocale() == "zhCN" and
+{	
+	{
+		option	= "lock",
+		desc	= "锁定/解锁计时条与信息框体。",
+		method	= "SlashLock",		
+	},
+	{
+		option	= "test",
+		desc	= "显示测试信息与计时条。",
+		method	= "SlashTest",		
+	},	
+	{
+		option	= "scale",
+		desc	= "设置计时条与信息框体的缩放大小。", 
+		method  = "SlashScale",
+		input	= "true",
+	}
+}
+	or
+{	
 	{
 		option	= "lock",
 		desc	= "Lock/unlock bar and message frame.",

@@ -1,9 +1,10 @@
-BigWigsCThun = AceAddon:new({
+﻿BigWigsCThun = AceAddon:new({
 	name          	= "BigWigsCThun",
 	cmd           	= AceChatCmd:new({}, {}),
 
 	zonename 	= "AQ40",
 	enabletrigger	= GetLocale() == "koKR" and "쑨의 눈"
+		or GetLocale() == "zhCN" and "克苏恩之眼"
 		or "Eye of C'Thun",
 
 	loc = GetLocale() == "koKR" and {
@@ -21,7 +22,26 @@ BigWigsCThun = AceAddon:new({
 			
 			bar1text	= "눈달린 촉수!",
 			bar2text	= "쑨 약화!",	
-	} or {
+	} 	
+		or GetLocale() == "zhCN" and 
+	{
+			bossname 	= "克苏恩之眼",
+			disabletrigger 	= "克苏恩死亡了。",
+			bosskill 	= "克苏恩被击败了！",
+			
+			trigger1 	= "巨眼触须的大地破裂",
+			trigger2 	= "被削弱了！",
+			
+			warn1		= "巨眼触须出现！",
+			warn2		= "5秒后巨眼触须出现！",
+			warn3		= "10秒后巨眼触须出现！",
+			warn4		= "克苏恩被削弱了 - 45秒内全力输出伤害！",
+			
+			bar1text	= "巨眼触须",
+			bar2text	= "克苏恩被削弱了！",
+	}	
+		or 
+	{
 			bossname 	= "Eye of C'Thun",
 			disabletrigger 	= "C'Thun dies.",
 			bosskill 	= "C'Thun has been defeated.",

@@ -6,6 +6,7 @@ BigWigsJeklik = AceAddon:new({
 
 	zonename = "ZG",
 	enabletrigger = GetLocale() == "koKR" and "대여사제 제클릭" 
+		or GetLocale() == "zhCN" and "高阶祭司耶克里克"
 		or "High Priestess Jeklik",
 
 
@@ -20,7 +21,22 @@ BigWigsJeklik = AceAddon:new({
 		disabletrigger = "대여사제 제클릭|1이;가; 죽었습니다.",
 
 		bosskill = "대여사제 제클릭을 물리쳤습니다!",	
-	} or {
+	} 
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "高阶祭司耶克里克",
+
+		trigger1 = "我命令你把这些入侵者烧成灰烬！$",
+		trigger2 = "开始释放强效治疗！$",
+		warn1 = "炸弹蝙蝠来了！",
+		warn2 = "高阶祭司耶克里克正在施放治疗，赶快打断它！",
+
+		disabletrigger = "高阶祭司耶克里克死亡了。",
+
+		bosskill = "高阶祭司耶克里克被击败了！",
+	}	
+		or 
+	{
 		bossname = "High Priestess Jeklik",
 
 		trigger1 = "I command you to rain fire down upon these invaders!$",

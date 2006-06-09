@@ -1,9 +1,10 @@
-BigWigsAyamiss = AceAddon:new({
+﻿BigWigsAyamiss = AceAddon:new({
 	name          = "BigWigsAyamiss",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ20",
 	enabletrigger = GetLocale() == "koKR" and "사냥꾼 아야미스"
+		or GetLocale() == "zhCN" and "狩猎者阿亚米斯"
 		or "Ayamiss the Hunter",
 
 	loc = GetLocale() == "koKR" and {
@@ -16,7 +17,20 @@ BigWigsAyamiss = AceAddon:new({
 		
 		you = "",
 		whopattern = "(.+)|1이;가; ",
-	} or {
+	} 
+		or GetLocale() == "zhCN" and 
+	{
+		bossname = "狩猎者阿亚米斯",
+		disabletrigger = "狩猎者阿亚米斯死亡了。",
+		bosskill = "狩猎者阿亚米斯被击败了！",
+
+		sacrificetrigger = "^(.+)受(.+)了麻痹效果的影响。",
+		sacrificewarn = "成为祭品了！",
+		you = "你",
+		are = "到",
+	}
+		or 
+	{
 		bossname = "Ayamiss the Hunter",
 		disabletrigger = "Ayamiss the Hunter dies.",
 		bosskill = "Ayamiss the Hunter has been defeated.",

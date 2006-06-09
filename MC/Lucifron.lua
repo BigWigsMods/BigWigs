@@ -1,9 +1,10 @@
-BigWigsLucifron = AceAddon:new({
+﻿BigWigsLucifron = AceAddon:new({
 	name          = "BigWigsLucifron",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "MC",
 	enabletrigger = GetLocale() == "koKR" and "루시프론"
+		or GetLocale() == "zhCN" and "鲁西弗隆"
 		or "Lucifron",
 
 	loc = GetLocale() == "deDE" and
@@ -38,6 +39,22 @@ BigWigsLucifron = AceAddon:new({
 		bar1text = "루시프론의 저주",
 		bar2text = "파멸의 예언",		
 	} 
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "鲁西弗隆",
+		disabletrigger = "鲁西弗隆死亡了。",
+
+		trigger1 = "受到了鲁西弗隆的诅咒",
+		trigger2 = "受到了末日降临",
+
+		warn1 = "5秒后发动鲁西弗隆的诅咒！",
+		warn2 = "鲁西弗隆的诅咒 - 20秒后再次发动",
+		warn3 = "5秒后发动末日降临！",
+		warn4 = "末日降临 - 20秒后再次发动",
+
+		bar1text = "鲁西弗隆的诅咒",
+		bar2text = "末日降临",
+	}
 		or 
 	{
 		bossname = "Lucifron",

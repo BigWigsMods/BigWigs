@@ -1,9 +1,10 @@
-BigWigsTwins = AceAddon:new({
+﻿BigWigsTwins = AceAddon:new({
 	name          = "BigWigsTwins",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ40",
 	enabletrigger = GetLocale() == "koKR" and {"제왕 베클로어", "제왕 베크닐라쉬"} 
+		or GetLocale() == "zhCN" and {"维克洛尔大帝", "维克尼拉斯大帝"}	
 		or {"Emperor Vek'lor", "Emperor Vek'nilash"},		
 
 	loc = GetLocale() == "koKR" and {
@@ -33,7 +34,38 @@ BigWigsTwins = AceAddon:new({
 		warn5 = "Enrage in 60 seconds",
 		warn6 = "Enrage in 30 seconds",
 		warn7 = "Enrage in 10 seconds",
-	} or {
+	}
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "双子皇帝 - 维克洛尔大帝与维克尼拉斯大帝",
+		veklor = "维克洛尔大帝",
+		veknilash = "维克尼拉斯大帝",
+		disabletrigger = "死亡了。",
+		bosskill = "双子皇帝被击败了！",
+
+		porttrigger = "施放了双子传送。",
+		portwarn = "双子传送发动！",
+		portdelaywarn = "5秒后发动双子传送！",
+		bartext = "双子传送",
+		explodebugtrigger = "获得了爆炸虫的效果。$",
+		explodebugwarn = "爆炸虫即将出现！",
+		enragetrigger = "获得了激怒的效果。",
+		enragewarn = "双子皇帝获得了激怒的效果！",
+		healtrigger1 = "的治疗兄弟为",
+		healtrigger2 = "的治疗兄弟为",
+		healwarn = "正在施放治疗兄弟 - 快将他们分开！",
+		startwarn = "双子皇帝已激活 - 15分钟后进入激怒状态",
+		enragebartext = "激怒",
+		warn1 = "10分钟后激怒",
+		warn2 = "5分钟后激怒",
+		warn3 = "3分钟后激怒",
+		warn4 = "90秒后激怒",
+		warn5 = "60秒后激怒",
+		warn6 = "30秒后激怒",
+		warn7 = "10秒后激怒",
+	}
+		or 
+	{
 		bossname = "Twin Emperors - Emperor Vek'lor and Emperor Vek'nilash",
 		veklor = "Emperor Vek'lor",
 		veknilash = "Emperor Vek'nilash",

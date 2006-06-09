@@ -1,9 +1,10 @@
-BigWigsMarli = AceAddon:new({
+﻿BigWigsMarli = AceAddon:new({
 	name          = "BigWigsMarli",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "ZG",
 	enabletrigger = GetLocale() == "koKR" and "대여사제 말리"
+		or GetLocale() == "zhCN" and "高阶祭司玛尔里"
 		or "High Priestess Mar'li",
 
 	loc = GetLocale() == "koKR" and {
@@ -19,7 +20,23 @@ BigWigsMarli = AceAddon:new({
 
 		bosskill = "대여사제 말리를 물리쳤습니다!",
 	
-	} or { 
+	} 
+		or GetLocale() == "zhCN" and
+	{ 
+		bossname = "高阶祭司玛尔里",
+
+		trigger1 = "来为我作战吧，我的孩子们！$",
+		trigger2 = "^高阶祭司玛尔里的生命吸取治疗了高阶祭司玛尔里(.+)。",
+
+		warn1 = "蜘蛛出现！",
+		warn2 = "高阶祭司玛尔里正在施放生命吸取，赶快打断她！",
+
+		disabletrigger = "高阶祭司玛尔里死亡了。",
+
+		bosskill = "高阶祭司玛尔里被击败了！",
+	}
+		or 
+	{ 
 		bossname = "High Priestess Mar'li",
 
 		trigger1 = "Aid me my brood!$",

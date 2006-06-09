@@ -1,9 +1,10 @@
-BigWigsMandokir = AceAddon:new({
+﻿BigWigsMandokir = AceAddon:new({
 	name          = "BigWigsMandokir",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "ZG",
 	enabletrigger = GetLocale() == "koKR" and "혈군주 만도키르"
+		or GetLocale() == "zhCN" and "血领主曼多基尔"
 		or "Bloodlord Mandokir",
 
 	loc = GetLocale() == "koKR" and {	
@@ -14,7 +15,20 @@ BigWigsMandokir = AceAddon:new({
 		warn1 = "당신을 지켜보고 있습니다 - 모든 동작 금지!",
 		warn2 = "님을 지켜봅니다!",
 		bosskill = "혈군주 만도키르를 물리쳤습니다!",
-	} or {
+	} 
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "血领主曼多基尔",
+		disabletrigger = "血领主曼多基尔死亡了。",
+
+		trigger1 = "(.+)！我正在看着你！$",
+
+		warn1 = "你被盯上了 - 停止一切动作！",
+		warn2 = "被盯上了！",
+		bosskill = "血领主曼多基尔被击败了！",
+	}		
+		or 
+	{
 		bossname = "Bloodlord Mandokir",
 		disabletrigger = "Bloodlord Mandokir dies.",
 

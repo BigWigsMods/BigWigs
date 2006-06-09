@@ -4,6 +4,7 @@
 
 	zonename = "ZG",
 	enabletrigger = GetLocale() == "koKR" and "학카르"
+		or GetLocale() == "zhCN" and "哈卡"
 		or "Hakkar",
 
 	loc = GetLocale() == "koKR" and {
@@ -24,7 +25,28 @@
 		bar1text = "격노",
 		bar2text = "생명력 흡수",
 	
-	} or {
+	} 
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "哈卡",
+		disabletrigger = "哈卡死亡了。",
+
+		trigger1 = "^骄傲会将你送上绝路",
+		trigger2 = "^(.+)的酸性血液虹吸使哈卡受到了(%d+)点自然伤害。",
+		flee = "逃跑",
+
+		start = "哈卡已经激活 - 90秒后开始生命吸取 - 10分钟后进入激怒状态",
+		warn1 = "60秒后开始生命吸取",
+		warn2 = "45秒后开始生命吸取",
+		warn3 = "15秒后开始生命吸取",
+		warn4 = "血液虹吸 - 90秒后再次发动",
+		bosskill = "哈卡被击败了！",
+
+		bar1text = "激怒",
+		bar2text = "生命吸取",
+	} 
+		or 
+	{
 		bossname = "Hakkar",
 		disabletrigger = "Hakkar dies.",
 

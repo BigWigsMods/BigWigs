@@ -1,9 +1,10 @@
-BigWigsViscidus = AceAddon:new({
+﻿BigWigsViscidus = AceAddon:new({
 	name          	= "BigWigsViscidus",
 	cmd           	= AceChatCmd:new({}, {}),
 
 	zonename 	= "AQ40",
 	enabletrigger 	= GetLocale() == "koKR" and "비시디우스"
+		or GetLocale() == "zhCN" and "维希度斯"
 		or "Viscidus",
 
 	loc = GetLocale() == "koKR" and {
@@ -35,7 +36,40 @@ BigWigsViscidus = AceAddon:new({
 			warn8		= "님이 독소에 걸렸습니다 - 대피!",
 			
 			bar1text	= "Poison Bolt Volley",
-	} or {
+	} 	
+		or GetLocale() == "zhCN" and 
+	{
+			bossname = "维希度斯",
+			disabletrigger = "维希度斯死亡了。",
+			bosskill = "维希度斯被击败了！",
+			
+			--You suffer 1545 Nature damage from Toxic Slime's Toxin.
+			
+			trigger1 	= "的速度慢下来了！",
+			trigger2 	= "冻结了！",
+			trigger3 	= "变成了坚硬的固体！",
+			trigger4 	= "开始碎裂了！",
+			trigger5 	= "马上就要碎裂的样子！",
+			trigger6	= "受到了毒性之箭效果",
+			trigger7 	= "^(.+)受(.+)了剧毒效果的影响。$",
+			
+			you 		= "你",
+			are 		= "到",
+			
+			warn1 		= "冻结第一阶段！",
+			warn2 		= "冻结第二阶段 - 做好准备",
+			warn3 		= "冻结第三阶段 - DPS DPS DPS",
+			warn4 		= "即将碎裂 - 加大火力！",
+			warn5 		= "即将碎裂 - 几近成功！",
+			warn6		= "毒性之箭 - 迅速解毒！",
+			warn7		= "3秒后发动毒性之箭！",
+			warn8		= "在毒云中 - 快跑开！",
+			warn9		= "你在毒云中 - 快跑开！",
+			
+			bar1text	= "毒性之箭",
+	}	
+		or 
+	{
 			bossname = "Viscidus",
 			disabletrigger = "Viscidus dies.",
 			bosskill = "Viscidus has been defeated.",

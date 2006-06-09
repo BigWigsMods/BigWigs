@@ -1,11 +1,12 @@
-BigWigsNefarian = AceAddon:new({
+﻿BigWigsNefarian = AceAddon:new({
 	name          = "BigWigsNefarian",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "BWL",
 	enabletrigger = GetLocale() == "koKR" and 
-		{"군주 빅터 네파리우스", "네파리안"} or 
-		{"Lord Victor Nefarius", "Nefarian"}, 
+		{"군주 빅터 네파리우스", "네파리안"} 
+		or GetLocale() == "zhCN" and {"维克多·奈法里奥斯","奈法利安"} 
+		or {"Lord Victor Nefarius", "Nefarian"}, 
 
 	loc = GetLocale() == "deDE" and 
 	{ 
@@ -85,6 +86,45 @@ BigWigsNefarian = AceAddon:new({
 
 		bar1text = "직업 지목",
 	} 
+		or GetLocale() == "zhCN" and
+	{	
+		bossname = "奈法利安",
+		disabletrigger = "奈法利安死亡了。",
+
+		trigger1 = "干得好，我的手下。",
+		trigger2 = "燃烧吧！你这个",
+		trigger3 = "^不可能",
+		trigger4 = "奈法利安开始施放低沉咆哮。",
+		trigger5 = "奈法利安开始施放暗影烈焰。",
+		triggershamans	= "^萨满",
+		triggerdruid	= "^德鲁伊",
+		triggerwarlock	= "^术士",
+		triggerpriest	= "^牧师",
+		triggerhunter	= "^猎人",
+		triggerwarrior	= "^战士们，我知道你",
+		triggerrogue	= "^盗贼",
+		triggerpaladin	= "^圣骑士",
+		triggermage		= "^你们也是法师",
+
+		warn1 = "奈法利安将在10秒后降落！",
+		warn2 = "奈法利安已降落！",
+		warn3 = "骨龙群出现！",
+		warn4 = "2秒后发动群体恐惧！",
+		warn5 = "暗影烈焰发动！",
+		warn6 = "5秒后开始点名！",
+		warnshaman	= "萨满祭司 - 图腾涌现！",
+		warndruid	= "德鲁伊 - 强制猫形态，无法治疗和解诅咒！",
+		warnwarlock	= "术士 - 地狱火出现，DPS职业尽快将其消灭！",
+		warnpriest	= "牧师 - 停止治疗，静等25秒！",
+		warnhunter	= "猎人 - 远程武器损坏！",
+		warnwarrior	= "战士 - 强制狂暴姿态，加大对MT的治疗量！",
+		warnrogue	= "盗贼 - 被传送和麻痹！",
+		warnpaladin	= "圣骑士 - BOSS受到保护祝福，物理攻击无效！",
+		warnmage	= "法师 - 变形术发动，注意解除！",
+		bosskill = "奈法利安被击败了！",
+
+		bar1text = "职业点名",
+	}
 		or 
 	{	
 		bossname = "Nefarian",

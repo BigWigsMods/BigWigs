@@ -1,9 +1,10 @@
-BigWigsChromaggus = AceAddon:new({
+﻿BigWigsChromaggus = AceAddon:new({
 	name          = "BigWigsChromaggus",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "BWL",
-	enabletrigger = GetLocale() == "koKR" and "ũ�θ�����" 
+	enabletrigger = GetLocale() == "koKR" and "ũ�θ�����"
+		or GetLocale() == "zhCN" and "克洛玛古斯"
 		or "Chromaggus",
 
 	loc = GetLocale() == "koKR" and {
@@ -61,6 +62,35 @@ BigWigsChromaggus = AceAddon:new({
 			["Fleisch entz\195\188nden"] = "Interface\\Icons\\Spell_Fire_Fire",
 			["Incinerate"] = "Interface\\Icons\\Spell_Shadow_ChillTouch",
 			["Frostbeulen"] = "Interface\\Icons\\Spell_Frost_ChillingBlast",
+		}
+	}
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "克洛玛古斯",
+		disabletrigger = "克洛玛古斯死亡了。",
+
+		trigger1 = "^克洛玛古斯开始施放(.+)。",
+		trigger2 = "^.+的(.+)克洛玛古斯造成(%d+)点(.+)伤害。",
+		trigger3 = "^克洛玛古斯的时间流逝被(.+)抵抗了。",
+		trigger4 = "变得极为狂暴！",
+		trigger5 = "的皮肤闪着光芒",
+
+		hit = "击中",
+		crit = "致命一击",
+
+		warn1 = "%s - 10秒后施放！",
+		warn2 = "正在施放 %s！",
+		warn3 = "新法术弱点：%s",
+		warn4 = "法术弱点已改变！",
+		warn5 = "狂暴警报 - 猎人立刻使用宁神射击！",
+		bosskill = "克洛玛古斯被击败了！",
+
+		breathsicons = {
+			["时间流逝"] = "Interface\\Icons\\Spell_Arcane_PortalOrgrimmar",
+			["腐蚀酸液"] = "Interface\\Icons\\Spell_Nature_Acid_01",
+			["Ignite Flesh"] = "Interface\\Icons\\Spell_Fire_Fire",
+			["Incinerate"] = "Interface\\Icons\\Spell_Shadow_ChillTouch",
+			["冰霜灼烧"] = "Interface\\Icons\\Spell_Frost_ChillingBlast",
 		}
 	}	or {
 		bossname = "Chromaggus",

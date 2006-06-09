@@ -1,9 +1,10 @@
-BigWigsOnyxia = AceAddon:new({
+﻿BigWigsOnyxia = AceAddon:new({
 	name          = "BigWigsOnyxia",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "Onyxia",
 	enabletrigger = GetLocale() == "koKR" and "오닉시아" 
+		or GetLocale() == "zhCN" and "奥妮克希亚"
 		or "Onyxia"	,
 
 	loc = GetLocale() == "deDE" and 
@@ -34,6 +35,20 @@ BigWigsOnyxia = AceAddon:new({
 		warn3 = "오닉시아 3단계 시작!",
 		bosskill = "오닉시아를 물리쳤습니다!",
 	} 
+		or GetLocale() == "zhCN" and
+	{ 
+		bossname = "奥妮克希亚",
+		disabletrigger = "奥妮克希亚死亡了。",
+
+		trigger1 = "深深地吸了一口气……",
+		trigger2 = "从上空",
+		trigger3 = "看起来需要再给你一次教训",
+
+		warn1 = "奥妮克希亚深呼吸即将出现，向边缘散开！",
+		warn2 = "奥妮克希亚进入第二阶段！",
+		warn3 = "奥妮克希亚进入第三阶段！",
+		bosskill = "奥妮克希亚被击败了！",
+	}	
 		or 
 	{ 
 		bossname = "Onyxia",

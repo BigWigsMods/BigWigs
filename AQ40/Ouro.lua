@@ -1,9 +1,10 @@
-BigWigsOuro = AceAddon:new({
+﻿BigWigsOuro = AceAddon:new({
 	name          = "BigWigsOuro",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ40",
 	enabletrigger = GetLocale() == "koKR" and "아우로"
+		or GetLocale() == "zhCN" and "奥罗"
 		or "Ouro",
 
 	loc = GetLocale() == "koKR" and {
@@ -27,7 +28,32 @@ BigWigsOuro = AceAddon:new({
 
 		berserksoonwarn = "광폭화 예고 - 준비하세요!",
 		bosskill = "아우로를 물리쳤습니다!",
-	} or { 
+	}
+		or GetLocale() == "zhCN" and
+	{ 
+		bossname = "奥罗",
+		disabletrigger = "奥罗死亡了。",
+
+		sweeptrigger = "奥罗开始施放横扫。",
+		sweepannounce = "横扫发动！",
+		sweepwarn = "5秒后发动横扫！快退！",
+		sweepbartext = "横扫",
+
+		sandblasttrigger = "奥罗开始施展沙尘爆裂。",
+		sandblastannounce = "沙尘爆裂发动！",
+		sandblastwarn = "5秒后发动沙尘爆裂！",
+		sandblastbartext = "沙尘爆裂",
+
+		emergetrigger = "土堆施放了召唤奥罗甲虫。",
+		emergeannounce = "奥罗潜入地下！杀光虫子！",
+		emergewarn1 = "15秒后奥罗将钻出地面！",
+		emergebartext = "奥罗钻出地面",
+
+		berserksoonwarn = "即将狂暴 - 做好准备！",
+		bosskill = "奥罗被击败了！",
+	}	
+		or 
+	{	
 		bossname = "Ouro",
 		disabletrigger = "Ouro dies.",
 

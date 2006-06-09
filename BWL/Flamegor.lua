@@ -1,10 +1,11 @@
-BigWigsFlamegor = AceAddon:new({
+﻿BigWigsFlamegor = AceAddon:new({
 	name          = "BigWigsFlamegor",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "BWL",
 	enabletrigger = GetLocale() == "koKR" and "플레임고르"
 		or GetLocale() == "deDE" and "Flammenmaul" 
+		or GetLocale() == "zhCN" and "弗莱格尔"
 		or "Flamegor",
 
 	loc = GetLocale() == "koKR" and {	
@@ -42,6 +43,24 @@ BigWigsFlamegor = AceAddon:new({
 
 		bar1text = "Fluegelgelstoss",
 	}	
+		or GetLocale() == "zhCN" and 
+	{
+		bossname = "弗莱格尔",
+		disabletrigger = "弗莱格尔死亡了。",
+
+		trigger1 = "弗莱格尔开始施放龙翼打击。",
+		trigger2 = "弗莱格尔开始施放暗影烈焰。",
+		trigger3 = "变得狂暴起来！",
+
+		warn1 = "弗莱格尔开始施放龙翼打击！",
+		warn2 = "龙翼打击 - 30秒后再次发动",
+		warn3 = "3秒后发动龙翼打击！",
+		warn4 = "暗影烈焰发动！",
+		warn5 = "狂暴警报 - 猎人立刻使用宁神射击！",
+		bosskill = "弗莱格尔被击败了！",
+
+		bar1text = "龙翼打击",
+	}
 		or 
 	{
 		bossname = "Flamegor",

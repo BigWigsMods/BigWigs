@@ -1,9 +1,10 @@
-BigWigsBaronGeddon = AceAddon:new({
+﻿BigWigsBaronGeddon = AceAddon:new({
 	name          = "BigWigsBaronGeddon",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "MC",
 	enabletrigger = GetLocale() == "koKR" and "남작 게돈" 
+		or GetLocale() == "zhCN" and "迦顿男爵" 
 		or "Baron Geddon",
 
 	loc = GetLocale() == "deDE" and
@@ -33,6 +34,19 @@ BigWigsBaronGeddon = AceAddon:new({
 		warn1 = "당신은 폭탄입니다!",
 		warn2 = "님이 폭탄입니다!",	
 	} 
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "迦顿男爵",
+		disabletrigger = "迦顿男爵死亡了。",
+
+		trigger1 = "^(.+)受(.+)了活化炸弹",
+
+		you = "你",
+		are = "到",
+
+		warn1 = "你是炸弹人！向着夕阳奔跑吧！",
+		warn2 = "是炸弹人！向着夕阳奔跑吧！",
+	}
 		or 
 	{
 		bossname = "Baron Geddon",

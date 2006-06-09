@@ -1,9 +1,10 @@
-BigWigsHuhuran = AceAddon:new({
+﻿BigWigsHuhuran = AceAddon:new({
 	name          = "BigWigsHuhuran",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ40",
 	enabletrigger = GetLocale() == "koKR" and "공주 후후란"
+		or GetLocale() == "zhCN" and "哈霍兰公主"
 		or "Princess Huhuran",
 
 	loc = GetLocale() == "koKR" and {
@@ -20,7 +21,25 @@ BigWigsHuhuran = AceAddon:new({
 		stingwarn = "비룡 쐐기 - 메인탱커 해제!",
 		stingdelaywarn = "비룡 쐐기 3초전!",
 		bartext = "비룡 쐐기",	
-	} or {
+	}
+		or GetLocale() == "zhCN" and 
+	{
+		bossname = "哈霍兰公主",
+		disabletrigger = "哈霍兰公主死亡了。",
+		bosskill = "哈霍兰公主被击败了！",
+
+		frenzytrigger = "变得狂暴起来！",
+		berserktrigger = "变得极度狂暴而愤怒！",
+		frenzywarn = "狂暴警报 - 猎人立刻使用宁神射击！",
+		berserkwarn = "狂暴模式 - 治疗注意！",
+		berserksoonwarn = "即将狂暴 - 做好准备！",
+		stingtrigger = "受到了致命剧毒效果的影响。",
+		stingwarn = "毒性之箭 - 给TANK驱散！",
+		stingdelaywarn = "3秒后哈霍兰可能施放毒性之箭！",
+		bartext = "毒性之箭",
+	}	
+		or 
+	{
 		bossname = "Princess Huhuran",
 		disabletrigger = "Princess Huhuran dies.",
 		bosskill = "Princess Huhuran has been defeated.",

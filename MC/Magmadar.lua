@@ -1,9 +1,10 @@
-BigWigsMagmadar = AceAddon:new({
+﻿BigWigsMagmadar = AceAddon:new({
 	name          = "BigWigsMagmadar",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "MC",
 	enabletrigger = GetLocale() == "koKR" and "마그마다르"
+		or GetLocale() == "zhCN" and "玛格曼达"
 		or "Magmadar",
 
 	loc = GetLocale() == "koKR" and {
@@ -18,6 +19,20 @@ BigWigsMagmadar = AceAddon:new({
 		warn3 = "광역 공포 경보 - 다음 공포까지 30초!",
 
 		bar1text = "광역 공포",	
+	} 
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "玛格曼达",
+		disabletrigger = "玛格曼达死亡了。",
+
+		trigger1 = "变得极为狂暴！",
+		trigger2 = "受到了恐慌",
+
+		warn1 = "狂暴警报 - 猎人立刻使用宁神射击！",
+		warn2 = "5秒后发动群体恐惧！",
+		warn3 = "群体恐惧 - 30秒后再次发动",
+
+		bar1text = "群体恐惧",
 	} or {
 		bossname = "Magmadar",
 		disabletrigger = "Magmadar dies.",

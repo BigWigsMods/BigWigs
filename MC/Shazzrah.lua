@@ -1,9 +1,10 @@
-BigWigsShazzrah = AceAddon:new({
+﻿BigWigsShazzrah = AceAddon:new({
 	name          = "BigWigsShazzrah",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "MC",
 	enabletrigger = GetLocale() == "koKR" and "샤즈라"
+		or GetLocale() == "zhCN" and "沙斯拉尔"
 		or "Shazzrah",
 
 	loc = GetLocale() == "koKR" and {	
@@ -18,7 +19,23 @@ BigWigsShazzrah = AceAddon:new({
 		warn3 = "마법 약화 버프 - 마법 무효화를 사용하세요!",
 
 		bar1text = "점멸",
-	} or {
+	} 
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "沙斯拉尔",
+		disabletrigger = "沙斯拉尔死亡了。",
+
+		trigger1 = "沙斯拉尔获得了闪现术的效果",
+		trigger2 = "沙斯拉尔获得了衰减魔法的效果",
+
+		warn1 = "闪现术 - 30秒后再次发动",
+		warn2 = "5秒后发动闪现术！",
+		warn3 = "自我Buff - 驱散魔法！",
+
+		bar1text = "闪现术",
+	}
+		or 
+	{
 		bossname = "Shazzrah",
 		disabletrigger = "Shazzrah dies.",
 

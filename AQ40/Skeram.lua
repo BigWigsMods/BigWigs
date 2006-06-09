@@ -4,6 +4,7 @@ BigWigsSkeram = AceAddon:new({
 
 	zonename = "AQ40",
 	enabletrigger = GetLocale() == "koKR" and "예언자 스케람" 
+		or GetLocale() == "zhCN" and "预言者斯克拉姆"	
 		or "The Prophet Skeram",
 
 	loc = GetLocale() == "koKR" and {
@@ -21,7 +22,24 @@ BigWigsSkeram = AceAddon:new({
 		mcyou = "",
 		mcare = "are",	
 		whopattern = "(.+)|1이;가; ",
-	} or {
+	}
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "预言者斯克拉姆",
+		disabletrigger = "预言者斯克拉姆死亡了。",
+		bosskill = "预言者斯克拉姆被击败了！",
+
+		aetrigger = "预言者斯克拉姆开始施放魔爆术。",
+		mctrigger = "预言者斯克拉姆开始施放充实。",
+		aewarn = "正在施放魔爆术 - 迅速打断！",
+		mcwarn = "正在施放充实 - 准备变羊！",
+		mcplayer = "^(.+)受(.+)了充实效果的影响。",
+		mcplayerwarn = "被控制了！变羊！恐惧！",
+		mcyou = "你",
+		mcare = "到",
+	}	
+		or 
+	{
 		bossname = "The Prophet Skeram",
 		disabletrigger = "The Prophet Skeram dies.",
 		bosskill = "The Prophet Skeram has been defeated.",

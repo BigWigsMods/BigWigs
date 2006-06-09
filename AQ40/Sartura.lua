@@ -1,9 +1,10 @@
-BigWigsSartura = AceAddon:new({
+﻿BigWigsSartura = AceAddon:new({
 	name          = "BigWigsSartura",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ40",
 	enabletrigger = GetLocale() == "koKR" and "전투감시병 살투라" 
+		or GetLocale() == "zhCN" and "沙尔图拉"
 		or "Battleguard Sartura",
 
 	loc = GetLocale() == "koKR" and {
@@ -28,7 +29,33 @@ BigWigsSartura = AceAddon:new({
 		whirlwindoff = "전투감시병 살투라의 몸에서 소용돌이 효과가 사라졌습니다.",
 		whirlwindonwarn = "소용돌이 - 전투감시병 살투라 - 소용돌이",
 		whirlwindoffwarn = "소용돌이 사라짐. 스턴! 스턴! 스턴!",	
-	} or { 
+	}
+		or GetLocale() == "zhCN" and
+	{ 
+		bossname = "沙尔图拉",
+		disabletrigger = "我战斗到了最后一刻！",
+		bosskill = "沙尔图拉被击败了！",
+
+		-- starttrigger = "You will be judged for defiling these sacred grounds!  The laws of the Ancients will not be challenged!  Trespassers will be annihilated!\n",
+		starttrigger = "我宣判你死刑",
+		startwarn = "沙尔图拉已激活 - 10分钟后进入激怒状态",
+		enragetrigger = "沙尔图拉进入激怒状态！",
+		enragewarn = "激怒 - 激怒 - 激怒",
+		bartext = "激怒",
+		warn1 = "8分钟后激怒",
+		warn2 = "5分钟后激怒",
+		warn3 = "3分钟后激怒",
+		warn4 = "90秒后激怒",
+		warn5 = "60秒后激怒",
+		warn6 = "30秒后激怒",
+		warn7 = "10秒后激怒",
+		whirlwindon = "沙尔图拉获得了旋风斩的效果。",
+		whirlwindoff = "旋风斩效果从沙尔图拉身上消失。",
+		whirlwindonwarn = "旋风斩 - 沙尔图拉 - 旋风斩",
+		whirlwindoffwarn = "旋风斩消失！",
+	}	
+		or 
+	{	
 		bossname = "Battleguard Sartura",
 		disabletrigger = "I serve to the last",
 		bosskill = "Battleguard Sartura has been defeated!",

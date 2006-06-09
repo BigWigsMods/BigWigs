@@ -1,9 +1,10 @@
-BigWigsMajordomo = AceAddon:new({
+﻿BigWigsMajordomo = AceAddon:new({
 	name          = "BigWigsMajordomo",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "MC",
 	enabletrigger = GetLocale() == "koKR" and "청지기 이그젝큐투스"
+		or GetLocale() == "zhCN" and "管理者埃克索图斯"
 		or "Majordomo Executus",
 
 	loc = GetLocale() == "koKR" and {
@@ -28,6 +29,30 @@ BigWigsMajordomo = AceAddon:new({
 
 		texture1 = "Interface\\Icons\\Spell_Frost_FrostShock",
 		texture2 = "Interface\\Icons\\Spell_Shadow_AntiShadow",	
+	} 
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "管理者埃克索图斯",
+		disabletrigger = "不可能！等一下",
+
+		trigger1 = "获得了魔法反射的效果",
+		trigger2 = "获得了伤害反射护盾的效果",
+		trigger3 = "魔法反射效果从",
+		trigger4 = "伤害反射护盾效果从",
+
+		warn1 = "魔法反射护盾，持续10秒！",
+		warn2 = "伤害反射护盾，持续10秒！",
+		warn3 = "5秒后可以攻击！",
+		warn4 = "魔法反射护盾已消失！",
+		warn5 = "伤害反射护盾已消失！",
+		bosskill = "管理者埃克索图斯被击败了！",
+
+		bar1text = "魔法反射护盾",
+		bar2text = "伤害反射护盾",
+		bar3text = "新生力量",
+
+		texture1 = "Interface\\Icons\\Spell_Frost_FrostShock",
+		texture2 = "Interface\\Icons\\Spell_Shadow_AntiShadow",
 	} or {
 		bossname = "Majordomo Executus",
 		disabletrigger = "Impossible! Stay your attack, mortals... I submit! I submit!",

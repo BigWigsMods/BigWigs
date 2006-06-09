@@ -1,9 +1,10 @@
-BigWigsGuardians = AceAddon:new({
+﻿BigWigsGuardians = AceAddon:new({
 	name          = "BigWigsGuardians",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ20",
 	enabletrigger = GetLocale() == "koKR" and "아누비사스 감시자"
+		or GetLocale() == "zhCN" and "阿努比萨斯守卫者"
 		or "Anubisath Guardian",
 
 	loc = GetLocale() == "koKR" and {
@@ -24,7 +25,29 @@ BigWigsGuardians = AceAddon:new({
 		plaguewarn = "님이 역병에 걸렸습니다. 피하세요!",
 		plagueyou = "",	
 		whopattern = "(.+)|1이;가; "
-	} or {
+	} 
+		or GetLocale() == "zhCN" and 
+	{
+		bossname = "阿努比萨斯守卫者",
+		disabletrigger = "阿努比萨斯守卫者死亡了。",
+		bosskill = "阿努比萨斯守卫者被击败了！",
+
+		explodetrigger = "阿努比萨斯守卫者获得了爆炸的效果。",
+		explodewarn = "即将爆炸！近战躲开！",
+		enragetrigger = "阿努比萨斯守卫者获得了狂怒的效果。",
+		enragewarn = "进入狂怒状态！",
+		summonguardtrigger = "阿努比萨斯守卫者施放了召唤阿努比萨斯虫群卫士。",
+		summonguardwarn = "虫群卫士已被召唤出来",
+		summonwarriortrigger = "阿努比萨斯守卫者施放了召唤阿努比萨斯战士。",
+		summonwarriorwarn = "阿努比萨斯战士已被召唤出来",		
+		plaguetrigger = "^(.+)受(.+)了瘟疫效果的影响。$",
+		plaguewarn = "受到瘟疫的影响！快躲开！",
+		plaguewarnyou = "你受到瘟疫的影响！快跑开！",
+		plagueyou = "你",
+		plagueare = "到",
+	}
+		or 
+	{
 		bossname = "Anubisath Guardian",
 		disabletrigger = "Anubisath Guardian dies.",
 		bosskill = "Anubisath Guardian has been defeated.",

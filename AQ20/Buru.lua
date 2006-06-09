@@ -1,9 +1,10 @@
-BigWigsBuru = AceAddon:new({
+﻿BigWigsBuru = AceAddon:new({
 	name          = "BigWigsBuru",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ20",
 	enabletrigger = GetLocale() == "koKR" and "먹보 부루"
+		or GetLocale() == "zhCN" and "吞咽者布鲁"
 		or "Buru the Gorger",
 
 	loc = GetLocale() == "koKR" and {
@@ -15,7 +16,20 @@ BigWigsBuru = AceAddon:new({
 		watchwarn = "님을 노려봅니다!",
 		you = UnitName("player"),	
 		watchtell = "당신을 주시합니다!",
-	} or {
+	} 
+		or GetLocale() == "zhCN" and
+	{
+		bossname = "吞咽者布鲁",
+		disabletrigger = "吞咽者布鲁死亡了。",
+		bosskill = "吞咽者布鲁被击败了！",
+
+		watchtrigger = "凝视着(.+)！",
+		watchwarn = "被布鲁盯上了！",
+		watchwarnyou = "你被布鲁盯上了！放风筝吧！",
+		you = "你",
+	}
+		or 
+	{
 		bossname = "Buru the Gorger",
 		disabletrigger = "Buru the Gorger dies.",
 		bosskill = "Buru the Gorger has been defeated.",

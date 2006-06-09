@@ -1,10 +1,11 @@
-BigWigsFiremaw = AceAddon:new({
+﻿BigWigsFiremaw = AceAddon:new({
 	name          = "BigWigsFiremaw",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "BWL",
 	enabletrigger = GetLocale() == "koKR" and "화염아귀" 
 		or GetLocale() == "deDE" and "Feuerschwinge" 
+		or GetLocale() == "zhCN" and "费尔默"
 		or "Firemaw",
 
 	loc = GetLocale() == "koKR" and {
@@ -40,6 +41,22 @@ BigWigsFiremaw = AceAddon:new({
 			
 		bar1text = "Fluegelgelstoss",
 	} 
+		or GetLocale() == "zhCN" and 
+	{
+		bossname = "费尔默",
+		disabletrigger = "费尔默死亡了。",
+
+		trigger1 = "费尔默开始施放龙翼打击。",
+		trigger2 = "费尔默开始施放暗影烈焰。",
+
+		warn1 = "费尔默开始施放龙翼打击！",
+		warn2 = "龙翼打击 - 30秒后再次发动",
+		warn3 = "3秒后发动龙翼打击！",
+		warn4 = "暗影烈焰发动！",
+		bosskill = "费尔默被击败了！",
+
+		bar1text = "龙翼打击",
+	}
 		or 
 	{
 		bossname = "Firemaw",
