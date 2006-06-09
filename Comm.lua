@@ -24,12 +24,13 @@ end
 
 function BigWigsComm:BIGWIGS_SYNC_RECV(a1, a2, a3, a4, a5, a6, a7, a8 )
 	local msg = oRA_Core:Clean(a1)
-	local _, _, msg, sync, rest = string.find(msg, "^BIGWIGSSYNC ($S+) ($S+)%s*(.*)$")
+	local _, _, msg = string.find(msg, "^BIGWIGSSYNC (.*)$")
 	local nick = a2
 
 	if not msg then return end
 
-	local _, _,  = string.find(msg, "^(%S+)%s*(.*)$")
+	local _, _,sync,rest  = string.find(msg, "^(%S+)%s*(.*)$")
+
 	self:TriggerEvent("BIGWIGS_SYNC_"..sync, rest )
 end
 
