@@ -34,9 +34,9 @@
 		bossname = "라그나로스",
 		disabletrigger = "라그나로스|1이;가; 죽었습니다.",
 
-		trigger1 = "설퍼론의 유황",
-		trigger2 = "이제 너희,",
-		trigger3 = "나의 종들아,",
+		trigger1 = "설퍼론의 유황",		
+		trigger2 = "나의 종들아,",
+		trigger3 = "이제 너희,",
 
 		warn1 = "광역 튕겨냄!",
 		warn2 = "5초후 광역 튕겨냄!",
