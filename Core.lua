@@ -113,6 +113,22 @@ BigWigs = AceAddon:new({
 		Duskwood = "그늘숲", 
 		Feralas = "페랄라스",
 		Hinterlands = "저주받은 땅", 
+	} or GetLocale() == "zhCN" and {
+		ModuleEnable = "%s模块已开启",
+		TargetEnable = "目标监视已开启",
+		TargetDisable = "目标监视已关闭",
+
+		MC = "熔火之心",
+		BWL = "黑翼之巢",
+		Onyxia = "奥妮克西亚的巢穴",
+		ZG = "祖尔格拉布",
+		AQ20 = "安其拉废墟",
+		AQ40 = "安其拉",
+		Ashenvale = "灰谷",
+		Azshara = "艾萨拉",
+		Duskwood = "暮色森林", 
+		Feralas = "菲拉斯",
+		Hinterlands = "辛特兰", 
 	} or {
 		ModuleEnable = "%s mod enabled",
 		TargetEnable = "Target monitoring enabled",
