@@ -223,7 +223,7 @@ function BigWigsTwins:CHAT_MSG_MONSTER_EMOTE()
 end
 
 function BigWigsTwins:BIGWIGS_SYNC_TWINSENRAGE()
-	if( not self.enragestarted ) 
+	if( not self.enragestarted ) then
 		self:StartEnrage()
 	end
 end
