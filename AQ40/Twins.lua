@@ -108,6 +108,7 @@ function BigWigsTwins:Enable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
 	self:RegisterEvent("CHAT_MSG_COMBAT_FRIENDLY_DEATH", "PLAYER_REGEN_ENABLED")
+	self:RegisterEvent("BIGWIGS_SYNC_TWINSENRAGE")
 end
 
 function BigWigsTwins:Disable()
@@ -124,6 +125,7 @@ function BigWigsTwins:PLAYER_REGEN_DISABLED()
 	local go = self:Scan()
 	if (go) then
 		self:StartEnrage()
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "TWINSENRAGE")
 	end
 end
 
@@ -214,6 +216,10 @@ function BigWigsTwins:CHAT_MSG_MONSTER_EMOTE()
 	if (string.find(arg1, self.loc.enragetrigger)) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.enragewarn, "Red")
 	end
+end
+
+function BigWigsTwins:BIGWIGS_SYNC_TWINSENRAGE()
+	self:StartEnrage()
 end
 --------------------------------
 --      Load this bitch!      --
