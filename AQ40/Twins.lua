@@ -102,7 +102,6 @@ end
 
 function BigWigsTwins:Enable()
 	self.disabled = nil
-	self.enragestarted = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
@@ -110,12 +109,13 @@ function BigWigsTwins:Enable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
 	self:RegisterEvent("CHAT_MSG_COMBAT_FRIENDLY_DEATH", "PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("BIGWIGS_SYNC_TWINSENRAGE")
+	self:RegisterEvent("BIGWIGS_SYNC_TWINSTELEPORT")
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "TWINSENRAGE", 10 )
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "TWINSTELEPORT", 10 )
 end
 
 function BigWigsTwins:Disable()
 	self.disabled = true
-	self.enragestarted = nil
 	self:UnregisterAllEvents()
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bartext)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.portdelaywarn)
@@ -127,7 +127,7 @@ end
 function BigWigsTwins:PLAYER_REGEN_DISABLED()
 	local go = self:Scan()
 	if (go) then
-		self:StartEnrage()
+		-- Now fires off the SYNC event as recommended by Tekkub
 		self:TriggerEvent("BIGWIGS_SYNC_SEND", "TWINSENRAGE")
 	end
 end
@@ -168,7 +168,6 @@ function BigWigsTwins:StartEnrage()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 580, "Yellow")
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 790, "Orange")
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 870, "Red")
-	self.enragestarted = true			
 end
 
 function BigWigsTwins:StopEnrage()
@@ -183,7 +182,6 @@ function BigWigsTwins:StopEnrage()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebartext, 580)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebartext, 790)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebartext, 870)
-	self.enragestarted = nil
 end
 
 function BigWigsTwins:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -193,13 +191,17 @@ function BigWigsTwins:CHAT_MSG_COMBAT_HOSTILE_DEATH()
     end
 end
 
+function BigWigsTwins:BIGWIGS_SYNC_TWINSTELEPORT(rest, nick)
+	self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.portwarn, "Yellow")
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.portdelaywarn, 25, "Red")
+	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bartext, 30, 1, "Yellow", "Interface\\Icons\\Spell_Arcane_Blink")
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bartext, 10, "Orange")
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bartext, 20, "Red")
+end
+
 function BigWigsTwins:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	if (string.find(arg1, self.loc.porttrigger)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.portwarn, "Yellow")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.portdelaywarn, 25, "Red")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bartext, 30, 1, "Yellow", "Interface\\Icons\\Spell_Arcane_Blink")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bartext, 10, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bartext, 20, "Red")
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "TWINSTELEPORT")
 	end
 end
 
@@ -224,9 +226,7 @@ function BigWigsTwins:CHAT_MSG_MONSTER_EMOTE()
 end
 
 function BigWigsTwins:BIGWIGS_SYNC_TWINSENRAGE(rest, nick)
-	if( not self.enragestarted ) then
-		self:StartEnrage()
-	end
+	self:StartEnrage()
 end
 --------------------------------
 --      Load this bitch!      --
