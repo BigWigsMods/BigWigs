@@ -9,7 +9,7 @@ BigWigsComm = AceAddon:new({
 
 
 function BigWigsComm:Enable()
-	if oRA_Core then oRA_Core:AddCheck("BIGWIGS_SYNC_RECV","BIGWIGSSYNC")
+	if oRA_Core then oRA_Core:AddCheck("BIGWIGS_SYNC_RECV", "BIGWIGSSYNC")
 	elseif CT_RA_ParseEvent then self:RegisterEvent("CHAT_MSG_CHANNEL") end
 	self:RegisterEvent("BIGWIGS_SYNC_RECV")
 	self:RegisterEvent("BIGWIGS_SYNC_SEND")
@@ -40,15 +40,12 @@ function BigWigsComm:BIGWIGS_SYNC_RECV(rawmsg, nick)
 	cleanmsg = string.gsub(cleanmsg, "§", "S")
 	if strsub(cleanmsg, strlen(cleanmsg)-7) == " ...hic!" then cleanmsg = strsub(cleanmsg, 1, strlen(cleanmsg)-8) end
 
-	local _, _, msg = string.find(cleanmsg, "^BIGWIGSSYNC (.*)$")
+	local _, _, sync, rest = string.find(cleanmsg, "^BIGWIGSSYNC (%S+)%s*(.*)$")
+	if not sync then return end
 
-	if not msg then return end
-
-	local _, _, sync, rest = string.find(msg, "^(%S+)%s*(.*)$")
-
-	if not throt[msg] or not times[msg] or (times[msg] + throt[msg]) <= GetTime() then
+	if not throt[sync] or not times[sync] or (times[sync] + throt[sync]) <= GetTime() then
 		self:TriggerEvent("BIGWIGS_SYNC_"..sync, rest, nick)
-		times[msg] = GetTime()
+		times[sync] = GetTime()
 	end
 end
 
