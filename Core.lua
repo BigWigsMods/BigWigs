@@ -148,8 +148,8 @@ end
 
 
 function BigWigs:Enable()
-	if self:GetOpt("nScale") then self:SetScale(self:GetOpt("nScale")) end
-	self:TogOpt("bLock")
+	self:SetScale(self:GetOpt("nScale"))
+--~~ 	self:TogOpt("bLock")
 --~~ 	self:ShowAnchors()
 
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
@@ -242,14 +242,8 @@ end
 
 function BigWigs:SetScale(nScale)
 	if nScale and nScale >= 0.25 and nScale <= 5 then
-		-- 55 is height of BigWigsAnchorFrame
-		-- local yOfM = 55 - ( 55 * nScale )
-		-- BigWigsTextFrame:SetPoint("TOP", BigWigsAnchorFrame, "BOTTOM", 0, yOfM)
-		BigWigsTextFrame:SetScale(nScale)
-
 		self:SetOpt("nScale", nScale)
 		self:TriggerEvent("BIGWIGS_SCALE", nScale)
-
 		self.cmd:result(string.format("Scale is set to %s", nScale))
 	end
 end
