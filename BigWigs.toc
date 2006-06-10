@@ -14,6 +14,7 @@ Messages.lua
 Messages.xml
 Sound.lua
 Comm.lua
+DelayedEvents.lua
 
 ZG\Jeklik.lua
 ZG\Marli.lua
@@ -56,3 +57,4 @@ MC\Shazzrah.lua
 Other\Azuregos.lua
 Other\Emeriss.lua
 Other\Onyxia.lua
+Other\Test.lua

@@ -1,55 +1,51 @@
-﻿BIGWIGS_CMD_OPT = GetLocale() == "koKR" and {
+﻿local cmdopt = GetLocale() == "koKR" and {
 	{
-		option	= "잠금",
+		option	= "anchor",
 		desc	= "타이머 바와 메시지를 고정시키거나 풀어줌.",
-		method	= "SlashLock",		
+		method	= "ShowAnchors",
 	},
 	{
 		option	= "테스트",
 		desc	= "시험용 바와 메시지를 출력.",
-		method	= "SlashTest",		
-	},	
+		method	= "Test",
+	},
 	{
 		option	= "크기",
-		desc	= "메시지 및 바 크기를 변경.", 
+		desc	= "메시지 및 바 크기를 변경.",
 		method  = "SlashScale",
-		input	= "true", 
+		input	= "true",
 	}
-} 
-	or GetLocale() == "zhCN" and
-{	
+} or GetLocale() == "zhCN" and {
 	{
-		option	= "lock",
+		option	= "anchor",
 		desc	= "锁定/解锁计时条与信息框体。",
-		method	= "SlashLock",		
+		method	= "ShowAnchors",
 	},
 	{
 		option	= "test",
 		desc	= "显示测试信息与计时条。",
-		method	= "SlashTest",		
-	},	
+		method	= "Test",
+	},
 	{
 		option	= "scale",
-		desc	= "设置计时条与信息框体的缩放大小。", 
+		desc	= "设置计时条与信息框体的缩放大小。",
 		method  = "SlashScale",
 		input	= "true",
 	}
-}
-	or
-{	
+} or {
 	{
-		option	= "lock",
-		desc	= "Lock/unlock bar and message frame.",
-		method	= "SlashLock",		
+		option	= "anchor",
+		desc	= "Show anchor frames.",
+		method	= "ShowAnchors",
 	},
 	{
 		option	= "test",
 		desc	= "Shows the test message and bar.",
-		method	= "SlashTest",		
-	},	
+		method	= "Test",
+	},
 	{
 		option	= "scale",
-		desc	= "Set the scale of TimerBar and Message.", 
+		desc	= "Set the scale of TimerBar and Message.",
 		method  = "SlashScale",
 		input	= "true",
 	}
@@ -58,17 +54,13 @@
 BigWigs = AceAddon:new({
 	name          = "BigWigs",
 	description   = "Boss Mods with Timex bars.",
-	version       = "0",
-	build         = tonumber(string.sub("$Revision$", 12, -3)),
+	version       = tonumber(string.sub("$Revision$", 12, -3)),
 	releaseDate   = string.sub("$Date$", 8, 17),
 	aceCompatible = 102,
 	author        = "Tekkub Stoutwrithe",
 	email 		    = "tekkub@gmail.com",
 	category      = "inventory",
-	cmd           = AceChatCmd:new(
-										{"/bw", "/BigWigs"}, 
-										BIGWIGS_CMD_OPT
-									),
+	cmd           = AceChatCmd:new({"/bw", "/BigWigs"}, cmdopt),
 	db            = AceDatabase:new("BigWigsDB"),
 
 	modules = {},
@@ -94,25 +86,25 @@ BigWigs = AceAddon:new({
 		AQ40 = "Ahn'Qiraj",
 		Ashenvale = "Ashenvale",
 		Azshara = "Azshara",
-		Duskwood = "Duskwood", 
+		Duskwood = "Duskwood",
 		Feralas = "Feralas",
-		Hinterlands = "Das Hinterland", 
+		Hinterlands = "Das Hinterland",
 	} or GetLocale() == "koKR" and {
 		ModuleEnable = "%s 모듈을 시작",
 		TargetEnable = "타겟 확인 시작",
 		TargetDisable = "타겟 확인 꺼짐",
 
 		MC = "화산 심장부",
-		BWL = "검은날개 둥지",		
+		BWL = "검은날개 둥지",
 		Onyxia = "오닉시아의 둥지",
 		ZG = "줄구룹",
 		AQ20 = "안퀴라즈 폐허",
-		AQ40 = "안퀴라즈", 	
+		AQ40 = "안퀴라즈",
 		Ashenvale = "잿빛 골짜기",
 		Azshara = "아즈샤라",
-		Duskwood = "그늘숲", 
+		Duskwood = "그늘숲",
 		Feralas = "페랄라스",
-		Hinterlands = "저주받은 땅", 
+		Hinterlands = "저주받은 땅",
 	} or GetLocale() == "zhCN" and {
 		ModuleEnable = "%s模块已开启",
 		TargetEnable = "目标监视已开启",
@@ -126,9 +118,9 @@ BigWigs = AceAddon:new({
 		AQ40 = "安其拉",
 		Ashenvale = "灰谷",
 		Azshara = "艾萨拉",
-		Duskwood = "暮色森林", 
+		Duskwood = "暮色森林",
 		Feralas = "菲拉斯",
-		Hinterlands = "辛特兰", 
+		Hinterlands = "辛特兰",
 	} or {
 		ModuleEnable = "%s mod enabled",
 		TargetEnable = "Target monitoring enabled",
@@ -142,35 +134,29 @@ BigWigs = AceAddon:new({
 		AQ40 = "Ahn'Qiraj",
 		Ashenvale = "Ashenvale",
 		Azshara = "Azshara",
-		Duskwood = "Duskwood", 
+		Duskwood = "Duskwood",
 		Feralas = "Feralas",
-		Hinterlands = "The Hinterlands", 
+		Hinterlands = "The Hinterlands",
 	},
 })
 
 
 function BigWigs:Initialize()
 	if not BigWigsDB then BigWigsDB = {} end
-		self.sv = BigWigsDB
+	self.sv = BigWigsDB
 end
 
 
 function BigWigs:Enable()
-	if ( self:GetOpt("nScale") ) then self:SetScale( self:GetOpt("nScale") ) end		
-	self:TogOpt("bLock") 	self:SlashLock() 
-	
-	self:RegisterEvent("BIGWIGS_BAR_START")
-	self:RegisterEvent("BIGWIGS_BAR_CANCEL")
-	self:RegisterEvent("BIGWIGS_DELAYEDMESSAGE_START")
-	self:RegisterEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL")
-	self:RegisterEvent("BIGWIGS_BAR_SETCOLOR")
-	self:RegisterEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START")
-	self:RegisterEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL")
+	if self:GetOpt("nScale") then self:SetScale(self:GetOpt("nScale")) end
+	self:TogOpt("bLock")
+--~~ 	self:ShowAnchors()
+
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 end
 
 
-function BigWigs:Disable()	
+function BigWigs:Disable()
 	self:UnregisterAllEvents()
 end
 
@@ -180,7 +166,6 @@ end
 -------------------------------
 
 function BigWigs:RegisterModule(module)
-
 	if not module or not module.name then return end
 	self.modules[module.name] = module
 
@@ -211,9 +196,7 @@ end
 
 
 function BigWigs:ZONE_CHANGED_NEW_AREA()
-
 	if self.enablezones[GetRealZoneText()] then
-	
 		self.monitoring = true
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.TargetEnable, "LtBlue", true)
 		self:RegisterEvent("PLAYER_TARGET_CHANGED")
@@ -248,83 +231,39 @@ function BigWigs:GetColor(color)
 end
 
 
----------------------------
---      Test method      --
----------------------------
-
 function BigWigs:Test()
-	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar", 15, 1, "Green", "Interface\\Icons\\Spell_Nature_ResistNature")
-	self:TriggerEvent("BIGWIGS_MESSAGE", "Test", "Green")
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", "OMG Bear!", 5, "Yellow")
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", "*RAWR*", 10, "Orange")
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", "Test Bar", 5, "Yellow")
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", "Test Bar", 7, "Orange")
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", "Test Bar", 10, "Red")
-
-	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar 2", 6, 2, "Green", "Interface\\Icons\\Spell_Nature_ResistNature")
-	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar 3", 7, 3, "Yellow", "Interface\\Icons\\Spell_Nature_ResistNature")
-	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar 4", 7, 4, "Red", "Interface\\Icons\\Spell_Nature_ResistNature")
+	self:TriggerEvent("BIGWIGS_TEST")
 end
 
-
-------------------------------
---      Delay Handlers      --
-------------------------------
-
-function BigWigs:BIGWIGS_BAR_DELAYEDSETCOLOR_START(text, time, color)
-	if not text or not time then return end
-	self:debug(string.format("BIGWIGS_BAR_DELAYEDSETCOLOR | %s | %s | %s", text, time, type(color) == "string" and color or type(color)))
-	Timex:AddSchedule("BIGWIGS_BAR_DELAYEDSETCOLOR "..text..time, time, nil, nil, "BIGWIGS_BAR_SETCOLOR", text, color)
-end
-
-
-function BigWigs:BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL(text, time)
-	if not text or not time then return end
-	Timex:DeleteSchedule("BIGWIGS_BAR_DELAYEDSETCOLOR "..text..time)
-end
-
-
-function BigWigs:BIGWIGS_DELAYEDMESSAGE_START(text, time, color, noraidsay)
-	if not text or not time then return end
-	Timex:AddNamedSchedule("BIGWIGS_DELAYEDMESSAGE "..text, time, nil, nil, "BIGWIGS_MESSAGE", text, color, noraidsay)
-end
-
-
-function BigWigs:BIGWIGS_DELAYEDMESSAGE_CANCEL(text)
-	if not text then return end
-	Timex:DeleteSchedule("BIGWIGS_DELAYEDMESSAGE "..text)
-end
 
 --------------------------------
 --      Interface Handler     --
 --------------------------------
-function BigWigs:SetScale(nScale)	
-	if ( nScale and nScale >= 0.25 and nScale <= 5 ) then					
-		-- 55 is height of BigWigsAnchorFrame 
-		-- local yOfM = 55 - ( 55 * nScale ) 
+
+function BigWigs:SetScale(nScale)
+	if nScale and nScale >= 0.25 and nScale <= 5 then
+		-- 55 is height of BigWigsAnchorFrame
+		-- local yOfM = 55 - ( 55 * nScale )
 		-- BigWigsTextFrame:SetPoint("TOP", BigWigsAnchorFrame, "BOTTOM", 0, yOfM)
 		BigWigsTextFrame:SetScale(nScale)
-		
+
 		self:SetOpt("nScale", nScale)
-		self.cmd:result( format("Scale is set to %s", nScale ) )		
+		self:TriggerEvent("BIGWIGS_SCALE", nScale)
+
+		self.cmd:result(string.format("Scale is set to %s", nScale))
 	end
 end
+
 
 --------------------------------
 --        Slash Handler       --
 --------------------------------
-function BigWigs:SlashLock()
-	if ( self:TogOpt("bLock") ) then 
-		BW_BarAnchorButton:Show()
-		BW_MsgAnchorButton:Show()
-	else
-		BW_BarAnchorButton:Hide()
-		BW_MsgAnchorButton:Hide()
-	end	
+
+function BigWigs:ShowAnchors()
+	self:TriggerEvent("BIGWIGS_SHOW_ANCHORS")
 end
-function BigWigs:SlashTest()
-	self:Test()	
-end
+
+
 function BigWigs:SlashScale(ScaleValue)
 	local args = ace.ParseWords(ScaleValue)
 	scale = tonumber(args[1])
@@ -336,15 +275,22 @@ end
 --------------------------------
 --      Utility Function      --
 --------------------------------
-function BigWigs:GetOpt(OptName) 
-	return self.db:get(self.profilePath,OptName) 
+
+function BigWigs:GetOpt(OptName)
+	return self.db:get(self.profilePath,OptName)
 end
+
+
 function BigWigs:SetOpt(OptName, OptVal)
-	self.db:set(self.profilePath,OptName,OptVal) 
+	self.db:set(self.profilePath,OptName,OptVal)
 end
-function BigWigs:TogOpt(OptName) 
-	return self.db:toggle(self.profilePath,OptName) 
+
+
+function BigWigs:TogOpt(OptName)
+	return self.db:toggle(self.profilePath,OptName)
 end
+
+
 --------------------------------
 --      Load this bitch!      --
 --------------------------------
