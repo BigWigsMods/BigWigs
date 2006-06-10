@@ -110,6 +110,7 @@ function BigWigsTwins:Enable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
 	self:RegisterEvent("CHAT_MSG_COMBAT_FRIENDLY_DEATH", "PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("BIGWIGS_SYNC_TWINSENRAGE")
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "TWINSENRAGE", 10 )
 end
 
 function BigWigsTwins:Disable()
@@ -222,7 +223,7 @@ function BigWigsTwins:CHAT_MSG_MONSTER_EMOTE()
 	end
 end
 
-function BigWigsTwins:BIGWIGS_SYNC_TWINSENRAGE()
+function BigWigsTwins:BIGWIGS_SYNC_TWINSENRAGE(rest, nick)
 	if( not self.enragestarted ) then
 		self:StartEnrage()
 	end
