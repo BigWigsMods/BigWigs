@@ -51,9 +51,9 @@ function BigWigsSyncTest:BIGWIGS_TEST()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", "Test Bar", 7, "Orange")
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", "Test Bar", 10, "Red")
 
-	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar 2", 6, 2, "Green", "Interface\\Icons\\Spell_Nature_ResistNature")
-	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar 3", 7, 3, "Yellow", "Interface\\Icons\\Spell_Nature_ResistNature")
-	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar 4", 7, 4, "Red", "Interface\\Icons\\Spell_Nature_ResistNature")
+	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar 2", 10, 2, "Green", "Interface\\Icons\\Spell_Nature_ResistNature")
+	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar 3", 5, 3, "Yellow", "Interface\\Icons\\Spell_Nature_ResistNature")
+	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar 4", 3, 4, "Red", "Interface\\Icons\\Spell_Nature_ResistNature")
 end
 
 
