@@ -9,7 +9,8 @@ BigWigsComm = AceAddon:new({
 
 
 function BigWigsComm:Enable()
-	if oRA_Core then oRA_Core:AddCheck("BIGWIGS_SYNC_RECV","BIGWIGSSYNC") end
+	if oRA_Core then oRA_Core:AddCheck("BIGWIGS_SYNC_RECV","BIGWIGSSYNC")
+	elseif CT_RA_ParseEvent then self:RegisterEvent("CHAT_MSG_CHANNEL") end
 	self:RegisterEvent("BIGWIGS_SYNC_RECV")
 	self:RegisterEvent("BIGWIGS_SYNC_SEND")
 	self:RegisterEvent("BIGWIGS_SYNC_THROTTLE")
@@ -25,10 +26,21 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsComm:BIGWIGS_SYNC_RECV(a1, a2, a3, a4, a5, a6, a7, a8 )
-	local msg = oRA_Core:Clean(a1)
-	local _, _, msg = string.find(msg, "^BIGWIGSSYNC (.*)$")
-	local nick = a2
+-- Handle inbound chatter when the user runs CTRA
+function BigWigsComm:CHAT_MSG_CHANNEL()
+	if not CT_RA_Channel or string.lower(arg9) ~= string.lower(CT_RA_Channel) then return end
+
+	self:BIGWIGS_SYNC_RECV(arg1, arg2)
+end
+
+
+-- Parse out inbound chatter
+function BigWigsComm:BIGWIGS_SYNC_RECV(rawmsg, nick)
+	local cleanmsg = string.gsub(rawmsg, "%$", "s")
+	cleanmsg = string.gsub(cleanmsg, "§", "S")
+	if strsub(cleanmsg, strlen(cleanmsg)-7) == " ...hic!" then cleanmsg = strsub(cleanmsg, 1, strlen(cleanmsg)-8) end
+
+	local _, _, msg = string.find(cleanmsg, "^BIGWIGSSYNC (.*)$")
 
 	if not msg then return end
 
@@ -42,13 +54,13 @@ end
 
 
 function BigWigsComm:BIGWIGS_SYNC_SEND(msg)
-	if oRA_Core then oRA_Core:Send("BIGWIGSSYNC " .. msg) end
+	if oRA_Core then oRA_Core:Send("BIGWIGSSYNC " .. msg)
+	elseif CT_RA_AddMessage then CT_RA_AddMessage("BIGWIGSSYNC " .. msg) end
 end
 
 
 function BigWigsComm:BIGWIGS_SYNC_THROTTLE(msg, time)
 	assert(msg, "No message passed")
-	assert(time, "No time passed")
 
 	throt[msg] = time
 end
