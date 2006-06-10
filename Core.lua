@@ -44,6 +44,11 @@
 		method	= "Test",
 	},
 	{
+		option	= "err",
+		desc	= "Sends messages to the Blizzard error frame instead of Bigwig's own frame.",
+		method	= "Test",
+	},
+	{
 		option	= "scale",
 		desc	= "Set the scale of TimerBar and Message.",
 		method  = "SlashScale",
@@ -198,12 +203,12 @@ end
 function BigWigs:ZONE_CHANGED_NEW_AREA()
 	if self.enablezones[GetRealZoneText()] then
 		self.monitoring = true
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.TargetEnable, "LtBlue", true)
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.TargetEnable, "LtBlue", true, 0)
 		self:RegisterEvent("PLAYER_TARGET_CHANGED")
 		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
 	elseif self.monitoring then
 		self.monitoring = nil
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.TargetDisable, "LtBlue", true)
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.TargetDisable, "LtBlue", true, 0)
 		self:UnregisterEvent("PLAYER_TARGET_CHANGED")
 		self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 	end

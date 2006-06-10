@@ -16,8 +16,8 @@ function BigWigsSound:Disable()
 end
 
 
-function BigWigsSound:BIGWIGS_MESSAGE(text)
-	if not text then return end
+function BigWigsSound:BIGWIGS_MESSAGE(text, color, noraidsay, sound)
+	if not text or sound == 0 then return end
 	PlaySoundFile("Interface\\AddOns\\BigWigs\\msg.wav")
 end
 
