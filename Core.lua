@@ -1,60 +1,7 @@
-﻿local cmdopt = GetLocale() == "koKR" and {
-	{
-		option	= "anchor",
-		desc	= "타이머 바와 메시지를 고정시키거나 풀어줌.",
-		method	= "ShowAnchors",
-	},
-	{
-		option	= "테스트",
-		desc	= "시험용 바와 메시지를 출력.",
-		method	= "Test",
-	},
-	{
-		option	= "크기",
-		desc	= "메시지 및 바 크기를 변경.",
-		method  = "SlashScale",
-		input	= "true",
-	}
-} or GetLocale() == "zhCN" and {
-	{
-		option	= "anchor",
-		desc	= "锁定/解锁计时条与信息框体。",
-		method	= "ShowAnchors",
-	},
-	{
-		option	= "test",
-		desc	= "显示测试信息与计时条。",
-		method	= "Test",
-	},
-	{
-		option	= "scale",
-		desc	= "设置计时条与信息框体的缩放大小。",
-		method  = "SlashScale",
-		input	= "true",
-	}
-} or {
-	{
-		option	= "anchor",
-		desc	= "Show anchor frames.",
-		method	= "ShowAnchors",
-	},
-	{
-		option	= "test",
-		desc	= "Shows the test message and bar.",
-		method	= "Test",
-	},
-	{
-		option	= "err",
-		desc	= "Sends messages to the Blizzard error frame instead of Bigwig's own frame.",
-		method	= "Test",
-	},
-	{
-		option	= "scale",
-		desc	= "Set the scale of TimerBar and Message.",
-		method  = "SlashScale",
-		input	= "true",
-	}
-}
+﻿
+local tekteck = TekTechEmbed:GetInstance("1")
+local sv
+
 
 BigWigs = AceAddon:new({
 	name          = "BigWigs",
@@ -65,7 +12,7 @@ BigWigs = AceAddon:new({
 	author        = "Tekkub Stoutwrithe",
 	email 		    = "tekkub@gmail.com",
 	category      = "inventory",
-	cmd           = AceChatCmd:new({"/bw", "/BigWigs"}, cmdopt),
+	cmd           = AceChatCmd:new({"/bw", "/BigWigs"}, {}),
 	db            = AceDatabase:new("BigWigsDB"),
 
 	modules = {},
@@ -148,15 +95,11 @@ BigWigs = AceAddon:new({
 
 function BigWigs:Initialize()
 	if not BigWigsDB then BigWigsDB = {} end
-	self.sv = BigWigsDB
+	sv = BigWigsDB
 end
 
 
 function BigWigs:Enable()
-	self:SetScale(self:GetOpt("nScale"))
---~~ 	self:TogOpt("bLock")
---~~ 	self:ShowAnchors()
-
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 end
 
@@ -170,9 +113,26 @@ end
 --      Module Handling      --
 -------------------------------
 
+local bw = BigWigs
+local get = function(self, a1,a2,a3,a4,a5,a6,a7,a8,a9) return tekteck:TableGetVal(sv, self.name, a1,a2,a3,a4,a5,a6,a7,a8,a9) end
+local set = function(self, val,a1,a2,a3,a4,a5,a6,a7,a8,a9) tekteck:TableSetVal(sv, val, self.name, a1,a2,a3,a4,a5,a6,a7,a8,a9) end
+local tog = function(self, a1,a2,a3,a4,a5,a6,a7,a8,a9)
+	local x
+	if not get(self, a1,a2,a3,a4,a5,a6,a7,a8,a9) then x = true end
+	set(self, x, a1,a2,a3,a4,a5,a6,a7,a8,a9)
+	return x
+end
+
+
 function BigWigs:RegisterModule(module)
 	if not module or not module.name then return end
 	self.modules[module.name] = module
+
+	module.GetOpt, module.SetOpt, module.TogOpt = get, set, tog
+	if module.cmdOptions then
+		module.cmdOptions.handler = module
+		table.insert(self.cmd.options, module.cmdOptions)
+	end
 
 	local z = module.zonename
 
@@ -245,49 +205,49 @@ end
 --      Interface Handler     --
 --------------------------------
 
-function BigWigs:SetScale(nScale)
-	if nScale and nScale >= 0.25 and nScale <= 5 then
-		self:SetOpt("nScale", nScale)
-		self:TriggerEvent("BIGWIGS_SCALE", nScale)
-		self.cmd:result(string.format("Scale is set to %s", nScale))
-	end
-end
+--~~ function BigWigs:SetScale(nScale)
+--~~ 	if nScale and nScale >= 0.25 and nScale <= 5 then
+--~~ 		self:SetOpt("nScale", nScale)
+--~~ 		self:TriggerEvent("BIGWIGS_SCALE", nScale)
+--~~ 		self.cmd:result(string.format("Scale is set to %s", nScale))
+--~~ 	end
+--~~ end
 
 
 --------------------------------
 --        Slash Handler       --
 --------------------------------
 
-function BigWigs:ShowAnchors()
-	self:TriggerEvent("BIGWIGS_SHOW_ANCHORS")
-end
+--~~ function BigWigs:ShowAnchors()
+--~~ 	self:TriggerEvent("BIGWIGS_SHOW_ANCHORS")
+--~~ end
 
 
-function BigWigs:SlashScale(ScaleValue)
-	local args = ace.ParseWords(ScaleValue)
-	scale = tonumber(args[1])
+--~~ function BigWigs:SlashScale(ScaleValue)
+--~~ 	local args = ace.ParseWords(ScaleValue)
+--~~ 	scale = tonumber(args[1])
 
-	self:SetScale(scale)
-end
+--~~ 	self:SetScale(scale)
+--~~ end
 
 
 --------------------------------
 --      Utility Function      --
 --------------------------------
 
-function BigWigs:GetOpt(OptName)
-	return self.db:get(self.profilePath,OptName)
-end
+--~~ function BigWigs:GetOpt(OptName)
+--~~ 	return self.db:get(self.profilePath,OptName)
+--~~ end
 
 
-function BigWigs:SetOpt(OptName, OptVal)
-	self.db:set(self.profilePath,OptName,OptVal)
-end
+--~~ function BigWigs:SetOpt(OptName, OptVal)
+--~~ 	self.db:set(self.profilePath,OptName,OptVal)
+--~~ end
 
 
-function BigWigs:TogOpt(OptName)
-	return self.db:toggle(self.profilePath,OptName)
-end
+--~~ function BigWigs:TogOpt(OptName)
+--~~ 	return self.db:toggle(self.profilePath,OptName)
+--~~ end
 
 
 --------------------------------

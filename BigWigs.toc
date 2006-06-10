@@ -3,8 +3,9 @@
 ## Title: Big Wigs |cff007fff -Ace-|r
 ## Notes: Boss Mods with Timex bars. |cffff4488By Tekkub|r
 ## Dependencies: Ace, Timex
-## SavedVariables: BigWigsDB
+## SavedVariablesPerCharacter: BigWigsDB
 
+TekTech\TekTechEmbed.lua
 MetrognomeLib\MetrognomeLib.lua
 
 Core.lua

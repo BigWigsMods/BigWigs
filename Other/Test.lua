@@ -1,48 +1,60 @@
 ﻿
-BigWigsSyncTest = AceAddon:new({
-	name          = "BigWigsSyncTest",
+local cmdopt = {
+	option = "test",
+	desc   = "Some useful test events.",
+	input  = true,
+	args   = {
+		{
+			option = "local",
+			desc   = "Fire off some test events locally.",
+			method = "BIGWIGS_TEST",
+		},
+		{
+			option = "sync",
+			desc   = "Fire off a test sync message to the raid.",
+			method = "Send",
+		},
+	},
+}
+
+
+BigWigsTest = AceAddon:new({
+	name          = "BigWigsTest",
 	cmd           = AceChatCmd:new({}, {}),
+	cmdOptions    = cmdopt,
 
-	loc = {
-		bossname = "SyncTest",
-
-		bartext = "Testing Sync",
-		texture = "Interface\\Icons\\Spell_Frost_FrostShock",
-
-		warn1 = "Testing Sync",
-	}
+	loc = {},
 })
 
 
-function BigWigsSyncTest:Initialize()
+function BigWigsTest:Initialize()
 	BigWigs:RegisterModule(self)
 end
 
 
-function BigWigsSyncTest:Enable()
+function BigWigsTest:Enable()
 	self:RegisterEvent("BIGWIGS_SYNC_SYNCTEST")
 	self:RegisterEvent("BIGWIGS_TEST")
 end
 
 
-function BigWigsSyncTest:Disable()
-	self.disabled = true
+function BigWigsTest:Disable()
 	self:UnregisterAllEvents()
 end
 
 
-function BigWigsSyncTest:Send()
+function BigWigsTest:Send()
 	self:TriggerEvent("BIGWIGS_SYNC_SEND", "SYNCTEST")
 end
 
 
-function BigWigsSyncTest:BIGWIGS_SYNC_SYNCTEST(msg)
-	self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Green")
-	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bartext, 10, 1, "Green", self.loc.texture)
+function BigWigsTest:BIGWIGS_SYNC_SYNCTEST(msg)
+	self:TriggerEvent("BIGWIGS_MESSAGE", "Testing Sync", "Green")
+	self:TriggerEvent("BIGWIGS_BAR_START", "Testing Sync", 10, 1, "Green", "Interface\\Icons\\Spell_Frost_FrostShock")
 end
 
 
-function BigWigsSyncTest:BIGWIGS_TEST()
+function BigWigsTest:BIGWIGS_TEST()
 	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar", 15, 1, "Green", "Interface\\Icons\\Spell_Nature_ResistNature")
 	self:TriggerEvent("BIGWIGS_MESSAGE", "Test", "Green")
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", "OMG Bear!", 5, "Yellow")
@@ -60,4 +72,4 @@ end
 --------------------------------
 --      Load this bitch!      --
 --------------------------------
-BigWigsSyncTest:RegisterForLoad()
+BigWigsTest:RegisterForLoad()
