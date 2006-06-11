@@ -3,59 +3,53 @@
 	cmd           	= AceChatCmd:new({}, {}),
 
 	zonename 	= "AQ40",
-	enabletrigger	= GetLocale() == "koKR" and "쑨의 눈"
-		or GetLocale() == "zhCN" and "克苏恩之眼"
+	enabletrigger	= GetLocale() == "koKR" and "ì¨ì ë"
 		or "Eye of C'Thun",
 
-	loc = GetLocale() == "koKR" and {
-			bossname 	= "쑨의 눈",
-			disabletrigger 	= "쑨|1이;가; 죽었습니다.",
-			bosskill 	= "쑨을 물리쳤습니다.",
+	loc 		= GetLocale() == "koKR" and {
+			bossname 	= "ì¨ì ë",
+			disabletrigger 	= "ì¨|1ì´;ê°; ì£½ììµëë¤.",
+			bosskill 	= "ì¨ì ë¬¼ë¦¬ì³¤ìµëë¤.",
 			
-			trigger1 	= "눈 달린 거대한 촉수|1이;가; 지표 균열|1으로;로;",
-			trigger2 	= "약해졌습니다!",
+			weakendtrigger 	= "ì½í´ì¡ìµëë¤!",
 			
-			warn1		= "눈달린 촉수 등장 - 촉수 처리!",
-			warn2		= "5초후 눈달린 촉수 등장!",
-			warn3		= "10초후 눈달린 촉수 등장!",
-			warn4		= "쑨이 약화되었습니다 - 45초간 최대 공격!",
-			
-			bar1text	= "눈달린 촉수!",
-			bar2text	= "쑨 약화!",	
-	} 	
-		or GetLocale() == "zhCN" and 
-	{
-			bossname 	= "克苏恩之眼",
-			disabletrigger 	= "克苏恩死亡了。",
-			bosskill 	= "克苏恩被击败了！",
-			
-			trigger1 	= "巨眼触须的大地破裂",
-			trigger2 	= "被削弱了！",
-			
-			warn1		= "巨眼触须出现！",
-			warn2		= "5秒后巨眼触须出现！",
-			warn3		= "10秒后巨眼触须出现！",
-			warn4		= "克苏恩被削弱了 - 45秒内全力输出伤害！",
-			
-			bar1text	= "巨眼触须",
-			bar2text	= "克苏恩被削弱了！",
-	}	
-		or 
-	{
+			tentacle1	= "ëë¬ë¦° ì´ì ë±ì¥ - ì´ì ì²ë¦¬!",
+			tentacle2	= "5ì´í ëë¬ë¦° ì´ì ë±ì¥!",
+			tentacle3	= "10ì´í ëë¬ë¦° ì´ì ë±ì¥!",
+			weakend		= "ì¨ì´ ì½íëììµëë¤ - 45ì´ê° ìµë ê³µê²©!",
+		
+			combat		= "C'Thun event started - 40 sec untill Dark Glare and Eyes",
+		
+			phase1		= "Eye of C'Thun dies.",
+		
+			glare2		= "PEWPEW Dark glare - 5 sec!",
+			glare1		= "PEWPEW Dark glare - MOVE IT!",
+		
+			barTentacle	= "ëë¬ë¦° ì´ì!",
+			barWeakend	= "ì¨ ì½í!",	
+			barGlare	= "Dark glare!",
+	} or {
 			bossname 	= "Eye of C'Thun",
 			disabletrigger 	= "C'Thun dies.",
 			bosskill 	= "C'Thun has been defeated.",
 			
-			trigger1 	= "Eye Tentacle's Ground Rupture",
-			trigger2 	= "is weakened!",
+			weakendtrigger 	= "is weakened!",
 			
-			warn1		= "Incoming Tentacle Rape Party - Pleasure!",
-			warn2		= "Incoming Tentacle Rape Party - 5~ sec!",
-			warn3		= "Incoming Tentacle Rape Party - 10~ sec!",
-			warn4		= "C'Thun is weakened - DPS Party for 45~ sec!",
-			
-			bar1text	= "Tentacle rape party!",
-			bar2text	= "C'Thun is weakened!",
+			tentacle1	= "Incoming Tentacle Rape Party - Pleasure~~!",
+			tentacle2	= "Incoming Tentacle Rape Party - 5~ sec!",
+			tentacle3	= "Incoming Tentacle Rape Party - 10~ sec!",
+			weakend		= "C'Thun is weakened - DPS Party for 45~ sec!",
+		
+			combat		= "C'Thun event started - 40 sec untill Dark Glare and Eyes",
+		
+			phase1		= "Eye of C'Thun dies.",
+		
+			glare2		= "PEWPEW Dark glare - 5 sec!",
+			glare1		= "PEWPEW Dark glare - MOVE IT!",
+		
+			barTentacle	= "Tentacle rape party!",
+			barWeakend	= "C'Thun is weakened!",
+			barGlare	= "Dark glare!",
 	},
 })
 
@@ -67,43 +61,63 @@ end
 function BigWigsCThun:Enable()
 	self.disabled = nil
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE")
 	self:RegisterEvent("BIGWIGS_MESSAGE")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "CheckString")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "CheckString")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "CheckString")
 end
 
-function BigWigsCThun:Disable()
-	self.disabled = true
-	self.prior = nil
-	self:UnregisterAllEvents()
+function BigWigsCThun:CHAT_MSG_MONSTER_EMOTE()
+	if( arg1 == self.loc.weakendtrigger ) then
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.weakend, "red")
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barWeakend, 45, 3, "Red", "Interface\\Icons\\INV_ValentinesCandy")
+	end
 end
 
-function BigWigsCThun:CheckString()
-	if (not self.prior and string.find(arg1, self.loc.trigger1)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 40, "Orange")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 35, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 45, 1, "Green", "Interface\\Icons\\Spell_Nature_CorrosiveBreath")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 15, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 30, "Red")
-		self.prior = true
+function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH()
+		if(arg1 == self.loc.phase1) then
+			self.phase2 = 1
+		end
+end
+
+function BigWigsCThun:CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE()
+	if arg1 and string.find(arg1, "Eye Beam") then
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.combat, "Yellow")
+		
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barTentacle, 44, 1, "Green", "Interface\\Icons\\Spell_Nature_CallStorm")
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGlare, 44, 2, "Red", "Interface\\Icons\\Spell_Shadow_ShadowBolt")
+		
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare2, 39, "Orange")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle2, 39, "Orange")
+		
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare1, 44, "Red")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle1, 44, "Red")
+		
+		self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE")
+		self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	end
 end
 
 function BigWigsCThun:BIGWIGS_MESSAGE(text)
-	if text == self.loc.warn1 or text == self.loc.warn2 then
-		self.prior = nil
+	if (text == self.loc.glare1 and not self.phase2 ) then
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare1, 87, "Red")
+		
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGlare, 87, 2, "Red", "Interface\\Icons\\Spell_Shadow_ShadowBolt")
+	elseif (text == self.loc.tentacle1 and not self.phase2 ) then
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle1, 45, "Red")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle2, 40, "Orange")
+	
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barTentacle, 45, 1, "Green", "Interface\\Icons\\Spell_Nature_CallStorm")
 	end
 end
 
-function BigWigsCThun:CHAT_MSG_MONSTER_EMOTE()
-	if (arg1 == self.loc.trigger2) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "red")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar2text, 45, 1, "Red", "Interface\\Icons\\Spell_Nature_CorrosiveBreath")
-	end
+function BigWigsCThun:Disable()
+	self.disabled = true
+	self.phase2 = nil
+	self:UnregisterAllEvents()
 end
+
 --------------------------------
---      Load this bitch!      --
+--			Load this bitch!			--
 --------------------------------
 BigWigsCThun:RegisterForLoad()
