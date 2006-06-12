@@ -80,7 +80,7 @@ function BigWigsMoam:CHAT_MSG_MONSTER_EMOTE()
 end
 
 function BigWigsMoam:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
-	if( string.find( arg1, self.loc.returntrigger ) then
+	if( string.find( arg1, self.loc.returntrigger )) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.returnwarn, "Red")
 		self:AddsStart()
 	end
