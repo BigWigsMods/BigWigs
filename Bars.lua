@@ -105,8 +105,7 @@ end
 function BigWigsBars:SetScale(msg)
 	local scale = tonumber(msg)
 	if scale and scale >= 0.25 and scale <= 5 then
-		self:SetOpt("scale", scale)
-		self.msgframe:SetScale(scale)
+		self:SetOpt(scale, "scale")
 		self.cmd:result("Scale is set to "..scale)
 	end
 end
