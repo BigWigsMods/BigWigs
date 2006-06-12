@@ -35,6 +35,7 @@ end
 function BigWigsTest:Enable()
 	self:RegisterEvent("BIGWIGS_SYNC_SYNCTEST")
 	self:RegisterEvent("BIGWIGS_TEST")
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "SYNCTEST", 4)
 end
 
 
