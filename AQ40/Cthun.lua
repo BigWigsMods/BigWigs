@@ -28,8 +28,12 @@
 			barTentacle	= "ëë¬ë¦° ì´ì!",
 			barWeakend	= "ì¨ ì½í!",	
 			barGlare	= "Dark glare!",
+
+			eyebeam		= "Eye Beam",
+			cthun		= "C'Thun",
 	} or {
 			bossname 	= "Eye of C'Thun",
+			cthun		= "C'Thun",
 			disabletrigger 	= "C'Thun dies.",
 			bosskill 	= "C'Thun has been defeated.",
 			
@@ -50,6 +54,8 @@
 			barTentacle	= "Tentacle rape party!",
 			barWeakend	= "C'Thun is weakened!",
 			barGlare	= "Dark glare!",
+
+			eyebeam		= "Eye Beam",
 	},
 })
 
@@ -65,6 +71,7 @@ function BigWigsCThun:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE")
 	self:RegisterEvent("BIGWIGS_MESSAGE")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 end
 
 function BigWigsCThun:CHAT_MSG_MONSTER_EMOTE()
@@ -77,11 +84,36 @@ end
 function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 		if(arg1 == self.loc.phase1) then
 			self.phase2 = 1
+		elseif( arg1 == self.loc.disabletrigger) then
+			self:Disable()
 		end
 end
 
+function BigWigsCThun:Scan()
+	if (UnitName("target") == (self.loc.bossname or self.loc.cthun) and UnitAffectingCombat("target")) then
+		return true
+	elseif (UnitName("playertarget") == (self.loc.bossname or self.loc.cthun) and UnitAffectingCombat("playertarget")) then
+		return true
+	else
+		local i
+		for i = 1, GetNumRaidMembers(), 1 do
+			if (UnitName("Raid"..i.."target") == (self.loc.cthun or self.loc.bossname) and UnitAffectingCombat("Raid"..i.."target")) then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+function BigWigsTwins:PLAYER_REGEN_ENABLED()
+	local go = self:Scan()
+	if (not go) then
+		self:Disable()
+	end
+end
+
 function BigWigsCThun:CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE()
-	if arg1 and string.find(arg1, "Eye Beam") then
+	if arg1 and string.find(arg1, self.loc.eyebeam) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.combat, "Yellow")
 		
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barTentacle, 44, 1, "Green", "Interface\\Icons\\Spell_Nature_CallStorm")
