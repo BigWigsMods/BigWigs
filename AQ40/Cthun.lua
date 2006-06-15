@@ -93,7 +93,7 @@ function BigWigsCThun:Enable()
 	metro:Register("BigWigs Cthun Tentacles", self.TentacleRape, self.timeP1Tentacle, self )
 	metro:Register("BigWigs Cthun Tentacles Reschedule", self.StartTentacleRape, self.timeReschedule, self )
 	metro:Register("BigWigs Cthun Tentacles Phase2", self.StartTentacleRape, self.timeP2Start, self)
-	metro:Register("BigWigs Cthun Dark Glare", self.DarkGlare, self.timeP1Glare, self)
+	metro:Register("BigWigs Cthun Dark Glare", self.DarkGlare, self.timeP1GlareStart, self)
 end
 
 function BigWigsCThun:TentacleRape() 
@@ -107,6 +107,10 @@ function BigWigsCThun:TentacleRape()
 end
 
 function BigWigsCThun:DarkGlare()
+	if ( self.firstGlare ) then 
+		metro:ChangeRate("BigWigs Cthun Dark Glare", self.timeP1Glare )
+		self.firstGlare = nil
+	end	
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare1, self.timeP1Glare, "Red")
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare2, self.timeP1Glare-1, "Orange")
 	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGlare, self.timeP1Glare, 2, "Red", "Interface\\Icons\\Spell_Shadow_ShadowBolt")
@@ -200,6 +204,7 @@ function BigWigsCThun:CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE()
 		self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE")
 		self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 		
+		self.firstGlare = true
 		-- start our tentacle rape and dark glare schedules
 		metro:Start("BigWigs Cthun Tentacles")
 		metro:Start("BigWigs Cthun Dark Glare")
