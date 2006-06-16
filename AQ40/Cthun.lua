@@ -142,7 +142,7 @@ function BigWigsCThun:DarkGlare()
 		self.firstGlare = nil
 	end	
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare1, self.timeP1Glare, "Red")
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare2, self.timeP1Glare-1, "Orange")
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare2, self.timeP1Glare-5, "Orange")
 	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGlare, self.timeP1Glare, 2, "Red", "Interface\\Icons\\Spell_Shadow_ShadowBolt")
 end
 
@@ -176,6 +176,11 @@ function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.tentacle2)
 			self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.barTentacle)
 
+			-- Cancel Existing Glare Timers
+			self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.barGlare)
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.glare1, self.timeP1Glare, "Red")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.glare2, self.timeP1Glare-5, "Orange")
+
 			-- change to phase 2 rate
 			metro:Stop("BigWigs Cthun Tentacles")
 			metro:ChangeRate("BigWigs Cthun Tentacles", self.timeP2Tentacle )
@@ -186,7 +191,7 @@ function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barTentacle, self.loc.timeP2Start, 1, "Green", "Interface\\Icons\\Spell_Nature_CallStorm")
 
 			-- this metro schedule will restart the tentacle rapes again.
-			metro:Start("BigWigs Cthun Phase2", 1)
+			metro:Start("BigWigs Cthun Tentacles Phase2", 1)
 			-- no Dark glaring in phase 2
 			metro:Stop("BigWigs Cthun Dark Glare")
 
