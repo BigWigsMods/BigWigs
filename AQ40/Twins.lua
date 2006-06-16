@@ -102,6 +102,7 @@ end
 
 function BigWigsTwins:Enable()
 	self.disabled = nil
+	self.enrageStarted = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
@@ -116,6 +117,7 @@ end
 
 function BigWigsTwins:Disable()
 	self.disabled = true
+	self.enrageStarted = nil
 	self:UnregisterAllEvents()
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bartext)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.portdelaywarn)
@@ -128,6 +130,7 @@ function BigWigsTwins:PLAYER_REGEN_DISABLED()
 	local go = self:Scan()
 	if (go) then
 		-- Now fires off the SYNC event as recommended by Tekkub
+		self:StartEnrage()
 		self:TriggerEvent("BIGWIGS_SYNC_SEND", "TWINSENRAGE")
 	end
 end
@@ -168,9 +171,11 @@ function BigWigsTwins:StartEnrage()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 580, "Yellow")
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 790, "Orange")
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 870, "Red")
+	self.enrageStarted = true
 end
 
 function BigWigsTwins:StopEnrage()
+	self.enrageStarted = nil
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.enragebartext)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn1)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn2)
@@ -226,7 +231,9 @@ function BigWigsTwins:CHAT_MSG_MONSTER_EMOTE()
 end
 
 function BigWigsTwins:BIGWIGS_SYNC_TWINSENRAGE(rest, nick)
-	self:StartEnrage()
+	if( not self.enrageStarted ) then
+		self:StartEnrage()
+	end
 end
 --------------------------------
 --      Load this bitch!      --
