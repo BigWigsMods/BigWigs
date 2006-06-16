@@ -35,6 +35,8 @@ BigWigsCThun = AceAddon:new({
 
 			eyebeam		= "Eye Beam",
 			cthun		= "C'Thun",
+			glarewarning	= "DARK GLARE ON YOU! MOVE!",
+			groupwarning	= "Dark Glare on group %s (%s)" ,
 
 	} 
 		or GetLocale() == "zhCN" and 
@@ -63,6 +65,8 @@ BigWigsCThun = AceAddon:new({
 			barGlare	= "黑暗闪耀！",
 			
 			eyebeam		= "眼棱光",
+			glarewarning	= "DARK GLARE ON YOU! MOVE!",
+			groupwarning	= "Dark Glare on group %s (%s)" ,
 	}
 		or 
 	{
@@ -90,6 +94,8 @@ BigWigsCThun = AceAddon:new({
 			barGlare	= "Dark glare!",
 
 			eyebeam		= "Eye Beam",
+			glarewarning	= "DARK GLARE ON YOU! MOVE!",
+			groupwarning	= "Dark Glare on group %s (%s)",
 	},
 
 	timeP1Tentacle	 = 44,
@@ -109,6 +115,7 @@ end
 
 function BigWigsCThun:Enable()
 	self.disabled = nil
+	self.target = nil
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE")
@@ -119,11 +126,47 @@ function BigWigsCThun:Enable()
 	metro:Unregister("BigWigs Cthun Tentacles Reschedule")
 	metro:Unregister("BigWigs Cthun Tentacles Phase2")
 	metro:Unregister("BigWigs Cthun Dark Glare")
+	metro:Unregister("BigWigs Cthun Dark Glare Group Warning")
+	metro:Unregister("BigWigs Cthun Target")
 
 	metro:Register("BigWigs Cthun Tentacles", self.TentacleRape, self.timeP1Tentacle, self )
 	metro:Register("BigWigs Cthun Tentacles Reschedule", self.StartTentacleRape, self.timeReschedule, self )
 	metro:Register("BigWigs Cthun Tentacles Phase2", self.StartTentacleRape, self.timeP2Start, self)
 	metro:Register("BigWigs Cthun Dark Glare", self.DarkGlare, self.timeP1GlareStart, self)
+	-- we warn which group will be dark glared 4 second before it hits.
+	metro:Register("BigWigs Cthun Group Warning", self.GroupWarning, self.timeP1GlareStart - 4, self)
+	metro:Register("BigWigs Cthun Target", self.CheckTarget, 0.2, self)
+end
+
+function BigWigsCThun:CheckTarget()
+	local i
+	self.target = nil
+	if( UnitName("playertarget") == self.loc.bossname ) then
+		self.target = UnitName("playertargettarget")
+	else
+		for i = 1, GetNumRaidMembers(), 1 do
+			if UnitName("Raid"..i.."target") == self.loc.bossname then
+				self.target = UnitName("Raid"..i.."targettarget")
+				break
+			end
+		end		
+	end
+end
+
+function BigWigsCThun:GroupWarning()
+	if( self.firstWarning ) then
+		metro:ChangeRate("BigWigs Cthun Group Warning", self.timeP1Glare )
+		self.firstWarning = false
+	end
+	if( self.target ) then
+		local i, name, group
+		for i = 1, GetNumRaidMembers(), 1 do 
+			name, _, group, _, _, _, _, _ = GetRaidRosterInfo(i)
+			if( name == self.target ) then break end
+		end
+		self:TriggerEvent("BIGWIGS_MESSAGE", string.format( self.loc.groupwarning, group, self.target), "Red")
+		self:TriggerEvent("BIGWIGS_SENDTELL", self.target, self.loc.glarewarning ) 
+	end
 end
 
 function BigWigsCThun:TentacleRape() 
@@ -194,6 +237,8 @@ function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 			metro:Start("BigWigs Cthun Tentacles Phase2", 1)
 			-- no Dark glaring in phase 2
 			metro:Stop("BigWigs Cthun Dark Glare")
+			metro:Stop("BigWigs Cthun Group Warning")
+			metro:Stop("BigWigs Cthun Target")
 
 		elseif( arg1 == self.loc.disabletrigger) then
 			self:Disable()
@@ -243,6 +288,9 @@ function BigWigsCThun:CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE()
 		-- start our tentacle rape and dark glare schedules
 		metro:Start("BigWigs Cthun Tentacles")
 		metro:Start("BigWigs Cthun Dark Glare")
+		-- start group warning schedules
+		metro:Start("BigWigs Cthun Group Warning")
+		metro:Start("BigWigs Cthun Target")
 	end
 end
 
@@ -259,6 +307,8 @@ function BigWigsCThun:Disable()
 	metro:Unregister("BigWigs Cthun Tentacles Reschedule")
 	metro:Unregister("BigWigs Cthun Tentacles Phase2")
 	metro:Unregister("BigWigs Cthun Dark Glare")
+	metro:Unregister("BigWigs Cthun Group Warning")
+	metro:Unregister("BigWigs Cthun Target")
 	
 	self:UnregisterAllEvents()
 end
