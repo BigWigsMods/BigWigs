@@ -7,6 +7,7 @@ BigWigsCThun = AceAddon:new({
 
 	zonename 	= "AQ40",
 	enabletrigger	= GetLocale() == "koKR" and "ì¨ì ë"
+		or GetLocale() == "zhCN" and "克苏恩之眼"
 		or "Eye of C'Thun",
 
 	loc 		= GetLocale() == "koKR" and {
@@ -35,7 +36,36 @@ BigWigsCThun = AceAddon:new({
 			eyebeam		= "Eye Beam",
 			cthun		= "C'Thun",
 
-	} or {
+	} 
+		or GetLocale() == "zhCN" and 
+	{
+			bossname 	= "克苏恩之眼",
+			cthun		= "克苏恩",
+			disabletrigger 	= "克苏恩死亡了。",
+			bosskill 	= "克苏恩被击败了！",
+			
+			weakendtrigger 	= "被削弱了！",
+			
+			tentacle1	= "眼球触须出现！",
+			tentacle2	= "5秒后眼球触须出现！",
+			tentacle3	= "10秒后眼球触须出现！",
+			weakend		= "克苏恩被削弱了 - 45秒内全力输出伤害！",
+			
+			combat		= "克苏恩事件开始 - 45秒后发动黑暗闪耀与眼棱光",
+			
+			phase1		= "克苏恩之眼死亡了。",
+			
+			glare2		= "5秒后发动黑暗闪耀！",
+			glare1		= "黑暗闪耀发动 - 跑位！",
+			
+			barTentacle	= "眼球触须！",
+			barWeakend	= "克苏恩被削弱了！",
+			barGlare	= "黑暗闪耀！",
+			
+			eyebeam		= "眼棱光",
+	}
+		or 
+	{
 			bossname 	= "Eye of C'Thun",
 			cthun		= "C'Thun",
 			disabletrigger 	= "C'Thun dies.",
