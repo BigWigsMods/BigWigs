@@ -231,7 +231,7 @@ function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 			-- schedule first rape into phase 2
 			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle1, self.timeP2Start, "Red")
 			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle2, self.timeP2Start-5, "Orange")
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barTentacle, self.loc.timeP2Start, 1, "Green", "Interface\\Icons\\Spell_Nature_CallStorm")
+			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barTentacle, self.timeP2Start, 1, "Green", "Interface\\Icons\\Spell_Nature_CallStorm")
 
 			-- this metro schedule will restart the tentacle rapes again.
 			metro:Start("BigWigs Cthun Tentacles Phase2", 1)
