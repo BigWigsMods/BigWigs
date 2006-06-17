@@ -190,6 +190,7 @@ function BigWigsCThun:DarkGlare()
 end
 
 function BigWigsCThun:StartTentacleRape()
+	self:TentacleRape()
 	metro:Start("BigWigs Cthun Tentacles")
 end
 
