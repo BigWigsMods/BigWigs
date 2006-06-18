@@ -98,12 +98,12 @@ BigWigsCThun = AceAddon:new({
 			groupwarning	= "Dark Glare on group %s (%s)",
 	},
 
-	timeP1Tentacle	 = 44,
-	timeP1GlareStart = 44,
+	timeP1Tentacle	 = 45,
+	timeP1GlareStart = 45,
 	timeP1Glare	 = 87,
 	
 	timeP2Start     = 42,
-	timeP2Tentacle  = 29,
+	timeP2Tentacle  = 30,
 
 	timeReschedule	= 48,
 })
@@ -190,7 +190,6 @@ function BigWigsCThun:DarkGlare()
 end
 
 function BigWigsCThun:StartTentacleRape()
-	self:TentacleRape()
 	metro:Start("BigWigs Cthun Tentacles")
 end
 
