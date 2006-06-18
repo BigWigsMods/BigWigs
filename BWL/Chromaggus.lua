@@ -13,13 +13,13 @@
 
 		trigger1 = "크로마구스|1이;가; (.+)|1을;를; 시전합니다.",
 		trigger2 = "(.+)|1이;가; (.+)|1으로;로; 크로마구스에게 (%d+)의 (.+) 입혔습니다.",
-		trigger3 = "크로마구스|1이;가; 시간의 쇠퇴|1으로;로; (.+)|1을;를; 공격했지만 저항했습니다.",		
+		trigger3 = "크로마구스|1이;가; 시간의 쇠퇴|1으로;로; (.+)|1을;를; 공격했지만 저항했습니다.",
 		trigger4 = "광란의 상태에 빠집니다!",
 		trigger5 = "가죽이 점점 빛나면서 물러서기 시작합니다.",
 
 		hit = "피해를",
 		crit = "치명상을",
-		
+
 		warn1 = "%s 10초전!",
 		warn2 = "%s를 시전합니다!",
 		warn3 = "새로운 취약 속성: %s",
@@ -34,8 +34,8 @@
 			["소각"] = "Interface\\Icons\\Spell_Shadow_ChillTouch",
 			["동결"] = "Interface\\Icons\\Spell_Frost_ChillingBlast",
 		}
-	} 
-		or GetLocale() == "deDE" and 
+	}
+		or GetLocale() == "deDE" and
 	{
 		bossname = "Chromaggus",
 		disabletrigger = "Chromaggus stirbt.",
@@ -154,7 +154,7 @@ end
 
 function BigWigsChromaggus:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end
@@ -196,7 +196,7 @@ function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE()
 	end
 end
 
-if (GetLocale() == "koKR") then 
+if (GetLocale() == "koKR") then
 	function BigWigsChromaggus:PlayerDamageEvents()
 		if (not self.loc.vulnerability) then
 			local _, School, Dmg, Type = string.find(arg1, self.loc.trigger2)
@@ -209,7 +209,7 @@ if (GetLocale() == "koKR") then
 			Timex:ChangeDuration("BigWigsChromaggusResetTimer", 60)
 		end
 	end
-else 
+else
 	function BigWigsChromaggus:PlayerDamageEvents()
 		if (not self.loc.vulnerability) then
 			local _,_, Type, Dmg, School = string.find(arg1, self.loc.trigger2)
@@ -222,7 +222,7 @@ else
 			Timex:ChangeDuration("BigWigsChromaggusResetTimer", 60)
 		end
 	end
-end 
+end
 
 function BigWigsChromaggus:Reset()
 	self.loc.vulnerability = nil

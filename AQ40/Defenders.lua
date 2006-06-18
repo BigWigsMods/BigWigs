@@ -5,8 +5,8 @@
 	zonename = "AQ40",
 	enabletrigger = GetLocale() == "koKR" and "아누비사스 문지기"
 		or GetLocale() == "zhCN" and "阿努比萨斯防御者"
-	 	or "Anubisath Defender",		
-	
+	 	or "Anubisath Defender",
+
 	loc = GetLocale() == "koKR" and {
 		bossname = "아누비사스 문지기",
 		disabletrigger = "아누비사스 문지기|1이;가; 죽었습니다.",
@@ -20,18 +20,18 @@
 		summonguardwarn = "감시병 소환",
 		summonwarriortrigger = "아누비사스 문지기|1이;가; 아누비사스 전사 소환|1을;를; 시전합니다.",
 		summonwarriorwarn = "전사 소환",
-		
+
 		plaguetrigger = "(.*)역병에 걸렸습니다.",
 		plaguewarn = "님은 역병에 걸렸습니다. 피하세요",
 		plagueyouwarn = "당신은 역병에 걸렸습니다! 떨어지세요!",
 		plagueyou = "",
 		plagueare = "are",
-		thunderclaptrigger = "아누비사스 문지기|1이;가; 천둥벼락|1으로;로; (.+)에게 (%d+)의" ; 		
+		thunderclaptrigger = "아누비사스 문지기|1이;가; 천둥벼락|1으로;로; (.+)에게 (%d+)의" ;
 		thunderclapwarn = "천둥벼락!",
 		whopattern = "(.+)|1이;가; ",
-	} 
+	}
 		or GetLocale() == "zhCN" and
-	{	
+	{
 		bossname = "阿努比萨斯防御者",
 		disabletrigger = "阿努比萨斯防御者死亡了。",
 		bosskill = "阿努比萨斯防御者被击败了！",
@@ -51,9 +51,9 @@
 		plagueare = "到",
 		thunderclaptrigger = "^阿努比萨斯防御者的雷霆一击击中(.+)造成%d+点伤害。",
 		thunderclapwarn = "雷霆一击发动！",
-	}	
-		or 
-	{		
+	}
+		or
+	{
 		bossname = "Anubisath Defender",
 		disabletrigger = "Anubisath Defender dies.",
 		bosskill = "Anubisath Defender has been defeated.",
@@ -101,7 +101,7 @@ end
 
 function BigWigsDefenders:CHAT_MSG_COMBAT_HOSTILE_DEATH()
     if (arg1 == self.loc.disabletrigger) then
-        self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+        self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
         self:Disable()
     end
 end
@@ -124,8 +124,8 @@ end
 
 if (GetLocale() == "koKR") then
 	function BigWigsDefenders:checkPlague()
-		local _,_, Player = string.find(arg1, self.loc.plaguetrigger)		
-		if (Player) then	
+		local _,_, Player = string.find(arg1, self.loc.plaguetrigger)
+		if (Player) then
 			if (Player == self.loc.plagueyou) then
 				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.plagueyouwarn, "Red", true)
 			else
@@ -135,10 +135,10 @@ if (GetLocale() == "koKR") then
 			end
 		end
 	end
-else 
+else
 	function BigWigsDefenders:checkPlague()
 		local _,_, Player, Type = string.find(arg1, self.loc.plaguetrigger)
-		if (Player and Type) then	
+		if (Player and Type) then
 			if (Player == self.loc.plagueyou and Type == self.loc.plagueare) then
 				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.plagueyouwarn, "Red", true)
 			else

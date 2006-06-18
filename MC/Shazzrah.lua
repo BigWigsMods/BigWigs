@@ -7,7 +7,7 @@
 		or GetLocale() == "zhCN" and "沙斯拉尔"
 		or "Shazzrah",
 
-	loc = GetLocale() == "koKR" and {	
+	loc = GetLocale() == "koKR" and {
 		bossname = "샤즈라",
 		disabletrigger = "샤즈라|1이;가; 죽었습니다.",
 
@@ -19,7 +19,7 @@
 		warn3 = "마법 약화 버프 - 마법 무효화를 사용하세요!",
 
 		bar1text = "점멸",
-	} 
+	}
 		or GetLocale() == "zhCN" and
 	{
 		bossname = "沙斯拉尔",
@@ -34,7 +34,7 @@
 
 		bar1text = "闪现术",
 	}
-		or 
+		or
 	{
 		bossname = "Shazzrah",
 		disabletrigger = "Shazzrah dies.",
@@ -72,7 +72,7 @@ end
 
 function BigWigsShazzrah:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

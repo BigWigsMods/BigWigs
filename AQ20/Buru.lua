@@ -14,9 +14,9 @@
 
 		watchtrigger = "(.+)|1을;를; 노려봅니다!",
 		watchwarn = "님을 노려봅니다!",
-		you = UnitName("player"),	
+		you = UnitName("player"),
 		watchtell = "당신을 주시합니다!",
-	} 
+	}
 		or GetLocale() == "zhCN" and
 	{
 		bossname = "吞咽者布鲁",
@@ -28,7 +28,7 @@
 		watchwarnyou = "你被布鲁盯上了！放风筝吧！",
 		you = "你",
 	}
-		or 
+		or
 	{
 		bossname = "Buru the Gorger",
 		disabletrigger = "Buru the Gorger dies.",
@@ -71,7 +71,7 @@ end
 
 function BigWigsBuru:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

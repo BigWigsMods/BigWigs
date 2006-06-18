@@ -11,6 +11,14 @@ local cmdopt = {
 		},
 	},
 }
+local sounds = {
+	Long = "Interface\\AddOns\\BigWigs\\Long.wav",
+	Info = "Interface\\AddOns\\BigWigs\\Info.wav",
+	Msg = "Interface\\AddOns\\BigWigs\\Msg.wav",
+	Alert = "Interface\\AddOns\\BigWigs\\Alert.wav",
+	Alarm = "Interface\\AddOns\\BigWigs\\Alarm.wav",
+	Victory = "Interface\\AddOns\\BigWigs\\VictoryShort.mp3",
+}
 
 
 BigWigsSound = AceAddon:new({
@@ -47,7 +55,7 @@ end
 
 function BigWigsSound:BIGWIGS_MESSAGE(text, color, noraidsay, sound)
 	if not text or sound == 0 then return end
-	PlaySoundFile("Interface\\AddOns\\BigWigs\\msg.wav")
+	PlaySoundFile(sounds[sound] or sounds.Msg)
 end
 
 

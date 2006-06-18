@@ -3,12 +3,12 @@
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "Onyxia",
-	enabletrigger = GetLocale() == "koKR" and "오닉시아" 
+	enabletrigger = GetLocale() == "koKR" and "오닉시아"
 		or GetLocale() == "zhCN" and "奥妮克希亚"
 		or "Onyxia"	,
 
-	loc = GetLocale() == "deDE" and 
-	{ 
+	loc = GetLocale() == "deDE" and
+	{
 		bossname = "Onyxia",
 		disabletrigger = "Onyxia stirbt.",
 
@@ -20,9 +20,9 @@
 		warn2 = "Onyxia Phase 2 kommt!",
 		warn3 = "Onyxia Phase 3 kommt!",
 		bosskill = "Onyxia wurde besiegt!",
-	} 
-		or GetLocale() == "koKR" and 
-	{ 
+	}
+		or GetLocale() == "koKR" and
+	{
 		bossname = "오닉시아",
 		disabletrigger = "오닉시아|1이;가; 죽었습니다.",
 
@@ -34,9 +34,9 @@
 		warn2 = "오닉시아 2단계 시작!",
 		warn3 = "오닉시아 3단계 시작!",
 		bosskill = "오닉시아를 물리쳤습니다!",
-	} 
+	}
 		or GetLocale() == "zhCN" and
-	{ 
+	{
 		bossname = "奥妮克希亚",
 		disabletrigger = "奥妮克希亚死亡了。",
 
@@ -48,9 +48,9 @@
 		warn2 = "奥妮克希亚进入第二阶段！",
 		warn3 = "奥妮克希亚进入第三阶段！",
 		bosskill = "奥妮克希亚被击败了！",
-	}	
-		or 
-	{ 
+	}
+		or
+	{
 		bossname = "Onyxia",
 		disabletrigger = "Onyxia dies.",
 
@@ -84,7 +84,7 @@ end
 
 function BigWigsOnyxia:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

@@ -4,11 +4,11 @@
 
 	zonename = "BWL",
 	enabletrigger = GetLocale() == "koKR" and "플레임고르"
-		or GetLocale() == "deDE" and "Flammenmaul" 
+		or GetLocale() == "deDE" and "Flammenmaul"
 		or GetLocale() == "zhCN" and "弗莱格尔"
 		or "Flamegor",
 
-	loc = GetLocale() == "koKR" and {	
+	loc = GetLocale() == "koKR" and {
 		bossname = "플레임고르",
 		disabletrigger = "플레임고르|1이;가; 죽었습니다.",
 
@@ -23,9 +23,9 @@
 		warn5 = "광란 - 평정 사격!",
 		bosskill = "플레임고르를 물리쳤습니다!",
 
-		bar1text = "폭풍 날개",	
-	} 
-		or GetLocale() == "deDE" and 
+		bar1text = "폭풍 날개",
+	}
+		or GetLocale() == "deDE" and
 	{
 		bossname = "Flammenmaul",
 		disabletrigger = "Flammenmaul stirbt.",
@@ -42,8 +42,8 @@
 		bosskill = "Flammenmaul wurde besiegt!",
 
 		bar1text = "Fluegelgelstoss",
-	}	
-		or GetLocale() == "zhCN" and 
+	}
+		or GetLocale() == "zhCN" and
 	{
 		bossname = "弗莱格尔",
 		disabletrigger = "弗莱格尔死亡了。",
@@ -61,7 +61,7 @@
 
 		bar1text = "龙翼打击",
 	}
-		or 
+		or
 	{
 		bossname = "Flamegor",
 		disabletrigger = "Flamegor dies.",
@@ -105,7 +105,7 @@ end
 
 function BigWigsFlamegor:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

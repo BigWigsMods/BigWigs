@@ -3,7 +3,7 @@
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ40",
-	enabletrigger = GetLocale() == "koKR" and { "군주 크리", "공주 야우즈", "벰" } 
+	enabletrigger = GetLocale() == "koKR" and { "군주 크리", "공주 야우즈", "벰" }
 		or GetLocale() == "zhCN" and { "克里勋爵", "亚尔基公主", "维姆" }
 		or { "Lord Kri", "Princess Yauj", "Vem" },
 
@@ -15,10 +15,10 @@
 		bosskill = "벌레 무리 중 하나를 물리쳤습니다!",
 
 		healtrigger = "공주 야우즈|1이;가; 상급 치유|1을;를; 시전합니다.",
-		healwarn = "치유 시전 - 시전 방해!",	
-	} 
-		or GetLocale() == "zhCN" and 
-	{ 
+		healwarn = "치유 시전 - 시전 방해!",
+	}
+		or GetLocale() == "zhCN" and
+	{
 		bossname = "虫子一家 - 克里勋爵、亚尔基公主、维姆",
 		disabletrigger1 = "克里勋爵死亡了。",
 		disabletrigger2 = "亚尔基公主死亡了。",
@@ -27,15 +27,15 @@
 
 		healtrigger = "亚尔基公主开始施放强效治疗术。",
 		healwarn = "亚尔基公主正在施放治疗 - 迅速打断！",
-		
+
 		feartrigger = "受到了恐慌效果的影响。",
     	fearstatus = false,
     	fearbar = "群体恐惧",
     	fearwarn1 = "群体恐惧 - 20秒后再次发动",
     	fearwarn2 = "5秒后发动群体恐惧！",
-	}	
-		or 
-	{ 
+	}
+		or
+	{
 		bossname = "Bug Family - Lord Kri, Princess Yauj and Vem",
 		disabletrigger1 = "Lord Kri dies.",
 		disabletrigger2 = "Princess Yauj dies.",
@@ -98,7 +98,7 @@ function BigWigsBugFamily:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	or arg1 == self.loc.disabletrigger3) then
 		self.deaths = self.deaths + 1
 		if ( self.deaths == 3 ) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 			self:Disable()
 		end
 	end

@@ -4,7 +4,7 @@
 
 	zonename = "MC",
 	enabletrigger = GetLocale() == "koKR" and "게헨나스"
-		or GetLocale() == "zhCN" and "基赫纳斯" 
+		or GetLocale() == "zhCN" and "基赫纳斯"
 		or "Gehennas",
 
 	loc = GetLocale() == "koKR" and {
@@ -16,8 +16,8 @@
 		warn1 = "5초후 게헨나스의 저주!",
 		warn2 = "게헨나스의 저주 - 다음 저주 30초후!",
 
-		bar1text = "게헨나스의 저주",	
-	} 
+		bar1text = "게헨나스의 저주",
+	}
 		or GetLocale() == "zhCN" and
 	{
 		bossname = "基赫纳斯",
@@ -68,7 +68,7 @@ end
 
 function BigWigsGehennas:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

@@ -7,7 +7,7 @@
 		or GetLocale() == "zhCN" and "血领主曼多基尔"
 		or "Bloodlord Mandokir",
 
-	loc = GetLocale() == "koKR" and {	
+	loc = GetLocale() == "koKR" and {
 		bossname = "혈군주 만도키르",
 		disabletrigger = "혈군주 만도크리|1이;가; 죽었습니다.",
 		trigger1 = "(.+)! 널 지켜보고 있겠다!",
@@ -15,7 +15,7 @@
 		warn1 = "당신을 지켜보고 있습니다 - 모든 동작 금지!",
 		warn2 = "님을 지켜봅니다!",
 		bosskill = "혈군주 만도키르를 물리쳤습니다!",
-	} 
+	}
 		or GetLocale() == "zhCN" and
 	{
 		bossname = "血领主曼多基尔",
@@ -26,8 +26,8 @@
 		warn1 = "你被盯上了 - 停止一切动作！",
 		warn2 = "被盯上了！",
 		bosskill = "血领主曼多基尔被击败了！",
-	}		
-		or 
+	}
+		or
 	{
 		bossname = "Bloodlord Mandokir",
 		disabletrigger = "Bloodlord Mandokir dies.",
@@ -62,7 +62,7 @@ end
 
 function BigWigsMandokir:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

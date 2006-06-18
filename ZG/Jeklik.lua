@@ -5,7 +5,7 @@ BigWigsJeklik = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "ZG",
-	enabletrigger = GetLocale() == "koKR" and "대여사제 제클릭" 
+	enabletrigger = GetLocale() == "koKR" and "대여사제 제클릭"
 		or GetLocale() == "zhCN" and "高阶祭司耶克里克"
 		or "High Priestess Jeklik",
 
@@ -20,8 +20,8 @@ BigWigsJeklik = AceAddon:new({
 
 		disabletrigger = "대여사제 제클릭|1이;가; 죽었습니다.",
 
-		bosskill = "대여사제 제클릭을 물리쳤습니다!",	
-	} 
+		bosskill = "대여사제 제클릭을 물리쳤습니다!",
+	}
 		or GetLocale() == "zhCN" and
 	{
 		bossname = "高阶祭司耶克里克",
@@ -34,8 +34,8 @@ BigWigsJeklik = AceAddon:new({
 		disabletrigger = "高阶祭司耶克里克死亡了。",
 
 		bosskill = "高阶祭司耶克里克被击败了！",
-	}	
-		or 
+	}
+		or
 	{
 		bossname = "High Priestess Jeklik",
 
@@ -73,7 +73,7 @@ end
 
 function BigWigsJeklik:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

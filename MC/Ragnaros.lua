@@ -7,8 +7,8 @@
 		or GetLocale() == "zhCN" and "拉格纳罗斯"
 		or "Ragnaros",
 
-	loc = GetLocale() == "deDE" and 
-	{ 
+	loc = GetLocale() == "deDE" and
+	{
 		bossname = "Ragnaros",
 		disabletrigger = "Ragnaros stirbt.",
 
@@ -29,12 +29,12 @@
 		bar2text = "Auftauchen Ragnaros",
 		bar3text = "Untertauchen Ragnaros",
 	}
-		or GetLocale() == "koKR" and 
-	{	
+		or GetLocale() == "koKR" and
+	{
 		bossname = "라그나로스",
 		disabletrigger = "라그나로스|1이;가; 죽었습니다.",
 
-		trigger1 = "설퍼론의 유황",		
+		trigger1 = "설퍼론의 유황",
 		trigger2 = "나의 종들아,",
 		trigger3 = "이제 너희,",
 
@@ -50,7 +50,7 @@
 		bar1text = "광역 튕겨냄",
 		bar2text = "라그나로스 등장",
 		bar3text = "피조물 등장",
-	} 
+	}
 		or GetLocale() == "zhCN" and
 	{
 		bossname = "拉格纳罗斯",
@@ -73,7 +73,7 @@
 		bar2text = "拉格纳罗斯出现",
 		bar3text = "拉格纳罗斯消失",
 	}
-		or 
+		or
 	{
 		bossname = "Ragnaros",
 		disabletrigger = "Ragnaros dies.",
@@ -135,7 +135,7 @@ end
 
 function BigWigsRagnaros:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

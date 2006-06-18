@@ -20,9 +20,9 @@
 		stingtrigger = "공주 후후란|1이;가; 비룡 쐐기|1으로;로;",
 		stingwarn = "비룡 쐐기 - 메인탱커 해제!",
 		stingdelaywarn = "비룡 쐐기 3초전!",
-		bartext = "비룡 쐐기",	
+		bartext = "비룡 쐐기",
 	}
-		or GetLocale() == "zhCN" and 
+		or GetLocale() == "zhCN" and
 	{
 		bossname = "哈霍兰公主",
 		disabletrigger = "哈霍兰公主死亡了。",
@@ -37,8 +37,8 @@
 		stingwarn = "毒性之箭 - 给TANK驱散！",
 		stingdelaywarn = "3秒后哈霍兰可能施放毒性之箭！",
 		bartext = "毒性之箭",
-	}	
-		or 
+	}
+		or
 	{
 		bossname = "Princess Huhuran",
 		disabletrigger = "Princess Huhuran dies.",
@@ -85,7 +85,7 @@ end
 
 function BigWigsHuhuran:CHAT_MSG_COMBAT_HOSTILE_DEATH()
     if (arg1 == self.loc.disabletrigger) then
-        self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+        self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
         self:Disable()
     end
 end

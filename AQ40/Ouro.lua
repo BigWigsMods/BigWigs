@@ -30,7 +30,7 @@
 		bosskill = "아우로를 물리쳤습니다!",
 	}
 		or GetLocale() == "zhCN" and
-	{ 
+	{
 		bossname = "奥罗",
 		disabletrigger = "奥罗死亡了。",
 
@@ -51,9 +51,9 @@
 
 		berserksoonwarn = "即将狂暴 - 做好准备！",
 		bosskill = "奥罗被击败了！",
-	}	
-		or 
-	{	
+	}
+		or
+	{
 		bossname = "Ouro",
 		disabletrigger = "Ouro dies.",
 
@@ -110,7 +110,7 @@ end
 
 function BigWigsOuro:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

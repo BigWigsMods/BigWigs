@@ -3,12 +3,12 @@
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "MC",
-	enabletrigger = GetLocale() == "koKR" and "남작 게돈" 
-		or GetLocale() == "zhCN" and "迦顿男爵" 
+	enabletrigger = GetLocale() == "koKR" and "남작 게돈"
+		or GetLocale() == "zhCN" and "迦顿男爵"
 		or "Baron Geddon",
 
 	loc = GetLocale() == "deDE" and
-	{	
+	{
 		bossname = "Baron Geddon",
 		disabletrigger = "Baron Geddon stirbt.",
 
@@ -19,8 +19,8 @@
 
 		warn1 = "Du bist die Bombe!",
 		warn2 = " ist die Bombe!",
-	} 
-		or GetLocale() == "koKR" and 
+	}
+		or GetLocale() == "koKR" and
 	{
 		bossname = "남작 게돈",
 		disabletrigger = "남작 게돈|1이;가; 죽었습니다.",
@@ -32,8 +32,8 @@
 		are = "은",
 
 		warn1 = "당신은 폭탄입니다!",
-		warn2 = "님이 폭탄입니다!",	
-	} 
+		warn2 = "님이 폭탄입니다!",
+	}
 		or GetLocale() == "zhCN" and
 	{
 		bossname = "迦顿男爵",
@@ -47,7 +47,7 @@
 		warn1 = "你是炸弹人！向着夕阳奔跑吧！",
 		warn2 = "是炸弹人！向着夕阳奔跑吧！",
 	}
-		or 
+		or
 	{
 		bossname = "Baron Geddon",
 		disabletrigger = "Baron Geddon dies.",
@@ -82,7 +82,7 @@ end
 
 function BigWigsBaronGeddon:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

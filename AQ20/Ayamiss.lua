@@ -14,11 +14,11 @@
 
 		sacrificetrigger = "(.*)마비에 걸렸습니다.",
 		sacrificewarn = "님이 마비에 걸렸습니다!",
-		
+
 		you = "",
 		whopattern = "(.+)|1이;가; ",
-	} 
-		or GetLocale() == "zhCN" and 
+	}
+		or GetLocale() == "zhCN" and
 	{
 		bossname = "狩猎者阿亚米斯",
 		disabletrigger = "狩猎者阿亚米斯死亡了。",
@@ -29,7 +29,7 @@
 		you = "你",
 		are = "到",
 	}
-		or 
+		or
 	{
 		bossname = "Ayamiss the Hunter",
 		disabletrigger = "Ayamiss the Hunter dies.",
@@ -62,7 +62,7 @@ end
 
 function BigWigsAyamiss:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end
@@ -70,11 +70,11 @@ end
 if (GetLocale() == "koKR") then
 	function BigWigsAyamiss:checkSacrifice()
 		local _, _, Player = string.find(arg1, self.loc.sacrificetrigger)
-		if (Player) then	
+		if (Player) then
 			if (Player == self.loc.you) then
 				Player = UnitName("player")
 			else
-				Player = string.find(Player, self.loc.whopattern) 
+				Player = string.find(Player, self.loc.whopattern)
 			end
 			self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.sacrificewarn, "Red")
 		end
@@ -82,7 +82,7 @@ if (GetLocale() == "koKR") then
 else
 	function BigWigsAyamiss:checkSacrifice()
 		local _, _, Player, Type = string.find(arg1, self.loc.sacrificetrigger)
-		if (Player and Type) then	
+		if (Player and Type) then
 			if (Player == self.loc.you and Type == self.loc.are) then
 				Player = UnitName("player")
 			end

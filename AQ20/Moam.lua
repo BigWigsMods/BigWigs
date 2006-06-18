@@ -13,11 +13,11 @@ BigWigsMoam = AceAddon:new({
 		startrigger = "senses your fear",
 		startwarn = "Moam Enaged! 90 Seconds until adds! Drain mana!",
 		addsbar = "Adds",
-		addsincoming = "Adds incoming in %s seconds!",	
+		addsincoming = "Adds incoming in %s seconds!",
 		addstrigger = "drains your mana and turns to stone.",
 		addswarn = "Adds spawned! Moam Paralyzed for 90 seconds!",
 		paralyzebar = "Paralyze",
-		returnincoming = "Moam unparalyzed in %s seconds!",	
+		returnincoming = "Moam unparalyzed in %s seconds!",
 		returntrigger = "^Energize fades from Moam%.$",
 		returnwarn = "Moam unparalyzed! 90 seconds until adds! Drain mana!",
 	},
@@ -88,7 +88,7 @@ end
 
 function BigWigsMoam:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if ( arg1 == self.loc.disabletrigger ) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

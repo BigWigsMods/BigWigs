@@ -14,7 +14,7 @@
 		trigger1 = "자만심은 세상의 종말을 불러올 뿐이다. 오너라! 건방진 피조물들이여! 와서 신의 진노에 맞서 보아라!",
 		trigger2 = "학카르|1이;가; (.+)의 피의 착취에 의해 (.+) 피해를 입었습니다.",
 		flee = "Fleeing will do you no good mortals!",
-	
+
 		start = "학카르 시작 - 90초후 생명력 흡수 - 10분후 격노",
 		warn1 = "생명력 흡수 60초전",
 		warn2 = "생명력 흡수 45초전",
@@ -24,8 +24,8 @@
 
 		bar1text = "격노",
 		bar2text = "생명력 흡수",
-	
-	} 
+
+	}
 		or GetLocale() == "zhCN" and
 	{
 		bossname = "哈卡",
@@ -44,8 +44,8 @@
 
 		bar1text = "激怒",
 		bar2text = "生命吸取",
-	} 
-		or 
+	}
+		or
 	{
 		bossname = "Hakkar",
 		disabletrigger = "Hakkar dies.",
@@ -104,7 +104,7 @@ end
 
 function BigWigsHakkar:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

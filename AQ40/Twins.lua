@@ -3,9 +3,9 @@
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "AQ40",
-	enabletrigger = GetLocale() == "koKR" and {"제왕 베클로어", "제왕 베크닐라쉬"} 
-		or GetLocale() == "zhCN" and {"维克洛尔大帝", "维克尼拉斯大帝"}	
-		or {"Emperor Vek'lor", "Emperor Vek'nilash"},		
+	enabletrigger = GetLocale() == "koKR" and {"제왕 베클로어", "제왕 베크닐라쉬"}
+		or GetLocale() == "zhCN" and {"维克洛尔大帝", "维克尼拉斯大帝"}
+		or {"Emperor Vek'lor", "Emperor Vek'nilash"},
 
 	loc = GetLocale() == "koKR" and {
 		bossname = "쌍둥이 제왕 - 제왕 베클로어, 제왕 베크닐라쉬",
@@ -64,7 +64,7 @@
 		warn6 = "30秒后激怒",
 		warn7 = "10秒后激怒",
 	}
-		or 
+		or
 	{
 		bossname = "Twin Emperors - Emperor Vek'lor and Emperor Vek'nilash",
 		veklor = "Emperor Vek'lor",
@@ -191,7 +191,7 @@ end
 
 function BigWigsTwins:CHAT_MSG_COMBAT_HOSTILE_DEATH()
     if (arg1 == self.loc.veklor .. self.loc.disabletrigger or arg1 == self.loc.veknilash .. self.loc.disabletrigger) then
-        self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+        self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
         self:Disable()
     end
 end

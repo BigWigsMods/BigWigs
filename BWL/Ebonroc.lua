@@ -4,21 +4,21 @@
 
 	zonename = "BWL",
 	enabletrigger = GetLocale() == "koKR" and "에본로크"
-		or GetLocale() == "deDE" and "Schattenschwinge" 
+		or GetLocale() == "deDE" and "Schattenschwinge"
 		or GetLocale() == "zhCN" and "埃博诺克"
 		or "Ebonroc",
 
 	loc = GetLocale() == "koKR" and {
 		bossname = "에본로크",
-		disabletrigger = "에본로크|1이;가; 죽었습니다.",		
-		
+		disabletrigger = "에본로크|1이;가; 죽었습니다.",
+
 		trigger1 = "에본로크|1이;가; 폭풍 날개|1을;를; 시전합니다.",
 		trigger2 = "에본로크|1이;가; 암흑의 불길|1을;를; 시전합니다.",
 		trigger3 = "(.*)에본로크의 그림자에 걸렸습니다.",
 
 		you = "",
 		are = "are",
-		whopattern = "(.+)|1이;가; ", 
+		whopattern = "(.+)|1이;가; ",
 
 		warn1 = "에본로크가 폭풍 날개를 시전합니다!",
 		warn2 = "30초후 폭풍 날개!",
@@ -29,20 +29,20 @@
 		bosskill = "에본로크를 물리쳤습니다!",
 
 		bar1text = "폭풍 날개",
-	
-	} 
-		or GetLocale() == "deDE" and 
+
+	}
+		or GetLocale() == "deDE" and
 	{
 		bossname = "Schattenschwinge",
 		disabletrigger = "Schattenschwinge stirbt.",
-	
+
 		trigger1 = "Schattenschwinge beginnt Fl\195\188gelsto\195\159 zu wirken.",
 		trigger2 = "Schattenschwinge beginnt Schattenflamme zu wirken.",
 		trigger3 = "^([^%s]+) ([^%s]+) betroffen von Schattenschwinges Schatten",
-		
+
 		you = "Ihr",
-		are = "seid",	
-	
+		are = "seid",
+
 		warn1 = "Schattenschwinge beginnt Fl\195\188gelsto\195\159 zu wirken!",
 		warn2 = "30 Sekunden bis zum n\195\164chsten Fl\195\188gelsto\195\159!",
 		warn3 = "3 Sekunden bis Schattenschwinge Fl\195\188gelsto\195\159 zaubert!",
@@ -50,9 +50,9 @@
 		warn5 = "Du hast Schattenschwinges Schatten!",
 		warn6 = " hat Schattenschwinges Schatten!",
 		bosskill = "Schattenschwinge wurde besiegt!",
-			
+
 		bar1text = "Fluegelgelstoss",
-	} 
+	}
 		or GetLocale() == "zhCN" and
 	{
 		bossname = "埃博诺克",
@@ -75,7 +75,7 @@
 
 		bar1text = "龙翼打击",
 	}
-		or 
+		or
 	{
 		bossname = "Ebonroc",
 		disabletrigger = "Ebonroc dies.",
@@ -125,7 +125,7 @@ end
 
 function BigWigsEbonroc:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end
@@ -143,7 +143,7 @@ function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	end
 end
 
-if (GetLocale() == "koKR") then 
+if (GetLocale() == "koKR") then
 	function BigWigsEbonroc:Event()
 		local _,_, EPlayer = string.find(arg1, self.loc.trigger3)
 		if (EPlayer) then
@@ -156,7 +156,7 @@ if (GetLocale() == "koKR") then
 			end
 		end
 	end
-else	
+else
 	function BigWigsEbonroc:Event()
 		local _,_, EPlayer, EType = string.find(arg1, self.loc.trigger3)
 		if (EPlayer and EType) then

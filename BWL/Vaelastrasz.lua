@@ -4,8 +4,8 @@
 
 	zonename = "BWL",
 	enabletrigger = GetLocale() == "koKR" and "타락한 밸라스트라즈"
-		or GetLocale() == "deDE" and "Vaelastrasz der Verdorbene" 
-		or GetLocale() == "zhCN" and "堕落的瓦拉斯塔兹" 
+		or GetLocale() == "deDE" and "Vaelastrasz der Verdorbene"
+		or GetLocale() == "zhCN" and "堕落的瓦拉斯塔兹"
 		or "Vaelastrasz the Corrupt",
 
 	loc = GetLocale() == "koKR" and {
@@ -14,14 +14,14 @@
 
 		trigger1 = "(.*)불타는 아드레날린에 걸렸습니다.",
 
-		whopattern = "(.+)|1이;가; ", 
-		you = "",		
+		whopattern = "(.+)|1이;가; ",
+		you = "",
 
 		warn1 = "당신은 불타는 아드레날린에 걸렸습니다!",
 		warn2 = "님이 불타는 아드레날린에 걸렸습니다!",
-		bosskill = "타락의 벨라스트라즈를 물리쳤습니다!",		
-	} 
-		or GetLocale() == "deDE" and 
+		bosskill = "타락의 벨라스트라즈를 물리쳤습니다!",
+	}
+		or GetLocale() == "deDE" and
 	{
 		bossname = "Vaelastrasz der Verdorbene",
 		disabletrigger = "Vaelastrasz der Verdorbene stirbt.",
@@ -34,7 +34,7 @@
 		warn1 = "Du brennst!",
 		warn2 = " brennt!",
 		bosskill = "Vaelastrasz der Verdorbene wurde besiegt!",
-	}	
+	}
 		or GetLocale() == "zhCN" and
 	{
 		bossname = "堕落的瓦拉斯塔兹",
@@ -49,7 +49,7 @@
 		warn2 = "在燃烧！",
 		bosskill = "堕落的瓦拉斯塔兹被击败了！",
 	}
-		or 
+		or
 	{
 		bossname = "Vaelastrasz the Corrupt",
 		disabletrigger = "Vaelastrasz the Corrupt dies.",
@@ -85,7 +85,7 @@ end
 
 function BigWigsVaelastrasz:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

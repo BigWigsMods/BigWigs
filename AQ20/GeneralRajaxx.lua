@@ -34,9 +34,9 @@ BigWigsGeneralRajaxx = AceAddon:new({
 		warn7 = "7/8 단계",
 		warn8 = "장군 라작스 등장",
 
-		bosskill = "장군 라작스를 물리쳤습니다!",	
-	} 
-		or GetLocale() == "zhCN" and 
+		bosskill = "장군 라작스를 물리쳤습니다!",
+	}
+		or GetLocale() == "zhCN" and
 	{
 		bossname = "拉贾克斯将军",
 		disabletrigger = "拉贾克斯将军死亡了。",
@@ -64,7 +64,7 @@ BigWigsGeneralRajaxx = AceAddon:new({
 
 		bosskill = "拉贾克斯将军被击败了！",
 	}
-		or 
+		or
 	{
 		bossname = "General Rajaxx",
 		disabletrigger = "General Rajaxx dies.",
@@ -116,7 +116,7 @@ end
 
 function BigWigsGeneralRajaxx:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

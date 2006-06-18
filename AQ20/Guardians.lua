@@ -19,14 +19,14 @@
 		summonguardtrigger = "아누비사스 감시자|1이;가; 아누비사스 감시병 소환|1을;를; 시전합니다.",
 		summonguardwarn = "감시병 소환",
 		summonwarriortrigger = "아누비사스 감시자|1이;가; 아누비사스 전사 소환|1을;를; 시전합니다.",
-		summonwarriorwarn = "전사 소환",		
-		
-		plaguetrigger = "(.*)역병에 걸렸습니다.", 
+		summonwarriorwarn = "전사 소환",
+
+		plaguetrigger = "(.*)역병에 걸렸습니다.",
 		plaguewarn = "님이 역병에 걸렸습니다. 피하세요!",
-		plagueyou = "",	
+		plagueyou = "",
 		whopattern = "(.+)|1이;가; "
-	} 
-		or GetLocale() == "zhCN" and 
+	}
+		or GetLocale() == "zhCN" and
 	{
 		bossname = "阿努比萨斯守卫者",
 		disabletrigger = "阿努比萨斯守卫者死亡了。",
@@ -39,14 +39,14 @@
 		summonguardtrigger = "阿努比萨斯守卫者施放了召唤阿努比萨斯虫群卫士。",
 		summonguardwarn = "虫群卫士已被召唤出来",
 		summonwarriortrigger = "阿努比萨斯守卫者施放了召唤阿努比萨斯战士。",
-		summonwarriorwarn = "阿努比萨斯战士已被召唤出来",		
+		summonwarriorwarn = "阿努比萨斯战士已被召唤出来",
 		plaguetrigger = "^(.+)受(.+)了瘟疫效果的影响。$",
 		plaguewarn = "受到瘟疫的影响！快躲开！",
 		plaguewarnyou = "你受到瘟疫的影响！快跑开！",
 		plagueyou = "你",
 		plagueare = "到",
 	}
-		or 
+		or
 	{
 		bossname = "Anubisath Guardian",
 		disabletrigger = "Anubisath Guardian dies.",
@@ -59,7 +59,7 @@
 		summonguardtrigger = "Anubisath Guardian casts Summon Anubisath Swarmguard.",
 		summonguardwarn = "Swarmguard Summoned",
 		summonwarriortrigger = "Anubisath Guardian casts Summon Anubisath Warrior.",
-		summonwarriorwarn = "Warrior Summoned",		
+		summonwarriorwarn = "Warrior Summoned",
 		plaguetrigger = "^([^%s]+) ([^%s]+) afflicted by Plague%.$",
 		plaguewarn = " has the Plague! Keep away!",
 		plaguewarnyou = "You got the Plague!",
@@ -90,7 +90,7 @@ end
 
 function BigWigsGuardians:CHAT_MSG_COMBAT_HOSTILE_DEATH()
     if (arg1 == self.loc.disabletrigger) then
-        self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+        self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
         self:Disable()
     end
 end

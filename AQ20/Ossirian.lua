@@ -18,9 +18,9 @@
 		supremedelaywarn = "%d초후 무적 상태 돌입!",
 		debufftrigger = "무적의 오시리안|1이;가; (.+) 약점에 걸렸습니다.",
 		debuffwarn = "오시리안이 %s 계열 마법에 약해졌습니다.",
-		bartext = "무적 상태",	
-	} 
-		or GetLocale() == "zhCN" and 
+		bartext = "무적 상태",
+	}
+		or GetLocale() == "zhCN" and
 	{
 		bossname = "无疤者奥斯里安",
 		disabletrigger1 = "我……败……了。",
@@ -34,7 +34,7 @@
 		debuffwarn = "奥斯里安新法术弱点: %s",
 		bartext = "无敌",
 	}
-		or 
+		or
 	{
 		bossname = "Ossirian the Unscarred",
 		disabletrigger1 = "I...have...failed.",
@@ -73,7 +73,7 @@ end
 
 function BigWigsOssirian:checkEnd()
     if (arg1 == self.loc.disabletrigger1 or arg1 == self.loc.disabletrigger2) then
-        self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+        self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
         self:Disable()
     end
 end

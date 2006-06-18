@@ -19,8 +19,8 @@
 		warn2 = "마법 보호막 소멸!",
 		warn3 = "마법 보호막 동작 - 마법 공격 금지!",
 		bosskill = "아주어고스를 물리쳤습니다!",
-	} 
-		or GetLocale() == "zhCN" and 
+	}
+		or GetLocale() == "zhCN" and
 	{
 		bossname = "艾索雷葛斯",
 		disabletrigger = "艾索雷葛斯死亡了。",
@@ -34,7 +34,7 @@
 		warn3 = "魔法护盾开启 - 不要施放法术！",
 		bosskill = "艾索雷葛斯被击败了！",
 	}
-		or 
+		or
 	{
 		bossname = "Azuregos",
 		disabletrigger = "Azuregos dies.",
@@ -70,7 +70,7 @@ end
 
 function BigWigsAzuregos:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

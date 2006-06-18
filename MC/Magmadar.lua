@@ -18,8 +18,8 @@
 		warn2 = "5초후 광역 공포!",
 		warn3 = "광역 공포 경보 - 다음 공포까지 30초!",
 
-		bar1text = "광역 공포",	
-	} 
+		bar1text = "광역 공포",
+	}
 		or GetLocale() == "zhCN" and
 	{
 		bossname = "玛格曼达",
@@ -75,7 +75,7 @@ end
 
 function BigWigsMagmadar:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

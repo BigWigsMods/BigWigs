@@ -19,10 +19,10 @@
 		disabletrigger = "대여사제 말리|1이;가; 죽었습니다.",
 
 		bosskill = "대여사제 말리를 물리쳤습니다!",
-	
-	} 
+
+	}
 		or GetLocale() == "zhCN" and
-	{ 
+	{
 		bossname = "高阶祭司玛尔里",
 
 		trigger1 = "来为我作战吧，我的孩子们！$",
@@ -35,8 +35,8 @@
 
 		bosskill = "高阶祭司玛尔里被击败了！",
 	}
-		or 
-	{ 
+		or
+	{
 		bossname = "High Priestess Mar'li",
 
 		trigger1 = "Aid me my brood!$",
@@ -74,7 +74,7 @@ end
 
 function BigWigsMarli:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

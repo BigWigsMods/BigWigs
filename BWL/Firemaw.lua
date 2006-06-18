@@ -3,13 +3,13 @@
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "BWL",
-	enabletrigger = GetLocale() == "koKR" and "화염아귀" 
-		or GetLocale() == "deDE" and "Feuerschwinge" 
+	enabletrigger = GetLocale() == "koKR" and "화염아귀"
+		or GetLocale() == "deDE" and "Feuerschwinge"
 		or GetLocale() == "zhCN" and "费尔默"
 		or "Firemaw",
 
 	loc = GetLocale() == "koKR" and {
-	
+
 		bossname = "화염아귀",
 		disabletrigger = "화염아귀|1이;가; 죽었습니다.",
 
@@ -23,25 +23,25 @@
 		bosskill = "화염아귀를 물리쳤습니다!",
 
 		bar1text = "폭풍 날개",
-	
-	} 
-		or GetLocale() == "deDE" and 
+
+	}
+		or GetLocale() == "deDE" and
 	{
 		bossname = "Feuerschwinge",
 		disabletrigger = "Feuerschwinge stirbt.",
-	
+
 		trigger1 = "Feuerschwinge beginnt Fl\195\188gelsto\195\159 zu wirken.",
 		trigger2 = "Feuerschwinge beginnt Schattenflamme zu wirken.",
-	
+
 		warn1 = "Feuerschwinge beginnt Fl\195\188gelsto\195\159 zu wirken!",
 		warn2 = "30 Sekunden bis zum n\195\164chsten Fl\195\188gelsto\195\159!",
 		warn3 = "3 Sekunden bis Feuerschwinge Fl\195\188gelsto\195\159 zaubert!",
 		warn4 = "Schattenflamme kommt!",
 		bosskill = "Feuerschwinge wurde besiegt!",
-			
+
 		bar1text = "Fluegelgelstoss",
-	} 
-		or GetLocale() == "zhCN" and 
+	}
+		or GetLocale() == "zhCN" and
 	{
 		bossname = "费尔默",
 		disabletrigger = "费尔默死亡了。",
@@ -57,7 +57,7 @@
 
 		bar1text = "龙翼打击",
 	}
-		or 
+		or
 	{
 		bossname = "Firemaw",
 		disabletrigger = "Firemaw dies.",
@@ -98,7 +98,7 @@ end
 
 function BigWigsFiremaw:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

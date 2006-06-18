@@ -7,27 +7,27 @@
 		or GetLocale() == "zhCN" and "顽强的范克瑞斯"
 		or "Fankriss the Unyielding",
 
-	loc = GetLocale() == "koKR" and {	
+	loc = GetLocale() == "koKR" and {
 		bossname = "불굴의 판크리스",
-		disabletrigger = "불굴의 판크리스|1이;가; 죽었습니다.",		
+		disabletrigger = "불굴의 판크리스|1이;가; 죽었습니다.",
 		bosskill = "불굴의 판크리스를 물리쳤습니다!",
 
 		wormtrigger = "불굴의 판크리스|1이;가; 벌레 소환|1을;를; 시전합니다.",
 		wormwarn = "벌레 소환 - 제거!",
-	} 
-		or GetLocale() == "zhCN" and 
-	{ 
+	}
+		or GetLocale() == "zhCN" and
+	{
 		bossname = "顽强的范克瑞斯",
-		disabletrigger = "顽强的范克瑞斯死亡了。",		
+		disabletrigger = "顽强的范克瑞斯死亡了。",
 		bosskill = "顽强的范克瑞斯被击败了！",
 
 		wormtrigger = "顽强的范克瑞斯施放了召唤虫子。",
 		wormwarn = "虫子出现 - 赶快杀掉！",
-	}	
-		or 
-	{ 
+	}
+		or
+	{
 		bossname = "Fankriss the Unyielding",
-		disabletrigger = "Fankriss the Unyielding dies.",		
+		disabletrigger = "Fankriss the Unyielding dies.",
 		bosskill = "Fankriss the Unyielding has been defeated!",
 
 		wormtrigger = "Fankriss the Unyielding casts Summon Worm.",
@@ -53,7 +53,7 @@ end
 
 function BigWigsFankriss:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

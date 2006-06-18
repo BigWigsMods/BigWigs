@@ -3,13 +3,13 @@
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "BWL",
-	enabletrigger = GetLocale() == "koKR" and 
-		{"군주 빅터 네파리우스", "네파리안"} 
-		or GetLocale() == "zhCN" and {"维克多·奈法里奥斯","奈法利安"} 
-		or {"Lord Victor Nefarius", "Nefarian"}, 
+	enabletrigger = GetLocale() == "koKR" and
+		{"군주 빅터 네파리우스", "네파리안"}
+		or GetLocale() == "zhCN" and {"维克多·奈法里奥斯","奈法利安"}
+		or {"Lord Victor Nefarius", "Nefarian"},
 
-	loc = GetLocale() == "deDE" and 
-	{ 
+	loc = GetLocale() == "deDE" and
+	{
 		bossname = "Nefarian",
 		disabletrigger = "Nefarian stirbt.",
 
@@ -46,9 +46,9 @@
 		bosskill = "Nefarian wurde besiegt!",
 
 		bar1text = "Klassenruf",
-	} 
-		or GetLocale() == "koKR" and 
-	{	
+	}
+		or GetLocale() == "koKR" and
+	{
 		bossname = "네파리안",
 		disabletrigger = "네파리안|1이;가; 죽었습니다.",
 
@@ -82,12 +82,12 @@
 		warnrogue	= "도적 - 강제 소환!",
 		warnpaladin	= "성기사 - 강제 보축 사용!",
 		warnmage	= "마법사 - 변이!",
-		bosskill = "네파리안을 물리쳤습니다!",		
+		bosskill = "네파리안을 물리쳤습니다!",
 
 		bar1text = "직업 지목",
-	} 
+	}
 		or GetLocale() == "zhCN" and
-	{	
+	{
 		bossname = "奈法利安",
 		disabletrigger = "奈法利安死亡了。",
 
@@ -125,8 +125,8 @@
 
 		bar1text = "职业点名",
 	}
-		or 
-	{	
+		or
+	{
 		bossname = "Nefarian",
 		disabletrigger = "Nefarian dies.",
 
@@ -189,7 +189,7 @@ end
 
 function BigWigsNefarian:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

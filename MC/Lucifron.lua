@@ -8,7 +8,7 @@
 		or "Lucifron",
 
 	loc = GetLocale() == "deDE" and
-	{		
+	{
 		bossname = "Lucifron",
 		disabletrigger = "Lucifron stirbt.",
 
@@ -23,7 +23,7 @@
 		bar1text = "Lucifrons Fluch",
 		bar2text = "Impending Verdammnis",
 	}
-		or GetLocale() == "koKR" and 
+		or GetLocale() == "koKR" and
 	{
 		bossname = "루시프론",
 		disabletrigger = "루시프론|1이;가; 죽었습니다.",
@@ -34,11 +34,11 @@
 		warn1 = "5초후 루시프론의 저주!",
 		warn2 = "루시프론의 저주 - 다음 저주는 20초후!",
 		warn3 = "5초후 파멸의 예언!",
-		warn4 = "파멸의 예언 - 다음 예언은 20초후!",	
+		warn4 = "파멸의 예언 - 다음 예언은 20초후!",
 
 		bar1text = "루시프론의 저주",
-		bar2text = "파멸의 예언",		
-	} 
+		bar2text = "파멸의 예언",
+	}
 		or GetLocale() == "zhCN" and
 	{
 		bossname = "鲁西弗隆",
@@ -55,7 +55,7 @@
 		bar1text = "鲁西弗隆的诅咒",
 		bar2text = "末日降临",
 	}
-		or 
+		or
 	{
 		bossname = "Lucifron",
 		disabletrigger = "Lucifron dies.",
@@ -104,7 +104,7 @@ end
 
 function BigWigsLucifron:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

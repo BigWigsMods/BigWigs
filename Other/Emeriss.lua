@@ -7,24 +7,24 @@
 		or GetLocale() == "zhCN" and "艾莫莉丝"
 		or "Emeriss",
 
-	loc = GetLocale() == "koKR" and {	
+	loc = GetLocale() == "koKR" and {
 		bossname = "에메리스",
 		disabletrigger = "에메리스|1이;가; 죽었습니다.",
 
 		trigger1 = "(.*)대지의 오염에 걸렸습니다.",
-		trigger2 = "에메리스의 산성 숨결에 의해",		
+		trigger2 = "에메리스의 산성 숨결에 의해",
 
 		warn1 = "당신은 대지의 오염에 걸렸습니다!",
 		warn2 = "님이 대지의 오염에 걸렸습니다!",
 		warn3 = "5초후 산성 숨결!",
 		warn4 = "산성 숨결 - 30초후 재시전!",
 		bosskill = "에메리스를 물리쳤습니다!",
-		
-		isyou = "", 
-		whopattern = "(.+)|1이;가; ", 
+
+		isyou = "",
+		whopattern = "(.+)|1이;가; ",
 
 		bar1text = "산성 숨결",
-	} 
+	}
 		or GetLocale() == "zhCN" and
 	{
 		bossname = "艾莫莉丝",
@@ -38,13 +38,13 @@
 		warn3 = "5秒后发动毒性吐息！",
 		warn4 = "毒性吐息 - 30秒后再次发动",
 		bosskill = "艾莫莉丝被击败了！",
-		
-		isyou = "你", 
+
+		isyou = "你",
 		isare = "到",
 
 		bar1text = "毒性吐息",
-	}	
-		or 
+	}
+		or
 	{
 		bossname = "Emeriss",
 		disabletrigger = "Emeriss dies.",
@@ -57,8 +57,8 @@
 		warn3 = "5 seconds until Noxious Breath!",
 		warn4 = "Noxious Breath - 30 seconds till next!",
 		bosskill = "Emeriss has been defeated!",
-		
-		isyou = "You", 
+
+		isyou = "You",
 		isare = "are",
 
 		bar1text = "Noxious Breath",
@@ -91,12 +91,12 @@ end
 
 function BigWigsEmeriss:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end
 
-if (GetLocale() == "koKR") then 
+if (GetLocale() == "koKR") then
 	function BigWigsEmeriss:Event()
 		if (not self.prior and string.find(arg1, self.loc.trigger2)) then
 			self.prior = true
@@ -118,7 +118,7 @@ if (GetLocale() == "koKR") then
 			end
 		end
 	end
-else 
+else
 	function BigWigsEmeriss:Event()
 		if (not self.prior and string.find(arg1, self.loc.trigger2)) then
 			self.prior = true

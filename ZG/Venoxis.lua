@@ -5,7 +5,7 @@ BigWigsVenoxis = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "ZG",
-	enabletrigger = GetLocale() == "koKR" and "대사제 베녹시스" 
+	enabletrigger = GetLocale() == "koKR" and "대사제 베녹시스"
 		or GetLocale() == "zhCN" and "高阶祭司温诺希斯"
 		or "High Priest Venoxis",
 
@@ -21,7 +21,7 @@ BigWigsVenoxis = AceAddon:new({
 		warn2 = "2단계 시작 - 독구름을 조심하세요!",
 
 		bosskill = "대사제 베녹시스를 물리쳤습니다!",
-	} 
+	}
 		or GetLocale() == "zhCN" and
 	{
 		bossname = "高阶祭司温诺希斯",
@@ -35,7 +35,7 @@ BigWigsVenoxis = AceAddon:new({
 
 		bosskill = "高阶祭司温诺希斯被击败了！",
 	}
-		or 
+		or
 	{
 		bossname = "High Priest Venoxis",
 		disabletrigger = "High Priest Venoxis dies.",
@@ -73,7 +73,7 @@ end
 
 function BigWigsVenoxis:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end

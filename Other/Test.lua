@@ -57,9 +57,10 @@ end
 
 function BigWigsTest:BIGWIGS_TEST()
 	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar", 15, 1, "Green", "Interface\\Icons\\Spell_Nature_ResistNature")
-	self:TriggerEvent("BIGWIGS_MESSAGE", "Test", "Green")
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", "OMG Bear!", 5, "Yellow")
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", "*RAWR*", 10, "Orange")
+	self:TriggerEvent("BIGWIGS_MESSAGE", "Test", "Green", nil, "Long")
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", "OMG Bear!", 5, "Yellow", nil, "Alert")
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", "*RAWR*", 10, "Orange", nil, "Alarm")
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", "Victory!", 15, "Green", nil, "Victory")
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", "Test Bar", 5, "Yellow")
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", "Test Bar", 7, "Orange")
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", "Test Bar", 10, "Red")
