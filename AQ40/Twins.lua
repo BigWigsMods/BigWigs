@@ -115,7 +115,7 @@ function BigWigsTwins:Enable()
 	self:RegisterEvent("BIGWIGS_SYNC_TWINSTELEPORT")
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "TWINSENRAGE", 10)
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "TWINSTELEPORT", 10)
-	Metro:Register("BigWigs_Twins_CheckWhipe", self.PLAYER_REGEN_ENABLED, 2, self)
+	Metro:Register("BigWigs_Twins_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
 end
 
 function BigWigsTwins:Disable()
@@ -142,9 +142,9 @@ function BigWigsTwins:PLAYER_REGEN_ENABLED()
 	local go = self:Scan()
 	if (not go) then
 		self:StopEnrage()
-		Metro:Stop("BigWigs_Twins_CheckWhipe")
-	elseif (not Metro:Status("BigWigs_Twins_CheckWhipe")) then
-		Metro:Start("BigWigs_Twins_CheckWhipe")
+		Metro:Stop("BigWigs_Twins_CheckWipe")
+	elseif (not Metro:Status("BigWigs_Twins_CheckWipe")) then
+		Metro:Start("BigWigs_Twins_CheckWipe")
 	end
 end
 

@@ -129,7 +129,7 @@ function BigWigsCThun:Enable()
 	metro:Unregister("BigWigs Cthun Dark Glare Group Warning")
 	metro:Unregister("BigWigs Cthun Target")
 
-	Metro:Register("BigWigs_Cthun_CheckWhipe", self.PLAYER_REGEN_ENABLED, 2, self)
+	Metro:Register("BigWigs_Cthun_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
 	
 	metro:Register("BigWigs Cthun Tentacles", self.TentacleRape, self.timeP1Tentacle, self )
 	metro:Register("BigWigs Cthun Tentacles Reschedule", self.StartTentacleRape, self.timeReschedule, self )
@@ -268,9 +268,9 @@ function BigWigsTwins:PLAYER_REGEN_ENABLED()
 	local go = self:Scan()
 	if (not go) then
 		self:Disable()
-		Metro:Stop("BigWigs_Twins_CheckWhipe")
-	elseif (not Metro:Status("BigWigs_Twins_CheckWhipe")) then
-		Metro:Start("BigWigs_Twins_CheckWhipe")
+		Metro:Stop("BigWigs_Twins_CheckWipe")
+	elseif (not Metro:Status("BigWigs_Twins_CheckWipe")) then
+		Metro:Start("BigWigs_Twins_CheckWipe")
 	end
 end
 
