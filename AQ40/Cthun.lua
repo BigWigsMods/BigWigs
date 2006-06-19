@@ -298,7 +298,7 @@ function BigWigsCThun:Scan()
 	return false
 end
 
-function BigWigsCthun:PLAYER_REGEN_ENABLED()
+function BigWigsCThun:PLAYER_REGEN_ENABLED()
 	local go = self:Scan()
 	if (not go) then
 		self:Disable()
