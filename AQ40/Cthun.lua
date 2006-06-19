@@ -37,6 +37,8 @@ BigWigsCThun = AceAddon:new({
 			eyebeam		= "안광",				
 			glarewarning	= "암흑의 주시를 당하고 있습니다! 이동!",
 			groupwarning	= "암흑의 주시 %s (%s)",
+			invulnerable2	= "Party ends in 5 seconds!",
+			invulnerable1	= "Party over! C'Thun is now invulnerable!",
 	} 
 		or GetLocale() == "zhCN" and 
 	{
@@ -71,6 +73,8 @@ BigWigsCThun = AceAddon:new({
 			eyebeam		= "眼棱光",
 			glarewarning	= "DARK GLARE ON YOU! MOVE!",
 			groupwarning	= "Dark Glare on group %s (%s)" ,
+			invulnerable2	= "Party ends in 5 seconds!",
+			invulnerable1	= "Party over! C'Thun is now invulnerable!",
 	}
 		or 
 	{
@@ -85,6 +89,8 @@ BigWigsCThun = AceAddon:new({
 			tentacle2	= "Incoming Tentacle Rape Party - 5 sec!",
 			tentacle3	= "Incoming Tentacle Rape Party - 10 sec!",
 			weakend		= "C'Thun is weakened - DPS Party for 45 sec!",
+			invulnerable2	= "Party ends in 5 seconds!",
+			invulnerable1	= "Party over! C'Thun is now invulnerable!",
 
 			giant3		= "Incoming Giant Eye - 10 sec!",
 			giant2		= "Incoming Giant Eye - 5 sec!",
@@ -219,7 +225,9 @@ end
 
 function BigWigsCThun:CHAT_MSG_MONSTER_EMOTE()
 	if( arg1 == self.loc.weakendtrigger ) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.weakend, "red")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.weakend, "Green")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.invulnerable2, 40, "Orange")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.invulnerable1, 45, "Red")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barWeakend, 45, 4, "Red", "Interface\\Icons\\INV_ValentinesCandy")
 
 		-- cancel tentacle timers
@@ -339,9 +347,12 @@ function BigWigsCThun:Disable()
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.giant3)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.glare1)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.glare2)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.invulnerable1)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.invulnerable2)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.barGlare)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.barTentacle)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.barGiant)
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.barWeakened)
 	metro:Unregister("BigWigs Cthun Tentacles")
 	metro:Unregister("BigWigs Cthun Tentacles Reschedule")
 	metro:Unregister("BigWigs Cthun Tentacles Phase2")
