@@ -72,7 +72,7 @@ function BigWigsMandokir:CHAT_MSG_MONSTER_YELL()
 	local _,_, EPlayer = string.find(arg1, self.loc.trigger1)
 	if EPlayer then
 		if EPlayer == UnitName("player") then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
+			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true, "Alarm")
 		else
 			self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
 			self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
