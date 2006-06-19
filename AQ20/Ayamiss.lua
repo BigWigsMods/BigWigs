@@ -74,7 +74,7 @@ if (GetLocale() == "koKR") then
 			if (Player == self.loc.you) then
 				Player = UnitName("player")
 			else
-				Player = string.find(Player, self.loc.whopattern)
+				_, _, Player = string.find(Player, self.loc.whopattern) 
 			end
 			self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.sacrificewarn, "Red")
 		end

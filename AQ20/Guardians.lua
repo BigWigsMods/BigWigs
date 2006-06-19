@@ -118,7 +118,7 @@ if ( GetLocale() == "koKR" ) then
 			if (Player == self.loc.plagueyou) then
 				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.plaguewarnyou, "Red", true)
 			else
-				Player = string.find(Player, self.loc.whopattern)
+				_, _, Player = string.find(Player, self.loc.whopattern)
 				self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.plaguewarn, "Yellow")
 				self:TriggerEvent("BIGWIGS_SENDTELL", Player, self.loc.plaguetell)
 			end

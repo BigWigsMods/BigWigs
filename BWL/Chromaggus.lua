@@ -3,36 +3,36 @@
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "BWL",
-	enabletrigger = GetLocale() == "koKR" and "Å©·Î¸¶±¸½º"
+	enabletrigger = GetLocale() == "koKR" and "í¬ë¡œë§ˆêµ¬ìŠ¤"
 		or GetLocale() == "zhCN" and "å…‹æ´›çŽ›å¤æ–¯"
 		or "Chromaggus",
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "Å©·Î¸¶±¸½º",
-		disabletrigger = "Å©·Î¸¶±¸½º|1ÀÌ;°¡; Á×¾ú½À´Ï´Ù.",
+		bossname = "í¬ë¡œë§ˆêµ¬ìŠ¤",
+		disabletrigger = "í¬ë¡œë§ˆêµ¬ìŠ¤|1ì´;ê°€; ì£½ì—ˆìŠµë‹ˆë‹¤.",
 
-		trigger1 = "Å©·Î¸¶±¸½º|1ÀÌ;°¡; (.+)|1À»;¸¦; ½ÃÀüÇÕ´Ï´Ù.",
-		trigger2 = "(.+)|1ÀÌ;°¡; (.+)|1À¸·Î;·Î; Å©·Î¸¶±¸½º¿¡°Ô (%d+)ÀÇ (.+) ÀÔÇû½À´Ï´Ù.",
-		trigger3 = "Å©·Î¸¶±¸½º|1ÀÌ;°¡; ½Ã°£ÀÇ ¼èÅð|1À¸·Î;·Î; (.+)|1À»;¸¦; °ø°ÝÇßÁö¸¸ ÀúÇ×Çß½À´Ï´Ù.",
-		trigger4 = "±¤¶õÀÇ »óÅÂ¿¡ ºüÁý´Ï´Ù!",
-		trigger5 = "°¡Á×ÀÌ Á¡Á¡ ºû³ª¸é¼­ ¹°·¯¼­±â ½ÃÀÛÇÕ´Ï´Ù.",
+		trigger1 = "í¬ë¡œë§ˆêµ¬ìŠ¤|1ì´;ê°€; (.+)|1ì„;ë¥¼; ì‹œì „í•©ë‹ˆë‹¤.",
+		trigger2 = "(.+)|1ì´;ê°€; (.+)|1ìœ¼ë¡œ;ë¡œ; í¬ë¡œë§ˆêµ¬ìŠ¤ì—ê²Œ (%d+)ì˜ (.+) ìž…í˜”ìŠµë‹ˆë‹¤.",
+		trigger3 = "í¬ë¡œë§ˆêµ¬ìŠ¤|1ì´;ê°€; ì‹œê°„ì˜ ì‡ í‡´|1ìœ¼ë¡œ;ë¡œ; (.+)|1ì„;ë¥¼; ê³µê²©í–ˆì§€ë§Œ ì €í•­í–ˆìŠµë‹ˆë‹¤.",		
+		trigger4 = "ê´‘ëž€ì˜ ìƒíƒœì— ë¹ ì§‘ë‹ˆë‹¤!",
+		trigger5 = "ê°€ì£½ì´ ì ì  ë¹›ë‚˜ë©´ì„œ ë¬¼ëŸ¬ì„œê¸° ì‹œìž‘í•©ë‹ˆë‹¤.",
 
-		hit = "ÇÇÇØ¸¦",
-		crit = "Ä¡¸í»óÀ»",
+		hit = "í”¼í•´ë¥¼",
+		crit = "ì¹˜ëª…ìƒì„",
 
-		warn1 = "%s 10ÃÊÀü!",
-		warn2 = "%s¸¦ ½ÃÀüÇÕ´Ï´Ù!",
-		warn3 = "»õ·Î¿î Ãë¾à ¼Ó¼º: %s",
-		warn4 = "Ãë¾à ¼Ó¼ºÀÌ º¯°æµÇ¾ú½À´Ï´Ù!",
-		warn5 = "±¤ÆøÈ­ - ÆòÁ¤ »ç°Ý!",
-		bosskill = "Å©·Î¸¶±¸½º¸¦ ¹°¸®ÃÆ½À´Ï´Ù!",
+		warn1 = "%s 10ì´ˆì „!",
+		warn2 = "%së¥¼ ì‹œì „í•©ë‹ˆë‹¤!",
+		warn3 = "ìƒˆë¡œìš´ ì·¨ì•½ ì†ì„±: %s",
+		warn4 = "ì·¨ì•½ ì†ì„±ì´ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤!",
+		warn5 = "ê´‘í­í™” - í‰ì • ì‚¬ê²©!",
+		bosskill = "í¬ë¡œë§ˆêµ¬ìŠ¤ë¥¼ ë¬¼ë¦¬ì³¤ìŠµë‹ˆë‹¤!",
 
 		breathsicons = {
-			["½Ã°£ÀÇ ¼èÅð"] = "Interface\\Icons\\Spell_Arcane_PortalOrgrimmar",
-			["ºÎ½Ä¼º »ê"] = "Interface\\Icons\\Spell_Nature_Acid_01",
-			["»ìÁ¡ ÅÂ¿ì±â"] = "Interface\\Icons\\Spell_Fire_Fire",
-			["¼Ò°¢"] = "Interface\\Icons\\Spell_Shadow_ChillTouch",
-			["µ¿°á"] = "Interface\\Icons\\Spell_Frost_ChillingBlast",
+			["ì‹œê°„ì˜ ì‡ í‡´"] = "Interface\\Icons\\Spell_Arcane_PortalOrgrimmar",
+			["ë¶€ì‹ì„± ì‚°"] = "Interface\\Icons\\Spell_Nature_Acid_01",
+			["ì‚´ì  íƒœìš°ê¸°"] = "Interface\\Icons\\Spell_Fire_Fire",
+			["ì†Œê°"] = "Interface\\Icons\\Spell_Shadow_ChillTouch",
+			["ë™ê²°"] = "Interface\\Icons\\Spell_Frost_ChillingBlast",
 		}
 	}
 		or GetLocale() == "deDE" and
@@ -199,7 +199,7 @@ end
 if (GetLocale() == "koKR") then
 	function BigWigsChromaggus:PlayerDamageEvents()
 		if (not self.loc.vulnerability) then
-			local _, School, Dmg, Type = string.find(arg1, self.loc.trigger2)
+			local _, _, _, School, Dmg, Type = string.find(arg1, self.loc.trigger2)
 			if (Type == (self.loc.hit or self.loc.crit) and tonumber(Dmg or "") and School) then
 				if ((tonumber(Dmg) >= 550 and Type == self.loc.hit) or (tonumber(Dmg) >= 1100 and Type == self.loc.crit)) then
 					self.loc.vulnerability = School

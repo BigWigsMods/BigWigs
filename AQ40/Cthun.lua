@@ -1,4 +1,3 @@
-﻿
 local metro = Metrognome:GetInstance("1")
 
 BigWigsCThun = AceAddon:new({
@@ -6,43 +5,38 @@ BigWigsCThun = AceAddon:new({
 	cmd           	= AceChatCmd:new({}, {}),
 
 	zonename 	= "AQ40",
-	enabletrigger	= GetLocale() == "koKR" and "ì¨ì ë"
+	enabletrigger	= GetLocale() == "koKR" and "쑨의 눈"
 		or GetLocale() == "zhCN" and "克苏恩之眼"
 		or "Eye of C'Thun",
 
-	loc 		= GetLocale() == "koKR" and {
-			bossname 	= "ì¨ì ë",
-			disabletrigger 	= "ì¨|1ì´;ê°; ì£½ììµëë¤.",
-			bosskill 	= "ì¨ì ë¬¼ë¦¬ì³¤ìµëë¤.",
+	loc 		= GetLocale() == "koKR" and {			
+			bossname 	= "쑨의 눈",
+			cthun		= "쑨",
+			disabletrigger 	= "쑨|1이;가; 죽었습니다.",
+			bosskill 	= "쑨을 물리쳤습니다.",
 			
-			weakendtrigger 	= "ì½í´ì¡ìµëë¤!",
+			weakendtrigger 	= "약해졌습니다!",
 			
-			tentacle1	= "ëë¬ë¦° ì´ì ë±ì¥ - ì´ì ì²ë¦¬!",
-			tentacle2	= "5ì´í ëë¬ë¦° ì´ì ë±ì¥!",
-			tentacle3	= "10ì´í ëë¬ë¦° ì´ì ë±ì¥!",
-			weakend		= "ì¨ì´ ì½íëììµëë¤ - 45ì´ê° ìµë ê³µê²©!",
+			tentacle1	= "눈달린 촉수 등장 - 촉수 처리~~!",
+			tentacle2	= "눈달린 촉수 등장 - 5초전!",
+			tentacle3	= "눈달린 촉수 등장 - 10초전!",
+			weakend		= "쑨이 약화되었습니다 - 45초간 최대 공격!",
 		
-			combat		= "C'Thun event started - 45 sec until Dark Glare and Eyes",
+			combat		= "쑨 시작 - 45초후 암흑의 주시",
 		
-			phase1		= "Eye of C'Thun dies.",
-
-			giant3		= "Incoming Giant Eye - 10 sec!",
-			giant2		= "Incoming Giant Eye - 5 sec!",
-			giant1		= "Incoming Giant Eye - Poke it!",			
+			phase1		= "쑨의 눈|1이;가; 죽었습니다.",
 		
-			glare2		= "PEWPEW Dark glare - 5 sec!",
-			glare1		= "PEWPEW Dark glare - MOVE IT!",
+			glare2		= "암흑의 주시 - 5초전!",
+			glare1		= "암흑의 주시 - 이동!이동!",
 		
-			barTentacle	= "ëë¬ë¦° ì´ì!",
-			barWeakend	= "ì¨ ì½í!",	
-			barGlare	= "Dark glare!",
+			barTentacle	= "눈달린 촉수!",
+			barWeakend	= "쑨 약화!",
+			barGlare	= "암흑의 주시!",
 			barGiant	= "Giant Eye!",
 
-			eyebeam		= "Eye Beam",
-			cthun		= "C'Thun",
-			glarewarning	= "DARK GLARE ON YOU! MOVE!",
-			groupwarning	= "Dark Glare on group %s (%s)" ,
-
+			eyebeam		= "안광",				
+			glarewarning	= "암흑의 주시를 당하고 있습니다! 이동!",
+			groupwarning	= "암흑의 주시 %s (%s)",
 	} 
 		or GetLocale() == "zhCN" and 
 	{

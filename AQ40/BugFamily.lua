@@ -15,10 +15,16 @@
 		bosskill = "벌레 무리 중 하나를 물리쳤습니다!",
 
 		healtrigger = "공주 야우즈|1이;가; 상급 치유|1을;를; 시전합니다.",
-		healwarn = "치유 시전 - 시전 방해!",
-	}
-		or GetLocale() == "zhCN" and
-	{
+		healwarn = "치유 시전 - 시전 방해!",					
+		
+		feartrigger = "공포에 걸렸습니다.",
+    	fearstatus = false,
+    	fearbar = "공포",
+    	fearwarn1 = "공포 시전! 다음 시전 20초후!",
+    	fearwarn2 = "5초후 공포!",
+	} 
+		or GetLocale() == "zhCN" and 
+	{ 
 		bossname = "虫子一家 - 克里勋爵、亚尔基公主、维姆",
 		disabletrigger1 = "克里勋爵死亡了。",
 		disabletrigger2 = "亚尔基公主死亡了。",
