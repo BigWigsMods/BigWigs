@@ -22,7 +22,7 @@ BigWigsCThun = AceAddon:new({
 			tentacle3	= "10ì´í ëë¬ë¦° ì´ì ë±ì¥!",
 			weakend		= "ì¨ì´ ì½íëììµëë¤ - 45ì´ê° ìµë ê³µê²©!",
 		
-			combat		= "C'Thun event started - 45 sec untill Dark Glare and Eyes",
+			combat		= "C'Thun event started - 45 sec until Dark Glare and Eyes",
 		
 			phase1		= "Eye of C'Thun dies.",
 
@@ -96,7 +96,7 @@ BigWigsCThun = AceAddon:new({
 			giant2		= "Incoming Giant Eye - 5 sec!",
 			giant1		= "Incoming Giant Eye - Poke it!",			
 		
-			combat		= "C'Thun event started - 45 sec untill Dark Glare and Eyes",
+			combat		= "C'Thun event started - 45 sec until Dark Glare and Eyes",
 		
 			phase1		= "Eye of C'Thun dies.",
 		
