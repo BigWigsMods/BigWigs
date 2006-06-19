@@ -110,9 +110,10 @@ function BigWigsViscidus:Enable()
 	self.disabled = nil
 	self:RegisterEvent("BIGWIGS_MESSAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "CheckSting")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "CheckSting")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CheckSting")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "CheckVis")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "CheckVis")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CheckVis")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
 function BigWigsViscidus:Disable()
@@ -121,8 +122,15 @@ function BigWigsViscidus:Disable()
 	self:UnregisterAllEvents()
 end
 
+function BigWigsTwins:CHAT_MSG_COMBAT_HOSTILE_DEATH()
+    if (arg1 == self.loc.disabletrigger) then
+        self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+        self:Disable()
+    end
+end
+
 if (GetLocale() == "koKR") then 
-	function BigWigsViscidus:CheckSting()
+	function BigWigsViscidus:CheckVis()
 		if (not self.prior1 and string.find(arg1, self.loc.trigger6)) then
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn6, "Orange")
 			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn7, 7, "Orange")
@@ -141,7 +149,7 @@ if (GetLocale() == "koKR") then
 		end
 	end
 else
-	function BigWigsViscidus:CheckSting()
+	function BigWigsViscidus:CheckVis()
 		if (not self.prior1 and string.find(arg1, self.loc.trigger6)) then
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn6, "Orange")
 			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn7, 7, "Orange")

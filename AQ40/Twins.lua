@@ -1,4 +1,6 @@
-﻿BigWigsTwins = AceAddon:new({
+﻿local Metro = Metrognome:GetInstance("1")
+
+BigWigsTwins = AceAddon:new({
 	name          = "BigWigsTwins",
 	cmd           = AceChatCmd:new({}, {}),
 
@@ -108,11 +110,12 @@ function BigWigsTwins:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
-	self:RegisterEvent("CHAT_MSG_COMBAT_FRIENDLY_DEATH", "PLAYER_REGEN_ENABLED")
+--	self:RegisterEvent("CHAT_MSG_COMBAT_FRIENDLY_DEATH", "PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("BIGWIGS_SYNC_TWINSENRAGE")
 	self:RegisterEvent("BIGWIGS_SYNC_TWINSTELEPORT")
-	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "TWINSENRAGE", 10 )
-	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "TWINSTELEPORT", 10 )
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "TWINSENRAGE", 10)
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "TWINSTELEPORT", 10)
+	Metro:Register("BigWigs_Twins_CheckWhipe", self.PLAYER_REGEN_ENABLED, 2, self)
 end
 
 function BigWigsTwins:Disable()
@@ -139,6 +142,9 @@ function BigWigsTwins:PLAYER_REGEN_ENABLED()
 	local go = self:Scan()
 	if (not go) then
 		self:StopEnrage()
+		Metro:Stop("BigWigs_Twins_CheckWhipe")
+	elseif (not Metro:Status("BigWigs_Twins_CheckWhipe")) then
+		Metro:Start("BigWigs_Twins_CheckWhipe")
 	end
 end
 
@@ -196,7 +202,7 @@ function BigWigsTwins:CHAT_MSG_COMBAT_HOSTILE_DEATH()
     end
 end
 
-function BigWigsTwins:BIGWIGS_SYNC_TWINSTELEPORT(rest, nick)
+function BigWigsTwins:BIGWIGS_SYNC_TWINSTELEPORT()
 	self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.portwarn, "Yellow")
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.portdelaywarn, 25, "Red")
 	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bartext, 30, 1, "Yellow", "Interface\\Icons\\Spell_Arcane_Blink")
@@ -230,8 +236,8 @@ function BigWigsTwins:CHAT_MSG_MONSTER_EMOTE()
 	end
 end
 
-function BigWigsTwins:BIGWIGS_SYNC_TWINSENRAGE(rest, nick)
-	if( not self.enrageStarted ) then
+function BigWigsTwins:BIGWIGS_SYNC_TWINSENRAGE()
+	if (not self.enrageStarted) then
 		self:StartEnrage()
 	end
 end

@@ -29,10 +29,9 @@
 		healwarn = "亚尔基公主正在施放治疗 - 迅速打断！",
 
 		feartrigger = "受到了恐慌效果的影响。",
-    	fearstatus = false,
-    	fearbar = "群体恐惧",
-    	fearwarn1 = "群体恐惧 - 20秒后再次发动",
-    	fearwarn2 = "5秒后发动群体恐惧！",
+		fearbar = "群体恐惧",
+		fearwarn1 = "群体恐惧 - 20秒后再次发动",
+		fearwarn2 = "5秒后发动群体恐惧！",
 	}
 		or
 	{
@@ -46,10 +45,9 @@
 		healwarn = "Casting heal - interrupt it!",
 
 		feartrigger = "is afflicted by Fear%.",
-    	fearstatus = false,
-    	fearbar = "AE Fear",
-    	fearwarn1 = "AE Fear! Next in 20 Seconds!",
-    	fearwarn2 = "AE Fear in 5 Seconds!",
+		fearbar = "AE Fear",
+		fearwarn1 = "AE Fear! Next in 20 Seconds!",
+		fearwarn2 = "AE Fear in 5 Seconds!",
 	},
 })
 
@@ -64,9 +62,9 @@ function BigWigsBugFamily:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE","FearEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE","FearEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE","FearEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "FearEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "FearEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "FearEvent")
 	self:RegisterEvent("BIGWIGS_MESSAGE","FearEvent")
 end
 
@@ -75,21 +73,21 @@ function BigWigsBugFamily:Disable()
 	self:UnregisterAllEvents()
 end
 
-function BigWigsBugFamily:FearEvent(msgtxt)
-    if (msgtxt) then
-        if ( self.fearstatus and msgtxt == self.loc.fearwarn2) then
-            self.fearstatus = false
-        end
-    else
-        if (not self.fearstatus and string.find(arg1, self.loc.feartrigger)) then
-            self.fearstatus = true
-        self:TriggerEvent("BIGWIGS_BAR_START", self.loc.fearbar, 20, 2, "Green", "Interface\\Icons\\Spell_Shadow_Possession")
-            self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.fearbar, 10, "Yellow")
-            self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.fearbar, 15, "Red")
-            self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.fearwarn1, "Red")
-            self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.fearwarn2, 15, "Orange")
-        end
-    end
+function BigWigsBugFamily:FearEvent()
+	if (not self.fearstatus and string.find(arg1, self.loc.feartrigger)) then
+		self.fearstatus = true
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.fearbar, 20, 2, "Green", "Interface\\Icons\\Spell_Shadow_Possession")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.fearbar, 10, "Yellow")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.fearbar, 15, "Red")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.fearwarn1, "Red")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.fearwarn2, 15, "Orange")
+	end
+end
+
+function BigWigsBugFamily:PLAYER_REGEN_ENABLED(txt)
+	if (self.fearstatus and txt == self.loc.fearwarn2) then
+		self.fearstatus = false
+	end
 end
 
 function BigWigsBugFamily:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -97,7 +95,7 @@ function BigWigsBugFamily:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	or arg1 == self.loc.disabletrigger2
 	or arg1 == self.loc.disabletrigger3) then
 		self.deaths = self.deaths + 1
-		if ( self.deaths == 3 ) then
+		if (self.deaths == 3) then
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 			self:Disable()
 		end

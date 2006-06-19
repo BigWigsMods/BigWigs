@@ -129,6 +129,8 @@ function BigWigsCThun:Enable()
 	metro:Unregister("BigWigs Cthun Dark Glare Group Warning")
 	metro:Unregister("BigWigs Cthun Target")
 
+	Metro:Register("BigWigs_Cthun_CheckWhipe", self.PLAYER_REGEN_ENABLED, 2, self)
+	
 	metro:Register("BigWigs Cthun Tentacles", self.TentacleRape, self.timeP1Tentacle, self )
 	metro:Register("BigWigs Cthun Tentacles Reschedule", self.StartTentacleRape, self.timeReschedule, self )
 	metro:Register("BigWigs Cthun Tentacles Phase2", self.StartTentacleRape, self.timeP2Start, self)
@@ -242,6 +244,7 @@ function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 
 		elseif( arg1 == self.loc.disabletrigger) then
 			self:Disable()
+			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		end
 end
 
@@ -261,10 +264,13 @@ function BigWigsCThun:Scan()
 	return false
 end
 
-function BigWigsCThun:PLAYER_REGEN_ENABLED()
+function BigWigsTwins:PLAYER_REGEN_ENABLED()
 	local go = self:Scan()
 	if (not go) then
 		self:Disable()
+		Metro:Stop("BigWigs_Twins_CheckWhipe")
+	elseif (not Metro:Status("BigWigs_Twins_CheckWhipe")) then
+		Metro:Start("BigWigs_Twins_CheckWhipe")
 	end
 end
 
@@ -312,8 +318,7 @@ function BigWigsCThun:Disable()
 	
 	self:UnregisterAllEvents()
 end
-
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsCThun:RegisterForLoad()
