@@ -12,11 +12,11 @@ local cmdopt = {
 	},
 }
 local sounds = {
-	Long = "Interface\\AddOns\\BigWigs\\Long.wav",
-	Info = "Interface\\AddOns\\BigWigs\\Info.wav",
-	Msg = "Interface\\AddOns\\BigWigs\\Msg.wav",
-	Alert = "Interface\\AddOns\\BigWigs\\Alert.wav",
-	Alarm = "Interface\\AddOns\\BigWigs\\Alarm.wav",
+	Long = "Interface\\AddOns\\BigWigs\\Long.mp3",
+	Info = "Interface\\AddOns\\BigWigs\\Info.mp3",
+	Msg = "Interface\\AddOns\\BigWigs\\Msg.mp3",
+	Alert = "Interface\\AddOns\\BigWigs\\Alert.mp3",
+	Alarm = "Interface\\AddOns\\BigWigs\\Alarm.mp3",
 	Victory = "Interface\\AddOns\\BigWigs\\VictoryShort.mp3",
 }
 
