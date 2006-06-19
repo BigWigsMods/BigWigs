@@ -25,6 +25,10 @@ BigWigsCThun = AceAddon:new({
 			combat		= "C'Thun event started - 45 sec untill Dark Glare and Eyes",
 		
 			phase1		= "Eye of C'Thun dies.",
+
+			giant3		= "Incoming Giant Eye - 10 sec!",
+			giant2		= "Incoming Giant Eye - 5 sec!",
+			giant1		= "Incoming Giant Eye - Poke it!",			
 		
 			glare2		= "PEWPEW Dark glare - 5 sec!",
 			glare1		= "PEWPEW Dark glare - MOVE IT!",
@@ -32,6 +36,7 @@ BigWigsCThun = AceAddon:new({
 			barTentacle	= "ëë¬ë¦° ì´ì!",
 			barWeakend	= "ì¨ ì½í!",	
 			barGlare	= "Dark glare!",
+			barGiant	= "Giant Eye!",
 
 			eyebeam		= "Eye Beam",
 			cthun		= "C'Thun",
@@ -52,6 +57,10 @@ BigWigsCThun = AceAddon:new({
 			tentacle2	= "5秒后眼球触须出现！",
 			tentacle3	= "10秒后眼球触须出现！",
 			weakend		= "克苏恩被削弱了 - 45秒内全力输出伤害！",
+
+			giant3		= "Incoming Giant Eye - 10 sec!",
+			giant2		= "Incoming Giant Eye - 5 sec!",
+			giant1		= "Incoming Giant Eye - Poke it!",			
 			
 			combat		= "克苏恩事件开始 - 45秒后发动黑暗闪耀与眼棱光",
 			
@@ -63,6 +72,7 @@ BigWigsCThun = AceAddon:new({
 			barTentacle	= "眼球触须！",
 			barWeakend	= "克苏恩被削弱了！",
 			barGlare	= "黑暗闪耀！",
+			barGiant	= "Giant Eye!",
 			
 			eyebeam		= "眼棱光",
 			glarewarning	= "DARK GLARE ON YOU! MOVE!",
@@ -77,10 +87,14 @@ BigWigsCThun = AceAddon:new({
 			
 			weakendtrigger 	= "is weakened!",
 			
-			tentacle1	= "Incoming Tentacle Rape Party - Pleasure~~!",
-			tentacle2	= "Incoming Tentacle Rape Party - 5~ sec!",
-			tentacle3	= "Incoming Tentacle Rape Party - 10~ sec!",
-			weakend		= "C'Thun is weakened - DPS Party for 45~ sec!",
+			tentacle1	= "Incoming Tentacle Rape Party - Pleasure!",
+			tentacle2	= "Incoming Tentacle Rape Party - 5 sec!",
+			tentacle3	= "Incoming Tentacle Rape Party - 10 sec!",
+			weakend		= "C'Thun is weakened - DPS Party for 45 sec!",
+
+			giant3		= "Incoming Giant Eye - 10 sec!",
+			giant2		= "Incoming Giant Eye - 5 sec!",
+			giant1		= "Incoming Giant Eye - Poke it!",			
 		
 			combat		= "C'Thun event started - 45 sec untill Dark Glare and Eyes",
 		
@@ -92,6 +106,7 @@ BigWigsCThun = AceAddon:new({
 			barTentacle	= "Tentacle rape party!",
 			barWeakend	= "C'Thun is weakened!",
 			barGlare	= "Dark glare!",
+			barGiant	= "Giant Eye!",
 
 			eyebeam		= "Eye Beam",
 			glarewarning	= "DARK GLARE ON YOU! MOVE!",
@@ -100,12 +115,12 @@ BigWigsCThun = AceAddon:new({
 
 	timeP1Tentacle	 = 45,
 	timeP1GlareStart = 45,
-	timeP1Glare	 = 87,
+	timeP1Glare	 = 85,
 	
-	timeP2Start     = 42,
+	timeP2Offset    = 12,
 	timeP2Tentacle  = 30,
 
-	timeReschedule	= 48,
+	timeReschedule	= 45,
 })
 
 function BigWigsCThun:Initialize()
@@ -116,6 +131,7 @@ end
 function BigWigsCThun:Enable()
 	self.disabled = nil
 	self.target = nil
+	self.gianteye = nil
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE")
@@ -129,15 +145,17 @@ function BigWigsCThun:Enable()
 	metro:Unregister("BigWigs Cthun Dark Glare Group Warning")
 	metro:Unregister("BigWigs Cthun Target")
 
-	Metro:Register("BigWigs_Cthun_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
+	Metro:Register("BigWigs Cthun CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
 	
 	metro:Register("BigWigs Cthun Tentacles", self.TentacleRape, self.timeP1Tentacle, self )
 	metro:Register("BigWigs Cthun Tentacles Reschedule", self.StartTentacleRape, self.timeReschedule, self )
-	metro:Register("BigWigs Cthun Tentacles Phase2", self.StartTentacleRape, self.timeP2Start, self)
+	metro:Register("BigWigs Cthun Tentacles Phase2", self.StartTentacleRape, self.timeP2Tentacle + self.timeP2Offset, self )
 	metro:Register("BigWigs Cthun Dark Glare", self.DarkGlare, self.timeP1GlareStart, self)
-	-- we warn which group will be dark glared 4 second before it hits.
-	metro:Register("BigWigs Cthun Group Warning", self.GroupWarning, self.timeP1GlareStart - 4, self)
+
+	-- we warn which group will be dark glared 2 second before it hits.
+	metro:Register("BigWigs Cthun Group Warning", self.GroupWarning, self.timeP1GlareStart - 2, self)
 	metro:Register("BigWigs Cthun Target", self.CheckTarget, 0.2, self)
+
 end
 
 function BigWigsCThun:CheckTarget()
@@ -158,7 +176,7 @@ end
 function BigWigsCThun:GroupWarning()
 	if( self.firstWarning ) then
 		metro:ChangeRate("BigWigs Cthun Group Warning", self.timeP1Glare )
-		self.firstWarning = false
+		self.firstWarning = nil
 	end
 	if( self.target ) then
 		local i, name, group
@@ -175,6 +193,15 @@ function BigWigsCThun:TentacleRape()
 	local nexttime = self.timeP1Tentacle
 	if( self.phase2 ) then
 		nexttime = self.timeP2Tentacle
+		if(  self.gianteye ) then
+			self.gianteye = nil
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.giant1, nexttime, "Red")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.giant2, nexttime - 5, "Orange")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.giant3, nexttime - 10, "Yellow")
+			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGiant, nexttime, 3, "Orange", "Interface\\Icons\\Ability_EyeOfTheOwl" )
+		else
+			self.gianteye = true
+		end
 	end
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle1, nexttime, "Red")
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle2, nexttime - 5, "Orange")
@@ -192,20 +219,27 @@ function BigWigsCThun:DarkGlare()
 end
 
 function BigWigsCThun:StartTentacleRape()
+	self:TentacleRape()
 	metro:Start("BigWigs Cthun Tentacles")
 end
-
 
 function BigWigsCThun:CHAT_MSG_MONSTER_EMOTE()
 	if( arg1 == self.loc.weakendtrigger ) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.weakend, "red")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barWeakend, 45, 3, "Red", "Interface\\Icons\\INV_ValentinesCandy")
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barWeakend, 45, 4, "Red", "Interface\\Icons\\INV_ValentinesCandy")
 
 		-- cancel tentacle timers
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.tentacle1)
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.tentacle2)
 		self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.barTentacle)
 
+		-- cancel giant timers
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.giant1)
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.giant2)
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.log.giant3)
+		self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.barGiant)
+
+		-- stop the timer, and reschedule.
 		metro:Stop("BigWigs Cthun Tentacles")
 		metro:Start("BigWigs Cthun Tentacles Reschedule", 1)
 
@@ -231,9 +265,9 @@ function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 			metro:ChangeRate("BigWigs Cthun Tentacles", self.timeP2Tentacle )
 			
 			-- schedule first rape into phase 2
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle1, self.timeP2Start, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle2, self.timeP2Start-5, "Orange")
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barTentacle, self.timeP2Start, 1, "Green", "Interface\\Icons\\Spell_Nature_CallStorm")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle1, self.timeP2Tentacle + self.timeP2Offset, "Red")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle2, self.timeP2Tentacle + self.timeP2Offset - 5, "Orange")
+			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barTentacle, self.timeP2Tentacle + self.timeP2Offset, 1, "Green", "Interface\\Icons\\Spell_Nature_CallStorm")
 
 			-- this metro schedule will restart the tentacle rapes again.
 			metro:Start("BigWigs Cthun Tentacles Phase2", 1)
@@ -264,13 +298,13 @@ function BigWigsCThun:Scan()
 	return false
 end
 
-function BigWigsTwins:PLAYER_REGEN_ENABLED()
+function BigWigsCthun:PLAYER_REGEN_ENABLED()
 	local go = self:Scan()
 	if (not go) then
 		self:Disable()
-		Metro:Stop("BigWigs_Twins_CheckWipe")
-	elseif (not Metro:Status("BigWigs_Twins_CheckWipe")) then
-		Metro:Start("BigWigs_Twins_CheckWipe")
+		Metro:Stop("BigWigs Cthun CheckWipe")
+	elseif (not Metro:Status("BigWigs Cthun CheckWipe")) then
+		Metro:Start("BigWigs Cthun CheckWipe")
 	end
 end
 
@@ -291,6 +325,7 @@ function BigWigsCThun:CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE()
 		self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 		
 		self.firstGlare = true
+		self.firstWarning = true
 		-- start our tentacle rape and dark glare schedules
 		metro:Start("BigWigs Cthun Tentacles")
 		metro:Start("BigWigs Cthun Dark Glare")
@@ -305,16 +340,21 @@ function BigWigsCThun:Disable()
 	self.phase2 = nil
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.tentacle1)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.tentacle2)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.giant1)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.giant2)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.giant3)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.glare1)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.glare2)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.barGlare)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.barTentacle)
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.barGiant)
 	metro:Unregister("BigWigs Cthun Tentacles")
 	metro:Unregister("BigWigs Cthun Tentacles Reschedule")
 	metro:Unregister("BigWigs Cthun Tentacles Phase2")
 	metro:Unregister("BigWigs Cthun Dark Glare")
 	metro:Unregister("BigWigs Cthun Group Warning")
 	metro:Unregister("BigWigs Cthun Target")
+	metro:Unregister("Bigwigs Cthun CheckWipe")
 	
 	self:UnregisterAllEvents()
 end
