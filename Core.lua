@@ -41,6 +41,7 @@ BigWigs = AceAddon:new({
 		Duskwood = "Duskwood",
 		Feralas = "Feralas",
 		Hinterlands = "Das Hinterland",
+		Naxxramas = "Naxxramas",
 	} or GetLocale() == "koKR" and {
 		ModuleEnable = "%s 모듈을 시작",
 		TargetEnable = "타겟 확인 시작",
@@ -57,6 +58,7 @@ BigWigs = AceAddon:new({
 		Duskwood = "그늘숲",
 		Feralas = "페랄라스",
 		Hinterlands = "저주받은 땅",
+		Naxxramas = "Naxxramas",
 	} or GetLocale() == "zhCN" and {
 		ModuleEnable = "%s模块已开启",
 		TargetEnable = "目标监视已开启",
@@ -73,6 +75,7 @@ BigWigs = AceAddon:new({
 		Duskwood = "暮色森林",
 		Feralas = "菲拉斯",
 		Hinterlands = "辛特兰",
+		Naxxramas = "Naxxramas",
 	} or {
 		ModuleEnable = "%s mod enabled",
 		TargetEnable = "Target monitoring enabled",
@@ -89,6 +92,7 @@ BigWigs = AceAddon:new({
 		Duskwood = "Duskwood",
 		Feralas = "Feralas",
 		Hinterlands = "The Hinterlands",
+		Naxxramas = "Naxxramas",
 	},
 })
 
