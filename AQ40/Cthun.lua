@@ -194,7 +194,7 @@ function BigWigsCThun:TentacleRape()
 	local nexttime = self.timeP1Tentacle
 	if( self.phase2 ) then
 		nexttime = self.timeP2Tentacle
-		if(  self.gianteye ) then
+		if( self.gianteye ) then
 			self.gianteye = nil
 			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.giant1, nexttime, "Red")
 			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.giant2, nexttime - 5, "Orange")
@@ -271,6 +271,10 @@ function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle1, self.timeP2Tentacle + self.timeP2Offset, "Red")
 			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle2, self.timeP2Tentacle + self.timeP2Offset - 5, "Orange")
 			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barTentacle, self.timeP2Tentacle + self.timeP2Offset, 1, "Green", "Interface\\Icons\\Spell_Nature_CallStorm")
+
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.giant1, self.timeP2Tentacle + self.timeP2Offset, "Red")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.giant2, self.timeP2Tentacle + self.timeP2Offset - 5, "Orange")
+			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGiant, self.timeP2Tentacle + self.timeP2Offset, 3, "Orange", "Interface\\Icons\\Ability_EyeOfTheOwl" )		
 
 			-- this metro schedule will restart the tentacle rapes again.
 			metro:Start("BigWigs Cthun Tentacles Phase2", 1)
