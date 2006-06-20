@@ -114,7 +114,8 @@ BigWigsCThun = AceAddon:new({
 	},
 
 	timeP1Tentacle	 = 45,
-	timeP1GlareStart = 45,
+	timeP1TentacleStart = 42,
+	timeP1GlareStart = 42,
 	timeP1Glare	 = 85,
 	
 	timeP2Offset    = 12,
@@ -250,7 +251,7 @@ end
 
 function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 		if(arg1 == self.loc.phase1) then
-			self.phase2 = 1
+			self.phase2 = true
 
 			-- cancel tentacle timers
 			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.tentacle1)
@@ -315,13 +316,13 @@ function BigWigsCThun:CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE()
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.combat, "Yellow")
 		
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barTentacle, self.timeP1GlareStart, 1, "Green", "Interface\\Icons\\Spell_Nature_CallStorm")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGlare, self.timeP1Tentacle, 2, "Red", "Interface\\Icons\\Spell_Shadow_ShadowBolt")
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGlare, self.timeP1TentacleStart, 2, "Red", "Interface\\Icons\\Spell_Shadow_ShadowBolt")
 		
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare2, self.timeP1GlareStart - 5, "Orange")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle2, self.timeP1Tentacle - 5, "Orange")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle2, self.timeP1TentacleStart - 5, "Orange")
 		
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare1, self.timeP1GlareStart, "Red")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle1, self.timeP1Tentacle, "Red")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle1, self.timeP1TentacleStart, "Red")
 		
 		self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE")
 		self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
