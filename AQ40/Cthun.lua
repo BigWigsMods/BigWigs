@@ -114,9 +114,9 @@ BigWigsCThun = AceAddon:new({
 	},
 
 	timeP1Tentacle	 = 45,
-	timeP1TentacleStart = 42,
-	timeP1GlareStart = 42,
-	timeP1Glare	 = 85,
+	timeP1TentacleStart = 45,
+	timeP1GlareStart = 45,
+	timeP1Glare	 = 87,
 	
 	timeP2Offset    = 12,
 	timeP2Tentacle  = 30,
@@ -161,16 +161,19 @@ end
 
 function BigWigsCThun:CheckTarget()
 	local i
-	self.target = nil
+	local newtarget = nil
 	if( UnitName("playertarget") == self.loc.bossname ) then
-		self.target = UnitName("playertargettarget")
+		newtarget = UnitName("playertargettarget")
 	else
 		for i = 1, GetNumRaidMembers(), 1 do
 			if UnitName("Raid"..i.."target") == self.loc.bossname then
-				self.target = UnitName("Raid"..i.."targettarget")
+				newtarget = UnitName("Raid"..i.."targettarget")
 				break
 			end
 		end		
+	end
+	if( newtarget ) then
+		self.target = newtarget
 	end
 end
 
@@ -213,8 +216,9 @@ function BigWigsCThun:DarkGlare()
 	if ( self.firstGlare ) then 
 		metro:ChangeRate("BigWigs Cthun Dark Glare", self.timeP1Glare )
 		self.firstGlare = nil
-	end	
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare1, self.timeP1Glare, "Red")
+	end
+	-- we announce just before the glare to give people time, hence the -1 
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare1, self.timeP1Glare-1, "Red")
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare2, self.timeP1Glare-5, "Orange")
 	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGlare, self.timeP1Glare, 2, "Red", "Interface\\Icons\\Spell_Shadow_ShadowBolt")
 end
