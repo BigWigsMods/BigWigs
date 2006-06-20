@@ -28,6 +28,7 @@ AQ20\Buru.lua
 AQ20\GeneralRajaxx.lua
 AQ20\Guardians.lua
 AQ20\Ossirian.lua
+AQ20\Moam.lua
 
 AQ40\Skeram.lua
 AQ40\BugFamily.lua
