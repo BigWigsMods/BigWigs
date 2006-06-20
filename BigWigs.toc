@@ -1,4 +1,4 @@
-## Interface: 11000
+## Interface: 11100
 ## Author: Tekkub Stoutwrithe + others
 ## Title: Big Wigs |cff007fff -Ace-|r
 ## Notes: Boss Mods with Timex bars. |cffff4488By Tekkub|r
