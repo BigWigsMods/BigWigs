@@ -15,6 +15,11 @@ local cmdopt = {
 			method = "ToggleErr",
 		},
 		{
+			option = "white",
+			desc   = "Toggles white only messages ignoring coloring.",
+			method = "ToggleWhite",
+		},
+		{
 			option = "scale",
 			desc   = "Set the bar scale.",
 			method = "SetScale",
@@ -78,7 +83,7 @@ end
 
 function BigWigsMessages:BIGWIGS_MESSAGE(text, color, noraidsay)
 	if not text then return end
-	local red, green, blue = BigWigs:GetColor(color)
+	local red, green, blue = ( (not self:GetOpt("White")) and BigWigs:GetColor(color) )
 	local f = self:GetOpt("ToErr") and self.uierrorsframe or self.msgframe
 	f:AddMessage(text, red or 1, green or 1, blue or 1, 1, UIERRORS_HOLD_TIME)
 end
@@ -103,6 +108,11 @@ function BigWigsMessages:ToggleErr()
 	self.cmd:msg("Messages now sent to: ".. (t and "Blizzard frame" or "BigWigs frame"))
 end
 
+
+function BigWigsMessages:ToggleWhite()
+	local t = self:TogOpt("White")
+	self.cmd:msg("Coloring all messages white is now: " .. (t and "On" or "Off"))
+end
 
 --------------------------------
 --      Load this bitch!      --
