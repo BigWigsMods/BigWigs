@@ -39,6 +39,7 @@ BigWigsCThun = AceAddon:new({
 			groupwarning	= "암흑의 주시 %s (%s)",
 			invulnerable2	= "Party ends in 5 seconds!",
 			invulnerable1	= "Party over! C'Thun is now invulnerable!",
+			positions	= "Assume the position! Green Beam coming!",
 	} 
 		or GetLocale() == "zhCN" and 
 	{
@@ -75,6 +76,7 @@ BigWigsCThun = AceAddon:new({
 			groupwarning	= "Dark Glare on group %s (%s)" ,
 			invulnerable2	= "Party ends in 5 seconds!",
 			invulnerable1	= "Party over! C'Thun is now invulnerable!",
+			positions	= "Assume the position! Green Beam coming!",
 	}
 		or 
 	{
@@ -111,12 +113,14 @@ BigWigsCThun = AceAddon:new({
 			eyebeam		= "Eye Beam",
 			glarewarning	= "DARK GLARE ON YOU! MOVE!",
 			groupwarning	= "Dark Glare on group %s (%s)",
+			positions	= "Assume the position! Green Beam coming!",
 	},
 
 	timeP1Tentacle	 = 45,
 	timeP1TentacleStart = 45,
 	timeP1GlareStart = 45,
 	timeP1Glare	 = 87,
+	timeP1GlareDuration = 34,
 	
 	timeP2Offset    = 12,
 	timeP2Tentacle  = 30,
@@ -220,6 +224,7 @@ function BigWigsCThun:DarkGlare()
 	-- we announce just before the glare to give people time, hence the -1 
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare1, self.timeP1Glare-1, "Red")
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare2, self.timeP1Glare-5, "Orange")
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.positions, self.timeP1Glare + self.timeP1GlareDuration, "Green")
 	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGlare, self.timeP1Glare, 2, "Red", "Interface\\Icons\\Spell_Shadow_ShadowBolt")
 end
 
@@ -264,8 +269,9 @@ function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 
 			-- Cancel Existing Glare Timers
 			self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.barGlare)
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.glare1, self.timeP1Glare, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.glare2, self.timeP1Glare-5, "Orange")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.glare1)
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.glare2)
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.positions)
 
 			-- change to phase 2 rate
 			metro:Stop("BigWigs Cthun Tentacles")
@@ -331,6 +337,8 @@ function BigWigsCThun:CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE()
 		
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare1, self.timeP1GlareStart, "Red")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle1, self.timeP1TentacleStart, "Red")
+
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.positions, self.timeP1GlareStart + self.timeP1GlareDuration, "Green")
 		
 		self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE")
 		self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
@@ -356,6 +364,7 @@ function BigWigsCThun:Disable()
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.giant3)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.glare1)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.glare2)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.positions)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.invulnerable1)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.invulnerable2)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.barGlare)
