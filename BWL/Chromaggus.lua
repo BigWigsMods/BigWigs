@@ -40,7 +40,7 @@
 		bossname = "Chromaggus",
 		disabletrigger = "Chromaggus stirbt.",
 
-		trigger1 = "^Chromaggus beginnt ([%w ]+) zu wirken.",
+		trigger1 = "^Chromaggus beginnt ([%w ]+)\ zu wirken.",
 		trigger2 = "^[%w']+ [%w' ]+ ([%w]+) Chromaggus f\195\188r ([%d]+) ([%w ]+) Schaden%..*",
 		trigger3 = "Chromagguss Zeitraffer wurde von ([%w]+)% wiederstanden.",
 		trigger4 = "ger\195\164t in t\195\182dliche Raserei!",
@@ -60,7 +60,7 @@
 			["Zeitraffer"] = "Interface\\Icons\\Spell_Arcane_PortalOrgrimmar",
 			["Corrosive Acid"] = "Interface\\Icons\\Spell_Nature_Acid_01",
 			["Fleisch entz\195\188nden"] = "Interface\\Icons\\Spell_Fire_Fire",
-			["Incinerate"] = "Interface\\Icons\\Spell_Shadow_ChillTouch",
+			["Verbrennen"] = "Interface\\Icons\\Spell_Shadow_ChillTouch",
 			["Frostbeulen"] = "Interface\\Icons\\Spell_Frost_ChillingBlast",
 		}
 	}
