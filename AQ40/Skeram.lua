@@ -5,7 +5,7 @@ BigWigsSkeram = AceAddon:new({
 	zonename = "AQ40",
 	enabletrigger = GetLocale() == "koKR" and "예언자 스케람"
 		or GetLocale() == "zhCN" and "预言者斯克拉姆"
-		or "The Prophet Skeram",
+		or GetLocale() == "deDE" and "Der Prophet Skeram" or "The Prophet Skeram",
 
 	loc = GetLocale() == "koKR" and {
 		bossname = "예언자 스케람",
@@ -38,7 +38,20 @@ BigWigsSkeram = AceAddon:new({
 		mcyou = "你",
 		mcare = "到",
 	}
-		or
+	 or GetLocale() == "deDE" and {
+		bossname = "Der Prophet Skeram",
+		disabletrigger = "Der Prophet Skeram stirbt.",
+		bosskill = "Der Prophet Skeram wurde besiegt.",
+		aetrigger = "Der Prophet Skeram beginnt Arkane Explosion zu wirken.",
+		mctrigger = "Der Prophet Skeram beginnt True Fulfillment zu wirken.",
+		aewarn = "Zaubert Arkane Explosion - unterbrechen!",
+		mcwarn = "Zaubert True Fulfillment - bereitmachen zum sheepen!",
+		mcplayer = "^([^%s]+) ([^%s]+) betroffen von True Fulfillment.$",
+		mcplayerwarn = " ist \195\188bernommen worden! Sheep! Fear!",
+		mcyou = "Du",
+		mcare = "bist",
+	} 
+		or 
 	{
 		bossname = "The Prophet Skeram",
 		disabletrigger = "The Prophet Skeram dies.",

@@ -5,7 +5,7 @@
 	zonename = "AQ40",
 	enabletrigger = GetLocale() == "koKR" and "전투감시병 살투라" 
 		or GetLocale() == "zhCN" and "沙尔图拉"
-		or "Battleguard Sartura",
+		or GetLocale() == "deDE" and "Schlachtwache Sartura" or "Battleguard Sartura",
 
 	loc = GetLocale() == "koKR" and {
 		bossname = "전투감시병 살투라",
@@ -54,7 +54,31 @@
 		whirlwindonwarn = "旋风斩 - 沙尔图拉 - 旋风斩",
 		whirlwindoffwarn = "旋风斩消失！",
 	}	
-		or 
+		or GetLocale() == "deDE" and
+	{	
+		bossname = "Schlachtwache Sartura",
+		disabletrigger = "Ich diene bis",
+		bosskill = "Schlachtwache Sartura wurde besiegt!",
+
+		-- starttrigger = "Ihr habt heiligen Boden entweiht;  The laws of the Ancients will not be challenged!  Trespassers will be annihilated!\n",
+		starttrigger = "Ihr habt heiligen Boden entweiht",
+		startwarn = "Kampf mit Sartura hat begonnen - 10 Minuten bis Rage",
+		enragetrigger = "ger\195\164t in t\195\182dliche Raserei",
+		enragewarn = "Rage - Rage - Rage",
+		bartext = "Rage",
+		warn1 = "Rage in 8 Minuten",
+		warn2 = "Rage in 5 Minuten",
+		warn3 = "Rage in 3 Minuten",
+		warn4 = "Rage in 90 Sekunden",
+		warn5 = "Rage in 60 Sekunden",
+		warn6 = "Rage in 30 Sekunden",
+		warn7 = "Rage in 10 Sekunden",
+		whirlwindon = "Schlachtwache Sartura bekommt 'Wirbelwind'.",
+		whirlwindoff = "Wirbelwind schwindet von Schlachtwache Sartura.",
+		whirlwindonwarn = "Wirbelwind - Schlachtwache Sartura - Wirbelwind",
+		whirlwindoffwarn = "Wirbelwind verschwunden. Draufhauen! Draufhauen! Draufhauen!",
+	}
+	  or
 	{	
 		bossname = "Battleguard Sartura",
 		disabletrigger = "I serve to the last",
@@ -109,9 +133,11 @@ function BigWigsSartura:Disable()
 end
 
 function BigWigsSartura:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
+	ace:print(arg1)
 	if (arg1 == self.loc.whirlwindon) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.whirlwindonwarn, "Red")
 	elseif (arg1 == self.loc.whirlwindoff) then
+		ace:print("wirbelwind is aus")
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.whirlwindoffwarn, "Yellow")
 	end
 end

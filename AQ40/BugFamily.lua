@@ -5,7 +5,7 @@
 	zonename = "AQ40",
 	enabletrigger = GetLocale() == "koKR" and { "군주 크리", "공주 야우즈", "벰" }
 		or GetLocale() == "zhCN" and { "克里勋爵", "亚尔基公主", "维姆" }
-		or { "Lord Kri", "Princess Yauj", "Vem" },
+		or GetLocale() == "deDE" and { "Lord Kri", "Prinzessin Yauj", "Vem" } or { "Lord Kri", "Princess Yauj", "Vem" },
 
 	loc = GetLocale() == "koKR" and {
 		bossname = "벌레 무리 - 군주 크리, 공주 야우즈, 벰",
@@ -18,10 +18,9 @@
 		healwarn = "치유 시전 - 시전 방해!",					
 		
 		feartrigger = "공포에 걸렸습니다.",
-    	fearstatus = false,
-    	fearbar = "공포",
-    	fearwarn1 = "공포 시전! 다음 시전 20초후!",
-    	fearwarn2 = "5초후 공포!",
+   	fearbar = "공포",
+   	fearwarn1 = "공포 시전! 다음 시전 20초후!",
+   	fearwarn2 = "5초후 공포!",
 	} 
 		or GetLocale() == "zhCN" and 
 	{ 
@@ -39,7 +38,23 @@
 		fearwarn1 = "群体恐惧 - 20秒后再次发动",
 		fearwarn2 = "5秒后发动群体恐惧！",
 	}
-		or
+	 or GetLocale() == "deDE" and {
+		bossname = "K\195\164ferfamilie - Lord Kri, Prinzessin Yauj und Vem",
+		disabletrigger1 = "Lord Kri stirbt.",
+		disabletrigger2 = "Prinzessin Yauj stirbt.",
+		disabletrigger3 = "Vem stirbt.",
+		bosskill = "Die K\195\164ferfamilie wurde besiegt!",
+
+		healtrigger = "Prinzessin Yauj beginnt Gro\195\159e Heilung zu wirken.",
+		healwarn = "Zaubert Heilung - unterbrechen!",
+		
+		feartrigger = "ist betroffen von Furcht%.",
+		fearbar = "AE Furcht",
+		fearwarn1 = "AE Furcht! N\195\164chster in 20 Sekunden!",
+		fearwarn2 = "AE Furcht in 5 Sekunden!",
+
+
+	} or 
 	{
 		bossname = "Bug Family - Lord Kri, Princess Yauj and Vem",
 		disabletrigger1 = "Lord Kri dies.",
@@ -71,7 +86,7 @@ function BigWigsBugFamily:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "FearEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "FearEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "FearEvent")
-	self:RegisterEvent("BIGWIGS_MESSAGE","FearEvent")
+--~ 	self:RegisterEvent("BIGWIGS_MESSAGE","FearEvent")
 end
 
 function BigWigsBugFamily:Disable()
