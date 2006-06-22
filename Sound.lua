@@ -14,7 +14,6 @@ local cmdopt = {
 local sounds = {
 	Long = "Interface\\AddOns\\BigWigs\\Sounds\\Long.mp3",
 	Info = "Interface\\AddOns\\BigWigs\\Sounds\\Info.mp3",
-	Msg = "Interface\\AddOns\\BigWigs\\Sounds\\Msg.mp3",
 	Alert = "Interface\\AddOns\\BigWigs\\Sounds\\Alert.mp3",
 	Alarm = "Interface\\AddOns\\BigWigs\\Sounds\\Alarm.mp3",
 	Victory = "Interface\\AddOns\\BigWigs\\Sounds\\VictoryShort.mp3",
@@ -54,8 +53,10 @@ end
 
 
 function BigWigsSound:BIGWIGS_MESSAGE(text, color, noraidsay, sound)
-	if not text or sound == 0 then return end
-	PlaySoundFile(sounds[sound] or sounds.Msg)
+	if not text or sound == false then return end
+
+	if sounds[sound] then PlaySoundFile(sounds[sound])
+	else PlaySound("RaidWarning") end
 end
 
 
