@@ -86,7 +86,7 @@ function BigWigsBugFamily:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "FearEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "FearEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "FearEvent")
---~ 	self:RegisterEvent("BIGWIGS_MESSAGE","FearEvent")
+	self:RegisterEvent("BIGWIGS_MESSAGE")
 end
 
 function BigWigsBugFamily:Disable()
@@ -105,7 +105,7 @@ function BigWigsBugFamily:FearEvent()
 	end
 end
 
-function BigWigsBugFamily:PLAYER_REGEN_ENABLED(txt)
+function BigWigsBugFamily:BIGWIGS_MESSAGE(txt)
 	if (self.fearstatus and txt == self.loc.fearwarn2) then
 		self.fearstatus = false
 	end
