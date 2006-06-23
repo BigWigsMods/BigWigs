@@ -28,7 +28,7 @@ BigWigsSound = AceAddon:new({
 
 
 function BigWigsSound:Initialize()
-	BigWigs:RegisterModule(self)
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 	self.disabled = self:GetOpt("disabled")
 end
 

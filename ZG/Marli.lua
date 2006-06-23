@@ -1,6 +1,4 @@
-﻿
-local bboss = BabbleLib:GetInstance("Boss 1.2")
-
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
 
 BigWigsMarli = AceAddon:new({
 	name          = "BigWigsMarli",
@@ -43,12 +41,10 @@ BigWigsMarli = AceAddon:new({
 	},
 })
 
-
 function BigWigsMarli:Initialize()
 	self.disabled = true
 	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
-
 
 function BigWigsMarli:Enable()
 	self.disabled = nil
@@ -57,12 +53,10 @@ function BigWigsMarli:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 end
 
-
 function BigWigsMarli:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
 end
-
 
 function BigWigsMarli:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
@@ -71,22 +65,18 @@ function BigWigsMarli:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	end
 end
 
-
 function BigWigsMarli:CHAT_MSG_MONSTER_YELL()
 	if string.find(arg1, self.loc.trigger1) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Yellow")
 	end
 end
 
-
 function BigWigsMarli:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
 	if string.find(arg1, self.loc.trigger2) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Orange")
 	end
 end
-
-
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsMarli:RegisterForLoad()

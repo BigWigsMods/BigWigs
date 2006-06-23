@@ -1,6 +1,4 @@
-﻿
-local bboss = BabbleLib:GetInstance("Boss 1.2")
-
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
 
 BigWigsJeklik = AceAddon:new({
 	name          = "BigWigsJeklik",
@@ -40,12 +38,10 @@ BigWigsJeklik = AceAddon:new({
 	},
 })
 
-
 function BigWigsJeklik:Initialize()
 	self.disabled = true
 	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
-
 
 function BigWigsJeklik:Enable()
 	self.disabled = nil
@@ -54,12 +50,10 @@ function BigWigsJeklik:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
-
 function BigWigsJeklik:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
 end
-
 
 function BigWigsJeklik:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
@@ -68,22 +62,18 @@ function BigWigsJeklik:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	end
 end
 
-
 function BigWigsJeklik:CHAT_MSG_MONSTER_YELL()
 	if string.find(arg1, self.loc.trigger1) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Yellow")
 	end
 end
 
-
 function BigWigsJeklik:CHAT_MSG_MONSTER_EMOTE()
 	if string.find(arg1, self.loc.trigger2) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Orange")
 	end
 end
-
-
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsJeklik:RegisterForLoad()

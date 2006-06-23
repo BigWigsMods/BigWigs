@@ -101,7 +101,7 @@
 
 function BigWigsEbonroc:Initialize()
 	self.disabled = true
-	BigWigs:RegisterModule(self)
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
 
 function BigWigsEbonroc:Enable()

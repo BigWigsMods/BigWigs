@@ -80,7 +80,7 @@
 function BigWigsOuro:Initialize()
 	self.disabled = true
 	self.berserkannounced = nil
-	BigWigs:RegisterModule(self)
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
 
 function BigWigsOuro:Enable()

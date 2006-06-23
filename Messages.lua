@@ -37,7 +37,7 @@ BigWigsMessages = AceAddon:new({
 
 
 function BigWigsMessages:Initialize()
-	BigWigs:RegisterModule(self)
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 	self.anchorframe, rwframe = BigWigsMsgAnchorFrame, RaidWarningFrame
 	frame = self:GetOpt("NotRW") and self:CreateMsgFrame() or RaidWarningFrame
 end

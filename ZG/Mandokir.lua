@@ -1,6 +1,4 @@
-﻿
-local bboss = BabbleLib:GetInstance("Boss 1.2")
-
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
 
 BigWigsMandokir = AceAddon:new({
 	name          = "BigWigsMandokir",
@@ -36,12 +34,10 @@ BigWigsMandokir = AceAddon:new({
 	},
 })
 
-
 function BigWigsMandokir:Initialize()
 	self.disabled = true
 	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
-
 
 function BigWigsMandokir:Enable()
 	self.disabled = nil
@@ -49,12 +45,10 @@ function BigWigsMandokir:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
-
 function BigWigsMandokir:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
 end
-
 
 function BigWigsMandokir:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
@@ -62,7 +56,6 @@ function BigWigsMandokir:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 		self:Disable()
 	end
 end
-
 
 function BigWigsMandokir:CHAT_MSG_MONSTER_YELL()
 	local _,_, n = string.find(arg1, self.loc.trigger1)
@@ -75,9 +68,7 @@ function BigWigsMandokir:CHAT_MSG_MONSTER_YELL()
 		end
 	end
 end
-
-
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsMandokir:RegisterForLoad()

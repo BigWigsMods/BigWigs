@@ -1,5 +1,4 @@
-﻿
-local cmdopt = {
+﻿local cmdopt = {
 	option = "test",
 	desc   = "Some useful test events.",
 	input  = true,
@@ -17,7 +16,6 @@ local cmdopt = {
 	},
 }
 
-
 BigWigsTest = AceAddon:new({
 	name          = "BigWigsTest",
 	cmd           = AceChatCmd:new({}, {}),
@@ -26,11 +24,9 @@ BigWigsTest = AceAddon:new({
 	loc = {},
 })
 
-
 function BigWigsTest:Initialize()
-	BigWigs:RegisterModule(self)
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
-
 
 function BigWigsTest:Enable()
 	self:RegisterEvent("BIGWIGS_SYNC_SYNCTEST")
@@ -38,22 +34,18 @@ function BigWigsTest:Enable()
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "SYNCTEST", 4)
 end
 
-
 function BigWigsTest:Disable()
 	self:UnregisterAllEvents()
 end
-
 
 function BigWigsTest:Send()
 	self:TriggerEvent("BIGWIGS_SYNC_SEND", "SYNCTEST")
 end
 
-
 function BigWigsTest:BIGWIGS_SYNC_SYNCTEST(msg)
 	self:TriggerEvent("BIGWIGS_MESSAGE", "Testing Sync", "Green")
 	self:TriggerEvent("BIGWIGS_BAR_START", "Testing Sync", 10, 1, "Green", "Interface\\Icons\\Spell_Frost_FrostShock")
 end
-
 
 function BigWigsTest:BIGWIGS_TEST()
 	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar", 15, 1, "Green", "Interface\\Icons\\Spell_Nature_ResistNature")
@@ -69,8 +61,6 @@ function BigWigsTest:BIGWIGS_TEST()
 	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar 3", 5, 3, "Yellow", "Interface\\Icons\\Spell_Nature_ResistNature")
 	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar 4", 3, 4, "Red", "Interface\\Icons\\Spell_Nature_ResistNature")
 end
-
-
 --------------------------------
 --      Load this bitch!      --
 --------------------------------

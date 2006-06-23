@@ -52,7 +52,7 @@
 
 function BigWigsShazzrah:Initialize()
 	self.disabled = true
-	BigWigs:RegisterModule(self)
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
 
 function BigWigsShazzrah:Enable()

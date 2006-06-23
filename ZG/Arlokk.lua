@@ -1,9 +1,7 @@
-﻿
-local bboss = BabbleLib:GetInstance("Boss 1.2")
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
 
-
-BigWigsMandokir = AceAddon:new({
-	name          = "BigWigsMandokir",
+BigWigsArlokk = AceAddon:new({
+	name          = "BigWigsArlokk",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = BabbleLib:GetInstance("Zone 1.2")("Zul'Gurub"),
@@ -27,35 +25,30 @@ BigWigsMandokir = AceAddon:new({
 	},
 })
 
-
-function BigWigsMandokir:Initialize()
+function BigWigsArlokk:Initialize()
 	self.disabled = true
 	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
 
-
-function BigWigsMandokir:Enable()
+function BigWigsArlokk:Enable()
 	self.disabled = nil
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
-
-function BigWigsMandokir:Disable()
+function BigWigsArlokk:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
 end
 
-
-function BigWigsMandokir:CHAT_MSG_COMBAT_HOSTILE_DEATH()
+function BigWigsArlokk:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
 		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
-
-function BigWigsMandokir:CHAT_MSG_MONSTER_YELL()
+function BigWigsArlokk:CHAT_MSG_MONSTER_YELL()
 	local _,_, n = string.find(arg1, self.loc.trigger1)
 	if n then
 		if n == UnitName("player") then
@@ -66,9 +59,7 @@ function BigWigsMandokir:CHAT_MSG_MONSTER_YELL()
 		end
 	end
 end
-
-
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
-BigWigsMandokir:RegisterForLoad()
+BigWigsArlokk:RegisterForLoad()

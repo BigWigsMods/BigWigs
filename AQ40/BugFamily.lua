@@ -18,9 +18,9 @@
 		healwarn = "치유 시전 - 시전 방해!",					
 		
 		feartrigger = "공포에 걸렸습니다.",
-   	fearbar = "공포",
-   	fearwarn1 = "공포 시전! 다음 시전 20초후!",
-   	fearwarn2 = "5초후 공포!",
+		fearbar = "공포",
+		fearwarn1 = "공포 시전! 다음 시전 20초후!",
+		fearwarn2 = "5초후 공포!",
 	} 
 		or GetLocale() == "zhCN" and 
 	{ 
@@ -52,8 +52,6 @@
 		fearbar = "AE Furcht",
 		fearwarn1 = "AE Furcht! N\195\164chster in 20 Sekunden!",
 		fearwarn2 = "AE Furcht in 5 Sekunden!",
-
-
 	} or 
 	{
 		bossname = "Bug Family - Lord Kri, Princess Yauj and Vem",
@@ -74,7 +72,7 @@
 
 function BigWigsBugFamily:Initialize()
 	self.disabled = true
-	BigWigs:RegisterModule(self)
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
 
 function BigWigsBugFamily:Enable()

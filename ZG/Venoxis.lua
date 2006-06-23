@@ -1,6 +1,4 @@
-﻿
-local bboss = BabbleLib:GetInstance("Boss 1.2")
-
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
 
 BigWigsVenoxis = AceAddon:new({
 	name          = "BigWigsVenoxis",
@@ -44,12 +42,10 @@ BigWigsVenoxis = AceAddon:new({
 	},
 })
 
-
 function BigWigsVenoxis:Initialize()
 	self.disabled = true
 	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
-
 
 function BigWigsVenoxis:Enable()
 	self.disabled = nil
@@ -58,12 +54,10 @@ function BigWigsVenoxis:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
-
 function BigWigsVenoxis:Disable()
 	self.disabled = nil
 	self:UnregisterAllEvents()
 end
-
 
 function BigWigsVenoxis:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
@@ -71,7 +65,6 @@ function BigWigsVenoxis:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 		self:Disable()
 	end
 end
-
 
 function BigWigsVenoxis:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
 	if arg1 == self.loc.trigger1 then
@@ -84,8 +77,7 @@ function BigWigsVenoxis:CHAT_MSG_MONSTER_YELL()
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Yellow")
 	end
 end
-
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsVenoxis:RegisterForLoad()

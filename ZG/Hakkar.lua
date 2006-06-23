@@ -1,7 +1,4 @@
-﻿
-
-local bboss = BabbleLib:GetInstance("Boss 1.2")
-
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
 
 BigWigsHakkar = AceAddon:new({
 	name          = "BigWigsHakkar",
@@ -63,12 +60,10 @@ BigWigsHakkar = AceAddon:new({
 	},
 })
 
-
 function BigWigsHakkar:Initialize()
 	self.disabled = true
 	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
-
 
 function BigWigsHakkar:Enable()
 	self.disabled = nil
@@ -79,13 +74,11 @@ function BigWigsHakkar:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
-
 function BigWigsHakkar:Disable()
 	self.disabled = true
 	self:Reset()
 	self:UnregisterAllEvents()
 end
-
 
 function BigWigsHakkar:Reset()
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
@@ -98,14 +91,12 @@ function BigWigsHakkar:Reset()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar2text, 75)
 end
 
-
 function BigWigsHakkar:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		self:Disable()
 	end
 end
-
 
 function BigWigsHakkar:CHAT_MSG_MONSTER_YELL()
 	if string.find(arg1, self.loc.trigger1) then
@@ -117,7 +108,6 @@ function BigWigsHakkar:CHAT_MSG_MONSTER_YELL()
 	end
 end
 
-
 function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE()
 	if not self.prior and string.find(arg1, self.loc.trigger2) then
 		self.prior = true
@@ -125,11 +115,9 @@ function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE()
 	end
 end
 
-
 function BigWigsHakkar:BIGWIGS_MESSAGE(text)
 	if text == self.loc.warn1 then self.prior = nil end
 end
-
 
 function BigWigsHakkar:BeginTimers(first)
 	if not first then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Green") end
@@ -141,11 +129,7 @@ function BigWigsHakkar:BeginTimers(first)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar2text, 45, "Orange")
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar2text, 75, "Red")
 end
-
-
-
 --------------------------------
---			Load this bitch!			--
+--      Load this bitch!      --
 --------------------------------
 BigWigsHakkar:RegisterForLoad()
-

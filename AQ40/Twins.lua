@@ -99,7 +99,7 @@ BigWigsTwins = AceAddon:new({
 
 function BigWigsTwins:Initialize()
 	self.disabled = true
-	BigWigs:RegisterModule(self)
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
 
 function BigWigsTwins:Enable()
@@ -110,7 +110,6 @@ function BigWigsTwins:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
---	self:RegisterEvent("CHAT_MSG_COMBAT_FRIENDLY_DEATH", "PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("BIGWIGS_SYNC_TWINSENRAGE")
 	self:RegisterEvent("BIGWIGS_SYNC_TWINSTELEPORT")
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "TWINSENRAGE", 10)

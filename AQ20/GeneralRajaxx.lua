@@ -96,7 +96,7 @@ BigWigsGeneralRajaxx = AceAddon:new({
 
 function BigWigsGeneralRajaxx:Initialize()
 	self.disabled = true
-	BigWigs:RegisterModule(self)
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
 
 function BigWigsGeneralRajaxx:Enable()

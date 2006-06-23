@@ -32,7 +32,7 @@ BigWigsBars = AceAddon:new({
 
 
 function BigWigsBars:Initialize()
-	BigWigs:RegisterModule(self)
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 
 	self.frame = BigWigsAnchorFrame
 end
