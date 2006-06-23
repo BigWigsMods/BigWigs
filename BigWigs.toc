@@ -4,15 +4,17 @@
 ## Notes: Boss Mods with Timex bars.
 ## Dependencies: Ace, Timex
 ## OptionalDeps: FuBar, BabbleLib
-## SavedVariablesPerCharacter: BigWigsDB, BigWigsFubarDB
+## SavedVariables: BigWigsFubarDB
+## SavedVariablesPerCharacter: BigWigsDB
 
+BabbleLibBoss\BabbleLib-Boss.lua
+BabbleLibZone\BabbleLib-Zone.lua
 TekTech\TekTechEmbed.lua
 MetrognomeLib\MetrognomeLib.lua
 CompostLib\CompostLib.lua
 DewDropLib\DewdropLib.lua
 TabletLib\TabletLib.lua
 FBPlug1.2\FuBarPlugin-1.2.lua
-BabbleLibBoss\BabbleLib-Boss.lua
 
 Core.lua
 Options.lua
