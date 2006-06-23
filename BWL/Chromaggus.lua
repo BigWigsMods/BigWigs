@@ -1,14 +1,21 @@
-﻿BigWigsChromaggus = AceAddon:new({
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsChromaggus = AceAddon:new({
 	name          = "BigWigsChromaggus",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "BWL",
-	enabletrigger = GetLocale() == "koKR" and "크로마구스"
-		or GetLocale() == "zhCN" and "克洛玛古斯"
-		or "Chromaggus",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Blackwing Lair"),
+	enabletrigger = bboss("Chromaggus"),
+	bossname = bboss("Chromaggus"),
+	
+	toggleoptions = {
+		notBreaths = "Warn for Chromaggus his breaths",
+		notVulnerability = "Warn when Chromaggus his vulnerability changes",
+		notFrenzy = "Warn when Chromaggus goes into a killing frenzy",
+		notBosskill = "Boss death",
+	},
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "크로마구스",
 		disabletrigger = "크로마구스|1이;가; 죽었습니다.",
 
 		trigger1 = "크로마구스|1이;가; (.+)|1을;를; 시전합니다.",
@@ -37,7 +44,6 @@
 	}
 		or GetLocale() == "deDE" and
 	{
-		bossname = "Chromaggus",
 		disabletrigger = "Chromaggus stirbt.",
 
 		trigger1 = "^Chromaggus beginnt ([%w ]+)\ zu wirken.",
@@ -66,7 +72,6 @@
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "克洛玛古斯",
 		disabletrigger = "克洛玛古斯死亡了。",
 
 		trigger1 = "^克洛玛古斯开始施放(.+)。",
@@ -93,7 +98,6 @@
 			["冰霜灼烧"] = "Interface\\Icons\\Spell_Frost_ChillingBlast",
 		}
 	}	or {
-		bossname = "Chromaggus",
 		disabletrigger = "Chromaggus dies.",
 
 		trigger1 = "^Chromaggus begins to cast ([%w ]+)\.",
@@ -154,7 +158,7 @@ end
 
 function BigWigsChromaggus:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
@@ -171,12 +175,12 @@ function BigWigsChromaggus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 		Timex:ChangeDuration("BigWigsChromaggusResetTimer", 60)
 		self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.warn2, SpellName), "Red")
 
-		if (self.loc.breath1 == SpellName) then
+		if (self.loc.breath1 == SpellName and not self:GetOpt("notBreaths")) then
 			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", format(self.loc.warn1, SpellName), 50, "Red")
 			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.breath1, 60, 1, "Yellow", self.loc.breathsicons[SpellName])
 			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.breath1, 30, "Orange")
 			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.breath1, 50, "Red")
-		elseif (self.loc.breath2 == SpellName) then
+		elseif (self.loc.breath2 == SpellName and not self:GetOpt("notBreaths")) then
 			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", format(self.loc.warn1, SpellName), 50, "Red")
 			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.breath2, 60, 2, "Yellow", self.loc.breathsicons[SpellName])
 			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.breath2, 30, "Orange")
@@ -186,11 +190,11 @@ function BigWigsChromaggus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 end
 
 function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE()
-	if (arg1 == self.loc.trigger4 and arg2 == self.loc.bossname) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red")
+	if (arg1 == self.loc.trigger4) then
+		if (not self:GetOpt("notFrenzy")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red") end
 		Timex:ChangeDuration("BigWigsChromaggusResetTimer", 60)
-	elseif (arg1 == self.loc.trigger5 and arg2 == self.loc.bossname) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "White")
+	elseif (arg1 == self.loc.trigger5) then
+		if (not self:GetOpt("notVulnerability")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "White") end
 		Timex:AddNamedSchedule("BigWigsChromaggusSpellVulnerability", 2.5, false, 1, function() BigWigsChromaggus.loc.vulnerability = nil end)
 		Timex:ChangeDuration("BigWigsChromaggusResetTimer", 60)
 	end
@@ -203,7 +207,7 @@ if (GetLocale() == "koKR") then
 			if (Type == (self.loc.hit or self.loc.crit) and tonumber(Dmg or "") and School) then
 				if ((tonumber(Dmg) >= 550 and Type == self.loc.hit) or (tonumber(Dmg) >= 1100 and Type == self.loc.crit)) then
 					self.loc.vulnerability = School
-					self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.warn3, School), "White")
+					if (not self:GetOpt("notVulnerability")) then self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.warn3, School), "White") end
 				end
 			end
 			Timex:ChangeDuration("BigWigsChromaggusResetTimer", 60)
@@ -216,7 +220,7 @@ else
 			if (Type == (self.loc.hit or self.loc.crit) and tonumber(Dmg or "") and School) then
 				if ((tonumber(Dmg) >= 550 and Type == self.loc.hit) or (tonumber(Dmg) >= 1100 and Type == self.loc.crit)) then
 					self.loc.vulnerability = School
-					self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.warn3, School), "White")
+					if (not self:GetOpt("notVulnerability")) then self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.warn3, School), "White") end
 				end
 			end
 			Timex:ChangeDuration("BigWigsChromaggusResetTimer", 60)

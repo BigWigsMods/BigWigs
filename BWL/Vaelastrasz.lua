@@ -1,15 +1,20 @@
-﻿BigWigsVaelastrasz = AceAddon:new({
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsVaelastrasz = AceAddon:new({
 	name          = "BigWigsVaelastrasz",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "BWL",
-	enabletrigger = GetLocale() == "koKR" and "타락한 밸라스트라즈"
-		or GetLocale() == "deDE" and "Vaelastrasz der Verdorbene"
-		or GetLocale() == "zhCN" and "堕落的瓦拉斯塔兹"
-		or "Vaelastrasz the Corrupt",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Blackwing Lair"),
+	enabletrigger = bboss("Vaelastrasz the Corrupt"),
+	bossname = bboss("Vaelastrasz the Corrupt"),
+
+	toggleoptions = {
+		notYouBruning = "Warn when you are burning",
+		notElseBuring = "Warn when others are burning",
+		notBosskill = "Boss death",
+	},
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "타락한 밸라스트라즈",
 		disabletrigger = "밸라스트라즈|1이;가; 죽었습니다.",
 
 		trigger1 = "(.*)불타는 아드레날린에 걸렸습니다.",
@@ -23,7 +28,6 @@
 	}
 		or GetLocale() == "deDE" and
 	{
-		bossname = "Vaelastrasz der Verdorbene",
 		disabletrigger = "Vaelastrasz der Verdorbene stirbt.",
 
 		trigger1 = "^([^%s]+) ([^%s]+) von Brennendes Adrenalin betroffen",
@@ -37,7 +41,6 @@
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "堕落的瓦拉斯塔兹",
 		disabletrigger = "堕落的瓦拉斯塔兹死亡了。",
 
 		trigger1 = "^(.+)受(.+)了燃烧刺激",
@@ -51,7 +54,6 @@
 	}
 		or
 	{
-		bossname = "Vaelastrasz the Corrupt",
 		disabletrigger = "Vaelastrasz the Corrupt dies.",
 
 		trigger1 = "^([^%s]+) ([^%s]+) afflicted by Burning Adrenaline",
@@ -85,7 +87,7 @@ end
 
 function BigWigsVaelastrasz:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
@@ -94,9 +96,9 @@ if (GetLocale() == "koKR") then
 	function BigWigsVaelastrasz:Event()
 		local _, _, EPlayer = string.find(arg1, self.loc.trigger1)
 		if (EPlayer) then
-			if (EPlayer == self.loc.you) then
+			if (EPlayer == self.loc.you and not self:GetOpt("notYouBruning")) then
 				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
-			else
+			elseif (not self:GetOpt("notElseBuring")) then 
 				local _, _, EWho = string.find(EPlayer, self.loc.whopattern)
 				self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn2, "Yellow")
 				self:TriggerEvent("BIGWIGS_SENDTELL", EWho, self.loc.warn1)
@@ -107,9 +109,9 @@ else
 	function BigWigsVaelastrasz:Event()
 		local _, _, EPlayer, EType = string.find(arg1, self.loc.trigger1)
 		if (EPlayer and EType) then
-			if (EPlayer == self.loc.you and EType == self.loc.are) then
+			if (EPlayer == self.loc.you and EType == self.loc.are and not self:GetOpt("notYouBruning")) then
 				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
-			else
+			elseif (not self:GetOpt("notElseBuring")) then 
 				self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
 				self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
 			end

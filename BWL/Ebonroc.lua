@@ -1,15 +1,22 @@
-﻿BigWigsEbonroc = AceAddon:new({
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsEbonroc = AceAddon:new({
 	name          = "BigWigsEbonroc",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "BWL",
-	enabletrigger = GetLocale() == "koKR" and "에본로크"
-		or GetLocale() == "deDE" and "Schattenschwinge"
-		or GetLocale() == "zhCN" and "埃博诺克"
-		or "Ebonroc",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Blackwing Lair"),
+	enabletrigger = bboss("Ebonroc"),
+	bossname = bboss("Ebonroc"),
+
+	toggleoptions = {
+		notWingBuffet = "Warn for Wing Buffet",
+		notShadowFlame = "Warn for Shadow Flame",
+		notYouCruse = "Warn when you got Shadow of Ebonroc",
+		notElseCruse = "Warn when others got Shadow of Ebonroc",
+		notBosskill = "Boss death",
+	},
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "에본로크",
 		disabletrigger = "에본로크|1이;가; 죽었습니다.",
 
 		trigger1 = "에본로크|1이;가; 폭풍 날개|1을;를; 시전합니다.",
@@ -29,11 +36,9 @@
 		bosskill = "에본로크를 물리쳤습니다!",
 
 		bar1text = "폭풍 날개",
-
 	}
 		or GetLocale() == "deDE" and
 	{
-		bossname = "Schattenschwinge",
 		disabletrigger = "Schattenschwinge stirbt.",
 
 		trigger1 = "Schattenschwinge beginnt Fl\195\188gelsto\195\159 zu wirken.",
@@ -55,7 +60,6 @@
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "埃博诺克",
 		disabletrigger = "埃博诺克死亡了。",
 
 		trigger1 = "埃博诺克开始施放龙翼打击。",
@@ -77,7 +81,6 @@
 	}
 		or
 	{
-		bossname = "Ebonroc",
 		disabletrigger = "Ebonroc dies.",
 
 		trigger1 = "Ebonroc begins to cast Wing Buffet",
@@ -125,20 +128,20 @@ end
 
 function BigWigsEbonroc:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
-	if (string.find(arg1, self.loc.trigger1)) then
+	if (string.find(arg1, self.loc.trigger1) and not self:GetOpt("notWingBuffet")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Yellow")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 29, "Red")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 32, 1, "Yellow", "Interface\\Icons\\Spell_Fire_SelfDestruct")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
-	elseif (arg1 == self.loc.trigger2) then
+	elseif (arg1 == self.loc.trigger2 and not self:GetOpt("notShadowFlame")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red")
 	end
 end
@@ -147,9 +150,9 @@ if (GetLocale() == "koKR") then
 	function BigWigsEbonroc:Event()
 		local _,_, EPlayer = string.find(arg1, self.loc.trigger3)
 		if (EPlayer) then
-			if (EPlayer == self.loc.you) then
+			if (EPlayer == self.loc.you and not self:GetOpt("notYouCruse")) then
 				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red", true)
-			else
+			elseif (not self:GetOpt("notElseCruse")) then 
 				local _,_, EWho = string.find(EPlayer, self.loc.whopattern)
 				self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn6, "Yellow")
 				self:TriggerEvent("BIGWIGS_SENDTELL", EWho, self.loc.warn5)
@@ -160,9 +163,9 @@ else
 	function BigWigsEbonroc:Event()
 		local _,_, EPlayer, EType = string.find(arg1, self.loc.trigger3)
 		if (EPlayer and EType) then
-			if (EPlayer == self.loc.you and EType == self.loc.are) then
+			if (EPlayer == self.loc.you and EType == self.loc.are and not self:GetOpt("notYouCruse")) then
 				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red", true)
-			else
+			elseif (not self:GetOpt("notElseCruse")) then 
 				self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn6, "Yellow")
 				self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn5)
 			end

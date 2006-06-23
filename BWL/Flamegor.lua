@@ -1,15 +1,21 @@
-﻿BigWigsFlamegor = AceAddon:new({
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsFlamegor = AceAddon:new({
 	name          = "BigWigsFlamegor",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "BWL",
-	enabletrigger = GetLocale() == "koKR" and "플레임고르"
-		or GetLocale() == "deDE" and "Flammenmaul"
-		or GetLocale() == "zhCN" and "弗莱格尔"
-		or "Flamegor",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Blackwing Lair"),
+	enabletrigger = bboss("Flamegor"),
+	bossname = bboss("Flamegor"),
+
+	toggleoptions = {
+		notWingBuffet = "Warn for Wing Buffet",
+		notShadowFlame = "Warn for Shadow Flame",
+		notFrenzy = "Warn when Flamegor goes into a frenzy",
+		notBosskill = "Boss death",
+	},
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "플레임고르",
 		disabletrigger = "플레임고르|1이;가; 죽었습니다.",
 
 		trigger1 = "플레임고르|1이;가; 폭풍 날개|1을;를; 시전합니다.",
@@ -27,7 +33,6 @@
 	}
 		or GetLocale() == "deDE" and
 	{
-		bossname = "Flammenmaul",
 		disabletrigger = "Flammenmaul stirbt.",
 
 		trigger1 = "Flammenmaul beginnt Fl\195\188gelsto\195\159 zu wirken.",
@@ -45,7 +50,6 @@
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "弗莱格尔",
 		disabletrigger = "弗莱格尔死亡了。",
 
 		trigger1 = "弗莱格尔开始施放龙翼打击。",
@@ -63,7 +67,6 @@
 	}
 		or
 	{
-		bossname = "Flamegor",
 		disabletrigger = "Flamegor dies.",
 
 		trigger1 = "Flamegor begins to cast Wing Buffet",
@@ -105,26 +108,26 @@ end
 
 function BigWigsFlamegor:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsFlamegor:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
-	if (string.find(arg1, self.loc.trigger1)) then
+	if (string.find(arg1, self.loc.trigger1) and not self:GetOpt("notWingBuffet")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Yellow")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 29, "Red")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 32, 1, "Yellow", "Interface\\Icons\\Spell_Fire_SelfDestruct")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
-	elseif (arg1 == self.loc.trigger2) then
+	elseif (arg1 == self.loc.trigger2 and not self:GetOpt("notShadowFlame")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red")
 	end
 end
 
 function BigWigsFlamegor:CHAT_MSG_MONSTER_EMOTE()
-	if (arg1 == self.loc.trigger3) then
+	if (arg1 == self.loc.trigger3 and not self:GetOpt("notFrenzy")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red")
 	end
 end

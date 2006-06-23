@@ -1,16 +1,20 @@
-﻿BigWigsFiremaw = AceAddon:new({
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsFiremaw = AceAddon:new({
 	name          = "BigWigsFiremaw",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "BWL",
-	enabletrigger = GetLocale() == "koKR" and "화염아귀"
-		or GetLocale() == "deDE" and "Feuerschwinge"
-		or GetLocale() == "zhCN" and "费尔默"
-		or "Firemaw",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Blackwing Lair"),
+	enabletrigger = bboss("Firemaw"),
+	bossname = bboss("Firemaw"),
+
+	toggleoptions = {
+		notWingBuffet = "Warn for Wing Buffet",
+		notShadowFlame = "Warn for Shadow Flame",
+		notBosskill = "Boss death",
+	},
 
 	loc = GetLocale() == "koKR" and {
-
-		bossname = "화염아귀",
 		disabletrigger = "화염아귀|1이;가; 죽었습니다.",
 
 		trigger1 = "화염아귀|1이;가; 폭풍 날개|1을;를; 시전합니다.",
@@ -23,11 +27,9 @@
 		bosskill = "화염아귀를 물리쳤습니다!",
 
 		bar1text = "폭풍 날개",
-
 	}
 		or GetLocale() == "deDE" and
 	{
-		bossname = "Feuerschwinge",
 		disabletrigger = "Feuerschwinge stirbt.",
 
 		trigger1 = "Feuerschwinge beginnt Fl\195\188gelsto\195\159 zu wirken.",
@@ -43,7 +45,6 @@
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "费尔默",
 		disabletrigger = "费尔默死亡了。",
 
 		trigger1 = "费尔默开始施放龙翼打击。",
@@ -59,7 +60,6 @@
 	}
 		or
 	{
-		bossname = "Firemaw",
 		disabletrigger = "Firemaw dies.",
 
 		trigger1 = "Firemaw begins to cast Wing Buffet",
@@ -98,20 +98,20 @@ end
 
 function BigWigsFiremaw:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsFiremaw:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
-	if (string.find(arg1, self.loc.trigger1)) then
+	if (string.find(arg1, self.loc.trigger1) and not self:GetOpt("notWingBuffet")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Yellow")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 29, "Red")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 32, 1, "Yellow", "Interface\\Icons\\Spell_Fire_SelfDestruct")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
-	elseif (arg1 == self.loc.trigger2) then
+	elseif (arg1 == self.loc.trigger2 and not self:GetOpt("notShadowFlame")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red")
 	end
 end
