@@ -1,14 +1,17 @@
-﻿BigWigsHakkar = AceAddon:new({
+﻿
+
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+
+BigWigsHakkar = AceAddon:new({
 	name          = "BigWigsHakkar",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "ZG",
-	enabletrigger = GetLocale() == "koKR" and "학카르"
-		or GetLocale() == "zhCN" and "哈卡"
-		or "Hakkar",
+	enabletrigger = bboss("Hakkar"),
+	bossname = bboss("Hakkar"),
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "학카르",
 		disabletrigger = "학카르|1이;가; 죽었습니다.",
 
 		trigger1 = "자만심은 세상의 종말을 불러올 뿐이다. 오너라! 건방진 피조물들이여! 와서 신의 진노에 맞서 보아라!",
@@ -25,10 +28,7 @@
 		bar1text = "격노",
 		bar2text = "생명력 흡수",
 
-	}
-		or GetLocale() == "zhCN" and
-	{
-		bossname = "哈卡",
+	} or GetLocale() == "zhCN" and {
 		disabletrigger = "哈卡死亡了。",
 
 		trigger1 = "^骄傲会将你送上绝路",
@@ -44,10 +44,7 @@
 
 		bar1text = "激怒",
 		bar2text = "生命吸取",
-	}
-		or
-	{
-		bossname = "Hakkar",
+	} or {
 		disabletrigger = "Hakkar dies.",
 
 		trigger1 = "FACE THE WRATH OF THE SOULFLAYER!",

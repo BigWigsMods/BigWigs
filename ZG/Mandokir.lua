@@ -1,41 +1,37 @@
-﻿BigWigsMandokir = AceAddon:new({
+﻿
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+
+BigWigsMandokir = AceAddon:new({
 	name          = "BigWigsMandokir",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "ZG",
-	enabletrigger = GetLocale() == "koKR" and "혈군주 만도키르"
-		or GetLocale() == "zhCN" and "血领主曼多基尔"
-		or "Bloodlord Mandokir",
+	enabletrigger = bboss("Bloodlord Mandokir"),
+	bossname = bboss("Bloodlord Mandokir"),
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "혈군주 만도키르",
 		disabletrigger = "혈군주 만도크리|1이;가; 죽었습니다.",
 		trigger1 = "(.+)! 널 지켜보고 있겠다!",
 
 		warn1 = "당신을 지켜보고 있습니다 - 모든 동작 금지!",
-		warn2 = "님을 지켜봅니다!",
+		warn2 = "%s님을 지켜봅니다!",
 		bosskill = "혈군주 만도키르를 물리쳤습니다!",
-	}
-		or GetLocale() == "zhCN" and
-	{
-		bossname = "血领主曼多基尔",
+	} or GetLocale() == "zhCN" and {
 		disabletrigger = "血领主曼多基尔死亡了。",
 
 		trigger1 = "(.+)！我正在看着你！$",
 
 		warn1 = "你被盯上了 - 停止一切动作！",
-		warn2 = "被盯上了！",
+		warn2 = "%s被盯上了！",
 		bosskill = "血领主曼多基尔被击败了！",
-	}
-		or
-	{
-		bossname = "Bloodlord Mandokir",
+	} or {
 		disabletrigger = "Bloodlord Mandokir dies.",
 
 		trigger1 = "([^%s]+)! I'm watching you!$",
 
 		warn1 = "You are being watched - stop all actions!",
-		warn2 = " is being watched!",
+		warn2 = "%s is being watched!",
 		bosskill = "Bloodlord Mandokir has been defeated!",
 	},
 })
@@ -69,13 +65,13 @@ end
 
 
 function BigWigsMandokir:CHAT_MSG_MONSTER_YELL()
-	local _,_, EPlayer = string.find(arg1, self.loc.trigger1)
-	if EPlayer then
-		if EPlayer == UnitName("player") then
+	local _,_, n = string.find(arg1, self.loc.trigger1)
+	if n then
+		if n == UnitName("player") then
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true, "Alarm")
 		else
-			self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
-			self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
+			self:TriggerEvent("BIGWIGS_MESSAGE", string.format(self.loc.warn2, n), "Yellow")
+			self:TriggerEvent("BIGWIGS_SENDTELL", n, self.loc.warn1)
 		end
 	end
 end

@@ -7,6 +7,7 @@ BigWigsMandokir = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "ZG",
+	bossname = bboss("High Priestess Arlokk"),
 	enabletrigger = bboss("High Priestess Arlokk"),
 
 	loc = {
@@ -22,7 +23,6 @@ BigWigsMandokir = AceAddon:new({
 
 
 function BigWigsMandokir:Initialize()
-	self.loc.bossname = bboss("High Priestess Arlokk")
 	self.disabled = true
 	BigWigs:RegisterModule(self)
 end

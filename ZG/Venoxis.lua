@@ -1,16 +1,16 @@
 ﻿
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
 
 BigWigsVenoxis = AceAddon:new({
 	name          = "BigWigsVenoxis",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "ZG",
-	enabletrigger = GetLocale() == "koKR" and "대사제 베녹시스"
-		or GetLocale() == "zhCN" and "高阶祭司温诺希斯"
-		or "High Priest Venoxis",
+	enabletrigger = bboss("High Priest Venoxis"),
+	bossname = bboss("High Priest Venoxis"),
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "대사제 베녹시스",
 		disabletrigger = "대사제 베녹시스|1이;가; 죽었습니다.",
 		-- "이제서야... 안식을...!"
 
@@ -21,10 +21,7 @@ BigWigsVenoxis = AceAddon:new({
 		warn2 = "2단계 시작 - 독구름을 조심하세요!",
 
 		bosskill = "대사제 베녹시스를 물리쳤습니다!",
-	}
-		or GetLocale() == "zhCN" and
-	{
-		bossname = "高阶祭司温诺希斯",
+	} or GetLocale() == "zhCN" and {
 		disabletrigger = "高阶祭司温诺希斯死亡了。",
 
 		trigger1 = "高阶祭司温诺希斯获得了恢复的效果。",
@@ -34,10 +31,7 @@ BigWigsVenoxis = AceAddon:new({
 		warn2 = "进入第二阶段，小心毒云！",
 
 		bosskill = "高阶祭司温诺希斯被击败了！",
-	}
-		or
-	{
-		bossname = "High Priest Venoxis",
+	} or {
 		disabletrigger = "High Priest Venoxis dies.",
 
 		trigger1 = "High Priest Venoxis gains Renew.",

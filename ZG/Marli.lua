@@ -1,15 +1,16 @@
-﻿BigWigsMarli = AceAddon:new({
+﻿
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+
+BigWigsMarli = AceAddon:new({
 	name          = "BigWigsMarli",
 	cmd           = AceChatCmd:new({}, {}),
 
 	zonename = "ZG",
-	enabletrigger = GetLocale() == "koKR" and "대여사제 말리"
-		or GetLocale() == "zhCN" and "高阶祭司玛尔里"
-		or "High Priestess Mar'li",
+	enabletrigger = bboss("High Priestess Mar'li"),
+	bossname = bboss("High Priestess Mar'li"),
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "대여사제 말리",
-
 		trigger1 = "어미를 도와라!$",
 		trigger2 = "^High Priestess Mar'li's Drain Life heals High Priestess Mar'li for (.+).",
 
@@ -19,12 +20,7 @@
 		disabletrigger = "대여사제 말리|1이;가; 죽었습니다.",
 
 		bosskill = "대여사제 말리를 물리쳤습니다!",
-
-	}
-		or GetLocale() == "zhCN" and
-	{
-		bossname = "高阶祭司玛尔里",
-
+	} or GetLocale() == "zhCN" and {
 		trigger1 = "来为我作战吧，我的孩子们！$",
 		trigger2 = "^高阶祭司玛尔里的生命吸取治疗了高阶祭司玛尔里(.+)。",
 
@@ -34,11 +30,7 @@
 		disabletrigger = "高阶祭司玛尔里死亡了。",
 
 		bosskill = "高阶祭司玛尔里被击败了！",
-	}
-		or
-	{
-		bossname = "High Priestess Mar'li",
-
+	} or {
 		trigger1 = "Aid me my brood!$",
 		trigger2 = "^High Priestess Mar'li's Drain Life heals High Priestess Mar'li for (.+).",
 
