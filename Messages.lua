@@ -10,9 +10,9 @@ local cmdopt = {
 			method = "BIGWIGS_SHOW_ANCHORS",
 		},
 		{
-			option = "err",
-			desc   = "Toggle sending messages to the Blizzard error frame.",
-			method = "ToggleErr",
+			option = "rw",
+			desc   = "Toggle sending messages to the RaidWarnings frame.",
+			method = "ToggleRW",
 		},
 		{
 			option = "white",
@@ -27,6 +27,7 @@ local cmdopt = {
 		},
 	},
 }
+local rwframe, frame
 
 BigWigsMessages = AceAddon:new({
 	name          = "BigWigsMessages",
@@ -37,21 +38,8 @@ BigWigsMessages = AceAddon:new({
 
 function BigWigsMessages:Initialize()
 	BigWigs:RegisterModule(self)
-
-	self.anchorframe = BigWigsMsgAnchorFrame
-	self.uierrorsframe = UIErrorsFrame
-
-	self.msgframe = BigWigsTextFrame
-	self.msgframe:SetWidth(512)
-	self.msgframe:SetHeight(200)
-
-	self.msgframe:SetPoint("TOP", self.anchorframe, "BOTTOM", 0, 0)
-	self.msgframe:SetScale(self:GetOpt("scale") or 1)
-
-	-- self.msgframe:SetJustifyV("TOP")
-	-- self.msgframe:SetFrameStrata("HIGH")
-	self.msgframe:SetFontObject(ErrorFont)
-	self.msgframe:Show()
+	self.anchorframe, rwframe = BigWigsMsgAnchorFrame, RaidWarningFrame
+	frame = self:GetOpt("NotRW") and self:CreateMsgFrame() or RaidWarningFrame
 end
 
 
@@ -64,6 +52,23 @@ end
 
 function BigWigsMessages:Disable()
 	self:UnregisterAllEvents()
+end
+
+
+function BigWigsMessages:CreateMsgFrame()
+	self.msgframe = CreateFrame("MessageFrame")
+	self.msgframe:SetWidth(512)
+	self.msgframe:SetHeight(40)
+
+	self.msgframe:SetPoint("TOP", self.anchorframe, "BOTTOM", 0, 0)
+	self.msgframe:SetScale(self:GetOpt("scale") or 1)
+	self.msgframe:SetInsertMode("TOP")
+	self.msgframe:SetFrameStrata("HIGH")
+	self.msgframe:SetToplevel(true)
+	self.msgframe:SetFontObject(GameFontNormalHuge)
+	self.msgframe:Show()
+
+	return self.msgframe
 end
 
 
@@ -81,11 +86,11 @@ function BigWigsMessages:BIGWIGS_HIDE_ANCHORS()
 end
 
 
-function BigWigsMessages:BIGWIGS_MESSAGE(text, color, noraidsay)
+function BigWigsMessages:BIGWIGS_MESSAGE(text, color)
 	if not text then return end
-	local red, green, blue = ( (not self:GetOpt("White")) and BigWigs:GetColor(color) )
-	local f = self:GetOpt("ToErr") and self.uierrorsframe or self.msgframe
-	f:AddMessage(text, red or 1, green or 1, blue or 1, 1, UIERRORS_HOLD_TIME)
+	local red, green, blue = self:GetOpt("White") and BigWigs:GetColor("White") or BigWigs:GetColor(color)
+	local f = self:GetOpt("NotRW") and self.msgframe or rwframe
+	frame:AddMessage(text, red or 1, green or 1, blue or 1, 1, UIERRORS_HOLD_TIME)
 end
 
 
@@ -97,15 +102,17 @@ function BigWigsMessages:SetScale(msg)
 	local scale = tonumber(msg)
 	if scale and scale >= 0.25 and scale <= 5 then
 		self:SetOpt(scale, "scale")
-		self.msgframe:SetScale(scale)
+		if self.msgframe then self.msgframe:SetScale(scale) end
 		self.cmd:result(string.format("Scale is set to %s", scale))
 	end
 end
 
 
-function BigWigsMessages:ToggleErr()
-	local t = self:TogOpt("ToErr")
-	self.cmd:msg("Messages now sent to: ".. (t and "Blizzard frame" or "BigWigs frame"))
+function BigWigsMessages:ToggleRW()
+	local t = self:TogOpt("NotRW")
+	if t and not self.msgframe then self:CreateMsgFrame() end
+	self.cmd:msg("Messages now sent to: ".. (t and "BigWigs frame" or "RaidWarning frame"))
+	frame = t and self.msgframe or RaidWarningFrame
 end
 
 
@@ -113,6 +120,7 @@ function BigWigsMessages:ToggleWhite()
 	local t = self:TogOpt("White")
 	self.cmd:msg("Coloring all messages white is now: " .. (t and "On" or "Off"))
 end
+
 
 --------------------------------
 --      Load this bitch!      --
