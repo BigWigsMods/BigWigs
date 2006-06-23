@@ -6,9 +6,15 @@ BigWigsMandokir = AceAddon:new({
 	name          = "BigWigsMandokir",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "ZG",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Zul'Gurub"),
 	bossname = bboss("High Priestess Arlokk"),
 	enabletrigger = bboss("High Priestess Arlokk"),
+
+	toggleoptions = {
+		notPlayer = "Mark applied to you",
+		notOthers = "Mark applied to other players",
+		notBosskill = "Boss death",
+	},
 
 	loc = {
 		disabletrigger = "High Priestess Arlokk dies.",
@@ -24,7 +30,7 @@ BigWigsMandokir = AceAddon:new({
 
 function BigWigsMandokir:Initialize()
 	self.disabled = true
-	BigWigs:RegisterModule(self)
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
 
 
@@ -43,7 +49,7 @@ end
 
 function BigWigsMandokir:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
@@ -53,8 +59,8 @@ function BigWigsMandokir:CHAT_MSG_MONSTER_YELL()
 	local _,_, n = string.find(arg1, self.loc.trigger1)
 	if n then
 		if n == UnitName("player") then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true, "Alarm")
-		else
+			if not self:GetOpt("notPlayer") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true, "Alarm") end
+		elseif not self:GetOpt("notOthers") then
 			self:TriggerEvent("BIGWIGS_MESSAGE", string.format(self.loc.warn2, n), "Yellow")
 			self:TriggerEvent("BIGWIGS_SENDTELL", n, self.loc.warn1)
 		end

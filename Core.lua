@@ -104,6 +104,7 @@ end
 
 
 function BigWigs:Enable()
+	self:RegisterEvent("BIGWIGS_REGISTER_MODULE")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 end
 
@@ -129,7 +130,14 @@ end
 
 
 function BigWigs:RegisterModule(module)
-	if not module or not module.name then return end
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", module)
+end
+
+
+function BigWigs:BIGWIGS_REGISTER_MODULE(module)
+	assert(module, "No module passed")
+	assert(module.name, "Module has no name element")
+
 	self.modules[module.name] = module
 
 	module.GetOpt, module.SetOpt, module.TogOpt = get, set, tog
@@ -141,9 +149,9 @@ function BigWigs:RegisterModule(module)
 	local z = module.zonename
 
 	if type(z) == "string" then
-		if self.loc[z] then self.enablezones[self.loc[z]] = true end
+		self.enablezones[self.loc[z] or z] = true
 	elseif type(z) == "table" then
-		for _,zone in pairs(z) do self.enablezones[self.loc[zone]] = true end
+		for _,zone in pairs(z) do self.enablezones[self.loc[zone] or zone] = true end
 	end
 
 	local t = module.enabletrigger

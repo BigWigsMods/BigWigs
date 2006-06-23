@@ -3,13 +3,19 @@
 ## Title: Big Wigs |cff007fff -Ace-|r
 ## Notes: Boss Mods with Timex bars.
 ## Dependencies: Ace, Timex
-## SavedVariablesPerCharacter: BigWigsDB
+## OptionalDeps: FuBar, BabbleLib
+## SavedVariablesPerCharacter: BigWigsDB, BigWigsFubarDB
 
 TekTech\TekTechEmbed.lua
 MetrognomeLib\MetrognomeLib.lua
+CompostLib\CompostLib.lua
+DewDropLib\DewdropLib.lua
+TabletLib\TabletLib.lua
+FBPlug1.2\FuBarPlugin-1.2.lua
 BabbleLibBoss\BabbleLib-Boss.lua
 
 Core.lua
+Options.lua
 Bars.lua
 Bars.xml
 Messages.lua

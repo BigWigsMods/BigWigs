@@ -6,7 +6,7 @@ BigWigsJeklik = AceAddon:new({
 	name          = "BigWigsJeklik",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "ZG",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Zul'Gurub"),
 	enabletrigger = bboss("High Priestess Jeklik"),
 	bossname = bboss("High Priestess Jeklik"),
 
@@ -43,7 +43,7 @@ BigWigsJeklik = AceAddon:new({
 
 function BigWigsJeklik:Initialize()
 	self.disabled = true
-	BigWigs:RegisterModule(self)
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
 
 

@@ -6,7 +6,7 @@ BigWigsMandokir = AceAddon:new({
 	name          = "BigWigsMandokir",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "ZG",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Zul'Gurub"),
 	enabletrigger = bboss("Bloodlord Mandokir"),
 	bossname = bboss("Bloodlord Mandokir"),
 
@@ -39,7 +39,7 @@ BigWigsMandokir = AceAddon:new({
 
 function BigWigsMandokir:Initialize()
 	self.disabled = true
-	BigWigs:RegisterModule(self)
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
 
 

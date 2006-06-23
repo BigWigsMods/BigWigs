@@ -6,7 +6,7 @@ BigWigsMarli = AceAddon:new({
 	name          = "BigWigsMarli",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "ZG",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Zul'Gurub"),
 	enabletrigger = bboss("High Priestess Mar'li"),
 	bossname = bboss("High Priestess Mar'li"),
 
@@ -46,7 +46,7 @@ BigWigsMarli = AceAddon:new({
 
 function BigWigsMarli:Initialize()
 	self.disabled = true
-	BigWigs:RegisterModule(self)
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
 
 

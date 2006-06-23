@@ -6,7 +6,7 @@ BigWigsVenoxis = AceAddon:new({
 	name          = "BigWigsVenoxis",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "ZG",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Zul'Gurub"),
 	enabletrigger = bboss("High Priest Venoxis"),
 	bossname = bboss("High Priest Venoxis"),
 
@@ -47,7 +47,7 @@ BigWigsVenoxis = AceAddon:new({
 
 function BigWigsVenoxis:Initialize()
 	self.disabled = true
-	BigWigs:RegisterModule(self)
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
 
 

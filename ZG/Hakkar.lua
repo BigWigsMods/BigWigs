@@ -7,7 +7,7 @@ BigWigsHakkar = AceAddon:new({
 	name          = "BigWigsHakkar",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "ZG",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Zul'Gurub"),
 	enabletrigger = bboss("Hakkar"),
 	bossname = bboss("Hakkar"),
 
@@ -66,7 +66,7 @@ BigWigsHakkar = AceAddon:new({
 
 function BigWigsHakkar:Initialize()
 	self.disabled = true
-	BigWigs:RegisterModule(self)
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
 
 
