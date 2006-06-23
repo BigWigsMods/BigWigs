@@ -1,4 +1,7 @@
-﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
+﻿
+
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
 
 BigWigsArlokk = AceAddon:new({
 	name          = "BigWigsArlokk",
@@ -9,8 +12,8 @@ BigWigsArlokk = AceAddon:new({
 	enabletrigger = bboss("High Priestess Arlokk"),
 
 	toggleoptions = {
-		notPlayer = "Mark applied to you",
-		notOthers = "Mark applied to other players",
+		notPlayer = "Mark on player warning",
+		notOthers = "Mark on others warning",
 		notBosskill = "Boss death",
 	},
 
@@ -25,10 +28,12 @@ BigWigsArlokk = AceAddon:new({
 	},
 })
 
+
 function BigWigsArlokk:Initialize()
 	self.disabled = true
 	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
+
 
 function BigWigsArlokk:Enable()
 	self.disabled = nil
@@ -36,10 +41,12 @@ function BigWigsArlokk:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
+
 function BigWigsArlokk:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
 end
+
 
 function BigWigsArlokk:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
@@ -47,6 +54,7 @@ function BigWigsArlokk:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 		self:Disable()
 	end
 end
+
 
 function BigWigsArlokk:CHAT_MSG_MONSTER_YELL()
 	local _,_, n = string.find(arg1, self.loc.trigger1)
@@ -59,7 +67,10 @@ function BigWigsArlokk:CHAT_MSG_MONSTER_YELL()
 		end
 	end
 end
+
+
 --------------------------------
 --      Load this bitch!      --
 --------------------------------
 BigWigsArlokk:RegisterForLoad()
+

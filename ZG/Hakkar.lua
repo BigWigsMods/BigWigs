@@ -8,6 +8,18 @@ BigWigsHakkar = AceAddon:new({
 	enabletrigger = bboss("Hakkar"),
 	bossname = bboss("Hakkar"),
 
+	toggleoptions = {
+		notEnrageBar = "Enrage timer",
+		notDrainBar = "Drain timer",
+		notEngage = "Battle start",
+		notDrain90 = "Drain 90-sec warning",
+		notDrain60 = "Drain 60-sec warning",
+		notDrain45 = "Drain 45-sec warning",
+		notDrain15 = "Drain 15-sec warning",
+		notBosskill = "Boss death",
+	},
+	optionorder = {"notEngage", "notEnrageBar", "notDrainBar", "notDrain90", "notDrain60", "notDrain45", "notDrain15", "notBosskill"},
+
 	loc = GetLocale() == "koKR" and {
 		disabletrigger = "학카르|1이;가; 죽었습니다.",
 
@@ -93,15 +105,15 @@ end
 
 function BigWigsHakkar:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsHakkar:CHAT_MSG_MONSTER_YELL()
 	if string.find(arg1, self.loc.trigger1) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.start, "Green")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 600, 1, "Purple", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+		if not self:GetOpt("notEngage") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.start, "Green") end
+		if not self:GetOpt("notEnrageBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 600, 1, "Purple", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy") end
 		self:BeginTimers(true)
 	elseif string.find(arg1, self.loc.flee) then
 		self:Reset()
@@ -120,14 +132,14 @@ function BigWigsHakkar:BIGWIGS_MESSAGE(text)
 end
 
 function BigWigsHakkar:BeginTimers(first)
-	if not first then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Green") end
-	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar2text, 90, 2, "Green", "Interface\\Icons\\Spell_Shadow_LifeDrain")
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 30, "Yellow")
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 45, "Orange")
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 75, "Red")
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar2text, 30, "Yellow")
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar2text, 45, "Orange")
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar2text, 75, "Red")
+	if not first and not self:GetOpt("notDrain90") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Green") end
+	if not self:GetOpt("notDrainBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar2text, 90, 2, "Green", "Interface\\Icons\\Spell_Shadow_LifeDrain") end
+	if not self:GetOpt("notDrain60") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 30, "Yellow") end
+	if not self:GetOpt("notDrain45") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 45, "Orange") end
+	if not self:GetOpt("notDrain15") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 75, "Red") end
+	if not self:GetOpt("notDrainBar") then self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar2text, 30, "Yellow") end
+	if not self:GetOpt("notDrainBar") then self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar2text, 45, "Orange") end
+	if not self:GetOpt("notDrainBar") then self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar2text, 75, "Red") end
 end
 --------------------------------
 --      Load this bitch!      --

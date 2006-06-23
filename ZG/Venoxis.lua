@@ -8,6 +8,12 @@ BigWigsVenoxis = AceAddon:new({
 	enabletrigger = bboss("High Priest Venoxis"),
 	bossname = bboss("High Priest Venoxis"),
 
+	toggleoptions = {
+		notRenew = "Renew dispel warnings",
+		notPhase2 = "Phase 2 warning",
+		notBosskill = "Boss death",
+	},
+
 	loc = GetLocale() == "koKR" and {
 		disabletrigger = "대사제 베녹시스|1이;가; 죽었습니다.",
 		-- "이제서야... 안식을...!"
@@ -61,19 +67,19 @@ end
 
 function BigWigsVenoxis:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsVenoxis:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
-	if arg1 == self.loc.trigger1 then
+	if arg1 == self.loc.trigger1 and not self:GetOpt("notRenew") then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Orange")
 	end
 end
 
 function BigWigsVenoxis:CHAT_MSG_MONSTER_YELL()
-	if string.find(arg1, self.loc.trigger2) then
+	if string.find(arg1, self.loc.trigger2) and not self:GetOpt("notPhase2") then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Yellow")
 	end
 end

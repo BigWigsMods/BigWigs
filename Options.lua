@@ -75,8 +75,15 @@ end
 function BigWigsOptions:Menu3(level, value)
 	if type(value) ~= "table" then return end
 
-	for i,v in pairs(value.toggleoptions) do
-		dewdrop:AddLine("text", v, "func", value.TogOpt, "arg1", value, "arg2", i, "checked", not value:GetOpt(i))
+	if value.optionorder then
+		for _,i in pairs(value.optionorder) do
+			local v = value.toggleoptions[i]
+			dewdrop:AddLine("text", v, "func", value.TogOpt, "arg1", value, "arg2", i, "checked", not value:GetOpt(i))
+		end
+	else
+		for i,v in pairs(value.toggleoptions) do
+			dewdrop:AddLine("text", v, "func", value.TogOpt, "arg1", value, "arg2", i, "checked", not value:GetOpt(i))
+		end
 	end
 end
 

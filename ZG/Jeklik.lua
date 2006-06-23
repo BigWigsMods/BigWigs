@@ -8,6 +8,12 @@ BigWigsJeklik = AceAddon:new({
 	enabletrigger = bboss("High Priestess Jeklik"),
 	bossname = bboss("High Priestess Jeklik"),
 
+	toggleoptions = {
+		notBats = "Bomb bats warnings",
+		notHeal = "Heal interrupt warnings",
+		notBosskill = "Boss death",
+	},
+
 	loc = GetLocale() == "koKR" and {
 		trigger1 = "침략자들에게 뜨거운 맛을 보여줘라!$",
 		trigger2 = "상급 치유를 시전하기 시작합니다!$",
@@ -57,19 +63,19 @@ end
 
 function BigWigsJeklik:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsJeklik:CHAT_MSG_MONSTER_YELL()
-	if string.find(arg1, self.loc.trigger1) then
+	if string.find(arg1, self.loc.trigger1) and not self:GetOpt("notBats") then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Yellow")
 	end
 end
 
 function BigWigsJeklik:CHAT_MSG_MONSTER_EMOTE()
-	if string.find(arg1, self.loc.trigger2) then
+	if string.find(arg1, self.loc.trigger2) and not self:GetOpt("notHeal") then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Orange")
 	end
 end

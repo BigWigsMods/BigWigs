@@ -8,6 +8,12 @@ BigWigsMandokir = AceAddon:new({
 	enabletrigger = bboss("Bloodlord Mandokir"),
 	bossname = bboss("Bloodlord Mandokir"),
 
+	toggleoptions = {
+		notPlayer = "Watching you warning",
+		notOthers = "Watching other players warnings",
+		notBosskill = "Boss death",
+	},
+
 	loc = GetLocale() == "koKR" and {
 		disabletrigger = "혈군주 만도크리|1이;가; 죽었습니다.",
 		trigger1 = "(.+)! 널 지켜보고 있겠다!",
@@ -52,7 +58,7 @@ end
 
 function BigWigsMandokir:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
@@ -61,8 +67,8 @@ function BigWigsMandokir:CHAT_MSG_MONSTER_YELL()
 	local _,_, n = string.find(arg1, self.loc.trigger1)
 	if n then
 		if n == UnitName("player") then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true, "Alarm")
-		else
+			if not self:GetOpt("notPlayer") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true, "Alarm") end
+		elseif not self:GetOpt("notOthers") then
 			self:TriggerEvent("BIGWIGS_MESSAGE", string.format(self.loc.warn2, n), "Yellow")
 			self:TriggerEvent("BIGWIGS_SENDTELL", n, self.loc.warn1)
 		end

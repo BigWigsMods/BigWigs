@@ -8,6 +8,12 @@ BigWigsMarli = AceAddon:new({
 	enabletrigger = bboss("High Priestess Mar'li"),
 	bossname = bboss("High Priestess Mar'li"),
 
+	toggleoptions = {
+		notSpiders = "Spider spawn warnings",
+		notDrain = "Drain life warnings",
+		notBosskill = "Boss death",
+	},
+
 	loc = GetLocale() == "koKR" and {
 		trigger1 = "어미를 도와라!$",
 		trigger2 = "^High Priestess Mar'li's Drain Life heals High Priestess Mar'li for (.+).",
@@ -60,19 +66,19 @@ end
 
 function BigWigsMarli:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsMarli:CHAT_MSG_MONSTER_YELL()
-	if string.find(arg1, self.loc.trigger1) then
+	if string.find(arg1, self.loc.trigger1) and not self:GetOpt("notSpiders") then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Yellow")
 	end
 end
 
 function BigWigsMarli:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
-	if string.find(arg1, self.loc.trigger2) then
+	if string.find(arg1, self.loc.trigger2) and not self:GetOpt("notDrain") then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Orange")
 	end
 end
