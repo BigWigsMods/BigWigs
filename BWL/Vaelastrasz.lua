@@ -11,6 +11,7 @@ BigWigsVaelastrasz = AceAddon:new({
 	toggleoptions = {
 		notYouBruning = "Warn when you are burning",
 		notElseBuring = "Warn when others are burning",
+		notIcon = "Put a Skull icon on the person who's burning. (Requires promoted or higher)",
 		notBosskill = "Boss death",
 	},
 
@@ -104,9 +105,11 @@ if (GetLocale() == "koKR") then
 				self:TriggerEvent("BIGWIGS_SENDTELL", EWho, self.loc.warn1)
 			end
 
-			for i=1,GetNumRaidMembers() do
-				if UnitName("raid"..i) == Eplayer then
-					SetRaidTargetIcon("raid"..i, 8)
+			if (not self:GetOpt("notIcon")) then
+				for i=1,GetNumRaidMembers() do
+					if UnitName("raid"..i) == Eplayer then
+						SetRaidTargetIcon("raid"..i, 8)
+					end
 				end
 			end
 		end
@@ -122,9 +125,11 @@ else
 				self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
 			end
 
-			for i=1,GetNumRaidMembers() do
-				if UnitName("raid"..i) == Eplayer then
-					SetRaidTargetIcon("raid"..i, 8)
+			if (not self:GetOpt("notIcon")) then
+				for i=1,GetNumRaidMembers() do
+					if UnitName("raid"..i) == Eplayer then
+						SetRaidTargetIcon("raid"..i, 8)
+					end
 				end
 			end
 		end
