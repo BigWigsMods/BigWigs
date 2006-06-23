@@ -9,8 +9,8 @@ BigWigsVaelastrasz = AceAddon:new({
 	bossname = bboss("Vaelastrasz the Corrupt"),
 
 	toggleoptions = {
-		notYouBruning = "Warn when you are burning",
-		notElseBuring = "Warn when others are burning",
+		notYouBurning = "Warn when you are burning",
+		notElseBurning = "Warn when others are burning",
 		notIcon = "Put a Skull icon on the person who's burning. (Requires promoted or higher)",
 		notBosskill = "Boss death",
 	},
@@ -97,9 +97,9 @@ if (GetLocale() == "koKR") then
 	function BigWigsVaelastrasz:Event()
 		local _, _, EPlayer = string.find(arg1, self.loc.trigger1)
 		if (EPlayer) then
-			if (EPlayer == self.loc.you and not self:GetOpt("notYouBruning")) then
+			if (EPlayer == self.loc.you and not self:GetOpt("notYouBurning")) then
 				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
-			elseif (not self:GetOpt("notElseBuring")) then 
+			elseif (not self:GetOpt("notElseBurning")) then 
 				local _, _, EWho = string.find(EPlayer, self.loc.whopattern)
 				self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn2, "Yellow")
 				self:TriggerEvent("BIGWIGS_SENDTELL", EWho, self.loc.warn1)
@@ -118,9 +118,9 @@ else
 	function BigWigsVaelastrasz:Event()
 		local _, _, EPlayer, EType = string.find(arg1, self.loc.trigger1)
 		if (EPlayer and EType) then
-			if (EPlayer == self.loc.you and EType == self.loc.are and not self:GetOpt("notYouBruning")) then
+			if (EPlayer == self.loc.you and EType == self.loc.are and not self:GetOpt("notYouBurning")) then
 				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
-			elseif (not self:GetOpt("notElseBuring")) then 
+			elseif (not self:GetOpt("notElseBurning")) then 
 				self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
 				self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
 			end
