@@ -110,6 +110,9 @@ else
 				self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
 				self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
 			end
+			TargetByName(EPlayer)
+			SetRaidTargetIcon('target', 8)
+			TargetLastTarget()
 		end
 	end
 end
