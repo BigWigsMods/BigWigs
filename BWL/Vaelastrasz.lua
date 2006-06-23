@@ -103,6 +103,12 @@ if (GetLocale() == "koKR") then
 				self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn2, "Yellow")
 				self:TriggerEvent("BIGWIGS_SENDTELL", EWho, self.loc.warn1)
 			end
+
+			for i=1,GetNumRaidMembers() do
+				if UnitName("raid"..i) == Eplayer then
+					SetRaidTargetIcon("raid"..i, 8)
+				end
+			end
 		end
 	end
 else
@@ -114,6 +120,12 @@ else
 			elseif (not self:GetOpt("notElseBuring")) then 
 				self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
 				self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
+			end
+
+			for i=1,GetNumRaidMembers() do
+				if UnitName("raid"..i) == Eplayer then
+					SetRaidTargetIcon("raid"..i, 8)
+				end
 			end
 		end
 	end
