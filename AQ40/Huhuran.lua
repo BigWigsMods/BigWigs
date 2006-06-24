@@ -1,14 +1,26 @@
-﻿BigWigsHuhuran = AceAddon:new({
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsHuhuran = AceAddon:new({
 	name          = "BigWigsHuhuran",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "AQ40",
-	enabletrigger = GetLocale() == "koKR" and "공주 후후란"
-		or GetLocale() == "zhCN" and "哈霍兰公主"
-		or "Princess Huhuran",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Temple of Ahn'Qiraj"),
+	enabletrigger = bboss("Princess Huhuran"),
+	bossname = bboss("Princess Huhuran"),
+
+	toggleoptions = {
+		notBosskill = "Boss death",
+		notWyvernBar = "Wyvern Sting bar",
+		notWyvern3Sec = "Wyvern Sting 3-sec warning",
+		notWyvernWarn = "Wyvern Sting warning",
+		notFrenzyWarn = "Frenzy warning",
+		notBerserkSoon = "Berserk soon warning",
+		notBerserkWarn = "Berserk warning",
+	},
+
+	optionorder = {"notWyvernBar", "notWyvern3Sec", "notWyvernWarn", "notFrenzyWarn", "notBerserkSoon", "notBerserkWarn", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "공주 후후란",
 		disabletrigger = "공주 후후란|1이;가; 죽었습니다.",
 		bosskill = "공주 후후란을 물리쳤습니다.",
 
@@ -24,7 +36,6 @@
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "哈霍兰公主",
 		disabletrigger = "哈霍兰公主死亡了。",
 		bosskill = "哈霍兰公主被击败了！",
 
@@ -40,7 +51,6 @@
 	}
 		or
 	{
-		bossname = "Princess Huhuran",
 		disabletrigger = "Princess Huhuran dies.",
 		bosskill = "Princess Huhuran has been defeated.",
 
@@ -85,15 +95,15 @@ end
 
 function BigWigsHuhuran:CHAT_MSG_COMBAT_HOSTILE_DEATH()
     if (arg1 == self.loc.disabletrigger) then
-        self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+        if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
         self:Disable()
     end
 end
 
 function BigWigsHuhuran:CHAT_MSG_MONSTER_EMOTE()
-	if (arg1 == self.loc.frenzytrigger) then
+	if (not self:GetOpt("notFrenzyWarn") and arg1 == self.loc.frenzytrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.frenzywarn, "Orange")
-	elseif (arg1 == self.loc.berserktrigger) then
+	elseif (not self:GetOpt("notBerserkWarn") and arg1 == self.loc.berserktrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.berserkwarn, "Red")
 	end
 end
@@ -102,7 +112,7 @@ function BigWigsHuhuran:UNIT_HEALTH()
 	if (UnitName(arg1) == self.loc.bossname) then
 		local health = UnitHealth(arg1)
 		if (health > 30 and health <= 33) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.berserksoonwarn, "Red")
+			if not self:GetOpt("notBerserkSoon") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.berserksoonwarn, "Red") end
 			self.berserkannounced = true
 		elseif (health > 40 and self.berserkannounced) then
 			self.berserkannounced = nil
@@ -112,12 +122,13 @@ end
 
 function BigWigsHuhuran:checkSting()
 	if (not self.prior and string.find(arg1, self.loc.stingtrigger)) then
-		DEFAULT_CHAT_FRAME:AddMessage("BWMessage CheckSting" )
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.stingwarn, "Orange")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.stingdelaywarn, 22, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bartext, 25, 1, "Green", "Interface\\Icons\\INV_Spear_02")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bartext, 10, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bartext, 20, "Red")
+		if not self:GetOpt("notWyvernWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.stingwarn, "Orange") end
+		if not self:GetOpt("notWyvernBar") then
+			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bartext, 25, 1, "Green", "Interface\\Icons\\INV_Spear_02")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bartext, 10, "Orange")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bartext, 20, "Red")
+		end
+		if not self:GetOpt("notWyvern3Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.stingdelaywarn, 22, "Orange") end
 		self.prior = true
 	end
 end
