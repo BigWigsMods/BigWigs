@@ -16,6 +16,8 @@ BigWigsBugFamily = AceAddon:new({
 		notHealWarn = "Heal warning",
 	},
 
+	optionorder = {"notHealWarn", "notFearBar", "notFearWarn", "notFear5Sec", "notBosskill"},
+
 	loc = GetLocale() == "koKR" and {
 		disabletrigger1 = "군주 크리|1이;가; 죽었습니다.",
 		disabletrigger2 = "공주 야우즈|1이;가; 죽었습니다.",

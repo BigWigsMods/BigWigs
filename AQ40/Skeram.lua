@@ -14,6 +14,8 @@ BigWigsSkeram = AceAddon:new({
 		notAEWarn = "AE warnings",
 	},
 
+	optionorder = {"notMCWarn", "notAEWarn", "notBosskill"},
+
 	loc = GetLocale() == "koKR" and {
 		disabletrigger = "예언자 스케람|1이;가; 죽었습니다.",
 		bosskill = "예언자 스케람을 물리쳤습니다.",
