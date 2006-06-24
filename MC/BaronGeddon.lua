@@ -117,8 +117,8 @@ else
 				self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
 			end
 
-			for i=1,GetNumRaidMembers() do
-				if UnitName("raid"..i) == Eplayer then
+			for i=1, GetNumRaidMembers() do
+				if UnitName("raid"..i) == EPlayer then
 					SetRaidTargetIcon("raid"..i, 8)
 				end
 			end

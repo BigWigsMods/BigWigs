@@ -73,8 +73,8 @@ function BigWigsMandokir:CHAT_MSG_MONSTER_YELL()
 			self:TriggerEvent("BIGWIGS_SENDTELL", n, self.loc.warn1)
 		end
 
-		for i=1,GetNumRaidMembers() do
-			if UnitName("raid"..i) == Eplayer then
+		for i=1, GetNumRaidMembers() do
+			if UnitName("raid"..i) == n then
 				SetRaidTargetIcon("raid"..i, 8)
 			end
 		end

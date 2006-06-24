@@ -126,8 +126,8 @@ else
 			end
 
 			if (not self:GetOpt("notIcon")) then
-				for i=1,GetNumRaidMembers() do
-					if UnitName("raid"..i) == Eplayer then
+				for i=1, GetNumRaidMembers() do
+					if UnitName("raid"..i) == EPlayer then
 						SetRaidTargetIcon("raid"..i, 8)
 					end
 				end

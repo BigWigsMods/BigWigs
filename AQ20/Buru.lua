@@ -67,8 +67,8 @@ function BigWigsBuru:CHAT_MSG_MONSTER_EMOTE()
 			self:TriggerEvent("BIGWIGS_SENDTELL", Player, self.loc.watchwarnyou)
 		end
 
-		for i=1,GetNumRaidMembers() do
-			if UnitName("raid"..i) == Eplayer then
+		for i=1, GetNumRaidMembers() do
+			if UnitName("raid"..i) == Player then
 				SetRaidTargetIcon("raid"..i, 8)
 			end
 		end
