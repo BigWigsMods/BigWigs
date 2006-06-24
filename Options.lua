@@ -6,14 +6,15 @@ local tablet = TabletLib:GetInstance("1.0")
 
 BigWigsOptions = FuBarPlugin:GetInstance("1.2"):new({
 	name          = "FuBar - BigWigs",
-	description   = "Options menu for BigWigs",
-	version       = 0,
-	releaseDate   = "2006-04-06",
+	description   = GetAddOnMetadata("BigWigs", "Notes"),
+	version       = GetAddOnMetadata("BigWigs", "Version").." b".. string.sub(GetAddOnMetadata("BigWigs", "X-Build"), 12, -3),
+	releaseDate   = string.sub(GetAddOnMetadata("BigWigs", "X-ReleaseDate"), 8, 18),
+	author        = GetAddOnMetadata("BigWigs", "Author"),
+	email   	    = GetAddOnMetadata("BigWigs", "X-Email"),
+	website       = GetAddOnMetadata("BigWigs", "X-Website"),
+	category      = GetAddOnMetadata("BigWigs", "X-Category"),
+
 	aceCompatible = 103,
-	author        = "Tekkub Stoutwrithe",
-	email         = "tekkub@gmail.com",
-	website       = "http://tekkub.wowinterface.com/",
-	category      = "combat",
 	db            = AceDatabase:new("BigWigsFubarDB"),
 	cmd           = AceChatCmd:new({}, {}),
 

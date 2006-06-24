@@ -5,13 +5,15 @@ local sv
 
 BigWigs = AceAddon:new({
 	name          = "BigWigs",
-	description   = "Boss Mods with Timex bars.",
-	version       = tonumber(string.sub("$Revision$", 12, -3)),
-	releaseDate   = string.sub("$Date$", 8, 17),
-	aceCompatible = 102,
-	author        = "Tekkub Stoutwrithe",
-	email 		    = "tekkub@gmail.com",
-	category      = "inventory",
+	description   = GetAddOnMetadata("BigWigs", "Notes"),
+	version       = GetAddOnMetadata("BigWigs", "Version").." b".. string.sub(GetAddOnMetadata("BigWigs", "X-Build"), 12, -3),
+	releaseDate   = string.sub(GetAddOnMetadata("BigWigs", "X-ReleaseDate"), 8, 18),
+	author        = GetAddOnMetadata("BigWigs", "Author"),
+	email   	    = GetAddOnMetadata("BigWigs", "X-Email"),
+	website       = GetAddOnMetadata("BigWigs", "X-Website"),
+	category      = GetAddOnMetadata("BigWigs", "X-Category"),
+
+	aceCompatible = 103,
 	cmd           = AceChatCmd:new({"/bw", "/BigWigs"}, {}),
 	db            = AceDatabase:new("BigWigsDB"),
 
