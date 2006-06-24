@@ -1,14 +1,22 @@
-﻿BigWigsBugFamily = AceAddon:new({
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsBugFamily = AceAddon:new({
 	name          = "BigWigsBugFamily",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "AQ40",
-	enabletrigger = GetLocale() == "koKR" and { "군주 크리", "공주 야우즈", "벰" }
-		or GetLocale() == "zhCN" and { "克里勋爵", "亚尔基公主", "维姆" }
-		or GetLocale() == "deDE" and { "Lord Kri", "Prinzessin Yauj", "Vem" } or { "Lord Kri", "Princess Yauj", "Vem" },
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Ahn'Qiraj"),
+	enabletrigger = { bboss("Lord Kri"), bboss("Princess Yauj"), bboss("Vem")  },
+	bossname =  bboss("Lord Kri") .. ", ".. bboss("Princess Yauj") .. ", ".. bboss("Vem"),
+
+	toggleoptions = {
+		notBosskill = "Boss death",
+		notFearBar = "Fear timer",
+		notFearWarn = "Fear warning",
+		notFear5Sec = "Fear 5-sec warning",
+		notHealWarn = "Heal warning",
+	},
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "벌레 무리 - 군주 크리, 공주 야우즈, 벰",
 		disabletrigger1 = "군주 크리|1이;가; 죽었습니다.",
 		disabletrigger2 = "공주 야우즈|1이;가; 죽었습니다.",
 		disabletrigger3 = "벰|1이;가; 죽었습니다.",
@@ -24,7 +32,6 @@
 	} 
 		or GetLocale() == "zhCN" and 
 	{ 
-		bossname = "虫子一家 - 克里勋爵、亚尔基公主、维姆",
 		disabletrigger1 = "克里勋爵死亡了。",
 		disabletrigger2 = "亚尔基公主死亡了。",
 		disabletrigger3 = "维姆死亡了。",
@@ -39,7 +46,6 @@
 		fearwarn2 = "5秒后发动群体恐惧！",
 	}
 	 or GetLocale() == "deDE" and {
-		bossname = "K\195\164ferfamilie - Lord Kri, Prinzessin Yauj und Vem",
 		disabletrigger1 = "Lord Kri stirbt.",
 		disabletrigger2 = "Prinzessin Yauj stirbt.",
 		disabletrigger3 = "Vem stirbt.",
@@ -54,7 +60,6 @@
 		fearwarn2 = "AE Furcht in 5 Sekunden!",
 	} or 
 	{
-		bossname = "Bug Family - Lord Kri, Princess Yauj and Vem",
 		disabletrigger1 = "Lord Kri dies.",
 		disabletrigger2 = "Princess Yauj dies.",
 		disabletrigger3 = "Vem dies.",
@@ -95,17 +100,23 @@ end
 function BigWigsBugFamily:FearEvent()
 	if (not self.fearstatus and string.find(arg1, self.loc.feartrigger)) then
 		self.fearstatus = true
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.fearbar, 20, 2, "Green", "Interface\\Icons\\Spell_Shadow_Possession")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.fearbar, 10, "Yellow")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.fearbar, 15, "Red")
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.fearwarn1, "Red")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.fearwarn2, 15, "Orange")
+		if not self:GetOpt("notFearBar") then
+			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.fearbar, 20, 2, "Green", "Interface\\Icons\\Spell_Shadow_Possession")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.fearbar, 10, "Yellow")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.fearbar, 15, "Red")
+		end
+		if not self:GetOpt("notFearWarn") then
+			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.fearwarn1, "Red")
+		end
+		if not self:GetOpt("notFear5Sec") then
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.fearwarn2, 15, "Orange")
+		end
 	end
 end
 
 function BigWigsBugFamily:BIGWIGS_MESSAGE(txt)
 	if (self.fearstatus and txt == self.loc.fearwarn2) then
-		self.fearstatus = false
+		self.fearstatus = nil
 	end
 end
 
@@ -115,7 +126,7 @@ function BigWigsBugFamily:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	or arg1 == self.loc.disabletrigger3) then
 		self.deaths = self.deaths + 1
 		if (self.deaths == 3) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+			if not self:GetOpt("Bosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 			self:Disable()
 		end
 	end
@@ -127,7 +138,7 @@ end
 
 function BigWigsBugFamily:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
 	if (arg1 == self.loc.healtrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.healwarn, "Orange")
+		if not self:GetOpt("HealWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.healwarn, "Orange") end
 	end
 end
 --------------------------------
