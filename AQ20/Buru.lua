@@ -1,14 +1,24 @@
-﻿BigWigsBuru = AceAddon:new({
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsBuru = AceAddon:new({
 	name          = "BigWigsBuru",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "AQ20",
-	enabletrigger = GetLocale() == "koKR" and "먹보 부루"
-		or GetLocale() == "zhCN" and "吞咽者布鲁"
-		or "Buru the Gorger",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Ruins of Ahn'Qiraj"),
+	enabletrigger = bboss("Buru the Gorger"),
+	bossname = bboss("Buru the Gorger"),
+
+	toggleoptions = {
+		notBosskill = "Boss death",
+		notWatchYou = "You're being watched warning",
+		notWatchOther = "Others being watched warning",
+		notIcon = "Put a Skull icon on the person who's watched. (Requires promoted or higher)",
+	},
+
+	optionorder = {"notWatchYou", "notWatchOther", "notIcon", "notBosskill"},
+
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "먹보 부루",
 		disabletrigger = "먹보 부루|1이;가; 죽었습니다.",
 		bosskill = "먹보 부루를 물리쳤습니다.",
 
@@ -19,7 +29,6 @@
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "吞咽者布鲁",
 		disabletrigger = "吞咽者布鲁死亡了。",
 		bosskill = "吞咽者布鲁被击败了！",
 
@@ -30,7 +39,6 @@
 	}
 		or
 	{
-		bossname = "Buru the Gorger",
 		disabletrigger = "Buru the Gorger dies.",
 		bosskill = "Buru the Gorger has been defeated.",
 
@@ -61,15 +69,20 @@ function BigWigsBuru:CHAT_MSG_MONSTER_EMOTE()
 	local _, _, Player = string.find(arg1, self.loc.watchtrigger)
 	if (Player) then
 		if (Player == self.loc.you) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.watchwarnyou, "Red", true)
+			Player = UnitName("player")
+			if not self:GetOpt("notWatchYou") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.watchwarnyou, "Red", true) end
 		else
-			self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.watchwarn, "Yellow")
-			self:TriggerEvent("BIGWIGS_SENDTELL", Player, self.loc.watchwarnyou)
+			if( not self:GetOpt("notWatchOther") then 
+				self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.watchwarn, "Yellow")
+				self:TriggerEvent("BIGWIGS_SENDTELL", Player, self.loc.watchwarnyou)
+			end
 		end
 
-		for i=1, GetNumRaidMembers() do
-			if UnitName("raid"..i) == Player then
-				SetRaidTargetIcon("raid"..i, 8)
+		if not self:GetOpt("notIcon") then
+			for i=1, GetNumRaidMembers() do
+				if UnitName("raid"..i) == Player then
+					SetRaidTargetIcon("raid"..i, 8)
+				end
 			end
 		end
 	end
@@ -77,7 +90,7 @@ end
 
 function BigWigsBuru:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end 
 		self:Disable()
 	end
 end
