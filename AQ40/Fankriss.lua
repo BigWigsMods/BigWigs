@@ -1,14 +1,22 @@
-﻿BigWigsFankriss = AceAddon:new({
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsFankriss = AceAddon:new({
 	name          = "BigWigsFankriss",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "AQ40",
-	enabletrigger = GetLocale() == "koKR" and "불굴의 판크리스"
-		or GetLocale() == "zhCN" and "顽强的范克瑞斯"
-		or "Fankriss the Unyielding",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Ahn'Qiraj"),
+	enabletrigger = bboss("Fankriss the Unyielding"),
+	bossname = bboss("Fankriss the Unyielding"),
+
+	toggleoptions = {
+		notBosskill = "Boss death",
+		notWormWarn = "MC warnings",
+	},
+
+	optionorder = {"notWormWarn", "notBosskill"},
+
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "불굴의 판크리스",
 		disabletrigger = "불굴의 판크리스|1이;가; 죽었습니다.",
 		bosskill = "불굴의 판크리스를 물리쳤습니다!",
 
@@ -17,7 +25,6 @@
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "顽强的范克瑞斯",
 		disabletrigger = "顽强的范克瑞斯死亡了。",
 		bosskill = "顽强的范克瑞斯被击败了！",
 
@@ -26,7 +33,6 @@
 	}
 		or
 	{
-		bossname = "Fankriss the Unyielding",
 		disabletrigger = "Fankriss the Unyielding dies.",
 		bosskill = "Fankriss the Unyielding has been defeated!",
 
@@ -53,13 +59,13 @@ end
 
 function BigWigsFankriss:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsFankriss:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
-	if (arg1 == self.loc.wormtrigger) then
+	if (not self:GetOpt("notWormWarn") and arg1 == self.loc.wormtrigger ) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.wormwarn, "Orange")
 	end
 end
