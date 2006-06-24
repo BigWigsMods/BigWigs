@@ -1,14 +1,20 @@
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
 BigWigsSkeram = AceAddon:new({
 	name          = "BigWigsSkeram",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "AQ40",
-	enabletrigger = GetLocale() == "koKR" and "예언자 스케람"
-		or GetLocale() == "zhCN" and "预言者斯克拉姆"
-		or GetLocale() == "deDE" and "Der Prophet Skeram" or "The Prophet Skeram",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Ahn'Qiraj"),
+	enabletrigger = bboss("The Prophet Skeram"),
+	bossname = bboss("The Prophet Skeram"),
+
+	toggleoptions = {
+		notBosskill = "Boss death",
+		notMCWarn = "MC warnings",
+		notAEWarn = "AE warnings",
+	},
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "예언자 스케람",
 		disabletrigger = "예언자 스케람|1이;가; 죽었습니다.",
 		bosskill = "예언자 스케람을 물리쳤습니다.",
 
@@ -25,7 +31,6 @@ BigWigsSkeram = AceAddon:new({
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "预言者斯克拉姆",
 		disabletrigger = "预言者斯克拉姆死亡了。",
 		bosskill = "预言者斯克拉姆被击败了！",
 
@@ -39,7 +44,6 @@ BigWigsSkeram = AceAddon:new({
 		mcare = "到",
 	}
 	 or GetLocale() == "deDE" and {
-		bossname = "Der Prophet Skeram",
 		disabletrigger = "Der Prophet Skeram stirbt.",
 		bosskill = "Der Prophet Skeram wurde besiegt.",
 		aetrigger = "Der Prophet Skeram beginnt Arkane Explosion zu wirken.",
@@ -53,7 +57,6 @@ BigWigsSkeram = AceAddon:new({
 	} 
 		or 
 	{
-		bossname = "The Prophet Skeram",
 		disabletrigger = "The Prophet Skeram dies.",
 		bosskill = "The Prophet Skeram has been defeated.",
 
@@ -87,7 +90,7 @@ end
 
 function BigWigsSkeram:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
@@ -99,7 +102,7 @@ if (GetLocale() == "koKR") then
 			if (Player == self.loc.mcyou) then
 				Player = UnitName("player")
 			end
-			self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.mcplayerwarn, "Red")
+			if not self:GetOpt("notMCWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.mcplayerwarn, "Red") end
 		end
 	end
 else
@@ -109,16 +112,16 @@ else
 			if (Player == self.loc.mcyou and Type == self.loc.mcare) then
 				Player = UnitName("player")
 			end
-			self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.mcplayerwarn, "Red")
+			if not self:GetOpt("notMCWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.mcplayerwarn, "Red") end
 		end
 	end
 end
 
 function BigWigsSkeram:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	if (arg1 == self.loc.aetrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.aewarn, "Orange")
+		if not self:GetOpt("notAEWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.aewarn, "Orange") end
 	elseif (arg1 == self.loc.mctrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.mcwarn, "Orange")
+		if not self:GetOpt("notMCWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.mcwarn, "Orange") end
 	end
 end
 --------------------------------
