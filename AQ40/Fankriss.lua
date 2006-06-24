@@ -10,7 +10,7 @@ BigWigsFankriss = AceAddon:new({
 
 	toggleoptions = {
 		notBosskill = "Boss death",
-		notWormWarn = "MC warnings",
+		notWormWarn = "Worm warnings",
 	},
 
 	optionorder = {"notWormWarn", "notBosskill"},
