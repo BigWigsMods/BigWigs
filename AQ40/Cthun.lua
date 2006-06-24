@@ -1,16 +1,21 @@
+local bboss = BabbleLib:GetInstance("Boss 1.2")
 local metro = Metrognome:GetInstance("1")
 
 BigWigsCThun = AceAddon:new({
 	name          	= "BigWigsCThun",
 	cmd           	= AceChatCmd:new({}, {}),
 
-	zonename 	= "AQ40",
-	enabletrigger	= GetLocale() == "koKR" and "쑨의 눈"
-		or GetLocale() == "zhCN" and "克苏恩之眼"
-		or "Eye of C'Thun",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Temple of Ahn'Qiraj"),
+	enabletrigger = bboss("Eye of C'Thun"),
+	bossname = bboss("Eye of C'Thun"),
+
+	toggleoptions = {
+		notBosskill = "Boss death",
+	},
+
+	optionorder = {"notBosskill"},
 
 	loc 		= GetLocale() == "koKR" and {			
-			bossname 	= "쑨의 눈",
 			cthun		= "쑨",
 			disabletrigger 	= "쑨|1이;가; 죽었습니다.",
 			bosskill 	= "쑨을 물리쳤습니다.",
@@ -43,7 +48,6 @@ BigWigsCThun = AceAddon:new({
 	} 
 		or GetLocale() == "zhCN" and 
 	{
-			bossname 	= "克苏恩之眼",
 			cthun		= "克苏恩",
 			disabletrigger 	= "克苏恩死亡了。",
 			bosskill 	= "克苏恩被击败了！",
@@ -80,7 +84,6 @@ BigWigsCThun = AceAddon:new({
 	}
 		or 
 	{
-			bossname 	= "Eye of C'Thun",
 			cthun		= "C'Thun",
 			disabletrigger 	= "C'Thun dies.",
 			bosskill 	= "C'Thun has been defeated.",
@@ -166,11 +169,11 @@ end
 function BigWigsCThun:CheckTarget()
 	local i
 	local newtarget = nil
-	if( UnitName("playertarget") == self.loc.bossname ) then
+	if( UnitName("playertarget") == self.bossname ) then
 		newtarget = UnitName("playertargettarget")
 	else
 		for i = 1, GetNumRaidMembers(), 1 do
-			if UnitName("Raid"..i.."target") == self.loc.bossname then
+			if UnitName("Raid"..i.."target") == self.bossname then
 				newtarget = UnitName("Raid"..i.."targettarget")
 				break
 			end
@@ -294,20 +297,20 @@ function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 			metro:Stop("BigWigs Cthun Target")
 
 		elseif( arg1 == self.loc.disabletrigger) then
+			if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 			self:Disable()
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		end
 end
 
 function BigWigsCThun:Scan()
-	if (UnitName("target") == (self.loc.bossname or self.loc.cthun) and UnitAffectingCombat("target")) then
+	if (UnitName("target") == (self.bossname or self.loc.cthun) and UnitAffectingCombat("target")) then
 		return true
-	elseif (UnitName("playertarget") == (self.loc.bossname or self.loc.cthun) and UnitAffectingCombat("playertarget")) then
+	elseif (UnitName("playertarget") == (self.bossname or self.loc.cthun) and UnitAffectingCombat("playertarget")) then
 		return true
 	else
 		local i
 		for i = 1, GetNumRaidMembers(), 1 do
-			if (UnitName("Raid"..i.."target") == (self.loc.cthun or self.loc.bossname) and UnitAffectingCombat("Raid"..i.."target")) then
+			if (UnitName("Raid"..i.."target") == (self.loc.cthun or self.bossname) and UnitAffectingCombat("Raid"..i.."target")) then
 				return true
 			end
 		end
