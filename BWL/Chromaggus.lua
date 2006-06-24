@@ -14,6 +14,7 @@ BigWigsChromaggus = AceAddon:new({
 		notFrenzy = "Warn when Chromaggus goes into a killing frenzy",
 		notBosskill = "Boss death",
 	},
+	optionorder = {"notBreaths", "notVulnerability", "notFrenzy", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
 		disabletrigger = "크로마구스|1이;가; 죽었습니다.",

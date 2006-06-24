@@ -14,6 +14,7 @@ BigWigsVaelastrasz = AceAddon:new({
 		notIcon = "Put a Skull icon on the person who's burning. (Requires promoted or higher)",
 		notBosskill = "Boss death",
 	},
+	optionorder = {"notYouBurning", "notElseBurning", "notIcon", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
 		disabletrigger = "밸라스트라즈|1이;가; 죽었습니다.",

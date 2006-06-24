@@ -1,18 +1,27 @@
-﻿BigWigsViscidus = AceAddon:new({
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsViscidus = AceAddon:new({
 	name          	= "BigWigsViscidus",
 	cmd           	= AceChatCmd:new({}, {}),
 
-	zonename 	= "AQ40",
-	enabletrigger 	= GetLocale() == "koKR" and "비시디우스"
-		or GetLocale() == "zhCN" and "维希度斯"
-		or "Viscidus",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Temple of Ahn'Qiraj"),
+	enabletrigger = bboss("Viscidus"),
+	bossname = bboss("Viscidus"),
 
+	toggleoptions = {
+		notState = "Warn for Viscidus different states",
+		notYouToxin = "Warn when you are standing in a Toxin Cloud",
+		notElseToxin = "Warn when others are standing in a Toxin Cloud",
+		notVolley = "Warn for Poison Bolt Volley",
+		notBosskill = "Boss death",
+	},
+	optionorder = {"notState", "notYouToxin", "notElseToxin", "notVolley", "notBosskill"},
+	
 	loc = GetLocale() == "koKR" and {
-			bossname = "비시디우스",
 			disabletrigger = "비시디우스|1이;가; 죽었습니다.",
 			bosskill = "비시디우스를 물리쳤습니다.",
 			
-			--You suffer 1545 Nature damage from Toxic Slime's Toxin.
+			-- You suffer 1545 Nature damage from Toxic Slime's Toxin.
 			
 			trigger1 	= "begins to slow!",
 			trigger2 	= "is freezing up!",
@@ -39,11 +48,10 @@
 	} 	
 		or GetLocale() == "zhCN" and 
 	{
-			bossname = "维希度斯",
 			disabletrigger = "维希度斯死亡了。",
 			bosskill = "维希度斯被击败了！",
 			
-			--You suffer 1545 Nature damage from Toxic Slime's Toxin.
+			-- You suffer 1545 Nature damage from Toxic Slime's Toxin.
 			
 			trigger1 	= "的速度慢下来了！",
 			trigger2 	= "冻结了！",
@@ -70,11 +78,10 @@
 	}	
 		or 
 	{
-			bossname = "Viscidus",
 			disabletrigger = "Viscidus dies.",
 			bosskill = "Viscidus has been defeated.",
 			
-			--You suffer 1545 Nature damage from Toxic Slime's Toxin.
+			-- You suffer 1545 Nature damage from Toxic Slime's Toxin.
 			
 			trigger1 	= "begins to slow!",
 			trigger2 	= "is freezing up!",
@@ -124,14 +131,14 @@ end
 
 function BigWigsTwins:CHAT_MSG_COMBAT_HOSTILE_DEATH()
     if (arg1 == self.loc.disabletrigger) then
-        self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+        if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
         self:Disable()
     end
 end
 
 if (GetLocale() == "koKR") then 
 	function BigWigsViscidus:CheckVis()
-		if (not self.prior1 and string.find(arg1, self.loc.trigger6)) then
+		if (not self.prior1 and string.find(arg1, self.loc.trigger6) and not self:GetOpt("notVolley")) then
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn6, "Orange")
 			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn7, 7, "Orange")
 			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 10, 1, "Green", "Interface\\Icons\\Spell_Nature_CorrosiveBreath")
@@ -160,10 +167,10 @@ else
 		elseif (string.find(arg1, self.loc.trigger7)) then
 			local _,_, pl, ty = string.find(arg1, self.loc.trigger7)
 			if (pl and ty) then	
-				if (pl == self.loc.you and ty == self.loc.are) then
+				if (pl == self.loc.you and ty == self.loc.are and not self:GetOpt("notYouToxin")) then
 					pl = UnitName("player")
 					self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn9, "Red", true)
-				else
+				elseif (not self:GetOpt("notElseToxin")) then
 					self:TriggerEvent("BIGWIGS_MESSAGE", pl .. self.loc.warn8, "Red")
 					self:TriggerEvent("BIGWIGS_SENDTELL", pl, self.loc.warn9)
 				end
@@ -173,6 +180,7 @@ else
 end 
 
 function BigWigsViscidus:CHAT_MSG_MONSTER_EMOTE()
+	if (self:GetOpt("notState")) then return end
 	if (arg1 == self.loc.trigger1) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Yellow")
 	elseif (arg1 == self.loc.trigger2) then

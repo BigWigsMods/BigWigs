@@ -1,11 +1,19 @@
-﻿BigWigsMagmadar = AceAddon:new({
-	name          = "BigWigsMagmadar",
-	cmd           = AceChatCmd:new({}, {}),
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
 
-	zonename = "MC",
-	enabletrigger = GetLocale() == "koKR" and "마그마다르"
-		or GetLocale() == "zhCN" and "玛格曼达"
-		or "Magmadar",
+BigWigsMagmadar = AceAddon:new({
+	name = "BigWigsMagmadar",
+	cmd = AceChatCmd:new({}, {}),
+
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Molten Core"),
+	enabletrigger = bboss("Magmadar"),
+	bossname = bboss("Magmadar"),
+
+	toggleoptions = {
+		notFear = "Warn for Fear",
+		notFrenzy = "Warn when Magmadar goes into a frenzy",
+		notBosskill = "Boss death",
+	},
+	optionorder = {"notFear", "notFrenzy", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
 		bossname = "마그마다르",
@@ -75,19 +83,19 @@ end
 
 function BigWigsMagmadar:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsMagmadar:CHAT_MSG_MONSTER_EMOTE()
-	if (arg1 == self.loc.trigger1) then
+	if (arg1 == self.loc.trigger1 and not self:GetOpt("notFrenzy")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
 	end
 end
 
 function BigWigsMagmadar:Fear()
-	if (not self.prior and string.find(arg1, self.loc.trigger2)) then
+	if (not self.prior and string.find(arg1, self.loc.trigger2) and not self:GetOpt("notFear")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "Red")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 25, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_PsychicScream")

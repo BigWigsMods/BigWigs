@@ -1,11 +1,19 @@
-﻿BigWigsShazzrah = AceAddon:new({
-	name          = "BigWigsShazzrah",
-	cmd           = AceChatCmd:new({}, {}),
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
 
-	zonename = "MC",
-	enabletrigger = GetLocale() == "koKR" and "샤즈라"
-		or GetLocale() == "zhCN" and "沙斯拉尔"
-		or "Shazzrah",
+BigWigsShazzrah = AceAddon:new({
+	name = "BigWigsShazzrah",
+	cmd = AceChatCmd:new({}, {}),
+
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Molten Core"),
+	enabletrigger = bboss("Shazzrah"),
+	bossname = bboss("Shazzrah"),
+
+	toggleoptions = {
+		notSelfBuff = "Warn for Self Buff",
+		notBlink = "Warn for Blink",
+		notBosskill = "Boss death",
+	},
+	optionorder = {"notSelfBuff", "notBlink", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
 		bossname = "샤즈라",
@@ -72,19 +80,19 @@ end
 
 function BigWigsShazzrah:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsShazzrah:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
-	if (string.find(arg1, self.loc.trigger1)) then
+	if (string.find(arg1, self.loc.trigger1) and not self:GetOpt("notBlink")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 25, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Arcane_Blink")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
-	elseif (string.find(arg1, self.loc.trigger2)) then
+	elseif (string.find(arg1, self.loc.trigger2) and not self:GetOpt("notSelfBuff")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "Red")
 	end
 end

@@ -1,11 +1,19 @@
-﻿BigWigsLucifron = AceAddon:new({
-	name          = "BigWigsLucifron",
-	cmd           = AceChatCmd:new({}, {}),
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
 
-	zonename = "MC",
-	enabletrigger = GetLocale() == "koKR" and "루시프론"
-		or GetLocale() == "zhCN" and "鲁西弗隆"
-		or "Lucifron",
+BigWigsLucifron = AceAddon:new({
+	name = "BigWigsLucifron",
+	cmd = AceChatCmd:new({}, {}),
+
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Molten Core"),
+	enabletrigger = bboss("Lucifron"),
+	bossname = bboss("Lucifron"),
+	
+	toggleoptions = {
+		notCurse = "Warn for Lucifron's Curse",
+		notDoom= "Warn for Impending Doom",
+		notBosskill = "Boss death",
+	},
+	optionorder = {"notCurse", "notDoom", "notBosskill"},
 
 	loc = GetLocale() == "deDE" and
 	{
@@ -104,20 +112,20 @@ end
 
 function BigWigsLucifron:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsLucifron:Event()
-	if (not self.prior1 and string.find(arg1, self.loc.trigger1)) then
+	if (not self.prior1 and string.find(arg1, self.loc.trigger1) and not self:GetOpt("notCurse")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Red")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 15, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 20, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_BlackPlague")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 15, "Red")
 		self.prior1 = true
-	elseif (not self.prior2 and string.find(arg1, self.loc.trigger2)) then
+	elseif (not self.prior2 and string.find(arg1, self.loc.trigger2) and not self:GetOpt("notDoom")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 15, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar2text, 20, 2, "Yellow", "Interface\\Icons\\Spell_Shadow_NightOfTheDead")

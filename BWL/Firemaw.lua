@@ -13,6 +13,7 @@ BigWigsFiremaw = AceAddon:new({
 		notShadowFlame = "Warn for Shadow Flame",
 		notBosskill = "Boss death",
 	},
+	optionorder = {"notWingBuffet", "notShadowFlame", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
 		disabletrigger = "화염아귀|1이;가; 죽었습니다.",

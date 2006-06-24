@@ -1,11 +1,18 @@
-﻿BigWigsGehennas = AceAddon:new({
-	name          = "BigWigsGehennas",
-	cmd           = AceChatCmd:new({}, {}),
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
 
-	zonename = "MC",
-	enabletrigger = GetLocale() == "koKR" and "게헨나스"
-		or GetLocale() == "zhCN" and "基赫纳斯"
-		or "Gehennas",
+BigWigsGehennas = AceAddon:new({
+	name = "BigWigsGehennas",
+	cmd = AceChatCmd:new({}, {}),
+
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Molten Core"),
+	enabletrigger = bboss("Gehennas"),
+	bossname = bboss("Gehennas"),
+
+	toggleoptions = {
+		notCurse = "Warn for Gehennas's Curse",
+		notBosskill = "Boss death",
+	},
+	optionorder = {"notCurse", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
 		bossname = "게헨나스",
@@ -68,13 +75,13 @@ end
 
 function BigWigsGehennas:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsGehennas:Event()
-	if (not self.prior and string.find(arg1, self.loc.trigger1)) then
+	if (not self.prior and string.find(arg1, self.loc.trigger1) and not self:GetOpt("notCurse")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Red")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 25, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_BlackPlague")

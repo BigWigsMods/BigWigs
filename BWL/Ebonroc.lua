@@ -15,6 +15,7 @@ BigWigsEbonroc = AceAddon:new({
 		notElseCruse = "Warn when others got Shadow of Ebonroc",
 		notBosskill = "Boss death",
 	},
+	optionorder = {"notWingBuffet", "notShadowFlame", "notYouCruse", "notElseCruse", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
 		disabletrigger = "에본로크|1이;가; 죽었습니다.",

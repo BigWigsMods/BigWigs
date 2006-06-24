@@ -1,11 +1,20 @@
-﻿BigWigsRagnaros = AceAddon:new({
-	name          = "BigWigsRagnaros",
-	cmd           = AceChatCmd:new({}, {}),
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
 
-	zonename = "MC",
-	enabletrigger = GetLocale() == "koKR" and "라그나로스"
-		or GetLocale() == "zhCN" and "拉格纳罗斯"
-		or "Ragnaros",
+BigWigsRagnaros = AceAddon:new({
+	name = "BigWigsRagnaros",
+	cmd = AceChatCmd:new({}, {}),
+
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Molten Core"),
+	enabletrigger = bboss("Ragnaros"),
+	bossname = bboss("Ragnaros"),
+
+	toggleoptions = {
+		notSubmerge = "Warn for Ragnaros Submerge & Sons of Flame",
+		notEmerge = "Warn for Ragnaros Emerge",
+		notAoEKnock = "Warn for AoE KnockBack",
+		notBosskill = "Boss death",
+	},
+	optionorder = {"notSubmerge", "notEmerge", "notAoEKnock", "notBosskill"},
 
 	loc = GetLocale() == "deDE" and
 	{
@@ -135,30 +144,29 @@ end
 
 function BigWigsRagnaros:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsRagnaros:CHAT_MSG_MONSTER_YELL()
-	if string.find(arg1, self.loc.trigger1) then
+	if string.find(arg1, self.loc.trigger1 and not self:GetOpt("notAoEKnock")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 23, "Red")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 28, 1, "Yellow", "Interface\\Icons\\Spell_Fire_SoulBurn")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
-		self:ResetResetTimer()
-	elseif string.find(arg1, self.loc.trigger2) then
+	elseif string.find(arg1, self.loc.trigger2 and not self:GetOpt("notSubmerge")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "Red")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn4, 75, "Red")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar2text, 90, 2, "Yellow", "Interface\\Icons\\Spell_Fire_Volcano")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar2text, 30, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar2text, 60, "Red")
 		Timex:AddSchedule("BigWigsRagnarosEmerge", 90, false, 1, self.Emerge, self)
-		self:ResetResetTimer()
-	elseif string.find(arg1, self.loc.trigger3) then
+	elseif string.find(arg1, self.loc.trigger3 and not self:GetOpt("notEmerge")) then
 		self:Emerge()
 	end
+	self:ResetResetTimer()
 end
 
 function BigWigsRagnaros:Emerge()

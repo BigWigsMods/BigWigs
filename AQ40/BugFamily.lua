@@ -6,7 +6,7 @@ BigWigsBugFamily = AceAddon:new({
 
 	zonename = BabbleLib:GetInstance("Zone 1.2")("Temple of Ahn'Qiraj"),
 	enabletrigger = { bboss("Lord Kri"), bboss("Princess Yauj"), bboss("Vem")  },
-	bossname =  bboss("Lord Kri") .. ", ".. bboss("Princess Yauj") .. ", ".. bboss("Vem"),
+	bossname =  "Bug Trio - " .. bboss("Lord Kri") .. ", ".. bboss("Princess Yauj") .. " & ".. bboss("Vem"),
 
 	toggleoptions = {
 		notBosskill = "Boss death",

@@ -1,11 +1,19 @@
-﻿BigWigsMajordomo = AceAddon:new({
-	name          = "BigWigsMajordomo",
-	cmd           = AceChatCmd:new({}, {}),
+﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
 
-	zonename = "MC",
-	enabletrigger = GetLocale() == "koKR" and "청지기 이그젝큐투스"
-		or GetLocale() == "zhCN" and "管理者埃克索图斯"
-		or "Majordomo Executus",
+BigWigsMajordomo = AceAddon:new({
+	name = "BigWigsMajordomo",
+	cmd = AceChatCmd:new({}, {}),
+
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Molten Core"),
+	enabletrigger = bboss("Majordomo Executus"),
+	bossname = bboss("Majordomo Executus"),
+
+	toggleoptions = {
+		notMagic = "Warn for Magic Reflection",
+		notDmg = "Warn for Damage Shields",
+		notBosskill = "Boss death",
+	},
+	optionorder = {"notMagic", "notDmg", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
 		bossname = "청지기 이그젝큐투스",
@@ -103,14 +111,14 @@ end
 
 function BigWigsMajordomo:CHAT_MSG_MONSTER_YELL()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsMajordomo:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
-	if (string.find(arg1, self.loc.trigger1) and not self.aura) then self:NewPowers(1)
-	elseif (string.find(arg1, self.loc.trigger2) and not self.aura) then self:NewPowers(2) end
+	if (string.find(arg1, self.loc.trigger1) and not self.aura and not self:GetOpt("notMagic")) then self:NewPowers(1)
+	elseif (string.find(arg1, self.loc.trigger2) and not self.aura and not self:GetOpt("notDmg")) then self:NewPowers(2) end
 end
 
 function BigWigsMajordomo:CHAT_MSG_SPELL_AURA_GONE_OTHER()

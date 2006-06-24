@@ -14,6 +14,7 @@ BigWigsFlamegor = AceAddon:new({
 		notFrenzy = "Warn when Flamegor goes into a frenzy",
 		notBosskill = "Boss death",
 	},
+	optionorder = {"notWingBuffet", "notShadowFlame", "notFrenzy", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
 		disabletrigger = "플레임고르|1이;가; 죽었습니다.",
