@@ -72,7 +72,7 @@ function BigWigsBuru:CHAT_MSG_MONSTER_EMOTE()
 			Player = UnitName("player")
 			if not self:GetOpt("notWatchYou") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.watchwarnyou, "Red", true) end
 		else
-			if( not self:GetOpt("notWatchOther") then 
+			if not self:GetOpt("notWatchOther") then 
 				self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.watchwarn, "Yellow")
 				self:TriggerEvent("BIGWIGS_SENDTELL", Player, self.loc.watchwarnyou)
 			end
