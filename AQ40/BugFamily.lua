@@ -4,7 +4,7 @@ BigWigsBugFamily = AceAddon:new({
 	name          = "BigWigsBugFamily",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Ahn'Qiraj"),
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Temple of Ahn'Qiraj"),
 	enabletrigger = { bboss("Lord Kri"), bboss("Princess Yauj"), bboss("Vem")  },
 	bossname =  bboss("Lord Kri") .. ", ".. bboss("Princess Yauj") .. ", ".. bboss("Vem"),
 

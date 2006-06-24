@@ -4,7 +4,7 @@ BigWigsFankriss = AceAddon:new({
 	name          = "BigWigsFankriss",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Ahn'Qiraj"),
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Temple of Ahn'Qiraj"),
 	enabletrigger = bboss("Fankriss the Unyielding"),
 	bossname = bboss("Fankriss the Unyielding"),
 
