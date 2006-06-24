@@ -1,14 +1,32 @@
-﻿BigWigsOuro = AceAddon:new({
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsOuro = AceAddon:new({
 	name          = "BigWigsOuro",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "AQ40",
-	enabletrigger = GetLocale() == "koKR" and "아우로"
-		or GetLocale() == "zhCN" and "奥罗"
-		or "Ouro",
+
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Temple of Ahn'Qiraj"),
+	enabletrigger = bboss("Ouro"),
+	bossname = bboss("Ouro"),
+
+	toggleoptions = {
+		notBosskill = "Boss death",
+		notBerserkSoon = "Berserk soon warning",
+		notSweepBar = "Sweep timerbar",
+		notSweep5Sec = "Sweep 5-sec warning",
+		notSweepWarn = "Sweep warning",
+		notBlastBar = "Sand Blast timerbar",
+		notBlast5Sec = "Sand Blast 5-sec warning",
+		notBlastWarn = "Sand Blast warning",
+		notEmergeBar = "Emerge timerbar",
+		notEmerge5Sec = "Emerge 5-sec warning",
+		notEmergeWarn = "Emerge warning",
+		
+	},
+
+	optionorder = {"notSweepBar", "notSweep5Sec", "notSweepWarn", "notBlastBar", "notBlast5Sec", "notBlastWarn", "notEmergeBar", "notEmerge5Sec", "notEmergeWarn", "notBerserkSoon", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "아우로",
 		disabletrigger = "아우로|1이;가; 죽었습니다.",
 
 		sweeptrigger = "아우로|1이;가; 휩쓸기|1을;를; 시전합니다.",
@@ -31,7 +49,6 @@
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "奥罗",
 		disabletrigger = "奥罗死亡了。",
 
 		sweeptrigger = "奥罗开始施放横扫。",
@@ -54,7 +71,6 @@
 	}
 		or
 	{
-		bossname = "Ouro",
 		disabletrigger = "Ouro dies.",
 
 		sweeptrigger = "Ouro begins to cast Sweep",
@@ -110,7 +126,7 @@ end
 
 function BigWigsOuro:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
@@ -119,7 +135,7 @@ function BigWigsOuro:UNIT_HEALTH()
 	if (UnitName(arg1) == self.loc.bossname) then
 		local health = UnitHealth(arg1)
 		if (health > 20 and health <= 23) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.berserksoonwarn, "Red")
+			if not self:GetOpt("notBerserkSoon") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.berserksoonwarn, "Red") end
 			self.berserkannounced = true
 		elseif (health > 30 and self.berserkannounced) then
 			self.berserkannounced = nil
@@ -129,23 +145,29 @@ end
 
 function BigWigsOuro:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	if (string.find(arg1, self.loc.sweeptrigger)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.sweepannounce, "Red")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.sweepwarn, 15, "Red")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.sweepbartext, 20, 1, "Yellow", "Interface\\Icons\\Spell_Fire_SoulBurn")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sweepbartext, 10, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sweepbartext, 15, "Red")
+		if not self:GetOpt("notSweepWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.sweepannounce, "Red") end
+		if not self:GetOpt("notSweep5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.sweepwarn, 15, "Red") end
+		if not self:GetOpt("notSweepBar") then
+			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.sweepbartext, 20, 1, "Yellow", "Interface\\Icons\\Spell_Fire_SoulBurn")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sweepbartext, 10, "Orange")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sweepbartext, 15, "Red")
+		end
 	elseif (string.find(arg1, self.loc.sandblasttrigger)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.sandblastannounce, "Red")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.sandblastwarn, 15, "Red")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.sandblastbartext, 20, 1, "Yellow", "Interface\\Icons\\Spell_Fire_SoulBurn")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sandblastbartext, 10, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sandblastbartext, 15, "Red")
+		if not self:GetOpt("notBlastWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.sandblastannounce, "Red") end
+		if not self:GetOpt("notBlast5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.sandblastwarn, 15, "Red") end
+		if not self:GetOpt("notBlastBar") then
+			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.sandblastbartext, 20, 2, "Yellow", "Interface\\Icons\\Spell_Fire_SoulBurn")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sandblastbartext, 10, "Orange")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sandblastbartext, 15, "Red")
+		end
 	elseif (string.find(arg1, self.loc.emergetrigger)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.emergeannounce, "Red")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.emergewarn, 15, "Red")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.emergebartext, 20, 1, "Yellow", "Interface\\Icons\\Spell_Fire_SoulBurn")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.emergebartext, 10, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.emergebartext, 15, "Red")
+		if not self:GetOpt("notEmergeWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.emergeannounce, "Red") end
+		if not self:GetOpt("notEmerge5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.emergewarn, 15, "Red") end
+		if not self:GetOpt("notEmergeBar") then
+			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.emergebartext, 20, 3, "Yellow", "Interface\\Icons\\Spell_Fire_SoulBurn")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.emergebartext, 10, "Orange")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.emergebartext, 15, "Red")
+		end
 	end
 end
 --------------------------------
