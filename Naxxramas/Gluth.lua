@@ -29,10 +29,6 @@ end
 function BigWigsGluth:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn2)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 10)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 20)
 	self.prior = nil
 end
 
