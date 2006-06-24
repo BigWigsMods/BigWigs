@@ -1,14 +1,26 @@
-﻿BigWigsSartura = AceAddon:new({
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsSartura = AceAddon:new({
 	name          = "BigWigsSartura",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "AQ40",
-	enabletrigger = GetLocale() == "koKR" and "전투감시병 살투라" 
-		or GetLocale() == "zhCN" and "沙尔图拉"
-		or GetLocale() == "deDE" and "Schlachtwache Sartura" or "Battleguard Sartura",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Ahn'Qiraj"),
+	enabletrigger = bboss("Battleguard Sartura"),
+	bossname = bboss("Battleguard Sartura"),
+
+	toggleoptions = {
+		notBosskill = "Boss death",
+		notWhirlwindWarn = "Whirlwind warnings",
+		notStartWarn = "Start warning",
+		notEnrageBar = "Enrage timer",
+		notEnrageTimer = "Timer warnings",
+		notEnrageWarn = "Enrage warning",
+	},
+
+	optionorder = { "notStartWarn", "notWhirlwindWarn", "notEnrageBar", "notEnrageTimer", "notEnrageWarn", "notBosskill"},
+
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "전투감시병 살투라",
 		disabletrigger = "최후의 그날까지!",
 		bosskill = "전투감시병 살투라를 물리쳤습니다!",
 
@@ -32,7 +44,6 @@
 	}
 		or GetLocale() == "zhCN" and
 	{ 
-		bossname = "沙尔图拉",
 		disabletrigger = "我战斗到了最后一刻！",
 		bosskill = "沙尔图拉被击败了！",
 
@@ -56,7 +67,6 @@
 	}	
 		or GetLocale() == "deDE" and
 	{	
-		bossname = "Schlachtwache Sartura",
 		disabletrigger = "Ich diene bis",
 		bosskill = "Schlachtwache Sartura wurde besiegt!",
 
@@ -80,7 +90,6 @@
 	}
 	  or
 	{	
-		bossname = "Battleguard Sartura",
 		disabletrigger = "I serve to the last",
 		bosskill = "Battleguard Sartura has been defeated!",
 
@@ -135,36 +144,39 @@ end
 function BigWigsSartura:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
 	ace:print(arg1)
 	if (arg1 == self.loc.whirlwindon) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.whirlwindonwarn, "Red")
+		if not self:GetOpt("notWhirlwindWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.whirlwindonwarn, "Red") end
 	elseif (arg1 == self.loc.whirlwindoff) then
-		ace:print("wirbelwind is aus")
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.whirlwindoffwarn, "Yellow")
+		if not self:GetOpt("notWhirlwindWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.whirlwindoffwarn, "Yellow") end
 	end
 end
 
 function BigWigsSartura:CHAT_MSG_MONSTER_YELL()
 	if (string.find(arg1, self.loc.starttrigger)) then
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bartext, 600, 1, "Green", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Red")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 120, "Green")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 300, "Yellow")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 420, "Yellow")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn4, 510, "Orange")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn5, 540, "Orange")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn6, 570, "Red")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn7, 590, "Red")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.bartext, 300, "Yellow")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.bartext, 510, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.bartext, 570, "Red")
+		if not self:GetOpt("notStartWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Red") end
+		if not self:GetOpt("notEnrageBar") then
+			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bartext, 600, 1, "Green", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.bartext, 300, "Yellow")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.bartext, 510, "Orange")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.bartext, 570, "Red")
+		end
+		if not self:GetOpt("notEnrageTimer") then
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 120, "Green")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 300, "Yellow")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 420, "Yellow")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn4, 510, "Orange")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn5, 540, "Orange")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn6, 570, "Red")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn7, 590, "Red")
+		end
 	elseif (string.find(arg1, self.loc.disabletrigger)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsSartura:CHAT_MSG_MONSTER_EMOTE()
 	if (string.find(arg1, self.loc.enragetrigger)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.enragewarn, "Yellow")
+		if not self:GetOpt("notEnrageWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.enragewarn, "Yellow") end
 	end
 end
 --------------------------------
