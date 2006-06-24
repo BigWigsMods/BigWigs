@@ -1,12 +1,27 @@
+-- local bboss = BabbleLib:GetInstance("Boss 1.2")
+
 BigWigsAnubrekhan = AceAddon:new({
 	name          = "BigWigsAnubrekhan",
 	cmd           = AceChatCmd:new({}, {}),
 
+--	zonename = BabbleLib:GetInstance("Zone 1.2")("Naxxramas"),
+--	enabletrigger = bboss("Anub'Rekhan"),
+--	bossname = bboss("Anub'Rekhan"),
+
 	zonename = "Naxxramas",
 	enabletrigger = "Anub'Rekhan",
+	bossname = "Anub'Rekhan",
+
+	toggleoptions = {
+		notSwarmWarn = "Warn when the current Locust Swarm ends",
+		notLocustInc = "Warn for the incoming Locust Swarm",
+		notSwarmBar = "Show the Time Bar of the current Locust Swarm",
+		notLocustIncBar = "Show the Time Bar for the incoming Locust Swarm",
+		notBosskill = "Boss death",
+	},
+	optionorder = {"notLocustInc", "notLocustIncBar", "notSwarmWarn", "notSwarmBar", "notBosskill"},
 
 	loc = { 
-		bossname = "Anub'Rekhan",
 		disabletrigger = "Anub'Rekhan dies.",		
 		bosskill = "Anub'Rekhan has been defeated!",
 
@@ -28,7 +43,7 @@ BigWigsAnubrekhan = AceAddon:new({
 
 function BigWigsAnubrekhan:Initialize()
 	self.disabled = true
-	BigWigs:RegisterModule(self)
+	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
 
 function BigWigsAnubrekhan:Enable()
@@ -38,6 +53,10 @@ function BigWigsAnubrekhan:Enable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+	self:RegisterEvent("BIGWIGS_SYNC_LOCUSTINC")
+	self:RegisterEvent("BIGWIGS_SYNC_LOCUSTSWARM")
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "LOCUSTINC", 10)
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "LOCUSTSWARM", 10)
 end
 
 function BigWigsAnubrekhan:Disable()
@@ -57,33 +76,20 @@ end
 
 function BigWigsAnubrekhan:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		 if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsAnubrekhan:CHAT_MSG_MONSTER_YELL()
 	if (arg1 == self.loc.starttrigger1 or arg1 == self.loc.starttigger2 or arg1 == self.loc.starttrigger3) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Orange")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.locustwarn10sec, 80, "Red")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.locustincbar, 90, 1, "Yellow", "Interface\\Icons\\Spell_Nature_InsectSwarm")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.locustincbar, 65, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.locustincbar, 80, "Red")
+		self:BIGWIGS_SYNC_LOCUSTINC()
 	end
 end
 
-function BigWigsAnubrekhan:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
-	if (arg1 == self.loc.swarmbartrigger) then
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.swarmendwarn, 20, "Red")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.locustbar, 20, 1, "Yellow", "Interface\\Icons\\Spell_Nature_InsectSwarm")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.locustbar, 10, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.locustbar, 5, "Red")
-	end
-end
-
-function BigWigsAnubrekhan:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
-	if (arg1 == self.loc.swarmtrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.locustwarn, "Orange")
+function BigWigsAnubrekhan:BIGWIGS_SYNC_LOCUSTINC()
+	if (not self:GetOpt("notLocustInc")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.locustwarn, "Orange") end
+	if (not self:GetOpt("notLocustIncBar")) then 
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.locustwarn10sec, 90, "Red")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.locustincbar, 100, 1, "Yellow", "Interface\\Icons\\Spell_Nature_InsectSwarm")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.locustincbar, 75, "Orange")
@@ -91,11 +97,34 @@ function BigWigsAnubrekhan:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	end
 end
 
+function BigWigsAnubrekhan:BIGWIGS_SYNC_LOCUSTSWARM()
+	if (not self:GetOpt("notSwarmWarn")) then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.swarmendwarn, 20, "Red") end
+	if (not self:GetOpt("notSwarmBar")) then 
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.locustbar, 20, 1, "Yellow", "Interface\\Icons\\Spell_Nature_InsectSwarm")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.locustbar, 10, "Orange")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.locustbar, 5, "Red")
+	end
+end
+
+function BigWigsAnubrekhan:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
+	if (arg1 == self.loc.swarmbartrigger) then
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "LOCUSTSWARM")
+	end
+end
+
+function BigWigsAnubrekhan:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
+	if (arg1 == self.loc.swarmtrigger) then
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "LOCUSTINC")
+	end
+end
+
+--[[ Unused function, commenting out 
 function BigWigsAnubrekhan:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
 	if (arg1 == self.loc.wormtrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.wormwarn, "Orange")
 	end
 end
+--]]
 --------------------------------
 --      Load this bitch!      --
 --------------------------------
