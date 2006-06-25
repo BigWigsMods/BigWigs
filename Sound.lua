@@ -16,7 +16,7 @@ local sounds = {
 	Info = "Interface\\AddOns\\BigWigs\\Sounds\\Info.mp3",
 	Alert = "Interface\\AddOns\\BigWigs\\Sounds\\Alert.mp3",
 	Alarm = "Interface\\AddOns\\BigWigs\\Sounds\\Alarm.mp3",
-	Victory = "Interface\\AddOns\\BigWigs\\Sounds\\VictoryShort.mp3",
+	Victory = "Interface\\AddOns\\BigWigs\\Sounds\\Victory.mp3",
 }
 
 
