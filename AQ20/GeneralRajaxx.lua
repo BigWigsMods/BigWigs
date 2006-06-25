@@ -1,16 +1,25 @@
-﻿
+local bboss = BabbleLib:GetInstance("Boss 1.2")
 
 BigWigsGeneralRajaxx = AceAddon:new({
 	name          = "BigWigsGeneralRajaxx",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "AQ20",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Ruins of Ahn'Qiraj"),
 	enabletrigger = GetLocale() == "koKR" and "사령관 안도로브"
 		or GetLocale() == "zhCN" and "安多洛夫中将"
 		or "Lieutenant General Andorov",
 
+	bossname = bboss("General Rajaxx"),
+
+	toggleoptions = {
+		notBosskill = "Boss death",
+		notWave = "Wave warning",
+	},
+
+	optionorder = {"notWave", "notBosskill"},
+	
+	
 	loc = GetLocale() == "koKR" and {
-		bossname = "장군 라작스",
 		disabletrigger = "장군 라작스|1이;가; 죽었습니다.",
 
 --		lieutenant = "Lieutenant General Andorov",
@@ -38,7 +47,6 @@ BigWigsGeneralRajaxx = AceAddon:new({
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "拉贾克斯将军",
 		disabletrigger = "拉贾克斯将军死亡了。",
 
 --		lieutenant = "Lieutenant General Andorov",
@@ -66,7 +74,6 @@ BigWigsGeneralRajaxx = AceAddon:new({
 	}
 		or
 	{
-		bossname = "General Rajaxx",
 		disabletrigger = "General Rajaxx dies.",
 
 --		lieutenant = "Lieutenant General Andorov",
@@ -116,14 +123,14 @@ end
 
 function BigWigsGeneralRajaxx:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsGeneralRajaxx:CHAT_MSG_MONSTER_YELL()
 	if (arg1 and self.warnsets[arg1]) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.warnsets[arg1], "Orange")
+		if not self:GetOpt("notWave") then self:TriggerEvent("BIGWIGS_MESSAGE", self.warnsets[arg1], "Orange") end
 	end
 end
 --------------------------------

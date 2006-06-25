@@ -1,14 +1,27 @@
-﻿BigWigsGuardians = AceAddon:new({
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsGuardians = AceAddon:new({
 	name          = "BigWigsGuardians",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "AQ20",
-	enabletrigger = GetLocale() == "koKR" and "아누비사스 감시자"
-		or GetLocale() == "zhCN" and "阿努比萨斯守卫者"
-		or "Anubisath Guardian",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Ruins of Ahn'Qiraj"),
+	enabletrigger = bboss("Anubisath Guardian"),
+	bossname = bboss("Anubisath Guardian"),
+
+	toggleoptions = {
+		notBosskill = "Boss death",
+		notSummon = "Summon warnings",
+		notPlagueYou = "Plague on you",
+		notPlagueOther = "Plague on others",
+		notExplode = "Explode warning",	
+		notEnrage = "Enrage warning",
+	},
+
+	optionorder = {"notPlagueYou", "notPlagueOther", "notSummon", "notExplode", "notEnrage", "notBosskill"},
+
+
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "아누비사스 감시자",
 		disabletrigger = "아누비사스 감시자|1이;가; 죽었습니다.",
 		bosskill = "아누비사스 감시자를 물리쳤습니다.",
 
@@ -28,7 +41,6 @@
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "阿努比萨斯守卫者",
 		disabletrigger = "阿努比萨斯守卫者死亡了。",
 		bosskill = "阿努比萨斯守卫者被击败了！",
 
@@ -48,7 +60,6 @@
 	}
 		or
 	{
-		bossname = "Anubisath Guardian",
 		disabletrigger = "Anubisath Guardian dies.",
 		bosskill = "Anubisath Guardian has been defeated.",
 
@@ -90,23 +101,23 @@ end
 
 function BigWigsGuardians:CHAT_MSG_COMBAT_HOSTILE_DEATH()
     if (arg1 == self.loc.disabletrigger) then
-        self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+        if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
         self:Disable()
     end
 end
 
 function BigWigsGuardians:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
-	if (arg1 == self.loc.explodetrigger) then
+	if (not self:GetOpt("notExplode") and arg1 == self.loc.explodetrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.explodewarn, "Red")
-	elseif (arg1 == self.loc.enragetrigger) then
+	elseif (not self:GetOpt("notEnrage") and arg1 == self.loc.enragetrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.enragewarn, "Red")
 	end
 end
 
 function BigWigsGuardians:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
-	if (arg1 == self.loc.summonguardtrigger) then
+	if (not self:GetOpt("notSummon") and arg1 == self.loc.summonguardtrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.summonguardwarn, "Yellow")
-	elseif (arg1 == self.loc.summonwarriortrigger) then
+	elseif (not self:GetOpt("notSummon") and arg1 == self.loc.summonwarriortrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.summonwarriorwarn, "Yellow")
 	end
 end
@@ -116,11 +127,13 @@ if ( GetLocale() == "koKR" ) then
 		local _,_,Player = string.find(arg1, self.loc.plaguetrigger)
 		if (Player) then
 			if (Player == self.loc.plagueyou) then
-				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.plaguewarnyou, "Red", true)
+				if not self:GetOpt("notPlagueYou") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.plaguewarnyou, "Red", true) end
 			else
 				_, _, Player = string.find(Player, self.loc.whopattern)
-				self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.plaguewarn, "Yellow")
-				self:TriggerEvent("BIGWIGS_SENDTELL", Player, self.loc.plaguetell)
+				if not self:GetOpt("notPlagueOther") then
+					self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.plaguewarn, "Yellow")
+					self:TriggerEvent("BIGWIGS_SENDTELL", Player, self.loc.plaguetell)
+				end
 			end
 		end
 	end
@@ -129,10 +142,12 @@ else
 		local _,_,Player, Type = string.find(arg1, self.loc.plaguetrigger)
 		if (Player and Type) then
 			if (Player == self.loc.plagueyou and Type == self.loc.plagueare) then
-				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.plaguewarnyou, "Red", true)
+				if not self:GetOpt("notPlagueYou") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.plaguewarnyou, "Red", true) end
 			else
-				self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.plaguewarn, "Yellow")
-				self:TriggerEvent("BIGWIGS_SENDTELL", Player, self.loc.plaguetell)
+				if not self:GetOpt("notPlagueOther") then
+					self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.plaguewarn, "Yellow")
+					self:TriggerEvent("BIGWIGS_SENDTELL", Player, self.loc.plaguetell)
+				end
 			end
 		end
 	end

@@ -1,14 +1,21 @@
-﻿BigWigsAyamiss = AceAddon:new({
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsAyamiss = AceAddon:new({
 	name          = "BigWigsAyamiss",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "AQ20",
-	enabletrigger = GetLocale() == "koKR" and "사냥꾼 아야미스"
-		or GetLocale() == "zhCN" and "狩猎者阿亚米斯"
-		or "Ayamiss the Hunter",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Ruins of Ahn'Qiraj"),
+	enabletrigger = bboss("Ayamiss the Hunter"),
+	bossname = bboss("Ayamiss the Hunter"),
+
+	toggleoptions = {
+		notBosskill = "Boss death",
+		notSacrifice = "Sacrifice warning",
+	},
+
+	optionorder = {"notSacrifice", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "사냥꾼 아야미스",
 		disabletrigger = "사냥꾼 아야미스|1이;가; 죽었습니다.",
 		bosskill = "사냥꾼 아야미스를 물리쳤습니다.",
 
@@ -20,7 +27,6 @@
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "狩猎者阿亚米斯",
 		disabletrigger = "狩猎者阿亚米斯死亡了。",
 		bosskill = "狩猎者阿亚米斯被击败了！",
 
@@ -31,7 +37,6 @@
 	}
 		or
 	{
-		bossname = "Ayamiss the Hunter",
 		disabletrigger = "Ayamiss the Hunter dies.",
 		bosskill = "Ayamiss the Hunter has been defeated.",
 
@@ -62,7 +67,7 @@ end
 
 function BigWigsAyamiss:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
@@ -76,7 +81,7 @@ if (GetLocale() == "koKR") then
 			else
 				_, _, Player = string.find(Player, self.loc.whopattern) 
 			end
-			self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.sacrificewarn, "Red")
+			if not self:GetOpt("notSacrifice") then self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.sacrificewarn, "Red") end
 		end
 	end
 else
@@ -86,7 +91,7 @@ else
 			if (Player == self.loc.you and Type == self.loc.are) then
 				Player = UnitName("player")
 			end
-			self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.sacrificewarn, "Red")
+			if not self:GetOpt("notSacrifice") then self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.sacrificewarn, "Red") end
 		end
 	end
 end

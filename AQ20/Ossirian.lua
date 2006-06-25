@@ -1,14 +1,25 @@
-﻿BigWigsOssirian = AceAddon:new({
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+
+BigWigsOssirian = AceAddon:new({
 	name          = "BigWigsOssirian",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "AQ40",
-	enabletrigger = GetLocale() == "koKR" and "무적의 오시리안"
-		or GetLocale() == "zhCN" and "无疤者奥斯里安"
-		or "Ossirian the Unscarred",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Ruins of Ahn'Qiraj"),
+	enabletrigger = bboss("Ossirian the Unscarred"),
+	bossname = bboss("Ossirian the Unscarred"),
+
+	toggleoptions = {
+		notBosskill = "Boss death",
+		notSupreme = "Supreme warning",
+		notSupremeDelay = "Supreme x-sec warnings",
+		notSupremeBar = "Supreme timerbar",
+		notDebuff = "Debuff warning",
+	},
+
+	optionorder = {"notDebuff", "notSupremeBar", "notSupreme", "notSupremeDelay", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "무적의 오시리안",
 		disabletrigger1 = "내가... 졌다.",
 		disabletrigger2 = "무적의 오시리안|1이;가; 죽었습니다.",
 		bosskill = "오시리안을 물리쳤습니다!",
@@ -22,7 +33,6 @@
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "无疤者奥斯里安",
 		disabletrigger1 = "我……败……了。",
 		disabletrigger2 = "无疤者奥斯里安死亡了。",
 		bosskill = "无疤者奥斯里安被击败了！",
@@ -36,7 +46,6 @@
 	}
 		or
 	{
-		bossname = "Ossirian the Unscarred",
 		disabletrigger1 = "I...have...failed.",
 		disabletrigger2 = "Ossirian the Unscarred dies.",
 		bosskill = "Ossirian has been defeated!",
@@ -73,29 +82,31 @@ end
 
 function BigWigsOssirian:checkEnd()
     if (arg1 == self.loc.disabletrigger1 or arg1 == self.loc.disabletrigger2) then
-        self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+        if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
         self:Disable()
     end
 end
 
 function BigWigsOssirian:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
 	if (arg1 == self.loc.supremetrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.supremewarn, "Yellow")
+		if not self:GetOpt("notSupreme") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.supremewarn, "Yellow") end
 	end
 end
 
 function BigWigsOssirian:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE()
 	local _, _, debuffName = string.find(arg1, self.loc.debufftrigger)
 	if (debuffName) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.debuffwarn, debuffName), "Red")
+		if not self:GetOpt("notDebuff") then self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.debuffwarn, debuffName), "Red") end
 
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", format(self.loc.supremedelaywarn, 30))
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", format(self.loc.supremedelaywarn, 40))
 		self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bartext)
 
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", format(self.loc.supremedelaywarn, 15), 30, "Orange")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", format(self.loc.supremedelaywarn, 5), 40, "Red")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bartext, 45, 1, "Green", "Interface\\Icons\\Spell_Shadow_CurseOfTounges")
+		if not self:GetOpt("notSupremeDelay") then
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", format(self.loc.supremedelaywarn, 15), 30, "Orange")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", format(self.loc.supremedelaywarn, 5), 40, "Red")
+		end
+		if not self:GetOpt("notSupremeBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bartext, 45, 1, "Green", "Interface\\Icons\\Spell_Shadow_CurseOfTounges") end
 	end
 end
 --------------------------------
