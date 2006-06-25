@@ -251,7 +251,7 @@ function BigWigsCThun:CHAT_MSG_MONSTER_EMOTE()
 		-- cancel giant timers
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.giant1)
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.giant2)
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.log.giant3)
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.giant3)
 		self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.barGiant)
 
 		-- stop the timer, and reschedule.
