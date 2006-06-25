@@ -82,7 +82,7 @@ function BigWigsAnubrekhan:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 end
 
 function BigWigsAnubrekhan:CHAT_MSG_MONSTER_YELL()
-	if (arg1 == self.loc.starttrigger1 or arg1 == self.loc.starttigger2 or arg1 == self.loc.starttrigger3) then
+	if (arg1 == self.loc.starttrigger1 or arg1 == self.loc.starttrigger2 or arg1 == self.loc.starttrigger3) then
 		self:BIGWIGS_SYNC_LOCUSTINC()
 	end
 end
