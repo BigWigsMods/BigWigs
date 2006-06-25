@@ -4,6 +4,13 @@ BigWigsGluth = AceAddon:new({
 
 	zonename = "Naxxramas",
 	enabletrigger = "Gluth",
+	bossname = "Gluth",
+
+	toggleoptions = {
+		notFrenzy = "Frenzy warning",
+		notBosskill = "Boss death",
+	},
+	optionorder = {"notFrenzy", "notBosskill"},
 
 	loc = {
 		bossname = "Gluth",
@@ -34,14 +41,14 @@ end
 
 function BigWigsGluth:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notFrenzy") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsGluth:CHAT_MSG_MONSTER_EMOTE()
 	if (arg1 == self.loc.trigger1) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red") end
 	end
 end
 --------------------------------

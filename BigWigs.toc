@@ -78,3 +78,6 @@ Other\Azuregos.lua
 Other\Emeriss.lua
 Other\Onyxia.lua
 Other\Test.lua
+
+Naxxramas\Anubrekhan.lua
+Naxxramas\Gluth.lua
