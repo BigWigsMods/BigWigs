@@ -8,7 +8,7 @@ BigWigsTwins = AceAddon:new({
 	zonename = BabbleLib:GetInstance("Zone 1.2")("Temple of Ahn'Qiraj"),
 	veklor = bboss("Emperor Vek'lor"),
 	veknilash = bboss("Emperor Vek'nilash"),
-	enabletrigger = {veklor, veknilash},
+	enabletrigger = {bboss("Emperor Vek'lor"), bboss("Emperor Vek'nilash")},
 	bossname = format("The Twin Emperors - %s and %s", bboss("Emperor Vek'lor"), bboss("Emperor Vek'nilash")),
 
 	toggleoptions = {
