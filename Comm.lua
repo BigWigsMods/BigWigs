@@ -28,7 +28,7 @@ end
 -- Handle inbound chatter when the user runs CTRA
 function BigWigsComm:CHAT_MSG_CHANNEL(msg, chan, sender)
 	local rawmsg, channel, nick = msg or arg1, chan or arg9 or "", sender or arg2
-	if not CT_RA_Channel or string.lower(channel) ~= string.lower(CT_RA_Channel) then return end
+	if not CT_RA_Channel or string.lower(channel) ~= string.lower(CT_RA_Channel) and channel ~= "SelfSync" then return end
 
 	local cleanmsg = string.gsub(rawmsg, "%$", "s")
 	cleanmsg = string.gsub(cleanmsg, "§", "S")
@@ -47,7 +47,7 @@ end
 function BigWigsComm:BIGWIGS_SYNC_SEND(msg)
 	if oRA_Core then oRA_Core:Send("BIGWIGSSYNC " .. msg)
 	elseif CT_RA_AddMessage then CT_RA_AddMessage("BIGWIGSSYNC " .. msg) end
-	self:CHAT_MSG_CHANNEL("BIGWIGSSYNC " .. msg, CT_RA_Channel, UnitName("player"))
+	self:CHAT_MSG_CHANNEL("BIGWIGSSYNC " .. msg, "SelfSync", UnitName("player"))
 end
 
 
