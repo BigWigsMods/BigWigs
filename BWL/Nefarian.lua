@@ -1,16 +1,20 @@
-﻿BigWigsNefarian = AceAddon:new({
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsNefarian = AceAddon:new({
 	name          = "BigWigsNefarian",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "BWL",
-	enabletrigger = GetLocale() == "koKR" and
-		{"군주 빅터 네파리우스", "네파리안"}
-		or GetLocale() == "zhCN" and {"维克多·奈法里奥斯","奈法利安"}
-		or {"Lord Victor Nefarius", "Nefarian"},
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Blackwing Lair"),
+	enabletrigger = { bboss("Nefarian"), bboss("Lord Victor Nefarius") },
+	bossname = bboss("Nefarian"),
+
+	toggleoptions = {
+		notBosskill = "Boss death",
+	},
+	optionorder = {"notBosskill"},
 
 	loc = GetLocale() == "deDE" and
 	{
-		bossname = "Nefarian",
 		disabletrigger = "Nefarian stirbt.",
 
 		trigger1 = "Sehr gut, meine Diener.",
@@ -49,7 +53,6 @@
 	}
 		or GetLocale() == "koKR" and
 	{
-		bossname = "네파리안",
 		disabletrigger = "네파리안|1이;가; 죽었습니다.",
 
 		trigger1 = "적들의 사기가 떨어지고 있다",
@@ -88,7 +91,6 @@
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "奈法利安",
 		disabletrigger = "奈法利安死亡了。",
 
 		trigger1 = "干得好，我的手下。",
@@ -127,7 +129,6 @@
 	}
 		or
 	{
-		bossname = "Nefarian",
 		disabletrigger = "Nefarian dies.",
 
 		trigger1 = "Well done, my minions",
@@ -189,7 +190,7 @@ end
 
 function BigWigsNefarian:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
