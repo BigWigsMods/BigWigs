@@ -21,10 +21,12 @@ BigWigsOuro = AceAddon:new({
 		notEmergeBar = "Emerge timerbar",
 		notEmerge5Sec = "Emerge 5-sec warning",
 		notEmergeWarn = "Emerge warning",
+		notScarabWarn = "Scarab Despawn Warning",
+		notScarabBar = "Scarab despawn timebar",
 		
 	},
 
-	optionorder = {"notSweepBar", "notSweep5Sec", "notSweepWarn", "notBlastBar", "notBlast5Sec", "notBlastWarn", "notEmergeBar", "notEmerge5Sec", "notEmergeWarn", "notBerserkSoon", "notBosskill"},
+	optionorder = {"notSweepBar", "notSweep5Sec", "notSweepWarn", "notBlastBar", "notBlast5Sec", "notBlastWarn", "notEmergeBar", "notEmerge5Sec", "notEmergeWarn", "notScarabWarn", "notScarabBar", "notBerserkSoon", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
 		disabletrigger = "아우로|1이;가; 죽었습니다.",
@@ -43,6 +45,9 @@ BigWigsOuro = AceAddon:new({
 		emergeannounce = "아우로 등장! 벌레들 제거!",
 		emergewarn1 = "15초후 아우로 잠수!",
 		emergebartext = "아우로 잠수",
+		
+		scarabdespawn = "Scarbs Despawn in 10 Seconds", --Translate me
+		scarabbar	= "Scarabs despawn", -- Translate Me
 
 		berserksoonwarn = "광폭화 예고 - 준비하세요!",
 		bosskill = "아우로를 물리쳤습니다!",
@@ -65,6 +70,9 @@ BigWigsOuro = AceAddon:new({
 		emergeannounce = "奥罗潜入地下！杀光虫子！",
 		emergewarn1 = "15秒后奥罗将钻出地面！",
 		emergebartext = "奥罗钻出地面",
+		
+		scarabdespawn = "Scarbs Despawn in 10 Seconds", --Translate me
+		scarabbar	= "Scarabs despawn", -- Translate Me
 
 		berserksoonwarn = "即将狂暴 - 做好准备！",
 		bosskill = "奥罗被击败了！",
@@ -87,6 +95,9 @@ BigWigsOuro = AceAddon:new({
 		emergeannounce = "Ouro has emerged! Kill them bugs!",
 		emergewarn1 = "15 seconds until Ouro submerges!",
 		emergebartext = "Ouro submerge",
+		
+		scarabdespawn = "Scarbs Despawn in 10 Seconds",
+		scarabbar	= "Scarabs despawn",
 
 		berserksoonwarn = "Berserk Soon - Get Ready!",
 		bosskill = "Ouro has been defeated!",
@@ -104,6 +115,12 @@ function BigWigsOuro:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:RegisterEvent("BIGWIGS_SYNC_OUROSWEEP")
+	self:RegisterEvent("BIGWIGS_SYNC_OUROSANDBLAST")
+	self:RegisterEvent("BIGWIGS_SYNC_OUROEMERGE")
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "OUROSWEEP", 10)
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "OUROSANDBLAST", 10)
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "OUROEMERGE", 10)
 end
 
 function BigWigsOuro:Disable()
@@ -122,6 +139,10 @@ function BigWigsOuro:Disable()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.sandblastbartext, 10)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.emergebartext, 30)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.emergebartext, 40)
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.scarabbar)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.scarabbar, 30)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.scarabbar, 45)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.scarabdespawn, 50)
 end
 
 function BigWigsOuro:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -142,32 +163,49 @@ function BigWigsOuro:UNIT_HEALTH()
 		end
 	end
 end
+function BigWigsOuro:BIGWIGS_SYNC_OUROSWEEP()
+	if not self:GetOpt("notSweepWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.sweepannounce, "Red") end
+	if not self:GetOpt("notSweep5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.sweepwarn, 15, "Red") end
+	if not self:GetOpt("notSweepBar") then
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.sweepbartext, 20, 1, "Yellow", "Interface\\Icons\\Spell_Nature_Thorns")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sweepbartext, 10, "Orange")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sweepbartext, 15, "Red")
+	end
+end
+
+function BigWigsOuro:BIGWIGS_SYNC_OUROSANDBLAST()
+	if not self:GetOpt("notBlastWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.sandblastannounce, "Red") end
+	if not self:GetOpt("notBlast5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.sandblastwarn, 15, "Red") end
+	if not self:GetOpt("notBlastBar") then
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.sandblastbartext, 20, 2, "Yellow", "Interface\\Icons\\Spell_Nature_Cyclone")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sandblastbartext, 10, "Orange")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sandblastbartext, 15, "Red")
+	end
+end
+
+function BigWigsOuro:BIGWIGS_SYNC_OUROEMERGE()
+	if not self:GetOpt("notEmergeWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.emergeannounce, "Red") end
+	if not self:GetOpt("notEmerge5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.emergewarn, 15, "Red") end
+	if not self:GetOpt("notEmergeBar") then
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.emergebartext, 20, 3, "Yellow", "Interface\\Icons\\Spell_Nature_Earthquake")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.emergebartext, 10, "Orange")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.emergebartext, 15, "Red")
+	end
+	if not self:GetOpt("notScarabWarn") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.scarabdespawn, 50, "Red") end
+	if not self:GetOpt("notScarabBar") then
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.scarabbar, 60, 3, "Yellow", "Interface\\Icons\\INV_Scarab_Clay")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.scarabbar, 30, "Yellow")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.scarabbar, 45, "Green")
+	end
+end
 
 function BigWigsOuro:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	if (string.find(arg1, self.loc.sweeptrigger)) then
-		if not self:GetOpt("notSweepWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.sweepannounce, "Red") end
-		if not self:GetOpt("notSweep5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.sweepwarn, 15, "Red") end
-		if not self:GetOpt("notSweepBar") then
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.sweepbartext, 20, 1, "Yellow", "Interface\\Icons\\Spell_Fire_SoulBurn")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sweepbartext, 10, "Orange")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sweepbartext, 15, "Red")
-		end
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "OUROSWEEP")
 	elseif (string.find(arg1, self.loc.sandblasttrigger)) then
-		if not self:GetOpt("notBlastWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.sandblastannounce, "Red") end
-		if not self:GetOpt("notBlast5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.sandblastwarn, 15, "Red") end
-		if not self:GetOpt("notBlastBar") then
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.sandblastbartext, 20, 2, "Yellow", "Interface\\Icons\\Spell_Fire_SoulBurn")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sandblastbartext, 10, "Orange")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.sandblastbartext, 15, "Red")
-		end
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "OUROSANDBLAST")
 	elseif (string.find(arg1, self.loc.emergetrigger)) then
-		if not self:GetOpt("notEmergeWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.emergeannounce, "Red") end
-		if not self:GetOpt("notEmerge5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.emergewarn, 15, "Red") end
-		if not self:GetOpt("notEmergeBar") then
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.emergebartext, 20, 3, "Yellow", "Interface\\Icons\\Spell_Fire_SoulBurn")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.emergebartext, 10, "Orange")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.emergebartext, 15, "Red")
-		end
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "OUROEMERGE")
 	end
 end
 --------------------------------
