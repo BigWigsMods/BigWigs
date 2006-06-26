@@ -10,8 +10,14 @@ BigWigsNefarian = AceAddon:new({
 
 	toggleoptions = {
 		notBosskill = "Boss death",
+		notFear = "Fear warning",
+		notShadowFlame = "Shadowflame warning",
+		notClassIncoming = "Class call incoming warning",
+		notClassCall = "Class call",
+		notClassBar = "Class call timerbar",
+		notOtherWarn = "Landing and Zerg warnings",
 	},
-	optionorder = {"notBosskill"},
+	optionorder = {"notFear", "notShadowFlame", "notClassIncoming", "notClassBar", "notClassCall", "notOtherWarn", "notBosskill"},
 
 	loc = GetLocale() == "deDE" and
 	{
@@ -213,8 +219,12 @@ function BigWigsNefarian:CHAT_MSG_MONSTER_YELL()
 
 	for i,v in pairs(self.warnpairs) do
 		if string.find(arg1, i) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", v[1], "Red")
-			if v[2] then self:ClassCallBar()end
+			if v[2] then
+				if not self:GetOpt("notClassCall") then self:TriggerEvent("BIGWIGS_MESSAGE", v[1], "Red") end
+				self:ClassCallBar()
+			else 
+				if not self:GetOpt("notOtherWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", v[1], "Red") end
+			end
 			return
 		end
 	end
@@ -222,17 +232,19 @@ end
 
 function BigWigsNefarian:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	if (string.find(arg1, self.loc.trigger4)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red")
+		if not self:GetOpt("notFear") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red") end
 	elseif (string.find(arg1, self.loc.trigger5)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red")
+		if not self:GetOpt("notShadowFlame") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red") end
 	end
 end
 
 function BigWigsNefarian:ClassCallBar()
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn6, 27, "Red")
-	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_Charm")
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
+	if not self:GetOpt("notClassIncoming") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn6, 27, "Red") end
+	if not self:GetOpt("notClassBar") then 
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_Charm")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
+	end
 end
 --------------------------------
 --      Load this bitch!      --
