@@ -4,7 +4,7 @@ BigWigsViscidus = AceAddon:new({
 	name          	= "BigWigsViscidus",
 	cmd           	= AceChatCmd:new({}, {}),
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Temple of Ahn'Qiraj"),
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Ahn'Qiraj"),
 	enabletrigger = bboss("Viscidus"),
 	bossname = bboss("Viscidus"),
 

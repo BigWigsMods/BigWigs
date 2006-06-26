@@ -5,7 +5,7 @@ BigWigsCThun = AceAddon:new({
 	name          	= "BigWigsCThun",
 	cmd           	= AceChatCmd:new({}, {}),
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Temple of Ahn'Qiraj"),
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Ahn'Qiraj"),
 	enabletrigger = bboss("Eye of C'Thun"),
 	bossname = bboss("Eye of C'Thun"),
 

@@ -4,7 +4,7 @@ BigWigsSkeram = AceAddon:new({
 	name          = "BigWigsSkeram",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Temple of Ahn'Qiraj"),
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Ahn'Qiraj"),
 	enabletrigger = bboss("The Prophet Skeram"),
 	bossname = bboss("The Prophet Skeram"),
 

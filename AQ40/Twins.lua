@@ -5,7 +5,7 @@ BigWigsTwins = AceAddon:new({
 	name          = "BigWigsTwins",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Temple of Ahn'Qiraj"),
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Ahn'Qiraj"),
 	veklor = bboss("Emperor Vek'lor"),
 	veknilash = bboss("Emperor Vek'nilash"),
 	enabletrigger = {bboss("Emperor Vek'lor"), bboss("Emperor Vek'nilash")},

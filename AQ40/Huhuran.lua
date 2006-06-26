@@ -4,7 +4,7 @@ BigWigsHuhuran = AceAddon:new({
 	name          = "BigWigsHuhuran",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Temple of Ahn'Qiraj"),
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Ahn'Qiraj"),
 	enabletrigger = bboss("Princess Huhuran"),
 	bossname = bboss("Princess Huhuran"),
 
