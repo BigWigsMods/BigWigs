@@ -9,9 +9,9 @@ BigWigsMajordomo = AceAddon:new({
 	bossname = bboss("Majordomo Executus"),
 
 	toggleoptions = {
-		notMagic = "마법 반사 경고",
-		notDmg = "물리 보호막 경고",
-		notBosskill = "보스 사망",
+		notMagic = "Warn for Magic Reflection",
+		notDmg = "Warn for Damage Shields",
+		notBosskill = "Boss death",
 	},
 	optionorder = {"notMagic", "notDmg", "notBosskill"},
 

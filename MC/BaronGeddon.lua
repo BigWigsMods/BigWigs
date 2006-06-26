@@ -9,10 +9,10 @@ BigWigsBaronGeddon = AceAddon:new({
 	bossname = bboss("Baron Geddon"),
 
 	toggleoptions = {
-		notYouBomb = "자신이 폭탄일 때 경고",
-		notElseBomb = "다른 사람이 폭탄일 때 경고",
-		notIcon = "폭탄이 사람에게 해골 표시 달기. (승급 필요)",
-		notBosskill = "보스 사망",
+		notYouBomb = "Warn when you are the bomb",
+		notElseBomb = "Warn when others are the bomb",
+		notIcon = "Put a Skull icon on the person who's the bomb. (Requires promoted or higher)",
+		notBosskill = "Boss death",
 	},
 
 	loc = GetLocale() == "deDE" and

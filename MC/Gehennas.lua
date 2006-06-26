@@ -9,8 +9,8 @@ BigWigsGehennas = AceAddon:new({
 	bossname = bboss("Gehennas"),
 
 	toggleoptions = {
-		notCurse = "게헨나스의 저주 경고",
-		notBosskill = "보스 사망",
+		notCurse = "Warn for Gehennas's Curse",
+		notBosskill = "Boss death",
 	},
 	optionorder = {"notCurse", "notBosskill"},
 

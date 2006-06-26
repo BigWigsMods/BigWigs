@@ -9,9 +9,9 @@ BigWigsMagmadar = AceAddon:new({
 	bossname = bboss("Magmadar"),
 
 	toggleoptions = {
-		notFear = "공포 경고",
-		notFrenzy = "광폭화 경고",
-		notBosskill = "보스 사망",
+		notFear = "Warn for Fear",
+		notFrenzy = "Warn when Magmadar goes into a frenzy",
+		notBosskill = "Boss death",
 	},
 	optionorder = {"notFear", "notFrenzy", "notBosskill"},
 
