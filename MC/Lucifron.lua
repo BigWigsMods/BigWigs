@@ -9,9 +9,9 @@ BigWigsLucifron = AceAddon:new({
 	bossname = bboss("Lucifron"),
 	
 	toggleoptions = {
-		notCurse = "Warn for Lucifron's Curse",
-		notDoom= "Warn for Impending Doom",
-		notBosskill = "Boss death",
+		notCurse = "루시프론의 저주 경고",
+		notDoom= "파멸의 예언 경고",
+		notBosskill = "보스 사망",
 	},
 	optionorder = {"notCurse", "notDoom", "notBosskill"},
 

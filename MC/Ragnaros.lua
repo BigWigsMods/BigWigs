@@ -9,10 +9,10 @@ BigWigsRagnaros = AceAddon:new({
 	bossname = bboss("Ragnaros"),
 
 	toggleoptions = {
-		notSubmerge = "Warn for Ragnaros Submerge & Sons of Flame",
-		notEmerge = "Warn for Ragnaros Emerge",
-		notAoEKnock = "Warn for AoE KnockBack",
-		notBosskill = "Boss death",
+		notSubmerge = "피조물 소환 경고",
+		notEmerge = "라그나로스 재등장 경고",
+		notAoEKnock = "광역 튕겨냄 경고",
+		notBosskill = "보스 사망",
 	},
 	optionorder = {"notSubmerge", "notEmerge", "notAoEKnock", "notBosskill"},
 
