@@ -86,6 +86,7 @@ function BigWigsFiremaw:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("BIGWIGS_MESSAGE")
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "FIREMAW_WING_BUFFET", 10)
 end
 
 function BigWigsFiremaw:Disable()
@@ -105,15 +106,21 @@ function BigWigsFiremaw:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 end
 
 function BigWigsFiremaw:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
-	if (string.find(arg1, self.loc.trigger1) and not self:GetOpt("notWingBuffet")) then
+	if (string.find(arg1, self.loc.trigger1)) then
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "FIREMAW_WING_BUFFET")
+	elseif (arg1 == self.loc.trigger2 and not self:GetOpt("notShadowFlame")) then
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red")
+	end
+end
+
+function BigWigsFiremaw:FIREMAW_WING_BUFFET()
+	if (not self:GetOpt("notWingBuffet")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Yellow")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 29, "Red")
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 32, 1, "Yellow", "Interface\\Icons\\Spell_Fire_SelfDestruct")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
-	elseif (arg1 == self.loc.trigger2 and not self:GetOpt("notShadowFlame")) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red")
 	end
 end
 --------------------------------
