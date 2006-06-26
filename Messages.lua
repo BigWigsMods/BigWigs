@@ -88,7 +88,8 @@ end
 
 function BigWigsMessages:BIGWIGS_MESSAGE(text, color)
 	if not text then return end
-	local red, green, blue = self:GetOpt("White") and BigWigs:GetColor("White") or BigWigs:GetColor(color)
+	if self:GetOpt("White") then red,green,blue = BigWigs:GetColor("White")
+	else red,green,blue = BigWigs:GetColor(color) end
 	local f = self:GetOpt("NotRW") and self.msgframe or rwframe
 	frame:AddMessage(text, red or 1, green or 1, blue or 1, 1, UIERRORS_HOLD_TIME)
 end
