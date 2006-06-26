@@ -8,7 +8,11 @@ BigWigsMajordomo = AceAddon:new({
 	enabletrigger = bboss("Majordomo Executus"),
 	bossname = bboss("Majordomo Executus"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notMagic = "마법 반사막 경고",
+		notDmg = "물리 보호막 경고",
+		notBosskill = "보스 사망",
+	} or {
 		notMagic = "Warn for Magic Reflection",
 		notDmg = "Warn for Damage Shields",
 		notBosskill = "Boss death",

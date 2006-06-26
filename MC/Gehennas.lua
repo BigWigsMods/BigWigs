@@ -8,7 +8,10 @@ BigWigsGehennas = AceAddon:new({
 	enabletrigger = bboss("Gehennas"),
 	bossname = bboss("Gehennas"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notCurse = "게헨나스의 저주 경고",
+		notBosskill = "보스 사망",		
+	} or {				
 		notCurse = "Warn for Gehennas's Curse",
 		notBosskill = "Boss death",
 	},

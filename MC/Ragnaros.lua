@@ -8,7 +8,12 @@ BigWigsRagnaros = AceAddon:new({
 	enabletrigger = bboss("Ragnaros"),
 	bossname = bboss("Ragnaros"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notSubmerge = "피조물 소환 경고",
+		notEmerge = "라그나로스 재등장 경고",
+		notAoEKnock = "광역 튕겨냄 경고",
+		notBosskill = "보스 사망",		
+	} or {		
 		notSubmerge = "Warn for Ragnaros Submerge & Sons of Flame",
 		notEmerge = "Warn for Ragnaros Emerge",
 		notAoEKnock = "Warn for AoE KnockBack",
