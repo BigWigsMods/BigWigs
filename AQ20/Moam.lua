@@ -7,10 +7,8 @@ BigWigsMoam = AceAddon:new({
 
 	zonename = BabbleLib:GetInstance("Zone 1.2")("Ruins of Ahn'Qiraj"),
 
-	enabletrigger = "Moam",
-	bossname = "Moam",
---	enabletrigger = bboss("Moam"),
---	bossname = bboss("Moam"),
+	enabletrigger = bboss("Moam"),
+	bossname = bboss("Moam"),
 
 	toggleoptions = {
 		notBosskill = "Boss death",
