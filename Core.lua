@@ -108,6 +108,7 @@ end
 function BigWigs:Enable()
 	self:RegisterEvent("BIGWIGS_REGISTER_MODULE")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "ENABLEMODULE", 10)
 end
 
 
@@ -170,7 +171,12 @@ function BigWigs:EnableModule(module)
 	if m and m.disabled then
 		m:Enable()
 		self:TriggerEvent("BIGWIGS_MESSAGE", string.format(self.loc.ModuleEnable, m.loc.bossname or m.bossname or "??"), "LtBlue", true)
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "ENABLEMODULE " .. (m.loc.bossname or m.bossname or "??" ) )
 	end
+end
+
+function BigWigs:BIGWIGS_SYNC_ENABLEMODULE( module, nick )
+	if ( module ) then self:EnableModule(module) end
 end
 
 
