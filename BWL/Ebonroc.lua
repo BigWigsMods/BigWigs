@@ -143,7 +143,7 @@ function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	end
 end
 
-function BigWigsEbonroc:EBONROC_WING_BUFFET()
+function BigWigsEbonroc:BIGWIGS_SYNC_EBONROC_WING_BUFFET()
 	if (not self:GetOpt("notWingBuffet")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Yellow")

@@ -113,7 +113,7 @@ function BigWigsFiremaw:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	end
 end
 
-function BigWigsFiremaw:FIREMAW_WING_BUFFET()
+function BigWigsFiremaw:BIGWIGS_SYNC_FIREMAW_WING_BUFFET()
 	if (not self:GetOpt("notWingBuffet")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Yellow")

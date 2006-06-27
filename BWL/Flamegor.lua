@@ -129,7 +129,7 @@ function BigWigsFlamegor:CHAT_MSG_MONSTER_EMOTE()
 	end
 end
 
-function BigWigsFlamegor:FLAMEGOR_WING_BUFFET()
+function BigWigsFlamegor:BIGWIGS_SYNC_FLAMEGOR_WING_BUFFET()
 	if (not self:GetOpt("notFrenzy")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Yellow")
