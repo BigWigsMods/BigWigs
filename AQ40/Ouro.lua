@@ -235,7 +235,7 @@ function BigWigsOuro:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	elseif (string.find(arg1, self.loc.sandblasttrigger)) then
 		self:TriggerEvent("BIGWIGS_SYNC_SEND", "OUROSANDBLAST")
 	elseif (string.find(arg1, self.loc.submergetrigger)) then
-		self:TriggerEvent("BIGWIGS_SUNC_SEND", "OUROSUBMERGE")
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "OUROSUBMERGE")
 	end
 end
 --------------------------------
