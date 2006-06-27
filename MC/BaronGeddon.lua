@@ -20,6 +20,8 @@ BigWigsBaronGeddon = AceAddon:new({
 		notBosskill = "Boss death",
 	},
 
+	optionorder = { "notYouBomb", "notElseBomb", "notIcon", "notBosskill" },
+
 	loc = GetLocale() == "deDE" and
 	{
 		disabletrigger = "Baron Geddon stirbt.",

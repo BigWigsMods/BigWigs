@@ -14,6 +14,8 @@ BigWigsMarli = AceAddon:new({
 		notBosskill = "Boss death",
 	},
 
+	optionorder = { "notDrain", "notSpiders", "notBosskill" },
+
 	loc = GetLocale() == "koKR" and {
 		trigger1 = "어미를 도와라!$",
 		trigger2 = "^High Priestess Mar'li's Drain Life heals High Priestess Mar'li for (.+).",

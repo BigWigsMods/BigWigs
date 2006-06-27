@@ -17,6 +17,8 @@ BigWigsArlokk = AceAddon:new({
 		notBosskill = "Boss death",
 	},
 
+	optionorder = {"notPlayer", "notOthers", "notBosskill"},
+
 	loc = {
 		disabletrigger = "High Priestess Arlokk dies.",
 

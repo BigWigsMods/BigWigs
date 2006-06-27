@@ -14,6 +14,8 @@ BigWigsJeklik = AceAddon:new({
 		notBosskill = "Boss death",
 	},
 
+	optionorder = { "notBats", "notHeal", "notBosskill" },
+
 	loc = GetLocale() == "koKR" and {
 		trigger1 = "침략자들에게 뜨거운 맛을 보여줘라!$",
 		trigger2 = "상급 치유를 시전하기 시작합니다!$",

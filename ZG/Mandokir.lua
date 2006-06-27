@@ -14,6 +14,8 @@ BigWigsMandokir = AceAddon:new({
 		notBosskill = "Boss death",
 	},
 
+	optionorder = { "notPlayer", "notOthers", "notBosskill" },
+
 	loc = GetLocale() == "koKR" and {
 		disabletrigger = "혈군주 만도크리|1이;가; 죽었습니다.",
 		trigger1 = "(.+)! 널 지켜보고 있겠다!",

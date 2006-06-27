@@ -13,6 +13,7 @@ BigWigsVenoxis = AceAddon:new({
 		notPhase2 = "Phase 2 warning",
 		notBosskill = "Boss death",
 	},
+	optionorder = { "notRenew", "notPhase2", "notBosskill" },
 
 	loc = GetLocale() == "koKR" and {
 		disabletrigger = "대사제 베녹시스|1이;가; 죽었습니다.",
