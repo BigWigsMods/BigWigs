@@ -24,7 +24,7 @@ BigWigsAnubrekhan = AceAddon:new({
 		starttrigger1 = "Just a little taste...",
 		starttrigger2 = "Yes, run! It makes the blood pump faster!",
 		starttrigger3 = "There is no way out.",
-		engagewarn = "Anub'Rekhan engaged. First Locust Swarm in 90 seconds.",
+		engagewarn = "Anub'Rekhan engaged. First Locust Swarm in about 90 seconds.",
 		
 		gaintrigger = "Anub'Rekhan gains Locust Swarm.",
 		gainendwarn = "Locust Swarm ended!",
@@ -58,21 +58,21 @@ end
 function BigWigsAnubrekhan:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.locustwarn10sec)
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.locustincbar)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.swarmendwarn)
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.locustbar)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.locustbar, 5)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.locustbar, 10)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.locustincbar, 65)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.locustincbar, 75)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.locustincbar, 80)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.locustincbar, 90)
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.gainincbar)
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.gainbar)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.gainendwarn)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.gainwarn10sec)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.gainbar, 5)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.gainbar, 10)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.gainincbar, 65)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.gainincbar, 70)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.gainincbar, 80)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.gainincbar, 85)
 end
 
 function BigWigsAnubrekhan:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		 if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
+		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
