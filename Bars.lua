@@ -1,4 +1,7 @@
 
+local sliderchange
+local minscale, maxscale = 0.25, 2
+local dewdrop = DewdropLib:GetInstance("1.0")
 local cmdopt = {
 	option = "bars",
 	desc   = "Options for the Timex Bars.",
@@ -28,6 +31,13 @@ BigWigsBars = AceAddon:new({
 	name          = "BigWigsBars",
 	cmd           = AceChatCmd:new({}, {}),
 	cmdOptions    = cmdopt,
+
+	loc = {
+		menutitle = "Timex Bars",
+		menuanchor = "Show anchor",
+		menuup = "Grow bars upwards",
+		menuscale = "Scale",
+	},
 })
 
 
@@ -99,21 +109,39 @@ end
 
 
 ------------------------------
+--      Menu Functions      --
+------------------------------
+
+function BigWigsBars:MenuSettings(level, value)
+	dewdrop:AddLine("text", self.loc.menuanchor, "func", self.BIGWIGS_SHOW_ANCHORS, "arg1", self)
+	dewdrop:AddLine("text", self.loc.menuup, "func", self.ToggleUp, "arg1", self, "arg2", true, "checked", self:GetOpt("growup"))
+	dewdrop:AddLine("text", self.loc.menuscale, "sliderFunc", sliderchange, "hasArrow", true, "hasSlider", true,
+		"sliderTop", maxscale, "sliderBottom", minscale, "sliderValue", ((self:GetOpt("scale") or 1)-minscale)/(maxscale-minscale))
+end
+
+
+------------------------------
 --      Slash Handlers      --
 ------------------------------
 
-function BigWigsBars:SetScale(msg)
+function BigWigsBars:SetScale(msg, supressreport)
 	local scale = tonumber(msg)
-	if scale and scale >= 0.25 and scale <= 5 then
+	if scale and scale >= minscale and scale <= maxscale then
 		self:SetOpt(scale, "scale")
-		self.cmd:result("Scale is set to "..scale)
+		if not supressreport then self.cmd:result("Scale is set to "..scale) end
 	end
 end
 
 
-function BigWigsBars:ToggleUp()
+sliderchange = function(value)
+	BigWigsBars:SetScale(value*(maxscale-minscale) + minscale, true)
+	return string.format("%.2f", value*(maxscale-minscale) + minscale)
+end
+
+
+function BigWigsBars:ToggleUp(supressreport)
 	local t = self:TogOpt("growup")
-	self.cmd:result("Bars now grow ".. (t and "upwards." or "downwards."))
+	if not supressreport then self.cmd:result("Bars now grow ".. (t and "upwards." or "downwards.")) end
 end
 
 

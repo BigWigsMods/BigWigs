@@ -1,4 +1,8 @@
 
+local sliderchange
+local minscale, maxscale = 0.25, 2
+local rwframe, frame
+local dewdrop = DewdropLib:GetInstance("1.0")
 local cmdopt = {
 	option = "msg",
 	desc   = "Options for the message frame.",
@@ -27,10 +31,6 @@ local cmdopt = {
 		},
 	},
 }
-local sliderchange
-local minscale, maxscale = 0.25, 2
-local rwframe, frame
-local dewdrop = DewdropLib:GetInstance("1.0")
 
 BigWigsMessages = AceAddon:new({
 	name          = "BigWigsMessages",
@@ -39,6 +39,10 @@ BigWigsMessages = AceAddon:new({
 
 	loc = {
 		menutitle = "Message frame",
+		menuanchor = "Show anchor",
+		menurw = "Send messages to RaidWarning frame",
+		menucolor = "Colorize messages",
+		menuscale = "Scale",
 	}
 })
 
@@ -107,10 +111,10 @@ end
 ------------------------------
 
 function BigWigsMessages:MenuSettings(level, value)
-	dewdrop:AddLine("text", "Show anchor", "func", self.BIGWIGS_SHOW_ANCHORS, "arg1", self)
-	dewdrop:AddLine("text", "Send messages to RaidWarning frame", "func", self.ToggleRW, "arg1", self, "arg2", true, "checked", not self:GetOpt("NotRW"))
-	dewdrop:AddLine("text", "Colorize messages", "func", self.ToggleWhite, "arg1", self, "arg2", true, "checked", not self:GetOpt("White"))
-	dewdrop:AddLine("text", "Scale", "sliderFunc", sliderchange, "hasArrow", true, "hasSlider", true,
+	dewdrop:AddLine("text", self.loc.menuanchor, "func", self.BIGWIGS_SHOW_ANCHORS, "arg1", self)
+	dewdrop:AddLine("text", self.loc.menurw, "func", self.ToggleRW, "arg1", self, "arg2", true, "checked", not self:GetOpt("NotRW"))
+	dewdrop:AddLine("text", self.loc.menucolor, "func", self.ToggleWhite, "arg1", self, "arg2", true, "checked", not self:GetOpt("White"))
+	dewdrop:AddLine("text", self.loc.menuscale, "sliderFunc", sliderchange, "hasArrow", true, "hasSlider", true,
 		"sliderTop", maxscale, "sliderBottom", minscale, "sliderValue", ((self:GetOpt("scale") or 1)-minscale)/(maxscale-minscale))
 end
 

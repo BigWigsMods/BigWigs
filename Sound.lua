@@ -1,4 +1,5 @@
 
+local dewdrop = DewdropLib:GetInstance("1.0")
 local cmdopt = {
 	option = "sound",
 	desc   = "Options for sounds.",
@@ -24,6 +25,11 @@ BigWigsSound = AceAddon:new({
 	name          = "BigWigsSound",
 	cmd           = AceChatCmd:new({}, {}),
 	cmdOptions    = cmdopt,
+
+	loc = {
+		menutitle = "Sounds",
+		menutoggle = "Use sounds",
+	},
 })
 
 
@@ -57,6 +63,15 @@ function BigWigsSound:BIGWIGS_MESSAGE(text, color, noraidsay, sound)
 
 	if sounds[sound] then PlaySoundFile(sounds[sound])
 	else PlaySound("RaidWarning") end
+end
+
+
+------------------------------
+--      Menu Functions      --
+------------------------------
+
+function BigWigsSound:MenuSettings(level, value)
+	dewdrop:AddLine("text", self.loc.menutoggle, "func", self.Toggle, "arg1", self, "checked", not self.disabled)
 end
 
 
