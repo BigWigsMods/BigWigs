@@ -27,6 +27,8 @@ local cmdopt = {
 		},
 	},
 }
+local sliderchange
+local minscale, maxscale = 0.25, 2
 local rwframe, frame
 local dewdrop = DewdropLib:GetInstance("1.0")
 
@@ -108,7 +110,8 @@ function BigWigsMessages:MenuSettings(level, value)
 	dewdrop:AddLine("text", "Show anchor", "func", self.BIGWIGS_SHOW_ANCHORS, "arg1", self)
 	dewdrop:AddLine("text", "Send messages to RaidWarning frame", "func", self.ToggleRW, "arg1", self, "arg2", true, "checked", not self:GetOpt("NotRW"))
 	dewdrop:AddLine("text", "Colorize messages", "func", self.ToggleWhite, "arg1", self, "arg2", true, "checked", not self:GetOpt("White"))
---~~ 	dewdrop:AddLine("text", "Blah", "func", self.somthing, "arg1", self, "arg2", true, "checked", self:GetOpt("White"))
+	dewdrop:AddLine("text", "Scale", "sliderFunc", sliderchange, "hasArrow", true, "hasSlider", true,
+		"sliderTop", maxscale, "sliderBottom", minscale, "sliderValue", ((self:GetOpt("scale") or 1)-minscale)/(maxscale-minscale))
 end
 
 
@@ -118,11 +121,17 @@ end
 
 function BigWigsMessages:SetScale(msg, supressreport)
 	local scale = tonumber(msg)
-	if scale and scale >= 0.25 and scale <= 5 then
+	if scale and scale >= minscale and scale <= maxscale then
 		self:SetOpt(scale, "scale")
 		if self.msgframe then self.msgframe:SetScale(scale) end
 		if not supressreport then self.cmd:result(string.format("Scale is set to %s", scale)) end
 	end
+end
+
+
+sliderchange = function(value)
+	BigWigsMessages:SetScale(value*(maxscale-minscale) + minscale, true)
+	return string.format("%.2f", value*(maxscale-minscale) + minscale)
 end
 
 
