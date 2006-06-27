@@ -169,9 +169,15 @@ function BigWigsCThun:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 
+	self:RegisterEvent("BIGWIGS_SYNC_CTHUNSTART")
+	self:RegisterEvent("BIGWIGS_SYNC_CTHUNP2START")
+	self:RegisterEvent("BIGWIGS_SYNC_CTHUNWEAKENED")
+
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "CTHUNSTART", 10)
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "CTHUNP2START", 10)
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "CTHUNWEAKENED", 10)
+
+	
 
 	metro:Unregister("BigWigs Cthun Tentacles")
 	metro:Unregister("BigWigs Cthun Tentacles Reschedule")
