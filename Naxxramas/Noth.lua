@@ -30,7 +30,7 @@ BigWigsNoth = AceAddon:new({
 		starttrigger3 = "Your life is forfeit!",
 		startwarn = "Noth the Plaguebringer engaged! 90 seconds till teleport",
 
-		blinktrigger = "Noth the Plaguebringer gains Blink",
+		blinktrigger = "Noth the Plaguebringer gains Blink.",
 		blinkwarn = "Blink! Stop DPS!",
 		blinkwarn2 = "Blink in ~5 seconds!",
 		blinkbar = "Blink",
@@ -59,20 +59,20 @@ function BigWigsNoth:Enable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 
-	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "NOTHBLINK", 5 )
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "NOTHBLINK", 5)
 
 	metro:Unregister("BigWigs Noth ToBalcony")
 	metro:Unregister("BigWigs Noth ToRoom")
 
-	metro:Register("BigWigs Noth ToBalcony", self.teleportToBalcony, self.timeroom, self )
-	metro:Register("BigWigs Noth ToRoom", self.teleportToRoom, self.timebalcony, self )
+	metro:Register("BigWigs Noth ToBalcony", self.teleportToBalcony, self.timeroom, self)
+	metro:Register("BigWigs Noth ToRoom", self.teleportToRoom, self.timebalcony, self)
 end
 
 function BigWigsNoth:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
 	
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.teleportwarn2 )
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.teleportwarn2)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.backwarn2)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.blinkwarn2)
 
@@ -87,16 +87,16 @@ end
 function BigWigsNoth:teleportToBalcony()
 	if self.timeroom == 90 then
 		self.timeroom = 110
-		metro:ChangeRate("BigWigs Noth ToBalcony", self.timeroom )
+		metro:ChangeRate("BigWigs Noth ToBalcony", self.timeroom)
 	elseif self.timeroom == 110 then
 		self.timeroom = 180
-		metro:ChangeRate("BigWigs Noth ToBalcony", self.timeroom )
+		metro:ChangeRate("BigWigs Noth ToBalcony", self.timeroom)
 	end
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.blinkwarn2)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.blinkbar)
 	if not self:GetOpt("notTeleport") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.teleportwarn, "Red") end
 	if not self:GetOpt("notTeleportBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.backbar, self.timebalcony, 2, "Orange", "Interface\\Icons\\Spell_Magic_LesserInvisibilty") end
-	if not self:GetOpt("notTeleport10Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.backwarn2, self.timebalcony - 10 ) end
+	if not self:GetOpt("notTeleport10Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.backwarn2, self.timebalcony - 10) end
 	metro:Stop("BigWigs Noth ToBalcony")
 	metro:Start("BigWigs Noth ToRoom")
 end
@@ -104,14 +104,14 @@ end
 function BigWigsNoth:teleportToRoom()
 	if self.timebalcony == 70 then
 		self.timebalcony = 95
-		metro:ChangeRate("BigWigs Noth ToBalcony", self.timebalcony )
+		metro:ChangeRate("BigWigs Noth ToBalcony", self.timebalcony)
 	elseif self.timebalcony == 95 then
 		self.timebalcony = 120
-		metro:ChangeRate("BigWigs Noth ToBalcony", self.timebalcony )
+		metro:ChangeRate("BigWigs Noth ToBalcony", self.timebalcony)
 	end	
 	if not self:GetOpt("notTeleport") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.backwarn, "Red") end
 	if not self:GetOpt("notTeleportBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.teleportbar, self.timeroom, 1, "Yellow", "Interface\\Icons\\Spell_Magic_LesserInvisibilty") end
-	if not self:GetOpt("notTeleport10Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.teleportwarn2, self.timeroom - 10 ) end
+	if not self:GetOpt("notTeleport10Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.teleportwarn2, self.timeroom - 10) end
 	metro:Stop("BigWigs Noth ToRoom")
 	metro:Start("BigWigs Noth ToBalcony")
 end
@@ -148,7 +148,6 @@ function BigWigsNoth:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
 		self:TriggerEvent("BIGWIGS_SYNC_SEND", "NOTHBLINK")
 	end
 end
-
 --------------------------------
 --      Load this bitch!      --
 --------------------------------
