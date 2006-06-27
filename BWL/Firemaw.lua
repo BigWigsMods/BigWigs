@@ -85,7 +85,7 @@ function BigWigsFiremaw:Enable()
 	self.disabled = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
-	self:RegisterEvent("BIGWIGS_MESSAGE")
+	self:RegisterEvent("BIGWIGS_SYNC_FIREMAW_WING_BUFFET")
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "FIREMAW_WING_BUFFET", 10)
 end
 

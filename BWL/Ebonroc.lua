@@ -115,7 +115,7 @@ function BigWigsEbonroc:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
-	self:RegisterEvent("BIGWIGS_MESSAGE")
+	self:RegisterEvent("BIGWIGS_SYNC_EBONROC_WING_BUFFET")
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "EBONROC_WING_BUFFET", 10)
 end
 
