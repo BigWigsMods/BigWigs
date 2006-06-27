@@ -1,4 +1,5 @@
 local bboss = BabbleLib:GetInstance("Boss 1.2")
+local metro = Metrognome:GetInstance("1")
 
 BigWigsNoth = AceAddon:new({
 	name          = "BigWigsNoth",
@@ -27,7 +28,7 @@ BigWigsNoth = AceAddon:new({
 		starttrigger1 = "Die, trespasser!",
 		starttrigger2 = "Glory to the master!",
 		starttrigger3 = "Your life is forfeit!",
-		engagewarn = "Noth the Plaguebringer engaged! 90 seconds till teleport",
+		startwarn = "Noth the Plaguebringer engaged! 90 seconds till teleport",
 
 		blinktrigger = "Noth the Plaguebringer gains Blink",
 		blinkwarn = "Blink! Stop DPS!",
@@ -43,8 +44,6 @@ BigWigsNoth = AceAddon:new({
 		backwarn = "He's back in the room!",
 		backwarn2 = "10 seconds until he's back in the room!",
 	},
-	timeroom = { 90, 110, 180 },
-	timebalcony = { 70, 95, 120 },
 })
 
 function BigWigsNoth:Initialize()
@@ -54,8 +53,8 @@ end
 
 function BigWigsNoth:Enable()
 	self.disabled = nil
-	self.roomcount = 0
-	self.balconycount = 0
+	self.timeroom = 90
+	self.timebalcony = 70
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
@@ -65,14 +64,12 @@ function BigWigsNoth:Enable()
 	metro:Unregister("BigWigs Noth ToBalcony")
 	metro:Unregister("BigWigs Noth ToRoom")
 
-	metro:Register("BigWigs Noth ToBalcony", self.teleportToBalcony, self.timeroom[0] )
-	metro:Register("BigWigs Noth ToRoom", self.teleportToRoom, self.timebalcony[0] )
+	metro:Register("BigWigs Noth ToBalcony", self.teleportToBalcony, self.timeroom, self )
+	metro:Register("BigWigs Noth ToRoom", self.teleportToRoom, self.timebalcony, self )
 end
 
 function BigWigsNoth:Disable()
 	self.disabled = true
-	self.roomcount = 0
-	self.balconycount = 0
 	self:UnregisterAllEvents()
 	
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.teleportwarn2 )
@@ -88,25 +85,33 @@ function BigWigsNoth:Disable()
 end
 
 function BigWigsNoth:teleportToBalcony()
-	if self.roomcount < 2 ) then 
-		self.roomcount = self.roomcount + 1
-		metro:ChangeRate("BigWigs Noth ToBalcony", self.timeroom[self.roomcount] )
+	if self.timeroom == 90 then
+		self.timeroom = 110
+		metro:ChangeRate("BigWigs Noth ToBalcony", self.timeroom )
+	elseif self.timeroom == 110 then
+		self.timeroom = 180
+		metro:ChangeRate("BigWigs Noth ToBalcony", self.timeroom )
 	end
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.blinkwarn2)
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.blinkbar)
 	if not self:GetOpt("notTeleport") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.teleportwarn, "Red") end
-	if not self:GetOpt("notTeleportBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.backbar, 2, "Orange", "Interface\\Icons\\Spell_Magic_LesserInvisibilty") end
-	if not self:GetOpt("notTeleport10Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.backwarn2, self.timebalcony[self.balconycount] - 10 ) end
+	if not self:GetOpt("notTeleportBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.backbar, self.timebalcony, 2, "Orange", "Interface\\Icons\\Spell_Magic_LesserInvisibilty") end
+	if not self:GetOpt("notTeleport10Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.backwarn2, self.timebalcony - 10 ) end
 	metro:Stop("BigWigs Noth ToBalcony")
 	metro:Start("BigWigs Noth ToRoom")
 end
 
 function BigWigsNoth:teleportToRoom()
-	if self.balconycount < 2 ) then 
-		self.balconycount = self.balconycount + 1
-		metro:ChangeRate("BigWigs Noth ToRoom", self.timebalcony[self.balconycount] )
-	end
+	if self.timebalcony == 70 then
+		self.timebalcony = 95
+		metro:ChangeRate("BigWigs Noth ToBalcony", self.timebalcony )
+	elseif self.timebalcony == 95 then
+		self.timebalcony = 120
+		metro:ChangeRate("BigWigs Noth ToBalcony", self.timebalcony )
+	end	
 	if not self:GetOpt("notTeleport") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.backwarn, "Red") end
-	if not self:GetOpt("notTeleportBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.teleportbar, 1, "Yellow", "Interface\\Icons\\Spell_Magic_LesserInvisibilty") end
-	if not self:GetOpt("notTeleport10Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.teleportwarn2, self.timeroom[self.roomcount] - 10 ) end
+	if not self:GetOpt("notTeleportBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.teleportbar, self.timeroom, 1, "Yellow", "Interface\\Icons\\Spell_Magic_LesserInvisibilty") end
+	if not self:GetOpt("notTeleport10Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.teleportwarn2, self.timeroom - 10 ) end
 	metro:Stop("BigWigs Noth ToRoom")
 	metro:Start("BigWigs Noth ToBalcony")
 end
@@ -120,16 +125,13 @@ end
 
 function BigWigsNoth:CHAT_MSG_MONSTER_YELL()
 	if (arg1 == self.loc.starttrigger1 or arg1 == self.loc.starttrigger2 or arg1 == self.loc.starttrigger3) then
-		self.roomcount = 0
-		self.balconycount = 0
-		metro:ChangeRate("BigWigs Noth ToBalcony", self.timeroom[self.roomcount] )
-		metro:ChangeRate("BigWigs Noth ToRoom", self.timebalcony[self.balconycount] )
+		self.timeroom = 90
+		self.timebalcony = 70
+		metro:ChangeRate("BigWigs Noth ToBalcony", self.timeroom )
+		metro:ChangeRate("BigWigs Noth ToRoom", self.timebalcony )
 		if not self:GetOpt("notStartWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Red") end
-		if not self:GetOpt("notTeleportBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.teleportbar, 1, "Yellow", "Interface\\Icons\\Spell_Magic_LesserInvisibilty") end
-		if not self:GetOpt("notTeleport10Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.teleportwarn2, self.timeroom[0] - 10, "Orange") end
-
-		if not self:GetOpt("notBlinkBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.blinkbar, 3, "Green", "Interface\\Icons\\Spell_Arcane_Blink") end
-		if not self:GetOpt("notBlink5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.blinkwarn2, 25, "Yellow" ) end
+		if not self:GetOpt("notTeleportBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.teleportbar, self.timeroom, 1, "Yellow", "Interface\\Icons\\Spell_Magic_LesserInvisibilty") end
+		if not self:GetOpt("notTeleport10Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.teleportwarn2, self.timeroom - 10, "Orange") end
 
 		metro:Start("BigWigs Noth ToBalcony")
 	end
@@ -137,7 +139,7 @@ end
 
 function BigWigsNoth:BIGWIGS_SYNC_NOTHBLINK()
 	if not self:GetOpt("notBlink") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.blinkwarn, "Red") end
-	if not self:GetOpt("notBlinkBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.blinkbar, 3, "Green", "Interface\\Icons\\Spell_Arcane_Blink") end
+	if not self:GetOpt("notBlinkBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.blinkbar, 30, 3, "Green", "Interface\\Icons\\Spell_Arcane_Blink") end
 	if not self:GetOpt("notBlink5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.blinkwarn2, 25, "Yellow" ) end
 end
 

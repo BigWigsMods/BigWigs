@@ -83,3 +83,4 @@ Naxxramas\Anubrekhan.lua
 Naxxramas\Gluth.lua
 Naxxramas\Faerlina.lua
 Naxxramas\Razuvious.lua
+Naxxramas\Noth.lua
