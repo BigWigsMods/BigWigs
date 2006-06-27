@@ -28,11 +28,16 @@ local cmdopt = {
 	},
 }
 local rwframe, frame
+local dewdrop = DewdropLib:GetInstance("1.0")
 
 BigWigsMessages = AceAddon:new({
 	name          = "BigWigsMessages",
 	cmd           = AceChatCmd:new({}, {}),
 	cmdOptions    = cmdopt,
+
+	loc = {
+		menutitle = "Message frame",
+	}
 })
 
 
@@ -96,30 +101,42 @@ end
 
 
 ------------------------------
+--      Menu Functions      --
+------------------------------
+
+function BigWigsMessages:MenuSettings(level, value)
+	dewdrop:AddLine("text", "Show anchor", "func", self.BIGWIGS_SHOW_ANCHORS, "arg1", self)
+	dewdrop:AddLine("text", "Send messages to RaidWarning frame", "func", self.ToggleRW, "arg1", self, "arg2", true, "checked", not self:GetOpt("NotRW"))
+	dewdrop:AddLine("text", "Colorize messages", "func", self.ToggleWhite, "arg1", self, "arg2", true, "checked", not self:GetOpt("White"))
+--~~ 	dewdrop:AddLine("text", "Blah", "func", self.somthing, "arg1", self, "arg2", true, "checked", self:GetOpt("White"))
+end
+
+
+------------------------------
 --      Slash Handlers      --
 ------------------------------
 
-function BigWigsMessages:SetScale(msg)
+function BigWigsMessages:SetScale(msg, supressreport)
 	local scale = tonumber(msg)
 	if scale and scale >= 0.25 and scale <= 5 then
 		self:SetOpt(scale, "scale")
 		if self.msgframe then self.msgframe:SetScale(scale) end
-		self.cmd:result(string.format("Scale is set to %s", scale))
+		if not supressreport then self.cmd:result(string.format("Scale is set to %s", scale)) end
 	end
 end
 
 
-function BigWigsMessages:ToggleRW()
+function BigWigsMessages:ToggleRW(supressreport)
 	local t = self:TogOpt("NotRW")
 	if t and not self.msgframe then self:CreateMsgFrame() end
-	self.cmd:msg("Messages now sent to: ".. (t and "BigWigs frame" or "RaidWarning frame"))
+	if not supressreport then self.cmd:msg("Messages now sent to: ".. (t and "BigWigs frame" or "RaidWarning frame")) end
 	frame = t and self.msgframe or RaidWarningFrame
 end
 
 
-function BigWigsMessages:ToggleWhite()
+function BigWigsMessages:ToggleWhite(supressreport)
 	local t = self:TogOpt("White")
-	self.cmd:msg("Coloring all messages white is now: " .. (t and "On" or "Off"))
+	if not supressreport then self.cmd:msg("Coloring all messages white is now: " .. (t and "On" or "Off")) end
 end
 
 

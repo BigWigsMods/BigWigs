@@ -12,8 +12,8 @@ BigWigsArlokk = AceAddon:new({
 	enabletrigger = bboss("High Priestess Arlokk"),
 
 	toggleoptions = {
-		notPlayer = "Mark on player warning",
-		notOthers = "Mark on others warning",
+		notPlayer = "Warn when you are marked",
+		notOthers = "Warn when others are marked",
 		notBosskill = "Boss death",
 	},
 

@@ -9,8 +9,8 @@ BigWigsMandokir = AceAddon:new({
 	bossname = bboss("Bloodlord Mandokir"),
 
 	toggleoptions = {
-		notPlayer = "Watching you warning",
-		notOthers = "Watching other players warnings",
+		notPlayer = "Warn when you are being watched",
+		notOthers = "Warn when others are being watched",
 		notBosskill = "Boss death",
 	},
 

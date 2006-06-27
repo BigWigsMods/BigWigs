@@ -9,8 +9,8 @@ BigWigsJeklik = AceAddon:new({
 	bossname = bboss("High Priestess Jeklik"),
 
 	toggleoptions = {
-		notBats = "Bomb bats warnings",
-		notHeal = "Heal interrupt warnings",
+		notBats = "Warn on incoming bomb bats",
+		notHeal = "Show Heal interrupt warnings",
 		notBosskill = "Boss death",
 	},
 

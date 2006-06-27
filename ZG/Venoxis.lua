@@ -9,8 +9,8 @@ BigWigsVenoxis = AceAddon:new({
 	bossname = bboss("High Priest Venoxis"),
 
 	toggleoptions = {
-		notRenew = "Renew dispel warnings",
-		notPhase2 = "Phase 2 warning",
+		notRenew = "Show Renew dispel warnings",
+		notPhase2 = "Announce Phase 2 transition",
 		notBosskill = "Boss death",
 	},
 	optionorder = { "notRenew", "notPhase2", "notBosskill" },

@@ -9,8 +9,8 @@ BigWigsMarli = AceAddon:new({
 	bossname = bboss("High Priestess Mar'li"),
 
 	toggleoptions = {
-		notSpiders = "Spider spawn warnings",
-		notDrain = "Drain life warnings",
+		notSpiders = "Warn when spiders spawn",
+		notDrain = "Warn on Life Drain",
 		notBosskill = "Boss death",
 	},
 

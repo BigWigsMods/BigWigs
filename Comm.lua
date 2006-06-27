@@ -28,7 +28,7 @@ end
 -- Handle inbound chatter when the user runs CTRA
 function BigWigsComm:CHAT_MSG_CHANNEL(msg, chan, sender)
 	local rawmsg, channel, nick = msg or arg1, chan or arg9 or "", sender or arg2
-	if not CT_RA_Channel or string.lower(channel) ~= string.lower(CT_RA_Channel) and channel ~= "SelfSync" then return end
+	if (not CT_RA_Channel or string.lower(channel) ~= string.lower(CT_RA_Channel)) and channel ~= "SelfSync" then return end
 
 	local cleanmsg = string.gsub(rawmsg, "%$", "s")
 	cleanmsg = string.gsub(cleanmsg, "§", "S")

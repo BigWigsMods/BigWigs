@@ -6,7 +6,7 @@ local sv
 BigWigs = AceAddon:new({
 	name          = "BigWigs",
 	description   = GetAddOnMetadata("BigWigs", "Notes"),
-	version       = GetAddOnMetadata("BigWigs", "Version").." b".. string.sub(GetAddOnMetadata("BigWigs", "X-Build"), 12, -3),
+	version       = string.sub(GetAddOnMetadata("BigWigs", "X-Build"), 12, -3),
 	releaseDate   = string.sub(GetAddOnMetadata("BigWigs", "X-ReleaseDate"), 8, 18),
 	author        = GetAddOnMetadata("BigWigs", "Author"),
 	email   	    = GetAddOnMetadata("BigWigs", "X-Email"),
