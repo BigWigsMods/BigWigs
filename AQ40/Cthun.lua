@@ -11,10 +11,28 @@ BigWigsCThun = AceAddon:new({
 
 	toggleoptions = {
 		notStartWarn = "Start warning",
+		notGroupWarning = "Dark glare on group X warning",
+		notGlareWarn = "Dark glare warnings",
+		notGlareBar = "Dark glare timerbar",
+		notPositions = "Dark glare end warning",
+		notTentacle = "Tentacle warning",
+		notTentacle5Sec = "Tentacle 5-sec warning",
+		notTentacleBar = "Tentacle timerbar",
+		notGiant = "Giant Eye Tentacle warning",
+		notGiant5Sec = "Giant Eye Tentacle 5-sec warning",
+		notGiant10Sec = "Giant Eye Tentacle 10-sec warning",
+		notGiantBar = "Giant Eye Tentacle timerbar",
+		notPhase2Start = "Phase 2 start warning",
+		notWeakened = "Weakened warning",
+		notInvulnerable = "Invulnerable in x-sec warnings",
+		notWeakenedBar = "Weakened timberbar",
 		notBosskill = "Boss death",
 	},
 
-	optionorder = {"notStartWarn", "notBosskill"},
+	optionorder = {"notStartWarn", "notGlareWarn", "notGlareBar", "notPositions", "notGroupWarning",
+		"notTentacle", "notTentacle5Sec", "notTentacleBar",
+		"notPhase2Start", "notGiant", "notGiant5Sec", "notGiant10Sec", "notGiantBar", 
+		"notWeakened", "notWeakenedBar", "notInvulnerable", "notBosskill"},
 
 	loc 		= GetLocale() == "koKR" and {			
 			cthun		= "쑨",
@@ -46,6 +64,7 @@ BigWigsCThun = AceAddon:new({
 			invulnerable2	= "Party ends in 5 seconds!",
 			invulnerable1	= "Party over! C'Thun is now invulnerable!",
 			positions	= "Assume the position! Green Beam coming!",
+			phase2starting	= "The Eye is dead! Body incoming!",
 	} 
 		or GetLocale() == "zhCN" and 
 	{
@@ -82,6 +101,7 @@ BigWigsCThun = AceAddon:new({
 			invulnerable2	= "Party ends in 5 seconds!",
 			invulnerable1	= "Party over! C'Thun is now invulnerable!",
 			positions	= "Assume the position! Green Beam coming!",
+			phase2starting	= "The Eye is dead! Body incoming!",
 	}
 		or 
 	{
@@ -118,6 +138,7 @@ BigWigsCThun = AceAddon:new({
 			glarewarning	= "DARK GLARE ON YOU! MOVE!",
 			groupwarning	= "Dark Glare on group %s (%s)",
 			positions	= "Assume the position! Green Beam coming!",
+			phase2starting	= "The Eye is dead! Body incoming!",
 	},
 
 	timeP1Tentacle	 = 45,
@@ -201,8 +222,10 @@ function BigWigsCThun:GroupWarning()
 			name, _, group, _, _, _, _, _ = GetRaidRosterInfo(i)
 			if( name == self.target ) then break end
 		end
-		self:TriggerEvent("BIGWIGS_MESSAGE", string.format( self.loc.groupwarning, group, self.target), "Red")
-		self:TriggerEvent("BIGWIGS_SENDTELL", self.target, self.loc.glarewarning ) 
+		if not self:GetOpt("notGroupWarning") then
+			self:TriggerEvent("BIGWIGS_MESSAGE", string.format( self.loc.groupwarning, group, self.target), "Red")
+			self:TriggerEvent("BIGWIGS_SENDTELL", self.target, self.loc.glarewarning ) 
+		end
 	end
 end
 
@@ -212,17 +235,17 @@ function BigWigsCThun:TentacleRape()
 		nexttime = self.timeP2Tentacle
 		if( self.gianteye ) then
 			self.gianteye = nil
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.giant1, nexttime, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.giant2, nexttime - 5, "Orange")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.giant3, nexttime - 10, "Yellow")
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGiant, nexttime, 3, "Orange", "Interface\\Icons\\Ability_EyeOfTheOwl" )
+			if not self:GetOpt("notGiant") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.giant1, nexttime, "Red") end
+			if not self:GetOpt("notGiant5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.giant2, nexttime - 5, "Orange") end
+			if not self:GetOpt("notGiant10Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.giant3, nexttime - 10, "Yellow") end
+			if not self:GetOpt("notGiantBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGiant, nexttime, 3, "Orange", "Interface\\Icons\\Ability_EyeOfTheOwl" ) end
 		else
 			self.gianteye = true
 		end
 	end
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle1, nexttime, "Red")
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle2, nexttime - 5, "Orange")
-	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barTentacle, nexttime, 1, "Green", "Interface\\Icons\\Spell_Nature_CallStorm" )
+	if not self:GetOpt("notTentacle") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle1, nexttime, "Red") end
+	if not self:GetOpt("notTentacle5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle2, nexttime - 5, "Orange") end
+	if not self:GetOpt("notTentacleBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barTentacle, nexttime, 1, "Green", "Interface\\Icons\\Spell_Nature_CallStorm" ) end
 end
 
 function BigWigsCThun:DarkGlare()
@@ -231,10 +254,12 @@ function BigWigsCThun:DarkGlare()
 		self.firstGlare = nil
 	end
 	-- we announce just before the glare to give people time, hence the -1 
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare1, self.timeP1Glare-1, "Red")
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare2, self.timeP1Glare-5, "Orange")
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.positions, self.timeP1Glare + self.timeP1GlareDuration, "Green")
-	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGlare, self.timeP1Glare, 2, "Red", "Interface\\Icons\\Spell_Shadow_ShadowBolt")
+	if not self:GetOpt("notGlareWarn") then 
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare1, self.timeP1Glare-1, "Red")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare2, self.timeP1Glare-5, "Orange")
+	end
+	if not self:GetOpt("notPositions") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.positions, self.timeP1Glare + self.timeP1GlareDuration, "Green") end
+	if not self:GetOpt("notGlareBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGlare, self.timeP1Glare, 2, "Red", "Interface\\Icons\\Spell_Shadow_ShadowBolt") end
 end
 
 function BigWigsCThun:StartTentacleRape()
@@ -249,10 +274,12 @@ function BigWigsCThun:CHAT_MSG_MONSTER_EMOTE()
 end
 
 function BigWigsCThun:BIGWIGS_SYNC_CTHUNWEAKENED()
-	self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.weakend, "Green")
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.invulnerable2, 40, "Orange")
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.invulnerable1, 45, "Red")
-	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barWeakend, 45, 4, "Red", "Interface\\Icons\\INV_ValentinesCandy")
+	if not self:GetOpt("notWeakened") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.weakend, "Green") end
+	if not self:GetOpt("notInvulnerable") then
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.invulnerable2, 40, "Orange")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.invulnerable1, 45, "Red")
+	end
+	if not self:GetOpt("notWeakenedBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barWeakend, 45, 4, "Red", "Interface\\Icons\\INV_ValentinesCandy") end
 
 	-- cancel tentacle timers
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.tentacle1)
@@ -283,6 +310,8 @@ function BigWigsCThun:BIGWIGS_SYNC_CTHUNP2START()
 	if( not self.phase2 ) then
 		self.phase2 = true
 
+		if self:GetOpt("notPhase2Start") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.phase2starting, "Green" ) end
+
 		-- cancel tentacle timers
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.tentacle1)
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.tentacle2)
@@ -299,13 +328,13 @@ function BigWigsCThun:BIGWIGS_SYNC_CTHUNP2START()
 		metro:ChangeRate("BigWigs Cthun Tentacles", self.timeP2Tentacle )
 			
 		-- schedule first rape into phase 2
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle1, self.timeP2Tentacle + self.timeP2Offset, "Red")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle2, self.timeP2Tentacle + self.timeP2Offset - 5, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barTentacle, self.timeP2Tentacle + self.timeP2Offset, 1, "Green", "Interface\\Icons\\Spell_Nature_CallStorm")
+		if not self:GetOpt("notTentacle") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle1, self.timeP2Tentacle + self.timeP2Offset, "Red") end
+		if not self:GetOpt("notTentacle5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle2, self.timeP2Tentacle + self.timeP2Offset - 5, "Orange") end
+		if not self:GetOpt("notTentacleBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barTentacle, self.timeP2Tentacle + self.timeP2Offset, 1, "Green", "Interface\\Icons\\Spell_Nature_CallStorm") end
 
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.giant1, self.timeP2Tentacle + self.timeP2Offset, "Red")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.giant2, self.timeP2Tentacle + self.timeP2Offset - 5, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGiant, self.timeP2Tentacle + self.timeP2Offset, 3, "Orange", "Interface\\Icons\\Ability_EyeOfTheOwl" )		
+		if not self:GetOpt("notGiant") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.giant1, self.timeP2Tentacle + self.timeP2Offset, "Red") end
+		if not self:GetOpt("notGiant5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.giant2, self.timeP2Tentacle + self.timeP2Offset - 5, "Orange") end
+		if not self:GetOpt("notGiantBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGiant, self.timeP2Tentacle + self.timeP2Offset, 3, "Orange", "Interface\\Icons\\Ability_EyeOfTheOwl" ) end
 
 		-- this metro schedule will restart the tentacle rapes again.
 		metro:Start("BigWigs Cthun Tentacles Phase2", 1)
