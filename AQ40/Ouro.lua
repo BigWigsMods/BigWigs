@@ -26,10 +26,9 @@ BigWigsOuro = AceAddon:new({
 		notSubmergeWarn = "Emerge warning",
 		notScarabWarn = "Scarab Despawn Warning",
 		notScarabBar = "Scarab despawn timebar",
-		
-	},
+		},
 
-	optionorder = {"notSweepBar", "notSweep5Sec", "notSweepWarn", "notBlastBar", "notBlast5Sec", "notBlastWarn", "notEmergeBar", "notEmerge5Sec", "notEmergeWarn", "notSubmergeBar", "notSubmerge5Sec", "notSubmergeWarn","notScarabWarn", "notScarabBar", "notBerserkSoon", "notBosskill"},
+	optionorder = {"notSweepBar", "notSweep5Sec", "notSweepWarn", "notBlastBar", "notBlast5Sec", "notBlastWarn", "notEmergeBar", "notEmerge5Sec", "notEmergeWarn", "notSubmergeBar", "notSubmerge5Sec", "notSubmergeWarn", "notScarabWarn", "notScarabBar", "notBerserkSoon", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
 		disabletrigger = "아우로|1이;가; 죽었습니다.",
@@ -155,6 +154,11 @@ function BigWigsOuro:Disable()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.scarabbar, 30)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.scarabbar, 45)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.scarabdespawn)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.submergewarn, 25)
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.submergebar)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.submergebartext, 10)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.submergebartext, 20)
+
 end
 
 function BigWigsOuro:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -214,12 +218,11 @@ end
 
 function BigWigsOuro:BIGWIGS_SYNC_OUROSUBMERGE()
 	if not self:GetOpt("notSubmergeWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.submergeannounce, "Red") end
-		if not self:GetOpt("notSubmerge5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.submergewarn, 25, "Red") end
-		if not self:GetOpt("notSubmergeBar") then
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.submergebar, 30, 3, "Yellow", "Interface\\Icons\\Spell_Nature_Earthquake")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.submergebartext, 10, "Orange")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.submergebartext, 20, "Red")
-		end
+	if not self:GetOpt("notSubmerge5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.submergewarn, 25, "Red") end
+	if not self:GetOpt("notSubmergeBar") then
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.submergebar, 30, 3, "Yellow", "Interface\\Icons\\Spell_Nature_Earthquake")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.submergebartext, 10, "Orange")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.submergebartext, 20, "Red")
 	end
 end
 
