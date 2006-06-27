@@ -9,7 +9,13 @@ BigWigsOssirian = AceAddon:new({
 	enabletrigger = bboss("Ossirian the Unscarred"),
 	bossname = bboss("Ossirian the Unscarred"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notBosskill = "보스 사망",
+		notSupreme = "무적 경고",
+		notSupremeDelay = "무적 시간 경고",
+		notSupremeBar = "무적 타이머바",
+		notDebuff = "디버프 경고",
+	} or {
 		notBosskill = "Boss death",
 		notSupreme = "Supreme warning",
 		notSupremeDelay = "Supreme x-sec warnings",

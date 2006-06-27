@@ -8,7 +8,10 @@ BigWigsAyamiss = AceAddon:new({
 	enabletrigger = bboss("Ayamiss the Hunter"),
 	bossname = bboss("Ayamiss the Hunter"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notBosskill = "보스 사망",
+		notSacrifice = "마비 경고",
+	} or {
 		notBosskill = "Boss death",
 		notSacrifice = "Sacrifice warning",
 	},

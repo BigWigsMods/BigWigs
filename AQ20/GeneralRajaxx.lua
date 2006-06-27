@@ -11,7 +11,10 @@ BigWigsGeneralRajaxx = AceAddon:new({
 
 	bossname = bboss("General Rajaxx"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notBosskill = "보스 사망",
+		notWave = "단계 알림",
+	} or {
 		notBosskill = "Boss death",
 		notWave = "Wave warning",
 	},

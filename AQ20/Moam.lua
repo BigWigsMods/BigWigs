@@ -6,11 +6,19 @@ BigWigsMoam = AceAddon:new({
 
 
 	zonename = BabbleLib:GetInstance("Zone 1.2")("Ruins of Ahn'Qiraj"),
-
 	enabletrigger = bboss("Moam"),
 	bossname = bboss("Moam"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notBosskill = "보스 사망",
+		notStart = "시작 경고",
+		notAddsBar = "타이머바 추가",
+		notAdds = "경고 추가",
+		notParalyze = "멈춤 경고",
+		notParalyzeBar = "멈춤 타이머바",
+		notReturn = "재등장 경고",
+	
+	} or {
 		notBosskill = "Boss death",
 		notStart = "Start warning",
 		notAddsBar = "Adds timerbar",
@@ -24,7 +32,21 @@ BigWigsMoam = AceAddon:new({
 
 
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		bossname = "모암",
+		disabletrigger = "모암|1이;가; 죽었습니다.",
+		bosskill = "모암을 물리쳤습니다..",
+		startrigger = "당신의 공포를 알아챕니다.",
+		startwarn = "모암 행동시작! 90초 후 정령 등장!",
+		addsbar = "정령 등장",
+		addsincoming = "%s초후 정령 등장!",
+		addstrigger = "당신의 마나를 흡수하여 돌처럼 변합니다.",
+		addswarn = "정령 등장! 모암 90초간 멈춤!",
+		paralyzebar = "모암 멈춤",
+		returnincoming = "%s초후 모암 행동 재개!",
+		returntrigger = "모암의 몸에서 마력 충전 효과가 사라졌습니다.",
+		returnwarn = "모암 행동 재개! 90초 후 정령 등장!",
+	} or { 
 		disabletrigger = "Moam dies.",
 		bosskill = "Moam has been defeated.",
 		startrigger = "senses your fear",

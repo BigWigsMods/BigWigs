@@ -8,7 +8,12 @@ BigWigsBuru = AceAddon:new({
 	enabletrigger = bboss("Buru the Gorger"),
 	bossname = bboss("Buru the Gorger"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notBosskill = "보스 사망",
+		notWatchYou = "자신을 노려볼 때 경고",
+		notWatchOther = "다른 사람을 노려볼 때 경고",
+		notIcon = "노려보는 사람에게 해골 표시. (승급 필요)",
+	} or {
 		notBosskill = "Boss death",
 		notWatchYou = "You're being watched warning",
 		notWatchOther = "Others being watched warning",
