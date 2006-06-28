@@ -12,7 +12,7 @@ BigWigsCThun = AceAddon:new({
 	toggleoptions = GetLocale() == "koKR" and {
 		notBosskill = "보스 사망",
 	} or { 
-		notStartWarn = "시작 경고",
+		notStartWarn = "Start warning",
 		notGroupWarning = "Dark glare on group X warning",
 		notGlareWarn = "Dark glare warnings",
 		notGlareBar = "Dark glare timerbar",
