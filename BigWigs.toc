@@ -11,6 +11,7 @@
 
 ## Dependencies: Ace, Timex
 ## OptionalDeps: FuBar, BabbleLib
+
 ## SavedVariables: BigWigsFubarDB
 ## SavedVariablesPerCharacter: BigWigsDB
 
