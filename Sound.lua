@@ -1,6 +1,17 @@
-
 local dewdrop = DewdropLib:GetInstance("1.0")
-local cmdopt = {
+
+local cmdopt = GetLocale() == "koKR" and {
+	option = "효과음",
+	desc   = "효과음 옵션.",
+	input  = true,
+	args   = {
+		{
+			option = "켜기",
+			desc   = "효과음을 켜거나 끔.",
+			method = "Toggle",
+		},
+	},
+} or {
 	option = "sound",
 	desc   = "Options for sounds.",
 	input  = true,

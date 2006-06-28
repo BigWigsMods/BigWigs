@@ -1,9 +1,36 @@
-
 local sliderchange
 local minscale, maxscale = 0.25, 2
 local rwframe, frame
 local dewdrop = DewdropLib:GetInstance("1.0")
-local cmdopt = {
+
+local cmdopt = GetLocale() == "koKR" and {
+	option = "메시지",
+	desc   = "메시지 창 옵션.",
+	input  = true,
+	args   = {
+		{
+			option = "위치",
+			desc   = "메시지 위치 조정 프레임 보이기.",
+			method = "BIGWIGS_SHOW_ANCHORS",
+		},
+		{
+			option = "공대경고",
+			desc   = "공대경고 창으로 메시지 보내기.",
+			method = "ToggleRW",
+		},
+		{
+			option = "하양",
+			desc   = "메시지를 하얀 색으로 변경.",
+			method = "ToggleWhite",
+		},
+		{
+			option = "크기",
+			desc   = "메시지 크기 조정.",
+			method = "SetScale",
+			input  = true,
+		},
+	},
+} or  {
 	option = "msg",
 	desc   = "Options for the message frame.",
 	input  = true,

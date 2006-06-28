@@ -60,7 +60,7 @@ BigWigs = AceAddon:new({
 		Duskwood = "그늘숲",
 		Feralas = "페랄라스",
 		Hinterlands = "저주받은 땅",
-		Naxxramas = "Naxxramas",
+		Naxxramas = "낙스라마스",
 	} or GetLocale() == "zhCN" and {
 		ModuleEnable = "%s模块已开启",
 		TargetEnable = "目标监视已开启",

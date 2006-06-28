@@ -1,8 +1,30 @@
-
 local sliderchange
 local minscale, maxscale = 0.25, 2
 local dewdrop = DewdropLib:GetInstance("1.0")
-local cmdopt = {
+
+local cmdopt = GetLocale() == "koKR" and {
+	option = "바",
+	desc   = "Timex 바 옵션 조정.",
+	input  = true,
+	args   = {
+		{
+			option = "위치",
+			desc   = "바 위치 조정 프레임 보이기.",
+			method = "BIGWIGS_SHOW_ANCHORS",
+		},
+		{
+			option = "크기",
+			desc   = "바 크기 조절.",
+			method = "SetScale",
+			input  = true,
+		},
+		{
+			option = "방향",
+			desc   = "바 표시 순서를 위/아래로 조정.",
+			method = "ToggleUp",
+		},
+	},
+} or {
 	option = "bars",
 	desc   = "Options for the Timex Bars.",
 	input  = true,
