@@ -108,6 +108,7 @@ end
 function BigWigs:Enable()
 	self:RegisterEvent("BIGWIGS_REGISTER_MODULE")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	self:RegisterEvent("BIGWIGS_SYNC_ENABLEMODULE")
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "ENABLEMODULE", 10)
 end
 
