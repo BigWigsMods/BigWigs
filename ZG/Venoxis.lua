@@ -8,7 +8,11 @@ BigWigsVenoxis = AceAddon:new({
 	enabletrigger = bboss("High Priest Venoxis"),
 	bossname = bboss("High Priest Venoxis"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notRenew = "소생 해제 경고",
+		notPhase2 = "2단계 경보",
+		notBosskill = "보스 사망",
+	} or {
 		notRenew = "Show Renew dispel warnings",
 		notPhase2 = "Announce Phase 2 transition",
 		notBosskill = "Boss death",

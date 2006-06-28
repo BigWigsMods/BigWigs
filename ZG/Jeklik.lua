@@ -8,7 +8,11 @@ BigWigsJeklik = AceAddon:new({
 	enabletrigger = bboss("High Priestess Jeklik"),
 	bossname = bboss("High Priestess Jeklik"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notBats = "박쥐 소환 경고",
+		notHeal = "치유 시전 방해 알림",
+		notBosskill = "보스 사망",
+	} or {
 		notBats = "Warn on incoming bomb bats",
 		notHeal = "Show Heal interrupt warnings",
 		notBosskill = "Boss death",

@@ -8,7 +8,11 @@ BigWigsMarli = AceAddon:new({
 	enabletrigger = bboss("High Priestess Mar'li"),
 	bossname = bboss("High Priestess Mar'li"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notSpiders = "거미 소환 경고",
+		notDrain = "Life Drain 경고",
+		notBosskill = "보스 사망",
+	} or {
 		notSpiders = "Warn when spiders spawn",
 		notDrain = "Warn on Life Drain",
 		notBosskill = "Boss death",

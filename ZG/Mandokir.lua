@@ -8,7 +8,11 @@ BigWigsMandokir = AceAddon:new({
 	enabletrigger = bboss("Bloodlord Mandokir"),
 	bossname = bboss("Bloodlord Mandokir"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notPlayer = "당신을 지켜볼 때 경고",
+		notOthers = "다른 사람을 지켜볼 때 경고",
+		notBosskill = "보스 사망",	
+	} or { 
 		notPlayer = "Warn when you are being watched",
 		notOthers = "Warn when others are being watched",
 		notBosskill = "Boss death",

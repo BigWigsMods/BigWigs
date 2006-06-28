@@ -8,7 +8,16 @@ BigWigsHakkar = AceAddon:new({
 	enabletrigger = bboss("Hakkar"),
 	bossname = bboss("Hakkar"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notEnrageBar = "격노 타이머",
+		notDrainBar = "생명력 흡수 타이머",
+		notEngage = "시작 알림",
+		notDrain90 = "생흡 90초전 경고",
+		notDrain60 = "생흡 60초전 경고",
+		notDrain45 = "생흡 45초전 경고",
+		notDrain15 = "생흡 15초전 경고",
+		notBosskill = "보스 사망",
+	} or {
 		notEnrageBar = "Enrage timer",
 		notDrainBar = "Drain timer",
 		notEngage = "Announce battle start",
@@ -22,9 +31,9 @@ BigWigsHakkar = AceAddon:new({
 
 	loc = GetLocale() == "koKR" and {
 		disabletrigger = "학카르|1이;가; 죽었습니다.",
-
+				 
 		trigger1 = "자만심은 세상의 종말을 불러올 뿐이다. 오너라! 건방진 피조물들이여! 와서 신의 진노에 맞서 보아라!",
-		trigger2 = "학카르|1이;가; (.+)의 피의 착취에 의해 (.+) 피해를 입었습니다.",
+		trigger2 = "학카르|1이;가; (.+)의 피의 착취에 의해 (.+)의 자연 피해를 입었습니다.",
 		flee = "Fleeing will do you no good mortals!",
 
 		start = "학카르 시작 - 90초후 생명력 흡수 - 10분후 격노",
