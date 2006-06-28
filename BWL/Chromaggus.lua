@@ -146,7 +146,6 @@ end
 function BigWigsChromaggus:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
-	self:Reset()
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.breath1)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.breath2)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", format(self.loc.warn1, self.loc.breath1))
@@ -155,6 +154,7 @@ function BigWigsChromaggus:Disable()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath1, 50)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 30)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 50)
+	self:Reset()
 end
 
 function BigWigsChromaggus:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -173,7 +173,6 @@ function BigWigsChromaggus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 			self.loc.breath2 = SpellName
 		end
 
-		Timex:ChangeDuration("BigWigsChromaggusResetTimer", 60)
 		self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.warn2, SpellName), "Red")
 
 		if (self.loc.breath1 == SpellName and not self:GetOpt("notBreaths")) then
@@ -193,11 +192,9 @@ end
 function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE()
 	if (arg1 == self.loc.trigger4) then
 		if (not self:GetOpt("notFrenzy")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red") end
-		Timex:ChangeDuration("BigWigsChromaggusResetTimer", 60)
 	elseif (arg1 == self.loc.trigger5) then
 		if (not self:GetOpt("notVulnerability")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "White") end
 		Timex:AddNamedSchedule("BigWigsChromaggusSpellVulnerability", 2.5, false, 1, function() BigWigsChromaggus.loc.vulnerability = nil end)
-		Timex:ChangeDuration("BigWigsChromaggusResetTimer", 60)
 	end
 end
 
@@ -211,7 +208,6 @@ if (GetLocale() == "koKR") then
 					if (not self:GetOpt("notVulnerability")) then self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.warn3, School), "White") end
 				end
 			end
-			Timex:ChangeDuration("BigWigsChromaggusResetTimer", 60)
 		end
 	end
 else
@@ -224,7 +220,6 @@ else
 					if (not self:GetOpt("notVulnerability")) then self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.warn3, School), "White") end
 				end
 			end
-			Timex:ChangeDuration("BigWigsChromaggusResetTimer", 60)
 		end
 	end
 end
