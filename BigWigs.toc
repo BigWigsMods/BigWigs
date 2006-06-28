@@ -80,3 +80,6 @@ Other\Test.lua
 
 Naxxramas\Anubrekhan.lua
 Naxxramas\Gluth.lua
+Naxxramas\Razuvious.lua
+Naxxramas\Noth.lua
+Naxxramas\Faerlina.lua
