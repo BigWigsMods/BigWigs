@@ -154,7 +154,10 @@ function BigWigsChromaggus:Disable()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath1, 50)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 30)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 50)
-	self:Reset()
+
+	self.loc.vulnerability = nil
+	self.loc.breath1 = nil
+	self.loc.breath2 = nil
 end
 
 function BigWigsChromaggus:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -224,11 +227,6 @@ else
 	end
 end
 
-function BigWigsChromaggus:Reset()
-	self.loc.vulnerability = nil
-	self.loc.breath1 = nil
-	self.loc.breath2 = nil
-end
 --------------------------------
 --      Load this bitch!      --
 --------------------------------
