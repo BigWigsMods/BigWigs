@@ -31,70 +31,18 @@ BigWigs = AceAddon:new({
 		ModuleEnable = "%s mod aktiviert",
 		TargetEnable = "Ziel\195\188berwachung aktiviert",
 		TargetDisable = "Ziel\195\188berwachung deaktiviert",
-
-		MC = "Geschmolzener Kern",
-		BWL = "Pechschwingenhort",
-		Onyxia = "Onyxias Hort",
-		ZG = "Zul'Gurub",
-		AQ20 = "Ruinen von Ahn'Qiraj",
-		AQ40 = "Ahn'Qiraj",
-		Ashenvale = "Ashenvale",
-		Azshara = "Azshara",
-		Duskwood = "Duskwood",
-		Feralas = "Feralas",
-		Hinterlands = "Das Hinterland",
-		Naxxramas = "Naxxramas",
 	} or GetLocale() == "koKR" and {
 		ModuleEnable = "%s 모듈을 시작",
 		TargetEnable = "타겟 확인 시작",
 		TargetDisable = "타겟 확인 꺼짐",
-
-		MC = "화산 심장부",
-		BWL = "검은날개 둥지",
-		Onyxia = "오닉시아의 둥지",
-		ZG = "줄구룹",
-		AQ20 = "안퀴라즈 폐허",
-		AQ40 = "안퀴라즈",
-		Ashenvale = "잿빛 골짜기",
-		Azshara = "아즈샤라",
-		Duskwood = "그늘숲",
-		Feralas = "페랄라스",
-		Hinterlands = "저주받은 땅",
-		Naxxramas = "낙스라마스",
 	} or GetLocale() == "zhCN" and {
 		ModuleEnable = "%s模块已开启",
 		TargetEnable = "目标监视已开启",
 		TargetDisable = "目标监视已关闭",
-
-		MC = "熔火之心",
-		BWL = "黑翼之巢",
-		Onyxia = "奥妮克西亚的巢穴",
-		ZG = "祖尔格拉布",
-		AQ20 = "安其拉废墟",
-		AQ40 = "安其拉",
-		Ashenvale = "灰谷",
-		Azshara = "艾萨拉",
-		Duskwood = "暮色森林",
-		Feralas = "菲拉斯",
-		Hinterlands = "辛特兰",
-		Naxxramas = "Naxxramas",
 	} or {
 		ModuleEnable = "%s mod enabled",
 		TargetEnable = "Target monitoring enabled",
 		TargetDisable = "Target monitoring disabled",
-
-		MC = "Molten Core",
-		BWL = "Blackwing Lair",
-		Onyxia = "Onyxia's Lair",
-		ZG = "Zul'Gurub",
-		AQ20 = "Ruins of Ahn'Qiraj",
-		AQ40 = "Ahn'Qiraj",
-		Ashenvale = "Ashenvale",
-		Azshara = "Azshara",
-		Duskwood = "Duskwood",
-		Feralas = "Feralas",
-		Hinterlands = "The Hinterlands",
-		Naxxramas = "Naxxramas",
 	},
 })
 
@@ -108,7 +56,6 @@ end
 function BigWigs:Enable()
 	self:RegisterEvent("BIGWIGS_REGISTER_MODULE")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-	self:RegisterEvent("BIGWIGS_SYNC_ENABLEMODULE")
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "ENABLEMODULE", 10)
 end
 
