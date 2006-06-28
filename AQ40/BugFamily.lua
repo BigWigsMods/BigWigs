@@ -6,9 +6,17 @@ BigWigsBugFamily = AceAddon:new({
 
 	zonename = BabbleLib:GetInstance("Zone 1.2")("Ahn'Qiraj"),
 	enabletrigger = { bboss("Lord Kri"), bboss("Princess Yauj"), bboss("Vem")  },
-	bossname =  "Bug Trio - " .. bboss("Lord Kri") .. ", ".. bboss("Princess Yauj") .. " & ".. bboss("Vem"),
+	bossname = GetLocale() == "koKR" 
+		and "벌레 무리 - " .. bboss("Lord Kri") .. ", ".. bboss("Princess Yauj") .. " & ".. bboss("Vem")
+		or "Bug Trio - " .. bboss("Lord Kri") .. ", ".. bboss("Princess Yauj") .. " & ".. bboss("Vem"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notBosskill = "보스 사망",
+		notFearBar = "공포 타이머",
+		notFearWarn = "공포 경고",
+		notFear5Sec = "공포 5초전 경고",
+		notHealWarn = "치유 경고",
+	} or {
 		notBosskill = "Boss death",
 		notFearBar = "Fear timer",
 		notFearWarn = "Fear warning",

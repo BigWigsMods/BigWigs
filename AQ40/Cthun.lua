@@ -9,8 +9,10 @@ BigWigsCThun = AceAddon:new({
 	enabletrigger = bboss("Eye of C'Thun"),
 	bossname = bboss("Eye of C'Thun"),
 
-	toggleoptions = {
-		notStartWarn = "Start warning",
+	toggleoptions = GetLocale() == "koKR" and {
+		notBosskill = "보스 사망",
+	} or { 
+		notStartWarn = "시작 경고",
 		notGroupWarning = "Dark glare on group X warning",
 		notGlareWarn = "Dark glare warnings",
 		notGlareBar = "Dark glare timerbar",
@@ -45,6 +47,12 @@ BigWigsCThun = AceAddon:new({
 			tentacle2	= "눈달린 촉수 등장 - 5초전!",
 			tentacle3	= "눈달린 촉수 등장 - 10초전!",
 			weakend		= "쑨이 약화되었습니다 - 45초간 최대 공격!",
+			invulnerable2	= "Party ends in 5 seconds!",
+			invulnerable1	= "Party over! C'Thun is now invulnerable!",
+
+			giant3		= "Incoming Giant Eye - 10 sec!",
+			giant2		= "Incoming Giant Eye - 5 sec!",
+			giant1		= "Incoming Giant Eye - Poke it!",			
 		
 			combat		= "쑨 시작 - 45초후 암흑의 주시",
 		
@@ -60,10 +68,8 @@ BigWigsCThun = AceAddon:new({
 
 			eyebeam		= "안광",				
 			glarewarning	= "암흑의 주시를 당하고 있습니다! 이동!",
-			groupwarning	= "암흑의 주시 %s (%s)",
-			invulnerable2	= "Party ends in 5 seconds!",
-			invulnerable1	= "Party over! C'Thun is now invulnerable!",
-			positions	= "Assume the position! Green Beam coming!",
+			groupwarning	= "암흑의 주시 %s (%s)",			
+			positions	= "Assume the position! Green Beam coming!",			
 			phase2starting	= "The Eye is dead! Body incoming!",
 	} 
 		or GetLocale() == "zhCN" and 

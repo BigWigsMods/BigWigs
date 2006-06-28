@@ -8,7 +8,13 @@ BigWigsViscidus = AceAddon:new({
 	enabletrigger = bboss("Viscidus"),
 	bossname = bboss("Viscidus"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notState = "Warn for Viscidus different states",
+		notYouToxin = "Warn when you are standing in a Toxin Cloud",
+		notElseToxin = "Warn when others are standing in a Toxin Cloud",
+		notVolley = "Warn for Poison Bolt Volley",
+		notBosskill = "보스 사망",
+	} or {
 		notState = "Warn for Viscidus different states",
 		notYouToxin = "Warn when you are standing in a Toxin Cloud",
 		notElseToxin = "Warn when others are standing in a Toxin Cloud",

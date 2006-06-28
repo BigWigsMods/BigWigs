@@ -9,9 +9,16 @@ BigWigsTwins = AceAddon:new({
 	veklor = bboss("Emperor Vek'lor"),
 	veknilash = bboss("Emperor Vek'nilash"),
 	enabletrigger = {bboss("Emperor Vek'lor"), bboss("Emperor Vek'nilash")},
-	bossname = format("The Twin Emperors - %s and %s", bboss("Emperor Vek'lor"), bboss("Emperor Vek'nilash")),
+	bossname = GetLocale() == "koKR" 
+		and format("쌍둥이 황제 - %s and %s", bboss("Emperor Vek'lor"), bboss("Emperor Vek'nilash"))
+		or format("The Twin Emperors - %s and %s", bboss("Emperor Vek'lor"), bboss("Emperor Vek'nilash")),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notTeleport = "순간이동 경고",
+		notEnrage = "쌍둥이 격노 경고",
+		notBug = "벌레 폭발 경고",
+		notBosskill = "보스 사망",
+	} or {
 		notTeleport = "Warn for Teleport",
 		notEnrage = "Warn when the Twins become enraged",
 		notBug = "Warn for exploding bugs",

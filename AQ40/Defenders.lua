@@ -8,7 +8,15 @@ BigWigsDefenders = AceAddon:new({
 	enabletrigger = bboss("Anubisath Defender"),
 	bossname = bboss("Anubisath Defender"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notBosskill = "보스 사망",
+		notSummonWarn = "소환 경고",
+		notPlagueYou = "당신에게 역병",
+		notPlagueOther = "다른 사람에게 역명",
+		notThunderclap = "천둥벼락 경고",
+		notExplode = "폭발 경고",	
+		notEnrage = "분노 경고",
+	} or {
 		notBosskill = "Boss death",
 		notSummonWarn = "Summon warnings",
 		notPlagueYou = "Plague on you",

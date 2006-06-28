@@ -8,7 +8,14 @@ BigWigsSartura = AceAddon:new({
 	enabletrigger = bboss("Battleguard Sartura"),
 	bossname = bboss("Battleguard Sartura"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notBosskill = "보스 사망",
+		notWhirlwindWarn = "소용 돌이 경고",
+		notStartWarn = "시작 경고",
+		notEnrageBar = "격노 타이머",
+		notEnrageTimer = "타이머 경고",
+		notEnrageWarn = "격노 경고",
+	} or {
 		notBosskill = "Boss death",
 		notWhirlwindWarn = "Whirlwind warnings",
 		notStartWarn = "Start warning",

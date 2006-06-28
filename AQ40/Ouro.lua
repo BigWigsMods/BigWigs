@@ -9,7 +9,24 @@ BigWigsOuro = AceAddon:new({
 	enabletrigger = bboss("Ouro"),
 	bossname = bboss("Ouro"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notBosskill = "보스 사망",
+		notBerserkSoon = "광폭화 예고",
+		notSweepBar = "휩쓸기 타이머바",
+		notSweep5Sec = "휩쓸기 5초전 경고",
+		notSweepWarn = "휩쓸기 경고",
+		notBlastBar = "모래 돌풍 타이머바",
+		notBlast5Sec = "모래 돌풍 5초전 경고",
+		notBlastWarn = "모래 돌풍 경고",
+		notEmergeBar = "재등장 타이머바",
+		notEmerge5Sec = "재등장 5초전 경고",
+		notEmergeWarn = "재등장 경고",
+		notSubmergeBar = "잠수 타이머바",
+		notSubmerge5Sec = "잠수 5초전 경고",
+		notSubmergeWarn = "잠수 경고",
+		notScarabWarn = "스카라베 소환 경고",
+		notScarabBar = "스카라베 소환 타이머바",
+	} or {
 		notBosskill = "Boss death",
 		notBerserkSoon = "Berserk soon warning",
 		notSweepBar = "Sweep timerbar",

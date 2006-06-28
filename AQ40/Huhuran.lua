@@ -8,7 +8,15 @@ BigWigsHuhuran = AceAddon:new({
 	enabletrigger = bboss("Princess Huhuran"),
 	bossname = bboss("Princess Huhuran"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notBosskill = "보스 사망",
+		notWyvernBar = "비룡쐐기 타이머바",
+		notWyvern3Sec = "비룡쐐기 3초전 경고",
+		notWyvernWarn = "비룡쐐기 경고",
+		notFrenzyWarn = "광폭화 경고",
+		notBerserkSoon = "광기 시간 경고",
+		notBerserkWarn = "광기 경고",
+	} or {
 		notBosskill = "Boss death",
 		notWyvernBar = "Wyvern Sting bar",
 		notWyvern3Sec = "Wyvern Sting 3-sec warning",
@@ -68,7 +76,9 @@ BigWigsHuhuran = AceAddon:new({
 
 function BigWigsHuhuran:Initialize()
 	self.disabled = true
+	self.repfrenzy = 0 
 	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
+
 end
 
 function BigWigsHuhuran:Enable()
@@ -102,7 +112,8 @@ end
 
 function BigWigsHuhuran:CHAT_MSG_MONSTER_EMOTE()
 	if (not self:GetOpt("notFrenzyWarn") and arg1 == self.loc.frenzytrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.frenzywarn, "Orange")
+		self.repfrenzy = self.repfrenzy + 1 
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.repfrenzy .. " " .. self.loc.frenzywarn, "Orange")
 	elseif (not self:GetOpt("notBerserkWarn") and arg1 == self.loc.berserktrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.berserkwarn, "Red")
 	end

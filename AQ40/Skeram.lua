@@ -8,7 +8,11 @@ BigWigsSkeram = AceAddon:new({
 	enabletrigger = bboss("The Prophet Skeram"),
 	bossname = bboss("The Prophet Skeram"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notBosskill = "보스 사망",
+		notMCWarn = "예언실현 경고",
+		notAEWarn = "신폭 경고",
+	} or {
 		notBosskill = "Boss death",
 		notMCWarn = "MC warnings",
 		notAEWarn = "AE warnings",
