@@ -37,7 +37,10 @@ BigWigsSound = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 	cmdOptions    = cmdopt,
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		menutitle = "효과음",
+		menutoggle = "효과음 사용",
+	} or {
 		menutitle = "Sounds",
 		menutoggle = "Use sounds",
 	},

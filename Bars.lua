@@ -54,7 +54,12 @@ BigWigsBars = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 	cmdOptions    = cmdopt,
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		menutitle = "타이머 바",
+		menuanchor = "앵커 보이기",
+		menuup = "바 위로 자라기",
+		menuscale = "크기",
+	} or {
 		menutitle = "Timex Bars",
 		menuanchor = "Show anchor",
 		menuup = "Grow bars upwards",

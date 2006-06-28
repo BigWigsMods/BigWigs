@@ -64,7 +64,13 @@ BigWigsMessages = AceAddon:new({
 	cmd           = AceChatCmd:new({}, {}),
 	cmdOptions    = cmdopt,
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		menutitle = "메시지 창",
+		menuanchor = "앵커 보이기",
+		menurw = "공대경고 창으로 메시지 보내기",
+		menucolor = "컬러 메시지",
+		menuscale = "크기",
+	} or {
 		menutitle = "Message frame",
 		menuanchor = "Show anchor",
 		menurw = "Send messages to RaidWarning frame",
