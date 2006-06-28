@@ -69,14 +69,14 @@ end
 function BigWigsMessages:CreateMsgFrame()
 	self.msgframe = CreateFrame("MessageFrame")
 	self.msgframe:SetWidth(512)
-	self.msgframe:SetHeight(40)
+	self.msgframe:SetHeight(80)
 
 	self.msgframe:SetPoint("TOP", self.anchorframe, "BOTTOM", 0, 0)
 	self.msgframe:SetScale(self:GetOpt("scale") or 1)
 	self.msgframe:SetInsertMode("TOP")
 	self.msgframe:SetFrameStrata("HIGH")
 	self.msgframe:SetToplevel(true)
-	self.msgframe:SetFontObject(GameFontNormalHuge)
+	self.msgframe:SetFontObject(GameFontNormalLarge)
 	self.msgframe:Show()
 
 	return self.msgframe
