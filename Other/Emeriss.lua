@@ -1,14 +1,27 @@
-﻿BigWigsEmeriss = AceAddon:new({
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsEmeriss = AceAddon:new({
 	name          = "BigWigsEmeriss",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = {"Duskwood", "Hinterlands", "Ashenvale", "Feralas"},
-	enabletrigger = GetLocale() == "koKR" and "에메리스"
-		or GetLocale() == "zhCN" and "艾莫莉丝"
-		or "Emeriss",
+	zonename = { BabbleLib:GetInstance("Zone 1.2")("Duskwood"), BabbleLib:GetInstance("Zone 1.2")("The Hinterlands"),
+			BabbleLib:GetInstance("Zone 1.2")("Ashenvale"), BabbleLib:GetInstance("Zone 1.2")("Feralas") },
+
+	enabletrigger = bboss("Emeriss"),
+	bossname = bboss("Emeriss"),
+
+	toggleoptions = {
+		notNoxious = "Noxious breath warning",
+		notNoxious5Sec = "Noxious breath 5-sec warning",
+		notNoxiusBar = "Noxious breath timerbar",
+		notVolatileYou = "Volatile infection on you warning",
+		notVolatileOther = "Volatile infection on others warning",
+		notBosskill = "Boss death",
+	},
+
+	optionorder = {"notNoxious", "notNoxious5Sec", "notNoxiousBar", "notVolatileYou", "notVolatileOther", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "에메리스",
 		disabletrigger = "에메리스|1이;가; 죽었습니다.",
 
 		trigger1 = "(.*)대지의 오염에 걸렸습니다.",
@@ -27,7 +40,6 @@
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "艾莫莉丝",
 		disabletrigger = "艾莫莉丝死亡了。",
 
 		trigger1 = "^(.+)受(.+)了快速传染效果",
@@ -46,7 +58,6 @@
 	}
 		or
 	{
-		bossname = "Emeriss",
 		disabletrigger = "Emeriss dies.",
 
 		trigger1 = "^([^%s]+) ([^%s]+) afflicted by Volatile Infection",
@@ -91,7 +102,7 @@ end
 
 function BigWigsEmeriss:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
@@ -100,20 +111,24 @@ if (GetLocale() == "koKR") then
 	function BigWigsEmeriss:Event()
 		if (not self.prior and string.find(arg1, self.loc.trigger2)) then
 			self.prior = true
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 25, "Red")
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_LifeDrain02")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
+			if not self:GetOpt("notNoxious") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red") end
+			if not self:GetOpt("notNoxious5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 25, "Red") end
+			if not self:GetOpt("notNoxiousBar") then
+				self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_LifeDrain02")
+				self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
+				self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
+			end
 		else
 			local _,_, EPlayer = string.find(arg1, self.loc.trigger1)
 			if (EPlayer) then
 				if (EPlayer == self.loc.isyou ) then
-					self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
+					if not self:GetOpt("notVolatileYou") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true) end
 				else
 					local _,_, EWho = string.find(EPlayer, self.loc.whopattern)
-					self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn2, "Yellow")
-					self:TriggerEvent("BIGWIGS_SENDTELL", EWho, self.loc.warn1)
+					if not self:GetOpt("notVolatileOther") then 
+						self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn2, "Yellow")
+						self:TriggerEvent("BIGWIGS_SENDTELL", EWho, self.loc.warn1)
+					end
 				end
 			end
 		end
@@ -122,19 +137,23 @@ else
 	function BigWigsEmeriss:Event()
 		if (not self.prior and string.find(arg1, self.loc.trigger2)) then
 			self.prior = true
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 25, "Red")
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_LifeDrain02")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
+			if not self:GetOpt("notNoxious") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red") end
+			if not self:GetOpt("notNoxious5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 25, "Red") end
+			if not self:GetOpt("notNoxiousBar") then
+				self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_LifeDrain02")
+				self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
+				self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
+			end
 		else
 			local _,_, EPlayer, EType = string.find(arg1, self.loc.trigger1)
 			if (EPlayer and EType) then
 				if (EPlayer == self.loc.isyou and EType == self.loc.isare) then
-					self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
+					if not self:GetOpt("notVolatileYou") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true) end
 				else
-					self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
-					self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
+					if not self:GetOpt("notVolatileOther") then
+						self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
+						self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
+					end
 				end
 			end
 		end

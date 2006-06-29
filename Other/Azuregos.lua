@@ -1,14 +1,22 @@
-﻿BigWigsAzuregos = AceAddon:new({
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsAzuregos = AceAddon:new({
 	name          = "BigWigsAzuregos",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "Azshara",
-	enabletrigger = GetLocale() == "koKR" and "아주어고스"
-		or GetLocale() == "zhCN" and "艾索雷葛斯"
-		or "Azuregos",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Azshara"),
+	enabletrigger = bboss("Azuregos"),
+	bossname = bboss("Azuregos"),
+
+	toggleoptions = {
+		notTeleport = "Teleport warning",
+		notShield = "Shield warnings",
+		notBosskill = "Boss death",
+	},
+
+	optionorder = {"notTeleport", "notShield", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
-		bossname = "Azuregos",
 		disabletrigger = "아주어고스|1이;가; 죽었습니다.",
 
 		trigger1 = "오너라, 조무래기들아! 덤벼봐라!",
@@ -22,7 +30,6 @@
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "艾索雷葛斯",
 		disabletrigger = "艾索雷葛斯死亡了。",
 
 		trigger1 = "来吧，小子。面对我！",
@@ -36,7 +43,6 @@
 	}
 		or
 	{
-		bossname = "Azuregos",
 		disabletrigger = "Azuregos dies.",
 
 		trigger1 = "Come, little ones",
@@ -70,26 +76,26 @@ end
 
 function BigWigsAzuregos:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsAzuregos:CHAT_MSG_MONSTER_YELL()
 	if (string.find(arg1, self.loc.trigger1)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
+		if not self:GetOpt("notTeleport") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red") end
 	end
 end
 
 function BigWigsAzuregos:CHAT_MSG_SPELL_AURA_GONE_OTHER()
 	if (string.find(arg1, self.loc.trigger2)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "White")
+		if not self:GetOpt("notShield") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "White") end
 	end
 end
 
 function BigWigsAzuregos:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
 	if (string.find(arg1, self.loc.trigger3)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "Red")
+		if not self:GetOpt("notShield") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "Red") end
 	end
 end
 --------------------------------

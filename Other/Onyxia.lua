@@ -1,15 +1,25 @@
-﻿BigWigsOnyxia = AceAddon:new({
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
+BigWigsOnyxia = AceAddon:new({
 	name          = "BigWigsOnyxia",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = "Onyxia",
-	enabletrigger = GetLocale() == "koKR" and "오닉시아"
-		or GetLocale() == "zhCN" and "奥妮克希亚"
-		or "Onyxia"	,
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Onyxia's Lair"),
+	enabletrigger = bboss("Onyxia"),
+	bossname = bboss("Onyxia"),
+
+	toggleoptions = {
+		notDeepBreath = "Deep breath warning",
+		notPhase2 = "Phase 2 warning",
+		notPhase3 = "Phase 3 warning"
+		notBosskill = "Boss death",
+	},
+
+	optionorder = {"notDeepBreath", "notPhase2", "notPhase3", "notBosskill"},
+
 
 	loc = GetLocale() == "deDE" and
 	{
-		bossname = "Onyxia",
 		disabletrigger = "Onyxia stirbt.",
 
 		trigger1 = "atmet tief ein...",
@@ -23,7 +33,6 @@
 	}
 		or GetLocale() == "koKR" and
 	{
-		bossname = "오닉시아",
 		disabletrigger = "오닉시아|1이;가; 죽었습니다.",
 
 		trigger1 = "깊은 숨을 들이쉽니다...",
@@ -37,7 +46,6 @@
 	}
 		or GetLocale() == "zhCN" and
 	{
-		bossname = "奥妮克希亚",
 		disabletrigger = "奥妮克希亚死亡了。",
 
 		trigger1 = "深深地吸了一口气……",
@@ -51,7 +59,6 @@
 	}
 		or
 	{
-		bossname = "Onyxia",
 		disabletrigger = "Onyxia dies.",
 
 		trigger1 = "takes in a deep breath...",
@@ -84,22 +91,22 @@ end
 
 function BigWigsOnyxia:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
 end
 
 function BigWigsOnyxia:CHAT_MSG_MONSTER_EMOTE()
 	if (arg1 == self.loc.trigger1) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
+		if not self:GetOpt("notDeepBreath") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red") end
 	end
 end
 
 function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL()
 	if (string.find(arg1, self.loc.trigger2)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "White")
+		if not self:GetOpt("notPhase2") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "White") end
 	elseif (string.find(arg1, self.loc.trigger3)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "White")
+		if not self:GetOpt("notPhase3") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "White") end
 	end
 end
 --------------------------------
