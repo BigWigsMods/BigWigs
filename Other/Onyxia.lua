@@ -11,7 +11,7 @@ BigWigsOnyxia = AceAddon:new({
 	toggleoptions = {
 		notDeepBreath = "Deep breath warning",
 		notPhase2 = "Phase 2 warning",
-		notPhase3 = "Phase 3 warning"
+		notPhase3 = "Phase 3 warning",
 		notBosskill = "Boss death",
 	},
 
