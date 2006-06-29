@@ -42,7 +42,10 @@ function BigWigsRazuvious:Enable()
 	self.disabled = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Shout")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Shout")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Shout")
+	self:RegisterEvent("BIGWIGS_MESSAGE")
 end
 
 function BigWigsRazuvious:Disable()
@@ -62,7 +65,7 @@ function BigWigsRazuvious:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	end
 end
 
-function BigWigsRazuvious:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
+function BigWigsRazuvious:Shout()
 	if (string.find(arg1, self.loc.shouttrigger) and not self.prior) then
 		if (not self:GetOpt("notShoutWarn")) then 
 			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.shoutwarn, "Orange")
