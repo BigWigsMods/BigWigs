@@ -22,7 +22,7 @@ BigWigsRazuvious = AceAddon:new({
 		startwarn = "Instructor Razuvious engaged!",
 		
 		starttrigger1 = "The time for practice is over! Show me what you have learned!",
-		starttrigger2 = "Sweep the leg. Do you have a problem with that?",
+		starttrigger2 = "Sweep the leg... Do you have a problem with that?",
 		starttrigger3 = "Show them no mercy!",
 		starttrigger4 = "Do as I taught you!",
 
