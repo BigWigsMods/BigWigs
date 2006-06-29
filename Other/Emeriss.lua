@@ -4,18 +4,16 @@ BigWigsEmeriss = AceAddon:new({
 	name          = "BigWigsEmeriss",
 	cmd           = AceChatCmd:new({}, {}),
 
---	zonename = { BabbleLib:GetInstance("Zone 1.2")("Duskwood"), BabbleLib:GetInstance("Zone 1.2")("The Hinterlands"),
---			BabbleLib:GetInstance("Zone 1.2")("Ashenvale"), BabbleLib:GetInstance("Zone 1.2")("Feralas") },
+	zonename = { "Outdoor Raid Bosses", BabbleLib:GetInstance("Zone 1.2")("Duskwood"), BabbleLib:GetInstance("Zone 1.2")("The Hinterlands"),
+			BabbleLib:GetInstance("Zone 1.2")("Ashenvale"), BabbleLib:GetInstance("Zone 1.2")("Feralas") },
 	
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Duskwood"),
-
 	enabletrigger = bboss("Emeriss"),
 	bossname = bboss("Emeriss"),
 
 	toggleoptions = {
 		notNoxious = "Noxious breath warning",
 		notNoxious5Sec = "Noxious breath 5-sec warning",
-		notNoxiusBar = "Noxious breath timerbar",
+		notNoxiousBar = "Noxious breath timerbar",
 		notVolatileYou = "Volatile infection on you warning",
 		notVolatileOther = "Volatile infection on others warning",
 		notBosskill = "Boss death",

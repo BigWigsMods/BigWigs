@@ -4,7 +4,7 @@ BigWigsAzuregos = AceAddon:new({
 	name          = "BigWigsAzuregos",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Azshara"),
+	zonename = {"Outdoor Raid Bosses", BabbleLib:GetInstance("Zone 1.2")("Azshara") },
 	enabletrigger = bboss("Azuregos"),
 	bossname = bboss("Azuregos"),
 

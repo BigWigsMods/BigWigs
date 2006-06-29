@@ -48,11 +48,14 @@ end
 
 function BigWigsOptions:BIGWIGS_REGISTER_MODULE(module)
 	if module.toggleoptions and module.zonename and module.bossname then
-		if not zones[module.zonename] then
-			table.insert(sortzone, module.zonename)
-			zones[module.zonename] = {}
+		local zonename = module.zonename
+		if type(zonename) == "table" then zonename = zonename[1] end
+
+		if not zones[zonename] then
+			table.insert(sortzone, zonename)
+			zones[zonename] = {}
 		end
-		zones[module.zonename][module.bossname] = module
+		zones[zonename][module.bossname] = module
 		table.insert(sortboss, module.bossname)
 		needsort = true
 	elseif module.MenuSettings then
