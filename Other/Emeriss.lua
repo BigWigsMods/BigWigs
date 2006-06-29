@@ -4,8 +4,10 @@ BigWigsEmeriss = AceAddon:new({
 	name          = "BigWigsEmeriss",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = { BabbleLib:GetInstance("Zone 1.2")("Duskwood"), BabbleLib:GetInstance("Zone 1.2")("The Hinterlands"),
-			BabbleLib:GetInstance("Zone 1.2")("Ashenvale"), BabbleLib:GetInstance("Zone 1.2")("Feralas") },
+--	zonename = { BabbleLib:GetInstance("Zone 1.2")("Duskwood"), BabbleLib:GetInstance("Zone 1.2")("The Hinterlands"),
+--			BabbleLib:GetInstance("Zone 1.2")("Ashenvale"), BabbleLib:GetInstance("Zone 1.2")("Feralas") },
+	
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Duskwood"),
 
 	enabletrigger = bboss("Emeriss"),
 	bossname = bboss("Emeriss"),
