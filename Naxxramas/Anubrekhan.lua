@@ -58,8 +58,8 @@ end
 function BigWigsAnubrekhan:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.gainincbar)
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.gainbar)
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.gainincbar)
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.gainbar)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.gainendwarn)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.gainwarn10sec)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.gainbar, 5)
