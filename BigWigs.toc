@@ -84,3 +84,4 @@ Naxxramas\Gluth.lua
 Naxxramas\Razuvious.lua
 Naxxramas\Noth.lua
 Naxxramas\Faerlina.lua
+Naxxramas\Maexxna.lua
