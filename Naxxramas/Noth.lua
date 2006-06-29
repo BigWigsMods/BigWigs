@@ -105,10 +105,10 @@ end
 function BigWigsNoth:teleportToRoom()
 	if self.timebalcony == 70 then
 		self.timebalcony = 95
-		metro:ChangeRate("BigWigs Noth ToBalcony", self.timebalcony)
+		metro:ChangeRate("BigWigs Noth ToRoom", self.timebalcony)
 	elseif self.timebalcony == 95 then
 		self.timebalcony = 120
-		metro:ChangeRate("BigWigs Noth ToBalcony", self.timebalcony)
+		metro:ChangeRate("BigWigs Noth ToRoom", self.timebalcony)
 	end	
 	if not self:GetOpt("notTeleport") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.backwarn, "Red") end
 	if not self:GetOpt("notTeleportBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.teleportbar, self.timeroom, 1, "Yellow", "Interface\\Icons\\Spell_Magic_LesserInvisibilty") end
