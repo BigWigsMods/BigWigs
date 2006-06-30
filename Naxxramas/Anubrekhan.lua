@@ -49,10 +49,13 @@ function BigWigsAnubrekhan:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("BIGWIGS_SYNC_LOCUSTINC")
 	self:RegisterEvent("BIGWIGS_SYNC_LOCUSTSWARM")
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "LOCUSTINC", 10)
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "LOCUSTSWARM", 10)
+
+	Metro:Register("BigWigs Anubrekhan CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
 end
 
 function BigWigsAnubrekhan:Disable()
@@ -69,6 +72,33 @@ function BigWigsAnubrekhan:Disable()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.gainincbar, 70)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.gainincbar, 85)
 end
+
+function BigWigsAnubrekhan:PLAYER_REGEN_ENABLED()
+	local go = self:Scan()
+	if (not go) then
+		Metro:Stop("BigWigs Anubrekhan CheckWipe")
+		self:Disable()
+	elseif (not Metro:Status("BigWigs Anubrekhan CheckWipe")) then
+		Metro:Start("BigWigs Anubrekhan CheckWipe")
+	end
+end
+
+function BigWigsAnubrekhan:Scan()
+	if (UnitName("target") == self.bossname and UnitAffectingCombat("target")) then
+		return true
+	elseif (UnitName("playertarget") == self.bossname and UnitAffectingCombat("playertarget")) then
+		return true
+	else
+		local i
+		for i = 1, GetNumRaidMembers(), 1 do
+			if (UnitName("Raid"..i.."target") == self.bossname and UnitAffectingCombat("Raid"..i.."target")) then
+				return true
+			end
+		end
+	end
+	return false
+end
+
 
 function BigWigsAnubrekhan:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
