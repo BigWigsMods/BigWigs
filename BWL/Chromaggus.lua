@@ -142,6 +142,8 @@ function BigWigsChromaggus:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PARTY_DAMAGE", "PlayerDamageEvents")
 	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE", "PlayerDamageEvents")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:RegisterEvent("BIGWIGS_SYNC_CHROMAGGUS_BREATH")
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "CHROMAGGUS_BREATH", 10)
 end
 
 function BigWigsChromaggus:Disable()
@@ -155,7 +157,6 @@ function BigWigsChromaggus:Disable()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath1, 50)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 30)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 50)
-
 	self.loc.vulnerability = nil
 	self.loc.breath1 = nil
 	self.loc.breath2 = nil
@@ -170,6 +171,13 @@ end
 
 function BigWigsChromaggus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	local _,_, SpellName = string.find(arg1, self.loc.trigger1)
+	if (SpellName) then
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "CHROMAGGUS_BREATH "..SpellName)
+	end
+end
+
+function BigWigsChromaggus:BIGWIGS_SYNC_CHROMAGGUS_BREATH(SpellName)
+--	local _,_, SpellName = string.find(arg1, self.loc.trigger1)
 	if (SpellName) then
 		if (not self.loc.breath1) then
 			self.loc.breath1 = SpellName
@@ -227,7 +235,6 @@ else
 		end
 	end
 end
-
 --------------------------------
 --      Load this bitch!      --
 --------------------------------
