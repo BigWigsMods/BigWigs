@@ -2,16 +2,16 @@
 local tekteck = TekTechEmbed:GetInstance("1")
 local sv
 
-
+local myname = "BigWigs"
 BigWigs = AceAddon:new({
-	name          = "BigWigs",
-	description   = GetAddOnMetadata("BigWigs", "Notes"),
-	version       = string.sub(GetAddOnMetadata("BigWigs", "X-Build"), 12, -3),
-	releaseDate   = string.sub(GetAddOnMetadata("BigWigs", "X-ReleaseDate"), 8, 18),
-	author        = GetAddOnMetadata("BigWigs", "Author"),
-	email   	    = GetAddOnMetadata("BigWigs", "X-Email"),
-	website       = GetAddOnMetadata("BigWigs", "X-Website"),
-	category      = GetAddOnMetadata("BigWigs", "X-Category"),
+	name          = myname,
+	description   = GetAddOnMetadata(myname, "Notes"),
+	version       = string.sub(GetAddOnMetadata(myname, "X-Build"), 12, -3),
+	releaseDate   = string.sub(GetAddOnMetadata(myname, "X-ReleaseDate"), 8, 18),
+	author        = GetAddOnMetadata(myname, "Author"),
+	email   	    = GetAddOnMetadata(myname, "X-Email"),
+	website       = GetAddOnMetadata(myname, "X-Website"),
+	category      = GetAddOnMetadata(myname, "X-Category"),
 
 	aceCompatible = 103,
 	cmd           = AceChatCmd:new({"/bw", "/BigWigs"}, {}),

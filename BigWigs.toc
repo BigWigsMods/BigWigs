@@ -7,7 +7,7 @@
 ## X-ReleaseDate: "$Date$"
 ## X-Website: http://wiki.wowace.com/index.php/BigWigs_Addon
 ## X-Email: tekkub@gmail.com
-## X-Category: Combat
+## X-Category: Raid
 
 ## Dependencies: Ace, Timex
 ## OptionalDeps: FuBar, BabbleLib
