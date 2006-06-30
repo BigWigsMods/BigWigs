@@ -10,7 +10,7 @@ BigWigsMarli = AceAddon:new({
 
 	toggleoptions = GetLocale() == "koKR" and {
 		notSpiders = "거미 소환 경고",
-		notDrain = "Life Drain 경고",
+		notDrain = "생명력 흡수 경고",
 		notBosskill = "보스 사망",
 	} or {
 		notSpiders = "Warn when spiders spawn",
@@ -22,10 +22,10 @@ BigWigsMarli = AceAddon:new({
 
 	loc = GetLocale() == "koKR" and {
 		trigger1 = "어미를 도와라!$",
-		trigger2 = "^High Priestess Mar'li's Drain Life heals High Priestess Mar'li for (.+).",
+		trigger2 = "대여사제 말리의 생명력 흡수|1으로;로; 대여사제 말리의 생명력이 (.+)만큼 회복되었습니다.",
 
 		warn1 = "거미 소환!",
-		warn2 = "High Priestess Mar'li is draining life! Interrupt it!",
+		warn2 = "말리가 생명력을 흡수합니다. 차단해 주세요!",
 
 		disabletrigger = "대여사제 말리|1이;가; 죽었습니다.",
 

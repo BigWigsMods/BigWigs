@@ -11,7 +11,11 @@ BigWigsArlokk = AceAddon:new({
 	bossname = bboss("High Priestess Arlokk"),
 	enabletrigger = bboss("High Priestess Arlokk"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notPlayer = "당신이 표적일 때 경고",
+		notOthers = "다른이가 표적일 때 경고",
+		notBosskill = "보스 사망 알림",
+	} or {
 		notPlayer = "Warn when you are marked",
 		notOthers = "Warn when others are marked",
 		notBosskill = "Boss death",
@@ -19,7 +23,15 @@ BigWigsArlokk = AceAddon:new({
 
 	optionorder = {"notPlayer", "notOthers", "notBosskill"},
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		disabletrigger = "대여사제 알로크|1이;가; 죽었습니다.",
+
+		trigger1 = "내 귀여운 것들아, (.+)%|1을;를; 잡아먹어라!$",
+
+		warn1 = "당신은 표적입니다!",
+		warn2 = "%s님은 표적입니다!",
+		bosskill = "대여사제 알로크를 물리쳤습니다!",
+	} or {
 		disabletrigger = "High Priestess Arlokk dies.",
 
 		trigger1 = "Feast on ([^%s]+), my pretties!$",
@@ -67,6 +79,13 @@ function BigWigsArlokk:CHAT_MSG_MONSTER_YELL()
 			self:TriggerEvent("BIGWIGS_MESSAGE", string.format(self.loc.warn2, n), "Yellow")
 			self:TriggerEvent("BIGWIGS_SENDTELL", n, self.loc.warn1)
 		end
+			
+		for i=1, GetNumRaidMembers() do
+			if UnitName("raid"..i) == n then
+				SetRaidTargetIcon("raid"..i, 8)
+			end
+		end
+		
 	end
 end
 

@@ -20,11 +20,10 @@ BigWigsVenoxis = AceAddon:new({
 	optionorder = { "notRenew", "notPhase2", "notBosskill" },
 
 	loc = GetLocale() == "koKR" and {
-		disabletrigger = "대사제 베녹시스|1이;가; 죽었습니다.",
-		-- "이제서야... 안식을...!"
+		disabletrigger = "대사제 베녹시스|1이;가; 죽었습니다.",		
 
 		trigger1 = "대사제 베녹시스|1이;가; 소생 효과를 얻었습니다.",
-		trigger2 = "Let the coils of hate unfurl!",
+		trigger2 = "증오의 또아리를 틀 시간이다!",
 
 		warn1 = "소생 - 마법 해제해주세요!",
 		warn2 = "2단계 시작 - 독구름을 조심하세요!",
