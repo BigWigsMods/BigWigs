@@ -28,7 +28,7 @@ BigWigsAnubrekhan = AceAddon:new({
 		
 		gaintrigger = "Anub'Rekhan gains Locust Swarm.",
 		gainendwarn = "Locust Swarm ended!",
-		gainnextwarn = "Next Locust Swarm in 115 seconds.",
+		gainnextwarn = "Next Locust Swarm in ~95 seconds.",
 		gainwarn10sec = "10 Seconds until Locust Swarm",
 		gainincbar = "Next Locust Swarm",
 		gainbar = "Locust Swarm",
@@ -66,8 +66,8 @@ function BigWigsAnubrekhan:Disable()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.gainbar, 10)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.gainincbar, 65)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.gainincbar, 80)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.gainincbar, 90)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.gainincbar, 105)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.gainincbar, 70)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.gainincbar, 85)
 end
 
 function BigWigsAnubrekhan:CHAT_MSG_COMBAT_HOSTILE_DEATH()
@@ -100,12 +100,12 @@ function BigWigsAnubrekhan:BIGWIGS_SYNC_LOCUSTSWARM()
 	end
 	if (not self:GetOpt("notLocustInc")) then 
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.gainnextwarn, "Orange")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.gainwarn10sec, 105, "Red")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.gainwarn10sec, 85, "Red")
 	end
 	if (not self:GetOpt("notLocustIncBar")) then 
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.gainincbar, 115, 1, "Yellow", "Interface\\Icons\\Spell_Nature_InsectSwarm")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.gainincbar, 90, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.gainincbar, 105, "Red")
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.gainincbar, 95, 1, "Yellow", "Interface\\Icons\\Spell_Nature_InsectSwarm")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.gainincbar, 70, "Orange")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.gainincbar, 85, "Red")
 	end
 end
 
