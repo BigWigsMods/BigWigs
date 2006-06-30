@@ -76,6 +76,8 @@ function BigWigsOssirian:Enable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL", "checkEnd")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
+	self:RegisterEvent("BIGWIGS_SYNC_OSSIRIAN_WEAKNESS")
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "OSSIRIAN_WEAKNESS", 10)
 end
 
 function BigWigsOssirian:Disable()
@@ -99,8 +101,14 @@ function BigWigsOssirian:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
 	end
 end
 
-function BigWigsOssirian:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE()
+function BigWigsOssirian:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	local _, _, debuffName = string.find(arg1, self.loc.debufftrigger)
+	if (debuffName) then
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "OSSIRIAN_WEAKNESS "..debuffName)
+	end
+end
+
+function BigWigsOssirian:BIGWIGS_SYNC_OSSIRIAN_WEAKNESS(debuffName)
 	if (debuffName) then
 		if not self:GetOpt("notDebuff") then self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.debuffwarn, debuffName), "Red") end
 
