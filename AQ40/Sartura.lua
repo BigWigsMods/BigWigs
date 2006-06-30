@@ -130,6 +130,10 @@ function BigWigsSartura:Enable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
+	self:RegisterEvent("BIGWIGS_SYNC_SARTURA_WIRLWINDON")
+	self:RegisterEvent("BIGWIGS_SYNC_SARTURA_WHIRLWINDOFF")
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "SARTURA_WHIRLWINDON", 3)
+	self:TriggerEvent("BIWWIGS_SYNC_THROTTLE", "SARTURA_WHIRLWINDOFF", 3)
 end
 
 function BigWigsSartura:Disable()
@@ -148,12 +152,19 @@ function BigWigsSartura:Disable()
 	self:UnregisterAllEvents()
 end
 
+function BigWigsSartura:BIGWIGS_SYNC_SARTURA_WHIRLWINDON()
+	if not self:GetOpt("notWhirlwindWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.whirlwindonwarn, "Red") end
+end
+
+function BigWigsSartura:BIGWIGS_SYNC_SARTURA_WHIRLWINDOFF()
+	if not self:GetOpt("notWhirlwindWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.whirlwindoffwarn, "Yellow") end
+end
+
 function BigWigsSartura:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
-	ace:print(arg1)
 	if (arg1 == self.loc.whirlwindon) then
-		if not self:GetOpt("notWhirlwindWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.whirlwindonwarn, "Red") end
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "SARTURA_WHIRLWINDON")
 	elseif (arg1 == self.loc.whirlwindoff) then
-		if not self:GetOpt("notWhirlwindWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.whirlwindoffwarn, "Yellow") end
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "SARTURA_WHIRLWINDOFF")
 	end
 end
 
