@@ -391,7 +391,7 @@ function BigWigsCThun:CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE()
 end
 
 function BigWigsCThun:BIGWIGS_SYNC_CTHUNSTART()
-	if not self.chtunstarted then
+	if not self.cthunstarted then
 		self.cthunstarted = true
 		if not self:GetOpt("notStartWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.combat, "Yellow") end
 		
