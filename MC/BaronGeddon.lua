@@ -103,6 +103,7 @@ if (GetLocale() == "koKR") then
 		local _, _, EPlayer = string.find(arg1, self.loc.trigger1)
 		if (EPlayer) then
 			if (EPlayer == self.loc.you and not self:GetOpt("notYouBomb")) then
+				EPlayer == UnitName('player')
 				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
 			elseif (not self:GetOpt("notElseBomb")) then
 				local _, _, EWho = string.find(EPlayer, self.loc.whopattern)
@@ -131,6 +132,9 @@ else
 			end
 
 			if (not self:GetOpt("notIcon")) then
+				if EPlayer == self.loc.you then
+					EPlayer == UnitName('player')
+				end
 				for i=1, GetNumRaidMembers() do
 					if UnitName("raid"..i) == EPlayer then
 						SetRaidTargetIcon("raid"..i, 8)
