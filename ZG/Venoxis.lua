@@ -65,7 +65,7 @@ function BigWigsVenoxis:Enable()
 end
 
 function BigWigsVenoxis:Disable()
-	self.disabled = nil
+	self.disabled = true
 	self:UnregisterAllEvents()
 end
 
