@@ -76,9 +76,7 @@ BigWigsHuhuran = AceAddon:new({
 
 function BigWigsHuhuran:Initialize()
 	self.disabled = true
-	self.repfrenzy = 0 
 	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-
 end
 
 function BigWigsHuhuran:Enable()
@@ -112,8 +110,7 @@ end
 
 function BigWigsHuhuran:CHAT_MSG_MONSTER_EMOTE()
 	if (not self:GetOpt("notFrenzyWarn") and arg1 == self.loc.frenzytrigger) then
-		self.repfrenzy = self.repfrenzy + 1 
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.repfrenzy .. " " .. self.loc.frenzywarn, "Orange")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.frenzywarn, "Orange")
 	elseif (not self:GetOpt("notBerserkWarn") and arg1 == self.loc.berserktrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.berserkwarn, "Red")
 	end
