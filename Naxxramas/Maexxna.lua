@@ -11,7 +11,6 @@ BigWigsMaexxna = AceAddon:new({
 
 	toggleoptions = {
 		notBosskill = "Boss death",
-		notStart = "Start warning",
 		notSpray = "Web Spray warning",
 		notSpray5Sec = "5 Second Web Spray warning",
 		notSpray10Sec = "Spiders Spawn/Web Spray 10-sec warning",
@@ -21,7 +20,7 @@ BigWigsMaexxna = AceAddon:new({
 		notEnrageWarn = "Enrage warning",
 	},
 
-	optionorder = {"notStart", "notSpray", "notSpray5Sec", "notSpray10Sec", "notSpray20Sec", "notSprayBar", "notEnrageSoon","notEnrageWarn", "notBosskill"},
+	optionorder = {"notSpray", "notSpray5Sec", "notSpray10Sec", "notSpray20Sec", "notSprayBar", "notEnrageSoon","notEnrageWarn", "notBosskill"},
 
 	loc = { 
 		disabletrigger = "Maexxna dies.",		
@@ -32,9 +31,6 @@ BigWigsMaexxna = AceAddon:new({
 
 		enragetrigger = "Maexxna gains Enrage.",
 
-		startwarn = "Maexxna engaged! 40 seconds until Web Spray!",
-		--webwrapwarn = "%s is all wrapped up!",
-		--webwrapyouwarn = "You are all wrapped up!",
 		webspraywarn30sec = "Web wrap in 10 seconds",
 		webspraywarn20sec = "Web Wrap. 10 seconds until Spiders spawn!",
 		webspraywarn10sec = "Spiders Spawn. 10 seconds until Web Spray!",
@@ -77,14 +73,14 @@ function BigWigsMaexxna:Disable()
 	self.disabled = true
 	self.enrageannounced = nil
 	self:UnregisterAllEvents()
-end
-
-function BigWigsMaexxna:StopTimers()
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.webspraywarn30sec)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.webspraywarn20sec)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.webspraywarn10sec)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.webspraybar)
+
+	Metro:Unregister("BigWigs_Maexxna_CheckWipe")
 end
+
 
 function BigWigsMaexxna:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
@@ -110,19 +106,6 @@ function BigWigsMaexxna:Event()
 			self:TriggerEvent("BIGWIGS_SYNC_SEND", "WEBSPRAY")
 		end
 	end
-
-	-- let people know when people get wrapped up
-	-- this might be too spammy, since I don't know the fight, so I disabled it. -Ammo
---	local _,_, EPlayer, EType = string.find(arg1, self.loc.webwraptrigger)
---	if (EPlayer and EType) then
---		if (EPlayer == self.loc.you and EType == self.loc.are) then
---			self:TriggerEvent("BIGWIGS_MESSAGE", string.format(self.loc.webwrapwarn, UnitName("player")), "Red", true)
---		else
---			self:TriggerEvent("BIGWIGS_MESSAGE", string.format(self.loc.webwrapwarn, EPlayer), "Yellow")
---			self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.webwrapyouwarn)
---		end
---	end
-
 end
 
 function BigWigsMaexxna:Scan()
@@ -140,20 +123,21 @@ function BigWigsMaexxna:Scan()
 	end
 	return false
 end
+
 function BigWigsMaexxna:PLAYER_REGEN_DISABLED()
 	local go = self:Scan()
 	if (go) then
-		ace:print("sent webspray sync")
 		self:TriggerEvent("BIGWIGS_SYNC_SEND", "WEBSPRAY")
 	end
 end
 
 function BigWigsMaexxna:PLAYER_REGEN_ENABLED()
 	local go = self:Scan()
+	local _,_,running,_ = Metro:Status("BigWigs_Maexxna_CheckWipe")
 	if (not go) then
-		self:StopTimers()
+		self:Disable()
 		Metro:Stop("BigWigs_Maexxna_CheckWipe")
-	elseif (not Metro:Status("BigWigs_Maexxna_CheckWipe")) then
+	elseif (not running) then
 		Metro:Start("BigWigs_Maexxna_CheckWipe")
 	end
 end

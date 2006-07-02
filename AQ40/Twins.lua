@@ -148,10 +148,11 @@ end
 
 function BigWigsTwins:PLAYER_REGEN_ENABLED()
 	local go = self:Scan()
+	local _,_,running,_ = Metro:Status("BigWigs_Twins_CheckWipe")
 	if (not go) then
 		self:StopEnrage()
 		Metro:Stop("BigWigs_Twins_CheckWipe")
-	elseif (not Metro:Status("BigWigs_Twins_CheckWipe")) then
+	elseif (not running) then
 		Metro:Start("BigWigs_Twins_CheckWipe")
 	end
 end

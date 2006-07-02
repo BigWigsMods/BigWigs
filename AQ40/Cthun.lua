@@ -173,7 +173,6 @@ function BigWigsCThun:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 
 	self:RegisterEvent("BIGWIGS_SYNC_CTHUNSTART")
 	self:RegisterEvent("BIGWIGS_SYNC_CTHUNP2START")
@@ -183,8 +182,6 @@ function BigWigsCThun:Enable()
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "CTHUNP2START", 10)
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "CTHUNWEAKENED", 10)
 
-	
-
 	metro:Unregister("BigWigs Cthun Tentacles")
 	metro:Unregister("BigWigs Cthun Tentacles Reschedule")
 	metro:Unregister("BigWigs Cthun Tentacles Phase2")
@@ -192,8 +189,6 @@ function BigWigsCThun:Enable()
 	metro:Unregister("BigWigs Cthun Dark Glare Group Warning")
 	metro:Unregister("BigWigs Cthun Target")
 
-	metro:Register("BigWigs Cthun CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
-	
 	metro:Register("BigWigs Cthun Tentacles", self.TentacleRape, self.timeP1Tentacle, self )
 	metro:Register("BigWigs Cthun Tentacles Reschedule", self.StartTentacleRape, self.timeReschedule, self )
 	metro:Register("BigWigs Cthun Tentacles Phase2", self.StartTentacleRape, self.timeP2Tentacle + self.timeP2Offset, self )
@@ -357,33 +352,6 @@ function BigWigsCThun:BIGWIGS_SYNC_CTHUNP2START()
 	end
 end
 
-
-function BigWigsCThun:Scan()
-	if (UnitName("target") == (self.bossname or self.loc.cthun) and UnitAffectingCombat("target")) then
-		return true
-	elseif (UnitName("playertarget") == (self.bossname or self.loc.cthun) and UnitAffectingCombat("playertarget")) then
-		return true
-	else
-		local i
-		for i = 1, GetNumRaidMembers(), 1 do
-			if (UnitName("Raid"..i.."target") == (self.loc.cthun or self.bossname) and UnitAffectingCombat("Raid"..i.."target")) then
-				return true
-			end
-		end
-	end
-	return false
-end
-
-function BigWigsCThun:PLAYER_REGEN_ENABLED()
-	local go = self:Scan()
-	if (not go) then
-		self:Disable()
-		metro:Stop("BigWigs Cthun CheckWipe")
-	elseif (not metro:Status("BigWigs Cthun CheckWipe")) then
-		metro:Start("BigWigs Cthun CheckWipe")
-	end
-end
-
 function BigWigsCThun:CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE()
 	if not self.cthunstarted and arg1 and string.find(arg1, self.loc.eyebeam) then
 		self:TriggerEvent("BIGWIGS_SYNC_SEND", "CTHUNSTART")
@@ -444,7 +412,6 @@ function BigWigsCThun:Disable()
 	metro:Unregister("BigWigs Cthun Dark Glare")
 	metro:Unregister("BigWigs Cthun Group Warning")
 	metro:Unregister("BigWigs Cthun Target")
-	metro:Unregister("Bigwigs Cthun CheckWipe")
 	
 	self:UnregisterAllEvents()
 end
