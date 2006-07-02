@@ -31,6 +31,7 @@ BigWigsRazuvious = AceAddon:new({
 		shoutwarn 		= "Disrupting Shout!",
 		shoutbar 		= "Disrupting Shout",
 	},
+	timeShout = 25
 })
 
 function BigWigsRazuvious:Initialize()
@@ -42,21 +43,21 @@ function BigWigsRazuvious:Enable()
 	self.disabled = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Shout")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Shout")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Shout")
-	
 	self:RegisterEvent("BIGWIGS_MESSAGE")
-	
 	self:RegisterEvent("BIGWIGS_SYNC_SHOUTWARN")
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "SHOUTWARN", 5)
+	Metro:Register("BigWigs_Twins_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
+	metro:Unregister("BigWigs Razuvious Shout")
+	metro:Register("BigWigs Razuvious Shout", self.BIGWIGS_SYNC_SHOUTWARN, self.timeShout, self )
 end
 
 function BigWigsRazuvious:Disable()
 	self.disabled = true
+	metro:Unregister("BigWigs Razuvious Shout")
 	self:UnregisterAllEvents()
-	
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.shoutbar)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.shout7secwarn)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.shoutbar, 10)
@@ -89,6 +90,8 @@ end
 function BigWigsRazuvious:Shout()
 	if (string.find(arg1, self.loc.shouttrigger) and not self.prior) then
 		self:TriggerEvent("BIGWIGS_SYNC_SEND", "SHOUTWARN")
+		metro:Stop("BigWigs Razuvious Shout")
+		metro:Start("BigWigs Razuvious Shout")
 	end
 end
 
@@ -103,8 +106,37 @@ function BigWigsRazuvious:CHAT_MSG_MONSTER_YELL()
 			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.shoutbar, 10, "Orange")
 			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.shoutbar, 18, "Red")
 		end
+	metro:Start("BigWigs Razuvious Shout")
 	end
 end
+
+function BigWigsRazuvious:PLAYER_REGEN_ENABLED()
+	local go = self:Scan()
+	local _,_,running,_ = Metro:Status("BigWigs_Razuvious_CheckWipe")
+	if (not go) then
+		metro:Stop("BigWigs Razuvious Shout")
+		Metro:Stop("BigWigs_Razuvious_CheckWipe")
+	elseif (not running) then
+		Metro:Start("BigWigs_Razuvious_CheckWipe")
+	end
+end
+
+function BigWigsRazuvious:Scan()
+	if (UnitName("target") == (self.bossname) and UnitAffectingCombat("target")) then
+		return true
+	elseif (UnitName("playertarget") == (self.bossname) and UnitAffectingCombat("playertarget")) then
+		return true
+	else
+		local i
+		for i = 1, GetNumRaidMembers(), 1 do
+			if (UnitName("Raid"..i.."target") == (self.bossname) and UnitAffectingCombat("Raid"..i.."target")) then
+				return true
+			end
+		end
+	end
+	return false
+end
+
 
 function BigWigsRazuvious:BIGWIGS_MESSAGE(text)
 	if text == self.loc.shout7secwarn then self.prior = nil end
