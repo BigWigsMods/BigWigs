@@ -102,6 +102,7 @@ function BigWigsHakkar:Disable()
 end
 
 function BigWigsHakkar:Reset()
+	self.prior = nil
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar2text)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn1)
