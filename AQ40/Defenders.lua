@@ -140,9 +140,9 @@ function BigWigsDefenders:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
 end
 
 function BigWigsDefenders:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
-	if (not self:GetOpt("notSummon") and arg1 == self.loc.summonguardtrigger) then
+	if (not self:GetOpt("notSummonWarn") and arg1 == self.loc.summonguardtrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.summonguardwarn, "Yellow")
-	elseif (not self:GetOpt("notSummon") and arg1 == self.loc.summonwarriortrigger) then
+	elseif (not self:GetOpt("notSummonWarn") and arg1 == self.loc.summonwarriortrigger) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.summonwarriorwarn, "Yellow")
 	end
 end
