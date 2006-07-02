@@ -49,7 +49,7 @@ BigWigsMoam = AceAddon:new({
 	} or { 
 		disabletrigger = "Moam dies.",
 		bosskill = "Moam has been defeated.",
-		startrigger = "senses your fear",
+		startrigger = "senses your fear.",
 		startwarn = "Moam Enaged! 90 Seconds until adds! Drain mana!",
 		addsbar = "Adds",
 		addsincoming = "Adds incoming in %s seconds!",
