@@ -161,7 +161,7 @@ BigWigsCThun = AceAddon:new({
 	timeP2Offset    = 12,
 	timeP2Tentacle  = 30,
 
-	timeReschedule	= 55,
+	timeReschedule	= 53,
 })
 
 function BigWigsCThun:Initialize()
