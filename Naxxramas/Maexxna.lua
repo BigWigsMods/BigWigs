@@ -143,8 +143,8 @@ function BigWigsMaexxna:PLAYER_REGEN_ENABLED()
 end
 
 function BigWigsMaexxna:CHAT_MSG_MONSTER_EMOTE()
-	if (not self:GetOpt("notEnrageWarn") and arg1 == self.loc.enragektrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.enragekwarn, "Red")
+	if (not self:GetOpt("notEnrageWarn") and arg1 == self.loc.enragetrigger) then
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.enragewarn, "Red")
 	end
 end
 
