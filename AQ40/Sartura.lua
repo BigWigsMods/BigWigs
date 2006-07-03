@@ -11,6 +11,7 @@ BigWigsSartura = AceAddon:new({
 	toggleoptions = GetLocale() == "koKR" and {
 		notBosskill = "보스 사망",
 		notWhirlwindWarn = "소용 돌이 경고",
+		notWhirlwindBar = "Whirlwind bar",
 		notStartWarn = "시작 경고",
 		notEnrageBar = "격노 타이머",
 		notEnrageTimer = "타이머 경고",
@@ -18,13 +19,14 @@ BigWigsSartura = AceAddon:new({
 	} or {
 		notBosskill = "Boss death",
 		notWhirlwindWarn = "Whirlwind warnings",
+		notWhirlwindBar = "Whirlwind bar",
 		notStartWarn = "Start warning",
 		notEnrageBar = "Enrage timer",
 		notEnrageTimer = "Timer warnings",
 		notEnrageWarn = "Enrage warning",
 	},
 
-	optionorder = { "notStartWarn", "notWhirlwindWarn", "notEnrageBar", "notEnrageTimer", "notEnrageWarn", "notBosskill"},
+	optionorder = { "notStartWarn", "notWhirlwindWarn", "notWhirlwindBar", "notEnrageBar", "notEnrageTimer", "notEnrageWarn", "notBosskill"},
 
 
 	loc = GetLocale() == "koKR" and {
@@ -47,7 +49,8 @@ BigWigsSartura = AceAddon:new({
 		whirlwindon = "전투감시병 살투라|1이;가; 소용돌이 효과를 얻었습니다.",
 		whirlwindoff = "전투감시병 살투라의 몸에서 소용돌이 효과가 사라졌습니다.",
 		whirlwindonwarn = "소용돌이 - 전투감시병 살투라 - 소용돌이",
-		whirlwindoffwarn = "소용돌이 사라짐. 스턴! 스턴! 스턴!",	
+		whirlwindoffwarn = "소용돌이 사라짐. 스턴! 스턴! 스턴!",
+		whirlwindbartext = "Whirlwind",
 	}
 		or GetLocale() == "zhCN" and
 	{ 
@@ -71,6 +74,7 @@ BigWigsSartura = AceAddon:new({
 		whirlwindoff = "旋风斩效果从沙尔图拉身上消失。",
 		whirlwindonwarn = "旋风斩 - 沙尔图拉 - 旋风斩",
 		whirlwindoffwarn = "旋风斩消失！",
+		whirlwindbartext = "Whirlwind",
 	}	
 		or GetLocale() == "deDE" and
 	{	
@@ -94,6 +98,7 @@ BigWigsSartura = AceAddon:new({
 		whirlwindoff = "Wirbelwind schwindet von Schlachtwache Sartura.",
 		whirlwindonwarn = "Wirbelwind - Schlachtwache Sartura - Wirbelwind",
 		whirlwindoffwarn = "Wirbelwind verschwunden. Draufhauen! Draufhauen! Draufhauen!",
+		whirlwindbartext = "Whirlwind",
 	}
 	  or
 	{	
@@ -117,6 +122,7 @@ BigWigsSartura = AceAddon:new({
 		whirlwindoff = "Whirlwind fades from Battleguard Sartura.",
 		whirlwindonwarn = "Whirlwind - Battleguard Sartura - Whirlwind",
 		whirlwindoffwarn = "Whirlwind faded. Spank! Spank! Spank!",
+		whirlwindbartext = "Whirlwind",
 	},
 })
 
@@ -131,9 +137,7 @@ function BigWigsSartura:Enable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("BIGWIGS_SYNC_SARTURA_WIRLWINDON")
-	self:RegisterEvent("BIGWIGS_SYNC_SARTURA_WHIRLWINDOFF")
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "SARTURA_WHIRLWINDON", 3)
-	self:TriggerEvent("BIWWIGS_SYNC_THROTTLE", "SARTURA_WHIRLWINDOFF", 3)
 end
 
 function BigWigsSartura:Disable()
@@ -145,26 +149,25 @@ function BigWigsSartura:Disable()
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn5)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn6)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn7)
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.whirlwindoffwarn)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bartext, 300)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bartext, 510)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bartext, 570)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bartext)
+	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.whirlwindbartext) 
 	self:UnregisterAllEvents()
 end
 
 function BigWigsSartura:BIGWIGS_SYNC_SARTURA_WHIRLWINDON()
 	if not self:GetOpt("notWhirlwindWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.whirlwindonwarn, "Red") end
+	if not self:GetOpt("notWhirlwindWarn") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.whirlwindoffwarn, 15, "Yellow") end
+	if not self:GetOpt("notWhirlwindBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.whirlwindbartext, 15, 2, "Red", "Interface\\Icons\\Ability_Whirlwind") end
 end
 
-function BigWigsSartura:BIGWIGS_SYNC_SARTURA_WHIRLWINDOFF()
-	if not self:GetOpt("notWhirlwindWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.whirlwindoffwarn, "Yellow") end
-end
 
 function BigWigsSartura:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
 	if (arg1 == self.loc.whirlwindon) then
 		self:TriggerEvent("BIGWIGS_SYNC_SEND", "SARTURA_WHIRLWINDON")
-	elseif (arg1 == self.loc.whirlwindoff) then
-		self:TriggerEvent("BIGWIGS_SYNC_SEND", "SARTURA_WHIRLWINDOFF")
 	end
 end
 
