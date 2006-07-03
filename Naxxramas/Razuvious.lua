@@ -49,7 +49,7 @@ function BigWigsRazuvious:Enable()
 	self:RegisterEvent("BIGWIGS_MESSAGE")
 	self:RegisterEvent("BIGWIGS_SYNC_SHOUTWARN")
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "SHOUTWARN", 5)
-	Metro:Register("BigWigs_Twins_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
+	metro:Register("BigWigs_Razuvious_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
 	metro:Unregister("BigWigs Razuvious Shout")
 	metro:Register("BigWigs Razuvious Shout", self.BIGWIGS_SYNC_SHOUTWARN, self.timeShout, self )
 end
@@ -115,9 +115,9 @@ function BigWigsRazuvious:PLAYER_REGEN_ENABLED()
 	local _,_,running,_ = Metro:Status("BigWigs_Razuvious_CheckWipe")
 	if (not go) then
 		metro:Stop("BigWigs Razuvious Shout")
-		Metro:Stop("BigWigs_Razuvious_CheckWipe")
+		metro:Stop("BigWigs_Razuvious_CheckWipe")
 	elseif (not running) then
-		Metro:Start("BigWigs_Razuvious_CheckWipe")
+		metro:Start("BigWigs_Razuvious_CheckWipe")
 	end
 end
 
