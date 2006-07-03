@@ -29,7 +29,7 @@ BigWigsMaexxna = AceAddon:new({
 		webwraptrigger = "(.*) (.*) afflicted by Web Wrap.",
 		webspraytrigger = "is afflicted by Web Spray.",
 
-		enragetrigger = "Maexxna gains Enrage.",
+		enragetrigger = "becomes enraged.",
 
 		webspraywarn30sec = "Web wrap in 10 seconds",
 		webspraywarn20sec = "Web Wrap. 10 seconds until Spiders spawn!",
