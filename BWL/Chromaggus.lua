@@ -181,7 +181,7 @@ function BigWigsChromaggus:BIGWIGS_SYNC_CHROMAGGUS_BREATH(SpellName)
 	if (SpellName) then
 		if (not self.loc.breath1) then
 			self.loc.breath1 = SpellName
-		elseif (not self.loc.breath2) then
+		elseif (not self.loc.breath2) and (self.loc.breath1 ~= SpellName) then
 			self.loc.breath2 = SpellName
 		end
 
