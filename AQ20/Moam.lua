@@ -36,7 +36,7 @@ BigWigsMoam = AceAddon:new({
 		bossname = "모암",
 		disabletrigger = "모암|1이;가; 죽었습니다.",
 		bosskill = "모암을 물리쳤습니다..",
-		startrigger = "당신의 공포를 알아챕니다.",
+		starttrigger = "당신의 공포를 알아챕니다.",
 		startwarn = "모암 행동시작! 90초 후 정령 등장!",
 		addsbar = "정령 등장",
 		addsincoming = "%s초후 정령 등장!",
@@ -49,7 +49,7 @@ BigWigsMoam = AceAddon:new({
 	} or { 
 		disabletrigger = "Moam dies.",
 		bosskill = "Moam has been defeated.",
-		startrigger = "senses your fear.",
+		starttrigger = "senses your fear.",
 		startwarn = "Moam Enaged! 90 Seconds until adds! Drain mana!",
 		addsbar = "Adds",
 		addsincoming = "Adds incoming in %s seconds!",
