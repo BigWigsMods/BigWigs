@@ -8,7 +8,12 @@ BigWigsFlamegor = AceAddon:new({
 	enabletrigger = bboss("Flamegor"),
 	bossname = bboss("Flamegor"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notWingBuffet = "폭풍 날개 경고",
+		notShadowFlame = "암흑의 불길 경고",
+		notFrenzy = "광란 경고",
+		notBosskill = "보스 사망 알림",
+	} or {
 		notWingBuffet = "Warn for Wing Buffet",
 		notShadowFlame = "Warn for Shadow Flame",
 		notFrenzy = "Warn when Flamegor goes into a frenzy",

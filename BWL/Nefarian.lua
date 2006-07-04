@@ -8,7 +8,15 @@ BigWigsNefarian = AceAddon:new({
 	enabletrigger = { bboss("Nefarian"), bboss("Lord Victor Nefarius") },
 	bossname = bboss("Nefarian"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notBosskill = "보스 사망 알림",
+		notFear = "공포 경고",
+		notShadowFlame = "암흑의 불길 경고",
+		notClassIncoming = "직업 지목 시간 경고",
+		notClassCall = "직업 지목",
+		notClassBar = "직업 지목 타이머 바",
+		notOtherWarn = "착지와 해골 경고",
+	} or {
 		notBosskill = "Boss death",
 		notFear = "Fear warning",
 		notShadowFlame = "Shadowflame warning",

@@ -8,7 +8,14 @@ BigWigsEbonroc = AceAddon:new({
 	enabletrigger = bboss("Ebonroc"),
 	bossname = bboss("Ebonroc"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notWingBuffet = "폭풍 날개 경고",
+		notShadowFlame = "암흑의 불길 경고",
+		notYouCruse = "자신에 대한 에본로크의 그림자 경고",
+		notElseCruse = "다른 사람의 에본로크의 그림자 경고",
+		notBosskill = "보스 사망 알림",
+	
+	} or {
 		notWingBuffet = "Warn for Wing Buffet",
 		notShadowFlame = "Warn for Shadow Flame",
 		notYouCruse = "Warn when you got Shadow of Ebonroc",

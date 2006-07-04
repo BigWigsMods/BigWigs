@@ -8,7 +8,12 @@ BigWigsChromaggus = AceAddon:new({
 	enabletrigger = bboss("Chromaggus"),
 	bossname = bboss("Chromaggus"),
 	
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notBreaths = "브레스 경고",
+		notVulnerability = "취약 속성 변경 경고",
+		notFrenzy = "광폭화 시간 경고",
+		notBosskill = "보스 사망 알림",
+	} or {
 		notBreaths = "Warn for Chromaggus his breaths",
 		notVulnerability = "Warn when Chromaggus his vulnerability changes",
 		notFrenzy = "Warn when Chromaggus goes into a killing frenzy",

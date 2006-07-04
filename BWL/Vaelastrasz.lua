@@ -8,7 +8,12 @@ BigWigsVaelastrasz = AceAddon:new({
 	enabletrigger = bboss("Vaelastrasz the Corrupt"),
 	bossname = bboss("Vaelastrasz the Corrupt"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notYouBurning = "자신의 아드레날린 경고",
+		notElseBurning = "다른 사람의 아드렌날린 경고",
+		notIcon = "아드레날린 해골 표시(승급 필요)",
+		notBosskill = "보스 사망 알림",
+	} or {
 		notYouBurning = "Warn when you are burning",
 		notElseBurning = "Warn when others are burning",
 		notIcon = "Put a Skull icon on the person who's burning. (Requires promoted or higher)",

@@ -8,7 +8,11 @@ BigWigsFiremaw = AceAddon:new({
 	enabletrigger = bboss("Firemaw"),
 	bossname = bboss("Firemaw"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notWingBuffet = "폭풍 날개 경고",
+		notShadowFlame = "암흑 불길 경고",
+		notBosskill = "보스 사망 알림",
+	} or {
 		notWingBuffet = "Warn for Wing Buffet",
 		notShadowFlame = "Warn for Shadow Flame",
 		notBosskill = "Boss death",
@@ -24,7 +28,7 @@ BigWigsFiremaw = AceAddon:new({
 		warn1 = "화염 아귀가 폭풍 날개를 시전합니다!",
 		warn2 = "30초후 다음 폭풍 날개!",
 		warn3 = "3초 후 폭풍 날개!",
-		warn4 = "암흑 불길 경보!",
+		warn4 = "암흑 불길 경고!",
 		bosskill = "화염아귀를 물리쳤습니다!",
 
 		bar1text = "폭풍 날개",
