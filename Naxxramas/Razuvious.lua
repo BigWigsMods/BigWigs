@@ -1,4 +1,5 @@
 ﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
+local metro = Metrognome:GetInstance("1")
 
 BigWigsRazuvious = AceAddon:new({
 	name          = "BigWigsRazuvious",
