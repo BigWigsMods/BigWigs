@@ -10,10 +10,13 @@ BigWigsPatchwerk = AceAddon:new({
 	bossname = bboss("Patchwerk"),
 
 	toggleoptions = {
+		notStartWarn = "Start warning",
 		notEnrageWarn = "Warn for Enrage",
+		notEnrageBar = "Enrage timerbar",
+		notEnrageSec = "Enrage x-sec warnings",
 		notBosskill = "Boss death",
 	},
-	optionorder = {"notEnrageWarn", "notBosskill"},
+	optionorder = {"notStartWarn", "notEnrageBar", "notEnrageSec", "notEnrageWarn", "notBosskill"},
 
 	loc = { 
 		disabletrigger = "Patchwerk dies.",		
@@ -100,25 +103,27 @@ function BigWigsPatchwerk:PLAYER_REGEN_ENABLED()
 end
 
 function BigWigsPatchwerk:CHAT_MSG_MONSTER_EMOTE()
-	if (not self:GetOpt("notEnrageWarn") and arg1 == self.loc.enragetrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.enragewarn, "Red")
+	if ( arg1 == self.loc.enragetrigger) then
+		if not self:GetOpt("notEnrageWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.enragewarn, "Red") end
 		self:StopEnrage()
 	end
 end
 
 function BigWigsPatchwerk:BIGWIGS_SYNC_PATCHWERKENRAGE()
-	if (not self:GetOpt("notEnrage")) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Red")
+	if not self:GetOpt("notStartWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Red") end
+	if not self:GetOpt("notEnrageBar") then 
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.enragebartext, 420, 2, "Green", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 120, "Yellow")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 240, "Orange")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 360, "Red")
+	end
+	if not self:GetOpt("notEnrageSec") then 
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 120, "Green")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 240, "Yellow")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 330, "Orange")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn4, 360, "Orange")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn5, 390, "Red")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn6, 410, "Red")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 120, "Yellow")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 240, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 360, "Red")
 	end
 end
 
