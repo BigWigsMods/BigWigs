@@ -114,7 +114,7 @@ end
 
 function BigWigsRazuvious:PLAYER_REGEN_ENABLED()
 	local go = self:Scan()
-	local _,_,running,_ = Metro:Status("BigWigs_Razuvious_CheckWipe")
+	local _,_,running,_ = metro:Status("BigWigs_Razuvious_CheckWipe")
 	if (not go) then
 		metro:Stop("BigWigs Razuvious Shout")
 		metro:Stop("BigWigs_Razuvious_CheckWipe")
