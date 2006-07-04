@@ -11,7 +11,7 @@ BigWigsMandokir = AceAddon:new({
 	toggleoptions = GetLocale() == "koKR" and {
 		notPlayer = "당신을 지켜볼 때 경고",
 		notOthers = "다른 사람을 지켜볼 때 경고",
-		notBosskill = "보스 사망",	
+		notBosskill = "보스 사망 알림",	 
 	} or { 
 		notPlayer = "Warn when you are being watched",
 		notOthers = "Warn when others are being watched",
@@ -21,7 +21,7 @@ BigWigsMandokir = AceAddon:new({
 	optionorder = { "notPlayer", "notOthers", "notBosskill" },
 
 	loc = GetLocale() == "koKR" and {
-		disabletrigger = "혈군주 만도크리|1이;가; 죽었습니다.",
+		disabletrigger = "혈군주 만도키르|1이;가; 죽었습니다.",
 		trigger1 = "(.+)! 널 지켜보고 있겠다!",
 
 		warn1 = "당신을 지켜보고 있습니다 - 모든 동작 금지!",

@@ -11,8 +11,8 @@ BigWigsBaronGeddon = AceAddon:new({
 	toggleoptions = GetLocale() == "koKR" and {
 		notYouBomb = "자신이 폭탄일때 경고",
 		notElseBomb = "다른 사람이 폭탄일때 경고",
-		notIcon = "폭탄에게 해골 표시 달기.(승급 필요)",
-		notBosskill = "보스 사망",
+		notIcon = "폭탄에게 해골 표시 달기(승급 필요)",
+		notBosskill = "보스 사망 알림",
 	} or {
 		notYouBomb = "Warn when you are the bomb",
 		notElseBomb = "Warn when others are the bomb",

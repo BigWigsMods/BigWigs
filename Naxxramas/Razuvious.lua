@@ -9,14 +9,33 @@ BigWigsRazuvious = AceAddon:new({
 	enabletrigger 	= bboss("Instructor Razuvious"),
 	bossname 		= bboss("Instructor Razuvious"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notShoutWarn 		= "분열의 외침 경고",
+		notShoutBar 		= "분열의 외침 타이머바 보이기",
+		notBosskill 		= "보스 사망 알림",
+	} or {
 		notShoutWarn 		= "Warn when Razuvious uses Disrupting Shout",
 		notShoutBar 		= "Show the Time Bar for Disrupting Shout",
 		notBosskill 		= "Boss death",
 	},
 	optionorder = {"notShoutWarn", "notShoutBar", "notBosskill"},
 	
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		disabletrigger 	= "훈련교관 라주비어스|1이;가; 죽었습니다.", 		
+		bosskill 		= "라주비어스를 물리쳤습니다!",
+		
+		startwarn 		= "훈련교관 라주비어스 광푝화! 외침까지 25초!",
+	
+		starttrigger1 	= "훈련은 끝났다!",
+		starttrigger2 	= "Sweep the leg... Do you have a problem with that?",
+		starttrigger3 	= "절대 봐주지 마라!",
+		starttrigger4 	= "Do as I taught you!",		
+
+		shouttrigger 	= "훈련교관 라주비어스|1이;가; 분열의 외침|1으로;로; (.+)에게 (.+)의 피해를 입혔습니다.",
+		shout7secwarn 	= "7초후 분열의 외침",
+		shoutwarn 		= "분열의 외침!",
+		shoutbar 		= "분열의 외침",
+	} or {
 		disabletrigger 	= "Instructor Razuvious dies.",		
 		bosskill 		= "Razuvious has been defeated!",
 		

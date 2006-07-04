@@ -16,7 +16,7 @@ BigWigsHakkar = AceAddon:new({
 		notDrain60 = "생흡 60초전 경고",
 		notDrain45 = "생흡 45초전 경고",
 		notDrain15 = "생흡 15초전 경고",
-		notBosskill = "보스 사망",
+		notBosskill = "보스 사망 알림",
 	} or {
 		notEnrageBar = "Enrage timer",
 		notDrainBar = "Drain timer",

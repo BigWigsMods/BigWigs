@@ -1,4 +1,20 @@
-﻿local cmdopt = {
+﻿local cmdopt = GetLocale() == "koKR" and {
+	option = "테스트",
+	desc   = "유용한 테스트 이벤트.",
+	input  = true,
+	args   = {
+		{
+			option = "local",
+			desc   = "Fire off some test events locally.",
+			method = "BIGWIGS_TEST",
+		},
+		{
+			option = "sync",
+			desc   = "Fire off a test sync message to the raid.",
+			method = "Send",
+		},
+	},
+} or { 
 	option = "test",
 	desc   = "Some useful test events.",
 	input  = true,

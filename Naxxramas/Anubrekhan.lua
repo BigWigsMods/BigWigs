@@ -8,7 +8,13 @@ BigWigsAnubrekhan = AceAddon:new({
 	enabletrigger = bboss("Anub'Rekhan"),
 	bossname = bboss("Anub'Rekhan"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notSwarmWarn = "메뚜기 떼 종료 알림",
+		notLocustInc = "다음 메뚜기 떼 경고",
+		notSwarmBar = "메뚜기 떼 종료 타이머 바 보이기",
+		notLocustIncBar = "다음 메뚜기 떼 타이머 바 보이기",
+		notBosskill = "보스 사망 알림",
+	} or {
 		notSwarmWarn = "Warn when the current Locust Swarm ends",
 		notLocustInc = "Warn for the incoming Locust Swarm",
 		notSwarmBar = "Show the Time Bar of the current Locust Swarm",
@@ -17,7 +23,26 @@ BigWigsAnubrekhan = AceAddon:new({
 	},
 	optionorder = {"notLocustInc", "notLocustIncBar", "notSwarmWarn", "notSwarmBar", "notBosskill"},
 
-	loc = { 
+
+	loc = GetLocale() == "koKR" and { 
+		disabletrigger = "아눕레칸|1이;가; 죽었습니다.",
+		bosskill = "아눕레칸을 물리쳤습니다!",
+
+		starttrigger1 = "어디 맛 좀 볼까...",
+		starttrigger2 = "그래, 도망쳐! 더 신선한 피가 솟구칠 테니!",
+		starttrigger3 = "나가는 길은 없다.",
+		engagewarn = "아눕레칸 격노. 대략 90초후 첫번째 메뚜기 떼.",
+				
+		gaintrigger = "아눕레칸|1이;가; 메뚜기 떼 효과를 얻었습니다.",
+		gainendwarn = "메뚜기 떼 종료!",
+		gainnextwarn = "다음 메뚜기 떼 대략 95초후.",
+		gainwarn10sec = "10초후 메뚜기 떼",
+		gainincbar = "다음 메뚜기 떼",
+		gainbar = "메뚜기 떼",				
+		 
+		casttrigger = "아눕레칸|1이;가; 메뚜기 떼|1을;를; 시전합니다.",
+		castwarn = "메뚜기 떼 소환!",
+	} or {
 		disabletrigger = "Anub'Rekhan dies.",		
 		bosskill = "Anub'Rekhan has been defeated!",
 

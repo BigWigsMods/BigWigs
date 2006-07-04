@@ -11,7 +11,7 @@ BigWigsLucifron = AceAddon:new({
 	toggleoptions = GetLocale() == "koKR" and {
 		notCurse = "루시프론의 저주 경고",
 		notDoom= "파멸의 예언 경고",
-		notBosskill = "보스 사망",
+		notBosskill = "보스 사망 알림",
 	} or {
 		notCurse = "Warn for Lucifron's Curse",
 		notDoom= "Warn for Impending Doom",

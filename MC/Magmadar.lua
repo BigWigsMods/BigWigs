@@ -11,7 +11,7 @@ BigWigsMagmadar = AceAddon:new({
 	toggleoptions = GetLocale() == "koKR" and {
 		notFear = "공포 경고",
 		notFrenzy = "광폭화 경고",
-		notBosskill = "보스 사망",		
+		notBosskill = "보스 사망 알림",	 	
 	} or {		
 		notFear = "Warn for Fear",
 		notFrenzy = "Warn when Magmadar goes into a frenzy",

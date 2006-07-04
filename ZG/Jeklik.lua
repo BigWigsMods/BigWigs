@@ -11,7 +11,7 @@ BigWigsJeklik = AceAddon:new({
 	toggleoptions = GetLocale() == "koKR" and {
 		notBats = "박쥐 소환 경고",
 		notHeal = "치유 시전 방해 알림",
-		notBosskill = "보스 사망",
+		notBosskill = "보스 사망 알림",
 	} or {
 		notBats = "Warn on incoming bomb bats",
 		notHeal = "Show Heal interrupt warnings",

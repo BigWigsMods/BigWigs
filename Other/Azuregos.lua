@@ -4,11 +4,15 @@ BigWigsAzuregos = AceAddon:new({
 	name          = "BigWigsAzuregos",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = {"Outdoor Raid Bosses", BabbleLib:GetInstance("Zone 1.2")("Azshara") },
+	zonename = { GetLocale() == "koKR" and "필드 몹" or "Outdoor Raid Bosses", BabbleLib:GetInstance("Zone 1.2")("Azshara") },
 	enabletrigger = bboss("Azuregos"),
 	bossname = bboss("Azuregos"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {	
+		notTeleport = "강제소환 경고",
+		notShield = "마법보호막 경고",
+		notBosskill = "보스 사망 알림",
+	} or {
 		notTeleport = "Teleport warning",
 		notShield = "Shield warnings",
 		notBosskill = "Boss death",

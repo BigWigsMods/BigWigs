@@ -1,10 +1,12 @@
+local bboss = BabbleLib:GetInstance("Boss 1.2")
+
 BigWigsGluth = AceAddon:new({
 	name	= "BigWigsGluth",
 	cmd		= AceChatCmd:new({}, {}),
 
-	zonename = "Naxxramas",
-	enabletrigger = "Gluth",
-	bossname = "Gluth",
+	zonename = BabbleLib:GetInstance("Zone 1.2")("Naxxramas"),
+	enabletrigger = bboss("Gluth"),
+	bossname = bboss("Gluth"),	
 
 	toggleoptions = {
 		notFrenzy = "Frenzy warning",

@@ -8,7 +8,12 @@ BigWigsFaerlina = AceAddon:new({
 	enabletrigger = bboss("Grand Widow Faerlina"),
 	bossname = bboss("Grand Widow Faerlina"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notEnrageWarn = "격노 경고",
+		notEnrageBar = "다음 격노 타이머 바 보이기",
+		notSilenceWarn = "Warn when silence is casted and enrage is delayed",
+		notBosskill = "보스 사망 알림",
+	} or {
 		notEnrageWarn = "Warn for Enrage",
 		notEnrageBar = "Show the timer bar for the next Enrage",
 		notSilenceWarn = "Warn when silence is casted and enrage is delayed",
@@ -16,7 +21,25 @@ BigWigsFaerlina = AceAddon:new({
 	},
 	optionorder = {"notEnrageWarn", "notEnrageBar", "notSilenceWarn", "notBosskill"},
 
-	loc = { 
+	loc = GetLocale() == "koKR" and { 
+		disabletrigger = "귀부인 펠리나|1이;가; 죽었습니다.",		
+		bosskill = "귀부인 펠리나를 물리쳤습니다!",
+
+		starttrigger1 = "내 앞에 무릎을 꿇어라, 벌레들아!",
+		starttrigger2 = "주인님의 이름으로 처단하라!",
+		starttrigger3 = "You cannot hide from me!",
+		starttrigger4 = "두 발이 성할 때 도망쳐라!",
+
+		silencetrigger = "Naxxramas Worshipper is afflicted by Widow's Embrace.",
+		enragetrigger = "Grand Widow Faerlina gains Enrage.",
+
+		startwarn = "Start or Enrage!",
+		enragewarn15sec = "15 seconds until enrage!",
+		enragewarn = "Enrage!",
+		silencewarn = "Silence! Delaying Enrage!",
+
+		enragebar = "Enrage",
+	} or {
 		disabletrigger = "Grand Widow Faerlina dies.",		
 		bosskill = "Grand Widow Faerlina has been defeated!",
 

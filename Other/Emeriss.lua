@@ -4,13 +4,20 @@ BigWigsEmeriss = AceAddon:new({
 	name          = "BigWigsEmeriss",
 	cmd           = AceChatCmd:new({}, {}),
 
-	zonename = { "Outdoor Raid Bosses", BabbleLib:GetInstance("Zone 1.2")("Duskwood"), BabbleLib:GetInstance("Zone 1.2")("The Hinterlands"),
+	zonename = { GetLocale() == "koKR" and "필드 몹" or "Outdoor Raid Bosses", BabbleLib:GetInstance("Zone 1.2")("Duskwood"), BabbleLib:GetInstance("Zone 1.2")("The Hinterlands"),
 			BabbleLib:GetInstance("Zone 1.2")("Ashenvale"), BabbleLib:GetInstance("Zone 1.2")("Feralas") },
 	
 	enabletrigger = bboss("Emeriss"),
 	bossname = bboss("Emeriss"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notNoxious = "산성 숨결 경고",
+		notNoxious5Sec = "산성 숨결 5초전 경고",
+		notNoxiousBar = "산성 숨결 타이머 바",
+		notVolatileYou = "자신에 대한 대지의 오염 경고",
+		notVolatileOther = "다른 사람의 대지의 오염 경고",
+		notBosskill = "보스 사망 알림",	
+	} or {
 		notNoxious = "Noxious breath warning",
 		notNoxious5Sec = "Noxious breath 5-sec warning",
 		notNoxiousBar = "Noxious breath timerbar",

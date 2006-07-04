@@ -8,7 +8,12 @@ BigWigsOnyxia = AceAddon:new({
 	enabletrigger = bboss("Onyxia"),
 	bossname = bboss("Onyxia"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notDeepBreath = "딥 브레스 경고",
+		notPhase2 = "2단계 알림",
+		notPhase3 = "3단계 알림",
+		notBosskill = "보스 사망",
+	} or {
 		notDeepBreath = "Deep breath warning",
 		notPhase2 = "Phase 2 warning",
 		notPhase3 = "Phase 3 warning",

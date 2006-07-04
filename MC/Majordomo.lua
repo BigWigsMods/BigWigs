@@ -11,7 +11,7 @@ BigWigsMajordomo = AceAddon:new({
 	toggleoptions = GetLocale() == "koKR" and {
 		notMagic = "마법 반사막 경고",
 		notDmg = "물리 보호막 경고",
-		notBosskill = "보스 사망",
+		notBosskill = "보스 사망 알림",
 	} or {
 		notMagic = "Warn for Magic Reflection",
 		notDmg = "Warn for Damage Shields",

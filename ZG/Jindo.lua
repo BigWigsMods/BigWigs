@@ -8,7 +8,11 @@ BigWigsJindo = AceAddon:new({
 	enabletrigger = bboss("Jin'do the Hexxer"),
 	bossname = bboss("Jin'do the Hexxer"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notBrainWash = "세뇌의 토템 경고",
+		notHealing = "치유의 토템 경고",
+		notBosskill = "보스 사망 알림",
+	} or {
 		notBrainWash = "Announce brainwash totems",
 		notHealing = "Announce healing totems",
 		notBosskill = "Boss death",
@@ -16,7 +20,17 @@ BigWigsJindo = AceAddon:new({
 
 	optionorder = { "notBrainWash", "notHealing", "notBosskill" },
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		disabletrigger = "주술사 진도|1이;가; 죽었습니다.",
+
+		triggerbrainwash = "주술사 진도|1이;가; 세뇌의 토템 소환|1을;를; 시전합니다.", 		
+		triggerhealing = "주술사 진도|1이;가; 치유의 토템 소환|1을;를; 시전합니다.", 
+
+		warnbrainwash = "세뇌의 토템!",
+		warnhealing = "치유의 토템!",
+
+		bosskill = "주술사 진도를 물리쳤습니다!",
+	} or { 
 		disabletrigger = "Jin'do the Hexxer dies.",
 
 		triggerbrainwash = "Jin'do the Hexxer casts Summon Brain Wash Totem.",

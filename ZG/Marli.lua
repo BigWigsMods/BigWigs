@@ -11,7 +11,7 @@ BigWigsMarli = AceAddon:new({
 	toggleoptions = GetLocale() == "koKR" and {
 		notSpiders = "거미 소환 경고",
 		notDrain = "생명력 흡수 경고",
-		notBosskill = "보스 사망",
+		notBosskill = "보스 사망 알림",
 	} or {
 		notSpiders = "Warn when spiders spawn",
 		notDrain = "Warn on Life Drain",

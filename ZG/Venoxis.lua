@@ -11,7 +11,7 @@ BigWigsVenoxis = AceAddon:new({
 	toggleoptions = GetLocale() == "koKR" and {
 		notRenew = "소생 해제 경고",
 		notPhase2 = "2단계 경보",
-		notBosskill = "보스 사망",
+		notBosskill = "보스 사망 알림",
 	} or {
 		notRenew = "Show Renew dispel warnings",
 		notPhase2 = "Announce Phase 2 transition",

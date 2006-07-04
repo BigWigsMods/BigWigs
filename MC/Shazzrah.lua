@@ -11,7 +11,7 @@ BigWigsShazzrah = AceAddon:new({
 	toggleoptions = GetLocale() == "koKR" and {
 		notSelfBuff = "마법 약화 버프 경고",
 		notBlink = "점멸 경고",
-		notBosskill = "보스 사망",					
+		notBosskill = "보스 사망 알림",	 				
 	} or {			
 		notSelfBuff = "Warn for Self Buff",
 		notBlink = "Warn for Blink",
