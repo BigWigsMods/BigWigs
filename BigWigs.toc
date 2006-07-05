@@ -87,5 +87,7 @@ Naxxramas\Noth.lua
 Naxxramas\Faerlina.lua
 Naxxramas\Maexxna.lua
 Naxxramas\Patchwerk.lua
+Naxxramas\Grobbulus.lua
+
 
 
