@@ -25,6 +25,7 @@ BigWigsPatchwerk = AceAddon:new({
 		enragetrigger = "goes into a berserker rage!",
 
 		enragewarn = "Enrage!",
+		starttrigger = "Patchwerk want to play!",
 		startwarn = "Patchwerk Engaged! Enrage in 7 minutes!",
 		enragebartext = "Enrage",
 		warn1 = "Enrage in 5 minutes",
@@ -45,17 +46,14 @@ function BigWigsPatchwerk:Enable()
 	self.disabled = nil
 	self.enrageStarted = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED")
-	self:RegisterEvent("BIGWIGS_SYNC_PATCHWERKENRAGE")
-	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "PATCHWERKENRAGE", 10)
 
 	Metro:Register("BigWigs_Patchwerk_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
 end
 
 function BigWigsPatchwerk:Disable()
 	self.disabled = true
-	self.enrageStarted = nil
 	self:UnregisterAllEvents()
 	self:StopEnrage()
 	Metro:Unregister("BigWigs_Patchwerk_CheckWipe")
@@ -84,10 +82,23 @@ function BigWigsPatchwerk:Scan()
 	return false
 end
 
-function BigWigsPatchwerk:PLAYER_REGEN_DISABLED()
-	local go = self:Scan()
-	if (go) then
-		self:TriggerEvent("BIGWIGS_SYNC_SEND", "PATCHWERKENRAGE")
+function BigWigsPatchwerk:CHAT_MSG_MONSTER_YELL()
+	if arg1 == self.loc.starttrigger then
+		if not self:GetOpt("notStartWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Red") end
+		if not self:GetOpt("notEnrageBar") then 
+			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.enragebartext, 420, 2, "Green", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 120, "Yellow")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 240, "Orange")
+			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 360, "Red")
+		end
+		if not self:GetOpt("notEnrageSec") then 
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 120, "Green")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 240, "Yellow")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 330, "Orange")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn4, 360, "Orange")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn5, 390, "Red")
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn6, 410, "Red")
+		end
 	end
 end
 
@@ -106,24 +117,6 @@ function BigWigsPatchwerk:CHAT_MSG_MONSTER_EMOTE()
 	if ( arg1 == self.loc.enragetrigger) then
 		if not self:GetOpt("notEnrageWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.enragewarn, "Red") end
 		self:StopEnrage()
-	end
-end
-
-function BigWigsPatchwerk:BIGWIGS_SYNC_PATCHWERKENRAGE()
-	if not self:GetOpt("notStartWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Red") end
-	if not self:GetOpt("notEnrageBar") then 
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.enragebartext, 420, 2, "Green", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 120, "Yellow")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 240, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 360, "Red")
-	end
-	if not self:GetOpt("notEnrageSec") then 
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 120, "Green")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 240, "Yellow")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 330, "Orange")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn4, 360, "Orange")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn5, 390, "Red")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn6, 410, "Red")
 	end
 end
 
