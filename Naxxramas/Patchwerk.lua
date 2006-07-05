@@ -25,7 +25,8 @@ BigWigsPatchwerk = AceAddon:new({
 		enragetrigger = "goes into a berserker rage!",
 
 		enragewarn = "Enrage!",
-		starttrigger = "Patchwerk want to play!",
+		starttrigger1 = "Patchwerk want to play!",
+		starttrigger2 = "Kel'thuzad make Patchwerk his avatar of war!",
 		startwarn = "Patchwerk Engaged! Enrage in 7 minutes!",
 		enragebartext = "Enrage",
 		warn1 = "Enrage in 5 minutes",
@@ -83,7 +84,7 @@ function BigWigsPatchwerk:Scan()
 end
 
 function BigWigsPatchwerk:CHAT_MSG_MONSTER_YELL()
-	if arg1 == self.loc.starttrigger then
+	if arg1 == self.loc.starttrigger1 or arg1 == self.loc.starttrigger2 then
 		if not self:GetOpt("notStartWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Red") end
 		if not self:GetOpt("notEnrageBar") then 
 			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.enragebartext, 420, 2, "Green", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
