@@ -115,7 +115,7 @@ BigWigsOuro = AceAddon:new({
 		emergewarn1 = "15 seconds until Ouro submerges!",
 		emergebartext = "Ouro submerge",
 		
-		scarabdespawn = "Scarbs Despawn in 10 Seconds",
+		scarabdespawn = "Scarabs despawn in 10 Seconds",
 		scarabbar	= "Scarabs despawn",
 		
 		submergetrigger = "Ouro casts Summon Ouro Mounds.",
@@ -246,6 +246,8 @@ end
 function BigWigsOuro:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()	
 	if (string.find(arg1, self.loc.emergetrigger)) then
 		self:TriggerEvent("BIGWIGS_SYNC_SEND", "OUROEMERGE")
+	elseif (string.find(arg1, self.loc.submergetrigger)) then
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "OUROSUBMERGE")
 	end
 end
 
