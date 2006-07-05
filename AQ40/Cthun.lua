@@ -74,6 +74,7 @@ BigWigsCThun = AceAddon:new({
 			positions	= "Assume the position! Green Beam coming!",			
 			positions2	= "5 seconds until Dark Glare ends!",
 			phase2starting	= "The Eye is dead! Body incoming!",
+			barGreenBeam	= "Green Beam!",
 	} 
 		or GetLocale() == "zhCN" and 
 	{
@@ -112,6 +113,7 @@ BigWigsCThun = AceAddon:new({
 			positions	= "Assume the position! Green Beam coming!",
 			phase2starting	= "The Eye is dead! Body incoming!",
 			positions2	= "5 seconds until Dark Glare ends!",
+			barGreenBeam	= "Green Beam!",
 	}
 		or 
 	{
@@ -143,6 +145,7 @@ BigWigsCThun = AceAddon:new({
 			barWeakend	= "C'Thun is weakened!",
 			barGlare	= "Dark glare!",
 			barGiant	= "Giant Eye!",
+			barGreenBeam	= "Green Beam!",
 
 			eyebeam		= "Eye Beam",
 			glarewarning	= "DARK GLARE ON YOU! MOVE!",
@@ -156,7 +159,7 @@ BigWigsCThun = AceAddon:new({
 	timeP1TentacleStart = 45,
 	timeP1GlareStart = 45,
 	timeP1Glare	 = 87,
-	timeP1GlareDuration = 34,
+	timeP1GlareDuration = 38,
 	
 	timeP2Offset    = 12,
 	timeP2Tentacle  = 30,
@@ -199,8 +202,8 @@ function BigWigsCThun:Enable()
 	metro:Register("BigWigs Cthun Tentacles Phase2", self.StartTentacleRape, self.timeP2Tentacle + self.timeP2Offset, self )
 	metro:Register("BigWigs Cthun Dark Glare", self.DarkGlare, self.timeP1GlareStart, self)
 
-	-- we warn which group will be dark glared 2 second before it hits.
-	metro:Register("BigWigs Cthun Group Warning", self.GroupWarning, self.timeP1GlareStart - 2, self)
+	-- we warn which group will be dark glared 3 second before it hits.
+	metro:Register("BigWigs Cthun Group Warning", self.GroupWarning, self.timeP1GlareStart - 3, self)
 	metro:Register("BigWigs Cthun Target", self.CheckTarget, 0.2, self)
 
 end
@@ -268,8 +271,9 @@ function BigWigsCThun:DarkGlare()
 
 	if not self:GetOpt("notGlareWarn") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare1, self.timeP1Glare, "Red") end
 	if not self:GetOpt("notGlare5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare2, self.timeP1Glare-5, "Orange") end
-	if not self:GetOpt("notPositions5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.positions2, self.timeP1Glare + self.timeP1GlareDuration - 5, "Yellow") end
-	if not self:GetOpt("notPositions") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.positions, self.timeP1Glare + self.timeP1GlareDuration, "Green") end
+	if not self:GetOpt("notPositions5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.positions2, self.timeP1GlareDuration - 5, "Yellow") end
+	if not self:GetOpt("notPositions") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.positions, self.timeP1GlareDuration, "Green") end
+	if not self:GetOpt("notPositionsBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGreenBeam, self.timeP1GlareDuration, 4, "Green", "Interface\\Icons\\Spell_Nature_CallStorm" ) end
 	if not self:GetOpt("notGlareBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.barGlare, self.timeP1Glare, 2, "Red", "Interface\\Icons\\Spell_Shadow_ShadowBolt") end
 end
 
@@ -377,9 +381,6 @@ function BigWigsCThun:BIGWIGS_SYNC_CTHUNSTART()
 		if not self:GetOpt("notGlareWarn") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.glare1, self.timeP1GlareStart, "Red") end
 		if not self:GetOpt("notTentacle") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.tentacle1, self.timeP1TentacleStart, "Red") end
 
-		if not self:GetOpt("notPositions") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.positions, self.timeP1GlareStart + self.timeP1GlareDuration, "Green") end
-		if not self:GetOpt("notPositions5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.positions2, self.timeP1GlareStart + self.timeP1GlareDuration - 2, "Yellow") end
-		
 		self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE")
 		self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 		
