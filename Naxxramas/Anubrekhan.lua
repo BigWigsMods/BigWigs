@@ -78,7 +78,7 @@ function BigWigsAnubrekhan:Enable()
 	self:RegisterEvent("BIGWIGS_SYNC_LOCUSTSWARM")
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "LOCUSTINC", 10)
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "LOCUSTSWARM", 10)
-	metro:Register("BigWigs AnubRekhan LocustInc", self.BIGWIGS_SYNC_LOCUSTSWARM, 3, self)
+	metro:Register("BigWigs AnubRekhan LocustInc", self.BIGWIGS_SYNC_LOCUSTSWARM, 3.25, self)
 end
 
 function BigWigsAnubrekhan:Disable()
