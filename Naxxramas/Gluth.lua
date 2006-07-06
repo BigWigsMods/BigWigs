@@ -85,7 +85,7 @@ function BigWigsGluth:CHAT_MSG_MONSTER_EMOTE()
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
 	elseif( arg1 == self.loc.starttrigger ) then
 		if not self:GetOpt("notStartWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Yellow") end
-		if not self:GetOpt("notDecimateBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.decimatebartext, 105, 2, "Red") end
+		if not self:GetOpt("notDecimateBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.decimatebartext, 105, 2, "Red", "Interface\\Icons\\INV_Shield_01") end
 		if not self:GetOpt("notDecimate30Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.decimate30secwarn, 75, "Yellow") end
 		if not self:GetOpt("notDecimate5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.decimate5secwarn, 100, "Orange") end
 	end
@@ -99,7 +99,7 @@ end
 
 function BigWigsGluth:BIGWIGS_SYNC_GLUTHDECIMATE()
 	if not self:GetOpt("notDecimateWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.decimatewarn, "Red") end
-	if not self:GetOpt("notDecimateBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.decimatebartext, 105, 2, "Red") end
+	if not self:GetOpt("notDecimateBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.decimatebartext, 105, 2, "Red", "Interface\\Icons\\INV_Shield_01") end
 	if not self:GetOpt("notDecimate30Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.decimate30secwarn, 75, "Yellow") end
 	if not self:GetOpt("notDecimate5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.decimate5secwarn, 100, "Orange") end
 end
