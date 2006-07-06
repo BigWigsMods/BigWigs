@@ -1,4 +1,5 @@
 local bboss = BabbleLib:GetInstance("Boss 1.2")
+local metro = Metrognome:GetInstance("1")
 
 BigWigsAnubrekhan = AceAddon:new({
 	name          = "BigWigsAnubrekhan",
@@ -22,7 +23,6 @@ BigWigsAnubrekhan = AceAddon:new({
 		notBosskill = "Boss death",
 	},
 	optionorder = {"notLocustInc", "notLocustIncBar", "notSwarmWarn", "notSwarmBar", "notBosskill"},
-
 
 	loc = GetLocale() == "koKR" and { 
 		disabletrigger = "아눕레칸|1이;가; 죽었습니다.",
@@ -78,12 +78,13 @@ function BigWigsAnubrekhan:Enable()
 	self:RegisterEvent("BIGWIGS_SYNC_LOCUSTSWARM")
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "LOCUSTINC", 10)
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "LOCUSTSWARM", 10)
-
+	metro:Register("BigWigs AnubRekhan LocustInc", self.BIGWIGS_SYNC_LOCUSTSWARM, 3, self)
 end
 
 function BigWigsAnubrekhan:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
+	metro:Unregister("BigWigs AnubRekhan LocustInc")
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.gainincbar)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.gainbar)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.gainendwarn)
@@ -117,6 +118,7 @@ function BigWigsAnubrekhan:CHAT_MSG_MONSTER_YELL()
 end
 
 function BigWigsAnubrekhan:BIGWIGS_SYNC_LOCUSTSWARM()
+	metro:Stop("BigWigs AnubRekhan LocustInc")
 	if (not self:GetOpt("notSwarmWarn")) then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.gainendwarn, 20, "Red") end
 	if (not self:GetOpt("notSwarmBar")) then 
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.gainbar, 20, 2, "Yellow", "Interface\\Icons\\Spell_Nature_InsectSwarm")
@@ -141,6 +143,7 @@ function BigWigsAnubrekhan:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
 end
 
 function BigWigsAnubrekhan:BIGWIGS_SYNC_LOCUSTINC()
+	metro:Start("BigWigs AnubRekhan LocustInc", 1)
 	if (not self:GetOpt("notLocustInc")) then 
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.castwarn, "Orange")
 	end
