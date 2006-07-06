@@ -1,4 +1,5 @@
 ﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
+local metro = Metrognome:GetInstance("1")
 
 BigWigsChromaggus = AceAddon:new({
 	name          = "BigWigsChromaggus",
@@ -149,11 +150,13 @@ function BigWigsChromaggus:Enable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("BIGWIGS_SYNC_CHROMAGGUS_BREATH")
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "CHROMAGGUS_BREATH", 10)
+	metro:Register("BigWigs Chromaggus Vulnerability", function() BigWigsChromaggus.loc.vulnerability = nil end, 2.5)
 end
 
 function BigWigsChromaggus:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
+	metro:Unregister("BigWigs Chromaggus Vulnerability")
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.breath1)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.breath2)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", format(self.loc.warn1, self.loc.breath1))
@@ -211,7 +214,7 @@ function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE()
 		if (not self:GetOpt("notFrenzy")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red") end
 	elseif (arg1 == self.loc.trigger5) then
 		if (not self:GetOpt("notVulnerability")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "White") end
-		Timex:AddNamedSchedule("BigWigsChromaggusSpellVulnerability", 2.5, false, 1, function() BigWigsChromaggus.loc.vulnerability = nil end)
+		metro:Start("BigWigs Chromaggus Vulnerability", 1)
 	end
 end
 
