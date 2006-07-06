@@ -139,6 +139,9 @@ function BigWigsOptions:Menu3(level, value)
 	end
 end
 
+function BigWigsOptions:UpdateTooltip()
+	tablet:SetHint("You can disable a currently running module by clicking on its name.  Loaded modules will have a check next to them in their respective sub-menus.")
+end
 
 --------------------------------
 --      Load this bitch!      --
