@@ -101,7 +101,7 @@ function BigWigsOssirian:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
 	end
 end
 
-function BigWigsOssirian:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
+function BigWigsOssirian:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE()
 	local _, _, debuffName = string.find(arg1, self.loc.debufftrigger)
 	if (debuffName) then
 		self:TriggerEvent("BIGWIGS_SYNC_SEND", "OSSIRIAN_WEAKNESS "..debuffName)
