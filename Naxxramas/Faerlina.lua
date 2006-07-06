@@ -11,7 +11,7 @@ BigWigsFaerlina = AceAddon:new({
 	toggleoptions = GetLocale() == "koKR" and {
 		notEnrageWarn = "격노 경고",
 		notEnrageBar = "다음 격노 타이머 바 보이기",
-		notSilenceWarn = "Warn when silence is casted and enrage is delayed",
+		notSilenceWarn = "침묵 시전, 격노 지연 경고",
 		notBosskill = "보스 사망 알림",
 	} or {
 		notEnrageWarn = "Warn for Enrage",
@@ -21,22 +21,22 @@ BigWigsFaerlina = AceAddon:new({
 	},
 	optionorder = {"notEnrageWarn", "notEnrageBar", "notSilenceWarn", "notBosskill"},
 
-	loc = GetLocale() == "koKR" and { 
-		disabletrigger = "귀부인 펠리나|1이;가; 죽었습니다.",		
-		bosskill = "귀부인 펠리나를 물리쳤습니다!",
+	loc = GetLocale() == "koKR" and { 	
+		disabletrigger = "귀부인 팰리나|1이;가; 죽었습니다.",		
+		bosskill = "귀부인 팰리나를 물리쳤습니다!",
 
 		starttrigger1 = "내 앞에 무릎을 꿇어라, 벌레들아!",
 		starttrigger2 = "주인님의 이름으로 처단하라!",
-		starttrigger3 = "You cannot hide from me!",
+		starttrigger3 = "나에게서 도망칠 수는 없다!",
 		starttrigger4 = "두 발이 성할 때 도망쳐라!",
-
-		silencetrigger = "Naxxramas Worshipper is afflicted by Widow's Embrace.",
+		
+		silencetrigger = "낙스라마스 숭배자|1이;가; 귀부인의 은총에 걸렸습니다.",
 		enragetrigger = "Grand Widow Faerlina gains Enrage.",
 
-		startwarn = "Start or Enrage!",
-		enragewarn15sec = "15 seconds until enrage!",
-		enragewarn = "Enrage!",
-		silencewarn = "Silence! Delaying Enrage!",
+		startwarn = "시작 또는 격노!",
+		enragewarn15sec = "15초후 격노!",
+		enragewarn = "격노!",
+		silencewarn = "침묵! 격노 연기!",
 
 		enragebar = "Enrage",
 	} or {
