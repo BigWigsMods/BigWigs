@@ -24,10 +24,10 @@ BigWigsJindo = AceAddon:new({
 		disabletrigger = "주술사 진도|1이;가; 죽었습니다.",
 
 		triggerbrainwash = "주술사 진도|1이;가; 세뇌의 토템 소환|1을;를; 시전합니다.", 		
-		triggerhealing = "주술사 진도|1이;가; 치유의 토템 소환|1을;를; 시전합니다.", 
+		triggerhealing = "주술사 진도|1이;가; 강력한 치유의 수호물 소환|1을;를; 시전합니다.", 
 
-		warnbrainwash = "세뇌의 토템!",
-		warnhealing = "치유의 토템!",
+		warnbrainwash = "세뇌의 토템 - 제거!",
+		warnhealing = "치유의 토템 - 제거!",
 
 		bosskill = "주술사 진도를 물리쳤습니다!",
 	} or { 

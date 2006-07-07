@@ -25,8 +25,12 @@ BigWigsOptions = FuBarPlugin:GetInstance("1.2"):new({
 	hasNoText  = true,
 	defaultMinimapPosition = 180,
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		running = "|cff00ff00실행중|r",
+		hint = "실행 중인 보스 모듈을 끄려면 이름을 클릭하십시오. 각각의 보스 모듈은 부메뉴로 옵션을 설정할 수 있습니다.", 
+	} or {
 		running = "|cff00ff00Module running|r",
+		hint = "You can disable a currently running module by clicking on its name.  Loaded modules will have a check next to them in their respective sub-menus.", 
 	},
 })
 
@@ -139,8 +143,8 @@ function BigWigsOptions:Menu3(level, value)
 	end
 end
 
-function BigWigsOptions:UpdateTooltip()
-	tablet:SetHint("You can disable a currently running module by clicking on its name.  Loaded modules will have a check next to them in their respective sub-menus.")
+function BigWigsOptions:UpdateTooltip()	
+	tablet:SetHint(self.loc.hint)
 end
 
 --------------------------------

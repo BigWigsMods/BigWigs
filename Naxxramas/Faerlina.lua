@@ -31,8 +31,8 @@ BigWigsFaerlina = AceAddon:new({
 		starttrigger4 = "두 발이 성할 때 도망쳐라!",
 		
 		silencetrigger = "낙스라마스 숭배자|1이;가; 귀부인의 은총에 걸렸습니다.",
-		enragetrigger = "Grand Widow Faerlina gains Enrage.",
-
+		enragetrigger = "귀부인 팰리나|1이;가; 격노 효과를 얻었습니다.",
+		
 		startwarn = "시작 또는 격노!",
 		enragewarn15sec = "15초후 격노!",
 		enragewarn = "격노!",

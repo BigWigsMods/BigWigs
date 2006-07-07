@@ -27,9 +27,9 @@ BigWigsRazuvious = AceAddon:new({
 		startwarn 		= "훈련교관 라주비어스 광푝화! 외침까지 25초!",
 	
 		starttrigger1 	= "훈련은 끝났다!",
-		starttrigger2 	= "Sweep the leg... Do you have a problem with that?",
+		starttrigger2 	= "다리를 후려 차라! 무슨 문제 있나?",
 		starttrigger3 	= "절대 봐주지 마라!",
-		starttrigger4 	= "Do as I taught you!",		
+		starttrigger4 	= "훈련받은 대로 해!",		
 
 		shouttrigger 	= "훈련교관 라주비어스|1이;가; 분열의 외침|1으로;로; (.+)에게 (.+)의 피해를 입혔습니다.",
 		shout7secwarn 	= "7초후 분열의 외침",
