@@ -157,14 +157,16 @@ function BigWigsChromaggus:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
 	metro:Unregister("BigWigs Chromaggus Vulnerability")
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.breath1)
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.breath2)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", format(self.loc.warn1, self.loc.breath1))
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", format(self.loc.warn1, self.loc.breath2))
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath1, 30)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath1, 50)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 30)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 50)
+	if ( not self:GetOpt("notBreaths") ) then
+		self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.breath1)
+		self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.breath2)
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", format(self.loc.warn1, self.loc.breath1))
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", format(self.loc.warn1, self.loc.breath2))
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath1, 30)
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath1, 50)
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 30)
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 50)
+	end
 	self.loc.vulnerability = nil
 	self.loc.breath1 = nil
 	self.loc.breath2 = nil
