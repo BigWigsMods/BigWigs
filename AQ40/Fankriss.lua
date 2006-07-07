@@ -9,7 +9,7 @@ BigWigsFankriss = AceAddon:new({
 	bossname = bboss("Fankriss the Unyielding"),
 
 	toggleoptions = GetLocale() == "koKR" and {
-		notBosskill = "보스 사망",
+		notBosskill = "보스 사망 알림",
 		notWormWarn = "벌레 경고",
 	} or {
 		notBosskill = "Boss death",

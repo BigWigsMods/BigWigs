@@ -9,10 +9,10 @@ BigWigsSartura = AceAddon:new({
 	bossname = bboss("Battleguard Sartura"),
 
 	toggleoptions = GetLocale() == "koKR" and {
-		notBosskill = "보스 사망",
-		notWhirlwindWarn = "소용 돌이 경고",
-		notWhirlwindBar = "Whirlwind bar",
-		notStartWarn = "시작 경고",
+		notBosskill = "보스 사망 알림",
+		notWhirlwindWarn = "소용돌이 경고",
+		notWhirlwindBar = "소용돌이 타이머 바",
+		notStartWarn = "시작 알림",
 		notEnrageBar = "격노 타이머",
 		notEnrageTimer = "타이머 경고",
 		notEnrageWarn = "격노 경고",
@@ -32,11 +32,11 @@ BigWigsSartura = AceAddon:new({
 	loc = GetLocale() == "koKR" and {
 		disabletrigger = "최후의 그날까지!",
 		bosskill = "전투감시병 살투라를 물리쳤습니다!",
-
-		-- starttrigger = "You will be judged for defiling these sacred grounds! The laws of the Ancients will not be challenged! Trespassers will be annihilated!",
+		
 		starttrigger = "성스러운 땅을 더럽힌 죄값을 받게 되리라. 고대의 법률은 거스를 수 없다! 침입자들을 처단하라!",
-		startwarn = "살투라 격노 - 10분후 다음 격노",
-		enragetrigger = "becomes enraged",
+		startwarn = "살투라 격노 - 10분후 다음 격노",		
+		-- 확인요 : CHAT_MSG_MONSTER_EMOTE? -.-? CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFF인데? 
+		enragetrigger = "전투감시병 살투라|1이;가; 격노 효과를 얻었습니다.",
 		enragewarn = "격노 - 격노 - 격노",
 		bartext = "격노",
 		warn1 = "격노 - 8분후",
@@ -50,7 +50,7 @@ BigWigsSartura = AceAddon:new({
 		whirlwindoff = "전투감시병 살투라의 몸에서 소용돌이 효과가 사라졌습니다.",
 		whirlwindonwarn = "소용돌이 - 전투감시병 살투라 - 소용돌이",
 		whirlwindoffwarn = "소용돌이 사라짐. 스턴! 스턴! 스턴!",
-		whirlwindbartext = "Whirlwind",
+		whirlwindbartext = "소용돌이",
 	}
 		or GetLocale() == "zhCN" and
 	{ 

@@ -10,7 +10,7 @@ BigWigsOuro = AceAddon:new({
 	bossname = bboss("Ouro"),
 
 	toggleoptions = GetLocale() == "koKR" and {
-		notBosskill = "보스 사망",
+		notBosskill = "보스 사망 알림",
 		notBerserkSoon = "광폭화 예고",
 		notSweepBar = "휩쓸기 타이머바",
 		notSweep5Sec = "휩쓸기 5초전 경고",
@@ -65,8 +65,8 @@ BigWigsOuro = AceAddon:new({
 		emergewarn1 = "15초후 아우로 잠수!",
 		emergebartext = "아우로 잠수",
 		
-		scarabdespawn = "Scarbs Despawn in 10 Seconds", --Translate me
-		scarabbar	= "Scarabs despawn", -- Translate Me
+		scarabdespawn = "스카라베 소환 10초전", 
+		scarabbar	= "스카라베 소환", 
 
 		berserksoonwarn = "광폭화 예고 - 준비하세요!",
 		bosskill = "아우로를 물리쳤습니다!",

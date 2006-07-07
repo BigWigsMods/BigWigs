@@ -9,7 +9,25 @@ BigWigsCThun = AceAddon:new({
 	enabletrigger = bboss("Eye of C'Thun"),
 	bossname = bboss("Eye of C'Thun"),
 
-	toggleoptions = GetLocale() == "koKR" and {
+	toggleoptions = GetLocale() == "koKR" and {		
+		notStartWarn = "시작 알림",
+		notGroupWarning = "Dark glare on group X warning",		
+		notGlareWarn = "암흑의 주시 경고",
+		notGlare5Sec = "암흑의 주시 5초전 경고",
+		notGlareBar = "암흑의 주시 타이머바",
+		notPositions5Sec = "암흑의 주시 종료 5초전 알림",
+		notPositions = "암흑의 주시 종료 알림",
+		notTentacle = "촉수 경고",
+		notTentacle5Sec = "촉수 5초전 경고",
+		notTentacleBar = "촉수 타이머바",
+		notGiant = "거대한 눈달린 촉수 경고",
+		notGiant5Sec = "거대한 눈달린 촉수 5초전 경고",
+		notGiant10Sec = "거대한 눈달린 촉수 10초전 경고",
+		notGiantBar = "거대한 눈달리 촉수 타이머 바",
+		notPhase2Start = "2단계 시작 알림",
+		notWeakened = "약화 경고",
+		notInvulnerable = "Invulnerable in x-sec warnings",
+		notWeakenedBar = "약화 타이머바",
 		notBosskill = "보스 사망",
 	} or { 
 		notStartWarn = "Start warning",
@@ -52,8 +70,8 @@ BigWigsCThun = AceAddon:new({
 			invulnerable2	= "Party ends in 5 seconds!",
 			invulnerable1	= "Party over! C'Thun is now invulnerable!",
 
-			giant3		= "Incoming Giant Eye - 10 sec!",
-			giant2		= "Incoming Giant Eye - 5 sec!",
+			giant3		= "거대한 눈다린 촉수 - 10초전!",
+			giant2		= "거대한 눈다린 촉수 - 5초전!",
 			giant1		= "Incoming Giant Eye - Poke it!",			
 		
 			combat		= "쑨 시작 - 45초후 암흑의 주시",

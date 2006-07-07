@@ -11,7 +11,7 @@ BigWigsBugFamily = AceAddon:new({
 		or "Bug Trio - " .. bboss("Lord Kri") .. ", ".. bboss("Princess Yauj") .. " & ".. bboss("Vem"),
 
 	toggleoptions = GetLocale() == "koKR" and {
-		notBosskill = "보스 사망",
+		notBosskill = "보스 사망 알림",
 		notFearBar = "공포 타이머",
 		notFearWarn = "공포 경고",
 		notFear5Sec = "공포 5초전 경고",

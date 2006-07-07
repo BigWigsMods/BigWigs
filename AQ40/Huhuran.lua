@@ -9,7 +9,7 @@ BigWigsHuhuran = AceAddon:new({
 	bossname = bboss("Princess Huhuran"),
 
 	toggleoptions = GetLocale() == "koKR" and {
-		notBosskill = "보스 사망",
+		notBosskill = "보스 사망 알림",
 		notWyvernBar = "비룡쐐기 타이머바",
 		notWyvern3Sec = "비룡쐐기 3초전 경고",
 		notWyvernWarn = "비룡쐐기 경고",
