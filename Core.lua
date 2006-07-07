@@ -120,7 +120,7 @@ function BigWigs:EnableModule(module)
 	if m and m.disabled then
 		m:Enable()
 		self:TriggerEvent("BIGWIGS_MESSAGE", string.format(self.loc.ModuleEnable, m.loc.bossname or m.bossname or "??"), "LtBlue", true)
-		self:TriggerEvent("BIGWIGS_SYNC_SEND", "ENABLEMODULE " .. (m.loc.bossname or m.bossname or "??" ) )
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "ENABLEMODULE " .. m.name )
 	end
 end
 
