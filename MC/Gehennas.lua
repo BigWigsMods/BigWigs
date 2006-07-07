@@ -45,10 +45,10 @@ BigWigsGehennas = AceAddon:new({
 
 		trigger1 = "afflicted by Gehennas",
 
-		warn1 = "5 seconds until Gehennas's Curse!",
-		warn2 = "Gehennas's Curse - 30 seconds until next!",
+		warn1 = "5 seconds until Gehennas' Curse!",
+		warn2 = "Gehennas' Curse - 30 seconds until next!",
 
-		bar1text = "Gehennas's Curse",
+		bar1text = "Gehennas' Curse",
 	},
 })
 
