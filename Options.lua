@@ -5,7 +5,11 @@ local needsort = false
 local dewdrop = DewdropLib:GetInstance("1.0")
 local tablet = TabletLib:GetInstance("1.0")
 
-local cmdopt = not FuBar and {
+local cmdopt = not FuBar and GetLocale() == "koKR" and {
+	option = "미니맵",
+	desc   = "미니맵 버튼을 켜기.",
+	method = "Show",
+} or {
 	option = "minimap",
 	desc   = "Toggle the minimap button on.",
 	method = "Show",
