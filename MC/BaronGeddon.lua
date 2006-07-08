@@ -105,9 +105,9 @@ if (GetLocale() == "koKR") then
 			if (EPlayer == self.loc.you and not self:GetOpt("notYouBomb")) then
 				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
 			elseif (not self:GetOpt("notElseBomb")) then
-				local _, _, EWho = string.find(EPlayer, self.loc.whopattern)
-				self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn2, "Yellow")
-				self:TriggerEvent("BIGWIGS_SENDTELL", EWho, self.loc.warn1)
+				_, _, EPlayer = string.find(EPlayer, self.loc.whopattern)
+				self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
+				self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
 			end
 
 			if (not self:GetOpt("notIcon")) then
