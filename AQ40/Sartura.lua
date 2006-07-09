@@ -136,8 +136,8 @@ function BigWigsSartura:Enable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
-	self:RegisterEvent("BIGWIGS_SYNC_SARTURA_WIRLWINDON")
-	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "SARTURA_WHIRLWINDON", 3)
+	self:RegisterEvent("BIGWIGS_SYNC_SARTURAWIRLWINDON")
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "SARTURAWHIRLWINDON", 3)
 end
 
 function BigWigsSartura:Disable()
@@ -158,7 +158,7 @@ function BigWigsSartura:Disable()
 	self:UnregisterAllEvents()
 end
 
-function BigWigsSartura:BIGWIGS_SYNC_SARTURA_WHIRLWINDON()
+function BigWigsSartura:BIGWIGS_SYNC_SARTURAWHIRLWINDON()
 	if not self:GetOpt("notWhirlwindWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.whirlwindonwarn, "Red") end
 	if not self:GetOpt("notWhirlwindWarn") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.whirlwindoffwarn, 15, "Yellow") end
 	if not self:GetOpt("notWhirlwindBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.whirlwindbartext, 15, 2, "Red", "Interface\\Icons\\Ability_Whirlwind") end
@@ -167,7 +167,7 @@ end
 
 function BigWigsSartura:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
 	if (arg1 == self.loc.whirlwindon) then
-		self:TriggerEvent("BIGWIGS_SYNC_SEND", "SARTURA_WHIRLWINDON")
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "SARTURAWHIRLWINDON")
 	end
 end
 
