@@ -157,13 +157,15 @@ function BigWigsChromaggus:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
 	metro:Unregister("BigWigs Chromaggus Vulnerability")
-	if ( not self:GetOpt("notBreaths") ) then
+	if (self.loc.breath1) then
 		self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.breath1)
-		self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.breath2)
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", format(self.loc.warn1, self.loc.breath1))
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", format(self.loc.warn1, self.loc.breath2))
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath1, 30)
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath1, 50)
+	end
+	if (self.loc.breath2) then
+		self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.breath2)
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", format(self.loc.warn1, self.loc.breath2))
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 30)
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 50)
 	end
@@ -187,7 +189,6 @@ function BigWigsChromaggus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 end
 
 function BigWigsChromaggus:BIGWIGS_SYNC_CHROMAGGUS_BREATH(SpellName)
---	local _,_, SpellName = string.find(arg1, self.loc.trigger1)
 	if (SpellName) then
 		if (not self.loc.breath1) then
 			self.loc.breath1 = SpellName
