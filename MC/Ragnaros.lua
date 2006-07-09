@@ -197,7 +197,7 @@ end
 
 function BigWigsRagnaros:ResetResetTimer()
 	Timex:DeleteSchedule("BigWigsRagnarosReset")
-	Timex:AddSchedule("BigWigsRagnarosReset", 95, false, 1, self.Reset, self)
+	Timex:AddSchedule("BigWigsRagnarosReset", 95, false, 1, function() Timex:DeleteNamedSchedule("BigWigsRagnarosEmerge") end)
 end
 --------------------------------
 --      Load this bitch!      --
