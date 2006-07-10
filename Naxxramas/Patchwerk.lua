@@ -9,13 +9,7 @@ BigWigsPatchwerk = AceAddon:new({
 	enabletrigger = bboss("Patchwerk"),
 	bossname = bboss("Patchwerk"),
 
-	toggleoptions = GetLocale() == "koKR" and {
-		notStartWarn = "시작 알림",
-		notEnrageWarn = "Warn for Enrage",
-		notEnrageBar = "Enrage timerbar",
-		notEnrageSec = "Enrage x-sec warnings",
-		notBosskill = "보스 사망 알림",
-	} or {
+	toggleoptions = {
 		notStartWarn = "Start warning",
 		notEnrageWarn = "Warn for Enrage",
 		notEnrageBar = "Enrage timerbar",
@@ -25,14 +19,14 @@ BigWigsPatchwerk = AceAddon:new({
 	optionorder = {"notStartWarn", "notEnrageBar", "notEnrageSec", "notEnrageWarn", "notBosskill"},
 
 	loc = { 
-		disabletrigger = "패치워크|1이;가; 죽었습니다.",		
-		bosskill = "패치워크를 물리쳤습니다!",
+		disabletrigger = "Patchwerk dies.",		
+		bosskill = "Patchwerk has been defeated!",
 
 		enragetrigger = "goes into a berserker rage!",
 
 		enragewarn = "Enrage!",
-		starttrigger1 = "패치워크랑 놀아줘!",
-		starttrigger2 = "켈투자드님이 패치워크 싸움꾼으로 만들었다.",
+		starttrigger1 = "Patchwerk want to play!",
+		starttrigger2 = "Kel'thuzad make Patchwerk his avatar of war!",
 		startwarn = "Patchwerk Engaged! Enrage in 7 minutes!",
 		enragebartext = "Enrage",
 		warn1 = "Enrage in 5 minutes",
