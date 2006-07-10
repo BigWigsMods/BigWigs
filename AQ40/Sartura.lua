@@ -166,7 +166,7 @@ end
 
 
 function BigWigsSartura:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
-	if (string.find(arg1, self.loc.whirlwindon) then
+	if (string.find(arg1, self.loc.whirlwindon)) then
 		self:TriggerEvent("BIGWIGS_SYNC_SEND", "SARTURAWHIRLWINDON")
 	end
 end
