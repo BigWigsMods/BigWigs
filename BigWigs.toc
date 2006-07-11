@@ -41,6 +41,7 @@ ZG\Venoxis.lua
 ZG\Hakkar.lua
 ZG\Mandokir.lua
 ZG\Jindo.lua
+ZG\Thekal.lua
 
 AQ20\Ayamiss.lua
 AQ20\Buru.lua
