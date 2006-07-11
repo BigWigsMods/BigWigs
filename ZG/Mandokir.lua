@@ -11,8 +11,8 @@ BigWigsMandokir = AceAddon:new({
 	toggleoptions = GetLocale() == "koKR" and {
 		notPlayer = "당신을 지켜볼 때 경고",
 		notOthers = "다른 사람을 지켜볼 때 경고",
-		notBosskill = "보스 사망 알림",	 
-	} or { 
+		notBosskill = "보스 사망 알림",
+	} or {
 		notPlayer = "Warn when you are being watched",
 		notOthers = "Warn when others are being watched",
 		notBosskill = "Boss death",
@@ -39,28 +39,35 @@ BigWigsMandokir = AceAddon:new({
 		disabletrigger = "Bloodlord Mandokir dies.",
 
 		trigger1 = "([^%s]+)! I'm watching you!$",
+		trigger2 = "goes into a rage after seeing his raptor fall in battle!$",
 
 		warn1 = "You are being watched - stop all actions!",
 		warn2 = "%s is being watched!",
+		warn3 = "Ohgan has been taken down, Mandokir has enraged",
 		bosskill = "Bloodlord Mandokir has been defeated!",
 	},
 })
+
 
 function BigWigsMandokir:Initialize()
 	self.disabled = true
 	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
 end
 
+
 function BigWigsMandokir:Enable()
 	self.disabled = nil
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
+
 
 function BigWigsMandokir:Disable()
 	self.disabled = true
 	self:UnregisterAllEvents()
 end
+
 
 function BigWigsMandokir:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if arg1 == self.loc.disabletrigger then
@@ -68,6 +75,14 @@ function BigWigsMandokir:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 		self:Disable()
 	end
 end
+
+
+function BigWigsMandokir:CHAT_MSG_MONSTER_EMOTE()
+	if string.find(arg1, self.loc.trigger2) and not self:GetOpt("notRage") then
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "Orange")
+	end
+end
+
 
 function BigWigsMandokir:CHAT_MSG_MONSTER_YELL()
 	local _,_, n = string.find(arg1, self.loc.trigger1)
@@ -86,6 +101,8 @@ function BigWigsMandokir:CHAT_MSG_MONSTER_YELL()
 		end
 	end
 end
+
+
 --------------------------------
 --      Load this bitch!      --
 --------------------------------
