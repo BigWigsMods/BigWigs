@@ -9,7 +9,16 @@ BigWigsMaexxna = AceAddon:new({
 	enabletrigger = bboss("Maexxna"),
 	bossname = bboss("Maexxna"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notBosskill = "보스 사망 알림",
+		notSpray = "거미줄 뿌리기 경고",
+		notSpray5Sec = "거미줄 뿌리기 5초전 경고",
+		notSpray10Sec = "거미 소환/10초 후 거미줄 뿌리기 경고",
+		notSpray20Sec = "거미줄 감싸기/10초후 거미 소환 경고",
+		notSprayBar = "거미줄 뿌리기 타이머바",
+		notEnrageSoon = "분노 예고",
+		notEnrageWarn = "분노 경고",
+	} or {
 		notBosskill = "Boss death",
 		notSpray = "Web Spray warning",
 		notSpray5Sec = "5 Second Web Spray warning",
@@ -22,7 +31,28 @@ BigWigsMaexxna = AceAddon:new({
 
 	optionorder = {"notSpray", "notSpray5Sec", "notSpray10Sec", "notSpray20Sec", "notSprayBar", "notEnrageSoon","notEnrageWarn", "notBosskill"},
 
-	loc = { 
+	loc = GetLocale() == "koKR" and { 
+		disabletrigger = "맥스나|1이;가; 죽었습니다.",		
+		bosskill = "맥스나를 물리쳤습니다!",
+
+		webwraptrigger = "(.*) (.*) afflicted by Web Wrap.", -- "(.*)|1이;가; 거미줄 감싸기에 걸렸습니다."
+		webspraytrigger = "거미줄 뿌리기에 걸렸습니다.",		
+
+		enragetrigger = "맥스나|1이;가; 분노에 휩싸입니다!",
+
+		webspraywarn30sec = "10초후 거미줄 감싸기",
+		webspraywarn20sec = "거미줄 감싸기. 10초후 거미 소환!",
+		webspraywarn10sec = "거미 소환. 10초후 거미줄 뿌리기!",
+		webspraywarn5sec = "5초! HOTS/ABOLISH/GOGO",
+		webspraywarn = "거미줄 감싸기! 다음 번은 40초후!",
+		enragewarn = "분노 - 무한 공격!",
+		enragesoonwarn = "분노 예고 - 준비!",
+
+		webspraybar = "거미줄 뿌리기",
+
+		you = "You",
+		are = "are",
+	} or {
 		disabletrigger = "Maexxna dies.",		
 		bosskill = "Maexxna has been defeated!",
 
