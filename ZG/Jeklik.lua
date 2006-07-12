@@ -38,6 +38,16 @@ BigWigsJeklik = AceAddon:new({
 		disabletrigger = "高阶祭司耶克里克死亡了。",
 
 		bosskill = "高阶祭司耶克里克被击败了！",
+	} or GetLocale() =="deDe" and{
+		trigger1 = = "^Ich befehle Euch Feuer",
+		trigger2 = "beginnt Gro\195\159es Heilen zu wirken!",
+		warn1 = "Fledermaus Bomben im Anflug!",
+		warn2 = "Heilversuch - unterbrechen!",
+
+		disabletrigger = "Hohenpriester Jeklik stribt.",
+
+		bosskill = "High Priestess Jeklik wurde besiegt!",
+	
 	} or {
 		trigger1 = "I command you to rain fire down upon these invaders!$",
 		trigger2 = "begins to cast a Great Heal!$",
