@@ -36,13 +36,13 @@ BigWigsMandokir = AceAddon:new({
 		warn2 = "%s被盯上了！",
 		bosskill = "血领主曼多基尔被击败了！",
 	} or GetLocale() == "deDE" and {
-		disabletrigger = "Blutfürst Mandokir stirbt.",
+		disabletrigger = "Blutf\195\188rst Mandokir stirbt.",
 
 		trigger1 =  "([^%s]+)! Ich behalte Euch im Auge!";
 
 		warn1 = "Du wirst beobachtet!",
 		warn2 = "%s wird beobachtet!",
-		bosskill = "Blutfürst Mandokir wurde besiegt!",
+		bosskill = "Blutf\195\188rst Mandokir wurde besiegt!",
 	} or {
 		disabletrigger = "Bloodlord Mandokir dies.",
 
