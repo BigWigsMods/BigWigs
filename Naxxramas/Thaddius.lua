@@ -6,7 +6,7 @@ BigWigsThaddius = AceAddon:new({
 	cmd		= AceChatCmd:new({}, {}),
 
 	zonename = BabbleLib:GetInstance("Zone 1.2")("Naxxramas"),
-	enabletrigger = { bboss("Feugen"), bboss("Stalagg"), bboss("Thaddius")  },
+	enabletrigger = {bboss("Feugen"), bboss("Stalagg"), bboss("Thaddius")},
 	bossname = "Thaddius and company - " .. bboss("Feugen") .. ", ".. bboss("Stalagg") .. " & ".. bboss("Thaddius"),
 	
 	toggleoptions = {
@@ -141,7 +141,7 @@ end
 
 function BigWigsThaddius:PLAYER_REGEN_ENABLED()
 	local go = self:Scan()
-	local _,_,running,_ = Metro:Status("BigWigs_Thaddius_CheckWipe")
+	local _,_,running = Metro:Status("BigWigs_Thaddius_CheckWipe")
 	if (not go) then
 		self:Disable()
 		Metro:Stop("BigWigs_Thaddius_CheckWipe")
@@ -151,7 +151,7 @@ function BigWigsThaddius:PLAYER_REGEN_ENABLED()
 end
 
 function BigWigsThaddius:CHAT_MSG_MONSTER_EMOTE()
-	if ( arg1 == self.loc.enragetrigger) then
+	if (arg1 == self.loc.enragetrigger) then
 		if not self:GetOpt("notEnrageWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.enragewarn, "Red") end
 		self:StopEnrage()
 	end
@@ -180,28 +180,26 @@ function BigWigsThaddius:BIGWIGS_SYNC_POLARITY()
 	if (not self:GetOpt("notPolarityShift")) then
 		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.pswarn2, "Yellow")
 		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.pswarn3, 27, "Red")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Nature_CallStorm")
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Nature_Lightning")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
 	end
 end
 
 function BigWigsThaddius:Event()
-		local _, _, EPlayer = string.find(arg1, self.loc.postrigger)
+	local _, _, EPlayer = string.find(arg1, self.loc.postrigger)
+	if (EPlayer) then
+		if (EPlayer == self.loc.you and not self:GetOpt("notYouPositive")) then
+			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.poswarn, "Green", true)
+		end
+	else
+		_, _, EPlayer = string.find(arg1, self.loc.negtrigger)
 		if (EPlayer) then
-			if (EPlayer == self.loc.you and not self:GetOpt("notYouPositive")) then
-				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.poswarn, "Green", true)
-			end
-		else
-			local _, _, EPlayer = string.find(arg1, self.loc.negtrigger)
-			if (EPlayer) then
-				if (EPlayer == self.loc.you and not self:GetOpt("notYouNegative")) then
-					self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.negwarn, "Red", true)
-				end
+			if (EPlayer == self.loc.you and not self:GetOpt("notYouNegative")) then
+				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.negwarn, "Red", true)
 			end
 		end
 	end
-	return false
 end
 --------------------------------
 --      Load this bitch!      --
