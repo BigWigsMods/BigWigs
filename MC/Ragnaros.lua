@@ -30,16 +30,16 @@ BigWigsRagnaros = AceAddon:new({
 		trigger2 = "^VORW\195\134RTS,",
 		trigger3 = "^UND JETZT ZU EUCH,",
 
-		warn1 = "AoE Knockback!",
-		warn2 = "5 Sekunden bis AoE Knockback!",
+		warn1 = "Knockback!",
+		warn2 = "5 Sekunden bis Knockback!",
 		warn3 = "Ragnaros ist f\105\188r 90 Sekunden untergetaucht. S\195\162hne der Flamme kommen!",
 		warn4 = "15 Sekunden bis Ragnaros auftaucht!",
-		warn5 = "Ragnaros ist aufgetaucht. 3 Minuten bis zum Untertuachen!",
-		warn6 = "60 Sekunden bis Ragnaros untertaucht & S\195\162hne der Flamme!",
-		warn7 = "20 Sekunden bis Ragnaros untertaucht & S\195\162hne der Flamme!",
+		warn5 = "Ragnaros ist aufgetaucht. 3 Minuten bis zum Untertauchen!",
+		warn6 = "60 Sekunden bis S\195\162hne der Flamme!",
+		warn7 = "20 Sekunden bis S\195\162hne der Flamme!",
 		bosskill = "Ragnaros wurde besiegt!",
 
-		bar1text = "AoE Knockback",
+		bar1text = "Knockback",
 		bar2text = "Auftauchen Ragnaros",
 		bar3text = "Untertauchen Ragnaros",
 	}

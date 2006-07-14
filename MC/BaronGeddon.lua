@@ -26,7 +26,7 @@ BigWigsBaronGeddon = AceAddon:new({
 	{
 		disabletrigger = "Baron Geddon stirbt.",
 
-		trigger1 = "^([^%s]+) ([^%s]+) betroffen von Lebende Bombe",
+		trigger1 = "^([^%s]+) ([^%s]+) von Lebende Bombe betroffen.",
 
 		you = "Ihr",
 		are = "seid",

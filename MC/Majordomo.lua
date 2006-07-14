@@ -65,7 +65,29 @@ BigWigsMajordomo = AceAddon:new({
 
 		texture1 = "Interface\\Icons\\Spell_Frost_FrostShock",
 		texture2 = "Interface\\Icons\\Spell_Shadow_AntiShadow",
-	} or {
+	} or GetLocale() == "deDE" and {
+		bossname = "Majordomus Executus",
+		disabletrigger = "Unm\195\182! Haltet ein, Sterbliche... Ich gebe auf! Ich gebe auf!",
+
+		trigger1 = "bekommt 'Magiereflexion'",
+		trigger2 = "bekommt 'Schadensschild'",
+		trigger3 = "Magiereflexion schwindet von",
+		trigger4 = "Schadensschild schwindet von",
+
+		warn1 = "Magiereflexion f\195\188r 10 Sekunden!",
+		warn2 = "Schadensschild f\195\188r 10 Sekunden!",
+		warn3 = "5 Sekunden bis Schild!",
+		warn4 = "Magiereflexion beendet!",
+		warn5 = "Schadensschild beendet!",
+		bosskill = "Majordomo Executus wurde besiegt!",
+
+		bar1text = "Magiereflexion",
+		bar2text = "Schadensschild",
+		bar3text = "Neuer Schild",
+
+		texture1 = "Interface\\Icons\\Spell_Frost_FrostShock",
+		texture2 = "Interface\\Icons\\Spell_Shadow_AntiShadow",
+	}or {
 		bossname = "Majordomo Executus",
 		disabletrigger = "Impossible! Stay your attack, mortals... I submit! I submit!",
 

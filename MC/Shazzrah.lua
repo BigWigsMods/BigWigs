@@ -46,8 +46,19 @@ BigWigsShazzrah = AceAddon:new({
 
 		bar1text = "闪现术",
 	}
-		or
-	{
+		or GetLocale == "deDE" and {
+		bossname = "Shazzrah",
+		disabletrigger = "Shazzrah stirbt.",
+
+		trigger1 = "Shazzrah wirkt Portal von Shazzrah.",
+		trigger2 = "Shazzrah bekommt 'Magie d\195\164mpfen'.",
+
+		warn1 = "TELEPORT! N\195\164chster in 30 Sekunden!",
+		warn2 = "5 Sekunden bis Teleport!",
+		warn3 = "Magied\195\164mpfer entfernen!",
+
+		bar1text = "Teleport",
+	} or {
 		bossname = "Shazzrah",
 		disabletrigger = "Shazzrah dies.",
 

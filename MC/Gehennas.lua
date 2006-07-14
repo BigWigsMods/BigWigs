@@ -39,6 +39,16 @@ BigWigsGehennas = AceAddon:new({
 		warn2 = "基赫纳斯的诅咒 - 30秒后再次发动",
 
 		bar1text = "基赫纳斯的诅咒",
+	} or GetLocale == "deDE" and {
+		bossname = "Gehennas",
+		disabletrigger = "Gehennas stirbt.",
+
+		trigger1 = "von Gehennas Fluch betroffen",
+
+		warn1 = "5 Sekunden bis Gehennas' Fluch!",
+		warn2 = "Gehennas' Fluch! N\195\164chster in 30 Sekunden!",
+
+		bar1text = "Gehennas' Fluch",
 	} or {
 		bossname = "Gehennas",
 		disabletrigger = "Gehennas dies.",
