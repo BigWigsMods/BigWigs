@@ -136,7 +136,7 @@ function BigWigsSartura:Enable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
-	self:RegisterEvent("BIGWIGS_SYNC_SARTURAWIRLWINDON")
+	self:RegisterEvent("BIGWIGS_SYNC_SARTURAWHIRLWINDON")
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "SARTURAWHIRLWINDON", 3)
 end
 
@@ -166,7 +166,7 @@ end
 
 
 function BigWigsSartura:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
-	if (string.find(arg1, self.loc.whirlwindon)) then
+	if arg1 == self.loc.whirlwindon then
 		self:TriggerEvent("BIGWIGS_SYNC_SEND", "SARTURAWHIRLWINDON")
 	end
 end
