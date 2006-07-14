@@ -90,6 +90,8 @@ Naxxramas\Faerlina.lua
 Naxxramas\Maexxna.lua
 Naxxramas\Patchwerk.lua
 Naxxramas\Grobbulus.lua
+Naxxramas\Thaddius.lua
+
 
 
 

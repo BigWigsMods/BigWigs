@@ -61,10 +61,10 @@ BigWigsMaexxna = AceAddon:new({
 
 		enragetrigger = "becomes enraged.",
 
-		webspraywarn30sec = "Web wrap in 10 seconds",
-		webspraywarn20sec = "Web Wrap. 10 seconds until Spiders spawn!",
+		webspraywarn30sec = "Wall Cocoons in 10 seconds",
+		webspraywarn20sec = "Wall Cocoons! 10 seconds until Spiders spawn!",
 		webspraywarn10sec = "Spiders Spawn. 10 seconds until Web Spray!",
-		webspraywarn5sec = "5 seconds! HOTS/ABOLISH/GOGO",
+		webspraywarn5sec = "WEB SPRAY 5 seconds!",
 		webspraywarn = "Web Spray! 40 seconds until next!",
 		enragewarn = "Enrage - Give it all you got!",
 		enragesoonwarn = "Enrage Soon - Get Ready!",
@@ -103,6 +103,7 @@ function BigWigsMaexxna:Disable()
 	self.disabled = true
 	self.enrageannounced = nil
 	self:UnregisterAllEvents()
+	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.webspraywarn5sec)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.webspraywarn30sec)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.webspraywarn20sec)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.webspraywarn10sec)

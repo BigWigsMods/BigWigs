@@ -71,6 +71,11 @@ function BigWigsFaerlina:Enable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE")
+	
+	self:RegisterEvent("BIGWIGS_SYNC_ENRAGE")
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "ENRAGE", 5)
+	self:RegisterEvent("BIGWIGS_SYNC_SILENCED")
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "SILENCED", 5)
 end
 
 function BigWigsFaerlina:Disable()
@@ -105,42 +110,50 @@ function BigWigsFaerlina:CHAT_MSG_MONSTER_YELL()
 	end
 end
 
+function BigWigsFaerlina:BIGWIGS_SYNC_ENRAGE()
+	if (not self:GetOpt("notEnrageWarn")) then
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.enragewarn, "Orange")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.enragewarn15sec, 45, "Red")
+	end
+	if (not self:GetOpt("notEnrageBar")) then
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.enragebar, 60, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.enragebar, 40, "Orange")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.enragebar, 50, "Red")
+	end
+end
+
 function BigWigsFaerlina:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
 	if (arg1 == self.loc.enragetrigger) then
-		if (not self:GetOpt("notEnrageWarn")) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.enragewarn, "Orange")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.enragewarn15sec, 45, "Red")
-		end
-		if (not self:GetOpt("notEnrageBar")) then
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.enragebar, 60, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.enragebar, 40, "Orange")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.enragebar, 50, "Red")
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "ENRAGE")
+	end
+end
+
+function BigWigsFaerlina:BIGWIGS_SYNC_SILENCED()
+	local id = "BigWigsBar "..self.loc.enragebar
+	if (TimexBar:Check(id)) then
+		local timexBar = TimexBar.barMap[id]
+		if (timexBar) then
+			local v = timexBar.v
+			if (v < 30) then
+				self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.enragebar)
+				self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.enragewarn15sec)
+				self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebar, 10)
+				self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebar, 20)
+				if (not self:GetOpt("notSilenceWarn")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.silencewarn, "Orange") end
+				if (not self:GetOpt("notEnrageWarn")) then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.enragewarn15sec, 15, "Red") end
+				if (not self:GetOpt("notEnrageBar")) then
+					self:TriggerEvent("BIGWIGS_BAR_START", self.loc.enragebar, 30, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+					self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.gainincbar, 10, "Orange")
+					self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.gainincbar, 20, "Red")
+				end
+			end
 		end
 	end
 end
 
 function BigWigsFaerlina:CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE()
 	if (arg1 == self.loc.silencetrigger) then
-		local id = "BigWigsBar "..self.loc.enragebar
-		if (TimexBar:Check(id)) then
-			local timexBar = TimexBar.barMap[id]
-			if (timexBar) then
-				local v = timexBar.v
-				if (v < 30) then
-					self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.enragebar)
-					self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.enragewarn15sec)
-					self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebar, 10)
-					self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebar, 20)
-					if (not self:GetOpt("notSilenceWarn")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.silencewarn, "Orange") end
-					if (not self:GetOpt("notEnrageWarn")) then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.enragewarn15sec, 15, "Red") end
-					if (not self:GetOpt("notEnrageBar")) then
-						self:TriggerEvent("BIGWIGS_BAR_START", self.loc.enragebar, 30, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
-						self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.gainincbar, 10, "Orange")
-						self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.gainincbar, 20, "Red")
-					end
-				end
-			end
-		end
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "SILENCED")
 	end
 end
 --------------------------------

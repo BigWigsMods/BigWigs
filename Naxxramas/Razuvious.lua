@@ -49,9 +49,10 @@ BigWigsRazuvious = AceAddon:new({
 		shouttrigger 	= "Instructor Razuvious's Disrupting Shout hits (.+) for (.+)",
 		shout7secwarn 	= "7 seconds until Disrupting Shout",
 		shoutwarn 		= "Disrupting Shout!",
+		noshoutwarn		= "No shout! next in ~20secs",
 		shoutbar 		= "Disrupting Shout",
 	},
-	timeShout = 25
+	timeShout = 30
 })
 
 function BigWigsRazuvious:Initialize()
@@ -69,19 +70,24 @@ function BigWigsRazuvious:Enable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("BIGWIGS_MESSAGE")
 	self:RegisterEvent("BIGWIGS_SYNC_SHOUTWARN")
+	self:RegisterEvent("BIGWIGS_SYNC_NOSHOUT")
 	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "SHOUTWARN", 5)
+	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "NOSHOUT", 5)
 	metro:Register("BigWigs_Razuvious_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
 	metro:Unregister("BigWigs Razuvious Shout")
-	metro:Register("BigWigs Razuvious Shout", self.BIGWIGS_SYNC_SHOUTWARN, self.timeShout, self )
+	metro:Register("BigWigs Razuvious Shout", self.noShout, self.timeShout, self )
 end
 
 function BigWigsRazuvious:Disable()
 	self.disabled = true
 	metro:Unregister("BigWigs Razuvious Shout")
+	metro:Unregister("BigWigs_Razuvious_CheckWipe")
 	self:UnregisterAllEvents()
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.shoutbar)
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.shout7secwarn)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.shoutbar, 5)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.shoutbar, 10)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.shoutbar, 13)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.shoutbar, 18)
 	self.prior = nil
 end
@@ -89,7 +95,7 @@ end
 function BigWigsRazuvious:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	if (arg1 == self.loc.disabletrigger) then
 		if (not self:GetOpt("notBosskill")) then 
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory!")
+			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
 		end
 		self:Disable()
 	end
@@ -97,8 +103,8 @@ end
 
 function BigWigsRazuvious:BIGWIGS_SYNC_SHOUTWARN()
 	if (not self:GetOpt("notShoutWarn")) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.shoutwarn, "Orange")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.shout7secwarn, 18, "Yellow")
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.shoutwarn, "Orange", nil, "Alarm")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.shout7secwarn, 18, "Yellow", nil, "Alert")
 	end
 	if (not self:GetOpt("notShoutBar")) then
 		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.shoutbar, 25, 1, "Yellow", "Interface\\Icons\\Ability_Warrior_WarCry")
@@ -107,6 +113,24 @@ function BigWigsRazuvious:BIGWIGS_SYNC_SHOUTWARN()
 	end
 	self.prior = true
 end 
+
+function BigWigsRazuvious:BIGWIGS_SYNC_NOSHOUT()
+	if (not self:GetOpt("notShoutWarn")) then
+		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.noshoutwarn, "Yellow")
+		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.shout7secwarn, 13, "Yellow", nil, "Alert")
+	end
+	if (not self:GetOpt("notShoutBar")) then
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.shoutbar, 20, 1, "Yellow", "Interface\\Icons\\Ability_Warrior_WarCry")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.shoutbar, 5, "Orange")
+		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.shoutbar, 13, "Red")
+	end	
+end
+
+function BigWigsRazuvious:noShout()	
+	metro:Stop("BigWigs Razuvious Shout")
+	metro:Start("BigWigs Razuvious Shout")
+	self:TriggerEvent("BIGWIGS_SYNC_SEND", "NOSHOUT")
+end
 
 function BigWigsRazuvious:Shout()
 	if (string.find(arg1, self.loc.shouttrigger) and not self.prior) then
@@ -119,8 +143,8 @@ end
 function BigWigsRazuvious:CHAT_MSG_MONSTER_YELL()
 	if (arg1 == self.loc.starttrigger1 or arg1 == self.loc.starttrigger2 or arg1 == self.loc.starttrigger3 or arg1 == self.loc.starttrigger4) then
 		if (not self:GetOpt("notShoutWarn")) then 
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Orange") 
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.shout7secwarn, 18, "Yellow") 
+			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Orange", nil, "Alarm") 
+			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.shout7secwarn, 18, "Yellow", nil, "Alert") 
 		end
 		if (not self:GetOpt("notShoutBar")) then 
 			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.shoutbar, 25, 1, "Yellow", "Interface\\Icons\\Ability_Warrior_WarCry")
