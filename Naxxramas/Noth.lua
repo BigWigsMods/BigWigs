@@ -23,7 +23,35 @@ BigWigsNoth = AceAddon:new({
 	},
 	optionorder = {"notStartWarn", "notCurseWarn", "notCurseBar", "notBlink", "notBlink5Sec", "notBlinkBar", "notTeleport", "notTeleport10Sec", "notTeleportBar", "notBosskill"},
 
-	loc = { 
+	loc = GetLocale() == "deDE" and {
+		disabletrigger = "Noth der Seuchenf\195\188rst stirbt.",		
+		bosskill = "Noth der Seuchenf\195\188rst wurde besiegt!",
+
+		starttrigger1 = "Sterbt, Eindringling!",
+		starttrigger2 = "Ehre unserem Meister!",
+		starttrigger3 = "Euer Leben ist verwirkt!",
+		startwarn = "Noth engaged! 90 Sekunden bis Teleport!",
+
+		blinktrigger = "Noth der Seuchenf\195\188rst bekommt 'Blinzeln'.",
+		blinkwarn = "Stop DPS!",
+		blinkwarn2 = "Blink in ~5 s!",
+		blinkbar = "Blink",
+
+		teleportwarn = "Teleport! Er ist auf dem Balkon!",
+		teleportwarn2 = "Teleport in 10 Sekunden!",
+
+		teleportbar = "Teleport!",
+		backbar = "R\195\188ckteleport!",
+		
+		backwarn = "Er ist wieder im Raum!",
+		backwarn2 = "10 Sekunden bis R\195\188ckteleport!",
+    
+		cursetrigger = "von Fluch des Seuchenf\195\188rsten betroffen",
+		cursewarn	 = "Fluch! N\195\164chster in ~55 Sekunden",
+		curse10secwarn = "Fluch in ~10 Sekunden",
+		
+		cursebar = "Fluch",
+	} or { 
 		disabletrigger = "Noth the Plaguebringer dies.",		
 		bosskill = "Noth the Plaguebringer has been defeated!",
 

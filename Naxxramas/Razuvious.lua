@@ -35,6 +35,21 @@ BigWigsRazuvious = AceAddon:new({
 		shout7secwarn 	= "7초후 분열의 외침",
 		shoutwarn 		= "분열의 외침!",
 		shoutbar 		= "분열의 외침",
+	} or GetLocale() == "deDE" and {
+		disabletrigger = "Instrukteur Razuvious stirbt.",		
+		bosskill = "Razuvious wurde besiegt!",
+		
+		startwarn = "Razuvious engaged! ~25 s bis Shout",
+		
+		starttrigger1 = "Die Zeit des \195\156bens ist vorbei! Zeigt mir, was ihr gelernt habt!",
+		starttrigger2 = "Streckt sie nieder... oder habt ihr ein Problem damit?",
+		starttrigger3 = "Lasst keine Gnade walten!",
+		starttrigger4 = "Befolgt meine Befehle!",
+
+		shouttrigger = "Instrukteur Razuvious's Unterbrechungsruf trifft (.+) f\195\188r (.+)",
+		shout7secwarn = "7 Sekunden bis Shout",
+		shoutwarn = "Disrupting Shout",
+		shoutbar = "Disrupting Shout",
 	} or {
 		disabletrigger 	= "Instructor Razuvious dies.",		
 		bosskill 		= "Razuvious has been defeated!",

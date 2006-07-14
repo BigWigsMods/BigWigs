@@ -39,6 +39,24 @@ BigWigsFaerlina = AceAddon:new({
 		silencewarn = "침묵! 격노 연기!",
 
 		enragebar = "Enrage",
+	} or GetLocale() == "deDE" and { 
+		disabletrigger = "Gro\195\159witwe Faerlina stirbt.",		
+		bosskill = "Gro\195\159witwe Faerlina wurde besiegt!",
+
+		starttrigger1 = "Kniet nieder, Wurm!",
+		starttrigger2 = "T\195\182tet sie im Namen des Meisters!",
+		starttrigger3 = "Ihr k\195\182nnt euch nicht vor mir verstecken!",
+		starttrigger4 = "Flieht, solange ihr noch k\195\182nnt.",
+
+		silencetrigger = "J\195\188nger von Naxxramas ist von Umarmung der Witwe betroffen.",
+		enragetrigger = "Gro\195\159witwe Faerlina bekommt 'Wutanfall'.",
+
+		startwarn = "Start oder Enrage!",
+		enragewarn15sec = "15 s bis Enrage!",
+		enragewarn = "Enrage!",
+		silencewarn = "Silence! Enrage verz\195\182gert!",
+
+		enragebar = "Enrage",
 	} or {
 		disabletrigger = "Grand Widow Faerlina dies.",		
 		bosskill = "Grand Widow Faerlina has been defeated!",

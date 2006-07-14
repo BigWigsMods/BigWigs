@@ -42,6 +42,24 @@ BigWigsAnubrekhan = AceAddon:new({
 		 
 		casttrigger = "아눕레칸|1이;가; 메뚜기 떼|1을;를; 시전합니다.",
 		castwarn = "메뚜기 떼 소환!",
+	} or GetLocale() == "deDE" and { 
+		disabletrigger = "Anub'Rekhan stirbt.",		
+		bosskill = "Anub'Rekhan ist besiegt!",
+
+		starttrigger1 = "Nur einmal kosten...",
+		starttrigger2 = "Rennt! Das bringt das Blut in Wallung!",
+		starttrigger3 = "Es gibt kein Entkommen.",
+		engagewarn = "Heuschreckenschwarm in ca. 90 s.",
+		
+		gaintrigger = "Anub'Rekhan bekommt Heuschreckenschwarm.",
+		gainendwarn = "Heuschreckenschwarm beendet!",
+		gainnextwarn = "N\195\164chster Schwarm in ca. 90 s.",
+		gainwarn10sec = "10 s BIS SCHWARM",
+		gainincbar = "Schwarm",
+		gainbar = "Heuschreckenschwarm",
+		
+		casttrigger = "Anub'Rekhan beginnt Heuschreckenschwarm zu wirken.",
+		castwarn = "SCHWARM incoming!",
 	} or {
 		disabletrigger = "Anub'Rekhan dies.",		
 		bosskill = "Anub'Rekhan has been defeated!",
