@@ -15,7 +15,18 @@ BigWigsBroodlord = AceAddon:new({
 	},
 	optionorder = {"notYouMS", "notElseMS", "notBosskill"},
 
-	loc = {
+	loc = GetLocale() == "deDE" and {
+		disabletrigger = "Brutw\195\164chter Dreschbringer stirbt.",
+
+		trigger1 = "^([^%s]+) ([^%s]+) von T\195\182dlicher Sto\195\159 betroffen",
+
+		you = "Ihr",
+		are = "seid",
+
+		warn1 = "Mortal Strike on you!",
+		warn2 = "Mortal Strike on %s!",
+		bosskill = "Lashlayer wurde besiegt!",
+	} or {
 		disabletrigger = "Broodlord Lashlayer dies.",
 
 		trigger1 = "^([^%s]+) ([^%s]+) afflicted by Mortal Strike",

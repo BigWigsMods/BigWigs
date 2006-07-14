@@ -54,8 +54,8 @@ BigWigsChromaggus = AceAddon:new({
 		disabletrigger = "Chromaggus stirbt.",
 
 		trigger1 = "^Chromaggus beginnt ([%w ]+)\ zu wirken.",
-		trigger2 = "^[%w']+ [%w' ]+ ([%w]+) Chromaggus f\195\188r ([%d]+) ([%w ]+) Schaden%..*",
-		trigger3 = "Chromagguss Zeitraffer wurde von ([%w]+)% wiederstanden.",
+		trigger2 = "^[%w']+ [%w' ]+ ([%w]+) Chromaggus f\195\188r ([%d]+) ([%w ]+)schaden%..*",
+		trigger3 = "Chromaggus's Zeitraffer wurde von ([%w]+)% widerstanden.",
 		trigger4 = "ger\195\164t in t\195\182dliche Raserei!",
 		trigger5 = "als die Haut schimmert",
 
@@ -63,10 +63,10 @@ BigWigsChromaggus = AceAddon:new({
 		crit = "trifft kritisch",
 
 		warn1 = "%s in 10 Sekunden!",
-		warn2 = "%s wirkt!",
-		warn3 = "Neue Zauberspruchverwundbarkeit: %s",
-		warn4 = "Zauberspruchverwundbarkeit hat sich ge\195\164ndert!",
-		warn5 = "Raserei - Einlullender Schuss!",
+		warn2 = "Chromaggus wirkt %s!",
+		warn3 = "Neue Verwundbarkeit: %s",
+		warn4 = "Verwundbarkeit ge\195\164ndert!",
+		warn5 = "RASEREI!",
 		bosskill = "Chromaggus wurde besiegt!",
 
 		breathsicons = {

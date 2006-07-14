@@ -42,7 +42,7 @@ BigWigsFiremaw = AceAddon:new({
 
 		warn1 = "Feuerschwinge beginnt Fl\195\188gelsto\195\159 zu wirken!",
 		warn2 = "30 Sekunden bis zum n\195\164chsten Fl\195\188gelsto\195\159!",
-		warn3 = "3 Sekunden bis Feuerschwinge Fl\195\188gelsto\195\159 zaubert!",
+		warn3 = "3 Sekunden bis Fl\195\188gelsto\195\159!",
 		warn4 = "Schattenflamme kommt!",
 		bosskill = "Feuerschwinge wurde besiegt!",
 

@@ -51,7 +51,7 @@ BigWigsEbonroc = AceAddon:new({
 
 		trigger1 = "Schattenschwinge beginnt Fl\195\188gelsto\195\159 zu wirken.",
 		trigger2 = "Schattenschwinge beginnt Schattenflamme zu wirken.",
-		trigger3 = "^([^%s]+) ([^%s]+) betroffen von Schattenschwinges Schatten",
+		trigger3 = "^([^%s]+) ([^%s]+) von Schattenschwinges Schatten betroffen",
 
 		you = "Ihr",
 		are = "seid",
@@ -64,7 +64,7 @@ BigWigsEbonroc = AceAddon:new({
 		warn6 = " hat Schattenschwinges Schatten!",
 		bosskill = "Schattenschwinge wurde besiegt!",
 
-		bar1text = "Fluegelgelstoss",
+		bar1text = "Fl\195\188gelgelsto\195\159",
 	}
 		or GetLocale() == "zhCN" and
 	{

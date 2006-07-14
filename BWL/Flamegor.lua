@@ -47,12 +47,12 @@ BigWigsFlamegor = AceAddon:new({
 
 		warn1 = "Flammenmaul beginnt Fl\195\188gelsto\195\159 zu wirken!",
 		warn2 = "30 Sekunden bis zum n\195\64chsten Fl\195\188gelsto\195\159!",
-		warn3 = "3 Sekunden bis Flammenmaul Fl\195\188gelsto\195\159 wirkt!",
+		warn3 = "3 Sekunden bis Fl\195\188gelsto\195\159!",
 		warn4 = "Schattenflamme kommt!",
 		warn5 = "Raserei - Einlullender Schuss!",
 		bosskill = "Flammenmaul wurde besiegt!",
 
-		bar1text = "Fluegelgelstoss",
+		bar1text = "Fl\195\188gelsto\195\159",
 	}
 		or GetLocale() == "zhCN" and
 	{

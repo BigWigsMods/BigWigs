@@ -43,7 +43,7 @@ BigWigsVaelastrasz = AceAddon:new({
 		are = "seid",
 
 		warn1 = "Du brennst!",
-		warn2 = " brennt!",
+		warn2 = " BRENNT!",
 		bosskill = "Vaelastrasz der Verdorbene wurde besiegt!",
 	}
 		or GetLocale() == "zhCN" and
