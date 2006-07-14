@@ -191,10 +191,13 @@ function BigWigsThaddius:Event()
 		if (EPlayer) then
 			if (EPlayer == self.loc.you and not self:GetOpt("notYouPositive")) then
 				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.poswarn, "Green", true)
-	elseif local _, _, EPlayer = string.find(arg1, self.loc.negtrigger)
-		if (EPlayer) then
-			if (EPlayer == self.loc.you and not self:GetOpt("notYouNegative")) then
-				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.negwarn, "Red", true)
+			end
+		else
+			local _, _, EPlayer = string.find(arg1, self.loc.negtrigger)
+			if (EPlayer) then
+				if (EPlayer == self.loc.you and not self:GetOpt("notYouNegative")) then
+					self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.negwarn, "Red", true)
+				end
 			end
 		end
 	end
