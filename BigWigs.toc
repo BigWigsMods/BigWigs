@@ -92,6 +92,7 @@ Naxxramas\Maexxna.lua
 Naxxramas\Patchwerk.lua
 Naxxramas\Grobbulus.lua
 Naxxramas\Thaddius.lua
+Naxxramas\Heigan.lua
 
 
 

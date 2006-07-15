@@ -129,7 +129,7 @@ function BigWigsHeigan:PLAYER_REGEN_ENABLED()
 end
 
 function BigWigsHeigan:CHAT_MSG_MONSTER_EMOTE()
-	elseif (string.find(arg1, self.loc.disabletrigger)) then
+	if (string.find(arg1, self.loc.disabletrigger)) then
 		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
 		self:Disable()
 	end
@@ -148,7 +148,7 @@ end
 function BigWigsHeigan:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
 	if (string.find(arg1, self.loc.backroomtrigger)) then
 		self:StopFirstTeleport()
-		self:TriggerEvent("BIGWIGS_SYNC_SEND", "BACKROOM") end
+		self:TriggerEvent("BIGWIGS_SYNC_SEND", "BACKROOM")
 	end
 end
 
