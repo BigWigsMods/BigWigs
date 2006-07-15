@@ -25,6 +25,8 @@ BigWigsHeigan = AceAddon:new({
 		bosskill = "Heigan the Unclean has been defeated!",
 
 		starttrigger = "You are mine now.",
+		starttrigger2 = "You... are next.",
+		starttrigger3 = "I see you.",
 		backroomtrigger = "Heigan the Unclean casts Plague Cloud.",
 		teleporttrigger = "The end is upon you.",
 
@@ -99,7 +101,7 @@ function BigWigsHeigan:Scan()
 end
 
 function BigWigsHeigan:CHAT_MSG_MONSTER_YELL()
-	if arg1 == self.loc.starttrigger then
+	if arg1 == self.loc.starttrigger or arg1 == self.loc.starttrigger2 or arg1 == self.loc.starttrigger3 then
 		if not self:GetOpt("notStartWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Red") end
 		if not self:GetOpt("notFirstTeleportBar") then 
 			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.firstteleportbar, 90, 2, "Green", "Interface\\Icons\\Spell_Arcane_Blink")
