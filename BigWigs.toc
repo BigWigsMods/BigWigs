@@ -80,6 +80,7 @@ MC\Shazzrah.lua
 Other\Azuregos.lua
 Other\Emeriss.lua
 Other\Onyxia.lua
+Other\Kazzak.lua
 Other\Test.lua
 
 Naxxramas\Anubrekhan.lua
