@@ -20,8 +20,8 @@ BigWigsGeneralRajaxx = AceAddon:new({
 	},
 
 	optionorder = {"notWave", "notBosskill"},
-	
-	
+
+
 	loc = GetLocale() == "koKR" and {
 		disabletrigger = "장군 라작스|1이;가; 죽었습니다.",
 
@@ -82,7 +82,7 @@ BigWigsGeneralRajaxx = AceAddon:new({
 --		lieutenant = "Lieutenant General Andorov",
 --		general = "General Rajaxx",
 
-		trigger1 = "They come now. Try not to get yourself killed, young blood.",
+		trigger1 = "Kill first, ask questions later... Incoming!",
 		trigger2 = "?????",  -- There is no callout for wave 2 ><
 		trigger3 = "The time of our retribution is at hand! Let darkness reign in the hearts of our enemies!",
 		trigger4 = "No longer will we wait behind barred doors and walls of stone! No longer will our vengeance be denied! The dragons themselves will tremble before our wrath!",
