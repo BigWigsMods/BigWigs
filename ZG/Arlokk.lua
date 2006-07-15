@@ -32,13 +32,13 @@ BigWigsArlokk = AceAddon:new({
 		warn2 = "%s님은 표적입니다!",
 		bosskill = "대여사제 알로크를 물리쳤습니다!",
 	} or GetLocale() == "deDE" and {
-		disabletrigger = "Hohenpriester Arlokk stribt.",
+		disabletrigger = "Hohepriesterin Arlokk stribt.",
 
 		trigger1 ="Labt euch an ([^%s]+), meine S\195\188\195\159en!$",
 
 		warn1 = "Du bist markiert!",
 		warn2 = "%s ist markiert!",
-		bosskill = "Hohenpriester Arlokk wurde besiegt!",
+		bosskill = "Hohepriesterin Arlokk wurde besiegt!",
 	
 	} or {
 		disabletrigger = "High Priestess Arlokk dies.",
