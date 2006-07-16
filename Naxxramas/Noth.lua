@@ -43,7 +43,7 @@ BigWigsNoth = AceAddon:new({
 		teleportbar = "Teleport!",
 		backbar = "R\195\188ckteleport!",
 		
-		backwarn = "Er ist wieder im Raum!",
+		backwarn = "Er ist wieder im Raum! DPS f\195\188r %d Sekunden.",
 		backwarn2 = "10 Sekunden bis R\195\188ckteleport!",
     
 		cursetrigger = "von Fluch des Seuchenf\195\188rsten betroffen",
