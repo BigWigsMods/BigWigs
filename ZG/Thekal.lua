@@ -8,7 +8,11 @@ BigWigsThekal = AceAddon:new({
 	enabletrigger = bboss("High Priest Thekal"),
 	bossname = bboss("High Priest Thekal"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notTigers = "호랑이 소환 경고",
+		notHeal = "치유 시전 방해 경고",
+		notBosskill = "보스 사망 알림",
+	} or {
 		notTigers = "Warn on incoming tigers",
 		notHeal = "Show heal interrupt warnings",
 		notBosskill = "Boss death",
@@ -16,7 +20,16 @@ BigWigsThekal = AceAddon:new({
 
 	optionorder = { "notTigers", "notHeal", "notBosskill" },
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		trigger1 = "대사제 데칼|1이;가; 줄리안 수호표범 소환|1을;를; 사용했습니다.",
+		trigger2 = "광신도 로르칸|1이;가; 상급 치유|1을;를; 시전합니다.",
+		warn1 = "호랑이 소환!!!",
+		warn2 = "로르칸, 상급 치유 시전!!!",
+
+		disabletrigger = "대사제 데칼|1이;가; 죽었습니다.",
+
+		bosskill = "대사제 데칼을 물리쳤습니다!!!",
+	} or { 
 		trigger1 = "High Priest Thekal performs Summon Zulian Guardians.",
 		trigger2 = "Zealot Lor'Khan begins to cast Great Heal.",
 		warn1 = "Incoming Tigers!",
