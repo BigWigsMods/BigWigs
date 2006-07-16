@@ -52,6 +52,27 @@ BigWigsMaexxna = AceAddon:new({
 
 		you = "You",
 		are = "are",
+	} or GetLocale() == "deDE" and {
+		disabletrigger = "Maexxna stirbt.",		
+		bosskill = "Maexxna wurde besiegt!",
+
+		webwraptrigger = "(.*) (.*) ist von Fangnetz betroffen.",
+		webspraytrigger = "ist von Gespinstschauer betroffen.",
+
+		enragetrigger = "wird w\195\188tend.",
+
+		webspraywarn30sec = "Fangnetze in 10 Sekunden",
+		webspraywarn20sec = "Fangnetze! 10 Sekunden bis Gespinst!",
+		webspraywarn10sec = "Spinnen! 10 Sekunden bis Kokons!",
+		webspraywarn5sec = "GESPINST in 5 Sekunden!",
+		webspraywarn = "GESPINST! N\195\164chstes in 40 Sekunden!",
+		enragewarn = "Enrage - Gebt alles!",
+		enragesoonwarn = "Enrage in K\195\188rze - ACHTUNG!",
+
+		webspraybar = "Web Spray",
+
+		you = "Ihr",
+		are = "seid",
 	} or {
 		disabletrigger = "Maexxna dies.",		
 		bosskill = "Maexxna has been defeated!",
