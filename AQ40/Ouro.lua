@@ -67,6 +67,12 @@ BigWigsOuro = AceAddon:new({
 		
 		scarabdespawn = "스카라베 소환 10초전", 
 		scarabbar	= "스카라베 소환", 
+		
+		submergetrigger = "아우로|1이;가; 아우로 더미 소환|1을;를; 시전합니다.",
+		submergeannounce = "아우로 잠수!",
+		submergewarn1 = "5초후 아우로 재등장!",
+		submergebar = "아우로 재등장",
+
 
 		berserksoonwarn = "광폭화 예고 - 준비하세요!",
 		bosskill = "아우로를 물리쳤습니다!",
