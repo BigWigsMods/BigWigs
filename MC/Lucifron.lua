@@ -30,10 +30,10 @@ BigWigsLucifron = AceAddon:new({
 		warn1 = "5 Sekunden bis Lucifrons Fluch!",
 		warn2 = "Lucifrons Fluch - 20 Sekunden bis zum n\195\164chsten!",
 		warn3 = "5 Sekunden bis Drohende Verdammnis!",
-		warn4 = "Impending Verdammnis - 20 Sekunden bis zum n\195\164chsten!",
+		warn4 = "Drohende Verdammnis - N\195\164chster in 20 Sekunden!",
 
 		bar1text = "Lucifrons Fluch",
-		bar2text = "Impending Verdammnis",
+		bar2text = "Drohende Verdammnis",
 	}
 		or GetLocale() == "koKR" and
 	{

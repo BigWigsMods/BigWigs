@@ -50,11 +50,11 @@ BigWigsMagmadar = AceAddon:new({
 		disabletrigger = "Magmadar stirbt.",
 
 		trigger1 = "ger\195\164t in t\195\182dliche Raserei!",
-		trigger2 = "von Panik betroffen.",
+		trigger2 = "von Panik betroffen",
 
 		warn1 = "RASEREI!",
 		warn2 = "5 Sekunden bis Fear!",
-		warn3 = "Fear! N\195\164chste in 30 Sekunden!",
+		warn3 = "Fear! N\195\164chstes in 30 Sekunden!",
 
 		bar1text = "Fear",
 	} or {
