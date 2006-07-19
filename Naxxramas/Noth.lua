@@ -159,7 +159,7 @@ function BigWigsNoth:teleportToBalcony()
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.cursebar, self.cursetime-10)
 
 	if not self:GetOpt("notTeleport") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.teleportwarn, "Red") end
-	if not self:GetOpt("notTeleportBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.backbar, self.timebalcony, 2, "Orange", "Interface\\Icons\\Spell_Magic_LesserInvisibilty") end
+	if not self:GetOpt("notTeleportBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.backbar, self.timebalcony, 0, "Orange", "Interface\\Icons\\Spell_Magic_LesserInvisibilty") end
 	if not self:GetOpt("notTeleport10Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.backwarn2, self.timebalcony - 10) end
 	metro:Stop("BigWigs Noth ToBalcony")
 	metro:Start("BigWigs Noth ToRoom")
@@ -175,7 +175,7 @@ function BigWigsNoth:teleportToRoom()
 	end	
 	
 	if not self:GetOpt("notTeleport") then self:TriggerEvent("BIGWIGS_MESSAGE", string.format(self.loc.backwarn, self.timeroom), "Red") end
-	if not self:GetOpt("notTeleportBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.teleportbar, self.timeroom, 2, "Yellow", "Interface\\Icons\\Spell_Magic_LesserInvisibilty") end
+	if not self:GetOpt("notTeleportBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.teleportbar, self.timeroom, 0, "Yellow", "Interface\\Icons\\Spell_Magic_LesserInvisibilty") end
 	if not self:GetOpt("notTeleport10Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.teleportwarn2, self.timeroom - 10) end
 	metro:Stop("BigWigs Noth ToRoom")
 	metro:Start("BigWigs Noth ToBalcony")
