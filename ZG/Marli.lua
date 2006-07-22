@@ -40,6 +40,16 @@ BigWigsMarli = AceAddon:new({
 		disabletrigger = "高阶祭司玛尔里死亡了。",
 
 		bosskill = "高阶祭司玛尔里被击败了！",
+	} or GetLocale() == "deDE" and {
+		trigger1 = "Helft mir, meine Brut!$",
+		trigger2 = "^High Priestess Mar'li's Drain Life heals High Priestess Mar'li for (.+).",
+
+		warn1 = "Spiders spawned!",
+		warn2 = "High Priestess Mar'li is draining life! Interrupt it!",
+
+		disabletrigger = "High Priestess Mar'li dies.",
+
+		bosskill = "High Priest Mar'li has been defeated!",
 	} or {
 		trigger1 = "Aid me my brood!$",
 		trigger2 = "^High Priestess Mar'li's Drain Life heals High Priestess Mar'li for (.+).",

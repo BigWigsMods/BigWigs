@@ -62,6 +62,22 @@ BigWigsHakkar = AceAddon:new({
 
 		bar1text = "激怒",
 		bar2text = "生命吸取",
+	} or GetLocale() == "deDE" and {
+		disabletrigger = "Hakkar stirbt.",
+
+		trigger1 = "SP\195\156RT DEN ZORN DES SEELENSCHINDERS!",
+		trigger2 = "^Hakkar erleidet (.+) Naturschaden von (.+) %(durch Bluttrinker%)",
+		flee = "Fleeing will do you no good mortals!", -- CHECK
+
+		start = "Hakkar engaged - 90 Sekunden bis Bluttrinker - 10 min bis Enrage",
+		warn1 = "60 Sekunden bis Bluttrinker",
+		warn2 = "45 Sekunden bis Bluttrinker",
+		warn3 = "15 Sekunden bis Bluttrinker",
+		warn4 = "Bluttrinker - n\195\164chster in 90 Sekunden",
+		bosskill = "Hakkar wurde besiegt!",
+
+		bar1text = "Enrage",
+		bar2text = "Life Drain",
 	} or {
 		disabletrigger = "Hakkar dies.",
 

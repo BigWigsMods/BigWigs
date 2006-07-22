@@ -44,7 +44,7 @@ BigWigsJeklik = AceAddon:new({
 		warn1 = "Fledermaus Bomben im Anflug!",
 		warn2 = "Heilversuch - unterbrechen!",
 
-		disabletrigger = "Hohenpriester Jeklik stribt.",
+		disabletrigger = "Hohepriesterin Jeklik stirbt.",
 
 		bosskill = "High Priestess Jeklik wurde besiegt!",
 	

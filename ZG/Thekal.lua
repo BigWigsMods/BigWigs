@@ -29,6 +29,15 @@ BigWigsThekal = AceAddon:new({
 		disabletrigger = "대사제 데칼|1이;가; 죽었습니다.",
 
 		bosskill = "대사제 데칼을 물리쳤습니다!!!",
+	} or GetLocale() == "deDE" and { 
+		trigger1 = "Hohepriester Thekal wirkt Zulianische W\195\164chter beschw\195\182ren.",
+		trigger2 = "Zealot Lor'Khan beginnt Gro\195\159e Heilung zu wirken.", -- CHECK
+		warn1 = "Tiger beschworen!",
+		warn2 = "Lor'Khan Heilt - Unterbrechen!",
+
+		disabletrigger = "High Priest Thekal dies.",
+
+		bosskill = "High Priest Thekal has been defeated!",
 	} or { 
 		trigger1 = "High Priest Thekal performs Summon Zulian Guardians.",
 		trigger2 = "Zealot Lor'Khan begins to cast Great Heal.",

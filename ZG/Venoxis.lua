@@ -39,6 +39,16 @@ BigWigsVenoxis = AceAddon:new({
 		warn2 = "进入第二阶段，小心毒云！",
 
 		bosskill = "高阶祭司温诺希斯被击败了！",
+	} or GetLocale() == "deDE" and {
+		disabletrigger = "Hohepriester Venoxis stirbt.",
+
+		trigger1 = "Hohepriester Venoxis bekommt 'Erneuerung'.",
+		trigger2 = "Lasst das Schlachten beginnen!", -- CHECK
+
+		warn1 = "Erneuerung - schnell entfernen!",
+		warn2 = "Phase 2, auf Giftwolken aufpassen!",
+
+		bosskill = "High Priest Venoxis has been defeated!",
 	} or {
 		disabletrigger = "High Priest Venoxis dies.",
 

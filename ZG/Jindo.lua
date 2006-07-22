@@ -30,6 +30,16 @@ BigWigsJindo = AceAddon:new({
 		warnhealing = "치유의 토템 - 제거!",
 
 		bosskill = "주술사 진도를 물리쳤습니다!",
+	} or GetLocale() == "deDE" and { 
+		disabletrigger = "Jin'do der Verhexer stirbt.",
+
+		triggerbrainwash = "Jin'do der Verhexer wirkt Totem der Gehirnw\195\164sche beschw\195\182ren.",
+		triggerhealing = "Jin'do der Verhexer wirkt M\195\164chtiger Heilungszauberschutz.",
+
+		warnbrainwash = "\195\156bernahmetotem!",
+		warnhealing = "Heiltotem!",
+
+		bosskill = "Jin'do wurde besiegt!",
 	} or { 
 		disabletrigger = "Jin'do the Hexxer dies.",
 
