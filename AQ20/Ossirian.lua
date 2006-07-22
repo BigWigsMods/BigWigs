@@ -36,6 +36,7 @@ BigWigsOssirian = AceAddon:new({
 		debufftrigger = "무적의 오시리안|1이;가; (.+) 약점에 걸렸습니다.",
 		debuffwarn = "오시리안이 %s 계열 마법에 약해졌습니다.",
 		bartext = "무적 상태",
+		expose = "Expose",
 	}
 		or GetLocale() == "zhCN" and
 	{
@@ -49,6 +50,7 @@ BigWigsOssirian = AceAddon:new({
 		debufftrigger = "^无疤者奥斯里安受到了(.+)虚弱效果的影响。$",
 		debuffwarn = "奥斯里安新法术弱点: %s",
 		bartext = "无敌",
+		expose = "Expose",
 	}
 		or GetLocale() == "deDE" and {
 		disabletrigger1 = "Ich... habe... versagt.",
@@ -61,6 +63,7 @@ BigWigsOssirian = AceAddon:new({
 		debufftrigger = "^Ossirian der Narbenlose ist von (.*)schw\195\164che betroffen%.$",
 		debuffwarn = "Ossirian anf\195\164llig gegen %s",
 		bartext = "Supreme",
+		expose = "Expose",
 	}
     or
 	{
@@ -74,6 +77,7 @@ BigWigsOssirian = AceAddon:new({
 		debufftrigger = "^Ossirian the Unscarred is afflicted by (.+) Weakness%.$",
 		debuffwarn = "Ossirian now weak to %s",
 		bartext = "Supreme",
+		expose = "Expose",
 	},
 })
 
@@ -115,7 +119,7 @@ end
 
 function BigWigsOssirian:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE()
 	local _, _, debuffName = string.find(arg1, self.loc.debufftrigger)
-	if (debuffName) then
+	if (debuffName and debuffName ~= self.loc.expose) then
 		self:TriggerEvent("BIGWIGS_SYNC_SEND", "OSSIRIAN_WEAKNESS "..debuffName)
 	end
 end
