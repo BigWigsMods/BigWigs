@@ -38,7 +38,17 @@ BigWigsAyamiss = AceAddon:new({
 		you = "你",
 		are = "到",
 	}
-		or
+		or GetLocale() == "deDE" and
+	{
+		disabletrigger = "Ayamiss der J\195\164ger stirbt.",
+		bosskill = "Ayamiss wurde besiegt.",
+
+		sacrificetrigger = "^([^%s]+) ([^%s]+) von Paralisieren betroffen",
+		sacrificewarn = " wird geopfert!",
+		you = "Ihr",
+		are = "seid",
+	}
+    or 
 	{
 		disabletrigger = "Ayamiss the Hunter dies.",
 		bosskill = "Ayamiss the Hunter has been defeated.",

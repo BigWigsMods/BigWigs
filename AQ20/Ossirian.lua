@@ -50,7 +50,19 @@ BigWigsOssirian = AceAddon:new({
 		debuffwarn = "奥斯里安新法术弱点: %s",
 		bartext = "无敌",
 	}
-		or
+		or GetLocale() == "deDE" and {
+		disabletrigger1 = "Ich... habe... versagt.",
+		disabletrigger2 = "Ossirian der Narbenlose stirbt.",
+		bosskill = "Ossirian wurde besiegt!",
+
+		supremetrigger = "Ossirian der Narbenlose bekommt 'St\195\164rke des Ossirian'.",
+		supremewarn = "Ossirian Supreme Mode!",
+		supremedelaywarn = "Supreme in %d Sekunden!",
+		debufftrigger = "^Ossirian der Narbenlose ist von (.*)schw\195\164che betroffen%.$",
+		debuffwarn = "Ossirian anf\195\164llig gegen %s",
+		bartext = "Supreme",
+	}
+    or
 	{
 		disabletrigger1 = "I...have...failed.",
 		disabletrigger2 = "Ossirian the Unscarred dies.",

@@ -42,7 +42,17 @@ BigWigsBuru = AceAddon:new({
 		watchwarnyou = "你被布鲁盯上了！放风筝吧！",
 		you = "你",
 	}
-		or
+		or GetLocale() == "deDE" and 
+	{
+		disabletrigger = "Buru der Verschlinger stirbt.",
+		bosskill = "Buru wurde besiegt.",
+
+		watchtrigger = "beh\195\164lt (.+) im Blickfeld!",
+		watchwarn = " wird beobachtet!",
+		watchwarnyou = "Du wirst beobachtet! Lauf!",
+		you = "Ihr",
+	}
+    or
 	{
 		disabletrigger = "Buru the Gorger dies.",
 		bosskill = "Buru the Gorger has been defeated.",

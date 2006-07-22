@@ -65,7 +65,26 @@ BigWigsGuardians = AceAddon:new({
 		plagueyou = "你",
 		plagueare = "到",
 	}
-		or
+		or GetLocale() == "deDE" and
+	{
+		disabletrigger = "Besch\195\188tzer des Anubisath stirbt.",
+		bosskill = "Besch\195\188tzer des Anubisath wurde besiegt.",
+
+		explodetrigger = "Besch\195\188tzer des Anubisath bekommt 'Explodieren'.",
+		explodewarn = "Explodiert! Weg von ihm!",
+		enragetrigger = "Besch\195\188tzer des Anubisath bekommt 'Wutanfall'.",
+		enragewarn = "Enraged!",
+		summonguardtrigger = "Besch\195\188tzer des Anubisath wirkt Schwarmwache des Anubisath beschw\195\182ren.",
+		summonguardwarn = "Schwarmwache beschworen",
+		summonwarriortrigger = "Besch\195\188tzer des Anubisath wirkt Krieger des Anubisath beschw\195\182ren.",
+		summonwarriorwarn = "Krieger beschworen",
+		plaguetrigger = "^([^%s]+) ([^%s]+) von Seuche betroffen%.$",
+		plaguewarn = " hat die Seuche!",
+		plaguewarnyou = "Du hast die Seuche!",
+		plagueyou = "Du",
+		plagueare = "bist",
+	} 
+    or 
 	{
 		disabletrigger = "Anubisath Guardian dies.",
 		bosskill = "Anubisath Guardian has been defeated.",
