@@ -20,7 +20,31 @@ BigWigsHeigan = AceAddon:new({
 	},
 	optionorder = {"notStartWarn", "notFirstTeleport", "notBackRoom", "notTeleport", "notFirstTeleportBar", "notTeleportSec", "notBosskill"},
 
-	loc = { 
+	loc = GetLocale() == "deDE" and { 
+		disabletrigger = "Heigan der Unreine nimmt einen letzten Atemzug.",		
+		bosskill = "Heigan wurde besiegt!",
+
+		starttrigger = "Ihr geh\195\182rt mir...",
+		starttrigger2 = "Ihr seid.... als n\195\164chstes dran.",
+		starttrigger3 = "Ihr entgeht mir nicht...",
+		backroomtrigger = "Heigan der Unreine wirkt Seuchenwolke.",
+		teleporttrigger = "Euer Ende naht.",
+
+		startwarn = "Heigan engaged! 90 Sekunden bis Teleport",
+		warn1 = "Teleport in 1 Minute",
+		warn2 = "Teleport in 30 Sekunden",
+		warn3 = "Teleport in 10 Sekunden",
+		backwarn1 = "Teleport! Zur\195\188ck in 40 Sekunden!",
+		backwarn2 = "Zur\195\188ck im Raum in 30 Sekunden",
+		backwarn3 = "Zur\195\188ck im Raum in 10 Sekunden",
+		teleportwarn1 = "Zur\195\188ck im Raum! 90 Sekunden bis Teleport",
+		teleportwarn2 = "Teleport in 30 Sekunden",
+		teleportwarn3 = "Teleport in 10 Sekunden",
+
+		firstteleportbar = "Erster Teleport!",
+		teleportbar = "Teleport!",
+		backbar = "R\195\188ckteleport!",
+	} or { 
 		disabletrigger = "Heigan the Unclean takes his last breath.",		
 		bosskill = "Heigan the Unclean has been defeated!",
 
