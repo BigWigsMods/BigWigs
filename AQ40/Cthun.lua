@@ -325,6 +325,9 @@ function BigWigsCThun:BIGWIGS_SYNC_CTHUNWEAKENED()
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.giant3)
 	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.barGiant)
 
+	-- flipflop the giant eye timers
+	self.gianteye = not self.gianteye
+
 	-- stop the timer, and reschedule.
 	metro:Stop("BigWigs Cthun Tentacles")
 	metro:Start("BigWigs Cthun Tentacles Reschedule", 1)
