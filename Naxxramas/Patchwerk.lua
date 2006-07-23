@@ -9,7 +9,13 @@ BigWigsPatchwerk = AceAddon:new({
 	enabletrigger = bboss("Patchwerk"),
 	bossname = bboss("Patchwerk"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notStartWarn = "시작 알림",
+		notEnrageWarn = "격노 경고",
+		notEnrageBar = "격노 타이머바",
+		notEnrageSec = "격노 시간 경고",
+		notBosskill = "보스 사망 알림",
+	} or {
 		notStartWarn = "Start warning",
 		notEnrageWarn = "Warn for Enrage",
 		notEnrageBar = "Enrage timerbar",
@@ -18,7 +24,24 @@ BigWigsPatchwerk = AceAddon:new({
 	},
 	optionorder = {"notStartWarn", "notEnrageBar", "notEnrageSec", "notEnrageWarn", "notBosskill"},
 
-	loc = { 
+	loc = GetLocale() == "koKR" and { 	 
+		disabletrigger = "패치워크|1이;가; 죽었습니다.",		
+		bosskill = "패치워크를 물리쳤습니다!",
+
+		enragetrigger = "goes into a berserker rage!", -- 사용되지 않음
+
+		enragewarn = "격노!",
+		starttrigger1 = "패치워크랑 놀아줘!",
+		starttrigger2 = "켈투자드님이 패치워크 싸움꾼으로 만들었다.",
+		startwarn = "패치워크 전투시작! 격노 7분후!",
+		enragebartext = "격노",
+		warn1 = "격노 5분후",
+		warn2 = "격노 3분후",
+		warn3 = "격노 90초후",
+		warn4 = "격노 60초후",
+		warn5 = "격노 30초후",
+		warn6 = "격노 10초후",	
+	} or {
 		disabletrigger = "Patchwerk dies.",		
 		bosskill = "Patchwerk has been defeated!",
 

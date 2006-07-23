@@ -9,7 +9,18 @@ BigWigsNoth = AceAddon:new({
 	enabletrigger = bboss("Noth the Plaguebringer"),
 	bossname = bboss("Noth the Plaguebringer"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notStartWarn = "시작 알림",
+		notBlink = "점멸 경고",
+		notBlink5Sec = "점멸 시간 경고",
+		notBlinkBar = "점멸 타이머바",
+		notTeleport = "순간이동 경고",
+		notTeleport10Sec = "순간이동 10초전 경고",
+		notTeleportBar = "순간이동 타이머바",
+		notBosskill = "보스 사망 알림",
+		notCurseWarn = "저주 경고",
+		notCurseBar = "저주 타이머바",
+	} or {
 		notStartWarn = "Start warning",
 		notBlink = "Blink warning",
 		notBlink5Sec = "Blink 5-sec warning",
@@ -51,7 +62,40 @@ BigWigsNoth = AceAddon:new({
 		curse10secwarn = "Fluch in ~10 Sekunden",
 		
 		cursebar = "Fluch",
-	} or { 
+	} 
+		or GetLocale() == "koKR" and 
+	{ 	
+		disabletrigger = "역병술사 노스|1이;가; 죽었습니다.",		
+		bosskill = "역병술사 노스를 물리쳤습니다!",
+
+		starttrigger1 = "죽어라, 침입자들아!",
+		starttrigger2 = "주인님께 영광을!",
+		starttrigger3 = "너희 생명은 끝이다!",
+		startwarn = "역병술사 노스와 전투 시작! 90초후 순간이동",		
+	 	-- "이제 숨을 거두어라!",
+		
+		addtrigger = "일어나라,병사들이여! 다시 일어나 싸워라!",
+
+		blinktrigger = "역병술사 노스|1이;가; 점멸 효과를 얻었습니다.",
+		blinkwarn = "점멸! 공격 금지!",
+		blinkwarn2 = "점멸 약 5초후!",
+		blinkbar = "점멸",
+		
+		teleportwarn = "순간이동! 발코니에 위치!",
+		teleportwarn2 = "순간이동 10초후!",
+
+		teleportbar = "순간이동!",
+		backbar = "방으로 복귀!",
+		
+		backwarn = "방으로 복귀! %d 초간 최대한 공격!!",
+		backwarn2 = "10초후 방으로 복귀!",
+		
+		cursetrigger = "(.+)|1이;가; 역병술사의 저주에 걸렸습니다.",
+		cursewarn	 = "저주! 다음 저주 약 55초후",
+		curse10secwarn = "저주 약 10초후",
+		
+		cursebar = "다음 저주",	
+	} or {
 		disabletrigger = "Noth the Plaguebringer dies.",		
 		bosskill = "Noth the Plaguebringer has been defeated!",
 
@@ -80,7 +124,7 @@ BigWigsNoth = AceAddon:new({
 		cursewarn	 = "Curse! next in ~55 seconds",
 		curse10secwarn = "Curse in ~10 seconds",
 		
-		cursebar = "Next Curse",
+		cursebar = "Next Curse",		
 	},
 })
 
