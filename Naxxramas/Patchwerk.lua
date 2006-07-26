@@ -41,6 +41,23 @@ BigWigsPatchwerk = AceAddon:new({
 		warn4 = "격노 60초후",
 		warn5 = "격노 30초후",
 		warn6 = "격노 10초후",	
+	} or GetLocale() == "deDE" and {
+		disabletrigger = "Flickwerk stirbt.",		
+		bosskill = "Flickwerk wurde besiegt!",
+
+		enragetrigger = "f\195\164llt in Berserkerwut!",
+
+		enragewarn = "Enrage!",
+		starttrigger1 = "Flickwerk spielen m\195\182chte!",
+		starttrigger2 = "Kel'thuzad macht Flickwerk zu seinem Abgesandten von Krieg!",
+		startwarn = "Patchwerk engaged! Enrage in 7 Minuten!",
+		enragebartext = "Enrage",
+		warn1 = "Enrage in 5 Minuten",
+		warn2 = "Enrage in 3 Minuten",
+		warn3 = "Enrage in 90 Skunden",
+		warn4 = "Enrage in 60 Sekunden",
+		warn5 = "Enrage in 30 Sekunden",
+		warn6 = "Enrage in 10 Sekunden",
 	} or {
 		disabletrigger = "Patchwerk dies.",		
 		bosskill = "Patchwerk has been defeated!",
