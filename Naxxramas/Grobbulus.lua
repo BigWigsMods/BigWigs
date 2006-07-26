@@ -8,7 +8,12 @@ BigWigsGrobbulus = AceAddon:new({
 	enabletrigger = bboss("Grobbulus"),
 	bossname = bboss("Grobbulus"),
 
-	toggleoptions = {
+	toggleoptions = GetLocale() == "koKR" and {
+		notYouInjected = "자신의 돌연변이 경고",
+		notElseInjected = "다른 사람의 돌연변이 경고",
+		notIcon = "돌연변이에게 해골 표시(승급 필요)",
+		notBosskill = "보스 사망 알림",
+	} or { 
 		notYouInjected = "Warn when you are injected",
 		notElseInjected = "Warn when others are injected",
 		notIcon = "Put a Skull icon on the person who's injected. (Requires promoted or higher)",
@@ -17,7 +22,19 @@ BigWigsGrobbulus = AceAddon:new({
 
 	optionorder = {"notYouInjected", "notElseInjected", "notIcon", "notBosskill"},
 
-	loc = {
+	loc = GetLocale() == "koKR" and {
+		disabletrigger = "그라불루스|1이;가; 죽었습니다.",
+
+		trigger1 = "(.*)돌연변이 유발에 걸렸습니다.",
+
+		whopattern = "(.+)|1이;가; ",
+		you = "",
+		are = "are",
+
+		warn1 = "당신은 돌연변이 유발에 걸렸습니다.",
+		warn2 = " 님이 돌연변이 유발에 걸렸습니다.",
+		bosskill = "그라불루스를 물리쳤습니다!",
+	} or {
 		disabletrigger = "Grobbulus dies.",
 
 		trigger1 = "^([^%s]+) ([^%s]+) afflicted by Mutating Injection",
@@ -56,27 +73,52 @@ function BigWigsGrobbulus:CHAT_MSG_COMBAT_HOSTILE_DEATH()
 	end
 end
 
-function BigWigsGrobbulus:Event()
-	local _, _, EPlayer, EType = string.find(arg1, self.loc.trigger1)
-	if (EPlayer and EType) then
-		if (EPlayer == self.loc.you and EType == self.loc.are and not self:GetOpt("notYouInjected")) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
-		elseif (not self:GetOpt("notElseInjected")) then 
-			self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
-			self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
-		end
-		if (not self:GetOpt("notIcon")) then
-			if EPlayer == self.loc.you then
-				EPlayer = UnitName('player')
+if GetLocale() == "koKR" then 
+	function BigWigsGrobbulus:Event()
+		local _, _, EPlayer = string.find(arg1, self.loc.trigger1)
+		if (EPlayer) then
+			if (EPlayer == self.loc.you and not self:GetOpt("notYouInjected")) then
+				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
+			elseif (not self:GetOpt("notElseInjected")) then 
+				_, _, EPlayer = string.find(EPlayer, self.loc.whopattern)
+				self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
+				self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
 			end
-			for i=1, GetNumRaidMembers() do
-				if UnitName("raid"..i) == EPlayer then
-					SetRaidTargetIcon("raid"..i, 8)
+			if (not self:GetOpt("notIcon")) then
+				if EPlayer == self.loc.you then
+					EPlayer = UnitName('player')
+				end
+				for i=1, GetNumRaidMembers() do
+					if UnitName("raid"..i) == EPlayer then
+						SetRaidTargetIcon("raid"..i, 8)
+					end
 				end
 			end
 		end
 	end
-end
+else
+	function BigWigsGrobbulus:Event()
+		local _, _, EPlayer, EType = string.find(arg1, self.loc.trigger1)
+		if (EPlayer and EType) then
+			if (EPlayer == self.loc.you and EType == self.loc.are and not self:GetOpt("notYouInjected")) then
+				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
+			elseif (not self:GetOpt("notElseInjected")) then 
+				self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
+				self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
+			end
+			if (not self:GetOpt("notIcon")) then
+				if EPlayer == self.loc.you then
+					EPlayer = UnitName('player')
+				end
+				for i=1, GetNumRaidMembers() do
+					if UnitName("raid"..i) == EPlayer then
+						SetRaidTargetIcon("raid"..i, 8)
+					end
+				end
+			end
+		end
+	end
+end 
 --------------------------------
 --      Load this bitch!      --
 --------------------------------
