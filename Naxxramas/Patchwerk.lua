@@ -124,7 +124,7 @@ function BigWigsPatchwerk:Scan()
 end
 
 function BigWigsPatchwerk:CHAT_MSG_MONSTER_YELL()
-	if arg1 == self.loc.starttrigger1 or arg1 == self.loc.starttrigger2 then
+	if (arg1 == self.loc.starttrigger1 or arg1 == self.loc.starttrigger2) then
 		if not self:GetOpt("notStartWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Red") end
 		if not self:GetOpt("notEnrageBar") then 
 			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.enragebartext, 420, 2, "Green", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
