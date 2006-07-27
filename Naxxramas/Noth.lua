@@ -283,7 +283,7 @@ function BigWigsNoth:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
 end
 
 function BigWigsNoth:BIGWIGS_MESSAGE(text)
-	if text == self.loc.curse5secwarn then self.prior = nil end
+	if text == self.loc.curse10secwarn then self.prior = nil end
 end
 --------------------------------
 --      Load this bitch!      --
