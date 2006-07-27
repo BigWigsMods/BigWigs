@@ -54,6 +54,7 @@ BigWigsFaerlina = AceAddon:new({
 		startwarn = "Start oder Enrage!",
 		enragewarn15sec = "15 s bis Enrage!",
 		enragewarn = "Enrage!",
+    enrageremovewarn = "Enrage entfernt! N\195\164chstes in %d Sekunden!",
 		silencewarn = "Silence! Enrage verz\195\182gert!",
 
 		enragebar = "Enrage",
