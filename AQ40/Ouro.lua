@@ -168,8 +168,8 @@ function BigWigsOuro:Disable()
 	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.emergewarn)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.sweepbartext, 10)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.sweepbartext, 15)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.sandblastbartext, 5)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.sandblastbartext, 10)
+	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.sandblastbartext, 15)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.emergebartext, 75)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.emergebartext, 135)
 	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.emergebartext, 165)
@@ -233,7 +233,7 @@ function BigWigsOuro:BIGWIGS_SYNC_OUROEMERGE()
 	end
 	if not self:GetOpt("notScarabWarn") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.scarabdespawn, 50, "Red") end
 	if not self:GetOpt("notScarabBar") then
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.scarabbar, 60, 4, "Orange", "Interface\\Icons\\INV_Scarab_Clay")
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.scarabbar, 60, 5, "Orange", "Interface\\Icons\\INV_Scarab_Clay")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.scarabbar, 30, "Yellow")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.scarabbar, 45, "Green")
 	end
@@ -243,7 +243,7 @@ function BigWigsOuro:BIGWIGS_SYNC_OUROSUBMERGE()
 	if not self:GetOpt("notSubmergeWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.submergeannounce, "Red") end
 	if not self:GetOpt("notSubmerge5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.submergewarn, 25, "Red") end
 	if not self:GetOpt("notSubmergeBar") then
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.submergebar, 30, 3, "Yellow", "Interface\\Icons\\Spell_Nature_Earthquake")
+		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.submergebar, 30, 4, "Yellow", "Interface\\Icons\\Spell_Nature_Earthquake")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.submergebartext, 10, "Orange")
 		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.submergebartext, 20, "Red")
 	end
