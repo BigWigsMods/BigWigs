@@ -65,7 +65,7 @@ BigWigsHakkar = AceAddon:new({
 	} or GetLocale() == "deDE" and {
 		disabletrigger = "Hakkar stirbt.",
 
-		trigger1 = "SP\195\156RT DEN ZORN DES SEELENSCHINDERS!",
+		trigger1 = "STELLT EUCH DEM ZORN DES SEELENSCHINDERS!",
 		trigger2 = "^Hakkar erleidet (.+) Naturschaden von (.+) %(durch Bluttrinker%)",
 		flee = "Fleeing will do you no good mortals!", -- CHECK
 
@@ -77,7 +77,7 @@ BigWigsHakkar = AceAddon:new({
 		bosskill = "Hakkar wurde besiegt!",
 
 		bar1text = "Enrage",
-		bar2text = "Life Drain",
+		bar2text = "Bluttrinker",
 	} or {
 		disabletrigger = "Hakkar dies.",
 
