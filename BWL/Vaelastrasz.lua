@@ -22,7 +22,7 @@ BigWigsVaelastrasz = AceAddon:new({
 	optionorder = {"notYouBurning", "notElseBurning", "notIcon", "notBosskill"},
 
 	loc = GetLocale() == "koKR" and {
-		disabletrigger = "밸라스트라즈|1이;가; 죽었습니다.",
+		disabletrigger = "타락한 밸라스트라즈|1이;가; 죽었습니다.",
 
 		trigger1 = "(.*)불타는 아드레날린에 걸렸습니다.",
 
@@ -106,9 +106,9 @@ if (GetLocale() == "koKR") then
 			if (EPlayer == self.loc.you and not self:GetOpt("notYouBurning")) then
 				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
 			elseif (not self:GetOpt("notElseBurning")) then 
-				local _, _, EWho = string.find(EPlayer, self.loc.whopattern)
-				self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn2, "Yellow")
-				self:TriggerEvent("BIGWIGS_SENDTELL", EWho, self.loc.warn1)
+				local _, _, EPlayer = string.find(EPlayer, self.loc.whopattern)
+				self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
+				self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
 			end
 
 			if (not self:GetOpt("notIcon")) then
