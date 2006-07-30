@@ -71,7 +71,7 @@ BigWigsChromaggus = AceAddon:new({
 
 		breathsicons = {
 			["Zeitraffer"] = "Interface\\Icons\\Spell_Arcane_PortalOrgrimmar",
-			["Corrosive Acid"] = "Interface\\Icons\\Spell_Nature_Acid_01",
+			["\195\132tzende S\195\164ure"] = "Interface\\Icons\\Spell_Nature_Acid_01",
 			["Fleisch entz\195\188nden"] = "Interface\\Icons\\Spell_Fire_Fire",
 			["Verbrennen"] = "Interface\\Icons\\Spell_Shadow_ChillTouch",
 			["Frostbeulen"] = "Interface\\Icons\\Spell_Frost_ChillingBlast",
