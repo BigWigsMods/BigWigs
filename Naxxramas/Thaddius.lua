@@ -31,6 +31,7 @@ BigWigsThaddius = AceAddon:new({
 		starttrigger = "Stalagg crush you!",
 		starttrigger1 = "Feed you to master!",
 		starttrigger2 = "Eat... your... bones...",
+		starttrigger3 = "Break... you!!",
 		pstrigger = "Now you feel pain...",
 		trigger1 = "Thaddius begins to cast Polarity Shift",
 		postrigger = "^([^%s]+) ([^%s]+) afflicted by Positive Charge",
@@ -118,7 +119,7 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_YELL()
 		self:TriggerEvent("BIGWIGS_SYNC_SEND", "POLARITY")
 	elseif arg1 == self.loc.starttrigger or arg1 == self.loc.starttrigger1 then
 		if not self:GetOpt("notStartWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Red") end
-	elseif arg1 == self.loc.starttrigger2 then
+	elseif arg1 == self.loc.starttrigger2 or arg1 == self.loc.starttrigger3 then
 		if not self:GetOpt("notStartWarn2") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn2, "Red") end
 		if not self:GetOpt("notEnrageBar") then 
 			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.enragebartext, 300, 2, "Green", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
