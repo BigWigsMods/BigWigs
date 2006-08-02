@@ -46,7 +46,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	emergetrigger = "Dirt Mound casts Summon Ouro Scarabs.",
 	emergeannounce = "Ouro has emerged!",
-	emergewarn1 = "15 seconds until Ouro submerges!",
+	emergewarn = "15 seconds until Ouro submerges!",
 	emergebartext = "Ouro submerge",
 
 	scarabdespawn = "Scarabs despawn in 10 Seconds",
@@ -54,7 +54,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	submergetrigger = "Ouro casts Summon Ouro Mounds.",
 	submergeannounce = "Ouro has submerged!",
-	submergewarn1 = "5 seconds until Ouro Emerges!",
+	submergewarn = "5 seconds until Ouro Emerges!",
 	submergebar = "Ouro Emerge",
 
 	berserksoonwarn = "Berserk Soon - Get Ready!",
@@ -73,7 +73,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	emergetrigger = "흙더미|1이;가; 아우로 스카라베 소환|1을;를; 시전합니다.",
 	emergeannounce = "아우로 등장! 벌레들 제거!",
-	emergewarn1 = "15초후 아우로 잠수!",
+	emergewarn = "15초후 아우로 잠수!",
 	emergebartext = "아우로 잠수",
 
 	scarabdespawn = "스카라베 소환 10초전",
@@ -81,7 +81,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	submergetrigger = "아우로|1이;가; 아우로 더미 소환|1을;를; 시전합니다.",
 	submergeannounce = "아우로 잠수!",
-	submergewarn1 = "5초후 아우로 재등장!",
+	submergewarn = "5초후 아우로 재등장!",
 	submergebar = "아우로 재등장",
 
 	berserksoonwarn = "광폭화 예고 - 준비하세요!",
@@ -100,7 +100,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	emergetrigger = "土堆施放了召唤奥罗甲虫。",
 	emergeannounce = "奥罗潜入地下！杀光虫子！",
-	emergewarn1 = "15秒后奥罗将钻出地面！",
+	emergewarn = "15秒后奥罗将钻出地面！",
 	emergebartext = "奥罗钻出地面",
 
 	scarabdespawn = "Scarbs Despawn in 10 Seconds", --Translate me
