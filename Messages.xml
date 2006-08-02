@@ -44,18 +44,6 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 		</Layers>
 
 		<Frames>
-			<Button name="$parentMenu" inherits="OptionsButtonTemplate" text="Menu">
-				<Size>
-					<AbsDimension x="40" y="25"/>
-				</Size>
-				<Anchors>
-					<Anchor point="BOTTOM">
-						<Offset>
-							<AbsDimension x="0" y="5"/>
-						</Offset>
-					</Anchor>
-				</Anchors>
-			</Button>
 			<Button name="$parentTest" inherits="OptionsButtonTemplate" text="Test">
 				<Size>
 					<AbsDimension x="40" y="25"/>

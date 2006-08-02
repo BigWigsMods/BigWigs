@@ -137,7 +137,6 @@ BigWigsMessages.consoleOptions = {
 function BigWigsMessages:OnInitialize()
 	self.anchorframe, rwframe = BigWigsMsgAnchorFrame, RaidWarningFrame
 	frame = self.db.profile.useraidwarn and RaidWarningFrame or self:CreateMsgFrame()
-	dewdrop:Register(BigWigsMsgAnchorFrameMenu, "children", self.core.cmdtable)
 end
 
 
