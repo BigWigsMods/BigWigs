@@ -1,7 +1,7 @@
 ## Interface: 11100
 
-## Title: Big Wigs |cff007fff -Ace-|r
-## Notes: Boss Mods with Timex bars.
+## Title: Big Wigs |cff7fff7f -Ace2-|r
+## Notes: Boss Mods with Timer bars.
 ## Author: Tekkub Stoutwrithe, Ammo, Shyva & Others
 ## X-Build: $Revision$
 ## X-ReleaseDate: "$Date$"
@@ -9,30 +9,47 @@
 ## X-Email: tekkub@gmail.com
 ## X-Category: Raid
 
-## Dependencies: Ace, Timex
-## OptionalDeps: FuBar, BabbleLib
+## OptionalDeps: FuBar, BabbleLib, PaintChipsLib, Ace2, TabletLib, CompostLib, Metrognome, DewDropLib
 
-## SavedVariables: BigWigsFubarDB
-## SavedVariablesPerCharacter: BigWigsDB
+## SavedVariables: BigWigsDB, BigWigsFubarDB
+## SavedVariablesPerCharacter: BigWigsDBPerChar
 
-BabbleLibBoss\BabbleLib-Boss.lua
-BabbleLibZone\BabbleLib-Zone.lua
-TekTech\TekTechEmbed.lua
-MetrognomeLib\MetrognomeLib.lua
-CompostLib\CompostLib.lua
-DewDropLib\DewdropLib.lua
-TabletLib\TabletLib.lua
-FBPlug1.2\FuBarPlugin-1.2.lua
+Libs\AceLibrary\AceLibrary.lua
+
+Libs\Compost-2.0\Compost-2.0.lua
+
+Libs\AceOO-2.0\AceOO-2.0.lua
+Libs\AceAddon-2.0\AceAddon-2.0.lua
+Libs\AceConsole-2.0\AceConsole-2.0.lua
+Libs\AceHook-2.0\AceHook-2.0.lua
+Libs\AceDB-2.0\AceDB-2.0.lua
+Libs\AceDebug-2.0\AceDebug-2.0.lua
+Libs\AceEvent-2.0\AceEvent-2.0.lua
+Libs\AceLocale-2.0\AceLocale-2.0.lua
+Libs\AceModuleCore-2.0\AceModuleCore-2.0.lua
+
+Libs\Babble-Boss-2.0\Babble-Boss-2.0.lua
+Libs\Babble-Zone-2.0\Babble-Zone-2.0.lua
+Libs\Metrognome-2.0\Metrognome-2.0.lua
+Libs\Dewdrop-2.0\Dewdrop-2.0.lua
+Libs\Tablet-2.0\Tablet-2.0.lua
+Libs\FuBarPlugin-2.0\FuBarPlugin-2.0.lua
+Libs\PaintChips-2.0\PaintChips-2.0.lua
+Libs\CandyBar-2.0\CandyBar-2.0.lua
 
 Core.lua
+Comm.lua
+Comm-1.12.lua
+TargetMonitor.lua
 Options.lua
 Bars.lua
 Bars.xml
 Messages.lua
 Messages.xml
 Sound.lua
-Comm.lua
-DelayedEvents.lua
+RaidWarn.lua
+BossBlock.lua
+RaidIcon.lua
 
 ZG\Arlokk.lua
 ZG\Jeklik.lua
@@ -93,7 +110,6 @@ Naxxramas\Patchwerk.lua
 Naxxramas\Grobbulus.lua
 Naxxramas\Thaddius.lua
 Naxxramas\Heigan.lua
-
-
-
-
+Naxxramas\Gothik.lua
+Naxxramas\Loatheb.lua
+Naxxramas\Horsemen.lua

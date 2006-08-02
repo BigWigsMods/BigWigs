@@ -1,207 +1,164 @@
-﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
-local metro = Metrognome:GetInstance("1")
+------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsRazuvious = AceAddon:new({
-	name          = "BigWigsRazuvious",
-	cmd           = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Instructor Razuvious")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename 		= BabbleLib:GetInstance("Zone 1.2")("Naxxramas"),
-	enabletrigger 	= bboss("Instructor Razuvious"),
-	bossname 		= bboss("Instructor Razuvious"),
+----------------------------
+--      Localization      --
+----------------------------
 
-	toggleoptions = GetLocale() == "koKR" and {
-		notShoutWarn 		= "분열의 외침 경고",
-		notShoutBar 		= "분열의 외침 타이머바 보이기",
-		notBosskill 		= "보스 사망 알림",
-	} or {
-		notShoutWarn 		= "Warn when Razuvious uses Disrupting Shout",
-		notShoutBar 		= "Show the Time Bar for Disrupting Shout",
-		notBosskill 		= "Boss death",
-	},
-	optionorder = {"notShoutWarn", "notShoutBar", "notBosskill"},
+L:RegisterTranslations("enUS", function() return {
+	cmd = "razuvious",
+
+	shout_cmd = "shout",
+	shout_name = "Shout Alert",
+	shout_desc = "Warn for disrupting shout",
+
+	startwarn 		= "Instructor Razuvious engaged!, ~25secs until shout!",
+
+	starttrigger1 	= "The time for practice is over! Show me what you have learned!",
+	starttrigger2 	= "Sweep the leg... Do you have a problem with that?",
+	starttrigger3 	= "Show them no mercy!",
+	starttrigger4 	= "Do as I taught you!",
+
+	shouttrigger 	= "Instructor Razuvious's Disrupting Shout hits (.+) for (.+)",
+	shout7secwarn 	= "7 seconds until Disrupting Shout",
+	shoutwarn 		= "Disrupting Shout!",
+	noshoutwarn		= "No shout! next in ~20secs",
+	shoutbar 		= "Disrupting Shout",
+
+} end )
+
+L:RegisterTranslations("deDE", function() return {
+	startwarn = "Razuvious engaged! ~25 s bis Shout",
 	
-	loc = GetLocale() == "koKR" and {
-		disabletrigger 	= "훈련교관 라주비어스|1이;가; 죽었습니다.", 		
-		bosskill 		= "라주비어스를 물리쳤습니다!",
-		
-		startwarn 		= "훈련교관 라주비어스 광푝화! 외침까지 25초!",
-	
-		starttrigger1 	= "훈련은 끝났다!",
-		starttrigger2 	= "다리를 후려 차라! 무슨 문제 있나?",
-		starttrigger3 	= "절대 봐주지 마라!",
-		starttrigger4 	= "훈련받은 대로 해!",		
+	starttrigger1 = "Die Zeit des \195\156bens ist vorbei! Zeigt mir, was ihr gelernt habt!",
+	starttrigger2 = "Streckt sie nieder... oder habt ihr ein Problem damit?",
+	starttrigger3 = "Lasst keine Gnade walten!",
+	starttrigger4 = "Befolgt meine Befehle!",
 
-		shouttrigger 	= "훈련교관 라주비어스|1이;가; 분열의 외침|1으로;로; (.+)에게 (.+)의 피해를 입혔습니다.",
-		shout7secwarn 	= "7초후 분열의 외침",
-		shoutwarn 		= "분열의 외침!",
-		shoutbar 		= "분열의 외침",
-	} or GetLocale() == "deDE" and {
-		disabletrigger = "Instrukteur Razuvious stirbt.",		
-		bosskill = "Razuvious wurde besiegt!",
-		
-		startwarn = "Razuvious engaged! ~25 s bis Shout",
-		
-		starttrigger1 = "Die Zeit des \195\156bens ist vorbei! Zeigt mir, was ihr gelernt habt!",
-		starttrigger2 = "Streckt sie nieder... oder habt ihr ein Problem damit?",
-		starttrigger3 = "Lasst keine Gnade walten!",
-		starttrigger4 = "Befolgt meine Befehle!",
+	shouttrigger = "Instrukteur Razuvious's Unterbrechungsruf trifft (.+) f\195\188r (.+)",
+	shout7secwarn = "7 Sekunden bis Shout",
+	shoutwarn = "Disrupting Shout",
+	shoutbar = "Disrupting Shout",
+} end )
 
-		shouttrigger = "Instrukteur Razuvious's Unterbrechungsruf trifft (.+) f\195\188r (.+)",
-		shout7secwarn = "7 Sekunden bis Shout",
-		shoutwarn = "Disrupting Shout",
-		shoutbar = "Disrupting Shout",
-	} or {
-		disabletrigger 	= "Instructor Razuvious dies.",		
-		bosskill 		= "Razuvious has been defeated!",
-		
-		startwarn 		= "Instructor Razuvious engaged!, ~25secs until shout!",
-	
-		starttrigger1 	= "The time for practice is over! Show me what you have learned!",
-		starttrigger2 	= "Sweep the leg... Do you have a problem with that?",
-		starttrigger3 	= "Show them no mercy!",
-		starttrigger4 	= "Do as I taught you!",
+L:RegisterTranslations("koKR", function() return {
+	startwarn 		= "훈련교관 라주비어스 광푝화! 외침까지 25초!",
 
-		shouttrigger 	= "Instructor Razuvious's Disrupting Shout hits (.+) for (.+)",
-		shout7secwarn 	= "7 seconds until Disrupting Shout",
-		shoutwarn 		= "Disrupting Shout!",
-		noshoutwarn		= "No shout! next in ~20secs",
-		shoutbar 		= "Disrupting Shout",
-	},
-	timeShout = 30
-})
+	starttrigger1 	= "훈련은 끝났다!",
+	starttrigger2 	= "다리를 후려 차라! 무슨 문제 있나?",
+	starttrigger3 	= "절대 봐주지 마라!",
+	starttrigger4 	= "훈련받은 대로 해!",		
 
-function BigWigsRazuvious:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
+	shouttrigger 	= "훈련교관 라주비어스|1이;가; 분열의 외침|1으로;로; (.+)에게 (.+)의 피해를 입혔습니다.",
+	shout7secwarn 	= "7초후 분열의 외침",
+	shoutwarn 		= "분열의 외침!",
+	shoutbar 		= "분열의 외침",
+} end )
 
-function BigWigsRazuvious:Enable()
-	self.disabled = nil
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+BigWigsRazuvious = BigWigs:NewModule(boss)
+BigWigsRazuvious.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
+BigWigsRazuvious.enabletrigger = boss
+BigWigsRazuvious.toggleoptions = {"shout", "bosskill"}
+BigWigsRazuvious.revision = tonumber(string.sub("$Revision$", 12, -3))
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function BigWigsRazuvious:OnEnable()
+	self.timeShout = 30
+	self.prior = nil
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Shout")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Shout")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Shout")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	self:RegisterEvent("BIGWIGS_MESSAGE")
-	self:RegisterEvent("BIGWIGS_SYNC_SHOUTWARN")
-	self:RegisterEvent("BIGWIGS_SYNC_NOSHOUT")
-	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "SHOUTWARN", 5)
-	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "NOSHOUT", 5)
-	metro:Register("BigWigs_Razuvious_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
-	metro:Unregister("BigWigs Razuvious Shout")
-	metro:Register("BigWigs Razuvious Shout", self.noShout, self.timeShout, self )
+
+	self:RegisterEvent("BigWigs_Message")
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "RazuviousShout", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "RazuviousNoShout", 5)
 end
 
-function BigWigsRazuvious:Disable()
-	self.disabled = true
-	metro:Unregister("BigWigs Razuvious Shout")
-	metro:Unregister("BigWigs_Razuvious_CheckWipe")
-	self:UnregisterAllEvents()
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.shoutbar)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.shout7secwarn)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.shoutbar, 5)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.shoutbar, 10)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.shoutbar, 13)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.shoutbar, 18)
-	self.prior = nil
-end
-
-function BigWigsRazuvious:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger) then
-		if (not self:GetOpt("notBosskill")) then 
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
+function BigWigsRazuvious:CHAT_MSG_MONSTER_YELL( msg )
+	if msg == L"starttrigger1" or msg == L"starttrigger2" or msg == L"starttrigger3" or msg == L"starttrigger4" then
+		if self.db.profile.shout then
+			self:TriggerEvent("BigWigs_Message", L"startwarn", "Orange", nil, "Alarm")
+			self:ScheduleEvent("bwrazuviousshout", 18, L"shout7secwarn", "Yellow", nil, "Alert")
+			self:TriggerEvent("BigWigs_StartBar", self, L"shoutbar", 25, 1, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red")
 		end
-		self:Disable()
+		self:ScheduleEvent("bwrazuviousnoshout", self.noShout, self.timeShout, self )
 	end
 end
 
-function BigWigsRazuvious:BIGWIGS_SYNC_SHOUTWARN()
-	if (not self:GetOpt("notShoutWarn")) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.shoutwarn, "Orange", nil, "Alarm")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.shout7secwarn, 18, "Yellow", nil, "Alert")
-	end
-	if (not self:GetOpt("notShoutBar")) then
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.shoutbar, 25, 1, "Yellow", "Interface\\Icons\\Ability_Warrior_WarCry")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.shoutbar, 10, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.shoutbar, 18, "Red")
-	end
-	self.prior = true
-end 
+function BigWigsRazuvious:BigWigs_Message(text)
+	if text == L"shout7secwarn" then self.prior = nil end
+end
 
-function BigWigsRazuvious:BIGWIGS_SYNC_NOSHOUT()
-	if (not self:GetOpt("notShoutWarn")) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.noshoutwarn, "Yellow")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.shout7secwarn, 13, "Yellow", nil, "Alert")
+function BigWigsRazuvious:Shout( msg )
+	if string.find(msg, L"shouttrigger") and not self.prior then
+		self:TriggerEvent("BigWigs_SendSync", "RazuviousShout")
+		self:CancelScheduledEvent("bwrazuviousnoshout")
+		self:ScheduleEvent("bwrazuviousnoshout", self.noShout, self.timeShout, self )
 	end
-	if (not self:GetOpt("notShoutBar")) then
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.shoutbar, 20, 1, "Yellow", "Interface\\Icons\\Ability_Warrior_WarCry")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.shoutbar, 5, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.shoutbar, 13, "Red")
-	end	
 end
 
 function BigWigsRazuvious:noShout()	
-	metro:Stop("BigWigs Razuvious Shout")
-	metro:Start("BigWigs Razuvious Shout")
-	self:TriggerEvent("BIGWIGS_SYNC_SEND", "NOSHOUT")
+	self:CancelScheduledEvent("bwrazuviousnoshout")
+	self:ScheduleEvent("bwrazuviousnoshout", self.noShout, self.timeShout, self )
+	self:TriggerEvent("BigWigs_SendSync", "RazuviousNoShout")
 end
 
-function BigWigsRazuvious:Shout()
-	if (string.find(arg1, self.loc.shouttrigger) and not self.prior) then
-		self:TriggerEvent("BIGWIGS_SYNC_SEND", "SHOUTWARN")
-		metro:Stop("BigWigs Razuvious Shout")
-		metro:Start("BigWigs Razuvious Shout")
-	end
-end
-
-function BigWigsRazuvious:CHAT_MSG_MONSTER_YELL()
-	if (arg1 == self.loc.starttrigger1 or arg1 == self.loc.starttrigger2 or arg1 == self.loc.starttrigger3 or arg1 == self.loc.starttrigger4) then
-		if (not self:GetOpt("notShoutWarn")) then 
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Orange", nil, "Alarm") 
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.shout7secwarn, 18, "Yellow", nil, "Alert") 
+function BigWigsRazuvious:BigWigs_RecvSync( sync )
+	if sync == "RazuviousShout" then
+		if self.db.profile.shout then
+			self:TriggerEvent("BigWigs_Message", L"shoutwarn", "Orange", nil, "Alarm")
+			self:ScheduleEvent("bwrazuviousshout", 18, L"shout7secwarn", "Yellow", nil, "Alert")
+			self:TriggerEvent("BigWigs_StartBar", self, L"shoutbar", 25, 1, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red" )
 		end
-		if (not self:GetOpt("notShoutBar")) then 
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.shoutbar, 25, 1, "Yellow", "Interface\\Icons\\Ability_Warrior_WarCry")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.shoutbar, 10, "Orange")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.shoutbar, 18, "Red")
+		self.prior = true
+	elseif sync == "RazuviousNoShout" then
+		if self.db.profile.shout then
+			self:TriggerEvent("BigWigs_Message", L"noshoutwarn", "Yellow")
+			self:ScheduleEvent("bwrazuviousshout", 13, L"shout7secwarn", "Yellow", nil, "Alert")
+			self:TriggerEvent("BigWigs_StartBar", self, L"shoutbar", 20, 1, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red")
 		end
-	metro:Start("BigWigs Razuvious Shout")
+		self.prior = true
 	end
 end
 
 function BigWigsRazuvious:PLAYER_REGEN_ENABLED()
 	local go = self:Scan()
-	local _,_,running,_ = metro:Status("BigWigs_Razuvious_CheckWipe")
+	local running = self:IsEventScheduled("Razuvious_CheckWipe")
 	if (not go) then
-		metro:Stop("BigWigs Razuvious Shout")
-		metro:Stop("BigWigs_Razuvious_CheckWipe")
+		self:TriggerEvent("BigWigs_RebootModule", self)
 	elseif (not running) then
-		metro:Start("BigWigs_Razuvious_CheckWipe")
+		self:ScheduleRepeatingEvent("Razuvious_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
 	end
 end
 
 function BigWigsRazuvious:Scan()
-	if (UnitName("target") == (self.bossname) and UnitAffectingCombat("target")) then
+	if (UnitName("target") == (boss) and UnitAffectingCombat("target")) then
 		return true
-	elseif (UnitName("playertarget") == (self.bossname) and UnitAffectingCombat("playertarget")) then
+	elseif (UnitName("playertarget") == (boss) and UnitAffectingCombat("playertarget")) then
 		return true
 	else
 		local i
 		for i = 1, GetNumRaidMembers(), 1 do
-			if (UnitName("Raid"..i.."target") == (self.bossname) and UnitAffectingCombat("Raid"..i.."target")) then
+			if (UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("Raid"..i.."target")) then
 				return true
 			end
 		end
 	end
 	return false
 end
-
-
-function BigWigsRazuvious:BIGWIGS_MESSAGE(text)
-	if text == self.loc.shout7secwarn then self.prior = nil end
-end
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsRazuvious:RegisterForLoad()

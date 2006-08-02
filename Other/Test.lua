@@ -1,83 +1,133 @@
-﻿local cmdopt = GetLocale() == "koKR" and {
-	option = "테스트",
-	desc   = "유용한 테스트 이벤트.",
-	input  = true,
-	args   = {
-		{
-			option = "local",
-			desc   = "Fire off some test events locally.",
-			method = "BIGWIGS_TEST",
-		},
-		{
-			option = "sync",
-			desc   = "Fire off a test sync message to the raid.",
-			method = "Send",
-		},
-	},
-} or { 
-	option = "test",
-	desc   = "Some useful test events.",
-	input  = true,
-	args   = {
-		{
-			option = "local",
-			desc   = "Fire off some test events locally.",
-			method = "BIGWIGS_TEST",
-		},
-		{
-			option = "sync",
-			desc   = "Fire off a test sync message to the raid.",
-			method = "Send",
-		},
-	},
-}
+﻿
+------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsTest = AceAddon:new({
-	name          = "BigWigsTest",
-	cmd           = AceChatCmd:new({}, {}),
-	cmdOptions    = cmdopt,
+local L = AceLibrary("AceLocale-2.0"):new("BigWigsTest")
+local BB = AceLibrary("Babble-Boss-2.0")
 
-	loc = {},
-})
 
-function BigWigsTest:Initialize()
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
+----------------------------
+--      Localization      --
+----------------------------
+
+L:RegisterTranslations("enUS", function() return {
+	["Test"] = true,
+	["Test Bar"] = true,
+	["Test Bar 2"] = true,
+	["Test Bar 3"] = true,
+	["Test Bar 4"] = true,
+	["Testing"] = true,
+	["OMG Bear!"] = true,
+	["*RAWR*"] = true,
+	["Victory!"] = true,
+} end)
+
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+BigWigsTest = BigWigs:NewModule(L"Test")
+
+
+function BigWigsTest:OnEnable()
+	self:RegisterEvent("BigWigs_Test")
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "TestSync", 5)
+	self:RegisterEvent("BigWigs_SyncTest")
 end
 
-function BigWigsTest:Enable()
-	self:RegisterEvent("BIGWIGS_SYNC_SYNCTEST")
-	self:RegisterEvent("BIGWIGS_TEST")
-	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "SYNCTEST", 4)
+
+function BigWigsTest:BigWigs_SyncTest()
+	self:TriggerEvent("BigWigs_SendSync", "TestSync")
 end
 
-function BigWigsTest:Disable()
-	self:UnregisterAllEvents()
+
+function BigWigsTest:BigWigs_RecvSync(sync)
+	if sync == "TestSync" then
+		self:TriggerEvent("BigWigs_Message", "Testing Sync", "Green")
+		self:TriggerEvent("BigWigs_StartBar", self, "Testing Sync", 10, 1, "Interface\\Icons\\Spell_Frost_FrostShock", "Green", "Blue", "Yellow", "Red")
+	end
 end
 
-function BigWigsTest:Send()
-	self:TriggerEvent("BIGWIGS_SYNC_SEND", "SYNCTEST")
+
+function BigWigsTest:BigWigs_Test()
+	self:TriggerEvent("BigWigs_StartBar", self, L"Test Bar", 15, 1, "Interface\\Icons\\Spell_Nature_ResistNature", "Red", "Orange", "Yellow", "Green")
+	self:TriggerEvent("BigWigs_Message", L"Testing", "Green", nil, "Long")
+	self:ScheduleEvent("BigWigs_Message", 5, L"OMG Bear!", "Yellow", nil, "Alert")
+	self:ScheduleEvent("BigWigs_Message", 10, L"*RAWR*", "Orange", nil, "Alarm")
+	self:ScheduleEvent("BigWigs_Message", 15, L"Victory!", "Green", nil, "Victory")
+
+	self:TriggerEvent("BigWigs_StartBar", self, L"Test Bar 2", 10, 2, "Interface\\Icons\\Spell_Nature_ResistNature", "green", "yellow", "orange", "red")
+	self:TriggerEvent("BigWigs_StartBar", self, L"Test Bar 3", 5, 3, "Interface\\Icons\\Spell_Nature_ResistNature", "yellow")
+	self:TriggerEvent("BigWigs_StartBar", self, L"Test Bar 4", 3, 4, "Interface\\Icons\\Spell_Nature_ResistNature", "red")
 end
 
-function BigWigsTest:BIGWIGS_SYNC_SYNCTEST(msg)
-	self:TriggerEvent("BIGWIGS_MESSAGE", "Testing Sync", "Green")
-	self:TriggerEvent("BIGWIGS_BAR_START", "Testing Sync", 10, 1, "Green", "Interface\\Icons\\Spell_Frost_FrostShock")
+
+
+---------------------------------------------------------------------
+
+
+------------------------------
+--      Are you local?      --
+------------------------------
+
+local L2 = AceLibrary("AceLocale-2.0"):new("BigWigsDebug")
+local BB = AceLibrary("Babble-Boss-2.0")
+
+
+----------------------------
+--      Localization      --
+----------------------------
+
+L2:RegisterTranslations("enUS", function() return {
+	["Test"] = true,
+	["Test Bar"] = true,
+	["Test Bar 2"] = true,
+	["Test Bar 3"] = true,
+	["Test Bar 4"] = true,
+	["Testing"] = true,
+	["OMG Bear!"] = true,
+	["*RAWR*"] = true,
+	["Victory!"] = true,
+} end)
+
+
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+local L2 = AceLibrary("AceLocale-2.0"):new("BigWigsDebug")
+L2:RegisterTranslations("enUS", function() return {} end)
+BigWigsDebug = BigWigs:NewModule("Debug", "Metrognome-2.0")
+BigWigsDebug.zonename = "Silithus"
+BigWigsDebug.enabletrigger = "Aurel Goldleaf"
+
+
+function BigWigsDebug:OnInitialize()
+	self:RegisterEvent("BigWigs_DebugDisable")
+	self:RegisterMetro("BigWigs_Debug_Metro", BigWigsDebug.MetroTester, 7, BigWigsDebug)
 end
 
-function BigWigsTest:BIGWIGS_TEST()
-	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar", 15, 1, "Green", "Interface\\Icons\\Spell_Nature_ResistNature")
-	self:TriggerEvent("BIGWIGS_MESSAGE", "Test", "Green", nil, "Long")
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", "OMG Bear!", 5, "Yellow", nil, "Alert")
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", "*RAWR*", 10, "Orange", nil, "Alarm")
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", "Victory!", 15, "Green", nil, "Victory")
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", "Test Bar", 5, "Yellow")
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", "Test Bar", 7, "Orange")
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", "Test Bar", 10, "Red")
 
-	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar 2", 10, 2, "Green", "Interface\\Icons\\Spell_Nature_ResistNature")
-	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar 3", 5, 3, "Yellow", "Interface\\Icons\\Spell_Nature_ResistNature")
-	self:TriggerEvent("BIGWIGS_BAR_START", "Test Bar 4", 3, 4, "Red", "Interface\\Icons\\Spell_Nature_ResistNature")
+function BigWigsDebug:OnEnable()
+	self:StartMetro("BigWigs_Debug_Metro", 1)
+	self:ScheduleEvent("BigWigs_DebugDisable", 5)
+	self:ScheduleEvent("BigWigs_Message", 7, "TriggerDelayedEvent fired", "Yellow", nil, "Alert")
+
+	self:TriggerEvent("BigWigs_Message", "Debug start", "Green", nil, "Alert")
+	self:TriggerEvent("BigWigs_StartBar", self, "Debug test", 5, 1, "Interface\\Icons\\Spell_Nature_ResistNature", "Green")
+	self:TriggerEvent("BigWigs_StartBar", self, "Message", 7, 2, "Interface\\Icons\\Spell_Nature_ResistNature", "Red", "Orange", "Yellow", "Green")
 end
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsTest:RegisterForLoad()
+
+
+function BigWigsDebug:MetroTester()
+	self:TriggerEvent("BigWigs_Message", "Metrognome timer fired", "Yellow", nil, "Alert")
+end
+
+
+function BigWigsDebug:BigWigs_DebugDisable()
+	self:TriggerEvent("BigWigs_Message", "Disabling debug module", "Yellow", nil, "Alert")
+	self.core:ToggleModuleActive(self, false)
+end
+

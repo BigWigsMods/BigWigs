@@ -1,136 +1,119 @@
-local bboss = BabbleLib:GetInstance("Boss 1.2")
+------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsSkeram = AceAddon:new({
-	name          = "BigWigsSkeram",
-	cmd           = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("The Prophet Skeram")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Ahn'Qiraj"),
-	enabletrigger = bboss("The Prophet Skeram"),
-	bossname = bboss("The Prophet Skeram"),
+----------------------------
+--      Localization      --
+----------------------------
 
-	toggleoptions = GetLocale() == "koKR" and {
-		notBosskill = "보스 사망 알림",
-		notMCWarn = "예언실현 경고",
-		notAEWarn = "신폭 경고",
-	} or {
-		notBosskill = "Boss death",
-		notMCWarn = "MC warnings",
-		notAEWarn = "AE warnings",
-	},
+L:RegisterTranslations("enUS", function() return {
+	aetrigger = "The Prophet Skeram begins to cast Arcane Explosion.",
+	mctrigger = "The Prophet Skeram begins to cast True Fulfillment.",
+	aewarn = "Casting Arcane Explosion!",
+	mcwarn = "Casting Mind Control!",
+	mcplayer = "^([^%s]+) ([^%s]+) afflicted by True Fulfillment.$",
+	mcplayerwarn = " is mindcontrolled!",
+	mcyou = "You",
+	mcare = "are",
 
-	optionorder = {"notMCWarn", "notAEWarn", "notBosskill"},
+	cmd = "Skeram",
+	mc_cmd = "mc",
+	mc_name = "Mind Control Alert",
+	mc_desc = "Warn for Mind Control",
 
-	loc = GetLocale() == "koKR" and {
-		disabletrigger = "예언자 스케람|1이;가; 죽었습니다.",
-		bosskill = "예언자 스케람을 물리쳤습니다.",
+	ae_cmd = "ae",
+	ae_name = "Arcane Explosion Alert",
+	ae_desc = "Warn for Arcane Explosion",
+} end )
 
-		aetrigger = "예언자 스케람|1이;가; 신비한 폭발|1을;를; 시전합니다.",
-		mctrigger = "예언자 스케람|1이;가; 예언 실현|1을;를; 시전합니다.",
-		aewarn = "신비한 폭발 시전 - 시전 방해!",
-		mcwarn = "예언 실현 시전 - 양변 준비!",
-		mcplayer = "(.*)예언 실현에 걸렸습니다.",
-		mcplayerwarn = "님이 정신지배되었습니다. 양변! 공포!",
+L:RegisterTranslations("deDE", function() return {
+	aetrigger = "Der Prophet Skeram beginnt Arkane Explosion zu wirken.",
+	mctrigger = "Der Prophet Skeram beginnt True Fulfillment zu wirken.",
+	aewarn = "Zaubert Arkane Explosion!",
+	mcwarn = "Zaubert True Fulfillment!",
+	mcplayer = "^([^%s]+) ([^%s]+) betroffen von True Fulfillment.$",
+	mcplayerwarn = " ist \195\188bernommen worden! Sheep! Fear!",
+	mcyou = "Du",
+	mcare = "bist",
+} end )
 
-		mcyou = "",
-		mcare = "are",
-		whopattern = "(.+)|1이;가; ",
-	}
-		or GetLocale() == "zhCN" and
-	{
-		disabletrigger = "预言者斯克拉姆死亡了。",
-		bosskill = "预言者斯克拉姆被击败了！",
+L:RegisterTranslations("zhCN", function() return {
+	aetrigger = "预言者斯克拉姆开始施放魔爆术。",
+	mctrigger = "预言者斯克拉姆开始施放充实。",
+	aewarn = "正在施放魔爆术 - 迅速打断！",
+	mcwarn = "正在施放充实 - 准备变羊！",
+	mcplayer = "^(.+)受(.+)了充实效果的影响。",
+	mcplayerwarn = "被控制了！变羊！恐惧！",
+	mcyou = "你",
+	mcare = "到",
+} end )
 
-		aetrigger = "预言者斯克拉姆开始施放魔爆术。",
-		mctrigger = "预言者斯克拉姆开始施放充实。",
-		aewarn = "正在施放魔爆术 - 迅速打断！",
-		mcwarn = "正在施放充实 - 准备变羊！",
-		mcplayer = "^(.+)受(.+)了充实效果的影响。",
-		mcplayerwarn = "被控制了！变羊！恐惧！",
-		mcyou = "你",
-		mcare = "到",
-	}
-	 or GetLocale() == "deDE" and {
-		disabletrigger = "Der Prophet Skeram stirbt.",
-		bosskill = "Der Prophet Skeram wurde besiegt.",
-		aetrigger = "Der Prophet Skeram beginnt Arkane Explosion zu wirken.",
-		mctrigger = "Der Prophet Skeram beginnt True Fulfillment zu wirken.",
-		aewarn = "Zaubert Arkane Explosion - unterbrechen!",
-		mcwarn = "Zaubert True Fulfillment - bereitmachen zum sheepen!",
-		mcplayer = "^([^%s]+) ([^%s]+) betroffen von True Fulfillment.$",
-		mcplayerwarn = " ist \195\188bernommen worden! Sheep! Fear!",
-		mcyou = "Du",
-		mcare = "bist",
-	} 
-		or 
-	{
-		disabletrigger = "The Prophet Skeram dies.",
-		bosskill = "The Prophet Skeram has been defeated.",
+L:RegisterTranslations("koKR", function() return {
+	aetrigger = "예언자 스케람|1이;가; 신비한 폭발|1을;를; 시전합니다.",
+	mctrigger = "예언자 스케람|1이;가; 예언 실현|1을;를; 시전합니다.",
+	aewarn = "신비한 폭발 시전 - 시전 방해!",
+	mcwarn = "예언 실현 시전 - 양변 준비!",
+	mcplayer = "(.*)예언 실현에 걸렸습니다.",
+	mcplayerwarn = "님이 정신지배되었습니다. 양변! 공포!",
 
-		aetrigger = "The Prophet Skeram begins to cast Arcane Explosion.",
-		mctrigger = "The Prophet Skeram begins to cast True Fulfillment.",
-		aewarn = "Casting Arcane Explosion - interrupt it!",
-		mcwarn = "Casting True Fulfillment - prepare to sheep!",
-		mcplayer = "^([^%s]+) ([^%s]+) afflicted by True Fulfillment.$",
-		mcplayerwarn = " is mindcontrolled! Sheep! Fear!",
-		mcyou = "You",
-		mcare = "are",
-	},
-})
+	mcyou = "",
+	mcare = "are",
+	whopattern = "(.+)|1이;가; ",
+} end )
 
-function BigWigsSkeram:Initialize()
-    self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
-function BigWigsSkeram:Enable()
-	self.disabled = nil
+BigWigsSkeram = BigWigs:NewModule(boss)
+BigWigsSkeram.zonename = AceLibrary("Babble-Zone-2.0")("Ahn'Qiraj")
+BigWigsSkeram.enabletrigger = boss
+BigWigsSkeram.toggleoptions = {"ae", "mc", "bosskill"}
+BigWigsSkeram.revision = tonumber(string.sub("$Revision$", 12, -3))
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function BigWigsSkeram:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
-function BigWigsSkeram:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-end
-
-function BigWigsSkeram:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger) then
-		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-		self:Disable()
-	end
-end
+------------------------------
+--      Event Handlers      --
+------------------------------
 
 if (GetLocale() == "koKR") then
-	function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE()
-		local _,_, Player = string.find(arg1, self.loc.mcplayer)
-		if (Player) then
-			if (Player == self.loc.mcyou) then
-				Player = UnitName("player")
+	function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(arg1)
+		local _,_, player = string.find(arg1, L"mcplayer")
+		if player then
+			if player == L"mcyou" then
+				player = UnitName("player")
 			end
-			if not self:GetOpt("notMCWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.mcplayerwarn, "Red") end
+			if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", player .. L"mcplayerwarn", "Red") end
 		end
 	end
 else
-	function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE()
-		local _,_, Player, Type = string.find(arg1, self.loc.mcplayer)
-		if (Player and Type) then
-			if (Player == self.loc.mcyou and Type == self.loc.mcare) then
-				Player = UnitName("player")
+	function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(arg1)
+		local _,_, player, type = string.find(arg1, L"mcplayer")
+		if player and type then
+			if player == L"mcyou" and type == L"mcare" then
+				player = UnitName("player")
 			end
-			if not self:GetOpt("notMCWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.mcplayerwarn, "Red") end
+			if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", player .. L"mcplayerwarn", "Red") end
 		end
 	end
 end
 
-function BigWigsSkeram:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
-	if (arg1 == self.loc.aetrigger) then
-		if not self:GetOpt("notAEWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.aewarn, "Orange") end
-	elseif (arg1 == self.loc.mctrigger) then
-		if not self:GetOpt("notMCWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.mcwarn, "Orange") end
+function BigWigsSkeram:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(arg1)
+	if (arg1 == L"aetrigger") then
+		if self.db.profile.ae then self:TriggerEvent("BigWigs_Message", L"aewarn", "Orange") end
+	elseif (arg1 == L"mctrigger") then
+		if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", L"mcwarn", "Orange") end
 	end
 end
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsSkeram:RegisterForLoad()

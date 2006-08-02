@@ -1,117 +1,110 @@
-﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
+﻿------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsShazzrah = AceAddon:new({
-	name = "BigWigsShazzrah",
-	cmd = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Shazzrah")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Molten Core"),
-	enabletrigger = bboss("Shazzrah"),
-	bossname = bboss("Shazzrah"),
+----------------------------
+--      Localization      --
+----------------------------
 
-	toggleoptions = GetLocale() == "koKR" and {
-		notSelfBuff = "마법 약화 버프 경고",
-		notBlink = "점멸 경고",
-		notBosskill = "보스 사망 알림",	 				
-	} or {			
-		notSelfBuff = "Warn for Self Buff",
-		notBlink = "Warn for Blink",
-		notBosskill = "Boss death",
-	},
-	optionorder = {"notSelfBuff", "notBlink", "notBosskill"},
+L:RegisterTranslations("enUS", function() return {
+	trigger1 = "Shazzrah gains Blink",
+	trigger2 = "Shazzrah gains Deaden Magic",
 
-	loc = GetLocale() == "koKR" and {
-		bossname = "샤즈라",
-		disabletrigger = "샤즈라|1이;가; 죽었습니다.",
+	warn1 = "Blink - 30 seconds until next!",
+	warn2 = "5 seconds to Blink!",
+	warn3 = "Self buff - Dispel Magic!",
 
-		trigger1 = "샤즈라|1이;가; 샤즈라의 문|1을;를; 시전합니다.",
-		trigger2 = "샤즈라|1이;가; 마법 약화 효과를 얻었습니다.",
+	bar1text = "Blink",
 
-		warn1 = "점멸 - 30초후 재점멸!",
-		warn2 = "5초후 점멸!",
-		warn3 = "마법 약화 버프 - 마법 무효화를 사용하세요!",
+	cmd = "Shazzrah",
+	selfbuff_cmd = "selfbuff",
+	selfbuff_name = "Self Buff Alert",
+	selfbuff_desc = "Warn when Shazzrah casts a Self Buff",
+	blink_cmd = "blink",
+	blink_name = "Blink Alert",
+	blink_desc = "Warn when Shazzrah Blinks",
+} end)
 
-		bar1text = "점멸",
-	}
-		or GetLocale() == "zhCN" and
-	{
-		bossname = "沙斯拉尔",
-		disabletrigger = "沙斯拉尔死亡了。",
 
-		trigger1 = "沙斯拉尔获得了闪现术的效果",
-		trigger2 = "沙斯拉尔获得了衰减魔法的效果",
+L:RegisterTranslations("zhCN", function() return {
+	trigger1 = "沙斯拉尔获得了闪现术的效果",
+	trigger2 = "沙斯拉尔获得了衰减魔法的效果",
 
-		warn1 = "闪现术 - 30秒后再次发动",
-		warn2 = "5秒后发动闪现术！",
-		warn3 = "自我Buff - 驱散魔法！",
+	warn1 = "闪现术 - 30秒后再次发动",
+	warn2 = "5秒后发动闪现术！",
+	warn3 = "自我Buff - 驱散魔法！",
 
-		bar1text = "闪现术",
-	}
-		or GetLocale == "deDE" and {
-		bossname = "Shazzrah",
-		disabletrigger = "Shazzrah stirbt.",
+	bar1text = "闪现术",
 
-		trigger1 = "Shazzrah wirkt Portal von Shazzrah.",
-		trigger2 = "Shazzrah bekommt 'Magie d\195\164mpfen'.",
+} end)
 
-		warn1 = "TELEPORT! N\195\164chster in 30 Sekunden!",
-		warn2 = "5 Sekunden bis Teleport!",
-		warn3 = "Magied\195\164mpfer entfernen!",
 
-		bar1text = "Teleport",
-	} or {
-		bossname = "Shazzrah",
-		disabletrigger = "Shazzrah dies.",
+L:RegisterTranslations("koKR", function() return {
+	trigger1 = "샤즈라|1이;가; 샤즈라의 문|1을;를; 시전합니다.",
+	trigger2 = "샤즈라|1이;가; 마법 약화 효과를 얻었습니다.",
 
-		trigger1 = "Shazzrah gains Blink",
-		trigger2 = "Shazzrah gains Deaden Magic",
+	warn1 = "점멸 - 30초후 재점멸!",
+	warn2 = "5초후 점멸!",
+	warn3 = "마법 약화 버프 - 마법 무효화를 사용하세요!",
 
-		warn1 = "Blink - 30 seconds to next!",
-		warn2 = "5 seconds to Blink!",
-		warn3 = "Self buff - Dispel Magic!",
+	bar1text = "점멸",
+} end)
 
-		bar1text = "Blink",
-	},
-})
+L:RegisterTranslations("deDE", function() return {
+	trigger1 = "Shazzrah wirkt Portal von Shazzrah.",
+	trigger2 = "Shazzrah bekommt 'Magie d\195\164mpfen'.",
 
-function BigWigsShazzrah:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
+	warn1 = "TELEPORT! N\195\164chster in 30 Sekunden!",
+	warn2 = "5 Sekunden bis Teleport!",
+	warn3 = "Magied\195\164mpfer entfernen!",
 
-function BigWigsShazzrah:Enable()
-	self.disabled = nil
+	bar1text = "Teleport",
+} end)
+
+
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+BigWigsShazzrah = BigWigs:NewModule(boss)
+BigWigsShazzrah.zonename = AceLibrary("Babble-Zone-2.0")("Molten Core")
+BigWigsShazzrah.enabletrigger = boss
+BigWigsShazzrah.toggleoptions = {"selfbuff", "blink", "bosskill"}
+BigWigsShazzrah.revision = tonumber(string.sub("$Revision$", 12, -3))
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function BigWigsShazzrah:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "ShazzrahBlink", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "ShazzrahDeadenMagic", 5)
 end
 
-function BigWigsShazzrah:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn2)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 10)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 20)
-end
+------------------------------
+--      Event Handlers      --
+------------------------------
 
-function BigWigsShazzrah:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger) then
-		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-		self:Disable()
+function BigWigsShazzrah:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+	if (string.find(msg, L"trigger1")) then
+		self:TriggerEvent("BigWigs_SendSync", "ShazzrahBlink")
+	elseif (string.find(arg1, L"trigger2")) then
+		self:TriggerEvent("BigWigs_SendSync", "ShazzrahDeadenMagic")
 	end
 end
 
-function BigWigsShazzrah:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
-	if (string.find(arg1, self.loc.trigger1) and not self:GetOpt("notBlink")) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 25, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Arcane_Blink")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
-	elseif (string.find(arg1, self.loc.trigger2) and not self:GetOpt("notSelfBuff")) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "Red")
+function BigWigsShazzrah:BigWigs_RecvSync(sync)
+	if (sync == "ShazzrahBlink" and self.db.profile.blink) then
+		self:TriggerEvent("BigWigs_Message", L"warn1", "Red")
+		self:ScheduleEvent("BigWigs_Message", 25, L"warn2", "Orange")
+		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, 1, "Interface\\Icons\\Spell_Arcane_Blink", "Yellow", "Orange", "Red")
+	elseif (sync == "ShazzrahDeadenMagic" and self.db.profile.selfbuff) then
+		self:TriggerEvent("BigWigs_Message", L"warn3", "Red")
 	end
 end
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsShazzrah:RegisterForLoad()

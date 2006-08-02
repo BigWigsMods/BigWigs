@@ -1,28 +1,13 @@
-local dewdrop = DewdropLib:GetInstance("1.0")
 
-local cmdopt = GetLocale() == "koKR" and {
-	option = "효과음",
-	desc   = "효과음 옵션.",
-	input  = true,
-	args   = {
-		{
-			option = "켜기",
-			desc   = "효과음을 켜거나 끔.",
-			method = "Toggle",
-		},
-	},
-} or {
-	option = "sound",
-	desc   = "Options for sounds.",
-	input  = true,
-	args   = {
-		{
-			option = "toggle",
-			desc   = "Toggle sounds on or off.",
-			method = "Toggle",
-		},
-	},
-}
+assert(BigWigs, "BigWigs not found!")
+
+------------------------------
+--      Are you local?      --
+------------------------------
+
+local L = AceLibrary("AceLocale-2.0"):new("BigWigsSound")
+--~~ local dewdrop = DewdropLib:GetInstance("1.0")
+
 local sounds = {
 	Long = "Interface\\AddOns\\BigWigs\\Sounds\\Long.mp3",
 	Info = "Interface\\AddOns\\BigWigs\\Sounds\\Info.mp3",
@@ -32,65 +17,59 @@ local sounds = {
 }
 
 
-BigWigsSound = AceAddon:new({
-	name          = "BigWigsSound",
-	cmd           = AceChatCmd:new({}, {}),
-	cmdOptions    = cmdopt,
+----------------------------
+--      Localization      --
+----------------------------
 
-	loc = GetLocale() == "koKR" and {
-		menutitle = "효과음",
-		menutoggle = "효과음 사용",
-	} or {
-		menutitle = "Sounds",
-		menutoggle = "Use sounds",
-	},
-})
+L:RegisterTranslations("enUS", function() return {
+	["Sounds"] = true,
+	["sounds"] = true,
+	["Use sounds"] = true,
+	["Options for sounds."] = true,
+	["Toggle sounds on or off."] = true,
+} end)
 
 
-function BigWigsSound:Initialize()
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-	self.disabled = self:GetOpt("disabled")
+L:RegisterTranslations("koKR", function() return {
+	["Sounds"] = "효과음",
+	["sounds"] = "효과음",
+	["Use sounds"] = "효과음 사용",
+	["Options for sounds."] = "효과음 옵션.",
+	["Toggle sounds on or off."] = "효과음을 켜거나 끔.",
+} end)
+
+
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+BigWigsSound = BigWigs:NewModule(L"Sounds")
+BigWigsSound.consoleCmd = L"sounds"
+BigWigsSound.consoleOptions = {
+	type = "toggle",
+	name = L"Sounds",
+	desc = L"Toggle sounds on or off.",
+	get = function() return BigWigsSound.db.profile.sound end,
+	set = function(v)
+		BigWigsSound.db.profile.sound = v
+		BigWigs:ToggleModuleActive(L"Sounds", v)
+	end,
+}
+
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function BigWigsSound:OnEnable()
+	self:RegisterEvent("BigWigs_Message")
 end
 
 
-function BigWigsSound:Enable()
-	self.disabled = nil
-	self:RegisterEvent("BIGWIGS_MESSAGE")
-end
-
-
-function BigWigsSound:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-end
-
-
-function BigWigsSound:Toggle()
-	local t = self:TogOpt("disabled")
-	if t then self:Disable()
-	else self:Enable() end
-end
-
-
-function BigWigsSound:BIGWIGS_MESSAGE(text, color, noraidsay, sound)
+function BigWigsSound:BigWigs_Message(text, color, noraidsay, sound)
 	if not text or sound == false then return end
 
 	if sounds[sound] then PlaySoundFile(sounds[sound])
 	else PlaySound("RaidWarning") end
 end
-
-
-------------------------------
---      Menu Functions      --
-------------------------------
-
-function BigWigsSound:MenuSettings(level, value)
-	dewdrop:AddLine("text", self.loc.menutoggle, "func", self.Toggle, "arg1", self, "checked", not self.disabled)
-end
-
-
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsSound:RegisterForLoad()
 

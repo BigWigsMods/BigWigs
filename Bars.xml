@@ -2,7 +2,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.blizzard.com/wow/ui/FrameXML/UI.xsd">
 
-	<Frame name="BigWigsAnchorFrame" frameStrata="HIGH" hidden="true" toplevel="true" enableMouse="true" movable="true" resizable="true" parent="UIParent">
+	<Frame name="BigWigsBarsAnchorFrame" frameStrata="HIGH" hidden="true" toplevel="true" enableMouse="true" movable="true" resizable="true" parent="UIParent">
 		<Size>
 			<AbsDimension x="175" y="55"/>
 		</Size>
@@ -57,7 +57,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						BigWigsBars:TriggerEvent("BIGWIGS_TEST")
+						BigWigsBars:TriggerEvent("BigWigs_Test")
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -74,7 +74,7 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
-					  BigWigsBars:BIGWIGS_HIDE_ANCHORS()
+					  BigWigsBars:BigWigs_HideAnchors()
 					</OnClick>
 				</Scripts>
 			</Button>

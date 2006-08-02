@@ -1,106 +1,115 @@
-local Metro = Metrognome:GetInstance("1")
-local bboss = BabbleLib:GetInstance("Boss 1.2")
+------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsThaddius = AceAddon:new({
-	name	= "BigWigsThaddius",
-	cmd		= AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Thaddius")
+local feugen = AceLibrary("Babble-Boss-2.0")("Feugen")
+local stalagg = AceLibrary("Babble-Boss-2.0")("Stalagg")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Naxxramas"),
-	enabletrigger = {bboss("Feugen"), bboss("Stalagg"), bboss("Thaddius")},
-	bossname = "Thaddius and company - " .. bboss("Feugen") .. ", ".. bboss("Stalagg") .. " & ".. bboss("Thaddius"),
+----------------------------
+--      Localization      --
+----------------------------
+
+L:RegisterTranslations("enUS", function() return {
+	cmd = "thaddius",
+
+	enrage_cmd = "enrage",
+	enrage_name = "Enrage Alert",
+	enrage_desc = "Warn for Enrage",
+
+	phase_cmd = "phase",
+	phase_name = "Phase Alerts",
+	phase_desc = "Warn for Phase transitions",
+
+	polarity_cmd = "polarity",
+	polarity_name = "Polarity Shift Alert",
+	polarity_desc = "Warn for polarity shifts",
+
+	power_cmd = "power",
+	power_name = "Power Surge Alert",
+	power_desc = "Warn for Stalagg's power surge",
+
+	charge_cmd = "charge",
+	charge_name = "Charge Alert",
+	charge_desc = "Warn for Positive/Negative charge on you.",
+
+	enragetrigger = "goes into a berserker rage!",
+	starttrigger = "Stalagg crush you!",
+	starttrigger1 = "Feed you to master!",
+	starttrigger2 = "Eat... your... bones...",
+	starttrigger3 = "Break... you!!",
+
+
+	pstrigger = "Now you feel pain...",
+	trigger1 = "Thaddius begins to cast Polarity Shift",
+	postrigger = "^([^%s]+) ([^%s]+) afflicted by Positive Charge",
+	negtrigger = "^([^%s]+) ([^%s]+) afflicted by Negative Charge",
+	stalaggtrigger = "Stalagg gains Power Surge.",
+
+	you = "You",
+	are = "are",
+
+	enragewarn = "Enrage!",
+	startwarn = "Thaddius Phase 1",
+	startwarn2 = "Thaddius Phase 2, Enrage in 5 minutes!",
+	pswarn1 = "Thaddius begins to cast Polarity Shift!",
+	pswarn2 = "30 seconds till next Polarity Shift!",
+	pswarn3 = "3 seconds before Thaddius casts Polarity Shift!",
+	poswarn = "You are a Positive Charge!",
+	negwarn = "You are a Negative Charge!",
+	enragebartext = "Enrage",
+	warn1 = "Enrage in 3 minutes",
+	warn2 = "Enrage in 90 seconds",
+	warn3 = "Enrage in 60 seconds",
+	warn4 = "Enrage in 30 seconds",
+	warn5 = "Enrage in 10 seconds",
+	stalaggwarn = "Power Surge",
+
+	bar1text = "PolarityShift",
 	
-	toggleoptions = {
-		notStartWarn = "Phase 1 warning",
-		notPowerSurge = "Power Surge warning from Stalagg",
-		notStartWarn2 = "Phase 2 warning",
-		notPolarityShift = "Warn for Polarity Shift",
-		notYouPositive = "Warn when you are a Positive Charge",
-		notYouNegative = "Warn when you are a Negative Charge",
-		notEnrageWarn = "Warn for Enrage",
-		notEnrageBar = "Enrage timerbar",
-		notEnrageSec = "Enrage x-sec warnings",
-		notBosskill = "Boss death",
-	},
-	optionorder = {"notStartWarn", "notPowerSurge", "notStartWarn2", "notPolarityShift", "notYouPositive", "notYouNegative", "notEnrageBar", "notEnrageSec", "notEnrageWarn", "notBosskill"},
+} end )
 
-	loc = { 
-		disabletrigger = "Thank... you...",		
-		bosskill = "Thaddius has been defeated!",
 
-		enragetrigger = "goes into a berserker rage!",
-		starttrigger = "Stalagg crush you!",
-		starttrigger1 = "Feed you to master!",
-		starttrigger2 = "Eat... your... bones...",
-		starttrigger3 = "Break... you!!",
-		pstrigger = "Now you feel pain...",
-		trigger1 = "Thaddius begins to cast Polarity Shift",
-		postrigger = "^([^%s]+) ([^%s]+) afflicted by Positive Charge",
-		negtrigger = "^([^%s]+) ([^%s]+) afflicted by Negative Charge",
-		stalaggtrigger = "Stalagg gains Power Surge.",
 
-		you = "You",
-		are = "are",
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
-		enragewarn = "Enrage!",
-		startwarn = "Thaddius Phase 1",
-		startwarn2 = "Thaddius Phase 2, Enrage in 5 minutes!",
-		pswarn1 = "Thaddius begins to cast Polarity Shift!",
-		pswarn2 = "30 seconds till next Polarity Shift!",
-		pswarn3 = "3 seconds before Thaddius casts Polarity Shift!",
-		poswarn = "You are a Positive Charge!",
-		negwarn = "You are a Negative Charge!",
-		enragebartext = "Enrage",
-		warn1 = "Enrage in 3 minutes",
-		warn2 = "Enrage in 90 seconds",
-		warn3 = "Enrage in 60 seconds",
-		warn4 = "Enrage in 30 seconds",
-		warn5 = "Enrage in 10 seconds",
-		stalaggwarn = "Power Surge",
+BigWigsThaddius = BigWigs:NewModule(boss)
+BigWigsThaddius.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
+BigWigsThaddius.enabletrigger = { boss, feugen, stalagg }
+BigWigsThaddius.toggleoptions = {"enrage", "charge", "polarity", "power", "phase", "bosskill"}
+BigWigsThaddius.revision = tonumber(string.sub("$Revision$", 12, -3))
 
-		bar1text = "PolarityShift",
-	},
-})
+------------------------------
+--      Initialization      --
+------------------------------
 
-function BigWigsThaddius:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
-
-function BigWigsThaddius:Enable()
-	self.disabled = nil
+function BigWigsThaddius:OnEnable()
 	self.enrageStarted = nil
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
-	self:RegisterEvent("BIGWIGS_SYNC_POLARITY")
-	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "POLARITY", 10)
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "ChargeEvent")
 
-	Metro:Register("BigWigs_Thaddius_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
-end
-
-function BigWigsThaddius:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.pswarn3)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 10)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 20)
-	self:StopEnrage()
-	Metro:Unregister("BigWigs_Thaddius_CheckWipe")
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "ThaddiusPolarity", 10)
 end
 
 function BigWigsThaddius:Scan()
-	if (UnitName("target") == self.bossname and UnitAffectingCombat("target")) then
+	if (UnitName("target") == boss and UnitAffectingCombat("target")) then
 		return true
-	elseif (UnitName("playertarget") == self.bossname and UnitAffectingCombat("playertarget")) then
+	elseif (UnitName("playertarget") == boss and UnitAffectingCombat("playertarget")) then
 		return true
 	else
 		local i
 		for i = 1, GetNumRaidMembers(), 1 do
-			if (UnitName("raid"..i.."target") == self.bossname and UnitAffectingCombat("raid"..i.."target")) then
+			if (UnitName("raid"..i.."target") == boss and UnitAffectingCombat("raid"..i.."target")) then
 				return true
 			end
 		end
@@ -108,101 +117,80 @@ function BigWigsThaddius:Scan()
 	return false
 end
 
-function BigWigsThaddius:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
-	if (not self:GetOpt("notPowerSurge") and arg1 == self.loc.stalaggtrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.stalaggwarn, "Red")
+function BigWigsThaddius:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
+	if self.db.profile.power and msg == L"stalaggtrigger" then
+		self:TriggerEvent("BigWigs_Message", L"stalaggwarn", "Red")
 	end
 end
 
-function BigWigsThaddius:CHAT_MSG_MONSTER_YELL()
-	if (string.find(arg1, self.loc.pstrigger)) then
-		self:TriggerEvent("BIGWIGS_SYNC_SEND", "POLARITY")
-	elseif arg1 == self.loc.starttrigger or arg1 == self.loc.starttrigger1 then
-		if not self:GetOpt("notStartWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Red") end
-	elseif arg1 == self.loc.starttrigger2 or arg1 == self.loc.starttrigger3 then
-		if not self:GetOpt("notStartWarn2") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn2, "Red") end
-		if not self:GetOpt("notEnrageBar") then 
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.enragebartext, 300, 2, "Green", "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 75, "Yellow")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 150, "Orange")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.enragebartext, 225, "Red")
+function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
+	if string.find(msg, L"pstrigger") then
+		self:TriggerEvent("BigWigs_SendSync", "ThaddiusPolarity")
+	elseif msg == L"starttrigger" or msg == L"starttrigger1" then
+		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L"startwarn", "Red") end
+	elseif msg == L"starttrigger2" or msg == L"starttrigger3" then
+		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L"startwarn2", "Red") end
+		if self.db.profile.enrage then
+			self:TriggerEvent("BigWigs_StartBar", self, L"enragebartext", 300, 2, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
+			self:ScheduleEvent("bwthaddiuswarn1", "BigWigs_Message", 120, L"warn1", "Green")
+			self:ScheduleEvent("bwthaddiuswarn2", "BigWigs_Message", 210, L"warn2", "Yellow")
+			self:ScheduleEvent("bwthaddiuswarn3", "BigWigs_Message", 240, L"warn3", "Orange")
+			self:ScheduleEvent("bwthaddiuswarn4", "BigWigs_Message", 270, L"warn4", "Red")
+			self:ScheduleEvent("bwthaddiuswarn5", "BigWigs_Message", 290, L"warn5", "Red")
 		end
-		if not self:GetOpt("notEnrageSec") then 
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 120, "Green")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 210, "Yellow")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 240, "Orange")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn4, 270, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn5, 290, "Red")
-		end
-	elseif (string.find(arg1, self.loc.disabletrigger)) then
-		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-		self:Disable()
 	end
 end
 
 function BigWigsThaddius:PLAYER_REGEN_ENABLED()
 	local go = self:Scan()
-	local _,_,running = Metro:Status("BigWigs_Thaddius_CheckWipe")
+	local running = self:IsEventScheduled("Thaddius_CheckWipe")
 	if (not go) then
-		self:Disable()
-		Metro:Stop("BigWigs_Thaddius_CheckWipe")
+		self:TriggerEvent("BigWigs_RebootModule", self)
 	elseif (not running) then
-		Metro:Start("BigWigs_Thaddius_CheckWipe")
+		self:ScheduleRepeatingEvent("Thaddius_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
 	end
 end
 
-function BigWigsThaddius:CHAT_MSG_MONSTER_EMOTE()
-	if (arg1 == self.loc.enragetrigger) then
-		if not self:GetOpt("notEnrageWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.enragewarn, "Red") end
-		self:StopEnrage()
+function BigWigsThaddius:CHAT_MSG_MONSTER_EMOTE( msg )
+	if (msg == L"enragetrigger") then
+		if self.db.prifile.enrage then self:TriggerEvent("BigWigs_Message", L"enragewarn", "Red") end
+		self:TriggerEvent("BigWigs_StopBar", self, L"enragebartext")
+		self:CancelScheduledEvent("bwthaddiuswarn1")
+		self:CancelScheduledEvent("bwthaddiuswarn2")
+		self:CancelScheduledEvent("bwthaddiuswarn3")
+		self:CancelScheduledEvent("bwthaddiuswarn4")
+		self:CancelScheduledEvent("bwthaddiuswarn5")
 	end
 end
 
-function BigWigsThaddius:StopEnrage()
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.enragebartext)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn1)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn2)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn3)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn4)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn5)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn6)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebartext, 75)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebartext, 150)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.enragebartext, 225)
-end
-
-function BigWigsThaddius:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
-	if (string.find(arg1, self.loc.trigger1)) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.pswarn1, "Red")
+function BigWigsThaddius:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
+	if self.db.profile.polarity and string.find(msg, L"trigger1") then
+		self:TriggerEvent("BigWigs_Message", L"pswarn1", "Red")
 	end
 end
 
-function BigWigsThaddius:BIGWIGS_SYNC_POLARITY()
-	if (not self:GetOpt("notPolarityShift")) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.pswarn2, "Yellow")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.pswarn3, 27, "Red")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Nature_Lightning")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
+function BigWigsThaddius:BigWigs_RecvSync( sync )
+	if self.db.profile.polarity then
+		self:TriggerEvent("BigWigs_Message", L"pswarn2", "Yellow")
+		self:ScheduleEvent("BigWigs_Message", 27, L"pswarn3", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, 1, "Interface\\Icons\\Spell_Nature_Lightning", "Yellow", "Orange", "Red")
 	end
 end
 
-function BigWigsThaddius:Event()
-	local _, _, EPlayer = string.find(arg1, self.loc.postrigger)
-	if (EPlayer) then
-		if (EPlayer == self.loc.you and not self:GetOpt("notYouPositive")) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.poswarn, "Green", true)
+function BigWigsThaddius:ChargeEvent( msg )
+	if not self.db.profile.charge then return end
+
+	local _, _, player = string.find(msg, L"postrigger")
+	if player then
+		if player == L"you" then
+			self:TriggerEvent("BigWigs_Message", L"poswarn", "Green", true)
 		end
 	else
-		_, _, EPlayer = string.find(arg1, self.loc.negtrigger)
-		if (EPlayer) then
-			if (EPlayer == self.loc.you and not self:GetOpt("notYouNegative")) then
-				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.negwarn, "Red", true)
+		_, _, player = string.find(msg, L"negtrigger")
+		if player then
+			if player == L"you" then
+				self:TriggerEvent("BigWigs_Message", L"negwarn", "Red", true)
 			end
 		end
 	end
 end
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsThaddius:RegisterForLoad()

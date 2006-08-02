@@ -1,169 +1,158 @@
-﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
+﻿------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsMajordomo = AceAddon:new({
-	name = "BigWigsMajordomo",
-	cmd = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Majordomo Executus")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Molten Core"),
-	enabletrigger = bboss("Majordomo Executus"),
-	bossname = bboss("Majordomo Executus"),
+local Texture1 = "Interface\\Icons\\Spell_Frost_FrostShock"
+local Texture2 = "Interface\\Icons\\Spell_Shadow_AntiShadow"
+local aura
 
-	toggleoptions = GetLocale() == "koKR" and {
-		notMagic = "마법 반사막 경고",
-		notDmg = "물리 보호막 경고",
-		notBosskill = "보스 사망 알림",
-	} or {
-		notMagic = "Warn for Magic Reflection",
-		notDmg = "Warn for Damage Shields",
-		notBosskill = "Boss death",
-	},
-	optionorder = {"notMagic", "notDmg", "notBosskill"},
+----------------------------
+--      Localization      --
+----------------------------
 
-	loc = GetLocale() == "koKR" and {
-		bossname = "청지기 이그젝큐투스",
-		disabletrigger = "이럴 수가! 그만! 제발 그만! 내가 졌다! 내가 졌어!",
+L:RegisterTranslations("enUS", function() return {
+	disabletrigger = "Impossible! Stay your attack, mortals... I submit! I submit!",
 
-		trigger1 = "마법 반사 효과를 얻었습니다.",
-		trigger2 = "피해 보호막 효과를 얻었습니다.",
-		trigger3 = "마법 반사 효과가 사라졌습니다.",
-		trigger4 = "피해 보호막 효과가 사라졌습니다.",
+	trigger1 = "gains Magic Reflection",
+	trigger2 = "gains Damage Shield",
+	trigger3 = "Magic Reflection fades",
+	trigger4 = "Damage Shield fades",
 
-		warn1 = "마법 보호막 - 10초간!",
-		warn2 = "피해 보호막 - 10초간!",
-		warn3 = "5초후 버프!",
-		warn4 = "마법 반사 사라짐!",
-		warn5 = "피해 보호 사라짐!",
-		bosskill = "청지기를 물리쳤습니다!",
+	warn1 = "Magic Reflection for 10 seconds!",
+	warn2 = "Damage Shield for 10 seconds!",
+	warn3 = "5 seconds until powers!",
+	warn4 = "Magic Reflection down!",
+	warn5 = "Damage Shield down!",
+	bosskill = "Majordomo Executus has been defeated!",
 
-		bar1text = "마법 반사",
-		bar2text = "피해 보호막",
-		bar3text = "새로운 버프",
+	bar1text = "Magic Reflection",
+	bar2text = "Damage Shield",
+	bar3text = "New powers",
 
-		texture1 = "Interface\\Icons\\Spell_Frost_FrostShock",
-		texture2 = "Interface\\Icons\\Spell_Shadow_AntiShadow",
-	}
-		or GetLocale() == "zhCN" and
-	{
-		bossname = "管理者埃克索图斯",
-		disabletrigger = "不可能！等一下",
+	cmd = "Majordomo",
+	magic_cmd = "magic",
+	magic_name = "Magic Reflection alert",
+	magic_desc = "Warn for Magic Reflection",
+	dmg_cmd = "dmg",
+	dmg_name = "Damage Shields alert",
+	dmg_desc = "Warn for Damage Shields",
+} end)
 
-		trigger1 = "获得了魔法反射的效果",
-		trigger2 = "获得了伤害反射护盾的效果",
-		trigger3 = "魔法反射效果从",
-		trigger4 = "伤害反射护盾效果从",
+L:RegisterTranslations("zhCN", function() return {
+	disabletrigger = "不可能！等一下",
 
-		warn1 = "魔法反射护盾，持续10秒！",
-		warn2 = "伤害反射护盾，持续10秒！",
-		warn3 = "5秒后可以攻击！",
-		warn4 = "魔法反射护盾已消失！",
-		warn5 = "伤害反射护盾已消失！",
-		bosskill = "管理者埃克索图斯被击败了！",
+	trigger1 = "获得了魔法反射的效果",
+	trigger2 = "获得了伤害反射护盾的效果",
+	trigger3 = "魔法反射效果从",
+	trigger4 = "伤害反射护盾效果从",
 
-		bar1text = "魔法反射护盾",
-		bar2text = "伤害反射护盾",
-		bar3text = "新生力量",
+	warn1 = "魔法反射护盾，持续10秒！",
+	warn2 = "伤害反射护盾，持续10秒！",
+	warn3 = "5秒后可以攻击！",
+	warn4 = "魔法反射护盾已消失！",
+	warn5 = "伤害反射护盾已消失！",
+	bosskill = "管理者埃克索图斯被击败了！",
 
-		texture1 = "Interface\\Icons\\Spell_Frost_FrostShock",
-		texture2 = "Interface\\Icons\\Spell_Shadow_AntiShadow",
-	} or GetLocale() == "deDE" and {
-		bossname = "Majordomus Executus",
-		disabletrigger = "Unm\195\182! Haltet ein, Sterbliche... Ich gebe auf! Ich gebe auf!",
+	bar1text = "魔法反射护盾",
+	bar2text = "伤害反射护盾",
+	bar3text = "新生力量",
+} end)
 
-		trigger1 = "bekommt 'Magiereflexion'",
-		trigger2 = "bekommt 'Schadensschild'",
-		trigger3 = "Magiereflexion schwindet von",
-		trigger4 = "Schadensschild schwindet von",
+L:RegisterTranslations("koKR", function() return {
+	disabletrigger = "이럴 수가! 그만! 제발 그만! 내가 졌다! 내가 졌어!",
 
-		warn1 = "Magiereflexion f\195\188r 10 Sekunden!",
-		warn2 = "Schadensschild f\195\188r 10 Sekunden!",
-		warn3 = "5 Sekunden bis Schild!",
-		warn4 = "Magiereflexion beendet!",
-		warn5 = "Schadensschild beendet!",
-		bosskill = "Majordomo Executus wurde besiegt!",
+	trigger1 = "마법 반사 효과를 얻었습니다.",
+	trigger2 = "피해 보호막 효과를 얻었습니다.",
+	trigger3 = "마법 반사 효과가 사라졌습니다.",
+	trigger4 = "피해 보호막 효과가 사라졌습니다.",
 
-		bar1text = "Magiereflexion",
-		bar2text = "Schadensschild",
-		bar3text = "Neuer Schild",
+	warn1 = "마법 보호막 - 10초간!",
+	warn2 = "피해 보호막 - 10초간!",
+	warn3 = "5초후 버프!",
+	warn4 = "마법 반사 사라짐!",
+	warn5 = "피해 보호 사라짐!",
+	bosskill = "청지기를 물리쳤습니다!",
 
-		texture1 = "Interface\\Icons\\Spell_Frost_FrostShock",
-		texture2 = "Interface\\Icons\\Spell_Shadow_AntiShadow",
-	}or {
-		bossname = "Majordomo Executus",
-		disabletrigger = "Impossible! Stay your attack, mortals... I submit! I submit!",
+	bar1text = "마법 반사",
+	bar2text = "피해 보호막",
+	bar3text = "새로운 버프",
+} end)
 
-		trigger1 = "gains Magic Reflection",
-		trigger2 = "gains Damage Shield",
-		trigger3 = "Magic Reflection fades",
-		trigger4 = "Damage Shield fades",
+L:RegisterTranslations("deDE", function() return {
+	disabletrigger = "Unm\195\182! Haltet ein, Sterbliche... Ich gebe auf! Ich gebe auf!",
 
-		warn1 = "Magic Reflection for 10 seconds!",
-		warn2 = "Damage Shield for 10 seconds!",
-		warn3 = "5 seconds until powers!",
-		warn4 = "Magic Reflection down!",
-		warn5 = "Damage Shield down!",
-		bosskill = "Majordomo Executus has been defeated!",
+	trigger1 = "bekommt 'Magiereflexion'",
+	trigger2 = "bekommt 'Schadensschild'",
+	trigger3 = "Magiereflexion schwindet von",
+	trigger4 = "Schadensschild schwindet von",
 
-		bar1text = "Magic Reflection",
-		bar2text = "Damage Shield",
-		bar3text = "New powers",
+	warn1 = "Magiereflexion f\195\188r 10 Sekunden!",
+	warn2 = "Schadensschild f\195\188r 10 Sekunden!",
+	warn3 = "5 Sekunden bis Schild!",
+	warn4 = "Magiereflexion beendet!",
+	warn5 = "Schadensschild beendet!",
+	bosskill = "Majordomo Executus wurde besiegt!",
 
-		texture1 = "Interface\\Icons\\Spell_Frost_FrostShock",
-		texture2 = "Interface\\Icons\\Spell_Shadow_AntiShadow",
-	},
-})
+	bar1text = "Magiereflexion",
+	bar2text = "Schadensschild",
+	bar3text = "Neuer Schild",
+} end)
 
-function BigWigsMajordomo:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
-function BigWigsMajordomo:Enable()
-	self.disabled = nil
+BigWigsMajordomo = BigWigs:NewModule(boss)
+BigWigsMajordomo.zonename = AceLibrary("Babble-Zone-2.0")("Molten Core")
+BigWigsMajordomo.enabletrigger = boss
+BigWigsMajordomo.toggleoptions = {"magic", "dmg", "bosskill"}
+BigWigsMajordomo.revision = tonumber(string.sub("$Revision$", 12, -3))
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function BigWigsMajordomo:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	aura = nil
 end
 
-function BigWigsMajordomo:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar2text)
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar3text)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn3)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar3text, 10)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar3text, 20)
+function BigWigsMajordomo:VerifyEnable(unit)
+	return UnitCanAttack("player", unit)
 end
 
-function BigWigsMajordomo:CHAT_MSG_MONSTER_YELL()
-	if (arg1 == self.loc.disabletrigger) then
-		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-		self:Disable()
+------------------------------
+--      Event Handlers      --
+------------------------------
+
+function BigWigsMajordomo:CHAT_MSG_MONSTER_YELL(msg)
+	if (msg == L"disabletrigger") then
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")("%s has been defeated"), self:ToString()), "Green", nil, "Victory") end
+		self.core:ToggleModuleActive(self, false)
 	end
 end
 
-function BigWigsMajordomo:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
-	if (string.find(arg1, self.loc.trigger1) and not self.aura and not self:GetOpt("notMagic")) then self:NewPowers(1)
-	elseif (string.find(arg1, self.loc.trigger2) and not self.aura and not self:GetOpt("notDmg")) then self:NewPowers(2) end
+function BigWigsMajordomo:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+	if (string.find(msg, L"trigger1") and not aura and self.db.profile.magic) then self:NewPowers(1)
+	elseif (string.find(msg, L"trigger2") and not aura and self.db.profile.dmg) then self:NewPowers(2) end
 end
 
-function BigWigsMajordomo:CHAT_MSG_SPELL_AURA_GONE_OTHER()
-	if ((string.find(arg1, self.loc.trigger3) or string.find(arg1, self.loc.trigger4)) and self.aura) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.aura == 1 and self.loc.warn4 or self.loc.warn5, "Yellow")
-		self.aura = nil
+function BigWigsMajordomo:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
+	if ((string.find(msg, L"trigger3") or string.find(msg, L"trigger4")) and aura) then
+		self:TriggerEvent("BigWigs_Message", aura == 1 and L"warn4" or L"warn5", "Yellow")
+		aura = nil
 	end
 end
 
 function BigWigsMajordomo:NewPowers(power)
-	self.aura = power
-	self:TriggerEvent("BIGWIGS_MESSAGE", power == 1 and self.loc.warn1 or self.loc.warn2, "Red")
-	self:TriggerEvent("BIGWIGS_BAR_START", power == 1 and self.loc.bar1text or self.loc.bar2text, 10, 1, "Red", power == 1 and self.loc.texture1 or self.loc.texture2)
-	self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar3text, 30, 2, "Yellow", "Interface\\Icons\\Spell_Frost_Wisp")
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 25, "Orange")
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar3text, 10, "Orange")
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar3text, 20, "Red")
+	aura = power
+	self:TriggerEvent("BigWigs_Message", power == 1 and L"warn1" or L"warn2", "Red")
+	self:TriggerEvent("BigWigs_StartBar", self, L"bar3text", 30, 1, "Interface\\Icons\\Spell_Frost_Wisp", "Yellow", "Orange", "Red")
+	self:TriggerEvent("BigWigs_StartBar", self, power == 1 and L"bar1text" or L"bar2text", 10, 2,  power == 1 and Texture1 or Texture2, "Orange", "Red")
+	self:ScheduleEvent("BigWigs_Message", 25, L"warn3", "Orange")
 end
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsMajordomo:RegisterForLoad()

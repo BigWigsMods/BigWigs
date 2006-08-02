@@ -1,124 +1,163 @@
-local bboss = BabbleLib:GetInstance("Boss 1.2")
+------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsGluth = AceAddon:new({
-	name = "BigWigsGluth",
-	cmd = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Gluth")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Naxxramas"),
-	enabletrigger = bboss("Gluth"),
-	bossname = bboss("Gluth"),
+----------------------------
+--      Localization      --
+----------------------------
 
-	toggleoptions = {	
-		notFear = "Fear warning",
-		notFrenzy = "Frenzy warning",
-		notStartWarn = "Start warning",
-		notDecimateWarn = "Decimate warning",
-		notDecimate30Sec = "Decimate 30-sec warning",
-		notDecimate5Sec = "Decimate 5-sec warning",
-		notDecimateBar = "Decimate timerbar",
-		notBosskill = "Boss death",
-	},
-	optionorder = {"notStartWarn", "notFear", "notFrenzy", "notDecimateWarn", "notDecimate30Sec", "notDecimate5Sec", "notDecimateBar", "notBosskill"},
+L:RegisterTranslations("enUS", function() return {
+	cmd = "gluth",
 
-	loc = {
-		bossname = "Gluth",
-		disabletrigger = "Gluth dies.",
+	fear_cmd = "fear",
+	fear_name = "Fear Alert",
+	fear_desc = "Warn for fear",
+	
+	frenzy_cmd = "frenzy",
+	frenzy_name = "Frenzy Alert",
+	frenzy_desc = "Warn for frenzy",
 
-		trigger1 = "goes into a frenzy!",
-		trigger2 = "by Terrifying Roar.",
-		starttrigger = "devours all nearby zombies!",
+	decimate_cmd = "decimate",
+	decimate_name = "Decimate Alert",
+	decimate_desc = "Warn for Decimate",
 
-		warn1 = "Frenzy alert - Hunter Tranq shot now!",
-		warn2 = "5 second until AoE Fear!",
-		warn3 = "AoE Fear alert - 20 seconds till next!",
-		startwarn = "Gluth Engaged! 105 seconds till Zombies!",
-		decimate30secwarn = "30 seconds till Zombies!",
-		decimate5secwarn = "5 seconds till Zombies!",
-		decimatewarn = "Decimate! - AoE Zombies!",
-		decimatetrigger = "Gluth gains Decimate.",
+	trigger1 = "goes into a frenzy!",
+	trigger2 = "by Terrifying Roar.",
+	starttrigger = "devours all nearby zombies!",
 
-		bar1text = "AoE Fear",
-		decimatebartext = "Decimate Zombies",
-	},
-})
+	warn1 = "Frenzy Alert!",
+	warn2 = "5 second until AoE Fear!",
+	warn3 = "AoE Fear alert - 20 seconds till next!",
 
-function BigWigsGluth:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
+	startwarn = "Gluth Engaged! ~105 seconds till Zombies!",
+	decimatesoonwarn = "Decimate Soon!",
+	decimatewarn = "Decimate! - AoE Zombies!",
+	decimatetrigger = "Gluth gains Decimate.",
 
-function BigWigsGluth:Enable()
-	self.disabled = nil
-	self:RegisterEvent("BIGWIGS_MESSAGE")
-	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
+	bar1text = "AoE Fear",
+	decimatebartext = "Decimate Zombies",
+
+} end )
+
+
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+BigWigsGluth = BigWigs:NewModule(boss)
+BigWigsGluth.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
+BigWigsGluth.enabletrigger = boss
+BigWigsGluth.toggleoptions = {"frenzy", "fear", "decimate", "bosskill"}
+BigWigsGluth.revision = tonumber(string.sub("$Revision$", 12, -3))
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+-- XXX Need to add a timer bar for berserker rage.
+-- XXX It happens some time after the 3rd decimate, but it's probably on a
+-- XXX fixed timer, so just make it a bar like the Twins@AQ40 enrage timer.
+
+function BigWigsGluth:OnEnable()
+	self.started = nil
+
+	self:RegisterEvent("BigWigs_Message")
+
+	self:RegisterEvent("PLAYER_REGEN_ENABLED")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED")
+
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS", "Frenzy")
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE", "Frenzy")
+
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Fear")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Fear")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Fear")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
-	self:RegisterEvent("BIGWIGS_SYNC_GLUTHDECIMATE")
-	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "GLUTHDECIMATE", 10)
+
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "GluthDecimate", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "GluthStart", 10)
 end
 
-function BigWigsGluth:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.decimatebartext)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.decimate30secwarn, 75)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.decimate5secwarn, 100)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn2)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 5)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 15)
-	self.prior = nil
-end
-
-function BigWigsGluth:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger) then
-		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-		self:Disable()
+function BigWigsGluth:PLAYER_REGEN_DISABLED()
+	local go = self:Scan()
+	local running = self:IsEventScheduled("Gluth_CheckStart")
+	if go then
+		self:TriggerEvent("BigWigs_SendSync", "GluthStart")
+	elseif not running then
+		self:ScheduleRepeatingEvent("Gluth_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self )
 	end
 end
 
-function BigWigsGluth:CHAT_MSG_MONSTER_EMOTE()
-	if (arg1 == self.loc.trigger1 and not self:GetOpt("notFrenzy")) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
-	elseif( arg1 == self.loc.starttrigger ) then
-		if not self:GetOpt("notStartWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Yellow") end
-		if not self:GetOpt("notDecimateBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.decimatebartext, 105, 2, "Red", "Interface\\Icons\\INV_Shield_01") end
-		if not self:GetOpt("notDecimate30Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.decimate30secwarn, 75, "Yellow") end
-		if not self:GetOpt("notDecimate5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.decimate5secwarn, 100, "Orange") end
+function BigWigsGluth:PLAYER_REGEN_ENABLED()
+	local go = self:Scan()
+	local running = self:IsEventScheduled("Gluth_CheckWipe")
+	if (not go) then
+		self:TriggerEvent("BigWigs_RebootModule", self)
+	elseif (not running) then
+		self:ScheduleRepeatingEvent("Gluth_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
 	end
 end
 
-function BigWigsGluth:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
-	if (arg1 == self.loc.decimatetrigger ) then
-		self:TriggerEvent("BIGWIGS_SYNC_SEND", "GLUTHDECIMATE")
+
+function BigWigsGluth:Scan()
+	if UnitName("target") == boss and UnitAffectingCombat("target") then
+		return true
+	elseif UnitName("playertarget") == boss and UnitAffectingCombat("playertarget") then
+		return true
+	else
+		local i
+		for i = 1, GetNumRaidMembers(), 1 do
+			if UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("raid"..i.."target") then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+function BigWigsGluth:Frenzy( msg )
+	if self.db.profile.frenzy and msg == L"trigger1" then
+		self:TriggerEvent("BigWigs_Message", L"warn1", "Red")
 	end
 end
 
-function BigWigsGluth:BIGWIGS_SYNC_GLUTHDECIMATE()
-	if not self:GetOpt("notDecimateWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.decimatewarn, "Red") end
-	if not self:GetOpt("notDecimateBar") then self:TriggerEvent("BIGWIGS_BAR_START", self.loc.decimatebartext, 105, 2, "Red", "Interface\\Icons\\INV_Shield_01") end
-	if not self:GetOpt("notDecimate30Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.decimate30secwarn, 75, "Yellow") end
-	if not self:GetOpt("notDecimate5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.decimate5secwarn, 100, "Orange") end
-end
-
-function BigWigsGluth:Fear()
-	if (not self.prior and string.find(arg1, self.loc.trigger2) and not self:GetOpt("notFear")) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "Red")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 15, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 20, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_PsychicScream")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 5, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 15, "Red")
+function BigWigsGluth:Fear( msg )
+	if self.db.profile.fear and not self.prior and string.find(msg, L"trigger2") then
+		self:TriggerEvent("BigWigs_Message", L"warn3", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 20, 1, "Interface\\Icons\\Spell_Shadow_PsychicScream", "Yellow", "Orange", "Red")
+		self:ScheduleEvent("BigWigs_Message", 15, L"warn2", "Orange")
 		self.prior = true
 	end
 end
 
-function BigWigsGluth:BIGWIGS_MESSAGE(text)
-	if text == self.loc.warn2 then self.prior = nil end
+function BigWigsGluth:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
+	if msg == L"decimatetrigger" then
+		self:TriggerEvent("BigWigs_SendSync", "GluthDecimate")
+	end
 end
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsGluth:RegisterForLoad()
+
+function BigWigsGluth:BigWigs_RecvSync( sync )
+	if sync == "GluthDecimate" and self.db.profile.decimate then 	
+		self:TriggerEvent("BigWigs_Message", L"decimatewarn", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"decimatebartext", 105, 2, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
+		self:ScheduleEvent("BigWigs_Message", 100, L"decimatesoon", "Orange")
+	elseif sync == "GluthStart" then
+		self:CancelScheduledEvent("Gluth_CheckStart")
+		if self.db.profile.decimate and not self.started then
+			self.started = true
+			self:TriggerEvent("BigWigs_Message", L"startwarn", "Yellow")
+			self:TriggerEvent("BigWigs_StartBar", self, L"decimatebartext", 105, 2, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
+			self:ScheduleEvent("BigWigs_Message", 100, L"decimatesoon", "Orange")
+		end
+	end
+end
+
+function BigWigsGluth:BigWigs_Message(text)
+	if text == L"warn2" then self.prior = nil end
+end

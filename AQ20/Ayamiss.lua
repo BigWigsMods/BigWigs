@@ -1,114 +1,89 @@
-local bboss = BabbleLib:GetInstance("Boss 1.2")
+﻿------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsAyamiss = AceAddon:new({
-	name          = "BigWigsAyamiss",
-	cmd           = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Ayamiss the Hunter")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Ruins of Ahn'Qiraj"),
-	enabletrigger = bboss("Ayamiss the Hunter"),
-	bossname = bboss("Ayamiss the Hunter"),
+----------------------------
+--      Localization      --
+----------------------------
 
-	toggleoptions = GetLocale() == "koKR" and {
-		notBosskill = "보스 사망",
-		notSacrifice = "마비 경고",
-	} or {
-		notBosskill = "Boss death",
-		notSacrifice = "Sacrifice warning",
-	},
+L:RegisterTranslations("enUS", function() return {
+	cmd = "ayamiss",
+	sacrifice_cmd = "sacrifice",
+	sacrifice_name = "Sacrifice Alert",
+	sacrifice_desc = "Warn for Sacrifice",
 
-	optionorder = {"notSacrifice", "notBosskill"},
+	sacrificetrigger = "^([^%s]+) ([^%s]+) afflicted by Paralyze",
+	sacrificewarn = " is being Sacrificed!",
+	you = "You",
+	are = "are",	
+} end )
 
-	loc = GetLocale() == "koKR" and {
-		disabletrigger = "사냥꾼 아야미스|1이;가; 죽었습니다.",
-		bosskill = "사냥꾼 아야미스를 물리쳤습니다.",
+L:RegisterTranslations("deDE", function() return {
+	sacrificetrigger = "^([^%s]+) ([^%s]+) von Paralisieren betroffen",
+	sacrificewarn = " wird geopfert!",
+	you = "Ihr",
+	are = "seid",
+} end )
 
+L:RegisterTranslations("zhCN", function() return {
+	sacrificetrigger = "^(.+)受(.+)了麻痹效果的影响。",
+	sacrificewarn = "成为祭品了！",
+	you = "你",
+	are = "到",
+} end )
+
+L:RegisterTranslations("koKR", function() return {
 		sacrificetrigger = "(.*)마비에 걸렸습니다.",
 		sacrificewarn = "님이 마비에 걸렸습니다!",
 
 		you = "",
 		whopattern = "(.+)|1이;가; ",
-	}
-		or GetLocale() == "zhCN" and
-	{
-		disabletrigger = "狩猎者阿亚米斯死亡了。",
-		bosskill = "狩猎者阿亚米斯被击败了！",
+} end )
 
-		sacrificetrigger = "^(.+)受(.+)了麻痹效果的影响。",
-		sacrificewarn = "成为祭品了！",
-		you = "你",
-		are = "到",
-	}
-		or GetLocale() == "deDE" and
-	{
-		disabletrigger = "Ayamiss der J\195\164ger stirbt.",
-		bosskill = "Ayamiss wurde besiegt.",
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
-		sacrificetrigger = "^([^%s]+) ([^%s]+) von Paralisieren betroffen",
-		sacrificewarn = " wird geopfert!",
-		you = "Ihr",
-		are = "seid",
-	}
-    or 
-	{
-		disabletrigger = "Ayamiss the Hunter dies.",
-		bosskill = "Ayamiss the Hunter has been defeated.",
+BigWigsAyamiss = BigWigs:NewModule(boss)
+BigWigsAyamiss.zonename = AceLibrary("Babble-Zone-2.0")("Ruins of Ahn'Qiraj")
+BigWigsAyamiss.enabletrigger = boss
+BigWigsAyamiss.toggleoptions = {"sacrifice", "bosskill"}
+BigWigsAyamiss.revision = tonumber(string.sub("$Revision$", 12, -3))
 
-		sacrificetrigger = "^([^%s]+) ([^%s]+) afflicted by Paralyze",
-		sacrificewarn = " is being Sacrificed!",
-		you = "You",
-		are = "are",
-	},
-})
+------------------------------
+--      Initialization      --
+------------------------------
 
-function BigWigsAyamiss:Initialize()
-    self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
-
-function BigWigsAyamiss:Enable()
-	self.disabled = nil
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH" )
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "checkSacrifice")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "checkSacrifice")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "checkSacrifice")
-end
-
-function BigWigsAyamiss:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-end
-
-function BigWigsAyamiss:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger) then
-		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-		self:Disable()
-	end
+function BigWigsAyamiss:OnEnable()
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath" )
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "CheckSacrifice")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "CheckSacrifice")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CheckSacrifice")
 end
 
 if (GetLocale() == "koKR") then
-	function BigWigsAyamiss:checkSacrifice()
-		local _, _, Player = string.find(arg1, self.loc.sacrificetrigger)
-		if (Player) then
-			if (Player == self.loc.you) then
-				Player = UnitName("player")
+	function BigWigsAyamiss:CheckSacrifice( msg )
+		local _, _, player = string.find(msg, L"sacrificetrigger")
+		if (player) then
+			if (player == L"you") then
+				player = UnitName("player")
 			else
-				_, _, Player = string.find(Player, self.loc.whopattern) 
+				_, _, player = string.find(Player, L"whopattern") 
 			end
-			if not self:GetOpt("notSacrifice") then self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.sacrificewarn, "Red") end
+			if self.db.profile.sacrifice then self:TriggerEvent("BigWigs_Message", player .. L"sacrificewarn", "Red") end
 		end
 	end
 else
-	function BigWigsAyamiss:checkSacrifice()
-		local _, _, Player, Type = string.find(arg1, self.loc.sacrificetrigger)
-		if (Player and Type) then
-			if (Player == self.loc.you and Type == self.loc.are) then
-				Player = UnitName("player")
+	function BigWigsAyamiss:CheckSacrifice( msg )
+		local _, _, player, type = string.find(msg, L"sacrificetrigger")
+		if (player and type) then
+			if (player == L"you" and type == L"are") then
+				player = UnitName("player")
 			end
-			if not self:GetOpt("notSacrifice") then self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.sacrificewarn, "Red") end
+			if self.db.profile.sacrifice then self:TriggerEvent("BigWigs_Message", player .. L"sacrificewarn", "Red") end
 		end
 	end
 end
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsAyamiss:RegisterForLoad()

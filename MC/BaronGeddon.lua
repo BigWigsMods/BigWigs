@@ -1,152 +1,124 @@
-﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
+﻿------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsBaronGeddon = AceAddon:new({
-	name = "BigWigsBaronGeddon",
-	cmd = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Baron Geddon")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Molten Core"),
-	enabletrigger = bboss("Baron Geddon"),
-	bossname = bboss("Baron Geddon"),
+----------------------------
+--      Localization      --
+----------------------------
 
-	toggleoptions = GetLocale() == "koKR" and {
-		notYouBomb = "자신이 폭탄일때 경고",
-		notElseBomb = "다른 사람이 폭탄일때 경고",
-		notIcon = "폭탄에게 해골 표시 달기(승급 필요)",
-		notBosskill = "보스 사망 알림",
-	} or {
-		notYouBomb = "Warn when you are the bomb",
-		notElseBomb = "Warn when others are the bomb",
-		notIcon = "Put a Skull icon on the person who's the bomb. (Requires promoted or higher)",
-		notBosskill = "Boss death",
-	},
+L:RegisterTranslations("enUS", function() return {
+	trigger1 = "^([^%s]+) ([^%s]+) afflicted by Living Bomb",
 
-	optionorder = { "notYouBomb", "notElseBomb", "notIcon", "notBosskill" },
+	you = "You",
+	are = "are",
 
-	loc = GetLocale() == "deDE" and
-	{
-		disabletrigger = "Baron Geddon stirbt.",
+	warn1 = "You are the bomb!",
+	warn2 = " is the bomb!",
 
-		trigger1 = "^([^%s]+) ([^%s]+) von Lebende Bombe betroffen.",
+	cmd = "Baron",
+	youbomb_cmd = "youbomb",
+	youbomb_name = "You are the bomb alert",
+	youbomb_desc = "Warn when you are the bomb",
+	elsebomb_cmd = "elsebomb",
+	elsebomb_name = "Someone else is the bomb alert",
+	elsebomb_desc = "Warn when others are the bomb",
+	icon_cmd = "icon",
+	icon_name = "Skull icon on bomb",
+	icon_desc = "Put a Skull icon on the person who's the bomb. (Requires promoted or higher)",
+} end)
 
-		you = "Ihr",
-		are = "seid",
+L:RegisterTranslations("zhCN", function() return {
+	trigger1 = "^(.+)受(.+)了活化炸弹",
 
-		warn1 = "Du bist die Bombe!",
-		warn2 = " ist die Bombe!",
-	}
-		or GetLocale() == "koKR" and
-	{
-		disabletrigger = "남작 게돈|1이;가; 죽었습니다.",
+	you = "你",
+	are = "到",
 
-		trigger1 = "^(.*)살아있는 폭탄에 걸렸습니다.",
-		whopattern = "(.+)|1이;가; ",
+	warn1 = "你是炸弹人！向着夕阳奔跑吧！",
+	warn2 = "是炸弹人！向着夕阳奔跑吧！",
+} end)
 
-		you = "",
-		are = "은",
+L:RegisterTranslations("koKR", function() return {
+	trigger1 = "^(.*)살아있는 폭탄에 걸렸습니다.",
+	whopattern = "(.+)|1이;가; ",
 
-		warn1 = "당신은 폭탄입니다!",
-		warn2 = "님이 폭탄입니다!",
-	}
-		or GetLocale() == "zhCN" and
-	{
-		disabletrigger = "迦顿男爵死亡了。",
+	you = "",
+	are = "은",
 
-		trigger1 = "^(.+)受(.+)了活化炸弹",
+	warn1 = "당신은 폭탄입니다!",
+	warn2 = "님이 폭탄입니다!",
+} end)
 
-		you = "你",
-		are = "到",
+L:RegisterTranslations("deDE", function() return {
+	trigger1 = "^([^%s]+) ([^%s]+) betroffen von Lebende Bombe",
 
-		warn1 = "你是炸弹人！向着夕阳奔跑吧！",
-		warn2 = "是炸弹人！向着夕阳奔跑吧！",
-	}
-		or
-	{
-		disabletrigger = "Baron Geddon dies.",
+	you = "Ihr",
+	are = "seid",
 
-		trigger1 = "^([^%s]+) ([^%s]+) afflicted by Living Bomb",
+	warn1 = "Du bist die Bombe!",
+	warn2 = " ist die Bombe!",
+} end)
 
-		you = "You",
-		are = "are",
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
-		warn1 = "You are the bomb!",
-		warn2 = " is the bomb!",
-	},
-})
+BigWigsBaronGeddon = BigWigs:NewModule(boss)
+BigWigsBaronGeddon.zonename = AceLibrary("Babble-Zone-2.0")("Molten Core")
+BigWigsBaronGeddon.enabletrigger = boss
+BigWigsBaronGeddon.toggleoptions = {"youbomb", "elsebomb", "icon", "bosskill"}
+BigWigsBaronGeddon.revision = tonumber(string.sub("$Revision$", 12, -3))
 
-function BigWigsBaronGeddon:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
+------------------------------
+--      Initialization      --
+------------------------------
 
-function BigWigsBaronGeddon:Enable()
-	self.disabled = nil
+function BigWigsBaronGeddon:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
-function BigWigsBaronGeddon:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-end
-
-function BigWigsBaronGeddon:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger) then
-		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-		self:Disable()
-	end
-end
+------------------------------
+--      Event Handlers      --
+------------------------------
 
 if (GetLocale() == "koKR") then
-	function BigWigsBaronGeddon:Event()
-		local _, _, EPlayer = string.find(arg1, self.loc.trigger1)
+	function BigWigsBaronGeddon:Event(msg)
+		local _, _, EPlayer = string.find(msg, L"trigger1")
 		if (EPlayer) then
-			if (EPlayer == self.loc.you and not self:GetOpt("notYouBomb")) then
-				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
-			elseif (not self:GetOpt("notElseBomb")) then
-				_, _, EPlayer = string.find(EPlayer, self.loc.whopattern)
-				self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
-				self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
+			if (EPlayer == L"you" and self.db.profile.youbomb) then
+				self:TriggerEvent("BigWigs_Message", L".warn1", "Red", true)
+			elseif (self.db.profile.elsebomb) then
+				_, _, EPlayer = string.find(EPlayer, L"whopattern")
+				self:TriggerEvent("BigWigs_Message", EPlayer .. L"warn2", "Yellow")
+				self:TriggerEvent("BigWigs_SendTell", EPlayer, L"warn1")
 			end
 
-			if (not self:GetOpt("notIcon")) then
-				if EPlayer == self.loc.you then
-					EPlayer = UnitName('player')
-				end
-				for i=1,GetNumRaidMembers() do
-					if UnitName("raid"..i) == EPlayer then
-						SetRaidTargetIcon("raid"..i, 8)
-					end
-				end
+			if self.db.profile.icon then
+				if EPlayer == L"you" then	EPlayer = UnitName("player") end
+				self:TriggerEvent("BigWigs_SetRaidIcon", EPlayer )
 			end
 		end
 	end
 else
-	function BigWigsBaronGeddon:Event()
-		local _, _, EPlayer, EType = string.find(arg1, self.loc.trigger1)
+	function BigWigsBaronGeddon:Event(msg)
+		local _, _, EPlayer, EType = string.find(msg, L"trigger1")
 		if (EPlayer and EType) then
-			if (EPlayer == self.loc.you and EType == self.loc.are and not self:GetOpt("notYouBomb")) then
-				self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
-			elseif (not self:GetOpt("notElseBomb")) then
-				self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
-				self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
+			if (EPlayer == L"you" and EType == L"are" and self.db.profile.youbomb) then
+				self:TriggerEvent("BigWigs_Message", L"warn1", "Red", true)
+			elseif (self.db.profile.elsebomb) then
+				self:TriggerEvent("BigWigs_Message", EPlayer .. L"warn2", "Yellow")
+				self:TriggerEvent("BigWigs_SendTell", EPlayer, L"warn1")
 			end
 
-			if (not self:GetOpt("notIcon")) then
-				if EPlayer == self.loc.you then
-					EPlayer = UnitName('player')
-				end
-				for i=1, GetNumRaidMembers() do
-					if UnitName("raid"..i) == EPlayer then
-						SetRaidTargetIcon("raid"..i, 8)
-					end
-				end
+			if self.db.profile.icon then
+				if EPlayer == L"you" then	EPlayer = UnitName("player") end
+				self:TriggerEvent("BigWigs_SetRaidIcon", EPlayer )
 			end
 		end
 	end
 end
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsBaronGeddon:RegisterForLoad()

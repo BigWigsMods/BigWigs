@@ -1,165 +1,139 @@
-local bboss = BabbleLib:GetInstance("Boss 1.2")
+﻿------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsEmeriss = AceAddon:new({
-	name          = "BigWigsEmeriss",
-	cmd           = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Emeriss")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename = { GetLocale() == "koKR" and "필드 몹" or "Outdoor Raid Bosses", BabbleLib:GetInstance("Zone 1.2")("Duskwood"), BabbleLib:GetInstance("Zone 1.2")("The Hinterlands"),
-			BabbleLib:GetInstance("Zone 1.2")("Ashenvale"), BabbleLib:GetInstance("Zone 1.2")("Feralas") },
+----------------------------
+--      Localization      --
+----------------------------
+
+L:RegisterTranslations("enUS", function() return {
+
+	cmd = "emeriss",
 	
-	enabletrigger = bboss("Emeriss"),
-	bossname = bboss("Emeriss"),
+	noxious_cmd = "noxious",
+	noxious_name = "Noxious breath alert",
+	noxious_desc = "Warn for noxious breath",
+	
+	volatileyou_cmd = "volatileyou",
+	volatileyou_name = "Voltile infection on you alert",
+	volatileyou_desc = "Warn for volatile infection on you",
+	
+	volatileother_cmd = "volatileother",
+	volatileother_name = "Volatile infection on others alert",
+	volatileother_desc = "Warn for volatile infection on others",
 
-	toggleoptions = GetLocale() == "koKR" and {
-		notNoxious = "산성 숨결 경고",
-		notNoxious5Sec = "산성 숨결 5초전 경고",
-		notNoxiousBar = "산성 숨결 타이머 바",
-		notVolatileYou = "자신에 대한 대지의 오염 경고",
-		notVolatileOther = "다른 사람의 대지의 오염 경고",
-		notBosskill = "보스 사망 알림",	
-	} or {
-		notNoxious = "Noxious breath warning",
-		notNoxious5Sec = "Noxious breath 5-sec warning",
-		notNoxiousBar = "Noxious breath timerbar",
-		notVolatileYou = "Volatile infection on you warning",
-		notVolatileOther = "Volatile infection on others warning",
-		notBosskill = "Boss death",
-	},
+	trigger1 = "^([^%s]+) ([^%s]+) afflicted by Volatile Infection",
+	trigger2 = "afflicted by Noxious Breath",
 
-	optionorder = {"notNoxious", "notNoxious5Sec", "notNoxiousBar", "notVolatileYou", "notVolatileOther", "notBosskill"},
+	warn1 = "You are afflicted by Volatile Infection!",
+	warn2 = " is afflicted by Volatile Infection!",
+	warn3 = "5 seconds until Noxious Breath!",
+	warn4 = "Noxious Breath - 30 seconds till next!",
 
-	loc = GetLocale() == "koKR" and {
-		disabletrigger = "에메리스|1이;가; 죽었습니다.",
+	isyou = "You",
+	isare = "are",
 
-		trigger1 = "(.*)대지의 오염에 걸렸습니다.",
-		trigger2 = "에메리스의 산성 숨결에 의해",
+	bar1text = "Noxious Breath",	
+	
+} end )
 
-		warn1 = "당신은 대지의 오염에 걸렸습니다!",
-		warn2 = "님이 대지의 오염에 걸렸습니다!",
-		warn3 = "5초후 산성 숨결!",
-		warn4 = "산성 숨결 - 30초후 재시전!",
-		bosskill = "에메리스를 물리쳤습니다!",
+L:RegisterTranslations("zhCN", function() return {
+	trigger1 = "^(.+)受(.+)了快速传染效果",
+	trigger2 = "受到了毒性吐息效果的影响。",
 
-		isyou = "",
-		whopattern = "(.+)|1이;가; ",
+	warn1 = "你中了快速传染！",
+	warn2 = "中了快速传染！",
+	warn3 = "5秒后发动毒性吐息！",
+	warn4 = "毒性吐息 - 30秒后再次发动",
 
-		bar1text = "산성 숨결",
-	}
-		or GetLocale() == "zhCN" and
-	{
-		disabletrigger = "艾莫莉丝死亡了。",
+	isyou = "你",
+	isare = "到",
 
-		trigger1 = "^(.+)受(.+)了快速传染效果",
-		trigger2 = "受到了毒性吐息效果的影响。",
+	bar1text = "毒性吐息",
+} end )
 
-		warn1 = "你中了快速传染！",
-		warn2 = "中了快速传染！",
-		warn3 = "5秒后发动毒性吐息！",
-		warn4 = "毒性吐息 - 30秒后再次发动",
-		bosskill = "艾莫莉丝被击败了！",
+L:RegisterTranslations("koKR", function() return {
+	trigger1 = "(.*)대지의 오염에 걸렸습니다.",
+	trigger2 = "에메리스의 산성 숨결에 의해",
 
-		isyou = "你",
-		isare = "到",
+	warn1 = "당신은 대지의 오염에 걸렸습니다!",
+	warn2 = "님이 대지의 오염에 걸렸습니다!",
+	warn3 = "5초후 산성 숨결!",
+	warn4 = "산성 숨결 - 30초후 재시전!",
 
-		bar1text = "毒性吐息",
-	}
-		or
-	{
-		disabletrigger = "Emeriss dies.",
+	isyou = "",
+	whopattern = "(.+)|1이;가; ",
 
-		trigger1 = "^([^%s]+) ([^%s]+) afflicted by Volatile Infection",
-		trigger2 = "afflicted by Noxious Breath",
+	bar1text = "산성 숨결",
+} end )
 
-		warn1 = "You are afflicted by Volatile Infection!",
-		warn2 = " is afflicted by Volatile Infection!",
-		warn3 = "5 seconds until Noxious Breath!",
-		warn4 = "Noxious Breath - 30 seconds till next!",
-		bosskill = "Emeriss has been defeated!",
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
-		isyou = "You",
-		isare = "are",
+BigWigsEmeriss = BigWigs:NewModule(boss)
+BigWigsEmeriss.zonename = { AceLibrary("AceLocale-2.0"):new("BigWigs")("Outdoor Raid Bosses Zone"), AceLibrary("Babble-Zone-2.0")("Blasted Lands"), AceLibrary("Babble-Zone-2.0")("Duskwood"), AceLibrary("Babble-Zone-2.0")("The Hinterlands") }
+BigWigsEmeriss.enabletrigger = boss
+BigWigsEmeriss.toggleoptions = {"noxious", "volatileyou", "volatileother", "bosskill"}
+BigWigsEmeriss.revision = tonumber(string.sub("$Revision$", 12, -3))
 
-		bar1text = "Noxious Breath",
-	},
-})
+------------------------------
+--      Initialization      --
+------------------------------
 
-function BigWigsEmeriss:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
-
-function BigWigsEmeriss:Enable()
-	self.disabled = nil
-	self:RegisterEvent("BIGWIGS_MESSAGE")
+function BigWigsEmeriss:OnEnable()
+	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
-end
-
-function BigWigsEmeriss:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn3)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 10)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 20)
-	self.prior = nil
-end
-
-function BigWigsEmeriss:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger) then
-		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-		self:Disable()
-	end
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
 if (GetLocale() == "koKR") then
-	function BigWigsEmeriss:Event()
-		if (not self.prior and string.find(arg1, self.loc.trigger2)) then
+	function BigWigsEmeriss:Event( msg )
+		if (not self.prior and string.find(msg, L"trigger2")) then
 			self.prior = true
-			if not self:GetOpt("notNoxious") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red") end
-			if not self:GetOpt("notNoxious5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 25, "Red") end
-			if not self:GetOpt("notNoxiousBar") then
-				self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_LifeDrain02")
-				self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
-				self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
+			if self.db.profile.noxious then 
+				self:TriggerEvent("BigWigs_Message", L"warn4", "Red")
+				self:ScheduleEvent("BigWigs_Message", 25, L"warn3", "Red")
+				self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, 1, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
 			end
 		else
-			local _,_, EPlayer = string.find(arg1, self.loc.trigger1)
+			local _,_, EPlayer = string.find(msg, L"trigger1")
 			if (EPlayer) then
-				if (EPlayer == self.loc.isyou ) then
-					if not self:GetOpt("notVolatileYou") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true) end
+				if (EPlayer == L"isyou" ) then
+					if self.db.profile.volatileyou then self:TriggerEvent("BigWigs_Message", L"warn1", "Red", true) end
 				else
-					local _,_, EWho = string.find(EPlayer, self.loc.whopattern)
-					if not self:GetOpt("notVolatileOther") then 
-						self:TriggerEvent("BIGWIGS_MESSAGE", EWho .. self.loc.warn2, "Yellow")
-						self:TriggerEvent("BIGWIGS_SENDTELL", EWho, self.loc.warn1)
+					local _,_, EWho = string.find(EPlayer, L"whopattern")
+					if self.db.profile.volatileother then 
+						self:TriggerEvent("BigWigs_Message", EWho .. L"warn2", "Yellow")
+						self:TriggerEvent("BigWigs_SendTell", EWho, L"warn1")
 					end
 				end
 			end
 		end
 	end
 else
-	function BigWigsEmeriss:Event()
-		if (not self.prior and string.find(arg1, self.loc.trigger2)) then
+	function BigWigsEmeriss:Event( msg )
+		if (not self.prior and string.find(msg, L"trigger2")) then
 			self.prior = true
-			if not self:GetOpt("notNoxious") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red") end
-			if not self:GetOpt("notNoxious5Sec") then self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 25, "Red") end
-			if not self:GetOpt("notNoxiousBar") then
-				self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_LifeDrain02")
-				self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
-				self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
-			end
+			if self.db.profile.noxious then 
+				self:TriggerEvent("BigWigs_Message", L"warn4", "Red")
+				self:ScheduleEvent("BigWigs_Message", 25, L"warn3", "Red")
+				self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, 1, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
+			end			
 		else
-			local _,_, EPlayer, EType = string.find(arg1, self.loc.trigger1)
+			local _,_, EPlayer, EType = string.find(msg, L"trigger1")
 			if (EPlayer and EType) then
-				if (EPlayer == self.loc.isyou and EType == self.loc.isare) then
-					if not self:GetOpt("notVolatileYou") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true) end
+				if (EPlayer == L"isyou" and EType == L"isare") then
+					if self.db.profile.volatileyou then self:TriggerEvent("BigWigs_Message", L"warn1", "Red", true) end
 				else
-					if not self:GetOpt("notVolatileOther") then
-						self:TriggerEvent("BIGWIGS_MESSAGE", EPlayer .. self.loc.warn2, "Yellow")
-						self:TriggerEvent("BIGWIGS_SENDTELL", EPlayer, self.loc.warn1)
+					if self.db.profile.volatileother then
+						self:TriggerEvent("BigWigs_Message", EPlayer .. L"warn2", "Yellow")
+						self:TriggerEvent("BigWigs_SendTell", EPlayer, L"warn1")
 					end
 				end
 			end
@@ -167,10 +141,6 @@ else
 	end
 end
 
-function BigWigsLucifron:BIGWIGS_MESSAGE(text)
-	if text == self.loc.warn3 then self.prior = nil end
+function BigWigsEmeriss:BigWigs_Message(text)
+	if text == L"warn3" then self.prior = nil end
 end
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsEmeriss:RegisterForLoad()

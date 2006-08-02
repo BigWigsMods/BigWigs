@@ -1,99 +1,72 @@
-﻿
+﻿------------------------------
+--      Are you local?      --
+------------------------------
 
-local bboss = BabbleLib:GetInstance("Boss 1.2")
+local boss = AceLibrary("Babble-Boss-2.0")("High Priestess Arlokk")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
+----------------------------
+--      Localization      --
+----------------------------
 
-BigWigsArlokk = AceAddon:new({
-	name          = "BigWigsArlokk",
-	cmd           = AceChatCmd:new({}, {}),
-
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Zul'Gurub"),
-	bossname = bboss("High Priestess Arlokk"),
-	enabletrigger = bboss("High Priestess Arlokk"),
-
-	toggleoptions = GetLocale() == "koKR" and {
-		notPlayer = "당신이 표적일 때 경고",
-		notOthers = "다른이가 표적일 때 경고",
-		notBosskill = "보스 사망 알림",
-	} or {
-		notPlayer = "Warn when you are marked",
-		notOthers = "Warn when others are marked",
-		notBosskill = "Boss death",
-	},
-
-	optionorder = {"notPlayer", "notOthers", "notBosskill"},
-
-	loc = GetLocale() == "koKR" and {
-		disabletrigger = "대여사제 알로크|1이;가; 죽었습니다.",
-
-		trigger1 = "내 귀여운 것들아, (.+)%|1을;를; 잡아먹어라!$",
-
-		warn1 = "당신은 표적입니다!",
-		warn2 = "%s님은 표적입니다!",
-		bosskill = "대여사제 알로크를 물리쳤습니다!",
-	} or GetLocale() == "deDE" and {
-		disabletrigger = "Hohepriesterin Arlokk stribt.",
-
-		trigger1 ="Labt euch an ([^%s]+), meine S\195\188\195\159en!$",
-
-		warn1 = "Du bist markiert!",
-		warn2 = "%s ist markiert!",
-		bosskill = "Hohepriesterin Arlokk wurde besiegt!",
+L:RegisterTranslations("enUS", function() return {
+	cmd = "arlokk",
 	
-	} or {
-		disabletrigger = "High Priestess Arlokk dies.",
+	youmark_cmd = "youmark",
+	youmark_name = "You're marked alert",
+	youmark_desc = "Warn when you are marked",
+	
+	othermark_cmd = "othermark",
+	othermark_name = "Others are marked alert",
+	othermark_desc = "Warn when others are marked",
 
-		trigger1 = "Feast on ([^%s]+), my pretties!$",
+	trigger1 = "Feast on ([^%s]+), my pretties!$",
 
-		warn1 = "You are marked!",
-		warn2 = "%s is marked!",
-		bosskill = "High Priestess Arlokk has been defeated!",
-	},
-})
+	warn1 = "You are marked!",
+	warn2 = "%s is marked!",	
+} end )
 
+L:RegisterTranslations("deDE", function() return {
+	trigger1 ="Labt euch an ([^%s]+), meine S\195\188\195\159en!$",
 
-function BigWigsArlokk:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
+	warn1 = "Du bist markiert!",
+	warn2 = "%s ist markiert!",
+} end )
 
+L:RegisterTranslations("koKR", function() return {
+	trigger1 = "내 귀여운 것들아, (.+)%|1을;를; 잡아먹어라!$",
 
-function BigWigsArlokk:Enable()
-	self.disabled = nil
+	warn1 = "당신은 표적입니다!",
+	warn2 = "%s님은 표적입니다!",
+} end )
+
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+BigWigsArlokk = BigWigs:NewModule(boss)
+BigWigsArlokk.zonename = AceLibrary("Babble-Zone-2.0")("Zul'Gurub")
+BigWigsArlokk.enabletrigger = boss
+BigWigsArlokk.toggleoptions = {"youmark", "othermark", "bosskill"}
+BigWigsArlokk.revision = tonumber(string.sub("$Revision$", 12, -3))
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function BigWigsArlokk:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
-
-function BigWigsArlokk:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-end
-
-
-function BigWigsArlokk:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if arg1 == self.loc.disabletrigger then
-		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-		self:Disable()
-	end
-end
-
-
-function BigWigsArlokk:CHAT_MSG_MONSTER_YELL()
-	local _,_, n = string.find(arg1, self.loc.trigger1)
+function BigWigsArlokk:CHAT_MSG_MONSTER_YELL( msg )
+	local _,_, n = string.find(msg, L"trigger1")
 	if n then
 		if n == UnitName("player") then
-			if not self:GetOpt("notPlayer") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true, "Alarm") end
-		elseif not self:GetOpt("notOthers") then
-			self:TriggerEvent("BIGWIGS_MESSAGE", string.format(self.loc.warn2, n), "Yellow")
-			self:TriggerEvent("BIGWIGS_SENDTELL", n, self.loc.warn1)
+			if self.db.profile.youmark then self:TriggerEvent("BigWigs_Message", L"warn1", "Red", true, "Alarm") end
+		elseif self.db.profile.othermark then
+			self:TriggerEvent("BigWigs_Message", string.format(L"warn2", n), "Yellow")
+			self:TriggerEvent("BigWigs_SendTell", n, L"warn1")
 		end
 	end
 end
-
-
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsArlokk:RegisterForLoad()
-

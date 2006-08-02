@@ -1,120 +1,102 @@
-local bboss = BabbleLib:GetInstance("Boss 1.2")
+------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsOnyxia = AceAddon:new({
-	name          = "BigWigsOnyxia",
-	cmd           = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Onyxia")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Onyxia's Lair"),
-	enabletrigger = bboss("Onyxia"),
-	bossname = bboss("Onyxia"),
+----------------------------
+--      Localization      --
+----------------------------
 
-	toggleoptions = GetLocale() == "koKR" and {
-		notDeepBreath = "딥 브레스 경고",
-		notPhase2 = "2단계 알림",
-		notPhase3 = "3단계 알림",
-		notBosskill = "보스 사망",
-	} or {
-		notDeepBreath = "Deep breath warning",
-		notPhase2 = "Phase 2 warning",
-		notPhase3 = "Phase 3 warning",
-		notBosskill = "Boss death",
-	},
+L:RegisterTranslations("enUS", function() return {
+	cmd = "Onyxia",
 
-	optionorder = {"notDeepBreath", "notPhase2", "notPhase3", "notBosskill"},
+	deepbreath_cmd = "deepbreath",
+	deepbreath_name = "Deep Breath alert",
+	deepbreath_desc = "Warn when Onyxia begins to cast Deep Breath ",
 
+	phase2_cmd = "phase2",
+	phase2_name = "Phase 2 alert",
+	phase2_desc = "Warn for Phase 2",
 
-	loc = GetLocale() == "deDE" and
-	{
-		disabletrigger = "Onyxia stirbt.",
+	phase3_cmd = "phase3",
+	phase3_name = "Phase 3 alert",
+	phase3_desc = "Warn for Phase 3",
 
-		trigger1 = "atmet tief ein...",
-		trigger2 = "von oben",
-		trigger3 = "Es sieht so aus",
+	trigger1 = "takes in a deep breath...",
+	trigger2 = "from above",
+	trigger3 = "It seems you'll need another lesson",
 
-		warn1 = "Onyxia Tiefer Atem kommt, rennt zu den Seiten!",
-		warn2 = "Onyxia Phase 2 kommt!",
-		warn3 = "Onyxia Phase 3 kommt!",
-		bosskill = "Onyxia wurde besiegt!",
-	}
-		or GetLocale() == "koKR" and
-	{
-		disabletrigger = "오닉시아|1이;가; 죽었습니다.",
+	warn1 = "Deep Breath incoming!",
+	warn2 = "Onyxia phase 2 incoming!",
+	warn3 = "Onyxia phase 3 incoming!",
+} end )
 
-		trigger1 = "깊은 숨을 들이쉽니다...",
-		trigger2 = "머리 위에서 모조리",
-		trigger3 = "혼이 더 나야 정신을 차리겠구나!",
+L:RegisterTranslations("deDE", function() return {
+	trigger1 = "atmet tief ein...",
+	trigger2 = "von oben",
+	trigger3 = "Es sieht so aus",
 
-		warn1 = "경고 : 오닉시아 딥 브레스, 구석으로 피하십시오!",
-		warn2 = "오닉시아 2단계 시작!",
-		warn3 = "오닉시아 3단계 시작!",
-		bosskill = "오닉시아를 물리쳤습니다!",
-	}
-		or GetLocale() == "zhCN" and
-	{
-		disabletrigger = "奥妮克希亚死亡了。",
+	warn1 = "Onyxia Tiefer Atem kommt, rennt zu den Seiten!",
+	warn2 = "Onyxia Phase 2 kommt!",
+	warn3 = "Onyxia Phase 3 kommt!",
+} end )
 
-		trigger1 = "深深地吸了一口气……",
-		trigger2 = "从上空",
-		trigger3 = "看起来需要再给你一次教训",
+L:RegisterTranslations("zhCN", function() return {
+	trigger1 = "深深地吸了一口气……",
+	trigger2 = "从上空",
+	trigger3 = "看起来需要再给你一次教训",
 
-		warn1 = "奥妮克希亚深呼吸即将出现，向边缘散开！",
-		warn2 = "奥妮克希亚进入第二阶段！",
-		warn3 = "奥妮克希亚进入第三阶段！",
-		bosskill = "奥妮克希亚被击败了！",
-	}
-		or
-	{
-		disabletrigger = "Onyxia dies.",
+	warn1 = "奥妮克希亚深呼吸即将出现，向边缘散开！",
+	warn2 = "奥妮克希亚进入第二阶段！",
+	warn3 = "奥妮克希亚进入第三阶段！",
+} end )
 
-		trigger1 = "takes in a deep breath...",
-		trigger2 = "from above",
-		trigger3 = "It seems you'll need another lesson",
+L:RegisterTranslations("koKR", function() return {
+	trigger1 = "깊은 숨을 들이쉽니다...",
+	trigger2 = "머리 위에서 모조리",
+	trigger3 = "혼이 더 나야 정신을 차리겠구나!",
 
-		warn1 = "Onyxia Deep Breath AoE incoming, move to sides!",
-		warn2 = "Onyxia phase 2 incoming!",
-		warn3 = "Onyxia phase 3 incoming!",
-		bosskill = "Onyxia has been defeated!",
-	}
-})
+	warn1 = "경고 : 오닉시아 딥 브레스, 구석으로 피하십시오!",
+	warn2 = "오닉시아 2단계 시작!",
+	warn3 = "오닉시아 3단계 시작!",
+} end )
 
-function BigWigsOnyxia:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
-function BigWigsOnyxia:Enable()
-	self.disabled = nil
+BigWigsOnyxia = BigWigs:NewModule(boss)
+BigWigsOnyxia.zonename = AceLibrary("Babble-Zone-2.0")("Onyxia's Lair")
+BigWigsOnyxia.enabletrigger = boss
+BigWigsOnyxia.toggleoptions = {"deepbreath", "phase2", "phase3", "bosskill"}
+BigWigsOnyxia.revision = tonumber(string.sub("$Revision$", 12, -3))
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function BigWigsOnyxia:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
-function BigWigsOnyxia:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-end
+------------------------------
+--      Event Handlers      --
+------------------------------
 
-function BigWigsOnyxia:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger) then
-		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-		self:Disable()
+function BigWigsOnyxia:CHAT_MSG_MONSTER_EMOTE(msg)
+	if (msg == L"trigger1") then
+		if self.db.profile.deepbreath then self:TriggerEvent("BigWigs_Message", L"warn1", "Red") end
 	end
 end
 
-function BigWigsOnyxia:CHAT_MSG_MONSTER_EMOTE()
-	if (arg1 == self.loc.trigger1) then
-		if not self:GetOpt("notDeepBreath") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red") end
+function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL(msg)
+	if (string.find(msg, L"trigger2")) then
+		if self.db.profile.phase2 then self:TriggerEvent("BigWigs_Message", L"warn2", "White") end
+	elseif (string.find(msg, L"trigger3")) then
+		if self.db.profile.phase3 then self:TriggerEvent("BigWigs_Message", L"warn3", "White") end
 	end
 end
-
-function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL()
-	if (string.find(arg1, self.loc.trigger2)) then
-		if not self:GetOpt("notPhase2") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "White") end
-	elseif (string.find(arg1, self.loc.trigger3)) then
-		if not self:GetOpt("notPhase3") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "White") end
-	end
-end
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsOnyxia:RegisterForLoad()

@@ -1,90 +1,55 @@
-local bboss = BabbleLib:GetInstance("Boss 1.2")
+﻿------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsJindo = AceAddon:new({
-	name          = "BigWigsJindo",
-	cmd           = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Jin'do the Hexxer")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Zul'Gurub"),
-	enabletrigger = bboss("Jin'do the Hexxer"),
-	bossname = bboss("Jin'do the Hexxer"),
+----------------------------
+--      Localization      --
+----------------------------
 
-	toggleoptions = GetLocale() == "koKR" and {
-		notBrainWash = "세뇌의 토템 경고",
-		notHealing = "치유의 토템 경고",
-		notBosskill = "보스 사망 알림",
-	} or {
-		notBrainWash = "Announce brainwash totems",
-		notHealing = "Announce healing totems",
-		notBosskill = "Boss death",
-	},
+L:RegisterTranslations("enUS", function() return {
+	cmd = "jindo",
+	
+	brainwash_cmd = "brainwash",
+	brainwash_name = "Brainwash Totem Alert",
+	brainwash_desc = "Warn for Brainwash Totems",
+	
+	healing_cmd = "healing",
+	healing_name = "Healing Totem Alert",
+	healing_desc = "Warn for Healing Totems",
+	
+	triggerbrainwash = "Jin'do the Hexxer casts Summon Brain Wash Totem.",
+	triggerhealing = "Jin'do the Hexxer casts Powerful Healing Ward.",
 
-	optionorder = { "notBrainWash", "notHealing", "notBosskill" },
+	warnbrainwash = "Brain Wash Totem!",
+	warnhealing = "Healing Totem!",
+} end )
 
-	loc = GetLocale() == "koKR" and {
-		disabletrigger = "주술사 진도|1이;가; 죽었습니다.",
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
-		triggerbrainwash = "주술사 진도|1이;가; 세뇌의 토템 소환|1을;를; 시전합니다.", 		
-		triggerhealing = "주술사 진도|1이;가; 강력한 치유의 수호물 소환|1을;를; 시전합니다.", 
+BigWigsJindo = BigWigs:NewModule(boss)
+BigWigsJindo.zonename = AceLibrary("Babble-Zone-2.0")("Zul'Gurub")
+BigWigsJindo.enabletrigger = boss
+BigWigsJindo.toggleoptions = {"brainwash", "healing", "bosskill"}
+BigWigsJindo.revision = tonumber(string.sub("$Revision$", 12, -3))
 
-		warnbrainwash = "세뇌의 토템 - 제거!",
-		warnhealing = "치유의 토템 - 제거!",
+------------------------------
+--      Initialization      --
+------------------------------
 
-		bosskill = "주술사 진도를 물리쳤습니다!",
-	} or GetLocale() == "deDE" and { 
-		disabletrigger = "Jin'do der Verhexer stirbt.",
-
-		triggerbrainwash = "Jin'do der Verhexer wirkt Totem der Gehirnw\195\164sche beschw\195\182ren.",
-		triggerhealing = "Jin'do der Verhexer wirkt M\195\164chtiger Heilungszauberschutz.",
-
-		warnbrainwash = "\195\156bernahmetotem!",
-		warnhealing = "Heiltotem!",
-
-		bosskill = "Jin'do wurde besiegt!",
-	} or { 
-		disabletrigger = "Jin'do the Hexxer dies.",
-
-		triggerbrainwash = "Jin'do the Hexxer casts Summon Brain Wash Totem.",
-		triggerhealing = "Jin'do the Hexxer casts Powerful Healing Ward.",
-
-		warnbrainwash = "Brain Wash Totem!",
-		warnhealing = "Healing Totem!",
-
-		bosskill = "Jin'do the Hexxer has been defeated!",
-	},
-})
-
-function BigWigsJindo:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
-
-function BigWigsJindo:Enable()
-	self.disabled = nil
+function BigWigsJindo:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
-function BigWigsJindo:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-end
-
-function BigWigsJindo:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if arg1 == self.loc.disabletrigger then
-		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-		self:Disable()
-	end
-end
-
-function BigWigsJindo:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
-	if arg1 == self.loc.triggerbrainwash and not self:GetOpt("notBrainWash") then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warnbrainwash, "Orange")
-	elseif arg1 == self.loc.triggerhealing and not self:GetOpt("notHealing") then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warnhealing, "Red" )
+function BigWigsJindo:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
+	if self.db.profile.brainwash and msg == L"triggerbrainwash" then
+		self:TriggerEvent("BigWigs_Message", L"warnbrainwash", "Orange")
+	elseif self.db.profile.healing and msg == L"triggerhealing" then
+		self:TriggerEvent("BigWigs_Message", L"warnhealing", "Red" )
 	end 
 end
-
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsJindo:RegisterForLoad()

@@ -1,91 +1,126 @@
+
+assert( BigWigs, "BigWigs not found!")
+
+
+------------------------------
+--      Are you local?      --
+------------------------------
+
+local L = AceLibrary("AceLocale-2.0"):new("BigWigsBars")
+local paint = AceLibrary("PaintChips-2.0")
 local sliderchange
 local minscale, maxscale = 0.25, 2
-local dewdrop = DewdropLib:GetInstance("1.0")
 
-local cmdopt = GetLocale() == "koKR" and {
-	option = "바",
-	desc   = "Timex 바 옵션 조정.",
-	input  = true,
+
+----------------------------
+--      Localization      --
+----------------------------
+
+L:RegisterTranslations("enUS", function() return {
+	["Bars"] = true,
+
+	["bars"] = true,
+	["anchor"] = true,
+	["scale"] = true,
+	["up"] = true,
+
+	["Options for the timer bars."] = true,
+	["Show the bar anchor frame."] = true,
+	["Set the bar scale."] = true,
+	["Toggle bars grow upwards/downwards from anchor."] = true,
+
+	["Timer bars"] = true,
+	["Show anchor"] = true,
+	["Grow bars upwards"] = true,
+	["Scale"] = true,
+	["Bar scale"] = true,
+
+	["Bars now grow %2$s"] = true,
+	["Scale is set to %2$s"] = true,
+
+	["Up"] = true,
+	["Down"] = true,
+} end)
+
+
+L:RegisterTranslations("koKR", function() return {
+	["bars"] = "바",
+	["anchor"] = "위치",
+	["scale"] = "크기",
+	["up"] = "방향",
+
+	["Options for the timer bars."] = "Timer 바 옵션 조정.",
+	["Show the bar anchor frame."] = "바 위치 조정 프레임 보이기.",
+	["Set the bar scale."] = "바 크기 조절.",
+	["Toggle bars grow upwards/downwards from anchor."] = "바 표시 순서를 위/아래로 조정.",
+
+	["Timer bars"] = "타이머 바",
+	["Show anchor"] = "앵커 보이기",
+	["Grow bars upwards"] = "바 위로 자라기",
+	["Scale"]= "크기",
+} end)
+
+
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+BigWigsBars = BigWigs:NewModule(L"Bars")
+BigWigsBars.revision = tonumber(string.sub("$Revision$", 12, -3))
+BigWigsBars.defaultDB = {
+	growup = false,
+	scale = 1.0,
+}
+BigWigsBars.consoleCmd = L"bars"
+BigWigsBars.consoleOptions = {
+	type = "group",
+	name = L"Bars",
+	desc = L"Options for the timer bars.",
 	args   = {
-		{
-			option = "위치",
-			desc   = "바 위치 조정 프레임 보이기.",
-			method = "BIGWIGS_SHOW_ANCHORS",
+		[L"anchor"] = {
+			type = "execute",
+			name = L"Show anchor",
+			desc = L"Show the bar anchor frame.",
+			func = function() BigWigsBars:BigWigs_ShowAnchors() end,
 		},
-		{
-			option = "크기",
-			desc   = "바 크기 조절.",
-			method = "SetScale",
-			input  = true,
+		[L"up"] = {
+			type = "toggle",
+			name = "Group upwards",
+			desc = L"Toggle bars grow upwards/downwards from anchor.",
+			get = function() return BigWigsBars.db.profile.growup end,
+			set = function(v) BigWigsBars.db.profile.growup = v end,
+			message = L"Bars now grow %2$s",
+			current = L"Bars now grow %2$s",
+			map = {[true] = L"Up", [false] = L"Down"},
 		},
-		{
-			option = "방향",
-			desc   = "바 표시 순서를 위/아래로 조정.",
-			method = "ToggleUp",
-		},
-	},
-} or {
-	option = "bars",
-	desc   = "Options for the Timex Bars.",
-	input  = true,
-	args   = {
-		{
-			option = "anchor",
-			desc   = "Show the bar anchor frame.",
-			method = "BIGWIGS_SHOW_ANCHORS",
-		},
-		{
-			option = "scale",
-			desc   = "Set the bar scale.",
-			method = "SetScale",
-			input  = true,
-		},
-		{
-			option = "up",
-			desc   = "Toggle bars grow upwards/downwards from anchor.",
-			method = "ToggleUp",
+		[L"scale"] = {
+			type = "range",
+			name = L"Bar scale",
+			desc = L"Set the bar scale.",
+			min = 0.2,
+			max = 2.0,
+			step = 0.1,
+			get = function() return BigWigsBars.db.profile.scale end,
+			set = function(v) BigWigsBars.db.profile.scale = v end,
 		},
 	},
 }
 
 
-BigWigsBars = AceAddon:new({
-	name          = "BigWigsBars",
-	cmd           = AceChatCmd:new({}, {}),
-	cmdOptions    = cmdopt,
+------------------------------
+--      Initialization      --
+------------------------------
 
-	loc = GetLocale() == "koKR" and {
-		menutitle = "타이머 바",
-		menuanchor = "앵커 보이기",
-		menuup = "바 위로 자라기",
-		menuscale = "크기",
-	} or {
-		menutitle = "Timex Bars",
-		menuanchor = "Show anchor",
-		menuup = "Grow bars upwards",
-		menuscale = "Scale",
-	},
-})
-
-
-function BigWigsBars:Initialize()
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-
-	self.frame = BigWigsAnchorFrame
+function BigWigsBars:OnInitialize()
+	self.anchorframe = BigWigsBarsAnchorFrame
 end
 
 
-function BigWigsBars:Enable()
-	self:RegisterEvent("BIGWIGS_SHOW_ANCHORS")
-	self:RegisterEvent("BIGWIGS_HIDE_ANCHORS")
-	self:RegisterEvent("BIGWIGS_BAR_START")
-	self:RegisterEvent("BIGWIGS_BAR_CANCEL")
-	self:RegisterEvent("BIGWIGS_BAR_SETCOLOR")
-end
-
-
-function BigWigsBars:Disable()
-	self:UnregisterAllEvents()
+function BigWigsBars:OnEnable()
+	self:RegisterEvent("BigWigs_ShowAnchors")
+	self:RegisterEvent("BigWigs_HideAnchors")
+	self:RegisterEvent("BigWigs_StartBar")
+	self:RegisterEvent("BigWigs_StopBar")
 end
 
 
@@ -93,59 +128,31 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsBars:BIGWIGS_SHOW_ANCHORS()
-	self.frame:Show()
+function BigWigsBars:BigWigs_ShowAnchors()
+	self.anchorframe:Show()
 end
 
 
-function BigWigsBars:BIGWIGS_HIDE_ANCHORS()
-	self.frame:Hide()
+function BigWigsBars:BigWigs_HideAnchors()
+	self.anchorframe:Hide()
 end
 
 
-function BigWigsBars:BIGWIGS_BAR_START(text, time, bar, color, texture)
+function BigWigsBars:BigWigs_StartBar(module, text, time, bar, icon, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10)
 	if not text or not time then return end
-
-	local red, green, blue = BigWigs:GetColor(color)
 	local id = "BigWigsBar "..text
-	local u = self:GetOpt("growup")
-	TimexBar:Get(id)
-	TimexBar:SetText(id, text)
-	TimexBar:SetTexture(id, texture)
-	TimexBar:SetColor(id, red or 0, green or 0, blue or 0)
-	TimexBar:SetPoint(id, u and "BOTTOM" or "TOP", "BigWigsAnchorFrame", u and "TOP" or "BOTTOM", 0, (u and (-1) or 1) * ((bar or 0) * (-15) + 5))
-	TimexBar:SetScale(id, self:GetOpt("scale"))
-	TimexBar:Start(id, time)
+	local u = self.db.profile.growup
+
+	module:RegisterCandyBar(id, time, text, icon, c1, c2, c3, c4, c5, c6, c8, c9, c10)
+	module:SetCandyBarPoint(id, u and "BOTTOM" or "TOP", "BigWigsBarsAnchorFrame", u and "TOP" or "BOTTOM", 0, (u and (-1) or 1) * ((bar or 0) * (-16) + 5))
+	module:SetCandyBarScale(id, self.db.profile.scale or 1)
+	module:StartCandyBar(id, true)
 end
 
-
-function BigWigsBars:BIGWIGS_BAR_CANCEL(text)
+function BigWigsBars:BigWigs_StopBar(module, text)
 	if not text then return end
-	TimexBar:Stop("BigWigsBar "..text)
+	module:UnregisterCandyBar("BigWigsBar "..text)
 end
-
-
-function BigWigsBars:BIGWIGS_BAR_SETCOLOR(text, color)
-	if not text then return end
-	self:debug(string.format("BIGWIGS_BAR_SETCOLOR | %s | %s", text, type(color) == "string" and color or type(color)))
-
-	local red, green, blue = BigWigs:GetColor(color)
-	local id = "BigWigsBar "..text
-	TimexBar:SetColor(id, red or 0, green or 0, blue or 0)
-end
-
-
-------------------------------
---      Menu Functions      --
-------------------------------
-
-function BigWigsBars:MenuSettings(level, value)
-	dewdrop:AddLine("text", self.loc.menuanchor, "func", self.BIGWIGS_SHOW_ANCHORS, "arg1", self)
-	dewdrop:AddLine("text", self.loc.menuup, "func", self.ToggleUp, "arg1", self, "arg2", true, "checked", self:GetOpt("growup"))
-	dewdrop:AddLine("text", self.loc.menuscale, "sliderFunc", sliderchange, "hasArrow", true, "hasSlider", true,
-		"sliderTop", maxscale, "sliderBottom", minscale, "sliderValue", ((self:GetOpt("scale") or 1)-minscale)/(maxscale-minscale))
-end
-
 
 ------------------------------
 --      Slash Handlers      --
@@ -154,8 +161,8 @@ end
 function BigWigsBars:SetScale(msg, supressreport)
 	local scale = tonumber(msg)
 	if scale and scale >= minscale and scale <= maxscale then
-		self:SetOpt(scale, "scale")
-		if not supressreport then self.cmd:result("Scale is set to "..scale) end
+		self.db.profile.scale = scale
+		if not supressreport then self.core:Print(L"Scale is set to %s", scale) end
 	end
 end
 
@@ -167,12 +174,8 @@ end
 
 
 function BigWigsBars:ToggleUp(supressreport)
-	local t = self:TogOpt("growup")
-	if not supressreport then self.cmd:result("Bars now grow ".. (t and "upwards." or "downwards.")) end
+	self.db.profile.growup = not self.db.profile.growup
+	local t = self.db.profile.growup
+	if not supressreport then self.core:Print(L"Bars now grow %s", (t and L"Up" or L"Down")) end
 end
 
-
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsBars:RegisterForLoad()

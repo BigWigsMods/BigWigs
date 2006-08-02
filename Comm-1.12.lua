@@ -1,5 +1,5 @@
 
-if GetBuildInfo() == "1.12" then return end
+if GetBuildInfo() ~= "1.12" then return end
 assert(BigWigs, "BigWigs not found!")
 
 
@@ -22,7 +22,7 @@ BigWigsComm = BigWigs:NewModule("Comm")
 ------------------------------
 
 function BigWigsComm:OnEnable()
-	self:RegisterEvent("CHAT_MSG_CHANNEL")
+	self:RegisterEvent("CHAT_MSG_ADDON")
 	self:RegisterEvent("BigWigs_SendSync")
 	self:RegisterEvent("BigWigs_ThrottleSync")
 end
@@ -32,38 +32,26 @@ end
 --      Event Handlers      --
 ------------------------------
 
--- Handle inbound chatter when the user runs CTRA
-function BigWigsComm:CHAT_MSG_CHANNEL(msg, sender, arg3, arg4, arg5, arg6, arg7, arg8, chan)
-	local rawmsg, channel, nick = msg, chan or arg3, sender
-	
-	if channel ~= "SelfSync" and (not CT_RA_Channel or string.lower(channel) ~= string.lower(CT_RA_Channel)) then return end
+function BigWigsComm:CHAT_MSG_ADDON(prefix, message, type, sender)
+	if (prefix ~= "BigWigs" or type ~= "RAID") then return end
 
-	local cleanmsg = string.gsub(rawmsg, "%$", "s")
-	cleanmsg = string.gsub(cleanmsg, "§", "S")
-	if strsub(cleanmsg, strlen(cleanmsg)-7) == " ...hic!" then cleanmsg = strsub(cleanmsg, 1, strlen(cleanmsg)-8) end
-
-	local _, _, sync, rest = string.find(cleanmsg, "^BigWigsSync (%S+)%s*(.*)$")
+	local _, _, sync, rest = string.find(message, "(%S+)%s*(.*)$")
 	if not sync then return end
 
-
 	if not throt[sync] or not times[sync] or (times[sync] + throt[sync]) <= GetTime() then
-		self:TriggerEvent("BigWigs_RecvSync", sync, rest, nick)
+		self:TriggerEvent("BigWigs_RecvSync", sync, rest, sender)
 		times[sync] = GetTime()
 	end
 end
 
 
 function BigWigsComm:BigWigs_SendSync(msg)
-	if oRA_Core then oRA_Core:Send("BigWigsSync " .. msg)
-	elseif CT_RA_AddMessage then CT_RA_AddMessage("BigWigsSync " .. msg) end
-	self:CHAT_MSG_CHANNEL("BigWigsSync " .. msg, UnitName("player"), "SelfSync")
+	SendAddonMessage("BigWigs", msg, "RAID")
+	self:CHAT_MSG_ADDON("BigWigs", msg, "RAID")
 end
 
 
 function BigWigsComm:BigWigs_ThrottleSync(msg, time)
 	assert(msg, "No message passed")
-
 	throt[msg] = time
 end
-
-

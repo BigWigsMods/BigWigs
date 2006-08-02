@@ -1,252 +1,232 @@
-﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
-local metro = Metrognome:GetInstance("1")
+﻿------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsChromaggus = AceAddon:new({
-	name          = "BigWigsChromaggus",
-	cmd           = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Chromaggus")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Blackwing Lair"),
-	enabletrigger = bboss("Chromaggus"),
-	bossname = bboss("Chromaggus"),
+local breath1 = nil
+local breath2 = nil
+
+----------------------------
+--      Localization      --
+----------------------------
+
+L:RegisterTranslations("enUS", function() return {
+	cmd = "Chromaggus",
 	
-	toggleoptions = GetLocale() == "koKR" and {
-		notBreaths = "브레스 경고",
-		notVulnerability = "취약 속성 변경 경고",
-		notFrenzy = "광폭화 시간 경고",
-		notBosskill = "보스 사망 알림",
-	} or {
-		notBreaths = "Warn for Chromaggus his breaths",
-		notVulnerability = "Warn when Chromaggus his vulnerability changes",
-		notFrenzy = "Warn when Chromaggus goes into a killing frenzy",
-		notBosskill = "Boss death",
-	},
-	optionorder = {"notBreaths", "notVulnerability", "notFrenzy", "notBosskill"},
+	frenzy_cmd = "frenzy",
+	frenzy_name = "Frenzy Alert",
+	frenzy_desc = "Warn for Frenzy",
+	
+	breath_cmd = "breath",
+	breath_name = "Breath Alerts",
+	breath_desc = "Warn for Breaths",
+	
+	vulnerability_cmd = "vulnerability",
+	vulnerability_name = "Vulnerability Alerts",
+	vulnerability_desc = "Warn for Vulnerability changes",
+	
+	trigger1 = "^Chromaggus begins to cast ([%w ]+)\.",
+	trigger2 = "^[%w']+ [%w' ]+ ([%w]+) Chromaggus for ([%d]+) ([%w ]+) damage%..*",
+	trigger3 = "Chromaggus's Time Lapse was resisted by ([%w]+)%.",
+	trigger4 = "goes into a killing frenzy!",
+	trigger5 = "flinches as its skin shimmers.",
 
-	loc = GetLocale() == "koKR" and {
-		disabletrigger = "크로마구스|1이;가; 죽었습니다.",
+	hit = "hits",
+	crit = "crits",
 
-		trigger1 = "크로마구스|1이;가; (.+)|1을;를; 시전합니다.",
-		trigger2 = "(.+)|1이;가; (.+)|1으로;로; 크로마구스에게 (%d+)의 (.+) 입혔습니다.",
-		trigger3 = "크로마구스|1이;가; 시간의 쇠퇴|1으로;로; (.+)|1을;를; 공격했지만 저항했습니다.",		
-		trigger4 = "광란의 상태에 빠집니다!",
-		trigger5 = "가죽이 점점 빛나면서 물러서기 시작합니다.",
+	warn1 = "%s in 10 seconds!",
+	warn2 = "%s is casting!",
+	warn3 = "New spell vulnerability: %s",
+	warn4 = "Spell vulnerability changed!",
+	warn5 = "Frenzy Alert!",
 
-		hit = "피해를",
-		crit = "치명상을",
+	breath1 = "Time Lapse",
+	breath2 = "Corrosive Acid",
+	breath3 = "Ignire Flesh",
+	breath4 = "Incinerate",
+	breath5 = "Frost Burn",
 
-		warn1 = "%s 10초전!",
-		warn2 = "%s를 시전합니다!",
-		warn3 = "새로운 취약 속성: %s",
-		warn4 = "취약 속성이 변경되었습니다!",
-		warn5 = "광폭화 - 평정 사격!",
-		bosskill = "크로마구스를 물리쳤습니다!",
+	icon1 = "Interface\\Icons\\Spell_Arcane_PortalOrgrimmar",
+	icon2 = "Interface\\Icons\\Spell_Nature_Acid_01",
+	icon3 = "Interface\\Icons\\Spell_Fire_Fire",
+	icon4 = "Interface\\Icons\\Spell_Shadow_ChillTouch",
+	icon5 = "Interface\\Icons\\Spell_Frost_ChillingBlast",
 
-		breathsicons = {
-			["시간의 쇠퇴"] = "Interface\\Icons\\Spell_Arcane_PortalOrgrimmar",
-			["부식성 산"] = "Interface\\Icons\\Spell_Nature_Acid_01",
-			["살점 태우기"] = "Interface\\Icons\\Spell_Fire_Fire",
-			["소각"] = "Interface\\Icons\\Spell_Shadow_ChillTouch",
-			["동결"] = "Interface\\Icons\\Spell_Frost_ChillingBlast",
-		}
-	}
-		or GetLocale() == "deDE" and
-	{
-		disabletrigger = "Chromaggus stirbt.",
+} end )
 
-		trigger1 = "^Chromaggus beginnt ([%w ]+)\ zu wirken.",
-		trigger2 = "^[%w']+ [%w' ]+ ([%w]+) Chromaggus f\195\188r ([%d]+) ([%w ]+)schaden%..*",
-		trigger3 = "Chromaggus's Zeitraffer wurde von ([%w]+)% widerstanden.",
-		trigger4 = "ger\195\164t in t\195\182dliche Raserei!",
-		trigger5 = "als die Haut schimmert",
+L:RegisterTranslations("deDE", function() return {
+	trigger1 = "^Chromaggus beginnt ([%w ]+)\ zu wirken.",
+	trigger2 = "^[%w']+ [%w' ]+ ([%w]+) Chromaggus f\195\188r ([%d]+) ([%w ]+)schaden%..*",
+	trigger3 = "Chromaggus's Zeitraffer wurde von ([%w]+)% widerstanden.",
+	trigger4 = "ger\195\164t in t\195\182dliche Raserei!",
+	trigger5 = "als die Haut schimmert",
 
-		hit = "trifft",
-		crit = "trifft kritisch",
+	hit = "trifft",
+	crit = "trifft kritisch",
 
-		warn1 = "%s in 10 Sekunden!",
-		warn2 = "Chromaggus wirkt %s!",
-		warn3 = "Neue Verwundbarkeit: %s",
-		warn4 = "Verwundbarkeit ge\195\164ndert!",
-		warn5 = "RASEREI!",
-		bosskill = "Chromaggus wurde besiegt!",
+	warn1 = "%s in 10 Sekunden!",
+	warn2 = "Chromaggus wirkt %s!",
+	warn3 = "Neue Verwundbarkeit: %s",
+	warn4 = "Verwundbarkeit ge\195\164ndert!",
+	warn5 = "RASEREI!",
 
-		breathsicons = {
-			["Zeitraffer"] = "Interface\\Icons\\Spell_Arcane_PortalOrgrimmar",
-			["\195\132tzende S\195\164ure"] = "Interface\\Icons\\Spell_Nature_Acid_01",
-			["Fleisch entz\195\188nden"] = "Interface\\Icons\\Spell_Fire_Fire",
-			["Verbrennen"] = "Interface\\Icons\\Spell_Shadow_ChillTouch",
-			["Frostbeulen"] = "Interface\\Icons\\Spell_Frost_ChillingBlast",
-		}
-	}
-		or GetLocale() == "zhCN" and
-	{
-		disabletrigger = "克洛玛古斯死亡了。",
+	breath1 = "Zeitraffer",
+	breath2 = "Corrosive Acid",
+	breath3 = "Fleisch entz\195\188nden",
+	breath4 = "Verbrennen",
+	breath5 = "Frostbeulen",
+} end )
 
-		trigger1 = "^克洛玛古斯开始施放(.+)。",
-		trigger2 = "^.+的(.+)克洛玛古斯造成(%d+)点(.+)伤害。",
-		trigger3 = "^克洛玛古斯的时间流逝被(.+)抵抗了。",
-		trigger4 = "变得极为狂暴！",
-		trigger5 = "的皮肤闪着光芒",
+L:RegisterTranslations("zhCN", function() return {
+	trigger1 = "^克洛玛古斯开始施放(.+)。",
+	trigger2 = "^.+的(.+)克洛玛古斯造成(%d+)点(.+)伤害。",
+	trigger3 = "^克洛玛古斯的时间流逝被(.+)抵抗了。",
+	trigger4 = "变得极为狂暴！",
+	trigger5 = "的皮肤闪着光芒",
 
-		hit = "击中",
-		crit = "致命一击",
+	hit = "击中",
+	crit = "致命一击",
 
-		warn1 = "%s - 10秒后施放！",
-		warn2 = "正在施放 %s！",
-		warn3 = "新法术弱点：%s",
-		warn4 = "法术弱点已改变！",
-		warn5 = "狂暴警报 - 猎人立刻使用宁神射击！",
-		bosskill = "克洛玛古斯被击败了！",
+	warn1 = "%s - 10秒后施放！",
+	warn2 = "正在施放 %s！",
+	warn3 = "新法术弱点：%s",
+	warn4 = "法术弱点已改变！",
+	warn5 = "狂暴警报 - 猎人立刻使用宁神射击！",
 
-		breathsicons = {
-			["时间流逝"] = "Interface\\Icons\\Spell_Arcane_PortalOrgrimmar",
-			["腐蚀酸液"] = "Interface\\Icons\\Spell_Nature_Acid_01",
-			["Ignite Flesh"] = "Interface\\Icons\\Spell_Fire_Fire",
-			["Incinerate"] = "Interface\\Icons\\Spell_Shadow_ChillTouch",
-			["冰霜灼烧"] = "Interface\\Icons\\Spell_Frost_ChillingBlast",
-		}
-	}	or {
-		disabletrigger = "Chromaggus dies.",
+	breath1 = "时间流逝",
+	breath2 = "腐蚀酸液",
+	breath3 = "Ignite Flesh",
+	breath4 = "Incinerate",
+	breath5 = "冰霜灼烧",
+} end )
 
-		trigger1 = "^Chromaggus begins to cast ([%w ]+)\.",
-		trigger2 = "^[%w']+ [%w' ]+ ([%w]+) Chromaggus for ([%d]+) ([%w ]+) damage%..*",
-		trigger3 = "Chromaggus's Time Lapse was resisted by ([%w]+)%.",
-		trigger4 = "goes into a killing frenzy!",
-		trigger5 = "flinches as its skin shimmers.",
+L:RegisterTranslations("koKR", function() return {
+	trigger1 = "크로마구스|1이;가; (.+)|1을;를; 시전합니다.",
+	trigger2 = "(.+)|1이;가; (.+)|1으로;로; 크로마구스에게 (%d+)의 (.+) 입혔습니다.",
+	trigger3 = "크로마구스|1이;가; 시간의 쇠퇴|1으로;로; (.+)|1을;를; 공격했지만 저항했습니다.",		
+	trigger4 = "광란의 상태에 빠집니다!",
+	trigger5 = "가죽이 점점 빛나면서 물러서기 시작합니다.",
 
-		hit = "hits",
-		crit = "crits",
+	hit = "피해를",
+	crit = "치명상을",
 
-		warn1 = "%s in 10 seconds!",
-		warn2 = "%s is casting!",
-		warn3 = "New spell vulnerability: %s",
-		warn4 = "Spell vulnerability changed!",
-		warn5 = "Frenzy - Tranq Shot!",
-		bosskill = "Chromaggus has been defeated!",
+	warn1 = "%s 10초전!",
+	warn2 = "%s를 시전합니다!",
+	warn3 = "새로운 취약 속성: %s",
+	warn4 = "취약 속성이 변경되었습니다!",
+	warn5 = "광폭화 - 평정 사격!",
 
-		breathsicons = {
-			["Time Lapse"] = "Interface\\Icons\\Spell_Arcane_PortalOrgrimmar",
-			["Corrosive Acid"] = "Interface\\Icons\\Spell_Nature_Acid_01",
-			["Ignite Flesh"] = "Interface\\Icons\\Spell_Fire_Fire",
-			["Incinerate"] = "Interface\\Icons\\Spell_Shadow_ChillTouch",
-			["Frost Burn"] = "Interface\\Icons\\Spell_Frost_ChillingBlast",
-		},
-	},
-})
+	breath1 = "시간의 쇠퇴",
+	breath2 = "부식성 산",
+	breath3 = "살점 태우기",
+	breath4 = "소각",
+	breath5 = "동결",
 
-function BigWigsChromaggus:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
+} end )
 
-function BigWigsChromaggus:Enable()
-	self.disabled = nil
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+BigWigsChromaggus = BigWigs:NewModule(boss)
+BigWigsChromaggus.zonename = AceLibrary("Babble-Zone-2.0")("Blackwing Lair")
+BigWigsChromaggus.enabletrigger = boss
+BigWigsChromaggus.toggleoptions = { "frenzy", "breath", "vulnerability", "bosskill"}
+BigWigsChromaggus.revision = tonumber(string.sub("$Revision$", 12, -3))
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function BigWigsChromaggus:OnEnable()
+	-- in the module itself for resetting via schedule
+	self.vulnerability = nil
+	-- locals
+	breath1 = nil
+	breath2 = nil
+
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE", "PlayerDamageEvents")
 	self:RegisterEvent("CHAT_MSG_SPELL_PET_DAMAGE", "PlayerDamageEvents")
 	self:RegisterEvent("CHAT_MSG_SPELL_PARTY_DAMAGE", "PlayerDamageEvents")
 	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE", "PlayerDamageEvents")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
-	self:RegisterEvent("BIGWIGS_SYNC_CHROMAGGUS_BREATH")
-	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "CHROMAGGUS_BREATH", 10)
-	metro:Register("BigWigs Chromaggus Vulnerability", function() BigWigsChromaggus.loc.vulnerability = nil end, 2.5)
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "ChromaggusBreath", 10)
+
 end
 
-function BigWigsChromaggus:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-	metro:Unregister("BigWigs Chromaggus Vulnerability")
-	if (self.loc.breath1) then
-		self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.breath1)
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", format(self.loc.warn1, self.loc.breath1))
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath1, 30)
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath1, 50)
-	end
-	if (self.loc.breath2) then
-		self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.breath2)
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", format(self.loc.warn1, self.loc.breath2))
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 30)
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.breath2, 50)
-	end
-	self.loc.vulnerability = nil
-	self.loc.breath1 = nil
-	self.loc.breath2 = nil
-end
-
-function BigWigsChromaggus:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger) then
-		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-		self:Disable()
+function BigWigsChromaggus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
+	local _,_, SpellName = string.find(msg, L"trigger1")
+	if SpellName then
+		self:TriggerEvent("BigWigs_SendSync", "ChromaggusBreath "..SpellName)
 	end
 end
 
-function BigWigsChromaggus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
-	local _,_, SpellName = string.find(arg1, self.loc.trigger1)
-	if (SpellName) then
-		self:TriggerEvent("BIGWIGS_SYNC_SEND", "CHROMAGGUS_BREATH "..SpellName)
-	end
-end
-
-function BigWigsChromaggus:BIGWIGS_SYNC_CHROMAGGUS_BREATH(SpellName)
-	if (SpellName) then
-		if (not self.loc.breath1) then
-			self.loc.breath1 = SpellName
-		elseif (not self.loc.breath2) and (self.loc.breath1 ~= SpellName) then
-			self.loc.breath2 = SpellName
+function BigWigsChromaggus:BigWigs_RecvSync(sync, SpellName)
+	if sync ~= "ChromaggusBreath" then return end
+	
+	if SpellName then
+		if not breath1 then
+			breath1 = SpellName
+		elseif not breath2 and not breath1 ~= SpellName then
+			breath2 = SpellName
 		end
 
-		self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.warn2, SpellName), "Red")
+		self:TriggerEvent("BigWigs_Message", format(L"warn2", SpellName), "Red")
 
-		if (self.loc.breath1 == SpellName and not self:GetOpt("notBreaths")) then
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", format(self.loc.warn1, SpellName), 50, "Red")
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.breath1, 60, 1, "Yellow", self.loc.breathsicons[SpellName])
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.breath1, 30, "Orange")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.breath1, 50, "Red")
-		elseif (self.loc.breath2 == SpellName and not self:GetOpt("notBreaths")) then
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", format(self.loc.warn1, SpellName), 50, "Red")
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.breath2, 60, 2, "Yellow", self.loc.breathsicons[SpellName])
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.breath2, 30, "Orange")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.breath2, 50, "Red")
+		-- figure out the icon
+		local breathnr = L:HasReverseTranslation(SpellName) and L:GetReverseTranslation(SpellName) or "breath1"
+		breathnr = string.sub(breathnr, -1 )
+		if tonumber( breathnr) < 1 or tonumber( breathnr ) > 5 then breathnr = 1 end
+		local icon = "icon"..breathnr
+		icon = L(icon)
+
+		if breath1 == SpellName and not self.db.profile.breath then
+			self:ScheduleEvent("bwchromaggusbreath1", "BigWigs_Message", 50, format(L"warn1", breath1), "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, breath1, 60, 1, icon, "Green", "Yellow", "Orange", "Red")
+		elseif breath2 == SpellName and self.db.profile.breath then
+			self:ScheduleEvent("bwchromaggusbreath2", "BigWigs_Message", 50, format(L"warn1", breath2), "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, breath2, 60, 2, icon, "Green", "Yellow", "Orange", "Red")
 		end
 	end
 end
 
-function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE()
-	if (arg1 == self.loc.trigger4) then
-		if (not self:GetOpt("notFrenzy")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn5, "Red") end
-	elseif (arg1 == self.loc.trigger5) then
-		if (not self:GetOpt("notVulnerability")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "White") end
-		metro:Start("BigWigs Chromaggus Vulnerability", 1)
+function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE( msg )
+	if msg == L"trigger4" and self.db.profile.frenzy then
+		self:TriggerEvent("BigWigs_Message", L"warn5", "Red")
+	elseif msg == L"trigger5" and self.db.profile.vulnerability then
+		self:TriggerEvent("BigWigs_Message", L"warn4", "White")
+		self:ScheduleEvent(function() BigWigsChromaggus.vulnerability = nil end, 2.5 )
 	end
 end
 
 if (GetLocale() == "koKR") then
-	function BigWigsChromaggus:PlayerDamageEvents()
-		if (not self.loc.vulnerability) then
-			local _, _, _, School, Dmg, Type = string.find(arg1, self.loc.trigger2)
-			if (Type == (self.loc.hit or self.loc.crit) and tonumber(Dmg or "") and School) then
-				if ((tonumber(Dmg) >= 550 and Type == self.loc.hit) or (tonumber(Dmg) >= 1100 and Type == self.loc.crit)) then
-					self.loc.vulnerability = School
-					if (not self:GetOpt("notVulnerability")) then self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.warn3, School), "White") end
+	function BigWigsChromaggus:PlayerDamageEvents(msg)
+		if (not self.vulnerability) then
+			local _, _, _, school, dmg, type = string.find(msg, L"trigger2")
+			if type == (L"hit" or L"crit") and tonumber(dmg or "") and school then
+				if (tonumber(dmg) >= 550 and type == L"hit") or (tonumber(dmg) >= 1100 and type == L"crit") then
+					self.vulnerability = school
+					if self.db.profile.vulnerability then self:TriggerEvent("BigWigs_Message", format(L"warn3", school), "White") end
 				end
 			end
 		end
 	end
 else
-	function BigWigsChromaggus:PlayerDamageEvents()
-		if (not self.loc.vulnerability) then
-			local _,_, Type, Dmg, School = string.find(arg1, self.loc.trigger2)
-			if (Type == (self.loc.hit or self.loc.crit) and tonumber(Dmg or "") and School) then
-				if ((tonumber(Dmg) >= 550 and Type == self.loc.hit) or (tonumber(Dmg) >= 1100 and Type == self.loc.crit)) then
-					self.loc.vulnerability = School
-					if (not self:GetOpt("notVulnerability")) then self:TriggerEvent("BIGWIGS_MESSAGE", format(self.loc.warn3, School), "White") end
+	function BigWigsChromaggus:PlayerDamageEvents(msg)
+		if (not self.vulnerability) then
+			local _,_, type, dmg, school = string.find(msg, L"trigger2")
+			if type == (L"hit" or L"crit") and tonumber(dmg or "") and school then
+				if (tonumber(dmg) >= 550 and type == L"hit") or (tonumber(dmg) >= 1100 and type == L"crit") then
+					self.vulnerability = school
+					if self.db.profile.vulnerability then self:TriggerEvent("BigWigs_Message", format(L"warn3", school), "White") end
 				end
 			end
 		end
 	end
 end
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsChromaggus:RegisterForLoad()

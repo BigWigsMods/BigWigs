@@ -1,130 +1,116 @@
-﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
+﻿------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsMagmadar = AceAddon:new({
-	name = "BigWigsMagmadar",
-	cmd = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Magmadar")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Molten Core"),
-	enabletrigger = bboss("Magmadar"),
-	bossname = bboss("Magmadar"),
+----------------------------
+--      Localization      --
+----------------------------
 
-	toggleoptions = GetLocale() == "koKR" and {
-		notFear = "공포 경고",
-		notFrenzy = "광폭화 경고",
-		notBosskill = "보스 사망 알림",	 	
-	} or {		
-		notFear = "Warn for Fear",
-		notFrenzy = "Warn when Magmadar goes into a frenzy",
-		notBosskill = "Boss death",
-	},
-	optionorder = {"notFear", "notFrenzy", "notBosskill"},
+L:RegisterTranslations("enUS", function() return {
+	-- Chat message triggers
+	trigger1 = "goes into a killing frenzy!",
+	trigger2 = "by Panic.",
 
-	loc = GetLocale() == "koKR" and {
-		bossname = "마그마다르",
-		disabletrigger = "마그마다르|1이;가; 죽었습니다.",
+	-- Warnings and bar texts
+	["Frenzy alert!"] = true,
+	["5 seconds until AoE Fear!"] = true,
+	["AoE Fear - 30 seconds until next!"] = true,
+	["AoE Fear"] = true,
 
-		trigger1 = "살기를 띤 듯한 광란의 상태에 빠집니다!",
-		trigger2 = "공황에 걸렸습니다.",
+	-- AceConsole strings
+	cmd = "Magmadar",
+	fear_cmd = "fear",
+	fear_name = "Warn for Fear",
+	fear_desc = "Warn when Magmadar casts AoE Fear",
+	frenzy_cmd = "frenzy",
+	frenzy_name = "Frenzy alert",
+	frenzy_desc = "Warn when Magmadar goes into a frenzy",
+} end)
 
-		warn1 = "광폭화 경보 - 사냥꾼의 평정 사격을 쏘세요!",
-		warn2 = "5초후 광역 공포!",
-		warn3 = "광역 공포 경보 - 다음 공포까지 30초!",
+L:RegisterTranslations("koKR", function() return {
+	trigger1 = "살기를 띤 듯한 광란의 상태에 빠집니다!",
+	trigger2 = "공황에 걸렸습니다.",
 
-		bar1text = "광역 공포",
-	}
-		or GetLocale() == "zhCN" and
-	{
-		bossname = "玛格曼达",
-		disabletrigger = "玛格曼达死亡了。",
+	["Frenzy alert!"] = "광폭화 경보 - 사냥꾼의 평정 사격을 쏘세요!",
+	["5 seconds until AoE Fear!"] = "5초후 광역 공포!",
+	["AoE Fear - 30 seconds until next!"] = "광역 공포 경보 - 다음 공포까지 30초!",
 
-		trigger1 = "变得极为狂暴！",
-		trigger2 = "受到了恐慌",
+	["AoE Fear"] = "광역 공포",
 
-		warn1 = "狂暴警报 - 猎人立刻使用宁神射击！",
-		warn2 = "5秒后发动群体恐惧！",
-		warn3 = "群体恐惧 - 30秒后再次发动",
+	fear_name = "공포 경고",
+	fear_desc = "공포 경고",
+	frenzy_desc = "광폭화 경고",
+} end)
 
-		bar1text = "群体恐惧",
-	} or GetLocale == "deDE" and {
-		bossname = "Magmadar",
-		disabletrigger = "Magmadar stirbt.",
 
-		trigger1 = "ger\195\164t in t\195\182dliche Raserei!",
-		trigger2 = "von Panik betroffen",
+L:RegisterTranslations("zhCN", function() return {
+	trigger1 = "变得极为狂暴！",
+	trigger2 = "受到了恐慌",
 
-		warn1 = "RASEREI!",
-		warn2 = "5 Sekunden bis Fear!",
-		warn3 = "Fear! N\195\164chstes in 30 Sekunden!",
+	["Frenzy alert!"] = "狂暴警报 - 猎人立刻使用宁神射击！",
+	["5 seconds until AoE Fear!"] = "5秒后发动群体恐惧！",
+	["AoE Fear - 30 seconds until next!"] = "群体恐惧 - 30秒后再次发动",
 
-		bar1text = "Fear",
-	} or {
-		bossname = "Magmadar",
-		disabletrigger = "Magmadar dies.",
+	["AoE Fear"] = "群体恐惧",
+} end)
 
-		trigger1 = "goes into a killing frenzy!",
-		trigger2 = "by Panic.",
 
-		warn1 = "Frenzy alert - Hunter Tranq shot now!",
-		warn2 = "5 second until AoE Fear!",
-		warn3 = "AoE Fear alert - 30 seconds till next!",
+L:RegisterTranslations("deDE", function() return {
+	trigger1 = "ger\195\164t in t\195\182dliche Raserei!",
+	trigger2 = "von Panik betroffen.",
 
-		bar1text = "AoE Fear",
-	},
-})
+	["Frenzy alert!"] = "RASEREI!",
+	["5 seconds until AoE Fear!"] = "5 Sekunden bis Fear!",
+	["AoE Fear - 30 seconds until next!"] = "Fear! N\195\164chste in 30 Sekunden!",
+} end)
 
-function BigWigsMagmadar:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
 
-function BigWigsMagmadar:Enable()
-	self.disabled = nil
-	self:RegisterEvent("BIGWIGS_MESSAGE")
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+BigWigsMagmadar = BigWigs:NewModule(boss)
+BigWigsMagmadar.zonename = AceLibrary("Babble-Zone-2.0")("Molten Core")
+BigWigsMagmadar.enabletrigger = boss
+BigWigsMagmadar.toggleoptions = {"fear", "frenzy", "bosskill"}
+BigWigsMagmadar.revision = tonumber(string.sub("$Revision$", 12, -3))
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function BigWigsMagmadar:OnEnable()
+	self.prior = nil
+	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Fear")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Fear")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Fear")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
-function BigWigsMagmadar:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn2)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 10)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 20)
-	self.prior = nil
-end
+------------------------------
+--      Event Handlers      --
+------------------------------
 
-function BigWigsMagmadar:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger) then
-		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-		self:Disable()
+function BigWigsMagmadar:CHAT_MSG_MONSTER_EMOTE(msg)
+	if msg == L"trigger1" and self.db.profile.frenzy then
+		self:TriggerEvent("BigWigs_Message", L"Frenzy alert!", "Red", nil, "Alert")
 	end
 end
 
-function BigWigsMagmadar:CHAT_MSG_MONSTER_EMOTE()
-	if (arg1 == self.loc.trigger1 and not self:GetOpt("notFrenzy")) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
-	end
-end
-
-function BigWigsMagmadar:Fear()
-	if (not self.prior and string.find(arg1, self.loc.trigger2) and not self:GetOpt("notFear")) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn3, "Red")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 25, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 30, 1, "Yellow", "Interface\\Icons\\Spell_Shadow_PsychicScream")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
+function BigWigsMagmadar:Fear(msg)
+	if not self.prior and string.find(msg, L"trigger2") and self.db.profile.fear then
+		self:TriggerEvent("BigWigs_StartBar", self, L"AoE Fear", 30, 1, "Interface\\Icons\\Spell_Shadow_PsychicScream", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L"AoE Fear - 30 seconds until next!", "Red")
+		self:ScheduleEvent("BigWigs_Message", 25, L"5 seconds until AoE Fear!", "Orange")
 		self.prior = true
 	end
 end
 
-function BigWigsMagmadar:BIGWIGS_MESSAGE(text)
-	if text == self.loc.warn2 then self.prior = nil end
+function BigWigsMagmadar:BigWigs_Message(text)
+	if text == L"5 seconds until AoE Fear!" then self.prior = nil end
 end
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsMagmadar:RegisterForLoad()

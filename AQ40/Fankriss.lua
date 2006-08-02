@@ -1,78 +1,59 @@
-local bboss = BabbleLib:GetInstance("Boss 1.2")
+------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsFankriss = AceAddon:new({
-	name          = "BigWigsFankriss",
-	cmd           = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Fankriss the Unyielding")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Ahn'Qiraj"),
-	enabletrigger = bboss("Fankriss the Unyielding"),
-	bossname = bboss("Fankriss the Unyielding"),
+----------------------------
+--      Localization      --
+----------------------------
 
-	toggleoptions = GetLocale() == "koKR" and {
-		notBosskill = "보스 사망 알림",
-		notWormWarn = "벌레 경고",
-	} or {
-		notBosskill = "Boss death",
-		notWormWarn = "Worm warnings",
-	},
+L:RegisterTranslations("enUS", function() return {
+	cmd = "Fankriss",
+	worm_cmd = "worm",
+	worm_name = "Worm Alert",
+	worm_desc = "Warn for Incoming Worms",
 
-	optionorder = {"notWormWarn", "notBosskill"},
+	wormtrigger = "Fankriss the Unyielding casts Summon Worm.",
+	wormwarn = "Incoming Worm!",
+} end )
 
+L:RegisterTranslations("zhCN", function() return {
+	wormtrigger = "顽强的范克瑞斯施放了召唤虫子。",
+	wormwarn = "虫子出现 - 赶快杀掉！",
+} end )
 
-	loc = GetLocale() == "koKR" and {
-		disabletrigger = "불굴의 판크리스|1이;가; 죽었습니다.",
-		bosskill = "불굴의 판크리스를 물리쳤습니다!",
+L:RegisterTranslations("koKR", function() return {
+	wormtrigger = "불굴의 판크리스|1이;가; 벌레 소환|1을;를; 시전합니다.",
+	wormwarn = "벌레 소환 - 제거!",
+} end )
 
-		wormtrigger = "불굴의 판크리스|1이;가; 벌레 소환|1을;를; 시전합니다.",
-		wormwarn = "벌레 소환 - 제거!",
-	}
-		or GetLocale() == "zhCN" and
-	{
-		disabletrigger = "顽强的范克瑞斯死亡了。",
-		bosskill = "顽强的范克瑞斯被击败了！",
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
-		wormtrigger = "顽强的范克瑞斯施放了召唤虫子。",
-		wormwarn = "虫子出现 - 赶快杀掉！",
-	}
-		or
-	{
-		disabletrigger = "Fankriss the Unyielding dies.",
-		bosskill = "Fankriss the Unyielding has been defeated!",
+BigWigsFankriss = BigWigs:NewModule(boss)
+BigWigsFankriss.zonename = AceLibrary("Babble-Zone-2.0")("Ahn'Qiraj")
+BigWigsFankriss.enabletrigger = boss
+BigWigsFankriss.toggleoptions = {"worm", "bosskill"}
+BigWigsFankriss.revision = tonumber(string.sub("$Revision$", 12, -3))
 
-		wormtrigger = "Fankriss the Unyielding casts Summon Worm.",
-		wormwarn = "Incoming Worm - Kill it!",
-	},
-})
+------------------------------
+--      Initialization      --
+------------------------------
 
-function BigWigsFankriss:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
-
-function BigWigsFankriss:Enable()
-	self.disabled = nil
+function BigWigsFankriss:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
-function BigWigsFankriss:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-end
+------------------------------
+--      Event Handlers      --
+------------------------------
 
-function BigWigsFankriss:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger) then
-		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-		self:Disable()
+function BigWigsFankriss:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(arg1)
+	if self.db.profile.worm and arg1 == L"wormtrigger" then
+		self:TriggerEvent("BigWigs_Message", L"wormwarn", "Orange")
 	end
 end
-
-function BigWigsFankriss:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
-	if (not self:GetOpt("notWormWarn") and arg1 == self.loc.wormtrigger ) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.wormwarn, "Orange")
-	end
-end
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsFankriss:RegisterForLoad()

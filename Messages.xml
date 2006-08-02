@@ -44,6 +44,18 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 		</Layers>
 
 		<Frames>
+			<Button name="$parentMenu" inherits="OptionsButtonTemplate" text="Menu">
+				<Size>
+					<AbsDimension x="40" y="25"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="5"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
 			<Button name="$parentTest" inherits="OptionsButtonTemplate" text="Test">
 				<Size>
 					<AbsDimension x="40" y="25"/>
@@ -57,7 +69,7 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 				</Anchors>
 				<Scripts>
 					<OnClick>
-						BigWigsMessages:TriggerEvent("BIGWIGS_TEST")
+						BigWigsMessages:TriggerEvent("BigWigs_Test")
 					</OnClick>
 				</Scripts>
 			</Button>
@@ -74,7 +86,7 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 				</Anchors>
 				<Scripts>
 					<OnClick>
-					  BigWigsMessages:BIGWIGS_HIDE_ANCHORS()
+					  BigWigsMessages:BigWigs_HideAnchors()
 					</OnClick>
 				</Scripts>
 			</Button>

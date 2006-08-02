@@ -1,157 +1,128 @@
-local bboss = BabbleLib:GetInstance("Boss 1.2")
+------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsBugFamily = AceAddon:new({
-	name          = "BigWigsBugFamily",
-	cmd           = AceChatCmd:new({}, {}),
+local kri = AceLibrary("Babble-Boss-2.0")("Lord Kri")
+local yauj = AceLibrary("Babble-Boss-2.0")("Princess Yauj")
+local vem = AceLibrary("Babble-Boss-2.0")("Vem")
+local boss = AceLibrary("Babble-Boss-2.0")("The Bug Family")
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Ahn'Qiraj"),
-	enabletrigger = { bboss("Lord Kri"), bboss("Princess Yauj"), bboss("Vem")  },
-	bossname = GetLocale() == "koKR" 
-		and "벌레 무리 - " .. bboss("Lord Kri") .. ", ".. bboss("Princess Yauj") .. " & ".. bboss("Vem")
-		or "Bug Trio - " .. bboss("Lord Kri") .. ", ".. bboss("Princess Yauj") .. " & ".. bboss("Vem"),
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local deaths = 0
+local fearstatus
 
-	toggleoptions = GetLocale() == "koKR" and {
-		notBosskill = "보스 사망 알림",
-		notFearBar = "공포 타이머",
-		notFearWarn = "공포 경고",
-		notFear5Sec = "공포 5초전 경고",
-		notHealWarn = "치유 경고",
-	} or {
-		notBosskill = "Boss death",
-		notFearBar = "Fear timer",
-		notFearWarn = "Fear warning",
-		notFear5Sec = "Fear 5-sec warning",
-		notHealWarn = "Heal warning",
-	},
+----------------------------
+--      Localization      --
+----------------------------
 
-	optionorder = {"notHealWarn", "notFearBar", "notFearWarn", "notFear5Sec", "notBosskill"},
+L:RegisterTranslations("enUS", function() return {
+	cmd = "BugFamily",
+	fear_cmd = "fear",
+	fear_name = "Fear Alert",
+	fear_desc = "Warn for Fear",
 
-	loc = GetLocale() == "koKR" and {
-		disabletrigger1 = "군주 크리|1이;가; 죽었습니다.",
-		disabletrigger2 = "공주 야우즈|1이;가; 죽었습니다.",
-		disabletrigger3 = "벰|1이;가; 죽었습니다.",
-		bosskill = "벌레 무리 중 하나를 물리쳤습니다!",
+	heal_cmd = "heal",
+	heal_name = "Heal Alert",
+	heal_desc = "Warn for Heal",
 
-		healtrigger = "공주 야우즈|1이;가; 상급 치유|1을;를; 시전합니다.",
-		healwarn = "치유 시전 - 시전 방해!",					
-		
-		feartrigger = "공포에 걸렸습니다.",
-		fearbar = "공포",
-		fearwarn1 = "공포 시전! 다음 시전 20초후!",
-		fearwarn2 = "5초후 공포!",
-	} 
-		or GetLocale() == "zhCN" and 
-	{ 
-		disabletrigger1 = "克里勋爵死亡了。",
-		disabletrigger2 = "亚尔基公主死亡了。",
-		disabletrigger3 = "维姆死亡了。",
-		bosskill = "虫子一家被击败了！",
+	healtrigger = "Princess Yauj begins to cast Great Heal.",
+	healwarn = "Casting heal - interrupt it!",
 
-		healtrigger = "亚尔基公主开始施放强效治疗术。",
-		healwarn = "亚尔基公主正在施放治疗 - 迅速打断！",
+	feartrigger = "is afflicted by Fear%.",
+	fearbar = "AE Fear",
+	fearwarn1 = "AE Fear! Next in 20 Seconds!",
+	fearwarn2 = "AE Fear in 5 Seconds!",
+} end )
 
-		feartrigger = "受到了恐慌效果的影响。",
-		fearbar = "群体恐惧",
-		fearwarn1 = "群体恐惧 - 20秒后再次发动",
-		fearwarn2 = "5秒后发动群体恐惧！",
-	}
-	 or GetLocale() == "deDE" and {
-		disabletrigger1 = "Lord Kri stirbt.",
-		disabletrigger2 = "Prinzessin Yauj stirbt.",
-		disabletrigger3 = "Vem stirbt.",
-		bosskill = "Die K\195\164ferfamilie wurde besiegt!",
+L:RegisterTranslations("deDE", function() return {
+	healtrigger = "Prinzessin Yauj beginnt Gro\195\159e Heilung zu wirken.",
+	healwarn = "Zaubert Heilung - unterbrechen!",
 
-		healtrigger = "Prinzessin Yauj beginnt Gro\195\159e Heilung zu wirken.",
-		healwarn = "Zaubert Heilung - unterbrechen!",
-		
-		feartrigger = "ist betroffen von Furcht%.",
-		fearbar = "AE Furcht",
-		fearwarn1 = "AE Furcht! N\195\164chster in 20 Sekunden!",
-		fearwarn2 = "AE Furcht in 5 Sekunden!",
-	} or 
-	{
-		disabletrigger1 = "Lord Kri dies.",
-		disabletrigger2 = "Princess Yauj dies.",
-		disabletrigger3 = "Vem dies.",
-		bosskill = "The Bug Family has been defeated!",
+	feartrigger = "ist betroffen von Furcht%.",
+	fearbar = "AE Furcht",
+	fearwarn1 = "AE Furcht! N\195\164chster in 20 Sekunden!",
+	fearwarn2 = "AE Furcht in 5 Sekunden!",
+} end )
 
-		healtrigger = "Princess Yauj begins to cast Great Heal.",
-		healwarn = "Casting heal - interrupt it!",
+L:RegisterTranslations("zhCN", function() return {
+	healtrigger = "亚尔基公主开始施放强效治疗术。",
+	healwarn = "亚尔基公主正在施放治疗 - 迅速打断！",
 
-		feartrigger = "is afflicted by Fear%.",
-		fearbar = "AE Fear",
-		fearwarn1 = "AE Fear! Next in 20 Seconds!",
-		fearwarn2 = "AE Fear in 5 Seconds!",
-	},
-})
+	feartrigger = "受到了恐慌效果的影响。",
+	fearbar = "群体恐惧",
+	fearwarn1 = "群体恐惧 - 20秒后再次发动",
+	fearwarn2 = "5秒后发动群体恐惧！",
+} end )
 
-function BigWigsBugFamily:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
+L:RegisterTranslations("koKR", function() return {
+	healtrigger = "공주 야우즈|1이;가; 상급 치유|1을;를; 시전합니다.",
+	healwarn = "치유 시전 - 시전 방해!",
 
-function BigWigsBugFamily:Enable()
-	self.disabled = nil
-	self.deaths = 0
+	feartrigger = "공포에 걸렸습니다.",
+	fearbar = "공포",
+	fearwarn1 = "공포 시전! 다음 시전 20초후!",
+	fearwarn2 = "5초후 공포!",
+} end )
+
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+BigWigsBugFamily = BigWigs:NewModule(boss)
+BigWigsBugFamily.zonename = AceLibrary("Babble-Zone-2.0")("Ahn'Qiraj")
+BigWigsBugFamily.enabletrigger = {kri, yauj, vem}
+BigWigsBugFamily.toggleoptions = {"fear", "heal", "bosskill"}
+BigWigsBugFamily.revision = tonumber(string.sub("$Revision$", 12, -3))
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function BigWigsBugFamily:OnEnable()
+	deaths = 0
+	fearstatus = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "FearEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "FearEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "FearEvent")
-	self:RegisterEvent("BIGWIGS_MESSAGE")
+	self:RegisterEvent("BigWigs_Message")
 end
 
-function BigWigsBugFamily:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-end
+------------------------------
+--      Event Handlers      --
+------------------------------
 
-function BigWigsBugFamily:FearEvent()
-	if (not self.fearstatus and string.find(arg1, self.loc.feartrigger)) then
-		self.fearstatus = true
-		if not self:GetOpt("notFearBar") then
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.fearbar, 20, 2, "Green", "Interface\\Icons\\Spell_Shadow_Possession")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.fearbar, 10, "Yellow")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.fearbar, 15, "Red")
-		end
-		if not self:GetOpt("notFearWarn") then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.fearwarn1, "Red")
-		end
-		if not self:GetOpt("notFear5Sec") then
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.fearwarn2, 15, "Orange")
-		end
+function BigWigsBugFamily:FearEvent(msg)
+	if self.db.profile.fear and not fearstatus and string.find(msg, L"feartrigger") then
+		fearstatus = true
+		self:TriggerEvent("BigWigs_StartBar", self, L"fearbar", 20, 2, "Interface\\Icons\\Spell_Shadow_Possession", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L"fearwarn1", "Red")
+		self:ScheduleEvent("BigWigs_Message", 15, L"fearwarn2", "Orange")
 	end
 end
 
-function BigWigsBugFamily:BIGWIGS_MESSAGE(txt)
-	if (self.fearstatus and txt == self.loc.fearwarn2) then
-		self.fearstatus = nil
-	end
+function BigWigsBugFamily:BigWigs_Message(txt)
+	if fearstatus and txt == L"fearwarn2" then fearstatus = nil end
 end
 
-function BigWigsBugFamily:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger1
-	or arg1 == self.loc.disabletrigger2
-	or arg1 == self.loc.disabletrigger3) then
-		self.deaths = self.deaths + 1
-		if (self.deaths == 3) then
-			if not self:GetOpt("Bosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-			self:Disable()
+function BigWigsBugFamily:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+	if (msg == string.format(UNITDIESOTHER, kri) or string.format(UNITDIESOTHER, yauj) or string.format(UNITDIESOTHER, vem)) then
+		deaths = deaths + 1
+		if (deaths == 3) then
+			if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")("%s has been defeated"), boss), "Green", nil, "Victory") end
+			self.core:ToggleModuleActive(self, false)
 		end
 	end
 end
 
 function BigWigsBugFamily:PLAYER_REGEN_ENABLED()
-	self.deaths = 0
+	deaths = 0
 end
 
-function BigWigsBugFamily:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
-	if (arg1 == self.loc.healtrigger) then
-		if not self:GetOpt("HealWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.healwarn, "Orange") end
+function BigWigsBugFamily:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+	if self.db.profile.heal and msg == L"healtrigger" then
+		self:TriggerEvent("BigWigs_Message", L"healwarn", "Orange")
 	end
 end
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsBugFamily:RegisterForLoad()

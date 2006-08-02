@@ -1,133 +1,109 @@
-﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
+﻿------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsFiremaw = AceAddon:new({
-	name          = "BigWigsFiremaw",
-	cmd           = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Firemaw")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Blackwing Lair"),
-	enabletrigger = bboss("Firemaw"),
-	bossname = bboss("Firemaw"),
+----------------------------
+--      Localization      --
+----------------------------
 
-	toggleoptions = GetLocale() == "koKR" and {
-		notWingBuffet = "폭풍 날개 경고",
-		notShadowFlame = "암흑 불길 경고",
-		notBosskill = "보스 사망 알림",
-	} or {
-		notWingBuffet = "Warn for Wing Buffet",
-		notShadowFlame = "Warn for Shadow Flame",
-		notBosskill = "Boss death",
-	},
-	optionorder = {"notWingBuffet", "notShadowFlame", "notBosskill"},
+L:RegisterTranslations("enUS", function() return {
+	trigger1 = "Firemaw begins to cast Wing Buffet",
+	trigger2 = "Firemaw begins to cast Shadow Flame.",
 
-	loc = GetLocale() == "koKR" and {
-		disabletrigger = "화염아귀|1이;가; 죽었습니다.",
+	warn1 = "Firemaw begins to cast Wing Buffet!",
+	warn2 = "30 seconds till next Wing Buffet!",
+	warn3 = "3 seconds before Firemaw casts Wing Buffet!",
+	warn4 = "Shadow Flame Incoming!",
 
-		trigger1 = "화염아귀|1이;가; 폭풍 날개|1을;를; 시전합니다.",
-		trigger2 = "화염아귀|1이;가; 암흑의 불길|1을;를; 시전합니다.",
+	bar1text = "Wing Buffet",
 
-		warn1 = "화염 아귀가 폭풍 날개를 시전합니다!",
-		warn2 = "30초후 다음 폭풍 날개!",
-		warn3 = "3초 후 폭풍 날개!",
-		warn4 = "암흑 불길 경고!",
-		bosskill = "화염아귀를 물리쳤습니다!",
+	cmd = "Firemaw",
+	wingbuffet_cmd = "wingbuffet",
+	wingbuffet_name = "Wing Buffet alert",
+	wingbuffet_desc = "Warn for Wing Buffet",
+	shadowflame_cmd = "shadowflame",
+	shadowflame_name = "Shadow Flame alert",
+	shadowflame_desc = "Warn for Shadow Flame",
+} end)
 
-		bar1text = "폭풍 날개",
-	}
-		or GetLocale() == "deDE" and
-	{
-		disabletrigger = "Feuerschwinge stirbt.",
+L:RegisterTranslations("zhCN", function() return {
+	trigger1 = "费尔默开始施放龙翼打击。",
+	trigger2 = "费尔默开始施放暗影烈焰。",
 
-		trigger1 = "Feuerschwinge beginnt Fl\195\188gelsto\195\159 zu wirken.",
-		trigger2 = "Feuerschwinge beginnt Schattenflamme zu wirken.",
+	warn1 = "费尔默开始施放龙翼打击！",
+	warn2 = "龙翼打击 - 30秒后再次发动",
+	warn3 = "3秒后发动龙翼打击！",
+	warn4 = "暗影烈焰发动！",
 
-		warn1 = "Feuerschwinge beginnt Fl\195\188gelsto\195\159 zu wirken!",
-		warn2 = "30 Sekunden bis zum n\195\164chsten Fl\195\188gelsto\195\159!",
-		warn3 = "3 Sekunden bis Fl\195\188gelsto\195\159!",
-		warn4 = "Schattenflamme kommt!",
-		bosskill = "Feuerschwinge wurde besiegt!",
+	bar1text = "龙翼打击",
+} end)
 
-		bar1text = "Fluegelgelstoss",
-	}
-		or GetLocale() == "zhCN" and
-	{
-		disabletrigger = "费尔默死亡了。",
 
-		trigger1 = "费尔默开始施放龙翼打击。",
-		trigger2 = "费尔默开始施放暗影烈焰。",
+L:RegisterTranslations("koKR", function() return {
+	trigger1 = "화염아귀|1이;가; 폭풍 날개|1을;를; 시전합니다.",
+	trigger2 = "화염아귀|1이;가; 암흑의 불길|1을;를; 시전합니다.",
 
-		warn1 = "费尔默开始施放龙翼打击！",
-		warn2 = "龙翼打击 - 30秒后再次发动",
-		warn3 = "3秒后发动龙翼打击！",
-		warn4 = "暗影烈焰发动！",
-		bosskill = "费尔默被击败了！",
+	warn1 = "화염 아귀가 폭풍 날개를 시전합니다!",
+	warn2 = "30초후 다음 폭풍 날개!",
+	warn3 = "3초 후 폭풍 날개!",
+	warn4 = "암흑 불길 경고!",
 
-		bar1text = "龙翼打击",
-	}
-		or
-	{
-		disabletrigger = "Firemaw dies.",
+	bar1text = "폭풍 날개",
+} end)
 
-		trigger1 = "Firemaw begins to cast Wing Buffet",
-		trigger2 = "Firemaw begins to cast Shadow Flame.",
+L:RegisterTranslations("deDE", function() return {
+	trigger1 = "Feuerschwinge beginnt Fl\195\188gelsto\195\159 zu wirken.",
+	trigger2 = "Feuerschwinge beginnt Schattenflamme zu wirken.",
 
-		warn1 = "Firemaw begins to cast Wing Buffet!",
-		warn2 = "30 seconds till next Wing Buffet!",
-		warn3 = "3 seconds before Firemaw casts Wing Buffet!",
-		warn4 = "Shadow Flame Incoming!",
-		bosskill = "Firemaw has been defeated!",
+	warn1 = "Feuerschwinge beginnt Fl\195\188gelsto\195\159 zu wirken!",
+	warn2 = "30 Sekunden bis zum n\195\164chsten Fl\195\188gelsto\195\159!",
+	warn3 = "3 Sekunden bis Feuerschwinge Fl\195\188gelsto\195\159 zaubert!",
+	warn4 = "Schattenflamme kommt!",
 
-		bar1text = "Wing Buffet",
-	},
-})
+	bar1text = "Fluegelgelstoss",
+} end)
 
-function BigWigsFiremaw:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
-function BigWigsFiremaw:Enable()
-	self.disabled = nil
+BigWigsFiremaw = BigWigs:NewModule(boss)
+BigWigsFiremaw.zonename = AceLibrary("Babble-Zone-2.0")("Blackwing Lair")
+BigWigsFiremaw.enabletrigger = boss
+BigWigsFiremaw.toggleoptions = {"wingbuffet", "shadowflame", "bosskill"}
+BigWigsFiremaw.revision = tonumber(string.sub("$Revision$", 12, -3))
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function BigWigsFiremaw:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
-	self:RegisterEvent("BIGWIGS_SYNC_FIREMAW_WING_BUFFET")
-	self:TriggerEvent("BIGWIGS_SYNC_THROTTLE", "FIREMAW_WING_BUFFET", 10)
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "FiremawWingBuffet", 10)
 end
 
-function BigWigsFiremaw:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.bar1text)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn3)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 10)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bar1text, 20)
-end
+------------------------------
+--      Event Handlers      --
+------------------------------
 
-function BigWigsFiremaw:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger) then
-		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-		self:Disable()
+function BigWigsFiremaw:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+	if (string.find(msg, L"trigger1")) then
+		self:TriggerEvent("BigWigs_SendSync", "FiremawWingBuffet")
+	elseif (msg == L"trigger2" and self.db.profile.shadowflame) then
+		self:TriggerEvent("BigWigs_Message", L"warn4", "Red")
 	end
 end
 
-function BigWigsFiremaw:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE()
-	if (string.find(arg1, self.loc.trigger1)) then
-		self:TriggerEvent("BIGWIGS_SYNC_SEND", "FIREMAW_WING_BUFFET")
-	elseif (arg1 == self.loc.trigger2 and not self:GetOpt("notShadowFlame")) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn4, "Red")
+function BigWigsFiremaw:BigWigs_RecvSync(sync)
+	if sync == "FiremawWingBuffet" and self.db.profile.wingbuffet then
+		self:TriggerEvent("BigWigs_Message", L"warn1", "Red")
+		self:TriggerEvent("BigWigs_Message", L"warn2", "Yellow")
+		self:ScheduleEvent("BigWigs_Message", 29, L"warn3", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 32, 1, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")
 	end
 end
-
-function BigWigsFiremaw:BIGWIGS_SYNC_FIREMAW_WING_BUFFET()
-	if (not self:GetOpt("notWingBuffet")) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red")
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn2, "Yellow")
-		self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 29, "Red")
-		self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bar1text, 32, 1, "Yellow", "Interface\\Icons\\Spell_Fire_SelfDestruct")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 10, "Orange")
-		self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bar1text, 20, "Red")
-	end
-end
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsFiremaw:RegisterForLoad()

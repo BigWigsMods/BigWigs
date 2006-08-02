@@ -1,118 +1,115 @@
-local bboss = BabbleLib:GetInstance("Boss 1.2")
+﻿------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsGuardians = AceAddon:new({
-	name          = "BigWigsGuardians",
-	cmd           = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Anubisath Guardian")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Ruins of Ahn'Qiraj"),
-	enabletrigger = bboss("Anubisath Guardian"),
-	bossname = bboss("Anubisath Guardian"),
+----------------------------
+--      Localization      --
+----------------------------
 
-	toggleoptions = GetLocale() == "koKR" and {
-		notBosskill = "보스 사망",
-		notSummon = "소환 경고",
-		notPlagueYou = "자신에게 역병",
-		notPlagueOther = "다른 사람에게 역병",
-		notExplode = "폭발 경고",	
-		notEnrage = "분노 경고",
-	} or {
-		notBosskill = "Boss death",
-		notSummon = "Summon warnings",
-		notPlagueYou = "Plague on you",
-		notPlagueOther = "Plague on others",
-		notExplode = "Explode warning",	
-		notEnrage = "Enrage warning",
-	},
+L:RegisterTranslations("enUS", function() return {
+	cmd = "guardian",
+	
+	summon_cmd = "summon",
+	summon_name = "Summon Alert",
+	summon_desc = "Warn for summoned adds",
+	
+	plagueyou_cmd = "plagueyou",
+	plagueyou_name = "Plague on you alert",
+	plagueyou_desc = "Warn for plague on you",
 
-	optionorder = {"notPlagueYou", "notPlagueOther", "notSummon", "notExplode", "notEnrage", "notBosskill"},
+	plagueother_cmd = "plagueother",
+	plagueother_name = "Plague on others alert",
+	plagueother_desc = "Warn for plague on others",
+	
+	explode_cmd = "explode",
+	explode_name = "Explode Alert",
+	explode_desc = "Warn for incoming explosion",
+	
+	enrage_cmd = "enrage",
+	enrage_name = "Enrage Alert",
+	enrage_desc = "Warn for enrage",
 
+	explodetrigger = "Anubisath Guardian gains Explode.",
+	explodewarn = "Exploding!",
+	enragetrigger = "Anubisath Guardian gains Enrage.",
+	enragewarn = "Enraged!",
+	summonguardtrigger = "Anubisath Guardian casts Summon Anubisath Swarmguard.",
+	summonguardwarn = "Swarmguard Summoned",
+	summonwarriortrigger = "Anubisath Guardian casts Summon Anubisath Warrior.",
+	summonwarriorwarn = "Warrior Summoned",
+	plaguetrigger = "^([^%s]+) ([^%s]+) afflicted by Plague%.$",
+	plaguewarn = " has the Plague!",
+	plaguewarnyou = "You got the Plague!",
+	plagueyou = "You",
+	plagueare = "are",	
+} end )
 
+L:RegisterTranslations("deDE", function() return {
+	explodetrigger = "Besch\195\188tzer des Anubisath bekommt 'Explodieren'.",
+	explodewarn = "Explodiert!",
+	enragetrigger = "Besch\195\188tzer des Anubisath bekommt 'Wutanfall'.",
+	enragewarn = "Enraged!",
+	summonguardtrigger = "Besch\195\188tzer des Anubisath wirkt Schwarmwache des Anubisath beschw\195\182ren.",
+	summonguardwarn = "Schwarmwache beschworen",
+	summonwarriortrigger = "Besch\195\188tzer des Anubisath wirkt Krieger des Anubisath beschw\195\182ren.",
+	summonwarriorwarn = "Krieger beschworen",
+	plaguetrigger = "^([^%s]+) ([^%s]+) von Seuche betroffen%.$",
+	plaguewarn = " hat die Seuche!",
+	plaguewarnyou = "Du hast die Seuche!",
+	plagueyou = "Du",
+	plagueare = "bist",
+} end )
 
-	loc = GetLocale() == "koKR" and {
-		disabletrigger = "아누비사스 감시자|1이;가; 죽었습니다.",
-		bosskill = "아누비사스 감시자를 물리쳤습니다.",
+L:RegisterTranslations("zhCN", function() return {
+	explodetrigger = "阿努比萨斯守卫者获得了爆炸的效果。",
+	explodewarn = "即将爆炸！近战躲开！",
+	enragetrigger = "阿努比萨斯守卫者获得了狂怒的效果。",
+	enragewarn = "进入狂怒状态！",
+	summonguardtrigger = "阿努比萨斯守卫者施放了召唤阿努比萨斯虫群卫士。",
+	summonguardwarn = "虫群卫士已被召唤出来",
+	summonwarriortrigger = "阿努比萨斯守卫者施放了召唤阿努比萨斯战士。",
+	summonwarriorwarn = "阿努比萨斯战士已被召唤出来",
+	plaguetrigger = "^(.+)受(.+)了瘟疫效果的影响。$",
+	plaguewarn = "受到瘟疫的影响！快躲开！",
+	plaguewarnyou = "你受到瘟疫的影响！快跑开！",
+	plagueyou = "你",
+	plagueare = "到",
+} end )
 
-		explodetrigger = "아누비사스 감시자|1이;가; 폭파 효과를 얻었습니다.",
-		explodewarn = "폭파! 피하세요!",
-		enragetrigger = "아누비사스 감시자|1이;가; 분노 효과를 얻었습니다.",
-		enragewarn = "분노!",
-		summonguardtrigger = "아누비사스 감시자|1이;가; 아누비사스 감시병 소환|1을;를; 시전합니다.",
-		summonguardwarn = "감시병 소환",
-		summonwarriortrigger = "아누비사스 감시자|1이;가; 아누비사스 전사 소환|1을;를; 시전합니다.",
-		summonwarriorwarn = "전사 소환",
+L:RegisterTranslations("koKR", function() return {
+	explodetrigger = "아누비사스 감시자|1이;가; 폭파 효과를 얻었습니다.",
+	explodewarn = "폭파! 피하세요!",
+	enragetrigger = "아누비사스 감시자|1이;가; 분노 효과를 얻었습니다.",
+	enragewarn = "분노!",
+	summonguardtrigger = "아누비사스 감시자|1이;가; 아누비사스 감시병 소환|1을;를; 시전합니다.",
+	summonguardwarn = "감시병 소환",
+	summonwarriortrigger = "아누비사스 감시자|1이;가; 아누비사스 전사 소환|1을;를; 시전합니다.",
+	summonwarriorwarn = "전사 소환",
+	plaguetrigger = "(.*)역병에 걸렸습니다.",
+	plaguewarn = "님이 역병에 걸렸습니다. 피하세요!",
+	plagueyou = "",
+	whopattern = "(.+)|1이;가; "
+} end )
 
-		plaguetrigger = "(.*)역병에 걸렸습니다.",
-		plaguewarn = "님이 역병에 걸렸습니다. 피하세요!",
-		plagueyou = "",
-		whopattern = "(.+)|1이;가; "
-	}
-		or GetLocale() == "zhCN" and
-	{
-		disabletrigger = "阿努比萨斯守卫者死亡了。",
-		bosskill = "阿努比萨斯守卫者被击败了！",
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
-		explodetrigger = "阿努比萨斯守卫者获得了爆炸的效果。",
-		explodewarn = "即将爆炸！近战躲开！",
-		enragetrigger = "阿努比萨斯守卫者获得了狂怒的效果。",
-		enragewarn = "进入狂怒状态！",
-		summonguardtrigger = "阿努比萨斯守卫者施放了召唤阿努比萨斯虫群卫士。",
-		summonguardwarn = "虫群卫士已被召唤出来",
-		summonwarriortrigger = "阿努比萨斯守卫者施放了召唤阿努比萨斯战士。",
-		summonwarriorwarn = "阿努比萨斯战士已被召唤出来",
-		plaguetrigger = "^(.+)受(.+)了瘟疫效果的影响。$",
-		plaguewarn = "受到瘟疫的影响！快躲开！",
-		plaguewarnyou = "你受到瘟疫的影响！快跑开！",
-		plagueyou = "你",
-		plagueare = "到",
-	}
-		or GetLocale() == "deDE" and
-	{
-		disabletrigger = "Besch\195\188tzer des Anubisath stirbt.",
-		bosskill = "Besch\195\188tzer des Anubisath wurde besiegt.",
+BigWigsGuardians = BigWigs:NewModule(boss)
+BigWigsGuardians.zonename = AceLibrary("Babble-Zone-2.0")("Ruins of Ahn'Qiraj")
+BigWigsGuardians.enabletrigger = boss
+BigWigsGuardians.toggleoptions = {"summon", "plagueyou", "plagueother", "explode", "enrage", "bosskill"}
+BigWigsGuardians.revision = tonumber(string.sub("$Revision$", 12, -3))
 
-		explodetrigger = "Besch\195\188tzer des Anubisath bekommt 'Explodieren'.",
-		explodewarn = "Explodiert! Weg von ihm!",
-		enragetrigger = "Besch\195\188tzer des Anubisath bekommt 'Wutanfall'.",
-		enragewarn = "Enraged!",
-		summonguardtrigger = "Besch\195\188tzer des Anubisath wirkt Schwarmwache des Anubisath beschw\195\182ren.",
-		summonguardwarn = "Schwarmwache beschworen",
-		summonwarriortrigger = "Besch\195\188tzer des Anubisath wirkt Krieger des Anubisath beschw\195\182ren.",
-		summonwarriorwarn = "Krieger beschworen",
-		plaguetrigger = "^([^%s]+) ([^%s]+) von Seuche betroffen%.$",
-		plaguewarn = " hat die Seuche!",
-		plaguewarnyou = "Du hast die Seuche!",
-		plagueyou = "Du",
-		plagueare = "bist",
-	} 
-    or 
-	{
-		disabletrigger = "Anubisath Guardian dies.",
-		bosskill = "Anubisath Guardian has been defeated.",
+------------------------------
+--      Initialization      --
+------------------------------
 
-		explodetrigger = "Anubisath Guardian gains Explode.",
-		explodewarn = "Exploding! Run away!",
-		enragetrigger = "Anubisath Guardian gains Enrage.",
-		enragewarn = "Enraged!",
-		summonguardtrigger = "Anubisath Guardian casts Summon Anubisath Swarmguard.",
-		summonguardwarn = "Swarmguard Summoned",
-		summonwarriortrigger = "Anubisath Guardian casts Summon Anubisath Warrior.",
-		summonwarriorwarn = "Warrior Summoned",
-		plaguetrigger = "^([^%s]+) ([^%s]+) afflicted by Plague%.$",
-		plaguewarn = " has the Plague! Keep away!",
-		plaguewarnyou = "You got the Plague!",
-		plagueyou = "You",
-		plagueare = "are",
-	},
-})
-
-function BigWigsGuardians:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
-
-function BigWigsGuardians:Enable()
-	self.disabled = nil
-	self:UnregisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+function BigWigsGuardians:OnEnable()
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "checkPlague")
@@ -120,66 +117,47 @@ function BigWigsGuardians:Enable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "checkPlague")
 end
 
-function BigWigsGuardians:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-end
-
-function BigWigsGuardians:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-    if (arg1 == self.loc.disabletrigger) then
-        if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-        self:Disable()
-    end
-end
-
-function BigWigsGuardians:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS()
-	if (not self:GetOpt("notExplode") and arg1 == self.loc.explodetrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.explodewarn, "Red")
-	elseif (not self:GetOpt("notEnrage") and arg1 == self.loc.enragetrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.enragewarn, "Red")
+function BigWigsGuardians:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
+	if self.db.profile.explode and msg == L"explodetrigger" then 
+		self:TriggerEvent("BigWigs_Message", L"explodewarn", "Red")
+	elseif self.db.profile.enrage and msg == L"enragetrigger" then 
+		self:TriggerEvent("BigWigs_Message", L"enragewarn", "Red")
 	end
 end
 
-function BigWigsGuardians:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF()
-	if (not self:GetOpt("notSummon") and arg1 == self.loc.summonguardtrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.summonguardwarn, "Yellow")
-	elseif (not self:GetOpt("notSummon") and arg1 == self.loc.summonwarriortrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.summonwarriorwarn, "Yellow")
+function BigWigsGuardians:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
+	if self.db.profile.summon and msg == L"summonguardtrigger" then 
+		self:TriggerEvent("BigWigs_Message", L"summonguardwarn", "Yellow")
+	elseif self.db.profile.summon and msg == L"summonwarriortrigger" then 
+		self:TriggerEvent("BigWigs_Message", L"summonwarriorwarn", "Yellow")
 	end
 end
 
 if ( GetLocale() == "koKR" ) then
-	function BigWigsGuardians:checkPlague()
-		local _,_,Player = string.find(arg1, self.loc.plaguetrigger)
-		if (Player) then
-			if (Player == self.loc.plagueyou) then
-				if not self:GetOpt("notPlagueYou") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.plaguewarnyou, "Red", true) end
+	function BigWigsGuardians:checkPlague( msg )
+		local _,_,player = string.find(msg, L"plaguetrigger")
+		if player then
+			if player == L"plagueyou" then
+				if self.db.profile.plagueyou then self:TriggerEvent("BigWigs_Message", L"plaguewarnyou", "Red", true) end
 			else
-				_, _, Player = string.find(Player, self.loc.whopattern)
-				if not self:GetOpt("notPlagueOther") then
-					self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.plaguewarn, "Yellow")
-					self:TriggerEvent("BIGWIGS_SENDTELL", Player, self.loc.plaguetell)
+				_, _, player = string.find(player, L"whopattern")
+				if self.db.profile.plagueother then
+					self:TriggerEvent("BigWigs_Message", player .. L"plaguewarn", "Yellow")
+					self:TriggerEvent("BigWigs_SendTell", player, L"plaguewarnyou")
 				end
 			end
 		end
 	end
 else
-	function BigWigsGuardians:checkPlague()
-		local _,_,Player, Type = string.find(arg1, self.loc.plaguetrigger)
-		if (Player and Type) then
-			if (Player == self.loc.plagueyou and Type == self.loc.plagueare) then
-				if not self:GetOpt("notPlagueYou") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.plaguewarnyou, "Red", true) end
-			else
-				if not self:GetOpt("notPlagueOther") then
-					self:TriggerEvent("BIGWIGS_MESSAGE", Player .. self.loc.plaguewarn, "Yellow")
-					self:TriggerEvent("BIGWIGS_SENDTELL", Player, self.loc.plaguetell)
-				end
+	function BigWigsGuardians:checkPlague( msg )
+		local _,_,player, type = string.find(msg, L"plaguetrigger")
+		if (player and type) then
+			if (player == L"plagueyou" and type == L"plagueare") then
+				if self.db.profile.plagueyou then self:TriggerEvent("BigWigs_Message", L"plaguewarnyou", "Red", true) end
+			elseif self.db.profile.plagueother then
+				self:TriggerEvent("BigWigs_Message", player .. L"plaguewarn", "Yellow")
+				self:TriggerEvent("BigWigs_SendTell", player, L"plaguewarnyou")
 			end
 		end
 	end
 end
-
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsGuardians:RegisterForLoad()

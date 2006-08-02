@@ -1,93 +1,60 @@
-﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
+﻿------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsKazzak = AceAddon:new({
-	name          = "BigWigsKazzak",
-	cmd           = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Lord Kazzak")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+
+local supremetime = 180
+
+----------------------------
+--      Localization      --
+----------------------------
+
+L:RegisterTranslations("enUS", function() return {
+	cmd = "kazzak",
 	
-	zonename 		= "Outdoor Raid Bosses", BabbleLib:GetInstance("Zone 1.2")("Blasted Lands"),
-	enabletrigger 	= bboss("Lord Kazzak"),
-	bossname 		= bboss("Lord Kazzak"),
-
-	toggleoptions = {
-		notBossKill 	= "Boss Death",
-		notSupremeWarn  = "Supreme warnings",
-		notSupremeBar 	= "Supreme timerbar",
-	},
+	supreme_cmd = "supreme",
+	supreme_name = "Supreme Alert",
+	supreme_desc = "Warn for Supreme Mode",
 	
-	optionorder = {"notSupremeWarn", "notSupremeBar", "notBossKill"},
-	
-	loc = {
-		starttrigger = "For the Legion! For Kil'Jaeden!",
+	starttrigger = "For the Legion! For Kil'Jaeden!",
 		
-		disabletrigger = "Lord Kazzak dies.",
+	engagewarn	 = "Lord Kazzak engaged, 3mins until Supreme!",
 		
-		bosskill 	 = "Lord Kazzak has been defeated!",
+	supreme1min	 = "Supreme mode in 1 minute!",
+	supreme30sec = "Supreme mode in 30 seconds!",
+	supreme10sec = "Supreme mode in 10 seconds!",
 		
-		engagewarn	 = "Lord Kazzak engaged, 3mins until Supreme!",
-		
-		supreme1min	 = "Supreme mode in 1 minute!",
-		supreme30sec = "Supreme mode in 30 seconds!",
-		supreme10sec = "Supreme mode in 10 seconds!",
-		
-		bartext = "Supreme mode",
-	},
-})
+	bartext = "Supreme mode",	
+} end )
 
-function BigWigsKazzak:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
-function BigWigsKazzak:Enable()
-	self.disabled = nil
-	self.supremetime = 180
+BigWigsKazzak = BigWigs:NewModule(boss)
+BigWigsKazzak.zonename = { AceLibrary("AceLocale-2.0"):new("BigWigs")("Outdoor Raid Bosses Zone"), AceLibrary("Babble-Zone-2.0")("Blasted Lands") }
+BigWigsKazzak.enabletrigger = boss
+BigWigsKazzak.toggleoptions = {"supreme", "bosskill"}
+BigWigsKazzak.revision = tonumber(string.sub("$Revision$", 12, -3))
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function BigWigsKazzak:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")	
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
-function BigWigsKazzak:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-	
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.supreme1min)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.supreme30sec)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.supreme10sec)
-	
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bartext, self.supremetime - 60)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bartext, self.supremetime - 30)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.bartext, self.supremetime - 10)
-	
-	self.supremetime = nil
-end
-
-function BigWigsKazzak:CHAT_MSG_MONSTER_YELL()
-	if (arg1 == self.loc.starttrigger) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.engagewarn, "Red")
-		
-		if not self:GetOpt("notSupremeWarn") then
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.supreme1min, self.supremetime - 60, "Yellow")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.supreme30sec, self.supremetime - 30, "Orange")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.supreme10sec, self.supremetime - 10, "Red")
-		end
-		
-		if not self:GetOpt("notSupremeBar") then
-		
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.bartext, self.supremetime, 1, "Green", "Interface\\Icons\\Spell_Shadow_ShadowWordPain")
- 			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bartext, self.supremetime - 60, "Yellow")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bartext, self.supremetime - 30, "Orange")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_START", self.loc.bartext, self.supremetime - 10, "Red")
-		
-		end
+function BigWigsKazzak:CHAT_MSG_MONSTER_YELL( msg )
+	if self.db.profile.supreme and msg == L"starttrigger" then 
+		self:TriggerEvent("BigWigs_Message", L"engagewarn", "Red")
+		self:ScheduleEvent("BigWigs_Message", supremetime - 60, L"supreme1min", "Yellow")
+		self:ScheduleEvent("BigWigs_Message", supremetime - 30, L"supreme1min", "Orange")
+		self:ScheduleEvent("BigWigs_Message", supremetime - 10, L"supreme1min", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"bartext", supremetime, 1, "Interface\\Icons\\Spell_Shadow_ShadowWordPain", "Green", "Yellow", "Orange", "Red")
 	end
 end
 
-function BigWigsKazzak:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger and not self:GetOpt("notBossKill")) then
-		self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory")
-	end
-	self:Disable()
-end
--------------------------------
---     Load this bitch!      --
--------------------------------
-BigWigsKazzak:RegisterForLoad()

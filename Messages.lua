@@ -1,101 +1,150 @@
-local sliderchange
-local minscale, maxscale = 0.25, 2
-local rwframe, frame
-local dewdrop = DewdropLib:GetInstance("1.0")
 
-local cmdopt = GetLocale() == "koKR" and {
-	option = "메시지",
-	desc   = "메시지 창 옵션.",
-	input  = true,
+assert(BigWigs, "BigWigs not found!")
+
+------------------------------
+--      Are you local?      --
+------------------------------
+
+local L = AceLibrary("AceLocale-2.0"):new("BigWigsMessages")
+local dewdrop = AceLibrary("Dewdrop-2.0")
+local paint = AceLibrary("PaintChips-2.0")
+
+local rwframe, frame
+local minscale, maxscale = 0.25, 2
+
+
+----------------------------
+--      Localization      --
+----------------------------
+
+L:RegisterTranslations("enUS", function() return {
+	["Messages"] = true,
+
+	["msg"] = true,
+	["anchor"] = true,
+	["rw"] = true,
+	["color"] = true,
+	["scale"] = true,
+
+	["Options for the message frame."] = true,
+	["Show the message anchor frame."] = true,
+	["Toggle sending messages to the RaidWarnings frame."] = true,
+	["Toggles white only messages ignoring coloring."] = true,
+	["Set the bar scale."] = true,
+
+	["Message frame"] = true,
+	["Show anchor"] = true,
+	["Send messages to RaidWarning frame"] = true,
+	["Set the message frame scale."] = true,
+	["Colorize messages"] = true,
+	["Scale"] = true,
+
+	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = true,
+	["White"] = true,
+	["BigWigs frame"] = true,
+	["RaidWarning frame"] = true,
+	["Scale is set to %s"] = true,
+	["Messages are now sent to the %2$s"] = true,
+	["Messages are currently sent to the %2$s"] = true,
+} end)
+
+
+L:RegisterTranslations("koKR", function() return {
+	["msg"] = "메시지",
+	["anchor"] = "위치",
+	["rw"] = "공대경고",
+	["scale"] = "크기",
+
+	["Options for the message frame."] = "메시지 창 옵션.",
+	["Show the message anchor frame."] = "메시지 위치 조정 프레임 보이기.",
+	["Toggle sending messages to the RaidWarnings frame."] = "공대경고 창으로 메시지 보내기.",
+	["Toggles white only messages ignoring coloring."] = "메시지를 하얀 색으로 변경.",
+	["Set the bar scale."] = "메시지 크기 조정.",
+
+	["Message frame"] = "메시지 창",
+	["Show anchor"] = "앵커 보이기",
+	["Send messages to RaidWarning frame"] = "공대경고 창으로 메시지 보내기",
+	["Colorize messages"] = "컬러 메시지",
+	["Scale"] = "크기",
+} end)
+
+
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+BigWigsMessages = BigWigs:NewModule(L"Messages")
+BigWigsMessages.defaultDB = {
+	useraidwarn = true,
+	usecolors = true,
+	scale = 1.0,
+}
+BigWigsMessages.consoleCmd = L"msg"
+BigWigsMessages.consoleOptions = {
+	type = "group",
+	name = L"Messages",
+	desc = L"Options for the message frame.",
 	args   = {
-		{
-			option = "위치",
-			desc   = "메시지 위치 조정 프레임 보이기.",
-			method = "BIGWIGS_SHOW_ANCHORS",
+		[L"anchor"] = {
+			type = "execute",
+			name = "Anchor",
+			desc = L"Show the message anchor frame.",
+			func = function() BigWigsMessages.anchorframe:Show() end,
 		},
-		{
-			option = "공대경고",
-			desc   = "공대경고 창으로 메시지 보내기.",
-			method = "ToggleRW",
+		[L"rw"] = {
+			type = "toggle",
+			name = "Use RaidWarning",
+			desc = L"Toggle sending messages to the RaidWarnings frame.",
+			get = function() return BigWigsMessages.db.profile.useraidwarn end,
+			set = function(v)
+				BigWigsMessages.db.profile.useraidwarn = v
+				frame = v and RaidWarningFrame or BigWigsMessages.msgframe or BigWigsMessages:CreateMsgFrame()
+			end,
+			message = L"Messages are now sent to the %2$s",
+			current = L"Messages are currently sent to the %2$s",
+			map = {[true] = L"RaidWarning frame", [false] = L"BigWigs frame"},
 		},
-		{
-			option = "하양",
-			desc   = "메시지를 하얀 색으로 변경.",
-			method = "ToggleWhite",
+		[L"color"] = {
+			type = "toggle",
+			name = "Use colors",
+			desc = L"Toggles white only messages ignoring coloring.",
+			get = function() return BigWigsMessages.db.profile.usecolors end,
+			set = function(v) BigWigsMessages.db.profile.usecolors = v end,
+			map = {[true] = L"|cffff0000Co|cffff00fflo|cff00ff00r|r", [false] = L"White"},
 		},
-		{
-			option = "크기",
-			desc   = "메시지 크기 조정.",
-			method = "SetScale",
-			input  = true,
-		},
-	},
-} or  {
-	option = "msg",
-	desc   = "Options for the message frame.",
-	input  = true,
-	args   = {
-		{
-			option = "anchor",
-			desc   = "Show the message anchor frame.",
-			method = "BIGWIGS_SHOW_ANCHORS",
-		},
-		{
-			option = "rw",
-			desc   = "Toggle sending messages to the RaidWarnings frame.",
-			method = "ToggleRW",
-		},
-		{
-			option = "white",
-			desc   = "Toggles white only messages ignoring coloring.",
-			method = "ToggleWhite",
-		},
-		{
-			option = "scale",
-			desc   = "Set the bar scale.",
-			method = "SetScale",
-			input  = true,
+		[L"scale"] = {
+			type = "range",
+			name = "Message frame scale",
+			desc = L"Set the message frame scale.",
+			min = 0.2,
+			max = 2.0,
+			step = 0.1,
+			get = function() return BigWigsMessages.db.profile.scale end,
+			set = function(v)
+				BigWigsMessages.db.profile.scale = v
+				if BigWigsMessages.msgframe then BigWigsMessages.msgframe:SetScale(v) end
+			end,
+			hidden = function() return BigWigsMessages.db.profile.useraidwarn end,
 		},
 	},
 }
 
-BigWigsMessages = AceAddon:new({
-	name          = "BigWigsMessages",
-	cmd           = AceChatCmd:new({}, {}),
-	cmdOptions    = cmdopt,
 
-	loc = GetLocale() == "koKR" and {
-		menutitle = "메시지 창",
-		menuanchor = "앵커 보이기",
-		menurw = "공대경고 창으로 메시지 보내기",
-		menucolor = "컬러 메시지",
-		menuscale = "크기",
-	} or {
-		menutitle = "Message frame",
-		menuanchor = "Show anchor",
-		menurw = "Send messages to RaidWarning frame",
-		menucolor = "Colorize messages",
-		menuscale = "Scale",
-	}
-})
+------------------------------
+--      Initialization      --
+------------------------------
 
-
-function BigWigsMessages:Initialize()
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
+function BigWigsMessages:OnInitialize()
 	self.anchorframe, rwframe = BigWigsMsgAnchorFrame, RaidWarningFrame
-	frame = self:GetOpt("NotRW") and self:CreateMsgFrame() or RaidWarningFrame
+	frame = self.db.profile.useraidwarn and RaidWarningFrame or self:CreateMsgFrame()
+	dewdrop:Register(BigWigsMsgAnchorFrameMenu, "children", self.core.cmdtable)
 end
 
 
-function BigWigsMessages:Enable()
-	self:RegisterEvent("BIGWIGS_MESSAGE")
-	self:RegisterEvent("BIGWIGS_SHOW_ANCHORS")
-	self:RegisterEvent("BIGWIGS_HIDE_ANCHORS")
-end
-
-
-function BigWigsMessages:Disable()
-	self:UnregisterAllEvents()
+function BigWigsMessages:OnEnable()
+	self:RegisterEvent("BigWigs_Message")
+	self:RegisterEvent("BigWigs_ShowAnchors")
+	self:RegisterEvent("BigWigs_HideAnchors")
 end
 
 
@@ -105,7 +154,7 @@ function BigWigsMessages:CreateMsgFrame()
 	self.msgframe:SetHeight(80)
 
 	self.msgframe:SetPoint("TOP", self.anchorframe, "BOTTOM", 0, 0)
-	self.msgframe:SetScale(self:GetOpt("scale") or 1)
+	self.msgframe:SetScale(self.db.profile.scale or 1)
 	self.msgframe:SetInsertMode("TOP")
 	self.msgframe:SetFrameStrata("HIGH")
 	self.msgframe:SetToplevel(true)
@@ -120,73 +169,19 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsMessages:BIGWIGS_SHOW_ANCHORS()
+function BigWigsMessages:BigWigs_ShowAnchors()
 	self.anchorframe:Show()
 end
 
 
-function BigWigsMessages:BIGWIGS_HIDE_ANCHORS()
+function BigWigsMessages:BigWigs_HideAnchors()
 	self.anchorframe:Hide()
 end
 
 
-function BigWigsMessages:BIGWIGS_MESSAGE(text, color)
+function BigWigsMessages:BigWigs_Message(text, color)
 	if not text then return end
-	if self:GetOpt("White") then red,green,blue = BigWigs:GetColor("White")
-	else red,green,blue = BigWigs:GetColor(color) end
-	local f = self:GetOpt("NotRW") and self.msgframe or rwframe
-	frame:AddMessage(text, red or 1, green or 1, blue or 1, 1, UIERRORS_HOLD_TIME)
+	local _, r, g, b = paint:GetRGBPercent(self.db.profile.usecolors and color or "white")
+	local f = self.db.profile.userwaidwarn and self.msgframe or rwframe
+	frame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
 end
-
-
-------------------------------
---      Menu Functions      --
-------------------------------
-
-function BigWigsMessages:MenuSettings(level, value)
-	dewdrop:AddLine("text", self.loc.menuanchor, "func", self.BIGWIGS_SHOW_ANCHORS, "arg1", self)
-	dewdrop:AddLine("text", self.loc.menurw, "func", self.ToggleRW, "arg1", self, "arg2", true, "checked", not self:GetOpt("NotRW"))
-	dewdrop:AddLine("text", self.loc.menucolor, "func", self.ToggleWhite, "arg1", self, "arg2", true, "checked", not self:GetOpt("White"))
-	dewdrop:AddLine("text", self.loc.menuscale, "sliderFunc", sliderchange, "hasArrow", true, "hasSlider", true,
-		"sliderTop", maxscale, "sliderBottom", minscale, "sliderValue", ((self:GetOpt("scale") or 1)-minscale)/(maxscale-minscale))
-end
-
-
-------------------------------
---      Slash Handlers      --
-------------------------------
-
-function BigWigsMessages:SetScale(msg, supressreport)
-	local scale = tonumber(msg)
-	if scale and scale >= minscale and scale <= maxscale then
-		self:SetOpt(scale, "scale")
-		if self.msgframe then self.msgframe:SetScale(scale) end
-		if not supressreport then self.cmd:result(string.format("Scale is set to %s", scale)) end
-	end
-end
-
-
-sliderchange = function(value)
-	BigWigsMessages:SetScale(value*(maxscale-minscale) + minscale, true)
-	return string.format("%.2f", value*(maxscale-minscale) + minscale)
-end
-
-
-function BigWigsMessages:ToggleRW(supressreport)
-	local t = self:TogOpt("NotRW")
-	if t and not self.msgframe then self:CreateMsgFrame() end
-	if not supressreport then self.cmd:msg("Messages now sent to: ".. (t and "BigWigs frame" or "RaidWarning frame")) end
-	frame = t and self.msgframe or RaidWarningFrame
-end
-
-
-function BigWigsMessages:ToggleWhite(supressreport)
-	local t = self:TogOpt("White")
-	if not supressreport then self.cmd:msg("Coloring all messages white is now: " .. (t and "On" or "Off")) end
-end
-
-
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsMessages:RegisterForLoad()

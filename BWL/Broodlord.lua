@@ -1,82 +1,74 @@
-﻿local bboss = BabbleLib:GetInstance("Boss 1.2")
+﻿------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsBroodlord = AceAddon:new({
-	name          = "BigWigsBroodlord",
-	cmd           = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Broodlord Lashlayer")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Blackwing Lair"),
-	enabletrigger = bboss("Broodlord Lashlayer"),
-	bossname = bboss("Broodlord Lashlayer"),
+----------------------------
+--      Localization      --
+----------------------------
 
-	toggleoptions = {
-		notYouMS = "Warn when you are afflicted by Mortal Strike",
-		notElseMS = "Warn when others are afflicted by Mortal Strike",
-		notBosskill = "Boss death",
-	},
-	optionorder = {"notYouMS", "notElseMS", "notBosskill"},
+L:RegisterTranslations("enUS", function() return {
+	trigger1 = "^([^%s]+) ([^%s]+) afflicted by Mortal Strike",
 
-	loc = GetLocale() == "deDE" and {
-		disabletrigger = "Brutw\195\164chter Dreschbringer stirbt.",
+	you = "You",
+	are = "are",
 
-		trigger1 = "^([^%s]+) ([^%s]+) von T\195\182dlicher Sto\195\159 betroffen",
+	warn1 = "Mortal Strike on you!",
+	warn2 = "Mortal Strike on %s!",
 
-		you = "Ihr",
-		are = "seid",
+	cmd = "Broodlord",
+	youms_cmd = "youms",
+	youms_name = "Mortal strike on you alert",
+	youms_desc = "Warn when you get mortal strike",
+	elsems_cmd = "elsems",
+	elsems_name = "Mortal strike on others alert",
+	elsems_desc = "Warn when someone else gets mortal strike",
+} end )
 
-		warn1 = "Mortal Strike on you!",
-		warn2 = "Mortal Strike on %s!",
-		bosskill = "Lashlayer wurde besiegt!",
-	} or {
-		disabletrigger = "Broodlord Lashlayer dies.",
+L:RegisterTranslations("deDE", function() return {
+	trigger1 = "^([^%s]+) ([^%s]+) von T\195\182dlicher Sto\195\159 betroffen",
 
-		trigger1 = "^([^%s]+) ([^%s]+) afflicted by Mortal Strike",
+	you = "Ihr",
+	are = "seid",
 
-		you = "You",
-		are = "are",
+	warn1 = "Mortal Strike on you!",
+	warn2 = "Mortal Strike on %s!",
+} end )
 
-		warn1 = "Mortal Strike on you!",
-		warn2 = "Mortal Strike on %s!",
-		bosskill = "Broodlord Lashlayer has been defeated!",
-	},
-})
+----------------------------------
+--      Module Declaration      --
+----------------------------------
 
-function BigWigsBroodlord:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
+BigWigsBroodlord = BigWigs:NewModule(boss)
+BigWigsBroodlord.zonename = AceLibrary("Babble-Zone-2.0")("Blackwing Lair")
+BigWigsBroodlord.enabletrigger = boss
+BigWigsBroodlord.toggleoptions = {"youms", "elsems", "bosskill"}
+BigWigsBroodlord.revision = tonumber(string.sub("$Revision$", 12, -3))
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function BigWigsBroodlord:OnEnable()
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "MSEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "MSEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "MSEvent")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
-function BigWigsBroodlord:Enable()
-	self.disabled = nil
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
-end
+------------------------------
+--      Event Handlers      --
+------------------------------
 
-function BigWigsBroodlord:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-end
-
-function BigWigsBroodlord:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.disabletrigger) then
-		if (not self:GetOpt("notBosskill")) then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-		self:Disable()
-	end
-end
-
-function BigWigsBroodlord:Event()
-	local _, _, EPlayer, EType = string.find(arg1, self.loc.trigger1)
+function BigWigsBroodlord:MSEvent(msg)
+	local _, _, EPlayer, EType = string.find(msg, L"trigger1")
 	if (EPlayer and EType) then
-		if (EPlayer == self.loc.you and EType == self.loc.are and not self:GetOpt("notYouMS")) then
-			self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.warn1, "Red", true)
-		elseif (not self:GetOpt("notElseMS")) then 
-			self:TriggerEvent("BIGWIGS_MESSAGE", string.format(self.loc.warn2, EPlayer), "Yellow")
+		if EPlayer == L"you" and EType == L"are" and self.db.profile.youms then
+			self:TriggerEvent("BigWigs_Message", L"warn1", "Red", true)
+		elseif self.db.profile.elsems then
+			self:TriggerEvent("BigWigs_Message", string.format(L"warn2", EPlayer), "Yellow")
 		end
 	end
 end
-
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsBroodlord:RegisterForLoad()
