@@ -1,102 +1,103 @@
-local bboss = BabbleLib:GetInstance("Boss 1.2")
-local metro = Metrognome:GetInstance("1")
+------------------------------
+--      Are you local?      --
+------------------------------
 
-BigWigsGothik = AceAddon:new({
-	name          = "BigWigsGothik",
-	cmd           = AceChatCmd:new({}, {}),
+local boss = AceLibrary("Babble-Boss-2.0")("Gothik the Harvester")
+local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-	zonename = BabbleLib:GetInstance("Zone 1.2")("Naxxramas"),
-	enabletrigger = bboss("Gothik the Harvester"),
-	bossname = bboss("Gothik the Harvester"),
+----------------------------
+--      Localization      --
+----------------------------
 
-	toggleoptions = {
-		notStartWarn = "Start warning",
-		notTillRoomBar = "Display room bar",
-		notRoomSec = "Room x-sec warnings and adds",
-		notRoomWarn = "Warn when is in the room",
-		notBosskill = "Boss death",
-	},
-	optionorder = {"notStartWarn", "notTillRoomBar", "notRoomSec", "notRoomWarn", "notBosskill"},
+L:RegisterTranslations("enUS", function() return {
 
-	loc = {
-		disabletrigger = "I... am... undone.",		
-		bosskill = "Gothik the Harvester has been defeated!",
+	cmd = "gothik",
 
-		starttrigger1 = "Foolishly you have sought your own demise.",
-		starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
-		startwarn = "Gothik the Harvester engaged! 4:30 till go down",
-		
-		riderdietrigger = "Unrelenting Rider dies.",
-		dkdietrigger = "Unrelenting Deathknight dies.",
-		
-		riderdiewarn = "Rider dead!",
-		dkdiewarn = "Death Knight dead!",
-		
-		warn1 = "In room in 3 minutes",
-		warn2 = "In room in 90 seconds",
-		warn3 = "In room in 60 seconds",
-		warn4 = "In room in 30 seconds",
-		warn5 = "Gothik Incoming in 10 seconds",
-		
-		trawarn = "Trainees in 3 seconds",
-		dkwarn = "Deathknight in 3 seconds",
-		riderwarn = "Rider in 3 seconds",
-		dktwarn = "Trainees and DK in 3 seconds",
-		rtwarn = "Trainees and Rider in 3 seconds",
-		triowarn = "Trainees in 3 seconds",
-		
-		inroomtrigger = "I have waited long enough. Now you face the harvester of souls.",
-		inroomwarn = "He's in the room!",
-		
-		inroombartext = "Till on Room",
-	},
-})
+	room_cmd = "room",
+	room_name = "Room Arrival Alerts",
+	room_desc = "Warn for Gothik's arrival",
 
-function BigWigsGothik:Initialize()
-	self.disabled = true
-	self:TriggerEvent("BIGWIGS_REGISTER_MODULE", self)
-end
+	add_cmd = "add",
+	add_name = "Add Warnings",
+	add_desc = "Warn for adds",
 
-function BigWigsGothik:Enable()
-	self.disabled = nil
-	self.roomStarted = nil
+	disabletrigger = "I... am... undone.",		
+
+	starttrigger1 = "Foolishly you have sought your own demise.",
+	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
+	startwarn = "Gothik the Harvester engaged! 4:30 till he's in the room.",
+	
+	riderdietrigger = "Unrelenting Rider dies.",
+	dkdietrigger = "Unrelenting Deathknight dies.",
+	
+	riderdiewarn = "Rider dead!",
+	dkdiewarn = "Death Knight dead!",
+	
+	warn1 = "In room in 3 minutes",
+	warn2 = "In room in 90 seconds",
+	warn3 = "In room in 60 seconds",
+	warn4 = "In room in 30 seconds",
+	warn5 = "Gothik Incoming in 10 seconds",
+	
+	trawarn = "Trainees in 3 seconds",
+	dkwarn = "Deathknight in 3 seconds",
+	riderwarn = "Rider in 3 seconds",
+	dktwarn = "Trainees and DK in 3 seconds",
+	rtwarn = "Trainees and Rider in 3 seconds",
+	triowarn = "Trainees in 3 seconds",
+
+	trabar = "Trainees",
+	dkbar = "Deathknight",
+	riderbar = "Rider",
+	
+	inroomtrigger = "I have waited long enough. Now you face the harvester of souls.",
+	inroomwarn = "He's in the room!",
+	
+	inroombartext = "Till on Room",
+} end )
+
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+BigWigsGothik = BigWigs:NewModule(boss)
+BigWigsGothik.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
+BigWigsGothik.enabletrigger = boss
+BigWigsGothik.toggleoptions = { "room", "add", "bosskill"}
+BigWigsGothik.revision = tonumber(string.sub("$Revision: 6466 $", 12, -3))
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function BigWigsGothik:OnEnable()
+	self.tratime = 25
+	self.dktime = 75
+	self.ridertime = 135
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	
-	self:RegisterEvent("BIGWIGS_MESSAGE")
-
-	metro:Register("BigWigs_Gothik_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
 end
 
-function BigWigsGothik:Disable()
-	self.disabled = true
-	self:UnregisterAllEvents()
-
-	self:StopRoom()
-	
-	metro:Unregister("BigWigs_Gothik_CheckWipe")
-	
-	self.prior = nil
-end
-
-function BigWigsGothik:CHAT_MSG_COMBAT_HOSTILE_DEATH()
-	if (arg1 == self.loc.riderdietrigger) then
-		if not self:GetOpt("notRiderWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.riderdiewarn, "Red") end
-	elseif (arg1 == self.loc.dkdietrigger) then
-		if not self:GetOpt("notDKWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.dkdiewarn, "Red") end	
+function BigWigsGothik:PLAYER_REGEN_ENABLED()
+	local go = self:Scan()
+	local running = self:IsEventScheduled("Gothik_CheckWipe")
+	if (not go) then
+		self:TriggerEvent("BigWigs_RebootModule", self)
+	elseif (not running) then
+		self:ScheduleRepeatingEvent("Gothik_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
 	end
 end
 
 function BigWigsGothik:Scan()
-	if (UnitName("target") == self.bossname and UnitAffectingCombat("target")) then
+	if (UnitName("target") == boss and UnitAffectingCombat("target")) then
 		return true
-	elseif (UnitName("playertarget") == self.bossname and UnitAffectingCombat("playertarget")) then
+	elseif (UnitName("playertarget") == boss and UnitAffectingCombat("playertarget")) then
 		return true
 	else
 		local i
 		for i = 1, GetNumRaidMembers(), 1 do
-			if (UnitName("raid"..i.."target") == self.bossname and UnitAffectingCombat("raid"..i.."target")) then
+			if (UnitName("raid"..i.."target") == boss and UnitAffectingCombat("raid"..i.."target")) then
 				return true
 			end
 		end
@@ -104,116 +105,90 @@ function BigWigsGothik:Scan()
 	return false
 end
 
-function BigWigsGothik:PLAYER_REGEN_ENABLED()
-	local go = self:Scan()
-	local _,_,running = metro:Status("BigWigs_Gothik_CheckWipe")
-	if (not go) then
-		--self:Disable()
-		metro:Stop("BigWigs_Gothik_CheckWipe")
-	elseif (not running) then
-		metro:Start("BigWigs_Gothik_CheckWipe")
+function BigWigsGothik:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
+	if msg == L"riderdietrigger" and self.db.profile.add then
+		self:TriggerEvent("BigWigs_Message", L"riderdiewarn", "Red")
+	elseif msg == L"dkdietrigger" and self.db.profile.add  then
+		self:TriggerEvent("BigWigs_Message", L"dkdiewarn", "Red")
 	end
 end
 
-function BigWigsGothik:CHAT_MSG_MONSTER_YELL()
-	if (arg1 == self.loc.starttrigger1 or arg1 == self.loc.starttrigger2) then
-		if not self:GetOpt("notStartWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.startwarn, "Red") end
-		if not self:GetOpt("notTillRoomBar") then 
-			self:TriggerEvent("BIGWIGS_BAR_START", self.loc.inroombartext, 270, 2, "Green", "Interface\\Icons\\Spell_Magic_LesserInvisibilty")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.inroombartext, 70, "Yellow")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.inroombartext, 140, "Orange")
-			self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR", self.loc.inroombartext, 205, "Red")
-		end
-		if not self:GetOpt("notRoomSec") then 
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.trawarn, 22, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.trawarn, 42, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.trawarn, 62, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.dkwarn, 72, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.trawarn, 82, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn1, 90, "Green")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.dkwarn, 97, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.trawarn, 102, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.dktwarn, 122, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.riderwarn, 132, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.trawarn, 142, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.dkwarn, 147, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.rtwarn, 162, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.dkwarn, 172, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn2, 180, "Yellow")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.trawarn, 182, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.riderwarn, 192, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.dkwarn, 197, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.trawarn, 202, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn3, 210, "Orange")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.triowarn, 222, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn4, 240, "Red")
-			self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc.warn5, 260, "Red")
-		end
-		--[[
-		 	that was pretty hacky. personally i'd start a 5 second metro timer.
-			and do something like this:
-			oh and sync it too.
-			
-			--in init
-			self.timers = {
-				Trainee = 25,
-				Deathknight = 75
-				Rider = 135
-			}
-			self.repoptimers = {
-				Trainee = 20,
-				Deathknight = 25
-				Rider = 30
-			}
-			--TODO: start the 3 candybars here
-			--TODO: set up a 225 second metro timer to stop the 5 second timer.
-			
-			--in 5 second timer
-			local message = ""
-			for i,v in self.timers do
-				self.timers[i] = self.timers[i] - 5
-				if self.timers[i] == 5 then
-					message = message..i
-				end
-				if self.timers[i] == 0 then
-					-- TODO: redo the appropriate bar
-					self.timers[i] = self.repoptimers[i]
-				end
-			end
-			if message then
-				-- give a 3 second warning for the next spawn
-				self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_START", self.loc[message], 2, "Red")
-			end
-
-		]]--
-	elseif (arg1 == self.loc.inroomtrigger) then
-		if not self:GetOpt("notRoomWarn") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.inroomwarn, "Red") end
-		self:StopRoom()
-	elseif (string.find(arg1, self.loc.disabletrigger)) then
-		if not self:GetOpt("notBosskill") then self:TriggerEvent("BIGWIGS_MESSAGE", self.loc.bosskill, "Green", nil, "Victory") end
-		self:Disable()
-	end
-end
 
 function BigWigsGothik:StopRoom()
-	self:TriggerEvent("BIGWIGS_BAR_CANCEL", self.loc.inroombartext)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn1)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn2)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn3)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn4)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn5)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.warn6)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.trawarn)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.dkwarn)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.riderwarn)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.dktwarn)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.rtwarn)
-	self:TriggerEvent("BIGWIGS_DELAYEDMESSAGE_CANCEL", self.loc.triowarn)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.inroombartext, 70)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.inroombartext, 140)
-	self:TriggerEvent("BIGWIGS_BAR_DELAYEDSETCOLOR_CANCEL", self.loc.inroombartext, 205)
+	self:TriggerEvent("BigWigs_StopBar", self, L"inroombartext")
+	self:CancelScheduledEvent("bwgothikwarn1")
+	self:CancelScheduledEvent("bwgothikwarn2")
+	self:CancelScheduledEvent("bwgothikwarn3")
+	self:CancelScheduledEvent("bwgothikwarn4")
+	self:CancelScheduledEvent("bwgothikwarn5")
+	self:TriggerEvent("BigWigs_StopBar", self, L"trabar")
+	self:TriggerEvent("BigWigs_StopBar", self, L"dkbar")
+	self:TriggerEvent("BigWigs_stopBar", self, L"riderbar")
+	self:CancelScheduledEvent("bwgothiktrawarn")
+	self:CancelScheduledEvent("bwgothikdkwarn")
+	self:CancelScheduledEvent("bwgothikriderwarn")
+	self:CancelScheduledEvent("bwgothiktrarepop")
+	self:CancelScheduledEvent("bwgothiktrarepop2")
+	self:CancelScheduledEvent("bwgothikdkrepop")
+	self:CancelScheduledEvent("bwgothikdkrepop2")
+	self:CancelScheduledEvent("bwgothikriderrepop")
+	self:CancelScheduledEvent("bwgothikriderrepop2")
+
 end
---------------------------------
---      Load this bitch!      --
---------------------------------
-BigWigsGothik:RegisterForLoad()
+
+function BigWigsGothik:Trainee( first )
+	self:TriggerEvent("BigWigs_StartBar", self, L"trabar", self.tratime, 2, nil, "Yellow", "Orange", "Red")	
+	self:ScheduleEvent("bwgothiktrawarn", "BigWigs_Message", self.tratime - 3, L"trawarn", "Yellow")
+	if first then self:ScheduleRepeatingEvent("bwgothikdkrepop2", self.Rider, self.ridertime, self) end
+	
+end
+
+function BigWigsGothik:DeathKnight( first )
+	self:TriggerEvent("BigWigs_StartBar", self, L"dkbar", self.dktime, 3, nil, "Yellow", "Orange", "Red")
+	self:ScheduleEvent("bwgothikdkwarn", "BigWigs_Message", self.dktime - 3, L"dkwarn", "Orange")
+	if first then self:ScheduleRepeatingEvent("bwgothikdkrepop2", self.Rider, self.ridertime, self) end
+end
+
+function BigWigsGothik:Rider( first )
+	self:TriggerEvent("BigWigs_StartBar", self, L"riderbar", self.ridertime, 4, nil, "Yellow", "Orange", "Red")
+	self:ScheduleEvent("bwgothikriderwarn", "BigWigs_Message", self.ridertime -3, L"riderwarn", "Red")
+	if first then self:ScheduleRepeatingEvent("bwgothikriderrepop2", self.Rider, self.ridertime, self) end
+end
+
+function BigWigsGothik:CHAT_MSG_MONSTER_YELL( msg )
+	if msg == L"starttrigger1" or msg == L"starttrigger" then
+		if self.db.profile.room then
+			self:TriggerEvent("BigWigs_Message", L"startwarn", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"inroombartext", 270, 1, "Interface\\Icons\\Spell_Magic_LesserInvisibilty", "Green", "Yellow", "Orange", "Red")
+			self:ScheduleEvent("bwgothikwarn1", "BigWigs_Message", 90, L"warn1", "Green")
+			self:ScheduleEvent("bwgothikwarn2", "BigWigs_Message", 180, L"warn2", "Yellow")
+			self:ScheduleEvent("bwgothikwarn3", "BigWigs_Message", 210, L"warn3", "Orange")
+			self:ScheduleEvent("bwgothikwarn4", "BigWigs_Message", 240, L"warn4", "Red")
+			self:ScheduleEvent("bwgothikwarn5", "BigWigs_Message", 260, L"warn5", "Red")
+		end
+		if self.db.profile.add then
+			-- add bars
+			self:TriggerEvent("BigWigs_StartBar", self, L"trabar", self.tratime, 2, nil, "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"dkbar", self.dktime, 3, nil, "Green", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"riderbar", self.ridertime, 4, nil, "Green", "Yellow", "Orange", "Red")
+			-- 3 second warnings
+			self:ScheduleEvent("bwgothiktrawarn", "BigWigs_Message", self.tratime - 3, L"trawarn", "Yellow")
+			self:ScheduleEvent("bwgothikdkwarn", "BigWigs_Message", self.dktime - 3, L"dkwarn", "Orange")
+			self:ScheduleEvent("bwgothikriderwarn", "BigWigs_Message", self.ridertime -3, L"riderwarn", "Red")
+			-- repop schedules
+			self:ScheduleEvent("bwgothiktrarepop", self.Trainee, self.tratime, self, true )
+			self:ScheduleEvent("bwgothiktdkrepop", self.DeathKnight, self.dktime, self, true )
+			self:ScheduleEvent("bwgothikriderrepop", self.Rider, self.ridertime, self, true )
+			-- set the new times
+			self.tratime = 20
+			self.dktime = 25
+			self.ridertime = 30
+		end
+	elseif msg == L"inroomtrigger" then
+		if self.db.profile.room then self:TriggerEvent("BigWigs_Message", L"inroomwarn", "Red") end
+		self:StopRoom()
+	elseif string.find(msg, L"disabletrigger") then
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")("%s has been defeated"), boss), "Green", nil, "Victory") end
+		self.core:ToggleModuleActive(self, false)
+	end
+end
