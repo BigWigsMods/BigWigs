@@ -148,8 +148,12 @@ end
 
 function BigWigsMaexxna:PLAYER_REGEN_DISABLED()
 	local go = self:Scan()
+	local running = self:IsEventScheduled("Maexxna_CheckStart")
 	if (go) then
+		self:CancelScheduledEvent("Maexxna_CheckStart")
 		self:TriggerEvent("BigWigs_SendSync", "MaexxnaWebspray") 
+	elseif not running then
+		self:ScheduleRepeatingEvent("Maexxna_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self)
 	end
 end
 

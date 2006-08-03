@@ -88,6 +88,7 @@ function BigWigsGluth:PLAYER_REGEN_DISABLED()
 	local go = self:Scan()
 	local running = self:IsEventScheduled("Gluth_CheckStart")
 	if go then
+		self:CancelScheduledEvent("Gluth_CheckStart")
 		self:TriggerEvent("BigWigs_SendSync", "GluthStart")
 	elseif not running then
 		self:ScheduleRepeatingEvent("Gluth_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self )
@@ -148,7 +149,6 @@ function BigWigsGluth:BigWigs_RecvSync( sync )
 		self:TriggerEvent("BigWigs_StartBar", self, L"decimatebartext", 105, 2, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
 		self:ScheduleEvent("BigWigs_Message", 100, L"decimatesoon", "Orange")
 	elseif sync == "GluthStart" then
-		self:CancelScheduledEvent("Gluth_CheckStart")
 		if self.db.profile.decimate and not self.started then
 			self.started = true
 			self:TriggerEvent("BigWigs_Message", L"startwarn", "Yellow")

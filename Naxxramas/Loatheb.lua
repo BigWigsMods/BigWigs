@@ -88,8 +88,12 @@ end
 
 function BigWigsLoatheb:PLAYER_REGEN_DISABLED()
 	local go = self:Scan()
+	local running = self:IsEventScheduled("Loatheb_CheckStart")
 	if (go) then
+		self:CancelScheduledEvent("Loatheb_CheckStart")
 		self:TriggerEvent("BigWigs_SendSync", "LoathebStart")
+	elseif not running then
+		self:ScheduleRepeatingEvent("Loatheb_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self)
 	end
 end
 

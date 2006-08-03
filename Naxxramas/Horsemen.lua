@@ -79,8 +79,12 @@ end
 
 function BigWigsHorsemen:PLAYER_REGEN_DISABLED()
 	local go = self:Scan()
+	local running = self:IsEventScheduled("Horsemen_CheckStart")
 	if (go) then
+		self:CancelScheduledEvent("Horsemen_CheckStart")
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenStart")
+	elseif not running then
+		self:ScheduleRepeatingEvent("Horsemen_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self)
 	end
 end
 
