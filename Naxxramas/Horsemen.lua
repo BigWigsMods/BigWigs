@@ -85,14 +85,14 @@ function BigWigsHorsemen:PLAYER_REGEN_DISABLED()
 end
 
 function BigWigsHorsemen:Scan()
-	if (UnitName("target") == ( thane or mograine or zeliek or blaumeux )  and UnitAffectingCombat("target")) then
+	if ( ( UnitName("target") == thane or UnitName("target") == mograine or UnitName("target") == zeliek or UnitName("target") == blaumeux )  and UnitAffectingCombat("target")) then
 		return true
-	elseif (UnitName("playertarget") == ( thane or mograine or zeliek or blaumeux ) and UnitAffectingCombat("playertarget")) then
+	elseif ( ( UnitName("playertarget") == thane or UnitName("playertarget") == mograine or UnitName("playertarget") == zeliek or UnitName("playertarget") == blaumeux ) and UnitAffectingCombat("playertarget")) then
 		return true
 	else
 		local i
 		for i = 1, GetNumRaidMembers(), 1 do
-			if (UnitName("raid"..i.."target") == ( thane or mograine or zeliek or blaumeux ) and UnitAffectingCombat("raid"..i.."target")) then
+			if ( ( UnitName("raid"..i.."target") == thane or UnitName("raid"..i.."target") == mograine or UnitName("raid"..i.."target") == zeliek or UnitName("raid"..i.."target") == blaumeux ) and UnitAffectingCombat("raid"..i.."target")) then
 				return true
 			end
 		end

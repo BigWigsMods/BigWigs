@@ -152,14 +152,14 @@ function BigWigsTwins:PLAYER_REGEN_ENABLED()
 end
 
 function BigWigsTwins:Scan()
-	if (UnitName("target") == (veklor or veknilash) and UnitAffectingCombat("target")) then
+	if ( (UnitName("target") == veklor or UnitName("target") == veknilash) and UnitAffectingCombat("target")) then
 		return true
-	elseif (UnitName("playertarget") == (veklor or veknilash) and UnitAffectingCombat("playertarget")) then
+	elseif ((UnitName("playertarget") == veklor or UnitName("playertarget") == veknilash) and UnitAffectingCombat("playertarget")) then
 		return true
 	else
 		local i
 		for i = 1, GetNumRaidMembers(), 1 do
-			if (UnitName("Raid"..i.."target") == (veklor or veknilash) and UnitAffectingCombat("Raid"..i.."target")) then
+			if ( (UnitName("Raid"..i.."target") == veklor or UnitName("Raid"..i.."target") == veknilash) and UnitAffectingCombat("Raid"..i.."target")) then
 				return true
 			end
 		end
