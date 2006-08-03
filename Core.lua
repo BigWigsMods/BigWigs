@@ -128,119 +128,8 @@ end
 ------------------------------
 
 function BigWigs:OnInitialize()
-	for name,module in self:IterateModules() do
-		if module:IsBossModule() then self:ToggleModuleActive(module, false) end
-
-		-- Set up DB
-		local opts
-		if module:IsBossModule() and module.toggleoptions then
-			opts = {}
-			for _,v in pairs(module.toggleoptions) do if v ~= -1 then opts[v] = true end end
-		end
-		self:RegisterDefaults(name, "profile", opts or module.defaultDB or {})
-		module.db = self:AcquireDBNamespace(name)
-
-		-- Set up AceConsole
-		if module:IsBossModule() then
-			local cons
-			local zonename = type(module.zonename) == "table" and module.zonename[1] or module.zonename
-			local zone = BZ:HasReverseTranslation(zonename) and L(BZ:GetReverseTranslation(zonename)) or L(zonename)
-			local L2 = AceLibrary("AceLocale-2.0"):new("BigWigs"..name)
-			if module.toggleoptions then
-				local m = module
-
-				cons = {
-					type = "group",
-					name = name,
-					desc = string.format(L"Options for %s in %s.", name, zonename),
---~~ 					disabled = function() return not m.core:IsModuleActive(m) end,
-					args = {
-						[L"toggle"] = {
-							type = "toggle",
-							name = L"Active",
-							order = 1,
-							desc = L"Activate or deactivate this module.",
-							get = function() return m.core:IsModuleActive(m) end,
-							set = function() m.core:ToggleModuleActive(m) end,
-						},
-						[L"reboot"] = {
-							type = "execute",
-							name = L"Reboot",
-							order = 2,
-							desc = L"Reboot this module.",
-							func = function() m.core:TriggerEvent("BigWigs_RebootModule", m) end,
-							hidden = function() return not m.core:IsModuleActive(m) end,
-						},
-						[L"debug"] = {
-							type = "toggle",
-							name = L"Debugging",
-							desc = L"Show debug messages.",
-							order = 3,
-							get = function() return m:IsDebugging() end,
-							set = function(v) m:SetDebugging(v) end,
-							hidden = function() return not m:IsDebugging() and not BigWigs:IsDebugging() end,
-						},
-					},
-				}
-				local x = 10
-				for _,v in pairs(module.toggleoptions) do
-					local val = v
-					x = x + 1
-					if x == 11 and v ~= "bosskill" then
-						cons.args["headerblankspotthingy"] = {
-							type = "header",
-							order = 4,
-						}
-					end
-					if v == -1 then
-						cons.args["blankspacer"..x] = {
-							type = "header",
-							order = x,
-						}
-					else
-						local l = v == "bosskill" and L or L2
-						cons.args[l(v.."_cmd")] = {
-							type = "toggle",
-							order = v == "bosskill" and -1 or x,
-							name = l(v.."_name"),
-							desc = l(v.."_desc"),
-							get = function() return m.db.profile[val] end,
-							set = function(v) m.db.profile[val] = v end,
-						}
-					end
-				end
-			end
-
-			if cons or module.consoleOptions then
-				if not self.cmdtable.args[L"boss"].args[zone] then
-					self.cmdtable.args[L"boss"].args[zone] = {
-						type = "group",
-						name = zonename,
-						desc = string.format(L"Options for bosses in %s.", zonename),
-						args = {},
-					}
-				end
-
-				self.cmdtable.args[L"boss"].args[zone].args[L2"cmd"] = cons or module.consoleOptions
-			end
-		elseif module.consoleOptions then
-			self.cmdtable.args[L"plugin"].args[module.consoleCmd or name] = cons or module.consoleOptions
-		end
-
-		-- Set up target monitoring
-		local z = module.zonename
-
-		if type(z) == "string" then enablezones[z] = true
-		elseif type(z) == "table" then
-			for _,zone in pairs(z) do enablezones[zone] = true end
-		end
-
-		local t = module.enabletrigger
-		if type(t) == "string" then enablemobs[t] = module
-		elseif type(t) == "table" then
-			for _,mob in pairs(t) do enablemobs[mob] = module end
-		end
-	end
+	for name,module in self:IterateModules() do self:RegisterModule(name,module) end
+	self:RegisterEvent("ADDON_LOADED")
 end
 
 
@@ -254,6 +143,133 @@ end
 -------------------------------
 --      Module Handling      --
 -------------------------------
+
+function BigWigs:ADDON_LOADED(addon)
+	local gname = GetAddOnMetadata(addon, "X-BigWigsModule")
+	if not gname then return end
+
+	local g = getglobal(gname)
+	self:RegisterModule(g.name, g)
+end
+
+
+function BigWigs:RegisterModule(name,module)
+	if module:IsBossModule() then self:ToggleModuleActive(module, false) end
+
+	-- Set up DB
+	local opts
+	if module:IsBossModule() and module.toggleoptions then
+		opts = {}
+		for _,v in pairs(module.toggleoptions) do if v ~= -1 then opts[v] = true end end
+	end
+
+	if module.db then module:RegisterDefaults("profile", opts or module.defaultDB or {})
+	else self:RegisterDefaults(name, "profile", opts or module.defaultDB or {}) end
+
+	if not module.db then module.db = self:AcquireDBNamespace(name) end
+
+	-- Set up AceConsole
+	if module:IsBossModule() then
+		local cons
+		local zonename = type(module.zonename) == "table" and module.zonename[1] or module.zonename
+		local zone = BZ:HasReverseTranslation(zonename) and L(BZ:GetReverseTranslation(zonename)) or L(zonename)
+		local L2 = AceLibrary("AceLocale-2.0"):new("BigWigs"..name)
+		if module.toggleoptions then
+			local m = module
+
+			cons = {
+				type = "group",
+				name = name,
+				desc = string.format(L"Options for %s in %s.", name, zonename),
+--~~ 					disabled = function() return not m.core:IsModuleActive(m) end,
+				args = {
+					[L"toggle"] = {
+						type = "toggle",
+						name = L"Active",
+						order = 1,
+						desc = L"Activate or deactivate this module.",
+						get = function() return m.core:IsModuleActive(m) end,
+						set = function() m.core:ToggleModuleActive(m) end,
+					},
+					[L"reboot"] = {
+						type = "execute",
+						name = L"Reboot",
+						order = 2,
+						desc = L"Reboot this module.",
+						func = function() m.core:TriggerEvent("BigWigs_RebootModule", m) end,
+						hidden = function() return not m.core:IsModuleActive(m) end,
+					},
+					[L"debug"] = {
+						type = "toggle",
+						name = L"Debugging",
+						desc = L"Show debug messages.",
+						order = 3,
+						get = function() return m:IsDebugging() end,
+						set = function(v) m:SetDebugging(v) end,
+						hidden = function() return not m:IsDebugging() and not BigWigs:IsDebugging() end,
+					},
+				},
+			}
+			local x = 10
+			for _,v in pairs(module.toggleoptions) do
+				local val = v
+				x = x + 1
+				if x == 11 and v ~= "bosskill" then
+					cons.args["headerblankspotthingy"] = {
+						type = "header",
+						order = 4,
+					}
+				end
+				if v == -1 then
+					cons.args["blankspacer"..x] = {
+						type = "header",
+						order = x,
+					}
+				else
+					local l = v == "bosskill" and L or L2
+					cons.args[l(v.."_cmd")] = {
+						type = "toggle",
+						order = v == "bosskill" and -1 or x,
+						name = l(v.."_name"),
+						desc = l(v.."_desc"),
+						get = function() return m.db.profile[val] end,
+						set = function(v) m.db.profile[val] = v end,
+					}
+				end
+			end
+		end
+
+		if cons or module.consoleOptions then
+			if not self.cmdtable.args[L"boss"].args[zone] then
+				self.cmdtable.args[L"boss"].args[zone] = {
+					type = "group",
+					name = zonename,
+					desc = string.format(L"Options for bosses in %s.", zonename),
+					args = {},
+				}
+			end
+
+			self.cmdtable.args[L"boss"].args[zone].args[L2"cmd"] = cons or module.consoleOptions
+		end
+	elseif module.consoleOptions then
+		self.cmdtable.args[L"plugin"].args[module.consoleCmd or name] = cons or module.consoleOptions
+	end
+
+	-- Set up target monitoring
+	local z = module.zonename
+
+	if type(z) == "string" then enablezones[z] = true
+	elseif type(z) == "table" then
+		for _,zone in pairs(z) do enablezones[zone] = true end
+	end
+
+	local t = module.enabletrigger
+	if type(t) == "string" then enablemobs[t] = module
+	elseif type(t) == "table" then
+		for _,mob in pairs(t) do enablemobs[mob] = module end
+	end
+end
+
 
 function BigWigs:EnableModule(module)
 	local m = self:GetModule(module)
