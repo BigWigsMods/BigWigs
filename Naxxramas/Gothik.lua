@@ -64,7 +64,7 @@ BigWigsGothik = BigWigs:NewModule(boss)
 BigWigsGothik.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsGothik.enabletrigger = boss
 BigWigsGothik.toggleoptions = { "room", "add", "bosskill"}
-BigWigsGothik.revision = tonumber(string.sub("$Revision: 6466 $", 12, -3))
+BigWigsGothik.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
