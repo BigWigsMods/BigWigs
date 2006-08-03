@@ -172,7 +172,7 @@ function BigWigsTwins:BigWigs_RecvSync(sync)
 		self.enragestarted = true
 		if self.db.profile.teleport then
 			self:ScheduleEvent("BigWigs_Message", 25, L"portdelaywarn", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"bartext", 30, 1, "Yellow", "Interface\\Icons\\Spell_Arcane_Blink", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"bartext", 30, 1, "Interface\\Icons\\Spell_Arcane_Blink", "Yellow", "Orange", "Red")
 		end
 		if self.db.profile.enrage then
 			self:TriggerEvent("BigWigs_Message", L"startwarn", "Red")
@@ -188,7 +188,7 @@ function BigWigsTwins:BigWigs_RecvSync(sync)
 	elseif sync == "TwinsTeleport" and self.db.profile.teleport then
 		self:TriggerEvent("BigWigs_Message", L"portwarn", "Yellow")
 		self:ScheduleEvent("BigWigs_Message", 25, L"portdelaywarn", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"bartext", 30, 1, "Yellow", "Interface\\Icons\\Spell_Arcane_Blink", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"bartext", 30, 1, "Interface\\Icons\\Spell_Arcane_Blink", "Yellow", "Orange", "Red")
 	end
 end
 
