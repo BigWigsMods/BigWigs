@@ -8,7 +8,6 @@ assert( BigWigs, "BigWigs not found!")
 
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsBars")
 local paint = AceLibrary("PaintChips-2.0")
-local sliderchange
 local minscale, maxscale = 0.25, 2
 
 
@@ -165,13 +164,6 @@ function BigWigsBars:SetScale(msg, supressreport)
 		if not supressreport then self.core:Print(L"Scale is set to %s", scale) end
 	end
 end
-
-
-sliderchange = function(value)
-	BigWigsBars:SetScale(value*(maxscale-minscale) + minscale, true)
-	return string.format("%.2f", value*(maxscale-minscale) + minscale)
-end
-
 
 function BigWigsBars:ToggleUp(supressreport)
 	self.db.profile.growup = not self.db.profile.growup
