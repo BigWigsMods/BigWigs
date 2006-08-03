@@ -35,7 +35,7 @@ BigWigsLoatheb = BigWigs:NewModule(boss)
 BigWigsLoatheb.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsLoatheb.enabletrigger = boss
 BigWigsLoatheb.toggleoptions = {"doom", "bosskill"}
-BigWigsLoatheb.revision = tonumber(string.sub("$Revision: 6466 $", 12, -3))
+BigWigsLoatheb.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
