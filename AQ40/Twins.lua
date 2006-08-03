@@ -138,7 +138,14 @@ end
 
 function BigWigsTwins:PLAYER_REGEN_DISABLED()
 	local go = self:Scan()
-	if (go) then self:TriggerEvent("BigWigs_SendSync", "TwinsEnrage") end
+	local running = self:IsEventScheduled("Twins_CheckStart")
+	if (go) then
+		self:CancelScheduledEvent("Twins_CheckStart")
+		self:TriggerEvent("BigWigs_SendSync", "TwinsEnrage")
+	elseif not running then
+		self:ScheduleRepeatingEvent("Twins_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self)
+	end
+
 end
 
 function BigWigsTwins:PLAYER_REGEN_ENABLED()
