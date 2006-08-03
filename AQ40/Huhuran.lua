@@ -5,9 +5,6 @@
 local boss = AceLibrary("Babble-Boss-2.0")("Princess Huhuran")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-local prior
-local berserkannounced
-
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -36,6 +33,12 @@ L:RegisterTranslations("enUS", function() return {
 	stingwarn = "Wyvern Sting - Dispel Tanks!",
 	stingdelaywarn = "Possible Wyvern Sting in 3 seconds!",
 	bartext = "Wyvern Sting",
+	
+	startwarn = "Huhuran engaged, 5 minutes to berserk!",
+	berserkbar = "Berserk",
+	berserkwarn1 = "Berserk in 1 minute!",
+	berserkwarn2 = "Berserk in 30 seconds!",
+	berserkwarn3 = "Berserk in 5 seconds!",
 
 } end )
 
@@ -78,26 +81,94 @@ BigWigsHuhuran.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsHuhuran:OnEnable()
-	prior = nil
-	berserkannounced = nil
+	self.prior = nil
+	self.berserkannounced = nil
+	self.started = nil
+	
 	self:RegisterEvent("BigWigs_Message")
+
+	self:RegisterEvent("PLAYER_REGEN_ENABLED")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED")
+	
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "checkSting")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "checkSting")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "checkSting")
+	
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "HuhuranStart", 10)
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
+function BigWigsHuhuran:PLAYER_REGEN_DISABLED()
+	local go = self:Scan()
+	local running = self:IsEventScheduled("Huhuran_CheckStart")
+	if go then
+		self:CancelScheduledEvent("Huhuran_CheckStart")
+		self:TriggerEvent("BigWigs_SendSync", "HuhuranStart")
+	elseif not running then
+		self:ScheduleRepeatingEvent("Huhuran_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self )
+	end
+end
+
+function BigWigsHuhuran:PLAYER_REGEN_ENABLED()
+	local go = self:Scan()
+	local running = self:IsEventScheduled("Huhuran_CheckWipe")
+	if (not go) then
+		self:TriggerEvent("BigWigs_RebootModule", self)
+	elseif (not running) then
+		self:ScheduleRepeatingEvent("Huhuran_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
+	end
+end
+
+function BigWigsHuhuran:Scan()
+	if UnitName("target") == boss and UnitAffectingCombat("target") then
+		return true
+	elseif UnitName("playertarget") == boss and UnitAffectingCombat("playertarget") then
+		return true
+	else
+		local i
+		for i = 1, GetNumRaidMembers(), 1 do
+			if UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("raid"..i.."target") then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+function BigWigsHuhuran:BigWigs_RecvSync( sync )
+	if sync == "HuhuranStart" then
+		if self.db.profile.berserk and not self.started then
+			self.started = true
+			self:TriggerEvent("BigWigs_Message", L"startwarn", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"berserkbar", 300, 1, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
+			self:ScheduleEvent("bwhuhuranenragewarn1", "BigWigs_Message", 240, L"berserkwarn1", "Yellow")
+			self:ScheduleEvent("bwhuhuranenragewarn2", "BigWigs_Message", 270, L"berserkwarn2", "Orange")
+			self:ScheduleEvent("bwhuhuranenragewarn3", "BigWigs_Message", 295, L"berserkwarn3", "Red")
+		end
+	end
+end
+
 function BigWigsHuhuran:CHAT_MSG_MONSTER_EMOTE(arg1)
 	if self.db.profile.frenzy and arg1 == L"frenzytrigger" then
 		self:TriggerEvent("BigWigs_Message", L"frenzywarn", "Orange")
 	elseif self.db.profile.berserk and arg1 == L"berserktrigger" then
+
+		self:CancelScheduledEvent("bwhuhuranenragewarn1")
+		self:CancelScheduledEvent("bwhuhuranenragewarn2")
+		self:CancelScheduledEvent("bwhuhuranenragewarn3")
+
+		self:TriggerEvent("BigWigs_StopBar", self, L"berserkbar")
+
 		self:TriggerEvent("BigWigs_Message", L"berserkwarn", "Red")
+
+		self.berserkannounced = true
 	end
 end
 
@@ -107,23 +178,23 @@ function BigWigsHuhuran:UNIT_HEALTH(arg1)
 		local health = UnitHealth(arg1)
 		if (health > 30 and health <= 33) then
 			self:TriggerEvent("BigWigs_Message", L"berserksoonwarn", "Red")
-			berserkannounced = true
-		elseif (health > 40 and berserkannounced) then
-			berserkannounced = false
+			self.berserkannounced = true
+		elseif (health > 40 and self.berserkannounced) then
+			self.berserkannounced = false
 		end
 	end
 end
 
 function BigWigsHuhuran:checkSting(arg1)
 	if not self.db.profile.wyvern then return end
-	if not prior and string.find(arg1, L"stingtrigger") then
+	if not self.prior and string.find(arg1, L"stingtrigger") then
 		self:TriggerEvent("BigWigs_Message", L"stingwarn", "Orange")
-		self:TriggerEvent("BigWigs_StartBar", self, L"bartext", 25, 1, "Interface\\Icons\\INV_Spear_02", "Green", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"bartext", 25, 2, "Interface\\Icons\\INV_Spear_02", "Green", "Yellow", "Orange", "Red")
 		self:ScheduleEvent("BigWigs_Message", 22, L"stingdelaywarn", "Orange")
-		prior = true
+		self.prior = true
 	end
 end
 
 function BigWigsHuhuran:BigWigs_Message(text)
-	if text == L"stingdelaywarn" then prior = nil end
+	if text == L"stingdelaywarn" then self.prior = nil end
 end
