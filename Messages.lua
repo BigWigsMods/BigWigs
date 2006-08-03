@@ -90,6 +90,7 @@ BigWigsMessages.consoleOptions = {
 			name = "Anchor",
 			desc = L"Show the message anchor frame.",
 			func = function() BigWigsMessages.anchorframe:Show() end,
+			hidden = function() return BigWigsMessages.db.profile.useraidwarn end,
 		},
 		[L"rw"] = {
 			type = "toggle",
