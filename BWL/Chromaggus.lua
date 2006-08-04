@@ -186,7 +186,7 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, SpellName)
 		local icon = "icon"..breathnr
 		icon = L(icon)
 
-		if breath1 == SpellName and not self.db.profile.breath then
+		if breath1 == SpellName and self.db.profile.breath then
 			self:ScheduleEvent("bwchromaggusbreath1", "BigWigs_Message", 50, format(L"warn1", breath1), "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, breath1, 60, 1, icon, "Green", "Yellow", "Orange", "Red")
 		elseif breath2 == SpellName and self.db.profile.breath then
