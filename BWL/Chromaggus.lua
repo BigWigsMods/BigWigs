@@ -44,7 +44,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	breath1 = "Time Lapse",
 	breath2 = "Corrosive Acid",
-	breath3 = "Ignire Flesh",
+	breath3 = "Ignite Flesh",
 	breath4 = "Incinerate",
 	breath5 = "Frost Burn",
 
