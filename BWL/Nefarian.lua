@@ -238,7 +238,7 @@ end
 function BigWigsNefarian:BigWigs_RecvSync( sync )
 	if sync == "NefarianShadowflame" and self.db.profile.shadowflame then
 		self:TriggerEvent("BigWigs_Message", L"warn5", "Red")
-	elseif sync == "NefarianFear", and self.db.profile.fear then
+	elseif sync == "NefarianFear" and self.db.profile.fear then
 		self:TriggerEvent("BigWigs_Message", L"warn4", "Red")
 	end
 end
