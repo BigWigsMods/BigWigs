@@ -136,7 +136,7 @@ function BigWigsNoth:OnEnable()
 	
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "NothBlink", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "NOthCurse", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "NothCurse", 5)
 
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Curse")
