@@ -126,8 +126,8 @@ function BigWigsHeigan:BigWigs_RecvSync( sync )
 
 	if self.db.profile.teleport then
 		self:TriggerEvent("BigWigs_Message", string.format(L"teleportwarn1", self.toRoomTime), "Green")
-		self:ScheduleEvent("BigWigs_Message", self.toRoomTime-30, L"teleportwarn2", "Yellow")
-		self:ScheduleEvent("BigWigs_Message", self.toRoomTime-10, L"teleportwarn3", "Red")
+		self:ScheduleEvent("bwheiganwarn2","BigWigs_Message", self.toRoomTime-30, L"teleportwarn2", "Yellow")
+		self:ScheduleEvent("bwheiganwarn3","BigWigs_Message", self.toRoomTime-10, L"teleportwarn3", "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L"backbar", self.toRoomTime, 1, "Interface\\Icons\\Spell_Magic_LesserInvisibilty", "Yellow", "Orange", "Red")
 	end
 end
@@ -135,8 +135,8 @@ end
 function BigWigsHeigan:BackToRoom()
 	if self.db.profile.teleport then
 		self:TriggerEvent("BigWigs_Message", L"backwarn", "Green")
-		self:ScheduleEvent("BigWigs_Message", self.toPlatformTime-30, L"warn2", "Yellow")
-		self:ScheduleEvent("BigWigs_Message", self.toPlatformTime-10, L"warn3", "Red")
+		self:ScheduleEvent("bwheiganwarn2","BigWigs_Message", self.toPlatformTime-30, L"warn2", "Yellow")
+		self:ScheduleEvent("bwheiganwarn3","BigWigs_Message", self.toPlatformTime-10, L"warn3", "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L"teleportbar", self.toPlatformTime, 1, "Interface\\Icons\\Spell_Arcane_Blink", "Green", "Yellow", "Orange", "Red")
 	end
 end
