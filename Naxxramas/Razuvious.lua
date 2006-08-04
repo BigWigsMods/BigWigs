@@ -16,18 +16,25 @@ L:RegisterTranslations("enUS", function() return {
 	shout_name = "Shout Alert",
 	shout_desc = "Warn for disrupting shout",
 
-	startwarn 		= "Instructor Razuvious engaged!, ~25secs until shout!",
+	shieldwall_cmd = "shieldwall",
+	shieldwall_name = "Shield Wall Timer",
+	shieldwall_desc = "Show timer for shieldwall",
+
+	startwarn	= "Instructor Razuvious engaged!, ~25secs until shout!",
 
 	starttrigger1 	= "The time for practice is over! Show me what you have learned!",
 	starttrigger2 	= "Sweep the leg... Do you have a problem with that?",
 	starttrigger3 	= "Show them no mercy!",
 	starttrigger4 	= "Do as I taught you!",
 
-	shouttrigger 	= "Instructor Razuvious's Disrupting Shout hits (.+) for (.+)",
+	shouttrigger 	= "Disrupting Shout",
 	shout7secwarn 	= "7 seconds until Disrupting Shout",
 	shoutwarn 		= "Disrupting Shout!",
 	noshoutwarn		= "No shout! next in ~20secs",
 	shoutbar 		= "Disrupting Shout",
+
+	shieldwalltrigger   = "Deathknight Understudy gains Shield Wall.",
+	shieldwallbar       = "Shield Wall",	
 
 } end )
 
@@ -39,10 +46,14 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger3 = "Lasst keine Gnade walten!",
 	starttrigger4 = "Befolgt meine Befehle!",
 
-	shouttrigger = "Instrukteur Razuvious's Unterbrechungsruf trifft (.+) f\195\188r (.+)",
-	shout7secwarn = "7 Sekunden bis Shout",
-	shoutwarn = "Disrupting Shout",
-	shoutbar = "Disrupting Shout",
+	shouttrigger = "Unterbrechungsruf",
+	shout7secwarn = "7 Sekunden bis Ruf!",
+	shoutwarn = "Unterbrechungsruf!",
+	noshoutwarn = "Kein Ruf! N\195\164chster in ~20s",
+	shoutbar = "Unterbrechungsruf",
+
+	shieldwalltrigger   = "Reservist der Todesritter bekommt 'Schildwall'.",
+	shieldwallbar       = "Schildwall",	
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -67,7 +78,7 @@ L:RegisterTranslations("koKR", function() return {
 BigWigsRazuvious = BigWigs:NewModule(boss)
 BigWigsRazuvious.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsRazuvious.enabletrigger = boss
-BigWigsRazuvious.toggleoptions = {"shout", "bosskill"}
+BigWigsRazuvious.toggleoptions = {"shout", "shieldwall", "bosskill"}
 BigWigsRazuvious.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -82,12 +93,14 @@ function BigWigsRazuvious:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Shout")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Shout")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Shout")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_BUFFS", "Shieldwall")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "RazuviousShout", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RazuviousNoShout", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "RazuviousShieldwall", 5)
 end
 
 function BigWigsRazuvious:CHAT_MSG_MONSTER_YELL( msg )
@@ -103,6 +116,12 @@ end
 
 function BigWigsRazuvious:BigWigs_Message(text)
 	if text == L"shout7secwarn" then self.prior = nil end
+end
+
+function BigWigsRazuvious:Shieldwall( msg ) 
+	if string.find(msg, L"shieldwalltrigger") then
+		self:TriggerEvent("BigWigs_SendSync", "RazuviousShieldwall")
+	end
 end
 
 function BigWigsRazuvious:Shout( msg )
@@ -134,6 +153,10 @@ function BigWigsRazuvious:BigWigs_RecvSync( sync )
 			self:TriggerEvent("BigWigs_StartBar", self, L"shoutbar", 20, 1, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red")
 		end
 		self.prior = true
+	elseif sync == "RazuviousShieldwall" then
+		if self.db.profile.shieldwall then
+			self:TriggerEvent("BigWigs_StartBar", self, L"shieldwallbar", 20, 2, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red")
+		end
 	end
 end
 
