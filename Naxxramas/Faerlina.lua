@@ -36,6 +36,7 @@ L:RegisterTranslations("enUS", function() return {
 	silencewarn = "Silence! Delaying Enrage!",
 
 	enragebar = "Enrage",
+	silencebar = "Silence",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -136,10 +137,11 @@ function BigWigsFaerlina:BigWigs_RecvSync( sync )
 			self:CancelScheduledEvent("bwfaerlinaenrage15")
 			if self.db.profile.silence then
 				self:TriggerEvent("BigWigs_Message", L"silencewarn", "Orange")
+				self:TriggerEvent("BigWigs_StartBar", self, L"silencebar", self.silencetime, 2, "Interface\\Icons\\Spell_Holy_Silence", "Green", "Yellow", "Orange", "Red")
 			end
 			if self.db.profile.enrage then
-				self:ScheduleEvent( "bwfaerlinaenrage15", "BigWigs_Message", 15, L"enragewarn15sec", "Red")
-				self:TriggerEvent("BigWigs_StartBar", self, L"enragebar", 30, 1, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Yellow", "Orange", "Red")
+				self:ScheduleEvent( "bwfaerlinaenrage15", "BigWigs_Message", self.silencetime - 15, L"enragewarn15sec", "Red")
+				self:TriggerEvent("BigWigs_StartBar", self, L"enragebar", self.silencetime, 1, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Yellow", "Orange", "Red")
 			end
 		else -- Reactive enrage removed
 			if self.db.profile.enrage then
@@ -147,6 +149,9 @@ function BigWigsFaerlina:BigWigs_RecvSync( sync )
 				self:ScheduleEvent("bwfaerlinaenrage15", "BigWigs_Message", self.enragetime - 15, L"enragewarn15sec", "Red")
 				self:TriggerEvent("BigWigs_StartBar", self, L"enragebar", self.enragetime, 1, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
 			end
+			if self.db.profile.silence then
+				self:TriggerEvent("BigWigs_StartBar", self, L"silencebar", self.silencetime, 2, "Interface\\Icons\\Spell_Holy_Silence", "Green", "Yellow", "Orange", "Red")
+ 			end			
 			self.enraged = nil
 		end
 	end
