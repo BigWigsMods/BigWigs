@@ -174,7 +174,7 @@ end
 ----------------------
 
 function BigWigsCThun:CHAT_MSG_MONSTER_EMOTE( arg1 )
-	if arg1 == L"weakenedtrigger" then self:TriggerEvent("BigWigs_SendSync", "CThunweakened") end
+	if arg1 == L"weakenedtrigger" then self:TriggerEvent("BigWigs_SendSync", "CThunWeakened") end
 end
 
 function BigWigsCThun:CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE( arg1 )
