@@ -153,7 +153,7 @@ end
 
 function BigWigsThaddius:CHAT_MSG_MONSTER_EMOTE( msg )
 	if (msg == L"enragetrigger") then
-		if self.db.prifile.enrage then self:TriggerEvent("BigWigs_Message", L"enragewarn", "Red") end
+		if self.db.profile.enrage then self:TriggerEvent("BigWigs_Message", L"enragewarn", "Red") end
 		self:TriggerEvent("BigWigs_StopBar", self, L"enragebartext")
 		self:CancelScheduledEvent("bwthaddiuswarn1")
 		self:CancelScheduledEvent("bwthaddiuswarn2")
