@@ -26,12 +26,10 @@ L:RegisterTranslations("enUS", function() return {
 	warn1 = "Teleport in 1 minute",
 	warn2 = "Teleport in 30 seconds",
 	warn3 = "Teleport in 10 seconds",
-	backwarn1 = "He's back on the floor! 90 seconds till next teleport",
+	backwarn = "He's back on the floor! 90 seconds till next teleport",
 	teleportwarn2 = "Inc to floor in 30 seconds",
 	teleportwarn3 = "Inc to floor in 10 seconds",
 	teleportwarn1 = "Teleport! %d sec till back in room!",
-	backwarn2 = "Teleport in 30 seconds",
-	backwarn3 = "Teleport in 10 seconds",
 	-- [[ Bars ]]--
 	teleportbar = "Teleport!",
 	backbar = "Back on floor!",
@@ -47,13 +45,11 @@ L:RegisterTranslations("deDE", function() return {
 	warn1 = "Teleport in 1 Minute",
 	warn2 = "Teleport in 30 Sekunden",
 	warn3 = "Teleport in 10 Sekunden",
-	backwarn1 = "Teleport! Zur\195\188ck in %d Sekunden!",
+	backwarn = "Teleport! Zur\195\188ck in %d Sekunden!",
 	teleportwarn2 = "Zur\195\188ck im Raum in 30 Sekunden",
 	teleportwarn3 = "Zur\195\188ck im Raum in 10 Sekunden",
 	
 	teleportwarn1 = "Zur\195\188ck im Raum! 90 Sekunden bis Teleport",
-	backwarn2 = "Teleport in 30 Sekunden",
-	backwarn3 = "Teleport in 10 Sekunden",
 
 	teleportbar = "Teleport!",
 	backbar = "R\195\188ckteleport!",
@@ -89,9 +85,9 @@ function BigWigsHeigan:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.teleport and msg == L"starttrigger" or msg == L"starttrigger2" or msg == L"starttrigger3" then
 		self:TriggerEvent("BigWigs_Message", L"startwarn", "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L"teleportbar", self.toPlatformTime, 2, "Interface\\Icons\\Spell_Arcane_Blink", "Green", "Yellow", "Orange", "Red")
-		self:ScheduleEvent("bwheiganwarn1", "BigWigs_Message", self.toPlatformTime-60, "Green")
-		self:ScheduleEvent("bwheiganwarn2", "BigWigs_Message", self.toPlatformTime-30, "Yellow")
-		self:ScheduleEvent("bwheiganwarn3", "BigWigs_Message", self.toPlatformTime-10, "Orange")
+		self:ScheduleEvent("bwheiganwarn1", "BigWigs_Message", self.toPlatformTime-60, L"warn1", "Green")
+		self:ScheduleEvent("bwheiganwarn2", "BigWigs_Message", self.toPlatformTime-30, L"warn2", "Yellow")
+		self:ScheduleEvent("bwheiganwarn3", "BigWigs_Message", self.toPlatformTime-10, L"warn3", "Orange")
 	elseif string.find(msg, L"teleporttrigger") then
 		self:TriggerEvent("BigWigs_SendSync", "HeiganTeleport")
 	end
@@ -138,9 +134,9 @@ end
 
 function BigWigsHeigan:BackToRoom()
 	if self.db.profile.teleport then
-		self:TriggerEvent("BigWigs_Message", L"backwarn1", "Green")
-		self:ScheduleEvent("BigWigs_Message", self.toPlatformTime-30, L"backwarn2", "Yellow")
-		self:ScheduleEvent("BigWigs_Message", self.toPlatformTime-10, L"backwarn3", "Red")
+		self:TriggerEvent("BigWigs_Message", L"backwarn", "Green")
+		self:ScheduleEvent("BigWigs_Message", self.toPlatformTime-30, L"warn2", "Yellow")
+		self:ScheduleEvent("BigWigs_Message", self.toPlatformTime-10, L"warn3", "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L"teleportbar", self.toPlatformTime, 1, "Interface\\Icons\\Spell_Arcane_Blink", "Green", "Yellow", "Orange", "Red")
 	end
 end

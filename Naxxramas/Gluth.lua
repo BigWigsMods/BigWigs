@@ -147,13 +147,13 @@ function BigWigsGluth:BigWigs_RecvSync( sync )
 	if sync == "GluthDecimate" and self.db.profile.decimate then 	
 		self:TriggerEvent("BigWigs_Message", L"decimatewarn", "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L"decimatebartext", 105, 2, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
-		self:ScheduleEvent("BigWigs_Message", 100, L"decimatesoon", "Orange")
+		self:ScheduleEvent("BigWigs_Message", 100, L"decimatesoonwarn", "Orange")
 	elseif sync == "GluthStart" then
 		if self.db.profile.decimate and not self.started then
 			self.started = true
 			self:TriggerEvent("BigWigs_Message", L"startwarn", "Yellow")
 			self:TriggerEvent("BigWigs_StartBar", self, L"decimatebartext", 105, 2, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
-			self:ScheduleEvent("BigWigs_Message", 100, L"decimatesoon", "Orange")
+			self:ScheduleEvent("BigWigs_Message", 100, L"decimatesoonwarn", "Orange")
 		end
 	end
 end
