@@ -188,6 +188,10 @@ function BigWigsNefarian:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "NefarianShadowflame", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "NefarianFear", 10)
 end
 
 ------------------------------
@@ -225,9 +229,17 @@ end
 
 function BigWigsNefarian:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if (string.find(msg, L"trigger4")) then
-		if self.db.profile.fear then self:TriggerEvent("BigWigs_Message", L"warn4", "Red") end
+		self:TriggerEvent("BigWigs_SendSync", "NefarianFear") 
 	elseif (string.find(msg, L"trigger5")) then
-		if self.db.profile.shadowflame then self:TriggerEvent("BigWigs_Message", L"warn5", "Red") end
+		self:TriggerEvent("BigWigs_SendSync", "NefarianShadowflame")
+	end
+end
+
+function BigWigsNefarian:BigWigs_RecvSync( sync )
+	if sync == "NefarianShadowflame" and self.db.profile.shadowflame then
+		self:TriggerEvent("BigWigs_Message", L"warn5", "Red")
+	elseif sync == "NefarianFear", and self.db.profile.fear then
+		self:TriggerEvent("BigWigs_Message", L"warn4", "Red")
 	end
 end
 

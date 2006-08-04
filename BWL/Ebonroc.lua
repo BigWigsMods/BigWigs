@@ -119,6 +119,7 @@ function BigWigsEbonroc:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "EbonrocWingBuffet", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "EbonrocShadowflame", 10)
 end
 
 ------------------------------
@@ -128,8 +129,8 @@ end
 function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if (string.find(msg, L"trigger1")) then
 		self:TriggerEvent("BigWigs_SendSync", "EbonrocWingBuffet")
-	elseif (msg == L"trigger2" and self.db.profile.shadowflame) then
-		self:TriggerEvent("BigWigs_Message", L"warn4", "Red")
+	elseif msg == L"trigger2" then
+		self:TriggerEvent("BigWigs_SendSync", "EbronrocShadowflame")
 	end
 end
 
@@ -139,6 +140,8 @@ function BigWigsEbonroc:BigWigs_RecvSync(sync)
 		self:TriggerEvent("BigWigs_Message", L"warn2", "Yellow")
 		self:ScheduleEvent("BigWigs_Message", 29, L"warn3", "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 32, 1, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")
+	elseif sync == "EbronrocShadowflame" and self.db.profile.shadowflame then
+		self:TriggerEvent("BigWigs_Message", L"warn4", "Red")
 	end
 end
 
