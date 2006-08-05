@@ -221,7 +221,7 @@ function BigWigsNoth:teleportToRoom()
 	
 	if self.db.profile.teleport then
 		self:TriggerEvent("BigWigs_Message", string.format(L"backwarn", self.timeroom), "Red")
-		self:TriggerEvent("BigWig_StartBar", self, L"teleportbar", self.timeroom, 0, "Interface\\Icons\\Spell_Magic_LesserInvisibilty", "Green", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"teleportbar", self.timeroom, 0, "Interface\\Icons\\Spell_Magic_LesserInvisibilty", "Green", "Yellow", "Orange", "Red")
 		self:ScheduleEvent("bwnothteleport", "BigWigs_Message", self.timeroom - 10, L"teleportwarn2", "Orange")
 	end
 	self.prior = nil
