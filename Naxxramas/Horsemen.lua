@@ -109,9 +109,9 @@ function BigWigsHorsemen:Mark( first )
 	if first then
 		self:ScheduleRepeatingEvent("bwhorsemenmarkrepeater", self.Mark, 12, self )
 	end
-	if self.profile.mark then self:TriggerEvent("BigWigs_Message", string.format( L"markwarn1", self.marks ), "Red") end
+	if self.db.profile.mark then self:TriggerEvent("BigWigs_Message", string.format( L"markwarn1", self.marks ), "Red") end
 	self.marks = self.marks + 1
-	if self.profile.mark then 
+	if self.db.profile.mark then 
 		self:TriggerEvent("BigWigs_StartBar", self, L"markbar", 12, 1, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Orange", "Red")
 		self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 7, string.format( L"markwarn2", self.marks ), "Orange")
 	end
@@ -120,7 +120,7 @@ end
 function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 	if sync == "HorsemenStart" and not self.started then
 		self.started = true
-		if self.profile.mark then
+		if self.db.profile.mark then
 			self:TriggerEvent("BigWigs_Message", L"startwarn", "Yellow")
 			self:TriggerEvent("BigWigs_StartBar", self, L"markbar", 30, 1, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Yellow", "Orange", "Red")
 			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 25, string.format( L"markwarn2", self.marks ), "Orange")
