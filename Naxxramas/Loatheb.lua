@@ -100,7 +100,7 @@ end
 function BigWigsLoatheb:BigWigs_RecvSync(sync)
 	if sync == "LoathebStart" and not self.started then
 		self.started = true
-		if self.profile.doom then 
+		if self.db.profile.doom then 
 			self:TriggerEvent("BigWigs_StartBar", self, L"doombar", 120, 1, "Interface\\Icons\\Spell_Shadow_NightOfTheDead", "Green", "Yellow", "Orange", "Red")
 			self:ScheduleEvent("bwloathebdoom", "BigWigs_Message", 115, L"doomwarn5sec", "Orange")
 		end
