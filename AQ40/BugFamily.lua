@@ -108,7 +108,7 @@ function BigWigsBugFamily:BigWigs_Message(txt)
 end
 
 function BigWigsBugFamily:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
-	if (msg == string.format(UNITDIESOTHER, kri) or string.format(UNITDIESOTHER, yauj) or string.format(UNITDIESOTHER, vem)) then
+	if (msg == string.format(UNITDIESOTHER, kri) or msg == string.format(UNITDIESOTHER, yauj) or msg == string.format(UNITDIESOTHER, vem)) then
 		deaths = deaths + 1
 		if (deaths == 3) then
 			if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")("%s has been defeated"), boss), "Green", nil, "Victory") end
