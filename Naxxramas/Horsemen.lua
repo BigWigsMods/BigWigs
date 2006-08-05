@@ -2,7 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
-local thane = AceLibrary("Babble-Boss-2.0")("Thane Korthazz")
+local thane = AceLibrary("Babble-Boss-2.0")("Thane Korth'azz")
 local mograine = AceLibrary("Babble-Boss-2.0")("Highlord Mograine")
 local zeliek = AceLibrary("Babble-Boss-2.0")("Sir Zeliek")
 local blaumeux = AceLibrary("Babble-Boss-2.0")("Lady Blaumeux")
