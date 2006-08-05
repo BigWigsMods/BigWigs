@@ -142,9 +142,16 @@ function BigWigsBars:BigWigs_StartBar(module, text, time, bar, icon, c1, c2, c3,
 	local id = "BigWigsBar "..text
 	local u = self.db.profile.growup
 
+	-- yes we try and register every time, we also set the point every time since people can change their mind midbar.
+	module:RegisterCandyBarGroup("BigWigsGroup")
+	module:SetCandyBarGroupPoint("BigWigsGroup", u and "BOTTOM" or "TOP", "BigWigsBarsAnchorFrame", u and "TOP" or "BOTTOM", 0, 0)
+	module:SetCandyBarGroupGrowth("BigWigsGroup", u)
+
 	module:RegisterCandyBar(id, time, text, icon, c1, c2, c3, c4, c5, c6, c8, c9, c10)
-	module:SetCandyBarPoint(id, u and "BOTTOM" or "TOP", "BigWigsBarsAnchorFrame", u and "TOP" or "BOTTOM", 0, (u and (-1) or 1) * ((bar or 0) * (-16) + 5))
+	module:RegisterCandyBarWithGroup(id, "BigWigsGroup")
+
 	module:SetCandyBarScale(id, self.db.profile.scale or 1)
+	module:SetCandyBarFade(id, .5)
 	module:StartCandyBar(id, true)
 end
 
