@@ -155,7 +155,7 @@ function BigWigsRazuvious:BigWigs_RecvSync( sync )
 		self.prior = true
 	elseif sync == "RazuviousShieldwall" then
 		if self.db.profile.shieldwall then
-			self:TriggerEvent("BigWigs_StartBar", self, L"shieldwallbar", 20, 2, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"shieldwallbar", 20, 2, "Interface\\Icons\\Ability_Warrior_ShieldWall", "Yellow", "Orange", "Red")
 		end
 	end
 end
