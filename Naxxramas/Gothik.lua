@@ -53,7 +53,7 @@ L:RegisterTranslations("enUS", function() return {
 	inroomtrigger = "I have waited long enough. Now you face the harvester of souls.",
 	inroomwarn = "He's in the room!",
 	
-	inroombartext = "Till on Room",
+	inroombartext = "In Room",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -199,6 +199,9 @@ function BigWigsGothik:CHAT_MSG_MONSTER_YELL( msg )
 			self:ScheduleEvent("bwgothikwarn5", "BigWigs_Message", 260, L"warn5", "Red")
 		end
 		if self.db.profile.add then
+			self.tratime = 27
+			self.dktime = 77
+			self.ridertime = 137		
 			-- add bars
 			self:TriggerEvent("BigWigs_StartBar", self, L"trabar", self.tratime, 2, nil, "Yellow", "Orange", "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, L"dkbar", self.dktime, 3, nil, "Green", "Yellow", "Orange", "Red")
