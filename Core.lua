@@ -64,16 +64,16 @@ L:RegisterTranslations("deDE", function() return {
 
 
 L:RegisterTranslations("koKR", function() return {
-	["%s mod enabled"] = "%s 모 9S~",
-	["Target monitoring enabled"] = "풬x ""인 9S~",
-	["Target monitoring disabled"] = "풬x ""인 꺼짐",
+	["%s mod enabled"] = "%s 모듈을 시작",
+	["Target monitoring enabled"] = "타겟 확인 시작",
+	["Target monitoring disabled"] = "타겟 확인 꺼짐",
 } end)
 
 
 L:RegisterTranslations("zhCN", function() return {
-	["%s mod enabled"] = "%s模已弬启",
-	["Target monitoring enabled"] = ":!: 已弬启",
-	["Target monitoring disabled"] = ":!: 已&",
+	["%s mod enabled"] = "%s模块已开启",
+	["Target monitoring enabled"] = "目标监视已开启",
+	["Target monitoring disabled"] = "目标监视已关闭",
 } end)
 
 
@@ -294,3 +294,5 @@ function BigWigs:BigWigs_RecvSync(sync, module)
 		if m.zonename == GetRealZoneText() then self:EnableModule(BB:GetTranslation(module)) end
 	end
 end
+
+
