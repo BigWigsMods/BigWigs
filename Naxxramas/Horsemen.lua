@@ -140,13 +140,13 @@ end
 
 function BigWigsHorsemen:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if msg == thane..L"shieldwalltrigger" then
-		self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall", thane )
+		self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..thane )
 	elseif msg == zeliek..L"shieldwalltrigger" then
-		self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall", zeliek )
+		self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..zeliek )
 	elseif msg == mograine..L"shieldwalltrigger" then
-		self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall", mograine )
+		self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..mograine )
 	elseif msg == blaumeux..L"shieldwalltrigger" then
-		self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall", blaumeux )
+		self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..blaumeux )
 	end
 end
 
