@@ -35,7 +35,7 @@ L:RegisterTranslations("enUS", function() return {
 	startwarn = "Gluth Engaged! ~105 seconds till Zombies!",
 	decimatesoonwarn = "Decimate Soon!",
 	decimatewarn = "Decimate! - AoE Zombies!",
-	decimatetrigger = "Gluth gains Decimate.",
+	decimatetrigger = "Decimate",
 
 	bar1text = "AoE Fear",
 	decimatebartext = "Decimate Zombies",
@@ -77,7 +77,10 @@ function BigWigsGluth:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Fear")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+	
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Decimate")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Decimate")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Decimate")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "GluthDecimate", 10)
@@ -137,14 +140,14 @@ function BigWigsGluth:Fear( msg )
 	end
 end
 
-function BigWigsGluth:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
-	if msg == L"decimatetrigger" then
+function BigWigsGluth:Decimate( msg )
+	if string.find(msg, L"decimatetrigger") then
 		self:TriggerEvent("BigWigs_SendSync", "GluthDecimate")
 	end
 end
 
 function BigWigsGluth:BigWigs_RecvSync( sync )
-	if sync == "GluthDecimate" and self.db.profile.decimate then 	
+	if sync == "GluthDecimate" and self.db.profile.decimate then
 		self:TriggerEvent("BigWigs_Message", L"decimatewarn", "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L"decimatebartext", 105, 2, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
 		self:ScheduleEvent("BigWigs_Message", 100, L"decimatesoonwarn", "Orange")
