@@ -170,7 +170,7 @@ function BigWigsThaddius:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 end
 
 function BigWigsThaddius:BigWigs_RecvSync( sync )
-	if self.db.profile.polarity then
+	if sync == "ThaddiusPolarity" and self.db.profile.polarity then
 		self:TriggerEvent("BigWigs_Message", L"pswarn2", "Yellow")
 		self:ScheduleEvent("BigWigs_Message", 27, L"pswarn3", "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, 1, "Interface\\Icons\\Spell_Nature_Lightning", "Yellow", "Orange", "Red")
