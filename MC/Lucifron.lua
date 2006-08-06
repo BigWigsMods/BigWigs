@@ -73,6 +73,19 @@ L:RegisterTranslations("deDE", function() return {
 	bar2text = "Impending Verdammnis",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 = "subit les effets de Mal\195\169diction de Lucifron",
+	trigger2 = "subit les effets de Mal\195\169diction imminente.",
+
+	warn1 = "5 secondes avant Mal\195\169diction de Lucifron!",
+	warn2 = "Mal\195\169diction de Lucifron - 20 sec avant prochaine!",
+	warn3 = "5 secondes avant Mal\195\169diction imminente!",
+	warn4 = "Mal\195\169diction imminente - 20 sec avant prochaine!",
+
+	bar1text = "Mal\195\169diction de Lucifron",
+	bar2text = "Mal\195\169diction imminente",
+} end)
+
 
 ----------------------------------
 --      Module Declaration      --

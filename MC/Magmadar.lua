@@ -67,6 +67,16 @@ L:RegisterTranslations("deDE", function() return {
 	["AoE Fear - 30 seconds until next!"] = "Fear! N\195\164chste in 30 Sekunden!",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 = "entre dans une sanglante fr\195\169n\195\169sie !",
+	trigger2 = "Panique.",
+
+	["Frenzy alert!"] = "ALERTE FRENESIE - Tir tranquilisant!",
+	["5 seconds until AoE Fear!"] = "AE FEAR DANS 5 SECONDES!",
+	["AoE Fear - 30 seconds until next!"] = "AE FEAR - 30 sec avant prochain!",
+
+} end)
+
 
 ----------------------------------
 --      Module Declaration      --

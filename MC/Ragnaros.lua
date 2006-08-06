@@ -92,6 +92,24 @@ L:RegisterTranslations("deDE", function() return {
 	bar3text = "Untertauchen Ragnaros",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 = "^GO\195\155TEZ ",
+	trigger2 = "^VENEZ, MES SERVITEURS",
+	trigger3 = "^ET MAINTENANT",
+
+	warn1 = "AoE Knockback!",
+	warn2 = "5 sec avant AoE Knockback!",
+	warn3 = "Ragnaros dispara\195\174t pour 90 sec. Arriv\195\169e des Fils des flammes!",
+	warn4 = "15 sec avant que Ragnaros n'\195\169merge!",
+	warn5 = "Ragnaros a emerger. 3 min avant l'arriv\195\169e des Fils des flammes!",
+	warn6 = "60 sec avant l'arriv\195\169e des Fils des flammes!!",
+	warn7 = "20 sec avant l'arriv\195\169e des Fils des flammes!!",
+
+	bar1text = "AoE knockback",
+	bar2text = "Ragnaros emerge",
+	bar3text = "Ragnaros submerge",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

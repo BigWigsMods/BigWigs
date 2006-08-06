@@ -54,6 +54,15 @@ L:RegisterTranslations("deDE", function() return {
 	bar1text = "Gehennas' Fluch",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 = "subit les effets de Mal\195\169diction de Gehennas.",
+
+	warn1 = "5 SECONDES AVANT LA MALEDICTION DE ZONE!",
+	warn2 = "ALERTE MALEDICTION DE ZONE - 30 sec avant prochaine!",
+
+	bar1text = "Mal\195\169diction de Gehennas",
+} end)
+
 
 ----------------------------------
 --      Module Declaration      --

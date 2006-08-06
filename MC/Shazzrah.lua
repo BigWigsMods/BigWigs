@@ -64,6 +64,17 @@ L:RegisterTranslations("deDE", function() return {
 	bar1text = "Teleport",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 = "Shazzrah gagne Porte de Shazzrah",
+	trigger2 = "Shazzrah gagne Magie diminu\195\169e",
+
+	warn1 = "TRANSFERT - 30 sec avant prochain!",
+	warn2 = "5 SECONDES AVANT TRANSFERT!",
+	warn3 = "SHAZZRAH SE BUFF - DISSIPEZ LE!",
+
+	bar1text = "Transfert",
+} end)
+
 
 ----------------------------------
 --      Module Declaration      --

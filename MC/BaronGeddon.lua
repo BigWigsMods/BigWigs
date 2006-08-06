@@ -61,6 +61,16 @@ L:RegisterTranslations("deDE", function() return {
 	warn2 = " ist die Bombe!",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 = "^([^%s]+) ([^%s]+) les effets de Bombe vivante.",
+
+	you = "Vous",
+	are = "subissez",
+
+	warn1 = "TU ES LA BOMBE !",
+	warn2 = " EST LA BOMBE!",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
