@@ -23,7 +23,7 @@ local phase2started = nil
 local firstglare = nil
 local firstwarning = nil
 local target = nil
-local tentacletime = timeP1Tentacle
+-- local self.tentacletime = timeP1Tentacle
 
 ----------------------------
 --      Localization      --
@@ -154,7 +154,7 @@ function BigWigsCThun:OnEnable()
 	firstwarning = nil
 	phase2started = nil
 
-	tentacletime = timeP1Tentacle
+	self.tentacletime = timeP1Tentacle
 
 	-- register events
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")		-- weakened triggering
@@ -238,7 +238,7 @@ end
 function BigWigsCThun:CThunP2Start()
 	if not phase2started then
 		phase2started = true
-		tentacletime = timeP2Tentacle
+		self.tentacletime = timeP2Tentacle
 
 		self:TriggerEvent("BigWigs_Message", L"phase2starting", "Green")
 
@@ -262,14 +262,14 @@ function BigWigsCThun:CThunP2Start()
 		self:CancelScheduledEvent("bwcthuntarget")
 
 		if self.db.profile.tentacle then
-			self:ScheduleEvent("bwtentacle1", "BigWigs_Message", timeP2Tentacle + timeP2Offset -.1, self.db.profile.rape and L"tentacle1" or L"norape1", "Red")
-			self:ScheduleEvent("bwtentacle2", "BigWigs_Message", timeP2Tentacle + timeP2Offset - 5, self.db.profile.rape and L"tentacle2" or L"norape2", "Orange")
+			self:ScheduleEvent("bwcthuntentacle1", "BigWigs_Message", timeP2Tentacle + timeP2Offset -.1, self.db.profile.rape and L"tentacle1" or L"norape1", "Red")
+			self:ScheduleEvent("bwcthuntentacle2", "BigWigs_Message", timeP2Tentacle + timeP2Offset - 5, self.db.profile.rape and L"tentacle2" or L"norape2", "Orange")
 			self:TriggerEvent("BigWigs_StartBar", self, self.db.profile.rape and L"barTentacle" or L"barNoRape", timeP2Tentacle + timeP2Offset, 1, "Interface\\Icons\\Spell_Nature_CallStorm", "Yellow", "Orange", "Red" )
 		end
 
 		if self.db.profile.giant then
-			self:ScheduleEvent("bwgiant1", "BigWigs_Message", timeP2Tentacle + timeP2Offset -.1, L"giant1", "Red")
-			self:ScheduleEvent("bwgiant2", "BigWigs_Message", timeP2Tentacle + timeP2Offset - 5, L"giant2", "Orange")
+			self:ScheduleEvent("bwcthungiant1", "BigWigs_Message", timeP2Tentacle + timeP2Offset -.1, L"giant1", "Red")
+			self:ScheduleEvent("bwcthungiant2", "BigWigs_Message", timeP2Tentacle + timeP2Offset - 5, L"giant2", "Orange")
 			self:TriggerEvent("BigWigs_StartBar", self, L"barGiant", timeP2Tentacle + timeP2Offset, 3, "Interface\\Icons\\Ability_EyeOfTheOwl", "Yellow", "Orange", "Red" )
 		end
 
@@ -310,7 +310,7 @@ end
 
 function BigWigsCThun:StartTentacleRape()
 	self:TentacleRape()
-	self:ScheduleRepeatingEvent("bwcthuntentacles", self.TentacleRape, tentacletime, self )
+	self:ScheduleRepeatingEvent("bwcthuntentacles", self.TentacleRape, self.tentacletime, self )
 end
 
 function BigWigsCThun:CheckTarget()
@@ -355,19 +355,19 @@ function BigWigsCThun:TentacleRape()
 		if gianteye then
 			gianteye = nil
 			if self.db.profile.giant then
-				self:TriggerEvent("BigWigs_StartBar", self, L"barGiant", tentacletime, 3, "Interface\\Icons\\Ability_EyeOfTheOwl", "Yellow", "Orange", "Red")
-				self:ScheduleEvent("bwcthungiant1", "BigWigs_Message", tentacletime -.1, L"giant1", "Red")
-				self:ScheduleEvent("bwcthungiant2", "BigWigs_Message", tentacletime - 5, L"giant2", "Orange")
-				self:ScheduleEvent("bwcthungiant3", "BigWigs_Message", tentacletime - 10, L"giant3", "Yellow")
+				self:TriggerEvent("BigWigs_StartBar", self, L"barGiant", self.tentacletime, 3, "Interface\\Icons\\Ability_EyeOfTheOwl", "Yellow", "Orange", "Red")
+				self:ScheduleEvent("bwcthungiant1", "BigWigs_Message", self.tentacletime -.1, L"giant1", "Red")
+				self:ScheduleEvent("bwcthungiant2", "BigWigs_Message", self.tentacletime - 5, L"giant2", "Orange")
+				self:ScheduleEvent("bwcthungiant3", "BigWigs_Message", self.tentacletime - 10, L"giant3", "Yellow")
 			end
 		else
 			gianteye = true
 		end
 	end
 	if self.db.profile.tentacle then
-		self:TriggerEvent("BigWigs_StartBar", self, L"barTentacle", tentacletime, 1, "Interface\\Icons\\Spell_Nature_CallStorm", "Yellow", "Orange", "Red")
-		self:ScheduleEvent("bwcthuntentacle1", "BigWigs_Message", tentacletime -.1, self.db.profile.rape and L"tentacle1" or L"norape1", "Red")
-		self:ScheduleEvent("bwcthuntentacle2", "BigWigs_Message", tentacletime -5, self.db.profile.rape and L"tentacle2" or L"norape2", "Orange")
+		self:TriggerEvent("BigWigs_StartBar", self, L"barTentacle", self.tentacletime, 1, "Interface\\Icons\\Spell_Nature_CallStorm", "Yellow", "Orange", "Red")
+		self:ScheduleEvent("bwcthuntentacle1", "BigWigs_Message", self.tentacletime -.1, self.db.profile.rape and L"tentacle1" or L"norape1", "Red")
+		self:ScheduleEvent("bwcthuntentacle2", "BigWigs_Message", self.tentacletime -5, self.db.profile.rape and L"tentacle2" or L"norape2", "Orange")
 	end
 end
 
