@@ -63,6 +63,7 @@ BigWigsGluth.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsGluth:OnEnable()
 	self.started = nil
+	self.prior = nil
 
 	self:RegisterEvent("BigWigs_Message")
 
