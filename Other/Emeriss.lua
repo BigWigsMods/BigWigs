@@ -75,7 +75,7 @@ L:RegisterTranslations("koKR", function() return {
 ----------------------------------
 
 BigWigsEmeriss = BigWigs:NewModule(boss)
-BigWigsEmeriss.zonename = { AceLibrary("AceLocale-2.0"):new("BigWigs")("Outdoor Raid Bosses Zone"), AceLibrary("Babble-Zone-2.0")("Blasted Lands"), AceLibrary("Babble-Zone-2.0")("Duskwood"), AceLibrary("Babble-Zone-2.0")("The Hinterlands") }
+BigWigsEmeriss.zonename = { AceLibrary("AceLocale-2.0"):new("BigWigs")("Outdoor Raid Bosses Zone"), AceLibrary("Babble-Zone-2.0")("Blasted Lands"), AceLibrary("Babble-Zone-2.0")("Duskwood"), AceLibrary("Babble-Zone-2.0")("The Hinterlands"), , AceLibrary("Babble-Zone-2.0")("Feralas") }
 BigWigsEmeriss.enabletrigger = boss
 BigWigsEmeriss.toggleoptions = {"noxious", "volatileyou", "volatileother", "bosskill"}
 BigWigsEmeriss.revision = tonumber(string.sub("$Revision$", 12, -3))
