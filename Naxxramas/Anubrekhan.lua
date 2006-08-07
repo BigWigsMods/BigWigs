@@ -116,7 +116,7 @@ end
 
 function BigWigsAnubrekhan:BigWigs_RecvSync( sync )
 	if sync == "AnubLocustInc" then
-		self:ScheduleEvent("bwanublocustinc", 3.25, self.BigWigs_RecvSync, self, "AnubLocustSwarm")
+		self:ScheduleEvent("bwanublocustinc", self.BigWigs_RecvSync, 3.25, self, "AnubLocustSwarm")
 		self:TriggerEvent("BigWigs_Message", L"castwarn", "Orange")
 	elseif sync == "AnubLocustSwarm" then
 		self:CancelScheduledEvent("bwanublocustinc")
