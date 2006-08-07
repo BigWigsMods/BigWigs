@@ -43,8 +43,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	pstrigger = "Now you feel pain...",
 	trigger1 = "Thaddius begins to cast Polarity Shift",
-	postrigger = "^([^%s]+) ([^%s]+) afflicted by Positive Charge",
-	negtrigger = "^([^%s]+) ([^%s]+) afflicted by Negative Charge",
+	chargetrigger = "^([^%s]+) ([^%s]+) afflicted by ([^%s]+) Charge",
+	positivetype = "Positive",
+	negativetype = "Negative",
 	stalaggtrigger = "Stalagg gains Power Surge.",
 
 	you = "You",
@@ -180,12 +181,11 @@ end
 function BigWigsThaddius:ChargeEvent( msg )
 	if not self.db.profile.charge then return end
 
-	local _, _, playername, playertype = string.find(msg, L"postrigger")
-	if playername and playertype and playername == L"you" then
-		self:TriggerEvent("BigWigs_Message", L"poswarn", "Green", true)
-	else
-		local _, _, playername, playertype = string.find(msg, L"postrigger")
-		if playername and playertype and playername == L"you" then
+	local _, _, playername, playertype, chargetype = string.find(msg, L"chargetrigger")
+	if playername and playertype and chargetype and playername == L"you" then
+		if chargetype == L"positivetype" then
+			self:TriggerEvent("BigWigs_Message", L"poswarn", "Green", true)
+		else
 			self:TriggerEvent("BigWigs_Message", L"negwarn", "Red", true)
 		end
 	end
