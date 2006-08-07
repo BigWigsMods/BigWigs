@@ -123,6 +123,6 @@ end
 
 function BigWigsGeneralRajaxx:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.wave and msg and self.warnsets[msg] then
-		self:TriggerEvent("BigWigs_Message", self.warnsets[arg1], "Orange")
+		self:TriggerEvent("BigWigs_Message", self.warnsets[msg], "Orange")
 	end
 end
