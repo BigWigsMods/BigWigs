@@ -5,27 +5,31 @@
 local boss = AceLibrary("Babble-Boss-2.0")("High Priestess Mar'li")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
+local lastdrain = 0
+
+
 ----------------------------
 --      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "marli",
-	
+
 	spider_cmd = "spider",
 	spider_name = "Spider Alert",
 	spider_desc = "Warn when spiders spawn",
-	
+
 	drain_cmd = "drain",
 	drain_name = "Drain Alert",
 	drain_desc = "Warn for life drain",
-	
+
 	trigger1 = "Aid me my brood!$",
 	trigger2 = "^High Priestess Mar'li's Drain Life heals High Priestess Mar'li for (.+).",
 
 	warn1 = "Spiders spawned!",
 	warn2 = "High Priestess Mar'li is draining life! Interrupt it!",
 } end )
+
 
 L:RegisterTranslations("zhCN", function() return {
 	trigger1 = "来为我作战吧，我的孩子们！$",
@@ -35,6 +39,7 @@ L:RegisterTranslations("zhCN", function() return {
 	warn2 = "高阶祭司玛尔里正在施放生命吸取，赶快打断她！",
 } end )
 
+
 L:RegisterTranslations("koKR", function() return {
 	trigger1 = "어미를 도와라!$",
 	trigger2 = "대여사제 말리의 생명력 흡수|1으로;로; 대여사제 말리의 생명력이 (.+)만큼 회복되었습니다.",
@@ -42,6 +47,7 @@ L:RegisterTranslations("koKR", function() return {
 	warn1 = "거미 소환!",
 	warn2 = "말리가 생명력을 흡수합니다. 차단해 주세요!",
 } end )
+
 
 ----------------------------------
 --      Module Declaration      --
@@ -53,6 +59,7 @@ BigWigsMarli.enabletrigger = boss
 BigWigsMarli.toggleoptions = {"spider", "drain", "bosskill"}
 BigWigsMarli.revision = tonumber(string.sub("$Revision$", 12, -3))
 
+
 ------------------------------
 --      Initialization      --
 ------------------------------
@@ -63,14 +70,17 @@ function BigWigsMarli:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 end
 
+
 function BigWigsMarli:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.spider and string.find(msg, L"trigger1") then
 		self:TriggerEvent("BigWigs_Message", L"warn1", "Yellow")
 	end
 end
 
+
 function BigWigsMarli:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
-	if self.db.profile.drain and string.find(msg, L"trigger2") then
+	if self.db.profile.drain and string.find(msg, L"trigger2") and lastdrain < (GetTime()-3) then
+		lastdrain = GetTime()
 		self:TriggerEvent("BigWigs_Message", L"warn2", "Orange")
 	end
 end
