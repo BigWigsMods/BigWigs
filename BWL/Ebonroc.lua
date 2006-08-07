@@ -130,7 +130,7 @@ function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if (string.find(msg, L"trigger1")) then
 		self:TriggerEvent("BigWigs_SendSync", "EbonrocWingBuffet")
 	elseif msg == L"trigger2" then
-		self:TriggerEvent("BigWigs_SendSync", "EbronrocShadowflame")
+		self:TriggerEvent("BigWigs_SendSync", "EbonrocShadowflame")
 	end
 end
 
@@ -140,7 +140,7 @@ function BigWigsEbonroc:BigWigs_RecvSync(sync)
 		self:TriggerEvent("BigWigs_Message", L"warn2", "Yellow")
 		self:ScheduleEvent("BigWigs_Message", 29, L"warn3", "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 32, 1, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")
-	elseif sync == "EbronrocShadowflame" and self.db.profile.shadowflame then
+	elseif sync == "EbonrocShadowflame" and self.db.profile.shadowflame then
 		self:TriggerEvent("BigWigs_Message", L"warn4", "Red")
 	end
 end
