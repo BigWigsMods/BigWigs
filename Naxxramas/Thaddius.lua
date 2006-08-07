@@ -94,7 +94,8 @@ function BigWigsThaddius:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "PolarityCast")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF", "PolarityCast")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "ChargeEvent")
 
@@ -164,7 +165,7 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_EMOTE( msg )
 	end
 end
 
-function BigWigsThaddius:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
+function BigWigsThaddius:PolarityCast( msg )
 	if self.db.profile.polarity and string.find(msg, L"trigger1") then
 		self:TriggerEvent("BigWigs_Message", L"pswarn1", "Red")
 	end
