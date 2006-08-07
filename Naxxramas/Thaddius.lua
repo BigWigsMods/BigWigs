@@ -32,7 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	charge_cmd = "charge",
 	charge_name = "Charge Alert",
-	charge_desc = "Warn for Positive/Negative charge on you.",
+	charge_desc = "Warn about Positive/Negative charge for yourself only.",
 
 	enragetrigger = "goes into a berserker rage!",
 	starttrigger = "Stalagg crush you!",
@@ -102,14 +102,14 @@ function BigWigsThaddius:OnEnable()
 end
 
 function BigWigsThaddius:Scan()
-	if (UnitName("target") == boss and UnitAffectingCombat("target")) then
+	if ( (UnitName("target") == boss or UnitName("target") == feugen or UnitName("target") == stalagg) and UnitAffectingCombat("target")) then
 		return true
-	elseif (UnitName("playertarget") == boss and UnitAffectingCombat("playertarget")) then
+	elseif ((UnitName("playertarget") == boss or UnitName("playertarget") == feugen or UnitName("playertarget") == stalagg) and UnitAffectingCombat("playertarget")) then
 		return true
 	else
 		local i
 		for i = 1, GetNumRaidMembers(), 1 do
-			if (UnitName("raid"..i.."target") == boss and UnitAffectingCombat("raid"..i.."target")) then
+			if ( (UnitName("raid"..i.."target") == boss or UnitName("raid"..i.."target") == feugen or UnitName("raid"..i.."target") == stalagg) and UnitAffectingCombat("raid"..i.."target")) then
 				return true
 			end
 		end
@@ -180,17 +180,13 @@ end
 function BigWigsThaddius:ChargeEvent( msg )
 	if not self.db.profile.charge then return end
 
-	local _, _, player = string.find(msg, L"postrigger")
-	if player then
-		if player == L"you" then
-			self:TriggerEvent("BigWigs_Message", L"poswarn", "Green", true)
-		end
+	local _, _, playername, playertype = string.find(msg, L"postrigger")
+	if playername and playertype and playername == L"you" then
+		self:TriggerEvent("BigWigs_Message", L"poswarn", "Green", true)
 	else
-		_, _, player = string.find(msg, L"negtrigger")
-		if player then
-			if player == L"you" then
-				self:TriggerEvent("BigWigs_Message", L"negwarn", "Red", true)
-			end
+		local _, _, playername, playertype = string.find(msg, L"postrigger")
+		if playername and playertype and playername == L"you" then
+			self:TriggerEvent("BigWigs_Message", L"negwarn", "Red", true)
 		end
 	end
 end
