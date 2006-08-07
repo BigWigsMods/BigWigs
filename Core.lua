@@ -277,7 +277,7 @@ function BigWigs:EnableModule(module)
 	if m and m:IsBossModule() and not self:IsModuleActive(module) then
 		self:ToggleModuleActive(module, true)
 		self:TriggerEvent("BigWigs_Message", string.format(L"%s mod enabled", m:ToString() or "??"), "Cyan", true)
-		self:TriggerEvent("BigWigs_SendSync", "EnableModule " .. BB:GetReverseTranslation(module))
+		self:TriggerEvent("BigWigs_SendSync", "EnableModule " .. (BB:HasReverseTranslation(module) == true and BB:GetReverseTranslation(module) or module))
 	end
 end
 
@@ -290,8 +290,8 @@ end
 
 function BigWigs:BigWigs_RecvSync(sync, module)
 	if sync == "EnableModule" and module then
-		local m = self:GetModule(BB:GetTranslation(module))
-		if m.zonename == GetRealZoneText() then self:EnableModule(BB:GetTranslation(module)) end
+		local m = self:GetModule(BB:HasTranslation(module) == true and BB:GetTranslation(module) or module)
+		if m.zonename == GetRealZoneText() then self:EnableModule(BB:HasTranslation(module) == true and BB:GetTranslation(module) or module) end
 	end
 end
 
