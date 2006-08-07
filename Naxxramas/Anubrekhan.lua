@@ -82,7 +82,8 @@ BigWigsAnubrekhan.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsAnubrekhan:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF", "LocustCast")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "LocustCast")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
@@ -107,7 +108,7 @@ function BigWigsAnubrekhan:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	end
 end
 
-function BigWigsAnubrekhan:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
+function BigWigsAnubrekhan:LocustCast( msg )
 	if msg == L"casttrigger" then
 		self:TriggerEvent("BigWigs_SendSync", "AnubLocustInc")
 	end
