@@ -70,10 +70,10 @@ L:RegisterTranslations("deDE", function() return {
 	dkdiewarn = "Todesritter tot!",
 	
 	warn1 = "Im Raum in 3 minuten",
-    warn2 = "Im Raum in 90 Sekunden",
-    warn3 = "Im Raum in 60 Sekunden",
-    warn4 = "Im Raum in 30 Sekunden",
-    warn5 = "Gothik INC 10 Sekunden",
+	warn2 = "Im Raum in 90 Sekunden",
+	warn3 = "Im Raum in 60 Sekunden",
+	warn4 = "Im Raum in 30 Sekunden",
+	warn5 = "Gothik INC 10 Sekunden",
 	
 	trawarn = "Trainees in 3 Sekunden",
 	dkwarn = "Todesritter in 3 Sekunden",
@@ -173,17 +173,20 @@ function BigWigsGothik:StopRoom()
 end
 
 function BigWigsGothik:Trainee()
-	self:TriggerEvent("BigWigs_StartBar", self, L"trabar", self.tratime, 2, nil, "Yellow", "Orange", "Red")	
+	self:TriggerEvent("BigWigs_StartBar", self, L"trabar", self.tratime, 2, nil, "Yellow", "Orange", "Red")
+	self:ScheduleEvent("bwgothiktrawarn", "BigWigs_Message", self.tratime - 3, L"trawarn", "Yellow")	
 	self:ScheduleRepeatingEvent("bwgothiktrarepop2", self.Trainee, self.tratime, self)
 end
 
 function BigWigsGothik:DeathKnight()
 	self:TriggerEvent("BigWigs_StartBar", self, L"dkbar", self.dktime, 3, nil, "Yellow", "Orange", "Red")
+	self:ScheduleEvent("bwgothikdkwarn", "BigWigs_Message", self.dktime - 3, L"dkwarn", "Orange")
 	self:ScheduleRepeatingEvent("bwgothikdkrepop2", self.DeathKnight, self.dktime, self)
 end
 
 function BigWigsGothik:Rider()
 	self:TriggerEvent("BigWigs_StartBar", self, L"riderbar", self.ridertime, 4, nil, "Yellow", "Orange", "Red")
+	self:ScheduleEvent("bwgothikriderwarn", "BigWigs_Message", self.ridertime -3, L"riderwarn", "Red")
 	self:ScheduleRepeatingEvent("bwgothikriderrepop2", self.Rider, self.ridertime, self)
 end
 
@@ -198,10 +201,7 @@ function BigWigsGothik:CHAT_MSG_MONSTER_YELL( msg )
 			self:ScheduleEvent("bwgothikwarn4", "BigWigs_Message", 240, L"warn4", "Red")
 			self:ScheduleEvent("bwgothikwarn5", "BigWigs_Message", 260, L"warn5", "Red")
 		end
-		if self.db.profile.add then
-			self.tratime = 27
-			self.dktime = 77
-			self.ridertime = 137		
+		if self.db.profile.add then		
 			-- add bars
 			self:TriggerEvent("BigWigs_StartBar", self, L"trabar", self.tratime, 2, nil, "Yellow", "Orange", "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, L"dkbar", self.dktime, 3, nil, "Green", "Yellow", "Orange", "Red")
