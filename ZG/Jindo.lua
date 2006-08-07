@@ -27,6 +27,25 @@ L:RegisterTranslations("enUS", function() return {
 	warnhealing = "Healing Totem!",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	cmd = "jindo",
+	
+	brainwash_cmd = "brainwash",
+	brainwash_name = "Brainwash Totem Alert",
+	brainwash_desc = "Warn for Brainwash Totems",
+	
+	healing_cmd = "healing",
+	healing_name = "Healing Totem Alert",
+	healing_desc = "Warn for Healing Totems",
+	
+	triggerbrainwash = "Jin'do der Verhexer wirkt Totem der Gehirnw\195\164sche beschw\195\182ren.",
+	triggerhealing = "Jin'do der Verhexer wirkt M\195\164chtiger Heilungszauberschutz.",
+
+	warnbrainwash = "\195\156bernahmetotem!",
+	warnhealing = "Heiltotem!",
+} end )
+
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
