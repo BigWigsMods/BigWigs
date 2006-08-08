@@ -61,16 +61,16 @@ L:RegisterTranslations("koKR", function() return {
 
 
 L:RegisterTranslations("deDE", function() return {
-	trigger1 = "betroffen von Lucifron",
-	trigger2 = "betroffen von Impending Verdammnis",
+	trigger1 = "von Lucifrons Fluch betroffen",
+	trigger2 = "von Drohende Verdammnis betroffen",
 
 	warn1 = "5 Sekunden bis Lucifrons Fluch!",
 	warn2 = "Lucifrons Fluch - 20 Sekunden bis zum n\195\164chsten!",
-	warn3 = "5 Sekunden bis Impending Verdammnis!",
-	warn4 = "Impending Verdammnis - 20 Sekunden bis zum n\195\164chsten!",
+	warn3 = "5 Sekunden bis Drohende Verdammnis!",
+	warn4 = "Drohende Verdammnis - 20 Sekunden bis zum n\195\164chsten!",
 
 	bar1text = "Lucifrons Fluch",
-	bar2text = "Impending Verdammnis",
+	bar2text = "Drohende Verdammnis",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

@@ -52,7 +52,7 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	trigger1 = "^([^%s]+) ([^%s]+) betroffen von Lebende Bombe",
+	trigger1 = "^([^%s]+) ([^%s]+) von Lebende Bombe betroffen",
 
 	you = "Ihr",
 	are = "seid",
