@@ -29,6 +29,9 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	sacrifice_name = "祭品警报",
+	sacrifice_desc = "玩家成为祭品时发出警报",
+	
 	sacrificetrigger = "^(.+)受(.+)了麻痹效果的影响。",
 	sacrificewarn = "成为祭品了！",
 	you = "你",

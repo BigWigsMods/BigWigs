@@ -19,12 +19,15 @@ L:RegisterTranslations("enUS", function() return {
 	warn2 = " is the bomb!",
 
 	cmd = "Baron",
+	
 	youbomb_cmd = "youbomb",
 	youbomb_name = "You are the bomb alert",
 	youbomb_desc = "Warn when you are the bomb",
+	
 	elsebomb_cmd = "elsebomb",
 	elsebomb_name = "Someone else is the bomb alert",
 	elsebomb_desc = "Warn when others are the bomb",
+	
 	icon_cmd = "icon",
 	icon_name = "Skull icon on bomb",
 	icon_desc = "Put a Skull icon on the person who's the bomb. (Requires promoted or higher)",
@@ -38,6 +41,15 @@ L:RegisterTranslations("zhCN", function() return {
 
 	warn1 = "你是炸弹人！向着夕阳奔跑吧！",
 	warn2 = "是炸弹人！向着夕阳奔跑吧！",
+	
+	youbomb_name = "玩家炸弹警报",
+	youbomb_desc = "你成为炸弹时发出警报",
+	
+	elsebomb_name = "队友炸弹警报",
+	elsebomb_desc = "队友成为炸弹时发出警报",
+	
+	icon_name = "炸弹图标",
+	icon_desc = "在成为炸弹的队友头上标记骷髅图标（需要助理或领袖权限）",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

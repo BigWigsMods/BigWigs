@@ -64,6 +64,21 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	summon_name = "召唤警报",
+	summon_desc = "阿努比萨斯守卫者召唤援兵时发出警报",
+	
+	plagueyou_name = "玩家瘟疫警报",
+	plagueyou_desc = "你中了瘟疫时发出警报",
+
+	plagueother_name = "队友瘟疫警报",
+	plagueother_desc = "队友中了瘟疫时发出警报",
+	
+	explode_name = "爆炸警报",
+	explode_desc = "阿努比萨斯守卫者即将爆炸时发出警报",
+	
+	enrage_name = "狂怒警报",
+	enrage_desc = "阿努比萨斯守卫者进入狂怒状态时发出警报",
+	
 	explodetrigger = "阿努比萨斯守卫者获得了爆炸的效果。",
 	explodewarn = "即将爆炸！近战躲开！",
 	enragetrigger = "阿努比萨斯守卫者获得了狂怒的效果。",

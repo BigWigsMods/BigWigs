@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -118,22 +118,58 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	tentacle_name = "触须警报",
+	tentacle_desc = "触须出现时发出警报",
+
+	glare_name = "黑暗闪耀警报",
+	glare_desc = "黑暗闪耀发动时发出警报",
+
+	group_name = "黑暗闪耀小队警报",
+	group_desc = "黑暗闪耀发动时对小队X发出警报",
+
+	giant_name = "巨眼警报",
+	giant_desc = "巨眼出现时发出警报",
+
+	weakened_name = "虚弱警报",
+	weakened_desc = "克苏恩被削弱时发出警报",
+
+	rape_name = "Rape is never funny",
+	rape_desc = "Some people just don't get hentai jokes, the bastards",
+	
 	weakenedtrigger 	= "被削弱了！",
 
-	tentacle1	= "眼球触须出现！",
-	tentacle2	= "5秒后眼球触须出现！",
+	tentacle1	= "Tentacle Rape Party - Pleasure!",
+	tentacle2	= "Tentacle Rape Party - 5 sec",
+	
+	norape1		= "Tentacle Party! - What's that in your pants?",
+	norape2		= "Tentacle Party! - 5 sec",
+	
 	weakened		= "克苏恩被削弱了 - 45秒内全力输出伤害！",
+	invulnerable2	= "Party ends in 5 seconds",
+	invulnerable1	= "Party over - C'Thun invulnerable",
+	
+	giant3		= "Giant Eye - 10 sec",
+	giant2		= "Giant Eye - 5 sec",
+	giant1		= "Giant Eye - Poke it!",
 
-	startwarn	= "克苏恩事件开始 - 45秒后发动黑暗闪耀与眼棱光",
+	startwarn	= "克苏恩已激活 - 45秒后发动黑暗闪耀、出现巨眼",
 
 	glare2		= "5秒后发动黑暗闪耀！",
 	glare1		= "黑暗闪耀发动 - 跑位！",
 
-	barTentacle	= "眼球触须！",
-	barweakened	= "克苏恩被削弱了！",
-	barGlare	= "黑暗闪耀！",
+	barTentacle	= "Tentacle rape party!",
+	barNoRape	= "Tentacle party!",
+	barWeakened	= "克苏恩被削弱了！",
+	barGlare	= "黑暗闪耀",
+	barGiant	= "巨眼",
+	barGreenBeam	= "绿光",
 
 	eyebeam		= "眼棱光",
+	glarewarning	= "DARK GLARE ON YOU! MOVE!",
+	groupwarning	= "Dark Glare on group %s (%s)",
+	positions1	= "绿光发动",
+	positions2	= "5秒后黑暗闪耀结束",
+	phase2starting	= "克苏恩之眼已死亡 - 进入第二阶段",
 } end )
 
 ----------------------------------

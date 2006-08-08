@@ -24,12 +24,15 @@ L:RegisterTranslations("enUS", function() return {
 	bar1text = "Wing Buffet",
 
 	cmd = "Flamegor",
+	
 	wingbuffet_cmd = "wingbuffet",
 	wingbuffet_name = "Wing Buffet alert",
 	wingbuffet_desc = "Warn for Wing Buffet",
+	
 	shadowflame_cmd = "shadowflame",
 	shadowflame_name = "Shadow Flame alert",
 	shadowflame_desc = "Warn for Shadow Flame",
+	
 	frenzy_cmd = "frenzy",
 	frenzy_name = "Frenzy alert",
 	frenzy_desc = "Warn when for frenzy",
@@ -48,6 +51,15 @@ L:RegisterTranslations("zhCN", function() return {
 	bosskill = "弗莱格尔被击败了！",
 
 	bar1text = "龙翼打击",
+	
+	wingbuffet_name = "龙翼打击警报",
+	wingbuffet_desc = "龙翼打击警报",
+	
+	shadowflame_name = "暗影烈焰警报",
+	shadowflame_desc = "暗影烈焰警报",
+	
+	frenzy_name = "狂暴警报",
+	frenzy_desc = "狂暴警报",
 } end)
 
 

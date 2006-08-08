@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -49,6 +49,12 @@ L:RegisterTranslations("zhCN", function() return {
 	mcplayerwarn = "被控制了！变羊！恐惧！",
 	mcyou = "你",
 	mcare = "到",
+	
+	mc_name = "精神控制警报",
+	mc_desc = "精神控制警报",
+	
+	ae_name = "魔爆术警报",
+	ae_desc = "魔爆术警报",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

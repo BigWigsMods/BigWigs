@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -20,6 +20,9 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	worm_name = "虫子警报",
+	worm_desc = "召唤虫子出现时发出警报",
+	
 	wormtrigger = "顽强的范克瑞斯施放了召唤虫子。",
 	wormwarn = "虫子出现 - 赶快杀掉！",
 } end )

@@ -20,9 +20,11 @@ L:RegisterTranslations("enUS", function() return {
 	bar1text = "Blink",
 
 	cmd = "Shazzrah",
+	
 	selfbuff_cmd = "selfbuff",
 	selfbuff_name = "Self Buff Alert",
 	selfbuff_desc = "Warn when Shazzrah casts a Self Buff",
+	
 	blink_cmd = "blink",
 	blink_name = "Blink Alert",
 	blink_desc = "Warn when Shazzrah Blinks",
@@ -38,7 +40,12 @@ L:RegisterTranslations("zhCN", function() return {
 	warn3 = "自我Buff - 驱散魔法！",
 
 	bar1text = "闪现术",
-
+	
+	selfbuff_name = "自我Buff警报",
+	selfbuff_desc = "沙斯拉尔自我Buff时发出警报",
+	
+	blink_name = "闪现术警报",
+	blink_desc = "沙斯拉尔发动闪现术时发出警报",
 } end)
 
 

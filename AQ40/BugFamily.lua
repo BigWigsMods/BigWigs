@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -45,6 +45,12 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	fear_name = "恐惧警报",
+	fear_desc = "敌人发动群体恐惧时发出警报",
+
+	heal_name = "治疗警报",
+	heal_desc = "亚尔基公主施放治疗时发出警报",
+	
 	healtrigger = "亚尔基公主开始施放强效治疗术。",
 	healwarn = "亚尔基公主正在施放治疗 - 迅速打断！",
 

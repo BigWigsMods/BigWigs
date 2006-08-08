@@ -19,12 +19,30 @@ L:RegisterTranslations("enUS", function() return {
 	warn2 = "Mortal Strike on %s!",
 
 	cmd = "Broodlord",
+	
 	youms_cmd = "youms",
 	youms_name = "Mortal strike on you alert",
 	youms_desc = "Warn when you get mortal strike",
+	
 	elsems_cmd = "elsems",
 	elsems_name = "Mortal strike on others alert",
 	elsems_desc = "Warn when someone else gets mortal strike",
+} end )
+
+L:RegisterTranslations("zhCN", function() return {
+	trigger1 = "^(.+)受(.+)了致死打击",
+
+	you = "你",
+	are = "到",
+
+	warn1 = "你中了致死打击！",
+	warn2 = "%s中了致死打击！",
+
+	youms_name = "玩家致死打击警报",
+	youms_desc = "你中了致死打击时发出警报",
+	
+	elsems_name = "队友致死打击警报",
+	elsems_desc = "队友中了致死打击时发出警报",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

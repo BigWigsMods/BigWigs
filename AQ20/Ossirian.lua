@@ -39,12 +39,19 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	supreme_name = "无敌警报",
+	supreme_desc = "奥斯里安进入无敌状态时发出警报",
+	
+	debuff_name = "不良效果警报",
+	debuff_desc = "奥斯里安受到虚弱效果影响时发出警报",
+	
 	supremetrigger = "无疤者奥斯里安获得了奥斯里安之力的效果。",
 	supremewarn = "无疤者奥斯里安无敌了！速退！",
 	supremedelaywarn = "%d秒后奥斯里安无敌",
 	debufftrigger = "^无疤者奥斯里安受到了(.+)虚弱效果的影响。$",
 	debuffwarn = "奥斯里安新法术弱点: %s",
 	bartext = "无敌",
+	expose = "Expose",	
 } end )
 
 L:RegisterTranslations("koKR", function() return {

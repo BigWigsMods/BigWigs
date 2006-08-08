@@ -20,6 +20,7 @@ L:RegisterTranslations("enUS", function() return {
 	bar1text = "Gehennas' Curse",
 
 	cmd = "Gehennas",
+	
 	curse_cmd = "curse",
 	curse_name = "Gehennas' Curse alert",
 	curse_desc = "Warn for Gehennas' Curse",
@@ -32,6 +33,9 @@ L:RegisterTranslations("zhCN", function() return {
 	warn2 = "基赫纳斯的诅咒 - 30秒后再次发动",
 
 	bar1text = "基赫纳斯的诅咒",
+	
+	curse_name = "诅咒警报",
+	curse_desc = "诅咒警报",
 } end)
 
 

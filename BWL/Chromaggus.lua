@@ -80,6 +80,15 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	frenzy_name = "狂暴警报",
+	frenzy_desc = "狂暴警报",
+	
+	breath_name = "吐息警报",
+	breath_desc = "吐息警报",
+	
+	vulnerability_name = "弱点警报",
+	vulnerability_desc = "克洛玛古斯弱点改变时发出警报",
+	
 	trigger1 = "^克洛玛古斯开始施放(.+)。",
 	trigger2 = "^.+的(.+)克洛玛古斯造成(%d+)点(.+)伤害。",
 	trigger3 = "^克洛玛古斯的时间流逝被(.+)抵抗了。",
@@ -97,8 +106,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	breath1 = "时间流逝",
 	breath2 = "腐蚀酸液",
-	breath3 = "Ignite Flesh",
-	breath4 = "Incinerate",
+	breath3 = "点燃肉体",
+	breath4 = "焚化",
 	breath5 = "冰霜灼烧",
 } end )
 

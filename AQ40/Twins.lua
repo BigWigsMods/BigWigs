@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -53,6 +53,18 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	bug_name = "爆炸虫警报",
+	bug_desc = "爆炸虫警报",
+
+	teleport_name = "传送警报",
+	teleport_desc = "传送警报",
+
+	enrage_name = "激怒警报",
+	enrage_desc = "激怒警报",
+
+	heal_name = "治疗警报",
+	heal_desc = "双子皇帝互相治疗时发出警报",
+	
 	porttrigger = "施放了双子传送。",
 	portwarn = "双子传送发动！",
 	portdelaywarn = "5秒后发动双子传送！",

@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -48,15 +48,19 @@ L:RegisterTranslations("enUS", function() return {
 	bar1text = "Class call",
 
 	cmd = "Nefarian",
+	
 	shadowflame_cmd = "shadowflame",
 	shadowflame_name = "Shadow Flame alert",
 	shadowflame_desc = "Warn for Shadow Flame",
+	
 	fear_cmd = "fear",
 	fear_name = "Warn for Fear",
 	fear_desc = "Warn when Nefarian casts AoE Fear",
+	
 	classcall_cmd = "classcall",
 	classcall_name = "Class Call alert",
 	classcall_desc = "Warn for Class Calls",
+	
 	otherwarn_cmd = "otherwarn",
 	otherwarn_name = "Other alerts",
 	otherwarn_desc = "Landing and Zerg warnings",
@@ -96,6 +100,18 @@ L:RegisterTranslations("zhCN", function() return {
 	bosskill = "奈法利安被击败了！",
 
 	bar1text = "职业点名",
+	
+	shadowflame_name = "暗影烈焰警报",
+	shadowflame_desc = "暗影烈焰警报",
+	
+	fear_name = "恐惧警报",
+	fear_desc = "恐惧警报",
+	
+	classcall_name = "职业点名警报",
+	classcall_desc = "职业点名警报",
+	
+	otherwarn_name = "其他警报",
+	otherwarn_desc = "降落与杂兵出现时发出警报",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

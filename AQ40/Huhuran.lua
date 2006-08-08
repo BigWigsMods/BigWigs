@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -43,15 +43,30 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	wyvern_name = "毒性之箭警报",
+	wyvern_desc = "毒性之箭警报",
+
+	frenzy_name = "狂暴警报",
+	frenzy_desc = "狂暴警报",
+
+	berserk_name = "极度狂暴警报",
+	berserk_desc = "极度狂暴警报",
+	
 	frenzytrigger = "变得狂暴起来！",
 	berserktrigger = "变得极度狂暴而愤怒！",
 	frenzywarn = "狂暴警报 - 猎人立刻使用宁神射击！",
-	berserkwarn = "狂暴模式 - 治疗注意！",
-	berserksoonwarn = "即将狂暴 - 做好准备！",
+	berserkwarn = "极度狂暴 - 治疗注意！",
+	berserksoonwarn = "即将极度狂暴 - 做好准备！",
 	stingtrigger = "受到了致命剧毒效果的影响。",
 	stingwarn = "毒性之箭 - 给TANK驱散！",
 	stingdelaywarn = "3秒后哈霍兰可能施放毒性之箭！",
 	bartext = "毒性之箭",
+	
+	startwarn = "哈霍兰公主已激活 - 5分钟后进入极度狂暴状态",
+	berserkbar = "极度狂暴",
+	berserkwarn1 = "1分钟后极度狂暴！",
+	berserkwarn2 = "30秒后极度狂暴！",
+	berserkwarn3 = "5秒后极度狂暴！",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

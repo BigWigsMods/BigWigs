@@ -19,12 +19,15 @@ L:RegisterTranslations("enUS", function() return {
 	warn2 = " is burning!",
 
 	cmd = "Vaelastrasz",
+	
 	youburning_cmd = "youburning",
 	youburning_name = "You are burning alert",
 	youburning_desc = "Warn when you are burning",
+	
 	elseburning_cmd = "elseburning",
 	elseburning_name = "Someone else is burning alert",
 	elseburning_desc = "Warn when others are burning",
+	
 	icon_cmd = "icon",
 	icon_name = "Skull icon on bomb",
 	icon_desc = "Put a Skull icon on the person who's the bomb. (Requires promoted or higher)",
@@ -38,6 +41,15 @@ L:RegisterTranslations("zhCN", function() return {
 
 	warn1 = "你在燃烧！",
 	warn2 = "在燃烧！",
+	
+	youburning_name = "玩家燃烧警报",
+	youburning_desc = "你燃烧时发出警报",
+	
+	elseburning_name = "队友燃烧警报",
+	elseburning_desc = "队友燃烧时发出警报",
+	
+	icon_name = "炸弹图标",
+	icon_desc = "在燃烧的队友头上标记骷髅图标（需要助理或领袖权限）",
 } end)
 
 

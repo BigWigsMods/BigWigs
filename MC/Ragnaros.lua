@@ -27,12 +27,15 @@ L:RegisterTranslations("enUS", function() return {
 	bar3text = "Ragnaros submerge",
 
 	cmd = "Ragnaros",
+	
 	emerge_cmd = "emerge",
 	emerge_name = "Emerge alert",
 	emerge_desc = "Warn for Ragnaros Emerge",
+	
 	submerge_cmd = "submerge",
 	submerge_name = "Submerge alert",
 	submerge_desc = "Warn for Ragnaros Submerge & Sons of Flame",
+	
 	aoeknock_cmd = "aoeknock",
 	aoeknock_name = "AoE knockback alert",
 	aoeknock_desc = "Warn for AoE KnockBack",
@@ -54,6 +57,15 @@ L:RegisterTranslations("zhCN", function() return {
 	bar1text = "群体击退",
 	bar2text = "拉格纳罗斯出现",
 	bar3text = "拉格纳罗斯消失",
+	
+	emerge_name = "出现警报",
+	emerge_desc = "出现警报",
+	
+	submerge_name = "消失警报",
+	submerge_desc = "消失警报",
+	
+	aoeknock_name = "群体击退警报",
+	aoeknock_desc = "群体击退警报",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

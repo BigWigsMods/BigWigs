@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -53,6 +53,18 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	volley_name = "毒性之箭警报",
+	volley_desc = "毒性之箭警报",
+
+	toxinyou_name = "玩家毒云警报",
+	toxinyou_desc = "你站在毒云中时发出警报",
+
+	toxinother_name = "队友毒云警报",
+	toxinother_desc = "队友站在毒云中时发出警报",
+
+	freeze_name = "冻结状态警报",
+	freeze_desc = "冻结状态警报",
+	
 	trigger1 	= "的速度慢下来了！",
 	trigger2 	= "冻结了！",
 	trigger3 	= "变成了坚硬的固体！",

@@ -27,15 +27,19 @@ L:RegisterTranslations("enUS", function() return {
 	bar1text = "Wing Buffet",
 
 	cmd = "Ebonroc",
+	
 	wingbuffet_cmd = "wingbuffet",
 	wingbuffet_name = "Wing Buffet alert",
 	wingbuffet_desc = "Warn for Wing Buffet",
+	
 	shadowflame_cmd = "shadowflame",
 	shadowflame_name = "Shadow Flame alert",
 	shadowflame_desc = "Warn for Shadow Flame",
+	
 	youcurse_cmd = "youcurse",
 	youcurse_name = "Shadow of Ebonroc on you alert",
 	youcurse_desc = "Warn when you got Shadow of Ebonroc",
+	
 	elsecurse_cmd = "elsecurse",
 	elsecurse_name = "Shadow of Ebonroc on others alert",
 	elsecurse_desc = "Warn when others got Shadow of Ebonroc",
@@ -57,6 +61,18 @@ L:RegisterTranslations("zhCN", function() return {
 	warn6 = "中了埃博诺克之影！",
 
 	bar1text = "龙翼打击",
+	
+	wingbuffet_name = "龙翼打击警报",
+	wingbuffet_desc = "龙翼打击警报",
+	
+	shadowflame_name = "暗影烈焰警报",
+	shadowflame_desc = "暗影烈焰警报",
+	
+	youcurse_name = "玩家埃博诺克之影警报",
+	youcurse_desc = "你中了埃博诺克之影时发出警报",
+	
+	elsecurse_name = "队友埃博诺克之影警报",
+	elsecurse_desc = "队友中了埃博诺克之影时发出警报",
 } end)
 
 

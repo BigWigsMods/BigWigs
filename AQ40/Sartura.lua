@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -59,6 +59,12 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	enrage_name = "激怒警报",
+	enrage_desc = "激怒警报",
+
+	whirlwind_name = "旋风斩警报",
+	whirlwind_desc = "旋风斩警报",
+	
 	starttrigger = "我宣判你死刑",
 	startwarn = "沙尔图拉已激活 - 10分钟后进入激怒状态",
 	enragetrigger = "沙尔图拉进入激怒状态！",
@@ -75,7 +81,7 @@ L:RegisterTranslations("zhCN", function() return {
 	whirlwindoff = "旋风斩效果从沙尔图拉身上消失。",
 	whirlwindonwarn = "旋风斩 - 沙尔图拉 - 旋风斩",
 	whirlwindoffwarn = "旋风斩消失！",
-	whirlwindbartext = "Whirlwind",
+	whirlwindbartext = "旋风斩",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

@@ -33,9 +33,11 @@ L:RegisterTranslations("enUS", function() return {
 	bar3text = "New powers",
 
 	cmd = "Majordomo",
+	
 	magic_cmd = "magic",
 	magic_name = "Magic Reflection alert",
 	magic_desc = "Warn for Magic Reflection",
+	
 	dmg_cmd = "dmg",
 	dmg_name = "Damage Shields alert",
 	dmg_desc = "Warn for Damage Shields",
@@ -59,6 +61,12 @@ L:RegisterTranslations("zhCN", function() return {
 	bar1text = "魔法反射护盾",
 	bar2text = "伤害反射护盾",
 	bar3text = "新生力量",
+	
+	magic_name = "魔法反射护盾警报",
+	magic_desc = "魔法反射护盾警报",
+	
+	dmg_name = "伤害反射护盾警报",
+	dmg_desc = "伤害反射护盾警报",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

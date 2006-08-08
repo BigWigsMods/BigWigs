@@ -22,9 +22,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	-- AceConsole strings
 	cmd = "Magmadar",
+	
 	fear_cmd = "fear",
 	fear_name = "Warn for Fear",
 	fear_desc = "Warn when Magmadar casts AoE Fear",
+	
 	frenzy_cmd = "frenzy",
 	frenzy_name = "Frenzy alert",
 	frenzy_desc = "Warn when Magmadar goes into a frenzy",
@@ -53,8 +55,13 @@ L:RegisterTranslations("zhCN", function() return {
 	["Frenzy alert!"] = "狂暴警报 - 猎人立刻使用宁神射击！",
 	["5 seconds until AoE Fear!"] = "5秒后发动群体恐惧！",
 	["AoE Fear - 30 seconds until next!"] = "群体恐惧 - 30秒后再次发动",
-
 	["AoE Fear"] = "群体恐惧",
+	
+	fear_name = "恐惧警报",
+	fear_desc = "恐惧警报",
+	
+	frenzy_name = "狂暴警报",
+	frenzy_desc = "狂暴警报",
 } end)
 
 

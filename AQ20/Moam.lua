@@ -58,6 +58,25 @@ L:RegisterTranslations("koKR", function() return {
 	returnwarn = "모암 행동 재개! 90초 후 정령 등장!",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	adds_name = "增援警报",
+	adds_desc = "敌人增援出现时发出警报",
+	
+	paralyze_name = "石化警报",
+	paralyze_desc = "莫阿姆进入石化状态时发出警报",
+
+	starttrigger = "感觉到了你的恐惧。",
+	startwarn = "莫阿姆已激活 - 90秒后敌人增援出现",
+	addsbar = "增援",
+	addsincoming = "敌人增援将%s秒后出现！",
+	addstrigger = "吸取了你的魔法能量，并变成了石头。",
+	addswarn = "增援出现！莫阿姆石化90秒！",
+	paralyzebar = "石化",
+	returnincoming = "莫阿姆将在%s秒后解除石化！",
+	returntrigger = "^充能效果从莫阿姆身上消失。$",
+	returnwarn = "莫阿姆解除石化！90秒后敌人增援出现！",	
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

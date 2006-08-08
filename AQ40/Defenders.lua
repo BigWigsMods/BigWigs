@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -53,6 +53,24 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	plagueyou_name = "玩家瘟疫警报",
+	plagueyou_desc = "你中了瘟疫时发出警报",
+
+	plagueother_name = "队友瘟疫警报",
+	plagueother_desc = "队友中了瘟疫时发出警报",
+
+	thunderclap_name = "雷霆一击警报",
+	thunderclap_desc = "阿努比萨斯防御者发动雷霆一击时发出警报",
+
+	explode_name = "爆炸警报",
+	explode_desc = "阿努比萨斯防御者即将爆炸时发出警报",
+
+	enrage_name = "狂怒警报",
+	enrage_desc = "阿努比萨斯防御者进入狂怒状态时发出警报",
+
+	summon_name = "召唤警报",
+	summon_desc = "阿努比萨斯防御者召唤援兵时发出警报",
+	
 	explodetrigger = "阿努比萨斯防御者获得了爆炸的效果。",
 	explodewarn = "即将爆炸！近战躲开！",
 	enragetrigger = "阿努比萨斯防御者获得了狂怒的效果。",

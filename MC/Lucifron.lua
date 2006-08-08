@@ -25,9 +25,11 @@ L:RegisterTranslations("enUS", function() return {
 	bar2text = "Impending Doom",
 
 	cmd = "Lucifron",
+	
 	curse_cmd = "curse",
 	curse_name = "Lucifron's Curse alert",
 	curse_desc = "Warn for Lucifron's Curse",
+	
 	doom_cmd = "dmg",
 	doom_name = "Impending Doom alert",
 	doom_desc = "Warn for Impending Doom",
@@ -44,6 +46,12 @@ L:RegisterTranslations("zhCN", function() return {
 
 	bar1text = "鲁西弗隆的诅咒",
 	bar2text = "末日降临",
+	
+	curse_name = "诅咒警报",
+	curse_desc = "诅咒警报",
+	
+	doom_name = "末日降临警报",
+	doom_desc = "末日降临警报",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

@@ -38,6 +38,15 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	you_name = "玩家凝视警报",
+	you_desc = "当你被凝视时发出警报",
+	
+	other_name = "队友凝视警报",
+	other_desc = "当队友被凝视时发出警报",
+	
+	icon_name = "标记图标",
+	icon_desc = "在被凝视的队友头上标记团队图标（需要助理或领袖权限）",
+	
 	watchtrigger = "凝视着(.+)！",
 	watchwarn = "被布鲁盯上了！",
 	watchwarnyou = "你被布鲁盯上了！放风筝吧！",

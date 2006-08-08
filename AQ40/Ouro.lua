@@ -1,4 +1,4 @@
---      Are you local?      --
+﻿--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.0")("Ouro")
@@ -88,6 +88,21 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	sweep_name = "横扫警报",
+	sweep_desc = "横扫警报",
+	
+	sandblast_name = "沙尘爆裂警报",
+	sandblast_desc = "沙尘爆裂警报",
+	
+	emerge_name = "钻地警报",
+	emerge_desc = "钻地警报",
+	
+	submerge_name = "钻出警报",
+	submerge_desc = "钻出警报",
+	
+	scarab_name = "甲虫消失警报",
+	scarab_desc = "甲虫消失警报",
+	
 	sweeptrigger = "奥罗开始施放横扫。",
 	sweepannounce = "横扫发动！",
 	sweepwarn = "5秒后发动横扫！快退！",
@@ -99,12 +114,17 @@ L:RegisterTranslations("zhCN", function() return {
 	sandblastbartext = "沙尘爆裂",
 
 	emergetrigger = "土堆施放了召唤奥罗甲虫。",
-	emergeannounce = "奥罗潜入地下！杀光虫子！",
-	emergewarn = "15秒后奥罗将钻出地面！",
-	emergebartext = "奥罗钻出地面",
+	emergeannounce = "奥罗钻出了地面！",
+	emergewarn = "15秒后奥罗将潜入地下！",
+	emergebartext = "钻出地面",
 
-	scarabdespawn = "Scarbs Despawn in 10 Seconds", --Translate me
-	scarabbar	= "Scarabs despawn", -- Translate Me
+	scarabdespawn = "10秒后甲虫消失", --Translate me
+	scarabbar	= "甲虫消失", -- Translate Me
+	
+	submergetrigger = "奥罗施放了召唤奥罗土堆。",
+	submergeannounce = "奥罗潜入地下！杀光虫子！",
+	submergewarn = "5秒后奥罗将钻出地面！",
+	submergebar = "潜入地下",
 
 	berserksoonwarn = "即将狂暴 - 做好准备！",
 } end )
