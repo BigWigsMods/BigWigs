@@ -60,9 +60,7 @@ BigWigsOptions.hasIcon = "Interface\\Icons\\INV_Misc_Orb_05"
 --~~ BigWigsOptions.hasNoText  = true
 BigWigsOptions.defaultMinimapPosition = 180
 
-function BigWigsOptions:OnMenuRequest(level, value)
-   Dewdrop:FeedAceOptionsTable(deuce.core.cmdtable)
-end
+BigWigsOptions.OnMenuRequest = deuce.core.cmdtable
 
 
 -----------------------------
