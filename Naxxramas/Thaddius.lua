@@ -39,7 +39,9 @@ L:RegisterTranslations("enUS", function() return {
 	starttrigger1 = "Feed you to master!",
 	starttrigger2 = "Eat... your... bones...",
 	starttrigger3 = "Break... you!!",
-
+	
+	adddeath = "dies.",
+	teslaoverload = "overloads!",
 
 	pstrigger = "Now you feel pain...",
 	trigger1 = "Thaddius begins to cast Polarity Shift",
@@ -54,9 +56,11 @@ L:RegisterTranslations("enUS", function() return {
 	enragewarn = "Enrage!",
 	startwarn = "Thaddius Phase 1",
 	startwarn2 = "Thaddius Phase 2, Enrage in 5 minutes!",
+	addsdownwarn = "Thaddius incoming in 10-20sec!",
+	thaddiusincoming = "Thaddius incoming in 3 sec!",
 	pswarn1 = "Thaddius begins to cast Polarity Shift!",
-	pswarn2 = "30 seconds till next Polarity Shift!",
-	pswarn3 = "3 seconds before Thaddius casts Polarity Shift!",
+	pswarn2 = "30 seconds to Polarity Shift!",
+	pswarn3 = "3 seconds to Polarity Shift!",
 	poswarn = "You are a Positive Charge!",
 	negwarn = "You are a Negative Charge!",
 	enragebartext = "Enrage",
@@ -67,7 +71,7 @@ L:RegisterTranslations("enUS", function() return {
 	warn5 = "Enrage in 10 seconds",
 	stalaggwarn = "Power Surge",
 
-	bar1text = "PolarityShift",
+	bar1text = "Polarity Shift",
 	
 } end )
 
@@ -89,6 +93,8 @@ BigWigsThaddius.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsThaddius:OnEnable()
 	self.enrageStarted = nil
+	self.addsdead = 0
+	self.teslawarn = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
@@ -126,7 +132,7 @@ function BigWigsThaddius:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 end
 
 function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
-	if string.find(msg, L"pstrigger") then
+	if msg == L"pstrigger" then
 		self:TriggerEvent("BigWigs_SendSync", "ThaddiusPolarity")
 	elseif msg == L"starttrigger" or msg == L"starttrigger1" then
 		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L"startwarn", "Red") end
@@ -154,7 +160,7 @@ function BigWigsThaddius:PLAYER_REGEN_ENABLED()
 end
 
 function BigWigsThaddius:CHAT_MSG_MONSTER_EMOTE( msg )
-	if (msg == L"enragetrigger") then
+	if msg == L"enragetrigger" then
 		if self.db.profile.enrage then self:TriggerEvent("BigWigs_Message", L"enragewarn", "Red") end
 		self:TriggerEvent("BigWigs_StopBar", self, L"enragebartext")
 		self:CancelScheduledEvent("bwthaddiuswarn1")
@@ -162,6 +168,14 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_EMOTE( msg )
 		self:CancelScheduledEvent("bwthaddiuswarn3")
 		self:CancelScheduledEvent("bwthaddiuswarn4")
 		self:CancelScheduledEvent("bwthaddiuswarn5")
+	elseif msg == L"adddeath" then
+		self.addsdead = self.addsdead + 1
+		if self.addsdead == 2 and self.db.profile.phase then
+			self:TriggerEvent("BigWigs_Message", L"addsdownwarn", "Yellow")
+		end
+	elseif msg == L"teslaoverload" and self.db.profile.phase and not self.teslawarn then
+		self.teslawarn = true
+		self:TriggerEvent("BigWigs_Message", L"thaddiusincoming", "Red")
 	end
 end
 
