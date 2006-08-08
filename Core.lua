@@ -7,7 +7,6 @@ local BZ = AceLibrary("Babble-Zone-2.0")
 local BB = AceLibrary("Babble-Boss-2.0")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs")
 
-local enablezones, enablemobs = {}, {}
 
 ----------------------------
 --      Localization      --
@@ -256,19 +255,8 @@ function BigWigs:RegisterModule(name,module)
 		self.cmdtable.args[L"plugin"].args[module.consoleCmd or name] = cons or module.consoleOptions
 	end
 
-	-- Set up target monitoring
-	local z = module.zonename
-
-	if type(z) == "string" then enablezones[z] = true
-	elseif type(z) == "table" then
-		for _,zone in pairs(z) do enablezones[zone] = true end
-	end
-
-	local t = module.enabletrigger
-	if type(t) == "string" then enablemobs[t] = module
-	elseif type(t) == "table" then
-		for _,mob in pairs(t) do enablemobs[mob] = module end
-	end
+	-- Set up target monitoring, in case the monitor module has already initialized
+	self:TriggerEvent("BigWigs_RegisterForTargetting", module.zonename, module.enabletrigger)
 end
 
 
