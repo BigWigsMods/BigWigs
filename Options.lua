@@ -60,8 +60,16 @@ BigWigsOptions.hasIcon = "Interface\\Icons\\INV_Misc_Orb_05"
 --~~ BigWigsOptions.hasNoText  = true
 BigWigsOptions.defaultMinimapPosition = 180
 
+-- total hack
 BigWigsOptions.OnMenuRequest = deuce.core.cmdtable
-
+local args = AceLibrary("FuBarPlugin-2.0"):GetAceOptionsDataTable(BigWigsOptions)
+for k,v in pairs(args) do
+	if BigWigsOptions.OnMenuRequest.args[k] == nil then
+		DEFAULT_CHAT_FRAME:AddMessage(k)
+		BigWigsOptions.OnMenuRequest.args[k] = v
+	end
+end
+-- end hack
 
 -----------------------------
 --      FuBar Methods      --
