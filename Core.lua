@@ -134,6 +134,7 @@ end
 
 
 function BigWigs:OnEnable()
+	self:RegisterEvent("BigWigs_TargetSeen")
 	self:RegisterEvent("BigWigs_RebootModule")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "EnableModule", 10)
@@ -283,4 +284,31 @@ function BigWigs:BigWigs_RecvSync(sync, module)
 	end
 end
 
+
+function BigWigs:BigWigs_TargetSeen(mobname, unit)
+	for name,module in self:IterateModules() do
+		if module:IsBossModule() and self:ZoneIsTrigger(module, GetRealZoneText()) and self:MobIsTrigger(module, mobname)
+			and (not module.VerifyEnable or module:VerifyEnable(unit)) then
+				self:EnableModule(name)
+		end
+	end
+end
+
+
+function BigWigsTargetMonitor:ZoneIsTrigger(module, zone)
+	local t = module.zonename
+	if type(t) == "string" then return zone == t
+	elseif type(t) == "table" then
+		for _,mzone in pairs(t) do if mzone == zone then return true end end
+	end
+end
+
+
+function BigWigsTargetMonitor:MobIsTrigger(module, name)
+	local t = module.enabletrigger
+	if type(t) == "string" then return name == t
+	elseif type(t) == "table" then
+		for _,mob in pairs(t) do if mob == name then return true end end
+	end
+end
 
