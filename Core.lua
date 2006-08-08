@@ -295,7 +295,7 @@ function BigWigs:BigWigs_TargetSeen(mobname, unit)
 end
 
 
-function BigWigsTargetMonitor:ZoneIsTrigger(module, zone)
+function BigWigs:ZoneIsTrigger(module, zone)
 	local t = module.zonename
 	if type(t) == "string" then return zone == t
 	elseif type(t) == "table" then
@@ -304,7 +304,7 @@ function BigWigsTargetMonitor:ZoneIsTrigger(module, zone)
 end
 
 
-function BigWigsTargetMonitor:MobIsTrigger(module, name)
+function BigWigs:MobIsTrigger(module, name)
 	local t = module.enabletrigger
 	if type(t) == "string" then return name == t
 	elseif type(t) == "table" then
