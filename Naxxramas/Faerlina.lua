@@ -91,7 +91,7 @@ BigWigsFaerlina.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsFaerlina:OnEnable()
 	self.enragetime = 60
-	self.enrageTimerStarted = nil
+	self.enrageTimerStarted = 0
 	self.silencetime = 30
 	self.enraged = nil
 	
@@ -143,14 +143,16 @@ function BigWigsFaerlina:BigWigs_RecvSync( sync )
 
 			local currentTime = GetTime()
 
-			if (self.enrageTimerStarted + 30) > currentTime and self.db.profile.enrage then
-				-- We SHOULD reset the enrage timer, since it's more than 30
-				-- sec since enrage started.
-				self:TriggerEvent("BigWigs_StopBar", self, L"enragebar")
-				self:CancelScheduledEvent("bwfaerlinaenrage15")
-				self:ScheduleEvent( "bwfaerlinaenrage15", "BigWigs_Message", self.silencetime - 15, L"enragewarn15sec", "Red")
-				self:TriggerEvent("BigWigs_StartBar", self, L"enragebar", self.silencetime, 1, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Yellow", "Orange", "Red")
-				self.enrageTimerStarted = currentTime
+			if self.db.profile.enrage then
+				if (self.enrageTimerStarted + 30) > currentTime then
+					-- We SHOULD reset the enrage timer, since it's more than 30
+					-- sec since enrage started.
+					self:TriggerEvent("BigWigs_StopBar", self, L"enragebar")
+					self:CancelScheduledEvent("bwfaerlinaenrage15")
+					self:ScheduleEvent( "bwfaerlinaenrage15", "BigWigs_Message", self.silencetime - 15, L"enragewarn15sec", "Red")
+					self:TriggerEvent("BigWigs_StartBar", self, L"enragebar", self.silencetime, 1, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Yellow", "Orange", "Red")
+					self.enrageTimerStarted = currentTime
+				end
 			end
 
 			if self.db.profile.silence then
