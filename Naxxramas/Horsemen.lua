@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -37,6 +37,24 @@ L:RegisterTranslations("enUS", function() return {
 	shieldwallwarn2 = "%s - Shield Wall GONE!",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	mark_name = "标记警报",
+	mark_desc = "标记警报",
+
+	shieldwall_name = "盾墙警报",
+	shieldwall_desc = "盾墙警报",
+
+	markbar = "标记",
+	markwarn1 = "标记(%d)！",
+	markwarn2 = "标记(%d) - 5秒",
+
+	startwarn = "四骑士已激活 - 30秒后标记",
+
+	shieldwallbar = "%s - 盾墙",
+	shieldwalltrigger = "获得了盾墙",
+	shieldwallwarn = "%s - 20秒盾墙效果",
+	shieldwallwarn2 = "%s - 盾墙消失了！",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

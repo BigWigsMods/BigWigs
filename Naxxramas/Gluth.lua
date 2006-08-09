@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -39,9 +39,34 @@ L:RegisterTranslations("enUS", function() return {
 
 	bar1text = "AoE Fear",
 	decimatebartext = "Decimate Zombies",
-
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	fear_name = "恐惧警报",
+	fear_desc = "恐惧警报",
+	
+	frenzy_name = "狂暴警报",
+	frenzy_desc = "狂暴警报",
+
+	decimate_name = "吞噬警报",
+	decimate_desc = "吞噬警报",
+
+	trigger1 = "变得狂暴起来！",
+	trigger2 = "恐惧怒吼",
+	starttrigger = "吞吃了周围所有的僵尸！",
+
+	warn1 = "狂暴警报 - 猎人立刻使用宁神射击！",
+	warn2 = "5秒后发动群体恐惧！",
+	warn3 = "群体恐惧 - 20秒后再次发动",
+
+	startwarn = "格拉斯已激活 - 105秒后僵尸出现！",
+	decimatesoonwarn = "吞噬来临！",
+	decimatewarn = "吞噬 - AoE僵尸！",
+	decimatetrigger = "吞噬",
+
+	bar1text = "群体恐惧",
+	decimatebartext = "吞噬僵尸",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

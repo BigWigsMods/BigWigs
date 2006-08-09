@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -74,6 +74,32 @@ L:RegisterTranslations("koKR", function() return {
 	enragebar = "Enrage",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	silence_name = "沉默警报",
+	silence_desc = "沉默警报",
+
+	enrage_name = "激怒警报",
+	enrage_desc = "激怒警报",
+
+	starttrigger1 = "跪下求饶吧，懦夫！",
+	starttrigger2 = "以主人之名，杀了他们！",
+	starttrigger3 = "休想从我面前逃掉！",
+	starttrigger4 = "逃啊！有本事就逃啊！",
+
+	silencetrigger = "黑女巫法琳娜受到了黑女巫的拥抱效果的影响。", -- EDITED it affects her too.
+	enragetrigger = "黑女巫法琳娜获得了激怒的效果。",
+	enragefade = "激怒效果从黑女巫法琳娜身上消失。",
+
+	startwarn = "Start or Enrage!",
+	enragewarn15sec = "15秒后激怒！",
+	enragewarn = "激怒！",
+	enrageremovewarn = "激怒已移除 - %d后再次激怒", -- added
+	silencewarn = "沉默！延缓了激怒！",
+	silencewarnnodelay = "沉默！",
+
+	enragebar = "激怒",
+	silencebar = "沉默",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

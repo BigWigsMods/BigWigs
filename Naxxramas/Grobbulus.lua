@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -31,7 +31,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	warn1 = "You are injected!",
 	warn2 = " is Injected!",
-
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -55,6 +54,24 @@ L:RegisterTranslations("koKR", function() return {
 	warn2 = " 님이 돌연변이 유발에 걸렸습니다.",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	youinjected_name = "玩家变异注射警报",
+	youinjected_desc = "你中了变异注射时发出警报",
+	
+	otherinjected_name = "队友变异注射警报",
+	otherinjected_desc = "队友中了变异注射时发出警报",
+
+	icon_name = "标记图标",
+	icon_desc = "在中了变异注射的队友头上标记骷髅图标（需要助理或领袖权限）",
+
+	trigger1 = "^(.+)受(.+)了变异注射",
+
+	you = "你",
+	are = "到",
+
+	warn1 = "你中变异注射了！",
+	warn2 = "中变异注射了！",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -109,6 +109,43 @@ L:RegisterTranslations("koKR", function() return {
 	cursebar = "다음 저주",	
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	blink_name = "闪现术警报",
+	blink_desc = "闪现术警报",
+
+	teleport_name = "传送警报",
+	teleport_desc = "传送警报",
+
+	curse_name = "诅咒警报",
+	curse_desc = "诅咒警报",
+
+	starttrigger1 = "死吧，入侵者！",
+	starttrigger2 = "荣耀归于我主！",
+	starttrigger3 = "我要没收你的生命！",
+	startwarn = "瘟疫使者诺斯已激活 - 90秒后传送",
+	
+	addtrigger = "Rise, my soldiers! Rise and fight once more!",
+
+	blinktrigger = "瘟疫使者诺斯获得了闪现术的效果。",
+	blinkwarn = "闪现术！停止攻击！",
+	blinkwarn2 = "5秒后发动闪现术！",
+	blinkbar = "闪现术",
+	
+	teleportwarn = "传送发动！",
+	teleportwarn2 = "10秒后发动传送！",
+
+	teleportbar = "传送！",
+	backbar = "回到房间！",
+	
+	backwarn = "诺斯回到房间 - %d后再次传送",
+	backwarn2 = "10秒后诺斯回到房间！",
+	
+	cursetrigger = "受到了瘟疫使者的诅咒效果的影响",
+	cursewarn	 = "诅咒 - 55秒后再次发动",
+	curse10secwarn = "10秒后发动诅咒！",
+	
+	cursebar = "下一次诅咒",		
+} end )
 
 ----------------------------------
 --      Module Declaration      --

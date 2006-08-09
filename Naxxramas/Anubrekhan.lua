@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -65,6 +65,26 @@ L:RegisterTranslations("koKR", function() return {
 	 
 	casttrigger = "아눕레칸|1이;가; 메뚜기 떼|1을;를; 시전합니다.",
 	castwarn = "메뚜기 떼 소환!",
+} end )
+
+L:RegisterTranslations("zhCN", function() return {
+	locust_name = "虫群警报",
+	locust_desc = "虫群警报",
+
+	starttrigger1 = "一些小点心……",
+	starttrigger2 = "对，跑吧！那样伤口出血就更多了！",
+	starttrigger3 = "你们逃不掉的。",
+	engagewarn = "阿努布雷坎已激活 - 90秒后出现第一波虫群",
+	
+	gaintrigger = "阿努布雷坎获得了虫群风暴的效果。",
+	gainendwarn = "虫群风暴结束了！",
+	gainnextwarn = "90秒后出现下一波虫群。",
+	gainwarn10sec = "10秒后出现下一波虫群。",
+	gainincbar = "下一波虫群",
+	gainbar = "虫群风暴",
+	
+	casttrigger = "阿努布雷坎开始施放虫群风暴。",
+	castwarn = "虫群风暴来了！",
 } end )
 
 ----------------------------------

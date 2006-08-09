@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -35,7 +35,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	shieldwalltrigger   = "Deathknight Understudy gains Shield Wall.",
 	shieldwallbar       = "Shield Wall",	
-
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -70,6 +69,29 @@ L:RegisterTranslations("koKR", function() return {
 	shoutbar 		= "분열의 외침",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	shout_name = "怒吼警报",
+	shout_desc = "瓦解怒吼警报",
+
+	shieldwall_name = "盾墙计时器",
+	shieldwall_desc = "盾墙计时器",
+
+	startwarn	= "教官拉苏维奥斯已激活 - 25秒后瓦解怒吼",
+
+	starttrigger1 	= "练习时间到此为止！都拿出真本事来！",
+	starttrigger2 	= "绊腿……有什么问题么？",
+	starttrigger3 	= "仁慈无用！",
+	starttrigger4 	= "按我教导的去做！",
+
+	shouttrigger 	= "瓦解怒吼",
+	shout7secwarn 	= "7秒后发动瓦解怒吼",
+	shoutwarn 		= "瓦解怒吼！",
+	noshoutwarn		= "瓦解怒吼 - 20秒后发动",
+	shoutbar 		= "瓦解怒吼",
+
+	shieldwalltrigger   = "死亡骑士学员获得了盾墙的效果。",
+	shieldwallbar       = "盾墙",	
+} end )
 
 ----------------------------------
 --      Module Declaration      --

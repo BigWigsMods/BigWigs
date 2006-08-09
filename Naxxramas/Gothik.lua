@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -90,6 +90,48 @@ L:RegisterTranslations("deDE", function() return {
 	inroomwarn = "He's in the room!",
 	
 	inroombartext = "Till on Room",
+} end )
+
+L:RegisterTranslations("zhCN", function() return {
+	room_name = "进入房间警报",
+	room_desc = "收割者戈提克进入房间时发出警报",
+
+	add_name = "增援警报",
+	add_desc = "增援警报",
+
+	disabletrigger = "I... am... undone.",		
+
+	starttrigger1 = "你愚蠢地寻找自己的困境。",
+	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
+	startwarn = "收割者戈提克已激活 - 4:30后进入房间",
+	
+	riderdietrigger = "冷酷的骑兵死亡了。",
+	dkdietrigger = "冷酷的死亡骑士死亡了。",
+	
+	riderdiewarn = "骑兵已死亡！",
+	dkdiewarn = "死亡骑士已死亡！",
+	
+	warn1 = "3分钟后进入房间",
+	warn2 = "90秒后进入房间",
+	warn3 = "60秒后进入房间",
+	warn4 = "30秒后进入房间",
+	warn5 = "收割者戈提克10后进入房间！",
+	
+	trawarn = "3秒后学徒出现",
+	dkwarn = "3秒后死亡骑士出现",
+	riderwarn = "3秒后骑兵出现",
+	dktwarn = "3秒后学徒与死亡骑士出现",
+	rtwarn = "3秒后学徒与骑兵出现",
+	triowarn = "3秒后学徒出现",
+
+	trabar = "学徒",
+	dkbar = "死亡骑士",
+	riderbar = "骑兵",
+	
+	inroomtrigger = "我等待了太久。现在你面对灵魂收割机。",
+	inroomwarn = "收割者戈提克进入了房间！",
+	
+	inroombartext = "进入房间",
 } end )
 
 ----------------------------------

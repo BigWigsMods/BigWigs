@@ -65,7 +65,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	summon_name = "召唤警报",
-	summon_desc = "阿努比萨斯守卫者召唤援兵时发出警报",
+	summon_desc = "阿努比萨斯守卫者召唤增援时发出警报",
 	
 	plagueyou_name = "玩家瘟疫警报",
 	plagueyou_desc = "你中了瘟疫时发出警报",

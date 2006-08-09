@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -48,6 +48,39 @@ L:RegisterTranslations("enUS", function() return {
 	are = "are",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	doom_name = "必然的厄运警报",
+	doom_desc = "必然的厄运警报",
+	
+	spore_name = "孢子警报",
+	spore_desc = "孢子警报",
+
+	curse_name = "诅咒驱散警报",
+	curse_desc = "洛欧塞布驱散了一个诅咒效果时发出警报",
+
+	doombar = "必然的厄运",
+	doomwarn = "必然的厄运 - %s秒后再次发动",
+	doomwarn5sec = "5秒后发动必然的厄运！",		
+	doomtrigger = "受到了必然的厄运效果的影响",
+	
+	sporewarn = "孢子出现",
+	sporebar = "召唤孢子",
+	sporespawntrigger = "洛欧塞布施放了召唤孢子。",
+	sporedietrigger = "孢子死亡了。",
+
+	removecursewarn = "洛欧塞布驱散了一个诅咒效果",
+	removecursebar = "驱散诅咒",
+	removecursetrigger = "洛欧塞布对洛欧塞布施放了驱散诅咒。",
+	
+	doomtimerbar = "每隔15秒发动必然的厄运",
+	doomtimerwarn = "必然的厄运计时%s秒后改变！",
+	doomtimerwarnnow = "必然的厄运现在每隔15秒发动一次！",
+	
+	startwarn = "洛欧塞布已激活 - 2分钟后发动必然的厄运！",
+
+	you = "你",
+	are = "are",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -29,7 +29,6 @@ L:RegisterTranslations("enUS", function() return {
 	warn4 = "Enrage in 60 seconds",
 	warn5 = "Enrage in 30 seconds",
 	warn6 = "Enrage in 10 seconds",
-
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -62,6 +61,25 @@ L:RegisterTranslations("koKR", function() return {
 	warn4 = "격노 60초후",
 	warn5 = "격노 30초후",
 	warn6 = "격노 10초후",	
+} end )
+
+L:RegisterTranslations("zhCN", function() return {
+	enrage_name = "激怒警报",
+	enrage_desc = "激怒警报",
+
+	enragetrigger = "变得愤怒了！",
+
+	enragewarn = "激怒！",
+	starttrigger1 = "帕奇维克要跟你玩！",
+	starttrigger2 = "帕奇维克是克尔苏加德的战神！",
+	startwarn = "帕奇维克已激活 - 7分钟后激怒",
+	enragebartext = "激怒",
+	warn1 = "5分钟后激怒",
+	warn2 = "3分钟后激怒",
+	warn3 = "90秒后激怒",
+	warn4 = "60秒后激怒",
+	warn5 = "30秒后激怒",
+	warn6 = "10秒后激怒",
 } end )
 
 ----------------------------------

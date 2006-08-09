@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -72,10 +72,63 @@ L:RegisterTranslations("enUS", function() return {
 	stalaggwarn = "Power Surge",
 
 	bar1text = "Polarity Shift",
-	
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	enrage_name = "激怒警报",
+	enrage_desc = "激怒警报",
 
+	phase_name = "阶段警报",
+	phase_desc = "阶段转换时发出警报",
+
+	polarity_name = "极性转换警报",
+	polarity_desc = "极性转换警报",
+
+	power_name = "力量振荡警报",
+	power_desc = "力量振荡警报",
+
+	charge_name = "电荷警报",
+	charge_desc = "你身上的电荷效果发生变化时发出警报",
+
+	enragetrigger = "变得极度狂暴而愤怒！",
+	starttrigger = "斯塔拉格要碾碎你！",
+	starttrigger1 = "主人要吃了你！",
+	starttrigger2 = "咬碎……你的……骨头……",
+	starttrigger3 = "打……烂……你！",
+	
+	adddeath = "死亡了。",
+	teslaoverload = "超负荷！",
+
+	pstrigger = "你感受到痛苦的滋味了吧……",
+	trigger1 = "塔迪乌斯开始施放极性转化。",
+	chargetrigger = "^(.+)受(.+)了(.+)电荷",
+	positivetype = "正",
+	negativetype = "负",
+	stalaggtrigger = "斯塔拉格获得了力量振荡的效果。",
+
+	you = "你",
+	are = "到",
+
+	enragewarn = "激怒！",
+	startwarn = "塔迪乌斯第一阶段",
+	startwarn2 = "塔迪乌斯第二阶段，5分钟后激怒！",
+	addsdownwarn = "10-20秒后塔迪乌斯出现！",
+	thaddiusincoming = "3秒后塔迪乌斯出现！",
+	pswarn1 = "塔迪乌斯开始施放极性转化！",
+	pswarn2 = "30秒后发动极性转化！",
+	pswarn3 = "3秒后发动极性转化！",
+	poswarn = "你是正电荷！",
+	negwarn = "你是负电荷！",
+	enragebartext = "激怒",
+	warn1 = "3分钟后激怒",
+	warn2 = "90秒后激怒",
+	warn3 = "60秒后激怒",
+	warn4 = "30秒后激怒",
+	warn5 = "10秒后激怒",
+	stalaggwarn = "力量振荡",
+
+	bar1text = "极性转化",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -55,6 +55,28 @@ L:RegisterTranslations("deDE", function() return {
 	backbar = "R\195\188ckteleport!",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	teleport_name = "传送警报",
+	teleport_desc = "传送警报",
+
+	-- [[ Triggers ]]--
+	starttrigger = "你现在是我的。",
+	starttrigger2 = "你……就是下一个。",
+	starttrigger3 = "我看见你……",
+	teleporttrigger = "结束的是你。",
+	-- [[ Warnings ]]--
+	startwarn = "希尔盖已激活 - 90秒后传送",
+	warn1 = "1分钟后传送",
+	warn2 = "30秒后传送",
+	warn3 = "10秒后传送",
+	backwarn = "希尔盖出现 - 90秒后再次传送",
+	teleportwarn2 = "30秒后希尔盖出现",
+	teleportwarn3 = "10秒后希尔盖出现",
+	teleportwarn1 = "传送发动！ - %d秒后希尔盖出现！",
+	-- [[ Bars ]]--
+	teleportbar = "传送！",
+	backbar = "出现！",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

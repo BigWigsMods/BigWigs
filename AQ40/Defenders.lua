@@ -69,7 +69,7 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage_desc = "阿努比萨斯防御者进入狂怒状态时发出警报",
 
 	summon_name = "召唤警报",
-	summon_desc = "阿努比萨斯防御者召唤援兵时发出警报",
+	summon_desc = "阿努比萨斯防御者召唤增援时发出警报",
 	
 	explodetrigger = "阿努比萨斯防御者获得了爆炸的效果。",
 	explodewarn = "即将爆炸！近战躲开！",

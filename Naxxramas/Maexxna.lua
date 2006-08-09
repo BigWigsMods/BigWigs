@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -77,6 +77,32 @@ L:RegisterTranslations("koKR", function() return {
 
 	you = "You",
 	are = "are",
+} end )
+
+L:RegisterTranslations("zhCN", function() return {
+	spray_name = "蛛网喷射警报",
+	spray_desc = "蛛网喷射警报",
+
+	enrage_name = "激怒警报",
+	enrage_desc = "激怒警报",
+
+	webwraptrigger = "^(.+)受(.+)了蛛网裹体",
+	webspraytrigger = "受到了蛛网喷射",
+
+	enragetrigger = "变得愤怒了！",
+
+	webspraywarn30sec = "10秒后发动墙茧",
+	webspraywarn20sec = "墙茧 - 10秒后蜘蛛出现！",
+	webspraywarn10sec = "蜘蛛出现 - 10秒后蛛网喷射！",
+	webspraywarn5sec = "蛛网裹体5秒！",
+	webspraywarn = "蛛网裹体 -  40秒后再次发动",
+	enragewarn = "激怒 - 全力攻击！",
+	enragesoonwarn = "即将激怒 - 做好准备！",
+
+	webspraybar = "蛛网喷射",
+
+	you = "你",
+	are = "到",
 } end )
 
 ----------------------------------
