@@ -17,7 +17,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	wormtrigger = "Fankriss the Unyielding casts Summon Worm.",
 	wormwarn = "Incoming Worm!",
-	wormbar = "Enrage",
+	wormbar = "Sandworm Enrage",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
