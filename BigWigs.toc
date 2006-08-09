@@ -2,7 +2,7 @@
 
 ## Title: Big Wigs |cff7fff7f -Ace2-|r
 ## Notes: Boss Mods with Timer bars.
-## Author: Tekkub Stoutwrithe, Ammo, Shyva & Others
+## Author: Tekkub Stoutwrithe, Ammo, Shyva, Rabbit & Others
 ## X-Build: $Revision$
 ## X-ReleaseDate: "$Date$"
 ## X-Website: http://wiki.wowace.com/index.php/BigWigs_Addon
