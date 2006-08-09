@@ -133,12 +133,18 @@ function BigWigsDefenders:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Thunderclap")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Thunderclap")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Thunderclap")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function BigWigsDefenders:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+	if msg == string.format(UNITDIESOTHER, boss) then
+		self.core:ToggleModuleActive(self, false)
+	end
+end
 
 function BigWigsDefenders:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if self.db.profile.explode and msg == L"explodetrigger" then

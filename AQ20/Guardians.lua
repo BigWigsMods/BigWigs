@@ -124,12 +124,22 @@ BigWigsGuardians.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsGuardians:OnEnable()
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "checkPlague")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "checkPlague")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "checkPlague")
+end
+
+------------------------------
+--      Event Handlers      --
+------------------------------
+
+function BigWigsGuardians:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+	if msg == string.format(UNITDIESOTHER, boss) then
+		self.core:ToggleModuleActive(self, false)
+	end
 end
 
 function BigWigsGuardians:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
