@@ -86,7 +86,7 @@ L:RegisterTranslations("deDE", function() return {
 	dkbar = "Todesritter",
 	riderbar = "Reiter",
 	
-	inroomtrigger = "I have waited long enough. Now you face the harvester of souls.",
+	inroomtrigger = "Ich habe lange genug gewartet. Stellt euch dem Seelenj\195\164ger.",
 	inroomwarn = "He's in the room!",
 	
 	inroombartext = "Till on Room",
