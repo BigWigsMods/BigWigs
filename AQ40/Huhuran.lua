@@ -162,7 +162,7 @@ function BigWigsHuhuran:BigWigs_RecvSync( sync )
 		if self.db.profile.berserk and not self.started then
 			self.started = true
 			self:TriggerEvent("BigWigs_Message", L"startwarn", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"berserkbar", 300, 1, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"berserkbar", 300, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
 			self:ScheduleEvent("bwhuhuranenragewarn1", "BigWigs_Message", 240, L"berserkwarn1", "Yellow")
 			self:ScheduleEvent("bwhuhuranenragewarn2", "BigWigs_Message", 270, L"berserkwarn2", "Orange")
 			self:ScheduleEvent("bwhuhuranenragewarn3", "BigWigs_Message", 295, L"berserkwarn3", "Red")
@@ -204,7 +204,7 @@ function BigWigsHuhuran:checkSting(arg1)
 	if not self.db.profile.wyvern then return end
 	if not self.prior and string.find(arg1, L"stingtrigger") then
 		self:TriggerEvent("BigWigs_Message", L"stingwarn", "Orange")
-		self:TriggerEvent("BigWigs_StartBar", self, L"bartext", 25, 2, "Interface\\Icons\\INV_Spear_02", "Green", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"bartext", 25, "Interface\\Icons\\INV_Spear_02", "Green", "Yellow", "Orange", "Red")
 		self:ScheduleEvent("BigWigs_Message", 22, L"stingdelaywarn", "Orange")
 		self.prior = true
 	end

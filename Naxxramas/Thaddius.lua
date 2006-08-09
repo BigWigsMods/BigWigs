@@ -192,7 +192,7 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
 	elseif msg == L"starttrigger2" or msg == L"starttrigger3" then
 		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L"startwarn2", "Red") end
 		if self.db.profile.enrage then
-			self:TriggerEvent("BigWigs_StartBar", self, L"enragebartext", 300, 2, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"enragebartext", 300, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
 			self:ScheduleEvent("bwthaddiuswarn1", "BigWigs_Message", 120, L"warn1", "Green")
 			self:ScheduleEvent("bwthaddiuswarn2", "BigWigs_Message", 210, L"warn2", "Yellow")
 			self:ScheduleEvent("bwthaddiuswarn3", "BigWigs_Message", 240, L"warn3", "Orange")
@@ -242,7 +242,7 @@ function BigWigsThaddius:BigWigs_RecvSync( sync )
 	if sync == "ThaddiusPolarity" and self.db.profile.polarity then
 		self:TriggerEvent("BigWigs_Message", L"pswarn2", "Yellow")
 		self:ScheduleEvent("BigWigs_Message", 27, L"pswarn3", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, 1, "Interface\\Icons\\Spell_Nature_Lightning", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, "Interface\\Icons\\Spell_Nature_Lightning", "Yellow", "Orange", "Red")
 	end
 end
 

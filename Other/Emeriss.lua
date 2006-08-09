@@ -108,7 +108,7 @@ if (GetLocale() == "koKR") then
 			if self.db.profile.noxious then 
 				self:TriggerEvent("BigWigs_Message", L"warn4", "Red")
 				self:ScheduleEvent("BigWigs_Message", 25, L"warn3", "Red")
-				self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, 1, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
+				self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
 			end
 		else
 			local _,_, EPlayer = string.find(msg, L"trigger1")
@@ -132,7 +132,7 @@ else
 			if self.db.profile.noxious then 
 				self:TriggerEvent("BigWigs_Message", L"warn4", "Red")
 				self:ScheduleEvent("BigWigs_Message", 25, L"warn3", "Red")
-				self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, 1, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
+				self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
 			end			
 		else
 			local _,_, EPlayer, EType = string.find(msg, L"trigger1")

@@ -151,7 +151,7 @@ function BigWigsMaexxna:BigWigs_RecvSync( sync )
 	self:ScheduleEvent("BigWigs_Message", 20, L"webspraywarn20sec", "Yellow")
 	self:ScheduleEvent("BigWigs_Message", 30, L"webspraywarn10sec", "Yellow")
 	self:ScheduleEvent("BigWigs_Message", 35, L"webspraywarn5sec", "Yellow")
-	self:TriggerEvent("BigWigs_StartBar", self, L"webspraybar", 40, 1, "Interface\\Icons\\Ability_Ensnare", "Green", "Yellow", "Orange", "Red")
+	self:TriggerEvent("BigWigs_StartBar", self, L"webspraybar", 40, "Interface\\Icons\\Ability_Ensnare", "Green", "Yellow", "Orange", "Red")
 end
 
 

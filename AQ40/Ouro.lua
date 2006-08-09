@@ -185,7 +185,7 @@ function BigWigsOuro:Sweep()
 	if self.db.profile.sweep then
 		self:TriggerEvent("BigWigs_Message", L"sweepannounce", "Red")
 		self:ScheduleEvent("bwourosweepwarn", "BigWigs_Message", 18, L"sweepwarn", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"sweepbartext", 23, 1, "Interface\\Icons\\Spell_Nature_Thorns", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"sweepbartext", 23, "Interface\\Icons\\Spell_Nature_Thorns", "Yellow", "Orange", "Red")
 	end
 end
 
@@ -193,7 +193,7 @@ function BigWigsOuro:Sandblast()
 	if self.db.profile.sandblast then
 		self:TriggerEvent("BigWigs_Message", L"sandblastannounce", "Red")
 		self:ScheduleEvent("bwouroblastwarn", "BigWigs_Message", 18, L"sandblastwarn", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"sandblastbartext", 23, 2, "Interface\\Icons\\Spell_Nature_Cyclone", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"sandblastbartext", 23, "Interface\\Icons\\Spell_Nature_Cyclone", "Yellow", "Orange", "Red")
 	end
 end
 
@@ -201,12 +201,12 @@ function BigWigsOuro:Emerge()
 	if self.db.profile.emerge then
 		self:TriggerEvent("BigWigs_Message", L"emergeannounce", "Red")
 		self:ScheduleEvent("bwouroemergewarn", "BigWigs_Message", 165, L"emergewarn", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"emergebartext", 180, 3, "Interface\\Icons\\Spell_Nature_Earthquake", "Green", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"emergebartext", 180, "Interface\\Icons\\Spell_Nature_Earthquake", "Green", "Yellow", "Orange", "Red")
 	end
 
 	if self.db.profile.scarab then
 		self:ScheduleEvent("bwscarabdespawn", "BigWigs_Message", 50, L"scarabdespawn", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"scarabbar", 60, 5, "Interface\\Icons\\INV_Scarab_Clay", "Red", "Orange", "Yellow", "Green" )
+		self:TriggerEvent("BigWigs_StartBar", self, L"scarabbar", 60, "Interface\\Icons\\INV_Scarab_Clay", "Red", "Orange", "Yellow", "Green" )
 	end
 end
 
@@ -214,7 +214,7 @@ function BigWigsOuro:Submerge()
 	if self.db.profile.submerge then
 		self:TriggerEvent("BigWigs_Message", L"submergeannounce", "Red")
 		self:ScheduleEvent("bwsubmergewarn", "BigWigs_Message", 25, L"submergewarn", "Red" )
-		self:TriggerEvent("BigWigs_StartBar", self, L"submergebar", 30, 4, "Interface\\Icons\\Spell_Nature_Earthquake", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"submergebar", 30, "Interface\\Icons\\Spell_Nature_Earthquake", "Yellow", "Orange", "Red")
 	end
 end
 

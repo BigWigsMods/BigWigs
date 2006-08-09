@@ -69,7 +69,7 @@ function BigWigsKazzak:CHAT_MSG_MONSTER_YELL( msg )
 		self:ScheduleEvent("BigWigs_Message", supremetime - 60, L"supreme1min", "Yellow")
 		self:ScheduleEvent("BigWigs_Message", supremetime - 30, L"supreme1min", "Orange")
 		self:ScheduleEvent("BigWigs_Message", supremetime - 10, L"supreme1min", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"bartext", supremetime, 1, "Interface\\Icons\\Spell_Shadow_ShadowWordPain", "Green", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"bartext", supremetime, "Interface\\Icons\\Spell_Shadow_ShadowWordPain", "Green", "Yellow", "Orange", "Red")
 	end
 end
 

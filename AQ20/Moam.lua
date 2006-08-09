@@ -103,7 +103,7 @@ function BigWigsMoam:AddsStart()
 		self:ScheduleEvent("BigWigs_Message", 60, format(L"addsincoming", 30), "Yellow")
 		self:ScheduleEvent("BigWigs_Message", 75, format(L"addsincoming", 15), "Orange")
 		self:ScheduleEvent("BigWigs_Message", 85, format(L"addsincoming", 5), "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"addsbar", 90, 1, "Interface\\Icons\\Spell_Shadow_CurseOfTounges", "Green", "Yellow", "Orange", "Red") 
+		self:TriggerEvent("BigWigs_StartBar", self, L"addsbar", 90, "Interface\\Icons\\Spell_Shadow_CurseOfTounges", "Green", "Yellow", "Orange", "Red") 
 	end
 end
 
@@ -120,7 +120,7 @@ function BigWigsMoam:CHAT_MSG_MONSTER_EMOTE( msg )
 			self:ScheduleEvent("BigWigs_Message", 60, format(L"returnincoming", 30), "Yellow")
 			self:ScheduleEvent("BigWigs_Message", 75, format(L"returnincoming", 15), "Orange")
 			self:ScheduleEvent("BigWigs_Message", 85, format(L"returnincoming", 5), "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"paralyzebar", 90, 1, "Interface\\Icons\\Spell_Shadow_CurseOfTounges", "Green", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"paralyzebar", 90, "Interface\\Icons\\Spell_Shadow_CurseOfTounges", "Green", "Yellow", "Orange", "Red")
 		end
 	end
 end

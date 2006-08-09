@@ -133,7 +133,7 @@ function BigWigsFlamegor:BigWigs_RecvSync(sync)
 		self:TriggerEvent("BigWigs_Message", L"warn1", "Red")
 		self:TriggerEvent("BigWigs_Message", L"warn2", "Yellow")
 		self:ScheduleEvent("BigWigs_Message", 29, L"warn3", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 32, 1, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 32, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")
 	elseif sync == "FlamegorShadowflame" and self.db.profile.shadowflame then
 		self:TriggerEvent("BigWigs_Message", L"warn4", "Red")
 	end

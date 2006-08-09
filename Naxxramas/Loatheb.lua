@@ -156,7 +156,7 @@ function BigWigsLoatheb:BigWigs_RecvSync(sync)
 	if sync == "LoathebStart" and not self.started then
 		self.started = true
 		if self.db.profile.doom then
-			self:TriggerEvent("BigWigs_StartBar", self, L"doomtimerbar", 300, 1, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"doomtimerbar", 300, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
 			self:ScheduleEvent("bwloathebtimerreduce1", "BigWigs_Message", 240, string.format(L"doomtimerwarn", 60), "Green")
 			self:ScheduleEvent("bwloathebtimerreduce2", "BigWigs_Message", 270, string.format(L"doomtimerwarn", 30), "Yellow")
 			self:ScheduleEvent("bwloathebtimerreduce3", "BigWigs_Message", 290, string.format(L"doomtimerwarn", 10), "Orange")
@@ -166,24 +166,24 @@ function BigWigsLoatheb:BigWigs_RecvSync(sync)
 			self:ScheduleEvent("bwloathebdoomtimerreduce", function () BigWigsLoatheb.doomTime = 15 end, 300)
 
 			self:TriggerEvent("BigWigs_Message", L"startwarn", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"doombar", 120, 2, "Interface\\Icons\\Spell_Shadow_NightOfTheDead", "Green", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"doombar", 120, "Interface\\Icons\\Spell_Shadow_NightOfTheDead", "Green", "Yellow", "Orange", "Red")
 			self:ScheduleEvent("bwloathebdoom", "BigWigs_Message", 115, L"doomwarn5sec", "Orange")
 		end
 	elseif sync == "LoathebDoom" then
 		if self.db.profile.doom then
 			self:TriggerEvent("BigWigs_Message", string.format(L"doomwarn", self.doomTime), "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"doombar", self.doomTime, 2, "Interface\\Icons\\Spell_Shadow_NightOfTheDead", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"doombar", self.doomTime, "Interface\\Icons\\Spell_Shadow_NightOfTheDead", "Yellow", "Orange", "Red")
 			self:ScheduleEvent("bwloathebdoom", "BigWigs_Message", self.doomTime - 5, L"doomwarn5sec", "Orange")
 		end
 	elseif sync == "LoathebSporeSpawn" then
 		if self.db.profile.spore then
 			self:TriggerEvent("BigWigs_Message", L"sporewarn", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"sporebar", 12, 3, "Interface\\Icons\\Ability_TheBlackArrow", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"sporebar", 12, "Interface\\Icons\\Ability_TheBlackArrow", "Yellow", "Orange", "Red")
 		end
 	elseif sync == "LoathebRemoveCurse" then
 		if self.db.profile.curse then
 			self:TriggerEvent("BigWigs_Message", L"removecursewarn", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"removecursebar", 30, 4, "Interface\\Icons\\Spell_Holy_RemoveCurse", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"removecursebar", 30, "Interface\\Icons\\Spell_Holy_RemoveCurse", "Yellow", "Orange", "Red")
 		end
 	end
 end

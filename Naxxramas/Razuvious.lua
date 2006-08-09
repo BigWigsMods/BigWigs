@@ -133,7 +133,7 @@ function BigWigsRazuvious:CHAT_MSG_MONSTER_YELL( msg )
 		if self.db.profile.shout then
 			self:TriggerEvent("BigWigs_Message", L"startwarn", "Orange", nil, "Alarm")
 			self:ScheduleEvent("bwrazuviousshout", "BigWigs_Message", 18, L"shout7secwarn", "Yellow", nil, "Alert")
-			self:TriggerEvent("BigWigs_StartBar", self, L"shoutbar", 25, 1, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"shoutbar", 25, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red")
 		end
 		self:ScheduleEvent("bwrazuviousnoshout", self.noShout, self.timeShout, self )
 	end
@@ -168,18 +168,18 @@ function BigWigsRazuvious:BigWigs_RecvSync( sync )
 		if self.db.profile.shout then
 			self:TriggerEvent("BigWigs_Message", L"shoutwarn", "Orange", nil, "Alarm")
 			self:ScheduleEvent("bwrazuviousshout", "BigWigs_Message", 18, L"shout7secwarn", "Yellow", nil, "Alert")
-			self:TriggerEvent("BigWigs_StartBar", self, L"shoutbar", 25, 1, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red" )
+			self:TriggerEvent("BigWigs_StartBar", self, L"shoutbar", 25, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red" )
 		end
 		self.prior = true
 	elseif sync == "RazuviousNoShout" then
 		if self.db.profile.shout then
 			self:TriggerEvent("BigWigs_Message", L"noshoutwarn", "Yellow")
 			self:ScheduleEvent("bwrazuviousshout", "BigWigs_Message", 13, L"shout7secwarn", "Yellow", nil, "Alert")
-			self:TriggerEvent("BigWigs_StartBar", self, L"shoutbar", 20, 1, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"shoutbar", 20, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red")
 		end
 	elseif sync == "RazuviousShieldwall" then
 		if self.db.profile.shieldwall then
-			self:TriggerEvent("BigWigs_StartBar", self, L"shieldwallbar", 20, 2, "Interface\\Icons\\Ability_Warrior_ShieldWall", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"shieldwallbar", 20, "Interface\\Icons\\Ability_Warrior_ShieldWall", "Yellow", "Orange", "Red")
 		end
 	end
 end

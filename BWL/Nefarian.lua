@@ -261,5 +261,5 @@ end
 
 function BigWigsNefarian:ClassCallBar()
 	self:ScheduleEvent("BigWigs_Message", 27, L"warn6", "Red")
-	self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, 1, "Interface\\Icons\\Spell_Shadow_Charm", "Yellow", "Orange", "Red")
+	self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, "Interface\\Icons\\Spell_Shadow_Charm", "Yellow", "Orange", "Red")
 end

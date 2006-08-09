@@ -113,7 +113,7 @@ function BigWigsOssirian:BigWigs_RecvSync(sync, debuffName)
 			self:ScheduleEvent("bwossiriansupreme1", "BigWigs_Message", 30, format(L"supremedelaywarn", 15), "Yellow")
 			self:ScheduleEvent("bwossiriansupreme2", "BigWigs_Message", 35, format(L"supremedelaywarn", 10), "Orange")
 			self:ScheduleEvent("bwossiriansupreme3", "BigWigs_Message", 40, format(L"supremedelaywarn", 5), "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"bartext", 45, 1, "Interface\\Icons\\Spell_Shadow_CurseOfTounges", "Green", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"bartext", 45, "Interface\\Icons\\Spell_Shadow_CurseOfTounges", "Green", "Yellow", "Orange", "Red")
 		end
 	end
 end

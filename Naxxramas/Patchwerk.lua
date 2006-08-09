@@ -122,7 +122,7 @@ end
 function BigWigsPatchwerk:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.enrage and ( msg == L"starttrigger1" or msg == L"starttrigger2" ) then
 		self:TriggerEvent("BigWigs_Message", L"startwarn", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"enragebartext", 420, 1, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"enragebartext", 420, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
 		self:ScheduleEvent("bwpatchwarn1", "BigWigs_Message", 120, L"warn1", "Green")
 		self:ScheduleEvent("bwpatchwarn2", "BigWigs_Message", 240, L"warn2", "Yellow")
 		self:ScheduleEvent("bwpatchwarn3", "BigWigs_Message", 330, L"warn3", "Orange")

@@ -121,7 +121,7 @@ end
 
 function BigWigsMagmadar:Fear(msg)
 	if not self.prior and string.find(msg, L"trigger2") and self.db.profile.fear then
-		self:TriggerEvent("BigWigs_StartBar", self, L"AoE Fear", 30, 1, "Interface\\Icons\\Spell_Shadow_PsychicScream", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"AoE Fear", 30, "Interface\\Icons\\Spell_Shadow_PsychicScream", "Yellow", "Orange", "Red")
 		self:TriggerEvent("BigWigs_Message", L"AoE Fear - 30 seconds until next!", "Red")
 		self:ScheduleEvent("BigWigs_Message", 25, L"5 seconds until AoE Fear!", "Orange")
 		self.prior = true

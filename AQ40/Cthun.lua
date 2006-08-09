@@ -250,13 +250,13 @@ function BigWigsCThun:CThunStart()
 		self:TriggerEvent("BigWigs_Message", L"startwarn", "Yellow")
 
 		if self.db.profile.tentacle then
-			self:TriggerEvent("BigWigs_StartBar", self, self.db.profile.rape and L"barTentacle" or L"barNoRape", timeP1TentacleStart, 1, "Interface\\Icons\\Spell_Nature_CallStorm", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, self.db.profile.rape and L"barTentacle" or L"barNoRape", timeP1TentacleStart, "Interface\\Icons\\Spell_Nature_CallStorm", "Yellow", "Orange", "Red")
 			self:ScheduleEvent("bwcthuntentacle2", "BigWigs_Message", timeP1TentacleStart - 5, self.db.profile.rape and L"tentacle2" or L"norape2", "Orange" )
 			self:ScheduleEvent("bwcthuntentacle1", "BigWigs_Message", timeP1TentacleStart, self.db.profile.rape and L"tentacle1" or L"norape1", "Red" )
 		end
 
 		if self.db.profile.glare then
-			self:TriggerEvent("BigWigs_StartBar", self, L"barGlare", timeP1GlareStart, 2, "Interface\\Icons\\Spell_Shadow_ShadowBolt", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"barGlare", timeP1GlareStart, "Interface\\Icons\\Spell_Shadow_ShadowBolt", "Yellow", "Orange", "Red")
 			self:ScheduleEvent("bwcthunglare2", "BigWigs_Message", timeP1GlareStart - 5, L"glare2", "Orange" )
 			self:ScheduleEvent("bwcthunglare1", "BigWigs_Message", timeP1GlareStart, L"glare1", "Red" )
 		end
@@ -300,13 +300,13 @@ function BigWigsCThun:CThunP2Start()
 		if self.db.profile.tentacle then
 			self:ScheduleEvent("bwcthuntentacle1", "BigWigs_Message", timeP2Tentacle + timeP2Offset -.1, self.db.profile.rape and L"tentacle1" or L"norape1", "Red")
 			self:ScheduleEvent("bwcthuntentacle2", "BigWigs_Message", timeP2Tentacle + timeP2Offset - 5, self.db.profile.rape and L"tentacle2" or L"norape2", "Orange")
-			self:TriggerEvent("BigWigs_StartBar", self, self.db.profile.rape and L"barTentacle" or L"barNoRape", timeP2Tentacle + timeP2Offset, 1, "Interface\\Icons\\Spell_Nature_CallStorm", "Yellow", "Orange", "Red" )
+			self:TriggerEvent("BigWigs_StartBar", self, self.db.profile.rape and L"barTentacle" or L"barNoRape", timeP2Tentacle + timeP2Offset, "Interface\\Icons\\Spell_Nature_CallStorm", "Yellow", "Orange", "Red" )
 		end
 
 		if self.db.profile.giant then
 			self:ScheduleEvent("bwcthungiant1", "BigWigs_Message", timeP2Tentacle + timeP2Offset -.1, L"giant1", "Red")
 			self:ScheduleEvent("bwcthungiant2", "BigWigs_Message", timeP2Tentacle + timeP2Offset - 5, L"giant2", "Orange")
-			self:TriggerEvent("BigWigs_StartBar", self, L"barGiant", timeP2Tentacle + timeP2Offset, 3, "Interface\\Icons\\Ability_EyeOfTheOwl", "Yellow", "Orange", "Red" )
+			self:TriggerEvent("BigWigs_StartBar", self, L"barGiant", timeP2Tentacle + timeP2Offset, "Interface\\Icons\\Ability_EyeOfTheOwl", "Yellow", "Orange", "Red" )
 		end
 
 		self:ScheduleEvent("bwcthunstarttentacles", self.StartTentacleRape, timeP2Tentacle + timeP2Offset, self )
@@ -317,7 +317,7 @@ end
 function BigWigsCThun:CThunWeakened()
 	if self.db.profile.weakened then
 		self:TriggerEvent("BigWigs_Message", L"weakened", "Green" )
-		self:TriggerEvent("BigWigs_StartBar", self, L"barWeakened", timeWeakened, 4, "Interface\\Icons\\INV_ValentinesCandy", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"barWeakened", timeWeakened, "Interface\\Icons\\INV_ValentinesCandy", "Yellow", "Orange", "Red")
 		self:ScheduleEvent("bwcthunweaken2", "BigWigs_Message", timeWeakened - 5, L"invulnerable2", "Orange")
 		self:ScheduleEvent("bwcthunweaken1", "BigWigs_Message", timeWeakened, L"invulnerable1", "Red" )
 	end
@@ -391,7 +391,7 @@ function BigWigsCThun:TentacleRape()
 		if gianteye then
 			gianteye = nil
 			if self.db.profile.giant then
-				self:TriggerEvent("BigWigs_StartBar", self, L"barGiant", tentacletime, 3, "Interface\\Icons\\Ability_EyeOfTheOwl", "Yellow", "Orange", "Red")
+				self:TriggerEvent("BigWigs_StartBar", self, L"barGiant", tentacletime, "Interface\\Icons\\Ability_EyeOfTheOwl", "Yellow", "Orange", "Red")
 				self:ScheduleEvent("bwcthungiant1", "BigWigs_Message", tentacletime -.1, L"giant1", "Red")
 				self:ScheduleEvent("bwcthungiant2", "BigWigs_Message", tentacletime - 5, L"giant2", "Orange")
 				self:ScheduleEvent("bwcthungiant3", "BigWigs_Message", tentacletime - 10, L"giant3", "Yellow")
@@ -401,7 +401,7 @@ function BigWigsCThun:TentacleRape()
 		end
 	end
 	if self.db.profile.tentacle then
-		self:TriggerEvent("BigWigs_StartBar", self, L"barTentacle", tentacletime, 1, "Interface\\Icons\\Spell_Nature_CallStorm", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"barTentacle", tentacletime, "Interface\\Icons\\Spell_Nature_CallStorm", "Yellow", "Orange", "Red")
 		self:ScheduleEvent("bwcthuntentacle1", "BigWigs_Message", tentacletime -.1, self.db.profile.rape and L"tentacle1" or L"norape1", "Red")
 		self:ScheduleEvent("bwcthuntentacle2", "BigWigs_Message", tentacletime -5, self.db.profile.rape and L"tentacle2" or L"norape2", "Orange")
 	end
@@ -409,8 +409,8 @@ end
 
 function BigWigsCThun:DarkGlare()
 	if self.db.profile.glare then
-		self:TriggerEvent("BigWigs_StartBar", self, L"barGreenBeam", timeP1GlareDuration, 4, "Interface\\Icons\\Spell_Nature_CallStorm", "Yellow", "Orange", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"barGlare", timeP1Glare, 2, "Interface\\Icons\\Spell_Shadow_ShadowBolt", "Green", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"barGreenBeam", timeP1GlareDuration, "Interface\\Icons\\Spell_Nature_CallStorm", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"barGlare", timeP1Glare, "Interface\\Icons\\Spell_Shadow_ShadowBolt", "Green", "Yellow", "Orange", "Red")
 		self:ScheduleEvent("bwcthunglare1", "BigWigs_Message", timeP1Glare - .1, L"glare1", "Red")
 		self:ScheduleEvent("bwcthunglare2", "BigWigs_Message", timeP1Glare - 5, L"glare2", "Orange")
 		self:ScheduleEvent("bwcthunpositions1", "BigWigs_Message", timeP1GlareDuration, L"positions1", "Red")

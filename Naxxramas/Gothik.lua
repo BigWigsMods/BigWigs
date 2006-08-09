@@ -212,19 +212,19 @@ function BigWigsGothik:StopRoom()
 end
 
 function BigWigsGothik:Trainee()
-	self:TriggerEvent("BigWigs_StartBar", self, L"trabar", self.tratime, 2, nil, "Yellow", "Orange", "Red")
+	self:TriggerEvent("BigWigs_StartBar", self, L"trabar", self.tratime, nil, "Yellow", "Orange", "Red")
 	self:ScheduleEvent("bwgothiktrawarn", "BigWigs_Message", self.tratime - 3, L"trawarn", "Yellow")	
 	self:ScheduleRepeatingEvent("bwgothiktrarepop2", self.Trainee, self.tratime, self)
 end
 
 function BigWigsGothik:DeathKnight()
-	self:TriggerEvent("BigWigs_StartBar", self, L"dkbar", self.dktime, 3, nil, "Yellow", "Orange", "Red")
+	self:TriggerEvent("BigWigs_StartBar", self, L"dkbar", self.dktime, nil, "Yellow", "Orange", "Red")
 	self:ScheduleEvent("bwgothikdkwarn", "BigWigs_Message", self.dktime - 3, L"dkwarn", "Orange")
 	self:ScheduleRepeatingEvent("bwgothikdkrepop2", self.DeathKnight, self.dktime, self)
 end
 
 function BigWigsGothik:Rider()
-	self:TriggerEvent("BigWigs_StartBar", self, L"riderbar", self.ridertime, 4, nil, "Yellow", "Orange", "Red")
+	self:TriggerEvent("BigWigs_StartBar", self, L"riderbar", self.ridertime, nil, "Yellow", "Orange", "Red")
 	self:ScheduleEvent("bwgothikriderwarn", "BigWigs_Message", self.ridertime -3, L"riderwarn", "Red")
 	self:ScheduleRepeatingEvent("bwgothikriderrepop2", self.Rider, self.ridertime, self)
 end
@@ -233,7 +233,7 @@ function BigWigsGothik:CHAT_MSG_MONSTER_YELL( msg )
 	if msg == L"starttrigger1" or msg == L"starttrigger2" then
 		if self.db.profile.room then
 			self:TriggerEvent("BigWigs_Message", L"startwarn", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"inroombartext", 270, 1, "Interface\\Icons\\Spell_Magic_LesserInvisibilty", "Green", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"inroombartext", 270, "Interface\\Icons\\Spell_Magic_LesserInvisibilty", "Green", "Yellow", "Orange", "Red")
 			self:ScheduleEvent("bwgothikwarn1", "BigWigs_Message", 90, L"warn1", "Green")
 			self:ScheduleEvent("bwgothikwarn2", "BigWigs_Message", 180, L"warn2", "Yellow")
 			self:ScheduleEvent("bwgothikwarn3", "BigWigs_Message", 210, L"warn3", "Orange")
@@ -245,9 +245,9 @@ function BigWigsGothik:CHAT_MSG_MONSTER_YELL( msg )
 			self.dktime = 77
 			self.ridertime = 137
 			-- add bars
-			self:TriggerEvent("BigWigs_StartBar", self, L"trabar", self.tratime, 2, nil, "Yellow", "Orange", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"dkbar", self.dktime, 3, nil, "Green", "Yellow", "Orange", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"riderbar", self.ridertime, 4, nil, "Green", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"trabar", self.tratime, nil, "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"dkbar", self.dktime, nil, "Green", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"riderbar", self.ridertime, nil, "Green", "Yellow", "Orange", "Red")
 			-- 3 second warnings
 			self:ScheduleEvent("bwgothiktrawarn", "BigWigs_Message", self.tratime - 3, L"trawarn", "Yellow")
 			self:ScheduleEvent("bwgothikdkwarn", "BigWigs_Message", self.dktime - 3, L"dkwarn", "Orange")

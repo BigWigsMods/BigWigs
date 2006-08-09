@@ -191,11 +191,11 @@ function BigWigsTwins:BigWigs_RecvSync(sync)
 		self.enragestarted = true
 		if self.db.profile.teleport then
 			self:ScheduleEvent("BigWigs_Message", 25, L"portdelaywarn", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"bartext", 30, 1, "Interface\\Icons\\Spell_Arcane_Blink", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"bartext", 30, "Interface\\Icons\\Spell_Arcane_Blink", "Yellow", "Orange", "Red")
 		end
 		if self.db.profile.enrage then
 			self:TriggerEvent("BigWigs_Message", L"startwarn", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"enragebartext", 900, 2, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"enragebartext", 900, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
 			self:ScheduleEvent("bwtwinswarn1", "BigWigs_Message", 300, L"warn1", "Green")
 			self:ScheduleEvent("bwtwinswarn2", "BigWigs_Message", 600, L"warn2", "Yellow")
 			self:ScheduleEvent("bwtwinswarn3", "BigWigs_Message", 720, L"warn3", "Yellow")
@@ -207,7 +207,7 @@ function BigWigsTwins:BigWigs_RecvSync(sync)
 	elseif sync == "TwinsTeleport" and self.db.profile.teleport then
 		self:TriggerEvent("BigWigs_Message", L"portwarn", "Yellow")
 		self:ScheduleEvent("BigWigs_Message", 25, L"portdelaywarn", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"bartext", 30, 1, "Interface\\Icons\\Spell_Arcane_Blink", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"bartext", 30, "Interface\\Icons\\Spell_Arcane_Blink", "Yellow", "Orange", "Red")
 	end
 end
 

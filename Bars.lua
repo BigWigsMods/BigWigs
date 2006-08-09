@@ -137,7 +137,7 @@ function BigWigsBars:BigWigs_HideAnchors()
 end
 
 
-function BigWigsBars:BigWigs_StartBar(module, text, time, bar, icon, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10)
+function BigWigsBars:BigWigs_StartBar(module, text, time, icon, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10)
 	if not text or not time then return end
 	local id = "BigWigsBar "..text
 	local u = self.db.profile.growup

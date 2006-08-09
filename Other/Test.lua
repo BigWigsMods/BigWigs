@@ -46,21 +46,21 @@ end
 function BigWigsTest:BigWigs_RecvSync(sync)
 	if sync == "TestSync" then
 		self:TriggerEvent("BigWigs_Message", "Testing Sync", "Green")
-		self:TriggerEvent("BigWigs_StartBar", self, "Testing Sync", 10, 1, "Interface\\Icons\\Spell_Frost_FrostShock", "Green", "Blue", "Yellow", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, "Testing Sync", 10, "Interface\\Icons\\Spell_Frost_FrostShock", "Green", "Blue", "Yellow", "Red")
 	end
 end
 
 
 function BigWigsTest:BigWigs_Test()
-	self:TriggerEvent("BigWigs_StartBar", self, L"Test Bar", 15, 1, "Interface\\Icons\\Spell_Nature_ResistNature", "Red", "Orange", "Yellow", "Green")
+	self:TriggerEvent("BigWigs_StartBar", self, L"Test Bar", 15, "Interface\\Icons\\Spell_Nature_ResistNature", "Red", "Orange", "Yellow", "Green")
 	self:TriggerEvent("BigWigs_Message", L"Testing", "Green", nil, "Long")
 	self:ScheduleEvent("BigWigs_Message", 5, L"OMG Bear!", "Yellow", nil, "Alert")
 	self:ScheduleEvent("BigWigs_Message", 10, L"*RAWR*", "Orange", nil, "Alarm")
 	self:ScheduleEvent("BigWigs_Message", 15, L"Victory!", "Green", nil, "Victory")
 
-	self:TriggerEvent("BigWigs_StartBar", self, L"Test Bar 2", 10, 2, "Interface\\Icons\\Spell_Nature_ResistNature", "green", "yellow", "orange", "red")
-	self:TriggerEvent("BigWigs_StartBar", self, L"Test Bar 3", 5, 3, "Interface\\Icons\\Spell_Nature_ResistNature", "yellow")
-	self:TriggerEvent("BigWigs_StartBar", self, L"Test Bar 4", 3, 4, "Interface\\Icons\\Spell_Nature_ResistNature", "red")
+	self:TriggerEvent("BigWigs_StartBar", self, L"Test Bar 2", 10, "Interface\\Icons\\Spell_Nature_ResistNature", "green", "yellow", "orange", "red")
+	self:TriggerEvent("BigWigs_StartBar", self, L"Test Bar 3", 5, "Interface\\Icons\\Spell_Nature_ResistNature", "yellow")
+	self:TriggerEvent("BigWigs_StartBar", self, L"Test Bar 4", 3, "Interface\\Icons\\Spell_Nature_ResistNature", "red")
 end
 
 
@@ -115,8 +115,8 @@ function BigWigsDebug:OnEnable()
 	self:ScheduleEvent("BigWigs_Message", 7, "TriggerDelayedEvent fired", "Yellow", nil, "Alert")
 
 	self:TriggerEvent("BigWigs_Message", "Debug start", "Green", nil, "Alert")
-	self:TriggerEvent("BigWigs_StartBar", self, "Debug test", 5, 1, "Interface\\Icons\\Spell_Nature_ResistNature", "Green")
-	self:TriggerEvent("BigWigs_StartBar", self, "Message", 7, 2, "Interface\\Icons\\Spell_Nature_ResistNature", "Red", "Orange", "Yellow", "Green")
+	self:TriggerEvent("BigWigs_StartBar", self, "Debug test", 5, "Interface\\Icons\\Spell_Nature_ResistNature", "Green")
+	self:TriggerEvent("BigWigs_StartBar", self, "Message", 7, "Interface\\Icons\\Spell_Nature_ResistNature", "Red", "Orange", "Yellow", "Green")
 end
 
 

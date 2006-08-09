@@ -180,7 +180,7 @@ end
 function BigWigsMajordomo:NewPowers(power)
 	aura = power
 	self:TriggerEvent("BigWigs_Message", power == 1 and L"warn1" or L"warn2", "Red")
-	self:TriggerEvent("BigWigs_StartBar", self, L"bar3text", 30, 1, "Interface\\Icons\\Spell_Frost_Wisp", "Yellow", "Orange", "Red")
-	self:TriggerEvent("BigWigs_StartBar", self, power == 1 and L"bar1text" or L"bar2text", 10, 2,  power == 1 and Texture1 or Texture2, "Orange", "Red")
+	self:TriggerEvent("BigWigs_StartBar", self, L"bar3text", 30, "Interface\\Icons\\Spell_Frost_Wisp", "Yellow", "Orange", "Red")
+	self:TriggerEvent("BigWigs_StartBar", self, power == 1 and L"bar1text" or L"bar2text", 10, power == 1 and Texture1 or Texture2, "Orange", "Red")
 	self:ScheduleEvent("BigWigs_Message", 25, L"warn3", "Orange")
 end

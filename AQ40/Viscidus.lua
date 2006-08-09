@@ -147,7 +147,7 @@ if (GetLocale() == "koKR") then
 		if self.db.profile.volley and not prior and string.find(arg1, L"trigger6") then
 			self:TriggerEvent("BigWigs_Message", L"warn6", "Orange")
 			self:ScheduleEvent("BigWigs_Message", 7, L"warn7", "Orange")
-			self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 10, 1, "Interface\\Icons\\Spell_Nature_CorrosiveBreath", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 10, "Interface\\Icons\\Spell_Nature_CorrosiveBreath", "Yellow", "Orange", "Red")
 			prior = true
 		elseif self.db.profile.toxinother and string.find(arg1, L"trigger7") then
 			local _,_, pl = string.find(arg1, L"trigger7")
@@ -164,7 +164,7 @@ else
 		if self.db.profile.volley and not prior and string.find(arg1, L"trigger6") then
 			self:TriggerEvent("BigWigs_Message", L"warn6", "Orange")
 			self:ScheduleEvent("BigWigs_Message", 7, L"warn7", "Orange")
-			self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 10, 1, "Interface\\Icons\\Spell_Nature_CorrosiveBreath", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 10, "Interface\\Icons\\Spell_Nature_CorrosiveBreath", "Yellow", "Orange", "Red")
 			prior = true
 		elseif string.find(arg1, L"trigger7") then
 			local _,_, pl, ty = string.find(arg1, L"trigger7")
