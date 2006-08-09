@@ -32,6 +32,13 @@ L:RegisterTranslations("enUS", function() return {
 
 
 L:RegisterTranslations("zhCN", function() return {
+	spider_name = "蜘蛛警报",
+	spider_desc = "小蜘蛛出现时发出警报",
+
+
+	drain_name = "吸取警报",
+	drain_desc = "高阶祭司玛尔里使用生命吸取时发出警报",
+	
 	trigger1 = "来为我作战吧，我的孩子们！$",
 	trigger2 = "^高阶祭司玛尔里的生命吸取治疗了高阶祭司玛尔里(.+)。",
 

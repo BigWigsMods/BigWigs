@@ -28,6 +28,12 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	renew_name = "恢复警报",
+	renew_desc = "恢复警报",
+	
+	phase_name = "第二阶段警报",
+	phase_desc = "第二阶段警报",
+	
 	trigger1 = "高阶祭司温诺希斯获得了恢复的效果。",
 	trigger2 = "让仇恨的",
 

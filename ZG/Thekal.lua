@@ -34,6 +34,19 @@ L:RegisterTranslations("koKR", function() return {
 	warn2 = "로르칸, 상급 치유 시전!!!",
 } end )
 
+L:RegisterTranslations("enUS", function() return {
+	heal_name = "治疗警报",
+	heal_desc = "治疗警报",
+
+	tiger_name = "老虎警报",
+	tiger_desc = "小老虎出现时发出警报",
+
+	trigger1 = "高阶祭司塞卡尔使用了召唤祖利安守护者。",
+	trigger2 = "狂热者洛卡恩开始施放强效治疗术。",
+	warn1 = "老虎出现！",
+	warn2 = "狂热者洛卡恩正在施放治疗，赶快打断它！",	
+} end )
+
 
 ----------------------------------
 --      Module Declaration      --

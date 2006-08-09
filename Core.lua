@@ -73,6 +73,42 @@ L:RegisterTranslations("zhCN", function() return {
 	["%s mod enabled"] = "%s模块已开启",
 	["Target monitoring enabled"] = "目标监视已开启",
 	["Target monitoring disabled"] = "目标监视已关闭",
+	["%s has been defeated"] = "%s被击败了！",     -- "<boss> has been defeated"
+	["%s have been defeated"] = "%s被击败了！",    -- "<bosses> have been defeated"
+
+	-- AceConsole strings
+	["boss"] = "boss",
+	["Bosses"] = "首领",
+	["Options for boss modules."] = "首领模块设置。",
+	["Options for bosses in %s."] = "%s首领模块设置。", -- "Options for bosses in <zone>"
+	["Options for %s in %s."] = "%s %s模块设置。",     -- "Options for <boss> in <zone>"
+	["plugin"] = "plugin",
+	["Plugins"] = "插件",
+	["Options for plugins."] = "插件设置。",
+	["toggle"] = "toggle",
+	["Active"] = "激活",
+	["Activate or deactivate this module."] = "激活或关闭此模块。",
+	["reboot"] = "reboot",
+	["Reboot"] = "重启",
+	["Reboot this module."] = "重启此模块",
+	["debug"] = "debug",
+	["Debugging"] = "除错",
+	["Show debug messages."] = "显示除错信息。",
+	
+	bosskill_name = "首领死亡",
+	bosskill_desc = "首领被击败时发出提示",
+
+	-- AceConsole zone commands
+	["Zul'Gurub"] = "ZG",
+	["Molten Core"] = "MC",
+	["Blackwing Lair"] = "BWL",
+	["Ahn'Qiraj"] = "AQ40",
+	["Ruins of Ahn'Qiraj"] = "AQ20",
+	["Onyxia's Lair"] = "Onyxia",
+	["Naxxramas"] = "Naxxramas",
+	["Silithus"] = "Silithus",
+	["Outdoor Raid Bosses"] = "Outdoor",
+	["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
 } end)
 
 

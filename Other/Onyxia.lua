@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -44,6 +44,15 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	deepbreath_name = "深呼吸警报",
+	deepbreath_desc = "奥妮克希亚开始施放深呼吸时发出警报",
+
+	phase2_name = "第二阶段警报",
+	phase2_desc = "第二阶段警报",
+
+	phase3_name = "第三阶段警报",
+	phase3_desc = "第三阶段警报",
+	
 	trigger1 = "深深地吸了一口气……",
 	trigger2 = "从上空",
 	trigger3 = "看起来需要再给你一次教训",

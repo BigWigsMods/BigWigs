@@ -26,7 +26,6 @@ L:RegisterTranslations("enUS", function() return {
 	warn1 = "You are being watched - stop all actions!",
 	warn2 = "%s is being watched!",
 	warn3 = "Ohgan down! Mandokir enraged!",	
-	
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -37,10 +36,18 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	you_name = "玩家被盯警报",
+	you_desc = "你被血领主盯上时发出警报",
+	
+	other_name = "队友被盯警报",
+	other_desc = "队友被血领主盯上时发出警报",
+	
 	trigger1 = "(.+)！我正在看着你！$",
+	trigger2 = "怒不可遏！$",
 
 	warn1 = "你被盯上了 - 停止一切动作！",
 	warn2 = "%s被盯上了！",
+	warn3 = "奥根死了！血领主进入激怒状态！",	
 } end )
 
 L:RegisterTranslations("koKR", function() return {

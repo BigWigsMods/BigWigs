@@ -30,6 +30,12 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	teleport_name = "传送警报",
+	teleport_desc = "传送警报",
+	
+	shield_name = "护盾警报",
+	shield_desc = "护盾警报",
+	
 	trigger1 = "来吧，小子。面对我！",
 	trigger2 = "^反射效果从艾索雷葛斯身上消失",
 	trigger3 = "^艾索雷葛斯获得了反射",

@@ -29,6 +29,21 @@ L:RegisterTranslations("enUS", function() return {
 	bartext = "Supreme mode",	
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	supreme_name = "无敌警报",
+	supreme_desc = "无敌警报",
+	
+	starttrigger = "为了燃烧军团！为了基尔加丹！",
+		
+	engagewarn	 = "卡扎克已激活 - 3分钟后无敌！",
+		
+	supreme1min	 = "1分钟后无敌！",
+	supreme30sec = "30秒后无敌！",
+	supreme10sec = "10秒后无敌！",
+		
+	bartext = "无敌模式",	
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

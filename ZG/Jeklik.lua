@@ -35,8 +35,14 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	heal_name = "治疗警报",
+	heal_desc = "高阶祭司耶克里克使用治疗时发出警报",
+	
+	bomb_name = "炸弹蝙蝠警报",
+	bomb_desc = "炸弹蝙蝠出现时发出警报",
+	
 	trigger1 = "我命令你把这些入侵者烧成灰烬！$",
-	trigger2 = "开始释放强效治疗！$",
+	trigger2 = "开始施放强效治疗术！$",
 	warn1 = "炸弹蝙蝠来了！",
 	warn2 = "高阶祭司耶克里克正在施放治疗，赶快打断它！",
 } end )

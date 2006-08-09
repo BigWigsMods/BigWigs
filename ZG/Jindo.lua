@@ -45,6 +45,20 @@ L:RegisterTranslations("deDE", function() return {
 	warnhealing = "Heiltotem!",
 } end )
 
+L:RegisterTranslations("enUS", function() return {
+	brainwash_name = "洗脑图腾警报",
+	brainwash_desc = "洗脑图腾警报",
+	
+	healing_name = "治疗图腾警报",
+	healing_desc = "治疗图腾警报",
+	
+	triggerbrainwash = "金度施放了召唤洗脑图腾。",
+	triggerhealing = "金度施放了强效治疗守卫。",
+
+	warnbrainwash = "洗脑图腾！",
+	warnhealing = "治疗图腾！",
+} end )
+
 
 ----------------------------------
 --      Module Declaration      --

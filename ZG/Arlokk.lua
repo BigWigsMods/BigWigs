@@ -40,6 +40,19 @@ L:RegisterTranslations("koKR", function() return {
 	warn2 = "%s님은 표적입니다!",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	youmark_name = "玩家标记警报",
+	youmark_desc = "当你被标记时发出警报",
+	
+	othermark_name = "队友标记警报",
+	othermark_desc = "当队友被标记时发出警报",
+
+	trigger1 = "吞噬(.+)的躯体吧！$",
+
+	warn1 = "你被标记了！",
+	warn2 = "%s被标记了！",	
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

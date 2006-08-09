@@ -41,6 +41,15 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	noxious_name = "毒性吐息警报",
+	noxious_desc = "毒性吐息警报",
+	
+	volatileyou_name = "玩家快速传染警报",
+	volatileyou_desc = "你中了快速传染时发出警报",
+	
+	volatileother_name = "队友快速传染警报",
+	volatileother_desc = "队友中了快速传染时发出警报",
+	
 	trigger1 = "^(.+)受(.+)了快速传染效果",
 	trigger2 = "受到了毒性吐息效果的影响。",
 
