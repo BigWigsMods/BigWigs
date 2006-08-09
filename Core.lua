@@ -315,9 +315,8 @@ end
 
 function BigWigs:BigWigs_RecvSync(sync, module)
 	if sync == "EnableModule" and module then
-		local name = BB:HasTranslation(module) == true and BB(module) or module
-		local m = self:GetModule(name)
-		if m.zonename == GetRealZoneText() then self:EnableModule(name, true) end
+		local name = BB:HasTranslation(module) and BB(module) or module
+		if self:GetModule(name).zonename == GetRealZoneText() then self:EnableModule(name, true) end
 	end
 end
 

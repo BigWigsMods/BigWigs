@@ -53,6 +53,7 @@ deuce.consoleOptions = not FuBar and {
 
 BigWigsOptions = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceConsole-2.0", "AceDB-2.0", "FuBarPlugin-2.0")
 BigWigsOptions.name = "FuBar - BigWigs"
+BigWigsOptions.cannotDetachTooltip = true
 BigWigsOptions:RegisterDB("BigWigsFubarDB")
 
 --~~ BigWigsOptions.hideWithoutStandby = true
