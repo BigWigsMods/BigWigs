@@ -94,7 +94,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["debug"] = "debug",
 	["Debugging"] = "除错",
 	["Show debug messages."] = "显示除错信息。",
-	
+
 	bosskill_name = "首领死亡",
 	bosskill_desc = "首领被击败时发出提示",
 
@@ -302,7 +302,7 @@ function BigWigs:EnableModule(module, nosync)
 	if m and m:IsBossModule() and not self:IsModuleActive(module) then
 		self:ToggleModuleActive(module, true)
 		self:TriggerEvent("BigWigs_Message", string.format(L"%s mod enabled", m:ToString() or "??"), "Cyan", true)
-		if not nosync then self:TriggerEvent("BigWigs_SendSync", "EnableModule " .. (BB:HasReverseTranslation(module) == true and BB:GetReverseTranslation(module) or module)) end
+		if not nosync then self:TriggerEvent("BigWigs_SendSync", "EnableModule " .. (module.synctoken or BB:GetReverseTranslation(module))) end
 	end
 end
 
