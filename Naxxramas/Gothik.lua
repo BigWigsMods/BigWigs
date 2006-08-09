@@ -39,6 +39,8 @@ L:RegisterTranslations("enUS", function() return {
 	warn4 = "In room in 30 seconds",
 	warn5 = "Gothik Incoming in 10 seconds",
 	
+	wave = "%d/18: ",
+	
 	trawarn = "Trainees in 3 seconds",
 	dkwarn = "Deathknight in 3 seconds",
 	riderwarn = "Rider in 3 seconds",
@@ -149,6 +151,11 @@ BigWigsGothik.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsGothik:OnEnable()
+	self.wave = 0
+	self.tratime = 27
+	self.dktime = 77
+	self.ridertime = 137
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
@@ -188,7 +195,6 @@ function BigWigsGothik:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 	end
 end
 
-
 function BigWigsGothik:StopRoom()
 	self:TriggerEvent("BigWigs_StopBar", self, L"inroombartext")
 	self:CancelScheduledEvent("bwgothikwarn1")
@@ -203,30 +209,37 @@ function BigWigsGothik:StopRoom()
 	self:CancelScheduledEvent("bwgothikdkwarn")
 	self:CancelScheduledEvent("bwgothikriderwarn")
 	self:CancelScheduledEvent("bwgothiktrarepop")
-	self:CancelScheduledEvent("bwgothiktrarepop2")
 	self:CancelScheduledEvent("bwgothikdkrepop")
-	self:CancelScheduledEvent("bwgothikdkrepop2")
 	self:CancelScheduledEvent("bwgothikriderrepop")
-	self:CancelScheduledEvent("bwgothikriderrepop2")
+end
 
+function BigWigsGothik:WaveWarn(message, L, color)
+	self.wave = self.wave + 1
+	if self.db.profile.add then self:TriggerEvent("BigWigs_Message", string.format(L"wave", self.wave) .. message, color) end
 end
 
 function BigWigsGothik:Trainee()
-	self:TriggerEvent("BigWigs_StartBar", self, L"trabar", self.tratime, nil, "Yellow", "Orange", "Red")
-	self:ScheduleEvent("bwgothiktrawarn", "BigWigs_Message", self.tratime - 3, L"trawarn", "Yellow")	
-	self:ScheduleRepeatingEvent("bwgothiktrarepop2", self.Trainee, self.tratime, self)
+	if self.db.profile.add then
+		self:TriggerEvent("BigWigs_StartBar", self, L"trabar", self.tratime, nil, "Yellow", "Orange", "Red")
+	end
+	self:ScheduleEvent("bwgothiktrawarn", self.WaveWarn, self.tratime - 3, self, L"trawarn", L, "Yellow")
+	self:ScheduleRepeatingEvent("bwgothiktrarepop", self.Trainee, self.tratime, self)
 end
 
 function BigWigsGothik:DeathKnight()
-	self:TriggerEvent("BigWigs_StartBar", self, L"dkbar", self.dktime, nil, "Yellow", "Orange", "Red")
-	self:ScheduleEvent("bwgothikdkwarn", "BigWigs_Message", self.dktime - 3, L"dkwarn", "Orange")
-	self:ScheduleRepeatingEvent("bwgothikdkrepop2", self.DeathKnight, self.dktime, self)
+	if self.db.profile.add then
+		self:TriggerEvent("BigWigs_StartBar", self, L"dkbar", self.dktime, nil, "Yellow", "Orange", "Red")
+	end
+	self:ScheduleEvent("bwgothikdkwarn", self.WaveWarn, self.dktime - 3, self, L"dkwarn", L, "Orange")
+	self:ScheduleRepeatingEvent("bwgothikdkrepop", self.DeathKnight, self.dktime, self)
 end
 
 function BigWigsGothik:Rider()
-	self:TriggerEvent("BigWigs_StartBar", self, L"riderbar", self.ridertime, nil, "Yellow", "Orange", "Red")
-	self:ScheduleEvent("bwgothikriderwarn", "BigWigs_Message", self.ridertime -3, L"riderwarn", "Red")
-	self:ScheduleRepeatingEvent("bwgothikriderrepop2", self.Rider, self.ridertime, self)
+	if self.db.profile.add then
+		self:TriggerEvent("BigWigs_StartBar", self, L"riderbar", self.ridertime, nil, "Yellow", "Orange", "Red")
+	end
+	self:ScheduleEvent("bwgothikriderwarn", self.WaveWarn, self.ridertime - 3, self, L"riderwarn", L, "Red")
+	self:ScheduleRepeatingEvent("bwgothikriderrepop", self.Rider, self.ridertime, self)
 end
 
 function BigWigsGothik:CHAT_MSG_MONSTER_YELL( msg )
@@ -241,26 +254,14 @@ function BigWigsGothik:CHAT_MSG_MONSTER_YELL( msg )
 			self:ScheduleEvent("bwgothikwarn5", "BigWigs_Message", 260, L"warn5", "Red")
 		end
 		if self.db.profile.add then		
-			self.tratime = 27
-			self.dktime = 77
-			self.ridertime = 137
-			-- add bars
-			self:TriggerEvent("BigWigs_StartBar", self, L"trabar", self.tratime, nil, "Yellow", "Orange", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"dkbar", self.dktime, nil, "Green", "Yellow", "Orange", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"riderbar", self.ridertime, nil, "Green", "Yellow", "Orange", "Red")
-			-- 3 second warnings
-			self:ScheduleEvent("bwgothiktrawarn", "BigWigs_Message", self.tratime - 3, L"trawarn", "Yellow")
-			self:ScheduleEvent("bwgothikdkwarn", "BigWigs_Message", self.dktime - 3, L"dkwarn", "Orange")
-			self:ScheduleEvent("bwgothikriderwarn", "BigWigs_Message", self.ridertime -3, L"riderwarn", "Red")
-			-- repop schedules
-			self:ScheduleEvent("bwgothiktrarepop", self.Trainee, self.tratime, self)
-			self:ScheduleEvent("bwgothiktdkrepop", self.DeathKnight, self.dktime, self)
-			self:ScheduleEvent("bwgothikriderrepop", self.Rider, self.ridertime, self)
-			-- set the new times
-			self.tratime = 20
-			self.dktime = 25
-			self.ridertime = 30
+			self:Trainee()
+			self:DeathKnight()
+			self:Rider()
 		end
+		-- set the new times
+		self.tratime = 20
+		self.dktime = 25
+		self.ridertime = 30
 	elseif msg == L"inroomtrigger" then
 		if self.db.profile.room then self:TriggerEvent("BigWigs_Message", L"inroomwarn", "Red") end
 		self:StopRoom()
