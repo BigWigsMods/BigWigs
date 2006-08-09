@@ -24,7 +24,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Bosses"] = true,
 	["Options for boss modules."] = true,
 	["Options for bosses in %s."] = true, -- "Options for bosses in <zone>"
-	["Options for %s in %s."] = true,     -- "Options for <boss> in <zone>"
+	["Options for %s (%s) in %s."] = true,     -- "Options for <boss> (<revision>) in <zone>"
 	["plugin"] = true,
 	["Plugins"] = true,
 	["Options for plugins."] = true,
@@ -208,6 +208,7 @@ function BigWigs:RegisterModule(name,module)
 	-- Set up AceConsole
 	if module:IsBossModule() then
 		local cons
+		local revision = type(module.revision) == "number" and module.revision or -1
 		local zonename = type(module.zonename) == "table" and module.zonename[1] or module.zonename
 		local zone = BZ:HasReverseTranslation(zonename) and L(BZ:GetReverseTranslation(zonename)) or L(zonename)
 		local L2 = AceLibrary("AceLocale-2.0"):new("BigWigs"..name)
@@ -217,7 +218,7 @@ function BigWigs:RegisterModule(name,module)
 			cons = {
 				type = "group",
 				name = name,
-				desc = string.format(L"Options for %s in %s.", name, zonename),
+				desc = string.format(L"Options for %s (%s) in %s.", name, revision, zonename),
 --~~ 					disabled = function() return not m.core:IsModuleActive(m) end,
 				args = {
 					[L"toggle"] = {
