@@ -17,6 +17,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	wormtrigger = "Fankriss the Unyielding casts Summon Worm.",
 	wormwarn = "Incoming Worm!",
+	wormbar = "Enrage",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -49,14 +50,24 @@ BigWigsFankriss.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsFankriss:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "FankrissWorm", 10)
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsFankriss:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(arg1)
-	if self.db.profile.worm and arg1 == L"wormtrigger" then
+function BigWigsFankriss:BigWigs_RecvSync(sync)
+	if sync == "FankrissWorm" and self.db.profile.worm then
 		self:TriggerEvent("BigWigs_Message", L"wormwarn", "Orange")
+		self:TriggerEvent("BigWigs_StartBar", self, L"wormbar", 20, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Yellow", "Orange", "Red")
+	end
+end
+
+function BigWigsFankriss:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+	if arg1 == L"wormtrigger" then
+		self:TriggerEvent("BigWigs_SendSync", "FankrissWorm")
 	end
 end
