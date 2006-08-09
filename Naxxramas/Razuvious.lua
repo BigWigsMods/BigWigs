@@ -124,7 +124,6 @@ function BigWigsRazuvious:OnEnable()
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "RazuviousShout", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "RazuviousNoShout", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RazuviousShieldwall", 5)
 end
 
@@ -152,31 +151,29 @@ end
 function BigWigsRazuvious:Shout( msg )
 	if string.find(msg, L"shouttrigger") and not self.prior then
 		self:TriggerEvent("BigWigs_SendSync", "RazuviousShout")
-		self:CancelScheduledEvent("bwrazuviousnoshout")
-		self:ScheduleEvent("bwrazuviousnoshout", self.noShout, self.timeShout, self )
 	end
 end
 
 function BigWigsRazuvious:noShout()	
 	self:CancelScheduledEvent("bwrazuviousnoshout")
-	self:ScheduleEvent("bwrazuviousnoshout", self.noShout, self.timeShout, self )
-	self:TriggerEvent("BigWigs_SendSync", "RazuviousNoShout")
+	self:ScheduleEvent("bwrazuviousnoshout", self.noShout, self.timeShout - 5, self )
+	if self.db.profile.shout then
+		self:TriggerEvent("BigWigs_Message", L"noshoutwarn", "Yellow")
+		self:ScheduleEvent("bwrazuviousshout", "BigWigs_Message", 13, L"shout7secwarn", "Yellow", nil, "Alert")
+		self:TriggerEvent("BigWigs_StartBar", self, L"shoutbar", 20, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red")
+	end
 end
 
 function BigWigsRazuvious:BigWigs_RecvSync( sync )
 	if sync == "RazuviousShout" then
+		self:CancelScheduledEvent("bwrazuviousnoshout")
+		self:ScheduleEvent("bwrazuviousnoshout", self.noShout, self.timeShout, self )		
 		if self.db.profile.shout then
 			self:TriggerEvent("BigWigs_Message", L"shoutwarn", "Orange", nil, "Alarm")
 			self:ScheduleEvent("bwrazuviousshout", "BigWigs_Message", 18, L"shout7secwarn", "Yellow", nil, "Alert")
 			self:TriggerEvent("BigWigs_StartBar", self, L"shoutbar", 25, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red" )
 		end
 		self.prior = true
-	elseif sync == "RazuviousNoShout" then
-		if self.db.profile.shout then
-			self:TriggerEvent("BigWigs_Message", L"noshoutwarn", "Yellow")
-			self:ScheduleEvent("bwrazuviousshout", "BigWigs_Message", 13, L"shout7secwarn", "Yellow", nil, "Alert")
-			self:TriggerEvent("BigWigs_StartBar", self, L"shoutbar", 20, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red")
-		end
 	elseif sync == "RazuviousShieldwall" then
 		if self.db.profile.shieldwall then
 			self:TriggerEvent("BigWigs_StartBar", self, L"shieldwallbar", 20, "Interface\\Icons\\Ability_Warrior_ShieldWall", "Yellow", "Orange", "Red")
