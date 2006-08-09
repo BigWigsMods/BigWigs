@@ -302,7 +302,7 @@ function BigWigs:EnableModule(module, nosync)
 	if m and m:IsBossModule() and not self:IsModuleActive(module) then
 		self:ToggleModuleActive(module, true)
 		self:TriggerEvent("BigWigs_Message", string.format(L"%s mod enabled", m:ToString() or "??"), "Cyan", true)
-		if not nosync then self:TriggerEvent("BigWigs_SendSync", "EnableModule " .. (module.synctoken or BB:GetReverseTranslation(module))) end
+		if not nosync then self:TriggerEvent("BigWigs_SendSync", "EnableModule " .. (m.synctoken or BB:GetReverseTranslation(module))) end
 	end
 end
 
