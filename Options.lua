@@ -59,6 +59,7 @@ BigWigsOptions:RegisterDB("BigWigsFubarDB")
 BigWigsOptions.hasIcon = "Interface\\Icons\\INV_Misc_Orb_05"
 --~~ BigWigsOptions.hasNoText  = true
 BigWigsOptions.defaultMinimapPosition = 180
+BigWigsOptions.cannotDetachTooltip = true
 
 -- total hack
 BigWigsOptions.OnMenuRequest = deuce.core.cmdtable
