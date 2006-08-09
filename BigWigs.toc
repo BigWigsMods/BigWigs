@@ -50,6 +50,7 @@ Sound.lua
 RaidWarn.lua
 BossBlock.lua
 RaidIcon.lua
+Range.lua
 
 ZG\Arlokk.lua
 ZG\Jeklik.lua
