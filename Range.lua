@@ -17,13 +17,13 @@ L:RegisterTranslations("enUS", function() return {
 	["range"] = true,
 	["Options for the combat log's range."] = true,
 
-	["party"] = true,
-	["Party"] = true,
-	["Party combat log range."] = true,
+--~~ 	["party"] = true,
+--~~ 	["Party"] = true,
+--~~ 	["Party combat log range."] = true,
 
-	["friend"] = true,
-	["Friendlies"] = true,
-	["Friendly players combat log range."] = true,
+--~~ 	["friend"] = true,
+--~~ 	["Friendlies"] = true,
+--~~ 	["Friendly players combat log range."] = true,
 
 	["mob"] = true,
 	["Creatures"] = true,
@@ -50,34 +50,34 @@ BigWigsRange.consoleOptions = {
 	name = L"Range",
 	desc = L"Options for the combat log's range.",
 	args   = {
-		[L"party"] = {
-			type = "range",
-			name = L"Party",
-			desc = L"Party combat log range.",
-			order = 1,
-			min = 5,
-			max = 200,
-			step = 5,
-			get = function() return GetCVar("CombatLogRangeParty") end,
-			set = function(v)
-				SetCVar("CombatLogRangeParty", v)
-				SetCVar("CombatLogRangePartyPet", v)
-			end,
-		},
-		[L"friend"] = {
-			type = "range",
-			name = L"Friendlies",
-			desc = L"Friendly players combat log range.",
-			order = 2,
-			min = 5,
-			max = 200,
-			step = 5,
-			get = function() return GetCVar("CombatLogRangeFriendlyPlayers") end,
-			set = function(v)
-				SetCVar("CombatLogRangeFriendlyPlayers", v)
-				SetCVar("CombatLogRangeFriendlyPlayersPets", v)
-			end,
-		},
+--~~ 		[L"party"] = {
+--~~ 			type = "range",
+--~~ 			name = L"Party",
+--~~ 			desc = L"Party combat log range.",
+--~~ 			order = 1,
+--~~ 			min = 5,
+--~~ 			max = 200,
+--~~ 			step = 5,
+--~~ 			get = function() return GetCVar("CombatLogRangeParty") end,
+--~~ 			set = function(v)
+--~~ 				SetCVar("CombatLogRangeParty", v)
+--~~ 				SetCVar("CombatLogRangePartyPet", v)
+--~~ 			end,
+--~~ 		},
+--~~ 		[L"friend"] = {
+--~~ 			type = "range",
+--~~ 			name = L"Friendlies",
+--~~ 			desc = L"Friendly players combat log range.",
+--~~ 			order = 2,
+--~~ 			min = 5,
+--~~ 			max = 200,
+--~~ 			step = 5,
+--~~ 			get = function() return GetCVar("CombatLogRangeFriendlyPlayers") end,
+--~~ 			set = function(v)
+--~~ 				SetCVar("CombatLogRangeFriendlyPlayers", v)
+--~~ 				SetCVar("CombatLogRangeFriendlyPlayersPets", v)
+--~~ 			end,
+--~~ 		},
 		[L"mob"] = {
 			type = "range",
 			name = L"Creatures",
@@ -106,10 +106,10 @@ BigWigsRange.consoleOptions = {
 			order = -1,
 			desc = L"Resets all ranges to defaults.",
 			func = function()
-				SetCVar("CombatLogRangeParty", 50)
-				SetCVar("CombatLogRangePartyPet", 50)
-				SetCVar("CombatLogRangeFriendlyPlayers", 50)
-				SetCVar("CombatLogRangeFriendlyPlayersPets", 50)
+--~~ 				SetCVar("CombatLogRangeParty", 50)
+--~~ 				SetCVar("CombatLogRangePartyPet", 50)
+--~~ 				SetCVar("CombatLogRangeFriendlyPlayers", 50)
+--~~ 				SetCVar("CombatLogRangeFriendlyPlayersPets", 50)
 				SetCVar("CombatLogRangeCreature", 30)
 				SetCVar("CombatDeathLogRange", 60)
 			end,
