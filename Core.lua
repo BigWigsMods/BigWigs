@@ -172,7 +172,7 @@ end
 function BigWigs:OnEnable()
 	self:RegisterEvent("BigWigs_TargetSeen")
 	self:RegisterEvent("BigWigs_RebootModule")
-	self:RegisterEvent("BigWigs_RecvSync", nil, 10)
+	self:RegisterEvent("BigWigs_RecvSync", 10)
 end
 
 
