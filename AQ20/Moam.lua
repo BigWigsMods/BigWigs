@@ -32,6 +32,21 @@ L:RegisterTranslations("enUS", function() return {
 	returnwarn = "Moam unparalyzed! 90 seconds until adds!",	
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	starttrigger = "sent votre peur%.",
+	startwarn = "Moam engag\195\169 ! 90 secondes avant les Elementaires !",
+	
+	addsbar = "Elementaire",
+	addsincoming = "Les Elementaires arrivent dans %s secondes !",
+	addstrigger = "absorbe votre mana et se change en pierre%.",
+	addswarn = "Elementaire ! Moam paralys\195\169 pour 90 secondes%.",
+	
+	paralyzebar = "Paralyse",
+	returnincoming = "Moam déparalysé dans %s secondes !",
+	returntrigger = "Dynamiser sur Moam vient de se dissiper%.",
+	returnwarn = "Moam engag\195\169 ! 90 secondes avant les Elementaires !",	
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	starttrigger = "sp\195\188rt Eure Angst.",
 	startwarn = "Moam enaged! 90 Sekunden bis Elementare kommen!",

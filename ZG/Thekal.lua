@@ -26,6 +26,14 @@ L:RegisterTranslations("enUS", function() return {
 	warn2 = "Lor'Khan Casting Heal!",	
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 = "Z\195\169lote Lor'Khan commence \195\160 lancer Soins exceptionnels%.",
+	trigger2 = "Shirvallah, que ta RAGE m\226\128\153envahisse !",
+
+	warn1 = "Lor'Khan lance un soins !",
+	warn2 = "Transformation en tigre !",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	trigger1 = "대사제 데칼|1이;가; 줄리안 수호표범 소환|1을;를; 사용했습니다.",
 	trigger2 = "광신도 로르칸|1이;가; 상급 치유|1을;를; 시전합니다.",

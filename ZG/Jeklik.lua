@@ -27,6 +27,13 @@ L:RegisterTranslations("enUS", function() return {
 	
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 =  "Qu'une pluie de feu s'abatte sur les envahisseurs !",
+	trigger2 = "commence \195\160 lancer un sort de Soins exceptionnels !",
+	warn1 = "Chauve-souris en approche !",
+	warn2 = "Commence \195\160 se soigner",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	trigger1 =  "^Ich befehle Euch Feuer",
 	trigger2 = "beginnt Gro\195\159es Heilen zu wirken!",

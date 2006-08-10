@@ -30,6 +30,13 @@ L:RegisterTranslations("enUS", function() return {
 	you = "You",	
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	watchtrigger = "pose ses yeux sur (.+) !",
+	watchwarn = " est surveill\195\169 !",
+	watchwarnyou = "Tu es surveill\195\169 !",
+	you = "Vous",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	watchtrigger = "beh\195\164lt (.+) im Blickfeld!",
 	watchwarn = " wird beobachtet!",

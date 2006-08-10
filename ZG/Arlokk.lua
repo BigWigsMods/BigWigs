@@ -26,6 +26,13 @@ L:RegisterTranslations("enUS", function() return {
 	warn2 = "%s is marked!",	
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 ="D\195\169vorez ([^%s]+), mes jolies !",
+
+	warn1 = "Tu es marqu\195\169 !",
+	warn2 = "%s est marqu\195\169 !",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	trigger1 ="Labt euch an ([^%s]+), meine S\195\188\195\159en!$",
 

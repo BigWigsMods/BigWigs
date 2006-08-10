@@ -27,6 +27,14 @@ L:RegisterTranslations("enUS", function() return {
 	warn2 = "Incoming phase 2, watch the poison clouds!",	
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 = "Grand pr\195\170tre Venoxis gagne R\195\169novation%.",
+	trigger2 = "Que se d\195\169roulent les anneaux de la haine !",
+
+	warn1 = "R\195\169novation - Dispellez le !",
+	warn2 = "Phase 2, attention aux nuages de poison !",
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 	renew_name = "恢复警报",
 	renew_desc = "恢复警报",

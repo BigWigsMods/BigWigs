@@ -28,6 +28,13 @@ L:RegisterTranslations("enUS", function() return {
 	warn3 = "Ohgan down! Mandokir enraged!",	
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 =  "([^%s]+), je vous ai \195\160 l'\197\147il";
+
+	warn1 = "Tu es surveill\195\169 !",
+	warn2 = "%s est surveill\195\169 !",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	trigger1 =  "([^%s]+)! Ich behalte Euch im Auge!";
 

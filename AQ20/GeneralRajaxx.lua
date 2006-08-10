@@ -39,6 +39,26 @@ L:RegisterTranslations("enUS", function() return {
 	
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 = "Ils arrivent%. Essayez de ne pas vous faire tuer, bleusaille%.",
+	trigger2 = "?????",  -- There is no callout for wave 2 ><
+	trigger3 = "L'heure de notre vengeance sonne enfin !",
+	trigger4 = "C'en est fini d'attendre derri\195\168re des portes ferm\195\169es et des murs de pierre !",
+	trigger5 = "La peur est pour l'ennemi ! La peur et la mort !",
+	trigger6 = "Staghelm pleurnichera pour avoir la vie sauve, comme l'a fait son morveux de fils !",
+	trigger7 = "Fandral ! Ton heure est venue !",
+	trigger8 = "Imb\195\169cile imprudent !",
+
+	warn1 = "Vague 1/8",
+	warn2 = "Vague 2/8",
+	warn3 = "Vague 3/8",
+	warn4 = "Vague 4/8",
+	warn5 = "Vague 5/8",
+	warn6 = "Vague 6/8",
+	warn7 = "Vague 7/8",
+	warn8 = "Le G\195\169n\195\169ral Rajaxx arrive !",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	trigger1 = "Hier kommen sie. Bleibt am Leben, Welpen.",
 	trigger2 = "?????",  -- There is no callout for wave 2 ><
