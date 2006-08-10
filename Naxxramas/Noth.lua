@@ -197,7 +197,7 @@ function BigWigsNoth:CHAT_MSG_MONSTER_YELL( msg )
 			self:ScheduleEvent("BigWigs_Message", self.timeroom-10, L"teleportwarn2", "Orange")
 			self:TriggerEvent("BigWigs_StartBar", self, L"teleportbar", self.timeroom, "Interface\\Icons\\Spell_Magic_LesserInvisibilty", "Green", "Yellow", "Orange", "Red")
 		end
-		self:ScheduleEvent(self.teleportToBalcony, self.timeroom, self)
+		self:ScheduleEvent("bwnothtobalcony", self.teleportToBalcony, self.timeroom, self)
 	end
 end
 
@@ -246,7 +246,7 @@ function BigWigsNoth:teleportToBalcony()
 		self:TriggerEvent("BigWigs_StartBar", self, L"backbar", self.timebalcony, "Interface\\Icons\\Spell_Magic_LesserInvisibilty", "Green", "Yellow", "Orange", "Red")
 		self:ScheduleEvent("bwnothback", "BigWigs_Message", self.timebalcony - 10, L"backwarn2", "Orange")
 	end
-	self:ScheduleEvent(self.teleportToRoom, self.timebalcony, self)
+	self:ScheduleEvent("bwnothtoroom", self.teleportToRoom, self.timebalcony, self)
 end
 
 function BigWigsNoth:teleportToRoom()
@@ -262,5 +262,5 @@ function BigWigsNoth:teleportToRoom()
 		self:ScheduleEvent("bwnothteleport", "BigWigs_Message", self.timeroom - 10, L"teleportwarn2", "Orange")
 	end
 	self.prior = nil
-	self:ScheduleEvent(self.teleportToBalcony, self.timeroom, self)
+	self:ScheduleEvent("bwnothtobalcony", self.teleportToBalcony, self.timeroom, self)
 end
