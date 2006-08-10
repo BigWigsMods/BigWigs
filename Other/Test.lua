@@ -97,8 +97,6 @@ L2:RegisterTranslations("enUS", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-local L2 = AceLibrary("AceLocale-2.0"):new("BigWigsDebug")
-L2:RegisterTranslations("enUS", function() return {} end)
 BigWigsDebug = BigWigs:NewModule("Debug", "Metrognome-2.0")
 -- BigWigsDebug.zonename = "Silithus"
 -- BigWigsDebug.enabletrigger = "Aurel Goldleaf"
