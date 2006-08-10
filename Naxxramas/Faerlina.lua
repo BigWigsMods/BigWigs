@@ -35,6 +35,7 @@ L:RegisterTranslations("enUS", function() return {
 	enrageremovewarn = "Enrage removed! %d seconds until next!", -- added
 	silencewarn = "Silence! Delaying Enrage!",
 	silencewarnnodelay = "Silence!",
+	silencewarn5sec = "Silence ends in 5 sec",
 
 	enragebar = "Enrage",
 	silencebar = "Silence",
@@ -188,6 +189,7 @@ function BigWigsFaerlina:BigWigs_RecvSync( sync )
 					self:TriggerEvent("BigWigs_Message", L"silencewarn", "Orange")
 				end
 				self:TriggerEvent("BigWigs_StartBar", self, L"silencebar", self.silencetime, "Interface\\Icons\\Spell_Holy_Silence", "Green", "Yellow", "Orange", "Red")
+				self:ScheduleEvent("bwfaerlinasilence5", "BigWigs_Message", self.silencetime -5, L"silencewarn5sec", "Orange")
 			end
 		else -- Reactive enrage removed
 			if self.db.profile.enrage then
@@ -198,6 +200,7 @@ function BigWigsFaerlina:BigWigs_RecvSync( sync )
 			end
 			if self.db.profile.silence then
 				self:TriggerEvent("BigWigs_StartBar", self, L"silencebar", self.silencetime, "Interface\\Icons\\Spell_Holy_Silence", "Green", "Yellow", "Orange", "Red")
+				self:ScheduleEvent("bwfaerlinasilence5", "BigWigs_Message", self.silencetime -5, L"silencewarn5sec", "Orange")
  			end			
 			self.enraged = nil
 		end
