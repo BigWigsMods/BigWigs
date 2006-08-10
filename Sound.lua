@@ -1,4 +1,4 @@
-
+﻿
 assert(BigWigs, "BigWigs not found!")
 
 ------------------------------
@@ -38,6 +38,12 @@ L:RegisterTranslations("koKR", function() return {
 	["Toggle sounds on or off."] = "효과음을 켜거나 끔.",
 } end)
 
+L:RegisterTranslations("zhCN", function() return {
+	["Sounds"] = "声音",
+	["Use sounds"] = "使用声音",
+	["Options for sounds."] = "声音设置。",
+	["Toggle sounds on or off."] = "切换是否使用声音。",
+} end)
 
 ----------------------------------
 --      Module Declaration      --
