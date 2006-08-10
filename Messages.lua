@@ -1,4 +1,4 @@
-
+﻿
 assert(BigWigs, "BigWigs not found!")
 
 ------------------------------
@@ -68,6 +68,29 @@ L:RegisterTranslations("koKR", function() return {
 	["Scale"] = "크기",
 } end)
 
+L:RegisterTranslations("zhCN", function() return {
+	["Messages"] = "信息",
+
+	["Options for the message frame."] = "信息框体设置。",
+	["Show the message anchor frame."] = "显示信息框体锚点。",
+	["Toggle sending messages to the RaidWarnings frame."] = "切换是否通过团队警告框体发送信息。",
+	["Toggles white only messages ignoring coloring."] = "切换是否只发送单色信息。",
+	["Set the bar scale."] = "设置计时条缩放比例。",
+
+	["Message frame"] = "信息框体",
+	["Show anchor"] = "显示锚点",
+	["Send messages to RaidWarning frame"] = "通过团队警告框体发送信息",
+	["Set the message frame scale."] = "设置信息框体缩放比例",
+	["Colorize messages"] = "彩色信息",
+	["Scale"] = "缩放",
+
+	["White"] = "白色",
+	["BigWigs frame"] = "BigWigs框体",
+	["RaidWarning frame"] = "团队警告框体",
+	["Scale is set to %s"] = "缩放比例设置为%s",
+	["Messages are now sent to the %2$s"] = "信息设置为发送到%2$s",
+	["Messages are currently sent to the %2$s"] = "信息当前设置为发送到%2$s",
+} end)
 
 ----------------------------------
 --      Module Declaration      --

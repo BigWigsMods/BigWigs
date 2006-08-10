@@ -1,4 +1,4 @@
-
+﻿
 assert( BigWigs, "BigWigs not found!")
 
 
@@ -59,6 +59,26 @@ L:RegisterTranslations("koKR", function() return {
 	["Scale"]= "크기",
 } end)
 
+L:RegisterTranslations("zhCN", function() return {
+	["Bars"] = "计时条",
+
+	["Options for the timer bars."] = "计时条设置/",
+	["Show the bar anchor frame."] = "显示计时条框体锚点。",
+	["Set the bar scale."] = "设置计时条缩放比例。",
+	["Toggle bars grow upwards/downwards from anchor."] = "切换计时条延展方向。",
+
+	["Timer bars"] = "计时条",
+	["Show anchor"] = "显示锚点",
+	["Grow bars upwards"] = "向上延展",
+	["Scale"] = "缩放",
+	["Bar scale"] = "计时条缩放",
+
+	["Bars now grow %2$s"] = "计时条设置为向%2$s延展。",
+	["Scale is set to %2$s"] = "缩放比例设置为%2$s",
+
+	["Up"] = "上",
+	["Down"] = "下",
+} end)
 
 ----------------------------------
 --      Module Declaration      --

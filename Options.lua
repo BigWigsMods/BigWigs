@@ -1,4 +1,4 @@
-
+﻿
 assert(BigWigs, "BigWigs not found!")
 
 ------------------------------
@@ -28,6 +28,18 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["minimap"] = "미니맵",
+} end)
+
+L:RegisterTranslations("zhCN", function() return {
+	["|cff00ff00Module running|r"] = "|cff00ff00模块运行中|r",
+--	tablethint = "You can disable a currently running module by clicking on its name.  Loaded modules will have a check next to them in their respective sub-menus.",
+	tablethint = "你可以点击图标重置所有运行中的模块。",
+	["Active boss modules"] = "激活首领模块",
+	["Hidden"] = "隐藏",
+	["Shown"] = "显示",
+	["Minimap"] = "小地图",
+	["Toggle the minimap button."] = "切换是否显示小地图图标。",
+	["All running modules have been reset."] = "所有运行中的模块都已重置。",
 } end)
 
 ----------------------------------

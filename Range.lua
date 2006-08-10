@@ -1,4 +1,4 @@
-
+﻿
 assert(BigWigs, "BigWigs not found!")
 
 ------------------------------
@@ -38,6 +38,27 @@ L:RegisterTranslations("enUS", function() return {
 	["Resets all ranges to defaults."] = true,
 } end)
 
+L:RegisterTranslations("zhCN", function() return {
+	["Range"] = "范围",
+	["Options for the combat log's range."] = "设置战斗记录范围。",
+
+--~~ 	["party"] = "",
+--~~ 	["Party"] = "",
+--~~ 	["Party combat log range."] = "",
+
+--~~ 	["friend"] = "",
+--~~ 	["Friendlies"] = "",
+--~~ 	["Friendly players combat log range."] = "",
+
+	["Creatures"] = "生物",
+	["Creature combat log range."] = "生物战斗记录范围。",
+
+	["Deaths"] = "死亡",
+	["Death message range."] = "死亡信息范围。",
+
+	["Reset to defaults"] = "重置",
+	["Resets all ranges to defaults."] = "重置为默认设置。",
+} end)
 
 ----------------------------------
 --      Module Declaration      --
