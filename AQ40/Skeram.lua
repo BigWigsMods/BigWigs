@@ -56,11 +56,16 @@ L:RegisterTranslations("zhCN", function() return {
 	mcyou = "你",
 	mcare = "到",
 	
+	splitwarn = "即将分裂！",
+	
 	mc_name = "精神控制警报",
 	mc_desc = "精神控制警报",
 	
 	ae_name = "魔爆术警报",
 	ae_desc = "魔爆术警报",
+	
+	split_name = "分裂警报",
+	split_desc = "预言者斯克拉姆即将复制镜像时发出警报",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

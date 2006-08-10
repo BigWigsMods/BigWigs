@@ -26,6 +26,7 @@ L:RegisterTranslations("zhCN", function() return {
 	
 	wormtrigger = "顽强的范克瑞斯施放了召唤虫子。",
 	wormwarn = "虫子出现 - 赶快杀掉！ (%d)",
+	wormbar = "沙虫激怒 (%d)",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

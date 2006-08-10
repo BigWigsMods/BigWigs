@@ -34,7 +34,7 @@ L:RegisterTranslations("koKR", function() return {
 	warn2 = "로르칸, 상급 치유 시전!!!",
 } end )
 
-L:RegisterTranslations("enUS", function() return {
+L:RegisterTranslations("zhCN", function() return {
 	heal_name = "治疗警报",
 	heal_desc = "治疗警报",
 

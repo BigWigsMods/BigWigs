@@ -45,7 +45,7 @@ L:RegisterTranslations("deDE", function() return {
 	warnhealing = "Heiltotem!",
 } end )
 
-L:RegisterTranslations("enUS", function() return {
+L:RegisterTranslations("zhCN", function() return {
 	brainwash_name = "洗脑图腾警报",
 	brainwash_desc = "洗脑图腾警报",
 	

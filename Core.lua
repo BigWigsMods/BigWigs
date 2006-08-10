@@ -54,7 +54,6 @@ L:RegisterTranslations("enUS", function() return {
 	["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
 } end)
 
-
 L:RegisterTranslations("deDE", function() return {
 	["%s mod enabled"] = "%s mod aktiviert",
 	["Target monitoring enabled"] = "Ziel\195\188berwachung aktiviert",
@@ -68,7 +67,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Target monitoring disabled"] = "타겟 확인 꺼짐",
 } end)
 
-
 L:RegisterTranslations("zhCN", function() return {
 	["%s mod enabled"] = "%s模块已开启",
 	["Target monitoring enabled"] = "目标监视已开启",
@@ -81,7 +79,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Bosses"] = "首领",
 	["Options for boss modules."] = "首领模块设置。",
 	["Options for bosses in %s."] = "%s首领模块设置。", -- "Options for bosses in <zone>"
-	["Options for %s in %s."] = "%s %s模块设置。",     -- "Options for <boss> in <zone>"
+	["Options for %s (%s) in %s."] = "%s (%s) %s 首领模块设置",     -- "Options for <boss> (<revision>) in <zone>"
 	["plugin"] = "plugin",
 	["Plugins"] = "插件",
 	["Options for plugins."] = "插件设置。",
