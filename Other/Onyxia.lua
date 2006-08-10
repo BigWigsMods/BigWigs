@@ -33,6 +33,16 @@ L:RegisterTranslations("enUS", function() return {
 	warn3 = "Onyxia phase 3 incoming!",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 = "prend une grande inspiration%.%.%.",
+	trigger2 = "un seul coup !",
+	trigger3 = "Il semble que vous ayez besoin d'une autre le\195\167on, mortels !",
+
+	warn1 = "Onyxia va souffler, tous sur les cot\195\169s !",
+	warn2 = "Onyxia rentre en phase 2 !",
+	warn3 = "Onyxia rentre en phase 3 !",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	trigger1 = "atmet tief ein...",
 	trigger2 = "von oben",
