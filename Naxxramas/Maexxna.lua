@@ -146,6 +146,8 @@ end
 function BigWigsMaexxna:BigWigs_RecvSync( sync )
 	if sync ~= "MaexxnaWebspray" then return end
 
+	self:CancelScheduledEvent("Maexxna_CheckStart")
+
 	self:TriggerEvent("BigWigs_Message", L"webspraywarn", "Red")
 	self:ScheduleEvent("BigWigs_Message", 10, L"webspraywarn30sec", "Yellow")
 	self:ScheduleEvent("BigWigs_Message", 20, L"webspraywarn20sec", "Yellow")
