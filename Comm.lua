@@ -33,12 +33,10 @@ end
 ------------------------------
 
 -- Handle inbound chatter when the user runs CTRA
-function BigWigsComm:CHAT_MSG_CHANNEL(msg, sender, arg3, arg4, arg5, arg6, arg7, arg8, chan)
-	local rawmsg, channel, nick = msg, chan or arg3, sender
-	
-	if channel ~= "SelfSync" and (not CT_RA_Channel or string.lower(channel) ~= string.lower(CT_RA_Channel)) then return end
+function BigWigsComm:CHAT_MSG_CHANNEL(msg, sender, sschan, arg4, arg5, arg6, arg7, arg8, chan)
+	if sschan ~= "SelfSync" and (not CT_RA_Channel or string.lower(chan) ~= string.lower(CT_RA_Channel)) then return end
 
-	local cleanmsg = string.gsub(rawmsg, "%$", "s")
+	local cleanmsg = string.gsub(msg, "%$", "s")
 	cleanmsg = string.gsub(cleanmsg, "§", "S")
 	if strsub(cleanmsg, strlen(cleanmsg)-7) == " ...hic!" then cleanmsg = strsub(cleanmsg, 1, strlen(cleanmsg)-8) end
 
@@ -47,7 +45,7 @@ function BigWigsComm:CHAT_MSG_CHANNEL(msg, sender, arg3, arg4, arg5, arg6, arg7,
 
 
 	if not throt[sync] or not times[sync] or (times[sync] + throt[sync]) <= GetTime() then
-		self:TriggerEvent("BigWigs_RecvSync", sync, rest, nick)
+		self:TriggerEvent("BigWigs_RecvSync", sync, rest, sender)
 		times[sync] = GetTime()
 	end
 end
