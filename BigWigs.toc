@@ -3,7 +3,7 @@
 ## Title: Big Wigs |cff7fff7f -Ace2-|r
 ## Notes: Boss Mods with Timer bars.
 ## Author: Tekkub Stoutwrithe, Ammo, Shyva, Rabbit & Others
-## X-Build: $Revision$
+## Version: 2.0
 ## X-ReleaseDate: "$Date$"
 ## X-Website: http://wiki.wowace.com/index.php/BigWigs_Addon
 ## X-Email: tekkub@gmail.com
@@ -51,6 +51,7 @@ RaidWarn.lua
 BossBlock.lua
 RaidIcon.lua
 Range.lua
+Tranq.lua
 
 ZG\Arlokk.lua
 ZG\Jeklik.lua

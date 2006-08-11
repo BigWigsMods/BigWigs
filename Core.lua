@@ -24,7 +24,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Bosses"] = true,
 	["Options for boss modules."] = true,
 	["Options for bosses in %s."] = true, -- "Options for bosses in <zone>"
-	["Options for %s (%s) in %s."] = true,     -- "Options for <boss> (<revision>) in <zone>"
+	["Options for %s (r%s) in %s."] = true,     -- "Options for <boss> (<revision>) in <zone>"
 	["plugin"] = true,
 	["Plugins"] = true,
 	["Options for plugins."] = true,
@@ -79,7 +79,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Bosses"] = "首领",
 	["Options for boss modules."] = "首领模块设置。",
 	["Options for bosses in %s."] = "%s首领模块设置。", -- "Options for bosses in <zone>"
-	["Options for %s (%s) in %s."] = "%s (%s) %s 首领模块设置",     -- "Options for <boss> (<revision>) in <zone>"
+	["Options for %s (r%s) in %s."] = "%s (%s) %s 首领模块设置",     -- "Options for <boss> (<revision>) in <zone>"
 	["plugin"] = "plugin",
 	["Plugins"] = "插件",
 	["Options for plugins."] = "插件设置。",
@@ -133,7 +133,7 @@ BigWigs.cmdtable = {type = "group", handler = BigWigs, args = {
 }}
 BigWigs:RegisterChatCommand({"/bw", "/BigWigs"}, BigWigs.cmdtable)
 BigWigs.debugFrame = ChatFrame5
-
+BigWigs.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 --------------------------------
 --      Module Prototype      --
@@ -162,7 +162,12 @@ end
 ------------------------------
 
 function BigWigs:OnInitialize()
-	for name,module in self:IterateModules() do self:RegisterModule(name,module) end
+	local rev = self.revision
+	for name,module in self:IterateModules() do
+		self:RegisterModule(name,module)
+		rev = math.max(rev, module.revision)
+	end
+	self.version = self.version.. " |cffff8888r"..rev.."|r"
 	self:RegisterEvent("ADDON_LOADED")
 end
 
@@ -215,7 +220,7 @@ function BigWigs:RegisterModule(name,module)
 			cons = {
 				type = "group",
 				name = name,
-				desc = string.format(L"Options for %s (%s) in %s.", name, revision, zonename),
+				desc = string.format(L"Options for %s (r%s) in %s.", name, revision, zonename),
 --~~ 					disabled = function() return not m.core:IsModuleActive(m) end,
 				args = {
 					[L"toggle"] = {
