@@ -62,8 +62,8 @@ end
 ------------------------------
 
 function BigWigsFankriss:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if arg1 == L"wormtrigger" then
-		self:TriggerEvent("BigWigs_SendSync", "FankrissWormSpawn", self.worms + 1 )
+	if msg == L"wormtrigger" then
+		self:TriggerEvent("BigWigs_SendSync", "FankrissWormSpawn "..tostring(self.worms + 1) )
 	end
 end
 
