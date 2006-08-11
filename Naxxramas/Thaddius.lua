@@ -39,6 +39,7 @@ L:RegisterTranslations("enUS", function() return {
 	starttrigger1 = "Feed you to master!",
 	starttrigger2 = "Eat... your... bones...",
 	starttrigger3 = "Break... you!!",
+	starttrigger4 = "Kill...",
 	
 	adddeath = "dies.",
 	teslaoverload = "overloads!",
@@ -144,6 +145,8 @@ BigWigsThaddius.revision = tonumber(string.sub("$Revision$", 12, -3))
 --      Initialization      --
 ------------------------------
 
+-- TODO: Add sync'ing for Stalagg's Power Surge.
+
 function BigWigsThaddius:OnEnable()
 	self.enrageStarted = nil
 	self.addsdead = 0
@@ -189,7 +192,7 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
 		self:TriggerEvent("BigWigs_SendSync", "ThaddiusPolarity")
 	elseif msg == L"starttrigger" or msg == L"starttrigger1" then
 		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L"startwarn", "Red") end
-	elseif msg == L"starttrigger2" or msg == L"starttrigger3" then
+	elseif msg == L"starttrigger2" or msg == L"starttrigger3" or msg == L"starttrigger4" then
 		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L"startwarn2", "Red") end
 		if self.db.profile.enrage then
 			self:TriggerEvent("BigWigs_StartBar", self, L"enragebartext", 300, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
