@@ -11,8 +11,8 @@ L:RegisterTranslations("enUS", function() return {
 	CHAT_MSG_SPELL_SELF_BUFF = "You fail to dispel (.+)'s Frenzy.",
 	CHAT_MSG_SPELL_SELF_DAMAGE = "You cast Tranquilizing Shot on (.+).",
 
-	"Tranq - " = true,
-	"%s's Tranq failed!" = true,
+	["Tranq - "] = true,
+	["%s's Tranq failed!"] = true,
 } end)
 
 
