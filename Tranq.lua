@@ -111,9 +111,8 @@ function BigWigsTranq:BigWigs_RecvSync(sync, details, sender)
 	elseif sync == "TranqShotFail" then self:TriggerEvent("BigWigs_TranqFail", details) end
 end
 
-
 function BigWigsTranq:BigWigs_TranqFired(unitname)
-	self:TriggerEvent("BigWigs_StartBar", self, L"Tranq - "..unitname, 20, icon, "Green")
+	self:TriggerEvent("BigWigs_StartBar", self, L"Tranq - "..unitname, 20, "Interface\\Icons\\Spell_Nature_Drowsy", "Green")
 end
 
 
