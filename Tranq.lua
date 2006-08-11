@@ -99,7 +99,7 @@ function BigWigsTranq:CHAT_MSG_SPELL_SELF_BUFF(msg)
 end
 
 
-function BigWigsTranq:CHAT_MSG_SPELL_SELF_DAMAGE()
+function BigWigsTranq:CHAT_MSG_SPELL_SELF_DAMAGE(msg)
 	if string.find(msg, L"CHAT_MSG_SPELL_SELF_DAMAGE") then
 		self:TriggerEvent("BigWigs_SendSync", "TranqShotFired "..UnitName("player"))
 	end
