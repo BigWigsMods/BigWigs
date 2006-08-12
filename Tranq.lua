@@ -15,6 +15,14 @@ L:RegisterTranslations("enUS", function() return {
 	["%s's Tranq failed!"] = true,
 } end)
 
+L:RegisterTranslations("zhCN", function() return {
+	CHAT_MSG_SPELL_SELF_BUFF = "你未能驱散(.+)的狂乱。",
+	CHAT_MSG_SPELL_SELF_DAMAGE = "你对(.+)施放了宁神射击。",
+
+	["Tranq - "] = "宁神射击 - ",
+	["%s's Tranq failed!"] = "%s的宁神射击失败了！",
+} end)
+
 
 ----------------------------------
 --      Module Declaration      --

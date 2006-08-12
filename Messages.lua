@@ -27,10 +27,13 @@ L:RegisterTranslations("enUS", function() return {
 	["scale"] = true,
 
 	["Options for the message frame."] = true,
+	["Anchor"] = true,
 	["Show the message anchor frame."] = true,
+	["Use RaidWarning"] = true,
 	["Toggle sending messages to the RaidWarnings frame."] = true,
+	["Use colors"] = true,
 	["Toggles white only messages ignoring coloring."] = true,
-	["Set the bar scale."] = true,
+	["Message frame scale"] = true,
 
 	["Message frame"] = true,
 	["Show anchor"] = true,
@@ -59,7 +62,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Show the message anchor frame."] = "메시지 위치 조정 프레임 보이기.",
 	["Toggle sending messages to the RaidWarnings frame."] = "공대경고 창으로 메시지 보내기.",
 	["Toggles white only messages ignoring coloring."] = "메시지를 하얀 색으로 변경.",
-	["Set the bar scale."] = "메시지 크기 조정.",
 
 	["Message frame"] = "메시지 창",
 	["Show anchor"] = "앵커 보이기",
@@ -72,10 +74,13 @@ L:RegisterTranslations("zhCN", function() return {
 	["Messages"] = "信息",
 
 	["Options for the message frame."] = "信息框体设置。",
+	["Anchor"] = "锚点",
 	["Show the message anchor frame."] = "显示信息框体锚点。",
+	["Use RaidWarning"] = "使用团队警告",
 	["Toggle sending messages to the RaidWarnings frame."] = "切换是否通过团队警告框体发送信息。",
+	["Use colors"] = "发送彩色信息",
 	["Toggles white only messages ignoring coloring."] = "切换是否只发送单色信息。",
-	["Set the bar scale."] = "设置计时条缩放比例。",
+	["Message frame scale"] = "信息框体缩放",
 
 	["Message frame"] = "信息框体",
 	["Show anchor"] = "显示锚点",
@@ -110,14 +115,14 @@ BigWigsMessages.consoleOptions = {
 	args   = {
 		[L"anchor"] = {
 			type = "execute",
-			name = "Anchor",
+			name = L"Anchor",
 			desc = L"Show the message anchor frame.",
 			func = function() BigWigsMessages.anchorframe:Show() end,
 			hidden = function() return BigWigsMessages.db.profile.useraidwarn end,
 		},
 		[L"rw"] = {
 			type = "toggle",
-			name = "Use RaidWarning",
+			name = L"Use RaidWarning",
 			desc = L"Toggle sending messages to the RaidWarnings frame.",
 			get = function() return BigWigsMessages.db.profile.useraidwarn end,
 			set = function(v)
@@ -130,7 +135,7 @@ BigWigsMessages.consoleOptions = {
 		},
 		[L"color"] = {
 			type = "toggle",
-			name = "Use colors",
+			name = L"Use colors",
 			desc = L"Toggles white only messages ignoring coloring.",
 			get = function() return BigWigsMessages.db.profile.usecolors end,
 			set = function(v) BigWigsMessages.db.profile.usecolors = v end,
@@ -138,7 +143,7 @@ BigWigsMessages.consoleOptions = {
 		},
 		[L"scale"] = {
 			type = "range",
-			name = "Message frame scale",
+			name = L"Message frame scale",
 			desc = L"Set the message frame scale.",
 			min = 0.2,
 			max = 2.0,

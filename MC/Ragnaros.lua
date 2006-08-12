@@ -65,8 +65,14 @@ L:RegisterTranslations("zhCN", function() return {
 	bar2text = "拉格纳罗斯出现",
 	bar3text = "拉格纳罗斯消失",
 	
+	sonofflame = "烈焰之子",
+	sonsdeadwarn = "(%d)个烈焰之子死亡了！",
+	
 	emerge_name = "出现警报",
 	emerge_desc = "出现警报",
+	
+	sondeath_name = "烈焰之子死亡",
+	sondeath_desc = "当一个烈焰之子死亡时发出警报",
 	
 	submerge_name = "消失警报",
 	submerge_desc = "消失警报",

@@ -85,6 +85,9 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	enrage_name = "激怒警报",
+	enrage_desc = "20%生命激怒前发出警报。",
+	
 	frenzy_name = "狂暴警报",
 	frenzy_desc = "狂暴警报",
 	
@@ -108,6 +111,7 @@ L:RegisterTranslations("zhCN", function() return {
 	warn3 = "新法术弱点：%s",
 	warn4 = "法术弱点已改变！",
 	warn5 = "狂暴警报 - 猎人立刻使用宁神射击！",
+	warn6 = "即将激怒！",
 
 	breath1 = "时间流逝",
 	breath2 = "腐蚀酸液",

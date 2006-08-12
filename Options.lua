@@ -50,8 +50,8 @@ local deuce = BigWigs:NewModule("Options Menu")
 deuce.consoleCmd = not FuBar and L"minimap"
 deuce.consoleOptions = not FuBar and {
 	type = "toggle",
-	name = "Minimap",
-	desc = "Toggle the minimap button.",
+	name = L"Minimap",
+	desc = L"Toggle the minimap button.",
 	get = function() return BigWigsOptions.minimapFrame:IsShown() end,
 	set = function(v) if v then BigWigsOptions:Show() else BigWigsOptions:Hide() end end,
 	map = {[false] = L"Hidden", [true] = L"Shown"},

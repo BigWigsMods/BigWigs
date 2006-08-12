@@ -26,6 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Options for the timer bars."] = true,
 	["Show the bar anchor frame."] = true,
 	["Set the bar scale."] = true,
+	["Group upwards"] = true,
 	["Toggle bars grow upwards/downwards from anchor."] = true,
 
 	["Timer bars"] = true,
@@ -39,6 +40,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Up"] = true,
 	["Down"] = true,
+	
+	["Test"] = true,
 } end)
 
 
@@ -65,7 +68,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["Options for the timer bars."] = "计时条设置/",
 	["Show the bar anchor frame."] = "显示计时条框体锚点。",
 	["Set the bar scale."] = "设置计时条缩放比例。",
-	["Toggle bars grow upwards/downwards from anchor."] = "切换计时条延展方向。",
+	["Group upwards"] = "向上排列",
+	["Toggle bars grow upwards/downwards from anchor."] = "切换计时条从锚点向下/向上排列。",
 
 	["Timer bars"] = "计时条",
 	["Show anchor"] = "显示锚点",
@@ -104,7 +108,7 @@ BigWigsBars.consoleOptions = {
 		},
 		[L"up"] = {
 			type = "toggle",
-			name = "Group upwards",
+			name = L"Group upwards",
 			desc = L"Toggle bars grow upwards/downwards from anchor.",
 			get = function() return BigWigsBars.db.profile.growup end,
 			set = function(v) BigWigsBars.db.profile.growup = v end,
