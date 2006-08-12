@@ -374,7 +374,7 @@ function BigWigsCThun:GroupWarning()
 			name, _, group, _, _, _, _, _ = GetRaidRosterInfo(i)
 			if name == target then break end
 		end
-		if self.db.profile.groupwarning then
+		if self.db.profile.group then
 			self:TriggerEvent("BigWigs_Message", string.format( L"groupwarning", group, target), "Red")
 			self:TriggerEvent("BigWigs_SendTell", target, L"glarewarning")
 		end
