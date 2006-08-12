@@ -25,12 +25,19 @@ L:RegisterTranslations("enUS", function() return {
 	bar1text = "AoE knockback",
 	bar2text = "Ragnaros emerge",
 	bar3text = "Ragnaros submerge",
+	
+	sonofflame = "Son of Flame",
+	sonsdeadwarn = "(%d) Sons of Flame dead!",
 
 	cmd = "Ragnaros",
 	
 	emerge_cmd = "emerge",
 	emerge_name = "Emerge alert",
 	emerge_desc = "Warn for Ragnaros Emerge",
+	
+	sondeath_cmd = "sondeath",
+	sondeath_name = "Son of Flame dies",
+	sondeath_desc = "Warn when a son dies",
 	
 	submerge_cmd = "submerge",
 	submerge_name = "Submerge alert",
@@ -129,7 +136,7 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsRagnaros = BigWigs:NewModule(boss)
 BigWigsRagnaros.zonename = AceLibrary("Babble-Zone-2.0")("Molten Core")
 BigWigsRagnaros.enabletrigger = boss
-BigWigsRagnaros.toggleoptions = {"submerge", "emerge", "aoeknock", "bosskill"}
+BigWigsRagnaros.toggleoptions = {"sondeath", "submerge", "emerge", "aoeknock", "bosskill"}
 BigWigsRagnaros.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -137,6 +144,8 @@ BigWigsRagnaros.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsRagnaros:OnEnable()
+	self.sonsdead = 0
+
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_PARTY_HITS", "Event")
 	self:RegisterEvent("CHAT_MSG_COMBAT_FRIENDLYPLAYER_HITS", "Event")
@@ -144,12 +153,42 @@ function BigWigsRagnaros:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PET_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "RagnarosSonDead", .1)
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function BigWigsRagnaros:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+	if msg == string.format(UNITDIESOTHER, L"sonofflame") then
+		self:TriggerEvent("BigWigs_SendSync", "RagnarosSonDead "..tostring(self.sonsdead + 1) )
+	else
+		self:GenericBossDeath(msg)
+	end
+end
+
+function BigWigsRagnaros:BigWigs_RecvSync(sync, rest)
+	if sync ~= "RagnarosSonDead" then return end
+	if not rest then return end
+	rest = tonumber(rest)
+	
+	if rest == (self.sonsdead + 1) then
+		self.sonsdead = self.sonsdead + 1
+		if self.db.profile.sondeath then
+			self:TriggerEvent("BigWigs_Message", string.format(L"sonsdeadwarn", self.sonsdead), "Orange")
+		end
+		
+		if self.sonsdead == 8 then
+			self:CancelScheduledEvent("bwragnarosemerge")
+			self:TriggerEvent("BigWigs_StopBar", L"bar2text")
+			self:Emerge()
+		end
+	end
+end
 
 function BigWigsRagnaros:CHAT_MSG_MONSTER_YELL(msg)
 	if (string.find(msg, L"trigger1") and self.db.profile.aoeknock) then
@@ -160,7 +199,7 @@ function BigWigsRagnaros:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_Message", L"warn3", "Red")
 		self:ScheduleEvent("BigWigs_Message", 75, L"warn4", "Orange")
 		self:TriggerEvent("BigWigs_StartBar", self, L"bar2text", 90, "Interface\\Icons\\Spell_Fire_Volcano", "Green", "Yellow", "Orange", "Red")
-		self:ScheduleEvent(self.Emerge, 90, self)
+		self:ScheduleEvent("bwragnarosemerge", self.Emerge, 90, self)
 	elseif (string.find(msg, L"trigger3") and self.db.profile.emerge) then
 		self:Emerge()
 	end
