@@ -167,6 +167,7 @@ function BigWigs:OnInitialize()
 		self:RegisterModule(name,module)
 		rev = math.max(rev, module.revision)
 	end
+    if not self.version then self.version = "2.0" end
 	self.version = self.version.. " |cffff8888r"..rev.."|r"
 	self:RegisterEvent("ADDON_LOADED")
 end
