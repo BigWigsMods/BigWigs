@@ -97,6 +97,7 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger1 = "主人要吃了你！",
 	starttrigger2 = "咬碎……你的……骨头……",
 	starttrigger3 = "打……烂……你！",
+	starttrigger4 = "杀……",
 	
 	adddeath = "死亡了。",
 	teslaoverload = "超负荷！",
@@ -127,7 +128,8 @@ L:RegisterTranslations("zhCN", function() return {
 	warn3 = "60秒后激怒",
 	warn4 = "30秒后激怒",
 	warn5 = "10秒后激怒",
-	stalaggwarn = "力量振荡",
+	stalaggwarn = "力量振荡！加大对坦克的治疗！",
+	powersurgebar = "力量振荡",
 
 	bar1text = "极性转化",
 } end )

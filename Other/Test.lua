@@ -23,6 +23,18 @@ L:RegisterTranslations("enUS", function() return {
 	["Victory!"] = true,
 } end)
 
+L:RegisterTranslations("zhCN", function() return {
+	["Test"] = "测试",
+	["Test Bar"] = "测试计时条",
+	["Test Bar 2"] = "测试计时条2",
+	["Test Bar 3"] = "测试计时条3",
+	["Test Bar 4"] = "测试计时条4",
+	["Testing"] = "测试中",
+	["OMG Bear!"] = "老天！熊！",
+	["*RAWR*"] = "*RAWR*",
+	["Victory!"] = "胜利！",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
