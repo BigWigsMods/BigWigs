@@ -15,6 +15,10 @@ local breath2 = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Chromaggus",
 	
+	enrage_cmd = "enrage",
+	enrage_name = "Enrage",
+	enrage_desc = "Warn before Enrage at 20%",
+	
 	frenzy_cmd = "frenzy",
 	frenzy_name = "Frenzy Alert",
 	frenzy_desc = "Warn for Frenzy",
@@ -41,6 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 	warn3 = "New spell vulnerability: %s",
 	warn4 = "Spell vulnerability changed!",
 	warn5 = "Frenzy Alert!",
+	warn6 = "Enrage soon!",
 
 	breath1 = "Time Lapse",
 	breath2 = "Corrosive Acid",
@@ -142,7 +147,7 @@ L:RegisterTranslations("koKR", function() return {
 BigWigsChromaggus = BigWigs:NewModule(boss)
 BigWigsChromaggus.zonename = AceLibrary("Babble-Zone-2.0")("Blackwing Lair")
 BigWigsChromaggus.enabletrigger = boss
-BigWigsChromaggus.toggleoptions = { "frenzy", "breath", "vulnerability", "bosskill"}
+BigWigsChromaggus.toggleoptions = { "enrage", "frenzy", "breath", "vulnerability", "bosskill"}
 BigWigsChromaggus.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -155,6 +160,7 @@ function BigWigsChromaggus:OnEnable()
 	-- locals
 	breath1 = nil
 	breath2 = nil
+	self.twenty = nil
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -163,10 +169,22 @@ function BigWigsChromaggus:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PARTY_DAMAGE", "PlayerDamageEvents")
 	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE", "PlayerDamageEvents")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("UNIT_HEALTH")
 	
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ChromaggusBreath", 10)
 
+end
+
+function BigWigsChromaggus:UNIT_HEALTH( msg )
+	if self.db.profile.enrage and UnitName(msg) == boss then
+		local health = UnitHealth(msg)
+		
+		if health > 20 and health <= 23 and not self.twenty then
+			self:TriggerEvent("BigWigs_Message", L"warn6", "Red")
+			self.twenty = true
+		end
+	end
 end
 
 function BigWigsChromaggus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
