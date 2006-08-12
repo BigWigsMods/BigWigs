@@ -71,6 +71,7 @@ L:RegisterTranslations("enUS", function() return {
 	warn4 = "Enrage in 30 seconds",
 	warn5 = "Enrage in 10 seconds",
 	stalaggwarn = "Power Surge, extra healing on tank!",
+	powersurgebar = "Power Surge",
 
 	bar1text = "Polarity Shift",
 } end )
@@ -249,6 +250,7 @@ function BigWigsThaddius:BigWigs_RecvSync( sync )
 		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, "Interface\\Icons\\Spell_Nature_Lightning", "Yellow", "Orange", "Red")
     elseif sync == "StalaggPower" and self.db.profile.power then
         self:TriggerEvent("BigWigs_Message", L"stalaggwarn", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"powersurgebar", 10, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Red")
 	end
 end
 
