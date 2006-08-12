@@ -186,6 +186,41 @@ L:RegisterTranslations("deDE", function() return {
 	bar1text = "Klassenruf",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 = "Beau travail",
+	trigger2 = "BR\195\155LEZ, mis\195\169rables",
+	trigger3 = "C'est impossible ! Relevez%-vous, serviteurs !",
+	trigger4 = "Nefarian commence \195\160 lancer Rugissement puissant",
+	trigger5 = "Nefarian commence \195\160 lancer Flamme d'ombre.",
+	triggershamans	= "Chamans, montrez moi",
+	triggerdruid	= "Les druides et leur stupides",
+	triggerwarlock	= "D\195\169monistes, vous ne devriez pas jouer",
+	triggerpriest	= "Pr\195\170tres ! Si vous continuez",
+	triggerhunter	= "Ah, les chasseurs et les stupides",
+	triggerwarrior	= "Guerriers, je sais que vous pouvez frapper plus fort",
+	triggerrogue	= "Voleurs, arr\195\170tez de vous cacher",
+	triggerpaladin	= "Les paladins",
+	triggermage		= "Les mages aussi",
+	
+	warn1 = "Nefarian att\195\169rit dans 10 sec!",
+	warn2 = "Nefarian att\195\169rit!",
+	warn3 = "Zerg imminent!",
+	warn4 = "Fear dans 2 sec!",
+	warn5 = "Flamme d'ombre imminente!",
+	warn6 = "Appel de classe imminent! STOP Grosheal  ranger arc/fusil",
+	warnshaman	= "CHAMANS - Apparition des totems!",
+	warndruid	= "DRUIDES - En forme f\195\169line!",
+	warnwarlock	= "DEMONISTES - Arriv\195\169e des Infernaux!",
+	warnpriest	= "PRETRES - Arr\195\170tez de soigner!",
+	warnhunter	= "CHASSEURS - Arcs/Fusils cass\195\169s!",
+	warnwarrior	= "GUERRIERS - En position berseker!",
+	warnrogue	= "VOLEURS - T\195\169l\195\169port\195\169s et root\195\169s!",
+	warnpaladin	= "PALADINS - B\195\169n\195\169diction de protection!",
+	warnmage	= "MAGES - Arriv\195\169e des m\195\169tamorphoses!",
+	bosskill = "Nefarian a ete vaincu!",
+
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

@@ -74,6 +74,17 @@ L:RegisterTranslations("deDE", function() return {
 	bar1text = "Fluegelgelstoss",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 = "Gueule-de-feu commence \195\160 lancer Frappe des ailes.",
+	trigger2 = "Gueule-de-feu commence \195\160 lancer Flamme d'ombre.",
+
+	warn1 = "Gueule-de-feu commence \195\160 lancer Frappe des ailes!",
+	warn2 = "30 sec avant prochain Frappe des ailes!",
+	warn3 = "3 sec avant prochain Frappe des ailes!",
+	warn4 = "Flamme d'ombre imminente!",
+
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

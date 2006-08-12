@@ -113,6 +113,22 @@ L:RegisterTranslations("deDE", function() return {
 	bar1text = "Fluegelgelstoss",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 = "Roch\195\169b\195\168ne commence \195\160 lancer Frappe des ailes.",
+	trigger2 = "Roch\195\169b\195\168ne commence \195\160 lancer Flamme d'ombre.",
+	trigger3 = "^([^%s]+) ([^%s]+) les effets de Ombre de Roch\195\169b\195\168ne",
+
+	you = "Vous",
+	are = "subissez",
+
+	warn1 = "Roch\195\169b\195\168ne commence \195\160 lancer Frappe des ailes!",
+	warn2 = "30 sec avant prochaine Frappe des ailes!",
+	warn3 = "3 sec avant prochaine Frappe des ailes!",
+	warn4 = "Flamme d'ombre imminente!",
+	warn5 = "Vous avez l'Ombre de Roch\195\169b\195\168nec!",
+	warn6 = " a l'Ombre de Roch\195\169b\195\168ne!",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

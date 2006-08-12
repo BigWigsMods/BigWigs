@@ -144,6 +144,33 @@ L:RegisterTranslations("koKR", function() return {
 
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	cmd = "Chromaggus",
+	
+	trigger1 = "^Chromaggus commence \195\160 lancer (.+)%.",
+	trigger2 = "^.+ lance .+ et (.+) \195\160 Chromaggus %(([%d]+) points de d\195\169g\195\162ts .+ (.+)%)%.";
+	trigger3 = "^Chromaggus utilise Trou de temps, mais ([%w]+) r\195\169siste%.",
+	trigger4 = "entre dans une sanglante fr\195\169n\195\169sie !",
+	trigger5 = "grimace lorsque sa peau se met \195\160 briller.",
+
+	hit = "lui inflige",
+	crit = "inflige un coup critique",
+
+	warn1 = "%s dans 10 seconde!",
+	warn2 = "incantation de %s !",
+	warn3 = "Nouvelle vulnerabiliter: %s",
+	warn4 = "la vulnerabiliter au sort a changer!",
+	warn5 = "Frenzy Alert!",
+	warn6 = "Enrage imminent!",
+
+	breath1 = "Trou de temps",
+	breath2 = "Acide corrosif",
+	breath3 = "Enflammer la chair",
+	breath4 = "Incin\195\169rer",
+	breath5 = "Br\195\187lure de givre",
+
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

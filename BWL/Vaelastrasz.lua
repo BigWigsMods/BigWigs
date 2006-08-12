@@ -73,6 +73,16 @@ L:RegisterTranslations("deDE", function() return {
 	warn2 = " brennt!",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 = "^([^%s]+) ([^%s]+) les effets de Mont\195\169e d'adr\195\169naline.",
+
+	you = "Vous",
+	are = "subissez",
+
+	warn1 = "tu brule!",
+	warn2 = " brule!",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

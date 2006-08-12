@@ -93,6 +93,19 @@ L:RegisterTranslations("deDE", function() return {
 	bar1text = "Fl\195\188gelsto\195\159",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 = "Flamegor commence \195\160 lancer Frappe des ailes.",
+	trigger2 = "Flamegor commence \195\160 lancer Flamme d'ombre.",
+	trigger3 = "est pris de fr\195\169n\195\169sie !",
+
+	warn1 = "Flamegor commence \195\160 lancer Frappe des ailes!",
+	warn2 = "30 sec avant prochaine Frappe des ailes!",
+	warn3 = "3 sec avant prochaine Frappe des ailes!",
+	warn4 = "Flamme d'ombre imminente!",
+	warn5 = "Frenzy - Tranq Shot!",
+	bosskill = "Flamegor a ete vaincu!",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

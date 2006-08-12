@@ -55,6 +55,17 @@ L:RegisterTranslations("deDE", function() return {
 	warn2 = "Mortal Strike on %s!",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 = "^([^%s]+) ([^%s]+) les effets de Frappe mortelle",
+
+	you = "Vous",
+	are = "subissez",
+
+	warn1 = "Frappe mortelle sur toi!",
+	warn2 = "Frappe mortelle sur %s!",
+
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
