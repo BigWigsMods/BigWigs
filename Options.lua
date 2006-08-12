@@ -7,7 +7,7 @@ assert(BigWigs, "BigWigs not found!")
 
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsOptions")
 local Tablet = AceLibrary("Tablet-2.0")
-local Dewdrop = AceLibrary("Dewdrop-2.0")
+-- local Dewdrop = AceLibrary("Dewdrop-2.0")
 
 ----------------------------
 --      Localization      --
@@ -15,8 +15,7 @@ local Dewdrop = AceLibrary("Dewdrop-2.0")
 
 L:RegisterTranslations("enUS", function() return {
 	["|cff00ff00Module running|r"] = true,
---	tablethint = "You can disable a currently running module by clicking on its name.  Loaded modules will have a check next to them in their respective sub-menus.",
-	tablethint = "You can reset all running modules by clicking on the icon.",
+	tablethint = "Click to reset all running modules. Shift-Click to disable all running modules.",
 	["Active boss modules"] = true,
 	["Hidden"] = true,
 	["Shown"] = true,
@@ -24,6 +23,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Minimap"] = true,
 	["Toggle the minimap button."] = true,
 	["All running modules have been reset."] = true,
+	["All running modules have been disabled."] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -32,7 +32,6 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00模块运行中|r",
---	tablethint = "You can disable a currently running module by clicking on its name.  Loaded modules will have a check next to them in their respective sub-menus.",
 	tablethint = "你可以点击图标重置所有运行中的模块。",
 	["Active boss modules"] = "激活首领模块",
 	["Hidden"] = "隐藏",
@@ -58,7 +57,6 @@ deuce.consoleOptions = not FuBar and {
 	hidden = function() return FuBar and true end,
 }
 
-
 ----------------------------
 --      FuBar Plugin      --
 ----------------------------
@@ -67,9 +65,9 @@ BigWigsOptions = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceConsole-2.0"
 BigWigsOptions.name = "FuBar - BigWigs"
 BigWigsOptions:RegisterDB("BigWigsFubarDB")
 
---~~ BigWigsOptions.hideWithoutStandby = true
+-- BigWigsOptions.hideWithoutStandby = true
 BigWigsOptions.hasIcon = "Interface\\Icons\\INV_Misc_Orb_05"
---~~ BigWigsOptions.hasNoText  = true
+-- BigWigsOptions.hasNoText  = true
 BigWigsOptions.defaultMinimapPosition = 180
 BigWigsOptions.cannotDetachTooltip = true
 
@@ -78,7 +76,7 @@ BigWigsOptions.OnMenuRequest = deuce.core.cmdtable
 local args = AceLibrary("FuBarPlugin-2.0"):GetAceOptionsDataTable(BigWigsOptions)
 for k,v in pairs(args) do
 	if BigWigsOptions.OnMenuRequest.args[k] == nil then
-		DEFAULT_CHAT_FRAME:AddMessage(k)
+--		DEFAULT_CHAT_FRAME:AddMessage(k)
 		BigWigsOptions.OnMenuRequest.args[k] = v
 	end
 end
@@ -92,7 +90,7 @@ function BigWigsOptions:OnTooltipUpdate()
 	local cat = Tablet:AddCategory("text", L"Active boss modules")
 
 	for name, module in deuce.core:IterateModules() do
-		if deuce.core:IsModuleActive(module) and module:IsBossModule() then
+		if module:IsBossModule() and deuce.core:IsModuleActive(module) then
 			cat:AddLine("text", name)
 		end
 	end
@@ -101,10 +99,19 @@ function BigWigsOptions:OnTooltipUpdate()
 end
 
 function BigWigsOptions:OnClick()
-	for name, module in deuce.core:IterateModules() do
-		if deuce.core:IsModuleActive(module) and module:IsBossModule() then
-			deuce.core:BigWigs_RebootModule(module)
+	if(IsShiftKeyDown()) then
+		for name, module in deuce.core:IterateModules() do
+			if module:IsBossModule() and deuce.core:IsModuleActive(module) then
+				deuce.core:ToggleModuleActive(module, false)
+			end
 		end
+		self:Print(L"All running modules have been disabled.")
+	else	
+		for name, module in deuce.core:IterateModules() do
+			if module:IsBossModule() and deuce.core:IsModuleActive(module) then
+				deuce.core:BigWigs_RebootModule(module)
+			end
+		end
+		self:Print(L"All running modules have been reset.")
 	end
-	self:Print(L"All running modules have been reset.")
 end
