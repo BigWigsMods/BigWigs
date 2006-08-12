@@ -183,7 +183,7 @@ function BigWigsThaddius:Scan()
 end
 
 function BigWigsThaddius:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
-	if self.db.profile.power and msg == L"stalaggtrigger" then
+	if msg == L"stalaggtrigger" then
         self:TriggerEvent("BigWigs_SendSync", "StalaggPower")
 	end
 end
