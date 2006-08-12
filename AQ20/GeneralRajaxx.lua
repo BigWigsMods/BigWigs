@@ -5,6 +5,10 @@
 local boss = AceLibrary("Babble-Boss-2.0")("General Rajaxx")
 local andorov = AceLibrary("Babble-Boss-2.0")("Lieutenant General Andorov")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.0"):new("BigWigs")
+
+local rajdead
+
 
 ----------------------------
 --      Localization      --
@@ -12,7 +16,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "rajaxx",
-	
+
 	wave_cmd = "wave",
 	wave_name = "Wave Alert",
 	wave_desc = "Warn for incoming waves",
@@ -34,9 +38,9 @@ L:RegisterTranslations("enUS", function() return {
 	warn5 = "Wave 5/8",
 	warn6 = "Wave 6/8",
 	warn7 = "Wave 7/8",
-	warn8 = "Incoming General Rajaxx",	
+	warn8 = "Incoming General Rajaxx",
 	warn9 = "Wave 1/8", -- trigger for starting the event by pulling the first wave instead of talking to andorov
-	
+
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -82,7 +86,7 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	wave_name = "来袭警报",
 	wave_desc = "当新一批敌人来袭时发出警报",
-	
+
 	trigger1 = "它们来了。尽量别被它们干掉，新兵。",
 	trigger2 = "?????",  -- There is no callout for wave 2 ><
 	trigger3 = "我们复仇的时刻到了！让敌人的内心被黑暗吞噬吧！",
@@ -135,19 +139,35 @@ BigWigsGeneralRajaxx.enabletrigger = andorov
 BigWigsGeneralRajaxx.toggleoptions = {"wave", "bosskill"}
 BigWigsGeneralRajaxx.revision = tonumber(string.sub("$Revision$", 12, -3))
 
+
 ------------------------------
 --      Initialization      --
 ------------------------------
 
 function BigWigsGeneralRajaxx:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self.warnsets = {}
 	for i=1,8 do self.warnsets[L("trigger"..i)] = L("warn"..i) end
 end
 
+
+function BigWigsGeneralRajaxx:VerifyEnable(unit)
+	return not rajdead
+end
+
+
 function BigWigsGeneralRajaxx:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.wave and msg and self.warnsets[msg] then
 		self:TriggerEvent("BigWigs_Message", self.warnsets[msg], "Orange")
+	end
+end
+
+
+function BigWigsGeneralRajaxx:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+	if msg == string.format(UNITDIESOTHER, self:ToString()) then
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(L2"%s has been defeated", self:ToString()), "Green", nil, "Victory") end
+		self.core:ToggleModuleActive(self, false)
+		rajdead = true
 	end
 end

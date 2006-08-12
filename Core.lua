@@ -162,13 +162,13 @@ end
 ------------------------------
 
 function BigWigs:OnInitialize()
+	if not self.version then self.version = GetAddOnMetadata("BigWigs", "Version") end
 	local rev = self.revision
 	for name,module in self:IterateModules() do
 		self:RegisterModule(name,module)
 		rev = math.max(rev, module.revision)
 	end
-    if not self.version then self.version = "2.0" end
-	self.version = self.version.. " |cffff8888r"..rev.."|r"
+	self.version = (self.version or "2.0").. " |cffff8888r"..rev.."|r"
 	self:RegisterEvent("ADDON_LOADED")
 end
 
