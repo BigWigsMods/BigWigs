@@ -27,7 +27,7 @@ L:RegisterTranslations("enUS", function() return {
 	bar3text = "Ragnaros submerge",
 	
 	sonofflame = "Son of Flame",
-	sonsdeadwarn = "(%d) Sons of Flame dead!",
+	sonsdeadwarn = "%d/8 Sons of Flame dead!",
 
 	cmd = "Ragnaros",
 	
@@ -66,7 +66,7 @@ L:RegisterTranslations("zhCN", function() return {
 	bar3text = "拉格纳罗斯消失",
 	
 	sonofflame = "烈焰之子",
-	sonsdeadwarn = "(%d)个烈焰之子死亡了！",
+	sonsdeadwarn = "%d/8个烈焰之子死亡了！",
 	
 	emerge_name = "出现警报",
 	emerge_desc = "出现警报",
