@@ -29,7 +29,7 @@ L:RegisterTranslations("enUS", function() return {
 	enragetrigger = "Grand Widow Faerlina gains Enrage.",
 	enragefade = "Enrage fades from Grand Widow Faerlina.",
 
-	startwarn = "Start or Enrage!",
+	startwarn = "Grand Widow Faerlina engaged, 60 seconds to enrage!",
 	enragewarn15sec = "15 seconds until enrage!",
 	enragewarn = "Enrage!",
 	enrageremovewarn = "Enrage removed! %d seconds until next!", -- added
@@ -50,7 +50,6 @@ L:RegisterTranslations("deDE", function() return {
 	silencetrigger = "J\195\188nger von Naxxramas ist von Umarmung der Witwe betroffen.",
 	enragetrigger = "Gro\195\159witwe Faerlina bekommt 'Wutanfall'.",
 
-	startwarn = "Start oder Enrage!",
 	enragewarn15sec = "15 s bis Enrage!",
 	enragewarn = "Enrage!",
 	silencewarn = "Silence! Enrage verz\195\182gert!",
@@ -66,8 +65,7 @@ L:RegisterTranslations("koKR", function() return {
 	
 	silencetrigger = "낙스라마스 숭배자|1이;가; 귀부인의 은총에 걸렸습니다.",
 	enragetrigger = "귀부인 팰리나|1이;가; 격노 효과를 얻었습니다.",
-	
-	startwarn = "시작 또는 격노!",
+
 	enragewarn15sec = "15초후 격노!",
 	enragewarn = "격노!",
 	silencewarn = "침묵! 격노 연기!",
@@ -91,7 +89,6 @@ L:RegisterTranslations("zhCN", function() return {
 	enragetrigger = "黑女巫法琳娜获得了激怒的效果。",
 	enragefade = "激怒效果从黑女巫法琳娜身上消失。",
 
-	startwarn = "Start or Enrage!",
 	enragewarn15sec = "15秒后激怒！",
 	enragewarn = "激怒！",
 	enrageremovewarn = "激怒已移除 - %d后再次激怒", -- added
@@ -126,17 +123,46 @@ function BigWigsFaerlina:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
-	
+	self:RegisterEvent("PLAYER_REGEN_ENABLED")
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "FaerlinaEnrage", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "FaerlinaSilence", 5)
 end
 
+function BigWigsFaerlina:Scan()
+	if UnitName("target") == boss and UnitAffectingCombat("target") then
+		return true
+	elseif UnitName("playertarget") == boss and UnitAffectingCombat("playertarget") then
+		return true
+	else
+		local i
+		for i = 1, GetNumRaidMembers(), 1 do
+			if UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("raid"..i.."target") then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+function BigWigsFaerlina:PLAYER_REGEN_ENABLED()
+	local go = self:Scan()
+	local running = self:IsEventScheduled("Faerlina_CheckWipe")
+	if (not go) then
+		self:TriggerEvent("BigWigs_RebootModule", self)
+	elseif (not running) then
+		self:ScheduleRepeatingEvent("Faerlina_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
+	end
+end
+
 function BigWigsFaerlina:CHAT_MSG_MONSTER_YELL( msg )
-	if self.db.profile.enrage and ( msg == L"starttrigger1" or msg == L"starttrigger2" or msg == L"starttrigger3" or msg == L"starttrigger4" ) then
+	if msg == L"starttrigger1" or msg == L"starttrigger2" or msg == L"starttrigger3" or msg == L"starttrigger4" then
 		self:TriggerEvent("BigWigs_Message", L"startwarn", "Orange")
-		self:ScheduleEvent("bwfaerlinaenrage15", "BigWigs_Message", self.enragetime - 15, L"enragewarn15sec", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"enragebar", self.enragetime, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
+		if self.db.profile.enrage then
+			self:ScheduleEvent("bwfaerlinaenrage15", "BigWigs_Message", self.enragetime - 15, L"enragewarn15sec", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"enragebar", self.enragetime, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
+		end
 		self.enrageTimerStarted = GetTime()
 	end
 end
@@ -201,7 +227,7 @@ function BigWigsFaerlina:BigWigs_RecvSync( sync )
 			if self.db.profile.silence then
 				self:TriggerEvent("BigWigs_StartBar", self, L"silencebar", self.silencetime, "Interface\\Icons\\Spell_Holy_Silence", "Green", "Yellow", "Orange", "Red")
 				self:ScheduleEvent("bwfaerlinasilence5", "BigWigs_Message", self.silencetime -5, L"silencewarn5sec", "Orange")
- 			end			
+			end
 			self.enraged = nil
 		end
 	end
