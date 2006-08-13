@@ -42,19 +42,35 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	cmd = "faerlina",
+
+	silence_cmd = "silence",
+	silence_name = "Stille",
+	silence_desc = "Warnung vor Stille",
+
+	enrage_cmd = "enrage",
+	enrage_name = "Wutanfall",
+	enrage_desc = "Warnung, wenn Gro\195\159witwe Faerlina w\195\188tend wird.",
+
 	starttrigger1 = "Kniet nieder, Wurm!",
 	starttrigger2 = "T\195\182tet sie im Namen des Meisters!",
 	starttrigger3 = "Ihr k\195\182nnt euch nicht vor mir verstecken!",
-	starttrigger4 = "Flieht, solange ihr noch k\195\182nnt.",
+	starttrigger4 = "Flieht, solange ihr noch k\195\182nnt",
 
 	silencetrigger = "J\195\188nger von Naxxramas ist von Umarmung der Witwe betroffen.",
 	enragetrigger = "Gro\195\159witwe Faerlina bekommt 'Wutanfall'.",
+	enragefade = "Wutanfall schwindet von Gro\195\159witwe Faerlina",
 
-	enragewarn15sec = "15 s bis Enrage!",
-	enragewarn = "Enrage!",
-	silencewarn = "Silence! Enrage verz\195\182gert!",
+	startwarn = "Start oder Wutanfall!",
+	enragewarn15sec = "15 Sekunden bis Wutanfall!",
+	enragewarn = "Wutanfall!",
+	enrageremovewarn = "Wutanfall vorbei! N\195\164chster in %d Sekunden!",
+	silencewarn = "Stille! Wutanfall verz\195\182gert!",
+	silencewarnnodelay = "Stille!",
+	silencewarn5sec = "Stille endet in 5 Sekunden",
 
-	enragebar = "Enrage",
+	enragebar = "Wutanfall",
+	silencebar = "Stille",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -65,7 +81,7 @@ L:RegisterTranslations("koKR", function() return {
 	
 	silencetrigger = "낙스라마스 숭배자|1이;가; 귀부인의 은총에 걸렸습니다.",
 	enragetrigger = "귀부인 팰리나|1이;가; 격노 효과를 얻었습니다.",
-
+	
 	enragewarn15sec = "15초후 격노!",
 	enragewarn = "격노!",
 	silencewarn = "침묵! 격노 연기!",
@@ -124,7 +140,7 @@ function BigWigsFaerlina:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-
+	
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "FaerlinaEnrage", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "FaerlinaSilence", 5)
@@ -160,8 +176,8 @@ function BigWigsFaerlina:CHAT_MSG_MONSTER_YELL( msg )
 	if msg == L"starttrigger1" or msg == L"starttrigger2" or msg == L"starttrigger3" or msg == L"starttrigger4" then
 		self:TriggerEvent("BigWigs_Message", L"startwarn", "Orange")
 		if self.db.profile.enrage then
-			self:ScheduleEvent("bwfaerlinaenrage15", "BigWigs_Message", self.enragetime - 15, L"enragewarn15sec", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"enragebar", self.enragetime, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
+		self:ScheduleEvent("bwfaerlinaenrage15", "BigWigs_Message", self.enragetime - 15, L"enragewarn15sec", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"enragebar", self.enragetime, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
 		end
 		self.enrageTimerStarted = GetTime()
 	end
@@ -227,7 +243,7 @@ function BigWigsFaerlina:BigWigs_RecvSync( sync )
 			if self.db.profile.silence then
 				self:TriggerEvent("BigWigs_StartBar", self, L"silencebar", self.silencetime, "Interface\\Icons\\Spell_Holy_Silence", "Green", "Yellow", "Orange", "Red")
 				self:ScheduleEvent("bwfaerlinasilence5", "BigWigs_Message", self.silencetime -5, L"silencewarn5sec", "Orange")
-			end
+ 			end			
 			self.enraged = nil
 		end
 	end

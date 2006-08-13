@@ -49,11 +49,11 @@ L:RegisterTranslations("deDE", function() return {
 	webspraywarn20sec = "Fangnetze! 10 Sekunden bis Gespinst!",
 	webspraywarn10sec = "Spinnen! 10 Sekunden bis Kokons!",
 	webspraywarn5sec = "GESPINST in 5 Sekunden!",
-	webspraywarn = "GESPINST! N\195\164chstes in 40 Sekunden!",
-	enragewarn = "Enrage - Gebt alles!",
-	enragesoonwarn = "Enrage in K\195\188rze - ACHTUNG!",
+	webspraywarn = "Gespinst! N\195\164chstes in 40 Sekunden!",
+	enragewarn = "Wutanfall - Gebt alles!",
+	enragesoonwarn = "Wutanfall in K\195\188rze - Bereit machen!",
 
-	webspraybar = "Web Spray",
+	webspraybar = "Gespinst",
 
 	you = "Ihr",
 	are = "seid",

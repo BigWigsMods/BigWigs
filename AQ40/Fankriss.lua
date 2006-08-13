@@ -20,6 +20,17 @@ L:RegisterTranslations("enUS", function() return {
 	wormbar = "Sandworm Enrage (%d)",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	cmd = "Fankriss",
+	worm_cmd = "worm",
+	worm_name = "Wurm beschw\195\182ren",
+	worm_desc = "Warnung, wenn Fankriss einen Wurm beschw\195\182rt.",
+
+	wormtrigger = "Fankriss der Unnachgiebige wirkt Wurm beschw\195\182ren.",
+	wormwarn = "Wurm wurde beschworen! (%d)",
+	wormbar = "Wurm ist w\195\188tend (%d)",
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 	worm_name = "虫子警报",
 	worm_desc = "召唤虫子出现时发出警报",

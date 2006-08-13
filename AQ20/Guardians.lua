@@ -49,9 +49,9 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	explodetrigger = "Besch\195\188tzer des Anubisath bekommt 'Explodieren'.",
-	explodewarn = "Explodiert!",
+	explodewarn = "Explosion!",
 	enragetrigger = "Besch\195\188tzer des Anubisath bekommt 'Wutanfall'.",
-	enragewarn = "Enraged!",
+	enragewarn = "Wutanfall!",
 	summonguardtrigger = "Besch\195\188tzer des Anubisath wirkt Schwarmwache des Anubisath beschw\195\182ren.",
 	summonguardwarn = "Schwarmwache beschworen",
 	summonwarriortrigger = "Besch\195\188tzer des Anubisath wirkt Krieger des Anubisath beschw\195\182ren.",
@@ -59,8 +59,8 @@ L:RegisterTranslations("deDE", function() return {
 	plaguetrigger = "^([^%s]+) ([^%s]+) von Seuche betroffen%.$",
 	plaguewarn = " hat die Seuche!",
 	plaguewarnyou = "Du hast die Seuche!",
-	plagueyou = "Du",
-	plagueare = "bist",
+	plagueyou = "Ihr",
+	plagueare = "seid",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

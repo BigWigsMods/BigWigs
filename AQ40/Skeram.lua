@@ -37,13 +37,28 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	aetrigger = "Der Prophet Skeram beginnt Arkane Explosion zu wirken.",
-	mctrigger = "Der Prophet Skeram beginnt True Fulfillment zu wirken.",
-	aewarn = "Zaubert Arkane Explosion!",
-	mcwarn = "Zaubert True Fulfillment!",
-	mcplayer = "^([^%s]+) ([^%s]+) betroffen von True Fulfillment.$",
-	mcplayerwarn = " ist \195\188bernommen worden! Sheep! Fear!",
-	mcyou = "Du",
-	mcare = "bist",
+	mctrigger = "Der Prophet Skeram beginnt Wahre Erf\195\188llung zu wirken.",
+	aewarn = "Arkane Explosion!",
+	mcwarn = "Gedankenkontrolle!",
+	mcplayer = "^([^%s]+) ([^%s]+) von Wahre Erf\195\188llung betroffen.",
+	mcplayerwarn = " steht unter Gedankenkontrolle!",
+	mcyou = "Ihr",
+	mcare = "seid",
+	
+	splitwarn = "Abbilder in K\195\188!",
+
+	cmd = "Skeram",
+	mc_cmd = "mc",
+	mc_name = "Gedankenkontrolle",
+	mc_desc = "Warnung vor Gedankenkontrolle",
+
+	ae_cmd = "ae",
+	ae_name = "Arkane Explosion",
+	ae_desc = "Warnung vor Arkaner Explosion",
+	
+	split_cmd = "split",
+	split_name = "Abbilder",
+	split_desc = "Warnung vor Abbildern",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

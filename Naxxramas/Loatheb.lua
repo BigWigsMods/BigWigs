@@ -48,6 +48,31 @@ L:RegisterTranslations("enUS", function() return {
 	are = "are",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	doombar = "Inevitable Doom",
+	doomwarn = "Inevitable Doom! %s seconds to next.",
+	doomwarn5sec = "Inevitable Doom in 5 Sekunden",
+	doomtrigger = "afflicted by Inevitable Doom.",
+	
+	sporewarn = "Spore Spawned",
+	sporebar = "Summon Spore",
+	sporespawntrigger = "Loatheb casts Summon Spore.",
+	sporedietrigger = "Spore dies.",
+
+	removecursewarn = "Curses removed on Loatheb",
+	removecursebar = "Remove Curse",
+	removecursetrigger = "Loatheb casts Remove Curse on Loatheb.",
+	
+	doomtimerbar = "Inevitable Doom every 15 seconds",
+	doomtimerwarn = "Inevitable Doom timerchange in %s seconds!",
+	doomtimerwarnnow = "Inevitable Doom now happens every 15sec!",
+	
+	startwarn = "Loatheb angegriffen! 2 Minuten bis Inevitable Doom!",
+
+	you = "Ihr",
+	are = "seid",
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 	doom_name = "必然的厄运警报",
 	doom_desc = "必然的厄运警报",

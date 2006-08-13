@@ -62,23 +62,42 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	cmd = "Chromaggus",
+	
+	enrage_cmd = "enrage",
+	enrage_name = "Wutanfall",
+	enrage_desc = "Warnung, wenn Chromaggus w\195\188tend wird ab 20%",
+	
+	frenzy_cmd = "frenzy",
+	frenzy_name = "Raserei",
+	frenzy_desc = "Warnung, wenn Chromaggus in Raserei ger\195\164t.",
+	
+	breath_cmd = "breath",
+	breath_name = "Atem",
+	breath_desc = "Warnung, wenn Chromaggus einen Atem wirkt.",
+	
+	vulnerability_cmd = "vulnerability",
+	vulnerability_name = "Zauber-Verwundbarkeiten",
+	vulnerability_desc = "Warnung, wenn Chromagguss Zauber-Verwundbarkeit sich \195\164ndert.",
+	
 	trigger1 = "^Chromaggus beginnt ([%w ]+)\ zu wirken.",
-	trigger2 = "^[%w']+ [%w' ]+ ([%w]+) Chromaggus f\195\188r ([%d]+) ([%w ]+)schaden%..*",
-	trigger3 = "Chromaggus's Zeitraffer wurde von ([%w]+)% widerstanden.",
+	trigger2 = "^[^%s]+ .* trifft Chromaggus(.+)f\195\188r ([%d]+) ([%w ]+)'schaden%..*",
+	trigger3 = "Chromaggus's Zeitraffer wurde von ([%w]+)% widerstanden.", --? Chromagguss
 	trigger4 = "ger\195\164t in t\195\182dliche Raserei!",
-	trigger5 = "als die Haut schimmert",
+	trigger5 = "weicht zur\195\188ck, als die Haut schimmert.", --? "als seine Haut schimmert"
 
 	hit = "trifft",
-	crit = "trifft kritisch",
+	crit = "kritisch",
 
 	warn1 = "%s in 10 Sekunden!",
-	warn2 = "Chromaggus wirkt %s!",
-	warn3 = "Neue Verwundbarkeit: %s",
-	warn4 = "Verwundbarkeit ge\195\164ndert!",
-	warn5 = "RASEREI!",
+	warn2 = "Chromaggus wirkt: %s!",
+	warn3 = "Neue Zauber-Verwundbarkeit: %s",
+	warn4 = "Zauber-Verwundbarkeit ge\195\164ndert!",
+	warn5 = "Raserei - Einlullender Schuss!",
+	warn6 = "Wutanfall steht kurz bevor!",
 
 	breath1 = "Zeitraffer",
-	breath2 = "Corrosive Acid",
+	breath2 = "\195\132tzende S\195\164ure",
 	breath3 = "Fleisch entz\195\188nden",
 	breath4 = "Verbrennen",
 	breath5 = "Frostbeulen",

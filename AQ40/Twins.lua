@@ -52,6 +52,47 @@ L:RegisterTranslations("enUS", function() return {
 	warn7 = "Enrage in 10 seconds",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	cmd = "Twins",
+
+	bug_cmd = "bug",
+	bug_name = " Explodierende K\195\164fer",
+	bug_desc = "Warnung vor explodierenden K\195\164fern.",
+
+	teleport_cmd = "teleport",
+	teleport_name = "Teleport",
+	teleport_desc = "Warnung, wenn die Zwillings Imperatoren sich teleportieren.",
+
+	enrage_cmd = "enrage",
+	enrage_name = "Wutanfall",
+	enrage_desc = "Warnung, wenn die Zwillings Imperatoren w\195\188tend werden.",
+
+	heal_cmd = "heal",
+	heal_name = "Heilung",
+	heal_desc = "Warnung, wenn die Zwillings Imperatoren sich heilen.",
+
+	porttrigger = "wirkt Zwillingsteleport.",
+	portwarn = "Teleport! - Seitenwechsel!",
+	portdelaywarn = "Teleport in 5 Sekunden!",
+	bartext = "Teleport",
+	explodebugtrigger = "bekommt 'K\195\164fer explodieren lassen'",
+	explodebugwarn = "K\195\164fer explodiert!",
+	enragetrigger = "wird w\195\188tend.", -- "bekommt 'Wutanfall'" ?
+	enragewarn = "Zwillings Imperatoren sind w\195\188tend!",
+	healtrigger1 = "'s Bruder heilen heilt",
+	healtrigger2 = " Bruder heilen heilt",
+	healwarn = "Heilung gewirkt - Schnell auseinander bringen!",
+	startwarn = "Zwillings Imperatoren angegriffen! Wutanfall in 15 Minuten!",
+	enragebartext = "Wutanfall",
+	warn1 = "Wutanfall in 10 Minuten",
+	warn2 = "Wutanfall in 5 Minuten",
+	warn3 = "Wutanfall in 3 Minuten",
+	warn4 = "Wutanfall in 90 Sekunden",
+	warn5 = "Wutanfall in 60 Sekunden",
+	warn6 = "Wutanfall in 30 Sekunden",
+	warn7 = "Wutanfall in 10 Sekunden",
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 	bug_name = "爆炸虫警报",
 	bug_desc = "爆炸虫警报",

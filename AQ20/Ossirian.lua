@@ -46,6 +46,7 @@ L:RegisterTranslations("deDE", function() return {
 	debufftrigger = "^Ossirian der Narbenlose ist von (.*)schw\195\164che betroffen%.$",
 	debuffwarn = "Ossirian anf\195\164llig gegen %s",
 	bartext = "Supreme",
+	expose = "Expose",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

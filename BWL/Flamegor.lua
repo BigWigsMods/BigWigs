@@ -86,11 +86,25 @@ L:RegisterTranslations("deDE", function() return {
 	warn1 = "Flammenmaul beginnt Fl\195\188gelsto\195\159 zu wirken!",
 	warn2 = "30 Sekunden bis zum n\195\64chsten Fl\195\188gelsto\195\159!",
 	warn3 = "3 Sekunden bis Fl\195\188gelsto\195\159!",
-	warn4 = "Schattenflamme kommt!",
+	warn4 = "Schattenflamme in K\195\188!",
 	warn5 = "Raserei - Einlullender Schuss!",
 	bosskill = "Flammenmaul wurde besiegt!",
 
 	bar1text = "Fl\195\188gelsto\195\159",
+
+	cmd = "Flamegor",
+	
+	wingbuffet_cmd = "wingbuffet",
+	wingbuffet_name = "Fl\195\188gelsto\195\159",
+	wingbuffet_desc = "Warnung, wenn Flammenmaul Fl\195\188gelsto\195\159 wirkt.",
+	
+	shadowflame_cmd = "shadowflame",
+	shadowflame_name = "Schattenflamme",
+	shadowflame_desc = "Warnung, wenn Flammenmaul Schattenflamme wirkt.",
+	
+	frenzy_cmd = "frenzy",
+	frenzy_name = "Raserei",
+	frenzy_desc = "Warnung, wenn Flammenmaul in Raserei ger\195\164t.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

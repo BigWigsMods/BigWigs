@@ -41,6 +41,24 @@ L:RegisterTranslations("enUS", function() return {
 	decimatebartext = "Decimate Zombies",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	trigger1 = "ger\195\164t in Raserei!",
+	trigger2 = "von Erschreckendes Gebr\195\188ll betroffen.",
+	starttrigger = "devours all nearby zombies!",
+
+	warn1 = "Raserei!",
+	warn2 = "5 Sekunden bis AoE Furcht!",
+	warn3 = "AoE Furcht - N\195\164chste in 20 Sekunden!",
+
+	startwarn = "Gluth angegriffen! ~105 Sekunden bis Zombies!",
+	decimatesoonwarn = "Dezimieren kurz bevor",
+	decimatewarn = "Dezimieren! - AoE Zombies!",
+	decimatetrigger = "Decimate",
+
+	bar1text = "Furcht",
+	decimatebartext = "Dezimieren",
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 	fear_name = "恐惧警报",
 	fear_desc = "恐惧警报",

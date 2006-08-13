@@ -41,15 +41,14 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger3 = "Ihr entgeht mir nicht...",
 	teleporttrigger = "Euer Ende naht.",
 
-	startwarn = "Heigan engaged! 90 Sekunden bis Teleport",
+	startwarn = "Heigan der Unsaubere angegriffen! 90 Sekunden bis Teleport!",
 	warn1 = "Teleport in 1 Minute",
 	warn2 = "Teleport in 30 Sekunden",
 	warn3 = "Teleport in 10 Sekunden",
-	backwarn = "Teleport! Zur\195\188ck in %d Sekunden!",
+	backwarn = "Zur\195\188ck im Raum! N\195\164chster Teleport in 90 Sekunden!",
 	teleportwarn2 = "Zur\195\188ck im Raum in 30 Sekunden",
 	teleportwarn3 = "Zur\195\188ck im Raum in 10 Sekunden",
-	
-	teleportwarn1 = "Zur\195\188ck im Raum! 90 Sekunden bis Teleport",
+	teleportwarn1 = "Teleport! Zur\195\188ck im Raum in %d Sekunden!",
 
 	teleportbar = "Teleport!",
 	backbar = "R\195\188ckteleport!",

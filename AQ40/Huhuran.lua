@@ -42,6 +42,39 @@ L:RegisterTranslations("enUS", function() return {
 
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	cmd = "Huhuran",
+
+	wyvern_cmd = "wyvern",
+	wyvern_name = "Stich des Fl\195\188geldrachen",
+	wyvern_desc = "Warnung, wenn Huhuran Stich des Fl\195\188geldrachen wirkt.",
+
+	frenzy_cmd = "frenzy",
+	frenzy_name = "Raserei",
+	frenzy_desc = "Warnung, wenn Huhuran in Raserei ger\195\164t.",
+
+	berserk_cmd = "berserk",
+	berserk_name = "Berserkerwut",
+	berserk_desc = "Warnung, wenn Huhuran in Berserkerwut verf\195\164llt.",
+
+	frenzytrigger = "ger\195\164t in Raserei",
+	berserktrigger = "verf\195\164llt in Berserkerwut",
+	frenzywarn = "Raserei - Einlullender Schuss!",
+	berserkwarn = "Berserkerwut - Volle DPS!",
+	berserksoonwarn = "Berserkerwut in K\195\188 - Bereit machen!",
+	stingtrigger = "von Stich des Fl\195\188geldrachen betroffen",
+	stingwarn = "Stich des Fl\195\188geldrachen - Krieger reinigen!",
+	stingdelaywarn = "M\195\182glicher Stich des Fl\195\188geldrachen in 3 Sekunden!",
+	bartext = "Stich",
+	
+	startwarn = "Huhuran angegriffen! 5 Minuten bis Berserkerwut!",
+	berserkbar = "Berserkerwut",
+	berserkwarn1 = "Berserkerwut in 1 Minute!",
+	berserkwarn2 = "Berserkerwut in 30 Sekunden!",
+	berserkwarn3 = "Berserkerwut in 5 Sekunden!",
+
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 	wyvern_name = "毒性之箭警报",
 	wyvern_desc = "毒性之箭警报",

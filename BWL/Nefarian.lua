@@ -151,15 +151,15 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	trigger1 = "Sehr gut, meine Diener.",
+	trigger1 = "Sehr gut, meine Diener",
 	trigger2 = "BRENNT! Ihr Elenden!",
-	trigger3 = "Unm\195\182glich!",
+	trigger3 = "Unm\195\182glich! Erhebt euch",
 	trigger4 = "Nefarian beginnt Dr\195\182hnendes Gebr\195\188ll zu wirken.",
 	trigger5 = "Nefarian beginnt Schattenflamme zu wirken.",
 	triggershamans	= "Schamane, zeigt mir was",
 	triggerdruid	= "Druiden und ihre l\195\164cherliche",
 	triggerwarlock	= "Hexenmeister, Ihr solltet nicht mit Magie",
-	triggerpriest	= "Priester! Wenn Ihr weiterhin so heilt,",
+	triggerpriest	= "Priester! Wenn Ihr weiterhin",
 	triggerhunter	= "J\195\164ger und ihre l\195\164stigen",
 	triggerwarrior	= "Krieger, Ich bin mir sicher",
 	triggerrogue	= "Schurken%? Kommt aus den Schatten",
@@ -168,22 +168,40 @@ L:RegisterTranslations("deDE", function() return {
 
 	warn1 = "Nefarian landet in 10 Sekunden!",
 	warn2 = "Nefarian landet!",
-	warn3 = "Zerg kommt!",
-	warn4 = "Furcht in 2 Sekunden!",
-	warn5 = "Schattenflamme kommt!",
-	warn6 = "Klassenruf kommt!",
-	warnshaman	= "Schamanen - Totems sind gesetzt!",
+	warn3 = "Diener herbeigerufen!",
+	warn4 = "AoE Furcht in 2 Sekunden!",
+	warn5 = "Schattenflamme in K\195\188!",
+	warn6 = "Klassenruf in K\195\188!",
+	warnshaman	= "Schamanen - Totems schnell entfernen!",
 	warndruid	= "Druiden - Gefangen in Katzenform!",
-	warnwarlock	= "Hexenmeister - H\195\182llenbestien kommen!",
-	warnpriest	= "Priester - Stoppt Heilung!",
-	warnhunter	= "J\195\164ger - B\195\182gen/Schusswaffen defekt!",
+	warnwarlock	= "Hexenmeister - H\195\182llenbestien!",
+	warnpriest	= "Priester - Heilung stoppen!",
+	warnhunter	= "J\195\164ger - Angelegte Fernkampfwaffen defekt!",
 	warnwarrior	= "Krieger - Gefangen in Berserkerhaltung!",
 	warnrogue	= "Schurken - Teleportiert und festgewurzelt!",
-	warnpaladin	= "Paladine - Blessing of Protection!",
-	warnmage	= "Magier - Verwandlung kommt!",
+	warnpaladin	= "Paladine - Segen des Schutzes!",
+	warnmage	= "Magier - Verwandlung!",
 	bosskill = "Nefarian wurde besiegt!",
 
 	bar1text = "Klassenruf",
+
+	cmd = "Nefarian",
+	
+	shadowflame_cmd = "shadowflame",
+	shadowflame_name = "Schattenflamme",
+	shadowflame_desc = "Warnung, wenn Nefarian Schattenflamme wirkt.",
+	
+	fear_cmd = "fear",
+	fear_name = "Furcht",
+	fear_desc = "Warnung, wenn Nefarian AoE Furcht wirkt.",
+	
+	classcall_cmd = "classcall",
+	classcall_name = "Klassenruf",
+	classcall_desc = "Warnung vor Klassenrufen.",
+	
+	otherwarn_cmd = "otherwarn",
+	otherwarn_name = "Anderes",
+	otherwarn_desc = "Warnung, wenn Nefarian landet und seine Diener ruft.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

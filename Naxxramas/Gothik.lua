@@ -59,39 +59,41 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	disabletrigger = "I... am... undone.",		
+	disabletrigger = "I... am... undone.",
 
 	starttrigger1 = "Ihr Narren habt euren eigenen Untergang heraufbeschworen.",
 	starttrigger2 = "Maz Azgala veni kamil toralar Naztheros zennshinagas.",
-	startwarn = "Gothik the Harvester Timer gestartet! 4:30 bis er runter kommt!",
+	startwarn = "Gothik der Ernter angegriffen! 4:30 bis er in den Raum kommt!",
 	
-	riderdietrigger = "Unrelenting Rider dies.",
-	dkdietrigger = "Unrelenting Deathknight dies.",
+	riderdietrigger = "Unerbittlicher Reiter stirbt.",
+	dkdietrigger = "Unerbittlicher Todesritter stirbt.",
 	
 	riderdiewarn = "Reiter tot!",
 	dkdiewarn = "Todesritter tot!",
 	
-	warn1 = "Im Raum in 3 minuten",
+	warn1 = "Im Raum in 3 Minuten",
 	warn2 = "Im Raum in 90 Sekunden",
 	warn3 = "Im Raum in 60 Sekunden",
 	warn4 = "Im Raum in 30 Sekunden",
-	warn5 = "Gothik INC 10 Sekunden",
+	warn5 = "Gothik im Raum in 10 Sekunden",
 	
-	trawarn = "Trainees in 3 Sekunden",
+	wave = "%d/18: ",
+	
+	trawarn = "Lehrlinge in 3 Sekunden",
 	dkwarn = "Todesritter in 3 Sekunden",
 	riderwarn = "Reiter in 3 Sekunden",
-	dktwarn = "Trainees und TR in 3 Sekunden",
-	rtwarn = "Trainees und Reiter in 3 Sekunden",
+	dktwarn = "Lehrlinge und Todesritter in 3 Sekunden",
+	rtwarn = "Lehrlinge und Reiter in 3 Sekunden",
 	triowarn = "Trainees in 3 Sekunden",
 
-	trabar = "Trainees",
+	trabar = "Lehrlinge",
 	dkbar = "Todesritter",
 	riderbar = "Reiter",
 	
 	inroomtrigger = "Ich habe lange genug gewartet. Stellt euch dem Seelenj\195\164ger.",
-	inroomwarn = "He's in the room!",
+	inroomwarn = "Er ist im Raum!",
 	
-	inroombartext = "Till on Room",
+	inroombartext = "Im Raum",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

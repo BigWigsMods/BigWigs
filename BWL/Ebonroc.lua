@@ -98,19 +98,37 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	trigger1 = "Schattenschwinge beginnt Fl\195\188gelsto\195\159 zu wirken.",
 	trigger2 = "Schattenschwinge beginnt Schattenflamme zu wirken.",
-	trigger3 = "^([^%s]+) ([^%s]+) betroffen von Schattenschwinges Schatten",
+	trigger3 = "^([^%s]+) (%w+) von Schattenschwinges Schatten betroffen.",
 
 	you = "Ihr",
 	are = "seid",
 
 	warn1 = "Schattenschwinge beginnt Fl\195\188gelsto\195\159 zu wirken!",
 	warn2 = "30 Sekunden bis zum n\195\164chsten Fl\195\188gelsto\195\159!",
-	warn3 = "3 Sekunden bis Schattenschwinge Fl\195\188gelsto\195\159 zaubert!",
-	warn4 = "Schattenflamme kommt!",
+	warn3 = "3 Sekunden bis Schattenschwinge Fl\195\188gelsto\195\159 wirkt!",
+	warn4 = "Schattenflamme in K\195\188!",
 	warn5 = "Du hast Schattenschwinges Schatten!",
 	warn6 = " hat Schattenschwinges Schatten!",
 
-	bar1text = "Fluegelgelstoss",
+	bar1text = "Fl\195\188gelsto\195\159",
+
+	cmd = "Ebonroc",
+	
+	wingbuffet_cmd = "wingbuffet",
+	wingbuffet_name = "Fl\195\188gelsto\195\159",
+	wingbuffet_desc = "Warnung, wenn Schattenschweinge Fl\195\188gelsto\195\159 wirkt.",
+	
+	shadowflame_cmd = "shadowflame",
+	shadowflame_name = "Schattenflamme",
+	shadowflame_desc = "Warnung, wenn Schattenschwinge Schattenflamme wirkt.",
+	
+	youcurse_cmd = "youcurse",
+	youcurse_name = "Schattenschwinges Schatten auf Dir",
+	youcurse_desc = "Warnung, wenn Du Schattenschwinges Schatten hast.",
+	
+	elsecurse_cmd = "elsecurse",
+	elsecurse_name = "Schattenschwinges Schatten auf Anderen",
+	elsecurse_desc = "Warnung, wenn andere Spieler Schattenschwinges Schatten haben.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

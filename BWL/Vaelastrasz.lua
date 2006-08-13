@@ -71,6 +71,16 @@ L:RegisterTranslations("deDE", function() return {
 
 	warn1 = "Du brennst!",
 	warn2 = " brennt!",
+
+	cmd = "Vaelastrasz",
+	
+	youburning_cmd = "youburning",
+	youburning_name = "Brennendes Adrenalin auf Dir",
+	youburning_desc = "Warnung, wenn Du brennst.",
+	
+	elseburning_cmd = "elseburning",
+	elseburning_name = "Brennendes Adrenalin auf Anderen",
+	elseburning_desc = "Warnung, wenn andere Spieler brennen.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

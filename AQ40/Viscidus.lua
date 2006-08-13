@@ -52,6 +52,47 @@ L:RegisterTranslations("enUS", function() return {
 	bar1text	= "Poison Bolt Volley",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	cmd = "Viscidus",
+
+	volley_cmd = "volley",
+	volley_name = "Poison Volley Alert",
+	volley_desc = "Warn for Poison Volley",
+
+	toxinyou_cmd = "toxinyou",
+	toxinyou_name = "Toxin Wolke",
+	toxinyou_desc = "Warnung, wenn Du in einer Toxin Wolke stehst.",
+
+	toxinother_cmd = "toxinother",
+	toxinother_name = "Toxin Wolke auf Anderen",
+	toxinother_desc = "Warnung, wenn andere Spieler in einer Toxin Wolke stehen.",
+
+	freeze_cmd = "freeze",
+	freeze_name = "Freeze Phasen",
+	freeze_desc = "Warnungen \195\188ber die verschiedenen Freeze Phasen.",
+
+	trigger1 	= "wird langsamer!",
+	trigger2 	= "friert ein!",
+	trigger3 	= "ist tiefgefroren!",
+	trigger4 	= "begins to crack!", -- ?
+	trigger5 	= "ist kurz davor, zu zerspringen!",
+	trigger6	= "afflicted by Poison Bolt Volley",
+	trigger7 	= "^([^%s]+) ([^%s]+) von Toxin betroffen.$",
+
+	you 		= "Ihr",
+	are 		= "seid",
+
+	warn1 		= "Erste Freeze Phase!",
+	warn2 		= "Zweite Freeze Phase - Bereit machen!",
+	warn3 		= "Dritte Freeze Phase - DPS!",
+	warn4 		= "Zerspringen - etwas noch!",
+	warn5 		= "Zerspringen - fast da!",
+	warn6		= "Poison Bolt Volley!",
+	warn7		= "Incoming Poison Bolt Volley in ~3 Sekunden!",
+	warn8		= " ist in einer Toxin Wolke!",
+	warn9		= "Du bist in einer Toxin Wolke!",
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 	volley_name = "毒性之箭警报",
 	volley_desc = "毒性之箭警报",

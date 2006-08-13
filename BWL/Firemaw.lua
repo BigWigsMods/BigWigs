@@ -68,10 +68,20 @@ L:RegisterTranslations("deDE", function() return {
 
 	warn1 = "Feuerschwinge beginnt Fl\195\188gelsto\195\159 zu wirken!",
 	warn2 = "30 Sekunden bis zum n\195\164chsten Fl\195\188gelsto\195\159!",
-	warn3 = "3 Sekunden bis Feuerschwinge Fl\195\188gelsto\195\159 zaubert!",
-	warn4 = "Schattenflamme kommt!",
+	warn3 = "3 Sekunden bis Feuerschwinge Fl\195\188gelsto\195\159 wirkt!",
+	warn4 = "Schattenflamme in K\195\188!",
 
-	bar1text = "Fluegelgelstoss",
+	bar1text = "Fl\195\188gelsto\195\159",
+
+	cmd = "Firemaw",
+	
+	wingbuffet_cmd = "wingbuffet",
+	wingbuffet_name = "Fl\195\188gelsto\195\159",
+	wingbuffet_desc = "Warnung, wenn Feuerschwinge Fl\195\188gelsto\195\159 wirkt.",
+	
+	shadowflame_cmd = "shadowflame",
+	shadowflame_name = "Schattenflamme",
+	shadowflame_desc = "Warnung, wenn Feuerschwinge Schattenflamme wirkt.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

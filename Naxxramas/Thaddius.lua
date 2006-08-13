@@ -76,6 +76,49 @@ L:RegisterTranslations("enUS", function() return {
 	bar1text = "Polarity Shift",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	enragetrigger = "verf\195\164llt in Berserkerwut",
+	starttrigger = "Stalagg crush you!",
+	starttrigger1 = "Feed you to master!",
+	starttrigger2 = "Eat... your... bones...",
+	starttrigger3 = "Break... you!!",
+	starttrigger4 = "Kill...",
+	
+	adddeath = "stirbt.",
+	teslaoverload = "overloads!",
+
+	pstrigger = "Now you feel pain...",
+	trigger1 = "Thaddius begins to cast Polarity Shift",
+	chargetrigger = "^([^%s]+) ([^%s]+) von ([^%s]+) Ladung betroffen",
+	positivetype = "Positive",
+	negativetype = "Negative",
+	stalaggtrigger = "Stalagg gains Power Surge.",
+
+	you = "Ihr",
+	are = "seid",
+
+	enragewarn = "Wutanfall!",
+	startwarn = "Thaddius Phase 1",
+	startwarn2 = "Thaddius Phase 2, Wutanfall in 5 Minuten!",
+	addsdownwarn = "Thaddius incoming in 10-20sec!",
+	thaddiusincoming = "Thaddius incoming in 3 sec!",
+	pswarn1 = "Thaddius begins to cast Polarity Shift!",
+	pswarn2 = "30 Sekunden bis Polarity Shift!",
+	pswarn3 = "3 Sekunden bis Polarity Shift!",
+	poswarn = "You are a Positive Charge!",
+	negwarn = "You are a Negative Charge!",
+	enragebartext = "Wutanfall",
+	warn1 = "Wutanfall in 3 Minuten",
+	warn2 = "Wutanfall in 90 Sekunden",
+	warn3 = "Wutanfall in 60 Sekunden",
+	warn4 = "Wutanfall in 30 Sekunden",
+	warn5 = "Wutanfall in 10 Sekunden",
+	stalaggwarn = "Power Surge, Extra Heilung auf Krieger!",
+	powersurgebar = "Power Surge",
+
+	bar1text = "Polarity Shift",
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 	enrage_name = "激怒警报",
 	enrage_desc = "激怒警报",
@@ -148,9 +191,10 @@ BigWigsThaddius.revision = tonumber(string.sub("$Revision$", 12, -3))
 --      Initialization      --
 ------------------------------
 
+-- TODO: Add sync'ing for Stalagg's Power Surge.
+
 function BigWigsThaddius:OnEnable()
 	self.enrageStarted = nil
-	self.engaged = nil
 	self.addsdead = 0
 	self.teslawarn = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -193,9 +237,8 @@ end
 function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
 	if msg == L"pstrigger" then
 		self:TriggerEvent("BigWigs_SendSync", "ThaddiusPolarity")
-	elseif msg == L"starttrigger" or msg == L"starttrigger1" and not self.engaged then
+	elseif msg == L"starttrigger" or msg == L"starttrigger1" then
 		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L"startwarn", "Red") end
-		self.engaged = true
 	elseif msg == L"starttrigger2" or msg == L"starttrigger3" or msg == L"starttrigger4" then
 		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L"startwarn2", "Red") end
 		if self.db.profile.enrage then

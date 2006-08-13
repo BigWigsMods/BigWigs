@@ -34,12 +34,12 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	trigger1 = "^([^%s]+) ([^%s]+) von Mutagene Injektion betroffen",
+	trigger1 = "^([^%s]+) ([^%s]+) von Mutierende Injektion betroffen",
 
 	you = "Ihr",
 	are = "seid",
 
-	warn1 = "Ihr seid verseucht!",
+	warn1 = "Du bist verseucht!",
 	warn2 = " ist verseucht!",
 } end )
 

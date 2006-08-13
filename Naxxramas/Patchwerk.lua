@@ -31,20 +31,21 @@ L:RegisterTranslations("enUS", function() return {
 	warn6 = "Enrage in 10 seconds",
 } end )
 
-L:RegisterTranslations("deDE", function() return {
-	enragetrigger = "f\195\164llt in Berserkerwut!",
 
-	enragewarn = "Enrage!",
+L:RegisterTranslations("deDE", function() return {
+	enragetrigger = "f\195\164llt in Berserkerwut!", -- 	enragetrigger = "wird w\195\188tend",
+
+	enragewarn = "Wutanfall!",
 	starttrigger1 = "Flickwerk spielen m\195\182chte!",
 	starttrigger2 = "Kel'thuzad macht Flickwerk zu seinem Abgesandten von Krieg!",
-	startwarn = "Patchwerk engaged! Enrage in 7 Minuten!",
-	enragebartext = "Enrage",
-	warn1 = "Enrage in 5 Minuten",
-	warn2 = "Enrage in 3 Minuten",
-	warn3 = "Enrage in 90 Skunden",
-	warn4 = "Enrage in 60 Sekunden",
-	warn5 = "Enrage in 30 Sekunden",
-	warn6 = "Enrage in 10 Sekunden",
+	startwarn = "Flickwerk angegriffen! Wutanfall in 7 Minuten!",
+	enragebartext = "Wutanfall",
+	warn1 = "Wutanfall in 5 Minuten",
+	warn2 = "Wutanfall in 3 Minuten",
+	warn3 = "Wutanfall in 90 Sekunden",
+	warn4 = "Wutanfall in 60 Sekunden",
+	warn5 = "Wutanfall in 30 Sekunden",
+	warn6 = "Wutanfall in 10 Sekunden",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

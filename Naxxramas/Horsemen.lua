@@ -37,6 +37,19 @@ L:RegisterTranslations("enUS", function() return {
 	shieldwallwarn2 = "%s - Shield Wall GONE!",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	markbar = "Mark",
+	markwarn1 = "Mark (%d)!",
+	markwarn2 = "Mark (%d) - 5 Sekunden",
+
+	startwarn = "The Four Horsemen angegriffen! Mark in 30 Sekunden",
+
+	shieldwallbar = "%s - Schildwall",
+	shieldwalltrigger = " bekommt 'Schildwall'.",
+	shieldwallwarn = "%s - Schildwall f\195\188r 20 Sekunden",
+	shieldwallwarn2 = "%s - Schildwall VORBEI!",
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 	mark_name = "标记警报",
 	mark_desc = "标记警报",

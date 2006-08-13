@@ -53,15 +53,17 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	starttrigger1 = "Sterbt, Eindringling!",
+	starttrigger1 = "Stirb, Eindringling!",
 	starttrigger2 = "Ehre unserem Meister!",
 	starttrigger3 = "Euer Leben ist verwirkt!",
-	startwarn = "Noth engaged! 90 Sekunden bis Teleport!",
+	startwarn = "Noth der Seuchenf\195\188rst angegriffen! 90 Sekunden bis Teleport!",
+	
+	addtrigger = "Erhebt euch, Soldaten! Erhebt euch und k\195\164mpft erneut!",
 
 	blinktrigger = "Noth der Seuchenf\195\188rst bekommt 'Blinzeln'.",
-	blinkwarn = "Stop DPS!",
-	blinkwarn2 = "Blink in ~5 s!",
-	blinkbar = "Blink",
+	blinkwarn = "Blinzeln! Stop DPS!",
+	blinkwarn2 = "Blinzeln in ~5 Sekunden!",
+	blinkbar = "Blinzeln",
 
 	teleportwarn = "Teleport! Er ist auf dem Balkon!",
 	teleportwarn2 = "Teleport in 10 Sekunden!",
@@ -69,7 +71,7 @@ L:RegisterTranslations("deDE", function() return {
 	teleportbar = "Teleport!",
 	backbar = "R\195\188ckteleport!",
 		
-	backwarn = "Er ist wieder im Raum! DPS f\195\188r %d Sekunden.",
+	backwarn = "Er ist wieder im Raum f\195\188r %d Sekunden.",
 	backwarn2 = "10 Sekunden bis R\195\188ckteleport!",
     
 	cursetrigger = "von Fluch des Seuchenf\195\188rsten betroffen",

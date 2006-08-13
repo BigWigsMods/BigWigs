@@ -35,13 +35,22 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	healtrigger = "Prinzessin Yauj beginnt Gro\195\159e Heilung zu wirken.",
-	healwarn = "Zaubert Heilung - unterbrechen!",
+	cmd = "BugFamily",
+	fear_cmd = "fear",
+	fear_name = "Furcht",
+	fear_desc = "Warnung, wenn wenn Prinzessin Yauj AoE Furcht wirkt.",
 
-	feartrigger = "ist betroffen von Furcht%.",
-	fearbar = "AE Furcht",
-	fearwarn1 = "AE Furcht! N\195\164chster in 20 Sekunden!",
-	fearwarn2 = "AE Furcht in 5 Sekunden!",
+	heal_cmd = "heal",
+	heal_name = "Heal Alert",
+	heal_desc = "Warnung, wenn Prinzessin Yauj versucht sich zu heilen.",
+
+	healtrigger = "Prinzessin Yauj beginnt Gro\195\159es Heilen zu wirken.",
+	healwarn = "Prinzessin Yauj heilt sich - UNTERBRECHEN!",
+
+	feartrigger = "ist betroffen von Furcht.",
+	fearbar = "AoE Furcht",
+	fearwarn1 = "AoE Furcht! N\195\164chste in 20 Sekunden!",
+	fearwarn2 = "AoE Furcht in 5 Sekunden!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

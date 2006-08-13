@@ -49,11 +49,13 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	starttrigger = "sp\195\188rt Eure Angst.",
-	startwarn = "Moam enaged! 90 Sekunden bis Elementare kommen!",
+	startwarn = "Moam angegriffen! 90 Sekunden bis Elementare kommen!",
+
 	addsbar = "Elementare",
 	addsincoming = "Elementare erscheinen in %s Sekunden!",
 	addstrigger = "entzieht Euch Euer Mana und versteinert Euch.",
 	addswarn = "Elementare! Moam paralysiert f\195\188r 90 Sekunden.",
+
 	paralyzebar = "Paralyse",
 	returnincoming = "Moam erwacht in %s Sekunden!",
 	returntrigger = "^Energiezufuhr schwindet von Moam%.$",

@@ -60,6 +60,55 @@ L:RegisterTranslations("enUS", function() return {
 	berserksoonwarn = "Berserk Soon - Get Ready!",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	cmd = "ouro",
+	
+	sweep_cmd = "sweep",
+	sweep_name = "Feger",
+	sweep_desc = "Warnung, wenn Ouro Feger wirkt.",
+	
+	sandblast_cmd = "sandblast",
+	sandblast_name = "Sandsto\195\159",
+	sandblast_desc = "Warnung, wenn Ouro Sandsto\195\159 wirkt.",
+	
+	emerge_cmd = "emerge",
+	emerge_name = "Auftauchen",
+	emerge_desc = "Warnung, wenn Ouro auftaucht",
+	
+	submerge_cmd = "submerge",
+	submerge_name = "Untertauchen",
+	submerge_desc = "Warnung, wenn Ouro untertaucht.",
+	
+	scarab_cmd = "scarab",
+	scarab_name = "Scarab Despawn Alert", -- ?
+	scarab_desc = "Warn for Scarab Despawn", -- ?
+
+	sweeptrigger = "Ouro begins to cast Sweep", --?
+	sweepannounce = "Feger!",
+	sweepwarn = "5 Sekunden bis Feger!",
+	sweepbartext = "Feger",
+
+	sandblasttrigger = "Ouro begins to perform Sand Blast", -- ?
+	sandblastannounce = "Sandsto\195\159 in K\195\188!",
+	sandblastwarn = "5 Sekunden bis Sandsto\195\159!",
+	sandblastbartext = "Sandsto\195\159",
+
+	emergetrigger = "Dirt Mound casts Summon Ouro Scarabs.", -- ?
+	emergeannounce = "Ouro ist aufgetaucht!",
+	emergewarn = "15 Sekunden bis Ouro untertaucht!",
+	emergebartext = "Untertauchen",
+
+	scarabdespawn = "Scarabs verschwinden in 10 Sekunden", -- ?
+	scarabbar	= "Scarabs despawn", -- ?
+
+	submergetrigger = "Ouro casts Summon Ouro Mounds.", -- ?
+	submergeannounce = "Ouro ist aufgetaucht!",
+	submergewarn = "5 Sekunden bis Ouro auftaucht!",
+	submergebar = "Auftauchen",
+
+	berserksoonwarn = "Berserkerwut in K\195\188 - Bereit machen!",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	sweeptrigger = "아우로|1이;가; 휩쓸기|1을;를; 시전합니다.",
 	sweepannounce = "휩쓸기!",
