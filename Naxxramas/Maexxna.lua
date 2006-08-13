@@ -148,11 +148,16 @@ function BigWigsMaexxna:BigWigs_RecvSync( sync )
 
 	self:CancelScheduledEvent("Maexxna_CheckStart")
 
+	self:CancelScheduledEvent("bwmaexxna30")
+	self:CancelScheduledEvent("bwmaexxna20")
+	self:CancelScheduledEvent("bwmaexxna10")
+	self:CancelScheduledEvent("bwmaexxna5")
+
 	self:TriggerEvent("BigWigs_Message", L"webspraywarn", "Red")
-	self:ScheduleEvent("BigWigs_Message", 10, L"webspraywarn30sec", "Yellow")
-	self:ScheduleEvent("BigWigs_Message", 20, L"webspraywarn20sec", "Yellow")
-	self:ScheduleEvent("BigWigs_Message", 30, L"webspraywarn10sec", "Yellow")
-	self:ScheduleEvent("BigWigs_Message", 35, L"webspraywarn5sec", "Yellow")
+	self:ScheduleEvent("bwmaexxna30", "BigWigs_Message", 10, L"webspraywarn30sec", "Yellow")
+	self:ScheduleEvent("bwmaexxna20", "BigWigs_Message", 20, L"webspraywarn20sec", "Yellow")
+	self:ScheduleEvent("bwmaexxna10", "BigWigs_Message", 30, L"webspraywarn10sec", "Yellow")
+	self:ScheduleEvent("bwmaexxna5", "BigWigs_Message", 35, L"webspraywarn5sec", "Yellow")
 	self:TriggerEvent("BigWigs_StartBar", self, L"webspraybar", 40, "Interface\\Icons\\Ability_Ensnare", "Green", "Yellow", "Orange", "Red")
 end
 
