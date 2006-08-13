@@ -121,6 +121,7 @@ BigWigsMaexxna.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsMaexxna:OnEnable()
 	self.enrageannounced = nil
+	self.prior = nil
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
@@ -130,6 +131,7 @@ function BigWigsMaexxna:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "SprayEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "SprayEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "SprayEvent")
+	self:RegisterEvent("BigWigs_Message")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MaexxnaWebspray", 8)
@@ -137,7 +139,7 @@ end
 
 function BigWigsMaexxna:SprayEvent( msg )
 	-- web spray warning
-	if string.find(msg, L"webspraytrigger") then
+	if string.find(msg, L"webspraytrigger") and not self.prior then
 		self:TriggerEvent("BigWigs_SendSync", "MaexxnaWebspray")
 	end
 end
@@ -145,6 +147,7 @@ end
 
 function BigWigsMaexxna:BigWigs_RecvSync( sync )
 	if sync ~= "MaexxnaWebspray" then return end
+	if self.prior then return end
 
 	self:CancelScheduledEvent("Maexxna_CheckStart")
 
@@ -152,6 +155,8 @@ function BigWigsMaexxna:BigWigs_RecvSync( sync )
 	self:CancelScheduledEvent("bwmaexxna20")
 	self:CancelScheduledEvent("bwmaexxna10")
 	self:CancelScheduledEvent("bwmaexxna5")
+
+	self.prior = true
 
 	self:TriggerEvent("BigWigs_Message", L"webspraywarn", "Red")
 	self:ScheduleEvent("bwmaexxna30", "BigWigs_Message", 10, L"webspraywarn30sec", "Yellow")
@@ -215,5 +220,11 @@ function BigWigsMaexxna:UNIT_HEALTH( msg )
 		elseif (health > 40 and self.enrageannounced) then
 			self.enrageannounced = nil
 		end
+	end
+end
+
+function BigWigsMaexxna:BigWigs_Message(text)
+	if text == L"webspraywarn10sec" then
+		self.prior = nil
 	end
 end
