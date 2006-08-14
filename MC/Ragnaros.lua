@@ -25,24 +25,24 @@ L:RegisterTranslations("enUS", function() return {
 	bar1text = "AoE knockback",
 	bar2text = "Ragnaros emerge",
 	bar3text = "Ragnaros submerge",
-	
+
 	sonofflame = "Son of Flame",
 	sonsdeadwarn = "%d/8 Sons of Flame dead!",
 
 	cmd = "Ragnaros",
-	
+
 	emerge_cmd = "emerge",
 	emerge_name = "Emerge alert",
 	emerge_desc = "Warn for Ragnaros Emerge",
-	
+
 	sondeath_cmd = "sondeath",
 	sondeath_name = "Son of Flame dies",
 	sondeath_desc = "Warn when a son dies",
-	
+
 	submerge_cmd = "submerge",
 	submerge_name = "Submerge alert",
 	submerge_desc = "Warn for Ragnaros Submerge & Sons of Flame",
-	
+
 	aoeknock_cmd = "aoeknock",
 	aoeknock_name = "AoE knockback alert",
 	aoeknock_desc = "Warn for AoE KnockBack",
@@ -64,19 +64,19 @@ L:RegisterTranslations("zhCN", function() return {
 	bar1text = "群体击退",
 	bar2text = "拉格纳罗斯出现",
 	bar3text = "拉格纳罗斯消失",
-	
+
 	sonofflame = "烈焰之子",
 	sonsdeadwarn = "%d/8个烈焰之子死亡了！",
-	
+
 	emerge_name = "出现警报",
 	emerge_desc = "出现警报",
-	
+
 	sondeath_name = "烈焰之子死亡",
 	sondeath_desc = "当一个烈焰之子死亡时发出警报",
-	
+
 	submerge_name = "消失警报",
 	submerge_desc = "消失警报",
-	
+
 	aoeknock_name = "群体击退警报",
 	aoeknock_desc = "群体击退警报",
 } end)
@@ -160,7 +160,7 @@ function BigWigsRagnaros:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
-	
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "RagnarosSonDead", .1)
 end
@@ -181,16 +181,17 @@ function BigWigsRagnaros:BigWigs_RecvSync(sync, rest)
 	if sync ~= "RagnarosSonDead" then return end
 	if not rest then return end
 	rest = tonumber(rest)
-	
+
 	if rest == (self.sonsdead + 1) then
 		self.sonsdead = self.sonsdead + 1
 		if self.db.profile.sondeath then
 			self:TriggerEvent("BigWigs_Message", string.format(L"sonsdeadwarn", self.sonsdead), "Orange")
 		end
-		
+
 		if self.sonsdead == 8 then
 			self:CancelScheduledEvent("bwragnarosemerge")
 			self:TriggerEvent("BigWigs_StopBar", L"bar2text")
+			self.sonsdead = 0 -- reset counter
 			self:Emerge()
 		end
 	end
