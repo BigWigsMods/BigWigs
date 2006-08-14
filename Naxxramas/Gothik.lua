@@ -59,10 +59,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	disabletrigger = "I... am... undone.",
+	disabletrigger = "I... am... undone.", -- ?
 
 	starttrigger1 = "Ihr Narren habt euren eigenen Untergang heraufbeschworen.",
-	starttrigger2 = "Maz Azgala veni kamil toralar Naztheros zennshinagas.",
+	starttrigger2 = "Maz Azgala veni kamil toralar Naztheros zennshinagas.", -- ?
 	startwarn = "Gothik der Ernter angegriffen! 4:30 bis er in den Raum kommt!",
 	
 	riderdietrigger = "Unerbittlicher Reiter stirbt.",
@@ -90,7 +90,7 @@ L:RegisterTranslations("deDE", function() return {
 	dkbar = "Todesritter",
 	riderbar = "Reiter",
 	
-	inroomtrigger = "Ich habe lange genug gewartet. Stellt euch dem Seelenj\195\164ger.",
+	inroomtrigger = "Ich habe lange genug gewartet. Stellt euch dem Seelenj\195\164ger.", -- ?
 	inroomwarn = "Er ist im Raum!",
 	
 	inroombartext = "Im Raum",

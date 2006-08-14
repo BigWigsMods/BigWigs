@@ -38,16 +38,26 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	markbar = "Mark",
-	markwarn1 = "Mark (%d)!",
-	markwarn2 = "Mark (%d) - 5 Sekunden",
+	cmd = "horsemen",
 
-	startwarn = "The Four Horsemen angegriffen! Mark in 30 Sekunden",
+	mark_cmd = "mark",
+	mark_name = "Mark Alerts", -- ?
+	mark_desc = "Warn for marks", -- ?
+
+	shieldwall_cmd  = "shieldwall",
+	shieldwall_name = "Schildwall",
+	shieldwall_desc = "Warnung vor Schildwall.",
+
+	markbar = "Mark", -- ?
+	markwarn1 = "Mark (%d)!", -- ?
+	markwarn2 = "Mark (%d) - 5 Sekunden", -- ?
+
+	startwarn = "The Four Horsemen angegriffen! Mark in 30 Sekunden", -- ?
 
 	shieldwallbar = "%s - Schildwall",
 	shieldwalltrigger = " bekommt 'Schildwall'.",
 	shieldwallwarn = "%s - Schildwall f\195\188r 20 Sekunden",
-	shieldwallwarn2 = "%s - Schildwall VORBEI!",
+	shieldwallwarn2 = "%s - Schildwall Vorbei!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

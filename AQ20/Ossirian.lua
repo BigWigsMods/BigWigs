@@ -40,13 +40,23 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	supremetrigger = "Ossirian der Narbenlose bekommt 'St\195\164rke des Ossirian'.",
-	supremewarn = "Ossirian Supreme Mode!",
-	supremedelaywarn = "Supreme in %d Sekunden!",
-	debufftrigger = "^Ossirian der Narbenlose ist von (.*)schw\195\164che betroffen%.$",
-	debuffwarn = "Ossirian anf\195\164llig gegen %s",
-	bartext = "Supreme",
-	expose = "Expose",
+	cmd = "ossirian",
+	
+	supreme_cmd = "supreme",
+	supreme_name = "St\195\164rke des Ossirian",
+	supreme_desc = "Warnung vor St\195\164rke des Ossirian.",
+	
+	debuff_cmd = "debuff",
+	debuff_name = "Debuff",
+	debuff_desc = "Warnung vor Debuff.",
+
+	supremetrigger = "Ossirian der Narbenlose bekommt 'St\195\164rke des Ossirian'",
+	supremewarn = "St\195\164rke des Ossirian!",
+	supremedelaywarn = "St\195\164rke des Ossirian in %d Sekunden!",
+	debufftrigger = "Ossirian der Narbenlose ist von (.*)schw\195\164che betroffen%.$",
+	debuffwarn = "Ossirian anf\195\164llig gegen: %s",
+	bartext = "St\195\164rke des Ossirian",
+	expose = "Schw\195\164che",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

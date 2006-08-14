@@ -53,6 +53,20 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	cmd = "noth",
+
+	blink_cmd = "blink",
+	blink_name = "Blinzeln",
+	blink_desc = "Warnung, wenn Noth Blinzeln wirkt.",
+
+	teleport_cmd = "teleport",
+	teleport_name = "Teleport",
+	teleport_desc = "Warnung vor Teleport.",
+
+	curse_cmd = "curse",
+	curse_name = "Fluch",
+	curse_desc = "Warnung, wenn Noth Fluch des Seuchenf\195\188rsten wirkt.",
+
 	starttrigger1 = "Stirb, Eindringling!",
 	starttrigger2 = "Ehre unserem Meister!",
 	starttrigger3 = "Euer Leben ist verwirkt!",

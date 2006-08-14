@@ -40,7 +40,7 @@ L:RegisterTranslations("deDE", function() return {
 	mctrigger = "Der Prophet Skeram beginnt Wahre Erf\195\188llung zu wirken.",
 	aewarn = "Arkane Explosion!",
 	mcwarn = "Gedankenkontrolle!",
-	mcplayer = "^([^%s]+) ([^%s]+) von Wahre Erf\195\188llung betroffen.",
+	mcplayer = "^([^%s]+) ([^%s]+) von Wahre Erf\195\188llung betroffen.$",
 	mcplayerwarn = " steht unter Gedankenkontrolle!",
 	mcyou = "Ihr",
 	mcare = "seid",

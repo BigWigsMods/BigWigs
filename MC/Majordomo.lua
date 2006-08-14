@@ -106,7 +106,17 @@ L:RegisterTranslations("deDE", function() return {
 
 	bar1text = "Magiereflexion",
 	bar2text = "Schadensschild",
-	bar3text = "Neuer Schild",
+	bar3text = "N\195\164chstes Schild",
+
+	cmd = "Majordomo",
+	
+	magic_cmd = "magic",
+	magic_name = "Magiereflexion",
+	magic_desc = "Warnung, wenn Magiereflexion aktiv.",
+	
+	dmg_cmd = "dmg",
+	dmg_name = "Schadensschild",
+	dmg_desc = "Warnung, wenn Schadensschild aktiv.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

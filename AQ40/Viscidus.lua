@@ -56,8 +56,8 @@ L:RegisterTranslations("deDE", function() return {
 	cmd = "Viscidus",
 
 	volley_cmd = "volley",
-	volley_name = "Poison Volley Alert",
-	volley_desc = "Warn for Poison Volley",
+	volley_name = "Poison Volley Alert", -- ?
+	volley_desc = "Warn for Poison Volley", -- ?
 
 	toxinyou_cmd = "toxinyou",
 	toxinyou_name = "Toxin Wolke",
@@ -69,7 +69,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	freeze_cmd = "freeze",
 	freeze_name = "Freeze Phasen",
-	freeze_desc = "Warnungen \195\188ber die verschiedenen Freeze Phasen.",
+	freeze_desc = "Zeigt die verschiedenen Freeze Phasen an.",
 
 	trigger1 	= "wird langsamer!",
 	trigger2 	= "friert ein!",
@@ -87,8 +87,8 @@ L:RegisterTranslations("deDE", function() return {
 	warn3 		= "Dritte Freeze Phase - DPS!",
 	warn4 		= "Zerspringen - etwas noch!",
 	warn5 		= "Zerspringen - fast da!",
-	warn6		= "Poison Bolt Volley!",
-	warn7		= "Incoming Poison Bolt Volley in ~3 Sekunden!",
+	warn6		= "Poison Bolt Volley!", -- ?
+	warn7		= "Incoming Poison Bolt Volley in ~3 Sekunden!", -- ?
 	warn8		= " ist in einer Toxin Wolke!",
 	warn9		= "Du bist in einer Toxin Wolke!",
 } end )

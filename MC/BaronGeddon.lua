@@ -71,6 +71,20 @@ L:RegisterTranslations("deDE", function() return {
 
 	warn1 = "Du bist die Bombe!",
 	warn2 = " ist die Bombe!",
+
+	cmd = "Baron",
+	
+	youbomb_cmd = "youbomb",
+	youbomb_name = "Du bist die Bombe",
+	youbomb_desc = "Warnung, wenn Du die Bombe bist.",
+	
+	elsebomb_cmd = "elsebomb",
+	elsebomb_name = "X ist die Bombe",
+	elsebomb_desc = "Warnung, wenn andere Spieler die Bombe sind",
+	
+	icon_cmd = "icon",
+	icon_name = "Symbol",
+	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der die Bombe ist. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

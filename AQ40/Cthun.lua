@@ -110,23 +110,23 @@ L:RegisterTranslations("deDE", function() return {
 
 	giant_cmd = "giant",
 	giant_name = "Riesiges Auge",
-	giant_desc = "Riesiges Auge", --?
+	giant_desc = "Riesiges Auge", -- ?
 
 	weakened_cmd = "weakened",
 	weakened_name = "Geschw\195\164cht",
 	weakened_desc = "Warnung, wenn C'Thun geschw\195\164cht ist.",
 
 	rape_cmd = "rape",
-	rape_name = "Rape is never funny", --?
-	rape_desc = "Some people just don't get hentai jokes, the bastards", --?
+	rape_name = "Rape is never funny", -- ?
+	rape_desc = "Some people just don't get hentai jokes, the bastards", -- ?
 
 	weakenedtrigger 	= "ist geschw\195\164cht!",
 
-	tentacle1	= "Tentacle Rape Party - Pleasure!", --?
-	tentacle2	= "Tentacle Rape Party - 5 sec", --?
+	tentacle1	= "Tentacle Rape Party - Pleasure!", -- ?
+	tentacle2	= "Tentacle Rape Party - 5 sec", -- ?
 
-	norape1		= "Tentacle Party! - What's that in your pants?", --?
-	norape2		= "Tentacle Party! - 5 sec", --?
+	norape1		= "Tentacle Party! - What's that in your pants?", -- ?
+	norape2		= "Tentacle Party! - 5 sec", -- ?
 
 	weakened		= "C'Thun ist geschw\195\164cht f\195\188r 45 Sekunden",
 	invulnerable2	= "C'Thun unverwundbar in 5 Sekunden",
@@ -141,17 +141,17 @@ L:RegisterTranslations("deDE", function() return {
 	glare2		= "Dunkles Starren - 5 Sekunden",
 	glare1		= "Dunkles Starren - BEWEGUNG!",
 
-	barTentacle	= "Tentacle rape party!", --?
-	barNoRape	= "Tentacle party!", --?
+	barTentacle	= "Tentacle rape party!", -- ?
+	barNoRape	= "Tentacle party!", -- ?
 	barWeakened	= "C'Thun ist geschw\195\164cht!",
 	barGlare	= "Dunkles Starren",
-	barGiant	= "Riesiges Auge", --?
-	barGreenBeam	= "Green Beam!", --?
+	barGiant	= "Riesiges Auge", -- ?
+	barGreenBeam	= "Green Beam!", -- ?
 
 	eyebeam		= "Augenstrahl", 
 	glarewarning	= "Dunkles Starren auf Dir! BEWEGUNG!",
 	groupwarning	= "Dunkles Starren auf Gruppe %s (%s)",
-	positions1	= "Green Beam coming", --?
+	positions1	= "Green Beam coming", -- ?
 	positions2	= "Dunkles Starren endet in 5 Sekunden",
 	phase2starting	= "Das Auge ist tot! - Phase 2 beginnt!",
 } end )

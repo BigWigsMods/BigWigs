@@ -40,6 +40,36 @@ L:RegisterTranslations("enUS", function() return {
 	
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	cmd = "emeriss",
+	
+	noxious_cmd = "noxious",
+	noxious_name = "Giftiger Atem",
+	noxious_desc = "Warnung vor Giftiger Atem.",
+	
+	volatileyou_cmd = "volatileyou",
+	volatileyou_name = "Fl\195\188chtige Infektion",
+	volatileyou_desc = "Warnung, wenn Fl\195\188chtige Infektion auf Dir.",
+	
+	volatileother_cmd = "volatileother",
+	volatileother_name = "Fl\195\188chtige Infektion auf Anderen",
+	volatileother_desc = "Warnung, wenn Fl\195\188chtige Infektion auf anderen Spielern.",
+
+	trigger1 = "^([^%s]+) ([^%s]+) von Fl\195\188chtige Infektion betroffen",
+	trigger2 = "von Giftiger Atem betroffen",
+
+	warn1 = "Du bist von Fl\195\188chtige Infektion betroffen!",
+	warn2 = " ist von Fl\195\188chtiger Infektion betroffen!",
+	warn3 = "5 Sekunden bis Giftiger Atem!",
+	warn4 = "Giftiger Atem! - N\195\164chster in 30 Sekunden!",
+
+	isyou = "Ihr",
+	isare = "seid",
+
+	bar1text = "Giftiger Atem",
+	
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 	noxious_name = "毒性吐息警报",
 	noxious_desc = "毒性吐息警报",

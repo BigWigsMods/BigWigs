@@ -34,6 +34,8 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	cmd = "anubrekhan",
+
 	locust_cmd = "locust",
 	locust_name = "Heuschreckenschwarm",
 	locust_desc = "Warnung, wenn Anub'Rekhan Heuschreckenschwarm wirkt.",

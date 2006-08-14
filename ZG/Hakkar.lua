@@ -35,6 +35,28 @@ L:RegisterTranslations("enUS", function() return {
 	
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	trigger1 = "^EURE \195\156BERHEBLICHKEIT K\195\156NDET BEREITS VOM ENDE DIESER WELT", -- ?
+	trigger2 = "^Hakkar erleidet (.+) Naturschaden durch (.+) Lebensentzug", -- ?
+	flee = "Fleeing will do you no good mortals!", -- ?
+
+	start = "Hakkar angegriffen - 90 Sekunden bis Lebensentzug - 10 Minuten bis Wutanfall",
+	warn1 = "60 Sekunden bis Lebensentzug",
+	warn2 = "45 Sekunden bis Lebensentzug",
+	warn3 = "15 Sekunden bis Lebensentzug",
+	warn4 = "Lebensentzug - N\195\164chster in 90 Sekunden",
+	["Enrage"] = "Wutanfall",
+	["Life Drain"] = "Lebensentzug",
+	
+	cmd = "hakkar",
+	drain_cmd = "drain",
+	drain_name = "Lebensentzung",
+	drain_desc = "Warnung vor Lebensentzug.",
+	
+	enrage_cmd = "enrage",
+	enrage_name = "Wutanfall",
+	enrage_desc = "Warnung, wenn Hakkar w\195\188tend wird.",
+} end)
 
 L:RegisterTranslations("koKR", function() return {
 	["Hakkar dies."] = "학카르|1이;가; 죽었습니다.",

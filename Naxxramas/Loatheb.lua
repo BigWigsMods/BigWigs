@@ -49,25 +49,39 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	doombar = "Inevitable Doom",
-	doomwarn = "Inevitable Doom! %s seconds to next.",
-	doomwarn5sec = "Inevitable Doom in 5 Sekunden",
-	doomtrigger = "afflicted by Inevitable Doom.",
-	
-	sporewarn = "Spore Spawned",
-	sporebar = "Summon Spore",
-	sporespawntrigger = "Loatheb casts Summon Spore.",
-	sporedietrigger = "Spore dies.",
+	cmd = "loatheb",
 
-	removecursewarn = "Curses removed on Loatheb",
-	removecursebar = "Remove Curse",
-	removecursetrigger = "Loatheb casts Remove Curse on Loatheb.",
+	doom_cmd = "doom",
+	doom_name = "Inevitable Doom Alert", -- ?
+	doom_desc = "Warn for Inevitable Doom", -- ?
 	
-	doomtimerbar = "Inevitable Doom every 15 seconds",
-	doomtimerwarn = "Inevitable Doom timerchange in %s seconds!",
-	doomtimerwarnnow = "Inevitable Doom now happens every 15sec!",
+	spore_cmd = "spore",
+	spore_name = "Spore Spawning Alert", -- ?
+	spore_desc = "Warn when a spore spawns", -- ?
+
+	curse_cmd = "curse",
+	curse_name = "Remove Curse Alert", -- ?
+	curse_desc = "Warn when a curses are removed from Loatheb", -- ?
+
+	doombar = "Inevitable Doom", -- ?
+	doomwarn = "Inevitable Doom! %s seconds to next.", -- ?
+	doomwarn5sec = "Inevitable Doom in 5 Sekunden", -- ?
+	doomtrigger = "afflicted by Inevitable Doom.", -- ?
 	
-	startwarn = "Loatheb angegriffen! 2 Minuten bis Inevitable Doom!",
+	sporewarn = "Spore Spawned", -- ?
+	sporebar = "Summon Spore", -- ?
+	sporespawntrigger = "Loatheb casts Summon Spore.", -- ?
+	sporedietrigger = "Spore dies.", -- ?
+
+	removecursewarn = "Curses removed on Loatheb", -- ?
+	removecursebar = "Remove Curse", -- ?
+	removecursetrigger = "Loatheb casts Remove Curse on Loatheb.", -- ?
+	
+	doomtimerbar = "Inevitable Doom every 15 seconds", -- ?
+	doomtimerwarn = "Inevitable Doom timerchange in %s seconds!", -- ?
+	doomtimerwarnnow = "Inevitable Doom now happens every 15sec!", -- ?
+	
+	startwarn = "Loatheb angegriffen! 2 Minuten bis Inevitable Doom!", -- ?
 
 	you = "Ihr",
 	are = "seid",

@@ -48,18 +48,28 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	cmd = "moam",
+
+	adds_cmd = "adds",
+	adds_name = "Elementare",
+	adds_desc = "Warnung, wenn Elementare erscheinen.",
+	
+	paralyze_cmd = "paralyze",
+	paralyze_name = "Steinform",
+	paralyze_desc = "Warnung, wenn Moam in Steinform.",
+
 	starttrigger = "sp\195\188rt Eure Angst.",
 	startwarn = "Moam angegriffen! 90 Sekunden bis Elementare kommen!",
 
 	addsbar = "Elementare",
 	addsincoming = "Elementare erscheinen in %s Sekunden!",
 	addstrigger = "entzieht Euch Euer Mana und versteinert Euch.",
-	addswarn = "Elementare! Moam paralysiert f\195\188r 90 Sekunden.",
+	addswarn = "Elementare! Moam in Steinform f\195\188r 90 Sekunden.",
 
-	paralyzebar = "Paralyse",
+	paralyzebar = "Steinform",
 	returnincoming = "Moam erwacht in %s Sekunden!",
 	returntrigger = "^Energiezufuhr schwindet von Moam%.$",
-	returnwarn = "Moam wach! 90 Sekunden bis Elementare kommen!",
+	returnwarn = "Moam erwacht! 90 Sekunden bis Elementare kommen!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

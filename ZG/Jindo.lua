@@ -31,15 +31,15 @@ L:RegisterTranslations("deDE", function() return {
 	cmd = "jindo",
 	
 	brainwash_cmd = "brainwash",
-	brainwash_name = "Brainwash Totem Alert",
-	brainwash_desc = "Warn for Brainwash Totems",
+	brainwash_name = "Gehirnw\195\164sche",
+	brainwash_desc = "Warnung, wenn Jin'do \195\156bernahmetotem beschw\195\182rt.",
 	
 	healing_cmd = "healing",
-	healing_name = "Healing Totem Alert",
-	healing_desc = "Warn for Healing Totems",
+	healing_name = "Heiltotem",
+	healing_desc = "Warnung, wenn Jin'do Heiltotem beschw\195\182rt.",
 	
-	triggerbrainwash = "Jin'do der Verhexer wirkt Totem der Gehirnw\195\164sche beschw\195\182ren.",
-	triggerhealing = "Jin'do der Verhexer wirkt M\195\164chtiger Heilungszauberschutz.",
+	triggerbrainwash = "wirkt Totem der Gehirnw\195\164sche beschw\195\182ren",
+	triggerhealing = "wirkt M\195\164chtiger Heilungszauberschutz",
 
 	warnbrainwash = "\195\156bernahmetotem!",
 	warnhealing = "Heiltotem!",

@@ -56,7 +56,7 @@ L:RegisterTranslations("deDE", function() return {
 	cmd = "Twins",
 
 	bug_cmd = "bug",
-	bug_name = " Explodierende K\195\164fer",
+	bug_name = "Explodierende K\195\164fer",
 	bug_desc = "Warnung vor explodierenden K\195\164fern.",
 
 	teleport_cmd = "teleport",
@@ -77,7 +77,7 @@ L:RegisterTranslations("deDE", function() return {
 	bartext = "Teleport",
 	explodebugtrigger = "bekommt 'K\195\164fer explodieren lassen'",
 	explodebugwarn = "K\195\164fer explodiert!",
-	enragetrigger = "wird w\195\188tend.", -- "bekommt 'Wutanfall'" ?
+	enragetrigger = "wird w\195\188tend.", -- ? "bekommt 'Wutanfall'"
 	enragewarn = "Zwillings Imperatoren sind w\195\188tend!",
 	healtrigger1 = "'s Bruder heilen heilt",
 	healtrigger2 = " Bruder heilen heilt",

@@ -78,22 +78,44 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	cmd = "thaddius",
+
+	enrage_cmd = "enrage",
+	enrage_name = "Wutanfall",
+	enrage_desc = "Warnung, wenn Thaddius w\195\188tend wird.",
+
+	phase_cmd = "phase",
+	phase_name = "Phasen",
+	phase_desc = "Anzeige der Phasenwechsel.",
+
+	polarity_cmd = "polarity",
+	polarity_name = "Polarity Shift Alert", -- ?
+	polarity_desc = "Warn for polarity shifts", -- ?
+
+	power_cmd = "power",
+	power_name = "Power Surge Alert", -- ?
+	power_desc = "Warn for Stalagg's power surge", -- ?
+
+	charge_cmd = "charge",
+	charge_name = "Charge Alert", -- ?
+	charge_desc = "Warn about Positive/Negative charge for yourself only.", -- ?
+
 	enragetrigger = "verf\195\164llt in Berserkerwut",
-	starttrigger = "Stalagg crush you!",
-	starttrigger1 = "Feed you to master!",
-	starttrigger2 = "Eat... your... bones...",
-	starttrigger3 = "Break... you!!",
-	starttrigger4 = "Kill...",
+	starttrigger = "Stalagg crush you!", -- ?
+	starttrigger1 = "Feed you to master!", -- ?
+	starttrigger2 = "Eat... your... bones...", -- ?
+	starttrigger3 = "Break... you!!", -- ?
+	starttrigger4 = "Kill...", -- ?
 	
 	adddeath = "stirbt.",
-	teslaoverload = "overloads!",
+	teslaoverload = "overloads!", -- ?
 
-	pstrigger = "Now you feel pain...",
-	trigger1 = "Thaddius begins to cast Polarity Shift",
+	pstrigger = "Now you feel pain...", -- ?
+	trigger1 = "Thaddius begins to cast Polarity Shift", -- ?
 	chargetrigger = "^([^%s]+) ([^%s]+) von ([^%s]+) Ladung betroffen",
-	positivetype = "Positive",
-	negativetype = "Negative",
-	stalaggtrigger = "Stalagg gains Power Surge.",
+	positivetype = "Positive", -- ?
+	negativetype = "Negative", -- ?
+	stalaggtrigger = "Stalagg gains Power Surge.", -- ?
 
 	you = "Ihr",
 	are = "seid",
@@ -101,23 +123,23 @@ L:RegisterTranslations("deDE", function() return {
 	enragewarn = "Wutanfall!",
 	startwarn = "Thaddius Phase 1",
 	startwarn2 = "Thaddius Phase 2, Wutanfall in 5 Minuten!",
-	addsdownwarn = "Thaddius incoming in 10-20sec!",
-	thaddiusincoming = "Thaddius incoming in 3 sec!",
-	pswarn1 = "Thaddius begins to cast Polarity Shift!",
-	pswarn2 = "30 Sekunden bis Polarity Shift!",
-	pswarn3 = "3 Sekunden bis Polarity Shift!",
-	poswarn = "You are a Positive Charge!",
-	negwarn = "You are a Negative Charge!",
+	addsdownwarn = "Thaddius incoming in 10-20sec!", -- ? 
+	thaddiusincoming = "Thaddius incoming in 3 sec!", -- ?
+	pswarn1 = "Thaddius begins to cast Polarity Shift!", -- ?
+	pswarn2 = "30 Sekunden bis Polarity Shift!", -- ?
+	pswarn3 = "3 Sekunden bis Polarity Shift!", -- ?
+	poswarn = "You are a Positive Charge!", -- ?
+	negwarn = "You are a Negative Charge!", -- ?
 	enragebartext = "Wutanfall",
 	warn1 = "Wutanfall in 3 Minuten",
 	warn2 = "Wutanfall in 90 Sekunden",
 	warn3 = "Wutanfall in 60 Sekunden",
 	warn4 = "Wutanfall in 30 Sekunden",
 	warn5 = "Wutanfall in 10 Sekunden",
-	stalaggwarn = "Power Surge, Extra Heilung auf Krieger!",
-	powersurgebar = "Power Surge",
+	stalaggwarn = "Power Surge, Extra Heilung auf Krieger!", -- ?
+	powersurgebar = "Power Surge", -- ?
 
-	bar1text = "Polarity Shift",
+	bar1text = "Polarity Shift", -- ?
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

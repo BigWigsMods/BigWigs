@@ -30,6 +30,23 @@ L:RegisterTranslations("enUS", function() return {
 	warn2 = "High Priestess Mar'li is draining life! Interrupt it!",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	cmd = "marli",
+
+	spider_cmd = "spider",
+	spider_name = "Spinnen",
+	spider_desc = "Warnung, wenn Spinnen spawnen.",
+
+	drain_cmd = "drain",
+	drain_name = "Drain Alert", -- ?
+	drain_desc = "Warn for life drain", -- ?
+
+	trigger1 = "^Helft mir, meine",
+	trigger2 = "^High Priestess Mar'li's Drain Life heals High Priestess Mar'li for (.+).", -- ?
+
+	warn1 = "Spinnen gespawnt!",
+	warn2 = "High Priestess Mar'li is draining life! Interrupt it!", -- ?
+} end )
 
 L:RegisterTranslations("zhCN", function() return {
 	spider_name = "蜘蛛警报",

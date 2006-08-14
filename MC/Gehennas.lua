@@ -52,10 +52,16 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	trigger1 = "von Gehennas Fluch betroffen",
 
-	warn1 = "5 Sekunden bis Gehennas' Fluch!",
-	warn2 = "Gehennas' Fluch! N\195\164chster in 30 Sekunden!",
+	warn1 = "5 Sekunden bis Gehennas Fluch!",
+	warn2 = "Gehennas Fluch! N\195\164chster in 30 Sekunden!",
 
-	bar1text = "Gehennas' Fluch",
+	bar1text = "Gehennas Fluch",
+
+	cmd = "Gehennas",
+	
+	curse_cmd = "curse",
+	curse_name = "Gehennas Fluch",
+	curse_desc = "Warnung, wenn Gehennas AoE Fluch wirkt.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

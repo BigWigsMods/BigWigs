@@ -38,10 +38,24 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	watchtrigger = "beh\195\164lt (.+) im Blickfeld!",
+	cmd = "buru",
+	
+	you_cmd = "you",
+	you_name = "Du wirst beobachtet",
+	you_desc = "Warnung, wenn Du beobachtet wirst.",
+	
+	other_cmd = "other",
+	other_name = "X wird beobachtet",
+	other_desc = "Warnung, wenn andere Spieler beobachtet werden.",
+	
+	icon_cmd = "icon",
+	icon_name = "Symbol",
+	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der beobachtet wird. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
+	
+	watchtrigger = "beh\195\164lt (.+) im Blickfeld",
 	watchwarn = " wird beobachtet!",
 	watchwarnyou = "Du wirst beobachtet!",
-	you = "Ihr",
+	you = "Euch",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

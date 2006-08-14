@@ -42,9 +42,23 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	cmd = "gluth",
+
+	fear_cmd = "fear",
+	fear_name = "Furcht",
+	fear_desc = "Warnung vor AoE Furcht.",
+	
+	frenzy_cmd = "frenzy",
+	frenzy_name = "Raserei",
+	frenzy_desc = "Warnung, wenn Gluth in Raserei ger\195\164t",
+
+	decimate_cmd = "decimate",
+	decimate_name = "Dezimieren", -- ?
+	decimate_desc = "Warnung vor Dezimieren", -- ?
+
 	trigger1 = "ger\195\164t in Raserei!",
 	trigger2 = "von Erschreckendes Gebr\195\188ll betroffen.",
-	starttrigger = "devours all nearby zombies!",
+	starttrigger = "devours all nearby zombies!", -- ?
 
 	warn1 = "Raserei!",
 	warn2 = "5 Sekunden bis AoE Furcht!",
@@ -53,10 +67,10 @@ L:RegisterTranslations("deDE", function() return {
 	startwarn = "Gluth angegriffen! ~105 Sekunden bis Zombies!",
 	decimatesoonwarn = "Dezimieren kurz bevor",
 	decimatewarn = "Dezimieren! - AoE Zombies!",
-	decimatetrigger = "Decimate",
+	decimatetrigger = "Decimate", -- ?
 
 	bar1text = "Furcht",
-	decimatebartext = "Dezimieren",
+	decimatebartext = "Dezimieren", -- ?
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

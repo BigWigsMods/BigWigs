@@ -35,10 +35,20 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	cmd = "jeklik",
+	
+	heal_cmd = "heal",
+	heal_name = "Heilung",
+	heal_desc = "Warnung, wenn Jeklik versucht sich zu heilen.",
+	
+	bomb_cmd = "bomb",
+	bomb_name = "Bomben",
+	bomb_desc = "Warnung, wenn Fledermaus Bomben im Anflug sind.",
+	
 	trigger1 =  "^Ich befehle Euch Feuer",
 	trigger2 = "beginnt Gro\195\159es Heilen zu wirken!",
 	warn1 = "Fledermaus Bomben im Anflug!",
-	warn2 = "Heilversuch - unterbrechen!",
+	warn2 = "Jeklik versucht sich zu heilen! - Unterbrechen!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

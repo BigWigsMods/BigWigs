@@ -100,21 +100,42 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	trigger1 = "^SP\195\156RT",
-	trigger2 = "^VORW\195\134RTS,",
-	trigger3 = "^UND JETZT ZU EUCH,",
+	trigger1 = "^SP\195\156RT DIE FLAMMEN",
+	trigger2 = "^VORW\195\134RTS,", -- ? "^KOMMT HERBEI, MEINE DIENER"
+	trigger3 = "^UND JETZT ZU EUCH,", -- ? "^NUN ZU EUCH, INSEKTEN"
 
-	warn1 = "AoE Knockback!",
-	warn2 = "5 Sekunden bis AoE Knockback!",
-	warn3 = "Ragnaros ist f\105\188r 90 Sekunden untergetaucht. S\195\162hne der Flamme kommen!",
+	warn1 = "AoE Rundumschlag!",
+	warn2 = "5 Sekunden bis AoE Rundumschlag!",
+	warn3 = "Ragnaros f\105\188r 90 Sekunden untergetaucht. S\195\162hne der Flamme kommen!",
 	warn4 = "15 Sekunden bis Ragnaros auftaucht!",
-	warn5 = "Ragnaros ist aufgetaucht. 3 Minuten bis zum Untertuachen!",
+	warn5 = "Ragnaros ist aufgetaucht. 3 Minuten bis zum Untertauchen!",
 	warn6 = "60 Sekunden bis Ragnaros untertaucht & S\195\162hne der Flamme!",
 	warn7 = "20 Sekunden bis Ragnaros untertaucht & S\195\162hne der Flamme!",
 
-	bar1text = "AoE Knockback",
+	bar1text = "AoE Rundumschlag",
 	bar2text = "Auftauchen Ragnaros",
 	bar3text = "Untertauchen Ragnaros",
+
+	sonofflame = "Sohn der Flamme",
+	sonsdeadwarn = "%d/8 S\195\162hne der Flamme tot!",
+
+	cmd = "Ragnaros",
+	
+	emerge_cmd = "emerge",
+	emerge_name = "Auftauchen",
+	emerge_desc = "Warnung, wenn Ragnaros auftaucht.",
+	
+	sondeath_cmd = "sondeath",
+	sondeath_name = "S\195\162hne der Flamme",
+	sondeath_desc = "Warnung, wenn ein Sohn der Flamme stirbt.",
+	
+	submerge_cmd = "submerge",
+	submerge_name = "Untertauchen",
+	submerge_desc = "Warnung, wenn Ragnaros untertaucht und die S\195\162hne der Flamme erscheinen.",
+	
+	aoeknock_cmd = "aoeknock",
+	aoeknock_name = "AoE Rundumschlag",
+	aoeknock_desc = "Warnung, wenn Ragnaros AoE Rundumschlag wirkt.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

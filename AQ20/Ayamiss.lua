@@ -29,6 +29,11 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	cmd = "ayamiss",
+	sacrifice_cmd = "sacrifice",
+	sacrifice_name = "Opferung",
+	sacrifice_desc = "Warnung, wenn ein Spieler geopfert wird.",
+
 	sacrificetrigger = "^([^%s]+) ([^%s]+) von Paralisieren betroffen",
 	sacrificewarn = " wird geopfert!",
 	you = "Ihr",

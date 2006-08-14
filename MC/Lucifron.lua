@@ -73,12 +73,22 @@ L:RegisterTranslations("deDE", function() return {
 	trigger2 = "von Drohende Verdammnis betroffen",
 
 	warn1 = "5 Sekunden bis Lucifrons Fluch!",
-	warn2 = "Lucifrons Fluch - 20 Sekunden bis zum n\195\164chsten!",
+	warn2 = "Lucifrons Fluch - N\195\164chster in 20 Sekunden!",
 	warn3 = "5 Sekunden bis Drohende Verdammnis!",
-	warn4 = "Drohende Verdammnis - 20 Sekunden bis zum n\195\164chsten!",
+	warn4 = "Drohende Verdammnis - N\195\164chste in 20 Sekunden!",
 
 	bar1text = "Lucifrons Fluch",
 	bar2text = "Drohende Verdammnis",
+
+	cmd = "Lucifron",
+	
+	curse_cmd = "curse",
+	curse_name = "Lucifrons Fluch",
+	curse_desc = "Warnung vor Lucifrons Fluch.",
+	
+	doom_cmd = "dmg",
+	doom_name = "Drohende Verdammnis",
+	doom_desc = "Warnung vor Drohender Verdammnis.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

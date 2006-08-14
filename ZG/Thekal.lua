@@ -26,6 +26,23 @@ L:RegisterTranslations("enUS", function() return {
 	warn2 = "Lor'Khan Casting Heal!",	
 } end )
 
+L:RegisterTranslations("enUS", function() return {
+	cmd = "thekal",
+	
+	heal_cmd = "heal",
+	heal_name = "Heilung",
+	heal_desc = "Warnung, wenn Zealot Lor'Khan sich heilt.",
+
+	tiger_cmd = "tiger",
+	tiger_name = "Tiger",
+	tiger_desc = "Warnung, wenn Tiger kommen.",
+
+	trigger1 = "High Priest Thekal performs Summon Zulian Guardians.", -- ?
+	trigger2 = "Zealot Lor'Khan begins to cast Great Heal.", -- ?
+	warn1 = "Tiger!",
+	warn2 = "Lor'Khan heilt sich!",	
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	trigger1 = "Z\195\169lote Lor'Khan commence \195\160 lancer Soins exceptionnels%.",
 	trigger2 = "Shirvallah, que ta RAGE m\226\128\153envahisse !",

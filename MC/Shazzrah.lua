@@ -30,7 +30,6 @@ L:RegisterTranslations("enUS", function() return {
 	blink_desc = "Warn when Shazzrah Blinks",
 } end)
 
-
 L:RegisterTranslations("zhCN", function() return {
 	trigger1 = "沙斯拉尔获得了闪现术的效果",
 	trigger2 = "沙斯拉尔获得了衰减魔法的效果",
@@ -48,7 +47,6 @@ L:RegisterTranslations("zhCN", function() return {
 	blink_desc = "沙斯拉尔发动闪现术时发出警报",
 } end)
 
-
 L:RegisterTranslations("koKR", function() return {
 	trigger1 = "샤즈라|1이;가; 샤즈라의 문|1을;를; 시전합니다.",
 	trigger2 = "샤즈라|1이;가; 마법 약화 효과를 얻었습니다.",
@@ -61,14 +59,24 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	trigger1 = "Shazzrah wirkt Portal von Shazzrah.",
-	trigger2 = "Shazzrah bekommt 'Magie d\195\164mpfen'.",
+	trigger1 = "Shazzrah wirkt Portal von Shazzrah",
+	trigger2 = "Shazzrah bekommt 'Magie d\195\164mpfen'",
 
-	warn1 = "TELEPORT! N\195\164chster in 30 Sekunden!",
-	warn2 = "5 Sekunden bis Teleport!",
-	warn3 = "Magied\195\164mpfer entfernen!",
+	warn1 = "Portal! N\195\164chstes in 30 Sekunden!",
+	warn2 = "5 Sekunden bis Portal!",
+	warn3 = "Magied\195\164mpfer auf Shazzrah! - Entfernen!",
 
-	bar1text = "Teleport",
+	bar1text = "Portal",
+
+	cmd = "Shazzrah",
+	
+	selfbuff_cmd = "selfbuff",
+	selfbuff_name = "Selbstbuff",
+	selfbuff_desc = "Warnung, wenn Shazzrah Magied\195\164mpfer hat.",
+	
+	blink_cmd = "blink",
+	blink_name = "Portal",
+	blink_desc = "Warnung, wenn Shazzrah Portal wirkt.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

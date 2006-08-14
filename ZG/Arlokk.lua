@@ -34,6 +34,16 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	cmd = "arlokk",
+	
+	youmark_cmd = "youmark",
+	youmark_name = "Du bist markiert",
+	youmark_desc = "Warnung, wenn Du markiert bist.",
+	
+	othermark_cmd = "othermark",
+	othermark_name = "X ist markiert",
+	othermark_desc = "Warnung, wenn andere Spieler markiert sind.",
+
 	trigger1 ="Labt euch an ([^%s]+), meine S\195\188\195\159en!$",
 
 	warn1 = "Du bist markiert!",

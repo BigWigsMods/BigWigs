@@ -27,6 +27,24 @@ L:RegisterTranslations("enUS", function() return {
 	warn2 = "Incoming phase 2, watch the poison clouds!",	
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	cmd = "venoxis",
+	
+	renew_cmd = "renew",
+	renew_name = "Erneuerung",
+	renew_desc = "Warnung, wenn Venoxis Erneuerung auf sich wirkt.",
+	
+	phase_cmd = "phase",
+	phase_name = "Phase 2",
+	phase_desc = "Warnung, wenn Venoxis in Phase 2 eintritt.",
+	
+	trigger1 = "Hohepriester Venoxis bekommt 'Erneuerung'",
+	trigger2 = "M\195\182ge das Schlachten beginnen", -- ?
+
+	warn1 = "Erneuerung - Jetzt Entfernen!",
+	warn2 = "Phase 2 - Vorsicht vor Giftwolken!",	
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	trigger1 = "Grand pr\195\170tre Venoxis gagne R\195\169novation%.",
 	trigger2 = "Que se d\195\169roulent les anneaux de la haine !",

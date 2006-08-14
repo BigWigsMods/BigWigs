@@ -75,12 +75,16 @@ L:RegisterTranslations("deDE", function() return {
 	cmd = "Vaelastrasz",
 	
 	youburning_cmd = "youburning",
-	youburning_name = "Brennendes Adrenalin auf Dir",
+	youburning_name = "Du brennst",
 	youburning_desc = "Warnung, wenn Du brennst.",
 	
 	elseburning_cmd = "elseburning",
-	elseburning_name = "Brennendes Adrenalin auf Anderen",
+	elseburning_name = "X brennt",
 	elseburning_desc = "Warnung, wenn andere Spieler brennen.",
+	
+	icon_cmd = "icon",
+	icon_name = "Symbol",
+	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler der brennt. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

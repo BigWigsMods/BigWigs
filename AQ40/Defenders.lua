@@ -55,11 +55,11 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("deDE", function() return {
 	cmd = "Defender",
 	plagueyou_cmd = "plagueyou",
-	plagueyou_name = "Seuche auf Dir",
+	plagueyou_name = "Du hast die Seuche",
 	plagueyou_desc = "Warnung, wenn Du die Seuche hast.",
 
 	plagueother_cmd = "plagueother",
-	plagueother_name = "Seuche auf Anderen",
+	plagueother_name = "X hat die Seuche",
 	plagueother_desc = "Warnung, wenn andere Spieler die Seuche haben.",
 
 	thunderclap_cmd = "thunderclap",
@@ -76,7 +76,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	summon_cmd = "summon",
 	summon_name = "Beschw\195\182rung",
-	summon_desc = "Warnung, vor Beschw\195\182rungen.",
+	summon_desc = "Warnung, wenn Verteidiger des Anubisath Schwarmwachen oder Krieger beschw\195\182rt.",
 
 	explodetrigger = "Verteidiger des Anubisath bekommt 'Explodieren'.",
 	explodewarn = "Explosion!",
@@ -86,7 +86,7 @@ L:RegisterTranslations("deDE", function() return {
 	summonguardwarn = "Schwarmwache beschworen",
 	summonwarriortrigger = "Verteidiger des Anubisath wirkt Krieger des Anubisath beschw\195\182ren.",
 	summonwarriorwarn = "Krieger beschworen",
-	plaguetrigger = "^([^%s]+) ([^%s]+) von Seuche betroffen",
+	plaguetrigger = "^([^%s]+) ([^%s]+) von Seuche betroffen%.$",
 	plaguewarn = " hat die Seuche!",
 	plagueyouwarn = "Du hast die Seuche!",
 	plagueyou = "Ihr",

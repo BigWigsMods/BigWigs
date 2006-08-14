@@ -41,8 +41,8 @@ L:RegisterTranslations("deDE", function() return {
 	cmd = "razuvious",
 
 	shout_cmd = "shout",
-	shout_name = "Unterbrechungsruf",
-	shout_desc = "Warnung, wenn Instruktor Razuvious Unterbrechungsruf wirkt.",
+	shout_name = "Unterbrechungsruf", -- ? "Triumphschrei"
+	shout_desc = "Warnung, wenn Instruktor Razuvious Unterbrechungsruf wirkt.", -- ? "Triumphschrei"
 
 	shieldwall_cmd = "shieldwall",
 	shieldwall_name = "Schildwall",
@@ -55,11 +55,11 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger3 = "Lasst keine Gnade walten!",
 	starttrigger4 = "Befolgt meine Befehle!",
 
-	shouttrigger = "Unterbrechungsruf", -- "Triumphschrei" ?
+	shouttrigger = "Unterbrechungsruf", -- ? "Triumphschrei"
 	shout7secwarn = "7 Sekunden bis Ruf!",
-	shoutwarn = "Unterbrechungsruf!", -- "Triumphschrei" ?
+	shoutwarn = "Unterbrechungsruf!", -- ? "Triumphschrei"
 	noshoutwarn = "Kein Ruf! N\195\164chster in ~20s",
-	shoutbar = "Unterbrechungsruf", -- "Triumphschrei" ?
+	shoutbar = "Unterbrechungsruf", -- ? "Triumphschrei"
 
 	shieldwalltrigger   = "Reservist der Todesritter bekommt 'Schildwall'.",
 	shieldwallbar       = "Schildwall",	

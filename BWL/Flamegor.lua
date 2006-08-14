@@ -81,7 +81,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	trigger1 = "Flammenmaul beginnt Fl\195\188gelsto\195\159 zu wirken.",
 	trigger2 = "Flammenmaul beginnt Schattenflamme zu wirken.",
-	trigger3 = "ger\195\164t in Raserei!",
+	trigger3 = "ger\195\164t in Raserei",
 
 	warn1 = "Flammenmaul beginnt Fl\195\188gelsto\195\159 zu wirken!",
 	warn2 = "30 Sekunden bis zum n\195\64chsten Fl\195\188gelsto\195\159!",

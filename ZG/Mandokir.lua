@@ -36,10 +36,22 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	trigger1 =  "([^%s]+)! Ich behalte Euch im Auge!";
+	cmd = "mandokir",
+	
+	you_cmd = "you",
+	you_name = "Du wirst beobachtet",
+	you_desc = "Warnung, wenn Du beobachtet wirst.",
+	
+	other_cmd = "other",
+	other_name = "X wird beobachtet",
+	other_desc = "Warnung, wenn andere Spieler beobachtet werden.",
 
-	warn1 = "Du wirst beobachtet!",
+	trigger1 = "([^%s]+)! Ich behalte Euch im Auge!$",
+	trigger2 = "goes into a rage after seeing his raptor fall in battle!$", -- ?
+
+	warn1 = "Du wirst beobachtet - Alle Aktionen stoppen!",
 	warn2 = "%s wird beobachtet!",
+	warn3 = "Ohgan down! Mandokir enraged!", -- ?
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

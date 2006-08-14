@@ -40,6 +40,16 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	cmd = "maexxna",
+	
+	spray_cmd = "spray",
+	spray_name = "Gespinst",
+	spray_desc = "Warnung vor Gespinst und Spinnen.",
+
+	enrage_cmd = "enrage",
+	enrage_name = "Wutanfall",
+	enrage_desc = "Warnung wenn Maxxna w\195\188tend wird.",
+
 	webwraptrigger = "(.*) (.*) ist von Fangnetz betroffen.",
 	webspraytrigger = "ist von Gespinstschauer betroffen.",
 
@@ -48,7 +58,7 @@ L:RegisterTranslations("deDE", function() return {
 	webspraywarn30sec = "Fangnetze in 10 Sekunden",
 	webspraywarn20sec = "Fangnetze! 10 Sekunden bis Gespinst!",
 	webspraywarn10sec = "Spinnen! 10 Sekunden bis Kokons!",
-	webspraywarn5sec = "GESPINST in 5 Sekunden!",
+	webspraywarn5sec = "Gespinst in 5 Sekunden!",
 	webspraywarn = "Gespinst! N\195\164chstes in 40 Sekunden!",
 	enragewarn = "Wutanfall - Gebt alles!",
 	enragesoonwarn = "Wutanfall in K\195\188rze - Bereit machen!",

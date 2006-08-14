@@ -34,6 +34,20 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	cmd = "grobbulus",
+	
+	youinjected_cmd = "youinjected",
+	youinjected_name = "Du bist verseucht",
+	youinjected_desc = "Warnung, wenn Du von Mutierende Injektion betroffen bist.",
+	
+	otherinjected_cmd = "otherinjected",
+	otherinjected_name = "X ist verseucht",
+	otherinjected_desc = "Warnung, wenn andere Spieler von Mutierende Injektion betroffen sind.",
+
+	icon_cmd = "icon",
+	icon_name = "Symbol",
+	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der die Bombe ist. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
+
 	trigger1 = "^([^%s]+) ([^%s]+) von Mutierende Injektion betroffen",
 
 	you = "Ihr",

@@ -48,13 +48,35 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	explodetrigger = "Besch\195\188tzer des Anubisath bekommt 'Explodieren'.",
+	cmd = "guardian",
+	
+	summon_cmd = "summon",
+	summon_name = "Beschw\195\182rung",
+	summon_desc = "Warnung, wenn Besch\195\188tzer des Anubisath Schwarmwachen oder Krieger beschw\195\182rt.",
+	
+	plagueyou_cmd = "plagueyou",
+	plagueyou_name = "Du hast die Seuche",
+	plagueyou_desc = "Warnung, wenn Du die Seuche hast.",
+
+	plagueother_cmd = "plagueother",
+	plagueother_name = "X hat die Seuche",
+	plagueother_desc = "Warnung, wenn andere Spieler die Seuche haben.",
+	
+	explode_cmd = "explode",
+	explode_name = "Explosion",
+	explode_desc = "Warnung vor Explosion.",
+	
+	enrage_cmd = "enrage",
+	enrage_name = "Wutanfall",
+	enrage_desc = "Warnung vor Wutanfall.",
+
+	explodetrigger = "Besch\195\188tzer des Anubisath bekommt 'Explodieren'",
 	explodewarn = "Explosion!",
-	enragetrigger = "Besch\195\188tzer des Anubisath bekommt 'Wutanfall'.",
+	enragetrigger = "Besch\195\188tzer des Anubisath bekommt 'Wutanfall'",
 	enragewarn = "Wutanfall!",
-	summonguardtrigger = "Besch\195\188tzer des Anubisath wirkt Schwarmwache des Anubisath beschw\195\182ren.",
+	summonguardtrigger = "Besch\195\188tzer des Anubisath wirkt Schwarmwache des Anubisath beschw\195\182ren",
 	summonguardwarn = "Schwarmwache beschworen",
-	summonwarriortrigger = "Besch\195\188tzer des Anubisath wirkt Krieger des Anubisath beschw\195\182ren.",
+	summonwarriortrigger = "Besch\195\188tzer des Anubisath wirkt Krieger des Anubisath beschw\195\182ren",
 	summonwarriorwarn = "Krieger beschworen",
 	plaguetrigger = "^([^%s]+) ([^%s]+) von Seuche betroffen%.$",
 	plaguewarn = " hat die Seuche!",

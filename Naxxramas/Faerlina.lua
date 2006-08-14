@@ -57,11 +57,11 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger3 = "Ihr k\195\182nnt euch nicht vor mir verstecken!",
 	starttrigger4 = "Flieht, solange ihr noch k\195\182nnt",
 
-	silencetrigger = "J\195\188nger von Naxxramas ist von Umarmung der Witwe betroffen.",
+	silencetrigger = "Gro\195\159witwe Faerlina ist von Umarmung der Witwe betroffen.", -- EDITED it affects her too.
 	enragetrigger = "Gro\195\159witwe Faerlina bekommt 'Wutanfall'.",
 	enragefade = "Wutanfall schwindet von Gro\195\159witwe Faerlina",
 
-	startwarn = "Start oder Wutanfall!",
+	startwarn = "Gro\195\159witwe Faerlina angegriffen! - 60 Sekunden bis Wutanfall!",
 	enragewarn15sec = "15 Sekunden bis Wutanfall!",
 	enragewarn = "Wutanfall!",
 	enrageremovewarn = "Wutanfall vorbei! N\195\164chster in %d Sekunden!",

@@ -23,6 +23,13 @@ L:RegisterTranslations("zhCN", function() return {
 	["%s's Tranq failed!"] = "%s的宁神射击失败了！",
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	CHAT_MSG_SPELL_SELF_BUFF = "(.+) kann dies nicht bannen: Raserei", -- ?
+	CHAT_MSG_SPELL_SELF_DAMAGE = "Ihr wirkt Einlullender Schuss auf (.+)",
+
+	["Tranq - "] = "Einlullender Schuss - ",
+	["%s's Tranq failed!"] = "%s's Einlullender Schuss verfehlt", -- ?
+} end)
 
 ----------------------------------
 --      Module Declaration      --

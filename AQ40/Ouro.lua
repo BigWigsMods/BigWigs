@@ -73,7 +73,7 @@ L:RegisterTranslations("deDE", function() return {
 	
 	emerge_cmd = "emerge",
 	emerge_name = "Auftauchen",
-	emerge_desc = "Warnung, wenn Ouro auftaucht",
+	emerge_desc = "Warnung, wenn Ouro auftaucht.",
 	
 	submerge_cmd = "submerge",
 	submerge_name = "Untertauchen",
@@ -83,7 +83,7 @@ L:RegisterTranslations("deDE", function() return {
 	scarab_name = "Scarab Despawn Alert", -- ?
 	scarab_desc = "Warn for Scarab Despawn", -- ?
 
-	sweeptrigger = "Ouro begins to cast Sweep", --?
+	sweeptrigger = "Ouro begins to cast Sweep", -- ?
 	sweepannounce = "Feger!",
 	sweepwarn = "5 Sekunden bis Feger!",
 	sweepbartext = "Feger",
