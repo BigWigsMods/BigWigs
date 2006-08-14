@@ -83,6 +83,17 @@ L:RegisterTranslations("zhCN", function() return {
 	["Supressing Chatframe"] = "正在阻挡Chatframe",
 	["Supressing RaidWarningFrame"] = "正在阻挡RaidWarningFrame",
 	["Supressing CT_RAMessageFrame"] = "正在阻挡CT_RAMessageFrame",
+		
+	["Supressed"] = "阻挡",
+	["Shown"] = "显示",
+
+	["YOU HAVE THE PLAGUE!"] = "你中了瘟疫！离开人群！",
+	["YOU ARE THE BOMB!"] = "你是炸弹人！",
+	["YOU ARE BEING WATCHED!"] = "你被盯上了！",
+	["YOU ARE CURSED!"] = "你中了诅咒！",
+	["YOU ARE BURNING!"] = "你正在燃烧！",
+	["YOU ARE AFFLICTED BY VOLATILE INFECTION!"] = "你中了快速传染！",
+	["YOU ARE MARKED!"] = "你被标记了！",
 } end)
 
 ----------------------------------

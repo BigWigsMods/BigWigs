@@ -45,6 +45,8 @@ L:RegisterTranslations("zhCN", function() return {
 	warn1 = "传送发动！",
 	warn2 = "魔法护盾消失！",
 	warn3 = "魔法护盾开启 - 不要施放法术！",
+	
+	shieldbar = "魔法护盾",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
