@@ -1,8 +1,75 @@
-﻿------------------------------
---      Are you local?      --
-------------------------------
+﻿
+----------------------------
+--      Localization      --
+----------------------------
 
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsBossBlock")
+
+L:RegisterTranslations("enUS", function() return {
+	["BossBlock"] = true,
+	["Supress bossmod chat from other players."] = true,
+
+	["Supress Raid Chat"] = true,
+	["Supress messages in the raid channel."] = true,
+
+	["Supress RaidWarn Chat"] = true,
+	["Supress RaidWarn messages in the chat frames."] = true,
+
+	["Supress RaidWarn"] = true,
+	["Supress RaidWarn popup messages."] = true,
+
+	["Supress RaidSay"] = true,
+	["Supress CTRA RaidSay popup messages."] = true,
+
+	["Supress Tells"] = true,
+	["Supress Tell messages."] = true,
+
+	["Debugging"] = true,
+	["Show debug messages."] = true,
+
+	["Supressing Chatframe"] = true,
+	["Supressing RaidWarningFrame"] = true,
+	["Supressing CT_RAMessageFrame"] = true,
+
+	["Supressed"] = true,
+	["Shown"] = true,
+} end)
+
+
+L:RegisterTranslations("zhCN", function() return {
+	["BossBlock"] = "信息阻挡",
+	["Supress bossmod chat from other players."] = "阻挡其他玩家的首领插件发送的信息。",
+
+	["Supress Raid Chat"] = "阻挡团队频道",
+	["Supress messages in the raid channel."] = "阻挡团队频道中的信息",
+
+	["Supress RaidWarn Chat"] = "阻挡团队警告聊天",
+	["Supress RaidWarn messages in the chat frames."] = "阻挡聊天窗体中的团队警告信息",
+
+	["Supress RaidWarn"] = "阻挡团队警告",
+	["Supress RaidWarn popup messages."] = "阻挡团队警告中的信息",
+
+	["Supress RaidSay"] = "阻挡RS",
+	["Supress CTRA RaidSay popup messages."] = "阻挡团队助手(CTRA)的RS信息",
+
+	["Supress Tells"] = "阻挡密语",
+	["Supress Tell messages."] = "阻挡密语中的信息",
+
+	["Debugging"] = "除错",
+	["Show debug messages."] = "显示除错信息",
+
+	["Supressing Chatframe"] = "正在阻挡Chatframe",
+	["Supressing RaidWarningFrame"] = "正在阻挡RaidWarningFrame",
+	["Supressing CT_RAMessageFrame"] = "正在阻挡CT_RAMessageFrame",
+
+	["Supressed"] = "阻挡",
+	["Shown"] = "显示",
+} end)
+
+
+------------------------------
+--      Are you local?      --
+------------------------------
 
 local raidchans = {
 	CHAT_MSG_WHISPER = "hidetells",
@@ -10,44 +77,12 @@ local raidchans = {
 	CHAT_MSG_RAID_WARNING = "hideraidwarnchat",
 	CHAT_MSG_RAID_LEADER = "hideraidchat",
 }
-
+local map = {[true] = "|cffff0000"..L"Supressed".."|r", [false] = "|cff00ff00"..L"Shown".."|r"}
 local blockregexs = {
 	"%*+ .+ %*+$",
 }
-
-----------------------------
---      Localization      --
-----------------------------
-
-L:RegisterTranslations("enUS", function() return {
-	["BossBlock"] = true,
-	["Supress bossmod chat from other players."] = true,
-	
-	["Supress Raid Chat"] = true,
-	["Supress messages in the raid channel."] = true,
-	
-	["Supress RaidWarn Chat"] = true,
-	["Supress RaidWarn messages in the chat frames."] = true,
-	
-	["Supress RaidWarn"] = true,
-	["Supress RaidWarn popup messages."] = true,
-	
-	["Supress RaidSay"] = true,
-	["Supress CTRA RaidSay popup messages."] = true,
-	
-	["Supress Tells"] = true,
-	["Supress Tell messages."] = true,
-	
-	["Debugging"] = true,
-	["Show debug messages."] = true,
-	
-	["Supressing Chatframe"] = true,
-	["Supressing RaidWarningFrame"] = true,
-	["Supressing CT_RAMessageFrame"] = true,
-	
-	["Supressed"] = true,
-	["Shown"] = true,
-
+local blockstrings = {
+	-- enUS
 	["YOU HAVE THE PLAGUE!"] = true,
 	["YOU ARE THE BOMB!"] = true,
 	["YOU ARE BEING WATCHED!"] = true,
@@ -56,61 +91,16 @@ L:RegisterTranslations("enUS", function() return {
 	["YOU ARE AFFLICTED BY VOLATILE INFECTION!"] = true,
 	["YOU ARE MARKED!"] = true,
 
-} end)
-
-L:RegisterTranslations("zhCN", function() return {
-	["BossBlock"] = "信息阻挡",
-	["Supress bossmod chat from other players."] = "阻挡其他玩家的首领插件发送的信息。",
-	
-	["Supress Raid Chat"] = "阻挡团队频道",
-	["Supress messages in the raid channel."] = "阻挡团队频道中的信息",
-	
-	["Supress RaidWarn Chat"] = "阻挡团队警告聊天",
-	["Supress RaidWarn messages in the chat frames."] = "阻挡聊天窗体中的团队警告信息",
-	
-	["Supress RaidWarn"] = "阻挡团队警告",
-	["Supress RaidWarn popup messages."] = "阻挡团队警告中的信息",
-	
-	["Supress RaidSay"] = "阻挡RS",
-	["Supress CTRA RaidSay popup messages."] = "阻挡团队助手(CTRA)的RS信息",
-	
-	["Supress Tells"] = "阻挡密语",
-	["Supress Tell messages."] = "阻挡密语中的信息",
-	
-	["Debugging"] = "除错",
-	["Show debug messages."] = "显示除错信息",
-	
-	["Supressing Chatframe"] = "正在阻挡Chatframe",
-	["Supressing RaidWarningFrame"] = "正在阻挡RaidWarningFrame",
-	["Supressing CT_RAMessageFrame"] = "正在阻挡CT_RAMessageFrame",
-		
-	["Supressed"] = "阻挡",
-	["Shown"] = "显示",
-
-	["YOU HAVE THE PLAGUE!"] = "你中了瘟疫！离开人群！",
-	["YOU ARE THE BOMB!"] = "你是炸弹人！",
-	["YOU ARE BEING WATCHED!"] = "你被盯上了！",
-	["YOU ARE CURSED!"] = "你中了诅咒！",
-	["YOU ARE BURNING!"] = "你正在燃烧！",
-	["YOU ARE AFFLICTED BY VOLATILE INFECTION!"] = "你中了快速传染！",
-	["YOU ARE MARKED!"] = "你被标记了！",
-} end)
-
-----------------------------------
---      Blocking Expressions    --
-----------------------------------
-
-local blockstrings = {
-	[L"YOU HAVE THE PLAGUE!"] = true,
-	[L"YOU ARE THE BOMB!"] = true,
-	[L"YOU ARE BEING WATCHED!"] = true,
-	[L"YOU ARE CURSED!"] = true,
-	[L"YOU ARE BURNING!"] = true,
-	[L"YOU ARE AFFLICTED BY VOLATILE INFECTION!"] = true,
-	[L"YOU ARE MARKED!"] = true,
+	-- znCH
+	["你中了瘟疫！离开人群！"] = true,
+	["你是炸弹人！"] = true,
+	["你被盯上了！"] = true,
+	["你中了诅咒！"] = true,
+	["你正在燃烧！"] = true,
+	["你中了快速传染！"] = true,
+	["你被标记了！"] = true,
 }
-		
-local map = {[true] = "|cffff0000"..L"Supressed".."|r", [false] = "|cff00ff00"..L"Shown".."|r"}
+
 
 ----------------------------------
 --      Module Declaration      --
@@ -192,6 +182,7 @@ BigWigsBossBlock.consoleOptions = {
 		},
 	},
 }
+
 
 ------------------------------
 --      Event Handlers      --
