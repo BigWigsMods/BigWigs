@@ -4,22 +4,39 @@
 
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsBossBlock")
 
-local map = {[true] = "|cffff0000".."Supressed".."|r", [false] = "|cff00ff00".."Shown".."|r"}
 local raidchans = {
 	CHAT_MSG_WHISPER = "hidetells",
 	CHAT_MSG_RAID = "hideraidchat",
 	CHAT_MSG_RAID_WARNING = "hideraidwarnchat",
 	CHAT_MSG_RAID_LEADER = "hideraidchat",
 }
-local blockstrings = {
-	["YOU HAVE THE PLAGUE!"] = true,
-	["YOU ARE THE BOMB!"] = true,
-	["YOU ARE BEING WATCHED!"] = true,
-	["YOU ARE CURSED!"] = true,
-	["YOU ARE BURNING!"] = true,
-	["YOU ARE AFFLICTED BY VOLATILE INFECTION!"] = true,
-	["YOU ARE MARKED!"] = true,
-}
+
+if GetLocale() ~= "zhCN" then 
+	local blockstrings = {
+		["YOU HAVE THE PLAGUE!"] = true,
+		["YOU ARE THE BOMB!"] = true,
+		["YOU ARE BEING WATCHED!"] = true,
+		["YOU ARE CURSED!"] = true,
+		["YOU ARE BURNING!"] = true,
+		["YOU ARE AFFLICTED BY VOLATILE INFECTION!"] = true,
+		["YOU ARE MARKED!"] = true,
+	}
+		
+	local map = {[true] = "|cffff0000".."Supressed".."|r", [false] = "|cff00ff00".."Shown".."|r"}
+else
+	local blockstrings = {
+		["YOU HAVE THE PLAGUE!"] = "你中了瘟疫！离开人群！",
+		["YOU ARE THE BOMB!"] = "你是炸弹人！",
+		["YOU ARE BEING WATCHED!"] = "你被盯上了！",
+		["YOU ARE CURSED!"] = "你中了诅咒！",
+		["YOU ARE BURNING!"] = "你正在燃烧！",
+		["YOU ARE AFFLICTED BY VOLATILE INFECTION!"] = "你中了快速传染！",
+		["YOU ARE MARKED!"] = "你被标记了！",
+	}
+		
+	local map = {[true] = "|cffff0000".."阻挡".."|r", [false] = "|cff00ff00".."显示".."|r"}
+end
+
 local blockregexs = {
 	"%*+ .+ %*+$",
 }
