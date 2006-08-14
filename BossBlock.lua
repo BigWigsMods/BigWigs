@@ -11,18 +11,6 @@ local raidchans = {
 	CHAT_MSG_RAID_LEADER = "hideraidchat",
 }
 
-local blockstrings = {
-	["YOU HAVE THE PLAGUE!"] = true,
-	["YOU ARE THE BOMB!"] = true,
-	["YOU ARE BEING WATCHED!"] = true,
-	["YOU ARE CURSED!"] = true,
-	["YOU ARE BURNING!"] = true,
-	["YOU ARE AFFLICTED BY VOLATILE INFECTION!"] = true,
-	["YOU ARE MARKED!"] = true,
-}
-		
-local map = {[true] = "|cffff0000".."Supressed".."|r", [false] = "|cff00ff00".."Shown".."|r"}
-
 local blockregexs = {
 	"%*+ .+ %*+$",
 }
@@ -56,6 +44,18 @@ L:RegisterTranslations("enUS", function() return {
 	["Supressing Chatframe"] = true,
 	["Supressing RaidWarningFrame"] = true,
 	["Supressing CT_RAMessageFrame"] = true,
+	
+	["Supressed"] = true,
+	["Shown"] = true,
+
+	["YOU HAVE THE PLAGUE!"] = true,
+	["YOU ARE THE BOMB!"] = true,
+	["YOU ARE BEING WATCHED!"] = true,
+	["YOU ARE CURSED!"] = true,
+	["YOU ARE BURNING!"] = true,
+	["YOU ARE AFFLICTED BY VOLATILE INFECTION!"] = true,
+	["YOU ARE MARKED!"] = true,
+
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -84,6 +84,22 @@ L:RegisterTranslations("zhCN", function() return {
 	["Supressing RaidWarningFrame"] = "正在阻挡RaidWarningFrame",
 	["Supressing CT_RAMessageFrame"] = "正在阻挡CT_RAMessageFrame",
 } end)
+
+----------------------------------
+--      Blocking Expressions    --
+----------------------------------
+
+local blockstrings = {
+	[L"YOU HAVE THE PLAGUE!"] = true,
+	[L"YOU ARE THE BOMB!"] = true,
+	[L"YOU ARE BEING WATCHED!"] = true,
+	[L"YOU ARE CURSED!"] = true,
+	[L"YOU ARE BURNING!"] = true,
+	[L"YOU ARE AFFLICTED BY VOLATILE INFECTION!"] = true,
+	[L"YOU ARE MARKED!"] = true,
+}
+		
+local map = {[true] = "|cffff0000"..L"Supressed".."|r", [false] = "|cff00ff00"..L"Shown".."|r"}
 
 ----------------------------------
 --      Module Declaration      --
