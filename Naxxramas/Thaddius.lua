@@ -301,18 +301,16 @@ function BigWigsThaddius:BigWigs_RecvSync( sync )
 end
 
 function BigWigsThaddius:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE( msg )
-	if not self.db.profile.charge then return end
-
 	local chargetype
 	_, _, chargetype = string.find(msg, L"chargetrigger")
 	if chargetype == L"positivetype" then
-		if chargetype ~= self.previousCharge then
+		if self.db.profile.charge and chargetype ~= self.previousCharge then
 			self:TriggerEvent("BigWigs_Message", L"poswarn", "Green", true)
 			self:TriggerEvent("BigWigs_StartBar", self, L"polaritytickbar", 5, "Interface\\Icons\\Spell_Lightning_LightningBolt01", "Red")
 		end
 		self.previousCharge = chargetype
 	elseif chargetype == L"negativetype" then
-		if chargetype ~= self.previousCharge then
+		if self.db.profile.charge and chargetype ~= self.previousCharge then
 			self:TriggerEvent("BigWigs_Message", L"negwarn", "Red", true)
 			self:TriggerEvent("BigWigs_StartBar", self, L"polaritytickbar", 5, "Interface\\Icons\\Spell_Lightning_LightningBolt01", "Red")
 		end
