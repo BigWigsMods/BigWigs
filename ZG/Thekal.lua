@@ -26,7 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 	warn2 = "Lor'Khan Casting Heal!",	
 } end )
 
-L:RegisterTranslations("enUS", function() return {
+L:RegisterTranslations("deDE", function() return {
 	cmd = "thekal",
 	
 	heal_cmd = "heal",
