@@ -260,6 +260,14 @@ function BigWigsOuro:Emerge()
 end
 
 function BigWigsOuro:Submerge()
+	self:CancelScheduledEvent("bwourosweepwarn")
+	self:CancelScheduledEvent("bwouroblastwarn")
+	self:CancelScheduledEvent("bwsubmergewarn")
+	
+	self:TriggerEvent("BigWigs_StopBar", self, L"sweepbartext")
+	self:TriggerEvent("BigWigs_StopBar", self, L"sandblastbartext")
+	self:TriggerEvent("BigWigs_StopBar", self, L"submergebar")
+
 	if self.db.profile.submerge then
 		self:TriggerEvent("BigWigs_Message", L"submergeannounce", "Red")
 		self:ScheduleEvent("bwsubmergewarn", "BigWigs_Message", 25, L"submergewarn", "Red" )
