@@ -26,7 +26,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	warn1 = "Teleport!",
 	warn2 = "Magic Shield down!",
-	warn3 = "Magic Shield UP!",	
+	warn3 = "Magic Shield UP!",
+
+	shieldbar = "Magic Shield",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -91,5 +93,6 @@ end
 function BigWigsAzuregos:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if self.db.profile.shield and string.find(arg1, L"trigger3") then
 		self:TriggerEvent("BigWigs_Message", L"warn3", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"shieldbar", 10, "Interface\\Icons\\Spell_Frost_FrostShock", "Orange", "Red")
 	end
 end
