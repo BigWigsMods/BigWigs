@@ -310,12 +310,12 @@ function BigWigsThaddius:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE( msg )
 			self:TriggerEvent("BigWigs_Message", L"poswarn", "Green", true)
 			self:TriggerEvent("BigWigs_StartBar", self, L"polaritytickbar", 5, "Interface\\Icons\\Spell_Lightning_LightningBolt01", "Red")
 		end
-		self.previousCharge = charge
+		self.previousCharge = chargetype
 	elseif chargetype == L"negativetype" then
 		if chargetype ~= self.previousCharge then
 			self:TriggerEvent("BigWigs_Message", L"negwarn", "Red", true)
 			self:TriggerEvent("BigWigs_StartBar", self, L"polaritytickbar", 5, "Interface\\Icons\\Spell_Lightning_LightningBolt01", "Red")
 		end
-		self.previousCharge = charge
+		self.previousCharge = chargetype
 	end
 end
