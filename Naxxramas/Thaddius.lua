@@ -46,7 +46,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	pstrigger = "Now you feel pain...",
 	trigger1 = "Thaddius begins to cast Polarity Shift",
-	chargetrigger = "^([^%s]+) ([^%s]+) afflicted by ([^%s]+) Charge",
+	chargetrigger = "You are afflicted by (%w+) Charge.",
 	positivetype = "Positive",
 	negativetype = "Negative",
 	stalaggtrigger = "Stalagg gains Power Surge.",
@@ -62,8 +62,9 @@ L:RegisterTranslations("enUS", function() return {
 	pswarn1 = "Thaddius begins to cast Polarity Shift!",
 	pswarn2 = "30 seconds to Polarity Shift!",
 	pswarn3 = "3 seconds to Polarity Shift!",
-	poswarn = "You are a Positive Charge!",
-	negwarn = "You are a Negative Charge!",
+	poswarn = "You changed to a Positive Charge!",
+	negwarn = "You changed to a Negative Charge!",
+	polaritytickbar = "Polarity tick",
 	enragebartext = "Enrage",
 	warn1 = "Enrage in 3 minutes",
 	warn2 = "Enrage in 90 seconds",
@@ -191,12 +192,12 @@ BigWigsThaddius.revision = tonumber(string.sub("$Revision$", 12, -3))
 --      Initialization      --
 ------------------------------
 
--- TODO: Add sync'ing for Stalagg's Power Surge.
-
 function BigWigsThaddius:OnEnable()
 	self.enrageStarted = nil
 	self.addsdead = 0
 	self.teslawarn = nil
+	self.previousCharge = ""
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
@@ -205,7 +206,7 @@ function BigWigsThaddius:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "PolarityCast")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF", "PolarityCast")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "ChargeEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ThaddiusPolarity", 10)
@@ -299,15 +300,22 @@ function BigWigsThaddius:BigWigs_RecvSync( sync )
 	end
 end
 
-function BigWigsThaddius:ChargeEvent( msg )
+function BigWigsThaddius:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE( msg )
 	if not self.db.profile.charge then return end
 
-	local _, _, playername, playertype, chargetype = string.find(msg, L"chargetrigger")
-	if playername and playertype and chargetype and playername == L"you" then
-		if chargetype == L"positivetype" then
+	local chargetype
+	_, _, chargetype = string.find(msg, L"chargetrigger")
+	if chargetype == L"positivetype" then
+		if chargetype ~= self.previousCharge then
 			self:TriggerEvent("BigWigs_Message", L"poswarn", "Green", true)
-		else
-			self:TriggerEvent("BigWigs_Message", L"negwarn", "Red", true)
+			self:TriggerEvent("BigWigs_StartBar", self, L"polaritytickbar", 5, "Interface\\Icons\\Spell_Lightning_LightningBolt01", "Red")
 		end
+		self.previousCharge = charge
+	elseif chargetype == L"negativetype" then
+		if chargetype ~= self.previousCharge then
+			self:TriggerEvent("BigWigs_Message", L"negwarn", "Red", true)
+			self:TriggerEvent("BigWigs_StartBar", self, L"polaritytickbar", 5, "Interface\\Icons\\Spell_Lightning_LightningBolt01", "Red")
+		end
+		self.previousCharge = charge
 	end
 end
