@@ -104,12 +104,14 @@ L:RegisterTranslations("zhCN", function() return {
 	silencetrigger = "黑女巫法琳娜受到了黑女巫的拥抱效果的影响。", -- EDITED it affects her too.
 	enragetrigger = "黑女巫法琳娜获得了激怒的效果。",
 	enragefade = "激怒效果从黑女巫法琳娜身上消失。",
-
+	
+	startwarn = "黑女巫法琳娜已激活 - 60秒后激怒！",
 	enragewarn15sec = "15秒后激怒！",
 	enragewarn = "激怒！",
 	enrageremovewarn = "激怒已移除 - %d后再次激怒", -- added
 	silencewarn = "沉默！延缓了激怒！",
 	silencewarnnodelay = "沉默！",
+	silencewarn5sec = "5秒后沉默结束！",
 
 	enragebar = "激怒",
 	silencebar = "沉默",

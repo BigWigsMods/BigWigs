@@ -1,4 +1,4 @@
-assert(BigWigs, "BigWigs not found!")
+﻿assert(BigWigs, "BigWigs not found!")
 
 ------------------------------
 --      Are you local?      --
@@ -50,6 +50,47 @@ L:RegisterTranslations("enUS", function() return {
 	["2nd"] = true,
 	["3rd"] = true,
 	["4th"] = true,
+} end)
+
+L:RegisterTranslations("zhCN", function() return {
+	["Colors"] = "颜色",
+
+	["Messages"] = "信息",
+	["Bars"] = "计时条",
+	["Shortbar"] = "短计时条",
+	["Longbar"] = "长计时条",
+	["Color %s"] = "颜色 %s",
+	["Color%s"] = "颜色%s",
+	["Number of colors"] = "颜色数量",
+	["xColors"] = "x颜色",
+	["Background"] = "背景",
+	["Text"] = "文本",
+	["Reset"] = "重置",
+
+	["Colors of messages and bars."] = "信息文字与计时条颜色。",
+	["Colors of messages."] = "信息文字颜色。",
+	["Change the color for \"%s\" messages."] = "变更\"%s\"信息的颜色。",
+	["Colors of bars."] = "计时条颜色。",
+	["Colors for short bars (< 1 minute)."] = "短时计时条（小于一分钟）的颜色。",
+	["Colors for long bars (> 1 minute)."] = "长时计时条（大于一分钟）的颜色。",
+	["Change the %s color."] = "变更颜色%s。",
+	["Number of colors the bar has."] = "计时条颜色数量。",
+	["Change the background color."] = "变更背景颜色。",
+	["Change the text color."] = "变更文本颜色。",
+	["Resets all ranges to defaults."] = "全部重置为默认状态。",
+
+	["Important"] = "重要",
+	["Personal"] = "个人",
+	["Urgent"] = "紧急",
+	["Attention"] = "注意",
+	["Positive"] = "积极",
+	["Bosskill"] = "首领击杀",
+	["Core"] = "核心",
+
+	["1st"] = "第一",
+	["2nd"] = "第二",
+	["3rd"] = "第三",
+	["4th"] = "第四",
 } end)
 
 ----------------------------------
@@ -338,13 +379,13 @@ function BigWigsColors:MsgColor(type)
 	elseif type == "Green" then type = self.db.profile.positive
 	elseif type == "Cyan" then type = self.db.profile.core end
 
-	if type == "Important" then type = self.db.profile.important
-	elseif type == "Personal" then type = self.db.profile.personal
-	elseif type == "Urgent" then type = self.db.profile.urgent
-	elseif type == "Attention" then type = self.db.profile.attention
-	elseif type == "Positive" then type = self.db.profile.positive
-	elseif type == "Bosskill" then type = self.db.profile.bosskill
-	elseif type == "Core" then type = self.db.profile.core end
+	if type == L"Important" then type = self.db.profile.important
+	elseif type == L"Personal" then type = self.db.profile.personal
+	elseif type == L"Urgent" then type = self.db.profile.urgent
+	elseif type == L"Attention" then type = self.db.profile.attention
+	elseif type == L"Positive" then type = self.db.profile.positive
+	elseif type == L"Bosskill" then type = self.db.profile.bosskill
+	elseif type == L"Core" then type = self.db.profile.core end
 
 	return type
 end

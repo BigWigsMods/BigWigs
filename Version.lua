@@ -1,4 +1,4 @@
-assert(BigWigs, "BigWigs not found!")
+﻿assert(BigWigs, "BigWigs not found!")
 
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsVersionQuery")
 
@@ -15,6 +15,15 @@ L:RegisterTranslations("enUS", function() return {
 	["Query the raid for BigWig versions."] = true,
 	["Query already running, please wait 5 seconds before you query again."] = true,
 	["Querying raid for BigWigs versions, please wait..."] = true,
+} end )
+
+L:RegisterTranslations("zhCN", function() return {
+	["VersionQuery"] = "版本检测",
+	["Options for Version Query."] = "版本检测设置。",
+	["Query"] = "检测",
+	["Query the raid for BigWig versions."] = "检测团队成员的BigWigs版本。",
+	["Query already running, please wait 5 seconds before you query again."] = "检测正在进行，请5秒后再进行检测。",
+	["Querying raid for BigWigs versions, please wait..."] = "正在检测团队成员的BigWigs版本，请稍侯……",
 } end )
 
 ---------------------------------

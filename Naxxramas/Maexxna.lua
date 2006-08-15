@@ -104,9 +104,14 @@ L:RegisterTranslations("zhCN", function() return {
 
 	enrage_name = "激怒警报",
 	enrage_desc = "激怒警报",
+	
+	cocoon_name = "蛛网裹体警报",
+	cocoon_desc = "对被蛛网裹体的玩家发出警报",
 
 	cocoontrigger = "^(.+)受(.+)了蛛网裹体",
 	webspraytrigger = "受到了蛛网喷射",
+	
+	cocoonwarn = "%s被蛛网裹体了！",
 
 	enragetrigger = "变得愤怒了！",
 
