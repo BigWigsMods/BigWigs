@@ -120,19 +120,19 @@ L:RegisterTranslations("deDE", function() return {
 	sonsdeadwarn = "%d/8 S\195\162hne der Flamme tot!",
 
 	cmd = "Ragnaros",
-	
+
 	emerge_cmd = "emerge",
 	emerge_name = "Auftauchen",
 	emerge_desc = "Warnung, wenn Ragnaros auftaucht.",
-	
+
 	sondeath_cmd = "sondeath",
 	sondeath_name = "S\195\162hne der Flamme",
 	sondeath_desc = "Warnung, wenn ein Sohn der Flamme stirbt.",
-	
+
 	submerge_cmd = "submerge",
 	submerge_name = "Untertauchen",
 	submerge_desc = "Warnung, wenn Ragnaros untertaucht und die S\195\162hne der Flamme erscheinen.",
-	
+
 	aoeknock_cmd = "aoeknock",
 	aoeknock_name = "AoE Rundumschlag",
 	aoeknock_desc = "Warnung, wenn Ragnaros AoE Rundumschlag wirkt.",
@@ -225,7 +225,7 @@ function BigWigsRagnaros:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 28, "Interface\\Icons\\Spell_Fire_SoulBurn", "Yellow", "Orange", "Red")
 	elseif (string.find(msg, L"trigger2") and self.db.profile.submerge) then
 		self:TriggerEvent("BigWigs_Message", L"warn3", "Red")
-		self:ScheduleEvent("BigWigs_Message", 75, L"warn4", "Orange")
+		self:ScheduleEvent("bwragnarosemergewarn4", "BigWigs_Message", 75, L"warn4", "Orange")
 		self:TriggerEvent("BigWigs_StartBar", self, L"bar2text", 90, "Interface\\Icons\\Spell_Fire_Volcano", "Green", "Yellow", "Orange", "Red")
 		self:ScheduleEvent("bwragnarosemerge", self.Emerge, 90, self)
 	elseif (string.find(msg, L"trigger3") and self.db.profile.emerge) then
@@ -235,6 +235,9 @@ function BigWigsRagnaros:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function BigWigsRagnaros:Emerge()
+	self:CancelScheduledEvent("bwragnarosemergewarn4")
+	self:TriggerEvent("BigWigs_StopBar", self, L"bar2text")
+
 	self:TriggerEvent("BigWigs_Message", L"warn5", "Yellow")
 	self:ScheduleEvent("BigWigs_Message", 120, L"warn6", "Orange")
 	self:ScheduleEvent("BigWigs_Message", 160, L"warn7", "Red")
