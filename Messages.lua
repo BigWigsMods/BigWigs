@@ -6,12 +6,10 @@ assert(BigWigs, "BigWigs not found!")
 ------------------------------
 
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsMessages")
-local dewdrop = AceLibrary("Dewdrop-2.0")
 local paint = AceLibrary("PaintChips-2.0")
 
 local rwframe, frame
 local minscale, maxscale = 0.25, 2
-
 
 ----------------------------
 --      Localization      --
@@ -207,9 +205,9 @@ function BigWigsMessages:BigWigs_HideAnchors()
 end
 
 
-function BigWigsMessages:BigWigs_Message(text, color)
+function BigWigsMessages:BigWigs_Message(text, type)
 	if not text then return end
-	local _, r, g, b = paint:GetRGBPercent(self.db.profile.usecolors and color or "white")
+	local _, r, g, b = paint:GetRGBPercent(self.db.profile.usecolors and BigWigsColors:MsgColor(type) or "white")
 	local f = self.db.profile.userwaidwarn and self.msgframe or rwframe
 	frame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
 end

@@ -41,6 +41,7 @@ Libs\CandyBar-2.0\CandyBar-2.0.lua
 Core.lua
 Comm.lua
 Comm-1.12.lua
+Colors.lua
 TargetMonitor.lua
 Options.lua
 Bars.lua
