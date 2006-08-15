@@ -5,6 +5,9 @@
 local boss = AceLibrary("Babble-Boss-2.0")("Maexxna")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
+local times = {}
+local prior = nil
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -20,8 +23,14 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_name = "Enrage Alert",
 	enrage_desc = "Warn for enrage",
 
-	webwraptrigger = "(.*) (.*) afflicted by Web Wrap.",
+	cocoon_cmd = "cocoon",
+	cocoon_name = "Cocoon Alert",
+	cocoon_desc = "Warn for Cocooned players",
+
+	cocoontrigger = "(.*) (.*) afflicted by Web Wrap.",
 	webspraytrigger = "is afflicted by Web Spray.",
+
+	cocoonwarn = "%s Cocooned!",
 
 	enragetrigger = "becomes enraged.",
 
@@ -50,7 +59,7 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_name = "Wutanfall",
 	enrage_desc = "Warnung wenn Maxxna w\195\188tend wird.",
 
-	webwraptrigger = "(.*) (.*) ist von Fangnetz betroffen.",
+	cocoontrigger = "(.*) (.*) ist von Fangnetz betroffen.",
 	webspraytrigger = "ist von Gespinstschauer betroffen.",
 
 	enragetrigger = "wird w\195\188tend.",
@@ -70,7 +79,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	webwraptrigger = "(.*) (.*) afflicted by Web Wrap.", -- "(.*)|1이;가; 거미줄 감싸기에 걸렸습니다."
+	cocoontrigger = "(.*) (.*) afflicted by Web Wrap.", -- "(.*)|1이;가; 거미줄 감싸기에 걸렸습니다."
 	webspraytrigger = "거미줄 뿌리기에 걸렸습니다.",		
 
 	enragetrigger = "맥스나|1이;가; 분노에 휩싸입니다!",
@@ -96,7 +105,7 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage_name = "激怒警报",
 	enrage_desc = "激怒警报",
 
-	webwraptrigger = "^(.+)受(.+)了蛛网裹体",
+	cocoontrigger = "^(.+)受(.+)了蛛网裹体",
 	webspraytrigger = "受到了蛛网喷射",
 
 	enragetrigger = "变得愤怒了！",
@@ -131,7 +140,8 @@ BigWigsMaexxna.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsMaexxna:OnEnable()
 	self.enrageannounced = nil
-	self.prior = nil
+	prior = nil
+	times = {}
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
@@ -145,35 +155,54 @@ function BigWigsMaexxna:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MaexxnaWebspray", 8)
+	-- the MaexxnaCocoon sync is left unthrottled, it's throttled inside the module itself
+	-- because the web wrap happens to a lot of players at once.
 end
 
 function BigWigsMaexxna:SprayEvent( msg )
 	-- web spray warning
-	if string.find(msg, L"webspraytrigger") and not self.prior then
+	if string.find(msg, L"webspraytrigger") and not prior then
 		self:TriggerEvent("BigWigs_SendSync", "MaexxnaWebspray")
+	elseif string.find(msg, L"cocoontrigger") then
+		local _,_,wplayer,wtype = string.find(msg, L"cocoontrigger")
+		if wplayer and wtype then
+			if wplayer == L"You" and wtype == "are" then
+				wplayer = UnitName("player")
+			end
+			local t = GetTime()
+			if ( not times[wplayer] ) or ( times[wplayer] and ( times[wplayer] + 10 ) < t) then
+				self:TriggerEvent("BigWigs_SendSync", "MaexxnaCocoon "..wplayer)
+			end
+		end
 	end
 end
 
 
-function BigWigsMaexxna:BigWigs_RecvSync( sync )
-	if sync ~= "MaexxnaWebspray" then return end
-	if self.prior then return end
+function BigWigsMaexxna:BigWigs_RecvSync( sync, rest )
+	if sync == "MaexxnaWebspray" then
+		if prior then return end
+		prior = true
 
-	self:CancelScheduledEvent("Maexxna_CheckStart")
+		self:CancelScheduledEvent("Maexxna_CheckStart")
 
-	self:CancelScheduledEvent("bwmaexxna30")
-	self:CancelScheduledEvent("bwmaexxna20")
-	self:CancelScheduledEvent("bwmaexxna10")
-	self:CancelScheduledEvent("bwmaexxna5")
+		self:CancelScheduledEvent("bwmaexxna30")
+		self:CancelScheduledEvent("bwmaexxna20")
+		self:CancelScheduledEvent("bwmaexxna10")
+		self:CancelScheduledEvent("bwmaexxna5")
 
-	self.prior = true
-
-	self:TriggerEvent("BigWigs_Message", L"webspraywarn", "Red")
-	self:ScheduleEvent("bwmaexxna30", "BigWigs_Message", 10, L"webspraywarn30sec", "Yellow")
-	self:ScheduleEvent("bwmaexxna20", "BigWigs_Message", 20, L"webspraywarn20sec", "Yellow")
-	self:ScheduleEvent("bwmaexxna10", "BigWigs_Message", 30, L"webspraywarn10sec", "Yellow")
-	self:ScheduleEvent("bwmaexxna5", "BigWigs_Message", 35, L"webspraywarn5sec", "Yellow")
-	self:TriggerEvent("BigWigs_StartBar", self, L"webspraybar", 40, "Interface\\Icons\\Ability_Ensnare", "Green", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L"webspraywarn", "Red")
+		self:ScheduleEvent("bwmaexxna30", "BigWigs_Message", 10, L"webspraywarn30sec", "Yellow")
+		self:ScheduleEvent("bwmaexxna20", "BigWigs_Message", 20, L"webspraywarn20sec", "Yellow")
+		self:ScheduleEvent("bwmaexxna10", "BigWigs_Message", 30, L"webspraywarn10sec", "Yellow")
+		self:ScheduleEvent("bwmaexxna5", "BigWigs_Message", 35, L"webspraywarn5sec", "Yellow")
+		self:TriggerEvent("BigWigs_StartBar", self, L"webspraybar", 40, "Interface\\Icons\\Ability_Ensnare", "Green", "Yellow", "Orange", "Red")
+	elseif sync == "MaexxnaCocoon" then
+		local t = GetTime()
+		if ( not times[rest] ) or ( times[rest] and ( times[rest] + 10 ) < t) then
+			if self.db.profile.cocoon then self:TriggerEvent("BigWigs_Message", string.format(L"cocoonwarn", rest), "Orange" ) end
+			times[rest] = t
+		end
+	end
 end
 
 
