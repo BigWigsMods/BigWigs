@@ -131,7 +131,7 @@ L:RegisterTranslations("zhCN", function() return {
 BigWigsMaexxna = BigWigs:NewModule(boss)
 BigWigsMaexxna.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsMaexxna.enabletrigger = boss
-BigWigsMaexxna.toggleoptions = {"spray", "enrage", "bosskill"}
+BigWigsMaexxna.toggleoptions = {"spray", "cocoon", "enrage", "bosskill"}
 BigWigsMaexxna.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
