@@ -379,13 +379,13 @@ function BigWigsColors:MsgColor(type)
 	elseif type == "Green" then type = self.db.profile.positive
 	elseif type == "Cyan" then type = self.db.profile.core end
 
-	if type == L"Important" then type = self.db.profile.important
-	elseif type == L"Personal" then type = self.db.profile.personal
-	elseif type == L"Urgent" then type = self.db.profile.urgent
-	elseif type == L"Attention" then type = self.db.profile.attention
-	elseif type == L"Positive" then type = self.db.profile.positive
-	elseif type == L"Bosskill" then type = self.db.profile.bosskill
-	elseif type == L"Core" then type = self.db.profile.core end
+	if type == "Important" then type = self.db.profile.important
+	elseif type == "Personal" then type = self.db.profile.personal
+	elseif type == "Urgent" then type = self.db.profile.urgent
+	elseif type == "Attention" then type = self.db.profile.attention
+	elseif type == "Positive" then type = self.db.profile.positive
+	elseif type == "Bosskill" then type = self.db.profile.bosskill
+	elseif type == "Core" then type = self.db.profile.core end
 
 	return type
 end

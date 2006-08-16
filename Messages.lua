@@ -8,9 +8,6 @@ assert(BigWigs, "BigWigs not found!")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsMessages")
 local paint = AceLibrary("PaintChips-2.0")
 
-local rwframe, frame
-local minscale, maxscale = 0.25, 2
-
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -47,6 +44,15 @@ L:RegisterTranslations("enUS", function() return {
 	["Scale is set to %s"] = true,
 	["Messages are now sent to the %2$s"] = true,
 	["Messages are currently sent to the %2$s"] = true,
+
+	["display"] = true,
+	["Display"] = true,
+	["Set where messages are displayed."] = true,
+	["Display is now set to %2$s"] = true,
+	["Display is currently set to %2$s"] = true,	
+
+	["Mik's Scrolling Battle Text"] = true,
+	["Scrolling Combat Text"] = true,
 } end)
 
 
@@ -101,7 +107,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 BigWigsMessages = BigWigs:NewModule(L"Messages")
 BigWigsMessages.defaultDB = {
-	useraidwarn = true,
+	display = L"RaidWarning frame",
 	usecolors = true,
 	scale = 1.0,
 }
@@ -116,20 +122,7 @@ BigWigsMessages.consoleOptions = {
 			name = L"Anchor",
 			desc = L"Show the message anchor frame.",
 			func = function() BigWigsMessages.anchorframe:Show() end,
-			hidden = function() return BigWigsMessages.db.profile.useraidwarn end,
-		},
-		[L"rw"] = {
-			type = "toggle",
-			name = L"Use RaidWarning",
-			desc = L"Toggle sending messages to the RaidWarnings frame.",
-			get = function() return BigWigsMessages.db.profile.useraidwarn end,
-			set = function(v)
-				BigWigsMessages.db.profile.useraidwarn = v
-				frame = v and RaidWarningFrame or BigWigsMessages.msgframe or BigWigsMessages:CreateMsgFrame()
-			end,
-			message = L"Messages are now sent to the %2$s",
-			current = L"Messages are currently sent to the %2$s",
-			map = {[true] = L"RaidWarning frame", [false] = L"BigWigs frame"},
+			hidden = function() return (BigWigsMessages.db.profile.display ~= L"BigWigs frame") end,
 		},
 		[L"color"] = {
 			type = "toggle",
@@ -151,19 +144,42 @@ BigWigsMessages.consoleOptions = {
 				BigWigsMessages.db.profile.scale = v
 				if BigWigsMessages.msgframe then BigWigsMessages.msgframe:SetScale(v) end
 			end,
-			hidden = function() return BigWigsMessages.db.profile.useraidwarn end,
+			hidden = function() return (BigWigsMessages.db.profile.display ~= L"BigWigs frame") end,
 		},
+		[L"display"] = {
+			type = "text",
+			name = L"Display",
+			desc = L"Set where messages are displayed.",
+			get = function() return BigWigsMessages.db.profile.display end,
+			validate = {L"BigWigs frame", L"RaidWarning frame"},
+			set = function(v)
+				BigWigsMessages.db.profile.display = v
+			end,
+			message = L"Display is now set to %2$s",
+			current = L"Display is currently set to %2$s",
+		}
 	},
 }
 
+------------------------------
+--   Optional Dependancies  --
+------------------------------
+
+if MikSBT then
+	table.insert(BigWigsMessages.consoleOptions.args[L"display"].validate, L"Mik's Scrolling Battle Text")
+end
+
+if SCT_Display_Message or ( SCT and SCT.DisplayMessage ) then
+	table.insert(BigWigsMessages.consoleOptions.args[L"display"].validate, L"Scrolling Combat Text")
+end
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
 function BigWigsMessages:OnInitialize()
-	self.anchorframe, rwframe = BigWigsMsgAnchorFrame, RaidWarningFrame
-	frame = self.db.profile.useraidwarn and RaidWarningFrame or self:CreateMsgFrame()
+	self.anchorframe = BigWigsMsgAnchorFrame
+	self:CreateMsgFrame()
 end
 
 
@@ -186,8 +202,6 @@ function BigWigsMessages:CreateMsgFrame()
 	self.msgframe:SetToplevel(true)
 	self.msgframe:SetFontObject(GameFontNormalLarge)
 	self.msgframe:Show()
-
-	return self.msgframe
 end
 
 
@@ -208,6 +222,20 @@ end
 function BigWigsMessages:BigWigs_Message(text, type)
 	if not text then return end
 	local _, r, g, b = paint:GetRGBPercent(self.db.profile.usecolors and BigWigsColors:MsgColor(type) or "white")
-	local f = self.db.profile.userwaidwarn and self.msgframe or rwframe
-	frame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
+
+	if self.db.profile.display == L"RaidWarning frame" then
+		RaidWarningFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
+	elseif MikSBT and self.db.profile.display == L"Mik's Scrolling Battle Text" then
+		MikSBT.DisplayMessage(text, MikSBT.DISPLAYTYPE_NOTIFICATION, false, r * 255, g * 255, b * 255)
+	elseif SCT_Display_Message and self.db.profile.display == L"Scrolling Combat Text" then -- SCT 4.x
+		local color = { }
+		color.r, color.g, color.b = r,g,b
+		SCT_Display_Message( text, color )		
+	elseif SCT and SCT.DisplayMesage and self.db.profile.display == L"Scrolling Combat Text" then -- SCT 5.x
+		local color = { }
+		color.r, color.g, color.b = r,g,b
+		SCT:DisplayMesage( text, color )		
+	else -- Default BigWigs Frame fallback
+		self.msgframe:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
+	end
 end

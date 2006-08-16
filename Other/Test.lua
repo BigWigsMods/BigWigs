@@ -57,7 +57,7 @@ end
 
 function BigWigsTest:BigWigs_RecvSync(sync)
 	if sync == "TestSync" then
-		self:TriggerEvent("BigWigs_Message", "Testing Sync", L"Positive")
+		self:TriggerEvent("BigWigs_Message", "Testing Sync", "Positive")
 		self:TriggerEvent("BigWigs_StartBar", self, "Testing Sync", 10, "Interface\\Icons\\Spell_Frost_FrostShock", true, "Green", "Blue", "Yellow", "Red")
 	end
 end
@@ -65,10 +65,10 @@ end
 
 function BigWigsTest:BigWigs_Test()
 	self:TriggerEvent("BigWigs_StartBar", self, L"Test Bar", 15, "Interface\\Icons\\Spell_Nature_ResistNature")
-	self:TriggerEvent("BigWigs_Message", L"Testing", L"Attention", nil, "Long")
-	self:ScheduleEvent("BigWigs_Message", 5, L"OMG Bear!", L"Important", nil, "Alert")
-	self:ScheduleEvent("BigWigs_Message", 10, L"*RAWR*", L"Urgent", nil, "Alarm")
-	self:ScheduleEvent("BigWigs_Message", 15, L"Victory!", L"Bosskill", nil, "Victory")
+	self:TriggerEvent("BigWigs_Message", L"Testing", "Attention", nil, "Long")
+	self:ScheduleEvent("BigWigs_Message", 5, L"OMG Bear!", "Important", nil, "Alert")
+	self:ScheduleEvent("BigWigs_Message", 10, L"*RAWR*", "Urgent", nil, "Alarm")
+	self:ScheduleEvent("BigWigs_Message", 15, L"Victory!", "Bosskill", nil, "Victory")
 
 	self:TriggerEvent("BigWigs_StartBar", self, L"Test Bar 2", 10, "Interface\\Icons\\Spell_Nature_ResistNature")
 	self:TriggerEvent("BigWigs_StartBar", self, L"Test Bar 3", 5, "Interface\\Icons\\Spell_Nature_ResistNature")
