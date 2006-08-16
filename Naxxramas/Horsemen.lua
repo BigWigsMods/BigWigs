@@ -150,8 +150,7 @@ function BigWigsHorsemen:Scan()
 	return false
 end
 
-function BigWigsMaexxna:MarkEvent( msg )
-	-- web spray warning
+function BigWigsHorsemen:MarkEvent( msg )
 	if string.find(msg, L"marktrigger") then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenMark")
 	end
