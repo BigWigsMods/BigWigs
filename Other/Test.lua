@@ -12,6 +12,7 @@ local BB = AceLibrary("Babble-Boss-2.0")
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
+	["test"] = true,
 	["Test"] = true,
 	["Test Bar"] = true,
 	["Test Bar 2"] = true,
@@ -21,6 +22,14 @@ L:RegisterTranslations("enUS", function() return {
 	["OMG Bear!"] = true,
 	["*RAWR*"] = true,
 	["Victory!"] = true,
+	["Options for testing."] = true,
+	["local"] = true,
+	["Local test"] = true,
+	["Perform a local test of BigWigs."] = true,
+	["sync"] = true,
+	["Sync test"] = true,
+	["Perform a sync test of BigWigs."] = true,
+	["Testing Sync"] = true,
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -40,7 +49,28 @@ L:RegisterTranslations("zhCN", function() return {
 ----------------------------------
 
 BigWigsTest = BigWigs:NewModule(L"Test")
+BigWigsTest.revision = tonumber(string.sub("$Revision$", 12, -3))
 
+BigWigsTest.consoleCmd = L"test"
+BigWigsTest.consoleOptions = {
+	type = "group",
+	name = L"Bars",
+	desc = L"Options for testing.",
+	args   = {
+		[L"local"] = {
+			type = "execute",
+			name = L"Local test",
+			desc = L"Perform a local test of BigWigs.",
+			func = function() BigWigsTest:TriggerEvent("BigWigs_Test") end,
+		},
+		[L"sync"] = {
+			type = "execute",
+			name = L"Sync test",
+			desc = L"Perform a sync test of BigWigs.",
+			func = function() BigWigsTest:TriggerEvent("BigWigs_SyncTest") end,
+		},		
+	}
+}
 
 function BigWigsTest:OnEnable()
 	self:RegisterEvent("BigWigs_Test")
@@ -57,8 +87,8 @@ end
 
 function BigWigsTest:BigWigs_RecvSync(sync)
 	if sync == "TestSync" then
-		self:TriggerEvent("BigWigs_Message", "Testing Sync", "Positive")
-		self:TriggerEvent("BigWigs_StartBar", self, "Testing Sync", 10, "Interface\\Icons\\Spell_Frost_FrostShock", true, "Green", "Blue", "Yellow", "Red")
+		self:TriggerEvent("BigWigs_Message", L"Testing Sync", "Positive")
+		self:TriggerEvent("BigWigs_StartBar", self, L"Testing Sync", 10, "Interface\\Icons\\Spell_Frost_FrostShock", true, "Green", "Blue", "Yellow", "Red")
 	end
 end
 
