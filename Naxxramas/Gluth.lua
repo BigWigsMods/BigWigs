@@ -137,11 +137,9 @@ function BigWigsGluth:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Decimate")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Decimate")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Decimate")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "GluthDecimate", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "GluthDecimate", 30)
 	self:TriggerEvent("BigWigs_ThrottleSync", "GluthStart", 10)
 end
 
