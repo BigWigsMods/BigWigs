@@ -221,9 +221,11 @@ end
 function BigWigsRagnaros:CHAT_MSG_MONSTER_YELL(msg)
 	if (string.find(msg, L"trigger1") and self.db.profile.aoeknock) then
 		self:TriggerEvent("BigWigs_Message", L"warn1", "Red")
-		self:ScheduleEvent("BigWigs_Message", 23, L"warn2", "Orange")
+		self:ScheduleEvent("bwragnarosaekbwarn", "BigWigs_Message", 23, L"warn2", "Orange")
 		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 28, "Interface\\Icons\\Spell_Fire_SoulBurn", "Yellow", "Orange", "Red")
 	elseif (string.find(msg, L"trigger2") and self.db.profile.submerge) then
+		self:CancelScheduledEvent("bwragnarosaekbwarn")
+		self:TriggerEvent("BigWigs_StopBar", self, L"bar1text")
 		self:TriggerEvent("BigWigs_Message", L"warn3", "Red")
 		self:ScheduleEvent("bwragnarosemergewarn4", "BigWigs_Message", 75, L"warn4", "Orange")
 		self:TriggerEvent("BigWigs_StartBar", self, L"bar2text", 90, "Interface\\Icons\\Spell_Fire_Volcano", "Green", "Yellow", "Orange", "Red")
