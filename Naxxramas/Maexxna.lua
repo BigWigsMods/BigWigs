@@ -142,7 +142,7 @@ BigWigsMaexxna.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsMaexxna:OnEnable()
 	self.enrageannounced = nil
-	prior = nil
+	self.prior = nil
 	times = {}
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -182,8 +182,8 @@ end
 
 function BigWigsMaexxna:BigWigs_RecvSync( sync, rest )
 	if sync == "MaexxnaWebspray" then
-		if prior then return end
-		prior = true
+		if self.prior then return end
+		self.prior = true
 
 		self:CancelScheduledEvent("Maexxna_CheckStart")
 
