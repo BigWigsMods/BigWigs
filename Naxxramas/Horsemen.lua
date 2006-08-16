@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -28,6 +28,7 @@ L:RegisterTranslations("enUS", function() return {
 	markbar = "Mark",
 	markwarn1 = "Mark (%d)!",
 	markwarn2 = "Mark (%d) - 5 sec",
+	marktrigger = "is afflicted by Mark of (Korth'azz|Blaumeux|Mograine|Zeliek)",
 
 	startwarn = "The Four Horsemen Engaged! Mark in 30 sec",
 
@@ -102,10 +103,14 @@ function BigWigsHorsemen:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "MarkEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "MarkEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "MarkEvent")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenShieldWall", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenStart", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenMark", 8)
 end
 
 function BigWigsHorsemen:PLAYER_REGEN_ENABLED()
@@ -145,16 +150,10 @@ function BigWigsHorsemen:Scan()
 	return false
 end
 
-
-function BigWigsHorsemen:Mark( first )
-	if first then
-		self:ScheduleRepeatingEvent("bwhorsemenmarkrepeater", self.Mark, 12, self )
-	end
-	if self.db.profile.mark then self:TriggerEvent("BigWigs_Message", string.format( L"markwarn1", self.marks ), "Red") end
-	self.marks = self.marks + 1
-	if self.db.profile.mark then 
-		self:TriggerEvent("BigWigs_StartBar", self, L"markbar", 12, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Orange", "Red")
-		self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 7, string.format( L"markwarn2", self.marks ), "Orange")
+function BigWigsMaexxna:MarkEvent( msg )
+	-- web spray warning
+	if string.find(msg, L"marktrigger") then
+		self:TriggerEvent("BigWigs_SendSync", "HorsemenMark")
 	end
 end
 
@@ -163,10 +162,18 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 		self.started = true
 		if self.db.profile.mark then
 			self:TriggerEvent("BigWigs_Message", L"startwarn", "Yellow")
-			self:TriggerEvent("BigWigs_StartBar", self, L"markbar", 30, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Yellow", "Orange", "Red")
-			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 25, string.format( L"markwarn2", self.marks ), "Orange")
+			self:TriggerEvent("BigWigs_StartBar", self, L"markbar", 20, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Yellow", "Orange", "Red")
+			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 15, string.format( L"markwarn2", self.marks ), "Orange")
 		end
-		self:ScheduleEvent("bwhorsemenmark", self.Mark, 30, self, true )
+	elseif sync == "HorsemenMark" then
+		if self.db.profile.mark then
+			self:TriggerEvent("BigWigs_Message", string.format( L"markwarn1", self.marks ), "Red")
+		end
+		self.marks = self.marks + 1
+		if self.db.profile.mark then 
+			self:TriggerEvent("BigWigs_StartBar", self, L"markbar", 12, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Orange", "Red")
+			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 7, string.format( L"markwarn2", self.marks ), "Orange")
+		end			
 	elseif sync == "HorsemenShieldWall" then
 		self:TriggerEvent("BigWigs_Message", string.format(L"shieldwallwarn", rest), "White")
 		self:ScheduleEvent("BigWigs_Message", 20, string.format(L"shieldwallwarn2", rest), "Green")
