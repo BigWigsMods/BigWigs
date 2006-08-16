@@ -168,7 +168,7 @@ function BigWigsMaexxna:SprayEvent( msg )
 	elseif string.find(msg, L"cocoontrigger") then
 		local _,_,wplayer,wtype = string.find(msg, L"cocoontrigger")
 		if wplayer and wtype then
-			if wplayer == L"you" and wtype == L"are" then
+			if wplayer == L"You" and wtype == L"are" then
 				wplayer = UnitName("player")
 			end
 			local t = GetTime()
