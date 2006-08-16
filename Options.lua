@@ -51,7 +51,7 @@ deuce.consoleOptions = not FuBar and {
 	type = "toggle",
 	name = L"Minimap",
 	desc = L"Toggle the minimap button.",
-	get = function() return BigWigsOptions.minimapFrame:IsShown() end,
+	get = function() return BigWigsOptions.minimapFrame and BigWigsOptions.minimapFrame:IsVisible() or false end,
 	set = function(v) if v then BigWigsOptions:Show() else BigWigsOptions:Hide() end end,
 	map = {[false] = L"Hidden", [true] = L"Shown"},
 	hidden = function() return FuBar and true end,
