@@ -218,7 +218,7 @@ function BigWigsFaerlina:BigWigs_RecvSync( sync )
 			local currentTime = GetTime()
 
 			if self.db.profile.enrage then
-				if (self.enrageTimerStarted + 30) > currentTime then
+				if (self.enrageTimerStarted + 30) < currentTime then
 					-- We SHOULD reset the enrage timer, since it's more than 30
 					-- sec since enrage started. This is only visuals ofcourse.
 					self:TriggerEvent("BigWigs_StopBar", self, L"enragebar")
