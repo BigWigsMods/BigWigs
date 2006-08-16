@@ -217,6 +217,15 @@ function BigWigsFaerlina:BigWigs_RecvSync( sync )
 
 			local currentTime = GetTime()
 
+			if self.db.profile.silence then
+				if (self.enrageTimerStarted + 30) < currentTime then
+					self:TriggerEvent("BigWigs_Message", L"silencewarnnodelay", "Orange")
+				else
+					self:TriggerEvent("BigWigs_Message", L"silencewarn", "Orange")
+				end
+				self:TriggerEvent("BigWigs_StartBar", self, L"silencebar", self.silencetime, "Interface\\Icons\\Spell_Holy_Silence", "Green", "Yellow", "Orange", "Red")
+				self:ScheduleEvent("bwfaerlinasilence5", "BigWigs_Message", self.silencetime -5, L"silencewarn5sec", "Orange")
+			end
 			if self.db.profile.enrage then
 				if (self.enrageTimerStarted + 30) < currentTime then
 					-- We SHOULD reset the enrage timer, since it's more than 30
@@ -229,15 +238,6 @@ function BigWigsFaerlina:BigWigs_RecvSync( sync )
 				end
 			end
 
-			if self.db.profile.silence then
-				if (self.enrageTimerStarted + 30) > currentTime then
-					self:TriggerEvent("BigWigs_Message", L"silencewarnnodelay", "Orange")
-				else
-					self:TriggerEvent("BigWigs_Message", L"silencewarn", "Orange")
-				end
-				self:TriggerEvent("BigWigs_StartBar", self, L"silencebar", self.silencetime, "Interface\\Icons\\Spell_Holy_Silence", "Green", "Yellow", "Orange", "Red")
-				self:ScheduleEvent("bwfaerlinasilence5", "BigWigs_Message", self.silencetime -5, L"silencewarn5sec", "Orange")
-			end
 		else -- Reactive enrage removed
 			if self.db.profile.enrage then
 				self:TriggerEvent("BigWigs_Message", string.format(L"enrageremovewarn", self.enragetime), "Orange")
