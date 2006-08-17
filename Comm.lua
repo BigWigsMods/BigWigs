@@ -44,7 +44,7 @@ function BigWigsComm:CHAT_MSG_CHANNEL(msg, sender, sschan, arg4, arg5, arg6, arg
 	
  	for _, c in msgarr do
 		local _, _, sync, rest = string.find(c, "^BigWigsSync (%S+)%s*(.*)$")
-		if sync and not throt[sync] or not times[sync] or (times[sync] + throt[sync]) <= GetTime() then
+		if sync and ( not throt[sync] or not times[sync] or (times[sync] + throt[sync]) <= GetTime()) then
 			self:TriggerEvent("BigWigs_RecvSync", sync, rest, sender)
 			times[sync] = GetTime()
 		end
