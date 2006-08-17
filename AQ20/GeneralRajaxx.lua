@@ -156,7 +156,7 @@ function BigWigsGeneralRajaxx:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self.warnsets = {}
-	for i=1,8 do self.warnsets[L("trigger"..i)] = L("warn"..i) end
+	for i=1,9 do self.warnsets[L("trigger"..i)] = L("warn"..i) end
 end
 
 
