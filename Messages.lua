@@ -231,10 +231,8 @@ function BigWigsMessages:BigWigs_Message(text, type)
 		local color = { }
 		color.r, color.g, color.b = r,g,b
 		SCT_Display_Message( text, color )		
-	elseif SCT and SCT.DisplayMesage and self.db.profile.display == L"Scrolling Combat Text" then -- SCT 5.x
-		local color = { }
-		color.r, color.g, color.b = r,g,b
-		SCT:DisplayMesage( text, color )		
+	elseif SCT and SCT_MSG_FRAME and self.db.profile.display == L"Scrolling Combat Text" then -- SCT 5.x
+		SCT_MSG_FRAME:AddMessage( text, r, g, b, 1 )
 	else -- Default BigWigs Frame fallback
 		self.msgframe:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
 	end
