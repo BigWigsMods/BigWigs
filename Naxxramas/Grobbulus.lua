@@ -130,7 +130,7 @@ else
 		local _, _, eplayer, etype = string.find(msg, L"trigger1")
 		if eplayer and etype then
 			if self.db.profile.youinjected and eplayer == L"you" and etype == L"are" then
-				self:TriggerEvent("BigWigs_Message", L"warn1", "Red", true)
+				self:TriggerEvent("BigWigs_Message", L"warn1", "Red", true, "Alarm")
 			elseif self.db.profile.otherinjected then 
 				self:TriggerEvent("BigWigs_Message", eplayer .. L"warn2", "Yellow")
 				self:TriggerEvent("BigWigs_SendTell", eplayer, L"warn1")
