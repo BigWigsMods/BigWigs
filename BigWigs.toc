@@ -90,6 +90,7 @@ BWL\Flamegor.lua
 BWL\Nefarian.lua
 BWL\Vaelastrasz.lua
 BWL\Broodlord.lua
+BWL\Razorgore.lua
 
 MC\Lucifron.lua
 MC\BaronGeddon.lua
