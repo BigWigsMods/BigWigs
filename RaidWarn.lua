@@ -89,8 +89,9 @@ function BigWigsRaidWarn:BigWigs_Message(msg, color, noraidsay)
 	end
 	SendChatMessage("*** "..msg.." ***", "RAID_WARNING")
 end
-	
+
 function BigWigsRaidWarn:BigWigs_SendTell(player, msg )
-	if not self.db.profile.whisper or not player or not msg then return end
+	if not self.db.profile.whisper or not player or not msg or ( not IsRaidLeader() and not IsRaidOfficer() ) then return end
 	SendChatMessage(msg, "WHISPER", nil, player)
 end
+
