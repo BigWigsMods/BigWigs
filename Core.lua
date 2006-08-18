@@ -52,6 +52,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Silithus"] = true,
 	["Outdoor Raid Bosses"] = "Outdoor",
 	["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
+
+	["Unknown module '%s' should be enabled - a newer version of BigWigs might be avaiable!"] = true,
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -321,10 +323,14 @@ end
 function BigWigs:BigWigs_RecvSync(sync, module)
 	if sync == "EnableModule" and module then
 		local name = BB:HasTranslation(module) and BB(module) or module
-		if self:HasModule(name) and self:GetModule(name).zonename == GetRealZoneText() then self:EnableModule(name, true) end
+		if not self:HasModule(name) then
+			self:Print(string.format(L"Unknown module '%s' should be enabled - a newer version of BigWigs might be avaiable!", module))
+		elseif
+			self:GetModule(name).zonename == GetRealZoneText() then self:EnableModule(name, true)
+		end
 	elseif sync == "EnableExternal" and module then
 		local name = BB:HasTranslation(module) and BB(module) or module
-		if self:HasModule(name) and (self:GetModule(name).zonename == GetRealZoneText()) then self:EnableModule(name, true) end
+		if self:HasModule(name) and self:GetModule(name).zonename == GetRealZoneText() then self:EnableModule(name, true) end
 	end
 end
 
