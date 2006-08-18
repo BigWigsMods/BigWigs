@@ -66,7 +66,7 @@ end
 ------------------------------
 
 function BigWigsRazorgore:CHAT_MSG_MONSTER_YELL(msg)
-	if string.find(msg, L"start") then
+	if string.find(msg, L"start_trigger") then
 		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L"start_message", "Orange") end
 		self.eggs = 0
 	elseif self.db.profile.mc then
