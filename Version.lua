@@ -1,6 +1,13 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsVersionQuery")
+local Tablet = AceLibrary("Tablet-2.0")
+local Dewdrop = AceLibrary("Dewdrop-2.0")
+
+local QueryRunning
+local ResponseTable
+local ZoneRevisions
+local ResponseString
 
 ---------------------------------
 --      Localization           --
@@ -52,32 +59,25 @@ BigWigsVersionQuery.consoleOptions = {
 ------------------------------
 
 function BigWigsVersionQuery:OnEnable()
-
-	self.zoneRevisions = {}
-
+	QueryRunning = nil
+	ResponseTable = {}
+	ZoneRevisions = {}
+	ResponseString = ""
+	
 	local BWL = AceLibrary("AceLocale-2.0"):new("BigWigs")
-
-	-- Get the highest rev of the bosses in each zone.
 	for name,module in self.core:IterateModules() do
 		if module:IsBossModule() and module.zonename and type(module.zonename) == "string" then
 			local zone = BWL:HasTranslation(module.zonename) and BWL:GetTranslation(module.zonename) or module.zonename
 			local revision = module.revision
-			if not self.zoneRevisions[zone] or revision > self.zoneRevisions[zone] then
-				self.zoneRevisions[zone] = revision
+			if not ZoneRevisions[zone] or revision > ZoneRevisions[zone] then
+				ZoneRevisions[zone] = revision
 			end
 		end
 	end
-
-	BWL = nil
-
-	self.queryRunning = nil
-	self.responseTable = {}
-
-	self.responseString = ""
-
-	for key, value in self.zoneRevisions do
-		self.responseString = self.responseString.." "..key..":"..value
+	for key, value in ZoneRevisions do
+		ResponseString = ResponseString.." "..key..":"..value
 	end
+	BWL = nil
 
 	self:RegisterEvent("BigWigs_VersionQuery")
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -87,28 +87,52 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsVersionQuery:PrintVersions()
-	self.core:Print("Version replies:")
-	for key, value in self.responseTable do
-		self.core:Print(" - "..value[1]..": "..value[2])
+function BigWigsVersionQuery:UpdateVersions()
+	if not Tablet:IsRegistered("BigWigs_VersionQuery") then
+		Tablet:Register("BigWigs_VersionQuery",
+			"children", function() Tablet:SetTitle("BigWigs Version Query.")
+				self:OnTooltipUpdate() end,
+			"clickable", true,
+			"showEverythingWhenDetached", true,
+			"cantAttach", true,
+			"menu", function()
+					Dewdrop:AddLine(
+						'text', "Qeury",
+						'func', function() self:QueryVersion() end)
+					Dewdrop:AddLine(
+						'text', "Close",
+						'func', function() Tablet:Attach("BigWigs_VersionQuery"); Dewdrop:Close() end)
+				end
+		)
 	end
-	self.responseTable = {}
-	self.queryRunning = nil
+	if Tablet:IsAttached("BigWigs_VersionQuery") then
+		Tablet:Detach("BigWigs_VersionQuery")
+	else
+		Tablet:Refresh("BigWigs_VersionQuery")
+	end
+end
+
+function BigWigsVersionQuery:OnTooltipUpdate()
+	local Cat = Tablet:AddCategory("columns", 2,
+		"text", "Player",
+		"text2", "Version",
+		"child_justify1", "LEFT",
+		"child_justify2", "RIGHT")
+	for name, version in ResponseTable do
+		Cat:AddLine("text", name, "text2", version)
+	end
 end
 
 function BigWigsVersionQuery:QueryVersion()
-	if self.queryRunning then
+	if QueryRunning then
 		self.core:Print(L"Query already running, please wait 5 seconds before you query again.")
 		return
 	end
-
 	self.core:Print(L"Querying raid for BigWigs versions, please wait...")
-
-	self.queryRunning = true
-	self:ScheduleEvent("bwvqstop", function() BigWigsVersionQuery:PrintVersions() end, 5)
-
-	table.insert(self.responseTable, {UnitName("player"), self.responseString})
-
+	QueryRunning = true
+	self:ScheduleEvent(function() QueryRunning = nil end, 5)
+	ResponseTable[UnitName("player")] = ResponseString
+	self:UpdateVersions()
 	self:TriggerEvent("BigWigs_VersionQuery")
 end
 
@@ -118,11 +142,11 @@ end
 
 function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "BWVQ" and nick ~= UnitName("player") then
-		self:TriggerEvent("BigWigs_SendSync", "BWVR "..self.responseString)
+		self:TriggerEvent("BigWigs_SendSync", "BWVR "..ResponseString)
 	elseif sync == "BWVR" then
-		if self.queryRunning then
-			table.insert(self.responseTable, {nick, rest})
+		if QueryRunning then
+			ResponseTable[nick] = rest
+			self:UpdateVersions()
 		end
 	end
 end
-
