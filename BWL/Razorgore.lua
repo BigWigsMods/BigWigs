@@ -22,7 +22,7 @@ L:RegisterTranslations("enUS", function() return {
 	egg_trigger = "casts Destroy Egg",
 	egg_message = "%d/30 eggs destroyed!",
 
-	phase2_message = "All eggs destroyed, Razorgore lose!",
+	phase2_message = "All eggs destroyed, Razorgore loose!",
 
 	mc_cmd = "mindcontrol",
 	mc_name = "Mind Control",
