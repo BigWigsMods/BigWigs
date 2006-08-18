@@ -19,7 +19,7 @@ L:RegisterTranslations("enUS", function() return {
 	mindcontrol_trigger = "Foolish ([^%s]+).",
 	mindcontrol_message = "%s has been mind controlled!",
 
-	egg_trigger = "Razorgore the Untamed casts Destroy (.*)%.",
+	egg_trigger = "casts Destroy Egg",
 	egg_message = "%d/30 eggs destroyed!",
 
 	phase2_message = "All eggs destroyed, Razorgore lose!",
@@ -78,8 +78,7 @@ function BigWigsRazorgore:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function BigWigsRazorgore:CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF(msg)
-	local _, _, egg = string.find(msg, L"egg_trigger");
-	if egg then
+	if string.find(msg, L"egg_trigger") then
 		self:TriggerEvent("BigWigs_SendSync", "RazorgoreEgg "..tostring(self.eggs + 1))
 	end
 end
