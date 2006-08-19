@@ -44,9 +44,6 @@ L:RegisterTranslations("enUS", function() return {
 	trawarn = "Trainees in 3 seconds",
 	dkwarn = "Deathknight in 3 seconds",
 	riderwarn = "Rider in 3 seconds",
-	dktwarn = "Trainees and DK in 3 seconds",
-	rtwarn = "Trainees and Rider in 3 seconds",
-	triowarn = "Trainees in 3 seconds",
 
 	trabar = "Trainees",
 	dkbar = "Deathknight",
@@ -82,9 +79,6 @@ L:RegisterTranslations("deDE", function() return {
 	trawarn = "Lehrlinge in 3 Sekunden",
 	dkwarn = "Todesritter in 3 Sekunden",
 	riderwarn = "Reiter in 3 Sekunden",
-	dktwarn = "Lehrlinge und Todesritter in 3 Sekunden",
-	rtwarn = "Lehrlinge und Reiter in 3 Sekunden",
-	triowarn = "Trainees in 3 Sekunden",
 
 	trabar = "Lehrlinge",
 	dkbar = "Todesritter",
@@ -124,9 +118,6 @@ L:RegisterTranslations("zhCN", function() return {
 	trawarn = "3秒后学徒出现",
 	dkwarn = "3秒后死亡骑士出现",
 	riderwarn = "3秒后骑兵出现",
-	dktwarn = "3秒后学徒与死亡骑士出现",
-	rtwarn = "3秒后学徒与骑兵出现",
-	triowarn = "3秒后学徒出现",
 
 	trabar = "学徒",
 	dkbar = "死亡骑士",
