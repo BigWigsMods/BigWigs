@@ -103,10 +103,10 @@ L:RegisterTranslations("deDE", function() return {
 	you = "Ihr",
 	are = "seid",
 
-	warn1 = "Schattenschwinge beginnt Fl\195\188gelsto\195\159 zu wirken!",
+	warn1 = "Fl\195\188gelsto\195\159!",
 	warn2 = "30 Sekunden bis zum n\195\164chsten Fl\195\188gelsto\195\159!",
-	warn3 = "3 Sekunden bis Schattenschwinge Fl\195\188gelsto\195\159 wirkt!",
-	warn4 = "Schattenflamme in K\195\188!",
+	warn3 = "3 Sekunden bis Fl\195\188gelsto\195\159!",
+	warn4 = "Schattenflamme in K\195\188rze!",
 	warn5 = "Du hast Schattenschwinges Schatten!",
 	warn6 = " hat Schattenschwinges Schatten!",
 
@@ -123,11 +123,11 @@ L:RegisterTranslations("deDE", function() return {
 	shadowflame_desc = "Warnung, wenn Schattenschwinge Schattenflamme wirkt.",
 
 	youcurse_cmd = "youcurse",
-	youcurse_name = "Schattenschwinges Schatten auf Dir",
+	youcurse_name = "Schatten auf Dir",
 	youcurse_desc = "Warnung, wenn Du Schattenschwinges Schatten hast.",
 
 	elsecurse_cmd = "elsecurse",
-	elsecurse_name = "Schattenschwinges Schatten auf Anderen",
+	elsecurse_name = "Schatten auf Anderen",
 	elsecurse_desc = "Warnung, wenn andere Spieler Schattenschwinges Schatten haben.",
 } end)
 

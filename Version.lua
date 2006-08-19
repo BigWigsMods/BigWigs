@@ -33,6 +33,17 @@ L:RegisterTranslations("zhCN", function() return {
 	["Querying raid for BigWigs versions, please wait..."] = "正在检测团队成员的BigWigs版本，请稍侯……",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	-- ["versionquery"] = true,
+	["VersionQuery"] = "Versions Abfrage",
+	["Options for Version Query."] = "Optionen f\195\188r die Versions Abfrage.",
+	-- ["query"] = true,
+	["Query"] = "Abfrage",
+	["Query the raid for BigWig versions."] = "Abfrage des Raids nach verwendeten BigWigs Versionen.",
+	["Query already running, please wait 5 seconds before you query again."] = "Abfrage l\195\164uft bereits, bitte warte 5 Sekunden bevor du erneut abfragst.",
+	["Querying raid for BigWigs versions, please wait..."] = "Abfrage des Raids nach verwendeten BigWigs Versionen, bitte warten...",
+} end )
+
 ---------------------------------
 --      Addon Declaration      --
 ---------------------------------

@@ -93,6 +93,47 @@ L:RegisterTranslations("zhCN", function() return {
 	["4th"] = "第四",
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	["Colors"] = "Farben",
+
+	["Messages"] = "Nachrichten",
+	["Bars"] = "Anzeigebalken",
+	["Shortbar"] = "KurzerAnzeigebalken",
+	["Longbar"] = "LangerAnzeigebalken",
+	["Color %s"] =  "Farbe %s",
+	["Color%s"] = "Farbe%s",
+	["Number of colors"] = "Anzahl der Farben",
+	["xColors"] = "xFarben",
+	["Background"] = "Hintergrund",
+	["Text"] = "Text",
+	["Reset"] = "Zur\195\188cksetzen",
+
+	["Colors of messages and bars."] = "Farben der Nachrichten und Anzeigebalken.",
+	["Colors of messages."] = "Farben der Nachrichten.",
+	["Change the color for \"%s\" messages."] = "Farbe \195\164ndern f\195\188r \"%s\" Nachrichten.",
+	["Colors of bars."] = "Farben der Leisten.",
+	["Colors for short bars (< 1 minute)."] = "Farbe f\195\188r kurze Anzeigebalken (< 1 Minute).",
+	["Colors for long bars (> 1 minute)."] = "Farbe f\195\188r lange Anzeigebalken (> 1 Minute).",
+	["Change the %s color."] = "Die %s Farbe \195\164ndern.",
+	["Number of colors the bar has."] = "Anzahl der Farben, die ein Anzeigebalken hat.",
+	["Change the background color."] = "Hintergrund Farbe \195\164ndern.",
+	["Change the text color."] = "Text Farbe \195\164ndern.",
+	["Resets all ranges to defaults."] = "Auf Standard zur\195\188cksetzen.",
+
+	-- ["Important"] = true,
+	-- ["Personal"] = true,
+	-- ["Urgent"] = true,
+	-- ["Attention"] = true,
+	-- ["Positive"] = true,
+	-- ["Bosskill"] = true,
+	-- ["Core"] = true,
+
+	["1st"] = "1te",
+	["2nd"] = "2te",
+	["3rd"] = "3te",
+	["4th"] = "4te",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

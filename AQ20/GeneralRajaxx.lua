@@ -68,7 +68,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	wave_cmd = "wave",
 	wave_name = "Wellen",
-	wave_desc = "Warnung f\195\188 die ankommenden Wellen.",
+	wave_desc = "Warnung f\195\188r die ankommenden Wellen.",
 
 	trigger1 = "Hier kommen sie. Bleibt am Leben, Welpen.",
 	trigger2 = "?????",  -- There is no callout for wave 2 ><

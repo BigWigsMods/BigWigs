@@ -90,7 +90,7 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	disabletrigger = "Unm\195\182! Haltet ein, Sterbliche... Ich gebe auf! Ich gebe auf!",
+	disabletrigger = "Haltet ein, Sterbliche",
 
 	trigger1 = "bekommt 'Magiereflexion'",
 	trigger2 = "bekommt 'Schadensschild'",

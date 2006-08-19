@@ -47,11 +47,11 @@ L:RegisterTranslations("deDE", function() return {
 	other_desc = "Warnung, wenn andere Spieler beobachtet werden.",
 
 	trigger1 = "([^%s]+)! Ich behalte Euch im Auge!$",
-	trigger2 = "goes into a rage after seeing his raptor fall in battle!$", -- ?
+	trigger2 = "ger\195\164t in Rage, als er sieht, dass sein Raptor im Kampf stirbt!$",
 
 	warn1 = "Du wirst beobachtet - Alle Aktionen stoppen!",
 	warn2 = "%s wird beobachtet!",
-	warn3 = "Ohgan down! Mandokir enraged!", -- ?
+	warn3 = "Ohgan down! Mandokir w\195\188tend!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

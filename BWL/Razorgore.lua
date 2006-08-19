@@ -37,6 +37,33 @@ L:RegisterTranslations("enUS", function() return {
 	phase_desc = "Alert on phase 1 and 2",
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	cmd = "Razorgore",
+
+	start_trigger = "Eindringlinge sind in die",
+	start_message = "Razorgore angegriffen! 30 Eier noch zu zerst\195\182ren!",
+
+	mindcontrol_trigger = "^([^%s]+), Ihr Narr, Ihr dient jetzt mir!",
+	mindcontrol_message = "%s wurde \195\188bernommen!",
+
+	egg_trigger = "Razorgore der Ungez\195\164hmte wirkt (.*) zerst\195\182ren.",
+	egg_message = "%d/30 Eier zerst\195\182rt!",
+
+	phase2_message = "Alle Eier zerst\195\182rt!",
+
+	mc_cmd = "mindcontrol",
+	mc_name = "Gedankenkontrolle",
+	mc_desc = "Warnung, wenn Spieler \195\188bernommen werden.",
+
+	eggs_cmd = "eggs",
+	eggs_name = "Eier",
+	eggs_desc = "Countdown f\195\188r die noch zu zerst\195\182renden Eier.",
+
+	phase_cmd = "phase",
+	phase_name = "Phasen",
+	phase_desc = "Warnung beim Eintritt in Phase 1 und 2.",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
@@ -98,4 +125,5 @@ function BigWigsRazorgore:BigWigs_RecvSync(sync, rest)
 		end
 	end
 end
+
 

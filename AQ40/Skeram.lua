@@ -45,20 +45,20 @@ L:RegisterTranslations("deDE", function() return {
 	mcyou = "Ihr",
 	mcare = "seid",
 	
-	splitwarn = "Abbilder in K\195\188!",
+	splitwarn = "Abbilder in K\195\188rze!",
 
 	cmd = "Skeram",
 	mc_cmd = "mc",
 	mc_name = "Gedankenkontrolle",
-	mc_desc = "Warnung vor Gedankenkontrolle",
+	mc_desc = "Warnung vor Gedankenkontrolle.",
 
 	ae_cmd = "ae",
 	ae_name = "Arkane Explosion",
-	ae_desc = "Warnung vor Arkaner Explosion",
+	ae_desc = "Warnung vor Arkaner Explosion.",
 	
 	split_cmd = "split",
 	split_name = "Abbilder",
-	split_desc = "Warnung vor Abbildern",
+	split_desc = "Warnung, wenn die Abbilder von Prophet Skeram erscheinen.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

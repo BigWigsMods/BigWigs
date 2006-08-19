@@ -61,7 +61,7 @@ L:RegisterTranslations("deDE", function() return {
 	berserktrigger = "verf\195\164llt in Berserkerwut",
 	frenzywarn = "Raserei - Einlullender Schuss!",
 	berserkwarn = "Berserkerwut - Volle DPS!",
-	berserksoonwarn = "Berserkerwut in K\195\188 - Bereit machen!",
+	berserksoonwarn = "Berserkerwut in K\195\188rze - Bereit machen!",
 	stingtrigger = "von Stich des Fl\195\188geldrachen betroffen",
 	stingwarn = "Stich des Fl\195\188geldrachen - Krieger reinigen!",
 	stingdelaywarn = "M\195\182glicher Stich des Fl\195\188geldrachen in 3 Sekunden!",

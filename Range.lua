@@ -60,6 +60,32 @@ L:RegisterTranslations("zhCN", function() return {
 	["Resets all ranges to defaults."] = "重置为默认设置。",
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	["Range"] = "Reichweite",
+	-- ["range"] = true,
+	["Options for the combat log's range."] = "Optionen f\195\188r die Reichweite des Kampflogs.",
+
+--~~ 	["party"] = true,
+--~~ 	["Party"] = true,
+--~~ 	["Party combat log range."] = true,
+
+--~~ 	["friend"] = true,
+--~~ 	["Friendlies"] = true,
+--~~ 	["Friendly players combat log range."] = true,
+
+	-- ["mob"] = true,
+	["Creatures"] = "Kreaturen",
+	["Creature combat log range."] = "Reichweite von Kreaturen-Nachrichten im Kampflog.",
+
+	-- ["death"] = true,
+	["Deaths"] = "Tode",
+	["Death message range."] = "Reichweite von Todes-Nachrichten im Kampflog.",
+
+	-- ["reset"] = true,
+	["Reset to defaults"] = "Zur\195\188cksetzen",
+	["Resets all ranges to defaults."] = "Auf Standard zur\195\188cksetzen.",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

@@ -49,11 +49,11 @@ L:RegisterTranslations("deDE", function() return {
 	gainendwarn = "Heuschreckenschwarm vorbei!",
 	gainnextwarn = "N\195\164chster Schwarm in ~90 Sekunden.",
 	gainwarn10sec = "10 Sekunden bis Heuschreckenschwarm",
-	gainincbar = "N\195\164chster Heuschreckenschwarm",
+	gainincbar = "N\195\164chster Schwarm",
 	gainbar = "Heuschreckenschwarm",
 	
 	casttrigger = "Anub'Rekhan beginnt Heuschreckenschwarm zu wirken.",
-	castwarn = "Heuschreckenschwarm in K\195\188!",
+	castwarn = "Heuschreckenschwarm in K\195\188rze!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

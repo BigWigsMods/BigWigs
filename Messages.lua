@@ -101,6 +101,49 @@ L:RegisterTranslations("zhCN", function() return {
 	["Messages are currently sent to the %2$s"] = "信息当前设置为发送到%2$s",
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	["Messages"] = "Nachrichten",
+
+	-- ["msg"] = true,
+	-- ["anchor"] = true,
+	-- ["rw"] = true,
+	-- ["color"] = true,
+	-- ["scale"] = true,
+
+	["Options for the message frame."] = "Optionen f\195\188r das Nachrichten Fenster.",
+	["Anchor"] = "Verankerung",
+	["Show the message anchor frame."] = "Zeige die Verankerung des Nachrichten Fensters.",
+	["Use RaidWarning"] = "Benutze RaidWarning",
+	["Toggle sending messages to the RaidWarnings frame."] = "Sende Nachrichten \195\188ber das RaidWarning Fenster.",
+	["Use colors"] = "Benutze Farben",
+	["Toggles white only messages ignoring coloring."] = "W\195\164hle, ob farbige Nachrichten verwendet werden sollen.",
+	["Message frame scale"] = "Nachrichtenfenster Skalierung",
+
+	["Message frame"] = "Nachrichtenfenster",
+	["Show anchor"] = "Zeige Verankerung",
+	["Send messages to RaidWarning frame"] = "Sende Nachrichten \195\188ber das Raidwarning Fenster.",
+	["Set the message frame scale."] = "W\195\164hle die Skalierung des Nachrichten Fensters.",
+	["Colorize messages"] = "Farbige Nachrichten",
+	["Scale"] = "Skalierung",
+
+	-- ["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = true,
+	["White"] = "Wei\195\159",
+	["BigWigs frame"] = "BigWigs Fenster",
+	["RaidWarning frame"] = "RaidWarning Fenster",
+	["Scale is set to %s"] = "Skalierung jetzt %s",
+	["Messages are now sent to the %2$s"] = "Nachrichten werden nun gesendet an %2$s",
+	["Messages are currently sent to the %2$s"] = "Nachrichten werden zur Zeit gesendet an %2$s",
+
+	-- ["display"] = true,
+	["Display"] = "Anzeige",
+	["Set where messages are displayed."] = "W\195\164hle, wo Nachrichten angezeigt werden sollen.",
+	["Display is now set to %2$s"] = "Anzeige nun gesetzt auf %2$s",
+	["Display is currently set to %2$s"] = "Anzeige zur Zeit %2$s",
+
+	-- ["Mik's Scrolling Battle Text"] = true,
+	-- ["Scrolling Combat Text"] = true,
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

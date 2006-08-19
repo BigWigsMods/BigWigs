@@ -59,14 +59,20 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_name = "Wutanfall",
 	enrage_desc = "Warnung wenn Maxxna w\195\188tend wird.",
 
+	cocoon_cmd = "cocoon",
+	cocoon_name = "Fangnetz",
+	cocoon_desc = "Warnung, wenn Spieler von Fangnetz betroffen sind.",
+
 	cocoontrigger = "(.*) (.*) ist von Fangnetz betroffen.",
 	webspraytrigger = "ist von Gespinstschauer betroffen.",
+
+	cocoonwarn = "%s im Fangnetz!",
 
 	enragetrigger = "wird w\195\188tend.",
 
 	webspraywarn30sec = "Fangnetze in 10 Sekunden",
-	webspraywarn20sec = "Fangnetze! 10 Sekunden bis Gespinst!",
-	webspraywarn10sec = "Spinnen! 10 Sekunden bis Kokons!",
+	webspraywarn20sec = "Fangnetze! 10 Sekunden bis Spinnen!",
+	webspraywarn10sec = "Spinnen! 10 Sekunden bis Gespinst!",
 	webspraywarn5sec = "Gespinst in 5 Sekunden!",
 	webspraywarn = "Gespinst! N\195\164chstes in 40 Sekunden!",
 	enragewarn = "Wutanfall - Gebt alles!",

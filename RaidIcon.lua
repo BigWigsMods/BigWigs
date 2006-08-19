@@ -60,6 +60,33 @@ L:RegisterTranslations("zhCN", function() return {
 	["skull"] = "骷髅",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	["Raid Icons"] = "Schlachtzug Symbole",
+
+	-- ["raidicon"] = true,
+	-- ["place"] = true,
+	-- ["icon"] = true,
+
+	["Place"] = "Platzierung",
+	["Place Raid Icons"] = "Platziere Schlachtzug Symbole",
+	["Toggle placing of Raid Icons on players."] = "W\195\164hle, ob Schlachtzug Symbole auf Spieler gesetzt werden.",
+	
+	["Icon"] = "Symbol",
+	["Set Icon"] = "Symbol",
+	["Set which icon to place on players."] = "W\195\164hle, welches Symbol auf Spieler gesetzt wird.",
+	
+	["Options for Raid Icons."] = "Optionen f\195\188r Schlachtzug Symbole.",
+
+	["star"] = "Stern",
+	["circle"] = "Kreis",
+	["diamond"] = "Diamant",
+	["triangle"] = "Dreieck",
+	["moon"] = "Mond",
+	["square"] = "Quadrat",
+	["cross"] = "Kreuz",
+	["skull"] = "Totenkopf",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

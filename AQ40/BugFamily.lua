@@ -47,7 +47,7 @@ L:RegisterTranslations("deDE", function() return {
 	healtrigger = "Prinzessin Yauj beginnt Gro\195\159es Heilen zu wirken.",
 	healwarn = "Prinzessin Yauj versucht sich zu heilen! - Unterbrechen!",
 
-	feartrigger = "ist betroffen von Furcht.",
+	feartrigger = "ist von Furcht betroffen.",
 	fearbar = "AoE Furcht",
 	fearwarn1 = "AoE Furcht! N\195\164chste in 20 Sekunden!",
 	fearwarn2 = "AoE Furcht in 5 Sekunden!",

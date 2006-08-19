@@ -89,7 +89,7 @@ L:RegisterTranslations("deDE", function() return {
 	sweepbartext = "Feger",
 
 	sandblasttrigger = "Ouro begins to perform Sand Blast", -- ?
-	sandblastannounce = "Sandsto\195\159 in K\195\188!",
+	sandblastannounce = "Sandsto\195\159 in K\195\188rze!",
 	sandblastwarn = "5 Sekunden bis Sandsto\195\159!",
 	sandblastbartext = "Sandsto\195\159",
 
@@ -106,7 +106,7 @@ L:RegisterTranslations("deDE", function() return {
 	submergewarn = "5 Sekunden bis Ouro auftaucht!",
 	submergebar = "Auftauchen",
 
-	berserksoonwarn = "Berserkerwut in K\195\188 - Bereit machen!",
+	berserksoonwarn = "Berserkerwut in K\195\188rze - Bereit machen!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

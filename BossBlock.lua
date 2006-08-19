@@ -67,6 +67,36 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 
+L:RegisterTranslations("deDE", function() return {
+	["BossBlock"] = "BossBlock",
+	["Supress bossmod chat from other players."] = "Unterdr\195\188cke Bossmod Chat von anderen Spielern.",
+
+	["Supress Raid Chat"] = "Unterdr\195\188cke Raid Chat",
+	["Supress messages in the raid channel."] = "Unterdr\195\188cke Nachrichten im Raid Channel",
+
+	["Supress RaidWarn Chat"] = "Unterdr\195\188cke RaidWarn Chat",
+	["Supress RaidWarn messages in the chat frames."] = "Unterdr\195\188cke RaidWarn Nachrichten im Chat Fenster.",
+
+	["Supress RaidWarn"] = "Unterdr\195\188cke RaidWarn",
+	["Supress RaidWarn popup messages."] = "Unterdr\195\188cke RaidWarn Popup Nachrichten.",
+
+	["Supress RaidSay"] = "Unterdr\195\188cke RaidSay",
+	["Supress CTRA RaidSay popup messages."] = "Unterdr\195\188cke CTRA RaidSay Popup Nachrichten.",
+
+	["Supress Tells"] = "Unterdr\195\188cke Fl\195\188stern",
+	["Supress Tell messages."] = "Unterdr\195\188cke Fl\195\188stern Nachrichten.",
+
+	["Debugging"] = "Debugging",
+	["Show debug messages."] = "Zeige Debug Nachrichten.",
+
+	["Supressing Chatframe"] = "Unterdr\195\188cke Chatframe",
+	["Supressing RaidWarningFrame"] = "Unterdr\195\188cke RaidWarningFrame",
+	["Supressing CT_RAMessageFrame"] = "Unterdr\195\188cke CT_RAMessageFrame",
+
+	["Supressed"] = "Unterdr\195\188ckt",
+	["Shown"] = "Angezeigt",
+} end)
+
 ------------------------------
 --      Are you local?      --
 ------------------------------
@@ -99,6 +129,15 @@ local blockstrings = {
 	["你正在燃烧！"] = true,
 	["你中了快速传染！"] = true,
 	["你被标记了！"] = true,
+
+	-- deDE
+	["DU HAST DIE SEUCHE!"] = true,
+	["DU BIST DIE BOMBE!"] = true,
+	["DU WIRST BEOBACHTET!"] = true,
+	["DU BIST VERFLUCHT!"] = true,
+	["DU BRENNST!"] = true,
+	-- ["YOU ARE AFFLICTED BY VOLATILE INFECTION!"] = true,
+	["DU BIST MARKIERT!"] = true,
 }
 
 
@@ -233,5 +272,6 @@ function BigWigsBossBlock:IsChannelSupressed(chan)
 	if not raidchans[chan] then return end
 	return self.db.profile[raidchans[chan]]
 end
+
 
 

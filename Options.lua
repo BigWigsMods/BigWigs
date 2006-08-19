@@ -41,6 +41,19 @@ L:RegisterTranslations("zhCN", function() return {
 	["All running modules have been reset."] = "所有运行中的模块都已重置。",
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	["|cff00ff00Module running|r"] = "|cff00ff00Modul aktiviert|r",
+	tablethint = "Klicken, um alle laufenden Module zur\195\188ckzusetzen. Shift-Klick um alle laufenden Module zu beenden.",
+	["Active boss modules"] = "Aktive Boss Module",
+	["Hidden"] = "Versteckt",
+	["Shown"] = "Angezeigt",
+	-- ["minimap"] = true,
+	["Minimap"] = "Minimap",
+	["Toggle the minimap button."] = "Minimap Button anzeigen.",
+	["All running modules have been reset."] = "Alle laufenden Module wurden zur\195\188ckgesetzt.",
+	["All running modules have been disabled."] = "Alle laufenden Module wurden beendet.",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

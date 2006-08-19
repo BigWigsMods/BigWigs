@@ -46,7 +46,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	icon_cmd = "icon",
 	icon_name = "Symbol",
-	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der die Bombe ist. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
+	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der von Mutierende Injektion betroffen ist. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 
 	trigger1 = "^([^%s]+) ([^%s]+) von Mutierende Injektion betroffen",
 

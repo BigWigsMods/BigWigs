@@ -44,7 +44,6 @@ L:RegisterTranslations("enUS", function() return {
 	["Test"] = true,
 } end)
 
-
 L:RegisterTranslations("koKR", function() return {
 	["bars"] = "바",
 	["anchor"] = "위치",
@@ -82,6 +81,35 @@ L:RegisterTranslations("zhCN", function() return {
 
 	["Up"] = "上",
 	["Down"] = "下",
+} end)
+
+L:RegisterTranslations("deDE", function() return {
+	["Bars"] = "Anzeigebalken",
+
+	-- ["bars"] = true,
+	-- ["anchor"] = true,
+	-- ["scale"] = true,
+	-- ["up"] = true,
+
+	["Options for the timer bars."] = "Optionen f\195\188r die Timer Anzeigebalken.",
+	["Show the bar anchor frame."] = "Zeige die Verankerung der Anzeigebalken.",
+	["Set the bar scale."] = "W\195\164hle die Skalierung der Anzeigebalken.",
+	["Group upwards"] = "Nach oben fortsetzen",
+	["Toggle bars grow upwards/downwards from anchor."] = "Anzeigebalken von der Verankerung aus nach Oben/Unten fortsetzen.",
+
+	["Timer bars"] = "Timer Anzeigebalken",
+	["Show anchor"] = "Zeige Verankerung",
+	["Grow bars upwards"] = "Anzeigebalken nach oben fortsetzen lassen",
+	["Scale"] = "Skalierung",
+	["Bar scale"] = "Anzeigebalken Skalierung",
+
+	["Bars now grow %2$s"] = "Anzeigebalken werden nun fortgesetzt nach %2$s",
+	["Scale is set to %2$s"] = "Skalierung jetzt %2$s",
+
+	["Up"] = "Oben",
+	["Down"] = "Unten",
+	
+	["Test"] = "Test",
 } end)
 
 ----------------------------------
@@ -206,4 +234,5 @@ function BigWigsBars:ToggleUp(supressreport)
 	local t = self.db.profile.growup
 	if not supressreport then self.core:Print(L"Bars now grow %s", (t and L"Up" or L"Down")) end
 end
+
 

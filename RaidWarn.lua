@@ -42,6 +42,24 @@ L:RegisterTranslations("zhCN", function() return {
 	["Options for RaidWarning."] = "团队警告设置",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	["RaidWarning"] = "RaidWarning",
+
+	-- ["raidwarn"] = true,
+	-- ["broadcast"] = true,
+	-- ["whisper"] = true,
+
+	["Broadcast over RaidWarning"] = "Broadcast \195\188ber RaidWarning",
+	["Broadcast"] = "Broadcast",
+	["Toggle broadcasting over Raidwarning."] = "W\195\164hle, ob Warnungen \195\188ber RaidWarning gesendet werden sollen.",
+	
+	["Whisper"] = "Fl\195\188stern",
+	["Whisper warnings"] = "Fl\195\188ster Warnungen",
+	["Toggle whispering warnings to players."] = "W\195\164hle, ob Warnungen an andere Spieler gefl\195\188stert werden sollen.",
+	
+	["Options for RaidWarning."] = "Optionen f\195\188r RaidWarning.",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
@@ -94,4 +112,5 @@ function BigWigsRaidWarn:BigWigs_SendTell(player, msg )
 	if not self.db.profile.whisper or not player or not msg or ( not IsRaidLeader() and not IsRaidOfficer() ) then return end
 	SendChatMessage(msg, "WHISPER", nil, player)
 end
+
 

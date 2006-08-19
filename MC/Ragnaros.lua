@@ -101,23 +101,23 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	trigger1 = "^SP\195\156RT DIE FLAMMEN",
-	trigger2 = "^VORW\195\134RTS,", -- ? "^KOMMT HERBEI, MEINE DIENER"
-	trigger3 = "^UND JETZT ZU EUCH,", -- ? "^NUN ZU EUCH, INSEKTEN"
+	trigger2 = "^KOMMT HERBEI, MEINE DIENER", -- ?
+	trigger3 = "^NUN ZU EUCH, INSEKTEN", -- ?
 
 	warn1 = "AoE Rundumschlag!",
 	warn2 = "5 Sekunden bis AoE Rundumschlag!",
-	warn3 = "Ragnaros f\105\188r 90 Sekunden untergetaucht. S\195\162hne der Flamme kommen!",
+	warn3 = "Ragnaros f\195\188r 90 Sekunden untergetaucht. S\195\182hne der Flamme kommen!",
 	warn4 = "15 Sekunden bis Ragnaros auftaucht!",
 	warn5 = "Ragnaros ist aufgetaucht. 3 Minuten bis zum Untertauchen!",
-	warn6 = "60 Sekunden bis Ragnaros untertaucht & S\195\162hne der Flamme!",
-	warn7 = "20 Sekunden bis Ragnaros untertaucht & S\195\162hne der Flamme!",
+	warn6 = "60 Sekunden bis Ragnaros untertaucht & S\195\182hne der Flamme!",
+	warn7 = "20 Sekunden bis Ragnaros untertaucht & S\195\182hne der Flamme!",
 
 	bar1text = "AoE Rundumschlag",
 	bar2text = "Auftauchen Ragnaros",
 	bar3text = "Untertauchen Ragnaros",
 
 	sonofflame = "Sohn der Flamme",
-	sonsdeadwarn = "%d/8 S\195\162hne der Flamme tot!",
+	sonsdeadwarn = "%d/8 S\195\182hne der Flamme tot!",
 
 	cmd = "Ragnaros",
 
@@ -126,12 +126,12 @@ L:RegisterTranslations("deDE", function() return {
 	emerge_desc = "Warnung, wenn Ragnaros auftaucht.",
 
 	sondeath_cmd = "sondeath",
-	sondeath_name = "S\195\162hne der Flamme",
-	sondeath_desc = "Warnung, wenn ein Sohn der Flamme stirbt.",
+	sondeath_name = "S\195\182hne der Flamme",
+	sondeath_desc = "Counter f\195\188r die get\195\182teten S\195\182ohne der Flamme.",
 
 	submerge_cmd = "submerge",
 	submerge_name = "Untertauchen",
-	submerge_desc = "Warnung, wenn Ragnaros untertaucht und die S\195\162hne der Flamme erscheinen.",
+	submerge_desc = "Warnung, wenn Ragnaros untertaucht und die S\195\182hne der Flamme erscheinen.",
 
 	aoeknock_cmd = "aoeknock",
 	aoeknock_name = "AoE Rundumschlag",

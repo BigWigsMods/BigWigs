@@ -55,11 +55,39 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	["%s mod enabled"] = "%s mod aktiviert",
+	["%s mod enabled"] = "%s Modul aktiviert",
 	["Target monitoring enabled"] = "Ziel\195\188berwachung aktiviert",
 	["Target monitoring disabled"] = "Ziel\195\188berwachung deaktiviert",
-} end)
+	["%s has been defeated"] = "%s wurde besiegt",     -- "<boss> has been defeated"
+	["%s have been defeated"] = "%s wurden besiegt",    -- "<bosses> have been defeated"
+	-- ["plugin"] = true,
+	["Plugins"] = "Plugins",
+	["Options for plugins."] = "Optionen f\195\188r Plugins.",
+	-- ["toggle"] = true,
+	["Active"] = "Aktivieren",
+	["Activate or deactivate this module."] = "Aktiviere oder deaktiviere dieses Modul.",
+	-- ["reboot"] = true,
+	["Reboot"] = "Neustarten",
+	["Reboot this module."] = "Starte dieses Modul neu.",
+	-- ["debug"] = true,
+	["Debugging"] = "Debugging",
+	["Show debug messages."] = "Zeige Debug Nachrichten.",
+	bosskill_cmd = "kill",
+	bosskill_name = "Boss besiegt",
+	bosskill_desc = "Melde, wenn ein Boss besiegt wurde.",
 
+	-- AceConsole zone commands
+	["Zul'Gurub"] = "ZG",
+	["Molten Core"] = "MC",
+	["Blackwing Lair"] = "BWL",
+	["Ahn'Qiraj"] = "AQ40",
+	["Ruins of Ahn'Qiraj"] = "AQ20",
+	["Onyxia's Lair"] = "Onyxia",
+	["Naxxramas"] = "Naxxramas",
+	-- ["Silithus"] = true,
+	["Outdoor Raid Bosses"] = "Outdoor",
+	["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
+} end)
 
 L:RegisterTranslations("koKR", function() return {
 	["%s mod enabled"] = "%s 모듈을 시작",
@@ -355,4 +383,5 @@ function BigWigs:MobIsTrigger(module, name)
 		for _,mob in pairs(t) do if mob == name then return true end end
 	end
 end
+
 

@@ -29,7 +29,6 @@ L:RegisterTranslations("enUS", function() return {
 	["Toggle sounds on or off."] = true,
 } end)
 
-
 L:RegisterTranslations("koKR", function() return {
 	["Sounds"] = "효과음",
 	["sounds"] = "효과음",
@@ -43,6 +42,14 @@ L:RegisterTranslations("zhCN", function() return {
 	["Use sounds"] = "使用声音",
 	["Options for sounds."] = "声音设置。",
 	["Toggle sounds on or off."] = "切换是否使用声音。",
+} end)
+
+L:RegisterTranslations("deDE", function() return {
+	["Sounds"] = "Sound",
+	-- ["sounds"] = true,
+	["Use sounds"] = "Benutze Sounds",
+	["Options for sounds."] = "Optionen f\195\188r Sound.",
+	["Toggle sounds on or off."] = "Aktiviere oder deaktiviere Sound.",
 } end)
 
 ----------------------------------
@@ -78,4 +85,5 @@ function BigWigsSound:BigWigs_Message(text, color, noraidsay, sound)
 	if sounds[sound] then PlaySoundFile(sounds[sound])
 	else PlaySound("RaidWarning") end
 end
+
 
