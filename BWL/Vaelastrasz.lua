@@ -29,8 +29,8 @@ L:RegisterTranslations("enUS", function() return {
 	elseburning_desc = "Warn when others are burning",
 	
 	icon_cmd = "icon",
-	icon_name = "Skull icon on bomb",
-	icon_desc = "Put a Skull icon on the person who's the bomb. (Requires promoted or higher)",
+	icon_name = "Rkull Icon on bomb",
+	icon_desc = "Put a Raid Icon on the person who's the bomb. (Requires promoted or higher)",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

@@ -148,6 +148,7 @@ function BigWigsRaidIcon:BigWigs_SetRaidIcon(player)
 	for i=1,GetNumRaidMembers() do
 		if UnitName("raid"..i) == player then
 			if not GetRaidTargetIndex("raid"..i) then
+				SetRaidTargetIcon("raid"..i, 0)
 				SetRaidTargetIcon("raid"..i, icon)
 			end
 		end
