@@ -216,19 +216,19 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 	elseif sync == "HorsemenMeteor" then
 		self.lastmeteor = GetTime()
 		if self.db.profile.meteor then
-			self:TriggerEvent("BigWigs_Message", string.format( L"meteorwarn", self.marks ), "Red")
+			self:TriggerEvent("BigWigs_Message", L"meteorwarn", "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, L"meteorbar", 12, "Interface\\Icons\\Spell_Fire_Fireball02", "Orange", "Red")
 		end
 	elseif sync == "HorsemenWrath" then
 		self.lastwrath = GetTime()
 		if self.db.profile.meteor then
-			self:TriggerEvent("BigWigs_Message", string.format( L"wrathwarn", self.marks ), "Red")
+			self:TriggerEvent("BigWigs_Message", L"wrathwarn", "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, L"wrathbar", 12, "Interface\\Icons\\Spell_Holy_Excorcism", "Orange", "Red")
 		end
 	elseif sync == "HorsemenVoid" then
 		self.lastvoid = GetTime()
 		if self.db.profile.void then
-			self:TriggerEvent("BigWigs_Message", string.format( L"voidwarn", self.marks ), "Red")
+			self:TriggerEvent("BigWigs_Message", L"voidwarn", "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, L"voidbar", 12, "Interface\\Icons\\Spell_Frost_IceStorm", "Orange", "Red")
 		end
 	elseif sync == "HorsemenShieldWall" then
@@ -251,12 +251,10 @@ function BigWigsHorsemen:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 end
 
 function BigWigsHorsemen:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	print("void: "..msg)
 	if msg == L"voidtrigger" then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenVoid" )
 	end	
 end
-
 
 function BigWigsHorsemen:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 	if msg == string.format(UNITDIESOTHER, thane ) or
