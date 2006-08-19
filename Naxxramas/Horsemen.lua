@@ -24,11 +24,36 @@ L:RegisterTranslations("enUS", function() return {
 	shieldwall_cmd  = "shieldwall",
 	shieldwall_name = "Shieldwall Alerts",
 	shieldwall_desc = "Warn for shieldwall",
+	
+	void_cmd = "void",
+	void_name = "Void Zone Alerts",
+	void_desc = "Warn on Lady Blaumeux casting Void Zone.",
+
+	meteor_cmd = "meteor",
+	meteor_name = "Meteor Alerts",
+	meteor_desc = "Warn on Thane casting Meteor.",
+
+	wrath_cmd = "wrath",
+	wrath_name = "Holy Wrath Alerts",
+	wrath_desc = "Warn on Zeliek casting Wrath.",
 
 	markbar = "Mark",
 	markwarn1 = "Mark (%d)!",
 	markwarn2 = "Mark (%d) - 5 sec",
-	marktrigger = "is afflicted by Mark of (Korth'azz|Blaumeux|Mograine|Zeliek)",
+	--marktrigger = "is afflicted by Mark of (Korth'azz|Blaumeux|Mograine|Zeliek)",
+	marktrigger = "is afflicted by Mark of ",
+	
+	voidtrigger = "Lady Blaumeux casts Void Zone.",
+	voidwarn = "Void Zone Incoming",
+	voidbar = "Void Zone",
+
+	meteortrigger = "Thane Korth'azz's Meteor hits ",
+	meteorwarn = "Meteor!",
+	meteorbar = "Meteor",
+
+	wrathtrigger = "Sir Zeliek's Holy Wrath hits ",
+	wrathwarn = "Holy Wrath!",
+	wrathbar = "Holy Wrath",
 
 	startwarn = "The Four Horsemen Engaged! Mark in 30 sec",
 
@@ -87,7 +112,7 @@ L:RegisterTranslations("zhCN", function() return {
 BigWigsHorsemen = BigWigs:NewModule(boss)
 BigWigsHorsemen.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsHorsemen.enabletrigger = { thane, mograine, zeliek, blaumeux }
-BigWigsHorsemen.toggleoptions = {"mark", "shieldwall", "bosskill"}
+BigWigsHorsemen.toggleoptions = {"mark", "shieldwall", "meteor", "void", "wrath", "bosskill"}
 BigWigsHorsemen.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -97,12 +122,14 @@ BigWigsHorsemen.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsHorsemen:OnEnable()
 	self.started = nil
 	self.marks = 1
-	self.deaths = 0
+	self.deaths = 0	
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "MarkEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "MarkEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "MarkEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "MarkEvent")
@@ -111,6 +138,9 @@ function BigWigsHorsemen:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenShieldWall", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenStart", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenMark", 8)
+	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenVoid", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenWrath", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenMeteor", 5)
 end
 
 function BigWigsHorsemen:PLAYER_REGEN_ENABLED()
@@ -153,6 +183,16 @@ end
 function BigWigsHorsemen:MarkEvent( msg )
 	if string.find(msg, L"marktrigger") then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenMark")
+	elseif string.find(msg, L"meteortrigger") then
+		--if (not self.lastmeteor) or self.lastmeteor + 8 > GetTime() then
+			self:TriggerEvent("BigWigs_SendSync", "HorsemenMeteor")
+		--end
+	elseif string.find(msg, L"wrathtrigger") then
+		--if (not self.lastwrath) or self.lastwrath + 8 > GetTime() then
+			self:TriggerEvent("BigWigs_SendSync", "HorsemenWrath")
+		--end
+	elseif msg == L"voidtrigger" then
+		self:TriggerEvent("BigWigs_SendSync", "HorsemenVoid" )
 	end
 end
 
@@ -172,7 +212,25 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 		if self.db.profile.mark then 
 			self:TriggerEvent("BigWigs_StartBar", self, L"markbar", 12, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Orange", "Red")
 			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 7, string.format( L"markwarn2", self.marks ), "Orange")
-		end			
+		end
+	elseif sync == "HorsemenMeteor" then
+		self.lastmeteor = GetTime()
+		if self.db.profile.meteor then
+			self:TriggerEvent("BigWigs_Message", string.format( L"meteorwarn", self.marks ), "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"meteorbar", 12, "Interface\\Icons\\Spell_Fire_Fireball02", "Orange", "Red")
+		end
+	elseif sync == "HorsemenWrath" then
+		self.lastwrath = GetTime()
+		if self.db.profile.meteor then
+			self:TriggerEvent("BigWigs_Message", string.format( L"wrathwarn", self.marks ), "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"wrathbar", 12, "Interface\\Icons\\Spell_Holy_Excorcism", "Orange", "Red")
+		end
+	elseif sync == "HorsemenVoid" then
+		self.lastvoid = GetTime()
+		if self.db.profile.void then
+			self:TriggerEvent("BigWigs_Message", string.format( L"voidwarn", self.marks ), "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L"voidbar", 12, "Interface\\Icons\\Spell_Frost_IceStorm", "Orange", "Red")
+		end
 	elseif sync == "HorsemenShieldWall" then
 		self:TriggerEvent("BigWigs_Message", string.format(L"shieldwallwarn", rest), "White")
 		self:ScheduleEvent("BigWigs_Message", 20, string.format(L"shieldwallwarn2", rest), "Green")
@@ -191,6 +249,14 @@ function BigWigsHorsemen:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..blaumeux )
 	end
 end
+
+function BigWigsHorsemen:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+	print("void: "..msg)
+	if msg == L"voidtrigger" then
+		self:TriggerEvent("BigWigs_SendSync", "HorsemenVoid" )
+	end	
+end
+
 
 function BigWigsHorsemen:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 	if msg == string.format(UNITDIESOTHER, thane ) or
