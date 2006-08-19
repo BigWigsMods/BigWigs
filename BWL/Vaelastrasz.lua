@@ -29,7 +29,7 @@ L:RegisterTranslations("enUS", function() return {
 	elseburning_desc = "Warn when others are burning",
 	
 	icon_cmd = "icon",
-	icon_name = "Rkull Icon on bomb",
+	icon_name = "Raid Icon on bomb",
 	icon_desc = "Put a Raid Icon on the person who's the bomb. (Requires promoted or higher)",
 } end)
 
