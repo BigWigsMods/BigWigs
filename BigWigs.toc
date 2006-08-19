@@ -10,7 +10,7 @@
 ## X-Email: tekkub@gmail.com
 ## X-Category: Raid
 
-## OptionalDeps: FuBar, BabbleLib, PaintChipsLib, Ace2, TabletLib, CompostLib, Metrognome, DewDropLib, MikScrollingBattleText, sct, CandyBar
+## OptionalDeps: FuBar, BabbleLib, PaintChipsLib, Ace2, TabletLib, CompostLib, Metrognome, DewDropLib, MikScrollingBattleText, sct, CandyBar, FuBarPlugin-2.0
 
 ## SavedVariables: BigWigsDB, BigWigsFubarDB
 ## SavedVariablesPerCharacter: BigWigsDBPerChar
