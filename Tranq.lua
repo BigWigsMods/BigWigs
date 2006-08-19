@@ -108,14 +108,18 @@ end
 ------------------------------
 
 function BigWigsTranq:CHAT_MSG_SPELL_SELF_BUFF(msg)
-	if msg and string.find(msg, L"CHAT_MSG_SPELL_SELF_BUFF") then
+	if not msg then
+		self:Debug("CHAT_MSG_SPELL_SELF_BUFF: msg is nil")
+	elseif string.find(msg, L"CHAT_MSG_SPELL_SELF_BUFF") then
 		self:TriggerEvent("BigWigs_SendSync", "TranqShotFail "..UnitName("player"))
 	end
 end
 
 
 function BigWigsTranq:CHAT_MSG_SPELL_SELF_DAMAGE(msg)
-	if msg and string.find(msg, L"CHAT_MSG_SPELL_SELF_DAMAGE") then
+	if not msg then
+		self:Debug("CHAT_MSG_SPELL_SELF_DAMAGE: msg is nil")
+	elseif string.find(msg, L"CHAT_MSG_SPELL_SELF_DAMAGE") then
 		self:TriggerEvent("BigWigs_SendSync", "TranqShotFired "..UnitName("player"))
 	end
 end
@@ -134,5 +138,5 @@ end
 
 function BigWigsTranq:BigWigs_TranqFail(unitname)
 	self:SetCandyBarColor(L"Tranq - "..unitname, "Red")
-	self:TriggerEvent("BigWigs_Message", format(l"%s's Tranq failed!", unitname), "Red", nil, "Alarm")
+	self:TriggerEvent("BigWigs_Message", format(L"%s's Tranq failed!", unitname), "Red", nil, "Alarm")
 end
