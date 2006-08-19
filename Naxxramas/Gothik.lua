@@ -222,7 +222,7 @@ end
 
 function BigWigsGothik:Trainee()
 	if self.db.profile.add then
-		self:TriggerEvent("BigWigs_StartBar", self, L"trabar", self.tratime, nil, "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"trabar", self.tratime, "Interface\\Icons\\Ability_Seal", "Yellow", "Orange", "Red")
 	end
 	self:ScheduleEvent("bwgothiktrawarn", self.WaveWarn, self.tratime - 3, self, L"trawarn", L, "Yellow")
 	self:ScheduleRepeatingEvent("bwgothiktrarepop", self.Trainee, self.tratime, self)
@@ -230,7 +230,7 @@ end
 
 function BigWigsGothik:DeathKnight()
 	if self.db.profile.add then
-		self:TriggerEvent("BigWigs_StartBar", self, L"dkbar", self.dktime, nil, "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"dkbar", self.dktime, "Interface\\Icons\\INV_Boots_Plate_08", "Yellow", "Orange", "Red")
 	end
 	self:ScheduleEvent("bwgothikdkwarn", self.WaveWarn, self.dktime - 3, self, L"dkwarn", L, "Orange")
 	self:ScheduleRepeatingEvent("bwgothikdkrepop", self.DeathKnight, self.dktime, self)
@@ -238,7 +238,7 @@ end
 
 function BigWigsGothik:Rider()
 	if self.db.profile.add then
-		self:TriggerEvent("BigWigs_StartBar", self, L"riderbar", self.ridertime, nil, "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L"riderbar", self.ridertime, "Interface\\Icons\\Spell_Shadow_DeathPact", "Yellow", "Orange", "Red")
 	end
 	self:ScheduleEvent("bwgothikriderwarn", self.WaveWarn, self.ridertime - 3, self, L"riderwarn", L, "Red")
 	self:ScheduleRepeatingEvent("bwgothikriderrepop", self.Rider, self.ridertime, self)
