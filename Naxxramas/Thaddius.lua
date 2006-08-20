@@ -40,7 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 	starttrigger2 = "Eat... your... bones...",
 	starttrigger3 = "Break... you!!",
 	starttrigger4 = "Kill...",
-	
+
 	adddeath = "dies.",
 	teslaoverload = "overloads!",
 
@@ -64,6 +64,7 @@ L:RegisterTranslations("enUS", function() return {
 	pswarn3 = "3 seconds to Polarity Shift!",
 	poswarn = "You changed to a Positive Charge!",
 	negwarn = "You changed to a Negative Charge!",
+	nochange = "Your debuff did not change!",
 	polaritytickbar = "Polarity tick",
 	enragebartext = "Enrage",
 	warn1 = "Enrage in 3 minutes",
@@ -229,11 +230,10 @@ function BigWigsThaddius:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "PolarityCast")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF", "PolarityCast")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ThaddiusPolarity", 10)
-    self:TriggerEvent("BigWigs_ThrottleSync", "StalaggPower", 4)
+	self:TriggerEvent("BigWigs_ThrottleSync", "StalaggPower", 4)
 end
 
 function BigWigsThaddius:Scan()
@@ -254,7 +254,7 @@ end
 
 function BigWigsThaddius:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if msg == L"stalaggtrigger" then
-        self:TriggerEvent("BigWigs_SendSync", "StalaggPower")
+		self:TriggerEvent("BigWigs_SendSync", "StalaggPower")
 	end
 end
 
@@ -277,6 +277,32 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
 			self:ScheduleEvent("bwthaddiuswarn5", "BigWigs_Message", 290, L"warn5", "Red")
 		end
 	end
+end
+
+function BigWigsThaddius:DebuffTrigger()
+	local iIterator = 1
+	local chargetype = nil
+	while UnitDebuff("player", iIterator) and not chargetype do
+		if string.find(UnitDebuff("player", iIterator), "Positive") then
+			chargetype = L"positivetype"
+		elseif string.find(UnitDebuff("player", iIterator), "Negative") then
+			chargetype = L"negativetype"
+		end
+		iIterator = iIterator + 1
+	end
+	if not chargetype then return end
+
+	if self.db.profile.charge then
+		if self.previousCharge == chargetype then
+			self:TriggerEvent("BigWigs_Message", L"nochange", "Orange", true)
+		elseif chargetype == L"positivetype" then
+			self:TriggerEvent("BigWigs_Message", L"poswarn", "Green", true)
+		elseif chargetype == L"negativetype" then
+			self:TriggerEvent("BigWigs_Message", L"negwarn", "Red", true)
+		end
+		self:TriggerEvent("BigWigs_StartBar", self, L"polaritytickbar", 5, "Interface\\Icons\\Spell_Lightning_LightningBolt01", "Red")
+	end
+	self.previousCharge = chargetype
 end
 
 function BigWigsThaddius:PLAYER_REGEN_ENABLED()
@@ -317,29 +343,12 @@ end
 
 function BigWigsThaddius:BigWigs_RecvSync( sync )
 	if sync == "ThaddiusPolarity" and self.db.profile.polarity then
-		self:TriggerEvent("BigWigs_Message", L"pswarn2", "Yellow")
+		self:ScheduleEvent(self.DebuffTrigger, 0.1, self)
 		self:ScheduleEvent("BigWigs_Message", 27, L"pswarn3", "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, "Interface\\Icons\\Spell_Nature_Lightning", "Yellow", "Orange", "Red")
-    elseif sync == "StalaggPower" and self.db.profile.power then
-        self:TriggerEvent("BigWigs_Message", L"stalaggwarn", "Red")
+	elseif sync == "StalaggPower" and self.db.profile.power then
+		self:TriggerEvent("BigWigs_Message", L"stalaggwarn", "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L"powersurgebar", 10, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Red")
 	end
 end
 
-function BigWigsThaddius:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE( msg )
-	local chargetype
-	_, _, chargetype = string.find(msg, L"chargetrigger")
-	if chargetype == L"positivetype" then
-		if self.db.profile.charge and chargetype ~= self.previousCharge then
-			self:TriggerEvent("BigWigs_Message", L"poswarn", "Green", true)
-			self:TriggerEvent("BigWigs_StartBar", self, L"polaritytickbar", 5, "Interface\\Icons\\Spell_Lightning_LightningBolt01", "Red")
-		end
-		self.previousCharge = chargetype
-	elseif chargetype == L"negativetype" then
-		if self.db.profile.charge and chargetype ~= self.previousCharge then
-			self:TriggerEvent("BigWigs_Message", L"negwarn", "Red", true)
-			self:TriggerEvent("BigWigs_StartBar", self, L"polaritytickbar", 5, "Interface\\Icons\\Spell_Lightning_LightningBolt01", "Red")
-		end
-		self.previousCharge = chargetype
-	end
-end
