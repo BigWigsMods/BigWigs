@@ -218,6 +218,7 @@ function BigWigsThaddius:OnEnable()
 	self.enrageStarted = nil
 	self.addsdead = 0
 	self.teslawarn = nil
+	self.stage1warn = nil
 	self.previousCharge = ""
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -261,7 +262,10 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
 	if msg == L"pstrigger" then
 		self:TriggerEvent("BigWigs_SendSync", "ThaddiusPolarity")
 	elseif msg == L"starttrigger" or msg == L"starttrigger1" then
-		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L"startwarn", "Red") end
+		if self.db.profile.phase and not self.stage1warn then
+			self:TriggerEvent("BigWigs_Message", L"startwarn", "Red")
+		end
+		self.stage1warn = true
 	elseif msg == L"starttrigger2" or msg == L"starttrigger3" or msg == L"starttrigger4" then
 		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L"startwarn2", "Red") end
 		if self.db.profile.enrage then
