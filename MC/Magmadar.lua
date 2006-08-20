@@ -66,7 +66,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 L:RegisterTranslations("deDE", function() return {
-	trigger1 = "ger\195\164t in t\195\182dliche Raserei",
+	trigger1 = "ger\195\164t in t\195\182dliche Raserei!",
 	trigger2 = "von Panik betroffen",
 
 	["Frenzy alert!"] = "Raserei! - Einlullender Schuss!",
