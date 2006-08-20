@@ -107,6 +107,7 @@ BigWigsShazzrah.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsShazzrah:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ShazzrahBlink", 10)
@@ -118,10 +119,14 @@ end
 ------------------------------
 
 function BigWigsShazzrah:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+	if (string.find(msg, L"trigger2")) then
+		self:TriggerEvent("BigWigs_SendSync", "ShazzrahDeadenMagic")
+	end
+end
+
+function BigWigsShazzrah:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if (string.find(msg, L"trigger1")) then
 		self:TriggerEvent("BigWigs_SendSync", "ShazzrahBlink")
-	elseif (string.find(arg1, L"trigger2")) then
-		self:TriggerEvent("BigWigs_SendSync", "ShazzrahDeadenMagic")
 	end
 end
 
