@@ -261,7 +261,7 @@ end
 function BigWigsMaexxna:UNIT_HEALTH( msg )
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
-		if (health > 30 and health <= 33) then
+		if (health > 30 and health <= 33 and not self.enrageannounced) then
 			if self.db.profile.enrage then self:TriggerEvent("BigWigs_Message", L"enragesoonwarn", "Red") end
 			self.enrageannounced = true
 		elseif (health > 40 and self.enrageannounced) then
