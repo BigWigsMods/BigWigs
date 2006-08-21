@@ -117,7 +117,7 @@ function BigWigsSkeram:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("UNIT_HEALTH")
+--	self:RegisterEvent("UNIT_HEALTH")
 end
 
 ------------------------------
