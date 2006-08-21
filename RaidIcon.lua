@@ -5,6 +5,7 @@
 ------------------------------
 
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsRaidIcon")
+local lastplayer = nil
 
 ----------------------------
 --      Localization      --
@@ -136,6 +137,7 @@ BigWigsRaidIcon.consoleOptions = {
 
 function BigWigsRaidIcon:OnEnable()
 	self:RegisterEvent("BigWigs_SetRaidIcon")
+	self:RegisterEvent("BigWigs_RemoveRaidIcon")
 end
 
 function BigWigsRaidIcon:BigWigs_SetRaidIcon(player)
@@ -149,7 +151,18 @@ function BigWigsRaidIcon:BigWigs_SetRaidIcon(player)
 		if UnitName("raid"..i) == player then
 			if not GetRaidTargetIndex("raid"..i) then
 				SetRaidTargetIcon("raid"..i, icon)
+				lastplayer = player
 			end
 		end
 	end
+end
+
+function BigWigsRaidIcon:BigWigs_RemoveRaidIcon()
+	if not self.db.profile.place or not lastplayer then return end
+	for i=1,GetNumRaidMembers() do
+		if UnitName("raid"..i) == lastplayer then
+			SetRaidTargetIcon("raid"..i, 0)
+		end
+	end
+	lastplayer = nil
 end
