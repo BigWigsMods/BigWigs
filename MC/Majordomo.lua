@@ -127,12 +127,12 @@ L:RegisterTranslations("frFR", function() return {
 	trigger3 = "Renvoi de la magie sur .+ Attise%-flammes vient de se dissiper",
 	trigger4 = "Bouclier de d\195\169g\195\162ts sur .+ Attise%-flammes vient de se dissiper",
 
-	warn1 = "BOUCLIER SORTS PENDANT 10 SECONDES!",
-	warn2 = "BOUCLIER DEGATS PENDANT 10 SECONDES!",
-	warn3 = "5 SECONDES AVANT BOUCLIER!",
-	warn4 = "BOUCLIER SORTS TERMIN\195\137!",
-	warn5 = "BOUCLIER DEGATS TERMIN\195\137!",
-	bosskill = "Majordomo Executus a \195\169t\195\169 vaincu!",
+	warn1 = "Bouclier sorts pendant 10 secondes !",
+	warn2 = "Bouclier d\195\169g\195\162ts pendant 10 secondes !",
+	warn3 = "5 secondes avant le bouclier !",
+	warn4 = "Bouclier sorts termin\195\169 !",
+	warn5 = "Bouclier d\195\169g\195\162ts termin\195\169 !",
+	bosskill = "Majordomo Executus a \195\169t\195\169 vaincu !",
 
 	bar1text = "Renvoi de la magie",
 	bar2text = "Bouclier de d\195\169g\195\162ts",

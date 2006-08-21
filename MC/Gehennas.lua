@@ -67,8 +67,8 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("frFR", function() return {
 	trigger1 = "subit les effets de Mal\195\169diction de Gehennas.",
 
-	warn1 = "5 SECONDES AVANT LA MALEDICTION DE ZONE!",
-	warn2 = "ALERTE MALEDICTION DE ZONE - 30 sec avant prochaine!",
+	warn1 = "5 secondes avant AoE Mal\195\169diction !",
+	warn2 = "AoE Mal\195\169diction - 30 sec avant le prochain !",
 
 	bar1text = "Mal\195\169diction de Gehennas",
 } end)

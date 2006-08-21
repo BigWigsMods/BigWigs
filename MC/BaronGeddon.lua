@@ -93,8 +93,8 @@ L:RegisterTranslations("frFR", function() return {
 	you = "Vous",
 	are = "subissez",
 
-	warn1 = "TU ES LA BOMBE !",
-	warn2 = " EST LA BOMBE!",
+	warn1 = "Tu es la bombe !",
+	warn2 = " est la bombe !",
 } end)
 
 ----------------------------------

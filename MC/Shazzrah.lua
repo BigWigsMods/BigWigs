@@ -83,9 +83,9 @@ L:RegisterTranslations("frFR", function() return {
 	trigger1 = "Shazzrah gagne Porte de Shazzrah",
 	trigger2 = "Shazzrah gagne Magie diminu\195\169e",
 
-	warn1 = "TRANSFERT - 30 sec avant prochain!",
-	warn2 = "5 SECONDES AVANT TRANSFERT!",
-	warn3 = "SHAZZRAH SE BUFF - DISSIPEZ LE!",
+	warn1 = "Transfert - 30 sec avant le prochain",
+	warn2 = "5 secondes avant Transfert !",
+	warn3 = "Shazzrah se buff - Dispellez le !",
 
 	bar1text = "Transfert",
 } end)
