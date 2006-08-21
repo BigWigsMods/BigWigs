@@ -53,6 +53,7 @@ end
 
 function BigWigsComm:BigWigs_SendSync(msg)
 	if oRA_Core then oRA_Core:Send("BigWigsSync " .. msg)
+	elseif oRA then oRA:SendMessage("BigWigsSync " .. msg )
 	elseif CT_RA_AddMessage then CT_RA_AddMessage("BigWigsSync " .. msg) end
 	self:CHAT_MSG_CHANNEL("BigWigsSync " .. msg, UnitName("player"), "SelfSync")
 end
