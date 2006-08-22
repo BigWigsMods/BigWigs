@@ -148,8 +148,8 @@ function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 
-function BigWigsOnyxia:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_ DAMAGE(msg)
-	if (msg == L"trigger4") then
-	if self.db.profile.onyfear then self:TriggerEvent("BigWigs_Messaage", L"warn4", "Red") end
+function BigWigsOnyxia:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+	if msg == L"trigger4" and self.db.profile.onyfear then
+		self:TriggerEvent("BigWigs_Messaage", L"warn4", "Red")
 	end
 end
