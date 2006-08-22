@@ -1,5 +1,5 @@
 
-if GetBuildInfo() == "1.12" then return end
+if GetBuildInfo() == "1.12.0" then return end
 assert(BigWigs, "BigWigs not found!")
 
 
