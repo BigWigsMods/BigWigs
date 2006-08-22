@@ -52,7 +52,7 @@ L:RegisterTranslations("deDE", function() return {
 	icon_name = "Symbol",
 	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der beobachtet wird. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 	
-	watchtrigger = "beh\195\164lt (.+) im Blickfeld",
+	watchtrigger = "beh\195\164lt (.+) im Blickfeld!",
 	watchwarn = " wird beobachtet!",
 	watchwarnyou = "Du wirst beobachtet!",
 	you = "Euch",

@@ -72,13 +72,13 @@ L:RegisterTranslations("deDE", function() return {
 
 	trigger1 = "Hier kommen sie. Bleibt am Leben, Welpen.",
 	trigger2 = "?????",  -- There is no callout for wave 2 ><
-	trigger3 = "Die Zeit der Vergeltung ist gekommen",
-	trigger4 = "Wir werden nicht l\195\164nger",
-	trigger5 = "Wir kennen keine Furcht",
-	trigger6 = "Staghelm wird winseln und um sein Leben betteln",
-	trigger7 = "Fandral! Deine Zeit ist gekommen",
-	trigger8 = "Unversch\195\164mter Narr! Ich werde Euch",
-	trigger9 = "Remember, Rajaxx, when I said I'd kill you last?", -- ?
+	trigger3 = "Die Zeit der Vergeltung ist gekommen!",
+	trigger4 = "Wir werden nicht l\195\164nger hinter verbarrikadierten Toren und Mauern aus Stein ausharren!",
+	trigger5 = "Wir kennen keine Furcht!",
+	trigger6 = "Staghelm wird winseln und um sein Leben betteln, genau wie sein r\195\164udiger Sohn!",
+	trigger7 = "Fandral! Deine Zeit ist gekommen!",
+	trigger8 = "Unversch\195\164mter Narr! Ich werde Euch h\195\182chstpers\195\182nlich t\195\182ten!",
+	trigger9 = "Erinnerst du dich daran, Rajaxx, wann ich dir das letzte Mal sagte, ich w\195\188rde dich t\195\182ten?",
 
 	warn1 = "Welle 1/8",
 	warn2 = "Welle 2/8",

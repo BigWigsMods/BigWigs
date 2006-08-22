@@ -50,11 +50,11 @@ L:RegisterTranslations("deDE", function() return {
 	debuff_name = "Debuff",
 	debuff_desc = "Warnung vor Debuff.",
 
-	supremetrigger = "Ossirian der Narbenlose bekommt 'St\195\164rke des Ossirian'",
+	supremetrigger = "Ossirian der Narbenlose bekommt 'St\195\164rke des Ossirian'.",
 	supremewarn = "St\195\164rke des Ossirian!",
 	supremedelaywarn = "St\195\164rke des Ossirian in %d Sekunden!",
 	debufftrigger = "Ossirian der Narbenlose ist von (.*)schw\195\164che betroffen%.$",
-	debuffwarn = "Ossirian anf\195\164llig gegen: %s",
+	debuffwarn = "Ossirian f\195\188r 45 Sekunden anf\195\164llig gegen: %s",
 	bartext = "St\195\164rke des Ossirian",
 	expose = "Schw\195\164che",
 } end )
