@@ -24,13 +24,19 @@ L:RegisterTranslations("enUS", function() return {
 	phase3_name = "Phase 3 alert",
 	phase3_desc = "Warn for Phase 3",
 
+	onyfear_cmd = "onyfear",
+	onyfear_name = "Fear",
+	onyfear_desc = "Warn for Bellowing Roar in phase 3",
+
 	trigger1 = "takes in a deep breath...",
 	trigger2 = "from above",
 	trigger3 = "It seems you'll need another lesson",
+	trigger4 = "Onyxia begins to cast Bellowing Roar.",
 
 	warn1 = "Deep Breath incoming!",
 	warn2 = "Onyxia phase 2 incoming!",
 	warn3 = "Onyxia phase 3 incoming!",
+	warn4 = "Fear incoming, 1.5 Seconds!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -58,13 +64,19 @@ L:RegisterTranslations("deDE", function() return {
 	phase3_name = "Phase 3",
 	phase3_desc = "Warnung, wenn Onyxia landet und in Phase 3 eintritt.",
 
+	onyfear_cmd = "onyfear",
+	onyfear_name = "Fear",
+	onyfear_desc = "Warnung vor Dr\195\182hnendem Gebr\195\188ll in Phase 3",
+
 	trigger1 = "atmet tief ein...",
 	trigger2 = "^Diese sinnlose Anstrengung langweilt mich", -- ?
 	trigger3 = "^Mir scheint, dass Ihr noch eine Lektion braucht", -- ?
+	trigger4 = "Onyxia beginnt Dr\195\182hnendes Gebr\195\188ll zu wirken.",
 
 	warn1 = "Tiefer Atem! - Auf die Seiten gehen!",
 	warn2 = "Phase 2 - Onyxia hebt ab!",
 	warn3 = "Phase 3 - Onyxia landet!",
+	warn4 = "Dr\195\182hnendes Gebr\195\188ll in 1.5 Sekunden",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -76,7 +88,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	phase3_name = "第三阶段警报",
 	phase3_desc = "第三阶段警报",
-	
+
 	trigger1 = "深深地吸了一口气……",
 	trigger2 = "从上空",
 	trigger3 = "看起来需要再给你一次教训",
@@ -103,7 +115,7 @@ L:RegisterTranslations("koKR", function() return {
 BigWigsOnyxia = BigWigs:NewModule(boss)
 BigWigsOnyxia.zonename = AceLibrary("Babble-Zone-2.0")("Onyxia's Lair")
 BigWigsOnyxia.enabletrigger = boss
-BigWigsOnyxia.toggleoptions = {"deepbreath", "phase2", "phase3", "bosskill"}
+BigWigsOnyxia.toggleoptions = {"deepbreath", "phase2", "phase3", "onyfear", "bosskill"}
 BigWigsOnyxia.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -113,6 +125,7 @@ BigWigsOnyxia.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsOnyxia:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
@@ -131,5 +144,12 @@ function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL(msg)
 		if self.db.profile.phase2 then self:TriggerEvent("BigWigs_Message", L"warn2", "White") end
 	elseif (string.find(msg, L"trigger3")) then
 		if self.db.profile.phase3 then self:TriggerEvent("BigWigs_Message", L"warn3", "White") end
+	end
+end
+
+
+function BigWigsOnyxia:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_ DAMAGE(msg)
+	if (msg == L"trigger4") then
+	if self.db.profile.onyfear then self:TriggerEvent("BigWigs_Messaage", L"warn4", "Red") end
 	end
 end
