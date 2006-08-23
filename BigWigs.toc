@@ -1,4 +1,4 @@
-﻿## Interface: 11100
+﻿## Interface: 11200
 
 ## Title: Big Wigs |cff7fff7f -Ace2-|r
 ## Notes: Boss Mods with Timer bars.
@@ -40,7 +40,6 @@ Libs\CandyBar-2.0\CandyBar-2.0.lua
 
 Core.lua
 Comm.lua
-Comm-1.12.lua
 Colors.lua
 TargetMonitor.lua
 Options.lua

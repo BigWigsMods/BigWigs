@@ -1,5 +1,4 @@
 
-if GetBuildInfo() == "1.12.0" then return end
 assert(BigWigs, "BigWigs not found!")
 
 
@@ -22,7 +21,7 @@ BigWigsComm = BigWigs:NewModule("Comm")
 ------------------------------
 
 function BigWigsComm:OnEnable()
-	self:RegisterEvent("CHAT_MSG_CHANNEL")
+	self:RegisterEvent("CHAT_MSG_ADDON")
 	self:RegisterEvent("BigWigs_SendSync")
 	self:RegisterEvent("BigWigs_ThrottleSync")
 end
@@ -32,49 +31,26 @@ end
 --      Event Handlers      --
 ------------------------------
 
--- Handle inbound chatter when the user runs CTRA
-function BigWigsComm:CHAT_MSG_CHANNEL(msg, sender, sschan, arg4, arg5, arg6, arg7, arg8, chan)
-	if sschan ~= "SelfSync" and (not CT_RA_Channel or string.lower(chan) ~= string.lower(CT_RA_Channel)) then return end
+function BigWigsComm:CHAT_MSG_ADDON(prefix, message, type, sender)
+	if (prefix ~= "BigWigs" or type ~= "RAID") then return end
 
-	local cleanmsg = string.gsub(msg, "%$", "s")
-	cleanmsg = string.gsub(cleanmsg, "§", "S")
-	if strsub(cleanmsg, strlen(cleanmsg)-7) == " ...hic!" then cleanmsg = strsub(cleanmsg, 1, strlen(cleanmsg)-8) end
+	local _, _, sync, rest = string.find(message, "(%S+)%s*(.*)$")
+	if not sync then return end
 
-	local msgarr = self:SplitMessage(cleanmsg, "#")
-	
- 	for _, c in msgarr do
-		local _, _, sync, rest = string.find(c, "^BigWigsSync (%S+)%s*(.*)$")
-		if sync and ( not throt[sync] or not times[sync] or (times[sync] + throt[sync]) <= GetTime()) then
-			self:TriggerEvent("BigWigs_RecvSync", sync, rest, sender)
-			times[sync] = GetTime()
-		end
+	if not throt[sync] or not times[sync] or (times[sync] + throt[sync]) <= GetTime() then
+		self:TriggerEvent("BigWigs_RecvSync", sync, rest, sender)
+		times[sync] = GetTime()
 	end
 end
 
+
 function BigWigsComm:BigWigs_SendSync(msg)
-	if oRA_Core then oRA_Core:Send("BigWigsSync " .. msg)
-	elseif oRA then oRA:SendMessage("BigWigsSync " .. msg )
-	elseif CT_RA_AddMessage then CT_RA_AddMessage("BigWigsSync " .. msg) end
-	self:CHAT_MSG_CHANNEL("BigWigsSync " .. msg, UnitName("player"), "SelfSync")
+	SendAddonMessage("BigWigs", msg, "RAID")
+	self:CHAT_MSG_ADDON("BigWigs", msg, "RAID")
 end
 
 
 function BigWigsComm:BigWigs_ThrottleSync(msg, time)
 	assert(msg, "No message passed")
-
 	throt[msg] = time
-end
-
-
-function BigWigsComm:SplitMessage( msg, char )
-	local arr = { }
-	while (string.find(msg, char) ) do
-		local iStart, iEnd = string.find(msg, char)
-		table.insert(arr, strsub(msg, 1, iStart-1))
-		msg = strsub(msg, iEnd+1, strlen(msg))
-	end
-	if ( strlen(msg) > 0 ) then
-		table.insert(arr, msg)
-	end
-	return arr
 end
