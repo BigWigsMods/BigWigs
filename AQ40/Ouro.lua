@@ -262,7 +262,7 @@ end
 function BigWigsOuro:Submerge()
 	self:CancelScheduledEvent("bwourosweepwarn")
 	self:CancelScheduledEvent("bwouroblastwarn")
-	self:CancelScheduledEvent("bwsubmergewarn")
+	self:CancelScheduledEvent("bwouroemergewarn")
 	
 	self:TriggerEvent("BigWigs_StopBar", self, L"sweepbartext")
 	self:TriggerEvent("BigWigs_StopBar", self, L"sandblastbartext")
