@@ -266,7 +266,7 @@ function BigWigsOuro:Submerge()
 	
 	self:TriggerEvent("BigWigs_StopBar", self, L"sweepbartext")
 	self:TriggerEvent("BigWigs_StopBar", self, L"sandblastbartext")
-	self:TriggerEvent("BigWigs_StopBar", self, L"submergebar")
+	self:TriggerEvent("BigWigs_StopBar", self, L"emergebartext")
 
 	if self.db.profile.submerge then
 		self:TriggerEvent("BigWigs_Message", L"submergeannounce", "Red")
