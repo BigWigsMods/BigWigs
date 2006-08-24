@@ -155,7 +155,7 @@ function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "BWVQ" and nick ~= UnitName("player") then
 		self:TriggerEvent("BigWigs_SendSync", "BWVR "..ResponseString)
 	elseif sync == "BWVR" then
-		if QueryRunning then
+		if QueryRunning and nick and rest then
 			ResponseTable[nick] = rest
 			self:UpdateVersions()
 		end
