@@ -28,7 +28,7 @@ L:RegisterTranslations("enUS", function() return {
 	onyfear_name = "Fear",
 	onyfear_desc = "Warn for Bellowing Roar in phase 3",
 
-	trigger1 = "takes in a deep breath...",
+	trigger1 = "%s takes in a deep breath...",
 	trigger2 = "from above",
 	trigger3 = "It seems you'll need another lesson",
 	trigger4 = "Onyxia begins to cast Bellowing Roar.",
