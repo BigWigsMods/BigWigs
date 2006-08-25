@@ -107,7 +107,7 @@ function BigWigsVersionQuery:UpdateVersions()
 			"cantAttach", true,
 			"menu", function()
 					Dewdrop:AddLine(
-						'text', "Qeury",
+						'text', "Query",
 						'func', function() self:QueryVersion() end)
 					Dewdrop:AddLine(
 						'text', "Close",
