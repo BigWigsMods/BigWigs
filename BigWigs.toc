@@ -10,7 +10,7 @@
 ## X-Email: tekkub@gmail.com
 ## X-Category: Raid
 
-## OptionalDeps: FuBar, BabbleLib, PaintChipsLib, Ace2, TabletLib, CompostLib, Metrognome, DewDropLib, MikScrollingBattleText, sct, CandyBar, FuBarPlugin-2.0
+## OptionalDeps: FuBar, BabbleLib, PaintChipsLib, Ace2, TabletLib, CompostLib, DewDropLib, MikScrollingBattleText, sct, CandyBar, FuBarPlugin-2.0
 
 ## SavedVariables: BigWigsDB, BigWigsFubarDB
 ## SavedVariablesPerCharacter: BigWigsDBPerChar
@@ -31,7 +31,6 @@ Libs\AceModuleCore-2.0\AceModuleCore-2.0.lua
 
 Libs\Babble-Boss-2.0\Babble-Boss-2.0.lua
 Libs\Babble-Zone-2.0\Babble-Zone-2.0.lua
-Libs\Metrognome-2.0\Metrognome-2.0.lua
 Libs\Dewdrop-2.0\Dewdrop-2.0.lua
 Libs\Tablet-2.0\Tablet-2.0.lua
 Libs\FuBarPlugin-2.0\FuBarPlugin-2.0.lua
