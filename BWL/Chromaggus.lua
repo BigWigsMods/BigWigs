@@ -34,8 +34,10 @@ L:RegisterTranslations("enUS", function() return {
 	trigger1 = "^Chromaggus begins to cast ([%w ]+)\.",
 	trigger2 = "^[%w']+ [%w' ]+ ([%w]+) Chromaggus for ([%d]+) ([%w ]+) damage%..*",
 	trigger3 = "Chromaggus's Time Lapse was resisted by ([%w]+)%.",
-	trigger4 = "goes into a killing frenzy!",
-	trigger5 = "flinches as its skin shimmers.",
+	--trigger4 = "goes into a killing frenzy!",
+	trigger4 = "%s goes into a killing frenzy!",
+	--trigger5 = "flinches as its skin shimmers.",
+	trigger5 = "%s flinches as its skin shimmers.",
 
 	hit = "hits",
 	crit = "crits",

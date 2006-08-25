@@ -12,7 +12,8 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	trigger1 = "Flamegor begins to cast Wing Buffet",
 	trigger2 = "Flamegor begins to cast Shadow Flame.",
-	trigger3 = "goes into a frenzy!",
+	--trigger3 = "goes into a frenzy!",
+	trigger3 = "%s goes into a frenzy!",
 
 	warn1 = "Flamegor begins to cast Wing Buffet!",
 	warn2 = "30 seconds till next Wing Buffet!",
