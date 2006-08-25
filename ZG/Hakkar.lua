@@ -23,22 +23,22 @@ L:RegisterTranslations("enUS", function() return {
 	warn4 = "Life Drain - 90 seconds until next",
 	["Enrage"] = true,
 	["Life Drain"] = true,
-	
+
 	cmd = "hakkar",
 	drain_cmd = "drain",
 	drain_name = "Drain Alerts",
 	drain_desc = "Warn for Drains",
-	
+
 	enrage_cmd = "enrage",
 	enrage_name = "Enrage Alerts",
 	enrage_desc = "Warn for Enrage",
-	
+
 } end)
 
 L:RegisterTranslations("deDE", function() return {
 	trigger1 = "^EURE \195\156BERHEBLICHKEIT K\195\156NDET BEREITS VOM ENDE DIESER WELT!", -- ?
-	trigger2 = "Hakkar ist von Bluttrinker betroffen." -- ? "^Hakkar erleidet (.+) Naturschaden von (.+) %(durch Bluttrinker%).",
-    
+	trigger2 = "Hakkar ist von Bluttrinker betroffen.", -- ? "^Hakkar erleidet (.+) Naturschaden von (.+) %(durch Bluttrinker%).",
+
 	flee = "Fleeing will do you no good mortals!", -- ?
 
 	start = "Hakkar angegriffen - 90 Sekunden bis Lebensentzug - 10 Minuten bis Wutanfall",
@@ -48,12 +48,12 @@ L:RegisterTranslations("deDE", function() return {
 	warn4 = "Lebensentzug - N\195\164chster in 90 Sekunden",
 	["Enrage"] = "Wutanfall",
 	["Life Drain"] = "Lebensentzug",
-	
+
 	cmd = "hakkar",
 	drain_cmd = "drain",
 	drain_name = "Lebensentzung",
 	drain_desc = "Warnung vor Lebensentzug.",
-	
+
 	enrage_cmd = "enrage",
 	enrage_name = "Wutanfall",
 	enrage_desc = "Warnung, wenn Hakkar w\195\188tend wird.",
@@ -91,10 +91,10 @@ L:RegisterTranslations("zhCN", function() return {
 	warn4 = "血液虹吸 - 90秒后再次发动",
 	["Enrage"] = "激怒",
 	["Life Drain"] = "生命吸取",
-	
+
 	drain_name = "生命吸取警报",
 	drain_desc = "生命吸取警报",
-	
+
 	enrage_name = "激怒警报",
 	enrage_desc = "激怒警报",
 } end)
