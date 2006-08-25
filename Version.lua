@@ -90,7 +90,6 @@ function BigWigsVersionQuery:OnEnable()
 	end
 	BWL = nil
 
-	self:RegisterEvent("BigWigs_VersionQuery")
 	self:RegisterEvent("BigWigs_RecvSync")
 end
 
@@ -144,10 +143,6 @@ function BigWigsVersionQuery:QueryVersion()
 	self:ScheduleEvent(function() QueryRunning = nil end, 5)
 	ResponseTable[UnitName("player")] = ResponseString
 	self:UpdateVersions()
-	self:TriggerEvent("BigWigs_VersionQuery")
-end
-
-function BigWigsVersionQuery:BigWigs_VersionQuery()
 	self:TriggerEvent("BigWigs_SendSync", "BWVQ")
 end
 
