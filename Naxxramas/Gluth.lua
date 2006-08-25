@@ -56,7 +56,7 @@ L:RegisterTranslations("deDE", function() return {
 	decimate_name = "Dezimieren", -- ?
 	decimate_desc = "Warnung vor Dezimieren", -- ?
 
-	trigger1 = "ger\195\164t in Raserei!",
+	trigger1 = "%s ger\195\164t in Raserei!",
 	trigger2 = "von Erschreckendes Gebr\195\188ll betroffen.",
 	starttrigger = "devours all nearby zombies!", -- ?
 

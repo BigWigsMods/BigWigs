@@ -68,7 +68,7 @@ L:RegisterTranslations("deDE", function() return {
 	onyfear_name = "Fear",
 	onyfear_desc = "Warnung vor Dr\195\182hnendem Gebr\195\188ll in Phase 3",
 
-	trigger1 = "atmet tief ein...",
+	trigger1 = "%s atmet tief ein...",
 	trigger2 = "^Diese sinnlose Anstrengung langweilt mich", -- ?
 	trigger3 = "^Mir scheint, dass Ihr noch eine Lektion braucht", -- ?
 	trigger4 = "Onyxia beginnt Dr\195\182hnendes Gebr\195\188ll zu wirken.",

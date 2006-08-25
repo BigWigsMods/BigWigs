@@ -45,7 +45,7 @@ L:RegisterTranslations("deDE", function() return {
 	bomb_name = "Bomben",
 	bomb_desc = "Warnung, wenn Fledermaus Bomben im Anflug sind.",
 	
-	trigger1 =  "^Ich befehle Euch Feuer",
+	trigger1 =  "Ich befehle Euch Feuer \195\188ber diese Eindringlinge regnen zu lassen!",
 	trigger2 = "beginnt Gro\195\159es Heilen zu wirken!",
 	warn1 = "Fledermaus Bomben im Anflug!",
 	warn2 = "Jeklik versucht sich zu heilen! - Unterbrechen!",

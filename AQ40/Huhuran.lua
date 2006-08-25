@@ -57,8 +57,8 @@ L:RegisterTranslations("deDE", function() return {
 	berserk_name = "Berserkerwut",
 	berserk_desc = "Warnung, wenn Huhuran in Berserkerwut verf\195\164llt.",
 
-	frenzytrigger = "ger\195\164t in Raserei",
-	berserktrigger = "verf\195\164llt in Berserkerwut",
+	frenzytrigger = "%s ger\195\164t in Raserei!",
+	berserktrigger = "%s verf\195\164llt in Berserkerwut!",
 	frenzywarn = "Raserei - Einlullender Schuss!",
 	berserkwarn = "Berserkerwut - Volle DPS!",
 	berserksoonwarn = "Berserkerwut in K\195\188rze - Bereit machen!",

@@ -120,7 +120,7 @@ L:RegisterTranslations("deDE", function() return {
 	rape_name = "Rape is never funny", -- ?
 	rape_desc = "Some people just don't get hentai jokes, the bastards", -- ?
 
-	weakenedtrigger = "ist geschw\195\164cht!",
+	weakenedtrigger = "%s ist geschw\195\164cht!",
 
 	tentacle1	= "Tentacle Rape Party - Pleasure!", -- ?
 	tentacle2	= "Tentacle Rape Party - 5 sec", -- ?

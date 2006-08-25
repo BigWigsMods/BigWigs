@@ -34,7 +34,7 @@ L:RegisterTranslations("deDE", function() return {
 	sacrifice_name = "Opferung",
 	sacrifice_desc = "Warnung, wenn ein Spieler geopfert wird.",
 
-	sacrificetrigger = "^([^%s]+) ([^%s]+) von Paralisieren betroffen",
+	sacrificetrigger = "^([^%s]+) ([^%s]+) von Paralisieren betroffen.",
 	sacrificewarn = " wird geopfert!",
 	you = "Ihr",
 	are = "seid",

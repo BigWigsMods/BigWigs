@@ -49,7 +49,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Display"] = true,
 	["Set where messages are displayed."] = true,
 	["Display is now set to %2$s"] = true,
-	["Display is currently set to %2$s"] = true,	
+	["Display is currently set to %2$s"] = true,
 
 	["Mik's Scrolling Battle Text"] = true,
 	["Scrolling Combat Text"] = true,
@@ -165,7 +165,7 @@ BigWigsMessages.consoleOptions = {
 			name = L"Anchor",
 			desc = L"Show the message anchor frame.",
 			func = function() BigWigsMessages.anchorframe:Show() end,
-			hidden = function() return (BigWigsMessages.db.profile.display ~= L"BigWigs frame") end,
+			disabled = function() return (BigWigsMessages.db.profile.display ~= L"BigWigs frame") end,
 		},
 		[L"color"] = {
 			type = "toggle",
@@ -187,7 +187,7 @@ BigWigsMessages.consoleOptions = {
 				BigWigsMessages.db.profile.scale = v
 				if BigWigsMessages.msgframe then BigWigsMessages.msgframe:SetScale(v) end
 			end,
-			hidden = function() return (BigWigsMessages.db.profile.display ~= L"BigWigs frame") end,
+			disabled = function() return (BigWigsMessages.db.profile.display ~= L"BigWigs frame") end,
 		},
 		[L"display"] = {
 			type = "text",
@@ -273,7 +273,7 @@ function BigWigsMessages:BigWigs_Message(text, type)
 	elseif SCT_Display_Message and self.db.profile.display == L"Scrolling Combat Text" then -- SCT 4.x
 		local color = { }
 		color.r, color.g, color.b = r,g,b
-		SCT_Display_Message( text, color )		
+		SCT_Display_Message( text, color )
 	elseif SCT and SCT_MSG_FRAME and self.db.profile.display == L"Scrolling Combat Text" then -- SCT 5.x
 		SCT_MSG_FRAME:AddMessage( text, r, g, b, 1 )
 	else -- Default BigWigs Frame fallback

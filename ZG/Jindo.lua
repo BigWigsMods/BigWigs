@@ -38,8 +38,8 @@ L:RegisterTranslations("deDE", function() return {
 	healing_name = "Heiltotem",
 	healing_desc = "Warnung, wenn Jin'do Heiltotem beschw\195\182rt.",
 	
-	triggerbrainwash = "wirkt Totem der Gehirnw\195\164sche beschw\195\182ren",
-	triggerhealing = "wirkt M\195\164chtiger Heilungszauberschutz",
+	triggerbrainwash = "Jin'do der Verhexer wirkt Totem der Gehirnw\195\164sche beschw\195\182ren.",
+	triggerhealing = "Jin'do der Verhexer wirkt M\195\164chtiger Heilungszauberschutz.",
 
 	warnbrainwash = "\195\156bernahmetotem!",
 	warnhealing = "Heiltotem!",

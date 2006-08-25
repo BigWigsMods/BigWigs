@@ -82,11 +82,11 @@ L:RegisterTranslations("deDE", function() return {
 	vulnerability_name = "Zauber-Verwundbarkeiten",
 	vulnerability_desc = "Warnung, wenn Chromagguss Zauber-Verwundbarkeit sich \195\164ndert.",
 	
-	trigger1 = "^Chromaggus beginnt (.+) zu wirken%.", -- ? "^Chromaggus beginnt ([%w ]+)\ zu wirken."
+	trigger1 = "^Chromaggus beginnt (.+) zu wirken%.",
 	trigger2 = "^[^%s]+ .* trifft Chromaggus(.+)f\195\188r ([%d]+) ([%w ]+)'schaden%..*", -- ?
-	trigger3 = "Zeitraffer wurde von ([%w]+) widerstanden.%", -- ?
-	trigger4 = "ger\195\164t in t\195\182dliche Raserei!",
-	trigger5 = "weicht zur\195\188ck, als die Haut schimmert.",
+	trigger3 = "Chromagguss Zeitraffer wurde von ([%w]+) widerstanden.%", -- ?
+	trigger4 = "%s ger\195\164t in t\195\182dliche Raserei!",
+	trigger5 = "%s weicht zur\195\188ck, als die Haut schimmert.",
 
 	hit = "trifft",
 	crit = "kritisch",

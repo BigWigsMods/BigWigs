@@ -36,8 +36,9 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	trigger1 = "^EURE \195\156BERHEBLICHKEIT K\195\156NDET BEREITS VOM ENDE DIESER WELT", -- ?
-	trigger2 = "^Hakkar erleidet (.+) Naturschaden durch (.+) Lebensentzug", -- ?
+	trigger1 = "^EURE \195\156BERHEBLICHKEIT K\195\156NDET BEREITS VOM ENDE DIESER WELT!", -- ?
+	trigger2 = "Hakkar ist von Bluttrinker betroffen." -- ? "^Hakkar erleidet (.+) Naturschaden von (.+) %(durch Bluttrinker%).",
+    
 	flee = "Fleeing will do you no good mortals!", -- ?
 
 	start = "Hakkar angegriffen - 90 Sekunden bis Lebensentzug - 10 Minuten bis Wutanfall",

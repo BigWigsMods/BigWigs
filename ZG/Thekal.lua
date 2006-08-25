@@ -35,12 +35,12 @@ L:RegisterTranslations("deDE", function() return {
 
 	tiger_cmd = "tiger",
 	tiger_name = "Tiger",
-	tiger_desc = "Warnung, wenn Tiger kommen.",
+	tiger_desc = "Warnung, wenn Hohepriester Thekal Tiger beschw\195\182rt.",
 
-	trigger1 = "High Priest Thekal performs Summon Zulian Guardians.", -- ?
-	trigger2 = "Zealot Lor'Khan begins to cast Great Heal.", -- ?
+	trigger1 = "Hohepriester Thekal f\195\188hrt Zulianische W\195\164chter beschw\195\182ren aus.",
+	trigger2 = "Zelot Lor'Khan beginnt Gro\195\159es Heilen zu wirken.",
 	warn1 = "Tiger!",
-	warn2 = "Lor'Khan heilt sich!",	
+	warn2 = "Lor'Khan heilt sich!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

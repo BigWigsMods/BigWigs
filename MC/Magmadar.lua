@@ -66,12 +66,13 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 L:RegisterTranslations("deDE", function() return {
-	trigger1 = "ger\195\164t in t\195\182dliche Raserei!",
+	trigger1 = "%s ger\195\164t in t\195\182dliche Raserei!",
 	trigger2 = "von Panik betroffen",
 
 	["Frenzy alert!"] = "Raserei! - Einlullender Schuss!",
 	["5 seconds until AoE Fear!"] = "5 Sekunden bis AoE Furcht!",
 	["AoE Fear - 30 seconds until next!"] = "AoE Furcht! N\195\164chste in 30 Sekunden!",
+	["AoE Fear"] = "AoE Furcht",
 
 	cmd = "Magmadar",
 	

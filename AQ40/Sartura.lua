@@ -50,7 +50,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	starttrigger = "Ihr habt heiligen Boden entweiht",
 	startwarn = "Sartura angegriffen! 10 Minuten bis Wutanfall!",
-	enragetrigger = "wird w\195\188tend",
+	enragetrigger = "%s wird w\195\188tend!",
 	enragewarn = "Sartura ist w\195\188tend!",
 	bartext = "Wutanfall",
 	warn1 = "Wutanfall in 8 Minuten",

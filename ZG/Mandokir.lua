@@ -47,7 +47,7 @@ L:RegisterTranslations("deDE", function() return {
 	other_desc = "Warnung, wenn andere Spieler beobachtet werden.",
 
 	trigger1 = "([^%s]+)! Ich behalte Euch im Auge!$",
-	trigger2 = "ger\195\164t in Rage, als er sieht, dass sein Raptor im Kampf stirbt!$",
+	trigger2 = "%s ger\195\164t in Rage, als er sieht, dass sein Raptor im Kampf stirbt!$",
 
 	warn1 = "Du wirst beobachtet - Alle Aktionen stoppen!",
 	warn2 = "%s wird beobachtet!",

@@ -58,17 +58,17 @@ L:RegisterTranslations("deDE", function() return {
 	paralyze_name = "Steinform",
 	paralyze_desc = "Warnung, wenn Moam in Steinform.",
 
-	starttrigger = "sp\195\188rt Eure Angst.",
+	starttrigger = "%s sp\195\188rt Eure Angst.",
 	startwarn = "Moam angegriffen! 90 Sekunden bis Elementare erscheinen!",
 
 	addsbar = "Elementare",
 	addsincoming = "Elementare erscheinen in %s Sekunden!",
-	addstrigger = "entzieht Euch Euer Mana und versteinert Euch.",
+	addstrigger = "%s entzieht Euch Euer Mana und versteinert Euch.",
 	addswarn = "Elementare! Moam in Steinform f\195\188r 90 Sekunden.",
 
 	paralyzebar = "Steinform",
 	returnincoming = "Moam erwacht in %s Sekunden!",
-	returntrigger = "^Energiezufuhr schwindet von Moam%.$",
+	returntrigger = "Energiezufuhr schwindet von Moam.",
 	returnwarn = "Moam erwacht! 90 Sekunden bis Elementare erscheinen!",
 } end )
 
