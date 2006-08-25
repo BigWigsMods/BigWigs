@@ -32,7 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	cocoonwarn = "%s Cocooned!",
 
-	enragetrigger = "becomes enraged.",
+	enragetrigger = "%s becomes enraged.",
 
 	webspraywarn30sec = "Wall Cocoons in 10 seconds",
 	webspraywarn20sec = "Wall Cocoons! 10 seconds until Spiders spawn!",

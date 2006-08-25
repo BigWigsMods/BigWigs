@@ -16,7 +16,7 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_name = "Enrage Alert",
 	enrage_desc = "Warn for Enrage",
 
-	enragetrigger = "goes into a berserker rage!",
+	enragetrigger = "%s goes into a berserker rage!",
 
 	enragewarn = "Enrage!",
 	starttrigger1 = "Patchwerk want to play!",

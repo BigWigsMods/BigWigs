@@ -24,7 +24,7 @@ L:RegisterTranslations("enUS", function() return {
 	decimate_name = "Decimate Alert",
 	decimate_desc = "Warn for Decimate",
 
-	trigger1 = "goes into a frenzy!",
+	trigger1 = "%s goes into a frenzy!",
 	trigger2 = "by Terrifying Roar.",
 	starttrigger = "devours all nearby zombies!",
 

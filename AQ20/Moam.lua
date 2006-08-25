@@ -20,11 +20,11 @@ L:RegisterTranslations("enUS", function() return {
 	paralyze_name = "Paralyze Alert",
 	paralyze_desc = "Warn for Paralyze",
 
-	starttrigger = "senses your fear.",
+	starttrigger = "%s senses your fear.",
 	startwarn = "Moam Enaged! 90 Seconds until adds!",
 	addsbar = "Adds",
 	addsincoming = "Adds incoming in %s seconds!",
-	addstrigger = "drains your mana and turns to stone.",
+	addstrigger = "%s drains your mana and turns to stone.",
 	addswarn = "Adds spawned! Moam Paralyzed for 90 seconds!",
 	paralyzebar = "Paralyze",
 	returnincoming = "Moam unparalyzed in %s seconds!",

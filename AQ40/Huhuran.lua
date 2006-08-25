@@ -24,8 +24,8 @@ L:RegisterTranslations("enUS", function() return {
 	berserk_name = "Berserk Alert",
 	berserk_desc = "Warn for Berserk",
 
-	frenzytrigger = "goes into a frenzy!",
-	berserktrigger = "goes into a berserker rage!",
+	frenzytrigger = "%s goes into a frenzy!",
+	berserktrigger = "%s goes into a berserker rage!",
 	frenzywarn = "Frenzy - Tranq Shot!",
 	berserkwarn = "Berserk - Give it all you got!",
 	berserksoonwarn = "Berserk Soon - Get Ready!",

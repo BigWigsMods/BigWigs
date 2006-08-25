@@ -34,15 +34,15 @@ L:RegisterTranslations("enUS", function() return {
 	charge_name = "Charge Alert",
 	charge_desc = "Warn about Positive/Negative charge for yourself only.",
 
-	enragetrigger = "goes into a berserker rage!",
+	enragetrigger = "%s goes into a berserker rage!",
 	starttrigger = "Stalagg crush you!",
 	starttrigger1 = "Feed you to master!",
 	starttrigger2 = "Eat... your... bones...",
 	starttrigger3 = "Break... you!!",
 	starttrigger4 = "Kill...",
 
-	adddeath = "dies.",
-	teslaoverload = "overloads!",
+	adddeath = "%s dies.",
+	teslaoverload = "%s overloads!",
 
 	pstrigger = "Now you feel pain...",
 	trigger1 = "Thaddius begins to cast Polarity Shift",

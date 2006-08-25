@@ -11,7 +11,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	-- Chat message triggers
-	trigger1 = "goes into a killing frenzy!",
+	trigger1 = "%s goes into a killing frenzy!",
 	trigger2 = "by Panic.",
 
 	-- Warnings and bar texts
