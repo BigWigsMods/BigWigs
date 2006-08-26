@@ -343,7 +343,7 @@ end
 
 function BigWigsThaddius:BigWigs_RecvSync( sync )
 	if sync == "ThaddiusPolarity" and self.db.profile.polarity then
-		self:ScheduleEvent(self.DebuffTrigger, 0.1, self)
+	--	self:ScheduleEvent(self.DebuffTrigger, 0.1, self)
 		self:ScheduleEvent("BigWigs_Message", 27, L"pswarn3", "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, "Interface\\Icons\\Spell_Nature_Lightning", "Yellow", "Orange", "Red")
 	elseif sync == "StalaggPower" and self.db.profile.power then
