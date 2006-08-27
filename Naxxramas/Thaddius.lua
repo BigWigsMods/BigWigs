@@ -47,8 +47,8 @@ L:RegisterTranslations("enUS", function() return {
 	pstrigger = "Now you feel pain...",
 	trigger1 = "Thaddius begins to cast Polarity Shift",
 	chargetrigger = "You are afflicted by (%w+) Charge.",
-	positivetype = "Positive",
-	negativetype = "Negative",
+	positivetype = "Interface\\Icons\\Spell_ChargePositive",
+	negativetype = "Interface\\Icons\\Spell_ChargeNegative",
 	stalaggtrigger = "Stalagg gains Power Surge.",
 
 	you = "You",
@@ -114,8 +114,6 @@ L:RegisterTranslations("deDE", function() return {
 	pstrigger = "Now you feel pain...", -- ?
 	trigger1 = "Thaddius begins to cast Polarity Shift", -- ?
 	chargetrigger = "^([^%s]+) ([^%s]+) von ([^%s]+) Ladung betroffen",
-	positivetype = "Positive", -- ?
-	negativetype = "Negative", -- ?
 	stalaggtrigger = "Stalagg gains Power Surge.", -- ?
 
 	you = "Ihr",
@@ -172,8 +170,6 @@ L:RegisterTranslations("zhCN", function() return {
 	pstrigger = "你感受到痛苦的滋味了吧……",
 	trigger1 = "塔迪乌斯开始施放极性转化。",
 	chargetrigger = "^(.+)受(.+)了(.+)电荷",
-	positivetype = "正",
-	negativetype = "负",
 	stalaggtrigger = "斯塔拉格获得了力量振荡的效果。",
 
 	you = "你",
@@ -279,32 +275,6 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
 	end
 end
 
-function BigWigsThaddius:DebuffTrigger()
-	local iIterator = 1
-	local chargetype = nil
-	while UnitDebuff("player", iIterator) and not chargetype do
-		if string.find(UnitDebuff("player", iIterator), "Positive") then
-			chargetype = L"positivetype"
-		elseif string.find(UnitDebuff("player", iIterator), "Negative") then
-			chargetype = L"negativetype"
-		end
-		iIterator = iIterator + 1
-	end
-	if not chargetype then return end
-
-	if self.db.profile.charge then
-		if self.previousCharge == chargetype then
-			self:TriggerEvent("BigWigs_Message", L"nochange", "Orange", true)
-		elseif chargetype == L"positivetype" then
-			self:TriggerEvent("BigWigs_Message", L"poswarn", "Green", true)
-		elseif chargetype == L"negativetype" then
-			self:TriggerEvent("BigWigs_Message", L"negwarn", "Red", true)
-		end
-		self:TriggerEvent("BigWigs_StartBar", self, L"polaritytickbar", 5, "Interface\\Icons\\Spell_Lightning_LightningBolt01", "Red")
-	end
-	self.previousCharge = chargetype
-end
-
 function BigWigsThaddius:PLAYER_REGEN_ENABLED()
 	local go = self:Scan()
 	local running = self:IsEventScheduled("Thaddius_CheckWipe")
@@ -341,9 +311,45 @@ function BigWigsThaddius:PolarityCast( msg )
 	end
 end
 
+function BigWigsThaddius:PLAYER_AURAS_CHANGED( msg )
+	local chargetype = nil
+	local iIterator = 1
+	while UnitDebuff("player", iIterator) do
+		local texture, applications = UnitDebuff("player", iIterator)
+		if texture == L"positivetype" or texture == L"negativetype" then
+			-- If we have a debuff with this texture that has more
+			-- than one application, it means we still have the
+			-- counter debuff, and thus nothing has changed yet.
+			-- (we got a PW:S or Renew or whatever after he casted
+			--  PS, but before we got the new debuff)
+			if applications > 1 then return end
+			chargetype = texture
+			-- Note that we do not break out of the while loop when
+			-- we found a debuff, since we still have to check for
+			-- debuffs with more than 1 application.
+		end
+		iIterator = iIterator + 1
+	end
+	if not chargetype then return end
+
+	self:UnregisterEvent("PLAYER_AURAS_CHANGED")
+
+	if self.db.profile.charge then
+		if self.previousCharge == chargetype then
+			self:TriggerEvent("BigWigs_Message", L"nochange", "Orange", true)
+		elseif chargetype == L"positivetype" then
+			self:TriggerEvent("BigWigs_Message", L"poswarn", "Green", true)
+		elseif chargetype == L"negativetype" then
+			self:TriggerEvent("BigWigs_Message", L"negwarn", "Red", true)
+		end
+		self:TriggerEvent("BigWigs_StartBar", self, L"polaritytickbar", 5, chargetype, "Red")
+	end
+	self.previousCharge = chargetype
+end
+
 function BigWigsThaddius:BigWigs_RecvSync( sync )
 	if sync == "ThaddiusPolarity" and self.db.profile.polarity then
-	--	self:ScheduleEvent(self.DebuffTrigger, 0.1, self)
+		self:RegisterEvent("PLAYER_AURAS_CHANGED")
 		self:ScheduleEvent("BigWigs_Message", 27, L"pswarn3", "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, "Interface\\Icons\\Spell_Nature_Lightning", "Yellow", "Orange", "Red")
 	elseif sync == "StalaggPower" and self.db.profile.power then
