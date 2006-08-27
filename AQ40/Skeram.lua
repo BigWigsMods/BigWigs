@@ -12,6 +12,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	aetrigger = "The Prophet Skeram begins to cast Arcane Explosion.",
 	mctrigger = "The Prophet Skeram begins to cast True Fulfillment.",
+	splittrigger = "The Prophet Skeram casts Summon Images.",
 	aewarn = "Casting Arcane Explosion!",
 	mcwarn = "Casting Mind Control!",
 	mcplayer = "^([^%s]+) ([^%s]+) afflicted by True Fulfillment.$",
@@ -19,7 +20,7 @@ L:RegisterTranslations("enUS", function() return {
 	mcyou = "You",
 	mcare = "are",
 	
-	splitwarn = "Splitting soon!",
+	splitwarn = "Splitting!",
 
 	cmd = "Skeram",
 	mc_cmd = "mc",
@@ -111,35 +112,14 @@ BigWigsSkeram.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsSkeram:OnEnable()
-	self.seventyFive = nil
-	self.fifty = nil
-	self.twentyFive = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
---	self:RegisterEvent("UNIT_HEALTH")
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-function BigWigsSkeram:UNIT_HEALTH( msg )
-	if self.db.profile.split and UnitName(msg) == boss then
-		local health = UnitHealth(msg)
-		
-		if health > 75 and health <= 78 and not self.seventyFive then
-			self:TriggerEvent("BigWigs_Message", L"splitwarn", "Red")
-			self.seventyFive = true
-		elseif health > 50 and health <= 53 and not self.fifty then
-			self:TriggerEvent("BigWigs_Message", L"splitwarn", "Red")
-			self.fifty = true
-		elseif health > 25 and health <= 28 and not self.twentyFive then
-			self:TriggerEvent("BigWigs_Message", L"splitwarn", "Red")
-			self.twentyFive = true
-		end
-	end
-end
-
 if (GetLocale() == "koKR") then
 	function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(arg1)
 		local _,_, player = string.find(arg1, L"mcplayer")
@@ -167,5 +147,7 @@ function BigWigsSkeram:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(arg1)
 		if self.db.profile.ae then self:TriggerEvent("BigWigs_Message", L"aewarn", "Orange") end
 	elseif (arg1 == L"mctrigger") then
 		if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", L"mcwarn", "Orange") end
+	elseif (arg1 == L"splittrigger") then
+		if self.db.profile.split then self:TriggerEvent("BigWigs_Message", L"splitwarn", "Red") end
 	end
 end
