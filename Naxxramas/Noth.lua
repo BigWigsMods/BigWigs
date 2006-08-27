@@ -67,7 +67,7 @@ L:RegisterTranslations("deDE", function() return {
 	curse_name = "Fluch",
 	curse_desc = "Warnung, wenn Noth Fluch des Seuchenf\195\188rsten wirkt.",
 
-	starttrigger1 = "Stirb, Eindringling!",
+	starttrigger1 = "Sterbt, Eindringling!",
 	starttrigger2 = "Ehre unserem Meister!",
 	starttrigger3 = "Euer Leben ist verwirkt!",
 	startwarn = "Noth der Seuchenf\195\188rst angegriffen! 90 Sekunden bis Teleport!",
