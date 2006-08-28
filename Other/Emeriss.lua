@@ -133,23 +133,23 @@ end
 
 if (GetLocale() == "koKR") then
 	function BigWigsEmeriss:Event( msg )
-		if (not self.prior and string.find(msg, L"trigger2")) then
+		if (not self.prior and string.find(msg, L["trigger2"])) then
 			self.prior = true
 			if self.db.profile.noxious then 
-				self:TriggerEvent("BigWigs_Message", L"warn4", "Red")
-				self:ScheduleEvent("BigWigs_Message", 25, L"warn3", "Red")
-				self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
+				self:TriggerEvent("BigWigs_Message", L["warn4"], "Red")
+				self:ScheduleEvent("BigWigs_Message", 25, L["warn3"], "Red")
+				self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 30, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
 			end
 		else
-			local _,_, EPlayer = string.find(msg, L"trigger1")
+			local _,_, EPlayer = string.find(msg, L["trigger1"])
 			if (EPlayer) then
-				if (EPlayer == L"isyou" ) then
-					if self.db.profile.volatileyou then self:TriggerEvent("BigWigs_Message", L"warn1", "Red", true) end
+				if (EPlayer == L["isyou"] ) then
+					if self.db.profile.volatileyou then self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true) end
 				else
-					local _,_, EWho = string.find(EPlayer, L"whopattern")
+					local _,_, EWho = string.find(EPlayer, L["whopattern"])
 					if self.db.profile.volatileother then 
-						self:TriggerEvent("BigWigs_Message", EWho .. L"warn2", "Yellow")
-						self:TriggerEvent("BigWigs_SendTell", EWho, L"warn1")
+						self:TriggerEvent("BigWigs_Message", EWho .. L["warn2"], "Yellow")
+						self:TriggerEvent("BigWigs_SendTell", EWho, L["warn1"])
 					end
 				end
 			end
@@ -157,22 +157,22 @@ if (GetLocale() == "koKR") then
 	end
 else
 	function BigWigsEmeriss:Event( msg )
-		if (not self.prior and string.find(msg, L"trigger2")) then
+		if (not self.prior and string.find(msg, L["trigger2"])) then
 			self.prior = true
 			if self.db.profile.noxious then 
-				self:TriggerEvent("BigWigs_Message", L"warn4", "Red")
-				self:ScheduleEvent("BigWigs_Message", 25, L"warn3", "Red")
-				self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
+				self:TriggerEvent("BigWigs_Message", L["warn4"], "Red")
+				self:ScheduleEvent("BigWigs_Message", 25, L["warn3"], "Red")
+				self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 30, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
 			end			
 		else
-			local _,_, EPlayer, EType = string.find(msg, L"trigger1")
+			local _,_, EPlayer, EType = string.find(msg, L["trigger1"])
 			if (EPlayer and EType) then
-				if (EPlayer == L"isyou" and EType == L"isare") then
-					if self.db.profile.volatileyou then self:TriggerEvent("BigWigs_Message", L"warn1", "Red", true) end
+				if (EPlayer == L["isyou"] and EType == L["isare"]) then
+					if self.db.profile.volatileyou then self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true) end
 				else
 					if self.db.profile.volatileother then
-						self:TriggerEvent("BigWigs_Message", EPlayer .. L"warn2", "Yellow")
-						self:TriggerEvent("BigWigs_SendTell", EPlayer, L"warn1")
+						self:TriggerEvent("BigWigs_Message", EPlayer .. L["warn2"], "Yellow")
+						self:TriggerEvent("BigWigs_SendTell", EPlayer, L["warn1"])
 					end
 				end
 			end
@@ -181,5 +181,5 @@ else
 end
 
 function BigWigsEmeriss:BigWigs_Message(text)
-	if text == L"warn3" then self.prior = nil end
+	if text == L["warn3"] then self.prior = nil end
 end

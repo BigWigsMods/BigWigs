@@ -134,22 +134,22 @@ end
 ------------------------------
 
 function BigWigsOnyxia:CHAT_MSG_MONSTER_EMOTE(msg)
-	if (msg == L"trigger1") then
-		if self.db.profile.deepbreath then self:TriggerEvent("BigWigs_Message", L"warn1", "Red") end
+	if (msg == L["trigger1"]) then
+		if self.db.profile.deepbreath then self:TriggerEvent("BigWigs_Message", L["warn1"], "Red") end
 	end
 end
 
 function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL(msg)
-	if (string.find(msg, L"trigger2")) then
-		if self.db.profile.phase2 then self:TriggerEvent("BigWigs_Message", L"warn2", "White") end
-	elseif (string.find(msg, L"trigger3")) then
-		if self.db.profile.phase3 then self:TriggerEvent("BigWigs_Message", L"warn3", "White") end
+	if (string.find(msg, L["trigger2"])) then
+		if self.db.profile.phase2 then self:TriggerEvent("BigWigs_Message", L["warn2"], "White") end
+	elseif (string.find(msg, L["trigger3"])) then
+		if self.db.profile.phase3 then self:TriggerEvent("BigWigs_Message", L["warn3"], "White") end
 	end
 end
 
 
 function BigWigsOnyxia:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg == L"trigger4" and self.db.profile.onyfear then
-		self:TriggerEvent("BigWigs_Messaage", L"warn4", "Red")
+	if msg == L["trigger4"] and self.db.profile.onyfear then
+		self:TriggerEvent("BigWigs_Messaage", L["warn4"], "Red")
 	end
 end

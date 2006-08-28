@@ -82,12 +82,12 @@ function BigWigsKazzak:OnEnable()
 end
 
 function BigWigsKazzak:CHAT_MSG_MONSTER_YELL( msg )
-	if self.db.profile.supreme and msg == L"starttrigger" then 
-		self:TriggerEvent("BigWigs_Message", L"engagewarn", "Red")
-		self:ScheduleEvent("BigWigs_Message", supremetime - 60, L"supreme1min", "Yellow")
-		self:ScheduleEvent("BigWigs_Message", supremetime - 30, L"supreme30sec", "Orange")
-		self:ScheduleEvent("BigWigs_Message", supremetime - 10, L"supreme10sec", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"bartext", supremetime, "Interface\\Icons\\Spell_Shadow_ShadowWordPain", "Green", "Yellow", "Orange", "Red")
+	if self.db.profile.supreme and msg == L["starttrigger"] then 
+		self:TriggerEvent("BigWigs_Message", L["engagewarn"], "Red")
+		self:ScheduleEvent("BigWigs_Message", supremetime - 60, L["supreme1min"], "Yellow")
+		self:ScheduleEvent("BigWigs_Message", supremetime - 30, L["supreme30sec"], "Orange")
+		self:ScheduleEvent("BigWigs_Message", supremetime - 10, L["supreme10sec"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], supremetime, "Interface\\Icons\\Spell_Shadow_ShadowWordPain", "Green", "Yellow", "Orange", "Red")
 	end
 end
 
