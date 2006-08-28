@@ -1,5 +1,6 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
+local BWL = nil
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsVersionQuery")
 local tablet = AceLibrary("Tablet-2.0")
 local dewdrop = AceLibrary("Dewdrop-2.0")
@@ -173,6 +174,40 @@ function BigWigsVersionQuery:QueryVersion(zone)
 	self:TriggerEvent("BigWigs_SendSync", "BWVQ "..zone)
 end
 
+--[[ Parses the old style reply, which was MC:REV BWL:REV, etc. ]]
+function BigWigsVersionQuery:ParseReply(reply)
+	local pos = 1
+	local zonePairs = {}
+
+	while 1 do
+		local first, last = strfind(reply, " ", pos)
+		if first then -- found?
+			tinsert(zonePairs, strsub(reply, pos, first-1))
+			pos = last+1
+		else
+			tinsert(zonePairs, strsub(reply, pos))
+			break
+		end
+	end
+
+	if not BWL then BWL = AceLibrary("AceLocale-2.0"):new("BigWigs") end
+
+	for key, zonePair in zonePairs do
+		local colonIndex = strfind(zonePair, ":")
+		if colonIndex then
+			local zone = strsub(zonePair, 1, colonIndex - 1)
+			local realZone = BWL:HasReverseTranslation(zone) and BWL:GetReverseTranslation(zone) or zone
+			if realZone == self.currentZone or zone == self.currentZone then
+				local revision = strsub(zonePair, colonIndex + 1)
+				if tonumber(revision) ~= nil then
+					return tonumber(revision)
+				end
+			end
+		end
+	end
+	return -1
+end
+
 function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "BWVQ" and nick ~= UnitName("player") and rest then
 		if not self.zoneRevisions[rest] then
@@ -180,7 +215,8 @@ function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
 		else
 			self:TriggerEvent("BigWigs_SendSync", "BWVR " .. self.zoneRevisions[rest])
 		end
-	elseif sync == "BWVR" and self.queryRunning and nick and rest and tonumber(rest) ~= nil then
+	elseif sync == "BWVR" and self.queryRunning and nick and rest then
+		if tonumber(rest) == nil then rest = self:ParseReply(rest) end
 		self.responseTable[nick] = tonumber(rest)
 		self:UpdateVersions()
 	end
