@@ -155,6 +155,16 @@ L:RegisterTranslations("koKR", function() return {
 	bar1text	= "Poison Bolt Volley",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+-- need french chat/combatlog
+	trigger7 	= "^([^%s]+) ([^%s]+) subit les effets de Toxine%.$",
+
+	you 		= "Vous",
+	are 		= "subissez",
+
+} end )
+
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

@@ -113,6 +113,27 @@ L:RegisterTranslations("koKR", function() return {
 	whirlwindbartext = "소용돌이",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	
+	starttrigger = "Je vous condamne \195\160 mort !",
+	startwarn = "Sartura engaged - 10 minutes until Enrage",
+	enragetrigger = "devient fou furieux !",
+	enragewarn = "Enrage - Enrage - Enrage",
+	bartext = "Enrage",
+	warn1 = "Enrage in 8 minutes",
+	warn2 = "Enrage in 5 minutes",
+	warn3 = "Enrage in 3 minutes",
+	warn4 = "Enrage in 90 seconds",
+	warn5 = "Enrage in 60 seconds",
+	warn6 = "Enrage in 30 seconds",
+	warn7 = "Enrage in 10 seconds",
+	whirlwindon = "Garde de guerre Sartura gagne Tourbillon.",
+	whirlwindoff = "Tourbillon sur Garde de guerre Sartura vient de se dissiper.",
+	whirlwindonwarn = "Tourbillon - Battleguard Sartura - Tourbillon",
+	whirlwindoffwarn = "Tourbillon fini. ASSOMMEZ! ASSOMMEZ! ASSOMMEZ!",
+	whirlwindbartext = "Tourbillon",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

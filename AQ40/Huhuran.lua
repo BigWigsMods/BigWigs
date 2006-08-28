@@ -114,6 +114,14 @@ L:RegisterTranslations("koKR", function() return {
 	bartext = "비룡 쐐기",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+
+	frenzytrigger = "%s est pris de fr\195\169n\195\169sie !",
+	berserktrigger = "%s entre dans une rage d\195\169mente !",
+	stingtrigger = "les effets de Piq\195\187re de wyverne",
+} end )
+
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

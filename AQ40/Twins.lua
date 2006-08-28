@@ -151,6 +151,15 @@ L:RegisterTranslations("koKR", function() return {
 	warn7 = "Enrage in 10 seconds",
 } end )
 
+
+L:RegisterTranslations("frFR", function() return {
+	porttrigger = "lance T\195\169l\195\169portation des jumeaux.",
+	explodebugtrigger = "gagne Explosion de l'insecte%.$",
+	enragetrigger = "devient fou furieux.",-- not sure at all
+	healtrigger1 = "Soigner fr\195\168re de (.+) gu\195\169rit",
+	healtrigger2 = "Soigner fr\195\168re de (.+) soigne", 
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

@@ -45,6 +45,12 @@ L:RegisterTranslations("koKR", function() return {
 	wormwarn = "벌레 소환 - 제거! (%d)",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	wormtrigger = "Fankriss l'Inflexible lance Invocation d'un ver.",
+	wormwarn = "Incoming ver(%d) !",
+	wormbar = "ver (%d) Enrage ",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

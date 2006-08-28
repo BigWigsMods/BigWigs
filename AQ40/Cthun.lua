@@ -235,6 +235,13 @@ L:RegisterTranslations("zhCN", function() return {
 	phase2starting	= "克苏恩之眼已死亡 - 进入第二阶段",
 } end )
 
+
+
+	L:RegisterTranslations("frFR", function() return {
+	
+	weakenedtrigger = "%s est affaibli !",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

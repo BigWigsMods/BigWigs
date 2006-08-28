@@ -178,6 +178,15 @@ L:RegisterTranslations("zhCN", function() return {
 	berserksoonwarn = "即将狂暴 - 做好准备！",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+
+	sweeptrigger = "Ouro commence \195\160 lancer Balayer.",
+	sandblasttrigger = "Ouro commence \195\160 ex\195\169cuter Explosion de sable.",
+	emergetrigger = "Tas de terre lance Invocation de Scarab\195\169es d'Ouro.",
+	submergetrigger = "Ouro lance Invocation de Monticules d'Ouro.",
+
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

@@ -97,6 +97,19 @@ L:RegisterTranslations("koKR", function() return {
 	whopattern = "(.+)|1이;가; ",
 } end )
 
+	L:RegisterTranslations("frFR", function() return {
+	aetrigger = "Le Proph\195\168te Skeram commence \195\160 lancer Explosion des arcanes.",
+	mctrigger = "Le Proph\195\168te Skeram commence \195\160 lancer Accomplissement v\195\169ritable.",
+	splittrigger = "Le Proph\195\168te Skeram lance Invocation des Images.",
+	mcplayer = "([^%s]+) ([^%s]+) les effets de Accomplissement v\195\169ritable.",
+	mcplayerwarn = " est sous controle mental!",
+	mcyou = "Vous",
+	mcare = "subissez",
+	
+	splitwarn = "Separation!",
+
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

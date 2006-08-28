@@ -79,6 +79,16 @@ L:RegisterTranslations("koKR", function() return {
 	fearwarn2 = "5초후 공포!",
 } end )
 
+	L:RegisterTranslations("frFR", function() return {
+	healtrigger = "Princesse Yauj commence \195\160 lancer Soins exceptionnels.",
+	healwarn = "Princesse Yauj commence \195\160 se soigner - Kick!",
+
+	feartrigger = "subit les effets de Peur%.",
+	fearbar = "AE Fear",
+	fearwarn1 = "AE Fear! prochain dans 20 Sec!",
+	fearwarn2 = "AE Fear dans 5 Sec!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

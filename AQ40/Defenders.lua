@@ -153,6 +153,20 @@ L:RegisterTranslations("koKR", function() return {
 	thunderclapwarn = "천둥벼락! - 멀리 떨어지세요",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	explodetrigger = "D\195\169fenseur Anubisath gagne Exploser.",
+	enragetrigger = "D\195\169fenseur Anubisath gagne Enrager.",
+	summonguardtrigger = "D\195\169fenseur Anubisath lance Invocation d'un Garde-essaim Anubisath.",
+	summonwarriortrigger = "D\195\169fenseur Anubisath lance Invocation d'un Guerrier Anubisath.",
+	plaguetrigger = "^([^%s]+) ([^%s]+) les effets de Peste%.$",
+	plagueyou = "Vous",
+	plagueare = "subissez",
+	thunderclaptrigger = "^D\195\169fenseur Anubisath lance Coup de tonnerre",--not sure
+	
+	 
+} end )
+
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
