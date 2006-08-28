@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -338,11 +338,11 @@ function BigWigsThaddius:PLAYER_AURAS_CHANGED( msg )
 		if self.previousCharge == chargetype then
 			self:TriggerEvent("BigWigs_Message", L["nochange"], "Orange", true)
 		elseif chargetype == L"positivetype" then
-			self:TriggerEvent("BigWigs_Message", L["poswarn"], "Green", true)
+			self:TriggerEvent("BigWigs_Message", L["poswarn"], "Green", true, "Alarm")
 		elseif chargetype == L"negativetype" then
-			self:TriggerEvent("BigWigs_Message", L["negwarn"], "Red", true)
+			self:TriggerEvent("BigWigs_Message", L["negwarn"], "Red", true, "Alarm")
 		end
-		self:TriggerEvent("BigWigs_StartBar", self, L["polaritytickbar"], 5, chargetype, "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["polaritytickbar"], 6, chargetype, "Red")
 	end
 	self.previousCharge = chargetype
 end
