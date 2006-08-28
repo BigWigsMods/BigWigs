@@ -136,7 +136,7 @@ BigWigsRange.consoleOptions = {
 			get = function() return GetCVar("CombatLogRangeCreature") end,
 			set = function(v) SetCVar("CombatLogRangeCreature", v) end,
 		},
-		[L["death"[] = {
+		[L["death"]] = {
 			type = "range",
 			name = L["Deaths"],
 			desc = L["Death message range."],

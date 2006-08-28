@@ -127,7 +127,7 @@ if (GetLocale() == "koKR") then
 		local _, _, EPlayer = string.find(msg, L["trigger1"])
 		if (EPlayer) then
 			if (EPlayer == L["you"] and self.db.profile.youbomb) then
-				self:TriggerEvent("BigWigs_Message", L"warn1"], "Red", true)
+				self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true)
 			elseif (self.db.profile.elsebomb) then
 				_, _, EPlayer = string.find(EPlayer, L["whopattern"])
 				self:TriggerEvent("BigWigs_Message", EPlayer .. L["warn2"], "Yellow")
