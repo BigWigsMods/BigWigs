@@ -177,46 +177,46 @@ end
 ------------------------------
 
 function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if (string.find(msg, L"trigger1")) then
+	if (string.find(msg, L["trigger1"])) then
 		self:TriggerEvent("BigWigs_SendSync", "EbonrocWingBuffet")
-	elseif msg == L"trigger2" then
+	elseif msg == L["trigger2"] then
 		self:TriggerEvent("BigWigs_SendSync", "EbonrocShadowflame")
 	end
 end
 
 function BigWigsEbonroc:BigWigs_RecvSync(sync)
 	if sync == "EbonrocWingBuffet" and self.db.profile.wingbuffet then
-		self:TriggerEvent("BigWigs_Message", L"warn1", "Red")
-		self:TriggerEvent("BigWigs_Message", L"warn2", "Yellow")
-		self:ScheduleEvent("BigWigs_Message", 29, L"warn3", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 32, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn1"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn2"], "Yellow")
+		self:ScheduleEvent("BigWigs_Message", 29, L["warn3"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")
 	elseif sync == "EbonrocShadowflame" and self.db.profile.shadowflame then
-		self:TriggerEvent("BigWigs_Message", L"warn4", "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn4"], "Red")
 	end
 end
 
 if (GetLocale() == "koKR") then
 	function BigWigsEbonroc:Event(msg)
-		local _,_, EPlayer = string.find(msg, L"trigger3")
+		local _,_, EPlayer = string.find(msg, L["trigger3"])
 		if (EPlayer) then
-			if (EPlayer == L"you" and self.db.profile.youcurse) then
-				self:TriggerEvent("BigWigs_Message", L"warn5", "Red", true)
+			if (EPlayer == L["you"] and self.db.profile.youcurse) then
+				self:TriggerEvent("BigWigs_Message", L["warn5"], "Red", true)
 			elseif (self.db.profile.elsecurse) then
-				local _,_, EWho = string.find(EPlayer, L"whopattern")
-				self:TriggerEvent("BigWigs_Message", EWho .. L"warn6", "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", EWho, L"warn5")
+				local _,_, EWho = string.find(EPlayer, L["whopattern"])
+				self:TriggerEvent("BigWigs_Message", EWho .. L["warn6"], "Yellow")
+				self:TriggerEvent("BigWigs_SendTell", EWho, L["warn5"])
 			end
 		end
 	end
 else
 	function BigWigsEbonroc:Event(msg)
-		local _,_, EPlayer, EType = string.find(msg, L"trigger3")
+		local _,_, EPlayer, EType = string.find(msg, L["trigger3"])
 		if (EPlayer and EType) then
-			if (EPlayer == L"you" and EType == L"are" and self.db.profile.youcurse) then
-				self:TriggerEvent("BigWigs_Message", L"warn5", "Red", true)
+			if (EPlayer == L["you"] and EType == L["are"] and self.db.profile.youcurse) then
+				self:TriggerEvent("BigWigs_Message", L["warn5"], "Red", true)
 			elseif (self.db.profile.elsecurse) then
-				self:TriggerEvent("BigWigs_Message", EPlayer .. L"warn6", "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", EPlayer, L"warn5")
+				self:TriggerEvent("BigWigs_Message", EPlayer .. L["warn6"], "Yellow")
+				self:TriggerEvent("BigWigs_SendTell", EPlayer, L["warn5"])
 			end
 		end
 	end

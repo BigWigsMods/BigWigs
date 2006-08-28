@@ -233,14 +233,14 @@ function BigWigsChromaggus:UNIT_HEALTH( msg )
 		local health = UnitHealth(msg)
 		
 		if health > 20 and health <= 23 and not self.twenty then
-			self:TriggerEvent("BigWigs_Message", L"warn6", "Red")
+			self:TriggerEvent("BigWigs_Message", L["warn6"], "Red")
 			self.twenty = true
 		end
 	end
 end
 
 function BigWigsChromaggus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
-	local _,_, SpellName = string.find(msg, L"trigger1")
+	local _,_, SpellName = string.find(msg, L["trigger1"])
 	if SpellName then
 		self:TriggerEvent("BigWigs_SendSync", "ChromaggusBreath "..SpellName)
 	end
@@ -256,7 +256,7 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, SpellName)
 			breath2 = SpellName
 		end
 
-		self:TriggerEvent("BigWigs_Message", format(L"warn2", SpellName), "Red")
+		self:TriggerEvent("BigWigs_Message", format(L["warn2"], SpellName), "Red")
 
 		-- figure out the icon
 		local breathnr = L:HasReverseTranslation(SpellName) and L:GetReverseTranslation(SpellName) or "breath1"
@@ -266,10 +266,10 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, SpellName)
 		icon = L(icon)
 
 		if breath1 == SpellName and self.db.profile.breath then
-			self:ScheduleEvent("bwchromaggusbreath1", "BigWigs_Message", 50, format(L"warn1", breath1), "Red")
+			self:ScheduleEvent("bwchromaggusbreath1", "BigWigs_Message", 50, format(L["warn1"], breath1), "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, breath1, 60, icon, "Green", "Yellow", "Orange", "Red")
 		elseif breath2 == SpellName and self.db.profile.breath then
-			self:ScheduleEvent("bwchromaggusbreath2", "BigWigs_Message", 50, format(L"warn1", breath2), "Red")
+			self:ScheduleEvent("bwchromaggusbreath2", "BigWigs_Message", 50, format(L["warn1"], breath2), "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, breath2, 60, icon, "Green", "Yellow", "Orange", "Red")
 		end
 	end
@@ -277,9 +277,9 @@ end
 
 function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE( msg )
 	if msg == L"trigger4" and self.db.profile.frenzy then
-		self:TriggerEvent("BigWigs_Message", L"warn5", "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn5"], "Red")
 	elseif msg == L"trigger5" and self.db.profile.vulnerability then
-		self:TriggerEvent("BigWigs_Message", L"warn4", "White")
+		self:TriggerEvent("BigWigs_Message", L["warn4"], "White")
 		self:ScheduleEvent(function() BigWigsChromaggus.vulnerability = nil end, 2.5 )
 	end
 end
@@ -287,11 +287,11 @@ end
 if (GetLocale() == "koKR") then
 	function BigWigsChromaggus:PlayerDamageEvents(msg)
 		if (not self.vulnerability) then
-			local _, _, _, school, dmg, type = string.find(msg, L"trigger2")
-			if type == (L"hit" or L"crit") and tonumber(dmg or "") and school then
-				if (tonumber(dmg) >= 550 and type == L"hit") or (tonumber(dmg) >= 1100 and type == L"crit") then
+			local _, _, _, school, dmg, type = string.find(msg, L["trigger2"])
+			if ( type == L["hit"] or type == L["crit"] ) and tonumber(dmg or "") and school then
+				if (tonumber(dmg) >= 550 and type == L["hit"]) or (tonumber(dmg) >= 1100 and type == L["crit"]) then
 					self.vulnerability = school
-					if self.db.profile.vulnerability then self:TriggerEvent("BigWigs_Message", format(L"warn3", school), "White") end
+					if self.db.profile.vulnerability then self:TriggerEvent("BigWigs_Message", format(L["warn3"], school), "White") end
 				end
 			end
 		end
@@ -299,11 +299,11 @@ if (GetLocale() == "koKR") then
 else
 	function BigWigsChromaggus:PlayerDamageEvents(msg)
 		if (not self.vulnerability) then
-			local _,_, type, dmg, school = string.find(msg, L"trigger2")
-			if type == (L"hit" or L"crit") and tonumber(dmg or "") and school then
-				if (tonumber(dmg) >= 550 and type == L"hit") or (tonumber(dmg) >= 1100 and type == L"crit") then
+			local _,_, type, dmg, school = string.find(msg, L["trigger2"])
+			if ( type == L["hit"] or type == L["crit"] ) and tonumber(dmg or "") and school then
+				if (tonumber(dmg) >= 550 and type == L["hit"]) or (tonumber(dmg) >= 1100 and type == L["crit"]) then
 					self.vulnerability = school
-					if self.db.profile.vulnerability then self:TriggerEvent("BigWigs_Message", format(L"warn3", school), "White") end
+					if self.db.profile.vulnerability then self:TriggerEvent("BigWigs_Message", format(L["warn3"], school), "White") end
 				end
 			end
 		end

@@ -269,18 +269,18 @@ end
 
 function BigWigsNefarian:CHAT_MSG_MONSTER_YELL(msg)
 	if not warnpairs then warnpairs = {
-		[L"triggershamans"] = {L"warnshaman", true},
-		[L"triggerdruid"] = {L"warndruid", true},
-		[L"triggerwarlock"] = {L"warnwarlock", true},
-		[L"triggerpriest"] = {L"warnpriest", true},
-		[L"triggerhunter"] = {L"warnhunter", true},
-		[L"triggerwarrior"] = {L"warnwarrior", true},
-		[L"triggerrogue"] = {L"warnrogue", true},
-		[L"triggerpaladin"] = {L"warnpaladin", true},
-		[L"triggermage"] = {L"warnmage", true},
-		[L"trigger1"] = {L"warn1"},
-		[L"trigger2"] = {L"warn2"},
-		[L"trigger3"] = {L"warn3"},
+		[L["triggershamans"]] = {L["warnshaman"], true},
+		[L["triggerdruid"]] = {L["warndruid"], true},
+		[L["triggerwarlock"]] = {L["warnwarlock"], true},
+		[L["triggerpriest"]] = {L["warnpriest"], true},
+		[L["triggerhunter"]] = {L["warnhunter"], true},
+		[L["triggerwarrior"]] = {L["warnwarrior"], true},
+		[L["triggerrogue"]] = {L["warnrogue"], true},
+		[L["triggerpaladin"]] = {L["warnpaladin"], true},
+		[L["triggermage"]] = {L["warnmage"], true},
+		[L["trigger1"]] = {L["warn1"]},
+		[L["trigger2"]] = {L["warn2"]},
+		[L["trigger3"]] = {L["warn3"]},
 	} end
 
 	for i,v in pairs(warnpairs) do
@@ -297,22 +297,22 @@ function BigWigsNefarian:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function BigWigsNefarian:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if (string.find(msg, L"trigger4")) then
+	if (string.find(msg, L["trigger4"])) then
 		self:TriggerEvent("BigWigs_SendSync", "NefarianFear") 
-	elseif (string.find(msg, L"trigger5")) then
+	elseif (string.find(msg, L["trigger5"])) then
 		self:TriggerEvent("BigWigs_SendSync", "NefarianShadowflame")
 	end
 end
 
 function BigWigsNefarian:BigWigs_RecvSync( sync )
 	if sync == "NefarianShadowflame" and self.db.profile.shadowflame then
-		self:TriggerEvent("BigWigs_Message", L"warn5", "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn5"], "Red")
 	elseif sync == "NefarianFear" and self.db.profile.fear then
-		self:TriggerEvent("BigWigs_Message", L"warn4", "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn4"], "Red")
 	end
 end
 
 function BigWigsNefarian:ClassCallBar()
-	self:ScheduleEvent("BigWigs_Message", 27, L"warn6", "Red")
-	self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, "Interface\\Icons\\Spell_Shadow_Charm", "Yellow", "Orange", "Red")
+	self:ScheduleEvent("BigWigs_Message", 27, L["warn6"], "Red")
+	self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 30, "Interface\\Icons\\Spell_Shadow_Charm", "Yellow", "Orange", "Red")
 end

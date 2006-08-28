@@ -124,35 +124,35 @@ end
 
 if (GetLocale() == "koKR") then
 	function BigWigsVaelastrasz:Event(msg)
-		local _, _, EPlayer = string.find(msg, L"trigger1")
+		local _, _, EPlayer = string.find(msg, L["trigger1"])
 		if (EPlayer) then
-			if (EPlayer == L"you" and self.db.profile.youburning) then
-				self:TriggerEvent("BigWigs_Message", L"warn1", "Red", true)
+			if (EPlayer == L["you"] and self.db.profile.youburning) then
+				self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true)
 			elseif (self.db.profile.elseburning) then
-				local _, _, EWho = string.find(EPlayer, L"whopattern")
-				self:TriggerEvent("BigWigs_Message", EWho .. L"warn2", "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", EWho, L"warn1")
+				local _, _, EWho = string.find(EPlayer, L["whopattern"])
+				self:TriggerEvent("BigWigs_Message", EWho .. L["warn2"], "Yellow")
+				self:TriggerEvent("BigWigs_SendTell", EWho, L["warn1"])
 			end
 
 			if self.db.profile.icon then 
-				if EPlayer == L"you" then	EPlayer = UnitName("player") end
+				if EPlayer == L["you"] then EPlayer = UnitName("player") end
 				self:TriggerEvent("BigWigs_SetRaidIcon", EPlayer )
 			end
 		end
 	end
 else
 	function BigWigsVaelastrasz:Event(msg)
-		local _, _, EPlayer, EType = string.find(msg, L"trigger1")
+		local _, _, EPlayer, EType = string.find(msg, L["trigger1"])
 		if (EPlayer and EType) then
-			if (EPlayer == L"you" and EType == L"are" and self.db.profile.youburning) then
-				self:TriggerEvent("BigWigs_Message", L"warn1", "Red", true)
+			if (EPlayer == L["you"] and EType == L["are"] and self.db.profile.youburning) then
+				self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true)
 			elseif (self.db.profile.elseburning) then
-				self:TriggerEvent("BigWigs_Message", EPlayer .. L"warn2", "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", EPlayer, L"warn1")
+				self:TriggerEvent("BigWigs_Message", EPlayer .. L["warn2"], "Yellow")
+				self:TriggerEvent("BigWigs_SendTell", EPlayer, L["warn1"])
 			end
 
 			if self.db.profile.icon then
-				if EPlayer == L"you" then	EPlayer = UnitName("player") end
+				if EPlayer == L["you"] then EPlayer = UnitName("player") end
 				self:TriggerEvent("BigWigs_SetRaidIcon", EPlayer )
 			end
 		end

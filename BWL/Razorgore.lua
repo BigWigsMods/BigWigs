@@ -93,19 +93,19 @@ end
 ------------------------------
 
 function BigWigsRazorgore:CHAT_MSG_MONSTER_YELL(msg)
-	if string.find(msg, L"start_trigger") then
-		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L"start_message", "Orange") end
+	if string.find(msg, L["start_trigger"]) then
+		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L["start_message"], "Orange") end
 		self.eggs = 0
 	elseif self.db.profile.mc then
-		local _, _, player = string.find(msg, L"mindcontrol_trigger");
+		local _, _, player = string.find(msg, L["mindcontrol_trigger"]);
 		if player then
-			self:TriggerEvent("BigWigs_Message", string.format(L"mindcontrol_message", player), "Red")
+			self:TriggerEvent("BigWigs_Message", string.format(L["mindcontrol_message"], player), "Red")
 		end
 	end
 end
 
 function BigWigsRazorgore:CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF(msg)
-	if string.find(msg, L"egg_trigger") then
+	if string.find(msg, L["egg_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "RazorgoreEgg "..tostring(self.eggs + 1))
 	end
 end
@@ -117,11 +117,11 @@ function BigWigsRazorgore:BigWigs_RecvSync(sync, rest)
 	if rest == (self.eggs + 1) then
 		self.eggs = self.eggs + 1
 		if self.db.profile.eggs then
-			self:TriggerEvent("BigWigs_Message", string.format(L"egg_message", self.eggs), "Orange")
+			self:TriggerEvent("BigWigs_Message", string.format(L["egg_message"], self.eggs), "Orange")
 		end
 
 		if self.eggs == 30 and self.db.profile.phase then
-			self:TriggerEvent("BigWigs_Message", L"phase2_message", "Red")
+			self:TriggerEvent("BigWigs_Message", L["phase2_message"], "Red")
 		end
 	end
 end

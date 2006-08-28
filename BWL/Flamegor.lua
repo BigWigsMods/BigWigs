@@ -149,26 +149,26 @@ end
 ------------------------------
 
 function BigWigsFlamegor:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if (string.find(msg, L"trigger1")) then
+	if (string.find(msg, L["trigger1"])) then
 		self:TriggerEvent("BigWigs_SendSync", "FlamegorWingBuffet")
-	elseif msg == L"trigger2" then
+	elseif msg == L["trigger2"] then
 		self:TriggerEvent("BigWigs_SendSync", "FlamegorShadowflame")
 	end
 end
 
 function BigWigsFlamegor:BigWigs_RecvSync(sync)
 	if (sync == "FlamegorWingBuffet" and self.db.profile.wingbuffet) then
-		self:TriggerEvent("BigWigs_Message", L"warn1", "Red")
-		self:TriggerEvent("BigWigs_Message", L"warn2", "Yellow")
-		self:ScheduleEvent("BigWigs_Message", 29, L"warn3", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 32, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn1"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn2"], "Yellow")
+		self:ScheduleEvent("BigWigs_Message", 29, L["warn3"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")
 	elseif sync == "FlamegorShadowflame" and self.db.profile.shadowflame then
-		self:TriggerEvent("BigWigs_Message", L"warn4", "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn4"], "Red")
 	end
 end
 
 function BigWigsFlamegor:CHAT_MSG_MONSTER_EMOTE(msg)
-	if (msg == L"trigger3" and self.db.profile.frenzy) then
-		self:TriggerEvent("BigWigs_Message", L"warn5", "Red")
+	if (msg == L["trigger3"] and self.db.profile.frenzy) then
+		self:TriggerEvent("BigWigs_Message", L["warn5"], "Red")
 	end
 end
