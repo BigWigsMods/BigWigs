@@ -181,35 +181,16 @@ end
 
 --[[ Parses the old style reply, which was MC:REV BWL:REV, etc. ]]
 function BigWigsVersionQuery:ParseReply(reply)
-	local pos = 1
-	local zonePairs = {}
-
-	while 1 do
-		local first, last = strfind(reply, " ", pos)
-		if first then -- found?
-			tinsert(zonePairs, strsub(reply, pos, first-1))
-			pos = last+1
-		else
-			tinsert(zonePairs, strsub(reply, pos))
-			break
-		end
-	end
-
+	if not strfind(reply, ":") then return -1 end
 	if not BWL then BWL = AceLibrary("AceLocale-2.0"):new("BigWigs") end
+	local zone = BWL:HasTranslation(self.currentZone) and BWL:GetTranslation(self.currentZone) or self.currentZone
 
-	for key, zonePair in zonePairs do
-		local colonIndex = strfind(zonePair, ":")
-		if colonIndex then
-			local zone = strsub(zonePair, 1, colonIndex - 1)
-			local realZone = BWL:HasReverseTranslation(zone) and BWL:GetReverseTranslation(zone) or zone
-			if realZone == self.currentZone or zone == self.currentZone then
-				local revision = strsub(zonePair, colonIndex + 1)
-				if tonumber(revision) ~= nil then
-					return tonumber(revision)
-				end
-			end
-		end
-	end
+	local zoneIndex = strfind(reply, zone)
+	if not zoneIndex then return -1 end
+
+	local revision = strsub(reply, zoneIndex + strlen(zone) + 1, zoneIndex + strlen(zone) + 5)
+	if revision and tonumber(revision) ~= nil then return tonumber(revision) end
+
 	return -1
 end
 
@@ -226,3 +207,4 @@ function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
 		self:UpdateVersions()
 	end
 end
+
