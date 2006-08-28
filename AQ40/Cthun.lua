@@ -73,7 +73,7 @@ L:RegisterTranslations("enUS", function() return {
 	giant2		= "Giant Eye - 5 sec",
 	giant1		= "Giant Eye - Poke it!",
 
-	startwarn	= "C'Thun engaged! - 45 sec until Dark Glare and Eyes",
+	startwarn	= "C'Thun engaged! - 33 sec until Dark Glare and Eyes",
 
 	glare2		= "Dark glare - 5 sec",
 	glare1		= "Dark glare - MOVE IT!",
@@ -136,7 +136,7 @@ L:RegisterTranslations("deDE", function() return {
 	giant2		= "Riesiges Auge - 5 Sekunden",
 	giant1		= "Riesiges Auge - Angriff!",
 
-	startwarn	= "C'Thun angegriffen! - 45 Sekunden bis Dunkles Starren und Augen!",
+	startwarn	= "C'Thun angegriffen! - 33 Sekunden bis Dunkles Starren und Augen!",
 
 	glare2		= "Dunkles Starren - 5 Sekunden",
 	glare1		= "Dunkles Starren - BEWEGUNG!",
@@ -166,7 +166,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	giant2		= "거대한 눈다린 촉수 - 5초전!",
 
-	startwarn	= "쑨 시작 - 45초후 암흑의 주시",
+	startwarn	= "쑨 시작 - 33초후 암흑의 주시",
 
 	glare2		= "암흑의 주시 - 5초전!",
 	glare1		= "암흑의 주시 - 이동!이동!",
@@ -215,7 +215,7 @@ L:RegisterTranslations("zhCN", function() return {
 	giant2		= "Giant Eye - 5 sec",
 	giant1		= "Giant Eye - Poke it!",
 
-	startwarn	= "克苏恩已激活 - 45秒后发动黑暗闪耀、出现巨眼",
+	startwarn	= "克苏恩已激活 - 33秒后发动黑暗闪耀、出现巨眼",
 
 	glare2		= "5秒后发动黑暗闪耀！",
 	glare1		= "黑暗闪耀发动 - 跑位！",
