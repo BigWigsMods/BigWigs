@@ -191,7 +191,7 @@ end
 ------------------------------
 
 function BigWigsRagnaros:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
-	if msg == string.format(UNITDIESOTHER, L"sonofflame") then
+	if msg == string.format(UNITDIESOTHER, L["sonofflame"]) then
 		self:TriggerEvent("BigWigs_SendSync", "RagnarosSonDead "..tostring(self.sonsdead + 1) )
 	else
 		self:GenericBossDeath(msg)
@@ -206,12 +206,12 @@ function BigWigsRagnaros:BigWigs_RecvSync(sync, rest)
 	if rest == (self.sonsdead + 1) then
 		self.sonsdead = self.sonsdead + 1
 		if self.db.profile.sondeath then
-			self:TriggerEvent("BigWigs_Message", string.format(L"sonsdeadwarn", self.sonsdead), "Orange")
+			self:TriggerEvent("BigWigs_Message", string.format(L["sonsdeadwarn"], self.sonsdead), "Orange")
 		end
 
 		if self.sonsdead == 8 then
 			self:CancelScheduledEvent("bwragnarosemerge")
-			self:TriggerEvent("BigWigs_StopBar", L"bar2text")
+			self:TriggerEvent("BigWigs_StopBar", L["bar2text"])
 			self.sonsdead = 0 -- reset counter
 			self:Emerge()
 		end
@@ -219,18 +219,18 @@ function BigWigsRagnaros:BigWigs_RecvSync(sync, rest)
 end
 
 function BigWigsRagnaros:CHAT_MSG_MONSTER_YELL(msg)
-	if (string.find(msg, L"trigger1") and self.db.profile.aoeknock) then
-		self:TriggerEvent("BigWigs_Message", L"warn1", "Red")
-		self:ScheduleEvent("bwragnarosaekbwarn", "BigWigs_Message", 23, L"warn2", "Orange")
-		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 28, "Interface\\Icons\\Spell_Fire_SoulBurn", "Yellow", "Orange", "Red")
-	elseif (string.find(msg, L"trigger2") and self.db.profile.submerge) then
+	if (string.find(msg, L["trigger1"]) and self.db.profile.aoeknock) then
+		self:TriggerEvent("BigWigs_Message", L["warn1"], "Red")
+		self:ScheduleEvent("bwragnarosaekbwarn", "BigWigs_Message", 23, L["warn2"], "Orange")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 28, "Interface\\Icons\\Spell_Fire_SoulBurn", "Yellow", "Orange", "Red")
+	elseif (string.find(msg, L["trigger2"]) and self.db.profile.submerge) then
 		self:CancelScheduledEvent("bwragnarosaekbwarn")
-		self:TriggerEvent("BigWigs_StopBar", self, L"bar1text")
-		self:TriggerEvent("BigWigs_Message", L"warn3", "Red")
-		self:ScheduleEvent("bwragnarosemergewarn4", "BigWigs_Message", 75, L"warn4", "Orange")
-		self:TriggerEvent("BigWigs_StartBar", self, L"bar2text", 90, "Interface\\Icons\\Spell_Fire_Volcano", "Green", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StopBar", self, L["bar1text"])
+		self:TriggerEvent("BigWigs_Message", L["warn3"], "Red")
+		self:ScheduleEvent("bwragnarosemergewarn4", "BigWigs_Message", 75, L["warn4"], "Orange")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 90, "Interface\\Icons\\Spell_Fire_Volcano", "Green", "Yellow", "Orange", "Red")
 		self:ScheduleEvent("bwragnarosemerge", self.Emerge, 90, self)
-	elseif (string.find(msg, L"trigger3") and self.db.profile.emerge) then
+	elseif (string.find(msg, L["trigger3"]) and self.db.profile.emerge) then
 		self:Emerge()
 	end
 	self:ScheduleEvent("BigWigsRagnarosReset", "BigWigs_RebootModule", 95, self)
@@ -238,12 +238,12 @@ end
 
 function BigWigsRagnaros:Emerge()
 	self:CancelScheduledEvent("bwragnarosemergewarn4")
-	self:TriggerEvent("BigWigs_StopBar", self, L"bar2text")
+	self:TriggerEvent("BigWigs_StopBar", self, L["bar2text"])
 
-	self:TriggerEvent("BigWigs_Message", L"warn5", "Yellow")
-	self:ScheduleEvent("BigWigs_Message", 120, L"warn6", "Orange")
-	self:ScheduleEvent("BigWigs_Message", 160, L"warn7", "Red")
-	self:TriggerEvent("BigWigs_StartBar", self, L"bar3text", 180, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Green", "Yellow", "Orange", "Red")
+	self:TriggerEvent("BigWigs_Message", L["warn5"], "Yellow")
+	self:ScheduleEvent("BigWigs_Message", 120, L["warn6"], "Orange")
+	self:ScheduleEvent("BigWigs_Message", 160, L["warn7"], "Red")
+	self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 180, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Green", "Yellow", "Orange", "Red")
 	self:ScheduleEvent("BigWigsRagnarosReset", "BigWigs_RebootModule", 95, self)
 end
 
