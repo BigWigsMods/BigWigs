@@ -197,16 +197,16 @@ function BigWigsHorsemen:SkillEvent( msg )
 		--end
 	elseif msg == L["voidtrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenVoid" )
-		local target = nil
-		for i = 1, GetNumRaidMembers(), 1 do
-			if UnitName("Raid"..i.."target") == blaumeux then
-				target = UnitName("Raid"..i.."targettarget")
-				break
-			end
-		end
-		if target then
-			print("void on "..target)
-		end
+		--local target = nil
+		--for i = 1, GetNumRaidMembers(), 1 do
+		--	if UnitName("Raid"..i.."target") == blaumeux then
+		--		target = UnitName("Raid"..i.."targettarget")
+		--		break
+		--	end
+		--end
+		--if target then
+		--	print("void on "..target)
+		--end
 	end
 end
 
