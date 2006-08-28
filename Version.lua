@@ -16,11 +16,8 @@ L:RegisterTranslations("enUS", function() return {
 	["versionquery"] = true,
 	["VersionQuery"] = true,
 	["Options for Version Query."] = true,
-	["query"] = true,
-	["Query"] = true,
-	["Query the raid for BigWig versions."] = true,
-	["Query already running, please wait 5 seconds before you query again."] = true,
-	["Querying raid for BigWigs versions, please wait..."] = true,
+	["Query already running, please wait 5 seconds before trying again."] = true,
+	["Querying versions for "] = true,
 	["BigWigs Version Query"] = true,
 	["Close window"] = true, -- I know, it's really a Tablet.
 	["Showing version for "] = true,
@@ -28,38 +25,19 @@ L:RegisterTranslations("enUS", function() return {
 	["Player"] = true,
 	["Version"] = true,
 	["Current zone"] = true,
-} end )
-
-L:RegisterTranslations("zhCN", function() return {
-	["VersionQuery"] = "版本检测",
-	["Options for Version Query."] = "版本检测设置。",
-	["Query"] = "检测",
-	["Query the raid for BigWig versions."] = "检测团队成员的BigWigs版本。",
-	["Query already running, please wait 5 seconds before you query again."] = "检测正在进行，请5秒后再进行检测。",
-	["Querying raid for BigWigs versions, please wait..."] = "正在检测团队成员的BigWigs版本，请稍侯……",
-} end )
-
-L:RegisterTranslations("deDE", function() return {
-	-- ["versionquery"] = true,
-	["VersionQuery"] = "Versions Abfrage",
-	["Options for Version Query."] = "Optionen f\195\188r die Versions Abfrage.",
-	-- ["query"] = true,
-	["Query"] = "Abfrage",
-	["Query the raid for BigWig versions."] = "Abfrage des Raids nach verwendeten BigWigs Versionen.",
-	["Query already running, please wait 5 seconds before you query again."] = "Abfrage l\195\164uft bereits, bitte warte 5 Sekunden bevor du erneut abfragst.",
-	["Querying raid for BigWigs versions, please wait..."] = "Abfrage des Raids nach verwendeten BigWigs Versionen, bitte warten...",
+	["<zone>"] = true,
+	["Version query done."] = true,
+	["Runs a version query on your current zone."] = true,
+	["Closes the version query window."] = true,
+	["current"] = true,
+	["Runs a version query on the given zone."] = true,
+	["Zone"] = true,
+	["zone"] = true,
 } end )
 
 ---------------------------------
 --      Addon Declaration      --
 ---------------------------------
-
---[[
---
--- Todo: Make the query command accept text input to check for other zones
---       than the one you are currently in.
---
---]]
 
 BigWigsVersionQuery = BigWigs:NewModule("Version Query")
 
@@ -68,12 +46,20 @@ BigWigsVersionQuery.consoleOptions = {
 	type = "group",
 	name = L["VersionQuery"],
 	desc = L["Options for Version Query."],
-	args   = {
-		[L["query"]] = {
+	args = {
+		[L["current"]] = {
 			type = "execute",
-			name = L["Query"],
-			desc = L["Query the raid for BigWig versions."],
+			name = L["Current zone"],
+			desc = L["Runs a version query on your current zone."],
 			func = function() BigWigsVersionQuery:QueryVersion() end,
+		},
+		[L["zone"]] = {
+			type = "text",
+			name = L["Zone"],
+			desc = L["Runs a version query on the given zone."],
+			usage = L["<zone>"],
+			get = false,
+			set = function(zone) BigWigsVersionQuery:QueryVersion(zone) end,
 		},
 	}
 }
@@ -86,6 +72,7 @@ function BigWigsVersionQuery:OnEnable()
 	self.queryRunning = nil
 	self.responseTable = {}
 	self.zoneRevisions = {}
+	self.currentZone = ""
 
 	for name,module in self.core:IterateModules() do
 		if module:IsBossModule() and module.zonename and type(module.zonename) == "string" then
@@ -113,11 +100,15 @@ function BigWigsVersionQuery:UpdateVersions()
 			"cantAttach", true,
 			"menu", function()
 					dewdrop:AddLine(
-						'text', L["Query"],
-						'func', function() self:QueryVersion() end)
+						"text", L["Current zone"],
+						"tooltipTitle", L["Current zone"],
+						"tooltipText", L["Runs a version query on your current zone."],
+						"func", function() self:QueryVersion() end)
 					dewdrop:AddLine(
-						'text', L["Close window"],
-						'func', function() tablet:Attach("BigWigs_VersionQuery"); dewdrop:Close() end)
+						"text", L["Close window"],
+						"tooltipTitle", L["Close window"],
+						"tooltipText", L["Closes the version query window."],
+						"func", function() tablet:Attach("BigWigs_VersionQuery"); dewdrop:Close() end)
 				end
 		)
 	end
@@ -134,7 +125,7 @@ function BigWigsVersionQuery:OnTooltipUpdate()
 		"text", L["Current zone"],
 		"child_justify1", "LEFT"
 	)
-	zoneCat:AddLine("text", GetRealZoneText())
+	zoneCat:AddLine("text", self.currentZone)
 	local cat = tablet:AddCategory(
 		"columns", 2,
 		"text", L["Player"],
@@ -142,12 +133,11 @@ function BigWigsVersionQuery:OnTooltipUpdate()
 		"child_justify1", "LEFT",
 		"child_justify2", "RIGHT"
 	)
-	local zone = GetRealZoneText()	
 	for name, version in self.responseTable do
 		local color = COLOR_WHITE
-		if self.zoneRevisions[zone] and version > self.zoneRevisions[zone] then
+		if self.zoneRevisions[self.currentZone] and version > self.zoneRevisions[self.currentZone] then
 			color = COLOR_GREEN
-		elseif self.zoneRevisions[zone] and version < self.zoneRevisions[zone] then
+		elseif self.zoneRevisions[self.currentZone] and version < self.zoneRevisions[self.currentZone] then
 			color = COLOR_RED
 		end
 		cat:AddLine("text", name, "text2", "|cff"..color..version.."|r")
@@ -156,25 +146,31 @@ function BigWigsVersionQuery:OnTooltipUpdate()
 	tablet:SetHint(L["Green versions are newer than yours, red are older, and white are the same. A version of -1 means that the user does not have any modules for this zone."])
 end
 
-function BigWigsVersionQuery:QueryVersion()
+function BigWigsVersionQuery:QueryVersion(zone)
 	if self.queryRunning then
-		self.core:Print(L["Query already running, please wait 5 seconds before you query again."])
+		self.core:Print(L["Query already running, please wait 5 seconds before trying again."])
 		return
 	end
+	if not zone or zone == "" then zone = GetRealZoneText() end
 
-	self.core:Print(L["Querying raid for BigWigs versions, please wait..."])
+	self.currentZone = zone
+
+	self.core:Print(L["Querying versions for "].."|cff"..COLOR_GREEN..zone.."|r.")
 
 	self.queryRunning = true
-	self:ScheduleEvent(function() BigWigsVersionQuery.queryRunning = nil end, 5)
+	self:ScheduleEvent(	function()
+							self.queryRunning = nil
+							self.core:Print(L["Version query done."])
+						end, 5)
 
 	self.responseTable = {}
-	if not self.zoneRevisions[GetRealZoneText()] then
+	if not self.zoneRevisions[zone] then
 		self.responseTable[UnitName("player")] = -1
 	else
-		self.responseTable[UnitName("player")] = self.zoneRevisions[GetRealZoneText()]
+		self.responseTable[UnitName("player")] = self.zoneRevisions[zone]
 	end
 	self:UpdateVersions()
-	self:TriggerEvent("BigWigs_SendSync", "BWVQ "..GetRealZoneText())
+	self:TriggerEvent("BigWigs_SendSync", "BWVQ "..zone)
 end
 
 function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
