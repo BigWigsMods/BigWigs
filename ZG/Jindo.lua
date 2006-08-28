@@ -80,9 +80,9 @@ function BigWigsJindo:OnEnable()
 end
 
 function BigWigsJindo:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
-	if self.db.profile.brainwash and msg == L"triggerbrainwash" then
-		self:TriggerEvent("BigWigs_Message", L"warnbrainwash", "Orange")
-	elseif self.db.profile.healing and msg == L"triggerhealing" then
-		self:TriggerEvent("BigWigs_Message", L"warnhealing", "Red" )
+	if self.db.profile.brainwash and msg == L["triggerbrainwash"] then
+		self:TriggerEvent("BigWigs_Message", L["warnbrainwash"], "Orange")
+	elseif self.db.profile.healing and msg == L["triggerhealing"] then
+		self:TriggerEvent("BigWigs_Message", L["warnhealing"], "Red" )
 	end 
 end

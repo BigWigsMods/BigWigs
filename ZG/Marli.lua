@@ -96,15 +96,15 @@ end
 
 
 function BigWigsMarli:CHAT_MSG_MONSTER_YELL( msg )
-	if self.db.profile.spider and string.find(msg, L"trigger1") then
-		self:TriggerEvent("BigWigs_Message", L"warn1", "Yellow")
+	if self.db.profile.spider and string.find(msg, L["trigger1"]) then
+		self:TriggerEvent("BigWigs_Message", L["warn1"], "Yellow")
 	end
 end
 
 
 function BigWigsMarli:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
-	if self.db.profile.drain and string.find(msg, L"trigger2") and lastdrain < (GetTime()-3) then
+	if self.db.profile.drain and string.find(msg, L["trigger2"]) and lastdrain < (GetTime()-3) then
 		lastdrain = GetTime()
-		self:TriggerEvent("BigWigs_Message", L"warn2", "Orange")
+		self:TriggerEvent("BigWigs_Message", L["warn2"], "Orange")
 	end
 end

@@ -93,9 +93,9 @@ function BigWigsThekal:OnEnable()
 end
 
 function BigWigsThekal:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
-	if self.db.profile.tiger and arg1 == L"trigger1" then
-		self:TriggerEvent("BigWigs_Message", L"warn1", "Yellow")
-	elseif self.db.profile.heal and arg1 == L"trigger2" then
-		self:TriggerEvent("BigWigs_Message", L"warn2", "Orange")
+	if self.db.profile.tiger and arg1 == L["trigger1"] then
+		self:TriggerEvent("BigWigs_Message", L["warn1"], "Yellow")
+	elseif self.db.profile.heal and arg1 == L["trigger2"] then
+		self:TriggerEvent("BigWigs_Message", L["warn2"], "Orange")
 	end
 end

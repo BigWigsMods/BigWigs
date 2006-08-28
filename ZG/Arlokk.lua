@@ -90,13 +90,13 @@ function BigWigsArlokk:OnEnable()
 end
 
 function BigWigsArlokk:CHAT_MSG_MONSTER_YELL( msg )
-	local _,_, n = string.find(msg, L"trigger1")
+	local _,_, n = string.find(msg, L["trigger1"])
 	if n then
 		if n == UnitName("player") then
-			if self.db.profile.youmark then self:TriggerEvent("BigWigs_Message", L"warn1", "Red", true, "Alarm") end
+			if self.db.profile.youmark then self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true, "Alarm") end
 		elseif self.db.profile.othermark then
-			self:TriggerEvent("BigWigs_Message", string.format(L"warn2", n), "Yellow")
-			self:TriggerEvent("BigWigs_SendTell", n, L"warn1")
+			self:TriggerEvent("BigWigs_Message", string.format(L["warn2"], n), "Yellow")
+			self:TriggerEvent("BigWigs_SendTell", n, L["warn1"])
 		end
 	end
 end

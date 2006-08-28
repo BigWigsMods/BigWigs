@@ -92,13 +92,13 @@ function BigWigsJeklik:OnEnable()
 end
 
 function BigWigsJeklik:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.bomb and string.find(msg, L"trigger1") then
-		self:TriggerEvent("BigWigs_Message", L"warn1", "Yellow")
+	if self.db.profile.bomb and string.find(msg, L["trigger1"]) then
+		self:TriggerEvent("BigWigs_Message", L["warn1"], "Yellow")
 	end
 end
 
 function BigWigsJeklik:CHAT_MSG_MONSTER_EMOTE(msg)
-	if self.db.profile.heal and string.find(msg, L"trigger2") then
-		self:TriggerEvent("BigWigs_Message", L"warn2", "Orange")
+	if self.db.profile.heal and string.find(msg, L["trigger2"]) then
+		self:TriggerEvent("BigWigs_Message", L["warn2"], "Orange")
 	end
 end

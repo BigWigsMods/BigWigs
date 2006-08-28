@@ -97,7 +97,7 @@ function BigWigsMandokir:OnEnable()
 end
 
 function BigWigsMandokir:CHAT_MSG_MONSTER_EMOTE(msg)
-	if string.find(msg, L"trigger2") then self:TriggerEvent("BigWigs_Message", L"warn3", "Orange") end
+	if string.find(msg, L["trigger2"]) then self:TriggerEvent("BigWigs_Message", L["warn3"], "Orange") end
 end
 
 
@@ -105,10 +105,10 @@ function BigWigsMandokir:CHAT_MSG_MONSTER_YELL(msg)
 	local _,_, n = string.find(msg, L"trigger1")
 	if n then
 		if n == UnitName("player") then
-			if self.db.profile.you then self:TriggerEvent("BigWigs_Message", L"warn1", "Red", true, "Alarm") end
+			if self.db.profile.you then self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true, "Alarm") end
 		elseif self.db.profile.other then
-			self:TriggerEvent("BigWigs_Message", string.format(L"warn2", n), "Yellow")
-			self:TriggerEvent("BigWigs_SendTell", n, L"warn1")
+			self:TriggerEvent("BigWigs_Message", string.format(L["warn2"], n), "Yellow")
+			self:TriggerEvent("BigWigs_SendTell", n, L["warn1"])
 		end
 		self:TriggerEvent("BigWigs_SetRaidIcon", n )
 	end

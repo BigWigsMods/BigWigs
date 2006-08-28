@@ -129,18 +129,18 @@ end
 ------------------------------
 
 function BigWigsHakkar:CHAT_MSG_MONSTER_YELL(msg)
-	if string.find(msg, L"trigger1") then
-		self:TriggerEvent("BigWigs_Message", L"start", "Green")
-		if self.db.profile.enrage then self:TriggerEvent("BigWigs_StartBar", self, L"Enrage", 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Purple") end
+	if string.find(msg, L["trigger1"]) then
+		self:TriggerEvent("BigWigs_Message", L["start"], "Green")
+		if self.db.profile.enrage then self:TriggerEvent("BigWigs_StartBar", self, L["Enrage"], 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Purple") end
 		self:BeginTimers(true)
-	elseif string.find(msg, L"flee") then
+	elseif string.find(msg, L["flee"]) then
 		self:TriggerEvent("BigWigs_RebootModule", self)
 	end
 end
 
 
 function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
-	if not self.prior and string.find(msg, L"trigger2") then
+	if not self.prior and string.find(msg, L["trigger2"]) then
 		self.prior = true
 		self:BeginTimers()
 	end
@@ -148,16 +148,16 @@ end
 
 
 function BigWigsHakkar:BigWigs_Message(text)
-	if text == L"warn1" then self.prior = nil end
+	if text == L["warn1"] then self.prior = nil end
 end
 
 
 function BigWigsHakkar:BeginTimers(first)
 	if self.db.profile.drain then
-		if not first then self:TriggerEvent("BigWigs_Message", L"warn4", "Green") end
-		self:ScheduleEvent("BigWigs_Message", 30, L"warn1", "Yellow")
-		self:ScheduleEvent("BigWigs_Message", 45, L"warn2", "Orange")
-		self:ScheduleEvent("BigWigs_Message", 75, L"warn3", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"Life Drain", 90, "Interface\\Icons\\Spell_Shadow_LifeDrain", "Green", "Yellow", "Orange", "Red")
+		if not first then self:TriggerEvent("BigWigs_Message", L["warn4"], "Green") end
+		self:ScheduleEvent("BigWigs_Message", 30, L["warn1"], "Yellow")
+		self:ScheduleEvent("BigWigs_Message", 45, L["warn2"], "Orange")
+		self:ScheduleEvent("BigWigs_Message", 75, L["warn3"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["Life Drain"], 90, "Interface\\Icons\\Spell_Shadow_LifeDrain", "Green", "Yellow", "Orange", "Red")
 	end
 end

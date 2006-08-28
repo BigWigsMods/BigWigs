@@ -96,13 +96,13 @@ function BigWigsVenoxis:OnEnable()
 end
 
 function BigWigsVenoxis:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
-	if self.db.profile.renew and msg == L"trigger1" then
-		self:TriggerEvent("BigWigs_Message", L"warn1", "Orange")
+	if self.db.profile.renew and msg == L["trigger1"] then
+		self:TriggerEvent("BigWigs_Message", L["warn1"], "Orange")
 	end
 end
 
 function BigWigsVenoxis:CHAT_MSG_MONSTER_YELL( msg )
-	if self.db.profile.phase and string.find(msg, L"trigger2") then
-		self:TriggerEvent("BigWigs_Message", L"warn2", "Yellow")
+	if self.db.profile.phase and string.find(msg, L["trigger2"]) then
+		self:TriggerEvent("BigWigs_Message", L["warn2"], "Yellow")
 	end
 end
