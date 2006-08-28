@@ -181,23 +181,23 @@ function BigWigsGothik:Scan()
 end
 
 function BigWigsGothik:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
-	if msg == L"riderdietrigger" and self.db.profile.add then
-		self:TriggerEvent("BigWigs_Message", L"riderdiewarn", "Red")
-	elseif msg == L"dkdietrigger" and self.db.profile.add  then
-		self:TriggerEvent("BigWigs_Message", L"dkdiewarn", "Red")
+	if msg == L["riderdietrigger"] and self.db.profile.add then
+		self:TriggerEvent("BigWigs_Message", L["riderdiewarn"], "Red")
+	elseif msg == L["dkdietrigger"] and self.db.profile.add  then
+		self:TriggerEvent("BigWigs_Message", L["dkdiewarn"], "Red")
 	end
 end
 
 function BigWigsGothik:StopRoom()
-	self:TriggerEvent("BigWigs_StopBar", self, L"inroombartext")
+	self:TriggerEvent("BigWigs_StopBar", self, L["inroombartext"])
 	self:CancelScheduledEvent("bwgothikwarn1")
 	self:CancelScheduledEvent("bwgothikwarn2")
 	self:CancelScheduledEvent("bwgothikwarn3")
 	self:CancelScheduledEvent("bwgothikwarn4")
 	self:CancelScheduledEvent("bwgothikwarn5")
-	self:TriggerEvent("BigWigs_StopBar", self, L"trabar")
-	self:TriggerEvent("BigWigs_StopBar", self, L"dkbar")
-	self:TriggerEvent("BigWigs_StopBar", self, L"riderbar")
+	self:TriggerEvent("BigWigs_StopBar", self, L["trabar"])
+	self:TriggerEvent("BigWigs_StopBar", self, L["dkbar"])
+	self:TriggerEvent("BigWigs_StopBar", self, L["riderbar"])
 	self:CancelScheduledEvent("bwgothiktrawarn")
 	self:CancelScheduledEvent("bwgothikdkwarn")
 	self:CancelScheduledEvent("bwgothikriderwarn")
@@ -208,43 +208,43 @@ end
 
 function BigWigsGothik:WaveWarn(message, L, color)
 	self.wave = self.wave + 1
-	if self.db.profile.add then self:TriggerEvent("BigWigs_Message", string.format(L"wave", self.wave) .. message, color) end
+	if self.db.profile.add then self:TriggerEvent("BigWigs_Message", string.format(L["wave"], self.wave) .. message, color) end
 end
 
 function BigWigsGothik:Trainee()
 	if self.db.profile.add then
-		self:TriggerEvent("BigWigs_StartBar", self, L"trabar", self.tratime, "Interface\\Icons\\Ability_Seal", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["trabar"], self.tratime, "Interface\\Icons\\Ability_Seal", "Yellow", "Orange", "Red")
 	end
-	self:ScheduleEvent("bwgothiktrawarn", self.WaveWarn, self.tratime - 3, self, L"trawarn", L, "Yellow")
+	self:ScheduleEvent("bwgothiktrawarn", self.WaveWarn, self.tratime - 3, self, L["trawarn"], L, "Yellow")
 	self:ScheduleRepeatingEvent("bwgothiktrarepop", self.Trainee, self.tratime, self)
 end
 
 function BigWigsGothik:DeathKnight()
 	if self.db.profile.add then
-		self:TriggerEvent("BigWigs_StartBar", self, L"dkbar", self.dktime, "Interface\\Icons\\INV_Boots_Plate_08", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["dkbar"], self.dktime, "Interface\\Icons\\INV_Boots_Plate_08", "Yellow", "Orange", "Red")
 	end
-	self:ScheduleEvent("bwgothikdkwarn", self.WaveWarn, self.dktime - 3, self, L"dkwarn", L, "Orange")
+	self:ScheduleEvent("bwgothikdkwarn", self.WaveWarn, self.dktime - 3, self, L["dkwarn"], L, "Orange")
 	self:ScheduleRepeatingEvent("bwgothikdkrepop", self.DeathKnight, self.dktime, self)
 end
 
 function BigWigsGothik:Rider()
 	if self.db.profile.add then
-		self:TriggerEvent("BigWigs_StartBar", self, L"riderbar", self.ridertime, "Interface\\Icons\\Spell_Shadow_DeathPact", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["riderbar"], self.ridertime, "Interface\\Icons\\Spell_Shadow_DeathPact", "Yellow", "Orange", "Red")
 	end
-	self:ScheduleEvent("bwgothikriderwarn", self.WaveWarn, self.ridertime - 3, self, L"riderwarn", L, "Red")
+	self:ScheduleEvent("bwgothikriderwarn", self.WaveWarn, self.ridertime - 3, self, L["riderwarn"], L, "Red")
 	self:ScheduleRepeatingEvent("bwgothikriderrepop", self.Rider, self.ridertime, self)
 end
 
 function BigWigsGothik:CHAT_MSG_MONSTER_YELL( msg )
-	if msg == L"starttrigger1" or msg == L"starttrigger2" then
+	if msg == L["starttrigger1"] or msg == L["starttrigger2"] then
 		if self.db.profile.room then
-			self:TriggerEvent("BigWigs_Message", L"startwarn", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"inroombartext", 270, "Interface\\Icons\\Spell_Magic_LesserInvisibilty", "Green", "Yellow", "Orange", "Red")
-			self:ScheduleEvent("bwgothikwarn1", "BigWigs_Message", 90, L"warn1", "Green")
-			self:ScheduleEvent("bwgothikwarn2", "BigWigs_Message", 180, L"warn2", "Yellow")
-			self:ScheduleEvent("bwgothikwarn3", "BigWigs_Message", 210, L"warn3", "Orange")
-			self:ScheduleEvent("bwgothikwarn4", "BigWigs_Message", 240, L"warn4", "Red")
-			self:ScheduleEvent("bwgothikwarn5", "BigWigs_Message", 260, L"warn5", "Red")
+			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L["inroombartext"], 270, "Interface\\Icons\\Spell_Magic_LesserInvisibilty", "Green", "Yellow", "Orange", "Red")
+			self:ScheduleEvent("bwgothikwarn1", "BigWigs_Message", 90, L["warn1"], "Green")
+			self:ScheduleEvent("bwgothikwarn2", "BigWigs_Message", 180, L["warn2"], "Yellow")
+			self:ScheduleEvent("bwgothikwarn3", "BigWigs_Message", 210, L["warn3"], "Orange")
+			self:ScheduleEvent("bwgothikwarn4", "BigWigs_Message", 240, L["warn4"], "Red")
+			self:ScheduleEvent("bwgothikwarn5", "BigWigs_Message", 260, L["warn5"], "Red")
 		end
 		if self.db.profile.add then		
 			self:Trainee()
@@ -255,10 +255,10 @@ function BigWigsGothik:CHAT_MSG_MONSTER_YELL( msg )
 		self.tratime = 20
 		self.dktime = 25
 		self.ridertime = 30
-	elseif msg == L"inroomtrigger" then
-		if self.db.profile.room then self:TriggerEvent("BigWigs_Message", L"inroomwarn", "Red") end
+	elseif msg == L["inroomtrigger"] then
+		if self.db.profile.room then self:TriggerEvent("BigWigs_Message", L["inroomwarn"], "Red") end
 		self:StopRoom()
-	elseif string.find(msg, L"disabletrigger") then
+	elseif string.find(msg, L["disabletrigger"]) then
 		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")("%s has been defeated"), boss), "Green", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 	end

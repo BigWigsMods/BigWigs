@@ -175,24 +175,24 @@ function BigWigsFaerlina:PLAYER_REGEN_ENABLED()
 end
 
 function BigWigsFaerlina:CHAT_MSG_MONSTER_YELL( msg )
-	if msg == L"starttrigger1" or msg == L"starttrigger2" or msg == L"starttrigger3" or msg == L"starttrigger4" then
-		self:TriggerEvent("BigWigs_Message", L"startwarn", "Orange")
+	if msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"] then
+		self:TriggerEvent("BigWigs_Message", L["startwarn"], "Orange")
 		if self.db.profile.enrage then
-		self:ScheduleEvent("bwfaerlinaenrage15", "BigWigs_Message", self.enragetime - 15, L"enragewarn15sec", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"enragebar", self.enragetime, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
+			self:ScheduleEvent("bwfaerlinaenrage15", "BigWigs_Message", self.enragetime - 15, L["enragewarn15sec"], "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L["enragebar"], self.enragetime, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
 		end
 		self.enrageTimerStarted = GetTime()
 	end
 end
 
 function BigWigsFaerlina:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
-	if msg == L"enragetrigger" then
+	if msg == L["enragetrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "FaerlinaEnrage")
 	end
 end
 
 function BigWigsFaerlina:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE( msg )
-	if msg == L"silencetrigger" then
+	if msg == L["silencetrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "FaerlinaSilence")
 	end
 end
@@ -200,12 +200,12 @@ end
 function BigWigsFaerlina:BigWigs_RecvSync( sync )
 	if sync == "FaerlinaEnrage" then
 		if self.db.profile.enrage then
-			self:TriggerEvent("BigWigs_Message", L"enragewarn", "Orange")
+			self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Orange")
 		end
-		self:TriggerEvent("BigWigs_StopBar", self, L"enragebar")
+		self:TriggerEvent("BigWigs_StopBar", self, L["enragebar"])
 		self:CancelScheduledEvent("bwfaerlinaenrage15") 
-		self:TriggerEvent("BigWigs_StartBar", self, L"enragebar", self.enragetime, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
-		self:ScheduleEvent("bwfaerlinaenrage15", "BigWigs_Message", self.enragetime - 15, L"enragewarn15sec", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["enragebar"], self.enragetime, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
+		self:ScheduleEvent("bwfaerlinaenrage15", "BigWigs_Message", self.enragetime - 15, L["enragewarn15sec"], "Red")
 		self.enrageTimerStarted = GetTime()
 		self.enraged = true
 	elseif sync == "FaerlinaSilence" then
@@ -219,32 +219,32 @@ function BigWigsFaerlina:BigWigs_RecvSync( sync )
 
 			if self.db.profile.silence then
 				if (self.enrageTimerStarted + 30) < currentTime then
-					self:TriggerEvent("BigWigs_Message", L"silencewarnnodelay", "Orange")
+					self:TriggerEvent("BigWigs_Message", L["silencewarnnodelay"], "Orange")
 				else
-					self:TriggerEvent("BigWigs_Message", L"silencewarn", "Orange")
+					self:TriggerEvent("BigWigs_Message", L["silencewarn"], "Orange")
 				end
-				self:TriggerEvent("BigWigs_StartBar", self, L"silencebar", self.silencetime, "Interface\\Icons\\Spell_Holy_Silence", "Green", "Yellow", "Orange", "Red")
-				self:ScheduleEvent("bwfaerlinasilence5", "BigWigs_Message", self.silencetime -5, L"silencewarn5sec", "Orange")
+				self:TriggerEvent("BigWigs_StartBar", self, L["silencebar"], self.silencetime, "Interface\\Icons\\Spell_Holy_Silence", "Green", "Yellow", "Orange", "Red")
+				self:ScheduleEvent("bwfaerlinasilence5", "BigWigs_Message", self.silencetime -5, L["silencewarn5sec"], "Orange")
 			end
 			if self.db.profile.enrage then
 				if (self.enrageTimerStarted + 30) < currentTime then
 					-- We SHOULD reset the enrage timer, since it's more than 30
 					-- sec since enrage started. This is only visuals ofcourse.
-					self:TriggerEvent("BigWigs_StopBar", self, L"enragebar")
+					self:TriggerEvent("BigWigs_StopBar", self, L["enragebar"])
 					self:CancelScheduledEvent("bwfaerlinaenrage15")
-					self:ScheduleEvent( "bwfaerlinaenrage15", "BigWigs_Message", self.silencetime - 15, L"enragewarn15sec", "Red")
-					self:TriggerEvent("BigWigs_StartBar", self, L"enragebar", self.silencetime, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Yellow", "Orange", "Red")
+					self:ScheduleEvent( "bwfaerlinaenrage15", "BigWigs_Message", self.silencetime - 15, L["enragewarn15sec"], "Red")
+					self:TriggerEvent("BigWigs_StartBar", self, L["enragebar"], self.silencetime, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Yellow", "Orange", "Red")
 					self.enrageTimerStarted = currentTime
 				end
 			end
 
 		else -- Reactive enrage removed
 			if self.db.profile.enrage then
-				self:TriggerEvent("BigWigs_Message", string.format(L"enrageremovewarn", self.enragetime), "Orange")
+				self:TriggerEvent("BigWigs_Message", string.format(L["enrageremovewarn"], self.enragetime), "Orange")
 			end
 			if self.db.profile.silence then
-				self:TriggerEvent("BigWigs_StartBar", self, L"silencebar", self.silencetime, "Interface\\Icons\\Spell_Holy_Silence", "Green", "Yellow", "Orange", "Red")
-				self:ScheduleEvent("bwfaerlinasilence5", "BigWigs_Message", self.silencetime -5, L"silencewarn5sec", "Orange")
+				self:TriggerEvent("BigWigs_StartBar", self, L["silencebar"], self.silencetime, "Interface\\Icons\\Spell_Holy_Silence", "Green", "Yellow", "Orange", "Red")
+				self:ScheduleEvent("bwfaerlinasilence5", "BigWigs_Message", self.silencetime -5, L["silencewarn5sec"], "Orange")
  			end			
 			self.enraged = nil
 		end

@@ -181,21 +181,21 @@ function BigWigsHorsemen:Scan()
 end
 
 function BigWigsHorsemen:MarkEvent( msg )
-	if string.find(msg, L"marktrigger") then
+	if string.find(msg, L["marktrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenMark")
 	end
 end
 
 function BigWigsHorsemen:SkillEvent( msg )
-	if string.find(msg, L"meteortrigger") then
+	if string.find(msg, L["meteortrigger"]) then
 		--if (not self.lastmeteor) or self.lastmeteor + 8 > GetTime() then
 			self:TriggerEvent("BigWigs_SendSync", "HorsemenMeteor")
 		--end
-	elseif string.find(msg, L"wrathtrigger") then
+	elseif string.find(msg, L["wrathtrigger"]) then
 		--if (not self.lastwrath) or self.lastwrath + 8 > GetTime() then
 			self:TriggerEvent("BigWigs_SendSync", "HorsemenWrath")
 		--end
-	elseif msg == L"voidtrigger" then
+	elseif msg == L["voidtrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenVoid" )
 		local target = nil
 		for i = 1, GetNumRaidMembers(), 1 do
@@ -214,58 +214,58 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 	if sync == "HorsemenStart" and not self.started then
 		self.started = true
 		if self.db.profile.mark then
-			self:TriggerEvent("BigWigs_Message", L"startwarn", "Yellow")
-			self:TriggerEvent("BigWigs_StartBar", self, L"markbar", 17, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Yellow", "Orange", "Red")
-			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 12, string.format( L"markwarn2", self.marks ), "Orange")
+			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Yellow")
+			self:TriggerEvent("BigWigs_StartBar", self, L["markbar"], 17, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Yellow", "Orange", "Red")
+			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 12, string.format( L["markwarn2"], self.marks ), "Orange")
 		end
 	elseif sync == "HorsemenMark" then
 		if self.db.profile.mark then
-			self:TriggerEvent("BigWigs_Message", string.format( L"markwarn1", self.marks ), "Red")
+			self:TriggerEvent("BigWigs_Message", string.format( L["markwarn1"], self.marks ), "Red")
 		end
 		self.marks = self.marks + 1
 		if self.db.profile.mark then 
-			self:TriggerEvent("BigWigs_StartBar", self, L"markbar", 12, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Orange", "Red")
-			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 7, string.format( L"markwarn2", self.marks ), "Orange")
+			self:TriggerEvent("BigWigs_StartBar", self, L["markbar"], 12, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Orange", "Red")
+			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 7, string.format( L["markwarn2"], self.marks ), "Orange")
 		end
 	elseif sync == "HorsemenMeteor" then
 		self.lastmeteor = GetTime()
 		if self.db.profile.meteor then
-			self:TriggerEvent("BigWigs_Message", L"meteorwarn", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"meteorbar", 12, "Interface\\Icons\\Spell_Fire_Fireball02", "Orange", "Red")
+			self:TriggerEvent("BigWigs_Message", L["meteorwarn"], "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L["meteorbar"], 12, "Interface\\Icons\\Spell_Fire_Fireball02", "Orange", "Red")
 		end
 	elseif sync == "HorsemenWrath" then
 		self.lastwrath = GetTime()
 		if self.db.profile.meteor then
-			self:TriggerEvent("BigWigs_Message", L"wrathwarn", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"wrathbar", 12, "Interface\\Icons\\Spell_Holy_Excorcism", "Orange", "Red")
+			self:TriggerEvent("BigWigs_Message", L["wrathwarn"], "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L["wrathbar"], 12, "Interface\\Icons\\Spell_Holy_Excorcism", "Orange", "Red")
 		end
 	elseif sync == "HorsemenVoid" then
 		self.lastvoid = GetTime()
 		if self.db.profile.void then
-			self:TriggerEvent("BigWigs_Message", L"voidwarn", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"voidbar", 12, "Interface\\Icons\\Spell_Frost_IceStorm", "Orange", "Red")
+			self:TriggerEvent("BigWigs_Message", L["voidwarn"], "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L["voidbar"], 12, "Interface\\Icons\\Spell_Frost_IceStorm", "Orange", "Red")
 		end
 	elseif sync == "HorsemenShieldWall" then
-		self:TriggerEvent("BigWigs_Message", string.format(L"shieldwallwarn", rest), "White")
-		self:ScheduleEvent("BigWigs_Message", 20, string.format(L"shieldwallwarn2", rest), "Green")
-		self:TriggerEvent("BigWigs_StartBar", self, string.format(L"shieldwallbar", rest), 20, "Interface\\Icons\\Ability_Warrior_ShieldWall", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", string.format(L["shieldwallwarn"], rest), "White")
+		self:ScheduleEvent("BigWigs_Message", 20, string.format(L["shieldwallwarn2"], rest), "Green")
+		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["shieldwallbar"], rest), 20, "Interface\\Icons\\Ability_Warrior_ShieldWall", "Yellow", "Orange", "Red")
 	end
 end
 
 function BigWigsHorsemen:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
-	if msg == thane..L"shieldwalltrigger" then
+	if msg == thane..L["shieldwalltrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..thane )
-	elseif msg == zeliek..L"shieldwalltrigger" then
+	elseif msg == zeliek..L["shieldwalltrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..zeliek )
-	elseif msg == mograine..L"shieldwalltrigger" then
+	elseif msg == mograine..L["shieldwalltrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..mograine )
-	elseif msg == blaumeux..L"shieldwalltrigger" then
+	elseif msg == blaumeux..L["shieldwalltrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..blaumeux )
 	end
 end
 
 function BigWigsHorsemen:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if msg == L"voidtrigger" then
+	if msg == L["voidtrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenVoid" )
 	end	
 end

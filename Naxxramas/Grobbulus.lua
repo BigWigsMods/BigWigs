@@ -110,30 +110,30 @@ end
 
 if GetLocale() == "koKR" then 
 	function BigWigsGrobbulus:InjectEvent( msg )
-		local _, _, eplayer = string.find(msg, L"trigger1")
+		local _, _, eplayer = string.find(msg, L["trigger1"])
 		if (eplayer) then
-			if self.db.profile.youinjected and eplayer == L"you" then
-				self:TriggerEvent("BigWigs_Message", L"warn1", "Red", true, "Alarm")
+			if self.db.profile.youinjected and eplayer == L["you"] then
+				self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true, "Alarm")
 			elseif self.db.profile.otherinjected then
-				_, _, eplayer = string.find(eplayer, L"whopattern")
-				self:TriggerEvent("BigWigs_Message", eplayer .. L"warn2", "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", eplayer, L"warn1")
+				_, _, eplayer = string.find(eplayer, L["whopattern"])
+				self:TriggerEvent("BigWigs_Message", eplayer .. L["warn2"], "Yellow")
+				self:TriggerEvent("BigWigs_SendTell", eplayer, L["warn1"])
 			end
 			if self.db.profile.icon then
-				if eplayer == L"you" then	eplayer = UnitName('player') end
+				if eplayer == L["you"] then eplayer = UnitName('player') end
 				self:TriggerEvent("BigWigs_SetRaidIcon", eplayer)
 			end
 		end
 	end
 else
 	function BigWigsGrobbulus:InjectEvent( msg )
-		local _, _, eplayer, etype = string.find(msg, L"trigger1")
+		local _, _, eplayer, etype = string.find(msg, L["trigger1"])
 		if eplayer and etype then
-			if self.db.profile.youinjected and eplayer == L"you" and etype == L"are" then
-				self:TriggerEvent("BigWigs_Message", L"warn1", "Red", true, "Alarm")
+			if self.db.profile.youinjected and eplayer == L["you"] and etype == L["are"] then
+				self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true, "Alarm")
 			elseif self.db.profile.otherinjected then 
-				self:TriggerEvent("BigWigs_Message", eplayer .. L"warn2", "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", eplayer, L"warn1")
+				self:TriggerEvent("BigWigs_Message", eplayer .. L["warn2"], "Yellow")
+				self:TriggerEvent("BigWigs_SendTell", eplayer, L["warn1"])
 			end
 			if self.db.profile.icon then
 				if eplayer == L"you" then eplayer = UnitName('player') end

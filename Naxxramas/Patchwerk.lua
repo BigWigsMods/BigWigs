@@ -127,15 +127,15 @@ function BigWigsPatchwerk:Scan()
 end
 
 function BigWigsPatchwerk:CHAT_MSG_MONSTER_YELL( msg )
-	if self.db.profile.enrage and ( msg == L"starttrigger1" or msg == L"starttrigger2" ) then
-		self:TriggerEvent("BigWigs_Message", L"startwarn", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"enragebartext", 420, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
-		self:ScheduleEvent("bwpatchwarn1", "BigWigs_Message", 120, L"warn1", "Green")
-		self:ScheduleEvent("bwpatchwarn2", "BigWigs_Message", 240, L"warn2", "Yellow")
-		self:ScheduleEvent("bwpatchwarn3", "BigWigs_Message", 330, L"warn3", "Orange")
-		self:ScheduleEvent("bwpatchwarn4", "BigWigs_Message", 360, L"warn4", "Orange")
-		self:ScheduleEvent("bwpatchwarn5", "BigWigs_Message", 390, L"warn5", "Red")
-		self:ScheduleEvent("bwpatchwarn6", "BigWigs_Message", 410, L"warn6", "Red")
+	if self.db.profile.enrage and ( msg == L["starttrigger1"] or msg == L["starttrigger2"] ) then
+		self:TriggerEvent("BigWigs_Message", L["startwarn"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["enragebartext"], 420, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
+		self:ScheduleEvent("bwpatchwarn1", "BigWigs_Message", 120, L["warn1"], "Green")
+		self:ScheduleEvent("bwpatchwarn2", "BigWigs_Message", 240, L["warn2"], "Yellow")
+		self:ScheduleEvent("bwpatchwarn3", "BigWigs_Message", 330, L["warn3"], "Orange")
+		self:ScheduleEvent("bwpatchwarn4", "BigWigs_Message", 360, L["warn4"], "Orange")
+		self:ScheduleEvent("bwpatchwarn5", "BigWigs_Message", 390, L["warn5"], "Red")
+		self:ScheduleEvent("bwpatchwarn6", "BigWigs_Message", 410, L["warn6"], "Red")
 	end
 end
 
@@ -150,11 +150,11 @@ function BigWigsPatchwerk:PLAYER_REGEN_ENABLED()
 end
 
 function BigWigsPatchwerk:CHAT_MSG_MONSTER_EMOTE( msg )
-	if msg == L"enragetrigger" then
+	if msg == L["enragetrigger"] then
 		if self.db.profile.enrage then
-			self:TriggerEvent("BigWigs_Message", L"enragewarn", "Red")
+			self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Red")
 		end
-		self:TriggerEvent("BigWigs_StopBar", self, L"enragebartext")
+		self:TriggerEvent("BigWigs_StopBar", self, L["enragebartext"])
 		self:CancelScheduledEvent("bwpatchwarn1")
 		self:CancelScheduledEvent("bwpatchwarn2")
 		self:CancelScheduledEvent("bwpatchwarn3")

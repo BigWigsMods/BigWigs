@@ -255,22 +255,22 @@ function BigWigsThaddius:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 end
 
 function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
-	if msg == L"pstrigger" then
+	if msg == L["pstrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "ThaddiusPolarity")
-	elseif msg == L"starttrigger" or msg == L"starttrigger1" then
+	elseif msg == L["starttrigger"] or msg == L["starttrigger1"] then
 		if self.db.profile.phase and not self.stage1warn then
-			self:TriggerEvent("BigWigs_Message", L"startwarn", "Red")
+			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Red")
 		end
 		self.stage1warn = true
-	elseif msg == L"starttrigger2" or msg == L"starttrigger3" or msg == L"starttrigger4" then
-		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L"startwarn2", "Red") end
+	elseif msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"] then
+		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L["startwarn2"], "Red") end
 		if self.db.profile.enrage then
-			self:TriggerEvent("BigWigs_StartBar", self, L"enragebartext", 300, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
-			self:ScheduleEvent("bwthaddiuswarn1", "BigWigs_Message", 120, L"warn1", "Green")
-			self:ScheduleEvent("bwthaddiuswarn2", "BigWigs_Message", 210, L"warn2", "Yellow")
-			self:ScheduleEvent("bwthaddiuswarn3", "BigWigs_Message", 240, L"warn3", "Orange")
-			self:ScheduleEvent("bwthaddiuswarn4", "BigWigs_Message", 270, L"warn4", "Red")
-			self:ScheduleEvent("bwthaddiuswarn5", "BigWigs_Message", 290, L"warn5", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L["enragebartext"], 300, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
+			self:ScheduleEvent("bwthaddiuswarn1", "BigWigs_Message", 120, L["warn1"], "Green")
+			self:ScheduleEvent("bwthaddiuswarn2", "BigWigs_Message", 210, L["warn2"], "Yellow")
+			self:ScheduleEvent("bwthaddiuswarn3", "BigWigs_Message", 240, L["warn3"], "Orange")
+			self:ScheduleEvent("bwthaddiuswarn4", "BigWigs_Message", 270, L["warn4"], "Red")
+			self:ScheduleEvent("bwthaddiuswarn5", "BigWigs_Message", 290, L["warn5"], "Red")
 		end
 	end
 end
@@ -286,28 +286,28 @@ function BigWigsThaddius:PLAYER_REGEN_ENABLED()
 end
 
 function BigWigsThaddius:CHAT_MSG_MONSTER_EMOTE( msg )
-	if msg == L"enragetrigger" then
-		if self.db.profile.enrage then self:TriggerEvent("BigWigs_Message", L"enragewarn", "Red") end
-		self:TriggerEvent("BigWigs_StopBar", self, L"enragebartext")
+	if msg == L["enragetrigger"] then
+		if self.db.profile.enrage then self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Red") end
+		self:TriggerEvent("BigWigs_StopBar", self, L["enragebartext"])
 		self:CancelScheduledEvent("bwthaddiuswarn1")
 		self:CancelScheduledEvent("bwthaddiuswarn2")
 		self:CancelScheduledEvent("bwthaddiuswarn3")
 		self:CancelScheduledEvent("bwthaddiuswarn4")
 		self:CancelScheduledEvent("bwthaddiuswarn5")
-	elseif msg == L"adddeath" then
+	elseif msg == L["adddeath"] then
 		self.addsdead = self.addsdead + 1
 		if self.addsdead == 2 and self.db.profile.phase then
-			self:TriggerEvent("BigWigs_Message", L"addsdownwarn", "Yellow")
+			self:TriggerEvent("BigWigs_Message", L["addsdownwarn"], "Yellow")
 		end
-	elseif msg == L"teslaoverload" and self.db.profile.phase and not self.teslawarn then
+	elseif msg == L["teslaoverload"] and self.db.profile.phase and not self.teslawarn then
 		self.teslawarn = true
-		self:TriggerEvent("BigWigs_Message", L"thaddiusincoming", "Red")
+		self:TriggerEvent("BigWigs_Message", L["thaddiusincoming"], "Red")
 	end
 end
 
 function BigWigsThaddius:PolarityCast( msg )
-	if self.db.profile.polarity and string.find(msg, L"trigger1") then
-		self:TriggerEvent("BigWigs_Message", L"pswarn1", "Red")
+	if self.db.profile.polarity and string.find(msg, L["trigger1"]) then
+		self:TriggerEvent("BigWigs_Message", L["pswarn1"], "Red")
 	end
 end
 
@@ -316,7 +316,7 @@ function BigWigsThaddius:PLAYER_AURAS_CHANGED( msg )
 	local iIterator = 1
 	while UnitDebuff("player", iIterator) do
 		local texture, applications = UnitDebuff("player", iIterator)
-		if texture == L"positivetype" or texture == L"negativetype" then
+		if texture == L["positivetype"] or texture == L["negativetype"] then
 			-- If we have a debuff with this texture that has more
 			-- than one application, it means we still have the
 			-- counter debuff, and thus nothing has changed yet.
@@ -336,13 +336,13 @@ function BigWigsThaddius:PLAYER_AURAS_CHANGED( msg )
 
 	if self.db.profile.charge then
 		if self.previousCharge == chargetype then
-			self:TriggerEvent("BigWigs_Message", L"nochange", "Orange", true)
+			self:TriggerEvent("BigWigs_Message", L["nochange"], "Orange", true)
 		elseif chargetype == L"positivetype" then
-			self:TriggerEvent("BigWigs_Message", L"poswarn", "Green", true)
+			self:TriggerEvent("BigWigs_Message", L["poswarn"], "Green", true)
 		elseif chargetype == L"negativetype" then
-			self:TriggerEvent("BigWigs_Message", L"negwarn", "Red", true)
+			self:TriggerEvent("BigWigs_Message", L["negwarn"], "Red", true)
 		end
-		self:TriggerEvent("BigWigs_StartBar", self, L"polaritytickbar", 5, chargetype, "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["polaritytickbar"], 5, chargetype, "Red")
 	end
 	self.previousCharge = chargetype
 end
@@ -350,11 +350,11 @@ end
 function BigWigsThaddius:BigWigs_RecvSync( sync )
 	if sync == "ThaddiusPolarity" and self.db.profile.polarity then
 		self:RegisterEvent("PLAYER_AURAS_CHANGED")
-		self:ScheduleEvent("BigWigs_Message", 27, L"pswarn3", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 30, "Interface\\Icons\\Spell_Nature_Lightning", "Yellow", "Orange", "Red")
+		self:ScheduleEvent("BigWigs_Message", 27, L["pswarn3"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 30, "Interface\\Icons\\Spell_Nature_Lightning", "Yellow", "Orange", "Red")
 	elseif sync == "StalaggPower" and self.db.profile.power then
-		self:TriggerEvent("BigWigs_Message", L"stalaggwarn", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"powersurgebar", 10, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Red")
+		self:TriggerEvent("BigWigs_Message", L["stalaggwarn"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["powersurgebar"], 10, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Red")
 	end
 end
 
