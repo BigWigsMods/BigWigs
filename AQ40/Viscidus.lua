@@ -185,36 +185,36 @@ end
 
 if (GetLocale() == "koKR") then
 	function BigWigsViscidus:CheckVis(arg1)
-		if self.db.profile.volley and not prior and string.find(arg1, L"trigger6") then
-			self:TriggerEvent("BigWigs_Message", L"warn6", "Orange")
-			self:ScheduleEvent("BigWigs_Message", 7, L"warn7", "Orange")
-			self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 10, "Interface\\Icons\\Spell_Nature_CorrosiveBreath", "Yellow", "Orange", "Red")
+		if self.db.profile.volley and not prior and string.find(arg1, L["trigger6"]) then
+			self:TriggerEvent("BigWigs_Message", L["warn6"], "Orange")
+			self:ScheduleEvent("BigWigs_Message", 7, L["warn7"], "Orange")
+			self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 10, "Interface\\Icons\\Spell_Nature_CorrosiveBreath", "Yellow", "Orange", "Red")
 			prior = true
-		elseif self.db.profile.toxinother and string.find(arg1, L"trigger7") then
-			local _,_, pl = string.find(arg1, L"trigger7")
+		elseif self.db.profile.toxinother and string.find(arg1, L["trigger7"]) then
+			local _,_, pl = string.find(arg1, L["trigger7"])
 			if pl then
 				if pl == L"you" then
 					pl = UnitName("player")
 				end
-				self:TriggerEvent("BigWigs_Message", pl .. L"warn8", "Red")
+				self:TriggerEvent("BigWigs_Message", pl .. L["warn8"], "Red")
 			end
 		end
 	end
 else
 	function BigWigsViscidus:CheckVis(arg1)
-		if self.db.profile.volley and not prior and string.find(arg1, L"trigger6") then
-			self:TriggerEvent("BigWigs_Message", L"warn6", "Orange")
-			self:ScheduleEvent("BigWigs_Message", 7, L"warn7", "Orange")
-			self:TriggerEvent("BigWigs_StartBar", self, L"bar1text", 10, "Interface\\Icons\\Spell_Nature_CorrosiveBreath", "Yellow", "Orange", "Red")
+		if self.db.profile.volley and not prior and string.find(arg1, L["trigger6"]) then
+			self:TriggerEvent("BigWigs_Message", L["warn6"], "Orange")
+			self:ScheduleEvent("BigWigs_Message", 7, L["warn7"], "Orange")
+			self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 10, "Interface\\Icons\\Spell_Nature_CorrosiveBreath", "Yellow", "Orange", "Red")
 			prior = true
-		elseif string.find(arg1, L"trigger7") then
-			local _,_, pl, ty = string.find(arg1, L"trigger7")
+		elseif string.find(arg1, L["trigger7"]) then
+			local _,_, pl, ty = string.find(arg1, L["trigger7"])
 			if (pl and ty) then
-				if self.db.profile.toxinyou and pl == L"you" and ty == L"are" then
-					self:TriggerEvent("BigWigs_Message", L"warn9", "Red", true)
+				if self.db.profile.toxinyou and pl == L["you"] and ty == L["are"] then
+					self:TriggerEvent("BigWigs_Message", L["warn9"], "Red", true)
 				elseif self.db.profile.toxinother then
-					self:TriggerEvent("BigWigs_Message", pl .. L"warn8", "Red")
-					self:TriggerEvent("BigWigs_SendTell", pl, L"warn9")
+					self:TriggerEvent("BigWigs_Message", pl .. L["warn8"], "Red")
+					self:TriggerEvent("BigWigs_SendTell", pl, L["warn9"])
 				end
 			end
 		end
@@ -223,19 +223,19 @@ end
 
 function BigWigsViscidus:CHAT_MSG_MONSTER_EMOTE(arg1)
 	if not self.db.profile.freeze then return end
-	if arg1 == L"trigger1" then
-		self:TriggerEvent("BigWigs_Message", L"warn1", "Yellow")
-	elseif arg1 == L"trigger2" then
-		self:TriggerEvent("BigWigs_Message", L"warn2", "Orange")
-	elseif arg1 == L"trigger3" then
-		self:TriggerEvent("BigWigs_Message", L"warn3", "Red")
-	elseif arg1 == L"trigger4" then
-		self:TriggerEvent("BigWigs_Message", L"warn4", "Orange")
-	elseif arg1 == L"trigger5" then
-		self:TriggerEvent("BigWigs_Message", L"warn5", "Red")
+	if arg1 == L["trigger1"] then
+		self:TriggerEvent("BigWigs_Message", L["warn1"], "Yellow")
+	elseif arg1 == L["trigger2"] then
+		self:TriggerEvent("BigWigs_Message", L["warn2"], "Orange")
+	elseif arg1 == L["trigger3"] then
+		self:TriggerEvent("BigWigs_Message", L["warn3"], "Red")
+	elseif arg1 == L["trigger4"] then
+		self:TriggerEvent("BigWigs_Message", L["warn4"], "Orange")
+	elseif arg1 == L["trigger5"] then
+		self:TriggerEvent("BigWigs_Message", L["warn5"], "Red")
 	end
 end
 
 function BigWigsViscidus:BigWigs_Message(text)
-	if text == L"warn7" then prior = nil end
+	if text == L["warn7"] then prior = nil end
 end

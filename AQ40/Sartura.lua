@@ -142,9 +142,9 @@ end
 
 function BigWigsSartura:BigWigs_RecvSync(sync)
 	if sync == "SarturaWhirlwind" and self.db.profile.whirlwind then
-		self:TriggerEvent("BigWigs_Message", L"whirlwindonwarn", "Red")
-		self:ScheduleEvent("BigWigs_Message", 15, L"whirlwindoffwarn", "Yellow")
-		self:TriggerEvent("BigWigs_StartBar", self, L"whirlwindbartext", 15, "Interface\\Icons\\Ability_Whirlwind", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["whirlwindonwarn"], "Red")
+		self:ScheduleEvent("BigWigs_Message", 15, L["whirlwindoffwarn"[, "Yellow")
+		self:TriggerEvent("BigWigs_StartBar", self, L["whirlwindbartext"], 15, "Interface\\Icons\\Ability_Whirlwind", "Yellow", "Orange", "Red")
 	end
 end
 
@@ -155,21 +155,21 @@ function BigWigsSartura:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 end
 
 function BigWigsSartura:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.enrage and string.find(msg, L"starttrigger") then
-		self:TriggerEvent("BigWigs_Message", L"startwarn", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"bartext", 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
-		self:ScheduleEvent("BigWigs_Message", 120, L"warn1", "Green")
-		self:ScheduleEvent("BigWigs_Message", 300, L"warn2", "Yellow")
-		self:ScheduleEvent("BigWigs_Message", 420, L"warn3", "Yellow")
-		self:ScheduleEvent("BigWigs_Message", 510, L"warn4", "Orange")
-		self:ScheduleEvent("BigWigs_Message", 540, L"warn5", "Orange")
-		self:ScheduleEvent("BigWigs_Message", 570, L"warn6", "Red")
-		self:ScheduleEvent("BigWigs_Message", 590, L"warn7", "Red")
+	if self.db.profile.enrage and string.find(msg, L["starttrigger"]) then
+		self:TriggerEvent("BigWigs_Message", L["startwarn"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
+		self:ScheduleEvent("BigWigs_Message", 120, L["warn1"], "Green")
+		self:ScheduleEvent("BigWigs_Message", 300, L["warn2"], "Yellow")
+		self:ScheduleEvent("BigWigs_Message", 420, L["warn3"], "Yellow")
+		self:ScheduleEvent("BigWigs_Message", 510, L["warn4"], "Orange")
+		self:ScheduleEvent("BigWigs_Message", 540, L["warn5"], "Orange")
+		self:ScheduleEvent("BigWigs_Message", 570, L["warn6"], "Red")
+		self:ScheduleEvent("BigWigs_Message", 590, L["warn7"], "Red")
 	end
 end
 
 function BigWigsSartura:CHAT_MSG_MONSTER_EMOTE(msg)
-	if self.db.profile.enrage and string.find(msg, L"enragetrigger") then
-		self:TriggerEvent("BigWigs_Message", L"enragewarn", "Yellow")
+	if self.db.profile.enrage and string.find(msg, L["enragetrigger"]) then
+		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Yellow")
 	end
 end

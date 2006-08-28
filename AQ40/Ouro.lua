@@ -210,7 +210,7 @@ function BigWigsOuro:UNIT_HEALTH( msg )
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if (health > 20 and health <= 23) then
-			self:TriggerEvent("BigWigs_Message", L"berserksoonwarn", "Red")
+			self:TriggerEvent("BigWigs_Message", L["berserksoonwarn"], "Red")
 			berserkannounced = true
 		elseif (health > 30 and berserkannounced) then
 			berserkannounced = nil
@@ -232,30 +232,30 @@ end
 
 function BigWigsOuro:Sweep()
 	if self.db.profile.sweep then
-		self:TriggerEvent("BigWigs_Message", L"sweepannounce", "Red")
-		self:ScheduleEvent("bwourosweepwarn", "BigWigs_Message", 18, L"sweepwarn", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"sweepbartext", 23, "Interface\\Icons\\Spell_Nature_Thorns", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["sweepannounce"], "Red")
+		self:ScheduleEvent("bwourosweepwarn", "BigWigs_Message", 18, L["sweepwarn"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["sweepbartext"], 23, "Interface\\Icons\\Spell_Nature_Thorns", "Yellow", "Orange", "Red")
 	end
 end
 
 function BigWigsOuro:Sandblast()
 	if self.db.profile.sandblast then
-		self:TriggerEvent("BigWigs_Message", L"sandblastannounce", "Red")
-		self:ScheduleEvent("bwouroblastwarn", "BigWigs_Message", 18, L"sandblastwarn", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"sandblastbartext", 23, "Interface\\Icons\\Spell_Nature_Cyclone", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["sandblastannounce"], "Red")
+		self:ScheduleEvent("bwouroblastwarn", "BigWigs_Message", 18, L["sandblastwarn"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["sandblastbartext"], 23, "Interface\\Icons\\Spell_Nature_Cyclone", "Yellow", "Orange", "Red")
 	end
 end
 
 function BigWigsOuro:Emerge()
 	if self.db.profile.emerge then
-		self:TriggerEvent("BigWigs_Message", L"emergeannounce", "Red")
-		self:ScheduleEvent("bwouroemergewarn", "BigWigs_Message", 165, L"emergewarn", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"emergebartext", 180, "Interface\\Icons\\Spell_Nature_Earthquake", "Green", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["emergeannounce"], "Red")
+		self:ScheduleEvent("bwouroemergewarn", "BigWigs_Message", 165, L["emergewarn"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["emergebartext"], 180, "Interface\\Icons\\Spell_Nature_Earthquake", "Green", "Yellow", "Orange", "Red")
 	end
 
 	if self.db.profile.scarab then
-		self:ScheduleEvent("bwscarabdespawn", "BigWigs_Message", 50, L"scarabdespawn", "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"scarabbar", 60, "Interface\\Icons\\INV_Scarab_Clay", "Red", "Orange", "Yellow", "Green" )
+		self:ScheduleEvent("bwscarabdespawn", "BigWigs_Message", 50, L["scarabdespawn"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["scarabbar"], 60, "Interface\\Icons\\INV_Scarab_Clay", "Red", "Orange", "Yellow", "Green" )
 	end
 end
 
@@ -264,31 +264,31 @@ function BigWigsOuro:Submerge()
 	self:CancelScheduledEvent("bwouroblastwarn")
 	self:CancelScheduledEvent("bwouroemergewarn")
 	
-	self:TriggerEvent("BigWigs_StopBar", self, L"sweepbartext")
-	self:TriggerEvent("BigWigs_StopBar", self, L"sandblastbartext")
-	self:TriggerEvent("BigWigs_StopBar", self, L"emergebartext")
+	self:TriggerEvent("BigWigs_StopBar", self, L["sweepbartext"])
+	self:TriggerEvent("BigWigs_StopBar", self, L["sandblastbartext"])
+	self:TriggerEvent("BigWigs_StopBar", self, L["emergebartext"])
 
 	if self.db.profile.submerge then
-		self:TriggerEvent("BigWigs_Message", L"submergeannounce", "Red")
-		self:ScheduleEvent("bwsubmergewarn", "BigWigs_Message", 25, L"submergewarn", "Red" )
-		self:TriggerEvent("BigWigs_StartBar", self, L"submergebar", 30, "Interface\\Icons\\Spell_Nature_Earthquake", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["submergeannounce"], "Red")
+		self:ScheduleEvent("bwsubmergewarn", "BigWigs_Message", 25, L["submergewarn"], "Red" )
+		self:TriggerEvent("BigWigs_StartBar", self, L["submergebar"], 30, "Interface\\Icons\\Spell_Nature_Earthquake", "Yellow", "Orange", "Red")
 	end
 end
 
 function BigWigsOuro:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
-	if string.find(msg, L"emergetrigger") then
+	if string.find(msg, L["emergetrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "OuroEmerge")
-	elseif string.find(msg, L"submergetrigger") then
+	elseif string.find(msg, L["submergetrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "OuroSubmerge")
 	end
 end
 
 function BigWigsOuro:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
-	if string.find(msg, L"sweeptrigger") then
+	if string.find(msg, L["sweeptrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "OuroSweep")
-	elseif string.find(msg, L"sandblasttrigger") then
+	elseif string.find(msg, L["sandblasttrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "OuroSandblast")
-	elseif string.find(msg, L"submergetrigger") then
+	elseif string.find(msg, L["submergetrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "OuroSubmerge")
 	end
 end

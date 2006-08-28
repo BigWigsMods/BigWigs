@@ -110,16 +110,16 @@ end
 ------------------------------
 
 function BigWigsBugFamily:FearEvent(msg)
-	if self.db.profile.fear and not fearstatus and string.find(msg, L"feartrigger") then
+	if self.db.profile.fear and not fearstatus and string.find(msg, L["feartrigger"]) then
 		fearstatus = true
-		self:TriggerEvent("BigWigs_StartBar", self, L"fearbar", 20, "Interface\\Icons\\Spell_Shadow_Possession", "Yellow", "Orange", "Red")
-		self:TriggerEvent("BigWigs_Message", L"fearwarn1", "Red")
-		self:ScheduleEvent("BigWigs_Message", 15, L"fearwarn2", "Orange")
+		self:TriggerEvent("BigWigs_StartBar", self, L["fearbar"], 20, "Interface\\Icons\\Spell_Shadow_Possession", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["fearwarn1"], "Red")
+		self:ScheduleEvent("BigWigs_Message", 15, L["fearwarn2"], "Orange")
 	end
 end
 
 function BigWigsBugFamily:BigWigs_Message(txt)
-	if fearstatus and txt == L"fearwarn2" then fearstatus = nil end
+	if fearstatus and txt == L["fearwarn2"] then fearstatus = nil end
 end
 
 function BigWigsBugFamily:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
@@ -137,7 +137,7 @@ function BigWigsBugFamily:PLAYER_REGEN_ENABLED()
 end
 
 function BigWigsBugFamily:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if self.db.profile.heal and msg == L"healtrigger" then
-		self:TriggerEvent("BigWigs_Message", L"healwarn", "Orange")
+	if self.db.profile.heal and msg == L["healtrigger"] then
+		self:TriggerEvent("BigWigs_Message", L["healwarn"], "Orange")
 	end
 end

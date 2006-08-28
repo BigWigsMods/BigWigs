@@ -122,32 +122,32 @@ end
 ------------------------------
 if (GetLocale() == "koKR") then
 	function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(arg1)
-		local _,_, player = string.find(arg1, L"mcplayer")
+		local _,_, player = string.find(arg1, L["mcplayer"])
 		if player then
-			if player == L"mcyou" then
+			if player == L["mcyou"] then
 				player = UnitName("player")
 			end
-			if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", player .. L"mcplayerwarn", "Red") end
+			if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", player .. L["mcplayerwarn"], "Red") end
 		end
 	end
 else
 	function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(arg1)
-		local _,_, player, type = string.find(arg1, L"mcplayer")
+		local _,_, player, type = string.find(arg1, L["mcplayer"])
 		if player and type then
-			if player == L"mcyou" and type == L"mcare" then
+			if player == L["mcyou"] and type == L["mcare"] then
 				player = UnitName("player")
 			end
-			if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", player .. L"mcplayerwarn", "Red") end
+			if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", player .. L["mcplayerwarn"], "Red") end
 		end
 	end
 end
 
 function BigWigsSkeram:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(arg1)
-	if (arg1 == L"aetrigger") then
-		if self.db.profile.ae then self:TriggerEvent("BigWigs_Message", L"aewarn", "Orange") end
-	elseif (arg1 == L"mctrigger") then
-		if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", L"mcwarn", "Orange") end
-	elseif (arg1 == L"splittrigger") then
-		if self.db.profile.split then self:TriggerEvent("BigWigs_Message", L"splitwarn", "Red") end
+	if (arg1 == L["aetrigger"]) then
+		if self.db.profile.ae then self:TriggerEvent("BigWigs_Message", L["aewarn"], "Orange") end
+	elseif (arg1 == L["mctrigger"]) then
+		if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", L["mcwarn"], "Orange") end
+	elseif (arg1 == L["splittrigger"]) then
+		if self.db.profile.split then self:TriggerEvent("BigWigs_Message", L["splitwarn"], "Red") end
 	end
 end
