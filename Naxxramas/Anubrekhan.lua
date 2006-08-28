@@ -93,6 +93,17 @@ L:RegisterTranslations("zhCN", function() return {
 	castwarn = "虫群风暴来了！",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	starttrigger1 = "Rien qu'une petite bouch\195\169e",
+	starttrigger2 = "Oui, courez ! Faites circulez le sang !",
+	starttrigger3 = "Nulle part pour s'enfuir.",
+	
+	gaintrigger = "Anub'Rekhan gagne Nu\195\169e de sauterelles.",
+	
+	casttrigger = "Anub'Rekhan commence \195\160 lancer Nu\195\169e de sauterelles.",
+
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

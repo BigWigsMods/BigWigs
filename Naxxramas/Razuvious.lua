@@ -103,6 +103,19 @@ L:RegisterTranslations("zhCN", function() return {
 	shieldwallbar       = "盾墙",	
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+
+	starttrigger1 	= "Les cours sont termin\195\169s ! Montrez%-moi ce que vous avez appris !",
+	starttrigger2 	= "Frappe%-le \195\160 la jambe",
+	starttrigger3 	= "Pas de quartier !",
+	starttrigger4 	= "Faites ce que vous ai appris !",
+
+	shouttrigger 	= "Cri perturbant",
+
+	shieldwalltrigger   = "Deathknight Understudy gagne Mur protecteur.",
+
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

@@ -132,6 +132,16 @@ L:RegisterTranslations("zhCN", function() return {
 	are = "到",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	cocoontrigger = "(.*) (.*) les effets de Entoilage.",
+	webspraytrigger = "les effets de Jet de rets.",
+
+	enragetrigger = "%s devient folle furieuse !",
+
+	you = "Vous",
+	are = "subissez",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

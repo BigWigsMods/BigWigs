@@ -117,6 +117,18 @@ L:RegisterTranslations("zhCN", function() return {
 	silencebar = "沉默",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	starttrigger1 = "genoux, vermisseau !",
+	starttrigger2 = "Tuez%-les au nom du ma\195\174tre !",
+	starttrigger3 = "Vous ne pouvez pas m'\195\169chapper !",
+	starttrigger4 = "Fuyez tant que vous le pouvez !",
+
+	silencetrigger = "Grande veuve Faerlina subit les effets de Etreinte de la veuve.", -- EDITED it affects her too.
+	enragetrigger = "Grande veuve Faerlina gagne Enrager.",
+	enragefade = "Enrager sur Grande veuve Faerlina vient de se dissiper.",
+	
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

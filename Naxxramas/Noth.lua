@@ -163,6 +163,20 @@ L:RegisterTranslations("zhCN", function() return {
 	cursebar = "下一次诅咒",		
 } end )
 
+L:RegisterTranslations("enUS", function() return {
+	starttrigger1 = "Mourez, intrus !",
+	starttrigger2 = "Gloire au ma\195\174tre !",
+	starttrigger3 = "Vos vies ne valent plus rien !",
+	
+	addtrigger = "Rise, my soldiers! Rise and fight once more!", -- TO TRANSLATE need /chatlog
+
+	blinktrigger = "Noth le Porte%-peste gagne Transfert.",
+	
+	cursetrigger = "les effets de Mal\195\169diction de Porte%-peste.",
+
+
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

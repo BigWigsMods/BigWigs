@@ -83,6 +83,16 @@ L:RegisterTranslations("zhCN", function() return {
 	backbar = "出现！",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+
+	-- [[ Triggers ]]--
+	starttrigger = "Vous \195\170tes \195\160 moi, maintenant.",
+	starttrigger2 = "Tu es%.%.%. le suivant.",
+	starttrigger3 = "Je vous vois%.%.%.",
+	teleporttrigger = "The end is upon you.",-- to translate need french /chatlog
+} end )
+
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
