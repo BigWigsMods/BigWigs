@@ -122,7 +122,7 @@ end
 function BigWigsVersionQuery:OnTooltipUpdate()
 	local zoneCat = tablet:AddCategory(
 		"columns", 1,
-		"text", L["Current zone"],
+		"text", L["Zone"],
 		"child_justify1", "LEFT"
 	)
 	zoneCat:AddLine("text", self.currentZone)
