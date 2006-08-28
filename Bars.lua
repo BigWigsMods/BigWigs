@@ -122,32 +122,32 @@ BigWigsBars.defaultDB = {
 	growup = false,
 	scale = 1.0,
 }
-BigWigsBars.consoleCmd = L"bars"
+BigWigsBars.consoleCmd = L["bars"]
 BigWigsBars.consoleOptions = {
 	type = "group",
-	name = L"Bars",
-	desc = L"Options for the timer bars.",
+	name = L["Bars"],
+	desc = L["Options for the timer bars."],
 	args   = {
-		[L"anchor"] = {
+		[L["anchor"]] = {
 			type = "execute",
-			name = L"Show anchor",
-			desc = L"Show the bar anchor frame.",
+			name = L["Show anchor"],
+			desc = L["Show the bar anchor frame."],
 			func = function() BigWigsBars:BigWigs_ShowAnchors() end,
 		},
-		[L"up"] = {
+		[L["up"]] = {
 			type = "toggle",
-			name = L"Group upwards",
-			desc = L"Toggle bars grow upwards/downwards from anchor.",
+			name = L["Group upwards"],
+			desc = L["Toggle bars grow upwards/downwards from anchor."],
 			get = function() return BigWigsBars.db.profile.growup end,
 			set = function(v) BigWigsBars.db.profile.growup = v end,
-			message = L"Bars now grow %2$s",
-			current = L"Bars now grow %2$s",
-			map = {[true] = L"Up", [false] = L"Down"},
+			message = L["Bars now grow %2$s"],
+			current = L["Bars now grow %2$s"],
+			map = {[true] = L["Up"], [false] = L["Down"]},
 		},
-		[L"scale"] = {
+		[L["scale"]] = {
 			type = "range",
-			name = L"Bar scale",
-			desc = L"Set the bar scale.",
+			name = L["Bar scale"],
+			desc = L["Set the bar scale."],
 			min = 0.2,
 			max = 2.0,
 			step = 0.1,
@@ -225,14 +225,14 @@ function BigWigsBars:SetScale(msg, supressreport)
 	local scale = tonumber(msg)
 	if scale and scale >= minscale and scale <= maxscale then
 		self.db.profile.scale = scale
-		if not supressreport then self.core:Print(L"Scale is set to %s", scale) end
+		if not supressreport then self.core:Print(L["Scale is set to %s"], scale) end
 	end
 end
 
 function BigWigsBars:ToggleUp(supressreport)
 	self.db.profile.growup = not self.db.profile.growup
 	local t = self.db.profile.growup
-	if not supressreport then self.core:Print(L"Bars now grow %s", (t and L"Up" or L"Down")) end
+	if not supressreport then self.core:Print(L["Bars now grow %s"], (t and L["Up"] or L["Down"])) end
 end
 
 

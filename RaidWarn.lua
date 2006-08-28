@@ -64,28 +64,28 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsRaidWarn = BigWigs:NewModule(L"RaidWarning")
+BigWigsRaidWarn = BigWigs:NewModule(L["RaidWarning"])
 BigWigsRaidWarn.defaultDB = {
 	whisper = false,
 	broadcast = false,
 }
-BigWigsRaidWarn.consoleCmd = L"raidwarn"
+BigWigsRaidWarn.consoleCmd = L["raidwarn"]
 BigWigsRaidWarn.consoleOptions = {
 	type = "group",
-	name = L"RaidWarning",
-	desc = L"Options for RaidWarning.",
+	name = L["RaidWarning"],
+	desc = L["Options for RaidWarning."],
 	args   = {
-		[L"broadcast"] = {
+		[L["broadcast"]] = {
 			type = "toggle",
-			name = L"Broadcast",
-			desc = L"Toggle broadcasting over Raidwarning.",
+			name = L["Broadcast"],
+			desc = L["Toggle broadcasting over Raidwarning."],
 			get = function() return BigWigsRaidWarn.db.profile.broadcast end,
 			set = function(v) BigWigsRaidWarn.db.profile.broadcast = v end,		
 		},
-		[L"whisper"] = {
+		[L["whisper"]] = {
 			type = "toggle",
-			name = L"Whisper",
-			desc = L"Toggle whispering warnings to players.",
+			name = L["Whisper"],
+			desc = L["Toggle whispering warnings to players."],
 			get = function() return BigWigsRaidWarn.db.profile.whisper end,
 			set = function(v) BigWigsRaidWarn.db.profile.whisper = v end,		
 		},

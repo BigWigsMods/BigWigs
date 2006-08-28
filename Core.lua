@@ -146,16 +146,16 @@ BigWigs = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDebug-2.0", "AceMod
 BigWigs:SetModuleMixins("AceDebug-2.0", "AceEvent-2.0", "CandyBar-2.0")
 BigWigs:RegisterDB("BigWigsDB", "BigWigsDBPerChar")
 BigWigs.cmdtable = {type = "group", handler = BigWigs, args = {
-	[L"boss"] = {
+	[L["boss"]] = {
 		type = "group",
-		name = L"Bosses",
-		desc = L"Options for boss modules.",
+		name = L["Bosses"],
+		desc = L["Options for boss modules."],
 		args = {},
 	},
-	[L"plugin"] = {
+	[L["plugin"]] = {
 		type = "group",
-		name = L"Plugins",
-		desc = L"Options for plugins.",
+		name = L["Plugins"],
+		desc = L["Options for plugins."],
 		args = {},
 	},
 }}
@@ -179,7 +179,7 @@ end
 
 function BigWigs.modulePrototype:GenericBossDeath(msg)
 	if msg == string.format(UNITDIESOTHER, self:ToString()) then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(L"%s has been defeated", self:ToString()), "Green", nil, "Victory") end
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(L["%s has been defeated"], self:ToString()), "Green", nil, "Victory") end
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		self.core:ToggleModuleActive(self, false)
 	end
@@ -254,26 +254,26 @@ function BigWigs:RegisterModule(name,module)
 				desc = string.format(L"Options for %s (r%s) in %s.", name, revision, zonename),
 --~~ 					disabled = function() return not m.core:IsModuleActive(m) end,
 				args = {
-					[L"toggle"] = {
+					[L["toggle"]] = {
 						type = "toggle",
-						name = L"Active",
+						name = L["Active"],
 						order = 1,
-						desc = L"Activate or deactivate this module.",
+						desc = L["Activate or deactivate this module."],
 						get = function() return m.core:IsModuleActive(m) end,
 						set = function() m.core:ToggleModuleActive(m) end,
 					},
-					[L"reboot"] = {
+					[L["reboot"]] = {
 						type = "execute",
-						name = L"Reboot",
+						name = L["Reboot"],
 						order = 2,
-						desc = L"Reboot this module.",
+						desc = L["Reboot this module."],
 						func = function() m.core:TriggerEvent("BigWigs_RebootModule", m) end,
 						hidden = function() return not m.core:IsModuleActive(m) end,
 					},
-					[L"debug"] = {
+					[L["debug"]] = {
 						type = "toggle",
-						name = L"Debugging",
-						desc = L"Show debug messages.",
+						name = L["Debugging"],
+						desc = L["Show debug messages."],
 						order = 3,
 						get = function() return m:IsDebugging() end,
 						set = function(v) m:SetDebugging(v) end,
@@ -311,19 +311,19 @@ function BigWigs:RegisterModule(name,module)
 		end
 
 		if cons or module.consoleOptions then
-			if not self.cmdtable.args[L"boss"].args[zone] then
-				self.cmdtable.args[L"boss"].args[zone] = {
+			if not self.cmdtable.args[L["boss"]].args[zone] then
+				self.cmdtable.args[L["boss"]].args[zone] = {
 					type = "group",
 					name = zonename,
-					desc = string.format(L"Options for bosses in %s.", zonename),
+					desc = string.format(L["Options for bosses in %s."], zonename),
 					args = {},
 				}
 			end
 
-			self.cmdtable.args[L"boss"].args[zone].args[L2"cmd"] = cons or module.consoleOptions
+			self.cmdtable.args[L["boss"]].args[zone].args[L2["cmd"]] = cons or module.consoleOptions
 		end
 	elseif module.consoleOptions then
-		self.cmdtable.args[L"plugin"].args[module.consoleCmd or name] = cons or module.consoleOptions
+		self.cmdtable.args[L["plugin"]].args[module.consoleCmd or name] = cons or module.consoleOptions
 	end
 
 	-- Set up target monitoring, in case the monitor module has already initialized
@@ -335,7 +335,7 @@ function BigWigs:EnableModule(module, nosync)
 	local m = self:GetModule(module)
 	if m and m:IsBossModule() and not self:IsModuleActive(module) then
 		self:ToggleModuleActive(module, true)
-		self:TriggerEvent("BigWigs_Message", string.format(L"%s mod enabled", m:ToString() or "??"), "Cyan", true)
+		self:TriggerEvent("BigWigs_Message", string.format(L["%s mod enabled"], m:ToString() or "??"), "Cyan", true)
 		if not nosync then self:TriggerEvent("BigWigs_SendSync", (m.external and "EnableExternal " or "EnableModule ") .. (m.synctoken or BB:GetReverseTranslation(module))) end
 	end
 end

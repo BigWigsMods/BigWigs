@@ -58,21 +58,21 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsSound = BigWigs:NewModule(L"Sounds")
-BigWigsSound.consoleCmd = L"sounds"
+BigWigsSound = BigWigs:NewModule(L["Sounds"])
+BigWigsSound.consoleCmd = L["sounds"]
 BigWigsSound.consoleOptions = {
 	type = "group",
-	name = L"Sounds",
-	desc = L"Options for sounds.",
+	name = L["Sounds"],
+	desc = L["Options for sounds."],
 	args = {
-		[L"toggle"] = {
+		[L["toggle"]] = {
 			type = "toggle",
-			name = L"Sounds",
-			desc = L"Toggle sounds on or off.",
+			name = L["Sounds"],
+			desc = L["Toggle sounds on or off."],
 			get = function() return BigWigsSound.db.profile.sound end,
 			set = function(v)
 				BigWigsSound.db.profile.sound = v
-				BigWigs:ToggleModuleActive(L"Sounds", v)
+				BigWigs:ToggleModuleActive(L["Sounds"], v)
 			end,
 		},
 	}
@@ -94,5 +94,3 @@ function BigWigsSound:BigWigs_Message(text, color, noraidsay, sound)
 	if sounds[sound] then PlaySoundFile(sounds[sound])
 	else PlaySound("RaidWarning") end
 end
-
-

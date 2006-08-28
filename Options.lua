@@ -59,14 +59,14 @@ L:RegisterTranslations("deDE", function() return {
 ----------------------------------
 
 local deuce = BigWigs:NewModule("Options Menu")
-deuce.consoleCmd = not FuBar and L"minimap"
+deuce.consoleCmd = not FuBar and L["minimap"]
 deuce.consoleOptions = not FuBar and {
 	type = "toggle",
-	name = L"Minimap",
-	desc = L"Toggle the minimap button.",
+	name = L["Minimap"],
+	desc = L["Toggle the minimap button."],
 	get = function() return BigWigsOptions.minimapFrame and BigWigsOptions.minimapFrame:IsVisible() or false end,
 	set = function(v) if v then BigWigsOptions:Show() else BigWigsOptions:Hide() end end,
-	map = {[false] = L"Hidden", [true] = L"Shown"},
+	map = {[false] = L["Hidden"], [true] = L["Shown"]},
 	hidden = function() return FuBar and true end,
 }
 
@@ -100,7 +100,7 @@ end
 -----------------------------
 
 function BigWigsOptions:OnTooltipUpdate()
-	local cat = Tablet:AddCategory("text", L"Active boss modules")
+	local cat = Tablet:AddCategory("text", L["Active boss modules"])
 
 	for name, module in deuce.core:IterateModules() do
 		if module:IsBossModule() and deuce.core:IsModuleActive(module) then
@@ -108,7 +108,7 @@ function BigWigsOptions:OnTooltipUpdate()
 		end
 	end
 
-	Tablet:SetHint(L"tablethint")
+	Tablet:SetHint(L["tablethint"])
 end
 
 function BigWigsOptions:OnClick()
@@ -118,13 +118,13 @@ function BigWigsOptions:OnClick()
 				deuce.core:ToggleModuleActive(module, false)
 			end
 		end
-		self:Print(L"All running modules have been disabled.")
+		self:Print(L["All running modules have been disabled."])
 	else	
 		for name, module in deuce.core:IterateModules() do
 			if module:IsBossModule() and deuce.core:IsModuleActive(module) then
 				deuce.core:BigWigs_RebootModule(module)
 			end
 		end
-		self:Print(L"All running modules have been reset.")
+		self:Print(L["All running modules have been reset."])
 	end
 end

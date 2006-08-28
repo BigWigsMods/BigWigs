@@ -90,17 +90,17 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsRange = BigWigs:NewModule(L"Range")
-BigWigsRange.consoleCmd = L"range"
+BigWigsRange = BigWigs:NewModule(L["Range"])
+BigWigsRange.consoleCmd = L["range"]
 BigWigsRange.consoleOptions = {
 	type = "group",
-	name = L"Range",
-	desc = L"Options for the combat log's range.",
+	name = L["Range"],
+	desc = L["Options for the combat log's range."],
 	args   = {
---~~ 		[L"party"] = {
+--~~ 		[L["party"]] = {
 --~~ 			type = "range",
---~~ 			name = L"Party",
---~~ 			desc = L"Party combat log range.",
+--~~ 			name = L["Party"],
+--~~ 			desc = L["Party combat log range."],
 --~~ 			order = 1,
 --~~ 			min = 5,
 --~~ 			max = 200,
@@ -111,10 +111,10 @@ BigWigsRange.consoleOptions = {
 --~~ 				SetCVar("CombatLogRangePartyPet", v)
 --~~ 			end,
 --~~ 		},
---~~ 		[L"friend"] = {
+--~~ 		[L["friend"]] = {
 --~~ 			type = "range",
---~~ 			name = L"Friendlies",
---~~ 			desc = L"Friendly players combat log range.",
+--~~ 			name = L["Friendlies"],
+--~~ 			desc = L["Friendly players combat log range."],
 --~~ 			order = 2,
 --~~ 			min = 5,
 --~~ 			max = 200,
@@ -125,10 +125,10 @@ BigWigsRange.consoleOptions = {
 --~~ 				SetCVar("CombatLogRangeFriendlyPlayersPets", v)
 --~~ 			end,
 --~~ 		},
-		[L"mob"] = {
+		[L["mob"]] = {
 			type = "range",
-			name = L"Creatures",
-			desc = L"Creature combat log range.",
+			name = L["Creatures"],
+			desc = L["Creature combat log range."],
 			order = 3,
 			min = 5,
 			max = 200,
@@ -136,10 +136,10 @@ BigWigsRange.consoleOptions = {
 			get = function() return GetCVar("CombatLogRangeCreature") end,
 			set = function(v) SetCVar("CombatLogRangeCreature", v) end,
 		},
-		[L"death"] = {
+		[L["death"[] = {
 			type = "range",
-			name = L"Deaths",
-			desc = L"Death message range.",
+			name = L["Deaths"],
+			desc = L["Death message range."],
 			order = 4,
 			min = 5,
 			max = 200,
@@ -147,11 +147,11 @@ BigWigsRange.consoleOptions = {
 			get = function() return GetCVar("CombatDeathLogRange") end,
 			set = function(v) SetCVar("CombatDeathLogRange", v) end,
 		},
-		[L"reset"] = {
+		[L["reset"]] = {
 			type = "execute",
-			name = L"Reset to defaults",
+			name = L["Reset to defaults"],
 			order = -1,
-			desc = L"Resets all ranges to defaults.",
+			desc = L["Resets all ranges to defaults."],
 			func = function()
 --~~ 				SetCVar("CombatLogRangeParty", 50)
 --~~ 				SetCVar("CombatLogRangePartyPet", 50)

@@ -50,16 +50,16 @@ L:RegisterTranslations("deDE", function() return {
 
 BigWigsVersionQuery = BigWigs:NewModule("Version Query")
 
-BigWigsVersionQuery.consoleCmd = L"versionquery"
+BigWigsVersionQuery.consoleCmd = L["versionquery"]
 BigWigsVersionQuery.consoleOptions = {
 	type = "group",
-	name = L"VersionQuery",
-	desc = L"Options for Version Query.",
+	name = L["VersionQuery"],
+	desc = L["Options for Version Query."],
 	args   = {
-		[L"query"] = {
+		[L["query"]] = {
 			type = "execute",
-			name = L"Query",
-			desc = L"Query the raid for BigWig versions.",
+			name = L["Query"],
+			desc = L["Query the raid for BigWig versions."],
 			func = function() BigWigsVersionQuery:QueryVersion() end,
 		},
 	}
@@ -135,10 +135,10 @@ end
 
 function BigWigsVersionQuery:QueryVersion()
 	if QueryRunning then
-		self.core:Print(L"Query already running, please wait 5 seconds before you query again.")
+		self.core:Print(L["Query already running, please wait 5 seconds before you query again."])
 		return
 	end
-	self.core:Print(L"Querying raid for BigWigs versions, please wait...")
+	self.core:Print(L["Querying raid for BigWigs versions, please wait..."])
 	QueryRunning = true
 	self:ScheduleEvent(function() QueryRunning = nil end, 5)
 	ResponseTable[UnitName("player")] = ResponseString
