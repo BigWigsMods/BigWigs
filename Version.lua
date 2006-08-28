@@ -97,7 +97,7 @@ end
 function BigWigsVersionQuery:UpdateVersions()
 	if not tablet:IsRegistered("BigWigs_VersionQuery") then
 		tablet:Register("BigWigs_VersionQuery",
-			"children", function() tablet:SetTitle(L["BigWigs Version Query."])
+			"children", function() tablet:SetTitle(L["BigWigs Version Query"])
 				self:OnTooltipUpdate() end,
 			"clickable", true,
 			"showEverythingWhenDetached", true,
