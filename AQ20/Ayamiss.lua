@@ -81,24 +81,24 @@ end
 
 if (GetLocale() == "koKR") then
 	function BigWigsAyamiss:CheckSacrifice( msg )
-		local _, _, player = string.find(msg, L"sacrificetrigger")
+		local _, _, player = string.find(msg, L["sacrificetrigger"])
 		if (player) then
-			if (player == L"you") then
+			if (player == L["you"]) then
 				player = UnitName("player")
 			else
-				_, _, player = string.find(Player, L"whopattern") 
+				_, _, player = string.find(Player, L["whopattern"]) 
 			end
-			if self.db.profile.sacrifice then self:TriggerEvent("BigWigs_Message", player .. L"sacrificewarn", "Red") end
+			if self.db.profile.sacrifice then self:TriggerEvent("BigWigs_Message", player .. L["sacrificewarn"], "Red") end
 		end
 	end
 else
 	function BigWigsAyamiss:CheckSacrifice( msg )
-		local _, _, player, type = string.find(msg, L"sacrificetrigger")
+		local _, _, player, type = string.find(msg, L["sacrificetrigger"])
 		if (player and type) then
-			if (player == L"you" and type == L"are") then
+			if (player == L["you"] and type == L["are"]) then
 				player = UnitName("player")
 			end
-			if self.db.profile.sacrifice then self:TriggerEvent("BigWigs_Message", player .. L"sacrificewarn", "Red") end
+			if self.db.profile.sacrifice then self:TriggerEvent("BigWigs_Message", player .. L["sacrificewarn"], "Red") end
 		end
 	end
 end

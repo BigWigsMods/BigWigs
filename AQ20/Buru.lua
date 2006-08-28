@@ -101,15 +101,15 @@ function BigWigsBuru:OnEnable()
 end
 
 function BigWigsBuru:CHAT_MSG_MONSTER_EMOTE( msg )
-	local _, _, player = string.find(msg, L"watchtrigger")
+	local _, _, player = string.find(msg, L["watchtrigger"])
 	if player then
-		if player == L"you" then
+		if player == L["you"] then
 			player = UnitName("player")
-			if self.db.profile.you then self:TriggerEvent("BigWigs_Message", L"watchwarnyou", "Red", true) end
+			if self.db.profile.you then self:TriggerEvent("BigWigs_Message", L["watchwarnyou"], "Red", true) end
 		else
 			if self.db.profile.other then 
-				self:TriggerEvent("BigWigs_Message", player .. L"watchwarn", "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", player, L"watchwarnyou")
+				self:TriggerEvent("BigWigs_Message", player .. L["watchwarn"], "Yellow")
+				self:TriggerEvent("BigWigs_SendTell", player, L["watchwarnyou"])
 			end
 		end
 

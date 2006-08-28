@@ -126,35 +126,35 @@ end
 
 function BigWigsMoam:AddsStart()
 	if self.db.profile.adds then
-		self:ScheduleEvent("BigWigs_Message", 30, format(L"addsincoming", 60), "Green")
-		self:ScheduleEvent("BigWigs_Message", 60, format(L"addsincoming", 30), "Yellow")
-		self:ScheduleEvent("BigWigs_Message", 75, format(L"addsincoming", 15), "Orange")
-		self:ScheduleEvent("BigWigs_Message", 85, format(L"addsincoming", 5), "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L"addsbar", 90, "Interface\\Icons\\Spell_Shadow_CurseOfTounges", "Green", "Yellow", "Orange", "Red") 
+		self:ScheduleEvent("BigWigs_Message", 30, format(L["addsincoming"], 60), "Green")
+		self:ScheduleEvent("BigWigs_Message", 60, format(L["addsincoming"], 30), "Yellow")
+		self:ScheduleEvent("BigWigs_Message", 75, format(L["addsincoming"], 15), "Orange")
+		self:ScheduleEvent("BigWigs_Message", 85, format(L["addsincoming"], 5), "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["addsbar"], 90, "Interface\\Icons\\Spell_Shadow_CurseOfTounges", "Green", "Yellow", "Orange", "Red") 
 	end
 end
 
 function BigWigsMoam:CHAT_MSG_MONSTER_EMOTE( msg )
-	if msg == L"starttrigger" then
-		if self.db.profile.adds then self:TriggerEvent("BigWigs_Message", L"startwarn", "Red") end
+	if msg == L["starttrigger"] then
+		if self.db.profile.adds then self:TriggerEvent("BigWigs_Message", L["startwarn"], "Red") end
 		self:AddsStart()
-	elseif msg == L"addstrigger" then
+	elseif msg == L["addstrigger"] then
 		if self.db.profile.adds then
-			self:TriggerEvent("BigWigs_Message", L"addswarn", "Red")
+			self:TriggerEvent("BigWigs_Message", L["addswarn"], "Red")
 		end
 		if self.db.profile.paralyze then
-			self:ScheduleEvent("BigWigs_Message", 30, format(L"returnincoming", 60), "Green")
-			self:ScheduleEvent("BigWigs_Message", 60, format(L"returnincoming", 30), "Yellow")
-			self:ScheduleEvent("BigWigs_Message", 75, format(L"returnincoming", 15), "Orange")
-			self:ScheduleEvent("BigWigs_Message", 85, format(L"returnincoming", 5), "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L"paralyzebar", 90, "Interface\\Icons\\Spell_Shadow_CurseOfTounges", "Green", "Yellow", "Orange", "Red")
+			self:ScheduleEvent("BigWigs_Message", 30, format(L["returnincoming"], 60), "Green")
+			self:ScheduleEvent("BigWigs_Message", 60, format(L["returnincoming"], 30), "Yellow")
+			self:ScheduleEvent("BigWigs_Message", 75, format(L["returnincoming"], 15), "Orange")
+			self:ScheduleEvent("BigWigs_Message", 85, format(L["returnincoming"], 5), "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L["paralyzebar"], 90, "Interface\\Icons\\Spell_Shadow_CurseOfTounges", "Green", "Yellow", "Orange", "Red")
 		end
 	end
 end
 
 function BigWigsMoam:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
-	if string.find( msg, L"returntrigger") then
-		if self.db.profile.paralyze then self:TriggerEvent("BigWigs_Message", L"returnwarn", "Red") end
+	if string.find( msg, L["returntrigger"]) then
+		if self.db.profile.paralyze then self:TriggerEvent("BigWigs_Message", L["returnwarn"], "Red") end
 		self:AddsStart()
 	end
 end
