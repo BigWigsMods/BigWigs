@@ -55,7 +55,7 @@ L:RegisterTranslations("enUS", function() return {
 	wrathwarn = "Holy Wrath!",
 	wrathbar = "Holy Wrath",
 
-	startwarn = "The Four Horsemen Engaged! Mark in 30 sec",
+	startwarn = "The Four Horsemen Engaged! Mark in ~17 sec",
 
 	shieldwallbar = "%s - Shield Wall",
 	shieldwalltrigger = " gains Shield Wall.",
@@ -129,7 +129,7 @@ function BigWigsHorsemen:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "MarkEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "SkillEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "MarkEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "MarkEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "MarkEvent")
@@ -183,7 +183,11 @@ end
 function BigWigsHorsemen:MarkEvent( msg )
 	if string.find(msg, L"marktrigger") then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenMark")
-	elseif string.find(msg, L"meteortrigger") then
+	end
+end
+
+function BigWigsHorsemen:SkillEvent( msg )
+	if string.find(msg, L"meteortrigger") then
 		--if (not self.lastmeteor) or self.lastmeteor + 8 > GetTime() then
 			self:TriggerEvent("BigWigs_SendSync", "HorsemenMeteor")
 		--end
@@ -193,6 +197,16 @@ function BigWigsHorsemen:MarkEvent( msg )
 		--end
 	elseif msg == L"voidtrigger" then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenVoid" )
+		local target = nil
+		for i = 1, GetNumRaidMembers(), 1 do
+			if UnitName("Raid"..i.."target") == blaumeux then
+				target = UnitName("Raid"..i.."targettarget")
+				break
+			end
+		end
+		if target then
+			print("void on "..target)
+		end
 	end
 end
 
@@ -201,8 +215,8 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 		self.started = true
 		if self.db.profile.mark then
 			self:TriggerEvent("BigWigs_Message", L"startwarn", "Yellow")
-			self:TriggerEvent("BigWigs_StartBar", self, L"markbar", 20, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Yellow", "Orange", "Red")
-			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 15, string.format( L"markwarn2", self.marks ), "Orange")
+			self:TriggerEvent("BigWigs_StartBar", self, L"markbar", 17, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Yellow", "Orange", "Red")
+			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 12, string.format( L"markwarn2", self.marks ), "Orange")
 		end
 	elseif sync == "HorsemenMark" then
 		if self.db.profile.mark then
