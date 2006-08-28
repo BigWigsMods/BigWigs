@@ -1,13 +1,8 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsVersionQuery")
-local Tablet = AceLibrary("Tablet-2.0")
-local Dewdrop = AceLibrary("Dewdrop-2.0")
-
-local QueryRunning
-local ResponseTable
-local ZoneRevisions
-local ResponseString
+local tablet = AceLibrary("Tablet-2.0")
+local dewdrop = AceLibrary("Dewdrop-2.0")
 
 ---------------------------------
 --      Localization           --
@@ -22,6 +17,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Query the raid for BigWig versions."] = true,
 	["Query already running, please wait 5 seconds before you query again."] = true,
 	["Querying raid for BigWigs versions, please wait..."] = true,
+	["BigWigs Version Query"] = true,
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -70,25 +66,26 @@ BigWigsVersionQuery.consoleOptions = {
 ------------------------------
 
 function BigWigsVersionQuery:OnEnable()
-	QueryRunning = nil
-	ResponseTable = {}
-	ZoneRevisions = {}
-	ResponseString = ""
+	self.queryRunning = nil
+	self.responseTable = {}
+	self.zoneRevisions = {}
+	self.responseString = ""
 	
 	local BWL = AceLibrary("AceLocale-2.0"):new("BigWigs")
 	for name,module in self.core:IterateModules() do
 		if module:IsBossModule() and module.zonename and type(module.zonename) == "string" then
 			local zone = BWL:HasTranslation(module.zonename) and BWL:GetTranslation(module.zonename) or module.zonename
 			local revision = module.revision
-			if not ZoneRevisions[zone] or revision > ZoneRevisions[zone] then
-				ZoneRevisions[zone] = revision
+			if not self.zoneRevisions[zone] or revision > self.zoneRevisions[zone] then
+				self.zoneRevisions[zone] = revision
 			end
 		end
 	end
-	for key, value in ZoneRevisions do
-		ResponseString = ResponseString.." "..key..":"..value
-	end
 	BWL = nil
+
+	for key, value in self.zoneRevisions do
+		self.responseString = self.responseString.." "..key..":"..value
+	end
 
 	self:RegisterEvent("BigWigs_RecvSync")
 end
@@ -98,60 +95,65 @@ end
 ------------------------------
 
 function BigWigsVersionQuery:UpdateVersions()
-	if not Tablet:IsRegistered("BigWigs_VersionQuery") then
-		Tablet:Register("BigWigs_VersionQuery",
-			"children", function() Tablet:SetTitle("BigWigs Version Query.")
+	if not tablet:IsRegistered("BigWigs_VersionQuery") then
+		tablet:Register("BigWigs_VersionQuery",
+			"children", function() tablet:SetTitle(L["BigWigs Version Query."])
 				self:OnTooltipUpdate() end,
 			"clickable", true,
 			"showEverythingWhenDetached", true,
 			"cantAttach", true,
 			"menu", function()
-					Dewdrop:AddLine(
+					dewdrop:AddLine(
 						'text', "Query",
 						'func', function() self:QueryVersion() end)
-					Dewdrop:AddLine(
+					dewdrop:AddLine(
 						'text', "Close",
-						'func', function() Tablet:Attach("BigWigs_VersionQuery"); Dewdrop:Close() end)
+						'func', function() tablet:Attach("BigWigs_VersionQuery"); dewdrop:Close() end)
 				end
 		)
 	end
-	if Tablet:IsAttached("BigWigs_VersionQuery") then
-		Tablet:Detach("BigWigs_VersionQuery")
+	if tablet:IsAttached("BigWigs_VersionQuery") then
+		tablet:Detach("BigWigs_VersionQuery")
 	else
-		Tablet:Refresh("BigWigs_VersionQuery")
+		tablet:Refresh("BigWigs_VersionQuery")
 	end
 end
 
 function BigWigsVersionQuery:OnTooltipUpdate()
-	local Cat = Tablet:AddCategory("columns", 2,
+	local cat = tablet:AddCategory(
+		"columns", 2,
 		"text", "Player",
 		"text2", "Version",
 		"child_justify1", "LEFT",
-		"child_justify2", "RIGHT")
-	for name, version in ResponseTable do
-		Cat:AddLine("text", name, "text2", version)
+		"child_justify2", "RIGHT"
+	)
+	for name, version in self.responseTable do
+		cat:AddLine("text", name, "text2", version)
 	end
 end
 
 function BigWigsVersionQuery:QueryVersion()
-	if QueryRunning then
+	if self.queryRunning then
 		self.core:Print(L["Query already running, please wait 5 seconds before you query again."])
 		return
 	end
 	self.core:Print(L["Querying raid for BigWigs versions, please wait..."])
-	QueryRunning = true
-	self:ScheduleEvent(function() QueryRunning = nil end, 5)
-	ResponseTable[UnitName("player")] = ResponseString
+
+	self.queryRunning = true
+	self:ScheduleEvent(function() BigWigsVersionQuery.queryRunning = nil end, 5)
+
+	self.responseTable = {}
+	self.responseTable[UnitName("player")] = self.responseString
 	self:UpdateVersions()
 	self:TriggerEvent("BigWigs_SendSync", "BWVQ")
 end
 
 function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "BWVQ" and nick ~= UnitName("player") then
-		self:TriggerEvent("BigWigs_SendSync", "BWVR "..ResponseString)
+		self:TriggerEvent("BigWigs_SendSync", "BWVR "..self.responseString)
 	elseif sync == "BWVR" then
-		if QueryRunning and nick and rest then
-			ResponseTable[nick] = rest
+		if self.queryRunning and nick and rest then
+			self.responseTable[nick] = rest
 			self:UpdateVersions()
 		end
 	end
