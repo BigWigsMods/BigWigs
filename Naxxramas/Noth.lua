@@ -163,7 +163,7 @@ L:RegisterTranslations("zhCN", function() return {
 	cursebar = "下一次诅咒",		
 } end )
 
-L:RegisterTranslations("enUS", function() return {
+L:RegisterTranslations("frFR", function() return {
 	starttrigger1 = "Mourez, intrus !",
 	starttrigger2 = "Gloire au ma\195\174tre !",
 	starttrigger3 = "Vos vies ne valent plus rien !",
