@@ -22,7 +22,7 @@ L:RegisterTranslations("enUS", function() return {
 	["BigWigs Version Query"] = true,
 	["Close window"] = true, -- I know, it's really a Tablet.
 	["Showing version for "] = true,
-	["Green versions are newer than yours, red are older, and white are the same. A version of -1 means that the user does not have any modules for this zone."] = true,
+	["Green versions are newer than yours, red are older, and white are the same."] = true,
 	["Player"] = true,
 	["Version"] = true,
 	["Current zone"] = true,
@@ -34,6 +34,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Runs a version query on the given zone."] = true,
 	["Zone"] = true,
 	["zone"] = true,
+	["N/A"] = true,
 } end )
 
 ---------------------------------
@@ -135,16 +136,20 @@ function BigWigsVersionQuery:OnTooltipUpdate()
 		"child_justify2", "RIGHT"
 	)
 	for name, version in self.responseTable do
-		local color = COLOR_WHITE
-		if self.zoneRevisions[self.currentZone] and version > self.zoneRevisions[self.currentZone] then
-			color = COLOR_GREEN
-		elseif self.zoneRevisions[self.currentZone] and version < self.zoneRevisions[self.currentZone] then
-			color = COLOR_RED
+		if version == -1 then
+			cat:AddLine("text", name, "text2", "|cff"..COLOR_RED..L["N/A"].."|r")
+		else
+			local color = COLOR_WHITE
+			if self.zoneRevisions[self.currentZone] and version > self.zoneRevisions[self.currentZone] then
+				color = COLOR_GREEN
+			elseif self.zoneRevisions[self.currentZone] and version < self.zoneRevisions[self.currentZone] then
+				color = COLOR_RED
+			end
+			cat:AddLine("text", name, "text2", "|cff"..color..version.."|r")
 		end
-		cat:AddLine("text", name, "text2", "|cff"..color..version.."|r")
 	end
 
-	tablet:SetHint(L["Green versions are newer than yours, red are older, and white are the same. A version of -1 means that the user does not have any modules for this zone."])
+	tablet:SetHint(L["Green versions are newer than yours, red are older, and white are the same."])
 end
 
 function BigWigsVersionQuery:QueryVersion(zone)
