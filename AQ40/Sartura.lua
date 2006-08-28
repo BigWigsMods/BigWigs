@@ -143,7 +143,7 @@ end
 function BigWigsSartura:BigWigs_RecvSync(sync)
 	if sync == "SarturaWhirlwind" and self.db.profile.whirlwind then
 		self:TriggerEvent("BigWigs_Message", L["whirlwindonwarn"], "Red")
-		self:ScheduleEvent("BigWigs_Message", 15, L["whirlwindoffwarn"[, "Yellow")
+		self:ScheduleEvent("BigWigs_Message", 15, L["whirlwindoffwarn"], "Yellow")
 		self:TriggerEvent("BigWigs_StartBar", self, L["whirlwindbartext"], 15, "Interface\\Icons\\Ability_Whirlwind", "Yellow", "Orange", "Red")
 	end
 end
