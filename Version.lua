@@ -4,6 +4,10 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigsVersionQuery")
 local tablet = AceLibrary("Tablet-2.0")
 local dewdrop = AceLibrary("Dewdrop-2.0")
 
+local COLOR_GREEN = "00ff00"
+local COLOR_RED = "ff0000"
+local COLOR_WHITE = "ffffff"
+
 ---------------------------------
 --      Localization           --
 ---------------------------------
@@ -18,6 +22,12 @@ L:RegisterTranslations("enUS", function() return {
 	["Query already running, please wait 5 seconds before you query again."] = true,
 	["Querying raid for BigWigs versions, please wait..."] = true,
 	["BigWigs Version Query"] = true,
+	["Close window"] = true, -- I know, it's really a Tablet.
+	["Showing version for "] = true,
+	["Green versions are newer than yours, red are older, and white are the same. A version of -1 means that the user does not have any modules for this zone."] = true,
+	["Player"] = true,
+	["Version"] = true,
+	["Current zone"] = true,
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -44,6 +54,13 @@ L:RegisterTranslations("deDE", function() return {
 --      Addon Declaration      --
 ---------------------------------
 
+--[[
+--
+-- Todo: Make the query command accept text input to check for other zones
+--       than the one you are currently in.
+--
+--]]
+
 BigWigsVersionQuery = BigWigs:NewModule("Version Query")
 
 BigWigsVersionQuery.consoleCmd = L["versionquery"]
@@ -69,22 +86,13 @@ function BigWigsVersionQuery:OnEnable()
 	self.queryRunning = nil
 	self.responseTable = {}
 	self.zoneRevisions = {}
-	self.responseString = ""
-	
-	local BWL = AceLibrary("AceLocale-2.0"):new("BigWigs")
+
 	for name,module in self.core:IterateModules() do
 		if module:IsBossModule() and module.zonename and type(module.zonename) == "string" then
-			local zone = BWL:HasTranslation(module.zonename) and BWL:GetTranslation(module.zonename) or module.zonename
-			local revision = module.revision
-			if not self.zoneRevisions[zone] or revision > self.zoneRevisions[zone] then
-				self.zoneRevisions[zone] = revision
+			if not self.zoneRevisions[module.zonename] or module.revision > self.zoneRevisions[module.zonename] then
+				self.zoneRevisions[module.zonename] = module.revision
 			end
 		end
-	end
-	BWL = nil
-
-	for key, value in self.zoneRevisions do
-		self.responseString = self.responseString.." "..key..":"..value
 	end
 
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -100,14 +108,15 @@ function BigWigsVersionQuery:UpdateVersions()
 			"children", function() tablet:SetTitle(L["BigWigs Version Query"])
 				self:OnTooltipUpdate() end,
 			"clickable", true,
-			"showEverythingWhenDetached", true,
+			"showTitleWhenDetached", true,
+			"showHintWhenDetached", true,
 			"cantAttach", true,
 			"menu", function()
 					dewdrop:AddLine(
-						'text', "Query",
+						'text', L["Query"],
 						'func', function() self:QueryVersion() end)
 					dewdrop:AddLine(
-						'text', "Close",
+						'text', L["Close window"],
 						'func', function() tablet:Attach("BigWigs_VersionQuery"); dewdrop:Close() end)
 				end
 		)
@@ -120,16 +129,31 @@ function BigWigsVersionQuery:UpdateVersions()
 end
 
 function BigWigsVersionQuery:OnTooltipUpdate()
+	local zoneCat = tablet:AddCategory(
+		"columns", 1,
+		"text", L["Current zone"],
+		"child_justify1", "LEFT"
+	)
+	zoneCat:AddLine("text", GetRealZoneText())
 	local cat = tablet:AddCategory(
 		"columns", 2,
-		"text", "Player",
-		"text2", "Version",
+		"text", L["Player"],
+		"text2", L["Version"],
 		"child_justify1", "LEFT",
 		"child_justify2", "RIGHT"
 	)
+	local zone = GetRealZoneText()	
 	for name, version in self.responseTable do
-		cat:AddLine("text", name, "text2", version)
+		local color = COLOR_WHITE
+		if self.zoneRevisions[zone] and version > self.zoneRevisions[zone] then
+			color = COLOR_GREEN
+		elseif self.zoneRevisions[zone] and version < self.zoneRevisions[zone] then
+			color = COLOR_RED
+		end
+		cat:AddLine("text", name, "text2", "|cff"..color..version.."|r")
 	end
+
+	tablet:SetHint(L["Green versions are newer than yours, red are older, and white are the same. A version of -1 means that the user does not have any modules for this zone."])
 end
 
 function BigWigsVersionQuery:QueryVersion()
@@ -137,24 +161,31 @@ function BigWigsVersionQuery:QueryVersion()
 		self.core:Print(L["Query already running, please wait 5 seconds before you query again."])
 		return
 	end
+
 	self.core:Print(L["Querying raid for BigWigs versions, please wait..."])
 
 	self.queryRunning = true
 	self:ScheduleEvent(function() BigWigsVersionQuery.queryRunning = nil end, 5)
 
 	self.responseTable = {}
-	self.responseTable[UnitName("player")] = self.responseString
+	if not self.zoneRevisions[GetRealZoneText()] then
+		self.responseTable[UnitName("player")] = -1
+	else
+		self.responseTable[UnitName("player")] = self.zoneRevisions[GetRealZoneText()]
+	end
 	self:UpdateVersions()
-	self:TriggerEvent("BigWigs_SendSync", "BWVQ")
+	self:TriggerEvent("BigWigs_SendSync", "BWVQ "..GetRealZoneText())
 end
 
 function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BWVQ" and nick ~= UnitName("player") then
-		self:TriggerEvent("BigWigs_SendSync", "BWVR "..self.responseString)
-	elseif sync == "BWVR" then
-		if self.queryRunning and nick and rest then
-			self.responseTable[nick] = rest
-			self:UpdateVersions()
+	if sync == "BWVQ" and nick ~= UnitName("player") and rest then
+		if not self.zoneRevisions[rest] then
+			self:TriggerEvent("BigWigs_SendSync", "BWVR -1")
+		else
+			self:TriggerEvent("BigWigs_SendSync", "BWVR " .. self.zoneRevisions[rest])
 		end
+	elseif sync == "BWVR" and self.queryRunning and nick and rest and tonumber(rest) ~= nil then
+		self.responseTable[nick] = tonumber(rest)
+		self:UpdateVersions()
 	end
 end
