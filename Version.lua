@@ -1,7 +1,7 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
+local BWL = nil
 local BZ = AceLibrary("Babble-Zone-2.0")
-local BWL = AceLibrary("AceLocale-2.0"):new("BigWigs")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsVersionQuery")
 local tablet = AceLibrary("Tablet-2.0")
 local dewdrop = AceLibrary("Dewdrop-2.0")
@@ -74,18 +74,30 @@ BigWigsVersionQuery.consoleOptions = {
 function BigWigsVersionQuery:OnEnable()
 	self.queryRunning = nil
 	self.responseTable = {}
-	self.zoneRevisions = {}
+	self.zoneRevisions = nil
 	self.currentZone = ""
+	
+	BWL = AceLibrary("AceLocale-2.0"):new("BigWigs")
+	
+	self:RegisterEvent("BigWigs_RecvSync")
+end
 
+function BigWigsVersionQuery:PopulateRevisions()
+	self.zoneRevisions = {}
 	for name,module in self.core:IterateModules() do
 		if module:IsBossModule() and module.zonename and type(module.zonename) == "string" then
-			if not self.zoneRevisions[module.zonename] or module.revision > self.zoneRevisions[module.zonename] then
-				self.zoneRevisions[module.zonename] = module.revision
+			-- Make sure to get the enUS zone name.
+			local zone = BZ:HasReverseTranslation(module.zonename) and BZ:GetReverseTranslation(module.zonename) or module.zonename
+			-- Get the abbreviated name from BW Core.
+			local zoneAbbr = BWL:HasTranslation(zone) and BWL:GetTranslation(zone) or nil
+			if not self.zoneRevisions[zone] or module.revision > self.zoneRevisions[zone] then
+				self.zoneRevisions[zone] = module.revision
+			end
+			if zoneAbbr and (not self.zoneRevisions[zoneAbbr] or module.revision > self.zoneRevisions[zoneAbbr]) then
+				self.zoneRevisions[zoneAbbr] = module.revision
 			end
 		end
 	end
-
-	self:RegisterEvent("BigWigs_RecvSync")
 end
 
 ------------------------------
@@ -140,6 +152,7 @@ function BigWigsVersionQuery:OnTooltipUpdate()
 		if version == -1 then
 			cat:AddLine("text", name, "text2", "|cff"..COLOR_RED..L["N/A"].."|r")
 		else
+			if not self.zoneRevisions then self:PopulateRevisions() end
 			local color = COLOR_WHITE
 			if self.zoneRevisions[self.currentZone] and version > self.zoneRevisions[self.currentZone] then
 				color = COLOR_GREEN
@@ -154,19 +167,30 @@ function BigWigsVersionQuery:OnTooltipUpdate()
 end
 
 function BigWigsVersionQuery:QueryVersion(zone)
+	if not self.zoneRevisions then self:PopulateRevisions() end
 	if self.queryRunning then
 		self.core:Print(L["Query already running, please wait 5 seconds before trying again."])
 		return
 	end
 	if not zone or zone == "" then zone = GetRealZoneText() end
+	-- If this is a shorthand zone, convert it to enUS full.
+	-- Also, if this is a shorthand, we can't really know if the user is enUS or not.
 	if BWL:HasReverseTranslation(zone) then
-		local enUSZone = BWL:GetReverseTranslation(zone)
-		zone = BZ:HasTranslation(enUSZone) and BZ(zone) or zone
+		zone = BWL:GetReverseTranslation(zone)
+		-- If there is a translation for this to GetLocale(), get it, so we can
+		-- print the zone name in the correct locale.
+		if BZ:HasTranslation(zone) then
+			zone = BZ:GetTranslation(zone)
+		end
 	end
 
-	self.currentZone = zone
-
+	-- ZZZ |zone| should be translated here.
 	self.core:Print(L["Querying versions for "].."|cff"..COLOR_GREEN..zone.."|r.")
+
+	-- If this is a non-enUS zone, convert it to enUS.
+	if BZ:HasReverseTranslation(zone) then zone = BZ:GetReverseTranslation(zone) end
+
+	self.currentZone = zone
 
 	self.queryRunning = true
 	self:ScheduleEvent(	function()
@@ -201,6 +225,7 @@ end
 
 function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "BWVQ" and nick ~= UnitName("player") and rest then
+		if not self.zoneRevisions then self:PopulateRevisions() end
 		if not self.zoneRevisions[rest] then
 			self:TriggerEvent("BigWigs_SendSync", "BWVR -1")
 		else
