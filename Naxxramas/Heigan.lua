@@ -43,7 +43,7 @@ L:RegisterTranslations("deDE", function() return {
 	teleport_desc = "Warnung vor Teleport.",
 
 	starttrigger = "Ihr geh\195\182rt mir...",
-	starttrigger2 = "Ihr seid... als n\195\164chstes dran.",
+	starttrigger2 = "Ihr seid.... als n\195\164chstes dran.",
 	starttrigger3 = "Ihr entgeht mir nicht...",
 	teleporttrigger = "Euer Ende naht.",
 
