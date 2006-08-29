@@ -1,6 +1,7 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
-local BWL = nil
+local BZ = AceLibrary("Babble-Zone-2.0")
+local BWL = AceLibrary("AceLocale-2.0"):new("BigWigs")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsVersionQuery")
 local tablet = AceLibrary("Tablet-2.0")
 local dewdrop = AceLibrary("Dewdrop-2.0")
@@ -158,6 +159,10 @@ function BigWigsVersionQuery:QueryVersion(zone)
 		return
 	end
 	if not zone or zone == "" then zone = GetRealZoneText() end
+	if BWL:HasReverseTranslation(zone) then
+		local enUSZone = BWL:GetReverseTranslation(zone)
+		zone = BZ:HasTranslation(enUSZone) and BZ(zone) or zone
+	end
 
 	self.currentZone = zone
 
@@ -182,14 +187,14 @@ end
 --[[ Parses the old style reply, which was MC:REV BWL:REV, etc. ]]
 function BigWigsVersionQuery:ParseReply(reply)
 	if not strfind(reply, ":") then return -1 end
-	if not BWL then BWL = AceLibrary("AceLocale-2.0"):new("BigWigs") end
 	local zone = BWL:HasTranslation(self.currentZone) and BWL:GetTranslation(self.currentZone) or self.currentZone
 
-	local zoneIndex = strfind(reply, zone)
+	local zoneIndex, zoneEnd = string.find(reply, zone)
 	if not zoneIndex then return -1 end
 
-	local revision = strsub(reply, zoneIndex + strlen(zone) + 1, zoneIndex + strlen(zone) + 5)
-	if revision and tonumber(revision) ~= nil then return tonumber(revision) end
+	local revision = string.sub(reply, zoneEnd + 2, zoneEnd + 6)
+	local convertedRev = tonumber(revision)
+	if revision and convertedRev ~= nil then return convertedRev end
 
 	return -1
 end
