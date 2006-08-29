@@ -250,7 +250,7 @@ function BigWigs:RegisterModule(name,module)
 
 			cons = {
 				type = "group",
-				name = name.." ("..revision..")",
+				name = name,
 				desc = string.format(L"Options for %s (r%s) in %s.", name, revision, zonename),
 --~~ 					disabled = function() return not m.core:IsModuleActive(m) end,
 				args = {
