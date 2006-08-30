@@ -52,36 +52,36 @@ L:RegisterTranslations("deDE", function() return {
 	cmd = "loatheb",
 
 	doom_cmd = "doom",
-	doom_name = "Inevitable Doom Alert", -- ?
-	doom_desc = "Warn for Inevitable Doom", -- ?
+	doom_name = "Unausweichliches Schicksal Warnung",
+	doom_desc = "Warnung für Unausweichliches Schicksal",
 	
 	spore_cmd = "spore",
-	spore_name = "Spore Spawning Alert", -- ?
-	spore_desc = "Warn when a spore spawns", -- ?
+	spore_name = "Warnung bei Sporen",
+	spore_desc = "Warnung wenn Sporen auftauchen",
 
 	curse_cmd = "curse",
-	curse_name = "Remove Curse Alert", -- ?
-	curse_desc = "Warn when a curses are removed from Loatheb", -- ?
+	curse_name = "Fluch-Aufhebungs Warnung",
+	curse_desc = "Warnung wenn Fl\195\188che bei Loatheb aufgehoben wurden",
 
-	doombar = "Inevitable Doom", -- ?
-	doomwarn = "Inevitable Doom! %s seconds to next.", -- ?
-	doomwarn5sec = "Inevitable Doom in 5 Sekunden", -- ?
-	doomtrigger = "afflicted by Inevitable Doom.", -- ?
+	doombar = "Unausweichliches Schicksal",
+	doomwarn = "Unausweichliches Schicksal! %s Sekunden bis zum n\195\164chsten.",
+	doomwarn5sec = "Unausweichliches Schicksal in 5 Sekunden",
+	doomtrigger = "von Unausweichliches Schicksal betroffen.",
 	
-	sporewarn = "Spore Spawned", -- ?
-	sporebar = "Summon Spore", -- ?
-	sporespawntrigger = "Loatheb casts Summon Spore.", -- ?
-	sporedietrigger = "Spore dies.", -- ?
+	sporewarn = "Spore aufgetaucht",
+	sporebar = "Spore beschw\195\182ren",
+	sporespawntrigger = "Loatheb wirkt Spore beschw\195\182ren.",
+	sporedietrigger = "Spore stirbt.",
 
-	removecursewarn = "Curses removed on Loatheb", -- ?
-	removecursebar = "Remove Curse", -- ?
-	removecursetrigger = "Loatheb casts Remove Curse on Loatheb.", -- ?
+	removecursewarn = "Fl\195\188che bei Loatheb aufgehoben",
+	removecursebar = "Fluch aufheben",
+	removecursetrigger = "Loatheb wirkt Fluch aufheben auf Loatheb.",
 	
-	doomtimerbar = "Inevitable Doom every 15 seconds", -- ?
-	doomtimerwarn = "Inevitable Doom timerchange in %s seconds!", -- ?
-	doomtimerwarnnow = "Inevitable Doom now happens every 15sec!", -- ?
+	doomtimerbar = "Unausweichliches Schicksal alle 15 Sekunden",
+	doomtimerwarn = "Unausweichliches Schicksal Timer Wechsel in %s Sekunden!",
+	doomtimerwarnnow = "Unausweichliches Schicksal nun alle 15s!",
 	
-	startwarn = "Loatheb angegriffen! 2 Minuten bis Inevitable Doom!", -- ?
+	startwarn = "Loatheb angegriffen! 2 Minuten bis Unausweichliches Schicksal!",
 
 	you = "Ihr",
 	are = "seid",
