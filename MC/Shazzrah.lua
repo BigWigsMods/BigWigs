@@ -13,8 +13,8 @@ L:RegisterTranslations("enUS", function() return {
 	trigger1 = "Shazzrah gains Blink",
 	trigger2 = "Shazzrah gains Deaden Magic",
 
-	warn1 = "Blink - 30 seconds until next!",
-	warn2 = "5 seconds to Blink!",
+	warn1 = "Blink - ~45 seconds until next!",
+	warn2 = "~5 seconds to Blink!",
 	warn3 = "Self buff - Dispel Magic!",
 
 	bar1text = "Blink",
@@ -34,8 +34,8 @@ L:RegisterTranslations("zhCN", function() return {
 	trigger1 = "沙斯拉尔获得了闪现术的效果",
 	trigger2 = "沙斯拉尔获得了衰减魔法的效果",
 
-	warn1 = "闪现术 - 30秒后再次发动",
-	warn2 = "5秒后发动闪现术！",
+	warn1 = "闪现术 - ~45秒后再次发动",
+	warn2 = "~5秒后发动闪现术！",
 	warn3 = "自我Buff - 驱散魔法！",
 
 	bar1text = "闪现术",
@@ -51,8 +51,8 @@ L:RegisterTranslations("koKR", function() return {
 	trigger1 = "샤즈라|1이;가; 샤즈라의 문|1을;를; 시전합니다.",
 	trigger2 = "샤즈라|1이;가; 마법 약화 효과를 얻었습니다.",
 
-	warn1 = "점멸 - 30초후 재점멸!",
-	warn2 = "5초후 점멸!",
+	warn1 = "점멸 - ~45초후 재점멸!",
+	warn2 = "~5초후 점멸!",
 	warn3 = "마법 약화 버프 - 마법 무효화를 사용하세요!",
 
 	bar1text = "점멸",
@@ -62,8 +62,8 @@ L:RegisterTranslations("deDE", function() return {
 	trigger1 = "Shazzrah wirkt Portal von Shazzrah",
 	trigger2 = "Shazzrah bekommt 'Magie d\195\164mpfen'",
 
-	warn1 = "Portal! N\195\164chstes in 30 Sekunden!",
-	warn2 = "5 Sekunden bis Portal!",
+	warn1 = "Portal! N\195\164chstes in ~45 Sekunden!",
+	warn2 = "~5 Sekunden bis Portal!",
 	warn3 = "Magied\195\164mpfer auf Shazzrah! - Entfernen!",
 
 	bar1text = "Portal",
@@ -83,8 +83,8 @@ L:RegisterTranslations("frFR", function() return {
 	trigger1 = "Shazzrah gagne Porte de Shazzrah",
 	trigger2 = "Shazzrah gagne Magie diminu\195\169e",
 
-	warn1 = "Transfert - 30 sec avant le prochain",
-	warn2 = "5 secondes avant Transfert !",
+	warn1 = "Transfert - ~45 sec avant le prochain",
+	warn2 = "~5 secondes avant Transfert !",
 	warn3 = "Shazzrah se buff - Dispellez le !",
 
 	bar1text = "Transfert",
@@ -133,8 +133,8 @@ end
 function BigWigsShazzrah:BigWigs_RecvSync(sync)
 	if (sync == "ShazzrahBlink" and self.db.profile.blink) then
 		self:TriggerEvent("BigWigs_Message", L["warn1"], "Red")
-		self:ScheduleEvent("BigWigs_Message", 25, L["warn2"], "Orange")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 30, "Interface\\Icons\\Spell_Arcane_Blink", "Yellow", "Orange", "Red")
+		self:ScheduleEvent("BigWigs_Message", 40, L["warn2"], "Orange")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 45, "Interface\\Icons\\Spell_Arcane_Blink", "Yellow", "Orange", "Red")
 	elseif (sync == "ShazzrahDeadenMagic" and self.db.profile.selfbuff) then
 		self:TriggerEvent("BigWigs_Message", L["warn3"], "Red")
 	end
