@@ -298,14 +298,26 @@ function BigWigs:RegisterModule(name,module)
 					}
 				else
 					local l = v == "bosskill" and L or L2
-					cons.args[l(v.."_cmd")] = {
-						type = "toggle",
-						order = v == "bosskill" and -1 or x,
-						name = l(v.."_name"),
-						desc = l(v.."_desc"),
-						get = function() return m.db.profile[val] end,
-						set = function(v) m.db.profile[val] = v end,
-					}
+					if l:HasTranslation(v.."_validate") then
+						cons.args[l(v.."_cmd")] = {
+							type = "text",
+							order = v == "bosskill" and -1 or x,
+							name = l(v.."_name"),
+							desc = l(v.."_desc"),
+							get = function() return m.db.profile[val] end,
+							set = function(v) m.db.profile[val] = v end,
+							validate = l(v.."_validate"),
+						}
+					else
+						cons.args[l(v.."_cmd")] = {
+							type = "toggle",
+							order = v == "bosskill" and -1 or x,
+							name = l(v.."_name"),
+							desc = l(v.."_desc"),
+							get = function() return m.db.profile[val] end,
+							set = function(v) m.db.profile[val] = v end,
+						}
+					end
 				end
 			end
 		end
