@@ -92,17 +92,17 @@ L:RegisterTranslations("deDE", function() return {
 	power_desc = "Warnung f\195\188r Stalagg's Energieschub",
 
 	charge_name = "Ladungs-Warnung",
-	charge_desc = "Warn about Positive/Negative charge for yourself only.", -- ?
+	charge_desc = "Warnung bei positiver/negativer Aufladung bei euch selbst.",
 
 	enragetrigger = "verf\195\164llt in Berserkerwut",
 	starttrigger = "Stalagg zerquetschen!",
 	starttrigger1 = "Verf\195\188ttere euch an Meister!",
-	starttrigger2 = "Eat... your... bones...", -- ?
+	starttrigger2 = "Eure... Knochen... zermalmen...",
 	starttrigger3 = "Euch... zerquetschen!",
 	starttrigger4 = "T\195\182ten...",
 	
 	adddeath = "stirbt.",
-	teslaoverload = "overloads!", -- ?
+	teslaoverload = "\195\188berl\195\164dt!",
 
 	pstrigger = "Jetzt sp\195\188rt ihr den Schmerz",
 	trigger1 = "Thaddius beginnt Polarit\195\164tsver\195\164nderung zu wirken.",
@@ -115,8 +115,8 @@ L:RegisterTranslations("deDE", function() return {
 	enragewarn = "Wutanfall!",
 	startwarn = "Thaddius Phase 1",
 	startwarn2 = "Thaddius Phase 2, Wutanfall in 5 Minuten!",
-	addsdownwarn = "Thaddius incoming in 10-20sec!", -- ? 
-	thaddiusincoming = "Thaddius incoming in 3 sec!", -- ?
+	addsdownwarn = "Thaddius kommt frei in 10-20s!",
+	thaddiusincoming = "Thaddius kommt frei in 3s!",
 	pswarn1 = "Thaddius beginnt Polarit\195\164tsver\195\164nderung zu wirken!",
 	pswarn2 = "30 Sekunden bis Polarit\195\164tsver\195\164nderung!",
 	pswarn3 = "3 Sekunden bis Polarit\195\164tsver\195\164nderung!",
