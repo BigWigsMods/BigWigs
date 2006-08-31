@@ -11,11 +11,15 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "grobbulus",
-	
+
+	enrage_cmd = "enrage",
+	enrage_name = "Enrage Alert",
+	enrage_desc = "Warn for Enrage",
+
 	youinjected_cmd = "youinjected",
 	youinjected_name = "You're injected Alert",
 	youinjected_desc = "Warn when you're injected",
-	
+
 	otherinjected_cmd = "otherinjected",
 	otherinjected_name = "Others injected Alert",
 	otherinjected_desc = "Warn when others are injected",
@@ -29,17 +33,24 @@ L:RegisterTranslations("enUS", function() return {
 	you = "You",
 	are = "are",
 
+	startwarn = "Grobbulus engaged, 12min to enrage!",
+	enragebar = "Enrage",
+	enrage10min = "Enrage in 10min",
+	enrage5min = "Enrage in 5min",
+	enrage1min = "Enrage in 1min",
+	enrage30sec = "Enrage in 30sec",
+	enrage10sec = "Enrage in 10sec",
 	warn1 = "You are injected!",
 	warn2 = " is Injected!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
 	cmd = "grobbulus",
-	
+
 	youinjected_cmd = "youinjected",
 	youinjected_name = "Du bist verseucht",
 	youinjected_desc = "Warnung, wenn Du von Mutierende Injektion betroffen bist.",
-	
+
 	otherinjected_cmd = "otherinjected",
 	otherinjected_name = "X ist verseucht",
 	otherinjected_desc = "Warnung, wenn andere Spieler von Mutierende Injektion betroffen sind.",
@@ -94,7 +105,7 @@ L:RegisterTranslations("zhCN", function() return {
 BigWigsGrobbulus = BigWigs:NewModule(boss)
 BigWigsGrobbulus.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsGrobbulus.enabletrigger = boss
-BigWigsGrobbulus.toggleoptions = {"youinjected", "otherinjected", "icon", "bosskill"}
+BigWigsGrobbulus.toggleoptions = { "enrage", -1, "youinjected", "otherinjected", "icon", "bosskill" }
 BigWigsGrobbulus.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -102,13 +113,79 @@ BigWigsGrobbulus.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsGrobbulus:OnEnable()
+	self.started = nil
+
+	self:RegisterEvent("PLAYER_REGEN_ENABLED")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED")
+
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "InjectEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "InjectEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "InjectEvent")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "GrobbulusStart", 10)
 end
 
-if GetLocale() == "koKR" then 
+------------------------------
+--      Event Handlers      --
+------------------------------
+
+function BigWigsGrobbulus:PLAYER_REGEN_DISABLED()
+	local go = self:Scan()
+	local running = self:IsEventScheduled("Grobbulus_CheckStart")
+	if go then
+		self:CancelScheduledEvent("Grobbulus_CheckStart")
+		self:TriggerEvent("BigWigs_SendSync", "GrobbulusStart")
+	elseif not running then
+		self:ScheduleRepeatingEvent("Grobbulus_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self )
+	end
+end
+
+function BigWigsGrobbulus:PLAYER_REGEN_ENABLED()
+	local go = self:Scan()
+	local running = self:IsEventScheduled("Grobbulus_CheckWipe")
+	if not go then
+		self:TriggerEvent("BigWigs_RebootModule", self)
+	elseif not running then
+		self:ScheduleRepeatingEvent("Grobbulus_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
+	end
+end
+
+function BigWigsGrobbulus:Scan()
+	if UnitName("target") == boss and UnitAffectingCombat("target") then
+		return true
+	elseif UnitName("playertarget") == boss and UnitAffectingCombat("playertarget") then
+		return true
+	else
+		local i
+		for i = 1, GetNumRaidMembers(), 1 do
+			if UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("raid"..i.."target") then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+function BigWigsGrobbulus:BigWigs_RecvSync( sync )
+	if sync == "GrobbulusStart" then
+		if not self.started then
+			self.started = true
+			if self.db.profile.enrage then
+				self:TriggerEvent("BigWigs_Message", L["startwarn"], "Yellow")
+				self:TriggerEvent("BigWigs_StartBar", self, L["enragebar"], 720, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
+				self:ScheduleEvent("bwgrobbulusenragewarn1", "BigWigs_Message", 120, L["enrage10min"], "Yellow")
+				self:ScheduleEvent("bwgrobbulusenragewarn2", "BigWigs_Message", 420, L["enrage5min"], "Orange")
+				self:ScheduleEvent("bwgrobbulusenragewarn3", "BigWigs_Message", 660, L["enrage1min"], "Red")
+				self:ScheduleEvent("bwgrobbulusenragewarn4", "BigWigs_Message", 690, L["enrage30sec"], "Red")
+				self:ScheduleEvent("bwgrobbulusenragewarn5", "BigWigs_Message", 710, L["enrage10sec"], "Red")
+			end
+		end
+	end
+end
+
+if GetLocale() == "koKR" then
 	function BigWigsGrobbulus:InjectEvent( msg )
 		local _, _, eplayer = string.find(msg, L["trigger1"])
 		if (eplayer) then
@@ -120,7 +197,7 @@ if GetLocale() == "koKR" then
 				self:TriggerEvent("BigWigs_SendTell", eplayer, L["warn1"])
 			end
 			if self.db.profile.icon then
-				if eplayer == L["you"] then eplayer = UnitName('player') end
+				if eplayer == L["you"] then eplayer = UnitName("player") end
 				self:TriggerEvent("BigWigs_SetRaidIcon", eplayer)
 			end
 		end
@@ -131,14 +208,15 @@ else
 		if eplayer and etype then
 			if self.db.profile.youinjected and eplayer == L["you"] and etype == L["are"] then
 				self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true, "Alarm")
-			elseif self.db.profile.otherinjected then 
+			elseif self.db.profile.otherinjected then
 				self:TriggerEvent("BigWigs_Message", eplayer .. L["warn2"], "Yellow")
 				self:TriggerEvent("BigWigs_SendTell", eplayer, L["warn1"])
 			end
 			if self.db.profile.icon then
-				if eplayer == L"you" then eplayer = UnitName('player') end
+				if eplayer == L"you" then eplayer = UnitName("player") end
 				self:TriggerEvent("BigWigs_SetRaidIcon", eplayer )
 			end
 		end
 	end
-end 
+end
+
