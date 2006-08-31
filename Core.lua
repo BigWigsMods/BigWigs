@@ -24,7 +24,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Bosses"] = true,
 	["Options for boss modules."] = true,
 	["Options for bosses in %s."] = true, -- "Options for bosses in <zone>"
-	["Options for %s (r%s) in %s."] = true,     -- "Options for <boss> (<revision>) in <zone>"
+	["Options for %s (r%s)."] = true,     -- "Options for <boss> (<revision>)"
 	["plugin"] = true,
 	["Plugins"] = true,
 	["Options for plugins."] = true,
@@ -107,7 +107,6 @@ L:RegisterTranslations("zhCN", function() return {
 	["Bosses"] = "首领",
 	["Options for boss modules."] = "首领模块设置。",
 	["Options for bosses in %s."] = "%s首领模块设置。", -- "Options for bosses in <zone>"
-	["Options for %s (r%s) in %s."] = "%s (%s) %s 首领模块设置",     -- "Options for <boss> (<revision>) in <zone>"
 	["plugin"] = "plugin",
 	["Plugins"] = "插件",
 	["Options for plugins."] = "插件设置。",
@@ -242,17 +241,13 @@ function BigWigs:RegisterModule(name,module)
 	if module:IsBossModule() then
 		local cons
 		local revision = type(module.revision) == "number" and module.revision or -1
-		local zonename = type(module.zonename) == "table" and module.zonename[1] or module.zonename
-		local zone = BZ:HasReverseTranslation(zonename) and L(BZ:GetReverseTranslation(zonename)) or L(zonename)
 		local L2 = AceLibrary("AceLocale-2.0"):new("BigWigs"..name)
 		if module.toggleoptions then
 			local m = module
-
 			cons = {
 				type = "group",
 				name = name,
-				desc = string.format(L"Options for %s (r%s) in %s.", name, revision, zonename),
---~~ 					disabled = function() return not m.core:IsModuleActive(m) end,
+				desc = string.format(L"Options for %s (r%s).", name, revision),
 				args = {
 					[L["toggle"]] = {
 						type = "toggle",
@@ -323,6 +318,8 @@ function BigWigs:RegisterModule(name,module)
 		end
 
 		if cons or module.consoleOptions then
+			local zonename = type(module.zonename) == "table" and module.zonename[1] or module.zonename
+			local zone = BZ:HasReverseTranslation(zonename) and L(BZ:GetReverseTranslation(zonename)) or L(zonename)
 			if not self.cmdtable.args[L["boss"]].args[zone] then
 				self.cmdtable.args[L["boss"]].args[zone] = {
 					type = "group",
