@@ -6,7 +6,7 @@
 ## Author: Tekkub Stoutwrithe, Ammo, Shyva, Rabbit & Others 
 ## Version: 2.0
 ## X-ReleaseDate: "$Date$"
-## X-Website: http://wiki.wowace.com/index.php/BigWigs_Addon
+## X-Website: http://wiki.wowace.com/index.php/BigWigs
 ## X-Email: tekkub@gmail.com
 ## X-Category: Raid
 
