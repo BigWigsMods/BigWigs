@@ -42,31 +42,24 @@ L:RegisterTranslations("enUS", function() return {
 	summonwarriorwarn = "Warrior Summoned",
 	plaguetrigger = "^([^%s]+) ([^%s]+) afflicted by Plague%.$",
 	plaguewarn = " has the Plague!",
-	plaguewarnyou = "You got the Plague!",
+	plaguewarnyou = "You have the Plague!",
 	plagueyou = "You",
 	plagueare = "are",	
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "guardian",
-	
-	summon_cmd = "summon",
 	summon_name = "Beschw\195\182rung",
 	summon_desc = "Warnung, wenn Besch\195\188tzer des Anubisath Schwarmwachen oder Krieger beschw\195\182rt.",
-	
-	plagueyou_cmd = "plagueyou",
+
 	plagueyou_name = "Du hast die Seuche",
 	plagueyou_desc = "Warnung, wenn Du die Seuche hast.",
 
-	plagueother_cmd = "plagueother",
 	plagueother_name = "X hat die Seuche",
 	plagueother_desc = "Warnung, wenn andere Spieler die Seuche haben.",
-	
-	explode_cmd = "explode",
+
 	explode_name = "Explosion",
 	explode_desc = "Warnung vor Explosion.",
-	
-	enrage_cmd = "enrage",
+
 	enrage_name = "Wutanfall",
 	enrage_desc = "Warnung vor Wutanfall.",
 
@@ -208,3 +201,4 @@ else
 		end
 	end
 end
+

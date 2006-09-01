@@ -11,6 +11,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Defender",
+
 	plagueyou_cmd = "plagueyou",
 	plagueyou_name = "Plague on you alert",
 	plagueyou_desc = "Warn if you got the Plague",
@@ -45,7 +46,7 @@ L:RegisterTranslations("enUS", function() return {
 	summonwarriorwarn = "Warrior Summoned",
 	plaguetrigger = "^([^%s]+) ([^%s]+) afflicted by Plague%.$",
 	plaguewarn = " has the Plague!",
-	plagueyouwarn = "You got the plague!",
+	plagueyouwarn = "You have the plague!",
 	plagueyou = "You",
 	plagueare = "are",
 	thunderclaptrigger = "^Anubisath Defender's Thunderclap hits ([^%s]+) for %d+%.",
@@ -53,28 +54,21 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "Defender",
-	plagueyou_cmd = "plagueyou",
 	plagueyou_name = "Du hast die Seuche",
 	plagueyou_desc = "Warnung, wenn Du die Seuche hast.",
 
-	plagueother_cmd = "plagueother",
 	plagueother_name = "X hat die Seuche",
 	plagueother_desc = "Warnung, wenn andere Spieler die Seuche haben.",
 
-	thunderclap_cmd = "thunderclap",
 	thunderclap_name = "Donnerknall",
 	thunderclap_desc = "Warnung vor Donnerknall.",
 
-	explode_cmd = "explode",
 	explode_name = "Explosion",
 	explode_desc = "Warnung vor Explosion.",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Wutanfall",
 	enrage_desc = "Warnung vor Wutanfall.",
 
-	summon_cmd = "summon",
 	summon_name = "Beschw\195\182rung",
 	summon_desc = "Warnung, wenn Verteidiger des Anubisath Schwarmwachen oder Krieger beschw\195\182rt.",
 
@@ -162,10 +156,7 @@ L:RegisterTranslations("frFR", function() return {
 	plagueyou = "Vous",
 	plagueare = "subissez",
 	thunderclaptrigger = "^D\195\169fenseur Anubisath lance Coup de tonnerre",--not sure
-	
-	 
 } end )
-
 
 ----------------------------------
 --      Module Declaration      --
@@ -255,3 +246,4 @@ function BigWigsDefenders:Thunderclap(msg)
 		self:TriggerEvent("BigWigs_Message", L["thunderclapwarn"], "Yellow")
 	end
 end
+
