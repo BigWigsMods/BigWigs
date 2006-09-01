@@ -21,7 +21,7 @@ L:RegisterTranslations("enUS", function() return {
 	paralyze_desc = "Warn for Paralyze",
 
 	starttrigger = "%s senses your fear.",
-	startwarn = "Moam Enaged! 90 Seconds until adds!",
+	startwarn = "Moam Engaged! 90 Seconds until adds!",
 	addsbar = "Adds",
 	addsincoming = "Adds incoming in %s seconds!",
 	addstrigger = "%s drains your mana and turns to stone.",
