@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -39,15 +39,15 @@ L:RegisterTranslations("enUS", function() return {
 	warn4 = "In room in 30 seconds",
 	warn5 = "Gothik Incoming in 10 seconds",
 	
-	wave = "%d/18: ",
+	wave = "%d/20: ",
 	
 	trawarn = "Trainees in 3 seconds",
 	dkwarn = "Deathknight in 3 seconds",
 	riderwarn = "Rider in 3 seconds",
 
-	trabar = "Trainees",
-	dkbar = "Deathknight",
-	riderbar = "Rider",
+	trabar = "Trainee - %d",
+	dkbar = "Deathknight - %d",
+	riderbar = "Rider - %d",
 	
 	inroomtrigger = "I have waited long enough. Now you face the harvester of souls.",
 	inroomwarn = "He's in the room!",
@@ -74,15 +74,15 @@ L:RegisterTranslations("deDE", function() return {
 	warn4 = "Im Raum in 30 Sekunden",
 	warn5 = "Gothik im Raum in 10 Sekunden",
 	
-	wave = "%d/18: ",
+	wave = "%d/20: ",
 	
 	trawarn = "Lehrlinge in 3 Sekunden",
 	dkwarn = "Todesritter in 3 Sekunden",
 	riderwarn = "Reiter in 3 Sekunden",
 
-	trabar = "Lehrlinge",
-	dkbar = "Todesritter",
-	riderbar = "Reiter",
+	trabar = "Lehrlinge - %d",
+	dkbar = "Todesritter - %d",
+	riderbar = "Reiter - %d",
 	
 	inroomtrigger = "Ich habe lange genug gewartet. Stellt euch dem Seelenj\195\164ger.", -- ?
 	inroomwarn = "Er ist im Raum!",
@@ -119,9 +119,9 @@ L:RegisterTranslations("zhCN", function() return {
 	dkwarn = "3秒后死亡骑士出现",
 	riderwarn = "3秒后骑兵出现",
 
-	trabar = "学徒",
-	dkbar = "死亡骑士",
-	riderbar = "骑兵",
+	trabar = "学徒 - %d",
+	dkbar = "死亡骑士 - %d",
+	riderbar = "骑兵 - %d",
 	
 	inroomtrigger = "我等待了太久。现在你面对灵魂收割机。",
 	inroomwarn = "收割者戈提克进入了房间！",
@@ -213,26 +213,29 @@ end
 
 function BigWigsGothik:Trainee()
 	if self.db.profile.add then
-		self:TriggerEvent("BigWigs_StartBar", self, L["trabar"], self.tratime, "Interface\\Icons\\Ability_Seal", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["trabar"], self.tranum), self.tratime, "Interface\\Icons\\Ability_Seal", "Yellow", "Orange", "Red")
 	end
 	self:ScheduleEvent("bwgothiktrawarn", self.WaveWarn, self.tratime - 3, self, L["trawarn"], L, "Yellow")
 	self:ScheduleRepeatingEvent("bwgothiktrarepop", self.Trainee, self.tratime, self)
+	self.tranum = self.tranum + 1
 end
 
 function BigWigsGothik:DeathKnight()
 	if self.db.profile.add then
-		self:TriggerEvent("BigWigs_StartBar", self, L["dkbar"], self.dktime, "Interface\\Icons\\INV_Boots_Plate_08", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["dkbar"], self.dknum), self.dktime, "Interface\\Icons\\INV_Boots_Plate_08", "Yellow", "Orange", "Red")
 	end
 	self:ScheduleEvent("bwgothikdkwarn", self.WaveWarn, self.dktime - 3, self, L["dkwarn"], L, "Orange")
 	self:ScheduleRepeatingEvent("bwgothikdkrepop", self.DeathKnight, self.dktime, self)
+	self.dknum = self.dknum + 1
 end
 
 function BigWigsGothik:Rider()
 	if self.db.profile.add then
-		self:TriggerEvent("BigWigs_StartBar", self, L["riderbar"], self.ridertime, "Interface\\Icons\\Spell_Shadow_DeathPact", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["riderbar"], self.ridernum), self.ridertime, "Interface\\Icons\\Spell_Shadow_DeathPact", "Yellow", "Orange", "Red")
 	end
 	self:ScheduleEvent("bwgothikriderwarn", self.WaveWarn, self.ridertime - 3, self, L["riderwarn"], L, "Red")
 	self:ScheduleRepeatingEvent("bwgothikriderrepop", self.Rider, self.ridertime, self)
+	self.ridernum = self.ridernum + 1
 end
 
 function BigWigsGothik:CHAT_MSG_MONSTER_YELL( msg )
@@ -246,6 +249,9 @@ function BigWigsGothik:CHAT_MSG_MONSTER_YELL( msg )
 			self:ScheduleEvent("bwgothikwarn4", "BigWigs_Message", 240, L["warn4"], "Red")
 			self:ScheduleEvent("bwgothikwarn5", "BigWigs_Message", 260, L["warn5"], "Red")
 		end
+		self.tranum = 1
+		self.dknum = 1
+		self.ridernum = 1
 		if self.db.profile.add then		
 			self:Trainee()
 			self:DeathKnight()
