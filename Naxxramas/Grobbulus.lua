@@ -105,7 +105,7 @@ L:RegisterTranslations("zhCN", function() return {
 BigWigsGrobbulus = BigWigs:NewModule(boss)
 BigWigsGrobbulus.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsGrobbulus.enabletrigger = boss
-BigWigsGrobbulus.toggleoptions = { "enrage", -1, "youinjected", "otherinjected", "icon", "bosskill" }
+BigWigsGrobbulus.toggleoptions = { "youinjected", "otherinjected", "icon", -1, "enrage", "bosskill" }
 BigWigsGrobbulus.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -169,18 +169,16 @@ function BigWigsGrobbulus:Scan()
 end
 
 function BigWigsGrobbulus:BigWigs_RecvSync( sync )
-	if sync == "GrobbulusStart" then
-		if not self.started then
-			self.started = true
-			if self.db.profile.enrage then
-				self:TriggerEvent("BigWigs_Message", L["startwarn"], "Yellow")
-				self:TriggerEvent("BigWigs_StartBar", self, L["enragebar"], 720, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
-				self:ScheduleEvent("bwgrobbulusenragewarn1", "BigWigs_Message", 120, L["enrage10min"], "Yellow")
-				self:ScheduleEvent("bwgrobbulusenragewarn2", "BigWigs_Message", 420, L["enrage5min"], "Orange")
-				self:ScheduleEvent("bwgrobbulusenragewarn3", "BigWigs_Message", 660, L["enrage1min"], "Red")
-				self:ScheduleEvent("bwgrobbulusenragewarn4", "BigWigs_Message", 690, L["enrage30sec"], "Red")
-				self:ScheduleEvent("bwgrobbulusenragewarn5", "BigWigs_Message", 710, L["enrage10sec"], "Red")
-			end
+	if sync == "GrobbulusStart" and not self.started then
+		self.started = true
+		if self.db.profile.enrage then
+			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Yellow")
+			self:TriggerEvent("BigWigs_StartBar", self, L["enragebar"], 720, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
+			self:ScheduleEvent("bwgrobbulusenragewarn1", "BigWigs_Message", 120, L["enrage10min"], "Yellow")
+			self:ScheduleEvent("bwgrobbulusenragewarn2", "BigWigs_Message", 420, L["enrage5min"], "Orange")
+			self:ScheduleEvent("bwgrobbulusenragewarn3", "BigWigs_Message", 660, L["enrage1min"], "Red")
+			self:ScheduleEvent("bwgrobbulusenragewarn4", "BigWigs_Message", 690, L["enrage30sec"], "Red")
+			self:ScheduleEvent("bwgrobbulusenragewarn5", "BigWigs_Message", 710, L["enrage10sec"], "Red")
 		end
 	end
 end
