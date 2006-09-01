@@ -1,4 +1,4 @@
-﻿assert(BigWigs, "BigWigs not found!")
+assert(BigWigs, "BigWigs not found!")
 
 local BWL = nil
 local BZ = AceLibrary("Babble-Zone-2.0")
@@ -76,9 +76,9 @@ function BigWigsVersionQuery:OnEnable()
 	self.responseTable = {}
 	self.zoneRevisions = nil
 	self.currentZone = ""
-	
+
 	BWL = AceLibrary("AceLocale-2.0"):new("BigWigs")
-	
+
 	self:RegisterEvent("BigWigs_RecvSync")
 end
 
