@@ -72,7 +72,7 @@ L:RegisterTranslations("enUS", function() return {
 	warn3 = "Enrage in 60 seconds",
 	warn4 = "Enrage in 30 seconds",
 	warn5 = "Enrage in 10 seconds",
-	stalaggwarn = "Power Surge, extra healing on tank!",
+	stalaggwarn = "Power Surge on Stalagg!",
 	powersurgebar = "Power Surge",
 
 	bar1text = "Polarity Shift",
