@@ -217,12 +217,14 @@ function BigWigs:ADDON_LOADED(addon)
 	if not gname then return end
 
 	local g = getglobal(gname)
+	if not g or not g.name then return end
+
 	self:RegisterModule(g.name, g)
 	g.external = true
 end
 
 
-function BigWigs:RegisterModule(name,module)
+function BigWigs:RegisterModule(name, module)
 	if module:IsBossModule() then self:ToggleModuleActive(module, false) end
 
 	-- Set up DB
