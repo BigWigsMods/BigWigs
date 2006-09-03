@@ -11,33 +11,30 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "venoxis",
-	
+
 	renew_cmd = "renew",
 	renew_name = "Renew Alert",
 	renew_desc = "Warn for Renew",
-	
+
 	phase_cmd = "phase",
 	phase_name = "Phase 2 Alert",
 	phase_desc = "Warn for Phase 2",
-	
+
 	trigger1 = "High Priest Venoxis gains Renew.",
 	trigger2 = "Let the coils of hate unfurl!",
 
-	warn1 = "Renew - Dispel it now!",
-	warn2 = "Incoming phase 2, watch the poison clouds!",	
+	warn1 = "Renew!",
+	warn2 = "Incoming phase 2 - poison clouds spawning!",	
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "venoxis",
-	
-	renew_cmd = "renew",
+
 	renew_name = "Erneuerung",
 	renew_desc = "Warnung, wenn Venoxis Erneuerung auf sich wirkt.",
-	
-	phase_cmd = "phase",
+
 	phase_name = "Phase 2",
 	phase_desc = "Warnung, wenn Venoxis in Phase 2 eintritt.",
-	
+
 	trigger1 = "Hohepriester Venoxis bekommt 'Erneuerung'",
 	trigger2 = "M\195\182ge das Schlachten beginnen", -- ?
 
@@ -94,6 +91,10 @@ function BigWigsVenoxis:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
+
+------------------------------
+--      Events              --
+------------------------------
 
 function BigWigsVenoxis:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if self.db.profile.renew and msg == L["trigger1"] then

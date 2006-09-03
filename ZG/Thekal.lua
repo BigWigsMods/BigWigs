@@ -11,7 +11,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "thekal",
-	
+
 	heal_cmd = "heal",
 	heal_name = "Heal Alert",
 	heal_desc = "Warn for healing",
@@ -22,18 +22,15 @@ L:RegisterTranslations("enUS", function() return {
 
 	trigger1 = "High Priest Thekal performs Summon Zulian Guardians.",
 	trigger2 = "Zealot Lor'Khan begins to cast Great Heal.",
+
 	warn1 = "Incoming Tigers!",
 	warn2 = "Lor'Khan Casting Heal!",	
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "thekal",
-	
-	heal_cmd = "heal",
 	heal_name = "Heilung",
 	heal_desc = "Warnung, wenn Zealot Lor'Khan sich heilt.",
 
-	tiger_cmd = "tiger",
 	tiger_name = "Tiger",
 	tiger_desc = "Warnung, wenn Hohepriester Thekal Tiger beschw\195\182rt.",
 
@@ -72,7 +69,6 @@ L:RegisterTranslations("zhCN", function() return {
 	warn2 = "狂热者洛卡恩正在施放治疗，赶快打断它！",	
 } end )
 
-
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
@@ -92,10 +88,15 @@ function BigWigsThekal:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
+------------------------------
+--      Events              --
+------------------------------
+
 function BigWigsThekal:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
-	if self.db.profile.tiger and arg1 == L["trigger1"] then
+	if self.db.profile.tiger and msg == L["trigger1"] then
 		self:TriggerEvent("BigWigs_Message", L["warn1"], "Yellow")
-	elseif self.db.profile.heal and arg1 == L["trigger2"] then
+	elseif self.db.profile.heal and msg == L["trigger2"] then
 		self:TriggerEvent("BigWigs_Message", L["warn2"], "Orange")
 	end
 end
+

@@ -11,11 +11,11 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "arlokk",
-	
+
 	youmark_cmd = "youmark",
 	youmark_name = "You're marked alert",
 	youmark_desc = "Warn when you are marked",
-	
+
 	othermark_cmd = "othermark",
 	othermark_name = "Others are marked alert",
 	othermark_desc = "Warn when others are marked",
@@ -34,13 +34,9 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "arlokk",
-	
-	youmark_cmd = "youmark",
 	youmark_name = "Du bist markiert",
 	youmark_desc = "Warnung, wenn Du markiert bist.",
-	
-	othermark_cmd = "othermark",
+
 	othermark_name = "X ist markiert",
 	othermark_desc = "Warnung, wenn andere Spieler markiert sind.",
 
@@ -89,6 +85,10 @@ function BigWigsArlokk:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
+------------------------------
+--      Events              --
+------------------------------
+
 function BigWigsArlokk:CHAT_MSG_MONSTER_YELL( msg )
 	local _,_, n = string.find(msg, L["trigger1"])
 	if n then
@@ -100,3 +100,4 @@ function BigWigsArlokk:CHAT_MSG_MONSTER_YELL( msg )
 		end
 	end
 end
+

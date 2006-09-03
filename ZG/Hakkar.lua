@@ -49,12 +49,9 @@ L:RegisterTranslations("deDE", function() return {
 	["Enrage"] = "Wutanfall",
 	["Life Drain"] = "Lebensentzug",
 
-	cmd = "hakkar",
-	drain_cmd = "drain",
 	drain_name = "Lebensentzung",
 	drain_desc = "Warnung vor Lebensentzug.",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Wutanfall",
 	enrage_desc = "Warnung, wenn Hakkar w\195\188tend wird.",
 } end)
@@ -107,7 +104,6 @@ L:RegisterTranslations("zhCN", function() return {
 BigWigsHakkar = BigWigs:NewModule(boss)
 BigWigsHakkar.zonename = AceLibrary("Babble-Zone-2.0")("Zul'Gurub")
 BigWigsHakkar.enabletrigger = boss
-BigWigsHakkar.bossname = boss
 BigWigsHakkar.toggleoptions = {"drain", "enrage", "bosskill"}
 BigWigsHakkar.revision = tonumber(string.sub("$Revision$", 12, -3))
 
@@ -161,3 +157,4 @@ function BigWigsHakkar:BeginTimers(first)
 		self:TriggerEvent("BigWigs_StartBar", self, L["Life Drain"], 90, "Interface\\Icons\\Spell_Shadow_LifeDrain", "Green", "Yellow", "Orange", "Red")
 	end
 end
+
