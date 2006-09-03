@@ -46,7 +46,7 @@ end
 
 function BigWigsComm:BigWigs_SendSync(msg)
 	SendAddonMessage("BigWigs", msg, "RAID")
-	self:CHAT_MSG_ADDON("BigWigs", msg, "RAID")
+	self:CHAT_MSG_ADDON("BigWigs", msg, "RAID", UnitName("player"))
 end
 
 
