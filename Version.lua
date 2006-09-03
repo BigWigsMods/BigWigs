@@ -20,7 +20,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Options for Version Query."] = true,
 	["Query already running, please wait 5 seconds before trying again."] = true,
 	["Querying versions for "] = true,
-	["BigWigs Version Query"] = true,
+	["Big Wigs Version Query"] = true,
 	["Close window"] = true, -- I know, it's really a Tablet.
 	["Showing version for "] = true,
 	["Green versions are newer than yours, red are older, and white are the same."] = true,
@@ -107,7 +107,7 @@ end
 function BigWigsVersionQuery:UpdateVersions()
 	if not tablet:IsRegistered("BigWigs_VersionQuery") then
 		tablet:Register("BigWigs_VersionQuery",
-			"children", function() tablet:SetTitle(L["BigWigs Version Query"])
+			"children", function() tablet:SetTitle(L["Big Wigs Version Query"])
 				self:OnTooltipUpdate() end,
 			"clickable", true,
 			"showTitleWhenDetached", true,
