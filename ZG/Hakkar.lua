@@ -19,8 +19,9 @@ L:RegisterTranslations("enUS", function() return {
 	start = "Hakkar engaged - 90 seconds until drain - 10 minutes until enrage",
 	warn1 = "60 seconds until drain",
 	warn2 = "45 seconds until drain",
-	warn3 = "15 seconds until drain",
-	warn4 = "Life Drain - 90 seconds until next",
+	warn3 = "30 seconds until drain",
+	warn4 = "15 seconds until drain",
+	warn5 = "Life Drain - 90 seconds until next",
 	["Enrage"] = true,
 	["Life Drain"] = true,
 
@@ -44,8 +45,8 @@ L:RegisterTranslations("deDE", function() return {
 	start = "Hakkar angegriffen - 90 Sekunden bis Lebensentzug - 10 Minuten bis Wutanfall",
 	warn1 = "60 Sekunden bis Lebensentzug",
 	warn2 = "45 Sekunden bis Lebensentzug",
-	warn3 = "15 Sekunden bis Lebensentzug",
-	warn4 = "Lebensentzug - N\195\164chster in 90 Sekunden",
+	warn4 = "15 Sekunden bis Lebensentzug",
+	warn5 = "Lebensentzug - N\195\164chster in 90 Sekunden",
 	["Enrage"] = "Wutanfall",
 	["Life Drain"] = "Lebensentzug",
 
@@ -65,8 +66,8 @@ L:RegisterTranslations("koKR", function() return {
 	start = "학카르 시작 - 90초후 생명력 흡수 - 10분후 격노",
 	warn1 = "생명력 흡수 60초전",
 	warn2 = "생명력 흡수 45초전",
-	warn3 = "생명력 흡수 15초전",
-	warn4 = "생명력 흡수 - 다음 시전은 90초후",
+	warn4 = "생명력 흡수 15초전",
+	warn5 = "생명력 흡수 - 다음 시전은 90초후",
 	bosskill = "학카르를 물리쳤습니다!",
 
 	["Enrage"] = "격노",
@@ -84,8 +85,8 @@ L:RegisterTranslations("zhCN", function() return {
 	start = "哈卡已经激活 - 90秒后开始生命吸取 - 10分钟后进入激怒状态",
 	warn1 = "60秒后发动生命吸取",
 	warn2 = "45秒后发动生命吸取",
-	warn3 = "15秒后发动生命吸取",
-	warn4 = "血液虹吸 - 90秒后再次发动",
+	warn4 = "15秒后发动生命吸取",
+	warn5 = "血液虹吸 - 90秒后再次发动",
 	["Enrage"] = "激怒",
 	["Life Drain"] = "生命吸取",
 
@@ -150,10 +151,11 @@ end
 
 function BigWigsHakkar:BeginTimers(first)
 	if self.db.profile.drain then
-		if not first then self:TriggerEvent("BigWigs_Message", L["warn4"], "Green") end
-		self:ScheduleEvent("BigWigs_Message", 30, L["warn1"], "Yellow")
-		self:ScheduleEvent("BigWigs_Message", 45, L["warn2"], "Orange")
-		self:ScheduleEvent("BigWigs_Message", 75, L["warn3"], "Red")
+		if not first then self:TriggerEvent("BigWigs_Message", L["warn5"], "Green") end
+		self:ScheduleEvent("BigWigs_Message", 30, L["warn1"], "Green")
+		self:ScheduleEvent("BigWigs_Message", 45, L["warn2"], "Yellow")
+		self:ScheduleEvent("BigWigs_Message", 60, L["warn3"], "Orange")
+		self:ScheduleEvent("BigWigs_Message", 75, L["warn4"], "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L["Life Drain"], 90, "Interface\\Icons\\Spell_Shadow_LifeDrain", "Green", "Yellow", "Orange", "Red")
 	end
 end
