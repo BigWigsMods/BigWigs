@@ -16,8 +16,8 @@ local COLOR_WHITE = "ffffff"
 
 L:RegisterTranslations("enUS", function() return {
 	["versionquery"] = true,
-	["VersionQuery"] = true,
-	["Options for Version Query."] = true,
+	["Version Query"] = true,
+	["Commands for querying the raid for Big Wigs versions."] = true,
 	["Query already running, please wait 5 seconds before trying again."] = true,
 	["Querying versions for "] = true,
 	["Big Wigs Version Query"] = true,
@@ -47,8 +47,8 @@ BigWigsVersionQuery = BigWigs:NewModule("Version Query")
 BigWigsVersionQuery.consoleCmd = L["versionquery"]
 BigWigsVersionQuery.consoleOptions = {
 	type = "group",
-	name = L["VersionQuery"],
-	desc = L["Options for Version Query."],
+	name = L["Version Query"],
+	desc = L["Commands for querying the raid for Big Wigs versions."],
 	args = {
 		[L["current"]] = {
 			type = "execute",
@@ -84,7 +84,7 @@ end
 
 function BigWigsVersionQuery:PopulateRevisions()
 	self.zoneRevisions = {}
-	for name,module in self.core:IterateModules() do
+	for name, module in self.core:IterateModules() do
 		if module:IsBossModule() and module.zonename and type(module.zonename) == "string" then
 			-- Make sure to get the enUS zone name.
 			local zone = BZ:HasReverseTranslation(module.zonename) and BZ:GetReverseTranslation(module.zonename) or module.zonename
