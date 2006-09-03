@@ -3,6 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.0")("Instructor Razuvious")
+local understudy = AceLibrary("Babble-Boss-2.0")("Deathknight Understudy")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
 ----------------------------
@@ -34,22 +35,18 @@ L:RegisterTranslations("enUS", function() return {
 	shoutbar 		= "Disrupting Shout",
 
 	shieldwalltrigger   = "Deathknight Understudy gains Shield Wall.",
-	shieldwallbar       = "Shield Wall",	
+	shieldwallbar       = "Shield Wall",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "razuvious",
-
-	shout_cmd = "shout",
 	shout_name = "Unterbrechungsruf", -- ? "Triumphschrei"
 	shout_desc = "Warnung, wenn Instruktor Razuvious Unterbrechungsruf wirkt.", -- ? "Triumphschrei"
 
-	shieldwall_cmd = "shieldwall",
 	shieldwall_name = "Schildwall",
 	shieldwall_desc = "Timer f\195\188r Schildwall.",
 
 	startwarn = "Instrukteur Razuvious angegriffen! ~25 Sekunden bis zum ersten Ruf!",
-	
+
 	starttrigger1 = "Die Zeit des \195\156bens ist vorbei! Zeigt mir, was ihr gelernt habt!",
 	starttrigger2 = "Streckt sie nieder... oder habt ihr ein Problem damit?",
 	starttrigger3 = "Lasst keine Gnade walten!",
@@ -62,7 +59,7 @@ L:RegisterTranslations("deDE", function() return {
 	shoutbar = "Unterbrechungsruf", -- ? "Triumphschrei"
 
 	shieldwalltrigger   = "Reservist der Todesritter bekommt 'Schildwall'.",
-	shieldwallbar       = "Schildwall",	
+	shieldwallbar       = "Schildwall",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -100,7 +97,7 @@ L:RegisterTranslations("zhCN", function() return {
 	shoutbar 		= "瓦解怒吼",
 
 	shieldwalltrigger   = "死亡骑士学员获得了盾墙的效果。",
-	shieldwallbar       = "盾墙",	
+	shieldwallbar       = "盾墙",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -122,7 +119,7 @@ L:RegisterTranslations("frFR", function() return {
 
 BigWigsRazuvious = BigWigs:NewModule(boss)
 BigWigsRazuvious.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
-BigWigsRazuvious.enabletrigger = boss
+BigWigsRazuvious.enabletrigger = { understudy, boss }
 BigWigsRazuvious.toggleoptions = {"shout", "shieldwall", "bosskill"}
 BigWigsRazuvious.revision = tonumber(string.sub("$Revision$", 12, -3))
 
@@ -138,12 +135,12 @@ function BigWigsRazuvious:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Shout")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Shout")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Shout")
-	
+
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS", "Shieldwall")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS", "Shieldwall")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_BUFFS", "Shieldwall")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS", "Shieldwall")
-	
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 
 	self:RegisterEvent("BigWigs_Message")
@@ -231,3 +228,4 @@ function BigWigsRazuvious:Scan()
 	end
 	return false
 end
+
