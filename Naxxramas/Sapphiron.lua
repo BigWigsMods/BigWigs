@@ -22,14 +22,15 @@ L:RegisterTranslations("enUS", function() return {
 	lifedrain_name = "Life Drain",
 	lifedrain_desc = "Warns about the Life Drain curse.",
 
-	lifedrain_message = "Life Drain! ~24 seconds until next!",
+	lifedrain_message = "Life Drain! Possibly new one ~24sec!",
 	lifedrain_warn1 = "Life Drain in 5sec!",
 	lifedrain_bar = "Life Drain",
 	lifedrain_trigger = "afflicted by Life Drain",
 	lifedrain_trigger2 = "Life Drain was resisted",
 
 	deepbreath_trigger = "%s takes in a deep breath...",
-	deepbreath_warning = "Deep Breath incoming!",
+	deepbreath_warning = "Ice Bomb Incoming!",
+	deepbreath_bar = "Ice Bomb Lands!",
 } end )
 
 ----------------------------------
@@ -121,7 +122,7 @@ end
 function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "SapphironStart" and self.db.profile.lifedrain then
 		self:TriggerEvent("BigWigs_Message", L["engage_warn"], "Orange")
-		self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 24, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 18, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
 	elseif sync == "SapphironLifeDrain" and self.db.profile.lifedrain then
 		self:TriggerEvent("BigWigs_StopBar", L["lifedrain_bar"])
 		self:TriggerEvent("BigWigs_Message", L["lifedrain_message"], "Orange")
@@ -137,7 +138,10 @@ end
 
 function BigWigsSapphiron:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["deepbreath_trigger"] then
-		if self.db.profile.deepbreath then self:TriggerEvent("BigWigs_Message", L["deepbreath_warning"], "Red") end
+		if self.db.profile.deepbreath then
+			self:TriggerEvent("BigWigs_Message", L["deepbreath_warning"], "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_bar"], 8, "Interface\\Icons\\Spell_Frost_FrostShock", "Blue")
+		end
 	end
 end
 
