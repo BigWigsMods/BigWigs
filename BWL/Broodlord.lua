@@ -10,6 +10,8 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
+	cmd = "Broodlord",
+
 	trigger1 = "^([^%s]+) ([^%s]+) afflicted by Mortal Strike",
 
 	you = "You",
@@ -18,15 +20,17 @@ L:RegisterTranslations("enUS", function() return {
 	warn1 = "Mortal Strike on you!",
 	warn2 = "Mortal Strike on %s!",
 
-	cmd = "Broodlord",
-	
 	youms_cmd = "youms",
 	youms_name = "Mortal strike on you alert",
 	youms_desc = "Warn when you get mortal strike",
-	
+
 	elsems_cmd = "elsems",
 	elsems_name = "Mortal strike on others alert",
 	elsems_desc = "Warn when someone else gets mortal strike",
+
+	msbar_cmd = "msbar",
+	msbar_name = "Mortal Strike bar",
+	msbar_desc = "Shows a bar with the Mortal Strike duration",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -40,7 +44,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	youms_name = "玩家致死打击警报",
 	youms_desc = "你中了致死打击时发出警报",
-	
+
 	elsems_name = "队友致死打击警报",
 	elsems_desc = "队友中了致死打击时发出警报",
 } end )
@@ -57,7 +61,7 @@ L:RegisterTranslations("deDE", function() return {
 	youms_cmd = "youms",
 	youms_name = "T\195\182dlicher Sto\195\159 auf Dir",
 	youms_desc = "Warnung, wenn Du von T\195\182dlicher Sto\195\159 betroffen bist.",
-	
+
 	elsems_cmd = "elsems",
 	elsems_name = "T\195\182dlicher Sto\195\159 auf X",
 	elsems_desc = "Warnung, wenn andere Spieler von T\195\182dlicher Sto\195\159 betroffen sind.",
@@ -71,7 +75,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	warn1 = "Frappe mortelle sur toi!",
 	warn2 = "Frappe mortelle sur %s!",
-
 } end )
 
 ----------------------------------
@@ -81,7 +84,7 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsBroodlord = BigWigs:NewModule(boss)
 BigWigsBroodlord.zonename = AceLibrary("Babble-Zone-2.0")("Blackwing Lair")
 BigWigsBroodlord.enabletrigger = boss
-BigWigsBroodlord.toggleoptions = {"youms", "elsems", "bosskill"}
+BigWigsBroodlord.toggleoptions = {"youms", "elsems", "msbar", "bosskill"}
 BigWigsBroodlord.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -104,8 +107,10 @@ function BigWigsBroodlord:MSEvent(msg)
 	if (EPlayer and EType) then
 		if EPlayer == L["you"] and EType == L["are"] and self.db.profile.youms then
 			self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true)
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["warn2"], UnitName("player")), 10, "Interface\\Icons\\Ability_Warrior_SavageBlow", "Red")
 		elseif self.db.profile.elsems then
 			self:TriggerEvent("BigWigs_Message", string.format(L["warn2"], EPlayer), "Yellow")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["warn2"], EPlayer), 10, "Interface\\Icons\\Ability_Warrior_SavageBlow", "Red")
 		end
 	end
 end

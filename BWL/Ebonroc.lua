@@ -25,6 +25,7 @@ L:RegisterTranslations("enUS", function() return {
 	warn6 = " has Shadow of Ebonroc!",
 
 	bar1text = "Wing Buffet",
+	bar2text = "%s - Shadow of Ebonroc",
 
 	cmd = "Ebonroc",
 
@@ -43,6 +44,10 @@ L:RegisterTranslations("enUS", function() return {
 	elsecurse_cmd = "elsecurse",
 	elsecurse_name = "Shadow of Ebonroc on others alert",
 	elsecurse_desc = "Warn when others got Shadow of Ebonroc",
+
+	shadowbar_cmd = "cursebar",
+	shadowbar_name = "Shadow of Ebonroc timer bar",
+	shadowbar_desc = "Shows a timer bar when someone gets Shadow of Ebonroc",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -154,7 +159,7 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsEbonroc = BigWigs:NewModule(boss)
 BigWigsEbonroc.zonename = AceLibrary("Babble-Zone-2.0")("Blackwing Lair")
 BigWigsEbonroc.enabletrigger = boss
-BigWigsEbonroc.toggleoptions = { "youcurse", "elsecurse", "wingbuffet", "shadowflame", "bosskill"}
+BigWigsEbonroc.toggleoptions = { "youcurse", "elsecurse", "shadowbar", -1, "wingbuffet", "shadowflame", -1, "bosskill" }
 BigWigsEbonroc.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -177,7 +182,7 @@ end
 ------------------------------
 
 function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if (string.find(msg, L["trigger1"])) then
+	if string.find(msg, L["trigger1"]) then
 		self:TriggerEvent("BigWigs_SendSync", "EbonrocWingBuffet")
 	elseif msg == L["trigger2"] then
 		self:TriggerEvent("BigWigs_SendSync", "EbonrocShadowflame")
@@ -206,6 +211,10 @@ if (GetLocale() == "koKR") then
 				self:TriggerEvent("BigWigs_Message", EWho .. L["warn6"], "Yellow")
 				self:TriggerEvent("BigWigs_SendTell", EWho, L["warn5"])
 			end
+
+			if self.db.profile.shadowbar then
+				self:TriggerEvent("BigWigs_StartBar", self, string.format(L["bar2text"], EPlayer), 8, "Interface\\Icons\\Spell_Shadow_GatherShadows", "Red")
+			end
 		end
 	end
 else
@@ -217,6 +226,10 @@ else
 			elseif (self.db.profile.elsecurse) then
 				self:TriggerEvent("BigWigs_Message", EPlayer .. L["warn6"], "Yellow")
 				self:TriggerEvent("BigWigs_SendTell", EPlayer, L["warn5"])
+			end
+
+			if self.db.profile.shadowbar then
+				self:TriggerEvent("BigWigs_StartBar", self, string.format(L["bar2text"], EPlayer), 8, "Interface\\Icons\\Spell_Shadow_GatherShadows", "Red")
 			end
 		end
 	end
