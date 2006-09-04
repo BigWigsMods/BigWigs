@@ -64,13 +64,9 @@ Then he lifts for a little while - probably 30sec, then comes down and next life
 ]]
 
 function BigWigsSapphiron:OnEnable()
-
 	time = nil
 
-	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED")
-
-	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
+    self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "LifeDrain")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "LifeDrain")
@@ -79,7 +75,6 @@ function BigWigsSapphiron:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "SapphironStart", 4)
 	self:TriggerEvent("BigWigs_ThrottleSync", "SapphironLifeDrain", 4)
 end
 
@@ -87,49 +82,8 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsSapphiron:PLAYER_REGEN_DISABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Sapphiron_CheckStart")
-	if go then
-		self:CancelScheduledEvent("Sapphiron_CheckStart")
-		self:TriggerEvent("BigWigs_SendSync", "SapphironStart")
-	elseif not running then
-		self:ScheduleRepeatingEvent("Sapphiron_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self )
-	end
-end
-
-function BigWigsSapphiron:PLAYER_REGEN_ENABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Sapphiron_CheckWipe")
-	if (not go) then
-		self:TriggerEvent("BigWigs_RebootModule", self)
-	elseif (not running) then
-		self:ScheduleRepeatingEvent("Sapphiron_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
-	end
-end
-
-function BigWigsSapphiron:Scan()
-	if UnitName("target") == boss and UnitAffectingCombat("target") then
-		return true
-	elseif UnitName("playertarget") == boss and UnitAffectingCombat("playertarget") then
-		return true
-	else
-		local i
-		for i = 1, GetNumRaidMembers(), 1 do
-			if UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("raid"..i.."target") then
-				return true
-			end
-		end
-	end
-	return false
-end
-
 function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
-	if sync == "SapphironStart" and self.db.profile.lifedrain then
-		self:TriggerEvent("BigWigs_Message", L["engage_warn"], "Orange")
-		self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 18, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
-	elseif sync == "SapphironLifeDrain" and self.db.profile.lifedrain then
-		self:TriggerEvent("BigWigs_StopBar", L["lifedrain_bar"])
+	if sync == "SapphironLifeDrain" and self.db.profile.lifedrain then
 		self:TriggerEvent("BigWigs_Message", L["lifedrain_message"], "Orange")
 		self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 24, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
 	end
