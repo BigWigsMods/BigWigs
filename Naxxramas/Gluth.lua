@@ -15,7 +15,7 @@ L:RegisterTranslations("enUS", function() return {
 	fear_cmd = "fear",
 	fear_name = "Fear Alert",
 	fear_desc = "Warn for fear",
-	
+
 	frenzy_cmd = "frenzy",
 	frenzy_name = "Frenzy Alert",
 	frenzy_desc = "Warn for frenzy",
@@ -42,17 +42,12 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "gluth",
-
-	fear_cmd = "fear",
 	fear_name = "Furcht",
 	fear_desc = "Warnung vor AoE Furcht.",
-	
-	frenzy_cmd = "frenzy",
+
 	frenzy_name = "Raserei",
 	frenzy_desc = "Warnung, wenn Gluth in Raserei ger\195\164t",
 
-	decimate_cmd = "decimate",
 	decimate_name = "Dezimieren", -- ?
 	decimate_desc = "Warnung vor Dezimieren", -- ?
 
@@ -76,7 +71,7 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	fear_name = "恐惧警报",
 	fear_desc = "恐惧警报",
-	
+
 	frenzy_name = "狂暴警报",
 	frenzy_desc = "狂暴警报",
 
@@ -135,7 +130,7 @@ function BigWigsGluth:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Fear")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	
+
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Decimate")
 
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -197,7 +192,7 @@ function BigWigsGluth:Fear( msg )
 end
 
 function BigWigsGluth:Decimate( msg )
-	if string.find(msg, L"decimatetrigger") then
+	if string.find(msg, L["decimatetrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "GluthDecimate")
 	end
 end
