@@ -117,3 +117,4 @@ Naxxramas\Heigan.lua
 Naxxramas\Gothik.lua
 Naxxramas\Loatheb.lua
 Naxxramas\Horsemen.lua
+Naxxramas\Sapphiron.lua
