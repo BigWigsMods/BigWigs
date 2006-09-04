@@ -7,94 +7,94 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigsBossBlock")
 
 L:RegisterTranslations("enUS", function() return {
 	["BossBlock"] = true,
-	["Supress bossmod chat from other players."] = true,
+	["Suppress bossmod chat from other players."] = true,
 
-	["Supress Raid Chat"] = true,
-	["Supress messages in the raid channel."] = true,
+	["Suppress Raid Chat"] = true,
+	["Suppress messages in the raid channel."] = true,
 
-	["Supress RaidWarn Chat"] = true,
-	["Supress RaidWarn messages in the chat frames."] = true,
+	["Suppress RaidWarn Chat"] = true,
+	["Suppress RaidWarn messages in the chat frames."] = true,
 
-	["Supress RaidWarn"] = true,
-	["Supress RaidWarn popup messages."] = true,
+	["Suppress RaidWarn"] = true,
+	["Suppress RaidWarn popup messages."] = true,
 
-	["Supress RaidSay"] = true,
-	["Supress CTRA RaidSay popup messages."] = true,
-	["Supress oRA RaidSay popup messages."] = true,
+	["Suppress RaidSay"] = true,
+	["Suppress CTRA RaidSay popup messages."] = true,
+	["Suppress oRA RaidSay popup messages."] = true,
 
-	["Supress Tells"] = true,
-	["Supress Tell messages."] = true,
+	["Suppress Tells"] = true,
+	["Suppress Tell messages."] = true,
 
 	["Debugging"] = true,
 	["Show debug messages."] = true,
 
-	["Supressing Chatframe"] = true,
-	["Supressing RaidWarningFrame"] = true,
-	["Supressing CT_RAMessageFrame"] = true,
+	["Suppressing Chatframe"] = true,
+	["Suppressing RaidWarningFrame"] = true,
+	["Suppressing CT_RAMessageFrame"] = true,
 
-	["Supressed"] = true,
+	["Suppressed"] = true,
 	["Shown"] = true,
 } end)
 
 
 L:RegisterTranslations("zhCN", function() return {
 	["BossBlock"] = "信息阻挡",
-	["Supress bossmod chat from other players."] = "阻挡其他玩家的首领插件发送的信息。",
+	["Suppress bossmod chat from other players."] = "阻挡其他玩家的首领插件发送的信息。",
 
-	["Supress Raid Chat"] = "阻挡团队频道",
-	["Supress messages in the raid channel."] = "阻挡团队频道中的信息",
+	["Suppress Raid Chat"] = "阻挡团队频道",
+	["Suppress messages in the raid channel."] = "阻挡团队频道中的信息",
 
-	["Supress RaidWarn Chat"] = "阻挡团队警告聊天",
-	["Supress RaidWarn messages in the chat frames."] = "阻挡聊天窗体中的团队警告信息",
+	["Suppress RaidWarn Chat"] = "阻挡团队警告聊天",
+	["Suppress RaidWarn messages in the chat frames."] = "阻挡聊天窗体中的团队警告信息",
 
-	["Supress RaidWarn"] = "阻挡团队警告",
-	["Supress RaidWarn popup messages."] = "阻挡团队警告中的信息",
+	["Suppress RaidWarn"] = "阻挡团队警告",
+	["Suppress RaidWarn popup messages."] = "阻挡团队警告中的信息",
 
-	["Supress RaidSay"] = "阻挡RS",
-	["Supress CTRA RaidSay popup messages."] = "阻挡团队助手(CTRA)的RS信息",
+	["Suppress RaidSay"] = "阻挡RS",
+	["Suppress CTRA RaidSay popup messages."] = "阻挡团队助手(CTRA)的RS信息",
 
-	["Supress Tells"] = "阻挡密语",
-	["Supress Tell messages."] = "阻挡密语中的信息",
+	["Suppress Tells"] = "阻挡密语",
+	["Suppress Tell messages."] = "阻挡密语中的信息",
 
 	["Debugging"] = "除错",
 	["Show debug messages."] = "显示除错信息",
 
-	["Supressing Chatframe"] = "正在阻挡Chatframe",
-	["Supressing RaidWarningFrame"] = "正在阻挡RaidWarningFrame",
-	["Supressing CT_RAMessageFrame"] = "正在阻挡CT_RAMessageFrame",
+	["Suppressing Chatframe"] = "正在阻挡Chatframe",
+	["Suppressing RaidWarningFrame"] = "正在阻挡RaidWarningFrame",
+	["Suppressing CT_RAMessageFrame"] = "正在阻挡CT_RAMessageFrame",
 
-	["Supressed"] = "阻挡",
+	["Suppressed"] = "阻挡",
 	["Shown"] = "显示",
 } end)
 
 
 L:RegisterTranslations("deDE", function() return {
 	["BossBlock"] = "BossBlock",
-	["Supress bossmod chat from other players."] = "Unterdr\195\188cke Bossmod Chat von anderen Spielern.",
+	["Suppress bossmod chat from other players."] = "Unterdr\195\188cke Bossmod Chat von anderen Spielern.",
 
-	["Supress Raid Chat"] = "Unterdr\195\188cke Raid Chat",
-	["Supress messages in the raid channel."] = "Unterdr\195\188cke Nachrichten im Raid Channel",
+	["Suppress Raid Chat"] = "Unterdr\195\188cke Raid Chat",
+	["Suppress messages in the raid channel."] = "Unterdr\195\188cke Nachrichten im Raid Channel",
 
-	["Supress RaidWarn Chat"] = "Unterdr\195\188cke RaidWarn Chat",
-	["Supress RaidWarn messages in the chat frames."] = "Unterdr\195\188cke RaidWarn Nachrichten im Chat Fenster.",
+	["Suppress RaidWarn Chat"] = "Unterdr\195\188cke RaidWarn Chat",
+	["Suppress RaidWarn messages in the chat frames."] = "Unterdr\195\188cke RaidWarn Nachrichten im Chat Fenster.",
 
-	["Supress RaidWarn"] = "Unterdr\195\188cke RaidWarn",
-	["Supress RaidWarn popup messages."] = "Unterdr\195\188cke RaidWarn Popup Nachrichten.",
+	["Suppress RaidWarn"] = "Unterdr\195\188cke RaidWarn",
+	["Suppress RaidWarn popup messages."] = "Unterdr\195\188cke RaidWarn Popup Nachrichten.",
 
-	["Supress RaidSay"] = "Unterdr\195\188cke RaidSay",
-	["Supress CTRA RaidSay popup messages."] = "Unterdr\195\188cke CTRA RaidSay Popup Nachrichten.",
+	["Suppress RaidSay"] = "Unterdr\195\188cke RaidSay",
+	["Suppress CTRA RaidSay popup messages."] = "Unterdr\195\188cke CTRA RaidSay Popup Nachrichten.",
 
-	["Supress Tells"] = "Unterdr\195\188cke Fl\195\188stern",
-	["Supress Tell messages."] = "Unterdr\195\188cke Fl\195\188stern Nachrichten.",
+	["Suppress Tells"] = "Unterdr\195\188cke Fl\195\188stern",
+	["Suppress Tell messages."] = "Unterdr\195\188cke Fl\195\188stern Nachrichten.",
 
 	["Debugging"] = "Debugging",
 	["Show debug messages."] = "Zeige Debug Nachrichten.",
 
-	["Supressing Chatframe"] = "Unterdr\195\188cke Chatframe",
-	["Supressing RaidWarningFrame"] = "Unterdr\195\188cke RaidWarningFrame",
-	["Supressing CT_RAMessageFrame"] = "Unterdr\195\188cke CT_RAMessageFrame",
+	["Suppressing Chatframe"] = "Unterdr\195\188cke Chatframe",
+	["Suppressing RaidWarningFrame"] = "Unterdr\195\188cke RaidWarningFrame",
+	["Suppressing CT_RAMessageFrame"] = "Unterdr\195\188cke CT_RAMessageFrame",
 
-	["Supressed"] = "Unterdr\195\188ckt",
+	["Suppressed"] = "Unterdr\195\188ckt",
 	["Shown"] = "Angezeigt",
 } end)
 
@@ -108,7 +108,7 @@ local raidchans = {
 	CHAT_MSG_RAID_WARNING = "hideraidwarnchat",
 	CHAT_MSG_RAID_LEADER = "hideraidchat",
 }
-local map = {[true] = "|cffff0000"..L["Supressed"].."|r", [false] = "|cff00ff00"..L["Shown"].."|r"}
+local map = {[true] = "|cffff0000"..L["Suppressed"].."|r", [false] = "|cff00ff00"..L["Shown"].."|r"}
 local blockregexs = {
 	"%*+ .+ %*+$",
 }
@@ -158,13 +158,13 @@ BigWigsBossBlock.consoleCmd = "block"
 BigWigsBossBlock.consoleOptions = {
 	type = "group",
 	name = L["BossBlock"],
-	desc = L["Supress bossmod chat from other players."],
+	desc = L["Suppress bossmod chat from other players."],
 	args   = {
 		["chat"] = {
 			type = "toggle",
 			order = 1,
-			name = L["Supress Raid Chat"],
-			desc = L["Supress messages in the raid channel."],
+			name = L["Suppress Raid Chat"],
+			desc = L["Suppress messages in the raid channel."],
 			get = function() return BigWigsBossBlock.db.profile.hideraidchat end,
 			set = function(v) BigWigsBossBlock.db.profile.hideraidchat = v end,
 			map = map,
@@ -172,8 +172,8 @@ BigWigsBossBlock.consoleOptions = {
 		["rwchat"] = {
 			type = "toggle",
 			order = 1,
-			name = L["Supress RaidWarn Chat"],
-			desc = L["Supress RaidWarn messages in the chat frames."],
+			name = L["Suppress RaidWarn Chat"],
+			desc = L["Suppress RaidWarn messages in the chat frames."],
 			get = function() return BigWigsBossBlock.db.profile.hideraidwarnchat end,
 			set = function(v) BigWigsBossBlock.db.profile.hideraidwarnchat = v end,
 			map = map,
@@ -181,8 +181,8 @@ BigWigsBossBlock.consoleOptions = {
 		["rw"] = {
 			type = "toggle",
 			order = 1,
-			name = L["Supress RaidWarn"],
-			desc = L["Supress RaidWarn popup messages."],
+			name = L["Suppress RaidWarn"],
+			desc = L["Suppress RaidWarn popup messages."],
 			get = function() return BigWigsBossBlock.db.profile.hideraidwarn end,
 			set = function(v) BigWigsBossBlock.db.profile.hideraidwarn = v end,
 			map = map,
@@ -190,8 +190,8 @@ BigWigsBossBlock.consoleOptions = {
 		["rs"] = {
 			type = "toggle",
 			order = 1,
-			name = L["Supress RaidSay"],
-			desc = L["Supress CTRA RaidSay popup messages."],
+			name = L["Suppress RaidSay"],
+			desc = L["Suppress CTRA RaidSay popup messages."],
 			get = function() return BigWigsBossBlock.db.profile.hideraidsay end,
 			set = function(v) BigWigsBossBlock.db.profile.hideraidsay = v end,
 			map = map,
@@ -200,8 +200,8 @@ BigWigsBossBlock.consoleOptions = {
 		["ora_rs"] = {
 			type = "toggle",
 			order = 1,
-			name = L["Supress RaidSay"],
-			desc = L["Supress oRA RaidSay popup messages."],
+			name = L["Suppress RaidSay"],
+			desc = L["Suppress oRA RaidSay popup messages."],
 			get = function() return oRA_RaidSay:GetOpt("blockboss") end,
 			set = function(v) oRA_RaidSay:TogOpt("blockboss") end,
 			map = map,
@@ -210,8 +210,8 @@ BigWigsBossBlock.consoleOptions = {
 		["tell"] = {
 			type = "toggle",
 			order = 1,
-			name = L["Supress Tells"],
-			desc = L["Supress Tell messages."],
+			name = L["Suppress Tells"],
+			desc = L["Suppress Tell messages."],
 			get = function() return BigWigsBossBlock.db.profile.hidetells end,
 			set = function(v) BigWigsBossBlock.db.profile.hidetells = v end,
 			map = map,
@@ -246,8 +246,8 @@ end
 
 
 function BigWigsBossBlock:ChatFrame_OnEvent(event)
-	if self:IsChannelSupressed(event) and self:IsSpam(arg1) then
-		self:Debug(L["Supressing Chatframe"], event, arg1)
+	if self:IsChannelSuppressed(event) and self:IsSpam(arg1) then
+		self:Debug(L["Suppressing Chatframe"], event, arg1)
 		return
 	end
 	self.hooks.ChatFrame_OnEvent.orig(event)
@@ -256,7 +256,7 @@ end
 
 function BigWigsBossBlock:RaidWarningFrame_OnEvent(event, message)
 	if self.db.profile.hideraidwarn and self:IsSpam(message) then
-		self:Debug(L["Supressing RaidWarningFrame"], message)
+		self:Debug(L["Suppressing RaidWarningFrame"], message)
 		return
 	end
 	self.hooks.RaidWarningFrame_OnEvent.orig(event, message)
@@ -265,7 +265,7 @@ end
 
 function BigWigsBossBlock:CTRA_AddMessage(obj, text, red, green, blue, alpha, holdTime)
 	if self.db.profile.hideraidsay and self:IsSpam(text) then
-		self:Debug(L["Supressing CT_RAMessageFrame"], text)
+		self:Debug(L["Suppressing CT_RAMessageFrame"], text)
 		return
 	end
 	self.hooks[obj].AddMessage.orig(obj, text, red, green, blue, alpha, holdTime)
@@ -279,7 +279,7 @@ function BigWigsBossBlock:IsSpam(text)
 end
 
 
-function BigWigsBossBlock:IsChannelSupressed(chan)
+function BigWigsBossBlock:IsChannelSuppressed(chan)
 	if not raidchans[chan] then return end
 	return self.db.profile[raidchans[chan]]
 end
