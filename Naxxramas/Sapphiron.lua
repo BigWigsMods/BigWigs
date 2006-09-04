@@ -12,7 +12,7 @@ local time
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "sapphiron",
+	cmd = "Sapphiron",
 
 	engage_warn = "Sapphiron engaged! 10-24sec to Life Drain!",
 
@@ -59,7 +59,7 @@ BigWigsSapphiron.revision = tonumber(string.sub("$Revision$", 12, -3))
 12, 24, 44, 24, 24, 60, 24, 24, 44, 24
 
 It seems the first Life Drain happens at 10-24sec, then one at 24sec
-Then he lifts for a little while.
+Then he lifts for a little while - probably 30sec, then comes down and next life drain in 10-12sec.
 
 ]]
 
@@ -79,8 +79,8 @@ function BigWigsSapphiron:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "SapphironStart", 10)
-	self:TriggerEvent("BigWigs_ThrottleSync", "SapphironLifeDrain", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "SapphironStart", 4)
+	self:TriggerEvent("BigWigs_ThrottleSync", "SapphironLifeDrain", 4)
 end
 
 ------------------------------
@@ -137,12 +137,12 @@ end
 
 function BigWigsSapphiron:LifeDrain(msg)
 	if string.find(msg, L["lifedrain_trigger"]) or string.find(msg, L["lifedrain_trigger2"]) then
-		if not time or (time + 10) > GetTime() then
+		if not time or ((time + 2) > GetTime()) then
 			self:TriggerEvent("BigWigs_SendSync", "SapphironLifeDrain")
 			time = GetTime()
 		end
 	end
-end
+end 
 
 function BigWigsSapphiron:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["deepbreath_trigger"] then
