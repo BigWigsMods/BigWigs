@@ -12,8 +12,8 @@
 ## X-RelSite-Curse: 4356
 ## X-AceForum: 1222
 
-## OptionalDeps: Ace2, FuBar, BabbleLib, PaintChipsLib, TabletLib, CompostLib, DewDropLib, MikScrollingBattleText, sct, CandyBar, FuBarPlugin-2.0
-## X-Embeds: Ace2, FuBar, BabbleLib, PaintChipsLib, TabletLib, CompostLib, DewDropLib, CandyBar, FuBarPlugin-2.0
+## OptionalDeps: Ace2, FuBar, FuBarPlugin-2.0, BabbleLib, CandyBar, CompostLib, DewDropLib, PaintChipsLib, TabletLib, MikScrollingBattleText, sct
+## X-Embeds: Ace2, FuBar, FuBarPlugin-2.0, BabbleLib, CandyBar, CompostLib, DewDropLib, PaintChipsLib, TabletLib
 
 ## SavedVariables: BigWigsDB, BigWigsFubarDB
 ## SavedVariablesPerCharacter: BigWigsDBPerChar
