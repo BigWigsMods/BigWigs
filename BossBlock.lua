@@ -20,6 +20,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Supress RaidSay"] = true,
 	["Supress CTRA RaidSay popup messages."] = true,
+	["Supress oRA RaidSay popup messages."] = true,
 
 	["Supress Tells"] = true,
 	["Supress Tell messages."] = true,
@@ -195,6 +196,16 @@ BigWigsBossBlock.consoleOptions = {
 			set = function(v) BigWigsBossBlock.db.profile.hideraidsay = v end,
 			map = map,
 			hidden = function() return not CT_RAMessageFrame end,
+		},
+		["ora_rs"] = {
+			type = "toggle",
+			order = 1,
+			name = L["Supress RaidSay"],
+			desc = L["Supress oRA RaidSay popup messages."],
+			get = function() return oRA_RaidSay:GetOpt("blockboss") end,
+			set = function(v) oRA_RaidSay:TogOpt("blockboss") end,
+			map = map,
+			hidden = function() return not oRA_RaidSay end,
 		},
 		["tell"] = {
 			type = "toggle",
