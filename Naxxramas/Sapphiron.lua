@@ -5,6 +5,8 @@
 local boss = AceLibrary("Babble-Boss-2.0")("Sapphiron")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
+local time
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -25,8 +27,9 @@ L:RegisterTranslations("enUS", function() return {
 	lifedrain_message = "Life Drain! Possibly new one ~24sec!",
 	lifedrain_warn1 = "Life Drain in 5sec!",
 	lifedrain_bar = "Life Drain",
+
 	lifedrain_trigger = "afflicted by Life Drain",
-	lifedrain_trigger2 = "Life Drain was resisted",
+	lifedrain_trigger2 = "Life Drain was resisted by",
 
 	deepbreath_trigger = "%s takes in a deep breath...",
 	deepbreath_warning = "Ice Bomb Incoming!",
@@ -61,6 +64,8 @@ Then he lifts for a little while.
 ]]
 
 function BigWigsSapphiron:OnEnable()
+
+	time = nil
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
@@ -132,7 +137,10 @@ end
 
 function BigWigsSapphiron:LifeDrain(msg)
 	if string.find(msg, L["lifedrain_trigger"]) or string.find(msg, L["lifedrain_trigger2"]) then
-		self:TriggerEvent("BigWigs_SendSync", "SapphironLifeDrain")
+		if not time or (time + 10) > GetTime() then
+			self:TriggerEvent("BigWigs_SendSync", "SapphironLifeDrain")
+			time = GetTime()
+		end
 	end
 end
 
