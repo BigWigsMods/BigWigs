@@ -137,12 +137,12 @@ end
 
 function BigWigsSapphiron:LifeDrain(msg)
 	if string.find(msg, L["lifedrain_trigger"]) or string.find(msg, L["lifedrain_trigger2"]) then
-		if not time or ((time + 2) > GetTime()) then
+		if not time or (time + 2) > GetTime() then
 			self:TriggerEvent("BigWigs_SendSync", "SapphironLifeDrain")
 			time = GetTime()
 		end
 	end
-end 
+end
 
 function BigWigsSapphiron:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["deepbreath_trigger"] then
