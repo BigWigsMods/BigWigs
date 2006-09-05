@@ -118,14 +118,14 @@ function BigWigsKelThuzad:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 end
 
 function BigWigsKelThuzad:DetonateEvent( msg )
-	local _,_, player, type = string.find( msg, L["detonate_trigger"])
-	if player and type then
-		if player == L["you"] and type == L["are"] then
-			player = UnitName("player")
+	local _,_, dplayer, dtype = string.find( msg, L["detonate_trigger"])
+	if dplayer and dtype then
+		if dplayer == L["you"] and dtype == L["are"] then
+			dplayer = UnitName("player")
 		end
-		self:TriggerEvent("BigWigs_Message", player .. L["detonate_warning"], "Yellow")
-		self:TriggerEvent("BigWigs_SetRaidIcon", player )
-		self:TriggerEvent("BigWigs_StartBar", self, player .. L["detonate_bar"], 5, "Interface\\Icons\\Spell_Nature_WispSplode" )
+		self:TriggerEvent("BigWigs_Message", dplayer .. L["detonate_warning"], "Yellow")
+		self:TriggerEvent("BigWigs_SetRaidIcon", dplayer )
+		self:TriggerEvent("BigWigs_StartBar", self, dplayer .. L["detonate_bar"], 5, "Interface\\Icons\\Spell_Nature_WispSplode" )
 	end
 end
 
