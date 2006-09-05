@@ -38,6 +38,28 @@ L:RegisterTranslations("enUS", function() return {
 	whirlwindbartext = "Whirlwind",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	starttrigger = "Vous serez jug\195\169s pour avoir profan\195\169 ces lieux sacr\195\169s",
+	startwarn = "Sartura engag\195\169 - 10 minutes avant Enrag\195\169",
+	enragetrigger = boss.." gagne Enrager",
+	enragewarn = "Enrag\195\169 ! Enrag\195\169 ! Enrag\195\169 !",
+	bartext = "Enrag\195\169",
+	
+	warn1 = "Enrag\195\169 dans 8 minutes",
+	warn2 = "Enrag\195\169 dans 5 minutes",
+	warn3 = "Enrag\195\169 dans 3 minutes",
+	warn4 = "Enrag\195\169 dans 90 secondes",
+	warn5 = "Enrag\195\169 dans 60 secondes",
+	warn6 = "Enrag\195\169 dans 30 secondes",
+	warn7 = "Enrag\195\169 dans 10 secondes",
+	
+	whirlwindon = boss.." gagne Tourbillon",
+	whirlwindoff = "Tourbillon sur "..boss.." vient de se dissiper",
+	whirlwindonwarn = "Tourbillon - "..boss.." - Tourbillon",
+	whirlwindoffwarn = "Tourbillon fini. Assomez-le !",
+	whirlwindbartext = "Tourbillon",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	cmd = "Sartura",
 	enrage_cmd = "enrage",

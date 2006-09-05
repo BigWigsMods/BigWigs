@@ -34,6 +34,16 @@ L:RegisterTranslations("enUS", function() return {
 	fearwarn2 = "AE Fear in 5 Seconds!",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	healtrigger = yauj.." commence \195\160 lancer Soins exceptionnels",
+	healwarn = "Soins exceptionnels - interrompez-le !",
+
+	feartrigger = "subit les effets de Peur%.",
+	fearbar = "AoE Fear",
+	fearwarn1 = "AoE Fear ! Prochain dans 20 secondes",
+	fearwarn2 = "AoE Fear dans 5 secondes",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	cmd = "BugFamily",
 	fear_cmd = "fear",

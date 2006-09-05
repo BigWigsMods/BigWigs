@@ -36,6 +36,19 @@ L:RegisterTranslations("enUS", function() return {
 	split_desc = "Warn before Create Image",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	aetrigger = boss.." commence \195\160 lancer Explosion des arcanes",
+	mctrigger = boss.." lance Invocation des Images",
+	aewarn = "Explosion des arcanes - Interrompez-le !",
+	mcwarn = "Controle mental en cours",
+	mcplayer = "^([^%s]+) ([^%s]+) les effets de Accomplissement v\195\169ritables",
+	mcplayerwarn = " est sous controle mental !",
+	mcyou = "Tu",
+	mcare = "es",
+	
+	splitwarn = "Dédoublement !",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	aetrigger = "Der Prophet Skeram beginnt Arkane Explosion zu wirken.",
 	mctrigger = "Der Prophet Skeram beginnt Wahre Erf\195\188llung zu wirken.",
