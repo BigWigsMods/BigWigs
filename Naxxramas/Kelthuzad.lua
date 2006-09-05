@@ -35,12 +35,12 @@ L:RegisterTranslations("enUS", function() return {
 	mc_trigger1 = "Your soul is bound to me, now!",
 	mc_trigger2 = "There will be no escape!",
 	mc_warning = "Mind Control!",
-	
-    	start_trigger = "Minions, servants, soldiers of the cold dark! Obey the call of Kel'Thuzad!",
+
+	start_trigger = "Minions, servants, soldiers of the cold dark! Obey the call of Kel'Thuzad!",
 	start_warning = "Kel'Thuzad encounter started! ~5min till he is active!",
 	start_bar = "Phase 2",
 
-    	phase2_trigger = "Pray for mercy!",
+	phase2_trigger = "Pray for mercy!",
 	phase2_warning = "Phase 2, Kel'Thuzad incoming!",
 	phase2_bar = "Kel'Thuzad Active!",
 
@@ -58,6 +58,8 @@ L:RegisterTranslations("enUS", function() return {
 	are = "are",
 } end )
 
+-- 12, 32, 42, 72, 93, 127, 140, 193, 205, 238, 250, 267, 285, 310, 337
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
@@ -71,26 +73,6 @@ BigWigsKelThuzad.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 --      Initialization      --
 ------------------------------
-
---[[
-
-you enter room, Kel'Thuzad says bla blah blah
-	<N-NmE>	and phase 1 begins
-	<N-NmE>	you cant target Kel at this phase
-	<N-NmE>	adds from the surrounding rooms move towards you
-	<N-NmE>	and you have to stop em before they do
-	<N-NmE>	after approx 5 minutes of waves
-	<N-NmE>	phase 2 begins
-	<N-NmE>	and Kel "spawns"
-	<N-NmE>	hes got ALOT of abilities
-	<vhaarr>	:S
-	<N-NmE>	http://www.thottbot.com/?sp=28410 - Mind control ability
-	<N-NmE>	http://thottbot.com/?sp=28478 > his interruptable frost 9k frost bolt
-	<N-NmE>	http://thottbot.com/?sp=28479 this is propably his aoe frostbolt that you gotta eat
-	<N-NmE>	http://www.thottbot.com/?sp=27820
-	<N-NmE>	got that as well
-	<N-NmE>	or atleast we think its those spells
---]]
 
 function BigWigsKelThuzad:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -128,7 +110,7 @@ function BigWigsKelThuzad:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 		if self.db.profile.fissure then
 			self:TriggerEvent("BigWigs_Message", L["fissure_warning"], "Red")
 		end
-	elseif msg == L["frostbolt_trigger"] tehn
+	elseif msg == L["frostbolt_trigger"] then
 		if self.db.profile.frostbolt then
 			self:TriggerEvent("BigWigs_Message", L["frostbolt_warning"], "Yellow")
 		end
@@ -146,3 +128,4 @@ function BigWigsKelThuzad:DetonateEvent( msg )
 		self:TriggerEvent("BigWigs_StartBar", self, player .. L["detonate_bar"], 5, "Interface\\Icons\\Spell_Nature_WispSplode" )
 	end
 end
+
