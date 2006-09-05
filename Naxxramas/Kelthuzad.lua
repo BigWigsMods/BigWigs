@@ -12,7 +12,18 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Kelthuzad",
 
-    phase2_trigger = "Minions, servants, soldiers of the cold dark! Obey the call of Ke'Thuzad!",
+	phase2_cmd = "phase2",
+	phase2_name = "Phase 2 Warning",
+	phase2_desc = "Warn for phase 2 incoming.",
+
+	mc_cmd = "mindcontrol",
+	mc_name = "Mind Control",
+	mc_desc = "Warn for mind control.",
+	
+	mc_trigger = "Your soul is bound to me, now!",
+	mc_warning = "Mind Control!",
+	
+    	phase2_trigger = "Minions, servants, soldiers of the cold dark! Obey the call of Kel'Thuzad!",
 	phase2_warning = "Phase 2, Kel'Thuzad active!",
 } end )
 
@@ -23,7 +34,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsKelThuzad = BigWigs:NewModule(boss)
 BigWigsKelThuzad.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsKelThuzad.enabletrigger = boss
-BigWigsKelThuzad.toggleoptions = { "bosskill" }
+BigWigsKelThuzad.toggleoptions = { "mc", "phase2", "bosskill" }
 BigWigsKelThuzad.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -48,8 +59,6 @@ you enter room, Kel'Thuzad says bla blah blah
 	<N-NmE>	http://www.thottbot.com/?sp=27820
 	<N-NmE>	got that as well
 	<N-NmE>	or atleast we think its those spells
-
-
 --]]
 
 function BigWigsKelThuzad:OnEnable()
@@ -63,8 +72,9 @@ end
 
 function BigWigsKelThuzad:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["phase2_trigger"] then
-		if self.db.profile.deepbreath then self:TriggerEvent("BigWigs_Message", L["phase2_warning"], "Red") end
+		if self.db.profile.phase2 then self:TriggerEvent("BigWigs_Message", L["phase2_warning"], "Red") end
+	elseif msg == L["mc_trigger"] then
+		if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", L["mc_warning"], "Orange") end
 	end
 end
-
 
