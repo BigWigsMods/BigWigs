@@ -28,6 +28,10 @@ L:RegisterTranslations("enUS", function() return {
 	frostbolt_name = "Frostbolt Warning",
 	frostbolt_desc = "Warn for Frost bolt",
 
+	detonate_cmd = "detonate",
+	detonate_name = "Detonate Mana Warning",
+	detonate_desc = "Warn for Detonate Mana",
+
 	mc_trigger1 = "Your soul is bound to me, now!",
 	mc_trigger2 = "There will be no escape!",
 	mc_warning = "Mind Control!",
@@ -45,6 +49,13 @@ L:RegisterTranslations("enUS", function() return {
 
 	frostbolt_trigger = "Kel'Thuzad begins to cast Frostbolt.",
 	frostbolt_warning = "Frost Bolt!",
+
+	detonate_trigger = "^([^%s]+) ([^%s]+) afflicted by Detonate Mana",
+	detonate_bar = "Detonate Mana - ",
+	detonate_warning = " has Detonate Mana!",
+
+	you = "You",
+	are = "are",
 } end )
 
 ----------------------------------
@@ -54,7 +65,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsKelThuzad = BigWigs:NewModule(boss)
 BigWigsKelThuzad.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsKelThuzad.enabletrigger = boss
-BigWigsKelThuzad.toggleoptions = { "frostbolt", "fissure", "mc", "phase", "bosskill" }
+BigWigsKelThuzad.toggleoptions = { "frostbolt", "fissure", "mc", "detonate", "phase", "bosskill" }
 BigWigsKelThuzad.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -85,6 +96,10 @@ function BigWigsKelThuzad:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "DetonateEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "DetonateEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "DetonateEvent")
 end
 
 ------------------------------
@@ -117,5 +132,17 @@ function BigWigsKelThuzad:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 		if self.db.profile.frostbolt then
 			self:TriggerEvent("BigWigs_Message", L["frostbolt_warning"], "Yellow")
 		end
+	end
+end
+
+function BigWigsKelThuzad:DetonateEvent( msg )
+	local _,_, player, type = string.find( msg, L["detonate_trigger"])
+	if player and type then
+		if player == L["you"] and type == L["are"] then
+			player = UnitName("player")
+		end
+		self:TriggerEvent("BigWigs_Message", player .. L["detonate_warning"], "Yellow")
+		self:TriggerEvent("BigWigs_SetRaidIcon", player )
+		self:TriggerEvent("BigWigs_StartBar", self, player .. L["detonate_bar"], 5, "Interface\\Icons\\Spell_Nature_WispSplode" )
 	end
 end
