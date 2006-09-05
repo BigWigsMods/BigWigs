@@ -121,3 +121,4 @@ Naxxramas\Gothik.lua
 Naxxramas\Loatheb.lua
 Naxxramas\Horsemen.lua
 Naxxramas\Sapphiron.lua
+Naxxramas\Kelthuzad.lua
