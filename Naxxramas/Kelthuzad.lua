@@ -21,8 +21,12 @@ L:RegisterTranslations("enUS", function() return {
 	mc_desc = "Warn for mind control.",
 	
 	fissure_cmd = "fissure",
-	fissure_name = "Shadow Fissure",
+	fissure_name = "Shadow Fissure warning,",
 	fissure_desc = "Warn for Shadow Fissure",
+
+	frostbolt_cmd = "frostbolt",
+	frostbolt_name = "Frostbolt Warning",
+	frostbolt_desc = "Warn for Frost bolt",
 
 	mc_trigger1 = "Your soul is bound to me, now!",
 	mc_trigger2 = "There will be no escape!",
@@ -38,6 +42,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	fissure_trigger = "Kel'Thuzad casts Shadow Fissure.",
 	fissure_warning = "Shadow Fissure!",
+
+	frostbolt_trigger = "Kel'Thuzad begins to cast Frostbolt.",
+	frostbolt_warning = "Frost Bolt!",
 } end )
 
 ----------------------------------
@@ -47,7 +54,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsKelThuzad = BigWigs:NewModule(boss)
 BigWigsKelThuzad.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsKelThuzad.enabletrigger = boss
-BigWigsKelThuzad.toggleoptions = { "mc", "phase", "bosskill" }
+BigWigsKelThuzad.toggleoptions = { "frostbolt", "fissure", "mc", "phase", "bosskill" }
 BigWigsKelThuzad.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -105,6 +112,10 @@ function BigWigsKelThuzad:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 	if msg == L["fissure_trigger"] then
 		if self.db.profile.fissure then
 			self:TriggerEvent("BigWigs_Message", L["fissure_warning"], "Red")
+		end
+	elseif msg == L["frostbolt_trigger"] tehn
+		if self.db.profile.frostbolt then
+			self:TriggerEvent("BigWigs_Message", L["frostbolt_warning"], "Yellow")
 		end
 	end
 end
