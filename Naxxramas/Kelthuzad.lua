@@ -12,9 +12,9 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Kelthuzad",
 
-	phase2_cmd = "phase2",
-	phase2_name = "Phase 2 Warning",
-	phase2_desc = "Warn for phase 2 incoming.",
+	phase_cmd = "phase",
+	phase_name = "Phase Warnings",
+	phase_desc = "Warn for phases.",
 
 	mc_cmd = "mindcontrol",
 	mc_name = "Mind Control",
@@ -47,7 +47,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsKelThuzad = BigWigs:NewModule(boss)
 BigWigsKelThuzad.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsKelThuzad.enabletrigger = boss
-BigWigsKelThuzad.toggleoptions = { "mc", "phase2", "bosskill" }
+BigWigsKelThuzad.toggleoptions = { "mc", "phase", "bosskill" }
 BigWigsKelThuzad.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
