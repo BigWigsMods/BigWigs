@@ -33,7 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 	stingwarn = "Wyvern Sting - Dispel Tanks!",
 	stingdelaywarn = "Possible Wyvern Sting in 3 seconds!",
 	bartext = "Wyvern Sting",
-	
+
 	startwarn = "Huhuran engaged, 5 minutes to berserk!",
 	berserkbar = "Berserk",
 	berserkwarn1 = "Berserk in 1 minute!",
@@ -43,17 +43,12 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "Huhuran",
-
-	wyvern_cmd = "wyvern",
 	wyvern_name = "Stich des Fl\195\188geldrachen",
 	wyvern_desc = "Warnung, wenn Huhuran Stich des Fl\195\188geldrachen wirkt.",
 
-	frenzy_cmd = "frenzy",
 	frenzy_name = "Raserei",
 	frenzy_desc = "Warnung, wenn Huhuran in Raserei ger\195\164t.",
 
-	berserk_cmd = "berserk",
 	berserk_name = "Berserkerwut",
 	berserk_desc = "Warnung, wenn Huhuran in Berserkerwut verf\195\164llt.",
 
@@ -66,7 +61,7 @@ L:RegisterTranslations("deDE", function() return {
 	stingwarn = "Stich des Fl\195\188geldrachen - Krieger reinigen!",
 	stingdelaywarn = "M\195\182glicher Stich des Fl\195\188geldrachen in 3 Sekunden!",
 	bartext = "Stich",
-	
+
 	startwarn = "Huhuran angegriffen! 5 Minuten bis Berserkerwut!",
 	berserkbar = "Berserkerwut",
 	berserkwarn1 = "Berserkerwut in 1 Minute!",
@@ -229,7 +224,7 @@ function BigWigsHuhuran:CHAT_MSG_MONSTER_EMOTE(arg1)
 end
 
 function BigWigsHuhuran:UNIT_HEALTH(arg1)
-	if not self.db.profile.berserk then return end
+	if not self.db.profile.berserk or self.berserkannounced then return end
 	if UnitName(arg1) == boss then
 		local health = UnitHealth(arg1)
 		if (health > 30 and health <= 33) then

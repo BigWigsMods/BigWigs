@@ -11,25 +11,24 @@ local berserkannounced
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
+	cmd = "Ouro",
 
-	cmd = "ouro",
-	
 	sweep_cmd = "sweep",
 	sweep_name = "Sweep Alert",
 	sweep_desc = "Warn for Sweeps",
-	
+
 	sandblast_cmd = "sandblast",
 	sandblast_name = "Sandblast Alert",
 	sandblast_desc = "Warn for Sandblasts",
-	
+
 	emerge_cmd = "emerge",
 	emerge_name = "Emerge Alert",
 	emerge_desc = "Warn for Emerge",
-	
+
 	submerge_cmd = "submerge",
 	submerge_name = "Submerge Alert",
 	submerge_desc = "Warn for Submerge",
-	
+
 	scarab_cmd = "scarab",
 	scarab_name = "Scarab Despawn Alert",
 	scarab_desc = "Warn for Scarab Despawn",
@@ -61,25 +60,18 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "ouro",
-	
-	sweep_cmd = "sweep",
 	sweep_name = "Feger",
 	sweep_desc = "Warnung, wenn Ouro Feger wirkt.",
-	
-	sandblast_cmd = "sandblast",
+
 	sandblast_name = "Sandsto\195\159",
 	sandblast_desc = "Warnung, wenn Ouro Sandsto\195\159 wirkt.",
-	
-	emerge_cmd = "emerge",
+
 	emerge_name = "Auftauchen",
 	emerge_desc = "Warnung, wenn Ouro auftaucht.",
-	
-	submerge_cmd = "submerge",
+
 	submerge_name = "Untertauchen",
 	submerge_desc = "Warnung, wenn Ouro untertaucht.",
-	
-	scarab_cmd = "scarab",
+
 	scarab_name = "Scarab Despawn Alert", -- ?
 	scarab_desc = "Warn for Scarab Despawn", -- ?
 
@@ -202,6 +194,8 @@ BigWigsOuro.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsOuro:OnEnable()
+	berserkannounced = nil
+
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -216,6 +210,8 @@ function BigWigsOuro:OnEnable()
 end
 
 function BigWigsOuro:UNIT_HEALTH( msg )
+	if berserkannounced then return end
+
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if (health > 20 and health <= 23) then
