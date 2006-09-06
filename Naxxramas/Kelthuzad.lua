@@ -12,6 +12,8 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Kelthuzad",
 
+	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzad Chamber",
+
 	phase_cmd = "phase",
 	phase_name = "Phase Warnings",
 	phase_desc = "Warn for phases.",
@@ -86,6 +88,11 @@ BigWigsKelThuzad.revision = tonumber(string.sub("$Revision$", 12, -3))
 --      Initialization      --
 ------------------------------
 
+function BigWigsKelThuzad:OnInitialize()
+	-- Big evul hack to enable the module when entering Kel'Thuzads chamber.
+	self:RegisterEvent("MINIMAP_ZONE_CHANGED")
+end
+
 function BigWigsKelThuzad:OnEnable()
 	self.warnedAboutPhase3Soon = nil
 
@@ -102,6 +109,12 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function BigWigsKelThuzad:MINIMAP_ZONE_CHANGED(msg)
+	if not GetMinimapZoneText() == L["KELTHUZADCHAMBERLOCALIZEDLOLHAX"] then return end
+	-- Activate the Kel'Thuzad mod!
+	self.core:EnableModule(self)
+end
 
 function BigWigsKelThuzad:UNIT_HEALTH(msg)
 	if not self.db.profile.phase or self.warnedAboutPhase3Soon then return end
