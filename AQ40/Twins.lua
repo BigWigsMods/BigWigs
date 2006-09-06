@@ -204,7 +204,6 @@ function BigWigsTwins:PLAYER_REGEN_DISABLED()
 	if (go) then
 		self:CancelScheduledEvent("Twins_CheckStart")
 		self:TriggerEvent("BigWigs_SendSync", "TwinsEnrage")
-		self:TriggerEvent("BigWigs_SendSync", "TwinsTeleport")
 	elseif not running then
 		self:ScheduleRepeatingEvent("Twins_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self)
 	end
