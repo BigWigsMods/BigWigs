@@ -5,6 +5,9 @@
 local boss = AceLibrary("Babble-Boss-2.0")("Kel'Thuzad")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
+local mcTime
+local frostBlastTime
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -104,6 +107,9 @@ end
 function BigWigsKelThuzad:OnEnable()
 	self.warnedAboutPhase3Soon = nil
 
+	frostBlastTime = nil
+	mcTime = nil
+
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -161,7 +167,10 @@ function BigWigsKelThuzad:CHAT_MSG_MONSTER_YELL(msg)
 			self:TriggerEvent("BigWigs_Message", L["phase3_warning"], "Yellow")
 		end
 	elseif msg == L["mc_trigger1"] or msg == L["mc_trigger2"] then
-		self:TriggerEvent("BigWigs_SendSync", "KelMindControl")
+		if not mcTime or (mcTime + 2) < GetTime() then
+			self:TriggerEvent("BigWigs_SendSync", "KelMindControl")
+			mcTime = GetTime()
+		end
 	elseif msg == L["guardians_trigger"] then
 		if self.db.profile.guardians then
 			self:TriggerEvent("BigWigs_Message", L["guardians_warning"], "Red")
@@ -201,7 +210,10 @@ function BigWigsKelThuzad:Affliction( msg )
 			self:TriggerEvent("BigWigs_SendSync", "KelDetonate "..dplayer)
 		end
 	elseif string.find(msg, L["frostblast_trigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "KelFrostBlast")
+		if not frostBlastTime or (frostBlastTime + 2) < GetTime() then
+			self:TriggerEvent("BigWigs_SendSync", "KelFrostBlast")
+			frostBlastTime = GetTime()
+		end
 	end
 end
 
