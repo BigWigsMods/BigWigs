@@ -46,13 +46,16 @@ L:RegisterTranslations("enUS", function() return {
 	warn4 = "Spell vulnerability changed!",
 	warn5 = "Frenzy Alert!",
 	warn6 = "Enrage soon!",
-
+    
+    breathfirst = "First Breath",
+    breathsecond = "Second Breath",
 	breath1 = "Time Lapse",
 	breath2 = "Corrosive Acid",
 	breath3 = "Ignite Flesh",
 	breath4 = "Incinerate",
 	breath5 = "Frost Burn",
-
+    
+    iconunknown = "Interface\\Icons\\INV_Misc_QuestionMark",
 	icon1 = "Interface\\Icons\\Spell_Arcane_PortalOrgrimmar",
 	icon2 = "Interface\\Icons\\Spell_Nature_Acid_01",
 	icon3 = "Interface\\Icons\\Spell_Fire_Fire",
@@ -211,9 +214,37 @@ function BigWigsChromaggus:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE", "PlayerDamageEvents")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("UNIT_HEALTH")
+    self:RegisterEvent("PLAYER_REGEN_DISABLED")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ChromaggusBreath", 10)
+end
+
+function BigWigsChromaggus:Scan()
+	if UnitName("target") == boss and UnitAffectingCombat("target") then
+		return true
+	elseif UnitName("playertarget") == boss and UnitAffectingCombat("playertarget") then
+		return true
+	else
+		local i
+		for i = 1, GetNumRaidMembers(), 1 do
+			if UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("raid"..i.."target") then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+function BigWigsChromaggus:PLAYER_REGEN_DISABLED()
+	local go = self:Scan()
+	local running = self:IsEventScheduled("Chromaggus_CheckStart")
+	if (go) then
+		self:CancelScheduledEvent("Chromaggus_CheckStart")
+		self:TriggerEvent("BigWigs_SendSync", "ChromaggusBreath " .. L["breathfirst"])
+	elseif not running then
+		self:ScheduleRepeatingEvent("Chromaggus_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self)
+	end
 end
 
 function BigWigsChromaggus:UNIT_HEALTH( msg )
@@ -238,6 +269,16 @@ end
 function BigWigsChromaggus:BigWigs_RecvSync(sync, SpellName)
 	if sync ~= "ChromaggusBreath" then return end
 	
+    if SpellName == L["breathfirst"] then
+        if self.db.profile.breath then 
+            self:ScheduleEvent("bwchromaggusbreath1", "BigWigs_Message", 20, format(L["warn1"], L["breathfirst"]), "Red")
+            self:TriggerEvent("BigWigs_StartBar", self, L["breathfirst"], 30, L["iconunknown"], "Green", "Yellow", "Orange", "Red")
+            self:ScheduleEvent("bwchromaggusbreath1", "BigWigs_Message", 50, format(L["warn1"], L["breathsecond"]), "Red")
+            self:TriggerEvent("BigWigs_StartBar", self, L["breathsecond"], 60, L["iconunknown"], "Green", "Yellow", "Orange", "Red")
+        end
+        return
+    end
+    
 	if SpellName then
 		if not breath1 then
 			breath1 = SpellName
