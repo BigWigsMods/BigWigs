@@ -172,6 +172,7 @@ function BigWigsEbonroc:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+    self:RegisterEvent("PLAYER_REGEN_DISABLED")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "EbonrocWingBuffet", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "EbonrocShadowflame", 10)
@@ -180,6 +181,33 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function BigWigsEbonroc:Scan()
+	if UnitName("target") == boss and UnitAffectingCombat("target") then
+		return true
+	elseif UnitName("playertarget") == boss and UnitAffectingCombat("playertarget") then
+		return true
+	else
+		local i
+		for i = 1, GetNumRaidMembers(), 1 do
+			if UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("raid"..i.."target") then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+function BigWigsEbonroc:PLAYER_REGEN_DISABLED()
+	local go = self:Scan()
+	local running = self:IsEventScheduled("Ebonroc_CheckStart")
+	if (go) then
+		self:CancelScheduledEvent("Ebonroc_CheckStart")
+		self:TriggerEvent("BigWigs_SendSync", "EbonrocWingBuffet")
+	elseif not running then
+		self:ScheduleRepeatingEvent("Ebonroc_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self)
+	end
+end
 
 function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if string.find(msg, L["trigger1"]) then

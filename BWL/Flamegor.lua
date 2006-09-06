@@ -139,6 +139,7 @@ function BigWigsFlamegor:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+    self:RegisterEvent("PLAYER_REGEN_DISABLED")    
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "FlamegorWingBuffet", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "FlamegorShadowflame", 10)
@@ -147,6 +148,32 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+function BigWigsFlamegor:Scan()
+	if UnitName("target") == boss and UnitAffectingCombat("target") then
+		return true
+	elseif UnitName("playertarget") == boss and UnitAffectingCombat("playertarget") then
+		return true
+	else
+		local i
+		for i = 1, GetNumRaidMembers(), 1 do
+			if UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("raid"..i.."target") then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+function BigWigsFlamegor:PLAYER_REGEN_DISABLED()
+	local go = self:Scan()
+	local running = self:IsEventScheduled("Flamegor_CheckStart")
+	if (go) then
+		self:CancelScheduledEvent("Flamegor_CheckStart")
+		self:TriggerEvent("BigWigs_SendSync", "FlamegorWingBuffet")
+	elseif not running then
+		self:ScheduleRepeatingEvent("Flamegor_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self)
+	end
+end
 
 function BigWigsFlamegor:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if (string.find(msg, L["trigger1"])) then

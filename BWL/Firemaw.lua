@@ -112,6 +112,7 @@ BigWigsFiremaw.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsFiremaw:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+    self:RegisterEvent("PLAYER_REGEN_DISABLED")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "FiremawWingBuffet", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "FiremawShadowflame", 10)
@@ -120,6 +121,32 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+function BigWigsFiremaw:Scan()
+	if UnitName("target") == boss and UnitAffectingCombat("target") then
+		return true
+	elseif UnitName("playertarget") == boss and UnitAffectingCombat("playertarget") then
+		return true
+	else
+		local i
+		for i = 1, GetNumRaidMembers(), 1 do
+			if UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("raid"..i.."target") then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+function BigWigsFiremaw:PLAYER_REGEN_DISABLED()
+	local go = self:Scan()
+	local running = self:IsEventScheduled("Firemaw_CheckStart")
+	if (go) then
+		self:CancelScheduledEvent("Firemaw_CheckStart")
+		self:TriggerEvent("BigWigs_SendSync", "FiremawWingBuffet")
+	elseif not running then
+		self:ScheduleRepeatingEvent("Firemaw_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self)
+	end
+end
 
 function BigWigsFiremaw:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if (string.find(msg, L["trigger1"])) then
