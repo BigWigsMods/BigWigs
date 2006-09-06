@@ -14,29 +14,27 @@ local breath2 = nil
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Chromaggus",
-	
+
 	enrage_cmd = "enrage",
 	enrage_name = "Enrage",
 	enrage_desc = "Warn before Enrage at 20%",
-	
+
 	frenzy_cmd = "frenzy",
 	frenzy_name = "Frenzy Alert",
 	frenzy_desc = "Warn for Frenzy",
-	
+
 	breath_cmd = "breath",
 	breath_name = "Breath Alerts",
 	breath_desc = "Warn for Breaths",
-	
+
 	vulnerability_cmd = "vulnerability",
 	vulnerability_name = "Vulnerability Alerts",
 	vulnerability_desc = "Warn for Vulnerability changes",
-	
+
 	trigger1 = "^Chromaggus begins to cast ([%w ]+)\.",
 	trigger2 = "^[%w']+ [%w' ]+ ([%w]+) Chromaggus for ([%d]+) ([%w ]+) damage%..*",
 	trigger3 = "Chromaggus's Time Lapse was resisted by ([%w]+)%.",
-	--trigger4 = "goes into a killing frenzy!",
 	trigger4 = "%s goes into a killing frenzy!",
-	--trigger5 = "flinches as its skin shimmers.",
 	trigger5 = "%s flinches as its skin shimmers.",
 
 	hit = "hits",
@@ -64,24 +62,18 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "Chromaggus",
-	
-	enrage_cmd = "enrage",
 	enrage_name = "Wutanfall",
 	enrage_desc = "Warnung, wenn Chromaggus w\195\188tend wird.",
-	
-	frenzy_cmd = "frenzy",
+
 	frenzy_name = "Raserei",
 	frenzy_desc = "Warnung, wenn Chromaggus in Raserei ger\195\164t.",
-	
-	breath_cmd = "breath",
+
 	breath_name = "Atem",
 	breath_desc = "Warnung, wenn Chromaggus seinen Atem wirkt.",
-	
-	vulnerability_cmd = "vulnerability",
+
 	vulnerability_name = "Zauber-Verwundbarkeiten",
 	vulnerability_desc = "Warnung, wenn Chromagguss Zauber-Verwundbarkeit sich \195\164ndert.",
-	
+
 	trigger1 = "^Chromaggus beginnt (.+) zu wirken%.",
 	trigger2 = "^[^%s]+ .* trifft Chromaggus(.+)f\195\188r ([%d]+) ([%w ]+)'schaden%..*", -- ?
 	trigger3 = "Chromagguss Zeitraffer wurde von ([%w]+) widerstanden.%", -- ?
@@ -108,16 +100,16 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	enrage_name = "激怒警报",
 	enrage_desc = "20%生命激怒前发出警报。",
-	
+
 	frenzy_name = "狂暴警报",
 	frenzy_desc = "狂暴警报",
-	
+
 	breath_name = "吐息警报",
 	breath_desc = "吐息警报",
-	
+
 	vulnerability_name = "弱点警报",
 	vulnerability_desc = "克洛玛古斯弱点改变时发出警报",
-	
+
 	trigger1 = "^克洛玛古斯开始施放(.+)。",
 	trigger2 = "^.+的(.+)克洛玛古斯造成(%d+)点(.+)伤害。",
 	trigger3 = "^克洛玛古斯的时间流逝被(.+)抵抗了。",
@@ -166,8 +158,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	cmd = "Chromaggus",
-	
 	trigger1 = "^Chromaggus commence \195\160 lancer (.+)%.",
 	trigger2 = "^.+ lance .+ et (.+) \195\160 Chromaggus %(([%d]+) points de d\195\169g\195\162ts .+ (.+)%)%.";
 	trigger3 = "^Chromaggus utilise Trou de temps, mais ([%w]+) r\195\169siste%.",
@@ -189,7 +179,6 @@ L:RegisterTranslations("frFR", function() return {
 	breath3 = "Enflammer la chair",
 	breath4 = "Incin\195\169rer",
 	breath5 = "Br\195\187lure de givre",
-
 } end )
 
 ----------------------------------
@@ -222,19 +211,19 @@ function BigWigsChromaggus:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE", "PlayerDamageEvents")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("UNIT_HEALTH")
-	
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ChromaggusBreath", 10)
-
 end
 
 function BigWigsChromaggus:UNIT_HEALTH( msg )
 	if self.db.profile.enrage and UnitName(msg) == boss then
 		local health = UnitHealth(msg)
-		
 		if health > 20 and health <= 23 and not self.twenty then
 			self:TriggerEvent("BigWigs_Message", L["warn6"], "Red")
 			self.twenty = true
+		elseif health > 40 and self.twenty then
+			self.twenty = nil
 		end
 	end
 end
@@ -309,3 +298,4 @@ else
 		end
 	end
 end
+

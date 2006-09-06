@@ -58,11 +58,9 @@ L:RegisterTranslations("deDE", function() return {
 	warn1 = "T\195\182dlicher Sto\195\159 auf Dir!",
 	warn2 = "T\195\182dlicher Sto\195\159 auf %s!",
 
-	youms_cmd = "youms",
 	youms_name = "T\195\182dlicher Sto\195\159 auf Dir",
 	youms_desc = "Warnung, wenn Du von T\195\182dlicher Sto\195\159 betroffen bist.",
 
-	elsems_cmd = "elsems",
 	elsems_name = "T\195\182dlicher Sto\195\159 auf X",
 	elsems_desc = "Warnung, wenn andere Spieler von T\195\182dlicher Sto\195\159 betroffen sind.",
 } end )
@@ -114,3 +112,4 @@ function BigWigsBroodlord:MSEvent(msg)
 		end
 	end
 end
+

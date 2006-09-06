@@ -17,9 +17,8 @@ L:RegisterTranslations("enUS", function() return {
 	you = "You",
 	are = "are",
 
-	warn1 = "Ebonroc begins to cast Wing Buffet!",
-	warn2 = "30 seconds till next Wing Buffet!",
-	warn3 = "3 seconds before Ebonroc casts Wing Buffet!",
+	warn1 = "Wing Buffet! 30sec to next!",
+	warn3 = "3sec to Wing Buffet!",
 	warn4 = "Shadow Flame incoming!",
 	warn5 = "You have Shadow of Ebonroc!",
 	warn6 = " has Shadow of Ebonroc!",
@@ -59,7 +58,6 @@ L:RegisterTranslations("zhCN", function() return {
 	are = "到",
 
 	warn1 = "埃博诺克开始施放龙翼打击！",
-	warn2 = "龙翼打击 - 30秒后再次发动",
 	warn3 = "3秒后发动龙翼打击！",
 	warn4 = "暗影烈焰发动！",
 	warn5 = "你中了埃博诺克之影！",
@@ -90,8 +88,6 @@ L:RegisterTranslations("koKR", function() return {
 	are = "are",
 	whopattern = "(.+)|1이;가; ",
 
-	warn1 = "에본로크가 폭풍 날개를 시전합니다!",
-	warn2 = "30초후 폭풍 날개!",
 	warn3 = "3초후 폭풍 날개!",
 	warn4 = "암흑의 불길 경고!",
 	warn5 = "당신은 에본로크의 그림자에 걸렸습니다!",
@@ -108,8 +104,6 @@ L:RegisterTranslations("deDE", function() return {
 	you = "Ihr",
 	are = "seid",
 
-	warn1 = "Fl\195\188gelsto\195\159!",
-	warn2 = "30 Sekunden bis zum n\195\164chsten Fl\195\188gelsto\195\159!",
 	warn3 = "3 Sekunden bis Fl\195\188gelsto\195\159!",
 	warn4 = "Schattenflamme in K\195\188rze!",
 	warn5 = "Du hast Schattenschwinges Schatten!",
@@ -117,21 +111,15 @@ L:RegisterTranslations("deDE", function() return {
 
 	bar1text = "Fl\195\188gelsto\195\159",
 
-	cmd = "Ebonroc",
-
-	wingbuffet_cmd = "wingbuffet",
 	wingbuffet_name = "Fl\195\188gelsto\195\159",
 	wingbuffet_desc = "Warnung, wenn Schattenschwinge Fl\195\188gelsto\195\159 wirkt.",
 
-	shadowflame_cmd = "shadowflame",
 	shadowflame_name = "Schattenflamme",
 	shadowflame_desc = "Warnung, wenn Schattenschwinge Schattenflamme wirkt.",
 
-	youcurse_cmd = "youcurse",
 	youcurse_name = "Schatten auf Dir",
 	youcurse_desc = "Warnung, wenn Du Schattenschwinges Schatten hast.",
 
-	elsecurse_cmd = "elsecurse",
 	elsecurse_name = "Schatten auf Anderen",
 	elsecurse_desc = "Warnung, wenn andere Spieler Schattenschwinges Schatten haben.",
 } end)
@@ -144,8 +132,6 @@ L:RegisterTranslations("frFR", function() return {
 	you = "Vous",
 	are = "subissez",
 
-	warn1 = "Roch\195\169b\195\168ne commence \195\160 lancer Frappe des ailes!",
-	warn2 = "30 sec avant prochaine Frappe des ailes!",
 	warn3 = "3 sec avant prochaine Frappe des ailes!",
 	warn4 = "Flamme d'ombre imminente!",
 	warn5 = "Vous avez l'Ombre de Roch\195\169b\195\168nec!",
@@ -172,7 +158,7 @@ function BigWigsEbonroc:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-    self:RegisterEvent("PLAYER_REGEN_DISABLED")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "EbonrocWingBuffet", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "EbonrocShadowflame", 10)
@@ -210,17 +196,16 @@ function BigWigsEbonroc:PLAYER_REGEN_DISABLED()
 end
 
 function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if string.find(msg, L["trigger1"]) then
-		self:TriggerEvent("BigWigs_SendSync", "EbonrocWingBuffet")
-	elseif msg == L["trigger2"] then
+	if msg == L["trigger2"] then
 		self:TriggerEvent("BigWigs_SendSync", "EbonrocShadowflame")
+	elseif string.find(msg, L["trigger1"]) then
+		self:TriggerEvent("BigWigs_SendSync", "EbonrocWingBuffet")
 	end
 end
 
 function BigWigsEbonroc:BigWigs_RecvSync(sync)
 	if sync == "EbonrocWingBuffet" and self.db.profile.wingbuffet then
 		self:TriggerEvent("BigWigs_Message", L["warn1"], "Red")
-		self:TriggerEvent("BigWigs_Message", L["warn2"], "Yellow")
 		self:ScheduleEvent("BigWigs_Message", 29, L["warn3"], "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")
 	elseif sync == "EbonrocShadowflame" and self.db.profile.shadowflame then
