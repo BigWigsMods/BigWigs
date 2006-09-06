@@ -62,7 +62,7 @@ L:RegisterTranslations("enUS", function() return {
 	fissure_warning = "Shadow Fissure!",
 
 	frostblast_trigger = "^([^%s]+) ([^%s]+) afflicted by Frost Blast",
-	frostblast_warning = "Frost Blast!"
+	frostblast_warning = "Frost Blast!",
 
 	detonate_trigger = "^([^%s]+) ([^%s]+) afflicted by Detonate Mana",
 	detonate_bar = "Detonate Mana - ",
