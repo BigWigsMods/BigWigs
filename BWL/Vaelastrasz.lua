@@ -5,6 +5,9 @@
 local boss = AceLibrary("Babble-Boss-2.0")("Vaelastrasz the Corrupt")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
+local times = nil
+local playerName = nil
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -111,57 +114,54 @@ BigWigsVaelastrasz.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsVaelastrasz:OnEnable()
+	times = {}
+	playerName = UnitName("player")
+
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "VaelBomb", 5)
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-if (GetLocale() == "koKR") then
-	function BigWigsVaelastrasz:Event(msg)
-		local _, _, EPlayer = string.find(msg, L["trigger1"])
-		if (EPlayer) then
-			if (EPlayer == L["you"] and self.db.profile.youburning) then
-				self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true)
-			elseif (self.db.profile.elseburning) then
-				local _, _, EWho = string.find(EPlayer, L["whopattern"])
-				self:TriggerEvent("BigWigs_Message", EWho .. L["warn2"], "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", EWho, L["warn1"])
-			end
+function BigWigsVaelastrasz:BigWigs_RecvSync(sync, rest, nick)
+	if sync ~= "VaelBomb" or not rest then return end
+	local player = rest
 
-			if EPlayer == L["you"] then EPlayer = UnitName("player") end
-			if self.db.profile.icon then 
-				self:TriggerEvent("BigWigs_SetRaidIcon", EPlayer)
-			end
-			if self.db.profile.burningbar then
-				self:TriggerEvent("BigWigs_StartBar", self, EPlayer .. L["warn2"], 20, "Interface\\Icons\\INV_Gauntlets_03", "Yellow", "Orange", "Red")
-			end
-		end
+	if self.db.profile.youburning and player == playerName then
+		self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true)
+	elseif self.db.profile.elseburning then
+		self:TriggerEvent("BigWigs_Message", player .. L["warn2"], "Yellow")
+		self:TriggerEvent("BigWigs_SendTell", player, L["warn1"])
 	end
-else
-	function BigWigsVaelastrasz:Event(msg)
-		local _, _, EPlayer, EType = string.find(msg, L["trigger1"])
-		if (EPlayer and EType) then
-			if (EPlayer == L["you"] and EType == L["are"] and self.db.profile.youburning) then
-				self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true)
-			elseif (self.db.profile.elseburning) then
-				self:TriggerEvent("BigWigs_Message", EPlayer .. L["warn2"], "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", EPlayer, L["warn1"])
-			end
 
-			if EPlayer == L["you"] then EPlayer = UnitName("player") end
-			if self.db.profile.icon then	
-				self:TriggerEvent("BigWigs_SetRaidIcon", EPlayer )
-			end
-			if self.db.profile.burningbar then
-				self:TriggerEvent("BigWigs_StartBar", self, EPlayer .. L["warn2"], 20, "Interface\\Icons\\INV_Gauntlets_03", "Yellow", "Orange", "Red")
-			end
-		end
+	if self.db.profile.icon then 
+		self:TriggerEvent("BigWigs_SetRaidIcon", player)
+	end
+	if self.db.profile.burningbar then
+		self:TriggerEvent("BigWigs_StartBar", self, player .. L["warn2"], 20, "Interface\\Icons\\INV_Gauntlets_03", "Yellow", "Orange", "Red")
 	end
 end
 
+function BigWigsVaelastrasz:Event(msg)
+	local _, _, baPlayer = string.find(msg, L["trigger1"])
+	if baPlayer then
+		if baPlayer == L["you"] then
+			baPlayer = UnitName("player")
+		elseif GetLocale() == "koKR" then
+			_, _, baPlayer = string.find(baPlayer, L["whopattern"])
+		end
+		local t = GetTime()
+		if ( not times[baPlayer] ) or ( times[baPlayer] and ( times[baPlayer] + 5 ) < t) then
+			self:TriggerEvent("BigWigs_SendSync", "VaelBomb "..baPlayer)
+			times[baPlayer] = t
+		end
+	end
+end
 
