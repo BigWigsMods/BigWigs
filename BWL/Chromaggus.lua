@@ -46,16 +46,16 @@ L:RegisterTranslations("enUS", function() return {
 	warn4 = "Spell vulnerability changed!",
 	warn5 = "Frenzy Alert!",
 	warn6 = "Enrage soon!",
-    
-    breathfirst = "First Breath",
-    breathsecond = "Second Breath",
+
+	breathfirst = "First Breath",
+	breathsecond = "Second Breath",
 	breath1 = "Time Lapse",
 	breath2 = "Corrosive Acid",
 	breath3 = "Ignite Flesh",
 	breath4 = "Incinerate",
 	breath5 = "Frost Burn",
-    
-    iconunknown = "Interface\\Icons\\INV_Misc_QuestionMark",
+
+	iconunknown = "Interface\\Icons\\INV_Misc_QuestionMark",
 	icon1 = "Interface\\Icons\\Spell_Arcane_PortalOrgrimmar",
 	icon2 = "Interface\\Icons\\Spell_Nature_Acid_01",
 	icon3 = "Interface\\Icons\\Spell_Fire_Fire",
@@ -214,7 +214,7 @@ function BigWigsChromaggus:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE", "PlayerDamageEvents")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("UNIT_HEALTH")
-    self:RegisterEvent("PLAYER_REGEN_DISABLED")
+	--self:RegisterEvent("PLAYER_REGEN_DISABLED")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ChromaggusBreath", 10)
@@ -251,7 +251,7 @@ function BigWigsChromaggus:UNIT_HEALTH( msg )
 	if self.db.profile.enrage and UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 20 and health <= 23 and not self.twenty then
-			self:TriggerEvent("BigWigs_Message", L["warn6"], "Red")
+			if self.db.profile.enrage then self:TriggerEvent("BigWigs_Message", L["warn6"], "Red") end
 			self.twenty = true
 		elseif health > 40 and self.twenty then
 			self.twenty = nil
@@ -260,56 +260,55 @@ function BigWigsChromaggus:UNIT_HEALTH( msg )
 end
 
 function BigWigsChromaggus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
-	local _,_, SpellName = string.find(msg, L["trigger1"])
-	if SpellName then
-		self:TriggerEvent("BigWigs_SendSync", "ChromaggusBreath "..SpellName)
+	local _,_, spellName = string.find(msg, L["trigger1"])
+	if spellName then
+		self:TriggerEvent("BigWigs_SendSync", "ChromaggusBreath "..spellName)
 	end
 end
 
-function BigWigsChromaggus:BigWigs_RecvSync(sync, SpellName)
-	if sync ~= "ChromaggusBreath" then return end
-	
-    if SpellName == L["breathfirst"] then
-        if self.db.profile.breath then 
-            self:ScheduleEvent("bwchromaggusbreath1", "BigWigs_Message", 20, format(L["warn1"], L["breathfirst"]), "Red")
-            self:TriggerEvent("BigWigs_StartBar", self, L["breathfirst"], 30, L["iconunknown"], "Green", "Yellow", "Orange", "Red")
-            self:ScheduleEvent("bwchromaggusbreath1", "BigWigs_Message", 50, format(L["warn1"], L["breathsecond"]), "Red")
-            self:TriggerEvent("BigWigs_StartBar", self, L["breathsecond"], 60, L["iconunknown"], "Green", "Yellow", "Orange", "Red")
-        end
-        return
-    end
-    
-	if SpellName then
-		if not breath1 then
-			breath1 = SpellName
-		elseif not breath2 and not breath1 ~= SpellName then
-			breath2 = SpellName
-		end
+function BigWigsChromaggus:BigWigs_RecvSync(sync, spellName)
+	if sync ~= "ChromaggusBreath" or not spellName then return end
 
-		self:TriggerEvent("BigWigs_Message", format(L["warn2"], SpellName), "Red")
+	if self.db.profile.breath and spellName == L["breathfirst"] then
+		self:ScheduleEvent("bwchromaggusbreath1", "BigWigs_Message", 20, format(L["warn1"], L["breathfirst"]), "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["breathfirst"], 30, L["iconunknown"], "Green", "Yellow", "Orange", "Red")
+		self:ScheduleEvent("bwchromaggusbreath1", "BigWigs_Message", 50, format(L["warn1"], L["breathsecond"]), "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["breathsecond"], 60, L["iconunknown"], "Green", "Yellow", "Orange", "Red")
+		return
+	end
 
-		-- figure out the icon
-		local breathnr = L:HasReverseTranslation(SpellName) and L:GetReverseTranslation(SpellName) or "breath1"
-		breathnr = string.sub(breathnr, -1 )
-		if tonumber( breathnr) < 1 or tonumber( breathnr ) > 5 then breathnr = 1 end
-		local icon = "icon"..breathnr
-		icon = L(icon)
+	if not breath1 then
+		breath1 = spellName
+	elseif not breath2 and not breath1 ~= spellName then
+		breath2 = spellName
+	end
 
-		if breath1 == SpellName and self.db.profile.breath then
-			self:ScheduleEvent("bwchromaggusbreath1", "BigWigs_Message", 50, format(L["warn1"], breath1), "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, breath1, 60, icon, "Green", "Yellow", "Orange", "Red")
-		elseif breath2 == SpellName and self.db.profile.breath then
-			self:ScheduleEvent("bwchromaggusbreath2", "BigWigs_Message", 50, format(L["warn1"], breath2), "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, breath2, 60, icon, "Green", "Yellow", "Orange", "Red")
-		end
+	if not self.db.profile.breath then return end
+	self:TriggerEvent("BigWigs_Message", format(L["warn2"], spellName), "Red")
+
+	-- figure out the icon
+	local breathnr = L:HasReverseTranslation(spellName) and L:GetReverseTranslation(spellName) or "breath1"
+	breathnr = string.sub(breathnr, -1 )
+	if tonumber( breathnr) < 1 or tonumber( breathnr ) > 5 then breathnr = 1 end
+	local icon = "icon"..breathnr
+	icon = L(icon)
+
+	if breath1 == spellName then
+		self:ScheduleEvent("bwchromaggusbreath1", "BigWigs_Message", 50, format(L["warn1"], breath1), "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, breath1, 60, icon, "Green", "Yellow", "Orange", "Red")
+	elseif breath2 == spellName then
+		self:ScheduleEvent("bwchromaggusbreath2", "BigWigs_Message", 50, format(L["warn1"], breath2), "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, breath2, 60, icon, "Green", "Yellow", "Orange", "Red")
 	end
 end
 
 function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE( msg )
 	if msg == L"trigger4" and self.db.profile.frenzy then
 		self:TriggerEvent("BigWigs_Message", L["warn5"], "Red")
-	elseif msg == L"trigger5" and self.db.profile.vulnerability then
-		self:TriggerEvent("BigWigs_Message", L["warn4"], "White")
+	elseif msg == L"trigger5" then
+		if self.db.profile.vulnerability then
+			self:TriggerEvent("BigWigs_Message", L["warn4"], "White")
+		end
 		self:ScheduleEvent(function() BigWigsChromaggus.vulnerability = nil end, 2.5 )
 	end
 end
