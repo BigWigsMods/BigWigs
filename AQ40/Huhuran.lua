@@ -224,7 +224,7 @@ function BigWigsHuhuran:CHAT_MSG_MONSTER_EMOTE(arg1)
 end
 
 function BigWigsHuhuran:UNIT_HEALTH(arg1)
-	if not self.db.profile.berserk or self.berserkannounced then return end
+	if not self.db.profile.berserk then return end
 	if UnitName(arg1) == boss then
 		local health = UnitHealth(arg1)
 		if (health > 30 and health <= 33) then

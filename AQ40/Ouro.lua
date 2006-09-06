@@ -210,8 +210,6 @@ function BigWigsOuro:OnEnable()
 end
 
 function BigWigsOuro:UNIT_HEALTH( msg )
-	if berserkannounced then return end
-
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if (health > 20 and health <= 23) then
