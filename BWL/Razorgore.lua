@@ -38,8 +38,6 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "Razorgore",
-
 	start_trigger = "Eindringlinge sind in die",
 	start_message = "Razorgore angegriffen! 30 Eier noch zu zerst\195\182ren!",
 
@@ -51,15 +49,12 @@ L:RegisterTranslations("deDE", function() return {
 
 	phase2_message = "Alle Eier zerst\195\182rt!",
 
-	mc_cmd = "mindcontrol",
 	mc_name = "Gedankenkontrolle",
 	mc_desc = "Warnung, wenn Spieler \195\188bernommen werden.",
 
-	eggs_cmd = "eggs",
 	eggs_name = "Eier",
 	eggs_desc = "Countdown f\195\188r die noch zu zerst\195\182renden Eier.",
 
-	phase_cmd = "phase",
 	phase_name = "Phasen",
 	phase_desc = "Warnung beim Eintritt in Phase 1 und 2.",
 } end)
