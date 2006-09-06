@@ -19,7 +19,7 @@ L:RegisterTranslations("enUS", function() return {
 	mc_cmd = "mindcontrol",
 	mc_name = "Mind Control",
 	mc_desc = "Warn for mind control.",
-	
+
 	fissure_cmd = "fissure",
 	fissure_name = "Shadow Fissure warning,",
 	fissure_desc = "Warn for Shadow Fissure",
@@ -32,6 +32,10 @@ L:RegisterTranslations("enUS", function() return {
 	detonate_name = "Detonate Mana Warning",
 	detonate_desc = "Warn for Detonate Mana",
 
+	guardians_cmd = "guardians",
+	guardians_name = "Guardian adds in phase 3",
+	guardians_desc = "Warn for incoming Icecrown Guardians in phase 3",
+
 	mc_trigger1 = "Your soul is bound to me, now!",
 	mc_trigger2 = "There will be no escape!",
 	mc_warning = "Mind Control!",
@@ -43,6 +47,14 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_trigger = "Pray for mercy!",
 	phase2_warning = "Phase 2, Kel'Thuzad incoming!",
 	phase2_bar = "Kel'Thuzad Active!",
+
+	phase3_soon_warning = "Phase 3 soon!",
+	phase3_trigger = "Master, I require aid!",
+	phase3_warning = "Phase 3, Guardians in ~15sec!",
+
+	guardians_trigger = "Very well. Warriors of the frozen wastes, rise up! I command you to fight, kill and die for your master! Let none survive!",
+	guardians_warning = "Guardians incoming in ~10sec!",
+	guardians_bar = "Guardians incoming!",
 
 	fissure_trigger = "Kel'Thuzad casts Shadow Fissure.",
 	fissure_warning = "Shadow Fissure!",
@@ -67,7 +79,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsKelThuzad = BigWigs:NewModule(boss)
 BigWigsKelThuzad.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsKelThuzad.enabletrigger = boss
-BigWigsKelThuzad.toggleoptions = { "frostbolt", "fissure", "mc", "detonate", "phase", "bosskill" }
+BigWigsKelThuzad.toggleoptions = { "frostbolt", "fissure", "mc", "detonate", "phase", "guardians", "bosskill" }
 BigWigsKelThuzad.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -75,9 +87,12 @@ BigWigsKelThuzad.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsKelThuzad:OnEnable()
+	self.warnedAboutPhase3Soon = nil
+
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("UNIT_HEALTH")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "DetonateEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "DetonateEvent")
@@ -88,9 +103,21 @@ end
 --      Event Handlers      --
 ------------------------------
 
+function BigWigsKelThuzad:UNIT_HEALTH(msg)
+	if not self.db.profile.phase or self.warnedAboutPhase3Soon then return end
+
+	if UnitName(msg) == boss then
+		local health = UnitHealth(msg)
+		if health > 40 and health <= 43 then
+			self:TriggerEvent("BigWigs_Message", L["phase3_soon"], "Yellow")
+			self.warnedAboutPhase3Soon = true
+		end
+	end
+end
+
 function BigWigsKelThuzad:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["start_trigger"] then
-		if self.db.profile.phase then 
+		if self.db.profile.phase then
 			self:TriggerEvent("BigWigs_Message", L["start_warning"], "Yellow")
 			self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 300 )
 		end
@@ -100,8 +127,17 @@ function BigWigsKelThuzad:CHAT_MSG_MONSTER_YELL(msg)
 			self:TriggerEvent("BigWigs_Message", L["phase2_warning"], "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, L["phase2_bar"], 20 )
 		end
+	elseif msg == L["phase3_trigger"] then
+		if self.db.profile.phase then
+			self:TriggerEvent("BigWigs_Message", L["phase3_warning"], "Yellow")
+		end
 	elseif msg == L["mc_trigger1"] or msg == L["mc_trigger2"] then
 		if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", L["mc_warning"], "Orange") end
+	elseif msg == L["guardians_trigger"] then
+		if self.db.profile.guardians then
+			self:TriggerEvent("BigWigs_Message", L["guardians_warning"], "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L["guardians_bar"], 10)
+		end
 	end
 end
 
@@ -125,7 +161,7 @@ function BigWigsKelThuzad:DetonateEvent( msg )
 		end
 		self:TriggerEvent("BigWigs_Message", dplayer .. L["detonate_warning"], "Yellow")
 		self:TriggerEvent("BigWigs_SetRaidIcon", dplayer )
-		self:TriggerEvent("BigWigs_StartBar", self, dplayer .. L["detonate_bar"], 5, "Interface\\Icons\\Spell_Nature_WispSplode" )
+		self:TriggerEvent("BigWigs_StartBar", self, L["detonate_bar"] .. dplayer, 5, "Interface\\Icons\\Spell_Nature_WispSplode" )
 	end
 end
 
