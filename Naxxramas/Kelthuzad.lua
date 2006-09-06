@@ -23,7 +23,7 @@ L:RegisterTranslations("enUS", function() return {
 	mc_desc = "Warn for mind control.",
 
 	fissure_cmd = "fissure",
-	fissure_name = "Shadow Fissure warning,",
+	fissure_name = "Shadow Fissure warning",
 	fissure_desc = "Warn for Shadow Fissure",
 
 	frostbolt_cmd = "frostbolt",
@@ -111,19 +111,21 @@ end
 ------------------------------
 
 function BigWigsKelThuzad:MINIMAP_ZONE_CHANGED(msg)
-	if not GetMinimapZoneText() == L["KELTHUZADCHAMBERLOCALIZEDLOLHAX"] then return end
+	if not GetMinimapZoneText() == L["KELTHUZADCHAMBERLOCALIZEDLOLHAX"] or self.core:IsModuleActive(boss) then return end
 	-- Activate the Kel'Thuzad mod!
-	self.core:EnableModule(self)
+	self.core:EnableModule(boss)
 end
 
 function BigWigsKelThuzad:UNIT_HEALTH(msg)
-	if not self.db.profile.phase or self.warnedAboutPhase3Soon then return end
+	if not self.db.profile.phase then return end
 
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 40 and health <= 43 then
 			self:TriggerEvent("BigWigs_Message", L["phase3_soon"], "Yellow")
 			self.warnedAboutPhase3Soon = true
+		elseif health > 40 and self.warnedAboutPhase3Soon then
+			self.warnedAboutPhase3Soon = nil
 		end
 	end
 end
