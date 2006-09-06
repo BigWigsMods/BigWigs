@@ -111,7 +111,7 @@ end
 ------------------------------
 
 function BigWigsKelThuzad:MINIMAP_ZONE_CHANGED(msg)
-	if not GetMinimapZoneText() == L["KELTHUZADCHAMBERLOCALIZEDLOLHAX"] or self.core:IsModuleActive(boss) then return end
+	if GetMinimapZoneText() ~= L["KELTHUZADCHAMBERLOCALIZEDLOLHAX"] or self.core:IsModuleActive(boss) then return end
 	-- Activate the Kel'Thuzad mod!
 	self.core:EnableModule(boss)
 end
