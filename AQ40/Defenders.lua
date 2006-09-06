@@ -165,7 +165,7 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsDefenders = BigWigs:NewModule(boss)
 BigWigsDefenders.zonename = AceLibrary("Babble-Zone-2.0")("Ahn'Qiraj")
 BigWigsDefenders.enabletrigger = boss
-BigWigsDefenders.toggleoptions = {"plagueyou", "plagueother", "thunderclap", "explode", "enrage", "bosskill"}
+BigWigsDefenders.toggleoptions = { "plagueyou", "plagueother", -1, "thunderclap", "explode", "enrage", "bosskill"}
 BigWigsDefenders.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -175,13 +175,17 @@ BigWigsDefenders.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsDefenders:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "checkPlague")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "checkPlague")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "checkPlague")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "CheckPlague")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "CheckPlague")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CheckPlague")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Thunderclap")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Thunderclap")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Thunderclap")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderEnrage", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderExplode", 10)
 end
 
 ------------------------------
@@ -194,24 +198,33 @@ function BigWigsDefenders:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	end
 end
 
-function BigWigsDefenders:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if self.db.profile.explode and msg == L["explodetrigger"] then
+function BigWigsDefenders:BigWigs_RecvSync(sync, rest, nick)
+	if sync == "DefenderExplode" and self.db.profile.explode then
 		self:TriggerEvent("BigWigs_Message", L["explodewarn"], "Red")
-	elseif self.db.profile.enrage and msg == L["enragetrigger"] then
+	elseif sync == "DefenderEnrage" and self.db.profile.enrage then
 		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Red")
 	end
 end
 
+function BigWigsDefenders:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+	if msg == L["explodetrigger"] then
+		self:TriggerEvent("BigWigs_SendSync", "DefenderExplode")
+	elseif msg == L["enragetrigger"] then
+		self:TriggerEvent("BigWigs_SendSync", "DefenderEnrage")
+	end
+end
+
 function BigWigsDefenders:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if self.db.profile.summon and msg == L["summonguardtrigger"] then
+	if not self.db.profile.summon then return end
+	if msg == L["summonguardtrigger"] then
 		self:TriggerEvent("BigWigs_Message", L["summonguardwarn"], "Yellow")
-	elseif self.db.profile.summon and msg == L["summonwarriortrigger"] then
+	elseif msg == L["summonwarriortrigger"] then
 		self:TriggerEvent("BigWigs_Message", L["summonwarriorwarn"], "Yellow")
 	end
 end
 
 if (GetLocale() == "koKR") then
-	function BigWigsDefenders:checkPlague(msg)
+	function BigWigsDefenders:CheckPlague(msg)
 		local _,_, Player = string.find(msg, L["plaguetrigger"])
 		if (Player) then
 			if (Player == L["plagueyou"]) then
@@ -226,7 +239,7 @@ if (GetLocale() == "koKR") then
 		end
 	end
 else
-	function BigWigsDefenders:checkPlague(msg)
+	function BigWigsDefenders:CheckPlague(msg)
 		local _,_, Player, Type = string.find(msg, L["plaguetrigger"])
 		if (Player and Type) then
 			if (Player == L["plagueyou"] and Type == L["plagueare"]) then
