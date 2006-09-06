@@ -22,24 +22,28 @@ L:RegisterTranslations("enUS", function() return {
 	phase_desc = "Warn for phases.",
 
 	mc_cmd = "mindcontrol",
-	mc_name = "Mind Control",
-	mc_desc = "Warn for mind control.",
+	mc_name = "Mind Control Alert",
+	mc_desc = "Alerts when people are mind controlled.",
 
 	fissure_cmd = "fissure",
-	fissure_name = "Shadow Fissure warning",
-	fissure_desc = "Warn for Shadow Fissure",
+	fissure_name = "Shadow Fissure Alert",
+	fissure_desc = "Alerts about incoming Shadow Fizzures.",
 
 	frostblast_cmd = "frostblast",
-	frostblast_name = "Frostblast Warning",
-	frostblast_desc = "Warn for Frost Blast",
+	frostblast_name = "Frost Blast Alert",
+	frostblast_desc = "Alerts when people get Frost Blasted.",
 
 	detonate_cmd = "detonate",
 	detonate_name = "Detonate Mana Warning",
-	detonate_desc = "Warn for Detonate Mana",
+	detonate_desc = "Warns about Detonate Mana soon.",
+
+	detonateicon_cmd = "detonateicon",
+	detonateicon_name = "Raid Icon on Detonate",
+	detonateicon_desc = "Place a raid icon on people with Detonate Mana.",
 
 	guardians_cmd = "guardians",
-	guardians_name = "Guardian adds in phase 3",
-	guardians_desc = "Warn for incoming Icecrown Guardians in phase 3",
+	guardians_name = "Guardian Spawns",
+	guardians_desc = "Warn for incoming Icecrown Guardians in phase 3.",
 
 	mc_trigger1 = "Your soul is bound to me, now!",
 	mc_trigger2 = "There will be no escape!",
@@ -92,7 +96,7 @@ frost blast:
 BigWigsKelThuzad = BigWigs:NewModule(boss)
 BigWigsKelThuzad.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsKelThuzad.enabletrigger = boss
-BigWigsKelThuzad.toggleoptions = { "frostblast", "fissure", "mc", "detonate", "phase", "guardians", "bosskill" }
+BigWigsKelThuzad.toggleoptions = { "frostblast", "fissure", "mc", -1, "detonate", "detonateicon", -1 ,"guardians", "phase", "bosskill" }
 BigWigsKelThuzad.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -187,8 +191,8 @@ end
 
 function BigWigsKelThuzad:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "KelDetonation" and rest and self.db.profile.detonate then
-		self:TriggerEvent("BigWigs_Message", rest .. L["detonate_warning"], "Yellow")
-		self:TriggerEvent("BigWigs_SetRaidIcon", rest )
+		self:TriggerEvent("BigWigs_Message", rest .. L["detonate_warning"], "Yellow")	
+		if self.db.profile.detonateicon then self:TriggerEvent("BigWigs_SetRaidIcon", rest ) end
 		self:TriggerEvent("BigWigs_StartBar", self, L["detonate_bar"] .. rest, 5, "Interface\\Icons\\Spell_Nature_WispSplode", "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L["detonate_possible_bar"], 20, "Interface\\Icons\\Spell_Nature_WispSplode")
 	elseif sync == "KelFrostBlast" and self.db.profile.frostblast then
