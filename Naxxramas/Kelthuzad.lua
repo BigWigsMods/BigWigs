@@ -78,7 +78,10 @@ L:RegisterTranslations("enUS", function() return {
 Detonate timers:
 348, 36, 31, 51, 22, 22, 37, 34, 30, 24, 48, 24, 22
 ]]
-
+--[[
+frost blast:
+30, 161, 42, 46, 47, 63, 70
+]]
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
@@ -109,6 +112,12 @@ function BigWigsKelThuzad:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Affliction")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Affliction")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Affliction")
+
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "KelDetonate", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "KelFrostBlast", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "KelFizzure", 2)
+	self:TriggerEvent("BigWigs_ThrottleSync", "KelMindControl", 5)
 end
 
 ------------------------------
@@ -152,7 +161,7 @@ function BigWigsKelThuzad:CHAT_MSG_MONSTER_YELL(msg)
 			self:TriggerEvent("BigWigs_Message", L["phase3_warning"], "Yellow")
 		end
 	elseif msg == L["mc_trigger1"] or msg == L["mc_trigger2"] then
-		if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", L["mc_warning"], "Orange") end
+		self:TriggerEvent("BigWigs_SendSync", "KelMindControl")
 	elseif msg == L["guardians_trigger"] then
 		if self.db.profile.guardians then
 			self:TriggerEvent("BigWigs_Message", L["guardians_warning"], "Red")
@@ -163,26 +172,36 @@ end
 
 function BigWigsKelThuzad:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 	if msg == L["fissure_trigger"] then
-		if self.db.profile.fissure then
-			self:TriggerEvent("BigWigs_Message", L["fissure_warning"], "Red")
-		end
+		self:TriggerEvent("BigWigs_SendSync", "KelFizzure")
+	end
+end
+
+function BigWigsKelThuzad:BigWigs_RecvSync(sync, rest, nick)
+	if sync == "KelDetonation" and rest and self.db.profile.detonate then
+		self:TriggerEvent("BigWigs_Message", rest .. L["detonate_warning"], "Yellow")
+		self:TriggerEvent("BigWigs_SetRaidIcon", rest )
+		self:TriggerEvent("BigWigs_StartBar", self, L["detonate_bar"] .. rest, 5, "Interface\\Icons\\Spell_Nature_WispSplode", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["detonate_possible_bar"], 20, "Interface\\Icons\\Spell_Nature_WispSplode")
+	elseif sync == "KelFrostBlast" and self.db.profile.frostblast then
+		self:TriggerEvent("BigWigs_Message", L["frostblast_warning"], "Yellow")
+	elseif sync == "KelFizzure" and self.db.profile.fissure then
+		self:TriggerEvent("BigWigs_Message", L["fissure_warning"], "Red")
+	elseif sync == "KelMindControl" and self.db.profile.mc then
+		self:TriggerEvent("BigWigs_Message", L["mc_warning"], "Orange")
 	end
 end
 
 function BigWigsKelThuzad:Affliction( msg )
-	if self.db.profile.detonate and string.find(msg, L["detonate_trigger"]) then
+	if string.find(msg, L["detonate_trigger"]) then
 		local _,_, dplayer, dtype = string.find( msg, L["detonate_trigger"])
 		if dplayer and dtype then
 			if dplayer == L["you"] and dtype == L["are"] then
 				dplayer = UnitName("player")
 			end
-			self:TriggerEvent("BigWigs_Message", dplayer .. L["detonate_warning"], "Yellow")
-			self:TriggerEvent("BigWigs_SetRaidIcon", dplayer )
-			self:TriggerEvent("BigWigs_StartBar", self, L["detonate_bar"] .. dplayer, 5, "Interface\\Icons\\Spell_Nature_WispSplode", "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L["detonate_possible_bar"], 20, "Interface\\Icons\\Spell_Nature_WispSplode")
+			self:TriggerEvent("BigWigs_SendSync", "KelDetonate "..dplayer)
 		end
-	elseif self.db.profile.frostblast and string.find(msg, L["frostblast_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["frostblast_warning"], "Yellow")
+	elseif string.find(msg, L["frostblast_trigger"]) then
+		self:TriggerEvent("BigWigs_SendSync", "KelFrostBlast")
 	end
 end
 
