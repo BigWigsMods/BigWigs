@@ -146,7 +146,7 @@ function BigWigsKelThuzad:UNIT_HEALTH(msg)
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 40 and health <= 43 and not self.warnedAboutPhase3Soon then
-			self:TriggerEvent("BigWigs_Message", L["phase3_soon"], "Yellow")
+			self:TriggerEvent("BigWigs_Message", L["phase3_soon_warning"], "Yellow")
 			self.warnedAboutPhase3Soon = true
 		elseif health > 40 and self.warnedAboutPhase3Soon then
 			self.warnedAboutPhase3Soon = nil
@@ -155,31 +155,23 @@ function BigWigsKelThuzad:UNIT_HEALTH(msg)
 end
 
 function BigWigsKelThuzad:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["start_trigger"] then
-		if self.db.profile.phase then
-			self:TriggerEvent("BigWigs_Message", L["start_warning"], "Yellow")
-			self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 300 )
-		end
-	elseif msg == L["phase2_trigger"] then
-		if self.db.profile.phase then
-			self:TriggerEvent("BigWigs_StopBar", self, L["start_bar"] )
-			self:TriggerEvent("BigWigs_Message", L["phase2_warning"], "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L["phase2_bar"], 20 )
-		end
-	elseif msg == L["phase3_trigger"] then
-		if self.db.profile.phase then
-			self:TriggerEvent("BigWigs_Message", L["phase3_warning"], "Yellow")
-		end
+	if self.db.profile.phase and msg == L["start_trigger"] then
+		self:TriggerEvent("BigWigs_Message", L["start_warning"], "Yellow")
+		self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 300 )
+	elseif self.db.profile.phase and msg == L["phase2_trigger"] then
+		self:TriggerEvent("BigWigs_StopBar", self, L["start_bar"] )
+		self:TriggerEvent("BigWigs_Message", L["phase2_warning"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["phase2_bar"], 20 )
+	elseif self.db.profile.phase and msg == L["phase3_trigger"] then
+		self:TriggerEvent("BigWigs_Message", L["phase3_warning"], "Yellow")
 	elseif msg == L["mc_trigger1"] or msg == L["mc_trigger2"] then
 		if not mcTime or (mcTime + 2) < GetTime() then
 			self:TriggerEvent("BigWigs_SendSync", "KelMindControl")
 			mcTime = GetTime()
 		end
-	elseif msg == L["guardians_trigger"] then
-		if self.db.profile.guardians then
-			self:TriggerEvent("BigWigs_Message", L["guardians_warning"], "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L["guardians_bar"], 10)
-		end
+	elseif self.db.profile.guardians and msg == L["guardians_trigger"] then
+		self:TriggerEvent("BigWigs_Message", L["guardians_warning"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["guardians_bar"], 10)
 	end
 end
 
