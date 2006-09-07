@@ -10,6 +10,8 @@ local boss = AceLibrary("Babble-Boss-2.0")("The Four Horsemen")
 
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
+local times = nil
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -24,7 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 	shieldwall_cmd  = "shieldwall",
 	shieldwall_name = "Shieldwall Alerts",
 	shieldwall_desc = "Warn for shieldwall",
-	
+
 	void_cmd = "void",
 	void_name = "Void Zone Alerts",
 	void_desc = "Warn on Lady Blaumeux casting Void Zone.",
@@ -57,7 +59,7 @@ L:RegisterTranslations("enUS", function() return {
 	startwarn = "The Four Horsemen Engaged! Mark in ~17 sec",
 
 	shieldwallbar = "%s - Shield Wall",
-	shieldwalltrigger = " gains Shield Wall.",
+	shieldwalltrigger = "(.*) gains Shield Wall.",
 	shieldwallwarn = "%s - Shield Wall for 20 sec",
 	shieldwallwarn2 = "%s - Shield Wall GONE!",
 } end )
@@ -117,7 +119,9 @@ BigWigsHorsemen.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsHorsemen:OnEnable()
 	self.started = nil
 	self.marks = 1
-	self.deaths = 0	
+	self.deaths = 0
+
+	times = {}
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED")
@@ -177,31 +181,31 @@ end
 
 function BigWigsHorsemen:MarkEvent( msg )
 	if string.find(msg, L["marktrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "HorsemenMark")
+		local t = GetTime()
+		if not times["mark"] or (times["mark"] and (times["mark"] + 8) < t) then
+			self:TriggerEvent("BigWigs_SendSync", "HorsemenMark")
+			times["mark"] = t
+		end
 	end
 end
 
 function BigWigsHorsemen:SkillEvent( msg )
+	local t = GetTime()
 	if string.find(msg, L["meteortrigger"]) then
-		--if (not self.lastmeteor) or self.lastmeteor + 8 > GetTime() then
+		if not times["meteor"] or (times["meteor"] and (times["meteor"] + 8) < t) then
 			self:TriggerEvent("BigWigs_SendSync", "HorsemenMeteor")
-		--end
+			times["meteor"] = t
+		end
 	elseif string.find(msg, L["wrathtrigger"]) then
-		--if (not self.lastwrath) or self.lastwrath + 8 > GetTime() then
+		if not times["wrath"] or (times["wrath"] and (times["wrath"] + 8) < t) then
 			self:TriggerEvent("BigWigs_SendSync", "HorsemenWrath")
-		--end
+			times["wrath"] = t
+		end
 	elseif msg == L["voidtrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "HorsemenVoid" )
-		--local target = nil
-		--for i = 1, GetNumRaidMembers(), 1 do
-		--	if UnitName("Raid"..i.."target") == blaumeux then
-		--		target = UnitName("Raid"..i.."targettarget")
-		--		break
-		--	end
-		--end
-		--if target then
-		--	print("void on "..target)
-		--end
+		if not times["void"] or (times["void"] and (times["void"] + 8) < t) then
+			self:TriggerEvent("BigWigs_SendSync", "HorsemenVoid" )
+			times["void"] = t
+		end
 	end
 end
 
@@ -223,19 +227,16 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 7, string.format( L["markwarn2"], self.marks ), "Orange")
 		end
 	elseif sync == "HorsemenMeteor" then
-		self.lastmeteor = GetTime()
 		if self.db.profile.meteor then
 			self:TriggerEvent("BigWigs_Message", L["meteorwarn"], "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, L["meteorbar"], 12, "Interface\\Icons\\Spell_Fire_Fireball02", "Orange", "Red")
 		end
 	elseif sync == "HorsemenWrath" then
-		self.lastwrath = GetTime()
 		if self.db.profile.meteor then
 			self:TriggerEvent("BigWigs_Message", L["wrathwarn"], "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, L["wrathbar"], 12, "Interface\\Icons\\Spell_Holy_Excorcism", "Orange", "Red")
 		end
 	elseif sync == "HorsemenVoid" then
-		self.lastvoid = GetTime()
 		if self.db.profile.void then
 			self:TriggerEvent("BigWigs_Message", L["voidwarn"], "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, L["voidbar"], 12, "Interface\\Icons\\Spell_Frost_IceStorm", "Orange", "Red")
@@ -248,15 +249,8 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 end
 
 function BigWigsHorsemen:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
-	if msg == thane..L["shieldwalltrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..thane )
-	elseif msg == zeliek..L["shieldwalltrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..zeliek )
-	elseif msg == mograine..L["shieldwalltrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..mograine )
-	elseif msg == blaumeux..L["shieldwalltrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..blaumeux )
-	end
+	local _,_, mob = string.find(msg, L["shieldwalltrigger"])
+	self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..mob)
 end
 
 function BigWigsHorsemen:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)

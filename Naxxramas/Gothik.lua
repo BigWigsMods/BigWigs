@@ -10,36 +10,40 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "gothik",
+	cmd = "Gothik",
 
 	room_cmd = "room",
-	room_name = "Room Arrival Alerts",
+	room_name = "Room Arrival Warnings",
 	room_desc = "Warn for Gothik's arrival",
 
 	add_cmd = "add",
 	add_name = "Add Warnings",
 	add_desc = "Warn for adds",
 
+	adddeath_cmd = "adddeath",
+	adddeath_name = "Add Death Alert",
+	adddeath_desc = "Alerts when an add dies.",
+
 	disabletrigger = "I... am... undone.",
 
 	starttrigger1 = "Foolishly you have sought your own demise.",
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
 	startwarn = "Gothik the Harvester engaged! 4:30 till he's in the room.",
-	
+
 	riderdietrigger = "Unrelenting Rider dies.",
 	dkdietrigger = "Unrelenting Deathknight dies.",
-	
+
 	riderdiewarn = "Rider dead!",
 	dkdiewarn = "Death Knight dead!",
-	
+
 	warn1 = "In room in 3 minutes",
 	warn2 = "In room in 90 seconds",
 	warn3 = "In room in 60 seconds",
 	warn4 = "In room in 30 seconds",
 	warn5 = "Gothik Incoming in 10 seconds",
-	
+
 	wave = "%d/20: ",
-	
+
 	trawarn = "Trainees in 3 seconds",
 	dkwarn = "Deathknight in 3 seconds",
 	riderwarn = "Rider in 3 seconds",
@@ -47,10 +51,10 @@ L:RegisterTranslations("enUS", function() return {
 	trabar = "Trainee - %d",
 	dkbar = "Deathknight - %d",
 	riderbar = "Rider - %d",
-	
+
 	inroomtrigger = "I have waited long enough. Now you face the harvester of souls.",
 	inroomwarn = "He's in the room!",
-	
+
 	inroombartext = "In Room",
 } end )
 
@@ -60,21 +64,21 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger1 = "Ihr Narren habt euren eigenen Untergang heraufbeschworen.",
 	starttrigger2 = "Maz Azgala veni kamil toralar Naztheros zennshinagas.", -- ?
 	startwarn = "Gothik der Ernter angegriffen! 4:30 bis er in den Raum kommt!",
-	
+
 	riderdietrigger = "Unerbittlicher Reiter stirbt.",
 	dkdietrigger = "Unerbittlicher Todesritter stirbt.",
-	
+
 	riderdiewarn = "Reiter tot!",
 	dkdiewarn = "Todesritter tot!",
-	
+
 	warn1 = "Im Raum in 3 Minuten",
 	warn2 = "Im Raum in 90 Sekunden",
 	warn3 = "Im Raum in 60 Sekunden",
 	warn4 = "Im Raum in 30 Sekunden",
 	warn5 = "Gothik im Raum in 10 Sekunden",
-	
+
 	wave = "%d/20: ",
-	
+
 	trawarn = "Lehrlinge in 3 Sekunden",
 	dkwarn = "Todesritter in 3 Sekunden",
 	riderwarn = "Reiter in 3 Sekunden",
@@ -82,10 +86,10 @@ L:RegisterTranslations("deDE", function() return {
 	trabar = "Lehrlinge - %d",
 	dkbar = "Todesritter - %d",
 	riderbar = "Reiter - %d",
-	
+
 	inroomtrigger = "Ich habe lange genug gewartet. Stellt euch dem Seelenj\195\164ger.", -- ?
 	inroomwarn = "Er ist im Raum!",
-	
+
 	inroombartext = "Im Raum",
 } end )
 
@@ -96,24 +100,24 @@ L:RegisterTranslations("zhCN", function() return {
 	add_name = "增援警报",
 	add_desc = "增援警报",
 
-	disabletrigger = "I... am... undone.",		
+	disabletrigger = "I... am... undone.",
 
 	starttrigger1 = "你愚蠢地寻找自己的困境。",
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
 	startwarn = "收割者戈提克已激活 - 4:30后进入房间",
-	
+
 	riderdietrigger = "冷酷的骑兵死亡了。",
 	dkdietrigger = "冷酷的死亡骑士死亡了。",
-	
+
 	riderdiewarn = "骑兵已死亡！",
 	dkdiewarn = "死亡骑士已死亡！",
-	
+
 	warn1 = "3分钟后进入房间",
 	warn2 = "90秒后进入房间",
 	warn3 = "60秒后进入房间",
 	warn4 = "30秒后进入房间",
 	warn5 = "收割者戈提克10后进入房间！",
-	
+
 	trawarn = "3秒后学徒出现",
 	dkwarn = "3秒后死亡骑士出现",
 	riderwarn = "3秒后骑兵出现",
@@ -121,10 +125,10 @@ L:RegisterTranslations("zhCN", function() return {
 	trabar = "学徒 - %d",
 	dkbar = "死亡骑士 - %d",
 	riderbar = "骑兵 - %d",
-	
+
 	inroomtrigger = "我等待了太久。现在你面对灵魂收割机。",
 	inroomwarn = "收割者戈提克进入了房间！",
-	
+
 	inroombartext = "进入房间",
 } end )
 
@@ -135,7 +139,7 @@ L:RegisterTranslations("zhCN", function() return {
 BigWigsGothik = BigWigs:NewModule(boss)
 BigWigsGothik.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsGothik.enabletrigger = boss
-BigWigsGothik.toggleoptions = { "room", "add", "bosskill" }
+BigWigsGothik.toggleoptions = { "room", -1, "add", "adddeath", "bosskill" }
 BigWigsGothik.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -180,9 +184,9 @@ function BigWigsGothik:Scan()
 end
 
 function BigWigsGothik:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
-	if msg == L["riderdietrigger"] and self.db.profile.add then
+	if self.db.profile.adddeath and msg == L["riderdietrigger"] then
 		self:TriggerEvent("BigWigs_Message", L["riderdiewarn"], "Red")
-	elseif msg == L["dkdietrigger"] and self.db.profile.add  then
+	elseif self.db.profile.adddeath and msg == L["dkdietrigger"] then
 		self:TriggerEvent("BigWigs_Message", L["dkdiewarn"], "Red")
 	end
 end
@@ -251,7 +255,7 @@ function BigWigsGothik:CHAT_MSG_MONSTER_YELL( msg )
 		self.tranum = 1
 		self.dknum = 1
 		self.ridernum = 1
-		if self.db.profile.add then		
+		if self.db.profile.add then
 			self:Trainee()
 			self:DeathKnight()
 			self:Rider()

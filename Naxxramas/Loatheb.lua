@@ -15,7 +15,7 @@ L:RegisterTranslations("enUS", function() return {
 	doom_cmd = "doom",
 	doom_name = "Inevitable Doom Alert",
 	doom_desc = "Warn for Inevitable Doom",
-	
+
 	spore_cmd = "spore",
 	spore_name = "Spore Spawning Alert",
 	spore_desc = "Warn when a spore spawns",
@@ -25,8 +25,8 @@ L:RegisterTranslations("enUS", function() return {
 	curse_desc = "Warn when a curses are removed from Loatheb",
 
 	doombar = "Inevitable Doom",
-	doomwarn = "Inevitable Doom! %s seconds to next.",
-	doomwarn5sec = "Inevitable Doom in 5 seconds",		
+	doomwarn = "Inevitable Doom! %s seconds to next!",
+	doomwarn5sec = "Inevitable Doom in 5 seconds!",		
 	doomtrigger = "afflicted by Inevitable Doom.",
 
 	sporewarn = "Spore Spawned",
@@ -38,8 +38,8 @@ L:RegisterTranslations("enUS", function() return {
 	removecursebar = "Remove Curse",
 	removecursetrigger = "Loatheb casts Remove Curse on Loatheb.",
 
-	doomtimerbar = "Inevitable Doom every 15 seconds",
-	doomtimerwarn = "Inevitable Doom timerchange in %s seconds!",
+	doomtimerbar = "Doom every 15sec",
+	doomtimerwarn = "Doom timerchange in %s sec!",
 	doomtimerwarnnow = "Inevitable Doom now happens every 15sec!",
 
 	startwarn = "Loatheb engaged, 2 minutes to Inevitable Doom!",
@@ -85,7 +85,7 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	doom_name = "必然的厄运警报",
 	doom_desc = "必然的厄运警报",
-	
+
 	spore_name = "孢子警报",
 	spore_desc = "孢子警报",
 
@@ -96,7 +96,7 @@ L:RegisterTranslations("zhCN", function() return {
 	doomwarn = "必然的厄运 - %s秒后再次发动",
 	doomwarn5sec = "5秒后发动必然的厄运！",		
 	doomtrigger = "受到了必然的厄运效果的影响",
-	
+
 	sporewarn = "孢子出现",
 	sporebar = "召唤孢子",
 	sporespawntrigger = "洛欧塞布施放了召唤孢子。",
@@ -105,7 +105,7 @@ L:RegisterTranslations("zhCN", function() return {
 	removecursewarn = "洛欧塞布驱散了一个诅咒效果",
 	removecursebar = "驱散诅咒",
 	removecursetrigger = "洛欧塞布对洛欧塞布施放了驱散诅咒。",
-	
+
 	doomtimerbar = "每隔15秒发动必然的厄运",
 	doomtimerwarn = "必然的厄运计时%s秒后改变！",
 	doomtimerwarnnow = "必然的厄运现在每隔15秒发动一次！",
