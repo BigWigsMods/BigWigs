@@ -10,7 +10,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "faerlina",
+	cmd = "Faerlina",
 
 	silence_cmd = "silence",
 	silence_name = "Silence Alert",
@@ -42,13 +42,9 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "faerlina",
-
-	silence_cmd = "silence",
 	silence_name = "Stille",
 	silence_desc = "Warnung vor Stille",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Wutanfall",
 	enrage_desc = "Warnung, wenn Gro\195\159witwe Faerlina w\195\188tend wird.",
 
@@ -78,10 +74,10 @@ L:RegisterTranslations("koKR", function() return {
 	starttrigger2 = "주인님의 이름으로 처단하라!",
 	starttrigger3 = "나에게서 도망칠 수는 없다!",
 	starttrigger4 = "두 발이 성할 때 도망쳐라!",
-	
+
 	silencetrigger = "낙스라마스 숭배자|1이;가; 귀부인의 은총에 걸렸습니다.",
 	enragetrigger = "귀부인 팰리나|1이;가; 격노 효과를 얻었습니다.",
-	
+
 	enragewarn15sec = "15초후 격노!",
 	enragewarn = "격노!",
 	silencewarn = "침묵! 격노 연기!",
@@ -104,7 +100,7 @@ L:RegisterTranslations("zhCN", function() return {
 	silencetrigger = "黑女巫法琳娜受到了黑女巫的拥抱效果的影响。", -- EDITED it affects her too.
 	enragetrigger = "黑女巫法琳娜获得了激怒的效果。",
 	enragefade = "激怒效果从黑女巫法琳娜身上消失。",
-	
+
 	startwarn = "黑女巫法琳娜已激活 - 60秒后激怒！",
 	enragewarn15sec = "15秒后激怒！",
 	enragewarn = "激怒！",
@@ -126,7 +122,6 @@ L:RegisterTranslations("frFR", function() return {
 	silencetrigger = "Grande veuve Faerlina subit les effets de Etreinte de la veuve.", -- EDITED it affects her too.
 	enragetrigger = "Grande veuve Faerlina gagne Enrager.",
 	enragefade = "Enrager sur Grande veuve Faerlina vient de se dissiper.",
-	
 } end )
 
 ----------------------------------
@@ -148,13 +143,13 @@ function BigWigsFaerlina:OnEnable()
 	self.enrageTimerStarted = 0
 	self.silencetime = 30
 	self.enraged = nil
-	
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "FaerlinaEnrage", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "FaerlinaSilence", 5)
@@ -262,3 +257,4 @@ function BigWigsFaerlina:BigWigs_RecvSync( sync )
 		end
 	end
 end
+

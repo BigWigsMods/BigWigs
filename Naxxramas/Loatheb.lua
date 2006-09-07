@@ -10,7 +10,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "loatheb",
+	cmd = "Loatheb",
 
 	doom_cmd = "doom",
 	doom_name = "Inevitable Doom Alert",
@@ -28,7 +28,7 @@ L:RegisterTranslations("enUS", function() return {
 	doomwarn = "Inevitable Doom! %s seconds to next.",
 	doomwarn5sec = "Inevitable Doom in 5 seconds",		
 	doomtrigger = "afflicted by Inevitable Doom.",
-	
+
 	sporewarn = "Spore Spawned",
 	sporebar = "Summon Spore",
 	sporespawntrigger = "Loatheb casts Summon Spore.",
@@ -37,11 +37,11 @@ L:RegisterTranslations("enUS", function() return {
 	removecursewarn = "Curses removed on Loatheb",
 	removecursebar = "Remove Curse",
 	removecursetrigger = "Loatheb casts Remove Curse on Loatheb.",
-	
+
 	doomtimerbar = "Inevitable Doom every 15 seconds",
 	doomtimerwarn = "Inevitable Doom timerchange in %s seconds!",
 	doomtimerwarnnow = "Inevitable Doom now happens every 15sec!",
-	
+
 	startwarn = "Loatheb engaged, 2 minutes to Inevitable Doom!",
 
 	you = "You",
@@ -49,17 +49,12 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "loatheb",
-
-	doom_cmd = "doom",
 	doom_name = "Unausweichliches Schicksal Warnung",
 	doom_desc = "Warnung für Unausweichliches Schicksal",
-	
-	spore_cmd = "spore",
+
 	spore_name = "Warnung bei Sporen",
 	spore_desc = "Warnung wenn Sporen auftauchen",
 
-	curse_cmd = "curse",
 	curse_name = "Fluch-Aufhebungs Warnung",
 	curse_desc = "Warnung wenn Fl\195\188che bei Loatheb aufgehoben wurden",
 
@@ -67,7 +62,7 @@ L:RegisterTranslations("deDE", function() return {
 	doomwarn = "Unausweichliches Schicksal! %s Sekunden bis zum n\195\164chsten.",
 	doomwarn5sec = "Unausweichliches Schicksal in 5 Sekunden",
 	doomtrigger = "von Unausweichliches Schicksal betroffen.",
-	
+
 	sporewarn = "Spore aufgetaucht",
 	sporebar = "Spore beschw\195\182ren",
 	sporespawntrigger = "Loatheb wirkt Spore beschw\195\182ren.",
@@ -76,11 +71,11 @@ L:RegisterTranslations("deDE", function() return {
 	removecursewarn = "Fl\195\188che bei Loatheb aufgehoben",
 	removecursebar = "Fluch aufheben",
 	removecursetrigger = "Loatheb wirkt Fluch aufheben auf Loatheb.",
-	
+
 	doomtimerbar = "Unausweichliches Schicksal alle 15 Sekunden",
 	doomtimerwarn = "Unausweichliches Schicksal Timer Wechsel in %s Sekunden!",
 	doomtimerwarnnow = "Unausweichliches Schicksal nun alle 15s!",
-	
+
 	startwarn = "Loatheb angegriffen! 2 Minuten bis Unausweichliches Schicksal!",
 
 	you = "Ihr",

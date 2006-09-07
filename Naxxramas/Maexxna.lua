@@ -13,8 +13,8 @@ local prior = nil
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "maexxna",
-	
+	cmd = "Maexxna",
+
 	spray_cmd = "spray",
 	spray_name = "Web Spray Alert",
 	spray_desc = "Warn for webspray and spiders",
@@ -39,8 +39,8 @@ L:RegisterTranslations("enUS", function() return {
 	webspraywarn10sec = "Spiders Spawn. 10 seconds until Web Spray!",
 	webspraywarn5sec = "WEB SPRAY 5 seconds!",
 	webspraywarn = "Web Spray! 40 seconds until next!",
-	enragewarn = "Enrage - Give it all you got!",
-	enragesoonwarn = "Enrage Soon - Get Ready!",
+	enragewarn = "Enrage - SQUISH SQUISH SQUISH!",
+	enragesoonwarn = "Enrage Soon - Bugsquatters out!",
 
 	webspraybar = "Web Spray",
 
@@ -49,17 +49,12 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "maexxna",
-	
-	spray_cmd = "spray",
 	spray_name = "Gespinst",
 	spray_desc = "Warnung vor Gespinst und Spinnen.",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Wutanfall",
 	enrage_desc = "Warnung wenn Maxxna w\195\188tend wird.",
 
-	cocoon_cmd = "cocoon",
 	cocoon_name = "Fangnetz",
 	cocoon_desc = "Warnung, wenn Spieler von Fangnetz betroffen sind.",
 
@@ -113,7 +108,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	cocoontrigger = "^(.+)受(.+)了蛛网裹体",
 	webspraytrigger = "受到了蛛网喷射",
-	
+
 	cocoonwarn = "%s被蛛网裹体了！",
 
 	enragetrigger = "变得愤怒了！",
@@ -195,7 +190,6 @@ function BigWigsMaexxna:SprayEvent( msg )
 	end
 end
 
-
 function BigWigsMaexxna:BigWigs_RecvSync( sync, rest )
 	if sync == "MaexxnaWebspray" then
 		if prior then return end
@@ -222,8 +216,6 @@ function BigWigsMaexxna:BigWigs_RecvSync( sync, rest )
 		end
 	end
 end
-
-
 
 function BigWigsMaexxna:Scan()
 	if UnitName("target") == boss and UnitAffectingCombat("target") then
@@ -285,3 +277,4 @@ function BigWigsMaexxna:BigWigs_Message(text)
 		prior = nil
 	end
 end
+

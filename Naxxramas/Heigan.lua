@@ -10,7 +10,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "heigan",
+	cmd = "Heigan",
 
 	teleport_cmd = "teleport",
 	teleport_name = "Teleport Alert",
@@ -36,9 +36,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "heigan",
-
-	teleport_cmd = "teleport",
 	teleport_name = "Teleport",
 	teleport_desc = "Warnung vor Teleport.",
 
@@ -84,7 +81,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-
 	-- [[ Triggers ]]--
 	starttrigger = "Vous \195\170tes \195\160 moi, maintenant.",
 	starttrigger2 = "Tu es%.%.%. le suivant.",
@@ -177,5 +173,4 @@ function BigWigsHeigan:BackToRoom()
 		self:TriggerEvent("BigWigs_StartBar", self, L["teleportbar"], self.toPlatformTime, "Interface\\Icons\\Spell_Arcane_Blink", "Green", "Yellow", "Orange", "Red")
 	end
 end
-
 

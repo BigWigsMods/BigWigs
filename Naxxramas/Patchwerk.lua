@@ -10,7 +10,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "patchwerk",
+	cmd = "Patchwerk",
 
 	enrage_cmd = "enrage",
 	enrage_name = "Enrage Alert",
@@ -33,9 +33,6 @@ L:RegisterTranslations("enUS", function() return {
 
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "patchwerk",
-
-	enrage_cmd = "enrage",
 	enrage_name = "Wutanfall",
 	enrage_desc = "Warnung, wenn Flickwerk w\195\188tend wird.",
 
@@ -104,7 +101,6 @@ BigWigsPatchwerk.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsPatchwerk:OnEnable()
-	self.enrageStarted = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED")

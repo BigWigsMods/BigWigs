@@ -12,7 +12,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "thaddius",
+	cmd = "Thaddius",
 
 	enrage_cmd = "enrage",
 	enrage_name = "Enrage Alert",
@@ -328,8 +328,8 @@ function BigWigsThaddius:PLAYER_AURAS_CHANGED( msg )
 	self:UnregisterEvent("PLAYER_AURAS_CHANGED")
 
 	if self.db.profile.charge then
-		if self.previousCharge == chargetype then
-			self:TriggerEvent("BigWigs_Message", L["nochange"], "Orange", true)
+		if self.previousCharge and self.previousCharge == chargetype then
+			self:TriggerEvent("BigWigs_Message", L["nochange"], "Orange", true, "Alarm")
 		elseif chargetype == L"positivetype" then
 			self:TriggerEvent("BigWigs_Message", L["poswarn"], "Green", true, "Alarm")
 		elseif chargetype == L"negativetype" then

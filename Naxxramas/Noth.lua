@@ -10,7 +10,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "noth",
+	cmd = "Noth",
 
 	blink_cmd = "blink",
 	blink_name = "Blink Alert",
@@ -28,42 +28,38 @@ L:RegisterTranslations("enUS", function() return {
 	starttrigger2 = "Glory to the master!",
 	starttrigger3 = "Your life is forfeit!",
 	startwarn = "Noth the Plaguebringer engaged! 90 seconds till teleport",
-	
+
 	addtrigger = "Rise, my soldiers! Rise and fight once more!",
 
 	blinktrigger = "Noth the Plaguebringer gains Blink.",
 	blinkwarn = "Blink! Stop DPS!",
 	blinkwarn2 = "Blink in ~5 seconds!",
 	blinkbar = "Blink",
-	
+
 	teleportwarn = "Teleport! He's on the balcony!",
 	teleportwarn2 = "Teleport in 10 seconds!",
 
 	teleportbar = "Teleport!",
 	backbar = "Back in room!",
-	
+
 	backwarn = "He's back in the room for %d seconds!",
 	backwarn2 = "10 seconds until he's back in the room!",
-	
+
 	cursetrigger = "afflicted by Curse of the Plaguebringer",
 	cursewarn	 = "Curse! next in ~55 seconds",
 	curse10secwarn = "Curse in ~10 seconds",
-	
-	cursebar = "Next Curse",		
+
+	cursebar = "Next Curse",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "noth",
 
-	blink_cmd = "blink",
 	blink_name = "Blinzeln",
 	blink_desc = "Warnung, wenn Noth Blinzeln wirkt.",
 
-	teleport_cmd = "teleport",
 	teleport_name = "Teleport",
 	teleport_desc = "Warnung vor Teleport.",
 
-	curse_cmd = "curse",
 	curse_name = "Fluch",
 	curse_desc = "Warnung, wenn Noth Fluch des Seuchenf\195\188rsten wirkt.",
 
@@ -71,7 +67,7 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger2 = "Ehre unserem Meister!",
 	starttrigger3 = "Euer Leben ist verwirkt!",
 	startwarn = "Noth der Seuchenf\195\188rst angegriffen! 90 Sekunden bis Teleport!",
-	
+
 	addtrigger = "Erhebt euch, Soldaten! Erhebt euch und k\195\164mpft erneut!",
 
 	blinktrigger = "Noth der Seuchenf\195\188rst bekommt 'Blinzeln'.",
@@ -84,14 +80,14 @@ L:RegisterTranslations("deDE", function() return {
 
 	teleportbar = "Teleport!",
 	backbar = "R\195\188ckteleport!",
-		
+
 	backwarn = "Er ist wieder im Raum f\195\188r %d Sekunden.",
 	backwarn2 = "10 Sekunden bis R\195\188ckteleport!",
-    
+
 	cursetrigger = "von Fluch des Seuchenf\195\188rsten betroffen",
 	cursewarn	 = "Fluch! N\195\164chster in ~55 Sekunden",
 	curse10secwarn = "Fluch in ~10 Sekunden",
-		
+
 	cursebar = "Fluch",
 } end )
 
@@ -101,27 +97,27 @@ L:RegisterTranslations("koKR", function() return {
 	starttrigger3 = "너희 생명은 끝이다!",
 	startwarn = "역병술사 노스와 전투 시작! 90초후 순간이동",		
 	-- "이제 숨을 거두어라!",
-	
+
 	addtrigger = "일어나라,병사들이여! 다시 일어나 싸워라!",
 
 	blinktrigger = "역병술사 노스|1이;가; 점멸 효과를 얻었습니다.",
 	blinkwarn = "점멸! 공격 금지!",
 	blinkwarn2 = "점멸 약 5초후!",
 	blinkbar = "점멸",
-	
+
 	teleportwarn = "순간이동! 발코니에 위치!",
 	teleportwarn2 = "순간이동 10초후!",
 
 	teleportbar = "순간이동!",
 	backbar = "방으로 복귀!",
-	
+
 	backwarn = "방으로 복귀! %d 초간 최대한 공격!!",
 	backwarn2 = "10초후 방으로 복귀!",
-	
+
 	cursetrigger = "(.+)|1이;가; 역병술사의 저주에 걸렸습니다.",
 	cursewarn	 = "저주! 다음 저주 약 55초후",
 	curse10secwarn = "저주 약 10초후",
-	
+
 	cursebar = "다음 저주",	
 } end )
 
@@ -139,27 +135,27 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger2 = "荣耀归于我主！",
 	starttrigger3 = "我要没收你的生命！",
 	startwarn = "瘟疫使者诺斯已激活 - 90秒后传送",
-	
+
 	addtrigger = "Rise, my soldiers! Rise and fight once more!",
 
 	blinktrigger = "瘟疫使者诺斯获得了闪现术的效果。",
 	blinkwarn = "闪现术！停止攻击！",
 	blinkwarn2 = "5秒后发动闪现术！",
 	blinkbar = "闪现术",
-	
+
 	teleportwarn = "传送发动！",
 	teleportwarn2 = "10秒后发动传送！",
 
 	teleportbar = "传送！",
 	backbar = "回到房间！",
-	
+
 	backwarn = "诺斯回到房间 - %d后再次传送",
 	backwarn2 = "10秒后诺斯回到房间！",
-	
+
 	cursetrigger = "受到了瘟疫使者的诅咒效果的影响",
 	cursewarn	 = "诅咒 - 55秒后再次发动",
 	curse10secwarn = "10秒后发动诅咒！",
-	
+
 	cursebar = "下一次诅咒",		
 } end )
 
@@ -167,14 +163,12 @@ L:RegisterTranslations("frFR", function() return {
 	starttrigger1 = "Mourez, intrus !",
 	starttrigger2 = "Gloire au ma\195\174tre !",
 	starttrigger3 = "Vos vies ne valent plus rien !",
-	
+
 	addtrigger = "Rise, my soldiers! Rise and fight once more!", -- TO TRANSLATE need /chatlog
 
 	blinktrigger = "Noth le Porte%-peste gagne Transfert.",
-	
+
 	cursetrigger = "les effets de Mal\195\169diction de Porte%-peste.",
-
-
 } end )
 
 ----------------------------------
@@ -200,7 +194,7 @@ function BigWigsNoth:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
-	
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "NothBlink", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "NothCurse", 5)
@@ -222,7 +216,7 @@ function BigWigsNoth:CHAT_MSG_MONSTER_YELL( msg )
 	if msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] then
 		self.timeroom = 90
 		self.timebalcony = 70
-		
+
 		if self.db.profile.teleport then
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Red")
 			self:ScheduleEvent("BigWigs_Message", self.timeroom-10, L["teleportwarn2"], "Orange")
@@ -259,7 +253,6 @@ function BigWigsNoth:BigWigs_Message(text)
 	if text == L["curse10secwarn"] then self.prior = nil end
 end
 
-
 function BigWigsNoth:teleportToBalcony()
 	if self.timeroom == 90 then
 		self.timeroom = 110
@@ -271,7 +264,7 @@ function BigWigsNoth:teleportToBalcony()
 	self:CancelScheduledEvent("bwnothcurse")
 	self:TriggerEvent("BigWigs_StopBar", self, L["blinkbar"])
 	self:TriggerEvent("BigWigs_StopBar", self, L["cursebar"])
-	
+
 	if self.db.profile.teleport then 
 		self:TriggerEvent("BigWigs_Message", L["teleportwarn"], "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L["backbar"], self.timebalcony, "Interface\\Icons\\Spell_Magic_LesserInvisibilty", "Green", "Yellow", "Orange", "Red")
@@ -285,8 +278,8 @@ function BigWigsNoth:teleportToRoom()
 		self.timebalcony = 95
 	elseif self.timebalcony == 95 then
 		self.timebalcony = 120
-	end	
-	
+	end
+
 	if self.db.profile.teleport then
 		self:TriggerEvent("BigWigs_Message", string.format(L["backwarn"], self.timeroom), "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L["teleportbar"], self.timeroom, "Interface\\Icons\\Spell_Magic_LesserInvisibilty", "Green", "Yellow", "Orange", "Red")
@@ -295,3 +288,4 @@ function BigWigsNoth:teleportToRoom()
 	self.prior = nil
 	self:ScheduleEvent("bwnothtobalcony", self.teleportToBalcony, self.timeroom, self)
 end
+

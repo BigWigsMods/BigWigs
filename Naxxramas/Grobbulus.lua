@@ -10,7 +10,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "grobbulus",
+	cmd = "Grobbulus",
 
 	enrage_cmd = "enrage",
 	enrage_name = "Enrage Alert",
@@ -45,13 +45,9 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "grobbulus",
-
-	youinjected_cmd = "youinjected",
 	youinjected_name = "Du bist verseucht",
 	youinjected_desc = "Warnung, wenn Du von Mutierende Injektion betroffen bist.",
 
-	otherinjected_cmd = "otherinjected",
 	otherinjected_name = "X ist verseucht",
 	otherinjected_desc = "Warnung, wenn andere Spieler von Mutierende Injektion betroffen sind.",
 

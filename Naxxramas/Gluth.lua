@@ -10,7 +10,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "gluth",
+	cmd = "Gluth",
 
 	fear_cmd = "fear",
 	fear_name = "Fear Alert",

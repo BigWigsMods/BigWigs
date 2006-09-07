@@ -11,7 +11,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "razuvious",
+	cmd = "Razuvious",
 
 	shout_cmd = "shout",
 	shout_name = "Shout Alert",

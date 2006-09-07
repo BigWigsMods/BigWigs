@@ -10,7 +10,6 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-
 	cmd = "gothik",
 
 	room_cmd = "room",
@@ -21,7 +20,7 @@ L:RegisterTranslations("enUS", function() return {
 	add_name = "Add Warnings",
 	add_desc = "Warn for adds",
 
-	disabletrigger = "I... am... undone.",		
+	disabletrigger = "I... am... undone.",
 
 	starttrigger1 = "Foolishly you have sought your own demise.",
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
@@ -136,7 +135,7 @@ L:RegisterTranslations("zhCN", function() return {
 BigWigsGothik = BigWigs:NewModule(boss)
 BigWigsGothik.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsGothik.enabletrigger = boss
-BigWigsGothik.toggleoptions = { "room", "add", "bosskill"}
+BigWigsGothik.toggleoptions = { "room", "add", "bosskill" }
 BigWigsGothik.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -269,3 +268,4 @@ function BigWigsGothik:CHAT_MSG_MONSTER_YELL( msg )
 		self.core:ToggleModuleActive(self, false)
 	end
 end
+

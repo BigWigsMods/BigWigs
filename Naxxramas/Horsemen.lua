@@ -15,7 +15,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "horsemen",
+	cmd = "Horsemen",
 
 	mark_cmd = "mark",
 	mark_name = "Mark Alerts",
@@ -40,9 +40,8 @@ L:RegisterTranslations("enUS", function() return {
 	markbar = "Mark",
 	markwarn1 = "Mark (%d)!",
 	markwarn2 = "Mark (%d) - 5 sec",
-	--marktrigger = "is afflicted by Mark of (Korth'azz|Blaumeux|Mograine|Zeliek)",
 	marktrigger = "is afflicted by Mark of ",
-	
+
 	voidtrigger = "Lady Blaumeux casts Void Zone.",
 	voidwarn = "Void Zone Incoming",
 	voidbar = "Void Zone",
@@ -64,13 +63,9 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "horsemen",
-
-	mark_cmd = "mark",
 	mark_name = "Mark Alerts", -- ?
 	mark_desc = "Warn for marks", -- ?
 
-	shieldwall_cmd  = "shieldwall",
 	shieldwall_name = "Schildwall",
 	shieldwall_desc = "Warnung vor Schildwall.",
 
@@ -245,7 +240,7 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 			self:TriggerEvent("BigWigs_Message", L["voidwarn"], "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, L["voidbar"], 12, "Interface\\Icons\\Spell_Frost_IceStorm", "Orange", "Red")
 		end
-	elseif sync == "HorsemenShieldWall" then
+	elseif sync == "HorsemenShieldWall" and self.db.profile.shieldwall and rest then
 		self:TriggerEvent("BigWigs_Message", string.format(L["shieldwallwarn"], rest), "White")
 		self:ScheduleEvent("BigWigs_Message", 20, string.format(L["shieldwallwarn2"], rest), "Green")
 		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["shieldwallbar"], rest), 20, "Interface\\Icons\\Ability_Warrior_ShieldWall", "Yellow", "Orange", "Red")
@@ -282,3 +277,4 @@ function BigWigsHorsemen:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 		end
 	end
 end
+
