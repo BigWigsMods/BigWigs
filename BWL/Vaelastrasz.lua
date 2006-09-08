@@ -5,7 +5,6 @@
 local boss = AceLibrary("Babble-Boss-2.0")("Vaelastrasz the Corrupt")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-local times = nil
 local playerName = nil
 
 ----------------------------
@@ -114,7 +113,6 @@ BigWigsVaelastrasz.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsVaelastrasz:OnEnable()
-	times = {}
 	playerName = UnitName("player")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
