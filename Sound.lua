@@ -78,7 +78,6 @@ BigWigsSound.consoleOptions = {
 	}
 }
 
-
 ------------------------------
 --      Initialization      --
 ------------------------------
@@ -87,10 +86,10 @@ function BigWigsSound:OnEnable()
 	self:RegisterEvent("BigWigs_Message")
 end
 
-
 function BigWigsSound:BigWigs_Message(text, color, noraidsay, sound)
 	if not text or sound == false then return end
 
 	if sounds[sound] then PlaySoundFile(sounds[sound])
-	else PlaySound("RaidWarning") end
+	elseif not PlaySoundFile(sound) then PlaySound("RaidWarning") end
 end
+
