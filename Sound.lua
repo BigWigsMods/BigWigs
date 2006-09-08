@@ -90,6 +90,6 @@ function BigWigsSound:BigWigs_Message(text, color, noraidsay, sound)
 	if not text or sound == false then return end
 
 	if sounds[sound] then PlaySoundFile(sounds[sound])
-	elseif not PlaySoundFile(sound) then PlaySound("RaidWarning") end
+	else PlaySound("RaidWarning") end
 end
 
