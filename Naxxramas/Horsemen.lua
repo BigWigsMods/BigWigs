@@ -250,7 +250,7 @@ end
 
 function BigWigsHorsemen:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	local _,_, mob = string.find(msg, L["shieldwalltrigger"])
-	self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..mob)
+	if mob then self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..mob) end
 end
 
 function BigWigsHorsemen:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)

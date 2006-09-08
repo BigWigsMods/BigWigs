@@ -281,7 +281,7 @@ function BigWigsMessages:BigWigs_Message(text, type)
 		SCT_Display_Message( text, color )
 	elseif SCT and SCT_MSG_FRAME and self.db.profile.display == L["Scrolling Combat Text"] then -- SCT 5.x
 		SCT_MSG_FRAME:AddMessage( text, r, g, b, 1 )
-	elseif CombatText_AddMessage and self.db.profile.display = L["Floating Combat Text"] then -- Blizzards FCT
+	elseif CombatText_AddMessage and self.db.profile.display == L["Floating Combat Text"] then -- Blizzards FCT
 		CombatText_AddMessage(text, COMBAT_TEXT_SCROLL_FUNCTION, r, g, b, "sticky", nil)
 	else -- Default BigWigs Frame fallback
 		self.msgframe:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
