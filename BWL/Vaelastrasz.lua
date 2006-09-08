@@ -157,11 +157,7 @@ function BigWigsVaelastrasz:Event(msg)
 		elseif GetLocale() == "koKR" then
 			_, _, baPlayer = string.find(baPlayer, L["whopattern"])
 		end
-		local t = GetTime()
-		if ( not times[baPlayer] ) or ( times[baPlayer] and ( times[baPlayer] + 5 ) < t) then
-			self:TriggerEvent("BigWigs_SendSync", "VaelBomb "..baPlayer)
-			times[baPlayer] = t
-		end
+		self:TriggerEvent("BigWigs_SendSync", "VaelBomb "..baPlayer)
 	end
 end
 
