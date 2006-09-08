@@ -20,8 +20,8 @@ local timeWeakened = 45        -- duration of a weaken
 local gianteye = nil
 local cthunstarted = nil
 local phase2started = nil
-local firstglare = nil
-local firstwarning = nil
+local firstGlare = nil
+local firstWarning = nil
 local target = nil
 local tentacletime = timeP1Tentacle
 
@@ -256,8 +256,8 @@ function BigWigsCThun:OnEnable()
 	target = nil
 	gianteye = nil
 	cthunstarted = nil
-	firstglare = nil
-	firstwarning = nil
+	firstGlare = nil
+	firstWarning = nil
 	phase2started = nil
 
 	tentacletime = timeP1Tentacle
