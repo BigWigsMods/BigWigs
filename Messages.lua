@@ -53,6 +53,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Mik's Scrolling Battle Text"] = true,
 	["Scrolling Combat Text"] = true,
+	["Floating Combat Text"] = true,
 } end)
 
 
@@ -209,11 +210,15 @@ BigWigsMessages.consoleOptions = {
 ------------------------------
 
 if MikSBT then
-	table.insert(BigWigsMessages.consoleOptions.args[L"display"].validate, L["Mik's Scrolling Battle Text"])
+	table.insert(BigWigsMessages.consoleOptions.args[L["display"]].validate, L["Mik's Scrolling Battle Text"])
 end
 
 if SCT_Display_Message or ( SCT and SCT.DisplayMessage ) then
-	table.insert(BigWigsMessages.consoleOptions.args[L"display"].validate, L["Scrolling Combat Text"])
+	table.insert(BigWigsMessages.consoleOptions.args[L["display"]].validate, L["Scrolling Combat Text"])
+end
+
+if CombatText_AddMessage then
+	table.insert(BigWigsMessages.consoleOptions.args[L["display"]].validate, L["Floating Combat Text"])
 end
 
 ------------------------------
@@ -276,7 +281,10 @@ function BigWigsMessages:BigWigs_Message(text, type)
 		SCT_Display_Message( text, color )
 	elseif SCT and SCT_MSG_FRAME and self.db.profile.display == L["Scrolling Combat Text"] then -- SCT 5.x
 		SCT_MSG_FRAME:AddMessage( text, r, g, b, 1 )
+	elseif CombatText_AddMessage and self.db.profile.display = L["Floating Combat Text"] then -- Blizzards FCT
+		CombatText_AddMessage(text, COMBAT_TEXT_SCROLL_FUNCTION, r, g, b, "sticky", nil)
 	else -- Default BigWigs Frame fallback
 		self.msgframe:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
 	end
 end
+
