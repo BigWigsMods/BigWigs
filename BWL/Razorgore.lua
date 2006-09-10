@@ -78,6 +78,7 @@ function BigWigsRazorgore:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL");
 	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF");
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "RazorgoreEgg", 8)
@@ -120,5 +121,4 @@ function BigWigsRazorgore:BigWigs_RecvSync(sync, rest)
 		end
 	end
 end
-
 
