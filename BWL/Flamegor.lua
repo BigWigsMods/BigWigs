@@ -15,7 +15,7 @@ L:RegisterTranslations("enUS", function() return {
 	trigger3 = "%s goes into a frenzy!",
 
 	warn1 = "Wing Buffet! 30sec to next!",
-	warn3 = "3 seconds before Flamegor casts Wing Buffet!",
+	warn3 = "3sec to Wing Buffet!",
 	warn4 = "Shadow Flame incoming!",
 	warn5 = "Frenzy - Tranq Shot!",
 	bosskill = "Flamegor has been defeated!",
@@ -124,7 +124,7 @@ function BigWigsFlamegor:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED")    
+	self:RegisterEvent("PLAYER_REGEN_DISABLED")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "FlamegorWingBuffet", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "FlamegorShadowflame", 10)
