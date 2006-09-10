@@ -18,7 +18,6 @@ L:RegisterTranslations("enUS", function() return {
 	warn3 = "3sec to Wing Buffet!",
 	warn4 = "Shadow Flame incoming!",
 	warn5 = "Frenzy - Tranq Shot!",
-	bosskill = "Flamegor has been defeated!",
 
 	bar1text = "Wing Buffet",
 
@@ -45,7 +44,6 @@ L:RegisterTranslations("zhCN", function() return {
 	warn3 = "3秒后发动龙翼打击！",
 	warn4 = "暗影烈焰发动！",
 	warn5 = "狂暴警报 - 猎人立刻使用宁神射击！",
-	bosskill = "弗莱格尔被击败了！",
 
 	bar1text = "龙翼打击",
 
@@ -68,7 +66,6 @@ L:RegisterTranslations("koKR", function() return {
 	warn3 = "3초후 폭풍 날개!",
 	warn4 = "암흑의 불길 경보!",
 	warn5 = "광란 - 평정 사격!",
-	bosskill = "플레임고르를 물리쳤습니다!",
 
 	bar1text = "폭풍 날개",
 } end)
@@ -81,7 +78,6 @@ L:RegisterTranslations("deDE", function() return {
 	warn3 = "3 Sekunden bis Fl\195\188gelsto\195\159!",
 	warn4 = "Schattenflamme in K\195\188rze!",
 	warn5 = "Raserei - Einlullender Schuss!",
-	bosskill = "Flammenmaul wurde besiegt!",
 
 	bar1text = "Fl\195\188gelsto\195\159",
 
@@ -103,7 +99,6 @@ L:RegisterTranslations("frFR", function() return {
 	warn3 = "3 sec avant prochaine Frappe des ailes!",
 	warn4 = "Flamme d'ombre imminente!",
 	warn5 = "Frenzy - Tranq Shot!",
-	bosskill = "Flamegor a ete vaincu!",
 } end)
 
 ----------------------------------

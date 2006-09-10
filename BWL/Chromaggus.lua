@@ -42,7 +42,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	warn1 = "%s in 10 seconds!",
 	warn2 = "%s is casting!",
-	warn3 = "New spell vulnerability: %s",
+	warn3 = "Vulnerability: %s!",
 	warn4 = "Spell vulnerability changed!",
 	warn5 = "Frenzy Alert!",
 	warn6 = "Enrage soon!",
