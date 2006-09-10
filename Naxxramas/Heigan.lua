@@ -14,7 +14,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	teleport_cmd = "teleport",
 	teleport_name = "Teleport Alert",
-	teleport_desc = "Warn for Teleports",
+	teleport_desc = "Warn for Teleports.",
+
+	engage_cmd = "engage",
+	engage_name = "Engage Alert",
+	engage_desc = "Warn when Heigan is engaged.",
 
 	-- [[ Triggers ]]--
 	starttrigger = "You are mine now.",
@@ -96,7 +100,7 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsHeigan = BigWigs:NewModule(boss)
 BigWigsHeigan.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsHeigan.enabletrigger = boss
-BigWigsHeigan.toggleoptions = {"teleport", "bosskill"}
+BigWigsHeigan.toggleoptions = {"engage", "teleport", "bosskill"}
 BigWigsHeigan.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -115,12 +119,16 @@ function BigWigsHeigan:OnEnable()
 end
 
 function BigWigsHeigan:CHAT_MSG_MONSTER_YELL( msg )
-	if self.db.profile.teleport and msg == L["starttrigger"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] then
-		self:TriggerEvent("BigWigs_Message", L["startwarn"], "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["teleportbar"], self.toPlatformTime, "Interface\\Icons\\Spell_Arcane_Blink", "Green", "Yellow", "Orange", "Red")
-		self:ScheduleEvent("bwheiganwarn1", "BigWigs_Message", self.toPlatformTime-60, L["warn1"], "Green")
-		self:ScheduleEvent("bwheiganwarn2", "BigWigs_Message", self.toPlatformTime-30, L["warn2"], "Yellow")
-		self:ScheduleEvent("bwheiganwarn3", "BigWigs_Message", self.toPlatformTime-10, L["warn3"], "Orange")
+	if msg == L["starttrigger"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] then
+		if self.db.profile.engage then
+			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Red")
+		end
+		if self.db.profile.teleport then
+			self:TriggerEvent("BigWigs_StartBar", self, L["teleportbar"], self.toPlatformTime, "Interface\\Icons\\Spell_Arcane_Blink", "Green", "Yellow", "Orange", "Red")
+			self:ScheduleEvent("bwheiganwarn1", "BigWigs_Message", self.toPlatformTime-60, L["warn1"], "Green")
+			self:ScheduleEvent("bwheiganwarn2", "BigWigs_Message", self.toPlatformTime-30, L["warn2"], "Yellow")
+			self:ScheduleEvent("bwheiganwarn3", "BigWigs_Message", self.toPlatformTime-10, L["warn3"], "Orange")
+		end
 	elseif string.find(msg, L["teleporttrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "HeiganTeleport")
 	end
