@@ -119,7 +119,7 @@ L:RegisterTranslations("frFR", function() return {
 
 BigWigsRazuvious = BigWigs:NewModule(boss)
 BigWigsRazuvious.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
-BigWigsRazuvious.enabletrigger = { understudy, boss }
+BigWigsRazuvious.enabletrigger = { boss }
 BigWigsRazuvious.toggleoptions = {"shout", "shieldwall", "bosskill"}
 BigWigsRazuvious.revision = tonumber(string.sub("$Revision$", 12, -3))
 
