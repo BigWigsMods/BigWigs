@@ -10,7 +10,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	trigger1 = "Shazzrah gains Blink",
+	trigger1 = "casts Gate of Shazzrah",
 	trigger2 = "Shazzrah gains Deaden Magic",
 
 	warn1 = "Blink - ~45 seconds until next!",
