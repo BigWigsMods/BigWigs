@@ -255,7 +255,17 @@ function BigWigsOuro:Emerge()
 		self:ScheduleEvent("bwouroemergewarn", "BigWigs_Message", 165, L["emergewarn"], "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L["emergebartext"], 180, "Interface\\Icons\\Spell_Nature_Earthquake", "Green", "Yellow", "Orange", "Red")
 	end
-
+	
+	if self.db.profile.sweep then
+		self:ScheduleEvent("bwourosweepwarn", "BigWigs_Message", 18, L["sweepwarn"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["sweepbartext"], 23, "Interface\\Icons\\Spell_Nature_Thorns", "Yellow", "Orange", "Red")
+	end	
+	
+	if self.db.profile.sandblast then
+		self:ScheduleEvent("bwouroblastwarn", "BigWigs_Message", 18, L["sandblastwarn"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["sandblastbartext"], 23, "Interface\\Icons\\Spell_Nature_Cyclone", "Yellow", "Orange", "Red")
+	end
+		
 	if self.db.profile.scarab then
 		self:ScheduleEvent("bwscarabdespawn", "BigWigs_Message", 50, L["scarabdespawn"], "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L["scarabbar"], 60, "Interface\\Icons\\INV_Scarab_Clay", "Red", "Orange", "Yellow", "Green" )
