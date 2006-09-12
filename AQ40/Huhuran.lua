@@ -30,7 +30,7 @@ L:RegisterTranslations("enUS", function() return {
 	berserkwarn = "Berserk - Give it all you got!",
 	berserksoonwarn = "Berserk Soon - Get Ready!",
 	stingtrigger = "afflicted by Wyvern Sting",
-	stingwarn = "Wyvern Sting - Dispel Tanks!",
+	stingwarn = "Wyvern Sting!",
 	stingdelaywarn = "Possible Wyvern Sting in 3 seconds!",
 	bartext = "Wyvern Sting",
 
