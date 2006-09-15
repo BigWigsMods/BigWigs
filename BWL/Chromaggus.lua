@@ -5,9 +5,6 @@
 local boss = AceLibrary("Babble-Boss-2.0")("Chromaggus")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
-local breath1 = nil
-local breath2 = nil
-
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -31,24 +28,21 @@ L:RegisterTranslations("enUS", function() return {
 	vulnerability_name = "Vulnerability Alerts",
 	vulnerability_desc = "Warn for Vulnerability changes",
 
-	trigger1 = "^Chromaggus begins to cast ([%w ]+)\.",
-	trigger2 = "^[%w']+ [%w' ]+ ([%w]+) Chromaggus for ([%d]+) ([%w ]+) damage%..*",
-	trigger3 = "Chromaggus's Time Lapse was resisted by ([%w]+)%.",
-	trigger4 = "%s goes into a killing frenzy!",
-	trigger5 = "%s flinches as its skin shimmers.",
+	breath_trigger = "^Chromaggus begins to cast ([%w ]+)\.",
+	vulnerability_test = "^[%w']+ [%w' ]+ ([%w]+) Chromaggus for ([%d]+) ([%w ]+) damage%..*",
+	frenzy_trigger = "%s goes into a killing frenzy!",
+	vulnerability_trigger = "%s flinches as its skin shimmers.",
 
 	hit = "hits",
 	crit = "crits",
 
-	warn1 = "%s in 10 seconds!",
-	warn2 = "%s is casting!",
-	warn3 = "Vulnerability: %s!",
-	warn4 = "Spell vulnerability changed!",
-	warn5 = "Frenzy Alert!",
-	warn6 = "Enrage soon!",
+	breath_warning = "%s in 10 seconds!",
+	breath_message = "%s is casting!",
+	vulnerability_message = "Vulnerability: %s!",
+	vulnerability_warning = "Spell vulnerability changed!",
+	frenzy_message = "Frenzy Alert!",
+	enrage_warning = "Enrage soon!",
 
-	breathfirst = "First Breath",
-	breathsecond = "Second Breath",
 	breath1 = "Time Lapse",
 	breath2 = "Corrosive Acid",
 	breath3 = "Ignite Flesh",
@@ -77,21 +71,20 @@ L:RegisterTranslations("deDE", function() return {
 	vulnerability_name = "Zauber-Verwundbarkeiten",
 	vulnerability_desc = "Warnung, wenn Chromagguss Zauber-Verwundbarkeit sich \195\164ndert.",
 
-	trigger1 = "^Chromaggus beginnt (.+) zu wirken%.",
-	trigger2 = "^[^%s]+ .* trifft Chromaggus(.+)f\195\188r ([%d]+) ([%w ]+)'schaden%..*", -- ?
-	trigger3 = "Chromagguss Zeitraffer wurde von ([%w]+) widerstanden.%", -- ?
-	trigger4 = "%s ger\195\164t in t\195\182dliche Raserei!",
-	trigger5 = "%s weicht zur\195\188ck, als die Haut schimmert.",
+	breath_trigger = "^Chromaggus beginnt (.+) zu wirken%.",
+	vulnerability_test = "^[^%s]+ .* trifft Chromaggus(.+)f\195\188r ([%d]+) ([%w ]+)'schaden%..*", -- ?
+	frenzy_trigger = "%s ger\195\164t in t\195\182dliche Raserei!",
+	vulnerability_trigger = "%s weicht zur\195\188ck, als die Haut schimmert.",
 
 	hit = "trifft",
 	crit = "kritisch",
 
-	warn1 = "%s in 10 Sekunden!",
-	warn2 = "Chromaggus wirkt: %s Atem!",
-	warn3 = "Neue Zauber-Verwundbarkeit: %s",
-	warn4 = "Zauber-Verwundbarkeit ge\195\164ndert!",
-	warn5 = "Raserei - Einlullender Schuss!",
-	warn6 = "Wutanfall steht kurz bevor!",
+	breath_warning = "%s in 10 Sekunden!",
+	breath_message = "Chromaggus wirkt: %s Atem!",
+	vulnerability_message = "Neue Zauber-Verwundbarkeit: %s",
+	vulnerability_warning = "Zauber-Verwundbarkeit ge\195\164ndert!",
+	frenzy_message = "Raserei - Einlullender Schuss!",
+	enrage_warning = "Wutanfall steht kurz bevor!",
 
 	breath1 = "Zeitraffer",
 	breath2 = "\195\132tzende S\195\164ure",
@@ -113,21 +106,20 @@ L:RegisterTranslations("zhCN", function() return {
 	vulnerability_name = "弱点警报",
 	vulnerability_desc = "克洛玛古斯弱点改变时发出警报",
 
-	trigger1 = "^克洛玛古斯开始施放(.+)。",
-	trigger2 = "^.+的(.+)克洛玛古斯造成(%d+)点(.+)伤害。",
-	trigger3 = "^克洛玛古斯的时间流逝被(.+)抵抗了。",
-	trigger4 = "变得极为狂暴！",
-	trigger5 = "的皮肤闪着光芒",
+	breath_trigger = "^克洛玛古斯开始施放(.+)。",
+	vulnerability_test = "^.+的(.+)克洛玛古斯造成(%d+)点(.+)伤害。",
+	frenzy_trigger = "变得极为狂暴！",
+	vulnerability_trigger = "的皮肤闪着光芒",
 
 	hit = "击中",
 	crit = "致命一击",
 
-	warn1 = "%s - 10秒后施放！",
-	warn2 = "正在施放 %s！",
-	warn3 = "新法术弱点：%s",
-	warn4 = "法术弱点已改变！",
-	warn5 = "狂暴警报 - 猎人立刻使用宁神射击！",
-	warn6 = "即将激怒！",
+	breath_warning = "%s - 10秒后施放！",
+	breath_message = "正在施放 %s！",
+	vulnerability_message = "新法术弱点：%s",
+	vulnerability_warning = "法术弱点已改变！",
+	frenzy_message = "狂暴警报 - 猎人立刻使用宁神射击！",
+	enrage_warning = "即将激怒！",
 
 	breath1 = "时间流逝",
 	breath2 = "腐蚀酸液",
@@ -137,20 +129,19 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	trigger1 = "크로마구스|1이;가; (.+)|1을;를; 시전합니다.",
-	trigger2 = "(.+)|1이;가; (.+)|1으로;로; 크로마구스에게 (%d+)의 (.+) 입혔습니다.",
-	trigger3 = "크로마구스|1이;가; 시간의 쇠퇴|1으로;로; (.+)|1을;를; 공격했지만 저항했습니다.",		
-	trigger4 = "광란의 상태에 빠집니다!",
-	trigger5 = "가죽이 점점 빛나면서 물러서기 시작합니다.",
+	breath_trigger = "크로마구스|1이;가; (.+)|1을;를; 시전합니다.",
+	vulnerability_test = "(.+)|1이;가; (.+)|1으로;로; 크로마구스에게 (%d+)의 (.+) 입혔습니다.",
+	frenzy_trigger = "광란의 상태에 빠집니다!",
+	vulnerability_trigger = "가죽이 점점 빛나면서 물러서기 시작합니다.",
 
 	hit = "피해를",
 	crit = "치명상을",
 
-	warn1 = "%s 10초전!",
-	warn2 = "%s를 시전합니다!",
-	warn3 = "새로운 취약 속성: %s",
-	warn4 = "취약 속성이 변경되었습니다!",
-	warn5 = "광폭화 - 평정 사격!",
+	breath_warning = "%s 10초전!",
+	breath_message = "%s를 시전합니다!",
+	vulnerability_message = "새로운 취약 속성: %s",
+	vulnerability_warning = "취약 속성이 변경되었습니다!",
+	frenzy_message = "광폭화 - 평정 사격!",
 
 	breath1 = "시간의 쇠퇴",
 	breath2 = "부식성 산",
@@ -161,21 +152,20 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	trigger1 = "^Chromaggus commence \195\160 lancer (.+)%.",
-	trigger2 = "^.+ lance .+ et (.+) \195\160 Chromaggus %(([%d]+) points de d\195\169g\195\162ts .+ (.+)%)%.";
-	trigger3 = "^Chromaggus utilise Trou de temps, mais ([%w]+) r\195\169siste%.",
-	trigger4 = "entre dans une sanglante fr\195\169n\195\169sie !",
-	trigger5 = "grimace lorsque sa peau se met \195\160 briller.",
+	breath_trigger = "^Chromaggus commence \195\160 lancer (.+)%.",
+	vulnerability_test = "^.+ lance .+ et (.+) \195\160 Chromaggus %(([%d]+) points de d\195\169g\195\162ts .+ (.+)%)%.";
+	frenzy_trigger = "entre dans une sanglante fr\195\169n\195\169sie !",
+	vulnerability_trigger = "grimace lorsque sa peau se met \195\160 briller.",
 
 	hit = "lui inflige",
 	crit = "inflige un coup critique",
 
-	warn1 = "%s dans 10 seconde!",
-	warn2 = "incantation de %s !",
-	warn3 = "Nouvelle vulnerabiliter: %s",
-	warn4 = "la vulnerabiliter au sort a changer!",
-	warn5 = "Frenzy Alert!",
-	warn6 = "Enrage imminent!",
+	breath_warning = "%s dans 10 seconde!",
+	breath_message = "incantation de %s !",
+	vulnerability_message = "Nouvelle vulnerabiliter: %s",
+	vulnerability_warning = "la vulnerabiliter au sort a changer!",
+	frenzy_message = "Frenzy Alert!",
+	enrage_warning = "Enrage imminent!",
 
 	breath1 = "Trou de temps",
 	breath2 = "Acide corrosif",
@@ -201,9 +191,6 @@ BigWigsChromaggus.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsChromaggus:OnEnable()
 	-- in the module itself for resetting via schedule
 	self.vulnerability = nil
-	-- locals
-	breath1 = nil
-	breath2 = nil
 	self.twenty = nil
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
@@ -214,44 +201,16 @@ function BigWigsChromaggus:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE", "PlayerDamageEvents")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("UNIT_HEALTH")
-	--self:RegisterEvent("PLAYER_REGEN_DISABLED")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ChromaggusBreath", 10)
-end
-
-function BigWigsChromaggus:Scan()
-	if UnitName("target") == boss and UnitAffectingCombat("target") then
-		return true
-	elseif UnitName("playertarget") == boss and UnitAffectingCombat("playertarget") then
-		return true
-	else
-		local i
-		for i = 1, GetNumRaidMembers(), 1 do
-			if UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("raid"..i.."target") then
-				return true
-			end
-		end
-	end
-	return false
-end
-
-function BigWigsChromaggus:PLAYER_REGEN_DISABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Chromaggus_CheckStart")
-	if (go) then
-		self:CancelScheduledEvent("Chromaggus_CheckStart")
-		self:TriggerEvent("BigWigs_SendSync", "ChromaggusBreath " .. L["breathfirst"])
-	elseif not running then
-		self:ScheduleRepeatingEvent("Chromaggus_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self)
-	end
 end
 
 function BigWigsChromaggus:UNIT_HEALTH( msg )
 	if self.db.profile.enrage and UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 20 and health <= 23 and not self.twenty then
-			if self.db.profile.enrage then self:TriggerEvent("BigWigs_Message", L["warn6"], "Red") end
+			if self.db.profile.enrage then self:TriggerEvent("BigWigs_Message", L["enrage_warning"], "Red") end
 			self.twenty = true
 		elseif health > 40 and self.twenty then
 			self.twenty = nil
@@ -260,54 +219,32 @@ function BigWigsChromaggus:UNIT_HEALTH( msg )
 end
 
 function BigWigsChromaggus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
-	local _,_, spellName = string.find(msg, L["trigger1"])
+	local _,_, spellName = string.find(msg, L["breath_trigger"])
 	if spellName then
-		self:TriggerEvent("BigWigs_SendSync", "ChromaggusBreath "..spellName)
+		local breath = L:HasReverseTranslation(spellName) and L:GetReverseTranslation(spellName) or nil
+		if not breath then return end
+		breath = string.sub(breath, -1)
+		self:TriggerEvent("BigWigs_SendSync", "ChromaggusBreath "..breath)
 	end
 end
 
-function BigWigsChromaggus:BigWigs_RecvSync(sync, spellName)
-	if sync ~= "ChromaggusBreath" or not spellName then return end
+function BigWigsChromaggus:BigWigs_RecvSync(sync, spellId)
+	if sync ~= "ChromaggusBreath" or not spellId or not self.db.profile.breath then return end
 
-	if self.db.profile.breath and spellName == L["breathfirst"] then
-		self:ScheduleEvent("bwchromaggusbreath1", "BigWigs_Message", 20, format(L["warn1"], L["breathfirst"]), "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["breathfirst"], 30, L["iconunknown"], "Green", "Yellow", "Orange", "Red")
-		self:ScheduleEvent("bwchromaggusbreath1", "BigWigs_Message", 50, format(L["warn1"], L["breathsecond"]), "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["breathsecond"], 60, L["iconunknown"], "Green", "Yellow", "Orange", "Red")
-		return
-	end
+	local spellName = L:HasTranslation("breath"..spellId) and L["breath"..spellId] or nil
+	if not spellName then return end
 
-	if not breath1 then
-		breath1 = spellName
-	elseif not breath2 and not breath1 ~= spellName then
-		breath2 = spellName
-	end
-
-	if not self.db.profile.breath then return end
-	self:TriggerEvent("BigWigs_Message", format(L["warn2"], spellName), "Red")
-
-	-- figure out the icon
-	local breathnr = L:HasReverseTranslation(spellName) and L:GetReverseTranslation(spellName) or "breath1"
-	breathnr = string.sub(breathnr, -1 )
-	if tonumber( breathnr) < 1 or tonumber( breathnr ) > 5 then breathnr = 1 end
-	local icon = "icon"..breathnr
-	icon = L(icon)
-
-	if breath1 == spellName then
-		self:ScheduleEvent("bwchromaggusbreath1", "BigWigs_Message", 50, format(L["warn1"], breath1), "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, breath1, 60, icon, "Green", "Yellow", "Orange", "Red")
-	elseif breath2 == spellName then
-		self:ScheduleEvent("bwchromaggusbreath2", "BigWigs_Message", 50, format(L["warn1"], breath2), "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, breath2, 60, icon, "Green", "Yellow", "Orange", "Red")
-	end
+	self:TriggerEvent("BigWigs_Message", format(L["breath_message"], spellName), "Red")
+	self:ScheduleEvent("bwchromaggusbreath"..spellName, "BigWigs_Message", 50, format(L["breath_warning"], spellName), "Red")
+	self:TriggerEvent("BigWigs_StartBar", self, spellName, 60, L["icon"..spellId], "Green", "Yellow", "Orange", "Red")
 end
 
 function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE( msg )
-	if msg == L"trigger4" and self.db.profile.frenzy then
-		self:TriggerEvent("BigWigs_Message", L["warn5"], "Red")
-	elseif msg == L"trigger5" then
+	if msg == L["frenzy_trigger"] and self.db.profile.frenzy then
+		self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Red")
+	elseif msg == L["vulnerability_trigger"] then
 		if self.db.profile.vulnerability then
-			self:TriggerEvent("BigWigs_Message", L["warn4"], "White")
+			self:TriggerEvent("BigWigs_Message", L["vulnerability_warning"], "White")
 		end
 		self:ScheduleEvent(function() BigWigsChromaggus.vulnerability = nil end, 2.5 )
 	end
@@ -316,11 +253,11 @@ end
 if (GetLocale() == "koKR") then
 	function BigWigsChromaggus:PlayerDamageEvents(msg)
 		if (not self.vulnerability) then
-			local _, _, _, school, dmg, type = string.find(msg, L["trigger2"])
+			local _, _, _, school, dmg, type = string.find(msg, L["vulnerability_test"])
 			if ( type == L["hit"] or type == L["crit"] ) and tonumber(dmg or "") and school then
 				if (tonumber(dmg) >= 550 and type == L["hit"]) or (tonumber(dmg) >= 1100 and type == L["crit"]) then
 					self.vulnerability = school
-					if self.db.profile.vulnerability then self:TriggerEvent("BigWigs_Message", format(L["warn3"], school), "White") end
+					if self.db.profile.vulnerability then self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "White") end
 				end
 			end
 		end
@@ -328,11 +265,11 @@ if (GetLocale() == "koKR") then
 else
 	function BigWigsChromaggus:PlayerDamageEvents(msg)
 		if (not self.vulnerability) then
-			local _,_, type, dmg, school = string.find(msg, L["trigger2"])
+			local _,_, type, dmg, school = string.find(msg, L["vulnerability_test"])
 			if ( type == L["hit"] or type == L["crit"] ) and tonumber(dmg or "") and school then
 				if (tonumber(dmg) >= 550 and type == L["hit"]) or (tonumber(dmg) >= 1100 and type == L["crit"]) then
 					self.vulnerability = school
-					if self.db.profile.vulnerability then self:TriggerEvent("BigWigs_Message", format(L["warn3"], school), "White") end
+					if self.db.profile.vulnerability then self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "White") end
 				end
 			end
 		end

@@ -10,21 +10,21 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	trigger1 = "Ebonroc begins to cast Wing Buffet",
-	trigger2 = "Ebonroc begins to cast Shadow Flame.",
-	trigger3 = "^([^%s]+) ([^%s]+) afflicted by Shadow of Ebonroc",
+	wingbuffet_trigger = "Ebonroc begins to cast Wing Buffet",
+	shadowflame_trigger = "Ebonroc begins to cast Shadow Flame.",
+	shadowcurse_trigger = "^([^%s]+) ([^%s]+) afflicted by Shadow of Ebonroc",
 
 	you = "You",
 	are = "are",
 
-	warn1 = "Wing Buffet! 30sec to next!",
-	warn3 = "3sec to Wing Buffet!",
-	warn4 = "Shadow Flame incoming!",
-	warn5 = "You have Shadow of Ebonroc!",
-	warn6 = " has Shadow of Ebonroc!",
+	wingbuffet_message = "Wing Buffet! 30sec to next!",
+	wingbuffet_warning = "3sec to Wing Buffet!",
+	shadowflame_warning = "Shadow Flame incoming!",
+	shadowflame_message_you = "You have Shadow of Ebonroc!",
+	shadowflame_message_other = " has Shadow of Ebonroc!",
 
-	bar1text = "Wing Buffet",
-	bar2text = "%s - Shadow of Ebonroc",
+	wingbuffet_bar = "Wing Buffet",
+	shadowcurse_bar = "%s - Shadow of Ebonroc",
 
 	cmd = "Ebonroc",
 
@@ -50,20 +50,20 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
-	trigger1 = "埃博诺克开始施放龙翼打击。",
-	trigger2 = "埃博诺克开始施放暗影烈焰。",
-	trigger3 = "^(.+)受(.+)了埃博诺克之影",
+	wingbuffet_trigger = "埃博诺克开始施放龙翼打击。",
+	shadowflame_trigger = "埃博诺克开始施放暗影烈焰。",
+	shadowcurse_trigger = "^(.+)受(.+)了埃博诺克之影",
 
 	you = "你",
 	are = "到",
 
-	warn1 = "埃博诺克开始施放龙翼打击！",
-	warn3 = "3秒后发动龙翼打击！",
-	warn4 = "暗影烈焰发动！",
-	warn5 = "你中了埃博诺克之影！",
-	warn6 = "中了埃博诺克之影！",
+	wingbuffet_message = "埃博诺克开始施放龙翼打击！",
+	wingbuffet_warning = "3秒后发动龙翼打击！",
+	shadowflame_warning = "暗影烈焰发动！",
+	shadowflame_message_you = "你中了埃博诺克之影！",
+	shadowflame_message_other = "中了埃博诺克之影！",
 
-	bar1text = "龙翼打击",
+	wingbuffet_bar = "龙翼打击",
 
 	wingbuffet_name = "龙翼打击警报",
 	wingbuffet_desc = "龙翼打击警报",
@@ -80,36 +80,36 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 L:RegisterTranslations("koKR", function() return {
-	trigger1 = "에본로크|1이;가; 폭풍 날개|1을;를; 시전합니다.",
-	trigger2 = "에본로크|1이;가; 암흑의 불길|1을;를; 시전합니다.",
-	trigger3 = "(.*)에본로크의 그림자에 걸렸습니다.",
+	wingbuffet_trigger = "에본로크|1이;가; 폭풍 날개|1을;를; 시전합니다.",
+	shadowflame_trigger = "에본로크|1이;가; 암흑의 불길|1을;를; 시전합니다.",
+	shadowcurse_trigger = "(.*)에본로크의 그림자에 걸렸습니다.",
 
 	you = "",
 	are = "are",
 	whopattern = "(.+)|1이;가; ",
 
-	warn3 = "3초후 폭풍 날개!",
-	warn4 = "암흑의 불길 경고!",
-	warn5 = "당신은 에본로크의 그림자에 걸렸습니다!",
-	warn6 = "님이 에본로크의 그림자에 걸렸습니다!",
+	wingbuffet_warning = "3초후 폭풍 날개!",
+	shadowflame_warning = "암흑의 불길 경고!",
+	shadowflame_message_you = "당신은 에본로크의 그림자에 걸렸습니다!",
+	shadowflame_message_other = "님이 에본로크의 그림자에 걸렸습니다!",
 
-	bar1text = "폭풍 날개",
+	wingbuffet_bar = "폭풍 날개",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	trigger1 = "Schattenschwinge beginnt Fl\195\188gelsto\195\159 zu wirken.",
-	trigger2 = "Schattenschwinge beginnt Schattenflamme zu wirken.",
-	trigger3 = "^([^%s]+) (%w+) von Schattenschwinges Schatten betroffen.",
+	wingbuffet_trigger = "Schattenschwinge beginnt Fl\195\188gelsto\195\159 zu wirken.",
+	shadowflame_trigger = "Schattenschwinge beginnt Schattenflamme zu wirken.",
+	shadowcurse_trigger = "^([^%s]+) (%w+) von Schattenschwinges Schatten betroffen.",
 
 	you = "Ihr",
 	are = "seid",
 
-	warn3 = "3 Sekunden bis Fl\195\188gelsto\195\159!",
-	warn4 = "Schattenflamme in K\195\188rze!",
-	warn5 = "Du hast Schattenschwinges Schatten!",
-	warn6 = " hat Schattenschwinges Schatten!",
+	wingbuffet_warning = "3 Sekunden bis Fl\195\188gelsto\195\159!",
+	shadowflame_warning = "Schattenflamme in K\195\188rze!",
+	shadowflame_message_you = "Du hast Schattenschwinges Schatten!",
+	shadowflame_message_other = " hat Schattenschwinges Schatten!",
 
-	bar1text = "Fl\195\188gelsto\195\159",
+	wingbuffet_bar = "Fl\195\188gelsto\195\159",
 
 	wingbuffet_name = "Fl\195\188gelsto\195\159",
 	wingbuffet_desc = "Warnung, wenn Schattenschwinge Fl\195\188gelsto\195\159 wirkt.",
@@ -125,17 +125,17 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	trigger1 = "Roch\195\169b\195\168ne commence \195\160 lancer Frappe des ailes.",
-	trigger2 = "Roch\195\169b\195\168ne commence \195\160 lancer Flamme d'ombre.",
-	trigger3 = "^([^%s]+) ([^%s]+) les effets de Ombre de Roch\195\169b\195\168ne",
+	wingbuffet_trigger = "Roch\195\169b\195\168ne commence \195\160 lancer Frappe des ailes.",
+	shadowflame_trigger = "Roch\195\169b\195\168ne commence \195\160 lancer Flamme d'ombre.",
+	shadowcurse_trigger = "^([^%s]+) ([^%s]+) les effets de Ombre de Roch\195\169b\195\168ne",
 
 	you = "Vous",
 	are = "subissez",
 
-	warn3 = "3 sec avant prochaine Frappe des ailes!",
-	warn4 = "Flamme d'ombre imminente!",
-	warn5 = "Vous avez l'Ombre de Roch\195\169b\195\168nec!",
-	warn6 = " a l'Ombre de Roch\195\169b\195\168ne!",
+	wingbuffet_warning = "3 sec avant prochaine Frappe des ailes!",
+	shadowflame_warning = "Flamme d'ombre imminente!",
+	shadowflame_message_you = "Vous avez l'Ombre de Roch\195\169b\195\168nec!",
+	shadowflame_message_other = " a l'Ombre de Roch\195\169b\195\168ne!",
 } end)
 
 ----------------------------------
@@ -158,7 +158,7 @@ function BigWigsEbonroc:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED")
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "EbonrocWingBuffet", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "EbonrocShadowflame", 10)
@@ -168,81 +168,54 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsEbonroc:Scan()
-	if UnitName("target") == boss and UnitAffectingCombat("target") then
-		return true
-	elseif UnitName("playertarget") == boss and UnitAffectingCombat("playertarget") then
-		return true
-	else
-		local i
-		for i = 1, GetNumRaidMembers(), 1 do
-			if UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("raid"..i.."target") then
-				return true
-			end
-		end
-	end
-	return false
-end
-
-function BigWigsEbonroc:PLAYER_REGEN_DISABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Ebonroc_CheckStart")
-	if (go) then
-		self:CancelScheduledEvent("Ebonroc_CheckStart")
-		self:TriggerEvent("BigWigs_SendSync", "EbonrocWingBuffet")
-	elseif not running then
-		self:ScheduleRepeatingEvent("Ebonroc_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self)
-	end
-end
-
 function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg == L["trigger2"] then
+	if msg == L["shadowflame_trigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "EbonrocShadowflame")
-	elseif string.find(msg, L["trigger1"]) then
+	elseif string.find(msg, L["wingbuffet_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "EbonrocWingBuffet")
 	end
 end
 
 function BigWigsEbonroc:BigWigs_RecvSync(sync)
 	if sync == "EbonrocWingBuffet" and self.db.profile.wingbuffet then
-		self:TriggerEvent("BigWigs_Message", L["warn1"], "Red")
-		self:ScheduleEvent("BigWigs_Message", 29, L["warn3"], "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Red")
+		self:ScheduleEvent("BigWigs_Message", 29, L["wingbuffet_warning"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")
 	elseif sync == "EbonrocShadowflame" and self.db.profile.shadowflame then
-		self:TriggerEvent("BigWigs_Message", L["warn4"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Red")
 	end
 end
 
 if (GetLocale() == "koKR") then
 	function BigWigsEbonroc:Event(msg)
-		local _,_, EPlayer = string.find(msg, L["trigger3"])
+		local _,_, EPlayer = string.find(msg, L["shadowcurse_trigger"])
 		if (EPlayer) then
 			if (EPlayer == L["you"] and self.db.profile.youcurse) then
-				self:TriggerEvent("BigWigs_Message", L["warn5"], "Red", true)
+				self:TriggerEvent("BigWigs_Message", L["shadowflame_message_you"], "Red", true)
 			elseif (self.db.profile.elsecurse) then
 				local _,_, EWho = string.find(EPlayer, L["whopattern"])
-				self:TriggerEvent("BigWigs_Message", EWho .. L["warn6"], "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", EWho, L["warn5"])
+				self:TriggerEvent("BigWigs_Message", EWho .. L["shadowflame_message_other"], "Yellow")
+				self:TriggerEvent("BigWigs_SendTell", EWho, L["shadowflame_message_you"])
 			end
 
 			if self.db.profile.shadowbar then
-				self:TriggerEvent("BigWigs_StartBar", self, string.format(L["bar2text"], EPlayer), 8, "Interface\\Icons\\Spell_Shadow_GatherShadows", "Red")
+				self:TriggerEvent("BigWigs_StartBar", self, string.format(L["shadowcurse_bar"], EPlayer), 8, "Interface\\Icons\\Spell_Shadow_GatherShadows", "Red")
 			end
 		end
 	end
 else
 	function BigWigsEbonroc:Event(msg)
-		local _,_, EPlayer, EType = string.find(msg, L["trigger3"])
+		local _,_, EPlayer, EType = string.find(msg, L["shadowcurse_trigger"])
 		if (EPlayer and EType) then
 			if (EPlayer == L["you"] and EType == L["are"] and self.db.profile.youcurse) then
-				self:TriggerEvent("BigWigs_Message", L["warn5"], "Red", true)
+				self:TriggerEvent("BigWigs_Message", L["shadowflame_message_you"], "Red", true)
 			elseif (self.db.profile.elsecurse) then
-				self:TriggerEvent("BigWigs_Message", EPlayer .. L["warn6"], "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", EPlayer, L["warn5"])
+				self:TriggerEvent("BigWigs_Message", EPlayer .. L["shadowflame_message_other"], "Yellow")
+				self:TriggerEvent("BigWigs_SendTell", EPlayer, L["shadowflame_message_you"])
 			end
 
 			if self.db.profile.shadowbar then
-				self:TriggerEvent("BigWigs_StartBar", self, string.format(L["bar2text"], EPlayer), 8, "Interface\\Icons\\Spell_Shadow_GatherShadows", "Red")
+				self:TriggerEvent("BigWigs_StartBar", self, string.format(L["shadowcurse_bar"], EPlayer), 8, "Interface\\Icons\\Spell_Shadow_GatherShadows", "Red")
 			end
 		end
 	end

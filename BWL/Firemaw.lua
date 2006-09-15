@@ -10,14 +10,14 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	trigger1 = "Firemaw begins to cast Wing Buffet",
-	trigger2 = "Firemaw begins to cast Shadow Flame.",
+	wingbuffet_trigger = "Firemaw begins to cast Wing Buffet",
+	shadowflame_trigger = "Firemaw begins to cast Shadow Flame.",
 
-	warn1 = "Wing Buffet! 30sec to next!",
-	warn3 = "3sec to Wing Buffet!",
-	warn4 = "Shadow Flame Incoming!",
+	wingbuffet_message = "Wing Buffet! 30sec to next!",
+	wingbuffet_warning = "3sec to Wing Buffet!",
+	shadowflame_warning = "Shadow Flame Incoming!",
 
-	bar1text = "Wing Buffet",
+	wingbuffet_bar = "Wing Buffet",
 
 	cmd = "Firemaw",
 
@@ -31,13 +31,13 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
-	trigger1 = "费尔默开始施放龙翼打击。",
-	trigger2 = "费尔默开始施放暗影烈焰。",
+	wingbuffet_trigger = "费尔默开始施放龙翼打击。",
+	shadowflame_trigger = "费尔默开始施放暗影烈焰。",
 
-	warn3 = "3秒后发动龙翼打击！",
-	warn4 = "暗影烈焰发动！",
+	wingbuffet_warning = "3秒后发动龙翼打击！",
+	shadowflame_warning = "暗影烈焰发动！",
 
-	bar1text = "龙翼打击",
+	wingbuffet_bar = "龙翼打击",
 
 	wingbuffet_name = "龙翼打击警报",
 	wingbuffet_desc = "龙翼打击警报",
@@ -48,23 +48,23 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 L:RegisterTranslations("koKR", function() return {
-	trigger1 = "화염아귀|1이;가; 폭풍 날개|1을;를; 시전합니다.",
-	trigger2 = "화염아귀|1이;가; 암흑의 불길|1을;를; 시전합니다.",
+	wingbuffet_trigger = "화염아귀|1이;가; 폭풍 날개|1을;를; 시전합니다.",
+	shadowflame_trigger = "화염아귀|1이;가; 암흑의 불길|1을;를; 시전합니다.",
 
-	warn3 = "3초 후 폭풍 날개!",
-	warn4 = "암흑 불길 경고!",
+	wingbuffet_warning = "3초 후 폭풍 날개!",
+	shadowflame_warning = "암흑 불길 경고!",
 
-	bar1text = "폭풍 날개",
+	wingbuffet_bar = "폭풍 날개",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	trigger1 = "Feuerschwinge beginnt Fl\195\188gelsto\195\159 zu wirken.",
-	trigger2 = "Feuerschwinge beginnt Schattenflamme zu wirken.",
+	wingbuffet_trigger = "Feuerschwinge beginnt Fl\195\188gelsto\195\159 zu wirken.",
+	shadowflame_trigger = "Feuerschwinge beginnt Schattenflamme zu wirken.",
 
-	warn3 = "3 Sekunden bis Fl\195\188gelsto\195\159!",
-	warn4 = "Schattenflamme in K\195\188rze!",
+	wingbuffet_warning = "3 Sekunden bis Fl\195\188gelsto\195\159!",
+	shadowflame_warning = "Schattenflamme in K\195\188rze!",
 
-	bar1text = "Fl\195\188gelsto\195\159",
+	wingbuffet_bar = "Fl\195\188gelsto\195\159",
 
 	wingbuffet_name = "Fl\195\188gelsto\195\159",
 	wingbuffet_desc = "Warnung, wenn Feuerschwinge Fl\195\188gelsto\195\159 wirkt.",
@@ -74,11 +74,11 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	trigger1 = "Gueule-de-feu commence \195\160 lancer Frappe des ailes.",
-	trigger2 = "Gueule-de-feu commence \195\160 lancer Flamme d'ombre.",
+	wingbuffet_trigger = "Gueule-de-feu commence \195\160 lancer Frappe des ailes.",
+	shadowflame_trigger = "Gueule-de-feu commence \195\160 lancer Flamme d'ombre.",
 
-	warn3 = "3 sec avant prochain Frappe des ailes!",
-	warn4 = "Flamme d'ombre imminente!",
+	wingbuffet_warning = "3 sec avant prochain Frappe des ailes!",
+	shadowflame_warning = "Flamme d'ombre imminente!",
 
 } end)
 
@@ -99,7 +99,7 @@ BigWigsFiremaw.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsFiremaw:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED")
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "FiremawWingBuffet", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "FiremawShadowflame", 10)
@@ -108,47 +108,22 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-function BigWigsFiremaw:Scan()
-	if UnitName("target") == boss and UnitAffectingCombat("target") then
-		return true
-	elseif UnitName("playertarget") == boss and UnitAffectingCombat("playertarget") then
-		return true
-	else
-		local i
-		for i = 1, GetNumRaidMembers(), 1 do
-			if UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("raid"..i.."target") then
-				return true
-			end
-		end
-	end
-	return false
-end
-
-function BigWigsFiremaw:PLAYER_REGEN_DISABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Firemaw_CheckStart")
-	if (go) then
-		self:CancelScheduledEvent("Firemaw_CheckStart")
-		self:TriggerEvent("BigWigs_SendSync", "FiremawWingBuffet")
-	elseif not running then
-		self:ScheduleRepeatingEvent("Firemaw_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self)
-	end
-end
 
 function BigWigsFiremaw:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if (string.find(msg, L["trigger1"])) then
+	if string.find(msg, L["wingbuffet_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "FiremawWingBuffet")
-	elseif msg == L["trigger2"] then 
+	elseif msg == L["shadowflame_trigger"] then 
 		self:TriggerEvent("BigWigs_SendSync", "FiremawShadowflame")
 	end
 end
 
 function BigWigsFiremaw:BigWigs_RecvSync(sync)
 	if sync == "FiremawWingBuffet" and self.db.profile.wingbuffet then
-		self:TriggerEvent("BigWigs_Message", L["warn1"], "Red")
-		self:ScheduleEvent("BigWigs_Message", 29, L["warn3"], "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Red")
+		self:ScheduleEvent("BigWigs_Message", 29, L["wingbuffet_warning"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")
 	elseif sync == "FiremawShadowflame" and self.db.profile.shadowflame then
-		self:TriggerEvent("BigWigs_Message", L["warn4"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Red")
 	end
 end
+
