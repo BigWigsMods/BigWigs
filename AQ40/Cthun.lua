@@ -336,7 +336,7 @@ function BigWigsCThun:CThunStart()
 
 		self:ScheduleEvent("bwcthuntentaclesstart", self.StartTentacleRape, timeP1TentacleStart, self )
 		self:ScheduleEvent("bwcthundarkglarestart", self.DarkGlare, timeP1GlareStart, self )
-		self:ScheduleEvent("bwcthungroupwarning", self.GroupWarning, timeP1GlareStart - 3, self )
+		self:ScheduleEvent("bwcthungroupwarningstart", self.GroupWarning, timeP1GlareStart - 3, self )
 		self:ScheduleRepeatingEvent("bwcthuntarget", self.CheckTarget, timeTarget, self )
 	end
 end
