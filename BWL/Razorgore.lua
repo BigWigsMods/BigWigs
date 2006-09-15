@@ -22,6 +22,7 @@ L:RegisterTranslations("enUS", function() return {
 	egg_trigger = "casts Destroy Egg",
 	egg_message = "%d/30 eggs destroyed!",
 
+	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.",
 	phase2_message = "All eggs destroyed, Razorgore loose!",
 
 	mc_cmd = "mindcontrol",
@@ -66,7 +67,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsRazorgore = BigWigs:NewModule(boss)
 BigWigsRazorgore.zonename = AceLibrary("Babble-Zone-2.0")("Blackwing Lair")
 BigWigsRazorgore.enabletrigger = { boss, controller }
-BigWigsRazorgore.toggleoptions = { "mc", "eggs", "phase", "bosskill"}
+BigWigsRazorgore.toggleoptions = { "mc", --[["eggs",]] "phase", "bosskill"}
 BigWigsRazorgore.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -76,8 +77,9 @@ BigWigsRazorgore.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsRazorgore:OnEnable()
 	self.eggs = 0
 
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL");
-	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF");
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	--self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
