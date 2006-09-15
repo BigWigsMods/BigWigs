@@ -43,9 +43,9 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_name = "Enrage Alerts",
 	enrage_desc = "Warn for Enrage",
 
-	mindcontrol_cmd = "mc",
-	mindcontrol_name = "Mind Controll",
-	mindcontrol_desc = "Alert when someone is mind controlled.",
+	mc_cmd = "mc",
+	mc_name = "Mind Controll",
+	mc_desc = "Alert when someone is mind controlled.",
 
 } end)
 
