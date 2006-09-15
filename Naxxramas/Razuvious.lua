@@ -21,7 +21,7 @@ L:RegisterTranslations("enUS", function() return {
 	shieldwall_name = "Shield Wall Timer",
 	shieldwall_desc = "Show timer for shieldwall",
 
-	startwarn	= "Instructor Razuvious engaged!, ~25secs until shout!",
+	startwarn	= "Instructor Razuvious engaged! ~25sec to shout!",
 
 	starttrigger1 	= "The time for practice is over! Show me what you have learned!",
 	starttrigger2 	= "Sweep the leg... Do you have a problem with that?",
@@ -29,9 +29,9 @@ L:RegisterTranslations("enUS", function() return {
 	starttrigger4 	= "Do as I taught you!",
 
 	shouttrigger 	= "Disrupting Shout",
-	shout7secwarn 	= "7 seconds until Disrupting Shout",
+	shout7secwarn 	= "7 sec to Disrupting Shout",
 	shoutwarn 		= "Disrupting Shout!",
-	noshoutwarn		= "No shout! next in ~20secs",
+	noshoutwarn		= "No shout! Next in ~20secs",
 	shoutbar 		= "Disrupting Shout",
 
 	shieldwalltrigger   = "Deathknight Understudy gains Shield Wall.",

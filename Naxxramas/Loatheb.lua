@@ -22,11 +22,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	curse_cmd = "curse",
 	curse_name = "Remove Curse Alert",
-	curse_desc = "Warn when a curses are removed from Loatheb",
+	curse_desc = "Warn when curses are removed from Loatheb",
 
 	doombar = "Inevitable Doom",
-	doomwarn = "Inevitable Doom! %s seconds to next!",
-	doomwarn5sec = "Inevitable Doom in 5 seconds!",		
+	doomwarn = "Inevitable Doom! %s sec to next!",
+	doomwarn5sec = "Inevitable Doom in 5 sec!",		
 	doomtrigger = "afflicted by Inevitable Doom.",
 
 	sporewarn = "Spore Spawned",
