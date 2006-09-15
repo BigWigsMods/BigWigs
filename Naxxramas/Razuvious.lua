@@ -21,18 +21,19 @@ L:RegisterTranslations("enUS", function() return {
 	shieldwall_name = "Shield Wall Timer",
 	shieldwall_desc = "Show timer for shieldwall",
 
-	startwarn	= "Instructor Razuvious engaged! ~25sec to shout!",
+	startwarn = "Instructor Razuvious engaged! ~25sec to shout!",
 
-	starttrigger1 	= "The time for practice is over! Show me what you have learned!",
-	starttrigger2 	= "Sweep the leg... Do you have a problem with that?",
-	starttrigger3 	= "Show them no mercy!",
-	starttrigger4 	= "Do as I taught you!",
+	starttrigger1 = "The time for practice is over! Show me what you have learned!",
+	starttrigger2 = "Sweep the leg... Do you have a problem with that?",
+	starttrigger3 = "Show them no mercy!",
+	starttrigger4 = "Do as I taught you!",
 
-	shouttrigger 	= "Disrupting Shout",
-	shout7secwarn 	= "7 sec to Disrupting Shout",
-	shoutwarn 		= "Disrupting Shout!",
-	noshoutwarn		= "No shout! Next in ~20secs",
-	shoutbar 		= "Disrupting Shout",
+	shouttrigger = "Disrupting Shout",
+	shout7secwarn = "7 sec to Disrupting Shout",
+	shout3secwarn = "3 sec to Disrupting Shout!",
+	shoutwarn = "Disrupting Shout!",
+	noshoutwarn = "No shout! Next in ~20secs",
+	shoutbar = "Disrupting Shout",
 
 	shieldwalltrigger   = "Deathknight Understudy gains Shield Wall.",
 	shieldwallbar       = "Shield Wall",
@@ -153,7 +154,8 @@ function BigWigsRazuvious:CHAT_MSG_MONSTER_YELL( msg )
 	if msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"] then
 		if self.db.profile.shout then
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Orange", nil, "Alarm")
-			self:ScheduleEvent("bwrazuviousshout", "BigWigs_Message", 18, L["shout7secwarn"], "Yellow", nil, "Alert")
+			self:ScheduleEvent("bwrazuviousshout7sec", "BigWigs_Message", 18, L["shout7secwarn"], "Yellow")
+			self:ScheduleEvent("bwrazuviousshout3sec", "BigWigs_Message", 22, L["shout3secwarn"], "Orange", nil, "Alert")
 			self:TriggerEvent("BigWigs_StartBar", self, L["shoutbar"], 25, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red")
 		end
 		self:ScheduleEvent("bwrazuviousnoshout", self.noShout, self.timeShout, self )
@@ -181,7 +183,8 @@ function BigWigsRazuvious:noShout()
 	self:ScheduleEvent("bwrazuviousnoshout", self.noShout, self.timeShout - 5, self )
 	if self.db.profile.shout then
 		self:TriggerEvent("BigWigs_Message", L["noshoutwarn"], "Yellow")
-		self:ScheduleEvent("bwrazuviousshout", "BigWigs_Message", 13, L["shout7secwarn"], "Yellow", nil, "Alert")
+		self:ScheduleEvent("bwrazuviousshout7sec", "BigWigs_Message", 13, L["shout7secwarn"], "Yellow")
+		self:ScheduleEvent("bwrazuviousshout3sec", "BigWigs_Message", 17, L["shout3secwarn"], "Orange", nil, "Alert")
 		self:TriggerEvent("BigWigs_StartBar", self, L["shoutbar"], 20, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red")
 	end
 end
@@ -192,7 +195,8 @@ function BigWigsRazuvious:BigWigs_RecvSync( sync )
 		self:ScheduleEvent("bwrazuviousnoshout", self.noShout, self.timeShout, self )		
 		if self.db.profile.shout then
 			self:TriggerEvent("BigWigs_Message", L["shoutwarn"], "Orange", nil, "Alarm")
-			self:ScheduleEvent("bwrazuviousshout", "BigWigs_Message", 18, L["shout7secwarn"], "Yellow", nil, "Alert")
+			self:ScheduleEvent("bwrazuviousshout7sec", "BigWigs_Message", 18, L["shout7secwarn"], "Yellow")
+			self:ScheduleEvent("bwrazuviousshout3sec", "BigWigs_Message", 22, L["shout3secwarn"], "Orange", nil, "Alert")
 			self:TriggerEvent("BigWigs_StartBar", self, L["shoutbar"], 25, "Interface\\Icons\\Ability_Warrior_WarCry", "Yellow", "Orange", "Red" )
 		end
 		self.prior = true
