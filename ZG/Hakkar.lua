@@ -11,21 +11,30 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	-- Chat message triggers
-	trigger1 = "FACE THE WRATH OF THE SOULFLAYER!",
-	trigger2 = "^Hakkar suffers (.+) from (.+) Blood Siphon",
+	engage_trigger = "FACE THE WRATH OF THE SOULFLAYER!",
+	drain_trigger = "^Hakkar suffers (.+) from (.+) Blood Siphon",
+	mindcontrol_trigger = "(.*) (.*) afflicted by Cause Insanity",
+
+	you = "You",
+	are = "are",
+
 	flee = "Fleeing will do you no good mortals!",
 
 	-- Warnings and bar texts
-	start = "Hakkar engaged - 90 seconds until drain - 10 minutes until enrage",
-	warn1 = "60 seconds until drain",
-	warn2 = "45 seconds until drain",
-	warn3 = "30 seconds until drain",
-	warn4 = "15 seconds until drain",
-	warn5 = "Life Drain - 90 seconds until next",
+	start_message = "Hakkar engaged - 90 seconds until drain - 10 minutes until enrage",
+	drain_warning_60 = "60 seconds until drain",
+	drain_warning_45 = "45 seconds until drain",
+	drain_warning_30 = "30 seconds until drain",
+	drain_warning_15 = "15 seconds until drain",
+	drain_message = "Life Drain - 90 seconds until next",
+
+	mindcontrol_message = "%s is mindcontrolled!",
+
 	["Enrage"] = true,
 	["Life Drain"] = true,
 
-	cmd = "hakkar",
+	cmd = "Hakkar",
+
 	drain_cmd = "drain",
 	drain_name = "Drain Alerts",
 	drain_desc = "Warn for Drains",
@@ -34,19 +43,23 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_name = "Enrage Alerts",
 	enrage_desc = "Warn for Enrage",
 
+	mindcontrol_cmd = "mc",
+	mindcontrol_name = "Mind Controll",
+	mindcontrol_desc = "Alert when someone is mind controlled.",
+
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	trigger1 = "^EURE \195\156BERHEBLICHKEIT K\195\156NDET BEREITS VOM ENDE DIESER WELT!", -- ?
-	trigger2 = "Hakkar ist von Bluttrinker betroffen.", -- ? "^Hakkar erleidet (.+) Naturschaden von (.+) %(durch Bluttrinker%).",
+	engage_trigger = "^EURE \195\156BERHEBLICHKEIT K\195\156NDET BEREITS VOM ENDE DIESER WELT!", -- ?
+	drain_trigger = "Hakkar ist von Bluttrinker betroffen.", -- ? "^Hakkar erleidet (.+) Naturschaden von (.+) %(durch Bluttrinker%).",
 
 	flee = "Fleeing will do you no good mortals!", -- ?
 
-	start = "Hakkar angegriffen - 90 Sekunden bis Lebensentzug - 10 Minuten bis Wutanfall",
-	warn1 = "60 Sekunden bis Lebensentzug",
-	warn2 = "45 Sekunden bis Lebensentzug",
-	warn4 = "15 Sekunden bis Lebensentzug",
-	warn5 = "Lebensentzug - N\195\164chster in 90 Sekunden",
+	start_message = "Hakkar angegriffen - 90 Sekunden bis Lebensentzug - 10 Minuten bis Wutanfall",
+	drain_warning_60 = "60 Sekunden bis Lebensentzug",
+	drain_warning_45 = "45 Sekunden bis Lebensentzug",
+	drain_warning_15 = "15 Sekunden bis Lebensentzug",
+	drain_message = "Lebensentzug - N\195\164chster in 90 Sekunden",
 	["Enrage"] = "Wutanfall",
 	["Life Drain"] = "Lebensentzug",
 
@@ -60,14 +73,14 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("koKR", function() return {
 	["Hakkar dies."] = "학카르|1이;가; 죽었습니다.",
 
-	trigger1 = "자만심은 세상의 종말을 불러올 뿐이다. 오너라! 건방진 피조물들이여! 와서 신의 진노에 맞서 보아라!",
-	trigger2 = "학카르|1이;가; (.+)의 피의 착취에 의해 (.+)의 자연 피해를 입었습니다.",
+	engage_trigger = "자만심은 세상의 종말을 불러올 뿐이다. 오너라! 건방진 피조물들이여! 와서 신의 진노에 맞서 보아라!",
+	drain_trigger = "학카르|1이;가; (.+)의 피의 착취에 의해 (.+)의 자연 피해를 입었습니다.",
 
-	start = "학카르 시작 - 90초후 생명력 흡수 - 10분후 격노",
-	warn1 = "생명력 흡수 60초전",
-	warn2 = "생명력 흡수 45초전",
-	warn4 = "생명력 흡수 15초전",
-	warn5 = "생명력 흡수 - 다음 시전은 90초후",
+	start_message = "학카르 시작 - 90초후 생명력 흡수 - 10분후 격노",
+	drain_warning_60 = "생명력 흡수 60초전",
+	drain_warning_45 = "생명력 흡수 45초전",
+	drain_warning_15 = "생명력 흡수 15초전",
+	drain_message = "생명력 흡수 - 다음 시전은 90초후",
 	bosskill = "학카르를 물리쳤습니다!",
 
 	["Enrage"] = "격노",
@@ -77,16 +90,16 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	-- Chat message triggers
-	trigger1 = "^骄傲会将你送上绝路",
-	trigger2 = "^(.+)的酸性血液虹吸使哈卡受到了(%d+)点自然伤害。",
+	engage_trigger = "^骄傲会将你送上绝路",
+	drain_trigger = "^(.+)的酸性血液虹吸使哈卡受到了(%d+)点自然伤害。",
 	flee = "逃跑",
 
 	-- Warnings and bar texts
-	start = "哈卡已经激活 - 90秒后开始生命吸取 - 10分钟后进入激怒状态",
-	warn1 = "60秒后发动生命吸取",
-	warn2 = "45秒后发动生命吸取",
-	warn4 = "15秒后发动生命吸取",
-	warn5 = "血液虹吸 - 90秒后再次发动",
+	start_message = "哈卡已经激活 - 90秒后开始生命吸取 - 10分钟后进入激怒状态",
+	drain_warning_60 = "60秒后发动生命吸取",
+	drain_warning_45 = "45秒后发动生命吸取",
+	drain_warning_15 = "15秒后发动生命吸取",
+	drain_message = "血液虹吸 - 90秒后再次发动",
 	["Enrage"] = "激怒",
 	["Life Drain"] = "生命吸取",
 
@@ -105,7 +118,7 @@ L:RegisterTranslations("zhCN", function() return {
 BigWigsHakkar = BigWigs:NewModule(boss)
 BigWigsHakkar.zonename = AceLibrary("Babble-Zone-2.0")("Zul'Gurub")
 BigWigsHakkar.enabletrigger = boss
-BigWigsHakkar.toggleoptions = {"drain", "enrage", "bosskill"}
+BigWigsHakkar.toggleoptions = {"mc", "drain", "enrage", "bosskill"}
 BigWigsHakkar.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -115,6 +128,7 @@ BigWigsHakkar.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsHakkar:OnEnable()
 	self.prior = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
@@ -126,8 +140,8 @@ end
 ------------------------------
 
 function BigWigsHakkar:CHAT_MSG_MONSTER_YELL(msg)
-	if string.find(msg, L["trigger1"]) then
-		self:TriggerEvent("BigWigs_Message", L["start"], "Green")
+	if string.find(msg, L["engage_trigger"]) then
+		self:TriggerEvent("BigWigs_Message", L["start_message"], "Green")
 		if self.db.profile.enrage then self:TriggerEvent("BigWigs_StartBar", self, L["Enrage"], 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Purple") end
 		self:BeginTimers(true)
 	elseif string.find(msg, L["flee"]) then
@@ -135,27 +149,34 @@ function BigWigsHakkar:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-
 function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
-	if not self.prior and string.find(msg, L["trigger2"]) then
+	if not self.prior and string.find(msg, L["drain_trigger"]) then
 		self.prior = true
 		self:BeginTimers()
 	end
 end
 
-
-function BigWigsHakkar:BigWigs_Message(text)
-	if text == L["warn1"] then self.prior = nil end
+function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
+	local _,_, mcplayer, mctype = string.find(msg, L["mindcontrol_trigger"])
+	if mcplayer then
+		if mcplayer == L["You"] then
+			mcplayer = UnitName("player")
+		end
+		if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", string.format(L["mindcontrol_message"], mcplayer), "Orange") end
+	end
 end
 
+function BigWigsHakkar:BigWigs_Message(text)
+	if text == L["drain_warning_60"] then self.prior = nil end
+end
 
 function BigWigsHakkar:BeginTimers(first)
 	if self.db.profile.drain then
-		if not first then self:TriggerEvent("BigWigs_Message", L["warn5"], "Green") end
-		self:ScheduleEvent("BigWigs_Message", 30, L["warn1"], "Green")
-		self:ScheduleEvent("BigWigs_Message", 45, L["warn2"], "Yellow")
-		self:ScheduleEvent("BigWigs_Message", 60, L["warn3"], "Orange")
-		self:ScheduleEvent("BigWigs_Message", 75, L["warn4"], "Red")
+		if not first then self:TriggerEvent("BigWigs_Message", L["drain_message"], "Green") end
+		self:ScheduleEvent("BigWigs_Message", 30, L["drain_warning_60"], "Green")
+		self:ScheduleEvent("BigWigs_Message", 45, L["drain_warning_45"], "Yellow")
+		self:ScheduleEvent("BigWigs_Message", 60, L["drain_warning_30"], "Orange")
+		self:ScheduleEvent("BigWigs_Message", 75, L["drain_warning_15"], "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L["Life Drain"], 90, "Interface\\Icons\\Spell_Shadow_LifeDrain", "Green", "Yellow", "Orange", "Red")
 	end
 end
