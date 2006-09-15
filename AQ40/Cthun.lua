@@ -61,8 +61,8 @@ L:RegisterTranslations("enUS", function() return {
 	tentacle1	= "Tentacle Rape Party - Pleasure!",
 	tentacle2	= "Tentacle Rape Party - 5 sec",
 
-	norape1		= "Tentacle Party! - What's that in your pants?",
-	norape2		= "Tentacle Party! - 5 sec",
+	norape1		= "Tentacles spawned!",
+	norape2		= "Tentacles in 5sec!",
 
 
 	weakened		= "C'Thun is weakened for 45 sec",
@@ -76,7 +76,7 @@ L:RegisterTranslations("enUS", function() return {
 	startwarn	= "C'Thun engaged! - 33 sec until Dark Glare and Eyes",
 
 	glare2		= "Dark glare - 5 sec",
-	glare1		= "Dark glare - MOVE IT!",
+	glare1		= "Dark glare!",
 
 	barTentacle	= "Tentacle rape party!",
 	barNoRape	= "Tentacle party!",
@@ -86,7 +86,7 @@ L:RegisterTranslations("enUS", function() return {
 	barGreenBeam	= "Green Beam!",
 
 	eyebeam		= "Eye Beam",
-	glarewarning	= "DARK GLARE ON YOU! MOVE!",
+	glarewarning	= "DARK GLARE ON YOU!",
 	groupwarning	= "Dark Glare on group %s (%s)",
 	positions1	= "Green Beam coming",
 	positions2	= "Dark Glare ends in 5 sec",
@@ -94,29 +94,21 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "cthun",
-
-	tentacle_cmd = "tentacle",
 	tentacle_name = "Tentakel",
 	tentacle_desc = "Warnung vor Tentakeln.",
 
-	glare_cmd = "glare",
 	glare_name = "Dunkles Starren",
 	glare_desc = "Warnung vor Dunklem Starren.",
 
-	group_cmd = "group",
 	group_name = "Dunkles Starren Gruppe",
 	group_desc = "Warnung vor Dunklem Starren auf Gruppe X.",
 
-	giant_cmd = "giant",
 	giant_name = "Riesiges Auge",
 	giant_desc = "Riesiges Auge", -- ?
 
-	weakened_cmd = "weakened",
 	weakened_name = "Geschw\195\164cht",
 	weakened_desc = "Warnung, wenn C'Thun geschw\195\164cht ist.",
 
-	rape_cmd = "rape",
 	rape_name = "Rape is never funny", -- ?
 	rape_desc = "Some people just don't get hentai jokes, the bastards", -- ?
 
@@ -198,19 +190,19 @@ L:RegisterTranslations("zhCN", function() return {
 
 	rape_name = "Rape is never funny",
 	rape_desc = "Some people just don't get hentai jokes, the bastards",
-	
+
 	weakenedtrigger 	= "被削弱了！",
 
 	tentacle1	= "Tentacle Rape Party - Pleasure!",
 	tentacle2	= "Tentacle Rape Party - 5 sec",
-	
+
 	norape1		= "Tentacle Party! - What's that in your pants?",
 	norape2		= "Tentacle Party! - 5 sec",
-	
+
 	weakened		= "克苏恩被削弱了 - 45秒内全力输出伤害！",
 	invulnerable2	= "Party ends in 5 seconds",
 	invulnerable1	= "Party over - C'Thun invulnerable",
-	
+
 	giant3		= "Giant Eye - 10 sec",
 	giant2		= "Giant Eye - 5 sec",
 	giant1		= "Giant Eye - Poke it!",
@@ -237,8 +229,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 
-	L:RegisterTranslations("frFR", function() return {
-	
+L:RegisterTranslations("frFR", function() return {
 	weakenedtrigger = "%s est affaibli !",
 } end )
 

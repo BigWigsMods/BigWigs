@@ -37,7 +37,7 @@ L:RegisterTranslations("enUS", function() return {
 	summon_desc = "Warn for add summons",
 
 	explodetrigger = "Anubisath Defender gains Explode.",
-	explodewarn = "Exploding!!",
+	explodewarn = "Exploding!",
 	enragetrigger = "Anubisath Defender gains Enrage.",
 	enragewarn = "Enraged!",
 	summonguardtrigger = "Anubisath Defender casts Summon Anubisath Swarmguard.",

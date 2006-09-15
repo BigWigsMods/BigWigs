@@ -35,7 +35,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	sweeptrigger = "Ouro begins to cast Sweep",
 	sweepannounce = "Sweep!",
-	sweepwarn = "5 seconds until Sweep! Get out!",
+	sweepwarn = "5 seconds until Sweep!",
 	sweepbartext = "Sweep",
 
 	sandblasttrigger = "Ouro begins to perform Sand Blast",
@@ -212,7 +212,7 @@ end
 function BigWigsOuro:UNIT_HEALTH( msg )
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
-		if (health > 20 and health <= 23) then
+		if health > 20 and health <= 23 and not berserkannounced then
 			self:TriggerEvent("BigWigs_Message", L["berserksoonwarn"], "Red")
 			berserkannounced = true
 		elseif (health > 30 and berserkannounced) then

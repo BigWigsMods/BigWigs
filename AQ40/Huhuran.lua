@@ -227,7 +227,7 @@ function BigWigsHuhuran:UNIT_HEALTH(arg1)
 	if not self.db.profile.berserk then return end
 	if UnitName(arg1) == boss then
 		local health = UnitHealth(arg1)
-		if (health > 30 and health <= 33) then
+		if health > 30 and health <= 33 and not self.berserkannounced then
 			self:TriggerEvent("BigWigs_Message", L["berserksoonwarn"], "Red")
 			self.berserkannounced = true
 		elseif (health > 40 and self.berserkannounced) then

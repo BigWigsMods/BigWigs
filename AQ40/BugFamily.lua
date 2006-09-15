@@ -26,12 +26,12 @@ L:RegisterTranslations("enUS", function() return {
 	heal_desc = "Warn for Heal",
 
 	healtrigger = "Princess Yauj begins to cast Great Heal.",
-	healwarn = "Casting heal - interrupt it!",
+	healwarn = "Casting heal!",
 
 	feartrigger = "is afflicted by Fear%.",
-	fearbar = "AE Fear",
-	fearwarn1 = "AE Fear! Next in 20 Seconds!",
-	fearwarn2 = "AE Fear in 5 Seconds!",
+	fearbar = "AoE Fear",
+	fearwarn1 = "AoE Fear! Next in 20 Seconds!",
+	fearwarn2 = "AoE Fear in 5 Seconds!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
