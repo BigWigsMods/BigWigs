@@ -61,7 +61,7 @@ L:RegisterTranslations("enUS", function() return {
 	tentacle1	= "Tentacle Rape Party - Pleasure!",
 	tentacle2	= "Tentacle Rape Party - 5 sec",
 
-	norape1		= "Tentacles Party! - What's that in your pants!",
+	norape1		= "Tentacles Spawned!",
 	norape2		= "Tentacles in 5sec!",
 
 
