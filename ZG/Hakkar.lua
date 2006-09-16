@@ -159,7 +159,7 @@ end
 function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
 	local _,_, mcplayer, mctype = string.find(msg, L["mindcontrol_trigger"])
 	if mcplayer then
-		if mcplayer == L["You"] then
+		if mcplayer == L["you"] then
 			mcplayer = UnitName("player")
 		end
 		if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", string.format(L["mindcontrol_message"], mcplayer), "Orange") end
