@@ -21,23 +21,23 @@ L:RegisterTranslations("enUS", function() return {
 	healing_desc = "Warn for Healing Totems",
 
 	youcurse_cmd = "youcurse",
-	youcurse_name = "You are curse alert",	-- need change
-	youcurse_desc = "Warn when you get curse",	-- need change
+	youcurse_name = "You're cursed Alert",
+	youcurse_desc = "Warn when you get cursed",
 
 	elsecurse_cmd = "elsecurse",
-	elsecurse_name = "Someone else is curse alert",	-- need change
-	elsecurse_desc = "Warn when others are curse",	-- need change
-	
+	elsecurse_name = "Others are cursed Alert",
+	elsecurse_desc = "Warn when others are cursed",
+
 	triggerbrainwash = "Jin'do the Hexxer casts Summon Brain Wash Totem.",
 	triggerhealing = "Jin'do the Hexxer casts Powerful Healing Ward.",
 	triggercurse = "^([^%s]+) ([^%s]+) afflicted by Jin'do the Hexxer's Delusion.", -- CHECK
-	
+
 	warnbrainwash = "Brain Wash Totem!",
 	warnhealing = "Healing Totem!",
-	
-	cursewarn1 = "You are curse!",	-- need change
-	cursewarn2 = " is curse!",		-- need change
-	
+
+	cursewarn_self = "You are cursed!",
+	cursewarn_other = "%s is cursed!",
+
 	you = "You",
 	are = "are",
 } end )
@@ -90,10 +90,7 @@ L:RegisterTranslations("koKR", function() return {
 	
 	warnbrainwash = "세뇌의 토템 - 제거!",
 	warnhealing = "치유의 토템 - 제거!",
-	
-	cursewarn1 = "당신은 저주에 걸렸습니다. 망령 처리 GO!!",
-	cursewarn2 = "님은 저주에 걸렸습니다. 망령 처리 GO!!",
-	
+
 	you = "",
 	are = "",
 } end )
@@ -105,7 +102,7 @@ L:RegisterTranslations("koKR", function() return {
 BigWigsJindo = BigWigs:NewModule(boss)
 BigWigsJindo.zonename = AceLibrary("Babble-Zone-2.0")("Zul'Gurub")
 BigWigsJindo.enabletrigger = boss
-BigWigsJindo.toggleoptions = {"youcurse", "elsecurse", "brainwash", "healing", "bosskill"}
+BigWigsJindo.toggleoptions = {"youcurse", "elsecurse", -1, "brainwash", "healing", -1, "bosskill"}
 BigWigsJindo.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -114,15 +111,15 @@ BigWigsJindo.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsJindo:OnEnable()
 	playerName = UnitName("player")
-	
+
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
-	
+
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "Jindocurse", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "JindoCurse", 5)
 end
 
 ------------------------------
@@ -134,18 +131,18 @@ function BigWigsJindo:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 		self:TriggerEvent("BigWigs_Message", L["warnbrainwash"], "Orange")
 	elseif self.db.profile.healing and msg == L["triggerhealing"] then
 		self:TriggerEvent("BigWigs_Message", L["warnhealing"], "Red" )
-	end 
+	end
 end
 
 function BigWigsJindo:BigWigs_RecvSync(sync, rest, nick)
-	if sync ~= "Jindocurse" or not rest then return end
+	if sync ~= "JindoCurse" or not rest then return end
 	local player = rest
 
 	if player == playerName and self.db.profile.youcurse then
-		self:TriggerEvent("BigWigs_Message", L["cursewarn1"], "Red", true)
+		self:TriggerEvent("BigWigs_Message", L["cursewarn_you"], "Red", true)
 	elseif self.db.profile.elsecurse then
-		self:TriggerEvent("BigWigs_Message", player .. L["cursewarn2"], "Yellow")
-		self:TriggerEvent("BigWigs_SendTell", player, L["cursewarn1"])
+		self:TriggerEvent("BigWigs_Message", string.format(L["cursewarn_other"], player), "Yellow")
+		self:TriggerEvent("BigWigs_SendTell", player, L["cursewarn_you"])
 	end
 
 	if self.db.profile.icon then 
@@ -159,6 +156,7 @@ function BigWigsJindo:Event(msg)
 		if baPlayer == L["you"] then
 			baPlayer = UnitName("player")
 		end
-		self:TriggerEvent("BigWigs_SendSync", "Jindocurse "..baPlayer)
+		self:TriggerEvent("BigWigs_SendSync", "JindoCurse "..baPlayer)
 	end
 end
+
