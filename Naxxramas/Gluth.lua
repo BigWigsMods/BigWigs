@@ -2,8 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
---local boss = AceLibrary("Babble-Boss-2.0")("Gluth")
-local boss = "Arcane Chimaerok"
+local boss = AceLibrary("Babble-Boss-2.0")("Gluth")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
 ----------------------------
@@ -130,7 +129,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 BigWigsGluth = BigWigs:NewModule(boss)
 BigWigsGluth.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
-BigWigsGluth.enabletrigger = { "Chimaerok", "Arcane Chimaerok", "Chimaerok Devourer", boss }
+BigWigsGluth.enabletrigger = boss
 BigWigsGluth.toggleoptions = {"frenzy", "fear", "decimate", "bosskill"}
 BigWigsGluth.revision = tonumber(string.sub("$Revision$", 12, -3))
 
