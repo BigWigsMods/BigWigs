@@ -65,6 +65,13 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	
+	renew_name = "소생 경고",
+	renew_desc = "소생에 대한 경고",
+	
+	phase_name = "2 단계 경고",
+	phase_desc = "2 단계에 대한 경고",
+	
 	trigger1 = "대사제 베녹시스|1이;가; 소생 효과를 얻었습니다.",
 	trigger2 = "증오의 또아리를 틀 시간이다!",
 

@@ -61,6 +61,13 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	
+	heal_name = "치유 경고",
+	heal_desc = "치유에 대한 경고",
+	
+	bomb_name = "박쥐 경고",
+	bomb_desc = "박쥐에 대한 경고",
+		
 	trigger1 = "침략자들에게 뜨거운 맛을 보여줘라!$",
 	trigger2 = "상급 치유를 시전하기 시작합니다!$",
 	warn1 = "박쥐 소환!",

@@ -57,6 +57,13 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 L:RegisterTranslations("koKR", function() return {
+
+	spider_name = "거미 경고",
+	spider_desc = "거미 소환 시 경고",
+
+	drain_name = "흡수 경고",
+	drain_desc = "생명령 흡수에 대한 경고",
+
 	trigger1 = "어미를 도와라!$",
 	trigger2 = "대여사제 말리의 생명력 흡수|1으로;로; 대여사제 말리의 생명력이 (.+)만큼 회복되었습니다.",
 

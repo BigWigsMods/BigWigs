@@ -71,10 +71,23 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	cmd = "만도키르",
+	
+	you_name = "자신 경고",
+	you_desc = "자신을 보고 있을 때 경고",
+	
+	other_name = "타인 경고",
+	other_desc = "타인을 보고 있을 때 경고",
+
+	icon_name = "보고있을 때 아이콘 표시",
+	icon_desc = "보고 있는 사람에게 아이콘 표시",
+
 	trigger1 = "(.+)! 널 지켜보고 있겠다!",
+	trigger2 = "전장에서 자신의 랩터가 쓰러지는 모습을 보자 분노에 휩싸입니다!",
 
 	warn1 = "당신을 지켜보고 있습니다 - 모든 동작 금지!",
 	warn2 = "%s님을 지켜봅니다!",
+	warn3 = "오간이 죽자, 만도키르가 분노합니다.",
 } end )
 
 ----------------------------------

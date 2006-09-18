@@ -47,6 +47,13 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	
+	youmark_name = "자신의 표적 경고",
+	youmark_desc = "자신이 표적이 됐을 때 경고",
+	
+	othermark_name = "타인의 표적 경고",
+	othermark_desc = "타인이 표적이 됐을 때 경고",
+
 	trigger1 = "내 귀여운 것들아, (.+)%|1을;를; 잡아먹어라!$",
 
 	warn1 = "당신은 표적입니다!",

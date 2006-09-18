@@ -71,20 +71,38 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	["Hakkar dies."] = "학카르|1이;가; 죽었습니다.",
-
+	-- Chat message triggers
 	engage_trigger = "자만심은 세상의 종말을 불러올 뿐이다. 오너라! 건방진 피조물들이여! 와서 신의 진노에 맞서 보아라!",
 	drain_trigger = "학카르|1이;가; (.+)의 피의 착취에 의해 (.+)의 자연 피해를 입었습니다.",
+	mindcontrol_trigger = "^([^|;%s]*)(.*)정신 착란에 걸렸습니다%.$", -- "(.*) (.*) afflicted by Cause Insanity", -- CHECK
 
+	you = "",
+	are = "",
+
+	flee = "도망쳐 봐야 소용 없다, 어리석은 생명체여!", -- by turtl
+
+	-- Warnings and bar texts
 	start_message = "학카르 시작 - 90초후 생명력 흡수 - 10분후 격노",
 	drain_warning_60 = "생명력 흡수 60초전",
 	drain_warning_45 = "생명력 흡수 45초전",
+	drain_warning_30 = "생명력 흡수 30초전",
 	drain_warning_15 = "생명력 흡수 15초전",
 	drain_message = "생명력 흡수 - 다음 시전은 90초후",
-	bosskill = "학카르를 물리쳤습니다!",
+
+	mindcontrol_message = "%s|1이;가; 정신 지배되었습니다!",
 
 	["Enrage"] = "격노",
 	["Life Drain"] = "생명력 흡수",
+
+	drain_name = "흡수 경고",
+	drain_desc = "흡수에 대한 경고",
+	
+	enrage_name = "격노 경고",
+	enrage_desc = "격노에 대한 경고",
+
+	mc_name = "정신 지배",
+	mc_desc = "정신 지배 되었을 때 경고",
+
 } end)
 
 

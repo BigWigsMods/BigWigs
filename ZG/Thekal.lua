@@ -49,6 +49,13 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	
+	heal_name = "치유 경고",
+	heal_desc = "치유에 대한 경고",
+
+	tiger_name = "호랑이 경고",
+	tiger_desc = "호랑이 소환시 경고",
+
 	trigger1 = "대사제 데칼|1이;가; 줄리안 수호표범 소환|1을;를; 사용했습니다.",
 	trigger2 = "광신도 로르칸|1이;가; 상급 치유|1을;를; 시전합니다.",
 
