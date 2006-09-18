@@ -131,7 +131,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	volley_name = "Poison Volley 경고",
 	volley_desc = "Poison Volley에 대한 경고",
 
@@ -177,7 +176,6 @@ L:RegisterTranslations("frFR", function() return {
 
 } end )
 
-
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
@@ -205,24 +203,24 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-	function BigWigsViscidus:CheckVis(arg1)
-		if self.db.profile.volley and not prior and string.find(arg1, L["trigger6"]) then
-			self:TriggerEvent("BigWigs_Message", L["warn6"], "Orange")
-			self:ScheduleEvent("BigWigs_Message", 7, L["warn7"], "Orange")
-			self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 10, "Interface\\Icons\\Spell_Nature_CorrosiveBreath", "Yellow", "Orange", "Red")
-			prior = true
-		elseif string.find(arg1, L["trigger7"]) then
-			local _,_, pl, ty = string.find(arg1, L["trigger7"])
-			if (pl and ty) then
-				if self.db.profile.toxinyou and pl == L["you"] and ty == L["are"] then
-					self:TriggerEvent("BigWigs_Message", L["warn9"], "Red", true)
-				elseif self.db.profile.toxinother then
-					self:TriggerEvent("BigWigs_Message", pl .. L["warn8"], "Red")
-					self:TriggerEvent("BigWigs_SendTell", pl, L["warn9"])
-				end
+function BigWigsViscidus:CheckVis(arg1)
+	if not prior and self.db.profile.volley and string.find(arg1, L["trigger6"]) then
+		self:TriggerEvent("BigWigs_Message", L["warn6"], "Orange")
+		self:ScheduleEvent("BigWigs_Message", 7, L["warn7"], "Orange")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 10, "Interface\\Icons\\Spell_Nature_CorrosiveBreath", "Yellow", "Orange", "Red")
+		prior = true
+	elseif string.find(arg1, L["trigger7"]) then
+		local _,_, pl, ty = string.find(arg1, L["trigger7"])
+		if (pl and ty) then
+			if self.db.profile.toxinyou and pl == L["you"] and ty == L["are"] then
+				self:TriggerEvent("BigWigs_Message", L["warn9"], "Red", true)
+			elseif self.db.profile.toxinother then
+				self:TriggerEvent("BigWigs_Message", pl .. L["warn8"], "Red")
+				self:TriggerEvent("BigWigs_SendTell", pl, L["warn9"])
 			end
 		end
 	end
+end
 
 function BigWigsViscidus:CHAT_MSG_MONSTER_EMOTE(arg1)
 	if not self.db.profile.freeze then return end

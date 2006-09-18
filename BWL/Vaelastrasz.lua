@@ -164,7 +164,7 @@ function BigWigsVaelastrasz:Event(msg)
 	local _, _, baPlayer = string.find(msg, L["trigger1"])
 	if baPlayer then
 		if baPlayer == L["you"] then
-			baPlayer = UnitName("player")
+			baPlayer = playerName
 		end
 		self:TriggerEvent("BigWigs_SendSync", "VaelBomb "..baPlayer)
 	end

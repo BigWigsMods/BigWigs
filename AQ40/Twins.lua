@@ -129,7 +129,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	bug_name = "벌레 폭발 경고",
 	bug_desc = "벌레 폭발에 대한 경고",
 
@@ -164,7 +163,6 @@ L:RegisterTranslations("koKR", function() return {
 	warn6 = "격노 - 30 초전",
 	warn7 = "격노 - 10 초전",
 } end )
-
 
 L:RegisterTranslations("frFR", function() return {
 	porttrigger = "lance T\195\169l\195\169portation des jumeaux.",
@@ -205,7 +203,7 @@ end
 
 function BigWigsTwins:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if msg == string.format(UNITDIESOTHER, veklor) or msg == string.format(UNITDIESOTHER, veknilash) then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")("%s have been defeated"), boss), "Green", nil, "Victory") end
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")["%s have been defeated"], boss), "Green", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 	end
 end
@@ -247,7 +245,7 @@ function BigWigsTwins:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 end
 
 function BigWigsTwins:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if (self.db.profile.heal and (string.find(msg, L["healtrigger1"]) or string.find(msg, L["healtrigger2"])) and not self.prior) then
+	if (not self.prior and (string.find(msg, L["healtrigger1"]) or string.find(msg, L["healtrigger2"])) and self.db.profile.heal) then
 		self:TriggerEvent("BigWigs_Message", L["healwarn"], "Red")
 		self.prior = true
 		self:ScheduleEvent(function() BigWigsTwins.prior = nil end, 10)

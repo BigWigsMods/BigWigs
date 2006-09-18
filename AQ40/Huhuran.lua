@@ -4,6 +4,8 @@
 
 local boss = AceLibrary("Babble-Boss-2.0")("Princess Huhuran")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local berserkannounced
+local prior
 
 ----------------------------
 --      Localization      --
@@ -148,8 +150,8 @@ BigWigsHuhuran.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsHuhuran:OnEnable()
-	self.prior = nil
-	self.berserkannounced = nil
+	prior = nil
+	berserkannounced = nil
 
 	self:RegisterEvent("BigWigs_Message")
 
@@ -171,7 +173,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsHuhuran:BigWigs_RecvSync( sync, rest, nick )
+function BigWigsHuhuran:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "BossEngaged" and rest and rest == boss then
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
@@ -190,7 +192,6 @@ function BigWigsHuhuran:CHAT_MSG_MONSTER_EMOTE(arg1)
 	if self.db.profile.frenzy and arg1 == L["frenzytrigger"] then
 		self:TriggerEvent("BigWigs_Message", L["frenzywarn"], "Orange")
 	elseif self.db.profile.berserk and arg1 == L["berserktrigger"] then
-
 		self:CancelScheduledEvent("bwhuhuranenragewarn1")
 		self:CancelScheduledEvent("bwhuhuranenragewarn2")
 		self:CancelScheduledEvent("bwhuhuranenragewarn3")
@@ -199,7 +200,7 @@ function BigWigsHuhuran:CHAT_MSG_MONSTER_EMOTE(arg1)
 
 		self:TriggerEvent("BigWigs_Message", L["berserkwarn"], "Red")
 
-		self.berserkannounced = true
+		berserkannounced = true
 	end
 end
 
@@ -207,25 +208,25 @@ function BigWigsHuhuran:UNIT_HEALTH(arg1)
 	if not self.db.profile.berserk then return end
 	if UnitName(arg1) == boss then
 		local health = UnitHealth(arg1)
-		if health > 30 and health <= 33 and not self.berserkannounced then
+		if health > 30 and health <= 33 and not berserkannounced then
 			self:TriggerEvent("BigWigs_Message", L["berserksoonwarn"], "Red")
-			self.berserkannounced = true
-		elseif (health > 40 and self.berserkannounced) then
-			self.berserkannounced = false
+			berserkannounced = true
+		elseif (health > 40 and berserkannounced) then
+			berserkannounced = false
 		end
 	end
 end
 
 function BigWigsHuhuran:checkSting(arg1)
 	if not self.db.profile.wyvern then return end
-	if not self.prior and string.find(arg1, L["stingtrigger"]) then
+	if not prior and string.find(arg1, L["stingtrigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["stingwarn"], "Orange")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 25, "Interface\\Icons\\INV_Spear_02", "Green", "Yellow", "Orange", "Red")
 		self:ScheduleEvent("BigWigs_Message", 22, L["stingdelaywarn"], "Orange")
-		self.prior = true
+		prior = true
 	end
 end
 
 function BigWigsHuhuran:BigWigs_Message(text)
-	if text == L["stingdelaywarn"] then self.prior = nil end
+	if text == L["stingdelaywarn"] then prior = nil end
 end

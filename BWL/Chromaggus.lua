@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.0")("Chromaggus")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local twenty
 
 ----------------------------
 --      Localization      --
@@ -205,7 +206,7 @@ BigWigsChromaggus.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsChromaggus:OnEnable()
 	-- in the module itself for resetting via schedule
 	self.vulnerability = nil
-	self.twenty = nil
+	twenty = nil
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -223,11 +224,11 @@ end
 function BigWigsChromaggus:UNIT_HEALTH( msg )
 	if self.db.profile.enrage and UnitName(msg) == boss then
 		local health = UnitHealth(msg)
-		if health > 20 and health <= 23 and not self.twenty then
+		if health > 20 and health <= 23 and not twenty then
 			if self.db.profile.enrage then self:TriggerEvent("BigWigs_Message", L["enrage_warning"], "Red") end
-			self.twenty = true
-		elseif health > 40 and self.twenty then
-			self.twenty = nil
+			twenty = true
+		elseif health > 40 and twenty then
+			twenty = nil
 		end
 	end
 end
@@ -253,14 +254,14 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, spellId)
 	self:TriggerEvent("BigWigs_StartBar", self, spellName, 60, L["icon"..spellId], "Green", "Yellow", "Orange", "Red")
 end
 
-function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE( msg )
+function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["frenzy_trigger"] and self.db.profile.frenzy then
 		self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Red")
 	elseif msg == L["vulnerability_trigger"] then
 		if self.db.profile.vulnerability then
 			self:TriggerEvent("BigWigs_Message", L["vulnerability_warning"], "White")
 		end
-		self:ScheduleEvent(function() BigWigsChromaggus.vulnerability = nil end, 2.5 )
+		self:ScheduleEvent(function() BigWigsChromaggus.vulnerability = nil end, 2.5)
 	end
 end
 

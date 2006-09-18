@@ -273,13 +273,7 @@ function BigWigsNefarian:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "NefarianShadowflame", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "NefarianFear", 10)
-end
-
-------------------------------
---      Event Handlers      --
-------------------------------
-
-function BigWigsNefarian:CHAT_MSG_MONSTER_YELL(msg)
+	
 	if not warnpairs then warnpairs = {
 		[L["triggershamans"]] = {L["warnshaman"], true},
 		[L["triggerdruid"]] = {L["warndruid"], true},
@@ -294,7 +288,13 @@ function BigWigsNefarian:CHAT_MSG_MONSTER_YELL(msg)
 		[L["trigger2"]] = {L["warn2"]},
 		[L["trigger3"]] = {L["warn3"]},
 	} end
+end
 
+------------------------------
+--      Event Handlers      --
+------------------------------
+
+function BigWigsNefarian:CHAT_MSG_MONSTER_YELL(msg)
 	for i,v in pairs(warnpairs) do
 		if string.find(msg, i) then
 			if v[2] then

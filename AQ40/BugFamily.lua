@@ -80,7 +80,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	fear_name = "공포 경고",
 	fear_desc = "공포에 대한 경고",
 
@@ -96,7 +95,7 @@ L:RegisterTranslations("koKR", function() return {
 	fearwarn2 = "5초후 공포!",
 } end )
 
-	L:RegisterTranslations("frFR", function() return {
+L:RegisterTranslations("frFR", function() return {
 	healtrigger = "Princesse Yauj commence \195\160 lancer Soins exceptionnels.",
 	healwarn = "Princesse Yauj commence \195\160 se soigner - Kick!",
 
@@ -137,7 +136,7 @@ end
 ------------------------------
 
 function BigWigsBugFamily:FearEvent(msg)
-	if self.db.profile.fear and not fearstatus and string.find(msg, L["feartrigger"]) then
+	if not fearstatus and string.find(msg, L["feartrigger"] and self.db.profile.fear) then
 		fearstatus = true
 		self:TriggerEvent("BigWigs_StartBar", self, L["fearbar"], 20, "Interface\\Icons\\Spell_Shadow_Possession", "Yellow", "Orange", "Red")
 		self:TriggerEvent("BigWigs_Message", L["fearwarn1"], "Red")
@@ -153,15 +152,14 @@ function BigWigsBugFamily:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if (msg == string.format(UNITDIESOTHER, kri) or msg == string.format(UNITDIESOTHER, yauj) or msg == string.format(UNITDIESOTHER, vem)) then
 		deaths = deaths + 1
 		if (deaths == 3) then
-			if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")("%s has been defeated"), boss), "Green", nil, "Victory") end
+			if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")["%s has been defeated"], boss), "Green", nil, "Victory") end
 			self.core:ToggleModuleActive(self, false)
 		end
 	end
 end
 
 function BigWigsBugFamily:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if self.db.profile.heal and msg == L["healtrigger"] then
+	if msg == L["healtrigger"] and self.db.profile.heal then
 		self:TriggerEvent("BigWigs_Message", L["healwarn"], "Orange")
 	end
 end
-

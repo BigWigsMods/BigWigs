@@ -4,7 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.0")("Fankriss the Unyielding")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
-
+local worms
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -47,7 +47,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	worm_name = "벌레 경고",
 	worm_desc = "벌레에 대한 경고",
 
@@ -77,7 +76,7 @@ BigWigsFankriss.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsFankriss:OnEnable()
-	self.worms = 0
+	worms = 0
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
@@ -91,7 +90,7 @@ end
 
 function BigWigsFankriss:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg == L["wormtrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "FankrissWormSpawn "..tostring(self.worms + 1) )
+		self:TriggerEvent("BigWigs_SendSync", "FankrissWormSpawn "..tostring(worms + 1) )
 	end
 end
 
@@ -99,14 +98,14 @@ function BigWigsFankriss:BigWigs_RecvSync(sync, rest)
 	if sync ~= "FankrissWormSpawn" then return end
 	if not rest then return end
 	rest = tonumber(rest)
-	if rest == (self.worms + 1) then
+	if rest == (worms + 1) then
 		-- we accept this worm
 		-- Yes, this could go completely wrong when you don't reset your module and the whole raid does after a wipe
 		-- or you reset your module and the rest doesn't. Anyway. it'll work a lot better than anything else.
-		self.worms = self.worms + 1
+		worms = worms + 1
 		if self.db.profile.worm then
-			self:TriggerEvent("BigWigs_Message", string.format( L["wormwarn"], self.worms ), "Orange")
-			self:TriggerEvent("BigWigs_StartBar", self, string.format( L["wormbar"], self.worms ), 20, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_Message", string.format(L["wormwarn"], worms), "Orange")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["wormbar"], worms), 20, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Yellow", "Orange", "Red")
 		end	
 	end
 end
