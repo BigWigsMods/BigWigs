@@ -147,8 +147,8 @@ function BigWigsGluth:OnEnable()
 
 	self:RegisterEvent("BigWigs_Message")
 
-	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS", "Frenzy")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE", "Frenzy")
@@ -163,45 +163,6 @@ function BigWigsGluth:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "GluthDecimate", 30)
-	self:TriggerEvent("BigWigs_ThrottleSync", "GluthStart", 10)
-end
-
-function BigWigsGluth:PLAYER_REGEN_DISABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Gluth_CheckStart")
-	if go then
-		self:CancelScheduledEvent("Gluth_CheckStart")
-		self:TriggerEvent("BigWigs_SendSync", "GluthStart")
-	elseif not running then
-		self:ScheduleRepeatingEvent("Gluth_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self )
-	end
-end
-
-function BigWigsGluth:PLAYER_REGEN_ENABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Gluth_CheckWipe")
-	if (not go) then
-		self:TriggerEvent("BigWigs_RebootModule", self)
-	elseif (not running) then
-		self:ScheduleRepeatingEvent("Gluth_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
-	end
-end
-
-
-function BigWigsGluth:Scan()
-	if UnitName("target") == boss and UnitAffectingCombat("target") then
-		return true
-	elseif UnitName("playertarget") == boss and UnitAffectingCombat("playertarget") then
-		return true
-	else
-		local i
-		for i = 1, GetNumRaidMembers(), 1 do
-			if UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("raid"..i.."target") then
-				return true
-			end
-		end
-	end
-	return false
 end
 
 function BigWigsGluth:Frenzy( msg )
@@ -225,13 +186,14 @@ function BigWigsGluth:Decimate( msg )
 	end
 end
 
-function BigWigsGluth:BigWigs_RecvSync( sync )
+function BigWigsGluth:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "GluthDecimate" and self.db.profile.decimate then
 		self:TriggerEvent("BigWigs_Message", L["decimatewarn"], "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L["decimatebartext"], 105, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
 		self:ScheduleEvent("BigWigs_Message", 100, L["decimatesoonwarn"], "Orange")
-	elseif sync == "GluthStart" and not self.started then
-		self.started = true
+	elseif sync == "BossEngaged" and rest then
+		if not rest == boss then return end
+		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		if self.db.profile.decimate then
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Yellow")
 			self:TriggerEvent("BigWigs_StartBar", self, L["decimatebartext"], 105, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")

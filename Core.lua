@@ -243,7 +243,9 @@ function BigWigs.modulePrototype:CheckForEngage()
 	local running = self:IsEventScheduled(self:ToString().."_CheckStart")
 	if go then
 		self:CancelScheduledEvent(self:ToString().."_CheckStart")
-		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
 		self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self:ToString())
 	elseif not running then
 		self:ScheduleRepeatingEvent(self:ToString().."_CheckStart", self.CheckForEngage, .5, self)
@@ -262,8 +264,6 @@ function BigWigs.modulePrototype:CheckForWipe()
 			end
 		end
 	end
-
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
 	local go = self:Scan()
 	local running = self:IsEventScheduled(self:ToString().."_CheckWipe")
