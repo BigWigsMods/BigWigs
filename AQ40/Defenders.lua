@@ -126,6 +126,24 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	plagueyou_name = "자신의 역병 경고",
+	plagueyou_desc = "자신의 역병에 대한 경고",
+
+	plagueother_name = "타인의 역병 경고",
+	plagueother_desc = "타인의 역병에 대한 경고",
+
+	thunderclap_name = "천둥벼락 경고",
+	thunderclap_desc = "천둥벼락에 대한 경고",
+
+	explode_name = "폭발 경고",
+	explode_desc = "폭발에 대한 경고",
+
+	enrage_name = "분노 경고",
+	enrage_desc = "분노에 대한 경고",
+
+	summon_name = "소환 경고",
+	summon_desc = "추가 소환에 대한 경고",
+
 	explodetrigger = "아누비사스 문지기|1이;가; 폭파 효과를 얻었습니다.",
 	explodewarn = "폭파! 떨어지세요!",
 	enragetrigger = "아누비사스 문지기|1이;가; 분노 효과를 얻었습니다.",
@@ -134,15 +152,11 @@ L:RegisterTranslations("koKR", function() return {
 	summonguardwarn = "감시병 소환",
 	summonwarriortrigger = "아누비사스 문지기|1이;가; 아누비사스 전사 소환|1을;를; 시전합니다.",
 	summonwarriorwarn = "전사 소환",
-
-	plaguetrigger = "(.*)역병에 걸렸습니다.",
+	plaguetrigger = "^([^|;%s]*)(.*)역병에 걸렸습니다%.$", -- "(.*) 역병에 걸렸습니다.",
 	plaguewarn = "님은 역병에 걸렸습니다. 피하세요",
 	plagueyouwarn = "당신은 역병에 걸렸습니다! 떨어지세요!",
-
-	plagueyou = "",
-	plagueare = "are",
-	whopattern = "(.+)|1이;가; ",
-
+	plagueyou = "", -- "you"
+	plagueare = "", -- "are"
 	thunderclaptrigger = "아누비사스 문지기|1이;가; 천둥벼락|1으로;로; (.+)에게 (%d+)의",
 	thunderclapwarn = "천둥벼락! - 멀리 떨어지세요",
 } end )
@@ -223,22 +237,6 @@ function BigWigsDefenders:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	end
 end
 
-if (GetLocale() == "koKR") then
-	function BigWigsDefenders:CheckPlague(msg)
-		local _,_, Player = string.find(msg, L["plaguetrigger"])
-		if (Player) then
-			if (Player == L["plagueyou"]) then
-				if self.db.profile.plagueyou then self:TriggerEvent("BigWigs_Message", L["plagueyouwarn"], "Red", true) end
-			else
-				local _,_, Who = string.find(Player, L["whopattern"])
-				if self.db.profile.plagueother then
-					self:TriggerEvent("BigWigs_Message", Who .. L["plaguewarn"], "Yellow")
-					self:TriggerEvent("BigWigs_SendTell", Who, L["plagueyouwarn"])
-				end
-			end
-		end
-	end
-else
 	function BigWigsDefenders:CheckPlague(msg)
 		local _,_, Player, Type = string.find(msg, L["plaguetrigger"])
 		if (Player and Type) then
@@ -252,7 +250,6 @@ else
 			end
 		end
 	end
-end
 
 function BigWigsDefenders:Thunderclap(msg)
 	if self.db.profile.thunderclap and string.find(msg, L["thunderclaptrigger"]) then

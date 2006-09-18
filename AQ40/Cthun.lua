@@ -149,27 +149,59 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	weakenedtrigger 	= "약해졌습니다!",
+
+	tentacle_name = "촉수 경고",
+	tentacle_desc = "촉수에 대한 경고",
+
+	glare_name = "암흑의 주시 경고",
+	glare_desc = "암흑의 주시에 대한 경고",
+
+	group_name = "암흑의 주시 파티 경고",
+	group_desc = "파티 X 에 암흑의 주시에 대한 경고",
+
+	giant_name = "거대한 눈 경고",
+	giant_desc = "거대한 눈에 대한 경고",
+
+	weakened_name = "약화 경고",
+	weakened_desc = "약화 상태에 대한 경고",
+
+	rape_name = "Rape is never funny",
+	rape_desc = "Some people just don't get hentai jokes, the bastards",
+
+	weakenedtrigger 	= "%s|1이;가; 약해집니다!", --"%s|1이;가; 약해졌습니다!",
 
 	tentacle1	= "눈달린 촉수 등장 - 촉수 처리~~!",
 	tentacle2	= "눈달린 촉수 등장 - 5초전!",
-	tentacle3	= "눈달린 촉수 등장 - 10초전!",
-	weakened		= "쑨이 약화되었습니다 - 45초간 최대 공격!",
 
-	giant2		= "거대한 눈다린 촉수 - 5초전!",
+	norape1		= "작은 눈달린 촉수 등장 - 처리~~(마반,스턴)!",
+	norape2		= "작은 눈달린 촉수 - 5초전!",
+
+	weakened		= "쑨이 약화되었습니다 - 45초간 최대 공격!",
+	invulnerable2	= "쑨 약화 종료 5초전!",
+	invulnerable1	= "쑨 공격 불가 상태로 전환!",
+
+	giant3		= "거대한 발톱 촉수 - 10 초전",
+	giant2		= "거대한 발톱 촉수 - 5초전!",
+	giant1		= "거대한 발톱 촉수 등장 - 눈촉수 처리후 처리!!!",
 
 	startwarn	= "쑨 시작 - 33초후 암흑의 주시",
 
 	glare2		= "암흑의 주시 - 5초전!",
-	glare1		= "암흑의 주시 - 이동!이동!",
+	glare1		= "암흑의 주시 - 눈촉수 처리하면서 이동!",
 
 	barTentacle	= "눈달린 촉수!",
-	barweakened	= "쑨 약화!",
+	barNoRape	= "작은 눈달린 촉수!",
+	barWeakened	= "쑨 약화!",
 	barGlare	= "암흑의 주시!",
+	barGiant	= "거대한 눈!",
+	barGreenBeam	= "녹색 안광!",
 
 	eyebeam		= "안광",
 	glarewarning	= "암흑의 주시를 당하고 있습니다! 이동!",
-	groupwarning	= "암흑의 주시 %s (%s)",
+	groupwarning	= "암흑의 주시 %s파티 (%s님 바로 이동!!!!!!)",
+	positions1	= "빠른 진형 재정비 - 녹색 안광이 시작됩니다!",
+	positions2	= "암흑의 주시 종료 5초전!",
+	phase2starting	= "쑨의 눈 처치, 본체가 등장합니다. 준비!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

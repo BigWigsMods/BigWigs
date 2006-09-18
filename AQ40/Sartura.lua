@@ -116,9 +116,16 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	starttrigger = "성스러운 땅을 더럽힌 죄값을 받게 되리라. 고대의 법률은 거스를 수 없다! 침입자들을 처단하라!",
-	startwarn = "살투라 격노 - 10분후 다음 격노",
-	enragetrigger = "전투감시병 살투라|1이;가; 격노 효과를 얻었습니다.",
+
+	enrage_name = "격노 경고",
+	enrage_desc = "격노에 대한 경고",
+
+	whirlwind_name = "소용돌이 경고",
+	whirlwind_desc = "소용돌이에 대한 경고",
+
+	starttrigger = "성스러운 땅을 더럽힌 죗값을 받게 되리라. 고대의 법률은 거스를 수 없다! 침입자들을 처단하라!",
+	startwarn = "살투라 전투 시작! - 10분후 격노",
+	enragetrigger = "%s|1이;가; 격노 효과를 얻었습니다.",
 	enragewarn = "격노 - 격노 - 격노",
 	bartext = "격노",
 	warn1 = "격노 - 8분후",

@@ -47,8 +47,13 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+
+	worm_name = "벌레 경고",
+	worm_desc = "벌레에 대한 경고",
+
 	wormtrigger = "불굴의 판크리스|1이;가; 벌레 소환|1을;를; 시전합니다.",
 	wormwarn = "벌레 소환 - 제거! (%d)",
+	wormbar = "소환! (%d)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

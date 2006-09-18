@@ -98,15 +98,31 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	frenzytrigger = "광란의 상태에 빠집니다!",
-	berserktrigger = "광폭해집니다!",
+
+	wyvern_name = "비룡 쐐기 경고",
+	wyvern_desc = "비룡 쐐기에 대한 경고",
+
+	frenzy_name = "광폭화 경고",
+	frenzy_desc = "광폭화에 대한 경고",
+
+	berserk_name = "광기 경고",
+	berserk_desc = "광기에 대한 경고",
+
+	frenzytrigger = "%s|1이;가; 광란의 상태에 빠집니다!",
+	berserktrigger = "%s|1이;가; 광폭해집니다!",
 	frenzywarn = "광폭화 - 평정 사격!",
 	berserkwarn = "광기 - 독 빈도 증가!",
 	berserksoonwarn = "광폭화 경보 - 준비!",
-	stingtrigger = "공주 후후란|1이;가; 비룡 쐐기|1으로;로;",
+	stingtrigger = "비룡 쐐기에 걸렸습니다.",--"공주 후후란|1이;가; 비룡 쐐기|1으로;로;",
 	stingwarn = "비룡 쐐기 - 메인탱커 해제!",
 	stingdelaywarn = "비룡 쐐기 3초전!",
 	bartext = "비룡 쐐기",
+	
+	startwarn = "후후란 전투 개시, 5분 후 광기!!",
+	berserkbar = "광기",
+	berserkwarn1 = "광기 - 1 분전!",
+	berserkwarn2 = "광기 - 30 초전!",
+	berserkwarn3 = "광기 - 5 초전!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

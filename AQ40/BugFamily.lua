@@ -80,6 +80,13 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+
+	fear_name = "공포 경고",
+	fear_desc = "공포에 대한 경고",
+
+	heal_name = "치유 경고",
+	heal_desc = "치유에 대한 경고",
+
 	healtrigger = "공주 야우즈|1이;가; 상급 치유|1을;를; 시전합니다.",
 	healwarn = "치유 시전 - 시전 방해!",
 

@@ -131,26 +131,39 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+
+	volley_name = "Poison Volley 경고",
+	volley_desc = "Poison Volley에 대한 경고",
+
+	toxinyou_name = "자신의 독구름 경고",
+	toxinyou_desc = "자신이 독구름일 때 알림",
+
+	toxinother_name = "타인의 독구름 경고",
+	toxinother_desc = "타인이 독구름일 때 알림",
+
+	freeze_name = "빙결 상태 경고",
+	freeze_desc = "각각의 빙결 상태에 대한 경고",
+
 	trigger1 	= "begins to slow!",
 	trigger2 	= "is freezing up!",
 	trigger3 	= "is frozen solid!",
 	trigger4 	= "begins to crack!",
 	trigger5 	= "looks ready to shatter!",
 	trigger6	= "afflicted by Poison Bolt Volley",
-	trigger7 	= "(.*)독소에 걸렸습니다.",
+	trigger7 	= "^([^|;%s]*)(.*)독소에 걸렸습니다%.$", -- CHECK
 
 	you 		= "",
-	are 		= "are",
-	whopattern = "(.+)|1이;가; ",
+	are 		= "",
 
-	warn1 		= "First freeze phase!",
-	warn2 		= "Second freeze phase - GET READY",
-	warn3 		= "Third freeze phase - DPS DPS DPS",
+	warn1 		= "빙결 1 단계!",
+	warn2 		= "빙결 2 단계 - 준비",
+	warn3 		= "빙결 3 단계 - DPS DPS DPS",
 	warn4 		= "Cracking up - little more now!",
 	warn5 		= "Cracking up - almost there!",
 	warn6		= "Poison Bolt Volley - Cleanse Poison!",
-	warn7		= "Incoming Poison Bolt Volley in 3~ sec!",
+	warn7		= "Poison Bolt Volley 3 초전!",
 	warn8		= "님이 독소에 걸렸습니다 - 대피!",
+	warn9		= "당신은 독구름에 걸렸습니다!",
 
 	bar1text	= "Poison Bolt Volley",
 } end )
@@ -192,25 +205,6 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
-if (GetLocale() == "koKR") then
-	function BigWigsViscidus:CheckVis(arg1)
-		if self.db.profile.volley and not prior and string.find(arg1, L["trigger6"]) then
-			self:TriggerEvent("BigWigs_Message", L["warn6"], "Orange")
-			self:ScheduleEvent("BigWigs_Message", 7, L["warn7"], "Orange")
-			self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 10, "Interface\\Icons\\Spell_Nature_CorrosiveBreath", "Yellow", "Orange", "Red")
-			prior = true
-		elseif self.db.profile.toxinother and string.find(arg1, L["trigger7"]) then
-			local _,_, pl = string.find(arg1, L["trigger7"])
-			if pl then
-				if pl == L"you" then
-					pl = UnitName("player")
-				end
-				self:TriggerEvent("BigWigs_Message", pl .. L["warn8"], "Red")
-			end
-		end
-	end
-else
 	function BigWigsViscidus:CheckVis(arg1)
 		if self.db.profile.volley and not prior and string.find(arg1, L["trigger6"]) then
 			self:TriggerEvent("BigWigs_Message", L["warn6"], "Orange")
@@ -229,7 +223,6 @@ else
 			end
 		end
 	end
-end
 
 function BigWigsViscidus:CHAT_MSG_MONSTER_EMOTE(arg1)
 	if not self.db.profile.freeze then return end

@@ -129,26 +129,40 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	porttrigger = "(.+)|1이;가; 쌍둥이 순간이동|1을;를; 시전합니다.",
+
+	bug_name = "벌레 폭발 경고",
+	bug_desc = "벌레 폭발에 대한 경고",
+
+	teleport_name = "순간이동 경고",
+	teleport_desc = "순간이동에 대한 경고",
+
+	enrage_name = "격노 경고",
+	enrage_desc = "격노에 대한 경고",
+
+	heal_name = "치유 경고",
+	heal_desc = "형제 치유에 대한 경고",
+
+	porttrigger = "쌍둥이 순간이동|1을;를; 시전합니다.",
 	portwarn = "순간 이동!",
 	portdelaywarn = "5초후 순간 이동!",
 	bartext = "순간 이동",
 	explodebugtrigger = "(.+)|1이;가; 벌레 폭발 효과를 얻었습니다.",
 	explodebugwarn = "벌레 폭발!",
-	enragetrigger = "becomes enraged.",
-	enragewarn = "Twins are Enraged",
-	healtrigger1 = "(.+)|1이;가; 형제 치유|1을;를; 시전합니다.",
-	healtrigger2 = "(.+)|1이;가; 형제 치유|1을;를; 시전합니다.",
-	healwarn = "형제치유 시전중 - 쌍둥이 분리!",
-	startwarn = "Twin Emperors Engaged! Enrage in 15 minutes!",
-	enragebartext = "Enrage",
-	warn1 = "Enrage in 10 minutes",
-	warn2 = "Enrage in 5 minutes",
-	warn3 = "Enrage in 3 minutes",
-	warn4 = "Enrage in 90 seconds",
-	warn5 = "Enrage in 60 seconds",
-	warn6 = "Enrage in 30 seconds",
-	warn7 = "Enrage in 10 seconds",
+	enragetrigger = "%s|1이;가; 격노 효과를 얻었습니다.", -- CHECK
+	enragewarn = "쌍둥이 격노!!",
+	healtrigger1 = "(.+)|1이;가; 형제 치유|1을;를;",
+	healtrigger2 = "(.+)의 형제 치유|1으로;로;",
+
+	healwarn = "형제 치유 시전중 - 쌍둥이 분리!",
+	startwarn = "쌍둥이 제왕 전투 시작! 15분 후 격노!",
+	enragebartext = "격노",
+	warn1 = "격노 - 10 분전",
+	warn2 = "격노 - 5 분전",
+	warn3 = "격노 - 3 분전",
+	warn4 = "격노 - 90 초전",
+	warn5 = "격노 - 60 초전",
+	warn6 = "격노 - 30 초전",
+	warn7 = "격노 - 10 초전",
 } end )
 
 

@@ -102,6 +102,22 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	
+	sweep_name = "휩쓸기 경고",
+	sweep_desc = "휩쓸기에 대한 경고",
+	
+	sandblast_name = "모래돌풍 경고",
+	sandblast_desc = "모래돌풍에 대한 경고",
+	
+	emerge_name = "등장 경고",
+	emerge_desc = "등장에 대한 경고",
+	
+	submerge_name = "잠수 경고",
+	submerge_desc = "잠수에 대한 경고",
+	
+	scarab_name = "스카라베 소환 경고",
+	scarab_desc = "스카라베 소환에 대한 경고",
+
 	sweeptrigger = "아우로|1이;가; 휩쓸기|1을;를; 시전합니다.",
 	sweepannounce = "휩쓸기!",
 	sweepwarn = "5초후 휩쓸기! 대피",

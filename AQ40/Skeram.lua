@@ -100,14 +100,24 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("koKR", function() return {
 	aetrigger = "예언자 스케람|1이;가; 신비한 폭발|1을;를; 시전합니다.",
 	mctrigger = "예언자 스케람|1이;가; 예언 실현|1을;를; 시전합니다.",
+	splittrigger = "예언자 스케람|1이;가; 환영 소환|1을;를; 시전합니다.", -- By turtl
 	aewarn = "신비한 폭발 시전 - 시전 방해!",
 	mcwarn = "예언 실현 시전 - 양변 준비!",
-	mcplayer = "(.*)예언 실현에 걸렸습니다.",
+	mcplayer = "^([^|;%s]*)(.*)예언 실현에 걸렸습니다%.$", --"(.*)예언 실현에 걸렸습니다.",
 	mcplayerwarn = "님이 정신지배되었습니다. 양변! 공포!",
-
 	mcyou = "",
-	mcare = "are",
-	whopattern = "(.+)|1이;가; ",
+	mcare = "",
+
+	splitwarn = "곧 분리 됩니다.!! 경고!!",
+
+	mc_name = "정신 지배 경고",
+	mc_desc = "정신 지배에 대한 경고",
+
+	ae_name = "신비한 폭발 경고",
+	ae_desc = "신비한 폭발에 대한 경고",
+	
+	split_name = "분리 경고",
+	split_desc = "이미지 생성 전 경고",
 } end )
 
 	L:RegisterTranslations("frFR", function() return {
@@ -146,17 +156,6 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-if (GetLocale() == "koKR") then
-	function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(arg1)
-		local _,_, player = string.find(arg1, L["mcplayer"])
-		if player then
-			if player == L["mcyou"] then
-				player = UnitName("player")
-			end
-			if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", player .. L["mcplayerwarn"], "Red") end
-		end
-	end
-else
 	function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(arg1)
 		local _,_, player, type = string.find(arg1, L["mcplayer"])
 		if player and type then
@@ -166,7 +165,6 @@ else
 			if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", player .. L["mcplayerwarn"], "Red") end
 		end
 	end
-end
 
 function BigWigsSkeram:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(arg1)
 	if (arg1 == L["aetrigger"]) then
