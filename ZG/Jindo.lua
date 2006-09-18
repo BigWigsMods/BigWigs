@@ -55,6 +55,19 @@ L:RegisterTranslations("zhCN", function() return {
 	warnhealing = "治疗图腾！",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	
+	brainwash_name = "세뇌의 토템 경고",
+	brainwash_desc = "세뇌의 토템에 대한 경고",
+	
+	healing_name = "치유의 수호물 경고",
+	healing_desc = "치유의 수호물에 대한 경고",
+
+	triggerbrainwash = "주술사 진도|1이;가; 세뇌의 토템 소환|1을;를; 시전합니다.", 		
+	triggerhealing = "주술사 진도|1이;가; 강력한 치유의 수호물|1을;를; 시전합니다.",
+	warnbrainwash = "세뇌의 토템 - 제거!",
+	warnhealing = "치유의 토템 - 제거!",
+} end )
 
 ----------------------------------
 --      Module Declaration      --
