@@ -65,6 +65,25 @@ L:RegisterTranslations("deDE", function() return {
 	elsems_desc = "Warnung, wenn andere Spieler von T\195\182dlicher Sto\195\159 betroffen sind.",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	trigger1 = "^([^|;%s]*)(.*)죽음의 일격에 걸렸습니다%.$",
+
+	you = "",
+	are = "",
+
+	warn1 = "당신은 죽음의 일격!",
+	warn2 = "<<%s>> 죽음의 일격!",
+	
+	youms_name = "자신의 죽음의 일격 경고",
+	youms_desc = "당신이 죽음의 일격에 걸렸을 때 경고",
+	
+	elsems_name = "타인의 죽음의 일격 경고",
+	elsems_desc = "타인이 죽음의 일격에 걸렸을 때 경고",
+
+	msbar_name = "죽음의 일격 바",
+	msbar_desc = "죽음의 일격 주기 바 표시",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	trigger1 = "^([^%s]+) ([^%s]+) les effets de Frappe mortelle",
 

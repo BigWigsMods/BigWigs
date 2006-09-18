@@ -82,18 +82,34 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("koKR", function() return {
 	wingbuffet_trigger = "에본로크|1이;가; 폭풍 날개|1을;를; 시전합니다.",
 	shadowflame_trigger = "에본로크|1이;가; 암흑의 불길|1을;를; 시전합니다.",
-	shadowcurse_trigger = "(.*)에본로크의 그림자에 걸렸습니다.",
+	shadowcurse_trigger = "^([^|;%s]*)(.*)에본로크의 그림자에 걸렸습니다%.$",
 
 	you = "",
-	are = "are",
-	whopattern = "(.+)|1이;가; ",
+	are = "",
 
+	wingbuffet_message = "폭풍 날개! 다음은 30초 후!",
 	wingbuffet_warning = "3초후 폭풍 날개!",
 	shadowflame_warning = "암흑의 불길 경고!",
 	shadowflame_message_you = "당신은 에본로크의 그림자에 걸렸습니다!",
 	shadowflame_message_other = "님이 에본로크의 그림자에 걸렸습니다!",
 
 	wingbuffet_bar = "폭풍 날개",
+	shadowcurse_bar = "%s - 에본로크의 그림자",
+	
+	wingbuffet_name = "폭풍 날개 경고",
+	wingbuffet_desc = "폭풍 날개에 대한 경고",
+	
+	shadowflame_name = "암흑의 불길 경고",
+	shadowflame_desc = "암흑의 불길에 대한 경고",
+	
+	youcurse_name = "자신의 에본로크의 그림자 경고",
+	youcurse_desc = "자신이 에본로크의 그림자에 걸렸을 때 경고",
+	
+	elsecurse_name = "타인의 에본로크의 그림자 경고",
+	elsecurse_desc = "타인이 에본로크의 그림자에 걸렸을 때 경고",
+
+	shadowbar_name = "에본로크의 그림자 타이머 바",
+	shadowbar_desc = "에본로크의 그림자가 걸렸을 때 타이머 바 표시",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -186,24 +202,6 @@ function BigWigsEbonroc:BigWigs_RecvSync(sync)
 	end
 end
 
-if (GetLocale() == "koKR") then
-	function BigWigsEbonroc:Event(msg)
-		local _,_, EPlayer = string.find(msg, L["shadowcurse_trigger"])
-		if (EPlayer) then
-			if (EPlayer == L["you"] and self.db.profile.youcurse) then
-				self:TriggerEvent("BigWigs_Message", L["shadowflame_message_you"], "Red", true)
-			elseif (self.db.profile.elsecurse) then
-				local _,_, EWho = string.find(EPlayer, L["whopattern"])
-				self:TriggerEvent("BigWigs_Message", EWho .. L["shadowflame_message_other"], "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", EWho, L["shadowflame_message_you"])
-			end
-
-			if self.db.profile.shadowbar then
-				self:TriggerEvent("BigWigs_StartBar", self, string.format(L["shadowcurse_bar"], EPlayer), 8, "Interface\\Icons\\Spell_Shadow_GatherShadows", "Red")
-			end
-		end
-	end
-else
 	function BigWigsEbonroc:Event(msg)
 		local _,_, EPlayer, EType = string.find(msg, L["shadowcurse_trigger"])
 		if (EPlayer and EType) then
@@ -219,4 +217,3 @@ else
 			end
 		end
 	end
-end

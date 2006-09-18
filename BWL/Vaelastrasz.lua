@@ -60,13 +60,26 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 L:RegisterTranslations("koKR", function() return {
-	trigger1 = "(.*)불타는 아드레날린에 걸렸습니다.",
+	trigger1 = "^([^|;%s]*)(.*)불타는 아드레날린에 걸렸습니다%.$", --"(.*)불타는 아드레날린에 걸렸습니다.",
 
-	whopattern = "(.+)|1이;가; ",
 	you = "",
+	are = "",
 
 	warn1 = "당신은 불타는 아드레날린에 걸렸습니다!",
 	warn2 = "님이 불타는 아드레날린에 걸렸습니다!",
+	
+	youburning_name = "당신의 아드레날린 경고",
+	youburning_desc = "당신이 아드레날린에 대한 경고",
+	
+	elseburning_name = "타인의 아드레날린 경고",
+	elseburning_desc = "타인의 아드레날린에 대한 경고",
+	
+	icon_name = "폭탄에 공격대 아이콘 지정",
+	icon_desc = "폭탄이 된 사람에 공격대 아이콘 지정. (승급자 이상 요구)",
+
+	burningbar_name = "아드레날린 바",
+	burningbar_desc = "아드레날인에 대한 타이머 바 표시",
+
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -152,8 +165,6 @@ function BigWigsVaelastrasz:Event(msg)
 	if baPlayer then
 		if baPlayer == L["you"] then
 			baPlayer = UnitName("player")
-		elseif GetLocale() == "koKR" then
-			_, _, baPlayer = string.find(baPlayer, L["whopattern"])
 		end
 		self:TriggerEvent("BigWigs_SendSync", "VaelBomb "..baPlayer)
 	end

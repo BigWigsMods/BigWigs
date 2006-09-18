@@ -148,6 +148,18 @@ L:RegisterTranslations("koKR", function() return {
 	bosskill = "네파리안을 물리쳤습니다!",
 
 	bar1text = "직업 지목",
+	
+	shadowflame_name = "암흑의 불길 경고",
+	shadowflame_desc = "암흑의 불길에 대한 경고",
+	
+	fear_name = "공포 경고",
+	fear_desc = "네파리안이 공포 시전시 경고",
+	
+	classcall_name = "직업 지목 경고",
+	classcall_desc = "직업 지목에 대한 경고",
+	
+	otherwarn_name = "기타 경고",
+	otherwarn_desc = "착지와 소환에 대한 경고",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
