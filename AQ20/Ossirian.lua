@@ -76,12 +76,20 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-		supremetrigger = "무적의 오시리안|1이;가; 오시리안의 힘 효과를 얻었습니다.",
-		supremewarn = "오시리안 무적 상태!",
-		supremedelaywarn = "%d초후 무적 상태 돌입!",
-		debufftrigger = "무적의 오시리안|1이;가; (.+) 약점에 걸렸습니다.",
-		debuffwarn = "오시리안이 %s 계열 마법에 약해졌습니다.",
-		bartext = "무적 상태",
+	
+	supreme_name = "무적 경고",
+	supreme_desc = "무적 모드에 대한 경고",
+	
+	debuff_name = "약화마법 경고",
+	debuff_desc = "약화마법에 대한 경고",
+
+	supremetrigger = "무적의 오시리안|1이;가; 오시리안의 힘 효과를 얻었습니다.",
+	supremewarn = "오시리안 무적 상태!",
+	supremedelaywarn = "%d초후 무적 상태 돌입!",
+	debufftrigger = "무적의 오시리안|1이;가; (.+) 약점에 걸렸습니다.",
+	debuffwarn = "오시리안이 %s 계열 마법에 약해졌습니다.",
+	bartext = "무적 상태",
+	expose = "노출",	-- CHECK
 } end )
 
 

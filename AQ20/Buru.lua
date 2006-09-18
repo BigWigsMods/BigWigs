@@ -75,10 +75,21 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	
+	you_name = "당신을 노려봄 경고",
+	you_desc = "당신을 노려볼 때 경고",
+	
+	other_name = "타인을 노려봄 경고",
+	other_desc = "타인을 노려볼 때 경고",
+	
+	icon_name = "아이콘 지정",
+	icon_desc = "노려보는 사람에게 레이드 아이콘 지정(승급자 이상 요구)",
+
 	watchtrigger = "(.+)|1을;를; 노려봅니다!",
 	watchwarn = "님을 노려봅니다!",
+	watchwarnyou = "당신을 주시합니다!",
+	
 	you = UnitName("player"),
-	watchtell = "당신을 주시합니다!",
 } end )
 
 ----------------------------------
@@ -101,6 +112,9 @@ function BigWigsBuru:OnEnable()
 end
 
 function BigWigsBuru:CHAT_MSG_MONSTER_EMOTE( msg )
+	if GetLocale() == "koKR" then
+		msg = string.gsub(msg, "%%s|1이;가; ", "")
+	end
 	local _, _, player = string.find(msg, L["watchtrigger"])
 	if player then
 		if player == L["you"] then

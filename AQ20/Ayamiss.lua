@@ -51,11 +51,14 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-		sacrificetrigger = "(.*)마비에 걸렸습니다.",
-		sacrificewarn = "님이 마비에 걸렸습니다!",
 
-		you = "",
-		whopattern = "(.+)|1이;가; ",
+  	sacrifice_name = "마비 경고",
+  	sacrifice_desc = "마비에 대한 경고",
+  
+  	sacrificetrigger = "^([^|;%s]*)(.*)마비에 걸렸습니다%.$",
+  	sacrificewarn = "님이 마비에 걸렸습니다!",
+  	you = "",
+  	are = "",	
 } end )
 
 ----------------------------------
@@ -79,19 +82,6 @@ function BigWigsAyamiss:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CheckSacrifice")
 end
 
-if (GetLocale() == "koKR") then
-	function BigWigsAyamiss:CheckSacrifice( msg )
-		local _, _, player = string.find(msg, L["sacrificetrigger"])
-		if (player) then
-			if (player == L["you"]) then
-				player = UnitName("player")
-			else
-				_, _, player = string.find(Player, L["whopattern"]) 
-			end
-			if self.db.profile.sacrifice then self:TriggerEvent("BigWigs_Message", player .. L["sacrificewarn"], "Red") end
-		end
-	end
-else
 	function BigWigsAyamiss:CheckSacrifice( msg )
 		local _, _, player, type = string.find(msg, L["sacrificetrigger"])
 		if (player and type) then
@@ -101,4 +91,3 @@ else
 			if self.db.profile.sacrifice then self:TriggerEvent("BigWigs_Message", player .. L["sacrificewarn"], "Red") end
 		end
 	end
-end

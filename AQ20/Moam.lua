@@ -73,13 +73,20 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	starttrigger = "당신의 공포를 알아챕니다.",
+
+	adds_name = "정령 경고",
+	adds_desc = "정령에 대한 경고",
+	
+	paralyze_name = "마비 경고",
+	paralyze_desc = "마비에 대한 경고",
+
+	starttrigger = "%s|1이;가; 당신의 공포를 알아챕니다.",
 	startwarn = "모암 행동시작! 90초 후 정령 등장!",
 	addsbar = "정령 등장",
 	addsincoming = "%s초후 정령 등장!",
-	addstrigger = "당신의 마나를 흡수하여 돌처럼 변합니다.",
+	addstrigger = "당신의 마나를 흡수한 %s|1이;가; 돌처럼 변합니다.",
 	addswarn = "정령 등장! 모암 90초간 멈춤!",
-	paralyzebar = "모암 멈춤",
+	paralyzebar = "모암 마비",
 	returnincoming = "%s초후 모암 행동 재개!",
 	returntrigger = "모암의 몸에서 마력 충전 효과가 사라졌습니다.",
 	returnwarn = "모암 행동 재개! 90초 후 정령 등장!",

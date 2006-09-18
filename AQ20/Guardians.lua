@@ -110,6 +110,22 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	
+	summon_name = "소환 경고",
+	summon_desc = "추가 소환에 대한 경고",
+	
+	plagueyou_name = "자신의 역병 경고",
+	plagueyou_desc = "자신의 역병에 대한 경고",
+
+	plagueother_name = "타인의 역병 경고",
+	plagueother_desc = "타인의 역병에 대한 경고",
+	
+	explode_name = "폭발 경고",
+	explode_desc = "폭발에 대한 경고",
+	
+	enrage_name = "분노 경고",
+	enrage_desc = "분노에 대한 경고",
+
 	explodetrigger = "아누비사스 감시자|1이;가; 폭파 효과를 얻었습니다.",
 	explodewarn = "폭파! 피하세요!",
 	enragetrigger = "아누비사스 감시자|1이;가; 분노 효과를 얻었습니다.",
@@ -118,10 +134,11 @@ L:RegisterTranslations("koKR", function() return {
 	summonguardwarn = "감시병 소환",
 	summonwarriortrigger = "아누비사스 감시자|1이;가; 아누비사스 전사 소환|1을;를; 시전합니다.",
 	summonwarriorwarn = "전사 소환",
-	plaguetrigger = "(.*)역병에 걸렸습니다.",
+	plaguetrigger = "^([^|;%s]*)(.*)역병에 걸렸습니다%.$",
 	plaguewarn = "님이 역병에 걸렸습니다. 피하세요!",
+	plaguewarnyou = "당신은 역병에 걸렸습니다.",
 	plagueyou = "",
-	whopattern = "(.+)|1이;가; "
+	plagueare = "",	
 } end )
 
 ----------------------------------
@@ -173,22 +190,6 @@ function BigWigsGuardians:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	end
 end
 
-if ( GetLocale() == "koKR" ) then
-	function BigWigsGuardians:checkPlague( msg )
-		local _,_,player = string.find(msg, L["plaguetrigger"])
-		if player then
-			if player == L["plagueyou"] then
-				if self.db.profile.plagueyou then self:TriggerEvent("BigWigs_Message", L["plaguewarnyou"], "Red", true) end
-			else
-				_, _, player = string.find(player, L["whopattern"])
-				if self.db.profile.plagueother then
-					self:TriggerEvent("BigWigs_Message", player .. L["plaguewarn"], "Yellow")
-					self:TriggerEvent("BigWigs_SendTell", player, L["plaguewarnyou"])
-				end
-			end
-		end
-	end
-else
 	function BigWigsGuardians:checkPlague( msg )
 		local _,_,player, type = string.find(msg, L["plaguetrigger"])
 		if (player and type) then
@@ -200,5 +201,3 @@ else
 			end
 		end
 	end
-end
-
