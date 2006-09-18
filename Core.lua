@@ -221,16 +221,21 @@ function BigWigs.modulePrototype:Scan()
 	if not t then return false end
 	if type(t) == "string" then t = {t} end
 
+	if UnitExists("target") and UnitAffectingCombat("target") then
+		local target = UnitName("target")
+		for _, mob in pairs(t) do
+			if target == mob then
+				return true
+			end
+		end
+	end
+	local num = GetNumRaidMembers()
 	for _, mob in pairs(t) do
-		if UnitName("target") == mob and UnitAffectingCombat("target") then
-			return true
-		else
-			local i
-			for i = 1, GetNumRaidMembers(), 1 do
-				local raidUnit = "raid"..i.."target"
-				if UnitName(raidUnit) == mob and UnitAffectingCombat(raidUnit) then
-					return true
-				end
+		local i
+		for i = 1, num do
+			local raidUnit = "raid"..i.."target"
+			if UnitExists(raidUnit) and UnitName(raidUnit) == mob and UnitAffectingCombat(raidUnit) then
+				return true
 			end
 		end
 	end
