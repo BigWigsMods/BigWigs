@@ -95,7 +95,17 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	trigger1 = "(.*)대지의 오염에 걸렸습니다.",
+	
+	noxious_name = "산성 숨결 경고",
+	noxious_desc = "산성 숨결에 대한 경고",
+	
+	volatileyou_name = "자신의 대지의 오염 경고",
+	volatileyou_desc = "자신의 대지의 오염에 대한 경고",
+	
+	volatileother_name = "타인의 대지의 오염 경고",
+	volatileother_desc = "타인의 대지의 오염에 대한 경고",
+
+	trigger1 = "^([^|;%s]*)(.*)대지의 오염에 걸렸습니다%.$",
 	trigger2 = "에메리스의 산성 숨결에 의해",
 
 	warn1 = "당신은 대지의 오염에 걸렸습니다!",
@@ -104,7 +114,7 @@ L:RegisterTranslations("koKR", function() return {
 	warn4 = "산성 숨결 - 30초후 재시전!",
 
 	isyou = "",
-	whopattern = "(.+)|1이;가; ",
+	isare = "",
 
 	bar1text = "산성 숨결",
 } end )
@@ -131,31 +141,6 @@ function BigWigsEmeriss:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
-if (GetLocale() == "koKR") then
-	function BigWigsEmeriss:Event( msg )
-		if (not self.prior and string.find(msg, L["trigger2"])) then
-			self.prior = true
-			if self.db.profile.noxious then 
-				self:TriggerEvent("BigWigs_Message", L["warn4"], "Red")
-				self:ScheduleEvent("BigWigs_Message", 25, L["warn3"], "Red")
-				self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 30, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
-			end
-		else
-			local _,_, EPlayer = string.find(msg, L["trigger1"])
-			if (EPlayer) then
-				if (EPlayer == L["isyou"] ) then
-					if self.db.profile.volatileyou then self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true) end
-				else
-					local _,_, EWho = string.find(EPlayer, L["whopattern"])
-					if self.db.profile.volatileother then 
-						self:TriggerEvent("BigWigs_Message", EWho .. L["warn2"], "Yellow")
-						self:TriggerEvent("BigWigs_SendTell", EWho, L["warn1"])
-					end
-				end
-			end
-		end
-	end
-else
 	function BigWigsEmeriss:Event( msg )
 		if (not self.prior and string.find(msg, L["trigger2"])) then
 			self.prior = true
@@ -178,7 +163,6 @@ else
 			end
 		end
 	end
-end
 
 function BigWigsEmeriss:BigWigs_Message(text)
 	if text == L["warn3"] then self.prior = nil end

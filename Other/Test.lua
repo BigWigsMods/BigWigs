@@ -32,6 +32,27 @@ L:RegisterTranslations("enUS", function() return {
 	["Testing Sync"] = true,
 } end)
 
+L:RegisterTranslations("koKR", function() return {
+--	["test"] = "테스트",
+	["Test"] = "테스트",
+	["Test Bar"] = "테스트 바",
+	["Test Bar 2"] = "테스트 바 2",
+	["Test Bar 3"] = "테스트 바 3",
+	["Test Bar 4"] = "테스트 바 4",
+	["Testing"] = "테스트중",
+	["OMG Bear!"] = "OMG Bear!",
+	["*RAWR*"] = "*공격대경고*",
+	["Victory!"] = "승리!",
+	["Options for testing."] = "테스트 설정",
+--	["local"] = "지역",
+	["Local test"] = "지역 테스트",
+	["Perform a local test of BigWigs."] = "BigWigs의 지역 테스트 실행",
+--	["sync"] = "동기화",
+	["Sync test"] = "동기화 테스트",
+	["Perform a sync test of BigWigs."] = "BigWigs의 동기화 테스트 실행",
+	["Testing Sync"] = "동기화 테스트 중",
+} end)
+
 L:RegisterTranslations("zhCN", function() return {
 	["Test"] = "测试",
 	["Test Bar"] = "测试计时条",

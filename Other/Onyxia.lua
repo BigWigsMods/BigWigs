@@ -99,13 +99,28 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	trigger1 = "깊은 숨을 들이쉽니다...",
+
+	deepbreath_name = "딥브레스 경고",
+	deepbreath_desc = "오닉시아가 딥 브레스 시전 시 경고",
+
+	phase2_name = "2단계 경고",
+	phase2_desc = "2단계에 대한 경고",
+
+	phase3_name = "3단계 경고",
+	phase3_desc = "3단계에 대한 경고",
+
+	onyfear_name = "공포",
+	onyfear_desc = "3단계 공포에 대한 경고",
+
+	trigger1 = "%s|1이;가; 숨을 깊게 들이쉽니다.", --"%s|1이;가; 깊은 숨을 들이쉽니다...",
 	trigger2 = "머리 위에서 모조리",
 	trigger3 = "혼이 더 나야 정신을 차리겠구나!",
+	trigger4 = "오닉시아|1이;가; 우레와같은 울부짖음|1을;를; 시전합니다.", -- CHECK
 
 	warn1 = "경고 : 오닉시아 딥 브레스, 구석으로 피하십시오!",
 	warn2 = "오닉시아 2단계 시작!",
 	warn3 = "오닉시아 3단계 시작!",
+	warn4 = "공포 경고, 1.5 초 전!",
 } end )
 
 ----------------------------------

@@ -62,6 +62,22 @@ L:RegisterTranslations("zhCN", function() return {
 	bartext = "无敌模式",	
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	
+	supreme_name = "무적 경고",
+	supreme_desc = "무적 모드에 대한 경고",
+	
+	starttrigger = "군단을 위하여! 킬제덴을 위하여!", --CHECK
+		
+	engagewarn	 = "카쟈크 전투 개시, 3분 후 무적!",
+		
+	supreme1min	 = "무적 모드 - 1 분전!",
+	supreme30sec = "무적 모드 - 30 초전!",
+	supreme10sec = "무적 모드 - 10 초전!",
+		
+	bartext = "무적 모드",	
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

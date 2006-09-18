@@ -72,6 +72,13 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	
+	teleport_name = "소환 경고",
+	teleport_desc = "소환에 대한 경고",
+	
+	shield_name = "보호막 경고",
+	shield_desc = "보호막에 대한 경고",
+	
 	trigger1 = "오너라, 조무래기들아! 덤벼봐라!",
 	trigger2 = "아주어고스의 몸에서 반사 효과가 사라졌습니다.",
 	trigger3 = "아주어고스|1이;가; 반사 효과를",
@@ -79,6 +86,8 @@ L:RegisterTranslations("koKR", function() return {
 	warn1 = "강제 소환!",
 	warn2 = "마법 보호막 소멸!",
 	warn3 = "마법 보호막 동작 - 마법 공격 금지!",
+
+	shieldbar = "마법 보호막",
 } end )
 
 ----------------------------------
