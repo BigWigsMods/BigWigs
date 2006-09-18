@@ -131,7 +131,7 @@ function BigWigsFlamegor:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "FlamegorWingBuffet", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "FlamegorWingBuffet2", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "FlamegorShadowflame", 10)
 end
 
@@ -141,14 +141,14 @@ end
 
 function BigWigsFlamegor:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if string.find(msg, L["wingbuffet_trigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "FlamegorWingBuffet")
+		self:TriggerEvent("BigWigs_SendSync", "FlamegorWingBuffet2")
 	elseif msg == L["shadowflame_trigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "FlamegorShadowflame")
 	end
 end
 
 function BigWigsFlamegor:BigWigs_RecvSync(sync)
-	if sync == "FlamegorWingBuffet" and self.db.profile.wingbuffet then
+	if sync == "FlamegorWingBuffet2" and self.db.profile.wingbuffet then
 		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Red")
 		self:ScheduleEvent("BigWigs_Message", 29, L["wingbuffet_warning"], "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")

@@ -108,7 +108,7 @@ function BigWigsFiremaw:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "FiremawWingBuffet", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "FiremawWingBuffet2", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "FiremawShadowflame", 10)
 end
 
@@ -118,14 +118,14 @@ end
 
 function BigWigsFiremaw:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if string.find(msg, L["wingbuffet_trigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "FiremawWingBuffet")
+		self:TriggerEvent("BigWigs_SendSync", "FiremawWingBuffet2")
 	elseif msg == L["shadowflame_trigger"] then 
 		self:TriggerEvent("BigWigs_SendSync", "FiremawShadowflame")
 	end
 end
 
 function BigWigsFiremaw:BigWigs_RecvSync(sync)
-	if sync == "FiremawWingBuffet" and self.db.profile.wingbuffet then
+	if sync == "FiremawWingBuffet2" and self.db.profile.wingbuffet then
 		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Red")
 		self:ScheduleEvent("BigWigs_Message", 29, L["wingbuffet_warning"], "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")
