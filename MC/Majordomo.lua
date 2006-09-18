@@ -87,6 +87,12 @@ L:RegisterTranslations("koKR", function() return {
 	bar1text = "마법 반사",
 	bar2text = "피해 보호막",
 	bar3text = "새로운 버프",
+	
+	magic_name = "마법 보호막 경고",
+	magic_desc = "마법 보호막에 대한 경고",
+	
+	dmg_name = "피해 보호막 경고",
+	dmg_desc = "피해 보호막에 대한 경고",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

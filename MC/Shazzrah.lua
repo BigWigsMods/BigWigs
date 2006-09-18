@@ -56,6 +56,12 @@ L:RegisterTranslations("koKR", function() return {
 	warn3 = "마법 약화 버프 - 마법 무효화를 사용하세요!",
 
 	bar1text = "점멸",
+	
+	selfbuff_name = "약화 디버프 경고",
+	selfbuff_desc = "샤즈라가 약화 디버프 시전시 경고",
+	
+	blink_name = "점멸 경고",
+	blink_desc = "샤즈라 점멸 시 경고",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

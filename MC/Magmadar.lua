@@ -33,18 +33,21 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	trigger1 = "살기를 띤 듯한 광란의 상태에 빠집니다!",
+	-- Chat message triggers
+	trigger1 = "%s|1이;가; 살기를 띤 듯한 광란의 상태에 빠집니다!",
 	trigger2 = "공황에 걸렸습니다.",
 
+	-- Warnings and bar texts
 	["Frenzy alert!"] = "광폭화 경보 - 사냥꾼의 평정 사격을 쏘세요!",
 	["5 seconds until AoE Fear!"] = "5초후 광역 공포!",
 	["AoE Fear - 30 seconds until next!"] = "광역 공포 경보 - 다음 공포까지 30초!",
-
 	["AoE Fear"] = "광역 공포",
 
 	fear_name = "공포 경고",
-	fear_desc = "공포 경고",
-	frenzy_desc = "광폭화 경고",
+	fear_desc = "마그마다르 공포 시전 시 경고",
+	
+	frenzy_name = "광폭화 경고",
+	frenzy_desc = "마그마다르 광폭화 시 경고",
 } end)
 
 

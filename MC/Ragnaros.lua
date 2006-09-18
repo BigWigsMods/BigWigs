@@ -89,7 +89,7 @@ L:RegisterTranslations("koKR", function() return {
 	warn1 = "광역 튕겨냄!",
 	warn2 = "5초후 광역 튕겨냄!",
 	warn3 = "90초간 라그나로스 사라짐. 피조물 등장!",
-	warn4 = "15초후 라고나로스 재등장!",
+	warn4 = "15초후 라그나로스 재등장!",
 	warn5 = "라그나로스가 등장했습니다. 3분후 피조물 등장!",
 	warn6 = "60초후 피조물 등장 & 라그나로스 사라짐!",
 	warn7 = "20초후 피조물 등장 & 라그라로스 사라짐!",
@@ -97,6 +97,21 @@ L:RegisterTranslations("koKR", function() return {
 	bar1text = "광역 튕겨냄",
 	bar2text = "라그나로스 등장",
 	bar3text = "피조물 등장",
+
+	sonofflame = "화염의 수호물",
+	sonsdeadwarn = "%d/8 화염의 수호물 사망!",
+
+	emerge_name = "등장 경고",
+	emerge_desc = "라그나로스 등장에 대한 경고",
+
+	sondeath_name = "화염의 수호물 죽음",
+	sondeath_desc = "화염의 수호물 죽음 알림",
+	
+	submerge_name = "사라짐 경고",
+	submerge_desc = "라그나로스 사라짐 & 피조물에 대한 경고",
+	
+	aoeknock_name = "광역 넉백 경고",
+	aoeknock_desc = "광역 넉백에 대한 경고",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

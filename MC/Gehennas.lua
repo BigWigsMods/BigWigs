@@ -46,6 +46,9 @@ L:RegisterTranslations("koKR", function() return {
 	warn2 = "게헨나스의 저주 - 다음 저주 30초후!",
 
 	bar1text = "게헨나스의 저주",
+	
+	curse_name = "게헨나스의 저주 경고",
+	curse_desc = "게헨나스의 저주에 대한 경고",
 } end)
 
 

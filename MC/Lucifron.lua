@@ -65,6 +65,12 @@ L:RegisterTranslations("koKR", function() return {
 
 	bar1text = "루시프론의 저주",
 	bar2text = "파멸의 예언",
+	
+	curse_name = "루시프론의 저주 경고",
+	curse_desc = "루시프론의 저주에 대한 경고",
+	
+	doom_name = "파멸의 예언 경고",
+	doom_desc = "파멸의 예언에 대한 경고",
 } end)
 
 

@@ -53,14 +53,22 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	trigger1 = "^(.*)살아있는 폭탄에 걸렸습니다.",
-	whopattern = "(.+)|1이;가; ",
+	trigger1 = "^([^|;%s]*)(.*)살아있는 폭탄에 걸렸습니다%.$",
 
 	you = "",
-	are = "은",
+	are = "",
 
 	warn1 = "당신은 폭탄입니다!",
 	warn2 = "님이 폭탄입니다!",
+	
+	youbomb_name = "자신의 폭탄 경고",
+	youbomb_desc = "자신이 폭탄 일때 경고",
+	
+	elsebomb_name = "타인의 폭탄 경고",
+	elsebomb_desc = "타인이 폭탄 일때 경고",
+	
+	icon_name = "폭탄에 공격대 아이콘 표시",
+	icon_desc = "폭탄인 사람에게 공격대 아이콘 표시. (승급자 이상 요구)",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -122,25 +130,6 @@ end
 --      Event Handlers      --
 ------------------------------
 
-if (GetLocale() == "koKR") then
-	function BigWigsBaronGeddon:Event(msg)
-		local _, _, EPlayer = string.find(msg, L["trigger1"])
-		if (EPlayer) then
-			if (EPlayer == L["you"] and self.db.profile.youbomb) then
-				self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true)
-			elseif (self.db.profile.elsebomb) then
-				_, _, EPlayer = string.find(EPlayer, L["whopattern"])
-				self:TriggerEvent("BigWigs_Message", EPlayer .. L["warn2"], "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", EPlayer, L["warn1"])
-			end
-
-			if self.db.profile.icon then
-				if EPlayer == L["you"] then	EPlayer = UnitName("player") end
-				self:TriggerEvent("BigWigs_SetRaidIcon", EPlayer )
-			end
-		end
-	end
-else
 	function BigWigsBaronGeddon:Event(msg)
 		local _, _, EPlayer, EType = string.find(msg, L["trigger1"])
 		if (EPlayer and EType) then
@@ -157,4 +146,3 @@ else
 			end
 		end
 	end
-end
