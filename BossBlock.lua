@@ -53,6 +53,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Suppress RaidSay"] = "RaidSay 차단",
 	["Suppress CTRA RaidSay popup messages."] = "CTRA RaidSay 알림 메세지 차단",
 	["Suppress oRA RaidSay popup messages."] = "oRA RaidSay 알림 메세지 차단",
+	["Suppress oRA2 RaidSay popup messages."] = "oRA2 RaidSay 알림 메세지 차단",
 	
 	["Suppress Tells"] = "일반대화 차단",
 	["Suppress Tell messages."] = "일반대화 메세지 차단",
