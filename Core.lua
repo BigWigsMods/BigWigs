@@ -216,6 +216,65 @@ function BigWigs.modulePrototype:GenericBossDeath(msg)
 end
 
 
+function BigWigs.modulePrototype:Scan()
+	local t = self.enabletrigger
+	if not t then return false end
+	if type(t) == "string" then t = {t} end
+
+	for _, mob in pairs(t) do
+		if UnitName("target") == mob and UnitAffectingCombat("target") then
+			return true
+		else
+			local i
+			for i = 1, GetNumRaidMembers(), 1 do
+				local raidUnit = "raid"..i.."target"
+				if UnitName(raidUnit) == mob and UnitAffectingCombat(raidUnit) then
+					return true
+				end
+			end
+		end
+	end
+	return false
+end
+
+
+function BigWigs.modulePrototype:CheckForEngage()
+	local go = self:Scan()
+	local running = self:IsEventScheduled(self:ToString().."_CheckStart")
+	if go then
+		self:CancelScheduledEvent(self:ToString().."_CheckStart")
+		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self:ToString())
+	elseif not running then
+		self:ScheduleRepeatingEvent(self:ToString().."_CheckStart", self.CheckForEngage, .5, self)
+	end
+end
+
+
+function BigWigs.modulePrototype:CheckForWipe()
+	-- If we are a hunter, we need to check for the FD buff.
+	local _, class = UnitClass("player")
+	if class == "HUNTER" then
+		for i = 1, 16 do
+			local buff = UnitBuff("player", i)
+			if buff and buff == "Interface\\Icons\\Ability_Rogue_FeignDeath" then
+				return
+			end
+		end
+	end
+
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+
+	local go = self:Scan()
+	local running = self:IsEventScheduled(self:ToString().."_CheckWipe")
+	if not go then
+		self:TriggerEvent("BigWigs_RebootModule", self)
+	elseif not running then
+		self:ScheduleRepeatingEvent(self:ToString().."_CheckWipe", self.CheckForWipe, 2, self)
+	end
+end
+
+
 ------------------------------
 --      Initialization      --
 ------------------------------
@@ -235,7 +294,9 @@ end
 function BigWigs:OnEnable()
 	self:RegisterEvent("BigWigs_TargetSeen")
 	self:RegisterEvent("BigWigs_RebootModule")
+
 	self:RegisterEvent("BigWigs_RecvSync", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "BossEngaged", 5)
 end
 
 
