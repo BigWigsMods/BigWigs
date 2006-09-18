@@ -189,15 +189,13 @@ BigWigsTwins.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsTwins:OnEnable()
-	self.enragestarted = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "TwinsEnrage", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "TwinsTeleport", 10)
 end
 
@@ -212,47 +210,8 @@ function BigWigsTwins:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	end
 end
 
-function BigWigsTwins:PLAYER_REGEN_DISABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Twins_CheckStart")
-	if (go) then
-		self:CancelScheduledEvent("Twins_CheckStart")
-		self:TriggerEvent("BigWigs_SendSync", "TwinsEnrage")
-	elseif not running then
-		self:ScheduleRepeatingEvent("Twins_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self)
-	end
-
-end
-
-function BigWigsTwins:PLAYER_REGEN_ENABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Twins_CheckWipe")
-	if (not go) then
-		self:TriggerEvent("BigWigs_RebootModule", self)
-	elseif (not running) then
-		self:ScheduleRepeatingEvent("Twins_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
-	end
-end
-
-function BigWigsTwins:Scan()
-	if ( (UnitName("target") == veklor or UnitName("target") == veknilash) and UnitAffectingCombat("target")) then
-		return true
-	elseif ((UnitName("playertarget") == veklor or UnitName("playertarget") == veknilash) and UnitAffectingCombat("playertarget")) then
-		return true
-	else
-		local i
-		for i = 1, GetNumRaidMembers(), 1 do
-			if ( (UnitName("Raid"..i.."target") == veklor or UnitName("Raid"..i.."target") == veknilash) and UnitAffectingCombat("Raid"..i.."target")) then
-				return true
-			end
-		end
-	end
-	return false
-end
-
-function BigWigsTwins:BigWigs_RecvSync(sync)
-	if sync == "TwinsEnrage" and not self.enragestarted then
-		self.enragestarted = true
+function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
+	if sync == "BossEngaged" and rest and rest == boss then
 		if self.db.profile.teleport then
 			self:ScheduleEvent("BigWigs_Message", 25, L["portdelaywarn"], "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 30, "Interface\\Icons\\Spell_Arcane_Blink", "Yellow", "Orange", "Red")

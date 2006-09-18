@@ -161,37 +161,11 @@ function BigWigsFaerlina:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "FaerlinaEnrage", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "FaerlinaSilence", 5)
-end
-
-function BigWigsFaerlina:Scan()
-	if UnitName("target") == boss and UnitAffectingCombat("target") then
-		return true
-	elseif UnitName("playertarget") == boss and UnitAffectingCombat("playertarget") then
-		return true
-	else
-		local i
-		for i = 1, GetNumRaidMembers(), 1 do
-			if UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("raid"..i.."target") then
-				return true
-			end
-		end
-	end
-	return false
-end
-
-function BigWigsFaerlina:PLAYER_REGEN_ENABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Faerlina_CheckWipe")
-	if (not go) then
-		self:TriggerEvent("BigWigs_RebootModule", self)
-	elseif (not running) then
-		self:ScheduleRepeatingEvent("Faerlina_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
-	end
 end
 
 function BigWigsFaerlina:CHAT_MSG_MONSTER_YELL( msg )

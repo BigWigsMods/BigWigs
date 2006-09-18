@@ -130,19 +130,20 @@ end
 --      Event Handlers      --
 ------------------------------
 
-	function BigWigsBaronGeddon:Event(msg)
-		local _, _, EPlayer, EType = string.find(msg, L["trigger1"])
-		if (EPlayer and EType) then
-			if (EPlayer == L"you" and EType == L["are"] and self.db.profile.youbomb) then
-				self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true)
-			elseif (self.db.profile.elsebomb) then
-				self:TriggerEvent("BigWigs_Message", EPlayer .. L["warn2"], "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", EPlayer, L["warn1"])
-			end
+function BigWigsBaronGeddon:Event(msg)
+	local _, _, EPlayer, EType = string.find(msg, L["trigger1"])
+	if (EPlayer and EType) then
+		if (EPlayer == L"you" and EType == L["are"] and self.db.profile.youbomb) then
+			self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true)
+		elseif (self.db.profile.elsebomb) then
+			self:TriggerEvent("BigWigs_Message", EPlayer .. L["warn2"], "Yellow")
+			self:TriggerEvent("BigWigs_SendTell", EPlayer, L["warn1"])
+		end
 
-			if self.db.profile.icon then
-				if EPlayer == L["you"] then	EPlayer = UnitName("player") end
-				self:TriggerEvent("BigWigs_SetRaidIcon", EPlayer )
-			end
+		if self.db.profile.icon then
+			if EPlayer == L["you"] then	EPlayer = UnitName("player") end
+			self:TriggerEvent("BigWigs_SetRaidIcon", EPlayer )
 		end
 	end
+end
+

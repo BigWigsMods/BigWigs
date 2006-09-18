@@ -166,11 +166,10 @@ BigWigsLoatheb.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsLoatheb:OnEnable()
-	self.started = nil
 	self.doomTime = 30
 
-	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
@@ -184,46 +183,8 @@ function BigWigsLoatheb:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "LoathebRemoveCurse", 10)
 end
 
-function BigWigsLoatheb:PLAYER_REGEN_ENABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Loatheb_CheckWipe")
-	if (not go) then
-		self:TriggerEvent("BigWigs_RebootModule", self)
-	elseif (not running) then
-		self:ScheduleRepeatingEvent("Loatheb_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
-	end
-end
-
-function BigWigsLoatheb:Scan()
-	if (UnitName("target") == boss and UnitAffectingCombat("target")) then
-		return true
-	elseif (UnitName("playertarget") == boss and UnitAffectingCombat("playertarget")) then
-		return true
-	else
-		local i
-		for i = 1, GetNumRaidMembers(), 1 do
-			if (UnitName("raid"..i.."target") == boss and UnitAffectingCombat("raid"..i.."target")) then
-				return true
-			end
-		end
-	end
-	return false
-end
-
-function BigWigsLoatheb:PLAYER_REGEN_DISABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Loatheb_CheckStart")
-	if (go) then
-		self:CancelScheduledEvent("Loatheb_CheckStart")
-		self:TriggerEvent("BigWigs_SendSync", "LoathebStart")
-	elseif not running then
-		self:ScheduleRepeatingEvent("Loatheb_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self)
-	end
-end
-
-function BigWigsLoatheb:BigWigs_RecvSync(sync)
-	if sync == "LoathebStart" and not self.started then
-		self.started = true
+function BigWigsLoatheb:BigWigs_RecvSync(sync, rest, nick)
+	if sync == "BossEngage" and rest and rest == boss then
 		if self.db.profile.doom then
 			self:TriggerEvent("BigWigs_StartBar", self, L["doomtimerbar"], 300, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
 			self:ScheduleEvent("bwloathebtimerreduce1", "BigWigs_Message", 240, string.format(L["doomtimerwarn"], 60), "Green")

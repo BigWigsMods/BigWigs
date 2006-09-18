@@ -107,23 +107,7 @@ BigWigsPatchwerk.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsPatchwerk:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-end
-
-function BigWigsPatchwerk:Scan()
-	if (UnitName("target") == boss and UnitAffectingCombat("target")) then
-		return true
-	elseif (UnitName("playertarget") == boss and UnitAffectingCombat("playertarget")) then
-		return true
-	else
-		local i
-		for i = 1, GetNumRaidMembers(), 1 do
-			if (UnitName("raid"..i.."target") == boss and UnitAffectingCombat("raid"..i.."target")) then
-				return true
-			end
-		end
-	end
-	return false
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
 function BigWigsPatchwerk:CHAT_MSG_MONSTER_YELL( msg )
@@ -136,16 +120,6 @@ function BigWigsPatchwerk:CHAT_MSG_MONSTER_YELL( msg )
 		self:ScheduleEvent("bwpatchwarn4", "BigWigs_Message", 360, L["warn4"], "Orange")
 		self:ScheduleEvent("bwpatchwarn5", "BigWigs_Message", 390, L["warn5"], "Red")
 		self:ScheduleEvent("bwpatchwarn6", "BigWigs_Message", 410, L["warn6"], "Red")
-	end
-end
-
-function BigWigsPatchwerk:PLAYER_REGEN_ENABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Patchwerk_CheckWipe")
-	if (not go) then
-		self:TriggerEvent("BigWigs_RebootModule", self)
-	elseif (not running) then
-		self:ScheduleRepeatingEvent("Patchwerk_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
 	end
 end
 

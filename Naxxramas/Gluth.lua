@@ -2,7 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Gluth")
+--local boss = AceLibrary("Babble-Boss-2.0")("Gluth")
+local boss = "Arcane Chimaerok"
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
 ----------------------------
@@ -129,7 +130,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 BigWigsGluth = BigWigs:NewModule(boss)
 BigWigsGluth.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
-BigWigsGluth.enabletrigger = boss
+BigWigsGluth.enabletrigger = { "Chimaerok", "Arcane Chimaerok", "Chimaerok Devourer", boss }
 BigWigsGluth.toggleoptions = {"frenzy", "fear", "decimate", "bosskill"}
 BigWigsGluth.revision = tonumber(string.sub("$Revision$", 12, -3))
 
@@ -142,7 +143,6 @@ BigWigsGluth.revision = tonumber(string.sub("$Revision$", 12, -3))
 -- XXX fixed timer, so just make it a bar like the Twins@AQ40 enrage timer.
 
 function BigWigsGluth:OnEnable()
-	self.started = nil
 	self.prior = nil
 
 	self:RegisterEvent("BigWigs_Message")
@@ -191,9 +191,8 @@ function BigWigsGluth:BigWigs_RecvSync( sync, rest, nick )
 		self:TriggerEvent("BigWigs_Message", L["decimatewarn"], "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L["decimatebartext"], 105, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
 		self:ScheduleEvent("BigWigs_Message", 100, L["decimatesoonwarn"], "Orange")
-	elseif sync == "BossEngaged" and rest then
-		if not rest == boss then return end
-		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+	elseif sync == "BossEngaged" and rest and rest == boss then
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		if self.db.profile.decimate then
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Yellow")
 			self:TriggerEvent("BigWigs_StartBar", self, L["decimatebartext"], 105, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")

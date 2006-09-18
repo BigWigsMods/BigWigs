@@ -296,7 +296,7 @@ function BigWigs:OnEnable()
 	self:RegisterEvent("BigWigs_RebootModule")
 
 	self:RegisterEvent("BigWigs_RecvSync", 10)
-	self:TriggerEvent("BigWigs_ThrottleSync", "BossEngaged", 5)
+	self:RegisterEvent("AceEvent_FullyInitialized", function() self:TriggerEvent("BigWigs_ThrottleSync", "BossEngaged", 5) end )
 end
 
 

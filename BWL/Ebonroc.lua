@@ -202,18 +202,18 @@ function BigWigsEbonroc:BigWigs_RecvSync(sync)
 	end
 end
 
-	function BigWigsEbonroc:Event(msg)
-		local _,_, EPlayer, EType = string.find(msg, L["shadowcurse_trigger"])
-		if (EPlayer and EType) then
-			if (EPlayer == L["you"] and EType == L["are"] and self.db.profile.youcurse) then
-				self:TriggerEvent("BigWigs_Message", L["shadowflame_message_you"], "Red", true)
-			elseif (self.db.profile.elsecurse) then
-				self:TriggerEvent("BigWigs_Message", EPlayer .. L["shadowflame_message_other"], "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", EPlayer, L["shadowflame_message_you"])
-			end
-
-			if self.db.profile.shadowbar then
-				self:TriggerEvent("BigWigs_StartBar", self, string.format(L["shadowcurse_bar"], EPlayer), 8, "Interface\\Icons\\Spell_Shadow_GatherShadows", "Red")
-			end
+function BigWigsEbonroc:Event(msg)
+	local _,_, EPlayer, EType = string.find(msg, L["shadowcurse_trigger"])
+	if (EPlayer and EType) then
+		if (EPlayer == L["you"] and EType == L["are"] and self.db.profile.youcurse) then
+			self:TriggerEvent("BigWigs_Message", L["shadowflame_message_you"], "Red", true)
+		elseif (self.db.profile.elsecurse) then
+			self:TriggerEvent("BigWigs_Message", EPlayer .. L["shadowflame_message_other"], "Yellow")
+			self:TriggerEvent("BigWigs_SendTell", EPlayer, L["shadowflame_message_you"])
+		end
+		if self.db.profile.shadowbar then
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["shadowcurse_bar"], EPlayer), 8, "Interface\\Icons\\Spell_Shadow_GatherShadows", "Red")
 		end
 	end
+end
+

@@ -128,10 +128,8 @@ BigWigsGrobbulus.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsGrobbulus:OnEnable()
-	self.started = nil
-
-	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "InjectEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "InjectEvent")
@@ -139,53 +137,17 @@ function BigWigsGrobbulus:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "GrobbulusStart", 10)
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsGrobbulus:PLAYER_REGEN_DISABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Grobbulus_CheckStart")
-	if go then
-		self:CancelScheduledEvent("Grobbulus_CheckStart")
-		self:TriggerEvent("BigWigs_SendSync", "GrobbulusStart")
-	elseif not running then
-		self:ScheduleRepeatingEvent("Grobbulus_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self )
-	end
-end
-
-function BigWigsGrobbulus:PLAYER_REGEN_ENABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Grobbulus_CheckWipe")
-	if not go then
-		self:TriggerEvent("BigWigs_RebootModule", self)
-	elseif not running then
-		self:ScheduleRepeatingEvent("Grobbulus_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
-	end
-end
-
-function BigWigsGrobbulus:Scan()
-	if UnitName("target") == boss and UnitAffectingCombat("target") then
-		return true
-	elseif UnitName("playertarget") == boss and UnitAffectingCombat("playertarget") then
-		return true
-	else
-		local i
-		for i = 1, GetNumRaidMembers(), 1 do
-			if UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("raid"..i.."target") then
-				return true
-			end
+function BigWigsGrobbulus:BigWigs_RecvSync( sync, rest, nick )
+	if sync == "BossEngaged" and rest and rest == boss then
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-	end
-	return false
-end
-
-function BigWigsGrobbulus:BigWigs_RecvSync( sync )
-	if sync == "GrobbulusStart" and not self.started then
-		self.started = true
 		if self.db.profile.enrage then
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Yellow")
 			self:TriggerEvent("BigWigs_StartBar", self, L["enragebar"], 720, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
@@ -198,18 +160,19 @@ function BigWigsGrobbulus:BigWigs_RecvSync( sync )
 	end
 end
 
-	function BigWigsGrobbulus:InjectEvent( msg )
-		local _, _, eplayer, etype = string.find(msg, L["trigger1"])
-		if eplayer and etype then
-			if self.db.profile.youinjected and eplayer == L["you"] and etype == L["are"] then
-				self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true, "Alarm")
-			elseif self.db.profile.otherinjected then
-				self:TriggerEvent("BigWigs_Message", eplayer .. L["warn2"], "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", eplayer, L["warn1"])
-			end
-			if self.db.profile.icon then
-				if eplayer == L"you" then eplayer = UnitName("player") end
-				self:TriggerEvent("BigWigs_SetRaidIcon", eplayer )
-			end
+function BigWigsGrobbulus:InjectEvent( msg )
+	local _, _, eplayer, etype = string.find(msg, L["trigger1"])
+	if eplayer and etype then
+		if self.db.profile.youinjected and eplayer == L["you"] and etype == L["are"] then
+			self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true, "Alarm")
+		elseif self.db.profile.otherinjected then
+			self:TriggerEvent("BigWigs_Message", eplayer .. L["warn2"], "Yellow")
+			self:TriggerEvent("BigWigs_SendTell", eplayer, L["warn1"])
+		end
+		if self.db.profile.icon then
+			if eplayer == L"you" then eplayer = UnitName("player") end
+			self:TriggerEvent("BigWigs_SetRaidIcon", eplayer )
 		end
 	end
+end
+

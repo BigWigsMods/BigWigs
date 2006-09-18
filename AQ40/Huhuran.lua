@@ -150,20 +150,19 @@ BigWigsHuhuran.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsHuhuran:OnEnable()
 	self.prior = nil
 	self.berserkannounced = nil
-	self.started = nil
-	
+
 	self:RegisterEvent("BigWigs_Message")
 
-	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED")
-	
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "checkSting")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "checkSting")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "checkSting")
-	
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "HuhuranStart", 10)
 end
@@ -172,47 +171,12 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsHuhuran:PLAYER_REGEN_DISABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Huhuran_CheckStart")
-	if go then
-		self:CancelScheduledEvent("Huhuran_CheckStart")
-		self:TriggerEvent("BigWigs_SendSync", "HuhuranStart")
-	elseif not running then
-		self:ScheduleRepeatingEvent("Huhuran_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self )
-	end
-end
-
-function BigWigsHuhuran:PLAYER_REGEN_ENABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Huhuran_CheckWipe")
-	if (not go) then
-		self:TriggerEvent("BigWigs_RebootModule", self)
-	elseif (not running) then
-		self:ScheduleRepeatingEvent("Huhuran_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
-	end
-end
-
-function BigWigsHuhuran:Scan()
-	if UnitName("target") == boss and UnitAffectingCombat("target") then
-		return true
-	elseif UnitName("playertarget") == boss and UnitAffectingCombat("playertarget") then
-		return true
-	else
-		local i
-		for i = 1, GetNumRaidMembers(), 1 do
-			if UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("raid"..i.."target") then
-				return true
-			end
+function BigWigsHuhuran:BigWigs_RecvSync( sync, rest, nick )
+	if sync == "BossEngaged" and rest and rest == boss then
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-	end
-	return false
-end
-
-function BigWigsHuhuran:BigWigs_RecvSync( sync )
-	if sync == "HuhuranStart" then
-		if self.db.profile.berserk and not self.started then
-			self.started = true
+		if self.db.profile.berserk then
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, L["berserkbar"], 300, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
 			self:ScheduleEvent("bwhuhuranenragewarn1", "BigWigs_Message", 240, L["berserkwarn1"], "Yellow")

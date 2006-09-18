@@ -199,33 +199,7 @@ function BigWigsGothik:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-end
-
-function BigWigsGothik:PLAYER_REGEN_ENABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Gothik_CheckWipe")
-	if (not go) then
-		self:TriggerEvent("BigWigs_RebootModule", self)
-	elseif (not running) then
-		self:ScheduleRepeatingEvent("Gothik_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
-	end
-end
-
-function BigWigsGothik:Scan()
-	if (UnitName("target") == boss and UnitAffectingCombat("target")) then
-		return true
-	elseif (UnitName("playertarget") == boss and UnitAffectingCombat("playertarget")) then
-		return true
-	else
-		local i
-		for i = 1, GetNumRaidMembers(), 1 do
-			if (UnitName("raid"..i.."target") == boss and UnitAffectingCombat("raid"..i.."target")) then
-				return true
-			end
-		end
-	end
-	return false
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
 function BigWigsGothik:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )

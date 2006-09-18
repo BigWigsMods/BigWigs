@@ -274,7 +274,7 @@ function BigWigsThaddius:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "PolarityCast")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF", "PolarityCast")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -282,22 +282,6 @@ function BigWigsThaddius:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ThaddiusPolarity", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "StalaggPower", 4)
-end
-
-function BigWigsThaddius:Scan()
-	if ( (UnitName("target") == boss or UnitName("target") == feugen or UnitName("target") == stalagg) and UnitAffectingCombat("target")) then
-		return true
-	elseif ((UnitName("playertarget") == boss or UnitName("playertarget") == feugen or UnitName("playertarget") == stalagg) and UnitAffectingCombat("playertarget")) then
-		return true
-	else
-		local i
-		for i = 1, GetNumRaidMembers(), 1 do
-			if ( (UnitName("raid"..i.."target") == boss or UnitName("raid"..i.."target") == feugen or UnitName("raid"..i.."target") == stalagg) and UnitAffectingCombat("raid"..i.."target")) then
-				return true
-			end
-		end
-	end
-	return false
 end
 
 function BigWigsThaddius:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
@@ -324,16 +308,6 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
 			self:ScheduleEvent("bwthaddiuswarn4", "BigWigs_Message", 270, L["warn4"], "Red")
 			self:ScheduleEvent("bwthaddiuswarn5", "BigWigs_Message", 290, L["warn5"], "Red")
 		end
-	end
-end
-
-function BigWigsThaddius:PLAYER_REGEN_ENABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Thaddius_CheckWipe")
-	if (not go) then
-		self:TriggerEvent("BigWigs_RebootModule", self)
-	elseif (not running) then
-		self:ScheduleRepeatingEvent("Thaddius_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
 	end
 end
 

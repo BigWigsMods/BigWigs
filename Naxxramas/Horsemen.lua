@@ -160,14 +160,13 @@ BigWigsHorsemen.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsHorsemen:OnEnable()
-	self.started = nil
 	self.marks = 1
 	self.deaths = 0
 
 	times = {}
 
-	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
@@ -178,48 +177,10 @@ function BigWigsHorsemen:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenShieldWall", 3)
-	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenStart", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenMark", 8)
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenVoid", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenWrath", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenMeteor", 5)
-end
-
-function BigWigsHorsemen:PLAYER_REGEN_ENABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Horsemen_CheckWipe")
-	if (not go) then
-		self:TriggerEvent("BigWigs_RebootModule", self)
-	elseif (not running) then
-		self:ScheduleRepeatingEvent("Horsemen_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
-	end
-end
-
-function BigWigsHorsemen:PLAYER_REGEN_DISABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Horsemen_CheckStart")
-	if (go) then
-		self:CancelScheduledEvent("Horsemen_CheckStart")
-		self:TriggerEvent("BigWigs_SendSync", "HorsemenStart")
-	elseif not running then
-		self:ScheduleRepeatingEvent("Horsemen_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self)
-	end
-end
-
-function BigWigsHorsemen:Scan()
-	if ( ( UnitName("target") == thane or UnitName("target") == mograine or UnitName("target") == zeliek or UnitName("target") == blaumeux )  and UnitAffectingCombat("target")) then
-		return true
-	elseif ( ( UnitName("playertarget") == thane or UnitName("playertarget") == mograine or UnitName("playertarget") == zeliek or UnitName("playertarget") == blaumeux ) and UnitAffectingCombat("playertarget")) then
-		return true
-	else
-		local i
-		for i = 1, GetNumRaidMembers(), 1 do
-			if ( ( UnitName("raid"..i.."target") == thane or UnitName("raid"..i.."target") == mograine or UnitName("raid"..i.."target") == zeliek or UnitName("raid"..i.."target") == blaumeux ) and UnitAffectingCombat("raid"..i.."target")) then
-				return true
-			end
-		end
-	end
-	return false
 end
 
 function BigWigsHorsemen:MarkEvent( msg )
@@ -253,8 +214,10 @@ function BigWigsHorsemen:SkillEvent( msg )
 end
 
 function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
-	if sync == "HorsemenStart" and not self.started then
-		self.started = true
+	if sync == "BossEngaged" and rest and rest == boss then
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
 		if self.db.profile.mark then
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Yellow")
 			self:TriggerEvent("BigWigs_StartBar", self, L["markbar"], 17, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Yellow", "Orange", "Red")

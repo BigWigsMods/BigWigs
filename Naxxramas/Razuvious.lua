@@ -153,7 +153,7 @@ function BigWigsRazuvious:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_BUFFS", "Shieldwall")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS", "Shieldwall")
 
-	self:RegisterEvent("PLAYER_REGEN_ENABLED")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -216,31 +216,5 @@ function BigWigsRazuvious:BigWigs_RecvSync( sync )
 			self:TriggerEvent("BigWigs_StartBar", self, L["shieldwallbar"], 20, "Interface\\Icons\\Ability_Warrior_ShieldWall", "Yellow", "Orange", "Red")
 		end
 	end
-end
-
-function BigWigsRazuvious:PLAYER_REGEN_ENABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Razuvious_CheckWipe")
-	if (not go) then
-		self:TriggerEvent("BigWigs_RebootModule", self)
-	elseif (not running) then
-		self:ScheduleRepeatingEvent("Razuvious_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
-	end
-end
-
-function BigWigsRazuvious:Scan()
-	if (UnitName("target") == (boss) and UnitAffectingCombat("target")) then
-		return true
-	elseif (UnitName("playertarget") == (boss) and UnitAffectingCombat("playertarget")) then
-		return true
-	else
-		local i
-		for i = 1, GetNumRaidMembers(), 1 do
-			if (UnitName("Raid"..i.."target") == (boss) and UnitAffectingCombat("Raid"..i.."target")) then
-				return true
-			end
-		end
-	end
-	return false
 end
 
