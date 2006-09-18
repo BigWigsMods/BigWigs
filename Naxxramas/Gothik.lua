@@ -58,6 +58,51 @@ L:RegisterTranslations("enUS", function() return {
 	inroombartext = "In Room",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+
+	room_name = "고딕 등장 경고",
+	room_desc = "고딕 등장에 대한 경고",
+
+	add_name = "애드 경고",
+	add_desc = "애드에 대한 경고",
+
+	adddeath_name = "애드 죽음 알림",
+	adddeath_desc = "애드가 죽었을 때 알림.",
+
+	disabletrigger = "내가... 죽는... 구나.",
+
+	starttrigger1 = "어리석은 것들. 스스로 죽음을 자초하다니.",
+	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun", -- CHECK
+	startwarn = "영혼의 착취자 고딕 전투 시작! 4:30 후 고딕 등장.",
+	
+	riderdietrigger = "무자비한 기병|1이;가; 죽었습니다..",
+	dkdietrigger = "무자비한 죽음의 기사|1이;가; 죽었습니다.",
+	
+	riderdiewarn = "기병 죽음! 무덤조 긴장하세요!",
+	dkdiewarn = "죽음의 기사 죽음!",
+	
+	warn1 = "고딕 등장 3분 전",
+	warn2 = "고딕 등장 90초 전",
+	warn3 = "고딕 등장 60초 전",
+	warn4 = "고딕 등장 30초 전",
+	warn5 = "고딕 등장 10초 전",
+	
+	wave = "%d/20: ",
+	
+	trawarn = "훈련생 3초후 등장",
+	dkwarn = "죽음의 기사 3초후 등장",
+	riderwarn = "기병 3초후 등장",
+
+	trabar = "훈련병 - %d",
+	dkbar = "죽음의 기사 - %d",
+	riderbar = "기병 - %d",
+	
+	inroomtrigger = "오랫동안 기다려 왔다. 이제 영혼의 착취자를 만날 차례다.", -- CHECK
+	inroomwarn = "고딕 등장!!",
+	
+	inroombartext = "고딕 등장",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	disabletrigger = "I... am... undone.", -- ?
 

@@ -65,12 +65,31 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	trigger1 = "(.*)돌연변이 유발에 걸렸습니다.",
 
-	whopattern = "(.+)|1이;가; ",
+	enrage_name = "격노 경고",
+	enrage_desc = "격노에 대한 경고",
+	
+	youinjected_name = "자신의 돌연변이 경고",
+	youinjected_desc = "자신이 돌연변이 시 경고",
+	
+	otherinjected_name = "타인의 돌연변이 경고",
+	otherinjected_desc = "타인이 돌연변이 시 경고",
+
+	icon_name = "아이콘 지정",
+	icon_desc = "돌연변이 걸린 사람에게 아이콘 지정 (승급자 이상 요구)",
+
+	trigger1 = "^([^|;%s]*)(.*)돌연변이 유발에 걸렸습니다%.$", --"(.*)돌연변이 유발에 걸렸습니다.",
+
 	you = "",
-	are = "are",
+	are = "",
 
+	startwarn = "그라불루스 전투 시작, 12분 후 격노!",
+	enragebar = "격노",
+	enrage10min = "10분 후 격노!",
+	enrage5min = "5분 후 격노!",
+	enrage1min = "1분 후 격노!",
+	enrage30sec = "30초 후 격노!",
+	enrage10sec = "10초 후 격노",
 	warn1 = "당신은 돌연변이 유발에 걸렸습니다.",
 	warn2 = " 님이 돌연변이 유발에 걸렸습니다.",
 } end )
@@ -179,24 +198,6 @@ function BigWigsGrobbulus:BigWigs_RecvSync( sync )
 	end
 end
 
-if GetLocale() == "koKR" then
-	function BigWigsGrobbulus:InjectEvent( msg )
-		local _, _, eplayer = string.find(msg, L["trigger1"])
-		if (eplayer) then
-			if self.db.profile.youinjected and eplayer == L["you"] then
-				self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true, "Alarm")
-			elseif self.db.profile.otherinjected then
-				_, _, eplayer = string.find(eplayer, L["whopattern"])
-				self:TriggerEvent("BigWigs_Message", eplayer .. L["warn2"], "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", eplayer, L["warn1"])
-			end
-			if self.db.profile.icon then
-				if eplayer == L["you"] then eplayer = UnitName("player") end
-				self:TriggerEvent("BigWigs_SetRaidIcon", eplayer)
-			end
-		end
-	end
-else
 	function BigWigsGrobbulus:InjectEvent( msg )
 		local _, _, eplayer, etype = string.find(msg, L["trigger1"])
 		if eplayer and etype then
@@ -212,5 +213,3 @@ else
 			end
 		end
 	end
-end
-

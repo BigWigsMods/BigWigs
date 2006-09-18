@@ -80,6 +80,66 @@ L:RegisterTranslations("enUS", function() return {
 	are = "are",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+
+	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "캘투자드 연구실",
+
+	phase_name = "단계 알림",
+	phase_desc = "단계에 대한 알림.",
+
+	mc_name = "정신 지배",
+	mc_desc = "정신 지배 경고.",
+	
+	fissure_name = "어둠의 분열 경고",
+	fissure_desc = "어둠의 분열 시전에 관한 경고.",
+
+	frostblast_name = "냉기작열 경고",
+	frostblast_desc = "냉기 작열에 걸렸을 때 경고.",
+
+	detonate_name = "마나 폭발 경고",
+	detonate_desc = "마나 폭발에 대한 경고.",
+
+	detonateicon_name = "폭발 공격대 아이콘",
+	detonateicon_desc = "마나 폭발인 사람에게 공격대 아이콘 지정.",
+
+	guardians_name = "Guardian Spawns",
+	guardians_desc = "Warn for incoming Icecrown Guardians in phase 3.",
+
+	mc_trigger1 = "Your soul is bound to me, now!", -- CHECK
+	mc_trigger2 = "There will be no escape!", -- CHECK
+	mc_warning = "정신 지배!",
+
+	start_trigger = "Minions, servants, soldiers of the cold dark! Obey the call of Kel'Thuzad!", -- CHECK
+	start_warning = "Kel'Thuzad encounter started! ~5min till he is active!", -- CHECK
+	start_bar = "2 단계",
+
+	phase2_trigger = "Pray for mercy!", -- CHECK
+	phase2_warning = "2 단계, 켈투자드 다가옴!",
+	phase2_bar = "켈투자드 활동!",
+
+	phase3_soon_warning = "곧 3 단계 돌입!",
+	phase3_trigger = "Master, I require aid!", -- CHECK
+	phase3_warning = "3 단계, Guardians in ~15sec!",
+
+	guardians_trigger = "Very well. Warriors of the frozen wastes, rise up! I command you to fight, kill and die for your master! Let none survive!", -- CHECK
+	guardians_warning = "Guardians incoming in ~10sec!",
+	guardians_bar = "Guardians incoming!",
+
+	fissure_trigger = "켈투자드|1이;가; 어둠의 분열|1을;를; 시전합니다.",
+	fissure_warning = "어둠의 분열!",
+
+	frostblast_trigger = "^([^|;%s]*)(.*)냉기 작열에 걸렸습니다%.$",
+	frostblast_warning = "냉기 작열!",
+
+	detonate_trigger = "^([^|;%s]*)(.*)마나 폭발에 걸렸습니다%.$",
+	detonate_bar = "마나 폭발 - ",
+	detonate_possible_bar = "폭발 가능",
+	detonate_warning = "가 마나 폭발!",
+
+	you = "",
+	are = "",
+} end )
+
 -- 12, 32, 42, 72, 93, 127, 140, 193, 205, 238, 250, 267, 285, 310, 337
 --[[
 Detonate timers:

@@ -52,7 +52,11 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	enragetrigger = "goes into a berserker rage!", -- 사용되지 않음
+
+	enrage_name = "격노 경고",
+	enrage_desc = "격노에 대한 경고",
+
+	enragetrigger = "%s|1이;가; 광폭해집니다!",
 
 	enragewarn = "격노!",
 	starttrigger1 = "패치워크랑 놀아줘!",

@@ -70,19 +70,32 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+
+	silence_name = "침묵 경고",
+	silence_desc = "침묵에 대한 경고",
+
+	enrage_name = "격노 경고",
+	enrage_desc = "격노에 대한 경고",
+
 	starttrigger1 = "내 앞에 무릎을 꿇어라, 벌레들아!",
 	starttrigger2 = "주인님의 이름으로 처단하라!",
 	starttrigger3 = "나에게서 도망칠 수는 없다!",
 	starttrigger4 = "두 발이 성할 때 도망쳐라!",
 
-	silencetrigger = "낙스라마스 숭배자|1이;가; 귀부인의 은총에 걸렸습니다.",
+	silencetrigger = "낙스라마스 숭배자|1이;가; 귀부인의 은총에 걸렸습니다.", -- EDITED it affects her too.
 	enragetrigger = "귀부인 팰리나|1이;가; 격노 효과를 얻었습니다.",
+	enragefade = "귀부인 펠리나 격노 사라짐",
 
+	startwarn = "귀부인 팰리나 전투 시작! 60초 후 격노!",
 	enragewarn15sec = "15초후 격노!",
 	enragewarn = "격노!",
-	silencewarn = "침묵! 격노 연기!",
+	enrageremovewarn = "격노 사라짐! 다음 격노 %d초 후", -- added
+	silencewarn = "침묵! 격노 지연!",
+	silencewarnnodelay = "침묵!",
+	silencewarn5sec = "5초후 침묵 종료!",
 
-	enragebar = "Enrage",
+	enragebar = "격노",
+	silencebar = "침묵",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

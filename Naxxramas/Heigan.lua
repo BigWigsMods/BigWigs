@@ -39,6 +39,34 @@ L:RegisterTranslations("enUS", function() return {
 	backbar = "Back on floor!",
 } end )
 
+-- Korean Translation by gezta --
+L:RegisterTranslations("koKR", function() return {
+
+	teleport_name = "순간이동 경고",
+	teleport_desc = "순간이동에 대한 경고",
+
+	engage_name = "전투개시 알림",
+	engage_desc = "헤이건 전투 개시 알림.",
+
+	-- [[ Triggers ]]--
+	starttrigger = "이제 넌 내 것이다.",
+	starttrigger2 = "다음은... 너다.",
+	starttrigger3 = "네가 보인다...",
+	teleporttrigger = "여기가 너희 무덤이 되리라.",
+	-- [[ Warnings ]]--
+	startwarn = "부정의 헤이건, 단상으로 순간 이동까지 90초",
+	warn1 = "순간이동 1 분전 !!!",
+	warn2 = "순간이동 30초전 !!!",
+	warn3 = "순간이동 10초전 !!!",
+	backwarn = "헤이건 단상 아래!! 90초 후에 순간이동 !!!",
+	teleportwarn2 = "내려오기까지 30초 전 !!!",
+	teleportwarn3 = "내려오기까지 10초 전 !!!",
+	teleportwarn1 = "순간이동! %d초 후 내려옵니다. !!!",
+	-- [[ Bars ]]--
+	teleportbar = "순간이동!",
+	backbar = "단상으로 이동!",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	teleport_name = "Teleport",
 	teleport_desc = "Warnung vor Teleport.",

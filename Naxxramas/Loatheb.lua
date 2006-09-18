@@ -48,6 +48,41 @@ L:RegisterTranslations("enUS", function() return {
 	are = "are",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+
+	doom_name = "파멸 경고",
+	doom_desc = "피할 수 없는 파멸에 대한 경고",
+	
+	spore_name = "포자 경고",
+	spore_desc = "포자 소환에 대한 경고",
+
+	curse_name = "저주 해제 경고",
+	curse_desc = "로데브 저주 해제에 대한 경고",
+
+	doombar = "피할 수 없는 파멸",
+	doomwarn = "피할 수 없는 파멸! 다은은 %s초 후.",
+	doomwarn5sec = "피할 수 없는 파멸 5초 전",		
+	doomtrigger = "피할 수 없는 파멸에 걸렸습니다.",
+	
+	sporewarn = "포자소환!",
+	sporebar = "포자 소환!",
+	sporespawntrigger = "로데브|1이;가; 포자 소환|1을;를; 시전합니다.",
+	sporedietrigger = "포자|1이;가; 죽었습니다.",
+
+	removecursewarn = "로데브 저주 헤제 시전!",
+	removecursebar = "저주 해제",
+	removecursetrigger = "로데브|1이;가; 로데브에게 저주 해제|1을;를; 시전합니다.",
+	
+	doomtimerbar = "피할 수 없는 파멸 - 매 15초",
+	doomtimerwarn = "%s초 후 피할 수 없는 파멸 시간변경!",
+	doomtimerwarnnow = "피할 수 없는 파멸! 지금부터 매 15초마다.",
+	
+	startwarn = "로데브 전투시작!, 피할 수 없는 파멸까지 2 분!",
+
+	you = "",
+	are = "",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	doom_name = "Unausweichliches Schicksal Warnung",
 	doom_desc = "Warnung für Unausweichliches Schicksal",

@@ -36,6 +36,28 @@ L:RegisterTranslations("enUS", function() return {
 	deepbreath_bar = "Ice Bomb Lands!",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+
+	engage_warn = "사피론 전투 시작! 10-24초에 생명력 흡수!",
+
+	deepbreath_name = "딥브레스 경고",
+	deepbreath_desc = "사피론 딥 브레스 시전 시 경고.",
+
+	lifedrain_name = "생명력 흡수",
+	lifedrain_desc = "생명력 흡수 저주에 대한 경고.",
+
+	lifedrain_message = "생명력 흡수! 새로운 생명력 흡수 ~24초!",
+	lifedrain_warn1 = "5초간 생명력 흡수!",
+	lifedrain_bar = "생명력 흡수",
+
+	lifedrain_trigger = "피의 착취에 걸렸습니다.",
+	lifedrain_trigger2 = "피의 착취|1으로;로; (.+)|1을;를; 공격했지만 저항했습니다.",
+
+	deepbreath_trigger = "%s|1이;가; 숨을 깊게 들이쉽니다.",
+	deepbreath_warning = "얼음 폭탄 다가옴!",
+	deepbreath_bar = "얼음 폭탄 떨어짐!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

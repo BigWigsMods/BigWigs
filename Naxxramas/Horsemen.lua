@@ -64,6 +64,49 @@ L:RegisterTranslations("enUS", function() return {
 	shieldwallwarn2 = "%s - Shield Wall GONE!",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+
+	mark_name = "징표 경고",
+	mark_desc = "징표에 대한 경고",
+
+	shieldwall_name = "방패의벽 경고",
+	shieldwall_desc = "방패의벽에 대한 경고",
+	
+	void_name = "공허의 구역 경고",
+	void_desc = "여군주 블라미우스 공허의 구역 시전 경고.",
+
+	meteor_name = "운석 경고",
+	meteor_desc = "영주 코스아즈 운석 시전 경고.",
+
+	wrath_name = "성스러운 격노 경고",
+	wrath_desc = "젤리에크 경 신성한 격노 시전 경고",
+
+	markbar = "징표",
+	markwarn1 = "(%d) 징표!",
+	markwarn2 = "(%d) 징표 - 5 초",
+	--marktrigger = "is afflicted by Mark of (Korth'azz|Blaumeux|Mograine|Zeliek)",
+	marktrigger = "|1이;가; 징표에 걸렸습니다.",
+	
+	voidtrigger = "여군주 블라미우스|1이;가; 공허의 구역|1을;를; 시전합니다.",
+	voidwarn = "공허의 구역 생성",
+	voidbar = "공허의 구역",
+
+	meteortrigger = "영주 코스아즈|1이;가; 운석|1으로;로; ",
+	meteorwarn = "운석!",
+	meteorbar = "운석",
+
+	wrathtrigger = "젤리에크 경|1이;가; 성스러운 격노|1으로;로; ",
+	wrathwarn = "성스러운 격노!",
+	wrathbar = "성스러운 격노",
+
+	startwarn = "4인의 기병대 전투 시작! 약 17 초내에 징표",
+
+	shieldwallbar = "%s - 방패의 벽",
+	shieldwalltrigger = "(.*)|1이;가; 방패의 벽 효과를 얻었습니다.",
+	shieldwallwarn = "%s - 20초간 방배의 벽",
+	shieldwallwarn2 = "%s - 방패의 벽 사라짐!",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	mark_name = "Mark Alerts", -- ?
 	mark_desc = "Warn for marks", -- ?

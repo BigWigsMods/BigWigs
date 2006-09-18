@@ -78,6 +78,65 @@ L:RegisterTranslations("enUS", function() return {
 	bar1text = "Polarity Shift",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+
+	enrage_name = "격노 경고",
+	enrage_desc = "격노에 대한 경고",
+
+	phase_name = "단계 경고",
+	phase_desc = "단계 변경에 대한 경고",
+
+	polarity_name = "극성 변환 경고",
+	polarity_desc = "극성 변환에 대한 경고",
+
+	power_name = "마력의 쇄도 경고",
+	power_desc = "스탈라그의 마력의 쇄도에 대한 경고",
+
+	charge_name = "대전 경고",
+	charge_desc = "당신에게 걸린 전하의 극성 종류에 대한 경고",
+
+	enragetrigger = "%s|1이;가; 광폭해집니다!",
+	starttrigger = "스탈라그, 박살낸다!",
+	starttrigger1 = "너 주인님께 바칠꺼야!",
+	starttrigger2 = "잡아... 먹어주마...",
+	starttrigger3 = "박살을... 내주겠다!!",
+	starttrigger4 = "죽여주마...",
+	
+	adddeath = "%s|1이;가; 죽었습니다.",
+	teslaoverload = "%s|1이;가; 과부하에 걸립니다!",
+
+	pstrigger = "자 고통을 느껴봐라...",
+	trigger1 = "타디우스|1이;가; 극성 변환|1을;를; 시전합니다.",
+	chargetrigger = "(%w+)전하에 걸렸습니다.",	
+	stalaggtrigger = "스탈라그|1이;가; 마력의 쇄도 효과를 얻었습니다.",
+
+	you = "",
+	are = "",
+
+	enragewarn = "격노!",
+	startwarn = "타디우스 1 단계",
+	startwarn2 = "타디우스 2 단계, 5분 후 격노!",
+	addsdownwarn = "2단계가 10~20초후에 시작됩니다!",
+	thaddiusincoming = "2단계가 3초후 시작됩니다!",
+	pswarn1 = "타디우스가 극성 변환을 시전합니다!",
+	pswarn2 = "30초후 극성 변환 시전합니다!",
+	pswarn3 = "3초후 극성 변환을 시전합니다.!",
+	poswarn = "당신은 양전하로 대전되었습니다!",
+	negwarn = "당신은 음전하로 대전되었습니다!",
+	nochange = "당신은 대전되지 않았습니다!",
+	polaritytickbar = "극성 틱",
+	enragebartext = "격노",
+	warn1 = "3분후 격노",
+	warn2 = "90초후 격노",
+	warn3 = "60초후 격노",
+	warn4 = "30초후 격노",
+	warn5 = "10초후 격노",
+	stalaggwarn = "스탈라그 힘의 쇄도 발동, 탱커 폭힐!",
+	powersurgebar = "마력의 쇄도",
+
+	bar1text = "극성 변환",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	enrage_name = "Wutanfall",
 	enrage_desc = "Warnung, wenn Thaddius w\195\188tend wird.",

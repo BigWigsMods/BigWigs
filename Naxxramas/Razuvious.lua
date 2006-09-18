@@ -64,7 +64,13 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	startwarn 		= "훈련교관 라주비어스 광푝화! 외침까지 25초!",
+	shout_name = "외침 경고",
+	shout_desc = "분열의 외침에 대한 경고",
+
+	shieldwall_name = "방패의 벽 타이머",
+	shieldwall_desc = "방패의 벽에 대한 타이머 표시",
+
+	startwarn 		= "훈련교관 라주비어스 광폭화! 외침까지 25초!",
 
 	starttrigger1 	= "훈련은 끝났다!",
 	starttrigger2 	= "다리를 후려 차라! 무슨 문제 있나?",
@@ -72,9 +78,14 @@ L:RegisterTranslations("koKR", function() return {
 	starttrigger4 	= "훈련받은 대로 해!",		
 
 	shouttrigger 	= "훈련교관 라주비어스|1이;가; 분열의 외침|1으로;로; (.+)에게 (.+)의 피해를 입혔습니다.",
-	shout7secwarn 	= "7초후 분열의 외침",
+	shout7secwarn 	= "7초후 분열의 외침!",
+	shout3secwarn = "3초후 분열의 외침!",
 	shoutwarn 		= "분열의 외침!",
+	noshoutwarn		= "외침 사라짐! 다음은 20초 후",
 	shoutbar 		= "분열의 외침",
+
+	shieldwalltrigger   = "죽음의 기사 수습생|1이;가; 방패의 벽 효과를 얻었습니다.", -- CHECK
+	shieldwallbar       = "방패의 벽",	
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

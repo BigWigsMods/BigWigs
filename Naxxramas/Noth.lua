@@ -92,11 +92,20 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+
+	blink_name = "점멸 경고",
+	blink_desc = "점멸에 대한 경고",
+
+	teleport_name = "순간이동 경고",
+	teleport_desc = "순간이동에 대한 경고",
+
+	curse_name = "저주 경고",
+	curse_desc = "저주에 대한 경고",
+
 	starttrigger1 = "죽어라, 침입자들아!",
 	starttrigger2 = "주인님께 영광을!",
 	starttrigger3 = "너희 생명은 끝이다!",
-	startwarn = "역병술사 노스와 전투 시작! 90초후 순간이동",		
-	-- "이제 숨을 거두어라!",
+	startwarn = "역병술사 노스와 전투 시작! 90초후 순간이동",
 
 	addtrigger = "일어나라,병사들이여! 다시 일어나 싸워라!",
 
