@@ -172,8 +172,8 @@ function BigWigsMaexxna:OnEnable()
 	times = {}
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "SprayEvent")
@@ -206,11 +206,14 @@ function BigWigsMaexxna:SprayEvent( msg )
 end
 
 function BigWigsMaexxna:BigWigs_RecvSync( sync, rest )
-	if sync == "MaexxnaWebspray" then
+	if sync == "BossEngage" and rest and rest == boss then
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		self:BigWigs_RecvSync("MaexxnaWebSpray", nil, nil)
+	elseif sync == "MaexxnaWebspray" then
 		if prior then return end
 		prior = true
-
-		self:CancelScheduledEvent("Maexxna_CheckStart")
 
 		self:CancelScheduledEvent("bwmaexxna30")
 		self:CancelScheduledEvent("bwmaexxna20")
@@ -229,43 +232,6 @@ function BigWigsMaexxna:BigWigs_RecvSync( sync, rest )
 			if self.db.profile.cocoon then self:TriggerEvent("BigWigs_Message", string.format(L["cocoonwarn"], rest), "Orange" ) end
 			times[rest] = t
 		end
-	end
-end
-
-function BigWigsMaexxna:Scan()
-	if UnitName("target") == boss and UnitAffectingCombat("target") then
-		return true
-	elseif UnitName("playertarget") == boss and UnitAffectingCombat("playertarget") then
-		return true
-	else
-		local i
-		for i = 1, GetNumRaidMembers(), 1 do
-			if UnitName("raid"..i.."target") == bossname and UnitAffectingCombat("raid"..i.."target") then
-				return true
-			end
-		end
-	end
-	return false
-end
-
-function BigWigsMaexxna:PLAYER_REGEN_DISABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Maexxna_CheckStart")
-	if (go) then
-		self:CancelScheduledEvent("Maexxna_CheckStart")
-		self:TriggerEvent("BigWigs_SendSync", "MaexxnaWebspray") 
-	elseif not running then
-		self:ScheduleRepeatingEvent("Maexxna_CheckStart", self.PLAYER_REGEN_DISABLED, .5, self)
-	end
-end
-
-function BigWigsMaexxna:PLAYER_REGEN_ENABLED()
-	local go = self:Scan()
-	local running = self:IsEventScheduled("Maexxna_CheckWipe")
-	if (not go) then
-		self:TriggerEvent("BigWigs_RebootModule", self)
-	elseif (not running) then
-		self:ScheduleRepeatingEvent("Maexxna_CheckWipe", self.PLAYER_REGEN_ENABLED, 2, self)
 	end
 end
 
