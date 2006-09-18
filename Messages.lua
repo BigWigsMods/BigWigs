@@ -58,21 +58,47 @@ L:RegisterTranslations("enUS", function() return {
 
 
 L:RegisterTranslations("koKR", function() return {
-	["msg"] = "메시지",
-	["anchor"] = "위치",
-	["rw"] = "공대경고",
-	["scale"] = "크기",
+	["Messages"] = "메세지",
+  
+--	["msg"] = "메시지",
+--	["anchor"] = "위치",
+--	["rw"] = "공대경고",
+--	["color"] = "색상",
+--	["scale"] = "크기",
 
 	["Options for the message frame."] = "메시지 창 옵션.",
+	["Anchor"] = "위치",
 	["Show the message anchor frame."] = "메시지 위치 조정 프레임 보이기.",
+	["Use RaidWarning"] = "공격대 경고 사용",
 	["Toggle sending messages to the RaidWarnings frame."] = "공대경고 창으로 메시지 보내기.",
+	["Use colors"] = "색상 사용",
 	["Toggles white only messages ignoring coloring."] = "메시지를 하얀 색으로 변경.",
+	["Message frame scale"] = "메세지 창 크기",
 
 	["Message frame"] = "메시지 창",
 	["Show anchor"] = "앵커 보이기",
 	["Send messages to RaidWarning frame"] = "공대경고 창으로 메시지 보내기",
+	["Set the message frame scale."] = "메세지 창 크기 설정",
 	["Colorize messages"] = "컬러 메시지",
 	["Scale"] = "크기",
+
+	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000색|cffff00ff상|r",
+	["White"] = "화이트",
+	["BigWigs frame"] = "BigWigs 창",
+	["RaidWarning frame"] = "공격대경고 창",
+--	["Scale is set to %s"] = true,
+--	["Messages are now sent to the %2$s"] = true,
+--	["Messages are currently sent to the %2$s"] = true,
+
+	["display"] = "디스플레이",
+	["Display"] = "디스플레이",
+	["Set where messages are displayed."] = "메세지 디스플레이 설정",
+	["Display is now set to %2$s"] = "디스플레이를 %2$s 로 설정 하였습니다.",
+	["Display is currently set to %2$s"] = "디스플레이 현재 설정 : %2$s",
+
+	["Mik's Scrolling Battle Text"] = "MSBT",
+	["Scrolling Combat Text"] = "SCT",
+	["Floating Combat Text"] = "FCT",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

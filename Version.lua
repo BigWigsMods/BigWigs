@@ -38,6 +38,27 @@ L:RegisterTranslations("enUS", function() return {
 	["N/A"] = true,
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	["Version Query"] = "버전 요청",
+	["Commands for querying the raid for Big Wigs versions."] = "BigQigs 버전에 대한 공격대 요청 명령.",
+	["Query already running, please wait 5 seconds before trying again."] = "이미 요청 중, 5초후 다시 시도하세요.",
+	["Querying versions for "] = "버전 요청 중 : ",
+	["Big Wigs Version Query"] = "BigWigs 버전 요청",
+	["Close window"] = "창 닫기", -- I know, it's really a Tablet.
+	["Showing version for "] = "버전 표시 중 ",
+	["Green versions are newer than yours, red are older, and white are the same."] = "녹색 : 최신, 붉은색 : 이전, 흰색 : 같음(자신 기준)",
+	["Player"] = "플레이어",
+	["Version"] = "버전",
+	["Current zone"] = "현재 지역",
+	["<zone>"] = "<지역>",
+	["Version query done."] = "버전 요청 완료.",
+	["Runs a version query on your current zone."] = "현재 지역에 동작 모듈 버전 요청",
+	["Closes the version query window."] = "버전 확인 창 닫기.",
+	["Runs a version query on the given zone."] = "정해진 지역에 동작 모듈 버전 요청.",
+	["Zone"] = "지역",
+	["N/A"] = "N/A",
+} end )
+
 ---------------------------------
 --      Addon Declaration      --
 ---------------------------------

@@ -38,6 +38,30 @@ L:RegisterTranslations("enUS", function() return {
 	["skull"] = true,
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	["Raid Icons"] = "공격대 아이콘",
+
+	["Place"] = "지정",
+	["Place Raid Icons"] = "공격대 아이콘 지정",
+	["Toggle placing of Raid Icons on players."] = "플레이어에 공격대 아이콘 지정 토글",
+	
+	["Icon"] = "아이콘",
+	["Set Icon"] = "아이콘 설정",
+	["Set which icon to place on players."] = "플레이어에 아이콘 지정을 위한 설정",
+	
+	["Options for Raid Icons."] = "공격대 아이콘에 대한 설정",
+
+	["star"] = "별",
+	["circle"] = "원",
+	["diamond"] = "다이아몬드",
+	["triangle"] = "세모",
+	["moon"] = "달",
+	["square"] = "네모",
+	["cross"] = "가위표",
+	["skull"] = "해골",
+
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 	["Raid Icons"] = "团队图标",
 

@@ -52,6 +52,47 @@ L:RegisterTranslations("enUS", function() return {
 	["4th"] = true,
 } end)
 
+L:RegisterTranslations("koKR", function() return {
+	["Colors"] = "색상",
+
+	["Messages"] = "메세지",
+	["Bars"] = "바",
+	["Shortbar"] = "짧은바",
+	["Longbar"] = "긴바",
+	["Color %s"] = "색상 %s",
+	["Color%s"] = "색상%s",
+	["Number of colors"] = "색상의 수",
+	["xColors"] = "x색상",
+	["Background"] = "배경",
+	["Text"] = "글자",
+	["Reset"] = "초기화",
+
+	["Colors of messages and bars."] = "메세지와 바의 색상.",
+	["Colors of messages."] = "메세지의 색생",
+	["Change the color for \"%s\" messages."] = "\"%s\" 메세지에 대한 색생 변경.",
+	["Colors of bars."] = "바의 색상.",
+	["Colors for short bars (< 1 minute)."] = "짧은 바에 대한 색상 (< 1 분).",
+	["Colors for long bars (> 1 minute)."] = "긴 바에 대한 색상 (> 1 분).",
+	["Change the %s color."] = "%s 색상 변경.",
+	["Number of colors the bar has."] = "Number of colors the bar has.",
+	["Change the background color."] = "배경 색상 변경.",
+	["Change the text color."] = "글자 색상 변경.",
+	["Resets all ranges to defaults."] = "기본 설정으로 초기화.",
+
+	["Important"] = "중요",
+	["Personal"] = "개인",
+	["Urgent"] = "긴급",
+	["Attention"] = "주의",
+	["Positive"] = "제안",
+	["Bosskill"] = "보스사망",
+	["Core"] = "코어",
+
+	["1st"] = "첫째",
+	["2nd"] = "둘째",
+	["3rd"] = "셋째",
+	["4th"] = "넷째",
+} end)
+
 L:RegisterTranslations("zhCN", function() return {
 	["Colors"] = "颜色",
 

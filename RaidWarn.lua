@@ -28,6 +28,21 @@ L:RegisterTranslations("enUS", function() return {
 	["Options for RaidWarning."] = true,
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	["RaidWarning"] = "공격대 경고",
+  
+	["Broadcast over RaidWarning"] = "공격대 경고로 알림",
+	["Broadcast"] = "알림",
+	["Toggle broadcasting over Raidwarning."] = "공격대 경고로 알림 토글",
+	
+	["Whisper"] = "귓속말",
+	["Whisper warnings"] = "귓속말 경고",
+	["Toggle whispering warnings to players."] = "플레이어에게 귓속말 경고 알림 토글",
+	
+	["Options for RaidWarning."] = "공격대 경고 설정",
+	
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 	["RaidWarning"] = "团队警报",
 

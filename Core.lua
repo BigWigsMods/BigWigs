@@ -90,9 +90,40 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	["%s mod enabled"] = "%s 모듈을 시작",
+	["%s mod enabled"] = "%s 모듈 시작",
 	["Target monitoring enabled"] = "타겟 확인 시작",
 	["Target monitoring disabled"] = "타겟 확인 꺼짐",
+	["%s has been defeated"] = "%s|1을;를; 물리쳤습니다.",     -- "<boss> has been defeated"
+	["%s have been defeated"] = "%s|1을;를; 물리쳤습니다.",    -- "<bosses> have been defeated"
+
+	-- AceConsole strings
+	["Bosses"] = "보스들",
+	["Options for boss modules."] = "보스 모듈 설정",
+	["Options for bosses in %s."] = "%s 에 보스들을 위한 설정", -- "Options for bosses in <zone>"
+	["Options for %s (r%s)."] = "%s에 대한 설정(r%s).",     -- "Options for <boss> (<revision>)"
+	["Plugins"] = "플러그인들",
+	["Options for plugins."] = "플러그인 설정",
+	["Active"] = "활성화",
+	["Activate or deactivate this module."] = "활성화 혹은 모둘 발견",
+	["Reboot"] = "재시작",
+	["Reboot this module."] = "모듈 재시작",
+	["Debugging"] = "디버깅",
+	["Show debug messages."] = "디버그 메세지 표시",
+	bosskill_name = "보스 사망",
+	bosskill_desc = "보스를 물리쳤을 때 알림",
+
+	-- AceConsole zone commands
+	["Zul'Gurub"] = "ZG",
+	["Molten Core"] = "MC",
+	["Blackwing Lair"] = "BWL",
+	["Ahn'Qiraj"] = "AQ40",
+	["Ruins of Ahn'Qiraj"] = "AQ20",
+	["Onyxia's Lair"] = "오닉시아",
+	["Naxxramas"] = "낙스라마스",
+	["Silithus"] = "실리더스",
+	["Outdoor Raid Bosses"] = "야외",
+	["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
+
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

@@ -45,20 +45,26 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	["bars"] = "바",
-	["anchor"] = "위치",
-	["scale"] = "크기",
-	["up"] = "방향",
+	["Bars"] = "바",
 
 	["Options for the timer bars."] = "Timer 바 옵션 조정.",
 	["Show the bar anchor frame."] = "바 위치 조정 프레임 보이기.",
 	["Set the bar scale."] = "바 크기 조절.",
+	["Group upwards"] = "바 위로 생성",
 	["Toggle bars grow upwards/downwards from anchor."] = "바 표시 순서를 위/아래로 조정.",
 
 	["Timer bars"] = "타이머 바",
 	["Show anchor"] = "앵커 보이기",
-	["Grow bars upwards"] = "바 위로 자라기",
+	["Grow bars upwards"] = "바 위로 생성",
 	["Scale"]= "크기",
+	["Bar scale"] = "바 크기",
+	["Bars now grow %2$s"] = "바 생성 방향 : %2$s",
+	["Scale is set to %2$s"] = "크기 설정 : %2$s",
+  
+	["Up"] = "위",
+	["Down"] = "아래",
+
+	["Test"] = "테스트",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

@@ -33,9 +33,9 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Sounds"] = "효과음",
-	["sounds"] = "효과음",
-	["Use sounds"] = "효과음 사용",
 	["Options for sounds."] = "효과음 옵션.",
+
+	["Use sounds"] = "효과음 사용",
 	["Toggle sounds on or off."] = "효과음을 켜거나 끔.",
 } end)
 

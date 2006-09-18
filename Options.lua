@@ -27,7 +27,17 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	["minimap"] = "미니맵",
+	["|cff00ff00Module running|r"] = "|cff00ff00모듈 실행중|r",
+	tablethint = "<클릭> - 실행 중인 모듈 초기화. <쉬프트+클릭> - 모든 실행 중인 모듈 비활성화.",
+	["Active boss modules"] = "보스 모듈 활성화",
+	["Hidden"] = "숨김",
+	["Shown"] = "표시",
+	["Minimap"] = "미니맵",
+	["Toggle the minimap button."] = "미니맵 버튼 토글",
+	["All running modules have been reset."] = "모든 실행중인 모듈을 초기화합니다.",
+	["All running modules have been disabled."] = "모든 실행중인 모듈을 비활성화 합니다.",
+	
+	
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
