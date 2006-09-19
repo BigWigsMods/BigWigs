@@ -41,17 +41,12 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "emeriss",
-	
-	noxious_cmd = "noxious",
 	noxious_name = "Giftiger Atem",
 	noxious_desc = "Warnung vor Giftiger Atem.",
 	
-	volatileyou_cmd = "volatileyou",
 	volatileyou_name = "Fl\195\188chtige Infektion",
 	volatileyou_desc = "Warnung, wenn Fl\195\188chtige Infektion auf Dir.",
 	
-	volatileother_cmd = "volatileother",
 	volatileother_name = "Fl\195\188chtige Infektion auf Anderen",
 	volatileother_desc = "Warnung, wenn Fl\195\188chtige Infektion auf anderen Spielern.",
 

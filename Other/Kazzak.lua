@@ -30,9 +30,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "kazzak",
-	
-	supreme_cmd = "supreme",
 	supreme_name = "Supreme Mode",
 	supreme_desc = "Warnung vor Supreme Mode.",
 	

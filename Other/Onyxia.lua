@@ -50,30 +50,24 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "Onyxia",
-
-	deepbreath_cmd = "deepbreath",
 	deepbreath_name = "Tiefer Atem",
 	deepbreath_desc = "Warnung, wenn Onyxia tief einatmet.",
 
-	phase2_cmd = "phase2",
 	phase2_name = "Phase 2",
 	phase2_desc = "Warnung, wenn Onyxia abhebt und in Phase 2 eintritt.",
 
-	phase3_cmd = "phase3",
 	phase3_name = "Phase 3",
 	phase3_desc = "Warnung, wenn Onyxia landet und in Phase 3 eintritt.",
 
-	onyfear_cmd = "onyfear",
-	onyfear_name = "Fear",
-	onyfear_desc = "Warnung vor Dr\195\182hnendem Gebr\195\188ll in Phase 3",
+	onyfear_name = "Furcht",
+	onyfear_desc = "Warnung vor AoE Furcht in Phase 3.",
 
 	trigger1 = "%s atmet tief ein...",
 	trigger2 = "^Diese sinnlose Anstrengung langweilt mich", -- ?
 	trigger3 = "^Mir scheint, dass Ihr noch eine Lektion braucht", -- ?
 	trigger4 = "Onyxia beginnt Dr\195\182hnendes Gebr\195\188ll zu wirken.",
 
-	warn1 = "Tiefer Atem! - Auf die Seiten gehen!",
+	warn1 = "Tiefer Atem!",
 	warn2 = "Phase 2 - Onyxia hebt ab!",
 	warn3 = "Phase 3 - Onyxia landet!",
 	warn4 = "Dr\195\182hnendes Gebr\195\188ll in 1.5 Sekunden",

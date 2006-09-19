@@ -47,12 +47,15 @@ L:RegisterTranslations("deDE", function() return {
 	other_name = "X wird beobachtet",
 	other_desc = "Warnung, wenn andere Spieler beobachtet werden.",
 
+	icon_name = "Symbol",
+	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler der beobachtet wird. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
+
 	watch_trigger = "([^%s]+)! Ich behalte Euch im Auge!$",
-	enrage_trigger = "%s ger\195\164t in Rage, als er sieht, dass sein Raptor im Kampf stirbt!$",
+	enrage_trigger = "%s ger\195\164t in Rage, als er sieht, dass sein Raptor im Kampf stirbt!",
 
 	watched_warning_self = "Du wirst beobachtet!",
 	watched_warning_other = "%s wird beobachtet!",
-	enraged_message = "Ohgan down! Mandokir w\195\188tend!",
+	enraged_message = "Ohgan get\195\182tet! Mandokir w\195\188tend!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

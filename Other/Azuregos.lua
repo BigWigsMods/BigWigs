@@ -32,13 +32,9 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "azuregos",
-	
-	teleport_cmd = "teleport",
 	teleport_name = "Teleport",
 	teleport_desc = "Warnung f\195\188r Azuregos Teleport.",
 	
-	shield_cmd = "shield",
 	shield_name = "Magieschild",
 	shield_desc = "Warnung, wenn Magieschild aktiv.",
 	

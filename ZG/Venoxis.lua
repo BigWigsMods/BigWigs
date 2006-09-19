@@ -38,7 +38,7 @@ L:RegisterTranslations("deDE", function() return {
 	renew_trigger = "Hohepriester Venoxis bekommt 'Erneuerung'",
 	phase2_trigger = "M\195\182ge das Schlachten beginnen", -- ?
 
-	renew_message = "Erneuerung - Jetzt Entfernen!",
+	renew_message = "Erneuerung auf Venoxis!",
 	phase2_message = "Phase 2 - Vorsicht vor Giftwolken!",	
 } end )
 

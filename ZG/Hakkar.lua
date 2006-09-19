@@ -55,13 +55,14 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "^EURE \195\156BERHEBLICHKEIT K\195\156NDET BEREITS VOM ENDE DIESER WELT!", -- ?
-	drain_trigger = "Hakkar ist von Bluttrinker betroffen.", -- ? "^Hakkar erleidet (.+) Naturschaden von (.+) %(durch Bluttrinker%).",
+	drain_trigger = "Hakkar bekommt 'Bluttrinker'.",
 
 	flee = "Fleeing will do you no good mortals!", -- ?
 
 	start_message = "Hakkar angegriffen - 90 Sekunden bis Lebensentzug - 10 Minuten bis Wutanfall",
 	drain_warning_60 = "60 Sekunden bis Lebensentzug",
 	drain_warning_45 = "45 Sekunden bis Lebensentzug",
+	drain_warning_30 = "30 Sekunden bis Lebensentzug",
 	drain_warning_15 = "15 Sekunden bis Lebensentzug",
 	drain_message = "Lebensentzug - N\195\164chster in 90 Sekunden",
 	["Enrage"] = "Wutanfall",
