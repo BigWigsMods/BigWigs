@@ -61,7 +61,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	enrage_name = "Wutanfall",
-	enrage_desc = "Warnung, wenn Chromaggus w\195\188tend wird.",
+	enrage_desc = "Warnung, wenn Chromaggus w\195\188tend wird. (ab 20%).",
 
 	frenzy_name = "Raserei",
 	frenzy_desc = "Warnung, wenn Chromaggus in Raserei ger\195\164t.",

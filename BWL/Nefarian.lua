@@ -179,7 +179,7 @@ L:RegisterTranslations("deDE", function() return {
 	triggermage		= "Auch Magier%? Ihr solltet vorsichtiger",
 
 	warn1 = "Nefarian landet in 10 Sekunden!",
-	warn2 = "Nefarian landet!",
+	warn2 = "Nefarian ist gelandet!",
 	warn3 = "Diener herbeigerufen!",
 	warn4 = "AoE Furcht in 2 Sekunden!",
 	warn5 = "Schattenflamme in K\195\188rze!",
@@ -197,21 +197,16 @@ L:RegisterTranslations("deDE", function() return {
 
 	bar1text = "Klassenruf",
 
-	cmd = "Nefarian",
-	
 	shadowflame_cmd = "shadowflame",
 	shadowflame_name = "Schattenflamme",
 	shadowflame_desc = "Warnung, wenn Nefarian Schattenflamme wirkt.",
 	
-	fear_cmd = "fear",
 	fear_name = "Furcht",
 	fear_desc = "Warnung, wenn Nefarian AoE Furcht wirkt.",
 	
-	classcall_cmd = "classcall",
 	classcall_name = "Klassenruf",
 	classcall_desc = "Warnung vor Klassenrufen.",
 	
-	otherwarn_cmd = "otherwarn",
 	otherwarn_name = "Anderes",
 	otherwarn_desc = "Warnung, wenn Nefarian landet und seine Diener ruft.",
 } end)

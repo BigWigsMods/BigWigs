@@ -63,6 +63,9 @@ L:RegisterTranslations("deDE", function() return {
 
 	elsems_name = "T\195\182dlicher Sto\195\159 auf X",
 	elsems_desc = "Warnung, wenn andere Spieler von T\195\182dlicher Sto\195\159 betroffen sind.",
+
+	msbar_name = "T\195\182dlicher Sto\195\159",
+	msbar_desc = "Zeigt einen Anzeigebalken mit der Dauer des T\195\182dlichen Sto\195\159es.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

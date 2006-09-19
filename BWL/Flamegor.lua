@@ -85,7 +85,8 @@ L:RegisterTranslations("deDE", function() return {
 	shadowflame_trigger = "Flammenmaul beginnt Schattenflamme zu wirken.",
 	frenzy_trigger = "%s ger\195\164t in Raserei!",
 
-	wingbuffet_warning = "3 Sekunden bis Fl\195\188gelsto\195\159!",
+	wingbuffet_message = "Fl\195\188gelsto\195\159!",
+	wingbuffet_warning = "Fl\195\188gelsto\195\159 in 3 Sekunden!",
 	shadowflame_warning = "Schattenflamme in K\195\188rze!",
 	frenzy_message = "Raserei - Einlullender Schuss!",
 

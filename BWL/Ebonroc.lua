@@ -120,7 +120,8 @@ L:RegisterTranslations("deDE", function() return {
 	you = "Ihr",
 	are = "seid",
 
-	wingbuffet_warning = "3 Sekunden bis Fl\195\188gelsto\195\159!",
+	wingbuffet_message = "Fl\195\188gelsto\195\159!",
+	wingbuffet_warning = "Fl\195\188gelsto\195\159 in 3 Sekunden!",
 	shadowflame_warning = "Schattenflamme in K\195\188rze!",
 	shadowflame_message_you = "Du hast Schattenschwinges Schatten!",
 	shadowflame_message_other = " hat Schattenschwinges Schatten!",
@@ -138,6 +139,10 @@ L:RegisterTranslations("deDE", function() return {
 
 	elsecurse_name = "Schatten auf Anderen",
 	elsecurse_desc = "Warnung, wenn andere Spieler Schattenschwinges Schatten haben.",
+
+	shadowcurse_bar = "%s - Schattenschwinges Schatten",
+	shadowbar_name = "Schattenschwinges Schatten",
+	shadowbar_desc = "Zeigt einen Anzeigebalken wenn jemand Schattenschwinges Schatten hat.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
