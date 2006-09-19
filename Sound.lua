@@ -29,6 +29,9 @@ L:RegisterTranslations("enUS", function() return {
 	["toggle"] = true,
 	["Use sounds"] = true,
 	["Toggle sounds on or off."] = true,
+	["default"] = true,
+	["Default only"] = true,
+	["Use only the default sound."] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -59,6 +62,10 @@ L:RegisterTranslations("deDE", function() return {
 ----------------------------------
 
 BigWigsSound = BigWigs:NewModule(L["Sounds"])
+BigWigsSound.defaults = {
+	defaultonly = false,
+	sound = true,
+}
 BigWigsSound.consoleCmd = L["sounds"]
 BigWigsSound.consoleOptions = {
 	type = "group",
@@ -75,6 +82,13 @@ BigWigsSound.consoleOptions = {
 				BigWigs:ToggleModuleActive(L["Sounds"], v)
 			end,
 		},
+		[L["default"]] = {
+			type = "toggle",
+			name = L["Default only"],
+			desc = L["Use only the default sound."],
+			get = function() return BigWigsSound.db.profile.defaultonly end,
+			set = function(v) BigWigsSound.db.profile.defaultonly = v end,
+		},
 	}
 }
 
@@ -89,7 +103,7 @@ end
 function BigWigsSound:BigWigs_Message(text, color, noraidsay, sound)
 	if not text or sound == false then return end
 
-	if sounds[sound] then PlaySoundFile(sounds[sound])
+	if sounds[sound] and not self.db.profile.defaultonly then PlaySoundFile(sounds[sound])
 	else PlaySound("RaidWarning") end
 end
 
