@@ -13,6 +13,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Tranq - "] = true,
 	["%s's Tranq failed!"] = true,
+	["Tranq"] = true,
+	["Options for the tranq module."] = true,
+	["Toggle tranq bars on or off."] = true,
+	["Bars"] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -43,59 +47,28 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsTranq = BigWigs:NewModule("Tranq")
+BigWigsTranq = BigWigs:NewModule(L["Tranq"])
 BigWigsTranq.revision = tonumber(string.sub("$Revision$", 12, -3))
---~~ BigWigsTranq.consoleCmd = L"msg"
---~~ BigWigsTranq.consoleOptions = {
---~~ 	type = "group",
---~~ 	name = "Tranq",
---~~ 	desc = L"Options for the message frame.",
---~~ 	args   = {
---~~ 		[L"anchor"] = {
---~~ 			type = "execute",
---~~ 			name = "Anchor",
---~~ 			desc = L"Show the message anchor frame.",
---~~ 			func = function() BigWigsTranq.anchorframe:Show() end,
---~~ 			hidden = function() return BigWigsTranq.db.profile.useraidwarn end,
---~~ 		},
---~~ 		[L"rw"] = {
---~~ 			type = "toggle",
---~~ 			name = "Use RaidWarning",
---~~ 			desc = L"Toggle sending messages to the RaidWarnings frame.",
---~~ 			get = function() return BigWigsTranq.db.profile.useraidwarn end,
---~~ 			set = function(v)
---~~ 				BigWigsTranq.db.profile.useraidwarn = v
---~~ 				frame = v and RaidWarningFrame or BigWigsTranq.msgframe or BigWigsTranq:CreateMsgFrame()
---~~ 			end,
---~~ 			message = L"Messages are now sent to the %2$s",
---~~ 			current = L"Messages are currently sent to the %2$s",
---~~ 			map = {[true] = L"RaidWarning frame", [false] = L"BigWigs frame"},
---~~ 		},
---~~ 		[L"color"] = {
---~~ 			type = "toggle",
---~~ 			name = "Use colors",
---~~ 			desc = L"Toggles white only messages ignoring coloring.",
---~~ 			get = function() return BigWigsTranq.db.profile.usecolors end,
---~~ 			set = function(v) BigWigsTranq.db.profile.usecolors = v end,
---~~ 			map = {[true] = L"|cffff0000Co|cffff00fflo|cff00ff00r|r", [false] = L"White"},
---~~ 		},
---~~ 		[L"scale"] = {
---~~ 			type = "range",
---~~ 			name = "Message frame scale",
---~~ 			desc = L"Set the message frame scale.",
---~~ 			min = 0.2,
---~~ 			max = 2.0,
---~~ 			step = 0.1,
---~~ 			get = function() return BigWigsTranq.db.profile.scale end,
---~~ 			set = function(v)
---~~ 				BigWigsTranq.db.profile.scale = v
---~~ 				if BigWigsTranq.msgframe then BigWigsTranq.msgframe:SetScale(v) end
---~~ 			end,
---~~ 			hidden = function() return BigWigsTranq.db.profile.useraidwarn end,
---~~ 		},
---~~ 	},
---~~ }
-
+BigWigsTranq.defaults = {
+	bars = true,
+}
+BigWigsTranq.consoleCmd = L["Tranq"]
+BigWigsTranq.consoleOptions = {
+	type = "group",
+	name = L["Tranq"],
+	desc = L["Options for the tranq module."],
+	args = {
+		[L["Bars"]] = {
+			type = "toggle",
+			name = L["Bars"],
+			desc = L["Toggle tranq bars on or off."],
+			get = function() return BigWigsTranq.db.profile.bars end,
+			set = function(v)
+				BigWigsTranq.db.profile.bars = v
+			end,
+		},
+	}
+}
 
 ------------------------------
 --      Initialization      --
@@ -140,11 +113,15 @@ end
 
 
 function BigWigsTranq:BigWigs_TranqFired(unitname)
-	self:TriggerEvent("BigWigs_StartBar", self, L["Tranq - "]..unitname, 20, "Interface\\Icons\\Spell_Nature_Drowsy", "Green")
+	if self.db.profile.bars then
+		self:TriggerEvent("BigWigs_StartBar", self, L["Tranq - "]..unitname, 20, "Interface\\Icons\\Spell_Nature_Drowsy", "Green")
+	end
 end
 
 
 function BigWigsTranq:BigWigs_TranqFail(unitname)
-	self:SetCandyBarColor(L["Tranq - "]..unitname, "Red")
-	self:TriggerEvent("BigWigs_Message", format(L["%s's Tranq failed!"], unitname), "Red", nil, "Alarm")
+	if self.db.profile.bars then
+		self:SetCandyBarColor(L["Tranq - "]..unitname, "Red")
+		self:TriggerEvent("BigWigs_Message", format(L["%s's Tranq failed!"], unitname), "Red", nil, "Alarm")
+	end
 end
