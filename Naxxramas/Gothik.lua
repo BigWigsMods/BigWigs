@@ -30,8 +30,12 @@ L:RegisterTranslations("enUS", function() return {
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
 	startwarn = "Gothik the Harvester engaged! 4:30 till he's in the room.",
 
-	riderdietrigger = "Unrelenting Rider dies.",
-	dkdietrigger = "Unrelenting Deathknight dies.",
+	rider_name = "Unrelenting Rider",
+	spectral_rider_name = "Spectral Rider",
+	deathknight_name = "Unrelenting Deathknight",
+	spectral_deathknight_name = "Spektral Deathknight",
+	trainee_name = "Unrelenting Trainee",
+	spectral_trainee_name = "Spectral Trainee",
 
 	riderdiewarn = "Rider dead!",
 	dkdiewarn = "Death Knight dead!",
@@ -74,10 +78,7 @@ L:RegisterTranslations("koKR", function() return {
 	starttrigger1 = "어리석은 것들, 스스로 죽음을 자초하다니!",
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun", -- CHECK
 	startwarn = "영혼의 착취자 고딕 전투 시작! 4:30 후 고딕 등장.",
-	
-	riderdietrigger = "무자비한 기병|1이;가; 죽었습니다..",
-	dkdietrigger = "무자비한 죽음의 기사|1이;가; 죽었습니다.",
-	
+
 	riderdiewarn = "기병 죽음! 무덤조 긴장하세요!",
 	dkdiewarn = "죽음의 기사 죽음!",
 	
@@ -116,8 +117,8 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger2 = "Maz Azgala veni kamil toralar Naztheros zennshinagas.", -- ?
 	startwarn = "Gothik der Ernter angegriffen! 4:30 bis er in den Raum kommt!",
 
-	riderdietrigger = "Unerbittlicher Reiter stirbt.",
-	dkdietrigger = "Unerbittlicher Todesritter stirbt.",
+	rider_name = "Unerbittlicher Reiter",
+	deathknight_name = "Unerbittlicher Todesritter",
 
 	riderdiewarn = "Reiter tot!",
 	dkdiewarn = "Todesritter tot!",
@@ -157,9 +158,6 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
 	startwarn = "收割者戈提克已激活 - 4:30后进入房间",
 
-	riderdietrigger = "冷酷的骑兵死亡了。",
-	dkdietrigger = "冷酷的死亡骑士死亡了。",
-
 	riderdiewarn = "骑兵已死亡！",
 	dkdiewarn = "死亡骑士已死亡！",
 
@@ -189,7 +187,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 BigWigsGothik = BigWigs:NewModule(boss)
 BigWigsGothik.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
-BigWigsGothik.enabletrigger = boss
+BigWigsGothik.enabletrigger = { boss, L["rider_name"], L["deathknight_name"], L["trainee_name"],
+								L["spectral_rider_name"], L["spectral_deathknight_name"], L["spectral_trainee_name"] }
 BigWigsGothik.toggleoptions = { "room", -1, "add", "adddeath", "bosskill" }
 BigWigsGothik.revision = tonumber(string.sub("$Revision$", 12, -3))
 
@@ -209,9 +208,9 @@ function BigWigsGothik:OnEnable()
 end
 
 function BigWigsGothik:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
-	if self.db.profile.adddeath and msg == L["riderdietrigger"] then
+	if self.db.profile.adddeath and msg == string.format(UNITDIESOTHER, L["rider_name"]) then
 		self:TriggerEvent("BigWigs_Message", L["riderdiewarn"], "Red")
-	elseif self.db.profile.adddeath and msg == L["dkdietrigger"] then
+	elseif self.db.profile.adddeath and string.format(UNITDIESOTHER, L["deathknight_name"]) then
 		self:TriggerEvent("BigWigs_Message", L["dkdiewarn"], "Red")
 	end
 end
