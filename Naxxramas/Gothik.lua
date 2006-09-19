@@ -71,7 +71,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	disabletrigger = "내가... 죽는... 구나.",
 
-	starttrigger1 = "어리석은 것들. 스스로 죽음을 자초하다니.",
+	starttrigger1 = "어리석은 것들, 스스로 죽음을 자초하다니!",
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun", -- CHECK
 	startwarn = "영혼의 착취자 고딕 전투 시작! 4:30 후 고딕 등장.",
 	
@@ -97,7 +97,7 @@ L:RegisterTranslations("koKR", function() return {
 	dkbar = "죽음의 기사 - %d",
 	riderbar = "기병 - %d",
 	
-	inroomtrigger = "오랫동안 기다려 왔다. 이제 영혼의 착취자를 만날 차례다.", -- CHECK
+	inroomtrigger = "오랫동안 기다렸다. 이제 영혼의 착취자를 만날 차례다.",
 	inroomwarn = "고딕 등장!!",
 	
 	inroombartext = "고딕 등장",
