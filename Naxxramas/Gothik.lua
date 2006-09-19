@@ -46,7 +46,7 @@ L:RegisterTranslations("enUS", function() return {
 	warn4 = "In room in 30 seconds",
 	warn5 = "Gothik Incoming in 10 seconds",
 
-	wave = "%d/22: ",
+	wave = "%d/26: ",
 
 	trawarn = "Trainees in 3 seconds",
 	dkwarn = "Deathknight in 3 seconds",
@@ -88,7 +88,7 @@ L:RegisterTranslations("koKR", function() return {
 	warn4 = "고딕 등장 30초 전",
 	warn5 = "고딕 등장 10초 전",
 	
-	wave = "%d/20: ",
+	wave = "%d/26: ",
 	
 	trawarn = "훈련생 3초후 등장",
 	dkwarn = "죽음의 기사 3초후 등장",
@@ -129,7 +129,7 @@ L:RegisterTranslations("deDE", function() return {
 	warn4 = "Im Raum in 30 Sekunden",
 	warn5 = "Gothik im Raum in 10 Sekunden",
 
-	wave = "%d/20: ",
+	wave = "%d/26: ",
 
 	trawarn = "Lehrlinge in 3 Sekunden",
 	dkwarn = "Todesritter in 3 Sekunden",
