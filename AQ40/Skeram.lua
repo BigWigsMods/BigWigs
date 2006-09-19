@@ -52,6 +52,7 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	aetrigger = "Der Prophet Skeram beginnt Arkane Explosion zu wirken.",
 	mctrigger = "Der Prophet Skeram beginnt Wahre Erf\195\188llung zu wirken.",
+	splittrigger = "Der Prophet Skeram wirkt Abbilder beschw\195\182ren.",
 	aewarn = "Arkane Explosion!",
 	mcwarn = "Gedankenkontrolle!",
 	mcplayer = "^([^%s]+) ([^%s]+) von Wahre Erf\195\188llung betroffen.$",
@@ -59,18 +60,14 @@ L:RegisterTranslations("deDE", function() return {
 	mcyou = "Ihr",
 	mcare = "seid",
 	
-	splitwarn = "Abbilder in K\195\188rze!",
+	splitwarn = "Abbilder!",
 
-	cmd = "Skeram",
-	mc_cmd = "mc",
 	mc_name = "Gedankenkontrolle",
 	mc_desc = "Warnung vor Gedankenkontrolle.",
 
-	ae_cmd = "ae",
 	ae_name = "Arkane Explosion",
 	ae_desc = "Warnung vor Arkaner Explosion.",
 	
-	split_cmd = "split",
 	split_name = "Abbilder",
 	split_desc = "Warnung, wenn die Abbilder von Prophet Skeram erscheinen.",
 } end )

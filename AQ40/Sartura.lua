@@ -61,12 +61,9 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "Sartura",
-	enrage_cmd = "enrage",
 	enrage_name = "Wutanfall",
 	enrage_desc = "Warnung, wenn Sartura w\195\188tend wird.",
 
-	whirlwind_cmd = "whirlwind",
 	whirlwind_name = "Wirbelwind",
 	whirlwind_desc = "Warnung, wenn Sartura Wirbelwind wirkt.",
 

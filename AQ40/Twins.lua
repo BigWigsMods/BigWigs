@@ -53,26 +53,20 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "Twins",
-
-	bug_cmd = "bug",
 	bug_name = "Explodierende K\195\164fer",
 	bug_desc = "Warnung vor explodierenden K\195\164fern.",
 
-	teleport_cmd = "teleport",
 	teleport_name = "Teleport",
 	teleport_desc = "Warnung, wenn die Zwillings Imperatoren sich teleportieren.",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Wutanfall",
 	enrage_desc = "Warnung, wenn die Zwillings Imperatoren w\195\188tend werden.",
 
-	heal_cmd = "heal",
 	heal_name = "Heilung",
 	heal_desc = "Warnung, wenn die Zwillings Imperatoren sich heilen.",
 
 	porttrigger = "wirkt Zwillingsteleport.",
-	portwarn = "Teleport! - Seitenwechsel!",
+	portwarn = "Teleport!",
 	portdelaywarn = "Teleport in 5 Sekunden!",
 	bartext = "Teleport",
 	explodebugtrigger = "bekommt 'K\195\164fer explodieren lassen'",

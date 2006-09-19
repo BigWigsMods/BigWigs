@@ -53,21 +53,15 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "Viscidus",
-
-	volley_cmd = "volley",
 	volley_name = "Poison Volley Alert", -- ?
 	volley_desc = "Warn for Poison Volley", -- ?
 
-	toxinyou_cmd = "toxinyou",
 	toxinyou_name = "Toxin Wolke",
 	toxinyou_desc = "Warnung, wenn Du in einer Toxin Wolke stehst.",
 
-	toxinother_cmd = "toxinother",
 	toxinother_name = "Toxin Wolke auf Anderen",
 	toxinother_desc = "Warnung, wenn andere Spieler in einer Toxin Wolke stehen.",
 
-	freeze_cmd = "freeze",
 	freeze_name = "Freeze Phasen",
 	freeze_desc = "Zeigt die verschiedenen Freeze Phasen an.",
 
@@ -91,6 +85,8 @@ L:RegisterTranslations("deDE", function() return {
 	warn7		= "Incoming Poison Bolt Volley in ~3 Sekunden!", -- ?
 	warn8		= " ist in einer Toxin Wolke!",
 	warn9		= "Du bist in einer Toxin Wolke!",
+
+	bar1text        = "Poison Bolt Volley",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
