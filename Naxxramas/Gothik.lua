@@ -210,7 +210,7 @@ end
 function BigWigsGothik:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 	if self.db.profile.adddeath and msg == string.format(UNITDIESOTHER, L["rider_name"]) then
 		self:TriggerEvent("BigWigs_Message", L["riderdiewarn"], "Red")
-	elseif self.db.profile.adddeath and string.format(UNITDIESOTHER, L["deathknight_name"]) then
+	elseif self.db.profile.adddeath and msg == string.format(UNITDIESOTHER, L["deathknight_name"]) then
 		self:TriggerEvent("BigWigs_Message", L["dkdiewarn"], "Red")
 	end
 end
