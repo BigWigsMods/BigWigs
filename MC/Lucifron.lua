@@ -78,7 +78,7 @@ L:RegisterTranslations("deDE", function() return {
 	trigger1 = "von Lucifrons Fluch betroffen",
 	trigger2 = "von Drohende Verdammnis betroffen",
 
-	warn1 = Lucifrons Fluch in 5 Sekunden!",
+	warn1 = "Lucifrons Fluch in 5 Sekunden!",
 	warn2 = "Lucifrons Fluch - N\195\164chster in 20 Sekunden!",
 	warn3 = "Drohende Verdammnis in 5 Sekunden!",
 	warn4 = "Drohende Verdammnis - N\195\164chste in 20 Sekunden!",
