@@ -33,6 +33,10 @@ L:RegisterTranslations("enUS", function() return {
 	scarab_name = "Scarab Despawn Alert",
 	scarab_desc = "Warn for Scarab Despawn",
 
+	berserk_cmd = "berserk",
+	berserk_name = "Berserk",
+	berserk_desc = "Warn for when Ouro goes berserk",
+
 	sweeptrigger = "Ouro begins to cast Sweep",
 	sweepannounce = "Sweep!",
 	sweepwarn = "5 seconds until Sweep!",
@@ -43,9 +47,12 @@ L:RegisterTranslations("enUS", function() return {
 	sandblastwarn = "5 seconds until Sand Blast!",
 	sandblastbartext = "Sand Blast",
 
+	engage_message = "Ouro engaged! Possible Submerge in 90sec!",
+	possible_submerge_bar = "Possible submerge",
+
 	emergetrigger = "Dirt Mound casts Summon Ouro Scarabs.",
 	emergeannounce = "Ouro has emerged!",
-	emergewarn = "15 seconds until Ouro submerges!",
+	emergewarn = "15 sec to possible submerge!",
 	emergebartext = "Ouro submerge",
 
 	scarabdespawn = "Scarabs despawn in 10 Seconds",
@@ -87,7 +94,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	emergetrigger = "Dirt Mound casts Summon Ouro Scarabs.", -- ?
 	emergeannounce = "Ouro ist aufgetaucht!",
-	emergewarn = "15 Sekunden bis Ouro untertaucht!",
 	emergebartext = "Untertauchen",
 
 	scarabdespawn = "Scarabs verschwinden in 10 Sekunden", -- ?
@@ -130,7 +136,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	emergetrigger = "흙더미|1이;가; 아우로 스카라베 소환|1을;를; 시전합니다.",
 	emergeannounce = "아우로 등장! 벌레들 제거!",
-	emergewarn = "15초후 아우로 잠수!",
 	emergebartext = "아우로 잠수",
 
 	scarabdespawn = "스카라베 소환 10초전",
@@ -172,7 +177,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	emergetrigger = "土堆施放了召唤奥罗甲虫。",
 	emergeannounce = "奥罗钻出了地面！",
-	emergewarn = "15秒后奥罗将潜入地下！",
 	emergebartext = "钻出地面",
 
 	scarabdespawn = "10秒后甲虫消失", --Translate me
@@ -202,7 +206,7 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsOuro = BigWigs:NewModule(boss)
 BigWigsOuro.zonename = AceLibrary("Babble-Zone-2.0")("Ahn'Qiraj")
 BigWigsOuro.enabletrigger = boss
-BigWigsOuro.toggleoptions = {"sweep", "sandblast", "scarab", "emerge", "submerge", "bosskill"}
+BigWigsOuro.toggleoptions = {"sweep", "sandblast", "scarab", -1, "emerge", "submerge", -1, "berserk", "bosskill"}
 BigWigsOuro.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -215,6 +219,10 @@ function BigWigsOuro:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+
 	self:RegisterEvent("UNIT_HEALTH")
 
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -229,16 +237,26 @@ function BigWigsOuro:UNIT_HEALTH( msg )
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 20 and health <= 23 and not berserkannounced then
-			self:TriggerEvent("BigWigs_Message", L["berserksoonwarn"], "Red")
+			if self.db.profile.berserk then
+				self:TriggerEvent("BigWigs_Message", L["berserksoonwarn"], "Red")
+			end
 			berserkannounced = true
-		elseif (health > 30 and berserkannounced) then
+		elseif health > 30 and berserkannounced then
 			berserkannounced = nil
 		end
 	end
 end
 
-function BigWigsOuro:BigWigs_RecvSync( sync )
-	if sync == "OuroSweep" then
+function BigWigsOuro:BigWigs_RecvSync( sync, rest, nick )
+	if sync == "BossEngaged" and rest and rest == boss then
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		if self.db.profile.emerge then
+			self:TriggerEvent("BigWigs_Message", L["engage_message"], "Yellow")
+			self:PossibleSubmerge()
+		end
+	elseif sync == "OuroSweep" then
 		self:Sweep()
 	elseif sync == "OuroSandblast" then
 		self:Sandblast()
@@ -247,6 +265,17 @@ function BigWigsOuro:BigWigs_RecvSync( sync )
 	elseif sync == "OuroSubmerge" then
 		self:Submerge()
 	end
+end
+
+function BigWigsOuro:PossibleSubmerge()
+	self:TriggerEvent("BigWigs_StopBar", self, L["possible_submerge_bar"])
+	self:CancelScheduledEvent("bwouropossiblesubmerge")
+
+	if self.db.profile.emerge then
+		self:ScheduleEvent("bwouroemergewarn", "BigWigs_Message", 75, L["emergewarn"], "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["possible_submerge_bar"], 90, "Interface\\Icons\\Spell_Nature_Earthquake", "Green", "Yellow", "Orange", "Red")
+	end
+	self:ScheduleEvent("bwouropossiblesubmerge", self.PossibleSubmerge, 90, self)
 end
 
 function BigWigsOuro:Sweep()
@@ -268,20 +297,19 @@ end
 function BigWigsOuro:Emerge()
 	if self.db.profile.emerge then
 		self:TriggerEvent("BigWigs_Message", L["emergeannounce"], "Red")
-		self:ScheduleEvent("bwouroemergewarn", "BigWigs_Message", 165, L["emergewarn"], "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["emergebartext"], 180, "Interface\\Icons\\Spell_Nature_Earthquake", "Green", "Yellow", "Orange", "Red")
+		self:PossibleSubmerge()
 	end
-	
+
 	if self.db.profile.sweep then
 		self:ScheduleEvent("bwourosweepwarn", "BigWigs_Message", 18, L["sweepwarn"], "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L["sweepbartext"], 23, "Interface\\Icons\\Spell_Nature_Thorns", "Yellow", "Orange", "Red")
 	end	
-	
+
 	if self.db.profile.sandblast then
 		self:ScheduleEvent("bwouroblastwarn", "BigWigs_Message", 18, L["sandblastwarn"], "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L["sandblastbartext"], 23, "Interface\\Icons\\Spell_Nature_Cyclone", "Yellow", "Orange", "Red")
 	end
-		
+
 	if self.db.profile.scarab then
 		self:ScheduleEvent("bwscarabdespawn", "BigWigs_Message", 50, L["scarabdespawn"], "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L["scarabbar"], 60, "Interface\\Icons\\INV_Scarab_Clay", "Red", "Orange", "Yellow", "Green" )
@@ -292,10 +320,12 @@ function BigWigsOuro:Submerge()
 	self:CancelScheduledEvent("bwourosweepwarn")
 	self:CancelScheduledEvent("bwouroblastwarn")
 	self:CancelScheduledEvent("bwouroemergewarn")
-	
+	self:CancelScheduledEvent("bwouropossiblesubmerge")
+
 	self:TriggerEvent("BigWigs_StopBar", self, L["sweepbartext"])
 	self:TriggerEvent("BigWigs_StopBar", self, L["sandblastbartext"])
 	self:TriggerEvent("BigWigs_StopBar", self, L["emergebartext"])
+	self:TriggerEvent("BigWigs_StopBar", self, L["possible_submerge_bar"])
 
 	if self.db.profile.submerge then
 		self:TriggerEvent("BigWigs_Message", L["submergeannounce"], "Red")
@@ -321,3 +351,4 @@ function BigWigsOuro:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 		self:TriggerEvent("BigWigs_SendSync", "OuroSubmerge")
 	end
 end
+
