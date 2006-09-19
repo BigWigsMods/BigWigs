@@ -79,7 +79,7 @@ L:RegisterTranslations("koKR", function() return {
 	you = "",
 	are = "",
 
-	flee = "도망쳐 봐야 소용 없다, 어리석은 생명체여!", -- by turtl
+	flee = "도망쳐 봐야 소용없다, 어리석은 생명체여!", -- by turtl
 
 	-- Warnings and bar texts
 	start_message = "학카르 시작 - 90초후 생명력 흡수 - 10분후 격노",
