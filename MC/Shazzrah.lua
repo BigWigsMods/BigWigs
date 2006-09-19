@@ -69,18 +69,14 @@ L:RegisterTranslations("deDE", function() return {
 	trigger2 = "Shazzrah bekommt 'Magie d\195\164mpfen'",
 
 	warn1 = "Portal! N\195\164chstes in ~45 Sekunden!",
-	warn2 = "~5 Sekunden bis Portal!",
-	warn3 = "Magied\195\164mpfer auf Shazzrah! - Entfernen!",
+	warn2 = "Portal in ~5 Sekunden!",
+	warn3 = "Magied\195\164mpfer auf Shazzrah!",
 
 	bar1text = "Portal",
 
-	cmd = "Shazzrah",
-	
-	selfbuff_cmd = "selfbuff",
 	selfbuff_name = "Selbstbuff",
-	selfbuff_desc = "Warnung, wenn Shazzrah Magied\195\164mpfer hat.",
+	selfbuff_desc = "Warnung, wenn Magied\195\164mpfer auf Shazzrah.",
 	
-	blink_cmd = "blink",
 	blink_name = "Portal",
 	blink_desc = "Warnung, wenn Shazzrah Portal wirkt.",
 } end)

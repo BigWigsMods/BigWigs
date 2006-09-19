@@ -105,7 +105,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	warn1 = "Magiereflexion f\195\188r 10 Sekunden!",
 	warn2 = "Schadensschild f\195\188r 10 Sekunden!",
-	warn3 = "5 Sekunden bis Schild!",
+	warn3 = "Schild in 5 Sekunden!",
 	warn4 = "Magiereflexion beendet!",
 	warn5 = "Schadensschild beendet!",
 	bosskill = "Majordomo Executus wurde besiegt!",
@@ -114,13 +114,9 @@ L:RegisterTranslations("deDE", function() return {
 	bar2text = "Schadensschild",
 	bar3text = "N\195\164chstes Schild",
 
-	cmd = "Majordomo",
-	
-	magic_cmd = "magic",
 	magic_name = "Magiereflexion",
 	magic_desc = "Warnung, wenn Magiereflexion aktiv.",
 	
-	dmg_cmd = "dmg",
 	dmg_name = "Schadensschild",
 	dmg_desc = "Warnung, wenn Schadensschild aktiv.",
 } end)

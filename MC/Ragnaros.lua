@@ -134,21 +134,15 @@ L:RegisterTranslations("deDE", function() return {
 	sonofflame = "Sohn der Flamme",
 	sonsdeadwarn = "%d/8 S\195\182hne der Flamme tot!",
 
-	cmd = "Ragnaros",
-
-	emerge_cmd = "emerge",
 	emerge_name = "Auftauchen",
 	emerge_desc = "Warnung, wenn Ragnaros auftaucht.",
 
-	sondeath_cmd = "sondeath",
 	sondeath_name = "S\195\182hne der Flamme",
 	sondeath_desc = "Counter f\195\188r die get\195\182teten S\195\182ohne der Flamme.",
 
-	submerge_cmd = "submerge",
 	submerge_name = "Untertauchen",
 	submerge_desc = "Warnung, wenn Ragnaros untertaucht und die S\195\182hne der Flamme erscheinen.",
 
-	aoeknock_cmd = "aoeknock",
 	aoeknock_name = "AoE Rundumschlag",
 	aoeknock_desc = "Warnung, wenn Ragnaros AoE Rundumschlag wirkt.",
 } end)
