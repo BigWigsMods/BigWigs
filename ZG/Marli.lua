@@ -33,7 +33,7 @@ L:RegisterTranslations("deDE", function() return {
 	spider_name = "Spinnen",
 	spider_desc = "Warnung, wenn Hohepriesterin Mar'li Spinnen beschw\195\182rt.",
 
-	drain_name = "Blutsauger",,
+	drain_name = "Blutsauger",
 	drain_desc = "Warnung, wenn Hohepriesterin Mar'li sich heilt.", 
 
 	spiders_trigger = "Helft mir, meine Brut!$",
