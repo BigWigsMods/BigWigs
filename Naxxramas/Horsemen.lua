@@ -238,7 +238,7 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 			self:TriggerEvent("BigWigs_StartBar", self, L["meteorbar"], 12, "Interface\\Icons\\Spell_Fire_Fireball02", "Orange", "Red")
 		end
 	elseif sync == "HorsemenWrath" then
-		if self.db.profile.meteor then
+		if self.db.profile.wrath then
 			self:TriggerEvent("BigWigs_Message", L["wrathwarn"], "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, L["wrathbar"], 12, "Interface\\Icons\\Spell_Holy_Excorcism", "Orange", "Red")
 		end
