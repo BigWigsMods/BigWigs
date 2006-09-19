@@ -47,9 +47,7 @@ Colors.lua
 TargetMonitor.lua
 Options.lua
 Bars.lua
-Bars.xml
 Messages.lua
-Messages.xml
 Sound.lua
 RaidWarn.lua
 BossBlock.lua
