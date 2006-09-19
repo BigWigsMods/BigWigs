@@ -47,6 +47,10 @@ L:RegisterTranslations("enUS", function() return {
 	mc_name = "Mind Controll",
 	mc_desc = "Alert when someone is mind controlled.",
 
+	icon_cmd = "icon",
+	icon_name = "Place Icon",
+	icon_desc = "Place a skull icon on the mind controlled person (requires promoted or higher)",
+
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -136,7 +140,7 @@ L:RegisterTranslations("zhCN", function() return {
 BigWigsHakkar = BigWigs:NewModule(boss)
 BigWigsHakkar.zonename = AceLibrary("Babble-Zone-2.0")("Zul'Gurub")
 BigWigsHakkar.enabletrigger = boss
-BigWigsHakkar.toggleoptions = {"mc", "drain", "enrage", "bosskill"}
+BigWigsHakkar.toggleoptions = {"mc", "icon", -1, "drain", "enrage", "bosskill"}
 BigWigsHakkar.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -180,7 +184,12 @@ function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
 		if mcplayer == L["you"] then
 			mcplayer = UnitName("player")
 		end
-		if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", string.format(L["mindcontrol_message"], mcplayer), "Orange") end
+		if self.db.profile.mc then
+			self:TriggerEvent("BigWigs_Message", string.format(L["mindcontrol_message"], mcplayer), "Orange")
+		end
+		if self.db.profile.icon then 
+			self:TriggerEvent("BigWigs_SetRaidIcon", mcplayer)
+		end
 	end
 end
 

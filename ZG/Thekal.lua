@@ -10,7 +10,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "thekal",
+	cmd = "Thekal",
 
 	heal_cmd = "heal",
 	heal_name = "Heal Alert",
@@ -20,11 +20,11 @@ L:RegisterTranslations("enUS", function() return {
 	tiger_name = "Tigers Alert",
 	tiger_desc = "Warn for incoming tigers",
 
-	trigger1 = "High Priest Thekal performs Summon Zulian Guardians.",
-	trigger2 = "Zealot Lor'Khan begins to cast Great Heal.",
+	tigers_trigger = "High Priest Thekal performs Summon Zulian Guardians.",
+	heal_trigger = "Zealot Lor'Khan begins to cast Great Heal.",
 
-	warn1 = "Incoming Tigers!",
-	warn2 = "Lor'Khan Casting Heal!",	
+	tigers_message = "Incoming Tigers!",
+	heal_message = "Lor'Khan Casting Heal!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -34,33 +34,32 @@ L:RegisterTranslations("deDE", function() return {
 	tiger_name = "Tiger",
 	tiger_desc = "Warnung, wenn Hohepriester Thekal Tiger beschw\195\182rt.",
 
-	trigger1 = "Hohepriester Thekal f\195\188hrt Zulianische W\195\164chter beschw\195\182ren aus.",
-	trigger2 = "Zelot Lor'Khan beginnt Gro\195\159es Heilen zu wirken.",
-	warn1 = "Tiger!",
-	warn2 = "Lor'Khan heilt sich!",
+	tigers_trigger = "Hohepriester Thekal f\195\188hrt Zulianische W\195\164chter beschw\195\182ren aus.",
+	heal_trigger = "Zelot Lor'Khan beginnt Gro\195\159es Heilen zu wirken.",
+	tigers_message = "Tiger!",
+	heal_message = "Lor'Khan heilt sich!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	trigger1 = "Z\195\169lote Lor'Khan commence \195\160 lancer Soins exceptionnels%.",
-	trigger2 = "Shirvallah, que ta RAGE m\226\128\153envahisse !",
+	tigers_trigger = "Z\195\169lote Lor'Khan commence \195\160 lancer Soins exceptionnels%.",
+	heal_trigger = "Shirvallah, que ta RAGE m\226\128\153envahisse !",
 
-	warn1 = "Lor'Khan lance un soins !",
-	warn2 = "Transformation en tigre !",
+	tigers_message = "Lor'Khan lance un soins !",
+	heal_message = "Transformation en tigre !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	
 	heal_name = "치유 경고",
 	heal_desc = "치유에 대한 경고",
 
 	tiger_name = "호랑이 경고",
 	tiger_desc = "호랑이 소환시 경고",
 
-	trigger1 = "대사제 데칼|1이;가; 줄리안 수호표범 소환|1을;를; 사용했습니다.",
-	trigger2 = "광신도 로르칸|1이;가; 상급 치유|1을;를; 시전합니다.",
+	tigers_trigger = "대사제 데칼|1이;가; 줄리안 수호표범 소환|1을;를; 사용했습니다.",
+	heal_trigger = "광신도 로르칸|1이;가; 상급 치유|1을;를; 시전합니다.",
 
-	warn1 = "호랑이 소환!!!",
-	warn2 = "로르칸, 상급 치유 시전!!!",
+	tigers_message = "호랑이 소환!!!",
+	heal_message = "로르칸, 상급 치유 시전!!!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -70,10 +69,10 @@ L:RegisterTranslations("zhCN", function() return {
 	tiger_name = "老虎警报",
 	tiger_desc = "小老虎出现时发出警报",
 
-	trigger1 = "高阶祭司塞卡尔使用了召唤祖利安守护者。",
-	trigger2 = "狂热者洛卡恩开始施放强效治疗术。",
-	warn1 = "老虎出现！",
-	warn2 = "狂热者洛卡恩正在施放治疗，赶快打断它！",	
+	tigers_trigger = "高阶祭司塞卡尔使用了召唤祖利安守护者。",
+	heal_trigger = "狂热者洛卡恩开始施放强效治疗术。",
+	tigers_message = "老虎出现！",
+	heal_message = "狂热者洛卡恩正在施放治疗，赶快打断它！",	
 } end )
 
 ----------------------------------
@@ -100,10 +99,10 @@ end
 ------------------------------
 
 function BigWigsThekal:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
-	if self.db.profile.tiger and msg == L["trigger1"] then
-		self:TriggerEvent("BigWigs_Message", L["warn1"], "Yellow")
-	elseif self.db.profile.heal and msg == L["trigger2"] then
-		self:TriggerEvent("BigWigs_Message", L["warn2"], "Orange")
+	if self.db.profile.tiger and msg == L["tigers_trigger"] then
+		self:TriggerEvent("BigWigs_Message", L["tigers_message"], "Yellow")
+	elseif self.db.profile.heal and msg == L["heal_trigger"] then
+		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Orange")
 	end
 end
 

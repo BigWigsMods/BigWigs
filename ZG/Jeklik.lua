@@ -10,7 +10,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "jeklik",
+	cmd = "Jeklik",
 
 	heal_cmd = "heal",
 	heal_name = "Heal Alert",
@@ -20,18 +20,18 @@ L:RegisterTranslations("enUS", function() return {
 	bomb_name = "Bomb Bat Alert",
 	bomb_desc = "Warn for Bomb Bats",
 
-	trigger1 = "I command you to rain fire down upon these invaders!$",
-	trigger2 = "begins to cast a Great Heal!$",
-	warn1 = "Incoming bomb bats!",
-	warn2 = "Casting heal!",
+	bomb_trigger = "I command you to rain fire down upon these invaders!$",
+	heal_trigger = "begins to cast a Great Heal!$",
+	bomb_message = "Incoming bomb bats!",
+	heal_message = "Casting heal!",
 	
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	trigger1 =  "Qu'une pluie de feu s'abatte sur les envahisseurs !",
-	trigger2 = "commence \195\160 lancer un sort de Soins exceptionnels !",
-	warn1 = "Chauve-souris en approche !",
-	warn2 = "Commence \195\160 se soigner",
+	bomb_trigger =  "Qu'une pluie de feu s'abatte sur les envahisseurs !",
+	heal_trigger = "commence \195\160 lancer un sort de Soins exceptionnels !",
+	bomb_message = "Chauve-souris en approche !",
+	heal_message = "Commence \195\160 se soigner",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -41,10 +41,10 @@ L:RegisterTranslations("deDE", function() return {
 	bomb_name = "Bomben",
 	bomb_desc = "Warnung, wenn Fledermaus Bomben im Anflug sind.",
 
-	trigger1 =  "Ich befehle Euch Feuer \195\188ber diese Eindringlinge regnen zu lassen!",
-	trigger2 = "beginnt Gro\195\159es Heilen zu wirken!",
-	warn1 = "Fledermaus Bomben im Anflug!",
-	warn2 = "Jeklik versucht sich zu heilen! - Unterbrechen!",
+	bomb_trigger =  "Ich befehle Euch Feuer \195\188ber diese Eindringlinge regnen zu lassen!",
+	heal_trigger = "beginnt Gro\195\159es Heilen zu wirken!",
+	bomb_message = "Fledermaus Bomben im Anflug!",
+	heal_message = "Jeklik versucht sich zu heilen! - Unterbrechen!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -54,24 +54,24 @@ L:RegisterTranslations("zhCN", function() return {
 	bomb_name = "炸弹蝙蝠警报",
 	bomb_desc = "炸弹蝙蝠出现时发出警报",
 
-	trigger1 = "我命令你把这些入侵者烧成灰烬！$",
-	trigger2 = "开始释放强效治疗术！$",
-	warn1 = "炸弹蝙蝠来了！",
-	warn2 = "高阶祭司耶克里克正在施放治疗，赶快打断它！",
+	bomb_trigger = "我命令你把这些入侵者烧成灰烬！$",
+	heal_trigger = "开始释放强效治疗术！$",
+	bomb_message = "炸弹蝙蝠来了！",
+	heal_message = "高阶祭司耶克里克正在施放治疗，赶快打断它！",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	
+
 	heal_name = "치유 경고",
 	heal_desc = "치유에 대한 경고",
-	
+
 	bomb_name = "박쥐 경고",
 	bomb_desc = "박쥐에 대한 경고",
-		
-	trigger1 = "침략자들에게 뜨거운 맛을 보여줘라!$",
-	trigger2 = "상급 치유를 시전하기 시작합니다!$",
-	warn1 = "박쥐 소환!",
-	warn2 = "치유 시전 - 시전 방해해주세요!",
+
+	bomb_trigger = "침략자들에게 뜨거운 맛을 보여줘라!$",
+	heal_trigger = "상급 치유를 시전하기 시작합니다!$",
+	bomb_message = "박쥐 소환!",
+	heal_message = "치유 시전 - 시전 방해해주세요!",
 } end )
 
 ----------------------------------
@@ -99,14 +99,14 @@ end
 ------------------------------
 
 function BigWigsJeklik:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.bomb and string.find(msg, L["trigger1"]) then
-		self:TriggerEvent("BigWigs_Message", L["warn1"], "Yellow")
+	if self.db.profile.bomb and string.find(msg, L["bomb_trigger"]) then
+		self:TriggerEvent("BigWigs_Message", L["bomb_message"], "Yellow")
 	end
 end
 
 function BigWigsJeklik:CHAT_MSG_MONSTER_EMOTE(msg)
-	if self.db.profile.heal and string.find(msg, L["trigger2"]) then
-		self:TriggerEvent("BigWigs_Message", L["warn2"], "Orange")
+	if self.db.profile.heal and string.find(msg, L["heal_trigger"]) then
+		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Orange")
 	end
 end
 

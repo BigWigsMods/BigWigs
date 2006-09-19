@@ -10,7 +10,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "jindo",
+	cmd = "Jindo",
 
 	brainwash_cmd = "brainwash",
 	brainwash_name = "Brainwash Totem Alert",
@@ -27,6 +27,10 @@ L:RegisterTranslations("enUS", function() return {
 	elsecurse_cmd = "elsecurse",
 	elsecurse_name = "Others are cursed Alert",
 	elsecurse_desc = "Warn when others are cursed",
+
+	icon_cmd = "icon",
+	icon_name = "Place Icon",
+	icon_desc = "Place a skull icon on the cursed person (requires promoted or higher)",
 
 	triggerbrainwash = "Jin'do the Hexxer casts Summon Brain Wash Totem.",
 	triggerhealing = "Jin'do the Hexxer casts Powerful Healing Ward.",
@@ -105,7 +109,7 @@ L:RegisterTranslations("koKR", function() return {
 BigWigsJindo = BigWigs:NewModule(boss)
 BigWigsJindo.zonename = AceLibrary("Babble-Zone-2.0")("Zul'Gurub")
 BigWigsJindo.enabletrigger = boss
-BigWigsJindo.toggleoptions = {"youcurse", "elsecurse", -1, "brainwash", "healing", -1, "bosskill"}
+BigWigsJindo.toggleoptions = {"youcurse", "elsecurse", "icon", -1, "brainwash", "healing", -1, "bosskill"}
 BigWigsJindo.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------

@@ -5,12 +5,14 @@
 local boss = AceLibrary("Babble-Boss-2.0")("High Priestess Arlokk")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
+local playerName = nil
+
 ----------------------------
 --      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "arlokk",
+	cmd = "Arlokk",
 
 	youmark_cmd = "youmark",
 	youmark_name = "You're marked alert",
@@ -20,17 +22,21 @@ L:RegisterTranslations("enUS", function() return {
 	othermark_name = "Others are marked alert",
 	othermark_desc = "Warn when others are marked",
 
-	trigger1 = "Feast on ([^%s]+), my pretties!$",
+	icon_cmd = "icon",
+	icon_name = "Place Icon",
+	icon_desc = "Place a skull icon on the marked person (requires promoted or higher)",
 
-	warn1 = "You are marked!",
-	warn2 = "%s is marked!",	
+	mark_trigger = "Feast on ([^%s]+), my pretties!$",
+
+	mark_warning_self = "You are marked!",
+	mark_warning_other = "%s is marked!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	trigger1 ="D\195\169vorez ([^%s]+), mes jolies !",
+	mark_trigger ="D\195\169vorez ([^%s]+), mes jolies !",
 
-	warn1 = "Tu es marqu\195\169 !",
-	warn2 = "%s est marqu\195\169 !",
+	mark_warning_self = "Tu es marqu\195\169 !",
+	mark_warning_other = "%s est marqu\195\169 !",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -40,10 +46,10 @@ L:RegisterTranslations("deDE", function() return {
 	othermark_name = "X ist markiert",
 	othermark_desc = "Warnung, wenn andere Spieler markiert sind.",
 
-	trigger1 ="Labt euch an ([^%s]+), meine S\195\188\195\159en!$",
+	mark_trigger ="Labt euch an ([^%s]+), meine S\195\188\195\159en!$",
 
-	warn1 = "Du bist markiert!",
-	warn2 = "%s ist markiert!",
+	mark_warning_self = "Du bist markiert!",
+	mark_warning_other = "%s ist markiert!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -54,10 +60,10 @@ L:RegisterTranslations("koKR", function() return {
 	othermark_name = "타인의 표적 경고",
 	othermark_desc = "타인이 표적이 됐을 때 경고",
 
-	trigger1 = "내 귀여운 것들아, (.+)%|1을;를; 잡아먹어라!$",
+	mark_trigger = "내 귀여운 것들아, (.+)%|1을;를; 잡아먹어라!$",
 
-	warn1 = "당신은 표적입니다!",
-	warn2 = "%s님은 표적입니다!",
+	mark_warning_self = "당신은 표적입니다!",
+	mark_warning_other = "%s님은 표적입니다!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -67,10 +73,10 @@ L:RegisterTranslations("zhCN", function() return {
 	othermark_name = "队友标记警报",
 	othermark_desc = "当队友被标记时发出警报",
 
-	trigger1 = "吞噬(.+)的躯体吧！$",
+	mark_trigger = "吞噬(.+)的躯体吧！$",
 
-	warn1 = "你被标记了！",
-	warn2 = "%s被标记了！",	
+	mark_warning_self = "你被标记了！",
+	mark_warning_other = "%s被标记了！",	
 } end )
 
 ----------------------------------
@@ -80,7 +86,7 @@ L:RegisterTranslations("zhCN", function() return {
 BigWigsArlokk = BigWigs:NewModule(boss)
 BigWigsArlokk.zonename = AceLibrary("Babble-Zone-2.0")("Zul'Gurub")
 BigWigsArlokk.enabletrigger = boss
-BigWigsArlokk.toggleoptions = {"youmark", "othermark", "bosskill"}
+BigWigsArlokk.toggleoptions = {"youmark", "othermark", "icon", "bosskill"}
 BigWigsArlokk.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -97,14 +103,19 @@ end
 ------------------------------
 
 function BigWigsArlokk:CHAT_MSG_MONSTER_YELL( msg )
-	local _,_, n = string.find(msg, L["trigger1"])
+	local _,_, n = string.find(msg, L["mark_trigger"])
 	if n then
-		if n == UnitName("player") then
-			if self.db.profile.youmark then self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true, "Alarm") end
+		if n == playerName and self.db.profile.youmark then
+			self:TriggerEvent("BigWigs_Message", L["mark_warning_self"], "Red", true, "Alarm")
 		elseif self.db.profile.othermark then
-			self:TriggerEvent("BigWigs_Message", string.format(L["warn2"], n), "Yellow")
-			self:TriggerEvent("BigWigs_SendTell", n, L["warn1"])
+			self:TriggerEvent("BigWigs_Message", string.format(L["mark_warning_other"], n), "Yellow")
+			self:TriggerEvent("BigWigs_SendTell", n, L["mark_warning_self"])
 		end
+
+		if self.db.profile.icon then
+			self:TriggerEvent("BigWigs_SetRaidIcon", n)
+		end
+
 	end
 end
 

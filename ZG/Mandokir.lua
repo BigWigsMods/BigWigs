@@ -10,7 +10,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "mandokir",
+	cmd = "Mandokir",
 
 	you_cmd = "you",
 	you_name = "You're being watched alert",
@@ -20,23 +20,23 @@ L:RegisterTranslations("enUS", function() return {
 	other_name = "Others being watched alert",
 	other_desc = "Warn when others are being watched",
 
-	icon_cmd = "raidicon",
+	icon_cmd = "icon",
 	icon_name = "Raid icon on watched",
 	icon_desc = "Puts a raid icon on the watched person",
 
-	trigger1 = "([^%s]+)! I'm watching you!$",
-	trigger2 = "goes into a rage after seeing his raptor fall in battle!$",
+	watch_trigger = "([^%s]+)! I'm watching you!$",
+	enrage_trigger = "goes into a rage after seeing his raptor fall in battle!$",
 
-	warn1 = "You are being watched!",
-	warn2 = "%s is being watched!",
-	warn3 = "Ohgan down! Mandokir enraged!",	
+	watched_warning_self = "You are being watched!",
+	watched_warning_other = "%s is being watched!",
+	enraged_message = "Ohgan down! Mandokir enraged!",	
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	trigger1 =  "([^%s]+), je vous ai \195\160 l'\197\147il";
+	watch_trigger =  "([^%s]+), je vous ai \195\160 l'\197\147il";
 
-	warn1 = "Tu es surveill\195\169 !",
-	warn2 = "%s est surveill\195\169 !",
+	watched_warning_self = "Tu es surveill\195\169 !",
+	watched_warning_other = "%s est surveill\195\169 !",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -47,12 +47,12 @@ L:RegisterTranslations("deDE", function() return {
 	other_name = "X wird beobachtet",
 	other_desc = "Warnung, wenn andere Spieler beobachtet werden.",
 
-	trigger1 = "([^%s]+)! Ich behalte Euch im Auge!$",
-	trigger2 = "%s ger\195\164t in Rage, als er sieht, dass sein Raptor im Kampf stirbt!$",
+	watch_trigger = "([^%s]+)! Ich behalte Euch im Auge!$",
+	enrage_trigger = "%s ger\195\164t in Rage, als er sieht, dass sein Raptor im Kampf stirbt!$",
 
-	warn1 = "Du wirst beobachtet!",
-	warn2 = "%s wird beobachtet!",
-	warn3 = "Ohgan down! Mandokir w\195\188tend!",
+	watched_warning_self = "Du wirst beobachtet!",
+	watched_warning_other = "%s wird beobachtet!",
+	enraged_message = "Ohgan down! Mandokir w\195\188tend!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -62,12 +62,12 @@ L:RegisterTranslations("zhCN", function() return {
 	other_name = "队友被盯警报",
 	other_desc = "队友被血领主盯上时发出警报",
 
-	trigger1 = "(.+)！我正在看着你！$",
-	trigger2 = "怒不可遏！$",
+	watch_trigger = "(.+)！我正在看着你！$",
+	enrage_trigger = "怒不可遏！$",
 
-	warn1 = "你被盯上了 - 停止一切动作！",
-	warn2 = "%s被盯上了！",
-	warn3 = "奥根死了！血领主进入激怒状态！",	
+	watched_warning_self = "你被盯上了 - 停止一切动作！",
+	watched_warning_other = "%s被盯上了！",
+	enraged_message = "奥根死了！血领主进入激怒状态！",	
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -82,12 +82,12 @@ L:RegisterTranslations("koKR", function() return {
 	icon_name = "보고있을 때 아이콘 표시",
 	icon_desc = "보고 있는 사람에게 아이콘 표시",
 
-	trigger1 = "(.+)! 널 지켜보고 있겠다!",
-	trigger2 = "전장에서 자신의 랩터가 쓰러지는 모습을 보자 분노에 휩싸입니다!",
+	watch_trigger = "(.+)! 널 지켜보고 있겠다!",
+	enrage_trigger = "전장에서 자신의 랩터가 쓰러지는 모습을 보자 분노에 휩싸입니다!",
 
-	warn1 = "당신을 지켜보고 있습니다 - 모든 동작 금지!",
-	warn2 = "%s님을 지켜봅니다!",
-	warn3 = "오간이 죽자, 만도키르가 분노합니다.",
+	watched_warning_self = "당신을 지켜보고 있습니다 - 모든 동작 금지!",
+	watched_warning_other = "%s님을 지켜봅니다!",
+	enraged_message = "오간이 죽자, 만도키르가 분노합니다.",
 } end )
 
 ----------------------------------
@@ -115,19 +115,23 @@ end
 ------------------------------
 
 function BigWigsMandokir:CHAT_MSG_MONSTER_EMOTE(msg)
-	if string.find(msg, L["trigger2"]) then self:TriggerEvent("BigWigs_Message", L["warn3"], "Orange") end
+	if string.find(msg, L["enrage_trigger"]) then
+		self:TriggerEvent("BigWigs_Message", L["enraged_message"], "Orange")
+	end
 end
 
 function BigWigsMandokir:CHAT_MSG_MONSTER_YELL(msg)
-	local _,_, n = string.find(msg, L"trigger1")
+	local _,_, n = string.find(msg, L"watch_trigger")
 	if n then
-		if n == UnitName("player") then
-			if self.db.profile.you then self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true, "Alarm") end
+		if n == UnitName("player") and self.db.profile.you then
+			self:TriggerEvent("BigWigs_Message", L["watched_warning_self"], "Red", true, "Alarm")
 		elseif self.db.profile.other then
-			self:TriggerEvent("BigWigs_Message", string.format(L["warn2"], n), "Yellow")
-			self:TriggerEvent("BigWigs_SendTell", n, L["warn1"])
+			self:TriggerEvent("BigWigs_Message", string.format(L["watched_warning_other"], n), "Yellow")
+			self:TriggerEvent("BigWigs_SendTell", n, L["watched_warning_self"])
 		end
-		if self.db.profile.icon then self:TriggerEvent("BigWigs_SetRaidIcon", n) end
+		if self.db.profile.icon then
+			self:TriggerEvent("BigWigs_SetRaidIcon", n)
+		end
 	end
 end
 
