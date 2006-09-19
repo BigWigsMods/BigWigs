@@ -243,7 +243,7 @@ end
 
 function BigWigsDefenders:CheckPlague(msg)
 	local _,_, pplayer, ptype = string.find(msg, L["plaguetrigger"])
-	if player then
+	if pplayer then
 		if self.db.profile.plagueyou and pplayer == L["plagueyou"] then
 			self:TriggerEvent("BigWigs_Message", L["plagueyouwarn"], "Red", true)
 		elseif self.db.profile.plagueother then
