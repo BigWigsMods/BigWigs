@@ -211,6 +211,9 @@ function BigWigs.modulePrototype:GenericBossDeath(msg)
 	if msg == string.format(UNITDIESOTHER, self:ToString()) then
 		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(L["%s has been defeated"], self:ToString()), "Green", nil, "Victory") end
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
+		if self.core:IsDebugging() then
+			self.core:LevelDebug(1, "Boss dead, disabling module ["..self:ToString().."].")
+		end
 		self.core:ToggleModuleActive(self, false)
 	end
 end
@@ -250,6 +253,9 @@ function BigWigs.modulePrototype:CheckForEngage()
 	local go = self:Scan()
 	local running = self:IsEventScheduled(self:ToString().."_CheckStart")
 	if go then
+		if self.core:IsDebugging() then
+			self.core:LevelDebug(1, "Scan returned true, engaging ["..self:ToString().."].")
+		end
 		self:CancelScheduledEvent(self:ToString().."_CheckStart")
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
@@ -279,6 +285,9 @@ function BigWigs.modulePrototype:CheckForWipe()
 
 	local go = self:Scan()
 	if not go then
+		if self.core:IsDebugging() then
+			self.core:LevelDebug(1, "Rebooting module ["..self:ToString().."].")
+		end
 		self:TriggerEvent("BigWigs_RebootModule", self)
 	elseif not running then
 		self:ScheduleRepeatingEvent(self:ToString().."_CheckWipe", self.CheckForWipe, 2, self)
