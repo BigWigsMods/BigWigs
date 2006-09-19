@@ -232,7 +232,7 @@ function BigWigs.modulePrototype:Scan()
 
 	local i
 	for i = 1, GetNumRaidMembers() do
-		local raidUnit = string.format("raid%dtarget", i)
+		local raidUnit = string.format("raid%starget", i)
 		if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) then
 			local target = UnitName(raidUnit)
 			for _, mob in pairs(t) do
