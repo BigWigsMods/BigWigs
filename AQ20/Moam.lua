@@ -58,14 +58,14 @@ L:RegisterTranslations("deDE", function() return {
 	startwarn = "Moam angegriffen! 90 Sekunden bis Elementare erscheinen!",
 
 	addsbar = "Elementare",
-	addsincoming = "Elementare erscheinen in %s Sekunden!",
+	addsincoming = "Elementare in %s Sekunden!",
 	addstrigger = "%s entzieht Euch Euer Mana und versteinert Euch.",
 	addswarn = "Elementare! Moam in Steinform f\195\188r 90 Sekunden.",
 
 	paralyzebar = "Steinform",
 	returnincoming = "Moam erwacht in %s Sekunden!",
 	returntrigger = "Energiezufuhr schwindet von Moam.",
-	returnwarn = "Moam erwacht! 90 Sekunden bis Elementare erscheinen!",
+	returnwarn = "Moam erwacht! 90 Sekunden bis Elementare!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
