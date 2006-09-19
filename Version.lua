@@ -36,6 +36,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Zone"] = true,
 	["zone"] = true,
 	["N/A"] = true,
+	["BigWigs"] = true,
+	["Runs a version query on the BigWigs core."] = true,
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -71,6 +73,12 @@ BigWigsVersionQuery.consoleOptions = {
 	name = L["Version Query"],
 	desc = L["Commands for querying the raid for Big Wigs versions."],
 	args = {
+		[L["BigWigs"]] = {
+			type = "execute",
+			name = L["BigWigs"],
+			desc = L["Runs a version query on the BigWigs core."],
+			func = function() BigWigsVersionQuery:QueryVersion("BigWigs") end,
+		},
 		[L["current"]] = {
 			type = "execute",
 			name = L["Current zone"],
@@ -119,6 +127,7 @@ function BigWigsVersionQuery:PopulateRevisions()
 			end
 		end
 	end
+	self.zoneRevisions["BigWigs"] = self.core.revision
 end
 
 ------------------------------
@@ -135,6 +144,11 @@ function BigWigsVersionQuery:UpdateVersions()
 			"showHintWhenDetached", true,
 			"cantAttach", true,
 			"menu", function()
+					dewdrop:AddLine(
+						"text", L["BigWigs"],
+						"tooltipTitle", L["BigWigs"],
+						"tooltipText", L["Runs a version query on the BigWigs core."],
+						"func", function() self:QueryVersion("BigWigs") end)
 					dewdrop:AddLine(
 						"text", L["Current zone"],
 						"tooltipTitle", L["Current zone"],
