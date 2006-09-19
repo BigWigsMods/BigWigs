@@ -104,6 +104,12 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	room_name = "Ankunft",
+	room_desc = "Warnung, wenn Gothik in den Raum kommt.",
+
+	add_name = "Adds",
+	add_desc = "Warnung vor Adds.",
+
 	disabletrigger = "I... am... undone.", -- ?
 
 	starttrigger1 = "Ihr Narren habt euren eigenen Untergang heraufbeschworen.",

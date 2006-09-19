@@ -50,7 +50,7 @@ L:RegisterTranslations("deDE", function() return {
 	gainbar = "Heuschreckenschwarm",
 
 	casttrigger = "Anub'Rekhan beginnt Heuschreckenschwarm zu wirken.",
-	castwarn = "Heuschreckenschwarm in K\195\188rze!",
+	castwarn = "Heuschreckenschwarm!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

@@ -66,12 +66,12 @@ L:RegisterTranslations("deDE", function() return {
 	enragetrigger = "%s wird w\195\188tend.",
 
 	webspraywarn30sec = "Fangnetze in 10 Sekunden",
-	webspraywarn20sec = "Fangnetze! 10 Sekunden bis Spinnen!",
-	webspraywarn10sec = "Spinnen! 10 Sekunden bis Gespinst!",
+	webspraywarn20sec = "Fangnetze! Spinnen in 10 Sekunden!",
+	webspraywarn10sec = "Spinnen! Gespinst in 10 Sekunden!",
 	webspraywarn5sec = "Gespinst in 5 Sekunden!",
 	webspraywarn = "Gespinst! N\195\164chstes in 40 Sekunden!",
-	enragewarn = "Wutanfall - Gebt alles!",
-	enragesoonwarn = "Wutanfall in K\195\188rze - Bereit machen!",
+	enragewarn = "Wutanfall!",
+	enragesoonwarn = "Wutanfall in K\195\188rze!",
 
 	webspraybar = "Gespinst",
 

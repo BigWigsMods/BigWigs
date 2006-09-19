@@ -45,20 +45,31 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	enrage_name = "Wutanfall",
+	enrage_desc = "Warnung, wenn Grobbulus w\195\188tend wird.",
+
 	youinjected_name = "Du bist verseucht",
-	youinjected_desc = "Warnung, wenn Du von Mutierende Injektion betroffen bist.",
+	youinjected_desc = "Warnung, wenn Du von Mutagene Injektion betroffen bist.",
 
 	otherinjected_name = "X ist verseucht",
-	otherinjected_desc = "Warnung, wenn andere Spieler von Mutierende Injektion betroffen sind.",
+	otherinjected_desc = "Warnung, wenn andere Spieler von Mutagene Injektion betroffen sind.",
 
 	icon_cmd = "icon",
 	icon_name = "Symbol",
-	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der von Mutierende Injektion betroffen ist. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
+	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der von Mutagene Injektion betroffen ist. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 
 	trigger1 = "^([^%s]+) ([^%s]+) von Mutagene Injektion betroffen",
 
 	you = "Ihr",
 	are = "seid",
+
+	startwarn = "Grobbulus angegriffen! 12 Minuten bis Wutanfall!",
+	enragebar = "Wutanfall",
+	enrage10min = "Wutanfall in 10 Minuten!",
+	enrage5min = "Wutanfall in 5 Minuten!",
+	enrage1min = "Wutanfall in 1 Minute!",
+	enrage30sec = "Wutanfall in 30 Sekunden!",
+	enrage10sec = "Wutanfall in 10 Sekunden!",
 
 	warn1 = "Du bist verseucht!",
 	warn2 = " ist verseucht!",

@@ -84,8 +84,8 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	doom_name = "Unausweichliches Schicksal Warnung",
-	doom_desc = "Warnung für Unausweichliches Schicksal",
+	doom_name = "Unausweichliches Schicksal",
+	doom_desc = "Warnung f\195\188r Unausweichliches Schicksal.",
 
 	spore_name = "Warnung bei Sporen",
 	spore_desc = "Warnung wenn Sporen auftauchen",
