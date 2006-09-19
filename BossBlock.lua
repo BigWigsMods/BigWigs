@@ -116,6 +116,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	["Suppress RaidSay"] = "Unterdr\195\188cke RaidSay",
 	["Suppress CTRA RaidSay popup messages."] = "Unterdr\195\188cke CTRA RaidSay Popup Nachrichten.",
+	["Suppress oRA RaidSay popup messages."] = "Unterdr\195\188cke oRA RaidSay Popup Nachrichten.",
 
 	["Suppress Tells"] = "Unterdr\195\188cke Fl\195\188stern",
 	["Suppress Tell messages."] = "Unterdr\195\188cke Fl\195\188stern Nachrichten.",
