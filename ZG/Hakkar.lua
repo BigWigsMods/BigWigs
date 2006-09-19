@@ -44,7 +44,7 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_desc = "Warn for Enrage",
 
 	mc_cmd = "mc",
-	mc_name = "Mind Controll",
+	mc_name = "Mind Control",
 	mc_desc = "Alert when someone is mind controlled.",
 
 	icon_cmd = "icon",
@@ -140,7 +140,7 @@ L:RegisterTranslations("zhCN", function() return {
 BigWigsHakkar = BigWigs:NewModule(boss)
 BigWigsHakkar.zonename = AceLibrary("Babble-Zone-2.0")("Zul'Gurub")
 BigWigsHakkar.enabletrigger = boss
-BigWigsHakkar.toggleoptions = {"mc", "icon", -1, "drain", "enrage", "bosskill"}
+BigWigsHakkar.toggleoptions = { "drain", "enrage", -1, "mc", "icon", "bosskill" }
 BigWigsHakkar.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------

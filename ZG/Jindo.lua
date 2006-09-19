@@ -109,7 +109,7 @@ L:RegisterTranslations("koKR", function() return {
 BigWigsJindo = BigWigs:NewModule(boss)
 BigWigsJindo.zonename = AceLibrary("Babble-Zone-2.0")("Zul'Gurub")
 BigWigsJindo.enabletrigger = boss
-BigWigsJindo.toggleoptions = {"youcurse", "elsecurse", "icon", -1, "brainwash", "healing", -1, "bosskill"}
+BigWigsJindo.toggleoptions = {"youcurse", "elsecurse", "icon", -1, "brainwash", "healing", "bosskill"}
 BigWigsJindo.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
