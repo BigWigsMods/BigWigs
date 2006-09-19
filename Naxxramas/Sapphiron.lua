@@ -14,8 +14,6 @@ local time
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Sapphiron",
 
-	engage_warn = "Sapphiron engaged! 10-24sec to Life Drain!",
-
 	deepbreath_cmd = "deepbreath",
 	deepbreath_name = "Deep Breath alert",
 	deepbreath_desc = "Warn when Sapphiron begins to cast Deep Breath.",
@@ -23,6 +21,17 @@ L:RegisterTranslations("enUS", function() return {
 	lifedrain_cmd = "lifedrain",
 	lifedrain_name = "Life Drain",
 	lifedrain_desc = "Warns about the Life Drain curse.",
+
+	berserk_cmd = "berserk",
+	berserk_name = "Berserk",
+	berserk_desc = "Warn for berserk.",
+
+	berserk_bar = "Berserk",
+	berserk_warn_10min = "10min to berserk!",
+	berserk_warn_5min = "5min to berserk!",
+	berserk_warn_rest = "%s sec to berserk!",
+
+	engage_message = "Sapphiron engaged! Berserk in 15min!",
 
 	lifedrain_message = "Life Drain! Possibly new one ~24sec!",
 	lifedrain_warn1 = "Life Drain in 5sec!",
@@ -37,9 +46,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
-	engage_warn = "사피론 전투 시작! 10-24초에 생명력 흡수!",
-
 	deepbreath_name = "딥브레스 경고",
 	deepbreath_desc = "사피론 딥 브레스 시전 시 경고.",
 
@@ -65,30 +71,20 @@ L:RegisterTranslations("koKR", function() return {
 BigWigsSapphiron = BigWigs:NewModule(boss)
 BigWigsSapphiron.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsSapphiron.enabletrigger = boss
-BigWigsSapphiron.toggleoptions = { "lifedrain", "deepbreath", "bosskill" }
+BigWigsSapphiron.toggleoptions = { "berserk", "lifedrain", "deepbreath", "bosskill" }
 BigWigsSapphiron.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
---[[
---
-24, 24, 49, 24
-16, 24, 48
-18, 24, 
-18, 24
-12, 24, 44, 24, 24, 60, 24, 24, 44, 24
-
-It seems the first Life Drain happens at 10-24sec, then one at 24sec
-Then he lifts for a little while - probably 30sec, then comes down and next life drain in 10-12sec.
-
-]]
-
 function BigWigsSapphiron:OnEnable()
 	time = nil
 
     self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
+
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "LifeDrain")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "LifeDrain")
@@ -105,7 +101,21 @@ end
 ------------------------------
 
 function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
-	if sync == "SapphironLifeDrain" and self.db.profile.lifedrain then
+	if sync == "BossEngaged" and rest and rest == boss then
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		if self.db.profile.berserk then
+			self:TriggerEvent("BigWigs_Message", L["engage_message"], "Yellow")
+			self:TriggerEvent("BigWigs_StartBar", self, L["berserk_bar"], 900, "Interface\\Icons\\INV_Shield_01", "Red", "Orange", "Yellow", "Green")
+			self:ScheduleEvent("bwsapphberserk1", "BigWigs_Message", 600, L["berserk_warn_10min"], "Yellow")
+			self:ScheduleEvent("bwsapphberserk2", "BigWigs_Message", 300, L["berserk_warn_5min"], "Yellow")
+			self:ScheduleEvent("bwsapphberserk3", "BigWigs_Message", 60, string.format(L["berserk_warn_rest"], 60), "Red")
+			self:ScheduleEvent("bwsapphberserk4", "BigWigs_Message", 30, string.format(L["berserk_warn_rest"], 30), "Red")
+			self:ScheduleEvent("bwsapphberserk5", "BigWigs_Message", 10, string.format(L["berserk_warn_rest"], 10), "Red")
+			self:ScheduleEvent("bwsapphberserk6", "BigWigs_Message", 5, string.format(L["berserk_warn_rest"], 5), "Red")
+		end
+	elseif sync == "SapphironLifeDrain" and self.db.profile.lifedrain then
 		self:TriggerEvent("BigWigs_Message", L["lifedrain_message"], "Orange")
 		self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 24, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
 	end
