@@ -24,6 +24,10 @@ L:RegisterTranslations("enUS", function() return {
 	curse_name = "Curse Alert",
 	curse_desc = "Warn for curse",
 
+	wave_cmd = "wave",
+	wave_name = "Wave Alert",
+	wave_desc = "Warn for waves",
+
 	starttrigger1 = "Die, trespasser!",
 	starttrigger2 = "Glory to the master!",
 	starttrigger3 = "Your life is forfeit!",
@@ -50,6 +54,9 @@ L:RegisterTranslations("enUS", function() return {
 	curse10secwarn = "Curse in ~10 seconds",
 
 	cursebar = "Next Curse",
+
+	wave1bar = "Wave 1",
+	wave2bar = "Wave 2",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -187,7 +194,7 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsNoth = BigWigs:NewModule(boss)
 BigWigsNoth.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsNoth.enabletrigger = boss
-BigWigsNoth.toggleoptions = {"blink", "teleport", "curse", "bosskill"}
+BigWigsNoth.toggleoptions = {"blink", "teleport", "curse", "wave", "bosskill"}
 BigWigsNoth.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -198,6 +205,8 @@ function BigWigsNoth:OnEnable()
 	self.timeroom = 90
 	self.timebalcony = 70
 	self.cursetime = 55
+	self.wave1time = 5
+	self.wave2time = 35
 	self.prior = nil
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -279,7 +288,12 @@ function BigWigsNoth:teleportToBalcony()
 		self:TriggerEvent("BigWigs_StartBar", self, L["backbar"], self.timebalcony, "Interface\\Icons\\Spell_Magic_LesserInvisibilty", "Green", "Yellow", "Orange", "Red")
 		self:ScheduleEvent("bwnothback", "BigWigs_Message", self.timebalcony - 10, L["backwarn2"], "Orange")
 	end
+	if self.db.profile.wave then
+		self:TriggerEvent("BigWigs_StartBar", self, L["wave1bar"], self.wave1time )
+		self:TriggerEvent("BigWigs_StartBar", self, L["wave2bar"], self.wave2time )
+	end
 	self:ScheduleEvent("bwnothtoroom", self.teleportToRoom, self.timebalcony, self)
+	self.wave2time = self.wave2time + 15
 end
 
 function BigWigsNoth:teleportToRoom()
