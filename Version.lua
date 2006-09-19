@@ -38,6 +38,7 @@ L:RegisterTranslations("enUS", function() return {
 	["N/A"] = true,
 	["BigWigs"] = true,
 	["Runs a version query on the BigWigs core."] = true,
+	["Nr Replies"] = true,
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -176,6 +177,12 @@ function BigWigsVersionQuery:OnTooltipUpdate()
 		"child_justify1", "LEFT"
 	)
 	zoneCat:AddLine("text", self.currentZone)
+	local playerscat = tablet:AddCategory(
+		"columns", 1,
+		"text", L["Nr Replies"],
+		"child_justify1", "LEFT"
+	)
+	playerscat:AddLine("text", self.responses)
 	local cat = tablet:AddCategory(
 		"columns", 2,
 		"text", L["Player"],
@@ -239,6 +246,7 @@ function BigWigsVersionQuery:QueryVersion(zone)
 	else
 		self.responseTable[UnitName("player")] = self.zoneRevisions[zone]
 	end
+	self.responses = 1
 	self:UpdateVersions()
 	self:TriggerEvent("BigWigs_SendSync", "BWVQ "..zone)
 end
@@ -269,6 +277,7 @@ function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "BWVR" and self.queryRunning and nick and rest then
 		if tonumber(rest) == nil then rest = self:ParseReply(rest) end
 		self.responseTable[nick] = tonumber(rest)
+		self.responses = self.responses + 1
 		self:UpdateVersions()
 	end
 end
