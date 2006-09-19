@@ -10,12 +10,12 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "moam",
+	cmd = "Moam",
 
 	adds_cmd = "adds",
 	adds_name = "Adds Alert",
 	adds_desc = "Warn for Adds",
-	
+
 	paralyze_cmd = "paralyze",
 	paralyze_name = "Paralyze Alert",
 	paralyze_desc = "Warn for Paralyze",
@@ -35,12 +35,12 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("frFR", function() return {
 	starttrigger = "sent votre peur%.",
 	startwarn = "Moam engag\195\169 ! 90 secondes avant les Elementaires !",
-	
+
 	addsbar = "Elementaire",
 	addsincoming = "Les Elementaires arrivent dans %s secondes !",
 	addstrigger = "absorbe votre mana et se change en pierre%.",
 	addswarn = "Elementaire ! Moam paralys\195\169 pour 90 secondes%.",
-	
+
 	paralyzebar = "Paralyse",
 	returnincoming = "Moam déparalysé dans %s secondes !",
 	returntrigger = "Dynamiser sur Moam vient de se dissiper%.",
@@ -48,13 +48,9 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "moam",
-
-	adds_cmd = "adds",
 	adds_name = "Elementare",
 	adds_desc = "Warnung, wenn Elementare erscheinen.",
-	
-	paralyze_cmd = "paralyze",
+
 	paralyze_name = "Steinform",
 	paralyze_desc = "Warnung, wenn Moam in Steinform.",
 
@@ -73,10 +69,9 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	adds_name = "정령 경고",
 	adds_desc = "정령에 대한 경고",
-	
+
 	paralyze_name = "마비 경고",
 	paralyze_desc = "마비에 대한 경고",
 
@@ -95,7 +90,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	adds_name = "增援警报",
 	adds_desc = "敌人增援出现时发出警报",
-	
+
 	paralyze_name = "石化警报",
 	paralyze_desc = "莫阿姆进入石化状态时发出警报",
 
@@ -165,3 +160,4 @@ function BigWigsMoam:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 		self:AddsStart()
 	end
 end
+

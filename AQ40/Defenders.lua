@@ -36,6 +36,10 @@ L:RegisterTranslations("enUS", function() return {
 	summon_name = "Summon Alert",
 	summon_desc = "Warn for add summons",
 
+	icon_cmd = "icon",
+	icon_name = "Place icon",
+	icon_desc = "Place raid icon on the last plagued person (requires promoted or higher)",
+
 	explodetrigger = "Anubisath Defender gains Explode.",
 	explodewarn = "Exploding!",
 	enragetrigger = "Anubisath Defender gains Enrage.",
@@ -179,7 +183,7 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsDefenders = BigWigs:NewModule(boss)
 BigWigsDefenders.zonename = AceLibrary("Babble-Zone-2.0")("Ahn'Qiraj")
 BigWigsDefenders.enabletrigger = boss
-BigWigsDefenders.toggleoptions = { "plagueyou", "plagueother", -1, "thunderclap", "explode", "enrage", "bosskill"}
+BigWigsDefenders.toggleoptions = { "plagueyou", "plagueother", "icon", -1, "thunderclap", "explode", "enrage", "bosskill"}
 BigWigsDefenders.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -237,19 +241,21 @@ function BigWigsDefenders:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	end
 end
 
-	function BigWigsDefenders:CheckPlague(msg)
-		local _,_, Player, Type = string.find(msg, L["plaguetrigger"])
-		if (Player and Type) then
-			if (Player == L["plagueyou"] and Type == L["plagueare"]) then
-				if self.db.profile.plagueyou then self:TriggerEvent("BigWigs_Message", L["plagueyouwarn"], "Red", true) end
-			else
-				if self.db.profile.plagueother then
-					self:TriggerEvent("BigWigs_Message", Player .. L["plaguewarn"], "Yellow")
-					self:TriggerEvent("BigWigs_SendTell", Player, L["plagueyouwarn"])
-				end
-			end
+function BigWigsDefenders:CheckPlague(msg)
+	local _,_, pplayer, ptype = string.find(msg, L["plaguetrigger"])
+	if player then
+		if self.db.profile.plagueyou and pplayer == L["plagueyou"] then
+			self:TriggerEvent("BigWigs_Message", L["plagueyouwarn"], "Red", true)
+		elseif self.db.profile.plagueother then
+			self:TriggerEvent("BigWigs_Message", pplayer .. L["plaguewarn"], "Yellow")
+			self:TriggerEvent("BigWigs_SendTell", pplayer, L["plagueyouwarn"])
+		end
+
+		if self.db.profile.icon then
+			self:TriggerEvent("BigWigs_SetRaidIcon", pplayer)
 		end
 	end
+end
 
 function BigWigsDefenders:Thunderclap(msg)
 	if self.db.profile.thunderclap and string.find(msg, L["thunderclaptrigger"]) then

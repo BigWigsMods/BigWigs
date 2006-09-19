@@ -10,16 +10,16 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "buru",
-	
+	cmd = "Buru",
+
 	you_cmd = "you",
 	you_name = "You're being watched alert",
 	you_desc = "Warn when you're being watched",
-	
+
 	other_cmd = "other",
 	other_name = "Others being watched alert",
 	other_desc = "Warn when others are being watched",
-	
+
 	icon_cmd = "icon",
 	icon_name = "Place icon",
 	icon_desc = "Place raid icon on watched person (requires promoted or higher)",
@@ -27,7 +27,7 @@ L:RegisterTranslations("enUS", function() return {
 	watchtrigger = "sets eyes on (.+)!",
 	watchwarn = " is being watched!",
 	watchwarnyou = "You are being watched!",
-	you = "You",	
+	you = "You",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -38,20 +38,15 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "buru",
-	
-	you_cmd = "you",
 	you_name = "Du wirst beobachtet",
 	you_desc = "Warnung, wenn Du beobachtet wirst.",
-	
-	other_cmd = "other",
+
 	other_name = "X wird beobachtet",
 	other_desc = "Warnung, wenn andere Spieler beobachtet werden.",
-	
-	icon_cmd = "icon",
+
 	icon_name = "Symbol",
 	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der beobachtet wird. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
-	
+
 	watchtrigger = "beh\195\164lt (.+) im Blickfeld!",
 	watchwarn = " wird beobachtet!",
 	watchwarnyou = "Du wirst beobachtet!",
@@ -61,13 +56,13 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	you_name = "玩家凝视警报",
 	you_desc = "当你被凝视时发出警报",
-	
+
 	other_name = "队友凝视警报",
 	other_desc = "当队友被凝视时发出警报",
-	
+
 	icon_name = "标记图标",
 	icon_desc = "在被凝视的队友头上标记团队图标（需要助理或领袖权限）",
-	
+
 	watchtrigger = "凝视着(.+)！",
 	watchwarn = "被布鲁盯上了！",
 	watchwarnyou = "你被布鲁盯上了！放风筝吧！",
@@ -75,20 +70,19 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	
 	you_name = "당신을 노려봄 경고",
 	you_desc = "당신을 노려볼 때 경고",
-	
+
 	other_name = "타인을 노려봄 경고",
 	other_desc = "타인을 노려볼 때 경고",
-	
+
 	icon_name = "아이콘 지정",
 	icon_desc = "노려보는 사람에게 레이드 아이콘 지정(승급자 이상 요구)",
 
 	watchtrigger = "(.+)|1을;를; 노려봅니다!",
 	watchwarn = "님을 노려봅니다!",
 	watchwarnyou = "당신을 주시합니다!",
-	
+
 	you = UnitName("player"),
 } end )
 
@@ -117,14 +111,12 @@ function BigWigsBuru:CHAT_MSG_MONSTER_EMOTE( msg )
 	end
 	local _, _, player = string.find(msg, L["watchtrigger"])
 	if player then
-		if player == L["you"] then
+		if player == L["you"] and self.db.profile.you then
 			player = UnitName("player")
-			if self.db.profile.you then self:TriggerEvent("BigWigs_Message", L["watchwarnyou"], "Red", true) end
-		else
-			if self.db.profile.other then 
-				self:TriggerEvent("BigWigs_Message", player .. L["watchwarn"], "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", player, L["watchwarnyou"])
-			end
+			self:TriggerEvent("BigWigs_Message", L["watchwarnyou"], "Red", true)
+		elseif self.db.profile.other then
+			self:TriggerEvent("BigWigs_Message", player .. L["watchwarn"], "Yellow")
+			self:TriggerEvent("BigWigs_SendTell", player, L["watchwarnyou"])
 		end
 
 		if self.db.profile.icon then
@@ -132,3 +124,4 @@ function BigWigsBuru:CHAT_MSG_MONSTER_EMOTE( msg )
 		end
 	end
 end
+

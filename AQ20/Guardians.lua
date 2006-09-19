@@ -10,12 +10,12 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "guardian",
-	
+	cmd = "Guardian",
+
 	summon_cmd = "summon",
 	summon_name = "Summon Alert",
 	summon_desc = "Warn for summoned adds",
-	
+
 	plagueyou_cmd = "plagueyou",
 	plagueyou_name = "Plague on you alert",
 	plagueyou_desc = "Warn for plague on you",
@@ -23,11 +23,15 @@ L:RegisterTranslations("enUS", function() return {
 	plagueother_cmd = "plagueother",
 	plagueother_name = "Plague on others alert",
 	plagueother_desc = "Warn for plague on others",
-	
+
+	icon_cmd = "icon",
+	icon_name = "Place icon",
+	icon_desc = "Place raid icon on the last plagued person (requires promoted or higher)",
+
 	explode_cmd = "explode",
 	explode_name = "Explode Alert",
 	explode_desc = "Warn for incoming explosion",
-	
+
 	enrage_cmd = "enrage",
 	enrage_name = "Enrage Alert",
 	enrage_desc = "Warn for enrage",
@@ -81,19 +85,19 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	summon_name = "召唤警报",
 	summon_desc = "阿努比萨斯守卫者召唤增援时发出警报",
-	
+
 	plagueyou_name = "玩家瘟疫警报",
 	plagueyou_desc = "你中了瘟疫时发出警报",
 
 	plagueother_name = "队友瘟疫警报",
 	plagueother_desc = "队友中了瘟疫时发出警报",
-	
+
 	explode_name = "爆炸警报",
 	explode_desc = "阿努比萨斯守卫者即将爆炸时发出警报",
-	
+
 	enrage_name = "狂怒警报",
 	enrage_desc = "阿努比萨斯守卫者进入狂怒状态时发出警报",
-	
+
 	explodetrigger = "阿努比萨斯守卫者获得了爆炸的效果。",
 	explodewarn = "即将爆炸！近战躲开！",
 	enragetrigger = "阿努比萨斯守卫者获得了狂怒的效果。",
@@ -110,19 +114,18 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	
 	summon_name = "소환 경고",
 	summon_desc = "추가 소환에 대한 경고",
-	
+
 	plagueyou_name = "자신의 역병 경고",
 	plagueyou_desc = "자신의 역병에 대한 경고",
 
 	plagueother_name = "타인의 역병 경고",
 	plagueother_desc = "타인의 역병에 대한 경고",
-	
+
 	explode_name = "폭발 경고",
 	explode_desc = "폭발에 대한 경고",
-	
+
 	enrage_name = "분노 경고",
 	enrage_desc = "분노에 대한 경고",
 
@@ -148,7 +151,7 @@ L:RegisterTranslations("koKR", function() return {
 BigWigsGuardians = BigWigs:NewModule(boss)
 BigWigsGuardians.zonename = AceLibrary("Babble-Zone-2.0")("Ruins of Ahn'Qiraj")
 BigWigsGuardians.enabletrigger = boss
-BigWigsGuardians.toggleoptions = {"summon", "plagueyou", "plagueother", "explode", "enrage", "bosskill"}
+BigWigsGuardians.toggleoptions = {"summon", "explode", "enrage", -1, "plagueyou", "plagueother", "icon", "bosskill"}
 BigWigsGuardians.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -159,9 +162,9 @@ function BigWigsGuardians:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "checkPlague")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "checkPlague")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "checkPlague")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "CheckPlague")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "CheckPlague")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CheckPlague")
 end
 
 ------------------------------
@@ -190,14 +193,19 @@ function BigWigsGuardians:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	end
 end
 
-	function BigWigsGuardians:checkPlague( msg )
-		local _,_,player, type = string.find(msg, L["plaguetrigger"])
-		if (player and type) then
-			if (player == L["plagueyou"] and type == L["plagueare"]) then
-				if self.db.profile.plagueyou then self:TriggerEvent("BigWigs_Message", L["plaguewarnyou"], "Red", true) end
-			elseif self.db.profile.plagueother then
-				self:TriggerEvent("BigWigs_Message", player .. L["plaguewarn"], "Yellow")
-				self:TriggerEvent("BigWigs_SendTell", player, L["plaguewarnyou"])
-			end
+function BigWigsGuardians:CheckPlague( msg )
+	local _,_, player, type = string.find(msg, L["plaguetrigger"])
+	if player and type then
+		if self.db.profile.plagueyou and player == L["plagueyou"] and type == L["plagueare"] then
+			self:TriggerEvent("BigWigs_Message", L["plaguewarnyou"], "Red", true)
+		elseif self.db.profile.plagueother then
+			self:TriggerEvent("BigWigs_Message", player .. L["plaguewarn"], "Yellow")
+			self:TriggerEvent("BigWigs_SendTell", player, L["plaguewarnyou"])
+		end
+
+		if self.db.profile.icon then
+			self:TriggerEvent("BigWigs_SetRaidIcon", player)
 		end
 	end
+end
+

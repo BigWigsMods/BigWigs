@@ -15,7 +15,7 @@ local rajdead
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "rajaxx",
+	cmd = "Rajaxx",
 
 	wave_cmd = "wave",
 	wave_name = "Wave Alert",
@@ -153,7 +153,6 @@ BigWigsGeneralRajaxx.enabletrigger = andorov
 BigWigsGeneralRajaxx.toggleoptions = {"wave", "bosskill"}
 BigWigsGeneralRajaxx.revision = tonumber(string.sub("$Revision$", 12, -3))
 
-
 ------------------------------
 --      Initialization      --
 ------------------------------
@@ -165,18 +164,15 @@ function BigWigsGeneralRajaxx:OnEnable()
 	for i=1,9 do self.warnsets[L("trigger"..i)] = L("warn"..i) end
 end
 
-
 function BigWigsGeneralRajaxx:VerifyEnable(unit)
 	return not rajdead
 end
-
 
 function BigWigsGeneralRajaxx:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.wave and msg and self.warnsets[msg] then
 		self:TriggerEvent("BigWigs_Message", self.warnsets[msg], "Orange")
 	end
 end
-
 
 function BigWigsGeneralRajaxx:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if msg == string.format(UNITDIESOTHER, self:ToString()) then
@@ -185,3 +181,4 @@ function BigWigsGeneralRajaxx:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 		rajdead = true
 	end
 end
+
