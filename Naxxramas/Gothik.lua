@@ -46,7 +46,7 @@ L:RegisterTranslations("enUS", function() return {
 	warn4 = "In room in 30 seconds",
 	warn5 = "Gothik Incoming in 10 seconds",
 
-	wave = "%d/20: ",
+	wave = "%d/22: ",
 
 	trawarn = "Trainees in 3 seconds",
 	dkwarn = "Deathknight in 3 seconds",
