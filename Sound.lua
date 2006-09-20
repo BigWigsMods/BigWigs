@@ -40,6 +40,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	["Use sounds"] = "효과음 사용",
 	["Toggle sounds on or off."] = "효과음을 켜거나 끔.",
+	["Default only"] = "기본음",
+	["Use only the default sound."] = "기본음만 사용.",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
