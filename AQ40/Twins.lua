@@ -204,6 +204,9 @@ end
 
 function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "BossEngaged" and rest and rest == boss then
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
 		if self.db.profile.teleport then
 			self:ScheduleEvent("BigWigs_Message", 25, L["portdelaywarn"], "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 30, "Interface\\Icons\\Spell_Arcane_Blink", "Yellow", "Orange", "Red")
