@@ -60,6 +60,9 @@ L:RegisterTranslations("koKR", function() return {
 	othermark_name = "타인의 표적 경고",
 	othermark_desc = "타인이 표적이 됐을 때 경고",
 
+	icon_name = "아이콘 지정",
+	icon_desc = "표적이된 사람에게 해골 아이콘 지정 (승급자 이상 필요)",
+
 	mark_trigger = "내 귀여운 것들아, (.+)%|1을;를; 잡아먹어라!$",
 
 	mark_warning_self = "당신은 표적입니다!",

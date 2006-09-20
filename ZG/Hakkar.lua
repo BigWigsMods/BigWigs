@@ -108,6 +108,8 @@ L:RegisterTranslations("koKR", function() return {
 	mc_name = "정신 지배",
 	mc_desc = "정신 지배 되었을 때 경고",
 
+	icon_name = "아이콘 지정",
+	icon_desc = "정신 지배된 사람에게 해골 아이콘 지정 (승급자 이상 필요)",
 } end)
 
 

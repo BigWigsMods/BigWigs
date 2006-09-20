@@ -88,6 +88,9 @@ L:RegisterTranslations("koKR", function() return {
 	elsecurse_name = "타인의 저주 알림",
 	elsecurse_desc = "타인이 저주에 걸렸을 때 알림",
 	
+	icon_name = "아이콘 지정",
+	icon_desc = "저주가 걸린 사람에게 해골 아이콘 지정 (승급자 이상 필요)",
+
 	triggerbrainwash = "주술사 진도|1이;가; 세뇌의 토템 소환|1을;를; 시전합니다.", 		
 	triggerhealing = "주술사 진도|1이;가; 강력한 치유의 수호물|1을;를; 시전합니다.",
 	triggercurse = "^([^|;%s]*)(.*)진도의 망상에 걸렸습니다%.$",
