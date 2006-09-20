@@ -56,6 +56,16 @@ L:RegisterTranslations("koKR", function() return {
 	lifedrain_warn1 = "5초간 생명력 흡수!",
 	lifedrain_bar = "생명력 흡수",
 
+	berserk_name = "광폭화",
+	berserk_desc = "광폭화에 대한 경고.",
+
+	berserk_bar = "광폭화",
+	berserk_warn_10min = "10분 후 광폭화!",
+	berserk_warn_5min = "5분 후 광폭화!",
+	berserk_warn_rest = "%s초 후 광폭화!",
+
+	engage_message = "사피론 전투 개시! 광폭화 까지 15분!",
+
 	lifedrain_trigger = "피의 착취에 걸렸습니다.",
 	lifedrain_trigger2 = "피의 착취|1으로;로; (.+)|1을;를; 공격했지만 저항했습니다.",
 
