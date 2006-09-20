@@ -40,7 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 	enragewarn = "Twins are enraged",
 	healtrigger1 = "'s Heal Brother heals",
 	healtrigger2 = " Heal Brother heals",
-	healwarn = "Casting Heal Brother - Separate them fast!",
+	healwarn = "Casting Heal!",
 	startwarn = "Twin Emperors engaged! Enrage in 15 minutes!",
 	enragebartext = "Enrage",
 	warn1 = "Enrage in 10 minutes",
