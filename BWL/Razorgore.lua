@@ -15,7 +15,7 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Razorgore",
 
 	start_trigger = "Intruders have breached",
-	start_message = "Razorgore engaged, 30 eggs to go!",
+	start_message = "Razorgore engaged!",
 
 	mindcontrol_trigger = "Foolish ([^%s]+).",
 	mindcontrol_message = "%s has been mind controlled!",
@@ -31,8 +31,8 @@ L:RegisterTranslations("enUS", function() return {
 	mc_desc = "Warn when players are mind controlled",
 
 	eggs_cmd = "eggs",
-	eggs_name = "Egg countdown",
-	eggs_desc = "Count down the remaining eggs",
+	eggs_name = "Don't count eggs",
+	eggs_desc = "Don't count down the remaining eggs - this option does not work for everyone, we need better triggers.",
 
 	phase_cmd = "phase",
 	phase_name = "Phases",
@@ -42,13 +42,9 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
 
 	start_trigger = "침입자들이 들어왔다! 어떤 희생이 있더라도 알을 반드시 수호하라!", -- By turtl
-	start_message = "폭군 서슬송곳니 전투 시작, 알 30 개!",
 
 	mindcontrol_trigger = "자! ([^%s]+), 이제부터 나를 섬겨라!",	-- By turtl
 	mindcontrol_message = "<<%s>> 정신 지배 되었습니다.",
-
-	egg_trigger = "폭군 서슬송곳니|1이;가; 알 파괴|1을;를; 시전합니다.", -- By turtl
-	egg_message = "%d/30 알을 파괴하였습니다.",
 
 	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.", -- CHECK
 	phase2_message = "모든 알이 파괴되었습니다, 서슬송곳니가 풀려납니다.", -- CHECK
@@ -65,7 +61,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	start_trigger = "Eindringlinge sind in die",
-	start_message = "Razorgore angegriffen! 30 Eier noch zu zerst\195\182ren!",
+	start_message = "Razorgore angegriffen!",
 
 	mindcontrol_trigger = "^([^%s]+), Ihr Narr, Ihr dient jetzt mir!",
 	mindcontrol_message = "%s wurde \195\188bernommen!",
@@ -77,9 +73,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	mc_name = "Gedankenkontrolle",
 	mc_desc = "Warnung, wenn Spieler \195\188bernommen werden.",
-
-	eggs_name = "Eier",
-	eggs_desc = "Countdown f\195\188r die noch zu zerst\195\182renden Eier.",
 
 	phase_name = "Phasen",
 	phase_desc = "Warnung beim Eintritt in Phase 1 und 2.",
@@ -103,8 +96,8 @@ function BigWigsRazorgore:OnEnable()
 	eggs = 0
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	-- self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF")
-	-- self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFFS")
+	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -139,7 +132,7 @@ function BigWigsRazorgore:BigWigs_RecvSync(sync, rest)
 
 	if rest == (eggs + 1) then
 		eggs = eggs + 1
-		if self.db.profile.eggs then
+		if not self.db.profile.eggs then
 			self:TriggerEvent("BigWigs_Message", string.format(L["egg_message"], eggs), "Orange")
 		end
 
