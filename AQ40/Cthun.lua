@@ -53,8 +53,8 @@ L:RegisterTranslations("enUS", function() return {
 	weakened_desc = "Warn for Weakened State",
 
 	rape_cmd = "rape",
-	rape_name = "Rape is never funny",
-	rape_desc = "Some people just don't get hentai jokes, the bastards",
+	rape_name = "Rape jokes are funny",
+	rape_desc = "Some people like hentai jokes.",
 
 	weakenedtrigger = "%s is weakened!",
 
@@ -109,9 +109,6 @@ L:RegisterTranslations("deDE", function() return {
 	weakened_name = "Geschw\195\164cht",
 	weakened_desc = "Warnung, wenn C'Thun geschw\195\164cht ist.",
 
-	rape_name = "Rape is never funny", -- ?
-	rape_desc = "Some people just don't get hentai jokes, the bastards", -- ?
-
 	weakenedtrigger = "%s ist geschw\195\164cht!",
 
 	tentacle1	= "Tentacle Rape Party - Pleasure!", -- ?
@@ -165,9 +162,6 @@ L:RegisterTranslations("koKR", function() return {
 	weakened_name = "약화 경고",
 	weakened_desc = "약화 상태에 대한 경고",
 
-	rape_name = "Rape is never funny",
-	rape_desc = "Some people just don't get hentai jokes, the bastards",
-
 	weakenedtrigger 	= "%s|1이;가; 약해집니다!", --"%s|1이;가; 약해졌습니다!",
 
 	tentacle1	= "눈달린 촉수 등장 - 촉수 처리~~!",
@@ -220,9 +214,6 @@ L:RegisterTranslations("zhCN", function() return {
 	weakened_name = "虚弱警报",
 	weakened_desc = "克苏恩被削弱时发出警报",
 
-	rape_name = "Rape is never funny",
-	rape_desc = "Some people just don't get hentai jokes, the bastards",
-
 	weakenedtrigger 	= "被削弱了！",
 
 	tentacle1	= "Tentacle Rape Party - Pleasure!",
@@ -271,7 +262,7 @@ L:RegisterTranslations("frFR", function() return {
 
 BigWigsCThun = BigWigs:NewModule(cthun)
 BigWigsCThun.zonename = AceLibrary("Babble-Zone-2.0")("Ahn'Qiraj")
-BigWigsCThun.enabletrigger = { eyeofcthun }
+BigWigsCThun.enabletrigger = { eyeofcthun, cthun }
 BigWigsCThun.toggleoptions = { "rape", -1, "tentacle", "glare", "group", -1, "giant", "weakened", "bosskill" }
 BigWigsCThun.revision = tonumber(string.sub("$Revision$", 12, -3))
 
@@ -290,6 +281,8 @@ function BigWigsCThun:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")	-- start of phase2 and kill of C'Thun
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE") -- engage of Eye of C'Thun
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE") -- engage of Eye of C'Thun
+	-- Not sure about this, since we get out of combat between the phases.
+	--self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 
