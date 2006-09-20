@@ -123,6 +123,9 @@ L:RegisterTranslations("koKR", function() return {
 	plagueother_name = "타인의 역병 경고",
 	plagueother_desc = "타인의 역병에 대한 경고",
 
+	icon_name = "아이콘 지정",
+	icon_desc = "마지막 역병에 걸린 사람에게 공격대 아이콘 지정 (승급자 이상 요구)",
+
 	explode_name = "폭발 경고",
 	explode_desc = "폭발에 대한 경고",
 
