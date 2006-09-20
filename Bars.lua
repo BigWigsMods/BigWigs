@@ -43,6 +43,13 @@ L:RegisterTranslations("enUS", function() return {
 	
 	["Test"] = true,
 	["Close"] = true,
+
+	["Texture"] = true,
+	["Set the texture for the timerbars."] = true,
+
+	["default"] = true,
+	["smooth"] = true,
+	["otravi"] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -128,6 +135,7 @@ BigWigsBars.revision = tonumber(string.sub("$Revision$", 12, -3))
 BigWigsBars.defaultDB = {
 	growup = false,
 	scale = 1.0,
+	texture = L["default"],
 }
 BigWigsBars.consoleCmd = L["bars"]
 BigWigsBars.consoleOptions = {
@@ -161,6 +169,14 @@ BigWigsBars.consoleOptions = {
 			get = function() return BigWigsBars.db.profile.scale end,
 			set = function(v) BigWigsBars.db.profile.scale = v end,
 		},
+		[L["Texture"]] = {
+			type = "text",
+			name = L["Texture"],
+			desc = L["Set the texture for the timerbars."],
+			get = function() return BigWigsBars.db.profile.texture end,
+			set = function(v) BigWigsBars.db.profile.texture = v end,
+			validate = { L["default"], L["otravi"], L["smooth"] },
+		}
 	},
 }
 
@@ -170,6 +186,7 @@ BigWigsBars.consoleOptions = {
 ------------------------------
 
 function BigWigsBars:OnEnable()
+	if not self.db.profile.texture then self.db.profile.texture = L["default"] end
 	self:SetupFrames()
 	self:RegisterEvent("BigWigs_ShowAnchors")
 	self:RegisterEvent("BigWigs_HideAnchors")
@@ -207,6 +224,8 @@ function BigWigsBars:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, 
 
  	module:RegisterCandyBar(id, time, text, icon, c1, c2, c3, c4, c5, c6, c8, c9, c10)
  	module:RegisterCandyBarWithGroup(id, "BigWigsGroup")
+	local texture = "Interface\\AddOns\\BigWigs\\Textures\\" .. L:GetReverseTranslation( self.db.profile.texture )
+	module:SetCandyBarTexture( id, texture )
 	if bc then module:SetCandyBarBackgroundColor(id, bc, balpha) end
 	if txtc then module:SetCandyBarTextColor(id, txtc) end
 
