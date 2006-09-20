@@ -73,11 +73,18 @@ L:RegisterTranslations("koKR", function() return {
 	adddeath_name = "애드 죽음 알림",
 	adddeath_desc = "애드가 죽었을 때 알림.",
 
-	disabletrigger = "내가... 죽는... 구나.",
+	disabletrigger = "내가... 죽는구나.", -- CHECK
 
 	starttrigger1 = "어리석은 것들, 스스로 죽음을 자초하다니!",
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun", -- CHECK
 	startwarn = "영혼의 착취자 고딕 전투 시작! 4:30 후 고딕 등장.",
+
+	rider_name = "무자비한 죽음의 기병",
+	spectral_rider_name = "Spectral 죽음의 기병", -- CHECK
+	deathknight_name = "무자비한 죽음의 기사",
+	spectral_deathknight_name = "Spektral 죽음의 기사", -- CHECK
+	trainee_name = "무자비한 훈련생", -- CHECK
+	spectral_trainee_name = "Spectral 훈련생", -- CHECK
 
 	riderdiewarn = "기병 죽음! 무덤조 긴장하세요!",
 	dkdiewarn = "죽음의 기사 죽음!",
@@ -98,7 +105,7 @@ L:RegisterTranslations("koKR", function() return {
 	dkbar = "죽음의 기사 - %d",
 	riderbar = "기병 - %d",
 	
-	inroomtrigger = "오랫동안 기다렸다. 이제 영혼의 착취자를 만날 차례다.",
+	inroomtrigger = "오랫동안 기다려 왔다. 이제 영혼의 착취자를 만날 차례다.", -- CHECK
 	inroomwarn = "고딕 등장!!",
 	
 	inroombartext = "고딕 등장",

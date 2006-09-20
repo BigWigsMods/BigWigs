@@ -109,6 +109,9 @@ L:RegisterTranslations("koKR", function() return {
 	curse_name = "저주 경고",
 	curse_desc = "저주에 대한 경고",
 
+	wave_name = "웨이브 알림",
+	wave_desc = "웨이브에 대한 알림",
+
 	starttrigger1 = "죽어라, 침입자들아!",
 	starttrigger2 = "주인님께 영광을!",
 	starttrigger3 = "너희 생명은 끝이다!",
@@ -135,6 +138,9 @@ L:RegisterTranslations("koKR", function() return {
 	curse10secwarn = "저주 약 10초후",
 
 	cursebar = "다음 저주",	
+
+	wave1bar = "웨이브 1",
+	wave2bar = "웨이브 2",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

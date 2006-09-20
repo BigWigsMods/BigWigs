@@ -99,15 +99,17 @@ L:RegisterTranslations("koKR", function() return {
 	starttrigger = "스탈라그, 박살낸다!",
 	starttrigger1 = "너 주인님께 바칠꺼야!",
 	starttrigger2 = "잡아... 먹어주마...",
-	starttrigger3 = "박살을... 내주겠다!!",
+	starttrigger3 = "박살을 내주겠다!", -- CHECK
 	starttrigger4 = "죽여주마...",
 	
 	adddeath = "%s|1이;가; 죽었습니다.",
-	teslaoverload = "%s|1이;가; 과부하에 걸립니다!",
+	teslaoverload = "%s|1이;가; 과부하 상태가 됩니다.",
 
-	pstrigger = "자 고통을 느껴봐라...",
+	pstrigger = "자, 고통을 느껴봐라...",	 -- CHECK
 	trigger1 = "타디우스|1이;가; 극성 변환|1을;를; 시전합니다.",
 	chargetrigger = "(%w+)전하에 걸렸습니다.",	
+	positivetype = "Interface\\Icons\\Spell_ChargePositive",
+	negativetype = "Interface\\Icons\\Spell_ChargeNegative",
 	stalaggtrigger = "스탈라그|1이;가; 마력의 쇄도 효과를 얻었습니다.",
 
 	you = "",
@@ -119,11 +121,11 @@ L:RegisterTranslations("koKR", function() return {
 	addsdownwarn = "2단계가 10~20초후에 시작됩니다!",
 	thaddiusincoming = "2단계가 3초후 시작됩니다!",
 	pswarn1 = "타디우스가 극성 변환을 시전합니다!",
-	pswarn2 = "30초후 극성 변환 시전합니다!",
-	pswarn3 = "3초후 극성 변환을 시전합니다.!",
-	poswarn = "당신은 양전하로 대전되었습니다!",
-	negwarn = "당신은 음전하로 대전되었습니다!",
-	nochange = "당신은 대전되지 않았습니다!",
+	pswarn2 = "30초후 극성 변환!",
+	pswarn3 = "3초후 극성 변환!",
+	poswarn = "양전하로 대전!! 반대로 이동!",
+	negwarn = "음전하로 대전!! 반대로 이동!",
+	nochange = "극성이 변하지 않았습니다! 제자리 대기!",
 	polaritytickbar = "극성 틱",
 	enragebartext = "격노",
 	warn1 = "3분후 격노",
