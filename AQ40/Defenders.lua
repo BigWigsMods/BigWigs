@@ -148,6 +148,9 @@ L:RegisterTranslations("koKR", function() return {
 	summon_name = "소환 경고",
 	summon_desc = "추가 소환에 대한 경고",
 
+	icon_name = "아이콘 지정",
+	icon_desc = "마지막 역병에 걸린 사람에게 공격대 아이콘 지정(승급자 이상 필요)",
+
 	explodetrigger = "아누비사스 문지기|1이;가; 폭파 효과를 얻었습니다.",
 	explodewarn = "폭파! 떨어지세요!",
 	enragetrigger = "아누비사스 문지기|1이;가; 분노 효과를 얻었습니다.",

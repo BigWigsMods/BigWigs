@@ -124,6 +124,9 @@ L:RegisterTranslations("koKR", function() return {
 	scarab_name = "스카라베 소환 경고",
 	scarab_desc = "스카라베 소환에 대한 경고",
 
+	berserk_name = "광폭화",
+	berserk_desc = "아우로 광폭화 경고",
+
 	sweeptrigger = "아우로|1이;가; 휩쓸기|1을;를; 시전합니다.",
 	sweepannounce = "휩쓸기!",
 	sweepwarn = "5초후 휩쓸기! 대피",
@@ -134,8 +137,12 @@ L:RegisterTranslations("koKR", function() return {
 	sandblastwarn = "5초후 모래 돌풍",
 	sandblastbartext = "모래 돌풍",
 
+	engage_message = "아우로 전투개시! 90초후 잠수 가능!",
+	possible_submerge_bar = "잠수 가능",
+
 	emergetrigger = "흙더미|1이;가; 아우로 스카라베 소환|1을;를; 시전합니다.",
 	emergeannounce = "아우로 등장! 벌레들 제거!",
+	emergewarn = "15초후 아우로 잠수 가능!",
 	emergebartext = "아우로 잠수",
 
 	scarabdespawn = "스카라베 소환 10초전",
