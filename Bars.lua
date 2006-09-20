@@ -224,7 +224,7 @@ function BigWigsBars:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, 
 
  	module:RegisterCandyBar(id, time, text, icon, c1, c2, c3, c4, c5, c6, c8, c9, c10)
  	module:RegisterCandyBarWithGroup(id, "BigWigsGroup")
-	local texture = "Interface\\AddOns\\BigWigs\\Textures\\" .. L:GetReverseTranslation( self.db.profile.texture )
+	local texture = "Interface\\AddOns\\BigWigs\\Textures\\" .. L:HasReverseTranslation(self.db.profile.texture) and L:GetReverseTranslation( self.db.profile.texture ) or "default"
 	module:SetCandyBarTexture( id, texture )
 	if bc then module:SetCandyBarBackgroundColor(id, bc, balpha) end
 	if txtc then module:SetCandyBarTextColor(id, txtc) end
