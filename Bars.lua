@@ -73,6 +73,10 @@ L:RegisterTranslations("koKR", function() return {
 	["Down"] = "아래",
 
 	["Test"] = "테스트",
+
+	["default"] = "Default",
+	["smooth"] = "Smooth",
+	["otravi"] = "Otravi",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -95,6 +99,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	["Up"] = "上",
 	["Down"] = "下",
+
+	["default"] = "Default",
+	["smooth"] = "Smooth",
+	["otravi"] = "Otravi",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -124,6 +132,10 @@ L:RegisterTranslations("deDE", function() return {
 	["Down"] = "Unten",
 	
 	["Test"] = "Test",
+
+	["default"] = "Default",
+	["smooth"] = "Smooth",
+	["otravi"] = "Otravi",
 } end)
 
 ----------------------------------
