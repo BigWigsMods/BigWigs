@@ -137,7 +137,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	porttrigger = "쌍둥이 순간이동|1을;를; 시전합니다.",
 	portwarn = "순간 이동!",
-	portdelaywarn = "5초후 순간 이동!",
+	portdelaywarn = "약 5초후 순간 이동!",
 	bartext = "순간 이동",
 	explodebugtrigger = "(.+)|1이;가; 벌레 폭발 효과를 얻었습니다.",
 	explodebugwarn = "벌레 폭발!",

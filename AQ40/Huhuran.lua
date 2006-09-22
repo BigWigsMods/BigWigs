@@ -117,7 +117,7 @@ L:RegisterTranslations("koKR", function() return {
 	berserksoonwarn = "광폭화 경보 - 준비!",
 	stingtrigger = "비룡 쐐기에 걸렸습니다.",--"공주 후후란|1이;가; 비룡 쐐기|1으로;로;",
 	stingwarn = "비룡 쐐기 - 메인탱커 해제!",
-	stingdelaywarn = "비룡 쐐기 3초전!",
+	stingdelaywarn = "비룡 쐐기 약 3초전!",
 	bartext = "비룡 쐐기",
 	
 	startwarn = "후후란 전투 개시, 5분 후 광기!!",
