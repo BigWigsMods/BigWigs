@@ -185,6 +185,9 @@ end
 
 function BigWigsLoatheb:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "BossEngaged" and rest and rest == boss then
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
 		if self.db.profile.doom then
 			self:TriggerEvent("BigWigs_StartBar", self, L["doomtimerbar"], 300, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
 			self:ScheduleEvent("bwloathebtimerreduce1", "BigWigs_Message", 240, string.format(L["doomtimerwarn"], 60), "Green")
