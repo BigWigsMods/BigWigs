@@ -43,6 +43,12 @@ L:RegisterTranslations("frFR", function() return {
 	debuffwarn = "Ossirian est sensible pour 45 secondes : %s",
 	supremedelaywarn = "Supr\195\170me dans %d secondes !",
 	bartext = "Supr\195\170me",
+
+	["Shadow"] = "Ombre",
+	["Fire"] = "Feu",
+	["Frost"] = "Froid",
+	["Nature"] = "Nature",
+	["Arcane"] = "Arcane",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

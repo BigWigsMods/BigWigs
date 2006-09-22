@@ -147,6 +147,24 @@ L:RegisterTranslations("koKR", function() return {
 	plagueare = "",	
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	explodetrigger = "Gardien Anubisath gagne Exploser.",
+	explodewarn = "Explosion Imminente!",
+	enragetrigger = "Gardien Anubisath gagne Enrager.",
+	enragewarn = "Enrag\195\169 !",
+	summonguardtrigger = "Gardien Anubisath lance Invocation d'un Garde-essaim Anubisath.",
+	summonguardwarn = "Invocation d'un Garde-essaim",
+	summonwarriortrigger = "Gardien Anubisath lance Invocation d'un Guerrier Anubisath.",
+	summonwarriorwarn = "Invocation d'un Guerrier",
+	plaguetrigger = "^([^%s]+) ([^%s]+) les effets de Peste%.$",
+	plaguewarn = " a la Peste !",
+	plaguewarnyou = "Tu as la Peste !",
+	plagueyou = "Vous",
+	plagueare = "avez", 
+} end )
+
+
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
