@@ -108,6 +108,8 @@ L:RegisterTranslations("koKR", function() return {
 	enragesoonwarn = "분노 예고 - 준비!",
 
 	webspraybar = "거미줄 뿌리기",
+	cocoonbar = "고치", -- CHECK
+	spiderbar = "거미", -- CHECK
 
 	you = "",
 	are = "",
