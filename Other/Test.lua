@@ -116,10 +116,10 @@ end
 
 function BigWigsTest:BigWigs_Test()
 	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar"], 15, "Interface\\Icons\\Spell_Nature_ResistNature")
-	self:TriggerEvent("BigWigs_Message", L["Testing"], "Attention", nil, "Long")
-	self:ScheduleEvent("BigWigs_Message", 5, L["OMG Bear!"], "Important", nil, "Alert")
-	self:ScheduleEvent("BigWigs_Message", 10, L["*RAWR*"], "Urgent", nil, "Alarm")
-	self:ScheduleEvent("BigWigs_Message", 15, L["Victory!"], "Bosskill", nil, "Victory")
+	self:TriggerEvent("BigWigs_Message", L["Testing"], "Attention", true, "Long")
+	self:ScheduleEvent("BigWigs_Message", 5, L["OMG Bear!"], "Important", true, "Alert")
+	self:ScheduleEvent("BigWigs_Message", 10, L["*RAWR*"], "Urgent", true, "Alarm")
+	self:ScheduleEvent("BigWigs_Message", 15, L["Victory!"], "Bosskill", true, "Victory")
 
 	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar 2"], 10, "Interface\\Icons\\Spell_Nature_ResistNature")
 	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar 3"], 5, "Interface\\Icons\\Spell_Nature_ResistNature")

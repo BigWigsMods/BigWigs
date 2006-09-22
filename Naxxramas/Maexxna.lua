@@ -43,6 +43,8 @@ L:RegisterTranslations("enUS", function() return {
 	enragesoonwarn = "Enrage Soon - Bugsquatters out!",
 
 	webspraybar = "Web Spray",
+	cocoonbar = "Cocoons",
+	spiderbar = "Spiders",
 
 	you = "You",
 	are = "are",
@@ -225,7 +227,9 @@ function BigWigsMaexxna:BigWigs_RecvSync( sync, rest )
 		self:ScheduleEvent("bwmaexxna20", "BigWigs_Message", 20, L["webspraywarn20sec"], "Yellow")
 		self:ScheduleEvent("bwmaexxna10", "BigWigs_Message", 30, L["webspraywarn10sec"], "Yellow")
 		self:ScheduleEvent("bwmaexxna5", "BigWigs_Message", 35, L["webspraywarn5sec"], "Yellow")
-		self:TriggerEvent("BigWigs_StartBar", self, L["webspraybar"], 40, "Interface\\Icons\\Ability_Ensnare", "Green", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, L["cocoonbar"], 20, "Interface\\Icons\\Spell_Nature_Web" )
+		self:TriggerEvent("BigWigs_StartBar", self, L["spiderbar"], 30, "Interface\\Icons\\INV_Misc_MonsterSpiderCarapace_01" )
+		self:TriggerEvent("BigWigs_StartBar", self, L["webspraybar"], 40, "Interface\\Icons\\Ability_Ensnare" )
 	elseif sync == "MaexxnaCocoon" then
 		local t = GetTime()
 		if ( not times[rest] ) or ( times[rest] and ( times[rest] + 10 ) < t) then

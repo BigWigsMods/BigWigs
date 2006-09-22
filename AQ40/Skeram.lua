@@ -153,15 +153,15 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-	function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(arg1)
-		local _,_, player, type = string.find(arg1, L["mcplayer"])
-		if player and type then
-			if player == L["mcyou"] and type == L["mcare"] then
-				player = UnitName("player")
-			end
-			if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", player .. L["mcplayerwarn"], "Red") end
+function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(arg1)
+	local _,_, player, type = string.find(arg1, L["mcplayer"])
+	if player and type then
+		if player == L["mcyou"] and type == L["mcare"] then
+			player = UnitName("player")
 		end
+		if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", player .. L["mcplayerwarn"], "Red") end
 	end
+end
 
 function BigWigsSkeram:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(arg1)
 	if (arg1 == L["aetrigger"]) then

@@ -89,7 +89,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsRazorgore = BigWigs:NewModule(boss)
 BigWigsRazorgore.zonename = AceLibrary("Babble-Zone-2.0")("Blackwing Lair")
 BigWigsRazorgore.enabletrigger = { boss, controller }
-BigWigsRazorgore.toggleoptions = { "mc", --[["eggs",]] "phase", "bosskill"}
+BigWigsRazorgore.toggleoptions = { "mc", "eggs", "phase", "bosskill" }
 BigWigsRazorgore.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -101,7 +101,6 @@ function BigWigsRazorgore:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")

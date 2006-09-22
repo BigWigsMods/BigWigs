@@ -32,7 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	porttrigger = "casts Twin Teleport.",
 	portwarn = "Teleport!",
-	portdelaywarn = "Teleport in 5 seconds!",
+	portdelaywarn = "Teleport in ~5 seconds!",
 	bartext = "Teleport",
 	explodebugtrigger = "gains Explode Bug%.$",
 	explodebugwarn = "Bug exploding nearby!",

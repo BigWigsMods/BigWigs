@@ -34,7 +34,7 @@ L:RegisterTranslations("enUS", function() return {
 	whirlwindon = "Battleguard Sartura gains Whirlwind.",
 	whirlwindoff = "Whirlwind fades from Battleguard Sartura.",
 	whirlwindonwarn = "Whirlwind - Battleguard Sartura - Whirlwind",
-	whirlwindoffwarn = "Whirlwind faded. Spank! Spank! Spank!",
+	whirlwindoffwarn = "Whirlwind faded!",
 	whirlwindbartext = "Whirlwind",
 } end )
 
