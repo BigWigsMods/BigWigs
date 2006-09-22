@@ -84,32 +84,32 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("koKR", function() return {
 	
 	spray_name = "거미줄 뿌리기 경고",
-	spray_desc = "거미줄과 거미 소환에 대한 경고",
+	spray_desc = "거미줄 뿌리기와 거미 소환에 대한 경고",
 
 	enrage_name = "분노 경고",
 	enrage_desc = "분노에 대한 경고",
 
-	cocoon_name = "고치 경고",
-	cocoon_desc = "고치가된 플레이어에 대한 경고",
+	cocoon_name = "거미줄 감싸기 경고",
+	cocoon_desc = "거미줄 감싸기에 걸린 플레이어에 대한 경고",
 
-	cocoontrigger = "^([^|;%s]*)(.*)거미줄 뿌리기에 걸렸습니다%.$", -- "(.*) (.*) afflicted by Web Wrap.", -- "(.*)|1이;가; 거미줄 감싸기에 걸렸습니다."
-	webspraytrigger = "거미줄 뿌리기에 걸렸습니다.",		
+	cocoontrigger = "^([^|;%s]*)(.*)거미줄 감싸기에 걸렸습니다%.$", -- "(.*) (.*) afflicted by Web Wrap.",
+	webspraytrigger = "거미줄 뿌리기에 걸렸습니다.",
 
-	cocoonwarn = "<<%s>> 고치가 되었습니다.!",
+	cocoonwarn = "<<%s>> 거미줄 감싸기에 걸렸습니다!",
 
 	enragetrigger = "%s|1이;가; 분노에 휩싸입니다!",
 
-	webspraywarn30sec = "10초후 거미줄 감싸기",
-	webspraywarn20sec = "거미줄 감싸기. 10초후 거미 소환!",
-	webspraywarn10sec = "거미 소환. 10초후 거미줄 뿌리기!",
-	webspraywarn5sec = "거미 소환 5초! HOTS/ABOLISH/GOGO",
-	webspraywarn = "거미줄 감싸기! 다음 번은 40초후!",
+	webspraywarn30sec = "10초 이내 거미줄 감싸기",
+	webspraywarn20sec = "거미줄 감싸기. 10초 후 거미 소환!",
+	webspraywarn10sec = "거미 소환. 10초 후 거미줄 뿌리기!",
+	webspraywarn5sec = "5초 후 거미줄 뿌리기!",
+	webspraywarn = "거미줄 뿌리기! 다음은 40초 후!",
 	enragewarn = "분노 - 무한 공격!",
 	enragesoonwarn = "분노 예고 - 준비!",
 
 	webspraybar = "거미줄 뿌리기",
-	cocoonbar = "고치", -- CHECK
-	spiderbar = "거미", -- CHECK
+	cocoonbar = "거미줄 감싸기", -- CHECK
+	spiderbar = "거미 소환", -- CHECK
 
 	you = "",
 	are = "",
