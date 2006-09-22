@@ -89,6 +89,7 @@ BigWigsTest.consoleOptions = {
 			name = L["Sync test"],
 			desc = L["Perform a sync test of BigWigs."],
 			func = function() BigWigsTest:TriggerEvent("BigWigs_SyncTest") end,
+			disabled = function() return ( not IsRaidLeader() and not IsRaidOfficer() ) end,
 		},		
 	}
 }
