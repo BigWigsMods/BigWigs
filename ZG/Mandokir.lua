@@ -128,6 +128,7 @@ function BigWigsMandokir:CHAT_MSG_MONSTER_YELL(msg)
 	if n then
 		if n == UnitName("player") and self.db.profile.you then
 			self:TriggerEvent("BigWigs_Message", L["watched_warning_self"], "Red", true, "Alarm")
+			self:TriggerEvent("BigWigs_Message", string.format(L["watched_warning_other"], UnitName("player")), "Yellow", nil, nil, true)
 		elseif self.db.profile.other then
 			self:TriggerEvent("BigWigs_Message", string.format(L["watched_warning_other"], n), "Yellow")
 			self:TriggerEvent("BigWigs_SendTell", n, L["watched_warning_self"])

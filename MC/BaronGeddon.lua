@@ -130,13 +130,14 @@ function BigWigsBaronGeddon:Event(msg)
 	if (EPlayer and EType) then
 		if (EPlayer == L"you" and EType == L["are"] and self.db.profile.youbomb) then
 			self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true)
+			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["warn2"], "Yellow", nil, nil, true )
 		elseif (self.db.profile.elsebomb) then
 			self:TriggerEvent("BigWigs_Message", EPlayer .. L["warn2"], "Yellow")
 			self:TriggerEvent("BigWigs_SendTell", EPlayer, L["warn1"])
 		end
 
 		if self.db.profile.icon then
-			if EPlayer == L["you"] then	EPlayer = UnitName("player") end
+			if EPlayer == L["you"] then EPlayer = UnitName("player") end
 			self:TriggerEvent("BigWigs_SetRaidIcon", EPlayer )
 		end
 	end

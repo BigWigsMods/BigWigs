@@ -147,6 +147,7 @@ function BigWigsVaelastrasz:BigWigs_RecvSync(sync, rest, nick)
 
 	if player == playerName and self.db.profile.youburning then
 		self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true)
+		self:TriggerEvent("BigWigs_Message", playerName .. L["warn2"], "Yellow", nil, nil, true)
 	elseif self.db.profile.elseburning then
 		self:TriggerEvent("BigWigs_Message", player .. L["warn2"], "Yellow")
 		self:TriggerEvent("BigWigs_SendTell", player, L["warn1"])

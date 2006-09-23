@@ -219,6 +219,7 @@ function BigWigsGuardians:CheckPlague( msg )
 	if player and type then
 		if self.db.profile.plagueyou and player == L["plagueyou"] and type == L["plagueare"] then
 			self:TriggerEvent("BigWigs_Message", L["plaguewarnyou"], "Red", true)
+			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["plaguewarn"], "Yellow", nil, nil, true )
 		elseif self.db.profile.plagueother then
 			self:TriggerEvent("BigWigs_Message", player .. L["plaguewarn"], "Yellow")
 			self:TriggerEvent("BigWigs_SendTell", player, L["plaguewarnyou"])

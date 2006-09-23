@@ -296,8 +296,9 @@ function BigWigsMessages:BigWigs_HideAnchors()
 end
 
 
-function BigWigsMessages:BigWigs_Message(text, type)
+function BigWigsMessages:BigWigs_Message(text, type, noraidsay, sound, broadcastonly)
 	if not text then return end
+	if broadcastonly then return end
 	local _, r, g, b = paint:GetRGBPercent(self.db.profile.usecolors and BigWigsColors:MsgColor(type) or "white")
 
 	if self.db.profile.display == L["RaidWarning frame"] then

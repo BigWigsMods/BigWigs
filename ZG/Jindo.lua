@@ -150,6 +150,7 @@ function BigWigsJindo:BigWigs_RecvSync(sync, rest, nick)
 
 	if player == playerName and self.db.profile.youcurse then
 		self:TriggerEvent("BigWigs_Message", L["cursewarn_self"], "Red", true)
+		self:TriggerEvent("BigWigs_Message", string.format(L["cursewarn_other"], playerName, "Yellow", nil, nil, true)
 	elseif self.db.profile.elsecurse then
 		self:TriggerEvent("BigWigs_Message", string.format(L["cursewarn_other"], player), "Yellow")
 		self:TriggerEvent("BigWigs_SendTell", player, L["cursewarn_self"])

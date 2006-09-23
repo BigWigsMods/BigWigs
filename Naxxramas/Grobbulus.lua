@@ -176,6 +176,7 @@ function BigWigsGrobbulus:InjectEvent( msg )
 	if eplayer and etype then
 		if self.db.profile.youinjected and eplayer == L["you"] and etype == L["are"] then
 			self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true, "Alarm")
+			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["warn2"], "Yellow", nil, nil, true)
 		elseif self.db.profile.otherinjected then
 			self:TriggerEvent("BigWigs_Message", eplayer .. L["warn2"], "Yellow")
 			self:TriggerEvent("BigWigs_SendTell", eplayer, L["warn1"])

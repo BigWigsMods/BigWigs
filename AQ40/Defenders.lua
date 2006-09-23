@@ -249,6 +249,7 @@ function BigWigsDefenders:CheckPlague(msg)
 	if pplayer then
 		if self.db.profile.plagueyou and pplayer == L["plagueyou"] then
 			self:TriggerEvent("BigWigs_Message", L["plagueyouwarn"], "Red", true)
+			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["plaguewarn"], "Yellow", nil, nil, true)
 		elseif self.db.profile.plagueother then
 			self:TriggerEvent("BigWigs_Message", pplayer .. L["plaguewarn"], "Yellow")
 			self:TriggerEvent("BigWigs_SendTell", pplayer, L["plagueyouwarn"])
