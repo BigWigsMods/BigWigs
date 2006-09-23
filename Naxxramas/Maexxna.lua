@@ -210,7 +210,7 @@ function BigWigsMaexxna:SprayEvent( msg )
 end
 
 function BigWigsMaexxna:BigWigs_RecvSync( sync, rest )
-	if sync == "BossEngage" and rest and rest == boss then
+	if sync == "BossEngaged" and rest and rest == boss then
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
