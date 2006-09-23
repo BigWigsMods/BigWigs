@@ -99,7 +99,7 @@ L:RegisterTranslations("koKR", function() return {
 	warnhealing = "치유의 토템 - 제거!",
 
 	cursewarn_self = "당신은 저주에 걸렸습니다. 망령 처리!!",
-	cursewarn_other = "%s|1이;가; 저주에 걸렸습니다. 망령 처리!!",
+	cursewarn_other = "<<%s>> 저주에 걸렸습니다. 망령 처리!!", --"%s%|1이;가; 저주에 걸렸습니다. 망령 처리!!",
 	
 	you = "",
 	are = "",
