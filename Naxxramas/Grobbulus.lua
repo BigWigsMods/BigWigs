@@ -155,7 +155,7 @@ end
 ------------------------------
 
 function BigWigsGrobbulus:BigWigs_RecvSync( sync, rest, nick )
-	if sync == "BossEngaged" and rest and rest == boss then
+	if sync == self:GetEngageSync() and rest and rest == boss then
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end

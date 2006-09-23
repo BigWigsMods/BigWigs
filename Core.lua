@@ -249,6 +249,11 @@ function BigWigs.modulePrototype:Scan()
 end
 
 
+function BigWigs.modulePrototype:GetEngageSync()
+	return "BossEngaged"
+end
+
+
 function BigWigs.modulePrototype:CheckForEngage()
 	local go = self:Scan()
 	local running = self:IsEventScheduled(self:ToString().."_CheckStart")
@@ -260,7 +265,7 @@ function BigWigs.modulePrototype:CheckForEngage()
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		self:TriggerEvent("BigWigs_SendSync", "BossEngaged "..self:ToString())
+		self:TriggerEvent("BigWigs_SendSync", self:GetEngageSync().." "..self:ToString())
 	elseif not running then
 		self:ScheduleRepeatingEvent(self:ToString().."_CheckStart", self.CheckForEngage, .5, self)
 	end
