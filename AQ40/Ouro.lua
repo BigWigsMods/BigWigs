@@ -132,7 +132,7 @@ L:RegisterTranslations("koKR", function() return {
 	sweepwarn = "5초후 휩쓸기! 대피",
 	sweepbartext = "휩쓸기",
 
-	sandblasttrigger = "아우로|1이;가; 모래 돌풍|1을;를; 시전합니다.",
+	sandblasttrigger = "아우로|1이;가; 모래 돌풍|1을;를; 사용합니다.",
 	sandblastannounce = "모래 돌풍 경보!",
 	sandblastwarn = "5초후 모래 돌풍",
 	sandblastbartext = "모래 돌풍",
@@ -148,7 +148,7 @@ L:RegisterTranslations("koKR", function() return {
 	scarabdespawn = "스카라베 소환 10초전",
 	scarabbar	= "스카라베 소환",
 
-	submergetrigger = "아우로|1이;가; 아우로 더미 소환|1을;를; 시전합니다.",
+	submergetrigger = "아우로|1이;가; 아우로 흙더미 소환|1을;를; 시전합니다.",
 	submergeannounce = "아우로 잠수!",
 	submergewarn = "5초후 아우로 재등장!",
 	submergebar = "아우로 재등장",
