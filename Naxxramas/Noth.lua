@@ -36,7 +36,7 @@ L:RegisterTranslations("enUS", function() return {
 	addtrigger = "Rise, my soldiers! Rise and fight once more!",
 
 	blinktrigger = "Noth the Plaguebringer gains Blink.",
-	blinkwarn = "Blink! Stop DPS!",
+	blinkwarn = "Blink!",
 	blinkwarn2 = "Blink in ~5 seconds!",
 	blinkbar = "Blink",
 
@@ -211,8 +211,8 @@ function BigWigsNoth:OnEnable()
 	self.timeroom = 90
 	self.timebalcony = 70
 	self.cursetime = 55
-	self.wave1time = 5
-	self.wave2time = 35
+	self.wave1time = 10
+	self.wave2time = 40
 	self.prior = nil
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
