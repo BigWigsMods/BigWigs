@@ -37,7 +37,7 @@ L:RegisterTranslations("enUS", function() return {
 	warnshaman	= "Shamans - Totems spawned!",
 	warndruid	= "Druids - Stuck in cat form!",
 	warnwarlock	= "Warlocks - Incoming Infernals!",
-	warnpriest	= "Priests - Stop Healing!",
+	warnpriest	= "Priests - Heals hurt!",
 	warnhunter	= "Hunters - Bows/Guns broken!",
 	warnwarrior	= "Warriors - Stuck in berserking stance!",
 	warnrogue	= "Rogues - Ported and rooted!",
