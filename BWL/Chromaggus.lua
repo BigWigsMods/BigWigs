@@ -169,7 +169,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	breath_trigger = "^Chromaggus commence \195\160 lancer (.+)%.",
 	vulnerability_test = "^.+ lance .+ et (.+) \195\160 Chromaggus %(([%d]+) points de d\195\169g\195\162ts .+ (.+)%)%.";
-	frenzy_trigger = "entre dans une sanglante fr\195\169n\195\169sie !",
+	frenzy_trigger = "entre dans une fr\195\169n\195\169sie sanglante !",
 	vulnerability_trigger = "grimace lorsque sa peau se met \195\160 briller.",
 
 	hit = "lui inflige",

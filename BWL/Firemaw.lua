@@ -82,13 +82,13 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	wingbuffet_trigger = "Gueule-de-feu commence \195\160 lancer Frappe des ailes.",
+	wingbuffet_trigger = "Gueule%-de%-feu commence \195\160 lancer Frappe des ailes.",
 	shadowflame_trigger = "Gueule-de-feu commence \195\160 lancer Flamme d'ombre.",
 
 	wingbuffet_warning = "3 sec avant prochain Frappe des ailes!",
 	shadowflame_warning = "Flamme d'ombre imminente!",
-
 } end)
+
 
 ----------------------------------
 --      Module Declaration      --

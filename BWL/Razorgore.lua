@@ -82,6 +82,21 @@ L:RegisterTranslations("deDE", function() return {
 	phase_desc = "Warnung beim Eintritt in Phase 1 und 2.",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	start_trigger = "Sonnez l'alarme",
+	start_message = "Razorgore engaged!",
+
+	mindcontrol_trigger = "Stupide ([^%s]+), tu es mon esclave maintenant !$",
+	mindcontrol_message = "%s est sous controle mental!",
+
+	egg_trigger = "Tranchetripe l'Indompt\195\169 lance D\195\169truire (.+)%.",
+	egg_message = "%d/30 oeufs détruits!",
+
+	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.", --TO TRANSLATE
+	phase2_message = "All eggs destroyed, Razorgore loose!",
+} end)
+
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
