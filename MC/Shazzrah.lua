@@ -15,7 +15,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	warn1 = "Blink - ~45 seconds until next!",
 	warn2 = "~5 seconds to Blink!",
-	warn3 = "Self buff - Dispel Magic!",
+	warn3 = "Shazzrah buffed himself!",
 
 	bar1text = "Blink",
 
