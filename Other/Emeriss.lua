@@ -11,16 +11,16 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 
-	cmd = "emeriss",
-	
+	cmd = "Emeriss",
+
 	noxious_cmd = "noxious",
 	noxious_name = "Noxious breath alert",
 	noxious_desc = "Warn for noxious breath",
-	
+
 	volatileyou_cmd = "volatileyou",
 	volatileyou_name = "Voltile infection on you alert",
 	volatileyou_desc = "Warn for volatile infection on you",
-	
+
 	volatileother_cmd = "volatileother",
 	volatileother_name = "Volatile infection on others alert",
 	volatileother_desc = "Warn for volatile infection on others",
@@ -36,8 +36,32 @@ L:RegisterTranslations("enUS", function() return {
 	isyou = "You",
 	isare = "are",
 
-	bar1text = "Noxious Breath",	
+	bar1text = "Noxious Breath",
 	
+} end )
+
+L:RegisterTranslations("frFR", function() return {
+	noxious_name = "Alerte du Souffle naus\195\169abond",
+	noxious_desc = "Alerte du Souffle naus\195\169abond",
+
+	volatileyou_name = "Alerte lorsque vous subissez les effets de l'Infection volatile",
+	volatileyou_desc = "Alerte lorsque vous subissez les effets de l'Infection volatile",
+
+	volatileother_name = "Alerte lorsqu'un joueur subit les effets de l'Infection volatile",
+	volatileother_desc = "Alerte lorsqu'un joueur subit les effets de l'Infection volatile",
+
+	trigger1 = "^([^%s]+) ([^%s]+) les effets de Infection volatile",
+	trigger2 = "les effets de Souffle naus\195\169abond",
+
+	warn1 = "Tu subis les effets de Infection Volatile!",
+	warn2 = " subit les effets de Infection Volatile!",
+	warn3 = "Souffle naus\195\169abond dans 5 secondes!",
+	warn4 = "SOUFFLE NAUSEABOND - 30 sec avant prochain!",
+
+	isyou = "Vous",
+	isare = "subissez",
+
+	bar1text = "Souffle naus\195\169abond",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

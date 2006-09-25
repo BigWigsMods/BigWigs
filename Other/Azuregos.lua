@@ -10,16 +10,16 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "azuregos",
-	
+	cmd = "Azuregos",
+
 	teleport_cmd = "teleport",
 	teleport_name = "Teleport Alert",
 	teleport_desc = "Warn for teleport",
-	
+
 	shield_cmd = "shield",
 	shield_name = "Shield Alert",
 	shield_desc = "Warn for shield",
-	
+
 	trigger1 = "Come, little ones",
 	trigger2 = "^Reflection fades from Azuregos",
 	trigger3 = "^Azuregos gains Reflection",
@@ -47,6 +47,24 @@ L:RegisterTranslations("deDE", function() return {
 	warn3 = "Magieschild: Aktiv!",	
 
 	shieldbar = "Magieschild",
+} end )
+
+L:RegisterTranslations("frFR", function() return {
+	teleport_name = "T\195\169l\195\169portation",
+	teleport_desc = "Alerte T\195\169l\195\169portation.",
+
+	shield_name = "Bouclier Magique",
+	shield_desc = "Alerte, Bouclier Magique Actif.",
+
+	trigger1 = "^Venez m'affronter, mes petits !",
+	trigger2 = "^Renvoi sur Azuregos vient de se dissiper.",
+	trigger3 = "^Azuregos gagne Renvoi.",
+
+	warn1 = "T\195\169l\195\169portation!",
+	warn2 = "Bouclier Magique : Inactif!",
+	warn3 = "Bouclier Magique : Actif!",
+
+	shieldbar = "Bouclier Magique",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
