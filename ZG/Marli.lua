@@ -42,6 +42,21 @@ L:RegisterTranslations("deDE", function() return {
 	drainlife_message = "Mar'li heilt sich!",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	spider_name = "Araign\195\169e",
+	spider_desc = "Alerte Araign\195\169e.",
+
+	drain_name = "Drain",
+	drain_desc = "Alerte Drain.",
+
+	spiders_trigger = "., mes enfants !$",
+	drainlife_trigger = "^High Priestess Mar'li's Drain Life heals High Priestess Mar'li for (.+).",
+
+	spiders_message = "Araign\195\169e en Approche!",
+	drainlife_message = "Mar'li fait un drain!",
+} end )
+
+
 L:RegisterTranslations("zhCN", function() return {
 	spider_name = "蜘蛛警报",
 	spider_desc = "小蜘蛛出现时发出警报",

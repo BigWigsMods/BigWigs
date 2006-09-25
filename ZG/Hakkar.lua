@@ -75,6 +75,40 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_desc = "Warnung, wenn Hakkar w\195\188tend wird.",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	-- Chat message triggers
+	engage_trigger = "ANNONCE LA FIN DE VOTRE MONDE",
+	drain_trigger = "^Siphon de sang .+ (.+) inflige \195\160 Hakkar (.+).",
+	mindcontrol_trigger = "(.*) (.*) les effets de Rendre fou",
+
+	you = "Vous",
+	are = "subissez",
+
+	flee = "Fleeing will do you no good mortals!",
+
+	-- Warnings and bar texts
+	start_message = "Hakkar engag\195\169 - 90 secondes avant drain - 10 minutes avant f\195\169n\195\169sie",
+	drain_warning_60 = "60 secondes avant drain",
+	drain_warning_45 = "45 secondes avant drain",
+	drain_warning_30 = "30 secondes avant drain",
+	drain_warning_15 = "15 secondes avant drain",
+	drain_message = "Drain de vie - 90 secondes avant le prochain",
+
+	mindcontrol_message = "%s est Mind Control!",
+
+	drain_name = "Alertes de drains",
+	drain_desc = "Alertes des drains de vie",
+
+	enrage_name = "Alerte F\195\169n\195\169sie",
+	enrage_desc = "Alerte pour la F\195\169n\195\169sie",
+
+	mc_name = "Mind Control",
+	mc_desc = "Alerte quand un joueur est mind control.",
+
+	icon_name = "Placer une Icone",
+	icon_desc = "Place une icone sur la personne Mind Control (promotion requise)",
+} end)
+
 L:RegisterTranslations("koKR", function() return {
 	-- Chat message triggers
 	engage_trigger = "자만심은 세상의 종말을 불러올 뿐이다. 오너라! 건방진 피조물들이여! 와서 신의 진노에 맞서 보아라!",

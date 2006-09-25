@@ -60,6 +60,37 @@ L:RegisterTranslations("deDE", function() return {
 	warnhealing = "Heiltotem!",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	brainwash_name = "Alerte Totem de Mind Control",
+	brainwash_desc = "Alerte Totem de Mind Control",
+
+	healing_name = "Alerte Totem de Soins",
+	healing_desc = "Alerte Totem de Soins",
+
+	youcurse_name = "Alerte quand tu es Maudit",
+	youcurse_desc = "Alerte quand tu es Maudit",
+
+	elsecurse_name = "Alerte Autre Maudit",
+	elsecurse_desc = "Alerte quand un autre joueur est maudit",
+
+	icon_name = "Place une icone",
+	icon_desc = "Place une icone sur la personne Maudite (promotion requise)",
+
+	triggerbrainwash = "Jin'do the Hexxer casts Summon Brain Wash Totem.", --TO TRANSLATE
+	triggerhealing = "Jin'do the Hexxer casts Powerful Healing Ward.", --TO TRANSLATE
+	triggercurse = "^([^%s]+) ([^%s]+) les effets de Illusions de Jin'do",
+
+	warnbrainwash = "Totem de Mind Control!",
+	warnhealing = "Totem de Soins!",
+
+	cursewarn_self = "Tu es Maudit!",
+	cursewarn_other = "%s est Maudit!",
+
+	you = "Vous",
+	are = "subissez",
+} end )
+
+
 L:RegisterTranslations("zhCN", function() return {
 	brainwash_name = "洗脑图腾警报",
 	brainwash_desc = "洗脑图腾警报",
