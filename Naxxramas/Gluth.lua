@@ -34,7 +34,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	startwarn = "Gluth Engaged! ~105 seconds till Zombies!",
 	decimatesoonwarn = "Decimate Soon!",
-	decimatewarn = "Decimate! - AoE Zombies!",
+	decimatewarn = "Decimate!",
 	decimatetrigger = "Decimate",
 
 	bar1text = "AoE Fear",
