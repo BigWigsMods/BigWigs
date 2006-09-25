@@ -20,8 +20,15 @@ L:RegisterTranslations("enUS", function() return {
 	bomb_name = "Bomb Bat Alert",
 	bomb_desc = "Warn for Bomb Bats",
 
+	swarm_cmd = "swarm",
+	swarm_name = "Bat Swarm Alert",
+	swarm_desc = "Warn for the Bat swarms",
+
+	swarm_trigger = "emits a deafening shriek",
 	bomb_trigger = "I command you to rain fire down upon these invaders!$",
 	heal_trigger = "begins to cast a Great Heal!$",
+
+	swarm_message = "Incoming bat swarm!",
 	bomb_message = "Incoming bomb bats!",
 	heal_message = "Casting heal!",
 	
@@ -81,7 +88,7 @@ L:RegisterTranslations("koKR", function() return {
 BigWigsJeklik = BigWigs:NewModule(boss)
 BigWigsJeklik.zonename = AceLibrary("Babble-Zone-2.0")("Zul'Gurub")
 BigWigsJeklik.enabletrigger = boss
-BigWigsJeklik.toggleoptions = {"heal", "bomb", "bosskill"}
+BigWigsJeklik.toggleoptions = {"swarm", "heal", "bomb", "bosskill"}
 BigWigsJeklik.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -107,6 +114,8 @@ end
 function BigWigsJeklik:CHAT_MSG_MONSTER_EMOTE(msg)
 	if self.db.profile.heal and string.find(msg, L["heal_trigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Orange")
+	elseif self.db.profile.swarm and string.find(msg, L["swarm_trigger"]) then
+		self:TriggerEvent("BigWigs_Message", L["swarm_message"], "Orange")
 	end
 end
 
