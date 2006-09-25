@@ -23,9 +23,9 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	sacrificetrigger = "^([^%s]+) ([^%s]+) les effets de Paralysie%.$",
-	sacrificewarn = " est sacrifiÃ© !",
+	sacrificewarn = " est sacrifié !",
 	you = "Vous",
-	are = "\195\170tes",
+	are = "subissez",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
