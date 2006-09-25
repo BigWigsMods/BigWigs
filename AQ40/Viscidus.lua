@@ -40,12 +40,12 @@ L:RegisterTranslations("enUS", function() return {
 	are 		= "are",
 
 	warn1 		= "First freeze phase!",
-	warn2 		= "Second freeze phase - GET READY",
-	warn3 		= "Third freeze phase - DPS DPS DPS",
+	warn2 		= "Second freeze phase!",
+	warn3 		= "Last freeze phase!",
 	warn4 		= "Cracking up - little more now!",
 	warn5 		= "Cracking up - almost there!",
 	warn6		= "Poison Bolt Volley!",
-	warn7		= "Incoming Poison Bolt Volley in 3~ sec!",
+	warn7		= "Poison Bolt Volley in ~3 sec!",
 	warn8		= " is in a toxin cloud!",
 	warn9		= "You are in the toxin cloud!",
 
