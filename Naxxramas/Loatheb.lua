@@ -170,7 +170,7 @@ function BigWigsLoatheb:OnEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
@@ -223,14 +223,6 @@ end
 
 function BigWigsLoatheb:Event( msg )
 	if string.find(msg, L["doomtrigger"]) then self:TriggerEvent("BigWigs_SendSync", "LoathebDoom") end
-end
-
-function BigWigsLoatheb:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
-	if string.find(msg, L["sporedietrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "LoathebSporeDie")
-	end
-
-	self:GenericBossDeath(msg)
 end
 
 function BigWigsLoatheb:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
