@@ -41,7 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	warn1 		= "First freeze phase!",
 	warn2 		= "Second freeze phase!",
-	warn3 		= "Last freeze phase!",
+	warn3 		= "Viscidus is frozen!",
 	warn4 		= "Cracking up - little more now!",
 	warn5 		= "Cracking up - almost there!",
 	warn6		= "Poison Bolt Volley!",
