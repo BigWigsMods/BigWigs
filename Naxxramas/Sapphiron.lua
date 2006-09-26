@@ -98,7 +98,14 @@ function BigWigsSapphiron:OnEnable()
 	cachedUnitId = nil
 	lastTarget = nil
 
-    self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
+	if self:IsEventScheduled("bwsapphtargetscanner") then
+		self:CancelScheduledEvent("bwsapphtargetscanner")
+	end
+	if self:IsEventScheduled("bwsapphdelayed") then
+		self:CancelScheduledEvent("bwsapphdelayed")
+	end
+
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -123,6 +130,12 @@ function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
+		if self:IsEventScheduled("bwsapphtargetscanner") then
+			self:CancelScheduledEvent("bwsapphtargetscanner")
+		end
+		if self:IsEventScheduled("bwsapphdelayed") then
+			self:CancelScheduledEvent("bwsapphdelayed")
+		end
 		if self.db.profile.berserk then
 			self:TriggerEvent("BigWigs_Message", L["engage_message"], "Yellow")
 			self:TriggerEvent("BigWigs_StartBar", self, L["berserk_bar"], 900, "Interface\\Icons\\INV_Shield_01", "Red", "Orange", "Yellow", "Green")
@@ -146,6 +159,9 @@ function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
 		if self:IsEventScheduled("bwsapphtargetscanner") then
 			self:CancelScheduledEvent("bwsapphtargetscanner")
 		end
+		if self:IsEventScheduled("bwsapphdelayed") then
+			self:CancelScheduledEvent("bwsapphdelayed")
+		end
 		self:TriggerEvent("BigWigs_StopBar", self, L["lifedrain_bar"])
 		self:TriggerEvent("BigWigs_Message", L["deepbreath_incoming_message"], "Orange")
 		self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_incoming_bar"], 23, "Interface\\Icons\\Spell_Arcane_PortalIronForge", "Orange")
@@ -154,7 +170,7 @@ function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
 		end
 		lastTarget = nil
 		cachedUnitId = nil
-		self:ScheduleEvent("besapphdelayed", self.StartTargetScanner, 40, self)
+		self:ScheduleEvent("besapphdelayed", self.StartTargetScanner, 50, self)
 	end
 end
 
