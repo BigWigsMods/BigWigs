@@ -214,12 +214,12 @@ L:RegisterTranslations("zhCN", function() return {
 	weakened_name = "虚弱警报",
 	weakened_desc = "克苏恩被削弱时发出警报",
 
-	weakenedtrigger 	= "被削弱了！",
+	weakenedtrigger 	= "%s 被削弱了！",
 
 	tentacle1	= "Tentacle Rape Party - Pleasure!",
 	tentacle2	= "Tentacle Rape Party - 5 sec",
 
-	norape1		= "Tentacle Party! - What's that in your pants?",
+	norape1		= "眼球触须出现！",
 	norape2		= "Tentacle Party! - 5 sec",
 
 	weakened		= "克苏恩被削弱了 - 45秒内全力输出伤害！",

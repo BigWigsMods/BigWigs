@@ -116,9 +116,9 @@ L:RegisterTranslations("zhCN", function() return {
 	crit = "致命一击",
 
 	breath_warning = "%s - 10秒后施放！",
-	breath_message = "正在施放 %s！",
-	vulnerability_message = "新法术弱点：%s",
-	vulnerability_warning = "法术弱点已改变！",
+	breath_message = "克洛玛古斯 %s！",
+	vulnerability_message = "克洛玛古斯新弱点：%s",
+	vulnerability_warning = "克洛玛古斯弱点改变",
 	frenzy_message = "狂暴警报 - 猎人立刻使用宁神射击！",
 	enrage_warning = "即将激怒！",
 

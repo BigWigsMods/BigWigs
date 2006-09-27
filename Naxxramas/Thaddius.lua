@@ -224,7 +224,7 @@ L:RegisterTranslations("zhCN", function() return {
 	pstrigger = "你感受到痛苦的滋味了吧……",
 	trigger1 = "塔迪乌斯开始施放极性转化。",
 	chargetrigger = "^(.+)受(.+)了(.+)电荷",
-	stalaggtrigger = "斯塔拉格获得了力量振荡的效果。",
+	stalaggtrigger = "斯塔拉格获得了能量涌动的效果。",
 
 	you = "你",
 	are = "到",

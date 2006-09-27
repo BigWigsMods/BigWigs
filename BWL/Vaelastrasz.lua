@@ -53,7 +53,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 	elseburning_name = "队友燃烧警报",
 	elseburning_desc = "队友燃烧时发出警报",
-
+	
+	burningbar_name = "燃烧刺激计时条",
+	burningbar_desc = "燃烧刺激计时条",
 	icon_name = "炸弹图标",
 	icon_desc = "在燃烧的队友头上标记骷髅图标（需要助理或领袖权限）",
 } end)

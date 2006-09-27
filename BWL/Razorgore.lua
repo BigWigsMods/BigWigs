@@ -90,12 +90,34 @@ L:RegisterTranslations("frFR", function() return {
 	mindcontrol_message = "%s est sous controle mental!",
 
 	egg_trigger = "Tranchetripe l'Indompt\195\169 lance D\195\169truire (.+)%.",
-	egg_message = "%d/30 oeufs d�truits!",
+	egg_message = "%d/30 oeufs dtruits!",
 
 	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.", --TO TRANSLATE
 	phase2_message = "All eggs destroyed, Razorgore loose!",
 } end)
 
+L:RegisterTranslations("zhCN", function() return {
+
+	start_trigger = "入侵者",
+	start_message = "狂野的拉佐格尔 战斗开始!",
+
+	mindcontrol_trigger = "愚蠢的([^%s]+).",
+	mindcontrol_message = "%s 精神控制",
+
+	egg_trigger = "狂野的拉佐格尔施放了(.+)。",
+	egg_message = "%d/30 龙蛋已经摧毁",
+
+	phase2_message = "所有龙蛋摧毁",
+
+	mc_name = "精神控制",
+	mc_desc = "当一个玩家使用精神控制时向团队发出警报。",
+
+	eggs_name = "取消龙蛋计数",
+	eggs_desc = "取消剩余龙蛋计数 - 该功能还在完善中。。。",
+
+	phase_name = "第二阶段警报",
+	phase_desc = "第二阶段警报",
+} end)
 
 ----------------------------------
 --      Module Declaration      --

@@ -112,6 +112,9 @@ L:RegisterTranslations("zhCN", function() return {
 	summon_name = "召唤警报",
 	summon_desc = "阿努比萨斯防御者召唤增援时发出警报",
 	
+	icon_name = "标记瘟疫",
+	icon_desc = "团队标记中瘟疫的玩家 (需要助理或更高权限)",
+	
 	explodetrigger = "阿努比萨斯防御者获得了爆炸的效果。",
 	explodewarn = "即将爆炸！近战躲开！",
 	enragetrigger = "阿努比萨斯防御者获得了狂怒的效果。",

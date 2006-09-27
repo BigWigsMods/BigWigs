@@ -41,6 +41,7 @@ L:RegisterTranslations("zhCN", function() return {
 	shadowflame_trigger = "弗莱格尔开始施放暗影烈焰。",
 	frenzy_trigger = "变得狂暴起来！",
 
+	wingbuffet_message = "龙翼打击 - 30秒后再次发动",
 	wingbuffet_warning = "3秒后发动龙翼打击！",
 	shadowflame_warning = "暗影烈焰发动！",
 	frenzy_message = "狂暴警报 - 猎人立刻使用宁神射击！",

@@ -158,12 +158,22 @@ L:RegisterTranslations("zhCN", function() return {
 
 	add_name = "增援警报",
 	add_desc = "增援警报",
+	
+	adddeath_name = "小怪计时及死亡通告",
+	adddeath_desc = "小怪计时及死亡通告",
 
 	disabletrigger = "I... am... undone.",
 
-	starttrigger1 = "你愚蠢地寻找自己的困境。",
+	starttrigger1 = "你们这些蠢货已经主动步入了陷阱。",
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
 	startwarn = "收割者戈提克已激活 - 4:30后进入房间",
+
+	rider_name = "冷酷的骑兵",
+	spectral_rider_name = "骑兵",
+	deathknight_name = "冷酷的死亡骑士",
+	spectral_deathknight_name = "死亡骑士",
+	trainee_name = "冷酷的学徒",
+	spectral_trainee_name = "学徒",
 
 	riderdiewarn = "骑兵已死亡！",
 	dkdiewarn = "死亡骑士已死亡！",
@@ -182,7 +192,7 @@ L:RegisterTranslations("zhCN", function() return {
 	dkbar = "死亡骑士 - %d",
 	riderbar = "骑兵 - %d",
 
-	inroomtrigger = "我等待了太久。现在你面对灵魂收割机。",
+	inroomtrigger = "我已经等待很久了。现在你们将面对灵魂的收割者。",
 	inroomwarn = "收割者戈提克进入了房间！",
 
 	inroombartext = "进入房间",

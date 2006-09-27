@@ -98,11 +98,26 @@ L:RegisterTranslations("zhCN", function() return {
 	healing_name = "治疗图腾警报",
 	healing_desc = "治疗图腾警报",
 
-	triggerbrainwash = "金度施放了召唤洗脑图腾。",
-	triggerhealing = "金度施放了强效治疗守卫。",
+	youcurse_name = "你中诅咒警报",
+	youcurse_desc = "你中诅咒警报",
+
+	elsecurse_name = "玩家诅咒警报",
+	elsecurse_desc = "玩家诅咒警报",
+
+	icon_name = "标记被诅咒玩家",
+	icon_desc = "团队标记被诅咒玩家 (需要助力或更高权限)",
+
+	triggerbrainwash = "妖术师金度施放了召唤洗脑图腾。",
+	triggerhealing = "妖术师金度施放了强效治疗守卫。",
+	triggercurse = "^(.+)受到(.+)金度的欺骗效果的影响",
 
 	warnbrainwash = "洗脑图腾！",
 	warnhealing = "治疗图腾！",
+	cursewarn_self = "你中了诅咒!",
+	cursewarn_other = "%s 中了诅咒",
+
+	you = "你",
+	are = "是",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

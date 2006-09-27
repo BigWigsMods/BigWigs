@@ -106,7 +106,7 @@ L:RegisterTranslations("zhCN", function() return {
 	decimate_name = "吞噬警报",
 	decimate_desc = "吞噬警报",
 
-	trigger1 = "变得狂暴起来！",
+	trigger1 = "%s 变得狂怒无比！",
 	trigger2 = "恐惧怒吼",
 	starttrigger = "吞吃了周围所有的僵尸！",
 

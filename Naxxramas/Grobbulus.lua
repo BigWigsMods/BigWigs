@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -79,10 +79,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	enrage_name = "격노 경고",
 	enrage_desc = "격노에 대한 경고",
-	
+
 	youinjected_name = "자신의 돌연변이 경고",
 	youinjected_desc = "자신이 돌연변이 시 경고",
-	
+
 	otherinjected_name = "타인의 돌연변이 경고",
 	otherinjected_desc = "타인이 돌연변이 시 경고",
 
@@ -106,9 +106,12 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	enrage_name = "激怒警报",
+	enrage_desc = "激怒警报",
+
 	youinjected_name = "玩家变异注射警报",
 	youinjected_desc = "你中了变异注射时发出警报",
-	
+
 	otherinjected_name = "队友变异注射警报",
 	otherinjected_desc = "队友中了变异注射时发出警报",
 
@@ -120,6 +123,13 @@ L:RegisterTranslations("zhCN", function() return {
 	you = "你",
 	are = "到",
 
+	startwarn = "格罗布鲁斯激活，12分钟后进入激怒状态！",
+	enragebar = "Enrage",
+	enrage10min = "10分钟后激怒",
+	enrage5min = "5分钟后激怒",
+	enrage1min = "1分钟后激怒",
+	enrage30sec = "30秒后激怒",
+	enrage10sec = "10秒后激怒",
 	warn1 = "你中变异注射了！",
 	warn2 = "中变异注射了！",
 } end )

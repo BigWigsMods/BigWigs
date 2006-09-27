@@ -75,6 +75,7 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	aetrigger = "预言者斯克拉姆开始施放魔爆术。",
 	mctrigger = "预言者斯克拉姆开始施放充实。",
+	splittrigger = "预言者斯克拉姆施放了召唤幻象。",
 	aewarn = "正在施放魔爆术 - 迅速打断！",
 	mcwarn = "正在施放充实 - 准备变羊！",
 	mcplayer = "^(.+)受(.+)了充实效果的影响。",

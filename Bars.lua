@@ -99,10 +99,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 	["Up"] = "上",
 	["Down"] = "下",
-
-	["default"] = "Default",
-	["smooth"] = "Smooth",
-	["otravi"] = "Otravi",
+	["Texture"] = "材质",
+	["default"] = "默认",
+	["smooth"] = "平滑"
 } end)
 
 L:RegisterTranslations("deDE", function() return {

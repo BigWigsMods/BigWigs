@@ -31,7 +31,7 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
-	trigger1 = "沙斯拉尔获得了闪现术的效果",
+	trigger1 = "沙斯拉尔施放了沙斯拉尔之门。",
 	trigger2 = "沙斯拉尔获得了衰减魔法的效果",
 
 	warn1 = "闪现术 - ~45秒后再次发动",

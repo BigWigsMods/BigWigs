@@ -76,6 +76,9 @@ L:RegisterTranslations("zhCN", function() return {
 	othermark_name = "队友标记警报",
 	othermark_desc = "当队友被标记时发出警报",
 
+	icon_name = "标记被标记者",
+	icon_desc = "团队标记被标记者 (需要助理或更高权限)",
+
 	mark_trigger = "吞噬(.+)的躯体吧！$",
 
 	mark_warning_self = "你被标记了！",

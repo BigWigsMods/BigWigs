@@ -94,10 +94,10 @@ L:RegisterTranslations("zhCN", function() return {
 	teleport_desc = "传送警报",
 
 	-- [[ Triggers ]]--
-	starttrigger = "你现在是我的。",
+	starttrigger = "你是我的了。",
 	starttrigger2 = "你……就是下一个。",
-	starttrigger3 = "我看见你……",
-	teleporttrigger = "结束的是你。",
+	starttrigger3 = "我看到你了……",
+	teleporttrigger = "你的生命正走向终结。",
 	-- [[ Warnings ]]--
 	startwarn = "希尔盖已激活 - 90秒后传送",
 	warn1 = "1分钟后传送",

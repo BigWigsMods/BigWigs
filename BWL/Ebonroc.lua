@@ -62,6 +62,8 @@ L:RegisterTranslations("zhCN", function() return {
 	shadowflame_warning = "暗影烈焰发动！",
 	shadowflame_message_you = "你中了埃博诺克之影！",
 	shadowflame_message_other = "中了埃博诺克之影！",
+	
+	shadowcurse_bar = "%s - 埃博诺克之影",
 
 	wingbuffet_bar = "龙翼打击",
 

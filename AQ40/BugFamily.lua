@@ -73,7 +73,7 @@ L:RegisterTranslations("zhCN", function() return {
 	healtrigger = "亚尔基公主开始施放强效治疗术。",
 	healwarn = "亚尔基公主正在施放治疗 - 迅速打断！",
 
-	feartrigger = "受到了恐慌效果的影响。",
+	feartrigger = "受到了恐惧效果的影响。",
 	fearbar = "群体恐惧",
 	fearwarn1 = "群体恐惧 - 20秒后再次发动",
 	fearwarn2 = "5秒后发动群体恐惧！",

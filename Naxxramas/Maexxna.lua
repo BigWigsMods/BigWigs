@@ -126,7 +126,7 @@ L:RegisterTranslations("zhCN", function() return {
 	cocoon_desc = "对被蛛网裹体的玩家发出警报",
 
 	cocoontrigger = "^(.+)受(.+)了蛛网裹体",
-	webspraytrigger = "受到了蛛网喷射",
+	webspraytrigger = "蛛网喷射",
 
 	cocoonwarn = "%s被蛛网裹体了！",
 
@@ -141,6 +141,8 @@ L:RegisterTranslations("zhCN", function() return {
 	enragesoonwarn = "即将激怒 - 做好准备！",
 
 	webspraybar = "蛛网喷射",
+	cocoonbar = "墙茧",
+	spiderbar = "小蜘蛛出现",
 
 	you = "你",
 	are = "到",

@@ -151,14 +151,23 @@ L:RegisterTranslations("zhCN", function() return {
 	-- Chat message triggers
 	engage_trigger = "^骄傲会将你送上绝路",
 	drain_trigger = "^(.+)的酸性血液虹吸使哈卡受到了(%d+)点自然伤害。",
+	mindcontrol_trigger = "^(.+)受(.+)疯狂效果的影响。",
+	
+	you = "你",
+	are = "到",
+	
 	flee = "逃跑",
 
 	-- Warnings and bar texts
 	start_message = "哈卡已经激活 - 90秒后开始生命吸取 - 10分钟后进入激怒状态",
 	drain_warning_60 = "60秒后发动生命吸取",
 	drain_warning_45 = "45秒后发动生命吸取",
+	drain_warning_30 = "30秒后发动生命吸取",
 	drain_warning_15 = "15秒后发动生命吸取",
 	drain_message = "血液虹吸 - 90秒后再次发动",
+	
+	mindcontrol_message = "%s 被控制了",
+	
 	["Enrage"] = "激怒",
 	["Life Drain"] = "生命吸取",
 
@@ -167,6 +176,12 @@ L:RegisterTranslations("zhCN", function() return {
 
 	enrage_name = "激怒警报",
 	enrage_desc = "激怒警报",
+
+	mc_name = "精神控制警报",
+	mc_desc = "哈卡使用精神控制时警报。",
+
+	icon_name = "标记精神控制",
+	icon_desc = "团队标记被精神控制者 (需要助力或更高权限)",
 } end)
 
 

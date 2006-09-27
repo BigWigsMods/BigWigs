@@ -181,9 +181,13 @@ L:RegisterTranslations("zhCN", function() return {
 	sandblastannounce = "沙尘爆裂发动！",
 	sandblastwarn = "5秒后发动沙尘爆裂！",
 	sandblastbartext = "沙尘爆裂",
+	
+	engage_message = "奥罗激活！可能90秒后潜入地下！",
+	possible_submerge_bar = "潜入地下",
 
 	emergetrigger = "土堆施放了召唤奥罗甲虫。",
 	emergeannounce = "奥罗钻出了地面！",
+	emergewarn = "15秒后潜入地下",
 	emergebartext = "钻出地面",
 
 	scarabdespawn = "10秒后甲虫消失", --Translate me

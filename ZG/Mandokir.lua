@@ -65,6 +65,9 @@ L:RegisterTranslations("zhCN", function() return {
 	other_name = "队友被盯警报",
 	other_desc = "队友被血领主盯上时发出警报",
 
+	icon_name = "标记被盯上的玩家",
+	icon_desc = "团队标记被盯上的玩家",
+
 	watch_trigger = "(.+)！我正在看着你！$",
 	enrage_trigger = "怒不可遏！$",
 

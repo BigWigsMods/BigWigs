@@ -132,12 +132,35 @@ L:RegisterTranslations("zhCN", function() return {
 
 	shieldwall_name = "盾墙警报",
 	shieldwall_desc = "盾墙警报",
+	
+	void_name = "虚空领域警报",
+	void_desc = "当施放虚空领域时警报",
 
+	meteor_name = "流星警报",
+	meteor_desc = "库尔塔兹领主的流星警报",
+
+	wrath_name = "神圣之怒警报",
+	wrath_desc = "瑟里耶克爵士的神圣之怒警报",
+	
 	markbar = "标记",
 	markwarn1 = "标记(%d)！",
 	markwarn2 = "标记(%d) - 5秒",
+	
+	marktrigger = "受到了库尔塔兹印记效果的影响。",
 
-	startwarn = "四骑士已激活 - 30秒后标记",
+	voidtrigger = "女公爵布劳缪克丝施放了虚空领域。",
+	voidwarn = "5秒后虚空领域",
+	voidbar = "虚空领域",
+
+	meteortrigger = "库尔塔兹领主的流星击中",
+	meteorwarn = "流星",
+	meteorbar = "流星",
+
+	wrathtrigger = "瑟里耶克爵士的神圣之怒击中",
+	wrathwarn = "神圣之怒",
+	wrathbar = "神圣之怒",
+	
+	startwarn = "四骑士已激活 - 17秒后标记",
 
 	shieldwallbar = "%s - 盾墙",
 	shieldwalltrigger = "获得了盾墙",
