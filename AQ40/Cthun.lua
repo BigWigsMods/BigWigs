@@ -7,8 +7,8 @@ local cthun = AceLibrary("Babble-Boss-2.0")("C'Thun")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs" .. cthun)
 
 local timeP1Tentacle = 45      -- tentacle timers for phase 1
-local timeP1TentacleStart = 33 -- delay for first tentacles from engage onwards, adjusted 12 seconds for 1.12
-local timeP1GlareStart = 38    -- delay for first dark glare from engage onwards, adjusted 12 seconds for 1.12
+local timeP1TentacleStart = 45 -- delay for first tentacles from engage onwards
+local timeP1GlareStart = 45    -- delay for first dark glare from engage onwards
 local timeP1Glare = 87         -- interval for dark glare
 local timeP1GlareDuration = 38 -- duration of dark glare
 local timeP2Offset = 12        -- delay for all timers to restart after the Eye dies
@@ -73,7 +73,7 @@ L:RegisterTranslations("enUS", function() return {
 	giant2		= "Giant Eye - 5 sec",
 	giant1		= "Giant Eye - Poke it!",
 
-	startwarn	= "C'Thun engaged! - 33 sec until Dark Glare and Eyes",
+	startwarn	= "C'Thun engaged! - 45 sec until Dark Glare and Eyes",
 
 	glare2		= "Dark glare - 5 sec",
 	glare1		= "Dark glare!",
@@ -125,7 +125,7 @@ L:RegisterTranslations("deDE", function() return {
 	giant2		= "Riesiges Auge - 5 Sekunden",
 	giant1		= "Riesiges Auge - Angriff!",
 
-	startwarn	= "C'Thun angegriffen! - 33 Sekunden bis Dunkles Starren und Augen!",
+	startwarn	= "C'Thun angegriffen! - 45 Sekunden bis Dunkles Starren und Augen!",
 
 	glare2		= "Dunkles Starren - 5 Sekunden",
 	glare1		= "Dunkles Starren - BEWEGUNG!",
@@ -178,7 +178,7 @@ L:RegisterTranslations("koKR", function() return {
 	giant2		= "거대한 발톱 촉수 - 5초전!",
 	giant1		= "거대한 발톱 촉수 등장 - 눈촉수 처리후 처리!!!",
 
-	startwarn	= "쑨 시작 - 33초후 암흑의 주시",
+	startwarn	= "쑨 시작 - 45초후 암흑의 주시",
 
 	glare2		= "암흑의 주시 - 5초전!",
 	glare1		= "암흑의 주시 - 눈촉수 처리하면서 이동!",
@@ -230,7 +230,7 @@ L:RegisterTranslations("zhCN", function() return {
 	giant2		= "Giant Eye - 5 sec",
 	giant1		= "Giant Eye - Poke it!",
 
-	startwarn	= "克苏恩已激活 - 33秒后发动黑暗闪耀、出现巨眼",
+	startwarn	= "克苏恩已激活 - 45秒后发动黑暗闪耀、出现巨眼",
 
 	glare2		= "5秒后发动黑暗闪耀！",
 	glare1		= "黑暗闪耀发动 - 跑位！",
