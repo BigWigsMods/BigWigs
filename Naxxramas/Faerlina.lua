@@ -5,6 +5,8 @@
 local boss = AceLibrary("Babble-Boss-2.0")("Grand Widow Faerlina")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
+local started = nil
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -157,6 +159,8 @@ function BigWigsFaerlina:OnEnable()
 	self.silencetime = 30
 	self.enraged = nil
 
+	started = nil
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
@@ -169,13 +173,14 @@ function BigWigsFaerlina:OnEnable()
 end
 
 function BigWigsFaerlina:CHAT_MSG_MONSTER_YELL( msg )
-	if msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"] then
+	if not started and msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"] then
 		self:TriggerEvent("BigWigs_Message", L["startwarn"], "Orange")
 		if self.db.profile.enrage then
 			self:ScheduleEvent("bwfaerlinaenrage15", "BigWigs_Message", self.enragetime - 15, L["enragewarn15sec"], "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, L["enragebar"], self.enragetime, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
 		end
 		self.enrageTimerStarted = GetTime()
+		started = true
 	end
 end
 
