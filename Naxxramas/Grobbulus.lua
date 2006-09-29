@@ -5,6 +5,8 @@
 local boss = AceLibrary("Babble-Boss-2.0")("Grobbulus")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
+local started
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -149,6 +151,7 @@ BigWigsGrobbulus.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsGrobbulus:OnEnable()
+	started = nil
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
@@ -165,10 +168,9 @@ end
 ------------------------------
 
 function BigWigsGrobbulus:BigWigs_RecvSync( sync, rest, nick )
-	if sync == self:GetEngageSync() and rest and rest == boss then
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		if self.db.profile.enrage then
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Yellow")
 			self:TriggerEvent("BigWigs_StartBar", self, L["enragebar"], 720, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")

@@ -8,6 +8,7 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 local time
 local cachedUnitId
 local lastTarget
+local started
 
 ----------------------------
 --      Localization      --
@@ -97,6 +98,7 @@ function BigWigsSapphiron:OnEnable()
 	time = nil
 	cachedUnitId = nil
 	lastTarget = nil
+	started = nil
 
 	if self:IsEventScheduled("bwsapphtargetscanner") then
 		self:CancelScheduledEvent("bwsapphtargetscanner")
@@ -126,10 +128,9 @@ end
 ------------------------------
 
 function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
-	if sync == self:GetEngageSync() and rest and rest == boss then
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		if self:IsEventScheduled("bwsapphtargetscanner") then
 			self:CancelScheduledEvent("bwsapphtargetscanner")
 		end

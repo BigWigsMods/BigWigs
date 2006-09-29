@@ -5,6 +5,7 @@ local boss = AceLibrary("Babble-Boss-2.0")("Ouro")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
 local berserkannounced
+local started 
 
 ----------------------------
 --      Localization      --
@@ -226,6 +227,7 @@ BigWigsOuro.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsOuro:OnEnable()
 	berserkannounced = nil
+	started = nil
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
@@ -259,10 +261,9 @@ function BigWigsOuro:UNIT_HEALTH( msg )
 end
 
 function BigWigsOuro:BigWigs_RecvSync( sync, rest, nick )
-	if sync == self:GetEngageSync() and rest and rest == boss then
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		if self.db.profile.emerge then
 			self:TriggerEvent("BigWigs_Message", L["engage_message"], "Yellow")
 			self:PossibleSubmerge()
