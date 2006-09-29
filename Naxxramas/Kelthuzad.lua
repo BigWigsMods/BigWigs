@@ -142,7 +142,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 
-KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gemächer",
+KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gem\195\164cher",
 
 	phase_cmd = "phase",
 	phase_name = "Phasenwarnung",
@@ -172,11 +172,11 @@ KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gemächer",
 	guardians_name = "Guardian Spawns",
 	guardians_desc = "Warn for incoming Icecrown Guardians in phase 3.",
 
-	mc_trigger1 = "Eure Seele gehört jetzt mir!",
+	mc_trigger1 = "Eure Seele geh\195\182rt jetzt mir!",
 	mc_trigger2 = "Es gibt kein Entkommen!",
 	mc_warning = "Gedankenkontrolle!",
 
-	start_trigger = "Diener, Jünger, Soldaten der eisigen Finsternis! Folgt dem Ruf von Kel'Thuzad!",
+	start_trigger = "Diener, J\195\188nger, Soldaten der eisigen Finsternis! Folgt dem Ruf von Kel'Thuzad!",
 	start_warning = "Kel'Thuzad Encounter gestarted! ~5min bis er aktiv wird!",
 	start_bar = "Phase 2",
 
