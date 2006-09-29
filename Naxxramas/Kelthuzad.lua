@@ -140,6 +140,75 @@ L:RegisterTranslations("koKR", function() return {
 	are = "",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+
+KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gemächer",
+
+	phase_cmd = "phase",
+	phase_name = "Phasenwarnung",
+	phase_desc = "Warnt vor den verschiedenen Phasen.",
+
+	mc_cmd = "mindcontrol",
+	mc_name = "Gedankenkontrolle Warnung",
+	mc_desc = "Warnt, wenn Spieler von Gedankenkontrolle betroffen sind.",
+
+	fissure_cmd = "fissure",
+	fissure_name = "Schattenspalt Warnung",
+	fissure_desc = "Warnt vor Schattenspalt.",
+
+	frostblast_cmd = "frostblast",
+	frostblast_name = "Frostschlag Warnung",
+	frostblast_desc = "Warnt wenn Leute Frostschlag bekommen.",
+
+	detonate_cmd = "detonate",
+	detonate_name = "Detonierendes Mana Warnung",
+	detonate_desc = "Warnt vor Detonierendes Mana.",
+
+	detonateicon_cmd = "detonateicon",
+	detonateicon_name = "Schlachtzugicon bei Detonierung",
+	detonateicon_desc = "Plaziert ein Icon auf Spielern mit Detonierendes Mana.",
+
+	guardians_cmd = "guardians",
+	guardians_name = "Guardian Spawns",
+	guardians_desc = "Warn for incoming Icecrown Guardians in phase 3.",
+
+	mc_trigger1 = "Eure Seele gehört jetzt mir!",
+	mc_trigger2 = "Es gibt kein Entkommen!",
+	mc_warning = "Gedankenkontrolle!",
+
+	start_trigger = "Diener, Jünger, Soldaten der eisigen Finsternis! Folgt dem Ruf von Kel'Thuzad!",
+	start_warning = "Kel'Thuzad Encounter gestarted! ~5min bis er aktiv wird!",
+	start_bar = "Phase 2",
+
+	phase2_trigger = "Fleht um Gnade!",
+	phase2_warning = "Phase 2, Kel'Thuzad kommt!",
+	phase2_bar = "Kel'Thuzad aktiv!",
+
+	phase3_soon_warning = "Phase 3 bald!",
+	phase3_trigger = "Master, I require aid!",
+	phase3_warning = "Phase 3, Guardians in ~15sec!",
+
+	guardians_trigger = "Very well. Warriors of the frozen wastes, rise up! I command you to fight, kill and die for your master! Let none survive!",
+	guardians_warning = "Guardians incoming in ~10sec!",
+	guardians_bar = "Guardians incoming!",
+
+	fissure_trigger = "Kel'Thuzad wirkt Schattenspalt.",
+	fissure_warning = "Schattenspalt!",
+
+	frostblast_trigger = "^([^%s]+) ([^%s]+) von Frostschlag betroffen",
+	frostblast_warning = "Frostschlag!",
+
+	detonate_trigger = "^([^%s]+) ([^%s]+) von Detonierendes Mana betroffen",
+	detonate_bar = "Detonierendes Mana - ",
+	detonate_possible_bar = "Detonierendes Mana",
+	detonate_warning = " hat Detonierendes Mana!",
+
+	you = "Ihr",
+	are = "seid",
+} end )
+
+
+
 -- 12, 32, 42, 72, 93, 127, 140, 193, 205, 238, 250, 267, 285, 310, 337
 --[[
 Detonate timers:
