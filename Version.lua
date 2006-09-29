@@ -263,7 +263,9 @@ function BigWigsVersionQuery:ParseReply2(reply)
 
 	-- We need to check if rev or nick contains ':' - if it does, this is an old
 	-- style reply.
-	if tonumber(rev) == nil or string.find(rev, ":") or string.find(nick, ":") then return reply, nil end
+	if tonumber(rev) == nil or string.find(rev, ":") or string.find(nick, ":") then
+		return self:ParseReply(reply), nil
+	end
 	return tonumber(rev), nick
 end
 
@@ -303,13 +305,9 @@ function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
 		-- version reply we had.
 		local revision, queryNick = nil, nil
 		if tonumber(rest) == nil then
-			if string.find(rest, ":") then
-				-- This is a old style reply.
-				revision = self:ParseReply(rest)
-			else
-				-- New style reply.
-				revision, queryNick = self:ParseReply2(rest)
-			end
+			revision, queryNick = self:ParseReply2(rest)
+		else
+			revision = tonumber(rest)
 		end
 		if queryNick == nil or queryNick == UnitName("player") then
 			self.responseTable[nick] = tonumber(revision)
