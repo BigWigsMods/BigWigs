@@ -64,7 +64,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	startwarn = "글루스 전투 시작! 약 105초 후 좀비!",
 	decimatesoonwarn = "곧 척살!",
-	decimatewarn = "척살! - 좀비 광역 처리!",
+	decimatewarn = "척살!",
 	decimatetrigger = "척살",
 
 	bar1text = "광역 공포",

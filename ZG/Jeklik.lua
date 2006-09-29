@@ -72,12 +72,18 @@ L:RegisterTranslations("koKR", function() return {
 	heal_name = "치유 경고",
 	heal_desc = "치유에 대한 경고",
 
-	bomb_name = "박쥐 경고",
-	bomb_desc = "박쥐에 대한 경고",
+	bomb_name = "폭탄 박쥐 경고",
+	bomb_desc = "폭탄 박쥐에 대한 경고",
 
+	swarm_name = "박쥐 떼 경고",
+	swarm_desc = "박쥐 떼에 대한 경고",
+
+	swarm_trigger = "emits a deafening shriek", -- CHECK
 	bomb_trigger = "침략자들에게 뜨거운 맛을 보여줘라!$",
 	heal_trigger = "상급 치유를 시전하기 시작합니다!$",
-	bomb_message = "박쥐 소환!",
+
+	swarm_message = "박쥐 떼 소환!",
+	bomb_message = "폭탄 박쥐 소환!",
 	heal_message = "치유 시전 - 시전 방해해주세요!",
 } end )
 

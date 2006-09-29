@@ -134,6 +134,8 @@ function BigWigsOssirian:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE( msg )
 	if debuffName and debuffName ~= L["expose"] then
 		if L:HasReverseTranslation(debuffName) then
 			self:TriggerEvent("BigWigs_SendSync", "OssirianWeakness "..L:GetReverseTranslation(debuffName))
+		else
+			self:TriggerEvent("BigWigs_SendSync", "OssirianWeakness "..debuffName)
 		end
 	end
 end

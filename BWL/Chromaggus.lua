@@ -144,12 +144,12 @@ L:RegisterTranslations("koKR", function() return {
 	vulnerability_desc = "약화 속성 변경에 대한 경고",
 	
 	breath_trigger = "크로마구스|1이;가; (.+)|1을;를; 시전합니다.",
-	vulnerability_test = "(.+)|1으로;로; 크로마구스에게 (%d+)의 (.+) 피해를 입혔습니다.",
+	vulnerability_test = "(.+)|1으로;로; 크로마구스에게 (%d+)의 ([^%s]+) (.*)피해를 입혔습니다.",
 	frenzy_trigger = "%s|1이;가; 살기를 띤 듯한 광란의 상태에 빠집니다!",
 	vulnerability_trigger = "%s|1이;가; 주춤하면서 물러나면서 가죽이 빛납니다.", --"가죽이 점점 빛나면서 물러서기 시작합니다.",
 
-	hit = "피해",
-	crit = "치명상",
+	hit = "",
+	crit = "치명상 ",
 
 	breath_warning = "%s 10초전!",
 	breath_message = "%s를 시전합니다!",
@@ -268,14 +268,11 @@ end
 if (GetLocale() == "koKR") then
 	function BigWigsChromaggus:PlayerDamageEvents(msg)
 		if (not self.vulnerability) then
-			local _, _, school, dmg, type = string.find(msg, L["vulnerability_test"])
-			if ( type ) then
-				local dmgType = string.find( type, L["crit"] ) and L["crit"] or L["hit"] ;			
-				if (dmgType == (L["hit"] or L["crit"]) and tonumber(dmg or "") and school) then
-					if ((tonumber(dmg) >= 550 and dmgType == L["hit"]) or (tonumber(dmg) >= 1100 and dmgType == L["crit"])) then
-						self.vulnerability = school
-						if self.db.profile.vulnerability then self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], type), "White") end
-					end
+			local _,_,_, dmg, school, type = string.find(msg, L["vulnerability_test"])
+			if ( type == L["hit"] or type == L["crit"] ) and tonumber(dmg or "") and school then
+				if (tonumber(dmg) >= 550 and type == L["hit"]) or (tonumber(dmg) >= 1100 and type == L["crit"]) then
+					self.vulnerability = school
+					if self.db.profile.vulnerability then self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "White") end
 				end
 			end
 		end

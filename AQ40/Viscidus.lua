@@ -151,12 +151,12 @@ L:RegisterTranslations("koKR", function() return {
 	are 		= "",
 
 	warn1 		= "빙결 1 단계!",
-	warn2 		= "빙결 2 단계 - 준비",
-	warn3 		= "빙결 3 단계 - DPS DPS DPS",
+	warn2 		= "빙결 2 단계",
+	warn3 		= "비시디우스가 얼어 붙었습니다!",
 	warn4 		= "Cracking up - little more now!",
 	warn5 		= "Cracking up - almost there!",
 	warn6		= "Poison Bolt Volley - Cleanse Poison!",
-	warn7		= "Poison Bolt Volley 3 초전!",
+	warn7		= "Poison Bolt Volley 약 3 초후!",
 	warn8		= "님이 독소에 걸렸습니다 - 대피!",
 	warn9		= "당신은 독구름에 걸렸습니다!",
 
