@@ -166,12 +166,8 @@ function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
 		if self:IsEventScheduled("bwsapphdelayed") then
 			self:CancelScheduledEvent("bwsapphdelayed")
 		end
-		self:TriggerEvent("BigWigs_StopBar", self, L["lifedrain_bar"])
 		self:TriggerEvent("BigWigs_Message", L["deepbreath_incoming_message"], "Orange")
 		self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_incoming_bar"], 23, "Interface\\Icons\\Spell_Arcane_PortalIronForge", "Orange")
-		if self.db.profile.lifedrain then
-			self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 37, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
-		end
 		lastTarget = nil
 		cachedUnitId = nil
 		self:ScheduleEvent("besapphdelayed", self.StartTargetScanner, 50, self)
@@ -188,9 +184,15 @@ function BigWigsSapphiron:LifeDrain(msg)
 end
 
 function BigWigsSapphiron:CHAT_MSG_MONSTER_EMOTE(msg)
-	if msg == L["deepbreath_trigger"] and self.db.profile.deepbreath then
-		self:TriggerEvent("BigWigs_Message", L["deepbreath_warning"], "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_bar"], 7, "Interface\\Icons\\Spell_Frost_FrostShock", "Blue")
+	if msg == L["deepbreath_trigger"] then
+		if self.db.profile.deepbreath then
+			self:TriggerEvent("BigWigs_Message", L["deepbreath_warning"], "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_bar"], 7, "Interface\\Icons\\Spell_Frost_FrostShock", "Blue")
+		end
+		self:TriggerEvent("BigWigs_StopBar", self, L["lifedrain_bar"])
+		if self.db.profile.lifedrain then
+			self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 14, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
+		end
 	end
 end
 
