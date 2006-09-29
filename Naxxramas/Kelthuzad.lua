@@ -70,11 +70,12 @@ L:RegisterTranslations("enUS", function() return {
 
 	frostblast_trigger = "^([^%s]+) ([^%s]+) afflicted by Frost Blast",
 	frostblast_warning = "Frost Blast!",
+	frostblast_soon_message = "Possible Frost Blast in ~5sec!",
 
 	detonate_trigger = "^([^%s]+) ([^%s]+) afflicted by Detonate Mana",
-	detonate_bar = "Detonate Mana - ",
+	detonate_bar = "Detonate Mana - %s",
 	detonate_possible_bar = "Possible Detonate",
-	detonate_warning = " has Detonate Mana!",
+	detonate_warning = "%s has Detonate Mana!",
 
 	you = "You",
 	are = "are",
@@ -132,17 +133,15 @@ L:RegisterTranslations("koKR", function() return {
 	frostblast_warning = "냉기 작열!",
 
 	detonate_trigger = "^([^|;%s]*)(.*)마나 폭발에 걸렸습니다%.$",
-	detonate_bar = "마나 폭발 - ",
+	detonate_bar = "마나 폭발 - %s",
 	detonate_possible_bar = "폭발 가능",
-	detonate_warning = "가 마나 폭발!",
 
 	you = "",
 	are = "",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-
-KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gem\195\164cher",
+	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gem\195\164cher",
 
 	phase_cmd = "phase",
 	phase_name = "Phasenwarnung",
@@ -199,25 +198,14 @@ KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gem\195\164cher",
 	frostblast_warning = "Frostschlag!",
 
 	detonate_trigger = "^([^%s]+) ([^%s]+) von Detonierendes Mana betroffen",
-	detonate_bar = "Detonierendes Mana - ",
+	detonate_bar = "Detonierendes Mana - %s",
 	detonate_possible_bar = "Detonierendes Mana",
-	detonate_warning = " hat Detonierendes Mana!",
+	detonate_warning = "%s hat Detonierendes Mana!",
 
 	you = "Ihr",
 	are = "seid",
 } end )
 
-
-
--- 12, 32, 42, 72, 93, 127, 140, 193, 205, 238, 250, 267, 285, 310, 337
---[[
-Detonate timers:
-348, 36, 31, 51, 22, 22, 37, 34, 30, 24, 48, 24, 22
-]]
---[[
-frost blast:
-30, 161, 42, 46, 47, 63, 70
-]]
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
@@ -286,7 +274,7 @@ end
 function BigWigsKelThuzad:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.phase and msg == L["start_trigger"] then
 		self:TriggerEvent("BigWigs_Message", L["start_warning"], "Yellow")
-		self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 300 )
+		self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 320 )
 	elseif self.db.profile.phase and msg == L["phase2_trigger"] then
 		self:TriggerEvent("BigWigs_StopBar", self, L["start_bar"] )
 		self:TriggerEvent("BigWigs_Message", L["phase2_warning"], "Red")
@@ -312,12 +300,14 @@ end
 
 function BigWigsKelThuzad:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "KelDetonation" and rest and self.db.profile.detonate then
-		self:TriggerEvent("BigWigs_Message", rest .. L["detonate_warning"], "Yellow")	
+		self:TriggerEvent("BigWigs_Message", string.format(L["detonate_warning"], rest), "Yellow")
 		if self.db.profile.detonateicon then self:TriggerEvent("BigWigs_SetRaidIcon", rest ) end
-		self:TriggerEvent("BigWigs_StartBar", self, L["detonate_bar"] .. rest, 5, "Interface\\Icons\\Spell_Nature_WispSplode", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["detonate_bar"], rest), 5, "Interface\\Icons\\Spell_Nature_WispSplode", "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L["detonate_possible_bar"], 20, "Interface\\Icons\\Spell_Nature_WispSplode")
 	elseif sync == "KelFrostBlast" and self.db.profile.frostblast then
 		self:TriggerEvent("BigWigs_Message", L["frostblast_warning"], "Yellow")
+		self:ScheduleEvent("bwktfbwarn", "BigWigs_Message", 20, L["frostblast_soon_message"], "Yellow")
+		self:TriggerEvent("BigWigs_StartBar", self, L["frostblast_bar"], 25, "Interface\\Icons\\Spell_Frost_FreezingBreath")
 	elseif sync == "KelFizzure" and self.db.profile.fissure then
 		self:TriggerEvent("BigWigs_Message", L["fissure_warning"], "Red")
 	elseif sync == "KelMindControl" and self.db.profile.mc then
