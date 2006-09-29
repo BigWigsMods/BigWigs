@@ -39,6 +39,7 @@ L:RegisterTranslations("enUS", function() return {
 	["BigWigs"] = true,
 	["Runs a version query on the BigWigs core."] = true,
 	["Nr Replies"] = true,
+	["Ancient"] = true,
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -251,9 +252,24 @@ function BigWigsVersionQuery:QueryVersion(zone)
 	self:TriggerEvent("BigWigs_SendSync", "BWVQ "..zone)
 end
 
+--[[ Parses the new style reply, which is "1111 <nick>" ]]
+function BigWigsVersionQuery:ParseReply2(reply)
+	-- If there's no space, it's just a version number we got.
+	local first, last = string.find(reply, " ")
+	if not first or not last then return reply, nil end
+
+	local rev = string.sub(reply, 1, first)
+	local nick = string.sub(reply, last + 1, string.len(reply))
+
+	-- We need to check if rev or nick contains ':' - if it does, this is an old
+	-- style reply.
+	if tonumber(rev) == nil or string.find(rev, ":") or string.find(nick, ":") then return reply, nil end
+	return tonumber(rev), nick
+end
+
 --[[ Parses the old style reply, which was MC:REV BWL:REV, etc. ]]
 function BigWigsVersionQuery:ParseReply(reply)
-	if not strfind(reply, ":") then return -1 end
+	if not string.find(reply, ":") then return -1 end
 	local zone = BWL:HasTranslation(self.currentZone) and BWL:GetTranslation(self.currentZone) or self.currentZone
 
 	local zoneIndex, zoneEnd = string.find(reply, zone)
@@ -266,19 +282,40 @@ function BigWigsVersionQuery:ParseReply(reply)
 	return -1
 end
 
+--[[
+-- Version reply syntax history:
+--  Old Style:           MC:REV BWL:REV ZG:REV
+--  First Working Style: REV
+--  New Style:           REV QuereeNick
+--]]
+
 function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "BWVQ" and nick ~= UnitName("player") and rest then
 		if not self.zoneRevisions then self:PopulateRevisions() end
 		if not self.zoneRevisions[rest] then
-			self:TriggerEvent("BigWigs_SendSync", "BWVR -1")
+			self:TriggerEvent("BigWigs_SendSync", "BWVR -1 "..nick)
 		else
-			self:TriggerEvent("BigWigs_SendSync", "BWVR " .. self.zoneRevisions[rest])
+			self:TriggerEvent("BigWigs_SendSync", "BWVR " .. self.zoneRevisions[rest] .. " " .. nick)
 		end
 	elseif sync == "BWVR" and self.queryRunning and nick and rest then
-		if tonumber(rest) == nil then rest = self:ParseReply(rest) end
-		self.responseTable[nick] = tonumber(rest)
-		self.responses = self.responses + 1
-		self:UpdateVersions()
+		-- Means it's either a old style or new style reply.
+		-- The "working style" is just the number, which was the second type of
+		-- version reply we had.
+		local revision, queryNick = nil, nil
+		if tonumber(rest) == nil then
+			if string.find(rest, ":") then
+				-- This is a old style reply.
+				revision = self:ParseReply(rest)
+			else
+				-- New style reply.
+				revision, queryNick = self:ParseReply2(rest)
+			end
+		end
+		if nick == nil or queryNick == UnitName("player") then
+			self.responseTable[nick] = tonumber(revision)
+			self.responses = self.responses + 1
+			self:UpdateVersions()
+		end
 	end
 end
 
