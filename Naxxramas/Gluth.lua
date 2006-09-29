@@ -5,6 +5,8 @@
 local boss = AceLibrary("Babble-Boss-2.0")("Gluth")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
+local started = nil
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -143,6 +145,7 @@ BigWigsGluth.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsGluth:OnEnable()
 	self.prior = nil
+	started = nil
 
 	self:RegisterEvent("BigWigs_Message")
 
@@ -190,7 +193,8 @@ function BigWigsGluth:BigWigs_RecvSync( sync, rest, nick )
 		self:TriggerEvent("BigWigs_Message", L["decimatewarn"], "Red")
 		self:TriggerEvent("BigWigs_StartBar", self, L["decimatebartext"], 105, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
 		self:ScheduleEvent("BigWigs_Message", 100, L["decimatesoonwarn"], "Orange")
-	elseif sync == self:GetEngageSync() and rest and rest == boss then
+	elseif sync == self:GetEngageSync() and rest and rest == boss and not started then
+		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		if self.db.profile.decimate then
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Yellow")

@@ -7,6 +7,8 @@ local veknilash = AceLibrary("Babble-Boss-2.0")("Emperor Vek'nilash")
 local boss = AceLibrary("Babble-Boss-2.0")("The Twin Emperors")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs" .. boss)
 
+local started = nil
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -181,6 +183,7 @@ BigWigsTwins.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsTwins:OnEnable()
+	started = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
@@ -203,7 +206,8 @@ function BigWigsTwins:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 end
 
 function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
-	if sync == self:GetEngageSync() and rest and rest == boss then
+	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end

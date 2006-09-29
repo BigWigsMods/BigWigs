@@ -6,6 +6,7 @@ local boss = AceLibrary("Babble-Boss-2.0")("Princess Huhuran")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 local berserkannounced
 local prior
+local started
 
 ----------------------------
 --      Localization      --
@@ -152,6 +153,7 @@ BigWigsHuhuran.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsHuhuran:OnEnable()
 	prior = nil
 	berserkannounced = nil
+	started = nil
 
 	self:RegisterEvent("BigWigs_Message")
 
@@ -174,7 +176,8 @@ end
 ------------------------------
 
 function BigWigsHuhuran:BigWigs_RecvSync(sync, rest, nick)
-	if sync == self:GetEngageSync() and rest and rest == boss then
+	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end

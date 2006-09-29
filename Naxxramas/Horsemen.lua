@@ -12,6 +12,8 @@ local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
 local times = nil
 
+local started = nil
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -187,6 +189,7 @@ function BigWigsHorsemen:OnEnable()
 	self.deaths = 0
 
 	times = {}
+	started = nil
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -237,7 +240,8 @@ function BigWigsHorsemen:SkillEvent( msg )
 end
 
 function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
-	if sync == self:GetEngageSync() and rest and rest == boss then
+	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end

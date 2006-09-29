@@ -5,6 +5,8 @@
 local boss = AceLibrary("Babble-Boss-2.0")("Loatheb")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
 
+local started = nil
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -167,7 +169,8 @@ BigWigsLoatheb.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsLoatheb:OnEnable()
 	self.doomTime = 30
-
+	started = nil
+	
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -184,7 +187,8 @@ function BigWigsLoatheb:OnEnable()
 end
 
 function BigWigsLoatheb:BigWigs_RecvSync(sync, rest, nick)
-	if sync == self:GetEngageSync() and rest and rest == boss then
+	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
