@@ -216,7 +216,7 @@ function BigWigsMaexxna:BigWigs_RecvSync( sync, rest )
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		self:BigWigs_RecvSync("MaexxnaWebSpray", nil, nil)
+		self:BigWigs_RecvSync("MaexxnaWebspray", nil, nil)
 	elseif sync == "MaexxnaWebspray" then
 		if prior then return end
 		prior = true
