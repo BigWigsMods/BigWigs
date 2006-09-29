@@ -311,7 +311,7 @@ function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
 				revision, queryNick = self:ParseReply2(rest)
 			end
 		end
-		if nick == nil or queryNick == UnitName("player") then
+		if queryNick == nil or queryNick == UnitName("player") then
 			self.responseTable[nick] = tonumber(revision)
 			self.responses = self.responses + 1
 			self:UpdateVersions()
