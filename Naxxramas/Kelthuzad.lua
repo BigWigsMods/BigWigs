@@ -68,6 +68,7 @@ L:RegisterTranslations("enUS", function() return {
 	fissure_trigger = "Kel'Thuzad casts Shadow Fissure.",
 	fissure_warning = "Shadow Fissure!",
 
+	frostblast_bar = "Possible Frost Blast",
 	frostblast_trigger = "^([^%s]+) ([^%s]+) afflicted by Frost Blast",
 	frostblast_warning = "Frost Blast!",
 	frostblast_soon_message = "Possible Frost Blast in ~5sec!",
