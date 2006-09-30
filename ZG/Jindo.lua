@@ -76,11 +76,11 @@ L:RegisterTranslations("frFR", function() return {
 	icon_name = "Place une icone",
 	icon_desc = "Place une icone sur la personne Maudite (promotion requise)",
 
-	triggerbrainwash = "Jin'do the Hexxer casts Summon Brain Wash Totem.", --TO TRANSLATE
-	triggerhealing = "Jin'do the Hexxer casts Powerful Healing Ward.", --TO TRANSLATE
+	triggerbrainwash = "Jin'do le Mal\195\169ficieur lance Invocation du totem de lavage de cerveau", --TESTED
+	triggerhealing = "Jin'do le Mal\195\169ficieur lance Gardien gu\195\169risseur puissant.", --TESTED
 	triggercurse = "^([^%s]+) ([^%s]+) les effets de Illusions de Jin'do",
 
-	warnbrainwash = "Totem de Mind Control!",
+	warnbrainwash = "Totem de Control Mental!",
 	warnhealing = "Totem de Soins!",
 
 	cursewarn_self = "Tu es Maudit!",
