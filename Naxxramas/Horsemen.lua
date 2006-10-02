@@ -110,20 +110,42 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	mark_name = "Mark Alerts", -- ?
-	mark_desc = "Warn for marks", -- ?
+	mark_name = "Mal Alarm",
+	mark_desc = "Warnt vor den Mal Debuffs",
 
 	shieldwall_name = "Schildwall",
 	shieldwall_desc = "Warnung vor Schildwall.",
 
-	markbar = "Mark %d", -- ?
-	markwarn1 = "Mark %d!", -- ?
-	markwarn2 = "Mark %d - 5 Sekunden", -- ?
+	void_name = "Zone der Leere Warnung",
+	void_desc = "Warnt, wenn Lady Blaumeux Zone der Leere zaubert.",
 
-	startwarn = "The Four Horsemen angegriffen! Mark in 30 Sekunden", -- ?
+	meteor_name = "Meteor Alarm",
+	meteor_desc = "Warnt, wenn Thane Meteor zaubert.",
+
+	wrath_name = "Heiliger Zorn Alarm",
+	wrath_desc = "Warnt, wenn Sire Zeliek Heiliger Zorn zaubert.",
+
+	markbar = "Mal",
+	markwarn1 = "Mal (%d)!",
+	markwarn2 = "Mal (%d) - 5 Sekunden",
+	marktrigger = "ist von Mal von .+ betroffen",
+
+	voidtrigger = "Lady Blaumeux wirkt Zone der Leere.",
+	voidwarn = "Zone der Leere kommt",
+	voidbar = "Zone der Leere",
+
+	meteortrigger = "Thane Korth'azzs Meteor trifft ",
+	meteorwarn = "Meteor!",
+	meteorbar = "Meteor",
+
+	wrathtrigger = "Sire Zelieks Heiliger Zorn trifft ",
+	wrathwarn = "Heiliger Zorn!",
+	wrathbar = "Heiliger Zorn",
+
+	startwarn = "Die Vier Reiter angegriffen! Mal in ~17 Sekunden",
 
 	shieldwallbar = "%s - Schildwall",
-	shieldwalltrigger = " bekommt 'Schildwall'.",
+	shieldwalltrigger = "(.+) bekommt 'Schildwall'.",
 	shieldwallwarn = "%s - Schildwall f\195\188r 20 Sekunden",
 	shieldwallwarn2 = "%s - Schildwall Vorbei!",
 } end )
