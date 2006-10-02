@@ -57,6 +57,8 @@ L:RegisterTranslations("enUS", function() return {
 	icon4 = "Interface\\Icons\\Spell_Shadow_ChillTouch",
 	icon5 = "Interface\\Icons\\Spell_Frost_ChillingBlast",
 
+	castingbar = "Cast %s",
+
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -249,8 +251,9 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, spellId)
 	local spellName = L:HasTranslation("breath"..spellId) and L["breath"..spellId] or nil
 	if not spellName then return end
 
-	self:TriggerEvent("BigWigs_Message", format(L["breath_message"], spellName), "Red")
-	self:ScheduleEvent("bwchromaggusbreath"..spellName, "BigWigs_Message", 50, format(L["breath_warning"], spellName), "Red")
+	self:TriggerEvent("BigWigs_StartBar", self, string.format( L["castingbar"], spellName), 2 )
+	self:TriggerEvent("BigWigs_Message", string.format(L["breath_message"], spellName), "Red")
+	self:ScheduleEvent("bwchromaggusbreath"..spellName, "BigWigs_Message", 50, string.format(L["breath_warning"], spellName), "Red")
 	self:TriggerEvent("BigWigs_StartBar", self, spellName, 60, L["icon"..spellId], "Green", "Yellow", "Orange", "Red")
 end
 
