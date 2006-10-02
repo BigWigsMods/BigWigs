@@ -130,12 +130,15 @@ L:RegisterTranslations("koKR", function() return {
 	fissure_trigger = "켈투자드|1이;가; 어둠의 분열|1을;를; 시전합니다.",
 	fissure_warning = "어둠의 분열!",
 
+	frostblast_bar = "냉기 작열 가능",
 	frostblast_trigger = "^([^|;%s]*)(.*)냉기 작열에 걸렸습니다%.$",
 	frostblast_warning = "냉기 작열!",
+	frostblast_soon_message = "냉기 작열 가능 - 약 5초 이내!",
 
 	detonate_trigger = "^([^|;%s]*)(.*)마나 폭발에 걸렸습니다%.$",
 	detonate_bar = "마나 폭발 - %s",
 	detonate_possible_bar = "폭발 가능",
+	detonate_warning = "%s%|1이;가; 마나 폭발!",
 
 	you = "",
 	are = "",

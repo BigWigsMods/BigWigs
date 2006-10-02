@@ -127,8 +127,8 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	volley_name = "Poison Volley 경고",
-	volley_desc = "Poison Volley에 대한 경고",
+	volley_name = "연발 독액 경고",
+	volley_desc = "연발 독액에 대한 경고",
 
 	toxinyou_name = "자신의 독구름 경고",
 	toxinyou_desc = "자신이 독구름일 때 알림",
@@ -139,28 +139,28 @@ L:RegisterTranslations("koKR", function() return {
 	freeze_name = "빙결 상태 경고",
 	freeze_desc = "각각의 빙결 상태에 대한 경고",
 
-	trigger1 	= "begins to slow!",
-	trigger2 	= "is freezing up!",
-	trigger3 	= "is frozen solid!",
-	trigger4 	= "begins to crack!",
-	trigger5 	= "looks ready to shatter!",
-	trigger6	= "afflicted by Poison Bolt Volley",
+	trigger1 	= "%s|1이;가; 느려지기 시작했습니다!",	-- CHECK
+	trigger2 	= "%s|1이;가; 얼어붙고 있습니다!",	-- CHECK
+	trigger3 	= "%s|1이;가; 단단하게 얼었습니다!",	-- CHECK
+	trigger4 	= "%s|1이;가; 분해되기 시작합니다!",	-- CHECK
+	trigger5 	= "%s|1이;가; 부서질 것 같습니다!",	-- CHECK
+	trigger6	= "연발 독액에 걸렸습니다",	-- CHECK
 	trigger7 	= "^([^|;%s]*)(.*)독소에 걸렸습니다%.$", -- CHECK
 
 	you 		= "",
 	are 		= "",
 
-	warn1 		= "빙결 1 단계!",
-	warn2 		= "빙결 2 단계",
-	warn3 		= "비시디우스가 얼어 붙었습니다!",
-	warn4 		= "Cracking up - little more now!",
-	warn5 		= "Cracking up - almost there!",
-	warn6		= "Poison Bolt Volley - Cleanse Poison!",
-	warn7		= "Poison Bolt Volley 약 3 초후!",
+	warn1 		= "1 단계 - 느려집니다!",
+	warn2 		= "2 단계 - 얼어붙고 있습니다!",
+	warn3 		= "3 단계 - 얼었습니다! 물리 공격 시작!",
+	warn4 		= "4 단계 - 좀 더 빠르게 공격!",
+	warn5 		= "5 단계 - 거의 부서졌습니다!",
+	warn6		= "연발 독액 - 독 해제 하세요!",
+	warn7		= "연발 독액 - 약 3 초후 시전!",
 	warn8		= "님이 독소에 걸렸습니다 - 대피!",
 	warn9		= "당신은 독구름에 걸렸습니다!",
 
-	bar1text	= "Poison Bolt Volley",
+	bar1text	= "연발 독액",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

@@ -84,8 +84,8 @@ L:RegisterTranslations("koKR", function() return {
 	wrath_desc = "젤리에크 경 신성한 격노 시전 경고",
 
 	markbar = "징표 %d",
-	markwarn1 = "(%d) 징표!",
-	markwarn2 = "(%d) 징표 - 5 초",
+	markwarn1 = "%d 징표!",
+	markwarn2 = "%d 징표 - 5 초",
 	--marktrigger = "is afflicted by Mark of (Korth'azz|Blaumeux|Mograine|Zeliek)",
 	marktrigger = "|1이;가; 징표에 걸렸습니다.",
 	
