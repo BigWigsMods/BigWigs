@@ -41,9 +41,9 @@ L:RegisterTranslations("enUS", function() return {
 	wrath_name = "Holy Wrath Alerts",
 	wrath_desc = "Warn on Zeliek casting Wrath.",
 
-	markbar = "Mark",
-	markwarn1 = "Mark (%d)!",
-	markwarn2 = "Mark (%d) - 5 sec",
+	markbar = "Mark %d",
+	markwarn1 = "Mark %d!",
+	markwarn2 = "Mark %d in 5 sec",
 	marktrigger = "is afflicted by Mark of ",
 
 	voidtrigger = "Lady Blaumeux casts Void Zone.",
@@ -73,7 +73,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	shieldwall_name = "방패의벽 경고",
 	shieldwall_desc = "방패의벽에 대한 경고",
-	
+
 	void_name = "공허의 구역 경고",
 	void_desc = "여군주 블라미우스 공허의 구역 시전 경고.",
 
@@ -83,7 +83,7 @@ L:RegisterTranslations("koKR", function() return {
 	wrath_name = "성스러운 격노 경고",
 	wrath_desc = "젤리에크 경 신성한 격노 시전 경고",
 
-	markbar = "징표",
+	markbar = "징표 %d",
 	markwarn1 = "(%d) 징표!",
 	markwarn2 = "(%d) 징표 - 5 초",
 	--marktrigger = "is afflicted by Mark of (Korth'azz|Blaumeux|Mograine|Zeliek)",
@@ -116,9 +116,9 @@ L:RegisterTranslations("deDE", function() return {
 	shieldwall_name = "Schildwall",
 	shieldwall_desc = "Warnung vor Schildwall.",
 
-	markbar = "Mark", -- ?
-	markwarn1 = "Mark (%d)!", -- ?
-	markwarn2 = "Mark (%d) - 5 Sekunden", -- ?
+	markbar = "Mark %d", -- ?
+	markwarn1 = "Mark %d!", -- ?
+	markwarn2 = "Mark %d - 5 Sekunden", -- ?
 
 	startwarn = "The Four Horsemen angegriffen! Mark in 30 Sekunden", -- ?
 
@@ -144,7 +144,7 @@ L:RegisterTranslations("zhCN", function() return {
 	wrath_name = "神圣之怒警报",
 	wrath_desc = "瑟里耶克爵士的神圣之怒警报",
 	
-	markbar = "标记",
+	markbar = "标记 %d",
 	markwarn1 = "标记(%d)！",
 	markwarn2 = "标记(%d) - 5秒",
 	
@@ -177,7 +177,7 @@ L:RegisterTranslations("zhCN", function() return {
 BigWigsHorsemen = BigWigs:NewModule(boss)
 BigWigsHorsemen.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsHorsemen.enabletrigger = { thane, mograine, zeliek, blaumeux }
-BigWigsHorsemen.toggleoptions = {"mark", "shieldwall", "meteor", "void", "wrath", "bosskill"}
+BigWigsHorsemen.toggleoptions = {"mark", "shieldwall", -1, "meteor", "void", "wrath", "bosskill"}
 BigWigsHorsemen.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -247,7 +247,7 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 		end
 		if self.db.profile.mark then
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Yellow")
-			self:TriggerEvent("BigWigs_StartBar", self, L["markbar"], 17, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format( L["markbar"], self.marks), 17, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Yellow", "Orange", "Red")
 			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 12, string.format( L["markwarn2"], self.marks ), "Orange")
 		end
 	elseif sync == "HorsemenMark" then
@@ -256,7 +256,7 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 		end
 		self.marks = self.marks + 1
 		if self.db.profile.mark then 
-			self:TriggerEvent("BigWigs_StartBar", self, L["markbar"], 12, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format( L["markbar"], self.marks ), 12, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Orange", "Red")
 			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 7, string.format( L["markwarn2"], self.marks ), "Orange")
 		end
 	elseif sync == "HorsemenMeteor" then
