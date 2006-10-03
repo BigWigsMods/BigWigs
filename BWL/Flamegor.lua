@@ -106,7 +106,7 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("frFR", function() return {
 	wingbuffet_trigger = "Flamegor commence \195\160 lancer Frappe des ailes.",
 	shadowflame_trigger = "Flamegor commence \195\160 lancer Flamme d'ombre.",
-	frenzy_trigger = "est pris de fr\195\169n\195\169sie !",
+	frenzy_trigger = "%s est pris de fr\195\169n\195\169sie !",
 
 	wingbuffet_warning = "3 sec avant prochaine Frappe des ailes!",
 	shadowflame_warning = "Flamme d'ombre imminente!",
