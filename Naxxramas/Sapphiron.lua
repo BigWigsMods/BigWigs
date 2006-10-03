@@ -83,6 +83,35 @@ L:RegisterTranslations("koKR", function() return {
 	deepbreath_bar = "얼음 폭탄 떨어짐!",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	deepbreath_name = "Frostatem Warnung",
+	deepbreath_desc = "Warnt, wenn Saphiron Frostatem zaubert.",
+
+	lifedrain_name = "Lebenssauger",
+	lifedrain_desc = "Warnt vor dem Lebenssauger Fluch.",
+
+	berserk_name = "Berserker",
+	berserk_desc = "Warnt vor Berserker.",
+
+	berserk_bar = "Berserker",
+	berserk_warn_10min = "10min bis Berserker!",
+	berserk_warn_5min = "5min bis Berserker!",
+	berserk_warn_rest = "%s sek bis Berserker!",
+
+	engage_message = "Sapphiron angegriffen! Berserker in 15min!",
+
+	lifedrain_message = "Lebenssauger! N\195\164chster in ~24sek!",
+	lifedrain_warn1 = "Lebenssauger in 5sek!",
+	lifedrain_bar = "Lebenssauger",
+
+	lifedrain_trigger = "von Lebenssauger betroffen",
+	lifedrain_trigger2 = "Lebenssauger wurde von .+ widerstanden",
+
+	deepbreath_trigger = "%s atmet tief ein...",
+	deepbreath_warning = "Frostatem kommt!",
+	deepbreath_bar = "Frostatem!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
