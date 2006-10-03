@@ -52,10 +52,11 @@ L:RegisterTranslations("deDE", function() return {
 ----------------------------------
 
 BigWigsTranq = BigWigs:NewModule(L["Tranq"])
-BigWigsTranq.revision = tonumber(string.sub("$Revision$", 12, -3))
+BigWigsTranq.revision = tonumber(string.sub("$Revision: 11446 $", 12, -3))
 BigWigsTranq.defaults = {
 	bars = true,
 }
+BigWigsTranq.external = true
 BigWigsTranq.consoleCmd = L["Tranq"]
 BigWigsTranq.consoleOptions = {
 	type = "group",

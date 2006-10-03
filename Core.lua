@@ -28,6 +28,9 @@ L:RegisterTranslations("enUS", function() return {
 	["plugin"] = true,
 	["Plugins"] = true,
 	["Options for plugins."] = true,
+	["extra"] = true,
+	["Extras"] = true,
+	["Options for extras."] = true,
 	["toggle"] = true,
 	["Active"] = true,
 	["Activate or deactivate this module."] = true,
@@ -188,6 +191,12 @@ BigWigs.cmdtable = {type = "group", handler = BigWigs, args = {
 		desc = L["Options for plugins."],
 		args = {},
 	},
+	[L["extra"]] = {
+	type = "group",
+	name = L["Extras"],
+	desc = L["Options for extras."],
+	args = {},
+	},
 }}
 BigWigs:RegisterChatCommand({"/bw", "/BigWigs"}, BigWigs.cmdtable)
 BigWigs.debugFrame = ChatFrame5
@@ -336,8 +345,9 @@ function BigWigs:ADDON_LOADED(addon)
 	local g = getglobal(gname)
 	if not g or not g.name then return end
 
-	self:RegisterModule(g.name, g)
 	g.external = true
+	
+	self:RegisterModule(g.name, g)
 end
 
 
@@ -447,11 +457,18 @@ function BigWigs:RegisterModule(name, module)
 					args = {},
 				}
 			end
-
-			self.cmdtable.args[L["boss"]].args[zone].args[L2["cmd"]] = cons or module.consoleOptions
+			if module.external then
+				self.cmdtable.args[L["extra"]].args[L2["cmd"]] = cons or module.consoleOptions
+			else
+				self.cmdtable.args[L["boss"]].args[zone].args[L2["cmd"]] = cons or module.consoleOptions			
+			end
 		end
 	elseif module.consoleOptions then
-		self.cmdtable.args[L["plugin"]].args[module.consoleCmd or name] = cons or module.consoleOptions
+		if module.external then
+			self.cmdtable.args[L["extra"]].args[module.consoleCmd or name] = cons or module.consoleOptions
+		else
+			self.cmdtable.args[L["plugin"]].args[module.consoleCmd or name] = cons or module.consoleOptions
+		end
 	end
 
 	-- Set up target monitoring, in case the monitor module has already initialized

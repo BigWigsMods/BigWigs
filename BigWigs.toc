@@ -53,8 +53,9 @@ RaidWarn.lua
 BossBlock.lua
 RaidIcon.lua
 Range.lua
-Tranq.lua
 Version.lua
+
+Extras\Tranq.lua
 
 ZG\Arlokk.lua
 ZG\Jeklik.lua
