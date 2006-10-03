@@ -230,13 +230,14 @@ end
 ------------------------------
 
 function BigWigsSapphiron:StartTargetScanner()
-	if self:IsEventScheduled("bwsapphtargetscanner") then return end
+	if self:IsEventScheduled("bwsapphtargetscanner") or not started then return end
 
 	-- Start a repeating event that scans the raid for targets every 1 second.
 	self:ScheduleRepeatingEvent("bwsapphtargetscanner", self.RepeatedTargetScanner, 1, self)
 end
 
 function BigWigsSapphiron:RepeatedTargetScanner()
+	if not started then return end
 	local found = nil
 
 	-- If we have a cached unit (which we will if we found someone with the boss
