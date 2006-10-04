@@ -296,7 +296,7 @@ function BigWigsKelThuzad:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 end
 
 function BigWigsKelThuzad:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "KelDetonation" and rest and self.db.profile.detonate then
+	if sync == "KelDetonate" and rest and self.db.profile.detonate then
 		self:TriggerEvent("BigWigs_Message", string.format(L["detonate_warning"], rest), "Yellow")
 		if self.db.profile.detonateicon then self:TriggerEvent("BigWigs_SetRaidIcon", rest ) end
 		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["detonate_bar"], rest), 5, "Interface\\Icons\\Spell_Nature_WispSplode", "Red")
