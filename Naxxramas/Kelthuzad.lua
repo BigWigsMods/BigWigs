@@ -147,31 +147,24 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gem\195\164cher",
 
-	phase_cmd = "phase",
 	phase_name = "Phasenwarnung",
 	phase_desc = "Warnt vor den verschiedenen Phasen.",
 
-	mc_cmd = "mindcontrol",
 	mc_name = "Gedankenkontrolle Warnung",
 	mc_desc = "Warnt, wenn Spieler von Gedankenkontrolle betroffen sind.",
 
-	fissure_cmd = "fissure",
 	fissure_name = "Schattenspalt Warnung",
 	fissure_desc = "Warnt vor Schattenspalt.",
 
-	frostblast_cmd = "frostblast",
 	frostblast_name = "Frostschlag Warnung",
 	frostblast_desc = "Warnt wenn Leute Frostschlag bekommen.",
 
-	detonate_cmd = "detonate",
 	detonate_name = "Detonierendes Mana Warnung",
 	detonate_desc = "Warnt vor Detonierendes Mana.",
 
-	detonateicon_cmd = "detonateicon",
 	detonateicon_name = "Schlachtzugicon bei Detonierung",
 	detonateicon_desc = "Plaziert ein Icon auf Spielern mit Detonierendes Mana.",
 
-	guardians_cmd = "guardians",
 	guardians_name = "Guardian Spawns",
 	guardians_desc = "Warn for incoming Icecrown Guardians in phase 3.",
 
@@ -269,7 +262,7 @@ function BigWigsKelThuzad:UNIT_HEALTH(msg)
 		if health > 40 and health <= 43 and not self.warnedAboutPhase3Soon then
 			self:TriggerEvent("BigWigs_Message", L["phase3_soon_warning"], "Yellow")
 			self.warnedAboutPhase3Soon = true
-		elseif health > 40 and self.warnedAboutPhase3Soon then
+		elseif health > 60 and self.warnedAboutPhase3Soon then
 			self.warnedAboutPhase3Soon = nil
 		end
 	end
