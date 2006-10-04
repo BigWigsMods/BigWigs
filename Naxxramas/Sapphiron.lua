@@ -106,7 +106,10 @@ L:RegisterTranslations("deDE", function() return {
 
 	lifedrain_trigger = "von Lebenssauger betroffen",
 	lifedrain_trigger2 = "Lebenssauger wurde von .+ widerstanden",
-
+	
+	deepbreath_incoming_message = "Frostatem in ~23sek!",
+	deepbreath_incoming_soon_message = "Frostatem in ~5sek!",
+	deepbreath_incoming_bar = "Frostatem",
 	deepbreath_trigger = "%s atmet tief ein...",
 	deepbreath_warning = "Frostatem kommt!",
 	deepbreath_bar = "Frostatem!",
