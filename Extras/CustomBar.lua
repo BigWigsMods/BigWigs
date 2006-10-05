@@ -37,7 +37,7 @@ function BigWigsCustomBar:OnInitialize()
 		get = false,
 		set = function(v) BigWigsCustomBar:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..v) end,
 		usage = L["<seconds> <bar text>"],
-		disabled = function() return not IsRaidLeader() or not IsRaidOfficer() end,
+		disabled = function() return not IsRaidLeader() and not IsRaidOfficer() end,
 	})
 end
 
@@ -71,6 +71,6 @@ function BigWigsCustomBar:BigWigs_RecvSync(sync, rest, nick)
 	seconds = tonumber(seconds)
 	if seconds == nil then return end
 
-	self:TriggerEvent("BigWigs_StartBar", self, string.format(L["%s: %s"], nick, barText), seconds, "Interface\\Icons\\INV_Gauntlets_03")
+	self:TriggerEvent("BigWigs_StartBar", self, string.format(L["%s: %s"], nick, barText), seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 end
 
