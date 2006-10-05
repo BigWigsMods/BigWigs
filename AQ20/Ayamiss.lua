@@ -85,7 +85,7 @@ function BigWigsAyamiss:CheckSacrifice( msg )
 		if (player == L["you"] and type == L["are"]) then
 			player = UnitName("player")
 		end
-		if self.db.profile.sacrifice then self:TriggerEvent("BigWigs_Message", player .. L["sacrificewarn"], "Red") end
+		if self.db.profile.sacrifice then self:TriggerEvent("BigWigs_Message", player .. L["sacrificewarn"], "Important") end
 	end
 end
 

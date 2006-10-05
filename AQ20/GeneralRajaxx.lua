@@ -170,13 +170,13 @@ end
 
 function BigWigsGeneralRajaxx:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.wave and msg and self.warnsets[msg] then
-		self:TriggerEvent("BigWigs_Message", self.warnsets[msg], "Orange")
+		self:TriggerEvent("BigWigs_Message", self.warnsets[msg], "Urgent")
 	end
 end
 
 function BigWigsGeneralRajaxx:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if msg == string.format(UNITDIESOTHER, self:ToString()) then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(L2["%s has been defeated"], self:ToString()), "Green", nil, "Victory") end
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(L2["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 		rajdead = true
 	end

@@ -125,7 +125,7 @@ end
 
 function BigWigsOssirian:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if self.db.profile.supreme and arg1 == L["supremetrigger"] then
-		self:TriggerEvent("BigWigs_Message", L["supremewarn"], "Yellow")
+		self:TriggerEvent("BigWigs_Message", L["supremewarn"], "Attention")
 	end
 end
 
@@ -144,7 +144,7 @@ function BigWigsOssirian:BigWigs_RecvSync(sync, debuffKey)
 	if sync ~= "OssirianWeakness" then return end
 
 	if self.db.profile.debuff and debuffKey then
-		self:TriggerEvent("BigWigs_Message", format(L["debuffwarn"], debuffKey), "Red")
+		self:TriggerEvent("BigWigs_Message", format(L["debuffwarn"], debuffKey), "Important")
 	end
 
 	self:CancelScheduledEvent("bwossiriansupreme1")
@@ -153,10 +153,10 @@ function BigWigsOssirian:BigWigs_RecvSync(sync, debuffKey)
 	self:TriggerEvent("BigWigs_BarStop", L["bartext"])
 
 	if self.db.profile.supreme then
-		self:ScheduleEvent("bwossiriansupreme1", "BigWigs_Message", 30, format(L["supremedelaywarn"], 15), "Yellow")
-		self:ScheduleEvent("bwossiriansupreme2", "BigWigs_Message", 35, format(L["supremedelaywarn"], 10), "Orange")
-		self:ScheduleEvent("bwossiriansupreme3", "BigWigs_Message", 40, format(L["supremedelaywarn"], 5), "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 45, "Interface\\Icons\\Spell_Shadow_CurseOfTounges", "Green", "Yellow", "Orange", "Red")
+		self:ScheduleEvent("bwossiriansupreme1", "BigWigs_Message", 30, format(L["supremedelaywarn"], 15), "Attention")
+		self:ScheduleEvent("bwossiriansupreme2", "BigWigs_Message", 35, format(L["supremedelaywarn"], 10), "Urgent")
+		self:ScheduleEvent("bwossiriansupreme3", "BigWigs_Message", 40, format(L["supremedelaywarn"], 5), "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 45, "Interface\\Icons\\Spell_Shadow_CurseOfTounges")
 	end
 end
 

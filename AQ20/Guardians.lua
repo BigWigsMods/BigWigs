@@ -198,17 +198,17 @@ end
 
 function BigWigsGuardians:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if self.db.profile.explode and msg == L["explodetrigger"] then 
-		self:TriggerEvent("BigWigs_Message", L["explodewarn"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["explodewarn"], "Important")
 	elseif self.db.profile.enrage and msg == L["enragetrigger"] then 
-		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
 	end
 end
 
 function BigWigsGuardians:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	if self.db.profile.summon and msg == L["summonguardtrigger"] then 
-		self:TriggerEvent("BigWigs_Message", L["summonguardwarn"], "Yellow")
+		self:TriggerEvent("BigWigs_Message", L["summonguardwarn"], "Attention")
 	elseif self.db.profile.summon and msg == L["summonwarriortrigger"] then 
-		self:TriggerEvent("BigWigs_Message", L["summonwarriorwarn"], "Yellow")
+		self:TriggerEvent("BigWigs_Message", L["summonwarriorwarn"], "Attention")
 	end
 end
 
@@ -216,10 +216,10 @@ function BigWigsGuardians:CheckPlague( msg )
 	local _,_, player, type = string.find(msg, L["plaguetrigger"])
 	if player and type then
 		if self.db.profile.plagueyou and player == L["plagueyou"] and type == L["plagueare"] then
-			self:TriggerEvent("BigWigs_Message", L["plaguewarnyou"], "Red", true)
-			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["plaguewarn"], "Yellow", nil, nil, true )
+			self:TriggerEvent("BigWigs_Message", L["plaguewarnyou"], "Personal", true)
+			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["plaguewarn"], "Attention", nil, nil, true )
 		elseif self.db.profile.plagueother then
-			self:TriggerEvent("BigWigs_Message", player .. L["plaguewarn"], "Yellow")
+			self:TriggerEvent("BigWigs_Message", player .. L["plaguewarn"], "Attention")
 			self:TriggerEvent("BigWigs_SendTell", player, L["plaguewarnyou"])
 		end
 

@@ -113,10 +113,10 @@ function BigWigsBuru:CHAT_MSG_MONSTER_EMOTE( msg )
 	if player then
 		if player == L["you"] and self.db.profile.you then
 			player = UnitName("player")
-			self:TriggerEvent("BigWigs_Message", L["watchwarnyou"], "Red", true)
-			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["watchwarn"], "Yellow", nil, nil, true)
+			self:TriggerEvent("BigWigs_Message", L["watchwarnyou"], "Personal", true)
+			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["watchwarn"], "Attention", nil, nil, true)
 		elseif self.db.profile.other then
-			self:TriggerEvent("BigWigs_Message", player .. L["watchwarn"], "Yellow")
+			self:TriggerEvent("BigWigs_Message", player .. L["watchwarn"], "Attention")
 			self:TriggerEvent("BigWigs_SendTell", player, L["watchwarnyou"])
 		end
 
