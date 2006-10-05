@@ -151,16 +151,16 @@ end
 
 function BigWigsFlamegor:BigWigs_RecvSync(sync)
 	if sync == "FlamegorWingBuffet2" and self.db.profile.wingbuffet then
-		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Red")
-		self:ScheduleEvent("BigWigs_Message", 29, L["wingbuffet_warning"], "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Important")
+		self:ScheduleEvent("BigWigs_Message", 29, L["wingbuffet_warning"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct")
 	elseif sync == "FlamegorShadowflame" and self.db.profile.shadowflame then
-		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Important")
 	end
 end
 
 function BigWigsFlamegor:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["frenzy_trigger"] and self.db.profile.frenzy then
-		self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Important")
 	end
 end

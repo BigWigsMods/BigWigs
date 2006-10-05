@@ -201,11 +201,11 @@ end
 
 function BigWigsEbonroc:BigWigs_RecvSync(sync)
 	if sync == "EbonrocWingBuffet2" and self.db.profile.wingbuffet then
-		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Red")
-		self:ScheduleEvent("BigWigs_Message", 29, L["wingbuffet_warning"], "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Important")
+		self:ScheduleEvent("BigWigs_Message", 29, L["wingbuffet_warning"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct")
 	elseif sync == "EbonrocShadowflame" and self.db.profile.shadowflame then
-		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Important")
 	end
 end
 
@@ -213,13 +213,14 @@ function BigWigsEbonroc:Event(msg)
 	local _,_, EPlayer, EType = string.find(msg, L["shadowcurse_trigger"])
 	if (EPlayer and EType) then
 		if (EPlayer == L["you"] and EType == L["are"] and self.db.profile.youcurse) then
-			self:TriggerEvent("BigWigs_Message", L["shadowflame_message_you"], "Red", true)
+			self:TriggerEvent("BigWigs_Message", L["shadowflame_message_you"], "Personal", true)
+			self:TriggerEvent("BigWigs_Message", UnitName("player") ..  L["shadowflame_message_other"], "Attention", nil, nil, true )
 		elseif (self.db.profile.elsecurse) then
-			self:TriggerEvent("BigWigs_Message", EPlayer .. L["shadowflame_message_other"], "Yellow")
+			self:TriggerEvent("BigWigs_Message", EPlayer .. L["shadowflame_message_other"], "Attention")
 			self:TriggerEvent("BigWigs_SendTell", EPlayer, L["shadowflame_message_you"])
 		end
 		if self.db.profile.shadowbar then
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["shadowcurse_bar"], EPlayer), 8, "Interface\\Icons\\Spell_Shadow_GatherShadows", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["shadowcurse_bar"], EPlayer), 8, "Interface\\Icons\\Spell_Shadow_GatherShadows")
 		end
 	end
 end

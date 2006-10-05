@@ -227,7 +227,7 @@ function BigWigsChromaggus:UNIT_HEALTH( msg )
 	if self.db.profile.enrage and UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 20 and health <= 23 and not twenty then
-			if self.db.profile.enrage then self:TriggerEvent("BigWigs_Message", L["enrage_warning"], "Red") end
+			if self.db.profile.enrage then self:TriggerEvent("BigWigs_Message", L["enrage_warning"], "Important") end
 			twenty = true
 		elseif health > 40 and twenty then
 			twenty = nil
@@ -252,17 +252,17 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, spellId)
 	if not spellName then return end
 
 	self:TriggerEvent("BigWigs_StartBar", self, string.format( L["castingbar"], spellName), 2 )
-	self:TriggerEvent("BigWigs_Message", string.format(L["breath_message"], spellName), "Red")
-	self:ScheduleEvent("bwchromaggusbreath"..spellName, "BigWigs_Message", 50, string.format(L["breath_warning"], spellName), "Red")
-	self:TriggerEvent("BigWigs_StartBar", self, spellName, 60, L["icon"..spellId], "Green", "Yellow", "Orange", "Red")
+	self:TriggerEvent("BigWigs_Message", string.format(L["breath_message"], spellName), "Important")
+	self:ScheduleEvent("bwchromaggusbreath"..spellName, "BigWigs_Message", 50, string.format(L["breath_warning"], spellName), "Important")
+	self:TriggerEvent("BigWigs_StartBar", self, spellName, 60, L["icon"..spellId])
 end
 
 function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["frenzy_trigger"] and self.db.profile.frenzy then
-		self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Important")
 	elseif msg == L["vulnerability_trigger"] then
 		if self.db.profile.vulnerability then
-			self:TriggerEvent("BigWigs_Message", L["vulnerability_warning"], "White")
+			self:TriggerEvent("BigWigs_Message", L["vulnerability_warning"], "Positive")
 		end
 		self:ScheduleEvent(function() BigWigsChromaggus.vulnerability = nil end, 2.5)
 	end
@@ -275,7 +275,7 @@ if (GetLocale() == "koKR") then
 			if ( type == L["hit"] or type == L["crit"] ) and tonumber(dmg or "") and school then
 				if (tonumber(dmg) >= 550 and type == L["hit"]) or (tonumber(dmg) >= 1100 and type == L["crit"]) then
 					self.vulnerability = school
-					if self.db.profile.vulnerability then self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "White") end
+					if self.db.profile.vulnerability then self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive") end
 				end
 			end
 		end
@@ -287,7 +287,7 @@ else
 			if ( type == L["hit"] or type == L["crit"] ) and tonumber(dmg or "") and school then
 				if (tonumber(dmg) >= 550 and type == L["hit"]) or (tonumber(dmg) >= 1100 and type == L["crit"]) then
 					self.vulnerability = school
-					if self.db.profile.vulnerability then self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "White") end
+					if self.db.profile.vulnerability then self:TriggerEvent("BigWigs_Message", format(L["vulnerability_message"], school), "Positive") end
 				end
 			end
 		end

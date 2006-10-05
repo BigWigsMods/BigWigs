@@ -126,11 +126,11 @@ function BigWigsBroodlord:MSEvent(msg)
 	local _, _, EPlayer, EType = string.find(msg, L["trigger1"])
 	if (EPlayer and EType) then
 		if EPlayer == L["you"] and EType == L["are"] and self.db.profile.youms then
-			self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true)
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["warn2"], UnitName("player")), 5, "Interface\\Icons\\Ability_Warrior_SavageBlow", "Red")
+			self:TriggerEvent("BigWigs_Message", L["warn1"], "Personal", true)
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["warn2"], UnitName("player")), 5, "Interface\\Icons\\Ability_Warrior_SavageBlow")
 		elseif self.db.profile.elsems then
-			self:TriggerEvent("BigWigs_Message", string.format(L["warn2"], EPlayer), "Yellow")
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["warn2"], EPlayer), 5, "Interface\\Icons\\Ability_Warrior_SavageBlow", "Red")
+			self:TriggerEvent("BigWigs_Message", string.format(L["warn2"], EPlayer), "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["warn2"], EPlayer), 5, "Interface\\Icons\\Ability_Warrior_SavageBlow")
 		end
 	end
 end
