@@ -119,7 +119,7 @@ end
 
 function BigWigsTranq:BigWigs_TranqFired(unitname)
 	if self.db.profile.bars then
-		self:TriggerEvent("BigWigs_StartBar", self, L["Tranq - "]..unitname, 20, "Interface\\Icons\\Spell_Nature_Drowsy", "Green")
+		self:TriggerEvent("BigWigs_StartBar", self, L["Tranq - "]..unitname, 20, "Interface\\Icons\\Spell_Nature_Drowsy")
 	end
 end
 
@@ -127,6 +127,6 @@ end
 function BigWigsTranq:BigWigs_TranqFail(unitname)
 	if self.db.profile.bars then
 		self:SetCandyBarColor(L["Tranq - "]..unitname, "Red")
-		self:TriggerEvent("BigWigs_Message", format(L["%s's Tranq failed!"], unitname), "Red", nil, "Alarm")
+		self:TriggerEvent("BigWigs_Message", format(L["%s's Tranq failed!"], unitname), "Important", nil, "Alarm")
 	end
 end
