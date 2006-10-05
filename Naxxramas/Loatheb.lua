@@ -192,34 +192,34 @@ function BigWigsLoatheb:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.doom then
-			self:TriggerEvent("BigWigs_StartBar", self, L["doomtimerbar"], 300, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
-			self:ScheduleEvent("bwloathebtimerreduce1", "BigWigs_Message", 240, string.format(L["doomtimerwarn"], 60), "Green")
-			self:ScheduleEvent("bwloathebtimerreduce2", "BigWigs_Message", 270, string.format(L["doomtimerwarn"], 30), "Yellow")
-			self:ScheduleEvent("bwloathebtimerreduce3", "BigWigs_Message", 290, string.format(L["doomtimerwarn"], 10), "Orange")
-			self:ScheduleEvent("bwloathebtimerreduce4", "BigWigs_Message", 295, string.format(L["doomtimerwarn"], 5), "Red")
-			self:ScheduleEvent("bwloathebtimerreduce5", "BigWigs_Message", 300, L["doomtimerwarnnow"], "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L["doomtimerbar"], 300, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+			self:ScheduleEvent("bwloathebtimerreduce1", "BigWigs_Message", 240, string.format(L["doomtimerwarn"], 60), "Attention")
+			self:ScheduleEvent("bwloathebtimerreduce2", "BigWigs_Message", 270, string.format(L["doomtimerwarn"], 30), "Attention")
+			self:ScheduleEvent("bwloathebtimerreduce3", "BigWigs_Message", 290, string.format(L["doomtimerwarn"], 10), "Urgent")
+			self:ScheduleEvent("bwloathebtimerreduce4", "BigWigs_Message", 295, string.format(L["doomtimerwarn"], 5), "Important")
+			self:ScheduleEvent("bwloathebtimerreduce5", "BigWigs_Message", 300, L["doomtimerwarnnow"], "Important")
 
 			self:ScheduleEvent("bwloathebdoomtimerreduce", function () BigWigsLoatheb.doomTime = 15 end, 300)
 
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L["doombar"], 120, "Interface\\Icons\\Spell_Shadow_NightOfTheDead", "Green", "Yellow", "Orange", "Red")
-			self:ScheduleEvent("bwloathebdoom", "BigWigs_Message", 115, L["doomwarn5sec"], "Orange")
+			self:TriggerEvent("BigWigs_StartBar", self, L["doombar"], 120, "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
+			self:ScheduleEvent("bwloathebdoom", "BigWigs_Message", 115, L["doomwarn5sec"], "Urgent")
 		end
 	elseif sync == "LoathebDoom" then
 		if self.db.profile.doom then
-			self:TriggerEvent("BigWigs_Message", string.format(L["doomwarn"], self.doomTime), "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L["doombar"], self.doomTime, "Interface\\Icons\\Spell_Shadow_NightOfTheDead", "Yellow", "Orange", "Red")
-			self:ScheduleEvent("bwloathebdoom", "BigWigs_Message", self.doomTime - 5, L["doomwarn5sec"], "Orange")
+			self:TriggerEvent("BigWigs_Message", string.format(L["doomwarn"], self.doomTime), "Important")
+			self:TriggerEvent("BigWigs_StartBar", self, L["doombar"], self.doomTime, "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
+			self:ScheduleEvent("bwloathebdoom", "BigWigs_Message", self.doomTime - 5, L["doomwarn5sec"], "Urgent")
 		end
 	elseif sync == "LoathebSporeSpawn" then
 		if self.db.profile.spore then
-			self:TriggerEvent("BigWigs_Message", L["sporewarn"], "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L["sporebar"], 12, "Interface\\Icons\\Ability_TheBlackArrow", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_Message", L["sporewarn"], "Important")
+			self:TriggerEvent("BigWigs_StartBar", self, L["sporebar"], 12, "Interface\\Icons\\Ability_TheBlackArrow")
 		end
 	elseif sync == "LoathebRemoveCurse" then
 		if self.db.profile.curse then
-			self:TriggerEvent("BigWigs_Message", L["removecursewarn"], "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L["removecursebar"], 30, "Interface\\Icons\\Spell_Holy_RemoveCurse", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_Message", L["removecursewarn"], "Important")
+			self:TriggerEvent("BigWigs_StartBar", self, L["removecursebar"], 30, "Interface\\Icons\\Spell_Holy_RemoveCurse")
 		end
 	end
 end

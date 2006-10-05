@@ -268,38 +268,38 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.mark then
-			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Yellow")
-			self:TriggerEvent("BigWigs_StartBar", self, string.format( L["markbar"], self.marks), 17, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Yellow", "Orange", "Red")
-			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 12, string.format( L["markwarn2"], self.marks ), "Orange")
+			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format( L["markbar"], self.marks), 17, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde")
+			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 12, string.format( L["markwarn2"], self.marks ), "Urgent")
 		end
 	elseif sync == "HorsemenMark" then
 		if self.db.profile.mark then
-			self:TriggerEvent("BigWigs_Message", string.format( L["markwarn1"], self.marks ), "Red")
+			self:TriggerEvent("BigWigs_Message", string.format( L["markwarn1"], self.marks ), "Important")
 		end
 		self.marks = self.marks + 1
 		if self.db.profile.mark then 
-			self:TriggerEvent("BigWigs_StartBar", self, string.format( L["markbar"], self.marks ), 12, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde", "Orange", "Red")
-			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 7, string.format( L["markwarn2"], self.marks ), "Orange")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format( L["markbar"], self.marks ), 12, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde")
+			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 7, string.format( L["markwarn2"], self.marks ), "Urgent")
 		end
 	elseif sync == "HorsemenMeteor" then
 		if self.db.profile.meteor then
-			self:TriggerEvent("BigWigs_Message", L["meteorwarn"], "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L["meteorbar"], 12, "Interface\\Icons\\Spell_Fire_Fireball02", "Orange", "Red")
+			self:TriggerEvent("BigWigs_Message", L["meteorwarn"], "Important")
+			self:TriggerEvent("BigWigs_StartBar", self, L["meteorbar"], 12, "Interface\\Icons\\Spell_Fire_Fireball02")
 		end
 	elseif sync == "HorsemenWrath" then
 		if self.db.profile.wrath then
-			self:TriggerEvent("BigWigs_Message", L["wrathwarn"], "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L["wrathbar"], 12, "Interface\\Icons\\Spell_Holy_Excorcism", "Orange", "Red")
+			self:TriggerEvent("BigWigs_Message", L["wrathwarn"], "Important")
+			self:TriggerEvent("BigWigs_StartBar", self, L["wrathbar"], 12, "Interface\\Icons\\Spell_Holy_Excorcism")
 		end
 	elseif sync == "HorsemenVoid" then
 		if self.db.profile.void then
-			self:TriggerEvent("BigWigs_Message", L["voidwarn"], "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L["voidbar"], 12, "Interface\\Icons\\Spell_Frost_IceStorm", "Orange", "Red")
+			self:TriggerEvent("BigWigs_Message", L["voidwarn"], "Important")
+			self:TriggerEvent("BigWigs_StartBar", self, L["voidbar"], 12, "Interface\\Icons\\Spell_Frost_IceStorm")
 		end
 	elseif sync == "HorsemenShieldWall" and self.db.profile.shieldwall and rest then
-		self:TriggerEvent("BigWigs_Message", string.format(L["shieldwallwarn"], rest), "White")
-		self:ScheduleEvent("BigWigs_Message", 20, string.format(L["shieldwallwarn2"], rest), "Green")
-		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["shieldwallbar"], rest), 20, "Interface\\Icons\\Ability_Warrior_ShieldWall", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", string.format(L["shieldwallwarn"], rest), "Attention")
+		self:ScheduleEvent("BigWigs_Message", 20, string.format(L["shieldwallwarn2"], rest), "Positive")
+		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["shieldwallbar"], rest), 20, "Interface\\Icons\\Ability_Warrior_ShieldWall")
 	end
 end
 
@@ -321,7 +321,7 @@ function BigWigsHorsemen:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 		msg == string.format(UNITDIESOTHER, blaumeux) then
 		self.deaths = self.deaths + 1
 		if self.deaths == 4 then
-			if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")("%s have been defeated"), boss), "Green", nil, "Victory") end
+			if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")("%s have been defeated"), boss), "Bosskill", nil, "Victory") end
 			self.core:ToggleModuleActive(self, false)
 		end
 	end

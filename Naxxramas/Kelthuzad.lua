@@ -260,7 +260,7 @@ function BigWigsKelThuzad:UNIT_HEALTH(msg)
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 40 and health <= 43 and not self.warnedAboutPhase3Soon then
-			self:TriggerEvent("BigWigs_Message", L["phase3_soon_warning"], "Yellow")
+			self:TriggerEvent("BigWigs_Message", L["phase3_soon_warning"], "Attention")
 			self.warnedAboutPhase3Soon = true
 		elseif health > 60 and self.warnedAboutPhase3Soon then
 			self.warnedAboutPhase3Soon = nil
@@ -270,21 +270,21 @@ end
 
 function BigWigsKelThuzad:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.phase and msg == L["start_trigger"] then
-		self:TriggerEvent("BigWigs_Message", L["start_warning"], "Yellow")
+		self:TriggerEvent("BigWigs_Message", L["start_warning"], "Attention")
 		self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 320 )
 	elseif self.db.profile.phase and msg == L["phase2_trigger"] then
 		self:TriggerEvent("BigWigs_StopBar", self, L["start_bar"] )
-		self:TriggerEvent("BigWigs_Message", L["phase2_warning"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["phase2_warning"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["phase2_bar"], 20 )
 	elseif self.db.profile.phase and msg == L["phase3_trigger"] then
-		self:TriggerEvent("BigWigs_Message", L["phase3_warning"], "Yellow")
+		self:TriggerEvent("BigWigs_Message", L["phase3_warning"], "Attention")
 	elseif msg == L["mc_trigger1"] or msg == L["mc_trigger2"] then
 		if not mcTime or (mcTime + 2) < GetTime() then
 			self:TriggerEvent("BigWigs_SendSync", "KelMindControl")
 			mcTime = GetTime()
 		end
 	elseif self.db.profile.guardians and msg == L["guardians_trigger"] then
-		self:TriggerEvent("BigWigs_Message", L["guardians_warning"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["guardians_warning"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["guardians_bar"], 10)
 	end
 end
@@ -297,18 +297,18 @@ end
 
 function BigWigsKelThuzad:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "KelDetonate" and rest and self.db.profile.detonate then
-		self:TriggerEvent("BigWigs_Message", string.format(L["detonate_warning"], rest), "Yellow")
+		self:TriggerEvent("BigWigs_Message", string.format(L["detonate_warning"], rest), "Attention")
 		if self.db.profile.detonateicon then self:TriggerEvent("BigWigs_SetRaidIcon", rest ) end
-		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["detonate_bar"], rest), 5, "Interface\\Icons\\Spell_Nature_WispSplode", "Red")
+		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["detonate_bar"], rest), 5, "Interface\\Icons\\Spell_Nature_WispSplode")
 		self:TriggerEvent("BigWigs_StartBar", self, L["detonate_possible_bar"], 20, "Interface\\Icons\\Spell_Nature_WispSplode")
 	elseif sync == "KelFrostBlast" and self.db.profile.frostblast then
-		self:TriggerEvent("BigWigs_Message", L["frostblast_warning"], "Yellow")
-		self:ScheduleEvent("bwktfbwarn", "BigWigs_Message", 20, L["frostblast_soon_message"], "Yellow")
+		self:TriggerEvent("BigWigs_Message", L["frostblast_warning"], "Attention")
+		self:ScheduleEvent("bwktfbwarn", "BigWigs_Message", 20, L["frostblast_soon_message"])
 		self:TriggerEvent("BigWigs_StartBar", self, L["frostblast_bar"], 25, "Interface\\Icons\\Spell_Frost_FreezingBreath")
 	elseif sync == "KelFizzure" and self.db.profile.fissure then
-		self:TriggerEvent("BigWigs_Message", L["fissure_warning"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["fissure_warning"], "Important")
 	elseif sync == "KelMindControl" and self.db.profile.mc then
-		self:TriggerEvent("BigWigs_Message", L["mc_warning"], "Orange")
+		self:TriggerEvent("BigWigs_Message", L["mc_warning"], "Urgent")
 	end
 end
 

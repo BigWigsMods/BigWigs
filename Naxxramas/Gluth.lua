@@ -169,15 +169,15 @@ end
 
 function BigWigsGluth:Frenzy( msg )
 	if self.db.profile.frenzy and msg == L["trigger1"] then
-		self:TriggerEvent("BigWigs_Message", L["warn1"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn1"], "Important")
 	end
 end
 
 function BigWigsGluth:Fear( msg )
 	if self.db.profile.fear and not self.prior and string.find(msg, L["trigger2"]) then
-		self:TriggerEvent("BigWigs_Message", L["warn3"], "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 20, "Interface\\Icons\\Spell_Shadow_PsychicScream", "Yellow", "Orange", "Red")
-		self:ScheduleEvent("BigWigs_Message", 15, L["warn2"], "Orange")
+		self:TriggerEvent("BigWigs_Message", L["warn3"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 20, "Interface\\Icons\\Spell_Shadow_PsychicScream")
+		self:ScheduleEvent("BigWigs_Message", 15, L["warn2"], "Urgent")
 		self.prior = true
 	end
 end
@@ -190,16 +190,16 @@ end
 
 function BigWigsGluth:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "GluthDecimate" and self.db.profile.decimate then
-		self:TriggerEvent("BigWigs_Message", L["decimatewarn"], "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["decimatebartext"], 105, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
-		self:ScheduleEvent("BigWigs_Message", 100, L["decimatesoonwarn"], "Orange")
+		self:TriggerEvent("BigWigs_Message", L["decimatewarn"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["decimatebartext"], 105, "Interface\\Icons\\INV_Shield_01")
+		self:ScheduleEvent("BigWigs_Message", 100, L["decimatesoonwarn"], "Urgent")
 	elseif sync == self:GetEngageSync() and rest and rest == boss and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		if self.db.profile.decimate then
-			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Yellow")
-			self:TriggerEvent("BigWigs_StartBar", self, L["decimatebartext"], 105, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
-			self:ScheduleEvent("BigWigs_Message", 100, L["decimatesoonwarn"], "Orange")
+			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, L["decimatebartext"], 105, "Interface\\Icons\\INV_Shield_01")
+			self:ScheduleEvent("BigWigs_Message", 100, L["decimatesoonwarn"], "Urgent")
 		end
 	end
 end

@@ -132,9 +132,9 @@ end
 
 function BigWigsAnubrekhan:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.locust and msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] then
-		self:TriggerEvent("BigWigs_Message", L["engagewarn"], "Orange")
-		self:ScheduleEvent("BigWigs_Message", 80, L["gainwarn10sec"], "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["gainincbar"], 90, "Interface\\Icons\\Spell_Nature_InsectSwarm", "Green", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["engagewarn"], "Urgent")
+		self:ScheduleEvent("BigWigs_Message", 80, L["gainwarn10sec"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["gainincbar"], 90, "Interface\\Icons\\Spell_Nature_InsectSwarm")
 	end
 end
 
@@ -159,11 +159,11 @@ function BigWigsAnubrekhan:BigWigs_RecvSync( sync )
 	elseif sync == "AnubLocustSwarm" then
 		self:CancelScheduledEvent("bwanublocustinc")
 		if self.db.profile.locust then
-			self:ScheduleEvent("BigWigs_Message", 20, L["gainendwarn"], "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L["gainbar"], 20, "Interface\\Icons\\Spell_Nature_InsectSwarm", "Yellow", "Orange", "Red")
-			self:TriggerEvent("BigWigs_Message", L["gainnextwarn"], "Orange")
-			self:ScheduleEvent("BigWigs_Message", 80, L["gainwarn10sec"], "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L["gainincbar"], 90, "Interface\\Icons\\Spell_Nature_InsectSwarm", "Green", "Yellow", "Orange", "Red")
+			self:ScheduleEvent("BigWigs_Message", 20, L["gainendwarn"], "Important")
+			self:TriggerEvent("BigWigs_StartBar", self, L["gainbar"], 20, "Interface\\Icons\\Spell_Nature_InsectSwarm")
+			self:TriggerEvent("BigWigs_Message", L["gainnextwarn"], "Urgent")
+			self:ScheduleEvent("BigWigs_Message", 80, L["gainwarn10sec"], "Important")
+			self:TriggerEvent("BigWigs_StartBar", self, L["gainincbar"], 90, "Interface\\Icons\\Spell_Nature_InsectSwarm")
 		end
 	end
 end

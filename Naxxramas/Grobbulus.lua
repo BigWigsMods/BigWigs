@@ -172,13 +172,13 @@ function BigWigsGrobbulus:BigWigs_RecvSync( sync, rest, nick )
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		if self.db.profile.enrage then
-			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Yellow")
-			self:TriggerEvent("BigWigs_StartBar", self, L["enragebar"], 720, "Interface\\Icons\\INV_Shield_01", "Green", "Yellow", "Orange", "Red")
-			self:ScheduleEvent("bwgrobbulusenragewarn1", "BigWigs_Message", 120, L["enrage10min"], "Yellow")
-			self:ScheduleEvent("bwgrobbulusenragewarn2", "BigWigs_Message", 420, L["enrage5min"], "Orange")
-			self:ScheduleEvent("bwgrobbulusenragewarn3", "BigWigs_Message", 660, L["enrage1min"], "Red")
-			self:ScheduleEvent("bwgrobbulusenragewarn4", "BigWigs_Message", 690, L["enrage30sec"], "Red")
-			self:ScheduleEvent("bwgrobbulusenragewarn5", "BigWigs_Message", 710, L["enrage10sec"], "Red")
+			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, L["enragebar"], 720, "Interface\\Icons\\INV_Shield_01")
+			self:ScheduleEvent("bwgrobbulusenragewarn1", "BigWigs_Message", 120, L["enrage10min"], "Attention")
+			self:ScheduleEvent("bwgrobbulusenragewarn2", "BigWigs_Message", 420, L["enrage5min"], "Urgent")
+			self:ScheduleEvent("bwgrobbulusenragewarn3", "BigWigs_Message", 660, L["enrage1min"], "Important")
+			self:ScheduleEvent("bwgrobbulusenragewarn4", "BigWigs_Message", 690, L["enrage30sec"], "Important")
+			self:ScheduleEvent("bwgrobbulusenragewarn5", "BigWigs_Message", 710, L["enrage10sec"], "Important")
 		end
 	end
 end
@@ -187,10 +187,10 @@ function BigWigsGrobbulus:InjectEvent( msg )
 	local _, _, eplayer, etype = string.find(msg, L["trigger1"])
 	if eplayer and etype then
 		if self.db.profile.youinjected and eplayer == L["you"] and etype == L["are"] then
-			self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true, "Alarm")
-			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["warn2"], "Yellow", nil, nil, true)
+			self:TriggerEvent("BigWigs_Message", L["warn1"], "Personal", true, "Alarm")
+			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["warn2"], "Attention", nil, nil, true)
 		elseif self.db.profile.otherinjected then
-			self:TriggerEvent("BigWigs_Message", eplayer .. L["warn2"], "Yellow")
+			self:TriggerEvent("BigWigs_Message", eplayer .. L["warn2"], "Attention")
 			self:TriggerEvent("BigWigs_SendTell", eplayer, L["warn1"])
 		end
 		if self.db.profile.icon then

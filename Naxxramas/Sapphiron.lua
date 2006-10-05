@@ -173,14 +173,14 @@ function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
 			self:CancelScheduledEvent("bwsapphdelayed")
 		end
 		if self.db.profile.berserk then
-			self:TriggerEvent("BigWigs_Message", L["engage_message"], "Yellow")
-			self:TriggerEvent("BigWigs_StartBar", self, L["berserk_bar"], 900, "Interface\\Icons\\INV_Shield_01", "Red", "Orange", "Yellow", "Green")
-			self:ScheduleEvent("bwsapphberserk1", "BigWigs_Message", 300, L["berserk_warn_10min"], "Yellow")
-			self:ScheduleEvent("bwsapphberserk2", "BigWigs_Message", 600, L["berserk_warn_5min"], "Yellow")
-			self:ScheduleEvent("bwsapphberserk3", "BigWigs_Message", 840, string.format(L["berserk_warn_rest"], 60), "Red")
-			self:ScheduleEvent("bwsapphberserk4", "BigWigs_Message", 870, string.format(L["berserk_warn_rest"], 30), "Red")
-			self:ScheduleEvent("bwsapphberserk5", "BigWigs_Message", 890, string.format(L["berserk_warn_rest"], 10), "Red")
-			self:ScheduleEvent("bwsapphberserk6", "BigWigs_Message", 895, string.format(L["berserk_warn_rest"], 5), "Red")
+			self:TriggerEvent("BigWigs_Message", L["engage_message"], "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, L["berserk_bar"], 900, "Interface\\Icons\\INV_Shield_01")
+			self:ScheduleEvent("bwsapphberserk1", "BigWigs_Message", 300, L["berserk_warn_10min"], "Attention")
+			self:ScheduleEvent("bwsapphberserk2", "BigWigs_Message", 600, L["berserk_warn_5min"], "Attention")
+			self:ScheduleEvent("bwsapphberserk3", "BigWigs_Message", 840, string.format(L["berserk_warn_rest"], 60), "Urgent")
+			self:ScheduleEvent("bwsapphberserk4", "BigWigs_Message", 870, string.format(L["berserk_warn_rest"], 30), "Important")
+			self:ScheduleEvent("bwsapphberserk5", "BigWigs_Message", 890, string.format(L["berserk_warn_rest"], 10), "Important")
+			self:ScheduleEvent("bwsapphberserk6", "BigWigs_Message", 895, string.format(L["berserk_warn_rest"], 5), "Important")
 		end
 		if self.db.profile.deepbreath then
 			-- Lets start a repeated event after 5 seconds of combat so that
@@ -189,8 +189,8 @@ function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
 			self:ScheduleEvent("besapphdelayed", self.StartTargetScanner, 5, self)
 		end
 	elseif sync == "SapphironLifeDrain" and self.db.profile.lifedrain then
-		self:TriggerEvent("BigWigs_Message", L["lifedrain_message"], "Orange")
-		self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 24, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["lifedrain_message"], "Urgent")
+		self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 24, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
 	elseif sync == "SapphironFlight" and self.db.profile.deepbreath then
 		if self:IsEventScheduled("bwsapphtargetscanner") then
 			self:CancelScheduledEvent("bwsapphtargetscanner")
@@ -198,8 +198,8 @@ function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
 		if self:IsEventScheduled("bwsapphdelayed") then
 			self:CancelScheduledEvent("bwsapphdelayed")
 		end
-		self:TriggerEvent("BigWigs_Message", L["deepbreath_incoming_message"], "Orange")
-		self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_incoming_bar"], 23, "Interface\\Icons\\Spell_Arcane_PortalIronForge", "Orange")
+		self:TriggerEvent("BigWigs_Message", L["deepbreath_incoming_message"], "Urgent")
+		self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_incoming_bar"], 23, "Interface\\Icons\\Spell_Arcane_PortalIronForge")
 		lastTarget = nil
 		cachedUnitId = nil
 		self:ScheduleEvent("besapphdelayed", self.StartTargetScanner, 50, self)
@@ -218,12 +218,12 @@ end
 function BigWigsSapphiron:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["deepbreath_trigger"] then
 		if self.db.profile.deepbreath then
-			self:TriggerEvent("BigWigs_Message", L["deepbreath_warning"], "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_bar"], 7, "Interface\\Icons\\Spell_Frost_FrostShock", "Blue")
+			self:TriggerEvent("BigWigs_Message", L["deepbreath_warning"], "Important")
+			self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_bar"], 7, "Interface\\Icons\\Spell_Frost_FrostShock")
 		end
 		self:TriggerEvent("BigWigs_StopBar", self, L["lifedrain_bar"])
 		if self.db.profile.lifedrain then
-			self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 14, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 14, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
 		end
 	end
 end

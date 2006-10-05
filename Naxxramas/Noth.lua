@@ -242,9 +242,9 @@ function BigWigsNoth:CHAT_MSG_MONSTER_YELL( msg )
 		self.timebalcony = 70
 
 		if self.db.profile.teleport then
-			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Red")
-			self:ScheduleEvent("BigWigs_Message", self.timeroom-10, L["teleportwarn2"], "Orange")
-			self:TriggerEvent("BigWigs_StartBar", self, L["teleportbar"], self.timeroom, "Interface\\Icons\\Spell_Magic_LesserInvisibilty", "Green", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Important")
+			self:ScheduleEvent("BigWigs_Message", self.timeroom-10, L["teleportwarn2"], "Urgent")
+			self:TriggerEvent("BigWigs_StartBar", self, L["teleportbar"], self.timeroom, "Interface\\Icons\\Spell_Magic_LesserInvisibilty")
 		end
 		self:ScheduleEvent("bwnothtobalcony", self.teleportToBalcony, self.timeroom, self)
 	end
@@ -259,16 +259,16 @@ end
 function BigWigsNoth:BigWigs_RecvSync( sync )
 	if sync == "NothCurse" then
 		if self.db.profile.curse then
-			self:TriggerEvent("BigWigs_Message", L["cursewarn"], "Red", nil, "Alarm")
-			self:ScheduleEvent("bwnothcurse", "BigWigs_Message", self.cursetime-10, L["curse10secwarn"], "Orange")
-			self:TriggerEvent("BigWigs_StartBar", self, L["cursebar"], self.cursetime, "Interface\\Icons\\Spell_Shadow_AnimateDead", "Green", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_Message", L["cursewarn"], "Important", nil, "Alarm")
+			self:ScheduleEvent("bwnothcurse", "BigWigs_Message", self.cursetime-10, L["curse10secwarn"], "Urgent")
+			self:TriggerEvent("BigWigs_StartBar", self, L["cursebar"], self.cursetime, "Interface\\Icons\\Spell_Shadow_AnimateDead")
 		end
 		self.prior = true
 	elseif sync == "NothBlink" then
 		if self.db.profile.blink then
-			self:TriggerEvent("BigWigs_Message", L["blinkwarn"], "Red")
-			self:ScheduleEvent("bwnothblink", "BigWigs_Message", 25, L["blinkwarn2"], "Yellow")
-			self:TriggerEvent("BigWigs_StartBar", self, L["blinkbar"], 30, "Interface\\Icons\\Spell_Arcane_Blink", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_Message", L["blinkwarn"], "Important")
+			self:ScheduleEvent("bwnothblink", "BigWigs_Message", 25, L["blinkwarn2"], "Attention")
+			self:TriggerEvent("BigWigs_StartBar", self, L["blinkbar"], 30, "Interface\\Icons\\Spell_Arcane_Blink")
 		end
 	end
 end
@@ -290,9 +290,9 @@ function BigWigsNoth:teleportToBalcony()
 	self:TriggerEvent("BigWigs_StopBar", self, L["cursebar"])
 
 	if self.db.profile.teleport then 
-		self:TriggerEvent("BigWigs_Message", L["teleportwarn"], "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["backbar"], self.timebalcony, "Interface\\Icons\\Spell_Magic_LesserInvisibilty", "Green", "Yellow", "Orange", "Red")
-		self:ScheduleEvent("bwnothback", "BigWigs_Message", self.timebalcony - 10, L["backwarn2"], "Orange")
+		self:TriggerEvent("BigWigs_Message", L["teleportwarn"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["backbar"], self.timebalcony, "Interface\\Icons\\Spell_Magic_LesserInvisibilty")
+		self:ScheduleEvent("bwnothback", "BigWigs_Message", self.timebalcony - 10, L["backwarn2"], "Urgent")
 	end
 	if self.db.profile.wave then
 		self:TriggerEvent("BigWigs_StartBar", self, L["wave1bar"], self.wave1time )
@@ -310,9 +310,9 @@ function BigWigsNoth:teleportToRoom()
 	end
 
 	if self.db.profile.teleport then
-		self:TriggerEvent("BigWigs_Message", string.format(L["backwarn"], self.timeroom), "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["teleportbar"], self.timeroom, "Interface\\Icons\\Spell_Magic_LesserInvisibilty", "Green", "Yellow", "Orange", "Red")
-		self:ScheduleEvent("bwnothteleport", "BigWigs_Message", self.timeroom - 10, L["teleportwarn2"], "Orange")
+		self:TriggerEvent("BigWigs_Message", string.format(L["backwarn"], self.timeroom), "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["teleportbar"], self.timeroom, "Interface\\Icons\\Spell_Magic_LesserInvisibilty")
+		self:ScheduleEvent("bwnothteleport", "BigWigs_Message", self.timeroom - 10, L["teleportwarn2"], "Urgent")
 	end
 	self.prior = nil
 	self:ScheduleEvent("bwnothtobalcony", self.teleportToBalcony, self.timeroom, self)
