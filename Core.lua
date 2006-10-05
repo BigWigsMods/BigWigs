@@ -218,7 +218,7 @@ end
 
 function BigWigs.modulePrototype:GenericBossDeath(msg)
 	if msg == string.format(UNITDIESOTHER, self:ToString()) then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(L["%s has been defeated"], self:ToString()), "Green", nil, "Victory") end
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(L["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory") end
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		if self.core:IsDebugging() then
 			self.core:LevelDebug(1, "Boss dead, disabling module ["..self:ToString().."].")
@@ -482,7 +482,7 @@ function BigWigs:EnableModule(module, nosync)
 	local m = self:GetModule(module)
 	if m and m:IsBossModule() and not self:IsModuleActive(module) then
 		self:ToggleModuleActive(module, true)
-		self:TriggerEvent("BigWigs_Message", string.format(L["%s mod enabled"], m:ToString() or "??"), "Cyan", true)
+		self:TriggerEvent("BigWigs_Message", string.format(L["%s mod enabled"], m:ToString() or "??"), "Core", true)
 		if not nosync then self:TriggerEvent("BigWigs_SendSync", (m.external and "EnableExternal " or "EnableModule ") .. (m.synctoken or BB:GetReverseTranslation(module))) end
 	end
 end
