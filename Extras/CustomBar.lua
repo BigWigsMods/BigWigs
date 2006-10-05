@@ -12,6 +12,7 @@ L:RegisterTranslations("enUS", function() return {
 	["<seconds> <bar text>"] = true,
 	["Starts a custom bar with the parameters."] = true,
 	["%s: %s"] = true,
+	["%s: Timer [%s] finished."] = true,
 } end)
 
 ----------------------------------
@@ -71,6 +72,7 @@ function BigWigsCustomBar:BigWigs_RecvSync(sync, rest, nick)
 	seconds = tonumber(seconds)
 	if seconds == nil then return end
 
+	self:ScheduleEvent("bwcb"..nick..barText, "BigWigs_Message", seconds, string.format(L["%s: Timer [%s] finished."], nick, barText), "Attention")
 	self:TriggerEvent("BigWigs_StartBar", self, string.format(L["%s: %s"], nick, barText), seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 end
 
