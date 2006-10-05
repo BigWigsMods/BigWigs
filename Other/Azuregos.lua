@@ -127,19 +127,19 @@ end
 
 function BigWigsAzuregos:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.teleport and string.find(msg, L["trigger1"]) then
-		self:TriggerEvent("BigWigs_Message", L["warn1"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn1"], "Important")
 	end
 end
 
 function BigWigsAzuregos:CHAT_MSG_SPELL_AURA_GONE_OTHER( msg )
 	if self.db.profile.shield and string.find(msg, L["trigger2"]) then
-		self:TriggerEvent("BigWigs_Message", L["warn2"], "White")
+		self:TriggerEvent("BigWigs_Message", L["warn2"], "Attention")
 	end
 end
 
 function BigWigsAzuregos:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if self.db.profile.shield and string.find(arg1, L["trigger3"]) then
-		self:TriggerEvent("BigWigs_Message", L["warn3"], "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["shieldbar"], 10, "Interface\\Icons\\Spell_Frost_FrostShock", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn3"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["shieldbar"], 10, "Interface\\Icons\\Spell_Frost_FrostShock")
 	end
 end

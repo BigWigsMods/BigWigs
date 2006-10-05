@@ -164,18 +164,18 @@ end
 		if (not self.prior and string.find(msg, L["trigger2"])) then
 			self.prior = true
 			if self.db.profile.noxious then 
-				self:TriggerEvent("BigWigs_Message", L["warn4"], "Red")
-				self:ScheduleEvent("BigWigs_Message", 25, L["warn3"], "Red")
-				self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 30, "Interface\\Icons\\Spell_Shadow_LifeDrain02", "Yellow", "Orange", "Red")
+				self:TriggerEvent("BigWigs_Message", L["warn4"], "Important")
+				self:ScheduleEvent("BigWigs_Message", 25, L["warn3"], "Important")
+				self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 30, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
 			end			
 		else
 			local _,_, EPlayer, EType = string.find(msg, L["trigger1"])
 			if (EPlayer and EType) then
 				if (EPlayer == L["isyou"] and EType == L["isare"]) then
-					if self.db.profile.volatileyou then self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true) end
+					if self.db.profile.volatileyou then self:TriggerEvent("BigWigs_Message", L["warn1"], "Important", true) end
 				else
 					if self.db.profile.volatileother then
-						self:TriggerEvent("BigWigs_Message", EPlayer .. L["warn2"], "Yellow")
+						self:TriggerEvent("BigWigs_Message", EPlayer .. L["warn2"], "Attention")
 						self:TriggerEvent("BigWigs_SendTell", EPlayer, L["warn1"])
 					end
 				end
