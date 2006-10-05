@@ -37,7 +37,7 @@ function BigWigsCustomBar:OnInitialize()
 		get = false,
 		set = function(v) BigWigsCustomBar:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..v) end,
 		usage = L["<seconds> <bar text>"],
-		disabled = function() return not IsRaidLeader() and not IsRaidOfficer() end,
+		disabled = function() return (not IsRaidLeader() and not IsRaidOfficer()) and UnitInRaid("player") end,
 	})
 end
 
