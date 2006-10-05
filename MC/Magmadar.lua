@@ -131,15 +131,15 @@ end
 
 function BigWigsMagmadar:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["trigger1"] and self.db.profile.frenzy then
-		self:TriggerEvent("BigWigs_Message", L["Frenzy alert!"], "Red", nil, "Alert")
+		self:TriggerEvent("BigWigs_Message", L["Frenzy alert!"], "Important", nil, "Alert")
 	end
 end
 
 function BigWigsMagmadar:Fear(msg)
 	if not self.prior and string.find(msg, L["trigger2"]) and self.db.profile.fear then
-		self:TriggerEvent("BigWigs_StartBar", self, L["AoE Fear"], 30, "Interface\\Icons\\Spell_Shadow_PsychicScream", "Yellow", "Orange", "Red")
-		self:TriggerEvent("BigWigs_Message", L["AoE Fear - 30 seconds until next!"], "Red")
-		self:ScheduleEvent("BigWigs_Message", 25, L["5 seconds until AoE Fear!"], "Orange")
+		self:TriggerEvent("BigWigs_StartBar", self, L["AoE Fear"], 30, "Interface\\Icons\\Spell_Shadow_PsychicScream")
+		self:TriggerEvent("BigWigs_Message", L["AoE Fear - 30 seconds until next!"], "Important")
+		self:ScheduleEvent("BigWigs_Message", 25, L["5 seconds until AoE Fear!"], "Urgent")
 		self.prior = true
 	end
 end

@@ -103,9 +103,9 @@ end
 
 function BigWigsGehennas:Event(msg)
 	if (not prior and string.find(msg, L["trigger1"]) and not self.db.profile.notCurse) then
-		self:TriggerEvent("BigWigs_Message", L["warn2"], "Red")
-		self:ScheduleEvent("BigWigs_Message", 25, L["warn1"], "Orange")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 30, "Interface\\Icons\\Spell_Shadow_BlackPlague", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn2"], "Important")
+		self:ScheduleEvent("BigWigs_Message", 25, L["warn1"], "Urgent")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 30, "Interface\\Icons\\Spell_Shadow_BlackPlague")
 		prior = true
 	end
 end

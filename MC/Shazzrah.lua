@@ -134,10 +134,10 @@ end
 
 function BigWigsShazzrah:BigWigs_RecvSync(sync)
 	if (sync == "ShazzrahBlink" and self.db.profile.blink) then
-		self:TriggerEvent("BigWigs_Message", L["warn1"], "Red")
-		self:ScheduleEvent("BigWigs_Message", 40, L["warn2"], "Orange")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 45, "Interface\\Icons\\Spell_Arcane_Blink", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn1"], "Important")
+		self:ScheduleEvent("BigWigs_Message", 40, L["warn2"], "Urgent")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 45, "Interface\\Icons\\Spell_Arcane_Blink")
 	elseif (sync == "ShazzrahDeadenMagic" and self.db.profile.selfbuff) then
-		self:TriggerEvent("BigWigs_Message", L["warn3"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn3"], "Important")
 	end
 end

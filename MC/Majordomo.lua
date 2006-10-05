@@ -172,7 +172,7 @@ end
 
 function BigWigsMajordomo:CHAT_MSG_MONSTER_YELL(msg)
 	if (msg == L["disabletrigger"]) then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")("%s has been defeated"), self:ToString()), "Green", nil, "Victory") end
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")("%s has been defeated"), self:ToString()), "Bosskill", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 	end
 end
@@ -184,15 +184,15 @@ end
 
 function BigWigsMajordomo:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 	if ((string.find(msg, L["trigger3"]) or string.find(msg, L["trigger4"])) and aura) then
-		self:TriggerEvent("BigWigs_Message", aura == 1 and L["warn4"] or L["warn5"], "Yellow")
+		self:TriggerEvent("BigWigs_Message", aura == 1 and L["warn4"] or L["warn5"], "Attention")
 		aura = nil
 	end
 end
 
 function BigWigsMajordomo:NewPowers(power)
 	aura = power
-	self:TriggerEvent("BigWigs_Message", power == 1 and L["warn1"] or L["warn2"], "Red")
-	self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 30, "Interface\\Icons\\Spell_Frost_Wisp", "Yellow", "Orange", "Red")
-	self:TriggerEvent("BigWigs_StartBar", self, power == 1 and L["bar1text"] or L["bar2text"], 10, power == 1 and Texture1 or Texture2, "Orange", "Red")
-	self:ScheduleEvent("BigWigs_Message", 25, L["warn3"], "Orange")
+	self:TriggerEvent("BigWigs_Message", power == 1 and L["warn1"] or L["warn2"], "Important")
+	self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 30, "Interface\\Icons\\Spell_Frost_Wisp")
+	self:TriggerEvent("BigWigs_StartBar", self, power == 1 and L["bar1text"] or L["bar2text"], 10, power == 1 and Texture1 or Texture2)
+	self:ScheduleEvent("BigWigs_Message", 25, L["warn3"], "Urgent")
 end

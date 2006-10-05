@@ -137,14 +137,14 @@ end
 
 function BigWigsLucifron:Event(msg)
 	if (not prior1 and string.find(msg, L["trigger1"]) and self.db.profile.curse) then
-		self:TriggerEvent("BigWigs_Message", L["warn2"], "Red")
-		self:ScheduleEvent("BigWigs_Message", 15, L["warn1"], "Orange")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 20, "Interface\\Icons\\Spell_Shadow_BlackPlague", "yellow", "orange", "red")
+		self:TriggerEvent("BigWigs_Message", L["warn2"], "Important")
+		self:ScheduleEvent("BigWigs_Message", 15, L["warn1"], "Urgent")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 20, "Interface\\Icons\\Spell_Shadow_BlackPlague")
 		prior1 = true
 	elseif (not prior2 and string.find(msg, L["trigger2"]) and self.db.profile.doom) then
-		self:TriggerEvent("BigWigs_Message", L["warn4"], "Red")
-		self:ScheduleEvent("BigWigs_Message", 15, L["warn3"], "Orange")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 20, "Interface\\Icons\\Spell_Shadow_NightOfTheDead", "yellow", "orange", "red")
+		self:TriggerEvent("BigWigs_Message", L["warn4"], "Important")
+		self:ScheduleEvent("BigWigs_Message", 15, L["warn3"], "Urgent")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 20, "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
 		prior2 = true
 	end
 end
