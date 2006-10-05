@@ -82,18 +82,19 @@ L:RegisterTranslations("zhCN", function() return {
 
 	phase3_name = "第三阶段警报",
 	phase3_desc = "第三阶段警报",
-	
+
 	onyfear_name = "低沉咆哮",
 	onyfear_desc = "第三阶段低沉咆哮警报",
 
-	trigger1 = "深深地吸了一口气……",
+	trigger1 = "%s深深地吸了一口气……",
 	trigger2 = "从上空",
 	trigger3 = "看起来需要再给你一次教训",
 	trigger4 = "奥妮克希亚开始施放低沉咆哮。",
-	
+
 	warn1 = "奥妮克希亚深呼吸即将出现，向边缘散开！",
 	warn2 = "奥妮克希亚进入第二阶段！",
 	warn3 = "奥妮克希亚进入第三阶段！",
+	warn4 = "1.5秒后恐惧！"
 } end )
 
 L:RegisterTranslations("koKR", function() return {

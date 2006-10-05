@@ -7,7 +7,7 @@ local BZ = AceLibrary("Babble-Zone-2.0")
 local BB = AceLibrary("Babble-Boss-2.0")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs")
 
- 
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -137,20 +137,17 @@ L:RegisterTranslations("zhCN", function() return {
 	["%s have been defeated"] = "%s被击败了！",    -- "<bosses> have been defeated"
 
 	-- AceConsole strings
-	["boss"] = "boss",
 	["Bosses"] = "首领",
 	["Options for boss modules."] = "首领模块设置。",
 	["Options for bosses in %s."] = "%s首领模块设置。", -- "Options for bosses in <zone>"
-	["plugin"] = "plugin",
+	["Extras"] = "其他",
+	["Options for extras."] = "其他模块设置",
 	["Plugins"] = "插件",
 	["Options for plugins."] = "插件设置。",
-	["toggle"] = "toggle",
 	["Active"] = "激活",
 	["Activate or deactivate this module."] = "激活或关闭此模块。",
-	["reboot"] = "reboot",
 	["Reboot"] = "重启",
 	["Reboot this module."] = "重启此模块",
-	["debug"] = "debug",
 	["Debugging"] = "除错",
 	["Show debug messages."] = "显示除错信息。",
 
@@ -158,16 +155,14 @@ L:RegisterTranslations("zhCN", function() return {
 	bosskill_desc = "首领被击败时发出提示",
 
 	-- AceConsole zone commands
-	["Zul'Gurub"] = "ZG",
-	["Molten Core"] = "MC",
-	["Blackwing Lair"] = "BWL",
-	["Ahn'Qiraj"] = "AQ40",
-	["Ruins of Ahn'Qiraj"] = "AQ20",
-	["Onyxia's Lair"] = "Onyxia",
-	["Naxxramas"] = "Naxxramas",
-	["Silithus"] = "Silithus",
-	["Outdoor Raid Bosses"] = "Outdoor",
-	["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
+	["Zul'Gurub"] = "祖尔格拉布",
+	["Molten Core"] = "熔火之心",
+	["Blackwing Lair"] = "黑翼之巢",
+	["Ahn'Qiraj"] = "安其拉",
+	["Ruins of Ahn'Qiraj"] = "安其拉废墟",
+	["Onyxia's Lair"] = "奥妮克希亚的巢穴",
+	["Naxxramas"] = "纳克萨玛斯",
+	["Silithus"] = "希利苏斯",
 } end)
 
 
@@ -348,7 +343,7 @@ function BigWigs:ADDON_LOADED(addon)
 	if not g or not g.name then return end
 
 	g.external = true
-	
+
 	self:RegisterModule(g.name, g)
 end
 
@@ -462,7 +457,7 @@ function BigWigs:RegisterModule(name, module)
 			if module.external then
 				self.cmdtable.args[L["extra"]].args[L2["cmd"]] = cons or module.consoleOptions
 			else
-				self.cmdtable.args[L["boss"]].args[zone].args[L2["cmd"]] = cons or module.consoleOptions			
+				self.cmdtable.args[L["boss"]].args[zone].args[L2["cmd"]] = cons or module.consoleOptions
 			end
 		end
 	elseif module.consoleOptions then
