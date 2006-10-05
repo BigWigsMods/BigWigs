@@ -119,6 +119,9 @@ function BigWigsBaronGeddon:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent( "BigWigs_ThrottleSync", "GeddonBomb", 1)
 end
 
 ------------------------------
@@ -128,18 +131,27 @@ end
 function BigWigsBaronGeddon:Event(msg)
 	local _, _, EPlayer, EType = string.find(msg, L["trigger1"])
 	if (EPlayer and EType) then
-		if (EPlayer == L"you" and EType == L["are"] and self.db.profile.youbomb) then
-			self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true)
-			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["warn2"], "Yellow", nil, nil, true )
-		elseif (self.db.profile.elsebomb) then
-			self:TriggerEvent("BigWigs_Message", EPlayer .. L["warn2"], "Yellow")
-			self:TriggerEvent("BigWigs_SendTell", EPlayer, L["warn1"])
+		if EPlayer == L["you"] and EType == L["are"] then
+			EPlayer = UnitName("player")
 		end
+		self:TriggerEvent("BigWigs_SendSync", "GeddonBomb "..EPlayer)
+	end
+end
 
-		if self.db.profile.icon then
-			if EPlayer == L["you"] then EPlayer = UnitName("player") end
-			self:TriggerEvent("BigWigs_SetRaidIcon", EPlayer )
-		end
+function BigWigsBaronGeddon:BigWigs_RecvSync(sync, rest, nick)
+	if sync ~= "GeddonBomb" or not rest then return end
+	local player = rest
+	
+	if player == UnitName("player") and self.db.profile.youbomb then
+		self:TriggerEvent("BigWigs_Message", L["warn1"], "Red", true)
+		self:TriggerEvent("BigWigs_Message", player .. L["warn2"], "Yellow", nil, nil, true )
+	elseif (self.db.profile.elsebomb) then
+		self:TriggerEvent("BigWigs_Message", player .. L["warn2"], "Yellow")
+		self:TriggerEvent("BigWigs_SendTell", player, L["warn1"])
+	end
+
+	if self.db.profile.icon then
+		self:TriggerEvent("BigWigs_SetRaidIcon", player )
 	end
 end
 
