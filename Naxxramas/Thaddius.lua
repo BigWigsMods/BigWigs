@@ -258,7 +258,7 @@ L:RegisterTranslations("zhCN", function() return {
 BigWigsThaddius = BigWigs:NewModule(boss)
 BigWigsThaddius.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
 BigWigsThaddius.enabletrigger = { boss, feugen, stalagg }
-BigWigsThaddius.toggleoptions = {"enrage", "charge", "polarity", "power", "phase", "bosskill"}
+BigWigsThaddius.toggleoptions = {"enrage", "charge", "polarity", -1, "power", "phase", "bosskill"}
 BigWigsThaddius.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------

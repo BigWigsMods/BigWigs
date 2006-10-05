@@ -191,6 +191,7 @@ function BigWigsMaexxna:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MaexxnaWebspray", 8)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MaexxnaCocoon", 0)
 	-- the MaexxnaCocoon sync is left unthrottled, it's throttled inside the module itself
 	-- because the web wrap happens to a lot of players at once.
 end

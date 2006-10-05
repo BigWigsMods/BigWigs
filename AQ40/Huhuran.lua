@@ -168,7 +168,6 @@ function BigWigsHuhuran:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "checkSting")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "HuhuranStart", 10)
 end
 
 ------------------------------

@@ -181,7 +181,6 @@ function BigWigsLoatheb:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "LoathebDoom", 10)
-	self:TriggerEvent("BigWigs_ThrottleSync", "LoathebStart", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "LoathebSporeSpawn", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "LoathebRemoveCurse", 10)
 end

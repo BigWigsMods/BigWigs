@@ -204,8 +204,11 @@ L:RegisterTranslations("zhCN", function() return {
 
 BigWigsGothik = BigWigs:NewModule(boss)
 BigWigsGothik.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
-BigWigsGothik.enabletrigger = { boss, L["rider_name"], L["deathknight_name"], L["trainee_name"],
-								L["spectral_rider_name"], L["spectral_deathknight_name"], L["spectral_trainee_name"] }
+BigWigsGothik.enabletrigger = { boss }
+BigWigsGothik.wipemobs = {
+	L["rider_name"], L["deathknight_name"], L["trainee_name"],
+	L["spectral_rider_name"], L["spectral_deathknight_name"], L["spectral_trainee_name"]
+}
 BigWigsGothik.toggleoptions = { "room", -1, "add", "adddeath", "bosskill" }
 BigWigsGothik.revision = tonumber(string.sub("$Revision$", 12, -3))
 
