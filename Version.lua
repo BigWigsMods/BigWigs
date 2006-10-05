@@ -111,6 +111,8 @@ function BigWigsVersionQuery:OnEnable()
 	BWL = AceLibrary("AceLocale-2.0"):new("BigWigs")
 
 	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "BWVQ", 0)
+	self:TriggerEvent("BigWigs_ThrottleSync", "BWVR", 0)
 end
 
 function BigWigsVersionQuery:PopulateRevisions()
