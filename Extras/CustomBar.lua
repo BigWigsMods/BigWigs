@@ -21,9 +21,6 @@ L:RegisterTranslations("enUS", function() return {
 
 BigWigsCustomBar = BigWigs:NewModule(L["Custom Bars"], "AceConsole-2.0")
 BigWigsCustomBar.revision = tonumber(string.sub("$Revision$", 12, -3))
-BigWigsCustomBar.defaults = {
-	enabled = true,
-}
 BigWigsCustomBar.external = true
 
 ------------------------------
@@ -43,6 +40,8 @@ function BigWigsCustomBar:OnInitialize()
 end
 
 function BigWigsCustomBar:OnEnable()
+	self.enabled = true
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "BWCustomBar", 2)
 end
@@ -52,7 +51,7 @@ end
 ------------------------------
 
 function BigWigsCustomBar:BigWigs_RecvSync(sync, rest, nick)
-	if sync ~= "BWCustomBar" or not rest or not nick or not self.db.profile.enabled then return end
+	if sync ~= "BWCustomBar" or not rest or not nick or not self.enabled then return end
 
 	if UnitInRaid("player") then
 		for i = 1, GetNumRaidMembers() do
