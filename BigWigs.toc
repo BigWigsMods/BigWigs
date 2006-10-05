@@ -55,6 +55,7 @@ RaidIcon.lua
 Range.lua
 Version.lua
 
+Extras\CustomBar.lua
 Extras\Tranq.lua
 
 ZG\Arlokk.lua
