@@ -51,7 +51,7 @@ end
 ------------------------------
 
 function BigWigsCustomBar:BigWigs_RecvSync(sync, rest, nick)
-	if sync ~= "BWCustomBar" or not rest or not nick then return end
+	if sync ~= "BWCustomBar" or not rest or not nick or not self.db.profile.enabled then return end
 
 	if UnitInRaid("player") then
 		for i = 1, GetNumRaidMembers() do
