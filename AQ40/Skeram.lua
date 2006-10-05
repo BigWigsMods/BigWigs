@@ -160,16 +160,16 @@ function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(arg1)
 		if player == L["mcyou"] and type == L["mcare"] then
 			player = UnitName("player")
 		end
-		if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", player .. L["mcplayerwarn"], "Red") end
+		if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", player .. L["mcplayerwarn"], "Important") end
 	end
 end
 
 function BigWigsSkeram:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(arg1)
 	if (arg1 == L["aetrigger"]) then
-		if self.db.profile.ae then self:TriggerEvent("BigWigs_Message", L["aewarn"], "Orange") end
+		if self.db.profile.ae then self:TriggerEvent("BigWigs_Message", L["aewarn"], "Urgent") end
 	elseif (arg1 == L["mctrigger"]) then
-		if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", L["mcwarn"], "Orange") end
+		if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", L["mcwarn"], "Urgent") end
 	elseif (arg1 == L["splittrigger"]) then
-		if self.db.profile.split then self:TriggerEvent("BigWigs_Message", L["splitwarn"], "Red") end
+		if self.db.profile.split then self:TriggerEvent("BigWigs_Message", L["splitwarn"], "Important") end
 	end
 end

@@ -138,9 +138,9 @@ end
 function BigWigsBugFamily:FearEvent(msg)
 	if not fearstatus and string.find(msg, L["feartrigger"]) and self.db.profile.fear then
 		fearstatus = true
-		self:TriggerEvent("BigWigs_StartBar", self, L["fearbar"], 20, "Interface\\Icons\\Spell_Shadow_Possession", "Yellow", "Orange", "Red")
-		self:TriggerEvent("BigWigs_Message", L["fearwarn1"], "Red")
-		self:ScheduleEvent("BigWigs_Message", 15, L["fearwarn2"], "Orange")
+		self:TriggerEvent("BigWigs_StartBar", self, L["fearbar"], 20, "Interface\\Icons\\Spell_Shadow_Possession")
+		self:TriggerEvent("BigWigs_Message", L["fearwarn1"], "Important")
+		self:ScheduleEvent("BigWigs_Message", 15, L["fearwarn2"], "Urgent")
 	end
 end
 
@@ -152,7 +152,7 @@ function BigWigsBugFamily:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if (msg == string.format(UNITDIESOTHER, kri) or msg == string.format(UNITDIESOTHER, yauj) or msg == string.format(UNITDIESOTHER, vem)) then
 		deaths = deaths + 1
 		if (deaths == 3) then
-			if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")["%s has been defeated"], boss), "Green", nil, "Victory") end
+			if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")["%s has been defeated"], boss), "Bosskill", nil, "Victory") end
 			self.core:ToggleModuleActive(self, false)
 		end
 	end
@@ -160,6 +160,6 @@ end
 
 function BigWigsBugFamily:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg == L["healtrigger"] and self.db.profile.heal then
-		self:TriggerEvent("BigWigs_Message", L["healwarn"], "Orange")
+		self:TriggerEvent("BigWigs_Message", L["healwarn"], "Urgent")
 	end
 end

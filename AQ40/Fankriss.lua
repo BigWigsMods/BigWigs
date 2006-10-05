@@ -104,8 +104,8 @@ function BigWigsFankriss:BigWigs_RecvSync(sync, rest)
 		-- or you reset your module and the rest doesn't. Anyway. it'll work a lot better than anything else.
 		worms = worms + 1
 		if self.db.profile.worm then
-			self:TriggerEvent("BigWigs_Message", string.format(L["wormwarn"], worms), "Orange")
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["wormbar"], worms), 20, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Yellow", "Orange", "Red")
+			self:TriggerEvent("BigWigs_Message", string.format(L["wormwarn"], worms), "Urgent")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["wormbar"], worms), 20, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
 		end	
 	end
 end

@@ -200,7 +200,7 @@ end
 
 function BigWigsTwins:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if msg == string.format(UNITDIESOTHER, veklor) or msg == string.format(UNITDIESOTHER, veknilash) then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")["%s have been defeated"], boss), "Green", nil, "Victory") end
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")["%s have been defeated"], boss), "Bosskill", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 	end
 end
@@ -212,24 +212,24 @@ function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.teleport then
-			self:ScheduleEvent("BigWigs_Message", 25, L["portdelaywarn"], "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 30, "Interface\\Icons\\Spell_Arcane_Blink", "Yellow", "Orange", "Red")
+			self:ScheduleEvent("BigWigs_Message", 25, L["portdelaywarn"], "Important")
+			self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 30, "Interface\\Icons\\Spell_Arcane_Blink")
 		end
 		if self.db.profile.enrage then
-			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, L["enragebartext"], 900, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Green", "Yellow", "Orange", "Red")
-			self:ScheduleEvent("bwtwinswarn1", "BigWigs_Message", 300, L["warn1"], "Green")
-			self:ScheduleEvent("bwtwinswarn2", "BigWigs_Message", 600, L["warn2"], "Yellow")
-			self:ScheduleEvent("bwtwinswarn3", "BigWigs_Message", 720, L["warn3"], "Yellow")
-			self:ScheduleEvent("bwtwinswarn4", "BigWigs_Message", 810, L["warn4"], "Orange")
-			self:ScheduleEvent("bwtwinswarn5", "BigWigs_Message", 840, L["warn5"], "Orange")
-			self:ScheduleEvent("bwtwinswarn6", "BigWigs_Message", 870, L["warn6"], "Red")
-			self:ScheduleEvent("bwtwinswarn7", "BigWigs_Message", 890, L["warn7"], "Red")
+			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Important")
+			self:TriggerEvent("BigWigs_StartBar", self, L["enragebartext"], 900, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+			self:ScheduleEvent("bwtwinswarn1", "BigWigs_Message", 300, L["warn1"], "Attention")
+			self:ScheduleEvent("bwtwinswarn2", "BigWigs_Message", 600, L["warn2"], "Attention")
+			self:ScheduleEvent("bwtwinswarn3", "BigWigs_Message", 720, L["warn3"], "Attention")
+			self:ScheduleEvent("bwtwinswarn4", "BigWigs_Message", 810, L["warn4"], "Urgent")
+			self:ScheduleEvent("bwtwinswarn5", "BigWigs_Message", 840, L["warn5"], "Urgent")
+			self:ScheduleEvent("bwtwinswarn6", "BigWigs_Message", 870, L["warn6"], "Important")
+			self:ScheduleEvent("bwtwinswarn7", "BigWigs_Message", 890, L["warn7"], "Important")
 		end
 	elseif sync == "TwinsTeleport" and self.db.profile.teleport then
-		self:TriggerEvent("BigWigs_Message", L["portwarn"], "Yellow")
-		self:ScheduleEvent("BigWigs_Message", 25, L["portdelaywarn"], "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 30, "Interface\\Icons\\Spell_Arcane_Blink", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["portwarn"], "Attention")
+		self:ScheduleEvent("BigWigs_Message", 25, L["portdelaywarn"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 30, "Interface\\Icons\\Spell_Arcane_Blink")
 	end
 end
 
@@ -241,13 +241,13 @@ end
 
 function BigWigsTwins:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if (string.find(msg, L["explodebugtrigger"]) and self.db.profile.bug) then
-		self:TriggerEvent("BigWigs_Message", L["explodebugwarn"], "Red", true)
+		self:TriggerEvent("BigWigs_Message", L["explodebugwarn"], "Personal", true)
 	end
 end
 
 function BigWigsTwins:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if (not self.prior and (string.find(msg, L["healtrigger1"]) or string.find(msg, L["healtrigger2"])) and self.db.profile.heal) then
-		self:TriggerEvent("BigWigs_Message", L["healwarn"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["healwarn"], "Important")
 		self.prior = true
 		self:ScheduleEvent(function() BigWigsTwins.prior = nil end, 10)
 	end
@@ -255,6 +255,6 @@ end
 
 function BigWigsTwins:CHAT_MSG_MONSTER_EMOTE(msg)
 	if (string.find(msg, L["enragetrigger"]) and self.db.profile.enrage) then
-		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
 	end
 end

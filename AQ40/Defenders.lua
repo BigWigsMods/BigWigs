@@ -224,9 +224,9 @@ end
 
 function BigWigsDefenders:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "DefenderExplode" and self.db.profile.explode then
-		self:TriggerEvent("BigWigs_Message", L["explodewarn"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["explodewarn"], "Important")
 	elseif sync == "DefenderEnrage" and self.db.profile.enrage then
-		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
 	end
 end
 
@@ -241,9 +241,9 @@ end
 function BigWigsDefenders:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if not self.db.profile.summon then return end
 	if msg == L["summonguardtrigger"] then
-		self:TriggerEvent("BigWigs_Message", L["summonguardwarn"], "Yellow")
+		self:TriggerEvent("BigWigs_Message", L["summonguardwarn"], "Attention")
 	elseif msg == L["summonwarriortrigger"] then
-		self:TriggerEvent("BigWigs_Message", L["summonwarriorwarn"], "Yellow")
+		self:TriggerEvent("BigWigs_Message", L["summonwarriorwarn"], "Attention")
 	end
 end
 
@@ -251,10 +251,10 @@ function BigWigsDefenders:CheckPlague(msg)
 	local _,_, pplayer, ptype = string.find(msg, L["plaguetrigger"])
 	if pplayer then
 		if self.db.profile.plagueyou and pplayer == L["plagueyou"] then
-			self:TriggerEvent("BigWigs_Message", L["plagueyouwarn"], "Red", true)
-			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["plaguewarn"], "Yellow", nil, nil, true)
+			self:TriggerEvent("BigWigs_Message", L["plagueyouwarn"], "Personal", true)
+			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["plaguewarn"], "Attention", nil, nil, true)
 		elseif self.db.profile.plagueother then
-			self:TriggerEvent("BigWigs_Message", pplayer .. L["plaguewarn"], "Yellow")
+			self:TriggerEvent("BigWigs_Message", pplayer .. L["plaguewarn"], "Attention")
 			self:TriggerEvent("BigWigs_SendTell", pplayer, L["plagueyouwarn"])
 		end
 
@@ -266,7 +266,7 @@ end
 
 function BigWigsDefenders:Thunderclap(msg)
 	if self.db.profile.thunderclap and string.find(msg, L["thunderclaptrigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["thunderclapwarn"], "Yellow")
+		self:TriggerEvent("BigWigs_Message", L["thunderclapwarn"], "Attention")
 	end
 end
 

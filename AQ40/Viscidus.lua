@@ -201,17 +201,18 @@ end
 ------------------------------
 function BigWigsViscidus:CheckVis(arg1)
 	if not prior and self.db.profile.volley and string.find(arg1, L["trigger6"]) then
-		self:TriggerEvent("BigWigs_Message", L["warn6"], "Orange")
-		self:ScheduleEvent("BigWigs_Message", 7, L["warn7"], "Orange")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 10, "Interface\\Icons\\Spell_Nature_CorrosiveBreath", "Yellow", "Orange", "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn6"], "Urgent")
+		self:ScheduleEvent("BigWigs_Message", 7, L["warn7"], "Urgent")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 10, "Interface\\Icons\\Spell_Nature_CorrosiveBreath")
 		prior = true
 	elseif string.find(arg1, L["trigger7"]) then
 		local _,_, pl, ty = string.find(arg1, L["trigger7"])
 		if (pl and ty) then
 			if self.db.profile.toxinyou and pl == L["you"] and ty == L["are"] then
-				self:TriggerEvent("BigWigs_Message", L["warn9"], "Red", true)
+				self:TriggerEvent("BigWigs_Message", L["warn9"], "Personal", true)
+				self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["warn8"], "Important", nil, nil, true)
 			elseif self.db.profile.toxinother then
-				self:TriggerEvent("BigWigs_Message", pl .. L["warn8"], "Red")
+				self:TriggerEvent("BigWigs_Message", pl .. L["warn8"], "Important")
 				self:TriggerEvent("BigWigs_SendTell", pl, L["warn9"])
 			end
 		end
@@ -221,15 +222,15 @@ end
 function BigWigsViscidus:CHAT_MSG_MONSTER_EMOTE(arg1)
 	if not self.db.profile.freeze then return end
 	if arg1 == L["trigger1"] then
-		self:TriggerEvent("BigWigs_Message", L["warn1"], "Yellow")
+		self:TriggerEvent("BigWigs_Message", L["warn1"], "Atention")
 	elseif arg1 == L["trigger2"] then
-		self:TriggerEvent("BigWigs_Message", L["warn2"], "Orange")
+		self:TriggerEvent("BigWigs_Message", L["warn2"], "Urgent")
 	elseif arg1 == L["trigger3"] then
-		self:TriggerEvent("BigWigs_Message", L["warn3"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn3"], "Important")
 	elseif arg1 == L["trigger4"] then
-		self:TriggerEvent("BigWigs_Message", L["warn4"], "Orange")
+		self:TriggerEvent("BigWigs_Message", L["warn4"], "Urgent")
 	elseif arg1 == L["trigger5"] then
-		self:TriggerEvent("BigWigs_Message", L["warn5"], "Red")
+		self:TriggerEvent("BigWigs_Message", L["warn5"], "Important")
 	end
 end
 
