@@ -184,9 +184,9 @@ end
 
 function BigWigsJindo:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	if self.db.profile.brainwash and msg == L["triggerbrainwash"] then
-		self:TriggerEvent("BigWigs_Message", L["warnbrainwash"], "Orange")
+		self:TriggerEvent("BigWigs_Message", L["warnbrainwash"], "Urgent")
 	elseif self.db.profile.healing and msg == L["triggerhealing"] then
-		self:TriggerEvent("BigWigs_Message", L["warnhealing"], "Red" )
+		self:TriggerEvent("BigWigs_Message", L["warnhealing"], "Important" )
 	end
 end
 
@@ -195,10 +195,10 @@ function BigWigsJindo:BigWigs_RecvSync(sync, rest, nick)
 	local player = rest
 
 	if player == playerName and self.db.profile.youcurse then
-		self:TriggerEvent("BigWigs_Message", L["cursewarn_self"], "Red", true)
-		self:TriggerEvent("BigWigs_Message", string.format(L["cursewarn_other"], playerName), "Yellow", nil, nil, true)
+		self:TriggerEvent("BigWigs_Message", L["cursewarn_self"], "Personal", true)
+		self:TriggerEvent("BigWigs_Message", string.format(L["cursewarn_other"], playerName), "Attention", nil, nil, true)
 	elseif self.db.profile.elsecurse then
-		self:TriggerEvent("BigWigs_Message", string.format(L["cursewarn_other"], player), "Yellow")
+		self:TriggerEvent("BigWigs_Message", string.format(L["cursewarn_other"], player), "Attention")
 		self:TriggerEvent("BigWigs_SendTell", player, L["cursewarn_self"])
 	end
 

@@ -100,9 +100,9 @@ end
 
 function BigWigsThekal:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	if self.db.profile.tiger and msg == L["tigers_trigger"] then
-		self:TriggerEvent("BigWigs_Message", L["tigers_message"], "Yellow")
+		self:TriggerEvent("BigWigs_Message", L["tigers_message"], "Attention")
 	elseif self.db.profile.heal and msg == L["heal_trigger"] then
-		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Orange")
+		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Urgent")
 	end
 end
 

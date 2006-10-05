@@ -122,7 +122,7 @@ end
 
 function BigWigsMandokir:CHAT_MSG_MONSTER_EMOTE(msg)
 	if string.find(msg, L["enrage_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["enraged_message"], "Orange")
+		self:TriggerEvent("BigWigs_Message", L["enraged_message"], "Urgent")
 	end
 end
 
@@ -130,10 +130,10 @@ function BigWigsMandokir:CHAT_MSG_MONSTER_YELL(msg)
 	local _,_, n = string.find(msg, L"watch_trigger")
 	if n then
 		if n == UnitName("player") and self.db.profile.you then
-			self:TriggerEvent("BigWigs_Message", L["watched_warning_self"], "Red", true, "Alarm")
-			self:TriggerEvent("BigWigs_Message", string.format(L["watched_warning_other"], UnitName("player")), "Yellow", nil, nil, true)
+			self:TriggerEvent("BigWigs_Message", L["watched_warning_self"], "Personal", true, "Alarm")
+			self:TriggerEvent("BigWigs_Message", string.format(L["watched_warning_other"], UnitName("player")), "Attention", nil, nil, true)
 		elseif self.db.profile.other then
-			self:TriggerEvent("BigWigs_Message", string.format(L["watched_warning_other"], n), "Yellow")
+			self:TriggerEvent("BigWigs_Message", string.format(L["watched_warning_other"], n), "Attention")
 			self:TriggerEvent("BigWigs_SendTell", n, L["watched_warning_self"])
 		end
 		if self.db.profile.icon then

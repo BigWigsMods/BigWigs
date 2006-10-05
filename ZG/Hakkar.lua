@@ -215,8 +215,8 @@ end
 
 function BigWigsHakkar:CHAT_MSG_MONSTER_YELL(msg)
 	if string.find(msg, L["engage_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["start_message"], "Green")
-		if self.db.profile.enrage then self:TriggerEvent("BigWigs_StartBar", self, L["Enrage"], 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy", "Purple") end
+		self:TriggerEvent("BigWigs_Message", L["start_message"], "Important")
+		if self.db.profile.enrage then self:TriggerEvent("BigWigs_StartBar", self, L["Enrage"], 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy") end
 		self:BeginTimers(true)
 	elseif string.find(msg, L["flee"]) then
 		self:TriggerEvent("BigWigs_RebootModule", self)
@@ -237,7 +237,7 @@ function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
 			mcplayer = UnitName("player")
 		end
 		if self.db.profile.mc then
-			self:TriggerEvent("BigWigs_Message", string.format(L["mindcontrol_message"], mcplayer), "Orange")
+			self:TriggerEvent("BigWigs_Message", string.format(L["mindcontrol_message"], mcplayer), "Urgent")
 		end
 		if self.db.profile.icon then 
 			self:TriggerEvent("BigWigs_SetRaidIcon", mcplayer)
@@ -251,12 +251,12 @@ end
 
 function BigWigsHakkar:BeginTimers(first)
 	if self.db.profile.drain then
-		if not first then self:TriggerEvent("BigWigs_Message", L["drain_message"], "Green") end
-		self:ScheduleEvent("BigWigs_Message", 30, L["drain_warning_60"], "Green")
-		self:ScheduleEvent("BigWigs_Message", 45, L["drain_warning_45"], "Yellow")
-		self:ScheduleEvent("BigWigs_Message", 60, L["drain_warning_30"], "Orange")
-		self:ScheduleEvent("BigWigs_Message", 75, L["drain_warning_15"], "Red")
-		self:TriggerEvent("BigWigs_StartBar", self, L["Life Drain"], 90, "Interface\\Icons\\Spell_Shadow_LifeDrain", "Green", "Yellow", "Orange", "Red")
+		if not first then self:TriggerEvent("BigWigs_Message", L["drain_message"], "Attention") end
+		self:ScheduleEvent("BigWigs_Message", 30, L["drain_warning_60"], "Attention")
+		self:ScheduleEvent("BigWigs_Message", 45, L["drain_warning_45"], "Attention")
+		self:ScheduleEvent("BigWigs_Message", 60, L["drain_warning_30"], "Urgent")
+		self:ScheduleEvent("BigWigs_Message", 75, L["drain_warning_15"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["Life Drain"], 90, "Interface\\Icons\\Spell_Shadow_LifeDrain")
 	end
 end
 

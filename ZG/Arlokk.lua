@@ -112,10 +112,10 @@ function BigWigsArlokk:CHAT_MSG_MONSTER_YELL( msg )
 	local _,_, n = string.find(msg, L["mark_trigger"])
 	if n then
 		if n == playerName and self.db.profile.youmark then
-			self:TriggerEvent("BigWigs_Message", L["mark_warning_self"], "Red", true, "Alarm")
-			self:TriggerEvent("BigWigs_Message", string.format(L["mark_warning_other"], UnitName("player")), "Yellow", nil, nil, true)
+			self:TriggerEvent("BigWigs_Message", L["mark_warning_self"], "Important", true, "Alarm")
+			self:TriggerEvent("BigWigs_Message", string.format(L["mark_warning_other"], UnitName("player")), "Attention", nil, nil, true)
 		elseif self.db.profile.othermark then
-			self:TriggerEvent("BigWigs_Message", string.format(L["mark_warning_other"], n), "Yellow")
+			self:TriggerEvent("BigWigs_Message", string.format(L["mark_warning_other"], n), "Attention")
 			self:TriggerEvent("BigWigs_SendTell", n, L["mark_warning_self"])
 		end
 
