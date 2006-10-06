@@ -42,18 +42,19 @@ Libs\PaintChips-2.0\PaintChips-2.0.lua
 Libs\CandyBar-2.0\CandyBar-2.0.lua
 
 Core.lua
-Comm.lua
-Colors.lua
-TargetMonitor.lua
 Options.lua
-Bars.lua
-Messages.lua
-Sound.lua
-RaidWarn.lua
-BossBlock.lua
-RaidIcon.lua
-Range.lua
-Version.lua
+
+Plugins\Comm.lua
+Plugins\Colors.lua
+Plugins\TargetMonitor.lua
+Plugins\Bars.lua
+Plugins\Messages.lua
+Plugins\Sound.lua
+Plugins\RaidWarn.lua
+Plugins\BossBlock.lua
+Plugins\RaidIcon.lua
+Plugins\Range.lua
+Plugins\Version.lua
 
 Extras\CustomBar.lua
 Extras\Tranq.lua
