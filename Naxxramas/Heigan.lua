@@ -25,6 +25,7 @@ L:RegisterTranslations("enUS", function() return {
 	starttrigger2 = "You... are next.",
 	starttrigger3 = "I see you...",
 	teleporttrigger = "The end is upon you.",
+	dietrigger = "%s takes his last breath.",
 	-- [[ Warnings ]]--
 	startwarn = "Heigan the Unclean engaged! 90 seconds till teleport",
 	warn1 = "Teleport in 1 minute",
@@ -139,11 +140,19 @@ function BigWigsHeigan:OnEnable()
 	self.toRoomTime = 45
 	self.toPlatformTime = 90
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "HeiganTeleport", 10)
+end
+
+function BigWigsHeigan:CHAT_MSG_MONSTER_EMOTE( msg )
+	if msg == L["dietrigger"] then
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")["%s has been defeated"], boss), "Bosskill", nil, "Victory") end
+		self.core:ToggleModuleActive(self, false)
+	end
 end
 
 function BigWigsHeigan:CHAT_MSG_MONSTER_YELL( msg )
