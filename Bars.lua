@@ -50,6 +50,7 @@ L:RegisterTranslations("enUS", function() return {
 	["default"] = true,
 	["smooth"] = true,
 	["otravi"] = true,
+	["Charcoal"] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -77,6 +78,7 @@ L:RegisterTranslations("koKR", function() return {
 	["default"] = "Default",
 	["smooth"] = "Smooth",
 	["otravi"] = "Otravi",
+	["Charcoal"] = "Charcoal",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -101,7 +103,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["Down"] = "下",
 	["Texture"] = "材质",
 	["default"] = "默认",
-	["smooth"] = "平滑"
+	["smooth"] = "平滑",
+	["Charcoal"] = "Charcoal",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -135,6 +138,7 @@ L:RegisterTranslations("deDE", function() return {
 	["default"] = "Default",
 	["smooth"] = "Smooth",
 	["otravi"] = "Otravi",
+	["Charcoal"] = "Charcoal",
 } end)
 
 ----------------------------------
@@ -186,7 +190,7 @@ BigWigsBars.consoleOptions = {
 			desc = L["Set the texture for the timerbars."],
 			get = function() return BigWigsBars.db.profile.texture end,
 			set = function(v) BigWigsBars.db.profile.texture = v end,
-			validate = { L["default"], L["otravi"], L["smooth"] },
+			validate = { L["default"], L["otravi"], L["smooth"], L["Charcoal"] },
 		}
 	},
 }
