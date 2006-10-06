@@ -7,10 +7,11 @@ assert(BigWigs, "BigWigs not found!")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsCustomBar")
 
 L:RegisterTranslations("enUS", function() return {
+	["bwcb"] = true,
 	["custombar"] = true,
 	["Custom Bars"] = true,
 	["<seconds> <bar text>"] = true,
-	["Starts a custom bar with the parameters given."] = true,
+	["Starts a custom bar with the given parameters."] = true,
 	["%s: %s"] = true,
 	["%s: Timer [%s] finished."] = true,
 } end)
@@ -19,14 +20,14 @@ L:RegisterTranslations("enUS", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsCustomBar = BigWigs:NewModule(L["Custom Bars"], "AceConsole-2.0")
+BigWigsCustomBar = BigWigs:NewModule(L["Custom Bars"])
 BigWigsCustomBar.revision = tonumber(string.sub("$Revision$", 12, -3))
 BigWigsCustomBar.external = true
 BigWigsCustomBar.consoleCmd = L["custombar"]
 BigWigsCustomBar.consoleOptions = {
 	type = "text",
 	name = L["Custom Bars"],
-	desc = L["Starts a custom bar with the parameters given."],
+	desc = L["Starts a custom bar with the given parameters."],
 	get = false,
 	set = function(v) BigWigsCustomBar:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..v) end,
 	usage = L["<seconds> <bar text>"],
@@ -39,6 +40,7 @@ BigWigsCustomBar.consoleOptions = {
 
 function BigWigsCustomBar:OnEnable()
 	self.enabled = true
+	self:RegisterShortHand()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "BWCustomBar", 2)
@@ -71,5 +73,23 @@ function BigWigsCustomBar:BigWigs_RecvSync(sync, rest, nick)
 
 	self:ScheduleEvent("bwcb"..nick..barText, "BigWigs_Message", seconds, string.format(L["%s: Timer [%s] finished."], nick, barText), "Attention")
 	self:TriggerEvent("BigWigs_StartBar", self, string.format(L["%s: %s"], nick, barText), seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+end
+
+------------------------------
+--      Utility             --
+------------------------------
+
+-- For easy use in macros.
+function BWCB(seconds, message)
+	if message then seconds = tostring(seconds) .. " " .. message end
+	BigWigsCustomBar:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..seconds)
+end
+
+-- Shorthand slashcommand
+function BigWigsCustomBar:RegisterShortHand()
+	if SlashCmdList then
+		SlashCmdList["BWCB_SHORTHAND"] = BWCB
+		setglobal("SLASH_BWCB_SHORTHAND1", "/"..L["bwcb"])
+	end
 end
 
