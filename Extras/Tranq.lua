@@ -1,4 +1,4 @@
-﻿
+
 assert(BigWigs, "BigWigs not found!")
 
 ----------------------------
@@ -37,6 +37,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	["Tranq - "] = "宁神射击 - ",
 	["%s's Tranq failed!"] = "%s的宁神射击失败了！",
+	["Tranq"] = "宁神射击",
+	["Options for the tranq module."] = "设置宁神射击模块.",
+	["Toggle tranq bars on or off."] = "开启或禁用宁神射击计时条.",
+	["Bars"] = "计时条",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
