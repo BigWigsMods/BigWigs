@@ -235,7 +235,7 @@ function BigWigsHorsemen:MarkEvent( msg )
 	if string.find(msg, L["marktrigger"]) then
 		local t = GetTime()
 		if not times["mark"] or (times["mark"] and (times["mark"] + 8) < t) then
-			self:TriggerEvent("BigWigs_SendSync", "HorsemenMark")
+			self:TriggerEvent("BigWigs_SendSync", "HorsemenMark "..tostring(self.marks + 1))
 			times["mark"] = t
 		end
 	end
@@ -272,14 +272,18 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 			self:TriggerEvent("BigWigs_StartBar", self, string.format( L["markbar"], self.marks), 17, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde")
 			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 12, string.format( L["markwarn2"], self.marks ), "Urgent")
 		end
-	elseif sync == "HorsemenMark" then
-		if self.db.profile.mark then
-			self:TriggerEvent("BigWigs_Message", string.format( L["markwarn1"], self.marks ), "Important")
-		end
-		self.marks = self.marks + 1
-		if self.db.profile.mark then 
-			self:TriggerEvent("BigWigs_StartBar", self, string.format( L["markbar"], self.marks ), 12, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde")
-			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 7, string.format( L["markwarn2"], self.marks ), "Urgent")
+	elseif sync == "HorsemenMark" and rest then
+		rest = tonumber(rest)
+		if rest == nil then return end
+		if rest == (self.marks + 1) then
+			if self.db.profile.mark then
+				self:TriggerEvent("BigWigs_Message", string.format( L["markwarn1"], self.marks ), "Important")
+			end
+			self.marks = self.marks + 1
+			if self.db.profile.mark then 
+				self:TriggerEvent("BigWigs_StartBar", self, string.format( L["markbar"], self.marks ), 12, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde")
+				self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 7, string.format( L["markwarn2"], self.marks ), "Urgent")
+			end
 		end
 	elseif sync == "HorsemenMeteor" then
 		if self.db.profile.meteor then
