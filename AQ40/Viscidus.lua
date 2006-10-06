@@ -115,7 +115,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	warn1 		= "冻结第一阶段！",
 	warn2 		= "冻结第二阶段 - 做好准备",
-	warn3 		= "冻结第三阶段 - DPS DPS DPS",
+	warn3 		= "冻结第三阶段 - DPS全开！",
 	warn4 		= "即将碎裂 - 加大火力！",
 	warn5 		= "即将碎裂 - 几近成功！",
 	warn6		= "毒性之箭 - 迅速解毒！",

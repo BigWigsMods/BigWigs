@@ -173,6 +173,9 @@ L:RegisterTranslations("zhCN", function() return {
 	scarab_name = "甲虫消失警报",
 	scarab_desc = "甲虫消失警报",
 	
+	berserk_name = "狂暴警报",
+	berserk_desc = "当奥罗变得狂暴发出警报",
+
 	sweeptrigger = "奥罗开始施放横扫。",
 	sweepannounce = "横扫发动！",
 	sweepwarn = "5秒后发动横扫！快退！",

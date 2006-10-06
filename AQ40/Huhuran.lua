@@ -83,8 +83,8 @@ L:RegisterTranslations("zhCN", function() return {
 	berserk_name = "极度狂暴警报",
 	berserk_desc = "极度狂暴警报",
 	
-	frenzytrigger = "变得狂暴起来！",
-	berserktrigger = "变得极度狂暴而愤怒！",
+	frenzytrigger = "%s变得狂暴起来！",
+	berserktrigger = "%s变得极度狂暴而愤怒！",
 	frenzywarn = "狂暴警报 - 猎人立刻使用宁神射击！",
 	berserkwarn = "极度狂暴 - 治疗注意！",
 	berserksoonwarn = "即将极度狂暴 - 做好准备！",

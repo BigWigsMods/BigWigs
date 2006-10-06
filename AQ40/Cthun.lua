@@ -216,38 +216,38 @@ L:RegisterTranslations("zhCN", function() return {
 
 	weakenedtrigger 	= "%s 被削弱了！",
 
-	tentacle1	= "Tentacle Rape Party - Pleasure!",
-	tentacle2	= "Tentacle Rape Party - 5 sec",
+	tentacle1	= "血肉触须出现！",
+	tentacle2	= "5秒后血肉触须出现！",
 
 	norape1		= "眼球触须出现！",
-	norape2		= "Tentacle Party! - 5 sec",
+	norape2		= "5秒后眼球触须出现！",
 
 	weakened		= "克苏恩被削弱了 - 45秒内全力输出伤害！",
-	invulnerable2	= "Party ends in 5 seconds",
-	invulnerable1	= "Party over - C'Thun invulnerable",
+	invulnerable2	= "削弱状态还有5秒结束",
+	invulnerable1	= "削弱状态结束 - 停止攻击克苏恩！",
 
-	giant3		= "Giant Eye - 10 sec",
-	giant2		= "Giant Eye - 5 sec",
-	giant1		= "Giant Eye - Poke it!",
+	giant3		= "巨眼出现 - 10 秒",
+	giant2		= "巨眼出现 - 5 秒",
+	giant1		= "巨眼出现！",
 
-	startwarn	= "克苏恩已激活 - 45秒后发动黑暗闪耀、出现巨眼",
+	startwarn	= "克苏恩已激活 - 45秒后发动黑暗闪耀, 出现巨眼",
 
 	glare2		= "5秒后发动黑暗闪耀！",
 	glare1		= "黑暗闪耀发动 - 跑位！",
 
-	barTentacle	= "Tentacle rape party!",
-	barNoRape	= "Tentacle party!",
+	barTentacle	= "血肉触须！",
+	barNoRape	= "巨眼、巨爪触须！",
 	barWeakened	= "克苏恩被削弱了！",
-	barGlare	= "黑暗闪耀",
-	barGiant	= "巨眼",
-	barGreenBeam	= "绿光",
+	barGlare	= "黑暗闪耀！",
+	barGiant	= "巨眼！",
+	barGreenBeam	= "绿光！",
 
 	eyebeam		= "眼棱光",
-	glarewarning	= "DARK GLARE ON YOU! MOVE!",
-	groupwarning	= "Dark Glare on group %s (%s)",
+	glarewarning	= "黑暗闪耀在你身上发动了!",
+	groupwarning	= "黑暗闪耀在%s小队发动了！（%s小队移动！！）",
 	positions1	= "绿光发动",
 	positions2	= "5秒后黑暗闪耀结束",
-	phase2starting	= "克苏恩之眼已死亡 - 进入第二阶段",
+	phase2starting	= "克苏恩之眼已死亡 - 进入第二阶段！",
 } end )
 
 

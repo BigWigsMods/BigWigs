@@ -32,7 +32,7 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
-	CHAT_MSG_SPELL_SELF_BUFF = "你未能驱散(.+)的狂乱。",
+	CHAT_MSG_SPELL_SELF_BUFF = "你未能驱散(.+)的狂暴。",
 	CHAT_MSG_SPELL_SELF_DAMAGE = "你对(.+)施放了宁神射击。",
 
 	["Tranq - "] = "宁神射击 - ",
@@ -40,7 +40,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Tranq"] = "宁神射击",
 	["Options for the tranq module."] = "设置宁神射击模块.",
 	["Toggle tranq bars on or off."] = "开启或禁用宁神射击计时条.",
-	["Bars"] = "计时条",
+	["Bars"] = "宁神射击计时条",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

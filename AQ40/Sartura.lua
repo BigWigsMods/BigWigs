@@ -107,7 +107,7 @@ L:RegisterTranslations("zhCN", function() return {
 	warn7 = "10秒后激怒",
 	whirlwindon = "沙尔图拉获得了旋风斩的效果。",
 	whirlwindoff = "旋风斩效果从沙尔图拉身上消失。",
-	whirlwindonwarn = "旋风斩 - 沙尔图拉 - 旋风斩",
+	whirlwindonwarn = "沙尔图拉施放 旋风斩！",
 	whirlwindoffwarn = "旋风斩消失！",
 	whirlwindbartext = "旋风斩",
 } end )
