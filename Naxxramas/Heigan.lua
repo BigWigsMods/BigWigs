@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -43,29 +43,29 @@ L:RegisterTranslations("enUS", function() return {
 -- Korean Translation by gezta --
 L:RegisterTranslations("koKR", function() return {
 
-	teleport_name = "순간이동 경고",
-	teleport_desc = "순간이동에 대한 경고",
+	teleport_name = "???? ??",
+	teleport_desc = "????? ?? ??",
 
-	engage_name = "전투개시 알림",
-	engage_desc = "헤이건 전투 개시 알림.",
+	engage_name = "???? ??",
+	engage_desc = "??? ?? ?? ??.",
 
 	-- [[ Triggers ]]--
-	starttrigger = "이제 넌 내 것이다.",
-	starttrigger2 = "다음은... 너다.",
-	starttrigger3 = "네가 보인다...",
-	teleporttrigger = "여기가 너희 무덤이 되리라.",
+	starttrigger = "?? ? ? ???.",
+	starttrigger2 = "???... ??.",
+	starttrigger3 = "?? ???...",
+	teleporttrigger = "??? ?? ??? ???.",
 	-- [[ Warnings ]]--
-	startwarn = "부정의 헤이건, 단상으로 순간 이동까지 90초",
-	warn1 = "순간이동 1 분전 !!!",
-	warn2 = "순간이동 30초전 !!!",
-	warn3 = "순간이동 10초전 !!!",
-	backwarn = "헤이건 단상 아래!! 90초 후에 순간이동 !!!",
-	teleportwarn2 = "내려오기까지 30초 전 !!!",
-	teleportwarn3 = "내려오기까지 10초 전 !!!",
-	teleportwarn1 = "순간이동! %d초 후 내려옵니다. !!!",
+	startwarn = "??? ???, ???? ?? ???? 90?",
+	warn1 = "???? 1 ?? !!!",
+	warn2 = "???? 30?? !!!",
+	warn3 = "???? 10?? !!!",
+	backwarn = "??? ?? ??!! 90? ?? ???? !!!",
+	teleportwarn2 = "?????? 30? ? !!!",
+	teleportwarn3 = "?????? 10? ? !!!",
+	teleportwarn1 = "????! %d? ? ?????. !!!",
 	-- [[ Bars ]]--
-	teleportbar = "순간이동!",
-	backbar = "단상으로 이동!",
+	teleportbar = "????!",
+	backbar = "???? ??!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -94,11 +94,15 @@ L:RegisterTranslations("zhCN", function() return {
 	teleport_name = "传送警报",
 	teleport_desc = "传送警报",
 
+	engage_name = "激活警报",
+	engage_desc = "希尔盖激活时警告",
+
 	-- [[ Triggers ]]--
 	starttrigger = "你是我的了。",
 	starttrigger2 = "你……就是下一个。",
 	starttrigger3 = "我看到你了……",
 	teleporttrigger = "你的生命正走向终结。",
+	dietrigger = "%s takes his last breath.",
 	-- [[ Warnings ]]--
 	startwarn = "希尔盖已激活 - 90秒后传送",
 	warn1 = "1分钟后传送",

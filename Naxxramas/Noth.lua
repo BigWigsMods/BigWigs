@@ -153,6 +153,9 @@ L:RegisterTranslations("zhCN", function() return {
 	curse_name = "诅咒警报",
 	curse_desc = "诅咒警报",
 
+	wave_name = "小骷髅警报",
+	wave_desc = "警报数波小骷髅",
+
 	starttrigger1 = "死吧，入侵者！",
 	starttrigger2 = "荣耀归于我主！",
 	starttrigger3 = "我要没收你的生命！",
