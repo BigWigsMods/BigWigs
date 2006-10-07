@@ -173,6 +173,16 @@ local blockstrings = {
 	["DU BRENNST!"] = true,
 	-- ["YOU ARE AFFLICTED BY VOLATILE INFECTION!"] = true,
 	["DU BIST MARKIERT!"] = true,
+
+	-- frFR
+	["TU AS LA PESTE !"] = true,
+	["TU ES LA BOMBE !"] = true,
+	["TU ES SURVEILLE !"] = true,
+	["TU ES MAUDIT !"] = true,
+	["TU BRULES !"] = true,
+	["TU ES AFFLIGE PAR INFECTION VOLATILE !"] = true,
+	["TU ES MARQUE !"] = true,
+
 }
 
 
