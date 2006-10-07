@@ -41,26 +41,26 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 
-	start_trigger = "침입자들이 들어왔다! 어떤 희생이 있더라도 알을 반드시 수호하라!", -- By turtl
-	start_message = "폭군 서슬송곳니 전투 시작",
+	start_trigger = "????? ????! ?? ??? ???? ?? ??? ????!", -- By turtl
+	start_message = "?? ????? ?? ??",
 
-	mindcontrol_trigger = "자! ([^%s]+), 이제부터 나를 섬겨라!",	-- By turtl
-	mindcontrol_message = "<<%s>> 정신 지배 되었습니다.",
+	mindcontrol_trigger = "?! ([^%s]+), ???? ?? ???!",	-- By turtl
+	mindcontrol_message = "<<%s>> ?? ?? ?????.",
 
-	egg_trigger = "폭군 서슬송곳니|1이;가; 알 파괴|1을;를; 시전합니다.", -- By turtl
-	egg_message = "%d/30 알을 파괴하였습니다.",
+	egg_trigger = "?? ?????|1?;?; ? ??|1?;?; ?????.", -- By turtl
+	egg_message = "%d/30 ?? ???????.",
 
 	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.", -- CHECK
-	phase2_message = "모든 알이 파괴되었습니다, 서슬송곳니가 풀려납니다.", -- CHECK
+	phase2_message = "?? ?? ???????, ?????? ?????.", -- CHECK
 
-	mc_name = "정신 지배",
-	mc_desc = "플레이어가 정신 지배 되었을 때 경고",
+	mc_name = "?? ??",
+	mc_desc = "????? ?? ?? ??? ? ??",
 
-	eggs_name = "알 개수 알림 미사용",
-	eggs_desc = "남은 알 개수 알림 미사용",
+	eggs_name = "? ?? ?? ???",
+	eggs_desc = "?? ? ?? ?? ???",
 
-	phase_name = "단계",
-	phase_desc = "단계 1 과 2 알림",
+	phase_name = "??",
+	phase_desc = "?? 1 ? 2 ??",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -107,6 +107,7 @@ L:RegisterTranslations("zhCN", function() return {
 	egg_trigger = "狂野的拉佐格尔施放了(.+)。",
 	egg_message = "%d/30 龙蛋已经摧毁",
 
+	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.",
 	phase2_message = "所有龙蛋摧毁",
 
 	mc_name = "精神控制",

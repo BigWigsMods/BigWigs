@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -47,6 +47,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 	elsems_name = "队友致死打击警报",
 	elsems_desc = "队友中了致死打击时发出警报",
+
+	msbar_name = "致死打击条",
+	msbar_desc = "显示一条致死打击的持续时间",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -69,22 +72,22 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	trigger1 = "^([^|;%s]*)(.*)죽음의 일격에 걸렸습니다%.$",
+	trigger1 = "^([^|;%s]*)(.*)??? ??? ?????%.$",
 
 	you = "",
 	are = "",
 
-	warn1 = "당신은 죽음의 일격!",
-	warn2 = "<<%s>> 죽음의 일격!",
+	warn1 = "??? ??? ??!",
+	warn2 = "<<%s>> ??? ??!",
 	
-	youms_name = "자신의 죽음의 일격 경고",
-	youms_desc = "당신이 죽음의 일격에 걸렸을 때 경고",
+	youms_name = "??? ??? ?? ??",
+	youms_desc = "??? ??? ??? ??? ? ??",
 	
-	elsems_name = "타인의 죽음의 일격 경고",
-	elsems_desc = "타인이 죽음의 일격에 걸렸을 때 경고",
+	elsems_name = "??? ??? ?? ??",
+	elsems_desc = "??? ??? ??? ??? ? ??",
 
-	msbar_name = "죽음의 일격 바",
-	msbar_desc = "죽음의 일격 주기 바 표시",
+	msbar_name = "??? ?? ?",
+	msbar_desc = "??? ?? ?? ? ??",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

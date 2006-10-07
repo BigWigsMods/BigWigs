@@ -129,6 +129,8 @@ L:RegisterTranslations("zhCN", function() return {
 	breath3 = "点燃躯体",
 	breath4 = "焚烧",
 	breath5 = "冰霜灼烧",
+
+	castingbar = "施放 %s",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
