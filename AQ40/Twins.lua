@@ -35,6 +35,7 @@ L:RegisterTranslations("enUS", function() return {
 	porttrigger = "casts Twin Teleport.",
 	portwarn = "Teleport!",
 	portdelaywarn = "Teleport in ~5 seconds!",
+	portdelaywarn2 = "Teleport in ~10 seconds!",
 	bartext = "Teleport",
 	explodebugtrigger = "gains Explode Bug%.$",
 	explodebugwarn = "Bug exploding nearby!",
@@ -69,7 +70,8 @@ L:RegisterTranslations("deDE", function() return {
 
 	porttrigger = "wirkt Zwillingsteleport.",
 	portwarn = "Teleport!",
-	portdelaywarn = "Teleport in 5 Sekunden!",
+	portdelaywarn = "Teleport in ~5 Sekunden!",
+	portdelaywarn2 = "Teleport in ~10 Sekunden!",
 	bartext = "Teleport",
 	explodebugtrigger = "bekommt 'K\195\164fer explodieren lassen'",
 	explodebugwarn = "K\195\164fer explodiert!",
@@ -105,6 +107,7 @@ L:RegisterTranslations("zhCN", function() return {
 	porttrigger = "施放了双子传送。",
 	portwarn = "双子传送发动！",
 	portdelaywarn = "5秒后发动双子传送！",
+	portdelaywarn2 = "10秒后发动双子传送！",
 	bartext = "双子传送",
 	explodebugtrigger = "获得了爆炸虫的效果。$",
 	explodebugwarn = "爆炸虫即将出现！",
@@ -140,6 +143,7 @@ L:RegisterTranslations("koKR", function() return {
 	porttrigger = "쌍둥이 순간이동|1을;를; 시전합니다.",
 	portwarn = "순간 이동!",
 	portdelaywarn = "약 5초후 순간 이동!",
+	portdelaywarn2 = "약 10초후 순간 이동!",
 	bartext = "순간 이동",
 	explodebugtrigger = "(.+)|1이;가; 벌레 폭발 효과를 얻었습니다.",
 	explodebugwarn = "벌레 폭발!",
@@ -212,6 +216,7 @@ function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.teleport then
+			self:ScheduleEvent("BigWigs_Message", 20, L["portdelaywarn2"], "Urgent")
 			self:ScheduleEvent("BigWigs_Message", 25, L["portdelaywarn"], "Important")
 			self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 30, "Interface\\Icons\\Spell_Arcane_Blink")
 		end
@@ -228,6 +233,7 @@ function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
 		end
 	elseif sync == "TwinsTeleport" and self.db.profile.teleport then
 		self:TriggerEvent("BigWigs_Message", L["portwarn"], "Attention")
+		self:ScheduleEvent("BigWigs_Message", 20, L["portdelaywarn2"], "Urgent")
 		self:ScheduleEvent("BigWigs_Message", 25, L["portdelaywarn"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 30, "Interface\\Icons\\Spell_Arcane_Blink")
 	end
