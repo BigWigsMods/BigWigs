@@ -126,7 +126,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	breath1 = "时间流逝",
 	breath2 = "腐蚀酸液",
-	breath3 = "点燃肉体",
+	breath3 = "点燃躯体",
 	breath4 = "焚烧",
 	breath5 = "冰霜灼烧",
 } end )

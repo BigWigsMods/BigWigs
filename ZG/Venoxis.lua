@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -58,7 +58,7 @@ L:RegisterTranslations("zhCN", function() return {
 	phase_desc = "第二阶段警报",
 	
 	renew_trigger = "高阶祭司温诺希斯获得了恢复的效果。",
-	phase2_trigger = "让仇恨的",
+	phase2_trigger = "让复仇的毒蛇吞噬你们吧！",
 
 	renew_message = "恢复 - 立即驱散！",
 	phase2_message = "进入第二阶段，小心毒云！",
@@ -66,17 +66,17 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	
-	renew_name = "소생 경고",
-	renew_desc = "소생에 대한 경고",
+	renew_name = "?? ??",
+	renew_desc = "??? ?? ??",
 	
-	phase_name = "2 단계 경고",
-	phase_desc = "2 단계에 대한 경고",
+	phase_name = "2 ?? ??",
+	phase_desc = "2 ??? ?? ??",
 	
-	renew_trigger = "대사제 베녹시스|1이;가; 소생 효과를 얻었습니다.",
-	phase2_trigger = "증오의 또아리를 틀 시간이다!",
+	renew_trigger = "??? ????|1?;?; ?? ??? ?????.",
+	phase2_trigger = "??? ???? ? ????!",
 
-	renew_message = "소생 - 마법 해제해주세요!",
-	phase2_message = "2단계 시작 - 독구름을 조심하세요!",
+	renew_message = "?? - ?? ??????!",
+	phase2_message = "2?? ?? - ???? ?????!",
 } end )
 
 ----------------------------------

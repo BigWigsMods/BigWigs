@@ -79,32 +79,32 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 
-	enrage_name = "격노 경고",
-	enrage_desc = "격노에 대한 경고",
+	enrage_name = "?? ??",
+	enrage_desc = "??? ?? ??",
 
-	youinjected_name = "자신의 돌연변이 경고",
-	youinjected_desc = "자신이 돌연변이 시 경고",
+	youinjected_name = "??? ???? ??",
+	youinjected_desc = "??? ???? ? ??",
 
-	otherinjected_name = "타인의 돌연변이 경고",
-	otherinjected_desc = "타인이 돌연변이 시 경고",
+	otherinjected_name = "??? ???? ??",
+	otherinjected_desc = "??? ???? ? ??",
 
-	icon_name = "아이콘 지정",
-	icon_desc = "돌연변이 걸린 사람에게 아이콘 지정 (승급자 이상 요구)",
+	icon_name = "??? ??",
+	icon_desc = "???? ?? ???? ??? ?? (??? ?? ??)",
 
-	trigger1 = "^([^|;%s]*)(.*)돌연변이 유발에 걸렸습니다%.$", --"(.*)돌연변이 유발에 걸렸습니다.",
+	trigger1 = "^([^|;%s]*)(.*)???? ??? ?????%.$", --"(.*)???? ??? ?????.",
 
 	you = "",
 	are = "",
 
-	startwarn = "그라불루스 전투 시작, 12분 후 격노!",
-	enragebar = "격노",
-	enrage10min = "10분 후 격노!",
-	enrage5min = "5분 후 격노!",
-	enrage1min = "1분 후 격노!",
-	enrage30sec = "30초 후 격노!",
-	enrage10sec = "10초 후 격노",
-	warn1 = "당신은 돌연변이 유발에 걸렸습니다.",
-	warn2 = " 님이 돌연변이 유발에 걸렸습니다.",
+	startwarn = "????? ?? ??, 12? ? ??!",
+	enragebar = "??",
+	enrage10min = "10? ? ??!",
+	enrage5min = "5? ? ??!",
+	enrage1min = "1? ? ??!",
+	enrage30sec = "30? ? ??!",
+	enrage10sec = "10? ? ??",
+	warn1 = "??? ???? ??? ?????.",
+	warn2 = " ?? ???? ??? ?????.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -126,7 +126,7 @@ L:RegisterTranslations("zhCN", function() return {
 	are = "到",
 
 	startwarn = "格罗布鲁斯激活，12分钟后进入激怒状态！",
-	enragebar = "Enrage",
+	enragebar = "激怒",
 	enrage10min = "10分钟后激怒",
 	enrage5min = "5分钟后激怒",
 	enrage1min = "1分钟后激怒",

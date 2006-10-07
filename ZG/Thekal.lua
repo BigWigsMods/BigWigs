@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -49,17 +49,17 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	heal_name = "치유 경고",
-	heal_desc = "치유에 대한 경고",
+	heal_name = "?? ??",
+	heal_desc = "??? ?? ??",
 
-	tiger_name = "호랑이 경고",
-	tiger_desc = "호랑이 소환시 경고",
+	tiger_name = "??? ??",
+	tiger_desc = "??? ??? ??",
 
-	tigers_trigger = "대사제 데칼|1이;가; 줄리안 수호표범 소환|1을;를; 사용했습니다.",
-	heal_trigger = "광신도 로르칸|1이;가; 상급 치유|1을;를; 시전합니다.",
+	tigers_trigger = "??? ??|1?;?; ??? ???? ??|1?;?; ??????.",
+	heal_trigger = "??? ???|1?;?; ?? ??|1?;?; ?????.",
 
-	tigers_message = "호랑이 소환!!!",
-	heal_message = "로르칸, 상급 치유 시전!!!",
+	tigers_message = "??? ??!!!",
+	heal_message = "???, ?? ?? ??!!!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -69,8 +69,8 @@ L:RegisterTranslations("zhCN", function() return {
 	tiger_name = "老虎警报",
 	tiger_desc = "小老虎出现时发出警报",
 
-	tigers_trigger = "高阶祭司塞卡尔使用了召唤祖利安守护者。",
-	heal_trigger = "狂热者洛卡恩开始施放强效治疗术。",
+	tigers_trigger = "高阶祭司塞卡尔使用召唤祖利安守护者。",
+	heal_trigger = "狂热者洛卡恩开始施放强力治疗术。",
 	tigers_message = "老虎出现！",
 	heal_message = "狂热者洛卡恩正在施放治疗，赶快打断它！",	
 } end )
