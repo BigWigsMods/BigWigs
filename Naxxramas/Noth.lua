@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -100,47 +100,47 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 
-	blink_name = "점멸 경고",
-	blink_desc = "점멸에 대한 경고",
+	blink_name = "?? ??",
+	blink_desc = "??? ?? ??",
 
-	teleport_name = "순간이동 경고",
-	teleport_desc = "순간이동에 대한 경고",
+	teleport_name = "???? ??",
+	teleport_desc = "????? ?? ??",
 
-	curse_name = "저주 경고",
-	curse_desc = "저주에 대한 경고",
+	curse_name = "?? ??",
+	curse_desc = "??? ?? ??",
 
-	wave_name = "웨이브 알림",
-	wave_desc = "웨이브에 대한 알림",
+	wave_name = "??? ??",
+	wave_desc = "???? ?? ??",
 
-	starttrigger1 = "죽어라, 침입자들아!",
-	starttrigger2 = "주인님께 영광을!",
-	starttrigger3 = "너희 생명은 끝이다!",
-	startwarn = "역병술사 노스와 전투 시작! 90초후 순간이동",
+	starttrigger1 = "???, ?????!",
+	starttrigger2 = "???? ???!",
+	starttrigger3 = "?? ??? ???!",
+	startwarn = "???? ??? ?? ??! 90?? ????",
 
-	addtrigger = "일어나라,병사들이여! 다시 일어나 싸워라!",
+	addtrigger = "????,?????! ?? ??? ???!",
 
-	blinktrigger = "역병술사 노스|1이;가; 점멸 효과를 얻었습니다.",
-	blinkwarn = "점멸! 공격 금지!",
-	blinkwarn2 = "점멸 약 5초후!",
-	blinkbar = "점멸",
+	blinktrigger = "???? ??|1?;?; ?? ??? ?????.",
+	blinkwarn = "??! ?? ??!",
+	blinkwarn2 = "?? ? 5??!",
+	blinkbar = "??",
 
-	teleportwarn = "순간이동! 발코니에 위치!",
-	teleportwarn2 = "순간이동 10초후!",
+	teleportwarn = "????! ???? ??!",
+	teleportwarn2 = "???? 10??!",
 
-	teleportbar = "순간이동!",
-	backbar = "방으로 복귀!",
+	teleportbar = "????!",
+	backbar = "??? ??!",
 
-	backwarn = "방으로 복귀! %d 초간 최대한 공격!!",
-	backwarn2 = "10초후 방으로 복귀!",
+	backwarn = "??? ??! %d ?? ??? ??!!",
+	backwarn2 = "10?? ??? ??!",
 
-	cursetrigger = "(.+)|1이;가; 역병술사의 저주에 걸렸습니다.",
-	cursewarn	 = "저주! 다음 저주 약 55초후",
-	curse10secwarn = "저주 약 10초후",
+	cursetrigger = "(.+)|1?;?; ????? ??? ?????.",
+	cursewarn	 = "??! ?? ?? ? 55??",
+	curse10secwarn = "?? ? 10??",
 
-	cursebar = "다음 저주",	
+	cursebar = "?? ??",	
 
-	wave1bar = "웨이브 1",
-	wave2bar = "웨이브 2",
+	wave1bar = "??? 1",
+	wave2bar = "??? 2",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -158,7 +158,7 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger3 = "我要没收你的生命！",
 	startwarn = "瘟疫使者诺斯已激活 - 90秒后传送",
 
-	addtrigger = "Rise, my soldiers! Rise and fight once more!",
+	addtrigger = "起来吧，我的战士们！起来，再为主人尽忠一次！",
 
 	blinktrigger = "瘟疫使者诺斯获得了闪现术的效果。",
 	blinkwarn = "闪现术！停止攻击！",
@@ -178,7 +178,10 @@ L:RegisterTranslations("zhCN", function() return {
 	cursewarn	 = "诅咒 - 55秒后再次发动",
 	curse10secwarn = "10秒后发动诅咒！",
 
-	cursebar = "下一次诅咒",		
+	cursebar = "下一次诅咒",
+	
+	wave1bar = "第一波",
+	wave2bar = "第二波",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
