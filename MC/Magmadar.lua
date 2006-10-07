@@ -123,6 +123,9 @@ function BigWigsMagmadar:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Fear")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Fear")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "MagmadarFear", 5)
 end
 
 ------------------------------
@@ -135,11 +138,18 @@ function BigWigsMagmadar:CHAT_MSG_MONSTER_EMOTE(msg)
 	end
 end
 
-function BigWigsMagmadar:Fear(msg)
-	if not self.prior and string.find(msg, L["trigger2"]) and self.db.profile.fear then
+function BigWigsMagmadar:BigWigs_RecvSync( sync ) 
+	if sync ~= "MagmadarFear" then return end
+	if self.db.profile.fear then
 		self:TriggerEvent("BigWigs_StartBar", self, L["AoE Fear"], 30, "Interface\\Icons\\Spell_Shadow_PsychicScream")
 		self:TriggerEvent("BigWigs_Message", L["AoE Fear - 30 seconds until next!"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 25, L["5 seconds until AoE Fear!"], "Urgent")
+	end
+end
+
+function BigWigsMagmadar:Fear(msg)
+	if not self.prior and string.find(msg, L["trigger2"]) then
+		self:TriggerEvent("BigWigs_SendSync", "MagmadarFear")
 		self.prior = true
 	end
 end
