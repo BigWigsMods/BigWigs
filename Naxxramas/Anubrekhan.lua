@@ -155,6 +155,7 @@ function BigWigsAnubrekhan:BigWigs_RecvSync( sync )
 		self:ScheduleEvent("bwanublocustinc", self.TriggerEvent, 3.25, self, "BigWigs_SendSync", "AnubLocustSwarm")
 		if self.db.profile.locust then
 			self:TriggerEvent("BigWigs_Message", L["castwarn"], "Orange")
+			self:TriggerEvent("BigWigs_StartBar", self, L["castwarn"], 3, "Interface\\Icons\\Spell_Nature_InsectSwarm" )
 		end
 	elseif sync == "AnubLocustSwarm" then
 		self:CancelScheduledEvent("bwanublocustinc")
