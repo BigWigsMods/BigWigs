@@ -113,12 +113,18 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	bomb_trigger = "^([^%s]+) ([^%s]+) les effets de Bombe vivante.",
+	inferno_trigger = "Baron Geddon gagne Inferno.",
 
 	you = "Vous",
 	are = "subissez",
 
 	bomb_message_you = "Tu es la bombe !",
 	bomb_message_other = "%s est la bombe !",
+
+	inferno_bar = "Inferno",
+
+	inferno_message = "Inferno pendant 10sec!",
+
 } end)
 
 ----------------------------------
