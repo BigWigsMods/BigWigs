@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -111,7 +111,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	breath_trigger = "^克洛玛古斯开始施放(.+)。",
 	vulnerability_test = "^.+的(.+)克洛玛古斯造成(%d+)点(.+)伤害。",
-	frenzy_trigger = "变得极为狂暴！",
+	frenzy_trigger = "变得狂怒无比！",
 	vulnerability_trigger = "的皮肤闪着光芒",
 
 	hit = "击中",
@@ -133,38 +133,38 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	
-	enrage_name = "격노",
-	enrage_desc = "20% 격노 전 경고",
+	enrage_name = "??",
+	enrage_desc = "20% ?? ? ??",
 
-	frenzy_name = "광폭화 경고",
-	frenzy_desc = "광폭화에 대한 경고",
+	frenzy_name = "??? ??",
+	frenzy_desc = "???? ?? ??",
 	
-	breath_name = "브레스 경고",
-	breath_desc = "브레스에 대한 경고",
+	breath_name = "??? ??",
+	breath_desc = "???? ?? ??",
 	
-	vulnerability_name = "약화 속성 경고",
-	vulnerability_desc = "약화 속성 변경에 대한 경고",
+	vulnerability_name = "?? ?? ??",
+	vulnerability_desc = "?? ?? ??? ?? ??",
 	
-	breath_trigger = "크로마구스|1이;가; (.+)|1을;를; 시전합니다.",
-	vulnerability_test = "(.+)|1으로;로; 크로마구스에게 (%d+)의 ([^%s]+) (.*)피해를 입혔습니다.",
-	frenzy_trigger = "%s|1이;가; 살기를 띤 듯한 광란의 상태에 빠집니다!",
-	vulnerability_trigger = "%s|1이;가; 주춤하면서 물러나면서 가죽이 빛납니다.", --"가죽이 점점 빛나면서 물러서기 시작합니다.",
+	breath_trigger = "?????|1?;?; (.+)|1?;?; ?????.",
+	vulnerability_test = "(.+)|1??;?; ??????? (%d+)? ([^%s]+) (.*)??? ?????.",
+	frenzy_trigger = "%s|1?;?; ??? ? ?? ??? ??? ????!",
+	vulnerability_trigger = "%s|1?;?; ????? ????? ??? ????.", --"??? ?? ???? ???? ?????.",
 
 	hit = "",
-	crit = "치명상 ",
+	crit = "??? ",
 
-	breath_warning = "%s 10초전!",
-	breath_message = "%s를 시전합니다!",
-	vulnerability_message = "새로운 취약 속성: %s",
-	vulnerability_warning = "취약 속성이 변경되었습니다!",
-	frenzy_message = "광폭화 - 평정 사격!",
-	enrage_warning = "격노 경고!",
+	breath_warning = "%s 10??!",
+	breath_message = "%s? ?????!",
+	vulnerability_message = "??? ?? ??: %s",
+	vulnerability_warning = "?? ??? ???????!",
+	frenzy_message = "??? - ?? ??!",
+	enrage_warning = "?? ??!",
 
-	breath1 = "시간의 쇠퇴",
-	breath2 = "부식성 산",
-	breath3 = "살점 태우기",
-	breath4 = "소각",
-	breath5 = "동결",
+	breath1 = "??? ??",
+	breath2 = "??? ?",
+	breath3 = "?? ???",
+	breath4 = "??",
+	breath5 = "??",
 
 } end )
 

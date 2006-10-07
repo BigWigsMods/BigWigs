@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -83,7 +83,7 @@ L:RegisterTranslations("zhCN", function() return {
 	berserk_name = "极度狂暴警报",
 	berserk_desc = "极度狂暴警报",
 	
-	frenzytrigger = "%s变得狂暴起来！",
+	frenzytrigger = "%s 变得狂怒无比！",
 	berserktrigger = "%s变得极度狂暴而愤怒！",
 	frenzywarn = "狂暴警报 - 猎人立刻使用宁神射击！",
 	berserkwarn = "极度狂暴 - 治疗注意！",
@@ -102,30 +102,30 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 
-	wyvern_name = "비룡 쐐기 경고",
-	wyvern_desc = "비룡 쐐기에 대한 경고",
+	wyvern_name = "?? ?? ??",
+	wyvern_desc = "?? ??? ?? ??",
 
-	frenzy_name = "광폭화 경고",
-	frenzy_desc = "광폭화에 대한 경고",
+	frenzy_name = "??? ??",
+	frenzy_desc = "???? ?? ??",
 
-	berserk_name = "광기 경고",
-	berserk_desc = "광기에 대한 경고",
+	berserk_name = "?? ??",
+	berserk_desc = "??? ?? ??",
 
-	frenzytrigger = "%s|1이;가; 광란의 상태에 빠집니다!",
-	berserktrigger = "%s|1이;가; 광폭해집니다!",
-	frenzywarn = "광폭화 - 평정 사격!",
-	berserkwarn = "광기 - 독 빈도 증가!",
-	berserksoonwarn = "광폭화 경보 - 준비!",
-	stingtrigger = "비룡 쐐기에 걸렸습니다.",--"공주 후후란|1이;가; 비룡 쐐기|1으로;로;",
-	stingwarn = "비룡 쐐기 - 메인탱커 해제!",
-	stingdelaywarn = "비룡 쐐기 약 3초전!",
-	bartext = "비룡 쐐기",
+	frenzytrigger = "%s|1?;?; ??? ??? ????!",
+	berserktrigger = "%s|1?;?; ??????!",
+	frenzywarn = "??? - ?? ??!",
+	berserkwarn = "?? - ? ?? ??!",
+	berserksoonwarn = "??? ?? - ??!",
+	stingtrigger = "?? ??? ?????.",--"?? ???|1?;?; ?? ??|1??;?;",
+	stingwarn = "?? ?? - ???? ??!",
+	stingdelaywarn = "?? ?? ? 3??!",
+	bartext = "?? ??",
 	
-	startwarn = "후후란 전투 개시, 5분 후 광기!!",
-	berserkbar = "광기",
-	berserkwarn1 = "광기 - 1 분전!",
-	berserkwarn2 = "광기 - 30 초전!",
-	berserkwarn3 = "광기 - 5 초전!",
+	startwarn = "??? ?? ??, 5? ? ??!!",
+	berserkbar = "??",
+	berserkwarn1 = "?? - 1 ??!",
+	berserkwarn2 = "?? - 30 ??!",
+	berserkwarn3 = "?? - 5 ??!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

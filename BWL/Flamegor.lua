@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -39,7 +39,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	wingbuffet_trigger = "弗莱格尔开始施放龙翼打击。",
 	shadowflame_trigger = "弗莱格尔开始施放暗影烈焰。",
-	frenzy_trigger = "变得狂暴起来！",
+	frenzy_trigger = "变得狂怒无比！",
 
 	wingbuffet_message = "龙翼打击 - 30秒后再次发动",
 	wingbuffet_warning = "3秒后发动龙翼打击！",
@@ -60,25 +60,25 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 L:RegisterTranslations("koKR", function() return {
-	wingbuffet_trigger = "플레임고르|1이;가; 폭풍 날개|1을;를; 시전합니다.",
-	shadowflame_trigger = "플레임고르|1이;가; 암흑의 불길|1을;를; 시전합니다.",
-	frenzy_trigger = "%s|1이;가; 광란의 상태에 빠집니다!",
+	wingbuffet_trigger = "?????|1?;?; ?? ??|1?;?; ?????.",
+	shadowflame_trigger = "?????|1?;?; ??? ??|1?;?; ?????.",
+	frenzy_trigger = "%s|1?;?; ??? ??? ????!",
 
-	wingbuffet_message = "폭풍 날개! 다음은 30초 후!",
-	wingbuffet_warning = "3초후 폭풍 날개!",
-	shadowflame_warning = "암흑의 불길 경보!",
-	frenzy_message = "광란 - 평정 사격!",
+	wingbuffet_message = "?? ??! ??? 30? ?!",
+	wingbuffet_warning = "3?? ?? ??!",
+	shadowflame_warning = "??? ?? ??!",
+	frenzy_message = "?? - ?? ??!",
 
-	wingbuffet_bar = "폭풍 날개",
+	wingbuffet_bar = "?? ??",
 	
-	wingbuffet_name = "폭풍 날개 경고",
-	wingbuffet_desc = "폭풍 날개에 대한 경고",
+	wingbuffet_name = "?? ?? ??",
+	wingbuffet_desc = "?? ??? ?? ??",
 	
-	shadowflame_name = "암흑의 불길 경고",
-	shadowflame_desc = "암흑의 불길에 대한 경고",
+	shadowflame_name = "??? ?? ??",
+	shadowflame_desc = "??? ??? ?? ??",
 	
-	frenzy_name = "광란 경고",
-	frenzy_desc = "광란에 대한 경고",
+	frenzy_name = "?? ??",
+	frenzy_desc = "??? ?? ??",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
