@@ -366,6 +366,7 @@ function BigWigsCThun:CThunP2Start()
 
 		self:TriggerEvent("BigWigs_StopBar", self, L["barGlare"] )
 		self:TriggerEvent("BigWigs_StopBar", self, L["barTentacle"] )
+		self:TriggerEvent("BigWigs_StopBar", self, L["barNoRape"] )
 		self:TriggerEvent("BigWigs_StopBar", self, L["barGreenBeam"] )
 
 		self:CancelScheduledEvent("bwcthuntentacle2")
@@ -417,6 +418,7 @@ function BigWigsCThun:CThunWeakened()
 	self:CancelScheduledEvent("bwcthungiant3")
 
 	self:TriggerEvent("BigWigs_StopBar", self, L["barTentacle"])
+	self:TriggerEvent("BigWigs_stopBar", self, L["barNoRape"])
 	self:TriggerEvent("BigWigs_StopBar", self, L["barGiant"])
 
 	-- flipflop the giant eye flag
@@ -488,7 +490,7 @@ function BigWigsCThun:TentacleRape()
 		end
 	end
 	if self.db.profile.tentacle then
-		self:TriggerEvent("BigWigs_StartBar", self, L["barTentacle"], tentacletime, "Interface\\Icons\\Spell_Nature_CallStorm")
+		self:TriggerEvent("BigWigs_StartBar", self, self.db.profile.rape and L["barTentacle"] or L["barNoRape"], tentacletime, "Interface\\Icons\\Spell_Nature_CallStorm")
 		self:ScheduleEvent("bwcthuntentacle1", "BigWigs_Message", tentacletime -.1, self.db.profile.rape and L["tentacle1"] or L["norape1"], "Important")
 		self:ScheduleEvent("bwcthuntentacle2", "BigWigs_Message", tentacletime -5, self.db.profile.rape and L["tentacle2"] or L["norape2"], "Urgent")
 	end
