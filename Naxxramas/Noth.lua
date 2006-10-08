@@ -99,6 +99,8 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 
+L:RegisterTranslations("koKR", function() return {
+
 	blink_name = "점멸 경고",
 	blink_desc = "점멸에 대한 경고",
 
