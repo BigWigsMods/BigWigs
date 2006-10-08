@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -109,7 +109,7 @@ L:RegisterTranslations("zhCN", function() return {
 	portdelaywarn = "5秒后发动双子传送！",
 	portdelaywarn2 = "10秒后发动双子传送！",
 	bartext = "双子传送",
-	explodebugtrigger = "获得了爆炸虫的效果。$",
+	explodebugtrigger = "(.+)获得了爆炸虫",
 	explodebugwarn = "爆炸虫即将出现！",
 	enragetrigger = "获得了激怒的效果。",
 	enragewarn = "双子皇帝获得了激怒的效果！",

@@ -239,6 +239,8 @@ L:RegisterTranslations("zhCN", function() return {
 	pswarn3 = "3秒后发动极性转化！",
 	poswarn = "你是正电荷！",
 	negwarn = "你是负电荷！",
+	nochange = "你的电荷没有改变!",
+	polaritytickbar = "极性 Tick",
 	enragebartext = "激怒",
 	warn1 = "3分钟后激怒",
 	warn2 = "90秒后激怒",

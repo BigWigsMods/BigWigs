@@ -150,7 +150,7 @@ L:RegisterTranslations("zhCN", function() return {
 	startwarn = "洛欧塞布已激活 - 2分钟后发动必然的厄运！",
 
 	you = "你",
-	are = "是",
+	are = "到",
 } end )
 
 ----------------------------------
