@@ -45,30 +45,30 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 
-	fear_name = "?? ??",
-	fear_desc = "??? ?? ??",
+	fear_name = "공포 경고",
+	fear_desc = "공포에 대한 경고",
 	
-	frenzy_name = "??? ??",
-	frenzy_desc = "???? ?? ??",
+	frenzy_name = "광폭화 경고",
+	frenzy_desc = "광폭화에 대한 경고",
 
-	decimate_name = "?? ??",
-	decimate_desc = "??? ?? ??",
+	decimate_name = "척살 경보",
+	decimate_desc = "척살에 대한 경고",
 
-	trigger1 = "%s|1?;?; ??? ??? ????!", -- CHECK
-	trigger2 = "??? ???",
+	trigger1 = "%s|1이;가; 광란의 상태에 빠집니다!", -- CHECK
+	trigger2 = "공포의 포효에",
 	starttrigger = "devours all nearby zombies!", -- CHECK (not used)
 
-	warn1 = "??? ??!",
-	warn2 = "?? ?? 5? ?!",
-	warn3 = "?? ?? ?? - 20? ?",
+	warn1 = "광폭화 경고!",
+	warn2 = "광역 공포 5초 전!",
+	warn3 = "광역 공포 경고 - 20초 후",
 
-	startwarn = "??? ?? ??! ? 105? ? ??!",
-	decimatesoonwarn = "? ??!",
-	decimatewarn = "??!",
-	decimatetrigger = "??",
+	startwarn = "글루스 전투 시작! 약 105초 후 좀비!",
+	decimatesoonwarn = "곧 척살!",
+	decimatewarn = "척살!",
+	decimatetrigger = "척살",
 
-	bar1text = "?? ??",
-	decimatebartext = "?? ??",
+	bar1text = "광역 공포",
+	decimatebartext = "척살 좀비",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
