@@ -85,7 +85,7 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	trigger1 = "entre dans une fr\195\169n\195\169sie sanglante !",
+	trigger1 = "%s entre dans une fr\195\169n\195\169sie sanglante !"
 	trigger2 = "Panique.",
 
 	["Frenzy alert!"] = "Alerte fr\195\169n\195\169sie - Tir tranquilisant !",
