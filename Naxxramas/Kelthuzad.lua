@@ -181,12 +181,12 @@ L:RegisterTranslations("deDE", function() return {
 	phase2_bar = "Kel'Thuzad aktiv!",
 
 	phase3_soon_warning = "Phase 3 bald!",
-	phase3_trigger = "Master, I require aid!",
-	phase3_warning = "Phase 3, Guardians in ~15sec!",
+	phase3_trigger = "Meister, helft mir!",
+	phase3_warning = "Phase 3, W\195\164chter in ~15sek!",
 
-	guardians_trigger = "Very well. Warriors of the frozen wastes, rise up! I command you to fight, kill and die for your master! Let none survive!",
-	guardians_warning = "Guardians incoming in ~10sec!",
-	guardians_bar = "Guardians incoming!",
+	guardians_trigger = "Also gut. Erhebt euch, Krieger der eisigen Weiten! Ich befehle euch zu kämpfen, zu töten und für euren Meister zu sterben! Lasst keinen am Leben!",
+	guardians_warning = "W\195\164chter in ~10sek!",
+	guardians_bar = "W\195\164chter kommen!",
 
 	fissure_trigger = "Kel'Thuzad wirkt Schattenspalt.",
 	fissure_warning = "Schattenspalt!",
