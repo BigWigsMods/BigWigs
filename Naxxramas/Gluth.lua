@@ -125,6 +125,13 @@ L:RegisterTranslations("zhCN", function() return {
 	decimatebartext = "吞噬僵尸",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	trigger1 = "%s gagne Fr\195\169n\195\169sie.",
+	trigger2 = "de Rugissement terrifiant.",
+	starttrigger = "d\195\169vore tous les zombies aux alentours !",
+} end )
+
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
