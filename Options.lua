@@ -24,6 +24,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Toggle the minimap button."] = true,
 	["All running modules have been reset."] = true,
 	["All running modules have been disabled."] = true,
+	["%s reset."] = true,
+	["%s disabled."] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -93,28 +95,38 @@ BigWigsOptions.hasIcon = "Interface\\Icons\\INV_Misc_Orb_05"
 -- BigWigsOptions.hasNoText  = true
 BigWigsOptions.defaultMinimapPosition = 180
 BigWigsOptions.cannotDetachTooltip = true
+BigWigsOptions.clickableTooltip = true
 
--- total hack
+-- XXX total hack
 BigWigsOptions.OnMenuRequest = deuce.core.cmdtable
 local args = AceLibrary("FuBarPlugin-2.0"):GetAceOptionsDataTable(BigWigsOptions)
 for k,v in pairs(args) do
 	if BigWigsOptions.OnMenuRequest.args[k] == nil then
---		DEFAULT_CHAT_FRAME:AddMessage(k)
 		BigWigsOptions.OnMenuRequest.args[k] = v
 	end
 end
--- end hack
+-- XXX end hack
 
 -----------------------------
 --      FuBar Methods      --
 -----------------------------
+
+function BigWigsOptions:ModuleAction(module)
+	if IsShiftKeyDown() then
+		deuce.core:ToggleModuleActive(module, false)
+		self:Print(string.format(L["%s disabled."], module:ToString()))
+	else
+		deuce.core:BigWigs_RebootModule(module)
+		self:Print(string.format(L["%s reset."], module:ToString()))
+	end
+end
 
 function BigWigsOptions:OnTooltipUpdate()
 	local cat = Tablet:AddCategory("text", L["Active boss modules"])
 
 	for name, module in deuce.core:IterateModules() do
 		if module:IsBossModule() and deuce.core:IsModuleActive(module) then
-			cat:AddLine("text", name)
+			cat:AddLine("text", name, "func", function(mod) BigWigsOptions:ModuleAction(mod) end, "arg1", module)
 		end
 	end
 
@@ -122,14 +134,14 @@ function BigWigsOptions:OnTooltipUpdate()
 end
 
 function BigWigsOptions:OnClick()
-	if(IsShiftKeyDown()) then
+	if IsShiftKeyDown() then
 		for name, module in deuce.core:IterateModules() do
 			if module:IsBossModule() and deuce.core:IsModuleActive(module) then
 				deuce.core:ToggleModuleActive(module, false)
 			end
 		end
 		self:Print(L["All running modules have been disabled."])
-	else	
+	else
 		for name, module in deuce.core:IterateModules() do
 			if module:IsBossModule() and deuce.core:IsModuleActive(module) then
 				deuce.core:BigWigs_RebootModule(module)
