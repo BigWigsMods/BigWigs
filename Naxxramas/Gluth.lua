@@ -129,6 +129,7 @@ L:RegisterTranslations("frFR", function() return {
 	trigger1 = "%s gagne Fr\195\169n\195\169sie.",
 	trigger2 = "de Rugissement terrifiant.",
 	starttrigger = "d\195\169vore tous les zombies aux alentours !",
+	decimatetrigger = "D\195\169cimer",
 } end )
 
 
