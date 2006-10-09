@@ -122,8 +122,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	shouttrigger 	= "Cri perturbant",
 
-	shieldwalltrigger   = "Deathknight Understudy gagne Mur protecteur.",
-
+	shieldwalltrigger   = "Doublure de chevalier de la mort gagne Mur protecteur.",
 } end )
 
 ----------------------------------
