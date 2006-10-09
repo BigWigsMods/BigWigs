@@ -225,7 +225,9 @@ function BigWigsHorsemen:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenShieldWall", 3)
-	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenMark", 8)
+	-- Upgraded to HorsemenMark2 so that we don't get blocked by throttled syncs
+	-- from older revisions.
+	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenMark2", 8)
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenVoid", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenWrath", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenMeteor", 5)
@@ -235,7 +237,7 @@ function BigWigsHorsemen:MarkEvent( msg )
 	if string.find(msg, L["marktrigger"]) then
 		local t = GetTime()
 		if not times["mark"] or (times["mark"] and (times["mark"] + 8) < t) then
-			self:TriggerEvent("BigWigs_SendSync", "HorsemenMark "..tostring(self.marks + 1))
+			self:TriggerEvent("BigWigs_SendSync", "HorsemenMark2 "..tostring(self.marks + 1))
 			times["mark"] = t
 		end
 	end
@@ -272,7 +274,7 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 			self:TriggerEvent("BigWigs_StartBar", self, string.format( L["markbar"], self.marks), 17, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde")
 			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 12, string.format( L["markwarn2"], self.marks ), "Urgent")
 		end
-	elseif sync == "HorsemenMark" and rest then
+	elseif sync == "HorsemenMark2" and rest then
 		rest = tonumber(rest)
 		if rest == nil then return end
 		if rest == (self.marks + 1) then
