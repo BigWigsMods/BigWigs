@@ -228,7 +228,10 @@ function BigWigs.modulePrototype:Scan()
 	local a = self.wipemobs
 	if not t then return false end
 	if type(t) == "string" then t = {t} end
-	if a then for k,v in pairs(a) do table.insert(t, v) end end
+	if a then
+		if type(a) == "string" then a = {a} end
+		for k,v in pairs(a) do table.insert(t, v) end
+	end
 
 	if UnitExists("target") and UnitAffectingCombat("target") then
 		local target = UnitName("target")
