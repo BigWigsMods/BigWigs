@@ -79,7 +79,7 @@ L:RegisterTranslations("deDE", function() return {
 	enragewarn = "Zwillings Imperatoren sind w\195\188tend!",
 	healtrigger1 = "'s Bruder heilen heilt",
 	healtrigger2 = " Bruder heilen heilt",
-	healwarn = "Heilung gewirkt - Schnell auseinander bringen!",
+	healwarn = "Heilung gewirkt!",
 	startwarn = "Zwillings Imperatoren angegriffen! Wutanfall in 15 Minuten!",
 	enragebartext = "Wutanfall",
 	warn1 = "Wutanfall in 10 Minuten",

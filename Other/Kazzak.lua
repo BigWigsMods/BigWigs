@@ -33,15 +33,15 @@ L:RegisterTranslations("deDE", function() return {
 	supreme_name = "Supreme Mode",
 	supreme_desc = "Warnung vor Supreme Mode.",
 	
-	starttrigger = "F\195\188r die Legion! F\195\188r Kil'Jaeden!", -- ?
+	starttrigger = "F\195\188r die Legion! F\195\188r Kil'jaeden!",
 		
-	engagewarn	 = "Lord Kazzak angegriffen! - 3 Minuten bis Supreme Mode!",
+	engagewarn	 = "Lord Kazzak angegriffen! Supreme Mode in 3 Minuten!",
 		
 	supreme1min  = "Supreme Mode in 1 Minute!",
 	supreme30sec = "Supreme Mode in 30 Sekunden!",
 	supreme10sec = "Supreme Mode in 10 Sekunden!",
 		
-	bartext = "Supreme Mode",	
+	bartext = "Supreme Mode",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

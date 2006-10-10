@@ -45,12 +45,18 @@ L:RegisterTranslations("deDE", function() return {
 	heal_name = "Heilung",
 	heal_desc = "Warnung, wenn Jeklik versucht sich zu heilen.",
 
-	bomb_name = "Fledermaus Bomben",
-	bomb_desc = "Warnung, wenn Fledermaus Bomben im Anflug sind.",
+	bomb_name = "Fledermaus-Bomben",
+	bomb_desc = "Warnung, wenn Fledermaus-Bomben im Anflug sind.",
 
-	bomb_trigger =  "Ich befehle Euch Feuer \195\188ber diese Eindringlinge regnen zu lassen!",
+	swarm_name = "Fledermaus-Schwarm",
+	swarm_desc = "Warnung, wenn Fledermaus-Schwarm im Anflug.",
+
+	swarm_trigger = "emits a deafening shriek", -- ?
+	bomb_trigger = "Ich befehle Euch Feuer \195\188ber diese Eindringlinge regnen zu lassen!",
 	heal_trigger = "beginnt Gro\195\159es Heilen zu wirken!",
-	bomb_message = "Fledermaus Bomben im Anflug!",
+
+	swarm_message = "Fledermaus-Schwarm im Anflug!",
+	bomb_message = "Fledermaus-Bomben im Anflug!",
 	heal_message = "Jeklik versucht sich zu heilen!",
 } end )
 

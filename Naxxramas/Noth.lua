@@ -60,7 +60,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-
 	blink_name = "Blinzeln",
 	blink_desc = "Warnung, wenn Noth Blinzeln wirkt.",
 
@@ -70,32 +69,38 @@ L:RegisterTranslations("deDE", function() return {
 	curse_name = "Fluch",
 	curse_desc = "Warnung, wenn Noth Fluch des Seuchenf\195\188rsten wirkt.",
 
+	wave_name = "Wellen",
+	wave_desc = "Warnung vor den ankommenden Gegner Wellen.",
+
 	starttrigger1 = "Sterbt, Eindringling!",
 	starttrigger2 = "Ehre unserem Meister!",
 	starttrigger3 = "Euer Leben ist verwirkt!",
-	startwarn = "Noth der Seuchenf\195\188rst angegriffen! 90 Sekunden bis Teleport!",
+	startwarn = "Noth der Seuchenf\195\188rst angegriffen! Teleport in 90 Sekunden!",
 
 	addtrigger = "Erhebt euch, Soldaten! Erhebt euch und k\195\164mpft erneut!",
 
 	blinktrigger = "Noth der Seuchenf\195\188rst bekommt 'Blinzeln'.",
-	blinkwarn = "Blinzeln! Stop DPS!",
+	blinkwarn = "Blinzeln!",
 	blinkwarn2 = "Blinzeln in ~5 Sekunden!",
 	blinkbar = "Blinzeln",
 
-	teleportwarn = "Teleport! Er ist auf dem Balkon!",
+	teleportwarn = "Teleport! Noth auf dem Balkon!",
 	teleportwarn2 = "Teleport in 10 Sekunden!",
 
-	teleportbar = "Teleport!",
-	backbar = "R\195\188ckteleport!",
+	teleportbar = "Teleport",
+	backbar = "R\195\188ckteleport",
 
-	backwarn = "Er ist wieder im Raum f\195\188r %d Sekunden.",
-	backwarn2 = "10 Sekunden bis R\195\188ckteleport!",
+	backwarn = "Noth zur\195\188ck im Raum f\195\188r %d Sekunden.",
+	backwarn2 = "R\195\188ckteleport in 10 Sekunden!",
 
 	cursetrigger = "von Fluch des Seuchenf\195\188rsten betroffen",
 	cursewarn	 = "Fluch! N\195\164chster in ~55 Sekunden",
 	curse10secwarn = "Fluch in ~10 Sekunden",
 
-	cursebar = "Fluch",
+	cursebar = "N\195\164chster Fluch",
+
+	wave1bar = "Welle 1",
+	wave2bar = "Welle 2",
 } end )
 
 

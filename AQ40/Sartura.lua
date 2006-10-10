@@ -68,7 +68,7 @@ L:RegisterTranslations("deDE", function() return {
 	whirlwind_desc = "Warnung, wenn Sartura Wirbelwind wirkt.",
 
 	starttrigger = "Ihr habt heiligen Boden entweiht",
-	startwarn = "Sartura angegriffen! 10 Minuten bis Wutanfall!",
+	startwarn = "Sartura angegriffen! Wutanfall in 10 Minuten!",
 	enragetrigger = "%s wird w\195\188tend!",
 	enragewarn = "Sartura ist w\195\188tend!",
 	bartext = "Wutanfall",
@@ -81,8 +81,8 @@ L:RegisterTranslations("deDE", function() return {
 	warn7 = "Wutanfall in 10 Sekunden",
 	whirlwindon = "Schlachtwache Sartura bekommt 'Wirbelwind'.",
 	whirlwindoff = "Wirbelwind schwindet von Schlachtwache Sartura.",
-	whirlwindonwarn = "Wirbelwind! - Immun gegen Bet\195\164ubungen!",
-	whirlwindoffwarn = "Wirbelwind vorbei! - Jetzt bet\195\164uben!.",
+	whirlwindonwarn = "Wirbelwind!",
+	whirlwindoffwarn = "Wirbelwind vorbei!",
 	whirlwindbartext = "Wirbelwind",
 } end )
 

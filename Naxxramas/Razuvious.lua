@@ -40,24 +40,25 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	shout_name = "Unterbrechungsruf", -- ? "Triumphschrei"
-	shout_desc = "Warnung, wenn Instruktor Razuvious Unterbrechungsruf wirkt.", -- ? "Triumphschrei"
+	shout_name = "Unterbrechungsruf",
+	shout_desc = "Warnung, wenn Instruktor Razuvious Unterbrechungsruf wirkt.",
 
 	shieldwall_name = "Schildwall",
 	shieldwall_desc = "Timer f\195\188r Schildwall.",
 
-	startwarn = "Instrukteur Razuvious angegriffen! ~25 Sekunden bis zum ersten Ruf!",
+	startwarn = "Instruktor Razuvious angegriffen! Unterbrechungsruf in ~25 Sekunden!",
 
 	starttrigger1 = "Die Zeit des \195\156bens ist vorbei! Zeigt mir, was ihr gelernt habt!",
 	starttrigger2 = "Streckt sie nieder... oder habt ihr ein Problem damit?",
 	starttrigger3 = "Lasst keine Gnade walten!",
 	starttrigger4 = "Befolgt meine Befehle!",
 
-	shouttrigger = "Unterbrechungsruf", -- ? "Triumphschrei"
-	shout7secwarn = "7 Sekunden bis Ruf!",
-	shoutwarn = "Unterbrechungsruf!", -- ? "Triumphschrei"
-	noshoutwarn = "Kein Ruf! N\195\164chster in ~20s",
-	shoutbar = "Unterbrechungsruf", -- ? "Triumphschrei"
+	shouttrigger = "Unterbrechungsruf",
+	shout7secwarn = "Unterbrechungsruf in 7 Sekunden!",
+	shout3secwarn = "Unterbrechungsruf in 3 Sekunden!",
+	shoutwarn = "Unterbrechungsruf!",
+	noshoutwarn = "Kein Ruf! N\195\164chster in ~20 Sekunden",
+	shoutbar = "Unterbrechungsruf",
 
 	shieldwalltrigger   = "Reservist der Todesritter bekommt 'Schildwall'.",
 	shieldwallbar       = "Schildwall",

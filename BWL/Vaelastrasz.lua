@@ -99,6 +99,9 @@ L:RegisterTranslations("deDE", function() return {
 	elseburning_name = "X brennt",
 	elseburning_desc = "Warnung, wenn andere Spieler brennen.",
 
+	burningbar_name = "Brennendes Adrenalin",
+	burningbar_desc = "Zeigt einen Anzeigebalken f\195\188r Brennendes Adrenalin.",
+
 	icon_name = "Symbol",
 	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler der brennt. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 } end)

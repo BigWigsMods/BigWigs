@@ -120,12 +120,12 @@ L:RegisterTranslations("deDE", function() return {
 	trigger3 = "^NUN ZU EUCH, INSEKTEN", -- ?
 
 	warn1 = "AoE Rundumschlag!",
-	warn2 = "5 Sekunden bis AoE Rundumschlag!",
-	warn3 = "Ragnaros f\195\188r 90 Sekunden untergetaucht. S\195\182hne der Flamme kommen!",
-	warn4 = "15 Sekunden bis Ragnaros auftaucht!",
-	warn5 = "Ragnaros ist aufgetaucht. 3 Minuten bis zum Untertauchen!",
-	warn6 = "60 Sekunden bis Ragnaros untertaucht & S\195\182hne der Flamme!",
-	warn7 = "20 Sekunden bis Ragnaros untertaucht & S\195\182hne der Flamme!",
+	warn2 = "AoE Rundumschlag in 5 Sekunden!",
+	warn3 = "Ragnaros untergetaucht f\195\188r 90 Sekunden! S\195\182hne der Flamme kommen!",
+	warn4 = "Ragnaros taucht auf in 15 Sekunden!",
+	warn5 = "Ragnaros aufgetaucht! Untertauchen in 3 Minuten!",
+	warn6 = "Ragnaros taucht unter in 60 Sekunden!",
+	warn7 = "Ragnaros taucht unter in 20 Sekunden!",
 
 	bar1text = "AoE Rundumschlag",
 	bar2text = "Auftauchen Ragnaros",

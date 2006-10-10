@@ -28,7 +28,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-
 	renew_name = "Erneuerung",
 	renew_desc = "Warnung, wenn Venoxis Erneuerung auf sich wirkt.",
 
@@ -39,7 +38,7 @@ L:RegisterTranslations("deDE", function() return {
 	phase2_trigger = "M\195\182ge das Schlachten beginnen", -- ?
 
 	renew_message = "Erneuerung auf Venoxis!",
-	phase2_message = "Phase 2 - Vorsicht vor Giftwolken!",	
+	phase2_message = "Phase 2! Giftwolken!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

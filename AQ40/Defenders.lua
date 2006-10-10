@@ -76,19 +76,25 @@ L:RegisterTranslations("deDE", function() return {
 	summon_name = "Beschw\195\182rung",
 	summon_desc = "Warnung, wenn Verteidiger des Anubisath Schwarmwachen oder Krieger beschw\195\182rt.",
 
+	icon_name = "Symbol",
+	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der die Seuche hat. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
+
 	explodetrigger = "Verteidiger des Anubisath bekommt 'Explodieren'.",
 	explodewarn = "Explosion!",
 	enragetrigger = "Verteidiger des Anubisath bekommt 'Wutanfall'.",
 	enragewarn = "Wutanfall!",
+
 	summonguardtrigger = "Verteidiger des Anubisath wirkt Schwarmwache des Anubisath beschw\195\182ren.",
-	summonguardwarn = "Schwarmwache beschworen",
+	summonguardwarn = "Schwarmwache beschworen!",
 	summonwarriortrigger = "Verteidiger des Anubisath wirkt Krieger des Anubisath beschw\195\182ren.",
-	summonwarriorwarn = "Krieger beschworen",
+	summonwarriorwarn = "Krieger beschworen!",
+
 	plaguetrigger = "^([^%s]+) ([^%s]+) von Seuche betroffen%.$",
 	plaguewarn = " hat die Seuche!",
 	plagueyouwarn = "Du hast die Seuche!",
 	plagueyou = "Ihr",
 	plagueare = "seid",
+
 	thunderclaptrigger = "^Verteidiger des Anubisath's Donnerknall trifft ([^%s]+) f\195\188r %d+%.",
 	thunderclapwarn = "Donnerknall!",
 } end )

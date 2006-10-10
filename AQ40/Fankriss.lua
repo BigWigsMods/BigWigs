@@ -27,8 +27,6 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "Fankriss",
-	worm_cmd = "worm",
 	worm_name = "Wurm beschw\195\182ren",
 	worm_desc = "Warnung, wenn Fankriss einen Wurm beschw\195\182rt.",
 

@@ -36,6 +36,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	tigers_trigger = "Hohepriester Thekal f\195\188hrt Zulianische W\195\164chter beschw\195\182ren aus.",
 	heal_trigger = "Zelot Lor'Khan beginnt Gro\195\159es Heilen zu wirken.",
+
 	tigers_message = "Tiger!",
 	heal_message = "Lor'Khan heilt sich!",
 } end )

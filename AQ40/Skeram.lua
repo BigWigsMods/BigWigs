@@ -63,7 +63,7 @@ L:RegisterTranslations("deDE", function() return {
 	splitwarn = "Abbilder!",
 
 	mc_name = "Gedankenkontrolle",
-	mc_desc = "Warnung vor Gedankenkontrolle.",
+	mc_desc = "Warnung, wenn jemand unter Gedankenkontrolle steht.",
 
 	ae_name = "Arkane Explosion",
 	ae_desc = "Warnung vor Arkaner Explosion.",

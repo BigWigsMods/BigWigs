@@ -61,6 +61,9 @@ L:RegisterTranslations("deDE", function() return {
 	plagueother_name = "X hat die Seuche",
 	plagueother_desc = "Warnung, wenn andere Spieler die Seuche haben.",
 
+	icon_name = "Symbol",
+	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der die Seuche hat. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
+
 	explode_name = "Explosion",
 	explode_desc = "Warnung vor Explosion.",
 

@@ -40,7 +40,6 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-
 	you_name = "Du wirst beobachtet",
 	you_desc = "Warnung, wenn Du beobachtet wirst.",
 

@@ -59,7 +59,7 @@ L:RegisterTranslations("deDE", function() return {
 	enragetrigger = "Gro\195\159witwe Faerlina bekommt 'Wutanfall'.",
 	enragefade = "Wutanfall schwindet von Gro\195\159witwe Faerlina",
 
-	startwarn = "Gro\195\159witwe Faerlina angegriffen! - 60 Sekunden bis Wutanfall!",
+	startwarn = "Gro\195\159witwe Faerlina angegriffen! Wutanfall in 60 Sekunden!",
 	enragewarn15sec = "Wutanfall in 15 Sekunden!",
 	enragewarn = "Wutanfall!",
 	enrageremovewarn = "Wutanfall vorbei! N\195\164chster in %d Sekunden!",

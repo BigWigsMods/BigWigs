@@ -46,7 +46,10 @@ L:RegisterTranslations("deDE", function() return {
 	othermark_name = "X ist markiert",
 	othermark_desc = "Warnung, wenn andere Spieler markiert sind.",
 
-	mark_trigger ="Labt euch an ([^%s]+), meine S\195\188\195\159en!$",
+	icon_name = "Symbol",
+	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der markiert ist. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
+
+	mark_trigger = "Labt euch an ([^%s]+), meine S\195\188\195\159en!$",
 
 	mark_warning_self = "Du bist markiert!",
 	mark_warning_other = "%s ist markiert!",

@@ -37,6 +37,7 @@ L:RegisterTranslations("deDE", function() return {
 	drain_desc = "Warnung, wenn Hohepriesterin Mar'li sich heilt.", 
 
 	spiders_trigger = "Helft mir, meine Brut!$",
+	drainlife_trigger = "^High Priestess Mar'li's Drain Life heals High Priestess Mar'li for (.+).", -- ?
 
 	spiders_message = "Spinnen beschworen!",
 	drainlife_message = "Mar'li heilt sich!",

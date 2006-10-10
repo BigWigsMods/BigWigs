@@ -45,17 +45,14 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "BugFamily",
-	fear_cmd = "fear",
 	fear_name = "Furcht",
 	fear_desc = "Warnung, wenn wenn Prinzessin Yauj AoE Furcht wirkt.",
 
-	heal_cmd = "heal",
 	heal_name = "Heilung",
 	heal_desc = "Warnung, wenn Prinzessin Yauj versucht sich zu heilen.",
 
 	healtrigger = "Prinzessin Yauj beginnt Gro\195\159es Heilen zu wirken.",
-	healwarn = "Prinzessin Yauj versucht sich zu heilen! - Unterbrechen!",
+	healwarn = "Prinzessin Yauj versucht sich zu heilen!",
 
 	feartrigger = "ist von Furcht betroffen.",
 	fearbar = "AoE Furcht",

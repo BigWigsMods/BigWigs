@@ -94,6 +94,8 @@ L:RegisterTranslations("deDE", function() return {
 	breath3 = "Fleisch entz\195\188nden",
 	breath4 = "Verbrennen",
 	breath5 = "Frostbeulen",
+
+	castingbar = "Wirkt %s",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

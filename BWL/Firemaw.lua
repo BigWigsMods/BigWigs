@@ -68,9 +68,9 @@ L:RegisterTranslations("deDE", function() return {
 	wingbuffet_trigger = "Feuerschwinge beginnt Fl\195\188gelsto\195\159 zu wirken.",
 	shadowflame_trigger = "Feuerschwinge beginnt Schattenflamme zu wirken.",
 
-	wingbuffet_message = "Fl\195\188gelsto\195\159!",
+	wingbuffet_message = "Fl\195\188gelsto\195\159! N\195\164chster in 30 Sekunden!",
 	wingbuffet_warning = "Fl\195\188gelsto\195\159 in 3 Sekunden!",
-	shadowflame_warning = "Schattenflamme in K\195\188rze!",
+	shadowflame_warning = "Schattenflamme!",
 
 	wingbuffet_bar = "Fl\195\188gelsto\195\159",
 

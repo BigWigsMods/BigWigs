@@ -94,12 +94,30 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	bomb_trigger = "^([^%s]+) ([^%s]+) von Lebende Bombe betroffen",
+	inferno_trigger = "Baron Geddon bekommt 'Inferno'.",
+	service_trigger = "%s erweist Ragnaros einen letzten Dienst.", -- ?
 
 	you = "Ihr",
 	are = "seid",
 
 	bomb_message_you = "Du bist die Bombe!",
 	bomb_message_other = "%s ist die Bombe!",
+
+	bombtimer_bar = "%s: Lebende Bombe",
+	inferno_bar = "Inferno",
+	service_bar = "Letzter Dienst",
+
+	service_message = "Letzter Dienst! Baron Geddon explodiert in 5 Sekunden!",
+	inferno_message = "Inferno f\195\188r 10 Sekunden!",
+
+	service_name = "Letzter Dienst",
+	service_desc = "Timer Balken f\195\188r Baron Geddons letzten Dienst.",
+
+	inferno_name = "Inferno",
+	inferno_desc = "Timer Balken f\195\188r Baron Geddons Inferno.",
+
+	bombtimer_name = "Bomben Timer",
+	bombtimer_desc = "Zeigt einen 10 Sekunden Timer f\195\188r die Explosion der Lebenden Bombe.",
 
 	youbomb_name = "Du bist die Bombe",
 	youbomb_desc = "Warnung, wenn Du die Bombe bist.",

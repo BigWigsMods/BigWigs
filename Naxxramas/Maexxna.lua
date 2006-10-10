@@ -52,11 +52,11 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	spray_name = "Gespinst",
-	spray_desc = "Warnung vor Gespinst und Spinnen.",
+	spray_name = "Gespinstschauer",
+	spray_desc = "Warnung vor Gespinstschauer und Spinnen.",
 
 	enrage_name = "Wutanfall",
-	enrage_desc = "Warnung wenn Maxxna w\195\188tend wird.",
+	enrage_desc = "Warnung wenn Maexxna w\195\188tend wird.",
 
 	cocoon_name = "Fangnetz",
 	cocoon_desc = "Warnung, wenn Spieler von Fangnetz betroffen sind.",
@@ -70,13 +70,15 @@ L:RegisterTranslations("deDE", function() return {
 
 	webspraywarn30sec = "Fangnetze in 10 Sekunden",
 	webspraywarn20sec = "Fangnetze! Spinnen in 10 Sekunden!",
-	webspraywarn10sec = "Spinnen! Gespinst in 10 Sekunden!",
-	webspraywarn5sec = "Gespinst in 5 Sekunden!",
-	webspraywarn = "Gespinst! N\195\164chstes in 40 Sekunden!",
+	webspraywarn10sec = "Spinnen! Gespinstschauer in 10 Sekunden!",
+	webspraywarn5sec = "Gespinstschauer in 5 Sekunden!",
+	webspraywarn = "Gespinstschauer! N\195\164chster in 40 Sekunden!",
 	enragewarn = "Wutanfall!",
 	enragesoonwarn = "Wutanfall in K\195\188rze!",
 
-	webspraybar = "Gespinst",
+	webspraybar = "Gespinstschauer",
+	cocoonbar = "Fangnetze",
+	spiderbar = "Spinnen",
 
 	you = "Ihr",
 	are = "seid",

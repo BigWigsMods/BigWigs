@@ -47,17 +47,33 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	brainwash_name = "Gehirnw\195\164sche",
-	brainwash_desc = "Warnung, wenn Jin'do \195\156bernahmetotem beschw\195\182rt.",
+	brainwash_name = "Gehirnw\195\164schetotem",
+	brainwash_desc = "Warnung, wenn Jin'do Gehirnw\195\164schetotem beschw\195\182rt.",
 
 	healing_name = "Heiltotem",
 	healing_desc = "Warnung, wenn Jin'do Heiltotem beschw\195\182rt.",
 
+	youcurse_name = "Du bist verflucht",
+	youcurse_desc = "Warnung, wenn Du verflucht bist.",
+
+	elsecurse_name = "Andere sind verflucht",
+	elsecurse_desc = "Warnung, wenn Andere verflucht sind.",
+
+	icon_name = "Symbol",
+	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der verflucht ist. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
+
 	triggerbrainwash = "Jin'do der Verhexer wirkt Totem der Gehirnw\195\164sche beschw\195\182ren.",
 	triggerhealing = "Jin'do der Verhexer wirkt M\195\164chtiger Heilungszauberschutz.",
+	triggercurse = "^([^%s]+) ([^%s]+) von Irrbilder von Jin'do betroffen.",
 
-	warnbrainwash = "\195\156bernahmetotem!",
+	warnbrainwash = "Gehirnw\195\164schetotem!",
 	warnhealing = "Heiltotem!",
+
+	cursewarn_self = "Du bist verlucht!",
+	cursewarn_other = "%s ist verflucht!",
+
+	you = "Ihr",
+	are = "seid",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

@@ -184,10 +184,10 @@ L:RegisterTranslations("deDE", function() return {
 	warn4 = "AoE Furcht in 2 Sekunden!",
 	warn5 = "Schattenflamme in K\195\188rze!",
 	warn6 = "Klassenruf in K\195\188rze!",
-	warnshaman	= "Schamanen - Totems schnell entfernen!",
+	warnshaman	= "Schamanen - Totems!",
 	warndruid	= "Druiden - Gefangen in Katzenform!",
-	warnwarlock	= "Hexenmeister - H\195\182llenbestien!",
-	warnpriest	= "Priester - Heilung stoppen!",
+	warnwarlock	= "Hexenmeister - H\195\182llenbestien herbeigerufen!",
+	warnpriest	= "Priester - Heilung schadet!",
 	warnhunter	= "J\195\164ger - Angelegte Fernkampfwaffen defekt!",
 	warnwarrior	= "Krieger - Gefangen in Berserkerhaltung!",
 	warnrogue	= "Schurken - Teleportiert und festgewurzelt!",
@@ -197,7 +197,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	bar1text = "Klassenruf",
 
-	shadowflame_cmd = "shadowflame",
 	shadowflame_name = "Schattenflamme",
 	shadowflame_desc = "Warnung, wenn Nefarian Schattenflamme wirkt.",
 	

@@ -56,23 +56,36 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "^EURE \195\156BERHEBLICHKEIT K\195\156NDET BEREITS VOM ENDE DIESER WELT!", -- ?
 	drain_trigger = "Hakkar bekommt 'Bluttrinker'.",
+	mindcontrol_trigger = "(.*) (.*) von Wahnsinn verursachen betroffen.",
 
-	flee = "Fleeing will do you no good mortals!", -- ?
+	you = "Ihr",
+	are = "seid",
 
-	start_message = "Hakkar angegriffen - 90 Sekunden bis Lebensentzug - 10 Minuten bis Wutanfall",
-	drain_warning_60 = "60 Sekunden bis Lebensentzug",
-	drain_warning_45 = "45 Sekunden bis Lebensentzug",
-	drain_warning_30 = "30 Sekunden bis Lebensentzug",
-	drain_warning_15 = "15 Sekunden bis Lebensentzug",
-	drain_message = "Lebensentzug - N\195\164chster in 90 Sekunden",
+	flee = "Es ist sinnlos zu fl\195\188chten, Sterbliche!",
+
+	start_message = "Hakkar angegriffen! Bluttrinker in 90 Sekunden! Wutanfall in 10 Minuten!",
+	drain_warning_60 = "Bluttrinker in 60 Sekunden!",
+	drain_warning_45 = "Bluttrinker in 45 Sekunden!",
+	drain_warning_30 = "Bluttrinker in 30 Sekunden!",
+	drain_warning_15 = "Bluttrinker in 15 Sekunden!",
+	drain_message = "Bluttrinker! N\195\164chster in 90 Sekunden!",
+
+	mindcontrol_message = "%s steht unter Gedankenkontrolle!",
+
 	["Enrage"] = "Wutanfall",
-	["Life Drain"] = "Lebensentzug",
+	["Life Drain"] = "Bluttrinker",
 
-	drain_name = "Lebensentzung",
-	drain_desc = "Warnung vor Lebensentzug.",
+	drain_name = "Bluttrinker",
+	drain_desc = "Warnung, wenn Hakkar Bluttrinker wirkt.",
 
 	enrage_name = "Wutanfall",
 	enrage_desc = "Warnung, wenn Hakkar w\195\188tend wird.",
+
+	mc_name = "Gedankenkontrolle",
+	mc_desc = "Warnung wenn jemand unter Gedankenkontrolle steht.",
+
+	icon_name = "Symbol",
+	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der unter Gedankenkontrolle steht. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

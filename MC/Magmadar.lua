@@ -73,7 +73,7 @@ L:RegisterTranslations("deDE", function() return {
 	trigger2 = "von Panik betroffen",
 
 	["Frenzy alert!"] = "Raserei! - Einlullender Schuss!",
-	["5 seconds until AoE Fear!"] = "5 Sekunden bis AoE Furcht!",
+	["5 seconds until AoE Fear!"] = "AoE Furcht in 5 Sekunden!",
 	["AoE Fear - 30 seconds until next!"] = "AoE Furcht! N\195\164chste in 30 Sekunden!",
 	["AoE Fear"] = "AoE Furcht",
 

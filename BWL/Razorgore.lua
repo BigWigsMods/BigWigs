@@ -70,13 +70,17 @@ L:RegisterTranslations("deDE", function() return {
 	mindcontrol_trigger = "^([^%s]+), Ihr Narr, Ihr dient jetzt mir!",
 	mindcontrol_message = "%s wurde \195\188bernommen!",
 
-	egg_trigger = "Razorgore der Ungez\195\164hmte wirkt (.*) zerst\195\182ren.",
+	egg_trigger = "Razorgore der Ungez\195\164hmte wirkt Ei zerst\195\182ren.",
 	egg_message = "%d/30 Eier zerst\195\182rt!",
 
+	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.", -- ?
 	phase2_message = "Alle Eier zerst\195\182rt!",
 
 	mc_name = "Gedankenkontrolle",
 	mc_desc = "Warnung, wenn Spieler \195\188bernommen werden.",
+
+	eggs_name = "Eier nicht z\195\164hlen",
+	eggs_desc = "Die zerst\195\182rten Eier nicht z\195\164hlen.",
 
 	phase_name = "Phasen",
 	phase_desc = "Warnung beim Eintritt in Phase 1 und 2.",

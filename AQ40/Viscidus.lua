@@ -77,8 +77,8 @@ L:RegisterTranslations("deDE", function() return {
 	are 		= "seid",
 
 	warn1 		= "Erste Freeze Phase!",
-	warn2 		= "Zweite Freeze Phase - Bereit machen!",
-	warn3 		= "Dritte Freeze Phase - DPS!",
+	warn2 		= "Zweite Freeze Phase!",
+	warn3 		= "Dritte Freeze Phase!",
 	warn4 		= "Zerspringen - etwas noch!",
 	warn5 		= "Zerspringen - fast da!",
 	warn6		= "Poison Bolt Volley!", -- ?
