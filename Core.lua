@@ -106,6 +106,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Options for %s (r%s)."] = "%s에 대한 설정(r%s).",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "플러그인들",
 	["Options for plugins."] = "플러그인 설정",
+	["Extras"] = "기타",
+	["Options for extras."] = "기타 설정.",
 	["Active"] = "활성화",
 	["Activate or deactivate this module."] = "활성화 혹은 모둘 발견",
 	["Reboot"] = "재시작",

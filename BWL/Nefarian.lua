@@ -135,6 +135,7 @@ L:RegisterTranslations("koKR", function() return {
 	landing_warning = "네파리안이 착지했습니다!",
 	zerg_warning = "해골 등장!",
 	fear_warning = "2초 후 공포!",
+	fear_soon_warning = "약 5초내 공포!",
 	shadowflame_warning = "암흑의 불길 주의!",
 	classcall_warning = "곧 직업이 지목됩니다!",
 	warnshaman	= "주술사 - 토템 파괴!",
@@ -148,6 +149,7 @@ L:RegisterTranslations("koKR", function() return {
 	warnmage	= "마법사 - 변이!",
 
 	classcall_bar = "직업 지목",
+	fear_bar = "공포 가능",
 	
 	shadowflame_name = "암흑의 불길 경고",
 	shadowflame_desc = "암흑의 불길에 대한 경고",

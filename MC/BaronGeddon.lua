@@ -75,13 +75,32 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	bomb_trigger = "^([^|;%s]*)(.*)살아있는 폭탄에 걸렸습니다%.$",
+	inferno_trigger = "남작 게돈|1이;가; 불지옥 효과를 얻었습니다.", -- check
+	service_trigger = "%s|1이;가; 라그나로스를 위한 한가지 마지막 임무를 수행합니다.", -- check
 
 	you = "",
 	are = "",
 
 	bomb_message_you = "당신은 폭탄입니다!",
-	--bomb_message_other = "님이 폭탄입니다!",
-	
+	bomb_message_other = "%s|1이;가; 폭탄입니다!",
+
+	bombtimer_bar = "%s: 살아있는 폭탄",
+	inferno_bar = "불지옥",
+	service_bar = "마지막 임무",
+
+	service_message = "마지막 임무, 게돈 폭발 5초전!",
+	inferno_message = "10초동안 불지옥!",
+
+
+	service_name = "마지막 임무",
+	service_desc = "게돈의 마지막 임무에 대한 타이머 바",
+
+	inferno_name = "불지옥",
+	inferno_desc = "게돈 불지옥에 대한 타이머 바.",
+
+	bombtimer_name = "폭탄에 대한 바",
+	bombtimer_desc = "대상에서 폭탄이 사라질 때에 대한 10초 바를 표시합니다.",
+
 	youbomb_name = "자신의 폭탄 경고",
 	youbomb_desc = "자신이 폭탄 일때 경고",
 	

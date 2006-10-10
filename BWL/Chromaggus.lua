@@ -170,6 +170,7 @@ L:RegisterTranslations("koKR", function() return {
 	breath4 = "소각",
 	breath5 = "동결",
 
+	castingbar = "%s 시전",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
