@@ -74,6 +74,7 @@ L:RegisterTranslations("zhCN", function() return {
 	zerg_trigger = "^不可能",
 	fear_trigger = "奈法利安开始施放低沉咆哮。",
 	shadowflame_trigger = "奈法利安开始施放暗影烈焰。",
+
 	triggershamans	= "^萨满祭司",
 	triggerdruid	= "^德鲁伊",
 	triggerwarlock	= "^术士",
@@ -87,9 +88,11 @@ L:RegisterTranslations("zhCN", function() return {
 	landing_soon_warning = "奈法利安将在10秒后降落！",
 	landing_warning = "奈法利安已降落！",
 	zerg_warning = "骨龙群出现！",
-	fear_warning = "2秒后发动群体恐惧！",
+	fear_warning = "2秒后发动群体恐惧！"
+	fear_soon_warning = "5秒后发动群体恐惧",,
 	shadowflame_warning = "暗影烈焰发动！",
 	classcall_warning = "5秒后开始点名！",
+
 	warnshaman	= "萨满祭司 - 图腾涌现！",
 	warndruid	= "德鲁伊 - 强制猫形态，无法治疗和解诅咒！",
 	warnwarlock	= "术士 - 地狱火出现，DPS职业尽快将其消灭！",
@@ -101,6 +104,7 @@ L:RegisterTranslations("zhCN", function() return {
 	warnmage	= "法师 - 变形术发动，注意解除！",
 
 	classcall_bar = "职业点名",
+	fear_bar = "可能恐惧",
 	
 	shadowflame_name = "暗影烈焰警报",
 	shadowflame_desc = "暗影烈焰警报",
