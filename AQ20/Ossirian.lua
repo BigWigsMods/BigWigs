@@ -131,31 +131,27 @@ end
 
 function BigWigsOssirian:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE( msg )
 	local _, _, debuffName = string.find(msg, L["debufftrigger"])
-	if debuffName and debuffName ~= L["expose"] then
-		if L:HasReverseTranslation(debuffName) then
-			self:TriggerEvent("BigWigs_SendSync", "OssirianWeakness "..L:GetReverseTranslation(debuffName))
-		else
-			self:TriggerEvent("BigWigs_SendSync", "OssirianWeakness "..debuffName)
-		end
+	if debuffName and debuffName ~= L["expose"] and L:HasReverseTranslation(debuffName) then
+		self:TriggerEvent("BigWigs_SendSync", "OssirianWeakness "..L:GetReverseTranslation(debuffName))
 	end
 end
 
 function BigWigsOssirian:BigWigs_RecvSync(sync, debuffKey)
-	if sync ~= "OssirianWeakness" then return end
+	if sync ~= "OssirianWeakness" or not debuffKey or not L:HasTranslation(debuffKey) then return end
 
-	if self.db.profile.debuff and debuffKey then
-		self:TriggerEvent("BigWigs_Message", format(L["debuffwarn"], debuffKey), "Important")
+	if self.db.profile.debuff then
+		self:TriggerEvent("BigWigs_Message", string.format(L["debuffwarn"], L:GetTranslation(debuffKey)), "Important")
 	end
 
 	self:CancelScheduledEvent("bwossiriansupreme1")
 	self:CancelScheduledEvent("bwossiriansupreme2")
 	self:CancelScheduledEvent("bwossiriansupreme3")
-	self:TriggerEvent("BigWigs_BarStop", L["bartext"])
+	self:TriggerEvent("BigWigs_StopBar", L["bartext"])
 
 	if self.db.profile.supreme then
-		self:ScheduleEvent("bwossiriansupreme1", "BigWigs_Message", 30, format(L["supremedelaywarn"], 15), "Attention")
-		self:ScheduleEvent("bwossiriansupreme2", "BigWigs_Message", 35, format(L["supremedelaywarn"], 10), "Urgent")
-		self:ScheduleEvent("bwossiriansupreme3", "BigWigs_Message", 40, format(L["supremedelaywarn"], 5), "Important")
+		self:ScheduleEvent("bwossiriansupreme1", "BigWigs_Message", 30, string.format(L["supremedelaywarn"], 15), "Attention")
+		self:ScheduleEvent("bwossiriansupreme2", "BigWigs_Message", 35, string.format(L["supremedelaywarn"], 10), "Urgent")
+		self:ScheduleEvent("bwossiriansupreme3", "BigWigs_Message", 40, string.format(L["supremedelaywarn"], 5), "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 45, "Interface\\Icons\\Spell_Shadow_CurseOfTounges")
 	end
 end
