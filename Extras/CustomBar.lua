@@ -119,8 +119,8 @@ function BigWigsCustomBar:RegisterShortHand()
 	if SlashCmdList then
 		SlashCmdList["BWCB_SHORTHAND"] = BWCB
 		setglobal("SLASH_BWCB_SHORTHAND1", "/"..L["bwcb"])
-		SlashCmdList["BWCB_SHORTHAND"] = BWLCB
-		setglobal("SLASH_BWCB_SHORTHAND1", "/"..L["bwlcb"])
+		SlashCmdList["BWLCB_SHORTHAND"] = BWLCB
+		setglobal("SLASH_BWLCB_SHORTHAND1", "/"..L["bwlcb"])
 	end
 
 		if SlashCmdList then
