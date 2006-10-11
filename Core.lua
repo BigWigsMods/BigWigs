@@ -181,18 +181,21 @@ BigWigs.cmdtable = {type = "group", handler = BigWigs, args = {
 		name = L["Bosses"],
 		desc = L["Options for boss modules."],
 		args = {},
+		disabled = function() return not BigWigs:IsActive() end,
 	},
 	[L["plugin"]] = {
 		type = "group",
 		name = L["Plugins"],
 		desc = L["Options for plugins."],
 		args = {},
+		disabled = function() return not BigWigs:IsActive() end,
 	},
 	[L["extra"]] = {
-	type = "group",
-	name = L["Extras"],
-	desc = L["Options for extras."],
-	args = {},
+		type = "group",
+		name = L["Extras"],
+		desc = L["Options for extras."],
+		args = {},
+		disabled = function() return not BigWigs:IsActive() end,
 	},
 }}
 BigWigs:RegisterChatCommand({"/bw", "/BigWigs"}, BigWigs.cmdtable)
@@ -244,8 +247,8 @@ function BigWigs.modulePrototype:Scan()
 		end
 	end
 
-	local i
-	for i = 1, GetNumRaidMembers() do
+	local num = GetNumRaidMembers()
+	for i = 1, num do
 		local raidUnit = string.format("raid%starget", i)
 		if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) then
 			local target = UnitName(raidUnit)
@@ -328,11 +331,30 @@ end
 
 
 function BigWigs:OnEnable()
+	-- Enable all disabled modules that are not boss modules.
+	for name, module in self:IterateModules() do
+		if type(module.IsBossModule) ~= "function" or not module:IsBossModule() then
+			self:ToggleModuleActive(module, true)
+		end
+	end
+
+	self:TriggerEvent("BigWigs_CoreEnabled")
+
 	self:RegisterEvent("BigWigs_TargetSeen")
 	self:RegisterEvent("BigWigs_RebootModule")
 
 	self:RegisterEvent("BigWigs_RecvSync", 10)
 	self:RegisterEvent("AceEvent_FullyInitialized", function() self:TriggerEvent("BigWigs_ThrottleSync", "BossEngaged", 5) end )
+end
+
+
+function BigWigs:OnDisable()
+	-- Disable all modules
+	for name, module in self:IterateModules() do
+		self:ToggleModuleActive(module, false)
+	end
+
+	self:TriggerEvent("BigWigs_CoreDisabled")
 end
 
 

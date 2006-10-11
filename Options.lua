@@ -6,8 +6,7 @@ assert(BigWigs, "BigWigs not found!")
 ------------------------------
 
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsOptions")
-local Tablet = AceLibrary("Tablet-2.0")
--- local Dewdrop = AceLibrary("Dewdrop-2.0")
+local tablet = AceLibrary("Tablet-2.0")
 
 ----------------------------
 --      Localization      --
@@ -38,8 +37,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Toggle the minimap button."] = "미니맵 버튼 토글",
 	["All running modules have been reset."] = "모든 실행중인 모듈을 초기화합니다.",
 	["All running modules have been disabled."] = "모든 실행중인 모듈을 비활성화 합니다.",
-	
-	
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -90,11 +87,8 @@ BigWigsOptions = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceConsole-2.0"
 BigWigsOptions.name = "FuBar - BigWigs"
 BigWigsOptions:RegisterDB("BigWigsFubarDB")
 
--- BigWigsOptions.hideWithoutStandby = true
-BigWigsOptions.hasIcon = "Interface\\Icons\\INV_Misc_Orb_05"
--- BigWigsOptions.hasNoText  = true
+BigWigsOptions.hasIcon = "Interface\\AddOns\\BigWigs\\Icons\\core-enabled"
 BigWigsOptions.defaultMinimapPosition = 180
-BigWigsOptions.cannotDetachTooltip = true
 BigWigsOptions.clickableTooltip = true
 
 -- XXX total hack
@@ -106,6 +100,25 @@ for k,v in pairs(args) do
 	end
 end
 -- XXX end hack
+
+-----------------------------
+--      Icon Handling      --
+-----------------------------
+
+function BigWigsOptions:OnEnable()
+	self:RegisterEvent("BigWigs_CoreEnabled", "CoreState")
+	self:RegisterEvent("BigWigs_CoreDisabled", "CoreState")
+
+	self:CoreState()
+end
+
+function BigWigsOptions:CoreState()
+	if BigWigs:IsActive() then
+		self:SetIcon("Interface\\AddOns\\BigWigs\\Icons\\core-enabled")
+	else
+		self:SetIcon("Interface\\AddOns\\BigWigs\\Icons\\core-disabled")
+	end
+end
 
 -----------------------------
 --      FuBar Methods      --
@@ -122,7 +135,7 @@ function BigWigsOptions:ModuleAction(module)
 end
 
 function BigWigsOptions:OnTooltipUpdate()
-	local cat = Tablet:AddCategory("text", L["Active boss modules"])
+	local cat = tablet:AddCategory("text", L["Active boss modules"])
 
 	for name, module in deuce.core:IterateModules() do
 		if module:IsBossModule() and deuce.core:IsModuleActive(module) then
@@ -130,7 +143,7 @@ function BigWigsOptions:OnTooltipUpdate()
 		end
 	end
 
-	Tablet:SetHint(L["tablethint"])
+	tablet:SetHint(L["tablethint"])
 end
 
 function BigWigsOptions:OnClick()
@@ -150,3 +163,4 @@ function BigWigsOptions:OnClick()
 		self:Print(L["All running modules have been reset."])
 	end
 end
+

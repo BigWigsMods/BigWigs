@@ -4,8 +4,6 @@
 ------------------------------
 
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsTest")
-local BB = AceLibrary("Babble-Boss-2.0")
-
 
 ----------------------------
 --      Localization      --
@@ -96,7 +94,7 @@ BigWigsTest.consoleOptions = {
 			desc = L["Perform a sync test of BigWigs."],
 			func = function() BigWigsTest:TriggerEvent("BigWigs_SyncTest") end,
 			disabled = function() return ( not IsRaidLeader() and not IsRaidOfficer() ) end,
-		},		
+		},
 	}
 }
 
