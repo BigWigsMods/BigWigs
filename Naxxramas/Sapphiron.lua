@@ -115,6 +115,38 @@ L:RegisterTranslations("deDE", function() return {
 	deepbreath_bar = "Frostatem!",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	deepbreath_name = "深呼吸警报",
+	deepbreath_desc = "萨菲隆开始施放深呼吸时发出警报",
+
+	lifedrain_name = "生命吸取警报",
+	lifedrain_desc = "生命吸取诅咒时候发出警报",
+
+	berserk_name = "狂暴警报",
+	berserk_desc = "狂暴警报",
+
+	berserk_bar = "狂暴",
+	berserk_warn_10min = "10分钟后狂暴！",
+	berserk_warn_5min = "5分钟后狂暴！",
+	berserk_warn_rest = "%s秒后狂暴！",
+
+	engage_message = "萨菲隆激活！15分钟后进入狂暴状态！",
+
+	lifedrain_message = "生命吸取，~24秒后再次施放!",
+	lifedrain_warn1 = "5秒后生命吸取！",
+	lifedrain_bar = "生命吸取",
+
+	lifedrain_trigger = "受到了生命吸取",  -- need confirm
+	lifedrain_trigger2 = "生命吸取被抵抗",  -- need confirm
+
+	deepbreath_incoming_message = "寒冰炸弹~23秒后施放！",
+	deepbreath_incoming_soon_message = "寒冰炸弹~5秒后施放！",
+	deepbreath_incoming_bar = "寒冰炸弹",
+	deepbreath_trigger = "%s深深地吸了一口气……",  -- need confirm
+	deepbreath_warning = "寒冰炸弹即将着地！",
+	deepbreath_bar = "寒冰炸弹着地！",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
