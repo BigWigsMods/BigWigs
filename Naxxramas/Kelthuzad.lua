@@ -91,7 +91,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	mc_name = "정신 지배",
 	mc_desc = "정신 지배 경고.",
-	
+
 	fissure_name = "어둠의 분열 경고",
 	fissure_desc = "어둠의 분열 시전에 관한 경고.",
 
@@ -184,7 +184,7 @@ L:RegisterTranslations("deDE", function() return {
 	phase3_trigger = "Meister, helft mir!",
 	phase3_warning = "Phase 3, W\195\164chter in ~15sek!",
 
-	guardians_trigger = "Also gut. Erhebt euch, Krieger der eisigen Weiten! Ich befehle euch zu kämpfen, zu töten und für euren Meister zu sterben! Lasst keinen am Leben!",
+	guardians_trigger = "Also gut. Erhebt euch, Krieger der eisigen Weiten! Ich befehle euch zu k\195\164mpfen, zu t\195\182ten und f\195\188r euren Meister zu sterben! Lasst keinen am Leben!",
 	guardians_warning = "W\195\164chter in ~10sek!",
 	guardians_bar = "W\195\164chter kommen!",
 
@@ -389,4 +389,3 @@ function BigWigsKelThuzad:Affliction( msg )
 		end
 	end
 end
-
