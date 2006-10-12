@@ -6,6 +6,8 @@ assert(BigWigs, "BigWigs not found!")
 
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsCustomBar")
 
+local times = {}
+
 L:RegisterTranslations("enUS", function() return {
 	["bwcb"] = true,
 	["bwlcb"] = true,
@@ -70,10 +72,12 @@ BigWigsCustomBar.consoleOptions = {
 
 function BigWigsCustomBar:OnEnable()
 	self.enabled = true
+	times = {}
+
 	self:RegisterShortHand()
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "BWCustomBar", 2)
+	self:TriggerEvent("BigWigs_ThrottleSync", "BWCustomBar", 0)
 end
 
 ------------------------------
@@ -117,7 +121,11 @@ end
 -- For easy use in macros.
 function BWCB(seconds, message)
 	if message then seconds = tostring(seconds) .. " " .. message end
-	BigWigsCustomBar:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..seconds)
+	local t = GetTime()
+        if ( not times[seconds] ) or ( times[seconds] and ( times[seconds] + 2 ) < t) then
+		times[seconds] = t
+		BigWigsCustomBar:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..seconds)
+	end
 end
 
 function BWLCB(seconds, message)
