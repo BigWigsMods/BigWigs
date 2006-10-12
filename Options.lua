@@ -14,7 +14,8 @@ local tablet = AceLibrary("Tablet-2.0")
 
 L:RegisterTranslations("enUS", function() return {
 	["|cff00ff00Module running|r"] = true,
-	tablethint = "Click to reset all running modules. Shift-Click to disable all running modules.",
+	["Click to reset all running modules. Shift-Click to disable all running modules."] = true,
+	["Big Wigs is currently in standby mode. Click to activate it."] = true,
 	["Active boss modules"] = true,
 	["Hidden"] = true,
 	["Shown"] = true,
@@ -29,7 +30,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00모듈 실행중|r",
-	tablethint = "<클릭> - 실행 중인 모듈 초기화. <쉬프트+클릭> - 모든 실행 중인 모듈 비활성화.",
+	["Click to reset all running modules. Shift-Click to disable all running modules."] = "<클릭> - 실행 중인 모듈 초기화. <쉬프트+클릭> - 모든 실행 중인 모듈 비활성화.",
 	["Active boss modules"] = "보스 모듈 활성화",
 	["Hidden"] = "숨김",
 	["Shown"] = "표시",
@@ -41,7 +42,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00模块运行中|r",
-	tablethint = "你可以点击图标重置所有运行中的模块。",
+	["Click to reset all running modules. Shift-Click to disable all running modules."] = "你可以点击图标重置所有运行中的模块。",
 	["Active boss modules"] = "激活首领模块",
 	["Hidden"] = "隐藏",
 	["Shown"] = "显示",
@@ -52,11 +53,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00Modul aktiviert|r",
-	tablethint = "Klicken, um alle laufenden Module zur\195\188ckzusetzen. Shift-Klick um alle laufenden Module zu beenden.",
+	["Click to reset all running modules. Shift-Click to disable all running modules."] = "Klicken, um alle laufenden Module zur\195\188ckzusetzen. Shift-Klick um alle laufenden Module zu beenden.",
 	["Active boss modules"] = "Aktive Boss Module",
 	["Hidden"] = "Versteckt",
 	["Shown"] = "Angezeigt",
-	-- ["minimap"] = true,
 	["Minimap"] = "Minimap",
 	["Toggle the minimap button."] = "Minimap Button anzeigen.",
 	["All running modules have been reset."] = "Alle laufenden Module wurden zur\195\188ckgesetzt.",
@@ -90,6 +90,7 @@ BigWigsOptions:RegisterDB("BigWigsFubarDB")
 BigWigsOptions.hasIcon = "Interface\\AddOns\\BigWigs\\Icons\\core-enabled"
 BigWigsOptions.defaultMinimapPosition = 180
 BigWigsOptions.clickableTooltip = true
+BigWigsOptions.hasNoText = true
 
 -- XXX total hack
 BigWigsOptions.OnMenuRequest = deuce.core.cmdtable
@@ -135,32 +136,39 @@ function BigWigsOptions:ModuleAction(module)
 end
 
 function BigWigsOptions:OnTooltipUpdate()
-	local cat = tablet:AddCategory("text", L["Active boss modules"])
-
-	for name, module in deuce.core:IterateModules() do
-		if module:IsBossModule() and deuce.core:IsModuleActive(module) then
-			cat:AddLine("text", name, "func", function(mod) BigWigsOptions:ModuleAction(mod) end, "arg1", module)
+	if BigWigs:IsActive() then
+		local cat = tablet:AddCategory("text", L["Active boss modules"])
+		for name, module in deuce.core:IterateModules() do
+			if module:IsBossModule() and deuce.core:IsModuleActive(module) then
+				cat:AddLine("text", name, "func", function(mod) BigWigsOptions:ModuleAction(mod) end, "arg1", module)
+			end
 		end
+		tablet:SetHint(L["Click to reset all running modules. Shift-Click to disable all running modules."])
+	else
+		tablet:SetHint(L["Big Wigs is currently in standby mode. Click to activate it."])
 	end
-
-	tablet:SetHint(L["tablethint"])
 end
 
 function BigWigsOptions:OnClick()
-	if IsShiftKeyDown() then
-		for name, module in deuce.core:IterateModules() do
-			if module:IsBossModule() and deuce.core:IsModuleActive(module) then
-				deuce.core:ToggleModuleActive(module, false)
+	if BigWigs:IsActive() then
+		if IsShiftKeyDown() then
+			for name, module in deuce.core:IterateModules() do
+				if module:IsBossModule() and deuce.core:IsModuleActive(module) then
+					deuce.core:ToggleModuleActive(module, false)
+				end
 			end
+			self:Print(L["All running modules have been disabled."])
+		else
+			for name, module in deuce.core:IterateModules() do
+				if module:IsBossModule() and deuce.core:IsModuleActive(module) then
+					deuce.core:BigWigs_RebootModule(module)
+				end
+			end
+			self:Print(L["All running modules have been reset."])
 		end
-		self:Print(L["All running modules have been disabled."])
 	else
-		for name, module in deuce.core:IterateModules() do
-			if module:IsBossModule() and deuce.core:IsModuleActive(module) then
-				deuce.core:BigWigs_RebootModule(module)
-			end
-		end
-		self:Print(L["All running modules have been reset."])
+		BigWigs:ToggleActive(true)
+		self:UpdateTooltip()
 	end
 end
 
