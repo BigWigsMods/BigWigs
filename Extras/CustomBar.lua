@@ -20,6 +20,17 @@ L:RegisterTranslations("enUS", function() return {
 	["%s: Timer [%s] finished."] = true,
 } end)
 
+L:RegisterTranslations("koKR", function() return {
+	["Custom Bars"] = "사용자 바",
+	["Start a custom bar, either local or global."] = "사용자 바 시작, 전체 혹은 지역",
+	["Local"] = "지역",
+	["Global"] = "전체",
+	["<seconds> <bar text>"] = "<초> <바 텍스트>",
+	["Starts a custom bar with the given parameters."] = "입력한 매개변수로 사용자 바 시작",
+	["%s: %s"] = "%s: %s",
+	["%s: Timer [%s] finished."] = "%s: 타이머 [%s] 종료되었습니다.",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

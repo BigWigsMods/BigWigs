@@ -148,6 +148,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	wave1bar = "웨이브 1",
 	wave2bar = "웨이브 2",
+	wave2_message = "10초 내 웨이브 2",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

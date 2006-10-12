@@ -98,6 +98,11 @@ L:RegisterTranslations("koKR", function() return {
 	bartext = "무적 상태",
 	expose = "노출",	-- CHECK
 
+	["Shadow"] = "암흑",
+	["Fire"] = "화염",
+	["Frost"] = "냉기",
+	["Nature"] = "자연",
+	["Arcane"] = "비전",
 } end )
 
 

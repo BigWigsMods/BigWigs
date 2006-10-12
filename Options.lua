@@ -30,7 +30,8 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00모듈 실행중|r",
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "<클릭> - 실행 중인 모듈 초기화. <쉬프트+클릭> - 모든 실행 중인 모듈 비활성화.",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55f클릭|r : 모두 초기화 |cffeda55f쉬프트+클릭|r 비활성화 |cffeda55f컨트롤+쉬프트+클릭|r : BigWigs 비활성화.",
+	["Big Wigs is currently disabled. |cffeda55fClick|r to enable."] = "BigWigs가 비활성화 되어 있습니다. 활성화 하려면 |cffeda55f클릭|r하세요.",
 	["Active boss modules"] = "보스 모듈 활성화",
 	["Hidden"] = "숨김",
 	["Shown"] = "표시",
@@ -38,6 +39,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Toggle the minimap button."] = "미니맵 버튼 토글",
 	["All running modules have been reset."] = "모든 실행중인 모듈을 초기화합니다.",
 	["All running modules have been disabled."] = "모든 실행중인 모듈을 비활성화 합니다.",
+	["%s reset."] = "%s 초기화되었습니다.",
+	["%s disabled."] = "%s 비활성화 되었습니다.",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

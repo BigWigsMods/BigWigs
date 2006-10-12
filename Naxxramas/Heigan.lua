@@ -54,6 +54,7 @@ L:RegisterTranslations("koKR", function() return {
 	starttrigger2 = "다음은... 너다.",
 	starttrigger3 = "네가 보인다...",
 	teleporttrigger = "여기가 너희 무덤이 되리라.",
+	dietrigger = "%s|%1이;가; 마지막 숨결을 얻었습니다.", -- "%s takes his last breath.", -- check
 	-- [[ Warnings ]]--
 	startwarn = "부정의 헤이건, 단상으로 순간 이동까지 90초",
 	warn1 = "순간이동 1 분전 !!!",

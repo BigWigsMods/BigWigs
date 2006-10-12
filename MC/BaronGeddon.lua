@@ -82,7 +82,7 @@ L:RegisterTranslations("koKR", function() return {
 	are = "",
 
 	bomb_message_you = "당신은 폭탄입니다!",
-	bomb_message_other = "%s|1이;가; 폭탄입니다!",
+	bomb_message_other = "%s님이 폭탄입니다!",
 
 	bombtimer_bar = "%s: 살아있는 폭탄",
 	inferno_bar = "불지옥",
