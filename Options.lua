@@ -15,7 +15,8 @@ local tablet = AceLibrary("Tablet-2.0")
 L:RegisterTranslations("enUS", function() return {
 	["|cff00ff00Module running|r"] = true,
 	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = true,
-	["Big Wigs is currently disabled. |cffeda55fClick|r to enable."] = true,
+	["|cffeda55fClick|r to enable."] = true,
+	["Big Wigs is currently disabled."] = true,
 	["Active boss modules"] = true,
 	["Hidden"] = true,
 	["Shown"] = true,
@@ -31,7 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00모듈 실행중|r",
 	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55f클릭|r : 모두 초기화 |cffeda55f쉬프트+클릭|r 비활성화 |cffeda55f컨트롤+쉬프트+클릭|r : BigWigs 비활성화.",
-	["Big Wigs is currently disabled. |cffeda55fClick|r to enable."] = "BigWigs가 비활성화 되어 있습니다. 활성화 하려면 |cffeda55f클릭|r하세요.",
+	["|cffeda55fClick|r to enable."] = "BigWigs가 비활성화 되어 있습니다. 활성화 하려면 |cffeda55f클릭|r하세요.",
 	["Active boss modules"] = "보스 모듈 활성화",
 	["Hidden"] = "숨김",
 	["Shown"] = "표시",
@@ -93,7 +94,7 @@ BigWigsOptions:RegisterDB("BigWigsFubarDB")
 BigWigsOptions.hasIcon = "Interface\\AddOns\\BigWigs\\Icons\\core-enabled"
 BigWigsOptions.defaultMinimapPosition = 180
 BigWigsOptions.clickableTooltip = true
-BigWigsOptions.hasNoText = true
+--BigWigsOptions.hasNoText = true
 
 -- XXX total hack
 BigWigsOptions.OnMenuRequest = deuce.core.cmdtable
@@ -122,6 +123,8 @@ function BigWigsOptions:CoreState()
 	else
 		self:SetIcon("Interface\\AddOns\\BigWigs\\Icons\\core-disabled")
 	end
+
+	self:UpdateTooltip()
 end
 
 -----------------------------
@@ -148,7 +151,11 @@ function BigWigsOptions:OnTooltipUpdate()
 		end
 		tablet:SetHint(L["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."])
 	else
-		tablet:SetHint(L["Big Wigs is currently disabled. |cffeda55fClick|r to enable."])
+		-- use a text line for this, since the hint is not shown when we are
+		-- detached.
+		local cat = tablet:AddCategory("colums", 1)
+		cat:AddLine("text", L["Big Wigs is currently disabled."], "func", function() BigWigsOptions:OnClick() end)
+		tablet:SetHint(L["|cffeda55fClick|r to enable."])
 	end
 end
 
