@@ -206,34 +206,16 @@ BigWigsBossBlock.consoleOptions = {
 	args   = {
 		["chat"] = {
 			type = "toggle",
-			order = 1,
+			order = 101,
 			name = L["Suppress Raid Chat"],
 			desc = L["Suppress messages in the raid channel."],
 			get = function() return BigWigsBossBlock.db.profile.hideraidchat end,
 			set = function(v) BigWigsBossBlock.db.profile.hideraidchat = v end,
 			map = map,
 		},
-		["rwchat"] = {
-			type = "toggle",
-			order = 1,
-			name = L["Suppress RaidWarn Chat"],
-			desc = L["Suppress RaidWarn messages in the chat frames."],
-			get = function() return BigWigsBossBlock.db.profile.hideraidwarnchat end,
-			set = function(v) BigWigsBossBlock.db.profile.hideraidwarnchat = v end,
-			map = map,
-		},
-		["rw"] = {
-			type = "toggle",
-			order = 1,
-			name = L["Suppress RaidWarn"],
-			desc = L["Suppress RaidWarn popup messages."],
-			get = function() return BigWigsBossBlock.db.profile.hideraidwarn end,
-			set = function(v) BigWigsBossBlock.db.profile.hideraidwarn = v end,
-			map = map,
-		},
 		["rs"] = {
 			type = "toggle",
-			order = 1,
+			order = 102,
 			name = L["Suppress RaidSay"],
 			desc = L["Suppress CTRA RaidSay popup messages."],
 			get = function() return BigWigsBossBlock.db.profile.hideraidsay end,
@@ -243,7 +225,7 @@ BigWigsBossBlock.consoleOptions = {
 		},
 		["ora_rs"] = {
 			type = "toggle",
-			order = 1,
+			order = 103,
 			name = L["Suppress RaidSay"],
 			desc = L["Suppress oRA RaidSay popup messages."],
 			get = function() return oRA_RaidSay:GetOpt("blockboss") end,
@@ -253,7 +235,7 @@ BigWigsBossBlock.consoleOptions = {
 		},
 		["ora2_rs"] = {
 			type = "toggle",
-			order = 1,
+			order = 104,
 			name = L["Suppress RaidSay"],
 			desc = L["Suppress oRA2 RaidSay popup messages."],
 			get = function() return oRAPRaidWarn.db.profile.bossblock end,
@@ -261,9 +243,27 @@ BigWigsBossBlock.consoleOptions = {
 			map = map,
 			hidden = function() return not oRAPRaidWarn end,
 		},
+		["rw"] = {
+			type = "toggle",
+			order = 105,
+			name = L["Suppress RaidWarn"],
+			desc = L["Suppress RaidWarn popup messages."],
+			get = function() return BigWigsBossBlock.db.profile.hideraidwarn end,
+			set = function(v) BigWigsBossBlock.db.profile.hideraidwarn = v end,
+			map = map,
+		},
+		["rwchat"] = {
+			type = "toggle",
+			order = 106,
+			name = L["Suppress RaidWarn Chat"],
+			desc = L["Suppress RaidWarn messages in the chat frames."],
+			get = function() return BigWigsBossBlock.db.profile.hideraidwarnchat end,
+			set = function(v) BigWigsBossBlock.db.profile.hideraidwarnchat = v end,
+			map = map,
+		},
 		["tell"] = {
 			type = "toggle",
-			order = 1,
+			order = 107,
 			name = L["Suppress Tells"],
 			desc = L["Suppress Tell messages."],
 			get = function() return BigWigsBossBlock.db.profile.hidetells end,
@@ -272,21 +272,20 @@ BigWigsBossBlock.consoleOptions = {
 		},
 		["debugspacer"] = {
 			type = "header",
-			order = 99,
+			order = 108,
 			hidden = function() return not BigWigsBossBlock:IsDebugging() and not BigWigs:IsDebugging() end,
 		},
 		["debug"] = {
 			type = "toggle",
 			name = L["Debugging"],
 			desc = L["Show debug messages."],
-			order = 100,
+			order = 109,
 			get = function() return BigWigsBossBlock:IsDebugging() end,
 			set = function(v) BigWigsBossBlock:SetDebugging(v) end,
 			hidden = function() return not BigWigsBossBlock:IsDebugging() and not BigWigs:IsDebugging() end,
 		},
 	},
 }
-
 
 ------------------------------
 --      Event Handlers      --
@@ -304,7 +303,7 @@ function BigWigsBossBlock:ChatFrame_OnEvent(event)
 		self:Debug(L["Suppressing Chatframe"], event, arg1)
 		return
 	end
-	self.hooks.ChatFrame_OnEvent.orig(event)
+	self.hooks["ChatFrame_OnEvent"](event)
 end
 
 
@@ -313,7 +312,7 @@ function BigWigsBossBlock:RaidWarningFrame_OnEvent(event, message)
 		self:Debug(L["Suppressing RaidWarningFrame"], message)
 		return
 	end
-	self.hooks.RaidWarningFrame_OnEvent.orig(event, message)
+	self.hooks["RaidWarningFrame_OnEvent"](event, message)
 end
 
 
@@ -322,7 +321,7 @@ function BigWigsBossBlock:CTRA_AddMessage(obj, text, red, green, blue, alpha, ho
 		self:Debug(L["Suppressing CT_RAMessageFrame"], text)
 		return
 	end
-	self.hooks[obj].AddMessage.orig(obj, text, red, green, blue, alpha, holdTime)
+	self.hooks[obj].AddMessage(obj, text, red, green, blue, alpha, holdTime)
 end
 
 
@@ -337,6 +336,5 @@ function BigWigsBossBlock:IsChannelSuppressed(chan)
 	if not raidchans[chan] then return end
 	return self.db.profile[raidchans[chan]]
 end
-
 
 
