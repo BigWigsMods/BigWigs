@@ -50,13 +50,14 @@ L:RegisterTranslations("enUS", function() return {
 	backwarn2 = "10 seconds until he's back in the room!",
 
 	cursetrigger = "afflicted by Curse of the Plaguebringer",
-	cursewarn	 = "Curse! next in ~55 seconds",
+	cursewarn = "Curse! next in ~55 seconds",
 	curse10secwarn = "Curse in ~10 seconds",
 
 	cursebar = "Next Curse",
 
 	wave1bar = "Wave 1",
 	wave2bar = "Wave 2",
+	wave2_message = "Wave 2 in 10sec",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -224,7 +225,7 @@ function BigWigsNoth:OnEnable()
 	self.timebalcony = 70
 	self.cursetime = 55
 	self.wave1time = 10
-	self.wave2time = 40
+	self.wave2time = 41
 	self.prior = nil
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -307,8 +308,9 @@ function BigWigsNoth:teleportToBalcony()
 		self:ScheduleEvent("bwnothback", "BigWigs_Message", self.timebalcony - 10, L["backwarn2"], "Urgent")
 	end
 	if self.db.profile.wave then
-		self:TriggerEvent("BigWigs_StartBar", self, L["wave1bar"], self.wave1time )
-		self:TriggerEvent("BigWigs_StartBar", self, L["wave2bar"], self.wave2time )
+		self:TriggerEvent("BigWigs_StartBar", self, L["wave1bar"], self.wave1time, "Interface\\Icons\\Spell_ChargePositive" )
+		self:TriggerEvent("BigWigs_StartBar", self, L["wave2bar"], self.wave2time, "Interface\\Icons\\Spell_ChargePositive" )
+		self:ScheduleEvent("bwnothwave2inc", "BigWigs_Message", L["wave2_message"], self.wave2time - 10, "Urgent")
 	end
 	self:ScheduleEvent("bwnothtoroom", self.teleportToRoom, self.timebalcony, self)
 	self.wave2time = self.wave2time + 15
