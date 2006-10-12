@@ -113,8 +113,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	breath_trigger = "^克洛玛古斯开始施放(.+)。",
 	vulnerability_test = "^.+的(.+)克洛玛古斯造成(%d+)点(.+)伤害。",
-	frenzy_trigger = "变得狂怒无比！",
-	vulnerability_trigger = "的皮肤闪着光芒",
+	frenzy_trigger = "%s变得极为狂暴！",
+	vulnerability_trigger = "%s的皮肤闪着微光",
 
 	hit = "击中",
 	crit = "致命一击",

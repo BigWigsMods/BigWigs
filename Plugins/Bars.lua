@@ -1,4 +1,4 @@
-﻿
+
 assert( BigWigs, "BigWigs not found!")
 
 
@@ -84,6 +84,11 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	["Bars"] = "计时条",
 
+	["bars"] = "计时条",
+	["anchor"] = "锚点",
+	["scale"] = "大小",
+	["up"] = "上",
+
 	["Options for the timer bars."] = "计时条设置/",
 	["Show the bar anchor frame."] = "显示计时条框体锚点。",
 	["Set the bar scale."] = "设置计时条缩放比例。",
@@ -101,10 +106,17 @@ L:RegisterTranslations("zhCN", function() return {
 
 	["Up"] = "上",
 	["Down"] = "下",
+
+	["Test"] = "测试",
+	["Close"] = "关闭",
+
 	["Texture"] = "材质",
+	["Set the texture for the timerbars."] = "设定计时条的材质花纹",
+
 	["default"] = "默认",
 	["smooth"] = "平滑",
-	["Charcoal"] = "Charcoal",
+	["otravi"] = "otravi",
+	["Charcoal"] = "木炭",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -134,6 +146,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Down"] = "Unten",
 	
 	["Test"] = "Test",
+	["Close"] = true,
 
 	["default"] = "Default",
 	["smooth"] = "Smooth",

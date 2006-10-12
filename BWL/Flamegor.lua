@@ -39,7 +39,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	wingbuffet_trigger = "弗莱格尔开始施放龙翼打击。",
 	shadowflame_trigger = "弗莱格尔开始施放暗影烈焰。",
-	frenzy_trigger = "变得狂怒无比！",
+	frenzy_trigger = "%s变得狂怒无比！",
 
 	wingbuffet_message = "龙翼打击 - 30秒后再次发动",
 	wingbuffet_warning = "3秒后发动龙翼打击！",
