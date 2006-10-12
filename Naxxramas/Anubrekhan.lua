@@ -19,12 +19,12 @@ L:RegisterTranslations("enUS", function() return {
 	starttrigger1 = "Just a little taste...",
 	starttrigger2 = "Yes, run! It makes the blood pump faster!",
 	starttrigger3 = "There is no way out.",
-	engagewarn = "Anub'Rekhan engaged. First Locust Swarm in about 90 seconds.",
+	engagewarn = "Anub'Rekhan engaged. First Locust Swarm in ~90 sec",
 
 	gaintrigger = "Anub'Rekhan gains Locust Swarm.",
 	gainendwarn = "Locust Swarm ended!",
-	gainnextwarn = "Next Locust Swarm in about 90 seconds.",
-	gainwarn10sec = "10 Seconds until Locust Swarm",
+	gainnextwarn = "Next Locust Swarm in ~90 sec",
+	gainwarn10sec = "~10 Seconds until Locust Swarm",
 	gainincbar = "Next Locust Swarm",
 	gainbar = "Locust Swarm",
 
