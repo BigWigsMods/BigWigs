@@ -310,7 +310,7 @@ function BigWigsNoth:teleportToBalcony()
 	if self.db.profile.wave then
 		self:TriggerEvent("BigWigs_StartBar", self, L["wave1bar"], self.wave1time, "Interface\\Icons\\Spell_ChargePositive" )
 		self:TriggerEvent("BigWigs_StartBar", self, L["wave2bar"], self.wave2time, "Interface\\Icons\\Spell_ChargePositive" )
-		self:ScheduleEvent("bwnothwave2inc", "BigWigs_Message", L["wave2_message"], self.wave2time - 10, "Urgent")
+		self:ScheduleEvent("bwnothwave2inc", "BigWigs_Message", self.wave2time - 10, L["wave2_message"], "Urgent")
 	end
 	self:ScheduleEvent("bwnothtoroom", self.teleportToRoom, self.timebalcony, self)
 	self.wave2time = self.wave2time + 15
