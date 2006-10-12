@@ -14,8 +14,8 @@ local tablet = AceLibrary("Tablet-2.0")
 
 L:RegisterTranslations("enUS", function() return {
 	["|cff00ff00Module running|r"] = true,
-	["Click to reset all running modules. Shift-Click to disable all running modules."] = true,
-	["Big Wigs is currently in standby mode. Click to activate it."] = true,
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = true,
+	["Big Wigs is currently disabled. |cffeda55fClick|r to enable."] = true,
 	["Active boss modules"] = true,
 	["Hidden"] = true,
 	["Shown"] = true,
@@ -30,7 +30,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00모듈 실행중|r",
-	["Click to reset all running modules. Shift-Click to disable all running modules."] = "<클릭> - 실행 중인 모듈 초기화. <쉬프트+클릭> - 모든 실행 중인 모듈 비활성화.",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "<클릭> - 실행 중인 모듈 초기화. <쉬프트+클릭> - 모든 실행 중인 모듈 비활성화.",
 	["Active boss modules"] = "보스 모듈 활성화",
 	["Hidden"] = "숨김",
 	["Shown"] = "표시",
@@ -42,7 +42,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00模块运行中|r",
-	["Click to reset all running modules. Shift-Click to disable all running modules."] = "你可以点击图标重置所有运行中的模块。",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "你可以点击图标重置所有运行中的模块。",
 	["Active boss modules"] = "激活首领模块",
 	["Hidden"] = "隐藏",
 	["Shown"] = "显示",
@@ -53,7 +53,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00Modul aktiviert|r",
-	["Click to reset all running modules. Shift-Click to disable all running modules."] = "Klicken, um alle laufenden Module zur\195\188ckzusetzen. Shift-Klick um alle laufenden Module zu beenden.",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "Klicken, um alle laufenden Module zur\195\188ckzusetzen. Shift-Klick um alle laufenden Module zu beenden.",
 	["Active boss modules"] = "Aktive Boss Module",
 	["Hidden"] = "Versteckt",
 	["Shown"] = "Angezeigt",
@@ -143,21 +143,26 @@ function BigWigsOptions:OnTooltipUpdate()
 				cat:AddLine("text", name, "func", function(mod) BigWigsOptions:ModuleAction(mod) end, "arg1", module)
 			end
 		end
-		tablet:SetHint(L["Click to reset all running modules. Shift-Click to disable all running modules."])
+		tablet:SetHint(L["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."])
 	else
-		tablet:SetHint(L["Big Wigs is currently in standby mode. Click to activate it."])
+		tablet:SetHint(L["Big Wigs is currently disabled. |cffeda55fClick|r to enable."])
 	end
 end
 
 function BigWigsOptions:OnClick()
 	if BigWigs:IsActive() then
 		if IsShiftKeyDown() then
-			for name, module in deuce.core:IterateModules() do
-				if module:IsBossModule() and deuce.core:IsModuleActive(module) then
-					deuce.core:ToggleModuleActive(module, false)
+			if IsControlKeyDown() then
+				BigWigs:ToggleActive(false)
+				self:UpdateTooltip()
+			else
+				for name, module in deuce.core:IterateModules() do
+					if module:IsBossModule() and deuce.core:IsModuleActive(module) then
+						deuce.core:ToggleModuleActive(module, false)
+					end
 				end
+				self:Print(L["All running modules have been disabled."])
 			end
-			self:Print(L["All running modules have been disabled."])
 		else
 			for name, module in deuce.core:IterateModules() do
 				if module:IsBossModule() and deuce.core:IsModuleActive(module) then
