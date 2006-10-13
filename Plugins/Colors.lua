@@ -439,7 +439,7 @@ function BigWigsColors:RegHex(hex)
 	if type(hex) == "string" then
 		PaintChips:RegisterHex(hex)
 	elseif type(hex) == "table" then
-		for _,hexx in hex do
+		for _,hexx in pairs(hex) do
 			self:RegHex(hexx)
 		end
 	end
