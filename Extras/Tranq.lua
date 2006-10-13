@@ -11,7 +11,7 @@ L:RegisterTranslations("enUS", function() return {
 	CHAT_MSG_SPELL_SELF_BUFF = "You fail to dispel (.+)'s Frenzy.",
 	CHAT_MSG_SPELL_SELF_DAMAGE = "You cast Tranquilizing Shot on (.+).",
 
-	["Tranq - "] = true,
+	["Tranq - %s"] = true,
 	["%s's Tranq failed!"] = true,
 	["Tranq"] = true,
 	["Options for the tranq module."] = true,
@@ -23,7 +23,7 @@ L:RegisterTranslations("koKR", function() return {
 	CHAT_MSG_SPELL_SELF_BUFF = "(.+)의 광기|1을;를; 무효화하지 못했습니다.", --"You fail to dispel (.+)'s Frenzy.",
 	CHAT_MSG_SPELL_SELF_DAMAGE = "(.+)에게 평정의 사격|1을;를; 시전합니다.", --"You cast Tranquilizing Shot on (.+).",
 
-	["Tranq - "] = "평정 - ",
+	["Tranq - %s"] = "평정 - %s",
 	["%s's Tranq failed!"] = "%s의 평정 실패!",
 	["Tranq"] = "평정",
 	["Options for the tranq module."] = "평정 모듈에 대한 설정.",
@@ -35,7 +35,7 @@ L:RegisterTranslations("zhCN", function() return {
 	CHAT_MSG_SPELL_SELF_BUFF = "你未能驱散(.+)的狂暴。",
 	CHAT_MSG_SPELL_SELF_DAMAGE = "你对(.+)施放了宁神射击。",
 
-	["Tranq - "] = "宁神射击 - ",
+	["Tranq - %s"] = "宁神射击 - %s",
 	["%s's Tranq failed!"] = "%s的宁神射击失败了！",
 	["Tranq"] = "宁神射击",
 	["Options for the tranq module."] = "设置宁神射击模块.",
@@ -47,7 +47,7 @@ L:RegisterTranslations("deDE", function() return {
 	CHAT_MSG_SPELL_SELF_BUFF = "(.+) kann dies nicht bannen: Raserei", -- ?
 	CHAT_MSG_SPELL_SELF_DAMAGE = "Ihr wirkt Einlullender Schuss auf (.+)",
 
-	["Tranq - "] = "Einlullender Schuss - ",
+	["Tranq - %s"] = "Einlullender Schuss - %s",
 	["%s's Tranq failed!"] = "%s's Einlullender Schuss verfehlt",
 } end)
 
@@ -100,7 +100,7 @@ end
 function BigWigsTranq:CHAT_MSG_SPELL_SELF_BUFF(msg)
 	if not msg then
 		self:Debug("CHAT_MSG_SPELL_SELF_BUFF: msg is nil")
-	elseif string.find(msg, L"CHAT_MSG_SPELL_SELF_BUFF") then
+	elseif string.find(msg, L["CHAT_MSG_SPELL_SELF_BUFF"]) then
 		self:TriggerEvent("BigWigs_SendSync", "TranqShotFail "..UnitName("player"))
 	end
 end
@@ -109,7 +109,7 @@ end
 function BigWigsTranq:CHAT_MSG_SPELL_SELF_DAMAGE(msg)
 	if not msg then
 		self:Debug("CHAT_MSG_SPELL_SELF_DAMAGE: msg is nil")
-	elseif string.find(msg, L"CHAT_MSG_SPELL_SELF_DAMAGE") then
+	elseif string.find(msg, L["CHAT_MSG_SPELL_SELF_DAMAGE"]) then
 		self:TriggerEvent("BigWigs_SendSync", "TranqShotFired "..UnitName("player"))
 	end
 end
@@ -123,14 +123,15 @@ end
 
 function BigWigsTranq:BigWigs_TranqFired(unitname)
 	if self.db.profile.bars then
-		self:TriggerEvent("BigWigs_StartBar", self, L["Tranq - "]..unitname, 20, "Interface\\Icons\\Spell_Nature_Drowsy")
+		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["Tranq - %s"], unitname), 20, "Interface\\Icons\\Spell_Nature_Drowsy")
 	end
 end
 
 
 function BigWigsTranq:BigWigs_TranqFail(unitname)
 	if self.db.profile.bars then
-		self:SetCandyBarColor(L["Tranq - "]..unitname, "Red")
+		self:SetCandyBarColor(string.format(L["Tranq - %s"], unitname), "Red")
 		self:TriggerEvent("BigWigs_Message", format(L["%s's Tranq failed!"], unitname), "Important", nil, "Alarm")
 	end
 end
+
