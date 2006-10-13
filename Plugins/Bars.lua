@@ -146,7 +146,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Down"] = "Unten",
 	
 	["Test"] = "Test",
-	["Close"] = true,
+	--["Close"] = true,
 
 	["default"] = "Default",
 	["smooth"] = "Smooth",
