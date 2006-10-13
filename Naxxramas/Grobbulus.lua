@@ -106,6 +106,7 @@ L:RegisterTranslations("koKR", function() return {
 	enrage10sec = "10초 후 격노",
 	bomb_message_you = "당신은 돌연변이 유발에 걸렸습니다.",
 	bomb_message_other = "%s 님이 돌연변이 유발에 걸렸습니다.",
+	bomb_bar = "%s 돌연변이",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

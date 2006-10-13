@@ -60,13 +60,13 @@ L:RegisterTranslations("koKR", function() return {
 	curse_name = "저주 해제 경고",
 	curse_desc = "로데브 저주 해제에 대한 경고",
 
-	--doombar = "피할 수 없는 파멸",
-	--doomwarn = "피할 수 없는 파멸! 다은은 %s초 후.",
-	--doomwarn5sec = "피할 수 없는 파멸 5초 전",
+	doombar = "피할 수 없는 파멸 %d",
+	doomwarn = "피할 수 없는 파멸 %d! 다은은 %d초 후.",
+	doomwarn5sec = "피할 수 없는 파멸 %d 5초 전",		
 	doomtrigger = "피할 수 없는 파멸에 걸렸습니다.",
 	
-	sporewarn = "포자소환!",
-	sporebar = "포자 소환!",
+	sporewarn = "포자 %d 소환됨!",
+	sporebar = "포자 소환! %d",
 	sporespawntrigger = "로데브|1이;가; 포자 소환|1을;를; 시전합니다.",
 
 	removecursewarn = "로데브 저주 헤제 시전!",

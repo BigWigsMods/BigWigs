@@ -72,15 +72,15 @@ L:RegisterTranslations("koKR", function() return {
 
 	engage_message = "사피론 전투 개시! 광폭화 까지 15분!",
 
-	lifedrain_trigger = "피의 착취에 걸렸습니다.",
-	lifedrain_trigger2 = "피의 착취|1으로;로; (.+)|1을;를; 공격했지만 저항했습니다.",
+	lifedrain_trigger = "생명력 흡수에 걸렸습니다.",
+	lifedrain_trigger2 = "생명력 흡수|1으로;로; (.+)|1을;를; 공격했지만 저항했습니다.",
 
-	deepbreath_incoming_message = "얼음 폭탄 시전 - 약 25초 후!",
-	deepbreath_incoming_soon_message = "얼음 폭탄 시전 - 약 5초 후!",
-	deepbreath_incoming_bar = "얼음 폭탄 시전",
+	deepbreath_incoming_message = "얼음 화살 시전 - 약 25초 후!",
+	deepbreath_incoming_soon_message = "얼음 화살 시전 - 약 5초 후!",
+	deepbreath_incoming_bar = "얼음 화살 시전",
 	deepbreath_trigger = "%s|1이;가; 숨을 깊게 들이쉽니다.",
-	deepbreath_warning = "얼음 폭탄 다가옴!",
-	deepbreath_bar = "얼음 폭탄 떨어짐!",
+	deepbreath_warning = "얼음 화살 다가옴!",
+	deepbreath_bar = "얼음 화살 떨어짐!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

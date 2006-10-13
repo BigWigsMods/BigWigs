@@ -63,18 +63,26 @@ L:RegisterTranslations("koKR", function() return {
 	starttrigger3 = "네가 보인다...",
 	teleport_trigger = "여기가 너희 무덤이 되리라.",
 	die_trigger = "%s|%1이;가; 마지막 숨결을 얻었습니다.", -- "%s takes his last breath.", -- check
+
 	-- [[ Warnings ]]--
 	engage_message = "부정의 헤이건, 단상으로 순간 이동까지 90초",
+
 	teleport_1min_message = "순간이동 1 분전 !!!",
 	teleport_30sec_message = "순간이동 30초전 !!!",
 	teleport_10sec_message = "순간이동 10초전 !!!",
-	on_floor_message = "헤이건 단상 아래!! 90초 후에 순간이동 !!!",
+	on_platform_message = "순간이동! %d초 후 내려옵니다. !!!",
+
 	to_floor_30sec_message = "내려오기까지 30초 전 !!!",
 	to_floor_10sec_message = "내려오기까지 10초 전 !!!",
-	on_platform_message = "순간이동! %d초 후 내려옵니다. !!!",
+	on_floor_message = "헤이건 단상 아래!! 90초 후에 순간이동 !!!",
+
 	-- [[ Bars ]]--
 	teleport_bar = "순간이동!",
 	back_bar = "단상으로 이동!",
+
+	-- [[ Dream Room Mobs ]] --
+	["Eye Stalk"] = "Eye Stalk",
+	["Rotting Maggot"] = Rotting Maggot",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
