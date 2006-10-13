@@ -30,7 +30,7 @@ L:RegisterTranslations("enUS", function() return {
 	icon_name = "Place Icon",
 	icon_desc = "Place a skull icon on an injected person. (Requires promoted or higher)",
 
-	trigger1 = "^([^%s]+) ([^%s]+) afflicted by Mutating Injection",
+	inject_trigger = "^([^%s]+) ([^%s]+) afflicted by Mutating Injection",
 
 	you = "You",
 	are = "are",
@@ -42,8 +42,9 @@ L:RegisterTranslations("enUS", function() return {
 	enrage1min = "Enrage in 1min",
 	enrage30sec = "Enrage in 30sec",
 	enrage10sec = "Enrage in 10sec",
-	warn1 = "You are injected!",
-	warn2 = " is Injected!",
+	bomb_message_you = "You are injected!",
+	bomb_message_other = "%s is injected!",
+	bomb_bar = "%s injected",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -60,7 +61,7 @@ L:RegisterTranslations("deDE", function() return {
 	icon_name = "Symbol",
 	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der von Mutagene Injektion betroffen ist. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 
-	trigger1 = "^([^%s]+) ([^%s]+) von Mutagene Injektion betroffen",
+	inject_trigger = "^([^%s]+) ([^%s]+) von Mutagene Injektion betroffen",
 
 	you = "Ihr",
 	are = "seid",
@@ -73,8 +74,8 @@ L:RegisterTranslations("deDE", function() return {
 	enrage30sec = "Wutanfall in 30 Sekunden!",
 	enrage10sec = "Wutanfall in 10 Sekunden!",
 
-	warn1 = "Du bist verseucht!",
-	warn2 = " ist verseucht!",
+	bomb_message_you = "Du bist verseucht!",
+	bomb_message_other = "%s ist verseucht!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -91,7 +92,7 @@ L:RegisterTranslations("koKR", function() return {
 	icon_name = "아이콘 지정",
 	icon_desc = "돌연변이 걸린 사람에게 아이콘 지정 (승급자 이상 요구)",
 
-	trigger1 = "^([^|;%s]*)(.*)돌연변이 유발에 걸렸습니다%.$", --"(.*)돌연변이 유발에 걸렸습니다.",
+	inject_trigger = "^([^|;%s]*)(.*)돌연변이 유발에 걸렸습니다%.$", --"(.*)돌연변이 유발에 걸렸습니다.",
 
 	you = "",
 	are = "",
@@ -103,8 +104,8 @@ L:RegisterTranslations("koKR", function() return {
 	enrage1min = "1분 후 격노!",
 	enrage30sec = "30초 후 격노!",
 	enrage10sec = "10초 후 격노",
-	warn1 = "당신은 돌연변이 유발에 걸렸습니다.",
-	warn2 = " 님이 돌연변이 유발에 걸렸습니다.",
+	bomb_message_you = "당신은 돌연변이 유발에 걸렸습니다.",
+	bomb_message_other = "%s 님이 돌연변이 유발에 걸렸습니다.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -120,7 +121,7 @@ L:RegisterTranslations("zhCN", function() return {
 	icon_name = "标记图标",
 	icon_desc = "在中了变异注射的队友头上标记骷髅图标（需要助理或领袖权限）",
 
-	trigger1 = "^(.+)受(.+)了变异注射",
+	inject_trigger = "^(.+)受(.+)了变异注射",
 
 	you = "你",
 	are = "到",
@@ -132,8 +133,8 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage1min = "1分钟后激怒",
 	enrage30sec = "30秒后激怒",
 	enrage10sec = "10秒后激怒",
-	warn1 = "你中变异注射了！",
-	warn2 = "中变异注射了！",
+	bomb_message_you = "你中变异注射了！",
+	bomb_message_other = "%s 中变异注射了！",
 } end )
 
 ----------------------------------
@@ -161,6 +162,7 @@ function BigWigsGrobbulus:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "GrobbulusInject", 1)
 end
 
 ------------------------------
@@ -180,23 +182,30 @@ function BigWigsGrobbulus:BigWigs_RecvSync( sync, rest, nick )
 			self:ScheduleEvent("bwgrobbulusenragewarn4", "BigWigs_Message", 690, L["enrage30sec"], "Important")
 			self:ScheduleEvent("bwgrobbulusenragewarn5", "BigWigs_Message", 710, L["enrage10sec"], "Important")
 		end
+	elseif sync == "GrobbulusInject" and rest then
+		local player = rest
+		if self.db.profile.youinjected and player == UnitName("player") then
+			self:TriggerEvent("BigWigs_Message", L["bomb_message_you"], "Personal", true, "Alarm")
+			self:TriggerEvent("BigWigs_Message", string.format(L["bomb_message_other"], player), "Attention", nil, nil, true)
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["bomb_bar"], player), 10,"Interface\\Icons\\Spell_Shadow_CallofBone")
+		elseif self.db.profile.otherinjected then
+			self:TriggerEvent("BigWigs_Message", string.format(L["bomb_message_other"], player), "Attention")
+			self:TriggerEvent("BigWigs_SendTell", player, L["bomb_message_you"])
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["bomb_bar"], player), 10,"Interface\\Icons\\Spell_Shadow_CallofBone")
+		end
+		if self.db.profile.icon then
+			self:TriggerEvent("BigWigs_SetRaidIcon", player)
+		end
 	end
 end
 
 function BigWigsGrobbulus:InjectEvent( msg )
-	local _, _, eplayer, etype = string.find(msg, L["trigger1"])
+	local _, _, eplayer, etype = string.find(msg, L["inject_trigger"])
 	if eplayer and etype then
-		if self.db.profile.youinjected and eplayer == L["you"] and etype == L["are"] then
-			self:TriggerEvent("BigWigs_Message", L["warn1"], "Personal", true, "Alarm")
-			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["warn2"], "Attention", nil, nil, true)
-		elseif self.db.profile.otherinjected then
-			self:TriggerEvent("BigWigs_Message", eplayer .. L["warn2"], "Attention")
-			self:TriggerEvent("BigWigs_SendTell", eplayer, L["warn1"])
+		if eplayer == L["you"] and etype == L["are"] then
+			eplayer = UnitName("player")
 		end
-		if self.db.profile.icon then
-			if eplayer == L"you" then eplayer = UnitName("player") end
-			self:TriggerEvent("BigWigs_SetRaidIcon", eplayer )
-		end
+		self:TriggerEvent("BigWigs_SendSync", "GrobbulusInject "..eplayer)
 	end
 end
 
