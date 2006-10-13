@@ -88,12 +88,12 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "이제 너희",
 
 	knockback_message = "광역 튕겨냄!",
-	knockback_soon_message = "5초후 광역 튕겨냄!",
+	knockback_soon_message = "5초후 튕겨냄!",
 	submerge_message = "90초간 라그나로스 사라짐. 피조물 등장!",
 	emerge_soon_message = "15초후 라그나로스 재등장!",
-	emerge_message = "라그나로스가 등장했습니다. 3분후 피조물 등장!",
-	submerge_60sec_message = "60초후 피조물 등장 & 라그나로스 사라짐!",
-	submerge_20sec_message = "20초후 피조물 등장 & 라그라로스 사라짐!",
+	emerge_message = "라그나로스가 등장했습니다. 3분후 피조물 소환!",
+	submerge_60sec_message = "60초후 피조물 등장!",
+	submerge_20sec_message = "20초후 피조물 등장!",
 
 	knockback_bar = "광역 튕겨냄",
 	emerge_bar = "라그나로스 등장",
@@ -111,8 +111,8 @@ L:RegisterTranslations("koKR", function() return {
 	submerge_name = "사라짐 경고",
 	submerge_desc = "라그나로스 사라짐 & 피조물에 대한 경고",
 	
-	aoeknock_name = "광역 넉백 경고",
-	aoeknock_desc = "광역 넉백에 대한 경고",
+	aoeknock_name = "튕겨냄 경고",
+	aoeknock_desc = "라그나로스의 튕겨냄 경고",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
