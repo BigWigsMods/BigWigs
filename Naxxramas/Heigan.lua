@@ -82,7 +82,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	-- [[ Dream Room Mobs ]] --
 	["Eye Stalk"] = "Eye Stalk",
-	["Rotting Maggot"] = Rotting Maggot",
+	["Rotting Maggot"] = "Rotting Maggot",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
