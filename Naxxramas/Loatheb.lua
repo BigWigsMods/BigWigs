@@ -62,7 +62,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	doombar = "피할 수 없는 파멸 %d",
 	doomwarn = "피할 수 없는 파멸 %d! 다은은 %d초 후.",
-	doomwarn5sec = "피할 수 없는 파멸 %d 5초 전",		
+	doomwarn5sec = "피할 수 없는 파멸 %d 5초 전",
 	doomtrigger = "피할 수 없는 파멸에 걸렸습니다.",
 	
 	sporewarn = "포자 %d 소환됨!",
@@ -98,8 +98,8 @@ L:RegisterTranslations("deDE", function() return {
 	doomwarn5sec = "Unausweichliches Schicksal %d in 5 Sekunden",
 	doomtrigger = "von Unausweichliches Schicksal betroffen.",
 
-	sporewarn = "Spore aufgetaucht",
-	sporebar = "Spore beschw\195\182ren",
+	sporewarn = "Spore %d aufgetaucht",
+	sporebar = "Spore beschw\195\182ren %d",
 	sporespawntrigger = "Loatheb wirkt Spore beschw\195\182ren.",
 
 	removecursewarn = "Fl\195\188che bei Loatheb aufgehoben",
@@ -131,8 +131,8 @@ L:RegisterTranslations("zhCN", function() return {
 	--doomwarn5sec = "5秒后发动必然的厄运！",
 	doomtrigger = "受到了必然的厄运效果的影响",
 
-	sporewarn = "孢子出现",
-	sporebar = "召唤孢子",
+	--sporewarn = "孢子出现",
+	--sporebar = "召唤孢子",
 	sporespawntrigger = "洛欧塞布施放了召唤孢子。",
 
 	removecursewarn = "洛欧塞布驱散了一个诅咒效果",
