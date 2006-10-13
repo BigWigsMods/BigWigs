@@ -138,6 +138,17 @@ L:RegisterTranslations("zhCN", function() return {
 	bomb_message_other = "%s 中变异注射了！",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	inject_trigger = "^([^%s]+) ([^%s]+) les effets de Injection mutante.",
+
+	you = "Vous",
+	are = "subissez",
+
+	bomb_message_you = "Vous \195\170tes inf\195\169ct\195\169!",
+	bomb_message_other = "%s est inf\195\169ct\195\169!",
+} end )
+
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

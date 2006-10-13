@@ -253,6 +253,32 @@ L:RegisterTranslations("zhCN", function() return {
 	bar1text = "极性转化",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	enragetrigger = "%s entre dans une rage d\195\169mente !",
+	starttrigger = "Stalagg \195\169craser toi !",
+
+	starttrigger1 = "manger pour maitre !",
+	starttrigger2 = "Manger.. tes... os...", -- CHECK
+	starttrigger3 = "Casser... toi !", -- CHECK
+	starttrigger4 = "Tuer...", -- CHECK
+
+	adddeath = "%s meurt.",
+	teslaoverload = "%s entre en surcharge !",
+
+	pstrigger = "Maintenant toi sentir douleur...",
+	trigger1 = "Thaddius commence \195\160 lancer Changement de polarit�.",
+	chargetrigger = "Vous subissez les effets de Charge (%w+).",
+	stalaggtrigger = "Stalagg gagne Vague de puissance.",
+
+	you = "Vous",
+	are = "subissez",
+
+	stalaggwarn = "Vague de Puissance sur Stalagg",
+	powersurgebar = "Vague de Puissance",
+	bar1text = "Changement de polarit\195\169",
+} end )
+
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
