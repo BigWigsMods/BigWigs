@@ -4,27 +4,28 @@
 
 local boss = AceLibrary("Babble-Boss-2.0")("Ragnaros")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local started = nil
 
 ----------------------------
 --      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	trigger1 = "^TASTE",
-	trigger2 = "^COME FORTH,",
-	trigger3 = "^NOW FOR YOU,",
+	knockback_trigger = "^TASTE",
+	submerge_trigger = "^COME FORTH,",
+	engage_trigger = "^NOW FOR YOU,",
 
-	warn1 = "AoE Knockback!",
-	warn2 = "5 seconds until AoE Knockback!",
-	warn3 = "Ragnaros Down for 90 Seconds. Incoming Sons of Flame!",
-	warn4 = "15 seconds until Ragnaros emerges!",
-	warn5 = "Ragnaros has emerged. 3 minutes until submerge!",
-	warn6 = "60 seconds until Ragnaros submerge & Sons of Flame!",
-	warn7 = "20 seconds until Ragnaros submerge & Sons of Flame!",
+	knockback_message = "Knockback!",
+	knockback_soon_message = "5 sec to knockback!",
+	submerge_message = "Ragnaros down for 90 sec. Incoming Sons of Flame!",
+	emerge_soon_message = "15 sec until Ragnaros emerges!",
+	emerge_message = "Ragnaros emerged, 3 minutes until submerge!",
+	submerge_60sec_message = "60 sec to submerge!",
+	submerge_20sec_message = "20 sec to submerge!",
 
-	bar1text = "AoE knockback",
-	bar2text = "Ragnaros emerge",
-	bar3text = "Ragnaros submerge",
+	knockback_bar = "AoE knockback",
+	emerge_bar = "Ragnaros emerge",
+	submerge_bar = "Ragnaros submerge",
 
 	sonofflame = "Son of Flame",
 	sonsdeadwarn = "%d/8 Sons of Flame dead!",
@@ -44,26 +45,26 @@ L:RegisterTranslations("enUS", function() return {
 	submerge_desc = "Warn for Ragnaros Submerge & Sons of Flame",
 
 	aoeknock_cmd = "aoeknock",
-	aoeknock_name = "AoE knockback alert",
-	aoeknock_desc = "Warn for AoE KnockBack",
+	aoeknock_name = "Knockback alert",
+	aoeknock_desc = "Warn for Wrath of Ragnaros knockback",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
-	trigger1 = "^尝尝萨弗隆的火焰吧",
-	trigger2 = "^出现吧，我的奴仆",
-	trigger3 = "^现在轮到你们了",
+	knockback_trigger = "^尝尝萨弗隆的火焰吧",
+	submerge_trigger = "^出现吧，我的奴仆",
+	engage_trigger = "^现在轮到你们了",
 
-	warn1 = "群体击退！",
-	warn2 = "5秒后发动群体击退！",
-	warn3 = "拉格纳罗斯消失90秒。烈焰之子出现！",
-	warn4 = "15秒后拉格纳罗斯重新出现！",
-	warn5 = "拉格纳罗斯已经激活，将在3分钟后暂时消失并召唤烈焰之子！",
-	warn6 = "60秒后拉格纳罗斯将暂时消失并召唤烈焰之子！",
-	warn7 = "20秒后拉格纳罗斯将暂时消失并召唤烈焰之子！",
+	knockback_message = "群体击退！",
+	knockback_soon_message = "5秒后发动群体击退！",
+	submerge_message = "拉格纳罗斯消失90秒。烈焰之子出现！",
+	emerge_soon_message = "15秒后拉格纳罗斯重新出现！",
+	emerge_message = "拉格纳罗斯已经激活，将在3分钟后暂时消失并召唤烈焰之子！",
+	submerge_60sec_message = "60秒后拉格纳罗斯将暂时消失并召唤烈焰之子！",
+	submerge_20sec_message = "20秒后拉格纳罗斯将暂时消失并召唤烈焰之子！",
 
-	bar1text = "群体击退",
-	bar2text = "拉格纳罗斯出现",
-	bar3text = "拉格纳罗斯消失",
+	knockback_bar = "群体击退",
+	emerge_bar = "拉格纳罗斯出现",
+	submerge_bar = "拉格纳罗斯消失",
 
 	sonofflame = "烈焰之子",
 	sonsdeadwarn = "%d/8个烈焰之子死亡了！",
@@ -82,21 +83,21 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	trigger1 = "설퍼론의 유황",
-	trigger2 = "나의 종들아",
-	trigger3 = "이제 너희",
+	knockback_trigger = "설퍼론의 유황",
+	submerge_trigger = "나의 종들아",
+	engage_trigger = "이제 너희",
 
-	warn1 = "광역 튕겨냄!",
-	warn2 = "5초후 광역 튕겨냄!",
-	warn3 = "90초간 라그나로스 사라짐. 피조물 등장!",
-	warn4 = "15초후 라그나로스 재등장!",
-	warn5 = "라그나로스가 등장했습니다. 3분후 피조물 등장!",
-	warn6 = "60초후 피조물 등장 & 라그나로스 사라짐!",
-	warn7 = "20초후 피조물 등장 & 라그라로스 사라짐!",
+	knockback_message = "광역 튕겨냄!",
+	knockback_soon_message = "5초후 광역 튕겨냄!",
+	submerge_message = "90초간 라그나로스 사라짐. 피조물 등장!",
+	emerge_soon_message = "15초후 라그나로스 재등장!",
+	emerge_message = "라그나로스가 등장했습니다. 3분후 피조물 등장!",
+	submerge_60sec_message = "60초후 피조물 등장 & 라그나로스 사라짐!",
+	submerge_20sec_message = "20초후 피조물 등장 & 라그라로스 사라짐!",
 
-	bar1text = "광역 튕겨냄",
-	bar2text = "라그나로스 등장",
-	bar3text = "피조물 등장",
+	knockback_bar = "광역 튕겨냄",
+	emerge_bar = "라그나로스 등장",
+	submerge_bar = "피조물 등장",
 
 	sonofflame = "화염의 수호물",
 	sonsdeadwarn = "%d/8 화염의 수호물 사망!",
@@ -115,21 +116,21 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	trigger1 = "^SP\195\156RT DIE FLAMMEN",
-	trigger2 = "^KOMMT HERBEI, MEINE DIENER", -- ?
-	trigger3 = "^NUN ZU EUCH, INSEKTEN", -- ?
+	knockback_trigger = "^SP\195\156RT DIE FLAMMEN",
+	submerge_trigger = "^KOMMT HERBEI, MEINE DIENER", -- ?
+	engage_trigger = "^NUN ZU EUCH, INSEKTEN", -- ?
 
-	warn1 = "AoE Rundumschlag!",
-	warn2 = "AoE Rundumschlag in 5 Sekunden!",
-	warn3 = "Ragnaros untergetaucht f\195\188r 90 Sekunden! S\195\182hne der Flamme kommen!",
-	warn4 = "Ragnaros taucht auf in 15 Sekunden!",
-	warn5 = "Ragnaros aufgetaucht! Untertauchen in 3 Minuten!",
-	warn6 = "Ragnaros taucht unter in 60 Sekunden!",
-	warn7 = "Ragnaros taucht unter in 20 Sekunden!",
+	knockback_message = "AoE Rundumschlag!",
+	knockback_soon_message = "AoE Rundumschlag in 5 Sekunden!",
+	submerge_message = "Ragnaros untergetaucht f\195\188r 90 Sekunden! S\195\182hne der Flamme kommen!",
+	emerge_soon_message = "Ragnaros taucht auf in 15 Sekunden!",
+	emerge_message = "Ragnaros aufgetaucht! Untertauchen in 3 Minuten!",
+	submerge_60sec_message = "Ragnaros taucht unter in 60 Sekunden!",
+	submerge_20sec_message = "Ragnaros taucht unter in 20 Sekunden!",
 
-	bar1text = "AoE Rundumschlag",
-	bar2text = "Auftauchen Ragnaros",
-	bar3text = "Untertauchen Ragnaros",
+	knockback_bar = "AoE Rundumschlag",
+	emerge_bar = "Auftauchen Ragnaros",
+	submerge_bar = "Untertauchen Ragnaros",
 
 	sonofflame = "Sohn der Flamme",
 	sonsdeadwarn = "%d/8 S\195\182hne der Flamme tot!",
@@ -148,21 +149,21 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	trigger1 = "^GO\195\155TEZ ",
-	trigger2 = "^VENEZ, MES SERVITEURS",
-	trigger3 = "^ET MAINTENANT",
+	knockback_trigger = "^GO\195\155TEZ ",
+	submerge_trigger = "^VENEZ, MES SERVITEURS",
+	engage_trigger = "^ET MAINTENANT",
 
-	warn1 = "AoE Knockback !",
-	warn2 = "5 sec avant AoE Knockback !",
-	warn3 = "Ragnaros dispara\195\174t pour 90 sec. Arriv\195\169e des Fils des flammes !",
-	warn4 = "15 sec avant que Ragnaros n'\195\169merge !",
-	warn5 = "Ragnaros a emerger. 3 min avant l'arriv\195\169e des Fils des flammes !",
-	warn6 = "60 sec avant l'arriv\195\169e des Fils des flammes !",
-	warn7 = "20 sec avant l'arriv\195\169e des Fils des flammes !",
+	knockback_message = "AoE Knockback !",
+	knockback_soon_message = "5 sec avant AoE Knockback !",
+	submerge_message = "Ragnaros dispara\195\174t pour 90 sec. Arriv\195\169e des Fils des flammes !",
+	emerge_soon_message = "15 sec avant que Ragnaros n'\195\169merge !",
+	emerge_message = "Ragnaros a emerger. 3 min avant l'arriv\195\169e des Fils des flammes !",
+	submerge_60sec_message = "60 sec avant l'arriv\195\169e des Fils des flammes !",
+	submerge_20sec_message = "20 sec avant l'arriv\195\169e des Fils des flammes !",
 
-	bar1text = "AoE knockback",
-	bar2text = "Ragnaros emerge",
-	bar3text = "Ragnaros submerge",
+	knockback_bar = "AoE knockback",
+	emerge_bar = "Ragnaros emerge",
+	submerge_bar = "Ragnaros submerge",
 } end)
 
 ----------------------------------
@@ -172,7 +173,8 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsRagnaros = BigWigs:NewModule(boss)
 BigWigsRagnaros.zonename = AceLibrary("Babble-Zone-2.0")("Molten Core")
 BigWigsRagnaros.enabletrigger = boss
-BigWigsRagnaros.toggleoptions = {"sondeath", "submerge", "emerge", "aoeknock", "bosskill"}
+BigWigsRagnaros.wipemobs = { L["sonofflame"] }
+BigWigsRagnaros.toggleoptions = { "sondeath", "submerge", "emerge", "aoeknock", "bosskill" }
 BigWigsRagnaros.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -180,15 +182,12 @@ BigWigsRagnaros.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsRagnaros:OnEnable()
+	started = nil
 	self.sonsdead = 0
 
+	self:RegisterEvent("PLAYER_COMBAT_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_COMBAT_DISABLED", "CheckForEngage")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_COMBAT_CREATURE_VS_PARTY_HITS", "Event")
-	self:RegisterEvent("CHAT_MSG_COMBAT_FRIENDLYPLAYER_HITS", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PET_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PARTY_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -208,61 +207,65 @@ function BigWigsRagnaros:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 end
 
 function BigWigsRagnaros:BigWigs_RecvSync(sync, rest)
-	if sync ~= "RagnarosSonDead" then return end
-	if not rest then return end
-	rest = tonumber(rest)
-
-	if rest == (self.sonsdead + 1) then
-		self.sonsdead = self.sonsdead + 1
-		if self.db.profile.sondeath then
-			self:TriggerEvent("BigWigs_Message", string.format(L["sonsdeadwarn"], self.sonsdead), "Urgent")
+	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_ENABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_ENABLED")
 		end
-
-		if self.sonsdead == 8 then
-			self:CancelScheduledEvent("bwragnarosemerge")
-			self:TriggerEvent("BigWigs_StopBar", L["bar2text"])
-			self.sonsdead = 0 -- reset counter
-			self:Emerge()
+		self:Emerge()
+	elseif sync == "RagnarosSonDead" and rest then
+		rest = tonumber(rest)
+		if not rest then return end
+		if rest == (self.sonsdead + 1) then
+			self.sonsdead = self.sonsdead + 1
+			if self.db.profile.sondeath then
+				self:TriggerEvent("BigWigs_Message", string.format(L["sonsdeadwarn"], self.sonsdead), "Urgent")
+			end
+			if self.sonsdead == 8 then
+				self:CancelScheduledEvent("bwragnarosemerge")
+				self:TriggerEvent("BigWigs_StopBar", L["emerge_bar"])
+				self.sonsdead = 0 -- reset counter
+				self:Emerge()
+			end
 		end
 	end
 end
 
 function BigWigsRagnaros:CHAT_MSG_MONSTER_YELL(msg)
-	if (string.find(msg, L["trigger1"]) and self.db.profile.aoeknock) then
-		self:TriggerEvent("BigWigs_Message", L["warn1"], "Important")
-		self:ScheduleEvent("bwragnarosaekbwarn", "BigWigs_Message", 23, L["warn2"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 28, "Interface\\Icons\\Spell_Fire_SoulBurn")
-	elseif (string.find(msg, L["trigger2"]) and self.db.profile.submerge) then
-		self:CancelScheduledEvent("bwragnarosaekbwarn")
-		self:TriggerEvent("BigWigs_StopBar", self, L["bar1text"])
-		self:TriggerEvent("BigWigs_Message", L["warn3"], "Important")
-		self:ScheduleEvent("bwragnarosemergewarn4", "BigWigs_Message", 75, L["warn4"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar2text"], 90, "Interface\\Icons\\Spell_Fire_Volcano")
-		self:ScheduleEvent("bwragnarosemerge", self.Emerge, 90, self)
-	elseif (string.find(msg, L["trigger3"]) and self.db.profile.emerge) then
-		self:Emerge()
+	if string.find(msg, L["knockback_trigger"]) and self.db.profile.aoeknock then
+		self:TriggerEvent("BigWigs_Message", L["knockback_message"], "Important")
+		self:ScheduleEvent("bwragnarosaekbwarn", "BigWigs_Message", 23, L["knockback_soon_message"], "Urgent")
+		self:TriggerEvent("BigWigs_StartBar", self, L["knockback_bar"], 28, "Interface\\Icons\\Spell_Fire_SoulBurn")
+	elseif string.find(msg, L["submerge_trigger"]) then
+		self:Submerge()
 	end
-	self:ScheduleEvent("BigWigsRagnarosReset", "BigWigs_RebootModule", 95, self)
+end
+
+function BigWigsRagnaros:Submerge()
+	self:CancelScheduledEvent("bwragnarosaekbwarn")
+	self:TriggerEvent("BigWigs_StopBar", self, L["knockback_bar"])
+
+	if self.db.profile.submerge then
+		self:TriggerEvent("BigWigs_Message", L["submerge_message"], "Important")
+	end
+	if self.db.profile.emerge then
+		self:ScheduleEvent("bwragnarosemergewarn", "BigWigs_Message", 75, L["emerge_soon_message"], "Urgent")
+		self:TriggerEvent("BigWigs_StartBar", self, L["emerge_bar"], 90, "Interface\\Icons\\Spell_Fire_Volcano")
+	end
+	self:ScheduleEvent("bwragnarosemerge", self.Emerge, 90, self)
 end
 
 function BigWigsRagnaros:Emerge()
-	self:CancelScheduledEvent("bwragnarosemergewarn4")
-	self:TriggerEvent("BigWigs_StopBar", self, L["bar2text"])
+	self:CancelScheduledEvent("bwragnarosemergewarn")
+	self:TriggerEvent("BigWigs_StopBar", self, L["emerge_bar"])
 
-	self:TriggerEvent("BigWigs_Message", L["warn5"], "Attention")
-	self:ScheduleEvent("BigWigs_Message", 120, L["warn6"], "Urgent")
-	self:ScheduleEvent("BigWigs_Message", 160, L["warn7"], "Important")
-	self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 180, "Interface\\Icons\\Spell_Fire_SelfDestruct")
-	self:ScheduleEvent("BigWigsRagnarosReset", "BigWigs_RebootModule", 95, self)
-end
-
-function BigWigsRagnaros:Event(msg)
-	if (string.find(msg, boss)) then
-		if (not self:IsEventScheduled("BigWigsRagnarosReset")) then
-			self:ScheduleEvent("BigWigsRagnarosReset", "BigWigs_RebootModule", 95, self)
-			self:Emerge()
-		else
-			self:ScheduleEvent("BigWigsRagnarosReset", "BigWigs_RebootModule", 95, self)
-		end
+	if self.db.profile.emerge then
+		self:TriggerEvent("BigWigs_Message", L["emerge_message"], "Attention")
+	end
+	if self.db.profile.submerge then
+		self:ScheduleEvent("BigWigs_Message", 120, L["submerge_60sec_message"], "Urgent")
+		self:ScheduleEvent("BigWigs_Message", 160, L["submerge_20sec_message"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["submerge_bar"], 180, "Interface\\Icons\\Spell_Fire_SelfDestruct")
 	end
 end
+
