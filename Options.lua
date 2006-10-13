@@ -140,6 +140,7 @@ function BigWigsOptions:ModuleAction(module)
 		deuce.core:BigWigs_RebootModule(module)
 		self:Print(string.format(L["%s reset."], module:ToString()))
 	end
+	self:UpdateTooltip()
 end
 
 function BigWigsOptions:OnTooltipUpdate()
@@ -184,7 +185,8 @@ function BigWigsOptions:OnClick()
 		end
 	else
 		BigWigs:ToggleActive(true)
-		self:UpdateTooltip()
 	end
+
+	self:UpdateTooltip()
 end
 
