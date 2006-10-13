@@ -252,10 +252,27 @@ function BigWigsRagnaros:Submerge()
 		self:ScheduleEvent("bwragnarosemergewarn", "BigWigs_Message", 75, L["emerge_soon_message"], "Urgent")
 		self:TriggerEvent("BigWigs_StartBar", self, L["emerge_bar"], 90, "Interface\\Icons\\Spell_Fire_Volcano")
 	end
+	self:ScheduleRepeatingEvent("bwragnarosemergecheck", self.EmergeCheck, 2, self)
 	self:ScheduleEvent("bwragnarosemerge", self.Emerge, 90, self)
 end
 
+function BigWigsRagnaros:EmergeCheck()
+	if UnitExists("target") and UnitName("target") == boss and UnitExists("targettarget") then
+		self:Emerge()
+		return
+	end
+	local num = GetNumRaidMembers()
+	for i = 1, num do
+		local raidUnit = string.format("raid%starget", i)
+		if UnitExists(raidUnit) and UnitName(raidUnit) == boss and UnitExists(raidUnit.."target") then
+			self:Emerge()
+			return
+		end
+	end
+end
+
 function BigWigsRagnaros:Emerge()
+	self:CancelScheduledEvent("bwragnarosemergecheck")
 	self:CancelScheduledEvent("bwragnarosemergewarn")
 	self:TriggerEvent("BigWigs_StopBar", self, L["emerge_bar"])
 
