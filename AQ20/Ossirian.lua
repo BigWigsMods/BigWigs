@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -81,6 +81,12 @@ L:RegisterTranslations("zhCN", function() return {
 	debuffwarn = "奥斯里安新法术弱点: %s",
 	bartext = "无敌",
 	expose = "我……败……了。",
+
+	["Shadow"] = "暗影",
+	["Fire"] = "火焰",
+	["Frost"] = "冰霜",
+	["Nature"] = "自然",
+	["Arcane"] = "奥术",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

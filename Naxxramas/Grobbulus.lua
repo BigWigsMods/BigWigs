@@ -135,7 +135,8 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage30sec = "30秒后激怒",
 	enrage10sec = "10秒后激怒",
 	bomb_message_you = "你中变异注射了！",
-	bomb_message_other = "%s 中变异注射了！",
+	bomb_message_other = "%s中变异注射了！",
+	bomb_bar = "%s被变异注射",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

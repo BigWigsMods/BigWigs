@@ -126,13 +126,13 @@ L:RegisterTranslations("zhCN", function() return {
 	curse_name = "诅咒驱散警报",
 	curse_desc = "洛欧塞布驱散了一个诅咒效果时发出警报",
 
-	--doombar = "必然的厄运",
-	--doomwarn = "必然的厄运 - %s秒后再次发动",
-	--doomwarn5sec = "5秒后发动必然的厄运！",
+	doombar = "必然的厄运",
+	doomwarn = "必然的厄运 - %s秒后再次发动",
+	doomwarn5sec = "5秒后发动必然的厄运！",
 	doomtrigger = "受到了必然的厄运效果的影响",
 
-	--sporewarn = "孢子出现",
-	--sporebar = "召唤孢子",
+	sporewarn = "孢子出现",
+	sporebar = "召唤孢子",
 	sporespawntrigger = "洛欧塞布施放了召唤孢子。",
 
 	removecursewarn = "洛欧塞布驱散了一个诅咒效果",

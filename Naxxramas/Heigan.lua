@@ -132,6 +132,9 @@ L:RegisterTranslations("zhCN", function() return {
 	-- [[ Bars ]]--
 	teleport_bar = "传送！",
 	back_bar = "出现！",
+	-- [[ Dream Room Mobs ]] --
+	["Eye Stalk"] = "眼柄",
+	["Rotting Maggot"] = "腐烂之蛆",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

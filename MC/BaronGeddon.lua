@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -56,19 +56,38 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	bomb_trigger = "^(.+)受(.+)了活化炸弹",
+	inferno_trigger = "迦顿男爵获得了地狱火的效果。",
+	service_trigger = "%s为拉格纳罗斯做最后一次服务。",
 
 	you = "你",
 	are = "到",
 
 	bomb_message_you = "你是炸弹人！向着夕阳奔跑吧！",
-	--bomb_message_other = "是炸弹人！向着夕阳奔跑吧！",
-	
+	bomb_message_other = "%s是炸弹人！向着夕阳奔跑吧！",
+
+	bombtimer_bar = "%s: 活化炸弹",
+	inferno_bar = "地狱火",
+	service_bar = "最后自爆",
+
+	service_message = "最后一次服务，5秒后迦顿爆炸！",
+	inferno_message = "10秒后地狱火！",
+
+	service_name = "最后自爆计时条",
+	service_desc = "显示迦顿男爵最后自爆的计时条.",
+
+	inferno_name = "地狱火计时条",
+	inferno_desc = "显示迦顿男爵地狱火的计时条.",
+
 	youbomb_name = "玩家炸弹警报",
 	youbomb_desc = "你成为炸弹时发出警报",
-	
+
+	youbomb_name = "玩家炸弹警报",
+	youbomb_desc = "你成为炸弹时发出警报",
+
 	elsebomb_name = "队友炸弹警报",
 	elsebomb_desc = "队友成为炸弹时发出警报",
-	
+
+	icon_cmd = "icon",
 	icon_name = "炸弹图标",
 	icon_desc = "在成为炸弹的队友头上标记骷髅图标（需要助理或领袖权限）",
 } end)

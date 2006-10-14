@@ -218,8 +218,8 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger3 = "打……烂……你！",
 	starttrigger4 = "杀……",
 	
-	adddeath = "死亡了。",
-	teslaoverload = "超负荷！",
+	adddeath = "%s死亡了。",
+	teslaoverload = "%s超负荷！",
 
 	pstrigger = "你感受到痛苦的滋味了吧……",
 	trigger1 = "塔迪乌斯开始施放极性转化。",

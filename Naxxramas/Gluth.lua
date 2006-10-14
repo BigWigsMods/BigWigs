@@ -116,7 +116,7 @@ L:RegisterTranslations("zhCN", function() return {
 	warn2 = "5秒后发动群体恐惧！",
 	warn3 = "群体恐惧 - 20秒后再次发动",
 
-	startwarn = "格拉斯已激活 - 105秒后僵尸出现！",
+	startwarn = "格拉斯已激活，~105秒后僵尸出现！",
 	decimatesoonwarn = "吞噬来临！",
 	decimatewarn = "吞噬 - AoE僵尸！",
 	decimatetrigger = "吞噬",

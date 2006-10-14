@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -81,12 +81,12 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger1 = "一些小点心……",
 	starttrigger2 = "对，跑吧！那样伤口出血就更多了！",
 	starttrigger3 = "你们逃不掉的。",
-	engagewarn = "阿努布雷坎已激活 - 90秒后出现第一波虫群",
+	engagewarn = "阿努布雷坎已激活，~90秒后出现第一波虫群",
 
 	gaintrigger = "阿努布雷坎获得了虫群风暴的效果。",
 	gainendwarn = "虫群风暴结束了！",
-	gainnextwarn = "90秒后出现下一波虫群。",
-	gainwarn10sec = "10秒后出现下一波虫群。",
+	gainnextwarn = "~90秒后出现下一波虫群。",
+	gainwarn10sec = "~10秒后出现下一波虫群。",
 	gainincbar = "下一波虫群",
 	gainbar = "虫群风暴",
 

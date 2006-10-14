@@ -193,6 +193,7 @@ L:RegisterTranslations("zhCN", function() return {
 	
 	wave1bar = "第一波",
 	wave2bar = "第二波",
+	wave2_message = "10秒后第二波",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

@@ -96,7 +96,7 @@ L:RegisterTranslations("zhCN", function() return {
 	shieldwall_name = "盾墙计时器",
 	shieldwall_desc = "盾墙计时器",
 
-	startwarn	= "教官拉苏维奥斯已激活 - 25秒后瓦解怒吼",
+	startwarn	= "教官拉苏维奥斯已激活，~25秒后瓦解怒吼",
 
 	starttrigger1 	= "练习时间到此为止！都拿出真本事来！",
 	starttrigger2 	= "绊腿……有什么问题么？",
@@ -107,7 +107,7 @@ L:RegisterTranslations("zhCN", function() return {
 	shout7secwarn 	= "7秒后发动瓦解怒吼",
 	shout3secwarn = "3秒后发动瓦解怒吼！",
 	shoutwarn 		= "瓦解怒吼！",
-	noshoutwarn		= "瓦解怒吼 - 20秒后发动",
+	noshoutwarn		= "没有怒吼，下次在~20秒后发动",
 	shoutbar 		= "瓦解怒吼",
 
 	shieldwalltrigger   = "死亡骑士学员获得了盾墙的效果。",
