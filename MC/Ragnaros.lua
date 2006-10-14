@@ -185,8 +185,8 @@ function BigWigsRagnaros:OnEnable()
 	started = nil
 	self.sonsdead = 0
 
-	self:RegisterEvent("PLAYER_COMBAT_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_COMBAT_DISABLED", "CheckForEngage")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 
