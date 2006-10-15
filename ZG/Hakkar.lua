@@ -21,12 +21,9 @@ L:RegisterTranslations("enUS", function() return {
 	flee = "Fleeing will do you no good mortals!",
 
 	-- Warnings and bar texts
-	start_message = "Hakkar engaged - 90 seconds until drain - 10 minutes until enrage",
-	drain_warning_60 = "60 seconds until drain",
-	drain_warning_45 = "45 seconds until drain",
-	drain_warning_30 = "30 seconds until drain",
-	drain_warning_15 = "15 seconds until drain",
-	drain_message = "Life Drain - 90 seconds until next",
+	start_message = "Hakkar engaged - 90sec to drain - 10min to enrage!",
+	drain_warning = "%d sec to Life Drain!",
+	drain_message = "Life Drain - 90 sec to next!",
 
 	mindcontrol_message = "%s is mindcontrolled!",
 
@@ -50,7 +47,6 @@ L:RegisterTranslations("enUS", function() return {
 	icon_cmd = "icon",
 	icon_name = "Place Icon",
 	icon_desc = "Place a skull icon on the mind controlled person (requires promoted or higher)",
-
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -64,10 +60,7 @@ L:RegisterTranslations("deDE", function() return {
 	flee = "Es ist sinnlos zu fl\195\188chten, Sterbliche!",
 
 	start_message = "Hakkar angegriffen! Bluttrinker in 90 Sekunden! Wutanfall in 10 Minuten!",
-	drain_warning_60 = "Bluttrinker in 60 Sekunden!",
-	drain_warning_45 = "Bluttrinker in 45 Sekunden!",
-	drain_warning_30 = "Bluttrinker in 30 Sekunden!",
-	drain_warning_15 = "Bluttrinker in 15 Sekunden!",
+	drain_warning = "Bluttrinker in %d Sekunden!",
 	drain_message = "Bluttrinker! N\195\164chster in 90 Sekunden!",
 
 	mindcontrol_message = "%s steht unter Gedankenkontrolle!",
@@ -101,10 +94,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	-- Warnings and bar texts
 	start_message = "Hakkar engag\195\169 - 90 secondes avant drain - 10 minutes avant f\195\169n\195\169sie",
-	drain_warning_60 = "60 secondes avant drain",
-	drain_warning_45 = "45 secondes avant drain",
-	drain_warning_30 = "30 secondes avant drain",
-	drain_warning_15 = "15 secondes avant drain",
+	drain_warning = "%d secondes avant drain",
 	drain_message = "Drain de vie - 90 secondes avant le prochain",
 
 	mindcontrol_message = "%s est Mind Control!",
@@ -135,10 +125,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	-- Warnings and bar texts
 	start_message = "학카르 시작 - 90초후 생명력 흡수 - 10분후 격노",
-	drain_warning_60 = "생명력 흡수 60초전",
-	drain_warning_45 = "생명력 흡수 45초전",
-	drain_warning_30 = "생명력 흡수 30초전",
-	drain_warning_15 = "생명력 흡수 15초전",
+	drain_warning = "생명력 흡수 %d초전",
 	drain_message = "생명력 흡수 - 다음 시전은 90초후",
 
 	mindcontrol_message = "%s|1이;가; 정신 지배되었습니다!",
@@ -173,10 +160,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	-- Warnings and bar texts
 	start_message = "哈卡已经激活 - 90秒后开始生命吸取 - 10分钟后进入激怒状态",
-	drain_warning_60 = "60秒后发动生命吸取",
-	drain_warning_45 = "45秒后发动生命吸取",
-	drain_warning_30 = "30秒后发动生命吸取",
-	drain_warning_15 = "15秒后发动生命吸取",
+	drain_warning = "%d秒后发动生命吸取",
 	drain_message = "血液虹吸 - 90秒后再次发动",
 	
 	mindcontrol_message = "%s 被控制了",
@@ -252,23 +236,23 @@ function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
 		if self.db.profile.mc then
 			self:TriggerEvent("BigWigs_Message", string.format(L["mindcontrol_message"], mcplayer), "Urgent")
 		end
-		if self.db.profile.icon then 
+		if self.db.profile.icon then
 			self:TriggerEvent("BigWigs_SetRaidIcon", mcplayer)
 		end
 	end
 end
 
 function BigWigsHakkar:BigWigs_Message(text)
-	if text == L["drain_warning_60"] then self.prior = nil end
+	if text == string.format(L["drain_warning"], 60) then self.prior = nil end
 end
 
 function BigWigsHakkar:BeginTimers(first)
 	if self.db.profile.drain then
 		if not first then self:TriggerEvent("BigWigs_Message", L["drain_message"], "Attention") end
-		self:ScheduleEvent("BigWigs_Message", 30, L["drain_warning_60"], "Attention")
-		self:ScheduleEvent("BigWigs_Message", 45, L["drain_warning_45"], "Attention")
-		self:ScheduleEvent("BigWigs_Message", 60, L["drain_warning_30"], "Urgent")
-		self:ScheduleEvent("BigWigs_Message", 75, L["drain_warning_15"], "Important")
+		self:ScheduleEvent("bwhakkarld60", "BigWigs_Message", 30, string.format(L["drain_warning"], 60), "Attention")
+		self:ScheduleEvent("bwhakkarld45", "BigWigs_Message", 45, string.format(L["drain_warning"], 45), "Attention")
+		self:ScheduleEvent("bwhakkarld30", "BigWigs_Message", 60, string.format(L["drain_warning"], 30), "Urgent")
+		self:ScheduleEvent("bwhakkarld15", "BigWigs_Message", 75, string.format(L["drain_warning"], 15), "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["Life Drain"], 90, "Interface\\Icons\\Spell_Shadow_LifeDrain")
 	end
 end
