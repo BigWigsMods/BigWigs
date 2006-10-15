@@ -193,7 +193,7 @@ function BigWigsVersionQuery:OnTooltipUpdate()
 		"child_justify1", "LEFT",
 		"child_justify2", "RIGHT"
 	)
-	for name, version in self.responseTable do
+	for name, version in pairs(self.responseTable) do
 		if version == -1 then
 			cat:AddLine("text", name, "text2", "|cff"..COLOR_RED..L["N/A"].."|r")
 		else
