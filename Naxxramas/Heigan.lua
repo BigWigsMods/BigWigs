@@ -119,7 +119,7 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger2 = "你……就是下一个。",
 	starttrigger3 = "我看到你了……",
 	teleport_trigger = "你的生命正走向终结。",
-	die_trigger = "%s takes his last breath.",
+	die_trigger = "%s咽下了最后一口气。",
 	-- [[ Warnings ]]--
 	engage_message = "希尔盖已激活 - 90秒后传送",
 	teleport_1min_message = "1分钟后传送",
