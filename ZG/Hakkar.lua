@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -163,7 +163,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	-- Chat message triggers
 	engage_trigger = "^骄傲会将你送上绝路",
-	drain_trigger = "^(.+)的酸性血液虹吸使哈卡受到了(%d+)点自然伤害。",
+	drain_trigger = "^(.+)的酸性血液虹吸使哈卡受到了(.+)点自然伤害。",
 	mindcontrol_trigger = "^(.+)受(.+)疯狂效果的影响。",
 	
 	you = "你",

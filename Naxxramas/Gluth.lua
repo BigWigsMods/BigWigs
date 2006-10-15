@@ -105,8 +105,8 @@ L:RegisterTranslations("zhCN", function() return {
 	frenzy_name = "狂暴警报",
 	frenzy_desc = "狂暴警报",
 
-	decimate_name = "吞噬警报",
-	decimate_desc = "吞噬警报",
+	decimate_name = "残杀警报",
+	decimate_desc = "残杀警报",
 
 	trigger1 = "%s变得狂怒无比！",
 	trigger2 = "恐惧怒吼",
@@ -117,12 +117,12 @@ L:RegisterTranslations("zhCN", function() return {
 	warn3 = "群体恐惧 - 20秒后再次发动",
 
 	startwarn = "格拉斯已激活，~105秒后僵尸出现！",
-	decimatesoonwarn = "吞噬来临！",
-	decimatewarn = "吞噬 - AoE僵尸！",
-	decimatetrigger = "吞噬",
+	decimatesoonwarn = "残杀来临！",
+	decimatewarn = "残杀 - AoE僵尸！",
+	decimatetrigger = "残杀",
 
 	bar1text = "群体恐惧",
-	decimatebartext = "吞噬僵尸",
+	decimatebartext = "残杀",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
