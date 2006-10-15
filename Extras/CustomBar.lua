@@ -6,7 +6,7 @@ assert(BigWigs, "BigWigs not found!")
 
 local L = AceLibrary("AceLocale-2.0"):new("BigWigsCustomBar")
 
-local times = {}
+local times = nil
 
 L:RegisterTranslations("enUS", function() return {
 	["bwcb"] = true,
@@ -135,7 +135,7 @@ end
 function BWCB(seconds, message)
 	if message then seconds = tostring(seconds) .. " " .. message end
 	local t = GetTime()
-        if ( not times[seconds] ) or ( times[seconds] and ( times[seconds] + 2 ) < t) then
+	if ( not times[seconds] ) or ( times[seconds] and ( times[seconds] + 2 ) < t) then
 		times[seconds] = t
 		BigWigsCustomBar:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..seconds)
 	end
@@ -153,10 +153,6 @@ function BigWigsCustomBar:RegisterShortHand()
 		setglobal("SLASH_BWCB_SHORTHAND1", "/"..L["bwcb"])
 		SlashCmdList["BWLCB_SHORTHAND"] = BWLCB
 		setglobal("SLASH_BWLCB_SHORTHAND1", "/"..L["bwlcb"])
-	end
-
-		if SlashCmdList then
-
 	end
 end
 
