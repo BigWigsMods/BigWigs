@@ -16,6 +16,7 @@ L:RegisterTranslations("enUS", function() return {
 	["raidwarn"] = true,
 	["broadcast"] = true,
 	["whisper"] = true,
+	["useraidchannel"] = true,
 
 	["Broadcast over RaidWarning"] = true,
 	["Broadcast"] = true,
@@ -24,6 +25,9 @@ L:RegisterTranslations("enUS", function() return {
 	["Whisper"] = true,
 	["Whisper warnings"] = true,
 	["Toggle whispering warnings to players."] = true,
+	
+	["Use Raidchannel"] = true,
+	["Toggle use broadcasting over raid channel or raid warnning."] = true,
 	
 	["Options for RaidWarning."] = true,
 } end )
@@ -38,6 +42,9 @@ L:RegisterTranslations("koKR", function() return {
 	["Whisper"] = "귓속말",
 	["Whisper warnings"] = "귓속말 경고",
 	["Toggle whispering warnings to players."] = "플레이어에게 귓속말 경고 알림 토글",
+	
+	["Use Raidchannel"] = "공격대 채널 사용",
+	["Toggle use broadcasting over raid channel or raid warnning."] = "공격대 경고 혹은 채널 사용 토글",
 	
 	["Options for RaidWarning."] = "공격대 경고 설정",
 	
@@ -83,6 +90,7 @@ BigWigsRaidWarn = BigWigs:NewModule(L["RaidWarning"])
 BigWigsRaidWarn.defaultDB = {
 	whisper = false,
 	broadcast = false,
+	useraidchannel = false,
 }
 BigWigsRaidWarn.consoleCmd = L["raidwarn"]
 BigWigsRaidWarn.consoleOptions = {
@@ -104,6 +112,13 @@ BigWigsRaidWarn.consoleOptions = {
 			get = function() return BigWigsRaidWarn.db.profile.whisper end,
 			set = function(v) BigWigsRaidWarn.db.profile.whisper = v end,		
 		},
+		[L["useraidchannel"]] = {
+			type = "toggle",
+			name = L["Use Raidchannel"],
+			desc = L["Toggle use broadcasting over raid channel or raid warnning."],
+			get = function() return BigWigsRaidWarn.db.profile.useraidchannel end,
+			set = function(v) BigWigsRaidWarn.db.profile.useraidchannel = v end,		
+		},
 	}
 }
 
@@ -120,7 +135,11 @@ function BigWigsRaidWarn:BigWigs_Message(msg, color, noraidsay)
 	if not self.db.profile.broadcast or not msg or noraidsay or ( not IsRaidLeader() and not IsRaidOfficer() ) then
 		return 
 	end
-	SendChatMessage("*** "..msg.." ***", "RAID_WARNING")
+	if self.db.profile.useraidchannel then
+		SendChatMessage("*** "..msg.." ***", "RAID")
+	else
+		SendChatMessage("*** "..msg.." ***", "RAID_WARNING")
+	end
 end
 
 function BigWigsRaidWarn:BigWigs_SendTell(player, msg )
