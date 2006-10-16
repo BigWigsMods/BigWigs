@@ -7,7 +7,7 @@ local BZ = AceLibrary("Babble-Zone-2.0")
 local BB = AceLibrary("Babble-Boss-2.0")
 local L = AceLibrary("AceLocale-2.0"):new("BigWigs")
 
-
+ 
 ----------------------------
 --      Localization      --
 ----------------------------
