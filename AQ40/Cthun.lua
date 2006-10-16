@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -214,13 +214,13 @@ L:RegisterTranslations("zhCN", function() return {
 	weakened_name = "虚弱警报",
 	weakened_desc = "克苏恩被削弱时发出警报",
 
-	weakenedtrigger 	= "%s 被削弱了！",
+	weakenedtrigger 	= "%s的力量被削弱了！",
 
-	tentacle1	= "血肉触须出现！",
-	tentacle2	= "5秒后血肉触须出现！",
+	tentacle1	= "眼球触须出现！",
+	tentacle2	= "5秒后眼球触须出现！",
 
-	norape1		= "眼球触须出现！",
-	norape2		= "5秒后眼球触须出现！",
+	norape1		= "巨眼、巨爪触须出现！",
+	norape2		= "5秒后巨眼、巨爪触须出现！",
 
 	weakened		= "克苏恩被削弱了 - 45秒内全力输出伤害！",
 	invulnerable2	= "削弱状态还有5秒结束",
@@ -235,7 +235,7 @@ L:RegisterTranslations("zhCN", function() return {
 	glare2		= "5秒后发动黑暗闪耀！",
 	glare1		= "黑暗闪耀发动 - 跑位！",
 
-	barTentacle	= "血肉触须！",
+	barTentacle	= "眼球触须！",
 	barNoRape	= "巨眼、巨爪触须！",
 	barWeakened	= "克苏恩被削弱了！",
 	barGlare	= "黑暗闪耀！",
