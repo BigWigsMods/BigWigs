@@ -27,7 +27,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Toggle whispering warnings to players."] = true,
 	
 	["Use Raidchannel"] = true,
-	["Toggle use broadcasting over raid channel or raid warnning."] = true,
+	["Toggle using the raid channel instead of the raid warning channel for boss messages."] = true,
 	
 	["Options for RaidWarning."] = true,
 } end )
@@ -44,7 +44,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Toggle whispering warnings to players."] = "플레이어에게 귓속말 경고 알림 토글",
 	
 	["Use Raidchannel"] = "공격대 채널 사용",
-	["Toggle use broadcasting over raid channel or raid warnning."] = "공격대 경고 혹은 채널 사용 토글",
+	["Toggle using the raid channel instead of the raid warning channel for boss messages."] = "공격대 경고 혹은 채널 사용 토글",
 	
 	["Options for RaidWarning."] = "공격대 경고 설정",
 	
@@ -115,7 +115,7 @@ BigWigsRaidWarn.consoleOptions = {
 		[L["useraidchannel"]] = {
 			type = "toggle",
 			name = L["Use Raidchannel"],
-			desc = L["Toggle use broadcasting over raid channel or raid warnning."],
+			desc = L["Toggle using the raid channel instead of the raid warning channel for boss messages."],
 			get = function() return BigWigsRaidWarn.db.profile.useraidchannel end,
 			set = function(v) BigWigsRaidWarn.db.profile.useraidchannel = v end,		
 		},
