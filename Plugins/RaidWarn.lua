@@ -65,21 +65,25 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	["RaidWarning"] = "RaidWarning",
+	["RaidWarning"] = "RaidWarnung",
 
-	-- ["raidwarn"] = true,
-	-- ["broadcast"] = true,
-	-- ["whisper"] = true,
+	--["raidwarn"] = "raidwarnen",
+	--["broadcast"] = "verbreiten",
+	--["whisper"] = "fl\195\188stern",
+	--["useraidchannel"] = "raidchatbenutzen",
 
-	["Broadcast over RaidWarning"] = "Broadcast \195\188ber RaidWarning",
-	["Broadcast"] = "Broadcast",
-	["Toggle broadcasting over Raidwarning."] = "W\195\164hle, ob Warnungen \195\188ber RaidWarning gesendet werden sollen.",
+	["Broadcast over RaidWarning"] = "Verbreiten \195\188ber Sclachtzugswarnung",
+	["Broadcast"] = "Verbreiten",
+	["Toggle broadcasting over Raidwarning."] = "Meldungen \195\188ber Schlachtzugswarnung an Alle senden.",
 	
 	["Whisper"] = "Fl\195\188stern",
-	["Whisper warnings"] = "Fl\195\188ster Warnungen",
-	["Toggle whispering warnings to players."] = "W\195\164hle, ob Warnungen an andere Spieler gefl\195\188stert werden sollen.",
+	["Whisper warnings"] = "Warnungen fl\195\188stern",
+	["Toggle whispering warnings to players."] = "Warnungen an andere Spieler fl\195\188stern.",
+
+	["Use Raidchannel"] = "Schlachtzugschat benutzen",
+	["Toggle using the raid channel instead of the raid warning channel for boss messages."] = "Schlachtzugschat anstelle des Schlachtzugswarungschats für Boss Nachrichten benutzen.",
 	
-	["Options for RaidWarning."] = "Optionen f\195\188r RaidWarning.",
+	["Options for RaidWarning."] = "Optionen f\195\188r RaidWarnung.",
 } end )
 
 ----------------------------------

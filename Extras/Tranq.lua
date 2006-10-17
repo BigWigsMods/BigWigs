@@ -1,4 +1,4 @@
-
+﻿
 assert(BigWigs, "BigWigs not found!")
 
 ----------------------------
@@ -49,6 +49,10 @@ L:RegisterTranslations("deDE", function() return {
 
 	["Tranq - %s"] = "Einlullender Schuss - %s",
 	["%s's Tranq failed!"] = "%s's Einlullender Schuss verfehlt",
+	["Tranq"] = "EinlullenderSchuss",
+	["Options for the tranq module."] = "Optionen f\195\188r das Einlullender Schuss Modul.",
+	["Toggle tranq bars on or off."] = "Einlullender Schuss Anzeigebalken anzeigen.",
+	["Bars"] = "Anzeigebalken",
 } end)
 
 ----------------------------------

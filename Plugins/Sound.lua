@@ -53,10 +53,15 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Sounds"] = "Sound",
-	-- ["sounds"] = true,
-	["Use sounds"] = "Benutze Sounds",
+	--["sounds"] = "sound",
 	["Options for sounds."] = "Optionen f\195\188r Sound.",
-	["Toggle sounds on or off."] = "Aktiviere oder deaktiviere Sound.",
+
+	--["toggle"] = true,
+	["Use sounds"] = "Sound nutzen",
+	["Toggle sounds on or off."] = "Sound aktivieren/deaktivieren.",
+	--["default"] = "true",
+	["Default only"] = "Nur Standard",
+	["Use only the default sound."] = "Nur Standard Sound.",
 } end)
 
 ----------------------------------

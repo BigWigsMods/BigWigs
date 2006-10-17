@@ -58,14 +58,19 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00Modul aktiviert|r",
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "Klicken, um alle laufenden Module zur\195\188ckzusetzen. Shift-Klick um alle laufenden Module zu beenden.",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55fKlicken|r, um alle laufenden Module zur\195\188ckzusetzen. |cffeda55fShift+Klick|r um alle laufenden Module zu beenden. |cffeda55fStrg+Shift+Klick|r um BigWigs komplett zu beenden.",
+	["|cffeda55fClick|r to enable."] = "|cffeda55fKlicken|r um zu aktivieren.",
+	["Big Wigs is currently disabled."] = "Big Wigs ist gegenw\195\164rtig deaktiviert.",
 	["Active boss modules"] = "Aktive Boss Module",
 	["Hidden"] = "Versteckt",
 	["Shown"] = "Angezeigt",
+	-- ["minimap"] = true,
 	["Minimap"] = "Minimap",
 	["Toggle the minimap button."] = "Minimap Button anzeigen.",
 	["All running modules have been reset."] = "Alle laufenden Module wurden zur\195\188ckgesetzt.",
 	["All running modules have been disabled."] = "Alle laufenden Module wurden beendet.",
+	["%s reset."] = "%s zur\195\188ckgesetzt.",
+	["%s disabled."] = "%s beendet.",
 } end)
 
 ----------------------------------

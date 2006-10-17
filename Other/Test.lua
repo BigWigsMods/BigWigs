@@ -69,6 +69,27 @@ L:RegisterTranslations("zhCN", function() return {
 	["Testing Sync"] = "同步测试中",
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	-- ["test"] = true,
+	["Test"] = "Test",
+	["Test Bar"] = "Test Balken",
+	["Test Bar 2"] = "Test Balken 2",
+	["Test Bar 3"] = "Test Balken 3",
+	["Test Bar 4"] = "Test Balken 4",
+	["Testing"] = "Teste",
+	["OMG Bear!"] = "OMG B\195\164r!",
+	["*RAWR*"] = "RAWR",
+	["Victory!"] = "Sieg!",
+	["Options for testing."] = "Optionen f\195\188r den Test von BigWigs.",
+	["local"] = "Lokal",
+	["Local test"] = "Lokaler Test",
+	["Perform a local test of BigWigs."] = "Lokalen Test durchf\195\188hren.",
+	["sync"] = "sync",
+	["Sync test"] = "Synchronisations-Test",
+	["Perform a sync test of BigWigs."] = "Sychronisations-Test durchf\195\188hren.",
+	["Testing Sync"] = "Synchronisation testen",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

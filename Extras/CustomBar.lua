@@ -1,4 +1,4 @@
-assert(BigWigs, "BigWigs not found!")
+﻿assert(BigWigs, "BigWigs not found!")
 
 ----------------------------
 --      Localization      --
@@ -45,6 +45,20 @@ L:RegisterTranslations("zhCN", function() return {
 	["Starts a custom bar with the given parameters."] = "激活一条带参数的自制时间条",
 	["%s: %s"] = "%s: %s",
 	["%s: Timer [%s] finished."] = "%s: 计时器 [%s] 到时间",
+} end)
+
+L:RegisterTranslations("deDE", function() return {
+	-- ["bwcb"] = true,
+	-- ["bwlcb"] = true,
+	-- ["custombar"] = true,
+	["Custom Bars"] = "Individuelle Anzeigebalken",
+	["Start a custom bar, either local or global."] = "Einen individuellen Anzeigebalken starten (entweder lokal oder global).",
+	["Local"] = "Lokal",
+	["Global"] = "Global",
+	["<seconds> <bar text>"] = "<Sekunden> <Balkentext>",
+	["Starts a custom bar with the given parameters."] = "Einen individuellen Anzeigebalken mit den gegebenen Parametern starten. \n<Sekunden> <Balkentext>",
+	-- ["%s: %s"] = true,
+	["%s: Timer [%s] finished."] = "%s: Timer [%s] beendet.",
 } end)
 ----------------------------------
 --      Module Declaration      --

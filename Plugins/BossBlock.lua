@@ -103,31 +103,32 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["BossBlock"] = "BossBlock",
-	["Suppress bossmod chat from other players."] = "Unterdr\195\188cke Bossmod Chat von anderen Spielern.",
-
-	["Suppress Raid Chat"] = "Unterdr\195\188cke Raid Chat",
-	["Suppress messages in the raid channel."] = "Unterdr\195\188cke Nachrichten im Raid Channel",
-
-	["Suppress RaidWarn Chat"] = "Unterdr\195\188cke RaidWarn Chat",
-	["Suppress RaidWarn messages in the chat frames."] = "Unterdr\195\188cke RaidWarn Nachrichten im Chat Fenster.",
-
-	["Suppress RaidWarn"] = "Unterdr\195\188cke RaidWarn",
-	["Suppress RaidWarn popup messages."] = "Unterdr\195\188cke RaidWarn Popup Nachrichten.",
-
-	["Suppress RaidSay"] = "Unterdr\195\188cke RaidSay",
-	["Suppress CTRA RaidSay popup messages."] = "Unterdr\195\188cke CTRA RaidSay Popup Nachrichten.",
-	["Suppress oRA RaidSay popup messages."] = "Unterdr\195\188cke oRA RaidSay Popup Nachrichten.",
-
-	["Suppress Tells"] = "Unterdr\195\188cke Fl\195\188stern",
-	["Suppress Tell messages."] = "Unterdr\195\188cke Fl\195\188stern Nachrichten.",
+	["Suppress bossmod chat from other players."] = "Bossmod Chat von anderen Spielern unterdr\195\188cken.",
+ 	 
+	["Suppress Raid Chat"] = "Raid Chat unterdr\195\188cken",
+	["Suppress messages in the raid channel."] = "Nachrichten im Raid Channel unterdr\195\188cken",
+ 
+	["Suppress RaidWarn Chat"] = "RaidWarn Chat unterdr\195\188cken",
+	["Suppress RaidWarn messages in the chat frames."] = "RaidWarn Nachrichten im Chat Fenster unterdr\195\188cken.",
+ 
+	["Suppress RaidWarn"] = "RaidWarn unterdr\195\188cken",
+	["Suppress RaidWarn popup messages."] = "RaidWarn Popup-Nachrichten unterdr\195\188cken.",
+ 
+	["Suppress RaidSay"] = "RaidSay unterdr\195\188cken",
+	["Suppress CTRA RaidSay popup messages."] = "CTRA RaidSay Popup Nachrichten unterdr\195\188cken.",
+	["Suppress oRA RaidSay popup messages."] = "oRA RaidSay Popup Nachrichten unterdr\195\188cken.",
+	["Suppress oRA2 RaidSay popup messages."] = "oRA2 RaidSay Popup Nachrichten unterdr\195\188cken.",
+ 
+	["Suppress Tells"] = "Fl\195\188stern unterdr\195\188cken",
+	["Suppress Tell messages."] = "Fl\195\188stern Nachrichten unterdr\195\188cken.",
 
 	["Debugging"] = "Debugging",
-	["Show debug messages."] = "Zeige Debug Nachrichten.",
-
-	["Suppressing Chatframe"] = "Unterdr\195\188cke Chatframe",
-	["Suppressing RaidWarningFrame"] = "Unterdr\195\188cke RaidWarningFrame",
-	["Suppressing CT_RAMessageFrame"] = "Unterdr\195\188cke CT_RAMessageFrame",
-
+	["Show debug messages."] = "Debug Nachrichten anzeigen.",
+ 
+	["Suppressing Chatframe"] = "Chatframe unterdr\195\188ckt",
+	["Suppressing RaidWarningFrame"] = "RaidWarningFrame unterdr\195\188cket",
+	["Suppressing CT_RAMessageFrame"] = "CT_RAMessageFrame unterdr\195\188ckt",
+ 
 	["Suppressed"] = "Unterdr\195\188ckt",
 	["Shown"] = "Angezeigt",
 } end)

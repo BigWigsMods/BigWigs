@@ -86,21 +86,21 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	["Raid Icons"] = "Schlachtzug Symbole",
+	["Raid Icons"] = "Schlachtzug-Symbole",
 
-	-- ["raidicon"] = true,
-	-- ["place"] = true,
-	-- ["icon"] = true,
+	--["raidicon"] = "schlachtzugsymbol",
+	--["place"] = "position",
+	--["icon"] = "symbol",
 
 	["Place"] = "Platzierung",
-	["Place Raid Icons"] = "Platziere Schlachtzug Symbole",
-	["Toggle placing of Raid Icons on players."] = "W\195\164hle, ob Schlachtzug Symbole auf Spieler gesetzt werden.",
+	["Place Raid Icons"] = "Schlachtzug-Symbole platzieren",
+	["Toggle placing of Raid Icons on players."] = "Schlachtzug-Symbole auf Spieler setzen.",
 	
 	["Icon"] = "Symbol",
-	["Set Icon"] = "Symbol",
+	["Set Icon"] = "Symbol platzieren",
 	["Set which icon to place on players."] = "W\195\164hle, welches Symbol auf Spieler gesetzt wird.",
 	
-	["Options for Raid Icons."] = "Optionen f\195\188r Schlachtzug Symbole.",
+	["Options for Raid Icons."] = "Optionen f\195\188r Schlachtzug-Symbole.",
 
 	["star"] = "Stern",
 	["circle"] = "Kreis",

@@ -1,4 +1,4 @@
-
+﻿
 assert( BigWigs, "BigWigs not found!")
 
 
@@ -122,36 +122,43 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("deDE", function() return {
 	["Bars"] = "Anzeigebalken",
 
-	-- ["bars"] = true,
-	-- ["anchor"] = true,
-	-- ["scale"] = true,
-	-- ["up"] = true,
+	["bars"] = "balken",
+	["anchor"] = "verankerung",
+	["scale"] = "skalierung",
+	["up"] = "oben",
 
 	["Options for the timer bars."] = "Optionen f\195\188r die Timer Anzeigebalken.",
-	["Show the bar anchor frame."] = "Zeige die Verankerung der Anzeigebalken.",
-	["Set the bar scale."] = "W\195\164hle die Skalierung der Anzeigebalken.",
+	["Show the bar anchor frame."] = "Verankerung der Anzeigebalken anzeigen.",
+	["Set the bar scale."] = "Skalierung der Anzeigebalken w\195\164hlen.",
 	["Group upwards"] = "Nach oben fortsetzen",
-	["Toggle bars grow upwards/downwards from anchor."] = "Anzeigebalken von der Verankerung aus nach Oben/Unten fortsetzen.",
+	["Toggle bars grow upwards/downwards from anchor."] = "Anzeigebalken von der Verankerung aus nach oben/unten fortsetzen.",
 
 	["Timer bars"] = "Timer Anzeigebalken",
-	["Show anchor"] = "Zeige Verankerung",
-	["Grow bars upwards"] = "Anzeigebalken nach oben fortsetzen lassen",
+	["Show anchor"] = "Verankerung anzeigen",
+	["Grow bars upwards"] = "Anzeigebalken nach oben fortsetzen",
 	["Scale"] = "Skalierung",
 	["Bar scale"] = "Anzeigebalken Skalierung",
 
-	["Bars now grow %2$s"] = "Anzeigebalken werden nun fortgesetzt nach %2$s",
-	["Scale is set to %2$s"] = "Skalierung jetzt %2$s",
+	["Bars now grow %2$s"] = "Anzeigebalken werden nun fortgesetzt nach: %2$s",
+	["Scale is set to %2$s"] = "Skalierung jetzt: %2$s",
 
-	["Up"] = "Oben",
-	["Down"] = "Unten",
+	["Up"] = "oben",
+	["Down"] = "unten",
 	
 	["Test"] = "Test",
-	--["Close"] = true,
+	["Close"] = "Schlie\195\159en",
 
 	["default"] = "Default",
 	["smooth"] = "Smooth",
 	["otravi"] = "Otravi",
 	["Charcoal"] = "Charcoal",
+	["Texture"] = "Textur",
+	["Set the texture for the timerbars."] = "Textur der Anzeigebalken w\195\164hlen.",
+
+	["default"] = "vorgabe",
+	["smooth"] = "glatt",
+	["otravi"] = "otravi",
+	["Charcoal"] = "Charcoa",
 } end)
 
 ----------------------------------

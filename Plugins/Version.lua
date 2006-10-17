@@ -1,4 +1,4 @@
-assert(BigWigs, "BigWigs not found!")
+﻿assert(BigWigs, "BigWigs not found!")
 
 local BWL = nil
 local BZ = AceLibrary("Babble-Zone-2.0")
@@ -61,6 +61,34 @@ L:RegisterTranslations("koKR", function() return {
 	["Runs a version query on the given zone."] = "정해진 지역에 동작 모듈 버전 요청.",
 	["Zone"] = "지역",
 	["N/A"] = "N/A",
+} end )
+
+L:RegisterTranslations("deDE", function() return {
+	["versionquery"] = "Versionsabfrage",
+	["Version Query"] = "Versionsabfrage",
+	["Commands for querying the raid for Big Wigs versions."] = "Kommandos um den Schlachtzug nach verwendeten BigWigs Versionen abzufragen.",
+	["Query already running, please wait 5 seconds before trying again."] = "Abfrage l\195\164uft bereits, bitte 5 Sekunden warten bis zum n\195\164chsten Versuch.",
+	["Querying versions for "] = "Frage Versionen ab f\195\188r ",
+	["Big Wigs Version Query"] = "BigWigs Versionsabfrage",
+	["Close window"] = "Schlie\195\159e Fenster", -- I know, it's really a Tablet.
+	["Showing version for "] = "Zeige Version f\195\188r ",
+	["Green versions are newer than yours, red are older, and white are the same."] = "Gr\195\188ne Versionen sind neuer, rote sind \195\164lter, wei\195\159e sind gleich.",
+	["Player"] = "Spieler",
+	["Version"] = "Version",
+	["Current zone"] = "Momentane Zone",
+	["<zone>"] = "<zone>",
+	["Version query done."] = "Versionsabfrage beendet.",
+	["Runs a version query on your current zone."] = "Versionsabfrage f\195\188r die momentane Zone starten.",
+	["Closes the version query window."] = "Schlie\195\159t das Versionsabfrage-Fenster.",
+	["current"] = "gegenw\195\164rtig",
+	["Runs a version query on the given zone."] = "Versionsabfrage in f\195\188r eine gegebene Zone starten.",
+	["Zone"] = "Zone",
+	["zone"] = "Zone",
+	["N/A"] = "N/A",
+	["BigWigs"] = "BigWigs",
+	["Runs a version query on the BigWigs core."] = "Versionsabfrage f\195\188r die BigWigs Kernkomponente starten.",
+	["Nr Replies"] = "Anzahl der Antworten",
+	["Ancient"] = "Alt",
 } end )
 
 ---------------------------------

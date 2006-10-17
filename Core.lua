@@ -63,19 +63,29 @@ L:RegisterTranslations("deDE", function() return {
 	["Target monitoring disabled"] = "Ziel\195\188berwachung deaktiviert",
 	["%s has been defeated"] = "%s wurde besiegt",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s wurden besiegt",    -- "<bosses> have been defeated"
+
+	-- AceConsole strings
+	-- ["boss"] = true,
+	["Bosses"] = "Bosse",
+	["Options for boss modules."] = "Optionen f\195\188r Boss Module.",
+	["Options for bosses in %s."] = "Optionen f\195\188r Bosse in %s.", -- "Options for bosses in <zone>"
+	["Options for %s (r%s)."] = "Optionen f\195\188r %s (r%s).",     -- "Options for <boss> (<revision>)"
 	-- ["plugin"] = true,
 	["Plugins"] = "Plugins",
 	["Options for plugins."] = "Optionen f\195\188r Plugins.",
+	-- ["extra"] = true,
+	["Extras"] = "Extras",
+	["Options for extras."] = "Optionen f\195\188r Extras.",
 	-- ["toggle"] = true,
 	["Active"] = "Aktivieren",
-	["Activate or deactivate this module."] = "Aktiviere oder deaktiviere dieses Modul.",
+	["Activate or deactivate this module."] = "Aktiviert oder deaktiviert dieses Modul.",
 	-- ["reboot"] = true,
 	["Reboot"] = "Neustarten",
-	["Reboot this module."] = "Starte dieses Modul neu.",
+	["Reboot this module."] = "Startet dieses Modul neu.",
 	-- ["debug"] = true,
 	["Debugging"] = "Debugging",
 	["Show debug messages."] = "Zeige Debug Nachrichten.",
-	bosskill_cmd = "kill",
+	-- bosskill_cmd = "kill",
 	bosskill_name = "Boss besiegt",
 	bosskill_desc = "Melde, wenn ein Boss besiegt wurde.",
 
@@ -89,7 +99,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Naxxramas"] = "Naxxramas",
 	-- ["Silithus"] = true,
 	["Outdoor Raid Bosses"] = "Outdoor",
-	["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
+	-- ["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
 } end)
 
 L:RegisterTranslations("koKR", function() return {
