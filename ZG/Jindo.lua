@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -124,7 +124,7 @@ L:RegisterTranslations("zhCN", function() return {
 	icon_desc = "团队标记被诅咒玩家 (需要助力或更高权限)",
 
 	triggerbrainwash = "妖术师金度施放了召唤洗脑图腾。",
-	triggerhealing = "妖术师金度施放了强效治疗守卫。",
+	triggerhealing = "妖术师金度施放了强力治疗结界。",
 	triggercurse = "^(.+)受到(.+)金度的欺骗效果的影响",
 
 	warnbrainwash = "洗脑图腾！",

@@ -136,13 +136,13 @@ L:RegisterTranslations("zhCN", function() return {
 	lifedrain_warn1 = "5秒后生命吸取！",
 	lifedrain_bar = "生命吸取",
 
-	lifedrain_trigger = "受到了生命吸取",  -- need confirm
+	lifedrain_trigger = "受到了生命吸取效果的影响",
 	lifedrain_trigger2 = "生命吸取被抵抗",  -- need confirm
 
 	deepbreath_incoming_message = "寒冰炸弹~23秒后施放！",
 	deepbreath_incoming_soon_message = "寒冰炸弹~5秒后施放！",
 	deepbreath_incoming_bar = "寒冰炸弹",
-	deepbreath_trigger = "%s深深地吸了一口气……",  -- need confirm
+	deepbreath_trigger = "%s深深地吸了一口气……",
 	deepbreath_warning = "寒冰炸弹即将着地！",
 	deepbreath_bar = "寒冰炸弹着地！",
 } end )

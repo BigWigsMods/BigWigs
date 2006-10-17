@@ -224,10 +224,10 @@ L:RegisterTranslations("zhCN", function() return {
 	detonateicon_name = "自爆法力标记",
 	detonateicon_desc = "标记即将自爆法力的人",
 
-	guardians_name = "寒冰皇冠卫士警报",
-	guardians_desc = "提前警报第三阶段召唤来的寒冰皇冠卫士",
+	guardians_name = "寒冰皇冠护卫警报",
+	guardians_desc = "提前警报第三阶段召唤来的寒冰皇冠护卫",
 
-	mc_trigger1 = "现在，你的灵魂和我绑定了！",		-- need to check the line
+	mc_trigger1 = "你的灵魂现在属于我了！",
 	mc_trigger2 = "没有人能逃得掉！",
 	mc_warning = "精神控制！",
 
@@ -240,22 +240,22 @@ L:RegisterTranslations("zhCN", function() return {
 	phase2_bar = "克尔苏加德激活！",
 
 	phase3_soon_warning = "第三阶段即将来到！",
-	phase3_trigger = "主人，我需要帮助！",		-- need to check the line
+	phase3_trigger = "主人，我需要",
 	phase3_warning = "第三阶段开始，~15秒后卫士出现！",
 
 	guardians_trigger = "那好吧。冰冷废墟的战士，站起来！我命令你战斗，为你的主人而杀，而死！不要留一个！", -- need to check the line
-	guardians_warning = "~10秒后卫士出现！",
-	guardians_bar = "卫士出现！",
+	guardians_warning = "~10秒后护卫出现！",
+	guardians_bar = "护卫出现！",
 
-	fissure_trigger = "克尔苏加德开始施放暗影裂隙",	-- need to check the line
+	fissure_trigger = "克尔苏加德施放了暗影裂隙。",
 	fissure_warning = "暗影裂隙！",
 
 	frostblast_bar = "可能的冰霜冲击",
-	frostblast_trigger = "^(.+)受(.+)冰霜冲击的影响。",	-- need to check the line
+	frostblast_trigger = "^(.+)受到了冰霜冲击的影响。",
 	frostblast_warning = "冰霜冲击！",
 	frostblast_soon_message = "~5秒后可能有冰霜冲击！",
 
-	detonate_trigger = "^(.+)受(.+)自爆法力的影响。",	-- need to check the line
+	detonate_trigger = "^(.+)受到了自爆法力的影响。",
 	detonate_bar = "自爆法力 - %s",
 	detonate_possible_bar = "可能的自爆",
 	detonate_warning = "%s中了自爆法力！",
