@@ -42,7 +42,7 @@ Libs\PaintChips-2.0\PaintChips-2.0.lua
 Libs\CandyBar-2.0\CandyBar-2.0.lua
 
 Core.lua
-Options.lua 
+Options.lua
 
 Plugins\Comm.lua
 Plugins\Colors.lua
