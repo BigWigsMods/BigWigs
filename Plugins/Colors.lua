@@ -189,8 +189,10 @@ BigWigsColors.defaultDB = {
 	bosskill = "00ff00", -- Green
 	core = "00ffff", -- Cyan
 	
-	shortbar = {"ffff00", "ff7f00", "ff0000"; n=3},
-	longbar = {"00ff00", "ffff00", "ff7f00", "ff0000"; n=4},
+	shortbar = {"ffff00", "ff7f00", "ff0000"},
+	shortnr = 3,
+	longbar = {"00ff00", "ffff00", "ff7f00", "ff0000"},
+	longnr = 4,
 }
 BigWigsColors.consoleCmd = L["Colors"]
 BigWigsColors.consoleOptions = {
@@ -288,7 +290,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["2nd"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.shortbar[2]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.shortbar[2] = hex end,
-							hidden = function() if getn(BigWigsColors.db.profile.shortbar) < 2 then return true end end,
+							hidden = function() if BigWigsColors.db.profile.shortnr < 2 then return true end end,
 							order = 2,
 						},
 						[string.format(L["Color%s"], 3)] = {
@@ -297,7 +299,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["3rd"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.shortbar[3]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.shortbar[3] = hex end,
-							hidden = function() if getn(BigWigsColors.db.profile.shortbar) < 3 then return true end end,
+							hidden = function() if BigWigsColors.db.profile.shortnr < 3 then return true end end,
 							order = 3,
 						},
 						[string.format(L["Color%s"], 4)] = {
@@ -306,7 +308,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["4th"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.shortbar[4]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.shortbar[4] = hex end,
-							hidden = function() if getn(BigWigsColors.db.profile.shortbar) < 4 then return true end end,
+							hidden = function() if BigWigsColors.db.profile.shortnr < 4 then return true end end,
 							order = 4,
 						},
 						[L["xColors"]] = {
@@ -316,8 +318,8 @@ BigWigsColors.consoleOptions = {
 							min = 1,
 							max = 4,
 							step = 1,
-							get = function() return getn(BigWigsColors.db.profile.shortbar) end,
-							set = function(v) table.setn(BigWigsColors.db.profile.shortbar, v) end,
+							get = function() return BigWigsColors.db.profile.shortnr end,
+							set = function(v) BigWigsColors.db.profile.shortnr = v end,
 							order = 5,
 						},
 					},
@@ -342,7 +344,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["2nd"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.longbar[2]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.longbar[2] = hex end,
-							hidden = function() if getn(BigWigsColors.db.profile.longbar) < 2 then return true end end,
+							hidden = function() if BigWigsColors.db.profile.longnr < 2 then return true end end,
 							order = 2,
 						},
 						[string.format(L["Color%s"], 3)] = {
@@ -351,7 +353,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["3rd"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.longbar[3]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.longbar[3] = hex end,
-							hidden = function() if getn(BigWigsColors.db.profile.longbar) < 3 then return true end end,
+							hidden = function() if BigWigsColors.db.profile.longnr < 3 then return true end end,
 							order = 3,
 						},
 						[string.format(L["Color%s"], 4)] = {
@@ -360,7 +362,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["4th"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.longbar[4]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.longbar[4] = hex end,
-							hidden = function() if getn(BigWigsColors.db.profile.longbar) < 4 then return true end end,
+							hidden = function() if BigWigsColors.db.profile.longnr < 4 then return true end end,
 							order = 4,
 						},
 						[L["xColors"]] = {
@@ -370,8 +372,8 @@ BigWigsColors.consoleOptions = {
 							min = 1,
 							max = 4,
 							step = 1,
-							get = function() return getn(BigWigsColors.db.profile.longbar) end,
-							set = function(v) table.setn(BigWigsColors.db.profile.longbar, v) end,
+							get = function() return BigWigsColors.db.profile.longnr end,
+							set = function(v) BigWigsColors.db.profile.longnr = v end,
 							order = 5,
 						},
 					},
@@ -424,12 +426,12 @@ function BigWigsColors:ResetDB()
 	BigWigsColors.db.profile.shortbar[2] = BigWigsColors.defaultDB.shortbar[2]
 	BigWigsColors.db.profile.shortbar[3] = BigWigsColors.defaultDB.shortbar[3]
 	BigWigsColors.db.profile.shortbar[4] = BigWigsColors.defaultDB.shortbar[4]
-	table.setn(BigWigsColors.db.profile.shortbar, getn(BigWigsColors.defaultDB.shortbar))
+	BigWigsColors.db.profile.shortnr = BigWigsColors.defaultDB.shortnr
 	BigWigsColors.db.profile.longbar[1] = BigWigsColors.defaultDB.longbar[1]
 	BigWigsColors.db.profile.longbar[2] = BigWigsColors.defaultDB.longbar[2]
 	BigWigsColors.db.profile.longbar[3] = BigWigsColors.defaultDB.longbar[3]
 	BigWigsColors.db.profile.longbar[4] = BigWigsColors.defaultDB.longbar[4]
-	table.setn(BigWigsColors.db.profile.longbar, getn(BigWigsColors.defaultDB.longbar))
+	BigWigsColors.db.profile.longnr = BigWigsColors.defaultDB.longnr
 	BigWigsColors.db.profile.bgc = BigWigsColors.defaultDB.bgc
 	BigWigsColors.db.profile.bga = BigWigsColors.defaultDB.bga
 	BigWigsColors.db.profile.txtc = BigWigsColors.defaultDB.txtc
@@ -473,8 +475,14 @@ function BigWigsColors:MsgColor(type)
 end
 
 function BigWigsColors:BarColor(time)
-	local d = time <= 60 and self.db.profile.shortbar or self.db.profile.longbar
-	local n = getn(d)
+	local d, n
+	if time <= 60 then
+		d = self.db.profile.shortbar
+		n = self.db.profile.shortnr
+	else
+		d = self.db.profile.longbar
+		n = self.db.profile.longnr
+	end
 	if n == 4 then return d[1], d[2], d[3], d[4]
 	elseif n == 3 then return d[1], d[2], d[3]
 	elseif n == 2 then return d[1], d[2]
