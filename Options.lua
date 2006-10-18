@@ -78,15 +78,16 @@ L:RegisterTranslations("deDE", function() return {
 ----------------------------------
 
 local deuce = BigWigs:NewModule("Options Menu")
-deuce.consoleCmd = not FuBar and L["minimap"]
-deuce.consoleOptions = not FuBar and {
+deuce.hasFuBar = IsAddOnLoaded("FuBar") and FuBar
+deuce.consoleCmd = not deuce.hasFuBar and L["minimap"]
+deuce.consoleOptions = not deuce.hasFuBar and {
 	type = "toggle",
 	name = L["Minimap"],
 	desc = L["Toggle the minimap button."],
 	get = function() return BigWigsOptions.minimapFrame and BigWigsOptions.minimapFrame:IsVisible() or false end,
 	set = function(v) if v then BigWigsOptions:Show() else BigWigsOptions:Hide() end end,
 	map = {[false] = L["Hidden"], [true] = L["Shown"]},
-	hidden = function() return FuBar and true end,
+	hidden = function() return deuce.hasFuBar end,
 }
 
 ----------------------------
