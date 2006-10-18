@@ -1,4 +1,4 @@
-﻿assert(BigWigs, "BigWigs not found!")
+assert(BigWigs, "BigWigs not found!")
 
 local BWL = nil
 local BZ = AceLibrary("Babble-Zone-2.0")
@@ -89,6 +89,34 @@ L:RegisterTranslations("deDE", function() return {
 	["Runs a version query on the BigWigs core."] = "Versionsabfrage f\195\188r die BigWigs Kernkomponente starten.",
 	["Nr Replies"] = "Anzahl der Antworten",
 	["Ancient"] = "Alt",
+} end )
+
+L:RegisterTranslations("zhCN", function() return {
+	["versionquery"] = "检查版本",
+	["Version Query"] = "检查版本",
+	["Commands for querying the raid for Big Wigs versions."] = "这个命令检查Big Wigs的版本",
+	["Query already running, please wait 5 seconds before trying again."] = "检查中，请等5秒后再尝试",
+	["Querying versions for "] = "检查版本 ",
+	["Big Wigs Version Query"] = "Big Wigs版本检查",
+	["Close window"] = "关掉窗口", -- I know, it's really a Tablet.
+	["Showing version for "] = "显示版本 ",
+	["Green versions are newer than yours, red are older, and white are the same."] = "绿色的版本比你的新，红色德比较老，白色的是相同",
+	["Player"] = "玩家",
+	["Version"] = "版本",
+	["Current zone"] = "目前区域",
+	["<zone>"] = "<区域>",
+	["Version query done."] = "完成检查版本",
+	["Runs a version query on your current zone."] = "检查当前区域的版本",
+	["Closes the version query window."] = "关掉目前的检查版本窗口",
+	["current"] = "目前",
+	["Runs a version query on the given zone."] = "检查指定区域的版本",
+	["Zone"] = "区域",
+	["zone"] = "区域",
+	["N/A"] = "N/A",
+	["BigWigs"] = "BigWigs",
+	["Runs a version query on the BigWigs core."] = "检查BigWigs内核的版本",
+	["Nr Replies"] = "回复的数量",
+	["Ancient"] = "古老",
 } end )
 
 ---------------------------------

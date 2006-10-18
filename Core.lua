@@ -1,4 +1,4 @@
-﻿
+
 ------------------------------
 --      Are you local?      --
 ------------------------------
@@ -150,12 +150,15 @@ L:RegisterTranslations("zhCN", function() return {
 
 	-- AceConsole strings
 	["Bosses"] = "首领",
+	["boss"] = "首领",
 	["Options for boss modules."] = "首领模块设置。",
 	["Options for bosses in %s."] = "%s首领模块设置。", -- "Options for bosses in <zone>"
+	["Options for %s (r%s)."] = "%s模块设置 版本(r%s).",     -- "Options for <boss> (<revision>)"
 	["Extras"] = "其他",
 	["Options for extras."] = "其他模块设置",
 	["Plugins"] = "插件",
 	["Options for plugins."] = "插件设置。",
+	["toggle"] = "切换",
 	["Active"] = "激活",
 	["Activate or deactivate this module."] = "激活或关闭此模块。",
 	["Reboot"] = "重启",
@@ -175,6 +178,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Onyxia's Lair"] = "奥妮克希亚的巢穴",
 	["Naxxramas"] = "纳克萨玛斯",
 	["Silithus"] = "希利苏斯",
+	["Outdoor Raid Bosses"] = "野外首领",
 } end)
 
 

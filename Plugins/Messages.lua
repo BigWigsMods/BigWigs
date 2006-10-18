@@ -1,4 +1,4 @@
-﻿
+
 assert(BigWigs, "BigWigs not found!")
 
 ------------------------------
@@ -107,6 +107,12 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	["Messages"] = "信息",
 
+	["msg"] = "信息",
+	["anchor"] = "锚点",
+	["rw"] = "团队警报",
+	["color"] = "颜色",
+	["scale"] = "大小",
+
 	["Options for the message frame."] = "信息框体设置。",
 	["Anchor"] = "锚点",
 	["Show the message anchor frame."] = "显示信息框体锚点。",
@@ -123,12 +129,27 @@ L:RegisterTranslations("zhCN", function() return {
 	["Colorize messages"] = "彩色信息",
 	["Scale"] = "缩放",
 
+	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000颜|cffff00ff色|r",
 	["White"] = "白色",
 	["BigWigs frame"] = "BigWigs框体",
 	["RaidWarning frame"] = "团队警告框体",
 	["Scale is set to %s"] = "缩放比例设置为%s",
 	["Messages are now sent to the %2$s"] = "信息设置为发送到%2$s",
 	["Messages are currently sent to the %2$s"] = "信息当前设置为发送到%2$s",
+
+	["display"] = "显示",
+	["Display"] = "显示",
+	["Set where messages are displayed."] = "选择信息显示的位置",
+	["Display is now set to %2$s"] = "显示设置到%2$s",
+	["Display is currently set to %2$s"] = "显示目前设置到%2$s",
+
+	["Mik's Scrolling Battle Text"] = "Mik's滚动战斗信息",
+	["Scrolling Combat Text"] = "滚动战斗信息",
+	["Floating Combat Text"] = "浮动战斗信息",
+
+	["Test"] = "测试",
+	["Close"] = "关闭",
+
 } end)
 
 L:RegisterTranslations("deDE", function() return {

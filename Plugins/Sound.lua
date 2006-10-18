@@ -1,4 +1,4 @@
-﻿
+
 assert(BigWigs, "BigWigs not found!")
 
 ------------------------------
@@ -46,9 +46,15 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["Sounds"] = "声音",
+	["sounds"] = "声音",
+	["Options for sounds."] = "声音的选项",
+
+	["toggle"] = "选择",
 	["Use sounds"] = "使用声音",
-	["Options for sounds."] = "声音设置。",
 	["Toggle sounds on or off."] = "切换是否使用声音。",
+	["default"] = "默认",
+	["Default only"] = "只用默认",
+	["Use only the default sound."] = "只用默认声音",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

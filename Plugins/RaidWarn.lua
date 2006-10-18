@@ -1,4 +1,4 @@
-﻿assert(BigWigs, "BigWigs not found!")
+assert(BigWigs, "BigWigs not found!")
 
 ------------------------------
 --      Are you local?      --
@@ -53,6 +53,11 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	["RaidWarning"] = "团队警报",
 
+	["raidwarn"] = "团队警报",
+	["broadcast"] = "广播",
+	["whisper"] = "密语",
+	["useraidchannel"] = "使用团队聊天",
+
 	["Broadcast over RaidWarning"] = "通过团队警告频道发送信息",
 	["Broadcast"] = "广播",
 	["Toggle broadcasting over Raidwarning."] = "切换是否通过团队警告频道发送信息",
@@ -61,6 +66,9 @@ L:RegisterTranslations("zhCN", function() return {
 	["Whisper warnings"] = "密语警报",
 	["Toggle whispering warnings to players."] = "切换是否通过密语向玩家发送信息",
 	
+	["Use Raidchannel"] = "使用团队聊天",
+	["Toggle using the raid channel instead of the raid warning channel for boss messages."] = "切换是否使用团队聊天来代替团队警告频道来播放boss的信息",
+
 	["Options for RaidWarning."] = "团队警告设置",
 } end )
 
