@@ -151,13 +151,13 @@ function BigWigsOssirian:BigWigs_RecvSync(sync, debuffKey)
 	if sync ~= "OssirianWeakness" or not debuffKey or not L:HasTranslation(debuffKey) then return end
 
 	if self.db.profile.debuff then
-		self:TriggerEvent("BigWigs_Message", string.format(L["debuffwarn"], L:GetTranslation(debuffKey)), "Important")
+		self:TriggerEvent("BigWigs_Message", string.format(L["debuffwarn"], L[debuffKey]), "Important")
 	end
 
 	self:CancelScheduledEvent("bwossiriansupreme1")
 	self:CancelScheduledEvent("bwossiriansupreme2")
 	self:CancelScheduledEvent("bwossiriansupreme3")
-	self:TriggerEvent("BigWigs_StopBar", L["bartext"])
+	self:TriggerEvent("BigWigs_StopBar", self, L["bartext"])
 
 	if self.db.profile.supreme then
 		self:ScheduleEvent("bwossiriansupreme1", "BigWigs_Message", 30, string.format(L["supremedelaywarn"], 15), "Attention")
