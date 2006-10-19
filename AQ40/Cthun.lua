@@ -307,7 +307,7 @@ function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if (msg == string.format(UNITDIESOTHER, eyeofcthun)) then
 		self:TriggerEvent("BigWigs_SendSync", "CThunP2Start")
 	elseif (msg == string.format(UNITDIESOTHER, cthun)) then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")("%s has been defeated"), cthun), "Bosskill", nil, "Victory") end
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], cthun), "Bosskill", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 	end
 end

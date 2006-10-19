@@ -327,7 +327,7 @@ function BigWigsHorsemen:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 		msg == string.format(UNITDIESOTHER, blaumeux) then
 		self.deaths = self.deaths + 1
 		if self.deaths == 4 then
-			if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")("%s have been defeated"), boss), "Bosskill", nil, "Victory") end
+			if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s have been defeated"], boss), "Bosskill", nil, "Victory") end
 			self.core:ToggleModuleActive(self, false)
 		end
 	end
