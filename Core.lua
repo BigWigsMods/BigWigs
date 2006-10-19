@@ -532,10 +532,10 @@ end
 
 function BigWigs:BigWigs_RecvSync(sync, module)
 	if sync == "EnableModule" and module then
-		local name = BB:HasTranslation(module) and BB(module) or module
+		local name = BB:HasTranslation(module) and BB[module] or module
 		if self:HasModule(name) and self:GetModule(name).zonename == GetRealZoneText() then self:EnableModule(name, true) end
 	elseif sync == "EnableExternal" and module then
-		local name = BB:HasTranslation(module) and BB(module) or module
+		local name = BB:HasTranslation(module) and BB[module] or module
 		if self:HasModule(name) and self:GetModule(name).zonename == GetRealZoneText() then self:EnableModule(name, true) end
 	end
 end
