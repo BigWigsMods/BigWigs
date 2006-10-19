@@ -2,9 +2,9 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Razorgore the Untamed")
-local controller = AceLibrary("Babble-Boss-2.0")("Grethok the Controller")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Razorgore the Untamed"]
+local controller = AceLibrary("Babble-Boss-2.2")["Grethok the Controller"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local eggs
 
 ----------------------------
@@ -129,7 +129,7 @@ L:RegisterTranslations("zhCN", function() return {
 ----------------------------------
 
 BigWigsRazorgore = BigWigs:NewModule(boss)
-BigWigsRazorgore.zonename = AceLibrary("Babble-Zone-2.0")("Blackwing Lair")
+BigWigsRazorgore.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsRazorgore.enabletrigger = { boss, controller }
 BigWigsRazorgore.toggleoptions = { "mc", "eggs", "phase", "bosskill" }
 BigWigsRazorgore.revision = tonumber(string.sub("$Revision$", 12, -3))

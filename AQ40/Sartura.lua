@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Battleguard Sartura")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Battleguard Sartura"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -165,7 +165,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsSartura = BigWigs:NewModule(boss)
-BigWigsSartura.zonename = AceLibrary("Babble-Zone-2.0")("Ahn'Qiraj")
+BigWigsSartura.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsSartura.enabletrigger = boss
 BigWigsSartura.toggleoptions = {"enrage", "whirlwind", "bosskill"}
 BigWigsSartura.revision = tonumber(string.sub("$Revision$", 12, -3))
@@ -196,7 +196,7 @@ function BigWigsSartura:BigWigs_RecvSync(sync)
 end
 
 function BigWigsSartura:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if msg == L"whirlwindon" then
+	if msg == L["whirlwindon"] then
 		self:TriggerEvent("BigWigs_SendSync", "SarturaWhirlwind")
 	end
 end

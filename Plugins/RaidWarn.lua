@@ -4,7 +4,7 @@ assert(BigWigs, "BigWigs not found!")
 --      Are you local?      --
 ------------------------------
 
-local L = AceLibrary("AceLocale-2.0"):new("BigWigsRaidWarn")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsRaidWarn")
 
 ----------------------------
 --      Localization      --

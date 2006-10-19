@@ -3,7 +3,7 @@
 --      Are you local?      --
 ------------------------------
 
-local L = AceLibrary("AceLocale-2.0"):new("BigWigsTest")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsTest")
 
 ----------------------------
 --      Localization      --

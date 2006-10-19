@@ -4,7 +4,7 @@
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.0"):new("BigWigsCustomBar")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsCustomBar")
 
 local times = nil
 

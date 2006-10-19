@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("The Prophet Skeram")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["The Prophet Skeram"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -136,7 +136,7 @@ L:RegisterTranslations("koKR", function() return {
 ----------------------------------
 
 BigWigsSkeram = BigWigs:NewModule(boss)
-BigWigsSkeram.zonename = AceLibrary("Babble-Zone-2.0")("Ahn'Qiraj")
+BigWigsSkeram.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsSkeram.enabletrigger = boss
 BigWigsSkeram.toggleoptions = {"split", "ae", "mc", "bosskill"}
 BigWigsSkeram.revision = tonumber(string.sub("$Revision$", 12, -3))

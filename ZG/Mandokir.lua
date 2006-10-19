@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Bloodlord Mandokir")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Bloodlord Mandokir"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -100,7 +100,7 @@ L:RegisterTranslations("koKR", function() return {
 ----------------------------------
 
 BigWigsMandokir = BigWigs:NewModule(boss)
-BigWigsMandokir.zonename = AceLibrary("Babble-Zone-2.0")("Zul'Gurub")
+BigWigsMandokir.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsMandokir.enabletrigger = boss
 BigWigsMandokir.toggleoptions = {"you", "other", "icon", "bosskill"}
 BigWigsMandokir.revision = tonumber(string.sub("$Revision$", 12, -3))
@@ -126,7 +126,7 @@ function BigWigsMandokir:CHAT_MSG_MONSTER_EMOTE(msg)
 end
 
 function BigWigsMandokir:CHAT_MSG_MONSTER_YELL(msg)
-	local _,_, n = string.find(msg, L"watch_trigger")
+	local _,_, n = string.find(msg, L["watch_trigger"])
 	if n then
 		if n == UnitName("player") and self.db.profile.you then
 			self:TriggerEvent("BigWigs_Message", L["watched_warning_self"], "Personal", true, "Alarm")

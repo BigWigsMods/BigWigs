@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("High Priestess Mar'li")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["High Priestess Mar'li"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local lastdrain = 0
 
@@ -93,7 +93,7 @@ L:RegisterTranslations("koKR", function() return {
 ----------------------------------
 
 BigWigsMarli = BigWigs:NewModule(boss)
-BigWigsMarli.zonename = AceLibrary("Babble-Zone-2.0")("Zul'Gurub")
+BigWigsMarli.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsMarli.enabletrigger = boss
 BigWigsMarli.toggleoptions = {"spider", "drain", "bosskill"}
 BigWigsMarli.revision = tonumber(string.sub("$Revision$", 12, -3))

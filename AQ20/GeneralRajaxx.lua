@@ -2,10 +2,10 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("General Rajaxx")
-local andorov = AceLibrary("Babble-Boss-2.0")("Lieutenant General Andorov")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.0"):new("BigWigs")
+local boss = AceLibrary("Babble-Boss-2.2")["General Rajaxx"]
+local andorov = AceLibrary("Babble-Boss-2.2")["Lieutenant General Andorov"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigs")
 
 local rajdead
 
@@ -145,7 +145,7 @@ L:RegisterTranslations("koKR", function() return {
 ----------------------------------
 
 BigWigsGeneralRajaxx = BigWigs:NewModule(boss)
-BigWigsGeneralRajaxx.zonename = AceLibrary("Babble-Zone-2.0")("Ruins of Ahn'Qiraj")
+BigWigsGeneralRajaxx.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
 BigWigsGeneralRajaxx.enabletrigger = andorov
 BigWigsGeneralRajaxx.toggleoptions = {"wave", "bosskill"}
 BigWigsGeneralRajaxx.revision = tonumber(string.sub("$Revision$", 12, -3))
@@ -158,7 +158,7 @@ function BigWigsGeneralRajaxx:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self.warnsets = {}
-	for i=1,9 do self.warnsets[L("trigger"..i)] = L("warn"..i) end
+	for i=1,9 do self.warnsets[L["trigger"..i]] = L["warn"..i] end
 end
 
 function BigWigsGeneralRajaxx:VerifyEnable(unit)

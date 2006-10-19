@@ -2,9 +2,9 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Instructor Razuvious")
-local understudy = AceLibrary("Babble-Boss-2.0")("Deathknight Understudy")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Instructor Razuvious"]
+local understudy = AceLibrary("Babble-Boss-2.2")["Deathknight Understudy"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -131,7 +131,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsRazuvious = BigWigs:NewModule(boss)
-BigWigsRazuvious.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
+BigWigsRazuvious.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsRazuvious.enabletrigger = { boss }
 BigWigsRazuvious.wipemobs = { understudy }
 BigWigsRazuvious.toggleoptions = {"shout", "shieldwall", "bosskill"}

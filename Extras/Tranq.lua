@@ -5,7 +5,7 @@ assert(BigWigs, "BigWigs not found!")
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.0"):new("BigWigsTranq")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsTranq")
 
 L:RegisterTranslations("enUS", function() return {
 	CHAT_MSG_SPELL_SELF_BUFF = "You fail to dispel (.+)'s Frenzy.",

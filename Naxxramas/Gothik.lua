@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Gothik the Harvester")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Gothik the Harvester"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -203,7 +203,7 @@ L:RegisterTranslations("zhCN", function() return {
 ----------------------------------
 
 BigWigsGothik = BigWigs:NewModule(boss)
-BigWigsGothik.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
+BigWigsGothik.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsGothik.enabletrigger = { boss }
 BigWigsGothik.wipemobs = {
 	L["rider_name"], L["deathknight_name"], L["trainee_name"],
@@ -314,7 +314,7 @@ function BigWigsGothik:CHAT_MSG_MONSTER_YELL( msg )
 		if self.db.profile.room then self:TriggerEvent("BigWigs_Message", L["inroomwarn"], "Important") end
 		self:StopRoom()
 	elseif string.find(msg, L["disabletrigger"]) then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")("%s has been defeated"), boss), "Bosskill", nil, "Victory") end
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")("%s has been defeated"), boss), "Bosskill", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 	end
 end

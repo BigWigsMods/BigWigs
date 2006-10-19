@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Lord Kazzak")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Lord Kazzak"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local supremetime = 180
 
@@ -80,7 +80,7 @@ L:RegisterTranslations("koKR", function() return {
 ----------------------------------
 
 BigWigsKazzak = BigWigs:NewModule(boss)
-BigWigsKazzak.zonename = { AceLibrary("AceLocale-2.0"):new("BigWigs")("Outdoor Raid Bosses Zone"), AceLibrary("Babble-Zone-2.0")("Blasted Lands") }
+BigWigsKazzak.zonename = { AceLibrary("AceLocale-2.2"):new("BigWigs")["Outdoor Raid Bosses Zone"], AceLibrary("Babble-Zone-2.2")["Blasted Lands"] }
 BigWigsKazzak.enabletrigger = boss
 BigWigsKazzak.toggleoptions = {"supreme", "bosskill"}
 BigWigsKazzak.revision = tonumber(string.sub("$Revision$", 12, -3))

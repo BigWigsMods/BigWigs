@@ -1,9 +1,9 @@
 ------------------------------
 --      Are you local?      --
 ------------------------------
-local boss = AceLibrary("Babble-Boss-2.0")("Nefarian")
-local victor = AceLibrary("Babble-Boss-2.0")("Lord Victor Nefarius")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Nefarian"]
+local victor = AceLibrary("Babble-Boss-2.2")["Lord Victor Nefarius"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local warnpairs = nil
 
@@ -253,7 +253,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsNefarian = BigWigs:NewModule(boss)
-BigWigsNefarian.zonename = AceLibrary("Babble-Zone-2.0")("Blackwing Lair")
+BigWigsNefarian.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsNefarian.enabletrigger = { boss, victor }
 BigWigsNefarian.toggleoptions = {"shadowflame", "fear", "classcall", "otherwarn", "bosskill"}
 BigWigsNefarian.revision = tonumber(string.sub("$Revision$", 12, -3))

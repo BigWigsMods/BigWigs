@@ -2,9 +2,9 @@
 --      Are you local?      --
 ------------------------------
 
-local eyeofcthun = AceLibrary("Babble-Boss-2.0")("Eye of C'Thun")
-local cthun = AceLibrary("Babble-Boss-2.0")("C'Thun")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs" .. cthun)
+local eyeofcthun = AceLibrary("Babble-Boss-2.2")["Eye of C'Thun"]
+local cthun = AceLibrary("Babble-Boss-2.2")["C'Thun"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs" .. cthun)
 
 local timeP1Tentacle = 45      -- tentacle timers for phase 1
 local timeP1TentacleStart = 45 -- delay for first tentacles from engage onwards
@@ -261,7 +261,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsCThun = BigWigs:NewModule(cthun)
-BigWigsCThun.zonename = AceLibrary("Babble-Zone-2.0")("Ahn'Qiraj")
+BigWigsCThun.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsCThun.enabletrigger = { eyeofcthun, cthun }
 BigWigsCThun.toggleoptions = { "rape", -1, "tentacle", "glare", "group", -1, "giant", "weakened", "bosskill" }
 BigWigsCThun.revision = tonumber(string.sub("$Revision$", 12, -3))
@@ -307,7 +307,7 @@ function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if (msg == string.format(UNITDIESOTHER, eyeofcthun)) then
 		self:TriggerEvent("BigWigs_SendSync", "CThunP2Start")
 	elseif (msg == string.format(UNITDIESOTHER, cthun)) then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")("%s has been defeated"), cthun), "Bosskill", nil, "Victory") end
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")("%s has been defeated"), cthun), "Bosskill", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 	end
 end

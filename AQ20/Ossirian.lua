@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Ossirian the Unscarred")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Ossirian the Unscarred"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -117,7 +117,7 @@ L:RegisterTranslations("koKR", function() return {
 ----------------------------------
 
 BigWigsOssirian = BigWigs:NewModule(boss)
-BigWigsOssirian.zonename = AceLibrary("Babble-Zone-2.0")("Ruins of Ahn'Qiraj")
+BigWigsOssirian.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
 BigWigsOssirian.enabletrigger = boss
 BigWigsOssirian.toggleoptions = {"supreme", "debuff", "bosskill"}
 BigWigsOssirian.revision = tonumber(string.sub("$Revision$", 12, -3))

@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Jin'do the Hexxer")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Jin'do the Hexxer"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -172,7 +172,7 @@ L:RegisterTranslations("koKR", function() return {
 ----------------------------------
 
 BigWigsJindo = BigWigs:NewModule(boss)
-BigWigsJindo.zonename = AceLibrary("Babble-Zone-2.0")("Zul'Gurub")
+BigWigsJindo.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsJindo.enabletrigger = boss
 BigWigsJindo.toggleoptions = {"youcurse", "elsecurse", "icon", -1, "brainwash", "healing", "bosskill"}
 BigWigsJindo.revision = tonumber(string.sub("$Revision$", 12, -3))

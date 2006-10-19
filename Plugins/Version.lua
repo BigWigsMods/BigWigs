@@ -1,8 +1,8 @@
 assert(BigWigs, "BigWigs not found!")
 
 local BWL = nil
-local BZ = AceLibrary("Babble-Zone-2.0")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigsVersionQuery")
+local BZ = AceLibrary("Babble-Zone-2.2")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsVersionQuery")
 local tablet = AceLibrary("Tablet-2.0")
 local dewdrop = AceLibrary("Dewdrop-2.0")
 
@@ -164,7 +164,7 @@ function BigWigsVersionQuery:OnEnable()
 	self.zoneRevisions = nil
 	self.currentZone = ""
 
-	BWL = AceLibrary("AceLocale-2.0"):new("BigWigs")
+	BWL = AceLibrary("AceLocale-2.2"):new("BigWigs")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "BWVQ", 0)

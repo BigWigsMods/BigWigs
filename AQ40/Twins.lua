@@ -2,10 +2,10 @@
 --      Are you local?      --
 ------------------------------
 
-local veklor = AceLibrary("Babble-Boss-2.0")("Emperor Vek'lor")
-local veknilash = AceLibrary("Babble-Boss-2.0")("Emperor Vek'nilash")
-local boss = AceLibrary("Babble-Boss-2.0")("The Twin Emperors")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs" .. boss)
+local veklor = AceLibrary("Babble-Boss-2.2")["Emperor Vek'lor"]
+local veknilash = AceLibrary("Babble-Boss-2.2")["Emperor Vek'nilash"]
+local boss = AceLibrary("Babble-Boss-2.2")["The Twin Emperors"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs" .. boss)
 
 local started = nil
 
@@ -177,7 +177,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsTwins = BigWigs:NewModule(boss)
-BigWigsTwins.zonename = AceLibrary("Babble-Zone-2.0")("Ahn'Qiraj")
+BigWigsTwins.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsTwins.enabletrigger = {veklor, veknilash}
 BigWigsTwins.toggleoptions = {"bug", "teleport", "enrage", "heal", "bosskill"}
 BigWigsTwins.revision = tonumber(string.sub("$Revision$", 12, -3))
@@ -204,7 +204,7 @@ end
 
 function BigWigsTwins:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if msg == string.format(UNITDIESOTHER, veklor) or msg == string.format(UNITDIESOTHER, veknilash) then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")["%s have been defeated"], boss), "Bosskill", nil, "Victory") end
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s have been defeated"], boss), "Bosskill", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 	end
 end

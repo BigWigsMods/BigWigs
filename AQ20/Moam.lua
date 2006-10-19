@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Moam")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Moam"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -111,7 +111,7 @@ L:RegisterTranslations("zhCN", function() return {
 ----------------------------------
 
 BigWigsMoam = BigWigs:NewModule(boss)
-BigWigsMoam.zonename = AceLibrary("Babble-Zone-2.0")("Ruins of Ahn'Qiraj")
+BigWigsMoam.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
 BigWigsMoam.enabletrigger = boss
 BigWigsMoam.toggleoptions = {"adds", "paralyze", "bosskill"}
 BigWigsMoam.revision = tonumber(string.sub("$Revision$", 12, -3))

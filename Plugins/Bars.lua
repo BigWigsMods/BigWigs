@@ -6,7 +6,7 @@ assert( BigWigs, "BigWigs not found!")
 --      Are you local?      --
 ------------------------------
 
-local L = AceLibrary("AceLocale-2.0"):new("BigWigsBars")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsBars")
 local paint = AceLibrary("PaintChips-2.0")
 local minscale, maxscale = 0.25, 2
 
@@ -165,7 +165,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsBars = BigWigs:NewModule(L"Bars")
+BigWigsBars = BigWigs:NewModule(L["Bars"])
 BigWigsBars.revision = tonumber(string.sub("$Revision: 13134 $", 12, -3))
 BigWigsBars.defaultDB = {
 	growup = false,

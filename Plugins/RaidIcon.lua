@@ -4,7 +4,7 @@
 --      Are you local?      --
 ------------------------------
 
-local L = AceLibrary("AceLocale-2.0"):new("BigWigsRaidIcon")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsRaidIcon")
 local lastplayer = nil
 
 ----------------------------

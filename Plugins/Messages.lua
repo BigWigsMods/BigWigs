@@ -5,7 +5,7 @@ assert(BigWigs, "BigWigs not found!")
 --      Are you local?      --
 ------------------------------
 
-local L = AceLibrary("AceLocale-2.0"):new("BigWigsMessages")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsMessages")
 local paint = AceLibrary("PaintChips-2.0")
 
 ----------------------------
@@ -228,7 +228,7 @@ BigWigsMessages.consoleOptions = {
 			desc = L["Toggles white only messages ignoring coloring."],
 			get = function() return BigWigsMessages.db.profile.usecolors end,
 			set = function(v) BigWigsMessages.db.profile.usecolors = v end,
-			map = {[true] = L"|cffff0000Co|cffff00fflo|cff00ff00r|r", [false] = L["White"]},
+			map = {[true] = L["|cffff0000Co|cffff00fflo|cff00ff00r|r"], [false] = L["White"]},
 		},
 		[L["scale"]] = {
 			type = "range",

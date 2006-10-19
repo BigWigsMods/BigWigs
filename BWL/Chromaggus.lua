@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Chromaggus")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Chromaggus"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local twenty
 
 ----------------------------
@@ -201,7 +201,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsChromaggus = BigWigs:NewModule(boss)
-BigWigsChromaggus.zonename = AceLibrary("Babble-Zone-2.0")("Blackwing Lair")
+BigWigsChromaggus.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsChromaggus.enabletrigger = boss
 BigWigsChromaggus.toggleoptions = { "enrage", "frenzy", "breath", "vulnerability", "bosskill"}
 BigWigsChromaggus.revision = tonumber(string.sub("$Revision$", 12, -3))

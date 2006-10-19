@@ -3,11 +3,11 @@
 --      Are you local?      --
 ------------------------------
 
-local BZ = AceLibrary("Babble-Zone-2.0")
-local BB = AceLibrary("Babble-Boss-2.0")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs")
+local BZ = AceLibrary("Babble-Zone-2.2")
+local BB = AceLibrary("Babble-Boss-2.2")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 
- 
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -408,13 +408,13 @@ function BigWigs:RegisterModule(name, module)
 	if module:IsBossModule() then
 		local cons
 		local revision = type(module.revision) == "number" and module.revision or -1
-		local L2 = AceLibrary("AceLocale-2.0"):new("BigWigs"..name)
+		local L2 = AceLibrary("AceLocale-2.2"):new("BigWigs"..name)
 		if module.toggleoptions then
 			local m = module
 			cons = {
 				type = "group",
 				name = name,
-				desc = string.format(L"Options for %s (r%s).", name, revision),
+				desc = string.format(L["Options for %s (r%s)."], name, revision),
 				args = {
 					[L["toggle"]] = {
 						type = "toggle",
@@ -461,21 +461,21 @@ function BigWigs:RegisterModule(name, module)
 				else
 					local l = v == "bosskill" and L or L2
 					if l:HasTranslation(v.."_validate") then
-						cons.args[l(v.."_cmd")] = {
+						cons.args[l[v.."_cmd"]] = {
 							type = "text",
 							order = v == "bosskill" and -1 or x,
-							name = l(v.."_name"),
-							desc = l(v.."_desc"),
+							name = l[v.."_name"],
+							desc = l[v.."_desc"],
 							get = function() return m.db.profile[val] end,
 							set = function(v) m.db.profile[val] = v end,
-							validate = l(v.."_validate"),
+							validate = l[v.."_validate"],
 						}
 					else
-						cons.args[l(v.."_cmd")] = {
+						cons.args[l[v.."_cmd"]] = {
 							type = "toggle",
 							order = v == "bosskill" and -1 or x,
-							name = l(v.."_name"),
-							desc = l(v.."_desc"),
+							name = l[v.."_name"],
+							desc = l[v.."_desc"],
 							get = function() return m.db.profile[val] end,
 							set = function(v) m.db.profile[val] = v end,
 						}
@@ -486,7 +486,7 @@ function BigWigs:RegisterModule(name, module)
 
 		if cons or module.consoleOptions then
 			local zonename = type(module.zonename) == "table" and module.zonename[1] or module.zonename
-			local zone = BZ:HasReverseTranslation(zonename) and L(BZ:GetReverseTranslation(zonename)) or L(zonename)
+			local zone = BZ:HasReverseTranslation(zonename) and L[BZ:GetReverseTranslation(zonename)] or L[zonename]
 			if not self.cmdtable.args[L["boss"]].args[zone] then
 				self.cmdtable.args[L["boss"]].args[zone] = {
 					type = "group",

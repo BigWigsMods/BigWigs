@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("High Priest Thekal")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["High Priest Thekal"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -81,7 +81,7 @@ L:RegisterTranslations("zhCN", function() return {
 ----------------------------------
 
 BigWigsThekal = BigWigs:NewModule(boss)
-BigWigsThekal.zonename = AceLibrary("Babble-Zone-2.0")("Zul'Gurub")
+BigWigsThekal.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
 BigWigsThekal.enabletrigger = boss
 BigWigsThekal.toggleoptions = {"heal", "tiger", "bosskill"}
 BigWigsThekal.revision = tonumber(string.sub("$Revision$", 12, -3))

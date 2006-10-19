@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Azuregos")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Azuregos"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -109,7 +109,7 @@ L:RegisterTranslations("koKR", function() return {
 ----------------------------------
 
 BigWigsAzuregos = BigWigs:NewModule(boss)
-BigWigsAzuregos.zonename = { AceLibrary("AceLocale-2.0"):new("BigWigs")("Outdoor Raid Bosses Zone"), AceLibrary("Babble-Zone-2.0")("Azshara") }
+BigWigsAzuregos.zonename = { AceLibrary("AceLocale-2.2"):new("BigWigs")["Outdoor Raid Bosses Zone"], AceLibrary("Babble-Zone-2.2")["Azshara"] }
 BigWigsAzuregos.enabletrigger = boss
 BigWigsAzuregos.toggleoptions = {"teleport", "shield", "bosskill"}
 BigWigsAzuregos.revision = tonumber(string.sub("$Revision$", 12, -3))

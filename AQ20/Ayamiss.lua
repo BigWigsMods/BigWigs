@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Ayamiss the Hunter")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Ayamiss the Hunter"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -63,7 +63,7 @@ L:RegisterTranslations("koKR", function() return {
 ----------------------------------
 
 BigWigsAyamiss = BigWigs:NewModule(boss)
-BigWigsAyamiss.zonename = AceLibrary("Babble-Zone-2.0")("Ruins of Ahn'Qiraj")
+BigWigsAyamiss.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
 BigWigsAyamiss.enabletrigger = boss
 BigWigsAyamiss.toggleoptions = {"sacrifice", "bosskill"}
 BigWigsAyamiss.revision = tonumber(string.sub("$Revision$", 12, -3))

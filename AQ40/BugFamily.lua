@@ -2,12 +2,12 @@
 --      Are you local?      --
 ------------------------------
 
-local kri = AceLibrary("Babble-Boss-2.0")("Lord Kri")
-local yauj = AceLibrary("Babble-Boss-2.0")("Princess Yauj")
-local vem = AceLibrary("Babble-Boss-2.0")("Vem")
-local boss = AceLibrary("Babble-Boss-2.0")("The Bug Family")
+local kri = AceLibrary("Babble-Boss-2.2")["Lord Kri"]
+local yauj = AceLibrary("Babble-Boss-2.2")["Princess Yauj"]
+local vem = AceLibrary("Babble-Boss-2.2")["Vem"]
+local boss = AceLibrary("Babble-Boss-2.2")["The Bug Family"]
 
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local deaths = 0
 local fearstatus
 
@@ -107,7 +107,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsBugFamily = BigWigs:NewModule(boss)
-BigWigsBugFamily.zonename = AceLibrary("Babble-Zone-2.0")("Ahn'Qiraj")
+BigWigsBugFamily.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsBugFamily.enabletrigger = {kri, yauj, vem}
 BigWigsBugFamily.toggleoptions = {"fear", "heal", "bosskill"}
 BigWigsBugFamily.revision = tonumber(string.sub("$Revision$", 12, -3))
@@ -149,7 +149,7 @@ function BigWigsBugFamily:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if (msg == string.format(UNITDIESOTHER, kri) or msg == string.format(UNITDIESOTHER, yauj) or msg == string.format(UNITDIESOTHER, vem)) then
 		deaths = deaths + 1
 		if (deaths == 3) then
-			if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")["%s has been defeated"], boss), "Bosskill", nil, "Victory") end
+			if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], boss), "Bosskill", nil, "Victory") end
 			self.core:ToggleModuleActive(self, false)
 		end
 	end

@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Patchwerk")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Patchwerk"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -95,7 +95,7 @@ L:RegisterTranslations("zhCN", function() return {
 ----------------------------------
 
 BigWigsPatchwerk = BigWigs:NewModule(boss)
-BigWigsPatchwerk.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
+BigWigsPatchwerk.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsPatchwerk.enabletrigger = boss
 BigWigsPatchwerk.toggleoptions = {"enrage", "bosskill"}
 BigWigsPatchwerk.revision = tonumber(string.sub("$Revision$", 12, -3))

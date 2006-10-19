@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Vaelastrasz the Corrupt")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Vaelastrasz the Corrupt"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local playerName = nil
 
@@ -121,7 +121,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsVaelastrasz = BigWigs:NewModule(boss)
-BigWigsVaelastrasz.zonename = AceLibrary("Babble-Zone-2.0")("Blackwing Lair")
+BigWigsVaelastrasz.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
 BigWigsVaelastrasz.enabletrigger = boss
 BigWigsVaelastrasz.toggleoptions = {"youburning", "elseburning", "burningbar", -1, "icon", "bosskill"}
 BigWigsVaelastrasz.revision = tonumber(string.sub("$Revision$", 12, -3))

@@ -2,10 +2,10 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Thaddius")
-local feugen = AceLibrary("Babble-Boss-2.0")("Feugen")
-local stalagg = AceLibrary("Babble-Boss-2.0")("Stalagg")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Thaddius"]
+local feugen = AceLibrary("Babble-Boss-2.2")["Feugen"]
+local stalagg = AceLibrary("Babble-Boss-2.2")["Stalagg"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -284,7 +284,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsThaddius = BigWigs:NewModule(boss)
-BigWigsThaddius.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
+BigWigsThaddius.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsThaddius.enabletrigger = { boss, feugen, stalagg }
 BigWigsThaddius.toggleoptions = {"enrage", "charge", "polarity", -1, "power", "phase", "bosskill"}
 BigWigsThaddius.revision = tonumber(string.sub("$Revision$", 12, -3))
@@ -315,7 +315,7 @@ function BigWigsThaddius:OnEnable()
 end
 
 function BigWigsThaddius:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
-	if msg == L"stalaggtrigger" then
+	if msg == L["stalaggtrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "StalaggPower")
 	end
 end
@@ -393,9 +393,9 @@ function BigWigsThaddius:PLAYER_AURAS_CHANGED( msg )
 	if self.db.profile.charge then
 		if self.previousCharge and self.previousCharge == chargetype then
 			self:TriggerEvent("BigWigs_Message", L["nochange"], "Urgent", true, "Alarm")
-		elseif chargetype == L"positivetype" then
+		elseif chargetype == L["positivetype"] then
 			self:TriggerEvent("BigWigs_Message", L["poswarn"], "Positive", true, "Alarm")
-		elseif chargetype == L"negativetype" then
+		elseif chargetype == L["negativetype"] then
 			self:TriggerEvent("BigWigs_Message", L["negwarn"], "Important", true, "Alarm")
 		end
 		self:TriggerEvent("BigWigs_StartBar", self, L["polaritytickbar"], 6, chargetype, "Important")

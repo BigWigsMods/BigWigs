@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Majordomo Executus")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Majordomo Executus"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local Texture1 = "Interface\\Icons\\Spell_Frost_FrostShock"
 local Texture2 = "Interface\\Icons\\Spell_Shadow_AntiShadow"
@@ -146,7 +146,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsMajordomo = BigWigs:NewModule(boss)
-BigWigsMajordomo.zonename = AceLibrary("Babble-Zone-2.0")("Molten Core")
+BigWigsMajordomo.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsMajordomo.enabletrigger = boss
 BigWigsMajordomo.toggleoptions = {"magic", "dmg", "bosskill"}
 BigWigsMajordomo.revision = tonumber(string.sub("$Revision$", 12, -3))
@@ -172,7 +172,7 @@ end
 
 function BigWigsMajordomo:CHAT_MSG_MONSTER_YELL(msg)
 	if (msg == L["disabletrigger"]) then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")("%s has been defeated"), self:ToString()), "Bosskill", nil, "Victory") end
+		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")("%s has been defeated"), self:ToString()), "Bosskill", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 	end
 end

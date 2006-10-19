@@ -4,7 +4,7 @@
 --      Are you local?      --
 ------------------------------
 
-local L = AceLibrary("AceLocale-2.0"):new("BigWigsColors")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsColors")
 local PaintChips = AceLibrary("PaintChips-2.0")
 
 ----------------------------
@@ -179,7 +179,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsColors = BigWigs:NewModule(L"Colors")
+BigWigsColors = BigWigs:NewModule(L["Colors"])
 BigWigsColors.defaultDB = {
 	important = "ff0000", -- Red
 	personal = "ff0000", -- Red
@@ -270,7 +270,7 @@ BigWigsColors.consoleOptions = {
 			desc = L["Colors of bars."],
 			order = 2,
 			args = {
-				[L"Shortbar"] = {
+				[L["Shortbar"]] = {
 					type = "group",
 					name = L["Shortbar"],
 					desc = L["Colors for short bars (< 1 minute)."],

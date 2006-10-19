@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Ragnaros")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Ragnaros"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started = nil
 
 ----------------------------
@@ -171,7 +171,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsRagnaros = BigWigs:NewModule(boss)
-BigWigsRagnaros.zonename = AceLibrary("Babble-Zone-2.0")("Molten Core")
+BigWigsRagnaros.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsRagnaros.enabletrigger = boss
 BigWigsRagnaros.wipemobs = { L["sonofflame"] }
 BigWigsRagnaros.toggleoptions = { "sondeath", "submerge", "emerge", "aoeknock", "bosskill" }

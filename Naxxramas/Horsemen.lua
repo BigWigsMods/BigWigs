@@ -2,13 +2,13 @@
 --      Are you local?      --
 ------------------------------
 
-local thane = AceLibrary("Babble-Boss-2.0")("Thane Korth'azz")
-local mograine = AceLibrary("Babble-Boss-2.0")("Highlord Mograine")
-local zeliek = AceLibrary("Babble-Boss-2.0")("Sir Zeliek")
-local blaumeux = AceLibrary("Babble-Boss-2.0")("Lady Blaumeux")
-local boss = AceLibrary("Babble-Boss-2.0")("The Four Horsemen")
+local thane = AceLibrary("Babble-Boss-2.2")["Thane Korth'azz"]
+local mograine = AceLibrary("Babble-Boss-2.2")["Highlord Mograine"]
+local zeliek = AceLibrary("Babble-Boss-2.2")["Sir Zeliek"]
+local blaumeux = AceLibrary("Babble-Boss-2.2")["Lady Blaumeux"]
+local boss = AceLibrary("Babble-Boss-2.2")["The Four Horsemen"]
 
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local times = nil
 
@@ -197,7 +197,7 @@ L:RegisterTranslations("zhCN", function() return {
 ----------------------------------
 
 BigWigsHorsemen = BigWigs:NewModule(boss)
-BigWigsHorsemen.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
+BigWigsHorsemen.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsHorsemen.enabletrigger = { thane, mograine, zeliek, blaumeux }
 BigWigsHorsemen.toggleoptions = {"mark", "shieldwall", -1, "meteor", "void", "wrath", "bosskill"}
 BigWigsHorsemen.revision = tonumber(string.sub("$Revision$", 12, -3))
@@ -327,7 +327,7 @@ function BigWigsHorsemen:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 		msg == string.format(UNITDIESOTHER, blaumeux) then
 		self.deaths = self.deaths + 1
 		if self.deaths == 4 then
-			if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.0"):new("BigWigs")("%s have been defeated"), boss), "Bosskill", nil, "Victory") end
+			if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")("%s have been defeated"), boss), "Bosskill", nil, "Victory") end
 			self.core:ToggleModuleActive(self, false)
 		end
 	end

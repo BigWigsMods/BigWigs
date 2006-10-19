@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Lucifron")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Lucifron"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local prior1
 local prior2
@@ -112,7 +112,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsLucifron = BigWigs:NewModule(boss)
-BigWigsLucifron.zonename = AceLibrary("Babble-Zone-2.0")("Molten Core")
+BigWigsLucifron.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsLucifron.enabletrigger = boss
 BigWigsLucifron.toggleoptions = {"curse", "doom", "bosskill"}
 BigWigsLucifron.revision = tonumber(string.sub("$Revision$", 12, -3))

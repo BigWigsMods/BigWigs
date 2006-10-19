@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Kel'Thuzad")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Kel'Thuzad"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local mcTime
 local frostBlastTime
@@ -269,7 +269,7 @@ L:RegisterTranslations("zhCN", function() return {
 ----------------------------------
 
 BigWigsKelThuzad = BigWigs:NewModule(boss)
-BigWigsKelThuzad.zonename = AceLibrary("Babble-Zone-2.0")("Naxxramas")
+BigWigsKelThuzad.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsKelThuzad.enabletrigger = boss
 BigWigsKelThuzad.toggleoptions = { "frostblast", "fissure", "mc", -1, "detonate", "detonateicon", -1 ,"guardians", "phase", "bosskill" }
 BigWigsKelThuzad.revision = tonumber(string.sub("$Revision$", 12, -3))

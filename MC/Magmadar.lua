@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Magmadar")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Magmadar"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -106,7 +106,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsMagmadar = BigWigs:NewModule(boss)
-BigWigsMagmadar.zonename = AceLibrary("Babble-Zone-2.0")("Molten Core")
+BigWigsMagmadar.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsMagmadar.enabletrigger = boss
 BigWigsMagmadar.toggleoptions = {"fear", "frenzy", "bosskill"}
 BigWigsMagmadar.revision = tonumber(string.sub("$Revision$", 12, -3))

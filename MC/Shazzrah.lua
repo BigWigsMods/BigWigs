@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.0")("Shazzrah")
-local L = AceLibrary("AceLocale-2.0"):new("BigWigs"..boss)
+local boss = AceLibrary("Babble-Boss-2.2")["Shazzrah"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
 --      Localization      --
@@ -98,7 +98,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsShazzrah = BigWigs:NewModule(boss)
-BigWigsShazzrah.zonename = AceLibrary("Babble-Zone-2.0")("Molten Core")
+BigWigsShazzrah.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsShazzrah.enabletrigger = boss
 BigWigsShazzrah.toggleoptions = {"selfbuff", "blink", "bosskill"}
 BigWigsShazzrah.revision = tonumber(string.sub("$Revision$", 12, -3))

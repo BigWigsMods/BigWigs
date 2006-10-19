@@ -3,7 +3,7 @@
 --      Localization      --
 ----------------------------
 
-local L = AceLibrary("AceLocale-2.0"):new("BigWigsBossBlock")
+local L = AceLibrary("AceLocale-2.2"):new("BigWigsBossBlock")
 
 L:RegisterTranslations("enUS", function() return {
 	["BossBlock"] = true,
