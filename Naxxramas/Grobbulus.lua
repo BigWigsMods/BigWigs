@@ -30,6 +30,10 @@ L:RegisterTranslations("enUS", function() return {
 	icon_name = "Place Icon",
 	icon_desc = "Place a skull icon on an injected person. (Requires promoted or higher)",
 
+	cloud_cmd = "cloud",
+	cloud_name = "Poison Cloud",
+	cloud_desc = "Warn for Poison Clouds",
+
 	inject_trigger = "^([^%s]+) ([^%s]+) afflicted by Mutating Injection",
 
 	you = "You",
@@ -45,6 +49,11 @@ L:RegisterTranslations("enUS", function() return {
 	bomb_message_you = "You are injected!",
 	bomb_message_other = "%s is injected!",
 	bomb_bar = "%s injected",
+
+	cloud_trigger = "Grobbulus casts Poison Cloud.",
+	cloud_warn = "Poison Cloud next in ~15 seconds!",
+	cloud_bar = "Poison Cloud",
+
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -157,7 +166,7 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsGrobbulus = BigWigs:NewModule(boss)
 BigWigsGrobbulus.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsGrobbulus.enabletrigger = boss
-BigWigsGrobbulus.toggleoptions = { "youinjected", "otherinjected", "icon", -1, "enrage", "bosskill" }
+BigWigsGrobbulus.toggleoptions = { "youinjected", "otherinjected", "icon", "cloud", -1, "enrage", "bosskill" }
 BigWigsGrobbulus.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -172,10 +181,14 @@ function BigWigsGrobbulus:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "InjectEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "InjectEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "InjectEvent")
+
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "GrobbulusInject", 3)
+	self:TriggerEvent("BigWigs_ThrottleSync", "GrobbulusCloud", 5)
 end
 
 ------------------------------
@@ -209,6 +222,17 @@ function BigWigsGrobbulus:BigWigs_RecvSync( sync, rest, nick )
 		if self.db.profile.icon then
 			self:TriggerEvent("BigWigs_SetRaidIcon", player)
 		end
+	elseif sync == "GrobbulusCloud" then
+		if self.db.profile.cloud then
+			self:TriggerEvent("BigWigs_Message", L["cloud_warn"], "Urgent")
+			self:TriggerEvent("BigWigs_StartBar", self, L["cloud_bar"], 15, "Interface\\Icons\\Ability_Creature_Disease_02")			
+		end
+	end
+end
+
+function BigWigsGrobbulus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
+	if string.find( msg, L["cloud_trigger"] ) then
+		self:TriggerEvent("BigWigs_SendSync", "GrobbulusCloud")
 	end
 end
 
