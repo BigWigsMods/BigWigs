@@ -50,21 +50,21 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	teleport_name = "T\195\169l\195\169portation",
-	teleport_desc = "Alerte T\195\169l\195\169portation.",
+	teleport_name = "Alerte Téléportation",
+	teleport_desc = "Préviens quans Azuregos téléporte quelqu'un.",
 
-	shield_name = "Bouclier Magique",
-	shield_desc = "Alerte, Bouclier Magique Actif.",
+	shield_name = "Alerte Bouclier",
+	shield_desc = "Préviens quand Azuregos est protégé par un bouclier magique.",
 
-	trigger1 = "^Venez m'affronter, mes petits !",
+	trigger1 = "Venez m'affronter, mes petits !",
 	trigger2 = "^Renvoi sur Azuregos vient de se dissiper.",
 	trigger3 = "^Azuregos gagne Renvoi.",
 
-	warn1 = "T\195\169l\195\169portation!",
-	warn2 = "Bouclier Magique : Inactif!",
-	warn3 = "Bouclier Magique : Actif!",
+	warn1 = "Téléportation !",
+	warn2 = "Bouclier magique en place !",
+	warn3 = "Bouclier magique dissipé !",
 
-	shieldbar = "Bouclier Magique",
+	shieldbar = "Bouclier magique",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

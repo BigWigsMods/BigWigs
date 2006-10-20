@@ -75,6 +75,21 @@ L:RegisterTranslations("koKR", function() return {
 	bartext = "무적 모드",	
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	supreme_name = "Alerte Suprême",
+	supreme_desc = "Préviens régulièrement de l'approche du mode Suprême.",
+	
+	starttrigger = "Pour la Légion ! Pour Kil'Jaeden !",
+		
+	engagewarn	 = "Seigneur Kazzak engagé - 3 min. avant Suprême !",
+		
+	supreme1min	 = "Mode Suprême dans 1 min. !",
+	supreme30sec = "Mode Suprême dans 30 sec. !",
+	supreme10sec = "Mode Suprême dans 10 sec. !",
+		
+	bartext = "Mode Suprême",	
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

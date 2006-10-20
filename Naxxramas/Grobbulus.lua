@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -149,13 +149,40 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	enrage_name = "Alerte Enrager",
+	enrage_desc = "Préviens régulièrement quand Grobbulus devient enragé.",
+
+	youinjected_name = "Alerte quand vous êtes injecté",
+	youinjected_desc = "Préviens quand vous êtes injecté.",
+
+	otherinjected_name = "Alerte quand les autres sont injectés",
+	otherinjected_desc = "Préviens quand les autres sont injectés.",
+
+	icon_name = "Placer une icône",
+	icon_desc = "Place une icône sur la personne injectée. (nécessite d'être promu ou mieux)",
+
+	cloud_name = "Nuage de poison",
+	cloud_desc = "Préviens quand Globbulus lance ses nuages de poison.",
+	
 	inject_trigger = "^([^%s]+) ([^%s]+) les effets de Injection mutante.",
 
 	you = "Vous",
 	are = "subissez",
 
-	bomb_message_you = "Vous \195\170tes inf\195\169ct\195\169!",
-	bomb_message_other = "%s est inf\195\169ct\195\169!",
+	startwarn = "Grobbulus engagé, 12 min. avant Enrager !",
+	enragebar = "Enrager",
+	enrage10min = "Enrager dans 10 min.",
+	enrage5min = "Enrager dans 5 min.",
+	enrage1min = "Enrager dans 1 min.",
+	enrage30sec = "Enrager dans 30 sec.",
+	enrage10sec = "Enrager dans 10 sec.",
+	bomb_message_you = "Tu es injecté !",
+	bomb_message_other = "%s est injecté !",
+	bomb_bar = "%s injecté",
+
+	cloud_trigger = "Grobbulus lance Nuage de poison.",
+	cloud_warn = "Prochain nuage de poison dans ~15 sec. !",
+	cloud_bar = "Nuage de poison",
 } end )
 
 

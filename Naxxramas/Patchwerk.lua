@@ -91,12 +91,23 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	cmd = "Le Recousu",
-
+	enrage_cmd = "enrage",
+	enrage_name = "Alerte Enrager",
+	enrage_desc = "Préviens régulièrement quand Le Recousu devient enragé.",
+	
 	enragetrigger = "%s devient fou furieux !",
-
+	
+	enragewarn = "Enragé !",
 	starttrigger1 = "R'cousu veut jouer !",
 	starttrigger2 = "R'cousu avatar de guerre pour Kel'Thuzad !",
+	startwarn = "Le Recousu engagé ! Enrager dans 7 min. !",
+	enragebartext = "Enrager",
+	warn1 = "Enrager dans 5 min.",
+	warn2 = "Enrager dans 3 min.",
+	warn3 = "Enrager dans 90 sec.",
+	warn4 = "Enrager dans 60 sec.",
+	warn5 = "Enrager dans 30 sec.",
+	warn6 = "Enrager dans 10 sec.",	
 } end )
 
 ----------------------------------

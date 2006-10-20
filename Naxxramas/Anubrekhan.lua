@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -95,13 +95,23 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	starttrigger1 = "Rien qu'une petite bouch\195\169e",
+	locust_name = "Alerte Nuée de sauterelles",
+	locust_desc = "Préviens quand Anub'Rekhan invoque ses Nuées de sauterelles.",
+	
+	starttrigger1 = "Rien qu'une petite bouchée",
 	starttrigger2 = "Oui, courez ! Faites circulez le sang !",
 	starttrigger3 = "Nulle part pour s'enfuir.",
+	engagewarn = "Anub'Rekhan engagé. Première Nuée de sauterelles dans ~90 sec.",	
 
-	gaintrigger = "Anub'Rekhan gagne Nu\195\169e de sauterelles.",
+	gaintrigger = "Anub'Rekhan gagne Nuée de sauterelles.",
+	gainendwarn = "Fin de la Nuée de sauterelles !",
+	gainnextwarn = "Prochaine Nuée de sauterelles dans ~90 sec.",
+	gainwarn10sec = "~10 sec. avant la Nuée de sauterelles",	
+	gainincbar = "Prochaine Nuée",
+	gainbar = "Nuée de sauterelles",	
 
-	casttrigger = "Anub'Rekhan commence \195\160 lancer Nu\195\169e de sauterelles.",
+	casttrigger = "Anub'Rekhan commence à lancer Nuée de sauterelles.",
+	castwarn = "Nuée de sauterelles imminente !",	
 } end )
 
 ----------------------------------

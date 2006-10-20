@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -82,37 +82,37 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
--- Chat message triggers
-        engage_trigger = "ANNONCE LA FIN DE VOTRE MONDE",
-        drain_trigger = "^Siphon de sang .+ (.+) inflige \195\160 Hakkar (.+)%.",
-        mindcontrol_trigger = "(.+) (.+) les effets de Rendre fou",
+	-- Chat message triggers
+	engage_trigger = "ANNONCE LA FIN DE VOTRE MONDE",
+	drain_trigger = "^Siphon de sang .+ (.+) inflige à Hakkar (.+).",
+	mindcontrol_trigger = "(.*) (.*) les effets de Rendre fou.",
 
-        you = "Vous",
-        are = "subissez",
+	you = "Vous",
+	are = "subissez",
 
-        flee = "Fleeing will do you no good mortals!", -- FIXME...
+	flee = "Fuir ne vous servira à rien, mortels !",
 
 -- Warnings and bar texts
-        start_message = "Hakkar engag\195\169 - 90 secondes avant drain - 10 minutes avant fr\195\169n\195\169sie",
-        drain_warning = "%d secondes avant drain",
-        drain_message = "Drain de vie - 90 secondes avant le prochain",
+	start_message = "Hakkar engagé - 90 sec. avant Drain - 10 min. avant Enrager",
+	drain_warning = "%d sec. avant le Drain de vie !",	
+	drain_message = "Drain de vie - 90 sec. avant le prochain !",
 
-        mindcontrol_message = "%s est rendu fou !",
+	mindcontrol_message = "%s est devenu fou !",
 
-        ["Enrage"] = "Enrag\195\169",
-        ["Life Drain"] = "Drain de vie",
+	["Enrage"] = "Enrager",
+	["Life Drain"] = "Drain de vie",
 
-        drain_name = "Alerte Drains",
-        drain_desc = "Vous alerte des drains de vie.",
+	drain_name = "Alerte Drain",
+	drain_desc = "Préviens régulièrement quand Hakkar fait ses Drains de vie.",
 
-        enrage_name = "Alerte Fr\195\169n\195\169sie",
-        enrage_desc = "Vous alerte de la Fr\195\169n\195\169sie.",
+	enrage_name = "Alerte Enrager",
+	enrage_desc = "Préviens quand Hakkar devient enragé.",
 
-        mc_name = "Alerte Contr\195\180le mental",
-        mc_desc = "Vous alerte quand un joueur est sous contr\195\180le mental.",
+	mc_name = "Alerte Contrôle Mental",
+	mc_desc = "Préviens quand quelqu'un est sous le contrôle d'Hakkar.",
 
-        icon_name = "Ic\195\180ne de raid",
-        icon_desc = "Place une ic\195\180ne de raid sur la derni\195\168re personne sous contr\195\180le mental (requiert d'\195\170tre promus ou plus)",
+	icon_name = "Placer une icône",
+	icon_desc = "Place une icône de raid (crâne) sur la personne sous contrôle mental (nécessite d'être promu ou mieux).",	
 } end)
 
 L:RegisterTranslations("koKR", function() return {

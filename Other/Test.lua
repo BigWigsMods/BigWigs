@@ -90,6 +90,27 @@ L:RegisterTranslations("deDE", function() return {
 	["Testing Sync"] = "Synchronisation testen",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	["test"] = "test",
+	["Test"] = "Test",
+	["Test Bar"] = "Barre de test",
+	["Test Bar 2"] = "Barre de test 2",
+	["Test Bar 3"] = "Barre de test 3",
+	["Test Bar 4"] = "Barre de test 4",
+	["Testing"] = "Test",
+	["OMG Bear!"] = "Un ours !",
+	["*RAWR*"] = "*GRRR*",
+	["Victory!"] = "Victoire !",
+	["Options for testing."] = "Options concernant les tests.",
+	["local"] = "local",
+	["Local test"] = "Test local",
+	["Perform a local test of BigWigs."] = "Effectue un test local de BigWigs.",
+	["sync"] = "sync",
+	["Sync test"] = "Test de synchronisation",
+	["Perform a sync test of BigWigs."] = "Effectue un test de synchronisation de BigWigs.",
+	["Testing Sync"] = "Test synchro",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

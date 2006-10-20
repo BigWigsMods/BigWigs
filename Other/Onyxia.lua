@@ -40,13 +40,27 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	trigger1 = "prend une grande inspiration%.%.%.",
-	trigger2 = "un seul coup !",
-	trigger3 = "Il semble que vous ayez besoin d'une autre le\195\167on, mortels !",
+	deepbreath_name = "Alerte Grande inspiration",
+	deepbreath_desc = "Préviens quand Onyxia se prépare à prendre une grande inspiration.",
 
-	warn1 = "Onyxia va souffler, tous sur les cot\195\169s !",
-	warn2 = "Onyxia rentre en phase 2 !",
-	warn3 = "Onyxia rentre en phase 3 !",
+	phase2_name = "Alerte Phase 2",
+	phase2_desc = "Préviens quand Onyxia passe en phase 2.",
+
+	phase3_name = "Alerte Phase 3",
+	phase3_desc = "Préviens quand Onyxia passe en phase 3.",
+
+	onyfear_name = "Peur",
+	onyfear_desc = "Préviens quand Onyxia utilise son Rugissement puissant en phase 3.",
+	
+	trigger1 = "%s prend une grande inspiration%.%.%.",
+	trigger2 = "un seul coup !",
+	trigger3 = "Il semble que vous ayez besoin d'une autre leçon, mortels !",
+	trigger4 = "Onyxia commence à lancer Rugissement puissant.",	
+
+	warn1 = "Souffle imminent !",
+	warn2 = "Arrivée de la phase 2 d'Onyxia !",
+	warn3 = "Arrivée de la phase 3 d'Onyxia !",
+	warn4 = "Peur dans 1,5 sec. !",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

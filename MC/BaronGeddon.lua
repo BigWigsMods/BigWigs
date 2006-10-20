@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -170,7 +170,7 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("frFR", function() return {
         bomb_trigger = "^(.+) (.+) les effets de Bombe vivante%.",
         inferno_trigger = "Baron Geddon gagne Inferno.",
-        service_trigger = "%s performs one last service for Ragnaros.", -- FIXME
+        service_trigger = "%s accomplit un dernier service pour Ragnaros...",
 
         you = "Vous",
         are = "subissez",
@@ -178,9 +178,9 @@ L:RegisterTranslations("frFR", function() return {
         bomb_message_you = "Tu es la bombe !",
         bomb_message_other = "%s est la bombe !",
 
-        bombtimer_bar = "%s: Bombe vivante",
+        bombtimer_bar = "%s : Bombe vivante",
         inferno_bar = "Inferno",
-        service_bar = "Dernier Service",
+        service_bar = "Dernier service",
 
         service_message = "Dernier Service, Geddon explose dans 5 secondes !",
         inferno_message = "Inferno pendant 10 secondes !",
