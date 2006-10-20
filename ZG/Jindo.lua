@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -77,35 +77,34 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	brainwash_name = "Alerte Totem de Mind Control",
-	brainwash_desc = "Alerte Totem de Mind Control",
+        brainwash_name = "Alerte Totem de Contr\195\180le Mental",
+        brainwash_desc = "Vous alerte du pop de totem de contr\195\180le mental.",
 
-	healing_name = "Alerte Totem de Soins",
-	healing_desc = "Alerte Totem de Soins",
+        healing_name = "Alerte Totem de soins",
+        healing_desc = "Vous alerte du pop de totem de soins.",
 
-	youcurse_name = "Alerte quand tu es Maudit",
-	youcurse_desc = "Alerte quand tu es Maudit",
+        youcurse_name = "Alerte quand vous \195\170tes maudit",
+        youcurse_desc = "Vous alerte quand vous \195\170tes maudit.",
 
-	elsecurse_name = "Alerte Autre Maudit",
-	elsecurse_desc = "Alerte quand un autre joueur est maudit",
+        elsecurse_name = "Alerte quand d'autres sont maudits",
+        elsecurse_desc = "Vous alerte quand d'autres joueurs sont maudits.",
 
-	icon_name = "Place une icone",
-	icon_desc = "Place une icone sur la personne Maudite (promotion requise)",
+        icon_name = "Ic\195\180ne de raid",
+        icon_desc = "Place une ic\195\180ne de raid sur la derni\195\168re personne maudite (requiert d'\195\170tre promus ou plus)",
 
-	triggerbrainwash = "Jin'do le Mal\195\169ficieur lance Invocation du totem de lavage de cerveau", --TESTED
-	triggerhealing = "Jin'do le Mal\195\169ficieur lance Gardien gu\195\169risseur puissant.", --TESTED
-	triggercurse = "^([^%s]+) ([^%s]+) les effets de Illusions de Jin'do",
+        triggerbrainwash = "Jin'do le Mal\195\169ficieur lance Invocation du totem de lavage de cerveau", --TESTED
+        triggerhealing = "Jin'do le Mal\195\169ficieur lance Gardien gu\195\169risseur puissant.", --TESTED
+        triggercurse = "^([^%s]+) ([^%s]+) les effets de Illusions de Jin'do",
 
-	warnbrainwash = "Totem de Control Mental!",
-	warnhealing = "Totem de Soins!",
+        warnbrainwash = "Totem de Contr\195\180le Mental !",
+        warnhealing = "Totem de Soins !",
 
-	cursewarn_self = "Tu es Maudit!",
-	cursewarn_other = "%s est Maudit!",
+        cursewarn_self = "Tu es maudit !",
+        cursewarn_other = "%s est maudit !",
 
-	you = "Vous",
-	are = "subissez",
+        you = "Vous",
+        are = "subissez",
 } end )
-
 
 L:RegisterTranslations("zhCN", function() return {
 	brainwash_name = "洗脑图腾警报",

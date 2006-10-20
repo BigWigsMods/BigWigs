@@ -85,20 +85,20 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	trigger1 = "%s entre dans une fr\195\169n\195\169sie sanglante !",
-	trigger2 = "Panique.",
-
-	["Frenzy alert!"] = "Alerte fr\195\169n\195\169sie - Tir tranquilisant !",
-	["5 seconds until AoE Fear!"] = "AoE Fear dans 5 secondes !",
-
-	["AoE Fear - 30 seconds until next!"] = "AoE Fear - 30 sec avant le prochain !",
-	["AoE Fear"] = "AoE Fear",
-
-	fear_name = "fear",
-	fear_desc = "Pr\195\169venir quand Magmadar lance AoE Fear.",
-
-	frenzy_name = "Fr\195\169n\195\169sie",
-	frenzy_desc = "Pr\195\169venir quand Magmadar passe en fr\195\169n\195\169sie.",
+        trigger1 = "%s entre dans une fr\195\169n\195\169sie sanglante !",
+        trigger2 = " subit les effets de Panique.",
+ 
+        ["Frenzy alert!"] = "Alerte fr\195\169n\195\169sie - Tir tranquilisant !",
+        ["5 seconds until AoE Fear!"] = "AoE Fear dans 5 secondes !",
+ 
+        ["AoE Fear - 30 seconds until next!"] = "AoE Fear ! - 30 secondes avant le prochain",
+        ["AoE Fear"] = "AoE Fear",
+ 
+        fear_name = "Alerte Fear",
+        fear_desc = "Vous alerte quand Magmadar lance AoE Fear.",
+ 
+        frenzy_name = "Alerte Fr\195\169n\195\169sie",
+        frenzy_desc = "Vous alerte quand Magmadar passe en fr\195\169n\195\169sie.",
 } end)
 
 ----------------------------------

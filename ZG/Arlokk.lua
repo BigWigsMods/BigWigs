@@ -33,10 +33,19 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	mark_trigger ="D\195\169vorez ([^%s]+), mes jolies !",
+        youmark_name = "Alerte quand vous \195\170tes marqu\195\169",
+        youmark_desc = "Vous alerte quand vous \195\170tes marqu\195\169.",
 
-	mark_warning_self = "Tu es marqu\195\169 !",
-	mark_warning_other = "%s est marqu\195\169 !",
+        othermark_name = "Alerte quand d'autres sont marqu\195\169s",
+        othermark_desc = "Vous alerte quand d'autres joueurs sont marqu\195\169s.",
+
+        icon_name = "Ic\195\180ne de raid",
+        icon_desc = "Place une ic\195\180ne de raid sur la derni\195\168re personne marqu\195\169e (requiert d'\195\170tre promus ou plus)",
+
+        mark_trigger ="D\195\169vorez ([^%s]+), mes jolies !",
+
+        mark_warning_self = "Tu es marqu\195\169 !",
+        mark_warning_other = "%s est marqu\195\169 !",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

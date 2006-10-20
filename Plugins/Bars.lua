@@ -161,6 +161,44 @@ L:RegisterTranslations("deDE", function() return {
 	["Charcoal"] = "Charcoa",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+        ["Bars"] = "Barres",
+
+-- ["bars"] = true,
+-- ["anchor"] = true,
+-- ["scale"] = true,
+-- ["up"] = true,
+
+        ["Options for the timer bars."] = "Options des barres de temps.",
+        ["Show the bar anchor frame."] = "Affiche l'ancre de la fen\195\170tre des barres.",
+        ["Set the bar scale."] = "D\195\169finie l'\195\169chelle des barres.",
+        ["Group upwards"] = "Grouper vers le haut",
+        ["Toggle bars grow upwards/downwards from anchor."] = "S\195\169lectionne si les barres s'ajoutent au dessus ou en dessous de l'ancre.",
+
+        ["Timer bars"] = "Barres de temps",
+        ["Show anchor"] = "Afficher l'ancre",
+        ["Grow bars upwards"] = "Ajout des barres par le haut",
+        ["Scale"] = "Echelle",
+        ["Bar scale"] = "Echelle des barres",
+
+        ["Bars now grow %2$s"] = "Les barres s'ajoutent d\195\169sormais vers le %2s",
+        ["Scale is set to %2$s"] = "L'\195\169chelle est d\195\169finie \195\160 %2$s",
+
+        ["Up"] = "Haut",
+        ["Down"] = "Bas",
+
+        ["Test"] = "Test",
+        ["Close"] = "Fermer",
+
+        ["Texture"] = "Texture",
+        ["Set the texture for the timerbars."] = "D\195\169finie la texture des barres",
+
+        ["default"] = "D\195\169faut",
+        ["smooth"] = "smooth",
+        ["otravi"] = "otravi",
+        ["Charcoal"] = "Charcoal",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

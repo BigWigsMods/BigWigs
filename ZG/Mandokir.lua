@@ -33,10 +33,21 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	watch_trigger =  "([^%s]+), je vous ai \195\160 l'\197\147il";
+        you_name = "Alerte quand vous \195\170tes surveill\195\169",
+        you_desc = "Vous alerte lorsque vous \195\170tes surveill\195\169.",
 
-	watched_warning_self = "Tu es surveill\195\169 !",
-	watched_warning_other = "%s est surveill\195\169 !",
+        other_name = "Alerte quand d'autres sont surveill\195\169s",
+        other_desc = "Vous alerte quand d'autres joueurs sont surveill\195\169s.",
+
+        icon_name = "Ic\195\180ne de raid",
+        icon_desc = "Place une ic\195\180ne de raid sur la derni\195\168re personne surveill\195\169e (requiert d'\195\170tre promus ou plus)",
+
+        watch_trigger =  "([^%s]+), je vous ai \195\160 l'\197\147il";
+--      enrage_trigger = "goes into a rage after seeing his raptor fall in battle!$", -- FIXME
+
+        watched_warning_self = "Tu es surveill\195\169 !",
+        watched_warning_other = "%s est surveill\195\169 !",
+        enraged_message = "Ohgan est mort ! Mandokir enrag\195\169 !",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

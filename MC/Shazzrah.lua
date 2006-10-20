@@ -82,16 +82,21 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	trigger1 = "Shazzrah gagne Porte de Shazzrah",
-	trigger2 = "Shazzrah gagne Magie diminu\195\169e",
+        trigger1 = "Shazzrah gagne Porte de Shazzrah",
+        trigger2 = "Shazzrah gagne Magie diminu\195\169e",
 
-	warn1 = "Transfert - ~45 sec avant le prochain",
-	warn2 = "~5 secondes avant Transfert !",
-	warn3 = "Shazzrah se buff - Dispellez le !",
+        warn1 = "Transfert ! - ~45 secondes avant le prochain",
+        warn2 = "~5 secondes avant Transfert !",
+        warn3 = "Shazzrah se buff ! - Dispellez le",
 
-	bar1text = "Transfert",
+        bar1text = "Transfert",
+
+        selfbuff_name = "Alerte Buff",
+        selfbuff_desc = "Vous alerte quand Shazzrah se buff.",
+
+        blink_name = "Alerte Transfert",
+        blink_desc = "Vous alerte quand Shazzrah se t\195\169l\195\169porte.",
 } end)
-
 
 ----------------------------------
 --      Module Declaration      --

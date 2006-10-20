@@ -35,10 +35,22 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	bomb_trigger =  "Qu'une pluie de feu s'abatte sur les envahisseurs !",
-	heal_trigger = "commence \195\160 lancer un sort de Soins exceptionnels !",
-	bomb_message = "Chauve-souris en approche !",
-	heal_message = "Commence \195\160 se soigner",
+        bomb_trigger =  "Qu'une pluie de feu s'abatte sur les envahisseurs !",
+        heal_trigger = "commence \195\160 lancer un sort de Soins exceptionnels !",
+        swarm_trigger = "pousse un hurlement assourdissant !",  -- CHECKED
+
+        swarm_message = "Pack de Chauve-souris en approche !",
+        bomb_message = "Chauve-souris bombardier en approche !",
+        heal_message = "Commence \195\160 se soigner !",
+
+        heal_name = "Alerte Soins",
+        heal_desc = "Vous alerte lorsque le boss tente de se soigner.",
+
+        bomb_name = "Alerte Bombardier",
+        bomb_desc = "Vous alerte des pops de chauve-souris bombardier.",
+
+        swarm_name = "Alerte Pack de chauve-souris",
+        swarm_desc = "Vous alerte des pops de pack de chauve-souris",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

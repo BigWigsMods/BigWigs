@@ -44,19 +44,18 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	spider_name = "Araign\195\169e",
-	spider_desc = "Alerte Araign\195\169e.",
+        spider_name = "Alerte Araign\195\169e",
+        spider_desc = "Vous alerte du pop d'araign\195\169e.",
 
-	drain_name = "Drain",
-	drain_desc = "Alerte Drain.",
+        drain_name = "Alerte Drain",
+        drain_desc = "Vous alerte d'un drain en cours.",
 
-	spiders_trigger = "., mes enfants !$",
-	drainlife_trigger = "^High Priestess Mar'li's Drain Life heals High Priestess Mar'li for (.+).",
+        spiders_trigger = "., mes enfants !$",
+        drainlife_trigger = "^Drain de vie DE Grande pr\195\170tresse Mar'li gu\195\169rit Grande pr\195\170tresse Mar'li de (.+)%.$",
 
-	spiders_message = "Araign\195\169e en Approche!",
-	drainlife_message = "Mar'li fait un drain!",
+        spiders_message = "Araign\195\169e en approche !",
+        drainlife_message = "Mar'li fait un drain de vie !",
 } end )
-
 
 L:RegisterTranslations("zhCN", function() return {
 	spider_name = "蜘蛛警报",

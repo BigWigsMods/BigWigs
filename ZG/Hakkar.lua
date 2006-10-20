@@ -82,34 +82,37 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	-- Chat message triggers
-	engage_trigger = "ANNONCE LA FIN DE VOTRE MONDE",
-	drain_trigger = "^Siphon de sang .+ (.+) inflige \195\160 Hakkar (.+).",
-	mindcontrol_trigger = "(.*) (.*) les effets de Rendre fou",
+-- Chat message triggers
+        engage_trigger = "ANNONCE LA FIN DE VOTRE MONDE",
+        drain_trigger = "^Siphon de sang .+ (.+) inflige \195\160 Hakkar (.+)%.",
+        mindcontrol_trigger = "(.+) (.+) les effets de Rendre fou",
 
-	you = "Vous",
-	are = "subissez",
+        you = "Vous",
+        are = "subissez",
 
-	flee = "Fleeing will do you no good mortals!",
+        flee = "Fleeing will do you no good mortals!", -- FIXME...
 
-	-- Warnings and bar texts
-	start_message = "Hakkar engag\195\169 - 90 secondes avant drain - 10 minutes avant f\195\169n\195\169sie",
-	drain_warning = "%d secondes avant drain",
-	drain_message = "Drain de vie - 90 secondes avant le prochain",
+-- Warnings and bar texts
+        start_message = "Hakkar engag\195\169 - 90 secondes avant drain - 10 minutes avant fr\195\169n\195\169sie",
+        drain_warning = "%d secondes avant drain",
+        drain_message = "Drain de vie - 90 secondes avant le prochain",
 
-	mindcontrol_message = "%s est Mind Control!",
+        mindcontrol_message = "%s est rendu fou !",
 
-	drain_name = "Alertes de drains",
-	drain_desc = "Alertes des drains de vie",
+        ["Enrage"] = "Enrag\195\169",
+        ["Life Drain"] = "Drain de vie",
 
-	enrage_name = "Alerte F\195\169n\195\169sie",
-	enrage_desc = "Alerte pour la F\195\169n\195\169sie",
+        drain_name = "Alerte Drains",
+        drain_desc = "Vous alerte des drains de vie.",
 
-	mc_name = "Mind Control",
-	mc_desc = "Alerte quand un joueur est mind control.",
+        enrage_name = "Alerte Fr\195\169n\195\169sie",
+        enrage_desc = "Vous alerte de la Fr\195\169n\195\169sie.",
 
-	icon_name = "Placer une Icone",
-	icon_desc = "Place une icone sur la personne Mind Control (promotion requise)",
+        mc_name = "Alerte Contr\195\180le mental",
+        mc_desc = "Vous alerte quand un joueur est sous contr\195\180le mental.",
+
+        icon_name = "Ic\195\180ne de raid",
+        icon_desc = "Place une ic\195\180ne de raid sur la derni\195\168re personne sous contr\195\180le mental (requiert d'\195\170tre promus ou plus)",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

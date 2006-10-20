@@ -168,19 +168,40 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	bomb_trigger = "^([^%s]+) ([^%s]+) les effets de Bombe vivante.",
-	inferno_trigger = "Baron Geddon gagne Inferno.",
+        bomb_trigger = "^(.+) (.+) les effets de Bombe vivante%.",
+        inferno_trigger = "Baron Geddon gagne Inferno.",
+        service_trigger = "%s performs one last service for Ragnaros.", -- FIXME
 
-	you = "Vous",
-	are = "subissez",
+        you = "Vous",
+        are = "subissez",
 
-	bomb_message_you = "Tu es la bombe !",
-	bomb_message_other = "%s est la bombe !",
+        bomb_message_you = "Tu es la bombe !",
+        bomb_message_other = "%s est la bombe !",
 
-	inferno_bar = "Inferno",
+        bombtimer_bar = "%s: Bombe vivante",
+        inferno_bar = "Inferno",
+        service_bar = "Dernier Service",
 
-	inferno_message = "Inferno pendant 10sec!",
+        service_message = "Dernier Service, Geddon explose dans 5 secondes !",
+        inferno_message = "Inferno pendant 10 secondes !",
 
+        service_name = "Alerte Dernier Service",
+        service_desc = "Vous alerte du dernier service de Geddon.",
+
+        inferno_name = "Alerte Inferno",
+        inferno_desc = "Vous alerte des Inferno de Geddon.",
+
+        bombtimer_name = "Barre Bombes Vivantes",
+        bombtimer_desc = "Affiche une barre pour chaque Bombe vivante.",
+
+        youbomb_name = "Alerte quand vous \195\170tes la bombe",
+        youbomb_desc = "Vous alerte quand vous \195\170tes la bombe.",
+
+        elsebomb_name = "Alerte quand d'autres sont la bombe",
+        elsebomb_desc = "Vous alerte quand d'autres joueurs sont la bombe.",
+
+        icon_name = "Ic\195\180ne de raid",
+        icon_desc = "Place une ic\195\180ne de raid sur la derni\195\168re personne qui est la bombe (requiert d'\195\170tre promus ou plus)",
 } end)
 
 ----------------------------------
