@@ -90,6 +90,15 @@ L:RegisterTranslations("zhCN", function() return {
 	warn6 = "10秒后激怒",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	cmd = "Le Recousu",
+
+	enragetrigger = "%s devient fou furieux !",
+
+	starttrigger1 = "R'cousu veut jouer !",
+	starttrigger2 = "R'cousu avatar de guerre pour Kel'Thuzad !",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

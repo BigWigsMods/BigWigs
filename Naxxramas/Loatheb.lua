@@ -149,6 +149,19 @@ L:RegisterTranslations("zhCN", function() return {
 	are = "到",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	cmd = "Horreb",
+
+	doomtrigger = "les effets de Mal\195\169diction in\195\169vitable.",
+
+	sporespawntrigger = "Horreb lance Invocation de spore.",
+
+	removecursetrigger = "Horreb lance D\195\169livrance de la mal\195\169diction sur Horreb.",
+
+	you = "Vous",
+	are = "subissez",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
