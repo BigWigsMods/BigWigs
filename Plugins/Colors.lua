@@ -175,6 +175,47 @@ L:RegisterTranslations("deDE", function() return {
 	["4th"] = "4te",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	["Colors"] = "Couleurs",
+
+	["Messages"] = "Messages",
+	["Bars"] = "Barres",
+	["Shortbar"] = "BarresCourtes",
+	["Longbar"] = "BarresLongues",
+	["Color %s"] = "Couleur %s",
+	["Color%s"] = "Couleur%s",
+	["Number of colors"] = "Nombre de couleurs",
+	["xColors"] = "nCouleurs",
+	["Background"] = "Fond",
+	["Text"] = "Texte",
+	["Reset"] = "RÀZ",
+
+	["Colors of messages and bars."] = "Couleurs des messages et des barres.",
+	["Colors of messages."] = "Couleurs des messages.",
+	["Change the color for \"%s\" messages."] = "Change la couleur des messages \"%s\".",
+	["Colors of bars."] = "Couleurs des barres.",
+	["Colors for short bars (< 1 minute)."] = "Couleurs des barres de courte durée (< 1 minute).",
+	["Colors for long bars (> 1 minute)."] = "Couleurs des barres de longue durée (> 1 minute).",
+	["Change the %s color."] = "Change la couleur de %s.",
+	["Number of colors the bar has."] = "Nombre de couleurs que possède la barre.",
+	["Change the background color."] = "Change la couleur du fond.",
+	["Change the text color."] = "Change la couleur du texte.",
+	["Resets all ranges to defaults."] = "Réinitialise tous les paramètres à leurs valeurs par défaut.",
+
+	["Important"] = "Important",
+	["Personal"] = "Personnel",
+	["Urgent"] = "Urgent",
+	["Attention"] = "Attention",
+	["Positive"] = "Positif",
+	["Bosskill"] = "Défaite",
+	["Core"] = "Noyau",
+
+	["1st"] = "1er",
+	["2nd"] = "2ème",
+	["3rd"] = "3ème",
+	["4th"] = "4ème",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

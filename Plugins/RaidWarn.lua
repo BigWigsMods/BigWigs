@@ -1,4 +1,4 @@
-assert(BigWigs, "BigWigs not found!")
+﻿assert(BigWigs, "BigWigs not found!")
 
 ------------------------------
 --      Are you local?      --
@@ -92,6 +92,23 @@ L:RegisterTranslations("deDE", function() return {
 	["Toggle using the raid channel instead of the raid warning channel for boss messages."] = "Schlachtzugschat anstelle des Schlachtzugswarungschats für Boss Nachrichten benutzen.",
 	
 	["Options for RaidWarning."] = "Optionen f\195\188r RaidWarnung.",
+} end )
+
+L:RegisterTranslations("frFR", function() return {
+	["RaidWarning"] = "Avertissement du raid",
+
+	["Broadcast over RaidWarning"] = "Diffuser sur l'Avertissement Raid",
+	["Broadcast"] = "Diffuser",
+	["Toggle broadcasting over Raidwarning."] = "Diffuse ou non les messages sur l'Avertissement Raid.",
+	
+	["Whisper"] = "Chuchoter",
+	["Whisper warnings"] = "Chuchoter les avertissements",
+	["Toggle whispering warnings to players."] = "Chuchote ou non les avertissements aux joueurs.",
+
+	["Use Raidchannel"] = "Utiliser le canal Raid",
+	["Toggle using the raid channel instead of the raid warning channel for boss messages."] = "Utilise ou non le canal Raid au lieu de l'Avertissement Raid pour les messages des boss.",
+	
+	["Options for RaidWarning."] = "Options concernant l'Avertissement du Raid.",
 } end )
 
 ----------------------------------

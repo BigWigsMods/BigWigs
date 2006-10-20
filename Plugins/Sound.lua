@@ -1,4 +1,4 @@
-
+﻿
 assert(BigWigs, "BigWigs not found!")
 
 ------------------------------
@@ -68,6 +68,16 @@ L:RegisterTranslations("deDE", function() return {
 	--["default"] = "true",
 	["Default only"] = "Nur Standard",
 	["Use only the default sound."] = "Nur Standard Sound.",
+} end)
+
+L:RegisterTranslations("frFR", function() return {
+	["Sounds"] = "Sons",
+	["Options for sounds."] = "Options concernant les sons.",
+	
+	["Use sounds"] = "Utiliser les sons",
+	["Toggle sounds on or off."] = "Joue ou non les sons.",
+	["Default only"] = "Son par défaut uniquement",
+	["Use only the default sound."] = "Utilise uniquement le son par défaut.",	
 } end)
 
 ----------------------------------

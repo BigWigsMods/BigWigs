@@ -133,6 +133,38 @@ L:RegisterTranslations("deDE", function() return {
 	["Shown"] = "Angezeigt",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	["BossBlock"] = "BossBlock",
+	["Suppress bossmod chat from other players."] = "Supprime les messages des BossMods des autres joueurs.",
+
+	["Suppress Raid Chat"] = "Supprimer les messages du canal Raid",
+	["Suppress messages in the raid channel."] = "Supprime les messages du canal Raid.",
+
+	["Suppress RaidWarn Chat"] = "Supprimer les Avertissements Raid du chat",
+	["Suppress RaidWarn messages in the chat frames."] = "Supprime les messages de l'Avertissement Raid de la fenêtre de discussion.",
+
+	["Suppress RaidWarn"] = "Supprimer les Avertissements Raid",
+	["Suppress RaidWarn popup messages."] = "Supprime les messages à l'écran de l'Avertissement Raid.",
+
+	["Suppress RaidSay"] = "Supprimer les RaidSay",
+	["Suppress CTRA RaidSay popup messages."] = "Supprime les messages à l'écran du RaidSay de CTRA.",
+	["Suppress oRA RaidSay popup messages."] = "Supprime les messages à l'écran du RaidSay de oRA.",
+	["Suppress oRA2 RaidSay popup messages."] = "Supprime les messages à l'écran du RaidSay de oRA2.",	
+
+	["Suppress Tells"] = "Supprimer les chuchotements",
+	["Suppress Tell messages."] = "Supprime les messages chuchotés.",
+
+	["Debugging"] = "Débogage",
+	["Show debug messages."] = "Affiche les messages de débogage.",
+
+	["Suppressing Chatframe"] = "Suppression de la fenêtre de discussion",
+	["Suppressing RaidWarningFrame"] = "Suppression du cadre de l'Avertissement Raid",
+	["Suppressing CT_RAMessageFrame"] = "Suppression du cadre du RaidSay de CTRA",
+
+	["Suppressed"] = "Supprimé",
+	["Shown"] = "Affiché",
+} end)
+
 ------------------------------
 --      Are you local?      --
 ------------------------------

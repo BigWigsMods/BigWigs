@@ -112,6 +112,29 @@ L:RegisterTranslations("deDE", function() return {
 	["skull"] = "Totenkopf",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	["Raid Icons"] = "Icônes de raid",
+
+	["Place"] = "Placement",
+	["Place Raid Icons"] = "Placer les icônes de raid",
+	["Toggle placing of Raid Icons on players."] = "Place ou non les icônes de raid sur les joueurs.",
+	
+	["Icon"] = "Icône",
+	["Set Icon"] = "Déterminer l'icône",
+	["Set which icon to place on players."] = "Détermine quelle icône sera placée sur les joueurs.",
+	
+	["Options for Raid Icons."] = "Options concernant les icônes de raid.",
+
+	["star"] = "étoile",
+	["circle"] = "cercle",
+	["diamond"] = "diamant",
+	["triangle"] = "triangle",
+	["moon"] = "lune",
+	["square"] = "carré",
+	["cross"] = "croix",
+	["skull"] = "crâne",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

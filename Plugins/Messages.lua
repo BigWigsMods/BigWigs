@@ -1,4 +1,4 @@
-
+﻿
 assert(BigWigs, "BigWigs not found!")
 
 ------------------------------
@@ -197,6 +197,46 @@ L:RegisterTranslations("deDE", function() return {
 
 	["Test"] = "Test",
 	["Close"] = "Schlie\195\159en",
+} end)
+
+L:RegisterTranslations("frFR", function() return {
+	["Messages"] = "Messages",
+
+	["Options for the message frame."] = "Options concernant le cadre des messages.",
+	["Anchor"] = "Ancre",
+	["Show the message anchor frame."] = "Affiche l'ancre du cadre des messages.",
+	["Use RaidWarning"] = "Utiliser le cadre de l'Avertissement Raid",
+	["Toggle sending messages to the RaidWarnings frame."] = "Affiche ou non les messages dans le cadre des Avertissements Raid.",
+	["Use colors"] = "Utiliser des couleurs",
+	["Toggles white only messages ignoring coloring."] = "Utilise ou non des couleurs dans les messages à la place du blanc unique.",
+	["Message frame scale"] = "Taille du cadre des messages",
+
+	["Message frame"] = "Cadre des messages",
+	["Show anchor"] = "Afficher l'ancre",
+	["Send messages to RaidWarning frame"] = "Envoyer les messages dans le cadre des Avertissements Raid",
+	["Set the message frame scale."] = "Détermine la taille du cadre des messages.",
+	["Colorize messages"] = "Colorer les messages",
+	["Scale"] = "Taille",
+
+	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Co|cffff00ffule|cff00ff00ur|r",
+	["White"] = "Blanc",
+	["BigWigs frame"] = "Cadre de BigWigs",
+	["RaidWarning frame"] = "Cadre des Avertissements Raid",
+	["Scale is set to %s"] = "La taille est désormais définie à %s",
+	["Messages are now sent to the %2$s"] = "Les messages sont désormais affichés dans le %2$s",
+	["Messages are currently sent to the %2$s"] = "Les messages sont actuellement affichés dans le %2$s",
+
+	["Display"] = "Affichage",
+	["Set where messages are displayed."] = "Détermine où les messages sont affichés.",
+	["Display is now set to %2$s"] = "L'affichage est désormais défini au %2$s",
+	["Display is currently set to %2$s"] = "L'affichage est actuellement défini au %2$s",	
+
+	["Mik's Scrolling Battle Text"] = "Scrolling Battle Text de Mik",
+	["Scrolling Combat Text"] = "Scrolling Combat Text",
+	["Floating Combat Text"] = "Message de combat flottant",
+
+	["Test"] = "Test",
+	["Close"] = "Fermer",	
 } end)
 
 ----------------------------------

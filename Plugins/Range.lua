@@ -106,6 +106,26 @@ L:RegisterTranslations("deDE", function() return {
 	["Resets all ranges to defaults."] = "Auf Standard zur\195\188cksetzen.",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	["Range"] = "Portée",
+	["Options for the combat log's range."] = "Options concernant la portée du journal de combat.",
+
+--~~  	["Party"] = "Groupe",
+--~~  	["Party combat log range."] = "Portée du journal de combat du groupe.",
+
+--~~  	["Friendlies"] = "Alliés",
+--~~  	["Friendly players combat log range."] = "Portée du journal de combat des alliés.",
+
+	["Creatures"] = "Créatures",
+	["Creature combat log range."] = "Portée du journal de combat des créatures.",
+
+	["Deaths"] = "Morts",
+	["Death message range."] = "Portée du journal de combat des décès.",
+
+	["Reset to defaults"] = "RÀZ",
+	["Resets all ranges to defaults."] = "Réinitialise tous les paramètres à leurs valeurs par défaut.",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

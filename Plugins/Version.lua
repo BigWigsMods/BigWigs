@@ -1,4 +1,4 @@
-assert(BigWigs, "BigWigs not found!")
+﻿assert(BigWigs, "BigWigs not found!")
 
 local BWL = nil
 local BZ = AceLibrary("Babble-Zone-2.2")
@@ -117,6 +117,32 @@ L:RegisterTranslations("zhCN", function() return {
 	["Runs a version query on the BigWigs core."] = "检查BigWigs内核的版本",
 	["Nr Replies"] = "回复的数量",
 	["Ancient"] = "古老",
+} end )
+
+L:RegisterTranslations("frFR", function() return {
+
+	["Version Query"] = "Vérification des versions",
+	["Commands for querying the raid for Big Wigs versions."] = "Commandes de vérification des version de BigWigs du raid.",	
+	["Query already running, please wait 5 seconds before trying again."] = "Une vérification est déjà en cours, veuillez réessayer dans 5 secondes.",
+	["Querying versions for "] = "Vérification des versions pour ",
+	["Big Wigs Version Query"] = "Vérification des versions de BigWigs",
+	["Close window"] = "Fermer la fenêtre", -- I know, it's really a Tablet.
+	["Showing version for "] = "Affichage des versions pour ",
+	["Green versions are newer than yours, red are older, and white are the same."] = "Les versions en verte sont plus récentes que vous, celles en rouge plus anciennes, et celles en blanc les mêmes que vous.",
+	["Player"] = "Joueur",
+	["Version"] = "Version",
+	["Current zone"] = "Zone actuelle",
+	["<zone>"] = "<zone>",
+	["Version query done."] = "Vérification des versions terminée.",
+	["Runs a version query on your current zone."] = "Effectue une vérification des versions dans votre zone.",
+	["Closes the version query window."] = "Ferme la fenêtre de vérification des versions.",
+	["Runs a version query on the given zone."] = "Effectue une vérification des versions dans la zone donnée.",
+	["Zone"] = "Zone",
+	["N/A"] = "N/A",
+	["BigWigs"] = "BigWigs",
+	["Runs a version query on the BigWigs core."] = "Effectue une vérification des versions du noyau de BigWigs.",
+	["Nr Replies"] = "Nbre de réponses",
+	["Ancient"] = "Ancien",	
 } end )
 
 ---------------------------------

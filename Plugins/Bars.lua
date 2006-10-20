@@ -162,41 +162,36 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-        ["Bars"] = "Barres",
+	["Bars"] = "Barres",
 
--- ["bars"] = true,
--- ["anchor"] = true,
--- ["scale"] = true,
--- ["up"] = true,
+	["Options for the timer bars."] = "Options concernant les barres temporelles.",
+	["Show the bar anchor frame."] = "Affiche l'ancre du cadre des barres.",
+	["Set the bar scale."] = "Détermine la taille des barres.",
+	["Group upwards"] = "Ajouter vers le haut",
+	["Toggle bars grow upwards/downwards from anchor."] = "Ajoute les nouvelles barres soit en haut de l'ancre, soit en bas de l'ancre.",
 
-        ["Options for the timer bars."] = "Options des barres de temps.",
-        ["Show the bar anchor frame."] = "Affiche l'ancre de la fen\195\170tre des barres.",
-        ["Set the bar scale."] = "D\195\169finie l'\195\169chelle des barres.",
-        ["Group upwards"] = "Grouper vers le haut",
-        ["Toggle bars grow upwards/downwards from anchor."] = "S\195\169lectionne si les barres s'ajoutent au dessus ou en dessous de l'ancre.",
+	["Timer bars"] = "Barres temporelles",
+	["Show anchor"] = "Afficher l'ancre",
+	["Grow bars upwards"] = "Ajouter barres vers le haut",
+	["Scale"] = "Taille",
+	["Bar scale"] = "Taille des barres",
 
-        ["Timer bars"] = "Barres de temps",
-        ["Show anchor"] = "Afficher l'ancre",
-        ["Grow bars upwards"] = "Ajout des barres par le haut",
-        ["Scale"] = "Echelle",
-        ["Bar scale"] = "Echelle des barres",
+	["Bars now grow %2$s"] = "Les barres s'ajoutent désormais vers le %2$s.",
+	["Scale is set to %2$s"] = "La taille est désormais définie à %2$s.",
 
-        ["Bars now grow %2$s"] = "Les barres s'ajoutent d\195\169sormais vers le %2s",
-        ["Scale is set to %2$s"] = "L'\195\169chelle est d\195\169finie \195\160 %2$s",
+	["Up"] = "haut",
+	["Down"] = "bas",
+	
+	["Test"] = "Test",
+	["Close"] = "Fermer",
 
-        ["Up"] = "Haut",
-        ["Down"] = "Bas",
+	["Texture"] = "Texture",
+	["Set the texture for the timerbars."] = "Détermine la texture des barres temporelles.",
 
-        ["Test"] = "Test",
-        ["Close"] = "Fermer",
-
-        ["Texture"] = "Texture",
-        ["Set the texture for the timerbars."] = "D\195\169finie la texture des barres",
-
-        ["default"] = "D\195\169faut",
-        ["smooth"] = "smooth",
-        ["otravi"] = "otravi",
-        ["Charcoal"] = "Charcoal",
+	["default"] = "défaut",
+	["smooth"] = "smooth",
+	["otravi"] = "otravi",
+	["Charcoal"] = "Charcoal",	
 } end)
 
 ----------------------------------
