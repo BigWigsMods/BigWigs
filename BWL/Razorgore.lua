@@ -88,16 +88,25 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	start_trigger = "Sonnez l'alarme",
-	start_message = "Razorgore engaged!",
+	start_message = "Tranchetripe engagé !",
 
-	mindcontrol_trigger = "Stupide ([^%s]+), tu es mon esclave maintenant !$",
-	mindcontrol_message = "%s est sous controle mental!",
+	mindcontrol_trigger = "Stupide ([^%s]+), tu es mon esclave maintenant !",
+	mindcontrol_message = "%s est sous Contrôle mental !",
 
-	egg_trigger = "Tranchetripe l'Indompt\195\169 lance D\195\169truire (.+)%.",
-	egg_message = "%d/30 oeufs dtruits!",
+	egg_trigger = "Tranchetripe l'Indompté lance Détruire (.*)%.",
+	egg_message = "%d oeufs sur 30 détruits !",
 
-	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.", --TO TRANSLATE
-	phase2_message = "All eggs destroyed, Razorgore loose!",
+	phase2_trigger = "Warming Flames de Tranchetripe l'Indompté soigne Tranchetripe l'Indompté pour .*.", -- to translate	
+	phase2_message = "Tous les oeufs ont été détruits !",
+
+	mc_name = "Alerte Contrôle mental",
+	mc_desc = "Préviens quand un subit subit un contrôle mental.",
+
+	eggs_name = "Ne pas compter les oeufs",
+	eggs_desc = "Ne compte pas le nombre d'oeufs restants - cette option ne fonctionne pas chez tout le monde, un meilleur déclencheur doit être trouvé.",
+
+	phase_name = "Phases",
+	phase_desc = "Préviens de l'arrivée des phases 1 & 2.",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

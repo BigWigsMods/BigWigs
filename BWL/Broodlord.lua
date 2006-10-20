@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -91,13 +91,22 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	trigger1 = "^([^%s]+) ([^%s]+) les effets de Frappe mortelle",
+	trigger1 = "^([^%s]+) ([^%s]+) les effets de Frappe mortelle.",
 
 	you = "Vous",
 	are = "subissez",
 
-	warn1 = "Frappe mortelle sur toi!",
-	warn2 = "Frappe mortelle sur %s!",
+	warn1 = "Frappe mortelle sur toi !",
+	warn2 = "Frappe mortelle sur %s !",
+	
+	youms_name = "Alerte Frappe mortelle sur vous",
+	youms_desc = "Préviens quand vous êtes touché par la Frappe mortelle.",
+
+	elsems_name = "Alerte Frappe mortelle sur les autres",
+	elsems_desc = "Préviens quand quelqu'un d'autre est touché par la Frappe mortelle.",
+
+	msbar_name = "Barre Frappe mortelle",
+	msbar_desc = "Affiche une barre indiquant la durée de la Frappe mortelle.",	
 } end )
 
 ----------------------------------

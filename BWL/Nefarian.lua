@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 local boss = AceLibrary("Babble-Boss-2.2")["Nefarian"]
@@ -223,29 +223,44 @@ L:RegisterTranslations("frFR", function() return {
 	shadowflame_trigger = "Nefarian commence \195\160 lancer Flamme d'ombre.",
 	triggershamans	= "Chamans, montrez moi",
 	triggerdruid	= "Les druides et leur stupides",
-	triggerwarlock	= "D\195\169monistes, vous ne devriez pas jouer",
-	triggerpriest	= "Pr\195\170tres ! Si vous continuez",
+	triggerwarlock	= "Démonistes, vous ne devriez pas jouer",
+	triggerpriest	= "Prêtres ! Si vous continuez",
 	triggerhunter	= "Ah, les chasseurs et les stupides",
 	triggerwarrior	= "Guerriers, je sais que vous pouvez frapper plus fort",
-	triggerrogue	= "Voleurs, arr\195\170tez de vous cacher",
+	triggerrogue	= "Voleurs, arrêtez de vous cacher",
 	triggerpaladin	= "Les paladins",
 	triggermage		= "Les mages aussi",
 	
-	landing_soon_warning = "Nefarian att\195\169rit dans 10 sec!",
-	landing_warning = "Nefarian att\195\169rit!",
-	zerg_warning = "Zerg imminent!",
-	fear_warning = "Fear dans 2 sec!",
-	shadowflame_warning = "Flamme d'ombre imminente!",
-	classcall_warning = "Appel de classe imminent! STOP Grosheal  ranger arc/fusil",
-	warnshaman	= "CHAMANS - Apparition des totems!",
-	warndruid	= "DRUIDES - En forme f\195\169line!",
-	warnwarlock	= "DEMONISTES - Arriv\195\169e des Infernaux!",
-	warnpriest	= "PRETRES - Arr\195\170tez de soigner!",
-	warnhunter	= "CHASSEURS - Arcs/Fusils cass\195\169s!",
-	warnwarrior	= "GUERRIERS - En position berseker!",
-	warnrogue	= "VOLEURS - T\195\169l\195\169port\195\169s et root\195\169s!",
-	warnpaladin	= "PALADINS - B\195\169n\195\169diction de protection!",
-	warnmage	= "MAGES - Arriv\195\169e des m\195\169tamorphoses!",
+	landing_soon_warning = "Nefarian atterit dans 10 sec. !",
+	landing_warning = "Nefarian atterit !",
+	zerg_warning = "Zerg en imminent !",
+	fear_warning = "Peur dans 2 sec. !",
+	shadowflame_warning = "Flamme d'ombre imminente !",
+	classcall_warning = "Début de l'appel des classes !",
+	warnshaman	= "Chamans - Totems posés !",
+	warndruid	= "Druides - Coincés en forme féline !",
+	warnwarlock	= "Démonistes - Infernaux en approche !",
+	warnpriest	= "Prêtre - Stoppez les soins !",
+	warnhunter	= "Chasseurs - Arcs/Fusils cassés !",
+	warnwarrior	= "Guerriers - Coincés en posture berseker!",
+	warnrogue	= "Voleurs - Téléportés et cloués au sol !",
+	warnpaladin	= "Paladins - Bénédiction de protection !",
+	warnmage	= "Mages - Métamorphoses imminentes !",
+	
+	classcall_bar = "Appel des classes",
+	fear_bar = "Peur probable",
+
+	shadowflame_name = "Alerte Flamme d'ombre",
+	shadowflame_desc = "Préviens quand Nefarian utilise sa Flamme d'ombre.",
+	
+	fear_name = "Alerte Peur",
+	fear_desc = "Préviens quand Nefarian incante sa peur de zone.",
+	
+	classcall_name = "Alertes Appel des classes",
+	classcall_desc = "Signale les classes ciblés par l'appel des classes.",
+	
+	otherwarn_name = "Autres alertes",
+	otherwarn_desc = "Préviens quand les Zergs arrivent et quand Nefarian atterit.",	
 } end)
 
 ----------------------------------

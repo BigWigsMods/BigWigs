@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -174,26 +174,39 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	breath_trigger = "^Chromaggus commence \195\160 lancer (.+)%.",
-	vulnerability_test = "^.+ lance .+ et (.+) \195\160 Chromaggus %(([%d]+) points de d\195\169g\195\162ts .+ (.+)%)%.";
-	frenzy_trigger = "%s entre dans une fr\195\169n\195\169sie sanglante !",
-	vulnerability_trigger = "%s grimace lorsque sa peau se met \195\160 briller.",
+	enrage_name = "Enrager",
+	enrage_desc = "Préviens quand Chromaggus s'enrage (à 20%).",
+
+	frenzy_name = "Alerte Frénésie",
+	frenzy_desc = "Préviens quand Chromaggus entre dans des frénésies sanglantes.",
+
+	breath_name = "Alertes Souffles",
+	breath_desc = "Préviens quand Chromaggus souffle ainsi que leurs types.",
+
+	vulnerability_cmd = "vulnerability",
+	vulnerability_name = "Alertes Vulnérabilité",
+	vulnerability_desc = "Préviens quand la vulnérabilité de Chromaggus change.",
+	
+	breath_trigger = "^Chromaggus commence à lancer (.+)%.",
+	vulnerability_test = "^.+ lance .+ et (.+) à Chromaggus %(([%d]+) points de dégâts .+ (.+)%)%.";
+	frenzy_trigger = "%s entre dans une frénésie sanglante !",
+	vulnerability_trigger = "%s grimace lorsque sa peau se met à briller.",
 
 	hit = "lui inflige",
 	crit = "inflige un coup critique",
 
-	breath_warning = "%s dans 10 seconde!",
-	breath_message = "incantation de %s !",
-	vulnerability_message = "Nouvelle vulnerabiliter: %s",
-	vulnerability_warning = "la vulnerabiliter au sort a changer!",
-	frenzy_message = "Frenzy Alert!",
-	enrage_warning = "Enrage imminent!",
+	breath_warning = "%s dans 10 sec. !",
+	breath_message = "%s en cours d'incantation !",
+	vulnerability_message = "Vulnerabilité : %s !",
+	vulnerability_warning = "Vulnérabilité aux sorts modifiée !",
+	frenzy_message = "Alerte frénésie !",
+	enrage_warning = "Enragement imminent !",
 
 	breath1 = "Trou de temps",
 	breath2 = "Acide corrosif",
 	breath3 = "Enflammer la chair",
-	breath4 = "Incin\195\169rer",
-	breath5 = "Br\195\187lure de givre",
+	breath4 = "Incinérer",
+	breath5 = "Brûlure de givre",
 } end )
 
 ----------------------------------

@@ -82,11 +82,20 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	wingbuffet_trigger = "Gueule%-de%-feu commence \195\160 lancer Frappe des ailes.",
-	shadowflame_trigger = "Gueule-de-feu commence \195\160 lancer Flamme d'ombre.",
+	wingbuffet_trigger = "Gueule-de-feu commence à lancer Frappe des ailes.",
+	shadowflame_trigger = "Gueule-de-feu commence à lancer Flamme d'ombre.",
 
-	wingbuffet_warning = "3 sec avant prochain Frappe des ailes!",
-	shadowflame_warning = "Flamme d'ombre imminente!",
+	wingbuffet_message = "Frappe des ailes ! 30 sec. avant la prochaine !",
+	wingbuffet_warning = "3 sec. avant la Frappe des ailes !",
+	shadowflame_warning = "Flamme d'ombre imminente !",
+
+	wingbuffet_bar = "Frappe des ailes",
+
+	wingbuffet_name = "Alerte Frappe des ailes",
+	wingbuffet_desc = "Préviens quand Rochébène effectue sa Frappe des ailes.",
+
+	shadowflame_name = "Alerte Flamme d'ombre",
+	shadowflame_desc = "Préviens quand l'incantation de la Flamme d'ombre est imminente.",
 } end)
 
 

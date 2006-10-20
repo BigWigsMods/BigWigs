@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -151,17 +151,36 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	wingbuffet_trigger = "Roch\195\169b\195\168ne commence \195\160 lancer Frappe des ailes.",
-	shadowflame_trigger = "Roch\195\169b\195\168ne commence \195\160 lancer Flamme d'ombre.",
-	shadowcurse_trigger = "^([^%s]+) ([^%s]+) les effets de Ombre de Roch\195\169b\195\168ne",
+	wingbuffet_trigger = "Rochébène commence à lancer Frappe des ailes.",
+	shadowflame_trigger = "Rochébène commence à lancer Flamme d'ombre.",
+	shadowcurse_trigger = "^([^%s]+) ([^%s]+) les effets de Ombre de Rochébène.",
 
 	you = "Vous",
 	are = "subissez",
 
-	wingbuffet_warning = "3 sec avant prochaine Frappe des ailes!",
-	shadowflame_warning = "Flamme d'ombre imminente!",
-	shadowflame_message_you = "Vous avez l'Ombre de Roch\195\169b\195\168nec!",
-	shadowflame_message_other = " a l'Ombre de Roch\195\169b\195\168ne!",
+	wingbuffet_message = "Frappe des ailes ! 30 sec. avant la prochaine !",
+	wingbuffet_warning = "3 sec. avant la Frappe des ailes !",
+	shadowflame_warning = "Flamme d'ombre imminente !",
+	shadowflame_message_you = "Vous avez l'Ombre de Rochébène !",
+	shadowflame_message_other = " a l'Ombre de Rochébène !",
+
+	wingbuffet_bar = "Frappe des ailes",
+	shadowcurse_bar = "%s - Ombre de Rochébène",
+
+	wingbuffet_name = "Alerte Frappe des ailes",
+	wingbuffet_desc = "Préviens quand Rochébène effectue sa Frappe des ailes.",
+
+	shadowflame_name = "Alerte Flamme d'ombre",
+	shadowflame_desc = "Préviens quand l'incantation de la Flamme d'ombre est imminente.",
+
+	youcurse_name = "Alerte Ombre de Rochébène sur vous",
+	youcurse_desc = "Préviens quand vous subissez l'Ombre de Rochébène.",
+
+	elsecurse_name = "Alerte Ombre de Rochébène sur les autres",
+	elsecurse_desc = "Préviens quand les autres subissent l'Ombre de Rochébène.",
+
+	shadowbar_name = "Barre Ombre de Rochébène",
+	shadowbar_desc = "Affiche une barre temporelle quand quelqu'un subit l'Ombre de Rochébène.",
 } end)
 
 ----------------------------------

@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -107,13 +107,25 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	trigger1 = "^([^%s]+) ([^%s]+) les effets de Mont\195\169e d'adr\195\169naline.",
+	trigger1 = "^([^%s]+) ([^%s]+) les effets de Montée d'adrénaline.",
 
 	you = "Vous",
 	are = "subissez",
 
-	warn1 = "tu brule!",
-	warn2 = " brule!",
+	warn1 = "Tu brûles !",
+	warn2 = " brûle !",
+
+	youburning_name = "Alerte quand vous brûlez",
+	youburning_desc = "Préviens quand vous brûlez.",
+	
+	elseburning_name = "Alerte quand les autres brûlent",
+	elseburning_desc = "Préviens quand les autres brûlent.",
+	
+	burningbar_name = "Barre Montée d'adrénaline",
+	burningbar_desc = "Affiche une barre temporelle pour la Montée d'adrénaline.",	
+	
+	icon_name = "Icône de raid sur la bombe",
+	icon_desc = "Place une icône de raid sur la personne qui est la bombe (Nécessite d'être promu ou mieux).",	
 } end)
 
 ----------------------------------
