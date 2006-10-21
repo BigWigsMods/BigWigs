@@ -223,7 +223,7 @@ local blockstrings = {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsBossBlock = BigWigs:NewModule("BossBlock", "AceHook-2.0")
+BigWigsBossBlock = BigWigs:NewModule("BossBlock", "AceHook-2.1")
 BigWigsBossBlock.defaultDB = {
 	hideraidwarnchat = true,
 	hideraidwarn = true,
