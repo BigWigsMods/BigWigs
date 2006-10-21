@@ -94,23 +94,22 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-        trigger1 = "subit les effets de Mal\195\169diction de Lucifron",
-        trigger2 = "subit les effets de Mal\195\169diction imminente.",
- 
-        warn1 = "5 secondes avant Mal\195\169diction de Lucifron !",
-        warn2 = "Mal\195\169diction de Lucifron - 20 sec avant prochaine !",
-        warn3 = "5 secondes avant Mal\195\169diction imminente !",
-        warn4 = "Mal\195\169diction imminente - 20 sec avant prochaine !",
- 
-        bar1text = "Mal\195\169diction de Lucifron",
-        bar2text = "Mal\195\169diction imminente",
+	trigger1 = "subit les effets de Mal\195\169diction de Lucifron",
+	trigger2 = "subit les effets de Mal\195\169diction imminente.",
 
-        curse_name = "Alerte Mal\195\169diction de Lucifron",
-        curse_desc = "Vous alerte des mal\195\169dictions de Lucifron.",
+	warn1 = "5 secondes avant Mal\195\169diction de Lucifron !",
+	warn2 = "Mal\195\169diction de Lucifron - 20 sec avant prochaine !",
+	warn3 = "5 secondes avant Mal\195\169diction imminente !",
+	warn4 = "Mal\195\169diction imminente - 20 sec avant prochaine !",
 
-        doom_name = "Alerte Mal\195\169diction imminente",
-        doom_desc = "Vous alerte des mal\195\169dictions imminentes.",
+	bar1text = "Mal\195\169diction de Lucifron",
+	bar2text = "Mal\195\169diction imminente",
 
+	curse_name = "Alerte Mal\195\169diction de Lucifron",
+	curse_desc = "Vous alerte des mal\195\169dictions de Lucifron.",
+
+	doom_name = "Alerte Mal\195\169diction imminente",
+	doom_desc = "Vous alerte des mal\195\169dictions imminentes.",
 } end)
 
 ----------------------------------

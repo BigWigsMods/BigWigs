@@ -20,12 +20,6 @@ L:RegisterTranslations("enUS", function() return {
 	wormbar = "Sandworm Enrage (%d)",
 } end )
 
-L:RegisterTranslations("frFR", function() return {
-	wormtrigger = boss.." lance Invocation d'un ver",
-	wormwarn = "Invocation d'un ver ! (%d)",
-	wormbar = "Ver de sable enrag\195\169 (%d)",
-} end )
-
 L:RegisterTranslations("deDE", function() return {
 	worm_name = "Wurm beschw\195\182ren",
 	worm_desc = "Warnung, wenn Fankriss einen Wurm beschw\195\182rt.",

@@ -120,7 +120,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-
 	["Version Query"] = "Vérification des versions",
 	["Commands for querying the raid for Big Wigs versions."] = "Commandes de vérification des version de BigWigs du raid.",	
 	["Query already running, please wait 5 seconds before trying again."] = "Une vérification est déjà en cours, veuillez réessayer dans 5 secondes.",
@@ -130,16 +129,16 @@ L:RegisterTranslations("frFR", function() return {
 	["Showing version for "] = "Affichage des versions pour ",
 	["Green versions are newer than yours, red are older, and white are the same."] = "Les versions en verte sont plus récentes que vous, celles en rouge plus anciennes, et celles en blanc les mêmes que vous.",
 	["Player"] = "Joueur",
-	["Version"] = "Version",
+	--["Version"] = "Version",
 	["Current zone"] = "Zone actuelle",
-	["<zone>"] = "<zone>",
+	--["<zone>"] = "<zone>",
 	["Version query done."] = "Vérification des versions terminée.",
 	["Runs a version query on your current zone."] = "Effectue une vérification des versions dans votre zone.",
 	["Closes the version query window."] = "Ferme la fenêtre de vérification des versions.",
 	["Runs a version query on the given zone."] = "Effectue une vérification des versions dans la zone donnée.",
-	["Zone"] = "Zone",
-	["N/A"] = "N/A",
-	["BigWigs"] = "BigWigs",
+	--["Zone"] = "Zone",
+	--["N/A"] = "N/A",
+	--["BigWigs"] = "BigWigs",
 	["Runs a version query on the BigWigs core."] = "Effectue une vérification des versions du noyau de BigWigs.",
 	["Nr Replies"] = "Nbre de réponses",
 	["Ancient"] = "Ancien",	

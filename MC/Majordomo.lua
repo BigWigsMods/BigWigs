@@ -122,28 +122,28 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-        disabletrigger = "Impossible ! Arr\195\170tez votre attaque, mortels... Je me rends ! Je me rends !",
-        trigger1 = "gagne Renvoi de la magie",
-        trigger2 = "gagne Bouclier de d\195\169g\195\162ts",
-        trigger3 = "Renvoi de la magie sur .+ Attise%-flammes vient de se dissiper",
-        trigger4 = "Bouclier de d\195\169g\195\162ts sur .+ Attise%-flammes vient de se dissiper",
+	disabletrigger = "Impossible ! Arr\195\170tez votre attaque, mortels... Je me rends ! Je me rends !",
+	trigger1 = "gagne Renvoi de la magie",
+	trigger2 = "gagne Bouclier de d\195\169g\195\162ts",
+	trigger3 = "Renvoi de la magie sur .+ Attise%-flammes vient de se dissiper",
+	trigger4 = "Bouclier de d\195\169g\195\162ts sur .+ Attise%-flammes vient de se dissiper",
 
-        warn1 = "Bouclier sorts pendant 10 secondes !",
-        warn2 = "Bouclier d\195\169g\195\162ts pendant 10 secondes !",
-        warn3 = "5 secondes avant le bouclier !",
-        warn4 = "Bouclier sorts termin\195\169 !",
-        warn5 = "Bouclier d\195\169g\195\162ts termin\195\169 !",
-        bosskill = "Le Chambellant Executus a \195\169t\195\169 vaincu !",
+	warn1 = "Bouclier sorts pendant 10 secondes !",
+	warn2 = "Bouclier d\195\169g\195\162ts pendant 10 secondes !",
+	warn3 = "5 secondes avant le bouclier !",
+	warn4 = "Bouclier sorts termin\195\169 !",
+	warn5 = "Bouclier d\195\169g\195\162ts termin\195\169 !",
+	bosskill = "Le Chambellant Executus a \195\169t\195\169 vaincu !",
 
-        bar1text = "Renvoi de la magie",
-        bar2text = "Bouclier de d\195\169g\195\162ts",
-        bar3text = "Nouveaux Bouclier",
+	bar1text = "Renvoi de la magie",
+	bar2text = "Bouclier de d\195\169g\195\162ts",
+	bar3text = "Nouveaux Bouclier",
 
-        magic_name = "Alerte Bouclier de Sorts",
-        magic_desc = "Vous alerte des boucliers de sorts.",
+	magic_name = "Alerte Bouclier de Sorts",
+	magic_desc = "Vous alerte des boucliers de sorts.",
 
-        dmg_name = "Alerte Bouclier de D\195\169g\195\162ts",
-        dmg_desc = "Vous alerte des boucliers de d\195\169g\195\162ts.",
+	dmg_name = "Alerte Bouclier de D\195\169g\195\162ts",
+	dmg_desc = "Vous alerte des boucliers de d\195\169g\195\162ts.",
 } end)
 
 ----------------------------------

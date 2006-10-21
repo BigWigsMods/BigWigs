@@ -33,21 +33,21 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-    you_name = "Alerte quand vous \195\170tes surveill\195\169",
-    you_desc = "Vous alerte lorsque vous \195\170tes surveill\195\169.",
+	you_name = "Alerte quand vous \195\170tes surveill\195\169",
+	you_desc = "Vous alerte lorsque vous \195\170tes surveill\195\169.",
 
-    other_name = "Alerte quand d'autres sont surveill\195\169s",
-    other_desc = "Vous alerte quand d'autres joueurs sont surveill\195\169s.",
+	other_name = "Alerte quand d'autres sont surveill\195\169s",
+	other_desc = "Vous alerte quand d'autres joueurs sont surveill\195\169s.",
 
-    icon_name = "Ic\195\180ne de raid",
-    icon_desc = "Place une ic\195\180ne de raid sur la derni\195\168re personne surveill\195\169e (requiert d'\195\170tre promus ou plus)",
+	icon_name = "Ic\195\180ne de raid",
+	icon_desc = "Place une ic\195\180ne de raid sur la derni\195\168re personne surveill\195\169e (requiert d'\195\170tre promus ou plus)",
 
 	watch_trigger = "([^%s]+), je vous ai à l'œil !",
-    enrage_trigger = "devient fou furieux en voyant son raptor mourir durant le combat !",
+	enrage_trigger = "devient fou furieux en voyant son raptor mourir durant le combat !",
 
-    watched_warning_self = "Tu es surveill\195\169 !",
-    watched_warning_other = "%s est surveill\195\169 !",
-    enraged_message = "Ohgan est mort ! Mandokir enrag\195\169 !",
+	watched_warning_self = "Tu es surveill\195\169 !",
+	watched_warning_other = "%s est surveill\195\169 !",
+	enraged_message = "Ohgan est mort ! Mandokir enrag\195\169 !",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -87,8 +87,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	cmd = "만도키르",
-	
 	you_name = "자신 경고",
 	you_desc = "자신을 보고 있을 때 경고",
 	

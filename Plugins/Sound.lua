@@ -73,7 +73,7 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("frFR", function() return {
 	["Sounds"] = "Sons",
 	["Options for sounds."] = "Options concernant les sons.",
-	
+
 	["Use sounds"] = "Utiliser les sons",
 	["Toggle sounds on or off."] = "Joue ou non les sons.",
 	["Default only"] = "Son par défaut uniquement",

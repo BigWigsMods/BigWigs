@@ -58,48 +58,47 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-        ["%s mod enabled"] = "Module %s activ\195\169",
-        ["Target monitoring enabled"] = "Suivi des cibles activ\195\169",
-        ["Target monitoring disabled"] = "Suivi des cibles d\195\169sactiv\195\169",
-        ["%s has been defeated"] = "%s a \195\169t\195\169 vaincu",     -- "<boss> has been defeated"
-        ["%s have been defeated"] = "%s ont \195\169t\195\169 vaincu",    -- "<bosses> have been defeated"
+	["%s mod enabled"] = "Module %s activ\195\169",
+	["Target monitoring enabled"] = "Suivi des cibles activ\195\169",
+	["Target monitoring disabled"] = "Suivi des cibles d\195\169sactiv\195\169",
+	["%s has been defeated"] = "%s a \195\169t\195\169 vaincu",     -- "<boss> has been defeated"
+	["%s have been defeated"] = "%s ont \195\169t\195\169 vaincu",    -- "<bosses> have been defeated"
 
--- AceConsole strings
-        -- ["boss"] = true,
-        ["Bosses"] = "Boss",
-        ["Options for boss modules."] = "Options des modules des boss.",
-        ["Options for bosses in %s."] = "Options des boss dans %s.", -- "Options for bosses in <zone>"
-        ["Options for %s (r%s)."] = "Options pour %s (r%s).",     -- "Options for <boss> (<revision>)"
-        -- ["plugin"] = true,
-        -- ["Plugins"] = true,
-        ["Options for plugins."] = "Options pour les plugins.",
-        -- ["extra"] = true,
-        -- ["Extras"] = true,
-        ["Options for extras."] ="Options pour les extras.",
-        -- ["toggle"] = true,
-        ["Active"] = "Actif",
-        ["Activate or deactivate this module."] = "Activer ou d\195\169sactiver ce module.",
-        -- ["reboot"] = true,
-        ["Reboot"] = "Red\195\169marrer",
-        ["Reboot this module."] = "Red\195\169marrer ce module.",
-        -- ["debug"] = true,
-        ["Debugging"] = "D\195\169boguage",
-        ["Show debug messages."] = "Afficher les messages de d\195\169boguage.",
-        bosskill_cmd = "kill",
-        bosskill_name = "Mort des Boss",
-        bosskill_desc = "Annoncer la mort des boss.",
+	-- AceConsole strings
+	-- ["boss"] = true,
+	["Bosses"] = "Boss",
+	["Options for boss modules."] = "Options des modules des boss.",
+	["Options for bosses in %s."] = "Options des boss dans %s.", -- "Options for bosses in <zone>"
+	["Options for %s (r%s)."] = "Options pour %s (r%s).",     -- "Options for <boss> (<revision>)"
+	-- ["plugin"] = true,
+	-- ["Plugins"] = true,
+	["Options for plugins."] = "Options pour les plugins.",
+	-- ["extra"] = true,
+	-- ["Extras"] = true,
+	["Options for extras."] ="Options pour les extras.",
+	-- ["toggle"] = true,
+	["Active"] = "Actif",
+	["Activate or deactivate this module."] = "Activer ou d\195\169sactiver ce module.",
+	-- ["reboot"] = true,
+	["Reboot"] = "Red\195\169marrer",
+	["Reboot this module."] = "Red\195\169marrer ce module.",
+	-- ["debug"] = true,
+	["Debugging"] = "D\195\169boguage",
+	["Show debug messages."] = "Afficher les messages de d\195\169boguage.",
+	bosskill_name = "Mort des Boss",
+	bosskill_desc = "Annoncer la mort des boss.",
 
--- AceConsole zone commands
-        ["Zul'Gurub"] = "ZG",
-        ["Molten Core"] = "MC",
-        ["Blackwing Lair"] = "BWL",
-        ["Ahn'Qiraj"] = "AQ40",
-        ["Ruins of Ahn'Qiraj"] = "AQ20",
-        ["Onyxia's Lair"] = "Onyxia",
-        ["Naxxramas"] = "Naxxramas",
-        -- ["Silithus"] = true,
-        ["Outdoor Raid Bosses"] = "Ext\195\169rieur",
-        ["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
+	-- AceConsole zone commands
+	["Zul'Gurub"] = "ZG",
+	["Molten Core"] = "MC",
+	["Blackwing Lair"] = "BWL",
+	["Ahn'Qiraj"] = "AQ40",
+	["Ruins of Ahn'Qiraj"] = "AQ20",
+	["Onyxia's Lair"] = "Onyxia",
+	["Naxxramas"] = "Naxxramas",
+	-- ["Silithus"] = true,
+	["Outdoor Raid Bosses"] = "Ext\195\169rieur",
+	["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
 } end)
   
 L:RegisterTranslations("deDE", function() return {

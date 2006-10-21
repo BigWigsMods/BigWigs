@@ -34,7 +34,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["RaidWarning"] = "공격대 경고",
-  
+
 	["Broadcast over RaidWarning"] = "공격대 경고로 알림",
 	["Broadcast"] = "알림",
 	["Toggle broadcasting over Raidwarning."] = "공격대 경고로 알림 토글",
@@ -100,7 +100,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Broadcast over RaidWarning"] = "Diffuser sur l'Avertissement Raid",
 	["Broadcast"] = "Diffuser",
 	["Toggle broadcasting over Raidwarning."] = "Diffuse ou non les messages sur l'Avertissement Raid.",
-	
+
 	["Whisper"] = "Chuchoter",
 	["Whisper warnings"] = "Chuchoter les avertissements",
 	["Toggle whispering warnings to players."] = "Chuchote ou non les avertissements aux joueurs.",

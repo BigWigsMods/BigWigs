@@ -71,7 +71,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	-- ["test"] = true,
-	["Test"] = "Test",
+	--["Test"] = "Test",
 	["Test Bar"] = "Test Balken",
 	["Test Bar 2"] = "Test Balken 2",
 	["Test Bar 3"] = "Test Balken 3",
@@ -84,15 +84,15 @@ L:RegisterTranslations("deDE", function() return {
 	["local"] = "Lokal",
 	["Local test"] = "Lokaler Test",
 	["Perform a local test of BigWigs."] = "Lokalen Test durchf\195\188hren.",
-	["sync"] = "sync",
+	--["sync"] = "sync",
 	["Sync test"] = "Synchronisations-Test",
 	["Perform a sync test of BigWigs."] = "Sychronisations-Test durchf\195\188hren.",
 	["Testing Sync"] = "Synchronisation testen",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	["test"] = "test",
-	["Test"] = "Test",
+	--["test"] = "test",
+	--["Test"] = "Test",
 	["Test Bar"] = "Barre de test",
 	["Test Bar 2"] = "Barre de test 2",
 	["Test Bar 3"] = "Barre de test 3",
@@ -102,10 +102,10 @@ L:RegisterTranslations("frFR", function() return {
 	["*RAWR*"] = "*GRRR*",
 	["Victory!"] = "Victoire !",
 	["Options for testing."] = "Options concernant les tests.",
-	["local"] = "local",
+	--["local"] = "local",
 	["Local test"] = "Test local",
 	["Perform a local test of BigWigs."] = "Effectue un test local de BigWigs.",
-	["sync"] = "sync",
+	--["sync"] = "sync",
 	["Sync test"] = "Test de synchronisation",
 	["Perform a sync test of BigWigs."] = "Effectue un test de synchronisation de BigWigs.",
 	["Testing Sync"] = "Test synchro",

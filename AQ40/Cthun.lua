@@ -30,7 +30,7 @@ local tentacletime = timeP1Tentacle
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "cthun",
+	cmd = "Cthun",
 
 	tentacle_cmd = "tentacle",
 	tentacle_name = "Tentacle Alert",

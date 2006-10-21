@@ -42,17 +42,17 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-        renew_trigger = "Grand pr\195\170tre Venoxis gagne R\195\169novation.",
-        phase2_trigger = "Que se d\195\169roulent les anneaux de la haine !",
+	renew_trigger = "Grand pr\195\170tre Venoxis gagne R\195\169novation.",
+	phase2_trigger = "Que se d\195\169roulent les anneaux de la haine !",
 
-        renew_message = "R\195\169novation - Dispellez le !",
-        phase2_message = "Phase 2, attention aux nuages de poison !",
+	renew_message = "R\195\169novation - Dispellez le !",
+	phase2_message = "Phase 2, attention aux nuages de poison !",
 
-        renew_name = "Alerte R\195\169novation",
-        renew_desc = "Vous alerte lorsque le boss se met une r\195\169novation.",
+	renew_name = "Alerte R\195\169novation",
+	renew_desc = "Vous alerte lorsque le boss se met une r\195\169novation.",
 
-        phase_name = "Alerte Phase 2",
-        phase_desc = "Vous alerte du passage en phase 2.",
+	phase_name = "Alerte Phase 2",
+	phase_desc = "Vous alerte du passage en phase 2.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

@@ -149,36 +149,36 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-        knockback_trigger = "^GO\195\155TEZ ",
-        submerge_trigger = "^VENEZ, MES SERVITEURS",
-        engage_trigger = "^ET MAINTENANT",
+	knockback_trigger = "^GO\195\155TEZ ",
+	submerge_trigger = "^VENEZ, MES SERVITEURS",
+	engage_trigger = "^ET MAINTENANT",
 
-        knockback_message = "Projection de zone !",
-        knockback_soon_message = "5 secondes avant Projection de zone !",
-        submerge_message = "Ragnaros dispara\195\174t pour 90 secondes. Arriv\195\169e des Fils des flammes !",
-        emerge_soon_message = "15 secondes avant que Ragnaros n'\195\169merge !",
-        emerge_message = "Ragnaros a \195\169merg\195\169. 3 minutes avant l'arriv\195\169e des Fils des flammes !",
-        submerge_60sec_message = "60 secondes avant l'arriv\195\169e des Fils des flammes !",
-        submerge_20sec_message = "20 secondes avant l'arriv\195\169e des Fils des flammes !",
+	knockback_message = "Projection de zone !",
+	knockback_soon_message = "5 secondes avant Projection de zone !",
+	submerge_message = "Ragnaros dispara\195\174t pour 90 secondes. Arriv\195\169e des Fils des flammes !",
+	emerge_soon_message = "15 secondes avant que Ragnaros n'\195\169merge !",
+	emerge_message = "Ragnaros a \195\169merg\195\169. 3 minutes avant l'arriv\195\169e des Fils des flammes !",
+	submerge_60sec_message = "60 secondes avant l'arriv\195\169e des Fils des flammes !",
+	submerge_20sec_message = "20 secondes avant l'arriv\195\169e des Fils des flammes !",
 
-        knockback_bar = "Projection de zone",
-        emerge_bar = "Ragnaros \195\169merge",
-        submerge_bar = "Fils des flammes",
+	knockback_bar = "Projection de zone",
+	emerge_bar = "Ragnaros \195\169merge",
+	submerge_bar = "Fils des flammes",
 
-        sonofflame = "Fils des flammes",
-        sonsdeadwarn = "%d/8 Fils des flammes mort !",
+	sonofflame = "Fils des flammes",
+	sonsdeadwarn = "%d/8 Fils des flammes mort !",
 
-        emerge_name = "Alerte Emerge",
-        emerge_desc = "Vous alerte quand Ragnaros \195\169merge.",
+	emerge_name = "Alerte Emerge",
+	emerge_desc = "Vous alerte quand Ragnaros \195\169merge.",
 
-        sondeath_name = "Alerte mort des Fils",
-        sondeath_desc = "Vous alerte de la mort d'un Fils des flammes.",
+	sondeath_name = "Alerte mort des Fils",
+	sondeath_desc = "Vous alerte de la mort d'un Fils des flammes.",
 
-        submerge_name = "Alerte Immersion",
-        submerge_desc = "Vous alerte de l'immersion de Ragnaros et l'arriv\195\169e des Fils des flammes.",
+	submerge_name = "Alerte Immersion",
+	submerge_desc = "Vous alerte de l'immersion de Ragnaros et l'arriv\195\169e des Fils des flammes.",
 
-        aoeknock_name = "Alerte Projection de zone",
-        aoeknock_desc = "Vous alerte des projections de zone.",
+	aoeknock_name = "Alerte Projection de zone",
+	aoeknock_desc = "Vous alerte des projections de zone.",
 } end)
 
 ----------------------------------

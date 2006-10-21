@@ -42,17 +42,17 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-        heal_name = "Alerte Soins",
-        heal_desc = "Vous alerte en cas de soin.",
+	heal_name = "Alerte Soins",
+	heal_desc = "Vous alerte en cas de soin.",
 
-        tiger_name = "Alerte Tigres",
-        tiger_desc = "Vous alerte de l'invocation de tigres.",
+	tiger_name = "Alerte Tigres",
+	tiger_desc = "Vous alerte de l'invocation de tigres.",
 
-        tigers_trigger = "Grand pr\195\170tre Thekal ex\195\169cute Invocation de gardiens zuliens.",
-        heal_trigger = "Z\195\169lote Lor'Khan commence \195\160 lancer Soins exceptionnels.",
+	tigers_trigger = "Grand pr\195\170tre Thekal ex\195\169cute Invocation de gardiens zuliens.",
+	heal_trigger = "Z\195\169lote Lor'Khan commence \195\160 lancer Soins exceptionnels.",
 
-        tigers_message = "Invocation de tigres !",
-        heal_message = "Lor'Khan lance un soin !",
+	tigers_message = "Invocation de tigres !",
+	heal_message = "Lor'Khan lance un soin !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

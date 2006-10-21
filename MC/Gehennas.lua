@@ -65,15 +65,15 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-        trigger1 = "subit les effets de Mal\195\169diction de Gehennas.",
- 
-        warn1 = "5 secondes avant Mal\195\169diction !",
-        warn2 = "Mal\195\169diction ! - 30 secondes avant la prochaine",
- 
-        bar1text = "Mal\195\169diction de Gehennas",
+	trigger1 = "subit les effets de Mal\195\169diction de Gehennas.",
 
-        curse_name = "Alerte Mal\195\169diction de Gehennas",
-        curse_desc = "Vous alerte des mal\195\169dictions de Gehennas.",
+	warn1 = "5 secondes avant Mal\195\169diction !",
+	warn2 = "Mal\195\169diction ! - 30 secondes avant la prochaine",
+
+	bar1text = "Mal\195\169diction de Gehennas",
+
+	curse_name = "Alerte Mal\195\169diction de Gehennas",
+	curse_desc = "Vous alerte des mal\195\169dictions de Gehennas.",
 } end)
 
 ----------------------------------

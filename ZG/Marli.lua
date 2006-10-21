@@ -44,17 +44,17 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-        spider_name = "Alerte Araign\195\169e",
-        spider_desc = "Vous alerte du pop d'araign\195\169e.",
+	spider_name = "Alerte Araign\195\169e",
+	spider_desc = "Vous alerte du pop d'araign\195\169e.",
 
-        drain_name = "Alerte Drain",
-        drain_desc = "Vous alerte d'un drain en cours.",
+	drain_name = "Alerte Drain",
+	drain_desc = "Vous alerte d'un drain en cours.",
 
-        spiders_trigger = "., mes enfants !$",
-        drainlife_trigger = "^Drain de vie DE Grande pr\195\170tresse Mar'li gu\195\169rit Grande pr\195\170tresse Mar'li de (.+)%.$",
+	spiders_trigger = "., mes enfants !$",
+	drainlife_trigger = "^Drain de vie DE Grande pr\195\170tresse Mar'li gu\195\169rit Grande pr\195\170tresse Mar'li de (.+)%.$",
 
-        spiders_message = "Araign\195\169e en approche !",
-        drainlife_message = "Mar'li fait un drain de vie !",
+	spiders_message = "Araign\195\169e en approche !",
+	drainlife_message = "Mar'li fait un drain de vie !",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

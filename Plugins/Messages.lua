@@ -232,11 +232,11 @@ L:RegisterTranslations("frFR", function() return {
 	["Display is currently set to %2$s"] = "L'affichage est actuellement défini au %2$s",	
 
 	["Mik's Scrolling Battle Text"] = "Scrolling Battle Text de Mik",
-	["Scrolling Combat Text"] = "Scrolling Combat Text",
+	--["Scrolling Combat Text"] = "Scrolling Combat Text",
 	["Floating Combat Text"] = "Message de combat flottant",
 
-	["Test"] = "Test",
-	["Close"] = "Fermer",	
+	--["Test"] = "Test",
+	["Close"] = "Fermer",
 } end)
 
 ----------------------------------

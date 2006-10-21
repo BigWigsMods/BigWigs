@@ -118,7 +118,7 @@ L:RegisterTranslations("koKR", function() return {
 	split_desc = "이미지 생성 전 경고",
 } end )
 
-	L:RegisterTranslations("frFR", function() return {
+L:RegisterTranslations("frFR", function() return {
 	aetrigger = "Le Proph\195\168te Skeram commence \195\160 lancer Explosion des arcanes.",
 	mctrigger = "Le Proph\195\168te Skeram commence \195\160 lancer Accomplissement v\195\169ritable.",
 	splittrigger = "Le Proph\195\168te Skeram lance Invocation des Images.",
@@ -126,9 +126,8 @@ L:RegisterTranslations("koKR", function() return {
 	mcplayerwarn = " est sous controle mental!",
 	mcyou = "Vous",
 	mcare = "subissez",
-	
-	splitwarn = "Separation!",
 
+	splitwarn = "Separation!",
 } end )
 
 ----------------------------------

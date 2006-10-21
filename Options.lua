@@ -30,20 +30,20 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-        ["|cff00ff00Module running|r"] = "|cff00ff00Module d\195\169marr\195\169|r",
-        ["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55fClic|r pour red\195\169marrer les modules actifs. |cffeda55fShift+Clic|r pour les d\195\169sactiver. |cffeda55fCtrl+Shift+Clic|r pour d\195\169sactiver Big Wigs compl\195\168tement.",
-        ["|cffeda55fClick|r to enable."] = "|cffeda55fClic|r pour activer.",
-        ["Big Wigs is currently disabled."] = "Big Wigs est actuellement d\195\169sactiv\195\169.",
-        ["Active boss modules"] = "Modules de boss actifs",
-        ["Hidden"] = "Cach\195\169",
-        ["Shown"] = "Affich\195\169",
--- ["minimap"] = true,
--- ["Minimap"] = true,
-        ["Toggle the minimap button."] = "Afficher ou masquer le bouton sur la minimap.",
-        ["All running modules have been reset."] = "Tous les modules actifs ont \195\169t\195\169 red\195\169marr\195\169s.",
-        ["All running modules have been disabled."] = "Tous les modules ont \195\169t\195\169 d\195\169sactiv\195\169s.",
-        ["%s reset."] = "%s red\195\169marr\195\169.",
-        ["%s disabled."] = "%s d\195\169sactiv\195\169.",
+	["|cff00ff00Module running|r"] = "|cff00ff00Module d\195\169marr\195\169|r",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55fClic|r pour red\195\169marrer les modules actifs. |cffeda55fShift+Clic|r pour les d\195\169sactiver. |cffeda55fCtrl+Shift+Clic|r pour d\195\169sactiver Big Wigs compl\195\168tement.",
+	["|cffeda55fClick|r to enable."] = "|cffeda55fClic|r pour activer.",
+	["Big Wigs is currently disabled."] = "Big Wigs est actuellement d\195\169sactiv\195\169.",
+	["Active boss modules"] = "Modules de boss actifs",
+	["Hidden"] = "Cach\195\169",
+	["Shown"] = "Affich\195\169",
+	-- ["minimap"] = true,
+	-- ["Minimap"] = true,
+	["Toggle the minimap button."] = "Afficher ou masquer le bouton sur la minimap.",
+	["All running modules have been reset."] = "Tous les modules actifs ont \195\169t\195\169 red\195\169marr\195\169s.",
+	["All running modules have been disabled."] = "Tous les modules ont \195\169t\195\169 d\195\169sactiv\195\169s.",
+	["%s reset."] = "%s red\195\169marr\195\169.",
+	["%s disabled."] = "%s d\195\169sactiv\195\169.",
   } end)
   
 L:RegisterTranslations("koKR", function() return {

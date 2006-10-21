@@ -56,13 +56,13 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-        CHAT_MSG_SPELL_SELF_BUFF = "Vous n'avez pas r\195\169ussi \195\160 dissiper le fr\195\169n\195\169sie de (.+).";
-        CHAT_MSG_SPELL_SELF_DAMAGE = "Vous lancez Tir tranquillisant sur (.+).",
+	CHAT_MSG_SPELL_SELF_BUFF = "Vous n'avez pas r\195\169ussi \195\160 dissiper le fr\195\169n\195\169sie de (.+).";
+	CHAT_MSG_SPELL_SELF_DAMAGE = "Vous lancez Tir tranquillisant sur (.+).",
 
-        ["%s's Tranq failed!"] = "Le Tranq de %s a \195\169chou\195\169 !",
-        ["Options for the tranq module."] = "Options du module Tranq",
-        ["Toggle tranq bars on or off."] = "Afficher ou masquer les barres de Tranq",
-        ["Bars"] = "Barres",
+	["%s's Tranq failed!"] = "Le Tranq de %s a \195\169chou\195\169 !",
+	["Options for the tranq module."] = "Options du module Tranq",
+	["Toggle tranq bars on or off."] = "Afficher ou masquer les barres de Tranq",
+	["Bars"] = "Barres",
 } end)
 
 ----------------------------------

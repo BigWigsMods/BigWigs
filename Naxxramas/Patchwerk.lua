@@ -91,7 +91,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	enrage_cmd = "enrage",
 	enrage_name = "Alerte Enrager",
 	enrage_desc = "Préviens régulièrement quand Le Recousu devient enragé.",
 	
