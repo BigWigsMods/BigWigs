@@ -326,7 +326,7 @@ BigWigsBossBlock.consoleOptions = {
 
 function BigWigsBossBlock:OnEnable()
 	self:Hook("ChatFrame_OnEvent")
-	self:Hook("RaidWarningFrame_OnEvent")
+	self:Hook(RaidWarningFrame, "AddMessage", "RWAddMessage", true)
 	if CT_RAMessageFrame then self:Hook(CT_RAMessageFrame, "AddMessage", "CTRA_AddMessage") end
 end
 
@@ -340,12 +340,12 @@ function BigWigsBossBlock:ChatFrame_OnEvent(event)
 end
 
 
-function BigWigsBossBlock:RaidWarningFrame_OnEvent(event, message)
+function BigWigsBossBlock:RWAddMessage(frame, message, r, g, b, a)
 	if self.db.profile.hideraidwarn and self:IsSpam(message) then
 		self:Debug(L["Suppressing RaidWarningFrame"], message)
 		return
 	end
-	self.hooks["RaidWarningFrame_OnEvent"](event, message)
+	self.hooks[RaidWarningFrame].AddMessage(frame, message, r, g, b, a)
 end
 
 
