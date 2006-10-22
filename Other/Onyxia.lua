@@ -34,9 +34,9 @@ L:RegisterTranslations("enUS", function() return {
 	trigger4 = "Onyxia begins to cast Bellowing Roar.",
 
 	warn1 = "Deep Breath incoming!",
-	warn2 = "Onyxia phase 2 incoming!",
-	warn3 = "Onyxia phase 3 incoming!",
-	warn4 = "Fear incoming, 1.5 Seconds!",
+	warn2 = "Phase 2 incoming!",
+	warn3 = "Phase 3 incoming!",
+	warn4 = "Fear in 1.5sec!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
