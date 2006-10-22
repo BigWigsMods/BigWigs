@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -57,7 +57,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	bomb_trigger = "^(.+)受(.+)了活化炸弹",
 	inferno_trigger = "迦顿男爵获得了地狱火的效果。",
-	service_trigger = "%s为拉格纳罗斯做最后一次服务。",
+	service_trigger = "%s为拉格纳罗斯做最后一次服务",
 
 	you = "你",
 	are = "到",

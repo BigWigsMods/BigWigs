@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 local boss = AceLibrary("Babble-Boss-2.2")["Nefarian"]
@@ -83,13 +83,13 @@ L:RegisterTranslations("zhCN", function() return {
 	triggerwarrior	= "^战士",
 	triggerrogue	= "^盗贼",
 	triggerpaladin	= "^圣骑士",
-	triggermage		= "^你们也是法师",
+	triggermage	= "^你们也是法师",
 
 	landing_soon_warning = "奈法利安将在10秒后降落！",
 	landing_warning = "奈法利安已降落！",
 	zerg_warning = "骨龙群出现！",
 	fear_warning = "2秒后发动群体恐惧！",
-	fear_soon_warning = "5秒后发动群体恐惧",
+	fear_soon_warning = "~5秒后可能发动群体恐惧",
 	shadowflame_warning = "暗影烈焰发动！",
 	classcall_warning = "5秒后开始点名！",
 

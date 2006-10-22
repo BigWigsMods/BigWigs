@@ -224,8 +224,8 @@ L:RegisterTranslations("zhCN", function() return {
 	detonateicon_name = "自爆法力标记",
 	detonateicon_desc = "标记即将自爆法力的人",
 
-	guardians_name = "寒冰皇冠护卫警报",
-	guardians_desc = "提前警报第三阶段召唤来的寒冰皇冠护卫",
+	guardians_name = "寒冰皇冠卫士警报",
+	guardians_desc = "提前警报第三阶段召唤来的寒冰皇冠卫士",
 
 	mc_trigger1 = "你的灵魂现在属于我了！",
 	mc_trigger2 = "没有人能逃得掉！",
@@ -240,12 +240,12 @@ L:RegisterTranslations("zhCN", function() return {
 	phase2_bar = "克尔苏加德激活！",
 
 	phase3_soon_warning = "第三阶段即将来到！",
-	phase3_trigger = "主人，我需要",
+	phase3_trigger = "主人，我需要帮助！",
 	phase3_warning = "第三阶段开始，~15秒后卫士出现！",
 
-	guardians_trigger = "那好吧。冰冷废墟的战士，站起来！我命令你战斗，为你的主人而杀，而死！不要留一个！", -- need to check the line
-	guardians_warning = "~10秒后护卫出现！",
-	guardians_bar = "护卫出现！",
+	guardians_trigger = "很好，冰荒废土的战士们，起来吧！我命令你们为主人而战斗，杀戮，直到死亡！一个活口都不要留！",
+	guardians_warning = "~10秒后卫士出现！",
+	guardians_bar = "卫士出现！",
 
 	fissure_trigger = "克尔苏加德施放了暗影裂隙。",
 	fissure_warning = "暗影裂隙！",
