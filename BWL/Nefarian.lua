@@ -31,8 +31,8 @@ L:RegisterTranslations("enUS", function() return {
 	landing_soon_warning = "Nefarian landing in 10 seconds!",
 	landing_warning = "Nefarian is landing!",
 	zerg_warning = "Zerg incoming!",
-	fear_warning = "Fear in 2 seconds!",
-	fear_soon_warning = "Fear in ~5sec",
+	fear_warning = "Fear in 2 sec!",
+	fear_soon_warning = "Possible fear in ~5 sec",
 	shadowflame_warning = "Shadow Flame incoming!",
 	classcall_warning = "Class call incoming!",
 
@@ -335,8 +335,9 @@ function BigWigsNefarian:BigWigs_RecvSync( sync )
 	if sync == "NefarianShadowflame" and self.db.profile.shadowflame then
 		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Important")
 	elseif sync == "NefarianFear" and self.db.profile.fear then
+		self:CancelScheduledEvent("bwneffearsoon")
 		self:TriggerEvent("BigWigs_Message", L["fear_warning"], "Important")
-		self:ScheduleEvent("BigWigs_Message", 27, L["fear_soon_warning"], "Important")
+		self:ScheduleEvent("bwneffearsoon", "BigWigs_Message", 26, L["fear_soon_warning"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["fear_bar"], 32, "Interface\\Icons\\Spell_Shadow_PsychicScream")
 	end
 end
