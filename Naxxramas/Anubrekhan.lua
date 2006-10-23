@@ -23,7 +23,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	gaintrigger = "Anub'Rekhan gains Locust Swarm.",
 	gainendwarn = "Locust Swarm ended!",
-	gainnextwarn = "Next Locust Swarm in ~90 sec",
+	gainnextwarn = "Next Locust Swarm in ~85 sec",
 	gainwarn10sec = "~10 Seconds until Locust Swarm",
 	gainincbar = "Next Locust Swarm",
 	gainbar = "Locust Swarm",
@@ -44,7 +44,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	gaintrigger = "Anub'Rekhan bekommt 'Heuschreckenschwarm'.",
 	gainendwarn = "Heuschreckenschwarm vorbei!",
-	gainnextwarn = "N\195\164chster Schwarm in ~90 Sekunden.",
+	gainnextwarn = "N\195\164chster Schwarm in ~85 Sekunden.",
 	gainwarn10sec = "Heuschreckenschwarm in ~10 Sekunden",
 	gainincbar = "N\195\164chster Schwarm",
 	gainbar = "Heuschreckenschwarm",
@@ -65,7 +65,7 @@ L:RegisterTranslations("koKR", function() return {
 			
 	gaintrigger = "아눕레칸|1이;가; 메뚜기 떼 효과를 얻었습니다.",
 	gainendwarn = "메뚜기 떼 종료!",
-	gainnextwarn = "다음 메뚜기 떼 대략 90초후.",
+	gainnextwarn = "다음 메뚜기 떼 대략 85초후.",
 	gainwarn10sec = "10초후 메뚜기 떼",
 	gainincbar = "다음 메뚜기 떼",
 	gainbar = "메뚜기 떼",				
@@ -85,7 +85,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	gaintrigger = "阿努布雷坎获得了虫群风暴的效果。",
 	gainendwarn = "虫群风暴结束了！",
-	gainnextwarn = "~90秒后出现下一波虫群。",
+	gainnextwarn = "~85秒后出现下一波虫群。",
 	gainwarn10sec = "~10秒后出现下一波虫群。",
 	gainincbar = "下一波虫群",
 	gainbar = "虫群风暴",
@@ -106,7 +106,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	gaintrigger = "阿努比瑞克漢獲得了蟲群風暴的效果。",
 	gainendwarn = "蟲群風暴結束了！",
-	gainnextwarn = "*** 90 秒後出現下一波蟲群！ ***",
+	gainnextwarn = "*** 85 秒後出現下一波蟲群！ ***",
 	gainwarn10sec = "*** 10 秒後出現下一波蟲群！ ***",
 	gainincbar = "下一波蟲群",
 	gainbar = "蟲群風暴",
@@ -125,7 +125,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	gaintrigger = "Anub'Rekhan gagne Nuée de sauterelles.",
 	gainendwarn = "Fin de la Nuée de sauterelles !",
-	gainnextwarn = "Prochaine Nuée de sauterelles dans ~90 sec.",
+	gainnextwarn = "Prochaine Nuée de sauterelles dans ~85 sec.",
 	gainwarn10sec = "~10 sec. avant la Nuée de sauterelles",	
 	gainincbar = "Prochaine Nuée",
 	gainbar = "Nuée de sauterelles",	
@@ -193,8 +193,8 @@ function BigWigsAnubrekhan:BigWigs_RecvSync( sync )
 			self:ScheduleEvent("BigWigs_Message", 20, L["gainendwarn"], "Important")
 			self:TriggerEvent("BigWigs_StartBar", self, L["gainbar"], 20, "Interface\\Icons\\Spell_Nature_InsectSwarm")
 			self:TriggerEvent("BigWigs_Message", L["gainnextwarn"], "Urgent")
-			self:ScheduleEvent("BigWigs_Message", 80, L["gainwarn10sec"], "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["gainincbar"], 90, "Interface\\Icons\\Spell_Nature_InsectSwarm")
+			self:ScheduleEvent("BigWigs_Message", 75, L["gainwarn10sec"], "Important")
+			self:TriggerEvent("BigWigs_StartBar", self, L["gainincbar"], 85, "Interface\\Icons\\Spell_Nature_InsectSwarm")
 		end
 	end
 end
