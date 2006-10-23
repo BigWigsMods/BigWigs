@@ -69,6 +69,33 @@ L:RegisterTranslations("zhCN", function() return {
 	dmg_desc = "伤害反射护盾警报",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	--Majordomo 管理者埃克索圖斯
+	disabletrigger = "不可能！等一下",
+
+	trigger1 = "獲得了魔法反射的效果",
+	trigger2 = "獲得了傷害護盾的效果",
+	trigger3 = "魔法反射效果從",
+	trigger4 = "傷害護盾效果從",
+
+	warn1 = "*** == 魔法停火 == 魔法反射，持續10秒 ***",
+	warn2 = "*** == 近戰停火 == 傷害反射護盾，持續10秒 ***",
+	warn3 = "*** 5 秒後可以攻擊 ***",
+	warn4 = "*** 魔法反射已消失！ ***",
+	warn5 = "*** 傷害護盾已消失！ ***",
+	bosskill = "*** 警報解除 ***",
+
+	bar1text = "魔法反射",
+	bar2text = "傷害護盾",
+	bar3text = "新生力量",
+	
+	magic_name = "魔法反射警報",
+	magic_desc = "通報週期性施放的魔法反射",
+	
+	dmg_name = "傷害護盾警報",
+	dmg_desc = "通報週期性施放的傷害護盾",
+} end)
+
 L:RegisterTranslations("koKR", function() return {
 	disabletrigger = "이럴 수가! 그만! 제발 그만! 내가 졌다! 내가 졌어!",
 

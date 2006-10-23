@@ -80,6 +80,28 @@ L:RegisterTranslations("zhCN", function() return {
 	["Resets all ranges to defaults."] = "重置为默认设置。",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	["Range"] = "範圍",
+	["Options for the combat log's range."] = "戰鬥記錄範圍的選項。",
+
+--~~ 	["party"] = "",
+--~~ 	["Party"] = "",
+--~~ 	["Party combat log range."] = "",
+
+--~~ 	["friend"] = "",
+--~~ 	["Friendlies"] = "",
+--~~ 	["Friendly players combat log range."] = "",
+
+	["Creatures"] = "生物",
+	["Creature combat log range."] = "生物戰鬥記錄範圍。",
+
+	["Deaths"] = "死亡",
+	["Death message range."] = "死亡信息範圍。",
+
+	["Reset to defaults"] = "重設",
+	["Resets all ranges to defaults."] = "重置為預設值。",
+} end)
+
 L:RegisterTranslations("deDE", function() return {
 	["Range"] = "Reichweite",
 	-- ["range"] = true,

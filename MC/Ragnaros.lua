@@ -82,6 +82,40 @@ L:RegisterTranslations("zhCN", function() return {
 	aoeknock_desc = "群体击退警报",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Ragnaros 拉格納羅斯
+	knockback_trigger = "^感受薩弗隆的烈焰吧！",
+	submerge_trigger = "^出現吧，我的奴僕",
+	engage_trigger = "^現在輪到你們了",
+
+	knockback_message = "*** 群體擊退！ ***",
+	knockback_soon_message = "*** 5 秒後群體擊退，近戰後退！ ***",
+	submerge_message = "*** 消失 90 秒！ 烈焰之子出現！ ***",
+	emerge_soon_message = "*** 15 秒後重新出現！ ***",
+	emerge_message = "*** 拉格納羅斯已經進入戰鬥，3 分鐘後暫時消失並召喚烈焰之子 ***",
+	submerge_60sec_message = "*** 60 秒後暫時消失並召喚烈焰之子！ ***",
+	submerge_20sec_message = "*** 20 秒後暫時消失並召喚烈焰之子！ ***",
+
+	knockback_bar = "群體擊退",
+	emerge_bar = "拉格納羅斯出現",
+	submerge_bar = "拉格納羅斯消失",
+
+	sonofflame = "烈焰之子",
+	sonsdeadwarn = "*** %d/8 個烈焰之子死亡了！ ***",
+
+	emerge_name = "出現警報",
+	emerge_desc = "當拉格納羅斯出現消失時發出警報",
+
+	sondeath_name = "烈焰之子死亡",
+	sondeath_desc = "當一個烈焰之子死亡時發出警報",
+
+	submerge_name = "消失警報",
+	submerge_desc = "當拉格納羅斯消失時發出警報",
+
+	aoeknock_name = "群體擊退警報",
+	aoeknock_desc = "當拉格納羅斯發動擊退技能時發出警報",
+} end)
+
 L:RegisterTranslations("koKR", function() return {
 	knockback_trigger = "설퍼론의 유황",
 	submerge_trigger = "나의 종들아",

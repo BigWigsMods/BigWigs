@@ -137,6 +137,37 @@ L:RegisterTranslations("zhCN", function() return {
 	["Rotting Maggot"] = "腐烂之蛆",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	--Heigan the Unclean 骯髒者海根
+	teleport_name = "傳送警報",
+	teleport_desc = "傳送警報",
+
+	engage_name = "進入戰鬥警報",
+	engage_desc = "希爾蓋進入戰鬥警告",
+
+	-- [[ Triggers ]]--
+	starttrigger = "你是我的了。",
+	starttrigger2 = "你……就是下一個。",
+	starttrigger3 = "我看到你了……",
+	teleport_trigger = "你的生命正走向終結。",
+	die_trigger = "%s咽下了最後一口氣。",
+	-- [[ Warnings ]]--
+	engage_message = "*** 海根已進入戰鬥 - 90 秒後傳送 ***",
+	teleport_1min_message = "*** 1 分鐘後傳送 ***",
+	teleport_30sec_message = "*** 30 秒後傳送 ***",
+	teleport_10sec_message = "*** 10 秒後傳送 ***",
+	on_floor_message = "*** 海根出現 - 90 秒後再次傳送 ***",
+	to_floor_30sec_message = "*** 30 秒後海根出現 ***",
+	to_floor_10sec_message = "*** 10 秒後海根出現 ***",
+	on_platform_message = "*** 傳送發動！ - %d 秒後海根出現！ ***",
+	-- [[ Bars ]]--
+	teleport_bar = "傳送！",
+	back_bar = "出現！",
+	-- [[ Dream Room Mobs ]] --
+	["Eye Stalk"] = "眼柄",
+	["Rotting Maggot"] = "腐爛的蛆蟲",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	-- [[ Triggers ]]--
 	starttrigger = "Vous \195\170tes \195\160 moi, maintenant.",

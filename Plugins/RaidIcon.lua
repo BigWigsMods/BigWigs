@@ -85,6 +85,29 @@ L:RegisterTranslations("zhCN", function() return {
 	["skull"] = "骷髅",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	["Raid Icons"] = "團隊圖示",
+
+	["Place"] = "標記",
+	["Place Raid Icons"] = "標記團隊圖示",
+	["Toggle placing of Raid Icons on players."] = "切換是否在玩家身上標記團隊圖示",
+	
+	["Icon"] = "圖標",
+	["Set Icon"] = "設置圖示",
+	["Set which icon to place on players."] = "設置玩家身上標記的圖示。",
+	
+	["Options for Raid Icons."] = "團隊圖示設置",
+	
+	["star"] = "星星",
+	["circle"] = "圓圈",
+	["diamond"] = "方塊",
+	["triangle"] = "三角",
+	["moon"] = "月亮",
+	["square"] = "方形",
+	["cross"] = "十字",
+	["skull"] = "骷髏",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	["Raid Icons"] = "Schlachtzug-Symbole",
 

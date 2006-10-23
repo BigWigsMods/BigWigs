@@ -48,6 +48,17 @@ L:RegisterTranslations("zhCN", function() return {
 	are = "到",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Ayamiss the Hunter 狩獵者阿亞米斯
+	sacrifice_name = "祭品警報",
+	sacrifice_desc = "玩家成為祭品時發出警報",
+
+	sacrificetrigger = "^([^%s]+)受到([^%s]+)麻痹",
+	sacrificewarn = "變成祭品了，快殺 札拉幼蟲！",
+	you = "你",
+	are = "了",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	sacrifice_name = "마비 경고",
 	sacrifice_desc = "마비에 대한 경고",

@@ -125,6 +125,34 @@ L:RegisterTranslations("zhCN", function() return {
 	decimatebartext = "残杀",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	 -- Gluth 古魯斯
+	fear_name = "恐懼警報",
+	fear_desc = "當古魯斯施放群體恐懼時發出警報",
+
+	frenzy_name = "狂暴警報",
+	frenzy_desc = "當古魯斯狂暴時發出警報",
+
+	decimate_name = "殘殺警報",
+	decimate_desc = "當古魯斯殘殺時發出警報",
+
+	trigger1 = "變得狂暴起來！",
+	trigger2 = "可怕咆哮",
+	starttrigger = "毀滅所有附近的蛇神！",
+
+	warn1 = "*** 狂暴警報 - 獵人立刻使用寧神射擊！ ***",
+	warn2 = "*** 5 秒後發動群體恐懼！ ***",
+	warn3 = "*** 群體恐懼 - 20 秒後再次發動 ***",
+
+	startwarn = "*** 古魯斯已進入戰鬥 - 105 秒後僵屍出現！ ***",
+	decimatesoonwarn = "*** 殘殺來臨！ ***",
+	decimatewarn = "*** 殘殺 - AE僵屍！ ***",
+	decimatetrigger = "殘殺",
+
+	bar1text = "群體恐懼",
+	decimatebartext = "殘殺",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	trigger1 = "%s gagne Fr\195\169n\195\169sie.",
 	trigger2 = "de Rugissement terrifiant.",

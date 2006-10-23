@@ -85,6 +85,24 @@ L:RegisterTranslations("zhCN", function() return {
 	shieldbar = "魔法护盾",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	teleport_name = "傳送警報",
+	teleport_desc = "傳送警報",
+	
+	shield_name = "護盾警報",
+	shield_desc = "護盾警報",
+	
+	trigger1 = "來吧，小子。面對我！",
+	trigger2 = "^反射效果從艾索雷葛斯身上消失",
+	trigger3 = "^艾索雷葛斯獲得了反射",
+
+	warn1 = "傳送發動！",
+	warn2 = "魔法護盾消失！",
+	warn3 = "魔法護盾開啟 - 不要施放法術！",
+	
+	shieldbar = "魔法護盾",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	
 	teleport_name = "소환 경고",

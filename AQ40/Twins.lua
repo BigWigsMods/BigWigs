@@ -127,6 +127,43 @@ L:RegisterTranslations("zhCN", function() return {
 	warn7 = "10秒后激怒",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Twin Emperors 雙子皇帝
+	bug_name = "爆炸蟲警報",
+	bug_desc = "雙子皇帝施放爆炸蟲時發出警報",
+
+	teleport_name = "傳送警報",
+	teleport_desc = "雙子皇帝施放雙子傳送時發出警報",
+
+	enrage_name = "狂怒警報",
+	enrage_desc = "雙子皇帝的狂怒倒數計時與時警報",
+
+	heal_name = "治療警報",
+	heal_desc = "雙子皇帝互相治療時發出警報",
+	
+	porttrigger = "施放了雙子傳送。",
+	portwarn = "*** 雙子傳送發動！ ***",
+	portdelaywarn = "*** 5 秒後發動雙子傳送！ ***",
+	portdelaywarn2 = "*** 10 秒後發動雙子傳送！ ***",
+	bartext = "雙子傳送",
+	explodebugtrigger = "(.+)獲得了爆炸蟲的效果。$",
+	explodebugwarn = "*** 爆炸蟲即將出現！ ***",
+	enragetrigger = "獲得了狂怒的效果。",
+	enragewarn = "*** 開始狂怒！ ***",
+	healtrigger1 = "的治療兄弟為",
+	healtrigger2 = "的治療兄弟為",
+	healwarn = "*** 正在施放治療兄弟 - 快拉開！ ***",
+	startwarn = "*** 雙子皇帝已進入戰鬥 - 15分鐘後進入狂怒狀態 ***",
+	enragebartext = "狂怒",
+	warn1 = "*** 10 分鐘後狂怒 ***",
+	warn2 = "*** 5 分鐘後狂怒 ***",
+	warn3 = "*** 3 分鐘後狂怒 ***",
+	warn4 = "*** 90 秒後狂怒 ***",
+	warn5 = "*** 60 秒後狂怒 ***",
+	warn6 = "*** 30 秒後狂怒 ***",
+	warn7 = "*** 10 秒後狂怒 ***",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	bug_name = "벌레 폭발 경고",
 	bug_desc = "벌레 폭발에 대한 경고",

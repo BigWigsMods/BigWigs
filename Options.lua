@@ -79,6 +79,24 @@ L:RegisterTranslations("zhCN", function() return {
 	["%s disabled."] = "%s关闭。",
 } end)
 
+
+L:RegisterTranslations("zhTW", function() return {
+	["|cff00ff00Module running|r"] = "|cff00ff00模組運作中|r",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55f點擊|r圖示重置所有運作中的模組。|cffeda55fShift+點擊|r圖示關閉所有運作中的模組。|cffeda55fCtrl+Shift+點擊|r圖示關閉BigWigs。",
+	["|cffeda55fClick|r to enable."] = "|cffeda55f點擊|r圖示開啟BigWigs。",
+	["Big Wigs is currently disabled."] = "Big Wigs目前關閉。",
+	["Active boss modules"] = "啟動首領模組",
+	["Hidden"] = "隱藏",
+	["Shown"] = "顯示",
+	["Minimap"] = "小地圖",
+	["Minimap"] = "小地圖",
+	["Toggle the minimap button."] = "切換是否顯示小地圖圖標。",
+	["All running modules have been reset."] = "所有運行中的模組都已重置。",
+	["All running modules have been disabled."] = "所有運行中的模組都已關閉。",
+	["%s reset."] = "%s重置。",
+	["%s disabled."] = "%s關閉。",
+} end)
+
 L:RegisterTranslations("deDE", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00Modul aktiviert|r",
 	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55fKlicken|r, um alle laufenden Module zur\195\188ckzusetzen. |cffeda55fShift+Klick|r um alle laufenden Module zu beenden. |cffeda55fStrg+Shift+Klick|r um BigWigs komplett zu beenden.",

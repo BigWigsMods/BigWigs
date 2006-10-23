@@ -47,6 +47,24 @@ L:RegisterTranslations("zhCN", function() return {
 	blink_desc = "沙斯拉尔发动闪现术时发出警报",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Shazzrah 沙斯拉爾
+	trigger1 = "沙斯拉爾施放了沙斯拉爾之門。",
+	trigger2 = "沙斯拉爾獲得了衰減魔法的效果。",
+
+	warn1 = "*** 閃現術 - 45 秒後再次發動！ ***",
+	warn2 = "*** 5 秒後發動閃現術！ ***",
+	warn3 = "*** 自我 Buff - 驅散魔法 ***",
+
+	bar1text = "閃現術",
+	
+	selfbuff_name = "自我Buff警報",
+	selfbuff_desc = "沙斯拉爾自我Buff時發出警報",
+	
+	blink_name = "閃現術警報",
+	blink_desc = "沙斯拉爾發動閃現術時發出警報",
+} end)
+
 L:RegisterTranslations("koKR", function() return {
 	trigger1 = "샤즈라|1이;가; 샤즈라의 문|1을;를; 시전합니다.",
 	trigger2 = "샤즈라|1이;가; 마법 약화 효과를 얻었습니다.",

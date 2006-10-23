@@ -116,6 +116,38 @@ L:RegisterTranslations("zhCN", function() return {
 	plagueare = "到",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Anubisath Guardian　阿努比薩斯守衛者
+	summon_name = "召喚警報",
+	summon_desc = "阿努比薩斯守衛者召喚增援時發出警報",
+
+	plagueyou_name = "玩家瘟疫警報",
+	plagueyou_desc = "你中了瘟疫時發出警報",
+
+	plagueother_name = "隊友瘟疫警報",
+	plagueother_desc = "隊友中了瘟疫時發出警報",
+
+	explode_name = "爆炸警報",
+	explode_desc = "阿努比薩斯守衛者即將爆炸時發出警報",
+
+	enrage_name = "狂怒警報",
+	enrage_desc = "阿努比薩斯守衛者進入狂怒狀態時發出警報",
+
+	explodetrigger = "阿努比薩斯守衛者獲得了爆炸的效果。",
+	explodewarn = "*** 即將爆炸！近戰躲開！ ***",
+	enragetrigger = "阿努比薩斯守衛者獲得了狂怒的效果。",
+	enragewarn = "*** 進入狂怒狀態！ ***",
+	summonguardtrigger = "阿努比薩斯守衛者施放了召喚阿努比薩斯蟲群衛士。",
+	summonguardwarn = "*** 蟲群衛士已被召喚出來！ ***",
+	summonwarriortrigger = "阿努比薩斯守衛者施放了召喚阿努比薩斯戰士。",
+	summonwarriorwarn = "*** 阿努比薩斯戰士已被召喚出來！ ***",
+	plaguetrigger = "^(.+)受到(.+)瘟疫效果的影響。$",
+	plaguewarn = " 受到瘟疫的影響！快躲開！ ***",
+	plaguewarnyou = "*** 你受到瘟疫的影響！快跑開！ ***",
+	plagueyou = "你",
+	plagueare = "了",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	summon_name = "소환 경고",
 	summon_desc = "추가 소환에 대한 경고",

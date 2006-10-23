@@ -148,6 +148,37 @@ L:RegisterTranslations("zhCN", function() return {
 	bomb_bar = "%s被变异注射",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	--Grobbulus 葛羅巴斯
+	enrage_name = "狂怒警報",
+	enrage_desc = "狂怒警報",
+
+	youinjected_name = "突變注射警報",
+	youinjected_desc = "你中了突變注射時發出警報",
+
+	otherinjected_name = "隊友突變注射警報",
+	otherinjected_desc = "隊友中了突變注射時發出警報",
+
+	icon_name = "標記突變注射",
+	icon_desc = "在中了突變注射的隊友頭上標記骷髏標記（需要助理或領隊權限）",
+
+	inject_trigger = "^(.+)受到(.+)突變注射效果的影響。",
+
+	you = "你",
+	are = "了",
+
+	startwarn = "*** 格羅布魯斯進入戰鬥 - 12 分鐘後進入狂怒狀態！ ***",
+	enragebar = "狂怒",
+	enrage10min = "*** 10 分鐘後狂怒 ***",
+	enrage5min = "*** 5 分鐘後狂怒 ***",
+	enrage1min = "*** 1 分鐘後狂怒 ***",
+	enrage30sec = "*** 30 秒後狂怒 ***",
+	enrage10sec = "*** 10 秒後狂怒 ***",
+	bomb_message_you = "*** 你中突變注射了！ ***",
+	bomb_message_other = "*** %s 中突變注射了！ ***",
+	bomb_bar = "%s 被突變注射",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	enrage_name = "Alerte Enrager",
 	enrage_desc = "Préviens régulièrement quand Grobbulus devient enragé.",

@@ -89,6 +89,29 @@ L:RegisterTranslations("zhCN", function() return {
 	["Arcane"] = "奥术",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Ossirian the Unscarred 無疤者奧斯里安
+	supreme_name = "無敵警報",
+	supreme_desc = "無疤者奧斯里安進入無敵狀態時發出警報",
+
+	debuff_name = "虛弱警報",
+	debuff_desc = "無疤者奧斯里安受到虛弱效果影響時發出警報",
+
+	supremetrigger = "無疤者奧斯里安獲得了奧斯里安之力的效果。",
+	supremewarn = "*** 已經進入了無敵模式！ ***",
+	supremedelaywarn = "*** %d 秒後無敵！ ***",
+	debufftrigger = "^無疤者奧斯里安受到(.+)虛弱的傷害",
+	debuffwarn = "*** 抗性虛弱 45 秒 : %s - DPS全開！ ***",
+	bartext = "無敵",
+	expose = "我...已...失敗。",
+
+	["Shadow"] = "陰影",
+	["Fire"] = "火焰",
+	["Frost"] = "冰霜",
+	["Nature"] = "自然",
+	["Arcane"] = "祕法",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	supreme_name = "무적 경고",
 	supreme_desc = "무적 모드에 대한 경고",

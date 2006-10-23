@@ -43,6 +43,18 @@ L:RegisterTranslations("zhCN", function() return {
 	["Bars"] = "宁神射击计时条",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	CHAT_MSG_SPELL_SELF_BUFF = "你未能驅散(.+)的狂暴。",
+	CHAT_MSG_SPELL_SELF_DAMAGE = "你對(.+)施放了寧神射擊。",
+
+	["Tranq - %s"] = "寧神射擊 - %s",
+	["%s's Tranq failed!"] = "%s的寧神射擊失敗了！",
+	["Tranq"] = "寧神射擊",
+	["Options for the tranq module."] = "寧神射擊模組選項.",
+	["Toggle tranq bars on or off."] = "開啟或禁用寧神射擊計時條.",
+	["Bars"] = "寧神射擊計時條",
+} end)
+
 L:RegisterTranslations("deDE", function() return {
 	CHAT_MSG_SPELL_SELF_BUFF = "(.+) kann dies nicht bannen: Raserei", -- ?
 	CHAT_MSG_SPELL_SELF_DAMAGE = "Ihr wirkt Einlullender Schuss auf (.+)",

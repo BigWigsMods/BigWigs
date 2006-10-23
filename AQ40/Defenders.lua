@@ -138,6 +138,48 @@ L:RegisterTranslations("zhCN", function() return {
 	thunderclapwarn = "雷霆一击发动！",
 } end )
 
+
+L:RegisterTranslations("zhTW", function() return {
+	-- Anubisath Defender 阿努比薩斯防禦者
+	plagueyou_name = "玩家瘟疫警報",
+	plagueyou_desc = "你中了瘟疫時發出警報",
+
+	plagueother_name = "隊友瘟疫警報",
+	plagueother_desc = "隊友中了瘟疫時發出警報",
+
+	thunderclap_name = "雷霆震擊警報",
+	thunderclap_desc = "阿努比薩斯防禦者發動雷霆震擊時發出警報",
+
+	explode_name = "爆炸警報",
+	explode_desc = "阿努比薩斯防禦者即將爆炸時發出警報",
+
+	enrage_name = "狂怒警報",
+	enrage_desc = "阿努比薩斯防禦者進入狂怒狀態時發出警報",
+
+	summon_name = "召喚警報",
+	summon_desc = "阿努比薩斯防禦者召喚增援時發出警報",
+	
+	icon_name = "標記瘟疫",
+	icon_desc = "團隊標記中瘟疫的玩家 (需要助理或領隊權限)",
+	
+	explodetrigger = "阿努比薩斯防禦者獲得了爆炸的效果。",
+	explodewarn = "*** 即將爆炸！近戰躲開！ ***",
+	enragetrigger = "阿努比薩斯防禦者獲得了狂怒的效果。",
+	enragewarn = "*** 進入狂怒狀態！ ***",
+	summonguardtrigger = "阿努比薩斯防禦者施放了召喚阿努比薩斯蟲群衛士。",
+	summonguardwarn = "*** 蟲群衛士已被召喚出來 ***",
+	summonwarriortrigger = "阿努比薩斯防禦者施放了召喚阿努比薩斯戰士。",
+	summonwarriorwarn = "*** 阿努比薩斯戰士已被召喚出來 ***",
+	plaguetrigger = "^(.+)受到(.+)瘟疫的傷害",
+	plaguewarn = "受到瘟疫的影響！快躲開！*",
+	plagueyouwarn = "*** 你受到瘟疫的影響！快跑開！ ***",
+	plagueyou = "你",
+	plagueare = "了",
+	thunderclaptrigger = "^阿努比薩斯防禦者的雷霆震擊",
+	thunderclapwarn = "雷霆震擊發動！",
+} end )
+
+
 L:RegisterTranslations("koKR", function() return {
 	plagueyou_name = "자신의 역병 경고",
 	plagueyou_desc = "자신의 역병에 대한 경고",

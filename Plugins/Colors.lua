@@ -134,6 +134,47 @@ L:RegisterTranslations("zhCN", function() return {
 	["4th"] = "第四",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	["Colors"] = "顏色",
+
+	["Messages"] = "訊息",
+	["Bars"] = "計時條",
+	["Shortbar"] = "短計時條",
+	["Longbar"] = "長計時條",
+	["Color %s"] = "顏色 %s",
+	["Color%s"] = "顏色%s",
+	["Number of colors"] = "顏色數量",
+	["xColors"] = "x顏色",
+	["Background"] = "背景",
+	["Text"] = "文字",
+	["Reset"] = "重置",
+
+	["Colors of messages and bars."] = "訊息文字與計時條顏色。",
+	["Colors of messages."] = "訊息文字顏色。",
+	["Change the color for \"%s\" messages."] = "變更\"%s\"訊息的顏色。",
+	["Colors of bars."] = "計時條顏色。",
+	["Colors for short bars (< 1 minute)."] = "短時計時條（小於一分鍾）的顏色。",
+	["Colors for long bars (> 1 minute)."] = "長時計時條（大於一分鍾）的顏色。",
+	["Change the %s color."] = "變更顏色%s。",
+	["Number of colors the bar has."] = "計時條顏色數量。",
+	["Change the background color."] = "變更背景顏色。",
+	["Change the text color."] = "變更文字顏色。",
+	["Resets all ranges to defaults."] = "全部重置為須設狀態。",
+
+	["Important"] = "重要",
+	["Personal"] = "個人",
+	["Urgent"] = "緊急",
+	["Attention"] = "注意",
+	["Positive"] = "積極",
+	["Bosskill"] = "首領擊殺",
+	["Core"] = "核心",
+
+	["1st"] = "第一",
+	["2nd"] = "第二",
+	["3rd"] = "第三",
+	["4th"] = "第四",
+} end)
+
 L:RegisterTranslations("deDE", function() return {
 	["Colors"] = "Farben",
 

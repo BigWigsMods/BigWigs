@@ -54,6 +54,26 @@ L:RegisterTranslations("zhCN", function() return {
 	doom_desc = "末日降临警报",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Lucifron 魯西弗隆
+	trigger1 = "受到了魯西弗隆的詛咒",
+	trigger2 = "受到了末日降臨",
+
+	warn1 = "*** 群體詛咒 5 秒後發動！ ***",
+	warn2 = "*** 群體詛咒 - 20 秒後再次發動 ***",
+	warn3 = "*** 末日降臨 5 秒後發動！ ***",
+	warn4 = "*** 末日降臨 - 20 秒後再次發動 ***",
+
+	bar1text = "群體詛咒",
+	bar2text = "末日降臨",
+	
+	curse_name = "詛咒警報",
+	curse_desc = "當魯西弗隆使用群體詛咒技能時發出警報",
+	
+	doom_name = "末日降臨警報",
+	doom_desc = "當魯西弗隆使用末日降臨技能時發出警報",
+} end)
+
 L:RegisterTranslations("koKR", function() return {
 	trigger1 = "루시프론의 저주에 걸렸습니다.",
 	trigger2 = "파멸의 예언에 걸렸습니다.",

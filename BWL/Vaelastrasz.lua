@@ -60,6 +60,27 @@ L:RegisterTranslations("zhCN", function() return {
 	icon_desc = "在燃烧的队友头上标记骷髅图标（需要助理或领袖权限）",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	--Vaelastrasz 墮落的瓦拉斯塔茲
+	trigger1 = "^(.+)受到(.+)燃燒刺激的傷害",
+
+	you = "你",
+	are = "了",
+
+	warn1 = "*** 你正在燃燒！ ***",
+	warn2 = " 正在燃燒！ ***",
+
+	youburning_name = "玩家燃燒警報",
+	youburning_desc = "你燃燒時發出警報",
+
+	elseburning_name = "隊友燃燒警報",
+	elseburning_desc = "隊友燃燒時發出警報",
+	
+	burningbar_name = "燃燒刺激計時條",
+	burningbar_desc = "燃燒刺激計時條",
+	icon_name = "炸彈標記",
+	icon_desc = "在被燃燒的隊友頭上標記（需要助理或領隊權限）",
+} end)
 
 L:RegisterTranslations("koKR", function() return {
 	trigger1 = "^([^|;%s]*)(.*)불타는 아드레날린에 걸렸습니다%.$", --"(.*)불타는 아드레날린에 걸렸습니다.",

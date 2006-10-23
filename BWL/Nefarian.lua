@@ -119,6 +119,58 @@ L:RegisterTranslations("zhCN", function() return {
 	otherwarn_desc = "降落与杂兵出现时发出警报",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Nefarian 奈法利安
+	landing_soon_trigger = "幹得好，我的手下。",
+	landing_trigger = "燃燒吧！你這個",
+	zerg_trigger = "^不可能",
+	fear_trigger = "奈法利安開始施放低沉咆哮。",
+	shadowflame_trigger = "奈法利安開始施放暗影烈焰。",
+
+	triggershamans	= "^薩滿，讓我看看",
+	triggerdruid	= "^德魯伊和你們愚蠢的變形。讓我們看看什麼會發生吧！",
+	triggerwarlock	= "^術士，不要隨便去玩那些你不理解的法術。看看會發生什麼吧？",
+	triggerpriest	= "^牧師！如果你要繼續這麼治療的話，那我們來玩點有趣的東西！",
+	triggerhunter	= "^獵人和你那討厭的豌豆射擊！",
+	triggerwarrior	= "^戰士，我知道你應該比較抗打！讓我們來見識一下吧！",
+	triggerrogue	= "^盜賊？不要躲了，面對我吧！",
+	triggerpaladin	= "^聖騎士……聽說你有無數條命。讓我看看到底是怎麼樣的吧。",
+	triggermage	= "^還有法師？你應該小心使用你的魔法……",
+
+	landing_soon_warning	= "*** 10秒後降落！ ***",
+	landing_warning		= "*** 奈法利安已降落！ ***",
+	zerg_warning		= "*** 龍獸出現！ ***",
+	fear_warning		= "*** 群體恐懼 - 2 秒後發動 ***",
+	fear_soon_warning	= "*** 群體恐懼 - 5 秒後發動 ***",
+	shadowflame_warning	= "*** 暗影烈焰發動！ ***",
+	classcall_warning	= "*** 5 秒後開始點名！ ***",
+
+	warnshaman	= "*** 薩滿 - 圖騰湧現 ***",
+	warndruid	= "*** 德魯伊 - 強制貓形態，無法治療和解詛咒 ***",
+	warnwarlock	= "*** 術士 - 地獄火出現，DPS職業盡快將其消滅 ***",
+	warnpriest	= "*** 牧師 - 停止治療，靜等 25 秒 ***",
+	warnhunter	= "*** 獵人 - 遠程武器損壞 ***",
+	warnwarrior	= "*** 戰士 - 強制狂暴姿態，加大對MT的治療量 ***",
+	warnrogue	= "*** 盜賊 - 被傳送和麻痺 ***",
+	warnpaladin	= "*** 聖騎士 - BOSS受到保護祝福，物理攻擊無效 ***",
+	warnmage	= "*** 法師 - 變形術發動，注意解除 ***",
+
+	classcall_bar = "職業點名",
+	fear_bar = "可能恐懼",
+	
+	shadowflame_name = "暗影烈焰警報",
+	shadowflame_desc = "當奈法利安施放暗影烈焰時發出警報",
+	
+	fear_name = "恐懼警報",
+	fear_desc = "當奈法利安施放群體恐懼時發出警報",
+	
+	classcall_name = "職業點名警報",
+	classcall_desc = "當奈法利安進行職業點名時發出警報",
+	
+	otherwarn_name = "其他警報",
+	otherwarn_desc = "降落及龍獸出現時發出警報",
+} end)
+
 L:RegisterTranslations("koKR", function() return {
 	landing_soon_trigger = "적들의 사기가 떨어지고 있다",
 	landing_trigger = "불타라! 활활!",

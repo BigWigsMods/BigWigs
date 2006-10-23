@@ -59,6 +59,21 @@ L:RegisterTranslations("zhCN", function() return {
 	bartext = "无敌模式",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	supreme_name = "無敵警報",
+	supreme_desc = "無敵警報",
+
+	starttrigger = "為了燃燒軍團！為了基爾加丹！",
+
+	engagewarn	 = "卡紮克已開始攻擊 - 3分鐘後無敵！",
+
+	supreme1min	 = "1分鐘後無敵！",
+	supreme30sec = "30秒後無敵！",
+	supreme10sec = "10秒後無敵！",
+
+	bartext = "無敵模式",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	supreme_name = "무적 경고",
 	supreme_desc = "무적 모드에 대한 경고",

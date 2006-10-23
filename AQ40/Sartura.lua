@@ -112,6 +112,33 @@ L:RegisterTranslations("zhCN", function() return {
 	whirlwindbartext = "旋风斩",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	--Battleguard Sartura 沙爾圖拉
+	enrage_name = "狂暴警報",
+	enrage_desc = "當沙爾圖拉狂暴時發出警報",
+
+	whirlwind_name = "旋風斬警報",
+	whirlwind_desc = "當沙爾圖拉施放旋風斬發出警報",
+	
+	starttrigger = "我判你死刑！",
+	startwarn = "*** 沙爾圖拉已進入戰鬥 - 10分鐘後進入狂暴狀態 ***",
+	enragetrigger = "沙爾圖拉獲得了狂怒的效果。",
+	enragewarn = "*** 狂暴！狂暴！狂暴！ ***",
+	bartext = "狂暴",
+	warn1 = "*** 8 分鐘後狂暴 ***",
+	warn2 = "*** 5 分鐘後狂暴 ***",
+	warn3 = "*** 3 分鐘後狂暴 ***",
+	warn4 = "*** 90 秒後狂暴 ***",
+	warn5 = "*** 60 秒後狂暴 ***",
+	warn6 = "*** 30 秒後狂暴 ***",
+	warn7 = "*** 10 秒後狂暴 ***",
+	whirlwindon = "沙爾圖拉獲得了旋風斬的效果。",
+	whirlwindoff = "旋風斬效果從沙爾圖拉身上消失。",
+	whirlwindonwarn = "*** 沙爾圖拉施放 旋風斬！ ***",
+	whirlwindoffwarn = "*** 旋風斬消失！ ***",
+	whirlwindbartext = "旋風斬",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 
 	enrage_name = "격노 경고",

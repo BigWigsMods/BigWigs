@@ -38,6 +38,18 @@ L:RegisterTranslations("zhCN", function() return {
 	curse_desc = "诅咒警报",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Gehennas 基赫納斯
+	trigger1 = "受到基赫納斯的詛咒",
+
+	warn1 = "*** 群體詛咒 5 秒後發動！ ***",
+	warn2 = "*** 群體詛咒 - 30 秒後再次發動 ***",
+
+	bar1text = "基赫納斯的詛咒",
+	
+	curse_name = "詛咒警報",
+	curse_desc = "當基赫納斯使用反治療群體詛咒時發出警報",
+} end)
 
 L:RegisterTranslations("koKR", function() return {
 	trigger1 = "게헨나스의 저주에 걸렸습니다.",

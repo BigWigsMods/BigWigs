@@ -114,6 +114,32 @@ L:RegisterTranslations("zhCN", function() return {
 	shieldwallbar       = "盾墙",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	--Razuvious 講師拉祖維斯
+	shout_name = "怒吼警報",
+	shout_desc = "混亂怒吼警報",
+
+	shieldwall_name = "盾牆計時器",
+	shieldwall_desc = "盾牆計時器",
+
+	startwarn	= "*** 教官拉蘇維奧斯已進入戰鬥 - 25 秒後瓦解怒吼 ***",
+
+	starttrigger1 	= "練習時間到此為止！都拿出真本事來！",
+	starttrigger2 	= "絆腿……有什麼問題嗎？",
+	starttrigger3 	= "仁慈無用！",
+	starttrigger4 	= "照我教你的做！",
+
+	shouttrigger 	= "混亂怒吼",
+	shout7secwarn 	= "*** 7秒後發動混亂怒吼 ***",
+	shout3secwarn	= "*** 3秒後發動混亂怒吼！ ***",
+	shoutwarn 	= "*** 混亂怒吼！ ***",
+	noshoutwarn	= "*** 沒吼！ 下次在 20 秒後發動 ***",
+	shoutbar 	= "*** 混亂怒吼 ***",
+
+	shieldwalltrigger   = "死亡騎士學員獲得了盾牆的效果。",
+	shieldwallbar       = "盾牆",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 
 	starttrigger1 	= "Les cours sont termin\195\169s ! Montrez%-moi ce que vous avez appris !",

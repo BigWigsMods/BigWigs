@@ -101,6 +101,36 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 
+L:RegisterTranslations("zhTW", function() return {
+	["BossBlock"] = "訊息阻擋",
+	["Suppress bossmod chat from other players."] = "阻擋其他玩家的首領插件發送的訊息。",
+
+	["Suppress Raid Chat"] = "阻擋團隊頻道",
+	["Suppress messages in the raid channel."] = "阻擋團隊頻道中的訊息",
+
+	["Suppress RaidWarn Chat"] = "阻擋團隊警告聊天",
+	["Suppress RaidWarn messages in the chat frames."] = "阻擋聊天窗體中的團隊警告訊息",
+
+	["Suppress RaidWarn"] = "阻擋團隊警告",
+	["Suppress RaidWarn popup messages."] = "阻擋團隊警告中的訊息",
+
+	["Suppress RaidSay"] = "阻擋RS",
+	["Suppress CTRA RaidSay popup messages."] = "阻擋團隊助手(CTRA)的RS訊息",
+
+	["Suppress Tells"] = "阻擋密語",
+	["Suppress Tell messages."] = "阻擋密語中的訊息",
+
+	["Debugging"] = "除錯",
+	["Show debug messages."] = "顯示除錯訊息",
+
+	["Suppressing Chatframe"] = "正在阻擋Chatframe",
+	["Suppressing RaidWarningFrame"] = "正在阻擋RaidWarningFrame",
+	["Suppressing CT_RAMessageFrame"] = "正在阻擋CT_RAMessageFrame",
+
+	["Suppressed"] = "阻擋",
+	["Shown"] = "顯示",
+} end)
+
 L:RegisterTranslations("deDE", function() return {
 	["BossBlock"] = "BossBlock",
 	["Suppress bossmod chat from other players."] = "Bossmod Chat von anderen Spielern unterdr\195\188cken.",

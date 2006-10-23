@@ -264,6 +264,69 @@ L:RegisterTranslations("zhCN", function() return {
 	are = "到",
 } end )
 
+
+L:RegisterTranslations("zhTW", function() return {
+	
+	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "克爾蘇加德的大廳",
+
+	phase_name = "每個階段警報",
+	phase_desc = "每個階段警報",
+
+	mc_name = "精神控制警報",
+	mc_desc = "當有人被精神控制後警報",
+
+	fissure_name = "暗影裂隙警報",
+	fissure_desc = "警報即將來領的暗影裂隙",
+
+	frostblast_name = "冰霜衝擊警報",
+	frostblast_desc = "當有人被冰霜衝擊後警報",
+
+	detonate_name = "自爆法力警報",
+	detonate_desc = "警報即將來領的自爆法力",
+
+	detonateicon_name = "自爆法力標記",
+	detonateicon_desc = "標記即將自爆法力的人",
+
+	guardians_name = "寒冰皇冠護衛警報",
+	guardians_desc = "提前警報第三階段召喚來的寒冰皇冠護衛",
+
+	mc_trigger1 = "你的靈魂現在屬於我了！",
+	mc_trigger2 = "沒有人能逃得掉！",
+	mc_warning = "精神控制！",
+
+	start_trigger = "仆從們，侍衛們，隸屬於黑暗與寒冷戰士們！聽從克爾蘇加德的召喚！",
+	start_warning = "克爾蘇加德之戰開始，他將在 5 分鐘後進入戰鬥！",
+	start_bar = "第二階段",
+
+	phase2_trigger = "祈禱我的慈悲吧！",
+	phase2_warning = "第二階段開始，克爾蘇加德來了！",
+	phase2_bar = "克爾蘇加德進入戰鬥！",
+
+	phase3_soon_warning = "第三階段即將來到！",
+	phase3_trigger = "主人，我需要",
+	phase3_warning = "第三階段開始， 15 秒後衛士出現！",
+
+	guardians_trigger = "那好吧。冰冷廢墟的戰士，站起來！我命令你戰鬥，為你的主人而殺，而死！不要留一個！", -- need to check the line
+	guardians_warning = " 10 秒後護衛出現！",
+	guardians_bar = "護衛出現！",
+
+	fissure_trigger = "克爾蘇加德施放了暗影裂隙。",
+	fissure_warning = "暗影裂隙！",
+
+	frostblast_bar = "可能的冰霜衝擊",
+	frostblast_trigger = "^(.+)受到(.+)冰霜沖擊的影響。",
+	frostblast_warning = "冰霜沖擊！",
+	frostblast_soon_message = "~5秒後可能有冰霜沖擊！",
+
+	detonate_trigger = "^(.+)受到(.+)自爆法力的影響。",
+	detonate_bar = "自爆法力 - %s",
+	detonate_possible_bar = "可能的自爆",
+	detonate_warning = "%s中了自爆法力！",
+
+	you = "你",
+	are = "了",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

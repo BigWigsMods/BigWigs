@@ -58,6 +58,28 @@ L:RegisterTranslations("zhCN", function() return {
 	frenzy_desc = "狂暴警报",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Flamegor 弗萊格爾
+	wingbuffet_trigger = "弗萊格爾開始施放龍翼打擊。",
+	shadowflame_trigger = "弗萊格爾開始施放暗影烈焰。",
+	frenzy_trigger = "變得狂暴起來！",
+
+	wingbuffet_message = "*** 龍翼打擊！ 30 秒後再次發動***",
+	wingbuffet_warning = "*** 3 秒後龍翼打擊！ ***",
+	shadowflame_warning = "*** 暗影烈焰發動！ ***",
+	frenzy_message = "*** 狂暴警報！獵人立刻使用寧神射擊！ ***",
+
+	wingbuffet_bar = "龍翼打擊",
+
+	wingbuffet_name = "龍翼打擊警報",
+	wingbuffet_desc = "當弗萊格爾施放龍翼打擊時發出警報",
+
+	shadowflame_name = "暗影烈焰警報",
+	shadowflame_desc = "當弗萊格爾施放暗影烈焰時發出警報",
+
+	frenzy_name = "狂暴警報",
+	frenzy_desc = "狂暴警報",
+} end)
 
 L:RegisterTranslations("koKR", function() return {
 	wingbuffet_trigger = "플레임고르|1이;가; 폭풍 날개|1을;를; 시전합니다.",

@@ -85,6 +85,20 @@ L:RegisterTranslations("zhCN", function() return {
 	heal_message = "高阶祭司耶克里克正在施放治疗，赶快打断它！",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Jeklik 高階祭司耶克里克
+	heal_name = "治療警報",
+	heal_desc = "高階祭司耶克里克使用治療時發出警報",
+
+	bomb_name = "炸彈蝙蝠警報",
+	bomb_desc = "炸彈蝙蝠出現時發出警報",
+
+	bomb_trigger = "我命令你把這些入侵者燒成灰燼！$",
+	heal_trigger = "開始施放強效治療術！$",
+	bomb_message = "*** 火焰投擲！ 注意閃躲！ ***",
+	heal_message = "*** 補血 -  馬上中斷！ ***",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 
 	heal_name = "치유 경고",

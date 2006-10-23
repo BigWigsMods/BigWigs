@@ -69,6 +69,21 @@ L:RegisterTranslations("zhCN", function() return {
 	phase2_message = "进入第二阶段，小心毒云！",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	-- High Priest Venoxis 高階祭司溫諾希斯
+	renew_name = "補血警報",
+	renew_desc = "高階祭司溫諾希斯施放恢復術時發出警報",
+	
+	phase_name = "第二階段警報",
+	phase_desc = "高階祭司溫諾希斯進入第二階段(會放出毒雲)時警報",
+	
+	renew_trigger = "高階祭司溫諾希斯獲得了恢復的效果。",
+	phase2_trigger = "讓復仇的毒蛇吞噬你們吧！", -- check combatlog
+
+	renew_message = "*** 正在補血！馬上中斷！ ***",
+	phase2_message = "*** 進入第二階段！小心毒雲！ ***",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	
 	renew_name = "소생 경고",

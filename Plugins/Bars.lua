@@ -119,6 +119,46 @@ L:RegisterTranslations("zhCN", function() return {
 	["Charcoal"] = "木炭",
 } end)
 
+
+L:RegisterTranslations("zhTW", function() return {
+	["Bars"] = "計時條",
+
+	["bars"] = "計時條",
+	["anchor"] = "錨點",
+	["scale"] = "大小",
+	["up"] = "上",
+
+	["Options for the timer bars."] = "計時條設置",
+	["Show the bar anchor frame."] = "顯示計時條框架錨點。",
+	["Set the bar scale."] = "設置計時條縮放比例。",
+	["Group upwards"] = "向上排列",
+	["Toggle bars grow upwards/downwards from anchor."] = "切換計時條從錨點向下/向上排列。",
+
+	["Timer bars"] = "計時條",
+	["Show anchor"] = "顯示錨點",
+	["Grow bars upwards"] = "向上延展",
+	["Scale"] = "縮放",
+	["Bar scale"] = "計時條縮放",
+
+	["Bars now grow %2$s"] = "計時條設置為向%2$s延展。",
+	["Scale is set to %2$s"] = "縮放比例設置為%2$s",
+
+	["Up"] = "上",
+	["Down"] = "下",
+
+	["Test"] = "測試",
+	["Close"] = "關閉",
+
+	["Texture"] = "材質",
+	["Set the texture for the timerbars."] = "設定計時條的材質花紋",
+
+	["default"] = "默認",
+	["smooth"] = "平滑",
+	["otravi"] = "otravi",
+	["Charcoal"] = "木炭",
+} end)
+
+
 L:RegisterTranslations("deDE", function() return {
 	["Bars"] = "Anzeigebalken",
 

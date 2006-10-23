@@ -128,6 +128,35 @@ L:RegisterTranslations("zhCN", function() return {
 	silencebar = "沉默",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Grand Widow Faerlina 大寡婦費琳娜
+	silence_name = "沉默警報",
+	silence_desc = "沉默警報",
+
+	enrage_name = "狂怒警報",
+	enrage_desc = "狂怒警報",
+
+	starttrigger1 = "跪下求饒吧，懦夫！",
+	starttrigger2 = "以主人之名，殺了他們！",
+	starttrigger3 = "休想從我面前逃掉！",
+	starttrigger4 = "逃啊！有本事就逃啊！",
+
+	silencetrigger = "大寡婦費琳娜受到寡婦之擁的傷害。", -- EDITED it affects her too.
+	enragetrigger = "*** 大寡婦費琳娜獲得了狂怒的效果。 ***",
+	enragefade = "*** 狂怒效果從大寡婦費琳娜身上消失。 ***",
+
+	startwarn = "*** 大寡婦費琳娜已進入戰鬥 - 60 秒後狂怒！ ***",
+	enragewarn15sec = "*** 15 秒後狂怒！ ***",
+	enragewarn = "*** 狂怒！ ***",
+	enrageremovewarn = "*** 狂怒已移除 - %d 後再次狂怒 ***", -- added
+	silencewarn = "*** 沉默！延緩了狂怒！ ***",
+	silencewarnnodelay = "*** 沉默！ ***",
+	silencewarn5sec = "*** 5 秒後沉默結束！ ***",
+
+	enragebar = "狂怒",
+	silencebar = "沉默",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	starttrigger1 = "genoux, vermisseau !",
 	starttrigger2 = "Tuez%-les au nom du ma\195\174tre !",

@@ -135,6 +135,36 @@ L:RegisterTranslations("zhCN", function() return {
 	are = "是",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Jin'do the Hexxer 妖術師金度
+	brainwash_name = "控制圖騰警報",
+	brainwash_desc = "控制圖騰警報",
+
+	healing_name = "治療圖騰警報",
+	healing_desc = "治療圖騰警報",
+
+	youcurse_name = "你中詛咒發出警報",
+	youcurse_desc = "你中詛咒發出警報",
+
+	elsecurse_name = "玩家詛咒發出警報",
+	elsecurse_desc = "玩家詛咒發出警報",
+
+	icon_name = "標記被詛咒的隊友",
+	icon_desc = "在被詛咒的隊友頭上設置標記 (需要助手或領隊權限)",
+
+	triggerbrainwash = "妖術師金度施放了召喚控制圖騰。",
+	triggerhealing = "妖術師金度施放了強力治療結界。",
+	triggercurse = "^(.+)受到(.*)金度的欺騙",  -- CHECK
+
+	warnbrainwash = "*** 控制圖騰！ 快清掉！ ***",
+	warnhealing = "*** 治療圖騰！ 快清掉！ ***",
+	cursewarn_self = "*** 你中了詛咒 - 快打影子！ ***",
+	cursewarn_other = "*** %s 中了詛咒！不要解除！ ***",
+
+	you = "你",
+	are = "了",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	
 	brainwash_name = "세뇌의 토템 경고",

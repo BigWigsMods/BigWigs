@@ -151,6 +151,40 @@ L:RegisterTranslations("zhCN", function() return {
 	are = "到",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Maexxna 梅克絲娜
+	spray_name = "撒網警報",
+	spray_desc = "當梅克絲娜撒網及小蜘蛛出現時發出警報",
+
+	enrage_name = "狂怒警報",
+	enrage_desc = "狂怒警報",
+	
+	cocoon_name = "纏繞的蜘蛛網警報",
+	cocoon_desc = "玩家受到蜘蛛網纏繞發出警報",
+
+	cocoontrigger = "^(.+)受到(.*)纏繞的蜘蛛網",
+	webspraytrigger = "纏繞的蜘蛛網",
+
+	cocoonwarn = "*** %s 被蛛網纏繞了！ ***",
+
+	enragetrigger = "變得憤怒了！",
+
+	webspraywarn30sec = "*** 10 秒後發動纏繞的蜘蛛網 ***",
+	webspraywarn20sec = "*** 纏繞的蜘蛛網！ 10 秒後小蜘蛛出現！ ***",
+	webspraywarn10sec = "*** 小蜘蛛出現！ 10 秒後撒網！ ***",
+	webspraywarn5sec = "*** 5 秒後撒網！ ***",
+	webspraywarn = "*** 撒網！ 40 秒後再次發動 ***",
+	enragewarn = "*** 狂怒！全力攻擊！ ***",
+	enragesoonwarn = "*** 即將狂怒！ ***",
+
+	webspraybar = "撒網",
+	cocoonbar = "纏繞的蜘蛛網",
+	spiderbar = "小蜘蛛",
+
+	you = "你",
+	are = "了",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	cocoontrigger = "(.*) (.*) les effets de Entoilage.",
 	webspraytrigger = "les effets de Jet de rets.",

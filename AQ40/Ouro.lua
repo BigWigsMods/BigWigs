@@ -205,6 +205,56 @@ L:RegisterTranslations("zhCN", function() return {
 	berserksoonwarn = "即将狂暴 - 做好准备！",
 } end )
 
+
+L:RegisterTranslations("zhTW", function() return {
+	-- Ouro 奧羅
+	sweep_name = "橫掃警報",
+	sweep_desc = "奧羅施放橫掃時發出警報",
+	
+	sandblast_name = "沙塵爆裂警報",
+	sandblast_desc = "奧羅施放沙塵爆裂時發出警報",
+	
+	emerge_name = "鑽地警報",
+	emerge_desc = "奧羅鑽地時發出警報",
+	
+	submerge_name = "鑽出警報",
+	submerge_desc = "奧羅鑽出時發出警報",
+	
+	scarab_name = "甲蟲消失警報",
+	scarab_desc = "甲蟲消失時發出警報",
+	
+	berserk_name = "狂暴警報",
+	berserk_desc = "當奧羅變得狂暴發出警報",
+
+	sweeptrigger = "奧羅開始施放橫掃。",
+	sweepannounce = "*** 橫掃發動！ ***",
+	sweepwarn = "*** 5 秒後發動橫掃！快退！ ***",
+	sweepbartext = "橫掃",
+
+	sandblasttrigger = "奧羅開始施放沙塵爆裂。",
+	sandblastannounce = "*** 沙塵爆裂！ ***",
+	sandblastwarn = "*** 5 秒後發動沙塵爆裂！ ***",
+	sandblastbartext = "沙塵爆裂",
+	
+	engage_message = "*** 奧羅已進入戰鬥 - 90 秒後可能潛入地下！ ***",
+	possible_submerge_bar = "潛入地下",
+
+	emergetrigger = "土堆施放了召喚奧羅甲蟲。",
+	emergeannounce = "*** 奧羅鑽出了地面！ ***",
+	emergewarn = "*** 15 秒後潛入地下 ***",
+	emergebartext = "鑽出地面",
+
+	scarabdespawn = "*** 10 秒後甲蟲消失 ***", --Translate me
+	scarabbar	= "甲蟲消失", -- Translate Me
+	
+	submergetrigger = "奧羅施放了召喚奧羅土堆。",
+	submergeannounce = "*** 奧羅潛入地下！殺光蟲子！ ***",
+	submergewarn = "*** 5 秒後將鑽出地面！ ***",
+	submergebar = "潛入地下",
+
+	berserksoonwarn = "*** 即將狂暴 - 做好準備！ ***",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 
 	sweeptrigger = "Ouro commence \195\160 lancer Balayer.",

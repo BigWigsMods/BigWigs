@@ -38,6 +38,16 @@ L:RegisterTranslations("zhCN", function() return {
 	wormbar = "沙虫激怒 (%d)",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Fankriss the Unyielding 頑強的范克里斯
+	worm_name = "蟲子警報",
+	worm_desc = "范克里斯召喚蟲子時發出警報",
+	
+	wormtrigger = "頑強的范克里斯施放了召喚蟲子。",
+	wormwarn = "*** 召喚蟲子出現！注意！ ***",
+	wormbar = "王蟲激怒(%d)",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	worm_name = "벌레 경고",
 	worm_desc = "벌레에 대한 경고",

@@ -196,6 +196,52 @@ L:RegisterTranslations("zhCN", function() return {
 	wave2_message = "10秒后第二波",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	--Noth the Plaguebringer 瘟疫者諾斯
+	blink_name	= "閃現術警報",
+	blink_desc	= "閃現術警報",
+
+	teleport_name	= "傳送警報",
+	teleport_desc	= "傳送警報",
+
+	curse_name	= "詛咒警報",
+	curse_desc	= "詛咒警報",
+
+	wave_name	= "小骷髏警報",
+	wave_desc	= "警報數波小骷髏",
+
+	starttrigger1	= "死吧，入侵者！",
+	starttrigger2	= "榮耀歸於我主！",
+	starttrigger3	= "我要沒收你的生命！",
+	startwarn	= "*** 瘟疫者諾斯已進入戰動 - 90 秒後傳送 ***",
+
+	addtrigger	= "起來吧，我的戰士們！起來，再為主人盡忠一次！",
+
+	blinktrigger	= "瘟疫者諾斯獲得了閃現術的效果。",
+	blinkwarn	= "*** 閃現術！停止攻擊！ ***",
+	blinkwarn2	= "*** 5 秒後發動閃現術！ ***",
+	blinkbar	= "閃現術",
+
+	teleportwarn	= "*** 傳送發動！ ***",
+	teleportwarn2	= "*** 10 秒後發動傳送！ ***",
+
+	teleportbar	= "傳送！",
+	backbar		= "回到房間！",
+
+	backwarn	= "*** 諾斯回到房間 - %d後再次傳送 ***",
+	backwarn2	= "*** 10 秒後諾斯回到房間！ ***",
+
+	cursetrigger	= "受到了瘟疫使者的詛咒效果的影響",
+	cursewarn	= "*** 詛咒 - 55秒後再次發動 ***",
+	curse10secwarn	= "*** 10 秒後發動詛咒！ ***",
+
+	cursebar	= "下一次詛咒",
+	
+	wave1bar	= "第一波",
+	wave2bar	= "第二波",
+	wave2_message	= "*** 10 秒後第二波 ***",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	starttrigger1 = "Mourez, intrus !",
 	starttrigger2 = "Gloire au ma\195\174tre !",

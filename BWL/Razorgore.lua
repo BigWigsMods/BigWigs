@@ -133,6 +133,30 @@ L:RegisterTranslations("zhCN", function() return {
 	phase_desc = "第二阶段警报",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Razorgore 狂野的拉佐格爾
+	start_trigger = "入侵者",
+	start_message = "*** 拉佐格爾進入戰鬥！ ***",
+
+	mindcontrol_trigger = "愚蠢的 ([^%s]+).",
+	mindcontrol_message = "**** %s 被心靈控制 ***",
+
+	egg_trigger = "狂野的拉佐格爾施放了(.+)。",
+	egg_message = "*** 已摧毀 %d/30 個龍蛋！ ***",
+
+	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.",
+	phase2_message = "*** 已摧毀所有龍蛋 ***",
+
+	mc_name = "精神控制",
+	mc_desc = "當一個玩家使用精神控制時向團隊發出警報。",
+
+	eggs_name = "取消龍蛋計數",
+	eggs_desc = "取消剩餘龍蛋計數 - 該功能還在完善中。。。",
+
+	phase_name = "第二階段警報",
+	phase_desc = "第二階段警報",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

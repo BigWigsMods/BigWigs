@@ -90,6 +90,26 @@ L:RegisterTranslations("zhCN", function() return {
 	warn6 = "10秒后激怒",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Patchwerk 縫補者
+	enrage_name = "狂怒警報",
+	enrage_desc = "狂怒警報",
+
+	enragetrigger = "變得極度狂暴而憤怒！",
+
+	enragewarn = "狂怒！***",
+	starttrigger1 = "縫補者要跟你玩！",
+	starttrigger2 = "縫補者是克爾蘇加德的戰神！",
+	startwarn = "*** 帕奇維克已進入鬥 - 7 分鐘後狂怒 ***",
+	enragebartext = "狂怒",
+	warn1 = "*** 5 分鐘後狂怒 ***",
+	warn2 = "*** 3 分鐘後狂怒 ***",
+	warn3 = "*** 90 秒後狂怒 ***",
+	warn4 = "*** 60 秒後狂怒 ***",
+	warn5 = "*** 30 秒後狂怒 ***",
+	warn6 = "*** 10 秒後激怒 ***",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	enrage_name = "Alerte Enrager",
 	enrage_desc = "Préviens régulièrement quand Le Recousu devient enragé.",

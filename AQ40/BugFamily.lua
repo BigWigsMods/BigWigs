@@ -76,6 +76,23 @@ L:RegisterTranslations("zhCN", function() return {
 	fearwarn2 = "5秒后发动群体恐惧！",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Princess Yauj 亞爾基公主
+	fear_name = "恐懼警報",
+	fear_desc = "敵人發動群體恐懼時發出警報",
+
+	heal_name = "治療警報",
+	heal_desc = "亞爾基公主施放治療時發出警報",
+	
+	healtrigger = "亞爾基公主開始施放強效治療術。",
+	healwarn = "*** 正在施放治療！ 打斷！ ***",
+
+	feartrigger = "受到恐懼術的傷害",
+	fearbar = "群體恐懼",
+	fearwarn1 = "*** 群體恐懼 - 20 秒後再次發動 ***",
+	fearwarn2 = "*** 5 秒後群體恐懼！ ***",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	fear_name = "공포 경고",
 	fear_desc = "공포에 대한 경고",

@@ -135,6 +135,44 @@ L:RegisterTranslations("zhCN", function() return {
 	castingbar = "施放 %s",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Chromaggus 克洛瑪古斯
+	enrage_name = "狂暴警報",
+	enrage_desc = "當克洛瑪古斯生命值剩 20% ，狂暴時發出警報。",
+
+	frenzy_name = "狂怒警報",
+	frenzy_desc = "當克洛瑪古斯狂怒時發出警報",
+
+	breath_name = "吐息警報",
+	breath_desc = "當克洛瑪古斯吐息時發出警報",
+
+	vulnerability_name = "弱點改變警報",
+	vulnerability_desc = "當克洛瑪古斯弱點改變時發出警報",
+
+	breath_trigger = "^克洛瑪古斯開始施放(.+)。",
+	vulnerability_test = "^.+的(.+)克洛瑪古斯造成(%d+)點(.+)傷害。",
+	frenzy_trigger = "變得極為狂暴！",
+	vulnerability_trigger = "皮膚閃著微光而驚訝退縮",
+
+	hit = "擊中",
+	crit = "致命一擊",
+
+	breath_warning = "*** %s - 10 秒後施放！***",
+	breath_message = "*** 克洛瑪古斯施放：%s ！ ***",
+	vulnerability_message = "*** 克洛瑪古斯新弱點：%s ！ ***",
+	vulnerability_warning = "*** 克洛瑪古斯弱點改變 ***",
+	frenzy_message = "*** 狂怒警報 - 獵人立刻使用寧神射擊！ ***",
+	enrage_warning = "*** 即將暴怒！ ***",
+
+	breath1 = "時間流逝",
+	breath2 = "腐蝕酸液",
+	breath3 = "點燃軀體",
+	breath4 = "焚燒",
+	breath5 = "冰霜灼燒",
+
+	castingbar = "施放 %s",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	
 	enrage_name = "격노",

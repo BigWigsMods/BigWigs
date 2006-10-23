@@ -119,6 +119,34 @@ L:RegisterTranslations("zhCN", function() return {
 	["Ancient"] = "古老",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	["versionquery"] = "檢查版本",
+	["Version Query"] = "檢查版本",
+	["Commands for querying the raid for Big Wigs versions."] = "用於檢查BigWigs的版本",
+	["Query already running, please wait 5 seconds before trying again."] = "檢查中，若要再次檢查，請稍後5秒",
+	["Querying versions for "] = "檢查版本 ",
+	["Big Wigs Version Query"] = "Big Wigs版本檢查",
+	["Close window"] = "關閉窗口", -- I know, it's really a Tablet.
+	["Showing version for "] = "顯示版本 ",
+	["Green versions are newer than yours, red are older, and white are the same."] = "綠色的版本比你的新，紅色的比較舊，白色則表示版本相同",
+	["Player"] = "玩家",
+	["Version"] = "版本",
+	["Current zone"] = "目前區域",
+	["<zone>"] = "<區域>",
+	["Version query done."] = "完成檢查版本",
+	["Runs a version query on your current zone."] = "檢查目前區域的版本",
+	["Closes the version query window."] = "關掉目前的檢查版本視窗",
+	["current"] = "目前",
+	["Runs a version query on the given zone."] = "檢查指定區域的版本",
+	["Zone"] = "區域",
+	["zone"] = "區域",
+	["N/A"] = "N/A",
+	["BigWigs"] = "BigWigs",
+	["Runs a version query on the BigWigs core."] = "檢查BigWigs核心的版本",
+	["Nr Replies"] = "回復的數量",
+	["Ancient"] = "舊的",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	["Version Query"] = "Vérification des versions",
 	["Commands for querying the raid for Big Wigs versions."] = "Commandes de vérification des version de BigWigs du raid.",	

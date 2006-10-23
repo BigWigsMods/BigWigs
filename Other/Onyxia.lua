@@ -111,6 +111,30 @@ L:RegisterTranslations("zhCN", function() return {
 	warn4 = "1.5秒后恐惧！"
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	deepbreath_name = "深呼吸警報",
+	deepbreath_desc = "奧妮克希亞開始施放深呼吸時發出警報",
+
+	phase2_name = "第二階段警報",
+	phase2_desc = "第二階段警報",
+
+	phase3_name = "第三階段警報",
+	phase3_desc = "第三階段警報",
+
+	onyfear_name = "低沉咆哮",
+	onyfear_desc = "第三階段低沉咆哮警報",
+
+	trigger1 = "深深地吸了一口氣",
+	trigger2 = "從上空",
+	trigger3 = "看起來需要再給你一次教訓",
+	trigger4 = "奧妮克希亞開始施放低沈咆哮。",
+
+	warn1 = "奧妮克希亞深呼吸即將出現，向邊緣散開！",
+	warn2 = "奧妮克希亞進入第二階段！",
+	warn3 = "奧妮克希亞進入第三階段！",
+	warn4 = "1.5秒後恐懼！"
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 
 	deepbreath_name = "딥브레스 경고",

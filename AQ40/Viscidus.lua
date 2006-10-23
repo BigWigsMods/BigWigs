@@ -90,38 +90,76 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	volley_name = "毒性之箭警报",
-	volley_desc = "毒性之箭警报",
+	volley_name = "毒性之箭警報",
+	volley_desc = "毒性之箭警報",
 
-	toxinyou_name = "玩家毒云警报",
-	toxinyou_desc = "你站在毒云中时发出警报",
+	toxinyou_name = "玩家毒雲警報",
+	toxinyou_desc = "你站在毒雲中時發出警報",
 
-	toxinother_name = "队友毒云警报",
-	toxinother_desc = "队友站在毒云中时发出警报",
+	toxinother_name = "隊友毒雲警報",
+	toxinother_desc = "隊友站在毒雲中時發出警報",
 
-	freeze_name = "冻结状态警报",
-	freeze_desc = "冻结状态警报",
+	freeze_name = "凍結狀態警報",
+	freeze_desc = "凍結狀態警報",
 	
-	trigger1 	= "的速度慢下来了！",
-	trigger2 	= "冻结了！",
-	trigger3 	= "变成了坚硬的固体！",
-	trigger4 	= "开始碎裂了！",
-	trigger5 	= "马上就要碎裂的样子！",
+	trigger1 	= "的速度慢下來了！",
+	trigger2 	= "凍結了！",
+	trigger3 	= "變成了堅硬的固體！",
+	trigger4 	= "開始碎裂了！",
+	trigger5 	= "馬上就要碎裂的樣子！",
 	trigger6	= "受到了毒性之箭效果",
-	trigger7 	= "^(.+)受(.+)了剧毒效果的影响。$",
+	trigger7 	= "^(.+)受(.+)了劇毒效果的影響。$",
 
 	you 		= "你",
 	are 		= "到",
 
-	warn1 		= "冻结第一阶段！",
-	warn2 		= "冻结第二阶段 - 做好准备",
-	warn3 		= "冻结第三阶段 - DPS全开！",
-	warn4 		= "即将碎裂 - 加大火力！",
-	warn5 		= "即将碎裂 - 几近成功！",
+	warn1 		= "凍結第一階段！",
+	warn2 		= "凍結第二階段 - 做好准備",
+	warn3 		= "凍結第三階段 - DPS全開！",
+	warn4 		= "即將碎裂 - 加大火力！",
+	warn5 		= "即將碎裂 - 幾近成功！",
 	warn6		= "毒性之箭 - 迅速解毒！",
-	warn7		= "3秒后发动毒性之箭！",
-	warn8		= "在毒云中 - 快跑开！",
-	warn9		= "你在毒云中 - 快跑开！",
+	warn7		= "3秒後發動毒性之箭！",
+	warn8		= "在毒雲中 - 快跑開！",
+	warn9		= "你在毒雲中 - 快跑開！",
+
+	bar1text	= "毒性之箭",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	-- Viscidus 維希度斯
+	volley_name = "毒性之箭警報",
+	volley_desc = "當維希度斯施放毒性之箭時時發出警報",
+
+	toxinyou_name = "玩家毒雲警報",
+	toxinyou_desc = "你站在毒雲中時發出警報",
+
+	toxinother_name = "隊友毒雲警報",
+	toxinother_desc = "隊友站在毒雲中時發出警報",
+
+	freeze_name = "凍結狀態警報",
+	freeze_desc = "友方被凍結時發出警報",
+	
+	trigger1 	= "的速度慢下來了！",
+	trigger2 	= "凍住了！",
+	trigger3 	= "變成了堅硬的固體！",
+	trigger4 	= "開始碎裂了！",
+	trigger5 	= "馬上就要碎裂的樣子！",
+	trigger6	= "受到了毒性之箭效果",
+	trigger7 	= "^(.+)受到(.+)劇毒的",
+
+	you 		= "你",
+	are 		= "了",
+
+	warn1 		= "*** 凍結階段 1/3 ！ ***",
+	warn2 		= "*** 凍結階段 2/3 ！做好准備！ ***",
+	warn3 		= "*** 凍結階段 3/3 ！火力全開！ ***",
+	warn4 		= "*** 碎裂階段 1/3 ！加大火力！ ***",
+	warn5 		= "*** 碎裂階段 2/3 ！幾近成功！ ***",
+	warn6		= "*** 毒性之箭 - 迅速解毒！ ***",
+	warn7		= "*** 3 秒後發動毒性之箭！ ***",
+	warn8		= "在毒雲中！快跑開！！",
+	warn9		= "*** 你在毒雲中！快跑開！ ***",
 
 	bar1text	= "毒性之箭",
 } end )

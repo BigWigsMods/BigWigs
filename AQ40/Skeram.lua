@@ -95,6 +95,31 @@ L:RegisterTranslations("zhCN", function() return {
 	split_desc = "预言者斯克拉姆即将复制镜像时发出警报",
 } end )
 
+
+L:RegisterTranslations("zhTW", function() return {
+	-- The Prophet Skeram 預言者斯克拉姆
+	aetrigger = "預言者斯克拉姆開始施放魔爆術。",
+	mctrigger = "預言者斯克拉姆開始施放充實。",
+	splittrigger = "預言者斯克拉姆施放了召喚幻象。",
+	aewarn = "*** 施放魔爆術 - 迅速打斷！ ***",
+	mcwarn = "*** 施放充實 - 準備變羊！ ***",
+	mcplayer = "^(.+)受到(.+)充實效果的影響。",
+	mcplayerwarn = " 被心靈控制，法師快變羊！",
+	mcyou = "你",
+	mcare = "了",
+	
+	splitwarn = "*** 即將分裂！ ***",
+	
+	mc_name = "精神控制警報",
+	mc_desc = "預言者斯克拉姆進行精神控制時發出警報",
+	
+	ae_name = "魔爆術警報",
+	ae_desc = "預言者斯克拉姆施放魔爆術時發出警報",
+	
+	split_name = "幻影分身警報",
+	split_desc = "預言者斯克拉姆施放幻影分身時發出警報",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	aetrigger = "예언자 스케람|1이;가; 신비한 폭발|1을;를; 시전합니다.",
 	mctrigger = "예언자 스케람|1이;가; 예언 실현|1을;를; 시전합니다.",

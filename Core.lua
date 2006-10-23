@@ -225,6 +225,46 @@ L:RegisterTranslations("zhCN", function() return {
 	["Outdoor Raid Bosses"] = "野外首领",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	["%s mod enabled"] = "%s模組已開啟",
+	["Target monitoring enabled"] = "目標監視已開啟",
+	["Target monitoring disabled"] = "目標監視已關閉",
+	["%s has been defeated"] = "%s被擊敗了！",     -- "<boss> has been defeated"
+	["%s have been defeated"] = "%s被擊敗了！",    -- "<bosses> have been defeated"
+
+	-- AceConsole strings
+	["Bosses"] = "首領",
+	["boss"] = "boss",
+	["Options for boss modules."] = "首領模組選項。",
+	["Options for bosses in %s."] = "%s首領模組選項。", -- "Options for bosses in <zone>"
+	["Options for %s (r%s)."] = "%s模組選項 版本(r%s).",     -- "Options for <boss> (<revision>)"
+	["Extras"] = "其他",
+	["Options for extras."] = "其他模組選項",
+	["Plugins"] = "插件",
+	["Options for plugins."] = "插件選項。",
+	["toggle"] = "切換",
+	["Active"] = "啟動",
+	["Activate or deactivate this module."] = "開啟或關閉此模組。",
+	["Reboot"] = "重啟",
+	["Reboot this module."] = "重啟此模組",
+	["Debugging"] = "除錯",
+	["Show debug messages."] = "顯示除錯訊息。",
+
+	bosskill_name = "首領死亡",
+	bosskill_desc = "首領被擊敗時發出提示。",
+
+	-- AceConsole zone commands
+	["Zul'Gurub"] = "ZG",
+	["Molten Core"] = "MC",
+	["Blackwing Lair"] = "BWL",
+	["Ahn'Qiraj"] = "TAQ",
+	["Ruins of Ahn'Qiraj"] = "RAQ",
+	["Onyxia's Lair"] = "OL",
+	["Naxxramas"] = "NAX",
+	["Silithus"] = "silithus",
+	["Outdoor Raid Bosses"] = "outdoor",
+	["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
+} end)
 
 ---------------------------------
 --      Addon Declaration      --

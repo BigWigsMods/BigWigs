@@ -69,6 +69,23 @@ L:RegisterTranslations("zhCN", function() return {
 	you = "你",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	--Buru the Gorger 吞咽者布魯
+	you_name = "玩家凝視警報",
+	you_desc = "當你被吞咽者布魯盯住時發出警報。",
+
+	other_name = "隊友凝視警報",
+	other_desc = "當隊友被吞咽者布魯盯住時發出警報。",
+
+	icon_name = "標記圖標",
+	icon_desc = "在被凝視的隊友頭上標記（需要助理或領隊權限）",
+
+	watchtrigger = "凝視著(.+)！",
+	watchwarn = "被盯上了！往下一個蛋移動！",
+	watchwarnyou = "*** 你被盯上了！往下一個蛋移動！ ***",
+	you = "你",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	you_name = "당신을 노려봄 경고",
 	you_desc = "당신을 노려볼 때 경고",

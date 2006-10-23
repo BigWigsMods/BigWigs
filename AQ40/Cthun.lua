@@ -251,6 +251,59 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 
+L:RegisterTranslations("zhTW", function() return {
+	--C'Thun 克蘇恩
+	tentacle_name = "觸鬚警報",
+	tentacle_desc = "觸鬚出現時發出警報",
+
+	glare_name = "黑暗閃耀警報",
+	glare_desc = "黑暗閃耀發動時發出警報",
+
+	group_name = "黑暗閃耀小隊警報",
+	group_desc = "黑暗閃耀發動時對小隊X發出警報",
+
+	giant_name = "巨眼警報",
+	giant_desc = "巨眼出現時發出警報",
+
+	weakened_name = "虛弱警報",
+	weakened_desc = "克蘇恩被削弱時發出警報",
+
+	weakenedtrigger 	= "變弱了！",
+
+	tentacle1	= "*** 眼球觸須出現！ ***",
+	tentacle2	= "*** 5秒後眼球觸鬚出現！ ***",
+
+	norape1		= "*** 巨眼、巨爪觸鬚出現！ ***",
+	norape2		= "*** 5秒後巨眼、巨爪觸鬚出現！ ***",
+
+	weakened		= "*** 克蘇恩被削弱了 - 45秒內全力輸出傷害！ ***",
+	invulnerable2	= "*** 削弱狀態還有5秒結束 ***",
+	invulnerable1	= "*** 削弱狀態結束 - 停止攻擊克蘇恩！ ***",
+
+	giant3		= "*** 巨眼 10 秒後出現 ***",
+	giant2		= "*** 巨眼 5 秒後出現 ***",
+	giant1		= "*** 巨眼出現！ ***",
+
+	startwarn	= "*** 克蘇恩已進入戰鬥 - 45秒後發動黑暗閃耀, 出現巨眼",
+
+	glare2		= "*** 黑暗閃耀 5 秒後發動！ ***",
+	glare1		= "*** 黑暗閃耀發動 - 跑位！ ***",
+
+	barTentacle	= "*** 眼球觸鬚！ ***",
+	barNoRape	= "*** 巨眼、巨爪觸鬚！ ***",
+	barWeakened	= "*** 克蘇恩被削弱了！ ***",
+	barGlare	= "*** 黑暗閃耀！ ***",
+	barGiant	= "*** 巨眼！ ***",
+	barGreenBeam	= "*** 綠光！ ***",
+
+	eyebeam		= "眼棱",
+	glarewarning	= "*** 黑暗閃耀在你身上發動了！　***",
+	groupwarning	= "*** 黑暗閃耀在%s小隊發動了！ %s 小隊移動！ ***",
+	positions1	= "*** 綠光發動 ***",
+	positions2	= "*** 5 秒後黑暗閃耀結束 ***",
+	phase2starting	= "*** 克蘇恩之眼已死亡 - 進入第二階段！ ***",
+} end )
+
 
 L:RegisterTranslations("frFR", function() return {
 	weakenedtrigger = "%s est affaibli !",

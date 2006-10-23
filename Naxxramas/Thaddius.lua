@@ -253,6 +253,65 @@ L:RegisterTranslations("zhCN", function() return {
 	bar1text = "极性转化",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	--Thaddius 泰迪斯
+	enrage_name = "狂怒警報",
+	enrage_desc = "狂怒警報",
+
+	phase_name = "階段警報",
+	phase_desc = "階段轉換時發出警報",
+
+	polarity_name = "極性轉換警報",
+	polarity_desc = "極性轉換警報",
+
+	power_name = "力量振蕩警報",
+	power_desc = "力量振蕩警報",
+
+	charge_name = "電荷警報",
+	charge_desc = "你身上的電荷效果發生變化時發出警報",
+
+	enragetrigger = "變得極度狂暴而憤怒！",
+	starttrigger = "斯塔拉格要碾碎你！",
+	starttrigger1 = "主人要吃了你！",
+	starttrigger2 = "咬碎……你的……骨頭……",
+	starttrigger3 = "打……爛……你！",
+	starttrigger4 = "殺……",
+	
+	adddeath = "*** %s死亡了。 ***",
+	teslaoverload = "*** %s超負荷！ ***",
+
+	pstrigger = "你感受到痛苦的滋味了吧……",
+	trigger1 = "泰迪斯斯開始施放極性轉化。",
+	chargetrigger = "^(.+)受到(.+)(.+)電荷",
+	stalaggtrigger = "斯塔拉格獲得了能量湧動的效果。",
+
+	you = "你",
+	are = "了",
+
+	enragewarn = "*** 狂怒！ ***",
+	startwarn = "*** 泰迪斯斯第一階段 ***",
+	startwarn2 = "*** 泰迪斯斯第二階段 - 5 分鍾後狂怒！ ***",
+	addsdownwarn = "*** 10-20秒後泰迪斯斯出現！ ***",
+	thaddiusincoming = "*** 3 秒後泰迪斯斯出現！ ***",
+	pswarn1 = "*** 泰迪斯斯開始施放極性轉化！ ***",
+	pswarn2 = "*** 30 秒後發動極性轉化！ ***",
+	pswarn3 = "*** 3 秒後發動極性轉化！ ***",
+	poswarn = "*** 你是正電荷！ ***",
+	negwarn = "*** 你是負電荷！ ***",
+	nochange = "*** 你的電荷沒有改變！ ***",
+	polaritytickbar = "*** 極性狀態",
+	enragebartext = "*** 狂怒 ***",
+	warn1 = "*** 3 分鐘後狂怒 ***",
+	warn2 = "*** 90 秒後狂怒 ***",
+	warn3 = "*** 60 秒後狂怒 ***",
+	warn4 = "*** 30 秒後狂怒 ***",
+	warn5 = "*** 10 秒後狂怒 ***",
+	stalaggwarn = "*** 力量振蕩！加大對坦克的治療！ ***",
+	powersurgebar = "*** 力量振蕩 ***",
+
+	bar1text = "極性轉化",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	enragetrigger = "%s entre dans une rage d\195\169mente !",
 	starttrigger = "Stalagg \195\169craser toi !",

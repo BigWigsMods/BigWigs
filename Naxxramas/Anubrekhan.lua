@@ -94,6 +94,26 @@ L:RegisterTranslations("zhCN", function() return {
 	castwarn = "虫群风暴来了！",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Anub'Rekhan 阿努比瑞克漢
+	locust_name = "蟲群警報",
+	locust_desc = "各波蟲群的警報",
+
+	starttrigger1 = "一些小點心……",
+	starttrigger2 = "對，跑吧！那樣傷口出血就更多了！",
+	starttrigger3 = "你們逃不掉的。",
+	engagewarn = "*** 阿努比瑞克漢已進入戰鬥 - 90 秒後出現第一波蟲群！ ***",
+
+	gaintrigger = "阿努比瑞克漢獲得了蟲群風暴的效果。",
+	gainendwarn = "蟲群風暴結束了！",
+	gainnextwarn = "*** 90 秒後出現下一波蟲群！ ***",
+	gainwarn10sec = "*** 10 秒後出現下一波蟲群！ ***",
+	gainincbar = "下一波蟲群",
+	gainbar = "蟲群風暴",
+
+	casttrigger = "阿努比瑞克漢開始施放蟲群風暴。",
+	castwarn = "*** 蟲群風暴來了！ ***",
+} end )
 L:RegisterTranslations("frFR", function() return {
 	locust_name = "Alerte Nuée de sauterelles",
 	locust_desc = "Préviens quand Anub'Rekhan invoque ses Nuées de sauterelles.",

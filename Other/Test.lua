@@ -69,6 +69,24 @@ L:RegisterTranslations("zhCN", function() return {
 	["Testing Sync"] = "同步测试中",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	["Test"] = "測試",
+	["Test Bar"] = "測試計時條",
+	["Test Bar 2"] = "測試計時條2",
+	["Test Bar 3"] = "測試計時條3",
+	["Test Bar 4"] = "測試計時條4",
+	["Testing"] = "測試中",
+	["OMG Bear!"] = "天哪！蘇聯北極熊！",
+	["*RAWR*"] = "*RAWR*",
+	["Victory!"] = "勝利！",
+	["Options for testing."] = "測試選項",
+	["Local test"] = "本地測試",
+	["Perform a local test of BigWigs."] = "執行一次本地測試。",
+	["Sync test"] = "同步測試",
+	["Perform a sync test of BigWigs."] = "執行一次同步測試（需要助手或領隊權限）。",
+	["Testing Sync"] = "同步測試中",
+} end)
+
 L:RegisterTranslations("deDE", function() return {
 	-- ["test"] = true,
 	--["Test"] = "Test",

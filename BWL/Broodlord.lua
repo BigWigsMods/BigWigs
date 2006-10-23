@@ -52,6 +52,26 @@ L:RegisterTranslations("zhCN", function() return {
 	msbar_desc = "显示一条致死打击的持续时间",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Broodlord Lashlayer 勒西雷爾
+	trigger1 = "^(.+)受到(.+)致死打擊的傷害",
+
+	you = "你",
+	are = "了",
+
+	warn1 = "*** 你中了致死打擊！ ***",
+	warn2 = "*** %s 中了致死打擊！ ***",
+
+	youms_name = "玩家致死打擊警報",
+	youms_desc = "你中了致死打擊時發出警報",
+
+	elsems_name = "隊友致死打擊警報",
+	elsems_desc = "隊友中了致死打擊時發出警報",
+
+	msbar_name = "致死打擊條",
+	msbar_desc = "顯示一條致死打擊的持續時間",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	trigger1 = "^([^%s]+) ([^%s]+) von T\195\182dlicher Sto\195\159 betroffen",
 

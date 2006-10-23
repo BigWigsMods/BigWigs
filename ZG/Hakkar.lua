@@ -184,6 +184,40 @@ L:RegisterTranslations("zhCN", function() return {
 	icon_desc = "团队标记被精神控制者 (需要助力或更高权限)",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Hakkar 哈卡
+	-- Chat message triggers
+	engage_trigger = "^驕傲會將你送上絕路",
+	drain_trigger = "^(.+)的血液虹吸使哈卡受到了(.+)點自然傷害。$",
+	mindcontrol_trigger = "^(.+)受到(.*)導致瘋狂的傷害",
+	
+	you = "你",
+	are = "了",
+	
+	flee = "逃跑",
+
+	-- Warnings and bar texts
+	start_message = "*** 哈卡已經進入戰鬥 - 90秒後開始生命吸取 - 10分鐘後進入狂怒狀態 ***",
+	drain_warning = "*** %d 秒後開始生命吸取 ***",
+	drain_message = "*** 血液虹吸 - 90秒後再次發動 ***",
+	
+	mindcontrol_message = "*** %s 被控制了，法師快羊 ***",
+	
+	["Enrage"] = "狂怒",
+	["Life Drain"] = "生命吸取",
+
+	drain_name = "生命吸取警報",
+	drain_desc = "生命吸取警報",
+
+	enrage_name = "狂怒警報",
+	enrage_desc = "狂怒警報",
+
+	mc_name = "精神控制警報",
+	mc_desc = "哈卡使用精神控制時警報。",
+
+	icon_name = "標記被精神控制的隊友",
+	icon_desc = "在被精神控制的隊友頭上設置標記 (需要助手或領隊權限)",
+} end)
 
 ----------------------------------
 --      Module Declaration      --

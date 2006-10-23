@@ -72,6 +72,29 @@ L:RegisterTranslations("zhCN", function() return {
 	["Options for RaidWarning."] = "团队警告设置",
 } end )
 
+
+L:RegisterTranslations("zhTW", function() return {
+	["RaidWarning"] = "團隊警報",
+
+	["raidwarn"] = "團隊警報",
+	["broadcast"] = "廣播",
+	["whisper"] = "密語",
+	["useraidchannel"] = "使用團隊聊天",
+
+	["Broadcast over RaidWarning"] = "通過團隊警告頻道發送訊息",
+	["Broadcast"] = "廣播",
+	["Toggle broadcasting over Raidwarning."] = "切換是否通過團隊警告頻道發送訊息",
+	
+	["Whisper"] = "密語",
+	["Whisper warnings"] = "密語警報",
+	["Toggle whispering warnings to players."] = "切換是否通過密語向玩家發送訊息",
+	
+	["Use Raidchannel"] = "使用團隊聊天",
+	["Toggle using the raid channel instead of the raid warning channel for boss messages."] = "切換是否使用團隊聊天來代替團隊警告頻道來播放boss的訊息",
+
+	["Options for RaidWarning."] = "團隊警告選項",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	["RaidWarning"] = "RaidWarnung",
 

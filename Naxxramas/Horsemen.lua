@@ -192,6 +192,48 @@ L:RegisterTranslations("zhCN", function() return {
 	shieldwallwarn2 = "%s - 盾墙消失了！",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	mark_name = "標記警報",
+	mark_desc = "標記警報",
+
+	shieldwall_name = "盾牆警報",
+	shieldwall_desc = "盾牆警報",
+	
+	void_name = "虛空領域警報",
+	void_desc = "當女公爵布勞繆克絲施放虛空領域時警報",
+
+	meteor_name = "流星警報",
+	meteor_desc = "寇斯艾茲族長的流星警報",
+
+	wrath_name = "神聖之怒警報",
+	wrath_desc = "札里克爵士的神聖之怒警報",
+	
+	markbar = "標記 %d",
+	markwarn1 = "標記(%d)！",
+	markwarn2 = "標記(%d) - 5秒",
+	
+	marktrigger = "受到了庫爾塔茲印記效果的影響。",
+
+	voidtrigger = "女公爵布勞繆克絲施放了虛空領域。",
+	voidwarn = "5秒後虛空領域",
+	voidbar = "虛空領域",
+
+	meteortrigger = "寇斯艾茲族長的流星擊中",
+	meteorwarn = "流星",
+	meteorbar = "流星",
+
+	wrathtrigger = "札里克爵士的神聖之怒擊中",
+	wrathwarn = "神聖之怒",
+	wrathbar = "神聖之怒",
+	
+	startwarn = "四騎士已進入戰鬥 - 17秒後標記",
+
+	shieldwallbar = "%s - 盾牆",
+	shieldwalltrigger = "獲得了盾牆",
+	shieldwallwarn = "%s - 20秒盾牆效果",
+	shieldwallwarn2 = "%s - 盾牆消失了！",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

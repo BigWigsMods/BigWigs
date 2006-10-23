@@ -112,6 +112,30 @@ L:RegisterTranslations("zhCN", function() return {
 	bar1text = "毒性吐息",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	noxious_name = "毒性吐息警報",
+	noxious_desc = "毒性吐息警報",
+	
+	volatileyou_name = "玩家快速傳染警報",
+	volatileyou_desc = "你中了快速傳染時發出警報",
+	
+	volatileother_name = "隊友快速傳染警報",
+	volatileother_desc = "隊友中了快速傳染時發出警報",
+	
+	trigger1 = "^(.+)受到(.+)快速傳染效果的影響。",
+	trigger2 = "受到了毒性吐息效果的影響。",
+
+	warn1 = "你中了快速傳染！",
+	warn2 = "中了快速傳染！",
+	warn3 = "5秒後發動毒性吐息！",
+	warn4 = "毒性吐息 - 30秒後再次發動",
+
+	isyou = "你",
+	isare = "了",
+
+	bar1text = "毒性吐息",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	
 	noxious_name = "산성 숨결 경고",

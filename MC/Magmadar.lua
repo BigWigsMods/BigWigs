@@ -67,6 +67,22 @@ L:RegisterTranslations("zhCN", function() return {
 	frenzy_desc = "狂暴警报",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Magmadar 瑪格曼達
+	trigger1 = "變得極為狂暴！",
+	trigger2 = "受到恐慌的傷害",
+
+	["Frenzy alert!"] = "*** 狂暴狀態！ 獵人立刻使用寧神射擊！ ***",
+	["5 seconds until AoE Fear!"] = "*** 5 秒後發動群體恐懼 ***",
+	["AoE Fear - 30 seconds until next!"] = "*** 群體恐懼 - 30 秒後再次發動 ***",
+	["AoE Fear"] = "群體恐懼",
+	
+	fear_name = "群體恐懼警報",
+	fear_desc = "當瑪格曼達發動群體恐懼效果時發出警報",
+	
+	frenzy_name = "狂暴警報",
+	frenzy_desc = "當瑪格曼達狂暴時發出警報",
+} end)
 
 L:RegisterTranslations("deDE", function() return {
 	trigger1 = "%s ger\195\164t in t\195\182dliche Raserei!",

@@ -92,6 +92,44 @@ L:RegisterTranslations("zhCN", function() return {
 	icon_desc = "在成为炸弹的队友头上标记骷髅图标（需要助理或领袖权限）",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Baron Geddon 迦頓男爵
+	bomb_trigger = "^(.+)受到(.+)活化炸彈",
+	inferno_trigger = "迦頓男爵獲得了地獄火的效果。",
+	service_trigger = "做最後一次服務",
+
+	you = "你",
+	are = "了",
+
+	bomb_message_you = "*** 你是炸彈人！遠離人群！ ***",
+	bomb_message_other = "*** %s是炸彈人！遠離人群！ ***",
+
+	bombtimer_bar = "%s: 活化炸彈",
+	inferno_bar = "地獄火",
+	service_bar = "最後自爆",
+
+	service_message = "*** 5 秒後迦頓爆炸！ ***",
+	inferno_message = "*** 10 秒後地獄火！ ***",
+
+	service_name = "最後自爆計時條",
+	service_desc = "顯示迦頓男爵最後自爆的計時條.",
+
+	inferno_name = "地獄火計時條",
+	inferno_desc = "顯示迦頓男爵地獄火的計時條.",
+
+	youbomb_name = "玩家炸彈警報",
+	youbomb_desc = "你成為炸彈時發出警報",
+
+	youbomb_name = "玩家炸彈警報",
+	youbomb_desc = "你成為炸彈時發出警報",
+
+	elsebomb_name = "隊友炸彈警報",
+	elsebomb_desc = "隊友成為炸彈時發出警報",
+
+	icon_name = "炸彈標記",
+	icon_desc = "在成為炸彈的隊友頭上標記（需要助理或領隊權限）",
+} end)
+
 L:RegisterTranslations("koKR", function() return {
 	bomb_trigger = "^([^|;%s]*)(.*)살아있는 폭탄에 걸렸습니다%.$",
 	inferno_trigger = "남작 게돈|1이;가; 불지옥 효과를 얻었습니다.", -- check

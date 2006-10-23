@@ -71,6 +71,20 @@ L:RegisterTranslations("zhCN", function() return {
 	drainlife_message = "高阶祭司玛尔里正在施放生命吸取，赶快打断她！",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Mar'li 高階祭司瑪爾里(哈卡萊安魂者)
+	spider_name = "蜘蛛警報",
+	spider_desc = "當高階祭司瑪爾里召喚蜘蛛時發出警報。",
+
+	drain_name = "生命吸取警報",
+	drain_desc = "高階祭司瑪爾里使用生命吸取時發出警報",
+	
+	spiders_trigger = "來幫助我吧，我的孩子們！$",
+	drainlife_trigger = "^高階祭司瑪爾里的生命吸取治療了高階祭司瑪爾里(.+)。",
+
+	spiders_message = "*** 小蜘蛛出現！ ***",
+	drainlife_message = "*** 生命吸取！趕快打斷！ ***",
+} end )
 
 L:RegisterTranslations("koKR", function() return {
 

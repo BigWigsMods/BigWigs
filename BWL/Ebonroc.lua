@@ -83,6 +83,40 @@ L:RegisterTranslations("zhCN", function() return {
 	shadowbar_desc = "显示博诺克之影持续时间的一个时间条",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Ebonroc 埃博諾克
+	wingbuffet_trigger = "埃博諾克開始施放龍翼打擊。",
+	shadowflame_trigger = "埃博諾克開始施放暗影烈焰。",
+	shadowcurse_trigger = "^(.+)受到(.*)埃博諾克之影",
+
+	you = "你",
+	are = "了",
+
+	wingbuffet_message = "*** 開始施放龍翼打擊！ ***",
+	wingbuffet_warning = "*** 3 秒後龍翼打擊！ ***",
+	shadowflame_warning = "*** 暗影烈焰發動！ ***",
+	shadowflame_message_you = "*** 你中了埃博諾克之影！ ***",
+	shadowflame_message_other = " 中了埃博諾克之影！ ***",
+	
+	shadowcurse_bar = "%s - 埃博諾克之影",
+
+	wingbuffet_bar = "龍翼打擊",
+
+	wingbuffet_name = "龍翼打擊警報",
+	wingbuffet_desc = "當埃博諾克施放龍翼打擊時發出警報",
+
+	shadowflame_name = "暗影烈焰警報",
+	shadowflame_desc = "當埃博諾克施放暗影烈焰時發出警報",
+
+	youcurse_name = "埃博諾克之影警報",
+	youcurse_desc = "你中了埃博諾克之影時發出警報",
+
+	elsecurse_name = "隊友埃博諾克之影警報",
+	elsecurse_desc = "隊友中了埃博諾克之影時發出警報",
+
+	shadowbar_name = "博諾克之影時間條",
+	shadowbar_desc = "顯示博諾克之影持續時間的一個時間條",
+} end)
 
 L:RegisterTranslations("koKR", function() return {
 	wingbuffet_trigger = "에본로크|1이;가; 폭풍 날개|1을;를; 시전합니다.",

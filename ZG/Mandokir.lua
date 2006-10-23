@@ -86,6 +86,26 @@ L:RegisterTranslations("zhCN", function() return {
 	enraged_message = "奥根死了！血领主进入激怒状态！",	
 } end )
 
+
+L:RegisterTranslations("zhTW", function() return {
+	-- Bloodlord Mandokir 血領主曼多基爾
+	you_name = "玩家被盯警報",
+	you_desc = "你被血領主盯上時發出警報",
+
+	other_name = "隊友被盯警報",
+	other_desc = "隊友被血領主盯上時發出警報",
+
+	icon_name = "標記被盯上的玩家",
+	icon_desc = "團隊標記被盯上的玩家",
+
+	watch_trigger = "(.+)！我正在監視你！$",
+	enrage_trigger = "怒不可遏！$",
+
+	watched_warning_self = "*** 你被盯上了！停止一切動作！ ***",
+	watched_warning_other = "*** %s被盯上了！ ***",
+	enraged_message = "*** 奧根死了！血領主進入狂怒！ ***",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	you_name = "자신 경고",
 	you_desc = "자신을 보고 있을 때 경고",

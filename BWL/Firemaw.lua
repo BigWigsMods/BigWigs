@@ -46,6 +46,22 @@ L:RegisterTranslations("zhCN", function() return {
 	shadowflame_desc = "暗影烈焰警报",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	-- Firemaw 費爾默
+	wingbuffet_trigger = "費爾默開始施放龍翼打擊。",
+	shadowflame_trigger = "費爾默開始施放暗影烈焰。",
+
+	wingbuffet_warning = "*** 3 秒後龍翼打擊！ ***",
+	shadowflame_warning = "*** 暗影烈焰發動！ ***",
+
+	wingbuffet_bar = "龍翼打擊",
+
+	wingbuffet_name = "龍翼打擊警報",
+	wingbuffet_desc = "當費爾默施放龍翼打擊時發出警報",
+
+	shadowflame_name = "暗影烈焰警報",
+	shadowflame_desc = "當費爾默施放暗影烈焰時發出警報",
+} end)
 
 L:RegisterTranslations("koKR", function() return {
 	wingbuffet_trigger = "화염아귀|1이;가; 폭풍 날개|1을;를; 시전합니다.",

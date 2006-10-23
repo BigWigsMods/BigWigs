@@ -152,6 +152,54 @@ L:RegisterTranslations("zhCN", function() return {
 
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	["Messages"] = "訊息",
+
+	["msg"] = "訊息",
+	["anchor"] = "錨點",
+	["rw"] = "團隊警報",
+	["color"] = "顏色",
+	["scale"] = "大小",
+
+	["Options for the message frame."] = "訊息框架設置。",
+	["Anchor"] = "錨點",
+	["Show the message anchor frame."] = "顯示訊息訊息框架錨點。",
+	["Use RaidWarning"] = "使用團隊警告",
+	["Toggle sending messages to the RaidWarnings frame."] = "切換是否通過團隊警告框架發送訊息。",
+	["Use colors"] = "發送彩色訊息",
+	["Toggles white only messages ignoring coloring."] = "切換是否只發送單色訊息。",
+	["Message frame scale"] = "訊息框架縮放",
+
+	["Message frame"] = "訊息框架",
+	["Show anchor"] = "顯示錨點",
+	["Send messages to RaidWarning frame"] = "通過團隊警告框架發送訊息",
+	["Set the message frame scale."] = "設置訊息框架縮放比例",
+	["Colorize messages"] = "彩色訊息",
+	["Scale"] = "縮放",
+
+	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000顏|cffff00ff色|r",
+	["White"] = "白色",
+	["BigWigs frame"] = "BigWigs框架",
+	["RaidWarning frame"] = "團隊警告框架",
+	["Scale is set to %s"] = "縮放比例設置為%s",
+	["Messages are now sent to the %2$s"] = "目前訊息設定為發送到%2$s",
+	["Messages are currently sent to the %2$s"] = "目前訊息設定為發送到%2$s",
+
+	["display"] = "顯示",
+	["Display"] = "顯示",
+	["Set where messages are displayed."] = "選擇訊息顯示的位置",
+	["Display is now set to %2$s"] = "顯示設置到%2$s",
+	["Display is currently set to %2$s"] = "顯示目前設置到%2$s",
+
+	["Mik's Scrolling Battle Text"] = "Mik's滾動戰鬥訊息",
+	["Scrolling Combat Text"] = "滾動戰鬥訊息",
+	["Floating Combat Text"] = "浮動戰鬥訊息",
+
+	["Test"] = "測試",
+	["Close"] = "關閉",
+
+} end)
+
 L:RegisterTranslations("deDE", function() return {
 	["Messages"] = "Nachrichten",
 

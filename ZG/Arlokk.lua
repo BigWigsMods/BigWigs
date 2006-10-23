@@ -97,6 +97,23 @@ L:RegisterTranslations("zhCN", function() return {
 	mark_warning_other = "%s被标记了！",	
 } end )
 
+
+L:RegisterTranslations("zhTW", function() return {
+	-- Arlokk 高階祭司婭爾羅(哈卡萊先知)
+	youmark_name = "玩家標記警報",
+	youmark_desc = "當高階祭司婭爾羅標記你給她的黑豹時發出警報。",
+	
+	othermark_name = "隊友標記警報",
+	othermark_desc = "當高階祭司婭爾羅標記一個隊友給她的黑豹時發出警報。",
+
+	icon_name = "標記被標記者",
+	icon_desc = "團隊標記被標記者 (需要助理或更高權限)",
+
+	mark_trigger = "吞噬(.+)的軀體吧，我的小可愛們！$",
+
+	mark_warning_self = "*** 你被標記了！ ***",
+	mark_warning_other = "*** %s 被標記了！ 牧師照顧一下他！ ***",	
+} end )
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
