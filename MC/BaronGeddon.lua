@@ -133,7 +133,7 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("koKR", function() return {
 	bomb_trigger = "^([^|;%s]*)(.*)살아있는 폭탄에 걸렸습니다%.$",
 	inferno_trigger = "남작 게돈|1이;가; 불지옥 효과를 얻었습니다.", -- check
-	service_trigger = "%s|1이;가; 라그나로스를 위한 한가지 마지막 임무를 수행합니다.", -- check
+	service_trigger = "%s|1이;가; 라그나로스를 위한 마지막 임무를 수행합니다...", -- check
 
 	you = "",
 	are = "",

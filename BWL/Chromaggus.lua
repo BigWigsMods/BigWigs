@@ -196,7 +196,7 @@ L:RegisterTranslations("koKR", function() return {
 	crit = "치명상 ",
 
 	breath_warning = "%s 10초전!",
-	breath_message = "%s를 시전합니다!",
+	breath_message = "%s|1을;를; 시전합니다!",
 	vulnerability_message = "새로운 취약 속성: %s",
 	vulnerability_warning = "취약 속성이 변경되었습니다!",
 	frenzy_message = "광폭화 - 평정 사격!",

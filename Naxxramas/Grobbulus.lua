@@ -101,6 +101,9 @@ L:RegisterTranslations("koKR", function() return {
 	icon_name = "아이콘 지정",
 	icon_desc = "돌연변이 걸린 사람에게 아이콘 지정 (승급자 이상 요구)",
 
+	cloud_name = "독구름",
+	cloud_desc = "독구름에 대한 경고",
+
 	inject_trigger = "^([^|;%s]*)(.*)돌연변이 유발에 걸렸습니다%.$", --"(.*)돌연변이 유발에 걸렸습니다.",
 
 	you = "",

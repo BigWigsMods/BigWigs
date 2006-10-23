@@ -61,7 +61,7 @@ L:RegisterTranslations("koKR", function() return {
 	curse_desc = "로데브 저주 해제에 대한 경고",
 
 	doombar = "피할 수 없는 파멸 %d",
-	doomwarn = "피할 수 없는 파멸 %d! 다은은 %d초 후.",
+	doomwarn = "피할 수 없는 파멸 %d! 다음은 %d초 후.",
 	doomwarn5sec = "피할 수 없는 파멸 %d 5초 전",
 	doomtrigger = "피할 수 없는 파멸에 걸렸습니다.",
 	

@@ -56,7 +56,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	trigger1 = "%s|1이;가; 광란의 상태에 빠집니다!", -- CHECK
 	trigger2 = "공포의 포효에",
-	starttrigger = "devours all nearby zombies!", -- CHECK (not used)
+	starttrigger = "주위의 모든 좀비|1을;를; 먹어치웁니다!", -- CHECK (not used)
 
 	warn1 = "광폭화 경고!",
 	warn2 = "광역 공포 5초 전!",
