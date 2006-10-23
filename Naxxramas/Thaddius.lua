@@ -325,7 +325,7 @@ L:RegisterTranslations("frFR", function() return {
 	teslaoverload = "%s entre en surcharge !",
 
 	pstrigger = "Maintenant toi sentir douleur...",
-	trigger1 = "Thaddius commence \195\160 lancer Changement de polarité.",
+	trigger1 = "Thaddius commence \195\160 lancer Changement de polaritç¬¢,
 	chargetrigger = "Vous subissez les effets de Charge (%w+).",
 	stalaggtrigger = "Stalagg gagne Vague de puissance.",
 
