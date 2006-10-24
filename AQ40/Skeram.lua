@@ -31,9 +31,9 @@ L:RegisterTranslations("enUS", function() return {
 	ae_name = "Arcane Explosion Alert",
 	ae_desc = "Warn for Arcane Explosion",
 	
-	split_cmd = "split",
-	split_name = "Split Alert",
-	split_desc = "Warn before Create Image",
+--	split_cmd = "split",
+--	split_name = "Split Alert",
+--	split_desc = "Warn before Create Image",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -68,8 +68,8 @@ L:RegisterTranslations("deDE", function() return {
 	ae_name = "Arkane Explosion",
 	ae_desc = "Warnung vor Arkaner Explosion.",
 	
-	split_name = "Abbilder",
-	split_desc = "Warnung, wenn die Abbilder von Prophet Skeram erscheinen.",
+--	split_name = "Abbilder",
+--	split_desc = "Warnung, wenn die Abbilder von Prophet Skeram erscheinen.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -91,8 +91,8 @@ L:RegisterTranslations("zhCN", function() return {
 	ae_name = "魔爆术警报",
 	ae_desc = "魔爆术警报",
 	
-	split_name = "分裂警报",
-	split_desc = "预言者斯克拉姆即将复制镜像时发出警报",
+--	split_name = "分裂警报",
+--	split_desc = "预言者斯克拉姆即将复制镜像时发出警报",
 } end )
 
 
@@ -116,8 +116,8 @@ L:RegisterTranslations("zhTW", function() return {
 	ae_name = "魔爆術警報",
 	ae_desc = "預言者斯克拉姆施放魔爆術時發出警報",
 	
-	split_name = "幻影分身警報",
-	split_desc = "預言者斯克拉姆施放幻影分身時發出警報",
+--	split_name = "幻影分身警報",
+--	split_desc = "預言者斯克拉姆施放幻影分身時發出警報",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -139,8 +139,8 @@ L:RegisterTranslations("koKR", function() return {
 	ae_name = "신비한 폭발 경고",
 	ae_desc = "신비한 폭발에 대한 경고",
 	
-	split_name = "분리 경고",
-	split_desc = "이미지 생성 전 경고",
+--	split_name = "분리 경고",
+--	split_desc = "이미지 생성 전 경고",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -162,7 +162,7 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsSkeram = BigWigs:NewModule(boss)
 BigWigsSkeram.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsSkeram.enabletrigger = boss
-BigWigsSkeram.toggleoptions = {"split", "ae", "mc", "bosskill"}
+BigWigsSkeram.toggleoptions = {"ae", "mc", "bosskill"}
 BigWigsSkeram.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
