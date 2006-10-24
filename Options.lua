@@ -62,6 +62,8 @@ L:RegisterTranslations("koKR", function() return {
 	["All running modules have been disabled."] = "모든 실행중인 모듈을 비활성화 합니다.",
 	["%s reset."] = "%s 초기화되었습니다.",
 	["%s disabled."] = "%s 비활성화 되었습니다.",
+	["%s icon is now %s."] = "%s 아이콘은 현재 %s 입니다.",
+	["Show it again with /bw plugin minimap."] = "/bw plugin minimap 명령으로 다시 나타납니다.",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
