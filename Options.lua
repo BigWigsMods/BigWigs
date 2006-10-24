@@ -18,8 +18,8 @@ L:RegisterTranslations("enUS", function() return {
 	["|cffeda55fClick|r to enable."] = true,
 	["Big Wigs is currently disabled."] = true,
 	["Active boss modules"] = true,
-	["Hidden"] = true,
-	["Shown"] = true,
+	["hidden"] = true,
+	["shown"] = true,
 	["minimap"] = true,
 	["Minimap"] = true,
 	["Toggle the minimap button."] = true,
@@ -27,6 +27,8 @@ L:RegisterTranslations("enUS", function() return {
 	["All running modules have been disabled."] = true,
 	["%s reset."] = true,
 	["%s disabled."] = true,
+	["%s icon is now %s."] = true,
+	["Show it again with /bw plugin minimap."] = true,
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -35,8 +37,8 @@ L:RegisterTranslations("frFR", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55fClic|r pour activer.",
 	["Big Wigs is currently disabled."] = "Big Wigs est actuellement d\195\169sactiv\195\169.",
 	["Active boss modules"] = "Modules de boss actifs",
-	["Hidden"] = "Cach\195\169",
-	["Shown"] = "Affich\195\169",
+	["hidden"] = "cach\195\169",
+	["shown"] = "affich\195\169",
 	-- ["minimap"] = true,
 	-- ["Minimap"] = true,
 	["Toggle the minimap button."] = "Afficher ou masquer le bouton sur la minimap.",
@@ -52,8 +54,8 @@ L:RegisterTranslations("koKR", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55f클릭|r : 모듈 활성화.",
 	["Big Wigs is currently disabled."] = "BigWigs가 비활성화 되어 있습니다.",
 	["Active boss modules"] = "보스 모듈 활성화",
-	["Hidden"] = "숨김",
-	["Shown"] = "표시",
+	["hidden"] = "숨김",
+	["shown"] = "표시",
 	["Minimap"] = "미니맵",
 	["Toggle the minimap button."] = "미니맵 버튼 토글",
 	["All running modules have been reset."] = "모든 실행중인 모듈을 초기화합니다.",
@@ -68,8 +70,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55f点击|r图标开启BigWigs。",
 	["Big Wigs is currently disabled."] = "Big Wigs目前关闭。",
 	["Active boss modules"] = "激活首领模块",
-	["Hidden"] = "隐藏",
-	["Shown"] = "显示",
+	["hidden"] = "隐藏",
+	["shown"] = "显示",
 	["Minimap"] = "小地图",
 	["Minimap"] = "小地图",
 	["Toggle the minimap button."] = "切换是否显示小地图图标。",
@@ -86,8 +88,8 @@ L:RegisterTranslations("zhTW", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55f點擊|r圖示開啟BigWigs。",
 	["Big Wigs is currently disabled."] = "Big Wigs目前關閉。",
 	["Active boss modules"] = "啟動首領模組",
-	["Hidden"] = "隱藏",
-	["Shown"] = "顯示",
+	["hidden"] = "隱藏",
+	["shown"] = "顯示",
 	["Minimap"] = "小地圖",
 	["Minimap"] = "小地圖",
 	["Toggle the minimap button."] = "切換是否顯示小地圖圖標。",
@@ -103,8 +105,8 @@ L:RegisterTranslations("deDE", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55fKlicken|r um zu aktivieren.",
 	["Big Wigs is currently disabled."] = "Big Wigs ist gegenw\195\164rtig deaktiviert.",
 	["Active boss modules"] = "Aktive Boss Module",
-	["Hidden"] = "Versteckt",
-	["Shown"] = "Angezeigt",
+	["hidden"] = "versteckt",
+	["shown"] = "angezeigt",
 	-- ["minimap"] = true,
 	["Minimap"] = "Minimap",
 	["Toggle the minimap button."] = "Minimap Button anzeigen.",
@@ -126,8 +128,16 @@ deuce.consoleOptions = not deuce.hasFuBar and {
 	name = L["Minimap"],
 	desc = L["Toggle the minimap button."],
 	get = function() return BigWigsOptions.minimapFrame and BigWigsOptions.minimapFrame:IsVisible() or false end,
-	set = function(v) if v then BigWigsOptions:Show() else BigWigsOptions:Hide() end end,
-	map = {[false] = L["Hidden"], [true] = L["Shown"]},
+	set = function(v)
+		if v then
+			BigWigsOptions:Show()
+		else
+			BigWigsOptions:Hide()
+			BigWigs:Print(L["Show it again with /bw plugin minimap."])
+		end
+	end,
+	map = {[false] = L["hidden"], [true] = L["shown"]},
+	message = L["%s icon is now %s."],
 	hidden = function() return deuce.hasFuBar end,
 }
 
@@ -139,9 +149,11 @@ BigWigsOptions = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceConsole-2.0"
 BigWigsOptions.name = "FuBar - BigWigs"
 BigWigsOptions:RegisterDB("BigWigsFubarDB")
 
+BigWigsOptions.hasNoColor = true
 BigWigsOptions.hasIcon = "Interface\\AddOns\\BigWigs\\Icons\\core-enabled"
 BigWigsOptions.defaultMinimapPosition = 180
 BigWigsOptions.clickableTooltip = true
+BigWigsOptions.hideWithoutStandby = true
 --BigWigsOptions.hasNoText = true
 
 -- XXX total hack
