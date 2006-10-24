@@ -141,7 +141,7 @@ L:RegisterTranslations("zhTW", function() return {
 	summonguardwarn = "*** 蟲群衛士已被召喚出來！ ***",
 	summonwarriortrigger = "阿努比薩斯守衛者施放了召喚阿努比薩斯戰士。",
 	summonwarriorwarn = "*** 阿努比薩斯戰士已被召喚出來！ ***",
-	plaguetrigger = "^(.+)受到(.+)瘟疫效果的影響。$",
+	plaguetrigger = "^(.+)受到(.+)瘟疫",
 	plaguewarn = " 受到瘟疫的影響！快躲開！ ***",
 	plaguewarnyou = "*** 你受到瘟疫的影響！快跑開！ ***",
 	plagueyou = "你",

@@ -197,17 +197,17 @@ L:RegisterTranslations("zhTW", function() return {
 	flee = "逃跑",
 
 	-- Warnings and bar texts
-	start_message = "*** 哈卡已經進入戰鬥 - 90秒後開始生命吸取 - 10分鐘後進入狂怒狀態 ***",
+	start_message = "*** 哈卡已經進入戰鬥 - 90秒後開始血液虹吸 - 10分鐘後進入狂怒狀態 ***",
 	drain_warning = "*** %d 秒後開始生命吸取 ***",
 	drain_message = "*** 血液虹吸 - 90秒後再次發動 ***",
 	
 	mindcontrol_message = "*** %s 被控制了，法師快羊 ***",
 	
 	["Enrage"] = "狂怒",
-	["Life Drain"] = "生命吸取",
+	["Life Drain"] = "血液虹吸",
 
-	drain_name = "生命吸取警報",
-	drain_desc = "生命吸取警報",
+	drain_name = "血液虹吸警報",
+	drain_desc = "血液虹吸警報",
 
 	enrage_name = "狂怒警報",
 	enrage_desc = "狂怒警報",

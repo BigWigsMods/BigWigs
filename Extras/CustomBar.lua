@@ -50,13 +50,13 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	["bwcb"] = "bwcb",
 	["bwlcb"] = "bwlcb",
-	["custombar"] = "自訂時間列",
-	["Custom Bars"] = "自訂時間列",
-	["Start a custom bar, either local or global."] = "開始一個自訂時間列，區域或者全域",
+	["custombar"] = "自定時間條",
+	["Custom Bars"] = "自定時間條",
+	["Start a custom bar, either local or global."] = "開始一個自定時間條，區域或者全域",
 	["Local"] = "區域",
 	["Global"] = "全域",
 	["<seconds> <bar text>"] = "<秒> <列文字>",
-	["Starts a custom bar with the given parameters."] = "開始一個包含參數的自訂時間列",
+	["Starts a custom bar with the given parameters."] = "開始一個包含參數的自定時間條",
 	["%s: %s"] = "%s: %s",
 	["%s: Timer [%s] finished."] = "%s: 計時器 [%s] 終了。",
 } end)

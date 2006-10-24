@@ -62,7 +62,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	--Vaelastrasz 墮落的瓦拉斯塔茲
-	trigger1 = "^(.+)受到(.+)燃燒刺激的傷害",
+	trigger1 = "^(.+)受到(.+)燃燒刺激",
 
 	you = "你",
 	are = "了",

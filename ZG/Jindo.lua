@@ -152,7 +152,7 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_name = "標記被詛咒的隊友",
 	icon_desc = "在被詛咒的隊友頭上設置標記 (需要助手或領隊權限)",
 
-	triggerbrainwash = "妖術師金度施放了召喚控制圖騰。",
+	triggerbrainwash = "妖術師金度施放了召喚洗腦圖騰。",
 	triggerhealing = "妖術師金度施放了強力治療結界。",
 	triggercurse = "^(.+)受到(.*)金度的欺騙",  -- CHECK
 

@@ -170,7 +170,7 @@ L:RegisterTranslations("zhTW", function() return {
 	you = "你",
 	are = "了",
 
-	startwarn = "*** 格羅布魯斯進入戰鬥 - 12 分鐘後進入狂怒狀態！ ***",
+	startwarn = "*** 葛羅巴斯進入戰鬥 - 12 分鐘後進入狂怒狀態！ ***",
 	enragebar = "狂怒",
 	enrage10min = "*** 10 分鐘後狂怒 ***",
 	enrage5min = "*** 5 分鐘後狂怒 ***",

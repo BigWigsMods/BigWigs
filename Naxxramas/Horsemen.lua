@@ -199,11 +199,11 @@ L:RegisterTranslations("zhTW", function() return {
 	shieldwall_name = "盾牆警報",
 	shieldwall_desc = "盾牆警報",
 	
-	void_name = "虛空領域警報",
-	void_desc = "當女公爵布勞繆克絲施放虛空領域時警報",
+	void_name = "虛空地區警報",
+	void_desc = "當布洛莫斯爵士施放虛空地區時警報",
 
-	meteor_name = "流星警報",
-	meteor_desc = "寇斯艾茲族長的流星警報",
+	meteor_name = "隕石術警報",
+	meteor_desc = "寇斯艾茲族長的隕石術警報",
 
 	wrath_name = "神聖之怒警報",
 	wrath_desc = "札里克爵士的神聖之怒警報",
@@ -214,13 +214,13 @@ L:RegisterTranslations("zhTW", function() return {
 	
 	marktrigger = "受到了庫爾塔茲印記效果的影響。",
 
-	voidtrigger = "女公爵布勞繆克絲施放了虛空領域。",
-	voidwarn = "5秒後虛空領域",
-	voidbar = "虛空領域",
+	voidtrigger = "布洛莫斯爵士施放了虛空地區。",
+	voidwarn = "5秒後虛空地區",
+	voidbar = "虛空地區",
 
-	meteortrigger = "寇斯艾茲族長的流星擊中",
-	meteorwarn = "流星",
-	meteorbar = "流星",
+	meteortrigger = "寇斯艾茲族長的隕石術擊中",
+	meteorwarn = "隕石術",
+	meteorbar = "隕石術",
 
 	wrathtrigger = "札里克爵士的神聖之怒擊中",
 	wrathwarn = "神聖之怒",

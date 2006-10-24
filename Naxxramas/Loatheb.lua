@@ -150,33 +150,33 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	doom_name = "必然的厄運警報",
-	doom_desc = "必然的厄運警報",
+	doom_name = "無可避免的末日警報",
+	doom_desc = "無可避免的末日警報",
 
 	spore_name = "孢子警報",
 	spore_desc = "孢子警報",
 
 	curse_name = "詛咒驅散警報",
-	curse_desc = "洛歐塞布驅散了一個詛咒效果時發出警報",
+	curse_desc = "洛斯伯驅散了一個詛咒效果時發出警報",
 
-	doombar = "必然的厄運",
-	doomwarn = "必然的厄運 - %s秒後再次發動",
-	doomwarn5sec = "5秒後發動必然的厄運！",
-	doomtrigger = "受到了必然的厄運效果的影響",
+	doombar = "無可避免的末日",
+	doomwarn = "無可避免的末日 - %s秒後再次發動",
+	doomwarn5sec = "5秒後發動無可避免的末日！",
+	doomtrigger = "受到了無可避免的末日效果的影響",
 
 	sporewarn = "孢子出現",
 	sporebar = "召喚孢子",
-	sporespawntrigger = "洛歐塞布施放了召喚孢子。",
+	sporespawntrigger = "洛斯伯施放了召喚孢子。",
 
-	removecursewarn = "洛歐塞布驅散了一個詛咒效果",
-	removecursebar = "驅散詛咒",
-	removecursetrigger = "洛歐塞布對洛歐塞布施放了驅散詛咒。",
+	removecursewarn = "洛斯伯消除了一個詛咒效果",
+	removecursebar = "消除詛咒",
+	removecursetrigger = "洛斯伯對洛斯伯施放了消除詛咒。",
 
-	doomtimerbar = "每隔15秒發動必然的厄運",
-	doomtimerwarn = "必然的厄運計時%s秒後改變！",
-	doomtimerwarnnow = "必然的厄運現在每隔15秒發動一次！",
+	doomtimerbar = "每隔15秒發動無可避免的末日",
+	doomtimerwarn = "無可避免的末日計時%s秒後改變！",
+	doomtimerwarnnow = "無可避免的末日現在每隔15秒發動一次！",
 	
-	startwarn = "洛歐塞布已進入戰鬥 - 2 分鐘後發動必然的厄運！",
+	startwarn = "洛斯伯已進入戰鬥 - 2 分鐘後發動無可避免的末日！",
 
 	you = "你",
 	are = "到",

@@ -63,15 +63,15 @@ L:RegisterTranslations("zhTW", function() return {
 	supreme_name = "無敵警報",
 	supreme_desc = "無敵警報",
 
-	starttrigger = "為了燃燒軍團！為了基爾加丹！",
+	starttrigger = "為了軍團！為了基爾加德！",
 
-	engagewarn	 = "卡紮克已開始攻擊 - 3分鐘後無敵！",
+	engagewarn	 = "卡札克已開始攻擊 - 3分鐘後無敵！",
 
 	supreme1min	 = "1分鐘後無敵！",
 	supreme30sec = "30秒後無敵！",
 	supreme10sec = "10秒後無敵！",
 
-	bartext = "無敵模式",
+	bartext = "上帝模式",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

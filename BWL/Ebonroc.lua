@@ -114,8 +114,8 @@ L:RegisterTranslations("zhTW", function() return {
 	elsecurse_name = "隊友埃博諾克之影警報",
 	elsecurse_desc = "隊友中了埃博諾克之影時發出警報",
 
-	shadowbar_name = "博諾克之影時間條",
-	shadowbar_desc = "顯示博諾克之影持續時間的一個時間條",
+	shadowbar_name = "埃博諾克之影時間條",
+	shadowbar_desc = "顯示埃博諾克之影持續時間的時間條",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
