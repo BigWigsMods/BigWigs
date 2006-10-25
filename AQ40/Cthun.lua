@@ -8,9 +8,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs" .. cthun)
 
 local timeP1Tentacle = 45      -- tentacle timers for phase 1
 local timeP1TentacleStart = 45 -- delay for first tentacles from engage onwards
-local timeP1GlareStart = 45    -- delay for first dark glare from engage onwards
-local timeP1Glare = 87         -- interval for dark glare
-local timeP1GlareDuration = 38 -- duration of dark glare
+local timeP1GlareStart = 48    -- delay for first dark glare from engage onwards
+local timeP1Glare = 86         -- interval for dark glare
+local timeP1GlareDuration = 40 -- duration of dark glare
 local timeP2Offset = 12        -- delay for all timers to restart after the Eye dies
 local timeP2Tentacle = 30      -- tentacle timers for phase 2
 local timeReschedule = 53      -- delay from the moment of weakening for timers to restart
