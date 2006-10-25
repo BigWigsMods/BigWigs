@@ -245,6 +245,43 @@ L:RegisterTranslations("zhTW", function() return {
 	inroombartext = "進入房間",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	cmd = "Gothik",
+
+	starttrigger1 = "Dans votre folie, vous avez provoqu\195\169 votre propre mort.",
+	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
+	startwarn = "Gothik le moissonneur engag\195\169! 4:30 avant son arriv\195\169e dans la salle.",
+
+	rider_name = "Cavalier tenace",
+	spectral_rider_name = "Cavalier spectral",
+	deathknight_name = "Chevalier de la mort tenace",
+	spectral_deathknight_name = "Chevalier de la mort spectral",
+	trainee_name = "Jeune recrue tenace",
+	spectral_trainee_name = "Jeune recrue spectral",
+
+	riderdiewarn = "Cavalier mort !",
+	dkdiewarn = "Chevalier de la mort mort !",
+
+	warn1 = "Dans la salle dans 3 minutes",
+	warn2 = "Dans la salle dans 90 secondes",
+	warn3 = "Dans la salle dans 60 secondes",
+	warn4 = "Dans la salle dans 30 secondes",
+	warn5 = "Gothik arrive dans 10 secondes",
+
+	trawarn = "Jeune recrue dans 3 secondes",
+	dkwarn = "Chevalier de la mort dans 3 secondes",
+	riderwarn = "Cavalier dans 3 secondes",
+
+	trabar = "Jeune recrue - %d",
+	dkbar = "Chevalier de la mort - %d",
+	riderbar = "Cavalier - %d",
+
+	inroomtrigger = "J'ai attendu assez longtemps. Maintenant, vous affrontez le moissonneur d'\195\162mes.",
+	inroomwarn = "Il est dans la salle !",
+
+	inroombartext = "Dans la salle !",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
