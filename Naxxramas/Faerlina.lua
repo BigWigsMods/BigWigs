@@ -148,7 +148,7 @@ L:RegisterTranslations("zhTW", function() return {
 	startwarn = "*** 大寡婦費琳娜已進入戰鬥 - 60 秒後狂怒！ ***",
 	enragewarn15sec = "*** 15 秒後狂怒！ ***",
 	enragewarn = "*** 狂怒！ ***",
-	enrageremovewarn = "*** 狂怒已移除 - %d 後再次狂怒 ***", -- added
+	enrageremovewarn = "*** 狂怒已移除 - %d 秒後再次狂怒 ***", -- added
 	silencewarn = "*** 沉默！延緩了狂怒！ ***",
 	silencewarnnodelay = "*** 沉默！ ***",
 	silencewarn5sec = "*** 5 秒後沉默結束！ ***",

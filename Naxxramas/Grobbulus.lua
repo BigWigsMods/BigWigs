@@ -165,7 +165,7 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_name = "標記突變注射",
 	icon_desc = "在中了突變注射的隊友頭上標記骷髏標記（需要助理或領隊權限）",
 
-	inject_trigger = "^(.+)受到(.+)突變注射效果的影響。",
+	inject_trigger = "^(.+)受到(.+)突變注射",
 
 	you = "你",
 	are = "了",

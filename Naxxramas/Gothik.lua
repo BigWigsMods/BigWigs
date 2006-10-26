@@ -212,15 +212,15 @@ L:RegisterTranslations("zhTW", function() return {
 	disabletrigger = "I... am... undone.", --?
 
 	starttrigger1 = "你們這些蠢貨已經主動步入了陷阱。",
-	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun", --?
+	starttrigger2 = "我已經等待很久了。現在你們將面對靈魂的收割者。", --?
 	startwarn = "*** 收割者戈提克已進入戰鬥 - 4:30 後進入房間 ***",
 
-	rider_name = "無情的騎兵",
+	rider_name = "冷酷的騎兵",
 	spectral_rider_name = "騎兵",
-	deathknight_name = "無情的死騎",
+	deathknight_name = "冷酷的死亡騎士",
 	spectral_deathknight_name = "死騎",
-	trainee_name = "無情的訓練師",
-	spectral_trainee_name = "訓練師",
+	trainee_name = "冷酷的學徒",
+	spectral_trainee_name = "學徒",
 
 	riderdiewarn = "*** 騎兵已死亡！ ***",
 	dkdiewarn = "*** 死亡騎士已死亡！ ***",
@@ -239,7 +239,7 @@ L:RegisterTranslations("zhTW", function() return {
 	dkbar = "死騎 - %d",
 	riderbar = "騎兵 - %d",
 
-	inroomtrigger = "*** 我已經等待很久了。現在你們將面對靈魂的收割者。 ***",
+	inroomtrigger = "我已經等待很久了。現在你們將面對靈魂的收割者。",
 	inroomwarn = "*** 收割者高希進入了房間！ ***",
 
 	inroombartext = "進入房間",

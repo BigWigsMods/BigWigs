@@ -231,7 +231,7 @@ L:RegisterTranslations("zhTW", function() return {
 	backwarn	= "*** 諾斯回到房間 - %d後再次傳送 ***",
 	backwarn2	= "*** 10 秒後諾斯回到房間！ ***",
 
-	cursetrigger	= "受到了瘟疫使者的詛咒效果的影響",
+	cursetrigger	= "受到了瘟疫使者的詛咒",
 	cursewarn	= "*** 詛咒 - 55秒後再次發動 ***",
 	curse10secwarn	= "*** 10 秒後發動詛咒！ ***",
 
