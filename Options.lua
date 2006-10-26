@@ -1,4 +1,4 @@
-﻿
+
 assert(BigWigs, "BigWigs not found!")
 
 ------------------------------
@@ -68,7 +68,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00模块运行中|r",
---	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55f点击|r图标重置所有运行中的模块。|cffeda55fShift+点击|r图标关闭所有运行中的模块。|cffeda55fCtrl+Shift+点击|r图标关闭BigWigs。",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt+Click|r to disable them. |cffeda55fCtrl+Alt+Click|r to disable Big Wigs completely."] = "|cffeda55f点击|r图标重置所有运行中的模块。|cffeda55fAlt+点击|r图标关闭所有运行中的模块。|cffeda55fCtrl+Alt+点击|r图标关闭BigWigs。",
 	["|cffeda55fClick|r to enable."] = "|cffeda55f点击|r图标开启BigWigs。",
 	["Big Wigs is currently disabled."] = "Big Wigs目前关闭。",
 	["Active boss modules"] = "激活首领模块",
