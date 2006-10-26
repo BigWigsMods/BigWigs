@@ -115,15 +115,15 @@ L:RegisterTranslations("zhTW", function() return {
 	paralyze_desc = "莫阿姆進入石化狀態時發出警報",
 
 	starttrigger = "莫阿姆因神態失常而坐立不安。",
-	startwarn = "*** 莫阿姆已進入戰鬥 - 90 秒後召喚元素惡魔 ***",
+	startwarn = "莫阿姆已進入戰鬥 - 90 秒後召喚元素惡魔",
 	addsbar = "召喚惡魔",
-	addsincoming = "*** 將在 %s 秒後召喚惡魔！ ***",
+	addsincoming = "將在 %s 秒後召喚惡魔！",
 	addstrigger = "吸取你的法力後變成了石頭。",
 	addswarn = " ***惡魔被召喚！術士放逐！莫阿姆石化90秒！ ***",
 	paralyzebar = "石化",
-	returnincoming = "*** 將在 %s 秒後解除石化！ ***",
+	returnincoming = "將在 %s 秒後解除石化！",
 	returntrigger = "^充能效果從莫阿姆身上消失。$",
-	returnwarn = "*** 已解除石化！ 90 秒後重新召喚惡魔！ ***",
+	returnwarn = "已解除石化！ 90 秒後重新召喚惡魔！",
 } end )
 
 ----------------------------------

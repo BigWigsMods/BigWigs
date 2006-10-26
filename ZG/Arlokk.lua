@@ -111,8 +111,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	mark_trigger = "吞噬(.+)的軀體吧，我的小可愛們！$",
 
-	mark_warning_self = "*** 你被標記了！ ***",
-	mark_warning_other = "*** %s 被標記了！ 牧師照顧一下他！ ***",	
+	mark_warning_self = "你被標記了！",
+	mark_warning_other = "%s 被標記了！ 牧師照顧一下他！",	
 } end )
 ----------------------------------
 --      Module Declaration      --

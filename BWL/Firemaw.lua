@@ -51,8 +51,8 @@ L:RegisterTranslations("zhTW", function() return {
 	wingbuffet_trigger = "費爾默開始施放龍翼打擊。",
 	shadowflame_trigger = "費爾默開始施放暗影烈焰。",
 
-	wingbuffet_warning = "*** 3 秒後龍翼打擊！ ***",
-	shadowflame_warning = "*** 暗影烈焰發動！ ***",
+	wingbuffet_warning = "3 秒後龍翼打擊！",
+	shadowflame_warning = "暗影烈焰發動！",
 
 	wingbuffet_bar = "龍翼打擊",
 

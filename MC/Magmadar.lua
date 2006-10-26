@@ -72,9 +72,9 @@ L:RegisterTranslations("zhTW", function() return {
 	trigger1 = "變得極為狂暴！",
 	trigger2 = "受到恐慌的傷害",
 
-	["Frenzy alert!"] = "*** 狂暴狀態！ 獵人立刻使用寧神射擊！ ***",
-	["5 seconds until AoE Fear!"] = "*** 5 秒後發動群體恐懼 ***",
-	["AoE Fear - 30 seconds until next!"] = "*** 群體恐懼 - 30 秒後再次發動 ***",
+	["Frenzy alert!"] = "狂暴狀態！ 獵人立刻使用寧神射擊！",
+	["5 seconds until AoE Fear!"] = "5 秒後發動群體恐懼",
+	["AoE Fear - 30 seconds until next!"] = "群體恐懼 - 30 秒後再次發動",
 	["AoE Fear"] = "群體恐懼",
 	
 	fear_name = "群體恐懼警報",

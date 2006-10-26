@@ -101,15 +101,15 @@ L:RegisterTranslations("zhTW", function() return {
 	you = "你",
 	are = "了",
 
-	bomb_message_you = "*** 你是炸彈人！遠離人群！ ***",
-	bomb_message_other = "*** %s是炸彈人！遠離人群！ ***",
+	bomb_message_you = "你是炸彈人！遠離人群！",
+	bomb_message_other = "%s是炸彈人！遠離人群！",
 
 	bombtimer_bar = "%s: 活化炸彈",
 	inferno_bar = "地獄火",
 	service_bar = "最後自爆",
 
-	service_message = "*** 5 秒後迦頓爆炸！ ***",
-	inferno_message = "*** 10 秒後地獄火！ ***",
+	service_message = "5 秒後迦頓爆炸！",
+	inferno_message = "10 秒後地獄火！",
 
 	service_name = "最後自爆計時條",
 	service_desc = "顯示迦頓男爵最後自爆的計時條.",

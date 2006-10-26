@@ -59,8 +59,8 @@ L:RegisterTranslations("zhTW", function() return {
 	you = "你",
 	are = "了",
 
-	warn1 = "*** 你中了致死打擊！ ***",
-	warn2 = "*** %s 中了致死打擊！ ***",
+	warn1 = "你中了致死打擊！",
+	warn2 = "%s 中了致死打擊！",
 
 	youms_name = "玩家致死打擊警報",
 	youms_desc = "你中了致死打擊時發出警報",

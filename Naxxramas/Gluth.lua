@@ -140,13 +140,13 @@ L:RegisterTranslations("zhTW", function() return {
 	trigger2 = "可怕咆哮",
 	starttrigger = "毀滅所有附近的蛇神！",
 
-	warn1 = "*** 狂暴警報 - 獵人立刻使用寧神射擊！ ***",
-	warn2 = "*** 5 秒後發動群體恐懼！ ***",
-	warn3 = "*** 群體恐懼 - 20 秒後再次發動 ***",
+	warn1 = "狂暴警報 - 獵人立刻使用寧神射擊！",
+	warn2 = "5 秒後發動群體恐懼！",
+	warn3 = "群體恐懼 - 20 秒後再次發動",
 
-	startwarn = "*** 古魯斯已進入戰鬥 - 105 秒後僵屍出現！ ***",
-	decimatesoonwarn = "*** 殘殺來臨！ ***",
-	decimatewarn = "*** 殘殺 - AE僵屍！ ***",
+	startwarn = "古魯斯已進入戰鬥 - 105 秒後僵屍出現！",
+	decimatesoonwarn = "殘殺來臨！",
+	decimatewarn = "殘殺 - AE僵屍！",
 	decimatetrigger = "殘殺",
 
 	bar1text = "群體恐懼",

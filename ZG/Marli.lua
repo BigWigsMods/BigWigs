@@ -82,8 +82,8 @@ L:RegisterTranslations("zhTW", function() return {
 	spiders_trigger = "來幫助我吧，我的孩子們！$",
 	drainlife_trigger = "^高階祭司瑪爾里的生命吸取治療了高階祭司瑪爾里(.+)。",
 
-	spiders_message = "*** 小蜘蛛出現！ ***",
-	drainlife_message = "*** 生命吸取！趕快打斷！ ***",
+	spiders_message = "小蜘蛛出現！",
+	drainlife_message = "生命吸取！趕快打斷！",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

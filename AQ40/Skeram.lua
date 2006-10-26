@@ -101,14 +101,14 @@ L:RegisterTranslations("zhTW", function() return {
 	aetrigger = "預言者斯克拉姆開始施放魔爆術。",
 	mctrigger = "預言者斯克拉姆開始施放充實。",
 	splittrigger = "預言者斯克拉姆施放了召喚幻象。",
-	aewarn = "*** 施放魔爆術 - 迅速打斷！ ***",
-	mcwarn = "*** 施放充實 - 準備變羊！ ***",
+	aewarn = "施放魔爆術 - 迅速打斷！",
+	mcwarn = "施放充實 - 準備變羊！",
 	mcplayer = "^(.+)受到(.+)充實效果的影響。",
 	mcplayerwarn = " 被心靈控制，法師快變羊！",
 	mcyou = "你",
 	mcare = "了",
 	
-	splitwarn = "*** 即將分裂！ ***",
+	splitwarn = "即將分裂！",
 	
 	mc_name = "精神控制警報",
 	mc_desc = "預言者斯克拉姆進行精神控制時發出警報",

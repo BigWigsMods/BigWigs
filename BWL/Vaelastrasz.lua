@@ -67,7 +67,7 @@ L:RegisterTranslations("zhTW", function() return {
 	you = "你",
 	are = "了",
 
-	warn1 = "*** 你正在燃燒！ ***",
+	warn1 = "你正在燃燒！",
 	warn2 = " 正在燃燒！ ***",
 
 	youburning_name = "玩家燃燒警報",

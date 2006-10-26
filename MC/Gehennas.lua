@@ -42,8 +42,8 @@ L:RegisterTranslations("zhTW", function() return {
 	-- Gehennas 基赫納斯
 	trigger1 = "受到基赫納斯的詛咒",
 
-	warn1 = "*** 群體詛咒 5 秒後發動！ ***",
-	warn2 = "*** 群體詛咒 - 30 秒後再次發動 ***",
+	warn1 = "群體詛咒 5 秒後發動！",
+	warn2 = "群體詛咒 - 30 秒後再次發動",
 
 	bar1text = "基赫納斯的詛咒",
 	

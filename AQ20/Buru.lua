@@ -82,7 +82,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	watchtrigger = "凝視著(.+)！",
 	watchwarn = "被盯上了！往下一個蛋移動！",
-	watchwarnyou = "*** 你被盯上了！往下一個蛋移動！ ***",
+	watchwarnyou = "你被盯上了！往下一個蛋移動！",
 	you = "你",
 } end )
 

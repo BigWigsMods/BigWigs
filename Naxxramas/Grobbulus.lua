@@ -170,15 +170,15 @@ L:RegisterTranslations("zhTW", function() return {
 	you = "你",
 	are = "了",
 
-	startwarn = "*** 葛羅巴斯進入戰鬥 - 12 分鐘後進入狂怒狀態！ ***",
+	startwarn = "葛羅巴斯進入戰鬥 - 12 分鐘後進入狂怒狀態！",
 	enragebar = "狂怒",
-	enrage10min = "*** 10 分鐘後狂怒 ***",
-	enrage5min = "*** 5 分鐘後狂怒 ***",
-	enrage1min = "*** 1 分鐘後狂怒 ***",
-	enrage30sec = "*** 30 秒後狂怒 ***",
-	enrage10sec = "*** 10 秒後狂怒 ***",
-	bomb_message_you = "*** 你中突變注射了！ ***",
-	bomb_message_other = "*** %s 中突變注射了！ ***",
+	enrage10min = "10 分鐘後狂怒",
+	enrage5min = "5 分鐘後狂怒",
+	enrage1min = "1 分鐘後狂怒",
+	enrage30sec = "30 秒後狂怒",
+	enrage10sec = "10 秒後狂怒",
+	bomb_message_you = "你中突變注射了！",
+	bomb_message_other = "%s 中突變注射了！",
 	bomb_bar = "%s 被突變注射",
 } end )
 

@@ -52,9 +52,9 @@ L:RegisterTranslations("zhTW", function() return {
 	trigger1 = "沙斯拉爾施放了沙斯拉爾之門。",
 	trigger2 = "沙斯拉爾獲得了衰減魔法的效果。",
 
-	warn1 = "*** 閃現術 - 45 秒後再次發動！ ***",
-	warn2 = "*** 5 秒後發動閃現術！ ***",
-	warn3 = "*** 自我 Buff - 驅散魔法 ***",
+	warn1 = "閃現術 - 45 秒後再次發動！",
+	warn2 = "5 秒後發動閃現術！",
+	warn3 = "自我 Buff - 驅散魔法",
 
 	bar1text = "閃現術",
 	

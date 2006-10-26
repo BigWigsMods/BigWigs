@@ -95,8 +95,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	bomb_trigger = "我命令你把這些入侵者燒成灰燼！$",
 	heal_trigger = "開始施放強效治療術！$",
-	bomb_message = "*** 火焰投擲！ 注意閃躲！ ***",
-	heal_message = "*** 補血 -  馬上中斷！ ***",
+	bomb_message = "火焰投擲！ 注意閃躲！",
+	heal_message = "補血 -  馬上中斷！",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

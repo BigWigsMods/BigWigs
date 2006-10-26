@@ -100,14 +100,14 @@ L:RegisterTranslations("zhTW", function() return {
 	enragewarn = "狂怒！***",
 	starttrigger1 = "縫補者要跟你玩！",
 	starttrigger2 = "縫補者是科爾蘇加德的戰神！",
-	startwarn = "*** 縫補者已進入鬥 - 7 分鐘後狂怒 ***",
+	startwarn = "縫補者已進入鬥 - 7 分鐘後狂怒",
 	enragebartext = "狂怒",
-	warn1 = "*** 5 分鐘後狂怒 ***",
-	warn2 = "*** 3 分鐘後狂怒 ***",
-	warn3 = "*** 90 秒後狂怒 ***",
-	warn4 = "*** 60 秒後狂怒 ***",
-	warn5 = "*** 30 秒後狂怒 ***",
-	warn6 = "*** 10 秒後激怒 ***",
+	warn1 = "5 分鐘後狂怒",
+	warn2 = "3 分鐘後狂怒",
+	warn3 = "90 秒後狂怒",
+	warn4 = "60 秒後狂怒",
+	warn5 = "30 秒後狂怒",
+	warn6 = "10 秒後激怒",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

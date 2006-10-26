@@ -101,9 +101,9 @@ L:RegisterTranslations("zhTW", function() return {
 	watch_trigger = "(.+)！我正在監視你！$",
 	enrage_trigger = "怒不可遏！$",
 
-	watched_warning_self = "*** 你被盯上了！停止一切動作！ ***",
-	watched_warning_other = "*** %s被盯上了！ ***",
-	enraged_message = "*** 奧根死了！血領主進入狂怒！ ***",
+	watched_warning_self = "你被盯上了！停止一切動作！",
+	watched_warning_other = "%s被盯上了！",
+	enraged_message = "奧根死了！血領主進入狂怒！",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

@@ -165,17 +165,17 @@ L:RegisterTranslations("zhTW", function() return {
 	cocoontrigger = "^(.+)受到(.*)纏繞的蜘蛛網",
 	webspraytrigger = "纏繞的蜘蛛網",
 
-	cocoonwarn = "*** %s 被蛛網纏繞了！ ***",
+	cocoonwarn = "%s 被蛛網纏繞了！",
 
 	enragetrigger = "變得憤怒了！",
 
-	webspraywarn30sec = "*** 10 秒後發動纏繞的蜘蛛網 ***",
-	webspraywarn20sec = "*** 纏繞的蜘蛛網！ 10 秒後小蜘蛛出現！ ***",
-	webspraywarn10sec = "*** 小蜘蛛出現！ 10 秒後撒網！ ***",
-	webspraywarn5sec = "*** 5 秒後撒網！ ***",
-	webspraywarn = "*** 撒網！ 40 秒後再次發動 ***",
-	enragewarn = "*** 狂怒！全力攻擊！ ***",
-	enragesoonwarn = "*** 即將狂怒！ ***",
+	webspraywarn30sec = "10 秒後發動纏繞的蜘蛛網",
+	webspraywarn20sec = "纏繞的蜘蛛網！ 10 秒後小蜘蛛出現！",
+	webspraywarn10sec = "小蜘蛛出現！ 10 秒後撒網！",
+	webspraywarn5sec = "5 秒後撒網！",
+	webspraywarn = "撒網！ 40 秒後再次發動",
+	enragewarn = "狂怒！全力攻擊！",
+	enragesoonwarn = "即將狂怒！",
 
 	webspraybar = "撒網",
 	cocoonbar = "纏繞的蜘蛛網",

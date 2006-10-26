@@ -98,10 +98,10 @@ L:RegisterTranslations("zhTW", function() return {
 	debuff_desc = "無疤者奧斯里安受到虛弱效果影響時發出警報",
 
 	supremetrigger = "無疤者奧斯里安獲得了奧斯里安之力的效果。",
-	supremewarn = "*** 已經進入了無敵模式！ ***",
-	supremedelaywarn = "*** %d 秒後無敵！ ***",
+	supremewarn = "已經進入了無敵模式！",
+	supremedelaywarn = "%d 秒後無敵！",
 	debufftrigger = "^無疤者奧斯里安受到(.+)虛弱的傷害",
-	debuffwarn = "*** 抗性虛弱 45 秒 : %s - DPS全開！ ***",
+	debuffwarn = "抗性虛弱 45 秒 : %s - DPS全開！",
 	bartext = "無敵",
 	expose = "我...已...失敗。",
 

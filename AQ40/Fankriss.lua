@@ -44,7 +44,7 @@ L:RegisterTranslations("zhTW", function() return {
 	worm_desc = "范克里斯召喚蟲子時發出警報",
 	
 	wormtrigger = "頑強的范克里斯施放了召喚蟲子。",
-	wormwarn = "*** 召喚蟲子出現！注意！ ***",
+	wormwarn = "召喚蟲子出現！注意！",
 	wormbar = "王蟲激怒(%d)",
 } end )
 

@@ -156,10 +156,10 @@ L:RegisterTranslations("zhTW", function() return {
 	triggerhealing = "妖術師金度施放了強力治療結界。",
 	triggercurse = "^(.+)受到(.*)金度的欺騙",  -- CHECK
 
-	warnbrainwash = "*** 控制圖騰！ 快清掉！ ***",
-	warnhealing = "*** 治療圖騰！ 快清掉！ ***",
-	cursewarn_self = "*** 你中了詛咒 - 快打影子！ ***",
-	cursewarn_other = "*** %s 中了詛咒！不要解除！ ***",
+	warnbrainwash = "控制圖騰！ 快清掉！",
+	warnhealing = "治療圖騰！ 快清掉！",
+	cursewarn_self = "你中了詛咒 - 快打影子！",
+	cursewarn_other = "%s 中了詛咒！不要解除！",
 
 	you = "你",
 	are = "了",

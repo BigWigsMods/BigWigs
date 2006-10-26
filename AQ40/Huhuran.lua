@@ -113,19 +113,19 @@ L:RegisterTranslations("zhTW", function() return {
 	
 	frenzytrigger = "變得狂暴起來！",
 	berserktrigger = "進入狂暴狀態！",
-	frenzywarn = "*** 狂暴警報 - 獵人立刻使用寧神射擊！ ***",
-	berserkwarn = "*** 極度狂暴 - 治療注意！ ***",
-	berserksoonwarn = "*** 即將極度狂暴 - 做好準備！ ***",
+	frenzywarn = "狂暴警報 - 獵人立刻使用寧神射擊！",
+	berserkwarn = "極度狂暴 - 治療注意！",
+	berserksoonwarn = "即將極度狂暴 - 做好準備！",
 	stingtrigger = "^(.+)受到翼龍釘刺",
-	stingwarn = "*** 毒性之箭！淨化近戰！ ***",
-	stingdelaywarn = "*** 3 秒後可能施放毒性之箭！ ***",
+	stingwarn = "毒性之箭！淨化近戰！",
+	stingdelaywarn = "3 秒後可能施放毒性之箭！",
 	bartext = "毒性之箭",
 	
-	startwarn = "*** 哈霍蘭公主已進入戰鬥 - 5 分鐘後進入極度狂暴狀態 ***",
+	startwarn = "哈霍蘭公主已進入戰鬥 - 5 分鐘後進入極度狂暴狀態",
 	berserkbar = "極度狂暴",
-	berserkwarn1 = "*** 1 分鐘後極度狂暴！ ***",
-	berserkwarn2 = "*** 30 秒後極度狂暴！ ***",
-	berserkwarn3 = "*** 5 秒後極度狂暴！ ***",
+	berserkwarn1 = "1 分鐘後極度狂暴！",
+	berserkwarn2 = "30 秒後極度狂暴！",
+	berserkwarn3 = "5 秒後極度狂暴！",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

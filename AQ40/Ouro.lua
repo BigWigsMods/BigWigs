@@ -227,32 +227,32 @@ L:RegisterTranslations("zhTW", function() return {
 	berserk_desc = "當奧羅變得狂暴發出警報",
 
 	sweeptrigger = "奧羅開始施放橫掃。",
-	sweepannounce = "*** 橫掃發動！ ***",
-	sweepwarn = "*** 5 秒後發動橫掃！快退！ ***",
+	sweepannounce = "橫掃發動！",
+	sweepwarn = "5 秒後發動橫掃！快退！",
 	sweepbartext = "橫掃",
 
 	sandblasttrigger = "奧羅開始施放沙塵爆裂。",
-	sandblastannounce = "*** 沙塵爆裂！ ***",
-	sandblastwarn = "*** 5 秒後發動沙塵爆裂！ ***",
+	sandblastannounce = "沙塵爆裂！",
+	sandblastwarn = "5 秒後發動沙塵爆裂！",
 	sandblastbartext = "沙塵爆裂",
 	
-	engage_message = "*** 奧羅已進入戰鬥 - 90 秒後可能潛入地下！ ***",
+	engage_message = "奧羅已進入戰鬥 - 90 秒後可能潛入地下！",
 	possible_submerge_bar = "潛入地下",
 
 	emergetrigger = "土堆施放了召喚奧羅甲蟲。",
-	emergeannounce = "*** 奧羅鑽出了地面！ ***",
-	emergewarn = "*** 15 秒後潛入地下 ***",
+	emergeannounce = "奧羅鑽出了地面！",
+	emergewarn = "15 秒後潛入地下",
 	emergebartext = "鑽出地面",
 
-	scarabdespawn = "*** 10 秒後甲蟲消失 ***", --Translate me
+	scarabdespawn = "10 秒後甲蟲消失", --Translate me
 	scarabbar	= "甲蟲消失", -- Translate Me
 	
 	submergetrigger = "奧羅施放了召喚奧羅土堆。",
-	submergeannounce = "*** 奧羅潛入地下！殺光蟲子！ ***",
-	submergewarn = "*** 5 秒後將鑽出地面！ ***",
+	submergeannounce = "奧羅潛入地下！殺光蟲子！",
+	submergewarn = "5 秒後將鑽出地面！",
 	submergebar = "潛入地下",
 
-	berserksoonwarn = "*** 即將狂暴 - 做好準備！ ***",
+	berserksoonwarn = "即將狂暴 - 做好準備！",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

@@ -65,9 +65,9 @@ L:RegisterTranslations("zhTW", function() return {
 	frenzy_trigger = "變得狂暴起來！",
 
 	wingbuffet_message = "*** 龍翼打擊！ 30 秒後再次發動***",
-	wingbuffet_warning = "*** 3 秒後龍翼打擊！ ***",
-	shadowflame_warning = "*** 暗影烈焰發動！ ***",
-	frenzy_message = "*** 狂暴警報！獵人立刻使用寧神射擊！ ***",
+	wingbuffet_warning = "3 秒後龍翼打擊！",
+	shadowflame_warning = "暗影烈焰發動！",
+	frenzy_message = "狂暴警報！獵人立刻使用寧神射擊！",
 
 	wingbuffet_bar = "龍翼打擊",
 

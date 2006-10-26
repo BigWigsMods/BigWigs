@@ -128,15 +128,15 @@ L:RegisterTranslations("zhTW", function() return {
 	trigger8 = "厚顏無恥的笨蛋！我要親手殺了你！",
 	trigger9 = "記得",
 
-	warn1 = "*** 第 1/8 波敵人 ***",
-	warn2 = "*** 第 2/8 波敵人 ***",
-	warn3 = "*** 第 3/8 波敵人 ***",
-	warn4 = "*** 第 4/8 波敵人 ***",
-	warn5 = "*** 第 5/8 波敵人 ***",
-	warn6 = "*** 第 6/8 波敵人 ***",
-	warn7 = "*** 第 7/8 波敵人 ***",
-	warn8 = "*** 最後一波 拉賈克斯將軍！ ***",
-	warn9 = "*** 第 1/8 波敵人 ***", -- trigger for starting the event by pulling the first wave instead of talking to andorov
+	warn1 = "第 1/8 波敵人",
+	warn2 = "第 2/8 波敵人",
+	warn3 = "第 3/8 波敵人",
+	warn4 = "第 4/8 波敵人",
+	warn5 = "第 5/8 波敵人",
+	warn6 = "第 6/8 波敵人",
+	warn7 = "第 7/8 波敵人",
+	warn8 = "最後一波 拉賈克斯將軍！",
+	warn9 = "第 1/8 波敵人", -- trigger for starting the event by pulling the first wave instead of talking to andorov
 } end )
 
 L:RegisterTranslations("koKR", function() return {

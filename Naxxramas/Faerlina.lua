@@ -142,16 +142,16 @@ L:RegisterTranslations("zhTW", function() return {
 	starttrigger4 = "逃啊！有本事就逃啊！",
 
 	silencetrigger = "大寡婦費琳娜受到寡婦之擁的傷害。", -- EDITED it affects her too.
-	enragetrigger = "*** 大寡婦費琳娜獲得了狂怒的效果。 ***",
-	enragefade = "*** 狂怒效果從大寡婦費琳娜身上消失。 ***",
+	enragetrigger = "大寡婦費琳娜獲得了狂怒的效果。",
+	enragefade = "狂怒效果從大寡婦費琳娜身上消失。",
 
-	startwarn = "*** 大寡婦費琳娜已進入戰鬥 - 60 秒後狂怒！ ***",
-	enragewarn15sec = "*** 15 秒後狂怒！ ***",
-	enragewarn = "*** 狂怒！ ***",
-	enrageremovewarn = "*** 狂怒已移除 - %d 秒後再次狂怒 ***", -- added
-	silencewarn = "*** 沉默！延緩了狂怒！ ***",
-	silencewarnnodelay = "*** 沉默！ ***",
-	silencewarn5sec = "*** 5 秒後沉默結束！ ***",
+	startwarn = "大寡婦費琳娜已進入戰鬥 - 60 秒後狂怒！",
+	enragewarn15sec = "15 秒後狂怒！",
+	enragewarn = "狂怒！",
+	enrageremovewarn = "狂怒已移除 - %d 秒後再次狂怒", -- added
+	silencewarn = "沉默！延緩了狂怒！",
+	silencewarnnodelay = "沉默！",
+	silencewarn5sec = "5 秒後沉默結束！",
 
 	enragebar = "狂怒",
 	silencebar = "沉默",

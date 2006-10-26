@@ -85,12 +85,12 @@ L:RegisterTranslations("zhTW", function() return {
 	heal_desc = "亞爾基公主施放治療時發出警報",
 	
 	healtrigger = "亞爾基公主開始施放強效治療術。",
-	healwarn = "*** 正在施放治療！ 打斷！ ***",
+	healwarn = "正在施放治療！ 打斷！",
 
 	feartrigger = "受到恐懼術的傷害",
 	fearbar = "群體恐懼",
-	fearwarn1 = "*** 群體恐懼 - 20 秒後再次發動 ***",
-	fearwarn2 = "*** 5 秒後群體恐懼！ ***",
+	fearwarn1 = "群體恐懼 - 20 秒後再次發動",
+	fearwarn2 = "5 秒後群體恐懼！",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

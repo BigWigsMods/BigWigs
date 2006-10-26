@@ -159,24 +159,24 @@ L:RegisterTranslations("zhTW", function() return {
 	berserk_desc = "狂暴警報",
 
 	berserk_bar = "狂暴",
-	berserk_warn_10min = "*** 10分鐘後狂暴！ ***",
-	berserk_warn_5min = "*** 5分鐘後狂暴！ ***",
-	berserk_warn_rest = "*** %s秒後狂暴！ ***",
+	berserk_warn_10min = "10分鐘後狂暴！",
+	berserk_warn_5min = "5分鐘後狂暴！",
+	berserk_warn_rest = "%s秒後狂暴！",
 
-	engage_message = "*** 薩菲隆進入戰鬥 - 15 分鐘後進入狂暴狀態！ ***",
+	engage_message = "薩菲隆進入戰鬥 - 15 分鐘後進入狂暴狀態！",
 
-	lifedrain_message = "*** 生命吸取 24 秒後再次施放！ ***",
-	lifedrain_warn1 = "*** 5 秒後生命吸取！ ***",
+	lifedrain_message = "生命吸取 24 秒後再次施放！",
+	lifedrain_warn1 = "5 秒後生命吸取！",
 	lifedrain_bar = "生命吸取",
 
 	lifedrain_trigger = "受到了生命吸取效果的影響",
 	lifedrain_trigger2 = "生命吸取被抵抗",  -- need confirm
 
-	deepbreath_incoming_message = "*** 寒冰炸彈23 秒後施放！ ***",
-	deepbreath_incoming_soon_message = "*** 寒冰炸彈 5 秒後施放！ ***",
-	deepbreath_incoming_bar = "*** 寒冰炸彈 ***",
+	deepbreath_incoming_message = "寒冰炸彈23 秒後施放！",
+	deepbreath_incoming_soon_message = "寒冰炸彈 5 秒後施放！",
+	deepbreath_incoming_bar = "寒冰炸彈",
 	deepbreath_trigger = "%s深深地吸了一口氣……",
-	deepbreath_warning = "*** 寒冰炸彈即將著地！ ***",
+	deepbreath_warning = "寒冰炸彈即將著地！",
 	deepbreath_bar = "寒冰炸彈",
 } end )
 

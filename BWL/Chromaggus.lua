@@ -158,11 +158,11 @@ L:RegisterTranslations("zhTW", function() return {
 	crit = "致命一擊",
 
 	breath_warning = "*** %s - 10 秒後施放！***",
-	breath_message = "*** 克洛瑪古斯施放：%s ！ ***",
-	vulnerability_message = "*** 克洛瑪古斯新弱點：%s ！ ***",
-	vulnerability_warning = "*** 克洛瑪古斯弱點改變 ***",
-	frenzy_message = "*** 狂怒警報 - 獵人立刻使用寧神射擊！ ***",
-	enrage_warning = "*** 即將暴怒！ ***",
+	breath_message = "克洛瑪古斯施放：%s ！",
+	vulnerability_message = "克洛瑪古斯新弱點：%s ！",
+	vulnerability_warning = "克洛瑪古斯弱點改變",
+	frenzy_message = "狂怒警報 - 獵人立刻使用寧神射擊！",
+	enrage_warning = "即將暴怒！",
 
 	breath1 = "時間流逝",
 	breath2 = "腐蝕酸液",

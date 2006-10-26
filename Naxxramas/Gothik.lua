@@ -213,7 +213,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	starttrigger1 = "你們這些蠢貨已經主動步入了陷阱。",
 	starttrigger2 = "我已經等待很久了。現在你們將面對靈魂的收割者。", --?
-	startwarn = "*** 收割者戈提克已進入戰鬥 - 4:30 後進入房間 ***",
+	startwarn = "收割者戈提克已進入戰鬥 - 4:30 後進入房間",
 
 	rider_name = "冷酷的騎兵",
 	spectral_rider_name = "騎兵",
@@ -222,25 +222,25 @@ L:RegisterTranslations("zhTW", function() return {
 	trainee_name = "冷酷的學徒",
 	spectral_trainee_name = "學徒",
 
-	riderdiewarn = "*** 騎兵已死亡！ ***",
-	dkdiewarn = "*** 死亡騎士已死亡！ ***",
+	riderdiewarn = "騎兵已死亡！",
+	dkdiewarn = "死亡騎士已死亡！",
 
-	warn1 = "*** 3 分鐘後進入房間！ ***",
-	warn2 = "*** 90 秒後進入房間！ ***",
-	warn3 = "*** 60 秒後進入房間！ ***",
-	warn4 = "*** 30 秒後進入房間！ ***",
-	warn5 = "*** 10 秒後進入房間！ ***",
+	warn1 = "3 分鐘後進入房間！",
+	warn2 = "90 秒後進入房間！",
+	warn3 = "60 秒後進入房間！",
+	warn4 = "30 秒後進入房間！",
+	warn5 = "10 秒後進入房間！",
 
-	trawarn = "*** 3 秒後學徒出現！ ***",
-	dkwarn = "*** 3 秒後死亡騎士出現！ ***",
-	riderwarn = "*** 3 秒後騎兵出現！ ***",
+	trawarn = "3 秒後學徒出現！",
+	dkwarn = "3 秒後死亡騎士出現！",
+	riderwarn = "3 秒後騎兵出現！",
 
 	trabar = "訓練師 - %d",
 	dkbar = "死騎 - %d",
 	riderbar = "騎兵 - %d",
 
 	inroomtrigger = "我已經等待很久了。現在你們將面對靈魂的收割者。",
-	inroomwarn = "*** 收割者高希進入了房間！ ***",
+	inroomwarn = "收割者高希進入了房間！",
 
 	inroombartext = "進入房間",
 } end )
