@@ -33,7 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00Module d\195\169marr\195\169|r",
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55fClic|r pour red\195\169marrer les modules actifs. |cffeda55fShift+Clic|r pour les d\195\169sactiver. |cffeda55fCtrl+Shift+Clic|r pour d\195\169sactiver Big Wigs compl\195\168tement.",
+--	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55fClic|r pour red\195\169marrer les modules actifs. |cffeda55fShift+Clic|r pour les d\195\169sactiver. |cffeda55fCtrl+Shift+Clic|r pour d\195\169sactiver Big Wigs compl\195\168tement.",
 	["|cffeda55fClick|r to enable."] = "|cffeda55fClic|r pour activer.",
 	["Big Wigs is currently disabled."] = "Big Wigs est actuellement d\195\169sactiv\195\169.",
 	["Active boss modules"] = "Modules de boss actifs",
@@ -50,7 +50,7 @@ L:RegisterTranslations("frFR", function() return {
   
 L:RegisterTranslations("koKR", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00모듈 실행중|r",
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55f클릭|r : 모두 초기화 |cffeda55f쉬프트+클릭|r 비활성화 |cffeda55f컨트롤+쉬프트+클릭|r : BigWigs 비활성화.",
+--	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55f클릭|r : 모두 초기화 |cffeda55f쉬프트+클릭|r 비활성화 |cffeda55f컨트롤+쉬프트+클릭|r : BigWigs 비활성화.",
 	["|cffeda55fClick|r to enable."] = "|cffeda55f클릭|r : 모듈 활성화.",
 	["Big Wigs is currently disabled."] = "BigWigs가 비활성화 되어 있습니다.",
 	["Active boss modules"] = "보스 모듈 활성화",
@@ -68,7 +68,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00模块运行中|r",
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55f点击|r图标重置所有运行中的模块。|cffeda55fShift+点击|r图标关闭所有运行中的模块。|cffeda55fCtrl+Shift+点击|r图标关闭BigWigs。",
+--	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55f点击|r图标重置所有运行中的模块。|cffeda55fShift+点击|r图标关闭所有运行中的模块。|cffeda55fCtrl+Shift+点击|r图标关闭BigWigs。",
 	["|cffeda55fClick|r to enable."] = "|cffeda55f点击|r图标开启BigWigs。",
 	["Big Wigs is currently disabled."] = "Big Wigs目前关闭。",
 	["Active boss modules"] = "激活首领模块",
@@ -86,7 +86,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00模組運作中|r",
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55f點擊|r圖示重置所有運作中的模組。|cffeda55fShift+點擊|r圖示關閉所有運作中的模組。|cffeda55fCtrl+Shift+點擊|r圖示關閉BigWigs。",
+--	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55f點擊|r圖示重置所有運作中的模組。|cffeda55fShift+點擊|r圖示關閉所有運作中的模組。|cffeda55fCtrl+Shift+點擊|r圖示關閉BigWigs。",
 	["|cffeda55fClick|r to enable."] = "|cffeda55f點擊|r圖示開啟BigWigs。",
 	["Big Wigs is currently disabled."] = "Big Wigs目前關閉。",
 	["Active boss modules"] = "啟動首領模組",
@@ -103,7 +103,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00Modul aktiviert|r",
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55fKlicken|r, um alle laufenden Module zur\195\188ckzusetzen. |cffeda55fShift+Klick|r um alle laufenden Module zu beenden. |cffeda55fStrg+Shift+Klick|r um BigWigs komplett zu beenden.",
+--	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55fKlicken|r, um alle laufenden Module zur\195\188ckzusetzen. |cffeda55fShift+Klick|r um alle laufenden Module zu beenden. |cffeda55fStrg+Shift+Klick|r um BigWigs komplett zu beenden.",
 	["|cffeda55fClick|r to enable."] = "|cffeda55fKlicken|r um zu aktivieren.",
 	["Big Wigs is currently disabled."] = "Big Wigs ist gegenw\195\164rtig deaktiviert.",
 	["Active boss modules"] = "Aktive Boss Module",
