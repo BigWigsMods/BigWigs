@@ -14,7 +14,7 @@ local tablet = AceLibrary("Tablet-2.0")
 
 L:RegisterTranslations("enUS", function() return {
 	["|cff00ff00Module running|r"] = true,
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = true,
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt+Click|r to disable them. |cffeda55fCtrl+Alt+Click|r to disable Big Wigs completely."] = true,
 	["|cffeda55fClick|r to enable."] = true,
 	["Big Wigs is currently disabled."] = true,
 	["Active boss modules"] = true,
@@ -194,7 +194,7 @@ end
 -----------------------------
 
 function BigWigsOptions:ModuleAction(module)
-	if IsShiftKeyDown() then
+	if IsAltKeyDown() then
 		deuce.core:ToggleModuleActive(module, false)
 		self:Print(string.format(L["%s disabled."], module:ToString()))
 	else
@@ -212,7 +212,7 @@ function BigWigsOptions:OnTooltipUpdate()
 				cat:AddLine("text", name, "func", function(mod) BigWigsOptions:ModuleAction(mod) end, "arg1", module)
 			end
 		end
-		tablet:SetHint(L["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."])
+		tablet:SetHint(L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt+Click|r to disable them. |cffeda55fCtrl+Alt+Click|r to disable Big Wigs completely."])
 	else
 		-- use a text line for this, since the hint is not shown when we are
 		-- detached.
@@ -224,7 +224,7 @@ end
 
 function BigWigsOptions:OnClick()
 	if BigWigs:IsActive() then
-		if IsShiftKeyDown() then
+		if IsAltKeyDown() then
 			if IsControlKeyDown() then
 				BigWigs:ToggleActive(false)
 				self:UpdateTooltip()
