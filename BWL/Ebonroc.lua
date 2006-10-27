@@ -92,16 +92,15 @@ L:RegisterTranslations("zhTW", function() return {
 	you = "你",
 	are = "了",
 
-	wingbuffet_message = "開始施放龍翼打擊！",
+	wingbuffet_message = "龍翼打擊！ 30 秒後再次發動！",
 	wingbuffet_warning = "3 秒後龍翼打擊！",
 	shadowflame_warning = "暗影烈焰發動！",
 	shadowflame_message_you = "你中了埃博諾克之影！",
 	shadowflame_message_other = " 中了埃博諾克之影！",
 	
-	shadowcurse_bar = "%s - 埃博諾克之影",
-
 	wingbuffet_bar = "龍翼打擊",
-
+	shadowcurse_bar = "%s - 埃博諾克之影",
+	
 	wingbuffet_name = "龍翼打擊警報",
 	wingbuffet_desc = "當埃博諾克施放龍翼打擊時發出警報",
 

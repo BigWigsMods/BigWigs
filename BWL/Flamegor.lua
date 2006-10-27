@@ -62,9 +62,9 @@ L:RegisterTranslations("zhTW", function() return {
 	-- Flamegor 弗萊格爾
 	wingbuffet_trigger = "弗萊格爾開始施放龍翼打擊。",
 	shadowflame_trigger = "弗萊格爾開始施放暗影烈焰。",
-	frenzy_trigger = "變得狂暴起來！",
+	frenzy_trigger = "%s變得狂暴起來！",
 
-	wingbuffet_message = "*** 龍翼打擊！ 30 秒後再次發動***",
+	wingbuffet_message = "龍翼打擊！ 30 秒後再次發動！",
 	wingbuffet_warning = "3 秒後龍翼打擊！",
 	shadowflame_warning = "暗影烈焰發動！",
 	frenzy_message = "狂暴警報！獵人立刻使用寧神射擊！",

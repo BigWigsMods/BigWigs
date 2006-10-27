@@ -150,14 +150,14 @@ L:RegisterTranslations("zhTW", function() return {
 	vulnerability_desc = "當克洛瑪古斯弱點改變時發出警報",
 
 	breath_trigger = "^克洛瑪古斯開始施放(.+)。",
-	vulnerability_test = "^.+的(.+)克洛瑪古斯造成(%d+)點(.+)傷害。",
-	frenzy_trigger = "變得極為狂暴！",
-	vulnerability_trigger = "皮膚閃著微光而驚訝退縮",
+	vulnerability_test = "^.+的.+克洛瑪古斯(.+)成(%d+)點(.+)傷害。",
+	frenzy_trigger = "%s變得極為狂暴！", --完全比對
+	vulnerability_trigger = "%s因皮膚閃著微光而驚訝退縮。", --完全比對
 
-	hit = "擊中",
-	crit = "致命一擊",
-
-	breath_warning = "*** %s - 10 秒後施放！***",
+	hit = "造",
+	crit = "致命一擊造",
+	
+	breath_warning = "%s - 10 秒後施放！",
 	breath_message = "克洛瑪古斯施放：%s ！",
 	vulnerability_message = "克洛瑪古斯新弱點：%s ！",
 	vulnerability_warning = "克洛瑪古斯弱點改變",
@@ -171,6 +171,12 @@ L:RegisterTranslations("zhTW", function() return {
 	breath5 = "冰霜灼燒",
 
 	castingbar = "施放 %s",
+	-- about vulnerability_test
+	-- 誰的什麼法術擊中克洛瑪古斯    造    成 幾  點哪種傷害。 <-法術hit描述,空白為對照用
+	-- 誰的什麼法術對  克洛瑪古斯致命一擊造成 幾  點哪種傷害。 <-法術crit描述,空白為對照用
+	-- .+的   .+       克洛瑪古斯   (.+)   成(%d+)點(.+)傷害。 ，這樣修改可以不用動到程式。
+	-- drop  drop                   type      dmg   school     多抓一個"造"字是因type不能為空.又,判斷對跟擊中的話,要改程式碼(像koKR的做法) 
+
 } end )
 
 L:RegisterTranslations("koKR", function() return {
