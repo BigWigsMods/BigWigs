@@ -1,4 +1,4 @@
-## Interface: 20000
+## Interface: 11200
 
 ## Title: Big Wigs |cff7fff7f -Ace2-|r
 ## Notes: Boss Mods with Timer bars.
