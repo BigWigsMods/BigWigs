@@ -139,7 +139,7 @@ L:RegisterTranslations("zhTW", function() return {
 	start_message = "狂野的拉佐格爾進入戰鬥！",
 
 	mindcontrol_trigger = "愚蠢的 ([^%s]+).",
-	mindcontrol_message = "**** %s 被心靈控制 ***",
+	mindcontrol_message = "%s 被心靈控制",
 
 	egg_trigger = "狂野的拉佐格爾施放了(.+)。",
 	egg_message = "已摧毀 %d/30 個龍蛋！",
