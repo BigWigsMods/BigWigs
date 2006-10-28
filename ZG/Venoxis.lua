@@ -80,7 +80,7 @@ L:RegisterTranslations("zhTW", function() return {
 	renew_trigger = "高階祭司溫諾希斯獲得了恢復的效果。",
 	phase2_trigger = "讓仇恨的圈圈就此展開吧！", -- check combatlog
 
-	renew_message = "正在補血！馬上中斷！",
+	renew_message = "恢復！馬上驅散！",
 	phase2_message = "進入第二階段！小心毒雲！",
 } end )
 

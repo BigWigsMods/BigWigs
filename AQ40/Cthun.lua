@@ -284,7 +284,7 @@ L:RegisterTranslations("zhTW", function() return {
 	giant2		= "巨眼 5 秒後出現",
 	giant1		= "巨眼出現！",
 
-	startwarn	= "*** 克蘇恩已進入戰鬥 - 45秒後發動黑暗閃耀, 出現巨眼",
+	startwarn	= "克蘇恩已進入戰鬥 - 45秒後發動黑暗閃耀, 出現巨眼",
 
 	glare2		= "黑暗閃耀 5 秒後發動！",
 	glare1		= "黑暗閃耀發動 - 跑位！",
@@ -297,7 +297,7 @@ L:RegisterTranslations("zhTW", function() return {
 	barGreenBeam	= "綠光！",
 
 	eyebeam		= "眼棱",
-	glarewarning	= "*** 黑暗閃耀在你身上發動了！　***",
+	glarewarning	= "黑暗閃耀在你身上發動了！",
 	groupwarning	= "黑暗閃耀在%s小隊發動了！ %s 小隊移動！",
 	positions1	= "綠光發動",
 	positions2	= "5 秒後黑暗閃耀結束",

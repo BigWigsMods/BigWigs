@@ -86,7 +86,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00模組運作中|r",
---	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55f點擊|r圖示重置所有運作中的模組。|cffeda55fShift+點擊|r圖示關閉所有運作中的模組。|cffeda55fCtrl+Shift+點擊|r圖示關閉BigWigs。",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt+Click|r to disable them. |cffeda55fCtrl+Alt+Click|r to disable Big Wigs completely."] = "|cffeda55f點擊|r圖示重置所有運作中的模組。|cffeda55fAlt+點擊|r圖示關閉所有運作中的模組。|cffeda55fCtrl+Alt+點擊|r圖示關閉BigWigs。",
 	["|cffeda55fClick|r to enable."] = "|cffeda55f點擊|r圖示開啟BigWigs。",
 	["Big Wigs is currently disabled."] = "Big Wigs目前關閉。",
 	["Active boss modules"] = "啟動首領模組",

@@ -189,7 +189,7 @@ L:RegisterTranslations("zhTW", function() return {
 	-- Chat message triggers
 	engage_trigger = "^驕傲會將你送上絕路",
 	drain_trigger = "^(.+)的血液虹吸使哈卡受到了(.+)點自然傷害。$",
-	mindcontrol_trigger = "^(.+)受到(.*)導致瘋狂的傷害",
+	mindcontrol_trigger = "^(.+)受到(.*)導致瘋狂",
 	
 	you = "你",
 	are = "了",

@@ -54,7 +54,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	-- Broodlord Lashlayer 勒西雷爾
-	trigger1 = "^(.+)受到(.+)致死打擊的傷害",
+	trigger1 = "^(.+)受到(.+)致死打擊",
 
 	you = "你",
 	are = "了",

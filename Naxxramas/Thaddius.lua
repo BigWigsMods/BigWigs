@@ -281,7 +281,7 @@ L:RegisterTranslations("zhTW", function() return {
 	teslaoverload = "%s超負荷！",
 
 	pstrigger = "你感受到痛苦的滋味了吧……",
-	trigger1 = "泰迪斯開始施放兩極轉化。",
+	trigger1 = "泰迪斯開始施放兩極移形。",
 	chargetrigger = "^(.+)受到(.+)(.+)電荷",
 	stalaggtrigger = "斯塔拉格獲得了力量澎湃的效果。",
 
@@ -293,13 +293,13 @@ L:RegisterTranslations("zhTW", function() return {
 	startwarn2 = "泰迪斯第二階段 - 5 分鍾後狂怒！",
 	addsdownwarn = "10-20秒後泰迪斯出現！",
 	thaddiusincoming = "3 秒後泰迪斯出現！",
-	pswarn1 = "泰迪斯開始施放兩極轉化！",
-	pswarn2 = "30 秒後發動兩極轉化！",
-	pswarn3 = "3 秒後發動兩極轉化！",
+	pswarn1 = "泰迪斯開始施放兩極移形！",
+	pswarn2 = "30 秒後發動兩極移形！",
+	pswarn3 = "3 秒後發動兩極移形！",
 	poswarn = "你是正電荷！",
 	negwarn = "你是負電荷！",
 	nochange = "你的電荷沒有改變！",
-	polaritytickbar = "*** 極性狀態",
+	polaritytickbar = "極性狀態",
 	enragebartext = "狂怒",
 	warn1 = "3 分鐘後狂怒",
 	warn2 = "90 秒後狂怒",
@@ -309,7 +309,7 @@ L:RegisterTranslations("zhTW", function() return {
 	stalaggwarn = "力量澎湃！加大對坦克的治療！",
 	powersurgebar = "力量澎湃",
 
-	bar1text = "兩極轉化",
+	bar1text = "兩極移形",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
