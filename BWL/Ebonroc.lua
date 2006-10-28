@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -57,15 +57,14 @@ L:RegisterTranslations("zhCN", function() return {
 	you = "你",
 	are = "到",
 
-	wingbuffet_message = "埃博诺克开始施放龙翼打击！",
+	wingbuffet_message = "龙翼打击 - 30秒后再次发动",
 	wingbuffet_warning = "3秒后发动龙翼打击！",
 	shadowflame_warning = "暗影烈焰发动！",
 	shadowflame_message_you = "你中了埃博诺克之影！",
 	shadowflame_message_other = "中了埃博诺克之影！",
 	
-	shadowcurse_bar = "%s - 埃博诺克之影",
-
 	wingbuffet_bar = "龙翼打击",
+	shadowcurse_bar = "%s - 埃博诺克之影",
 
 	wingbuffet_name = "龙翼打击警报",
 	wingbuffet_desc = "龙翼打击警报",

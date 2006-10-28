@@ -214,7 +214,7 @@ L:RegisterTranslations("zhCN", function() return {
 	weakened_name = "虚弱警报",
 	weakened_desc = "克苏恩被削弱时发出警报",
 
-	weakenedtrigger 	= "%s的力量被削弱了！",
+	weakenedtrigger = "%s的力量被削弱了！",
 
 	tentacle1	= "眼球触须出现！",
 	tentacle2	= "5秒后眼球触须出现！",
@@ -222,7 +222,7 @@ L:RegisterTranslations("zhCN", function() return {
 	norape1		= "巨眼、巨爪触须出现！",
 	norape2		= "5秒后巨眼、巨爪触须出现！",
 
-	weakened		= "克苏恩被削弱了 - 45秒内全力输出伤害！",
+	weakened	= "克苏恩被削弱了 - 45秒内全力输出伤害！",
 	invulnerable2	= "削弱状态还有5秒结束",
 	invulnerable1	= "削弱状态结束 - 停止攻击克苏恩！",
 
@@ -230,7 +230,7 @@ L:RegisterTranslations("zhCN", function() return {
 	giant2		= "巨眼出现 - 5 秒",
 	giant1		= "巨眼出现！",
 
-	startwarn	= "克苏恩已激活 - 45秒后发动黑暗闪耀, 出现巨眼",
+	startwarn	= "克苏恩已激活 - 45秒后发动黑暗闪耀, 出现眼球",
 
 	glare2		= "5秒后发动黑暗闪耀！",
 	glare1		= "黑暗闪耀发动 - 跑位！",
@@ -242,7 +242,7 @@ L:RegisterTranslations("zhCN", function() return {
 	barGiant	= "巨眼！",
 	barGreenBeam	= "绿光！",
 
-	eyebeam		= "眼棱光",
+	eyebeam		= "眼棱",
 	glarewarning	= "黑暗闪耀在你身上发动了!",
 	groupwarning	= "黑暗闪耀在%s小队发动了！（%s小队移动！！）",
 	positions1	= "绿光发动",

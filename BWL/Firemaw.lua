@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -34,6 +34,7 @@ L:RegisterTranslations("zhCN", function() return {
 	wingbuffet_trigger = "费尔默开始施放龙翼打击。",
 	shadowflame_trigger = "费尔默开始施放暗影烈焰。",
 
+	wingbuffet_message = "龙翼打击 - 30秒后再次发动",
 	wingbuffet_warning = "3秒后发动龙翼打击！",
 	shadowflame_warning = "暗影烈焰发动！",
 
