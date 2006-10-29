@@ -26,7 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	swarm_trigger = "emits a deafening shriek",
 	bomb_trigger = "I command you to rain fire down upon these invaders!$",
-	heal_trigger = "begins to cast a Greater Heal!$",
+	heal_trigger = "begins to cast a Great Heal!$",
 
 	swarm_message = "Incoming bat swarm!",
 	bomb_message = "Incoming bomb bats!",
