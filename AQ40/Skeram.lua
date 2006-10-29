@@ -16,7 +16,8 @@ L:RegisterTranslations("enUS", function() return {
 	aewarn = "Casting Arcane Explosion!",
 	mcwarn = "Casting Mind Control!",
 	mcplayer = "^([^%s]+) ([^%s]+) afflicted by True Fulfillment.$",
-	mcplayerwarn = " is mindcontrolled!",
+	mcplayerwarn = "%s is mindcontrolled!",
+	mcbar = "MC: %s",
 	mcyou = "You",
 	mcare = "are",
 	
@@ -42,7 +43,7 @@ L:RegisterTranslations("frFR", function() return {
 	aewarn = "Explosion des arcanes - Interrompez-le !",
 	mcwarn = "Controle mental en cours",
 	mcplayer = "^([^%s]+) ([^%s]+) les effets de Accomplissement v\195\169ritables",
-	mcplayerwarn = " est sous controle mental !",
+	mcplayerwarn = "%s est sous controle mental !",
 	mcyou = "Tu",
 	mcare = "es",
 	
@@ -56,7 +57,7 @@ L:RegisterTranslations("deDE", function() return {
 	aewarn = "Arkane Explosion!",
 	mcwarn = "Gedankenkontrolle!",
 	mcplayer = "^([^%s]+) ([^%s]+) von Wahre Erf\195\188llung betroffen.$",
-	mcplayerwarn = " steht unter Gedankenkontrolle!",
+	mcplayerwarn = "%s steht unter Gedankenkontrolle!",
 	mcyou = "Ihr",
 	mcare = "seid",
 	
@@ -79,7 +80,7 @@ L:RegisterTranslations("zhCN", function() return {
 	aewarn = "正在施放魔爆术 - 迅速打断！",
 	mcwarn = "正在施放充实 - 准备变羊！",
 	mcplayer = "^(.+)受(.+)了充实效果的影响。",
-	mcplayerwarn = "被控制了！变羊！恐惧！",
+	mcplayerwarn = "%s 被控制了！变羊！恐惧！",
 	mcyou = "你",
 	mcare = "到",
 	
@@ -104,7 +105,7 @@ L:RegisterTranslations("zhTW", function() return {
 	aewarn = "施放魔爆術 - 迅速打斷！",
 	mcwarn = "施放充實 - 準備變羊！",
 	mcplayer = "^(.+)受到(.+)充實",
-	mcplayerwarn = " 被心靈控制，法師快變羊！",
+	mcplayerwarn = "%s 被心靈控制，法師快變羊！",
 	mcyou = "你",
 	mcare = "了",
 	
@@ -127,7 +128,7 @@ L:RegisterTranslations("koKR", function() return {
 	aewarn = "신비한 폭발 시전 - 시전 방해!",
 	mcwarn = "예언 실현 시전 - 양변 준비!",
 	mcplayer = "^([^|;%s]*)(.*)예언 실현에 걸렸습니다%.$", --"(.*)예언 실현에 걸렸습니다.",
-	mcplayerwarn = "님이 정신지배되었습니다. 양변! 공포!",
+	mcplayerwarn = "%s 님이 정신지배되었습니다. 양변! 공포!",
 	mcyou = "",
 	mcare = "",
 
@@ -141,18 +142,6 @@ L:RegisterTranslations("koKR", function() return {
 	
 --	split_name = "분리 경고",
 --	split_desc = "이미지 생성 전 경고",
-} end )
-
-L:RegisterTranslations("frFR", function() return {
-	aetrigger = "Le Proph\195\168te Skeram commence \195\160 lancer Explosion des arcanes.",
-	mctrigger = "Le Proph\195\168te Skeram commence \195\160 lancer Accomplissement v\195\169ritable.",
-	splittrigger = "Le Proph\195\168te Skeram lance Invocation des Images.",
-	mcplayer = "([^%s]+) ([^%s]+) les effets de Accomplissement v\195\169ritable.",
-	mcplayerwarn = " est sous controle mental!",
-	mcyou = "Vous",
-	mcare = "subissez",
-
-	splitwarn = "Separation!",
 } end )
 
 ----------------------------------
@@ -178,22 +167,29 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(arg1)
-	local _,_, player, type = string.find(arg1, L["mcplayer"])
+
+-- Note that we do not sync the MC at the moment, since you really only care
+-- about people that are MC'ed close to you anyway.
+function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
+	local _,_, player, type = string.find(msg, L["mcplayer"])
 	if player and type then
 		if player == L["mcyou"] and type == L["mcare"] then
 			player = UnitName("player")
 		end
-		if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", player .. L["mcplayerwarn"], "Important") end
+		if self.db.profile.mc then
+			self:TriggerEvent("BigWigs_Message", string.format(L["mcplayerwarn"], player), "Important")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mcbar"], player), 20, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
+		end
 	end
 end
 
-function BigWigsSkeram:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(arg1)
-	if (arg1 == L["aetrigger"]) then
-		if self.db.profile.ae then self:TriggerEvent("BigWigs_Message", L["aewarn"], "Urgent") end
-	elseif (arg1 == L["mctrigger"]) then
-		if self.db.profile.mc then self:TriggerEvent("BigWigs_Message", L["mcwarn"], "Urgent") end
-	elseif (arg1 == L["splittrigger"]) then
-		if self.db.profile.split then self:TriggerEvent("BigWigs_Message", L["splitwarn"], "Important") end
+function BigWigsSkeram:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+	if msg == L["aetrigger"] and self.db.profile.ae then
+		self:TriggerEvent("BigWigs_Message", L["aewarn"], "Urgent")
+	elseif msg == L["mctrigger"] and self.db.profile.mc then
+		self:TriggerEvent("BigWigs_Message", L["mcwarn"], "Urgent")
+	elseif msg == L["splittrigger"] and self.db.profile.split then
+		self:TriggerEvent("BigWigs_Message", L["splitwarn"], "Important")
 	end
 end
+
