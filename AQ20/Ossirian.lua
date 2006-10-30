@@ -65,6 +65,12 @@ L:RegisterTranslations("deDE", function() return {
 	debuffwarn = "Ossirian f\195\188r 45 Sekunden anf\195\164llig gegen: %s",
 	bartext = "St\195\164rke des Ossirian",
 	expose = "Schw\195\164che",
+
+	["Shadow"] = "Schatten",
+	["Fire"] = "Feuer",
+	["Frost"] = "Frost",
+	["Nature"] = "Natur",
+	["Arcane"] = "Arkan",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
