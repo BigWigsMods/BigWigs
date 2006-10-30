@@ -39,8 +39,8 @@ L:RegisterTranslations("deDE", function() return {
 	enragetrigger = "%s f\195\164llt in Berserkerwut!", -- ? "wird w\195\188tend",
 
 	enragewarn = "Wutanfall!",
-	starttrigger1 = "Flickwerk spielen m\195\182chte!", -- ?
-	starttrigger2 = "Kel'thuzad macht Flickwerk zu seinem Abgesandten von Krieg!", -- ?
+	starttrigger1 = "Flickwerk spielen m\195\182chte!",
+	starttrigger2 = "Kel’thuzad macht Flickwerk zu seinem Abgesandten von Krieg!",
 	startwarn = "Flickwerk angegriffen! Wutanfall in 7 Minuten!",
 	enragebartext = "Wutanfall",
 	warn1 = "Wutanfall in 5 Minuten",
