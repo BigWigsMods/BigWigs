@@ -163,7 +163,7 @@ L:RegisterTranslations("zhTW", function() return {
 	cocoon_desc = "玩家受到蜘蛛網纏繞發出警報",
 
 	cocoontrigger = "^(.+)受到(.*)纏繞的蜘蛛網",
-	webspraytrigger = "纏繞的蜘蛛網",
+	webspraytrigger = "梅克絲娜的撒網",
 
 	cocoonwarn = "%s 被蛛網纏繞了！",
 

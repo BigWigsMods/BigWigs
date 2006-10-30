@@ -217,7 +217,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	addtrigger	= "起來吧，我的戰士們！起來，再為主人盡忠一次！",
 
-	blinktrigger	= "瘟疫者諾斯獲得了閃現術的效果。",
+	blinktrigger	= "瘟疫者諾斯獲得了閃現的效果。",
 	blinkwarn	= "閃現術！停止攻擊！",
 	blinkwarn2	= "5 秒後發動閃現術！",
 	blinkbar	= "閃現術",
@@ -231,7 +231,7 @@ L:RegisterTranslations("zhTW", function() return {
 	backwarn	= "諾斯回到房間 - %d後再次傳送",
 	backwarn2	= "10 秒後諾斯回到房間！",
 
-	cursetrigger	= "受到了瘟疫使者的詛咒",
+	cursetrigger	= "瘟疫者詛咒",
 	cursewarn	= "詛咒 - 55秒後再次發動",
 	curse10secwarn	= "10 秒後發動詛咒！",
 
