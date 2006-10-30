@@ -117,9 +117,9 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("frFR", function() return {
 	locust_name = "Alerte Nuée de sauterelles",
 	locust_desc = "Préviens quand Anub'Rekhan invoque ses Nuées de sauterelles.",
-	
-	starttrigger1 = "Rien qu'une petite bouchée",
-	starttrigger2 = "Oui, courez ! Faites circulez le sang !",
+
+	starttrigger1 = "Rien qu'une petite bouch\195\169e...",
+	starttrigger2 = "Oui, courez ! Faites circuler le sang !",
 	starttrigger3 = "Nulle part pour s'enfuir.",
 	engagewarn = "Anub'Rekhan engagé. Première Nuée de sauterelles dans ~90 sec.",	
 
