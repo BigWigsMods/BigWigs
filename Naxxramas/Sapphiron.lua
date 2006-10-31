@@ -256,7 +256,7 @@ function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
 	elseif sync == "SapphironLifeDrain" and self.db.profile.lifedrain then
 		self:TriggerEvent("BigWigs_Message", L["lifedrain_message"], "Urgent")
 		self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 24, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
-	elseif sync == "SapphironFlight" and self.db.profile.deepbreath then
+	elseif sync == "SapphironFlight" and self.db.profile.deepbreath and started then
 		if self:IsEventScheduled("bwsapphtargetscanner") then
 			self:CancelScheduledEvent("bwsapphtargetscanner")
 		end
@@ -305,6 +305,11 @@ function BigWigsSapphiron:StartTargetScanner()
 end
 
 function BigWigsSapphiron:RepeatedTargetScanner()
+	if not UnitAffectingCombat("player") then
+		self:CancelScheduledEvent("bwsapphtargetscanner")
+		return
+	end
+
 	if not started then return end
 	local found = nil
 
