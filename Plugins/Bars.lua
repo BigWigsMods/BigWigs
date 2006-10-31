@@ -51,6 +51,7 @@ L:RegisterTranslations("enUS", function() return {
 	["smooth"] = true,
 	["otravi"] = true,
 	["Charcoal"] = true,
+	["glaze"] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -79,6 +80,7 @@ L:RegisterTranslations("koKR", function() return {
 	["smooth"] = "Smooth",
 	["otravi"] = "Otravi",
 	["Charcoal"] = "Charcoal",
+	["glaze"] = "glaze",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -117,6 +119,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["smooth"] = "平滑",
 	["otravi"] = "otravi",
 	["Charcoal"] = "木炭",
+	["glaze"] = "glaze",
 } end)
 
 
@@ -156,6 +159,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["smooth"] = "平滑",
 	["otravi"] = "otravi",
 	["Charcoal"] = "木炭",
+	["glaze"] = "glaze",
 } end)
 
 
@@ -199,6 +203,7 @@ L:RegisterTranslations("deDE", function() return {
 	["smooth"] = "glatt",
 	["otravi"] = "otravi",
 	["Charcoal"] = "Charcoa",
+	["glaze"] = "glaze",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -232,6 +237,7 @@ L:RegisterTranslations("frFR", function() return {
 	["smooth"] = "smooth",
 	["otravi"] = "otravi",
 	["Charcoal"] = "Charcoal",	
+	["glaze"] = "glaze",
 } end)
 
 ----------------------------------
@@ -283,7 +289,7 @@ BigWigsBars.consoleOptions = {
 			desc = L["Set the texture for the timerbars."],
 			get = function() return BigWigsBars.db.profile.texture end,
 			set = function(v) BigWigsBars.db.profile.texture = v end,
-			validate = { L["default"], L["otravi"], L["smooth"], L["Charcoal"] },
+			validate = { L["default"], L["otravi"], L["smooth"], L["Charcoal"], L["glaze"] },
 		}
 	},
 }
