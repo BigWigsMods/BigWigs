@@ -51,7 +51,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "^EURE \195\156BERHEBLICHKEIT K\195\156NDET BEREITS VOM ENDE DIESER WELT!", -- ?
-	drain_trigger = "^Hakkar erleidet (.+) durch %(Bluttrinker%).",
+	drain_trigger = "^Hakkar erleidet (.+) Naturschaden von (.+) %(durch Bluttrinker%).",
 	mindcontrol_trigger = "(.*) (.*) von Wahnsinn verursachen betroffen.",
 
 	you = "Ihr",
