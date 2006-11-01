@@ -146,7 +146,7 @@ L:RegisterTranslations("zhTW", function() return {
 	trigger4 	= "開始碎裂了！",
 	trigger5 	= "馬上就要碎裂的樣子！",
 	trigger6	= "受到了毒性之箭效果",
-	trigger7 	= "^(.+)受到(.+)劇毒的",
+	trigger7 	= "^(.+)受到(.*)劇毒的",
 
 	you 		= "你",
 	are 		= "了",

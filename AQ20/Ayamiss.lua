@@ -53,7 +53,7 @@ L:RegisterTranslations("zhTW", function() return {
 	sacrifice_name = "祭品警報",
 	sacrifice_desc = "玩家成為祭品時發出警報",
 
-	sacrificetrigger = "^([^%s]+)受到([^%s]+)麻痹",
+	sacrificetrigger = "^(.+)受到(.*)麻痹",
 	sacrificewarn = "變成祭品了，快殺 札拉幼蟲！",
 	you = "你",
 	are = "了",

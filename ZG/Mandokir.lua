@@ -99,7 +99,7 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "團隊標記被盯上的玩家",
 
 	watch_trigger = "(.+)！我正在監視你！$",
-	enrage_trigger = "怒不可遏！$",
+	enrage_trigger = "勃然大怒！$",
 
 	watched_warning_self = "你被盯上了！停止一切動作！",
 	watched_warning_other = "%s被盯上了！",

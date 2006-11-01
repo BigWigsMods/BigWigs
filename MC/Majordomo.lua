@@ -71,7 +71,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	--Majordomo 管理者埃克索圖斯
-	disabletrigger = "不可能！等一下",
+	disabletrigger = "不……不可能！等一下……我投降！我投降！",
 
 	trigger1 = "獲得了魔法反射的效果",
 	trigger2 = "獲得了傷害護盾的效果",
@@ -80,7 +80,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	warn1 = "== 法術停火 == 魔法反射，持續10秒",
 	warn2 = "== 近戰停火 == 傷害反射護盾，持續10秒",
-	warn3 = "5 秒後可以攻擊",
+	warn3 = "5秒後施放效果！",
 	warn4 = "魔法反射已消失！",
 	warn5 = "傷害護盾已消失！",
 	bosskill = "警報解除",

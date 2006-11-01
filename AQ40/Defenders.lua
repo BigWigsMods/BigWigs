@@ -147,8 +147,8 @@ L:RegisterTranslations("zhTW", function() return {
 	plagueother_name = "隊友瘟疫警報",
 	plagueother_desc = "隊友中了瘟疫時發出警報",
 
-	thunderclap_name = "雷霆震擊警報",
-	thunderclap_desc = "阿努比薩斯防禦者發動雷霆震擊時發出警報",
+	thunderclap_name = "雷霆一擊警報",
+	thunderclap_desc = "阿努比薩斯防禦者發動雷霆一擊時發出警報",
 
 	explode_name = "爆炸警報",
 	explode_desc = "阿努比薩斯防禦者即將爆炸時發出警報",
@@ -170,13 +170,13 @@ L:RegisterTranslations("zhTW", function() return {
 	summonguardwarn = "蟲群衛士已被召喚出來",
 	summonwarriortrigger = "阿努比薩斯防禦者施放了召喚阿努比薩斯戰士。",
 	summonwarriorwarn = "阿努比薩斯戰士已被召喚出來",
-	plaguetrigger = "^(.+)受到(.+)瘟疫",
+	plaguetrigger = "^(.+)受到(.*)瘟疫",
 	plaguewarn = "受到瘟疫的影響！快躲開！*",
 	plagueyouwarn = "你受到瘟疫的影響！快跑開！",
 	plagueyou = "你",
 	plagueare = "了",
-	thunderclaptrigger = "^阿努比薩斯防禦者的雷霆震擊",
-	thunderclapwarn = "雷霆震擊發動！",
+	thunderclaptrigger = "^阿努比薩斯防禦者的雷霆一擊",
+	thunderclapwarn = "雷霆一擊發動！",
 } end )
 
 

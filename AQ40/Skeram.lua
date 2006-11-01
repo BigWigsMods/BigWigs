@@ -104,7 +104,7 @@ L:RegisterTranslations("zhTW", function() return {
 	splittrigger = "預言者斯克拉姆施放了召喚幻象。",
 	aewarn = "施放魔爆術 - 迅速打斷！",
 	mcwarn = "施放充實 - 準備變羊！",
-	mcplayer = "^(.+)受到(.+)充實",
+	mcplayer = "^(.+)受到(.*)充實",
 	mcplayerwarn = "%s 被心靈控制，法師快變羊！",
 	mcbar = "MC: %s",
 	mcyou = "你",

@@ -231,7 +231,7 @@ L:RegisterTranslations("zhTW", function() return {
 	sweepwarn = "5 秒後發動橫掃！快退！",
 	sweepbartext = "橫掃",
 
-	sandblasttrigger = "奧羅開始施放沙塵爆裂。",
+	sandblasttrigger = "奧羅開始施展沙塵爆裂。",
 	sandblastannounce = "沙塵爆裂！",
 	sandblastwarn = "5 秒後發動沙塵爆裂！",
 	sandblastbartext = "沙塵爆裂",

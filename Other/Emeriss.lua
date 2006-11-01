@@ -122,7 +122,7 @@ L:RegisterTranslations("zhTW", function() return {
 	volatileother_name = "隊友快速傳染警報",
 	volatileother_desc = "隊友中了快速傳染時發出警報",
 	
-	trigger1 = "^(.+)受到(.+)快速傳染效果的影響。",
+	trigger1 = "^(.+)受到(.*)快速傳染效果的影響。",
 	trigger2 = "受到了毒性吐息效果的影響。",
 
 	warn1 = "你中了快速傳染！",

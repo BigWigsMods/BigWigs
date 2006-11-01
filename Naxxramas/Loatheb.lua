@@ -160,8 +160,8 @@ L:RegisterTranslations("zhTW", function() return {
 	curse_desc = "洛斯伯驅散了一個詛咒效果時發出警報",
 
 	doombar = "無可避免的末日",
-	doomwarn = "無可避免的末日 - %s秒後再次發動",
-	doomwarn5sec = "5秒後發動無可避免的末日！",
+	doomwarn = "無可避免的末日 - %s 秒後再次發動",
+	doomwarn5sec = "5 秒後發動無可避免的末日！",
 	doomtrigger = "受到了無可避免的末日效果的影響",
 
 	sporewarn = "孢子出現",
@@ -172,9 +172,9 @@ L:RegisterTranslations("zhTW", function() return {
 	removecursebar = "消除詛咒",
 	removecursetrigger = "洛斯伯對洛斯伯施放了消除詛咒。",
 
-	doomtimerbar = "每隔15秒發動無可避免的末日",
-	doomtimerwarn = "無可避免的末日計時%s秒後改變！",
-	doomtimerwarnnow = "無可避免的末日現在每隔15秒發動一次！",
+	doomtimerbar = "每隔 15 秒發動無可避免的末日",
+	doomtimerwarn = "無可避免的末日計時 %s 秒後改變！",
+	doomtimerwarnnow = "無可避免的末日現在每隔 15 秒發動一次！",
 	
 	startwarn = "洛斯伯已進入戰鬥 - 2 分鐘後發動無可避免的末日！",
 

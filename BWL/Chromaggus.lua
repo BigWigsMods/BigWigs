@@ -167,7 +167,7 @@ L:RegisterTranslations("zhTW", function() return {
 	breath1 = "時間流逝",
 	breath2 = "腐蝕酸液",
 	breath3 = "點燃軀體",
-	breath4 = "焚燒",
+	breath4 = "燒盡",
 	breath5 = "冰霜灼燒",
 
 	castingbar = "施放 %s",

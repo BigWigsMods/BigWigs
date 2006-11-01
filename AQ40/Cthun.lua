@@ -270,7 +270,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	weakenedtrigger 	= "變弱了！",
 
-	tentacle1	= "眼球觸須出現！",
+	tentacle1	= "眼球觸鬚出現！",
 	tentacle2	= "5秒後眼球觸鬚出現！",
 
 	norape1		= "巨眼、巨爪觸鬚出現！",

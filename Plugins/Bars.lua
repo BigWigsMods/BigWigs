@@ -155,7 +155,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Texture"] = "材質",
 	["Set the texture for the timerbars."] = "設定計時條的材質花紋",
 
-	["default"] = "默認",
+	["default"] = "預設",
 	["smooth"] = "平滑",
 	["otravi"] = "otravi",
 	["Charcoal"] = "木炭",

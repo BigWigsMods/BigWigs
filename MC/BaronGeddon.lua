@@ -94,9 +94,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	-- Baron Geddon 迦頓男爵
-	bomb_trigger = "^(.+)受到(.+)活化炸彈",
+	bomb_trigger = "^(.+)受到(.*)活化炸彈",
 	inferno_trigger = "迦頓男爵獲得了地獄火的效果。",
-	service_trigger = "做最後一次服務",
+	service_trigger = "%s為拉格納羅斯做最後一件事……",
 
 	you = "你",
 	are = "了",
@@ -109,7 +109,7 @@ L:RegisterTranslations("zhTW", function() return {
 	service_bar = "最後自爆",
 
 	service_message = "5 秒後迦頓爆炸！",
-	inferno_message = "10 秒後地獄火！",
+	inferno_message = "施放地獄火10秒！",
 
 	service_name = "最後自爆計時條",
 	service_desc = "顯示迦頓男爵最後自爆的計時條.",

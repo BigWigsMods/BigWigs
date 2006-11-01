@@ -96,7 +96,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Creature combat log range."] = "生物戰鬥記錄範圍。",
 
 	["Deaths"] = "死亡",
-	["Death message range."] = "死亡信息範圍。",
+	["Death message range."] = "死亡訊息範圍。",
 
 	["Reset to defaults"] = "重設",
 	["Resets all ranges to defaults."] = "重置為預設值。",

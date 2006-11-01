@@ -107,7 +107,7 @@ L:RegisterTranslations("zhTW", function() return {
 	warn3 = "90 秒後狂怒",
 	warn4 = "60 秒後狂怒",
 	warn5 = "30 秒後狂怒",
-	warn6 = "10 秒後激怒",
+	warn6 = "10 秒後狂怒",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
