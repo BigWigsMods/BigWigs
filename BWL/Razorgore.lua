@@ -114,13 +114,13 @@ L:RegisterTranslations("zhCN", function() return {
 	start_trigger = "入侵者",
 	start_message = "狂野的拉佐格尔 战斗开始!",
 
-	mindcontrol_trigger = "愚蠢的([^%s]+).",
-	mindcontrol_message = "%s 精神控制",
+	mindcontrol_trigger = "愚蠢的(.+)",
+	mindcontrol_message = "%s被精神控制！",
 
-	egg_trigger = "狂野的拉佐格尔施放了(.+)。",
+	egg_trigger = "狂野的拉佐格尔施放了(.+)",
 	egg_message = "%d/30 龙蛋已经摧毁",
 
-	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.",
+	phase2_trigger = "狂野的拉佐格尔的温暖之焰为狂野的拉佐格尔恢复了.*点生命值。",
 	phase2_message = "所有龙蛋摧毁",
 
 	mc_name = "精神控制",

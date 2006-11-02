@@ -162,7 +162,7 @@ L:RegisterTranslations("zhCN", function() return {
 	adddeath_name = "小怪计时及死亡通告",
 	adddeath_desc = "小怪计时及死亡通告",
 
-	disabletrigger = "I... am... undone.",
+	disabletrigger = "事业……未尽……",
 
 	starttrigger1 = "你们这些蠢货已经主动步入了陷阱。",
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",

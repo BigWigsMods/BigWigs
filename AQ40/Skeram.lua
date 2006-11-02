@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -81,6 +81,7 @@ L:RegisterTranslations("zhCN", function() return {
 	mcwarn = "正在施放充实 - 准备变羊！",
 	mcplayer = "^(.+)受(.+)了充实效果的影响。",
 	mcplayerwarn = "%s 被控制了！变羊！恐惧！",
+	mcbar = "控制：%s",
 	mcyou = "你",
 	mcare = "到",
 	

@@ -112,12 +112,13 @@ L:RegisterTranslations("zhCN", function() return {
 	vulnerability_desc = "克洛玛古斯弱点改变时发出警报",
 
 	breath_trigger = "^克洛玛古斯开始施放(.+)。",
-	vulnerability_test = "^.+的.+克洛玛古斯(.+)成(%d+)点(.+)伤害。",
+	vulnerability_test = "^.+的.+(.+)克洛玛古斯.+(%d+)点(.+)伤害。",
+
 	frenzy_trigger = "%s变得极为狂暴！",
 	vulnerability_trigger = "%s的皮肤闪着微光",
 
-	hit = "击中",
-	crit = "致命一击",
+	hit = "使",
+	crit = "致命一击对",
 
 	breath_warning = "%s - 10秒后施放！",
 	breath_message = "克洛玛古斯 %s！",
