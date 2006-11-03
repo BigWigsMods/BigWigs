@@ -100,7 +100,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Big Wigs Version Query"] = "Big Wigs版本检查",
 	["Close window"] = "关掉窗口", -- I know, it's really a Tablet.
 	["Showing version for "] = "显示版本 ",
-	["Green versions are newer than yours, red are older, and white are the same."] = "绿色的版本比你的新，红色德比较老，白色的是相同",
+	["Green versions are newer than yours, red are older, and white are the same."] = "绿色的版本比你的新，红色的比你的旧，白色的是相同",
 	["Player"] = "玩家",
 	["Version"] = "版本",
 	["Current zone"] = "目前区域",
