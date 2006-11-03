@@ -570,3 +570,4 @@ function BigWigsColors:BarColor(time)
 	elseif n == 2 then return d[1], d[2]
 	elseif n == 1 then return d[1] end
 end
+

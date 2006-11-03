@@ -444,7 +444,7 @@ end
 ------------------------------
 
 function BigWigsMessages:SetupFrames()
-	local f, t	
+	local f, t
 
 	f, _, _ = GameFontNormal:GetFont()
 
@@ -487,7 +487,7 @@ function BigWigsMessages:SetupFrames()
 	self.frames.cheader:SetTextColor(1, .8, 0)
 	self.frames.cheader:ClearAllPoints()
 	self.frames.cheader:SetPoint("TOP", self.frames.anchor, "TOP", 0, -10)
-	
+
 	self.frames.leftbutton = CreateFrame("Button", nil, self.frames.anchor)
 	self.frames.leftbutton.owner = self
 	self.frames.leftbutton:SetWidth(40)
@@ -495,7 +495,7 @@ function BigWigsMessages:SetupFrames()
 	self.frames.leftbutton:SetPoint("RIGHT", self.frames.anchor, "CENTER", -10, -15)
 	self.frames.leftbutton:SetScript( "OnClick", function()  self:TriggerEvent("BigWigs_Test") end )
 
-	
+
 	t = self.frames.leftbutton:CreateTexture()
 	t:SetWidth(50)
 	t:SetHeight(32)
@@ -509,7 +509,7 @@ function BigWigsMessages:SetupFrames()
 	t:SetTexCoord(0, 0.625, 0, 0.6875)
 	t:SetAllPoints(self.frames.leftbutton)
 	self.frames.leftbutton:SetPushedTexture(t)
-	
+
 	t = self.frames.leftbutton:CreateTexture()
 	t:SetTexture("Interface\\Buttons\\UI-Panel-Button-Highlight")
 	t:SetTexCoord(0, 0.625, 0, 0.6875)
@@ -528,7 +528,7 @@ function BigWigsMessages:SetupFrames()
 	self.frames.rightbutton:SetPoint("LEFT", self.frames.anchor, "CENTER", 10, -15)
 	self.frames.rightbutton:SetScript( "OnClick", function() self:BigWigs_HideAnchors() end )
 
-	
+
 	t = self.frames.rightbutton:CreateTexture()
 	t:SetWidth(50)
 	t:SetHeight(32)
@@ -561,18 +561,18 @@ end
 function BigWigsMessages:SavePosition()
 	local f = self.frames.anchor
 	local s = f:GetEffectiveScale()
-		
+
 	self.db.profile.posx = f:GetLeft() * s
-	self.db.profile.posy = f:GetTop() * s	
+	self.db.profile.posy = f:GetTop() * s
 end
 
 
 function BigWigsMessages:RestorePosition()
 	local x = self.db.profile.posx
 	local y = self.db.profile.posy
-		
+
 	if not x or not y then return end
-				
+
 	local f = self.frames.anchor
 	local s = f:GetEffectiveScale()
 
