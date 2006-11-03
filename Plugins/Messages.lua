@@ -409,19 +409,27 @@ function BigWigsMessages:BigWigs_HideAnchors()
 end
 
 
-function BigWigsMessages:BigWigs_Message(text, type, noraidsay, sound, broadcastonly)
+function BigWigsMessages:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 	if not text then return end
 	if broadcastonly then return end
-	local _, r, g, b = paint:GetRGBPercent(self.db.profile.usecolors and BigWigsColors:MsgColor(type) or "white")
+	local r, g, b
+	if color ~= nil and type(color) == "table" and type(color.r) == "number" and type(color.g) == "number" and type(color.b) == "number" then
+		r, g, b = color.r, color.g, color.b
+	else
+		if color and type(self.db.profile.usecolor) == "boolean" and self.db.profile.usecolor == true and type(BigWigsColors) == "table" and type(BigWigsColors.MsgColor) == "function" then
+			color = BigWigsColors:MsgColor(color)
+		end
+		_, r, g, b = paint:GetRGBPercent(color or "white")
+	end
 
 	if self.db.profile.display == L["RaidWarning frame"] then
 		RaidWarningFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
 	elseif MikSBT and self.db.profile.display == L["Mik's Scrolling Battle Text"] then
 		MikSBT.DisplayMessage(text, MikSBT.DISPLAYTYPE_NOTIFICATION, false, r * 255, g * 255, b * 255)
 	elseif SCT_Display_Message and self.db.profile.display == L["Scrolling Combat Text"] then -- SCT 4.x
-		local color = { }
-		color.r, color.g, color.b = r,g,b
-		SCT_Display_Message( text, color )
+		local colorStruct = {}
+		colorStruct.r, colorStruct.g, colorStruct.b = r, g, b
+		SCT_Display_Message( text, colorStruct )
 	elseif SCT and SCT_MSG_FRAME and self.db.profile.display == L["Scrolling Combat Text"] then -- SCT 5.x
 		SCT_MSG_FRAME:AddMessage( text, r, g, b, 1 )
 	elseif CombatText_AddMessage and self.db.profile.display == L["Floating Combat Text"] then -- Blizzards FCT
