@@ -332,9 +332,11 @@ function BigWigsBars:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, 
 	module:SetCandyBarGroupPoint("BigWigsGroup", u and "BOTTOM" or "TOP", self.frames.anchor, u and "TOP" or "BOTTOM", 0, 0)
 	module:SetCandyBarGroupGrowth("BigWigsGroup", u)
 
-	if type(otherc) ~= "boolean" or not otherc then c1, c2, c3, c4, c5, c6, c7, c8, c9, c10 = BigWigsColors:BarColor(time) end
-	local bc, balpha = BigWigsColors.db.profile.bgc, BigWigsColors.db.profile.bga
-	local txtc = BigWigsColors.db.profile.txtc
+	local bc, balpha, txtc
+	if BigWigsColors and type(BigWigsColors) == "table" then
+		if type(otherc) ~= "boolean" or not otherc then c1, c2, c3, c4, c5, c6, c7, c8, c9, c10 = BigWigsColors:BarColor(time) end
+		bc, balpha, txtc = BigWigsColors.db.profile.bgc, BigWigsColors.db.profile.bga, BigWigsColors.db.profile.txtc
+	end
 
  	module:RegisterCandyBar(id, time, text, icon, c1, c2, c3, c4, c5, c6, c8, c9, c10)
  	module:RegisterCandyBarWithGroup(id, "BigWigsGroup")
