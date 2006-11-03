@@ -171,9 +171,10 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("frFR", function() return {
 	-- [[ Triggers ]]--
 	starttrigger = "Vous \195\170tes \195\160 moi, maintenant.",
-	starttrigger2 = "Tu es%.%.%. le suivant.",
-	starttrigger3 = "Je vous vois%.%.%.",
-	teleport_trigger = "The end is upon you.",-- to translate need french /chatlog
+	starttrigger2 = "Tu es... le suivant.",
+	starttrigger3 = "Je vous vois...",
+	teleport_trigger = "Votre fin est venue.",
+	dietrigger = "%s rend son dernier soupir.",
 } end )
 
 ----------------------------------
@@ -211,7 +212,7 @@ function BigWigsHeigan:CHAT_MSG_MONSTER_EMOTE( msg )
 end
 
 function BigWigsHeigan:CHAT_MSG_MONSTER_YELL( msg )
-	if msg == L["starttrigger"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] then
+	if string.find(msg, L["starttrigger"]) or string.find(msg, L["starttrigger2"]) or string.find(msg, L["starttrigger3"]) then
 		if self.db.profile.engage then
 			self:TriggerEvent("BigWigs_Message", L["engage_message"], "Important")
 		end
