@@ -416,7 +416,7 @@ function BigWigsMessages:BigWigs_Message(text, color, noraidsay, sound, broadcas
 	if color ~= nil and type(color) == "table" and type(color.r) == "number" and type(color.g) == "number" and type(color.b) == "number" then
 		r, g, b = color.r, color.g, color.b
 	else
-		if color and type(self.db.profile.usecolor) == "boolean" and self.db.profile.usecolor == true and type(BigWigsColors) == "table" and type(BigWigsColors.MsgColor) == "function" then
+		if self.db.profile.usecolor and type(BigWigsColors) == "table" and type(BigWigsColors.MsgColor) == "function" then
 			color = BigWigsColors:MsgColor(color)
 		end
 		_, r, g, b = paint:GetRGBPercent(color or "white")
