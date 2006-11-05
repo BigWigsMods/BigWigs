@@ -198,6 +198,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase2starting	= "쑨의 눈 처치, 본체가 등장합니다. 준비!",
 } end )
 
+--fix local by 月色
 L:RegisterTranslations("zhCN", function() return {
 	tentacle_name = "触须警报",
 	tentacle_desc = "触须出现时发出警报",
@@ -236,7 +237,7 @@ L:RegisterTranslations("zhCN", function() return {
 	glare1		= "黑暗闪耀发动 - 跑位！",
 
 	barTentacle	= "眼球触须！",
-	barNoRape	= "巨眼、巨爪触须！",
+	barNoRape	= "巨眼触须！",
 	barWeakened	= "克苏恩被削弱了！",
 	barGlare	= "黑暗闪耀！",
 	barGiant	= "巨眼！",
@@ -245,7 +246,7 @@ L:RegisterTranslations("zhCN", function() return {
 	eyebeam		= "眼棱",
 	glarewarning	= "黑暗闪耀在你身上发动了!",
 	groupwarning	= "黑暗闪耀在%s小队发动了！（%s小队移动！！）",
-	positions1	= "绿光发动",
+	positions1	= "黑暗闪耀结束，绿光发动，请注意保持距离",
 	positions2	= "5秒后黑暗闪耀结束",
 	phase2starting	= "克苏恩之眼已死亡 - 进入第二阶段！",
 } end )

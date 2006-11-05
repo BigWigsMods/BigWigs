@@ -113,13 +113,13 @@ L:RegisterTranslations("zhCN", function() return {
 	["Close"] = "关闭",
 
 	["Texture"] = "材质",
-	["Set the texture for the timerbars."] = "设定计时条的材质花纹",
+	["Set the texture for the timerbars."] = "为计时条设定材质。",
 
 	["default"] = "默认",
-	["smooth"] = "平滑",
-	["otravi"] = "otravi",
-	["Charcoal"] = "木炭",
-	["glaze"] = "glaze",
+	["smooth"] = "圆滑",
+	["otravi"] = "平整",
+	["Charcoal"] = "木炭纹",
+	["glaze"] = "玻璃纹",
 } end)
 
 
