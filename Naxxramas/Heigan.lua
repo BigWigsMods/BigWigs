@@ -174,7 +174,7 @@ L:RegisterTranslations("frFR", function() return {
 	starttrigger2 = "Tu es... le suivant.",
 	starttrigger3 = "Je vous vois...",
 	teleport_trigger = "Votre fin est venue.",
-	dietrigger = "%s rend son dernier soupir.",
+	die_trigger = "%s rend son dernier soupir.",
 } end )
 
 ----------------------------------
