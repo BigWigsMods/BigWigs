@@ -1,7 +1,7 @@
 ## Interface: 11200
 
 ## Title: Big Wigs |cff7fff7f -Ace2-|r
-## Title: |cff7fff7f-Ace2-|r Big Wigs 
+## Title-zhCN: |cff7fff7f-Ace2-|r Big Wigs 
 ## Notes: Boss Mods with Timer bars.
 ## Notes-zhCN: 团队首领战信息提示插件，带有计时条。
 ## Notes-zhTW: 團隊首領戰訊息提示插件，帶有計時條。
