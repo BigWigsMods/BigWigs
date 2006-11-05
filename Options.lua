@@ -50,7 +50,7 @@ L:RegisterTranslations("frFR", function() return {
   
 L:RegisterTranslations("koKR", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00모듈 실행중|r",
---	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55f클릭|r : 모두 초기화 |cffeda55f쉬프트+클릭|r 비활성화 |cffeda55f컨트롤+쉬프트+클릭|r : BigWigs 비활성화.",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt+Click|r to disable them. |cffeda55fCtrl+Alt+Click|r to disable Big Wigs completely."] = "|cffeda55f클릭|r : 모두 초기화 |cffeda55f알트+클릭|r 비활성화 |cffeda55f컨트롤+알트+클릭|r : BigWigs 비활성화.",
 	["|cffeda55fClick|r to enable."] = "|cffeda55f클릭|r : 모듈 활성화.",
 	["Big Wigs is currently disabled."] = "BigWigs가 비활성화 되어 있습니다.",
 	["Active boss modules"] = "보스 모듈 활성화",
