@@ -59,6 +59,7 @@ Plugins\Range.lua
 Plugins\Version.lua
 
 Extras\CustomBar.lua
+Extras\Discovery.lua
 Extras\Tranq.lua
 
 ZG\Arlokk.lua
