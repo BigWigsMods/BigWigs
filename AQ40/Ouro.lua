@@ -346,16 +346,16 @@ end
 function BigWigsOuro:Sweep()
 	if self.db.profile.sweep then
 		self:TriggerEvent("BigWigs_Message", L["sweepannounce"], "Important")
-		self:ScheduleEvent("bwourosweepwarn", "BigWigs_Message", 18, L["sweepwarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["sweepbartext"], 23, "Interface\\Icons\\Spell_Nature_Thorns")
+		self:ScheduleEvent("bwourosweepwarn", "BigWigs_Message", 16, L["sweepwarn"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["sweepbartext"], 21, "Interface\\Icons\\Spell_Nature_Thorns")
 	end
 end
 
 function BigWigsOuro:Sandblast()
 	if self.db.profile.sandblast then
 		self:TriggerEvent("BigWigs_Message", L["sandblastannounce"], "Important")
-		self:ScheduleEvent("bwouroblastwarn", "BigWigs_Message", 18, L["sandblastwarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["sandblastbartext"], 23, "Interface\\Icons\\Spell_Nature_Cyclone")
+		self:ScheduleEvent("bwouroblastwarn", "BigWigs_Message", 17, L["sandblastwarn"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["sandblastbartext"], 22, "Interface\\Icons\\Spell_Nature_Cyclone")
 	end
 end
 
@@ -366,13 +366,13 @@ function BigWigsOuro:Emerge()
 	end
 
 	if self.db.profile.sweep then
-		self:ScheduleEvent("bwourosweepwarn", "BigWigs_Message", 18, L["sweepwarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["sweepbartext"], 23, "Interface\\Icons\\Spell_Nature_Thorns")
+		self:ScheduleEvent("bwourosweepwarn", "BigWigs_Message", 16, L["sweepwarn"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["sweepbartext"], 21, "Interface\\Icons\\Spell_Nature_Thorns")
 	end	
 
 	if self.db.profile.sandblast then
-		self:ScheduleEvent("bwouroblastwarn", "BigWigs_Message", 18, L["sandblastwarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["sandblastbartext"], 23, "Interface\\Icons\\Spell_Nature_Cyclone")
+		self:ScheduleEvent("bwouroblastwarn", "BigWigs_Message", 17, L["sandblastwarn"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["sandblastbartext"], 22, "Interface\\Icons\\Spell_Nature_Cyclone")
 	end
 
 	if self.db.profile.scarab then
