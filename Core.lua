@@ -270,7 +270,7 @@ L:RegisterTranslations("zhTW", function() return {
 --      Addon Declaration      --
 ---------------------------------
 
-BigWigs = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDebug-2.0", "AceModuleCore-2.0", "AceConsole-2.0", "AceDB-2.0")
+BigWigs = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDebug-2.0", "AceModuleCore-2.0", "AceConsole-2.0", "AceDB-2.0", "AceHook-2.1")
 BigWigs:SetModuleMixins("AceDebug-2.0", "AceEvent-2.0", "CandyBar-2.0")
 BigWigs:RegisterDB("BigWigsDB", "BigWigsDBPerChar")
 BigWigs.cmdtable = {type = "group", handler = BigWigs, args = {
@@ -425,10 +425,16 @@ function BigWigs:OnInitialize()
 	end
 	self.version = (self.version or "2.0").. " |cffff8888r"..rev.."|r"
 	self:RegisterEvent("ADDON_LOADED")
+	self:Hook( self, "ToggleModuleActive",
+		function( module, state)
+			self.hooks[self]["ToggleModuleActive"](module, state)
+			self:TriggerEvent( "BigWigs_ModuleToggle", module, state)
+		end )
 end
 
 
 function BigWigs:OnEnable()
+
 	-- Enable all disabled modules that are not boss modules.
 	for name, module in self:IterateModules() do
 		if type(module.IsBossModule) ~= "function" or not module:IsBossModule() then
