@@ -426,8 +426,8 @@ function BigWigs:OnInitialize()
 	self.version = (self.version or "2.0").. " |cffff8888r"..rev.."|r"
 	self:RegisterEvent("ADDON_LOADED")
 	self:Hook( self, "ToggleModuleActive",
-		function( module, state)
-			self.hooks[self]["ToggleModuleActive"](module, state)
+		function( self, module, state )
+			self.hooks[self]["ToggleModuleActive"](self, module, state)
 			self:TriggerEvent( "BigWigs_ModuleToggle", module, state)
 		end )
 end
