@@ -127,7 +127,7 @@ L:RegisterTranslations("zhTW", function() return {
 	trigger1 = "深深地吸了一口氣",
 	trigger2 = "從上空",
 	trigger3 = "看起來需要再給你一次教訓",
-	trigger4 = "奧妮克希亞開始施放低沈咆哮。",
+	trigger4 = "奧妮克希亞開始施放低沉咆哮。",
 
 	warn1 = "奧妮克希亞深呼吸即將出現，向邊緣散開！",
 	warn2 = "奧妮克希亞進入第二階段！",

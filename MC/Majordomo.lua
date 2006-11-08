@@ -83,7 +83,7 @@ L:RegisterTranslations("zhTW", function() return {
 	warn3 = "5秒後施放效果！",
 	warn4 = "魔法反射已消失！",
 	warn5 = "傷害護盾已消失！",
-	bosskill = "警報解除",
+	bosskill = "管理者埃克索圖斯被擊敗了！",
 
 	bar1text = "魔法反射",
 	bar2text = "傷害護盾",

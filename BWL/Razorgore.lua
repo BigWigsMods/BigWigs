@@ -141,10 +141,10 @@ L:RegisterTranslations("zhTW", function() return {
 	mindcontrol_trigger = "愚蠢的(.+)，",
 	mindcontrol_message = "%s 被心靈控制",
 
-	egg_trigger = "狂野的拉佐格爾施放了(.+)。",
+	egg_trigger = "狂野的拉佐格爾施放了摧毀蛋。",
 	egg_message = "已摧毀 %d/30 個龍蛋！",
 
-	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.",
+	phase2_trigger = "狂野的拉佐格爾的溫暖之焰為狂野的拉佐格爾恢復了.*點生命力。",
 	phase2_message = "已摧毀所有龍蛋",
 
 	mc_name = "精神控制",

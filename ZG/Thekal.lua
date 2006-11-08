@@ -90,7 +90,7 @@ L:RegisterTranslations("zhTW", function() return {
 	tiger_name = "老虎警報",
 	tiger_desc = "小老虎出現時發出警報",
 
-	tigers_trigger = "高階祭司塞卡爾使用召喚祖利安守護者。",
+	tigers_trigger = "古拉巴什食腐者使用召喚祖利安守護者。",
 	heal_trigger = "狂熱者洛卡恩開始施放強力治療術。",
 	tigers_message = "老虎出現！",
 	heal_message = "洛卡恩正在補血！快打斷它！",	
