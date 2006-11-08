@@ -68,7 +68,7 @@ L:RegisterTranslations("deDE", function() return {
 	trigger1 	= "wird langsamer!",
 	trigger2 	= "friert ein!",
 	trigger3 	= "ist tiefgefroren!",
-	trigger4 	= "begins to crack!", -- ?
+	trigger4 	= "geht die Puste aus!", --CHECK
 	trigger5 	= "ist kurz davor, zu zerspringen!",
 	trigger6	= "afflicted by Poison Bolt Volley", -- ?
 	trigger7 	= "^([^%s]+) ([^%s]+) von Toxin betroffen.$",
