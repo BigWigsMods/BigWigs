@@ -1,4 +1,4 @@
-﻿assert(BigWigs, "BigWigs not found!")
+assert(BigWigs, "BigWigs not found!")
 
 local BWL = nil
 local BZ = AceLibrary("Babble-Zone-2.2")
@@ -98,7 +98,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Query already running, please wait 5 seconds before trying again."] = "检查中，请等5秒后再尝试",
 	["Querying versions for "] = "检查版本 ",
 	["Big Wigs Version Query"] = "Big Wigs版本检查",
-	["Close window"] = "关掉窗口", -- I know, it's really a Tablet.
+	["Close window"] = "关闭窗口", -- I know, it's really a Tablet.
 	["Showing version for "] = "显示版本 ",
 	["Green versions are newer than yours, red are older, and white are the same."] = "绿色的版本比你的新，红色的比你的旧，白色的是相同",
 	["Player"] = "玩家",
@@ -116,7 +116,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["BigWigs"] = "BigWigs",
 	["Runs a version query on the BigWigs core."] = "检查BigWigs内核的版本",
 	["Nr Replies"] = "回复的数量",
-	["Ancient"] = "古老",
+	["Ancient"] = "旧的",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

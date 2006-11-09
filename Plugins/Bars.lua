@@ -1,4 +1,4 @@
-﻿
+
 assert( BigWigs, "BigWigs not found!")
 
 
@@ -118,8 +118,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["default"] = "默认",
 	["smooth"] = "圆滑",
 	["otravi"] = "平整",
-	["Charcoal"] = "木炭纹",
-	["glaze"] = "玻璃纹",
+	["Charcoal"] = "炭条纹",
+	["glaze"] = "釉纹",
 } end)
 
 

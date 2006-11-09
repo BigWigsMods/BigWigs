@@ -176,15 +176,15 @@ L:RegisterTranslations("zhCN", function() return {
 	voidwarn = "5秒后虚空领域",
 	voidbar = "虚空领域",
 
-	meteortrigger = "库尔塔兹领主的流星击中",
+	meteortrigger = "库尔塔兹领主的流星击中 ",
 	meteorwarn = "流星",
 	meteorbar = "流星",
 
-	wrathtrigger = "瑟里耶克爵士的神圣之怒击中",
+	wrathtrigger = "瑟里耶克爵士的神圣之怒击中 ",
 	wrathwarn = "神圣之怒",
 	wrathbar = "神圣之怒",
 	
-	startwarn = "四骑士已激活 - 17秒后标记",
+	startwarn = "四骑士已激活 - ~17秒后标记",
 
 	shieldwallbar = "%s - 盾墙",
 	shieldwalltrigger = "获得了盾墙",

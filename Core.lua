@@ -182,7 +182,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Silithus"] = "실리더스",
 	["Outdoor Raid Bosses"] = "야외",
 	["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
-
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
