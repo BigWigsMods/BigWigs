@@ -110,10 +110,10 @@ L:RegisterTranslations("frFR", function() return {
 	bar1text = "Transfert",
 
 	selfbuff_name = "Alerte Buff",
-	selfbuff_desc = "Vous alerte quand Shazzrah se buff.",
+	selfbuff_desc = "Pr\195\169viens quand Shazzrah se buff.",
 
 	blink_name = "Alerte Transfert",
-	blink_desc = "Vous alerte quand Shazzrah se t\195\169l\195\169porte.",
+	blink_desc = "Pr\195\169viens quand Shazzrah se t\195\169l\195\169porte.",
 } end)
 
 ----------------------------------

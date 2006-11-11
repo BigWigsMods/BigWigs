@@ -38,16 +38,24 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	aetrigger = boss.." commence \195\160 lancer Explosion des arcanes",
-	mctrigger = boss.." lance Invocation des Images",
-	aewarn = "Explosion des arcanes - Interrompez-le !",
-	mcwarn = "Controle mental en cours",
-	mcplayer = "^([^%s]+) ([^%s]+) les effets de Accomplissement v\195\169ritables",
+	aetrigger = "Le Proph\195\168te Skeram commence \195\160 lancer Explosion des arcanes.",
+	mctrigger = "Le Proph\195\168te Skeram commence \195\160 lancer Accomplissement v\195\169ritable.",
+	splittrigger = "Le Proph\195\168te Skeram lance Invocation des Images.",
+	aewarn = "Incantation d'Explosion des arcanes !",
+	mcwarn = "Incantation de Controle Mental !",
+	mcplayer = "([^%s]+) ([^%s]+) les effets de Accomplissement v\195\169ritable%.",
 	mcplayerwarn = "%s est sous controle mental !",
-	mcyou = "Tu",
-	mcare = "es",
+	mcbar = "CM: %s",
+	mcyou = "Vous",
+	mcare = "subissez",
 	
-	splitwarn = "Dédoublement !",
+	splitwarn = "D\195\169multiplication !",
+
+	mc_name = "Alerte Contr\195\180le mental",
+	mc_desc = "Pr\195\169viens en cas de contr\195\180le mental.",
+
+	ae_name = "Alerte Explosion des arcanes",
+	ae_desc = "Pr\195\169viens lorsque Skeram lance Explosion des arcanes.",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

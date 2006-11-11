@@ -39,9 +39,15 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	starttrigger = "Vous serez jug\195\169s pour avoir profan\195\169 ces lieux sacr\195\169s",
+	enrage_name = "Alerte Enrag\195\169",
+	enrage_desc = "Pr\195\169viens quand Sartura est enrag\195\169.",
+
+	whirlwind_name = "Alerte Tourbillon",
+	whirlwind_desc = "Pr\195\169viens des tourbillons.",
+
+	starttrigger = "Je vous condamne \195\160 mort !",
 	startwarn = "Sartura engag\195\169 - 10 minutes avant Enrag\195\169",
-	enragetrigger = boss.." gagne Enrager",
+	enragetrigger = "devient fou furieux !",
 	enragewarn = "Enrag\195\169 ! Enrag\195\169 ! Enrag\195\169 !",
 	bartext = "Enrag\195\169",
 	
@@ -53,8 +59,8 @@ L:RegisterTranslations("frFR", function() return {
 	warn6 = "Enrag\195\169 dans 30 secondes",
 	warn7 = "Enrag\195\169 dans 10 secondes",
 	
-	whirlwindon = boss.." gagne Tourbillon",
-	whirlwindoff = "Tourbillon sur "..boss.." vient de se dissiper",
+	whirlwindon = "Garde de guerre Sartura gagne Tourbillon.",
+	whirlwindoff = "Tourbillon sur Garde de guerre Sartura vient de se dissiper.",
 	whirlwindonwarn = "Tourbillon - "..boss.." - Tourbillon",
 	whirlwindoffwarn = "Tourbillon fini. Assomez-le !",
 	whirlwindbartext = "Tourbillon",

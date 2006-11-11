@@ -34,10 +34,10 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	you_name = "Alerte quand vous \195\170tes surveill\195\169",
-	you_desc = "Vous alerte lorsque vous \195\170tes surveill\195\169.",
+	you_desc = "Pr\195\169viens lorsque vous \195\170tes surveill\195\169.",
 
 	other_name = "Alerte quand d'autres sont surveill\195\169s",
-	other_desc = "Vous alerte quand d'autres joueurs sont surveill\195\169s.",
+	other_desc = "Pr\195\169viens quand d'autres joueurs sont surveill\195\169s.",
 
 	icon_name = "Ic\195\180ne de raid",
 	icon_desc = "Place une ic\195\180ne de raid sur la derni\195\168re personne surveill\195\169e (requiert d'\195\170tre promus ou plus)",

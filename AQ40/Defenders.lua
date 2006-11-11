@@ -220,6 +220,35 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	plagueyou_name = "Alerte Peste sur vous",
+	plagueyou_desc = "Pr\195\169viens quand vous avez la peste.",
+
+	plagueother_name = "Alerte Peste sur d'autres",
+	plagueother_desc = "Pr\195\169viens quand d'autres joueurs ont la peste.",
+
+	thunderclap_name = "Alerte Coups de tonnerre",
+	thunderclap_desc = "Pr\195\169viens des Coups de tonnerre",
+
+	explode_name = "Alerte Explosion",
+	explode_desc = "Pr\195\169viens en cas d'explosion imminente.",
+
+	enrage_name = "Alerte Enrag\195\169",
+	enrage_desc = "Pr\195\169viens quand le gardien s'enrage.",
+
+	summon_name = "Alerte invocation",
+	summon_desc = "Pr\195\169viens quand le gardien invoque des adds.",
+
+	icon_name = "Placer une ic\195\180ne",
+	icon_desc = "Place une ic\195\180ne de raid sur le dernier personnage qui a la peste (requiert d'\195\170tre promus ou plus).",
+
+	explodewarn = "Explosion imminente !",
+	enragewarn = "Enrag\195\169 !",
+	summonguardwarn = "Garde-Essaim invoqu\195\169 !",
+	summonwarriorwarn = "Guerrier invoqu\195\169 !",
+	plaguewarn = " a la peste !",
+	plagueyouwarn = "Tu as la peste !",
+	thunderclapwarn = "Coup de tonnerre !",
+
 	explodetrigger = "D\195\169fenseur Anubisath gagne Exploser.",
 	enragetrigger = "D\195\169fenseur Anubisath gagne Enrager.",
 	summonguardtrigger = "D\195\169fenseur Anubisath lance Invocation d'un Garde-essaim Anubisath.",

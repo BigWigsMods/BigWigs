@@ -36,19 +36,25 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	supremetrigger = "Ossirian l'Intouch\195\169 gagne Force d'Ossirian%.",
-	debufftrigger = "^Ossirian l'Intouch\195\169 subit les effets de Sensibilit\195\169 .* l?'?(.+)%.$",
+	supreme_name = "Alerte Mode Supr\195\170me",
+	supreme_desc = "Pr\195\169viens lorsque Ossirian passe en mode supr\195\170me.",
+
+	debuff_name = "Sensibilit\195\169s",
+	debuff_desc = "Pr\195\169viens lorsque Ossirian change de Sensibilit\195\169.",
+
+	supremetrigger = "Ossirian l'Intouch\195\169 gagne Force d'Ossirian.",
+	debufftrigger = "^Ossirian l'Intouch\195\169 subit les effets de (.+)%.$",
 
 	supremewarn = "Ossirian est en mode Supr\195\170me !",
-	debuffwarn = "Ossirian est sensible pour 45 secondes : %s",
+	debuffwarn = "%s pour 45 secondes !",
 	supremedelaywarn = "Supr\195\170me dans %d secondes !",
 	bartext = "Supr\195\170me",
 
-	["Shadow"] = "Ombre",
-	["Fire"] = "Feu",
-	["Frost"] = "Froid",
-	["Nature"] = "Nature",
-	["Arcane"] = "Arcane",
+	["Shadow"] = "Sensibilit\195\169 \195\160 l'Ombre",
+	["Fire"] = "Sensibilit\195\169 au Feu",
+	["Frost"] = "Sensibilit\195\169 au Givre",
+	["Nature"] = "Sensibilit\195\169 \195\160 la Nature",
+	["Arcane"] = "Sensibilit\195\169 aux Arcanes",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

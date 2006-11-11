@@ -59,8 +59,11 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	wormtrigger = "Fankriss l'Inflexible lance Invocation d'un ver.",
-	wormwarn = "Incoming ver(%d) !",
-	wormbar = "ver (%d) Enrage ",
+	wormwarn = "Invocation d'un ver ! (%d)",
+	wormbar = "Ver (%d) enrag\195\169 !",
+
+	worm_name = "Alerte Ver",
+	worm_desc = "Pr\195\169viens de l'arriv\195\169e des vers.",
 } end )
 
 ----------------------------------

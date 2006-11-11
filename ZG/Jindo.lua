@@ -78,16 +78,16 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	brainwash_name = "Alerte Totem de Contr\195\180le Mental",
-	brainwash_desc = "Vous alerte du pop de totem de contr\195\180le mental.",
+	brainwash_desc = "Pr\195\169viens du pop de totem de contr\195\180le mental.",
 
 	healing_name = "Alerte Totem de soins",
-	healing_desc = "Vous alerte du pop de totem de soins.",
+	healing_desc = "Pr\195\169viens du pop de totem de soins.",
 
 	youcurse_name = "Alerte quand vous \195\170tes maudit",
-	youcurse_desc = "Vous alerte quand vous \195\170tes maudit.",
+	youcurse_desc = "Pr\195\169viens quand vous \195\170tes maudit.",
 
 	elsecurse_name = "Alerte quand d'autres sont maudits",
-	elsecurse_desc = "Vous alerte quand d'autres joueurs sont maudits.",
+	elsecurse_desc = "Pr\195\169viens quand d'autres joueurs sont maudits.",
 
 	icon_name = "Ic\195\180ne de raid",
 	icon_desc = "Place une ic\195\180ne de raid sur la derni\195\168re personne maudite (requiert d'\195\170tre promus ou plus)",

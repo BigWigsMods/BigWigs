@@ -126,25 +126,25 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	wingbuffet_trigger = "Flamegor commence à lancer Frappe des ailes.",
-	shadowflame_trigger = "Flamegor commence à lancer Flamme d'ombre.",
-	frenzy_trigger = "est pris de frénésie !",
+	wingbuffet_trigger = "Flamegor commence \195\160 lancer Frappe des ailes.",
+	shadowflame_trigger = "Flamegor commence \195\160 lancer Flamme d'ombre.",
+	frenzy_trigger = "est pris de fr\195\169n\195\169sie !",
 
 	wingbuffet_message = "Frappe des ailes ! 30 sec. avant la prochaine !",
 	wingbuffet_warning = "3 sec. avant la Frappe des ailes !",
 	shadowflame_warning = "Flamme d'ombre imminente !",
-	frenzy_message = "Frénésie - Tir tranquillisant !",
+	frenzy_message = "Fr\195\169n\195\169sie - Tir tranquillisant !",
 
 	wingbuffet_bar = "Frappe des ailes",
 
 	wingbuffet_name = "Alerte Frappe des ailes",
-	wingbuffet_desc = "Préviens quand Rochébène effectue sa Frappe des ailes.",
+	wingbuffet_desc = "Pr\195\169viens quand Flamegor effectue sa Frappe des ailes.",
 
 	shadowflame_name = "Alerte Flamme d'ombre",
-	shadowflame_desc = "Préviens quand l'incantation de la Flamme d'ombre est imminente.",
+	shadowflame_desc = "Pr\195\169viens quand l'incantation de la Flamme d'ombre est imminente.",
 
-	frenzy_name = "Alerte Frénésie",
-	frenzy_desc = "Préviens quand Flamegor est pris de frénésie.",
+	frenzy_name = "Alerte Fr\195\169n\195\169sie",
+	frenzy_desc = "Pr\195\169viens quand Flamegor est pris de fr\195\169n\195\169sie.",
 } end)
 
 ----------------------------------

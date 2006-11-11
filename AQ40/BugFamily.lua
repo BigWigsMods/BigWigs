@@ -35,13 +35,19 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	healtrigger = yauj.." commence \195\160 lancer Soins exceptionnels",
-	healwarn = "Soins exceptionnels - interrompez-le !",
+	fear_name = "Alerte Peur",
+	fear_desc = "Pr\195\169viens des Peurs de zone.",
+
+	heal_name = "Alerte Soins",
+	heal_desc = "Pr\195\169viens lors de l'incantation de soins.",
+
+	healtrigger = "Princesse Yauj commence \195\160 lancer Soins exceptionnels.",
+	healwarn = "Princesse Yauj commence \195\160 se soigner - Interrompez-la !",
 
 	feartrigger = "subit les effets de Peur%.",
-	fearbar = "AoE Fear",
-	fearwarn1 = "AoE Fear ! Prochain dans 20 secondes",
-	fearwarn2 = "AoE Fear dans 5 secondes",
+	fearbar = "Peur de zone",
+	fearwarn1 = "Peur de zone ! prochain dans 20 secondes",
+	fearwarn2 = "Peur de zone dans 5 secondes !",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -107,16 +113,6 @@ L:RegisterTranslations("koKR", function() return {
 	fearbar = "공포",
 	fearwarn1 = "공포 시전! 다음 시전 20초후!",
 	fearwarn2 = "5초후 공포!",
-} end )
-
-L:RegisterTranslations("frFR", function() return {
-	healtrigger = "Princesse Yauj commence \195\160 lancer Soins exceptionnels.",
-	healwarn = "Princesse Yauj commence \195\160 se soigner - Kick!",
-
-	feartrigger = "subit les effets de Peur%.",
-	fearbar = "AE Fear",
-	fearwarn1 = "AE Fear! prochain dans 20 Sec!",
-	fearwarn2 = "AE Fear dans 5 Sec!",
 } end )
 
 ----------------------------------

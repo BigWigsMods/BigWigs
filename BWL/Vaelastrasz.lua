@@ -128,25 +128,25 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	trigger1 = "^([^%s]+) ([^%s]+) les effets de Montée d'adrénaline.",
+	trigger1 = "^([^%s]+) ([^%s]+) les effets de Mont\195\169e d'adr\195\169naline.",
 
 	you = "Vous",
 	are = "subissez",
 
-	warn1 = "Tu brûles !",
-	warn2 = " brûle !",
+	warn1 = "Tu br\195\187les !",
+	warn2 = " br\195\187le !",
 
-	youburning_name = "Alerte quand vous brûlez",
-	youburning_desc = "Préviens quand vous brûlez.",
+	youburning_name = "Alerte quand vous br\195\187lez",
+	youburning_desc = "Pr\195\169viens quand vous br\195\187lez.",
 	
-	elseburning_name = "Alerte quand les autres brûlent",
-	elseburning_desc = "Préviens quand les autres brûlent.",
+	elseburning_name = "Alerte quand les autres br\195\187lent",
+	elseburning_desc = "Pr\195\169viens quand les autres br\195\187lent.",
 	
-	burningbar_name = "Barre Montée d'adrénaline",
-	burningbar_desc = "Affiche une barre temporelle pour la Montée d'adrénaline.",	
+	burningbar_name = "Barre Mont\195\169e d'adr\195\169naline",
+	burningbar_desc = "Affiche une barre temporelle pour la Mont\195\169e d'adr\195\169naline.",	
 	
-	icon_name = "Icône de raid sur la bombe",
-	icon_desc = "Place une icône de raid sur la personne qui est la bombe (Nécessite d'être promu ou mieux).",	
+	icon_name = "Ic\195\180ne de raid sur la bombe",
+	icon_desc = "Place une ic\195\180ne de raid sur la personne qui est la bombe (N\195\169cessite d'\195\170tre promu ou mieux).",	
 } end)
 
 ----------------------------------

@@ -126,10 +126,10 @@ L:RegisterTranslations("frFR", function() return {
 	bar2text = "Mal\195\169diction imminente",
 
 	curse_name = "Alerte Mal\195\169diction de Lucifron",
-	curse_desc = "Vous alerte des mal\195\169dictions de Lucifron.",
+	curse_desc = "Pr\195\169viens des mal\195\169dictions de Lucifron.",
 
 	doom_name = "Alerte Mal\195\169diction imminente",
-	doom_desc = "Vous alerte des mal\195\169dictions imminentes.",
+	doom_desc = "Pr\195\169viens des mal\195\169dictions imminentes.",
 } end)
 
 ----------------------------------

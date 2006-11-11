@@ -45,10 +45,10 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	spider_name = "Alerte Araign\195\169e",
-	spider_desc = "Vous alerte du pop d'araign\195\169e.",
+	spider_desc = "Pr\195\169viens du pop d'araign\195\169e.",
 
 	drain_name = "Alerte Drain",
-	drain_desc = "Vous alerte d'un drain en cours.",
+	drain_desc = "Pr\195\169viens d'un drain en cours.",
 
 	spiders_trigger = "., mes enfants !$",
 	drainlife_trigger = "^Drain de vie DE Grande pr\195\170tresse Mar'li gu\195\169rit Grande pr\195\170tresse Mar'li de (.+)%.$",

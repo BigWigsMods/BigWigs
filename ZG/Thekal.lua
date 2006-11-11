@@ -43,10 +43,10 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	heal_name = "Alerte Soins",
-	heal_desc = "Vous alerte en cas de soin.",
+	heal_desc = "Pr\195\169viens en cas de soin.",
 
 	tiger_name = "Alerte Tigres",
-	tiger_desc = "Vous alerte de l'invocation de tigres.",
+	tiger_desc = "Pr\195\169viens de l'invocation de tigres.",
 
 	tigers_trigger = "Grand pr\195\170tre Thekal ex\195\169cute Invocation de gardiens zuliens.",
 	heal_trigger = "Z\195\169lote Lor'Khan commence \195\160 lancer Soins exceptionnels.",

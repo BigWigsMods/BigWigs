@@ -203,16 +203,16 @@ L:RegisterTranslations("frFR", function() return {
 	sonsdeadwarn = "%d/8 Fils des flammes mort !",
 
 	emerge_name = "Alerte Emerge",
-	emerge_desc = "Vous alerte quand Ragnaros \195\169merge.",
+	emerge_desc = "Pr\195\169viens quand Ragnaros \195\169merge.",
 
 	sondeath_name = "Alerte mort des Fils",
-	sondeath_desc = "Vous alerte de la mort d'un Fils des flammes.",
+	sondeath_desc = "Pr\195\169viens de la mort d'un Fils des flammes.",
 
 	submerge_name = "Alerte Immersion",
-	submerge_desc = "Vous alerte de l'immersion de Ragnaros et l'arriv\195\169e des Fils des flammes.",
+	submerge_desc = "Pr\195\169viens de l'immersion de Ragnaros et l'arriv\195\169e des Fils des flammes.",
 
 	aoeknock_name = "Alerte Projection de zone",
-	aoeknock_desc = "Vous alerte des projections de zone.",
+	aoeknock_desc = "Pr\195\169viens des projections de zone.",
 } end)
 
 ----------------------------------

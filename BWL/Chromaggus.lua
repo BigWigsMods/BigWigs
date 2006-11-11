@@ -219,39 +219,38 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	enrage_name = "Enrager",
-	enrage_desc = "Préviens quand Chromaggus s'enrage (à 20%).",
+	enrage_name = "Alerte Enrag\195\169",
+	enrage_desc = "Pr\195\169viens quand Chromaggus s'enrage (\195\160 20%).",
 
-	frenzy_name = "Alerte Frénésie",
-	frenzy_desc = "Préviens quand Chromaggus entre dans des frénésies sanglantes.",
+	frenzy_name = "Alerte Fr\195\169n\195\169sie",
+	frenzy_desc = "Pr\195\169viens quand Chromaggus entre dans des fr\195\169n\195\169sies sanglantes.",
 
-	breath_name = "Alertes Souffles",
-	breath_desc = "Préviens quand Chromaggus souffle ainsi que leurs types.",
+	breath_name = "Alerte Souffles",
+	breath_desc = "Pr\195\169viens quand Chromaggus souffle ainsi que leurs types.",
 
-	vulnerability_cmd = "vulnerability",
-	vulnerability_name = "Alertes Vulnérabilité",
-	vulnerability_desc = "Préviens quand la vulnérabilité de Chromaggus change.",
+	vulnerability_name = "Alerte Vuln\195\169rabilit\195\169s",
+	vulnerability_desc = "Pr\195\169viens quand la vuln\195\169rabilit\195\169 de Chromaggus change.",
 	
-	breath_trigger = "^Chromaggus commence à lancer (.+)%.",
-	vulnerability_test = "^.+ lance .+ et (.+) à Chromaggus %(([%d]+) points de dégâts .+ (.+)%)%.";
-	frenzy_trigger = "%s entre dans une frénésie sanglante !",
-	vulnerability_trigger = "%s grimace lorsque sa peau se met à briller.",
+	breath_trigger = "^Chromaggus commence \195\160 lancer (.+)%.",
+	vulnerability_test = "^.+ lance .+ et (.+) \195\160 Chromaggus %(([%d]+) points de d\195\169g\195\162ts .+ (.+)%)%.";
+	frenzy_trigger = "%s entre dans une fr\195\169n\195\169sie sanglante !",
+	vulnerability_trigger = "%s grimace lorsque sa peau se met \195\160 briller.",
 
 	hit = "lui inflige",
 	crit = "inflige un coup critique",
 
 	breath_warning = "%s dans 10 sec. !",
 	breath_message = "%s en cours d'incantation !",
-	vulnerability_message = "Vulnerabilité : %s !",
-	vulnerability_warning = "Vulnérabilité aux sorts modifiée !",
-	frenzy_message = "Alerte frénésie !",
+	vulnerability_message = "Vulnerabilit\195\169 : %s !",
+	vulnerability_warning = "Vuln\195\169rabilit\195\169 aux sorts modifi\195\169e !",
+	frenzy_message = "Alerte fr\195\169n\195\169sie !",
 	enrage_warning = "Enragement imminent !",
 
 	breath1 = "Trou de temps",
 	breath2 = "Acide corrosif",
 	breath3 = "Enflammer la chair",
-	breath4 = "Incinérer",
-	breath5 = "Brûlure de givre",
+	breath4 = "Incin\195\169rer",
+	breath5 = "Br\195\187lure de givre",
 } end )
 
 ----------------------------------

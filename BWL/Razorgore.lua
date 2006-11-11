@@ -88,25 +88,25 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	start_trigger = "Sonnez l'alarme",
-	start_message = "Tranchetripe engagé !",
+	start_message = "Tranchetripe engag\195\169 !",
 
 	mindcontrol_trigger = "Stupide ([^%s]+), tu es mon esclave maintenant !",
-	mindcontrol_message = "%s est sous Contrôle mental !",
+	mindcontrol_message = "%s est sous Contr\195\180le mental !",
 
-	egg_trigger = "Tranchetripe l'Indompté lance Détruire (.*)%.",
-	egg_message = "%d oeufs sur 30 détruits !",
+	egg_trigger = "Tranchetripe l'Indompt\195\169 lance D\195\169truire (.*)%.",
+	egg_message = "%d oeufs sur 30 d\195\169truits !",
 
-	phase2_trigger = "Warming Flames de Tranchetripe l'Indompté soigne Tranchetripe l'Indompté pour .*.", -- to translate	
-	phase2_message = "Tous les oeufs ont été détruits !",
+	phase2_trigger = "Flammes \195\169chauffantes DE Tranchetripe l'Indompt\195\169 gu\195\169rit Tranchetripe l'Indompt\195\169 de .*%.",
+	phase2_message = "Tous les oeufs ont \195\169t\195\169 d\195\169truits !",
 
-	mc_name = "Alerte Contrôle mental",
-	mc_desc = "Préviens quand un subit subit un contrôle mental.",
+	mc_name = "Alerte Contr\195\180le mental",
+	mc_desc = "Pr\195\169viens quand un joueur subit subit un contr\195\180le mental.",
 
 	eggs_name = "Ne pas compter les oeufs",
-	eggs_desc = "Ne compte pas le nombre d'oeufs restants - cette option ne fonctionne pas chez tout le monde, un meilleur déclencheur doit être trouvé.",
+	eggs_desc = "Ne compte pas le nombre d'oeufs restants - cette option ne fonctionne pas chez tout le monde, un meilleur d\195\169clencheur doit \195\170tre trouv\195\169.",
 
-	phase_name = "Phases",
-	phase_desc = "Préviens de l'arrivée des phases 1 & 2.",
+	phase_name = "Alerte Phases",
+	phase_desc = "Pr\195\169viens de l'arriv\195\169e des phases 1 & 2.",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

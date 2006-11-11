@@ -202,6 +202,35 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	bug_name = "Alerte explosion d'insecte",
+	bug_desc = "Pr\195\169viens de l'explosion des insectes.",
+
+	teleport_name = "Alerte T\195\169l\195\169portation",
+	teleport_desc = "Pr\195\169viens des t\195\169l\195\169portations.",
+
+	enrage_name =  "Alerte Enrag\195\169s",
+	enrage_desc = "Pr\195\169viens quand les jumeaux sont enrag\195\169s.",
+
+	heal_name = "Alerte soins",
+	heal_desc = "Pr\195\169viens quand les jumeaux se soignent.",
+
+	portwarn = "T\195\169l\195\169portation !",
+	portdelaywarn = "T\195\169l\195\169portation dans ~5 secondes !",
+	portdelaywarn2 = "T\195\169l\195\169portation dans ~10 secondes !",
+	bartext = "T\195\169l\195\169portation",
+	explodebugwarn = "Explosion d'insecte proche !",
+	enragewarn = "Les jumeaux sont enrag\195\169s !",
+	healwarn = "Incantation de soins !",
+	startwarn = "Les empereurs jumeaux engag\195\169s ! Enrag\195\169s dans 15 minutes",
+	enragebartext = "Enrag\195\169s",
+	warn1 = "Enrag\195\169s dans 10 minutes",
+	warn2 = "Enrag\195\169s dans 5 minutes",
+	warn3 = "Enrag\195\169s dans 3 minutes",
+	warn4 = "Enrag\195\169s dans 90 secondes",
+	warn5 = "Enrag\195\169s dans 60 secondes",
+	warn6 = "Enrag\195\169s dans 30 secondes",
+	warn7 = "Enrag\195\169s dans 10 secondes",
+
 	porttrigger = "lance T\195\169l\195\169portation des jumeaux.",
 	explodebugtrigger = "gagne Explosion de l'insecte%.$",
 	enragetrigger = "devient fou furieux.",-- not sure at all

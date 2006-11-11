@@ -49,10 +49,10 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_message = "Phase 2, attention aux nuages de poison !",
 
 	renew_name = "Alerte R\195\169novation",
-	renew_desc = "Vous alerte lorsque le boss se met une r\195\169novation.",
+	renew_desc = "Pr\195\169viens lorsque le boss se met une r\195\169novation.",
 
 	phase_name = "Alerte Phase 2",
-	phase_desc = "Vous alerte du passage en phase 2.",
+	phase_desc = "Pr\195\169viens du passage en phase 2.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

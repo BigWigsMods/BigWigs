@@ -33,12 +33,12 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00Module d\195\169marr\195\169|r",
---	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55fClic|r pour red\195\169marrer les modules actifs. |cffeda55fShift+Clic|r pour les d\195\169sactiver. |cffeda55fCtrl+Shift+Clic|r pour d\195\169sactiver Big Wigs compl\195\168tement.",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt+Click|r to disable them. |cffeda55fCtrl+Alt+Click|r to disable Big Wigs completely."] = "|cffeda55fClic|r pour red\195\169marrer les modules actifs. |cffeda55fAlt+Clic|r pour les d\195\169sactiver. |cffeda55fCtrl+Alt+Clic|r pour d\195\169sactiver Big Wigs compl\195\168tement.",
 	["|cffeda55fClick|r to enable."] = "|cffeda55fClic|r pour activer.",
 	["Big Wigs is currently disabled."] = "Big Wigs est actuellement d\195\169sactiv\195\169.",
 	["Active boss modules"] = "Modules de boss actifs",
-	["hidden"] = "cach\195\169",
-	["shown"] = "affich\195\169",
+	["hidden"] = "cach\195\169e",
+	["shown"] = "affich\195\169e",
 	-- ["minimap"] = true,
 	-- ["Minimap"] = true,
 	["Toggle the minimap button."] = "Afficher ou masquer le bouton sur la minimap.",
@@ -46,6 +46,8 @@ L:RegisterTranslations("frFR", function() return {
 	["All running modules have been disabled."] = "Tous les modules ont \195\169t\195\169 d\195\169sactiv\195\169s.",
 	["%s reset."] = "%s red\195\169marr\195\169.",
 	["%s disabled."] = "%s d\195\169sactiv\195\169.",
+	["%s icon is now %s."] = "L'ic\195\180ne de %s est d\195\169sormais %s.",
+	["Show it again with /bw plugin minimap."] = "Vous pouvez la r\195\169afficher avec /bw plugin minimap.",
   } end)
   
 L:RegisterTranslations("koKR", function() return {

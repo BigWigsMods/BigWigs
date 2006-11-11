@@ -33,18 +33,24 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	starttrigger = "sent votre peur%.",
-	startwarn = "Moam engag\195\169 ! 90 secondes avant les Elementaires !",
+	adds_name = "Alerte El\195\169mentaires",
+	adds_desc = "Pr\195\169viens lorsque les El\195\169mentaires apparaissents",
 
-	addsbar = "Elementaire",
-	addsincoming = "Les Elementaires arrivent dans %s secondes !",
-	addstrigger = "absorbe votre mana et se change en pierre%.",
-	addswarn = "Elementaire ! Moam paralys\195\169 pour 90 secondes%.",
+	paralyze_name = "Alerte Paralysie",
+	paralyze_desc = "Pr\195\169viens lorsque Moam entre en paralysie.",
 
-	paralyzebar = "Paralyse",
-	returnincoming = "Moam déparalysé dans %s secondes !",
+	starttrigger = "%s sent votre peur.",
+	startwarn = "Moam engag\195\169 ! 90 secondes avant les El\195\169mentaires !",
+
+	addsbar = "El\195\169mentaire",
+	addsincoming = "Les El\195\169mentaires arrivent dans %s secondes !",
+	addstrigger = "%s absorbe votre mana et se change en pierre.",
+	addswarn = "El\195\169mentaires ! Moam paralys\195\169 pour 90 secondes.",
+
+	paralyzebar = "Paralysie",
+	returnincoming = "Moam d\195\169paralys\195\169 dans %s secondes !",
 	returntrigger = "Dynamiser sur Moam vient de se dissiper%.",
-	returnwarn = "Moam engag\195\169 ! 90 secondes avant les Elementaires !",	
+	returnwarn = "Retour de Moam ! 90 secondes avant les El\195\169mentaires !",	
 } end )
 
 L:RegisterTranslations("deDE", function() return {

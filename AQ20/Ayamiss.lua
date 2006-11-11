@@ -22,8 +22,11 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	sacrifice_name = "Alerte Sacrifice",
+	sacrifice_desc = "Pr\195\169viens lorsqu'un joueur est sacrifi\195\169.",
+	
 	sacrificetrigger = "^([^%s]+) ([^%s]+) les effets de Paralysie%.$",
-	sacrificewarn = " est sacrifié !",
+	sacrificewarn = " est sacrifi\195\169 !",
 	you = "Vous",
 	are = "subissez",
 } end )

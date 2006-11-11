@@ -84,16 +84,16 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("frFR", function() return {
 	-- Chat message triggers
 	engage_trigger = "ANNONCE LA FIN DE VOTRE MONDE",
-	drain_trigger = "^Siphon de sang .+ (.+) inflige à Hakkar (.+).",
+	drain_trigger = "^Siphon de sang .+ (.+) inflige \195\160 Hakkar (.+).",
 	mindcontrol_trigger = "(.*) (.*) les effets de Rendre fou.",
 
 	you = "Vous",
 	are = "subissez",
 
-	flee = "Fuir ne vous servira à rien, mortels !",
+	flee = "Fuir ne vous servira \195\160 rien, mortels !",
 
 -- Warnings and bar texts
-	start_message = "Hakkar engagé - 90 sec. avant Drain - 10 min. avant Enrager",
+	start_message = "Hakkar engag\195\169 - 90 sec. avant Drain - 10 min. avant Enrager",
 	drain_warning = "%d sec. avant le Drain de vie !",	
 	drain_message = "Drain de vie - 90 sec. avant le prochain !",
 
@@ -103,16 +103,16 @@ L:RegisterTranslations("frFR", function() return {
 	["Life Drain"] = "Drain de vie",
 
 	drain_name = "Alerte Drain",
-	drain_desc = "Préviens régulièrement quand Hakkar fait ses Drains de vie.",
+	drain_desc = "Pr\195\169viens quand Hakkar fait ses drains de vie.",
 
 	enrage_name = "Alerte Enrager",
-	enrage_desc = "Préviens quand Hakkar devient enragé.",
+	enrage_desc = "Pr\195\169viens quand Hakkar devient enrag\195\169.",
 
-	mc_name = "Alerte Contrôle Mental",
-	mc_desc = "Préviens quand quelqu'un est sous le contrôle d'Hakkar.",
+	mc_name = "Alerte Contr\195\180le Mental",
+	mc_desc = "Pr\195\169viens quand quelqu'un est sous le contr\195\180le d'Hakkar.",
 
-	icon_name = "Placer une icône",
-	icon_desc = "Place une icône de raid (crâne) sur la personne sous contrôle mental (nécessite d'être promu ou mieux).",	
+	icon_name = "Placer une ic\195\180ne",
+	icon_desc = "Place une ic\195\180ne de raid sur la personne sous contr\195\180le mental (n\195\169cessite d'\195\170tre promu ou mieux).",	
 } end)
 
 L:RegisterTranslations("koKR", function() return {

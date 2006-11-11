@@ -157,6 +157,27 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	wyvern_name = "Alerte Piq\195\187re de wyverne",
+	wyvern_desc = "Pr\195\169viens des piq\195\187res de wyverne.",
+
+	frenzy_name = "Alerte Fr\195\169n\195\169sie",
+	frenzy_desc = "Pr\195\169viens des fr\195\169n\195\169sies.",
+
+	berserk_name = "Alerte Enrag\195\169e",
+	berserk_desc = "Pr\195\169viens quand Huhuran est enrag\195\169e.",
+
+	frenzywarn = "Fr\195\169n\195\169sie - Tranq Shot !",
+	berserkwarn = "Enrag\195\169e ! Enrag\195\169e ! Enrag\195\169e !",
+	berserksoonwarn = "Bientot enrag\195\169e !",
+	stingwarn = "Piq\195\187re de wyverne !",
+	stingdelaywarn = "Piq\195\187re de wyverne possible dans ~3 secondes !",
+	bartext = "Piq\195\187re de wyverne",
+
+	startwarn = "Huhuran engag\195\169e, 5 minutes avant enrag\195\169e !",
+	berserkbar = "Enrag\195\169e",
+	berserkwarn1 = "Enrag\195\169e dans 1 minute !",
+	berserkwarn2 = "Enrag\195\169e dans 30 secondes !",
+	berserkwarn3 = "Enrag\195\169e dans 5 secondes !",
 
 	frenzytrigger = "%s est pris de fr\195\169n\195\169sie !",
 	berserktrigger = "%s entre dans une rage d\195\169mente !",

@@ -31,6 +31,15 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	you_name = "Alerte quand vous \195\170tes surveill\195\169",
+	you_desc = "Pr\195\169viens quand vous \195\170tes surveill\195\169.",
+
+	other_name = "Alerte quand d'autres sont surveill\195\169s",
+	other_desc = "Pr\195\169viens quand d'autres joueurs sont surveill\195\169s.",
+
+	icon_name = "Placer une ic\195\180ne",
+	icon_desc = "Place une ic\195\180ne de raid sur le personnage surveill\195\169 (requiert d'\195\170tre promus ou plus).",
+
 	watchtrigger = "pose ses yeux sur (.+) !",
 	watchwarn = " est surveill\195\169 !",
 	watchwarnyou = "Tu es surveill\195\169 !",

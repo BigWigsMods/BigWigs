@@ -183,17 +183,36 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+
+	summon_name = "Alerte invocation",
+	summon_desc = "Pr\195\169viens quand le gardien invoque des adds.",
+
+	plagueyou_name = "Alerte Peste sur vous",
+	plagueyou_desc = "Pr\195\169viens quand vous avez la peste.",
+
+	plagueother_name = "Alerte Peste sur d'autres",
+	plagueother_desc = "Pr\195\169viens quand d'autres joueurs ont la peste.",
+
+	icon_name = "Placer une ic\195\180ne",
+	icon_desc = "Place une ic\195\180ne de raid sur le dernier personnage qui a la peste (requiert d'\195\170tre promus ou plus).",
+
+	explode_name = "Alerte Explosion",
+	explode_desc = "Pr\195\169viens en cas d'explosion imminente.",
+
+	enrage_name = "Alerte Enrag\195\169",
+	enrage_desc = "Pr\195\169viens quand le gardien s'enrage.",
+
 	explodetrigger = "Gardien Anubisath gagne Exploser.",
-	explodewarn = "Degagez Boom!",
+	explodewarn = "Explosion imminente !",
 	enragetrigger = "Gardien Anubisath gagne Enrager.",
-	enragewarn = "Enrag\195\169!",
+	enragewarn = "Enrag\195\169 !",
 	summonguardtrigger = "Gardien Anubisath lance Invocation d'un Garde-essaim Anubisath.",
-	summonguardwarn = "Garde-Essaim invoqué",
+	summonguardwarn = "Garde-Essaim invoqu\195\169 !",
 	summonwarriortrigger = "Gardien Anubisath lance Invocation d'un Guerrier Anubisath.",
-	summonwarriorwarn = "Invocation d'un Guerrier",
+	summonwarriorwarn = "Guerrier invoqu\195\169 !",
 	plaguetrigger = "^([^%s]+) ([^%s]+) les effets de Peste%.$",
-	plaguewarn = " a la Peste!",
-	plaguewarnyou = "Tu as la peste!",
+	plaguewarn = " a la peste !",
+	plaguewarnyou = "Tu as la peste !",
 	plagueyou = "Vous",
 	plagueare = "subissez",
 } end )

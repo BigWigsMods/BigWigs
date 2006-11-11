@@ -224,19 +224,19 @@ L:RegisterTranslations("frFR", function() return {
 	inferno_message = "Inferno pendant 10 secondes !",
 
 	service_name = "Alerte Dernier Service",
-	service_desc = "Vous alerte du dernier service de Geddon.",
+	service_desc = "Pr\195\169viens du dernier service de Geddon.",
 
 	inferno_name = "Alerte Inferno",
-	inferno_desc = "Vous alerte des Inferno de Geddon.",
+	inferno_desc = "Pr\195\169viens des Inferno de Geddon.",
 
 	bombtimer_name = "Barre Bombes Vivantes",
 	bombtimer_desc = "Affiche une barre pour chaque Bombe vivante.",
 
 	youbomb_name = "Alerte quand vous \195\170tes la bombe",
-	youbomb_desc = "Vous alerte quand vous \195\170tes la bombe.",
+	youbomb_desc = "Pr\195\169viens quand vous \195\170tes la bombe.",
 
 	elsebomb_name = "Alerte quand d'autres sont la bombe",
-	elsebomb_desc = "Vous alerte quand d'autres joueurs sont la bombe.",
+	elsebomb_desc = "Pr\195\169viens quand d'autres joueurs sont la bombe.",
 
 	icon_name = "Ic\195\180ne de raid",
 	icon_desc = "Place une ic\195\180ne de raid sur la derni\195\168re personne qui est la bombe (requiert d'\195\170tre promus ou plus)",

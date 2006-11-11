@@ -59,7 +59,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	warn1 = "Souffle imminent !",
 	warn2 = "Arriv\195\169e de la phase 2 d'Onyxia !",
-	warn3 = "Arriv\195\169e de la phase 2 d'Onyxia !",
+	warn3 = "Arriv\195\169e de la phase 3 d'Onyxia !",
 	warn4 = "Peur dans 1,5 sec. !",
 } end )
 

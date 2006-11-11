@@ -44,6 +44,9 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	wave_name = "Alerte Vagues",
+	wave_desc = "Pr\195\169viens de l'arriv\195\169e des vagues.",
+
 	trigger1 = "Ils arrivent%. Essayez de ne pas vous faire tuer, bleusaille%.",
 	trigger2 = "?????",  -- There is no callout for wave 2 ><
 	trigger3 = "L'heure de notre vengeance sonne enfin !",
@@ -52,6 +55,7 @@ L:RegisterTranslations("frFR", function() return {
 	trigger6 = "Staghelm pleurnichera pour avoir la vie sauve, comme l'a fait son morveux de fils !",
 	trigger7 = "Fandral ! Ton heure est venue !",
 	trigger8 = "Imb\195\169cile imprudent !",
+	-- trigger9 = "Remember, Rajaxx, when I said I'd kill you last?",
 
 	warn1 = "Vague 1/8",
 	warn2 = "Vague 2/8",
@@ -61,6 +65,7 @@ L:RegisterTranslations("frFR", function() return {
 	warn6 = "Vague 6/8",
 	warn7 = "Vague 7/8",
 	warn8 = "Le G\195\169n\195\169ral Rajaxx arrive !",
+	warn9 = "Vague 1/8", -- trigger for starting the event by pulling the first wave instead of talking to andorov
 } end )
 
 L:RegisterTranslations("deDE", function() return {

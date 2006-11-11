@@ -85,7 +85,7 @@ L:RegisterTranslations("frFR", function() return {
 	bar1text = "Mal\195\169diction de Gehennas",
 
 	curse_name = "Alerte Mal\195\169diction de Gehennas",
-	curse_desc = "Vous alerte des mal\195\169dictions de Gehennas.",
+	curse_desc = "Pr\195\169viens des mal\195\169dictions de Gehennas.",
 } end)
 
 ----------------------------------

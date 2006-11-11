@@ -120,13 +120,13 @@ L:RegisterTranslations("frFR", function() return {
 	warn2 = "Frappe mortelle sur %s !",
 	
 	youms_name = "Alerte Frappe mortelle sur vous",
-	youms_desc = "Préviens quand vous êtes touché par la Frappe mortelle.",
+	youms_desc = "Pr\195\169viens quand vous \195\170tes touch\195\169 par la Frappe mortelle.",
 
 	elsems_name = "Alerte Frappe mortelle sur les autres",
-	elsems_desc = "Préviens quand quelqu'un d'autre est touché par la Frappe mortelle.",
+	elsems_desc = "Pr\195\169viens quand quelqu'un d'autre est touch\195\169 par la Frappe mortelle.",
 
 	msbar_name = "Barre Frappe mortelle",
-	msbar_desc = "Affiche une barre indiquant la durée de la Frappe mortelle.",	
+	msbar_desc = "Affiche une barre indiquant la dur\195\169e de la Frappe mortelle.",	
 } end )
 
 ----------------------------------

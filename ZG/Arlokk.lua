@@ -34,10 +34,10 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	youmark_name = "Alerte quand vous \195\170tes marqu\195\169",
-	youmark_desc = "Vous alerte quand vous \195\170tes marqu\195\169.",
+	youmark_desc = "Pr\195\169viens quand vous \195\170tes marqu\195\169.",
 
 	othermark_name = "Alerte quand d'autres sont marqu\195\169s",
-	othermark_desc = "Vous alerte quand d'autres joueurs sont marqu\195\169s.",
+	othermark_desc = "Pr\195\169viens quand d'autres joueurs sont marqu\195\169s.",
 
 	icon_name = "Ic\195\180ne de raid",
 	icon_desc = "Place une ic\195\180ne de raid sur la derni\195\168re personne marqu\195\169e (requiert d'\195\170tre promus ou plus)",

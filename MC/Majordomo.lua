@@ -167,10 +167,10 @@ L:RegisterTranslations("frFR", function() return {
 	bar3text = "Nouveaux Bouclier",
 
 	magic_name = "Alerte Bouclier de Sorts",
-	magic_desc = "Vous alerte des boucliers de sorts.",
+	magic_desc = "Pr\195\169viens des boucliers de sorts.",
 
 	dmg_name = "Alerte Bouclier de D\195\169g\195\162ts",
-	dmg_desc = "Vous alerte des boucliers de d\195\169g\195\162ts.",
+	dmg_desc = "Pr\195\169viens des boucliers de d\195\169g\195\162ts.",
 } end)
 
 ----------------------------------
