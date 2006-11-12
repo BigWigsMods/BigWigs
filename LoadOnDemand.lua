@@ -91,7 +91,7 @@ function BigWigsLoD:InitializeLoD()
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadInZone")
 			if meta then
 				-- register this zone
-				for k, v in {Explode(meta, ",")} do
+				for k, v in pairs({Explode(meta, ",")}) do
 					local zone
 					if BZ:HasTranslation(v) then zone = BZ[v]
 					elseif LC:HasTranslation(v) then zone = LC[v] end
