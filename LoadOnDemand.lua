@@ -10,7 +10,6 @@ local withcore = {}
 local inzone = {}
 
 local function Split(str, sep)
-	if not str or type(str) ~= "string" then error("Bad String was a " .. type(str) .. "value: " .. tostring(str), 2) end
 	local x, y = string.find(str, sep) or 0, string.len(sep) or 1
 	return tonumber(string.sub(str, 1, x - 1)) or string.sub(str, 1, x - 1), tonumber(string.sub(string, x + y)) or string.sub(string, x + y)
 end
@@ -22,9 +21,7 @@ local function Trim(str)
 end
 
 local function Explode(str, sep)
-	if not string then return end
-	if type(str) ~= "string" then error("Bad String was a " .. type(str) .. "value: " .. tostring(str), 2) end
-	local a, b = Split(string, sep)
+	local a, b = Split(str, sep)
 	if not b or b == "" then return Trim(a) end
 	if not string.find(b, sep) then return Trim(a), Trim(b) end
 	return Trim(a), Explode(b, sep)
@@ -109,3 +106,4 @@ function BigWigsLoD:InitializeLoD()
 		end
 	end
 end
+
