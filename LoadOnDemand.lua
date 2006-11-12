@@ -109,3 +109,4 @@ function BigWigsLoD:InitializeLoD()
 		end
 	end
 end
+
