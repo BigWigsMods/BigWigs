@@ -3,7 +3,6 @@
 --      Are you local?      --
 ------------------------------
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigsLoD")
 local LC = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local BZ = AceLibrary("Babble-Zone-2.2")
 
@@ -28,19 +27,11 @@ local function Explode(str, sep)
 	return Trim(a), Explode(b, sep)
 end
 
-
-----------------------------
---      Localization      --
-----------------------------
-
-L:RegisterTranslations("enUS", function() return {
-} end )
-
 ------------------------------
 --    Addon Declaration     --
 ------------------------------
 
-BigWigsLoD = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceConsole-2.0")
+BigWigsLoD = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0")
 
 ------------------------------
 --      Initialization      --
@@ -79,15 +70,17 @@ function BigWigsLoD:ZONE_CHANGED_NEW_AREA()
 			end
 		end
 		inzone[zone] = nil
-		self:TriggerEvent("BigWigs_ModulePackLoaded")
+		self:TriggerEvent("BigWigs_ModulePackLoaded", zone)
 	end	
 end
 
 ------------------------------
 --     Utility Functions    --
 ------------------------------
+--
 function BigWigsLoD:InitializeLoD()
-	for i = 1, GetNumAddOns() do
+	local numAddons = GetNumAddOns()
+	for i = 1, numAddons do
 		if not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadInZone")
 			if meta then
