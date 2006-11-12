@@ -9,24 +9,24 @@ local BZ = AceLibrary("Babble-Zone-2.2")
 local withcore = {}
 local inzone = {}
 
-local function Split(string, sep)
-	if (not string or type(string) ~= "string") then error("Bad String was a " .. type(string) .. "value: " .. (string or "nil"), 2) end
-	local x, y = (strfind(string, sep) or 0), (strlen(sep) or 1)
-	return (tonumber(strsub(string, 1, x-1)) or strsub(string, 1, x-1)), (tonumber(strsub(string, x+y)) or strsub(string, x+y))
+local function Split(str, sep)
+	if not str or type(str) ~= "string" then error("Bad String was a " .. type(str) .. "value: " .. tostring(str), 2) end
+	local x, y = string.find(str, sep) or 0, string.len(sep) or 1
+	return tonumber(string.sub(str, 1, x - 1)) or string.sub(str, 1, x - 1), tonumber(string.sub(string, x + y)) or string.sub(string, x + y)
 end
 
 local function Trim(str)
-	str = gsub(str, "^%s*", "")
-	str = gsub(str, "%s*$", "")
+	str = string.gsub(str, "^%s*", "")
+	str = string.gsub(str, "%s*$", "")
 	return str
 end
 
-local function Explode(string, sep)
-	if (not string) then return     end
-	if (type(string) ~= "string") then error("Bad String was a " .. type(string) .. "value: " .. (string or "nil"), 2) end
+local function Explode(str, sep)
+	if not string then return end
+	if type(str) ~= "string" then error("Bad String was a " .. type(str) .. "value: " .. tostring(str), 2) end
 	local a, b = Split(string, sep)
-	if (not b or b == "") then return Trim(a) end
-	if (not strfind(b, sep)) then return Trim(a), Trim(b) end
+	if not b or b == "" then return Trim(a) end
+	if not string.find(b, sep) then return Trim(a), Trim(b) end
 	return Trim(a), Explode(b, sep)
 end
 
