@@ -410,6 +410,9 @@ function BigWigs.modulePrototype:CheckForWipe()
 	end
 end
 
+function BigWigs.modulePrototype:IsRegistered()
+	return self.registered
+end
 
 ------------------------------
 --      Initialization      --
@@ -440,7 +443,8 @@ function BigWigs:OnEnable()
 			self:ToggleModuleActive(module, true)
 		end
 	end
-
+	self:RegisterEvent("BigWigs_ModulePackLoaded")
+	
 	self:TriggerEvent("BigWigs_CoreEnabled")
 
 	self:RegisterEvent("BigWigs_TargetSeen")
@@ -464,6 +468,12 @@ end
 -------------------------------
 --      Module Handling      --
 -------------------------------
+
+function BigWigs:BigWigs_ModulePackLoaded()
+	for name, module in self:IterateModules() do
+		if not module:IsRegistered() then self:RegisterModule(name, module) end
+	end
+end
 
 function BigWigs:ADDON_LOADED(addon)
 	local gname = GetAddOnMetadata(addon, "X-BigWigsModule")
@@ -598,6 +608,7 @@ function BigWigs:RegisterModule(name, module)
 		end
 	end
 
+	module.registered = true
 	-- Set up target monitoring, in case the monitor module has already initialized
 	self:TriggerEvent("BigWigs_RegisterForTargetting", module.zonename, module.enabletrigger)
 end

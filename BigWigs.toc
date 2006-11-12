@@ -43,6 +43,7 @@ Libs\FuBarPlugin-2.0\FuBarPlugin-2.0.lua
 Libs\PaintChips-2.0\PaintChips-2.0.lua
 Libs\CandyBar-2.0\CandyBar-2.0.lua
 
+LoadOnDemand.lua
 Core.lua
 Options.lua
 
@@ -57,6 +58,7 @@ Plugins\BossBlock.lua
 Plugins\RaidIcon.lua
 Plugins\Range.lua
 Plugins\Version.lua
+Plugins\Test.lua
 
 Extras\CustomBar.lua
 Extras\Discovery.lua
@@ -110,7 +112,6 @@ Other\Azuregos.lua
 Other\Emeriss.lua
 Other\Onyxia.lua
 Other\Kazzak.lua
-Other\Test.lua
 
 Naxxramas\Anubrekhan.lua
 Naxxramas\Gluth.lua
