@@ -83,20 +83,20 @@ function BigWigsLoD:InitializeLoD()
 		if not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadInZone")
 			if meta then
-				-- register this zone
+				local ignorezone = string.find( meta, LC["Outdoor Raid Bosses Zone"] )
 				for k, v in pairs({Explode(meta, ",")}) do
 					local zone
-					if BZ:HasTranslation(v) then zone = BZ[v]
-					elseif LC:HasTranslation(v) then zone = LC[v] end
+					if BZ:HasTranslation(v) then zone = BZ[v] end
+					-- elseif LC:HasTranslation(v) then zone = LC[v] end
 					if zone then
 						if not inzone[zone] then inzone[zone] = {} end
 						table.insert( inzone[zone], i)
-						if LC:HasTranslation( v ) then
+						if not ignorezone then 
 							zonelist[zone] = true
-						else
+						else 
 							if not zonelist[LC["Other"]] then zonelist[LC["Other"]] = {} end
 							zonelist[LC["Other"]][zone] = true
-						end
+						end						
 					end
 				end
 			end
@@ -117,6 +117,7 @@ function BigWigsLoD:LoadZone( zone )
 			end
 		end
 		inzone[zone] = nil
+		zonelist[zone] = nil
 		self:TriggerEvent("BigWigs_ModulePackLoaded", zone)
 	end
 end

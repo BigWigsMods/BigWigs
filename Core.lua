@@ -45,6 +45,9 @@ L:RegisterTranslations("enUS", function() return {
 	bosskill_desc = "Announce when boss is defeated",
 
 	["Other"] = true,
+	["Load"] = true,
+	["Load All"] = true,
+	["Load all %s modules."] = true,
 	
 	-- AceConsole zone commands
 	["Zul'Gurub"] = "ZG",
@@ -445,6 +448,11 @@ function BigWigs:OnEnable()
 			self:ToggleModuleActive(module, true)
 		end
 	end
+	
+	if BigWigsLoD then
+		self:CreateLoDMenu()
+	end
+	
 	self:RegisterEvent("BigWigs_ModulePackLoaded")
 	
 	self:TriggerEvent("BigWigs_CoreEnabled")
@@ -670,4 +678,62 @@ function BigWigs:MobIsTrigger(module, name)
 	end
 end
 
+function BigWigs:CreateLoDMenu()
+	local zonelist = BigWigsLoD:GetZones()
+	for k,v in pairs( zonelist ) do
+		if type(v) ~= "table" then
+			self:AddLoDMenu( k )
+		else
+			self:AddLoDMenu( L["Other"] )
+		end
+	end
+end
 
+function BigWigs:AddLoDMenu( zonename )
+		local zone = nil
+		if L:HasTranslation(zonename) then
+			zone = L[zonename]
+		else
+			zone = L["Other"]
+		end
+		if zone then
+			if not self.cmdtable.args[L["boss"]].args[zone] then
+				self.cmdtable.args[L["boss"]].args[zone] = {
+					type = "group",
+					name = zonename,
+					desc = string.format(L["Options for bosses in %s."], zonename),
+					args = {}
+				}
+			end
+			if zone == L["Other"] then
+				local zones = BigWigsLoD:GetZones()
+				zones = zones[L["Other"]]
+				self.cmdtable.args[L["boss"]].args[zone].args[L["Load"]] = {
+					type = "execute",
+					name = L["Load All"],
+					desc = string.format( L["Load all %s modules."], zonename ),
+					order = 1,
+					func = function()
+							for z, v in pairs( zones ) do
+								BigWigsLoD:LoadZone( z )
+								if self.cmdtable.args[L["boss"]].args[z] and self.cmdtable.args[L["boss"]].args[z].args[L["Load"]] then
+									self.cmdtable.args[L["boss"]].args[z].args[L["Load"]] = nil
+								end
+							end
+							self.cmdtable.args[L["boss"]].args[zone] = nil
+						end
+				}
+			else
+				self.cmdtable.args[L["boss"]].args[zone].args[L["Load"]] = {
+					type = "execute",
+					name = L["Load All"],
+					desc = string.format( L["Load all %s modules."], zonename ),
+					order = 1,
+					func = function()
+							BigWigsLoD:LoadZone( zonename )
+							self.cmdtable.args[L["boss"]].args[zone].args[L["Load"]] = nil
+						end				
+				}
+			end
+		end
+end
