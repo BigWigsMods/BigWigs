@@ -11,7 +11,7 @@ local inzone = {}
 
 local function Split(str, sep)
 	local x, y = string.find(str, sep) or 0, string.len(sep) or 1
-	return tonumber(string.sub(str, 1, x - 1)) or string.sub(str, 1, x - 1), tonumber(string.sub(string, x + y)) or string.sub(string, x + y)
+	return tonumber(string.sub(str, 1, x - 1)) or string.sub(str, 1, x - 1), tonumber(string.sub(str, x + y)) or string.sub(str, x + y)
 end
 
 local function Trim(str)
