@@ -4,6 +4,7 @@
 ------------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsLoD")
+local LC = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local BZ = AceLibrary("Babble-Zone-2.2")
 
 local withcore = {}
