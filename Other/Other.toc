@@ -13,7 +13,7 @@
 ## X-RelSite-Curse: 4356
 ## X-AceForum: 1222
 
-## X-BigWigs-LoadWithCore: 1
+## X-BigWigs-LoadInZone: Onyxia's Lair, Blasted Lands, Azshara, Duskwood, The Hinterlands, Feralas, Outdoor Raid Bosses Zone
 
 ## Dependencies: BigWigs
 

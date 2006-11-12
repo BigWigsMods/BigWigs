@@ -85,17 +85,20 @@ end
 ------------------------------
 --     Utility Functions    --
 ------------------------------
-
 function BigWigsLoD:InitializeLoD()
 	for i = 1, GetNumAddOns() do
 		if not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadInZone")
 			if meta then
 				-- register this zone
-				for k, v in {Explode(z, ",")} do
-					local zone = BZ[v]
-					if not inzone[zone] then inzone[zone] = {} end
-					table.insert( inzone[zone], i)
+				for k, v in {Explode(meta, ",")} do
+					local zone
+					if BZ:HasTranslation(v) then zone = BZ[v]
+					elseif LC:HasTranslation(v) then zone = LC[v] end
+					if zone then
+						if not inzone[zone] then inzone[zone] = {} end
+						table.insert( inzone[zone], i)
+					end
 				end
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadWithCore")
@@ -106,4 +109,3 @@ function BigWigsLoD:InitializeLoD()
 		end
 	end
 end
-
