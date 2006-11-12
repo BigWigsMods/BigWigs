@@ -27,6 +27,7 @@ end
 
 function BigWigsTargetMonitor:OnEnable()
 	self:RegisterEvent("BigWigs_RegisterForTargetting")
+	self:RegisterEvent("BigWigs_ZoneLoaded", "ZONE_CHANGED_NEW_AREA")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	self:ZONE_CHANGED_NEW_AREA()
 end
