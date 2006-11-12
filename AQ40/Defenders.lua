@@ -175,8 +175,20 @@ L:RegisterTranslations("zhTW", function() return {
 	plagueyouwarn = "你受到瘟疫的影響！快跑開！",
 	plagueyou = "你",
 	plagueare = "了",
-	thunderclaptrigger = "^阿努比薩斯防禦者的雷霆一擊",
+	thunderclaptrigger = "^阿努比薩斯防禦者的雷霆一擊擊中(.+)造成%d+點傷害。",
 	thunderclapwarn = "雷霆一擊發動！",
+	--The thunderclaptrigger use three events,
+	--CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE,
+	--CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE and
+	--CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE,
+	--but tne function BigWigsDefenders:Thunderclap does the same thing.
+	--The skill affects a lot of players at once in zhTW.
+	--(See BigWigs\Naxxramas\Maexxna.lua)
+	--They say it works fine for all other locales.
+	--Or just simply use thunderclaptrigger = "^阿努比薩斯防禦者的雷霆一擊擊中你", to trigger self ?
+	--Any idea?
+	--If anyone knows how to correct it in translation string, mail to me please.
+	--xinsonic@gmail.com
 } end )
 
 

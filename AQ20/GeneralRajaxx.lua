@@ -123,7 +123,7 @@ L:RegisterTranslations("zhTW", function() return {
 	wave_name = "來襲警報",
 	wave_desc = "當新一批敵人來襲時發出警報",
 
-	trigger1 = "先殺再說...他們來了。", --開戰了才警告
+	trigger1 = "先殺再說...他們來了！", --開戰了才警告
 	trigger2 = "?????",  -- There is no callout for wave 2 ><
 	trigger3 = "我們懲罰的時刻就在眼前！讓黑暗支配敵人的內心吧！",
 	trigger4 = "我們不需在被禁堵的門與石牆後等待了！我們的復仇將不再被否認！巨龍將在我們的憤怒之前顫抖！",
