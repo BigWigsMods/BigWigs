@@ -44,6 +44,8 @@ L:RegisterTranslations("enUS", function() return {
 	bosskill_name = "Boss death",
 	bosskill_desc = "Announce when boss is defeated",
 
+	["Other"] = true,
+	
 	-- AceConsole zone commands
 	["Zul'Gurub"] = "ZG",
 	["Molten Core"] = "MC",

@@ -8,6 +8,7 @@ local BZ = AceLibrary("Babble-Zone-2.2")
 
 local withcore = {}
 local inzone = {}
+local zonelist = {}
 
 local function Split(str, sep)
 	local x, y = string.find(str, sep) or 0, string.len(sep) or 1
@@ -90,6 +91,12 @@ function BigWigsLoD:InitializeLoD()
 					if zone then
 						if not inzone[zone] then inzone[zone] = {} end
 						table.insert( inzone[zone], i)
+						if LC:HasTranslation( v ) then
+							zonelist[zone] = true
+						else
+							if not zonelist[LC["Other"]] then zonelist[LC["Other"]] = {} end
+							zonelist[LC["Other"]][zone] = true
+						end
 					end
 				end
 			end
@@ -112,4 +119,8 @@ function BigWigsLoD:LoadZone( zone )
 		inzone[zone] = nil
 		self:TriggerEvent("BigWigs_ModulePackLoaded", zone)
 	end
+end
+
+function BigWigsLoD:GetZones()
+	return zonelist
 end
