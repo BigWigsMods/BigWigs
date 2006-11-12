@@ -39,7 +39,14 @@ BigWigsLoD = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0")
 
 function BigWigsLoD:OnInitialize()
 	self:InitializeLoD()
-	self:RegisterEvent("BigWigs_CoreEnabled")
+end
+
+function BigWigsLoD:OnEnable()
+	if BigWigs:IsActive() then
+		self:BigWigs_CoreEnabled()
+	else
+		self:RegisterEvent("BigWigs_CoreEnabled")
+	end
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 end
 
@@ -77,7 +84,7 @@ end
 ------------------------------
 --     Utility Functions    --
 ------------------------------
---
+
 function BigWigsLoD:InitializeLoD()
 	local numAddons = GetNumAddOns()
 	for i = 1, numAddons do
