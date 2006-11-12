@@ -69,16 +69,7 @@ function BigWigsLoD:BigWigs_CoreEnabled()
 end
 
 function BigWigsLoD:ZONE_CHANGED_NEW_AREA()
-	local zone = GetRealZoneText()
-	if inzone[zone] then
-		for k,v in pairs( inzone[zone] ) do
-			if not IsAddOnLoaded( v ) then
-				LoadAddOn( v )
-			end
-		end
-		inzone[zone] = nil
-		self:TriggerEvent("BigWigs_ModulePackLoaded", zone)
-	end	
+	self:LoadZone( GetRealZoneText() )
 end
 
 ------------------------------
@@ -111,3 +102,14 @@ function BigWigsLoD:InitializeLoD()
 	end
 end
 
+function BigWigsLoD:LoadZone( zone )
+	if inzone[zone] then
+		for k,v in pairs( inzone[zone] ) do
+			if not IsAddOnLoaded( v ) then
+				LoadAddOn( v )
+			end
+		end
+		inzone[zone] = nil
+		self:TriggerEvent("BigWigs_ModulePackLoaded", zone)
+	end
+end
