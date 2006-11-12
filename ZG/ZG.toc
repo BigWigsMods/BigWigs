@@ -1,0 +1,27 @@
+## Interface: 11200
+
+## Title: Big Wigs [|cffeda55fZul'Gurub|r] |cff7fff7f -Ace2-|r
+## Notes: Big Wigs Zul'Gurub Modules
+## Author: Ammo, Rabbit
+## X-Credits: Tekkub Stoutwrithe (founding author), Shyva & Others
+## Version: 2.0
+## LoadOnDemand: 1
+
+## X-Website: http://www.wowace.com/index.php/BigWigs
+## X-Category: Raid
+## X-RelSite-WoWI: 5086
+## X-RelSite-Curse: 4356
+## X-AceForum: 1222
+
+## X-BigWigs-LoadInZone: Zul'Gurub
+
+## Dependencies: BigWigs
+
+Arlokk.lua
+Jeklik.lua
+Marli.lua
+Venoxis.lua
+Hakkar.lua
+Mandokir.lua
+Jindo.lua
+Thekal.lua

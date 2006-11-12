@@ -1,0 +1,29 @@
+## Interface: 11200
+
+## Title: Big Wigs [|cffeda55fAhn'Qiraj|r] |cff7fff7f -Ace2-|r
+## Notes: Big Wigs Ahn'Qiraj Modules
+## Author: Ammo, Rabbit
+## X-Credits: Tekkub Stoutwrithe (founding author), Shyva & Others
+## Version: 2.0
+## LoadOnDemand: 1
+
+## X-Website: http://www.wowace.com/index.php/BigWigs
+## X-Category: Raid
+## X-RelSite-WoWI: 5086
+## X-RelSite-Curse: 4356
+## X-AceForum: 1222
+
+## X-BigWigs-LoadInZone: Ahn'Qiraj
+
+## Dependencies: BigWigs
+
+Skeram.lua
+BugFamily.lua
+Sartura.lua
+Fankriss.lua
+Huhuran.lua
+Ouro.lua
+Defenders.lua
+Twins.lua
+Cthun.lua
+Viscidus.lua
