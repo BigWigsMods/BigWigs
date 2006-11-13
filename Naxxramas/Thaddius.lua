@@ -80,6 +80,9 @@ L:RegisterTranslations("enUS", function() return {
 	powersurgebar = "Power Surge",
 
 	bar1text = "Polarity Shift",
+
+	throwbar = "Throw",
+	throwwarn = "Throw in ~5 seconds!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
