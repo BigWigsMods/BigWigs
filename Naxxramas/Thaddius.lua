@@ -34,6 +34,10 @@ L:RegisterTranslations("enUS", function() return {
 	charge_name = "Charge Alert",
 	charge_desc = "Warn about Positive/Negative charge for yourself only.",
 
+	throw_cmd = "throw",
+	throw_name = "Throw Alerts",
+	throw_desc = "Warn about tank platform swaps.",
+
 	enragetrigger = "%s goes into a berserker rage!",
 	starttrigger = "Stalagg crush you!",
 	starttrigger1 = "Feed you to master!",
@@ -345,7 +349,7 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsThaddius = BigWigs:NewModule(boss)
 BigWigsThaddius.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 BigWigsThaddius.enabletrigger = { boss, feugen, stalagg }
-BigWigsThaddius.toggleoptions = {"enrage", "charge", "polarity", -1, "power", "phase", "bosskill"}
+BigWigsThaddius.toggleoptions = {"enrage", "charge", "polarity", -1, "power", "throw", "phase", "bosskill"}
 BigWigsThaddius.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -387,6 +391,8 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Important")
 		end
 		self.stage1warn = true
+		self:Throw()
+		self:ScheduleRepeatingEvent( "bwthaddiusthrow", self.Throw, 21, self )
 	elseif string.find(msg, L["starttrigger2"]) or string.find(msg, L["starttrigger3"]) or string.find(msg, L["starttrigger4"]) then
 		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L["startwarn2"], "Important") end
 		if self.db.profile.enrage then
@@ -411,8 +417,10 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_EMOTE( msg )
 		self:CancelScheduledEvent("bwthaddiuswarn5")
 	elseif msg == L["adddeath"] then
 		self.addsdead = self.addsdead + 1
-		if self.addsdead == 2 and self.db.profile.phase then
-			self:TriggerEvent("BigWigs_Message", L["addsdownwarn"], "Attention")
+		if self.addsdead == 2 then
+			if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L["addsdownwarn"], "Attention") end
+			self:CancelScheduledEvent("bwthaddiusthrow")
+			self:CancelScheduledEvent("bwthaddiusthrowwarn")
 		end
 	elseif msg == L["teslaoverload"] and self.db.profile.phase and not self.teslawarn then
 		self.teslawarn = true
@@ -473,3 +481,9 @@ function BigWigsThaddius:BigWigs_RecvSync( sync )
 	end
 end
 
+function BigWigsThaddius:Throw()
+	if self.db.profile.throw then
+		self:TriggerEvent("BigWigs_StartBar", self, L["throwbar"], 20, "Interface\\Icons\\Ability_Druid_Maul")
+		self:ScheduleEvent("bwthaddiusthrowwarn", "BigWigs_Message", 15, L["throwwarn"], "Urgent")
+	end
+end
