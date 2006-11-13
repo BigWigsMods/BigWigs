@@ -442,6 +442,8 @@ end
 
 function BigWigs:OnEnable()
 
+	if not self:IsEventRegistered("ADDON_LOADED") then self:RegisterEvent("ADDON_LOADED") end
+
 	-- Enable all disabled modules that are not boss modules.
 	for name, module in self:IterateModules() do
 		if type(module.IsBossModule) ~= "function" or not module:IsBossModule() then
