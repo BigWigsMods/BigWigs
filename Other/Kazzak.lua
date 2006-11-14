@@ -90,18 +90,18 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	supreme_name = "Alerte Suprême",
-	supreme_desc = "Préviens régulièrement de l'approche du mode Suprême.",
+	supreme_name = "Alerte Supr\195\170me",
+	supreme_desc = "Pr\195\169viens r\195\169guli\195\168rement de l'approche du mode Supr\195\170me.",
 
-	starttrigger = "Pour la Légion ! Pour Kil'Jaeden !",
+	starttrigger = "Pour la L\195\169gion ! Pour Kil'Jaeden !",
 
-	engagewarn	 = "Seigneur Kazzak engagé - 3 min. avant Suprême !",
+	engagewarn	 = "Seigneur Kazzak engag\195\169 - 3 minutes avant Supr\195\170me !",
 
-	supreme1min	 = "Mode Suprême dans 1 min. !",
-	supreme30sec = "Mode Suprême dans 30 sec. !",
-	supreme10sec = "Mode Suprême dans 10 sec. !",
+	supreme1min	 = "Mode Supr\195\170me dans 1 minute !",
+	supreme30sec = "Mode Supr\195\170me dans 30 secondes !",
+	supreme10sec = "Mode Supr\195\170me dans 10 secondes !",
 
-	bartext = "Mode Suprême",
+	bartext = "Mode Supr\195\170me",
 } end )
 
 ----------------------------------

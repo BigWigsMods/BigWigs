@@ -40,27 +40,27 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	noxious_name = "Alerte Souffle nauséabond",
-	noxious_desc = "Préviens quand Emeriss fait son Souffle nauséabond.",
+	noxious_name = "Alerte Souffle naus\195\169abond",
+	noxious_desc = "Pr\195\169viens quand Emeriss fait son Souffle naus\195\169abond.",
 
 	volatileyou_name = "Alerte Infection volatile sur vous",
-	volatileyou_desc = "Préviens quand vous êtes touché par l'Infection volatile.",
+	volatileyou_desc = "Pr\195\169viens quand vous \195\170tes touch\195\169 par l'Infection volatile.",
 
 	volatileother_name = "Alerte Infection volatile sur les autres",
-	volatileother_desc = "Préviens quand les autres sont touchés par l'Infection volatile.",
+	volatileother_desc = "Pr\195\169viens quand les autres sont touch\195\169s par l'Infection volatile.",
 
 	trigger1 = "^([^%s]+) ([^%s]+) les effets de Infection volatile.",
-	trigger2 = "les effets de Souffle nauséabond.",
+	trigger2 = "les effets de Souffle naus\195\169abond.",
 
-	warn1 = "Tu subis les effets de l'Infection volatile !",
-	warn2 = " subit les effets de l'Infection volatile !",
-	warn3 = "5 sec. avant le Souffle nauséabond !",
-	warn4 = "Souffle nauséabond - 30 sec. avant le suivant !",
+	warn1 = "Tu es infect\195\169 !",
+	warn2 = " est infect\195\169 !",
+	warn3 = "5 secondes avant le Souffle naus\195\169abond !",
+	warn4 = "Souffle naus\195\169abond - 30 secondes avant le suivant !",
 
 	isyou = "Vous",
 	isare = "subissez",
 
-	bar1text = "Souffle nauséabond",
+	bar1text = "Souffle naus\195\169abond",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

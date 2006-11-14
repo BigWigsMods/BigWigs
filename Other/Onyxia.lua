@@ -41,7 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	deepbreath_name = "Alerte Grande inspiration",
-	deepbreath_desc = "Préviens quand Onyxia se prépare à prendre une grande inspiration.",
+	deepbreath_desc = "Pr\195\169viens quand Onyxia se pr\195\169pare \195\160 prendre une grande inspiration.",
 
 	phase2_name = "Alerte Phase 2",
 	phase2_desc = "Pr\195\169viens quand Onyxia passe en phase 2.",
@@ -49,7 +49,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase3_name = "Alerte Phase 3",
 	phase3_desc = "Pr\195\169viens quand Onyxia passe en phase 3.",
 
-	onyfear_name = "Peur",
+	onyfear_name = "Alerte Peur",
 	onyfear_desc = "Pr\195\169viens quand Onyxia utilise son Rugissement puissant en phase 3.",
 	
 	trigger1 = "%s prend une grande inspiration%.%.%.",
@@ -58,9 +58,9 @@ L:RegisterTranslations("frFR", function() return {
 	trigger4 = "Onyxia commence \195\160 lancer Rugissement puissant.",
 
 	warn1 = "Souffle imminent !",
-	warn2 = "Arriv\195\169e de la phase 2 d'Onyxia !",
-	warn3 = "Arriv\195\169e de la phase 3 d'Onyxia !",
-	warn4 = "Peur dans 1,5 sec. !",
+	warn2 = "Arriv\195\169e de la phase 2 !",
+	warn3 = "Arriv\195\169e de la phase 3 !",
+	warn4 = "Peur de zone dans 1,5 sec. !",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
