@@ -96,7 +96,7 @@ L:RegisterTranslations("frFR", function() return {
 	egg_trigger = "Tranchetripe l'Indompt\195\169 lance D\195\169truire (.*)%.",
 	egg_message = "%d oeufs sur 30 d\195\169truits !",
 
-	phase2_trigger = "Flammes \195\169chauffantes DE Tranchetripe l'Indompt\195\169 gu\195\169rit Tranchetripe l'Indompt\195\169 de .*%.",
+	phase2_trigger = "Flammes \195\169chauffantes .+ Tranchetripe l'Indompt\195\169 gu\195\169rit Tranchetripe l'Indompt\195\169 de .*%.",
 	phase2_message = "Tous les oeufs ont \195\169t\195\169 d\195\169truits !",
 
 	mc_name = "Alerte Contr\195\180le mental",
