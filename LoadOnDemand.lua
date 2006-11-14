@@ -45,11 +45,16 @@ end
 function BigWigsLoD:OnEnable()
 	if BigWigs:IsActive() then
 		self:BigWigs_CoreEnabled()
-	else
-		self:RegisterEvent("BigWigs_CoreEnabled")
 	end
+	self:RegisterEvent("BigWigs_CoreEnabled")
+
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-	self:RegisterEvent("AceEvent_FullyInitialized", "ZONE_CHANGED_NEW_AREA")
+
+	if AceLibrary("AceEvent-2.0"):IsFullyInitialized() then
+		self:ZONE_CHANGED_NEW_AREA()
+	else
+		self:RegisterEvent("AceEvent_FullyInitialized", "ZONE_CHANGED_NEW_AREA")
+	end
 end
 
 ------------------------------
@@ -58,8 +63,10 @@ end
 
 function BigWigsLoD:BigWigs_CoreEnabled()
 
+	local loaded = false
 	for k,v in pairs( withcore ) do
 		if not IsAddOnLoaded( v ) then
+			loaded = true
 			LoadAddOn( v )
 		end
 	end	
@@ -67,7 +74,9 @@ function BigWigsLoD:BigWigs_CoreEnabled()
 	withcore = {}
 
 	-- Fire an event to have the target monitor check it's stuff
-	self:TriggerEvent("BigWigs_ModulePackLoaded")
+	if loaded then
+		self:TriggerEvent("BigWigs_ModulePackLoaded")
+	end
 end
 
 function BigWigsLoD:ZONE_CHANGED_NEW_AREA()
@@ -97,7 +106,7 @@ function BigWigsLoD:InitializeLoD()
 						else 
 							if not zonelist[LC["Other"]] then zonelist[LC["Other"]] = {} end
 							zonelist[LC["Other"]][zone] = true
-						end						
+						end
 					end
 				end
 			end
@@ -112,17 +121,22 @@ end
 
 function BigWigsLoD:LoadZone( zone )
 	if inzone[zone] then
+		local loaded = false
 		for k,v in pairs( inzone[zone] ) do
 			if not IsAddOnLoaded( v ) then
+				loaded = true
 				LoadAddOn( v )
 			end
 		end
 		inzone[zone] = nil
 		zonelist[zone] = nil
-		self:TriggerEvent("BigWigs_ModulePackLoaded", zone)
+		if loaded then
+			self:TriggerEvent("BigWigs_ModulePackLoaded", zone)
+		end
 	end
 end
 
 function BigWigsLoD:GetZones()
 	return zonelist
 end
+
