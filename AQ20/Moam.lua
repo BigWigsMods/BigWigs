@@ -13,8 +13,8 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Moam",
 
 	adds_cmd = "adds",
-	adds_name = "Adds Alert",
-	adds_desc = "Warn for Adds",
+	adds_name = "Mana Fiend Alert",
+	adds_desc = "Warn for Mana fiends",
 
 	paralyze_cmd = "paralyze",
 	paralyze_name = "Paralyze Alert",
@@ -23,13 +23,13 @@ L:RegisterTranslations("enUS", function() return {
 	starttrigger = "%s senses your fear.",
 	startwarn = "Moam Engaged! 90 Seconds until adds!",
 	addsbar = "Adds",
-	addsincoming = "Adds incoming in %s seconds!",
+	addsincoming = "Mana Fiends incoming in %s seconds!",
 	addstrigger = "%s drains your mana and turns to stone.",
-	addswarn = "Adds spawned! Moam Paralyzed for 90 seconds!",
+	addswarn = "Mana Fiends spawned! Moam Paralyzed for 90 seconds!",
 	paralyzebar = "Paralyze",
 	returnincoming = "Moam unparalyzed in %s seconds!",
 	returntrigger = "^Energize fades from Moam%.$",
-	returnwarn = "Moam unparalyzed! 90 seconds until adds!",	
+	returnwarn = "Moam unparalyzed! 90 seconds until Mana Fiends!",	
 } end )
 
 L:RegisterTranslations("frFR", function() return {
