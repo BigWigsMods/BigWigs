@@ -61,6 +61,7 @@ Plugins\Version.lua
 Plugins\Test.lua
 
 Extras\CustomBar.lua
+Extras\Discovery.lua
 Extras\Tranq.lua
 
 ZG\Arlokk.lua
