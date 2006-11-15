@@ -21,4 +21,3 @@ Azuregos.lua
 Emeriss.lua
 Onyxia.lua
 Kazzak.lua
-Test.lua
