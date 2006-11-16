@@ -61,8 +61,8 @@ L:RegisterTranslations("frFR", function() return {
 	trigger3 = "^Azuregos gagne Renvoi.",
 
 	warn1 = "T\195\169l\195\169portation !",
-	warn2 = "Bouclier magique en place !",
-	warn3 = "Bouclier magique dissip\195\169 !",
+	warn2 = "Bouclier magique dissip\195\169 !",
+	warn3 = "Bouclier magique en place !",
 
 	shieldbar = "Bouclier magique",
 } end )
