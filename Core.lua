@@ -501,6 +501,8 @@ end
 
 
 function BigWigs:RegisterModule(name, module)
+	if module:IsRegistered() then return end
+
 	if module:IsBossModule() then self:ToggleModuleActive(module, false) end
 
 	-- Set up DB
