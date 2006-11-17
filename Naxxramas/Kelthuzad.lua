@@ -341,7 +341,7 @@ BigWigsKelThuzad.revision = tonumber(string.sub("$Revision$", 12, -3))
 --      Initialization      --
 ------------------------------
 
-function BigWigsKelThuzad:OnInitialize()
+function BigWigsKelThuzad:OnRegister()
 	-- Big evul hack to enable the module when entering Kel'Thuzads chamber.
 	self:RegisterEvent("MINIMAP_ZONE_CHANGED")
 end
