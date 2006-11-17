@@ -1,6 +1,6 @@
 ## Interface: 11200
 
-## Title: Big Wigs [|cffeda55fPlugins|r] |cff7fff7f -Ace2-|r
+## Title: Big Wigs [|cffeda55fPlugins|r]
 ## Notes: Big Wigs Core Plugins
 ## Author: Ammo, Rabbit
 ## X-Credits: Tekkub Stoutwrithe (founding author), Shyva & Others
