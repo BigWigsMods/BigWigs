@@ -49,6 +49,9 @@ function BigWigsLoD:OnEnable()
 	self:RegisterEvent("BigWigs_CoreEnabled")
 
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	self:RegisterEvent("CHAT_MSG_SYSTEM")
+	self:RegisterEvent("BigWigs_JoinedGroup")
+	self:RegisterEvent("BigWigs_LeftGroup")
 
 	if AceLibrary("AceEvent-2.0"):IsFullyInitialized() then
 		self:ZONE_CHANGED_NEW_AREA()
@@ -81,6 +84,22 @@ end
 
 function BigWigsLoD:ZONE_CHANGED_NEW_AREA()
 	self:LoadZone( GetRealZoneText() )
+end
+
+function BigWigsLoD:CHAT_MSG_SYSTEM( msg )
+        if string.find(msg, "^"..ERR_RAID_YOU_LEFT) then
+                self:TriggerEvent("BigWigs_LeftGroup")
+        elseif string.find(msg, ERR_RAID_YOU_JOINED) then
+                self:TriggerEvent("BigWigs_JoinedGroup")
+	end
+end
+
+function BigWigsLoD:BigWigs_JoinedGroup()
+	BigWigs:ToggleActive(true)
+end
+
+function BigWigsLoD:BigWigs_LeftGroup()
+	BigWigs:ToggleActive(false)
 end
 
 ------------------------------

@@ -442,28 +442,42 @@ function BigWigs:OnInitialize()
 			self.hooks[self]["ToggleModuleActive"](self, module, state)
 			self:TriggerEvent( "BigWigs_ModuleToggle", module, state)
 		end )
+	self.loading = true
 end
 
 
 function BigWigs:OnEnable()
-	-- Enable all disabled modules that are not boss modules.
-	for name, module in self:IterateModules() do
-		if type(module.IsBossModule) ~= "function" or not module:IsBossModule() then
-			self:ToggleModuleActive(module, true)
+	if AceLibrary("AceEvent-2.0"):IsFullyInitialized() then
+		self:AceEvent_FullyInitialized()
+	else
+		self:RegisterEvent("AceEvent_FullyInitialized")
+	end
+end
+
+function BigWigs:AceEvent_FullyInitialized()
+	if GetNumRaidMembers() > 0 or not self.loading then
+		-- Enable all disabled modules that are not boss modules.
+		for name, module in self:IterateModules() do
+			if type(module.IsBossModule) ~= "function" or not module:IsBossModule() then
+				self:ToggleModuleActive(module, true)
+			end
 		end
-	end
+		
+		if BigWigsLoD then
+			self:CreateLoDMenu()
+		end
 	
-	if BigWigsLoD then
-		self:CreateLoDMenu()
+		self:TriggerEvent("BigWigs_CoreEnabled")
+	
+		self:RegisterEvent("BigWigs_TargetSeen")
+		self:RegisterEvent("BigWigs_RebootModule")
+	
+		self:RegisterEvent("BigWigs_RecvSync")
+		self:TriggerEvent("BigWigs_ThrottleSync", "BossEngaged", 5 )
+	else
+		self:ToggleActive(false)
 	end
-
-	self:TriggerEvent("BigWigs_CoreEnabled")
-
-	self:RegisterEvent("BigWigs_TargetSeen")
-	self:RegisterEvent("BigWigs_RebootModule")
-
-	self:RegisterEvent("BigWigs_RecvSync", 10)
-	self:RegisterEvent("AceEvent_FullyInitialized", function() self:TriggerEvent("BigWigs_ThrottleSync", "BossEngaged", 5) end )
+	self.loading = nil
 end
 
 

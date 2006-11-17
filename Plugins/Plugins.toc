@@ -1,0 +1,31 @@
+## Interface: 11200
+
+## Title: Big Wigs [|cffeda55fPlugins|r] |cff7fff7f -Ace2-|r
+## Notes: Big Wigs Core Plugins
+## Author: Ammo, Rabbit
+## X-Credits: Tekkub Stoutwrithe (founding author), Shyva & Others
+## Version: 2.0
+## LoadOnDemand: 1
+
+## X-Website: http://www.wowace.com/index.php/BigWigs
+## X-Category: Raid
+## X-RelSite-WoWI: 5086
+## X-RelSite-Curse: 4356
+## X-AceForum: 1222
+
+## X-BigWigs-LoadWithCore: 1
+
+## Dependencies: BigWigs
+
+Comm.lua
+Colors.lua
+TargetMonitor.lua
+Bars.lua
+Messages.lua
+Sound.lua
+RaidWarn.lua
+BossBlock.lua
+RaidIcon.lua
+Range.lua
+Version.lua
+Test.lua
