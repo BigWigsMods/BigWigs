@@ -43,9 +43,7 @@ function BigWigsLoD:OnInitialize()
 end
 
 function BigWigsLoD:OnEnable()
-	if BigWigs:IsActive() then
-		self:BigWigs_CoreEnabled()
-	end
+
 	self:RegisterEvent("BigWigs_CoreEnabled")
 
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
