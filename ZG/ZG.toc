@@ -1,6 +1,6 @@
 ## Interface: 11200
 
-## Title: Big Wigs [|cffeda55fZul'Gurub|r] |cff7fff7f -Ace2-|r
+## Title: Big Wigs [|cffeda55fZul'Gurub|r]
 ## Notes: Big Wigs Zul'Gurub Modules
 ## Author: Ammo, Rabbit
 ## X-Credits: Tekkub Stoutwrithe (founding author), Shyva & Others

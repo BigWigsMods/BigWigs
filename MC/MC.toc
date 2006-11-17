@@ -1,6 +1,6 @@
 ## Interface: 11200
 
-## Title: Big Wigs [|cffeda55fMolten Core|r] |cff7fff7f -Ace2-|r
+## Title: Big Wigs [|cffeda55fMolten Core|r]
 ## Notes: Big Wigs Molten Core Modules
 ## Author: Ammo, Rabbit
 ## X-Credits: Tekkub Stoutwrithe (founding author), Shyva & Others
