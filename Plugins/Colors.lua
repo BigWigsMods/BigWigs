@@ -492,7 +492,7 @@ BigWigsColors.consoleOptions = {
 --      Initialization      --
 ------------------------------
 
-function BigWigsColors:OnInitialize()
+function BigWigsColors:OnRegister()
 	self:RegHex(self.db.profile)
 end
 

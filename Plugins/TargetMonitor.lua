@@ -17,7 +17,7 @@ BigWigsTargetMonitor = BigWigs:NewModule("Target Monitor")
 --      Initialization      --
 ------------------------------
 
-function BigWigsTargetMonitor:OnInitialize()
+function BigWigsTargetMonitor:OnRegister()
 	for name,module in self.core:IterateModules() do
 		self:BigWigs_RegisterForTargetting(module.zonename, module.enabletrigger)
 	end

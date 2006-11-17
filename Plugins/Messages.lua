@@ -367,7 +367,7 @@ end
 --      Initialization      --
 ------------------------------
 
-function BigWigsMessages:OnInitialize()
+function BigWigsMessages:OnRegister()
 	self:SetupFrames()
 	self:CreateMsgFrame()
 end
