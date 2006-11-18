@@ -202,17 +202,28 @@ L:RegisterTranslations("zhCN", function() return {
 	["Options for boss modules."] = "首领模块设置。",
 	["Options for bosses in %s."] = "%s首领模块设置。", -- "Options for bosses in <zone>"
 	["Options for %s (r%s)."] = "%s模块设置 版本(r%s).",     -- "Options for <boss> (<revision>)"
-	["Extras"] = "其他",
-	["Options for extras."] = "其他模块设置",
+	["plugin"] = "插件",
 	["Plugins"] = "插件",
 	["Options for plugins."] = "插件设置。",
+	["extra"] = "额外",
+	["Extras"] = "额外",
+	["Options for extras."] = "额外的设置",
 	["toggle"] = "切换",
 	["Active"] = "激活",
 	["Activate or deactivate this module."] = "激活或关闭此模块。",
+	["reboot"] = "重启",
 	["Reboot"] = "重启",
 	["Reboot this module."] = "重启此模块",
+	["debug"] = "除错",
 	["Debugging"] = "除错",
 	["Show debug messages."] = "显示除错信息。",
+	bosskill_name = "首领死亡",
+	bosskill_desc = "首领死亡时提示",
+
+	["Other"] = "其他",
+	["Load"] = "载入",
+	["Load All"] = "载入所有",
+	["Load all %s modules."] = "载入所有%s的模块",
 
 	bosskill_name = "首领死亡",
 	bosskill_desc = "首领被击败时发出提示",
@@ -227,6 +238,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Naxxramas"] = "纳克萨玛斯",
 	["Silithus"] = "希利苏斯",
 	["Outdoor Raid Bosses"] = "野外首领",
+	["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
