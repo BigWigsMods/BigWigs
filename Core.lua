@@ -455,6 +455,9 @@ function BigWigs:OnInitialize()
 			self:TriggerEvent( "BigWigs_ModuleToggle", module, state)
 		end )
 	self.loading = true
+	-- Activate ourselves, or at least try to. If we were disabled during a reloadUI, OnEnable isn't called,
+	-- and self.loading will never be set to something else, resulting in a BigWigs that doesn't enable.
+	self:ToggleActive(true)
 end
 
 

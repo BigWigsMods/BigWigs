@@ -85,10 +85,10 @@ function BigWigsLoD:ZONE_CHANGED_NEW_AREA()
 end
 
 function BigWigsLoD:CHAT_MSG_SYSTEM( msg )
-        if string.find(msg, "^"..ERR_RAID_YOU_LEFT) then
-                self:TriggerEvent("BigWigs_LeftGroup")
-        elseif string.find(msg, ERR_RAID_YOU_JOINED) then
-                self:TriggerEvent("BigWigs_JoinedGroup")
+	if string.find(msg, "^"..ERR_RAID_YOU_LEFT) then
+		self:TriggerEvent("BigWigs_LeftGroup")
+	elseif string.find(msg, ERR_RAID_YOU_JOINED) then
+		self:TriggerEvent("BigWigs_JoinedGroup")
 	end
 end
 
