@@ -18,7 +18,7 @@ L:RegisterTranslations("enUS", function() return {
 	you = "You",
 	are = "are",
 
-	flee = "Fleeing will do you no good mortals!",
+	flee = "Fleeing will do you no good, mortals!",
 
 	-- Warnings and bar texts
 	start_message = "Hakkar engaged - 90sec to drain - 10min to enrage!",
