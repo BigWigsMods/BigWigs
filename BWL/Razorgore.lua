@@ -15,8 +15,10 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Razorgore",
 
 	start_trigger = "Intruders have breached",
-	start_message = "Razorgore engaged!",
-
+	start_message = "Razorgore engaged! Mobs in 45sec!",
+	start_soon = "Mob Spawn in 5sec!",
+	start_mob = "Mob Spawn",
+	
 	mindcontrol_trigger = "Foolish ([^%s]+).",
 	mindcontrol_message = "%s has been mind controlled!",
 
@@ -43,6 +45,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	start_trigger = "침입자들이 들어왔다! 어떤 희생이 있더라도 알을 반드시 수호하라!", -- By turtl
 	start_message = "폭군 서슬송곳니 전투 시작",
+	start_soon = "Mob Spawn in 5sec!",
+	start_mob = "Mob Spawn",
 
 	mindcontrol_trigger = "자! ([^%s]+), 이제부터 나를 섬겨라!",	-- By turtl
 	mindcontrol_message = "<<%s>> 정신 지배 되었습니다.",
@@ -66,6 +70,8 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	start_trigger = "Eindringlinge sind in die",
 	start_message = "Razorgore angegriffen!",
+	start_soon = "Mob Spawn in 5sec!",
+	start_mob = "Mob Spawn",
 
 	mindcontrol_trigger = "^([^%s]+), Ihr Narr, Ihr dient jetzt mir!",
 	mindcontrol_message = "%s wurde \195\188bernommen!",
@@ -89,6 +95,8 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("frFR", function() return {
 	start_trigger = "Sonnez l'alarme",
 	start_message = "Tranchetripe engag\195\169 !",
+	start_soon = "Mob Spawn in 5sec!",
+	start_mob = "Mob Spawn",
 
 	mindcontrol_trigger = "Stupide ([^%s]+), tu es mon esclave maintenant !",
 	mindcontrol_message = "%s est sous Contr\195\180le mental !",
@@ -113,6 +121,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	start_trigger = "入侵者",
 	start_message = "狂野的拉佐格尔 战斗开始!",
+	start_soon = "Mob Spawn in 5sec!",
+	start_mob = "Mob Spawn",
 
 	mindcontrol_trigger = "愚蠢的(.+)",
 	mindcontrol_message = "%s被精神控制！",
@@ -137,6 +147,8 @@ L:RegisterTranslations("zhTW", function() return {
 	-- Razorgore 狂野的拉佐格爾
 	start_trigger = "入侵者",
 	start_message = "狂野的拉佐格爾進入戰鬥！",
+	start_soon = "Mob Spawn in 5sec!",
+	start_mob = "Mob Spawn",
 
 	mindcontrol_trigger = "愚蠢的(.+)，",
 	mindcontrol_message = "%s 被心靈控制",
@@ -188,7 +200,11 @@ end
 
 function BigWigsRazorgore:CHAT_MSG_MONSTER_YELL(msg)
 	if string.find(msg, L["start_trigger"]) then
-		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L["start_message"], "Urgent") end
+		if self.db.profile.phase then
+			self:TriggerEvent("BigWigs_Message", L["start_message"], "Urgent")
+			self:TriggerEvent("BigWigs_StartBar", self, L["start_mob"], 45, "Interface\\Icons\\Spell_Holy_PrayerOfHealing")
+			self:ScheduleEvent("BigWigs_Message", 40, L["start_soon"], "Important")
+		end
 		eggs = 0
 	elseif self.db.profile.mc then
 		local _, _, player = string.find(msg, L["mindcontrol_trigger"]);
