@@ -26,6 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 	drain_message = "Life Drain - 90 sec to next!",
 
 	mindcontrol_message = "%s is mindcontrolled!",
+	mindcontrol_bar = "MC: %s",
 
 	["Enrage"] = true,
 	["Life Drain"] = true,
@@ -64,6 +65,7 @@ L:RegisterTranslations("deDE", function() return {
 	drain_message = "Bluttrinker! N\195\164chster in 90 Sekunden!",
 
 	mindcontrol_message = "%s steht unter Gedankenkontrolle!",
+	mindcontrol_bar = "MC: %s",
 
 	["Enrage"] = "Wutanfall",
 	["Life Drain"] = "Bluttrinker",
@@ -98,6 +100,7 @@ L:RegisterTranslations("frFR", function() return {
 	drain_message = "Drain de vie - 90 sec. avant le prochain !",
 
 	mindcontrol_message = "%s est devenu fou !",
+	mindcontrol_bar = "MC: %s",
 
 	["Enrage"] = "Enrager",
 	["Life Drain"] = "Drain de vie",
@@ -132,6 +135,7 @@ L:RegisterTranslations("koKR", function() return {
 	drain_message = "생명력 흡수 - 다음 시전은 90초후",
 
 	mindcontrol_message = "%s|1이;가; 정신 지배되었습니다!",
+	mindcontrol_bar = "MC: %s",
 
 	["Enrage"] = "격노",
 	["Life Drain"] = "생명력 흡수",
@@ -167,6 +171,7 @@ L:RegisterTranslations("zhCN", function() return {
 	drain_message = "血液虹吸 - 90秒后再次发动",
 	
 	mindcontrol_message = "%s 被控制了",
+	mindcontrol_bar = "MC: %s",
 	
 	["Enrage"] = "激怒",
 	["Life Drain"] = "生命吸取",
@@ -202,6 +207,7 @@ L:RegisterTranslations("zhTW", function() return {
 	drain_message = "血液虹吸 - 90秒後再次發動",
 	
 	mindcontrol_message = "%s 被控制了，法師快羊",
+	mindcontrol_bar = "MC: %s",
 	
 	["Enrage"] = "狂怒",
 	["Life Drain"] = "血液虹吸",
@@ -271,7 +277,7 @@ function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
 			mcplayer = UnitName("player")
 		end
 		if self.db.profile.mc then
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["%s MC"], mcplayer), 9.5, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mindcontrol_bar"], mcplayer), 9.5, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
 			self:TriggerEvent("BigWigs_Message", string.format(L["mindcontrol_message"], mcplayer), "Urgent")
 		end
 		if self.db.profile.icon then
