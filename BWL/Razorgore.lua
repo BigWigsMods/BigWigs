@@ -94,9 +94,9 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	start_trigger = "Sonnez l'alarme",
-	start_message = "Tranchetripe engag\195\169 !",
-	start_soon = "Mob Spawn in 5sec!",
-	start_mob = "Mob Spawn",
+	start_message = "Tranchetripe engag\195\169 ! 45 secondes avant l'arriv\195\169e des gardes !",
+	start_soon = "Arriv\195\169e des gardes dans 5 secondes !",
+	start_mob = "Arriv\195\169e des gardes",
 
 	mindcontrol_trigger = "Stupide ([^%s]+), tu es mon esclave maintenant !",
 	mindcontrol_message = "%s est sous Contr\195\180le mental !",

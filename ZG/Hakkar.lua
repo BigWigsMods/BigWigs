@@ -100,7 +100,7 @@ L:RegisterTranslations("frFR", function() return {
 	drain_message = "Drain de vie - 90 sec. avant le prochain !",
 
 	mindcontrol_message = "%s est devenu fou !",
-	mindcontrol_bar = "MC: %s",
+	mindcontrol_bar = "CM: %s",
 
 	["Enrage"] = "Enrager",
 	["Life Drain"] = "Drain de vie",
