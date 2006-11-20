@@ -58,7 +58,7 @@ L:RegisterTranslations("enUS", function() return {
 	emergebartext = "Ouro submerge",
 
 	scarabdespawn = "Scarabs despawn in 10 Seconds",
-	scarabbar	= "Scarabs despawn",
+	scarabbar = "Scarabs despawn",
 
 	submergetrigger = "Ouro casts Summon Ouro Mounds.",
 	submergeannounce = "Ouro has submerged!",
@@ -109,7 +109,7 @@ L:RegisterTranslations("deDE", function() return {
 	emergebartext = "Untertauchen",
 
 	scarabdespawn = "Scarabs verschwinden in 10 Sekunden", -- ?
-	scarabbar	= "Scarabs despawn", -- ?
+	scarabbar = "Scarabs despawn", -- ?
 
 	submergetrigger = "Ouro casts Summon Ouro Mounds.", -- ?
 	submergeannounce = "Ouro ist aufgetaucht!",
@@ -160,7 +160,7 @@ L:RegisterTranslations("koKR", function() return {
 	emergebartext = "아우로 잠수",
 
 	scarabdespawn = "스카라베 소환 10초전",
-	scarabbar	= "스카라베 소환",
+	scarabbar = "스카라베 소환",
 
 	submergetrigger = "아우로|1이;가; 아우로 흙더미 소환|1을;를; 시전합니다.",
 	submergeannounce = "아우로 잠수!",
@@ -211,7 +211,7 @@ L:RegisterTranslations("zhCN", function() return {
 	emergebartext = "钻出地面",
 
 	scarabdespawn = "10秒后甲虫消失", --Translate me
-	scarabbar	= "甲虫消失", -- Translate Me
+	scarabbar = "甲虫消失", -- Translate Me
 	
 	submergetrigger = "奥罗施放了召唤奥罗土堆。",
 	submergeannounce = "奥罗潜入地下！杀光虫子！",
@@ -262,7 +262,7 @@ L:RegisterTranslations("zhTW", function() return {
 	emergebartext = "鑽出地面",
 
 	scarabdespawn = "10 秒後甲蟲消失", --Translate me
-	scarabbar	= "甲蟲消失", -- Translate Me
+	scarabbar = "甲蟲消失", -- Translate Me
 	
 	submergetrigger = "奧羅施放了召喚奧羅土堆。",
 	submergeannounce = "奧羅潛入地下！殺光蟲子！",
@@ -313,14 +313,14 @@ L:RegisterTranslations("frFR", function() return {
 	emergebartext = "Ouro submerge",
 
 	scarabdespawn = "Depop des scarab\195\169s dans 10 sec",
-	scarabbar	= "Scarabs despawn",
+	scarabbar = "Scarabs despawn",
 
 	submergetrigger = "Ouro lance Invocation de Monticules d'Ouro.",
 	submergeannounce = "Ouro disparait!",
 	submergewarn = "5 seconds until Ouro Emerges!",
 	submergebartext = "Ouro Emerge",
 
-	berserktrigger = "entre dans une rage d\195\169mente !",
+	berserktrigger = "Ouro goes into a berserker rage!",
 	berserkannounce = "Berserk - Berserk!",
 	berserksoonwarn = "Berserk Soon - Get Ready!",
 } end )
