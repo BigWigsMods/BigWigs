@@ -176,6 +176,11 @@ L:RegisterTranslations("koKR", function() return {
 	bosskill_name = "보스 사망",
 	bosskill_desc = "보스를 물리쳤을 때 알림",
 
+	["Other"] = "외부",
+	["Load"] = "불러오기",
+	["Load All"] = "모두 불러오기",
+	["Load all %s modules."] = "모든 %s 모듈들을 불러옵니다.",
+	
 	-- AceConsole zone commands
 	["Zul'Gurub"] = "ZG",
 	["Molten Core"] = "MC",

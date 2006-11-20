@@ -102,6 +102,9 @@ L:RegisterTranslations("koKR", function() return {
 	charge_name = "대전 경고",
 	charge_desc = "당신에게 걸린 전하의 극성 종류에 대한 경고",
 
+	throw_name = "던지기 경고",
+	throw_desc = "탱커 위치 변경에 대한 경고",
+
 	enragetrigger = "%s|1이;가; 광폭해집니다!",
 	starttrigger = "스탈라그, 박살낸다!",
 	starttrigger1 = "너 주인님께 바칠꺼야!",
@@ -109,7 +112,7 @@ L:RegisterTranslations("koKR", function() return {
 	starttrigger3 = "박살을 내주겠다!", -- CHECK
 	starttrigger4 = "죽여주마...",
 	
-	adddeath = "%s|1이;가; 죽었습니다.",
+	adddeath = "%s|1이;가; 죽습니다.",
 	teslaoverload = "%s|1이;가; 과부하 상태가 됩니다.",
 
 	pstrigger = "자, 고통을 느껴봐라...",	 -- CHECK
@@ -144,6 +147,9 @@ L:RegisterTranslations("koKR", function() return {
 	powersurgebar = "마력의 쇄도",
 
 	bar1text = "극성 변환",
+
+	throwbar = "던지기",
+	throwwarn = "약 5초 후 던지기!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

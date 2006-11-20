@@ -135,7 +135,7 @@ L:RegisterTranslations("koKR", function() return {
 	drain_message = "생명력 흡수 - 다음 시전은 90초후",
 
 	mindcontrol_message = "%s|1이;가; 정신 지배되었습니다!",
-	mindcontrol_bar = "MC: %s",
+	mindcontrol_bar = "정신지배: %s",
 
 	["Enrage"] = "격노",
 	["Life Drain"] = "생명력 흡수",

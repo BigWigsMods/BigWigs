@@ -153,7 +153,7 @@ L:RegisterTranslations("koKR", function() return {
 	emergetrigger = "흙더미|1이;가; 아우로 스카라베 소환|1을;를; 시전합니다.",
 	emergeannounce = "아우로 등장! 벌레들 제거!",
 	emergewarn = "15초후 아우로 잠수 가능!",
-	emergewarn2 = "15 sec to Ouro sumberge!",
+	emergewarn2 = "15초 후 아우로 잠수!",
 	emergebartext = "아우로 잠수",
 
 	scarabdespawn = "스카라베 소환 10초전",
