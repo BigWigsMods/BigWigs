@@ -54,6 +54,7 @@ L:RegisterTranslations("enUS", function() return {
 	emergetrigger = "Dirt Mound casts Summon Ouro Scarabs.",
 	emergeannounce = "Ouro has emerged!",
 	emergewarn = "15 sec to possible submerge!",
+	emergewarn2 = "15 sec to Ouro sumberge!",
 	emergebartext = "Ouro submerge",
 
 	scarabdespawn = "Scarabs despawn in 10 Seconds",
@@ -102,6 +103,7 @@ L:RegisterTranslations("deDE", function() return {
 	emergetrigger = "Dirt Mound casts Summon Ouro Scarabs.", -- ?
 	emergeannounce = "Ouro ist aufgetaucht!",
 	emergewarn = "15 sec to possible submerge!",
+	emergewarn2 = "15 sec to Ouro sumberge!",
 	emergebartext = "Untertauchen",
 
 	scarabdespawn = "Scarabs verschwinden in 10 Sekunden", -- ?
@@ -151,6 +153,7 @@ L:RegisterTranslations("koKR", function() return {
 	emergetrigger = "흙더미|1이;가; 아우로 스카라베 소환|1을;를; 시전합니다.",
 	emergeannounce = "아우로 등장! 벌레들 제거!",
 	emergewarn = "15초후 아우로 잠수 가능!",
+	emergewarn2 = "15 sec to Ouro sumberge!",
 	emergebartext = "아우로 잠수",
 
 	scarabdespawn = "스카라베 소환 10초전",
@@ -199,6 +202,7 @@ L:RegisterTranslations("zhCN", function() return {
 	emergetrigger = "土堆施放了召唤奥罗甲虫。",
 	emergeannounce = "奥罗钻出了地面！",
 	emergewarn = "15秒后潜入地下",
+	emergewarn2 = "15 sec to Ouro sumberge!",
 	emergebartext = "钻出地面",
 
 	scarabdespawn = "10秒后甲虫消失", --Translate me
@@ -249,6 +253,7 @@ L:RegisterTranslations("zhTW", function() return {
 	emergetrigger = "土堆施放了召喚奧羅甲蟲。",
 	emergeannounce = "奧羅鑽出了地面！",
 	emergewarn = "15 秒後潛入地下",
+	emergewarn2 = "15 sec to Ouro sumberge!",
 	emergebartext = "鑽出地面",
 
 	scarabdespawn = "10 秒後甲蟲消失", --Translate me
@@ -340,14 +345,12 @@ function BigWigsOuro:BigWigs_RecvSync( sync, rest, nick )
 end
 
 function BigWigsOuro:PossibleSubmerge()
-	self:TriggerEvent("BigWigs_StopBar", self, L["possible_submerge_bar"])
-	self:CancelScheduledEvent("bwouropossiblesubmerge")
-
 	if self.db.profile.emerge then
 		self:ScheduleEvent("bwouroemergewarn", "BigWigs_Message", 75, L["emergewarn"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["possible_submerge_bar"], 90, "Interface\\Icons\\Spell_Nature_Earthquake")
+		self:ScheduleEvent("bwouroemergewarn2", "BigWigs_Message", 165, L["emergewarn2"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["emergebartext"], 180, "Interface\\Icons\\Spell_Nature_Earthquake")
 	end
-	self:ScheduleEvent("bwouropossiblesubmerge", self.PossibleSubmerge, 90, self)
 end
 
 function BigWigsOuro:Sweep()
@@ -392,7 +395,7 @@ function BigWigsOuro:Submerge()
 	self:CancelScheduledEvent("bwourosweepwarn")
 	self:CancelScheduledEvent("bwouroblastwarn")
 	self:CancelScheduledEvent("bwouroemergewarn")
-	self:CancelScheduledEvent("bwouropossiblesubmerge")
+	self:CancelScheduledEvent("bwouroemergewarn2")
 
 	self:TriggerEvent("BigWigs_StopBar", self, L["sweepbartext"])
 	self:TriggerEvent("BigWigs_StopBar", self, L["sandblastbartext"])
