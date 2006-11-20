@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -62,7 +62,7 @@ L:RegisterTranslations("koKR", function() return {
 	starttrigger2 = "다음은... 너다.",
 	starttrigger3 = "네가 보인다...",
 	teleport_trigger = "여기가 너희 무덤이 되리라.",
-	die_trigger = "%s|1이;가; 마지막 숨을 거둡니다." -- check
+	die_trigger = "%s|1이;가; 마지막 숨을 거둡니다.", -- check
 
 	-- [[ Warnings ]]--
 	engage_message = "부정의 헤이건, 단상으로 순간 이동까지 90초",
