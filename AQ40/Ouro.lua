@@ -62,7 +62,7 @@ L:RegisterTranslations("enUS", function() return {
 	submergetrigger = "Ouro casts Summon Ouro Mounds.",
 	submergeannounce = "Ouro has submerged!",
 	submergewarn = "5 seconds until Ouro Emerges!",
-	submergebar = "Ouro Emerge",
+	submergebartext = "Ouro Emerge",
 
 	berserksoonwarn = "Berserk Soon - Get Ready!",
 } end )
@@ -83,6 +83,9 @@ L:RegisterTranslations("deDE", function() return {
 	scarab_name = "Scarab Despawn Alert", -- ?
 	scarab_desc = "Warn for Scarab Despawn", -- ?
 
+	berserk_name = "Berserk",
+	berserk_desc = "Warn for when Ouro goes berserk",
+
 	sweeptrigger = "Ouro begins to cast Sweep", -- ?
 	sweepannounce = "Feger!",
 	sweepwarn = "5 Sekunden bis Feger!",
@@ -93,8 +96,12 @@ L:RegisterTranslations("deDE", function() return {
 	sandblastwarn = "5 Sekunden bis Sandsto\195\159!",
 	sandblastbartext = "Sandsto\195\159",
 
+	engage_message = "Ouro engaged! Possible Submerge in 90sec!",
+	possible_submerge_bar = "Possible submerge",
+
 	emergetrigger = "Dirt Mound casts Summon Ouro Scarabs.", -- ?
 	emergeannounce = "Ouro ist aufgetaucht!",
+	emergewarn = "15 sec to possible submerge!",
 	emergebartext = "Untertauchen",
 
 	scarabdespawn = "Scarabs verschwinden in 10 Sekunden", -- ?
@@ -103,7 +110,7 @@ L:RegisterTranslations("deDE", function() return {
 	submergetrigger = "Ouro casts Summon Ouro Mounds.", -- ?
 	submergeannounce = "Ouro ist aufgetaucht!",
 	submergewarn = "5 Sekunden bis Ouro auftaucht!",
-	submergebar = "Auftauchen",
+	submergebartext = "Auftauchen",
 
 	berserksoonwarn = "Berserkerwut in K\195\188rze - Bereit machen!",
 } end )
@@ -152,7 +159,7 @@ L:RegisterTranslations("koKR", function() return {
 	submergetrigger = "아우로|1이;가; 아우로 흙더미 소환|1을;를; 시전합니다.",
 	submergeannounce = "아우로 잠수!",
 	submergewarn = "5초후 아우로 재등장!",
-	submergebar = "아우로 재등장",
+	submergebartext = "아우로 재등장",
 
 	berserksoonwarn = "광폭화 예고 - 준비하세요!",
 } end )
@@ -200,7 +207,7 @@ L:RegisterTranslations("zhCN", function() return {
 	submergetrigger = "奥罗施放了召唤奥罗土堆。",
 	submergeannounce = "奥罗潜入地下！杀光虫子！",
 	submergewarn = "5秒后奥罗将钻出地面！",
-	submergebar = "潜入地下",
+	submergebartext = "潜入地下",
 
 	berserksoonwarn = "即将狂暴 - 做好准备！",
 } end )
@@ -250,7 +257,7 @@ L:RegisterTranslations("zhTW", function() return {
 	submergetrigger = "奧羅施放了召喚奧羅土堆。",
 	submergeannounce = "奧羅潛入地下！殺光蟲子！",
 	submergewarn = "5 秒後將鑽出地面！",
-	submergebar = "潛入地下",
+	submergebartext = "潛入地下",
 
 	berserksoonwarn = "即將狂暴 - 做好準備！",
 } end )
@@ -395,7 +402,7 @@ function BigWigsOuro:Submerge()
 	if self.db.profile.submerge then
 		self:TriggerEvent("BigWigs_Message", L["submergeannounce"], "Important")
 		self:ScheduleEvent("bwsubmergewarn", "BigWigs_Message", 25, L["submergewarn"], "Important" )
-		self:TriggerEvent("BigWigs_StartBar", self, L["submergebar"], 30, "Interface\\Icons\\Spell_Nature_Earthquake")
+		self:TriggerEvent("BigWigs_StartBar", self, L["submergebartext"], 30, "Interface\\Icons\\Spell_Nature_Earthquake")
 	end
 end
 
