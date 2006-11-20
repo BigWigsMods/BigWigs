@@ -65,6 +65,8 @@ L:RegisterTranslations("enUS", function() return {
 	submergewarn = "5 seconds until Ouro Emerges!",
 	submergebartext = "Ouro Emerge",
 
+	berserktrigger = "Ouro goes into a berserker rage!",
+	berserkannounce = "Berserk - Berserk!",
 	berserksoonwarn = "Berserk Soon - Get Ready!",
 } end )
 
@@ -114,11 +116,12 @@ L:RegisterTranslations("deDE", function() return {
 	submergewarn = "5 Sekunden bis Ouro auftaucht!",
 	submergebartext = "Auftauchen",
 
+	berserktrigger = "Ouro goes into a berserker rage!",
+	berserkannounce = "Berserk - Berserk!",
 	berserksoonwarn = "Berserkerwut in K\195\188rze - Bereit machen!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	
 	sweep_name = "휩쓸기 경고",
 	sweep_desc = "휩쓸기에 대한 경고",
 	
@@ -164,6 +167,8 @@ L:RegisterTranslations("koKR", function() return {
 	submergewarn = "5초후 아우로 재등장!",
 	submergebartext = "아우로 재등장",
 
+	berserktrigger = "Ouro goes into a berserker rage!",
+	berserkannounce = "Berserk - Berserk!",
 	berserksoonwarn = "광폭화 예고 - 준비하세요!",
 } end )
 
@@ -213,12 +218,12 @@ L:RegisterTranslations("zhCN", function() return {
 	submergewarn = "5秒后奥罗将钻出地面！",
 	submergebartext = "潜入地下",
 
+	berserktrigger = "Ouro goes into a berserker rage!",
+	berserkannounce = "Berserk - Berserk!",
 	berserksoonwarn = "即将狂暴 - 做好准备！",
 } end )
 
-
 L:RegisterTranslations("zhTW", function() return {
-	-- Ouro 奧羅
 	sweep_name = "橫掃警報",
 	sweep_desc = "奧羅施放橫掃時發出警報",
 	
@@ -264,16 +269,60 @@ L:RegisterTranslations("zhTW", function() return {
 	submergewarn = "5 秒後將鑽出地面！",
 	submergebartext = "潛入地下",
 
+	berserktrigger = "Ouro goes into a berserker rage!",
+	berserkannounce = "Berserk - Berserk!",
 	berserksoonwarn = "即將狂暴 - 做好準備！",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	sweep_name = "Sweep Alert",
+	sweep_desc = "Warn for Sweeps",
+
+	sandblast_name = "Sandblast Alert",
+	sandblast_desc = "Warn for Sandblasts",
+
+	emerge_name = "Emerge Alert",
+	emerge_desc = "Warn for Emerge",
+
+	submerge_name = "Submerge Alert",
+	submerge_desc = "Warn for Submerge",
+
+	scarab_name = "Scarab Despawn Alert",
+	scarab_desc = "Warn for Scarab Despawn",
+
+	berserk_name = "Berserk",
+	berserk_desc = "Warn for when Ouro goes berserk",
 
 	sweeptrigger = "Ouro commence \195\160 lancer Balayer.",
-	sandblasttrigger = "Ouro commence \195\160 ex\195\169cuter Explosion de sable.",
-	emergetrigger = "Tas de terre lance Invocation de Scarab\195\169es d'Ouro.",
-	submergetrigger = "Ouro lance Invocation de Monticules d'Ouro.",
+	sweepannounce = "balayage!",
+	sweepwarn = "balayage dans 5 sec!",
+	sweepbartext = "Sweep",
 
+	sandblasttrigger = "Ouro commence \195\160 ex\195\169cuter Explosion de sable.",
+	sandblastannounce = "explosion de sable!",
+	sandblastwarn = "5 seconds until Sand Blast!",
+	sandblastbartext = "Sand Blast",
+
+	engage_message = "Ouro engaged! Possible Submerge in 90sec!",
+	possible_submerge_bar = "Possible submerge",
+
+	emergetrigger = "Tas de terre lance Invocation de Scarab\195\169es d'Ouro.",
+	emergeannounce = "Ouro apparait!",
+	emergewarn = "15 sec to possible submerge!",
+	emergewarn2 = "15 sec to Ouro sumberge!",
+	emergebartext = "Ouro submerge",
+
+	scarabdespawn = "Depop des scarab\195\169s dans 10 sec",
+	scarabbar	= "Scarabs despawn",
+
+	submergetrigger = "Ouro lance Invocation de Monticules d'Ouro.",
+	submergeannounce = "Ouro disparait!",
+	submergewarn = "5 seconds until Ouro Emerges!",
+	submergebartext = "Ouro Emerge",
+
+	berserktrigger = "entre dans une rage d\195\169mente !",
+	berserkannounce = "Berserk - Berserk!",
+	berserksoonwarn = "Berserk Soon - Get Ready!",
 } end )
 
 ----------------------------------
@@ -296,6 +345,7 @@ function BigWigsOuro:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -309,6 +359,7 @@ function BigWigsOuro:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "OuroSandblast", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "OuroEmerge", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "OuroSubmerge", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "OuroBerserk", 10)
 end
 
 function BigWigsOuro:UNIT_HEALTH( msg )
@@ -341,6 +392,8 @@ function BigWigsOuro:BigWigs_RecvSync( sync, rest, nick )
 		self:Emerge()
 	elseif sync == "OuroSubmerge" then
 		self:Submerge()
+	elseif sync == "OuroBerserk" then
+		self:Berserk()
 	end
 end
 
@@ -350,6 +403,17 @@ function BigWigsOuro:PossibleSubmerge()
 		self:TriggerEvent("BigWigs_StartBar", self, L["possible_submerge_bar"], 90, "Interface\\Icons\\Spell_Nature_Earthquake")
 		self:ScheduleEvent("bwouroemergewarn2", "BigWigs_Message", 165, L["emergewarn2"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["emergebartext"], 180, "Interface\\Icons\\Spell_Nature_Earthquake")
+	end
+end
+
+function BigWigsOuro:Berserk()
+		self:CancelScheduledEvent("bwouroemergewarn")
+		self:CancelScheduledEvent("bwouroemergewarn2")
+		self:TriggerEvent("BigWigs_StopBar", self, L["emergebartext"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["possible_submerge_bar"])
+		
+	if self.db.profile.berserk then
+		self:TriggerEvent("BigWigs_Message", L["berserkannounce"], "Important")
 	end
 end
 
@@ -427,3 +491,8 @@ function BigWigsOuro:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 	end
 end
 
+function BigWigsOuro:CHAT_MSG_MONSTER_EMOTE( msg )
+	if msg == L["berserktrigger"] then
+		self:TriggerEvent("BigWigs_SendSync", "OuroBerserk")
+	end
+end
