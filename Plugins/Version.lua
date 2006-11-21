@@ -339,6 +339,11 @@ function BigWigsVersionQuery:QueryVersion(zone)
 		end
 	end
 
+	if not zone then
+		error("The given zone is invalid.")
+		return
+	end
+
 	-- ZZZ |zone| should be translated here.
 	self.core:Print(L["Querying versions for "].."|cff"..COLOR_GREEN..zone.."|r.")
 
