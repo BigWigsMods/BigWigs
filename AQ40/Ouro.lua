@@ -65,7 +65,7 @@ L:RegisterTranslations("enUS", function() return {
 	submergewarn = "5 seconds until Ouro Emerges!",
 	submergebartext = "Ouro Emerge",
 
-	berserktrigger = "Ouro goes into a berserker rage!",
+	berserktrigger = "%s goes into a berserker rage!",
 	berserkannounce = "Berserk - Berserk!",
 	berserksoonwarn = "Berserk Soon - Get Ready!",
 } end )
@@ -116,7 +116,7 @@ L:RegisterTranslations("deDE", function() return {
 	submergewarn = "5 Sekunden bis Ouro auftaucht!",
 	submergebartext = "Auftauchen",
 
-	berserktrigger = "Ouro goes into a berserker rage!",
+	berserktrigger = "%s goes into a berserker rage!",
 	berserkannounce = "Berserk - Berserk!",
 	berserksoonwarn = "Berserkerwut in K\195\188rze - Bereit machen!",
 } end )
@@ -167,7 +167,7 @@ L:RegisterTranslations("koKR", function() return {
 	submergewarn = "5초후 아우로 재등장!",
 	submergebartext = "아우로 재등장",
 
-	berserktrigger = "Ouro goes into a berserker rage!",
+	berserktrigger = "%s goes into a berserker rage!",
 	berserkannounce = "Berserk - Berserk!",
 	berserksoonwarn = "광폭화 예고 - 준비하세요!",
 } end )
@@ -218,7 +218,7 @@ L:RegisterTranslations("zhCN", function() return {
 	submergewarn = "5秒后奥罗将钻出地面！",
 	submergebartext = "潜入地下",
 
-	berserktrigger = "Ouro goes into a berserker rage!",
+	berserktrigger = "%s goes into a berserker rage!",
 	berserkannounce = "Berserk - Berserk!",
 	berserksoonwarn = "即将狂暴 - 做好准备！",
 } end )
@@ -269,7 +269,7 @@ L:RegisterTranslations("zhTW", function() return {
 	submergewarn = "5 秒後將鑽出地面！",
 	submergebartext = "潛入地下",
 
-	berserktrigger = "Ouro goes into a berserker rage!",
+	berserktrigger = "%s goes into a berserker rage!",
 	berserkannounce = "Berserk - Berserk!",
 	berserksoonwarn = "即將狂暴 - 做好準備！",
 } end )
@@ -320,7 +320,7 @@ L:RegisterTranslations("frFR", function() return {
 	submergewarn = "5 seconds until Ouro Emerges!",
 	submergebartext = "Ouro Emerge",
 
-	berserktrigger = "Ouro goes into a berserker rage!",
+	berserktrigger = "%s goes into a berserker rage!",
 	berserkannounce = "Berserk - Berserk!",
 	berserksoonwarn = "Berserk Soon - Get Ready!",
 } end )
