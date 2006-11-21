@@ -299,6 +299,7 @@ function BigWigsDefenders:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderEnrage", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderExplode", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderThunderclap", 6)
 end
 
 ------------------------------
@@ -357,7 +358,7 @@ function BigWigsDefenders:CheckPlague(msg)
 end
 
 function BigWigsDefenders:Thunderclap(msg)
-	if self.db.profile.thunderclap and string.find(msg, L["thunderclaptrigger"]) then
+	if string.find(msg, L["thunderclaptrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "DefenderThunderclap")
 	end
 end
