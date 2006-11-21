@@ -1,13 +1,11 @@
-
 assert(BigWigs, "BigWigs not found!")
-
 
 ------------------------------
 --      Are you local?      --
 ------------------------------
 
 local throt, times = {}, {}
-
+local playerName = nil
 
 ----------------------------------
 --      Module Declaration      --
@@ -15,10 +13,13 @@ local throt, times = {}, {}
 
 BigWigsComm = BigWigs:NewModule("Comm")
 
-
 ------------------------------
 --      Initialization      --
 ------------------------------
+
+function BigWigsComm:OnRegister()
+	playerName = UnitName("player")
+end
 
 function BigWigsComm:OnEnable()
 	self:RegisterEvent("CHAT_MSG_ADDON")
@@ -32,7 +33,7 @@ end
 ------------------------------
 
 function BigWigsComm:CHAT_MSG_ADDON(prefix, message, type, sender)
-	if (prefix ~= "BigWigs" or type ~= "RAID") then return end
+	if prefix ~= "BigWigs" or type ~= "RAID" then return end
 
 	local _, _, sync, rest = string.find(message, "(%S+)%s*(.*)$")
 	if not sync then return end
@@ -47,7 +48,7 @@ end
 
 function BigWigsComm:BigWigs_SendSync(msg)
 	SendAddonMessage("BigWigs", msg, "RAID")
-	self:CHAT_MSG_ADDON("BigWigs", msg, "RAID", UnitName("player"))
+	self:CHAT_MSG_ADDON("BigWigs", msg, "RAID", playerName)
 end
 
 
@@ -55,3 +56,4 @@ function BigWigsComm:BigWigs_ThrottleSync(msg, time)
 	assert(msg, "No message passed")
 	throt[msg] = time
 end
+
