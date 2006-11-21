@@ -38,10 +38,12 @@ function BigWigsComm:CHAT_MSG_ADDON(prefix, message, type, sender)
 	local _, _, sync, rest = string.find(message, "(%S+)%s*(.*)$")
 	if not sync then return end
 
+	local full = sync.."("..tostring(rest)..")"
+
 	if throt[sync] == nil then throt[sync] = 1 end
-	if throt[sync] == 0 or not times[sync] or (times[sync] + throt[sync]) <= GetTime() then
+	if throt[sync] == 0 or not times[full] or (times[full] + throt[sync]) <= GetTime() then
 		self:TriggerEvent("BigWigs_RecvSync", sync, rest, sender)
-		times[sync] = GetTime()
+		times[full] = GetTime()
 	end
 end
 
