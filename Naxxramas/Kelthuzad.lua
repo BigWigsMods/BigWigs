@@ -84,7 +84,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 
-	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "캘투자드 연구실",
+	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "켈투자드의 방",
 
 	phase_name = "단계 알림",
 	phase_desc = "단계에 대한 알림.",
@@ -104,31 +104,31 @@ L:RegisterTranslations("koKR", function() return {
 	detonateicon_name = "폭발 공격대 아이콘",
 	detonateicon_desc = "마나 폭발인 사람에게 공격대 아이콘 지정.",
 
-	guardians_name = "Guardian Spawns",
-	guardians_desc = "Warn for incoming Icecrown Guardians in phase 3.",
+	guardians_name = "수호자 생성",
+	guardians_desc = "phase 3의 수호자 생성에 대한 알림.",
 
-	mc_trigger1 = "Your soul is bound to me, now!", -- CHECK
-	mc_trigger2 = "There will be no escape!", -- CHECK
+	mc_trigger1 = "너의 영혼은 이제 내 것이다!", -- CHECK
+	mc_trigger2 = "빠져나갈 구멍은 없다.", -- CHECK
 	mc_warning = "정신 지배!",
 
-	start_trigger = "Minions, servants, soldiers of the cold dark! Obey the call of Kel'Thuzad!", -- CHECK
-	start_warning = "Kel'Thuzad encounter started! ~5min till he is active!", -- CHECK
+	start_trigger = "어둠의 문지기와 하수인, 그리고 병사들이여, 나 켈투자드가 부르니 명을 받들라!", -- CHECK
+	start_warning = "켈투자드 교전 시작! ~5분 후 공격가능!", -- CHECK
 	start_bar = "2 단계",
 
-	phase2_trigger = "Pray for mercy!", -- CHECK
+	phase2_trigger = "자비를 구하라!", -- CHECK
 	phase2_warning = "2 단계, 켈투자드 다가옴!",
 	phase2_bar = "켈투자드 활동!",
 
 	phase3_soon_warning = "곧 3 단계 돌입!",
-	phase3_trigger = "Master, I require aid!", -- CHECK
+	phase3_trigger = "주인님, 도와주소서!", -- CHECK
 	phase3_warning = "3 단계, Guardians in ~15sec!",
 
-	guardians_trigger = "Very well. Warriors of the frozen wastes, rise up! I command you to fight, kill and die for your master! Let none survive!", -- CHECK
-	guardians_warning = "Guardians incoming in ~10sec!",
-	guardians_bar = "Guardians incoming!",
+	guardians_trigger = "좋다. 얼어붙은 땅의 전사들이여, 일어나 싸워라! 쓰러질 때까지! 나를 위해! 한 놈도 살려두지 마라.", -- CHECK
+	guardians_warning = "10초 이내에 수호자 생성!",
+	guardians_bar = "수호자 !",
 
-	fissure_trigger = "켈투자드|1이;가; 어둠의 분열|1을;를; 시전합니다.",
-	fissure_warning = "어둠의 분열!",
+	fissure_trigger = "켈투자드|1이;가; 어둠의 균열|1을;를; 시전합니다.",
+	fissure_warning = "어둠의 균열!",
 
 	frostblast_bar = "냉기 작열 가능",
 	frostblast_trigger = "^([^|;%s]*)(.*)냉기 작열에 걸렸습니다%.$",
@@ -136,9 +136,9 @@ L:RegisterTranslations("koKR", function() return {
 	frostblast_soon_message = "냉기 작열 가능 - 약 5초 이내!",
 
 	detonate_trigger = "^([^|;%s]*)(.*)마나 폭발에 걸렸습니다%.$",
-	detonate_bar = "마나 폭발 - %s",
+	detonate_bar = "마나 폭발! - %s",
 	detonate_possible_bar = "폭발 가능",
-	detonate_warning = "%s%|1이;가; 마나 폭발!",
+	detonate_warning = "마나 폭발 걸림! < %s >",
 
 	you = "",
 	are = "",
