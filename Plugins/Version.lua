@@ -321,15 +321,16 @@ function BigWigsVersionQuery:OnTooltipUpdate()
 end
 
 function BigWigsVersionQuery:QueryVersion(zone)
-	if not self.zoneRevisions then self:PopulateRevisions() end
 	if self.queryRunning then
 		self.core:Print(L["Query already running, please wait 5 seconds before trying again."])
 		return
 	end
-	if not zone or zone == "" then zone = GetRealZoneText() end
+	if not zone or zone == "" or type(zone) ~= "string" then zone = GetRealZoneText() end
 	-- If this is a shorthand zone, convert it to enUS full.
 	-- Also, if this is a shorthand, we can't really know if the user is enUS or not.
-	if BWL:HasReverseTranslation(zone) then
+
+	if not BWL then BWL = AceLibrary("AceLocale-2.2"):new("BigWigs") end
+	if BWL ~= nil and zone ~= nil and type(zone) == "string" and BWL:HasReverseTranslation(zone) then
 		zone = BWL:GetReverseTranslation(zone)
 		-- If there is a translation for this to GetLocale(), get it, so we can
 		-- print the zone name in the correct locale.
@@ -353,6 +354,8 @@ function BigWigsVersionQuery:QueryVersion(zone)
 						end, 5)
 
 	self.responseTable = {}
+
+	if not self.zoneRevisions then self:PopulateRevisions() end
 	if not self.zoneRevisions[zone] then
 		self.responseTable[UnitName("player")] = -1
 	else
