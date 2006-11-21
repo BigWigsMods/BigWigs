@@ -407,11 +407,11 @@ function BigWigsOuro:PossibleSubmerge()
 end
 
 function BigWigsOuro:Berserk()
-		self:CancelScheduledEvent("bwouroemergewarn")
-		self:CancelScheduledEvent("bwouroemergewarn2")
-		self:TriggerEvent("BigWigs_StopBar", self, L["emergebartext"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["possible_submerge_bar"])
-		
+	self:CancelScheduledEvent("bwouroemergewarn")
+	self:CancelScheduledEvent("bwouroemergewarn2")
+	self:TriggerEvent("BigWigs_StopBar", self, L["emergebartext"])
+	self:TriggerEvent("BigWigs_StopBar", self, L["possible_submerge_bar"])
+
 	if self.db.profile.berserk then
 		self:TriggerEvent("BigWigs_Message", L["berserkannounce"], "Important")
 	end
