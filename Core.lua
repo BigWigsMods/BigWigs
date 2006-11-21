@@ -7,7 +7,6 @@ local BZ = AceLibrary("Babble-Zone-2.2")
 local BB = AceLibrary("Babble-Boss-2.2")
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 
- 
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -334,6 +333,9 @@ function BigWigs.modulePrototype:OnInitialize()
 	-- Unconditionally register, this shouldn't happen from any other place
 	-- anyway.
 	self.core:RegisterModule(self.name, self)
+
+	-- Notify observers that we have loaded.
+	self:TriggerEvent("BigWigs_ModuleLoaded", self.name, self)
 end
 
 
@@ -493,7 +495,7 @@ function BigWigs:AceEvent_FullyInitialized()
 		self:RegisterEvent("BigWigs_RebootModule")
 	
 		self:RegisterEvent("BigWigs_RecvSync")
-		self:TriggerEvent("BigWigs_ThrottleSync", "BossEngaged", 5 )
+		self:TriggerEvent("BigWigs_ThrottleSync", "BossEngaged", 5)
 	else
 		self:ToggleActive(false)
 	end
