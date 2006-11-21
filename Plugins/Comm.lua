@@ -59,3 +59,6 @@ function BigWigsComm:BigWigs_ThrottleSync(msg, time)
 	throt[msg] = time
 end
 
+function BigWigsComm:GetThrottleTable() return throt end
+function BigWigsComm:GetTimesTable() return times end
+
