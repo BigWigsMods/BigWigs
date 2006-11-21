@@ -456,11 +456,6 @@ function BigWigs:OnInitialize()
 		rev = math.max(rev, module.revision)
 	end
 	self.version = (self.version or "2.0").. " |cffff8888r"..rev.."|r"
-	self:Hook( self, "ToggleModuleActive",
-		function( self, module, state )
-			self.hooks[self]["ToggleModuleActive"](self, module, state)
-			self:TriggerEvent( "BigWigs_ModuleToggle", module, state)
-		end )
 	self.loading = true
 	-- Activate ourselves, or at least try to. If we were disabled during a reloadUI, OnEnable isn't called,
 	-- and self.loading will never be set to something else, resulting in a BigWigs that doesn't enable.
@@ -478,6 +473,15 @@ end
 
 function BigWigs:AceEvent_FullyInitialized()
 	if GetNumRaidMembers() > 0 or not self.loading then
+
+		if not self:IsHooked(self, "ToggleModuleActive") then
+			self:Hook( self, "ToggleModuleActive",
+				function( self, module, state )
+					self.hooks[self]["ToggleModuleActive"](self, module, state)
+					self:TriggerEvent( "BigWigs_ModuleToggle", module, state)
+				end )
+		end
+
 		-- Enable all disabled modules that are not boss modules.
 		for name, module in self:IterateModules() do
 			if type(module.IsBossModule) ~= "function" or not module:IsBossModule() then
@@ -775,5 +779,6 @@ function BigWigs:AddLoDMenu( zonename )
 		end
 	end
 end
+
 
 
