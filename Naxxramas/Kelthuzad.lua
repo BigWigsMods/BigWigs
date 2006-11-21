@@ -53,7 +53,9 @@ L:RegisterTranslations("enUS", function() return {
 	start_warning = "Kel'Thuzad encounter started! ~5min till he is active!",
 	start_bar = "Phase 2",
 
-	phase2_trigger = "Pray for mercy!",
+	phase2_trigger1 = "Pray for mercy!",
+	phase2_trigger2 = "Scream your dying breath!",
+	phase2_trigger3 = "The end is upon you!",
 	phase2_warning = "Phase 2, Kel'Thuzad incoming!",
 	phase2_bar = "Kel'Thuzad Active!",
 
@@ -115,7 +117,9 @@ L:RegisterTranslations("koKR", function() return {
 	start_warning = "켈투자드 교전 시작! ~5분 후 공격가능!", -- CHECK
 	start_bar = "2 단계",
 
-	phase2_trigger = "자비를 구하라!", -- CHECK
+	phase2_trigger1 = "자비를 구하라!", -- CHECK
+	phase2_trigger2 = "마지막 숨이나 쉬어라!",
+	phase2_trigger3 = "최후를 맞이하라!",
 	phase2_warning = "2 단계, 켈투자드 다가옴!",
 	phase2_bar = "켈투자드 활동!",
 
@@ -176,7 +180,9 @@ L:RegisterTranslations("deDE", function() return {
 	start_warning = "Kel'Thuzad Encounter gestarted! ~5min bis er aktiv wird!",
 	start_bar = "Phase 2",
 
-	phase2_trigger = "Fleht um Gnade!",
+	phase2_trigger1 = "Fleht um Gnade!",
+--	phase2_trigger2 = "Scream your dying breath!",
+--	phase2_trigger3 = "The end is upon you!",
 	phase2_warning = "Phase 2, Kel'Thuzad kommt!",
 	phase2_bar = "Kel'Thuzad aktiv!",
 
@@ -235,7 +241,9 @@ L:RegisterTranslations("zhCN", function() return {
 	start_warning = "克尔苏加德之战开始，他将在~5分钟后激活！",
 	start_bar = "第二阶段",
 
-	phase2_trigger = "祈祷我的慈悲吧！",
+	phase2_trigger1 = "祈祷我的慈悲吧！",
+--	phase2_trigger2 = "Scream your dying breath!",
+--	phase2_trigger3 = "The end is upon you!",
 	phase2_warning = "第二阶段开始，克尔苏加德来了！",
 	phase2_bar = "克尔苏加德激活！",
 
@@ -298,7 +306,9 @@ L:RegisterTranslations("zhTW", function() return {
 	start_warning = "科爾蘇加德之戰開始，他將在 5 分鐘後進入戰鬥！",
 	start_bar = "第二階段",
 
-	phase2_trigger = "祈禱我的慈悲吧！",
+	phase2_trigger1 = "祈禱我的慈悲吧！",
+--	phase2_trigger2 = "Scream your dying breath!",
+--	phase2_trigger3 = "The end is upon you!",
 	phase2_warning = "第二階段開始，科爾蘇加德來了！",
 	phase2_bar = "科爾蘇加德進入戰鬥！",
 
@@ -396,7 +406,7 @@ function BigWigsKelThuzad:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.phase and msg == L["start_trigger"] then
 		self:TriggerEvent("BigWigs_Message", L["start_warning"], "Attention")
 		self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 320 )
-	elseif self.db.profile.phase and msg == L["phase2_trigger"] then
+	elseif self.db.profile.phase and (msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"] or msg == L["phase2_trigger3"]) then
 		self:TriggerEvent("BigWigs_StopBar", self, L["start_bar"] )
 		self:TriggerEvent("BigWigs_Message", L["phase2_warning"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["phase2_bar"], 20 )
