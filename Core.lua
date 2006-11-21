@@ -482,6 +482,9 @@ function BigWigs:AceEvent_FullyInitialized()
 				end )
 		end
 
+		-- this will trigger the LoadWithCore to load
+		self:TriggerEvent("BigWigs_CoreEnabled")
+
 		-- Enable all disabled modules that are not boss modules.
 		for name, module in self:IterateModules() do
 			if type(module.IsBossModule) ~= "function" or not module:IsBossModule() then
@@ -492,8 +495,6 @@ function BigWigs:AceEvent_FullyInitialized()
 		if BigWigsLoD then
 			self:CreateLoDMenu()
 		end
-	
-		self:TriggerEvent("BigWigs_CoreEnabled")
 	
 		self:RegisterEvent("BigWigs_TargetSeen")
 		self:RegisterEvent("BigWigs_RebootModule")
