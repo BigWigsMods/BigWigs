@@ -321,6 +321,7 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 		rest = tonumber(rest)
 		if rest == nil then return end
 		if rest == (self.marks + 1) then
+			times["mark"] = GetTime()
 			if self.db.profile.mark then
 				self:TriggerEvent("BigWigs_Message", string.format( L["markwarn1"], self.marks ), "Important")
 			end
