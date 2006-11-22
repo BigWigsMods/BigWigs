@@ -1,4 +1,18 @@
 @echo off
+
+cd ..
+rmdir /s /q BigWigs_AQ20
+rmdir /s /q BigWigs_AQ40
+rmdir /s /q BigWigs_BWL
+rmdir /s /q BigWigs_MC
+rmdir /s /q BigWigs_ZG
+rmdir /s /q BigWigs_Naxxramas
+rmdir /s /q BigWigs_Other
+rmdir /s /q BigWigs_Extras
+rmdir /s /q BigWigs_Plugins
+
+cd BigWigs
+
 move AQ20\AQ20.toc AQ20\BigWigs_AQ20.toc
 move AQ40\AQ40.toc AQ40\BigWigs_AQ40.toc
 move BWL\BWL.toc BWL\BigWigs_BWL.toc
