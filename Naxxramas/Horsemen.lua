@@ -280,6 +280,7 @@ end
 
 function BigWigsHorsemen:MarkEvent( msg )
 	if string.find(msg, L["marktrigger"]) and not self.marked then
+		self.marked = true
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenMark2 "..tostring(self.marks + 1))
 	end
 end
