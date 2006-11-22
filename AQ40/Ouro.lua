@@ -167,8 +167,8 @@ L:RegisterTranslations("koKR", function() return {
 	submergewarn = "5초후 아우로 재등장!",
 	submergebartext = "아우로 재등장",
 
-	berserktrigger = "%s goes into a berserker rage!",
-	berserkannounce = "Berserk - Berserk!",
+	berserktrigger = "%s|1이;가; 광폭해집니다!", -- check
+	berserkannounce = "광폭화 - 광폭화!",
 	berserksoonwarn = "광폭화 예고 - 준비하세요!",
 } end )
 
