@@ -268,11 +268,10 @@ function BigWigsHorsemen:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "MarkEvent")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:RegisterEvent("BigWigs_Message")
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenShieldWall", 3)
-	-- Upgraded to HorsemenMark2 so that we don't get blocked by throttled syncs
-	-- from older revisions.
-	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenMark2", 8)
+
+	-- bump mark to 3
+	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenMark3", 8)
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenVoid", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenWrath", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenMeteor", 5)
@@ -280,8 +279,7 @@ end
 
 function BigWigsHorsemen:MarkEvent( msg )
 	if string.find(msg, L["marktrigger"]) and not self.marked then
-		self.marked = true
-		self:TriggerEvent("BigWigs_SendSync", "HorsemenMark2 "..tostring(self.marks + 1))
+		self:TriggerEvent("BigWigs_SendSync", "HorsemenMark3")
 	end
 end
 
@@ -316,23 +314,19 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 			self:TriggerEvent("BigWigs_StartBar", self, string.format( L["markbar"], self.marks), 17, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde")
 			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 12, string.format( L["markwarn2"], self.marks ), "Urgent")
 		end
-	elseif sync == "HorsemenMark2" and rest then
-		rest = tonumber(rest)
-		if rest == nil then return end
-		if rest == (self.marks + 1) then
-			local t = GetTime()
-			if not times["mark"] or (times["mark"] and (times["mark"] + 8) < t) then	
-				times["mark"] = t
-				if self.db.profile.mark then
-					self:TriggerEvent("BigWigs_Message", string.format( L["markwarn1"], self.marks ), "Important")
-				end
-				self.marks = self.marks + 1
-				if self.db.profile.mark then 
-					self:TriggerEvent("BigWigs_StartBar", self, string.format( L["markbar"], self.marks ), 12, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde")
-					self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 7, string.format( L["markwarn2"], self.marks ), "Urgent")
-				end
-			end
+	elseif sync == "HorsemenMark3" then
+		if self.marked then return end
+		self.marked = true
+		if self.db.profile.mark then
+			self:TriggerEvent("BigWigs_Message", string.format( L["markwarn1"], self.marks ), "Important")
 		end
+		self.marks = self.marks + 1
+		if self.db.profile.mark then 
+			self:TriggerEvent("BigWigs_StartBar", self, string.format( L["markbar"], self.marks ), 12, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde")
+			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 7, string.format( L["markwarn2"], self.marks ), "Urgent")
+		end
+		-- reset marked in 8 seconds
+		self:ScheduleEvent(function() BigWigsHorsemen.marked = nil end, 8)
 	elseif sync == "HorsemenMeteor" then
 		if self.db.profile.meteor then
 			self:TriggerEvent("BigWigs_Message", L["meteorwarn"], "Important")
@@ -379,8 +373,3 @@ function BigWigsHorsemen:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 	end
 end
 
-function BigWigsHorsemen:BigWigs_Message( msg )
-	if msg == string.format( L["markwarn2"], self.marks ) then
-		self.marked = nil
-	end
-end
