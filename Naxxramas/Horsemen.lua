@@ -251,6 +251,7 @@ BigWigsHorsemen.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsHorsemen:OnEnable()
 	self.marks = 1
 	self.deaths = 0
+	self.marked = nil
 
 	times = {}
 	started = nil
@@ -267,6 +268,7 @@ function BigWigsHorsemen:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "MarkEvent")
 
 	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterEvent("BigWigs_Message")
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenShieldWall", 3)
 	-- Upgraded to HorsemenMark2 so that we don't get blocked by throttled syncs
 	-- from older revisions.
@@ -277,7 +279,7 @@ function BigWigsHorsemen:OnEnable()
 end
 
 function BigWigsHorsemen:MarkEvent( msg )
-	if string.find(msg, L["marktrigger"]) then
+	if string.find(msg, L["marktrigger"]) and not self.marked then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenMark2 "..tostring(self.marks + 1))
 	end
 end
@@ -376,3 +378,8 @@ function BigWigsHorsemen:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 	end
 end
 
+function BigWigsHorsemen:BigWigs_Message( msg )
+	if msg == string.format( L["markwarn2"], self.marks ) then
+		self.marked = nil
+	end
+end
