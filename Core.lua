@@ -491,16 +491,14 @@ function BigWigs:AceEvent_FullyInitialized()
 				self:ToggleModuleActive(module, true)
 			end
 		end
-		
+
 		if BigWigsLoD then
 			self:CreateLoDMenu()
 		end
-	
+
 		self:RegisterEvent("BigWigs_TargetSeen")
 		self:RegisterEvent("BigWigs_RebootModule")
-	
 		self:RegisterEvent("BigWigs_RecvSync")
-		self:TriggerEvent("BigWigs_ThrottleSync", "BossEngaged", 5)
 	else
 		self:ToggleActive(false)
 	end
