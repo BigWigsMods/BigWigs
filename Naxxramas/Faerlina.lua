@@ -158,8 +158,8 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	starttrigger1 = "genoux, vermisseau !",
-	starttrigger2 = "Tuez%-les au nom du ma\195\174tre !",
+	starttrigger1 = "\195\128 genoux, vermisseau !",
+	starttrigger2 = "Tuez-les au nom du ma\195\174tre !",
 	starttrigger3 = "Vous ne pouvez pas m'\195\169chapper !",
 	starttrigger4 = "Fuyez tant que vous le pouvez !",
 
