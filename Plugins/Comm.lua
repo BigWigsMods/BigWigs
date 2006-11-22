@@ -7,6 +7,10 @@ assert(BigWigs, "BigWigs not found!")
 local throt, times = {}, {}
 local playerName = nil
 
+local coreSyncs = {
+	["BossEngaged"] = 5,
+}
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
@@ -19,6 +23,10 @@ BigWigsComm = BigWigs:NewModule("Comm")
 
 function BigWigsComm:OnRegister()
 	playerName = UnitName("player")
+
+	for k, v in pairs(coreSyncs) do
+		self:BigWigs_ThrottleSync(k, v)
+	end
 end
 
 function BigWigsComm:OnEnable()
