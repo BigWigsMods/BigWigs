@@ -473,15 +473,6 @@ end
 
 function BigWigs:AceEvent_FullyInitialized()
 	if GetNumRaidMembers() > 0 or not self.loading then
-
-		if not self:IsHooked(self, "ToggleModuleActive") then
-			self:Hook( self, "ToggleModuleActive",
-				function( self, module, state )
-					self.hooks[self]["ToggleModuleActive"](self, module, state)
-					self:TriggerEvent( "BigWigs_ModuleToggle", module, state)
-				end )
-		end
-
 		-- this will trigger the LoadWithCore to load
 		self:TriggerEvent("BigWigs_CoreEnabled")
 
