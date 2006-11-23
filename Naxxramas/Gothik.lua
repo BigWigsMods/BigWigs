@@ -80,11 +80,11 @@ L:RegisterTranslations("koKR", function() return {
 	startwarn = "영혼의 착취자 고딕 전투 시작! 4:30 후 고딕 등장.",
 
 	rider_name = "무자비한 죽음의 기병",
-	spectral_rider_name = "Spectral 죽음의 기병", -- CHECK
+	spectral_rider_name = "기병 망령",
 	deathknight_name = "무자비한 죽음의 기사",
-	spectral_deathknight_name = "Spektral 죽음의 기사", -- CHECK
-	trainee_name = "무자비한 훈련생", -- CHECK
-	spectral_trainee_name = "Spectral 훈련생", -- CHECK
+	spectral_deathknight_name = "죽음의 기사 망령",
+	trainee_name = "무자비한 훈련생",
+	spectral_trainee_name = "훈련생 유령",
 
 	riderdiewarn = "기병 죽음! 무덤조 긴장하세요!",
 	dkdiewarn = "죽음의 기사 죽음!",
