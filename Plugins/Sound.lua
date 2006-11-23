@@ -140,11 +140,17 @@ end
 function BigWigsSound:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 	if not text or sound == false or broadcastonly then return end
 
-	if sounds[sound] and not self.db.profile.defaultonly then PlaySoundFile(sounds[sound])
+	if sounds[sound] and not self.db.profile.defaultonly then 
+		if not PlaySoundFile(sounds[sound]) then
+			self:ScheduleEvent("BigWigs_Sound", 0.05, sound)
+		end
 	else PlaySound("RaidWarning") end
 end
 
 function BigWigsSound:BigWigs_Sound( sound )
-	if sounds[sound] and not self.db.profile.defaultonly then PlaySoundFile(sounds[sound])
+	if sounds[sound] and not self.db.profile.defaultonly then
+		if not PlaySoundFile(sounds[sound]) then
+			self:ScheduleEvent("BigWigs_Sound", 0.05, sound)
+		end
 	else PlaySound("RaidWarning") end
 end
