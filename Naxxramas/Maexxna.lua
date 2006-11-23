@@ -33,7 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	cocoonwarn = "%s Cocooned!",
 
-	enragetrigger = "%s becomes enraged.",
+	enragetrigger = "%s gains Enrage.",
 
 	webspraywarn30sec = "Wall Cocoons in 10 seconds",
 	webspraywarn20sec = "Wall Cocoons! 10 seconds until Spiders spawn!",
@@ -215,7 +215,6 @@ function BigWigsMaexxna:OnEnable()
 	times = {}
 	started = nil
 
-	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("UNIT_HEALTH")
@@ -223,10 +222,13 @@ function BigWigsMaexxna:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "SprayEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "SprayEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "SprayEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF", "EnrageEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS", "EnrageEvent")
 	self:RegisterEvent("BigWigs_Message")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MaexxnaWebspray", 8)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MaexxnaEnrage", 8)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MaexxnaCocoon", 0)
 	-- the MaexxnaCocoon sync is left unthrottled, it's throttled inside the module itself
 	-- because the web wrap happens to a lot of players at once.
@@ -278,12 +280,14 @@ function BigWigsMaexxna:BigWigs_RecvSync( sync, rest )
 			if self.db.profile.cocoon then self:TriggerEvent("BigWigs_Message", string.format(L["cocoonwarn"], rest), "Urgent" ) end
 			times[rest] = t
 		end
+	elseif sync == "MaexxnaEnrage" then
+		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
 	end
 end
 
-function BigWigsMaexxna:CHAT_MSG_MONSTER_EMOTE( msg )
-	if self.db.profile.enrage and msg == L["enragetrigger"] then 
-		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
+function BigWigsMaexxna:EnrageEvent( msg )
+	if string.find(msg, L["enragetrigger"]) then
+		self:TriggerEvent("BigWigs_SendSync", "MaexxnaEnrage")
 	end
 end
 
