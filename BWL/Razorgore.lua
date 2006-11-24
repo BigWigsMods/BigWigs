@@ -18,7 +18,7 @@ L:RegisterTranslations("enUS", function() return {
 	start_message = "Razorgore engaged! Mobs in 45sec!",
 	start_soon = "Mob Spawn in 5sec!",
 	start_mob = "Mob Spawn",
-	
+
 	mindcontrol_trigger = "Foolish ([^%s]+).",
 	mindcontrol_message = "%s has been mind controlled!",
 
@@ -42,16 +42,15 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-
-	start_trigger = "침입자들이 들어왔다! 어떤 희생이 있더라도 알을 반드시 수호하라!", -- By turtl
+	start_trigger = "침입자들이 들어왔다! 어떤 희생이 있더라도 알을 반드시 수호하라!",
 	start_message = "폭군 서슬송곳니 전투 시작",
 	start_soon = "Mob Spawn in 5sec!",
 	start_mob = "Mob Spawn",
 
-	mindcontrol_trigger = "자! ([^%s]+), 이제부터 나를 섬겨라!",	-- By turtl
+	mindcontrol_trigger = "자! ([^%s]+), 이제부터 나를 섬겨라!",
 	mindcontrol_message = "<<%s>> 정신 지배 되었습니다.",
 
-	egg_trigger = "폭군 서슬송곳니|1이;가; 알 파괴|1을;를; 시전합니다.", -- By turtl
+	egg_trigger = "폭군 서슬송곳니|1이;가; 알 파괴|1을;를; 시전합니다.",
 	egg_message = "%d/30 알을 파괴하였습니다.",
 
 	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.", -- CHECK
@@ -79,7 +78,7 @@ L:RegisterTranslations("deDE", function() return {
 	egg_trigger = "Razorgore der Ungez\195\164hmte wirkt Ei zerst\195\182ren.",
 	egg_message = "%d/30 Eier zerst\195\182rt!",
 
-	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.", -- ?
+	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.", -- CHECK
 	phase2_message = "Alle Eier zerst\195\182rt!",
 
 	mc_name = "Gedankenkontrolle",
@@ -118,7 +117,6 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
-
 	start_trigger = "入侵者",
 	start_message = "狂野的拉佐格尔 战斗开始!",
 	start_soon = "Mob Spawn in 5sec!",
@@ -144,7 +142,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Razorgore 狂野的拉佐格爾
 	start_trigger = "入侵者",
 	start_message = "狂野的拉佐格爾進入戰鬥！",
 	start_soon = "Mob Spawn in 5sec!",
@@ -235,4 +232,3 @@ function BigWigsRazorgore:BigWigs_RecvSync(sync, rest)
 		end
 	end
 end
-

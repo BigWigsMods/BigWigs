@@ -62,7 +62,7 @@ L:RegisterTranslations("zhCN", function() return {
 	shadowflame_warning = "暗影烈焰发动！",
 	shadowflame_message_you = "你中了埃博诺克之影！",
 	shadowflame_message_other = "中了埃博诺克之影！",
-	
+
 	wingbuffet_bar = "龙翼打击",
 	shadowcurse_bar = "%s - 埃博诺克之影",
 
@@ -83,7 +83,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Ebonroc 埃博諾克
 	wingbuffet_trigger = "埃博諾克開始施放龍翼打擊。",
 	shadowflame_trigger = "埃博諾克開始施放暗影烈焰。",
 	shadowcurse_trigger = "^(.+)受到(.*)埃博諾克之影",
@@ -96,10 +95,10 @@ L:RegisterTranslations("zhTW", function() return {
 	shadowflame_warning = "暗影烈焰發動！",
 	shadowflame_message_you = "你中了埃博諾克之影！",
 	shadowflame_message_other = " 中了埃博諾克之影！",
-	
+
 	wingbuffet_bar = "龍翼打擊",
 	shadowcurse_bar = "%s - 埃博諾克之影",
-	
+
 	wingbuffet_name = "龍翼打擊警報",
 	wingbuffet_desc = "當埃博諾克施放龍翼打擊時發出警報",
 
@@ -132,16 +131,16 @@ L:RegisterTranslations("koKR", function() return {
 
 	wingbuffet_bar = "폭풍 날개",
 	shadowcurse_bar = "%s - 에본로크의 그림자",
-	
+
 	wingbuffet_name = "폭풍 날개 경고",
 	wingbuffet_desc = "폭풍 날개에 대한 경고",
-	
+
 	shadowflame_name = "암흑의 불길 경고",
 	shadowflame_desc = "암흑의 불길에 대한 경고",
-	
+
 	youcurse_name = "자신의 에본로크의 그림자 경고",
 	youcurse_desc = "자신이 에본로크의 그림자에 걸렸을 때 경고",
-	
+
 	elsecurse_name = "타인의 에본로크의 그림자 경고",
 	elsecurse_desc = "타인이 에본로크의 그림자에 걸렸을 때 경고",
 
@@ -236,6 +235,8 @@ function BigWigsEbonroc:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "EbonrocWingBuffet2", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "EbonrocShadowflame", 10)
@@ -254,7 +255,18 @@ function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function BigWigsEbonroc:BigWigs_RecvSync(sync)
-	if sync == "EbonrocWingBuffet2" and self.db.profile.wingbuffet then
+	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		if self.db.profile.wingbuffet then
+			--self:ScheduleEvent("BigWigs_Message", 27, L["wingbuffet_warning"], "Important") --dont warn untill this is tested
+			self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 30, "Interface\\Icons\\Spell_Fire_SelfDestruct")
+			--its 30seconds from pull, but may not activate at pull, needs tested to adjust to activation delay
+			--basically we need a time from the pull and the bar appearing, then we remove that time from the bar
+		end
+	elseif sync == "EbonrocWingBuffet2" and self.db.profile.wingbuffet then
 		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 29, L["wingbuffet_warning"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct")
@@ -278,4 +290,3 @@ function BigWigsEbonroc:Event(msg)
 		end
 	end
 end
-

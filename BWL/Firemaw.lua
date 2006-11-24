@@ -48,7 +48,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Firemaw 費爾默
 	wingbuffet_trigger = "費爾默開始施放龍翼打擊。",
 	shadowflame_trigger = "費爾默開始施放暗影烈焰。",
 
@@ -135,6 +134,8 @@ function BigWigsFiremaw:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "FiremawWingBuffet2", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "FiremawShadowflame", 10)
@@ -153,7 +154,18 @@ function BigWigsFiremaw:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function BigWigsFiremaw:BigWigs_RecvSync(sync)
-	if sync == "FiremawWingBuffet2" and self.db.profile.wingbuffet then
+	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		if self.db.profile.wingbuffet then
+			--self:ScheduleEvent("BigWigs_Message", 27, L["wingbuffet_warning"], "Important") --dont warn untill this is tested
+			self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 30, "Interface\\Icons\\Spell_Fire_SelfDestruct")
+			--its 30seconds from pull, but may not activate at pull, needs tested to adjust to activation delay
+			--basically we need a time from the pull and the bar appearing, then we remove that time from the bar
+		end
+	elseif sync == "FiremawWingBuffet2" and self.db.profile.wingbuffet then
 		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 29, L["wingbuffet_warning"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct")
@@ -161,4 +173,3 @@ function BigWigsFiremaw:BigWigs_RecvSync(sync)
 		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Important")
 	end
 end
-

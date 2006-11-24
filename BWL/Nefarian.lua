@@ -83,7 +83,7 @@ L:RegisterTranslations("zhCN", function() return {
 	triggerwarrior	= "^战士",
 	triggerrogue	= "^盗贼",
 	triggerpaladin	= "^圣骑士",
-	triggermage	= "^你们也是法师",
+	triggermage		= "^你们也是法师",
 
 	landing_soon_warning = "奈法利安将在10秒后降落！",
 	landing_warning = "奈法利安已降落！",
@@ -105,22 +105,21 @@ L:RegisterTranslations("zhCN", function() return {
 
 	classcall_bar = "职业点名",
 	fear_bar = "可能恐惧",
-	
+
 	shadowflame_name = "暗影烈焰警报",
 	shadowflame_desc = "暗影烈焰警报",
-	
+
 	fear_name = "恐惧警报",
 	fear_desc = "恐惧警报",
-	
+
 	classcall_name = "职业点名警报",
 	classcall_desc = "职业点名警报",
-	
+
 	otherwarn_name = "其他警报",
 	otherwarn_desc = "降落与杂兵出现时发出警报",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Nefarian 奈法利安
 	landing_soon_trigger = "幹得好，我的手下。",
 	landing_trigger = "燃燒吧！你這個",
 	zerg_trigger = "^不可能",
@@ -135,7 +134,7 @@ L:RegisterTranslations("zhTW", function() return {
 	triggerwarrior	= "^戰士，我知道你應該比較抗打！讓我們來見識一下吧！",
 	triggerrogue	= "^盜賊？不要躲了，面對我吧！",
 	triggerpaladin	= "^聖騎士……聽說你有無數條命。讓我看看到底是怎麼樣的吧。",
-	triggermage	= "^還有法師？你應該小心使用你的魔法……",
+	triggermage		= "^還有法師？你應該小心使用你的魔法……",
 
 	landing_soon_warning	= "10秒後降落！",
 	landing_warning		= "奈法利安已降落！",
@@ -157,16 +156,16 @@ L:RegisterTranslations("zhTW", function() return {
 
 	classcall_bar = "職業點名",
 	fear_bar = "可能恐懼",
-	
+
 	shadowflame_name = "暗影烈焰警報",
 	shadowflame_desc = "當奈法利安施放暗影烈焰時發出警報",
-	
+
 	fear_name = "恐懼警報",
 	fear_desc = "當奈法利安施放群體恐懼時發出警報",
-	
+
 	classcall_name = "職業點名警報",
 	classcall_desc = "當奈法利安進行職業點名時發出警報",
-	
+
 	otherwarn_name = "其他警報",
 	otherwarn_desc = "降落及龍獸出現時發出警報",
 } end)
@@ -177,6 +176,7 @@ L:RegisterTranslations("koKR", function() return {
 	zerg_trigger = "말도 안 돼! 일어나라!",
 	fear_trigger = "네파리안|1이;가; 우레와같은 울부짖음|1을;를; 시전합니다.",
 	shadowflame_trigger = "네파리안|1이;가; 암흑의 불길|1을;를; 시전합니다.",
+
 	triggershamans	= "주술사",
 	triggerdruid	= "드루이드 녀석, 그 바보",
 	triggerwarlock	= "흑마법사여, 네가 이해하지도 못하는",
@@ -194,6 +194,7 @@ L:RegisterTranslations("koKR", function() return {
 	fear_soon_warning = "약 5초내 공포!",
 	shadowflame_warning = "암흑의 불길 주의!",
 	classcall_warning = "곧 직업이 지목됩니다!",
+
 	warnshaman	= "주술사 - 토템 파괴!",
 	warndruid	= "드루이드 - 강제 표범 변신!",
 	warnwarlock	= "흑마법사 - 지옥불정령 등장!",
@@ -206,16 +207,16 @@ L:RegisterTranslations("koKR", function() return {
 
 	classcall_bar = "직업 지목",
 	fear_bar = "공포 가능",
-	
+
 	shadowflame_name = "암흑의 불길 경고",
 	shadowflame_desc = "암흑의 불길에 대한 경고",
-	
+
 	fear_name = "공포 경고",
 	fear_desc = "네파리안이 공포 시전시 경고",
-	
+
 	classcall_name = "직업 지목 경고",
 	classcall_desc = "직업 지목에 대한 경고",
-	
+
 	otherwarn_name = "기타 경고",
 	otherwarn_desc = "착지와 소환에 대한 경고",
 } end)
@@ -226,6 +227,7 @@ L:RegisterTranslations("deDE", function() return {
 	zerg_trigger = "Unm\195\182glich! Erhebt euch",
 	fear_trigger = "Nefarian beginnt Dr\195\182hnendes Gebr\195\188ll zu wirken.",
 	shadowflame_trigger = "Nefarian beginnt Schattenflamme zu wirken.",
+
 	triggershamans	= "Schamane, zeigt mir was",
 	triggerdruid	= "Druiden und ihre l\195\164cherliche",
 	triggerwarlock	= "Hexenmeister, Ihr solltet nicht mit Magie",
@@ -242,6 +244,7 @@ L:RegisterTranslations("deDE", function() return {
 	fear_warning = "AoE Furcht in 2 Sekunden!",
 	shadowflame_warning = "Schattenflamme in K\195\188rze!",
 	classcall_warning = "Klassenruf in K\195\188rze!",
+
 	warnshaman	= "Schamanen - Totems!",
 	warndruid	= "Druiden - Gefangen in Katzenform!",
 	warnwarlock	= "Hexenmeister - H\195\182llenbestien herbeigerufen!",
@@ -256,13 +259,13 @@ L:RegisterTranslations("deDE", function() return {
 
 	shadowflame_name = "Schattenflamme",
 	shadowflame_desc = "Warnung, wenn Nefarian Schattenflamme wirkt.",
-	
+
 	fear_name = "Furcht",
 	fear_desc = "Warnung, wenn Nefarian AoE Furcht wirkt.",
-	
+
 	classcall_name = "Klassenruf",
 	classcall_desc = "Warnung vor Klassenrufen.",
-	
+
 	otherwarn_name = "Anderes",
 	otherwarn_desc = "Warnung, wenn Nefarian landet und seine Diener ruft.",
 } end)
@@ -273,6 +276,7 @@ L:RegisterTranslations("frFR", function() return {
 	zerg_trigger = "C'est impossible ! Relevez%-vous, serviteurs !",
 	fear_trigger = "Nefarian commence \195\160 lancer Rugissement puissant",
 	shadowflame_trigger = "Nefarian commence \195\160 lancer Flamme d'ombre.",
+
 	triggershamans	= "Chamans, montrez moi",
 	triggerdruid	= "Les druides et leur stupides",
 	triggerwarlock	= "D\195\169monistes, vous ne devriez pas jouer",
@@ -282,13 +286,14 @@ L:RegisterTranslations("frFR", function() return {
 	triggerrogue	= "Voleurs, arr\195\170tez de vous cacher",
 	triggerpaladin	= "Les paladins",
 	triggermage		= "Les mages aussi",
-	
+
 	landing_soon_warning = "Nefarian atterit dans 10 sec. !",
 	landing_warning = "Nefarian atterit !",
 	zerg_warning = "Zergs imminent !",
 	fear_warning = "Peur dans 2 sec. !",
 	shadowflame_warning = "Flamme d'ombre imminente !",
 	classcall_warning = "D\195\169but de l'appel des classes !",
+
 	warnshaman	= "Chamans - Totems pos\195\169s !",
 	warndruid	= "Druides - Coinc\195\169s en forme f\195\169line !",
 	warnwarlock	= "D\195\169monistes - Infernaux en approche !",
@@ -298,19 +303,19 @@ L:RegisterTranslations("frFR", function() return {
 	warnrogue	= "Voleurs - T\195\169l\195\169port\195\169s et clou\195\169s au sol !",
 	warnpaladin	= "Paladins - B\195\169n\195\169diction de protection !",
 	warnmage	= "Mages - M\195\169tamorphoses imminentes !",
-	
+
 	classcall_bar = "Appel des classes",
 	fear_bar = "Peur probable",
 
 	shadowflame_name = "Alerte Flamme d'ombre",
 	shadowflame_desc = "Pr\195\169viens quand Nefarian utilise sa Flamme d'ombre.",
-	
+
 	fear_name = "Alerte Peur",
 	fear_desc = "Pr\195\169viens quand Nefarian incante sa peur de zone.",
-	
+
 	classcall_name = "Alertes Appel de classe",
 	classcall_desc = "Signale les classes cibl\195\169s par l'appel de classe.",
-	
+
 	otherwarn_name = "Autres alertes",
 	otherwarn_desc = "Pr\195\169viens quand les Zergs arrivent et quand Nefarian atterit.",	
 } end)
@@ -337,7 +342,7 @@ function BigWigsNefarian:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "NefarianShadowflame", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "NefarianFear", 10)
-	
+
 	if not warnpairs then warnpairs = {
 		[L["triggershamans"]] = {L["warnshaman"], true},
 		[L["triggerdruid"]] = {L["warndruid"], true},
@@ -393,4 +398,3 @@ function BigWigsNefarian:BigWigs_RecvSync( sync )
 		self:TriggerEvent("BigWigs_StartBar", self, L["fear_bar"], 32, "Interface\\Icons\\Spell_Shadow_PsychicScream")
 	end
 end
-

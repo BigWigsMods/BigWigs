@@ -59,7 +59,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Flamegor 弗萊格爾
 	wingbuffet_trigger = "弗萊格爾開始施放龍翼打擊。",
 	shadowflame_trigger = "弗萊格爾開始施放暗影烈焰。",
 	frenzy_trigger = "%s變得狂暴起來！",
@@ -92,13 +91,13 @@ L:RegisterTranslations("koKR", function() return {
 	frenzy_message = "광란 - 평정 사격!",
 
 	wingbuffet_bar = "폭풍 날개",
-	
+
 	wingbuffet_name = "폭풍 날개 경고",
 	wingbuffet_desc = "폭풍 날개에 대한 경고",
-	
+
 	shadowflame_name = "암흑의 불길 경고",
 	shadowflame_desc = "암흑의 불길에 대한 경고",
-	
+
 	frenzy_name = "광란 경고",
 	frenzy_desc = "광란에 대한 경고",
 } end)
@@ -166,6 +165,8 @@ function BigWigsFlamegor:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "FlamegorWingBuffet2", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "FlamegorShadowflame", 10)
@@ -184,7 +185,18 @@ function BigWigsFlamegor:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function BigWigsFlamegor:BigWigs_RecvSync(sync)
-	if sync == "FlamegorWingBuffet2" and self.db.profile.wingbuffet then
+	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		if self.db.profile.wingbuffet then
+			--self:ScheduleEvent("BigWigs_Message", 27, L["wingbuffet_warning"], "Important") --dont warn untill this is tested
+			self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 30, "Interface\\Icons\\Spell_Fire_SelfDestruct")
+			--its 30seconds from pull, but may not activate at pull, needs tested to adjust to activation delay
+			--basically we need a time from the pull and the bar appearing, then we remove that time from the bar
+		end
+	elseif sync == "FlamegorWingBuffet2" and self.db.profile.wingbuffet then
 		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 29, L["wingbuffet_warning"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct")

@@ -20,7 +20,7 @@ L:RegisterTranslations("enUS", function() return {
 	are = "are",
 
 	warn1 = "You are burning!",
-	warn2 = " is burning!",	
+	warn2 = " is burning!",
 
 	youburning_cmd = "youburning",
 	youburning_name = "You are burning alert",
@@ -53,7 +53,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	elseburning_name = "队友燃烧警报",
 	elseburning_desc = "队友燃烧时发出警报",
-	
+
 	burningbar_name = "燃烧刺激计时条",
 	burningbar_desc = "燃烧刺激计时条",
 	icon_name = "炸弹图标",
@@ -61,7 +61,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	--Vaelastrasz 墮落的瓦拉斯塔茲
 	trigger1 = "^(.+)受到(.*)燃燒刺激",
 
 	you = "你",
@@ -90,19 +89,18 @@ L:RegisterTranslations("koKR", function() return {
 
 	warn1 = "당신은 불타는 아드레날린에 걸렸습니다!",
 	warn2 = "님이 불타는 아드레날린에 걸렸습니다!",
-	
+
 	youburning_name = "당신의 아드레날린 경고",
 	youburning_desc = "당신이 아드레날린에 대한 경고",
-	
+
 	elseburning_name = "타인의 아드레날린 경고",
 	elseburning_desc = "타인의 아드레날린에 대한 경고",
-	
+
 	icon_name = "폭탄에 공격대 아이콘 지정",
 	icon_desc = "폭탄이 된 사람에 공격대 아이콘 지정. (승급자 이상 요구)",
 
 	burningbar_name = "아드레날린 바",
 	burningbar_desc = "아드레날인에 대한 타이머 바 표시",
-
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -138,15 +136,15 @@ L:RegisterTranslations("frFR", function() return {
 
 	youburning_name = "Alerte quand vous br\195\187lez",
 	youburning_desc = "Pr\195\169viens quand vous br\195\187lez.",
-	
+
 	elseburning_name = "Alerte quand les autres br\195\187lent",
 	elseburning_desc = "Pr\195\169viens quand les autres br\195\187lent.",
-	
+
 	burningbar_name = "Barre Mont\195\169e d'adr\195\169naline",
-	burningbar_desc = "Affiche une barre temporelle pour la Mont\195\169e d'adr\195\169naline.",	
-	
+	burningbar_desc = "Affiche une barre temporelle pour la Mont\195\169e d'adr\195\169naline.",
+
 	icon_name = "Ic\195\180ne de raid sur la bombe",
-	icon_desc = "Place une ic\195\180ne de raid sur la personne qui est la bombe (N\195\169cessite d'\195\170tre promu ou mieux).",	
+	icon_desc = "Place une ic\195\180ne de raid sur la personne qui est la bombe (N\195\169cessite d'\195\170tre promu ou mieux).",
 } end)
 
 ----------------------------------
@@ -208,4 +206,3 @@ function BigWigsVaelastrasz:Event(msg)
 		self:TriggerEvent("BigWigs_SendSync", "VaelBomb "..baPlayer)
 	end
 end
-

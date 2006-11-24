@@ -53,7 +53,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Broodlord Lashlayer 勒西雷爾
 	trigger1 = "^(.+)受到(.*)致死打擊",
 
 	you = "你",
@@ -99,10 +98,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	warn1 = "당신은 죽음의 일격!",
 	warn2 = "<<%s>> 죽음의 일격!",
-	
+
 	youms_name = "자신의 죽음의 일격 경고",
 	youms_desc = "당신이 죽음의 일격에 걸렸을 때 경고",
-	
+
 	elsems_name = "타인의 죽음의 일격 경고",
 	elsems_desc = "타인이 죽음의 일격에 걸렸을 때 경고",
 
@@ -118,7 +117,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	warn1 = "Frappe mortelle sur toi !",
 	warn2 = "Frappe mortelle sur %s !",
-	
+
 	youms_name = "Alerte Frappe mortelle sur vous",
 	youms_desc = "Pr\195\169viens quand vous \195\170tes touch\195\169 par la Frappe mortelle.",
 
@@ -126,7 +125,7 @@ L:RegisterTranslations("frFR", function() return {
 	elsems_desc = "Pr\195\169viens quand quelqu'un d'autre est touch\195\169 par la Frappe mortelle.",
 
 	msbar_name = "Barre Frappe mortelle",
-	msbar_desc = "Affiche une barre indiquant la dur\195\169e de la Frappe mortelle.",	
+	msbar_desc = "Affiche une barre indiquant la dur\195\169e de la Frappe mortelle.",
 } end )
 
 ----------------------------------
@@ -166,4 +165,3 @@ function BigWigsBroodlord:MSEvent(msg)
 		end
 	end
 end
-

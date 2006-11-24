@@ -137,7 +137,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Chromaggus 克洛瑪古斯
 	enrage_name = "狂暴警報",
 	enrage_desc = "當克洛瑪古斯生命值剩 20% ，狂暴時發出警報。",
 
@@ -157,7 +156,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	hit = "造",
 	crit = "致命一擊造",
-	
+
 	breath_warning = "%s - 10 秒後施放！",
 	breath_message = "克洛瑪古斯施放：%s ！",
 	vulnerability_message = "克洛瑪古斯新弱點：%s ！",
@@ -179,22 +178,22 @@ L:RegisterTranslations("zhTW", function() return {
 	-- drop  drop                   type      dmg   school     多抓一個"造"字是因type不能為空.又,判斷對跟擊中的話,要改程式碼(像koKR的做法)
 	-- 原判斷句型會誤判其他近戰的暴擊句型，造成school抓出"致命一擊"字樣。
 	-- 最後一個變數從(.+)改為(......)，法術傷害只有兩個中文字，編碼為utf8所以是6個"."。
+	-- whoever added the above, do we still need it? if we dont please remove :)
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	
 	enrage_name = "격노",
 	enrage_desc = "20% 격노 전 경고",
 
 	frenzy_name = "광폭화 경고",
 	frenzy_desc = "광폭화에 대한 경고",
-	
+
 	breath_name = "브레스 경고",
 	breath_desc = "브레스에 대한 경고",
-	
+
 	vulnerability_name = "약화 속성 경고",
 	vulnerability_desc = "약화 속성 변경에 대한 경고",
-	
+
 	breath_trigger = "크로마구스|1이;가; (.+)|1을;를; 시전합니다.",
 	vulnerability_test = "(.+)|1으로;로; 크로마구스에게 (%d+)의 ([^%s]+) (.*)피해를 입혔습니다.",
 	frenzy_trigger = "%s|1이;가; 살기를 띤 듯한 광란의 상태에 빠집니다!",
@@ -231,7 +230,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	vulnerability_name = "Alerte Vuln\195\169rabilit\195\169s",
 	vulnerability_desc = "Pr\195\169viens quand la vuln\195\169rabilit\195\169 de Chromaggus change.",
-	
+
 	breath_trigger = "^Chromaggus commence \195\160 lancer (.+)%.",
 	vulnerability_test = "^.+ lance .+ et (.+) \195\160 Chromaggus %(([%d]+) points de d\195\169g\195\162ts .+ (.+)%)%.";
 	frenzy_trigger = "%s entre dans une fr\195\169n\195\169sie sanglante !",
@@ -356,4 +355,3 @@ else
 		end
 	end
 end
-
