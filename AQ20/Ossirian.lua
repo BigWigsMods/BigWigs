@@ -117,7 +117,7 @@ L:RegisterTranslations("zhTW", function() return {
 	bartext = "無敵",
 	expose = "我...已...失敗。",
 
-	["Shadow"] = "陰影",
+	["Shadow"] = "暗影",
 	["Fire"] = "火焰",
 	["Frost"] = "冰霜",
 	["Nature"] = "自然",
