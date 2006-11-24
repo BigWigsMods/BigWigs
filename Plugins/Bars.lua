@@ -10,6 +10,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsBars")
 local paint = AceLibrary("PaintChips-2.0")
 local minscale, maxscale = 0.25, 2
 
+local surface = AceLibrary("Surface-1.0")
 
 ----------------------------
 --      Localization      --
@@ -46,12 +47,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Texture"] = true,
 	["Set the texture for the timerbars."] = true,
-
-	["default"] = true,
-	["smooth"] = true,
-	["otravi"] = true,
-	["Charcoal"] = true,
-	["glaze"] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -75,12 +70,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Down"] = "아래",
 
 	["Test"] = "테스트",
-
-	["default"] = "Default",
-	["smooth"] = "Smooth",
-	["otravi"] = "Otravi",
-	["Charcoal"] = "Charcoal",
-	["glaze"] = "glaze",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -114,12 +103,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	["Texture"] = "材质",
 	["Set the texture for the timerbars."] = "为计时条设定材质。",
-
-	["default"] = "默认",
-	["smooth"] = "圆滑",
-	["otravi"] = "平整",
-	["Charcoal"] = "炭条纹",
-	["glaze"] = "釉纹",
 } end)
 
 
@@ -155,11 +138,6 @@ L:RegisterTranslations("zhTW", function() return {
 	["Texture"] = "材質",
 	["Set the texture for the timerbars."] = "設定計時條的材質花紋",
 
-	["default"] = "預設",
-	["smooth"] = "平滑",
-	["otravi"] = "otravi",
-	["Charcoal"] = "木炭",
-	["glaze"] = "glaze",
 } end)
 
 
@@ -192,18 +170,9 @@ L:RegisterTranslations("deDE", function() return {
 	["Test"] = "Test",
 	["Close"] = "Schlie\195\159en",
 
-	["default"] = "Default",
-	["smooth"] = "Smooth",
-	["otravi"] = "Otravi",
-	["Charcoal"] = "Charcoal",
 	["Texture"] = "Textur",
 	["Set the texture for the timerbars."] = "Textur der Anzeigebalken w\195\164hlen.",
 
-	["default"] = "vorgabe",
-	["smooth"] = "glatt",
-	["otravi"] = "otravi",
-	["Charcoal"] = "Charcoa",
-	["glaze"] = "glaze",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -232,12 +201,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	["Texture"] = "Texture",
 	["Set the texture for the timerbars."] = "Détermine la texture des barres temporelles.",
-
-	["default"] = "défaut",
-	["smooth"] = "smooth",
-	["otravi"] = "otravi",
-	["Charcoal"] = "Charcoal",	
-	["glaze"] = "glaze",
 } end)
 
 ----------------------------------
@@ -289,7 +252,7 @@ BigWigsBars.consoleOptions = {
 			desc = L["Set the texture for the timerbars."],
 			get = function() return BigWigsBars.db.profile.texture end,
 			set = function(v) BigWigsBars.db.profile.texture = v end,
-			validate = { L["default"], L["otravi"], L["smooth"], L["Charcoal"], L["glaze"] },
+			validate = surface:List(),
 		}
 	},
 }
@@ -299,13 +262,25 @@ BigWigsBars.consoleOptions = {
 --      Initialization      --
 ------------------------------
 
+function BigWigsBars:OnRegister()
+	self.consoleOptions.args[L["Texture"]].validate = surface:List()
+        self:RegisterEvent("Surface_Registered", function()
+		self.consoleOptions.args[L["Texture"]].validate = surface:List()
+        end)
+end
+
 function BigWigsBars:OnEnable()
-	if not self.db.profile.texture then self.db.profile.texture = L["default"] end
+	if not surface:Fetch(self.db.profile.texture) then self.db.profile.texture = "BantoBar" end
 	self:SetupFrames()
 	self:RegisterEvent("BigWigs_ShowAnchors")
 	self:RegisterEvent("BigWigs_HideAnchors")
 	self:RegisterEvent("BigWigs_StartBar")
 	self:RegisterEvent("BigWigs_StopBar")
+	if not self:IsEventRegistered("Surface_Registered") then 
+	        self:RegisterEvent("Surface_Registered", function()
+			self.consoleOptions.args[L["Texture"]].validate = surface:List()
+	        end)
+	end
 end
 
 

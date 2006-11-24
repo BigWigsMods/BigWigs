@@ -42,6 +42,7 @@ Libs\Tablet-2.0\Tablet-2.0.lua
 Libs\FuBarPlugin-2.0\FuBarPlugin-2.0.lua
 Libs\PaintChips-2.0\PaintChips-2.0.lua
 Libs\CandyBar-2.0\CandyBar-2.0.lua
+Libs\Surface-1.0\Surface-1.0.lua
 
 LoadOnDemand.lua
 Core.lua
