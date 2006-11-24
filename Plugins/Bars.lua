@@ -212,7 +212,7 @@ BigWigsBars.revision = tonumber(string.sub("$Revision: 13134 $", 12, -3))
 BigWigsBars.defaultDB = {
 	growup = false,
 	scale = 1.0,
-	texture = L["default"],
+	texture = "BantoBar",
 }
 BigWigsBars.consoleCmd = L["bars"]
 BigWigsBars.consoleOptions = {
@@ -315,8 +315,7 @@ function BigWigsBars:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, 
 
  	module:RegisterCandyBar(id, time, text, icon, c1, c2, c3, c4, c5, c6, c8, c9, c10)
  	module:RegisterCandyBarWithGroup(id, "BigWigsGroup")
-	local texture = "Interface\\AddOns\\BigWigs\\Textures\\" .. (L:HasReverseTranslation(self.db.profile.texture) and L:GetReverseTranslation( self.db.profile.texture ) or "default")
-	module:SetCandyBarTexture( id, texture )
+	module:SetCandyBarTexture( id, surface:Fetch( self.db.profile.texture) )
 	if bc then module:SetCandyBarBackgroundColor(id, bc, balpha) end
 	if txtc then module:SetCandyBarTextColor(id, txtc) end
 
