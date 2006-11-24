@@ -658,7 +658,9 @@ function BigWigs:RegisterModule(name, module)
 	end
 
 	-- Set up target monitoring, in case the monitor module has already initialized
-	self:TriggerEvent("BigWigs_RegisterForTargetting", module.zonename, module.enabletrigger)
+	if module.zonename and module.enabletrigger then
+		self:TriggerEvent("BigWigs_RegisterForTargetting", module.zonename, module.enabletrigger)
+	end
 end
 
 
