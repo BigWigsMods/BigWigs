@@ -201,7 +201,7 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	--Gothik the Harvester 收割者高希
 	room_name = "進入房間警報",
-	room_desc = "收割者戈提克進入房間時發出警報",
+	room_desc = "收割者高希進入房間時發出警報",
 
 	add_name = "增援警報",
 	add_desc = "增援警報",
@@ -213,7 +213,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	starttrigger1 = "你們這些蠢貨已經主動步入了陷阱。",
 	starttrigger2 = "我已經等待很久了。現在你們將面對靈魂的收割者。", --?
-	startwarn = "收割者戈提克已進入戰鬥 - 4:30 後進入房間",
+	startwarn = "收割者高希已進入戰鬥 - 4:30 後進入房間",
 
 	rider_name = "冷酷的騎兵",
 	spectral_rider_name = "騎兵",
@@ -235,7 +235,7 @@ L:RegisterTranslations("zhTW", function() return {
 	dkwarn = "3 秒後死亡騎士出現！",
 	riderwarn = "3 秒後騎兵出現！",
 
-	trabar = "訓練師 - %d",
+	trabar = "學徒 - %d",
 	dkbar = "死騎 - %d",
 	riderbar = "騎兵 - %d",
 

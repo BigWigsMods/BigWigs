@@ -143,7 +143,7 @@ L:RegisterTranslations("zhTW", function() return {
 	teleport_desc = "傳送警報",
 
 	engage_name = "進入戰鬥警報",
-	engage_desc = "希爾蓋進入戰鬥警告",
+	engage_desc = "海根進入戰鬥警告",
 
 	-- [[ Triggers ]]--
 	starttrigger = "你是我的了。",

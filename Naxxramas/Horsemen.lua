@@ -205,14 +205,14 @@ L:RegisterTranslations("zhTW", function() return {
 	meteor_name = "隕石術警報",
 	meteor_desc = "寇斯艾茲族長的隕石術警報",
 
-	wrath_name = "神聖之怒警報",
-	wrath_desc = "札里克爵士的神聖之怒警報",
+	wrath_name = "神聖憤怒警報",
+	wrath_desc = "札里克爵士的神聖憤怒警報",
 	
-	markbar = "標記 %d",
-	markwarn1 = "標記(%d)！",
-	markwarn2 = "標記(%d) - 5秒",
+	markbar = "印記 %d",
+	markwarn1 = "印記(%d)！",
+	markwarn2 = "印記(%d) - 5秒",
 	
-	marktrigger = "受到了庫爾塔茲印記效果的影響。",
+	marktrigger = "(.+)受到(.*)印記",
 
 	voidtrigger = "布洛莫斯爵士施放了虛空地區。",
 	voidwarn = "5秒後虛空地區",
@@ -222,9 +222,9 @@ L:RegisterTranslations("zhTW", function() return {
 	meteorwarn = "隕石術",
 	meteorbar = "隕石術",
 
-	wrathtrigger = "札里克爵士的神聖之怒擊中",
-	wrathwarn = "神聖之怒",
-	wrathbar = "神聖之怒",
+	wrathtrigger = "札里克爵士的神聖憤怒擊中",
+	wrathwarn = "神聖憤怒",
+	wrathbar = "神聖憤怒",
 	
 	startwarn = "四騎士已進入戰鬥 - 17秒後標記",
 
