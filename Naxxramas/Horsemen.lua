@@ -234,6 +234,48 @@ L:RegisterTranslations("zhTW", function() return {
 	shieldwallwarn2 = "%s - 盾牆消失了！",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	mark_name = "Alertes Marques",
+	mark_desc = "Annoncer les marques",
+
+	shieldwall_name = "Alertes Mur Protecteur",
+	shieldwall_desc = "Annoncer les Murs Protecteur",
+
+	void_name = "Alertes Zones de Vide",
+	void_desc = "Annoncer les nouvelle Zone de Vide de Dame Blaumeux.",
+
+	meteor_name = "Alertes M\195\169t\195\169ores",
+	meteor_desc = "Annoncer l'incantation des M\195\169t\195\169ores par Thane.",
+
+	wrath_name = "Alertes Col\195\168re Divine",
+	wrath_desc = "Annoncer l'incantation de Col\195\168re par Zeliek.",
+
+	markbar = "Marque %d",
+	markwarn1 = "Marque %d!",
+	markwarn2 = "Marque %d dans 5 sec",
+	marktrigger = "subit les effets de Marque de ",
+
+	voidtrigger = "Dame Blaumeux lance Zone de vide.",
+	voidwarn = "Zone de Vide bientot",
+	voidbar = "Zone de Vide",
+
+	meteortrigger = "Thane Korth'azz lance M\195\169t\195\169ore sur ",
+	meteorwarn = "M\195\169t\195\169or !",
+	meteorbar = "M\195\169t\195\169or",
+
+	wrathtrigger = "Sire Zeliek lance Col\195\168re divine sur",
+	wrathwarn = "Col\195\168re Divine !",
+	wrathbar = "Col\195\168re Divine",
+
+	startwarn = "Engagement de la Cavalerie! Marque dans ~17 sec",
+
+	shieldwallbar = "%s - Mur Protecteur",
+	shieldwalltrigger = "(.*) gagne Mur protecteur.",
+	shieldwallwarn = "%s - Mur Protecteur pendant 20 sec",
+	shieldwallwarn2 = "%s - Mur Protecteur FINI!",
+} end )
+
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
