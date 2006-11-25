@@ -114,6 +114,7 @@ L:RegisterTranslations("zhTW", function() return {
 	casttrigger = "阿努比瑞克漢開始施放蝗蟲風暴。",
 	castwarn = "蝗蟲風暴來了！",
 } end )
+
 L:RegisterTranslations("frFR", function() return {
 	locust_name = "Alerte Nuée de sauterelles",
 	locust_desc = "Préviens quand Anub'Rekhan invoque ses Nuées de sauterelles.",
@@ -121,17 +122,17 @@ L:RegisterTranslations("frFR", function() return {
 	starttrigger1 = "Rien qu'une petite bouch\195\169e...",
 	starttrigger2 = "Oui, courez ! Faites circuler le sang !",
 	starttrigger3 = "Nulle part pour s'enfuir.",
-	engagewarn = "Anub'Rekhan engagé. Première Nuée de sauterelles dans ~90 sec.",	
+	engagewarn = "Anub'Rekhan engagé. Première Nuée de sauterelles dans ~90 sec.",
 
 	gaintrigger = "Anub'Rekhan gagne Nuée de sauterelles.",
 	gainendwarn = "Fin de la Nuée de sauterelles !",
 	gainnextwarn = "Prochaine Nuée de sauterelles dans ~85 sec.",
-	gainwarn10sec = "~10 sec. avant la Nuée de sauterelles",	
+	gainwarn10sec = "~10 sec. avant la Nuée de sauterelles",
 	gainincbar = "Prochaine Nuée",
-	gainbar = "Nuée de sauterelles",	
+	gainbar = "Nuée de sauterelles",
 
 	casttrigger = "Anub'Rekhan commence à lancer Nuée de sauterelles.",
-	castwarn = "Nuée de sauterelles imminente !",	
+	castwarn = "Nuée de sauterelles imminente !",
 } end )
 
 ----------------------------------
@@ -161,7 +162,7 @@ function BigWigsAnubrekhan:OnEnable()
 end
 
 function BigWigsAnubrekhan:CHAT_MSG_MONSTER_YELL( msg )
-	if self.db.profile.locust and msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] then
+	if self.db.profile.locust and string.find(msg, L["starttrigger1"]) or msg == L["starttrigger2"] or msg == L["starttrigger3"] then
 		self:TriggerEvent("BigWigs_Message", L["engagewarn"], "Urgent")
 		self:ScheduleEvent("BigWigs_Message", 80, L["gainwarn10sec"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["gainincbar"], 90, "Interface\\Icons\\Spell_Nature_InsectSwarm")
