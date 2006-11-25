@@ -70,11 +70,11 @@ function BigWigsLoD:BigWigs_CoreEnabled()
 			loaded = true
 			LoadAddOn( v )
 		end
-	end	
+	end
 
 	withcore = {}
 
-	-- Fire an event to have the target monitor check it's stuff
+	-- Fire an event to have the target monitor check its stuff
 	if loaded then
 		self:TriggerEvent("BigWigs_ModulePackLoaded")
 	end
