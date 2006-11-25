@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Ebonroc"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local started 
 
 ----------------------------
 --      Localization      --
@@ -229,6 +230,7 @@ BigWigsEbonroc.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsEbonroc:OnEnable()
+	started = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
@@ -236,6 +238,7 @@ function BigWigsEbonroc:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "EbonrocWingBuffet2", 10)

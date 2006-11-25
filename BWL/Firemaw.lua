@@ -5,6 +5,8 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Firemaw"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
+local started
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -131,10 +133,12 @@ BigWigsFiremaw.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsFiremaw:OnEnable()
+	started = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "FiremawWingBuffet2", 10)
