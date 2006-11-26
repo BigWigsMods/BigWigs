@@ -357,7 +357,7 @@ function BigWigsOuro:OnEnable()
 
 	self:TriggerEvent("BigWigs_ThrottleSync", "OuroSweep", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "OuroSandblast", 10)
-	self:TriggerEvent("BigWigs_ThrottleSync", "OuroEmerge", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "OuroEmerge2", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "OuroSubmerge", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "OuroBerserk", 10)
 end
@@ -388,7 +388,7 @@ function BigWigsOuro:BigWigs_RecvSync( sync, rest, nick )
 		self:Sweep()
 	elseif sync == "OuroSandblast" then
 		self:Sandblast()
-	elseif sync == "OuroEmerge" then
+	elseif sync == "OuroEmerge2" then
 		self:Emerge()
 	elseif sync == "OuroSubmerge" then
 		self:Submerge()
@@ -411,6 +411,7 @@ function BigWigsOuro:Berserk()
 	self:CancelScheduledEvent("bwouroemergewarn2")
 	self:TriggerEvent("BigWigs_StopBar", self, L["emergebartext"])
 	self:TriggerEvent("BigWigs_StopBar", self, L["possible_submerge_bar"])
+	self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 
 	if self.db.profile.berserk then
 		self:TriggerEvent("BigWigs_Message", L["berserkannounce"], "Important")
@@ -475,7 +476,7 @@ end
 
 function BigWigsOuro:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	if string.find(msg, L["emergetrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "OuroEmerge")
+		self:TriggerEvent("BigWigs_SendSync", "OuroEmerge2")
 	elseif string.find(msg, L["submergetrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "OuroSubmerge")
 	end
