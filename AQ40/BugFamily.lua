@@ -171,5 +171,6 @@ end
 function BigWigsBugFamily:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg == L["healtrigger"] and self.db.profile.heal then
 		self:TriggerEvent("BigWigs_Message", L["healwarn"], "Urgent")
+		self:TriggerEvent("BigWigs_StartBar", self, L["healwarn"], 2, "Interface\\Icons\\Spell_Holy_Heal")
 	end
 end
