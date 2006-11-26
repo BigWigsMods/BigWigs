@@ -315,7 +315,7 @@ end
 function BigWigsDefenders:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "DefenderExplode" and self.db.profile.explode then
 		self:TriggerEvent("BigWigs_Message", L["explodewarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["explodewarn"], 6, "\\Interface\\Icons\\Spell_Fire_SelfDestruct")
+		self:TriggerEvent("BigWigs_StartBar", self, L["explodewarn"], 6, "Interface\\Icons\\Spell_Fire_SelfDestruct")
 	elseif sync == "DefenderEnrage" and self.db.profile.enrage then
 		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
 	elseif sync == "DefenderThunderclap" and self.db.profile.thunderclap then
