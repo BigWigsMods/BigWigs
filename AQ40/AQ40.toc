@@ -2,6 +2,8 @@
 
 ## Title: Big Wigs [|cffeda55fAhn'Qiraj|r]
 ## Notes: Big Wigs Ahn'Qiraj Modules
+## Title-zhTW: Big Wigs [|cffeda55f安其拉|r]
+## Notes-zhTW: Big Wigs 安其拉模組
 ## Author: Ammo, Rabbit
 ## X-Credits: Tekkub Stoutwrithe (founding author), Shyva & Others
 ## Version: 2.0

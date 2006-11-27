@@ -2,6 +2,8 @@
 
 ## Title: Big Wigs [|cffeda55fBlackwing Lair|r]
 ## Notes: Big Wigs Blackwing Lair Modules
+## Title-zhTW: Big Wigs [|cffeda55f黑翼之巢|r]
+## Notes-zhTW: Big Wigs 黑翼之巢模組
 ## Author: Ammo, Rabbit
 ## X-Credits: Tekkub Stoutwrithe (founding author), Shyva & Others
 ## Version: 2.0

@@ -2,6 +2,8 @@
 
 ## Title: Big Wigs [|cffeda55fExtras|r]
 ## Notes: Big Wigs Extra Plugins
+## Title-zhTW: Big Wigs [|cffeda55f額外|r]
+## Notes-zhTW: Big Wigs 額外的模組
 ## Author: Ammo, Rabbit
 ## X-Credits: Tekkub Stoutwrithe (founding author), Shyva & Others
 ## Version: 2.0

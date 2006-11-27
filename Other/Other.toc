@@ -2,6 +2,8 @@
 
 ## Title: Big Wigs [|cffeda55fOther|r]
 ## Notes: Big Wigs Other Modules
+## Title-zhTW: Big Wigs [|cffeda55f其他|r]
+## Notes-zhTW: Big Wigs 其他的模組
 ## Author: Ammo, Rabbit
 ## X-Credits: Tekkub Stoutwrithe (founding author), Shyva & Others
 ## Version: 2.0

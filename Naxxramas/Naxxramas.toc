@@ -2,6 +2,8 @@
 
 ## Title: Big Wigs [|cffeda55fNaxxramas|r]
 ## Notes: Big Wigs Naxxramas Modules
+## Title-zhTW: Big Wigs [|cffeda55f納克薩瑪斯|r]
+## Notes-zhTW: Big Wigs 納克薩瑪斯模組
 ## Author: Ammo, Rabbit
 ## X-Credits: Tekkub Stoutwrithe (founding author), Shyva & Others
 ## Version: 2.0

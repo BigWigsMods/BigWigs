@@ -2,6 +2,8 @@
 
 ## Title: Big Wigs [|cffeda55fRuins of Ahn'Qiraj|r]
 ## Notes: Big Wigs Ruins of Ahn'Qiraj Modules
+## Title-zhTW: Big Wigs [|cffeda55f安其拉廢墟|r]
+## Notes-zhTW: Big Wigs 安其拉廢墟模組
 ## Author: Ammo, Rabbit
 ## X-Credits: Tekkub Stoutwrithe (founding author), Shyva & Others
 ## Version: 2.0

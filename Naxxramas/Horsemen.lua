@@ -226,7 +226,7 @@ L:RegisterTranslations("zhTW", function() return {
 	wrathwarn = "神聖憤怒",
 	wrathbar = "神聖憤怒",
 	
-	startwarn = "四騎士已進入戰鬥 - 17秒後標記",
+	startwarn = "四騎士已進入戰鬥 - 17秒後印記",
 
 	shieldwallbar = "%s - 盾牆",
 	shieldwalltrigger = "獲得了盾牆",
