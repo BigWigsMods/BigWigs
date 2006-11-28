@@ -230,7 +230,7 @@ function BigWigsLoatheb:OnEnable()
 	-- 2: Doom and SporeSpawn versioned up because of the sync including the
 	-- doom/spore count now, so we don't hold back the counter.
 	self:TriggerEvent("BigWigs_ThrottleSync", "LoathebDoom", 600)
-	self:TriggerEvent("BigWigs_ThrottleSync", "LoathebSporeSpawn2", 600)
+	self:TriggerEvent("BigWigs_ThrottleSync", "LoathebSporeSpawn", 600)
 	self:TriggerEvent("BigWigs_ThrottleSync", "LoathebDoom2", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "LoathebSporeSpawn2", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "LoathebRemoveCurse", 10)
