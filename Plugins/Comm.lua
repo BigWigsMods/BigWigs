@@ -55,7 +55,7 @@ end
 
 
 function BigWigsComm:BigWigs_SendSync(msg)
-	local _, _, sync, rest = string.find( msg, "(%S+)%s*(.*)$"))
+	local _, _, sync, rest = string.find(msg, "(%S+)%s*(.*)$")
 
 	if not sync then return end
 
