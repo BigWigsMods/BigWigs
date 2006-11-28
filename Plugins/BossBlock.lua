@@ -355,7 +355,12 @@ BigWigsBossBlock.consoleOptions = {
 ------------------------------
 
 function BigWigsBossBlock:OnEnable()
-	self:Hook("ChatFrame_OnEvent")
+	if ChatFrame_MessageEventHandler ~= nil and type(ChatFrame_MessageEventHandler) == "function" then
+		self:Hook("ChatFrame_MessageEventHandler", "ChatFrame_OnEvent", true)
+	else
+		self:Hook("ChatFrame_OnEvent", true)
+	end
+
 	self:Hook(RaidWarningFrame, "AddMessage", "RWAddMessage", true)
 	if CT_RAMessageFrame then self:Hook(CT_RAMessageFrame, "AddMessage", "CTRA_AddMessage") end
 end
@@ -366,7 +371,11 @@ function BigWigsBossBlock:ChatFrame_OnEvent(event)
 		self:Debug(L["Suppressing Chatframe"], event, arg1)
 		return
 	end
-	self.hooks["ChatFrame_OnEvent"](event)
+	if type(self.hooks["ChatFrame_OnEvent"]) == "function" then
+		self.hooks["ChatFrame_OnEvent"](event)
+	else
+		return self.hooks["ChatFrame_MessageEventHandler"](event)
+	end
 end
 
 
