@@ -5,6 +5,7 @@
 ------------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsRaidWarn")
+local sentWhispers = nil
 
 ----------------------------
 --      Localization      --
@@ -16,6 +17,7 @@ L:RegisterTranslations("enUS", function() return {
 	["raidwarn"] = true,
 	["broadcast"] = true,
 	["whisper"] = true,
+	["showwhispers"] = true,
 	["useraidchannel"] = true,
 
 	["Broadcast over RaidWarning"] = true,
@@ -26,6 +28,9 @@ L:RegisterTranslations("enUS", function() return {
 	["Whisper warnings"] = true,
 	["Toggle whispering warnings to players."] = true,
 	
+	["Show whispers"] = true,
+	["Toggle showing whispers sent by BigWigs locally."] = true,
+
 	["Use Raidchannel"] = true,
 	["Toggle using the raid channel instead of the raid warning channel for boss messages."] = true,
 	
@@ -138,11 +143,12 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsRaidWarn = BigWigs:NewModule(L["RaidWarning"])
+BigWigsRaidWarn = BigWigs:NewModule(L["RaidWarning"], "AceHook-2.1")
 BigWigsRaidWarn.defaultDB = {
 	whisper = false,
 	broadcast = false,
 	useraidchannel = false,
+	showwhispers = true,
 }
 BigWigsRaidWarn.consoleCmd = L["raidwarn"]
 BigWigsRaidWarn.consoleOptions = {
@@ -155,21 +161,28 @@ BigWigsRaidWarn.consoleOptions = {
 			name = L["Broadcast"],
 			desc = L["Toggle broadcasting over Raidwarning."],
 			get = function() return BigWigsRaidWarn.db.profile.broadcast end,
-			set = function(v) BigWigsRaidWarn.db.profile.broadcast = v end,		
+			set = function(v) BigWigsRaidWarn.db.profile.broadcast = v end,
 		},
 		[L["whisper"]] = {
 			type = "toggle",
 			name = L["Whisper"],
 			desc = L["Toggle whispering warnings to players."],
 			get = function() return BigWigsRaidWarn.db.profile.whisper end,
-			set = function(v) BigWigsRaidWarn.db.profile.whisper = v end,		
+			set = function(v) BigWigsRaidWarn.db.profile.whisper = v end,
+		},
+		[L["showwhispers"]] = {
+			type = "toggle",
+			name = L["Show whispers"],
+			desc = L["Toggle showing whispers sent by BigWigs locally."],
+			get = function() return BigWigsRaidWarn.db.profile.showwhispers end,
+			set = function(v) BigWigsRaidWarn.db.profile.showwhispers = v end,
 		},
 		[L["useraidchannel"]] = {
 			type = "toggle",
 			name = L["Use Raidchannel"],
 			desc = L["Toggle using the raid channel instead of the raid warning channel for boss messages."],
 			get = function() return BigWigsRaidWarn.db.profile.useraidchannel end,
-			set = function(v) BigWigsRaidWarn.db.profile.useraidchannel = v end,		
+			set = function(v) BigWigsRaidWarn.db.profile.useraidchannel = v end,
 		},
 	}
 }
@@ -181,6 +194,14 @@ BigWigsRaidWarn.consoleOptions = {
 function BigWigsRaidWarn:OnEnable()
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("BigWigs_SendTell")
+
+	sentWhispers = {}
+
+	if ChatFrame_MessageEventHandler ~= nil and type(ChatFrame_MessageEventHandler) == "function" then
+		self:Hook("ChatFrame_MessageEventHandler", "WhisperHandler", true)
+	else
+		self:Hook("ChatFrame_OnEvent", "WhisperHandler", true)
+	end
 end
 
 function BigWigsRaidWarn:BigWigs_Message(msg, color, noraidsay)
@@ -194,9 +215,22 @@ function BigWigsRaidWarn:BigWigs_Message(msg, color, noraidsay)
 	end
 end
 
-function BigWigsRaidWarn:BigWigs_SendTell(player, msg )
+function BigWigsRaidWarn:BigWigs_SendTell(player, msg)
 	if not self.db.profile.whisper or not player or not msg or ( not IsRaidLeader() and not IsRaidOfficer() ) then return end
+	sentWhispers[msg] = true
 	SendChatMessage(msg, "WHISPER", nil, player)
 end
 
+function BigWigsRaidWarn:WhisperHandler(event)
+	if not self.db.profile.showwhispers and sentWhispers[arg1] then
+		self:Debug("Suppressing self-sent whisper.", event, arg1)
+		return
+	end
+
+	if type(self.hooks["ChatFrame_OnEvent"]) == "function" then
+		self.hooks["ChatFrame_OnEvent"](event)
+	else
+		return self.hooks["ChatFrame_MessageEventHandler"](event)
+	end
+end
 
