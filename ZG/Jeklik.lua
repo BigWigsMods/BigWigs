@@ -31,7 +31,6 @@ L:RegisterTranslations("enUS", function() return {
 	swarm_message = "Incoming bat swarm!",
 	bomb_message = "Incoming bomb bats!",
 	heal_message = "Casting heal!",
-	
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -86,7 +85,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Jeklik 高階祭司耶克里克
 	heal_name = "治療警報",
 	heal_desc = "高階祭司耶克里克使用治療時發出警報",
 
@@ -100,7 +98,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	heal_name = "치유 경고",
 	heal_desc = "치유에 대한 경고",
 
@@ -156,4 +153,3 @@ function BigWigsJeklik:CHAT_MSG_MONSTER_EMOTE(msg)
 		self:TriggerEvent("BigWigs_Message", L["swarm_message"], "Urgent")
 	end
 end
-

@@ -63,7 +63,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	drain_name = "吸取警报",
 	drain_desc = "高阶祭司玛尔里使用生命吸取时发出警报",
-	
+
 	spiders_trigger = "来为我作战吧，我的孩子们！$",
 	drainlife_trigger = "^高阶祭司玛尔里的生命吸取治疗了高阶祭司玛尔里(.+)。",
 
@@ -72,13 +72,12 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Mar'li 高階祭司瑪爾里(哈卡萊安魂者)
 	spider_name = "蜘蛛警報",
 	spider_desc = "當高階祭司瑪爾里召喚蜘蛛時發出警報。",
 
 	drain_name = "生命吸取警報",
 	drain_desc = "高階祭司瑪爾里使用生命吸取時發出警報",
-	
+
 	spiders_trigger = "來幫助我吧，我的孩子們！$",
 	drainlife_trigger = "^高階祭司瑪爾里的生命吸取治療了高階祭司瑪爾里(.+)。",
 
@@ -87,7 +86,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	spider_name = "거미 경고",
 	spider_desc = "거미 소환 시 경고",
 
@@ -137,4 +135,3 @@ function BigWigsMarli:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 		self:TriggerEvent("BigWigs_Message", L["drainlife_message"], "Urgent")
 	end
 end
-

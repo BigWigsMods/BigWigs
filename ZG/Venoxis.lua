@@ -35,7 +35,7 @@ L:RegisterTranslations("deDE", function() return {
 	phase_desc = "Warnung, wenn Venoxis in Phase 2 eintritt.",
 
 	renew_trigger = "Hohepriester Venoxis bekommt 'Erneuerung'",
-	phase2_trigger = "M\195\182ge das Schlachten beginnen", -- ?
+	phase2_trigger = "M\195\182ge das Schlachten beginnen",
 
 	renew_message = "Erneuerung auf Venoxis!",
 	phase2_message = "Phase 2! Giftwolken!",
@@ -58,10 +58,10 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	renew_name = "恢复警报",
 	renew_desc = "恢复警报",
-	
+
 	phase_name = "第二阶段警报",
 	phase_desc = "第二阶段警报",
-	
+
 	renew_trigger = "高阶祭司温诺希斯获得了恢复的效果。",
 	phase2_trigger = "让复仇的毒蛇吞噬你们吧！",
 
@@ -70,13 +70,12 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- High Priest Venoxis 高階祭司溫諾希斯
 	renew_name = "補血警報",
 	renew_desc = "高階祭司溫諾希斯施放恢復術時發出警報",
-	
+
 	phase_name = "第二階段警報",
 	phase_desc = "高階祭司溫諾希斯進入第二階段(會放出毒雲)時警報",
-	
+
 	renew_trigger = "高階祭司溫諾希斯獲得了恢復的效果。",
 	phase2_trigger = "讓仇恨的圈圈就此展開吧！", -- check combatlog
 
@@ -85,13 +84,12 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	
 	renew_name = "소생 경고",
 	renew_desc = "소생에 대한 경고",
-	
+
 	phase_name = "2 단계 경고",
 	phase_desc = "2 단계에 대한 경고",
-	
+
 	renew_trigger = "대사제 베녹시스|1이;가; 소생 효과를 얻었습니다.",
 	phase2_trigger = "증오의 또아리를 틀 시간이다!",
 

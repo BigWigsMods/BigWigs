@@ -51,7 +51,7 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	engage_trigger = "^EURE \195\156BERHEBLICHKEIT K\195\156NDET BEREITS VOM ENDE DIESER WELT!", -- ?
+	engage_trigger = "^EURE \195\156BERHEBLICHKEIT K\195\156NDET BEREITS VOM ENDE DIESER WELT!",
 	drain_trigger = "^Hakkar erleidet (.+) Naturschaden von (.+) %(durch Bluttrinker%).",
 	mindcontrol_trigger = "(.*) (.*) von Wahnsinn verursachen betroffen.",
 
@@ -142,7 +142,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	drain_name = "흡수 경고",
 	drain_desc = "흡수에 대한 경고",
-	
+
 	enrage_name = "격노 경고",
 	enrage_desc = "격노에 대한 경고",
 
@@ -159,20 +159,20 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "^骄傲会将你送上绝路",
 	drain_trigger = "^(.+)的酸性血液虹吸使哈卡受到了(.+)",
 	mindcontrol_trigger = "^(.+)受(.+)疯狂效果的影响",
-	
+
 	you = "你",
 	are = "到",
-	
+
 	flee = "逃跑",
 
 	-- Warnings and bar texts
 	start_message = "哈卡已经激活 - 90秒后开始生命吸取 - 10分钟后进入激怒状态",
 	drain_warning = "%d秒后发动生命吸取",
 	drain_message = "血液虹吸 - 90秒后再次发动",
-	
+
 	mindcontrol_message = "%s 被控制了",
 	mindcontrol_bar = "MC: %s",
-	
+
 	["Enrage"] = "激怒",
 	["Life Drain"] = "生命吸取",
 
@@ -190,12 +190,11 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Hakkar 哈卡
 	-- Chat message triggers
 	engage_trigger = "^驕傲會將你送上絕路",
 	drain_trigger = "^(.+)的血液虹吸使哈卡受到了(.+)點自然傷害。$",
 	mindcontrol_trigger = "^(.+)受到(.*)導致瘋狂",
-	
+
 	you = "你",
 	are = "了",
 	
@@ -205,10 +204,10 @@ L:RegisterTranslations("zhTW", function() return {
 	start_message = "哈卡已經進入戰鬥 - 90秒後開始血液虹吸 - 10分鐘後進入狂怒狀態",
 	drain_warning = "%d 秒後開始生命吸取",
 	drain_message = "血液虹吸 - 90秒後再次發動",
-	
+
 	mindcontrol_message = "%s 被控制了，法師快羊",
 	mindcontrol_bar = "MC: %s",
-	
+
 	["Enrage"] = "狂怒",
 	["Life Drain"] = "血液虹吸",
 
@@ -300,4 +299,3 @@ function BigWigsHakkar:BeginTimers(first)
 		self:TriggerEvent("BigWigs_StartBar", self, L["Life Drain"], 90, "Interface\\Icons\\Spell_Shadow_LifeDrain")
 	end
 end
-

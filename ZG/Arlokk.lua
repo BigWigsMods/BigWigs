@@ -65,10 +65,9 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	
 	youmark_name = "자신의 표적 경고",
 	youmark_desc = "자신이 표적이 됐을 때 경고",
-	
+
 	othermark_name = "타인의 표적 경고",
 	othermark_desc = "타인이 표적이 됐을 때 경고",
 
@@ -84,7 +83,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	youmark_name = "玩家标记警报",
 	youmark_desc = "当你被标记时发出警报",
-	
+
 	othermark_name = "队友标记警报",
 	othermark_desc = "当队友被标记时发出警报",
 
@@ -94,15 +93,13 @@ L:RegisterTranslations("zhCN", function() return {
 	mark_trigger = "吞噬(.+)的躯体吧！$",
 
 	mark_warning_self = "你被标记了！",
-	mark_warning_other = "%s被标记了！",	
+	mark_warning_other = "%s被标记了！",
 } end )
 
-
 L:RegisterTranslations("zhTW", function() return {
-	-- Arlokk 高階祭司婭爾羅(哈卡萊先知)
 	youmark_name = "玩家標記警報",
 	youmark_desc = "當高階祭司婭爾羅標記你給她的黑豹時發出警報。",
-	
+
 	othermark_name = "隊友標記警報",
 	othermark_desc = "當高階祭司婭爾羅標記一個隊友給她的黑豹時發出警報。",
 
@@ -112,8 +109,9 @@ L:RegisterTranslations("zhTW", function() return {
 	mark_trigger = "吞噬(.+)的軀體吧，我的小可愛們！$",
 
 	mark_warning_self = "你被標記了！",
-	mark_warning_other = "%s 被標記了！ 牧師照顧一下他！",	
+	mark_warning_other = "%s 被標記了！ 牧師照顧一下他！",
 } end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
@@ -154,4 +152,3 @@ function BigWigsArlokk:CHAT_MSG_MONSTER_YELL( msg )
 
 	end
 end
-

@@ -29,7 +29,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	watched_warning_self = "You are being watched!",
 	watched_warning_other = "%s is being watched!",
-	enraged_message = "Ohgan down! Mandokir enraged!",	
+	enraged_message = "Ohgan down! Mandokir enraged!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -83,12 +83,11 @@ L:RegisterTranslations("zhCN", function() return {
 
 	watched_warning_self = "你被盯上了 - 停止一切动作！",
 	watched_warning_other = "%s被盯上了！",
-	enraged_message = "奥根死了！血领主进入激怒状态！",	
+	enraged_message = "奥根死了！血领主进入激怒状态！",
 } end )
 
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Bloodlord Mandokir 血領主曼多基爾
 	you_name = "玩家被盯警報",
 	you_desc = "你被血領主盯上時發出警報",
 
@@ -109,7 +108,7 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("koKR", function() return {
 	you_name = "자신 경고",
 	you_desc = "자신을 보고 있을 때 경고",
-	
+
 	other_name = "타인 경고",
 	other_desc = "타인을 보고 있을 때 경고",
 
@@ -169,4 +168,3 @@ function BigWigsMandokir:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	end
 end
-

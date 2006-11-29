@@ -34,7 +34,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	triggerbrainwash = "Jin'do the Hexxer casts Summon Brain Wash Totem.",
 	triggerhealing = "Jin'do the Hexxer casts Powerful Healing Ward.",
-	triggercurse = "^([^%s]+) ([^%s]+) afflicted by Jin'do the Hexxer's Delusion.", -- CHECK
+	triggercurse = "^([^%s]+) ([^%s]+) afflicted by Delusions of Jin'do.",
 
 	warnbrainwash = "Brain Wash Totem!",
 	warnhealing = "Healing Totem!",
@@ -92,8 +92,8 @@ L:RegisterTranslations("frFR", function() return {
 	icon_name = "Ic\195\180ne de raid",
 	icon_desc = "Place une ic\195\180ne de raid sur la derni\195\168re personne maudite (requiert d'\195\170tre promus ou plus)",
 
-	triggerbrainwash = "Jin'do le Mal\195\169ficieur lance Invocation du totem de lavage de cerveau", --TESTED
-	triggerhealing = "Jin'do le Mal\195\169ficieur lance Gardien gu\195\169risseur puissant.", --TESTED
+	triggerbrainwash = "Jin'do le Mal\195\169ficieur lance Invocation du totem de lavage de cerveau",
+	triggerhealing = "Jin'do le Mal\195\169ficieur lance Gardien gu\195\169risseur puissant.",
 	triggercurse = "^([^%s]+) ([^%s]+) les effets de Illusions de Jin'do",
 
 	warnbrainwash = "Totem de Contr\195\180le Mental !",
@@ -136,7 +136,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Jin'do the Hexxer 妖術師金度
 	brainwash_name = "控制圖騰警報",
 	brainwash_desc = "控制圖騰警報",
 
@@ -166,32 +165,31 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	
 	brainwash_name = "세뇌의 토템 경고",
 	brainwash_desc = "세뇌의 토템에 대한 경고",
-	
+
 	healing_name = "치유의 수호물 경고",
 	healing_desc = "치유의 수호물에 대한 경고",
-	
+
 	youcurse_name = "자신의 저주 알림",
 	youcurse_desc = "자신이 저주에 걸렸을 때 알림",
 
 	elsecurse_name = "타인의 저주 알림",
 	elsecurse_desc = "타인이 저주에 걸렸을 때 알림",
-	
+
 	icon_name = "아이콘 지정",
 	icon_desc = "저주가 걸린 사람에게 해골 아이콘 지정 (승급자 이상 필요)",
 
-	triggerbrainwash = "주술사 진도|1이;가; 세뇌의 토템 소환|1을;를; 시전합니다.", 		
+	triggerbrainwash = "주술사 진도|1이;가; 세뇌의 토템 소환|1을;를; 시전합니다.",
 	triggerhealing = "주술사 진도|1이;가; 강력한 치유의 수호물|1을;를; 시전합니다.",
 	triggercurse = "^([^|;%s]*)(.*)진도의 망상에 걸렸습니다%.$",
-	
+
 	warnbrainwash = "세뇌의 토템 - 제거!",
 	warnhealing = "치유의 토템 - 제거!",
 
 	cursewarn_self = "당신은 저주에 걸렸습니다. 망령 처리!!",
 	cursewarn_other = "<<%s>> 저주에 걸렸습니다. 망령 처리!!", --"%s%|1이;가; 저주에 걸렸습니다. 망령 처리!!",
-	
+
 	you = "",
 	are = "",
 } end )
@@ -215,9 +213,9 @@ function BigWigsJindo:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "CurseEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "CurseEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CurseEvent")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "JindoCurse", 5)
@@ -252,7 +250,7 @@ function BigWigsJindo:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function BigWigsJindo:Event(msg)
+function BigWigsJindo:CurseEvent(msg)
 	local _, _, baPlayer = string.find(msg, L["triggercurse"])
 	if baPlayer then
 		if baPlayer == L["you"] then
@@ -261,4 +259,3 @@ function BigWigsJindo:Event(msg)
 		self:TriggerEvent("BigWigs_SendSync", "JindoCurse "..baPlayer)
 	end
 end
-

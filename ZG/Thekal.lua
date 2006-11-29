@@ -79,11 +79,10 @@ L:RegisterTranslations("zhCN", function() return {
 	tigers_trigger = "高阶祭司塞卡尔使用召唤祖利安守护者。",
 	heal_trigger = "狂热者洛卡恩开始施放强力治疗术。",
 	tigers_message = "老虎出现！",
-	heal_message = "狂热者洛卡恩正在施放治疗，赶快打断它！",	
+	heal_message = "狂热者洛卡恩正在施放治疗，赶快打断它！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- High Priest Thekal 高階祭司塞卡爾
 	heal_name = "治療警報",
 	heal_desc = "治療警報",
 
@@ -126,4 +125,3 @@ function BigWigsThekal:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Urgent")
 	end
 end
-
