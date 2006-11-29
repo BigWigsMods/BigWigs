@@ -125,6 +125,12 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("frFR", function() return {
 	["RaidWarning"] = "Avertissement du raid",
 
+	--["raidwarn"] = true,
+	--["broadcast"] = true,
+	--["whisper"] = true,
+	--["showwhispers"] = true,
+	--["useraidchannel"] = true,
+
 	["Broadcast over RaidWarning"] = "Diffuser sur l'Avertissement Raid",
 	["Broadcast"] = "Diffuser",
 	["Toggle broadcasting over Raidwarning."] = "Diffuse ou non les messages sur l'Avertissement Raid.",
@@ -133,9 +139,12 @@ L:RegisterTranslations("frFR", function() return {
 	["Whisper warnings"] = "Chuchoter les avertissements",
 	["Toggle whispering warnings to players."] = "Chuchote ou non les avertissements aux joueurs.",
 
+	["Show whispers"] = "Afficher les chuchotements",
+	["Toggle showing whispers sent by BigWigs locally."] = "Affiche ou non localement les chuchotements envoy\195\169s par BigWigs.",
+
 	["Use Raidchannel"] = "Utiliser le canal Raid",
 	["Toggle using the raid channel instead of the raid warning channel for boss messages."] = "Utilise ou non le canal Raid au lieu de l'Avertissement Raid pour les messages des boss.",
-	
+
 	["Options for RaidWarning."] = "Options concernant l'Avertissement du Raid.",
 } end )
 

@@ -100,6 +100,11 @@ L:RegisterTranslations("frFR", function() return {
 	bosskill_name = "Mort des Boss",
 	bosskill_desc = "Annoncer la mort des boss.",
 
+	["Other"] = "Autre",
+	["Load"] = "Charger",
+	["Load All"] = "Tout charger",
+	["Load all %s modules."] = "Charge tous les modules \"%s\".",
+
 	-- AceConsole zone commands
 	["Zul'Gurub"] = "ZG",
 	["Molten Core"] = "MC",
