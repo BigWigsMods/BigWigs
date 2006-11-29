@@ -1,4 +1,4 @@
-## Interface: 11200
+## Interface: 20000
 
 ## Title: Big Wigs [|cffeda55fPlugins|r]
 ## Notes: Big Wigs Core Plugins

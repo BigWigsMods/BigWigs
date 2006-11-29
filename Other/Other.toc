@@ -1,4 +1,4 @@
-## Interface: 11200
+## Interface: 20000
 
 ## Title: Big Wigs [|cffeda55fOther|r]
 ## Notes: Big Wigs Other Modules
