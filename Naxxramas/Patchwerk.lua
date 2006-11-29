@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -31,12 +31,11 @@ L:RegisterTranslations("enUS", function() return {
 	warn6 = "Enrage in 10 seconds",
 } end )
 
-
 L:RegisterTranslations("deDE", function() return {
 	enrage_name = "Wutanfall",
 	enrage_desc = "Warnung, wenn Flickwerk w\195\188tend wird.",
 
-	enragetrigger = "%s f\195\164llt in Berserkerwut!", -- ? "wird w\195\188tend",
+	enragetrigger = "%s f\195\164llt in Berserkerwut!",
 
 	enragewarn = "Wutanfall!",
 	starttrigger1 = "Flickwerk spielen m\195\182chte!",
@@ -52,7 +51,6 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	enrage_name = "격노 경고",
 	enrage_desc = "격노에 대한 경고",
 
@@ -68,7 +66,7 @@ L:RegisterTranslations("koKR", function() return {
 	warn3 = "격노 90초후",
 	warn4 = "격노 60초후",
 	warn5 = "격노 30초후",
-	warn6 = "격노 10초후",	
+	warn6 = "격노 10초후",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -91,7 +89,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Patchwerk 縫補者
 	enrage_name = "狂怒警報",
 	enrage_desc = "狂怒警報",
 
@@ -113,9 +110,9 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("frFR", function() return {
 	enrage_name = "Alerte Enrager",
 	enrage_desc = "Préviens régulièrement quand Le Recousu devient enragé.",
-	
+
 	enragetrigger = "%s devient fou furieux !",
-	
+
 	enragewarn = "Enragé !",
 	starttrigger1 = "R'cousu veut jouer !",
 	starttrigger2 = "R'cousu avatar de guerre pour Kel'Thuzad !",
@@ -126,7 +123,7 @@ L:RegisterTranslations("frFR", function() return {
 	warn3 = "Enrager dans 90 sec.",
 	warn4 = "Enrager dans 60 sec.",
 	warn5 = "Enrager dans 30 sec.",
-	warn6 = "Enrager dans 10 sec.",	
+	warn6 = "Enrager dans 10 sec.",
 } end )
 
 ----------------------------------

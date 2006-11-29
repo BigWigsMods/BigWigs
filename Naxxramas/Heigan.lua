@@ -48,9 +48,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Rotting Maggot"] = true,
 } end )
 
--- Korean Translation by gezta --
 L:RegisterTranslations("koKR", function() return {
-
 	teleport_name = "순간이동 경고",
 	teleport_desc = "순간이동에 대한 경고",
 
@@ -120,6 +118,7 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger3 = "我看到你了……",
 	teleport_trigger = "你的生命正走向终结。",
 	die_trigger = "%s咽下了最后一口气。",
+
 	-- [[ Warnings ]]--
 	engage_message = "希尔盖已激活 - 90秒后传送",
 	teleport_1min_message = "1分钟后传送",
@@ -129,16 +128,17 @@ L:RegisterTranslations("zhCN", function() return {
 	to_floor_30sec_message = "30秒后希尔盖出现",
 	to_floor_10sec_message = "10秒后希尔盖出现",
 	on_platform_message = "传送发动！ - %d秒后希尔盖出现！",
+
 	-- [[ Bars ]]--
 	teleport_bar = "传送！",
 	back_bar = "出现！",
+
 	-- [[ Dream Room Mobs ]] --
 	["Eye Stalk"] = "眼柄",
 	["Rotting Maggot"] = "腐烂之蛆",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	--Heigan the Unclean 骯髒者海根
 	teleport_name = "傳送警報",
 	teleport_desc = "傳送警報",
 
@@ -151,6 +151,7 @@ L:RegisterTranslations("zhTW", function() return {
 	starttrigger3 = "我看到你了……",
 	teleport_trigger = "你的生命正走向終結。",
 	die_trigger = "%s咽下了最後一口氣。",
+
 	-- [[ Warnings ]]--
 	engage_message = "海根已進入戰鬥 - 90 秒後傳送",
 	teleport_1min_message = "1 分鐘後傳送",
@@ -160,9 +161,11 @@ L:RegisterTranslations("zhTW", function() return {
 	to_floor_30sec_message = "30 秒後海根出現",
 	to_floor_10sec_message = "10 秒後海根出現",
 	on_platform_message = "傳送發動！ - %d 秒後海根出現！",
+
 	-- [[ Bars ]]--
 	teleport_bar = "傳送！",
 	back_bar = "出現！",
+
 	-- [[ Dream Room Mobs ]] --
 	["Eye Stalk"] = "眼柄",
 	["Rotting Maggot"] = "腐爛的蛆蟲",
@@ -248,4 +251,3 @@ function BigWigsHeigan:BackToRoom()
 		self:TriggerEvent("BigWigs_StartBar", self, L["teleport_bar"], self.toPlatformTime, "Interface\\Icons\\Spell_Arcane_Blink")
 	end
 end
-

@@ -53,7 +53,6 @@ L:RegisterTranslations("enUS", function() return {
 	cloud_trigger = "Grobbulus casts Poison Cloud.",
 	cloud_warn = "Poison Cloud next in ~15 seconds!",
 	cloud_bar = "Poison Cloud",
-
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -88,7 +87,6 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	enrage_name = "격노 경고",
 	enrage_desc = "격노에 대한 경고",
 
@@ -152,7 +150,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	--Grobbulus 葛羅巴斯
 	enrage_name = "狂怒警報",
 	enrage_desc = "狂怒警報",
 
@@ -197,7 +194,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	cloud_name = "Nuage de poison",
 	cloud_desc = "Préviens quand Globbulus lance ses nuages de poison.",
-	
+
 	inject_trigger = "^([^%s]+) ([^%s]+) les effets de Injection mutante.",
 
 	you = "Vous",
@@ -218,7 +215,6 @@ L:RegisterTranslations("frFR", function() return {
 	cloud_warn = "Prochain nuage de poison dans ~15 sec. !",
 	cloud_bar = "Nuage de poison",
 } end )
-
 
 ----------------------------------
 --      Module Declaration      --
@@ -286,7 +282,7 @@ function BigWigsGrobbulus:BigWigs_RecvSync( sync, rest, nick )
 	elseif sync == "GrobbulusCloud" then
 		if self.db.profile.cloud then
 			self:TriggerEvent("BigWigs_Message", L["cloud_warn"], "Urgent")
-			self:TriggerEvent("BigWigs_StartBar", self, L["cloud_bar"], 15, "Interface\\Icons\\Ability_Creature_Disease_02")			
+			self:TriggerEvent("BigWigs_StartBar", self, L["cloud_bar"], 15, "Interface\\Icons\\Ability_Creature_Disease_02")
 		end
 	end
 end
@@ -306,4 +302,3 @@ function BigWigsGrobbulus:InjectEvent( msg )
 		self:TriggerEvent("BigWigs_SendSync", "GrobbulusInject "..eplayer)
 	end
 end
-

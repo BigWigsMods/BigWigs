@@ -30,7 +30,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	casttrigger = "Anub'Rekhan begins to cast Locust Swarm.",
 	castwarn = "Incoming Locust Swarm!",
-
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -54,7 +53,6 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	locust_name = "메뚜기 떼 경고",
 	locust_desc = "메뚜기 떼에 대한 경고",
 
@@ -62,14 +60,14 @@ L:RegisterTranslations("koKR", function() return {
 	starttrigger2 = "그래, 도망쳐! 더 신선한 피가 솟구칠 테니!",
 	starttrigger3 = "나가는 길은 없다.",
 	engagewarn = "아눕레칸 격노. 대략 90초후 첫번째 메뚜기 떼.",
-			
+
 	gaintrigger = "아눕레칸|1이;가; 메뚜기 떼 효과를 얻었습니다.",
 	gainendwarn = "메뚜기 떼 종료!",
 	gainnextwarn = "다음 메뚜기 떼 대략 85초후.",
 	gainwarn10sec = "10초후 메뚜기 떼",
 	gainincbar = "다음 메뚜기 떼",
-	gainbar = "메뚜기 떼",				
-	 
+	gainbar = "메뚜기 떼",
+
 	casttrigger = "아눕레칸|1이;가; 메뚜기 떼|1을;를; 시전합니다.",
 	castwarn = "메뚜기 떼 소환!",
 } end )
@@ -95,7 +93,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Anub'Rekhan 阿努比瑞克漢
 	locust_name = "蝗蟲風暴警告",
 	locust_desc = "蝗蟲風暴的警報",
 

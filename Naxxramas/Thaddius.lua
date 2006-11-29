@@ -86,7 +86,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	enrage_name = "격노 경고",
 	enrage_desc = "격노에 대한 경고",
 
@@ -111,13 +110,13 @@ L:RegisterTranslations("koKR", function() return {
 	starttrigger2 = "잡아... 먹어주마...",
 	starttrigger3 = "박살을 내주겠다!", -- CHECK
 	starttrigger4 = "죽여주마...",
-	
+
 	adddeath = "%s|1이;가; 죽습니다.",
 	teslaoverload = "%s|1이;가; 과부하 상태가 됩니다.",
 
-	pstrigger = "자, 고통을 느껴봐라...",	 -- CHECK
+	pstrigger = "자, 고통을 느껴봐라...", -- CHECK
 	trigger1 = "타디우스|1이;가; 극성 변환|1을;를; 시전합니다.",
-	chargetrigger = "(%w+)전하에 걸렸습니다.",	
+	chargetrigger = "(%w+)전하에 걸렸습니다.",
 	positivetype = "Interface\\Icons\\Spell_ChargePositive",
 	negativetype = "Interface\\Icons\\Spell_ChargeNegative",
 	stalaggtrigger = "스탈라그|1이;가; 마력의 쇄도 효과를 얻었습니다.",
@@ -174,7 +173,7 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger2 = "Eure... Knochen... zermalmen...",
 	starttrigger3 = "Euch... zerquetschen!",
 	starttrigger4 = "T\195\182ten...",
-	
+
 	adddeath = "stirbt.",
 	teslaoverload = "\195\188berl\195\164dt!",
 
@@ -230,7 +229,7 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger2 = "咬碎……你的……骨头……",
 	starttrigger3 = "打……烂……你！",
 	starttrigger4 = "杀……",
-	
+
 	adddeath = "%s死亡了。",
 	teslaoverload = "%s超负荷！",
 
@@ -267,7 +266,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	--Thaddius 泰迪斯
 	enrage_name = "狂怒警報",
 	enrage_desc = "狂怒警報",
 
@@ -289,7 +287,7 @@ L:RegisterTranslations("zhTW", function() return {
 	starttrigger2 = "咬碎……你的……骨頭……",
 	starttrigger3 = "打……爛……你！",
 	starttrigger4 = "殺……",
-	
+
 	adddeath = "%s死亡了。",
 	teslaoverload = "%s超負荷！",
 
@@ -349,7 +347,6 @@ L:RegisterTranslations("frFR", function() return {
 	powersurgebar = "Vague de Puissance",
 	bar1text = "Changement de polarit\195\169",
 } end )
-
 
 ----------------------------------
 --      Module Declaration      --

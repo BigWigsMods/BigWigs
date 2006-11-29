@@ -67,7 +67,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	mark_name = "징표 경고",
 	mark_desc = "징표에 대한 경고",
 
@@ -86,9 +85,8 @@ L:RegisterTranslations("koKR", function() return {
 	markbar = "징표 %d",
 	markwarn1 = "%d 징표!",
 	markwarn2 = "%d 징표 - 5 초",
-	--marktrigger = "is afflicted by Mark of (Korth'azz|Blaumeux|Mograine|Zeliek)",
 	marktrigger = "의 징표에 걸렸습니다.",
-	
+
 	voidtrigger = "여군주 블라미우스|1이;가; 공허의 지대|1을;를; 시전합니다.",
 	voidwarn = "블라미우스 공허의 지대 생성!",
 	voidbar = "공허의 지대",
@@ -156,7 +154,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	shieldwall_name = "盾墙警报",
 	shieldwall_desc = "盾墙警报",
-	
+
 	void_name = "虚空领域警报",
 	void_desc = "当施放虚空领域时警报",
 
@@ -165,11 +163,11 @@ L:RegisterTranslations("zhCN", function() return {
 
 	wrath_name = "神圣之怒警报",
 	wrath_desc = "瑟里耶克爵士的神圣之怒警报",
-	
+
 	markbar = "标记 %d",
 	markwarn1 = "标记(%d)！",
 	markwarn2 = "标记(%d) - 5秒",
-	
+
 	marktrigger = "受到了库尔塔兹印记效果的影响。",
 
 	voidtrigger = "女公爵布劳缪克丝施放了虚空领域。",
@@ -183,7 +181,7 @@ L:RegisterTranslations("zhCN", function() return {
 	wrathtrigger = "瑟里耶克爵士的神圣之怒击中 ",
 	wrathwarn = "神圣之怒",
 	wrathbar = "神圣之怒",
-	
+
 	startwarn = "四骑士已激活 - ~17秒后标记",
 
 	shieldwallbar = "%s - 盾墙",
@@ -198,7 +196,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	shieldwall_name = "盾牆警報",
 	shieldwall_desc = "盾牆警報",
-	
+
 	void_name = "虛空地區警報",
 	void_desc = "當布洛莫斯爵士施放虛空地區時警報",
 
@@ -207,11 +205,11 @@ L:RegisterTranslations("zhTW", function() return {
 
 	wrath_name = "神聖憤怒警報",
 	wrath_desc = "札里克爵士的神聖憤怒警報",
-	
+
 	markbar = "印記 %d",
 	markwarn1 = "印記(%d)！",
 	markwarn2 = "印記(%d) - 5秒",
-	
+
 	marktrigger = "(.+)受到(.*)印記",
 
 	voidtrigger = "布洛莫斯爵士施放了虛空地區。",
@@ -225,7 +223,7 @@ L:RegisterTranslations("zhTW", function() return {
 	wrathtrigger = "札里克爵士的神聖憤怒擊中",
 	wrathwarn = "神聖憤怒",
 	wrathbar = "神聖憤怒",
-	
+
 	startwarn = "四騎士已進入戰鬥 - 17秒後印記",
 
 	shieldwallbar = "%s - 盾牆",
@@ -416,4 +414,3 @@ function BigWigsHorsemen:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 		end
 	end
 end
-

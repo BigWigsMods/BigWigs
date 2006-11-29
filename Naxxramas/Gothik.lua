@@ -63,7 +63,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	room_name = "고딕 등장 경고",
 	room_desc = "고딕 등장에 대한 경고",
 
@@ -88,15 +87,15 @@ L:RegisterTranslations("koKR", function() return {
 
 	riderdiewarn = "기병 죽음! 무덤조 긴장하세요!",
 	dkdiewarn = "죽음의 기사 죽음!",
-	
+
 	warn1 = "고딕 등장 3분 전",
 	warn2 = "고딕 등장 90초 전",
 	warn3 = "고딕 등장 60초 전",
 	warn4 = "고딕 등장 30초 전",
 	warn5 = "고딕 등장 10초 전",
-	
+
 	wave = "%d/26: ",
-	
+
 	trawarn = "훈련생 3초후 등장",
 	dkwarn = "죽음의 기사 3초후 등장",
 	riderwarn = "기병 3초후 등장",
@@ -104,10 +103,10 @@ L:RegisterTranslations("koKR", function() return {
 	trabar = "훈련병 - %d",
 	dkbar = "죽음의 기사 - %d",
 	riderbar = "기병 - %d",
-	
+
 	inroomtrigger = "오랫동안 기다려 왔다. 이제 영혼의 착취자를 만날 차례다.", -- CHECK
 	inroomwarn = "고딕 등장!!",
-	
+
 	inroombartext = "고딕 등장",
 } end )
 
@@ -121,7 +120,7 @@ L:RegisterTranslations("deDE", function() return {
 	disabletrigger = "I... am... undone.", -- ?
 
 	starttrigger1 = "Ihr Narren habt euren eigenen Untergang heraufbeschworen.",
-	starttrigger2 = "Maz Azgala veni kamil toralar Naztheros zennshinagas.", -- ?
+	starttrigger2 = "Maz Azgala veni kamil toralar Naztheros zennshinagas.",
 	startwarn = "Gothik der Ernter angegriffen! 4:30 bis er in den Raum kommt!",
 
 	rider_name = "Unerbittlicher Reiter",
@@ -146,7 +145,7 @@ L:RegisterTranslations("deDE", function() return {
 	dkbar = "Todesritter - %d",
 	riderbar = "Reiter - %d",
 
-	inroomtrigger = "Ich habe lange genug gewartet. Stellt euch dem Seelenj\195\164ger.", -- ?
+	inroomtrigger = "Ich habe lange genug gewartet. Stellt euch dem Seelenj\195\164ger.",
 	inroomwarn = "Er ist im Raum!",
 
 	inroombartext = "Im Raum",
@@ -158,7 +157,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	add_name = "增援警报",
 	add_desc = "增援警报",
-	
+
 	adddeath_name = "小怪计时及死亡通告",
 	adddeath_desc = "小怪计时及死亡通告",
 
@@ -199,13 +198,12 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	--Gothik the Harvester 收割者高希
 	room_name = "進入房間警報",
 	room_desc = "收割者高希進入房間時發出警報",
 
 	add_name = "增援警報",
 	add_desc = "增援警報",
-	
+
 	adddeath_name = "小怪計時及死亡通告",
 	adddeath_desc = "小怪計時及死亡通告",
 
@@ -402,4 +400,3 @@ function BigWigsGothik:CHAT_MSG_MONSTER_YELL( msg )
 		self.core:ToggleModuleActive(self, false)
 	end
 end
-

@@ -17,9 +17,9 @@ local started
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Sapphiron",
 
-	deepbreath_cmd = "deepbreath",
-	deepbreath_name = "Deep Breath alert",
-	deepbreath_desc = "Warn when Sapphiron begins to cast Deep Breath.",
+	deepbreath_cmd = "Ice Bomb",
+	deepbreath_name = "Ice Bomb Alert",
+	deepbreath_desc = "Warn when Sapphiron begins to cast Ice Bomb.",
 
 	lifedrain_cmd = "lifedrain",
 	lifedrain_name = "Life Drain",
@@ -106,7 +106,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	lifedrain_trigger = "von Lebenssauger betroffen",
 	lifedrain_trigger2 = "Lebenssauger wurde von .+ widerstanden",
-	
+
 	deepbreath_incoming_message = "Frostatem in ~23sek!",
 	deepbreath_incoming_soon_message = "Frostatem in ~5sek!",
 	deepbreath_incoming_bar = "Frostatem",
@@ -148,7 +148,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	--Sapphiron 薩菲隆
 	deepbreath_name = "深呼吸警報",
 	deepbreath_desc = "薩菲隆開始施放深呼吸時發出警報",
 
@@ -369,4 +368,3 @@ function BigWigsSapphiron:RepeatedTargetScanner()
 	end
 	self:TriggerEvent("BigWigs_SendSync", "SapphironFlight")
 end
-

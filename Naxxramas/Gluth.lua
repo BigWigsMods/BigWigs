@@ -44,10 +44,9 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	fear_name = "공포 경고",
 	fear_desc = "공포에 대한 경고",
-	
+
 	frenzy_name = "광폭화 경고",
 	frenzy_desc = "광폭화에 대한 경고",
 
@@ -78,8 +77,8 @@ L:RegisterTranslations("deDE", function() return {
 	frenzy_name = "Raserei",
 	frenzy_desc = "Warnung, wenn Gluth in Raserei ger\195\164t",
 
-	decimate_name = "Dezimieren", -- ?
-	decimate_desc = "Warnung vor Dezimieren", -- ?
+	decimate_name = "Dezimieren",
+	decimate_desc = "Warnung vor Dezimieren",
 
 	trigger1 = "%s ger\195\164t in Raserei!",
 	trigger2 = "von Erschreckendes Gebr\195\188ll betroffen.",
@@ -95,7 +94,7 @@ L:RegisterTranslations("deDE", function() return {
 	decimatetrigger = "Decimate", -- ?
 
 	bar1text = "Furcht",
-	decimatebartext = "Dezimieren", -- ?
+	decimatebartext = "Dezimieren",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -126,7 +125,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	 -- Gluth 古魯斯
 	fear_name = "恐懼警報",
 	fear_desc = "當古魯斯施放群體恐懼時發出警報",
 
@@ -243,4 +241,3 @@ end
 function BigWigsGluth:BigWigs_Message(text)
 	if text == L["warn2"] then self.prior = nil end
 end
-

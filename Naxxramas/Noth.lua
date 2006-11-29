@@ -95,7 +95,7 @@ L:RegisterTranslations("deDE", function() return {
 	backwarn2 = "R\195\188ckteleport in 10 Sekunden!",
 
 	cursetrigger = "von Fluch des Seuchenf\195\188rsten betroffen",
-	cursewarn	 = "Fluch! N\195\164chster in ~55 Sekunden",
+	cursewarn = "Fluch! N\195\164chster in ~55 Sekunden",
 	curse10secwarn = "Fluch in ~10 Sekunden",
 
 	cursebar = "N\195\164chster Fluch",
@@ -106,7 +106,6 @@ L:RegisterTranslations("deDE", function() return {
 
 
 L:RegisterTranslations("koKR", function() return {
-
 	blink_name = "점멸 경고",
 	blink_desc = "점멸에 대한 경고",
 
@@ -141,10 +140,10 @@ L:RegisterTranslations("koKR", function() return {
 	backwarn2 = "10초후 방으로 복귀!",
 
 	cursetrigger = "(.+)|1이;가; 역병술사의 저주에 걸렸습니다.",
-	cursewarn	 = "저주! 다음 저주 약 55초후",
+	cursewarn = "저주! 다음 저주 약 55초후",
 	curse10secwarn = "저주 약 10초후",
 
-	cursebar = "다음 저주",	
+	cursebar = "다음 저주",
 
 	wave1bar = "웨이브 1",
 	wave2bar = "웨이브 2",
@@ -186,60 +185,59 @@ L:RegisterTranslations("zhCN", function() return {
 	backwarn2 = "10秒后诺斯回到房间！",
 
 	cursetrigger = "受到了瘟疫使者的诅咒效果的影响",
-	cursewarn	 = "诅咒 - 55秒后再次发动",
+	cursewarn = "诅咒 - 55秒后再次发动",
 	curse10secwarn = "10秒后发动诅咒！",
 
 	cursebar = "下一次诅咒",
-	
+
 	wave1bar = "第一波",
 	wave2bar = "第二波",
 	wave2_message = "10秒后第二波",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	--Noth the Plaguebringer 瘟疫者諾斯
-	blink_name	= "閃現術警報",
-	blink_desc	= "閃現術警報",
+	blink_name = "閃現術警報",
+	blink_desc = "閃現術警報",
 
-	teleport_name	= "傳送警報",
-	teleport_desc	= "傳送警報",
+	teleport_name = "傳送警報",
+	teleport_desc = "傳送警報",
 
-	curse_name	= "詛咒警報",
-	curse_desc	= "詛咒警報",
+	curse_name = "詛咒警報",
+	curse_desc = "詛咒警報",
 
-	wave_name	= "小骷髏警報",
-	wave_desc	= "警報數波小骷髏",
+	wave_name = "小骷髏警報",
+	wave_desc = "警報數波小骷髏",
 
-	starttrigger1	= "死吧，入侵者！",
-	starttrigger2	= "榮耀歸於我主！",
-	starttrigger3	= "我要沒收你的生命！",
-	startwarn	= "瘟疫者諾斯已進入戰動 - 90 秒後傳送",
+	starttrigger1 = "死吧，入侵者！",
+	starttrigger2 = "榮耀歸於我主！",
+	starttrigger3 = "我要沒收你的生命！",
+	startwarn = "瘟疫者諾斯已進入戰動 - 90 秒後傳送",
 
-	addtrigger	= "起來吧，我的戰士們！起來，再為主人盡忠一次！",
+	addtrigger = "起來吧，我的戰士們！起來，再為主人盡忠一次！",
 
-	blinktrigger	= "瘟疫者諾斯獲得了閃現的效果。",
-	blinkwarn	= "閃現術！停止攻擊！",
-	blinkwarn2	= "5 秒後發動閃現術！",
-	blinkbar	= "閃現術",
+	blinktrigger = "瘟疫者諾斯獲得了閃現的效果。",
+	blinkwarn = "閃現術！停止攻擊！",
+	blinkwarn2 = "5 秒後發動閃現術！",
+	blinkbar = "閃現術",
 
-	teleportwarn	= "傳送發動！",
-	teleportwarn2	= "10 秒後發動傳送！",
+	teleportwarn = "傳送發動！",
+	teleportwarn2 = "10 秒後發動傳送！",
 
-	teleportbar	= "傳送！",
-	backbar		= "回到房間！",
+	teleportbar = "傳送！",
+	backbar = "回到房間！",
 
-	backwarn	= "諾斯回到房間 - %d後再次傳送",
-	backwarn2	= "10 秒後諾斯回到房間！",
+	backwarn = "諾斯回到房間 - %d後再次傳送",
+	backwarn2 = "10 秒後諾斯回到房間！",
 
-	cursetrigger	= "瘟疫者詛咒",
-	cursewarn	= "詛咒 - 55秒後再次發動",
-	curse10secwarn	= "10 秒後發動詛咒！",
+	cursetrigger = "瘟疫者詛咒",
+	cursewarn = "詛咒 - 55秒後再次發動",
+	curse10secwarn = "10 秒後發動詛咒！",
 
-	cursebar	= "下一次詛咒",
-	
-	wave1bar	= "第一波",
-	wave2bar	= "第二波",
-	wave2_message	= "10 秒後第二波",
+	cursebar = "下一次詛咒",
+
+	wave1bar = "第一波",
+	wave2bar = "第二波",
+	wave2_message = "10 秒後第二波",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -379,4 +377,3 @@ function BigWigsNoth:teleportToRoom()
 	self.prior = nil
 	self:ScheduleEvent("bwnothtobalcony", self.teleportToBalcony, self.timeroom, self)
 end
-

@@ -85,7 +85,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "켈투자드의 방",
 
 	phase_name = "단계 알림",
@@ -274,7 +273,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 L:RegisterTranslations("zhTW", function() return {
-	
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "科爾蘇加德的大廳",
 
 	phase_name = "每個階段警報",

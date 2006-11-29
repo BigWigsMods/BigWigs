@@ -27,14 +27,14 @@ L:RegisterTranslations("enUS", function() return {
 	starttrigger3 = "You cannot hide from me!",
 	starttrigger4 = "Run while you still can!",
 
-	silencetrigger = "Grand Widow Faerlina is afflicted by Widow's Embrace.", -- EDITED it affects her too.
+	silencetrigger = "Grand Widow Faerlina is afflicted by Widow's Embrace.",
 	enragetrigger = "Grand Widow Faerlina gains Enrage.",
 	enragefade = "Enrage fades from Grand Widow Faerlina.",
 
 	startwarn = "Grand Widow Faerlina engaged, 60 seconds to enrage!",
 	enragewarn15sec = "15 seconds until enrage!",
 	enragewarn = "Enrage!",
-	enrageremovewarn = "Enrage removed! %d seconds until next!", -- added
+	enrageremovewarn = "Enrage removed! %d seconds until next!",
 	silencewarn = "Silence! Delaying Enrage!",
 	silencewarnnodelay = "Silence!",
 	silencewarn5sec = "Silence ends in 5 sec",
@@ -55,7 +55,7 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger3 = "Ihr k\195\182nnt euch nicht vor mir verstecken!",
 	starttrigger4 = "Flieht, solange ihr noch k\195\182nnt",
 
-	silencetrigger = "Gro\195\159witwe Faerlina ist von Umarmung der Witwe betroffen.", -- EDITED it affects her too.
+	silencetrigger = "Gro\195\159witwe Faerlina ist von Umarmung der Witwe betroffen.",
 	enragetrigger = "Gro\195\159witwe Faerlina bekommt 'Wutanfall'.",
 	enragefade = "Wutanfall schwindet von Gro\195\159witwe Faerlina",
 
@@ -72,7 +72,6 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	silence_name = "침묵 경고",
 	silence_desc = "침묵에 대한 경고",
 
@@ -84,14 +83,14 @@ L:RegisterTranslations("koKR", function() return {
 	starttrigger3 = "나에게서 도망칠 수는 없다!",
 	starttrigger4 = "두 발이 성할 때 도망쳐라!",
 
-	silencetrigger = "낙스라마스 숭배자|1이;가; 귀부인의 은총에 걸렸습니다.", -- EDITED it affects her too.
+	silencetrigger = "낙스라마스 숭배자|1이;가; 귀부인의 은총에 걸렸습니다.",
 	enragetrigger = "귀부인 팰리나|1이;가; 격노 효과를 얻었습니다.",
 	enragefade = "귀부인 펠리나 격노 사라짐",
 
 	startwarn = "귀부인 팰리나 전투 시작! 60초 후 격노!",
 	enragewarn15sec = "15초후 격노!",
 	enragewarn = "격노!",
-	enrageremovewarn = "격노 사라짐! 다음 격노 %d초 후", -- added
+	enrageremovewarn = "격노 사라짐! 다음 격노 %d초 후",
 	silencewarn = "침묵! 격노 지연!",
 	silencewarnnodelay = "침묵!",
 	silencewarn5sec = "5초후 침묵 종료!",
@@ -112,14 +111,14 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger3 = "休想从我面前逃掉！",
 	starttrigger4 = "逃啊！有本事就逃啊！",
 
-	silencetrigger = "黑女巫法琳娜受到了黑女巫的拥抱效果的影响。", -- EDITED it affects her too.
+	silencetrigger = "黑女巫法琳娜受到了黑女巫的拥抱效果的影响。",
 	enragetrigger = "黑女巫法琳娜获得了激怒的效果。",
 	enragefade = "激怒效果从黑女巫法琳娜身上消失。",
 
 	startwarn = "黑女巫法琳娜已激活 - 60秒后激怒！",
 	enragewarn15sec = "15秒后激怒！",
 	enragewarn = "激怒！",
-	enrageremovewarn = "激怒已移除 - %d后再次激怒", -- added
+	enrageremovewarn = "激怒已移除 - %d后再次激怒",
 	silencewarn = "沉默！延缓了激怒！",
 	silencewarnnodelay = "沉默！",
 	silencewarn5sec = "5秒后沉默结束！",
@@ -129,7 +128,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Grand Widow Faerlina 大寡婦費琳娜
 	silence_name = "沉默警報",
 	silence_desc = "沉默警報",
 
@@ -141,14 +139,14 @@ L:RegisterTranslations("zhTW", function() return {
 	starttrigger3 = "休想從我面前逃掉！",
 	starttrigger4 = "逃啊！有本事就逃啊！",
 
-	silencetrigger = "大寡婦費琳娜受到寡婦之擁的傷害。", -- EDITED it affects her too.
+	silencetrigger = "大寡婦費琳娜受到寡婦之擁的傷害。",
 	enragetrigger = "大寡婦費琳娜獲得了狂怒的效果。",
 	enragefade = "狂怒效果從大寡婦費琳娜身上消失。",
 
 	startwarn = "大寡婦費琳娜已進入戰鬥 - 60 秒後狂怒！",
 	enragewarn15sec = "15 秒後狂怒！",
 	enragewarn = "狂怒！",
-	enrageremovewarn = "狂怒已移除 - %d 秒後再次狂怒", -- added
+	enrageremovewarn = "狂怒已移除 - %d 秒後再次狂怒",
 	silencewarn = "沉默！延緩了狂怒！",
 	silencewarnnodelay = "沉默！",
 	silencewarn5sec = "5 秒後沉默結束！",
@@ -163,7 +161,7 @@ L:RegisterTranslations("frFR", function() return {
 	starttrigger3 = "Vous ne pouvez pas m'\195\169chapper !",
 	starttrigger4 = "Fuyez tant que vous le pouvez !",
 
-	silencetrigger = "Grande veuve Faerlina subit les effets de Etreinte de la veuve.", -- EDITED it affects her too.
+	silencetrigger = "Grande veuve Faerlina subit les effets de Etreinte de la veuve.",
 	enragetrigger = "Grande veuve Faerlina gagne Enrager.",
 	enragefade = "Enrager sur Grande veuve Faerlina vient de se dissiper.",
 } end )
@@ -280,4 +278,3 @@ function BigWigsFaerlina:BigWigs_RecvSync( sync )
 		end
 	end
 end
-

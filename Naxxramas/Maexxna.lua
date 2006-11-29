@@ -85,7 +85,6 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	
 	spray_name = "거미줄 뿌리기 경고",
 	spray_desc = "거미줄 뿌리기와 거미 소환에 대한 경고",
 
@@ -95,7 +94,7 @@ L:RegisterTranslations("koKR", function() return {
 	cocoon_name = "거미줄 감싸기 경고",
 	cocoon_desc = "거미줄 감싸기에 걸린 플레이어에 대한 경고",
 
-	cocoontrigger = "^([^|;%s]*)(.*)거미줄 감싸기에 걸렸습니다%.$", -- "(.*) (.*) afflicted by Web Wrap.",
+	cocoontrigger = "^([^|;%s]*)(.*)거미줄 감싸기에 걸렸습니다%.$",
 	webspraytrigger = "거미줄 뿌리기에 걸렸습니다.",
 
 	cocoonwarn = "<<%s>> 거미줄 감싸기에 걸렸습니다!",
@@ -124,7 +123,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	enrage_name = "激怒警报",
 	enrage_desc = "激怒警报",
-	
+
 	cocoon_name = "蛛网裹体警报",
 	cocoon_desc = "对被蛛网裹体的玩家发出警报",
 
@@ -152,13 +151,12 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Maexxna 梅克絲娜
 	spray_name = "撒網警報",
 	spray_desc = "當梅克絲娜撒網及小蜘蛛出現時發出警報",
 
 	enrage_name = "狂怒警報",
 	enrage_desc = "狂怒警報",
-	
+
 	cocoon_name = "纏繞的蜘蛛網警報",
 	cocoon_desc = "玩家受到蜘蛛網纏繞發出警報",
 
@@ -233,7 +231,6 @@ function BigWigsMaexxna:OnEnable()
 end
 
 function BigWigsMaexxna:SprayEvent( msg )
-	-- web spray warning
 	if string.find(msg, L["webspraytrigger"]) and not prior then
 		self:TriggerEvent("BigWigs_SendSync", "MaexxnaWebspray")
 	elseif string.find(msg, L["cocoontrigger"]) then
@@ -304,4 +301,3 @@ function BigWigsMaexxna:BigWigs_Message(text)
 		prior = nil
 	end
 end
-

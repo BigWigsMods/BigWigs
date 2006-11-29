@@ -71,22 +71,22 @@ L:RegisterTranslations("koKR", function() return {
 	shieldwall_name = "방패의 벽 타이머",
 	shieldwall_desc = "방패의 벽에 대한 타이머 표시",
 
-	startwarn 		= "훈련교관 라주비어스 광폭화! 외침까지 25초!",
+	startwarn = "훈련교관 라주비어스 광폭화! 외침까지 25초!",
 
-	starttrigger1 	= "훈련은 끝났다!",
-	starttrigger2 	= "다리를 후려 차라! 무슨 문제 있나?",
-	starttrigger3 	= "절대 봐주지 마라!",
-	starttrigger4 	= "훈련받은 대로 해!",		
+	starttrigger1 = "훈련은 끝났다!",
+	starttrigger2 = "다리를 후려 차라! 무슨 문제 있나?",
+	starttrigger3 = "절대 봐주지 마라!",
+	starttrigger4 = "훈련받은 대로 해!",
 
-	shouttrigger 	= "훈련교관 라주비어스|1이;가; 분열의 외침|1으로;로; (.+)에게 (.+)의 피해를 입혔습니다.",
-	shout7secwarn 	= "7초후 분열의 외침!",
+	shouttrigger = "훈련교관 라주비어스|1이;가; 분열의 외침|1으로;로; (.+)에게 (.+)의 피해를 입혔습니다.",
+	shout7secwarn = "7초후 분열의 외침!",
 	shout3secwarn = "3초후 분열의 외침!",
-	shoutwarn 		= "분열의 외침!",
-	noshoutwarn		= "외침 사라짐! 다음은 20초 후",
-	shoutbar 		= "분열의 외침",
+	shoutwarn = "분열의 외침!",
+	noshoutwarn = "외침 사라짐! 다음은 20초 후",
+	shoutbar = "분열의 외침",
 
 	shieldwalltrigger   = "죽음의 기사 수습생|1이;가; 방패의 벽 효과를 얻었습니다.", -- CHECK
-	shieldwallbar       = "방패의 벽",	
+	shieldwallbar       = "방패의 벽",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -96,58 +96,56 @@ L:RegisterTranslations("zhCN", function() return {
 	shieldwall_name = "盾墙计时器",
 	shieldwall_desc = "盾墙计时器",
 
-	startwarn	= "教官拉苏维奥斯已激活，~25秒后瓦解怒吼",
+	startwarn = "教官拉苏维奥斯已激活，~25秒后瓦解怒吼",
 
-	starttrigger1 	= "练习时间到此为止！都拿出真本事来！",
-	starttrigger2 	= "绊腿……有什么问题么？",
-	starttrigger3 	= "仁慈无用！",
-	starttrigger4 	= "按我教导的去做！",
+	starttrigger1 = "练习时间到此为止！都拿出真本事来！",
+	starttrigger2 = "绊腿……有什么问题么？",
+	starttrigger3 = "仁慈无用！",
+	starttrigger4 = "按我教导的去做！",
 
-	shouttrigger 	= "瓦解怒吼",
-	shout7secwarn 	= "7秒后发动瓦解怒吼",
+	shouttrigger = "瓦解怒吼",
+	shout7secwarn = "7秒后发动瓦解怒吼",
 	shout3secwarn = "3秒后发动瓦解怒吼！",
-	shoutwarn 		= "瓦解怒吼！",
-	noshoutwarn		= "没有怒吼，下次在~20秒后发动",
-	shoutbar 		= "瓦解怒吼",
+	shoutwarn = "瓦解怒吼！",
+	noshoutwarn = "没有怒吼，下次在~20秒后发动",
+	shoutbar = "瓦解怒吼",
 
 	shieldwalltrigger   = "死亡骑士学员获得了盾墙的效果。",
 	shieldwallbar       = "盾墙",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	--Razuvious 講師拉祖維斯
 	shout_name = "怒吼警報",
 	shout_desc = "混亂怒吼警報",
 
 	shieldwall_name = "盾牆計時器",
 	shieldwall_desc = "盾牆計時器",
 
-	startwarn	= "講師拉祖維斯已進入戰鬥 - 25 秒後混亂怒吼",
+	startwarn = "講師拉祖維斯已進入戰鬥 - 25 秒後混亂怒吼",
 
-	starttrigger1 	= "練習時間到此為止！都拿出真本事來！",
-	starttrigger2 	= "絆腿……有什麼問題嗎？",
-	starttrigger3 	= "仁慈無用！",
-	starttrigger4 	= "照我教你的做！",
+	starttrigger1 = "練習時間到此為止！都拿出真本事來！",
+	starttrigger2 = "絆腿……有什麼問題嗎？",
+	starttrigger3 = "仁慈無用！",
+	starttrigger4 = "照我教你的做！",
 
-	shouttrigger 	= "混亂怒吼",
-	shout7secwarn 	= "7秒後發動混亂怒吼",
-	shout3secwarn	= "3秒後發動混亂怒吼！",
-	shoutwarn 	= "混亂怒吼！",
-	noshoutwarn	= "沒吼！ 下次在 20 秒後發動",
-	shoutbar 	= "混亂怒吼",
+	shouttrigger = "混亂怒吼",
+	shout7secwarn = "7秒後發動混亂怒吼",
+	shout3secwarn = "3秒後發動混亂怒吼！",
+	shoutwarn = "混亂怒吼！",
+	noshoutwarn = "沒吼！ 下次在 20 秒後發動",
+	shoutbar = "混亂怒吼",
 
 	shieldwalltrigger   = "死亡騎士實習者獲得了盾牆的效果。",
 	shieldwallbar       = "盾牆",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	starttrigger1 = "Les cours sont termin\195\169s ! Montrez%-moi ce que vous avez appris !",
+	starttrigger2 = "Frappe%-le \195\160 la jambe",
+	starttrigger3 = "Pas de quartier !",
+	starttrigger4 = "Faites ce que vous ai appris !",
 
-	starttrigger1 	= "Les cours sont termin\195\169s ! Montrez%-moi ce que vous avez appris !",
-	starttrigger2 	= "Frappe%-le \195\160 la jambe",
-	starttrigger3 	= "Pas de quartier !",
-	starttrigger4 	= "Faites ce que vous ai appris !",
-
-	shouttrigger 	= "Cri perturbant",
+	shouttrigger = "Cri perturbant",
 
 	shieldwalltrigger   = "Doublure de chevalier de la mort gagne Mur protecteur.",
 } end )
@@ -231,7 +229,7 @@ end
 function BigWigsRazuvious:BigWigs_RecvSync( sync )
 	if sync == "RazuviousShout" then
 		self:CancelScheduledEvent("bwrazuviousnoshout")
-		self:ScheduleEvent("bwrazuviousnoshout", self.noShout, self.timeShout, self )		
+		self:ScheduleEvent("bwrazuviousnoshout", self.noShout, self.timeShout, self )
 		if self.db.profile.shout then
 			self:TriggerEvent("BigWigs_Message", L["shoutwarn"], "Urgent", nil, "Alarm")
 			self:ScheduleEvent("bwrazuviousshout7sec", "BigWigs_Message", 18, L["shout7secwarn"], "Attention")
@@ -245,4 +243,3 @@ function BigWigsRazuvious:BigWigs_RecvSync( sync )
 		end
 	end
 end
-
