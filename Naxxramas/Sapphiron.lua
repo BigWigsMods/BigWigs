@@ -17,7 +17,7 @@ local started
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Sapphiron",
 
-	deepbreath_cmd = "Ice Bomb",
+	deepbreath_cmd = "deepbreath",
 	deepbreath_name = "Ice Bomb Alert",
 	deepbreath_desc = "Warn when Sapphiron begins to cast Ice Bomb.",
 
