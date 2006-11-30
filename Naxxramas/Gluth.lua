@@ -28,7 +28,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	trigger1 = "%s goes into a frenzy!",
 	trigger2 = "by Terrifying Roar.",
-	starttrigger = "devours all nearby zombies!",
 
 	warn1 = "Frenzy Alert!",
 	warn2 = "5 second until AoE Fear!",
@@ -55,7 +54,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	trigger1 = "%s|1이;가; 광란의 상태에 빠집니다!", -- CHECK
 	trigger2 = "공포의 포효에",
-	starttrigger = "주위의 모든 좀비|1을;를; 먹어치웁니다!", -- CHECK (not used)
 
 	warn1 = "광폭화 경고!",
 	warn2 = "광역 공포 5초 전!",
@@ -82,7 +80,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	trigger1 = "%s ger\195\164t in Raserei!",
 	trigger2 = "von Erschreckendes Gebr\195\188ll betroffen.",
-	starttrigger = "devours all nearby zombies!", -- ?
 
 	warn1 = "Raserei!",
 	warn2 = "5 Sekunden bis AoE Furcht!",
@@ -109,7 +106,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	trigger1 = "%s变得狂怒无比！",
 	trigger2 = "恐惧怒吼",
-	starttrigger = "吞吃了周围所有的僵尸！",
 
 	warn1 = "狂暴警报 - 猎人立刻使用宁神射击！",
 	warn2 = "5秒后发动群体恐惧！",
@@ -136,7 +132,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	trigger1 = "變得狂暴起來！",
 	trigger2 = "恐嚇咆哮",
-	starttrigger = "毀滅所有附近的蛇神！",
 
 	warn1 = "狂暴警報 - 獵人立刻使用寧神射擊！",
 	warn2 = "5 秒後發動群體恐懼！",
