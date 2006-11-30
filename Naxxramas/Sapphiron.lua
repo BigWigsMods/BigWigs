@@ -179,6 +179,38 @@ L:RegisterTranslations("zhTW", function() return {
 	deepbreath_bar = "寒冰炸彈",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	deepbreath_name = "Alerte Bombe de Glace",
+	deepbreath_desc = "Annoncer quand Saphiron commence \195\160 lancer la Bombe.",
+
+	lifedrain_name = "Drain de vie",
+	lifedrain_desc = "Annoncer les Drains de vie.",
+
+	berserk_name = "Berserk",
+	berserk_desc = "Annoncer le berserk.",
+
+	berserk_bar = "Berserk",
+	berserk_warn_10min = "10min avant berserk !",
+	berserk_warn_5min = "5min avant berserk !",
+	berserk_warn_rest = "%s sec avant berserk !",
+
+	engage_message = "Saphiron engag\195\169 ! Berserk dans 15min !",
+
+	lifedrain_message = "Drain de vie ! Suivant possible dans ~24sec !",
+	lifedrain_warn1 = "Drain de vie dans 5sec !",
+	lifedrain_bar = "Drain de vie",
+
+	lifedrain_trigger = "subit les effets de Drain de vie", --afflicted by Life Drain
+	lifedrain_trigger2 = "utilise Drain de vie, mais .+ r\195\169siste", -- Life Drain was resisted by
+
+	deepbreath_incoming_message = "Bombe de glace dans ~23sec !",
+	deepbreath_incoming_soon_message = "Bombe de glace dans ~5sec !",
+	deepbreath_incoming_bar = "Bombe de glace en cour",
+	deepbreath_trigger = "%s prend une grande inspiration...",
+	deepbreath_warning = "Bombe de glace imminente !",
+	deepbreath_bar = "Impact Bombe de glace!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
@@ -280,7 +312,7 @@ function BigWigsSapphiron:LifeDrain(msg)
 end
 
 function BigWigsSapphiron:CHAT_MSG_MONSTER_EMOTE(msg)
-	if msg == L["deepbreath_trigger"] then
+	if string.find(msg, L["deepbreath_trigger"]) then
 		if self.db.profile.deepbreath then
 			self:TriggerEvent("BigWigs_Message", L["deepbreath_warning"], "Important")
 			self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_bar"], 7, "Interface\\Icons\\Spell_Frost_FrostShock")
