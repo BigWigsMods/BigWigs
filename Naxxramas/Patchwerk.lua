@@ -17,8 +17,10 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_desc = "Warn for Enrage",
 
 	enragetrigger = "%s goes into a berserker rage!",
+	enragetrigger2 = "%s becomes enraged!",
 
 	enragewarn = "Enrage!",
+	enragewarn2 = "5% - Enrage!",
 	starttrigger1 = "Patchwerk want to play!",
 	starttrigger2 = "Kel'thuzad make Patchwerk his avatar of war!",
 	startwarn = "Patchwerk Engaged! Enrage in 7 minutes!",
@@ -36,8 +38,10 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_desc = "Warnung, wenn Flickwerk w\195\188tend wird.",
 
 	enragetrigger = "%s f\195\164llt in Berserkerwut!",
+	enragetrigger2 = "%s becomes enraged!",
 
 	enragewarn = "Wutanfall!",
+	enragewarn2 = "5% - Enrage!",
 	starttrigger1 = "Flickwerk spielen m\195\182chte!",
 	starttrigger2 = "Kel�thuzad macht Flickwerk zu seinem Abgesandten von Krieg!",
 	startwarn = "Flickwerk angegriffen! Wutanfall in 7 Minuten!",
@@ -55,8 +59,10 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_desc = "격노에 대한 경고",
 
 	enragetrigger = "%s|1이;가; 광폭해집니다!",
+	enragetrigger2 = "%s becomes enraged!",
 
 	enragewarn = "격노!",
+	enragewarn2 = "5% - Enrage!",
 	starttrigger1 = "패치워크랑 놀아줘!",
 	starttrigger2 = "켈투자드님이 패치워크 싸움꾼으로 만들었다.",
 	startwarn = "패치워크 전투시작! 격노 7분후!",
@@ -74,8 +80,10 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage_desc = "激怒警报",
 
 	enragetrigger = "变得愤怒了！",
+	enragetrigger2 = "%s becomes enraged!",
 
 	enragewarn = "激怒！",
+	enragewarn2 = "5% - Enrage!",
 	starttrigger1 = "帕奇维克要跟你玩！",
 	starttrigger2 = "帕奇维克是克尔苏加德的战神！",
 	startwarn = "帕奇维克已激活 - 7分钟后激怒",
@@ -93,8 +101,10 @@ L:RegisterTranslations("zhTW", function() return {
 	enrage_desc = "狂怒警報",
 
 	enragetrigger = "變得極度狂暴而憤怒！",
+	enragetrigger2 = "%s becomes enraged!",
 
 	enragewarn = "狂怒！",
+	enragewarn2 = "5% - Enrage!",
 	starttrigger1 = "縫補者要跟你玩！",
 	starttrigger2 = "縫補者是科爾蘇加德的戰神！",
 	startwarn = "縫補者已進入戰鬥 - 7 分鐘後狂怒",
@@ -112,8 +122,10 @@ L:RegisterTranslations("frFR", function() return {
 	enrage_desc = "Préviens régulièrement quand Le Recousu devient enragé.",
 
 	enragetrigger = "%s devient fou furieux !",
+	enragetrigger2 = "%s becomes enraged!",
 
 	enragewarn = "Enragé !",
+	enragewarn2 = "5% - Enrage!",
 	starttrigger1 = "R'cousu veut jouer !",
 	starttrigger2 = "R'cousu avatar de guerre pour Kel'Thuzad !",
 	startwarn = "Le Recousu engagé ! Enrager dans 7 min. !",
@@ -171,5 +183,9 @@ function BigWigsPatchwerk:CHAT_MSG_MONSTER_EMOTE( msg )
 		self:CancelScheduledEvent("bwpatchwarn4")
 		self:CancelScheduledEvent("bwpatchwarn5")
 		self:CancelScheduledEvent("bwpatchwarn6")
+	elseif msg == L["enragetrigger2"] then
+		if self.db.profile.enrage then
+			self:TriggerEvent("BigWigs_Message", L["enragewarn2"], "Important")
+		end
 	end
 end
