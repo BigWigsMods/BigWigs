@@ -253,7 +253,7 @@ BigWigsBars.consoleOptions = {
 			get = function() return BigWigsBars.db.profile.texture end,
 			set = function(v) BigWigsBars.db.profile.texture = v end,
 			validate = surface:List(),
-		}
+		},
 	},
 }
 
@@ -264,9 +264,9 @@ BigWigsBars.consoleOptions = {
 
 function BigWigsBars:OnRegister()
 	self.consoleOptions.args[L["Texture"]].validate = surface:List()
-        self:RegisterEvent("Surface_Registered", function()
+	self:RegisterEvent("Surface_Registered", function()
 		self.consoleOptions.args[L["Texture"]].validate = surface:List()
-        end)
+	end)
 end
 
 function BigWigsBars:OnEnable()
@@ -276,10 +276,10 @@ function BigWigsBars:OnEnable()
 	self:RegisterEvent("BigWigs_HideAnchors")
 	self:RegisterEvent("BigWigs_StartBar")
 	self:RegisterEvent("BigWigs_StopBar")
-	if not self:IsEventRegistered("Surface_Registered") then 
-	        self:RegisterEvent("Surface_Registered", function()
+	if not self:IsEventRegistered("Surface_Registered") then
+		self:RegisterEvent("Surface_Registered", function()
 			self.consoleOptions.args[L["Texture"]].validate = surface:List()
-	        end)
+		end)
 	end
 end
 
@@ -313,8 +313,8 @@ function BigWigsBars:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, 
 		bc, balpha, txtc = BigWigsColors.db.profile.bgc, BigWigsColors.db.profile.bga, BigWigsColors.db.profile.txtc
 	end
 
- 	module:RegisterCandyBar(id, time, text, icon, c1, c2, c3, c4, c5, c6, c8, c9, c10)
- 	module:RegisterCandyBarWithGroup(id, "BigWigsGroup")
+	module:RegisterCandyBar(id, time, text, icon, c1, c2, c3, c4, c5, c6, c8, c9, c10)
+	module:RegisterCandyBarWithGroup(id, "BigWigsGroup")
 	module:SetCandyBarTexture( id, surface:Fetch( self.db.profile.texture) )
 	if bc then module:SetCandyBarBackgroundColor(id, bc, balpha) end
 	if txtc then module:SetCandyBarTextColor(id, txtc) end
@@ -470,18 +470,18 @@ end
 function BigWigsBars:SavePosition()
 	local f = self.frames.anchor
 	local s = f:GetEffectiveScale()
-		
+
 	self.db.profile.posx = f:GetLeft() * s
-	self.db.profile.posy = f:GetTop() * s	
+	self.db.profile.posy = f:GetTop() * s
 end
 
 
 function BigWigsBars:RestorePosition()
 	local x = self.db.profile.posx
 	local y = self.db.profile.posy
-		
+
 	if not x or not y then return end
-				
+
 	local f = self.frames.anchor
 	local s = f:GetEffectiveScale()
 
