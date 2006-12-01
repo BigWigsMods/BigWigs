@@ -57,6 +57,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Load all %s modules."] = true,
 	
 	-- AceConsole zone commands
+	["Karazhan"] = true,
 	["Zul'Gurub"] = "ZG",
 	["Molten Core"] = "MC",
 	["Blackwing Lair"] = "BWL",
