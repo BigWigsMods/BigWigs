@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -78,8 +78,14 @@ L:RegisterTranslations("zhCN", function() return {
 	bomb_name = "炸弹蝙蝠警报",
 	bomb_desc = "炸弹蝙蝠出现时发出警报",
 
+	swarm_name = "蝙蝠群警报",
+	swarm_desc = "蝙蝠群出现时发出警报",
+
+	swarm_trigger = "发出刺耳尖啸",
 	bomb_trigger = "我命令你把这些入侵者烧成灰烬！$",
 	heal_trigger = "开始释放强效治疗术！$",
+
+	swarm_message = "蝙蝠群来了！",
 	bomb_message = "炸弹蝙蝠来了！",
 	heal_message = "高阶祭司耶克里克正在施放治疗，赶快打断它！",
 } end )

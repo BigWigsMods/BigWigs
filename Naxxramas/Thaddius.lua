@@ -223,6 +223,9 @@ L:RegisterTranslations("zhCN", function() return {
 	charge_name = "电荷警报",
 	charge_desc = "你身上的电荷效果发生变化时发出警报",
 
+	throw_name = "扔人提示",
+	throw_desc = "当TANK开始转换平台时发出警报",
+
 	enragetrigger = "变得极度狂暴而愤怒！",
 	starttrigger = "斯塔拉格要碾碎你！",
 	starttrigger1 = "主人要吃了你！",
@@ -263,6 +266,10 @@ L:RegisterTranslations("zhCN", function() return {
 	powersurgebar = "力量振荡",
 
 	bar1text = "极性转化",
+
+	throwbar = "扔",
+	throwwarn = "~5秒后扔人！",
+
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

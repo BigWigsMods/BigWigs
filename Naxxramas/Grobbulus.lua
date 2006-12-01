@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -132,6 +132,9 @@ L:RegisterTranslations("zhCN", function() return {
 	icon_name = "标记图标",
 	icon_desc = "在中了变异注射的队友头上标记骷髅图标（需要助理或领袖权限）",
 
+	cloud_name = "毒云警报",
+	cloud_desc = "毒云警报",
+
 	inject_trigger = "^(.+)受(.+)了变异注射",
 
 	you = "你",
@@ -147,6 +150,10 @@ L:RegisterTranslations("zhCN", function() return {
 	bomb_message_you = "你中变异注射了！",
 	bomb_message_other = "%s中变异注射了！",
 	bomb_bar = "%s被变异注射",
+
+	cloud_trigger = "格罗布鲁斯开始施放毒云。", -- need to check
+	cloud_warn = "下一个毒云在~15秒！",
+	cloud_bar = "毒云",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

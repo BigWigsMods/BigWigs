@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -94,6 +94,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 	plagueother_name = "队友瘟疫警报",
 	plagueother_desc = "队友中了瘟疫时发出警报",
+
+	icon_name = "用图标标记",
+	icon_desc = "用图标来标记上一个中瘟疫的人（需要助理或者领袖权限）",
 
 	explode_name = "爆炸警报",
 	explode_desc = "阿努比萨斯守卫者即将爆炸时发出警报",

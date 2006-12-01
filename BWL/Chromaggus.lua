@@ -114,6 +114,12 @@ L:RegisterTranslations("zhCN", function() return {
 	breath_trigger = "^克洛玛古斯开始施放(.+)。",
 	vulnerability_test = "^.+的.+(.+)克洛玛古斯.+(%d+)点(.+)伤害。",
 
+	-- xxx的火球术     使     克洛玛古斯 受到了  xxx  点  火焰  伤害。(普通伤害文字)
+	-- xxx的火球术 致命一击对 克洛玛古斯 造成    xxx  点  火焰  伤害。(重击伤害文字)
+	-- .+ 的 .+    (.+)     克洛玛古斯    .+    (%d+) 点  (.+)  伤害。
+	-- 某 的 drop	  type	  克洛玛古斯  drop   dmg  点 school 伤害。
+	-- 这个如何用regular expression表达出来？
+
 	frenzy_trigger = "%s变得极为狂暴！",
 	vulnerability_trigger = "%s的皮肤闪着微光",
 

@@ -70,7 +70,7 @@ L:RegisterTranslations("zhCN", function() return {
 	service_bar = "最后自爆",
 
 	service_message = "最后一次服务，5秒后迦顿爆炸！",
-	inferno_message = "10秒后地狱火！",
+	inferno_message = "10秒的地狱火！",
 
 	service_name = "最后自爆计时条",
 	service_desc = "显示迦顿男爵最后自爆的计时条.",
@@ -78,8 +78,8 @@ L:RegisterTranslations("zhCN", function() return {
 	inferno_name = "地狱火计时条",
 	inferno_desc = "显示迦顿男爵地狱火的计时条.",
 
-	youbomb_name = "玩家炸弹警报",
-	youbomb_desc = "你成为炸弹时发出警报",
+	bombtimer_name = "炸弹爆炸的计时条",
+	bombtimer_desc = "显示一个目标10秒后爆炸的计时条。",
 
 	youbomb_name = "玩家炸弹警报",
 	youbomb_desc = "你成为炸弹时发出警报",
@@ -87,7 +87,6 @@ L:RegisterTranslations("zhCN", function() return {
 	elsebomb_name = "队友炸弹警报",
 	elsebomb_desc = "队友成为炸弹时发出警报",
 
-	icon_cmd = "icon",
 	icon_name = "炸弹图标",
 	icon_desc = "在成为炸弹的队友头上标记骷髅图标（需要助理或领袖权限）",
 } end)
@@ -116,9 +115,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	inferno_name = "地獄火計時條",
 	inferno_desc = "顯示迦頓男爵地獄火的計時條.",
-
-	youbomb_name = "玩家炸彈警報",
-	youbomb_desc = "你成為炸彈時發出警報",
 
 	youbomb_name = "玩家炸彈警報",
 	youbomb_desc = "你成為炸彈時發出警報",
