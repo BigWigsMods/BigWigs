@@ -33,11 +33,11 @@ L:RegisterTranslations("enUS", function() return {
 	bar3text = "New powers",
 
 	cmd = "Majordomo",
-	
+
 	magic_cmd = "magic",
 	magic_name = "Magic Reflection alert",
 	magic_desc = "Warn for Magic Reflection",
-	
+
 	dmg_cmd = "dmg",
 	dmg_name = "Damage Shields alert",
 	dmg_desc = "Warn for Damage Shields",
@@ -61,16 +61,15 @@ L:RegisterTranslations("zhCN", function() return {
 	bar1text = "魔法反射护盾",
 	bar2text = "伤害反射护盾",
 	bar3text = "新的反射护盾",
-	
+
 	magic_name = "魔法反射护盾警报",
 	magic_desc = "魔法反射护盾警报",
-	
+
 	dmg_name = "伤害反射护盾警报",
 	dmg_desc = "伤害反射护盾警报",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	--Majordomo 管理者埃克索圖斯
 	disabletrigger = "不……不可能！等一下……我投降！我投降！",
 
 	trigger1 = "獲得了魔法反射的效果",
@@ -88,10 +87,10 @@ L:RegisterTranslations("zhTW", function() return {
 	bar1text = "魔法反射",
 	bar2text = "傷害護盾",
 	bar3text = "新生力量",
-	
+
 	magic_name = "魔法反射警報",
 	magic_desc = "通報週期性施放的魔法反射",
-	
+
 	dmg_name = "傷害護盾警報",
 	dmg_desc = "通報週期性施放的傷害護盾",
 } end)
@@ -114,10 +113,10 @@ L:RegisterTranslations("koKR", function() return {
 	bar1text = "마법 반사",
 	bar2text = "피해 보호막",
 	bar3text = "새로운 버프",
-	
+
 	magic_name = "마법 보호막 경고",
 	magic_desc = "마법 보호막에 대한 경고",
-	
+
 	dmg_name = "피해 보호막 경고",
 	dmg_desc = "피해 보호막에 대한 경고",
 } end)
@@ -143,7 +142,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	magic_name = "Magiereflexion",
 	magic_desc = "Warnung, wenn Magiereflexion aktiv.",
-	
+
 	dmg_name = "Schadensschild",
 	dmg_desc = "Warnung, wenn Schadensschild aktiv.",
 } end)

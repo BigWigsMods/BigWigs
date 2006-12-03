@@ -25,11 +25,11 @@ L:RegisterTranslations("enUS", function() return {
 	bar2text = "Impending Doom",
 
 	cmd = "Lucifron",
-	
+
 	curse_cmd = "curse",
 	curse_name = "Lucifron's Curse alert",
 	curse_desc = "Warn for Lucifron's Curse",
-	
+
 	doom_cmd = "dmg",
 	doom_name = "Impending Doom alert",
 	doom_desc = "Warn for Impending Doom",
@@ -46,16 +46,15 @@ L:RegisterTranslations("zhCN", function() return {
 
 	bar1text = "鲁西弗隆的诅咒",
 	bar2text = "末日降临",
-	
+
 	curse_name = "诅咒警报",
 	curse_desc = "诅咒警报",
-	
+
 	doom_name = "末日降临警报",
 	doom_desc = "末日降临警报",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Lucifron 魯西弗隆
 	trigger1 = "受到了魯西弗隆的詛咒",
 	trigger2 = "受到了末日降臨",
 
@@ -66,10 +65,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	bar1text = "群體詛咒",
 	bar2text = "末日降臨",
-	
+
 	curse_name = "詛咒警報",
 	curse_desc = "當魯西弗隆使用群體詛咒技能時發出警報",
-	
+
 	doom_name = "末日降臨警報",
 	doom_desc = "當魯西弗隆使用末日降臨技能時發出警報",
 } end)
@@ -85,14 +84,13 @@ L:RegisterTranslations("koKR", function() return {
 
 	bar1text = "루시프론의 저주",
 	bar2text = "파멸의 예언",
-	
+
 	curse_name = "루시프론의 저주 경고",
 	curse_desc = "루시프론의 저주에 대한 경고",
-	
+
 	doom_name = "파멸의 예언 경고",
 	doom_desc = "파멸의 예언에 대한 경고",
 } end)
-
 
 L:RegisterTranslations("deDE", function() return {
 	trigger1 = "von Lucifrons Fluch betroffen",
@@ -108,7 +106,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	curse_name = "Lucifrons Fluch",
 	curse_desc = "Warnung vor Lucifrons Fluch.",
-	
+
 	doom_name = "Drohende Verdammnis",
 	doom_desc = "Warnung vor Drohender Verdammnis.",
 } end)

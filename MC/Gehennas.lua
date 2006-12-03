@@ -20,7 +20,7 @@ L:RegisterTranslations("enUS", function() return {
 	bar1text = "Gehennas' Curse",
 
 	cmd = "Gehennas",
-	
+
 	curse_cmd = "curse",
 	curse_name = "Gehennas' Curse alert",
 	curse_desc = "Warn for Gehennas' Curse",
@@ -33,20 +33,19 @@ L:RegisterTranslations("zhCN", function() return {
 	warn2 = "基赫纳斯的诅咒 - 30秒后再次发动",
 
 	bar1text = "基赫纳斯的诅咒",
-	
+
 	curse_name = "诅咒警报",
 	curse_desc = "诅咒警报",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Gehennas 基赫納斯
 	trigger1 = "受到基赫納斯的詛咒",
 
 	warn1 = "群體詛咒 5 秒後發動！",
 	warn2 = "群體詛咒 - 30 秒後再次發動",
 
 	bar1text = "基赫納斯的詛咒",
-	
+
 	curse_name = "詛咒警報",
 	curse_desc = "當基赫納斯使用反治療群體詛咒時發出警報",
 } end)
@@ -58,11 +57,10 @@ L:RegisterTranslations("koKR", function() return {
 	warn2 = "게헨나스의 저주 - 다음 저주 30초후!",
 
 	bar1text = "게헨나스의 저주",
-	
+
 	curse_name = "게헨나스의 저주 경고",
 	curse_desc = "게헨나스의 저주에 대한 경고",
 } end)
-
 
 L:RegisterTranslations("deDE", function() return {
 	trigger1 = "von Gehennas Fluch betroffen",

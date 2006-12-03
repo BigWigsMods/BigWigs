@@ -83,7 +83,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Ragnaros 拉格納羅斯
 	knockback_trigger = "^感受薩弗隆的烈焰吧！",
 	submerge_trigger = "^出現吧，我的奴僕",
 	engage_trigger = "^現在輪到你們了",
@@ -141,10 +140,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	sondeath_name = "화염의 수호물 죽음",
 	sondeath_desc = "화염의 수호물 죽음 알림",
-	
+
 	submerge_name = "사라짐 경고",
 	submerge_desc = "라그나로스 사라짐 & 피조물에 대한 경고",
-	
+
 	aoeknock_name = "튕겨냄 경고",
 	aoeknock_desc = "라그나로스의 튕겨냄 경고",
 } end)
@@ -334,4 +333,3 @@ function BigWigsRagnaros:Emerge()
 		self:TriggerEvent("BigWigs_StartBar", self, L["submerge_bar"], 180, "Interface\\Icons\\Spell_Fire_SelfDestruct")
 	end
 end
-

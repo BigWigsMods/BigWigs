@@ -92,7 +92,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Baron Geddon 迦頓男爵
 	bomb_trigger = "^(.+)受到(.*)活化炸彈",
 	inferno_trigger = "迦頓男爵獲得了地獄火的效果。",
 	service_trigger = "%s為拉格納羅斯做最後一件事……",
@@ -115,6 +114,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 	inferno_name = "地獄火計時條",
 	inferno_desc = "顯示迦頓男爵地獄火的計時條.",
+
+	bombtimer_name = "Bar for when the bomb goes off",
+	bombtimer_desc = "Shows a 10 second bar for when the bomb goes off at the target.",
 
 	youbomb_name = "玩家炸彈警報",
 	youbomb_desc = "你成為炸彈時發出警報",
@@ -156,10 +158,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	youbomb_name = "자신의 폭탄 경고",
 	youbomb_desc = "자신이 폭탄 일때 경고",
-	
+
 	elsebomb_name = "타인의 폭탄 경고",
 	elsebomb_desc = "타인이 폭탄 일때 경고",
-	
+
 	icon_name = "폭탄에 공격대 아이콘 표시",
 	icon_desc = "폭탄인 사람에게 공격대 아이콘 표시. (승급자 이상 요구)",
 } end)
@@ -193,10 +195,10 @@ L:RegisterTranslations("deDE", function() return {
 
 	youbomb_name = "Du bist die Bombe",
 	youbomb_desc = "Warnung, wenn Du die Bombe bist.",
-	
+
 	elsebomb_name = "X ist die Bombe",
 	elsebomb_desc = "Warnung, wenn andere Spieler die Bombe sind",
-	
+
 	icon_name = "Symbol",
 	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der die Bombe ist. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 } end)
@@ -316,4 +318,3 @@ function BigWigsBaronGeddon:BigWigs_RecvSync(sync, rest, nick)
 		self:TriggerEvent("BigWigs_Message", L["inferno_message"], "Important")
 	end
 end
-

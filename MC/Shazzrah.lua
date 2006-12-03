@@ -20,11 +20,11 @@ L:RegisterTranslations("enUS", function() return {
 	bar1text = "Blink",
 
 	cmd = "Shazzrah",
-	
+
 	selfbuff_cmd = "selfbuff",
 	selfbuff_name = "Self Buff Alert",
 	selfbuff_desc = "Warn when Shazzrah casts a Self Buff",
-	
+
 	blink_cmd = "blink",
 	blink_name = "Blink Alert",
 	blink_desc = "Warn when Shazzrah Blinks",
@@ -39,16 +39,15 @@ L:RegisterTranslations("zhCN", function() return {
 	warn3 = "自我Buff - 驱散魔法！",
 
 	bar1text = "闪现术",
-	
+
 	selfbuff_name = "自我Buff警报",
 	selfbuff_desc = "沙斯拉尔自我Buff时发出警报",
-	
+
 	blink_name = "闪现术警报",
 	blink_desc = "沙斯拉尔发动闪现术时发出警报",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Shazzrah 沙斯拉爾
 	trigger1 = "沙斯拉爾施放了沙斯拉爾之門。",
 	trigger2 = "沙斯拉爾獲得了衰減魔法的效果。",
 
@@ -57,10 +56,10 @@ L:RegisterTranslations("zhTW", function() return {
 	warn3 = "自我 Buff - 驅散魔法",
 
 	bar1text = "閃現術",
-	
+
 	selfbuff_name = "自我Buff警報",
 	selfbuff_desc = "沙斯拉爾自我Buff時發出警報",
-	
+
 	blink_name = "閃現術警報",
 	blink_desc = "沙斯拉爾發動閃現術時發出警報",
 } end)
@@ -74,10 +73,10 @@ L:RegisterTranslations("koKR", function() return {
 	warn3 = "마법 약화 버프 - 마법 무효화를 사용하세요!",
 
 	bar1text = "점멸",
-	
+
 	selfbuff_name = "약화 디버프 경고",
 	selfbuff_desc = "샤즈라가 약화 디버프 시전시 경고",
-	
+
 	blink_name = "점멸 경고",
 	blink_desc = "샤즈라 점멸 시 경고",
 } end)
@@ -94,7 +93,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	selfbuff_name = "Selbstbuff",
 	selfbuff_desc = "Warnung, wenn Magied\195\164mpfer auf Shazzrah.",
-	
+
 	blink_name = "Portal",
 	blink_desc = "Warnung, wenn Shazzrah Portal wirkt.",
 } end)
