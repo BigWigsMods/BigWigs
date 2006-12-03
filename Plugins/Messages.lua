@@ -61,11 +61,11 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
 	["Messages"] = "메세지",
 
-	--["msg"] = "메시지", --?
-	--["anchor"] = "위치", --?
-	--["rw"] = "공대경고", --?
-	--["color"] = "색상", --?
-	--["scale"] = "크기", --?
+--	["msg"] = "메시지",
+--	["anchor"] = "위치",
+--	["rw"] = "공대경고",
+--	["color"] = "색상",
+--	["scale"] = "크기",
 
 	["Options for the message frame."] = "메시지 창 옵션.",
 	["Anchor"] = "위치",
@@ -87,9 +87,9 @@ L:RegisterTranslations("koKR", function() return {
 	["White"] = "화이트",
 	["BigWigs frame"] = "BigWigs 창",
 	["RaidWarning frame"] = "공격대경고 창",
-	["Scale is set to %s"] = true, --?
-	["Messages are now sent to the %2$s"] = true, --?
-	["Messages are currently sent to the %2$s"] = true, --?
+--	["Scale is set to %s"] = true,
+--	["Messages are now sent to the %2$s"] = true,
+--	["Messages are currently sent to the %2$s"] = true,
 
 	["display"] = "디스플레이",
 	["Display"] = "디스플레이",
@@ -276,10 +276,9 @@ L:RegisterTranslations("frFR", function() return {
 	["Display is currently set to %2$s"] = "L'affichage est actuellement défini au %2$s",
 
 	["Mik's Scrolling Battle Text"] = "Scrolling Battle Text de Mik",
-	["Scrolling Combat Text"] = "Scrolling Combat Text",
+--	["Scrolling Combat Text"] = "Scrolling Combat Text",
 	["Floating Combat Text"] = "Message de combat flottant",
 
-	["Test"] = "Test",
 	["Close"] = "Fermer",
 } end)
 
