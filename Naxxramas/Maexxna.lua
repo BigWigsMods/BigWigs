@@ -33,7 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	cocoonwarn = "%s Cocooned!",
 
-	enragetrigger = "%s becomes enraged.",
+	enragetrigger = "%s becomes enraged!",
 
 	webspraywarn30sec = "Wall Cocoons in 10 seconds",
 	webspraywarn20sec = "Wall Cocoons! 10 seconds until Spiders spawn!",
@@ -225,6 +225,7 @@ function BigWigsMaexxna:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MaexxnaWebspray", 8)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MaexxnaEnrage", 6)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MaexxnaCocoon", 0)
 	-- the MaexxnaCocoon sync is left unthrottled, it's throttled inside the module itself
 	-- because the web wrap happens to a lot of players at once.
@@ -275,12 +276,16 @@ function BigWigsMaexxna:BigWigs_RecvSync( sync, rest )
 			if self.db.profile.cocoon then self:TriggerEvent("BigWigs_Message", string.format(L["cocoonwarn"], rest), "Urgent" ) end
 			times[rest] = t
 		end
+	elseif sync == "MaexxnaEnrage" then
+		if self.db.profile.enrage then
+			self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
+		end
 	end
 end
 
 function BigWigsMaexxna:CHAT_MSG_MONSTER_EMOTE( msg )
-	if self.db.profile.enrage and msg == L["enragetrigger"] then 
-		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
+	if msg == L["enragetrigger"] then
+		self:TriggerEvent("BigWigs_SendSync", "MaexxnaEnrage")
 	end
 end
 
