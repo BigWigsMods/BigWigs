@@ -1,6 +1,4 @@
-
 assert( BigWigs, "BigWigs not found!")
-
 
 ------------------------------
 --      Are you local?      --
@@ -41,7 +39,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Up"] = true,
 	["Down"] = true,
-	
+
 	["Test"] = true,
 	["Close"] = true,
 
@@ -65,7 +63,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Bar scale"] = "바 크기",
 	["Bars now grow %2$s"] = "바 생성 방향 : %2$s",
 	["Scale is set to %2$s"] = "크기 설정 : %2$s",
-  
+
 	["Up"] = "위",
 	["Down"] = "아래",
 
@@ -137,9 +135,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	["Texture"] = "材質",
 	["Set the texture for the timerbars."] = "設定計時條的材質花紋",
-
 } end)
-
 
 L:RegisterTranslations("deDE", function() return {
 	["Bars"] = "Anzeigebalken",
@@ -172,7 +168,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	["Texture"] = "Textur",
 	["Set the texture for the timerbars."] = "Textur der Anzeigebalken w\195\164hlen.",
-
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -195,7 +190,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	["Up"] = "haut",
 	["Down"] = "bas",
-	
+
 	["Test"] = "Test",
 	["Close"] = "Fermer",
 
@@ -257,7 +252,6 @@ BigWigsBars.consoleOptions = {
 	},
 }
 
-
 ------------------------------
 --      Initialization      --
 ------------------------------
@@ -283,7 +277,6 @@ function BigWigsBars:OnEnable()
 	end
 end
 
-
 ------------------------------
 --      Event Handlers      --
 ------------------------------
@@ -291,7 +284,6 @@ end
 function BigWigsBars:BigWigs_ShowAnchors()
 	self.frames.anchor:Show()
 end
-
 
 function BigWigsBars:BigWigs_HideAnchors()
 	self.frames.anchor:Hide()
@@ -347,13 +339,12 @@ function BigWigsBars:ToggleUp(supressreport)
 	if not supressreport then self.core:Print(L["Bars now grow %s"], (t and L["Up"] or L["Down"])) end
 end
 
-
 ------------------------------
 --    Create the Anchor     --
 ------------------------------
 
 function BigWigsBars:SetupFrames()
-	local f, t	
+	local f, t
 
 	f, _, _ = GameFontNormal:GetFont()
 
@@ -379,7 +370,6 @@ function BigWigsBars:SetupFrames()
 	self.frames.anchor:SetScript("OnDragStart", function() this:StartMoving() end)
 	self.frames.anchor:SetScript("OnDragStop", function() this:StopMovingOrSizing() this.owner:SavePosition() end)
 
-
 	self.frames.cfade = self.frames.anchor:CreateTexture(nil, "BORDER")
 	self.frames.cfade:SetWidth(169)
 	self.frames.cfade:SetHeight(25)
@@ -396,7 +386,7 @@ function BigWigsBars:SetupFrames()
 	self.frames.cheader:SetTextColor(1, .8, 0)
 	self.frames.cheader:ClearAllPoints()
 	self.frames.cheader:SetPoint("TOP", self.frames.anchor, "TOP", 0, -10)
-	
+
 	self.frames.leftbutton = CreateFrame("Button", nil, self.frames.anchor)
 	self.frames.leftbutton.owner = self
 	self.frames.leftbutton:SetWidth(40)
@@ -404,7 +394,6 @@ function BigWigsBars:SetupFrames()
 	self.frames.leftbutton:SetPoint("RIGHT", self.frames.anchor, "CENTER", -10, -15)
 	self.frames.leftbutton:SetScript( "OnClick", function()  self:TriggerEvent("BigWigs_Test") end )
 
-	
 	t = self.frames.leftbutton:CreateTexture()
 	t:SetWidth(50)
 	t:SetHeight(32)
@@ -418,7 +407,7 @@ function BigWigsBars:SetupFrames()
 	t:SetTexCoord(0, 0.625, 0, 0.6875)
 	t:SetAllPoints(self.frames.leftbutton)
 	self.frames.leftbutton:SetPushedTexture(t)
-	
+
 	t = self.frames.leftbutton:CreateTexture()
 	t:SetTexture("Interface\\Buttons\\UI-Panel-Button-Highlight")
 	t:SetTexCoord(0, 0.625, 0, 0.6875)
@@ -437,7 +426,6 @@ function BigWigsBars:SetupFrames()
 	self.frames.rightbutton:SetPoint("LEFT", self.frames.anchor, "CENTER", 10, -15)
 	self.frames.rightbutton:SetScript( "OnClick", function() self:BigWigs_HideAnchors() end )
 
-	
 	t = self.frames.rightbutton:CreateTexture()
 	t:SetWidth(50)
 	t:SetHeight(32)
@@ -451,7 +439,7 @@ function BigWigsBars:SetupFrames()
 	t:SetTexCoord(0, 0.625, 0, 0.6875)
 	t:SetAllPoints(self.frames.rightbutton)
 	self.frames.rightbutton:SetPushedTexture(t)
-	
+
 	t = self.frames.rightbutton:CreateTexture()
 	t:SetTexture("Interface\\Buttons\\UI-Panel-Button-Highlight")
 	t:SetTexCoord(0, 0.625, 0, 0.6875)
@@ -466,7 +454,6 @@ function BigWigsBars:SetupFrames()
 	self:RestorePosition()
 end
 
-
 function BigWigsBars:SavePosition()
 	local f = self.frames.anchor
 	local s = f:GetEffectiveScale()
@@ -474,7 +461,6 @@ function BigWigsBars:SavePosition()
 	self.db.profile.posx = f:GetLeft() * s
 	self.db.profile.posy = f:GetTop() * s
 end
-
 
 function BigWigsBars:RestorePosition()
 	local x = self.db.profile.posx

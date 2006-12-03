@@ -21,11 +21,11 @@ L:RegisterTranslations("enUS", function() return {
 	["Place"] = true,
 	["Place Raid Icons"] = true,
 	["Toggle placing of Raid Icons on players."] = true,
-	
+
 	["Icon"] = true,
 	["Set Icon"] = true,
 	["Set which icon to place on players."] = true,
-	
+
 	["Options for Raid Icons."] = true,
 
 	["star"] = true,
@@ -44,11 +44,11 @@ L:RegisterTranslations("koKR", function() return {
 	["Place"] = "지정",
 	["Place Raid Icons"] = "공격대 아이콘 지정",
 	["Toggle placing of Raid Icons on players."] = "플레이어에 공격대 아이콘 지정 토글",
-	
+
 	["Icon"] = "아이콘",
 	["Set Icon"] = "아이콘 설정",
 	["Set which icon to place on players."] = "플레이어에 아이콘 지정을 위한 설정",
-	
+
 	["Options for Raid Icons."] = "공격대 아이콘에 대한 설정",
 
 	["star"] = "별",
@@ -59,7 +59,6 @@ L:RegisterTranslations("koKR", function() return {
 	["square"] = "네모",
 	["cross"] = "가위표",
 	["skull"] = "해골",
-
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -68,13 +67,13 @@ L:RegisterTranslations("zhCN", function() return {
 	["Place"] = "标记",
 	["Place Raid Icons"] = "标记团队图标",
 	["Toggle placing of Raid Icons on players."] = "切换是否在玩家身上标记团队图标",
-	
+
 	["Icon"] = "图标",
 	["Set Icon"] = "设置图标",
 	["Set which icon to place on players."] = "设置玩家身上标记的图标。",
-	
+
 	["Options for Raid Icons."] = "团队图标设置",
-	
+
 	["star"] = "星星",
 	["circle"] = "圆圈",
 	["diamond"] = "钻石",
@@ -91,13 +90,13 @@ L:RegisterTranslations("zhTW", function() return {
 	["Place"] = "標記",
 	["Place Raid Icons"] = "標記團隊圖示",
 	["Toggle placing of Raid Icons on players."] = "切換是否在玩家身上標記團隊圖示",
-	
+
 	["Icon"] = "圖標",
 	["Set Icon"] = "設置圖示",
 	["Set which icon to place on players."] = "設置玩家身上標記的圖示。",
-	
+
 	["Options for Raid Icons."] = "團隊圖示設置",
-	
+
 	["star"] = "星星",
 	["circle"] = "圓圈",
 	["diamond"] = "方塊",
@@ -118,11 +117,11 @@ L:RegisterTranslations("deDE", function() return {
 	["Place"] = "Platzierung",
 	["Place Raid Icons"] = "Schlachtzug-Symbole platzieren",
 	["Toggle placing of Raid Icons on players."] = "Schlachtzug-Symbole auf Spieler setzen.",
-	
+
 	["Icon"] = "Symbol",
 	["Set Icon"] = "Symbol platzieren",
 	["Set which icon to place on players."] = "W\195\164hle, welches Symbol auf Spieler gesetzt wird.",
-	
+
 	["Options for Raid Icons."] = "Optionen f\195\188r Schlachtzug-Symbole.",
 
 	["star"] = "Stern",
@@ -141,11 +140,11 @@ L:RegisterTranslations("frFR", function() return {
 	["Place"] = "Placement",
 	["Place Raid Icons"] = "Placer les icônes de raid",
 	["Toggle placing of Raid Icons on players."] = "Place ou non les icônes de raid sur les joueurs.",
-	
+
 	["Icon"] = "Icône",
 	["Set Icon"] = "Déterminer l'icône",
 	["Set which icon to place on players."] = "Détermine quelle icône sera placée sur les joueurs.",
-	
+
 	["Options for Raid Icons."] = "Options concernant les icônes de raid.",
 
 	["star"] = "étoile",

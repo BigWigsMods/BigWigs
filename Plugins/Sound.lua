@@ -1,4 +1,3 @@
-
 assert(BigWigs, "BigWigs not found!")
 
 ------------------------------
@@ -6,7 +5,6 @@ assert(BigWigs, "BigWigs not found!")
 ------------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsSound")
---~~ local dewdrop = DewdropLib:GetInstance("1.0")
 
 local sounds = {
 	Long = "Interface\\AddOns\\BigWigs\\Sounds\\Long.mp3",
@@ -15,7 +13,6 @@ local sounds = {
 	Alarm = "Interface\\AddOns\\BigWigs\\Sounds\\Alarm.mp3",
 	Victory = "Interface\\AddOns\\BigWigs\\Sounds\\Victory.mp3",
 }
-
 
 ----------------------------
 --      Localization      --

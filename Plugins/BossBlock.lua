@@ -1,5 +1,4 @@
-﻿
-----------------------------
+﻿----------------------------
 --      Localization      --
 ----------------------------
 
@@ -40,34 +39,33 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
 	["BossBlock"] = "보스차단",
 	["Suppress bossmod chat from other players."] = "타인의 보스모드 대화 차단.",
-	
+
 	["Suppress Raid Chat"] = "공격대 대화 차단",
 	["Suppress messages in the raid channel."] = "공격대 채널에 메세지 차단.",
-	
+
 	["Suppress RaidWarn Chat"] = "공격대경고 대화 차단",
 	["Suppress RaidWarn messages in the chat frames."] = "대화창에 공격대경고 메세지 차단",
-	
+
 	["Suppress RaidWarn"] = "공격대경고 차단",
 	["Suppress RaidWarn popup messages."] = "공격대경고 알림 메세지 차단",
-	
+
 	["Suppress RaidSay"] = "RaidSay 차단",
 	["Suppress CTRA RaidSay popup messages."] = "CTRA RaidSay 알림 메세지 차단",
 	["Suppress oRA RaidSay popup messages."] = "oRA RaidSay 알림 메세지 차단",
 	["Suppress oRA2 RaidSay popup messages."] = "oRA2 RaidSay 알림 메세지 차단",
-	
+
 	["Suppress Tells"] = "일반대화 차단",
 	["Suppress Tell messages."] = "일반대화 메세지 차단",
-	
+
 	["Debugging"] = "디버깅",
 	["Show debug messages."] = "디버그 메세지 표시",
-	
+
 	["Suppressing Chatframe"] = "대화창 차단됨",
 	["Suppressing RaidWarningFrame"] = "공격대경고창 차단됨",
 	["Suppressing CT_RAMessageFrame"] = "CR_RA메세지창 차단됨",
-	
+
 	["Suppressed"] = "차단됨",
 	["Shown"] = "표시함",
-
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -99,7 +97,6 @@ L:RegisterTranslations("zhCN", function() return {
 	["Suppressed"] = "阻挡",
 	["Shown"] = "显示",
 } end)
-
 
 L:RegisterTranslations("zhTW", function() return {
 	["BossBlock"] = "訊息阻擋",
@@ -134,31 +131,31 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("deDE", function() return {
 	["BossBlock"] = "BossBlock",
 	["Suppress bossmod chat from other players."] = "Bossmod Chat von anderen Spielern unterdr\195\188cken.",
- 	 
+
 	["Suppress Raid Chat"] = "Raid Chat unterdr\195\188cken",
 	["Suppress messages in the raid channel."] = "Nachrichten im Raid Channel unterdr\195\188cken",
- 
+
 	["Suppress RaidWarn Chat"] = "RaidWarn Chat unterdr\195\188cken",
 	["Suppress RaidWarn messages in the chat frames."] = "RaidWarn Nachrichten im Chat Fenster unterdr\195\188cken.",
- 
+
 	["Suppress RaidWarn"] = "RaidWarn unterdr\195\188cken",
 	["Suppress RaidWarn popup messages."] = "RaidWarn Popup-Nachrichten unterdr\195\188cken.",
- 
+
 	["Suppress RaidSay"] = "RaidSay unterdr\195\188cken",
 	["Suppress CTRA RaidSay popup messages."] = "CTRA RaidSay Popup Nachrichten unterdr\195\188cken.",
 	["Suppress oRA RaidSay popup messages."] = "oRA RaidSay Popup Nachrichten unterdr\195\188cken.",
 	["Suppress oRA2 RaidSay popup messages."] = "oRA2 RaidSay Popup Nachrichten unterdr\195\188cken.",
- 
+
 	["Suppress Tells"] = "Fl\195\188stern unterdr\195\188cken",
 	["Suppress Tell messages."] = "Fl\195\188stern Nachrichten unterdr\195\188cken.",
 
 	["Debugging"] = "Debugging",
 	["Show debug messages."] = "Debug Nachrichten anzeigen.",
- 
+
 	["Suppressing Chatframe"] = "Chatframe unterdr\195\188ckt",
 	["Suppressing RaidWarningFrame"] = "RaidWarningFrame unterdr\195\188cket",
 	["Suppressing CT_RAMessageFrame"] = "CT_RAMessageFrame unterdr\195\188ckt",
- 
+
 	["Suppressed"] = "Unterdr\195\188ckt",
 	["Shown"] = "Angezeigt",
 } end)
@@ -179,7 +176,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Suppress RaidSay"] = "Supprimer les RaidSay",
 	["Suppress CTRA RaidSay popup messages."] = "Supprime les messages à l'écran du RaidSay de CTRA.",
 	["Suppress oRA RaidSay popup messages."] = "Supprime les messages à l'écran du RaidSay de oRA.",
-	["Suppress oRA2 RaidSay popup messages."] = "Supprime les messages à l'écran du RaidSay de oRA2.",	
+	["Suppress oRA2 RaidSay popup messages."] = "Supprime les messages à l'écran du RaidSay de oRA2.",
 
 	["Suppress Tells"] = "Supprimer les chuchotements",
 	["Suppress Tell messages."] = "Supprime les messages chuchotés.",
@@ -245,9 +242,7 @@ local blockstrings = {
 	["TU BRULES !"] = true,
 	["TU ES AFFLIGE PAR INFECTION VOLATILE !"] = true,
 	["TU ES MARQUE !"] = true,
-
 }
-
 
 ----------------------------------
 --      Module Declaration      --
@@ -378,7 +373,6 @@ function BigWigsBossBlock:ChatFrame_OnEvent(event)
 	end
 end
 
-
 function BigWigsBossBlock:RWAddMessage(frame, message, r, g, b, a)
 	if self.db.profile.hideraidwarn and self:IsSpam(message) then
 		self:Debug(L["Suppressing RaidWarningFrame"], message)
@@ -386,7 +380,6 @@ function BigWigsBossBlock:RWAddMessage(frame, message, r, g, b, a)
 	end
 	self.hooks[RaidWarningFrame].AddMessage(frame, message, r, g, b, a)
 end
-
 
 function BigWigsBossBlock:CTRA_AddMessage(obj, text, red, green, blue, alpha, holdTime)
 	if self.db.profile.hideraidsay and self:IsSpam(text) then
@@ -396,17 +389,13 @@ function BigWigsBossBlock:CTRA_AddMessage(obj, text, red, green, blue, alpha, ho
 	self.hooks[obj].AddMessage(obj, text, red, green, blue, alpha, holdTime)
 end
 
-
 function BigWigsBossBlock:IsSpam(text)
 	if not text then return end
 	if blockstrings[text] then return true end
 	for _,regex in pairs(blockregexs) do if string.find(text, regex) then return true end end
 end
 
-
 function BigWigsBossBlock:IsChannelSuppressed(chan)
 	if not raidchans[chan] then return end
 	return self.db.profile[raidchans[chan]]
 end
-
-

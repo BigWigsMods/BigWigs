@@ -1,5 +1,4 @@
-﻿
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -165,11 +164,9 @@ function BigWigsTest:OnEnable()
 	self:RegisterEvent("BigWigs_SyncTest")
 end
 
-
 function BigWigsTest:BigWigs_SyncTest()
 	self:TriggerEvent("BigWigs_SendSync", "TestSync")
 end
-
 
 function BigWigsTest:BigWigs_RecvSync(sync)
 	if sync == "TestSync" then
@@ -177,7 +174,6 @@ function BigWigsTest:BigWigs_RecvSync(sync)
 		self:TriggerEvent("BigWigs_StartBar", self, L["Testing Sync"], 10, "Interface\\Icons\\Spell_Frost_FrostShock", true, "Green", "Blue", "Yellow", "Red")
 	end
 end
-
 
 function BigWigsTest:BigWigs_Test()
 	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar"], 15, "Interface\\Icons\\Spell_Nature_ResistNature")

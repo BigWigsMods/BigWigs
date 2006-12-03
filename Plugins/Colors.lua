@@ -270,7 +270,7 @@ BigWigsColors.defaultDB = {
 	positive = "00ff00", -- Green
 	bosskill = "00ff00", -- Green
 	core = "00ffff", -- Cyan
-	
+
 	shortbar = {"ffff00", "ff7f00", "ff0000"},
 	shortnr = 3,
 	longbar = {"00ff00", "ffff00", "ff7f00", "ff0000"},
@@ -539,6 +539,7 @@ end
 
 function BigWigsColors:MsgColor(type)
 	-- Make it compatible with old code
+	function BigWigsColors:MsgColor(type)
 	if type == "Red" then type = self.db.profile.important
 	elseif type == "Orange" then type = self.db.profile.urgent
 	elseif type == "Yellow" then type = self.db.profile.attention
@@ -570,4 +571,3 @@ function BigWigsColors:BarColor(time)
 	elseif n == 2 then return d[1], d[2]
 	elseif n == 1 then return d[1] end
 end
-

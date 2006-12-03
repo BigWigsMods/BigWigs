@@ -1,12 +1,10 @@
-﻿
-assert(BigWigs, "BigWigs not found!")
+﻿assert(BigWigs, "BigWigs not found!")
 
 ------------------------------
 --      Are you local?      --
 ------------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsRange")
-
 
 ----------------------------
 --      Localization      --

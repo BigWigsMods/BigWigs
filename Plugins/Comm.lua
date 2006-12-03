@@ -35,7 +35,6 @@ function BigWigsComm:OnEnable()
 	self:RegisterEvent("BigWigs_ThrottleSync")
 end
 
-
 ------------------------------
 --      Event Handlers      --
 ------------------------------
@@ -53,7 +52,6 @@ function BigWigsComm:CHAT_MSG_ADDON(prefix, message, type, sender)
 	end
 end
 
-
 function BigWigsComm:BigWigs_SendSync(msg)
 	local _, _, sync, rest = string.find(msg, "(%S+)%s*(.*)$")
 
@@ -66,7 +64,6 @@ function BigWigsComm:BigWigs_SendSync(msg)
 	end
 end
 
-
 function BigWigsComm:BigWigs_ThrottleSync(msg, time)
 	assert(msg, "No message passed")
 	throt[msg] = time
@@ -74,4 +71,3 @@ end
 
 function BigWigsComm:GetThrottleTable() return throt end
 function BigWigsComm:GetTimesTable() return times end
-

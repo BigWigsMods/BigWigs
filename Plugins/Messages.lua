@@ -1,5 +1,4 @@
-﻿
-assert(BigWigs, "BigWigs not found!")
+﻿assert(BigWigs, "BigWigs not found!")
 
 ------------------------------
 --      Are you local?      --
@@ -59,15 +58,14 @@ L:RegisterTranslations("enUS", function() return {
 	["Close"] = true,
 } end)
 
-
 L:RegisterTranslations("koKR", function() return {
 	["Messages"] = "메세지",
-  
---	["msg"] = "메시지",
---	["anchor"] = "위치",
---	["rw"] = "공대경고",
---	["color"] = "색상",
---	["scale"] = "크기",
+
+	--["msg"] = "메시지", --?
+	--["anchor"] = "위치", --?
+	--["rw"] = "공대경고", --?
+	--["color"] = "색상", --?
+	--["scale"] = "크기", --?
 
 	["Options for the message frame."] = "메시지 창 옵션.",
 	["Anchor"] = "위치",
@@ -89,9 +87,9 @@ L:RegisterTranslations("koKR", function() return {
 	["White"] = "화이트",
 	["BigWigs frame"] = "BigWigs 창",
 	["RaidWarning frame"] = "공격대경고 창",
---	["Scale is set to %s"] = true,
---	["Messages are now sent to the %2$s"] = true,
---	["Messages are currently sent to the %2$s"] = true,
+	["Scale is set to %s"] = true, --?
+	["Messages are now sent to the %2$s"] = true, --?
+	["Messages are currently sent to the %2$s"] = true, --?
 
 	["display"] = "디스플레이",
 	["Display"] = "디스플레이",
@@ -149,7 +147,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	["Test"] = "测试",
 	["Close"] = "关闭",
-
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -197,7 +194,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	["Test"] = "測試",
 	["Close"] = "關閉",
-
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -277,13 +273,13 @@ L:RegisterTranslations("frFR", function() return {
 	["Display"] = "Affichage",
 	["Set where messages are displayed."] = "Détermine où les messages sont affichés.",
 	["Display is now set to %2$s"] = "L'affichage est désormais défini au %2$s",
-	["Display is currently set to %2$s"] = "L'affichage est actuellement défini au %2$s",	
+	["Display is currently set to %2$s"] = "L'affichage est actuellement défini au %2$s",
 
 	["Mik's Scrolling Battle Text"] = "Scrolling Battle Text de Mik",
-	--["Scrolling Combat Text"] = "Scrolling Combat Text",
+	["Scrolling Combat Text"] = "Scrolling Combat Text",
 	["Floating Combat Text"] = "Message de combat flottant",
 
-	--["Test"] = "Test",
+	["Test"] = "Test",
 	["Close"] = "Fermer",
 } end)
 
@@ -372,13 +368,11 @@ function BigWigsMessages:OnRegister()
 	self:CreateMsgFrame()
 end
 
-
 function BigWigsMessages:OnEnable()
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("BigWigs_ShowAnchors")
 	self:RegisterEvent("BigWigs_HideAnchors")
 end
-
 
 function BigWigsMessages:CreateMsgFrame()
 	self.msgframe = CreateFrame("MessageFrame")
@@ -394,7 +388,6 @@ function BigWigsMessages:CreateMsgFrame()
 	self.msgframe:Show()
 end
 
-
 ------------------------------
 --      Event Handlers      --
 ------------------------------
@@ -403,11 +396,9 @@ function BigWigsMessages:BigWigs_ShowAnchors()
 	self.frames.anchor:Show()
 end
 
-
 function BigWigsMessages:BigWigs_HideAnchors()
 	self.frames.anchor:Hide()
 end
-
 
 function BigWigsMessages:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 	if not text then return end
@@ -470,7 +461,6 @@ function BigWigsMessages:SetupFrames()
 	self.frames.anchor:SetScript("OnDragStart", function() this:StartMoving() end)
 	self.frames.anchor:SetScript("OnDragStop", function() this:StopMovingOrSizing() this.owner:SavePosition() end)
 
-
 	self.frames.cfade = self.frames.anchor:CreateTexture(nil, "BORDER")
 	self.frames.cfade:SetWidth(169)
 	self.frames.cfade:SetHeight(25)
@@ -494,7 +484,6 @@ function BigWigsMessages:SetupFrames()
 	self.frames.leftbutton:SetHeight(25)
 	self.frames.leftbutton:SetPoint("RIGHT", self.frames.anchor, "CENTER", -10, -15)
 	self.frames.leftbutton:SetScript( "OnClick", function()  self:TriggerEvent("BigWigs_Test") end )
-
 
 	t = self.frames.leftbutton:CreateTexture()
 	t:SetWidth(50)
@@ -528,7 +517,6 @@ function BigWigsMessages:SetupFrames()
 	self.frames.rightbutton:SetPoint("LEFT", self.frames.anchor, "CENTER", 10, -15)
 	self.frames.rightbutton:SetScript( "OnClick", function() self:BigWigs_HideAnchors() end )
 
-
 	t = self.frames.rightbutton:CreateTexture()
 	t:SetWidth(50)
 	t:SetHeight(32)
@@ -542,7 +530,7 @@ function BigWigsMessages:SetupFrames()
 	t:SetTexCoord(0, 0.625, 0, 0.6875)
 	t:SetAllPoints(self.frames.rightbutton)
 	self.frames.rightbutton:SetPushedTexture(t)
-	
+
 	t = self.frames.rightbutton:CreateTexture()
 	t:SetTexture("Interface\\Buttons\\UI-Panel-Button-Highlight")
 	t:SetTexCoord(0, 0.625, 0, 0.6875)
@@ -557,7 +545,6 @@ function BigWigsMessages:SetupFrames()
 	self:RestorePosition()
 end
 
-
 function BigWigsMessages:SavePosition()
 	local f = self.frames.anchor
 	local s = f:GetEffectiveScale()
@@ -565,7 +552,6 @@ function BigWigsMessages:SavePosition()
 	self.db.profile.posx = f:GetLeft() * s
 	self.db.profile.posy = f:GetTop() * s
 end
-
 
 function BigWigsMessages:RestorePosition()
 	local x = self.db.profile.posx
