@@ -24,6 +24,14 @@ L:RegisterTranslations("enUS", function() return {
 	thunderclap_name = "Thunderclap Alert",
 	thunderclap_desc = "Warn for Thunderclap",
 
+	meteor_cmd = "meteor",
+	meteor_name = "Meteor Alert",
+	meteor_desc = "Warn for Meteor",
+
+	shadowstorm_cmd = "shadowstorm",
+	shadowstorm_name = "Shadow Storm",
+	shadowstorm_desc = "Warn for Shadow Storm",
+
 	explode_cmd = "explode",
 	explode_name = "Explode Alert",
 	explode_desc = "Warn for Explode",
@@ -53,8 +61,13 @@ L:RegisterTranslations("enUS", function() return {
 	plagueyouwarn = "You have the plague!",
 	plagueyou = "You",
 	plagueare = "are",
-	thunderclaptrigger = "^Anubisath Defender's Thunderclap hits ([^%s]+) for %d+%.",
+
+	thunderclaptrigger = "^Anubisath Defender's Thunderclap",
 	thunderclapwarn = "Thunderclap!",
+	meteortrigger = "^Anubisath Defender's Meteor",
+	meteorwarn = "Meteor!",
+	shadowstormtrigger = "^Anubisath Defender's Shadow Storm",
+	shadowstormwarn = "Shadow Storm!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -134,6 +147,7 @@ L:RegisterTranslations("zhCN", function() return {
 	plagueyouwarn = "你受到瘟疫的影响！快跑开！",
 	plagueyou = "你",
 	plagueare = "到",
+
 	thunderclaptrigger = "^阿努比萨斯防御者的雷霆一击击中(.+)造成%d+点伤害。",
 	thunderclapwarn = "雷霆一击发动！",
 } end )
@@ -175,20 +189,9 @@ L:RegisterTranslations("zhTW", function() return {
 	plagueyouwarn = "你受到瘟疫的影響！快跑開！",
 	plagueyou = "你",
 	plagueare = "了",
+
 	thunderclaptrigger = "^阿努比薩斯防禦者的雷霆一擊擊中(.+)造成%d+點傷害。",
 	thunderclapwarn = "雷霆一擊發動！",
-	--The thunderclaptrigger use three events,
-	--CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE,
-	--CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE and
-	--CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE,
-	--but tne function BigWigsDefenders:Thunderclap does the same thing.
-	--The skill affects a lot of players at once in zhTW.
-	--(See BigWigs\Naxxramas\Maexxna.lua)
-	--They say it works fine for all other locales.
-	--Or just simply use thunderclaptrigger = "^阿努比薩斯防禦者的雷霆一擊擊中你", to trigger self ?
-	--Any idea?
-	--If anyone knows how to correct it in translation string, mail to me please.
-	--xinsonic@gmail.com
 } end )
 
 
@@ -227,6 +230,7 @@ L:RegisterTranslations("koKR", function() return {
 	plagueyouwarn = "당신은 역병에 걸렸습니다! 떨어지세요!",
 	plagueyou = "", -- "you"
 	plagueare = "", -- "are"
+
 	thunderclaptrigger = "아누비사스 문지기|1이;가; 천둥벼락|1으로;로; (.+)에게 (%d+)의",
 	thunderclapwarn = "천둥벼락! - 멀리 떨어지세요",
 } end )
@@ -268,6 +272,7 @@ L:RegisterTranslations("frFR", function() return {
 	plaguetrigger = "^([^%s]+) ([^%s]+) les effets de Peste%.$",
 	plagueyou = "Vous",
 	plagueare = "subissez",
+
 	thunderclaptrigger = "^D\195\169fenseur Anubisath lance Coup de tonnerre",--not sure
 } end )
 
@@ -278,7 +283,7 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsDefenders = BigWigs:NewModule(boss)
 BigWigsDefenders.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 BigWigsDefenders.enabletrigger = boss
-BigWigsDefenders.toggleoptions = { "plagueyou", "plagueother", "icon", -1, "thunderclap", "explode", "enrage", "bosskill"}
+BigWigsDefenders.toggleoptions = { "plagueyou", "plagueother", "icon", -1, "thunderclap", "meteor", "shadowstorm", "explode", "enrage", "bosskill"}
 BigWigsDefenders.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -291,15 +296,17 @@ function BigWigsDefenders:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "CheckPlague")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "CheckPlague")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CheckPlague")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Thunderclap")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Thunderclap")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Thunderclap")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Abilities")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Abilities")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Abilities")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderEnrage", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderExplode", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderThunderclap", 6)
+	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderMeteor", 6)
+	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderShadowstorm", 6)
 end
 
 ------------------------------
@@ -320,6 +327,10 @@ function BigWigsDefenders:BigWigs_RecvSync(sync, rest, nick)
 		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
 	elseif sync == "DefenderThunderclap" and self.db.profile.thunderclap then
 		self:TriggerEvent("BigWigs_Message", L["thunderclapwarn"], "Important")
+	elseif sync == "DefenderMeteor" and self.db.profile.meteor then
+		self:TriggerEvent("BigWigs_Message", L["meteorwarn"], "Important")
+	elseif sync == "DefenderShadowstorm" and self.db.profile.shadowstorm then
+		self:TriggerEvent("BigWigs_Message", L["shadowstormwarn"], "Important")
 	end
 end
 
@@ -357,9 +368,12 @@ function BigWigsDefenders:CheckPlague(msg)
 	end
 end
 
-function BigWigsDefenders:Thunderclap(msg)
+function BigWigsDefenders:Abilities(msg)
 	if string.find(msg, L["thunderclaptrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "DefenderThunderclap")
+	elseif string.find(msg, L["meteortrigger"]) then
+		self:TriggerEvent("BigWigs_SendSync", "DefenderMeteor")
+	elseif string.find(msg, L["shadowstormtrigger"]) then
+		self:TriggerEvent("BigWigs_SendSync", "DefenderShadowstorm")
 	end
 end
-
