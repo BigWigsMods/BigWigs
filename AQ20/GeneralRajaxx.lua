@@ -40,7 +40,6 @@ L:RegisterTranslations("enUS", function() return {
 	warn7 = "Wave 7/8",
 	warn8 = "Incoming General Rajaxx",
 	warn9 = "Wave 1/8", -- trigger for starting the event by pulling the first wave instead of talking to andorov
-
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -119,7 +118,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- General Rajaxx 拉賈克斯將軍
 	wave_name = "來襲警報",
 	wave_desc = "當新一批敵人來襲時發出警報",
 
@@ -145,7 +143,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	
 	wave_name = "단계 알림",
 	wave_desc = "단계에 대한 알림",
 
@@ -169,7 +166,6 @@ L:RegisterTranslations("koKR", function() return {
 	warn8 = "장군 라작스 등장",
 	warn9 = "1/8 단계", -- trigger for starting the event by pulling the first wave instead of talking to andorov --CHECK
 } end )
-
 
 ----------------------------------
 --      Module Declaration      --
@@ -209,4 +205,3 @@ function BigWigsGeneralRajaxx:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 		rajdead = true
 	end
 end
-

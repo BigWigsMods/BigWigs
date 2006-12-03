@@ -48,7 +48,7 @@ L:RegisterTranslations("enUS", function() return {
 	plaguewarn = " has the Plague!",
 	plaguewarnyou = "You have the Plague!",
 	plagueyou = "You",
-	plagueare = "are",	
+	plagueare = "are",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -120,7 +120,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Anubisath Guardian　阿努比薩斯守衛者
 	summon_name = "召喚警報",
 	summon_desc = "阿努比薩斯守衛者召喚增援時發出警報",
 
@@ -182,11 +181,10 @@ L:RegisterTranslations("koKR", function() return {
 	plaguewarn = "님이 역병에 걸렸습니다. 피하세요!",
 	plaguewarnyou = "당신은 역병에 걸렸습니다.",
 	plagueyou = "",
-	plagueare = "",	
+	plagueare = "",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-
 	summon_name = "Alerte invocation",
 	summon_desc = "Pr\195\169viens quand le gardien invoque des adds.",
 
@@ -256,6 +254,7 @@ end
 function BigWigsGuardians:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if self.db.profile.explode and msg == L["explodetrigger"] then 
 		self:TriggerEvent("BigWigs_Message", L["explodewarn"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["explodewarn"], 6, "Interface\\Icons\\Spell_Fire_SelfDestruct")
 	elseif self.db.profile.enrage and msg == L["enragetrigger"] then 
 		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
 	end
@@ -285,4 +284,3 @@ function BigWigsGuardians:CheckPlague( msg )
 		end
 	end
 end
-

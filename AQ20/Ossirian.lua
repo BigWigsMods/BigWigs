@@ -102,7 +102,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Ossirian the Unscarred 無疤者奧斯里安
 	supreme_name = "無敵警報",
 	supreme_desc = "無疤者奧斯里安進入無敵狀態時發出警報",
 
@@ -137,7 +136,7 @@ L:RegisterTranslations("koKR", function() return {
 	debufftrigger = "무적의 오시리안|1이;가; (.+) 약점에 걸렸습니다.",
 	debuffwarn = "오시리안이 %s 계열 마법에 약해졌습니다.",
 	bartext = "무적 상태",
-	expose = "노출",	-- CHECK
+	expose = "노출", -- CHECK
 
 	["Shadow"] = "암흑",
 	["Fire"] = "화염",
@@ -145,7 +144,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Nature"] = "자연",
 	["Arcane"] = "비전",
 } end )
-
 
 ----------------------------------
 --      Module Declaration      --
@@ -201,4 +199,3 @@ function BigWigsOssirian:BigWigs_RecvSync(sync, debuffKey)
 		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 45, "Interface\\Icons\\Spell_Shadow_CurseOfTounges")
 	end
 end
-

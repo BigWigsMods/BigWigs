@@ -79,7 +79,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	--Buru the Gorger 吞咽者布魯
 	you_name = "玩家凝視警報",
 	you_desc = "當你被吞咽者布魯盯住時發出警報。",
 
@@ -151,4 +150,3 @@ function BigWigsBuru:CHAT_MSG_MONSTER_EMOTE( msg )
 		end
 	end
 end
-

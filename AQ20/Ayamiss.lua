@@ -18,13 +18,13 @@ L:RegisterTranslations("enUS", function() return {
 	sacrificetrigger = "^([^%s]+) ([^%s]+) afflicted by Paralyze",
 	sacrificewarn = " is being Sacrificed!",
 	you = "You",
-	are = "are",	
+	are = "are",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
 	sacrifice_name = "Alerte Sacrifice",
 	sacrifice_desc = "Pr\195\169viens lorsqu'un joueur est sacrifi\195\169.",
-	
+
 	sacrificetrigger = "^([^%s]+) ([^%s]+) les effets de Paralysie%.$",
 	sacrificewarn = " est sacrifi\195\169 !",
 	you = "Vous",
@@ -52,7 +52,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Ayamiss the Hunter 狩獵者阿亞米斯
 	sacrifice_name = "祭品警報",
 	sacrifice_desc = "玩家成為祭品時發出警報",
 
@@ -102,4 +101,3 @@ function BigWigsAyamiss:CheckSacrifice( msg )
 		if self.db.profile.sacrifice then self:TriggerEvent("BigWigs_Message", player .. L["sacrificewarn"], "Important") end
 	end
 end
-

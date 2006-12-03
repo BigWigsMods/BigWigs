@@ -29,7 +29,7 @@ L:RegisterTranslations("enUS", function() return {
 	paralyzebar = "Paralyze",
 	returnincoming = "Moam unparalyzed in %s seconds!",
 	returntrigger = "^Energize fades from Moam%.$",
-	returnwarn = "Moam unparalyzed! 90 seconds until Mana Fiends!",	
+	returnwarn = "Moam unparalyzed! 90 seconds until Mana Fiends!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -50,7 +50,7 @@ L:RegisterTranslations("frFR", function() return {
 	paralyzebar = "Paralysie",
 	returnincoming = "Moam d\195\169paralys\195\169 dans %s secondes !",
 	returntrigger = "Dynamiser sur Moam vient de se dissiper%.",
-	returnwarn = "Retour de Moam ! 90 secondes avant les El\195\169mentaires !",	
+	returnwarn = "Retour de Moam ! 90 secondes avant les El\195\169mentaires !",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -113,7 +113,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Moam 莫阿姆
 	adds_name = "召喚警報",
 	adds_desc = "召喚元素惡魔出現時發出警報",
 
@@ -186,4 +185,3 @@ function BigWigsMoam:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 		self:AddsStart()
 	end
 end
-
