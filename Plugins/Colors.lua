@@ -539,7 +539,6 @@ end
 
 function BigWigsColors:MsgColor(type)
 	-- Make it compatible with old code
-	function BigWigsColors:MsgColor(type)
 	if type == "Red" then type = self.db.profile.important
 	elseif type == "Orange" then type = self.db.profile.urgent
 	elseif type == "Yellow" then type = self.db.profile.attention
