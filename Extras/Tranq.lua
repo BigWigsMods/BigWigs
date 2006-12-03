@@ -1,5 +1,4 @@
-﻿
-assert(BigWigs, "BigWigs not found!")
+﻿assert(BigWigs, "BigWigs not found!")
 
 ----------------------------
 --      Localization      --
@@ -118,7 +117,6 @@ function BigWigsTranq:OnEnable()
 	self:RegisterEvent("BigWigs_TranqFail", 5)
 end
 
-
 ------------------------------
 --      Event Handlers      --
 ------------------------------
@@ -131,7 +129,6 @@ function BigWigsTranq:CHAT_MSG_SPELL_SELF_BUFF(msg)
 	end
 end
 
-
 function BigWigsTranq:CHAT_MSG_SPELL_SELF_DAMAGE(msg)
 	if not msg then
 		self:Debug("CHAT_MSG_SPELL_SELF_DAMAGE: msg is nil")
@@ -140,12 +137,10 @@ function BigWigsTranq:CHAT_MSG_SPELL_SELF_DAMAGE(msg)
 	end
 end
 
-
 function BigWigsTranq:BigWigs_RecvSync(sync, details, sender)
 	if sync == "TranqShotFired" then self:TriggerEvent("BigWigs_TranqFired", details)
 	elseif sync == "TranqShotFail" then self:TriggerEvent("BigWigs_TranqFail", details) end
 end
-
 
 function BigWigsTranq:BigWigs_TranqFired(unitname)
 	if self.db.profile.bars then
@@ -153,11 +148,9 @@ function BigWigsTranq:BigWigs_TranqFired(unitname)
 	end
 end
 
-
 function BigWigsTranq:BigWigs_TranqFail(unitname)
 	if self.db.profile.bars then
 		self:SetCandyBarColor(string.format(L["Tranq - %s"], unitname), "Red")
 		self:TriggerEvent("BigWigs_Message", format(L["%s's Tranq failed!"], unitname), "Important", nil, "Alarm")
 	end
 end
-

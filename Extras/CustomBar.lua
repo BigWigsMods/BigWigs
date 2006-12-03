@@ -194,4 +194,3 @@ function BigWigsCustomBar:RegisterShortHand()
 		setglobal("SLASH_BWLCB_SHORTHAND1", "/"..L["bwlcb"])
 	end
 end
-
