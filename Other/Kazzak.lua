@@ -20,9 +20,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	starttrigger = "For the Legion! For Kil'Jaeden!",
 
-	engagewarn	 = "Lord Kazzak engaged, 3mins until Supreme!",
+	engagewarn = "Lord Kazzak engaged, 3mins until Supreme!",
 
-	supreme1min	 = "Supreme mode in 1 minute!",
+	supreme1min = "Supreme mode in 1 minute!",
 	supreme30sec = "Supreme mode in 30 seconds!",
 	supreme10sec = "Supreme mode in 10 seconds!",
 
@@ -35,7 +35,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	starttrigger = "F\195\188r die Legion! F\195\188r Kil'jaeden!",
 
-	engagewarn	 = "Lord Kazzak angegriffen! Supreme Mode in 3 Minuten!",
+	engagewarn = "Lord Kazzak angegriffen! Supreme Mode in 3 Minuten!",
 
 	supreme1min  = "Supreme Mode in 1 Minute!",
 	supreme30sec = "Supreme Mode in 30 Sekunden!",
@@ -50,9 +50,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 	starttrigger = "为了燃烧军团！为了基尔加丹！",
 
-	engagewarn	 = "卡扎克已激活 - 3分钟后无敌！",
+	engagewarn = "卡扎克已激活 - 3分钟后无敌！",
 
-	supreme1min	 = "1分钟后无敌！",
+	supreme1min = "1分钟后无敌！",
 	supreme30sec = "30秒后无敌！",
 	supreme10sec = "10秒后无敌！",
 
@@ -65,9 +65,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 	starttrigger = "為了軍團！為了基爾加德！",
 
-	engagewarn	 = "卡札克已開始攻擊 - 3分鐘後無敵！",
+	engagewarn = "卡札克已開始攻擊 - 3分鐘後無敵！",
 
-	supreme1min	 = "1分鐘後無敵！",
+	supreme1min = "1分鐘後無敵！",
 	supreme30sec = "30秒後無敵！",
 	supreme10sec = "10秒後無敵！",
 
@@ -80,9 +80,9 @@ L:RegisterTranslations("koKR", function() return {
 
 	starttrigger = "군단을 위하여! 킬제덴을 위하여!", --CHECK
 
-	engagewarn	 = "카쟈크 전투 개시, 3분 후 무적!",
+	engagewarn = "카쟈크 전투 개시, 3분 후 무적!",
 
-	supreme1min	 = "무적 모드 - 1 분전!",
+	supreme1min = "무적 모드 - 1 분전!",
 	supreme30sec = "무적 모드 - 30 초전!",
 	supreme10sec = "무적 모드 - 10 초전!",
 
@@ -95,9 +95,9 @@ L:RegisterTranslations("frFR", function() return {
 
 	starttrigger = "Pour la L\195\169gion ! Pour Kil'Jaeden !",
 
-	engagewarn	 = "Seigneur Kazzak engag\195\169 - 3 minutes avant Supr\195\170me !",
+	engagewarn = "Seigneur Kazzak engag\195\169 - 3 minutes avant Supr\195\170me !",
 
-	supreme1min	 = "Mode Supr\195\170me dans 1 minute !",
+	supreme1min = "Mode Supr\195\170me dans 1 minute !",
 	supreme30sec = "Mode Supr\195\170me dans 30 secondes !",
 	supreme10sec = "Mode Supr\195\170me dans 10 secondes !",
 
@@ -132,4 +132,3 @@ function BigWigsKazzak:CHAT_MSG_MONSTER_YELL( msg )
 		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], supremetime, "Interface\\Icons\\Spell_Shadow_ShadowWordPain", "Green", "Yellow", "Orange", "Red")
 	end
 end
-

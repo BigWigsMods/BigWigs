@@ -36,7 +36,6 @@ L:RegisterTranslations("enUS", function() return {
 	isare = "are",
 
 	bar1text = "Noxious Breath",
-	
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -66,10 +65,10 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	noxious_name = "Giftiger Atem",
 	noxious_desc = "Warnung vor Giftiger Atem.",
-	
+
 	volatileyou_name = "Fl\195\188chtige Infektion",
 	volatileyou_desc = "Warnung, wenn Fl\195\188chtige Infektion auf Dir.",
-	
+
 	volatileother_name = "Fl\195\188chtige Infektion auf Anderen",
 	volatileother_desc = "Warnung, wenn Fl\195\188chtige Infektion auf anderen Spielern.",
 
@@ -85,19 +84,18 @@ L:RegisterTranslations("deDE", function() return {
 	isare = "seid",
 
 	bar1text = "Giftiger Atem",
-	
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
 	noxious_name = "毒性吐息警报",
 	noxious_desc = "毒性吐息警报",
-	
+
 	volatileyou_name = "玩家快速传染警报",
 	volatileyou_desc = "你中了快速传染时发出警报",
-	
+
 	volatileother_name = "队友快速传染警报",
 	volatileother_desc = "队友中了快速传染时发出警报",
-	
+
 	trigger1 = "^(.+)受(.+)了快速传染效果",
 	trigger2 = "受到了毒性吐息效果的影响。",
 
@@ -115,13 +113,13 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	noxious_name = "毒性吐息警報",
 	noxious_desc = "毒性吐息警報",
-	
+
 	volatileyou_name = "玩家快速傳染警報",
 	volatileyou_desc = "你中了快速傳染時發出警報",
-	
+
 	volatileother_name = "隊友快速傳染警報",
 	volatileother_desc = "隊友中了快速傳染時發出警報",
-	
+
 	trigger1 = "^(.+)受到(.*)快速傳染效果的影響。",
 	trigger2 = "受到了毒性吐息效果的影響。",
 
@@ -137,13 +135,12 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	
 	noxious_name = "산성 숨결 경고",
 	noxious_desc = "산성 숨결에 대한 경고",
-	
+
 	volatileyou_name = "자신의 대지의 오염 경고",
 	volatileyou_desc = "자신의 대지의 오염에 대한 경고",
-	
+
 	volatileother_name = "타인의 대지의 오염 경고",
 	volatileother_desc = "타인의 대지의 오염에 대한 경고",
 
@@ -196,7 +193,7 @@ end
 				self:TriggerEvent("BigWigs_Message", L["warn4"], "Important")
 				self:ScheduleEvent("BigWigs_Message", 25, L["warn3"], "Important")
 				self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 30, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
-			end			
+			end
 		else
 			local _,_, EPlayer, EType = string.find(msg, L["trigger1"])
 			if (EPlayer and EType) then

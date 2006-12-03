@@ -51,7 +51,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	onyfear_name = "Alerte Peur",
 	onyfear_desc = "Pr\195\169viens quand Onyxia utilise son Rugissement puissant en phase 3.",
-	
+
 	trigger1 = "%s prend une grande inspiration%.%.%.",
 	trigger2 = "un seul coup !",
 	trigger3 = "Il semble que vous ayez besoin d'une autre le\195\167on, mortels !",
@@ -136,7 +136,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	deepbreath_name = "딥브레스 경고",
 	deepbreath_desc = "오닉시아가 딥 브레스 시전 시 경고",
 
@@ -149,7 +148,7 @@ L:RegisterTranslations("koKR", function() return {
 	onyfear_name = "공포",
 	onyfear_desc = "3단계 공포에 대한 경고",
 
-	trigger1 = "%s|1이;가; 숨을 깊게 들이쉽니다.", --"%s|1이;가; 깊은 숨을 들이쉽니다...",
+	trigger1 = "%s|1이;가; 숨을 깊게 들이쉽니다.",
 	trigger2 = "머리 위에서 모조리",
 	trigger3 = "혼이 더 나야 정신을 차리겠구나!",
 	trigger4 = "오닉시아|1이;가; 우레와같은 울부짖음|1을;를; 시전합니다.", -- CHECK

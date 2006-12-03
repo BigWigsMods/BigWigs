@@ -34,17 +34,17 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("deDE", function() return {
 	teleport_name = "Teleport",
 	teleport_desc = "Warnung f\195\188r Azuregos Teleport.",
-	
+
 	shield_name = "Magieschild",
 	shield_desc = "Warnung, wenn Magieschild aktiv.",
-	
+
 	trigger1 = "Tretet mir",
 	trigger2 = "Reflexion schwindet von Azuregos",
 	trigger3 = "^Azuregos bekommt 'Reflexion'",
 
 	warn1 = "Teleport!",
 	warn2 = "Magieschild: Aus!",
-	warn3 = "Magieschild: Aktiv!",	
+	warn3 = "Magieschild: Aktiv!",
 
 	shieldbar = "Magieschild",
 } end )
@@ -70,10 +70,10 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	teleport_name = "传送警报",
 	teleport_desc = "传送警报",
-	
+
 	shield_name = "护盾警报",
 	shield_desc = "护盾警报",
-	
+
 	trigger1 = "来吧，小子。面对我！",
 	trigger2 = "^反射效果从艾索雷葛斯身上消失",
 	trigger3 = "^艾索雷葛斯获得了反射",
@@ -81,17 +81,17 @@ L:RegisterTranslations("zhCN", function() return {
 	warn1 = "传送发动！",
 	warn2 = "魔法护盾消失！",
 	warn3 = "魔法护盾开启 - 不要施放法术！",
-	
+
 	shieldbar = "魔法护盾",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
 	teleport_name = "傳送警報",
 	teleport_desc = "傳送警報",
-	
+
 	shield_name = "護盾警報",
 	shield_desc = "護盾警報",
-	
+
 	trigger1 = "來吧，小子。面對我！",
 	trigger2 = "^反射效果從艾索雷葛斯身上消失",
 	trigger3 = "^艾索雷葛斯獲得了反射",
@@ -99,18 +99,17 @@ L:RegisterTranslations("zhTW", function() return {
 	warn1 = "傳送發動！",
 	warn2 = "魔法護盾消失！",
 	warn3 = "魔法護盾開啟 - 不要施放法術！",
-	
+
 	shieldbar = "魔法護盾",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	
 	teleport_name = "소환 경고",
 	teleport_desc = "소환에 대한 경고",
-	
+
 	shield_name = "보호막 경고",
 	shield_desc = "보호막에 대한 경고",
-	
+
 	trigger1 = "오너라, 조무래기들아! 덤벼봐라!",
 	trigger2 = "아주어고스의 몸에서 반사 효과가 사라졌습니다.",
 	trigger3 = "아주어고스|1이;가; 반사 효과를",
