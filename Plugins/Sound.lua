@@ -130,18 +130,25 @@ BigWigsSound.consoleOptions = {
 ------------------------------
 
 function BigWigsSound:OnEnable()
+	if not self.db.profile.sound then
+		self.core:ToggleModuleActive(self, false)
+		return
+	end
+
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("BigWigs_Sound")
 end
 
 function BigWigsSound:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
-	if not text or sound == false or broadcastonly then return end
+	if not text or sound == false or broadcastonly or not self.db.profile.sound then return end
 
 	if sounds[sound] and not self.db.profile.defaultonly then PlaySoundFile(sounds[sound])
 	else PlaySound("RaidWarning") end
 end
 
 function BigWigsSound:BigWigs_Sound( sound )
+	if not self.db.profile.sound then return end
 	if sounds[sound] and not self.db.profile.defaultonly then PlaySoundFile(sounds[sound])
 	else PlaySound("RaidWarning") end
 end
+
