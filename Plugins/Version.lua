@@ -337,8 +337,12 @@ end
 
 function BigWigsVersionQuery:AlertOldRevisions()
 	if not self.responseTable or (not IsRaidLeader() or not IsRaidOfficer()) then return end
+	local myVersion = self.zoneRevisions[self.currentZone]
+	if not myVersion then return end
 	for name, version in pairs(self.responseTable) do
-		self:TriggerEvent("BigWigs_SendTell", name, L["There seems to be a newer version of Big Wigs available for you, please upgrade."])
+		if version < myVersion then
+			self:TriggerEvent("BigWigs_SendTell", name, L["There seems to be a newer version of Big Wigs available for you, please upgrade."])
+		end
 	end
 end
 
