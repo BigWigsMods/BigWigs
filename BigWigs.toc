@@ -13,17 +13,14 @@
 ## X-RelSite-WoWI: 5086
 ## X-RelSite-Curse: 4356
 ## X-AceForum: 1222
-## X-FlySpray: 1
 
-## OptionalDeps: Ace2, FuBar, FuBarPlugin-2.0, Babble-2.2, CandyBar, CompostLib, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib, Surfaces, MikScrollingBattleText, sct
-## X-Embeds: Ace2, FuBarPlugin-2.0, Babble-2.2, CandyBar, CompostLib, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib
+## OptionalDeps: Ace2, FuBar, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib, Surfaces, MikScrollingBattleText, sct
+## X-Embeds: Ace2, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib
 
 ## SavedVariables: BigWigsDB, BigWigsFubarDB
 ## SavedVariablesPerCharacter: BigWigsDBPerChar
 
 Libs\AceLibrary\AceLibrary.lua
-Libs\Compost-2.0\Compost-2.0.lua
-
 Libs\AceOO-2.0\AceOO-2.0.lua
 Libs\AceAddon-2.0\AceAddon-2.0.lua
 Libs\AceConsole-2.0\AceConsole-2.0.lua
