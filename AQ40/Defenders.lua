@@ -130,10 +130,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	summon_name = "召唤警报",
 	summon_desc = "阿努比萨斯防御者召唤增援时发出警报",
-	
+
 	icon_name = "标记瘟疫",
 	icon_desc = "团队标记中瘟疫的玩家 (需要助理或更高权限)",
-	
+
 	explodetrigger = "阿努比萨斯防御者获得了爆炸的效果。",
 	explodewarn = "即将爆炸！近战躲开！",
 	enragetrigger = "阿努比萨斯防御者获得了狂怒的效果。",
@@ -154,7 +154,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Anubisath Defender 阿努比薩斯防禦者
 	plagueyou_name = "玩家瘟疫警報",
 	plagueyou_desc = "你中了瘟疫時發出警報",
 
@@ -172,10 +171,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	summon_name = "召喚警報",
 	summon_desc = "阿努比薩斯防禦者召喚增援時發出警報",
-	
+
 	icon_name = "標記瘟疫",
 	icon_desc = "團隊標記中瘟疫的玩家 (需要助理或領隊權限)",
-	
+
 	explodetrigger = "阿努比薩斯防禦者獲得了爆炸的效果。",
 	explodewarn = "即將爆炸！近戰躲開！",
 	enragetrigger = "阿努比薩斯防禦者獲得了狂怒的效果。",

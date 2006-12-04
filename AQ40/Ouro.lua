@@ -1,4 +1,5 @@
-﻿--      Are you local?      --
+﻿------------------------------
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Ouro"]
@@ -124,16 +125,16 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("koKR", function() return {
 	sweep_name = "휩쓸기 경고",
 	sweep_desc = "휩쓸기에 대한 경고",
-	
+
 	sandblast_name = "모래돌풍 경고",
 	sandblast_desc = "모래돌풍에 대한 경고",
-	
+
 	emerge_name = "등장 경고",
 	emerge_desc = "등장에 대한 경고",
-	
+
 	submerge_name = "잠수 경고",
 	submerge_desc = "잠수에 대한 경고",
-	
+
 	scarab_name = "스카라베 소환 경고",
 	scarab_desc = "스카라베 소환에 대한 경고",
 
@@ -175,19 +176,19 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	sweep_name = "横扫警报",
 	sweep_desc = "横扫警报",
-	
+
 	sandblast_name = "沙尘爆裂警报",
 	sandblast_desc = "沙尘爆裂警报",
-	
+
 	emerge_name = "钻地警报",
 	emerge_desc = "钻地警报",
-	
+
 	submerge_name = "钻出警报",
 	submerge_desc = "钻出警报",
-	
+
 	scarab_name = "甲虫消失警报",
 	scarab_desc = "甲虫消失警报",
-	
+
 	berserk_name = "狂暴警报",
 	berserk_desc = "当奥罗变得狂暴发出警报",
 
@@ -200,7 +201,7 @@ L:RegisterTranslations("zhCN", function() return {
 	sandblastannounce = "沙尘爆裂发动！",
 	sandblastwarn = "5秒后发动沙尘爆裂！",
 	sandblastbartext = "沙尘爆裂",
-	
+
 	engage_message = "奥罗激活！可能90秒后潜入地下！",
 	possible_submerge_bar = "潜入地下",
 
@@ -212,7 +213,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	scarabdespawn = "10秒后甲虫消失", --Translate me
 	scarabbar = "甲虫消失", -- Translate Me
-	
+
 	submergetrigger = "奥罗施放了召唤奥罗土堆。",
 	submergeannounce = "奥罗潜入地下！杀光虫子！",
 	submergewarn = "5秒后奥罗将钻出地面！",
@@ -226,19 +227,19 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	sweep_name = "橫掃警報",
 	sweep_desc = "奧羅施放橫掃時發出警報",
-	
+
 	sandblast_name = "沙塵爆裂警報",
 	sandblast_desc = "奧羅施放沙塵爆裂時發出警報",
-	
+
 	emerge_name = "鑽地警報",
 	emerge_desc = "奧羅鑽地時發出警報",
-	
+
 	submerge_name = "鑽出警報",
 	submerge_desc = "奧羅鑽出時發出警報",
-	
+
 	scarab_name = "甲蟲消失警報",
 	scarab_desc = "甲蟲消失時發出警報",
-	
+
 	berserk_name = "狂暴警報",
 	berserk_desc = "當奧羅變得狂暴發出警報",
 
@@ -251,7 +252,7 @@ L:RegisterTranslations("zhTW", function() return {
 	sandblastannounce = "沙塵爆裂！",
 	sandblastwarn = "5 秒後發動沙塵爆裂！",
 	sandblastbartext = "沙塵爆裂",
-	
+
 	engage_message = "奧羅已進入戰鬥 - 90 秒後可能潛入地下！",
 	possible_submerge_bar = "潛入地下",
 
@@ -263,7 +264,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	scarabdespawn = "10 秒後甲蟲消失", --Translate me
 	scarabbar = "甲蟲消失", -- Translate Me
-	
+
 	submergetrigger = "奧羅施放了召喚奧羅土堆。",
 	submergeannounce = "奧羅潛入地下！殺光蟲子！",
 	submergewarn = "5 秒後將鑽出地面！",

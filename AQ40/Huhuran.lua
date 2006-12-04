@@ -82,7 +82,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	berserk_name = "极度狂暴警报",
 	berserk_desc = "极度狂暴警报",
-	
+
 	frenzytrigger = "%s变得狂怒无比！",
 	berserktrigger = "%s变得狂暴了！",
 	frenzywarn = "狂暴警报 - 猎人立刻使用宁神射击！",
@@ -92,7 +92,7 @@ L:RegisterTranslations("zhCN", function() return {
 	stingwarn = "毒性之箭 - 给TANK驱散！",
 	stingdelaywarn = "3秒后哈霍兰可能施放毒性之箭！",
 	bartext = "毒性之箭",
-	
+
 	startwarn = "哈霍兰公主已激活 - 5分钟后进入极度狂暴状态",
 	berserkbar = "极度狂暴",
 	berserkwarn1 = "1分钟后极度狂暴！",
@@ -101,7 +101,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	--Princess Huhuran 哈霍蘭公主
 	wyvern_name = "毒性之箭警報",
 	wyvern_desc = "哈霍蘭公主毒性之箭的警報",
 
@@ -110,7 +109,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	berserk_name = "極度狂暴模式警報",
 	berserk_desc = "哈霍蘭公主進入極度狂暴模式的倒數警報",
-	
+
 	frenzytrigger = "變得狂暴起來！",
 	berserktrigger = "進入狂暴狀態！",
 	frenzywarn = "狂暴警報 - 獵人立刻使用寧神射擊！",
@@ -120,7 +119,7 @@ L:RegisterTranslations("zhTW", function() return {
 	stingwarn = "毒性之箭！淨化近戰！",
 	stingdelaywarn = "3 秒後可能施放毒性之箭！",
 	bartext = "毒性之箭",
-	
+
 	startwarn = "哈霍蘭公主已進入戰鬥 - 5 分鐘後進入極度狂暴狀態",
 	berserkbar = "極度狂暴",
 	berserkwarn1 = "1 分鐘後極度狂暴！",
@@ -129,7 +128,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	wyvern_name = "비룡 쐐기 경고",
 	wyvern_desc = "비룡 쐐기에 대한 경고",
 
@@ -148,7 +146,7 @@ L:RegisterTranslations("koKR", function() return {
 	stingwarn = "비룡 쐐기 - 메인탱커 해제!",
 	stingdelaywarn = "비룡 쐐기 약 3초전!",
 	bartext = "비룡 쐐기",
-	
+
 	startwarn = "후후란 전투 개시, 5분 후 광기!!",
 	berserkbar = "광기",
 	berserkwarn1 = "광기 - 1 분전!",

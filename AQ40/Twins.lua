@@ -103,7 +103,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	heal_name = "治疗警报",
 	heal_desc = "双子皇帝互相治疗时发出警报",
-	
+
 	porttrigger = "施放了双子传送。",
 	portwarn = "双子传送发动！",
 	portdelaywarn = "5秒后发动双子传送！",
@@ -128,7 +128,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Twin Emperors 雙子皇帝
 	bug_name = "爆炸蟲警報",
 	bug_desc = "雙子皇帝施放爆炸蟲時發出警報",
 
@@ -140,7 +139,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	heal_name = "治療警報",
 	heal_desc = "雙子皇帝互相治療時發出警報",
-	
+
 	porttrigger = "施放了雙子傳送。",
 	portwarn = "雙子傳送發動！",
 	portdelaywarn = "5 秒後發動雙子傳送！",

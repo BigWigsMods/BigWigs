@@ -146,7 +146,6 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	tentacle_name = "촉수 경고",
 	tentacle_desc = "촉수에 대한 경고",
 
@@ -162,7 +161,7 @@ L:RegisterTranslations("koKR", function() return {
 	weakened_name = "약화 경고",
 	weakened_desc = "약화 상태에 대한 경고",
 
-	weakenedtrigger 	= "%s|1이;가; 약해집니다!", --"%s|1이;가; 약해졌습니다!",
+	weakenedtrigger 	= "%s|1이;가; 약해집니다!",
 
 	tentacle1	= "눈달린 촉수 등장 - 촉수 처리~~!",
 	tentacle2	= "눈달린 촉수 등장 - 5초전!",
@@ -198,7 +197,6 @@ L:RegisterTranslations("koKR", function() return {
 	phase2starting	= "쑨의 눈 처치, 본체가 등장합니다. 준비!",
 } end )
 
---fix local by 月色
 L:RegisterTranslations("zhCN", function() return {
 	tentacle_name = "触须警报",
 	tentacle_desc = "触须出现时发出警报",
@@ -251,9 +249,7 @@ L:RegisterTranslations("zhCN", function() return {
 	phase2starting	= "克苏恩之眼已死亡 - 进入第二阶段！",
 } end )
 
-
 L:RegisterTranslations("zhTW", function() return {
-	--C'Thun 克蘇恩
 	tentacle_name = "觸鬚警報",
 	tentacle_desc = "觸鬚出現時發出警報",
 
@@ -305,7 +301,6 @@ L:RegisterTranslations("zhTW", function() return {
 	phase2starting	= "克蘇恩之眼已死亡 - 進入第二階段！",
 } end )
 
-
 L:RegisterTranslations("frFR", function() return {
 	weakenedtrigger = "%s est affaibli !",
 } end )
@@ -331,8 +326,8 @@ function BigWigsCThun:OnEnable()
 	tentacletime = timeP1Tentacle
 
 	-- register events
-	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")		-- weakened triggering
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")	-- start of phase2 and kill of C'Thun
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE") -- engage of Eye of C'Thun
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE") -- engage of Eye of C'Thun
 	-- Not sure about this, since we get out of combat between the phases.
@@ -490,7 +485,6 @@ function BigWigsCThun:StartTentacleRape()
 	self:TentacleRape()
 	self:ScheduleRepeatingEvent("bwcthuntentacles", self.TentacleRape, tentacletime, self )
 end
-
 
 function BigWigsCThun:CheckTarget()
 	local i

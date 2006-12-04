@@ -5,6 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Fankriss the Unyielding"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local worms
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -32,17 +33,16 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	worm_name = "虫子警报",
 	worm_desc = "召唤虫子出现时发出警报",
-	
+
 	wormtrigger = "顽强的范克瑞斯施放了召唤虫子。",
 	wormwarn = "虫子出现 - 赶快杀掉！ (%d)",
 	wormbar = "沙虫激怒 (%d)",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Fankriss the Unyielding 頑強的范克里斯
 	worm_name = "蟲子警報",
 	worm_desc = "范克里斯召喚蟲子時發出警報",
-	
+
 	wormtrigger = "頑強的范克里斯施放了召喚蟲子。",
 	wormwarn = "召喚蟲子出現！注意！",
 	wormbar = "王蟲激怒(%d)",

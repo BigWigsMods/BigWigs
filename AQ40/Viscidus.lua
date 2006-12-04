@@ -86,7 +86,7 @@ L:RegisterTranslations("deDE", function() return {
 	warn8		= " ist in einer Toxin Wolke!",
 	warn9		= "Du bist in einer Toxin Wolke!",
 
-	bar1text        = "Poison Bolt Volley",
+	bar1text	= "Poison Bolt Volley",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -101,7 +101,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	freeze_name = "冻结状态警报",
 	freeze_desc = "冻结状态警报",
-	
+
 	trigger1 	= "的速度慢下来了！",
 	trigger2 	= "冻结了！",
 	trigger3 	= "变成了坚硬的固体！",
@@ -127,7 +127,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	-- Viscidus 維希度斯
 	volley_name = "毒性之箭警報",
 	volley_desc = "當維希度斯施放毒性之箭時時發出警報",
 
@@ -139,7 +138,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	freeze_name = "凍結狀態警報",
 	freeze_desc = "友方被凍結時發出警報",
-	
+
 	trigger1 	= "的速度慢下來了！",
 	trigger2 	= "凍住了！",
 	trigger3 	= "變成了堅硬的固體！",
@@ -202,12 +201,10 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
--- need french chat/combatlog
 	trigger7 	= "^([^%s]+) ([^%s]+) subit les effets de Toxine%.$",
 
 	you 		= "Vous",
 	are 		= "subissez",
-
 } end )
 
 ----------------------------------

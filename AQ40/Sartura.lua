@@ -50,7 +50,7 @@ L:RegisterTranslations("frFR", function() return {
 	enragetrigger = "devient fou furieux !",
 	enragewarn = "Enrag\195\169 ! Enrag\195\169 ! Enrag\195\169 !",
 	bartext = "Enrag\195\169",
-	
+
 	warn1 = "Enrag\195\169 dans 8 minutes",
 	warn2 = "Enrag\195\169 dans 5 minutes",
 	warn3 = "Enrag\195\169 dans 3 minutes",
@@ -58,7 +58,7 @@ L:RegisterTranslations("frFR", function() return {
 	warn5 = "Enrag\195\169 dans 60 secondes",
 	warn6 = "Enrag\195\169 dans 30 secondes",
 	warn7 = "Enrag\195\169 dans 10 secondes",
-	
+
 	whirlwindon = "Garde de guerre Sartura gagne Tourbillon.",
 	whirlwindoff = "Tourbillon sur Garde de guerre Sartura vient de se dissiper.",
 	whirlwindonwarn = "Tourbillon - "..boss.." - Tourbillon",
@@ -98,7 +98,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	whirlwind_name = "旋风斩警报",
 	whirlwind_desc = "旋风斩警报",
-	
+
 	starttrigger = "我宣判你死刑",
 	startwarn = "沙尔图拉已激活 - 10分钟后进入激怒状态",
 	enragetrigger = "沙尔图拉进入激怒状态！",
@@ -119,13 +119,12 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	--Battleguard Sartura 沙爾圖拉
 	enrage_name = "狂暴警報",
 	enrage_desc = "當沙爾圖拉狂暴時發出警報",
 
 	whirlwind_name = "旋風斬警報",
 	whirlwind_desc = "當沙爾圖拉施放旋風斬發出警報",
-	
+
 	starttrigger = "我判你死刑！",
 	startwarn = "沙爾圖拉已進入戰鬥 - 10分鐘後進入狂暴狀態",
 	enragetrigger = "沙爾圖拉獲得了狂怒的效果。",
@@ -146,7 +145,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-
 	enrage_name = "격노 경고",
 	enrage_desc = "격노에 대한 경고",
 
