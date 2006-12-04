@@ -313,7 +313,7 @@ function BigWigsHorsemen:OnEnable()
 	-- bump mark to 3
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenMark", 600)
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenMark2", 600)
-	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenMark3", 8)
+	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenMark3", 10.5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenVoid", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenWrath", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenMeteor", 5)
