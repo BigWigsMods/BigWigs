@@ -283,24 +283,21 @@ function BigWigsVersionQuery:UpdateVersions()
 end
 
 function BigWigsVersionQuery:OnTooltipUpdate()
-	local zoneCat = tablet:AddCategory(
-		"columns", 1,
-		"text", L["Zone"],
-		"child_justify1", "LEFT"
-	)
-	zoneCat:AddLine("text", self.currentZone)
-	local playerscat = tablet:AddCategory(
-		"columns", 1,
-		"text", L["Nr Replies"],
-		"child_justify1", "LEFT"
-	)
-	playerscat:AddLine("text", self.responses)
+	local infoCat = tablet:AddCategory(
+		"columns", 2,
+		"child_textR", 1,
+		"child_textG", 1,
+		"child_textB", 0,
+		"child_text2R", 1,
+		"child_text2G", 1,
+		"child_text2B", 1
+    )
+	infoCat:AddLine("text", L["Zone"], "text2", self.currentZone)
+	infoCat:AddLine("text", L["Nr Replies"], "text2", self.responses)
 	local cat = tablet:AddCategory(
 		"columns", 2,
 		"text", L["Player"],
-		"text2", L["Version"],
-		"child_justify1", "LEFT",
-		"child_justify2", "RIGHT"
+		"text2", L["Version"]
 	)
 	for name, version in pairs(self.responseTable) do
 		if version == -1 then
