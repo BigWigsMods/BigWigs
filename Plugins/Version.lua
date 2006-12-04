@@ -40,6 +40,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Runs a version query on the BigWigs core."] = true,
 	["Nr Replies"] = true,
 	["Ancient"] = true,
+	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = true,
+	["Notify people with older versions that there is a new version available."] = true,
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -250,29 +252,34 @@ end
 function BigWigsVersionQuery:UpdateVersions()
 	if not tablet:IsRegistered("BigWigs_VersionQuery") then
 		tablet:Register("BigWigs_VersionQuery",
-			"children", function() tablet:SetTitle(L["Big Wigs Version Query"])
-				self:OnTooltipUpdate() end,
+			"children", function()
+				tablet:SetTitle(L["Big Wigs Version Query"])
+				self:OnTooltipUpdate()
+			end,
 			"clickable", true,
 			"showTitleWhenDetached", true,
 			"showHintWhenDetached", true,
 			"cantAttach", true,
 			"menu", function()
-					dewdrop:AddLine(
-						"text", L["BigWigs"],
-						"tooltipTitle", L["BigWigs"],
-						"tooltipText", L["Runs a version query on the BigWigs core."],
-						"func", function() self:QueryVersion("BigWigs") end)
-					dewdrop:AddLine(
-						"text", L["Current zone"],
-						"tooltipTitle", L["Current zone"],
-						"tooltipText", L["Runs a version query on your current zone."],
-						"func", function() self:QueryVersion() end)
-					dewdrop:AddLine(
-						"text", L["Close window"],
-						"tooltipTitle", L["Close window"],
-						"tooltipText", L["Closes the version query window."],
-						"func", function() tablet:Attach("BigWigs_VersionQuery"); dewdrop:Close() end)
-				end
+				dewdrop:AddLine(
+					"text", L["BigWigs"],
+					"tooltipTitle", L["BigWigs"],
+					"tooltipText", L["Runs a version query on the BigWigs core."],
+					"func", function() self:QueryVersion("BigWigs") end)
+				dewdrop:AddLine(
+					"text", L["Current zone"],
+					"tooltipTitle", L["Current zone"],
+					"tooltipText", L["Runs a version query on your current zone."],
+					"func", function() self:QueryVersion() end)
+				dewdrop:AddLine(
+					"text", L["Close window"],
+					"tooltipTitle", L["Close window"],
+					"tooltipText", L["Closes the version query window."],
+					"func", function()
+						tablet:Attach("BigWigs_VersionQuery")
+						dewdrop:Close()
+					end)
+			end
 		)
 	end
 	if tablet:IsAttached("BigWigs_VersionQuery") then
@@ -299,6 +306,7 @@ function BigWigsVersionQuery:OnTooltipUpdate()
 		"text", L["Player"],
 		"text2", L["Version"]
 	)
+	local hasOld = nil
 	for name, version in pairs(self.responseTable) do
 		if version == -1 then
 			cat:AddLine("text", name, "text2", "|cff"..COLOR_RED..L["N/A"].."|r")
@@ -308,13 +316,30 @@ function BigWigsVersionQuery:OnTooltipUpdate()
 			if self.zoneRevisions[self.currentZone] and version > self.zoneRevisions[self.currentZone] then
 				color = COLOR_GREEN
 			elseif self.zoneRevisions[self.currentZone] and version < self.zoneRevisions[self.currentZone] then
+				hasOld = true
 				color = COLOR_RED
 			end
 			cat:AddLine("text", name, "text2", "|cff"..color..version.."|r")
 		end
 	end
 
+	if self.responseTable and hasOld and (IsRaidLeader() or IsRaidOfficer()) then
+		local alertCat = tablet:AddCategory("columns", 1)
+		alertCat:AddLine(
+			"text", L["Notify people with older versions that there is a new version available."],
+			"wrap", true,
+			"func", function() BigWigsVersionQuery:AlertOldRevisions() end
+		)
+	end
+
 	tablet:SetHint(L["Green versions are newer than yours, red are older, and white are the same."])
+end
+
+function BigWigsVersionQuery:AlertOldRevisions()
+	if not self.responseTable or (not IsRaidLeader() or not IsRaidOfficer()) then return end
+	for name, version in pairs(self.responseTable) do
+		self:TriggerEvent("BigWigs_SendTell", name, L["There seems to be a newer version of Big Wigs available for you, please upgrade."])
+	end
 end
 
 function BigWigsVersionQuery:QueryVersion(zone)
@@ -432,3 +457,4 @@ function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
 		end
 	end
 end
+
