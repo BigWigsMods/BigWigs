@@ -166,8 +166,13 @@ function BigWigsCustomBar:StartBar(bar, nick, localOnly)
 	if seconds == nil then return end
 
 	if not nick then nick = L["Local"] end
-	self:ScheduleEvent("bwcb"..nick..barText, "BigWigs_Message", seconds, string.format(L["%s: Timer [%s] finished."], nick, barText), "Attention", localOnly)
-	self:TriggerEvent("BigWigs_StartBar", self, string.format(L["%s: %s"], nick, barText), seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+	if seconds == 0 then
+		self:CancelScheduledEvent("bwcb"..nick..barText)
+		self:TriggerEvent("BigWigs_StopBar", self, string.format(L["%s: %s"], nick, barText))
+	else
+		self:ScheduleEvent("bwcb"..nick..barText, "BigWigs_Message", seconds, string.format(L["%s: Timer [%s] finished."], nick, barText), "Attention", localOnly)
+		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["%s: %s"], nick, barText), seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+	end
 end
 
 -- For easy use in macros.
@@ -194,3 +199,4 @@ function BigWigsCustomBar:RegisterShortHand()
 		setglobal("SLASH_BWLCB_SHORTHAND1", "/"..L["bwlcb"])
 	end
 end
+
