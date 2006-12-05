@@ -439,18 +439,11 @@ end
 
 function BigWigs.modulePrototype:CheckForWipe()
 	local running = self:IsEventScheduled(self:ToString().."_CheckWipe")
-	-- If we are a hunter, we need to check for the FD buff.
-	local _, class = UnitClass("player")
-	if class == "HUNTER" then
-		for i = 1, 16 do
-			local buff = UnitBuff("player", i)
-			if buff and buff == "Interface\\Icons\\Ability_Rogue_FeignDeath" then
-				if not running then
-					self:ScheduleRepeatingEvent(self:ToString().."_CheckWipe", self.CheckForWipe, 2, self)
-				end
-				return
-			end
+	if IsFeignDeath() then
+		if not running then
+			self:ScheduleRepeatingEvent(self:ToString().."_CheckWipe", self.CheckForWipe, 2, self)
 		end
+		return
 	end
 
 	local go = self:Scan()
