@@ -389,6 +389,15 @@ function BigWigs.modulePrototype:Scan()
 		end
 	end
 
+	if UnitExists("focus") and UnitAffectingCombat("focus") then
+		local target = UnitName("focus")
+		for _, mob in pairs(t) do
+			if target == mob then
+				return true
+			end
+		end
+	end
+
 	local num = GetNumRaidMembers()
 	for i = 1, num do
 		local raidUnit = string.format("raid%starget", i)
