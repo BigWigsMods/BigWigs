@@ -356,6 +356,11 @@ function BigWigsSapphiron:RepeatedTargetScanner()
 		found = true
 	end
 
+	if not found and UnitExists("focus") and UnitName("focus") == boss then
+		cachedUnitId = "focus"
+		found = true
+	end
+
 	-- Loop the raid roster
 	if not found then
 		for i = 1, GetNumRaidMembers() do
