@@ -15,7 +15,7 @@
 ## X-AceForum: 1222
 
 ## OptionalDeps: Ace2, FuBar, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib, Surfaces, MikScrollingBattleText, sct
-## X-Embeds: Ace2, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib
+## X-Embeds: Ace2, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib 
 
 ## SavedVariables: BigWigsDB, BigWigsFubarDB
 ## SavedVariablesPerCharacter: BigWigsDBPerChar
