@@ -303,9 +303,9 @@ function BigWigsDefenders:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderEnrage", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderExplode", 10)
-	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderThunderclap", 6)
-	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderMeteor", 6)
-	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderShadowstorm", 6)
+	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderThunderclap", 12)
+	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderMeteor", 12)
+	self:TriggerEvent("BigWigs_ThrottleSync", "DefenderShadowstorm", 12)
 end
 
 ------------------------------
