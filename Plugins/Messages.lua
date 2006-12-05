@@ -244,7 +244,13 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	["Messages"] = "Messages",
+	--["Messages"] = true,
+
+	--["msg"] = true,
+	--["anchor"] = true,
+	--["rw"] = true,
+	--["color"] = true,
+	--["scale"] = true,
 
 	["Options for the message frame."] = "Options concernant le cadre des messages.",
 	["Anchor"] = "Ancre",
@@ -258,7 +264,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Message frame"] = "Cadre des messages",
 	["Show anchor"] = "Afficher l'ancre",
 	["Send messages to RaidWarning frame"] = "Envoyer les messages dans le cadre des Avertissements Raid",
-	["Set the message frame scale."] = "Détermine la taille du cadre des messages.",
+	["Set the message frame scale."] = "D\195\169termine la taille du cadre des messages.",
 	["Colorize messages"] = "Colorer les messages",
 	["Scale"] = "Taille",
 
@@ -266,19 +272,21 @@ L:RegisterTranslations("frFR", function() return {
 	["White"] = "Blanc",
 	["BigWigs frame"] = "Cadre de BigWigs",
 	["RaidWarning frame"] = "Cadre des Avertissements Raid",
-	["Scale is set to %s"] = "La taille est désormais définie à %s",
-	["Messages are now sent to the %2$s"] = "Les messages sont désormais affichés dans le %2$s",
-	["Messages are currently sent to the %2$s"] = "Les messages sont actuellement affichés dans le %2$s",
+	["Scale is set to %s"] = "La taille est d\195\169sormais d\195\169finie \195\160 %s",
+	["Messages are now sent to the %2$s"] = "Les messages sont d\195\169sormais affich\195\169s dans le %2$s",
+	["Messages are currently sent to the %2$s"] = "Les messages sont actuellement affich\195\169s dans le %2$s",
 
+	--["display"] = true,
 	["Display"] = "Affichage",
-	["Set where messages are displayed."] = "Détermine où les messages sont affichés.",
-	["Display is now set to %2$s"] = "L'affichage est désormais défini au %2$s",
-	["Display is currently set to %2$s"] = "L'affichage est actuellement défini au %2$s",
+	["Set where messages are displayed."] = "D\195\169termine o\195\185 les messages sont affich\195\169s.",
+	["Display is now set to %2$s"] = "L'affichage est d\195\169sormais d\195\169fini au %2$s",
+	["Display is currently set to %2$s"] = "L'affichage est actuellement d\195\169fini au %2$s",
 
 	["Mik's Scrolling Battle Text"] = "Scrolling Battle Text de Mik",
---	["Scrolling Combat Text"] = "Scrolling Combat Text",
+	--["Scrolling Combat Text"] = true,
 	["Floating Combat Text"] = "Message de combat flottant",
 
+	--["Test"] = true,
 	["Close"] = "Fermer",
 } end)
 

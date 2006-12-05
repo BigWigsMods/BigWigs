@@ -135,26 +135,30 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	["Raid Icons"] = "Icônes de raid",
+	["Raid Icons"] = "Ic\195\180nes de raid",
+
+	--["raidicon"] = true,
+	--["place"] = true,
+	--["icon"] = true,
 
 	["Place"] = "Placement",
-	["Place Raid Icons"] = "Placer les icônes de raid",
-	["Toggle placing of Raid Icons on players."] = "Place ou non les icônes de raid sur les joueurs.",
+	["Place Raid Icons"] = "Placer les ic\195\180nes de raid",
+	["Toggle placing of Raid Icons on players."] = "Place ou non les ic\195\180nes de raid sur les joueurs.",
 
-	["Icon"] = "Icône",
-	["Set Icon"] = "Déterminer l'icône",
-	["Set which icon to place on players."] = "Détermine quelle icône sera placée sur les joueurs.",
+	["Icon"] = "Ic\195\180ne",
+	["Set Icon"] = "D\195\169terminer l'ic\195\180ne",
+	["Set which icon to place on players."] = "D\195\169termine quelle ic\195\180ne sera plac\195\169e sur les joueurs.",
 
-	["Options for Raid Icons."] = "Options concernant les icônes de raid.",
+	["Options for Raid Icons."] = "Options concernant les ic\195\180nes de raid.",
 
-	["star"] = "étoile",
+	["star"] = "\195\169toile",
 	["circle"] = "cercle",
 	["diamond"] = "diamant",
 	["triangle"] = "triangle",
 	["moon"] = "lune",
-	["square"] = "carré",
+	["square"] = "carr\195\169",
 	["cross"] = "croix",
-	["skull"] = "crâne",
+	["skull"] = "cr\195\162ne",
 } end )
 
 ----------------------------------

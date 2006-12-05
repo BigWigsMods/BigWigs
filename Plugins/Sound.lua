@@ -82,12 +82,15 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["Sounds"] = "Sons",
+	--["sounds"] = true,
 	["Options for sounds."] = "Options concernant les sons.",
 
+	--["toggle"] = true,
 	["Use sounds"] = "Utiliser les sons",
 	["Toggle sounds on or off."] = "Joue ou non les sons.",
-	["Default only"] = "Son par défaut uniquement",
-	["Use only the default sound."] = "Utilise uniquement le son par défaut.",	
+	--["default"] = true,
+	["Default only"] = "Son par d\195\169faut uniquement",
+	["Use only the default sound."] = "Utilise uniquement le son par d\195\169faut.",
 } end)
 
 ----------------------------------

@@ -173,9 +173,14 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("frFR", function() return {
 	["Bars"] = "Barres",
 
+	--["bars"] = true,
+	--["anchor"] = true,
+	--["scale"] = true,
+	--["up"] = true,
+
 	["Options for the timer bars."] = "Options concernant les barres temporelles.",
 	["Show the bar anchor frame."] = "Affiche l'ancre du cadre des barres.",
-	["Set the bar scale."] = "Détermine la taille des barres.",
+	["Set the bar scale."] = "D\195\169termine la taille des barres.",
 	["Group upwards"] = "Ajouter vers le haut",
 	["Toggle bars grow upwards/downwards from anchor."] = "Ajoute les nouvelles barres soit en haut de l'ancre, soit en bas de l'ancre.",
 
@@ -185,17 +190,17 @@ L:RegisterTranslations("frFR", function() return {
 	["Scale"] = "Taille",
 	["Bar scale"] = "Taille des barres",
 
-	["Bars now grow %2$s"] = "Les barres s'ajoutent désormais vers le %2$s.",
-	["Scale is set to %2$s"] = "La taille est désormais définie à %2$s.",
+	["Bars now grow %2$s"] = "Les barres s'ajoutent d\195\169sormais vers le %2$s.",
+	["Scale is set to %2$s"] = "La taille est d\195\169sormais d\195\169finie à %2$s.",
 
 	["Up"] = "haut",
 	["Down"] = "bas",
 
-	["Test"] = "Test",
+	--["Test"] = true,
 	["Close"] = "Fermer",
 
-	["Texture"] = "Texture",
-	["Set the texture for the timerbars."] = "Détermine la texture des barres temporelles.",
+	--["Texture"] = true,
+	["Set the texture for the timerbars."] = "D\195\169termine la texture des barres temporelles.",
 } end)
 
 ----------------------------------

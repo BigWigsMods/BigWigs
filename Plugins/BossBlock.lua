@@ -161,35 +161,35 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	["BossBlock"] = "BossBlock",
+	["BossBlock"] = "Bloquage BossMods",
 	["Suppress bossmod chat from other players."] = "Supprime les messages des BossMods des autres joueurs.",
 
 	["Suppress Raid Chat"] = "Supprimer les messages du canal Raid",
 	["Suppress messages in the raid channel."] = "Supprime les messages du canal Raid.",
 
 	["Suppress RaidWarn Chat"] = "Supprimer les Avertissements Raid du chat",
-	["Suppress RaidWarn messages in the chat frames."] = "Supprime les messages de l'Avertissement Raid de la fenêtre de discussion.",
+	["Suppress RaidWarn messages in the chat frames."] = "Supprime les messages de l'Avertissement Raid de la fen\195\170tre de discussion.",
 
 	["Suppress RaidWarn"] = "Supprimer les Avertissements Raid",
-	["Suppress RaidWarn popup messages."] = "Supprime les messages à l'écran de l'Avertissement Raid.",
+	["Suppress RaidWarn popup messages."] = "Supprime les messages \195\160 l'\195\169cran de l'Avertissement Raid.",
 
 	["Suppress RaidSay"] = "Supprimer les RaidSay",
-	["Suppress CTRA RaidSay popup messages."] = "Supprime les messages à l'écran du RaidSay de CTRA.",
-	["Suppress oRA RaidSay popup messages."] = "Supprime les messages à l'écran du RaidSay de oRA.",
-	["Suppress oRA2 RaidSay popup messages."] = "Supprime les messages à l'écran du RaidSay de oRA2.",
+	["Suppress CTRA RaidSay popup messages."] = "Supprime les messages \195\160 l'\195\169cran du RaidSay de CTRA.",
+	["Suppress oRA RaidSay popup messages."] = "Supprime les messages \195\160 l'\195\169cran du RaidSay de oRA.",
+	["Suppress oRA2 RaidSay popup messages."] = "Supprime les messages \195\160 l'\195\169cran du RaidSay de oRA2.",
 
 	["Suppress Tells"] = "Supprimer les chuchotements",
-	["Suppress Tell messages."] = "Supprime les messages chuchotés.",
+	["Suppress Tell messages."] = "Supprime les messages chuchot\195\169s.",
 
-	["Debugging"] = "Débogage",
-	["Show debug messages."] = "Affiche les messages de débogage.",
+	["Debugging"] = "D\195\169bogage",
+	["Show debug messages."] = "Affiche les messages de d\195\169bogage.",
 
-	["Suppressing Chatframe"] = "Suppression de la fenêtre de discussion",
+	["Suppressing Chatframe"] = "Suppression de la fen\195\170tre de discussion",
 	["Suppressing RaidWarningFrame"] = "Suppression du cadre de l'Avertissement Raid",
 	["Suppressing CT_RAMessageFrame"] = "Suppression du cadre du RaidSay de CTRA",
 
-	["Suppressed"] = "Supprimé",
-	["Shown"] = "Affiché",
+	["Suppressed"] = "Supprim\195\169",
+	["Shown"] = "Affich\195\169",
 } end)
 
 ------------------------------

@@ -108,8 +108,8 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	--["test"] = "test",
-	--["Test"] = "Test",
+	--["test"] = true,
+	--["Test"] = true,
 	["Test Bar"] = "Barre de test",
 	["Test Bar 2"] = "Barre de test 2",
 	["Test Bar 3"] = "Barre de test 3",
@@ -119,10 +119,10 @@ L:RegisterTranslations("frFR", function() return {
 	["*RAWR*"] = "*GRRR*",
 	["Victory!"] = "Victoire !",
 	["Options for testing."] = "Options concernant les tests.",
-	--["local"] = "local",
+	--["local"] = true,
 	["Local test"] = "Test local",
 	["Perform a local test of BigWigs."] = "Effectue un test local de BigWigs.",
-	--["sync"] = "sync",
+	--["sync"] = true,
 	["Sync test"] = "Test de synchronisation",
 	["Perform a sync test of BigWigs."] = "Effectue un test de synchronisation de BigWigs.",
 	["Testing Sync"] = "Test synchro",

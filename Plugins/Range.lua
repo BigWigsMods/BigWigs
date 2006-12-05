@@ -127,23 +127,29 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	["Range"] = "Portée",
-	["Options for the combat log's range."] = "Options concernant la portée du journal de combat.",
+	["Range"] = "Port\195\169e",
+	--["range"] = true,
+	["Options for the combat log's range."] = "Options concernant la port\195\169e du journal de combat.",
 
+--~~ 	["party"] = true,
 --~~  	["Party"] = "Groupe",
---~~  	["Party combat log range."] = "Portée du journal de combat du groupe.",
+--~~  	["Party combat log range."] = "Port\195\169e du journal de combat du groupe.",
 
---~~  	["Friendlies"] = "Alliés",
---~~  	["Friendly players combat log range."] = "Portée du journal de combat des alliés.",
+--~~ 	["friend"] = true,
+--~~  	["Friendlies"] = "Alli\195\169s",
+--~~  	["Friendly players combat log range."] = "Port\195\169e du journal de combat des alli\195\169s.",
 
-	["Creatures"] = "Créatures",
-	["Creature combat log range."] = "Portée du journal de combat des créatures.",
+	--["mob"] = true,
+	["Creatures"] = "Cr\195\169atures",
+	["Creature combat log range."] = "Port\195\169e du journal de combat des cr\195\169atures.",
 
+	--["death"] = true,
 	["Deaths"] = "Morts",
-	["Death message range."] = "Portée du journal de combat des décès.",
+	["Death message range."] = "Port\195\169e du journal de combat des d\195\169c\195\168s.",
 
-	["Reset to defaults"] = "RÀZ",
-	["Resets all ranges to defaults."] = "Réinitialise tous les paramètres à leurs valeurs par défaut.",
+	--["reset"] = true,
+	["Reset to defaults"] = "R\195\128Z",
+	["Resets all ranges to defaults."] = "R\195\169initialise tous les param\195\168tres \195\160 leurs valeurs par d\195\169faut.",
 } end)
 
 ----------------------------------
