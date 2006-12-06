@@ -303,6 +303,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	weakenedtrigger = "%s est affaibli !",
+	eyebeam		= "Rayon de l'Oeil",
 } end )
 
 ----------------------------------
