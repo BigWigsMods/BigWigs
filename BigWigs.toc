@@ -133,4 +133,3 @@ Karazhan\Malchezaar.lua
 Karazhan\ShadeOfAran.lua
 Karazhan\Terestian.lua
 Karazhan\TheBigBadWolf.lua
-
