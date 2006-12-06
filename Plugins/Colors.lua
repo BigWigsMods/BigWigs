@@ -28,7 +28,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Colors of messages and bars."] = true,
 	["Colors of messages."] = true,
-	["Change the color for \"%s\" messages."] = true,
+	["Change the color for %q messages."] = true,
 	["Colors of bars."] = true,
 	["Colors for short bars (< 1 minute)."] = true,
 	["Colors for long bars (> 1 minute)."] = true,
@@ -69,7 +69,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	["Colors of messages and bars."] = "메세지와 바의 색상.",
 	["Colors of messages."] = "메세지의 색생",
-	["Change the color for \"%s\" messages."] = "\"%s\" 메세지에 대한 색생 변경.",
+	["Change the color for %q messages."] = "%q 메세지에 대한 색생 변경.",
 	["Colors of bars."] = "바의 색상.",
 	["Colors for short bars (< 1 minute)."] = "짧은 바에 대한 색상 (< 1 분).",
 	["Colors for long bars (> 1 minute)."] = "긴 바에 대한 색상 (> 1 분).",
@@ -110,7 +110,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	["Colors of messages and bars."] = "信息文字与计时条颜色。",
 	["Colors of messages."] = "信息文字颜色。",
-	["Change the color for \"%s\" messages."] = "变更\"%s\"信息的颜色。",
+	["Change the color for %q messages."] = "变更%q信息的颜色。",
 	["Colors of bars."] = "计时条颜色。",
 	["Colors for short bars (< 1 minute)."] = "短时计时条（小于一分钟）的颜色。",
 	["Colors for long bars (> 1 minute)."] = "长时计时条（大于一分钟）的颜色。",
@@ -151,7 +151,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	["Colors of messages and bars."] = "訊息文字與計時條顏色。",
 	["Colors of messages."] = "訊息文字顏色。",
-	["Change the color for \"%s\" messages."] = "變更\"%s\"訊息的顏色。",
+	["Change the color for %q messages."] = "變更%q訊息的顏色。",
 	["Colors of bars."] = "計時條顏色。",
 	["Colors for short bars (< 1 minute)."] = "短時計時條（小於一分鐘）的顏色。",
 	["Colors for long bars (> 1 minute)."] = "長時計時條（大於一分鐘）的顏色。",
@@ -192,7 +192,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	["Colors of messages and bars."] = "Farben der Nachrichten und Anzeigebalken.",
 	["Colors of messages."] = "Farben der Nachrichten.",
-	["Change the color for \"%s\" messages."] = "Farbe \195\164ndern f\195\188r \"%s\" Nachrichten.",
+	["Change the color for %q messages."] = "Farbe \195\164ndern f\195\188r %q Nachrichten.",
 	["Colors of bars."] = "Farben der Anzeigebalken.",
 	["Colors for short bars (< 1 minute)."] = "Farben f\195\188r kurze Anzeigebalken (< 1 Minute).",
 	["Colors for long bars (> 1 minute)."] = "Farben f\195\188r lange Anzeigebalken (> 1 Minute).",
@@ -233,7 +233,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	["Colors of messages and bars."] = "Couleurs des messages et des barres.",
 	["Colors of messages."] = "Couleurs des messages.",
-	["Change the color for \"%s\" messages."] = "Change la couleur des messages \"%s\".",
+	["Change the color for %q messages."] = "Change la couleur des messages %q.",
 	["Colors of bars."] = "Couleurs des barres.",
 	["Colors for short bars (< 1 minute)."] = "Couleurs des barres de courte dur\195\169e (< 1 minute).",
 	["Colors for long bars (> 1 minute)."] = "Couleurs des barres de longue dur\195\169e (> 1 minute).",
@@ -291,7 +291,7 @@ BigWigsColors.consoleOptions = {
 				[L["Important"]] = {
 					name = L["Important"],
 					type = "color",
-					desc = string.format(L["Change the color for \"%s\" messages."], L["Important"]),
+					desc = string.format("Change the color for %q messages.", L["Important"]),
 					get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.important); return r, g, b end,
 					set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.important = hex end,
 					order = 1,
@@ -299,7 +299,7 @@ BigWigsColors.consoleOptions = {
 				[L["Personal"]] = {
 					name = L["Personal"],
 					type = "color",
-					desc = string.format(L["Change the color for \"%s\" messages."], L["Personal"]),
+					desc = string.format(L["Change the color for %q messages."], L["Personal"]),
 					get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.personal); return r, g, b end,
 					set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.personal = hex end,
 					order = 2,
@@ -307,7 +307,7 @@ BigWigsColors.consoleOptions = {
 				[L["Urgent"]] = {
 					name = L["Urgent"],
 					type = "color",
-					desc = string.format(L["Change the color for \"%s\" messages."], L["Urgent"]),
+					desc = string.format(L["Change the color for %q messages."], L["Urgent"]),
 					get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.urgent); return r, g, b end,
 					set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.urgent = hex end,
 					order = 3,
@@ -315,7 +315,7 @@ BigWigsColors.consoleOptions = {
 				[L["Attention"]] = {
 					name = L["Attention"],
 					type = "color",
-					desc = string.format(L["Change the color for \"%s\" messages."], L["Attention"]),
+					desc = string.format(L["Change the color for %q messages."], L["Attention"]),
 					get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.attention); return r, g, b end,
 					set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.attention = hex end,
 					order = 4,
@@ -323,7 +323,7 @@ BigWigsColors.consoleOptions = {
 				[L["Positive"]] = {
 					name = L["Positive"],
 					type = "color",
-					desc = string.format(L["Change the color for \"%s\" messages."], L["Positive"]),
+					desc = string.format(L["Change the color for %q messages."], L["Positive"]),
 					get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.positive); return r, g, b end,
 					set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.positive = hex end,
 					order = 5,
@@ -331,7 +331,7 @@ BigWigsColors.consoleOptions = {
 				[L["Bosskill"]] = {
 					name = L["Bosskill"],
 					type = "color",
-					desc = string.format(L["Change the color for \"%s\" messages."], L["Bosskill"]),
+					desc = string.format(L["Change the color for %q messages."], L["Bosskill"]),
 					get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.bosskill); return r, g, b end,
 					set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.bosskill = hex end,
 					order = 6,
@@ -339,7 +339,7 @@ BigWigsColors.consoleOptions = {
 				[L["Core"]] = {
 					name = L["Core"],
 					type = "color",
-					desc = string.format(L["Change the color for \"%s\" messages."], L["Core"]),
+					desc = string.format(L["Change the color for %q messages."], L["Core"]),
 					get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.core); return r, g, b end,
 					set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.core = hex end,
 					order = 7,
@@ -372,7 +372,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["2nd"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.shortbar[2]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.shortbar[2] = hex end,
-							hidden = function() if BigWigsColors.db.profile.shortnr < 2 then return true end end,
+							hidden = function() return BigWigsColors.db.profile.shortnr < 2 end,
 							order = 2,
 						},
 						[string.format(L["Color%s"], 3)] = {
@@ -381,7 +381,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["3rd"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.shortbar[3]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.shortbar[3] = hex end,
-							hidden = function() if BigWigsColors.db.profile.shortnr < 3 then return true end end,
+							hidden = function() return BigWigsColors.db.profile.shortnr < 3 end,
 							order = 3,
 						},
 						[string.format(L["Color%s"], 4)] = {
@@ -390,7 +390,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["4th"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.shortbar[4]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.shortbar[4] = hex end,
-							hidden = function() if BigWigsColors.db.profile.shortnr < 4 then return true end end,
+							hidden = function() return BigWigsColors.db.profile.shortnr < 4 end,
 							order = 4,
 						},
 						[L["xColors"]] = {
@@ -426,7 +426,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["2nd"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.longbar[2]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.longbar[2] = hex end,
-							hidden = function() if BigWigsColors.db.profile.longnr < 2 then return true end end,
+							hidden = function() return BigWigsColors.db.profile.longnr < 2 end,
 							order = 2,
 						},
 						[string.format(L["Color%s"], 3)] = {
@@ -435,7 +435,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["3rd"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.longbar[3]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.longbar[3] = hex end,
-							hidden = function() if BigWigsColors.db.profile.longnr < 3 then return true end end,
+							hidden = function() return BigWigsColors.db.profile.longnr < 3 end,
 							order = 3,
 						},
 						[string.format(L["Color%s"], 4)] = {
@@ -444,7 +444,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["4th"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.longbar[4]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.longbar[4] = hex end,
-							hidden = function() if BigWigsColors.db.profile.longnr < 4 then return true end end,
+							hidden = function() return BigWigsColors.db.profile.longnr < 4 end,
 							order = 4,
 						},
 						[L["xColors"]] = {
@@ -538,13 +538,6 @@ function BigWigsColors:RGBToHex(r, g, b)
 end
 
 function BigWigsColors:MsgColor(type)
-	-- Make it compatible with old code
-	if type == "Red" then type = self.db.profile.important
-	elseif type == "Orange" then type = self.db.profile.urgent
-	elseif type == "Yellow" then type = self.db.profile.attention
-	elseif type == "Green" then type = self.db.profile.positive
-	elseif type == "Cyan" then type = self.db.profile.core end
-
 	if type == "Important" then type = self.db.profile.important
 	elseif type == "Personal" then type = self.db.profile.personal
 	elseif type == "Urgent" then type = self.db.profile.urgent
@@ -570,3 +563,4 @@ function BigWigsColors:BarColor(time)
 	elseif n == 2 then return d[1], d[2]
 	elseif n == 1 then return d[1] end
 end
+
