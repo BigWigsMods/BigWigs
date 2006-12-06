@@ -204,11 +204,7 @@ function BigWigsRaidWarn:OnEnable()
 
 	sentWhispers = {}
 
-	if ChatFrame_MessageEventHandler ~= nil and type(ChatFrame_MessageEventHandler) == "function" then
-		self:Hook("ChatFrame_MessageEventHandler", "WhisperHandler", true)
-	else
-		self:Hook("ChatFrame_OnEvent", "WhisperHandler", true)
-	end
+	self:Hook("ChatFrame_MessageEventHandler", "WhisperHandler", true)
 end
 
 function BigWigsRaidWarn:BigWigs_Message(msg, color, noraidsay)
@@ -233,10 +229,6 @@ function BigWigsRaidWarn:WhisperHandler(event)
 		self:Debug("Suppressing self-sent whisper.", event, arg1)
 		return
 	end
-
-	if type(self.hooks["ChatFrame_OnEvent"]) == "function" then
-		self.hooks["ChatFrame_OnEvent"](event)
-	else
-		return self.hooks["ChatFrame_MessageEventHandler"](event)
-	end
+	return self.hooks["ChatFrame_MessageEventHandler"](event)
 end
+
