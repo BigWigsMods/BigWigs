@@ -350,43 +350,34 @@ BigWigsBossBlock.consoleOptions = {
 ------------------------------
 
 function BigWigsBossBlock:OnEnable()
-	if ChatFrame_MessageEventHandler ~= nil and type(ChatFrame_MessageEventHandler) == "function" then
-		self:Hook("ChatFrame_MessageEventHandler", "ChatFrame_OnEvent", true)
-	else
-		self:Hook("ChatFrame_OnEvent", true)
-	end
-
+	self:Hook("ChatFrame_MessageEventHandler", true)
 	self:Hook(RaidWarningFrame, "AddMessage", "RWAddMessage", true)
 	if CT_RAMessageFrame then self:Hook(CT_RAMessageFrame, "AddMessage", "CTRA_AddMessage") end
 end
 
 
-function BigWigsBossBlock:ChatFrame_OnEvent(event)
+function BigWigsBossBlock:ChatFrame_MessageEventHandler(event)
 	if self:IsChannelSuppressed(event) and self:IsSpam(arg1) then
 		self:Debug(L["Suppressing Chatframe"], event, arg1)
 		return
 	end
-	if type(self.hooks["ChatFrame_OnEvent"]) == "function" then
-		self.hooks["ChatFrame_OnEvent"](event)
-	else
-		return self.hooks["ChatFrame_MessageEventHandler"](event)
-	end
+	return self.hooks["ChatFrame_MessageEventHandler"](event)
 end
 
-function BigWigsBossBlock:RWAddMessage(frame, message, r, g, b, a)
+function BigWigsBossBlock:RWAddMessage(frame, message, r, g, b, a, t)
 	if self.db.profile.hideraidwarn and self:IsSpam(message) then
 		self:Debug(L["Suppressing RaidWarningFrame"], message)
 		return
 	end
-	self.hooks[RaidWarningFrame].AddMessage(frame, message, r, g, b, a)
+	self.hooks[RaidWarningFrame].AddMessage(frame, message, r, g, b, a, t)
 end
 
-function BigWigsBossBlock:CTRA_AddMessage(obj, text, red, green, blue, alpha, holdTime)
+function BigWigsBossBlock:CTRA_AddMessage(obj, text, r, g, b, a, t)
 	if self.db.profile.hideraidsay and self:IsSpam(text) then
 		self:Debug(L["Suppressing CT_RAMessageFrame"], text)
 		return
 	end
-	self.hooks[obj].AddMessage(obj, text, red, green, blue, alpha, holdTime)
+	self.hooks[obj].AddMessage(obj, text, r, g, b, a, t)
 end
 
 function BigWigsBossBlock:IsSpam(text)
@@ -399,3 +390,4 @@ function BigWigsBossBlock:IsChannelSuppressed(chan)
 	if not raidchans[chan] then return end
 	return self.db.profile[raidchans[chan]]
 end
+
