@@ -15,14 +15,6 @@ L:RegisterTranslations("enUS", function() return {
 	["range"] = true,
 	["Options for the combat log's range."] = true,
 
---~~ 	["party"] = true,
---~~ 	["Party"] = true,
---~~ 	["Party combat log range."] = true,
-
---~~ 	["friend"] = true,
---~~ 	["Friendlies"] = true,
---~~ 	["Friendly players combat log range."] = true,
-
 	["mob"] = true,
 	["Creatures"] = true,
 	["Creature combat log range."] = true,
@@ -40,12 +32,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Range"] = "범위",
 	["Options for the combat log's range."] = "전투 로그의 범위에 대한 설정",
 
---~~ 	["Party"] = true,
---~~ 	["Party combat log range."] = true,
-
---~~ 	["Friendlies"] = true,
---~~ 	["Friendly players combat log range."] = true,
-
 	["Creatures"] = "NPC",
 	["Creature combat log range."] = "NPC 전투 로그 범위",
 
@@ -59,14 +45,6 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	["Range"] = "范围",
 	["Options for the combat log's range."] = "设置战斗记录范围。",
-
---~~ 	["party"] = "",
---~~ 	["Party"] = "",
---~~ 	["Party combat log range."] = "",
-
---~~ 	["friend"] = "",
---~~ 	["Friendlies"] = "",
---~~ 	["Friendly players combat log range."] = "",
 
 	["Creatures"] = "生物",
 	["Creature combat log range."] = "生物战斗记录范围。",
@@ -82,14 +60,6 @@ L:RegisterTranslations("zhTW", function() return {
 	["Range"] = "範圍",
 	["Options for the combat log's range."] = "戰鬥記錄範圍的選項。",
 
---~~ 	["party"] = "",
---~~ 	["Party"] = "",
---~~ 	["Party combat log range."] = "",
-
---~~ 	["friend"] = "",
---~~ 	["Friendlies"] = "",
---~~ 	["Friendly players combat log range."] = "",
-
 	["Creatures"] = "生物",
 	["Creature combat log range."] = "生物戰鬥記錄範圍。",
 
@@ -104,14 +74,6 @@ L:RegisterTranslations("deDE", function() return {
 	["Range"] = "Reichweite",
 	-- ["range"] = true,
 	["Options for the combat log's range."] = "Optionen f\195\188r die Reichweite des Kampflogs.",
-
---~~ 	["party"] = true,
---~~ 	["Party"] = true,
---~~ 	["Party combat log range."] = true,
-
---~~ 	["friend"] = true,
---~~ 	["Friendlies"] = true,
---~~ 	["Friendly players combat log range."] = true,
 
 	-- ["mob"] = true,
 	["Creatures"] = "Kreaturen",
@@ -130,14 +92,6 @@ L:RegisterTranslations("frFR", function() return {
 	["Range"] = "Port\195\169e",
 	--["range"] = true,
 	["Options for the combat log's range."] = "Options concernant la port\195\169e du journal de combat.",
-
---~~ 	["party"] = true,
---~~  	["Party"] = "Groupe",
---~~  	["Party combat log range."] = "Port\195\169e du journal de combat du groupe.",
-
---~~ 	["friend"] = true,
---~~  	["Friendlies"] = "Alli\195\169s",
---~~  	["Friendly players combat log range."] = "Port\195\169e du journal de combat des alli\195\169s.",
 
 	--["mob"] = true,
 	["Creatures"] = "Cr\195\169atures",
@@ -163,34 +117,6 @@ BigWigsRange.consoleOptions = {
 	name = L["Range"],
 	desc = L["Options for the combat log's range."],
 	args   = {
---~~ 		[L["party"]] = {
---~~ 			type = "range",
---~~ 			name = L["Party"],
---~~ 			desc = L["Party combat log range."],
---~~ 			order = 1,
---~~ 			min = 5,
---~~ 			max = 200,
---~~ 			step = 5,
---~~ 			get = function() return GetCVar("CombatLogRangeParty") end,
---~~ 			set = function(v)
---~~ 				SetCVar("CombatLogRangeParty", v)
---~~ 				SetCVar("CombatLogRangePartyPet", v)
---~~ 			end,
---~~ 		},
---~~ 		[L["friend"]] = {
---~~ 			type = "range",
---~~ 			name = L["Friendlies"],
---~~ 			desc = L["Friendly players combat log range."],
---~~ 			order = 2,
---~~ 			min = 5,
---~~ 			max = 200,
---~~ 			step = 5,
---~~ 			get = function() return GetCVar("CombatLogRangeFriendlyPlayers") end,
---~~ 			set = function(v)
---~~ 				SetCVar("CombatLogRangeFriendlyPlayers", v)
---~~ 				SetCVar("CombatLogRangeFriendlyPlayersPets", v)
---~~ 			end,
---~~ 		},
 		[L["mob"]] = {
 			type = "range",
 			name = L["Creatures"],
@@ -219,13 +145,10 @@ BigWigsRange.consoleOptions = {
 			order = -1,
 			desc = L["Resets all ranges to defaults."],
 			func = function()
---~~ 				SetCVar("CombatLogRangeParty", 50)
---~~ 				SetCVar("CombatLogRangePartyPet", 50)
---~~ 				SetCVar("CombatLogRangeFriendlyPlayers", 50)
---~~ 				SetCVar("CombatLogRangeFriendlyPlayersPets", 50)
 				SetCVar("CombatLogRangeCreature", 30)
 				SetCVar("CombatDeathLogRange", 60)
 			end,
 		},
 	},
 }
+
