@@ -372,7 +372,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["2nd"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.shortbar[2]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.shortbar[2] = hex end,
-							hidden = function() return BigWigsColors.db.profile.shortnr < 2 end,
+							disabled = function() return BigWigsColors.db.profile.shortnr < 2 end,
 							order = 2,
 						},
 						[string.format(L["Color%s"], 3)] = {
@@ -381,7 +381,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["3rd"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.shortbar[3]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.shortbar[3] = hex end,
-							hidden = function() return BigWigsColors.db.profile.shortnr < 3 end,
+							disabled = function() return BigWigsColors.db.profile.shortnr < 3 end,
 							order = 3,
 						},
 						[string.format(L["Color%s"], 4)] = {
@@ -390,7 +390,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["4th"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.shortbar[4]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.shortbar[4] = hex end,
-							hidden = function() return BigWigsColors.db.profile.shortnr < 4 end,
+							disabled = function() return BigWigsColors.db.profile.shortnr < 4 end,
 							order = 4,
 						},
 						[L["xColors"]] = {
@@ -426,7 +426,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["2nd"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.longbar[2]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.longbar[2] = hex end,
-							hidden = function() return BigWigsColors.db.profile.longnr < 2 end,
+							disabled = function() return BigWigsColors.db.profile.longnr < 2 end,
 							order = 2,
 						},
 						[string.format(L["Color%s"], 3)] = {
@@ -435,7 +435,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["3rd"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.longbar[3]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.longbar[3] = hex end,
-							hidden = function() return BigWigsColors.db.profile.longnr < 3 end,
+							disabled = function() return BigWigsColors.db.profile.longnr < 3 end,
 							order = 3,
 						},
 						[string.format(L["Color%s"], 4)] = {
@@ -444,7 +444,7 @@ BigWigsColors.consoleOptions = {
 							desc = string.format(L["Change the %s color."], L["4th"]),
 							get = function() local _, r, g, b = PaintChips:GetRGBPercent(BigWigsColors.db.profile.longbar[4]); return r, g, b end,
 							set = function(r, g, b) local hex = BigWigsColors:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); BigWigsColors.db.profile.longbar[4] = hex end,
-							hidden = function() return BigWigsColors.db.profile.longnr < 4 end,
+							disabled = function() return BigWigsColors.db.profile.longnr < 4 end,
 							order = 4,
 						},
 						[L["xColors"]] = {
