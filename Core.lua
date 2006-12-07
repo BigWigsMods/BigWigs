@@ -585,7 +585,7 @@ function BigWigs:RegisterModule(name, module)
 						order = 3,
 						get = function() return m:IsDebugging() end,
 						set = function(v) m:SetDebugging(v) end,
-						hidden = function() return not m:IsDebugging() and not BigWigs:IsDebugging() end,
+						hidden = function() return not BigWigs:IsDebugging() end,
 					},
 				},
 			}

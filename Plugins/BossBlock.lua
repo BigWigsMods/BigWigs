@@ -25,9 +25,6 @@ L:RegisterTranslations("enUS", function() return {
 	["Suppress Tells"] = true,
 	["Suppress Tell messages."] = true,
 
-	["Debugging"] = true,
-	["Show debug messages."] = true,
-
 	["Suppressing Chatframe"] = true,
 	["Suppressing RaidWarningFrame"] = true,
 	["Suppressing CT_RAMessageFrame"] = true,
@@ -57,9 +54,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Suppress Tells"] = "일반대화 차단",
 	["Suppress Tell messages."] = "일반대화 메세지 차단",
 
-	["Debugging"] = "디버깅",
-	["Show debug messages."] = "디버그 메세지 표시",
-
 	["Suppressing Chatframe"] = "대화창 차단됨",
 	["Suppressing RaidWarningFrame"] = "공격대경고창 차단됨",
 	["Suppressing CT_RAMessageFrame"] = "CR_RA메세지창 차단됨",
@@ -87,9 +81,6 @@ L:RegisterTranslations("zhCN", function() return {
 	["Suppress Tells"] = "阻挡密语",
 	["Suppress Tell messages."] = "阻挡密语中的信息",
 
-	["Debugging"] = "除错",
-	["Show debug messages."] = "显示除错信息",
-
 	["Suppressing Chatframe"] = "正在阻挡Chatframe",
 	["Suppressing RaidWarningFrame"] = "正在阻挡RaidWarningFrame",
 	["Suppressing CT_RAMessageFrame"] = "正在阻挡CT_RAMessageFrame",
@@ -116,9 +107,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	["Suppress Tells"] = "阻擋密語",
 	["Suppress Tell messages."] = "阻擋密語中的訊息",
-
-	["Debugging"] = "除錯",
-	["Show debug messages."] = "顯示除錯訊息",
 
 	["Suppressing Chatframe"] = "正在阻擋Chatframe",
 	["Suppressing RaidWarningFrame"] = "正在阻擋RaidWarningFrame",
@@ -149,9 +137,6 @@ L:RegisterTranslations("deDE", function() return {
 	["Suppress Tells"] = "Fl\195\188stern unterdr\195\188cken",
 	["Suppress Tell messages."] = "Fl\195\188stern Nachrichten unterdr\195\188cken.",
 
-	["Debugging"] = "Debugging",
-	["Show debug messages."] = "Debug Nachrichten anzeigen.",
-
 	["Suppressing Chatframe"] = "Chatframe unterdr\195\188ckt",
 	["Suppressing RaidWarningFrame"] = "RaidWarningFrame unterdr\195\188cket",
 	["Suppressing CT_RAMessageFrame"] = "CT_RAMessageFrame unterdr\195\188ckt",
@@ -180,9 +165,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	["Suppress Tells"] = "Supprimer les chuchotements",
 	["Suppress Tell messages."] = "Supprime les messages chuchot\195\169s.",
-
-	["Debugging"] = "D\195\169bogage",
-	["Show debug messages."] = "Affiche les messages de d\195\169bogage.",
 
 	["Suppressing Chatframe"] = "Suppression de la fen\195\170tre de discussion",
 	["Suppressing RaidWarningFrame"] = "Suppression du cadre de l'Avertissement Raid",
@@ -327,20 +309,6 @@ BigWigsBossBlock.consoleOptions = {
 			get = function() return BigWigsBossBlock.db.profile.hidetells end,
 			set = function(v) BigWigsBossBlock.db.profile.hidetells = v end,
 			map = map,
-		},
-		["debugspacer"] = {
-			type = "header",
-			order = 108,
-			hidden = function() return not BigWigsBossBlock:IsDebugging() and not BigWigs:IsDebugging() end,
-		},
-		["debug"] = {
-			type = "toggle",
-			name = L["Debugging"],
-			desc = L["Show debug messages."],
-			order = 109,
-			get = function() return BigWigsBossBlock:IsDebugging() end,
-			set = function(v) BigWigsBossBlock:SetDebugging(v) end,
-			hidden = function() return not BigWigsBossBlock:IsDebugging() and not BigWigs:IsDebugging() end,
 		},
 	},
 }
