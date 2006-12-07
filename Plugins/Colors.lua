@@ -36,7 +36,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Number of colors the bar has."] = true,
 	["Change the background color."] = true,
 	["Change the text color."] = true,
-	["Resets all ranges to defaults."] = true,
+	["Resets all colors to defaults."] = true,
 
 	["Important"] = true,
 	["Personal"] = true,
@@ -77,7 +77,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Number of colors the bar has."] = "Number of colors the bar has.",
 	["Change the background color."] = "배경 색상 변경.",
 	["Change the text color."] = "글자 색상 변경.",
-	["Resets all ranges to defaults."] = "기본 설정으로 초기화.",
+	["Resets all colors to defaults."] = "기본 설정으로 초기화.",
 
 	["Important"] = "중요",
 	["Personal"] = "개인",
@@ -118,7 +118,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Number of colors the bar has."] = "计时条颜色数量。",
 	["Change the background color."] = "变更背景颜色。",
 	["Change the text color."] = "变更文本颜色。",
-	["Resets all ranges to defaults."] = "全部重置为默认状态。",
+	["Resets all colors to defaults."] = "全部重置为默认状态。",
 
 	["Important"] = "重要",
 	["Personal"] = "个人",
@@ -159,7 +159,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Number of colors the bar has."] = "計時條顏色數量。",
 	["Change the background color."] = "變更背景顏色。",
 	["Change the text color."] = "變更文字顏色。",
-	["Resets all ranges to defaults."] = "全部重置為預設狀態。",
+	["Resets all colors to defaults."] = "全部重置為預設狀態。",
 
 	["Important"] = "重要",
 	["Personal"] = "個人",
@@ -200,7 +200,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Number of colors the bar has."] = "Anzahl der Farben eines Anzeigebalkens.",
 	["Change the background color."] = "Hintergrund Farbe \195\164ndern.",
 	["Change the text color."] = "Textfarbe \195\164ndern.",
-	["Resets all ranges to defaults."] = "Auf Standard zur\195\188cksetzen.",
+	["Resets all colors to defaults."] = "Auf Standard zur\195\188cksetzen.",
 
 	["Important"] = "Wichtig",
 	["Personal"] = "Pers\195\182hnlich",
@@ -241,7 +241,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Number of colors the bar has."] = "Nombre de couleurs que poss\195\168de la barre.",
 	["Change the background color."] = "Change la couleur du fond.",
 	["Change the text color."] = "Change la couleur du texte.",
-	["Resets all ranges to defaults."] = "R\195\169initialise tous les param\195\168tres à leurs valeurs par d\195\169faut.",
+	["Resets all colors to defaults."] = "R\195\169initialise tous les param\195\168tres à leurs valeurs par d\195\169faut.",
 
 	["Important"] = "Important",
 	["Personal"] = "Personnel",
@@ -482,7 +482,7 @@ BigWigsColors.consoleOptions = {
 		[L["Reset"]] = {
 			name = L["Reset"],
 			type = "execute",
-			desc = L["Resets all ranges to defaults."],
+			desc = L["Resets all colors to defaults."],
 			func = function() BigWigsColors:ResetDB() end,
 		},
 	}
