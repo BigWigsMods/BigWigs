@@ -352,7 +352,9 @@ BigWigsBossBlock.consoleOptions = {
 function BigWigsBossBlock:OnEnable()
 	self:Hook("ChatFrame_MessageEventHandler", true)
 	self:Hook(RaidWarningFrame, "AddMessage", "RWAddMessage", true)
-	if CT_RAMessageFrame then self:Hook(CT_RAMessageFrame, "AddMessage", "CTRA_AddMessage") end
+	if CT_RAMessageFrame then
+		self:Hook(CT_RAMessageFrame, "AddMessage", "CTRA_AddMessage", true)
+	end
 end
 
 
