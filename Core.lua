@@ -576,7 +576,7 @@ function BigWigs:RegisterModule(name, module)
 						order = 2,
 						desc = L["Reboot this module."],
 						func = function() m.core:TriggerEvent("BigWigs_RebootModule", m) end,
-						hidden = function() return not m.core:IsModuleActive(m) end,
+						disabled = function() return not m.core:IsModuleActive(m) end,
 					},
 					[L["debug"]] = {
 						type = "toggle",
