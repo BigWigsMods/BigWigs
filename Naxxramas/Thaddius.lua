@@ -451,7 +451,7 @@ function BigWigsThaddius:PLAYER_AURAS_CHANGED( msg )
 	local chargetype = nil
 	local iIterator = 1
 	while UnitDebuff("player", iIterator) do
-		local texture, applications = UnitDebuff("player", iIterator)
+		local _,_,texture, applications = UnitDebuff("player", iIterator)
 		if texture == L["positivetype"] or texture == L["negativetype"] then
 			-- If we have a debuff with this texture that has more
 			-- than one application, it means we still have the
