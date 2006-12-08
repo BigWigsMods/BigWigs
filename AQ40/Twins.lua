@@ -32,7 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 	heal_name = "Heal Alert",
 	heal_desc = "Warn for Twins Healing",
 
-	porttrigger = "casts Twin Teleport.",
+	porttrigger = "gains Twin Teleport.",
 	portwarn = "Teleport!",
 	portdelaywarn = "Teleport in ~5 seconds!",
 	portdelaywarn2 = "Teleport in ~10 seconds!",
@@ -253,9 +253,9 @@ BigWigsTwins.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsTwins:OnEnable()
 	started = nil
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -304,15 +304,11 @@ function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function BigWigsTwins:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if (string.find(msg, L["porttrigger"])) then
-		self:TriggerEvent("BigWigs_SendSync", "TwinsTeleport")
-	end
-end
-
 function BigWigsTwins:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if (string.find(msg, L["explodebugtrigger"]) and self.db.profile.bug) then
+	if string.find(msg, L["explodebugtrigger"]) and self.db.profile.bug then
 		self:TriggerEvent("BigWigs_Message", L["explodebugwarn"], "Personal", true)
+	elseif string.find(msg, L["porttrigger"]) then
+		self:TriggerEvent("BigWigs_SendSync", "TwinsTeleport")
 	end
 end
 
