@@ -9,6 +9,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsTranq")
 L:RegisterTranslations("enUS", function() return {
 	CHAT_MSG_SPELL_SELF_BUFF = "You fail to dispel (.+)'s Frenzy.",
 	CHAT_MSG_SPELL_SELF_DAMAGE = "You cast Tranquilizing Shot on (.+).",
+	["Tranquilizing Shot"] = true,
 
 	["Tranq - %s"] = true,
 	["%s's Tranq failed!"] = true,
@@ -109,8 +110,12 @@ BigWigsTranq.consoleOptions = {
 ------------------------------
 
 function BigWigsTranq:OnEnable()
+	local _, class = UnitClass("player")
+	if class == "HUNTER" then
+		self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE")
+		self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	end
 	self:RegisterEvent("CHAT_MSG_SPELL_SELF_BUFF")
-	self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:RegisterEvent("BigWigs_TranqFired", 5)
@@ -120,6 +125,12 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function BigWigsTranq:UNIT_SPELLCAST_SUCCEEDED(player, spell, rank)
+	if player == "player" and spell == L["Tranquilizing Shot"] then
+		self:TriggerEvent("BigWigs_SendSync", "TranqShotFired "..UnitName("player"))
+	end
+end
 
 function BigWigsTranq:CHAT_MSG_SPELL_SELF_BUFF(msg)
 	if not msg then
@@ -138,8 +149,11 @@ function BigWigsTranq:CHAT_MSG_SPELL_SELF_DAMAGE(msg)
 end
 
 function BigWigsTranq:BigWigs_RecvSync(sync, details, sender)
-	if sync == "TranqShotFired" then self:TriggerEvent("BigWigs_TranqFired", details)
-	elseif sync == "TranqShotFail" then self:TriggerEvent("BigWigs_TranqFail", details) end
+	if sync == "TranqShotFired" then
+		self:TriggerEvent("BigWigs_TranqFired", details)
+	elseif sync == "TranqShotFail" then
+		self:TriggerEvent("BigWigs_TranqFail", details)
+	end
 end
 
 function BigWigsTranq:BigWigs_TranqFired(unitname)
@@ -154,3 +168,4 @@ function BigWigsTranq:BigWigs_TranqFail(unitname)
 		self:TriggerEvent("BigWigs_Message", format(L["%s's Tranq failed!"], unitname), "Important", nil, "Alarm")
 	end
 end
+
