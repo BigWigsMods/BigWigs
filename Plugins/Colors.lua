@@ -485,26 +485,9 @@ function BigWigsColors:OnRegister()
 end
 
 function BigWigsColors:ResetDB()
-	BigWigsColors.db.profile.important = BigWigsColors.defaultDB.important
-	BigWigsColors.db.profile.personal = BigWigsColors.defaultDB.personal
-	BigWigsColors.db.profile.urgent = BigWigsColors.defaultDB.urgent
-	BigWigsColors.db.profile.attention = BigWigsColors.defaultDB.attention
-	BigWigsColors.db.profile.positive = BigWigsColors.defaultDB.positive
-	BigWigsColors.db.profile.bosskill = BigWigsColors.defaultDB.bosskill
-	BigWigsColors.db.profile.core = BigWigsColors.defaultDB.core
-	BigWigsColors.db.profile.shortbar[1] = BigWigsColors.defaultDB.shortbar[1]
-	BigWigsColors.db.profile.shortbar[2] = BigWigsColors.defaultDB.shortbar[2]
-	BigWigsColors.db.profile.shortbar[3] = BigWigsColors.defaultDB.shortbar[3]
-	BigWigsColors.db.profile.shortbar[4] = BigWigsColors.defaultDB.shortbar[4]
-	BigWigsColors.db.profile.shortnr = BigWigsColors.defaultDB.shortnr
-	BigWigsColors.db.profile.longbar[1] = BigWigsColors.defaultDB.longbar[1]
-	BigWigsColors.db.profile.longbar[2] = BigWigsColors.defaultDB.longbar[2]
-	BigWigsColors.db.profile.longbar[3] = BigWigsColors.defaultDB.longbar[3]
-	BigWigsColors.db.profile.longbar[4] = BigWigsColors.defaultDB.longbar[4]
-	BigWigsColors.db.profile.longnr = BigWigsColors.defaultDB.longnr
-	BigWigsColors.db.profile.bgc = BigWigsColors.defaultDB.bgc
-	BigWigsColors.db.profile.bga = BigWigsColors.defaultDB.bga
-	BigWigsColors.db.profile.txtc = BigWigsColors.defaultDB.txtc
+	for k, v in pairs(self.db.profile) do
+		self.db.profile[k] = self.defaultDB[k]
+	end
 end
 
 function BigWigsColors:RegHex(hex)
