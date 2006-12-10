@@ -109,7 +109,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsKazzak = BigWigs:NewModule(boss)
-BigWigsKazzak.zonename = { AceLibrary("AceLocale-2.2"):new("BigWigs")["Outdoor Raid Bosses Zone"], AceLibrary("Babble-Zone-2.2")["Blasted Lands"] }
+BigWigsKazzak.zonename = AceLibrary("Babble-Zone-2.2")["Blasted Lands"]
 BigWigsKazzak.enabletrigger = boss
 BigWigsKazzak.toggleoptions = {"supreme", "bosskill"}
 BigWigsKazzak.revision = tonumber(string.sub("$Revision$", 12, -3))

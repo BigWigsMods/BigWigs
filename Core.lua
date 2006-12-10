@@ -7,29 +7,18 @@ local BZ = AceLibrary("Babble-Zone-2.2")
 local BB = AceLibrary("Babble-Boss-2.2")
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 
-local surface = AceLibrary("Surface-1.0")
-
-surface:Register("Otravi", "Interface\\AddOns\\BigWigs\\Textures\\otravi")
-surface:Register("Smooth", "Interface\\AddOns\\BigWigs\\Textures\\smooth")
-surface:Register("Glaze", "Interface\\AddOns\\BigWigs\\Textures\\glaze")
-surface:Register("Charcoal", "Interface\\AddOns\\BigWigs\\textures\\Charcoal")
-surface:Register("BantoBar", "Interface\\AddOns\\BigWigs\\textures\\default")
-
 ----------------------------
 --      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	["%s mod enabled"] = true,
-	["Target monitoring enabled"] = true,
-	["Target monitoring disabled"] = true,
 	["%s has been defeated"] = true,     -- "<boss> has been defeated"
 	["%s have been defeated"] = true,    -- "<bosses> have been defeated"
 
 	-- AceConsole strings
 	["boss"] = true,
 	["Bosses"] = true,
-	["Options for boss modules."] = true,
 	["Options for bosses in %s."] = true, -- "Options for bosses in <zone>"
 	["Options for %s (r%s)."] = true,     -- "Options for <boss> (<revision>)"
 	["plugin"] = true,
@@ -49,7 +38,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Show debug messages."] = true,
 	bosskill_cmd = "kill",
 	bosskill_name = "Boss death",
-	bosskill_desc = "Announce when boss is defeated",
+	bosskill_desc = "Announce when the boss has been defeated.",
 
 	["Other"] = true,
 	["Load"] = true,
@@ -63,24 +52,17 @@ L:RegisterTranslations("enUS", function() return {
 	["Blackwing Lair"] = "BWL",
 	["Ahn'Qiraj"] = "AQ40",
 	["Ruins of Ahn'Qiraj"] = "AQ20",
-	["Onyxia's Lair"] = "Onyxia",
 	["Naxxramas"] = "Naxxramas",
-	["Silithus"] = true,
-	["Outdoor Raid Bosses"] = "Outdoor",
-	["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
 } end)
 
 L:RegisterTranslations("frFR", function() return {
 	["%s mod enabled"] = "Module %s activ\195\169",
-	["Target monitoring enabled"] = "Suivi des cibles activ\195\169",
-	["Target monitoring disabled"] = "Suivi des cibles d\195\169sactiv\195\169",
 	["%s has been defeated"] = "%s a \195\169t\195\169 vaincu",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s ont \195\169t\195\169 vaincu",    -- "<bosses> have been defeated"
 
 	-- AceConsole strings
 	-- ["boss"] = true,
 	["Bosses"] = "Boss",
-	["Options for boss modules."] = "Options des modules des boss.",
 	["Options for bosses in %s."] = "Options des boss dans %s.", -- "Options for bosses in <zone>"
 	["Options for %s (r%s)."] = "Options pour %s (r%s).",     -- "Options for <boss> (<revision>)"
 	-- ["plugin"] = true,
@@ -112,24 +94,17 @@ L:RegisterTranslations("frFR", function() return {
 	["Blackwing Lair"] = "BWL",
 	["Ahn'Qiraj"] = "AQ40",
 	["Ruins of Ahn'Qiraj"] = "AQ20",
-	["Onyxia's Lair"] = "Onyxia",
 	["Naxxramas"] = "Naxxramas",
-	-- ["Silithus"] = true,
-	["Outdoor Raid Bosses"] = "Ext\195\169rieur",
-	["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
 } end)
   
 L:RegisterTranslations("deDE", function() return {
 	["%s mod enabled"] = "%s Modul aktiviert",
-	["Target monitoring enabled"] = "Ziel\195\188berwachung aktiviert",
-	["Target monitoring disabled"] = "Ziel\195\188berwachung deaktiviert",
 	["%s has been defeated"] = "%s wurde besiegt",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s wurden besiegt",    -- "<bosses> have been defeated"
 
 	-- AceConsole strings
 	-- ["boss"] = true,
 	["Bosses"] = "Bosse",
-	["Options for boss modules."] = "Optionen f\195\188r Boss Module.",
 	["Options for bosses in %s."] = "Optionen f\195\188r Bosse in %s.", -- "Options for bosses in <zone>"
 	["Options for %s (r%s)."] = "Optionen f\195\188r %s (r%s).",     -- "Options for <boss> (<revision>)"
 	-- ["plugin"] = true,
@@ -157,23 +132,16 @@ L:RegisterTranslations("deDE", function() return {
 	["Blackwing Lair"] = "BWL",
 	["Ahn'Qiraj"] = "AQ40",
 	["Ruins of Ahn'Qiraj"] = "AQ20",
-	["Onyxia's Lair"] = "Onyxia",
 	["Naxxramas"] = "Naxxramas",
-	-- ["Silithus"] = true,
-	["Outdoor Raid Bosses"] = "Outdoor",
-	-- ["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
 } end)
 
 L:RegisterTranslations("koKR", function() return {
 	["%s mod enabled"] = "%s 모듈 시작",
-	["Target monitoring enabled"] = "타겟 확인 시작",
-	["Target monitoring disabled"] = "타겟 확인 꺼짐",
 	["%s has been defeated"] = "<%s> 물리쳤습니다.",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "<%s> 물리쳤습니다.",    -- "<bosses> have been defeated"
 
 	-- AceConsole strings
 	["Bosses"] = "보스들",
-	["Options for boss modules."] = "보스 모듈 설정",
 	["Options for bosses in %s."] = "%s 에 보스들을 위한 설정", -- "Options for bosses in <zone>"
 	["Options for %s (r%s)."] = "%s에 대한 설정(r%s).",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "플러그인들",
@@ -200,24 +168,17 @@ L:RegisterTranslations("koKR", function() return {
 	["Blackwing Lair"] = "BWL",
 	["Ahn'Qiraj"] = "AQ40",
 	["Ruins of Ahn'Qiraj"] = "AQ20",
-	["Onyxia's Lair"] = "오닉시아",
 	["Naxxramas"] = "낙스라마스",
-	["Silithus"] = "실리더스",
-	["Outdoor Raid Bosses"] = "야외",
-	["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
 	["%s mod enabled"] = "%s模块已开启",
-	["Target monitoring enabled"] = "目标监视已开启",
-	["Target monitoring disabled"] = "目标监视已关闭",
 	["%s has been defeated"] = "%s被击败了！",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s被击败了！",    -- "<bosses> have been defeated"
 
 	-- AceConsole strings
 	["Bosses"] = "首领",
 	["boss"] = "首领",
-	["Options for boss modules."] = "首领模块设置。",
 	["Options for bosses in %s."] = "%s首领模块设置。", -- "Options for bosses in <zone>"
 	["Options for %s (r%s)."] = "%s模块设置 版本(r%s).",     -- "Options for <boss> (<revision>)"
 	["plugin"] = "插件",
@@ -252,24 +213,17 @@ L:RegisterTranslations("zhCN", function() return {
 	["Blackwing Lair"] = "黑翼之巢",
 	["Ahn'Qiraj"] = "安其拉",
 	["Ruins of Ahn'Qiraj"] = "安其拉废墟",
-	["Onyxia's Lair"] = "奥妮克希亚的巢穴",
 	["Naxxramas"] = "纳克萨玛斯",
-	["Silithus"] = "希利苏斯",
-	["Outdoor Raid Bosses"] = "野外首领",
-	["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
 	["%s mod enabled"] = "%s模組已開啟",
-	["Target monitoring enabled"] = "目標監視已開啟",
-	["Target monitoring disabled"] = "目標監視已關閉",
 	["%s has been defeated"] = "%s被擊敗了！",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s被擊敗了！",    -- "<bosses> have been defeated"
 
 	-- AceConsole strings
 	["Bosses"] = "首領",
 	["boss"] = "boss",
-	["Options for boss modules."] = "首領模組選項。",
 	["Options for bosses in %s."] = "%s首領模組選項。", -- "Options for bosses in <zone>"
 	["Options for %s (r%s)."] = "%s模組選項 版本(r%s).",     -- "Options for <boss> (<revision>)"
 	["Extras"] = "其他",
@@ -293,11 +247,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Blackwing Lair"] = "BWL",
 	["Ahn'Qiraj"] = "TAQ",
 	["Ruins of Ahn'Qiraj"] = "RAQ",
-	["Onyxia's Lair"] = "OL",
 	["Naxxramas"] = "NAX",
-	["Silithus"] = "silithus",
-	["Outdoor Raid Bosses"] = "outdoor",
-	["Outdoor Raid Bosses Zone"] = "Outdoor Raid Bosses", -- DO NOT EVER TRANSLATE untill I find a more elegant option
 } end)
 
 ---------------------------------
@@ -308,12 +258,10 @@ BigWigs = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDebug-2.0", "AceMod
 BigWigs:SetModuleMixins("AceDebug-2.0", "AceEvent-2.0", "CandyBar-2.0")
 BigWigs:RegisterDB("BigWigsDB", "BigWigsDBPerChar")
 BigWigs.cmdtable = {type = "group", handler = BigWigs, args = {
-	[L["boss"]] = {
-		type = "group",
-		name = L["Bosses"],
-		desc = L["Options for boss modules."],
-		args = {},
-		disabled = function() return not BigWigs:IsActive() end,
+	["spacer"] = {
+		type = "header",
+		name = " ",
+		order = 200,
 	},
 	[L["plugin"]] = {
 		type = "group",
@@ -321,6 +269,7 @@ BigWigs.cmdtable = {type = "group", handler = BigWigs, args = {
 		desc = L["Options for plugins."],
 		args = {},
 		disabled = function() return not BigWigs:IsActive() end,
+		order = 201,
 	},
 	[L["extra"]] = {
 		type = "group",
@@ -328,6 +277,7 @@ BigWigs.cmdtable = {type = "group", handler = BigWigs, args = {
 		desc = L["Options for extras."],
 		args = {},
 		disabled = function() return not BigWigs:IsActive() end,
+		order = 202,
 	},
 }}
 BigWigs:RegisterChatCommand({"/bw", "/BigWigs"}, BigWigs.cmdtable)
@@ -466,6 +416,13 @@ end
 ------------------------------
 
 function BigWigs:OnInitialize()
+	local surface = AceLibrary("Surface-1.0")
+	surface:Register("Otravi",   "Interface\\AddOns\\BigWigs\\Textures\\otravi")
+	surface:Register("Smooth",   "Interface\\AddOns\\BigWigs\\Textures\\smooth")
+	surface:Register("Glaze",    "Interface\\AddOns\\BigWigs\\Textures\\glaze")
+	surface:Register("Charcoal", "Interface\\AddOns\\BigWigs\\textures\\Charcoal")
+	surface:Register("BantoBar", "Interface\\AddOns\\BigWigs\\textures\\default")
+
 	if not self.version then self.version = GetAddOnMetadata("BigWigs", "Version") end
 	local rev = self.revision
 	for name, module in self:IterateModules() do
@@ -637,19 +594,23 @@ function BigWigs:RegisterModule(name, module)
 				zone = L[BZ:GetReverseTranslation(zonename)]
 			elseif L:HasTranslation(zonename) then
 				zone = L[zonename]
+			else
+				zone = L["Other"]
+				zonename = L["Other"]
 			end
-			if not self.cmdtable.args[L["boss"]].args[zone] then
-				self.cmdtable.args[L["boss"]].args[zone] = {
+			if not self.cmdtable.args[zone] then
+				self.cmdtable.args[zone] = {
 					type = "group",
 					name = zonename,
 					desc = string.format(L["Options for bosses in %s."], zonename),
 					args = {},
+					disabled = function() return not BigWigs:IsActive() end,
 				}
 			end
 			if module.external then
 				self.cmdtable.args[L["extra"]].args[L2["cmd"]] = cons or module.consoleOptions
 			else
-				self.cmdtable.args[L["boss"]].args[zone].args[L2["cmd"]] = cons or module.consoleOptions
+				self.cmdtable.args[zone].args[L2["cmd"]] = cons or module.consoleOptions
 			end
 		end
 	elseif module.consoleOptions then
@@ -740,53 +701,27 @@ end
 
 
 function BigWigs:AddLoDMenu( zonename )
-	local zone = nil
-	if L:HasTranslation(zonename) then
-		zone = L[zonename]
-	else
-		zone = L["Other"]
+	local zone = L:HasTranslation(zonename) and L[zonename] or nil
+	if not zone then return end
+	if not self.cmdtable.args[zone] then
+		self.cmdtable.args[zone] = {
+			type = "group",
+			name = zonename,
+			desc = string.format(L["Options for bosses in %s."], zonename),
+			args = {},
+			disabled = function() return not BigWigs:IsActive() end,
+		}
 	end
-	if zone then
-		if not self.cmdtable.args[L["boss"]].args[zone] then
-			self.cmdtable.args[L["boss"]].args[zone] = {
-				type = "group",
-				name = zonename,
-				desc = string.format(L["Options for bosses in %s."], zonename),
-				args = {}
-			}
-		end
-		if zone == L["Other"] then
-			local zones = BigWigsLoD:GetZones()
-			zones = zones[L["Other"]]
-			self.cmdtable.args[L["boss"]].args[zone].args[L["Load"]] = {
-				type = "execute",
-				name = L["Load All"],
-				desc = string.format( L["Load all %s modules."], zonename ),
-				order = 1,
-				func = function()
-						for z, v in pairs( zones ) do
-							BigWigsLoD:LoadZone( z )
-							if self.cmdtable.args[L["boss"]].args[z] and self.cmdtable.args[L["boss"]].args[z].args[L["Load"]] then
-								self.cmdtable.args[L["boss"]].args[z].args[L["Load"]] = nil
-							end
-						end
-						self.cmdtable.args[L["boss"]].args[zone] = nil
-					end
-			}
-		else
-			self.cmdtable.args[L["boss"]].args[zone].args[L["Load"]] = {
-				type = "execute",
-				name = L["Load All"],
-				desc = string.format( L["Load all %s modules."], zonename ),
-				order = 1,
-				func = function()
-						BigWigsLoD:LoadZone( zonename )
-						self.cmdtable.args[L["boss"]].args[zone].args[L["Load"]] = nil
-					end
-			}
-		end
-	end
+	if self.cmdtable.args[zone].args[L["Load"]] then return end
+	self.cmdtable.args[zone].args[L["Load"]] = {
+		type = "execute",
+		name = L["Load All"],
+		desc = string.format( L["Load all %s modules."], zonename ),
+		order = 1,
+		func = function()
+				BigWigsLoD:LoadZone( zonename )
+				self.cmdtable.args[zone].args[L["Load"]] = nil
+			end
+	}
 end
-
-
 

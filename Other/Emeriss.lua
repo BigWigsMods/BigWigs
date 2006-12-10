@@ -164,7 +164,6 @@ L:RegisterTranslations("koKR", function() return {
 
 BigWigsEmeriss = BigWigs:NewModule(boss)
 BigWigsEmeriss.zonename = {
-	AceLibrary("AceLocale-2.2"):new("BigWigs")["Outdoor Raid Bosses Zone"],
 	AceLibrary("Babble-Zone-2.2")["Blasted Lands"],
 	AceLibrary("Babble-Zone-2.2")["Duskwood"],
 	AceLibrary("Babble-Zone-2.2")["The Hinterlands"],

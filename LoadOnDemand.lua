@@ -11,21 +11,15 @@ local inzone = {}
 local zonelist = {}
 
 local function Split(str, sep)
-	local x, y = string.find(str, sep) or 0, string.len(sep) or 1
-	return tonumber(string.sub(str, 1, x - 1)) or string.sub(str, 1, x - 1), tonumber(string.sub(str, x + y)) or string.sub(str, x + y)
-end
-
-local function Trim(str)
-	str = string.gsub(str, "^%s*", "")
-	str = string.gsub(str, "%s*$", "")
-	return str
+	local x, y = str:find(sep) or 0, sep:len() or 1
+	return tonumber(str:sub(1, x - 1)) or str:sub(1, x - 1), tonumber(str:sub(x + y)) or str:sub(x + y)
 end
 
 local function Explode(str, sep)
 	local a, b = Split(str, sep)
-	if not b or b == "" then return Trim(a) end
-	if not string.find(b, sep) then return Trim(a), Trim(b) end
-	return Trim(a), Explode(b, sep)
+	if not b or b == "" then return a:trim() end
+	if not b:find(sep) then return a:trim(), b:trim() end
+	return a:trim(), Explode(b, sep)
 end
 
 ------------------------------
@@ -110,17 +104,14 @@ function BigWigsLoD:InitializeLoD()
 		if not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadInZone")
 			if meta then
-				local ignorezone = string.find( meta, LC["Outdoor Raid Bosses Zone"] )
 				for k, v in pairs({Explode(meta, ",")}) do
-					local zone
-					if BZ:HasTranslation(v) then zone = BZ[v] end
-					-- elseif LC:HasTranslation(v) then zone = LC[v] end
+					local zone = BZ:HasTranslation(v) and BZ[v] or nil
 					if zone then
 						if not inzone[zone] then inzone[zone] = {} end
 						table.insert( inzone[zone], i)
-						if not ignorezone then 
+						if LC:HasTranslation(v) then
 							zonelist[zone] = true
-						else 
+						else
 							if not zonelist[LC["Other"]] then zonelist[LC["Other"]] = {} end
 							zonelist[LC["Other"]][zone] = true
 						end
@@ -137,18 +128,24 @@ function BigWigsLoD:InitializeLoD()
 end
 
 function BigWigsLoD:LoadZone( zone )
-	if inzone[zone] then
-		local loaded = false
-		for k,v in pairs( inzone[zone] ) do
-			if not IsAddOnLoaded( v ) then
-				loaded = true
-				LoadAddOn( v )
-			end
+	if type(zonelist[zone]) == "table" then
+		for k, v in pairs( zonelist[zone] ) do
+			self:LoadZone( k )
 		end
-		inzone[zone] = nil
-		zonelist[zone] = nil
-		if loaded then
-			self:TriggerEvent("BigWigs_ModulePackLoaded", zone)
+	else
+		if inzone[zone] then
+			local loaded = false
+			for k,v in pairs( inzone[zone] ) do
+				if not IsAddOnLoaded( v ) then
+					loaded = true
+					LoadAddOn( v )
+				end
+			end
+			inzone[zone] = nil
+			zonelist[zone] = nil
+			if loaded then
+				self:TriggerEvent("BigWigs_ModulePackLoaded", zone)
+			end
 		end
 	end
 end
