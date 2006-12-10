@@ -5,9 +5,6 @@ assert( BigWigs, "BigWigs not found!")
 ------------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsBars")
-local paint = AceLibrary("PaintChips-2.0")
-local minscale, maxscale = 0.25, 2
-
 local surface = AceLibrary("Surface-1.0")
 
 ----------------------------
@@ -16,35 +13,26 @@ local surface = AceLibrary("Surface-1.0")
 
 L:RegisterTranslations("enUS", function() return {
 	["Bars"] = true,
-
 	["bars"] = true,
-	["anchor"] = true,
-	["scale"] = true,
-	["up"] = true,
-
 	["Options for the timer bars."] = true,
+
+	["Show anchor"] = true,
+	["anchor"] = true,
 	["Show the bar anchor frame."] = true,
+
+	["Scale"] = true,
+	["scale"] = true,
 	["Set the bar scale."] = true,
-	["Group upwards"] = true,
+
+	["Grow upwards"] = true,
+	["up"] = true,
 	["Toggle bars grow upwards/downwards from anchor."] = true,
 
-	["Timer bars"] = true,
-	["Show anchor"] = true,
-	["Grow bars upwards"] = true,
-	["Scale"] = true,
-	["Bar scale"] = true,
-
-	["Bars now grow %2$s"] = true,
-	["Scale is set to %2$s"] = true,
-
-	["Up"] = true,
-	["Down"] = true,
+	["Texture"] = true,
+	["Set the texture for the timer bars."] = true,
 
 	["Test"] = true,
 	["Close"] = true,
-
-	["Texture"] = true,
-	["Set the texture for the timerbars."] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -53,19 +41,11 @@ L:RegisterTranslations("koKR", function() return {
 	["Options for the timer bars."] = "Timer 바 옵션 조정.",
 	["Show the bar anchor frame."] = "바 위치 조정 프레임 보이기.",
 	["Set the bar scale."] = "바 크기 조절.",
-	["Group upwards"] = "바 위로 생성",
+	["Grow upwards"] = "바 위로 생성",
 	["Toggle bars grow upwards/downwards from anchor."] = "바 표시 순서를 위/아래로 조정.",
 
-	["Timer bars"] = "타이머 바",
 	["Show anchor"] = "앵커 보이기",
-	["Grow bars upwards"] = "바 위로 생성",
 	["Scale"]= "크기",
-	["Bar scale"] = "바 크기",
-	["Bars now grow %2$s"] = "바 생성 방향 : %2$s",
-	["Scale is set to %2$s"] = "크기 설정 : %2$s",
-
-	["Up"] = "위",
-	["Down"] = "아래",
 
 	["Test"] = "테스트",
 } end)
@@ -81,26 +61,17 @@ L:RegisterTranslations("zhCN", function() return {
 	["Options for the timer bars."] = "计时条设置/",
 	["Show the bar anchor frame."] = "显示计时条框体锚点。",
 	["Set the bar scale."] = "设置计时条缩放比例。",
-	["Group upwards"] = "向上排列",
+	["Grow upwards"] = "向上排列",
 	["Toggle bars grow upwards/downwards from anchor."] = "切换计时条从锚点向下/向上排列。",
 
-	["Timer bars"] = "计时条",
 	["Show anchor"] = "显示锚点",
-	["Grow bars upwards"] = "向上延展",
 	["Scale"] = "缩放",
-	["Bar scale"] = "计时条缩放",
-
-	["Bars now grow %2$s"] = "计时条设置为向%2$s延展。",
-	["Scale is set to %2$s"] = "缩放比例设置为%2$s",
-
-	["Up"] = "上",
-	["Down"] = "下",
 
 	["Test"] = "测试",
 	["Close"] = "关闭",
 
 	["Texture"] = "材质",
-	["Set the texture for the timerbars."] = "为计时条设定材质。",
+	["Set the texture for the timer bars."] = "为计时条设定材质。",
 } end)
 
 
@@ -115,26 +86,17 @@ L:RegisterTranslations("zhTW", function() return {
 	["Options for the timer bars."] = "計時條設置",
 	["Show the bar anchor frame."] = "顯示計時條框架錨點。",
 	["Set the bar scale."] = "設置計時條縮放比例。",
-	["Group upwards"] = "向上排列",
+	["Grow upwards"] = "向上排列",
 	["Toggle bars grow upwards/downwards from anchor."] = "切換計時條從錨點向下/向上排列。",
 
-	["Timer bars"] = "計時條",
 	["Show anchor"] = "顯示錨點",
-	["Grow bars upwards"] = "向上延展",
 	["Scale"] = "縮放",
-	["Bar scale"] = "計時條縮放",
-
-	["Bars now grow %2$s"] = "計時條設置為向%2$s延展。",
-	["Scale is set to %2$s"] = "縮放比例設置為%2$s",
-
-	["Up"] = "上",
-	["Down"] = "下",
 
 	["Test"] = "測試",
 	["Close"] = "關閉",
 
 	["Texture"] = "材質",
-	["Set the texture for the timerbars."] = "設定計時條的材質花紋",
+	["Set the texture for the timer bars."] = "設定計時條的材質花紋",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -148,26 +110,17 @@ L:RegisterTranslations("deDE", function() return {
 	["Options for the timer bars."] = "Optionen f\195\188r die Timer Anzeigebalken.",
 	["Show the bar anchor frame."] = "Verankerung der Anzeigebalken anzeigen.",
 	["Set the bar scale."] = "Skalierung der Anzeigebalken w\195\164hlen.",
-	["Group upwards"] = "Nach oben fortsetzen",
+	["Grow upwards"] = "Nach oben fortsetzen",
 	["Toggle bars grow upwards/downwards from anchor."] = "Anzeigebalken von der Verankerung aus nach oben/unten fortsetzen.",
 
-	["Timer bars"] = "Timer Anzeigebalken",
 	["Show anchor"] = "Verankerung anzeigen",
-	["Grow bars upwards"] = "Anzeigebalken nach oben fortsetzen",
 	["Scale"] = "Skalierung",
-	["Bar scale"] = "Anzeigebalken Skalierung",
 
-	["Bars now grow %2$s"] = "Anzeigebalken werden nun fortgesetzt nach: %2$s",
-	["Scale is set to %2$s"] = "Skalierung jetzt: %2$s",
-
-	["Up"] = "oben",
-	["Down"] = "unten",
-	
 	["Test"] = "Test",
 	["Close"] = "Schlie\195\159en",
 
 	["Texture"] = "Textur",
-	["Set the texture for the timerbars."] = "Textur der Anzeigebalken w\195\164hlen.",
+	["Set the texture for the timer bars."] = "Textur der Anzeigebalken w\195\164hlen.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -181,26 +134,18 @@ L:RegisterTranslations("frFR", function() return {
 	["Options for the timer bars."] = "Options concernant les barres temporelles.",
 	["Show the bar anchor frame."] = "Affiche l'ancre du cadre des barres.",
 	["Set the bar scale."] = "D\195\169termine la taille des barres.",
-	["Group upwards"] = "Ajouter vers le haut",
+	["Grow upwards"] = "Ajouter vers le haut",
 	["Toggle bars grow upwards/downwards from anchor."] = "Ajoute les nouvelles barres soit en haut de l'ancre, soit en bas de l'ancre.",
 
 	["Timer bars"] = "Barres temporelles",
 	["Show anchor"] = "Afficher l'ancre",
-	["Grow bars upwards"] = "Ajouter barres vers le haut",
 	["Scale"] = "Taille",
-	["Bar scale"] = "Taille des barres",
-
-	["Bars now grow %2$s"] = "Les barres s'ajoutent d\195\169sormais vers le %2$s.",
-	["Scale is set to %2$s"] = "La taille est d\195\169sormais d\195\169finie à %2$s.",
-
-	["Up"] = "haut",
-	["Down"] = "bas",
 
 	--["Test"] = true,
 	["Close"] = "Fermer",
 
 	--["Texture"] = true,
-	["Set the texture for the timerbars."] = "D\195\169termine la texture des barres temporelles.",
+	["Set the texture for the timer bars."] = "D\195\169termine la texture des barres temporelles.",
 } end)
 
 ----------------------------------
@@ -228,17 +173,14 @@ BigWigsBars.consoleOptions = {
 		},
 		[L["up"]] = {
 			type = "toggle",
-			name = L["Group upwards"],
+			name = L["Grow upwards"],
 			desc = L["Toggle bars grow upwards/downwards from anchor."],
 			get = function() return BigWigsBars.db.profile.growup end,
 			set = function(v) BigWigsBars.db.profile.growup = v end,
-			message = L["Bars now grow %2$s"],
-			current = L["Bars now grow %2$s"],
-			map = {[true] = L["Up"], [false] = L["Down"]},
 		},
 		[L["scale"]] = {
 			type = "range",
-			name = L["Bar scale"],
+			name = L["Scale"],
 			desc = L["Set the bar scale."],
 			min = 0.2,
 			max = 2.0,
@@ -249,7 +191,7 @@ BigWigsBars.consoleOptions = {
 		[L["Texture"]] = {
 			type = "text",
 			name = L["Texture"],
-			desc = L["Set the texture for the timerbars."],
+			desc = L["Set the texture for the timer bars."],
 			get = function() return BigWigsBars.db.profile.texture end,
 			set = function(v) BigWigsBars.db.profile.texture = v end,
 			validate = surface:List(),
@@ -324,24 +266,6 @@ end
 function BigWigsBars:BigWigs_StopBar(module, text)
 	if not text then return end
 	module:UnregisterCandyBar("BigWigsBar "..text)
-end
-
-------------------------------
---      Slash Handlers      --
-------------------------------
-
-function BigWigsBars:SetScale(msg, supressreport)
-	local scale = tonumber(msg)
-	if scale and scale >= minscale and scale <= maxscale then
-		self.db.profile.scale = scale
-		if not supressreport then self.core:Print(L["Scale is set to %s"], scale) end
-	end
-end
-
-function BigWigsBars:ToggleUp(supressreport)
-	self.db.profile.growup = not self.db.profile.growup
-	local t = self.db.profile.growup
-	if not supressreport then self.core:Print(L["Bars now grow %s"], (t and L["Up"] or L["Down"])) end
 end
 
 ------------------------------
@@ -479,3 +403,4 @@ function BigWigsBars:RestorePosition()
 	f:ClearAllPoints()
 	f:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 end
+
