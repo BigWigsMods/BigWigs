@@ -484,12 +484,6 @@ function BigWigsColors:OnRegister()
 	self:RegHex(self.db.profile)
 end
 
-function BigWigsColors:ResetDB()
-	for k, v in pairs(self.db.profile) do
-		self.db.profile[k] = self.defaultDB[k]
-	end
-end
-
 function BigWigsColors:RegHex(hex)
 	if type(hex) == "string" then
 		PaintChips:RegisterHex(hex)
@@ -503,6 +497,25 @@ end
 ------------------------------
 --         Handlers         --
 ------------------------------
+
+local function copyTable(to, from)
+	setmetatable(to, nil)
+	for k,v in pairs(from) do
+		if type(k) == "table" then
+			k = copyTable({}, k)
+		end
+		if type(v) == "table" then
+			v = copyTable({}, v)
+		end
+		to[k] = v
+	end
+	setmetatable(to, from)
+	return to
+end
+
+function BigWigsColors:ResetDB()
+	copyTable(self.db.profile, self.defaultDB)
+end
 
 function BigWigsColors:RGBToHex(r, g, b)
 	return format("%02x%02x%02x", r*255, g*255, b*255)
