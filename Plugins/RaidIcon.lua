@@ -28,14 +28,14 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Options for Raid Icons."] = true,
 
-	["star"] = true,
-	["circle"] = true,
-	["diamond"] = true,
-	["triangle"] = true,
-	["moon"] = true,
-	["square"] = true,
-	["cross"] = true,
-	["skull"] = true,
+	["Star"] = true,
+	["Circle"] = true,
+	["Diamond"] = true,
+	["Triangle"] = true,
+	["Moon"] = true,
+	["Square"] = true,
+	["Cross"] = true,
+	["Skull"] = true,
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -51,14 +51,14 @@ L:RegisterTranslations("koKR", function() return {
 
 	["Options for Raid Icons."] = "공격대 아이콘에 대한 설정",
 
-	["star"] = "별",
-	["circle"] = "원",
-	["diamond"] = "다이아몬드",
-	["triangle"] = "세모",
-	["moon"] = "달",
-	["square"] = "네모",
-	["cross"] = "가위표",
-	["skull"] = "해골",
+	["Star"] = "별",
+	["Circle"] = "원",
+	["Diamond"] = "다이아몬드",
+	["Triangle"] = "세모",
+	["Moon"] = "달",
+	["Square"] = "네모",
+	["Cross"] = "가위표",
+	["Skull"] = "해골",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -74,14 +74,14 @@ L:RegisterTranslations("zhCN", function() return {
 
 	["Options for Raid Icons."] = "团队图标设置",
 
-	["star"] = "星星",
-	["circle"] = "圆圈",
-	["diamond"] = "钻石",
-	["triangle"] = "三角",
-	["moon"] = "月亮",
-	["square"] = "方形",
-	["cross"] = "十字",
-	["skull"] = "骷髅",
+	["Star"] = "星星",
+	["Circle"] = "圆圈",
+	["Diamond"] = "钻石",
+	["Triangle"] = "三角",
+	["Moon"] = "月亮",
+	["Square"] = "方形",
+	["Cross"] = "十字",
+	["Skull"] = "骷髅",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -97,14 +97,14 @@ L:RegisterTranslations("zhTW", function() return {
 
 	["Options for Raid Icons."] = "團隊圖示設置",
 
-	["star"] = "星星",
-	["circle"] = "圓圈",
-	["diamond"] = "方塊",
-	["triangle"] = "三角",
-	["moon"] = "月亮",
-	["square"] = "方形",
-	["cross"] = "十字",
-	["skull"] = "骷髏",
+	["Star"] = "星星",
+	["Circle"] = "圓圈",
+	["Diamond"] = "方塊",
+	["Triangle"] = "三角",
+	["Moon"] = "月亮",
+	["Square"] = "方形",
+	["Cross"] = "十字",
+	["Skull"] = "骷髏",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -124,14 +124,14 @@ L:RegisterTranslations("deDE", function() return {
 
 	["Options for Raid Icons."] = "Optionen f\195\188r Schlachtzug-Symbole.",
 
-	["star"] = "Stern",
-	["circle"] = "Kreis",
-	["diamond"] = "Diamant",
-	["triangle"] = "Dreieck",
-	["moon"] = "Mond",
-	["square"] = "Quadrat",
-	["cross"] = "Kreuz",
-	["skull"] = "Totenkopf",
+	["Star"] = "Stern",
+	["Circle"] = "Kreis",
+	["Diamond"] = "Diamant",
+	["Triangle"] = "Dreieck",
+	["Moon"] = "Mond",
+	["Square"] = "Quadrat",
+	["Cross"] = "Kreuz",
+	["Skull"] = "Totenkopf",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -151,14 +151,14 @@ L:RegisterTranslations("frFR", function() return {
 
 	["Options for Raid Icons."] = "Options concernant les ic\195\180nes de raid.",
 
-	["star"] = "\195\169toile",
-	["circle"] = "cercle",
-	["diamond"] = "diamant",
-	["triangle"] = "triangle",
-	["moon"] = "lune",
-	["square"] = "carr\195\169",
-	["cross"] = "croix",
-	["skull"] = "cr\195\162ne",
+	["Star"] = "\195\169toile",
+	["Circle"] = "cercle",
+	["Diamond"] = "diamant",
+	["Triangle"] = "triangle",
+	["Moon"] = "lune",
+	["Square"] = "carr\195\169",
+	["Cross"] = "croix",
+	["Skull"] = "cr\195\162ne",
 } end )
 
 ----------------------------------
@@ -168,17 +168,7 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsRaidIcon = BigWigs:NewModule(L["Raid Icons"])
 BigWigsRaidIcon.defaultDB = {
 	place = true,
-	icon = L["skull"],
-}
-BigWigsRaidIcon.icontonumber = {
-	[L["star"]] = 1,
-	[L["circle"]] = 2,
-	[L["diamond"]] = 3,
-	[L["triangle"]] = 4,
-	[L["moon"]] = 5,
-	[L["square"]] = 6,
-	[L["cross"]] = 7,
-	[L["skull"]] = 8,
+	icon = 8,
 }
 BigWigsRaidIcon.consoleCmd = L["raidicon"]
 BigWigsRaidIcon.consoleOptions = {
@@ -191,15 +181,24 @@ BigWigsRaidIcon.consoleOptions = {
 			name = L["Place Raid Icons"],
 			desc = L["Toggle placing of Raid Icons on players."],
 			get = function() return BigWigsRaidIcon.db.profile.place end,
-			set = function(v) BigWigsRaidIcon.db.profile.place = v end,		
+			set = function(v) BigWigsRaidIcon.db.profile.place = v end,
 		},
 		[L["icon"]] = {
 			type = "text",
 			name = L["Set Icon"],
 			desc = L["Set which icon to place on players."],
-			get = function() return BigWigsRaidIcon.db.profile.icon end,
-			set = function(v) BigWigsRaidIcon.db.profile.icon = v end,
-			validate = {L["star"], L["circle"], L["diamond"], L["triangle"], L["moon"], L["square"], L["cross"], L["skull"] },
+			get = function() return tostring(BigWigsRaidIcon.db.profile.icon) end,
+			set = function(v) BigWigsRaidIcon.db.profile.icon = tonumber(v) end,
+			validate = {
+				["1"] = L["Star"],
+				["2"] = L["Circle"],
+				["3"] = L["Diamond"],
+				["4"] = L["Triangle"],
+				["5"] = L["Moon"],
+				["6"] = L["Square"],
+				["7"] = L["Cross"],
+				["8"] = L["Skull"]
+			},
 		},
 	}
 }
@@ -211,16 +210,17 @@ BigWigsRaidIcon.consoleOptions = {
 function BigWigsRaidIcon:OnEnable()
 	self:RegisterEvent("BigWigs_SetRaidIcon")
 	self:RegisterEvent("BigWigs_RemoveRaidIcon")
+
+	if type(self.db.profile.icon) ~= "number" then
+		self.db.profile.icon = 8
+	end
 end
 
 function BigWigsRaidIcon:BigWigs_SetRaidIcon(player)
-	if not self.db.profile.place or not player then return end
-	local icon = self.db.profile.icon
-	if not self.icontonumber[icon] then
-		icon = L["skull"]
-	end
-	icon = self.icontonumber[icon]
-	for i=1,GetNumRaidMembers() do
+	if not player or not self.db.profile.place then return end
+	local icon = self.db.profile.icon or 8
+	local num = GetNumRaidMembers()
+	for i = 1, num do
 		if UnitName("raid"..i) == player then
 			if not GetRaidTargetIndex("raid"..i) then
 				SetRaidTargetIcon("raid"..i, icon)
@@ -231,11 +231,13 @@ function BigWigsRaidIcon:BigWigs_SetRaidIcon(player)
 end
 
 function BigWigsRaidIcon:BigWigs_RemoveRaidIcon()
-	if not self.db.profile.place or not lastplayer then return end
-	for i=1,GetNumRaidMembers() do
+	if not lastplayer or not self.db.profile.place then return end
+	local num = GetNumRaidMembers()
+	for i = 1, num do
 		if UnitName("raid"..i) == lastplayer then
 			SetRaidTargetIcon("raid"..i, 0)
 		end
 	end
 	lastplayer = nil
 end
+
