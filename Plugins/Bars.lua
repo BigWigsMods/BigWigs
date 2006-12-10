@@ -137,7 +137,6 @@ L:RegisterTranslations("frFR", function() return {
 	["Grow upwards"] = "Ajouter vers le haut",
 	["Toggle bars grow upwards/downwards from anchor."] = "Ajoute les nouvelles barres soit en haut de l'ancre, soit en bas de l'ancre.",
 
-	["Timer bars"] = "Barres temporelles",
 	["Show anchor"] = "Afficher l'ancre",
 	["Scale"] = "Taille",
 
