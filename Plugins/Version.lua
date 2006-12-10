@@ -403,35 +403,14 @@ function BigWigsVersionQuery:QueryVersion(zone)
 end
 
 --[[ Parses the new style reply, which is "1111 <nick>" ]]
-function BigWigsVersionQuery:ParseReply2(reply)
-	-- If there's no space, it's just a version number we got.
-	local first, last = string.find(reply, " ")
+function BigWigsVersionQuery:ParseReply(reply)
+	local first, last = reply:find(" ")
 	if not first or not last then return reply, nil end
 
-	local rev = string.sub(reply, 1, first)
-	local nick = string.sub(reply, last + 1, string.len(reply))
+	local rev = reply:sub(1, first)
+	local nick = reply:sub(last + 1, reply:len())
 
-	-- We need to check if rev or nick contains ':' - if it does, this is an old
-	-- style reply.
-	if tonumber(rev) == nil or string.find(rev, ":") or string.find(nick, ":") then
-		return self:ParseReply(reply), nil
-	end
 	return tonumber(rev), nick
-end
-
---[[ Parses the old style reply, which was MC:REV BWL:REV, etc. ]]
-function BigWigsVersionQuery:ParseReply(reply)
-	if not string.find(reply, ":") then return -1 end
-	local zone = BWL:HasTranslation(self.currentZone) and BWL:GetTranslation(self.currentZone) or self.currentZone
-
-	local zoneIndex, zoneEnd = string.find(reply, zone)
-	if not zoneIndex then return -1 end
-
-	local revision = string.sub(reply, zoneEnd + 2, zoneEnd + 6)
-	local convertedRev = tonumber(revision)
-	if revision and convertedRev ~= nil then return convertedRev end
-
-	return -1
 end
 
 --[[
@@ -450,16 +429,8 @@ function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
 			self:TriggerEvent("BigWigs_SendSync", "BWVR " .. self.zoneRevisions[rest] .. " " .. nick)
 		end
 	elseif sync == "BWVR" and self.queryRunning and nick and rest then
-		-- Means it's either a old style or new style reply.
-		-- The "working style" is just the number, which was the second type of
-		-- version reply we had.
-		local revision, queryNick = nil, nil
-		if tonumber(rest) == nil then
-			revision, queryNick = self:ParseReply2(rest)
-		else
-			revision = tonumber(rest)
-		end
-		if queryNick == nil or queryNick == UnitName("player") then
+		local revision, queryNick = self:ParseReply(rest)
+		if revision and queryNick and queryNick == UnitName("player") then
 			self.responseTable[nick] = tonumber(revision)
 			self.responses = self.responses + 1
 			self:UpdateVersions()
