@@ -158,7 +158,9 @@ BigWigsOptions.hasIcon = "Interface\\AddOns\\BigWigs\\Icons\\core-enabled"
 BigWigsOptions.defaultMinimapPosition = 180
 BigWigsOptions.clickableTooltip = true
 BigWigsOptions.hideWithoutStandby = true
---BigWigsOptions.hasNoText = true
+
+BigWigsOptions.hideMenuTitle = true
+BigWigs.hideMenuTitle = true
 
 -- XXX total hack
 BigWigsOptions.OnMenuRequest = deuce.core.cmdtable
