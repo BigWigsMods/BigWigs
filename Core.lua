@@ -36,6 +36,7 @@ L:RegisterTranslations("enUS", function() return {
 	["debug"] = true,
 	["Debugging"] = true,
 	["Show debug messages."] = true,
+	["Options"] = true,
 	bosskill_cmd = "kill",
 	bosskill_name = "Boss death",
 	bosskill_desc = "Announce when the boss has been defeated.",
@@ -260,10 +261,25 @@ BigWigs = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDebug-2.0", "AceMod
 BigWigs:SetModuleMixins("AceDebug-2.0", "AceEvent-2.0", "CandyBar-2.0")
 BigWigs:RegisterDB("BigWigsDB", "BigWigsDBPerChar")
 BigWigs.cmdtable = {type = "group", handler = BigWigs, args = {
+	["bspacer"] = {
+		type = "header",
+		name = " ",
+		order = 1,
+	},
+	[L["Bosses"]] = {
+		type = "header",
+		name = L["Bosses"],
+		order = 2,
+	},
 	["spacer"] = {
 		type = "header",
 		name = " ",
 		order = 200,
+	},
+	[L["Options"]] = {
+		type = "header",
+		name = L["Options"],
+		order = 201,
 	},
 	[L["plugin"]] = {
 		type = "group",
@@ -271,7 +287,7 @@ BigWigs.cmdtable = {type = "group", handler = BigWigs, args = {
 		desc = L["Options for plugins."],
 		args = {},
 		disabled = function() return not BigWigs:IsActive() end,
-		order = 201,
+		order = 202,
 	},
 	[L["extra"]] = {
 		type = "group",
@@ -279,9 +295,32 @@ BigWigs.cmdtable = {type = "group", handler = BigWigs, args = {
 		desc = L["Options for extras."],
 		args = {},
 		disabled = function() return not BigWigs:IsActive() end,
-		order = 202,
+		order = 203,
 	},
 }}
+
+for k, zonename in pairs( {"Karahzan", "Zul'Gurub", "Molten Core", "Blackwing Lair", "Ahn'Qiraj", "Ruins of Ahn'Qiraj", "Naxxramas"} ) do 
+		local zone = zonename
+		if BZ:HasReverseTranslation(zonename) and L:HasTranslation(BZ:GetReverseTranslation(zonename)) then
+			zone = L[BZ:GetReverseTranslation(zonename)]
+		elseif L:HasTranslation(zonename) then
+			zone = L[zonename]
+		else
+			zone = L["Other"]
+			zonename = L["Other"]
+		end
+		if not BigWigs.cmdtable.args[zone] then
+			BigWigs.cmdtable.args[zone] = {
+				type = "group",
+				name = zonename,
+				desc = string.format(L["Options for bosses in %s."], zonename),
+				args = {},
+				disabled = function() return not BigWigs:IsActive() end,
+				order = 10,
+			}
+		end
+end
+
 BigWigs:RegisterChatCommand({"/bw", "/BigWigs"}, BigWigs.cmdtable)
 BigWigs.debugFrame = ChatFrame5
 BigWigs.revision = tonumber(string.sub("$Revision$", 12, -3))
