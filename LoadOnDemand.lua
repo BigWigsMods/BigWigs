@@ -68,6 +68,8 @@ function BigWigsLoD:BigWigs_CoreEnabled()
 
 	withcore = {}
 
+	self:LoadZone( GetRealZoneText() )
+
 	-- Fire an event to have the target monitor check its stuff
 	if loaded then
 		self:TriggerEvent("BigWigs_ModulePackLoaded")
@@ -75,7 +77,9 @@ function BigWigsLoD:BigWigs_CoreEnabled()
 end
 
 function BigWigsLoD:ZONE_CHANGED_NEW_AREA()
-	self:LoadZone( GetRealZoneText() )
+	if BigWigs:IsActive() then
+		self:LoadZone( GetRealZoneText() )
+	end
 end
 
 function BigWigsLoD:CHAT_MSG_SYSTEM( msg )
