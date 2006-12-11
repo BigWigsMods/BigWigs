@@ -32,7 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 	heal_name = "Heal Alert",
 	heal_desc = "Warn for Twins Healing",
 
-	porttrigger = "gains Twin Teleport.",
+	porttrigger = "Twin Teleport.",
 	portwarn = "Teleport!",
 	portdelaywarn = "Teleport in ~5 seconds!",
 	portdelaywarn2 = "Teleport in ~10 seconds!",
@@ -256,9 +256,12 @@ function BigWigsTwins:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "TwinsTeleport", 10)
 end
@@ -301,6 +304,12 @@ function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
 		self:ScheduleEvent("BigWigs_Message", 20, L["portdelaywarn2"], "Urgent")
 		self:ScheduleEvent("BigWigs_Message", 25, L["portdelaywarn"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 30, "Interface\\Icons\\Spell_Arcane_Blink")
+	end
+end
+
+function BigWigsTwins:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+	if string.find(msg, L["porttrigger"]) then
+		self:TriggerEvent("BigWigs_SendSync", "TwinsTeleport")
 	end
 end
 
