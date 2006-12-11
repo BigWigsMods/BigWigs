@@ -180,28 +180,28 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	--["Messages"] = true,
-
 	--["msg"] = true,
-	--["anchor"] = true,
-	--["color"] = true,
-	--["scale"] = true,
-
-	["Options for message display."] = "Options concernant le cadre des messages.",
-	["Show the message anchor frame."] = "Affiche l'ancre du cadre des messages.",
-	["Use colors"] = "Utiliser des couleurs",
-	["Toggles white only messages ignoring coloring."] = "Utilise ou non des couleurs dans les messages à la place du blanc unique.",
+	["Options for message display."] = "Options concernant l'affichage des messages.",
 
 	["Show anchor"] = "Afficher l'ancre",
-	["Set the message frame scale."] = "D\195\169termine la taille du cadre des messages.",
+	--["anchor"] = true,
+	["Show the message anchor frame."] = "Affiche l'ancre du cadre des messages.",
+
+	["Use colors"] = "Utiliser des couleurs",
+	--["color"] = true,
+	["Toggles white only messages ignoring coloring."] = "Utilise ou non des couleurs dans les messages à la place du blanc unique.",
+
 	["Scale"] = "Taille",
+	--["scale"] = true,
+	["Set the message frame scale."] = "D\195\169termine la taille du cadre des messages.",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Co|cffff00ffule|cff00ff00ur|r",
 	["White"] = "Blanc",
 	["BigWigs frame"] = "Cadre de BigWigs",
 	["RaidWarning frame"] = "Cadre des Avertissements Raid",
 
-	--["display"] = true,
 	["Display"] = "Affichage",
+	--["display"] = true,
 	["Set where messages are displayed."] = "D\195\169termine o\195\185 les messages sont affich\195\169s.",
 
 	["Mik's Scrolling Battle Text"] = "Scrolling Battle Text de Mik",

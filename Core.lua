@@ -80,15 +80,17 @@ L:RegisterTranslations("frFR", function() return {
 	-- ["debug"] = true,
 	["Debugging"] = "D\195\169boguage",
 	["Show debug messages."] = "Afficher les messages de d\195\169boguage.",
-	bosskill_name = "Mort des Boss",
-	bosskill_desc = "Annoncer la mort des boss.",
+	--bosskill_cmd = "kill",
+	bosskill_name = "D\195\169faite du boss",
+	bosskill_desc = "Pr\195\169viens quand le boss est vaincu.",
 
-	["Other"] = "Autre",
+	["Other"] = "Autres",
 	["Load"] = "Charger",
 	["Load All"] = "Tout charger",
 	["Load all %s modules."] = "Charge tous les modules \"%s\".",
 
 	-- AceConsole zone commands
+	["Karazhan"] = "Karazhan",
 	["Zul'Gurub"] = "ZG",
 	["Molten Core"] = "MC",
 	["Blackwing Lair"] = "BWL",

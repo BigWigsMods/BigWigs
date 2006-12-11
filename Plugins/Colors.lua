@@ -210,10 +210,13 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
+	--["colors"] = true,
 	["Colors"] = "Couleurs",
 
 	["Messages"] = "Messages",
 	["Bars"] = "Barres",
+	["Short"] = "Court",
+	--["Long"] = true,
 	["Short bars"] = "BarresCourtes",
 	["Long bars"] = "BarresLongues",
 	["Color %s"] = "Couleur %s",
