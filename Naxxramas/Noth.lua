@@ -102,6 +102,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	wave1bar = "Welle 1",
 	wave2bar = "Welle 2",
+	wave2_message = "Welle 2 in 10 Sekunden!",
 } end )
 
 

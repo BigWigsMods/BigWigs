@@ -104,8 +104,8 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	["|cff00ff00Module running|r"] = "|cff00ff00Modul aktiviert|r",
---	["|cffeda55fClick|r to reset all running modules. |cffeda55fShift+Click|r to disable them. |cffeda55fCtrl+Shift+Click|r to disable Big Wigs completely."] = "|cffeda55fKlicken|r, um alle laufenden Module zur\195\188ckzusetzen. |cffeda55fShift+Klick|r um alle laufenden Module zu beenden. |cffeda55fStrg+Shift+Klick|r um BigWigs komplett zu beenden.",
+	["|cff00ff00Module running|r"] = "|cff00ff00Modul aktiv|r",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt+Click|r to disable them. |cffeda55fCtrl+Alt+Click|r to disable Big Wigs completely."] = "|cffeda55fKlicken|r, um alle laufenden Module zur\195\188ckzusetzen. |cffeda55fAlt+Klick|r um alle laufenden Module zu beenden. |cffeda55fStrg+Alt+Klick|r um BigWigs komplett zu beenden.",
 	["|cffeda55fClick|r to enable."] = "|cffeda55fKlicken|r um zu aktivieren.",
 	["Big Wigs is currently disabled."] = "Big Wigs ist gegenw\195\164rtig deaktiviert.",
 	["Active boss modules"] = "Aktive Boss Module",
@@ -118,6 +118,8 @@ L:RegisterTranslations("deDE", function() return {
 	["All running modules have been disabled."] = "Alle laufenden Module wurden beendet.",
 	["%s reset."] = "%s zur\195\188ckgesetzt.",
 	["%s disabled."] = "%s beendet.",
+	["%s icon is now %s."] = "%s Symbol wird jetzt %s.",
+	["Show it again with /bw plugin minimap."] = "Erneut anzeigen mit /bw plugin minimap.",
 } end)
 
 ----------------------------------
@@ -254,4 +256,5 @@ function BigWigsOptions:OnClick()
 
 	self:UpdateTooltip()
 end
+
 

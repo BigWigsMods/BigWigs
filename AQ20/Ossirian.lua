@@ -68,7 +68,7 @@ L:RegisterTranslations("deDE", function() return {
 	supremewarn = "St\195\164rke des Ossirian!",
 	supremedelaywarn = "St\195\164rke des Ossirian in %d Sekunden!",
 	debufftrigger = "Ossirian der Narbenlose ist von (.*)schw\195\164che betroffen%.$",
-	debuffwarn = "Ossirian f\195\188r 45 Sekunden anf\195\164llig gegen: %s",
+	debuffwarn = "Ossirian jetzt anf\195\164llig gegen: %s!",
 	bartext = "St\195\164rke des Ossirian",
 	expose = "Schw\195\164che",
 

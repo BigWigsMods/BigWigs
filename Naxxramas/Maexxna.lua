@@ -62,13 +62,13 @@ L:RegisterTranslations("deDE", function() return {
 	cocoon_desc = "Warnung, wenn Spieler von Fangnetz betroffen sind.",
 
 	cocoontrigger = "(.*) (.*) von Fangnetz betroffen.",
-	webspraytrigger = "ist von Gespinstschauer betroffen.",
+	webspraytrigger = "von Gespinstschauer betroffen.",
 
 	cocoonwarn = "%s im Fangnetz!",
 
-	enragetrigger = "%s wird w\195\188tend.",
+	enragetrigger = "%s wird w\195\188tend!",
 
-	webspraywarn30sec = "Fangnetze in 10 Sekunden",
+	webspraywarn30sec = "Fangnetze in 10 Sekunden!",
 	webspraywarn20sec = "Fangnetze! Spinnen in 10 Sekunden!",
 	webspraywarn10sec = "Spinnen! Gespinstschauer in 10 Sekunden!",
 	webspraywarn5sec = "Gespinstschauer in 5 Sekunden!",

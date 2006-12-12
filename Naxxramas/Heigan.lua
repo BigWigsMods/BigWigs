@@ -87,22 +87,31 @@ L:RegisterTranslations("deDE", function() return {
 	teleport_name = "Teleport",
 	teleport_desc = "Warnung vor Teleport.",
 
+	engage_name = "Angriff",
+	engage_desc = "Warnung, wenn Heigan angegriffen wird.",
+
 	starttrigger = "Ihr geh\195\182rt mir...",
 	starttrigger2 = "Ihr seid.... als n\195\164chstes dran.",
 	starttrigger3 = "Ihr entgeht mir nicht...",
 	teleport_trigger = "Euer Ende naht.",
+	die_trigger = "%s takes his last breath.", -- ?
 
-	engage_message = "Heigan der Unsaubere angegriffen! 90 Sekunden bis Teleport!",
+	engage_message = "Heigan der Unsaubere angegriffen! Teleport in 90 Sekunden!",
+
 	teleport_1min_message = "Teleport in 1 Minute",
 	teleport_30sec_message = "Teleport in 30 Sekunden",
 	teleport_10sec_message = "Teleport in 10 Sekunden",
-	on_floor_message = "Zur\195\188ck im Raum! N\195\164chster Teleport in 90 Sekunden!",
+	on_platform_message = "Teleport! Auf der Plattform f\195\188r %d Sekunden!",
+
 	to_floor_30sec_message = "Zur\195\188ck im Raum in 30 Sekunden",
 	to_floor_10sec_message = "Zur\195\188ck im Raum in 10 Sekunden",
-	on_platform_message = "Teleport! Zur\195\188ck im Raum in %d Sekunden!",
+	on_floor_message = "Zur\195\188ck im Raum! N\195\164chster Teleport in 90 Sekunden!",
 
 	teleport_bar = "Teleport!",
 	back_bar = "R\195\188ckteleport!",
+
+	["Eye Stalk"] = "Augenstrunk",
+	["Rotting Maggot"] = "Faulende Made",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

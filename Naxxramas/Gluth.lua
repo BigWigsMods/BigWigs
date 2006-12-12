@@ -73,22 +73,22 @@ L:RegisterTranslations("deDE", function() return {
 	fear_desc = "Warnung vor AoE Furcht.",
 
 	frenzy_name = "Raserei",
-	frenzy_desc = "Warnung, wenn Gluth in Raserei ger\195\164t",
+	frenzy_desc = "Warnung, wenn Gluth in Raserei ger\195\164t.",
 
 	decimate_name = "Dezimieren",
-	decimate_desc = "Warnung vor Dezimieren",
+	decimate_desc = "Warnung vor Dezimieren.",
 
 	trigger1 = "%s ger\195\164t in Raserei!",
 	trigger2 = "von Erschreckendes Gebr\195\188ll betroffen.",
 
 	warn1 = "Raserei!",
-	warn2 = "5 Sekunden bis AoE Furcht!",
-	warn3 = "AoE Furcht - N\195\164chste in 20 Sekunden!",
+	warn2 = "AoE Furcht in 5 Sekunden!",
+	warn3 = "AoE Furcht! N\195\164chste in 20 Sekunden!",
 
-	startwarn = "Gluth angegriffen! ~105 Sekunden bis Zombies!",
+	startwarn = "Gluth angegriffen! Zombies in ~105 Sekunden!",
 	decimatesoonwarn = "Dezimieren kurz bevor",
-	decimatewarn = "Dezimieren! - AoE Zombies!",
-	decimatetrigger = "Decimate", -- ?
+	decimatewarn = "Dezimieren!",
+	decimatetrigger = "Dezimieren",
 
 	bar1text = "Furcht",
 	decimatebartext = "Dezimieren",

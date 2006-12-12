@@ -171,12 +171,15 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
+	-- ["colors"] = true,
 	["Colors"] = "Farben",
 
 	["Messages"] = "Nachrichten",
 	["Bars"] = "Anzeigebalken",
-	["Short bars"] = "KurzerAnzeigebalken",
-	["Long bars"] = "LangerAnzeigebalken",
+	["Short"] = "Kurz",
+	["Long"] = "Lang",
+	["Short bars"] = "Kurze Anzeigebalken",
+	["Long bars"] = "Lange Anzeigebalken",
 	["Color %s"] =  "Farbe %s",
 	["Color%s"] = "Farbe%s",
 	["Number of colors"] = "Anzahl der Farben",
@@ -550,4 +553,5 @@ function BigWigsColors:BarColor(time)
 	elseif n == 2 then return d[1], d[2]
 	elseif n == 1 then return d[1] end
 end
+
 

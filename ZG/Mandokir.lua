@@ -61,7 +61,7 @@ L:RegisterTranslations("deDE", function() return {
 	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler der beobachtet wird. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 
 	watch_trigger = "([^%s]+)! Ich behalte Euch im Auge!$",
-	enrage_trigger = "%s ger\195\164t in Rage, als er sieht, dass sein Raptor im Kampf stirbt!",
+	enrage_trigger = "ger\195\164t in Rage, als er sieht, dass sein Raptor im Kampf stirbt!",
 
 	watched_warning_self = "Du wirst beobachtet!",
 	watched_warning_other = "%s wird beobachtet!",

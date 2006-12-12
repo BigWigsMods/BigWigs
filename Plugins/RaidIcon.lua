@@ -110,9 +110,9 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("deDE", function() return {
 	["Raid Icons"] = "Schlachtzug-Symbole",
 
-	--["raidicon"] = "schlachtzugsymbol",
-	--["place"] = "position",
-	--["icon"] = "symbol",
+	-- ["raidicon"] = true,
+	-- ["place"] = true,
+	-- ["icon"] = true,
 
 	["Place"] = "Platzierung",
 	["Place Raid Icons"] = "Schlachtzug-Symbole platzieren",
@@ -240,4 +240,5 @@ function BigWigsRaidIcon:BigWigs_RemoveRaidIcon()
 	end
 	lastplayer = nil
 end
+
 

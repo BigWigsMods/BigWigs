@@ -242,7 +242,8 @@ L:RegisterTranslations("deDE", function() return {
 	landing_warning = "Nefarian ist gelandet!",
 	zerg_warning = "Diener herbeigerufen!",
 	fear_warning = "AoE Furcht in 2 Sekunden!",
-	shadowflame_warning = "Schattenflamme in K\195\188rze!",
+	fear_soon_warning = "M\195\182gliche AoE Furcht in ~5 sec",
+	shadowflame_warning = "Schattenflamme!",
 	classcall_warning = "Klassenruf in K\195\188rze!",
 
 	warnshaman	= "Schamanen - Totems!",
@@ -256,6 +257,7 @@ L:RegisterTranslations("deDE", function() return {
 	warnmage	= "Magier - Verwandlung!",
 
 	classcall_bar = "Klassenruf",
+	fear_bar = "M\195\182gliche AoE Furcht",
 
 	shadowflame_name = "Schattenflamme",
 	shadowflame_desc = "Warnung, wenn Nefarian Schattenflamme wirkt.",

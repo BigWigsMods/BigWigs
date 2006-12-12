@@ -157,13 +157,13 @@ L:RegisterTranslations("deDE", function() return {
 	you = "Ihr",
 	are = "seid",
 
-	wingbuffet_message = "Fl\195\188gelsto\195\159!",
+	wingbuffet_message = "Fl\195\188gelsto\195\159! N\195\164chster in 30 Sekunden!",
 	wingbuffet_warning = "Fl\195\188gelsto\195\159 in 3 Sekunden!",
 	shadowflame_warning = "Schattenflamme!",
 	shadowflame_message_you = "Du hast Schattenschwinges Schatten!",
 	shadowflame_message_other = " hat Schattenschwinges Schatten!",
 
-	wingbuffet_bar = "Fl\195\188gelsto\195\159! N\195\164chster in 30 Sekunden!",
+	wingbuffet_bar = "Fl\195\188gelsto\195\159",
 	shadowcurse_bar = "%s - Schattenschwinges Schatten",
 
 	wingbuffet_name = "Fl\195\188gelsto\195\159",

@@ -88,7 +88,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	-- ["test"] = true,
-	--["Test"] = "Test",
+	["Test"] = "Test",
 	["Test Bar"] = "Test Balken",
 	["Test Bar 2"] = "Test Balken 2",
 	["Test Bar 3"] = "Test Balken 3",
@@ -98,13 +98,13 @@ L:RegisterTranslations("deDE", function() return {
 	["*RAWR*"] = "RAWR",
 	["Victory!"] = "Sieg!",
 	["Options for testing."] = "Optionen f\195\188r den Test von BigWigs.",
-	["local"] = "Lokal",
+	-- ["local"] = true,
 	["Local test"] = "Lokaler Test",
-	["Perform a local test of BigWigs."] = "Lokalen Test durchf\195\188hren.",
-	--["sync"] = "sync",
+	["Perform a local test of BigWigs."] = "Lokalen Test von BigWigs durchf\195\188hren.",
+	-- ["sync"] = true,
 	["Sync test"] = "Synchronisations-Test",
 	["Perform a sync test of BigWigs."] = "Sychronisations-Test durchf\195\188hren.",
-	["Testing Sync"] = "Synchronisation testen",
+	["Testing Sync"] = "Teste Synchronisation",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

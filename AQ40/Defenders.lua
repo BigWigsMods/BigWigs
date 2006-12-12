@@ -78,13 +78,19 @@ L:RegisterTranslations("deDE", function() return {
 	plagueother_desc = "Warnung, wenn andere Spieler die Seuche haben.",
 
 	thunderclap_name = "Donnerknall",
-	thunderclap_desc = "Warnung vor Donnerknall.",
+	thunderclap_desc = "Warnung, wenn Verteidiger des Anubisath Donnerknall wirkt.",
+
+	meteor_name = "Meteor",
+	meteor_desc = "Warnung, wenn Verteidiger des Anubisath Meteor wirkt.",
+
+	shadowstorm_name = "Schattensturm",
+	shadowstorm_desc = "Warnung, wenn Verteidiger des Anubisath Schattensturm wirkt.",
 
 	explode_name = "Explosion",
-	explode_desc = "Warnung vor Explosion.",
+	explode_desc = "Warnung, wenn Verteidiger des Anubisath explodiert.",
 
 	enrage_name = "Wutanfall",
-	enrage_desc = "Warnung vor Wutanfall.",
+	enrage_desc = "Warnung, wenn Verteidiger des Anubisath w\195\188tend wird.",
 
 	summon_name = "Beschw\195\182rung",
 	summon_desc = "Warnung, wenn Verteidiger des Anubisath Schwarmwachen oder Krieger beschw\195\182rt.",
@@ -108,8 +114,12 @@ L:RegisterTranslations("deDE", function() return {
 	plagueyou = "Ihr",
 	plagueare = "seid",
 
-	thunderclaptrigger = "^Verteidiger des Anubisath's Donnerknall trifft ([^%s]+) f\195\188r %d+%.",
+	thunderclaptrigger = "^Verteidiger des Anubisath's Donnerknall",
 	thunderclapwarn = "Donnerknall!",
+	meteortrigger = "^Verteidiger des Anubisath's Meteor",
+	meteorwarn = "Meteor!",
+	shadowstormtrigger = "^Verteidiger des Anubisath's Schattensturm",
+	shadowstormwarn = "Schattensturm!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

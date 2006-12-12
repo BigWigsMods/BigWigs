@@ -146,33 +146,33 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Messages"] = "Nachrichten",
-
-	["msg"] = "msg",
-	["anchor"] = "verankerung",
-	["color"] = "farbe",
-	["scale"] = "skalierung",
-
+	-- ["msg"] = true,
 	["Options for message display."] = "Optionen f\195\188r das Nachrichtenfenster.",
-	["Show the message anchor frame."] = "Verankerung des Nachrichtenfensters anzeigen.",
-	["Use colors"] = "Farben benutzen",
-	["Toggles white only messages ignoring coloring."] = "Nachrichten farbig/wei\195\159 anzeigen.",
 
 	["Show anchor"] = "Verankerung anzeigen",
-	["Set the message frame scale."] = "Skalierung des Nachrichtenfensters w\195\164hlen.",
+	-- ["anchor"] = true,
+	["Show the message anchor frame."] = "Verankerung des Nachrichtenfensters anzeigen.",
+
+	["Use colors"] = "Farben benutzen",
+	-- ["color"] = true,
+	["Toggles white only messages ignoring coloring."] = "Nachrichten farbig/wei\195\159 anzeigen.",
+
 	["Scale"] = "Skalierung",
+	-- ["scale"] = true,
+	["Set the message frame scale."] = "Skalierung des Nachrichtenfensters w\195\164hlen.",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Fa|cffff00ffr|cff00ff00be|r",
 	["White"] = "Wei\195\159",
-	["BigWigs frame"] = "BigWigs",
-	["RaidWarning frame"] = "RaidWarning",
+	["BigWigs frame"] = "BigWigs Fenster",
+	["RaidWarning frame"] = "RaidWarning Fenster",
 
-	["display"] = "anzeige",
 	["Display"] = "Anzeige",
+	-- ["display"] = true,
 	["Set where messages are displayed."] = "W\195\164hle, wo Nachrichten angezeigt werden sollen.",
 
-	["Mik's Scrolling Battle Text"] = "MSBT",
-	["Scrolling Combat Text"] = "SCT",
-	["Floating Combat Text"] = "FCT",
+	-- ["Mik's Scrolling Battle Text"] = true,
+	-- ["Scrolling Combat Text"] = true,
+	-- ["Floating Combat Text"] = true,
 
 	["Test"] = "Test",
 	["Close"] = "Schlie\195\159en",
@@ -494,4 +494,5 @@ function BigWigsMessages:RestorePosition()
 	f:ClearAllPoints()
 	f:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 end
+
 

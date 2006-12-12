@@ -54,24 +54,24 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	adds_name = "Elementare",
-	adds_desc = "Warnung, wenn Elementare erscheinen.",
+	adds_name = "Manageister",
+	adds_desc = "Warnung, wenn Manageister erscheinen.",
 
 	paralyze_name = "Steinform",
 	paralyze_desc = "Warnung, wenn Moam in Steinform.",
 
 	starttrigger = "%s sp\195\188rt Eure Angst.",
-	startwarn = "Moam angegriffen! Elementare in 90 Sekunden!",
+	startwarn = "Moam angegriffen! Manageister in 90 Sekunden!",
 
-	addsbar = "Elementare",
-	addsincoming = "Elementare in %s Sekunden!",
+	addsbar = "Manageister",
+	addsincoming = "Manageister in %s Sekunden!",
 	addstrigger = "%s entzieht Euch Euer Mana und versteinert Euch.",
-	addswarn = "Elementare! Moam in Steinform f\195\188r 90 Sekunden.",
+	addswarn = "Manageister! Moam in Steinform f\195\188r 90 Sekunden.",
 
 	paralyzebar = "Steinform",
 	returnincoming = "Moam erwacht in %s Sekunden!",
 	returntrigger = "Energiezufuhr schwindet von Moam.",
-	returnwarn = "Moam erwacht! Elementare in 90 Sekunden!",
+	returnwarn = "Moam erwacht! Manageister in 90 Sekunden!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

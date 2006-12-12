@@ -101,26 +101,26 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Bars"] = "Anzeigebalken",
-
-	["bars"] = "balken",
-	["anchor"] = "verankerung",
-	["scale"] = "skalierung",
-	["up"] = "oben",
-
-	["Options for the timer bars."] = "Optionen f\195\188r die Timer Anzeigebalken.",
-	["Show the bar anchor frame."] = "Verankerung der Anzeigebalken anzeigen.",
-	["Set the bar scale."] = "Skalierung der Anzeigebalken w\195\164hlen.",
-	["Grow upwards"] = "Nach oben fortsetzen",
-	["Toggle bars grow upwards/downwards from anchor."] = "Anzeigebalken von der Verankerung aus nach oben/unten fortsetzen.",
+	-- ["bars"] = true,
+	["Options for the timer bars."] = "Optionen f\195\188r die Anzeigebalken.",
 
 	["Show anchor"] = "Verankerung anzeigen",
-	["Scale"] = "Skalierung",
+	-- ["anchor"] = true,
+	["Show the bar anchor frame."] = "Verankerung der Anzeigebalken anzeigen.",
 
-	["Test"] = "Test",
-	["Close"] = "Schlie\195\159en",
+	["Scale"] = "Skalierung",
+	-- ["scale"] = true,
+	["Set the bar scale."] = "Skalierung der Anzeigebalken w\195\164hlen.",
+
+	["Grow upwards"] = "Nach oben fortsetzen",
+	-- ["up"] = true,
+	["Toggle bars grow upwards/downwards from anchor."] = "Anzeigebalken von der Verankerung aus nach oben/unten fortsetzen.",
 
 	["Texture"] = "Textur",
 	["Set the texture for the timer bars."] = "Textur der Anzeigebalken w\195\164hlen.",
+
+	["Test"] = "Test",
+	["Close"] = "Schlie\195\159en",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -402,4 +402,5 @@ function BigWigsBars:RestorePosition()
 	f:ClearAllPoints()
 	f:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 end
+
 

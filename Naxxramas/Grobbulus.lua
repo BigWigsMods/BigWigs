@@ -65,16 +65,18 @@ L:RegisterTranslations("deDE", function() return {
 	otherinjected_name = "X ist verseucht",
 	otherinjected_desc = "Warnung, wenn andere Spieler von Mutagene Injektion betroffen sind.",
 
-	icon_cmd = "icon",
 	icon_name = "Symbol",
 	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der von Mutagene Injektion betroffen ist. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
+
+	cloud_name = "Giftwolke",
+	cloud_desc = "Warnung vor Giftwolken.",
 
 	inject_trigger = "^([^%s]+) ([^%s]+) von Mutagene Injektion betroffen",
 
 	you = "Ihr",
 	are = "seid",
 
-	startwarn = "Grobbulus angegriffen! 12 Minuten bis Wutanfall!",
+	startwarn = "Grobbulus angegriffen! Wutanfall in 12 Minuten!",
 	enragebar = "Wutanfall",
 	enrage10min = "Wutanfall in 10 Minuten!",
 	enrage5min = "Wutanfall in 5 Minuten!",
@@ -84,6 +86,11 @@ L:RegisterTranslations("deDE", function() return {
 
 	bomb_message_you = "Du bist verseucht!",
 	bomb_message_other = "%s ist verseucht!",
+	bomb_bar = "%s verseucht",
+
+	cloud_trigger = "Grobbulus wirkt Giftwolke.",
+	cloud_warn = "Giftwolke! N\195\164chste in ~15 Sekunden!",
+	cloud_bar = "Giftwolke",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

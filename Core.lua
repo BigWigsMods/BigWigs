@@ -125,11 +125,18 @@ L:RegisterTranslations("deDE", function() return {
 	-- ["debug"] = true,
 	["Debugging"] = "Debugging",
 	["Show debug messages."] = "Zeige Debug Nachrichten.",
+	["Options"] = "Optionen",
 	-- bosskill_cmd = "kill",
 	bosskill_name = "Boss besiegt",
 	bosskill_desc = "Melde, wenn ein Boss besiegt wurde.",
 
+	["Other"] = "Anderes",
+	["Load"] = "Laden",
+	["Load All"] = "Alle Laden",
+	["Load all %s modules."] = "Alle %s Module laden.",
+
 	-- AceConsole zone commands
+	-- ["Karazhan"] = true,
 	["Zul'Gurub"] = "ZG",
 	["Molten Core"] = "MC",
 	["Blackwing Lair"] = "BWL",
@@ -760,5 +767,6 @@ function BigWigs:AddLoDMenu( zonename )
 			end
 	}
 end
+
 
 

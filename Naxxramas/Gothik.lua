@@ -117,14 +117,21 @@ L:RegisterTranslations("deDE", function() return {
 	add_name = "Adds",
 	add_desc = "Warnung vor Adds.",
 
+	adddeath_name = "Add Stirbt",
+	adddeath_desc = "Warnung, wenn ein Add stirbt.",
+
 	disabletrigger = "I... am... undone.", -- ?
 
 	starttrigger1 = "Ihr Narren habt euren eigenen Untergang heraufbeschworen.",
 	starttrigger2 = "Maz Azgala veni kamil toralar Naztheros zennshinagas.",
-	startwarn = "Gothik der Ernter angegriffen! 4:30 bis er in den Raum kommt!",
+	startwarn = "Gothik der Seelenj\195\164ger angegriffen! Im Raum in 4:30 Minuten!",
 
 	rider_name = "Unerbittlicher Reiter",
+	spectral_rider_name = "Spektraler Reiter",
 	deathknight_name = "Unerbittlicher Todesritter",
+	spectral_deathknight_name = "Spektraler Todesritter",
+	trainee_name = "Unerbittlicher Lehrling",
+	spectral_trainee_name = "Spektraler Lehrling",
 
 	riderdiewarn = "Reiter tot!",
 	dkdiewarn = "Todesritter tot!",
@@ -141,12 +148,12 @@ L:RegisterTranslations("deDE", function() return {
 	dkwarn = "Todesritter in 3 Sekunden",
 	riderwarn = "Reiter in 3 Sekunden",
 
-	trabar = "Lehrlinge - %d",
+	trabar = "Lehrling - %d",
 	dkbar = "Todesritter - %d",
 	riderbar = "Reiter - %d",
 
 	inroomtrigger = "Ich habe lange genug gewartet. Stellt euch dem Seelenj\195\164ger.",
-	inroomwarn = "Er ist im Raum!",
+	inroomwarn = "Gothik im Raum!",
 
 	inroombartext = "Im Raum",
 } end )

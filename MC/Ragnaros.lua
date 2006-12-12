@@ -150,8 +150,8 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	knockback_trigger = "^SP\195\156RT DIE FLAMMEN",
-	submerge_trigger = "^KOMMT HERBEI, MEINE DIENER", -- ?
-	engage_trigger = "^NUN ZU EUCH, INSEKTEN", -- ?
+	submerge_trigger = "^KOMMT HERBEI, MEINE DIENER",
+	engage_trigger = "^NUN ZU EUCH, INSEKTEN",
 
 	knockback_message = "AoE Rundumschlag!",
 	knockback_soon_message = "AoE Rundumschlag in 5 Sekunden!",
