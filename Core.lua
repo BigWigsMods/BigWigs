@@ -301,7 +301,7 @@ BigWigs.cmdtable = {type = "group", handler = BigWigs, args = {
 	},
 }}
 
-for k, zonename in pairs( {"Karahzan", "Zul'Gurub", "Molten Core", "Blackwing Lair", "Ahn'Qiraj", "Ruins of Ahn'Qiraj", "Naxxramas"} ) do 
+for k, zonename in pairs( {"Karazhan", "Zul'Gurub", "Molten Core", "Blackwing Lair", "Ahn'Qiraj", "Ruins of Ahn'Qiraj", "Naxxramas"} ) do 
 		local zone = zonename
 		if BZ:HasReverseTranslation(zonename) and L:HasTranslation(BZ:GetReverseTranslation(zonename)) then
 			zone = L[BZ:GetReverseTranslation(zonename)]
