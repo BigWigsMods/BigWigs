@@ -32,7 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 	heal_name = "Heal Alert",
 	heal_desc = "Warn for Twins Healing",
 
-	porttrigger = "Twin Teleport.",
+	porttrigger = "Twin Teleport",
 	portwarn = "Teleport!",
 	portdelaywarn = "Teleport in ~5 seconds!",
 	portdelaywarn2 = "Teleport in ~10 seconds!",
