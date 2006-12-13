@@ -152,7 +152,7 @@ function BigWigsSound:OnRegister()
 			desc = string.format(L["Toggle to enable or disable %q from being played, or Ctrl-Click to preview."], k),
 			get = function() return BigWigsSound.db.profile.sounds[k] end,
 			set = function(v)
-				if IsCtrlKeyDown() then
+				if IsControlKeyDown() then
 					PlaySoundFile(sounds[k])
 				else
 					BigWigsSound.db.profile.sounds[k] = v
