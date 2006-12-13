@@ -23,7 +23,7 @@ L:RegisterTranslations("enUS", function() return {
 	["sounds"] = true,
 	["Options for sounds."] = true,
 
-	["Toggle to enable or disable %q from being played."] = true,
+	["Toggle to enable or disable %q from being played, or Ctrl-Click to preview."] = true,
 	["toggle"] = true,
 	["Use sounds"] = true,
 	["Toggle all sounds on or off."] = true,
@@ -149,9 +149,15 @@ function BigWigsSound:OnRegister()
 		self.consoleOptions.args[k] = {
 			type = "toggle",
 			name = k,
-			desc = string.format(L["Toggle to enable or disable %q from being played."], k),
+			desc = string.format(L["Toggle to enable or disable %q from being played, or Ctrl-Click to preview."], k),
 			get = function() return BigWigsSound.db.profile.sounds[k] end,
-			set = function(v) BigWigsSound.db.profile.sounds[k] = v end,
+			set = function(v)
+				if IsCtrlKeyDown() then
+					PlaySoundFile(sounds[k])
+				else
+					BigWigsSound.db.profile.sounds[k] = v
+				end
+			end,
 			disabled = function() return not BigWigsSound.core:IsModuleActive(self) or BigWigsSound.db.profile.defaultonly end,
 		}
 	end
