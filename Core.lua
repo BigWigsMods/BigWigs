@@ -301,21 +301,19 @@ BigWigs.cmdtable = {type = "group", handler = BigWigs, args = {
 	},
 }}
 
-for k, zonename in pairs( {"Karazhan", "Zul'Gurub", "Molten Core", "Blackwing Lair", "Ahn'Qiraj", "Ruins of Ahn'Qiraj", "Naxxramas"} ) do 
+for k, zonename in pairs({"Other", "Karazhan", "Zul'Gurub", "Molten Core", "Blackwing Lair", "Ahn'Qiraj", "Ruins of Ahn'Qiraj", "Naxxramas"}) do
 		local zone = zonename
 		if BZ:HasReverseTranslation(zonename) and L:HasTranslation(BZ:GetReverseTranslation(zonename)) then
 			zone = L[BZ:GetReverseTranslation(zonename)]
 		elseif L:HasTranslation(zonename) then
 			zone = L[zonename]
-		else
-			zone = L["Other"]
-			zonename = L["Other"]
 		end
+		local prettyZone = BZ:HasTranslation(zonename) and BZ[zonename] or L[zonename] or zone
 		if not BigWigs.cmdtable.args[zone] then
 			BigWigs.cmdtable.args[zone] = {
 				type = "group",
-				name = zonename,
-				desc = string.format(L["Options for bosses in %s."], zonename),
+				name = prettyZone,
+				desc = string.format(L["Options for bosses in %s."], prettyZone),
 				args = {},
 				disabled = function() return not BigWigs:IsActive() end,
 				order = 10,
@@ -323,7 +321,7 @@ for k, zonename in pairs( {"Karazhan", "Zul'Gurub", "Molten Core", "Blackwing La
 		end
 end
 
-BigWigs:RegisterChatCommand({"/bw", "/BigWigs"}, BigWigs.cmdtable)
+BigWigs:RegisterChatCommand({"/bw", "/BigWigs"}, BigWigs.cmdtable, "BIGWIGS")
 BigWigs.debugFrame = ChatFrame5
 BigWigs.revision = tonumber(string.sub("$Revision$", 12, -3))
 
