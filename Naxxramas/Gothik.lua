@@ -24,7 +24,7 @@ L:RegisterTranslations("enUS", function() return {
 	adddeath_name = "Add Death Alert",
 	adddeath_desc = "Alerts when an add dies.",
 
-	disabletrigger = "I... am... undone.",
+	--disabletrigger = "I... am... undone.",
 
 	starttrigger1 = "Foolishly you have sought your own demise.",
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
@@ -72,7 +72,7 @@ L:RegisterTranslations("koKR", function() return {
 	adddeath_name = "애드 죽음 알림",
 	adddeath_desc = "애드가 죽었을 때 알림.",
 
-	disabletrigger = "내가... 죽는구나.", -- CHECK
+	--disabletrigger = "내가... 죽는구나.", -- CHECK
 
 	starttrigger1 = "어리석은 것들, 스스로 죽음을 자초하다니!",
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun", -- CHECK
@@ -120,7 +120,7 @@ L:RegisterTranslations("deDE", function() return {
 	adddeath_name = "Add Stirbt",
 	adddeath_desc = "Warnung, wenn ein Add stirbt.",
 
-	disabletrigger = "I... am... undone.", -- ?
+	--disabletrigger = "I... am... undone.", -- ?
 
 	starttrigger1 = "Ihr Narren habt euren eigenen Untergang heraufbeschworen.",
 	starttrigger2 = "Maz Azgala veni kamil toralar Naztheros zennshinagas.",
@@ -168,7 +168,7 @@ L:RegisterTranslations("zhCN", function() return {
 	adddeath_name = "小怪计时及死亡通告",
 	adddeath_desc = "小怪计时及死亡通告",
 
-	disabletrigger = "事业……未尽……",
+	--disabletrigger = "事业……未尽……",
 
 	starttrigger1 = "你们这些蠢货已经主动步入了陷阱。",
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
@@ -214,7 +214,7 @@ L:RegisterTranslations("zhTW", function() return {
 	adddeath_name = "小怪計時及死亡通告",
 	adddeath_desc = "小怪計時及死亡通告",
 
-	disabletrigger = "I... am... undone.", --?
+	--disabletrigger = "I... am... undone.", --?
 
 	starttrigger1 = "你們這些蠢貨已經主動步入了陷阱。",
 	starttrigger2 = "我已經等待很久了。現在你們將面對靈魂的收割者。", --?
@@ -316,11 +316,18 @@ function BigWigsGothik:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
+------------------------------
+--      Event Handlers      --
+------------------------------
+
 function BigWigsGothik:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 	if self.db.profile.adddeath and msg == string.format(UNITDIESOTHER, L["rider_name"]) then
 		self:TriggerEvent("BigWigs_Message", L["riderdiewarn"], "Important")
 	elseif self.db.profile.adddeath and msg == string.format(UNITDIESOTHER, L["deathknight_name"]) then
 		self:TriggerEvent("BigWigs_Message", L["dkdiewarn"], "Important")
+	elseif self.db.profile.bosskill and msg == string.format(UNITDIESOTHER, boss) then
+		self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], boss), "Bosskill", nil, "Victory")
+		self.core:ToggleModuleActive(self, false)
 	end
 end
 
@@ -402,8 +409,5 @@ function BigWigsGothik:CHAT_MSG_MONSTER_YELL( msg )
 	elseif msg == L["inroomtrigger"] then
 		if self.db.profile.room then self:TriggerEvent("BigWigs_Message", L["inroomwarn"], "Important") end
 		self:StopRoom()
-	elseif string.find(msg, L["disabletrigger"]) then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], boss), "Bosskill", nil, "Victory") end
-		self.core:ToggleModuleActive(self, false)
 	end
 end
