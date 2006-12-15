@@ -20,7 +20,6 @@ local sounds = {
 
 L:RegisterTranslations("enUS", function() return {
 	["Sounds"] = true,
-	["sounds"] = true,
 	["Options for sounds."] = true,
 
 	["Toggle to enable or disable %q from being played, or Ctrl-Click to preview."] = true,
@@ -44,7 +43,6 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["Sounds"] = "声音",
-	["sounds"] = "声音",
 	["Options for sounds."] = "声音的选项",
 
 	["toggle"] = "选择",
@@ -57,7 +55,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["Sounds"] = "聲音",
-	["sounds"] = "聲音",
 	["Options for sounds."] = "聲音的選項",
 
 	["toggle"] = "選擇",
@@ -70,7 +67,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Sounds"] = "Sound",
-	--["sounds"] = "sound",
 	["Options for sounds."] = "Optionen f\195\188r Sound.",
 
 	--["toggle"] = true,
@@ -83,7 +79,6 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["Sounds"] = "Sons",
-	--["sounds"] = true,
 	["Options for sounds."] = "Options concernant les sons.",
 
 	--["toggle"] = true,
@@ -104,7 +99,7 @@ BigWigsSound.defaultDB = {
 	sound = true,
 	sounds = {},
 }
-BigWigsSound.consoleCmd = L["sounds"]
+BigWigsSound.consoleCmd = L["Sounds"]
 BigWigsSound.consoleOptions = {
 	type = "group",
 	name = L["Sounds"],

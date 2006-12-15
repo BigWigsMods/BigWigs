@@ -13,7 +13,6 @@ local paint = AceLibrary("PaintChips-2.0")
 
 L:RegisterTranslations("enUS", function() return {
 	["Messages"] = true,
-	["msg"] = true,
 	["Options for message display."] = true,
 
 	["Show anchor"] = true,
@@ -48,7 +47,6 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
 	["Messages"] = "메세지",
 
---	["msg"] = "메시지",
 --	["anchor"] = "위치",
 --	["color"] = "색상",
 --	["scale"] = "크기",
@@ -79,7 +77,6 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	["Messages"] = "信息",
 
-	["msg"] = "信息",
 	["anchor"] = "锚点",
 	["color"] = "颜色",
 	["scale"] = "大小",
@@ -113,7 +110,6 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	["Messages"] = "訊息",
 
-	["msg"] = "訊息",
 	["anchor"] = "錨點",
 	["color"] = "顏色",
 	["scale"] = "大小",
@@ -146,7 +142,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Messages"] = "Nachrichten",
-	-- ["msg"] = true,
 	["Options for message display."] = "Optionen f\195\188r das Nachrichtenfenster.",
 
 	["Show anchor"] = "Verankerung anzeigen",
@@ -180,7 +175,6 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	--["Messages"] = true,
-	--["msg"] = true,
 	["Options for message display."] = "Options concernant l'affichage des messages.",
 
 	["Show anchor"] = "Afficher l'ancre",
@@ -222,7 +216,7 @@ BigWigsMessages.defaultDB = {
 	usecolors = true,
 	scale = 1.0,
 }
-BigWigsMessages.consoleCmd = L["msg"]
+BigWigsMessages.consoleCmd = L["Messages"]
 BigWigsMessages.consoleOptions = {
 	type = "group",
 	name = L["Messages"],

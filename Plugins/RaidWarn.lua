@@ -14,7 +14,6 @@ local sentWhispers = nil
 L:RegisterTranslations("enUS", function() return {
 	["RaidWarning"] = true,
 
-	["raidwarn"] = true,
 	["broadcast"] = true,
 	["whisper"] = true,
 	["showwhispers"] = true,
@@ -57,7 +56,6 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	["RaidWarning"] = "团队警报",
 
-	["raidwarn"] = "团队警报",
 	["broadcast"] = "广播",
 	["whisper"] = "密语",
 	["useraidchannel"] = "使用团队聊天",
@@ -79,7 +77,6 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	["RaidWarning"] = "團隊警報",
 
-	["raidwarn"] = "團隊警報",
 	["broadcast"] = "廣播",
 	["whisper"] = "密語",
 	["useraidchannel"] = "使用團隊聊天",
@@ -101,7 +98,6 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("deDE", function() return {
 	["RaidWarning"] = "RaidWarnung",
 
-	--["raidwarn"] = "raidwarnen",
 	--["broadcast"] = "verbreiten",
 	--["whisper"] = "fl\195\188stern",
 	--["useraidchannel"] = "raidchatbenutzen",
@@ -123,7 +119,6 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("frFR", function() return {
 	["RaidWarning"] = "Avertissement du raid",
 
-	--["raidwarn"] = true,
 	--["broadcast"] = true,
 	--["whisper"] = true,
 	--["showwhispers"] = true,
@@ -157,7 +152,7 @@ BigWigsRaidWarn.defaultDB = {
 	useraidchannel = false,
 	showwhispers = true,
 }
-BigWigsRaidWarn.consoleCmd = L["raidwarn"]
+BigWigsRaidWarn.consoleCmd = L["RaidWarning"]
 BigWigsRaidWarn.consoleOptions = {
 	type = "group",
 	name = L["RaidWarning"],

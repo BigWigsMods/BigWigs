@@ -14,7 +14,7 @@ local lastplayer = nil
 L:RegisterTranslations("enUS", function() return {
 	["Raid Icons"] = true,
 
-	["raidicon"] = true,
+	["RaidIcon"] = true,
 	["place"] = true,
 	["icon"] = true,
 
@@ -110,7 +110,7 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("deDE", function() return {
 	["Raid Icons"] = "Schlachtzug-Symbole",
 
-	-- ["raidicon"] = true,
+	-- ["RaidIcon"] = true,
 	-- ["place"] = true,
 	-- ["icon"] = true,
 
@@ -137,7 +137,7 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("frFR", function() return {
 	["Raid Icons"] = "Ic\195\180nes de raid",
 
-	--["raidicon"] = true,
+	--["RaidIcon"] = true,
 	--["place"] = true,
 	--["icon"] = true,
 
@@ -170,7 +170,7 @@ BigWigsRaidIcon.defaultDB = {
 	place = true,
 	icon = 8,
 }
-BigWigsRaidIcon.consoleCmd = L["raidicon"]
+BigWigsRaidIcon.consoleCmd = L["RaidIcon"]
 BigWigsRaidIcon.consoleOptions = {
 	type = "group",
 	name = L["Raid Icons"],

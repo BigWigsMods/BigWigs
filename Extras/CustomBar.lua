@@ -11,7 +11,7 @@ local times = nil
 L:RegisterTranslations("enUS", function() return {
 	["bwcb"] = true,
 	["bwlcb"] = true,
-	["custombar"] = true,
+	["CustomBars"] = true,
 	["Custom Bars"] = true,
 	["Start a custom bar, either local or global."] = true,
 	["Local"] = true,
@@ -36,7 +36,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	["bwcb"] = "bwcb",
 	["bwlcb"] = "bwlcb",
-	["custombar"] = "自制时间条",
+	["CustomBars"] = "自制时间条",
 	["Custom Bars"] = "自制时间条",
 	["Start a custom bar, either local or global."] = "激活一条自制时间条，本地或者全局",
 	["Local"] = "本地",
@@ -50,7 +50,7 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	["bwcb"] = "bwcb",
 	["bwlcb"] = "bwlcb",
-	["custombar"] = "自定時間條",
+	["CustomBars"] = "自定時間條",
 	["Custom Bars"] = "自定時間條",
 	["Start a custom bar, either local or global."] = "開始一個自定時間條，區域或者全域",
 	["Local"] = "區域",
@@ -64,7 +64,7 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("deDE", function() return {
 	-- ["bwcb"] = true,
 	-- ["bwlcb"] = true,
-	-- ["custombar"] = true,
+	-- ["CustomBars"] = true,
 	["Custom Bars"] = "Individuelle Anzeigebalken",
 	["Start a custom bar, either local or global."] = "Einen individuellen Anzeigebalken starten (entweder lokal oder global).",
 	["Local"] = "Lokal",
@@ -92,7 +92,7 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsCustomBar = BigWigs:NewModule(L["Custom Bars"])
 BigWigsCustomBar.revision = tonumber(string.sub("$Revision$", 12, -3))
 BigWigsCustomBar.external = true
-BigWigsCustomBar.consoleCmd = L["custombar"]
+BigWigsCustomBar.consoleCmd = L["CustomBars"]
 BigWigsCustomBar.consoleOptions = {
 	type = "group",
 	name = L["Custom Bars"],

@@ -12,7 +12,6 @@ local PaintChips = AceLibrary("PaintChips-2.0")
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	["colors"] = true,
 	["Colors"] = true,
 
 	["Messages"] = true,
@@ -171,7 +170,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	-- ["colors"] = true,
 	["Colors"] = "Farben",
 
 	["Messages"] = "Nachrichten",
@@ -213,7 +211,6 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	--["colors"] = true,
 	["Colors"] = "Couleurs",
 
 	["Messages"] = "Messages",
@@ -273,7 +270,7 @@ BigWigsColors.defaultDB = {
 	longbar = {"00ff00", "ffff00", "ff7f00", "ff0000"},
 	longnr = 4,
 }
-BigWigsColors.consoleCmd = L["colors"]
+BigWigsColors.consoleCmd = L["Colors"]
 BigWigsColors.consoleOptions = {
 	type = "group",
 	name = L["Colors"],

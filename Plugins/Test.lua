@@ -9,7 +9,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsTest")
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	["test"] = true,
 	["Test"] = true,
 	["Test Bar"] = true,
 	["Test Bar 2"] = true,
@@ -19,7 +18,7 @@ L:RegisterTranslations("enUS", function() return {
 	["OMG Bear!"] = true,
 	["*RAWR*"] = true,
 	["Victory!"] = true,
-	["Options for testing."] = true,
+	["Commands for testing bars, messages and synchronization."] = true,
 	["local"] = true,
 	["Local test"] = true,
 	["Perform a local test of BigWigs."] = true,
@@ -30,7 +29,6 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
---	["test"] = "테스트",
 	["Test"] = "테스트",
 	["Test Bar"] = "테스트 바",
 	["Test Bar 2"] = "테스트 바 2",
@@ -40,7 +38,7 @@ L:RegisterTranslations("koKR", function() return {
 	["OMG Bear!"] = "OMG Bear!",
 	["*RAWR*"] = "*공격대경고*",
 	["Victory!"] = "승리!",
-	["Options for testing."] = "테스트 설정",
+	["Commands for testing bars, messages and synchronization."] = "테스트 설정",
 --	["local"] = "지역",
 	["Local test"] = "지역 테스트",
 	["Perform a local test of BigWigs."] = "BigWigs의 지역 테스트 실행",
@@ -60,7 +58,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["OMG Bear!"] = "老天！熊！",
 	["*RAWR*"] = "*RAWR*",
 	["Victory!"] = "胜利！",
-	["Options for testing."] = "测试选项",
+	["Commands for testing bars, messages and synchronization."] = "测试选项",
 	["Local test"] = "本地测试",
 	["Perform a local test of BigWigs."] = "执行一次本地测试。",
 	["Sync test"] = "同步测试",
@@ -78,7 +76,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["OMG Bear!"] = "天哪！蘇聯北極熊！",
 	["*RAWR*"] = "*RAWR*",
 	["Victory!"] = "勝利！",
-	["Options for testing."] = "測試選項",
+	["Commands for testing bars, messages and synchronization."] = "測試選項",
 	["Local test"] = "本地測試",
 	["Perform a local test of BigWigs."] = "執行一次本地測試。",
 	["Sync test"] = "同步測試",
@@ -87,7 +85,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	-- ["test"] = true,
 	["Test"] = "Test",
 	["Test Bar"] = "Test Balken",
 	["Test Bar 2"] = "Test Balken 2",
@@ -97,7 +94,7 @@ L:RegisterTranslations("deDE", function() return {
 	["OMG Bear!"] = "OMG B\195\164r!",
 	["*RAWR*"] = "RAWR",
 	["Victory!"] = "Sieg!",
-	["Options for testing."] = "Optionen f\195\188r den Test von BigWigs.",
+	["Commands for testing bars, messages and synchronization."] = "Optionen f\195\188r den Test von BigWigs.",
 	-- ["local"] = true,
 	["Local test"] = "Lokaler Test",
 	["Perform a local test of BigWigs."] = "Lokalen Test von BigWigs durchf\195\188hren.",
@@ -108,7 +105,6 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	--["test"] = true,
 	--["Test"] = true,
 	["Test Bar"] = "Barre de test",
 	["Test Bar 2"] = "Barre de test 2",
@@ -118,7 +114,7 @@ L:RegisterTranslations("frFR", function() return {
 	["OMG Bear!"] = "Un ours !",
 	["*RAWR*"] = "*GRRR*",
 	["Victory!"] = "Victoire !",
-	["Options for testing."] = "Options concernant les tests.",
+	["Commands for testing bars, messages and synchronization."] = "Options concernant les tests.",
 	--["local"] = true,
 	["Local test"] = "Test local",
 	["Perform a local test of BigWigs."] = "Effectue un test local de BigWigs.",
@@ -135,11 +131,11 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsTest = BigWigs:NewModule(L["Test"])
 BigWigsTest.revision = tonumber(string.sub("$Revision: 14954 $", 12, -3))
 
-BigWigsTest.consoleCmd = L["test"]
+BigWigsTest.consoleCmd = L["Test"]
 BigWigsTest.consoleOptions = {
 	type = "group",
 	name = L["Test"],
-	desc = L["Options for testing."],
+	desc = L["Commands for testing bars, messages and synchronization."],
 	args   = {
 		[L["local"]] = {
 			type = "execute",
@@ -186,3 +182,4 @@ function BigWigsTest:BigWigs_Test()
 	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar 3"], 5, "Interface\\Icons\\Spell_Nature_ResistNature")
 	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar 4"], 3, "Interface\\Icons\\Spell_Nature_ResistNature", true, "black")
 end
+

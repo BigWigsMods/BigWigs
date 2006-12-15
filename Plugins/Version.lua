@@ -15,7 +15,6 @@ local COLOR_WHITE = "ffffff"
 ---------------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	["versionquery"] = true,
 	["Version Query"] = true,
 	["Commands for querying the raid for Big Wigs versions."] = true,
 	["Query already running, please wait 5 seconds before trying again."] = true,
@@ -66,7 +65,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	-- ["versionquery"] = true,
 	["Version Query"] = "Versionsabfrage",
 	["Commands for querying the raid for Big Wigs versions."] = "Kommandos um den Schlachtzug nach verwendeten BigWigs Versionen abzufragen.",
 	["Query already running, please wait 5 seconds before trying again."] = "Abfrage l\195\164uft bereits, bitte 5 Sekunden warten bis zum n\195\164chsten Versuch.",
@@ -96,7 +94,6 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	["versionquery"] = "检查版本",
 	["Version Query"] = "检查版本",
 	["Commands for querying the raid for Big Wigs versions."] = "这个命令检查Big Wigs的版本",
 	["Query already running, please wait 5 seconds before trying again."] = "检查中，请等5秒后再尝试",
@@ -124,7 +121,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	["versionquery"] = "檢查版本",
 	["Version Query"] = "檢查版本",
 	["Commands for querying the raid for Big Wigs versions."] = "用於檢查BigWigs的版本",
 	["Query already running, please wait 5 seconds before trying again."] = "檢查中，若要再次檢查，請稍後5秒",
@@ -152,7 +148,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	--["versionquery"] = true,
 	["Version Query"] = "V\195\169rification des versions",
 	["Commands for querying the raid for Big Wigs versions."] = "Commandes de v\195\169rification des version de BigWigs du raid.",
 	["Query already running, please wait 5 seconds before trying again."] = "Une v\195\169rification est d\195\169jà en cours, veuillez r\195\169essayer dans 5 secondes.",
@@ -162,7 +157,6 @@ L:RegisterTranslations("frFR", function() return {
 	["Showing version for "] = "Affichage des versions pour ",
 	["Green versions are newer than yours, red are older, and white are the same."] = "Les versions en vert sont plus r\195\169centes que la votre, celles en rouge plus anciennes, et celles en blanc les m\195\170mes.",
 	["Player"] = "Joueur",
-	--["Version"] = true,
 	["Current zone"] = "Zone actuelle",
 	--["<zone>"] = true,
 	["Version query done."] = "V\195\169rification des versions termin\195\169e.",
@@ -187,7 +181,7 @@ L:RegisterTranslations("frFR", function() return {
 
 BigWigsVersionQuery = BigWigs:NewModule("Version Query")
 
-BigWigsVersionQuery.consoleCmd = L["versionquery"]
+BigWigsVersionQuery.consoleCmd = L["Version"]
 BigWigsVersionQuery.consoleOptions = {
 	type = "group",
 	name = L["Version Query"],

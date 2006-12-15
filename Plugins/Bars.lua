@@ -13,7 +13,6 @@ local surface = AceLibrary("Surface-1.0")
 
 L:RegisterTranslations("enUS", function() return {
 	["Bars"] = true,
-	["bars"] = true,
 	["Options for the timer bars."] = true,
 
 	["Show anchor"] = true,
@@ -53,7 +52,6 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	["Bars"] = "计时条",
 
-	["bars"] = "计时条",
 	["anchor"] = "锚点",
 	["scale"] = "大小",
 	["up"] = "上",
@@ -78,7 +76,6 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	["Bars"] = "計時條",
 
-	["bars"] = "計時條",
 	["anchor"] = "錨點",
 	["scale"] = "大小",
 	["up"] = "上",
@@ -101,7 +98,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Bars"] = "Anzeigebalken",
-	-- ["bars"] = true,
 	["Options for the timer bars."] = "Optionen f\195\188r die Anzeigebalken.",
 
 	["Show anchor"] = "Verankerung anzeigen",
@@ -125,7 +121,6 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["Bars"] = "Barres",
-	--["bars"] = true,
 	["Options for the timer bars."] = "Options concernant les barres temporelles.",
 
 	["Show anchor"] = "Afficher l'ancre",
@@ -158,7 +153,7 @@ BigWigsBars.defaultDB = {
 	scale = 1.0,
 	texture = "BantoBar",
 }
-BigWigsBars.consoleCmd = L["bars"]
+BigWigsBars.consoleCmd = L["Bars"]
 BigWigsBars.consoleOptions = {
 	type = "group",
 	name = L["Bars"],

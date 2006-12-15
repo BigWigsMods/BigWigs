@@ -238,7 +238,7 @@ BigWigsBossBlock.defaultDB = {
 	hideraidchat = true,
 	hidetells = true,
 }
-BigWigsBossBlock.consoleCmd = "block"
+BigWigsBossBlock.consoleCmd = L["BossBlock"]
 BigWigsBossBlock.consoleOptions = {
 	type = "group",
 	name = L["BossBlock"],

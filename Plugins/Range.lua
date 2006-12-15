@@ -12,7 +12,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsRange")
 
 L:RegisterTranslations("enUS", function() return {
 	["Range"] = true,
-	["range"] = true,
 	["Options for the combat log's range."] = true,
 
 	["mob"] = true,
@@ -72,7 +71,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Range"] = "Reichweite",
-	-- ["range"] = true,
 	["Options for the combat log's range."] = "Optionen f\195\188r die Reichweite des Kampflogs.",
 
 	-- ["mob"] = true,
@@ -90,7 +88,6 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["Range"] = "Port\195\169e",
-	--["range"] = true,
 	["Options for the combat log's range."] = "Options concernant la port\195\169e du journal de combat.",
 
 	--["mob"] = true,
@@ -111,7 +108,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsRange = BigWigs:NewModule(L["Range"])
-BigWigsRange.consoleCmd = L["range"]
+BigWigsRange.consoleCmd = L["Range"]
 BigWigsRange.consoleOptions = {
 	type = "group",
 	name = L["Range"],
