@@ -188,8 +188,8 @@ function BigWigsFlamegor:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	end
 end
 
-function BigWigsFlamegor:BigWigs_RecvSync(sync)
-	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+function BigWigsFlamegor:BigWigs_RecvSync(sync, rest, nick)
+	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")

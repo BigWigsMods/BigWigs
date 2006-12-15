@@ -278,7 +278,7 @@ function BigWigsTwins:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 end
 
 function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
-	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")

@@ -221,7 +221,7 @@ function BigWigsGluth:BigWigs_RecvSync( sync, rest, nick )
 		self:TriggerEvent("BigWigs_Message", L["decimatewarn"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["decimatebartext"], 105, "Interface\\Icons\\INV_Shield_01")
 		self:ScheduleEvent("BigWigs_Message", 100, L["decimatesoonwarn"], "Urgent")
-	elseif sync == self:GetEngageSync() and rest and rest == boss and not started then
+	elseif self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		if self.db.profile.decimate then

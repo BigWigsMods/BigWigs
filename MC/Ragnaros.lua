@@ -254,8 +254,8 @@ function BigWigsRagnaros:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	end
 end
 
-function BigWigsRagnaros:BigWigs_RecvSync(sync, rest)
-	if sync == self:GetEngageSync() and rest and rest == boss and not started then
+function BigWigsRagnaros:BigWigs_RecvSync(sync, rest, nick)
+	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_ENABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_ENABLED")

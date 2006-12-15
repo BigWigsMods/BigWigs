@@ -410,6 +410,15 @@ function BigWigs.modulePrototype:GetEngageSync()
 end
 
 
+function BigWigs.modulePrototype:ValidateEngageSync(sync, rest)
+	if type(sync) ~= "string" or type(rest) ~= "string" then return false end
+	if sync ~= self:GetEngageSync() then return false end
+	local boss = BB:HasReverseTranslation(rest) and BB:GetReverseTranslation(rest) or rest
+	if boss ~= self:ToString() then return false end
+	return true
+end
+
+
 function BigWigs.modulePrototype:CheckForEngage()
 	local go = self:Scan()
 	local running = self:IsEventScheduled(self:ToString().."_CheckStart")
@@ -421,7 +430,8 @@ function BigWigs.modulePrototype:CheckForEngage()
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		self:TriggerEvent("BigWigs_SendSync", self:GetEngageSync().." "..self:ToString())
+		local moduleName = BB:HasReverseTranslation(self:ToString()) and BB:GetReverseTranslation(self:ToString()) or self:ToString()
+		self:TriggerEvent("BigWigs_SendSync", self:GetEngageSync().." "..moduleName)
 	elseif not running then
 		self:ScheduleRepeatingEvent(self:ToString().."_CheckStart", self.CheckForEngage, .5, self)
 	end
