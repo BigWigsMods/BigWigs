@@ -146,7 +146,7 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	["BossBlock"] = "Bloquage BossMods",
+	--["BossBlock"] = true,
 	["Suppress bossmod chat from other players."] = "Supprime les messages des BossMods des autres joueurs.",
 
 	["Suppress Raid Chat"] = "Supprimer les messages du canal Raid",

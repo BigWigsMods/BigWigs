@@ -81,6 +81,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Sounds"] = "Sons",
 	["Options for sounds."] = "Options concernant les sons.",
 
+	["Toggle to enable or disable %q from being played, or Ctrl-Click to preview."] = "Permet ou non de jouer le son %q. Ctrl-clic pour avoir un aper\195\167u.",
 	--["toggle"] = true,
 	["Use sounds"] = "Utiliser les sons",
 	["Toggle all sounds on or off."] = "Joue ou non les sons.",

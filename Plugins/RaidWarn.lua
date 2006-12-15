@@ -117,7 +117,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	["RaidWarning"] = "Avertissement du raid",
+	["RaidWarning"] = "AvertissementRaid",
 
 	--["broadcast"] = true,
 	--["whisper"] = true,
