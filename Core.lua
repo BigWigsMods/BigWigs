@@ -16,6 +16,9 @@ L:RegisterTranslations("enUS", function() return {
 	["%s has been defeated"] = true,     -- "<boss> has been defeated"
 	["%s have been defeated"] = true,    -- "<bosses> have been defeated"
 
+	["Debug enabled, output routed to %s."] = true,
+	["Debug disabled."] = true,
+
 	-- AceConsole strings
 	["boss"] = true,
 	["Bosses"] = true,
@@ -530,6 +533,23 @@ function BigWigs:OnDisable()
 	self:TriggerEvent("BigWigs_CoreDisabled")
 end
 
+
+function BigWigs:ToggleModuleDebugging(enable)
+	local frame = self.debugFrame or ChatFrame5
+	if enable then
+		self:Print(string.format(L["Debug enabled, output routed to %s."], frame:GetName()))
+	else
+		self:Print(L["Debug disabled."])
+	end
+	for name, module in self:IterateModules() do
+		if type(module.SetDebugging) == "function" then
+			module:SetDebugging( enable )
+			module.debugFrame = frame
+		end
+	end
+end
+function BigWigs:OnDebugEnable() self:ToggleModuleDebugging(true) end
+function BigWigs:OnDebugDisable() self:ToggleModuleDebugging(false) end
 
 -------------------------------
 --      Module Handling      --
