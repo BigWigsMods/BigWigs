@@ -13,7 +13,7 @@ local timeP1Glare = 86         -- interval for dark glare
 local timeP1GlareDuration = 40 -- duration of dark glare
 local timeP2Offset = 12        -- delay for all timers to restart after the Eye dies
 local timeP2Tentacle = 30      -- tentacle timers for phase 2
-local timeReschedule = 53      -- delay from the moment of weakening for timers to restart
+local timeReschedule = 60      -- delay from the moment of weakening for timers to restart
 local timeTarget = 0.2         -- delay for target change checking on Eye of C'Thun
 local timeWeakened = 45        -- duration of a weaken
 
@@ -475,12 +475,17 @@ function BigWigsCThun:CThunWeakened()
 	gianteye = not gianteye
 
 	self:CancelScheduledEvent("bwcthuntentacles")
-	self:ScheduleEvent("bwcthunstarttentacles", self.StartTentacleRape, timeReschedule, self )
+	self:ScheduleEvent("bwcthunstarttentacles", self.OutOfWeaken, timeReschedule, self )
 end
 
 -----------------------
 -- Utility Functions --
 -----------------------
+
+function BigWigsCThun:OutOfWeaken()
+	self:StartTentacleRape()
+	-- Also fires up a big claw here, but we don't warn for them?
+end
 
 function BigWigsCThun:StartTentacleRape()
 	self:TentacleRape()
