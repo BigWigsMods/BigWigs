@@ -167,6 +167,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Reboot this module."] = "모듈 재시작",
 	["Debugging"] = "디버깅",
 	["Show debug messages."] = "디버그 메세지 표시",
+	["Options"] = "설정",
 	bosskill_name = "보스 사망",
 	bosskill_desc = "보스를 물리쳤을 때 알림",
 

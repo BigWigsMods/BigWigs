@@ -37,7 +37,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	["RaidWarning"] = "공격대 경고",
+	["RaidWarning"] = "공격대경고",
 
 	["Broadcast over RaidWarning"] = "공격대 경고로 알림",
 	["Broadcast"] = "알림",
@@ -46,6 +46,9 @@ L:RegisterTranslations("koKR", function() return {
 	["Whisper"] = "귓속말",
 	["Whisper warnings"] = "귓속말 경고",
 	["Toggle whispering warnings to players."] = "플레이어에게 귓속말 경고 알림 토글",
+	
+	["Show whispers"] = "귓속말 표시",
+	["Toggle showing whispers sent by BigWigs locally."] = "BigWigs가 보낸 귓속말 표시 토글",
 
 	["Use Raidchannel"] = "공격대 채널 사용",
 	["Toggle using the raid channel instead of the raid warning channel for boss messages."] = "공격대 경고 혹은 채널 사용 토글",
