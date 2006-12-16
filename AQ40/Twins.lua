@@ -8,6 +8,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["The Twin Emperors"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs" .. boss)
 
 local started = nil
+local cachedUnitId = nil
 
 ----------------------------
 --      Localization      --
@@ -253,6 +254,7 @@ BigWigsTwins.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsTwins:OnEnable()
 	started = nil
+	cachedUnitId = nil
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
@@ -287,6 +289,8 @@ function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
 			self:ScheduleEvent("BigWigs_Message", 20, L["portdelaywarn2"], "Urgent")
 			self:ScheduleEvent("BigWigs_Message", 25, L["portdelaywarn"], "Important")
 			self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 30, "Interface\\Icons\\Spell_Arcane_Blink")
+
+			self:ScheduleEvent("bwtwinscannercooldown", self.StartTargetScanner, 20, self)
 		end
 		if self.db.profile.enrage then
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Important")
@@ -300,10 +304,15 @@ function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
 			self:ScheduleEvent("bwtwinswarn7", "BigWigs_Message", 890, L["warn7"], "Important")
 		end
 	elseif sync == "TwinsTeleport" and self.db.profile.teleport then
+		self:CancelScheduledEvent("bwtwinscanner")
+		self:CancelScheduledEvent("bwtwinscannercooldown")
+
 		self:TriggerEvent("BigWigs_Message", L["portwarn"], "Attention")
 		self:ScheduleEvent("BigWigs_Message", 20, L["portdelaywarn2"], "Urgent")
 		self:ScheduleEvent("BigWigs_Message", 25, L["portdelaywarn"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 30, "Interface\\Icons\\Spell_Arcane_Blink")
+
+		self:ScheduleEvent("bwtwinscannercooldown", self.StartTargetScanner, 20, self)
 	end
 end
 
@@ -334,3 +343,67 @@ function BigWigsTwins:CHAT_MSG_MONSTER_EMOTE(msg)
 		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
 	end
 end
+
+-------------------------------
+--      Target Scanner       --
+-- (Because Blizz Fucked Up) --
+-------------------------------
+
+function BigWigsTwins:StartTargetScanner()
+	if self:IsEventScheduled("bwtwinscanner") or not started then return end
+	self:CancelScheduledEvent("bwtwinscannercooldown")
+	self:ScheduleRepeatingEvent("bwtwinscanner", self.RepeatedScanner, 0.5, self)
+end
+
+function BigWigsTwins:RepeatedScanner()
+	if not UnitAffectingCombat("player") then
+		self:CancelScheduledEvent("bwtwinscanner")
+		self:CancelScheduledEvent("bwtwinscannercooldown")
+		return
+	end
+
+	if not started then return end
+	local found = nil
+
+	-- If we have a cached unit (which we will if we found someone with the boss
+	-- as target), then check if he still has the same target
+	if cachedUnitId and UnitExists(cachedUnitId) and (UnitName(cachedUnitId) == veknilash or UnitName(cachedUnitId) == veklor) then
+		found = true
+	end
+
+	-- Check the players target
+	if not found and UnitExists("target") and (UnitName("target") == veknilash or UnitName("target") == veklor) then
+		cachedUnitId = "target"
+		found = true
+	end
+
+	if not found and UnitExists("focus") and (UnitName("focus") == veknilash or UnitName("focus") == veklor) then
+		cachedUnitId = "focus"
+		found = true
+	end
+
+	-- Loop the raid roster
+	if not found then
+		local num = GetNumRaidMembers()
+		for i = 1, num do
+			local unit = string.format("raid%dtarget", i)
+			if UnitExists(unit) and (UnitName(unit) == veknilash or UnitName(unit) == veklor) then
+				cachedUnitId = unit
+				found = true
+				break
+			end
+		end
+	end
+
+	-- We've checked everything. If nothing was found, just return home.
+	-- We basically shouldn't return here, because someone should always have
+	-- him targetted.
+	if not found then return end
+	-- Alright, we've got a valid unitId with the boss as target, now check if
+	-- the boss has a target. If it does, we're not porting.
+	if UnitExists(cachedUnitId.."target") then return end
+
+	self:CancelScheduledEvent("bwtwinscanner")
+	self:TriggerEvent("BigWigs_SendSync", "TwinsTeleport")
+end
+
