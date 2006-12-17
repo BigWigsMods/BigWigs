@@ -214,6 +214,12 @@ L:RegisterTranslations("koKR", function() return {
 	thunderclap_name = "천둥벼락 경고",
 	thunderclap_desc = "천둥벼락에 대한 경고",
 
+	meteor_name = "유성 경고",
+	meteor_desc = "유성에 대한 경고",
+
+	shadowstorm_name = "암흑 폭풍 경고",
+	shadowstorm_desc = "암흑 폭풍에 대한 경고",
+
 	explode_name = "폭발 경고",
 	explode_desc = "폭발에 대한 경고",
 
@@ -242,6 +248,11 @@ L:RegisterTranslations("koKR", function() return {
 
 	thunderclaptrigger = "아누비사스 문지기|1이;가; 천둥벼락|1으로;로; (.+)에게 (%d+)의",
 	thunderclapwarn = "천둥벼락! - 멀리 떨어지세요",
+	meteortrigger = "아누비사스 문지기|1이;가; 유성|1으로;로; (.+)에게",
+	meteorwarn = "유성!",
+	shadowstormtrigger = "아누비사스 문지기|1이;가; 암흑 폭풍|1으로;로; (.+)에게",
+	shadowstormwarn = "암흑 폭풍!",
+
 } end )
 
 L:RegisterTranslations("frFR", function() return {
