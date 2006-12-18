@@ -424,7 +424,7 @@ function BigWigs.modulePrototype:ValidateEngageSync(sync, rest)
 	for _, mob in pairs(t) do
 		if mob == rest then return true end
 	end
-	return (rest == self:ToString())
+	return (boss == self:ToString())
 end
 
 
@@ -794,6 +794,7 @@ function BigWigs:AddLoDMenu( zonename )
 			end
 	}
 end
+
 
 
 
