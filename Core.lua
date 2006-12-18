@@ -422,6 +422,7 @@ function BigWigs.modulePrototype:ValidateEngageSync(sync, rest)
 	if not t then return false end
 	if type(t) == "string" then t = {t} end
 	for _, mob in pairs(t) do
+		local translated = BB:HasReverseTranslation(mob) and BB:GetReverseTranslation(mob) or mob
 		if mob == rest then return true end
 	end
 	return (boss == self:ToString())
@@ -794,6 +795,7 @@ function BigWigs:AddLoDMenu( zonename )
 			end
 	}
 end
+
 
 
 
