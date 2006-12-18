@@ -414,18 +414,20 @@ function BigWigs.modulePrototype:GetEngageSync()
 end
 
 
+-- Really not much of a validation, but at least it validates that the sync is
+-- remotely related to the module :P
 function BigWigs.modulePrototype:ValidateEngageSync(sync, rest)
 	if type(sync) ~= "string" or type(rest) ~= "string" then return false end
 	if sync ~= self:GetEngageSync() then return false end
 	local boss = BB:HasReverseTranslation(rest) and BB:GetReverseTranslation(rest) or rest
 	local t = self.enabletrigger
-	if not t then return false end
+	if not t then return boss == self:ToString() or rest == self:ToString() end
 	if type(t) == "string" then t = {t} end
 	for _, mob in pairs(t) do
 		local translated = BB:HasReverseTranslation(mob) and BB:GetReverseTranslation(mob) or mob
-		if mob == rest then return true end
+		if translated == rest or mob == rest then return true end
 	end
-	return (boss == self:ToString())
+	return boss == self:ToString() or rest == self:ToString()
 end
 
 
@@ -795,6 +797,7 @@ function BigWigs:AddLoDMenu( zonename )
 			end
 	}
 end
+
 
 
 
