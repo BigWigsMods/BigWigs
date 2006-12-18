@@ -354,7 +354,13 @@ function BigWigsKelThuzad:OnRegister()
 	self:RegisterEvent("MINIMAP_ZONE_CHANGED")
 end
 
+function BigWigsKelThuzad:OnDisable()
+	self:RegisterEvent("MINIMAP_ZONE_CHANGED")
+end
+
 function BigWigsKelThuzad:OnEnable()
+	self:RegisterEvent("MINIMAP_ZONE_CHANGED")
+
 	self.warnedAboutPhase3Soon = nil
 
 	frostBlastTime = nil
