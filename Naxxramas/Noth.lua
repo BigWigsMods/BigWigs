@@ -45,6 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	teleportbar = "Teleport!",
 	backbar = "Back in room!",
+	curseexplosion = "Curse explosion!",
 
 	backwarn = "He's back in the room for %d seconds!",
 	backwarn2 = "10 seconds until he's back in the room!",
@@ -322,6 +323,7 @@ function BigWigsNoth:BigWigs_RecvSync( sync )
 			self:TriggerEvent("BigWigs_Message", L["cursewarn"], "Important", nil, "Alarm")
 			self:ScheduleEvent("bwnothcurse", "BigWigs_Message", self.cursetime-10, L["curse10secwarn"], "Urgent")
 			self:TriggerEvent("BigWigs_StartBar", self, L["cursebar"], self.cursetime, "Interface\\Icons\\Spell_Shadow_AnimateDead")
+			self:TriggerEvent("BigWigs_StartBar", self, L["curseexplosion"], 10, "Interface\\Icons\\Spell_Shadow_AntiShadow")
 		end
 		self.prior = true
 	elseif sync == "NothBlink" then
