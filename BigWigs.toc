@@ -1,21 +1,21 @@
 ## Interface: 20000
 
 ## Title: Big Wigs |cff7fff7f -Ace2-|r
-## Title-zhCN: |cff7fff7f-Ace2-|r Big Wigs 
-## Notes: Boss Mods with Timer bars.
+## Title-zhCN: |cff7fff7f-Ace2-|r Big Wigs
+## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
 ## Notes-zhCN: 团队首领战信息提示插件，带有计时条。
 ## Notes-zhTW: 團隊首領戰訊息提示插件，帶有計時條。
-## Author: Tekkub Stoutwrithe, Ammo, Shyva, Rabbit & Others
+## Author: Ammo, Rabbit
+## X-Credits: Tekkub Stoutwrithe, Shyva and others.
 ## Version: 2.0
-## X-Website: http://www.wowace.com/index.php/BigWigs
-## X-Email: tekkub@gmail.com
+## X-Website: http://wowace.com/wiki/BigWigs
 ## X-Category: Raid
 ## X-RelSite-WoWI: 5086
 ## X-RelSite-Curse: 4356
 ## X-AceForum: 1222
 
 ## OptionalDeps: Ace2, FuBar, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib, Surfaces, MikScrollingBattleText, sct
-## X-Embeds: Ace2, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib 
+## X-Embeds: Ace2, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, TabletLib, SurfaceLib
 
 ## SavedVariables: BigWigsDB, BigWigsFubarDB
 ## SavedVariablesPerCharacter: BigWigsDBPerChar
@@ -133,3 +133,4 @@ Karazhan\Malchezaar.lua
 Karazhan\ShadeOfAran.lua
 Karazhan\Terestian.lua
 Karazhan\TheBigBadWolf.lua
+
