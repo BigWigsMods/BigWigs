@@ -351,15 +351,15 @@ BigWigsKelThuzad.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsKelThuzad:OnRegister()
 	-- Big evul hack to enable the module when entering Kel'Thuzads chamber.
-	self:RegisterEvent("MINIMAP_ZONE_CHANGED")
+	self:RegisterEvent("ZONE_CHANGED_INDOORS")
 end
 
 function BigWigsKelThuzad:OnDisable()
-	self:RegisterEvent("MINIMAP_ZONE_CHANGED")
+	self:RegisterEvent("ZONE_CHANGED_INDOORS")
 end
 
 function BigWigsKelThuzad:OnEnable()
-	self:RegisterEvent("MINIMAP_ZONE_CHANGED")
+	self:RegisterEvent("ZONE_CHANGED_INDOORS")
 
 	self.warnedAboutPhase3Soon = nil
 
@@ -386,7 +386,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsKelThuzad:MINIMAP_ZONE_CHANGED(msg)
+function BigWigsKelThuzad:ZONE_CHANGED_INDOORS(msg)
 	if GetMinimapZoneText() ~= L["KELTHUZADCHAMBERLOCALIZEDLOLHAX"] or self.core:IsModuleActive(boss) then return end
 	-- Activate the Kel'Thuzad mod!
 	self.core:EnableModule(boss)
