@@ -198,24 +198,27 @@ BigWigsBars.consoleOptions = {
 ------------------------------
 
 function BigWigsBars:OnRegister()
-	self.consoleOptions.args[L["Texture"]].validate = surface:List()
-	self:RegisterEvent("Surface_Registered", function()
-		self.consoleOptions.args[L["Texture"]].validate = surface:List()
-	end)
+	local path = "Interface\\AddOns\\BigWigs\\Textures\\"
+	surface:Register("Otravi",   path.."otravi")
+	surface:Register("Smooth",   path.."smooth")
+	surface:Register("Glaze",    path.."glaze")
+	surface:Register("Charcoal", path.."Charcoal")
+	surface:Register("BantoBar", path.."default")
 end
 
 function BigWigsBars:OnEnable()
 	if not surface:Fetch(self.db.profile.texture) then self.db.profile.texture = "BantoBar" end
+
 	self:SetupFrames()
 	self:RegisterEvent("BigWigs_ShowAnchors")
 	self:RegisterEvent("BigWigs_HideAnchors")
 	self:RegisterEvent("BigWigs_StartBar")
 	self:RegisterEvent("BigWigs_StopBar")
-	if not self:IsEventRegistered("Surface_Registered") then
-		self:RegisterEvent("Surface_Registered", function()
-			self.consoleOptions.args[L["Texture"]].validate = surface:List()
-		end)
-	end
+
+	self.consoleOptions.args[L["Texture"]].validate = surface:List()
+	self:RegisterEvent("Surface_Registered", function()
+		self.consoleOptions.args[L["Texture"]].validate = surface:List()
+	end)
 end
 
 ------------------------------
@@ -241,7 +244,7 @@ function BigWigsBars:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, 
 	module:SetCandyBarGroupGrowth("BigWigsGroup", u)
 
 	local bc, balpha, txtc
-	if BigWigsColors and type(BigWigsColors) == "table" then
+	if type(BigWigsColors) == "table" then
 		if type(otherc) ~= "boolean" or not otherc then c1, c2, c3, c4, c5, c6, c7, c8, c9, c10 = BigWigsColors:BarColor(time) end
 		bc, balpha, txtc = BigWigsColors.db.profile.bgc, BigWigsColors.db.profile.bga, BigWigsColors.db.profile.txtc
 	end

@@ -418,8 +418,13 @@ function BigWigs.modulePrototype:ValidateEngageSync(sync, rest)
 	if type(sync) ~= "string" or type(rest) ~= "string" then return false end
 	if sync ~= self:GetEngageSync() then return false end
 	local boss = BB:HasReverseTranslation(rest) and BB:GetReverseTranslation(rest) or rest
-	if boss ~= self:ToString() then return false end
-	return true
+	local t = self.enabletrigger
+	if not t then return false end
+	if type(t) == "string" then t = {t} end
+	for _, mob in pairs(t) do
+		if mob == rest then return true end
+	end
+	return (rest == self:ToString())
 end
 
 
@@ -471,13 +476,6 @@ end
 ------------------------------
 
 function BigWigs:OnInitialize()
-	local surface = AceLibrary("Surface-1.0")
-	surface:Register("Otravi",   "Interface\\AddOns\\BigWigs\\Textures\\otravi")
-	surface:Register("Smooth",   "Interface\\AddOns\\BigWigs\\Textures\\smooth")
-	surface:Register("Glaze",    "Interface\\AddOns\\BigWigs\\Textures\\glaze")
-	surface:Register("Charcoal", "Interface\\AddOns\\BigWigs\\textures\\Charcoal")
-	surface:Register("BantoBar", "Interface\\AddOns\\BigWigs\\textures\\default")
-
 	if not self.version then self.version = GetAddOnMetadata("BigWigs", "Version") end
 	local rev = self.revision
 	for name, module in self:IterateModules() do
