@@ -118,10 +118,15 @@ end
 --     Utility Functions    --
 ------------------------------
 
+local function IsAddOnEnabled(v)
+	local _, _, _, enabled = GetAddOnInfo(v)
+	return enabled
+end
+
 function BigWigsLoD:InitializeLoD()
 	local numAddons = GetNumAddOns()
 	for i = 1, numAddons do
-		if not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
+		if not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) and IsAddOnEnabled(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadInZone")
 			if meta then
 				for k, v in pairs({Explode(meta, ",")}) do
