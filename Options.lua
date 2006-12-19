@@ -22,6 +22,8 @@ L:RegisterTranslations("enUS", function() return {
 	["All running modules have been disabled."] = true,
 	["%s reset."] = true,
 	["%s disabled."] = true,
+	["Menu"] = true,
+	["Menu options."] = true,
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -94,19 +96,28 @@ BigWigsOptions.hasIcon = "Interface\\AddOns\\BigWigs\\Icons\\core-enabled"
 BigWigsOptions.defaultMinimapPosition = 180
 BigWigsOptions.clickableTooltip = true
 BigWigsOptions.hideWithoutStandby = true
-
 BigWigsOptions.hideMenuTitle = true
+BigWigsOptions.OnMenuRequest = BigWigs.cmdtable
+
 BigWigs.hideMenuTitle = true
 
--- XXX total hack
-BigWigsOptions.OnMenuRequest = BigWigs.cmdtable
-local args = AceLibrary("FuBarPlugin-2.0"):GetAceOptionsDataTable(BigWigsOptions)
-for k,v in pairs(args) do
-	if BigWigsOptions.OnMenuRequest.args[k] == nil then
-		BigWigsOptions.OnMenuRequest.args[k] = v
+-----------------------------
+--      Menu Handling      --
+-----------------------------
+
+function BigWigsOptions:OnInitialize()
+	-- XXX Total hack :(
+	local args = AceLibrary("FuBarPlugin-2.0"):GetAceOptionsDataTable(self)
+	if not BigWigsOptions.OnMenuRequest.args[L["Menu"]] then
+		BigWigsOptions.OnMenuRequest.args[L["Menu"]] = {
+			type = "group",
+			name = L["Menu"],
+			desc = L["Menu options."],
+			args = args,
+			order = 300,
+		}
 	end
 end
--- XXX end hack
 
 -----------------------------
 --      Icon Handling      --
@@ -190,5 +201,4 @@ function BigWigsOptions:OnClick()
 
 	self:UpdateTooltip()
 end
-
 
