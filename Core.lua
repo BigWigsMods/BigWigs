@@ -347,6 +347,10 @@ function BigWigs:AceEvent_FullyInitialized()
 	if GetNumRaidMembers() > 0 or not self.loading then
 		if not BB then BB = AceLibrary("Babble-Boss-2.2") end
 
+		if BigWigsLoD then
+			self:CreateLoDMenu()
+		end
+
 		-- this will trigger the LoadWithCore to load
 		self:TriggerEvent("BigWigs_CoreEnabled")
 
@@ -355,10 +359,6 @@ function BigWigs:AceEvent_FullyInitialized()
 			if type(module.IsBossModule) ~= "function" or not module:IsBossModule() then
 				self:ToggleModuleActive(module, true)
 			end
-		end
-
-		if BigWigsLoD then
-			self:CreateLoDMenu()
 		end
 
 		self:RegisterEvent("BigWigs_TargetSeen")
@@ -636,10 +636,7 @@ function BigWigs:AddLoDMenu( zonename )
 		name = L["Load All"],
 		desc = string.format( L["Load all %s modules."], zonename ),
 		order = 1,
-		func = function()
-				BigWigsLoD:LoadZone( zonename )
-				self.cmdtable.args[zone].args[L["Load"]] = nil
-			end
+		func = function() BigWigsLoD:LoadZone( zonename ) end,
 	}
 end
 
