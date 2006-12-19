@@ -1,0 +1,41 @@
+$Id$
+
+This document is intended for raid participants.
+
+
+    When the fight begings
+
+Big Wigs automatically senses the nearby presence of a boss and enables the
+appropriate bossmod without delay. Normally, you're not required to do anything.
+
+
+    BossBlock
+
+The BossBlock plugin is the main thing keeping your sanity during boss
+encounters. It blocks any raid warning text that is determined to be boss
+announcement chatter.
+
+Most people will want to have all the BossBlock options checked, they will only
+block what you will be notified for in the BigWigs message frame anyway.
+
+
+    If you get hungry during the raid
+
+Big Wigs comes prepacked with a module for starting custom bars, which is
+excellent for when your pizza is in the oven. Just throw that baby in there, run
+back to your computer, and execute /bwlcb 720 Pizza!. 720 seconds is 12 minutes,
+which you'll obviously want to configure to your liking :)
+
+This bar is local to your client, and others won't be able to see it.
+
+
+    Moving the bars and messages
+
+The bars and messages plugins for Big Wigs can be moved with an anchor that can
+be toggled on from the plugins submenus Bars and Messages. After moving them,
+the test plugin can give you a couple of bars and messages to test your position
+and if you're fine with it.
+
+Remember that there are several bar textures available, as well as several
+output locations for the messages; for example SCT or MSBT.
+
