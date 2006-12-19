@@ -136,10 +136,10 @@ end
 function BigWigsOptions:ModuleAction(module)
 	if IsAltKeyDown() then
 		BigWigs:ToggleModuleActive(module, false)
-		self:Print(string.format(L["%s disabled."], module:ToString()))
+		BigWigs:Print(string.format(L["%s disabled."], module:ToString()))
 	else
 		BigWigs:BigWigs_RebootModule(module)
-		self:Print(string.format(L["%s reset."], module:ToString()))
+		BigWigs:Print(string.format(L["%s reset."], module:ToString()))
 	end
 	self:UpdateTooltip()
 end
@@ -174,7 +174,7 @@ function BigWigsOptions:OnClick()
 						BigWigs:ToggleModuleActive(module, false)
 					end
 				end
-				self:Print(L["All running modules have been disabled."])
+				BigWigs:Print(L["All running modules have been disabled."])
 			end
 		else
 			for name, module in BigWigs:IterateModules() do
@@ -182,7 +182,7 @@ function BigWigsOptions:OnClick()
 					BigWigs:BigWigs_RebootModule(module)
 				end
 			end
-			self:Print(L["All running modules have been reset."])
+			BigWigs:Print(L["All running modules have been reset."])
 		end
 	else
 		BigWigs:ToggleActive(true)
