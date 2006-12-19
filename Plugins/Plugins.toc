@@ -19,6 +19,7 @@
 
 ## Dependencies: BigWigs
 
+Prototype.lua
 Comm.lua
 Colors.lua
 TargetMonitor.lua
@@ -31,3 +32,4 @@ RaidIcon.lua
 Range.lua
 Version.lua
 Test.lua
+

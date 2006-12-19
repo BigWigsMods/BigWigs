@@ -46,6 +46,7 @@ LoadOnDemand.lua
 Core.lua
 Options.lua
 
+Plugins\Prototype.lua
 Plugins\Comm.lua
 Plugins\Colors.lua
 Plugins\TargetMonitor.lua
