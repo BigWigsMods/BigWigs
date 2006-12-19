@@ -22,6 +22,21 @@ local function Explode(str, sep)
 	return a:trim(), Explode(b, sep)
 end
 
+local function LoadBigWigsAddon(index)
+	if IsAddOnLoaded(index) then return end
+
+	local loaded, reason = LoadAddOn(index)
+
+	if not loaded and reason == "DEP_MISSING" then
+		local deps = {GetAddOnDependencies(index)}
+		if not deps then return end
+		for i, addon in ipairs(deps) do
+			if not IsAddOnLoaded(addon) then LoadAddOn(addon) end
+		end
+		LoadAddOn(index)
+	end
+end
+
 ------------------------------
 --    Addon Declaration     --
 ------------------------------
@@ -62,7 +77,7 @@ function BigWigsLoD:BigWigs_CoreEnabled()
 	for k,v in pairs( withcore ) do
 		if not IsAddOnLoaded( v ) then
 			loaded = true
-			LoadAddOn( v )
+			LoadBigWigsAddon(v)
 		end
 	end
 
@@ -142,7 +157,7 @@ function BigWigsLoD:LoadZone( zone )
 			for k,v in pairs( inzone[zone] ) do
 				if not IsAddOnLoaded( v ) then
 					loaded = true
-					LoadAddOn( v )
+					LoadBigWigsAddon(v)
 				end
 			end
 			inzone[zone] = nil
