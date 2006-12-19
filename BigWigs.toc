@@ -44,9 +44,9 @@ Libs\Surface-1.0\Surface-1.0.lua
 
 LoadOnDemand.lua
 Core.lua
+Prototype.lua
 Options.lua
 
-Plugins\Prototype.lua
 Plugins\Comm.lua
 Plugins\Colors.lua
 Plugins\TargetMonitor.lua

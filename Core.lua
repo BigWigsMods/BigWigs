@@ -297,6 +297,12 @@ BigWigs.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigs:OnInitialize()
 	if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
 
+	local function tablelen(t)
+		local c = 0
+		for k in pairs(t) do c = c + 1 end
+		return c
+	end
+
 	for k, zonename in pairs({"Other", "Karazhan", "Zul'Gurub", "Molten Core", "Blackwing Lair", "Ahn'Qiraj", "Ruins of Ahn'Qiraj", "Naxxramas"}) do
 			local zone = zonename
 			if BZ:HasReverseTranslation(zonename) and L:HasTranslation(BZ:GetReverseTranslation(zonename)) then
@@ -311,7 +317,7 @@ function BigWigs:OnInitialize()
 					name = prettyZone,
 					desc = string.format(L["Options for bosses in %s."], prettyZone),
 					args = {},
-					disabled = function() return not BigWigs:IsActive() end,
+					disabled = function() return not BigWigs:IsActive() or tablelen(BigWigs.cmdtable.args[zone].args) == 0 end,
 					order = 10,
 				}
 			end
@@ -618,7 +624,7 @@ function BigWigs:AddLoDMenu( zonename )
 	if not self.cmdtable.args[zone] then
 		self.cmdtable.args[zone] = {
 			type = "group",
-			name = zonename,
+			name = BZ:HasTranslation(zonename) and BZ[zonename] or zonename,
 			desc = string.format(L["Options for bosses in %s."], zonename),
 			args = {},
 			disabled = function() return not BigWigs:IsActive() end,

@@ -19,7 +19,6 @@
 
 ## Dependencies: BigWigs
 
-Prototype.lua
 Comm.lua
 Colors.lua
 TargetMonitor.lua

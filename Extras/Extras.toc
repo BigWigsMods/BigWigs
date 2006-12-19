@@ -17,7 +17,7 @@
 
 ## X-BigWigs-LoadWithCore: 1
 
-## Dependencies: BigWigs, BigWigs_Plugins
+## Dependencies: BigWigs
 
 CustomBar.lua
 Tranq.lua

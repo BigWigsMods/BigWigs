@@ -33,8 +33,9 @@ local function LoadBigWigsAddon(index)
 		for i, addon in ipairs(deps) do
 			if not IsAddOnLoaded(addon) then LoadAddOn(addon) end
 		end
-		LoadAddOn(index)
+		loaded, reason = LoadAddOn(index)
 	end
+	return loaded
 end
 
 ------------------------------
