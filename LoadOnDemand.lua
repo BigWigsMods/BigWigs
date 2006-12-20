@@ -22,18 +22,18 @@ local function Explode(str, sep)
 	return a:trim(), Explode(b, sep)
 end
 
-local function LoadBigWigsAddon(index)
-	if IsAddOnLoaded(index) then return end
+local function LoadBigWigsAddon(addon)
+	if IsAddOnLoaded(addon) then return end
 
-	local loaded, reason = LoadAddOn(index)
+	local loaded, reason = LoadAddOn(addon)
 
 	if not loaded and reason == "DEP_MISSING" then
-		local deps = {GetAddOnDependencies(index)}
+		local deps = {GetAddOnDependencies(addon)}
 		if not deps then return end
-		for i, addon in ipairs(deps) do
-			if not IsAddOnLoaded(addon) then LoadAddOn(addon) end
+		for i, dep in ipairs(deps) do
+			if not IsAddOnLoaded(dep) then LoadAddOn(dep) end
 		end
-		loaded, reason = LoadAddOn(index)
+		loaded, reason = LoadAddOn(addon)
 	end
 	return loaded
 end
@@ -73,23 +73,19 @@ end
 ------------------------------
 
 function BigWigsLoD:BigWigs_CoreEnabled()
-
-	local loaded = false
 	for k,v in pairs( withcore ) do
 		if not IsAddOnLoaded( v ) then
-			loaded = true
-			LoadBigWigsAddon(v)
+			if LoadBigWigsAddon(v) then
+				self:TriggerEvent("BigWigs_ModulePackLoaded", v)
+			else
+				self:TriggerEvent("BigWigs_ModulePackLoaded", v, true)
+			end
 		end
 	end
 
 	withcore = {}
 
 	self:LoadZone( GetRealZoneText() )
-
-	-- Fire an event to have the target monitor check its stuff
-	if loaded then
-		self:TriggerEvent("BigWigs_ModulePackLoaded")
-	end
 end
 
 function BigWigsLoD:ZONE_CHANGED_NEW_AREA()
@@ -118,22 +114,18 @@ end
 --     Utility Functions    --
 ------------------------------
 
-local function IsAddOnEnabled(v)
-	local _, _, _, enabled = GetAddOnInfo(v)
-	return enabled
-end
-
 function BigWigsLoD:InitializeLoD()
 	local numAddons = GetNumAddOns()
 	for i = 1, numAddons do
-		if not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) and IsAddOnEnabled(i) then
+		local name, _, _, enabled = GetAddOnInfo(i)
+		if not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) and enabled then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadInZone")
 			if meta then
 				for k, v in pairs({Explode(meta, ",")}) do
 					local zone = BZ:HasTranslation(v) and BZ[v] or nil
 					if zone then
 						if not inzone[zone] then inzone[zone] = {} end
-						table.insert( inzone[zone], i)
+						table.insert( inzone[zone], name)
 						if LC:HasTranslation(v) then
 							zonelist[zone] = true
 						else
@@ -146,7 +138,7 @@ function BigWigsLoD:InitializeLoD()
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadWithCore")
 			if meta then
 				-- register this addon for loading with core
-				table.insert( withcore, i )
+				table.insert( withcore, name )
 			end
 		end
 	end
@@ -171,11 +163,13 @@ function BigWigsLoD:LoadZone( zone )
 		end
 	else
 		if inzone[zone] then
-			local loaded = false
 			for k,v in pairs( inzone[zone] ) do
 				if not IsAddOnLoaded( v ) then
-					loaded = true
-					LoadBigWigsAddon(v)
+					if LoadBigWigsAddon(v) then
+						self:TriggerEvent("BigWigs_ModulePackLoaded", v)
+					else
+						self:TriggerEvent("BigWigs_ModulePackLoaded", v, true)
+					end
 				end
 			end
 			inzone[zone] = nil
