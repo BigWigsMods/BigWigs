@@ -544,6 +544,8 @@ function BigWigs:RegisterModule(name, module)
 		module:OnRegister()
 	end
 
+	self:TriggerEvent("BigWigs_ModuleRegistered", module.name)
+
 	-- Set up target monitoring, in case the monitor module has already initialized
 	if module.zonename and module.enabletrigger then
 		self:TriggerEvent("BigWigs_RegisterForTargetting", module.zonename, module.enabletrigger)
@@ -639,4 +641,5 @@ function BigWigs:AddLoDMenu( zonename )
 		func = function() BigWigsLoD:LoadZone( zonename ) end,
 	}
 end
+
 
