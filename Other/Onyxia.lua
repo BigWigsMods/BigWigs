@@ -52,7 +52,7 @@ L:RegisterTranslations("frFR", function() return {
 	onyfear_name = "Alerte Peur",
 	onyfear_desc = "Pr\195\169viens quand Onyxia utilise son Rugissement puissant en phase 3.",
 
-	trigger1 = "%s prend une grande inspiration%.%.%.",
+	trigger1 = "prend une grande inspiration",
 	trigger2 = "un seul coup !",
 	trigger3 = "Il semble que vous ayez besoin d'une autre le\195\167on, mortels !",
 	trigger4 = "Onyxia commence \195\160 lancer Rugissement puissant.",
@@ -185,7 +185,7 @@ end
 ------------------------------
 
 function BigWigsOnyxia:CHAT_MSG_MONSTER_EMOTE(msg)
-	if (msg == L["trigger1"]) then
+	if string.find(msg, L["trigger1"]) then
 		if self.db.profile.deepbreath then self:TriggerEvent("BigWigs_Message", L["warn1"], "Important") end
 	end
 end
