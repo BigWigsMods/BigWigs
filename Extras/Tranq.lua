@@ -82,7 +82,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsTranq = BigWigs:NewModule(L["Tranq"])
-BigWigsTranq.revision = tonumber(string.sub("$Revision: 11446 $", 12, -3))
+BigWigsTranq.revision = tonumber(string.sub("$Revision$", 12, -3))
 BigWigsTranq.defaults = {
 	bars = true,
 }

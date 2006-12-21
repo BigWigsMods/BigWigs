@@ -108,6 +108,8 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsRange = BigWigs:NewModule(L["Range"])
+
+BigWigsRange.revision = tonumber(string.sub("$Revision$", 12, -3))
 BigWigsRange.consoleCmd = L["Range"]
 BigWigsRange.consoleOptions = {
 	type = "group",

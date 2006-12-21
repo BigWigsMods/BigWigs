@@ -147,7 +147,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsBars = BigWigs:NewModule(L["Bars"])
-BigWigsBars.revision = tonumber(string.sub("$Revision: 13134 $", 12, -3))
+BigWigsBars.revision = tonumber(string.sub("$Revision$", 12, -3))
 BigWigsBars.defaultDB = {
 	growup = false,
 	scale = 1.0,

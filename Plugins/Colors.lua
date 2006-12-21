@@ -256,6 +256,8 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsColors = BigWigs:NewModule(L["Colors"])
+
+BigWigsColors.revision = tonumber(string.sub("$Revision$", 12, -3))
 BigWigsColors.defaultDB = {
 	important = "ff0000", -- Red
 	personal = "ff0000", -- Red

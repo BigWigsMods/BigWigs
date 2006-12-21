@@ -166,6 +166,8 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsRaidIcon = BigWigs:NewModule(L["Raid Icons"])
+
+BigWigsRaidIcon.revision = tonumber(string.sub("$Revision$", 12, -3))
 BigWigsRaidIcon.defaultDB = {
 	place = true,
 	icon = 8,

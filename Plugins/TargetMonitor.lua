@@ -9,6 +9,7 @@ local enablezones, enablemobs = {}, {}
 ---------------------------------
 
 BigWigsTargetMonitor = BigWigs:NewModule("Target Monitor")
+BigWigsTargetMonitor.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --

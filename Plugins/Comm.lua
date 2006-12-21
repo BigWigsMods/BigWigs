@@ -16,6 +16,7 @@ local coreSyncs = {
 ----------------------------------
 
 BigWigsComm = BigWigs:NewModule("Comm")
+BigWigsComm.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --

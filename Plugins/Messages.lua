@@ -211,6 +211,8 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsMessages = BigWigs:NewModule(L["Messages"])
+
+BigWigsMessages.revision = tonumber(string.sub("$Revision$", 12, -3))
 BigWigsMessages.defaultDB = {
 	display = L["RaidWarning frame"],
 	usecolors = true,

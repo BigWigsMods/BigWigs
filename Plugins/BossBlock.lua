@@ -231,6 +231,8 @@ local blockstrings = {
 ----------------------------------
 
 BigWigsBossBlock = BigWigs:NewModule("BossBlock", "AceHook-2.1")
+
+BigWigsBossBlock.revision = tonumber(string.sub("$Revision$", 12, -3))
 BigWigsBossBlock.defaultDB = {
 	hideraidwarnchat = true,
 	hideraidwarn = true,

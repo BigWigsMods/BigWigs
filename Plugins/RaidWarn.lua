@@ -149,6 +149,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsRaidWarn = BigWigs:NewModule(L["RaidWarning"], "AceHook-2.1")
+BigWigsRaidWarn.revision = tonumber(string.sub("$Revision$", 12, -3))
 BigWigsRaidWarn.defaultDB = {
 	whisper = false,
 	broadcast = false,

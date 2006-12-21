@@ -129,7 +129,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsTest = BigWigs:NewModule(L["Test"])
-BigWigsTest.revision = tonumber(string.sub("$Revision: 14954 $", 12, -3))
+BigWigsTest.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 BigWigsTest.consoleCmd = L["Test"]
 BigWigsTest.consoleOptions = {

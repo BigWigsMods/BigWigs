@@ -181,6 +181,7 @@ L:RegisterTranslations("frFR", function() return {
 
 BigWigsVersionQuery = BigWigs:NewModule("Version Query")
 
+BigWigsVersionQuery.revision = tonumber(string.sub("$Revision$", 12, -3))
 BigWigsVersionQuery.consoleCmd = L["Version"]
 BigWigsVersionQuery.consoleOptions = {
 	type = "group",
@@ -230,7 +231,7 @@ end
 function BigWigsVersionQuery:PopulateRevisions()
 	self.zoneRevisions = {}
 	for name, module in self.core:IterateModules() do
-		if module:IsBossModule() and module.zonename and type(module.zonename) == "string" then
+		if module:IsBossModule() and type(module.zonename) == "string" then
 			-- Make sure to get the enUS zone name.
 			local zone = BZ:HasReverseTranslation(module.zonename) and BZ:GetReverseTranslation(module.zonename) or module.zonename
 			-- Get the abbreviated name from BW Core.
@@ -352,12 +353,12 @@ function BigWigsVersionQuery:QueryVersion(zone)
 		self.core:Print(L["Query already running, please wait 5 seconds before trying again."])
 		return
 	end
-	if not zone or zone == "" or type(zone) ~= "string" then zone = GetRealZoneText() end
+	if type(zone) ~= "string" or zone == "" then zone = GetRealZoneText() end
 	-- If this is a shorthand zone, convert it to enUS full.
 	-- Also, if this is a shorthand, we can't really know if the user is enUS or not.
 
 	if not BWL then BWL = AceLibrary("AceLocale-2.2"):new("BigWigs") end
-	if BWL ~= nil and zone ~= nil and type(zone) == "string" and BWL:HasReverseTranslation(zone) then
+	if BWL ~= nil and type(zone) == "string" and BWL:HasReverseTranslation(zone) then
 		zone = BWL:GetReverseTranslation(zone)
 		-- If there is a translation for this to GetLocale(), get it, so we can
 		-- print the zone name in the correct locale.
@@ -388,14 +389,19 @@ function BigWigsVersionQuery:QueryVersion(zone)
 	self.responseTable = {}
 
 	if not self.zoneRevisions then self:PopulateRevisions() end
-	if not self.zoneRevisions[zone] then
-		self.responseTable[UnitName("player")] = -1
-	else
-		self.responseTable[UnitName("player")] = self.zoneRevisions[zone]
-	end
+	self.responseTable[UnitName("player")] = self:GetVersion(zone)
 	self.responses = 1
 	self:UpdateVersions()
 	self:TriggerEvent("BigWigs_SendSync", "BWVQ "..zone)
+end
+
+function BigWigsVersionQuery:GetVersion(zone)
+	if self.zoneRevisions[zone] then
+		return self.zoneRevisions[zone] or -1
+	elseif BigWigs:HasModule(zone) then
+		return BigWigs:GetModule(zone).revision or -1
+	end
+	return -1
 end
 
 --[[ Parses the new style reply, which is "1111 <nick>" ]]
@@ -422,7 +428,7 @@ function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
 		if not self.zoneRevisions[rest] then
 			self:TriggerEvent("BigWigs_SendSync", "BWVR -1 "..nick)
 		else
-			self:TriggerEvent("BigWigs_SendSync", "BWVR " .. self.zoneRevisions[rest] .. " " .. nick)
+			self:TriggerEvent("BigWigs_SendSync", "BWVR " .. self:GetVersion(rest) .. " " .. nick)
 		end
 	elseif sync == "BWVR" and self.queryRunning and nick and rest then
 		local revision, queryNick = self:ParseReply(rest)

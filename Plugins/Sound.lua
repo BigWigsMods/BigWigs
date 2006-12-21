@@ -95,6 +95,8 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 BigWigsSound = BigWigs:NewModule(L["Sounds"])
+
+BigWigsSound.revision = tonumber(string.sub("$Revision$", 12, -3))
 BigWigsSound.defaultDB = {
 	defaultonly = false,
 	sound = true,
