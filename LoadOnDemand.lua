@@ -148,11 +148,15 @@ function BigWigsLoD:LoadZone( zone )
 
 	-- Remove the "Load All" menu item from the core option table.
 	local menu = zone
-	if not zonelist[zone] then
+	
+	if zonelist[zone] then
+		menu = LC:HasTranslation(zone) and LC[zone] or zone
+	elseif zonelist[LC["Other"]] and zonelist[LC["Other"]][zone] then
 		menu = LC["Other"]
 	else
-		menu = LC:HasTranslation(menu) and LC[menu] or menu
+		return
 	end
+
 	if type(BigWigs.cmdtable.args[menu]) == "table" and type(BigWigs.cmdtable.args[menu].args) == "table" then
 		BigWigs.cmdtable.args[menu].args[LC["Load"]] = nil
 	end
