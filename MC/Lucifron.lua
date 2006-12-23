@@ -175,8 +175,8 @@ L:RegisterTranslations("frFR", function() return {
 	doom_name = "Alerte Mal\195\169diction imminente",
 	doom_desc = "Pr\195\169viens des mal\195\169dictions imminentes.",
 
-	--mc_name = "Mind Control alert",
-	--mc_desc = "Warn about afflicted players",
+	mc_name = "Alerte Contr\195\180le mental",
+	mc_desc = "Pr\195\169viens quand un joueur est sous contr\195\180le mental.",
 
 	icon_name = "Placer une ic\195\180ne",
 	icon_desc = "Place une ic\195\180ne de raid sur la personne sous contr\195\180le mental (n\195\169cessite d'\195\170tre promu ou mieux).",
@@ -192,8 +192,8 @@ L:RegisterTranslations("frFR", function() return {
 	doom_bar = "Mal\195\169diction imminente",
 
 	--mc_trigger = "^([^%s]+) ([^%s]+) afflicted by Dominate Mind.$",
-	--mc_message = "%s is Mind Controlled!",
-	--mc_bar = "MC: %s",
+	mc_message = "%s est sous Contr\195\180le mental !",
+	mc_bar = "CM : %s",
 
 	you = "Vous",
 } end)

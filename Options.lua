@@ -36,6 +36,8 @@ L:RegisterTranslations("frFR", function() return {
 	["All running modules have been disabled."] = "Tous les modules ont \195\169t\195\169 d\195\169sactiv\195\169s.",
 	["%s reset."] = "%s red\195\169marr\195\169.",
 	["%s disabled."] = "%s d\195\169sactiv\195\169.",
+	--["Menu"] = true,
+	["Menu options."] = "Options du menu.",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

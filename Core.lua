@@ -58,6 +58,9 @@ L:RegisterTranslations("frFR", function() return {
 	["%s has been defeated"] = "%s a \195\169t\195\169 vaincu",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s ont \195\169t\195\169 vaincu",    -- "<bosses> have been defeated"
 
+	["Debug enabled, output routed to %s."] = "D\195\169boguage activ\195\169, output dirig\195\169 vers %s.",
+	["Debug disabled."] = "D\195\169boguage d\195\169sactiv\195\169.",
+
 	-- AceConsole strings
 	["Bosses"] = "Boss",
 	["Options for bosses in %s."] = "Options des boss dans %s.", -- "Options for bosses in <zone>"
@@ -66,15 +69,13 @@ L:RegisterTranslations("frFR", function() return {
 	["Options for plugins."] = "Options pour les plugins.",
 	-- ["Extras"] = true,
 	["Options for extras."] ="Options pour les extras.",
-	-- ["toggle"] = true,
 	["Active"] = "Actif",
 	["Activate or deactivate this module."] = "Activer ou d\195\169sactiver ce module.",
-	-- ["reboot"] = true,
 	["Reboot"] = "Red\195\169marrer",
 	["Reboot this module."] = "Red\195\169marrer ce module.",
-	-- ["debug"] = true,
 	["Debugging"] = "D\195\169boguage",
 	["Show debug messages."] = "Afficher les messages de d\195\169boguage.",
+	--["Options"] = true,
 	--bosskill_cmd = "kill",
 	bosskill_name = "D\195\169faite du boss",
 	bosskill_desc = "Pr\195\169viens quand le boss est vaincu.",

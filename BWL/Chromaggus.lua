@@ -257,6 +257,8 @@ L:RegisterTranslations("frFR", function() return {
 	breath3 = "Enflammer la chair",
 	breath4 = "Incin\195\169rer",
 	breath5 = "Br\195\187lure de givre",
+
+	castingbar = "Incante %s",
 } end )
 
 ----------------------------------
