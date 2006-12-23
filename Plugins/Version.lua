@@ -1,4 +1,4 @@
-assert(BigWigs, "BigWigs not found!")
+﻿assert(BigWigs, "BigWigs not found!")
 
 local BWL = nil
 local BZ = AceLibrary("Babble-Zone-2.2")

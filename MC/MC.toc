@@ -1,4 +1,4 @@
-## Interface: 20000
+﻿## Interface: 20000
 
 ## Title: Big Wigs [|cffeda55fMolten Core|r]
 ## Notes: Big Wigs Molten Core Modules

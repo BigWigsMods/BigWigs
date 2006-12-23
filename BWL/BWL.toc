@@ -1,4 +1,4 @@
-## Interface: 20000
+﻿## Interface: 20000
 
 ## Title: Big Wigs [|cffeda55fBlackwing Lair|r]
 ## Notes: Big Wigs Blackwing Lair Modules

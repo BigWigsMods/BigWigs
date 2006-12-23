@@ -1,4 +1,4 @@
-KarazhanBeta = AceLibrary("AceAddon-2.0"):new("AceConsole-2.0", "AceEvent-2.0")
+﻿KarazhanBeta = AceLibrary("AceAddon-2.0"):new("AceConsole-2.0", "AceEvent-2.0")
 
 local BZ = AceLibrary("Babble-Zone-2.2")
 local warnedThisSession = nil

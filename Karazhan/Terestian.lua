@@ -1,4 +1,4 @@
---[[Attacks and Abilities
+﻿--[[Attacks and Abilities
 
     * Terestrian Illhoof comes with an Elite imp minion. He deals a moderate amount of melee damage, the imp does Fire damage.
     * Terestrian summons a constant stream of nonelite imps that fireball for around 250, and have very little (1.5-2k) HP.

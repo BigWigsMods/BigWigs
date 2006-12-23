@@ -1,4 +1,4 @@
-## Interface: 20000
+﻿## Interface: 20000
 
 ## Title: Big Wigs [|cffeda55fRuins of Ahn'Qiraj|r]
 ## Notes: Big Wigs Ruins of Ahn'Qiraj Modules

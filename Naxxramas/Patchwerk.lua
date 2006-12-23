@@ -1,4 +1,4 @@
-------------------------------
+﻿﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -43,7 +43,7 @@ L:RegisterTranslations("deDE", function() return {
 	enragewarn = "Wutanfall!",
 	enragewarn2 = "5% - Enrage!",
 	starttrigger1 = "Flickwerk spielen m\195\182chte!",
-	starttrigger2 = "Kel�thuzad macht Flickwerk zu seinem Abgesandten von Krieg!",
+	starttrigger2 = "Kel'thuzad macht Flickwerk zu seinem Abgesandten von Krieg!",
 	startwarn = "Flickwerk angegriffen! Wutanfall in 7 Minuten!",
 	enragebartext = "Wutanfall",
 	warn1 = "Wutanfall in 5 Minuten",
