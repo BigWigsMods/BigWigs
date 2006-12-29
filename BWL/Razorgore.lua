@@ -44,8 +44,8 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
 	start_trigger = "침입자들이 들어왔다! 어떤 희생이 있더라도 알을 반드시 수호하라!",
 	start_message = "폭군 서슬송곳니 전투 시작",
-	start_soon = "Mob Spawn in 5sec!",
-	start_mob = "Mob Spawn",
+	start_soon = "몹 소환 5초전!",
+	start_mob = "몹 소환",
 
 	mindcontrol_trigger = "자! ([^%s]+), 이제부터 나를 섬겨라!",
 	mindcontrol_message = "<<%s>> 정신 지배 되었습니다.",

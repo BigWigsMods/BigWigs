@@ -50,6 +50,8 @@ L:RegisterTranslations("koKR", function() return {
 	["All running modules have been disabled."] = "모든 실행중인 모듈을 비활성화 합니다.",
 	["%s reset."] = "%s 초기화되었습니다.",
 	["%s disabled."] = "%s 비활성화 되었습니다.",
+	["Menu"] = "메뉴",
+	["Menu options."] = "메뉴 설정.",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

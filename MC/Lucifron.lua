@@ -115,8 +115,8 @@ L:RegisterTranslations("koKR", function() return {
 	doom_name = "파멸의 예언 경고",
 	doom_desc = "파멸의 예언에 대한 경고",
 
-	--mc_name = "Mind Control alert",
-	--mc_desc = "Warn about afflicted players",
+	mc_name = "정신 지배 경고",
+	mc_desc = "정신 지배에 걸린 사람에 대한 경고",
 
 	icon_name = "아이콘 지정",
 	icon_desc = "정신 지배된 사람에게 해골 아이콘 지정 (승급자 이상 필요)",
@@ -131,9 +131,9 @@ L:RegisterTranslations("koKR", function() return {
 	doom_warn = "5초후 파멸의 예언!",
 	doom_bar = "파멸의 예언",
 
-	--mc_trigger = "^([^%s]+) ([^%s]+) afflicted by Dominate Mind.$",
-	--mc_message = "%s is Mind Controlled!",
-	--mc_bar = "MC: %s",
+	mc_trigger = "^([^|;%s]*)(.*)정신 지배에 걸렸습니다.$", -- CHECK
+	mc_message = "%s 정신 지배!",
+	mc_bar = "정배: %s",
 
 	--you = "",
 } end)

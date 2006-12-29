@@ -104,7 +104,7 @@ L:RegisterTranslations("koKR", function() return {
 	dkbar = "죽음의 기사 - %d",
 	riderbar = "기병 - %d",
 
-	inroomtrigger = "오랫동안 기다려 왔다. 이제 영혼의 착취자를 만날 차례다.", -- CHECK
+	inroomtrigger = "오랫동안 기다렸다. 이제 영혼의 착취자를 만날 차례다.", -- by overmind
 	inroomwarn = "고딕 등장!!",
 
 	inroombartext = "고딕 등장",
