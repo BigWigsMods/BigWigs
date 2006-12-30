@@ -253,8 +253,8 @@ function BigWigsLucifron:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
 			mcplayer = UnitName("player")
 		end
 		if self.db.profile.mc then
-			self:TriggerEvent("BigWigs_Message", string.format(L["mc_message"], player), "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mc_bar"], player), 15, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
+			self:TriggerEvent("BigWigs_Message", string.format(L["mc_message"], mcplayer), "Important")
+			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mc_bar"], mcplayer), 15, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
 		end
 		if self.db.profile.icon then
 			self:TriggerEvent("BigWigs_SetRaidIcon", mcplayer)
