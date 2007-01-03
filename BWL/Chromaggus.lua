@@ -5,6 +5,8 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Chromaggus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local twenty
+local started
+local barcount
 
 ----------------------------
 --      Localization      --
@@ -49,6 +51,9 @@ L:RegisterTranslations("enUS", function() return {
 	breath3 = "Ignite Flesh",
 	breath4 = "Incinerate",
 	breath5 = "Frost Burn",
+
+	breath1_bar = "Breath 1",
+	breath2_bar = "Breath 2",
 
 	iconunknown = "Interface\\Icons\\INV_Misc_QuestionMark",
 	icon1 = "Interface\\Icons\\Spell_Arcane_PortalOrgrimmar",
@@ -279,7 +284,11 @@ function BigWigsChromaggus:OnEnable()
 	-- in the module itself for resetting via schedule
 	self.vulnerability = nil
 	twenty = nil
+	started = nil
+	barcount = 2
 
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE", "PlayerDamageEvents")
@@ -315,16 +324,37 @@ function BigWigsChromaggus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 	end
 end
 
-function BigWigsChromaggus:BigWigs_RecvSync(sync, spellId)
-	if sync ~= "ChromaggusBreath" or not spellId or not self.db.profile.breath then return end
+function BigWigsChromaggus:BigWigs_RecvSync(sync, rest)
+	if self:ValidateEngageSync(sync, rest) and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		if self.db.profile.breath then
+			self:TriggerEvent("BigWigs_StartBar", self, L["breath1_bar"], 30, "Interface\\Icons\\INV_Misc_QuestionMark" )
+			self:TriggerEvent("BigWigs_StartBar", self, L["breath2_bar"], 60, "Interface\\Icons\\INV_Misc_QuestionMark" )
+			
+			self:ScheduleEvent("bwchromaggusunknown1", "BigWigs_Message", 20, string.format( L["breath_warning"], L["breath1_bar"]), "Important")
+			self:ScheduleEvent("bwchromaggusunknown2", "BigWigs_Message", 50, string.format( L["breath_warning"], L["breath2_bar"]), "Important")	
+		end
+	elseif sync == "ChromaggusBreath" and rest and self.db.profile.breath then
 
-	local spellName = L:HasTranslation("breath"..spellId) and L["breath"..spellId] or nil
-	if not spellName then return end
+		local spellName = L:HasTranslation("breath"..rest) and L["breath"..rest] or nil
+		if not spellName then return end
 
-	self:TriggerEvent("BigWigs_StartBar", self, string.format( L["castingbar"], spellName), 2 )
-	self:TriggerEvent("BigWigs_Message", string.format(L["breath_message"], spellName), "Important")
-	self:ScheduleEvent("bwchromaggusbreath"..spellName, "BigWigs_Message", 50, string.format(L["breath_warning"], spellName), "Important")
-	self:TriggerEvent("BigWigs_StartBar", self, spellName, 60, L["icon"..spellId])
+		if barcount == 2 then
+			barcount = 1
+			self:TriggerEvent("BigWigs_StopBar", self, L["breath1_bar"] )
+		elseif barcount == 1 then
+			barcount = 0
+			self:TriggerEvent("BigWigs_StopBar", self, L["breath2_bar"] )
+		end
+
+		self:TriggerEvent("BigWigs_StartBar", self, string.format( L["castingbar"], spellName), 2 )
+		self:TriggerEvent("BigWigs_Message", string.format(L["breath_message"], spellName), "Important")
+		self:ScheduleEvent("bwchromaggusbreath"..spellName, "BigWigs_Message", 50, string.format(L["breath_warning"], spellName), "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, spellName, 60, L["icon"..rest])
+	end
 end
 
 function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE(msg)
