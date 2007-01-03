@@ -28,15 +28,15 @@ L:RegisterTranslations("enUS", function() return {
 	onyfear_name = "Fear",
 	onyfear_desc = "Warn for Bellowing Roar in phase 3",
 
-	trigger1 = "%s takes in a deep breath...",
-	trigger2 = "from above",
-	trigger3 = "It seems you'll need another lesson",
-	trigger4 = "Onyxia begins to cast Bellowing Roar.",
+	deepbreath_trigger = "%s takes in a deep breath",
+	phase2_trigger = "from above",
+	phase3_trigger = "It seems you'll need another lesson",
+	fear_trigger = "Onyxia begins to cast Bellowing Roar.",
 
-	warn1 = "Deep Breath incoming!",
-	warn2 = "Phase 2 incoming!",
-	warn3 = "Phase 3 incoming!",
-	warn4 = "Fear in 1.5sec!",
+	deepbreath_message = "Deep Breath incoming!",
+	phase2_message = "Phase 2 incoming!",
+	phase3_message = "Phase 3 incoming!",
+	fear_message = "Fear in 1.5sec!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -52,15 +52,15 @@ L:RegisterTranslations("frFR", function() return {
 	onyfear_name = "Alerte Peur",
 	onyfear_desc = "Pr\195\169viens quand Onyxia utilise son Rugissement puissant en phase 3.",
 
-	trigger1 = "prend une grande inspiration",
-	trigger2 = "un seul coup !",
-	trigger3 = "Il semble que vous ayez besoin d'une autre le\195\167on, mortels !",
-	trigger4 = "Onyxia commence \195\160 lancer Rugissement puissant.",
+	deepbreath_trigger = "prend une grande inspiration",
+	phase2_trigger = "un seul coup !",
+	phase3_trigger = "Il semble que vous ayez besoin d'une autre le\195\167on, mortels !",
+	fear_trigger = "Onyxia commence \195\160 lancer Rugissement puissant.",
 
-	warn1 = "Souffle imminent !",
-	warn2 = "Arriv\195\169e de la phase 2 !",
-	warn3 = "Arriv\195\169e de la phase 3 !",
-	warn4 = "Peur de zone dans 1,5 sec. !",
+	deepbreath_message = "Souffle imminent !",
+	phase2_message = "Arriv\195\169e de la phase 2 !",
+	phase3_message = "Arriv\195\169e de la phase 3 !",
+	fear_message = "Peur de zone dans 1,5 sec. !",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -76,15 +76,15 @@ L:RegisterTranslations("deDE", function() return {
 	onyfear_name = "Furcht",
 	onyfear_desc = "Warnung vor AoE Furcht in Phase 3.",
 
-	trigger1 = "%s atmet tief ein...",
-	trigger2 = "^Diese sinnlose Anstrengung langweilt mich", -- ?
-	trigger3 = "^Mir scheint, dass Ihr noch eine Lektion braucht", -- ?
-	trigger4 = "Onyxia beginnt Dr\195\182hnendes Gebr\195\188ll zu wirken.",
+	deepbreath_trigger = "%s atmet tief ein...",
+	phase2_trigger = "^Diese sinnlose Anstrengung langweilt mich", -- ?
+	phase3_trigger = "^Mir scheint, dass Ihr noch eine Lektion braucht", -- ?
+	fear_trigger = "Onyxia beginnt Dr\195\182hnendes Gebr\195\188ll zu wirken.",
 
-	warn1 = "Tiefer Atem!",
-	warn2 = "Phase 2 - Onyxia hebt ab!",
-	warn3 = "Phase 3 - Onyxia landet!",
-	warn4 = "Dr\195\182hnendes Gebr\195\188ll in 1.5 Sekunden",
+	deepbreath_message = "Tiefer Atem!",
+	phase2_message = "Phase 2 - Onyxia hebt ab!",
+	phase3_message = "Phase 3 - Onyxia landet!",
+	fear_message = "Dr\195\182hnendes Gebr\195\188ll in 1.5 Sekunden",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -100,15 +100,15 @@ L:RegisterTranslations("zhCN", function() return {
 	onyfear_name = "低沉咆哮",
 	onyfear_desc = "第三阶段低沉咆哮警报",
 
-	trigger1 = "%s深深地吸了一口气……",
-	trigger2 = "从上空",
-	trigger3 = "看起来需要再给你一次教训",
-	trigger4 = "奥妮克希亚开始施放低沉咆哮。",
+	deepbreath_trigger = "%s深深地吸了一口气……",
+	phase2_trigger = "从上空",
+	phase3_trigger = "看起来需要再给你一次教训",
+	fear_trigger = "奥妮克希亚开始施放低沉咆哮。",
 
-	warn1 = "深呼吸即将出现，向边缘散开！",
-	warn2 = "进入第二阶段！",
-	warn3 = "进入第三阶段！",
-	warn4 = "1.5秒后恐惧！"
+	deepbreath_message = "深呼吸即将出现，向边缘散开！",
+	phase2_message = "进入第二阶段！",
+	phase3_message = "进入第三阶段！",
+	fear_message = "1.5秒后恐惧！"
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -124,15 +124,15 @@ L:RegisterTranslations("zhTW", function() return {
 	onyfear_name = "低沉咆哮",
 	onyfear_desc = "第三階段低沉咆哮警報",
 
-	trigger1 = "深深地吸了一口氣",
-	trigger2 = "從上空",
-	trigger3 = "看起來需要再給你一次教訓",
-	trigger4 = "奧妮克希亞開始施放低沉咆哮。",
+	deepbreath_trigger = "深深地吸了一口氣",
+	phase2_trigger = "從上空",
+	phase3_trigger = "看起來需要再給你一次教訓",
+	fear_trigger = "奧妮克希亞開始施放低沉咆哮。",
 
-	warn1 = "奧妮克希亞深呼吸即將出現，向邊緣散開！",
-	warn2 = "奧妮克希亞進入第二階段！",
-	warn3 = "奧妮克希亞進入第三階段！",
-	warn4 = "1.5秒後恐懼！"
+	deepbreath_message = "奧妮克希亞深呼吸即將出現，向邊緣散開！",
+	phase2_message = "奧妮克希亞進入第二階段！",
+	phase3_message = "奧妮克希亞進入第三階段！",
+	fear_message = "1.5秒後恐懼！"
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -148,15 +148,15 @@ L:RegisterTranslations("koKR", function() return {
 	onyfear_name = "공포",
 	onyfear_desc = "3단계 공포에 대한 경고",
 
-	trigger1 = "%s|1이;가; 숨을 깊게 들이쉽니다.",
-	trigger2 = "머리 위에서 모조리",
-	trigger3 = "혼이 더 나야 정신을 차리겠구나!",
-	trigger4 = "오닉시아|1이;가; 우레와같은 울부짖음|1을;를; 시전합니다.", -- CHECK
+	deepbreath_trigger = "%s|1이;가; 숨을 깊게 들이쉽니다.",
+	phase2_trigger = "머리 위에서 모조리",
+	phase3_trigger = "혼이 더 나야 정신을 차리겠구나!",
+	fear_trigger = "오닉시아|1이;가; 우레와같은 울부짖음|1을;를; 시전합니다.", -- CHECK
 
-	warn1 = "경고 : 오닉시아 딥 브레스, 구석으로 피하십시오!",
-	warn2 = "오닉시아 2단계 시작!",
-	warn3 = "오닉시아 3단계 시작!",
-	warn4 = "공포 경고, 1.5 초 전!",
+	deepbreath_message = "경고 : 오닉시아 딥 브레스, 구석으로 피하십시오!",
+	phase2_message = "오닉시아 2단계 시작!",
+	phase3_message = "오닉시아 3단계 시작!",
+	fear_message = "공포 경고, 1.5 초 전!",
 } end )
 
 ----------------------------------
@@ -185,22 +185,22 @@ end
 ------------------------------
 
 function BigWigsOnyxia:CHAT_MSG_MONSTER_EMOTE(msg)
-	if string.find(msg, L["trigger1"]) then
-		if self.db.profile.deepbreath then self:TriggerEvent("BigWigs_Message", L["warn1"], "Important") end
+	if string.find(msg, L["deepbreath_trigger"]) then
+		if self.db.profile.deepbreath then self:TriggerEvent("BigWigs_Message", L["deepbreath_message"], "Important") end
 	end
 end
 
 function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL(msg)
-	if (string.find(msg, L["trigger2"])) then
-		if self.db.profile.phase2 then self:TriggerEvent("BigWigs_Message", L["warn2"], "Urgent") end
-	elseif (string.find(msg, L["trigger3"])) then
-		if self.db.profile.phase3 then self:TriggerEvent("BigWigs_Message", L["warn3"], "Urgent") end
+	if string.find(msg, L["phase2_trigger"]) then
+		if self.db.profile.phase2 then self:TriggerEvent("BigWigs_Message", L["phase2_message"], "Urgent") end
+	elseif string.find(msg, L["phase3_trigger"]) then
+		if self.db.profile.phase3 then self:TriggerEvent("BigWigs_Message", L["phase3_message"], "Urgent") end
 	end
 end
-
 
 function BigWigsOnyxia:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg == L["trigger4"] and self.db.profile.onyfear then
-		self:TriggerEvent("BigWigs_Message", L["warn4"], "Important")
+	if msg == L["fear_trigger"] and self.db.profile.onyfear then
+		self:TriggerEvent("BigWigs_Message", L["fear_message"], "Important")
 	end
 end
+
