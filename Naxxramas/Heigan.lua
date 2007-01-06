@@ -96,7 +96,7 @@ L:RegisterTranslations("deDE", function() return {
 	teleport_trigger = "Euer Ende naht.",
 	die_trigger = "%s takes his last breath.", -- ?
 
-	engage_message = "Heigan der Unsaubere angegriffen! Teleport in 90 Sekunden!",
+	engage_message = "Heigan der Unreine angegriffen! Teleport in 90 Sekunden!",
 
 	teleport_1min_message = "Teleport in 1 Minute",
 	teleport_30sec_message = "Teleport in 30 Sekunden",
