@@ -23,6 +23,7 @@ function BigWigsTargetMonitor:OnRegister()
 end
 
 function BigWigsTargetMonitor:OnEnable()
+	self.monitoring = nil
 	self:RegisterEvent("BigWigs_RegisterForTargetting")
 	self:RegisterEvent("BigWigs_ModulePackLoaded", "ZONE_CHANGED_NEW_AREA")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
