@@ -12,6 +12,10 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Emeriss",
 
+	engage_cmd = "engage",
+	engage_name = "Engage Alert",
+	engage_desc = "Warn when Emeriss is engaged",
+
 	noxious_cmd = "noxious",
 	noxious_name = "Noxious breath alert",
 	noxious_desc = "Warn for noxious breath",
@@ -24,6 +28,10 @@ L:RegisterTranslations("enUS", function() return {
 	volatileother_name = "Volatile infection on others alert",
 	volatileother_desc = "Warn for volatile infection on others",
 
+	icon_cmd = "icon",
+	icon_name = "Place Icon",
+	icon_desc = "Place your selected raid icon on the afflicted person (requires promoted or higher)",
+
 	trigger1 = "^([^%s]+) ([^%s]+) afflicted by Volatile Infection",
 	trigger2 = "afflicted by Noxious Breath",
 
@@ -31,6 +39,9 @@ L:RegisterTranslations("enUS", function() return {
 	warn2 = " is afflicted by Volatile Infection!",
 	warn3 = "5 seconds until Noxious Breath!",
 	warn4 = "Noxious Breath - 30 seconds till next!",
+
+	engage_message = "Emeriss Engaged! - Noxious Breath in ~10seconds",
+	engage_trigger = "Hope is a DISEASE of the soul! This land shall wither and die!",
 
 	isyou = "You",
 	isare = "are",
@@ -170,7 +181,7 @@ BigWigsEmeriss.zonename = {
 	AceLibrary("Babble-Zone-2.2")["Feralas"]
 }
 BigWigsEmeriss.enabletrigger = boss
-BigWigsEmeriss.toggleoptions = {"noxious", "volatileyou", "volatileother", "bosskill"}
+BigWigsEmeriss.toggleoptions = {"engage", -1, "noxious", -1, "volatileyou", "volatileother", "icon", "bosskill"}
 BigWigsEmeriss.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -179,6 +190,7 @@ BigWigsEmeriss.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsEmeriss:OnEnable()
 	self:RegisterEvent("BigWigs_Message")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
@@ -203,10 +215,20 @@ end
 						self:TriggerEvent("BigWigs_Message", EPlayer .. L["warn2"], "Attention")
 						self:TriggerEvent("BigWigs_SendTell", EPlayer, L["warn1"])
 					end
+					if self.db.profile.icon then
+						self:TriggerEvent("BigWigs_SetRaidIcon", EPlayer)
+					end
 				end
 			end
 		end
 	end
+
+function BigWigsEmeriss:CHAT_MSG_MONSTER_YELL(msg)
+	if self.db.profile.engage and msg == L["engage_trigger"] then
+		self:TriggerEvent("BigWigs_Message", L["engage_message"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 10, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
+	end
+end
 
 function BigWigsEmeriss:BigWigs_Message(text)
 	if text == L["warn3"] then self.prior = nil end
