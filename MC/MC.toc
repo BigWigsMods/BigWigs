@@ -5,7 +5,7 @@
 ## Title-zhTW: Big Wigs [|cffeda55f熔火之心|r]
 ## Notes-zhTW: Big Wigs 熔火之心模組
 ## Author: Ammo, Rabbit
-## X-Credits: Tekkub Stoutwrithe (founding author), Shyva & Others
+## X-Credits: Tekkub(founding author), Shyva, Funkydude & Others
 ## Version: 2.0
 ## LoadOnDemand: 1
 
@@ -26,3 +26,6 @@ Magmadar.lua
 Majordomo.lua
 Ragnaros.lua
 Shazzrah.lua
+Sulfuron.lua
+Garr.lua
+Golemagg.lua
