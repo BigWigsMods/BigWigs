@@ -5,7 +5,7 @@
 ## Title-zhTW: Big Wigs [|cffeda55f黑翼之巢|r]
 ## Notes-zhTW: Big Wigs 黑翼之巢模組
 ## Author: Ammo, Rabbit
-## X-Credits: Tekkub(founding author), Shyva, Funkydude & Others
+## X-Credits: Tekkub Stoutwrithe(founding author), Shyva, Funkydude & Others
 ## Version: 2.0
 ## LoadOnDemand: 1
 

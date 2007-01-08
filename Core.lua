@@ -1,5 +1,4 @@
-﻿
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -42,7 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Load"] = true,
 	["Load All"] = true,
 	["Load all %s modules."] = true,
-	
+
 	-- AceConsole zone commands
 	["Karazhan"] = true,
 	["Zul'Gurub"] = "ZG",
@@ -164,7 +163,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Load"] = "불러오기",
 	["Load All"] = "모두 불러오기",
 	["Load all %s modules."] = "모든 %s 모듈들을 불러옵니다.",
-	
+
 	-- AceConsole zone commands
 	["Zul'Gurub"] = "ZG",
 	["Molten Core"] = "MC",
@@ -642,5 +641,3 @@ function BigWigs:AddLoDMenu( zonename )
 		func = function() BigWigsLoD:LoadZone( zonename ) end,
 	}
 end
-
-
