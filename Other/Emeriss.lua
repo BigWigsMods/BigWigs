@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Emeriss"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local BZ = AceLibrary("Babble-Zone-2.2")
 
 ----------------------------
 --      Localization      --
@@ -174,12 +175,7 @@ L:RegisterTranslations("koKR", function() return {
 ----------------------------------
 
 BigWigsEmeriss = BigWigs:NewModule(boss)
-BigWigsEmeriss.zonename = {
-	AceLibrary("Babble-Zone-2.2")["Ashenvale"],
-	AceLibrary("Babble-Zone-2.2")["Duskwood"],
-	AceLibrary("Babble-Zone-2.2")["The Hinterlands"],
-	AceLibrary("Babble-Zone-2.2")["Feralas"]
-}
+BigWigsEmeriss.zonename = {BZ["Ashenvale"], BZ["Duskwood"], BZ["The Hinterlands"], BZ["Feralas"]}
 BigWigsEmeriss.enabletrigger = boss
 BigWigsEmeriss.toggleoptions = {"engage", -1, "noxious", -1, "volatileyou", "volatileother", "icon", "bosskill"}
 BigWigsEmeriss.revision = tonumber(string.sub("$Revision$", 12, -3))
