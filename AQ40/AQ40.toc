@@ -1,4 +1,4 @@
-﻿## Interface: 20000
+﻿## Interface: 20003
 
 ## Title: Big Wigs [|cffeda55fAhn'Qiraj|r]
 ## Notes: Big Wigs Ahn'Qiraj Modules

@@ -641,3 +641,4 @@ function BigWigs:AddLoDMenu( zonename )
 		func = function() BigWigsLoD:LoadZone( zonename ) end,
 	}
 end
+

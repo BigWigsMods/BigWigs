@@ -1,4 +1,4 @@
-﻿## Interface: 20000
+﻿## Interface: 20003
 
 ## Title: Big Wigs |cff7fff7f -Ace2-|r
 ## Title-zhCN: |cff7fff7f-Ace2-|r Big Wigs
@@ -115,6 +115,9 @@ Other\Azuregos.lua
 Other\Emeriss.lua
 Other\Onyxia.lua
 Other\Kazzak.lua
+Other\Ysondre.lua
+Other\Taerar.lua
+Other\Lethon.lua
 
 Naxxramas\Anubrekhan.lua
 Naxxramas\Gluth.lua

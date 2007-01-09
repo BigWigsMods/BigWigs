@@ -1,4 +1,4 @@
-﻿## Interface: 20000
+﻿## Interface: 20003
 
 ## Title: Big Wigs [|cffeda55fOther|r]
 ## Notes: Big Wigs Other Modules
@@ -23,3 +23,6 @@ Azuregos.lua
 Emeriss.lua
 Onyxia.lua
 Kazzak.lua
+Ysondre.lua
+Taerar.lua
+Lethon.lua
