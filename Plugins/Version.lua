@@ -338,7 +338,7 @@ function BigWigsVersionQuery:OnTooltipUpdate()
 end
 
 function BigWigsVersionQuery:AlertOldRevisions()
-	if not self.responseTable or (not IsRaidLeader() or not IsRaidOfficer()) then return end
+	if not self.responseTable or (not IsRaidLeader() and not IsRaidOfficer()) then return end
 	local myVersion = self.zoneRevisions[self.currentZone]
 	if not myVersion then return end
 	for name, version in pairs(self.responseTable) do
