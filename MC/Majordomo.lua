@@ -26,7 +26,6 @@ L:RegisterTranslations("enUS", function() return {
 	warn3 = "5 seconds until powers!",
 	warn4 = "Magic Reflection down!",
 	warn5 = "Damage Shield down!",
-	bosskill = "Majordomo Executus has been defeated!",
 
 	bar1text = "Magic Reflection",
 	bar2text = "Damage Shield",
@@ -56,7 +55,6 @@ L:RegisterTranslations("zhCN", function() return {
 	warn3 = "5秒后再次释放反射护盾！",
 	warn4 = "魔法反射护盾已消失！",
 	warn5 = "伤害反射护盾已消失！",
-	bosskill = "管理者埃克索图斯被击败了！",
 
 	bar1text = "魔法反射护盾",
 	bar2text = "伤害反射护盾",
@@ -82,7 +80,6 @@ L:RegisterTranslations("zhTW", function() return {
 	warn3 = "5秒後施放效果！",
 	warn4 = "魔法反射已消失！",
 	warn5 = "傷害護盾已消失！",
-	bosskill = "管理者埃克索圖斯被擊敗了！",
 
 	bar1text = "魔法反射",
 	bar2text = "傷害護盾",
@@ -108,7 +105,6 @@ L:RegisterTranslations("koKR", function() return {
 	warn3 = "5초후 버프!",
 	warn4 = "마법 반사 사라짐!",
 	warn5 = "피해 보호 사라짐!",
-	bosskill = "청지기를 물리쳤습니다!",
 
 	bar1text = "마법 반사",
 	bar2text = "피해 보호막",
@@ -134,7 +130,6 @@ L:RegisterTranslations("deDE", function() return {
 	warn3 = "Schild in 5 Sekunden!",
 	warn4 = "Magiereflexion beendet!",
 	warn5 = "Schadensschild beendet!",
-	bosskill = "Majordomo Executus wurde besiegt!",
 
 	bar1text = "Magiereflexion",
 	bar2text = "Schadensschild",
@@ -159,7 +154,6 @@ L:RegisterTranslations("frFR", function() return {
 	warn3 = "5 secondes avant le bouclier !",
 	warn4 = "Bouclier sorts termin\195\169 !",
 	warn5 = "Bouclier d\195\169g\195\162ts termin\195\169 !",
-	bosskill = "Le Chambellant Executus a \195\169t\195\169 vaincu !",
 
 	bar1text = "Renvoi de la magie",
 	bar2text = "Bouclier de d\195\169g\195\162ts",
@@ -179,7 +173,7 @@ L:RegisterTranslations("frFR", function() return {
 BigWigsMajordomo = BigWigs:NewModule(boss)
 BigWigsMajordomo.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
 BigWigsMajordomo.enabletrigger = boss
-BigWigsMajordomo.toggleoptions = {"magic", "dmg", "bosskill"}
+BigWigsMajordomo.toggleoptions = { "magic", "dmg", "bosskill" }
 BigWigsMajordomo.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -202,19 +196,22 @@ end
 ------------------------------
 
 function BigWigsMajordomo:CHAT_MSG_MONSTER_YELL(msg)
-	if (msg == L["disabletrigger"]) then
+	if msg == L["disabletrigger"] then
 		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 	end
 end
 
 function BigWigsMajordomo:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if (string.find(msg, L["trigger1"]) and not aura and self.db.profile.magic) then self:NewPowers(1)
-	elseif (string.find(msg, L["trigger2"]) and not aura and self.db.profile.dmg) then self:NewPowers(2) end
+	if string.find(msg, L["trigger1"]) and not aura and self.db.profile.magic then
+		self:NewPowers(1)
+	elseif string.find(msg, L["trigger2"]) and not aura and self.db.profile.dmg then
+		self:NewPowers(2)
+	end
 end
 
 function BigWigsMajordomo:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
-	if ((string.find(msg, L["trigger3"]) or string.find(msg, L["trigger4"])) and aura) then
+	if string.find(msg, L["trigger3"]) or string.find(msg, L["trigger4"]) and aura then
 		self:TriggerEvent("BigWigs_Message", aura == 1 and L["warn4"] or L["warn5"], "Attention")
 		aura = nil
 	end
@@ -227,3 +224,4 @@ function BigWigsMajordomo:NewPowers(power)
 	self:TriggerEvent("BigWigs_StartBar", self, power == 1 and L["bar1text"] or L["bar2text"], 10, power == 1 and Texture1 or Texture2)
 	self:ScheduleEvent("BigWigs_Message", 25, L["warn3"], "Urgent")
 end
+
