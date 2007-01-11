@@ -96,8 +96,8 @@ L:RegisterTranslations("koKR", function() return {
 	fissure_name = "어둠의 분열 경고",
 	fissure_desc = "어둠의 분열 시전에 관한 경고.",
 
-	frostblast_name = "냉기작열 경고",
-	frostblast_desc = "냉기 작열에 걸렸을 때 경고.",
+	frostblast_name = "냉기작렬 경고",
+	frostblast_desc = "냉기 작렬에 걸렸을 때 경고.",
 
 	detonate_name = "마나 폭발 경고",
 	detonate_desc = "마나 폭발에 대한 경고.",
@@ -133,10 +133,10 @@ L:RegisterTranslations("koKR", function() return {
 	fissure_trigger = "켈투자드|1이;가; 어둠의 균열|1을;를; 시전합니다.",
 	fissure_warning = "어둠의 균열!",
 
-	frostblast_bar = "냉기 작열 가능",
-	frostblast_trigger = "^([^|;%s]*)(.*)냉기 작열에 걸렸습니다%.$",
-	frostblast_warning = "냉기 작열!",
-	frostblast_soon_message = "냉기 작열 가능 - 약 5초 이내!",
+	frostblast_bar = "냉기 작렬 가능",
+	frostblast_trigger = "^([^|;%s]*)(.*)냉기 작렬에 걸렸습니다%.$",
+	frostblast_warning = "냉기 작렬!",
+	frostblast_soon_message = "냉기 작렬 가능 - 약 5초 이내!",
 
 	detonate_trigger = "^([^|;%s]*)(.*)마나 폭발에 걸렸습니다%.$",
 	detonate_bar = "마나 폭발! - %s",
