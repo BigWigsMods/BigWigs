@@ -18,6 +18,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	wingbuffet_message = "Wing Buffet! 30sec to next!",
 	wingbuffet_warning = "3sec to Wing Buffet!",
+	wingbuffet_approx = "~5sec to first Wing Buffet!",
 	shadowflame_warning = "Shadow Flame incoming!",
 	frenzy_message = "Frenzy - Tranq Shot!",
 
@@ -195,10 +196,8 @@ function BigWigsFlamegor:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.wingbuffet then
-			--self:ScheduleEvent("BigWigs_Message", 27, L["wingbuffet_warning"], "Important") --dont warn untill this is tested
-			self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 30, "Interface\\Icons\\Spell_Fire_SelfDestruct")
-			--its 30seconds from pull, but may not activate at pull, needs tested to adjust to activation delay
-			--basically we need a time from the pull and the bar appearing, then we remove that time from the bar
+			self:ScheduleEvent("BigWigs_Message", 24, L["wingbuffet_approx"], "Important")
+			self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 29, "Interface\\Icons\\Spell_Fire_SelfDestruct")
 		end
 	elseif sync == "FlamegorWingBuffet2" and self.db.profile.wingbuffet then
 		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Important")
