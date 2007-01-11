@@ -204,13 +204,13 @@ function BigWigsRazuvious:BigWigs_Message(text)
 end
 
 function BigWigsRazuvious:Shieldwall( msg ) 
-	if string.find(msg, L["shieldwalltrigger"]) then
+	if msg:find(L["shieldwalltrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "RazuviousShieldwall")
 	end
 end
 
 function BigWigsRazuvious:Shout( msg )
-	if string.find(msg, L["shouttrigger"]) and not self.prior then
+	if msg:find(L["shouttrigger"]) and not self.prior then
 		self:TriggerEvent("BigWigs_SendSync", "RazuviousShout")
 	end
 end

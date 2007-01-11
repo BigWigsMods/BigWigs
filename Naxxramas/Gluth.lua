@@ -202,7 +202,7 @@ function BigWigsGluth:Frenzy( msg )
 end
 
 function BigWigsGluth:Fear( msg )
-	if self.db.profile.fear and not self.prior and string.find(msg, L["trigger2"]) then
+	if self.db.profile.fear and not self.prior and msg:find(L["trigger2"]) then
 		self:TriggerEvent("BigWigs_Message", L["warn3"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 20, "Interface\\Icons\\Spell_Shadow_PsychicScream")
 		self:ScheduleEvent("BigWigs_Message", 15, L["warn2"], "Urgent")
@@ -211,7 +211,7 @@ function BigWigsGluth:Fear( msg )
 end
 
 function BigWigsGluth:Decimate( msg )
-	if string.find(msg, L["decimatetrigger"]) then
+	if msg:find(L["decimatetrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "GluthDecimate")
 	end
 end

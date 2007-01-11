@@ -73,14 +73,14 @@ end
 ------------------------------
 
 function BigWigsMalchezaar:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if string.find(msg, "Infernal") then
+	if msg:find("Infernal") then
 		self:TriggerEvent("BigWigs_SendSync", "MalchezaarInfernal")
 	end
 end
 
 -- Event bucket until we know what's really going on.
 function BigWigsMalchezaar:EventBucket(msg)
-	if string.find(msg, L["enfeeble_trigger"]) and self.db.profile.enfeeble then
+	if msg:find(L["enfeeble_trigger"]) and self.db.profile.enfeeble then
 		self:TriggerEvent("BigWigs_SendSync", "MalchezaarEnfeeble")
 	end
 end

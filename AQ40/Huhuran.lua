@@ -268,7 +268,7 @@ end
 
 function BigWigsHuhuran:checkSting(arg1)
 	if not self.db.profile.wyvern then return end
-	if not prior and string.find(arg1, L["stingtrigger"]) then
+	if not prior and arg1:find(L["stingtrigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["stingwarn"], "Urgent")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 25, "Interface\\Icons\\INV_Spear_02")
 		self:ScheduleEvent("BigWigs_Message", 22, L["stingdelaywarn"], "Urgent")

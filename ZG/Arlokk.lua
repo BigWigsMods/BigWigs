@@ -136,7 +136,7 @@ end
 ------------------------------
 
 function BigWigsArlokk:CHAT_MSG_MONSTER_YELL( msg )
-	local _,_, n = string.find(msg, L["mark_trigger"])
+	local n = select(3, msg:find(L["mark_trigger"]))
 	if n then
 		if n == playerName and self.db.profile.youmark then
 			self:TriggerEvent("BigWigs_Message", L["mark_warning_self"], "Important", true, "Alarm")

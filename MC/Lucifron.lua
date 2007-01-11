@@ -228,12 +228,12 @@ end
 ------------------------------
 
 function BigWigsLucifron:Event(msg)
-	if (not prior1 and string.find(msg, L["curse_trigger"]) and self.db.profile.curse) then
+	if (not prior1 and msg:find(L["curse_trigger"]) and self.db.profile.curse) then
 		self:TriggerEvent("BigWigs_Message", L["curse_message"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 15, L["curse_warn"], "Urgent")
 		self:TriggerEvent("BigWigs_StartBar", self, L["curse_bar"], 20, "Interface\\Icons\\Spell_Shadow_BlackPlague")
 		prior1 = true
-	elseif (not prior2 and string.find(msg, L["doom_trigger"]) and self.db.profile.doom) then
+	elseif (not prior2 and msg:find(L["doom_trigger"]) and self.db.profile.doom) then
 		self:TriggerEvent("BigWigs_Message", L["doom_message"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 15, L["doom_warn"], "Urgent")
 		self:TriggerEvent("BigWigs_StartBar", self, L["doom_bar"], 20, "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
@@ -247,7 +247,7 @@ function BigWigsLucifron:BigWigs_Message(msg)
 end
 
 function BigWigsLucifron:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
-	local _,_, mcplayer, mctype = string.find(msg, L["mc_trigger"])
+	local mcplayer, mctype = select(3, msg:find(L["mc_trigger"]))
 	if mcplayer then
 		if mcplayer == L["you"] then
 			mcplayer = UnitName("player")

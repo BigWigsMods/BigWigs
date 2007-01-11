@@ -234,15 +234,15 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-function BigWigsViscidus:CheckVis(arg1)
-	if not prior and self.db.profile.volley and string.find(arg1, L["trigger6"]) then
+function BigWigsViscidus:CheckVis(msg)
+	if not prior and self.db.profile.volley and msg:find(L["trigger6"]) then
 		self:TriggerEvent("BigWigs_Message", L["warn6"], "Urgent")
 		self:ScheduleEvent("BigWigs_Message", 7, L["warn7"], "Urgent")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 10, "Interface\\Icons\\Spell_Nature_CorrosiveBreath")
 		prior = true
-	elseif string.find(arg1, L["trigger7"]) then
-		local _,_, pl, ty = string.find(arg1, L["trigger7"])
-		if (pl and ty) then
+	elseif msg:find(L["trigger7"]) then
+		local pl, ty = select(3, msg:find(L["trigger7"]))
+		if pl and ty then
 			if self.db.profile.toxinyou and pl == L["you"] and ty == L["are"] then
 				self:TriggerEvent("BigWigs_Message", L["warn9"], "Personal", true)
 				self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["warn8"], "Important", nil, nil, true)

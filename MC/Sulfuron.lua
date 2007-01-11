@@ -57,13 +57,13 @@ end
 ------------------------------
 
 function BigWigsSulfuron:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if (string.find(msg, L["inspire_trigger"])) then
+	if (msg:find(L["inspire_trigger"])) then
 		self:TriggerEvent("BigWigs_SendSync", "SulfuronInsp")
 	end
 end
 
 function BigWigsSulfuron:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if (string.find(msg, L["heal_trigger"])) then
+	if (msg:find(L["heal_trigger"])) then
 		self:TriggerEvent("BigWigs_SendSync", "SulfuronHeal")
 	end
 end

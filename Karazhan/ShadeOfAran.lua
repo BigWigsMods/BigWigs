@@ -96,7 +96,7 @@ end
 ------------------------------
 
 function BigWigsAran:CHAT_MSG_MONSTER_EMOTE(msg)
-	if string.find(msg, "refreshing drink") and self.db.profile.enrage then
+	if msg:find("refreshing drink") and self.db.profile.enrage then
 		self:TriggerEvent("BigWigs_Message", L["enrage_message"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["enrage_bar"], 30, "Interface\\Icons\\Spell_Fire_Fireball02")
 	end

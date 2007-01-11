@@ -148,13 +148,13 @@ end
 ------------------------------
 
 function BigWigsMandokir:CHAT_MSG_MONSTER_EMOTE(msg)
-	if string.find(msg, L["enrage_trigger"]) then
+	if msg:find(L["enrage_trigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["enraged_message"], "Urgent")
 	end
 end
 
 function BigWigsMandokir:CHAT_MSG_MONSTER_YELL(msg)
-	local _,_, n = string.find(msg, L["watch_trigger"])
+	local n = select(3, msg:find(L["watch_trigger"]))
 	if n then
 		if n == UnitName("player") and self.db.profile.you then
 			self:TriggerEvent("BigWigs_Message", L["watched_warning_self"], "Personal", true, "Alarm")

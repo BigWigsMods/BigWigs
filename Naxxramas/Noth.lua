@@ -293,7 +293,7 @@ end
 
 
 function BigWigsNoth:Curse( msg )
-	if string.find(msg, L["cursetrigger"]) and not self.prior then
+	if msg:find(L["cursetrigger"]) and not self.prior then
 		self:TriggerEvent("BigWigs_SendSync", "NothCurse")
 	end
 end

@@ -156,7 +156,7 @@ function BigWigsMagmadar:BigWigs_RecvSync( sync )
 end
 
 function BigWigsMagmadar:Fear(msg)
-	if not self.prior and string.find(msg, L["trigger2"]) then
+	if not self.prior and msg:find(L["trigger2"]) then
 		self:TriggerEvent("BigWigs_SendSync", "MagmadarFear")
 		self.prior = true
 	end

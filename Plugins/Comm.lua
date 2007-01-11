@@ -43,7 +43,7 @@ end
 function BigWigsComm:CHAT_MSG_ADDON(prefix, message, type, sender)
 	if prefix ~= "BigWigs" or type ~= "RAID" then return end
 
-	local _, _, sync, rest = string.find(message, "(%S+)%s*(.*)$")
+	local sync, rest = select(3, message:find("(%S+)%s*(.*)$"))
 	if not sync then return end
 
 	if throt[sync] == nil then throt[sync] = 1 end
@@ -54,7 +54,7 @@ function BigWigsComm:CHAT_MSG_ADDON(prefix, message, type, sender)
 end
 
 function BigWigsComm:BigWigs_SendSync(msg)
-	local _, _, sync, rest = string.find(msg, "(%S+)%s*(.*)$")
+	local sync, rest = select(3, msg:find("(%S+)%s*(.*)$"))
 
 	if not sync then return end
 

@@ -198,7 +198,7 @@ function BigWigsVaelastrasz:BigWigs_RecvSync(sync, rest, nick)
 end
 
 function BigWigsVaelastrasz:Event(msg)
-	local _, _, baPlayer = string.find(msg, L["trigger1"])
+	local baPlayer = select(3, msg:find(L["trigger1"]))
 	if baPlayer then
 		if baPlayer == L["you"] then
 			baPlayer = playerName

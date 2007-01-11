@@ -478,19 +478,19 @@ function BigWigsOuro:Submerge()
 end
 
 function BigWigsOuro:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
-	if string.find(msg, L["emergetrigger"]) then
+	if msg:find(L["emergetrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "OuroEmerge2")
-	elseif string.find(msg, L["submergetrigger"]) then
+	elseif msg:find(L["submergetrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "OuroSubmerge")
 	end
 end
 
 function BigWigsOuro:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
-	if string.find(msg, L["sweeptrigger"]) then
+	if msg:find(L["sweeptrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "OuroSweep")
-	elseif string.find(msg, L["sandblasttrigger"]) then
+	elseif msg:find(L["sandblasttrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "OuroSandblast")
-	elseif string.find(msg, L["submergetrigger"]) then
+	elseif msg:find(L["submergetrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "OuroSubmerge")
 	end
 end

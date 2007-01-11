@@ -350,7 +350,7 @@ function BigWigsCThun:CHAT_MSG_MONSTER_EMOTE( arg1 )
 end
 
 function BigWigsCThun:CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE( arg1 )
-	if not cthunstarted and arg1 and string.find(arg1, L["eyebeam"]) then self:TriggerEvent("BigWigs_SendSync", "CThunStart") end
+	if not cthunstarted and arg1 and arg1:find(L["eyebeam"]) then self:TriggerEvent("BigWigs_SendSync", "CThunStart") end
 end
 
 function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)

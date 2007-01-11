@@ -224,7 +224,7 @@ function BigWigsHeigan:CHAT_MSG_MONSTER_EMOTE( msg )
 end
 
 function BigWigsHeigan:CHAT_MSG_MONSTER_YELL( msg )
-	if string.find(msg, L["starttrigger"]) or string.find(msg, L["starttrigger2"]) or string.find(msg, L["starttrigger3"]) then
+	if msg:find(L["starttrigger"]) or msg:find(L["starttrigger2"]) or msg:find(L["starttrigger3"]) then
 		if self.db.profile.engage then
 			self:TriggerEvent("BigWigs_Message", L["engage_message"], "Important")
 		end
@@ -234,7 +234,7 @@ function BigWigsHeigan:CHAT_MSG_MONSTER_YELL( msg )
 			self:ScheduleEvent("bwheiganwarn2", "BigWigs_Message", self.toPlatformTime-30, L["teleport_30sec_message"], "Urgent")
 			self:ScheduleEvent("bwheiganwarn3", "BigWigs_Message", self.toPlatformTime-10, L["teleport_10sec_message"], "Important")
 		end
-	elseif string.find(msg, L["teleport_trigger"]) then
+	elseif msg:find(L["teleport_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "HeiganTeleport")
 	end
 end

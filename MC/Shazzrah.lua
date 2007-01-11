@@ -143,13 +143,13 @@ end
 ------------------------------
 
 function BigWigsShazzrah:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if (string.find(msg, L["trigger2"])) then
+	if (msg:find(L["trigger2"])) then
 		self:TriggerEvent("BigWigs_SendSync", "ShazzrahDeadenMagic")
 	end
 end
 
 function BigWigsShazzrah:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if (string.find(msg, L["trigger1"])) then
+	if (msg:find(L["trigger1"])) then
 		self:TriggerEvent("BigWigs_SendSync", "ShazzrahBlink")
 	end
 end

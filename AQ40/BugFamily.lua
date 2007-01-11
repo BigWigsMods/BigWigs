@@ -145,7 +145,7 @@ end
 ------------------------------
 
 function BigWigsBugFamily:FearEvent(msg)
-	if not fearstatus and string.find(msg, L["feartrigger"]) and self.db.profile.fear then
+	if not fearstatus and msg:find(L["feartrigger"]) and self.db.profile.fear then
 		fearstatus = true
 		self:TriggerEvent("BigWigs_StartBar", self, L["fearbar"], 20, "Interface\\Icons\\Spell_Shadow_Possession")
 		self:TriggerEvent("BigWigs_Message", L["fearwarn1"], "Important")

@@ -110,7 +110,7 @@ BigWigsTranq.consoleOptions = {
 ------------------------------
 
 function BigWigsTranq:OnEnable()
-	local _, class = UnitClass("player")
+	local class = select(2, UnitClass("player"))
 	if class == "HUNTER" then
 		self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE")
 		self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
@@ -135,7 +135,7 @@ end
 function BigWigsTranq:CHAT_MSG_SPELL_SELF_BUFF(msg)
 	if not msg then
 		self:Debug("CHAT_MSG_SPELL_SELF_BUFF: msg is nil")
-	elseif string.find(msg, L["CHAT_MSG_SPELL_SELF_BUFF"]) then
+	elseif msg:find(L["CHAT_MSG_SPELL_SELF_BUFF"]) then
 		self:TriggerEvent("BigWigs_SendSync", "TranqShotFail "..UnitName("player"))
 	end
 end
@@ -143,7 +143,7 @@ end
 function BigWigsTranq:CHAT_MSG_SPELL_SELF_DAMAGE(msg)
 	if not msg then
 		self:Debug("CHAT_MSG_SPELL_SELF_DAMAGE: msg is nil")
-	elseif string.find(msg, L["CHAT_MSG_SPELL_SELF_DAMAGE"]) then
+	elseif msg:find(L["CHAT_MSG_SPELL_SELF_DAMAGE"]) then
 		self:TriggerEvent("BigWigs_SendSync", "TranqShotFired "..UnitName("player"))
 	end
 end

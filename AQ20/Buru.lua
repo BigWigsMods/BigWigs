@@ -132,9 +132,9 @@ end
 
 function BigWigsBuru:CHAT_MSG_MONSTER_EMOTE( msg )
 	if GetLocale() == "koKR" then
-		msg = string.gsub(msg, "%%s|1이;가; ", "")
+		msg = msg:gsub("%%s|1이;가; ", "")
 	end
-	local _, _, player = string.find(msg, L["watchtrigger"])
+	local player = select(3, msg:find(L["watchtrigger"]))
 	if player then
 		if player == L["you"] and self.db.profile.you then
 			player = UnitName("player")

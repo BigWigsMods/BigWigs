@@ -81,10 +81,10 @@ end
 
 -- Event bucket until we know what's really going on.
 function BigWigsCurator:EventBucket(msg)
-	if string.find(msg, "Summon Flare") and self.db.profile.adds then
+	if msg:find("Summon Flare") and self.db.profile.adds then
 		self:TriggerEvent("BigWigs_Message", L["adds_message"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["adds_bar"], 30, "Interface\\Icons\\Spell_Arcane_Arcane04")
-	elseif string.find(msg, "Weakened") and not string.find(msg, "Weakened Soul") and self.db.profile.weaken then
+	elseif msg:find("Weakened") and not msg:find("Weakened Soul") and self.db.profile.weaken then
 		self:TriggerEvent("BigWigs_Message", L["weakened_message"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["weakened_bar"], 20, "Interface\\Icons\\Spell_Nature_Purge")
 	end

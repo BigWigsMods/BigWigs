@@ -372,7 +372,7 @@ function BigWigsDefenders:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 end
 
 function BigWigsDefenders:CheckPlague(msg)
-	local _,_, pplayer, ptype = string.find(msg, L["plaguetrigger"])
+	local pplayer, ptype = select(3, msg:find(L["plaguetrigger"]))
 	if pplayer then
 		if self.db.profile.plagueyou and pplayer == L["plagueyou"] then
 			self:TriggerEvent("BigWigs_Message", L["plagueyouwarn"], "Personal", true)
@@ -389,11 +389,11 @@ function BigWigsDefenders:CheckPlague(msg)
 end
 
 function BigWigsDefenders:Abilities(msg)
-	if string.find(msg, L["thunderclaptrigger"]) then
+	if msg:find(L["thunderclaptrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "DefenderThunderclap")
-	elseif string.find(msg, L["meteortrigger"]) then
+	elseif msg:find(L["meteortrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "DefenderMeteor")
-	elseif string.find(msg, L["shadowstormtrigger"]) then
+	elseif msg:find(L["shadowstormtrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "DefenderShadowstorm")
 	end
 end

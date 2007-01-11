@@ -185,15 +185,15 @@ end
 ------------------------------
 
 function BigWigsOnyxia:CHAT_MSG_MONSTER_EMOTE(msg)
-	if string.find(msg, L["deepbreath_trigger"]) then
+	if msg:find(L["deepbreath_trigger"]) then
 		if self.db.profile.deepbreath then self:TriggerEvent("BigWigs_Message", L["deepbreath_message"], "Important") end
 	end
 end
 
 function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL(msg)
-	if string.find(msg, L["phase2_trigger"]) then
+	if msg:find(L["phase2_trigger"]) then
 		if self.db.profile.phase2 then self:TriggerEvent("BigWigs_Message", L["phase2_message"], "Urgent") end
-	elseif string.find(msg, L["phase3_trigger"]) then
+	elseif msg:find(L["phase3_trigger"]) then
 		if self.db.profile.phase3 then self:TriggerEvent("BigWigs_Message", L["phase3_message"], "Urgent") end
 	end
 end

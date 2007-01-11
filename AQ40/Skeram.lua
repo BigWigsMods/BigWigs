@@ -180,7 +180,7 @@ end
 -- Note that we do not sync the MC at the moment, since you really only care
 -- about people that are MC'ed close to you anyway.
 function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
-	local _,_, player, type = string.find(msg, L["mcplayer"])
+	local player, type = select(3, msg:find(L["mcplayer"]))
 	if player and type then
 		if player == L["mcyou"] and type == L["mcare"] then
 			player = UnitName("player")

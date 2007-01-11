@@ -54,7 +54,7 @@ function BigWigsTaerar:OnEnable()
 end
 
 function BigWigsTaerar:Event( msg )
-	if (not self.prior and string.find(msg, L["noxious_trigger"])) then
+	if (not self.prior and msg:find(L["noxious_trigger"])) then
 		self.prior = true
 		if self.db.profile.noxious then 
 			self:TriggerEvent("BigWigs_Message", L["noxious_message"], "Important")

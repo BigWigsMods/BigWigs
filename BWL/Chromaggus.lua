@@ -315,11 +315,11 @@ function BigWigsChromaggus:UNIT_HEALTH( msg )
 end
 
 function BigWigsChromaggus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
-	local _,_, spellName = string.find(msg, L["breath_trigger"])
+	local spellName = select(3, msg:find(L["breath_trigger"]))
 	if spellName then
 		local breath = L:HasReverseTranslation(spellName) and L:GetReverseTranslation(spellName) or nil
 		if not breath then return end
-		breath = string.sub(breath, -1)
+		breath = breath:sub(-1)
 		self:TriggerEvent("BigWigs_SendSync", "ChromaggusBreath "..breath)
 	end
 end
@@ -371,7 +371,7 @@ end
 if (GetLocale() == "koKR") then
 	function BigWigsChromaggus:PlayerDamageEvents(msg)
 		if (not self.vulnerability) then
-			local _,_,_, dmg, school, type = string.find(msg, L["vulnerability_test"])
+			local dmg, school, type = select(4, msg:find(L["vulnerability_test"]))
 			if ( type == L["hit"] or type == L["crit"] ) and tonumber(dmg or "") and school then
 				if (tonumber(dmg) >= 550 and type == L["hit"]) or (tonumber(dmg) >= 1100 and type == L["crit"]) then
 					self.vulnerability = school
@@ -383,7 +383,7 @@ if (GetLocale() == "koKR") then
 else
 	function BigWigsChromaggus:PlayerDamageEvents(msg)
 		if (not self.vulnerability) then
-			local _,_, type, dmg, school = string.find(msg, L["vulnerability_test"])
+			local type, dmg, school = select(3, msg:find(L["vulnerability_test"]))
 			if ( type == L["hit"] or type == L["crit"] ) and tonumber(dmg or "") and school then
 				if (tonumber(dmg) >= 550 and type == L["hit"]) or (tonumber(dmg) >= 1100 and type == L["crit"]) then
 					self.vulnerability = school

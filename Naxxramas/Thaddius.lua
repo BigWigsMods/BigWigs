@@ -397,7 +397,7 @@ function BigWigsThaddius:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 end
 
 function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
-	if string.find(msg, L["pstrigger"]) then
+	if msg:find(L["pstrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "ThaddiusPolarity")
 	elseif msg == L["starttrigger"] or msg == L["starttrigger1"] then
 		if self.db.profile.phase and not self.stage1warn then
@@ -406,7 +406,7 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
 		self.stage1warn = true
 		self:Throw()
 		self:ScheduleRepeatingEvent( "bwthaddiusthrow", self.Throw, 21, self )
-	elseif string.find(msg, L["starttrigger2"]) or string.find(msg, L["starttrigger3"]) or string.find(msg, L["starttrigger4"]) then
+	elseif msg:find(L["starttrigger2"]) or msg:find(L["starttrigger3"]) or msg:find(L["starttrigger4"]) then
 		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L["startwarn2"], "Important") end
 		if self.db.profile.enrage then
 			self:TriggerEvent("BigWigs_StartBar", self, L["enragebartext"], 300, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
@@ -442,7 +442,7 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_EMOTE( msg )
 end
 
 function BigWigsThaddius:PolarityCast( msg )
-	if self.db.profile.polarity and string.find(msg, L["trigger1"]) then
+	if self.db.profile.polarity and msg:find(L["trigger1"]) then
 		self:TriggerEvent("BigWigs_Message", L["pswarn1"], "Important")
 	end
 end
@@ -451,7 +451,7 @@ function BigWigsThaddius:PLAYER_AURAS_CHANGED( msg )
 	local chargetype = nil
 	local iIterator = 1
 	while UnitDebuff("player", iIterator) do
-		local _,_,texture, applications = UnitDebuff("player", iIterator)
+		local texture, applications = select(3, UnitDebuff("player", iIterator))
 		if texture == L["positivetype"] or texture == L["negativetype"] then
 			-- If we have a debuff with this texture that has more
 			-- than one application, it means we still have the

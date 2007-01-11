@@ -203,15 +203,15 @@ function BigWigsMajordomo:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function BigWigsMajordomo:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if string.find(msg, L["trigger1"]) and not aura and self.db.profile.magic then
+	if msg:find(L["trigger1"]) and not aura and self.db.profile.magic then
 		self:NewPowers(1)
-	elseif string.find(msg, L["trigger2"]) and not aura and self.db.profile.dmg then
+	elseif msg:find(L["trigger2"]) and not aura and self.db.profile.dmg then
 		self:NewPowers(2)
 	end
 end
 
 function BigWigsMajordomo:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
-	if string.find(msg, L["trigger3"]) or string.find(msg, L["trigger4"]) and aura then
+	if msg:find(L["trigger3"]) or msg:find(L["trigger4"]) and aura then
 		self:TriggerEvent("BigWigs_Message", aura == 1 and L["warn4"] or L["warn5"], "Attention")
 		aura = nil
 	end

@@ -180,7 +180,7 @@ function BigWigsMoam:CHAT_MSG_MONSTER_EMOTE( msg )
 end
 
 function BigWigsMoam:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
-	if string.find( msg, L["returntrigger"]) then
+	if  msg:find(L["returntrigger"]) then
 		if self.db.profile.paralyze then self:TriggerEvent("BigWigs_Message", L["returnwarn"], "Important") end
 		self:AddsStart()
 	end

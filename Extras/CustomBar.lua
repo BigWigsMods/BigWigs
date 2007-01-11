@@ -160,7 +160,7 @@ end
 ------------------------------
 
 function BigWigsCustomBar:StartBar(bar, nick, localOnly)
-	local _, _, seconds, barText = string.find(bar, "(%d+) (.*)")
+	local seconds, barText = select(3, bar:find("(%d+) (.*)"))
 	if not seconds or not barText then return end
 	seconds = tonumber(seconds)
 	if seconds == nil then return end

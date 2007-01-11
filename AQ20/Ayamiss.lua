@@ -93,9 +93,9 @@ function BigWigsAyamiss:OnEnable()
 end
 
 function BigWigsAyamiss:CheckSacrifice( msg )
-	local _, _, player, type = string.find(msg, L["sacrificetrigger"])
-	if (player and type) then
-		if (player == L["you"] and type == L["are"]) then
+	local player, type = select(3, msg:find(L["sacrificetrigger"]))
+	if player and type then
+		if player == L["you"] and type == L["are"] then
 			player = UnitName("player")
 		end
 		if self.db.profile.sacrifice then self:TriggerEvent("BigWigs_Message", player .. L["sacrificewarn"], "Important") end

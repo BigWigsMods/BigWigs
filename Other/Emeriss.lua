@@ -194,7 +194,7 @@ function BigWigsEmeriss:OnEnable()
 end
 
 	function BigWigsEmeriss:Event( msg )
-		if (not self.prior and string.find(msg, L["trigger2"])) then
+		if (not self.prior and msg:find(L["trigger2"])) then
 			self.prior = true
 			if self.db.profile.noxious then 
 				self:TriggerEvent("BigWigs_Message", L["warn4"], "Important")
@@ -202,17 +202,17 @@ end
 				self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 30, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
 			end
 		else
-			local _,_, EPlayer, EType = string.find(msg, L["trigger1"])
-			if (EPlayer and EType) then
-				if (EPlayer == L["isyou"] and EType == L["isare"]) then
+			local player, type = select(3, msg:find(L["trigger1"]))
+			if (player and type) then
+				if (player == L["isyou"] and type == L["isare"]) then
 					if self.db.profile.volatileyou then self:TriggerEvent("BigWigs_Message", L["warn1"], "Important", true) end
 				else
 					if self.db.profile.volatileother then
-						self:TriggerEvent("BigWigs_Message", EPlayer .. L["warn2"], "Attention")
-						self:TriggerEvent("BigWigs_SendTell", EPlayer, L["warn1"])
+						self:TriggerEvent("BigWigs_Message", player .. L["warn2"], "Attention")
+						self:TriggerEvent("BigWigs_SendTell", player, L["warn1"])
 					end
 					if self.db.profile.icon then
-						self:TriggerEvent("BigWigs_SetRaidIcon", EPlayer)
+						self:TriggerEvent("BigWigs_SetRaidIcon", player)
 					end
 				end
 			end

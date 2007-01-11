@@ -196,7 +196,7 @@ end
 ------------------------------
 
 function BigWigsRazorgore:CHAT_MSG_MONSTER_YELL(msg)
-	if string.find(msg, L["start_trigger"]) then
+	if msg:find(L["start_trigger"]) then
 		if self.db.profile.phase then
 			self:TriggerEvent("BigWigs_Message", L["start_message"], "Urgent")
 			self:TriggerEvent("BigWigs_StartBar", self, L["start_mob"], 45, "Interface\\Icons\\Spell_Holy_PrayerOfHealing")
@@ -204,7 +204,7 @@ function BigWigsRazorgore:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		eggs = 0
 	elseif self.db.profile.mc then
-		local _, _, player = string.find(msg, L["mindcontrol_trigger"]);
+		local player = select(3, msg:find(L["mindcontrol_trigger"]))
 		if player then
 			self:TriggerEvent("BigWigs_Message", string.format(L["mindcontrol_message"], player), "Important")
 		end
@@ -212,7 +212,7 @@ function BigWigsRazorgore:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function BigWigsRazorgore:CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF(msg)
-	if string.find(msg, L["egg_trigger"]) then
+	if msg:find(L["egg_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "RazorgoreEgg "..tostring(eggs + 1))
 	end
 end

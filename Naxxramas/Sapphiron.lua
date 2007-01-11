@@ -303,7 +303,7 @@ function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
 end
 
 function BigWigsSapphiron:LifeDrain(msg)
-	if string.find(msg, L["lifedrain_trigger"]) or string.find(msg, L["lifedrain_trigger2"]) then
+	if msg:find(L["lifedrain_trigger"]) or msg:find(L["lifedrain_trigger2"]) then
 		if not time or (time + 2) < GetTime() then
 			self:TriggerEvent("BigWigs_SendSync", "SapphironLifeDrain")
 			time = GetTime()
@@ -312,7 +312,7 @@ function BigWigsSapphiron:LifeDrain(msg)
 end
 
 function BigWigsSapphiron:CHAT_MSG_MONSTER_EMOTE(msg)
-	if string.find(msg, L["deepbreath_trigger"]) then
+	if msg:find(L["deepbreath_trigger"]) then
 		if self.db.profile.deepbreath then
 			self:TriggerEvent("BigWigs_Message", L["deepbreath_warning"], "Important")
 			self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_bar"], 7, "Interface\\Icons\\Spell_Frost_FrostShock")

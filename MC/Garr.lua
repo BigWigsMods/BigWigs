@@ -44,7 +44,7 @@ end
 ------------------------------
 
 function BigWigsGarr:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if (string.find(msg, L["pulse_trigger"])) then
+	if (msg:find(L["pulse_trigger"])) then
 		self:TriggerEvent("BigWigs_StartBar", self, L["pulse_bar"], 18, "Interface\\Icons\\Spell_Holy_DispelMagic")
 	end
 end

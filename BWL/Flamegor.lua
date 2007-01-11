@@ -181,7 +181,7 @@ end
 ------------------------------
 
 function BigWigsFlamegor:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if string.find(msg, L["wingbuffet_trigger"]) then
+	if msg:find(L["wingbuffet_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "FlamegorWingBuffet2")
 	elseif msg == L["shadowflame_trigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "FlamegorShadowflame")

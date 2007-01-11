@@ -317,21 +317,21 @@ function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
 end
 
 function BigWigsTwins:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if string.find(msg, L["porttrigger"]) then
+	if msg:find(L["porttrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "TwinsTeleport")
 	end
 end
 
 function BigWigsTwins:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if string.find(msg, L["explodebugtrigger"]) and self.db.profile.bug then
+	if msg:find(L["explodebugtrigger"]) and self.db.profile.bug then
 		self:TriggerEvent("BigWigs_Message", L["explodebugwarn"], "Personal", true)
-	elseif string.find(msg, L["porttrigger"]) then
+	elseif msg:find(L["porttrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "TwinsTeleport")
 	end
 end
 
 function BigWigsTwins:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if (not self.prior and (string.find(msg, L["healtrigger1"]) or string.find(msg, L["healtrigger2"])) and self.db.profile.heal) then
+	if not self.prior and (msg:find(L["healtrigger1"]) or msg:find(L["healtrigger2"])) and self.db.profile.heal then
 		self:TriggerEvent("BigWigs_Message", L["healwarn"], "Important")
 		self.prior = true
 		self:ScheduleEvent(function() BigWigsTwins.prior = nil end, 10)
@@ -339,7 +339,7 @@ function BigWigsTwins:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 end
 
 function BigWigsTwins:CHAT_MSG_MONSTER_EMOTE(msg)
-	if (string.find(msg, L["enragetrigger"]) and self.db.profile.enrage) then
+	if (msg:find(L["enragetrigger"]) and self.db.profile.enrage) then
 		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
 	end
 end

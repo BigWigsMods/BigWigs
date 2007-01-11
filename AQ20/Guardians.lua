@@ -269,7 +269,7 @@ function BigWigsGuardians:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 end
 
 function BigWigsGuardians:CheckPlague( msg )
-	local _,_, player, type = string.find(msg, L["plaguetrigger"])
+	local player, type = select(3, msg:find(L["plaguetrigger"]))
 	if player and type then
 		if self.db.profile.plagueyou and player == L["plagueyou"] and type == L["plagueare"] then
 			self:TriggerEvent("BigWigs_Message", L["plaguewarnyou"], "Personal", true)

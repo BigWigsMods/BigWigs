@@ -253,24 +253,24 @@ end
 ------------------------------
 
 function BigWigsHakkar:CHAT_MSG_MONSTER_YELL(msg)
-	if string.find(msg, L["engage_trigger"]) then
+	if msg:find(L["engage_trigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["start_message"], "Important")
 		if self.db.profile.enrage then self:TriggerEvent("BigWigs_StartBar", self, L["Enrage"], 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy") end
 		self:BeginTimers(true)
-	elseif string.find(msg, L["flee"]) then
+	elseif msg:find(L["flee"]) then
 		self:TriggerEvent("BigWigs_RebootModule", self)
 	end
 end
 
 function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
-	if not self.prior and string.find(msg, L["drain_trigger"]) then
+	if not self.prior and msg:find(L["drain_trigger"]) then
 		self.prior = true
 		self:BeginTimers()
 	end
 end
 
 function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
-	local _,_, mcplayer, mctype = string.find(msg, L["mindcontrol_trigger"])
+	local mcplayer, mctype = select(3, msg:find(L["mindcontrol_trigger"]))
 	if mcplayer then
 		if mcplayer == L["you"] then
 			mcplayer = UnitName("player")

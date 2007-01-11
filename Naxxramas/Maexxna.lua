@@ -232,10 +232,10 @@ function BigWigsMaexxna:OnEnable()
 end
 
 function BigWigsMaexxna:SprayEvent( msg )
-	if string.find(msg, L["webspraytrigger"]) and not prior then
+	if msg:find(L["webspraytrigger"]) and not prior then
 		self:TriggerEvent("BigWigs_SendSync", "MaexxnaWebspray")
-	elseif string.find(msg, L["cocoontrigger"]) then
-		local _,_,wplayer,wtype = string.find(msg, L["cocoontrigger"])
+	elseif msg:find(L["cocoontrigger"]) then
+		local wplayer,wtype = select(3, msg:find(L["cocoontrigger"]))
 		if wplayer and wtype then
 			if wplayer == L["you"] and wtype == L["are"] then
 				wplayer = UnitName("player")

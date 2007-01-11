@@ -60,8 +60,8 @@ end
 
 -- Event bucket until we know what's really going on.
 function BigWigsHyakiss:Web(msg)
-	if string.find(msg, L["web_trigger"]) then
-		local _, _, webPlayer, webType = string.find(msg, L["web_trigger"])
+	if msg:find(L["web_trigger"]) then
+		local webPlayer, webType = select(3, msg:find(L["web_trigger"]))
 		if webPlayer and webType then
 			if webPlayer == L["you"] then
 				webPlayer = UnitName("player")

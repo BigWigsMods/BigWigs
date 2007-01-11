@@ -159,7 +159,7 @@ function BigWigsAnubrekhan:OnEnable()
 end
 
 function BigWigsAnubrekhan:CHAT_MSG_MONSTER_YELL( msg )
-	if self.db.profile.locust and string.find(msg, L["starttrigger1"]) or msg == L["starttrigger2"] or msg == L["starttrigger3"] then
+	if self.db.profile.locust and msg:find(L["starttrigger1"]) or msg == L["starttrigger2"] or msg == L["starttrigger3"] then
 		self:TriggerEvent("BigWigs_Message", L["engagewarn"], "Urgent")
 		self:ScheduleEvent("BigWigs_Message", 80, L["gainwarn10sec"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["gainincbar"], 90, "Interface\\Icons\\Spell_Nature_InsectSwarm")

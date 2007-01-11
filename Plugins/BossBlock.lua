@@ -355,7 +355,7 @@ end
 function BigWigsBossBlock:IsSpam(text)
 	if not text then return end
 	if blockstrings[text] then return true end
-	for _,regex in pairs(blockregexs) do if string.find(text, regex) then return true end end
+	for _,regex in pairs(blockregexs) do if text:find(regex) then return true end end
 end
 
 function BigWigsBossBlock:IsChannelSuppressed(chan)

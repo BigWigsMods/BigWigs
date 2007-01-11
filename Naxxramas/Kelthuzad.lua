@@ -451,15 +451,15 @@ function BigWigsKelThuzad:BigWigs_RecvSync(sync, rest, nick)
 end
 
 function BigWigsKelThuzad:Affliction( msg )
-	if string.find(msg, L["detonate_trigger"]) then
-		local _,_, dplayer, dtype = string.find( msg, L["detonate_trigger"])
+	if msg:find(L["detonate_trigger"]) then
+		local dplayer, dtype =  select(3, msg:find(L["detonate_trigger"]))
 		if dplayer and dtype then
 			if dplayer == L["you"] and dtype == L["are"] then
 				dplayer = UnitName("player")
 			end
 			self:TriggerEvent("BigWigs_SendSync", "KelDetonate "..dplayer)
 		end
-	elseif string.find(msg, L["frostblast_trigger"]) then
+	elseif msg:find(L["frostblast_trigger"]) then
 		if not frostBlastTime or (frostBlastTime + 2) < GetTime() then
 			self:TriggerEvent("BigWigs_SendSync", "KelFrostBlast")
 			frostBlastTime = GetTime()

@@ -272,12 +272,12 @@ end
 ------------------------------
 
 function BigWigsBaronGeddon:Event(msg)
-	local _, _, EPlayer, EType = string.find(msg, L["bomb_trigger"])
-	if EPlayer and EType then
-		if EPlayer == L["you"] and EType == L["are"] then
-			EPlayer = UnitName("player")
+	local player, type = select(3, msg:find(L["bomb_trigger"]))
+	if player and type then
+		if player == L["you"] and type == L["are"] then
+			player = UnitName("player")
 		end
-		self:TriggerEvent("BigWigs_SendSync", "GeddonBomb "..EPlayer)
+		self:TriggerEvent("BigWigs_SendSync", "GeddonBomb "..player)
 	end
 end
 

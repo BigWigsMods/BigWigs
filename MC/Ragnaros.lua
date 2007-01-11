@@ -280,11 +280,11 @@ function BigWigsRagnaros:BigWigs_RecvSync(sync, rest, nick)
 end
 
 function BigWigsRagnaros:CHAT_MSG_MONSTER_YELL(msg)
-	if string.find(msg, L["knockback_trigger"]) and self.db.profile.aoeknock then
+	if msg:find(L["knockback_trigger"]) and self.db.profile.aoeknock then
 		self:TriggerEvent("BigWigs_Message", L["knockback_message"], "Important")
 		self:ScheduleEvent("bwragnarosaekbwarn", "BigWigs_Message", 23, L["knockback_soon_message"], "Urgent")
 		self:TriggerEvent("BigWigs_StartBar", self, L["knockback_bar"], 28, "Interface\\Icons\\Spell_Fire_SoulBurn")
-	elseif string.find(msg, L["submerge_trigger"]) then
+	elseif msg:find(L["submerge_trigger"]) then
 		self:Submerge()
 	end
 end

@@ -128,7 +128,7 @@ function BigWigsVenoxis:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 end
 
 function BigWigsVenoxis:CHAT_MSG_MONSTER_YELL( msg )
-	if self.db.profile.phase and string.find(msg, L["phase2_trigger"]) then
+	if self.db.profile.phase and msg:find(L["phase2_trigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["phase2_message"], "Attention")
 	end
 end

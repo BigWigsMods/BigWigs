@@ -174,7 +174,7 @@ function BigWigsOssirian:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 end
 
 function BigWigsOssirian:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE( msg )
-	local _, _, debuffName = string.find(msg, L["debufftrigger"])
+	local debuffName = select(3, msg:find(L["debufftrigger"]))
 	if debuffName and debuffName ~= L["expose"] and L:HasReverseTranslation(debuffName) then
 		self:TriggerEvent("BigWigs_SendSync", "OssirianWeakness "..L:GetReverseTranslation(debuffName))
 	end

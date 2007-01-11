@@ -251,7 +251,7 @@ function BigWigsJindo:BigWigs_RecvSync(sync, rest, nick)
 end
 
 function BigWigsJindo:Event(msg)
-	local _, _, baPlayer = string.find(msg, L["triggercurse"])
+	local baPlayer = select(3, msg:find(L["triggercurse"]))
 	if baPlayer then
 		if baPlayer == L["you"] then
 			baPlayer = UnitName("player")

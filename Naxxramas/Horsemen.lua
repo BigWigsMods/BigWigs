@@ -320,19 +320,19 @@ function BigWigsHorsemen:OnEnable()
 end
 
 function BigWigsHorsemen:MarkEvent( msg )
-	if string.find(msg, L["marktrigger"]) and not self.marked then
+	if msg:find(L["marktrigger"]) and not self.marked then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenMark3")
 	end
 end
 
 function BigWigsHorsemen:SkillEvent( msg )
 	local t = GetTime()
-	if string.find(msg, L["meteortrigger"]) then
+	if msg:find(L["meteortrigger"]) then
 		if not times["meteor"] or (times["meteor"] and (times["meteor"] + 8) < t) then
 			self:TriggerEvent("BigWigs_SendSync", "HorsemenMeteor")
 			times["meteor"] = t
 		end
-	elseif string.find(msg, L["wrathtrigger"]) then
+	elseif msg:find(L["wrathtrigger"]) then
 		if not times["wrath"] or (times["wrath"] and (times["wrath"] + 8) < t) then
 			self:TriggerEvent("BigWigs_SendSync", "HorsemenWrath")
 			times["wrath"] = t
@@ -392,7 +392,7 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 end
 
 function BigWigsHorsemen:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
-	local _,_, mob = string.find(msg, L["shieldwalltrigger"])
+	local mob = select(3, msg:find(L["shieldwalltrigger"]))
 	if mob then self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..mob) end
 end
 

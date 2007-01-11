@@ -367,7 +367,7 @@ end
 
 function BigWigsNefarian:CHAT_MSG_MONSTER_YELL(msg)
 	for i,v in pairs(warnpairs) do
-		if string.find(msg, i) then
+		if msg:find(i) then
 			if v[2] then
 				if self.db.profile.classcall then
 					self:TriggerEvent("BigWigs_Message", v[1], "Important")
@@ -383,9 +383,9 @@ function BigWigsNefarian:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function BigWigsNefarian:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if string.find(msg, L["fear_trigger"]) then
+	if msg:find(L["fear_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "NefarianFear")
-	elseif string.find(msg, L["shadowflame_trigger"]) then
+	elseif msg:find(L["shadowflame_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "NefarianShadowflame")
 	end
 end

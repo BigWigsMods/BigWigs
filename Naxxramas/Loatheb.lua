@@ -289,7 +289,7 @@ function BigWigsLoatheb:BigWigs_RecvSync(sync, rest, nick)
 end
 
 function BigWigsLoatheb:Event( msg )
-	if string.find(msg, L["doomtrigger"]) then
+	if msg:find(L["doomtrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "LoathebDoom2 "..tostring(self.doomCount + 1))
 	end
 end
