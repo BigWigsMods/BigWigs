@@ -214,11 +214,6 @@ function BigWigsBars:OnEnable()
 	self:RegisterEvent("BigWigs_HideAnchors")
 	self:RegisterEvent("BigWigs_StartBar")
 	self:RegisterEvent("BigWigs_StopBar")
-
-	self.consoleOptions.args[L["Texture"]].validate = surface:List()
-	self:RegisterEvent("Surface_Registered", function()
-		self.consoleOptions.args[L["Texture"]].validate = surface:List()
-	end)
 end
 
 ------------------------------
