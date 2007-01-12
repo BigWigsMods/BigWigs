@@ -355,6 +355,12 @@ function BigWigsTwins:StartTargetScanner()
 	self:ScheduleRepeatingEvent("bwtwinscanner", self.RepeatedScanner, 0.5, self)
 end
 
+local function validateTarget(unitId)
+	return
+		(UnitName(unitId) == veknilash or UnitName(unitId) == veklor) and
+		UnitAffectingCombat(unitId) and CheckInteractDistance(unitId, 4)
+end
+
 function BigWigsTwins:RepeatedScanner()
 	if not UnitAffectingCombat("player") then
 		self:CancelScheduledEvent("bwtwinscanner")
@@ -367,17 +373,15 @@ function BigWigsTwins:RepeatedScanner()
 
 	-- If we have a cached unit (which we will if we found someone with the boss
 	-- as target), then check if he still has the same target
-	if cachedUnitId and UnitExists(cachedUnitId) and (UnitName(cachedUnitId) == veknilash or UnitName(cachedUnitId) == veklor) then
-		found = true
-	end
+	found = validateTarget(cachedUnitid)
 
 	-- Check the players target
-	if not found and UnitExists("target") and (UnitName("target") == veknilash or UnitName("target") == veklor) then
+	if not found and validateTarget("target") then
 		cachedUnitId = "target"
 		found = true
 	end
 
-	if not found and UnitExists("focus") and (UnitName("focus") == veknilash or UnitName("focus") == veklor) then
+	if not found and validateTarget("focus") then
 		cachedUnitId = "focus"
 		found = true
 	end
@@ -387,7 +391,7 @@ function BigWigsTwins:RepeatedScanner()
 		local num = GetNumRaidMembers()
 		for i = 1, num do
 			local unit = string.format("raid%dtarget", i)
-			if UnitExists(unit) and (UnitName(unit) == veknilash or UnitName(unit) == veklor) then
+			if validateTarget(unit) then
 				cachedUnitId = unit
 				found = true
 				break
@@ -395,13 +399,16 @@ function BigWigsTwins:RepeatedScanner()
 		end
 	end
 
+	local targetTarget = nil
+
+	-- Alright, we've got a valid unitId with the boss as target, now check if
+	-- the boss has a target. If it does, we're not porting.
+	if found then targetTarget = UnitName(cachedUnitId .. "target") end
+
 	-- We've checked everything. If nothing was found, just return home.
 	-- We basically shouldn't return here, because someone should always have
 	-- him targetted.
-	if not found then return end
-	-- Alright, we've got a valid unitId with the boss as target, now check if
-	-- the boss has a target. If it does, we're not porting.
-	if UnitExists(cachedUnitId.."target") then return end
+	if not found or targetTarget then return end
 
 	self:CancelScheduledEvent("bwtwinscanner")
 	self:TriggerEvent("BigWigs_SendSync", "TwinsTeleport")
