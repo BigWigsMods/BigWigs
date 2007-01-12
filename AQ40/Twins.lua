@@ -390,7 +390,7 @@ function BigWigsTwins:RepeatedScanner()
 	if not found then
 		local num = GetNumRaidMembers()
 		for i = 1, num do
-			local unit = string.format("raid%dtarget", i)
+			local unit = "raid"..i.."target"
 			if validateTarget(unit) then
 				cachedUnitId = unit
 				found = true
