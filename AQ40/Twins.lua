@@ -373,7 +373,9 @@ function BigWigsTwins:RepeatedScanner()
 
 	-- If we have a cached unit (which we will if we found someone with the boss
 	-- as target), then check if he still has the same target
-	found = validateTarget(cachedUnitid)
+	if cachedUnitId and validateTarget(cachedUnitId) then
+		found = true
+	end
 
 	-- Check the players target
 	if not found and validateTarget("target") then
