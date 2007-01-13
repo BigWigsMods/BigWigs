@@ -396,6 +396,7 @@ function BigWigsVersionQuery:QueryVersion(zone)
 end
 
 function BigWigsVersionQuery:GetVersion(zone)
+	if not self.zoneRevisions then self:PopulateRevisions() end
 	if self.zoneRevisions[zone] then
 		return self.zoneRevisions[zone] or -1
 	elseif BigWigs:HasModule(zone) then
@@ -424,12 +425,7 @@ end
 
 function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "BWVQ" and nick ~= UnitName("player") and rest then
-		if not self.zoneRevisions then self:PopulateRevisions() end
-		if not self.zoneRevisions[rest] then
-			self:TriggerEvent("BigWigs_SendSync", "BWVR -1 "..nick)
-		else
-			self:TriggerEvent("BigWigs_SendSync", "BWVR " .. self:GetVersion(rest) .. " " .. nick)
-		end
+		self:TriggerEvent("BigWigs_SendSync", "BWVR " .. self:GetVersion(rest) .. " " .. nick)
 	elseif sync == "BWVR" and self.queryRunning and nick and rest then
 		local revision, queryNick = self:ParseReply(rest)
 		if revision and queryNick and queryNick == UnitName("player") then
