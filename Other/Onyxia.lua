@@ -28,7 +28,7 @@ L:RegisterTranslations("enUS", function() return {
 	onyfear_name = "Fear",
 	onyfear_desc = "Warn for Bellowing Roar in phase 3",
 
-	deepbreath_trigger = "%s takes in a deep breath",
+	deepbreath_trigger = "%s takes in a deep breath...",
 	phase2_trigger = "from above",
 	phase3_trigger = "It seems you'll need another lesson",
 	fear_trigger = "Onyxia begins to cast Bellowing Roar.",
@@ -185,8 +185,8 @@ end
 ------------------------------
 
 function BigWigsOnyxia:CHAT_MSG_MONSTER_EMOTE(msg)
-	if msg:find(L["deepbreath_trigger"]) then
-		if self.db.profile.deepbreath then self:TriggerEvent("BigWigs_Message", L["deepbreath_message"], "Important") end
+	if msg == L["deepbreath_trigger"] and self.db.profile.deepbreath then
+		self:TriggerEvent("BigWigs_Message", L["deepbreath_message"], "Important")
 	end
 end
 
