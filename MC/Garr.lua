@@ -20,6 +20,14 @@ L:RegisterTranslations("enUS", function() return {
 	pulse_bar = "Antimagic Pulse",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	pulse_name = "Barre Impulsion anti-magique",
+	pulse_desc = "Affiche une barre temporelle pour l'Impulsion anti-magique.",
+
+	pulse_trigger = "effectue Impulsion anti-magique", -- à vérifier
+	pulse_bar = "Impulsion anti-magique",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

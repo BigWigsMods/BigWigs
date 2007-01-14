@@ -29,6 +29,22 @@ L:RegisterTranslations("enUS", function() return {
 	heal_bar = "Dark Mending",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	inspire_name = "Alerte Inspirer",
+	inspire_desc = "Pr\195\169viens quand le Messager de Sulfuron gagne Inspirer.",
+
+	heal_name = "Alerte Soins",
+	heal_desc = "Pr\195\169viens quand un Pr\195\170tre Attise-flammes commence \195\160 lancer un soin.",
+
+	inspire_trigger = "%s gagne Inspirer",
+	inpire_message = "Sulfuron gagne Inspirer !",
+	inspire_bar = "Inspirer",
+
+	heal_trigger = "commence \195\160 lancer Gu\195\169rison t\195\169n\195\169breuse",
+	heal_message = "Un Pr\195\170tre Attise-flammes lance un soin !",
+	heal_bar = "Gu\195\169rison t\195\169n\195\169breuse",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

@@ -191,7 +191,7 @@ L:RegisterTranslations("frFR", function() return {
 	doom_warn = "5 secondes avant Mal\195\169diction imminente !",
 	doom_bar = "Mal\195\169diction imminente",
 
-	--mc_trigger = "^([^%s]+) ([^%s]+) afflicted by Dominate Mind.$",
+	mc_trigger = "^([^%s]+) ([^%s]+) les effets de Emprise.$", -- à vérifier
 	mc_message = "%s est sous Contr\195\180le mental !",
 	mc_bar = "CM : %s",
 
