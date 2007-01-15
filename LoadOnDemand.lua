@@ -95,14 +95,28 @@ function BigWigsLoD:ZONE_CHANGED_NEW_AREA()
 end
 
 function BigWigsLoD:CHAT_MSG_SYSTEM( msg )
-	if msg:find("^"..ERR_RAID_YOU_LEFT) then
+	if msg:find("^"..ERR_RAID_YOU_LEFT) or msg:find(string.format(ERR_RAID_MEMBER_REMOVED_S, UnitName("player"))) then
 		self:TriggerEvent("BigWigs_LeftGroup")
 	elseif msg:find(ERR_RAID_YOU_JOINED) then
 		self:TriggerEvent("BigWigs_JoinedGroup")
 	end
 end
 
+local battlegrounds = {
+	[BZ["Alterac Valley"]] = true,
+	[BZ["Arathi Basin"]] = true,
+	[BZ["Warsong Gulch"]] = true,
+	[BZ["Nagrand Arena"]] = true,
+	[BZ["Eye of the Storm"]] = true,
+	[BZ["Blade's Edge Arena"]] = true,
+}
+
+local function InBattleground()
+	return battlegrounds[GetRealZoneText()] or battlegrounds[GetZoneText()] or nil
+end
+
 function BigWigsLoD:BigWigs_JoinedGroup()
+	if InBattleground() then return end
 	BigWigs:ToggleActive(true)
 end
 
