@@ -1,4 +1,5 @@
-﻿------------------------------
+﻿--[[ archived untill we get the new TBC Kazzak
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -132,3 +133,4 @@ function BigWigsKazzak:CHAT_MSG_MONSTER_YELL( msg )
 		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], supremetime, "Interface\\Icons\\Spell_Shadow_ShadowWordPain", "Green", "Yellow", "Orange", "Red")
 	end
 end
+]]
