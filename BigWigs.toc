@@ -114,7 +114,6 @@ MC\Golemagg.lua
 Other\Azuregos.lua
 Other\Emeriss.lua
 Other\Onyxia.lua
-Other\Kazzak.lua
 Other\Ysondre.lua
 Other\Taerar.lua
 Other\Lethon.lua
