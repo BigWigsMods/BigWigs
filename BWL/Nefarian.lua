@@ -366,6 +366,10 @@ end
 ------------------------------
 
 function BigWigsNefarian:CHAT_MSG_MONSTER_YELL(msg)
+	if msg:find(L["landing_soon_trigger"]) then
+		self:TriggerEvent("BigWigs_StartBar", self, L["landing_warning"], 10, "Interface\\Icons\\INV_Misc_Head_Dragon_Black")
+		return
+	end
 	for i,v in pairs(warnpairs) do
 		if msg:find(i) then
 			if v[2] then
