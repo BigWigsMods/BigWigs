@@ -15,7 +15,7 @@
 ## X-RelSite-Curse: 4356
 ## X-AceForum: 1222
 
-## X-BigWigs-LoadInZone: Onyxia's Lair, Azshara, Duskwood, The Hinterlands, Feralas, Ashenvale
+## X-BigWigs-LoadInZone: Onyxia's Lair, Azshara, Duskwood, The Hinterlands, Feralas, Ashenvale, Hellfire Peninsula
 
 ## Dependencies: BigWigs
 
@@ -25,3 +25,4 @@ Onyxia.lua
 Ysondre.lua
 Taerar.lua
 Lethon.lua
+Kazzak.lua
