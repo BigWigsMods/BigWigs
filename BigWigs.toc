@@ -118,6 +118,7 @@ Other\Ysondre.lua
 Other\Taerar.lua
 Other\Lethon.lua
 Other\Kazzak.lua
+Other\Gruul.lua
 
 Naxxramas\Anubrekhan.lua
 Naxxramas\Gluth.lua
