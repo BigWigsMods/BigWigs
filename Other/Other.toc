@@ -27,3 +27,4 @@ Taerar.lua
 Lethon.lua
 Kazzak.lua
 Gruul.lua
+Maulgar.lua
