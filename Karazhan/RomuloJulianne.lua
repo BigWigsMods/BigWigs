@@ -5,6 +5,7 @@
 
 local Romulo = AceLibrary("Babble-Boss-2.2")["Romulo"]
 local Julianne = AceLibrary("Babble-Boss-2.2")["Julianne"]
+local boss = AceLibrary("Babble-Boss-2.2")["Romulo & Julianne"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -58,7 +59,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsRomuloJulianne = BigWigs:NewModule(boss)
 BigWigsRomuloJulianne.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsRomuloJulianne.enabletrigger = {Romulo, Julianne}
-BigWigsRomuloJulianne.toggleoptions = {"phase", "buff", "poison", "bosskill"}
+BigWigsRomuloJulianne.toggleoptions = {"phase", "buff", "poison"}
 BigWigsRomuloJulianne.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -105,6 +106,7 @@ end
 function BigWigsRomuloJulianne:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["passion_trigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["passion_message"], "Urgent")
+	end
 end
 
 function BigWigsRomuloJulianne:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
