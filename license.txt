@@ -8,3 +8,16 @@ otherwise.
 
 Any and all questions regarding our stance and licensing should be
 directed to the #wowace IRC channel on irc.freenode.net.
+
+
+
+Contributions by Funkydude are copyrighted 2006 by Funkydude and licensed under the
+terms of the Creative Commons Attribution-NonCommercial-ShareAlike 2.0 license.
+
+http://creativecommons.org/licenses/by-nc-sa/2.5/
+
+Contributions from other authors do not fall under this license unless stated
+otherwise.
+
+Any and all questions regarding our stance and licensing should be
+directed to the #wowace IRC channel on irc.freenode.net.
