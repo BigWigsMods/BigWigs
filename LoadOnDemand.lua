@@ -10,18 +10,6 @@ local withcore = {}
 local inzone = {}
 local zonelist = {}
 
-local function Split(str, sep)
-	local x, y = str:find(sep) or 0, sep:len() or 1
-	return tonumber(str:sub(1, x - 1)) or str:sub(1, x - 1), tonumber(str:sub(x + y)) or str:sub(x + y)
-end
-
-local function Explode(str, sep)
-	local a, b = Split(str, sep)
-	if not b or b == "" then return a:trim() end
-	if not b:find(sep) then return a:trim(), b:trim() end
-	return a:trim(), Explode(b, sep)
-end
-
 local function LoadBigWigsAddon(addon)
 	if IsAddOnLoaded(addon) then return end
 
@@ -132,10 +120,10 @@ function BigWigsLoD:InitializeLoD()
 	local numAddons = GetNumAddOns()
 	for i = 1, numAddons do
 		local name, _, _, enabled = GetAddOnInfo(i)
-		if not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) and enabled then
+		if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadInZone")
 			if meta then
-				for k, v in pairs({Explode(meta, ",")}) do
+				for k, v in pairs({strsplit(",", meta)}) do
 					local zone = BZ:HasTranslation(v) and BZ[v] or nil
 					if zone then
 						if not inzone[zone] then inzone[zone] = {} end
