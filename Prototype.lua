@@ -30,25 +30,27 @@ function BigWigs.modulePrototype:GenericBossDeath(msg)
 	end
 end
 
-local scanTable = nil
 local function populateScanTable(mod)
-	if type(scanTable) == "table" then return end
-	scanTable = mod.enabletrigger
-	if not scanTable then return false end
-	if type(scanTable) == "string" then scanTable = {scanTable} end
+	if type(mod.scanTable) == "table" then return end
+	local x = mod.enabletrigger
+	if type(x) == "string" then x = {x} end
+	mod.scanTable = {}
+	for k, v in pairs(x) do
+		rawset(mod.scanTable, #mod.scanTable + 1, v)
+	end
 	local a = mod.wipemobs
 	if a then
 		if type(a) == "string" then a = {a} end
-		for k,v in pairs(a) do rawset(scanTable, #scanTable + 1, v) end
+		for k,v in pairs(a) do rawset(mod.scanTable, #mod.scanTable + 1, v) end
 	end
 end
 
 function BigWigs.modulePrototype:Scan()
-	if not scanTable then populateScanTable(self) end
+	if not self.scanTable then populateScanTable(self) end
 
 	if UnitExists("target") and UnitAffectingCombat("target") then
 		local target = UnitName("target")
-		for _, mob in pairs(scanTable) do
+		for _, mob in pairs(self.scanTable) do
 			if target == mob then
 				return true
 			end
@@ -57,7 +59,7 @@ function BigWigs.modulePrototype:Scan()
 
 	if UnitExists("focus") and UnitAffectingCombat("focus") then
 		local target = UnitName("focus")
-		for _, mob in pairs(scanTable) do
+		for _, mob in pairs(self.scanTable) do
 			if target == mob then
 				return true
 			end
@@ -69,7 +71,7 @@ function BigWigs.modulePrototype:Scan()
 		local raidUnit = string.format("raid%starget", i)
 		if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) then
 			local target = UnitName(raidUnit)
-			for _, mob in pairs(scanTable) do
+			for _, mob in ipairs(self.scanTable) do
 				if target == mob then
 					return true
 				end
@@ -89,8 +91,8 @@ function BigWigs.modulePrototype:ValidateEngageSync(sync, rest)
 	if type(sync) ~= "string" or type(rest) ~= "string" then return false end
 	if sync ~= self:GetEngageSync() then return false end
 	local boss = BB:HasReverseTranslation(rest) and BB:GetReverseTranslation(rest) or rest
-	if not scanTable then populateScanTable(self) end
-	for _, mob in pairs(scanTable) do
+	if not self.scanTable then populateScanTable(self) end
+	for _, mob in pairs(self.scanTable) do
 		local translated = BB:HasReverseTranslation(mob) and BB:GetReverseTranslation(mob) or mob
 		if translated == rest or mob == rest then return true end
 	end
@@ -129,8 +131,12 @@ function BigWigs.modulePrototype:CheckForWipe()
 		if self:IsDebugging() then
 			self:LevelDebug(1, "Rebooting module.")
 		end
-		if type(scanTable) == "table" then for k in pairs(scanTable) do scanTable[k] = nil end end
-		scanTable = nil
+		if type(self.scanTable) == "table" then
+			for k in pairs(self.scanTable) do
+				self.scanTable[k] = nil
+			end
+		end
+		self.scanTable = nil
 		self:TriggerEvent("BigWigs_RebootModule", self)
 	elseif not running then
 		self:ScheduleRepeatingEvent(self:ToString().."_CheckWipe", self.CheckForWipe, 2, self)
