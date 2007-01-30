@@ -1,8 +1,9 @@
-﻿------------------------------
+﻿--Gruul the Dragonkiller mod by Funkydude, currently in BETA!! use at your own risk!
+------------------------------
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.2")["Gruul"]
+local boss = AceLibrary("Babble-Boss-2.2")["Gruul the Dragonkiller"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -30,3 +31,8 @@ BigWigsGruul.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsGruul:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
+
+------------------------------
+--      Event Handlers      --
+------------------------------
+
