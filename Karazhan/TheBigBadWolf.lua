@@ -110,6 +110,6 @@ function BigWigsTheBigBadWolf:BigWigs_RecvSync( sync, rest, nick )
 	end
 	if self.db.profile.ridingbar then
 		self:ScheduleEvent("bwbigbadwolfwarn5", "BigWigs_Message", 25, L["riding_warn5"], "Urgent") 
-		self:TriggerEvent("BigWigs_StartBar", self, L["riding_bar"], 30, "Interface\\Icons\\INV_Gauntlets_03")
+		self:TriggerEvent("BigWigs_StartBar", self, L["riding_bar"], 30, "Interface\\Icons\\INV_Helmet_28")
 	end
 end
