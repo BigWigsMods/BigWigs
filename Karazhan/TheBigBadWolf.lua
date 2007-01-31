@@ -60,7 +60,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsTheBigBadWolf = BigWigs:NewModule(boss)
 BigWigsTheBigBadWolf.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsTheBigBadWolf.enabletrigger = {Grandmother, boss}
-BigWigsTheBigBadWolf.toggleoptions = { "riding", "bosskill" }
+BigWigsTheBigBadWolf.toggleoptions = { "youriding", "elseriding", "ridingbar", "icon", "bosskill" }
 BigWigsTheBigBadWolf.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -73,6 +73,7 @@ function BigWigsTheBigBadWolf:OnEnable()
 
 	-- drycoding the events
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS", "RidingEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS", "RidingEvent")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "BigBadWolfRiding", 5)
