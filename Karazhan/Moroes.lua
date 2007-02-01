@@ -100,12 +100,12 @@ end
 function BigWigsMoroes:UNIT_HEALTH(msg)
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
-		if health > 30 and health <= 24 and not enrageannounced then
+		if health > 30 and health <= 34 and not enrageannounced then
 			if self.db.profile.enrage then
 				self:TriggerEvent("BigWigs_Message", L["enrage_warning"], "Positive", nil, "Info")
 			end
 			enrageannounced = true
-		elseif health > 30 and enrageannounced then
+		elseif health > 40 and enrageannounced then
 			enrageannounced = nil
 		end
 	end
