@@ -145,3 +145,4 @@ Karazhan\ShadeOfAran.lua
 Karazhan\Terestian.lua
 Karazhan\TheBigBadWolf.lua
 Karazhan\RomuloJulianne.lua
+Karazhan\Moroes.lua

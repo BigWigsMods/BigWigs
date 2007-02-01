@@ -25,3 +25,4 @@ ShadeOfAran.lua
 Terestian.lua
 TheBigBadWolf.lua
 RomuloJulianne.lua
+Moroes.lua
