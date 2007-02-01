@@ -43,6 +43,7 @@ function BigWigsAttumen:OnEnable()
 	self.core:Print("Attumen mod by Funkydude, this mod is beta quality, at best! Please don't rely on it for anything!")
 	started = nil
 
+	self:RegisterEvent("BigWigs_RecvSync")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
