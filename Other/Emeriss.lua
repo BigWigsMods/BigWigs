@@ -147,6 +147,9 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	engage_name = "광폭화 경고",
+	engage_desc = "에메리스가 광폭화 되었을 때 경고",
+
 	noxious_name = "산성 숨결 경고",
 	noxious_desc = "산성 숨결에 대한 경고",
 
@@ -156,6 +159,9 @@ L:RegisterTranslations("koKR", function() return {
 	volatileother_name = "타인의 대지의 오염 경고",
 	volatileother_desc = "타인의 대지의 오염에 대한 경고",
 
+	icon_name = "아이콘 지정",
+	icon_desc = "효과에 걸린 사람에게 선택된 공격대 아이콘을 지정합니다.(승급자 이상 요구)",
+
 	trigger1 = "^([^|;%s]*)(.*)대지의 오염에 걸렸습니다%.$",
 	trigger2 = "에메리스의 산성 숨결에 의해",
 
@@ -163,6 +169,9 @@ L:RegisterTranslations("koKR", function() return {
 	warn2 = "님이 대지의 오염에 걸렸습니다!",
 	warn3 = "5초후 산성 숨결!",
 	warn4 = "산성 숨결 - 30초후 재시전!",
+
+	engage_message = "에메리스 광폭화! - 약 10초 후 산성 숨결",
+	engage_trigger = "Hope is a DISEASE of the soul! This land shall wither and die!", -- check
 
 	isyou = "",
 	isare = "",

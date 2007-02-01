@@ -60,6 +60,9 @@ L:RegisterTranslations("koKR", function() return {
 	decimate_name = "척살 경보",
 	decimate_desc = "척살에 대한 경고",
 
+	enrage_name = "격노",
+	enrage_desc = "격노에 대한 타이머",
+
 	frenzy_trigger = "%s|1이;가; 광란의 상태에 빠집니다!", -- CHECK
 	fear_trigger = "공포의 포효에",
 
@@ -71,6 +74,9 @@ L:RegisterTranslations("koKR", function() return {
 	decimatesoonwarn = "곧 척살!",
 	decimatewarn = "척살!",
 	decimatetrigger = "척살",
+
+	enrage_warning = "격노까지 %d 초!",
+	enrage_bar = "격노",
 
 	fear_bar = "광역 공포",
 	decimatebartext = "척살 좀비",

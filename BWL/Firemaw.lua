@@ -73,6 +73,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	wingbuffet_message = "폭풍 날개! 다음은 30초 후!",
 	wingbuffet_warning = "3초 후 폭풍 날개!",
+	wingbuffet_approx = "첫 폭풍 날개까지 약 5초!",
 	shadowflame_warning = "암흑 불길 경고!",
 
 	wingbuffet_bar = "폭풍 날개",
