@@ -1,5 +1,4 @@
-﻿--Romulo & Julianne mod by Funkydude, currently in BETA!! use at your own risk!
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -67,6 +66,8 @@ BigWigsRomuloJulianne.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsRomuloJulianne:OnEnable()
+	self.core:Print("Romulo & Julianne mod by Funkydude, this mod is beta quality, at best! Please don't rely on it for anything!")
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")

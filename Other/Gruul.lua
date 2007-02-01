@@ -1,5 +1,4 @@
-﻿--Gruul the Dragonkiller mod by Funkydude, currently in BETA!! use at your own risk!
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -59,6 +58,8 @@ BigWigsGruul.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsGruul:OnEnable()
+	self.core:Print("Gruul the Dragonkiller mod by Funkydude, this mod is beta quality, at best! Please don't rely on it for anything!")
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_SAY")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")

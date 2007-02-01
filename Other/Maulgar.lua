@@ -1,6 +1,4 @@
-﻿--High King Maulgar mod by Funkydude, currently in BETA!! use at your own risk!
-
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -47,6 +45,8 @@ BigWigsMaulgar.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsMaulgar:OnEnable()
+	self.core:Print("High King Maulgar mod by Funkydude, this mod is beta quality, at best! Please don't rely on it for anything!")
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")

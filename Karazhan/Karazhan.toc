@@ -27,3 +27,4 @@ TheBigBadWolf.lua
 RomuloJulianne.lua
 Moroes.lua
 Attumen.lua
+Maiden.lua
