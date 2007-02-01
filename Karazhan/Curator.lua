@@ -5,7 +5,6 @@
 local boss = AceLibrary("Babble-Boss-2.2")["The Curator"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local enrageannounced
-local started
 
 ----------------------------
 --      Localization      --
@@ -13,10 +12,6 @@ local started
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Curator",
-
-	adds_cmd = "adds",
-	adds_name = "Adds",
-	adds_desc = "Warn when The Curator spawns his mana adds.",
 
 	berserk_cmd = "berserk",
 	berserk_name = "Berserk",
@@ -30,15 +25,19 @@ L:RegisterTranslations("enUS", function() return {
 	weaken_name = "Weaken",
 	weaken_desc = "Alert when The Curator is weakened.",
 
-	adds_message = "Adds incoming!",
-	adds_bar = "Adds despawn",
+	weaken_trigger = "The Curator is afflicted by Evocation."
+	weaken_message = "Evocation - Weakened for ~20sec!",
+	weaken_bar = "Evocation",
+	weaken_fade_trigger = "Evocation fades from The Curator.",
+	weaken_fade_message = "Evocation Finished - Weakened Gone!",
 
-	weakened_message = "Curator is weakened for 20sec!",
-	weakened_bar = "Weakened",
-
-	engage_message = "Curator engaged, 12min to berserk!",
+	berserk_trigger = "The Menagerie is for guests only.",
+	berserk_message = "Curator engaged, 12min to berserk!",
 	berserk_bar = "Berserk",
-	enrage_soon_alert = "Enrage soon!",
+
+	enrage_trigger = "", --wtb a message? did he even enrage? need verification, i didn't notice this happen.
+	enrage_message = "Enrage!",
+	enrage_warning = "Enrage soon!",
 } end )
 
 ----------------------------------
@@ -48,7 +47,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsCurator = BigWigs:NewModule(boss)
 BigWigsCurator.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsCurator.enabletrigger = boss
-BigWigsCurator.toggleoptions = {"weaken", "adds", "berserk", "enrage", "bosskill"}
+BigWigsCurator.toggleoptions = {"weaken", "berserk", "enrage", "bosskill"}
 BigWigsCurator.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -57,49 +56,38 @@ BigWigsCurator.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsCurator:OnEnable()
 	self.core:Print("The Curator boss mod is beta quality, at best! Please don't rely on it for anything!")
-
 	enrageannounced = nil
-	started = nil
 
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF", "EventBucket")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "EventBucket")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_BUFF", "EventBucket")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "EventBucket")
+	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER"),
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE"),
 
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-
-	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
--- Event bucket until we know what's really going on.
-function BigWigsCurator:EventBucket(msg)
-	if msg:find("Summon Flare") and self.db.profile.adds then
-		self:TriggerEvent("BigWigs_Message", L["adds_message"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["adds_bar"], 30, "Interface\\Icons\\Spell_Arcane_Arcane04")
-	elseif msg:find("Weakened") and not msg:find("Weakened Soul") and self.db.profile.weaken then
-		self:TriggerEvent("BigWigs_Message", L["weakened_message"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["weakened_bar"], 20, "Interface\\Icons\\Spell_Nature_Purge")
+function BigWigsCurator:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["berserk_trigger"] and self.db.profile.berserk then
+			self:TriggerEvent("BigWigs_Message", L["berserk_message"], "Important")
+			self:TriggerEvent("BigWigs_StartBar", self, L["berserk_bar"], 720, "Interface\\Icons\\INV_Shield_01")
 	end
 end
 
-function BigWigsCurator:BigWigs_RecvSync(sync, rest, nick)
-	if sync == self:GetEngageSync() and rest and rest == boss and not started then
-		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
-		if self.db.profile.berserk then
-			self:TriggerEvent("BigWigs_Message", L["engage_message"], "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["berserk_bar"], 720, "Interface\\Icons\\INV_Shield_01")
-		end
+function BigWigsCurator:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
+	if msg == L["weaken_trigger"] and self.db.profile.weaken then
+		self:TriggerEvent("BigWigs_Message", L["weaken_message"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["weaken_bar"], 20, "Interface\\Icons\\Spell_Nature_Purge")
+	end
+end
+
+function BigWigsCurator:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
+	if msg == L["weaken_fade_trigger"] and self.db.profile.weaken then
+		self:TriggerEvent("BigWigs_Message", L["weaken_fade_message"], "Important")
 	end
 end
 
@@ -108,11 +96,10 @@ function BigWigsCurator:UNIT_HEALTH(msg)
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 10 and health <= 13 and not enrageannounced then
-			self:TriggerEvent("BigWigs_Message", L["enrage_soon_alert"], "Important")
+			self:TriggerEvent("BigWigs_Message", L["enrage_warning"], "Important")
 			enrageannounced = true
 		elseif health > 50 and enrageannounced then
 			enrageannounced = false
 		end
 	end
 end
-
