@@ -15,16 +15,16 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "RomuloJulianne",
 
 	phase_cmd = "phase",
-	phase_name = "Phase Alert",
+	phase_name = "Phases",
 	phase_desc = "Warn when entering a new Phase",
 
 	poison_cmd = "poison",
-	poison_name = "poison Alert",
+	poison_name = "Poison",
 	poison_desc = "Warn of a poisoned player",
 
-	passion_cmd = "passion",
-	passion_name = "Blinding Passion Alert",
-	passion_desc = "Warn when Julianne casts Blinding Passion",
+	heal_cmd = "heal",
+	heal_name = "Heal",
+	heal_desc = "Warn when Julianne casts Eternal Affection",
 
 	buff_cmd = "buff",
 	buff_name = "Self-Buff Alert",
@@ -40,8 +40,8 @@ L:RegisterTranslations("enUS", function() return {
 	poison_trigger = "^([^%s]+) ([^%s]+) afflicted by Poisoned Thrust",
 	poison_message = "%s Poisoned!!",
 
-	passion_trigger = "begins to cast Blinding Passion",
-	passion_message = "Casting Blinding Passion!",
+	heal_trigger = "begins to cast Eternal Affection",
+	heal_message = "Julianne casting Heal!",
 
 	buff1_trigger = "gains Daring",
 	buff1_message = "Romulo gains Daring!",
@@ -70,7 +70,7 @@ function BigWigsRomuloJulianne:OnEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "PoisonEvent")
@@ -104,9 +104,9 @@ function BigWigsRomuloJulianne:PoisonEvent(msg)
 	end
 end
 
-function BigWigsRomuloJulianne:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg:find(L["passion_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["passion_message"], "Urgent")
+function BigWigsRomuloJulianne:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+	if msg:find(L["heal_trigger"]) then
+		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Urgent")
 	end
 end
 
