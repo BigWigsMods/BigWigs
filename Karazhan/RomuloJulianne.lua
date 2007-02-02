@@ -51,6 +51,47 @@ L:RegisterTranslations("enUS", function() return {
 	you = "you",
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	cmd = "RomuloJulianne",
+
+	phase_cmd = "phase",
+	phase_name = "Phase",
+	phase_desc = "Warnt wenn eine neue Phase beginnt",
+
+	poison_cmd = "poison",
+	poison_name = "Gift",
+	poison_desc = "Warnt vor vergifteten Spielern",
+
+	heal_cmd = "heal",
+	heal_name = "Heilen",
+	heal_desc = "Warnt wenn Julianne sich heilt",
+
+	buff_cmd = "buff",
+	buff_name = "Selbst-Buff Alarm",
+	buff_desc = "Warnt wenn Julianne und Romulo sich selbst buffen",
+
+	phase1_trigger = "Welch' Teufel bist du, dass du mich so folterst?",
+	phase1_message = "Phase 1 - Julianne",
+	phase2_trigger = "Willst du mich zwingen? Knabe, sieh dich vor!",
+	phase2_message = "Phase 2 - Romulo",
+	phase3_trigger = "Komm, milde, liebevolle Nacht! Komm, gibt mir meinen Romulo zur\195\188ck!",
+	phase3_message = "Phase 3 - Beide",
+
+	poison_trigger = "^([^%s]+) ([^%s]+) von Vergifteter Sto? betroffen.",
+	poison_message = "%s ist vergiftet!",
+
+	heal_trigger = "beginnt Ewige Zuneigung zu wirken.",
+	heal_message = "Julianne casting Heal!",
+
+	buff1_trigger = "bekommt 'Wagemutig'.",
+	buff1_message = "Romulo bekommt Wagemut! - Magier Zauberraub!",
+	buff2_trigger = "bekommt 'Hingabe'.",
+	buff2_message = "Julianne bekommt Hingabe! - Magier Zauberraub!",
+
+	you = "Ihr",
+} end)
+
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
