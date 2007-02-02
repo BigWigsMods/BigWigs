@@ -73,21 +73,21 @@ end
 
 function BigWigsCurator:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["berserk_trigger"] and self.db.profile.berserk then
-			self:TriggerEvent("BigWigs_Message", L["berserk_message"], "Important")
+			self:TriggerEvent("BigWigs_Message", L["berserk_message"], "Attention")
 			self:TriggerEvent("BigWigs_StartBar", self, L["berserk_bar"], 720, "Interface\\Icons\\INV_Shield_01")
 	end
 end
 
 function BigWigsCurator:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 	if msg == L["weaken_trigger"] and self.db.profile.weaken then
-		self:TriggerEvent("BigWigs_Message", L["weaken_message"], "Important")
+		self:TriggerEvent("BigWigs_Message", L["weaken_message"], "Important", nil "Alarm")
 		self:TriggerEvent("BigWigs_StartBar", self, L["weaken_bar"], 20, "Interface\\Icons\\Spell_Nature_Purge")
 	end
 end
 
 function BigWigsCurator:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 	if msg == L["weaken_fade_trigger"] and self.db.profile.weaken then
-		self:TriggerEvent("BigWigs_Message", L["weaken_fade_message"], "Important")
+		self:TriggerEvent("BigWigs_Message", L["weaken_fade_message"], "Urgent")
 	end
 end
 
@@ -96,7 +96,7 @@ function BigWigsCurator:UNIT_HEALTH(msg)
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 10 and health <= 13 and not enrageannounced then
-			self:TriggerEvent("BigWigs_Message", L["enrage_warning"], "Important")
+			self:TriggerEvent("BigWigs_Message", L["enrage_warning"], "Positive")
 			enrageannounced = true
 		elseif health > 50 and enrageannounced then
 			enrageannounced = false
