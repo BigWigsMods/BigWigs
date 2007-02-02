@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -25,7 +25,7 @@ L:RegisterTranslations("enUS", function() return {
 	weaken_name = "Weaken",
 	weaken_desc = "Alert when The Curator is weakened.",
 
-	weaken_trigger = "The Curator is afflicted by Evocation."
+	weaken_trigger = "The Curator is afflicted by Evocation.",
 	weaken_message = "Evocation - Weakened for ~20sec!",
 	weaken_bar = "Evocation",
 	weaken_fade_trigger = "Evocation fades from The Curator.",
@@ -58,8 +58,8 @@ function BigWigsCurator:OnEnable()
 	self.core:Print("The Curator boss mod is beta quality, at best! Please don't rely on it for anything!")
 	enrageannounced = nil
 
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER"),
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE"),
+	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
 
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -80,7 +80,7 @@ end
 
 function BigWigsCurator:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 	if msg == L["weaken_trigger"] and self.db.profile.weaken then
-		self:TriggerEvent("BigWigs_Message", L["weaken_message"], "Important", nil "Alarm")
+		self:TriggerEvent("BigWigs_Message", L["weaken_message"], "Important", nil, "Alarm")
 		self:TriggerEvent("BigWigs_StartBar", self, L["weaken_bar"], 20, "Interface\\Icons\\Spell_Nature_Purge")
 	end
 end
