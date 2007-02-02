@@ -52,8 +52,6 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "RomuloJulianne",
-
 	phase_cmd = "phase",
 	phase_name = "Phase",
 	phase_desc = "Warnt wenn eine neue Phase beginnt",
