@@ -79,16 +79,16 @@ end
 ------------------------------
 
 function BigWigsCurator:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["berserk_trigger"] and self.db.profile.berserk then
+	if msg:find(L["berserk_trigger"]) and self.db.profile.berserk then
 		self:TriggerEvent("BigWigs_Message", L["berserk_message"], "Attention")
 		self:TriggerEvent("BigWigs_StartBar", self, L["berserk_bar"], 720, "Interface\\Icons\\INV_Shield_01")
-	elseif msg == L["berserk_trigger"] and self.db.profile.weaktime then
+	elseif msg:find(L["berserk_trigger"]) and self.db.profile.weaktime then
 		self:Evocation()
 	end
 end
 
 function BigWigsCurator:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
-	if msg == L["weaken_trigger"] and self.db.profile.weaken then
+	if msg:find(L["weaken_trigger"]) and self.db.profile.weaken then
 		self:TriggerEvent("BigWigs_Message", L["weaken_message"], "Important", nil, "Alarm")
 		self:TriggerEvent("BigWigs_StartBar", self, L["weaken_bar"], 20, "Interface\\Icons\\Spell_Nature_Purge")
 		self:ScheduleEvent("BigWigs_Message", 15, L["weaken_fade_warning"], "Urgent")

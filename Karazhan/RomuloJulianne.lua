@@ -121,11 +121,11 @@ end
 ------------------------------
 
 function BigWigsRomuloJulianne:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["phase1_trigger"] and self.db.profile.phase then
+	if msg:find(L["phase1_trigger"]) and self.db.profile.phase then
 		self:TriggerEvent("BigWigs_Message", L["phase1_message"], "Attention")
-	elseif msg == L["phase2_trigger"] and self.db.profile.phase then
+	elseif msg:find(L["phase2_trigger"]) and self.db.profile.phase then
 		self:TriggerEvent("BigWigs_Message", L["phase2_message"], "Attention")
-	elseif msg == L["phase3_trigger"] and self.db.profile.phase then
+	elseif msg:find(L["phase3_trigger"]) and self.db.profile.phase then
 		self:TriggerEvent("BigWigs_Message", L["phase3_message"], "Attention")
 	end
 end
@@ -149,9 +149,9 @@ function BigWigsRomuloJulianne:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 end
 
 function BigWigsRomuloJulianne:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if (msg:find(L["buff1_trigger"])) then
+	if msg:find(L["buff1_trigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["buff1_message"], "Attention")
-	elseif (msg:find(L["buff2_trigger"])) then
+	elseif msg:find(L["buff2_trigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["buff2_message"], "Attention")
 	end
 end

@@ -56,13 +56,13 @@ end
 ------------------------------
 
 function BigWigsAttumen:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["phase3_trigger"] and self.db.profile.phase then
+	if msg:find(L["phase3_trigger"]) and self.db.profile.phase then
 		self:TriggerEvent("BigWigs_Message", L["phase3_message"], "Important")
 	end
 end
 
 function BigWigsAttumen:CHAT_MSG_MONSTER_EMOTE(msg)
-	if msg == L["phase2_trigger"] and self.db.profile.phase then
+	if msg:find(L["phase2_trigger"]) and self.db.profile.phase then
 		self:TriggerEvent("BigWigs_Message", L["phase2_message"], "Urgent")
 	end
 end
