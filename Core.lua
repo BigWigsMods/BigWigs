@@ -2,7 +2,6 @@
 --      Are you local?      --
 ------------------------------
 
-local BZ = nil
 local BB = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 
@@ -295,8 +294,6 @@ BigWigs.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigs:OnInitialize()
-	if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
-
 	if not self.version then self.version = GetAddOnMetadata("BigWigs", "Version") end
 	local rev = self.revision
 	for name, module in self:IterateModules() do
