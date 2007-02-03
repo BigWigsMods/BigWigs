@@ -123,6 +123,7 @@ function BigWigsLoD:InitializeLoD()
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadInZone")
 			if meta then
 				for k, v in pairs({strsplit(",", meta)}) do
+					v = v:trim()
 					local zone = BZ:HasTranslation(v) and BZ[v] or nil
 					if zone then
 						if not inzone[zone] then inzone[zone] = {} end
@@ -160,8 +161,9 @@ function BigWigsLoD:LoadZone( zone )
 		return
 	end
 
-	if type(BigWigs.cmdtable.args[menu]) == "table" and type(BigWigs.cmdtable.args[menu].args) == "table" then
-		BigWigs.cmdtable.args[menu].args[LC["Load"]] = nil
+	local opt = BigWigs.cmdtable.args[menu]
+	if type(opt) == "table" and type(opt.args) == "table" then
+		opt.args[LC["Load"]] = nil
 	end
 
 	if type(zonelist[zone]) == "table" then
