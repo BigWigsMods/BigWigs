@@ -4,7 +4,7 @@
 ------------------------------
 
 local LC = AceLibrary("AceLocale-2.2"):new("BigWigs")
-local BZ = AceLibrary("Babble-Zone-2.2")
+local BZ = nil
 
 local withcore = {}
 local inzone = {}
@@ -89,16 +89,19 @@ function BigWigsLoD:CHAT_MSG_SYSTEM( msg )
 	end
 end
 
-local battlegrounds = {
-	[BZ["Alterac Valley"]] = true,
-	[BZ["Arathi Basin"]] = true,
-	[BZ["Warsong Gulch"]] = true,
-	[BZ["Nagrand Arena"]] = true,
-	[BZ["Eye of the Storm"]] = true,
-	[BZ["Blade's Edge Arena"]] = true,
-}
-
+local battlegrounds = nil
 local function InBattleground()
+	if not battlegrounds then
+		if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
+		battlegrounds = {
+			[BZ["Alterac Valley"]] = true,
+			[BZ["Arathi Basin"]] = true,
+			[BZ["Warsong Gulch"]] = true,
+			[BZ["Nagrand Arena"]] = true,
+			[BZ["Eye of the Storm"]] = true,
+			[BZ["Blade's Edge Arena"]] = true,
+		}
+	end
 	return battlegrounds[GetRealZoneText()] or battlegrounds[GetZoneText()] or nil
 end
 
@@ -124,6 +127,7 @@ function BigWigsLoD:InitializeLoD()
 			if meta then
 				for k, v in pairs({strsplit(",", meta)}) do
 					v = v:trim()
+					if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
 					local zone = BZ:HasTranslation(v) and BZ[v] or nil
 					if zone then
 						if not inzone[zone] then inzone[zone] = {} end

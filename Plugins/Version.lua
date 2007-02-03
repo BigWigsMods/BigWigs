@@ -1,7 +1,7 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
 local BWL = nil
-local BZ = AceLibrary("Babble-Zone-2.2")
+local BZ = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsVersionQuery")
 local tablet = AceLibrary("Tablet-2.0")
 local dewdrop = AceLibrary("Dewdrop-2.0")
@@ -230,6 +230,7 @@ end
 
 function BigWigsVersionQuery:PopulateRevisions()
 	self.zoneRevisions = {}
+	if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
 	for name, module in self.core:IterateModules() do
 		if module:IsBossModule() and type(module.zonename) == "string" then
 			-- Make sure to get the enUS zone name.
@@ -362,6 +363,7 @@ function BigWigsVersionQuery:QueryVersion(zone)
 		zone = BWL:GetReverseTranslation(zone)
 		-- If there is a translation for this to GetLocale(), get it, so we can
 		-- print the zone name in the correct locale.
+		if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
 		if BZ:HasTranslation(zone) then
 			zone = BZ:GetTranslation(zone)
 		end
@@ -376,15 +378,17 @@ function BigWigsVersionQuery:QueryVersion(zone)
 	self.core:Print(L["Querying versions for "].."|cff"..COLOR_GREEN..zone.."|r.")
 
 	-- If this is a non-enUS zone, convert it to enUS.
+	if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
 	if BZ:HasReverseTranslation(zone) then zone = BZ:GetReverseTranslation(zone) end
 
 	self.currentZone = zone
 
 	self.queryRunning = true
-	self:ScheduleEvent(	function()
-							self.queryRunning = nil
-							self.core:Print(L["Version query done."])
-						end, 5)
+	self:ScheduleEvent(
+		function()
+			self.queryRunning = nil
+			self.core:Print(L["Version query done."])
+		end, 5)
 
 	self.responseTable = {}
 

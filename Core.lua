@@ -317,8 +317,6 @@ end
 
 function BigWigs:AceEvent_FullyInitialized()
 	if GetNumRaidMembers() > 0 or not self.loading then
-		if not BB then BB = AceLibrary("Babble-Boss-2.2") end
-
 		-- this will trigger the LoadWithCore to load
 		self:TriggerEvent("BigWigs_CoreEnabled")
 
@@ -522,7 +520,10 @@ function BigWigs:EnableModule(module, nosync)
 	if m and m:IsBossModule() and not self:IsModuleActive(module) then
 		self:ToggleModuleActive(module, true)
 		self:TriggerEvent("BigWigs_Message", string.format(L["%s mod enabled"], m:ToString() or "??"), "Core", true)
-		if not nosync then self:TriggerEvent("BigWigs_SendSync", (m.external and "EnableExternal " or "EnableModule ") .. (m.synctoken or BB:GetReverseTranslation(module))) end
+		if not nosync then
+			if not BB then BB = AceLibrary("Babble-Boss-2.2") end
+			self:TriggerEvent("BigWigs_SendSync", (m.external and "EnableExternal " or "EnableModule ") .. (m.synctoken or BB:GetReverseTranslation(module)))
+		end
 	end
 end
 
@@ -534,21 +535,22 @@ end
 
 
 function BigWigs:BigWigs_RecvSync(sync, module)
-	if sync == "EnableModule" and module then
+	if (sync == "EnableModule" or sync == "EnableExternal") and module then
+		if not BB then BB = AceLibrary("Babble-Boss-2.2") end
 		local name = BB:HasTranslation(module) and BB[module] or module
-		if self:HasModule(name) and self:GetModule(name).zonename == GetRealZoneText() then self:EnableModule(name, true) end
-	elseif sync == "EnableExternal" and module then
-		local name = BB:HasTranslation(module) and BB[module] or module
-		if self:HasModule(name) and self:GetModule(name).zonename == GetRealZoneText() then self:EnableModule(name, true) end
+		if self:HasModule(name) and self:GetModule(name).zonename == GetRealZoneText() then
+			self:EnableModule(name, true)
+		end
 	end
 end
 
 
 function BigWigs:BigWigs_TargetSeen(mobname, unit)
+	local zone = GetRealZoneText()
 	for name,module in self:IterateModules() do
-		if module:IsBossModule() and self:ZoneIsTrigger(module, GetRealZoneText()) and self:MobIsTrigger(module, mobname)
+		if module:IsBossModule() and self:ZoneIsTrigger(module, zone) and self:MobIsTrigger(module, mobname)
 			and (not module.VerifyEnable or module:VerifyEnable(unit)) then
-				self:EnableModule(name)
+			self:EnableModule(name)
 		end
 	end
 end
