@@ -75,7 +75,7 @@ L:RegisterTranslations("deDE", function() return {
 	phase3_trigger = "Komm, milde, liebevolle Nacht! Komm, gibt mir meinen Romulo zur\195\188ck!",
 	phase3_message = "Phase 3 - Beide",
 
-	poison_trigger = "^([^%s]+) ([^%s]+) von Vergifteter Sto? betroffen.",
+	poison_trigger = "^([^%s]+) ([^%s]+) von Vergifteter Sto\195\159 betroffen.",
 	poison_message = "%s ist vergiftet!",
 
 	heal_trigger = "beginnt Ewige Zuneigung zu wirken.",
