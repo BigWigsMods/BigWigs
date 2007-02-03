@@ -47,6 +47,40 @@ L:RegisterTranslations("enUS", function() return {
 	you = "you",
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	engage_cmd = "engage",
+	engage_name = "Engage Alert",
+	engage_desc = "Warn when Moroes is pulled",
+
+	vanish_cmd = "vanish",
+	vanish_name = "Vanish Alert",
+	vanish_desc = "Warn when Moroes Vanishe's",
+
+	blind_cmd = "blind",
+	blind_name = "Blind Warning",
+	blind_desc = "Notify of Blinde'd players",
+
+	enrage_cmd = "enrage",
+	enrage_name = "Enrage Alert",
+	enrage_desc = "Warn when Moroes becomes enraged",
+
+	vanish_trigger1 = "Ihr habt gel\195\164utet?",
+	vanish_trigger2 = "Nun, wo war ich? Ah, ja...",
+	vanish_message = "Vanished!",
+
+	blind_trigger = "^([^%s]+) ([^%s]+) .* Blenden",
+	blind_message = "%s is Blinded!",
+
+	engage_trigger = "Hm, unangek\195\188ndigte Besucher.*",
+	engage_message = "Moroes Engaged!",
+
+	enrage_trigger = "%s wird w\195\188tend!",
+	enrage_message = "Enrage!",
+	enrage_warning = "Enrage Soon!",
+
+	you = "Ihr",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
@@ -54,7 +88,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsMoroes = BigWigs:NewModule(boss)
 BigWigsMoroes.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsMoroes.enabletrigger = boss
-BigWigsMoroes.toggleoptions = {"engage", -1, "vanish", "blind", -1, "enrage", "bosskill"}
+BigWigsMoroes.toggleoptions = {"engage", "vanish", "blind", -1, "enrage", "bosskill"}
 BigWigsMoroes.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
