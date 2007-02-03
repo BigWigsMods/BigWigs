@@ -297,32 +297,6 @@ BigWigs.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigs:OnInitialize()
 	if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
 
-	local function tablelen(t)
-		local c = 0
-		for k in pairs(t) do c = c + 1 end
-		return c
-	end
-
-	for k, zonename in pairs({"Other", "Karazhan", "Zul'Gurub", "Molten Core", "Blackwing Lair", "Ahn'Qiraj", "Ruins of Ahn'Qiraj", "Naxxramas"}) do
-			local zone = zonename
-			if BZ:HasReverseTranslation(zonename) and L:HasTranslation(BZ:GetReverseTranslation(zonename)) then
-				zone = L[BZ:GetReverseTranslation(zonename)]
-			elseif L:HasTranslation(zonename) then
-				zone = L[zonename]
-			end
-			local prettyZone = BZ:HasTranslation(zonename) and BZ[zonename] or L[zonename] or zone
-			if not BigWigs.cmdtable.args[zone] then
-				BigWigs.cmdtable.args[zone] = {
-					type = "group",
-					name = prettyZone,
-					desc = string.format(L["Options for bosses in %s."], prettyZone),
-					args = {},
-					disabled = function() return not BigWigs:IsActive() or tablelen(BigWigs.cmdtable.args[zone].args) == 0 end,
-					order = 10,
-				}
-			end
-	end
-
 	if not self.version then self.version = GetAddOnMetadata("BigWigs", "Version") end
 	local rev = self.revision
 	for name, module in self:IterateModules() do
@@ -330,6 +304,7 @@ function BigWigs:OnInitialize()
 	end
 	self.version = (self.version or "2.0").. " |cffff8888r"..rev.."|r"
 	self.loading = true
+
 	-- Activate ourselves, or at least try to. If we were disabled during a reloadUI, OnEnable isn't called,
 	-- and self.loading will never be set to something else, resulting in a BigWigs that doesn't enable.
 	self:ToggleActive(true)
@@ -346,10 +321,6 @@ end
 function BigWigs:AceEvent_FullyInitialized()
 	if GetNumRaidMembers() > 0 or not self.loading then
 		if not BB then BB = AceLibrary("Babble-Boss-2.2") end
-
-		if BigWigsLoD then
-			self:CreateLoDMenu()
-		end
 
 		-- this will trigger the LoadWithCore to load
 		self:TriggerEvent("BigWigs_CoreEnabled")
@@ -608,36 +579,3 @@ function BigWigs:MobIsTrigger(module, name)
 end
 
 
-function BigWigs:CreateLoDMenu()
-	local zonelist = BigWigsLoD:GetZones()
-	for k,v in pairs( zonelist ) do
-		if type(v) ~= "table" then
-			self:AddLoDMenu( k )
-		else
-			self:AddLoDMenu( L["Other"] )
-		end
-	end
-end
-
-
-function BigWigs:AddLoDMenu( zonename )
-	local zone = L:HasTranslation(zonename) and L[zonename] or nil
-	if not zone then return end
-	if not self.cmdtable.args[zone] then
-		self.cmdtable.args[zone] = {
-			type = "group",
-			name = BZ:HasTranslation(zonename) and BZ[zonename] or zonename,
-			desc = string.format(L["Options for bosses in %s."], zonename),
-			args = {},
-			disabled = function() return not BigWigs:IsActive() end,
-		}
-	end
-	if self.cmdtable.args[zone].args[L["Load"]] then return end
-	self.cmdtable.args[zone].args[L["Load"]] = {
-		type = "execute",
-		name = L["Load All"],
-		desc = string.format( L["Load all %s modules."], zonename ),
-		order = 1,
-		func = function() BigWigsLoD:LoadZone( zonename ) end,
-	}
-end

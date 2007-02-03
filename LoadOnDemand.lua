@@ -41,7 +41,6 @@ function BigWigsLoD:OnInitialize()
 end
 
 function BigWigsLoD:OnEnable()
-
 	self:RegisterEvent("BigWigs_CoreEnabled")
 
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
@@ -130,9 +129,11 @@ function BigWigsLoD:InitializeLoD()
 						table.insert( inzone[zone], name)
 						if LC:HasTranslation(v) then
 							zonelist[zone] = true
+							self:AddCoreMenu(zone)
 						else
 							if not zonelist[LC["Other"]] then zonelist[LC["Other"]] = {} end
 							zonelist[LC["Other"]][zone] = true
+							self:AddCoreMenu(LC["Other"])
 						end
 					end
 				end
@@ -189,5 +190,29 @@ end
 
 function BigWigsLoD:GetZones()
 	return zonelist
+end
+
+function BigWigsLoD:AddCoreMenu( zonename )
+	local zone = LC:HasTranslation(zonename) and LC[zonename] or nil
+	if not zone then return end
+	local opt = BigWigs.cmdtable.args
+	if not opt[zone] then
+		opt[zone] = {
+			type = "group",
+			name = BZ:HasTranslation(zonename) and BZ[zonename] or zonename,
+			desc = string.format(LC["Options for bosses in %s."], zonename),
+			args = {},
+			disabled = function() return not BigWigs:IsActive() end,
+		}
+	end
+	if not opt[zone].args[LC["Load"]] then
+		opt[zone].args[LC["Load"]] = {
+			type = "execute",
+			name = LC["Load All"],
+			desc = string.format( LC["Load all %s modules."], zonename ),
+			order = 1,
+			func = function() BigWigsLoD:LoadZone( zonename ) end,
+		}
+	end
 end
 
