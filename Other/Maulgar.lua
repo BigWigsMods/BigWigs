@@ -111,7 +111,7 @@ function BigWigsMaulgar:BigWigs_RecvSync( sync, rest, nick )
 end
 
 function BigWigsMaulgar:Nextwhirldwind()
-		self:ScheduleEvent("BigWigs_Message", 20, L["whirlwind_warning2"], "Positive")
-		self:ScheduleEvent("BigWigs_Message", 40, L["whirlwind_warning3"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["whirlwind_nextbar"], 50, "Interface\\Icons\\Ability_Whirlwind")
+	self:ScheduleEvent("BigWigs_Message", 20, L["whirlwind_warning2"], "Positive")
+	self:ScheduleEvent("BigWigs_Message", 40, L["whirlwind_warning3"], "Urgent")
+	self:TriggerEvent("BigWigs_StartBar", self, L["whirlwind_nextbar"], 50, "Interface\\Icons\\Ability_Whirlwind")
 end
