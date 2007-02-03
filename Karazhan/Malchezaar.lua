@@ -48,8 +48,6 @@ BigWigsMalchezaar.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsMalchezaar:OnEnable()
-	self.core:Print("The Malchezaar boss mod is beta quality, at best! Please don't rely on it for anything!")
-
 	started = nil
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

@@ -2,7 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
-local Grandmother = AceLibrary("Babble-Boss-2.2")["Grandmother"]
+local lady = AceLibrary("Babble-Boss-2.2")["Grandmother"]
 local boss = AceLibrary("Babble-Boss-2.2")["The Big Bad Wolf"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local playerName = nil
@@ -40,7 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 
 BigWigsTheBigBadWolf = BigWigs:NewModule(boss)
 BigWigsTheBigBadWolf.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-BigWigsTheBigBadWolf.enabletrigger = {Grandmother, boss}
+BigWigsTheBigBadWolf.enabletrigger = {lady, boss}
 BigWigsTheBigBadWolf.toggleoptions = {"youriding", "elseriding", "icon", "bosskill"}
 BigWigsTheBigBadWolf.revision = tonumber(string.sub("$Revision$", 12, -3))
 

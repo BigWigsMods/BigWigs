@@ -40,7 +40,6 @@ BigWigsAttumen.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsAttumen:OnEnable()
-	self.core:Print("Attumen mod by Funkydude, this mod is beta quality, at best! Please don't rely on it for anything!")
 	started = nil
 
 	self:RegisterEvent("BigWigs_RecvSync")

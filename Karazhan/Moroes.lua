@@ -96,7 +96,6 @@ BigWigsMoroes.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsMoroes:OnEnable()
-	self.core:Print("Moroes mod by Funkydude, this mod is beta quality, at best! Please don't rely on it for anything!")
 	enrageannounced = nil
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "BlindEvent")
