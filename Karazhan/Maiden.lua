@@ -56,7 +56,7 @@ end
 
 function BigWigsMaiden:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] and self.db.profile.engage then
-		self:TriggerEvent("BigWigs_Message", L["enage_message"], "Attention")
+		self:TriggerEvent("BigWigs_Message", L["engage_message"], "Attention")
 	elseif msg == L["repentance_trigger"] and self.db.profile.repentance then
 		self:TriggerEvent("BigWigs_Message", L["repentance_message"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 30, L["repentance_warning"], "Urgent", nil, "Alarm")
