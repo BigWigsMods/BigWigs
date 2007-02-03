@@ -479,13 +479,9 @@ function BigWigs:RegisterModule(name, module)
 		if cons or module.consoleOptions then
 			local zonename = type(module.zonename) == "table" and module.zonename[1] or module.zonename
 			local zone = zonename
-			if BZ:HasReverseTranslation(zonename) and L:HasTranslation(BZ:GetReverseTranslation(zonename)) then
-				zone = L[BZ:GetReverseTranslation(zonename)]
-			elseif L:HasTranslation(zonename) then
-				zone = L[zonename]
-			else
+			if module.otherMenu then
 				zone = L["Other"]
-				zonename = L["Other"]
+				zonename = zone
 			end
 			if not self.cmdtable.args[zone] then
 				self.cmdtable.args[zone] = {

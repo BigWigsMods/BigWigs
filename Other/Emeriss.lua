@@ -185,6 +185,7 @@ L:RegisterTranslations("koKR", function() return {
 
 BigWigsEmeriss = BigWigs:NewModule(boss)
 BigWigsEmeriss.zonename = {BZ["Ashenvale"], BZ["Duskwood"], BZ["The Hinterlands"], BZ["Feralas"]}
+BigWigsEmeriss.otherMenu = true
 BigWigsEmeriss.enabletrigger = boss
 BigWigsEmeriss.toggleoptions = {"engage", -1, "noxious", -1, "volatileyou", "volatileother", "icon", "bosskill"}
 BigWigsEmeriss.revision = tonumber(string.sub("$Revision$", 12, -3))

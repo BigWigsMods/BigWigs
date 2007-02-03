@@ -165,6 +165,7 @@ L:RegisterTranslations("koKR", function() return {
 
 BigWigsOnyxia = BigWigs:NewModule(boss)
 BigWigsOnyxia.zonename = AceLibrary("Babble-Zone-2.2")["Onyxia's Lair"]
+BigWigsOnyxia.otherMenu = true
 BigWigsOnyxia.enabletrigger = boss
 BigWigsOnyxia.toggleoptions = {"deepbreath", "phase2", "phase3", "onyfear", "bosskill"}
 BigWigsOnyxia.revision = tonumber(string.sub("$Revision$", 12, -3))

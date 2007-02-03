@@ -127,6 +127,7 @@ L:RegisterTranslations("koKR", function() return {
 
 BigWigsAzuregos = BigWigs:NewModule(boss)
 BigWigsAzuregos.zonename = AceLibrary("Babble-Zone-2.2")["Azshara"]
+BigWigsAzuregos.otherMenu = true
 BigWigsAzuregos.enabletrigger = boss
 BigWigsAzuregos.toggleoptions = {"teleport", "shield", "bosskill"}
 BigWigsAzuregos.revision = tonumber(string.sub("$Revision$", 12, -3))
