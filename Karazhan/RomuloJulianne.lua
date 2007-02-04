@@ -82,9 +82,9 @@ L:RegisterTranslations("deDE", function() return {
 	heal_message = "Julianne casting Heal!",
 
 	buff1_trigger = "bekommt 'Wagemutig'.",
-	buff1_message = "Romulo bekommt Wagemut! - Magier Zauberraub!",
+	buff1_message = "Romulo bekommt Wagemut!",
 	buff2_trigger = "bekommt 'Hingabe'.",
-	buff2_message = "Julianne bekommt Hingabe! - Magier Zauberraub!",
+	buff2_message = "Julianne bekommt Hingabe!",
 
 	you = "Ihr",
 } end)
