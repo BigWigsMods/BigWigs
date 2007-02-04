@@ -15,30 +15,32 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Moroes",
 
 	engage_cmd = "engage",
-	engage_name = "Engage Alert",
+	engage_name = "Engage",
 	engage_desc = "Warn when Moroes is pulled",
 
 	vanish_cmd = "vanish",
-	vanish_name = "Vanish Alert",
+	vanish_name = "Vanish",
 	vanish_desc = "Warn when Moroes Vanishe's",
 
 	blind_cmd = "blind",
-	blind_name = "Blind Warning",
-	blind_desc = "Notify of Blinde'd players",
+	blind_name = "Blind",
+	blind_desc = "Notify of Blinded players",
 
 	enrage_cmd = "enrage",
-	enrage_name = "Enrage Alert",
+	enrage_name = "Enrage",
 	enrage_desc = "Warn when Moroes becomes enraged",
 
 	vanish_trigger1 = "You rang?",
 	vanish_trigger2 = "Now, where was I? Oh, yes...",
-	vanish_message = "Vanished!",
+	vanish_message = "Vanished! Next in ~35sec!",
+	vanish_warning = "Vanish Soon!",
+	vanish_bar = "Next Vanish",
 
 	blind_trigger = "^([^%s]+) ([^%s]+) afflicted by Blind",
 	blind_message = "%s is Blinded!",
 
 	engage_trigger = "Hm, unannounced visitors. Preparations must be made...",
-	engage_message = "Moroes Engaged!",
+	engage_message = "Moroes Engaged - Vanish in ~35sec!",
 
 	enrage_trigger = "%s becomes enraged!",
 	enrage_message = "Enrage!",
@@ -49,30 +51,32 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	engage_cmd = "engage",
-	engage_name = "Engage Alert",
+	engage_name = "Engage",
 	engage_desc = "Warn when Moroes is pulled",
 
 	vanish_cmd = "vanish",
-	vanish_name = "Vanish Alert",
+	vanish_name = "Vanish",
 	vanish_desc = "Warn when Moroes Vanishe's",
 
 	blind_cmd = "blind",
-	blind_name = "Blind Warning",
-	blind_desc = "Notify of Blinde'd players",
+	blind_name = "Blind",
+	blind_desc = "Notify of Blinded players",
 
 	enrage_cmd = "enrage",
-	enrage_name = "Enrage Alert",
+	enrage_name = "Enrage",
 	enrage_desc = "Warn when Moroes becomes enraged",
 
 	vanish_trigger1 = "Ihr habt gel\195\164utet?",
 	vanish_trigger2 = "Nun, wo war ich? Ah, ja...",
-	vanish_message = "Vanished!",
+	vanish_message = "Vanished! Next in ~35sec!",
+	vanish_warning = "Vanish Soon!",
+	vanish_bar = "Next Vanish",
 
 	blind_trigger = "^([^%s]+) ([^%s]+) .* Blenden",
 	blind_message = "%s is Blinded!",
 
 	engage_trigger = "Hm, unangek\195\188ndigte Besucher.*",
-	engage_message = "Moroes Engaged!",
+	engage_message = "Moroes Engaged - Vanish in ~35sec!",
 
 	enrage_trigger = "%s wird w\195\188tend!",
 	enrage_message = "Enrage!",
@@ -108,6 +112,9 @@ function BigWigsMoroes:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "MoroesBlind", 3)
 end
 
 ------------------------------
@@ -117,11 +124,19 @@ end
 function BigWigsMoroes:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["vanish_trigger1"]) and self.db.profile.vanish then
 		self:TriggerEvent("BigWigs_Message", L["vanish_message"], "Urgent", mil, "Alert")
+		self:NextVanish()
 	elseif msg:find(L["vanish_trigger2"]) and self.db.profile.vanish then
 		self:TriggerEvent("BigWigs_Message", L["vanish_message"], "Urgent", nil, "Alert")
+		self:NextVanish()
 	elseif msg:find(L["engage_trigger"]) and self.db.profile.engage then
 		self:TriggerEvent("BigWigs_Message", L["engage_message"], "Attention")
+		self:NextVanish()
 	end
+end
+
+function BigWigsMoroes:NextVanish()
+	self:TriggerEvent("BigWigs_StartBar", self, L["vanish_bar"], 35, "Interface\\Icons\\Ability_Vanish")
+	self:ScheduleEvent("BigWigs_Message", 30, L["vanish_warning"], "Attention")
 end
 
 function BigWigsMoroes:CHAT_MSG_MONSTER_EMOTE(msg)
@@ -150,8 +165,15 @@ function BigWigsMoroes:BlindEvent(msg)
 		if bplayer == L["you"] then
 			bplayer = UnitName("player")
 		end
-		if self.db.profile.blind then
-			self:TriggerEvent("BigWigs_Message", string.format(L["blind_message"], bplayer), "Attention")
+		self:TriggerEvent("BigWigs_SendSync", "MoroesBlind "..bplayer)
+	end
+end
+
+function BigWigsMoroes:BigWigs_RecvSync( sync, rest, nick )
+	if sync == "MoroesBlind" and rest then
+		local player = rest
+		if player == UnitName("player") and self.db.profile.blind then
+		self:TriggerEvent("BigWigs_Message", string.format(L["blind_message"], bplayer), "Attention")
 		end
 	end
 end
