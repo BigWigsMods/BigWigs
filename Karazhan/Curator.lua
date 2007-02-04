@@ -29,7 +29,7 @@ L:RegisterTranslations("enUS", function() return {
 	weaktime_name = "Weaken Countdown",
 	weaktime_desc = "Countdown warning and bar untill next weaken.",
 
-	weaken_trigger = "The Curator is afflicted by Evocation.",
+	weaken_trigger = "Your request cannot be processed.",
 	weaken_message = "Evocation - Weakened for 20sec!",
 	weaken_bar = "Evocation",
 	weaken_fade_message = "Evocation Finished - Weakened Gone!",
@@ -66,10 +66,9 @@ BigWigsCurator.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsCurator:OnEnable()
 	enrageannounced = nil
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-
 	self:RegisterEvent("UNIT_HEALTH")
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
@@ -84,11 +83,7 @@ function BigWigsCurator:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_StartBar", self, L["berserk_bar"], 720, "Interface\\Icons\\INV_Shield_01")
 	elseif msg:find(L["berserk_trigger"]) and self.db.profile.weaktime then
 		self:Evocation()
-	end
-end
-
-function BigWigsCurator:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
-	if msg:find(L["weaken_trigger"]) and self.db.profile.weaken then
+	elseif msg:find(L["weaken_trigger"]) and self.db.profile.weaken then
 		self:TriggerEvent("BigWigs_Message", L["weaken_message"], "Important", nil, "Alarm")
 		self:TriggerEvent("BigWigs_StartBar", self, L["weaken_bar"], 20, "Interface\\Icons\\Spell_Nature_Purge")
 		self:ScheduleEvent("BigWigs_Message", 15, L["weaken_fade_warning"], "Urgent")
