@@ -72,7 +72,12 @@ function BigWigsMaulgar:OnEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
 	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "MaulgarHeal", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MaulgarShield", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MaulgarSpellShield", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MaulgarWhirldwind", 5)
 end
 
 ------------------------------
@@ -81,19 +86,17 @@ end
 
 function BigWigsMaulgar:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if (msg:find(L["heal_trigger"])) and self.db.profile.heal then
-		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Important", nil, "Alarm")
+		self:TriggerEvent("BigWigs_SendSync", "MaulgarHeal")
 	end
 end
 
 function BigWigsMaulgar:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if msg:find(L["shield_trigger"]) and self.db.profile.shield then
-		self:TriggerEvent("BigWigs_Message", L["shield_message"], "Important")
+		self:TriggerEvent("BigWigs_SendSync", "MaulgarShield")
 	elseif msg:find(L["spellshield_trigger"]) and self.db.profile.spellshield then
-		self:TriggerEvent("BigWigs_Message", L["spellshield_message"], "Attention", nil, "Info")
+		self:TriggerEvent("BigWigs_SendSync", "MaulgarSpellShield")
 	elseif msg:find(L["whirlwind_trigger"]) and self.db.profile.whirlwind then
-		self:TriggerEvent("BigWigs_Message", L["whirlwind_message"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["whirlwind_bar"], 15, "Interface\\Icons\\Ability_Whirlwind")
-		self:Nextwhirldwind()
+		self:TriggerEvent("BigWigs_SendSync", "MaulgarWhirldwind")
 	end
 end
 
@@ -107,6 +110,16 @@ function BigWigsMaulgar:BigWigs_RecvSync( sync, rest, nick )
 			self:TriggerEvent("BigWigs_Message", L["whirlwind_warning1"], "Attention")
 			self:Nextwhirldwind()
 		end
+	elseif sync == "MaulgarHeal" then
+		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Important", nil, "Alarm")
+	elseif sync == "MaulgarShield" then
+		self:TriggerEvent("BigWigs_Message", L["shield_message"], "Important")
+	elseif sync == "MaulgarSpellShield" then
+		self:TriggerEvent("BigWigs_Message", L["spellshield_message"], "Attention", nil, "Info")
+	elseif sync == "MaulgarWhirldwind" then
+		self:TriggerEvent("BigWigs_Message", L["whirlwind_message"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["whirlwind_bar"], 15, "Interface\\Icons\\Ability_Whirlwind")
+		self:Nextwhirldwind()
 	end
 end
 
