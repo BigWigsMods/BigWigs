@@ -295,13 +295,13 @@ BigWigs.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigs:OnInitialize()
 	if not self.version then self.version = GetAddOnMetadata("BigWigs", "Version") end
-	local rev = self.revision
-	for name, module in self:IterateModules() do
-		rev = math.max(rev, module.revision)
-	end
-	self.version = (self.version or "2.0").. " |cffff8888r"..rev.."|r"
+	self.version = (self.version or "2.0") .. " |cffff8888r" .. self.revision .. "|r"
 end
 
+-- This works because after a reloadui, GetNumRaidMembers() will return the real
+-- number. At initial login (or relog), it will say 0, but you will get a "You
+-- have joined a raid group" message, so our LoadOnDemand addon loads Core
+-- anyway.
 function BigWigs:OnEnable(first)
 	if not first or GetNumRaidMembers() > 0 then
 		-- this will trigger the LoadWithCore to load
