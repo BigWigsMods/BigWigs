@@ -3,7 +3,7 @@
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["The Crone"]
-local tito = AceLibrary("Babble-Boss-2.2")["Tito"]
+local roar = AceLibrary("Babble-Boss-2.2")["Roar"]
 local tinhead = AceLibrary("Babble-Boss-2.2")["Tinhead"]
 local strawman = AceLibrary("Babble-Boss-2.2")["Strawman"]
 local dorothee = AceLibrary("Babble-Boss-2.2")["Dorothee"]
@@ -30,7 +30,7 @@ L:RegisterTranslations("enUS", function() return {
 
 BigWigsWizardofOz = BigWigs:NewModule(boss)
 BigWigsWizardofOz.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-BigWigsWizardofOz.enabletrigger = {tito, tinhead, strawman, dorothee}
+BigWigsWizardofOz.enabletrigger = {roar, tinhead, strawman, dorothee}
 BigWigsWizardofOz.toggleoptions = {"summon", "bosskill"}
 BigWigsWizardofOz.revision = tonumber(string.sub("$Revision$", 12, -3))
 
