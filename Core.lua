@@ -300,23 +300,10 @@ function BigWigs:OnInitialize()
 		rev = math.max(rev, module.revision)
 	end
 	self.version = (self.version or "2.0").. " |cffff8888r"..rev.."|r"
-	self.loading = true
-
-	-- Activate ourselves, or at least try to. If we were disabled during a reloadUI, OnEnable isn't called,
-	-- and self.loading will never be set to something else, resulting in a BigWigs that doesn't enable.
-	self:ToggleActive(true)
 end
 
-function BigWigs:OnEnable()
-	if AceLibrary("AceEvent-2.0"):IsFullyInitialized() then
-		self:AceEvent_FullyInitialized()
-	else
-		self:RegisterEvent("AceEvent_FullyInitialized")
-	end
-end
-
-function BigWigs:AceEvent_FullyInitialized()
-	if GetNumRaidMembers() > 0 or not self.loading then
+function BigWigs:OnEnable(first)
+	if not first or GetNumRaidMembers() > 0 then
 		-- this will trigger the LoadWithCore to load
 		self:TriggerEvent("BigWigs_CoreEnabled")
 
@@ -333,9 +320,7 @@ function BigWigs:AceEvent_FullyInitialized()
 	else
 		self:ToggleActive(false)
 	end
-	self.loading = nil
 end
-
 
 function BigWigs:OnDisable()
 	-- Disable all modules
