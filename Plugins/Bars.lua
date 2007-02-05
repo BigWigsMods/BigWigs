@@ -204,14 +204,14 @@ function BigWigsBars:OnRegister()
 	surface:Register("Glaze",    path.."glaze")
 	surface:Register("Charcoal", path.."Charcoal")
 	surface:Register("BantoBar", path.."default")
-end
-
-function BigWigsBars:OnEnable()
-	if not surface:Fetch(self.db.profile.texture) then self.db.profile.texture = "BantoBar" end
 
 	if not self.frames then
 		self:SetupFrames()
 	end
+end
+
+function BigWigsBars:OnEnable()
+	if not surface:Fetch(self.db.profile.texture) then self.db.profile.texture = "BantoBar" end
 
 	self:RegisterEvent("BigWigs_ShowAnchors")
 	self:RegisterEvent("BigWigs_HideAnchors")

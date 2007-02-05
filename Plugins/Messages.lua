@@ -287,7 +287,10 @@ end
 ------------------------------
 
 function BigWigsMessages:OnRegister()
-	self:SetupFrames()
+	if not self.frames then
+		self:SetupFrames()
+	end
+
 	self:CreateMsgFrame()
 end
 
@@ -362,7 +365,7 @@ end
 function BigWigsMessages:SetupFrames()
 	local f, t
 
-	f, _, _ = GameFontNormal:GetFont()
+	f = GameFontNormal:GetFont()
 
 	self.frames = {}
 	self.frames.anchor = CreateFrame("Frame", "BigWigsMessageAnchor", UIParent)
@@ -375,7 +378,7 @@ function BigWigsMessages:SetupFrames()
 		bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background", tile = true, tileSize = 16,
 		edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border", edgeSize = 16,
 		insets = {left = 4, right = 4, top = 4, bottom = 4},
-		})
+	})
 	self.frames.anchor:SetBackdropBorderColor(.5, .5, .5)
 	self.frames.anchor:SetBackdropColor(0,0,0)
 	self.frames.anchor:ClearAllPoints()
