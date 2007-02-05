@@ -71,8 +71,6 @@ BigWigsAran.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsAran:OnEnable()
-	self.core:Print("The Aran boss mod is beta quality, at best! Please don't rely on it for anything!")
-
 	addsannounced = nil
 	enrageannounced = nil
 

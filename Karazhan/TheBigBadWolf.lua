@@ -49,8 +49,6 @@ BigWigsTheBigBadWolf.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsTheBigBadWolf:OnEnable()
-	self.core:Print("The Big Bad Wolf boss mod is beta quality, at best! Please don't rely on it for anything!")
-
 	playerName = UnitName("player")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 

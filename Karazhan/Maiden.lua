@@ -43,8 +43,6 @@ BigWigsMaiden.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsMaiden:OnEnable()
-	self.core:Print("Maiden mod by Funkydude, this mod is beta quality, at best! Please don't rely on it for anything!")
-
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
