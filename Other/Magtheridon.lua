@@ -46,7 +46,7 @@ L:RegisterTranslations("enUS", function() return {
 
 BigWigsMagtheridon = BigWigs:NewModule(boss)
 BigWigsMagtheridon.zonename = AceLibrary("Babble-Zone-2.2")["Magtheridon's Lair"]
-BigWigsMaulgar.otherMenu = true
+BigWigsMagtheridon.otherMenu = true
 BigWigsMagtheridon.enabletrigger = boss
 BigWigsMagtheridon.toggleoptions = {"escape", "abyssal", "heal", "bosskill"}
 BigWigsMagtheridon.revision = tonumber(string.sub("$Revision$", 12, -3))
