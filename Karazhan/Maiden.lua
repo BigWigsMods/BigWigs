@@ -28,6 +28,23 @@ L:RegisterTranslations("enUS", function() return {
 	repentance_warning = "Repentance Soon!",
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	engage_cmd = "engage",
+	engage_name = "Engage Warning",
+	engage_desc = "Alarm wenn Tugendhafte Maid angegriffen wird.",
+
+	repentance_cmd = "Bu\195\159e",
+	repentance_name = "Bu\195\159e Alarm",
+	repentance_desc = "Timer von Bu\195\159e",
+
+	engage_trigger = "Euer Verhalten wird nicht toleriert.",
+	engage_message = "Maid angegriffen!",
+
+	repentance_trigger = "L\195\182st Euch von Euren verdorbenen Gedanken!",
+	repentance_message = "Bu\195\159e!",
+	repentance_warning = "Bu\195\159e kommt",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
