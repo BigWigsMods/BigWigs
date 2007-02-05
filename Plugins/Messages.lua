@@ -7,6 +7,9 @@
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsMessages")
 local paint = AceLibrary("PaintChips-2.0")
 
+local messageFrame = nil
+local anchor = nil
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -249,7 +252,7 @@ BigWigsMessages.consoleOptions = {
 			get = function() return BigWigsMessages.db.profile.scale end,
 			set = function(v)
 				BigWigsMessages.db.profile.scale = v
-				if BigWigsMessages.msgframe then BigWigsMessages.msgframe:SetScale(v) end
+				if messageFrame then messageFrame:SetScale(v) end
 			end,
 			disabled = function() return (BigWigsMessages.db.profile.display ~= L["BigWigs frame"]) end,
 		},
@@ -286,32 +289,32 @@ end
 --      Initialization      --
 ------------------------------
 
-function BigWigsMessages:OnRegister()
+function BigWigsMessages:OnEnable()
 	if not self.frames then
 		self:SetupFrames()
 	end
 
-	self:CreateMsgFrame()
-end
+	if not messageFrame then
+		self:CreateMsgFrame()
+	end
 
-function BigWigsMessages:OnEnable()
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("BigWigs_ShowAnchors")
 	self:RegisterEvent("BigWigs_HideAnchors")
 end
 
 function BigWigsMessages:CreateMsgFrame()
-	self.msgframe = CreateFrame("MessageFrame")
-	self.msgframe:SetWidth(512)
-	self.msgframe:SetHeight(80)
+	messageFrame = CreateFrame("MessageFrame")
+	messageFrame:SetWidth(512)
+	messageFrame:SetHeight(80)
 
-	self.msgframe:SetPoint("TOP", self.frames.anchor, "BOTTOM", 0, 0)
-	self.msgframe:SetScale(self.db.profile.scale or 1)
-	self.msgframe:SetInsertMode("TOP")
-	self.msgframe:SetFrameStrata("HIGH")
-	self.msgframe:SetToplevel(true)
-	self.msgframe:SetFontObject(GameFontNormalLarge)
-	self.msgframe:Show()
+	messageFrame:SetPoint("TOP", anchor, "BOTTOM", 0, 0)
+	messageFrame:SetScale(self.db.profile.scale or 1)
+	messageFrame:SetInsertMode("TOP")
+	messageFrame:SetFrameStrata("HIGH")
+	messageFrame:SetToplevel(true)
+	messageFrame:SetFontObject(GameFontNormalLarge)
+	messageFrame:Show()
 end
 
 ------------------------------
@@ -319,42 +322,43 @@ end
 ------------------------------
 
 function BigWigsMessages:BigWigs_ShowAnchors()
-	self.frames.anchor:Show()
+	anchor:Show()
 end
 
 function BigWigsMessages:BigWigs_HideAnchors()
-	self.frames.anchor:Hide()
+	anchor:Hide()
 end
 
 function BigWigsMessages:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 	if not text then return end
 	if broadcastonly then return end
+
+	local db = self.db.profile
+
 	local r, g, b = 1, 1, 1 -- Default to white.
-	if self.db.profile.usecolors then
-		if color ~= nil and type(color) == "table" and type(color.r) == "number" and type(color.g) == "number" and type(color.b) == "number" then
+	if db.usecolors then
+		if type(color) == "table" and type(color.r) == "number" and type(color.g) == "number" and type(color.b) == "number" then
 			r, g, b = color.r, color.g, color.b
 		else
 			if type(BigWigsColors) == "table" and type(BigWigsColors.MsgColor) == "function" then
 				color = BigWigsColors:MsgColor(color)
 			end
-			_, r, g, b = paint:GetRGBPercent(color or "white")
+			r, g, b = select(2, paint:GetRGBPercent(color or "white"))
 		end
 	end
 
-	if self.db.profile.display == L["RaidWarning frame"] then
+	local display = db.display
+
+	if display == L["RaidWarning frame"] then
 		RaidWarningFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
-	elseif MikSBT and self.db.profile.display == L["Mik's Scrolling Battle Text"] then
+	elseif MikSBT and display == L["Mik's Scrolling Battle Text"] then
 		MikSBT.DisplayMessage(text, MikSBT.DISPLAYTYPE_NOTIFICATION, false, r * 255, g * 255, b * 255)
-	elseif SCT_Display_Message and self.db.profile.display == L["Scrolling Combat Text"] then -- SCT 4.x
-		local colorStruct = {}
-		colorStruct.r, colorStruct.g, colorStruct.b = r, g, b
-		SCT_Display_Message( text, colorStruct )
-	elseif SCT and SCT_MSG_FRAME and self.db.profile.display == L["Scrolling Combat Text"] then -- SCT 5.x
+	elseif SCT and SCT_MSG_FRAME and display == L["Scrolling Combat Text"] then -- SCT 5.x
 		SCT_MSG_FRAME:AddMessage( text, r, g, b, 1 )
-	elseif CombatText_AddMessage and self.db.profile.display == L["Floating Combat Text"] then -- Blizzards FCT
+	elseif CombatText_AddMessage and display == L["Floating Combat Text"] then -- Blizzards FCT
 		CombatText_AddMessage(text, COMBAT_TEXT_SCROLL_FUNCTION, r, g, b, "sticky", nil)
 	else -- Default BigWigs Frame fallback
-		self.msgframe:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
+		messageFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
 	end
 end
 
@@ -363,122 +367,121 @@ end
 ------------------------------
 
 function BigWigsMessages:SetupFrames()
-	local f, t
+	anchor = CreateFrame("Frame", "BigWigsMessageAnchor", UIParent)
+	anchor.owner = self
+	anchor:Hide()
 
-	f = GameFontNormal:GetFont()
-
-	self.frames = {}
-	self.frames.anchor = CreateFrame("Frame", "BigWigsMessageAnchor", UIParent)
-	self.frames.anchor.owner = self
-	self.frames.anchor:Hide()
-
-	self.frames.anchor:SetWidth(175)
-	self.frames.anchor:SetHeight(75)
-	self.frames.anchor:SetBackdrop({
+	anchor:SetWidth(175)
+	anchor:SetHeight(75)
+	anchor:SetBackdrop({
 		bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background", tile = true, tileSize = 16,
 		edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border", edgeSize = 16,
 		insets = {left = 4, right = 4, top = 4, bottom = 4},
 	})
-	self.frames.anchor:SetBackdropBorderColor(.5, .5, .5)
-	self.frames.anchor:SetBackdropColor(0,0,0)
-	self.frames.anchor:ClearAllPoints()
-	self.frames.anchor:SetPoint("CENTER", UIParent, "CENTER", 0, 100)
-	self.frames.anchor:EnableMouse(true)
-	self.frames.anchor:RegisterForDrag("LeftButton")
-	self.frames.anchor:SetMovable(true)
-	self.frames.anchor:SetScript("OnDragStart", function() this:StartMoving() end)
-	self.frames.anchor:SetScript("OnDragStop", function() this:StopMovingOrSizing() this.owner:SavePosition() end)
+	anchor:SetBackdropBorderColor(.5, .5, .5)
+	anchor:SetBackdropColor(0,0,0)
+	anchor:ClearAllPoints()
+	anchor:SetPoint("CENTER", UIParent, "CENTER", 0, 100)
+	anchor:EnableMouse(true)
+	anchor:RegisterForDrag("LeftButton")
+	anchor:SetMovable(true)
+	anchor:SetScript("OnDragStart", function() this:StartMoving() end)
+	anchor:SetScript("OnDragStop", function()
+		this:StopMovingOrSizing()
+		self:SavePosition()
+	end)
 
-	self.frames.cfade = self.frames.anchor:CreateTexture(nil, "BORDER")
-	self.frames.cfade:SetWidth(169)
-	self.frames.cfade:SetHeight(25)
-	self.frames.cfade:SetTexture("Interface\\ChatFrame\\ChatFrameBackground")
-	self.frames.cfade:SetPoint("TOP", self.frames.anchor, "TOP", 0, -4)
-	self.frames.cfade:SetBlendMode("ADD")
-	self.frames.cfade:SetGradientAlpha("VERTICAL", .1, .1, .1, 0, .25, .25, .25, 1)
-	self.frames.anchor.Fade = self.frames.fade
+	local cfade = anchor:CreateTexture(nil, "BORDER")
+	cfade:SetWidth(169)
+	cfade:SetHeight(25)
+	cfade:SetTexture("Interface\\ChatFrame\\ChatFrameBackground")
+	cfade:SetPoint("TOP", anchor, "TOP", 0, -4)
+	cfade:SetBlendMode("ADD")
+	cfade:SetGradientAlpha("VERTICAL", .1, .1, .1, 0, .25, .25, .25, 1)
+	anchor.Fade = cfade
 
-	self.frames.cheader = self.frames.anchor:CreateFontString(nil,"OVERLAY")
-	self.frames.cheader:SetFont(f, 14)
-	self.frames.cheader:SetWidth(150)
-	self.frames.cheader:SetText(L["Messages"])
-	self.frames.cheader:SetTextColor(1, .8, 0)
-	self.frames.cheader:ClearAllPoints()
-	self.frames.cheader:SetPoint("TOP", self.frames.anchor, "TOP", 0, -10)
+	local cheader = anchor:CreateFontString(nil,"OVERLAY")
+	cheader:SetFont(GameFontNormal:GetFont(), 14)
+	cheader:SetWidth(150)
+	cheader:SetText(L["Messages"])
+	cheader:SetTextColor(1, .8, 0)
+	cheader:ClearAllPoints()
+	cheader:SetPoint("TOP", anchor, "TOP", 0, -10)
 
-	self.frames.leftbutton = CreateFrame("Button", nil, self.frames.anchor)
-	self.frames.leftbutton.owner = self
-	self.frames.leftbutton:SetWidth(40)
-	self.frames.leftbutton:SetHeight(25)
-	self.frames.leftbutton:SetPoint("RIGHT", self.frames.anchor, "CENTER", -10, -15)
-	self.frames.leftbutton:SetScript( "OnClick", function()  self:TriggerEvent("BigWigs_Test") end )
+	local leftbutton = CreateFrame("Button", nil, anchor)
+	leftbutton.owner = self
+	leftbutton:SetWidth(40)
+	leftbutton:SetHeight(25)
+	leftbutton:SetPoint("RIGHT", anchor, "CENTER", -10, -15)
+	leftbutton:SetScript( "OnClick", function()  self:TriggerEvent("BigWigs_Test") end )
 
-	t = self.frames.leftbutton:CreateTexture()
+	local t = leftbutton:CreateTexture()
 	t:SetWidth(50)
 	t:SetHeight(32)
-	t:SetPoint("CENTER", self.frames.leftbutton, "CENTER")
+	t:SetPoint("CENTER", leftbutton, "CENTER")
 	t:SetTexture("Interface\\Buttons\\UI-Panel-Button-Up")
 	t:SetTexCoord(0, 0.625, 0, 0.6875)
-	self.frames.leftbutton:SetNormalTexture(t)
+	leftbutton:SetNormalTexture(t)
 
-	t = self.frames.leftbutton:CreateTexture(nil, "BACKGROUND")
+	t = leftbutton:CreateTexture(nil, "BACKGROUND")
 	t:SetTexture("Interface\\Buttons\\UI-Panel-Button-Down")
 	t:SetTexCoord(0, 0.625, 0, 0.6875)
-	t:SetAllPoints(self.frames.leftbutton)
-	self.frames.leftbutton:SetPushedTexture(t)
+	t:SetAllPoints(leftbutton)
+	leftbutton:SetPushedTexture(t)
 
-	t = self.frames.leftbutton:CreateTexture()
+	t = leftbutton:CreateTexture()
 	t:SetTexture("Interface\\Buttons\\UI-Panel-Button-Highlight")
 	t:SetTexCoord(0, 0.625, 0, 0.6875)
-	t:SetAllPoints(self.frames.leftbutton)
+	t:SetAllPoints(leftbutton)
 	t:SetBlendMode("ADD")
-	self.frames.leftbutton:SetHighlightTexture(t)
-	self.frames.leftbuttontext = self.frames.leftbutton:CreateFontString(nil,"OVERLAY")
-	self.frames.leftbuttontext:SetFontObject(GameFontHighlight)
-	self.frames.leftbuttontext:SetText(L["Test"])
-	self.frames.leftbuttontext:SetAllPoints(self.frames.leftbutton)
+	leftbutton:SetHighlightTexture(t)
 
-	self.frames.rightbutton = CreateFrame("Button", nil, self.frames.anchor)
-	self.frames.rightbutton.owner = self
-	self.frames.rightbutton:SetWidth(40)
-	self.frames.rightbutton:SetHeight(25)
-	self.frames.rightbutton:SetPoint("LEFT", self.frames.anchor, "CENTER", 10, -15)
-	self.frames.rightbutton:SetScript( "OnClick", function() self:BigWigs_HideAnchors() end )
+	local leftbuttontext = leftbutton:CreateFontString(nil,"OVERLAY")
+	leftbuttontext:SetFontObject(GameFontHighlight)
+	leftbuttontext:SetText(L["Test"])
+	leftbuttontext:SetAllPoints(leftbutton)
 
-	t = self.frames.rightbutton:CreateTexture()
+	local rightbutton = CreateFrame("Button", nil, anchor)
+	rightbutton.owner = self
+	rightbutton:SetWidth(40)
+	rightbutton:SetHeight(25)
+	rightbutton:SetPoint("LEFT", anchor, "CENTER", 10, -15)
+	rightbutton:SetScript( "OnClick", function() self:BigWigs_HideAnchors() end )
+
+	t = rightbutton:CreateTexture()
 	t:SetWidth(50)
 	t:SetHeight(32)
-	t:SetPoint("CENTER", self.frames.rightbutton, "CENTER")
+	t:SetPoint("CENTER", rightbutton, "CENTER")
 	t:SetTexture("Interface\\Buttons\\UI-Panel-Button-Up")
 	t:SetTexCoord(0, 0.625, 0, 0.6875)
-	self.frames.rightbutton:SetNormalTexture(t)
+	rightbutton:SetNormalTexture(t)
 
-	t = self.frames.rightbutton:CreateTexture(nil, "BACKGROUND")
+	t = rightbutton:CreateTexture(nil, "BACKGROUND")
 	t:SetTexture("Interface\\Buttons\\UI-Panel-Button-Down")
 	t:SetTexCoord(0, 0.625, 0, 0.6875)
-	t:SetAllPoints(self.frames.rightbutton)
-	self.frames.rightbutton:SetPushedTexture(t)
+	t:SetAllPoints(rightbutton)
+	rightbutton:SetPushedTexture(t)
 
-	t = self.frames.rightbutton:CreateTexture()
+	t = rightbutton:CreateTexture()
 	t:SetTexture("Interface\\Buttons\\UI-Panel-Button-Highlight")
 	t:SetTexCoord(0, 0.625, 0, 0.6875)
-	t:SetAllPoints(self.frames.rightbutton)
+	t:SetAllPoints(rightbutton)
 	t:SetBlendMode("ADD")
-	self.frames.rightbutton:SetHighlightTexture(t)
-	self.frames.rightbuttontext = self.frames.rightbutton:CreateFontString(nil,"OVERLAY")
-	self.frames.rightbuttontext:SetFontObject(GameFontHighlight)
-	self.frames.rightbuttontext:SetText(L["Close"])
-	self.frames.rightbuttontext:SetAllPoints(self.frames.rightbutton)
+	rightbutton:SetHighlightTexture(t)
+
+	local rightbuttontext = rightbutton:CreateFontString(nil,"OVERLAY")
+	rightbuttontext:SetFontObject(GameFontHighlight)
+	rightbuttontext:SetText(L["Close"])
+	rightbuttontext:SetAllPoints(rightbutton)
 
 	self:RestorePosition()
 end
 
 function BigWigsMessages:SavePosition()
-	local f = self.frames.anchor
-	local s = f:GetEffectiveScale()
+	local s = anchor:GetEffectiveScale()
 
-	self.db.profile.posx = f:GetLeft() * s
-	self.db.profile.posy = f:GetTop() * s
+	self.db.profile.posx = anchor:GetLeft() * s
+	self.db.profile.posy = anchor:GetTop() * s
 end
 
 function BigWigsMessages:RestorePosition()
@@ -487,11 +490,10 @@ function BigWigsMessages:RestorePosition()
 
 	if not x or not y then return end
 
-	local f = self.frames.anchor
-	local s = f:GetEffectiveScale()
+	local s = anchor:GetEffectiveScale()
 
-	f:ClearAllPoints()
-	f:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+	anchor:ClearAllPoints()
+	anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 end
 
 
