@@ -148,3 +148,4 @@ Karazhan\RomuloJulianne.lua
 Karazhan\Moroes.lua
 Karazhan\Attumen.lua
 Karazhan\Maiden.lua
+Karazhan\WizardofOz.lua

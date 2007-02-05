@@ -28,3 +28,4 @@ RomuloJulianne.lua
 Moroes.lua
 Attumen.lua
 Maiden.lua
+WizardofOz.lua
