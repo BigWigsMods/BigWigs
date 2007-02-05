@@ -526,16 +526,10 @@ function BigWigsColors:RGBToHex(r, g, b)
 	return format("%02x%02x%02x", r*255, g*255, b*255)
 end
 
-function BigWigsColors:MsgColor(type)
-	if type == "Important" then type = self.db.profile.important
-	elseif type == "Personal" then type = self.db.profile.personal
-	elseif type == "Urgent" then type = self.db.profile.urgent
-	elseif type == "Attention" then type = self.db.profile.attention
-	elseif type == "Positive" then type = self.db.profile.positive
-	elseif type == "Bosskill" then type = self.db.profile.bosskill
-	elseif type == "Core" then type = self.db.profile.core end
-
-	return type
+function BigWigsColors:MsgColor(hint)
+	local color = self.db.profile[hint:lower()]
+	if type(color) ~= "string" then return hint end
+	return color
 end
 
 function BigWigsColors:BarColor(time)
