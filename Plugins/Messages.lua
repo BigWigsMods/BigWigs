@@ -368,20 +368,20 @@ end
 
 function BigWigsMessages:SetupFrames()
 	anchor = CreateFrame("Frame", "BigWigsMessageAnchor", UIParent)
-	anchor.owner = self
 	anchor:Hide()
 
-	anchor:SetWidth(175)
-	anchor:SetHeight(75)
+	anchor:SetWidth(120)
+	anchor:SetHeight(60)
+	
 	anchor:SetBackdrop({
-		bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background", tile = true, tileSize = 16,
-		edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border", edgeSize = 16,
-		insets = {left = 4, right = 4, top = 4, bottom = 4},
-	})
-	anchor:SetBackdropBorderColor(.5, .5, .5)
-	anchor:SetBackdropColor(0,0,0)
+		bgFile = "Interface\\ChatFrame\\ChatFrameBackground", tile = true, tileSize = 32,
+		edgeFile = "Interface\\AddOns\\BigWigs\\Textures\\otravi-semi-full-border", edgeSize = 32,
+		insets = {left = 1, right = 1, top = 20, bottom = 1},
+	})	
+
+	anchor:SetBackdropColor(24/255, 24/255, 24/255)
 	anchor:ClearAllPoints()
-	anchor:SetPoint("CENTER", UIParent, "CENTER", 0, 100)
+	anchor:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
 	anchor:EnableMouse(true)
 	anchor:RegisterForDrag("LeftButton")
 	anchor:SetMovable(true)
@@ -391,88 +391,38 @@ function BigWigsMessages:SetupFrames()
 		self:SavePosition()
 	end)
 
-	local cfade = anchor:CreateTexture(nil, "BORDER")
-	cfade:SetWidth(169)
-	cfade:SetHeight(25)
-	cfade:SetTexture("Interface\\ChatFrame\\ChatFrameBackground")
-	cfade:SetPoint("TOP", anchor, "TOP", 0, -4)
-	cfade:SetBlendMode("ADD")
-	cfade:SetGradientAlpha("VERTICAL", .1, .1, .1, 0, .25, .25, .25, 1)
-	anchor.Fade = cfade
-
 	local cheader = anchor:CreateFontString(nil,"OVERLAY")
-	cheader:SetFont(GameFontNormal:GetFont(), 14)
-	cheader:SetWidth(150)
-	cheader:SetText(L["Messages"])
-	cheader:SetTextColor(1, .8, 0)
 	cheader:ClearAllPoints()
-	cheader:SetPoint("TOP", anchor, "TOP", 0, -10)
+	cheader:SetWidth(110)
+	cheader:SetHeight(15)
+	cheader:SetPoint("TOP", anchor, "TOP", 0, -14)
+	cheader:SetFont("Fonts\\FRIZQT__.TTF", 12)
+	cheader:SetJustifyH("LEFT")
+	cheader:SetText(L["Messages"])
+	cheader:SetShadowOffset(.8, -.8)
+	cheader:SetShadowColor(0, 0, 0, 1)
 
-	local leftbutton = CreateFrame("Button", nil, anchor)
-	leftbutton.owner = self
-	leftbutton:SetWidth(40)
-	leftbutton:SetHeight(25)
-	leftbutton:SetPoint("RIGHT", anchor, "CENTER", -10, -15)
-	leftbutton:SetScript( "OnClick", function()  self:TriggerEvent("BigWigs_Test") end )
+	local close = anchor:CreateTexture(nil, "ARTWORK")
+	close:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\otravi-close")
+	close:SetTexCoord(0, .625, 0, .9333)
 
-	local t = leftbutton:CreateTexture()
-	t:SetWidth(50)
-	t:SetHeight(32)
-	t:SetPoint("CENTER", leftbutton, "CENTER")
-	t:SetTexture("Interface\\Buttons\\UI-Panel-Button-Up")
-	t:SetTexCoord(0, 0.625, 0, 0.6875)
-	leftbutton:SetNormalTexture(t)
-
-	t = leftbutton:CreateTexture(nil, "BACKGROUND")
-	t:SetTexture("Interface\\Buttons\\UI-Panel-Button-Down")
-	t:SetTexCoord(0, 0.625, 0, 0.6875)
-	t:SetAllPoints(leftbutton)
-	leftbutton:SetPushedTexture(t)
-
-	t = leftbutton:CreateTexture()
-	t:SetTexture("Interface\\Buttons\\UI-Panel-Button-Highlight")
-	t:SetTexCoord(0, 0.625, 0, 0.6875)
-	t:SetAllPoints(leftbutton)
-	t:SetBlendMode("ADD")
-	leftbutton:SetHighlightTexture(t)
-
-	local leftbuttontext = leftbutton:CreateFontString(nil,"OVERLAY")
-	leftbuttontext:SetFontObject(GameFontHighlight)
-	leftbuttontext:SetText(L["Test"])
-	leftbuttontext:SetAllPoints(leftbutton)
-
-	local rightbutton = CreateFrame("Button", nil, anchor)
-	rightbutton.owner = self
-	rightbutton:SetWidth(40)
-	rightbutton:SetHeight(25)
-	rightbutton:SetPoint("LEFT", anchor, "CENTER", 10, -15)
-	rightbutton:SetScript( "OnClick", function() self:BigWigs_HideAnchors() end )
-
-	t = rightbutton:CreateTexture()
-	t:SetWidth(50)
-	t:SetHeight(32)
-	t:SetPoint("CENTER", rightbutton, "CENTER")
-	t:SetTexture("Interface\\Buttons\\UI-Panel-Button-Up")
-	t:SetTexCoord(0, 0.625, 0, 0.6875)
-	rightbutton:SetNormalTexture(t)
-
-	t = rightbutton:CreateTexture(nil, "BACKGROUND")
-	t:SetTexture("Interface\\Buttons\\UI-Panel-Button-Down")
-	t:SetTexCoord(0, 0.625, 0, 0.6875)
-	t:SetAllPoints(rightbutton)
-	rightbutton:SetPushedTexture(t)
-
-	t = rightbutton:CreateTexture()
-	t:SetTexture("Interface\\Buttons\\UI-Panel-Button-Highlight")
-	t:SetTexCoord(0, 0.625, 0, 0.6875)
-	t:SetAllPoints(rightbutton)
-	t:SetBlendMode("ADD")
-	rightbutton:SetHighlightTexture(t)
-
-	local rightbuttontext = rightbutton:CreateFontString(nil,"OVERLAY")
-	rightbuttontext:SetFontObject(GameFontHighlight)
-	rightbuttontext:SetText(L["Close"])
-	rightbuttontext:SetAllPoints(rightbutton)
+	close:SetWidth(20)
+	close:SetHeight(14)
+	close:SetPoint("TOPRIGHT", anchor, "TOPRIGHT", -7, -15)
+	
+	local closebutton = CreateFrame("Button", nil)
+	closebutton:SetParent( anchor )
+	closebutton:SetWidth(20)
+	closebutton:SetHeight(14)
+	closebutton:SetPoint("CENTER", close, "CENTER")
+	closebutton:SetScript( "OnClick", function() self:BigWigs_HideAnchors() end )
+	
+	local testbutton = CreateFrame("Button", nil, anchor, "UIPanelButtonTemplate")
+	testbutton:SetWidth(40)
+	testbutton:SetHeight(25)
+	testbutton:SetText(L["Test"])
+	testbutton:SetPoint("BOTTOM", anchor, "BOTTOM", 0, 2)
+	testbutton:SetScript( "OnClick", function()  self:TriggerEvent("BigWigs_Test") end )
 
 	self:RestorePosition()
 end
