@@ -120,6 +120,7 @@ Other\Lethon.lua
 Other\Kazzak.lua
 Other\Gruul.lua
 Other\Maulgar.lua
+Other\Magtheridon.lua
 
 Naxxramas\Anubrekhan.lua
 Naxxramas\Gluth.lua
