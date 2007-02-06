@@ -136,7 +136,7 @@ function BigWigsLoD:InitializeLoD()
 							zonelist[zone] = true
 							self:AddCoreMenu(zone)
 						else
-							local menu = GetAddOnMetaData(i, "X-BigWigs-Menu")
+							local menu = GetAddOnMetadata(i, "X-BigWigs-Menu")
 							assert(menu, "Modules either need to have a direct link to the core translation table or X-BigWigs-Menu set.")
 							local translatedMenu = LC[menu]
 							assert(translatedMenu, "No translation exists for this menu key.")
