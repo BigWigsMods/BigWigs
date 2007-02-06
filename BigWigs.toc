@@ -111,12 +111,12 @@ MC\Sulfuron.lua
 MC\Garr.lua
 MC\Golemagg.lua
 
-Other\Azuregos.lua
-Other\Emeriss.lua
-Other\Onyxia.lua
-Other\Ysondre.lua
-Other\Taerar.lua
-Other\Lethon.lua
+Azeroth\Azuregos.lua
+Azeroth\Emeriss.lua
+Azeroth\Onyxia.lua
+Azeroth\Ysondre.lua
+Azeroth\Taerar.lua
+Azeroth\Lethon.lua
 
 Outland\Kazzak.lua
 Outland\Gruul.lua
