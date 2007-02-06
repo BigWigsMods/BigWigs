@@ -117,10 +117,11 @@ Other\Onyxia.lua
 Other\Ysondre.lua
 Other\Taerar.lua
 Other\Lethon.lua
-Other\Kazzak.lua
-Other\Gruul.lua
-Other\Maulgar.lua
-Other\Magtheridon.lua
+
+Outland\Kazzak.lua
+Outland\Gruul.lua
+Outland\Maulgar.lua
+Outland\Magtheridon.lua
 
 Naxxramas\Anubrekhan.lua
 Naxxramas\Gluth.lua

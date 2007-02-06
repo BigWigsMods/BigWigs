@@ -9,6 +9,7 @@ rm -rf BigWigs_ZG
 rm -rf BigWigs_Naxxramas
 rm -rf BigWigs_Karazhan
 rm -rf BigWigs_Other
+rm -rf BigWigs_Outland
 rm -rf BigWigs_Extras
 rm -rf BigWigs_Plugins
 
@@ -22,6 +23,7 @@ mv Naxxramas/Naxxramas.toc Naxxramas/BigWigs_Naxxramas.toc
 mv Karazhan/Karazhan.toc Karazhan/BigWigs_Karazhan.toc
 mv ZG/ZG.toc ZG/BigWigs_ZG.toc
 mv Other/Other.toc Other/BigWigs_Other.toc
+mv Outland/Outland.toc Outland/BigWigs_Outland.toc
 mv Extras/Extras.toc Extras/BigWigs_Extras.toc
 mv Plugins/Plugins.toc Plugins/BigWigs_Plugins.toc
 
@@ -33,5 +35,6 @@ mv Naxxramas ../BigWigs_Naxxramas
 mv Karazhan ../BigWigs_Karazhan
 mv ZG ../BigWigs_ZG
 mv Other ../BigWigs_Other
+mv Outland ../BigWigs_Outland
 mv Extras ../BigWigs_Extras
 mv Plugins ../BigWigs_Plugins
