@@ -36,7 +36,6 @@ L:RegisterTranslations("enUS", function() return {
 	bosskill_name = "Boss death",
 	bosskill_desc = "Announce when the boss has been defeated.",
 
-	["Other"] = true,
 	["Load"] = true,
 	["Load All"] = true,
 	["Load all %s modules."] = true,
@@ -49,6 +48,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Ahn'Qiraj"] = "AQ40",
 	["Ruins of Ahn'Qiraj"] = "AQ20",
 	["Naxxramas"] = "Naxxramas",
+	["Azeroth"] = "Azeroth",
+	["Outland"] = "Outland",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -457,24 +458,24 @@ function BigWigs:RegisterModule(name, module)
 		end
 
 		if cons or module.consoleOptions then
-			local zonename = type(module.zonename) == "table" and module.zonename[1] or module.zonename
-			local zone = zonename
-			if module.otherMenu then
-				zone = L["Other"]
-				zonename = zone
-			end
-			if not self.cmdtable.args[zone] then
-				self.cmdtable.args[zone] = {
-					type = "group",
-					name = zonename,
-					desc = string.format(L["Options for bosses in %s."], zonename),
-					args = {},
-					disabled = function() return not BigWigs:IsActive() end,
-				}
-			end
 			if module.external then
 				self.cmdtable.args[L["Extras"]].args[L2["cmd"]] = cons or module.consoleOptions
 			else
+				local zonename = type(module.zonename) == "table" and module.zonename[1] or module.zonename
+				local zone = zonename
+				if module.otherMenu then
+					zone = L[module.otherMenu] or error(string.format("Invalid otherMenu value from %s.", module:ToString()))
+					zonename = zone
+				end
+				if not self.cmdtable.args[zone] then
+					self.cmdtable.args[zone] = {
+						type = "group",
+						name = zonename,
+						desc = string.format(L["Options for bosses in %s."], zonename),
+						args = {},
+						disabled = function() return not BigWigs:IsActive() end,
+					}
+				end
 				self.cmdtable.args[zone].args[L2["cmd"]] = cons or module.consoleOptions
 			end
 		end

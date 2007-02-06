@@ -36,7 +36,7 @@ L:RegisterTranslations("enUS", function() return {
 
 BigWigsLethon = BigWigs:NewModule(boss)
 BigWigsLethon.zonename = {BZ["Ashenvale"], BZ["Duskwood"], BZ["The Hinterlands"], BZ["Feralas"]}
-BigWigsLethon.otherMenu = true
+BigWigsLethon.otherMenu = "Azeroth"
 BigWigsLethon.enabletrigger = boss
 BigWigsLethon.toggleoptions = {"engage", -1, "noxious", "bosskill"}
 BigWigsLethon.revision = tonumber(string.sub("$Revision$", 12, -3))

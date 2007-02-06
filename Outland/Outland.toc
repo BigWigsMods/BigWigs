@@ -2,8 +2,8 @@
 
 ## Title: Big Wigs [|cffeda55fOutland|r]
 ## Notes: Big Wigs Outland Modules
-## Author: Ammo, Rabbit
-## X-Credits: Tekkub Stoutwrithe(founding author), Shyva, Funkydude & Others
+## Author: Funkydude, Ammo, Rabbit
+## X-Credits: Tekkub Stoutwrithe(founding author) & Others
 ## Version: 2.0
 ## LoadOnDemand: 1
 
@@ -13,6 +13,7 @@
 ## X-RelSite-Curse: 4356
 ## X-AceForum: 1222
 
+## X-BigWigs-Menu: Outland
 ## X-BigWigs-LoadInZone: Hellfire Peninsula, Gruul's Lair, Magtheridon's Lair
 
 ## Dependencies: BigWigs
@@ -21,3 +22,4 @@ Kazzak.lua
 Gruul.lua
 Maulgar.lua
 Magtheridon.lua
+

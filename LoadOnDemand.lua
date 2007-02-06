@@ -136,9 +136,13 @@ function BigWigsLoD:InitializeLoD()
 							zonelist[zone] = true
 							self:AddCoreMenu(zone)
 						else
-							if not zonelist[LC["Other"]] then zonelist[LC["Other"]] = {} end
-							zonelist[LC["Other"]][zone] = true
-							self:AddCoreMenu(LC["Other"])
+							local menu = GetAddOnMetaData(i, "X-BigWigs-Menu")
+							assert(menu, "Modules either need to have a direct link to the core translation table or X-BigWigs-Menu set.")
+							local translatedMenu = LC[menu]
+							assert(translatedMenu, "No translation exists for this menu key.")
+							if not zonelist[translatedMenu] then zonelist[translatedMenu] = {} end
+							zonelist[translatedMenu][zone] = true
+							self:AddCoreMenu(translatedMenu)
 						end
 					end
 				end
@@ -159,10 +163,12 @@ function BigWigsLoD:LoadZone( zone )
 	
 	if zonelist[zone] then
 		menu = LC:HasTranslation(zone) and LC[zone] or zone
-	elseif zonelist[LC["Other"]] and zonelist[LC["Other"]][zone] then
-		menu = LC["Other"]
 	else
-		return
+		for k, v in pairs(zonelist) do
+			if type(v) == "table" and v[zone] then
+				menu = k
+			end
+		end
 	end
 
 	local opt = BigWigs.cmdtable.args[menu]

@@ -36,7 +36,7 @@ L:RegisterTranslations("enUS", function() return {
 
 BigWigsTaerar = BigWigs:NewModule(boss)
 BigWigsTaerar.zonename = {BZ["Ashenvale"], BZ["Duskwood"], BZ["The Hinterlands"], BZ["Feralas"]}
-BigWigsTaerar.otherMenu = true
+BigWigsTaerar.otherMenu = "Azeroth"
 BigWigsTaerar.enabletrigger = boss
 BigWigsTaerar.toggleoptions = {"engage", -1, "noxious", "bosskill"}
 BigWigsTaerar.revision = tonumber(string.sub("$Revision$", 12, -3))

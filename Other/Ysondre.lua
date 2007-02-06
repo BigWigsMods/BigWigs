@@ -36,7 +36,7 @@ L:RegisterTranslations("enUS", function() return {
 
 BigWigsYsondre = BigWigs:NewModule(boss)
 BigWigsYsondre.zonename = {BZ["Ashenvale"], BZ["Duskwood"], BZ["The Hinterlands"], BZ["Feralas"]}
-BigWigsYsondre.otherMenu = true
+BigWigsYsondre.otherMenu = "Azeroth"
 BigWigsYsondre.enabletrigger = boss
 BigWigsYsondre.toggleoptions = {"engage", -1, "noxious", "bosskill"}
 BigWigsYsondre.revision = tonumber(string.sub("$Revision$", 12, -3))
