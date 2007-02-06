@@ -24,7 +24,7 @@ L:RegisterTranslations("enUS", function() return {
 	heal_name = "Heal",
 	heal_desc = "Warn when a Hellfire Channeler starts to heal",
 
-	escape_trigger1 = "%s's bonds begin to weaken!",
+	escape_trigger1 = "%%s's bonds begin to weaken!",
 	escape_trigger2 = "I... am... unleashed!",
 	escape_warning1 = "Magtheridon Engaged - Breaks free in 2min!",
 	escape_warning2 = "Breaks free in 1min!",
