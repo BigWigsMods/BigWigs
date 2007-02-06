@@ -26,7 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 
 BigWigsKazzak = BigWigs:NewModule(boss)
 BigWigsKazzak.zonename = AceLibrary("Babble-Zone-2.2")["Hellfire Peninsula"]
-BigWigsKazzak.otherMenu = true
+BigWigsKazzak.otherMenu = "Outland"
 BigWigsKazzak.enabletrigger = boss
 BigWigsKazzak.toggleoptions = {"engage", "bosskill"}
 BigWigsKazzak.revision = tonumber(string.sub("$Revision$", 12, -3))

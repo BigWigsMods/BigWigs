@@ -54,7 +54,7 @@ L:RegisterTranslations("enUS", function() return {
 
 BigWigsMaulgar = BigWigs:NewModule(boss)
 BigWigsMaulgar.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
-BigWigsMaulgar.otherMenu = true
+BigWigsMaulgar.otherMenu = "Outland"
 BigWigsMaulgar.enabletrigger = boss
 BigWigsMaulgar.toggleoptions = {"shield", "spellshield", -1, "whirlwind", "heal", "bosskill"}
 BigWigsMaulgar.revision = tonumber(string.sub("$Revision$", 12, -3))

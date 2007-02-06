@@ -49,7 +49,7 @@ L:RegisterTranslations("enUS", function() return {
 
 BigWigsGruul = BigWigs:NewModule(boss)
 BigWigsGruul.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
-BigWigsGruul.otherMenu = true
+BigWigsGruul.otherMenu = "Outland"
 BigWigsGruul.enabletrigger = boss
 BigWigsGruul.toggleoptions = {"engage", -1, "cavein", -1, "grasp", "enrage", "bosskill"}
 BigWigsGruul.revision = tonumber(string.sub("$Revision$", 12, -3))
