@@ -37,6 +37,7 @@ L:RegisterTranslations("enUS", function() return {
 	bosskill_desc = "Announce when the boss has been defeated.",
 
 	["Load"] = true,
+	["Other"] = true,
 	["Load All"] = true,
 	["Load all %s modules."] = true,
 
