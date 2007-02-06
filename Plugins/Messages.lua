@@ -371,7 +371,7 @@ function BigWigsMessages:SetupFrames()
 	anchor:Hide()
 
 	anchor:SetWidth(120)
-	anchor:SetHeight(60)
+	anchor:SetHeight(80)
 	
 	anchor:SetBackdrop({
 		bgFile = "Interface\\ChatFrame\\ChatFrameBackground", tile = true, tileSize = 32,
@@ -409,19 +409,19 @@ function BigWigsMessages:SetupFrames()
 	close:SetWidth(20)
 	close:SetHeight(14)
 	close:SetPoint("TOPRIGHT", anchor, "TOPRIGHT", -7, -15)
-	
+
 	local closebutton = CreateFrame("Button", nil)
 	closebutton:SetParent( anchor )
 	closebutton:SetWidth(20)
 	closebutton:SetHeight(14)
 	closebutton:SetPoint("CENTER", close, "CENTER")
 	closebutton:SetScript( "OnClick", function() self:BigWigs_HideAnchors() end )
-	
+
 	local testbutton = CreateFrame("Button", nil, anchor, "UIPanelButtonTemplate")
-	testbutton:SetWidth(40)
+	testbutton:SetWidth(60)
 	testbutton:SetHeight(25)
 	testbutton:SetText(L["Test"])
-	testbutton:SetPoint("BOTTOM", anchor, "BOTTOM", 0, 2)
+	testbutton:SetPoint("CENTER", anchor, "CENTER", 0, -16)
 	testbutton:SetScript( "OnClick", function()  self:TriggerEvent("BigWigs_Test") end )
 
 	self:RestorePosition()
