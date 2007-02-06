@@ -37,7 +37,6 @@ L:RegisterTranslations("enUS", function() return {
 	bosskill_desc = "Announce when the boss has been defeated.",
 
 	["Load"] = true,
-	["Other"] = true,
 	["Load All"] = true,
 	["Load all %s modules."] = true,
 
@@ -80,7 +79,6 @@ L:RegisterTranslations("frFR", function() return {
 	bosskill_name = "D\195\169faite du boss",
 	bosskill_desc = "Pr\195\169viens quand le boss est vaincu.",
 
-	["Other"] = "Autres",
 	["Load"] = "Charger",
 	["Load All"] = "Tout charger",
 	["Load all %s modules."] = "Charge tous les modules \"%s\".",
@@ -124,7 +122,6 @@ L:RegisterTranslations("deDE", function() return {
 	bosskill_name = "Boss besiegt",
 	bosskill_desc = "Melde, wenn ein Boss besiegt wurde.",
 
-	["Other"] = "Anderes",
 	["Load"] = "Laden",
 	["Load All"] = "Alle Laden",
 	["Load all %s modules."] = "Alle %s Module laden.",
@@ -164,7 +161,6 @@ L:RegisterTranslations("koKR", function() return {
 	bosskill_name = "보스 사망",
 	bosskill_desc = "보스를 물리쳤을 때 알림",
 
-	["Other"] = "외부",
 	["Load"] = "불러오기",
 	["Load All"] = "모두 불러오기",
 	["Load all %s modules."] = "모든 %s 모듈들을 불러옵니다.",
@@ -202,7 +198,6 @@ L:RegisterTranslations("zhCN", function() return {
 	bosskill_name = "首领死亡",
 	bosskill_desc = "首领死亡时提示",
 
-	["Other"] = "其他",
 	["Load"] = "载入",
 	["Load All"] = "载入所有",
 	["Load all %s modules."] = "载入所有%s的模块",
