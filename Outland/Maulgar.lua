@@ -5,6 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["High King Maulgar"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started
+local flurryannounced
 
 ----------------------------
 --      Localization      --
@@ -29,6 +30,10 @@ L:RegisterTranslations("enUS", function() return {
 	whirlwind_name = "Whirldwind",
 	whirlwind_desc = "Warn when Maulgar gains Whirlwind",
 
+	flurry_cmd = "flurry",
+	flurry_name = "Flurry",
+	flurry_desc = "Warn when Maulgar is close to Flurry and gains Flurry",
+
 	heal_trigger1 = "begins to cast Prayer of Healing",
 	heal_trigger2 = "begins to cast Heal",
 	heal_message1 = "Blindeye casting Prayer of Healing!",
@@ -41,13 +46,16 @@ L:RegisterTranslations("enUS", function() return {
 	spellshield_trigger = "gains Spell Shield.",
 	spellshield_message = "Spell Shield on Krosh!",
 
+	flurry_trigger = "You will not defeat the hand of Gruul!",
+	flurry_message = "50% - Flurry!",
+	flurry_warning = "Flurry Soon!",
+
 	whirlwind_trigger = "gains Whirlwind",
 	whirlwind_message = "Maulgar - Whirldwind for 15sec!",
 	whirlwind_bar = "Whirlwind",
-	whirlwind_nextbar = "Next WhirlWind",
+	whirlwind_nextbar = "~Next WhirlWind",
 	whirlwind_warning1 = "Maulgar Engaged - Whirldwind in ~50sec!",
-	whirlwind_warning2 = "Whirldwind in ~30sec",
-	whirlwind_warning3 = "Whirldwind in ~10sec",
+	whirlwind_warning2 = "Whirldwind Soon!",
 } end)
 
 ----------------------------------
@@ -58,7 +66,7 @@ BigWigsMaulgar = BigWigs:NewModule(boss)
 BigWigsMaulgar.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
 BigWigsMaulgar.otherMenu = "Outland"
 BigWigsMaulgar.enabletrigger = boss
-BigWigsMaulgar.toggleoptions = {"shield", "spellshield", -1, "whirlwind", "heal", "bosskill"}
+BigWigsMaulgar.toggleoptions = {"shield", "spellshield", "whirlwind", "heal", "flurry", "bosskill"}
 BigWigsMaulgar.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -67,10 +75,14 @@ BigWigsMaulgar.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsMaulgar:OnEnable()
 	started = nil
+	flurryannounced = nil
+
+	self:RegisterEvent("UNIT_HEALTH")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -88,9 +100,9 @@ end
 ------------------------------
 
 function BigWigsMaulgar:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if (msg:find(L["heal_trigger1"])) and self.db.profile.heal then
+	if msg:find(L["heal_trigger1"]) and self.db.profile.heal then
 		self:TriggerEvent("BigWigs_SendSync", "BlindeyePOH")
-	elseif (msg:find(L["heal_trigger2"])) and self.db.profile.heal then
+	elseif msg:find(L["heal_trigger2"]) and self.db.profile.heal then
 		self:TriggerEvent("BigWigs_SendSync", "BlindeyeHeal")
 	end
 end
@@ -131,7 +143,25 @@ function BigWigsMaulgar:BigWigs_RecvSync( sync, rest, nick )
 end
 
 function BigWigsMaulgar:Nextwhirldwind()
-	self:ScheduleEvent("BigWigs_Message", 20, L["whirlwind_warning2"], "Positive")
-	self:ScheduleEvent("BigWigs_Message", 40, L["whirlwind_warning3"], "Urgent")
+	self:ScheduleEvent("BigWigs_Message", 45, L["whirlwind_warning2"], "Urgent")
 	self:TriggerEvent("BigWigs_StartBar", self, L["whirlwind_nextbar"], 50, "Interface\\Icons\\Ability_Whirlwind")
+end
+
+function BigWigsMaulgar:CHAT_MSG_MONSTER_YELL(msg)
+	if msg:find(L["flurry_trigger"]) and self.db.profile.flurry then
+		self:TriggerEvent("BigWigs_Message", L["flurry_message"], "Important")
+	end
+end
+
+function BigWigsCurator:UNIT_HEALTH(msg)
+	if not self.db.profile.flurry then return end
+	if UnitName(msg) == boss then
+		local health = UnitHealth(msg)
+		if health > 52 and health <= 56 and not flurryannounced then
+			self:TriggerEvent("BigWigs_Message", L["flurry_warning"], "Positive")
+			flurryannounced = true
+		elseif health > 62 and flurryannounced then
+			flurryannounced = false
+		end
+	end
 end
