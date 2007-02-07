@@ -4,6 +4,8 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Gruul the Dragonkiller"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local grasp
+local slam
 
 ----------------------------
 --      Localization      --
@@ -28,7 +30,7 @@ L:RegisterTranslations("enUS", function() return {
 	cavein_name = "Cave In on You",
 	cavein_desc = "Warn for a Cave In on You",
 
-	engage_trigger = "Come.... and die. ()",
+	engage_trigger = "Come.... and die.",
 	engage_message = "Gruul Engaged!",
 
 	enrage_trigger = "%s grows in size!",
@@ -38,6 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 	grasp_trigger2 = "afflicted by Gronn Lord's Grasp",
 	grasp_message1 = "Grasp Incoming!",
 	grasp_message2 = "Grasp!",
+	grasp_warning = "Grasp Soon!",
 
 	cavein_trigger = "You are afflicted by Cave In.",
 	cavein_message = "Cave In on YOU!",
@@ -59,15 +62,17 @@ BigWigsGruul.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function BigWigsGruul:OnEnable()
-	self.core:Print("Gruul the Dragonkiller mod by Funkydude, this mod is beta quality, at best! Please don't rely on it for anything!")
+	slam = nil
+	grasp = nil
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("BigWigs_Message")
+
 	self:RegisterEvent("CHAT_MSG_MONSTER_SAY")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
 ------------------------------
@@ -86,12 +91,23 @@ function BigWigsGruul:CHAT_MSG_MONSTER_EMOTE(msg)
 	end
 end
 
-function BigWigsGruul:Event(msg)
-	if self.db.profile.grasp and msg:find(L["grasp_trigger1"]) then
+function BigWigsGruul:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
+	if self.db.profile.grasp and not slam and msg:find(L["grasp_trigger1"]) then
 		self:TriggerEvent("BigWigs_Message", L["grasp_message1"], "Attention")
-	elseif self.db.profile.grasp and msg:find(L["grasp_trigger2"]) then
+		self:ScheduleEvent("BigWigs_Message", 83, L["grasp_warning"], "Urgent")
+		self:TriggerEvent("BigWigs_StartBar", self, L["grasp_warning"], 85, "Interface\\Icons\\Ability_ThunderClap")
+		slam = true
+	elseif self.db.profile.grasp and not grasp and msg:find(L["grasp_trigger2"]) then
 		self:TriggerEvent("BigWigs_Message", L["grasp_message2"], "Urgent")
+		grasp = true
 	elseif self.db.profile.cavein and msg == L["cavein_trigger"] then
 		self:TriggerEvent("BigWigs_Message", L["cavein_message"], "Personal", true, "Alarm")
+	end
+end
+
+function BigWigsGruul:BigWigs_Message(text)
+	if text == L["grasp_warning"] then
+		slam = nil
+		grasp = nil
 	end
 end
