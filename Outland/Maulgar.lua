@@ -34,10 +34,8 @@ L:RegisterTranslations("enUS", function() return {
 	flurry_name = "Flurry",
 	flurry_desc = "Warn when Maulgar is close to Flurry and gains Flurry",
 
-	heal_trigger1 = "begins to cast Prayer of Healing",
-	heal_trigger2 = "begins to cast Heal",
-	heal_message1 = "Blindeye casting Prayer of Healing!",
-	heal_message2 = "Blindeye casting Heal!",
+	heal_trigger = "Blindeye the Seer begins to cast Prayer of Healing",
+	heal_message = "Blindeye casting Prayer of Healing!",
 	heal_bar = "Healing",
 
 	shield_trigger = "gains Greater Power Word: Shield",
@@ -100,10 +98,8 @@ end
 ------------------------------
 
 function BigWigsMaulgar:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if msg:find(L["heal_trigger1"]) and self.db.profile.heal then
-		self:TriggerEvent("BigWigs_SendSync", "BlindeyePOH")
-	elseif msg:find(L["heal_trigger2"]) and self.db.profile.heal then
-		self:TriggerEvent("BigWigs_SendSync", "BlindeyeHeal")
+	if msg:find(L["heal_trigger"]) and self.db.profile.heal then
+		self:TriggerEvent("BigWigs_SendSync", "BlindeyePrayer")
 	end
 end
 
@@ -127,10 +123,8 @@ function BigWigsMaulgar:BigWigs_RecvSync( sync, rest, nick )
 			self:TriggerEvent("BigWigs_Message", L["whirlwind_warning1"], "Attention")
 			self:Nextwhirldwind()
 		end
-	elseif sync == "BlindeyeHeal" then
-		self:TriggerEvent("BigWigs_Message", L["heal_message1"], "Important", nil, "Alarm")
-	elseif sync == "BlindeyePOH" then
-		self:TriggerEvent("BigWigs_Message", L["heal_message2"], "Important", nil, "Alarm")
+	elseif sync == "BlindeyePrayer" then
+		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Important", nil, "Alarm")
 	elseif sync == "BlindeyeShield" then
 		self:TriggerEvent("BigWigs_Message", L["shield_message"], "Important")
 	elseif sync == "KroshSpellShield" then
