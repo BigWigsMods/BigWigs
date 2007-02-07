@@ -153,7 +153,7 @@ function BigWigsMaulgar:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function BigWigsCurator:UNIT_HEALTH(msg)
+function BigWigsMaulgar:UNIT_HEALTH(msg)
 	if not self.db.profile.flurry then return end
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
@@ -165,3 +165,4 @@ function BigWigsCurator:UNIT_HEALTH(msg)
 		end
 	end
 end
+
