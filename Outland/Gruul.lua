@@ -92,12 +92,12 @@ function BigWigsGruul:CHAT_MSG_MONSTER_EMOTE(msg)
 end
 
 function BigWigsGruul:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
-	if self.db.profile.grasp and not slam and msg:find(L["grasp_trigger1"]) then
+	if not slam and self.db.profile.grasp and msg:find(L["grasp_trigger1"]) then
 		self:TriggerEvent("BigWigs_Message", L["grasp_message1"], "Attention")
 		self:ScheduleEvent("BigWigs_Message", 83, L["grasp_warning"], "Urgent")
 		self:TriggerEvent("BigWigs_StartBar", self, L["grasp_warning"], 85, "Interface\\Icons\\Ability_ThunderClap")
 		slam = true
-	elseif self.db.profile.grasp and not grasp and msg:find(L["grasp_trigger2"]) then
+	elseif not grasp and self.db.profile.grasp and msg:find(L["grasp_trigger2"]) then
 		self:TriggerEvent("BigWigs_Message", L["grasp_message2"], "Urgent")
 		grasp = true
 	elseif self.db.profile.cavein and msg == L["cavein_trigger"] then
