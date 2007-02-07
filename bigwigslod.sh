@@ -17,18 +17,6 @@ rm -rf BigWigs_Other
 
 cd BigWigs
 
-mv AQ20/AQ20.toc AQ20/BigWigs_AQ20.toc
-mv AQ40/AQ40.toc AQ40/BigWigs_AQ40.toc
-mv BWL/BWL.toc BWL/BigWigs_BWL.toc
-mv MC/MC.toc MC/BigWigs_MC.toc
-mv Naxxramas/Naxxramas.toc Naxxramas/BigWigs_Naxxramas.toc
-mv Karazhan/Karazhan.toc Karazhan/BigWigs_Karazhan.toc
-mv ZG/ZG.toc ZG/BigWigs_ZG.toc
-mv Azeroth/Azeroth.toc Azeroth/BigWigs_Azeroth.toc
-mv Outland/Outland.toc Outland/BigWigs_Outland.toc
-mv Extras/Extras.toc Extras/BigWigs_Extras.toc
-mv Plugins/Plugins.toc Plugins/BigWigs_Plugins.toc
-
 mv AQ20 ../BigWigs_AQ20
 mv AQ40 ../BigWigs_AQ40
 mv BWL ../BigWigs_BWL
