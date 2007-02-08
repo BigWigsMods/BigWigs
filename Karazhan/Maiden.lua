@@ -24,6 +24,7 @@ L:RegisterTranslations("enUS", function() return {
 	engage_message = "Maiden Engaged!",
 
 	repentance_trigger = "Cast out your corrupt thoughts.",
+	repentance_trigger_2 = "Your impurity must be cleansed.",
 	repentance_message = "Repentance!",
 	repentance_warning = "Repentance Soon!",
 } end)
@@ -41,6 +42,7 @@ L:RegisterTranslations("deDE", function() return {
 	engage_message = "Maid angegriffen!",
 
 	repentance_trigger = "L\195\182st Euch von Euren verdorbenen Gedanken!",
+	--repentance_trigger_2 = "Your impurity must be cleansed.",
 	repentance_message = "Bu\195\159e!",
 	repentance_warning = "Bu\195\159e kommt",
 } end)
@@ -72,7 +74,7 @@ end
 function BigWigsMaiden:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) and self.db.profile.engage then
 		self:TriggerEvent("BigWigs_Message", L["engage_message"], "Attention")
-	elseif msg:find(L["repentance_trigger"]) and self.db.profile.repentance then
+	elseif (msg:find(L["repentance_trigger"]) or msg:find(L["repentance_trigger_2"])) and self.db.profile.repentance then
 		self:TriggerEvent("BigWigs_Message", L["repentance_message"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 30, L["repentance_warning"], "Urgent", nil, "Alarm")
 		self:TriggerEvent("BigWigs_StartBar", self, L["repentance_message"], 33, "Interface\\Icons\\Spell_Holy_PrayerOfHealing")
