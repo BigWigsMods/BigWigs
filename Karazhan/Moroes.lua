@@ -122,13 +122,10 @@ end
 ------------------------------
 
 function BigWigsMoroes:CHAT_MSG_MONSTER_YELL(msg)
-	if msg:find(L["vanish_trigger1"]) and self.db.profile.vanish then
-		self:TriggerEvent("BigWigs_Message", L["vanish_message"], "Urgent", mil, "Alert")
-		self:NextVanish()
-	elseif msg:find(L["vanish_trigger2"]) and self.db.profile.vanish then
+	if self.db.profile.vanish and (msg == L["vanish_trigger1"] or msg == L["vanish_trigger2"]) then
 		self:TriggerEvent("BigWigs_Message", L["vanish_message"], "Urgent", nil, "Alert")
 		self:NextVanish()
-	elseif msg:find(L["engage_trigger"]) and self.db.profile.engage then
+	elseif self.db.profile.engage and msg == L["engage_trigger"] then
 		self:TriggerEvent("BigWigs_Message", L["engage_message"], "Attention")
 		self:NextVanish()
 	end
@@ -140,7 +137,7 @@ function BigWigsMoroes:NextVanish()
 end
 
 function BigWigsMoroes:CHAT_MSG_MONSTER_EMOTE(msg)
-	if msg:find(L["enrage_trigger"]) and self.db.profile.enrage then
+	if self.db.profile.enrage and msg == L["enrage_trigger"] then
 		self:TriggerEvent("BigWigs_Message", L["enrage_message"], "Important", nil, "Alarm")
 	end
 end
