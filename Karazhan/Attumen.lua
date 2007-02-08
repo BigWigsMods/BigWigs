@@ -15,7 +15,7 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Attumen",
 
 	phase_cmd = "phase",
-	phase_name = "Phase Alert",
+	phase_name = "Phase",
 	phase_desc = "Warn when entering a new Phase",
 
 	phase1_message = "Phase 1 - Midnight",
@@ -56,9 +56,9 @@ end
 ------------------------------
 
 function BigWigsAttumen:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.phase and msg:find(L["phase3_trigger"]) then
+	if self.db.profile.phase and msg == L["phase3_trigger"] then
 		self:TriggerEvent("BigWigs_Message", L["phase3_message"], "Important")
-	elseif self.db.profile.phase and (msg:find(L["phase2_trigger1"]) or msg:find(L["phase2_trigger2"])) then
+	elseif self.db.profile.phase and (msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"]) then
 		self:TriggerEvent("BigWigs_Message", L["phase2_message"], "Urgent")
 	end
 end
