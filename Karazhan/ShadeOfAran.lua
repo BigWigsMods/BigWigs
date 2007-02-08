@@ -4,7 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Shade of Aran"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local addsannounced, enrageannounced
+local addsAnnounced, enrageannounced
 
 ----------------------------
 --      Localization      --
@@ -43,12 +43,23 @@ L:RegisterTranslations("enUS", function() return {
 
 	conflagration_trigger = "afflicted by Conflagration", -- Spell_Fire_Incinerate 10 sec
 	blizzard_trigger = "begins to cast Blizzard", -- Spell_Frost_IceStorm 12 sec
-	pull_trigger = "Magnetic Pull", -- Spell_Nature_GroundingTotem 10sec?
-	flame_trigger = "(.*) (.*) afflicted by Flame Wreath", -- Spell_Fire_Fire tricky one
 
 	adds_message = "Elementals incoming soon!",
 	adds_bar = "Elementals despawn",
+	adds_trigger = "casts Summon Water Elementals",
+	
+	pull_message = "Arcane Explosion is casting!",
+	pull_bar = "Arcane Explosion",
+	pull_trigger = boss.." begins to cast Arcane Explosion.", -- Spell_Nature_GroundingTotem 10sec
+	
+	flame_castingmessage = "Flame Wreath is casting!",
+	flame_castingtrigger = "begins to cast Flame Wreath",
+	
+	flame_message = "Flame Wreath! Don't move!",
+	flame_bar = "Flame Wreath",
+	flame_trigger = "casts Flame Wreath", -- Spell_Fire_Fire tricky one
 
+	enrage_trigger = "refreshing drink",
 	enrage_warning = "Enrage soon!",
 	enrage_message = "Enrage! AoE Polymorph!",
 	enrage_bar = "Super Pyroblast Incoming",
@@ -64,22 +75,22 @@ BigWigsAran = BigWigs:NewModule(boss)
 BigWigsAran.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsAran.enabletrigger = boss
 BigWigsAran.toggleoptions = {"adds", "enrage", "blizzard", "conflag", "pull", "flame", "bosskill"}
-BigWigsAran.revision = tonumber(string.sub("$Revision$", 12, -3))
+BigWigsAran.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
 function BigWigsAran:OnEnable()
-	addsannounced = nil
+	addsAnnounced = nil
 	enrageannounced = nil
+	
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF", "EventBucket")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "EventBucket")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_BUFF", "EventBucket")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "EventBucket")
-
-	self:RegisterEvent("UNIT_HEALTH")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+	
 	self:RegisterEvent("UNIT_MANA")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -94,19 +105,42 @@ end
 ------------------------------
 
 function BigWigsAran:CHAT_MSG_MONSTER_EMOTE(msg)
-	if msg:find("refreshing drink") and self.db.profile.enrage then
+	if msg:find(L["enrage_trigger"]) and self.db.profile.enrage then
 		self:TriggerEvent("BigWigs_Message", L["enrage_message"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["enrage_bar"], 30, "Interface\\Icons\\Spell_Fire_Fireball02")
 	end
 end
 
--- Event bucket until we know what's really going on.
-function BigWigsAran:EventBucket(msg)
+function BigWigsAran:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+	if msg:find(L["adds_trigger"]) then
+		self:TriggerEvent("BigWigs_SendSync", "AranAddsSpawn")
+	end
+end
 
+function BigWigsAran:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+	if msg:find(L["pull_trigger"]) then
+		self:TriggerEvent("BigWigs_SendSync", "AranAE")
+	elseif msg:find(L["flame_castingtrigger"]) then
+		self:TriggerEvent("BigWigs_SendSync", "AranFlameCasting")
+	elseif msg:find(L["flame_trigger"]) then
+		self:TriggerEvent("BigWigs_SendSync", "AranFlame")
+	end
 end
 
 function BigWigsAran:BigWigs_RecvSync(sync, rest, nick)
-	
+	if sync == "AranAddsSpawn" and self.db.profile.adds and not addsAnnounced then
+		self:TriggerEvent("BigWigs_Message", L["adds_message"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["adds_bar"], 90, "Interface\\Icons\\Spell_Frost_SummonWaterElemental_2")
+		addsAnnounced = true
+	elseif sync == "AranFlameCasting" and self.db.profile.flame then
+		self:TriggerEvent("BigWigs_Message", L["flame_castingmessage"], "Urgent")
+	elseif sync == "AranFlame" and self.db.profile.flame then
+		self:TriggerEvent("BigWigs_Message", L["flame_message"], "Urgent")
+		self:TriggerEvent("BigWigs_StartBar", self, L["flame_bar"], 20, "Interface\\Icons\\Spell_Fire_Fire")
+	elseif sync == "AranAE" and self.db.profile.pull then
+		self:TriggerEvent("BigWigs_Message", L["pull_message"], "Important")
+		self:TriggerEvent("BigWigs_StartBar", self, L["pull_bar"], 10, "Interface\\Icons\\Spell_Nature_GroundingTotem")
+	end
 end
 
 function BigWigsAran:UNIT_MANA(msg)
@@ -121,21 +155,3 @@ function BigWigsAran:UNIT_MANA(msg)
 		end
 	end
 end
-
-function BigWigsAran:UNIT_HEALTH(msg)
-	if not self.db.profile.adds then return end
-	if UnitName(msg) == boss then
-		local health = UnitHealth(msg)
-		if health > 40 and health <= 43 and not addsannounced then
-			self:TriggerEvent("BigWigs_Message", L["adds_message"], "Important")
-			-- This bar should be 90 seconds and is probably triggered by
-			-- something, we just fire it now at 40-43% HP since we have nothing
-			-- better to go on.
-			self:TriggerEvent("BigWigs_StartBar", self, L["adds_bar"], 95, "Interface\\Icons\\Spell_Frost_SummonWaterElemental_2")
-			addsannounced = true
-		elseif health > 70 and addsannounced then
-			addsannounced = nil
-		end
-	end
-end
-
