@@ -56,6 +56,44 @@ L:RegisterTranslations("enUS", function() return {
 	whirlwind_warning2 = "Whirldwind Soon!",
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	heal_name = "Heal",
+	heal_desc = "Warn when Blindeye the Seer begins to cast a Heal",
+
+	shield_name = "Shield",
+	shield_desc = "Warn when Blindeye the Seer gains Greater Power Word: Shield",
+
+	spellshield_name = "Spell Shield",
+	spellshield_desc = "Warn when Krosh Firehand gains Spell Shield",
+
+	whirlwind_name = "Whirldwind",
+	whirlwind_desc = "Warn when Maulgar gains Whirlwind",
+
+	flurry_name = "Flurry",
+	flurry_desc = "Warn when Maulgar is close to Flurry and gains Flurry",
+
+	heal_trigger = "Blindauge der Seher beginnt Gebet der Heilung.*",
+	heal_message = "Blindeye casting Prayer of Healing!",
+	heal_bar = "Healing",
+
+	shield_trigger = "bekommt 'Gro\195\159es Machtwort: Schild'.",
+	shield_message = "Shield on Blindeye!",
+
+	spellshield_trigger = "bekommt 'Zauberschild'.",
+	spellshield_message = "Spell Shield on Krosh!",
+
+	flurry_trigger = "You will not defeat the hand of Gruul!",
+	flurry_message = "50% - Flurry!",
+	flurry_warning = "Flurry Soon!",
+
+	whirlwind_trigger = "bekommt Wirbelwind",
+	whirlwind_message = "Maulgar - Whirldwind for 15sec!",
+	whirlwind_bar = "Whirlwind",
+	whirlwind_nextbar = "~Next WhirlWind",
+	whirlwind_warning1 = "Maulgar Engaged - Whirldwind in ~50sec!",
+	whirlwind_warning2 = "Whirldwind Soon!",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
