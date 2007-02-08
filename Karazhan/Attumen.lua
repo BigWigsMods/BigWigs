@@ -19,7 +19,8 @@ L:RegisterTranslations("enUS", function() return {
 	phase_desc = "Warn when entering a new Phase",
 
 	phase1_message = "Phase 1 - Midnight",
-	phase2_trigger = "%s calls for her master!",
+	phase2_trigger1 = "Perhaps you would rather test yourselves against a more formidable opponent?!",
+	phase2_trigger2 = "Cowards! Wretches!",
 	phase2_message = "Phase 2 - Midnight & Attumen",
 	phase3_trigger = "Come Midnight, let's disperse this petty rabble!",
 	phase3_message = "Phase 3 - Attumen the Huntsman",
@@ -44,7 +45,6 @@ function BigWigsAttumen:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -56,13 +56,9 @@ end
 ------------------------------
 
 function BigWigsAttumen:CHAT_MSG_MONSTER_YELL(msg)
-	if msg:find(L["phase3_trigger"]) and self.db.profile.phase then
+	if self.db.profile.phase and msg:find(L["phase3_trigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["phase3_message"], "Important")
-	end
-end
-
-function BigWigsAttumen:CHAT_MSG_MONSTER_EMOTE(msg)
-	if msg:find(L["phase2_trigger"]) and self.db.profile.phase then
+	elseif self.db.profile.phase and (msg:find(L["phase2_trigger1"]) or msg:find(L["phase2_trigger2"])) then
 		self:TriggerEvent("BigWigs_Message", L["phase2_message"], "Urgent")
 	end
 end
