@@ -21,11 +21,11 @@ L:RegisterTranslations("enUS", function() return {
 	repentance_desc = "Estimated timer of Repentance",
 
 	engage_trigger = "Your behavior will not be tolerated.",
-	engage_message = "Maiden Engaged!",
+	engage_message = "Maiden Engaged! Repentance in ~33sec",
 
 	repentance_trigger = "Cast out your corrupt thoughts.",
 	repentance_trigger_2 = "Your impurity must be cleansed.",
-	repentance_message = "Repentance!",
+	repentance_message = "Repentance! Next in ~33sec",
 	repentance_warning = "Repentance Soon!",
 } end)
 
@@ -39,11 +39,11 @@ L:RegisterTranslations("deDE", function() return {
 	repentance_desc = "Timer von Bu\195\159e",
 
 	engage_trigger = "Euer Verhalten wird nicht toleriert.",
-	engage_message = "Maid angegriffen!",
+	--engage_message = "Maid angegriffen!", --changed enUS, re-translate
 
 	repentance_trigger = "L\195\182st Euch von Euren verdorbenen Gedanken!",
-	--repentance_trigger_2 = "Your impurity must be cleansed.",
-	repentance_message = "Bu\195\159e!",
+	--repentance_trigger_2 = "Your impurity must be cleansed.", --translate 2nd repentance yell
+	--repentance_message = "Bu\195\159e!", --changed enUS, re-translate
 	repentance_warning = "Bu\195\159e kommt",
 } end)
 
@@ -72,11 +72,16 @@ end
 ------------------------------
 
 function BigWigsMaiden:CHAT_MSG_MONSTER_YELL(msg)
-	if msg:find(L["engage_trigger"]) and self.db.profile.engage then
+	if self.db.profile.engage and msg == L["engage_trigger"] then
 		self:TriggerEvent("BigWigs_Message", L["engage_message"], "Attention")
-	elseif (msg:find(L["repentance_trigger"]) or msg:find(L["repentance_trigger_2"])) and self.db.profile.repentance then
+		self:NextRepentance()
+	elseif self.db.profile.repentance and (msg == L["repentance_trigger"] or msg == L["repentance_trigger_2"]) then
 		self:TriggerEvent("BigWigs_Message", L["repentance_message"], "Important")
-		self:ScheduleEvent("BigWigs_Message", 30, L["repentance_warning"], "Urgent", nil, "Alarm")
-		self:TriggerEvent("BigWigs_StartBar", self, L["repentance_message"], 33, "Interface\\Icons\\Spell_Holy_PrayerOfHealing")
+		self:NextRepentance()
 	end
+end
+
+function BigWigsMaiden:NextRepentance()
+	self:ScheduleEvent("BigWigs_Message", 28, L["repentance_warning"], "Urgent", nil, "Alarm")
+	self:TriggerEvent("BigWigs_StartBar", self, L["repentance_message"], 33, "Interface\\Icons\\Spell_Holy_PrayerOfHealing")
 end
