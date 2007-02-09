@@ -170,7 +170,7 @@ function BigWigsMoroes:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "MoroesBlind" and rest then
 		local player = rest
 		if player == UnitName("player") and self.db.profile.blind then
-		self:TriggerEvent("BigWigs_Message", string.format(L["blind_message"], bplayer), "Attention")
+		self:TriggerEvent("BigWigs_Message", string.format(L["blind_message"], player), "Attention")
 		end
 	end
 end
