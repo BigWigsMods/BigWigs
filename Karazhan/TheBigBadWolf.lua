@@ -34,6 +34,25 @@ L:RegisterTranslations("enUS", function() return {
 	riding_bar = "%s Running",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	youriding_name = "Du bist Rotk\195\164ppchen Warnung",
+	youriding_desc = "Warnung wenn du Rotk\195\164ppchen bist",
+
+	elseriding_name = "Andere sind Rotk\195\164ppchen Warnung",
+	elseriding_desc = "Warnung wenn andere Rotk\195\164ppchen sind",
+
+	icon_cmd = "icon",
+	icon_name = "Zeige Icon",
+	icon_desc = "Setzt ein Raid Icon auf die Person die Rotk\195\164ppchen ist.",
+
+	riding_trigger = "^([^%s]+) bekommt(.*) 'Rotk\195\164ppchen'",
+	you = "Ihr",
+
+	riding_youwarn = "Du bist Rotk\195\164ppchen!",
+	riding_otherwarn = "%s ist Rotk\195\164ppchen!",
+	riding_bar = "%s rennt",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
