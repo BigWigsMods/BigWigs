@@ -60,38 +60,38 @@ L:RegisterTranslations("deDE", function() return {
 	heal_name = "Heal",
 	heal_desc = "Warn when Blindeye the Seer begins to cast a Heal",
 
-	shield_name = "Shield",
-	shield_desc = "Warn when Blindeye the Seer gains Greater Power Word: Shield",
+	shield_name = "Schild",
+	shield_desc = "Warnung wenn Blindauge der Seher Machtwort: Schild bekommt",
 
-	spellshield_name = "Spell Shield",
-	spellshield_desc = "Warn when Krosh Firehand gains Spell Shield",
+	spellshield_name = "Zauberschild",
+	spellshield_desc = "Warnung wenn Krosh Feuerhand sein Zauberschild bekommt",
 
-	whirlwind_name = "Whirldwind",
-	whirlwind_desc = "Warn when Maulgar gains Whirlwind",
+	whirlwind_name = "Wirbelwind",
+	whirlwind_desc = "Warnung wenn Raufgar Wirbelwind bekommt",
 
-	flurry_name = "Flurry",
-	flurry_desc = "Warn when Maulgar is close to Flurry and gains Flurry",
+	flurry_name = "Schlaghagel",
+	flurry_desc = "Warnung wenn Raufgar kurz vor dem Schlaghagel steht und wenn er es bekommt",
 
 	heal_trigger = "Blindauge der Seher beginnt Gebet der Heilung.*",
-	heal_message = "Blindeye casting Prayer of Healing!",
-	heal_bar = "Healing",
+	heal_message = "Blindauge der Seher wirkt Gebet der Heilung!",
+	heal_bar = "Heilung",
 
 	shield_trigger = "bekommt 'Gro\195\159es Machtwort: Schild'.",
-	shield_message = "Shield on Blindeye!",
+	shield_message = "Schild auf Blindauge!",
 
 	spellshield_trigger = "bekommt 'Zauberschild'.",
-	spellshield_message = "Spell Shield on Krosh!",
+	spellshield_message = "Zauberschild auf Krosh!",
 
-	flurry_trigger = "You will not defeat the hand of Gruul!",
-	flurry_message = "50% - Flurry!",
-	flurry_warning = "Flurry Soon!",
+	flurry_trigger = "Ihr werdet die Hand von Gruul nicht besiegen!",
+	flurry_message = "50% - Schlaghagel!",
+	flurry_warning = "Schlaghagel bald!",
 
 	whirlwind_trigger = "bekommt Wirbelwind",
-	whirlwind_message = "Maulgar - Whirldwind for 15sec!",
-	whirlwind_bar = "Whirlwind",
-	whirlwind_nextbar = "~Next WhirlWind",
-	whirlwind_warning1 = "Maulgar Engaged - Whirldwind in ~50sec!",
-	whirlwind_warning2 = "Whirldwind Soon!",
+	whirlwind_message = "Raufgar - Wirbelwind fuer 15sek!",
+	whirlwind_bar = "Wirbelwind",
+	whirlwind_nextbar = "~Naechster Wirbelwind",
+	whirlwind_warning1 = "Raufgar angegriffen - Wirbelwind in ~50sek!",
+	whirlwind_warning2 = "Wirbelwind bald!",
 } end)
 
 ----------------------------------
