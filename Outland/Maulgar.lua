@@ -49,11 +49,11 @@ L:RegisterTranslations("enUS", function() return {
 	flurry_warning = "Flurry Soon!",
 
 	whirlwind_trigger = "gains Whirlwind",
-	whirlwind_message = "Maulgar - Whirldwind for 15sec!",
+	whirlwind_message = "Maulgar - Whirlwind for 15sec!",
 	whirlwind_bar = "Whirlwind",
-	whirlwind_nextbar = "~Next WhirlWind",
+	whirlwind_nextbar = "~Next Whirlwind",
 	whirlwind_warning1 = "Maulgar Engaged - Whirldwind in ~50sec!",
-	whirlwind_warning2 = "Whirldwind Soon!",
+	whirlwind_warning2 = "Whirlwind Soon!",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
