@@ -5,6 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Doomwalker"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started = nil
+local enrageAnnounced = nil
 
 ----------------------------
 --      Localization      --
@@ -26,6 +27,7 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_desc = "Warn about enrage around 20% hitpoints.",
 
 	engage_message = "Doomwalker engaged, Earthquake in ~30sec!",
+	enrage_soon_message = "Enrage soon!",
 
 	earthquake_trigger = "You are afflicted by Earthquake.",
 
@@ -50,10 +52,12 @@ BigWigsDoomwalker.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsDoomwalker:OnEnable()
 	started = nil
+	enrageAnnounced = nil
 
 	self:Hook("ChatFrame_MessageEventHandler", "ChatFrame_MessageEventHandler", true)
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
+	self:RegisterEvent("UNIT_HEALTH")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
@@ -101,4 +105,16 @@ function BigWigsDoomwalker:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 	end
 end
 
+function BigWigsDoomwalker:UNIT_HEALTH(msg)
+	if not self.db.profile.enrage then return end
+	if UnitName(msg) == boss then
+		local health = UnitHealth(arg1)
+		if health > 20 and health <= 25 and not enrageAnnounced then
+			self:Message(L["enrage_soon_message"], "Urgent")
+			enrageAnnounced = true
+		elseif health > 40 and enrageAnnounced then
+			enrageAnnounced = false
+		end
+	end
+end
 
