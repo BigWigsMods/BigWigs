@@ -14,10 +14,11 @@
 ## X-AceForum: 1222
 
 ## X-BigWigs-Menu: Outland
-## X-BigWigs-LoadInZone: Hellfire Peninsula, Gruul's Lair, Magtheridon's Lair
+## X-BigWigs-LoadInZone: Hellfire Peninsula, Gruul's Lair, Magtheridon's Lair, Shadowmoon Valley
 
 ## Dependencies: BigWigs
 
+Doomwalker.lua
 Kazzak.lua
 Gruul.lua
 Maulgar.lua

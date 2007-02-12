@@ -118,6 +118,7 @@ Azeroth\Ysondre.lua
 Azeroth\Taerar.lua
 Azeroth\Lethon.lua
 
+Outland\Doomwalker.lua
 Outland\Kazzak.lua
 Outland\Gruul.lua
 Outland\Maulgar.lua
