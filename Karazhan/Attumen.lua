@@ -34,6 +34,25 @@ L:RegisterTranslations("enUS", function() return {
 	phase3_message = "Phase 3 - Attumen the Huntsman",
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	phase_name = "Phase",
+	phase_desc = "Warnt wenn eine neue Phase beginnt",
+
+	curse_cmd = "Fluch",
+	curse_name = "Verfluchter Krieger",
+	curse_desc = "Warnt wenn ein Krieger verflucht ist",
+
+	curse_trigger = "^([^%s]+) ([^%s]+) von K\195\182rperlose Pr\195\164senz betroffen.",
+	curse_message = "Krieger verflucht - %s",
+
+	phase1_message = "Phase 1 - Mittnacht",
+	phase2_trigger1 = "Vielleicht m\195\182chtet Ihr Euch an einem Gegner messen, der Euch ebenb\195\188rtig ist?!",
+	phase2_trigger2 = "Feiglinge! Gesindel!",
+	phase2_message = "Phase 2 - Mittnacht & Attumen",
+	phase3_trigger = "Komm Mittnacht, lass' uns dieses Gesindel auseinander treiben!",
+	phase3_message = "Phase 3 - Attumen der J\195\164ger",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
