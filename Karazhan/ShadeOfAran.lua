@@ -9,10 +9,6 @@ local addsAnnounced, enrageannounced
 ----------------------------
 --      Localization      --
 ----------------------------
---[[
-    * Magnetic Pull / Super Arcane Explosion - Pulls everyone to the center of the room, Slows everyone, then starts a 10(?) second uninterruptable cast that deals 12,000 noncrit damage to a 30 yard radius (note that the room is only 35yds wide). If you start running as soon as you're pulled, you can avoid the AE even while Slowed.
-    * Flame Wreath - 5(?) sec uninterruptable cast. Targets 3 random people in the raid. If there is no one close to them, nothing happens. If there are any other players near the target, it creates a circle of fire on the ground for 20 (??) seconds. Anyone who crosses the flame wreath (moving in our out) will trigger a 3-4k Explosion that hits everyone in the room. 
-]]
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Aran",
@@ -55,7 +51,7 @@ L:RegisterTranslations("enUS", function() return {
 	flame_castingmessage = "Flame Wreath is casting!",
 	flame_castingtrigger = "begins to cast Flame Wreath",
 	
-	flame_message = "Flame Wreath! Don't move!",
+	flame_message = "Flame Wreath!",
 	flame_bar = "Flame Wreath",
 	flame_trigger = "casts Flame Wreath", -- Spell_Fire_Fire tricky one
 
