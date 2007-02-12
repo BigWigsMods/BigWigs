@@ -33,6 +33,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	earthquake_message = "Earthquake! ~70sec to next!",
 	earthquake_bar = "Earthquake",
+
+	overrun_trigger = "^Doomwalker.-Overrun",
+	overrun_message = "Overrun!",
+	overrun_soon_message = "Possible Overrun soon!",
+	overrun_bar = "Overrun Cooldown",
 } end)
 
 ----------------------------------
@@ -56,6 +61,7 @@ function BigWigsDoomwalker:OnEnable()
 
 	self:Hook("ChatFrame_MessageEventHandler", "ChatFrame_MessageEventHandler", true)
 
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
 	self:RegisterEvent("UNIT_HEALTH")
 
@@ -66,6 +72,7 @@ function BigWigsDoomwalker:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "DoomwalkerEarthquake", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "DoomwalkerOverrun", 10)
 end
 
 ------------------------------
@@ -93,15 +100,29 @@ function BigWigsDoomwalker:BigWigs_RecvSync( sync, rest, nick )
 			self:Message(L["engage_message"], "Attention")
 			self:Bar(L["earthquake_bar"], 30, "Spell_Nature_Earthquake")
 		end
+		if self.db.profile.overrun then
+			self:Bar(L["overrun_bar"], 30, "Ability_BullRush")
+			self:DelayedMessage(L["overrun_soon_message"], "Attention", 28)
+		end
 	elseif sync == "DoomwalkerEarthquake" and self.db.profile.earthquake then
 		self:Message(L["earthquake_message"], "Important")
 		self:Bar(L["earthquake_bar"], 70, "Spell_Nature_Earthquake")
+	elseif sync == "DoomwalkerOverrun" and self.db.profile.overrun then
+		self:Message(L["overrun_message"], "Important")
+		self:Bar(L["overrun_bar"], 30, "Ability_BullRush")
+		self:DelayedMessage(L["overrun_soon_message"], "Attention", 28)
 	end
 end
 
 function BigWigsDoomwalker:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 	if msg:find(L["earthquake_trigger"]) then
 		self:Sync("DoomwalkerEarthquake")
+	end
+end
+
+function BigWigsDoomwalker:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+	if msg:find(L["overrun_trigger"]) then
+		self:Sync("DoomwalkerOverrun")
 	end
 end
 
