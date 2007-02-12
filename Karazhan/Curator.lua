@@ -49,6 +49,43 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_warning = "Enrage soon!",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	berserk_cmd = "berserk",
+	berserk_name = "Berserker",
+	berserk_desc = "Warnung f\195\188r Berserker nach 12min.",
+
+	enrage_cmd = "enrage",
+	enrage_name = "Rage",
+	enrage_desc = "Warnung f\195\188r Rage bei 10%.",
+
+	weaken_cmd = "weaken",
+	weaken_name = "Schw\195\164chung",
+	weaken_desc = "Warnt wen der Kurator geschw\195\164cht ist.",
+
+	weaktime_cmd = "weaktime",
+	weaktime_name = "Schw\195\164chungs Timer",
+	weaktime_desc = "Timer und Anzeige f\195\188r die n\195\164chste Schw\195\164chung.",
+
+	weaken_trigger = "Ihre Anfrage kann nicht bearbeitet werden.",
+	weaken_message = "Hervorrufung f\195\188r 20 sekunden!",
+	weaken_bar = "Hervorrufung",
+	weaken_fade_message = "Hervorrufung beendet - Kurator nicht mehr geschw\195\164cht!",
+	weaken_fade_warning = "Hervorrufung in 5 sekunden beendet!",
+
+	weaktime_message1 = "Hervorrufung in ~10 sekunden",
+	weaktime_message2 = "Hervorrufung in ~30 sekunden",
+	weaktime_message3 = "Hervorrufung in ~70 sekunden",
+	weaktime_bar = "N\195\164chste Hervorrufung",
+
+	berserk_trigger = "Die Menagerie ist nur f\195\188r G\195\164ste.",
+	berserk_message = "Kurator aktiviert, 12min bis Berserker!",
+	berserk_bar = "Berserker",
+
+	enrage_trigger = "Die Nichteinhaltung wird zur Angriffshandlungen f\195\188hren.",
+	enrage_message = "Kurator in Rage!",
+	enrage_warning = "Kurator bald in Rage!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
