@@ -94,7 +94,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Azeroth"] = "Azeroth",
 	["Outland"] = "Outreterre",
 } end)
-  
+
 L:RegisterTranslations("deDE", function() return {
 	["%s mod enabled"] = "%s Modul aktiviert",
 	["%s has been defeated"] = "%s wurde besiegt",     -- "<boss> has been defeated"
@@ -173,7 +173,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Ahn'Qiraj"] = "AQ40",
 	["Ruins of Ahn'Qiraj"] = "AQ20",
 	["Naxxramas"] = "낙스라마스",
---	["Azeroth"] = "아제로스",
+	--["Azeroth"] = "아제로스",
+	["Azeroth"] = "Azeroth",
 	["Outland"] = "아웃랜드",
 	["Karazhan"] = "Karazhan",
 } end)
@@ -214,7 +215,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["Ahn'Qiraj"] = "安其拉",
 	["Ruins of Ahn'Qiraj"] = "安其拉废墟",
 	["Naxxramas"] = "纳克萨玛斯",
---	["Azeroth"] = true,
+	["Azeroth"] = "Azeroth",
+	["Outland"] = "Outland",
 	["Karazhan"] = "Karazhan",
 } end)
 
@@ -249,7 +251,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Ruins of Ahn'Qiraj"] = "RAQ",
 	["Naxxramas"] = "NAX",
 	["Azeroth"] = "艾澤拉斯",
---	["Outland"] = true,
+	["Outland"] = "Outland",
 	["Karazhan"] = "Karazhan",
 } end)
 
