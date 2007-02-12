@@ -153,6 +153,10 @@ function BigWigs.modulePrototype:Message(text, priority, ...)
 	self:TriggerEvent("BigWigs_Message", text, priority, ...)
 end
 
+function BigWigs.modulePrototype:DelayedMessage(text, priority, delay, ...)
+	self:ScheduleEvent("BigWigs_Message", delay, text, priority, ...)
+end
+
 function BigWigs.modulePrototype:Bar(text, length, icon, ...)
 	self:TriggerEvent("BigWigs_StartBar", self, text, length, "Interface\\Icons\\" .. icon, ...)
 end
@@ -160,5 +164,4 @@ end
 function BigWigs.modulePrototype:Sync(sync)
 	self:TriggerEvent("BigWigs_SendSync", sync)
 end
-
 
