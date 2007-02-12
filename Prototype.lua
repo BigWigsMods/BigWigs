@@ -149,12 +149,12 @@ end
 
 -- Shortcuts for common actions.
 
-function BigWigs.modulePrototype:Message(text, priority)
-	self:TriggerEvent("BigWigs_Message", text, priority)
+function BigWigs.modulePrototype:Message(text, priority, ...)
+	self:TriggerEvent("BigWigs_Message", text, priority, ...)
 end
 
-function BigWigs.modulePrototype:Bar(text, length, icon)
-	self:TriggerEvent("BigWigs_StartBar", self, text, length, "Interface\\Icons\\" .. icon)
+function BigWigs.modulePrototype:Bar(text, length, icon, ...)
+	self:TriggerEvent("BigWigs_StartBar", self, text, length, "Interface\\Icons\\" .. icon, ...)
 end
 
 function BigWigs.modulePrototype:Sync(sync)
