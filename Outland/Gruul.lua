@@ -46,6 +46,35 @@ L:RegisterTranslations("enUS", function() return {
 	cavein_message = "Cave In on YOU!",
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	engage_name = "Pull Warnung",
+	engage_desc = "Warnt, wenn Gruul gepulled wird",
+
+	enrage_name = "Wachstum Warnung",
+	enrage_desc = "Warnt, wenn Gruul w\195\164chst",
+
+	grasp_name = "Griff Warnung",
+	grasp_desc = "Warnt, wenn Gruul Griff des Gronnlords zaubert",
+
+	cavein_name = "H\195\182hleneinst\195\188rz auf dich",
+	cavein_desc = "Warnt bei H\195\182hleneinst\195\188rz auf dir",
+
+	engage_trigger = "Kommt und sterbt.",
+	engage_message = "Gruul gepullt!",
+
+	enrage_trigger = "%s wird gr\195\182\195\159er!",
+	enrage_message = "Gruul w\195\164chst!",
+
+	grasp_trigger1 = "von Erde ersch\195\188ttern betroffen",
+	grasp_trigger2 = "von Griff des Gronnlords betroffen",
+	grasp_message1 = "Griff kommt!",
+	grasp_message2 = "Griff des Gronnlords!",
+	grasp_warning = "Griff bald!",
+
+	cavein_trigger = "Ihr seid von H\195\182hleneinst\195\188rz betroffen.",
+	cavein_message = "H\195\182hleneinst\195\188rz auf dich!",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
