@@ -136,6 +136,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Naxxramas"] = "Naxxramas",
 	["Azeroth"] = "Azeroth",
 	["Outland"] = "Scherbenwelt",
+	["Karazhan"] = "Karazhan",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -174,6 +175,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Naxxramas"] = "낙스라마스",
 --	["Azeroth"] = "아제로스",
 	["Outland"] = "아웃랜드",
+	["Karazhan"] = "Karazhan",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -213,6 +215,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Ruins of Ahn'Qiraj"] = "安其拉废墟",
 	["Naxxramas"] = "纳克萨玛斯",
 --	["Azeroth"] = true,
+	["Karazhan"] = "Karazhan",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -247,6 +250,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Naxxramas"] = "NAX",
 	["Azeroth"] = "艾澤拉斯",
 --	["Outland"] = true,
+	["Karazhan"] = "Karazhan",
 } end)
 
 ---------------------------------
