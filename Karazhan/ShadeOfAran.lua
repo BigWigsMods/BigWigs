@@ -54,14 +54,14 @@ L:RegisterTranslations("enUS", function() return {
 
 	blizzard_trigger1 = "Back to the cold dark with you!",
 	blizzard_trigger2 = "I'll freeze you all!",
-	blizzard_message = "Casting Blizzard!",
+	blizzard_message = "Blizzard!",
 
-	pull_message = "Arcane Explosion is casting!",
+	pull_message = "Arcane Explosion!",
 	pull_trigger1 = "Yes, yes my son is quite powerful... but I have powers of my own!",
 	pull_trigger2 = "I am not some simple jester! I am Nielas Aran!",
 	pull_bar = "Arcane Explosion",
 
-	flame_warning = "Casting Flame Wreath!",
+	flame_warning = "Flame Wreath!",
 	flame_trigger1 = "I'll show you: this beaten dog still has some teeth!",
 	flame_trigger2 = "Burn, you hellish fiends!",
 
@@ -166,10 +166,10 @@ end
 function BigWigsAran:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.drink and msg == L["drink_trigger"] then
 		self:Message(L["drink_message"], "Positive")
-		self:Bar(L["drink_bar"], 30, "Spell_Fire_Fireball02")
+		self:Bar(L["drink_bar"], 15, "Spell_Fire_Fireball02")
 	elseif self.db.profile.pull and (msg == L["pull_trigger1"] or msg == L["pull_trigger2"]) then
 		self:Message(L["pull_message"], "Attention")
-		self:Bar(L["pull_bar"], 10, "Spell_Nature_GroundingTotem")
+		self:Bar(L["pull_bar"], 12, "Spell_Nature_GroundingTotem")
 	elseif self.db.profile.flame and (msg == L["flame_trigger1"] or msg == L["flame_trigger2"]) then
 		self:Message(L["flame_warning"], "Important", nil, "Alarm")
 	elseif self.db.profile.blizzard and (msg == L["blizzard_trigger1"] or msg == L["blizzard_trigger2"]) then
@@ -189,7 +189,7 @@ end
 function BigWigsAran:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if self.db.profile.flame and msg:find(L["flame_trigger"]) then
 		self:Message(L["flame_message"], "Important")
-		self:Bar(L["flame_bar"], 20, "Spell_Fire_Fire")
+		self:Bar(L["flame_bar"], 24, "Spell_Fire_Fire")
 	end
 end
 
