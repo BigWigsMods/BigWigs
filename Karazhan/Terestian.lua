@@ -70,6 +70,6 @@ function BigWigsTerestian:CheckSacrifice( msg )
 		if splayer == L["sacrifice_you"] then
 			splayer = UnitName("player")
 		end
-		self:TriggerEvent("BigWigs_Message", L["sacrifice_warning"]:format( splayer ), "Attention" )
+		self:Message( L["sacrifice_warning"]:format( splayer ), "Attention" )
 	end
 end
