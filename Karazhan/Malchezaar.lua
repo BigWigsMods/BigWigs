@@ -91,14 +91,14 @@ function BigWigsMalchezaar:BigWigs_RecvSync(sync, rest, nick)
 		end
 		if self.db.profile.infernals then
 			self:Message(L["engage_message"], "Important")
-			self:Bar(self, L["infernal_bar"], 120, "INV_Stone_05")
+			self:Bar(L["infernal_bar"], 120, "INV_Stone_05")
 		end
 	elseif sync == "MalchezaarEnfeeble" and self.db.profile.enfeeble then
 		self:Message(L["darknova_message"], "Important")
-		self:Bar(self, L["enfeeble_bar"], 7, "Spell_Shadow_CurseOfMannoroth")
-		self:Bar(self, L["darknova_bar"], 3, "Spell_Fire_FelFire")
+		self:Bar(L["enfeeble_bar"], 7, "Spell_Shadow_CurseOfMannoroth")
+		self:Bar(L["darknova_bar"], 3, "Spell_Fire_FelFire")
 	elseif sync == "MalchezaarInfernal" and self.db.profile.infernals then
 		self:Message(L["infernal_message"], "Important")
-		self:Bar(self, L["infernal_bar"], 120, "INV_Stone_05")
+		self:Bar(L["infernal_bar"], 120, "INV_Stone_05")
 	end
 end

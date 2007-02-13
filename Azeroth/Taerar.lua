@@ -58,17 +58,17 @@ function BigWigsTaerar:Event( msg )
 	if (not self.prior and msg:find(L["noxious_trigger"])) then
 		self.prior = true
 		if self.db.profile.noxious then 
-			self:TriggerEvent("BigWigs_Message", L["noxious_message"], "Important")
-			self:ScheduleEvent("BigWigs_Message", 25, L["noxious_warn"], "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["noxious_bar"], 30, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
+			self:Message(L["noxious_message"], "Important")
+			self:DelayedMessage(25, L["noxious_warn"], "Important")
+			self:Bar( L["noxious_bar"], 30, "Spell_Shadow_LifeDrain02")
 		end
 	end
 end
 
 function BigWigsTaerar:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.engage and msg == L["engage_trigger"] then
-		self:TriggerEvent("BigWigs_Message", L["engage_message"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["noxious_bar"], 10, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
+		self:Message( L["engage_message"], "Important")
+		self:Bar(L["noxious_bar"], 10, "Spell_Shadow_LifeDrain02")
 	end
 end
 

@@ -89,14 +89,14 @@ function BigWigsTheBigBadWolf:RidingEvent(msg)
 		if rplayer == playerName and self.db.profile.youriding then
 			self:Message(L["riding_youwarn"], "Personal", true, "Long")
 			self:Message(string.format(L["riding_otherwarn"], rplayer), "Attention", nil, nil, true)
-			self:Bar(self, string.format(L["riding_bar"], rplayer), 20,"INV_Chest_Cloth_18")
+			self:Bar(string.format(L["riding_bar"], rplayer), 20,"INV_Chest_Cloth_18")
 		elseif self.db.profile.elseriding then
 			self:Message(string.format(L["riding_otherwarn"], rplayer), "Attention")
 			self:Whisper(rplayer, L["riding_youwarn"])
-			self:Bar(self, string.format(L["riding_bar"], rplayer), 20,"INV_Chest_Cloth_18")
+			self:Bar(string.format(L["riding_bar"], rplayer), 20,"INV_Chest_Cloth_18")
 		end
 		if self.db.profile.icon then 
-			self:TriggerEvent("BigWigs_SetRaidIcon", rplayer)
+			self:SetRaidIcon(rplayer)
 		end
 	end
 end

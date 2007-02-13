@@ -153,7 +153,7 @@ function BigWigs.modulePrototype:Message(text, priority, ...)
 	self:TriggerEvent("BigWigs_Message", text, priority, ...)
 end
 
-function BigWigs.modulePrototype:DelayedMessage(text, priority, delay, ...)
+function BigWigs.modulePrototype:DelayedMessage(delay, text, priority, ...)
 	return self:ScheduleEvent("BigWigs_Message", delay, text, priority, ...)
 end
 
@@ -167,4 +167,8 @@ end
 
 function BigWigs.modulePrototype:Whisper(player, text)
 	self:TriggerEvent("BigWigs_SendTell", player, text)
+end
+
+function BigWigs.modulePrototype:SetRaidIcon( player )
+	self:TriggerEvent("BigWigs_SetRaidIcon", player )
 end

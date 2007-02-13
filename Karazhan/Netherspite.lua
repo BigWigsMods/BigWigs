@@ -59,8 +59,8 @@ function BigWigsNetherspite:BigWigs_RecvSync( sync, rest, nick )
 		started = true
 		if self.db.profile.phase then
 			self:Message(L["phase1_message"], "Important")
-			self:Bar(self, L["phase2_message"], 60, "Important")
-			self:Bar(self, L["portals"], 10, "Spell_Arcane_TeleportStormWind")
+			self:Bar(L["phase2_message"], 60, "Important")
+			self:Bar(L["portals"], 10, "Spell_Arcane_TeleportStormWind")
 		end
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
@@ -72,10 +72,10 @@ function BigWigsNetherspite:CHAT_MSG_RAID_BOSS_EMOTE(msg, bname)
 	if not self.db.profile.phase then return end
 	if msg:find(L["phase1_trigger"]) then
 		self:Message(L["phase1_message"], "Important")
-		self:Bar(self, L["phase2_message"], 60, "Spell_Frost_IceStorm") --random icon, you can't use 'important' on a bar
-		self:Bar(self, L["portals"], 10, "Spell_Arcane_TeleportStormWind")
+		self:Bar(L["phase2_message"], 60, "Spell_Frost_IceStorm") --random icon, you can't use 'important' on a bar
+		self:Bar(L["portals"], 10, "Spell_Arcane_TeleportStormWind")
 	elseif msg:find(L["phase2_trigger"]) then
 		self:Message(L["phase2_message"], "Important")
-		self:Bar(self, L["phase1_message"], 30, "Spell_Frost_IceStorm") --same again
+		self:Bar(L["phase1_message"], 30, "Spell_Frost_IceStorm") --same again
 	end	
 end

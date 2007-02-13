@@ -73,7 +73,7 @@ end
 function BigWigsMagtheridon:CHAT_MSG_MONSTER_EMOTE(msg)
 	if self.db.profile.escape and msg:find(L["escape_trigger1"]) then
 		self:Message(L["escape_warning1"], "Important")
-		self:Bar(self, L["escape_bar"], 120, "Ability_Rogue_Trip")
+		self:Bar(L["escape_bar"], 120, "Ability_Rogue_Trip")
 		self:DelayedMessage(60, L["escape_warning2"], "Positive")
 		self:DelayedMessage(90, L["escape_warning3"], "Attention")
 		self:DelayedMessage(110, L["escape_warning4"], "Urgent", nil, "Long")
@@ -95,6 +95,6 @@ end
 function BigWigsMagtheridon:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if self.db.profile.heal and msg:find(L["heal_trigger"]) then
 		self:Message(L["heal_message"], "Urgent", nil, "Alarm")
-		self:Bar(self, L["heal_message"], 2, "Spell_Shadow_ChillTouch")
+		self:Bar(L["heal_message"], 2, "Spell_Shadow_ChillTouch")
 	end
 end

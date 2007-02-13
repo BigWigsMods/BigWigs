@@ -107,10 +107,10 @@ end
 function BigWigsAran:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.drink and msg == L["drink_trigger"] then
 		self:Message(L["drink_message"], "Positive")
-		self:Bar(self, L["drink_bar"], 30, "Spell_Fire_Fireball02")
+		self:Bar(L["drink_bar"], 30, "Spell_Fire_Fireball02")
 	elseif self.db.profile.pull and (msg == L["pull_trigger1"] or msg == L["pull_trigger2"]) then
 		self:Message(L["pull_message"], "Attention")
-		self:Bar(self, L["pull_bar"], 10, "Spell_Nature_GroundingTotem")
+		self:Bar(L["pull_bar"], 10, "Spell_Nature_GroundingTotem")
 	elseif self.db.profile.flame and (msg == L["flame_trigger1"] or msg == L["flame_trigger2"]) then
 		self:Message(L["flame_warning"], "Important", nil, "Alarm")
 	elseif self.db.profile.blizzard and (msg == L["blizzard_trigger1"] or msg == L["blizzard_trigger2"]) then
@@ -123,14 +123,14 @@ end
 function BigWigsAran:CHAT_MSG_MONSTER_SAY(msg)
 	if self.db.profile.adds and msg == L["adds_trigger"] then
 		self:Message(L["adds_message"], "Important")
-		self:Bar(self, L["adds_bar"], 90, "Spell_Frost_SummonWaterElemental_2")
+		self:Bar(L["adds_bar"], 90, "Spell_Frost_SummonWaterElemental_2")
 	end
 end
 
 function BigWigsAran:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if self.db.profile.flame and msg:find(L["flame_trigger"]) then
 		self:Message(L["flame_message"], "Important")
-		self:Bar(self, L["flame_bar"], 20, "Spell_Fire_Fire")
+		self:Bar(L["flame_bar"], 20, "Spell_Fire_Fire")
 	end
 end
 

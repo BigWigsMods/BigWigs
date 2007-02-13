@@ -102,7 +102,7 @@ function BigWigsDoomwalker:BigWigs_RecvSync( sync, rest, nick )
 		end
 		if self.db.profile.overrun then
 			self:Bar(L["overrun_bar"], 30, "Ability_BullRush")
-			self:DelayedMessage(L["overrun_soon_message"], "Attention", 28)
+			self:DelayedMessage(28, L["overrun_soon_message"], "Attention")
 		end
 	elseif sync == "DoomwalkerEarthquake" and self.db.profile.earthquake then
 		self:Message(L["earthquake_message"], "Important")
@@ -110,7 +110,7 @@ function BigWigsDoomwalker:BigWigs_RecvSync( sync, rest, nick )
 	elseif sync == "DoomwalkerOverrun" and self.db.profile.overrun then
 		self:Message(L["overrun_message"], "Important")
 		self:Bar(L["overrun_bar"], 30, "Ability_BullRush")
-		self:DelayedMessage(L["overrun_soon_message"], "Attention", 28)
+		self:DelayedMessage(28, L["overrun_soon_message"], "Attention")
 	end
 end
 

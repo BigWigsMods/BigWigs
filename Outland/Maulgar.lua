@@ -169,14 +169,14 @@ function BigWigsMaulgar:BigWigs_RecvSync( sync, rest, nick )
 		self:Message(L["spellshield_message"], "Attention", nil, "Info")
 	elseif sync == "MaulgarWhirldwind" then
 		self:Message(L["whirlwind_message"], "Important")
-		self:Bar(self, L["whirlwind_bar"], 15, "Ability_Whirlwind")
+		self:Bar(L["whirlwind_bar"], 15, "Ability_Whirlwind")
 		self:Nextwhirldwind()
 	end
 end
 
 function BigWigsMaulgar:Nextwhirldwind()
 	self:DelayedMessage(45, L["whirlwind_warning2"], "Urgent")
-	self:Bar(self, L["whirlwind_nextbar"], 50, "Ability_Whirlwind")
+	self:Bar(L["whirlwind_nextbar"], 50, "Ability_Whirlwind")
 end
 
 function BigWigsMaulgar:CHAT_MSG_MONSTER_YELL(msg)

@@ -187,21 +187,21 @@ end
 
 function BigWigsOnyxia:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["deepbreath_trigger"] and self.db.profile.deepbreath then
-		self:TriggerEvent("BigWigs_Message", L["deepbreath_message"], "Important")
+		self:Message( L["deepbreath_message"], "Important")
 	end
 end
 
 function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["phase2_trigger"]) then
-		if self.db.profile.phase2 then self:TriggerEvent("BigWigs_Message", L["phase2_message"], "Urgent") end
+		if self.db.profile.phase2 then self:Message(L["phase2_message"], "Urgent") end
 	elseif msg:find(L["phase3_trigger"]) then
-		if self.db.profile.phase3 then self:TriggerEvent("BigWigs_Message", L["phase3_message"], "Urgent") end
+		if self.db.profile.phase3 then self:Message(L["phase3_message"], "Urgent") end
 	end
 end
 
 function BigWigsOnyxia:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg == L["fear_trigger"] and self.db.profile.onyfear then
-		self:TriggerEvent("BigWigs_Message", L["fear_message"], "Important")
+		self:Message(L["fear_message"], "Important")
 	end
 end
 

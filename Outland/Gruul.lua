@@ -124,7 +124,7 @@ function BigWigsGruul:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 	if not slam and self.db.profile.grasp and msg:find(L["grasp_trigger1"]) then
 		self:Message(L["grasp_message1"], "Attention")
 		self:DelayedMessage(83, L["grasp_warning"], "Urgent")
-		self:Bar(self, L["grasp_warning"], 85, "Ability_ThunderClap")
+		self:Bar(L["grasp_warning"], 85, "Ability_ThunderClap")
 		slam = true
 	elseif not grasp and self.db.profile.grasp and msg:find(L["grasp_trigger2"]) then
 		self:Message(L["grasp_message2"], "Urgent")

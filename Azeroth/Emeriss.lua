@@ -207,22 +207,22 @@ end
 		if (not self.prior and msg:find(L["trigger2"])) then
 			self.prior = true
 			if self.db.profile.noxious then 
-				self:TriggerEvent("BigWigs_Message", L["warn4"], "Important")
-				self:ScheduleEvent("BigWigs_Message", 25, L["warn3"], "Important")
-				self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 30, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
+				self:Message(L["warn4"], "Important")
+				self:DelayedMessage(25, L["warn3"], "Important")
+				self:Bar(L["bar1text"], 30, "Spell_Shadow_LifeDrain02")
 			end
 		else
 			local player, type = select(3, msg:find(L["trigger1"]))
 			if (player and type) then
 				if (player == L["isyou"] and type == L["isare"]) then
-					if self.db.profile.volatileyou then self:TriggerEvent("BigWigs_Message", L["warn1"], "Important", true) end
+					if self.db.profile.volatileyou then self:Message(L["warn1"], "Important", true) end
 				else
 					if self.db.profile.volatileother then
-						self:TriggerEvent("BigWigs_Message", player .. L["warn2"], "Attention")
-						self:TriggerEvent("BigWigs_SendTell", player, L["warn1"])
+						self:Message(player .. L["warn2"], "Attention")
+						self:Whisper(player, L["warn1"])
 					end
 					if self.db.profile.icon then
-						self:TriggerEvent("BigWigs_SetRaidIcon", player)
+						self:SetRaidIcon(player)
 					end
 				end
 			end
@@ -231,8 +231,8 @@ end
 
 function BigWigsEmeriss:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.engage and msg == L["engage_trigger"] then
-		self:TriggerEvent("BigWigs_Message", L["engage_message"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 10, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
+		self:Message( L["engage_message"], "Important")
+		self:Bar( L["bar1text"], 10, "Spell_Shadow_LifeDrain02")
 	end
 end
 

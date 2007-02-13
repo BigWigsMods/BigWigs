@@ -76,7 +76,7 @@ function BigWigsHyakiss:BigWigs_RecvSync(sync, rest, nick)
 		if not times[rest] or (times[rest] and (times[rest] + 5) < t) then
 			if self.db.profile.web then
 				self:Message(string.format(L["web_message"], rest), "Urgent")
-				self:Bar(self, string.format(L["web_bar"], rest), 8, "Spell_Nature_Web")
+				self:Bar( string.format(L["web_bar"], rest), 8, "Spell_Nature_Web")
 			end
 			times[rest] = t
 		end
