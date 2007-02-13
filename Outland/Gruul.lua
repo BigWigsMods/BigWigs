@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?      --
+--      Are you local?    --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Gruul the Dragonkiller"]
@@ -8,7 +8,7 @@ local grasp
 local slam
 
 ----------------------------
---      Localization      --
+--      Localization     --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -76,7 +76,7 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 ----------------------------------
---      Module Declaration      --
+--    Module Declaration   --
 ----------------------------------
 
 BigWigsGruul = BigWigs:NewModule(boss)
@@ -105,32 +105,32 @@ function BigWigsGruul:OnEnable()
 end
 
 ------------------------------
---      Event Handlers      --
+--    Event Handlers     --
 ------------------------------
 
 function BigWigsGruul:CHAT_MSG_MONSTER_SAY(msg)
 	if self.db.profile.engage and msg == L["engage_trigger"] then
-		self:TriggerEvent("BigWigs_Message", L["engage_message"], "Attention")
+		self:Message(L["engage_message"], "Attention")
 	end
 end
 
 function BigWigsGruul:CHAT_MSG_MONSTER_EMOTE(msg)
 	if self.db.profile.enrage and msg == L["enrage_trigger"] then
-		self:TriggerEvent("BigWigs_Message", L["enrage_message"], "Important")
+		self:Message(L["enrage_message"], "Important")
 	end
 end
 
 function BigWigsGruul:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 	if not slam and self.db.profile.grasp and msg:find(L["grasp_trigger1"]) then
-		self:TriggerEvent("BigWigs_Message", L["grasp_message1"], "Attention")
-		self:ScheduleEvent("BigWigs_Message", 83, L["grasp_warning"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["grasp_warning"], 85, "Interface\\Icons\\Ability_ThunderClap")
+		self:Message(L["grasp_message1"], "Attention")
+		self:DelayedMessage(83, L["grasp_warning"], "Urgent")
+		self:Bar(self, L["grasp_warning"], 85, "Ability_ThunderClap")
 		slam = true
 	elseif not grasp and self.db.profile.grasp and msg:find(L["grasp_trigger2"]) then
-		self:TriggerEvent("BigWigs_Message", L["grasp_message2"], "Urgent")
+		self:Message(L["grasp_message2"], "Urgent")
 		grasp = true
 	elseif self.db.profile.cavein and msg == L["cavein_trigger"] then
-		self:TriggerEvent("BigWigs_Message", L["cavein_message"], "Personal", true, "Alarm")
+		self:Message(L["cavein_message"], "Personal", true, "Alarm")
 	end
 end
 

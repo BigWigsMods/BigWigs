@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?      --
+--      Are you local?    --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["High King Maulgar"]
@@ -95,7 +95,7 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 ----------------------------------
---      Module Declaration      --
+--   Module Declaration    --
 ----------------------------------
 
 BigWigsMaulgar = BigWigs:NewModule(boss)
@@ -132,22 +132,22 @@ function BigWigsMaulgar:OnEnable()
 end
 
 ------------------------------
---      Event Handlers      --
+--    Event Handlers     --
 ------------------------------
 
 function BigWigsMaulgar:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if msg:find(L["heal_trigger"]) and self.db.profile.heal then
-		self:TriggerEvent("BigWigs_SendSync", "BlindeyePrayer")
+	if self.db.profile.heal and msg:find(L["heal_trigger"]) then
+		self:Sync("BlindeyePrayer")
 	end
 end
 
 function BigWigsMaulgar:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if msg:find(L["shield_trigger"]) and self.db.profile.shield then
-		self:TriggerEvent("BigWigs_SendSync", "BlindeyeShield")
-	elseif msg:find(L["spellshield_trigger"]) and self.db.profile.spellshield then
-		self:TriggerEvent("BigWigs_SendSync", "KroshSpellShield")
-	elseif msg:find(L["whirlwind_trigger"]) and self.db.profile.whirlwind then
-		self:TriggerEvent("BigWigs_SendSync", "MaulgarWhirldwind")
+	if self.db.profile.shield and msg:find(L["shield_trigger"]) then
+		self:Sync("BlindeyeShield")
+	elseif self.db.profile.spellshield and msg:find(L["spellshield_trigger"]) then
+		self:Sync("KroshSpellShield")
+	elseif self.db.profile.whirlwind and msg:find(L["whirlwind_trigger"]) then
+		self:Sync("MaulgarWhirldwind")
 	end
 end
 
@@ -158,30 +158,30 @@ function BigWigsMaulgar:BigWigs_RecvSync( sync, rest, nick )
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.whirlwind then
-			self:TriggerEvent("BigWigs_Message", L["whirlwind_warning1"], "Attention")
+			self:Message(L["whirlwind_warning1"], "Attention")
 			self:Nextwhirldwind()
 		end
 	elseif sync == "BlindeyePrayer" then
-		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Important", nil, "Alarm")
+		self:Message(L["heal_message"], "Important", nil, "Alarm")
 	elseif sync == "BlindeyeShield" then
-		self:TriggerEvent("BigWigs_Message", L["shield_message"], "Important")
+		self:Message(L["shield_message"], "Important")
 	elseif sync == "KroshSpellShield" then
-		self:TriggerEvent("BigWigs_Message", L["spellshield_message"], "Attention", nil, "Info")
+		self:Message(L["spellshield_message"], "Attention", nil, "Info")
 	elseif sync == "MaulgarWhirldwind" then
-		self:TriggerEvent("BigWigs_Message", L["whirlwind_message"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["whirlwind_bar"], 15, "Interface\\Icons\\Ability_Whirlwind")
+		self:Message(L["whirlwind_message"], "Important")
+		self:Bar(self, L["whirlwind_bar"], 15, "Ability_Whirlwind")
 		self:Nextwhirldwind()
 	end
 end
 
 function BigWigsMaulgar:Nextwhirldwind()
-	self:ScheduleEvent("BigWigs_Message", 45, L["whirlwind_warning2"], "Urgent")
-	self:TriggerEvent("BigWigs_StartBar", self, L["whirlwind_nextbar"], 50, "Interface\\Icons\\Ability_Whirlwind")
+	self:DelayedMessage(45, L["whirlwind_warning2"], "Urgent")
+	self:Bar(self, L["whirlwind_nextbar"], 50, "Ability_Whirlwind")
 end
 
 function BigWigsMaulgar:CHAT_MSG_MONSTER_YELL(msg)
-	if msg:find(L["flurry_trigger"]) and self.db.profile.flurry then
-		self:TriggerEvent("BigWigs_Message", L["flurry_message"], "Important")
+	if self.db.profile.flurry and msg:find(L["flurry_trigger"]) then
+		self:Message(L["flurry_message"], "Important")
 	end
 end
 
@@ -190,11 +190,10 @@ function BigWigsMaulgar:UNIT_HEALTH(msg)
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 52 and health <= 56 and not flurryannounced then
-			self:TriggerEvent("BigWigs_Message", L["flurry_warning"], "Positive")
+			self:Message(L["flurry_warning"], "Positive")
 			flurryannounced = true
 		elseif health > 62 and flurryannounced then
 			flurryannounced = false
 		end
 	end
 end
-

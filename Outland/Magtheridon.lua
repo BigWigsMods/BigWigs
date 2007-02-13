@@ -71,30 +71,30 @@ end
 ------------------------------
 
 function BigWigsMagtheridon:CHAT_MSG_MONSTER_EMOTE(msg)
-	if msg:find(L["escape_trigger1"]) and self.db.profile.escape then
-		self:TriggerEvent("BigWigs_Message", L["escape_warning1"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["escape_bar"], 120, "Interface\\Icons\\Ability_Rogue_Trip")
-		self:ScheduleEvent("BigWigs_Message", 60, L["escape_warning2"], "Positive")
-		self:ScheduleEvent("BigWigs_Message", 90, L["escape_warning3"], "Attention")
-		self:ScheduleEvent("BigWigs_Message", 110, L["escape_warning4"], "Urgent", nil, "Long")
+	if self.db.profile.escape and msg:find(L["escape_trigger1"]) then
+		self:Message(L["escape_warning1"], "Important")
+		self:Bar(self, L["escape_bar"], 120, "Ability_Rogue_Trip")
+		self:DelayedMessage(60, L["escape_warning2"], "Positive")
+		self:DelayedMessage(90, L["escape_warning3"], "Attention")
+		self:DelayedMessage(110, L["escape_warning4"], "Urgent", nil, "Long")
 	end
 end
 
 function BigWigsMagtheridon:CHAT_MSG_MONSTER_YELL(msg)
-	if msg:find(L["escape_trigger2"]) and self.db.profile.escape then
-		self:TriggerEvent("BigWigs_Message", L["escape_message"], "Important", nil, "Alert")
+	if self.db.profile.escape and msg == L["escape_trigger2"] then
+		self:Message(L["escape_message"], "Important", nil, "Alert")
 	end
 end
 
 function BigWigsMagtheridon:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg:find(L["abyssal_trigger"]) and self.db.profile.abyssal then
-		self:TriggerEvent("BigWigs_Message", L["abyssal_message"], "Attention")
+	if self.db.profile.abyssal and msg:find(L["abyssal_trigger"]) then
+		self:Message(L["abyssal_message"], "Attention")
 	end
 end
 
 function BigWigsMagtheridon:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if msg:find(L["heal_trigger"]) and self.db.profile.heal then
-		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Urgent", nil, "Alarm")
-		self:TriggerEvent("BigWigs_StartBar", self, L["heal_message"], 2, "Interface\\Icons\\Spell_Shadow_ChillTouch")
+	if self.db.profile.heal and msg:find(L["heal_trigger"]) then
+		self:Message(L["heal_message"], "Urgent", nil, "Alarm")
+		self:Bar(self, L["heal_message"], 2, "Spell_Shadow_ChillTouch")
 	end
 end
