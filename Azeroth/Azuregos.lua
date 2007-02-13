@@ -151,7 +151,7 @@ end
 
 function BigWigsAzuregos:CHAT_MSG_SPELL_AURA_GONE_OTHER( msg )
 	if self.db.profile.shield and msg:find(L["trigger2"]) then
-		self:Message(["warn2"], "Attention")
+		self:Message(L["warn2"], "Attention")
 	end
 end
 
