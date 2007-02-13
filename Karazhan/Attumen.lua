@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?      --
+--     Are you local?     --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Attumen the Huntsman"]
@@ -9,7 +9,7 @@ local playerName = nil
 local started
 
 ----------------------------
---      Localization      --
+--      Localization     --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -54,7 +54,7 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 ----------------------------------
---      Module Declaration      --
+--    Module Declaration   --
 ----------------------------------
 
 BigWigsAttumen = BigWigs:NewModule(boss)
@@ -86,14 +86,14 @@ function BigWigsAttumen:OnEnable()
 end
 
 ------------------------------
---      Event Handlers      --
+--     Event Handlers    --
 ------------------------------
 
 function BigWigsAttumen:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.phase and msg == L["phase3_trigger"] then
-		self:TriggerEvent("BigWigs_Message", L["phase3_message"], "Important")
+		self:Message(L["phase3_message"], "Important")
 	elseif self.db.profile.phase and (msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"]) then
-		self:TriggerEvent("BigWigs_Message", L["phase2_message"], "Urgent")
+		self:Message(L["phase2_message"], "Urgent")
 	end
 end
 
@@ -104,7 +104,7 @@ function BigWigsAttumen:BigWigs_RecvSync( sync, rest, nick )
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.phase then
-			self:TriggerEvent("BigWigs_Message", L["phase1_message"], "Attention")
+			self:Message(L["phase1_message"], "Attention")
 		end
 	end
 end
@@ -116,7 +116,7 @@ function BigWigsAttumen:CurseEvent(msg)
 			cplayer = playerName
 		end
 		if cplayer == playerName and self.db.profile.curse then
-			self:TriggerEvent("BigWigs_Message", string.format(L["curse_message"], cplayer), "Attention")
+			self:Message(string.format(L["curse_message"], cplayer), "Attention")
 		end
 	end
 end

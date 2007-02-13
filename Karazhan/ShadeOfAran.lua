@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?      --
+--      Are you local?    --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Shade of Aran"]
@@ -8,7 +8,7 @@ local drinkannounced
 local addsannounced
 
 ----------------------------
---      Localization      --
+--      Localization     --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -71,7 +71,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 ----------------------------------
---      Module Declaration      --
+--   Module Declaration    --
 ----------------------------------
 
 BigWigsAran = BigWigs:NewModule(boss)
@@ -101,7 +101,7 @@ function BigWigsAran:OnEnable()
 end
 
 ------------------------------
---      Event Handlers      --
+--    Event Handlers     --
 ------------------------------
 
 function BigWigsAran:CHAT_MSG_MONSTER_YELL(msg)

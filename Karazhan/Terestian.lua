@@ -13,3 +13,46 @@ Strategy
     * The most important thing in the fight is to DPS down Dark Chains as soon as they appear. Otherwise, the Sacrifice victim will die very quickly, and Terestrian will heal a lot.
     * Every once in a while, the raid leader should call AoE to clear out the nonelite imps. Once most of them are dead, the group should resume hard DPS on the boss. 
 ]]
+
+------------------------------
+--      Are you local?    --
+------------------------------
+
+local boss = AceLibrary("Babble-Boss-2.2")["Terestian Illhoof"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+
+----------------------------
+--      Localization     --
+----------------------------
+
+L:RegisterTranslations("enUS", function() return {
+	cmd = "Terestian",
+} end )
+
+----------------------------------
+--    Module Declaration   --
+----------------------------------
+
+BigWigsTerestian = BigWigs:NewModule(boss)
+BigWigsTerestian.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+BigWigsTerestian.enabletrigger = boss
+BigWigsTerestian.toggleoptions = {"bosskill"}
+BigWigsTerestian.revision = tonumber(string.sub("$Revision$", 12, -3))
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function BigWigsTerestian:OnEnable()
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+end
+
+------------------------------
+--     Event Handlers    --
+------------------------------
+
+--[[
+function BigWigsTerestian:Bucket()
+	
+end
+]]

@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?      --
+--     Are you local?     --
 ------------------------------
 
 local Romulo = AceLibrary("Babble-Boss-2.2")["Romulo"]
@@ -8,7 +8,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["Romulo & Julianne"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
---      Localization      --
+--      Localization     --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -91,7 +91,7 @@ L:RegisterTranslations("deDE", function() return {
 
 
 ----------------------------------
---      Module Declaration      --
+--   Module Declaration    --
 ----------------------------------
 
 BigWigsRomuloJulianne = BigWigs:NewModule(boss)
@@ -115,16 +115,16 @@ function BigWigsRomuloJulianne:OnEnable()
 end
 
 ------------------------------
---      Event Handlers      --
+--     Event Handlers    --
 ------------------------------
 
 function BigWigsRomuloJulianne:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["phase1_trigger"]) and self.db.profile.phase then
-		self:TriggerEvent("BigWigs_Message", L["phase1_message"], "Attention")
+		self:Message(L["phase1_message"], "Attention")
 	elseif msg:find(L["phase2_trigger"]) and self.db.profile.phase then
-		self:TriggerEvent("BigWigs_Message", L["phase2_message"], "Attention")
+		self:Message(L["phase2_message"], "Attention")
 	elseif msg:find(L["phase3_trigger"]) and self.db.profile.phase then
-		self:TriggerEvent("BigWigs_Message", L["phase3_message"], "Attention")
+		self:Message(L["phase3_message"], "Attention")
 	end
 end
 
@@ -135,21 +135,21 @@ function BigWigsRomuloJulianne:PoisonEvent(msg)
 			pplayer = UnitName("player")
 		end
 		if self.db.profile.poison then
-			self:TriggerEvent("BigWigs_Message", string.format(L["poison_message"], pplayer), "Important")
+			self:Message(string.format(L["poison_message"], pplayer), "Important")
 		end
 	end
 end
 
 function BigWigsRomuloJulianne:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg:find(L["heal_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Urgent")
+		self:Message(L["heal_message"], "Urgent")
 	end
 end
 
 function BigWigsRomuloJulianne:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if msg:find(L["buff1_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["buff1_message"], "Attention")
+		self:Message(L["buff1_message"], "Attention")
 	elseif msg:find(L["buff2_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["buff2_message"], "Attention")
+		self:Message(L["buff2_message"], "Attention")
 	end
 end

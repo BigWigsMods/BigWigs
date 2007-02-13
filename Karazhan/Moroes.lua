@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?      --
+--     Are you local?     --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Moroes"]
@@ -8,7 +8,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local enrageannounced
 
 ----------------------------
---      Localization      --
+--      Localization     --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -86,7 +86,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 ----------------------------------
---      Module Declaration      --
+--   Module Declaration    --
 ----------------------------------
 
 BigWigsMoroes = BigWigs:NewModule(boss)
@@ -118,27 +118,27 @@ function BigWigsMoroes:OnEnable()
 end
 
 ------------------------------
---      Event Handlers      --
+--    Event Handlers     --
 ------------------------------
 
 function BigWigsMoroes:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.vanish and (msg == L["vanish_trigger1"] or msg == L["vanish_trigger2"]) then
-		self:TriggerEvent("BigWigs_Message", L["vanish_message"], "Urgent", nil, "Alert")
+		self:Message(L["vanish_message"], "Urgent", nil, "Alert")
 		self:NextVanish()
 	elseif self.db.profile.engage and msg == L["engage_trigger"] then
-		self:TriggerEvent("BigWigs_Message", L["engage_message"], "Attention")
+		self:Message(L["engage_message"], "Attention")
 		self:NextVanish()
 	end
 end
 
 function BigWigsMoroes:NextVanish()
-	self:TriggerEvent("BigWigs_StartBar", self, L["vanish_bar"], 35, "Interface\\Icons\\Ability_Vanish")
-	self:ScheduleEvent("BigWigs_Message", 30, L["vanish_warning"], "Attention")
+	self:Bar(self, L["vanish_bar"], 35, "Ability_Vanish")
+	self:DelayedMessage(30, L["vanish_warning"], "Attention")
 end
 
 function BigWigsMoroes:CHAT_MSG_MONSTER_EMOTE(msg)
 	if self.db.profile.enrage and msg == L["enrage_trigger"] then
-		self:TriggerEvent("BigWigs_Message", L["enrage_message"], "Important", nil, "Alarm")
+		self:Message(L["enrage_message"], "Important", nil, "Alarm")
 	end
 end
 
@@ -147,7 +147,7 @@ function BigWigsMoroes:UNIT_HEALTH(msg)
 		local health = UnitHealth(msg)
 		if health > 30 and health <= 34 and not enrageannounced then
 			if self.db.profile.enrage then
-				self:TriggerEvent("BigWigs_Message", L["enrage_warning"], "Positive", nil, "Info")
+				self:Message(L["enrage_warning"], "Positive", nil, "Info")
 			end
 			enrageannounced = true
 		elseif health > 40 and enrageannounced then
@@ -162,7 +162,7 @@ function BigWigsMoroes:BlindEvent(msg)
 		if bplayer == L["you"] then
 			bplayer = UnitName("player")
 		end
-		self:TriggerEvent("BigWigs_SendSync", "MoroesBlind "..bplayer)
+		self:Sync("MoroesBlind "..bplayer)
 	end
 end
 
@@ -170,7 +170,7 @@ function BigWigsMoroes:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "MoroesBlind" and rest then
 		local player = rest
 		if player == UnitName("player") and self.db.profile.blind then
-		self:TriggerEvent("BigWigs_Message", string.format(L["blind_message"], player), "Attention")
+		self:Message(string.format(L["blind_message"], player), "Attention")
 		end
 	end
 end

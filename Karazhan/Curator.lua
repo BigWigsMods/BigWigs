@@ -1,5 +1,5 @@
 ------------------------------
---      Are you local?      --
+--      Are you local?    --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["The Curator"]
@@ -7,7 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local enrageannounced
 
 ----------------------------
---      Localization      --
+--      Localization     --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -87,7 +87,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 ----------------------------------
---      Module Declaration      --
+--   Module Declaration   --
 ----------------------------------
 
 BigWigsCurator = BigWigs:NewModule(boss)
@@ -111,30 +111,30 @@ function BigWigsCurator:OnEnable()
 end
 
 ------------------------------
---      Event Handlers      --
+--     Event Handlers    --
 ------------------------------
 
 function BigWigsCurator:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["berserk_trigger"]) and self.db.profile.berserk then
-		self:TriggerEvent("BigWigs_Message", L["berserk_message"], "Attention")
-		self:TriggerEvent("BigWigs_StartBar", self, L["berserk_bar"], 720, "Interface\\Icons\\INV_Shield_01")
+		self:Message(L["berserk_message"], "Attention")
+		self:Bar(self, L["berserk_bar"], 720, "INV_Shield_01")
 	elseif msg:find(L["berserk_trigger"]) and self.db.profile.weaktime then
 		self:Evocation()
 	elseif msg:find(L["weaken_trigger"]) and self.db.profile.weaken then
-		self:TriggerEvent("BigWigs_Message", L["weaken_message"], "Important", nil, "Alarm")
-		self:TriggerEvent("BigWigs_StartBar", self, L["weaken_bar"], 20, "Interface\\Icons\\Spell_Nature_Purge")
-		self:ScheduleEvent("BigWigs_Message", 15, L["weaken_fade_warning"], "Urgent")
-		self:ScheduleEvent("BigWigs_Message", 20, L["weaken_fade_message"], "Important", nil, "Alarm")
+		self:Message(L["weaken_message"], "Important", nil, "Alarm")
+		self:Bar(self, L["weaken_bar"], 20, "Spell_Nature_Purge")
+		self:DelayedMessage(15, L["weaken_fade_warning"], "Urgent")
+		self:DelayedMessage(20, L["weaken_fade_message"], "Important", nil, "Alarm")
 		self:Evocation()
 	end
 end
 
 function BigWigsCurator:Evocation()
 	if self.db.profile.weaktime then
-		self:TriggerEvent("BigWigs_StartBar", self, L["weaktime_bar"], 109, "Interface\\Icons\\Spell_Nature_Purge")
-		self:ScheduleEvent("BigWigs_Message", 39, L["weaktime_message3"], "Positive")
-		self:ScheduleEvent("BigWigs_Message", 79, L["weaktime_message2"], "Attention")
-		self:ScheduleEvent("BigWigs_Message", 99, L["weaktime_message1"], "Urgent")
+		self:Bar(self, L["weaktime_bar"], 109, "Spell_Nature_Purge")
+		self:DelayedMessage(39, L["weaktime_message3"], "Positive")
+		self:DelayedMessage(79, L["weaktime_message2"], "Attention")
+		self:DelayedMessage(99, L["weaktime_message1"], "Urgent")
 	end
 end
 
@@ -143,7 +143,7 @@ function BigWigsCurator:UNIT_HEALTH(msg)
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 10 and health <= 13 and not enrageannounced then
-			self:TriggerEvent("BigWigs_Message", L["enrage_warning"], "Positive")
+			self:Message(L["enrage_warning"], "Positive")
 			enrageannounced = true
 		elseif health > 50 and enrageannounced then
 			enrageannounced = false

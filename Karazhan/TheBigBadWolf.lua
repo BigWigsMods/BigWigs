@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?      --
+--      Are you local?    --
 ------------------------------
 
 local lady = AceLibrary("Babble-Boss-2.2")["Grandmother"]
@@ -8,7 +8,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local playerName = nil
 
 ----------------------------
---      Localization      --
+--      Localization     --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -54,7 +54,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 ----------------------------------
---      Module Declaration      --
+--   Module Declaration    --
 ----------------------------------
 
 BigWigsTheBigBadWolf = BigWigs:NewModule(boss)
@@ -64,7 +64,7 @@ BigWigsTheBigBadWolf.toggleoptions = {"youriding", "elseriding", "icon", "bosski
 BigWigsTheBigBadWolf.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
---      Initialization      --
+--      Initialization     --
 ------------------------------
 
 function BigWigsTheBigBadWolf:OnEnable()
@@ -77,7 +77,7 @@ function BigWigsTheBigBadWolf:OnEnable()
 end
 
 ------------------------------
---      Event Handlers      --
+--     Event Handlers    --
 ------------------------------
 
 function BigWigsTheBigBadWolf:RidingEvent(msg)
@@ -87,13 +87,13 @@ function BigWigsTheBigBadWolf:RidingEvent(msg)
 			rplayer = playerName
 		end
 		if rplayer == playerName and self.db.profile.youriding then
-			self:TriggerEvent("BigWigs_Message", L["riding_youwarn"], "Personal", true, "Long")
-			self:TriggerEvent("BigWigs_Message", string.format(L["riding_otherwarn"], rplayer), "Attention", nil, nil, true)
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["riding_bar"], rplayer), 20,"Interface\\Icons\\INV_Chest_Cloth_18")
+			self:Message(L["riding_youwarn"], "Personal", true, "Long")
+			self:Message(string.format(L["riding_otherwarn"], rplayer), "Attention", nil, nil, true)
+			self:Bar(self, string.format(L["riding_bar"], rplayer), 20,"INV_Chest_Cloth_18")
 		elseif self.db.profile.elseriding then
-			self:TriggerEvent("BigWigs_Message", string.format(L["riding_otherwarn"], rplayer), "Attention")
-			self:TriggerEvent("BigWigs_SendTell", rplayer, L["riding_youwarn"])
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["riding_bar"], rplayer), 20,"Interface\\Icons\\INV_Chest_Cloth_18")
+			self:Message(string.format(L["riding_otherwarn"], rplayer), "Attention")
+			self:Whisper(rplayer, L["riding_youwarn"])
+			self:Bar(self, string.format(L["riding_bar"], rplayer), 20,"INV_Chest_Cloth_18")
 		end
 		if self.db.profile.icon then 
 			self:TriggerEvent("BigWigs_SetRaidIcon", rplayer)

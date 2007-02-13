@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?      --
+--      Are you local?    --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Prince Malchezaar"]
@@ -7,7 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started
 
 ----------------------------
---      Localization      --
+--      Localization     --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -34,7 +34,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 ----------------------------------
---      Module Declaration      --
+--    Module Declaration   --
 ----------------------------------
 
 BigWigsMalchezaar = BigWigs:NewModule(boss)
@@ -67,19 +67,19 @@ function BigWigsMalchezaar:OnEnable()
 end
 
 ------------------------------
---      Event Handlers      --
+--     Event Handlers    --
 ------------------------------
 
 function BigWigsMalchezaar:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg:find("Infernal") then
-		self:TriggerEvent("BigWigs_SendSync", "MalchezaarInfernal")
+		self:Sync("MalchezaarInfernal")
 	end
 end
 
 -- Event bucket until we know what's really going on.
 function BigWigsMalchezaar:EventBucket(msg)
 	if msg:find(L["enfeeble_trigger"]) and self.db.profile.enfeeble then
-		self:TriggerEvent("BigWigs_SendSync", "MalchezaarEnfeeble")
+		self:Sync("MalchezaarEnfeeble")
 	end
 end
 
@@ -90,16 +90,15 @@ function BigWigsMalchezaar:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.infernals then
-			self:TriggerEvent("BigWigs_Message", L["engage_message"], "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["infernal_bar"], 120, "Interface\\Icons\\INV_Stone_05")
+			self:Message(L["engage_message"], "Important")
+			self:Bar(self, L["infernal_bar"], 120, "INV_Stone_05")
 		end
 	elseif sync == "MalchezaarEnfeeble" and self.db.profile.enfeeble then
-		self:TriggerEvent("BigWigs_Message", L["darknova_message"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["enfeeble_bar"], 7, "Interface\\Icons\\Spell_Shadow_CurseOfMannoroth")
-		self:TriggerEvent("BigWigs_StartBar", self, L["darknova_bar"], 3, "Interface\\Icons\\Spell_Fire_FelFire")
+		self:Message(L["darknova_message"], "Important")
+		self:Bar(self, L["enfeeble_bar"], 7, "Spell_Shadow_CurseOfMannoroth")
+		self:Bar(self, L["darknova_bar"], 3, "Spell_Fire_FelFire")
 	elseif sync == "MalchezaarInfernal" and self.db.profile.infernals then
-		self:TriggerEvent("BigWigs_Message", L["infernal_message"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["infernal_bar"], 120, "Interface\\Icons\\INV_Stone_05")
+		self:Message(L["infernal_message"], "Important")
+		self:Bar(self, L["infernal_bar"], 120, "INV_Stone_05")
 	end
 end
-

@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?      --
+--     Are you local?     --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["The Crone"]
@@ -10,7 +10,7 @@ local dorothee = AceLibrary("Babble-Boss-2.2")["Dorothee"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
---      Localization      --
+--      Localization     --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -56,16 +56,16 @@ function BigWigsWizardofOz:OnEnable()
 end
 
 ------------------------------
---      Event Handlers      --
+--    Event Handlers     --
 ------------------------------
 
 function BigWigsWizardofOz:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["summon_trigger"]) and self.db.profile.summon then
-		self:TriggerEvent("BigWigs_Message", L["summon_message"], "Attention")
+		self:Message(L["summon_message"], "Attention")
 	elseif msg:find(L["engage_trigger"]) and self.db.profile.spawns then
-		self:TriggerEvent("BigWigs_StartBar", self, L["spawns_roar"], 15, "Interface\\Icons\\INV_Staff_08")
-		self:TriggerEvent("BigWigs_StartBar", self, L["spawns_strawman"], 25, "Interface\\Icons\\Ability_Druid_ChallangingRoar")
-		self:TriggerEvent("BigWigs_StartBar", self, L["spawns_tinhead"], 35, "Interface\\Icons\\INV_Chest_Plate06")
-		self:TriggerEvent("BigWigs_StartBar", self, L["spawns_tito"], 48, "Interface\\Icons\\Ability_Hunter_Pet_Wolf")
+		self:Bar(self, L["spawns_roar"], 15, "INV_Staff_08")
+		self:Bar(self, L["spawns_strawman"], 25, "Ability_Druid_ChallangingRoar")
+		self:Bar(self, L["spawns_tinhead"], 35, "INV_Chest_Plate06")
+		self:Bar(self, L["spawns_tito"], 48, "Ability_Hunter_Pet_Wolf")
 	end
 end

@@ -1,12 +1,12 @@
 ﻿------------------------------
---      Are you local?      --
+--      Are you local?    --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Maiden of Virtue"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
---      Localization      --
+--      Localization     --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -48,7 +48,7 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 ----------------------------------
---      Module Declaration      --
+--   Module Declaration    --
 ----------------------------------
 
 BigWigsMaiden = BigWigs:NewModule(boss)
@@ -68,20 +68,20 @@ function BigWigsMaiden:OnEnable()
 end
 
 ------------------------------
---      Event Handlers      --
+--    Event Handlers     --
 ------------------------------
 
 function BigWigsMaiden:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.engage and msg == L["engage_trigger"] then
-		self:TriggerEvent("BigWigs_Message", L["engage_message"], "Attention")
+		self:Message(L["engage_message"], "Attention")
 		self:NextRepentance()
 	elseif self.db.profile.repentance and (msg == L["repentance_trigger1"] or msg == L["repentance_trigger2"]) then
-		self:TriggerEvent("BigWigs_Message", L["repentance_message"], "Important")
+		self:Message(L["repentance_message"], "Important")
 		self:NextRepentance()
 	end
 end
 
 function BigWigsMaiden:NextRepentance()
-	self:ScheduleEvent("BigWigs_Message", 28, L["repentance_warning"], "Urgent", nil, "Alarm")
-	self:TriggerEvent("BigWigs_StartBar", self, L["repentance_message"], 33, "Interface\\Icons\\Spell_Holy_PrayerOfHealing")
+	self:DelayedMessage(28, L["repentance_warning"], "Urgent", nil, "Alarm")
+	self:Bar(self, L["repentance_message"], 33, "Spell_Holy_PrayerOfHealing")
 end

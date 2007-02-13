@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?      --
+--      Are you local?    --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Hyakiss the Lurker"]
@@ -7,7 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local times
 
 ----------------------------
---      Localization      --
+--      Localization     --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -25,7 +25,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 ----------------------------------
---      Module Declaration      --
+--   Module Declaration    --
 ----------------------------------
 
 BigWigsHyakiss = BigWigs:NewModule(boss)
@@ -52,7 +52,7 @@ function BigWigsHyakiss:OnEnable()
 end
 
 ------------------------------
---      Event Handlers      --
+--    Event Handlers     --
 ------------------------------
 
 function BigWigsHyakiss:Web(msg)
@@ -64,7 +64,7 @@ function BigWigsHyakiss:Web(msg)
 			end
 			local t = GetTime()
 			if not times[webPlayer] or (times[webPlayer] and (times[webPlayer] + 5) < t) then
-				self:TriggerEvent("BigWigs_SendSync", "HyakissWeb "..webPlayer)
+				self:Sync("HyakissWeb "..webPlayer)
 			end
 		end
 	end
@@ -75,11 +75,10 @@ function BigWigsHyakiss:BigWigs_RecvSync(sync, rest, nick)
 		local t = GetTime()
 		if not times[rest] or (times[rest] and (times[rest] + 5) < t) then
 			if self.db.profile.web then
-				self:TriggerEvent("BigWigs_Message", string.format(L["web_message"], rest), "Urgent")
-				self:TriggerEvent("BigWigs_StartBar", self, string.format(L["web_bar"], rest), 8, "Interface\\Icons\\Spell_Nature_Web")
+				self:Message(string.format(L["web_message"], rest), "Urgent")
+				self:Bar(self, string.format(L["web_bar"], rest), 8, "Spell_Nature_Web")
 			end
 			times[rest] = t
 		end
 	end
 end
-

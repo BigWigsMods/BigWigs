@@ -2,8 +2,8 @@
 
 ## Title: Big Wigs [|cffeda55fKarazhan|r]
 ## Notes: (BETA) Big Wigs Karazhan Modules
-## Author: Ammo, Rabbit
-## X-Credits: Tekkub Stoutwrithe(founding author), Shyva, Funkydude & Others
+## Author: Ammo, Rabbit, Funkydude
+## X-Credits: Tekkub Stoutwrithe(founding author) & Others
 ## Version: 2.0
 ## LoadOnDemand: 1
 
@@ -29,3 +29,4 @@ Moroes.lua
 Attumen.lua
 Maiden.lua
 WizardofOz.lua
+Netherspite.lua
