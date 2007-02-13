@@ -154,7 +154,7 @@ function BigWigs.modulePrototype:Message(text, priority, ...)
 end
 
 function BigWigs.modulePrototype:DelayedMessage(text, priority, delay, ...)
-	self:ScheduleEvent("BigWigs_Message", delay, text, priority, ...)
+	return self:ScheduleEvent("BigWigs_Message", delay, text, priority, ...)
 end
 
 function BigWigs.modulePrototype:Bar(text, length, icon, ...)
