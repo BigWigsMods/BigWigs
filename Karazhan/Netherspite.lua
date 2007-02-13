@@ -8,7 +8,6 @@ local started
 local voidcount
 local p1Duration = 60
 local p2Duration = 30
-local voidDuration = 90
 local netherDuration = 5
 
 ----------------------------
@@ -40,7 +39,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	voidzone_trigger = "casts Void Zone.",
 	voidzone_warn = "Void Zone (%d)!",
-	voidzone_bar = "Void Zone (%d)",
 
 	netherbreath_trigger = "casts Face Random Target.",
 	netherbreath_warn = "Incoming Netherbreath!",
@@ -54,7 +52,7 @@ BigWigsNetherspite = BigWigs:NewModule(boss)
 BigWigsNetherspite.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsNetherspite.enabletrigger = boss
 BigWigsNetherspite.toggleoptions = {"voidzone", "netherbreath", "phase", "bosskill"}
-BigWigsNetherspite.revision = tonumber(string.sub("$Revision$", 12, -3))
+BigWigsNetherspite.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -108,7 +106,6 @@ end
 
 function BigWigsNetherspite:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if self.db.profile.voidzone and msg:find( L["voidzone_trigger"] ) then
-		self:Bar( L["voidzone_bar"]:format( voidcount ), voidDuration, "Spell_Shadow_GatherShadows" )
 		self:Message( L["voidzone_warn"]:format(voidcount), "Attention")
 		voidcount = voidcount + 1
 	elseif msg:find(L["netherbreath_trigger"]) then
