@@ -165,3 +165,6 @@ function BigWigs.modulePrototype:Sync(sync)
 	self:TriggerEvent("BigWigs_SendSync", sync)
 end
 
+function BigWigs.modulePrototype:Whisper(player, text)
+	self:TriggerEvent("BigWigs_SendTell", player, text)
+end
