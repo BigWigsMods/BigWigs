@@ -152,3 +152,4 @@ Karazhan\Moroes.lua
 Karazhan\Attumen.lua
 Karazhan\Maiden.lua
 Karazhan\WizardofOz.lua
+Karazhan\Netherspite.lua
