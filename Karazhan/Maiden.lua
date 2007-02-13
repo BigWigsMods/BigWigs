@@ -82,6 +82,6 @@ function BigWigsMaiden:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function BigWigsMaiden:NextRepentance()
-	self:DelayedMessage(28, L["repentance_warning"], "Urgent", nil, "Alarm")
+	self:DelayedMessage(L["repentance_warning"], "Urgent", 28, nil, "Alarm")
 	self:Bar(self, L["repentance_message"], 33, "Spell_Holy_PrayerOfHealing")
 end

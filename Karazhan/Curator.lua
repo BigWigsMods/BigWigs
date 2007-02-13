@@ -123,8 +123,8 @@ function BigWigsCurator:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg:find(L["weaken_trigger"]) and self.db.profile.weaken then
 		self:Message(L["weaken_message"], "Important", nil, "Alarm")
 		self:Bar(self, L["weaken_bar"], 20, "Spell_Nature_Purge")
-		self:DelayedMessage(15, L["weaken_fade_warning"], "Urgent")
-		self:DelayedMessage(20, L["weaken_fade_message"], "Important", nil, "Alarm")
+		self:DelayedMessage(L["weaken_fade_warning"], "Urgent", 15)
+		self:DelayedMessage(L["weaken_fade_message"], "Important", 20, nil, "Alarm")
 		self:Evocation()
 	end
 end
@@ -132,9 +132,9 @@ end
 function BigWigsCurator:Evocation()
 	if self.db.profile.weaktime then
 		self:Bar(self, L["weaktime_bar"], 109, "Spell_Nature_Purge")
-		self:DelayedMessage(39, L["weaktime_message3"], "Positive")
-		self:DelayedMessage(79, L["weaktime_message2"], "Attention")
-		self:DelayedMessage(99, L["weaktime_message1"], "Urgent")
+		self:DelayedMessage(L["weaktime_message3"], "Positive", 39)
+		self:DelayedMessage(L["weaktime_message2"], "Attention", 79)
+		self:DelayedMessage(L["weaktime_message1"], "Urgent", 99)
 	end
 end
 

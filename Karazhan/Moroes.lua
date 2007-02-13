@@ -133,7 +133,7 @@ end
 
 function BigWigsMoroes:NextVanish()
 	self:Bar(self, L["vanish_bar"], 35, "Ability_Vanish")
-	self:DelayedMessage(30, L["vanish_warning"], "Attention")
+	self:DelayedMessage(L["vanish_warning"], "Attention", 30)
 end
 
 function BigWigsMoroes:CHAT_MSG_MONSTER_EMOTE(msg)
