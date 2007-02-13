@@ -153,3 +153,4 @@ Karazhan\Attumen.lua
 Karazhan\Maiden.lua
 Karazhan\WizardofOz.lua
 Karazhan\Netherspite.lua
+Karazhan\Nightbane.lua

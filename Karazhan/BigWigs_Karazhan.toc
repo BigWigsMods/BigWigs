@@ -30,3 +30,4 @@ Attumen.lua
 Maiden.lua
 WizardofOz.lua
 Netherspite.lua
+Nightbane.lua
