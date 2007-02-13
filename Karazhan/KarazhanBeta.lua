@@ -20,7 +20,6 @@ function KarazhanBeta:ZONE_CHANGED_NEW_AREA()
 		self:Print("We need logs from Curator and beyond, Thanks!")
 	else
 		self:Print("Thanks for running Transcriptor! Please remember to click the icon so it glows red.")
-		self:Message("Karazhan Beta Bossmods Loaded", "Important", true)
 	end
 end
 
