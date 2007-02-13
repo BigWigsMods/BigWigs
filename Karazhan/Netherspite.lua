@@ -1,7 +1,5 @@
--- Netherspite for BW, by Arelenda
-
 ------------------------------
---      Are you local?      --
+--      Are you local?    --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Netherspite"]
@@ -9,7 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started
 
 ----------------------------
---      Localization      --
+--      Localization     --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -17,8 +15,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	phase_cmd = "phase",
 	phase_name = "Phases",
-	phase_desc = "Warns when Netherspite changes from one phase to another"
-	
+	phase_desc = "Warns when Netherspite changes from one phase to another",
+
 	phase1_message = "Withdrawal!",
 	phase1_trigger = "cries out in withdrawal",
 
@@ -26,11 +24,10 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_trigger = "nether-fed rage",
 
 	portals = "Portals open",
-
 } end )
 
 ----------------------------------
---      Module Declaration      --
+--    Module Declaration   --
 ----------------------------------
 
 BigWigsNetherspite = BigWigs:NewModule(boss)
@@ -53,20 +50,18 @@ function BigWigsNetherspite:OnEnable()
 end
 
 ------------------------------
---      Event Handlers      --
+--    Event Handlers     --
 ------------------------------
 
 
 function BigWigsNetherspite:BigWigs_RecvSync( sync, rest, nick )
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
-		
 		if self.db.profile.phase then
-			self:TriggerEvent("BigWigs_Message", L["phase1_message"], "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["phase2_message"], 60, "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["portals"], 10, "Interface\\Icons\\Spell_Arcane_TeleportStormWind")
+			self:Message(L["phase1_message"], "Important")
+			self:Bar(self, L["phase2_message"], 60, "Important")
+			self:Bar(self, L["portals"], 10, "Spell_Arcane_TeleportStormWind")
 		end
-
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
@@ -75,13 +70,12 @@ end
 
 function BigWigsNetherspite:CHAT_MSG_RAID_BOSS_EMOTE(msg, bname)
 	if not self.db.profile.phase then return end
-	
 	if msg:find(L["phase1_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["phase1_message"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["phase2_message"], 60, "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["portals"], 10, "Interface\\Icons\\Spell_Arcane_TeleportStormWind")
+		self:Message(L["phase1_message"], "Important")
+		self:Bar(self, L["phase2_message"], 60, "Spell_Frost_IceStorm") --random icon, you can't use 'important' on a bar
+		self:Bar(self, L["portals"], 10, "Spell_Arcane_TeleportStormWind")
 	elseif msg:find(L["phase2_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["phase2_message"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["phase1_message"], 30, "Important")
+		self:Message(L["phase2_message"], "Important")
+		self:Bar(self, L["phase1_message"], 30, "Spell_Frost_IceStorm") --same again
 	end	
 end

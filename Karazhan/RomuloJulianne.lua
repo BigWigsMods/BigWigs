@@ -97,7 +97,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsRomuloJulianne = BigWigs:NewModule(boss)
 BigWigsRomuloJulianne.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsRomuloJulianne.enabletrigger = {Romulo, Julianne}
-BigWigsRomuloJulianne.toggleoptions = {"phase", "buff", "poison"}
+BigWigsRomuloJulianne.toggleoptions = {"phase", "heal", "buff", "poison"}
 BigWigsRomuloJulianne.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -119,11 +119,12 @@ end
 ------------------------------
 
 function BigWigsRomuloJulianne:CHAT_MSG_MONSTER_YELL(msg)
-	if msg:find(L["phase1_trigger"]) and self.db.profile.phase then
+	if not self.db.profile.phase then return end
+	if msg:find(L["phase1_trigger"]) then
 		self:Message(L["phase1_message"], "Attention")
-	elseif msg:find(L["phase2_trigger"]) and self.db.profile.phase then
+	elseif msg:find(L["phase2_trigger"]) then
 		self:Message(L["phase2_message"], "Attention")
-	elseif msg:find(L["phase3_trigger"]) and self.db.profile.phase then
+	elseif msg:find(L["phase3_trigger"]) then
 		self:Message(L["phase3_message"], "Attention")
 	end
 end
@@ -141,12 +142,13 @@ function BigWigsRomuloJulianne:PoisonEvent(msg)
 end
 
 function BigWigsRomuloJulianne:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if msg:find(L["heal_trigger"]) then
+	if self.db.profile.heal and msg:find(L["heal_trigger"]) then
 		self:Message(L["heal_message"], "Urgent")
 	end
 end
 
 function BigWigsRomuloJulianne:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+	if not self.db.profile.buff then return end
 	if msg:find(L["buff1_trigger"]) then
 		self:Message(L["buff1_message"], "Attention")
 	elseif msg:find(L["buff2_trigger"]) then

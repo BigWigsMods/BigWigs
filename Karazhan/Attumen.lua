@@ -90,9 +90,10 @@ end
 ------------------------------
 
 function BigWigsAttumen:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.phase and msg == L["phase3_trigger"] then
+	if not self.db.profile.phase then return end
+	if msg == L["phase3_trigger"] then
 		self:Message(L["phase3_message"], "Important")
-	elseif self.db.profile.phase and (msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"]) then
+	elseif (msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"]) then
 		self:Message(L["phase2_message"], "Urgent")
 	end
 end
