@@ -99,10 +99,10 @@ L:RegisterTranslations("deDE", function() return {
 
 	adds_message = "Elementare!",
 	adds_warning = "Elementare in K\195\188rze!",
-	adds_trigger = "Ich bin noch nicht fertig! Nein, ich habe einige weitere Tricks im \195\132rmel...", -- check
+	adds_trigger = "Ich bin noch nicht fertig! Nein, ich habe noch ein paar Tricks auf Lager…",
 	adds_bar = "Elementare verschwinden",
 
-	drink_trigger = "Sicher würdet Ihr einem alten Mann kein erfrischendes Getränk verwehren? Nein, nein, ich denke nicht.", -- check
+	drink_trigger = "Ihr w\195\188rdet einem alten Mann doch nicht ein erfrischendes Getr\195\164nk verweigern? Nein nein, das h\195\164tte ich auch nicht gedacht.",
 	drink_warning = "Wenig Mana - trinkt gleich!",
 	drink_message = "Trinkt - AoE Polymorph!",
 	drink_bar = "Super-Pyroblast kommt!",
@@ -122,7 +122,7 @@ L:RegisterTranslations("deDE", function() return {
 	
 	flame_warning = "Wirkt Flammenkranz!",
 	flame_trigger1 = "Ich werde Euch zeigen: dieser gepr\195\188gelte Hund hat immer noch Z\195\164hne!",
-	flame_trigger2 = "Burn, you hellish fiends!", -- check
+	flame_trigger2 = "Brennt, Ihr herzlosen Teufel!",
 
 	flame_message = "Flammenkranz!",
 	flame_bar = "Flammenkranz",
