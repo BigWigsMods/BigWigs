@@ -108,14 +108,14 @@ function BigWigsAran:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.drink and msg == L["drink_trigger"] then
 		self:Message(L["drink_message"], "Positive")
 		self:Bar(self, L["drink_bar"], 30, "Spell_Fire_Fireball02")
-	elseif self.db.profile.pull and (msg == L["pull_trigger1"] or msg == L["pull_trigger2"])
+	elseif self.db.profile.pull and (msg == L["pull_trigger1"] or msg == L["pull_trigger2"]) then
 		self:Message(L["pull_message"], "Attention")
 		self:Bar(self, L["pull_bar"], 10, "Spell_Nature_GroundingTotem")
-	elseif self.db.profile.flame and (msg == L["flame_trigger1"] or msg == L["flame_trigger2"])
+	elseif self.db.profile.flame and (msg == L["flame_trigger1"] or msg == L["flame_trigger2"]) then
 		self:Message(L["flame_warning"], "Important", nil, "Alarm")
-	elseif self.db.profile.blizzard and (msg == L["blizzard_trigger1"] or msg == L["blizzard_trigger2"])
+	elseif self.db.profile.blizzard and (msg == L["blizzard_trigger1"] or msg == L["blizzard_trigger2"]) then
 		self:Message(L["blizzard_message"], "Attention")
-	elseif self.db.profile.engage and (msg == L["engage_trigger1"] or msg == L["engage_trigger2"])
+	elseif self.db.profile.engage and (msg == L["engage_trigger1"] or msg == L["engage_trigger2"]) then
 		self:Message(L["engage_message"], "Positive")
 	end
 end
