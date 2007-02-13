@@ -27,6 +27,15 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Terestian",
+
+	sacrifice_cmd = "sacrifice",
+	sacrifice_name = "Sacrifice Alert",
+	sacrifice_desc = "Warn for Sacrifice of players.",
+
+	sacrifice_you = "You",
+	sacrifice_trigger = "^([^%s]+) ([^%s]+) afflicted by Sacrifice",
+	sacrifice_warning = "%s is being Sacrificed!",
+
 } end )
 
 ----------------------------------
@@ -36,7 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsTerestian = BigWigs:NewModule(boss)
 BigWigsTerestian.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsTerestian.enabletrigger = boss
-BigWigsTerestian.toggleoptions = {"bosskill"}
+BigWigsTerestian.toggleoptions = {"sacrifice", "bosskill"}
 BigWigsTerestian.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -45,14 +54,22 @@ BigWigsTerestian.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsTerestian:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "CheckSacrifice")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "CheckSacrifice")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CheckSacrifice")
 end
 
 ------------------------------
 --     Event Handlers    --
 ------------------------------
 
---[[
-function BigWigsTerestian:Bucket()
-	
+function BigWigsTerestian:CheckSacrifice( msg )
+	if not self.db.profile.sacrifice then return end
+	local splayer, stype = select(3, msg:find(L["sacrifice_trigger"]))
+	if splayer then
+		if splayer == L["sacrifice_you"] then
+			splayer = UnitName("player")
+		end
+		self:TriggerEvent("BigWigs_Message", L["sacrifice_warning"]:format( splayer ), "Attention" )
+	end
 end
-]]
