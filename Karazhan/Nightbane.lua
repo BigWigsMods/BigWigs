@@ -5,12 +5,23 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Nightbane"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
+--[[
+n phase1 (on the ground) he has a fear and sometimes at a random player the ground is burning and do aoe dmg to ppl on it.
+fear cooldown seems to be 30-40seconds, at least enough that one warrior can tank it without fearward.
+every 25% he going into the air. one person will get "rain of bones" debuff and will damage nearby people. 
+5 skeletons spawn and nightbane will cast some damage spell on some people. after some time he will come back.
+]]--
+
 ----------------------------
 --      Localization     --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Nightbane",
+
+
+	fear_trigger = "afflicted by Bellowing Roar",
+	
 } end )
 
 ----------------------------------
