@@ -47,7 +47,7 @@ BigWigsNightbane.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsNightbane:OnEnable()
 	prior = nil
-	self:Registerevent("BigWigs_RecvSync")
+	self:RegisterEvent("BigWigs_RecvSync")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
