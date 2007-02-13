@@ -31,3 +31,4 @@ Maiden.lua
 WizardofOz.lua
 Netherspite.lua
 Nightbane.lua
+Shadikith.lua
