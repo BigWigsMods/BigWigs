@@ -87,10 +87,10 @@ function BigWigsNetherspite:CHAT_MSG_RAID_BOSS_EMOTE(msg, bname)
 	if not self.db.profile.phase then return end
 	if msg:find(L["phase1_trigger"]) then
 		self:Message(L["phase1_message"], "Important")
-		self:Bar(L["phase2_message"], p1Duration, "Spell_Frost_IceStorm") --random icon, you can't use 'important' on a bar
+		self:Bar(L["phase2_message"], p1Duration, "Spell_ChargePositive")
 	elseif msg:find(L["phase2_trigger"]) then
 		self:Message(L["phase2_message"], "Important")
-		self:Bar(L["phase1_message"], p2Duration, "Spell_Frost_IceStorm") --same again
+		self:Bar(L["phase1_message"], p2Duration, "Spell_ChargeNegative")
 	end	
 end
 
