@@ -70,6 +70,65 @@ L:RegisterTranslations("enUS", function() return {
 	flame_trigger = "casts Flame Wreath",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	cmd = "Aran",
+
+	adds_cmd = "adds",
+	adds_name = "Wasserelementare",
+	adds_desc = "Warnt vor den Wasserelementaren bei 40%.",
+
+  drink_cmd = "drink",
+	drink_name = "Trinken",
+	drink_desc = "Warnt, wenn Arans Schemen zu trinken beginnt.",
+
+	engage_cmd = "engage",
+	engage_name = "Angriff",
+	engage_desc = "Warnt, wenn Arans Schemen angegriffen wurde.",
+  
+	blizzard_cmd = "blizzard",
+	blizzard_name = "Blizzard",
+	blizzard_desc = "Warnt vor dem Blizzard.",
+  
+	pull_cmd = "pull",
+	pull_name = "Magnet/Super-AE",
+	pull_desc = "Warnt vor dem Magnetpull und der Arkanen Explosion.",
+
+	flame_cmd = "flame",
+	flame_name = "Flammenkranz",
+	flame_desc = "Warnt, wenn jemand vom Flammenkranz betroffen ist.",
+
+	adds_message = "Elementare!",
+	adds_warning = "Elementare in K\195\188rze!",
+	adds_trigger = "Ich bin noch nicht fertig! Nein, ich habe einige weitere Tricks im \195\132rmel...", -- check
+	adds_bar = "Elementare verschwinden",
+
+	drink_trigger = "Sicher würdet Ihr einem alten Mann kein erfrischendes Getränk verwehren? Nein, nein, ich denke nicht.", -- check
+	drink_warning = "Wenig Mana - trinkt gleich!",
+	drink_message = "Trinkt - AoE Polymorph!",
+	drink_bar = "Super-Pyroblast kommt!",
+
+	engage_trigger1 = "Qu\195\164lt mich nicht l\195\164nger!",
+	engage_trigger2 = "Wer seid Ihr? Was wollt Ihr? Bleibt fern von mir!",
+	engage_message = "Arans Schemen angegriffen.",
+
+	blizzard_trigger1 = "Zur\195\188ck in die eisige Finsternis mit Euch!",
+	blizzard_trigger2 = "Ich werde Euch alle einfrieren!",
+	blizzard_message = "Wirkt Blizzard!",
+
+	pull_message = "Arkane Explosion wird gewirkt!",
+	pull_trigger1 = "Ja, ja, mein Sohn ist sehr m\195\164chtig... aber ich habe meine eigenen Kr\195\164fte!",
+	pull_trigger2 = "Ich bin kein einfacher Hofnarr! Ich bin Nielas Aran!",
+	pull_bar = "Arkane Explosion",
+	
+	flame_warning = "Wirkt Flammenkranz!",
+	flame_trigger1 = "Ich werde Euch zeigen: dieser gepr\195\188gelte Hund hat immer noch Z\195\164hne!",
+	flame_trigger2 = "Burn, you hellish fiends!", -- check
+
+	flame_message = "Flammenkranz!",
+	flame_bar = "Flammenkranz",
+	flame_trigger = "wirkt Flammenkranz",
+} end )
+
 ----------------------------------
 --   Module Declaration    --
 ----------------------------------
