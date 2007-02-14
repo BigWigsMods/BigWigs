@@ -35,6 +35,25 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger = "Oh Tito, we simply must find a way home!",
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	summon_name = "Tito rufen",
+	summon_desc = "Warnt wenn Dorothee beginnt Tito zu rufen",
+
+	spawns_name = "Spawn Timer",
+	spawns_desc = "Timerbalken wann Br\195\188ller, Blechkopf und Strohmann in den Kampf eingreifen",
+
+	spawns_roar = "Br\195\188ller greift an!",
+	spawns_strawman = "Strohmann greift an!",
+	spawns_tinhead = "Blechkopf greift an!",
+	spawns_tito = "Tito gerufen!",
+
+	summon_trigger = "Lass' nicht zu, dass sie uns wehtun, Tito. Nein, das wirst du nicht, oder?",
+	summon_message = "Tito herbeigerufen!",
+
+	engage_trigger = "Oh Tito, wir m\195\188ssen einfach einen Weg nach Hause finden!",
+} end)
+
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------
@@ -63,9 +82,9 @@ function BigWigsWizardofOz:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["summon_trigger"]) and self.db.profile.summon then
 		self:Message(L["summon_message"], "Attention")
 	elseif msg:find(L["engage_trigger"]) and self.db.profile.spawns then
-		self:Bar(self, L["spawns_roar"], 15, "INV_Staff_08")
-		self:Bar(self, L["spawns_strawman"], 25, "Ability_Druid_ChallangingRoar")
-		self:Bar(self, L["spawns_tinhead"], 35, "INV_Chest_Plate06")
-		self:Bar(self, L["spawns_tito"], 48, "Ability_Hunter_Pet_Wolf")
+		self:Bar(L["spawns_roar"], 15, "INV_Staff_08")
+		self:Bar(L["spawns_strawman"], 25, "Ability_Druid_ChallangingRoar")
+		self:Bar(L["spawns_tinhead"], 35, "INV_Chest_Plate06")
+		self:Bar(L["spawns_tito"], 48, "Ability_Hunter_Pet_Wolf")
 	end
 end
