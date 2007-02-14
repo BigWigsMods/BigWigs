@@ -116,11 +116,11 @@ end
 
 function BigWigsRomuloJulianne:CHAT_MSG_MONSTER_YELL(msg)
 	if not self.db.profile.phase then return end
-	if msg:find(L["phase1_trigger"]) then
+	if msg == L["phase1_trigger"] then
 		self:Message(L["phase1_message"], "Attention")
-	elseif msg:find(L["phase2_trigger"]) then
+	elseif msg == L["phase2_trigger"] then
 		self:Message(L["phase2_message"], "Attention")
-	elseif msg:find(L["phase3_trigger"]) then
+	elseif msg == L["phase3_trigger"] then
 		self:Message(L["phase3_message"], "Attention")
 	end
 end
