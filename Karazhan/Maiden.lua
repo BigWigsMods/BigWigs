@@ -22,11 +22,16 @@ L:RegisterTranslations("enUS", function() return {
 
 	engage_trigger = "Your behavior will not be tolerated.",
 	engage_message = "Maiden Engaged! Repentance in ~33sec",
+	
+	holyfire_trigger = "^([^%s]+) ([^%s]+) afflicted by Holy Fire",
+	holyfire_message = "%s is afflicted by Holy Fire!",
 
 	repentance_trigger1 = "Cast out your corrupt thoughts.",
 	repentance_trigger2 = "Your impurity must be cleansed.",
 	repentance_message = "Repentance! Next in ~33sec",
 	repentance_warning = "Repentance Soon!",
+	
+	you = "you",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -61,8 +66,15 @@ BigWigsMaiden.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsMaiden:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "HolyFireEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "HolyFireEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "HolyFireEvent")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "MaidenHolyFire", 3)
 end
 
 ------------------------------
@@ -79,7 +91,24 @@ function BigWigsMaiden:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
+function BigWigsMaiden:HolyFireEvent(msg)
+	local bplayer, btype = select(3, msg:find(L["holyfire_trigger"]))
+	if bplayer then
+		if bplayer == L["you"] then
+			bplayer = UnitName("player")
+		end
+		self:Sync("MaidenHolyFire "..bplayer)
+	end
+end
+
 function BigWigsMaiden:NextRepentance()
 	self:DelayedMessage(28, L["repentance_warning"], "Urgent", nil, "Alarm")
 	self:Bar(L["repentance_message"], 33, "Spell_Holy_PrayerOfHealing")
+end
+
+function BigWigsMaiden:BigWigs_RecvSync( sync, rest, nick )
+	if sync == "MaidenHolyFire" and rest then
+		local player = rest
+		self:Message(string.format(L["holyfire_message"], player), "Important")
+	end
 end
