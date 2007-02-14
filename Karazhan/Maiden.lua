@@ -23,6 +23,10 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger = "Your behavior will not be tolerated.",
 	engage_message = "Maiden Engaged! Repentance in ~33sec",
 	
+	holyfire_cmd = "holyfire",
+	holyfire_name = "Holy Fire alert",
+	holyfire_desc = "Alert when people are afflicted by Holy Fire",
+	
 	holyfire_trigger = "^([^%s]+) ([^%s]+) afflicted by Holy Fire",
 	holyfire_message = "%s is afflicted by Holy Fire!",
 
@@ -57,7 +61,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsMaiden = BigWigs:NewModule(boss)
 BigWigsMaiden.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsMaiden.enabletrigger = boss
-BigWigsMaiden.toggleoptions = {"engage", "repentance", "bosskill"}
+BigWigsMaiden.toggleoptions = {"engage", "repentance", "holyfire", "bosskill"}
 BigWigsMaiden.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -109,6 +113,8 @@ end
 function BigWigsMaiden:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "MaidenHolyFire" and rest then
 		local player = rest
-		self:Message(string.format(L["holyfire_message"], player), "Important")
+		if self.db.profile.holyfire then
+			self:Message(string.format(L["holyfire_message"], player), "Important")
+		end
 	end
 end
