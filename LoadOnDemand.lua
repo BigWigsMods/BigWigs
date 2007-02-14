@@ -10,22 +10,6 @@ local withcore = {}
 local inzone = {}
 local zonelist = {}
 
-local function LoadBigWigsAddon(addon)
-	if IsAddOnLoaded(addon) then return end
-
-	local loaded, reason = LoadAddOn(addon)
-
-	if not loaded and reason == "DEP_MISSING" then
-		local deps = {GetAddOnDependencies(addon)}
-		if not deps then return end
-		for i, dep in ipairs(deps) do
-			if not IsAddOnLoaded(dep) then LoadAddOn(dep) end
-		end
-		loaded, reason = LoadAddOn(addon)
-	end
-	return loaded
-end
-
 ------------------------------
 --    Addon Declaration     --
 ------------------------------
@@ -62,7 +46,7 @@ end
 function BigWigsLoD:BigWigs_CoreEnabled()
 	for k,v in pairs( withcore ) do
 		if not IsAddOnLoaded( v ) then
-			if LoadBigWigsAddon(v) then
+			if LoadAddOon(v) then
 				self:TriggerEvent("BigWigs_ModulePackLoaded", v)
 			else
 				self:TriggerEvent("BigWigs_ModulePackLoaded", v, true)
@@ -184,7 +168,7 @@ function BigWigsLoD:LoadZone( zone )
 		if inzone[zone] then
 			for k,v in pairs( inzone[zone] ) do
 				if not IsAddOnLoaded( v ) then
-					if LoadBigWigsAddon(v) then
+					if LoadAddOn(v) then
 						self:TriggerEvent("BigWigs_ModulePackLoaded", v)
 					else
 						self:TriggerEvent("BigWigs_ModulePackLoaded", v, true)
