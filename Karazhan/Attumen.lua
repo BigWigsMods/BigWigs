@@ -33,7 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase3_trigger = "Come Midnight, let's disperse this petty rabble!",
 	phase3_message = "Phase 3 - Attumen the Huntsman",
 
-	you = "you",
+	you = "You",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
