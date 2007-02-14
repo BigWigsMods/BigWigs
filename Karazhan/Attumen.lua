@@ -38,7 +38,6 @@ L:RegisterTranslations("deDE", function() return {
 	phase_name = "Phase",
 	phase_desc = "Warnt wenn eine neue Phase beginnt",
 
-	curse_cmd = "Fluch",
 	curse_name = "Verfluchter Krieger",
 	curse_desc = "Warnt wenn ein Krieger verflucht ist",
 

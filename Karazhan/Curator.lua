@@ -50,19 +50,15 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	berserk_cmd = "berserk",
 	berserk_name = "Berserker",
 	berserk_desc = "Warnung f\195\188r Berserker nach 12min.",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Rage",
 	enrage_desc = "Warnung f\195\188r Rage bei 10%.",
 
-	weaken_cmd = "weaken",
 	weaken_name = "Schw\195\164chung",
 	weaken_desc = "Warnt wen der Kurator geschw\195\164cht ist.",
 
-	weaktime_cmd = "weaktime",
 	weaktime_name = "Schw\195\164chungs Timer",
 	weaktime_desc = "Timer und Anzeige f\195\188r die n\195\164chste Schw\195\164chung.",
 

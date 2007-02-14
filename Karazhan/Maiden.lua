@@ -30,11 +30,9 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	engage_cmd = "engage",
 	engage_name = "Engage Warning",
 	engage_desc = "Alarm wenn Tugendhafte Maid angegriffen wird.",
 
-	repentance_cmd = "Bu\195\159e",
 	repentance_name = "Alarm f\195\188r Bu\195\159e",
 	repentance_desc = "Ungef\195\164re Zeitangabe von Bu\195\159e",
 

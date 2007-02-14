@@ -71,29 +71,21 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	cmd = "Aran",
-
-	adds_cmd = "adds",
 	adds_name = "Wasserelementare",
 	adds_desc = "Warnt vor den Wasserelementaren bei 40%.",
 
-  drink_cmd = "drink",
 	drink_name = "Trinken",
 	drink_desc = "Warnt, wenn Arans Schemen zu trinken beginnt.",
 
-	engage_cmd = "engage",
 	engage_name = "Angriff",
 	engage_desc = "Warnt, wenn Arans Schemen angegriffen wurde.",
-  
-	blizzard_cmd = "blizzard",
+
 	blizzard_name = "Blizzard",
 	blizzard_desc = "Warnt vor dem Blizzard.",
-  
-	pull_cmd = "pull",
+
 	pull_name = "Magnet/Super-AE",
 	pull_desc = "Warnt vor dem Magnetpull und der Arkanen Explosion.",
 
-	flame_cmd = "flame",
 	flame_name = "Flammenkranz",
 	flame_desc = "Warnt, wenn jemand vom Flammenkranz betroffen ist.",
 
@@ -119,7 +111,7 @@ L:RegisterTranslations("deDE", function() return {
 	pull_trigger1 = "Ja, ja, mein Sohn ist sehr m\195\164chtig... aber ich habe meine eigenen Kr\195\164fte!",
 	pull_trigger2 = "Ich bin kein einfacher Hofnarr! Ich bin Nielas Aran!",
 	pull_bar = "Arkane Explosion",
-	
+
 	flame_warning = "Wirkt Flammenkranz!",
 	flame_trigger1 = "Ich werde Euch zeigen: dieser gepr\195\188gelte Hund hat immer noch Z\195\164hne!",
 	flame_trigger2 = "Brennt, Ihr herzlosen Teufel!",

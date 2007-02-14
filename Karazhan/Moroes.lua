@@ -50,19 +50,15 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	engage_cmd = "engage",
 	engage_name = "Engage",
 	engage_desc = "Warn when Moroes is pulled",
 
-	vanish_cmd = "vanish",
 	vanish_name = "Vanish",
 	vanish_desc = "Warn when Moroes Vanishe's",
 
-	blind_cmd = "blind",
 	blind_name = "Blind",
 	blind_desc = "Notify of Blinded players",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Enrage",
 	enrage_desc = "Warn when Moroes becomes enraged",
 

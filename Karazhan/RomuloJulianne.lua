@@ -52,19 +52,15 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	phase_cmd = "phase",
 	phase_name = "Phase",
 	phase_desc = "Warnt wenn eine neue Phase beginnt",
 
-	poison_cmd = "poison",
 	poison_name = "Gift",
 	poison_desc = "Warnt vor vergifteten Spielern",
 
-	heal_cmd = "heal",
 	heal_name = "Heilen",
 	heal_desc = "Warnt wenn Julianne sich heilt",
 
-	buff_cmd = "buff",
 	buff_name = "Selbst-Buff Alarm",
 	buff_desc = "Warnt wenn Julianne und Romulo sich selbst buffen",
 
