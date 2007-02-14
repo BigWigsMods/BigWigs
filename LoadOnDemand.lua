@@ -46,7 +46,7 @@ end
 function BigWigsLoD:BigWigs_CoreEnabled()
 	for k,v in pairs( withcore ) do
 		if not IsAddOnLoaded( v ) then
-			if LoadAddOon(v) then
+			if LoadAddOn(v) then
 				self:TriggerEvent("BigWigs_ModulePackLoaded", v)
 			else
 				self:TriggerEvent("BigWigs_ModulePackLoaded", v, true)
