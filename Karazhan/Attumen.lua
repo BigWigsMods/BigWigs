@@ -32,6 +32,8 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_message = "Phase 2 - Midnight & Attumen",
 	phase3_trigger = "Come Midnight, let's disperse this petty rabble!",
 	phase3_message = "Phase 3 - Attumen the Huntsman",
+
+	you = "you",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -50,6 +52,8 @@ L:RegisterTranslations("deDE", function() return {
 	phase2_message = "Phase 2 - Mittnacht & Attumen",
 	phase3_trigger = "Komm Mittnacht, lass' uns dieses Gesindel auseinander treiben!",
 	phase3_message = "Phase 3 - Attumen der J\195\164ger",
+
+	you = "Ihr",
 } end)
 
 ----------------------------------
