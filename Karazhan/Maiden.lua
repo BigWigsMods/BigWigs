@@ -35,11 +35,10 @@ L:RegisterTranslations("enUS", function() return {
 	repentance_message = "Repentance! Next in ~33sec",
 	repentance_warning = "Repentance Soon!",
 	
-	you = "you",
+	you = "You",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	engage_name = "Engage Warning",
 	engage_desc = "Alarm wenn Tugendhafte Maid angegriffen wird.",
 
 	repentance_name = "Alarm f\195\188r Bu\195\159e",
@@ -52,6 +51,14 @@ L:RegisterTranslations("deDE", function() return {
 	repentance_trigger2 = "Eure Unreinheit muss gel\195\164utert werden.",
 	repentance_message = "Bu\195\159e! N\195\164chster in ~33sek",
 	repentance_warning = "Bu\195\159e kommt.",
+
+	holyfire_name = "Alarm f\195\188r Heiliges Feuer",
+	holyfire_desc = "Warnt wenn Personen von Heiliges Feuer betroffen sind",
+
+	holyfire_trigger = "^([^%s]+) ([^%s]+) von Heiliges Feuer betroffen.",
+	holyfire_message = "%s ist von Heiliges Feuer betroffen!",
+
+	you = "Ihr",
 } end)
 
 ----------------------------------
@@ -111,10 +118,8 @@ function BigWigsMaiden:NextRepentance()
 end
 
 function BigWigsMaiden:BigWigs_RecvSync( sync, rest, nick )
-	if sync == "MaidenHolyFire" and rest then
-		local player = rest
-		if self.db.profile.holyfire then
-			self:Message(string.format(L["holyfire_message"], player), "Important")
-		end
+	if sync == "MaidenHolyFire" and rest and self.db.profile.holyfire then
+		self:Message(string.format(L["holyfire_message"], rest), "Important")
 	end
 end
+
