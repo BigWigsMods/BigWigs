@@ -13,32 +13,35 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Maiden",
 
 	engage_cmd = "engage",
-	engage_name = "Engage Warning",
+	engage_name = "Engage",
 	engage_desc = "Alert when the Maiden of Virtue is engaged",
 
 	repentance_cmd = "repentance",
-	repentance_name = "Repentance Alert",
+	repentance_name = "Repentance",
 	repentance_desc = "Estimated timer of Repentance",
+
+	holyfire_cmd = "holyfire",
+	holyfire_name = "Holy Fire",
+	holyfire_desc = "Alert when people are afflicted by Holy Fire",
 
 	engage_trigger = "Your behavior will not be tolerated.",
 	engage_message = "Maiden Engaged! Repentance in ~33sec",
-	
-	holyfire_cmd = "holyfire",
-	holyfire_name = "Holy Fire alert",
-	holyfire_desc = "Alert when people are afflicted by Holy Fire",
-	
-	holyfire_trigger = "^([^%s]+) ([^%s]+) afflicted by Holy Fire",
-	holyfire_message = "%s is afflicted by Holy Fire!",
 
 	repentance_trigger1 = "Cast out your corrupt thoughts.",
 	repentance_trigger2 = "Your impurity must be cleansed.",
 	repentance_message = "Repentance! Next in ~33sec",
 	repentance_warning = "Repentance Soon!",
-	
+	repentance_bar = "Repentance",
+	repentance_nextbar = "Next Repentance",
+
+	holyfire_trigger = "^([^%s]+) ([^%s]+) afflicted by Holy Fire",
+	holyfire_message = "Holy Fire: %s",
+
 	you = "You",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
+	engage_name = "Engage",
 	engage_desc = "Alarm wenn Tugendhafte Maid angegriffen wird.",
 
 	repentance_name = "Alarm f\195\188r Bu\195\159e",
@@ -56,7 +59,7 @@ L:RegisterTranslations("deDE", function() return {
 	holyfire_desc = "Warnt wenn Personen von Heiliges Feuer betroffen sind",
 
 	holyfire_trigger = "^([^%s]+) ([^%s]+) von Heiliges Feuer betroffen.",
-	holyfire_message = "%s ist von Heiliges Feuer betroffen!",
+	holyfire_message = "Heiliges Feuer: %s",
 
 	you = "Ihr",
 } end)
@@ -69,7 +72,7 @@ BigWigsMaiden = BigWigs:NewModule(boss)
 BigWigsMaiden.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsMaiden.enabletrigger = boss
 BigWigsMaiden.toggleoptions = {"engage", "repentance", "holyfire", "bosskill"}
-BigWigsMaiden.revision = tonumber(string.sub("$Revision$", 12, -3))
+BigWigsMaiden.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -77,13 +80,13 @@ BigWigsMaiden.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsMaiden:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	
+
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "HolyFireEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "HolyFireEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "HolyFireEvent")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MaidenHolyFire", 3)
 end
@@ -114,12 +117,12 @@ end
 
 function BigWigsMaiden:NextRepentance()
 	self:DelayedMessage(28, L["repentance_warning"], "Urgent", nil, "Alarm")
-	self:Bar(L["repentance_message"], 33, "Spell_Holy_PrayerOfHealing")
+	self:Bar(L["repentance_nextbar"], 33, "Spell_Holy_PrayerOfHealing")
+	self:Bar(L["repentance_bar"], 8, "Spell_Holy_PrayerOfHealing")
 end
 
 function BigWigsMaiden:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "MaidenHolyFire" and rest and self.db.profile.holyfire then
-		self:Message(string.format(L["holyfire_message"], rest), "Important")
+		self:Message(L["holyfire_message"]:format(rest), "Important")
 	end
 end
-
