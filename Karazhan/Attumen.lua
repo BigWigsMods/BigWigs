@@ -21,10 +21,14 @@ L:RegisterTranslations("enUS", function() return {
 
 	curse_cmd = "curse",
 	curse_name = "Cursed Warriors",
-	curse_desc = "Warn when a warrior is cursed",
+	curse_desc = "Warn when a played is cursed by Intangible Presence",
+
+	icon_cmd = "icon",
+	icon_name = "Icon",
+	icon_desc = "Place a Raid Icon on the cursed player(requires promoted or higher)",
 
 	curse_trigger = "^([^%s]+) ([^%s]+) afflicted by Intangible Presence",
-	curse_message = "Warrior Cursed - %s",
+	curse_message = "Cursed - %s",
 
 	phase1_message = "Phase 1 - Midnight",
 	phase2_trigger1 = "Perhaps you would rather test yourselves against a more formidable opponent?!",
@@ -40,11 +44,11 @@ L:RegisterTranslations("deDE", function() return {
 	phase_name = "Phase",
 	phase_desc = "Warnt wenn eine neue Phase beginnt",
 
-	curse_name = "Verfluchter Krieger",
-	curse_desc = "Warnt wenn ein Krieger verflucht ist",
+	--curse_name = "Verfluchter Krieger", --enUS changed
+	--curse_desc = "Warnt wenn ein Krieger verflucht ist", --enUS changed
 
 	curse_trigger = "^([^%s]+) ([^%s]+) von K\195\182rperlose Pr\195\164senz betroffen.",
-	curse_message = "Krieger verflucht - %s",
+	--curse_message = "Krieger verflucht - %s", --enUS changed
 
 	phase1_message = "Phase 1 - Mittnacht",
 	phase2_trigger1 = "Vielleicht m\195\182chtet Ihr Euch an einem Gegner messen, der Euch ebenb\195\188rtig ist?!",
@@ -63,8 +67,8 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsAttumen = BigWigs:NewModule(boss)
 BigWigsAttumen.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsAttumen.enabletrigger = horse
-BigWigsAttumen.toggleoptions = {"phase", "curse", "bosskill"}
-BigWigsAttumen.revision = tonumber(string.sub("$Revision$", 12, -3))
+BigWigsAttumen.toggleoptions = {"phase", -1, "curse", "icon", "bosskill"}
+BigWigsAttumen.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -72,16 +76,14 @@ BigWigsAttumen.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function BigWigsAttumen:OnEnable()
 	started = nil
-	playerName = UnitName("player")
+	pName = UnitName("player")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
-	if select(2, UnitClass("player")) == "WARRIOR" then
-		self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "CurseEvent")
-		self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "CurseEvent")
-		self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CurseEvent")
-	end
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "CurseEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "CurseEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CurseEvent")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -117,10 +119,13 @@ function BigWigsAttumen:CurseEvent(msg)
 	local cplayer, ctype = select(3, msg:find(L["curse_trigger"]))
 	if cplayer then
 		if cplayer == L["you"] then
-			cplayer = playerName
+			cplayer = pName
 		end
-		if cplayer == playerName and self.db.profile.curse then
-			self:Message(string.format(L["curse_message"], cplayer), "Attention")
+		if cplayer == pName and self.db.profile.curse then
+			self:Message(L["curse_message"]:format(cplayer), "Attention")
+		end
+		if self.db.profile.icon then
+			self:SetRaidIcon(cplayer)
 		end
 	end
 end
