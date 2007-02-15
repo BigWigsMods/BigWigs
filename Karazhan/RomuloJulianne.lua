@@ -31,14 +31,14 @@ L:RegisterTranslations("enUS", function() return {
 	buff_desc = "Warn when Julianne and Romulo gain a self-buff",
 
 	phase1_trigger = "What devil art thou, that dost torment me thus?",
-	phase1_message = "Entering Phase 1 - Julianne",
+	phase1_message = "Phase 1 - Julianne",
 	phase2_trigger = "Wilt thou provoke me? Then have at thee, boy!",
-	phase2_message = "Entering Phase 2 - Romulo",
+	phase2_message = "Phase 2 - Romulo",
 	phase3_trigger = "Come, gentle night; and give me back my Romulo!",
-	phase3_message = "Entering Phase 3 - Both",
+	phase3_message = "Phase 3 - Both",
 
 	poison_trigger = "^([^%s]+) ([^%s]+) afflicted by Poisoned Thrust",
-	poison_message = "%s Poisoned!!",
+	poison_message = "Poisoned: %s",
 
 	heal_trigger = "begins to cast Eternal Affection",
 	heal_message = "Julianne casting Heal!",
@@ -48,7 +48,7 @@ L:RegisterTranslations("enUS", function() return {
 	buff2_trigger = "gains Devotion",
 	buff2_message = "Julianne gains Devotion!",
 
-	you = "you",
+	you = "You",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -72,7 +72,7 @@ L:RegisterTranslations("deDE", function() return {
 	phase3_message = "Phase 3 - Beide",
 
 	poison_trigger = "^([^%s]+) ([^%s]+) von Vergifteter Sto\195\159 betroffen.",
-	poison_message = "%s ist vergiftet!",
+	poison_message = "Vergiftet: %s",
 
 	heal_trigger = "beginnt Ewige Zuneigung zu wirken.",
 	heal_message = "Julianne casting Heal!",
@@ -94,7 +94,7 @@ BigWigsRomuloJulianne = BigWigs:NewModule(boss)
 BigWigsRomuloJulianne.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsRomuloJulianne.enabletrigger = {Romulo, Julianne}
 BigWigsRomuloJulianne.toggleoptions = {"phase", "heal", "buff", "poison"}
-BigWigsRomuloJulianne.revision = tonumber(string.sub("$Revision$", 12, -3))
+BigWigsRomuloJulianne.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -132,7 +132,7 @@ function BigWigsRomuloJulianne:PoisonEvent(msg)
 			pplayer = UnitName("player")
 		end
 		if self.db.profile.poison then
-			self:Message(string.format(L["poison_message"], pplayer), "Important")
+			self:Message(L["poison_message"]:format(pplayer), "Important")
 		end
 	end
 end
