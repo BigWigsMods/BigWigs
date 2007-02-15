@@ -53,18 +53,6 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	engage_name = "Engage",
-	engage_desc = "Warn when Moroes is pulled",
-
-	vanish_name = "Vanish",
-	vanish_desc = "Warn when Moroes Vanishe's",
-
-	garrote_name = "Garrote",
-	garrote_desc = "Notify of players afflicted by Garrote",
-
-	enrage_name = "Enrage",
-	enrage_desc = "Warn when Moroes becomes enraged",
-
 	vanish_trigger1 = "Ihr habt gel\195\164utet?",
 	vanish_trigger2 = "Nun, wo war ich? Ah, ja...",
 	vanish_message = "Vanished! Next in ~35sec!",
@@ -78,8 +66,6 @@ L:RegisterTranslations("deDE", function() return {
 	engage_message = "Moroes Engaged - Vanish in ~35sec!",
 
 	enrage_trigger = "%s wird w\195\188tend!",
-	enrage_message = "Enrage!",
-	enrage_warning = "Enrage Soon!",
 
 	you = "Ihr",
 } end )
@@ -168,8 +154,9 @@ end
 function BigWigsMoroes:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "MoroesGarrote" and rest and self.db.profile.garrote then
 		self:Message(L["garrote_message"]:format(rest), "Attention")
-	end
-	if self.db.profile.icon then
-		self:SetRaidIcon(rest)
+		if self.db.profile.icon then
+			self:SetRaidIcon(rest)
+		end
 	end
 end
+
