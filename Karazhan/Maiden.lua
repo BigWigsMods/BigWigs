@@ -24,6 +24,10 @@ L:RegisterTranslations("enUS", function() return {
 	holyfire_name = "Holy Fire",
 	holyfire_desc = "Alert when people are afflicted by Holy Fire",
 
+	icon_cmd = "icon",
+	icon_name = "icon",
+	icon_desc = "Place a Raid Icon on the player afflicted by Holy Fire(requires promoted or higher)",
+
 	engage_trigger = "Your behavior will not be tolerated.",
 	engage_message = "Maiden Engaged! Repentance in ~33sec",
 
@@ -71,7 +75,7 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsMaiden = BigWigs:NewModule(boss)
 BigWigsMaiden.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsMaiden.enabletrigger = boss
-BigWigsMaiden.toggleoptions = {"engage", "repentance", "holyfire", "bosskill"}
+BigWigsMaiden.toggleoptions = {"engage", "repentance", -1, "holyfire", "icon", "bosskill"}
 BigWigsMaiden.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -124,5 +128,8 @@ end
 function BigWigsMaiden:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "MaidenHolyFire" and rest and self.db.profile.holyfire then
 		self:Message(L["holyfire_message"]:format(rest), "Important")
+	end
+	if self.db.profile.icon then
+		self:SetRaidIcon(rest)
 	end
 end
