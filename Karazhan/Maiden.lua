@@ -45,7 +45,6 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	engage_name = "Engage",
 	engage_desc = "Alarm wenn Tugendhafte Maid angegriffen wird.",
 
 	repentance_name = "Alarm f\195\188r Bu\195\159e",
@@ -128,8 +127,8 @@ end
 function BigWigsMaiden:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "MaidenHolyFire" and rest and self.db.profile.holyfire then
 		self:Message(L["holyfire_message"]:format(rest), "Important")
-	end
-	if self.db.profile.icon then
-		self:SetRaidIcon(rest)
+		if self.db.profile.icon then
+			self:SetRaidIcon(rest)
+		end
 	end
 end
