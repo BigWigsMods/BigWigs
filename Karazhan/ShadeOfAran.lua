@@ -50,6 +50,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	engage_trigger1 = "I'll not be tortured again!",
 	engage_trigger2 = "Who are you? What do you want? Stay away from me!",
+	engage_trigger3 = "Please, no more! My son... he's gone mad!",
 	engage_message = "Shade of Aran Engaged",
 
 	blizzard_trigger1 = "Back to the cold dark with you!",
@@ -166,7 +167,7 @@ function BigWigsAran:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["flame_warning"], "Important", nil, "Alarm")
 	elseif self.db.profile.blizzard and (msg == L["blizzard_trigger1"] or msg == L["blizzard_trigger2"]) then
 		self:Message(L["blizzard_message"], "Attention")
-	elseif self.db.profile.engage and (msg == L["engage_trigger1"] or msg == L["engage_trigger2"]) then
+	elseif self.db.profile.engage and (msg == L["engage_trigger1"] or msg == L["engage_trigger2"] or msg == L["engage_trigger3"]) then
 		self:Message(L["engage_message"], "Positive")
 	end
 end
