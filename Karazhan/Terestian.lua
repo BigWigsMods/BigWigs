@@ -73,3 +73,4 @@ function BigWigsTerestian:CheckSacrifice( msg )
 		self:Message( L["sacrifice_warning"]:format( splayer ), "Attention" )
 	end
 end
+

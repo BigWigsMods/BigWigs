@@ -4,8 +4,10 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Netherspite"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+
 local started
 local voidcount
+
 local p1Duration = 60
 local p2Duration = 30
 local netherDuration = 5
@@ -112,3 +114,4 @@ function BigWigsNetherspite:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 		self:Sync("Netherbreath")
 	end
 end
+

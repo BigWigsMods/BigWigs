@@ -40,7 +40,6 @@ end
 --    Event Handlers     --
 ------------------------------
 
-
 function BigWigsShadikith:BigWigs_RecvSync( sync, rest, nick )
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true

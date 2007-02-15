@@ -5,7 +5,6 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Attumen the Huntsman"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local horse = AceLibrary("Babble-Boss-2.2")["Midnight"]
-local playerName = nil
 local started
 
 ----------------------------
@@ -76,7 +75,6 @@ BigWigsAttumen.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function BigWigsAttumen:OnEnable()
 	started = nil
-	pName = UnitName("player")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -98,7 +96,7 @@ function BigWigsAttumen:CHAT_MSG_MONSTER_YELL(msg)
 	if not self.db.profile.phase then return end
 	if msg == L["phase3_trigger"] then
 		self:Message(L["phase3_message"], "Important")
-	elseif (msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"]) then
+	elseif msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"] then
 		self:Message(L["phase2_message"], "Urgent")
 	end
 end
@@ -117,15 +115,25 @@ end
 
 function BigWigsAttumen:CurseEvent(msg)
 	local cplayer, ctype = select(3, msg:find(L["curse_trigger"]))
-	if cplayer then
+	if cplayer and self.db.profile.curse then
+		local id = nil
 		if cplayer == L["you"] then
-			cplayer = pName
+			cplayer = UnitName("player")
+			id = "player"
+		else
+			for i = 1, GetNumRaidMembers() do
+				if UnitName("raid"..i) == cplayer then
+					id = "raid"..i
+					break
+				end
+			end
 		end
-		if cplayer == pName and self.db.profile.curse then
+		if not id then return end
+		if select(2, UnitClass(id)) == "WARRIOR" then
 			self:Message(L["curse_message"]:format(cplayer), "Attention")
-		end
-		if self.db.profile.icon then
-			self:SetRaidIcon(cplayer)
+			if self.db.profile.icon then
+				self:SetRaidIcon(cplayer)
+			end
 		end
 	end
 end

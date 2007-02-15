@@ -41,7 +41,6 @@ L:RegisterTranslations("deDE", function() return {
 	elseriding_name = "Andere sind Rotk\195\164ppchen Warnung",
 	elseriding_desc = "Warnung wenn andere Rotk\195\164ppchen sind",
 
-	icon_cmd = "icon",
 	icon_name = "Zeige Icon",
 	icon_desc = "Setzt ein Raid Icon auf die Person die Rotk\195\164ppchen ist.",
 
@@ -100,3 +99,4 @@ function BigWigsTheBigBadWolf:RidingEvent(msg)
 		end
 	end
 end
+

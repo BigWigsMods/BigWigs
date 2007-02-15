@@ -151,3 +151,4 @@ function BigWigsRomuloJulianne:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 		self:Message(L["buff2_message"], "Attention")
 	end
 end
+

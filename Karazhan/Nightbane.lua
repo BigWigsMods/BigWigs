@@ -25,9 +25,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	fear_you = "You",
 	fear_trigger = "^([^%s]+) ([^%s]+) afflicted by Bellowing Roar",
-	fear_warn = "AoE Fear - ~30 seconds until next!",
-	fear5sec_warn = "~5 sec until AoE Fear",
-	fear_bar = "AoE Fear", 
+	fear_warn = "Fear - ~30 seconds until next!",
+	fear5sec_warn = "~5 sec until Fear",
+	fear_bar = "Fear", 
 	
 } end )
 
@@ -86,3 +86,4 @@ end
 function BigWigsNightbane:BigWigs_Message( text )
 	if text == L["fear5sec_warn"] then prior = nil end
 end
+

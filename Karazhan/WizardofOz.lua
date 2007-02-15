@@ -88,3 +88,4 @@ function BigWigsWizardofOz:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["spawns_tito"], 48, "Ability_Hunter_Pet_Wolf")
 	end
 end
+
