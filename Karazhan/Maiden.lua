@@ -25,7 +25,7 @@ L:RegisterTranslations("enUS", function() return {
 	holyfire_desc = "Alert when people are afflicted by Holy Fire",
 
 	icon_cmd = "icon",
-	icon_name = "icon",
+	icon_name = "Icon",
 	icon_desc = "Place a Raid Icon on the player afflicted by Holy Fire(requires promoted or higher)",
 
 	engage_trigger = "Your behavior will not be tolerated.",

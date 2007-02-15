@@ -20,7 +20,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase_desc = "Warn when entering a new Phase",
 
 	curse_cmd = "curse",
-	curse_name = "Cursed Warriors",
+	curse_name = "Curse",
 	curse_desc = "Warn when a played is cursed by Intangible Presence",
 
 	icon_cmd = "icon",
