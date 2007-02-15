@@ -4,7 +4,6 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Moroes"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-
 local enrageannounced
 
 ----------------------------
@@ -22,13 +21,17 @@ L:RegisterTranslations("enUS", function() return {
 	vanish_name = "Vanish",
 	vanish_desc = "Warn when Moroes Vanishe's",
 
-	blind_cmd = "blind",
-	blind_name = "Blind",
-	blind_desc = "Notify of Blinded players",
+	garrote_cmd = "garrote",
+	garrote_name = "Garrote",
+	garrote_desc = "Notify of players afflicted by Garrote",
 
 	enrage_cmd = "enrage",
 	enrage_name = "Enrage",
 	enrage_desc = "Warn when Moroes becomes enraged",
+
+	icon_cmd = "icon",
+	icon_name = "Icon",
+	icon_desc = "Place a Raid Icon on the player afflicted by Garrote(requires promoted or higher)",
 
 	vanish_trigger1 = "You rang?",
 	vanish_trigger2 = "Now, where was I? Oh, yes...",
@@ -36,8 +39,8 @@ L:RegisterTranslations("enUS", function() return {
 	vanish_warning = "Vanish Soon!",
 	vanish_bar = "Next Vanish",
 
-	blind_trigger = "^([^%s]+) ([^%s]+) afflicted by Blind",
-	blind_message = "%s is Blinded!",
+	garrote_trigger = "^([^%s]+) ([^%s]+) afflicted by Garrote",
+	garrote_message = "Garrote: %s",
 
 	engage_trigger = "Hm, unannounced visitors. Preparations must be made...",
 	engage_message = "Moroes Engaged - Vanish in ~35sec!",
@@ -46,7 +49,7 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_message = "Enrage!",
 	enrage_warning = "Enrage Soon!",
 
-	you = "you",
+	you = "You",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -56,8 +59,8 @@ L:RegisterTranslations("deDE", function() return {
 	vanish_name = "Vanish",
 	vanish_desc = "Warn when Moroes Vanishe's",
 
-	blind_name = "Blind",
-	blind_desc = "Notify of Blinded players",
+	garrote_name = "Garrote",
+	garrote_desc = "Notify of players afflicted by Garrote",
 
 	enrage_name = "Enrage",
 	enrage_desc = "Warn when Moroes becomes enraged",
@@ -68,8 +71,8 @@ L:RegisterTranslations("deDE", function() return {
 	vanish_warning = "Vanish Soon!",
 	vanish_bar = "Next Vanish",
 
-	blind_trigger = "^([^%s]+) ([^%s]+) .* Blenden",
-	blind_message = "%s is Blinded!",
+	garrote_trigger = "^([^%s]+) ([^%s]+) afflicted by Garrote",
+	garrote_message = "Garrote: %s",
 
 	engage_trigger = "Hm, unangek\195\188ndigte Besucher.*",
 	engage_message = "Moroes Engaged - Vanish in ~35sec!",
@@ -88,8 +91,8 @@ L:RegisterTranslations("deDE", function() return {
 BigWigsMoroes = BigWigs:NewModule(boss)
 BigWigsMoroes.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsMoroes.enabletrigger = boss
-BigWigsMoroes.toggleoptions = {"engage", "vanish", "blind", -1, "enrage", "bosskill"}
-BigWigsMoroes.revision = tonumber(string.sub("$Revision$", 12, -3))
+BigWigsMoroes.toggleoptions = {"engage", "vanish", "enrage", -1, "garrote", "icon", "bosskill"}
+BigWigsMoroes.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -98,9 +101,9 @@ BigWigsMoroes.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsMoroes:OnEnable()
 	enrageannounced = nil
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "BlindEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "BlindEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "BlindEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "GarroteEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "GarroteEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "GarroteEvent")
 
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -110,7 +113,7 @@ function BigWigsMoroes:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "MoroesBlind", 3)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MoroesGarrote", 5)
 end
 
 ------------------------------
@@ -152,21 +155,22 @@ function BigWigsMoroes:UNIT_HEALTH(msg)
 	end
 end
 
-function BigWigsMoroes:BlindEvent(msg)
-	local bplayer, btype = select(3, msg:find(L["blind_trigger"]))
-	if bplayer then
-		if bplayer == L["you"] then
-			bplayer = UnitName("player")
+function BigWigsMoroes:GarroteEvent(msg)
+	local gplayer, gtype = select(3, msg:find(L["garrote_trigger"]))
+	if gplayer then
+		if gplayer == L["you"] then
+			gplayer = UnitName("player")
 		end
-		self:Sync("MoroesBlind "..bplayer)
+		self:Sync("MoroesGarrote "..gplayer)
 	end
 end
 
 function BigWigsMoroes:BigWigs_RecvSync( sync, rest, nick )
-	if sync == "MoroesBlind" and rest then
-		local player = rest
-		if player == UnitName("player") and self.db.profile.blind then
-		self:Message(string.format(L["blind_message"], player), "Attention")
+	if sync == "MoroesGarrote" and rest and self.db.profile.garrote then
+		self:Message(L["garrote_message"]:format(rest), "Attention")
 		end
+	end
+	if self.db.profile.icon then
+		self:SetRaidIcon(rest)
 	end
 end
