@@ -61,7 +61,7 @@ L:RegisterTranslations("enUS", function() return {
 	pull_trigger2 = "I am not some simple jester! I am Nielas Aran!",
 	pull_bar = "Arcane Explosion",
 
-	flame_warning = "Flame Wreath!",
+	flame_warning = "Casting: Flame Wreath!",
 	flame_trigger1 = "I'll show you: this beaten dog still has some teeth!",
 	flame_trigger2 = "Burn, you hellish fiends!",
 
