@@ -67,6 +67,35 @@ L:RegisterTranslations("deDE", function() return {
 	you = "Ihr",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	engage_name = "Engager",
+	engage_desc = "Avertir quand Demoiselle de Vertu est engag\195\169e",
+
+	repentance_name = "Repentir",
+	repentance_desc = "Temps estim\195\169 du Repentir",
+
+	holyfire_name = "Terre sacr\195\169",
+	holyfire_desc = "Avertir quand quelqu'un est affect\195\169 par Flammes sacr\195\169es",
+
+	icon_name = "Ic\195\180ne",
+	icon_desc = "Place une ic\195\180ne raid sur le joueur affect\195\169 par Flammes sacr\196\169es(requiert promotion ou sup\195\169rieur)",
+
+	engage_trigger = "Votre comportement est inacceptable.",
+	engage_message = "Maiden Engag\195\169! Repentir dans ~33sec",
+
+	repentance_trigger1 = "Chassez vos pens\195\169es corrompues.",
+	repentance_trigger2 = "Il faut se d\195\169barrasser de votre impuret\195\169.",
+	repentance_message = "Repentir! Prochain dans ~33sec",
+	repentance_warning = "Repentir Imminent!",
+	repentance_bar = "Repentir",
+	repentance_nextbar = "Prochain Repentir",
+
+	holyfire_trigger = "^(.+) (.+) subit les effets de Flammes sacr\195\169es.",
+	holyfire_message = "Flammes sacr\195\169es: %s",
+
+	you = "Vous",
+} end)
+
 ----------------------------------
 --   Module Declaration    --
 ----------------------------------
@@ -121,7 +150,7 @@ end
 function BigWigsMaiden:NextRepentance()
 	self:DelayedMessage(28, L["repentance_warning"], "Urgent", nil, "Alarm")
 	self:Bar(L["repentance_nextbar"], 33, "Spell_Holy_PrayerOfHealing")
-	self:Bar(L["repentance_bar"], 8, "Spell_Holy_PrayerOfHealing")
+	self:Bar(L["repentance_bar"], 12, "Spell_Holy_PrayerOfHealing")
 end
 
 function BigWigsMaiden:BigWigs_RecvSync( sync, rest, nick )

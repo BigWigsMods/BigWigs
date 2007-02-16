@@ -52,6 +52,24 @@ L:RegisterTranslations("deDE", function() return {
 	riding_bar = "%s rennt",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	youriding_name = "Tu es le Chaperon Rouge",
+	youriding_desc = "Avertir quand vous \195\170tes le Chaperon Rouge",
+
+	elseriding_name = "Alerte des autres Chaperon Rouge",
+	elseriding_desc = "Avertir quand les autres sont Chaperon Rouge",
+
+	icon_name = "Ic\195\180ne",
+	icon_desc = "Place une ic\195\180 sur la personne qui est Chaperon Rouge.(Requiert promotion ou sup\195\169rieur)",
+
+	riding_trigger = "^([^%s]+) gagne(.*) Chaperon Rouge",
+	you = "Vous",
+
+	riding_youwarn = "Tu es le Chaperon Rouge!",
+	riding_otherwarn = "%s est le Chaperon Rouge!",
+	riding_bar = "%s Court",
+} end )
+
 ----------------------------------
 --   Module Declaration    --
 ----------------------------------
