@@ -130,7 +130,7 @@ BigWigsAran = BigWigs:NewModule(boss)
 BigWigsAran.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsAran.enabletrigger = boss
 BigWigsAran.toggleoptions = {"engage", "adds", "drink", -1, "blizzard", "pull", "flame", "bosskill"}
-BigWigsAran.revision = tonumber(string.sub("$Revision$", 12, -3))
+BigWigsAran.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -165,6 +165,7 @@ function BigWigsAran:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["pull_bar"], 12, "Spell_Nature_GroundingTotem")
 	elseif self.db.profile.flame and (msg == L["flame_trigger1"] or msg == L["flame_trigger2"]) then
 		self:Message(L["flame_warning"], "Important", nil, "Alarm")
+		self:Bar(L["flame_bar"], 5, "Spell_Fire_Fire")
 	elseif self.db.profile.blizzard and (msg == L["blizzard_trigger1"] or msg == L["blizzard_trigger2"]) then
 		self:Message(L["blizzard_message"], "Attention")
 	elseif self.db.profile.engage and (msg == L["engage_trigger1"] or msg == L["engage_trigger2"] or msg == L["engage_trigger3"]) then
@@ -182,7 +183,7 @@ end
 function BigWigsAran:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if self.db.profile.flame and msg:find(L["flame_trigger"]) then
 		self:Message(L["flame_message"], "Important")
-		self:Bar(L["flame_bar"], 24, "Spell_Fire_Fire")
+		self:Bar(L["flame_bar"], 21, "Spell_Fire_Fire")
 	end
 end
 
