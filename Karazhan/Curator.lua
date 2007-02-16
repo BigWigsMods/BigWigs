@@ -120,7 +120,7 @@ function BigWigsCurator:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["weaken_message"], "Important", nil, "Alarm")
 		self:Bar(L["weaken_bar"], 20, "Spell_Nature_Purge")
 		self:ScheduleEvent("weak1", "BigWigs_Message", 15, L["weaken_fade_warning"], "Urgent")
-		self:ScheduleEvent("weak2", "BigWigs_Message", L["weaken_fade_message"], "Important", nil, "Alarm")
+		self:ScheduleEvent("weak2", "BigWigs_Message", 20, L["weaken_fade_message"], "Important", nil, "Alarm")
 		self:Evocation()
 	elseif self.db.profile.enrage and msg == L["enrage_trigger"] then
 		self:Message(L["enrage_message"], "Important")
