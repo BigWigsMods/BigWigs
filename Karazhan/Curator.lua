@@ -19,7 +19,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	enrage_cmd = "enrage",
 	enrage_name = "Enrage",
-	enrage_desc = "Warn for enrage at 10%.",
+	enrage_desc = "Warn for enrage at 15%.",
 
 	weaken_cmd = "weaken",
 	weaken_name = "Weaken",
@@ -44,7 +44,7 @@ L:RegisterTranslations("enUS", function() return {
 	berserk_message = "Curator engaged, 12min to berserk!",
 	berserk_bar = "Berserk",
 
-	enrage_trigger = "", --wtb a message? did he even enrage? need verification, i didn't notice this happen.
+	enrage_trigger = "Failure to comply will result in offensive action.",
 	enrage_message = "Enrage!",
 	enrage_warning = "Enrage soon!",
 } end )
@@ -54,7 +54,7 @@ L:RegisterTranslations("deDE", function() return {
 	berserk_desc = "Warnung f\195\188r Berserker nach 12min.",
 
 	enrage_name = "Rage",
-	enrage_desc = "Warnung f\195\188r Rage bei 10%.",
+	enrage_desc = "Warnung f\195\188r Rage bei 15%.",
 
 	weaken_name = "Schw\195\164chung",
 	weaken_desc = "Warnt wen der Kurator geschw\195\164cht ist.",
@@ -90,7 +90,7 @@ BigWigsCurator = BigWigs:NewModule(boss)
 BigWigsCurator.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsCurator.enabletrigger = boss
 BigWigsCurator.toggleoptions = {"weaken", "weaktime", "berserk", "enrage", "bosskill"}
-BigWigsCurator.revision = tonumber(string.sub("$Revision$", 12, -3))
+BigWigsCurator.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -111,26 +111,35 @@ end
 ------------------------------
 
 function BigWigsCurator:CHAT_MSG_MONSTER_YELL(msg)
-	if msg:find(L["berserk_trigger"]) and self.db.profile.berserk then
+	if self.db.profile.berserk and msg == L["berserk_trigger"] then
 		self:Message(L["berserk_message"], "Attention")
 		self:Bar(L["berserk_bar"], 720, "INV_Shield_01")
-	elseif msg:find(L["berserk_trigger"]) and self.db.profile.weaktime then
+	elseif self.db.profile.weaktime and msg == L["berserk_trigger"] then
 		self:Evocation()
-	elseif msg:find(L["weaken_trigger"]) and self.db.profile.weaken then
+	elseif self.db.profile.weaken and msg == L["weaken_trigger"] then
 		self:Message(L["weaken_message"], "Important", nil, "Alarm")
 		self:Bar(L["weaken_bar"], 20, "Spell_Nature_Purge")
-		self:DelayedMessage(15, L["weaken_fade_warning"], "Urgent")
-		self:DelayedMessage(20, L["weaken_fade_message"], "Important", nil, "Alarm")
+		self:ScheduleEvent("weak1", "BigWigs_Message", 15, L["weaken_fade_warning"], "Urgent")
+		self:ScheduleEvent("weak2", "BigWigs_Message", L["weaken_fade_message"], "Important", nil, "Alarm")
 		self:Evocation()
+	elseif self.db.profile.enrage and msg == L["enrage_trigger"] then
+		self:Message(L["enrage_message"], "Important")
+		self:CancelScheduledEvent("weak1")
+		self:CancelScheduledEvent("weak2")
+		self:CancelScheduledEvent("evoc1")
+		self:CancelScheduledEvent("evoc2")
+		self:CancelScheduledEvent("evoc3")
+		self:TriggerEvent("BigWigs_StopBar", self, L["weaken_bar"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["weaktime_bar"])
 	end
 end
 
 function BigWigsCurator:Evocation()
 	if self.db.profile.weaktime then
 		self:Bar(L["weaktime_bar"], 109, "Spell_Nature_Purge")
-		self:DelayedMessage(39, L["weaktime_message3"], "Positive")
-		self:DelayedMessage(79, L["weaktime_message2"], "Attention")
-		self:DelayedMessage(99, L["weaktime_message1"], "Urgent")
+		self:ScheduleEvent("evoc1", "BigWigs_Message", 39, L["weaktime_message3"], "Positive")
+		self:ScheduleEvent("evoc2", "BigWigs_Message", 79, L["weaktime_message2"], "Attention")
+		self:ScheduleEvent("evoc3", "BigWigs_Message", 99, L["weaktime_message1"], "Urgent")
 	end
 end
 
@@ -138,7 +147,7 @@ function BigWigsCurator:UNIT_HEALTH(msg)
 	if not self.db.profile.enrage then return end
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
-		if health > 10 and health <= 13 and not enrageannounced then
+		if health > 15 and health <= 18 and not enrageannounced then
 			self:Message(L["enrage_warning"], "Positive")
 			enrageannounced = true
 		elseif health > 50 and enrageannounced then
