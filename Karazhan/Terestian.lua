@@ -74,7 +74,7 @@ end
 function BigWigsTerestian:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 	if self.db.profile.weak and msg:find(L["weak_trigger"]) then
 		self:Message(L["weak_message"], "Important", nil, "Alarm")
-		self:DelayedMessage(25, L"weak_warning1"], "Attention")
+		self:DelayedMessage(25, L["weak_warning1"], "Attention")
 		self:DelayedMessage(30, L["weak_warning2"], "Attention")
 		self:Bar(L["weak_bar"], 30, "Spell_Shadow_Cripple")
 	end
