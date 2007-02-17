@@ -73,7 +73,7 @@ end
 ------------------------------
 
 function BigWigsMalchezaar:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.infernal and (msg == L["infernal_trigger1"] or msg == L["infernal_trigger2"]) then
+	if self.db.profile.infernals and (msg == L["infernal_trigger1"] or msg == L["infernal_trigger2"]) then
 		self:Message(L["infernal_warning"], "Positive")
 		self:NextInfernal()
 	elseif self.db.profile.engage and msg == L["engage_trigger"] then
