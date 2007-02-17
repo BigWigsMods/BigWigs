@@ -13,6 +13,10 @@ local afflict
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Malchezaar",
 
+	phase_cmd = "engage",
+	phase_name = "Engage",
+	phase_desc = "Alert when changing phases",
+
 	enfeeble_cmd = "enfeeble",
 	enfeeble_name = "Enfeeble",
 	enfeeble_desc = "Show cooldown timer for enfeeble",
@@ -21,12 +25,16 @@ L:RegisterTranslations("enUS", function() return {
 	infernals_name = "Infernals",
 	infernals_desc = "Show cooldown timer for Infernal summons.",
 
-	engage_trigger = "Madness has brought you here to me. I shall be your undoing!",
-	engage_message = "Malchezaar engaged, Infernal in ~20sec!",
+	phase1_trigger = "Madness has brought you here to me. I shall be your undoing!",
+	phase2_trigger = "Simple fools! Time is the fire in which you'll burn!",
+	phase3_trigger = "How can you hope to stand against such overwhelming power?",
+	phase1_message = "Phase 1 - Infernal in ~40sec!",
+	phase2_message = "60% - Phase 2",
+	phase3_message = "30% - Phase 3 ",
 
 	enfeeble_trigger = "afflicted by Enfeeble",
 	enfeeble_message = "Enfeeble! next in ~30sec",
-	enfeeble_warning = "Enfeeble Soon!",
+	enfeeble_warning = "Enfeeble in ~5sec!",
 	enfeeble_bar = "Enfeeble",
 	enfeeble_nextbar = "Next Enfeeble",
 
@@ -44,7 +52,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsMalchezaar = BigWigs:NewModule(boss)
 BigWigsMalchezaar.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsMalchezaar.enabletrigger = boss
-BigWigsMalchezaar.toggleoptions = {"enfeeble", "infernals", "bosskill"}
+BigWigsMalchezaar.toggleoptions = {"phase", "enfeeble", "infernals", "bosskill"}
 BigWigsMalchezaar.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -76,9 +84,12 @@ function BigWigsMalchezaar:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.infernals and (msg == L["infernal_trigger1"] or msg == L["infernal_trigger2"]) then
 		self:Message(L["infernal_warning"], "Positive")
 		self:NextInfernal()
-	elseif self.db.profile.engage and msg == L["engage_trigger"] then
-		self:Message(L["engage_message"], "Positive")
-		self:NextInfernal()
+	elseif self.db.profile.phase and msg == L["phase1_trigger"] then
+		self:Message(L["phase1_message"], "Positive")
+	elseif self.db.profile.phase and msg == L["phase2_trigger"] then
+		self:Message(L["phase2_message"], "Positive")
+	elseif self.db.profile.phase and msg == L["phase3_trigger"] then
+		self:Message(L["phase3_message"], "Positive")
 	end
 end
 
@@ -98,8 +109,8 @@ function BigWigsMalchezaar:BigWigs_RecvSync(sync, rest, nick)
 		afflict = true
 		self:Message(L["enfeeble_message"], "Important", nil, "Alarm")
 		self:DelayedMessage(25, L["enfeeble_warning"], "Attention")
-		self:Bar(L["enfeeble_bar"], 6, "Spell_Shadow_LifeDrain02")
-		self:Bar(L["enfeeble_nextbar"], 25, "Spell_Shadow_LifeDrain02")
+		self:Bar(L["enfeeble_bar"], 7, "Spell_Shadow_LifeDrain02")
+		self:Bar(L["enfeeble_nextbar"], 30, "Spell_Shadow_LifeDrain02")
 	end
 end
 
