@@ -6,6 +6,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["Gruul the Dragonkiller"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local grasp
 local slam
+local growcount
 
 ----------------------------
 --      Localization     --
@@ -15,15 +16,15 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Gruul",
 
 	engage_cmd = "engage",
-	engage_name = "Engage Alert",
+	engage_name = "Engage",
 	engage_desc = "Warn when Grull is pulled",
 
-	enrage_cmd = "enrage",
-	enrage_name = "Enrage Warning",
-	enrage_desc = "Warn when Grull becomes enraged",
+	grow_cmd = "grow",
+	grow_name = "Grow",
+	grow_desc = "Warn when Grull grows",
 
 	grasp_cmd = "grasp",
-	grasp_name = "Grasp Warning",
+	grasp_name = "Grasp",
 	grasp_desc = "Warn when Gruul casts Gronn Lord's Grasp",
 
 	cavein_cmd = "cavein",
@@ -33,8 +34,10 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger = "Come.... and die.",
 	engage_message = "Gruul Engaged!",
 
-	enrage_trigger = "%s grows in size!",
-	enrage_message = "Enrage!",
+	grow_trigger = "%s grows in size!",
+	grow_message = "Grows: (%d)",
+	grow_warning = "Grow (%d) in ~5sec",
+	grow_bar = "Grow (%d)",
 
 	grasp_trigger1 = "afflicted by Ground Slam",
 	grasp_trigger2 = "afflicted by Gronn Lord's Grasp",
@@ -50,8 +53,8 @@ L:RegisterTranslations("deDE", function() return {
 	engage_name = "Pull Warnung",
 	engage_desc = "Warnt, wenn Gruul gepulled wird",
 
-	enrage_name = "Wachstum Warnung",
-	enrage_desc = "Warnt, wenn Gruul w\195\164chst",
+	--grow_name = "Wachstum Warnung", --enUS changed
+	--grow_desc = "Warnt, wenn Gruul w\195\164chst", --enUS changed
 
 	grasp_name = "Griff Warnung",
 	grasp_desc = "Warnt, wenn Gruul Griff des Gronnlords zaubert",
@@ -62,8 +65,10 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Kommt und sterbt.",
 	engage_message = "Gruul gepullt!",
 
-	enrage_trigger = "%s wird gr\195\182\195\159er!",
-	enrage_message = "Gruul w\195\164chst!",
+	grow_trigger = "%s wird gr\195\182\195\159er!",
+	--grow_message = "Gruul w\195\164chst!", --enUS changed
+	--grow_warning = "Grow (%d) in ~5sec",
+	--grow_bar = "Grow (%d)",
 
 	grasp_trigger1 = "von Erde ersch\195\188ttern betroffen",
 	grasp_trigger2 = "von Griff des Gronnlords betroffen",
@@ -83,8 +88,8 @@ BigWigsGruul = BigWigs:NewModule(boss)
 BigWigsGruul.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
 BigWigsGruul.otherMenu = "Outland"
 BigWigsGruul.enabletrigger = boss
-BigWigsGruul.toggleoptions = {"engage", -1, "cavein", -1, "grasp", "enrage", "bosskill"}
-BigWigsGruul.revision = tonumber(string.sub("$Revision$", 12, -3))
+BigWigsGruul.toggleoptions = {"engage", "grasp", "grow", -1, "cavein", "bosskill"}
+BigWigsGruul.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -93,6 +98,7 @@ BigWigsGruul.revision = tonumber(string.sub("$Revision$", 12, -3))
 function BigWigsGruul:OnEnable()
 	slam = nil
 	grasp = nil
+	growcount = 1
 
 	self:RegisterEvent("BigWigs_Message")
 
@@ -115,8 +121,11 @@ function BigWigsGruul:CHAT_MSG_MONSTER_SAY(msg)
 end
 
 function BigWigsGruul:CHAT_MSG_MONSTER_EMOTE(msg)
-	if self.db.profile.enrage and msg == L["enrage_trigger"] then
-		self:Message(L["enrage_message"], "Important")
+	if self.db.profile.grow and msg == L["grow_trigger"] then
+		self:Message(L["grow_message"]:format(growcount), "Important")
+		growcount = growcount + 1
+		self:Bar(L["grow_bar"]:format(growcount), 30, "Spell_Shadow_Charm")
+		self:DelayedMessage(25, L["grow_warning"]:format(growcount), "Attention")
 	end
 end
 
