@@ -23,6 +23,7 @@ L:RegisterTranslations("enUS", function() return {
 	sacrifice_you = "You",
 	sacrifice_trigger = "^([^%s]+) ([^%s]+) afflicted by Sacrifice",
 	sacrifice_message = "%s is being Sacrificed!",
+	sacrifice_bar = "Sacrifice: %s",
 
 	weak_trigger = "afflicted by Broken Pact",
 	weak_message = "Weakened for 30sec!",
@@ -66,7 +67,7 @@ function BigWigsTerestian:CheckSacrifice(msg)
 			splayer = UnitName("player")
 		end
 		self:Message(L["sacrifice_message"]:format(splayer), "Attention")
-		self:Bar(L["riding_bar"]:format(splayer), 30, "Spell_Shadow_AntiMagicShell")
+		self:Bar(L["sacrifice_bar"]:format(splayer), 30, "Spell_Shadow_AntiMagicShell")
 	end
 end
 
