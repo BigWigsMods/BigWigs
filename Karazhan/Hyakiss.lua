@@ -32,7 +32,7 @@ BigWigsHyakiss = BigWigs:NewModule(boss)
 BigWigsHyakiss.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsHyakiss.enabletrigger = boss
 BigWigsHyakiss.toggleoptions = {"web", "bosskill"}
-BigWigsHyakiss.revision = tonumber(string.sub("$Revision$", 12, -3))
+BigWigsHyakiss.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -74,10 +74,9 @@ function BigWigsHyakiss:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "HyakissWeb" and rest and self.db.profile.web then
 		local t = GetTime()
 		if not times[rest] or (times[rest] and (times[rest] + 5) < t) then
-			self:Message(string.format(L["web_message"], rest), "Urgent")
-			self:Bar( string.format(L["web_bar"], rest), 8, "Spell_Nature_Web")
+			self:Message(L["web_message"]:format(rest), "Urgent")
+			self:Bar(L["web_bar"]:format(rest), 8, "Spell_Nature_Web")
 			times[rest] = t
 		end
 	end
 end
-

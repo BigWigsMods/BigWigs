@@ -16,27 +16,27 @@ L:RegisterTranslations("enUS", function() return {
 
 	adds_cmd = "adds",
 	adds_name = "Elementals",
-	adds_desc = "Warn about the water elemental adds spawning.",
+	adds_desc = "Warn about the water elemental adds spawning",
 
 	drink_cmd = "drink",
 	drink_name = "Drinking",
-	drink_desc = "Warn when Shade of Aran starts to drink.",
+	drink_desc = ("Warn when %s starts to drink"):format(boss),
 
 	engage_cmd = "engage",
 	engage_name = "Engage",
-	engage_desc = "Warn when Shade of Aran has been engaged",
+	engage_desc = ("Warn when %s has been engaged"):format(boss),
 
 	blizzard_cmd = "blizzard",
 	blizzard_name = "Blizzard",
-	blizzard_desc = "Warn about the Blizzard.",
+	blizzard_desc = "Warn when Blizzard is being cast",
 
 	pull_cmd = "pull",
 	pull_name = "Pull/Super AE",
-	pull_desc = "Warn about the magnetic pull and Super Arcane Explosion.",
+	pull_desc = "Warn for the magnetic pull and Super Arcane Explosion",
 
 	flame_cmd = "flame",
 	flame_name = "Flame Wreath",
-	flame_desc = "Warn when someone is afflicted by Flame Wreath.",
+	flame_desc = "Warn when Flame Wreath is being cast",
 
 	adds_message = "Elementals Incoming!",
 	adds_warning = "Elementals Soon",
@@ -51,7 +51,7 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger1 = "I'll not be tortured again!",
 	engage_trigger2 = "Who are you? What do you want? Stay away from me!",
 	engage_trigger3 = "Please, no more! My son... he's gone mad!",
-	engage_message = "Shade of Aran Engaged",
+	engage_message = "%s Engaged",
 
 	blizzard_trigger1 = "Back to the cold dark with you!",
 	blizzard_trigger2 = "I'll freeze you all!",
@@ -76,10 +76,10 @@ L:RegisterTranslations("deDE", function() return {
 	adds_desc = "Warnt vor den Wasserelementaren bei 40%.",
 
 	drink_name = "Trinken",
-	drink_desc = "Warnt, wenn Arans Schemen zu trinken beginnt.",
+	drink_desc = ("Warnt, wenn %s zu trinken beginnt."):format(boss),
 
 	engage_name = "Angriff",
-	engage_desc = "Warnt, wenn Arans Schemen angegriffen wurde.",
+	engage_desc = ("Warnt, wenn %s angegriffen wurde."):format(boss),
 
 	blizzard_name = "Blizzard",
 	blizzard_desc = "Warnt vor dem Blizzard.",
@@ -102,7 +102,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	engage_trigger1 = "Qu\195\164lt mich nicht l\195\164nger!",
 	engage_trigger2 = "Wer seid Ihr? Was wollt Ihr? Bleibt fern von mir!",
-	engage_message = "Arans Schemen angegriffen.",
+	engage_message = "%s angegriffen.",
 
 	blizzard_trigger1 = "Zur\195\188ck in die eisige Finsternis mit Euch!",
 	blizzard_trigger2 = "Ich werde Euch alle einfrieren!",
@@ -169,7 +169,7 @@ function BigWigsAran:CHAT_MSG_MONSTER_YELL(msg)
 	elseif self.db.profile.blizzard and (msg == L["blizzard_trigger1"] or msg == L["blizzard_trigger2"]) then
 		self:Message(L["blizzard_message"], "Attention")
 	elseif self.db.profile.engage and (msg == L["engage_trigger1"] or msg == L["engage_trigger2"] or msg == L["engage_trigger3"]) then
-		self:Message(L["engage_message"], "Positive")
+		self:Message(L["engage_message"]:format(boss), "Positive")
 	end
 end
 
@@ -191,10 +191,10 @@ function BigWigsAran:UNIT_MANA(msg)
 	if not self.db.profile.drink then return end
 	if UnitName(msg) == boss then
 		local mana = UnitMana(msg)
-		if mana > 5000 and mana <= 10000 and not drinkannounced then
+		if mana > 10000 and mana <= 20000 and not drinkannounced then
 			self:Message(L["drink_warning"], "Urgent", nil, "Alert")
 			drinkannounced = true
-		elseif mana > 20000 and drinkannounced then
+		elseif mana > 50000 and drinkannounced then
 			drinkannounced = nil
 		end
 	end

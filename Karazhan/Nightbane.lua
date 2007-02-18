@@ -5,13 +5,6 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Nightbane"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
---[[
-n phase1 (on the ground) he has a fear and sometimes at a random player the ground is burning and do aoe dmg to ppl on it.
-fear cooldown seems to be 30-40seconds, at least enough that one warrior can tank it without fearward.
-every 25% he going into the air. one person will get "rain of bones" debuff and will damage nearby people. 
-5 skeletons spawn and nightbane will cast some damage spell on some people. after some time he will come back.
-]]--
-
 ----------------------------
 --      Localization     --
 ----------------------------
@@ -28,7 +21,7 @@ L:RegisterTranslations("enUS", function() return {
 	fear_warn = "Fear - ~30 seconds until next!",
 	fear5sec_warn = "~5 sec until Fear",
 	fear_bar = "Fear", 
-	
+
 } end )
 
 ----------------------------------
@@ -39,7 +32,7 @@ BigWigsNightbane = BigWigs:NewModule(boss)
 BigWigsNightbane.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsNightbane.enabletrigger = boss
 BigWigsNightbane.toggleoptions = {"fear", "bosskill"}
-BigWigsNightbane.revision = tonumber(string.sub("$Revision$", 12, -3))
+BigWigsNightbane.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -86,4 +79,3 @@ end
 function BigWigsNightbane:BigWigs_Message( text )
 	if text == L["fear5sec_warn"] then prior = nil end
 end
-

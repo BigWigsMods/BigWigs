@@ -15,11 +15,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	engage_cmd = "engage",
 	engage_name = "Engage",
-	engage_desc = "Warn when Moroes is pulled",
+	engage_desc = ("Warn when %s is pulled"):format(boss),
 
 	vanish_cmd = "vanish",
 	vanish_name = "Vanish",
-	vanish_desc = "Warn when Moroes Vanishe's",
+	vanish_desc = "Vanish estimated timers",
 
 	garrote_cmd = "garrote",
 	garrote_name = "Garrote",
@@ -27,7 +27,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	enrage_cmd = "enrage",
 	enrage_name = "Enrage",
-	enrage_desc = "Warn when Moroes becomes enraged",
+	enrage_desc = ("Warn when %s becomes enraged"):format(boss),
 
 	icon_cmd = "icon",
 	icon_name = "Icon",
@@ -43,7 +43,7 @@ L:RegisterTranslations("enUS", function() return {
 	garrote_message = "Garrote: %s",
 
 	engage_trigger = "Hm, unannounced visitors. Preparations must be made...",
-	engage_message = "Moroes Engaged - Vanish in ~35sec!",
+	engage_message = "%s Engaged - Vanish in ~35sec!",
 
 	enrage_trigger = "%s becomes enraged!",
 	enrage_message = "Enrage!",
@@ -55,15 +55,10 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("deDE", function() return {
 	vanish_trigger1 = "Ihr habt gel\195\164utet?",
 	vanish_trigger2 = "Nun, wo war ich? Ah, ja...",
-	vanish_message = "Vanished! Next in ~35sec!",
-	vanish_warning = "Vanish Soon!",
-	vanish_bar = "Next Vanish",
 
-	garrote_trigger = "^([^%s]+) ([^%s]+) afflicted by Garrote",
-	garrote_message = "Garrote: %s",
+	--garrote_trigger = "^([^%s]+) ([^%s]+) afflicted by Garrote", --change for garrote
 
 	engage_trigger = "Hm, unangek\195\188ndigte Besucher.*",
-	engage_message = "Moroes Engaged - Vanish in ~35sec!",
 
 	enrage_trigger = "%s wird w\195\188tend!",
 
@@ -111,7 +106,7 @@ function BigWigsMoroes:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["vanish_message"], "Urgent", nil, "Alert")
 		self:NextVanish()
 	elseif self.db.profile.engage and msg == L["engage_trigger"] then
-		self:Message(L["engage_message"], "Attention")
+		self:Message(L["engage_message"]:format(boss), "Attention")
 		self:NextVanish()
 	end
 end
@@ -159,4 +154,3 @@ function BigWigsMoroes:BigWigs_RecvSync( sync, rest, nick )
 		end
 	end
 end
-

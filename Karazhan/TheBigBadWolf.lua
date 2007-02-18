@@ -78,7 +78,7 @@ BigWigsTheBigBadWolf = BigWigs:NewModule(boss)
 BigWigsTheBigBadWolf.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsTheBigBadWolf.enabletrigger = {lady, boss}
 BigWigsTheBigBadWolf.toggleoptions = {"youriding", "elseriding", "icon", "bosskill"}
-BigWigsTheBigBadWolf.revision = tonumber(string.sub("$Revision$", 12, -3))
+BigWigsTheBigBadWolf.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization     --
@@ -105,16 +105,15 @@ function BigWigsTheBigBadWolf:RidingEvent(msg)
 		end
 		if rplayer == playerName and self.db.profile.youriding then
 			self:Message(L["riding_youwarn"], "Personal", true, "Long")
-			self:Message(string.format(L["riding_otherwarn"], rplayer), "Attention", nil, nil, true)
-			self:Bar(string.format(L["riding_bar"], rplayer), 20,"INV_Chest_Cloth_18")
+			self:Message(L["riding_otherwarn"]:format(rplayer), "Attention", nil, nil, true)
+			self:Bar(L["riding_bar"]:format(rplayer), 20,"INV_Chest_Cloth_18")
 		elseif self.db.profile.elseriding then
-			self:Message(string.format(L["riding_otherwarn"], rplayer), "Attention")
+			self:Message(L["riding_otherwarn"]:format(rplayer), "Attention")
 			self:Whisper(rplayer, L["riding_youwarn"])
-			self:Bar(string.format(L["riding_bar"], rplayer), 20,"INV_Chest_Cloth_18")
+			self:Bar(L["riding_bar"]:format(rplayer), 20,"INV_Chest_Cloth_18")
 		end
 		if self.db.profile.icon then 
 			self:SetRaidIcon(rplayer)
 		end
 	end
 end
-

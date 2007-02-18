@@ -14,11 +14,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	sacrifice_cmd = "sacrifice",
 	sacrifice_name = "Sacrifice",
-	sacrifice_desc = "Warn for Sacrifice of players.",
+	sacrifice_desc = "Warn for Sacrifice of players",
 
 	weak_cmd = "weak",
 	weak_name = "Weakened",
-	weak_desc = "Warn Terestian becomes weakened.",
+	weak_desc = "Warn for weakened state",
 
 	sacrifice_you = "You",
 	sacrifice_trigger = "^([^%s]+) ([^%s]+) afflicted by Sacrifice",

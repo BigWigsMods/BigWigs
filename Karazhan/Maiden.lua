@@ -14,7 +14,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	engage_cmd = "engage",
 	engage_name = "Engage",
-	engage_desc = "Alert when the Maiden of Virtue is engaged",
+	engage_desc = ("Alert when %s is engaged"):format(boss),
 
 	repentance_cmd = "repentance",
 	repentance_name = "Repentance",
@@ -45,7 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	engage_desc = "Alarm wenn Tugendhafte Maid angegriffen wird.",
+	engage_desc = ("Alarm wenn %s angegriffen wird."):format(boss),
 
 	repentance_name = "Alarm f\195\188r Bu\195\159e",
 	repentance_desc = "Ungef\195\164re Zeitangabe von Bu\195\159e",
@@ -69,7 +69,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	engage_name = "Engager",
-	engage_desc = "Avertir quand Demoiselle de Vertu est engag\195\169e",
+	engage_desc = ("Avertir quand %s est engag\195\169e"):format(boss),
 
 	repentance_name = "Repentir",
 	repentance_desc = "Temps estim\195\169 du Repentir",

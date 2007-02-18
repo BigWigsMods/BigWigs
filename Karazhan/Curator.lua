@@ -23,7 +23,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	weaken_cmd = "weaken",
 	weaken_name = "Weaken",
-	weaken_desc = "Alert when The Curator is weakened.",
+	weaken_desc = "Warn for weakened state",
 
 	weaktime_cmd = "weaktime",
 	weaktime_name = "Weaken Countdown",
@@ -41,7 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 	weaktime_bar = "Next Evocation",
 
 	berserk_trigger = "The Menagerie is for guests only.",
-	berserk_message = "Curator engaged, 12min to berserk!",
+	berserk_message = "%s engaged, 12min to berserk!",
 	berserk_bar = "Berserk",
 
 	enrage_trigger = "Failure to comply will result in offensive action.",
@@ -57,7 +57,7 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_desc = "Warnung f\195\188r Rage bei 15%.",
 
 	weaken_name = "Schw\195\164chung",
-	weaken_desc = "Warnt wen der Kurator geschw\195\164cht ist.",
+	--weaken_desc = "Warn for weakened state", --enUS changed
 
 	weaktime_name = "Schw\195\164chungs Timer",
 	weaktime_desc = "Timer und Anzeige f\195\188r die n\195\164chste Schw\195\164chung.",
@@ -74,7 +74,7 @@ L:RegisterTranslations("deDE", function() return {
 	weaktime_bar = "N\195\164chste Hervorrufung",
 
 	berserk_trigger = "Die Menagerie ist nur f\195\188r G\195\164ste.",
-	berserk_message = "Kurator aktiviert, 12min bis Berserker!",
+	berserk_message = "%s aktiviert, 12min bis Berserker!",
 	berserk_bar = "Berserker",
 
 	enrage_trigger = "Die Nichteinhaltung wird zur Angriffshandlungen f\195\188hren.",
@@ -112,7 +112,7 @@ end
 
 function BigWigsCurator:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.berserk and msg == L["berserk_trigger"] then
-		self:Message(L["berserk_message"], "Attention")
+		self:Message(L["berserk_message"]:format(boss), "Attention")
 		self:Bar(L["berserk_bar"], 720, "INV_Shield_01")
 	elseif self.db.profile.weaktime and msg == L["berserk_trigger"] then
 		self:Evocation()
@@ -147,7 +147,7 @@ function BigWigsCurator:UNIT_HEALTH(msg)
 	if not self.db.profile.enrage then return end
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
-		if health > 15 and health <= 18 and not enrageannounced then
+		if health > 16 and health <= 19 and not enrageannounced then
 			self:Message(L["enrage_warning"], "Positive")
 			enrageannounced = true
 		elseif health > 50 and enrageannounced then

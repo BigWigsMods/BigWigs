@@ -2,8 +2,8 @@
 --     Are you local?     --
 ------------------------------
 
-local Romulo = AceLibrary("Babble-Boss-2.2")["Romulo"]
-local Julianne = AceLibrary("Babble-Boss-2.2")["Julianne"]
+local boy = AceLibrary("Babble-Boss-2.2")["Romulo"]
+local girl = AceLibrary("Babble-Boss-2.2")["Julianne"]
 local boss = AceLibrary("Babble-Boss-2.2")["Romulo & Julianne"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
@@ -24,16 +24,16 @@ L:RegisterTranslations("enUS", function() return {
 
 	heal_cmd = "heal",
 	heal_name = "Heal",
-	heal_desc = "Warn when Julianne casts Eternal Affection",
+	heal_desc = ("Warn when %s casts Eternal Affection"):format(girl),
 
 	buff_cmd = "buff",
 	buff_name = "Self-Buff Alert",
-	buff_desc = "Warn when Julianne and Romulo gain a self-buff",
+	buff_desc = ("Warn when %s and %s gain a self-buff"):format(boy, girl),
 
 	phase1_trigger = "What devil art thou, that dost torment me thus?",
-	phase1_message = "Phase 1 - Julianne",
+	phase1_message = "Phase 1 - %s",
 	phase2_trigger = "Wilt thou provoke me? Then have at thee, boy!",
-	phase2_message = "Phase 2 - Romulo",
+	phase2_message = "Phase 2 - %s",
 	phase3_trigger = "Come, gentle night; and give me back my Romulo!",
 	phase3_message = "Phase 3 - Both",
 
@@ -41,12 +41,12 @@ L:RegisterTranslations("enUS", function() return {
 	poison_message = "Poisoned: %s",
 
 	heal_trigger = "begins to cast Eternal Affection",
-	heal_message = "Julianne casting Heal!",
+	heal_message = "%s casting Heal!",
 
 	buff1_trigger = "gains Daring",
-	buff1_message = "Romulo gains Daring!",
+	buff1_message = "%s gains Daring!",
 	buff2_trigger = "gains Devotion",
-	buff2_message = "Julianne gains Devotion!",
+	buff2_message = "%s gains Devotion!",
 
 	you = "You",
 } end)
@@ -59,15 +59,15 @@ L:RegisterTranslations("deDE", function() return {
 	poison_desc = "Warnt vor vergifteten Spielern",
 
 	heal_name = "Heilen",
-	heal_desc = "Warnt wenn Julianne sich heilt",
+	heal_desc = ("Warnt wenn %s sich heilt"):format(girl),
 
 	buff_name = "Selbst-Buff Alarm",
-	buff_desc = "Warnt wenn Julianne und Romulo sich selbst buffen",
+	buff_desc = ("Warnt wenn %s und %s sich selbst buffen"):format(boy, girl),
 
 	phase1_trigger = "Welch' Teufel bist du, dass du mich so folterst?",
-	phase1_message = "Phase 1 - Julianne",
+	phase1_message = "Phase 1 - %s",
 	phase2_trigger = "Willst du mich zwingen? Knabe, sieh dich vor!",
-	phase2_message = "Phase 2 - Romulo",
+	phase2_message = "Phase 2 - %s",
 	phase3_trigger = "Komm, milde, liebevolle Nacht! Komm, gibt mir meinen Romulo zur\195\188ck!",
 	phase3_message = "Phase 3 - Beide",
 
@@ -75,12 +75,12 @@ L:RegisterTranslations("deDE", function() return {
 	poison_message = "Vergiftet: %s",
 
 	heal_trigger = "beginnt Ewige Zuneigung zu wirken.",
-	heal_message = "Julianne casting Heal!",
+	heal_message = "%s casting Heal!",
 
 	buff1_trigger = "bekommt 'Wagemutig'.",
-	buff1_message = "Romulo bekommt Wagemut!",
+	buff1_message = "%s bekommt Wagemut!",
 	buff2_trigger = "bekommt 'Hingabe'.",
-	buff2_message = "Julianne bekommt Hingabe!",
+	buff2_message = "%s bekommt Hingabe!",
 
 	you = "Ihr",
 } end)
@@ -92,7 +92,7 @@ L:RegisterTranslations("deDE", function() return {
 
 BigWigsRomuloJulianne = BigWigs:NewModule(boss)
 BigWigsRomuloJulianne.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-BigWigsRomuloJulianne.enabletrigger = {Romulo, Julianne}
+BigWigsRomuloJulianne.enabletrigger = {boy, girl}
 BigWigsRomuloJulianne.toggleoptions = {"phase", "heal", "buff", "poison"}
 BigWigsRomuloJulianne.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -117,9 +117,9 @@ end
 function BigWigsRomuloJulianne:CHAT_MSG_MONSTER_YELL(msg)
 	if not self.db.profile.phase then return end
 	if msg == L["phase1_trigger"] then
-		self:Message(L["phase1_message"], "Attention")
+		self:Message(L["phase1_message"]:format(girl), "Attention")
 	elseif msg == L["phase2_trigger"] then
-		self:Message(L["phase2_message"], "Attention")
+		self:Message(L["phase2_message"]:format(boy), "Attention")
 	elseif msg == L["phase3_trigger"] then
 		self:Message(L["phase3_message"], "Attention")
 	end
@@ -139,16 +139,15 @@ end
 
 function BigWigsRomuloJulianne:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if self.db.profile.heal and msg:find(L["heal_trigger"]) then
-		self:Message(L["heal_message"], "Urgent")
+		self:Message(L["heal_message"]:fomart(girl), "Urgent")
 	end
 end
 
 function BigWigsRomuloJulianne:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if not self.db.profile.buff then return end
 	if msg:find(L["buff1_trigger"]) then
-		self:Message(L["buff1_message"], "Attention")
+		self:Message(L["buff1_message"]:format(boy), "Attention")
 	elseif msg:find(L["buff2_trigger"]) then
-		self:Message(L["buff2_message"], "Attention")
+		self:Message(L["buff2_message"]:format(girl), "Attention")
 	end
 end
-
