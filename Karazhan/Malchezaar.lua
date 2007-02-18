@@ -25,6 +25,10 @@ L:RegisterTranslations("enUS", function() return {
 	infernals_name = "Infernals",
 	infernals_desc = "Show cooldown timer for Infernal summons.",
 
+	nova_cmd = "nova",
+	nova_name = "Shadow Nova",
+	nova_desc = "Estimated Shadow Nova timers",
+
 	phase1_trigger = "Madness has brought you here to me. I shall be your undoing!",
 	phase2_trigger = "Simple fools! Time is the fire in which you'll burn!",
 	phase3_trigger = "How can you hope to stand against such overwhelming power?",
@@ -43,6 +47,10 @@ L:RegisterTranslations("enUS", function() return {
 	infernal_bar = "Incoming Infernal",
 	infernal_warning = "Infernal incoming in ~20sec!",
 	infernal_message = "Infernal in ~5sec!",
+
+	nova_trigger = "Prince Malchezaar begins to cast Shadow Nova",
+	nova_message = "Shadow Nova!",
+	nova_bar = "~Incoming Nova",
 } end )
 
 ----------------------------------
@@ -52,7 +60,7 @@ L:RegisterTranslations("enUS", function() return {
 BigWigsMalchezaar = BigWigs:NewModule(boss)
 BigWigsMalchezaar.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 BigWigsMalchezaar.enabletrigger = boss
-BigWigsMalchezaar.toggleoptions = {"phase", "enfeeble", "infernals", "bosskill"}
+BigWigsMalchezaar.toggleoptions = {"phase", "enfeeble", "nova", "infernals", "bosskill"}
 BigWigsMalchezaar.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -67,6 +75,7 @@ function BigWigsMalchezaar:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "EnfeebleEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "EnfeebleEvent")
@@ -74,6 +83,7 @@ function BigWigsMalchezaar:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalchezaarEnfeeble", 20)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MalchezaarNova", 20)
 end
 
 ------------------------------
@@ -104,6 +114,12 @@ function BigWigsMalchezaar:EnfeebleEvent(msg)
 	end
 end
 
+function BigWigsMalchezaar:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+	if msg:find(L["nova_trigger"]) then
+		self:Sync("MalchezaarNova")
+	end
+end
+
 function BigWigsMalchezaar:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "MalchezaarEnfeeble" and self.db.profile.enfeeble then
 		afflict = true
@@ -111,6 +127,11 @@ function BigWigsMalchezaar:BigWigs_RecvSync(sync, rest, nick)
 		self:DelayedMessage(25, L["enfeeble_warning"], "Attention")
 		self:Bar(L["enfeeble_bar"], 7, "Spell_Shadow_LifeDrain02")
 		self:Bar(L["enfeeble_nextbar"], 30, "Spell_Shadow_LifeDrain02")
+	elseif sync == "MalchezaarEnfeeble" and self.db.profile.nova then
+		self:Bar(L["nova_bar"], 5, "Spell_Shadow_Shadowfury")
+	elseif sync == "MalchezaarNova" and self.db.profile.nova then
+		self:Message(L["nova_message"], "Attention", nil, "Info")
+		self:Bar(L["nova_message"], 2, "Spell_Shadow_Shadowfury")
 	end
 end
 
