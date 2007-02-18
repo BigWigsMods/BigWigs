@@ -140,7 +140,6 @@ Naxxramas\Horsemen.lua
 Naxxramas\Sapphiron.lua
 Naxxramas\Kelthuzad.lua
 
-Karazhan\KarazhanBeta.lua
 Karazhan\Curator.lua
 Karazhan\Hyakiss.lua
 Karazhan\Malchezaar.lua

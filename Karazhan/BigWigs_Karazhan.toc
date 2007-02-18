@@ -17,7 +17,6 @@
 
 ## Dependencies: BigWigs
 
-KarazhanBeta.lua
 Curator.lua
 Hyakiss.lua
 Malchezaar.lua
