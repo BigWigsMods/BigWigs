@@ -121,14 +121,17 @@ function BigWigsMalchezaar:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function BigWigsMalchezaar:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "MalchezaarEnfeeble" and self.db.profile.enfeeble then
-		afflict = true
-		self:Message(L["enfeeble_message"], "Important", nil, "Alarm")
-		self:DelayedMessage(25, L["enfeeble_warning"], "Attention")
-		self:Bar(L["enfeeble_bar"], 7, "Spell_Shadow_LifeDrain02")
-		self:Bar(L["enfeeble_nextbar"], 30, "Spell_Shadow_LifeDrain02")
-	elseif sync == "MalchezaarEnfeeble" and self.db.profile.nova then
-		self:Bar(L["nova_bar"], 5, "Spell_Shadow_Shadowfury")
+	if sync == "MalchezaarEnfeeble" then
+		if self.db.profile.enfeeble then
+			afflict = true
+			self:Message(L["enfeeble_message"], "Important", nil, "Alarm")
+			self:DelayedMessage(25, L["enfeeble_warning"], "Attention")
+			self:Bar(L["enfeeble_bar"], 7, "Spell_Shadow_LifeDrain02")
+			self:Bar(L["enfeeble_nextbar"], 30, "Spell_Shadow_LifeDrain02")
+		end
+		if self.db.profile.nova then
+			self:Bar(L["nova_bar"], 5, "Spell_Shadow_Shadowfury")
+		end
 	elseif sync == "MalchezaarNova" and self.db.profile.nova then
 		self:Message(L["nova_message"], "Attention", nil, "Info")
 		self:Bar(L["nova_message"], 2, "Spell_Shadow_Shadowfury")
