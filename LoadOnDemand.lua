@@ -6,9 +6,8 @@
 local LC = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local BZ = nil
 
-local withcore = {}
-local inzone = {}
-local zonelist = {}
+local loadWithCore = nil
+local loadInZone = {}
 
 ------------------------------
 --    Addon Declaration     --
@@ -44,17 +43,21 @@ end
 ------------------------------
 
 function BigWigsLoD:BigWigs_CoreEnabled()
-	for k,v in pairs( withcore ) do
-		if not IsAddOnLoaded( v ) then
-			if LoadAddOn(v) then
-				self:TriggerEvent("BigWigs_ModulePackLoaded", v)
-			else
-				self:TriggerEvent("BigWigs_ModulePackLoaded", v, true)
+	if type(loadWithCore) == "table" then
+		local k, v
+		for k, v in pairs( loadWithCore ) do
+			if not IsAddOnLoaded( v ) then
+				if LoadAddOn(v) then
+					self:TriggerEvent("BigWigs_ModulePackLoaded", v)
+				else
+					self:TriggerEvent("BigWigs_ModulePackLoaded", v, true)
+				end
 			end
+			loadWithCore[k] = nil
 		end
+		-- This only happens once.
+		loadWithCore = nil
 	end
-
-	withcore = {}
 
 	self:LoadZone( GetRealZoneText() )
 end
@@ -104,42 +107,46 @@ end
 
 function BigWigsLoD:InitializeLoD()
 	local numAddons = GetNumAddOns()
+	local i, k, v
 	for i = 1, numAddons do
 		local name, _, _, enabled = GetAddOnInfo(i)
 		if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadInZone")
 			if meta then
+				-- X-BW-Menu can override showing the modules in the
+				-- modules own specified zone submenu
+				local menu = GetAddOnMetadata(i, "X-BigWigs-Menu")
+				local menuConsoleCommand = nil
+				if menu then
+					assert(LC:HasTranslation(menu), string.format("The menu key %s, specified by %s, does not exist in the core translation table.", menu, name))
+					menuConsoleCommand = LC[menu]
+				end
+
 				for k, v in pairs({strsplit(",", meta)}) do
 					v = v:trim()
 					if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
 					local zone = BZ:HasTranslation(v) and BZ[v] or nil
 					assert(zone, string.format("The zone %s, specified by the %s addon, does not exist in Babble-Zone.", v, name))
 
-					-- X-BW-Menu can override showing the modules in the
-					-- modules own specified zone submenu
-					local menu = GetAddOnMetadata(i, "X-BigWigs-Menu")
-
-					-- consoleZone is basically the zonename we want to show
-					-- in the console command options, like "MC" for Molten
-					-- Core, for example.
-					local consoleZone = LC:HasTranslation(zone) and LC[zone] or LC[menu]
-					assert(consoleZone, string.format("%s's zone, %s, has no translation appropriate for console usage.", name, zone))
-
-					if not inzone[zone] then inzone[zone] = {} end
-					table.insert( inzone[zone], name)
-
-					if menu then
+					if not loadInZone[zone] then loadInZone[zone] = {} end
+					table.insert( loadInZone[zone], name)
+	
+					if menuConsoleCommand then
 						-- Okay, so the addon wants to be put in a menu of
 						-- its own, and not one directed by the module
 						-- zones. This means we need a translation from BZ
 						-- for the actual module name as well.
 						local guiKey = BZ:HasTranslation(menu) and BZ[menu] or nil
 						assert(guiKey, string.format("%s's X-BigWigs-Menu (%s) has no translation available in Babble-Zone.", name, menu))
-						if not zonelist[guiKey] then zonelist[guiKey] = {} end
-						zonelist[guiKey][zone] = true
-						self:AddCoreMenu(consoleZone, guiKey)
+						self:AddCoreMenu(menuConsoleCommand, guiKey)
+						if not loadInZone[guiKey] then loadInZone[guiKey] = {} end
+						table.insert( loadInZone[guiKey], name)
 					else
-						zonelist[zone] = true
+						-- consoleZone is basically the zonename we want to show
+						-- in the console command options, like "MC" for Molten
+						-- Core, for example.
+						local consoleZone = LC:HasTranslation(zone) and LC[zone] or nil
+						assert(consoleZone, string.format("%s's zone, %s, has no translation appropriate for console usage.", name, zone))
 						self:AddCoreMenu(consoleZone, zone)
 					end
 				end
@@ -147,42 +154,52 @@ function BigWigsLoD:InitializeLoD()
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadWithCore")
 			if meta then
 				-- register this addon for loading with core
-				table.insert( withcore, name )
+				if type(loadWithCore) ~= "table" then loadWithCore = {} end
+				table.insert( loadWithCore, name )
 			end
 		end
 	end
 end
 
 function BigWigsLoD:LoadZone( zone )
-	if type(zonelist[zone]) == "table" then
-		for k, v in pairs( zonelist[zone] ) do
-			self:LoadZone( k )
-		end
-	else
-		if inzone[zone] then
-			for k,v in pairs( inzone[zone] ) do
-				if not IsAddOnLoaded( v ) then
-					if LoadAddOn(v) then
-						self:TriggerEvent("BigWigs_ModulePackLoaded", v)
-					else
-						self:TriggerEvent("BigWigs_ModulePackLoaded", v, true)
-					end
+	if loadInZone[zone] then
+		local i, v, k, z, j, addon
+		local addonsLoaded = {}
+		for i, v in ipairs( loadInZone[zone] ) do
+			if not IsAddOnLoaded( v ) then
+				if LoadAddOn(v) then
+					self:TriggerEvent("BigWigs_ModulePackLoaded", v)
+				else
+					self:TriggerEvent("BigWigs_ModulePackLoaded", v, true)
 				end
 			end
-			inzone[zone] = nil
-			zonelist[zone] = nil
-			if loaded then
-				self:TriggerEvent("BigWigs_ModulePackLoaded", zone)
-			end
+			table.insert(addonsLoaded, v)
+			loadInZone[zone][i] = nil
 		end
+		if #loadInZone[zone] == 0 then
+			loadInZone[zone] = nil
+		end
+
+		-- Remove all already loaded addons from the loadInZone table so that
+		-- the "Load all" options for the zone menus that are affected by these
+		-- addons are hidden.
+		for i, addon in ipairs(addonsLoaded) do
+			for k in pairs(loadInZone) do
+				for j, z in ipairs(loadInZone[k]) do
+					if z == addon or IsAddOnLoaded(z) then
+						loadInZone[k][j] = nil
+					end
+				end
+				if #loadInZone[k] == 0 then
+					loadInZone[k] = nil
+				end
+			end
+			addonsLoaded[i] = nil
+		end
+		addonsLoaded = nil
 	end
 end
 
-function BigWigsLoD:GetZones()
-	return zonelist
-end
-
--- AddCoreMenu gets passed the translated zonename for the menu.
 function BigWigsLoD:AddCoreMenu(consoleCommand, guiCommand)
 	local opt = BigWigs.cmdtable.args
 	if not opt[consoleCommand] then
@@ -200,10 +217,8 @@ function BigWigsLoD:AddCoreMenu(consoleCommand, guiCommand)
 			name = LC["Load All"],
 			desc = string.format( LC["Load all %s modules."], guiCommand ),
 			order = 1,
-			func = function()
-				BigWigsLoD:LoadZone( guiCommand )
-				opt[consoleCommand].args[LC["Load"]] = nil
-			end,
+			func = function() BigWigsLoD:LoadZone( guiCommand ) end,
+			hidden = function() return not loadInZone[guiCommand] or #loadInZone[guiCommand] == 0 end,
 		}
 	end
 end
