@@ -21,6 +21,7 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_warning1 = "%s Engaged- Enrage in 1min",
 	enrage_warning2 = "Enrage in 5 sec",
 	enrage_message = "Enrage for 10sec!",
+	enrage_finished = "Enrage over",
 	enrage_bar = "Enrage",
 } end)
 
@@ -51,12 +52,13 @@ end
 
 function BigWigsKazzak:CHAT_MSG_MONSTER_YELL(msg)
 	if not self.db.profile.enrage then return end
-	if msg == L["enrage_trigger"] then
+	if msg == L["enrage_trigger1"] then
 		self:Message(L["enrage_warning1"]:format(boss), "Attention")
-		self:DelayedMessage(5, L["enrage_warning2"], "Urgent")
+		self:DelayedMessage(55, L["enrage_warning2"], "Urgent")
 		self:Bar(L["enrage_bar"], 60, "Spell_Shadow_UnholyFrenzy")
 	elseif msg == L["enrage_trigger2"] then
 		self:Message(L["enrage_message"], "Important")
+		self:DelayedMessage(10, L["enrage_finished"], "Positive")
 		self:Bar(L["enrage_bar"], 10, "Spell_Shadow_UnholyFrenzy")
 	end
 end
