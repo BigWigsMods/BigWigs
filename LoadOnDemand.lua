@@ -188,15 +188,15 @@ function BigWigsLoD:GetZones()
 	return zonelist
 end
 
-function BigWigsLoD:AddCoreMenu( zonename )
-	local zone = LC:HasTranslation(zonename) and LC[zonename] or nil
+-- AddCoreMenu gets passed the translated zonename for the menu.
+function BigWigsLoD:AddCoreMenu( zone )
 	if not zone then return end
 	local opt = BigWigs.cmdtable.args
 	if not opt[zone] then
 		opt[zone] = {
 			type = "group",
-			name = BZ:HasTranslation(zonename) and BZ[zonename] or zonename,
-			desc = string.format(LC["Options for bosses in %s."], zonename),
+			name = zone,
+			desc = string.format(LC["Options for bosses in %s."], zone),
 			args = {},
 			disabled = function() return not BigWigs:IsActive() end,
 		}
@@ -205,9 +205,9 @@ function BigWigsLoD:AddCoreMenu( zonename )
 		opt[zone].args[LC["Load"]] = {
 			type = "execute",
 			name = LC["Load All"],
-			desc = string.format( LC["Load all %s modules."], zonename ),
+			desc = string.format( LC["Load all %s modules."], zone ),
 			order = 1,
-			func = function() BigWigsLoD:LoadZone( zonename ) end,
+			func = function() BigWigsLoD:LoadZone( zone ) end,
 		}
 	end
 end
