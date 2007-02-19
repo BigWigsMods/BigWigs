@@ -94,7 +94,7 @@ end
 function BigWigsNightbane:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "NightbaneFear" and self.db.profile.fear then
 		self:Bar(L["fear_bar"], 2, "Spell_Shadow_PsychicScream")
-		self:Message(L["fear_warn"], "Positive")
+		self:Message(L["fear_message"], "Positive")
 	elseif sync == "NightbaneCharr" and self.db.profile.charrtime then
 		self:Bar(L["charrtime_bar"]:format(groundcount), 30, "Spell_Fire_LavaSpawn")
 		self:DelayedMessage(15, L["charrtime_warning"]:format(groundcount), "Attention", true)
@@ -120,7 +120,7 @@ function BigWigsNightbane:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function BigWigsNightbane:Event(msg)
-	if self.db.profile.charr and msg == L["char_trigger"] then
+	if self.db.profile.charr and msg == L["charr_trigger"] then
 		self:Message(L["charr_message"], "Urgent", true, "Alarm")
 	elseif not ground and msg:find(L["charrtime_trigger"]) then
 		self:Sync("NightbaneCharr")
