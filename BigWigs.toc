@@ -154,3 +154,5 @@ Karazhan\WizardofOz.lua
 Karazhan\Netherspite.lua
 Karazhan\Nightbane.lua
 Karazhan\Shadikith.lua
+
+SC\Hydross.lua

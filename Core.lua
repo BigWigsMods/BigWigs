@@ -50,6 +50,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Naxxramas"] = "Naxxramas",
 	["Azeroth"] = "Azeroth",
 	["Outland"] = "Outland",
+	["Serpentshrine Cavern"] = "SC",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -93,6 +94,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Naxxramas"] = "Naxxramas",
 	["Azeroth"] = "Azeroth",
 	["Outland"] = "Outreterre",
+	["Serpentshrine Cavern"] = "SC",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -137,6 +139,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Azeroth"] = "Azeroth",
 	["Outland"] = "Scherbenwelt",
 	["Karazhan"] = "Karazhan",
+	["Serpentshrine Cavern"] = "SC",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -177,6 +180,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Azeroth"] = "Azeroth",
 	["Outland"] = "아웃랜드",
 	["Karazhan"] = "Karazhan",
+	["Serpentshrine Cavern"] = "SC",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -218,6 +222,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Azeroth"] = "Azeroth",
 	["Outland"] = "Outland",
 	["Karazhan"] = "Karazhan",
+	["Serpentshrine Cavern"] = "SC",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -253,6 +258,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Azeroth"] = "艾澤拉斯",
 	["Outland"] = "Outland",
 	["Karazhan"] = "Karazhan",
+	["Serpentshrine Cavern"] = "SC",
 } end)
 
 ---------------------------------
@@ -299,7 +305,7 @@ BigWigs.cmdtable = {type = "group", handler = BigWigs, args = {
 BigWigs:RegisterChatCommand({"/bw", "/BigWigs"}, BigWigs.cmdtable, "BIGWIGS")
 
 BigWigs.debugFrame = ChatFrame5
-BigWigs.revision = tonumber(string.sub("$Revision$", 12, -3))
+BigWigs.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -569,5 +575,4 @@ function BigWigs:MobIsTrigger(module, name)
 		for _,mob in pairs(t) do if mob == name then return true end end
 	end
 end
-
 
