@@ -17,4 +17,5 @@
 
 ## Dependencies: BigWigs
 
+SCBeta.lua
 Hydross.lua
