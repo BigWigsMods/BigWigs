@@ -2,6 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
+local BZ = AceLibrary("Babble-Zone-2.2")
 local BB = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 
@@ -478,22 +479,26 @@ function BigWigs:RegisterModule(name, module)
 			if module.external then
 				self.cmdtable.args[L["Extras"]].args[L2["cmd"]] = cons or module.consoleOptions
 			else
-				local zonename = type(module.zonename) == "table" and module.zonename[1] or module.zonename
-				local zone = zonename
+				local consoleZone = nil
+				local guiZone = nil
 				if module.otherMenu then
-					zone = L[module.otherMenu] or error(string.format("Invalid otherMenu value from %s.", module:ToString()))
-					zonename = zone
+					consoleZone = L[module.otherMenu]
+					guiZone = BZ[module.otherMenu]
+				else
+					local moduleZone = type(module.zonename) == "table" and module.zonename[1] or module.zonename
+					guiZone = moduleZone
+					consoleZone = L[BZ:GetReverseTranslation(moduleZone)]
 				end
-				if not self.cmdtable.args[zone] then
-					self.cmdtable.args[zone] = {
+				if not self.cmdtable.args[consoleZone] then
+					self.cmdtable.args[consoleZone] = {
 						type = "group",
-						name = zonename,
-						desc = string.format(L["Options for bosses in %s."], zonename),
+						name = guiZone,
+						desc = string.format(L["Options for bosses in %s."], guiZone),
 						args = {},
 						disabled = function() return not BigWigs:IsActive() end,
 					}
 				end
-				self.cmdtable.args[zone].args[L2["cmd"]] = cons or module.consoleOptions
+				self.cmdtable.args[consoleZone].args[L2["cmd"]] = cons or module.consoleOptions
 			end
 		end
 	elseif module.consoleOptions then

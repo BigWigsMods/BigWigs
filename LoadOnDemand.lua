@@ -113,21 +113,34 @@ function BigWigsLoD:InitializeLoD()
 					v = v:trim()
 					if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
 					local zone = BZ:HasTranslation(v) and BZ[v] or nil
-					if zone then
-						if not inzone[zone] then inzone[zone] = {} end
-						table.insert( inzone[zone], name)
-						if LC:HasTranslation(v) then
-							zonelist[zone] = true
-							self:AddCoreMenu(zone)
-						else
-							local menu = GetAddOnMetadata(i, "X-BigWigs-Menu")
-							assert(menu, string.format("%s either need to have a direct link to the core translation table or X-BigWigs-Menu set.", name))
-							local translatedMenu = LC[menu]
-							assert(translatedMenu, string.format("No translation exists for the menu key %s from %s.", menu, name))
-							if not zonelist[translatedMenu] then zonelist[translatedMenu] = {} end
-							zonelist[translatedMenu][zone] = true
-							self:AddCoreMenu(translatedMenu)
-						end
+					assert(zone, string.format("The zone %s, specified by the %s addon, does not exist in Babble-Zone.", v, name))
+
+					-- X-BW-Menu can override showing the modules in the
+					-- modules own specified zone submenu
+					local menu = GetAddOnMetadata(i, "X-BigWigs-Menu")
+
+					-- consoleZone is basically the zonename we want to show
+					-- in the console command options, like "MC" for Molten
+					-- Core, for example.
+					local consoleZone = LC:HasTranslation(zone) and LC[zone] or LC[menu]
+					assert(consoleZone, string.format("%s's zone, %s, has no translation appropriate for console usage.", name, zone))
+
+					if not inzone[zone] then inzone[zone] = {} end
+					table.insert( inzone[zone], name)
+
+					if menu then
+						-- Okay, so the addon wants to be put in a menu of
+						-- its own, and not one directed by the module
+						-- zones. This means we need a translation from BZ
+						-- for the actual module name as well.
+						local guiKey = BZ:HasTranslation(menu) and BZ[menu] or nil
+						assert(guiKey, string.format("%s's X-BigWigs-Menu (%s) has no translation available in Babble-Zone.", name, menu))
+						if not zonelist[guiKey] then zonelist[guiKey] = {} end
+						zonelist[guiKey][zone] = true
+						self:AddCoreMenu(consoleZone, guiKey)
+					else
+						zonelist[zone] = true
+						self:AddCoreMenu(consoleZone, zone)
 					end
 				end
 			end
@@ -141,23 +154,6 @@ function BigWigsLoD:InitializeLoD()
 end
 
 function BigWigsLoD:LoadZone( zone )
-
-	-- Remove the "Load All" menu item from the core option table.
-	local menu = zone
-	
-	if not zonelist[zone] then
-		for k, v in pairs(zonelist) do
-			if type(v) == "table" and v[zone] then
-				menu = k
-			end
-		end
-	end
-
-	local opt = BigWigs.cmdtable.args[menu]
-	if type(opt) == "table" and type(opt.args) == "table" then
-		opt.args[LC["Load"]] = nil
-	end
-
 	if type(zonelist[zone]) == "table" then
 		for k, v in pairs( zonelist[zone] ) do
 			self:LoadZone( k )
@@ -187,25 +183,27 @@ function BigWigsLoD:GetZones()
 end
 
 -- AddCoreMenu gets passed the translated zonename for the menu.
-function BigWigsLoD:AddCoreMenu( zone )
-	if not zone then return end
+function BigWigsLoD:AddCoreMenu(consoleCommand, guiCommand)
 	local opt = BigWigs.cmdtable.args
-	if not opt[zone] then
-		opt[zone] = {
+	if not opt[consoleCommand] then
+		opt[consoleCommand] = {
 			type = "group",
-			name = zone,
-			desc = string.format(LC["Options for bosses in %s."], zone),
+			name = guiCommand,
+			desc = string.format(LC["Options for bosses in %s."], guiCommand),
 			args = {},
 			disabled = function() return not BigWigs:IsActive() end,
 		}
 	end
-	if not opt[zone].args[LC["Load"]] then
-		opt[zone].args[LC["Load"]] = {
+	if not opt[consoleCommand].args[LC["Load"]] then
+		opt[consoleCommand].args[LC["Load"]] = {
 			type = "execute",
 			name = LC["Load All"],
-			desc = string.format( LC["Load all %s modules."], zone ),
+			desc = string.format( LC["Load all %s modules."], guiCommand ),
 			order = 1,
-			func = function() BigWigsLoD:LoadZone( zone ) end,
+			func = function()
+				BigWigsLoD:LoadZone( guiCommand )
+				opt[consoleCommand].args[LC["Load"]] = nil
+			end,
 		}
 	end
 end
