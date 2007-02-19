@@ -139,7 +139,7 @@ end
 
 function BigWigsRomuloJulianne:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if self.db.profile.heal and msg:find(L["heal_trigger"]) then
-		self:Message(L["heal_message"]:fomart(girl), "Urgent")
+		self:Message(L["heal_message"]:format(girl), "Urgent")
 	end
 end
 
