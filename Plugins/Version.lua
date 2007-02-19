@@ -37,7 +37,7 @@ L:RegisterTranslations("enUS", function() return {
 	["N/A"] = true,
 	["BigWigs"] = true,
 	["Runs a version query on the BigWigs core."] = true,
-	["Nr Replies"] = true,
+	["Replies"] = true,
 	["Ancient"] = true,
 	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = true,
 	["Notify people with older versions that there is a new version available."] = true,
@@ -87,7 +87,7 @@ L:RegisterTranslations("deDE", function() return {
 	["N/A"] = "N/A",
 	["BigWigs"] = "BigWigs",
 	["Runs a version query on the BigWigs core."] = "Versionsabfrage f\195\188r die BigWigs Kernkomponente durchf\195\188hren.",
-	["Nr Replies"] = "Anzahl der Antworten",
+	["Replies"] = "Anzahl der Antworten",
 	["Ancient"] = "Alt",
 	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "Es scheint eine neuere Version von BigWigs bereit zu stehen, bitte upgraden.",
 	["Notify people with older versions that there is a new version available."] = "Personen mit einer \195\164lteren BigWigs Version benachrichtigen, dass eine neue Version bereit steht.",
@@ -116,7 +116,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["N/A"] = "N/A",
 	["BigWigs"] = "BigWigs",
 	["Runs a version query on the BigWigs core."] = "检查BigWigs内核的版本",
-	["Nr Replies"] = "回复的数量",
+	["Replies"] = "回复的数量",
 	["Ancient"] = "旧的",
 } end )
 
@@ -143,7 +143,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["N/A"] = "N/A",
 	["BigWigs"] = "BigWigs",
 	["Runs a version query on the BigWigs core."] = "檢查BigWigs核心的版本",
-	["Nr Replies"] = "回復的數量",
+	["Replies"] = "回復的數量",
 	["Ancient"] = "舊的",
 } end )
 
@@ -169,7 +169,7 @@ L:RegisterTranslations("frFR", function() return {
 	--["N/A"] = true,
 	--["BigWigs"] = true,
 	["Runs a version query on the BigWigs core."] = "Effectue une v\195\169rification des versions du noyau de BigWigs.",
-	["Nr Replies"] = "Nbre de r\195\169ponses",
+	["Replies"] = "Nbre de r\195\169ponses",
 	["Ancient"] = "Ancien",
 	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "Une nouvelle version de Big Wigs est disponible. Mise \195\160 jour conseill\195\169e !",
 	["Notify people with older versions that there is a new version available."] = "Pr\195\169viens les personnes poss\195\169dant des versions anciennes qu'une nouvelle version est disponible.",
@@ -303,7 +303,7 @@ function BigWigsVersionQuery:OnTooltipUpdate()
 		"child_text2B", 1
     )
 	infoCat:AddLine("text", L["Zone"], "text2", self.currentZone)
-	infoCat:AddLine("text", L["Nr Replies"], "text2", self.responses)
+	infoCat:AddLine("text", L["Replies"], "text2", self.responses)
 	local cat = tablet:AddCategory(
 		"columns", 2,
 		"text", L["Player"],
@@ -401,12 +401,14 @@ end
 
 function BigWigsVersionQuery:GetVersion(zone)
 	if not self.zoneRevisions then self:PopulateRevisions() end
+	local rev = -1
 	if self.zoneRevisions[zone] then
-		return self.zoneRevisions[zone] or -1
+		rev = self.zoneRevisions[zone]
 	elseif BigWigs:HasModule(zone) then
-		return BigWigs:GetModule(zone).revision or -1
+		rev = BigWigs:GetModule(zone).revision
 	end
-	return -1
+	if not rev then rev = -1 end
+	return rev
 end
 
 --[[ Parses the new style reply, which is "1111 <nick>" ]]
