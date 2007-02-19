@@ -5,13 +5,13 @@ local warnedThisSession = nil
 
 function SCBeta:OnEnable()
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-	if GetRealZoneText() == BZ["Serpentshrine Cavern"] then
+	if GetRealZoneText() == BZ["Coilfang Reservoir"] then
 		self:ZONE_CHANGED_NEW_AREA()
 	end
 end
 
 function SCBeta:ZONE_CHANGED_NEW_AREA()
-	if GetRealZoneText() ~= BZ["Serpentshrine Cavern"] or warnedThisSession then return end
+	if GetRealZoneText() ~= BZ["Coilfang Reservoir"] or warnedThisSession then return end
 	warnedThisSession = true
 	if not IsAddOnLoaded("Transcriptor") then
 		self:Print("The BigWigs boss modules for Serpentshrine Cavern are not complete yet, by far, and we need your help.")

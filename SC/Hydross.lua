@@ -19,7 +19,7 @@ L:RegisterTranslations("enUS", function() return {
 ----------------------------------
 
 BigWigsHydross = BigWigs:NewModule(boss)
-BigWigsHydross.zonename = AceLibrary("Babble-Zone-2.2")["Serpentshrine Cavern"]
+BigWigsHydross.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
 BigWigsHydross.enabletrigger = boss
 BigWigsHydross.toggleoptions = {"bosskill"}
 BigWigsHydross.revision = tonumber(("$Revision$"):sub(12, -3))
