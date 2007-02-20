@@ -45,6 +45,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Test"] = true,
 	["Close"] = true,
+
+	["reset"] = true,
+	["Reset position"] = true,
+	["Reset the anchor position, moving it to the center of your screen."] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -228,11 +232,31 @@ BigWigsMessages.consoleOptions = {
 	desc = L["Options for message display."],
 	args   = {
 		[L["anchor"]] = {
-			type = "execute",
+			type = "toggle",
 			name = L["Show anchor"],
 			desc = L["Show the message anchor frame."],
-			func = function() BigWigsMessages:BigWigs_ShowAnchors() end,
+			get = function() return anchor:IsShown() end,
+			set = function(v)
+				if v then
+					BigWigsMessages:BigWigs_ShowAnchors()
+				else
+					BigWigsMessages:BigWigs_HideAnchors()
+				end
+			end,
 			disabled = function() return (BigWigsMessages.db.profile.display ~= L["BigWigs frame"]) end,
+			order = 1,
+		},
+		[L["reset"]] = {
+			type = "execute",
+			name = L["Reset position"],
+			desc = L["Reset the anchor position, moving it to the center of your screen."],
+			func = function() BigWigsMessages:ResetAnchor() end,
+			order = 2,
+		},
+		spacer = {
+			type = "header",
+			name = " ",
+			order = 50,
 		},
 		[L["color"]] = {
 			type = "toggle",
@@ -241,6 +265,7 @@ BigWigsMessages.consoleOptions = {
 			get = function() return BigWigsMessages.db.profile.usecolors end,
 			set = function(v) BigWigsMessages.db.profile.usecolors = v end,
 			map = {[true] = L["|cffff0000Co|cffff00fflo|cff00ff00r|r"], [false] = L["White"]},
+			order = 100,
 		},
 		[L["scale"]] = {
 			type = "range",
@@ -255,6 +280,7 @@ BigWigsMessages.consoleOptions = {
 				if messageFrame then messageFrame:SetScale(v) end
 			end,
 			disabled = function() return (BigWigsMessages.db.profile.display ~= L["BigWigs frame"]) end,
+			order = 101,
 		},
 		[L["display"]] = {
 			type = "text",
@@ -265,7 +291,8 @@ BigWigsMessages.consoleOptions = {
 			set = function(v)
 				BigWigsMessages.db.profile.display = v
 			end,
-		}
+			order = 102,
+		},
 	},
 }
 
@@ -330,8 +357,7 @@ function BigWigsMessages:BigWigs_HideAnchors()
 end
 
 function BigWigsMessages:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
-	if not text then return end
-	if broadcastonly then return end
+	if broadcastonly or not text then return end
 
 	local db = self.db.profile
 
@@ -363,7 +389,7 @@ function BigWigsMessages:BigWigs_Message(text, color, noraidsay, sound, broadcas
 end
 
 ------------------------------
---    Create the Anchor     --
+--    Anchor                --
 ------------------------------
 
 function BigWigsMessages:SetupFrames()
@@ -427,6 +453,13 @@ function BigWigsMessages:SetupFrames()
 	self:RestorePosition()
 end
 
+function BigWigsMessages:ResetAnchor()
+	anchor:ClearAllPoints()
+	anchor:SetPoint("CENTER", UIParent, "CENTER")
+	self.db.profile.posx = nil
+	self.db.profile.posy = nil
+end
+
 function BigWigsMessages:SavePosition()
 	local s = anchor:GetEffectiveScale()
 
@@ -438,12 +471,12 @@ function BigWigsMessages:RestorePosition()
 	local x = self.db.profile.posx
 	local y = self.db.profile.posy
 
-	if not x or not y then return end
-
-	local s = anchor:GetEffectiveScale()
-
-	anchor:ClearAllPoints()
-	anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+	if x and y then
+		local s = anchor:GetEffectiveScale()
+		anchor:ClearAllPoints()
+		anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+	else
+		self:ResetAnchor()
+	end
 end
-
 

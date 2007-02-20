@@ -34,6 +34,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Test"] = true,
 	["Close"] = true,
+
+	["reset"] = true,
+	["Reset position"] = true,
+	["Reset the anchor position, moving it to the center of your screen."] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -162,10 +166,30 @@ BigWigsBars.consoleOptions = {
 	desc = L["Options for the timer bars."],
 	args   = {
 		[L["anchor"]] = {
-			type = "execute",
+			type = "toggle",
 			name = L["Show anchor"],
 			desc = L["Show the bar anchor frame."],
-			func = function() BigWigsBars:BigWigs_ShowAnchors() end,
+			get = function() return anchor:IsShown() end,
+			set = function(v)
+				if v then
+					BigWigsBars:BigWigs_ShowAnchors()
+				else
+					BigWigsBars:BigWigs_HideAnchors()
+				end
+			end,
+			order = 1,
+		},
+		[L["reset"]] = {
+			type = "execute",
+			name = L["Reset position"],
+			desc = L["Reset the anchor position, moving it to the center of your screen."],
+			func = function() BigWigsBars:ResetAnchor() end,
+			order = 2,
+		},
+		spacer = {
+			type = "header",
+			name = " ",
+			order = 50,
 		},
 		[L["up"]] = {
 			type = "toggle",
@@ -173,6 +197,7 @@ BigWigsBars.consoleOptions = {
 			desc = L["Toggle bars grow upwards/downwards from anchor."],
 			get = function() return BigWigsBars.db.profile.growup end,
 			set = function(v) BigWigsBars.db.profile.growup = v end,
+			order = 100,
 		},
 		[L["scale"]] = {
 			type = "range",
@@ -183,6 +208,7 @@ BigWigsBars.consoleOptions = {
 			step = 0.1,
 			get = function() return BigWigsBars.db.profile.scale end,
 			set = function(v) BigWigsBars.db.profile.scale = v end,
+			order = 101,
 		},
 		[L["Texture"]] = {
 			type = "text",
@@ -191,6 +217,7 @@ BigWigsBars.consoleOptions = {
 			get = function() return BigWigsBars.db.profile.texture end,
 			set = function(v) BigWigsBars.db.profile.texture = v end,
 			validate = surface:List(),
+			order = 102,
 		},
 	},
 }
@@ -330,6 +357,13 @@ function BigWigsBars:SetupFrames()
 	self:RestorePosition()
 end
 
+function BigWigsBars:ResetAnchor()
+	anchor:ClearAllPoints()
+	anchor:SetPoint("CENTER", UIParent, "CENTER")
+	self.db.profile.posx = nil
+	self.db.profile.posy = nil
+end
+
 function BigWigsBars:SavePosition()
 	local s = anchor:GetEffectiveScale()
 
@@ -341,12 +375,12 @@ function BigWigsBars:RestorePosition()
 	local x = self.db.profile.posx
 	local y = self.db.profile.posy
 
-	if not x or not y then return end
-
-	local s = anchor:GetEffectiveScale()
-
-	anchor:ClearAllPoints()
-	anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+	if x and y then
+		local s = anchor:GetEffectiveScale()
+		anchor:ClearAllPoints()
+		anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+	else
+		self:ResetAnchor()
+	end
 end
-
 
