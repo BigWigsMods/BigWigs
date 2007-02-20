@@ -145,7 +145,7 @@ function BigWigsLoD:InitializeLoD()
 						-- consoleZone is basically the zonename we want to show
 						-- in the console command options, like "MC" for Molten
 						-- Core, for example.
-						local consoleZone = LC:HasTranslation(zone) and LC[zone] or nil
+						local consoleZone = LC:HasTranslation(v) and LC[v] or nil
 						assert(consoleZone, string.format("%s's zone, %s, has no translation appropriate for console usage.", name, zone))
 						self:AddCoreMenu(consoleZone, zone)
 					end
