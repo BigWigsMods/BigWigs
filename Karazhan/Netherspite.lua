@@ -46,6 +46,31 @@ L:RegisterTranslations("enUS", function() return {
 	netherbreath_warn = "Incoming Netherbreath!",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	phase_name = "Phase",
+	phase_desc = ("Warnt wenn %s von einer Phase zur anderen wechselt"):format(boss),
+
+	voidzone_name = "Zone der Leere",
+	voidzone_desc = "Warnt vor Zone der Leere",
+
+	netherbreath_name = "Netheratem",
+	netherbreath_desc = "Warnt vor Netheratem",
+
+	phase1_message = "Withdrawal - Netheratem vorbei",
+	phase1_warning = "Nethergroll Engaged - Rage in 60 Sek!",
+	phase1_bar = "Next Withdrawal",
+	phase1_trigger = "%s schreit auf und \195\182ffnet Tore zum Nether.",
+	phase2_message = "Rage - Incoming Netheratem!",
+	phase2_bar = "N\195\164chste Rage",
+	phase2_trigger = "Netherenergien versetzen %s in rasende Wut",
+
+	voidzone_trigger = "wirkt Zone der Leere.",
+	voidzone_warn = "Zone der Leere (%d)!",
+
+	netherbreath_trigger = "casts Face Random Target.",
+	netherbreath_warn = "Incoming Netheratem!",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------

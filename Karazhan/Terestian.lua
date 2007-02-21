@@ -32,6 +32,25 @@ L:RegisterTranslations("enUS", function() return {
 	weak_bar = "Weakened",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	sacrifice_name = "Opferung",
+	sacrifice_desc = "Warnt welcher Spieler geopfert wird",
+
+	weak_name = "Geschw\195\164cht",
+	weak_desc = "Warnt wenn Terestian geschw\195\164cht ist",
+
+	sacrifice_you = "Ihr",
+	sacrifice_trigger = "^([^%s]+) ([^%s]+) von Opferung betroffen",
+	sacrifice_message = "%s wird geopfert!",
+	sacrifice_bar = "Opferung: %s",
+
+	weak_trigger = "von Mal der Flamme betroffen",
+	weak_message = "Geschw\195\164cht f\195\188r 30 Sek!",
+	weak_warning1 = "Geschw\195\164cht vorbei in 5 Sek!",
+	weak_warning2 = "Geschw\195\164cht vorbei!",
+	weak_bar = "Geschw\195\164cht",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------

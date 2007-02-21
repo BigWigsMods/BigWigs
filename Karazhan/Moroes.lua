@@ -85,8 +85,8 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	vanish_name = "Vanish",
-	vanish_desc = "Ungef\195\164re Zeitangabe von Vanish",
+	vanish_name = "Verschwinden",
+	vanish_desc = "Ungef\195\164re Zeitangabe f\195\188r Verschwinden",
 
 	garrote_name = "Erdrosseln",
 	garrote_desc = "Warnt welche Spieler von Erdrosseln betroffen sind",
@@ -95,19 +95,19 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_desc = ("Warnt wenn %s w\195\188tend wird"):format(boss),
 
 	icon_name = "Icon",
-	icon_desc = "Place a Raid Icon on the player afflicted by Garrote(requires promoted or higher)",
+	icon_desc = "Platziert ein Schlachtzugssymbol bei dem Spieler, welcher von Erdrosseln betroffen ist (ben\195\182tigt 'bef\195\182rdert' oder h\195\182her)",
 
 	vanish_trigger1 = "Ihr habt gel\195\164utet?",
 	vanish_trigger2 = "Nun, wo war ich? Ah, ja...",
-	vanish_message = "Vanished! N\195\164chste in ~35 Sek!",
-	vanish_warning = "Vanish bald!",
-	vanish_bar = "N\195\164chste Vanish",
+	vanish_message = "Verschwunden! N\195\164chste in ~35 Sek!",
+	vanish_warning = "Verschwinden bald!",
+	vanish_bar = "N\195\164chste Verschwinden",
 
 	garrote_trigger = "^([^%s]+) ([^%s]+) von Erdrosseln betroffen",
 	garrote_message = "Erdrosseln: %s",
 
-	engage_trigger = "Hm, unangek\195\188ndigte Besucher.*",
-	engage_message = "%s Engaged - Vanish in ~35 Sek!",
+	engage_trigger = "Hm, unangek\195\188ndigte Besucher. Es m\195\188ssen Vorbereitungen getroffen werden...",
+	engage_message = "%s Engaged - Verschwinden in ~35 Sek!",
 
 	enrage_trigger = "%s wird w\195\188tend!",
 	enrage_message = "Enrage!",

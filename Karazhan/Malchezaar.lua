@@ -53,6 +53,43 @@ L:RegisterTranslations("enUS", function() return {
 	nova_bar = "~Incoming Nova",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	phase_name = "Engage",
+	phase_desc = "Warnt wenn eine neue Phase beginnt",
+
+	enfeeble_name = "Entkr\195\164ften",
+	enfeeble_desc = "Zeige Timerbalken f\195\188r Entkr\195\164ften",
+
+	infernals_name = "Infernos",
+	infernals_desc = "Zeige Timerbalken f\195\188r Infernos",
+
+	nova_name = "Schattennova",
+	nova_desc = "Ungef\195\164re Zeitangabe f\195\188r Schattennova",
+
+	phase1_trigger = "Der Wahnsinn f\195\188hrte Euch zu mir. Ich werde Euch das Genick brechen!",
+	phase2_trigger = "Dummk\195\182pfe! Zeit ist das Feuer, in dem Ihr brennen werdet!",
+	phase3_trigger = "Wie k\195\182nnt Ihr hoffen, einer so \195\188berw\195\164ltigenden Macht gewachsen zu sein?",
+	phase1_message = "Phase 1 - Infernos in ~40 Sek!",
+	phase2_message = "60% - Phase 2",
+	phase3_message = "30% - Phase 3 ",
+
+	enfeeble_trigger = "von Entkr\195\164ften betroffen",
+	enfeeble_message = "Entkr\195\164ften! N\195\164chste in ~30 Sek",
+	enfeeble_warning = "Entkr\195\164ften in ~5 Sek!",
+	enfeeble_bar = "Entkr\195\164ften",
+	enfeeble_nextbar = "N\195\164chste Entkr\195\164ften",
+
+	infernal_trigger1 = "Ihr steht nicht nur vor Malchezzar allein, sondern vor den Legionen, die ich befehlige!",
+	infernal_trigger2 = "Alle Realit\195\164ten, alle Dimensionen stehen mir offen!",
+	infernal_bar = "Infernos",
+	infernal_warning = "Infernos in ~20 Sek!",
+	infernal_message = "Infernos in ~5 Sek!",
+
+	nova_trigger = "Prinz Malchezaar beginnt Schattennova zu wirken",
+	nova_message = "Schattennova!",
+	nova_bar = "~Schattennova",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------
