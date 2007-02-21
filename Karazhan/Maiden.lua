@@ -45,23 +45,29 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	engage_desc = ("Alarm wenn %s angegriffen wird."):format(boss),
+	engage_name = "Engage",
+	engage_desc = ("Warnt wenn %s w\195\188tend ist"):format(boss),
 
-	repentance_name = "Alarm f\195\188r Bu\195\159e",
+	repentance_name = "Bu\195\159e",
 	repentance_desc = "Ungef\195\164re Zeitangabe von Bu\195\159e",
 
+	holyfire_name = "Heiliges Feuer",
+	holyfire_desc = "Warnt wenn Personen von Heiliges Feuer betroffen sind",
+
+	icon_name = "Icon",
+	icon_desc = "Place a Raid Icon on the player afflicted by Holy Fire(requires promoted or higher)",
+
 	engage_trigger = "Euer Verhalten wird nicht toleriert.",
-	engage_message = "Maid angegriffen! Bu\195\159e in ~33sek.",
+	engage_message = "Maid Engaged! Bu\195\159e in ~33 Sek!",
 
 	repentance_trigger1 = "L\195\182st Euch von Euren verdorbenen Gedanken!",
 	repentance_trigger2 = "Eure Unreinheit muss gel\195\164utert werden.",
-	repentance_message = "Bu\195\159e! N\195\164chster in ~33sek",
-	repentance_warning = "Bu\195\159e kommt.",
+	repentance_message = "Bu\195\159e! N\195\164chste in ~33 Sek!",
+	repentance_warning = "Bu\195\159e bald!",
+	repentance_bar = "Bu\195\159e",
+	repentance_nextbar = "N\195\164chste Bu\195\159e",
 
-	holyfire_name = "Alarm f\195\188r Heiliges Feuer",
-	holyfire_desc = "Warnt wenn Personen von Heiliges Feuer betroffen sind",
-
-	holyfire_trigger = "^([^%s]+) ([^%s]+) von Heiliges Feuer betroffen.",
+	holyfire_trigger = "^([^%s]+) ([^%s]+) von Heiliges Feuer betroffen",
 	holyfire_message = "Heiliges Feuer: %s",
 
 	you = "Ihr",

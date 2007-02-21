@@ -85,17 +85,37 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
+	vanish_name = "Vanish",
+	vanish_desc = "Ungef\195\164re Zeitangabe von Vanish",
+
+	garrote_name = "Erdrosseln",
+	garrote_desc = "Warnt welche Spieler von Erdrosseln betroffen sind",
+
+	enrage_name = "Enrage",
+	enrage_desc = ("Warnt wenn %s w\195\188tend wird"):format(boss),
+
+	icon_name = "Icon",
+	icon_desc = "Place a Raid Icon on the player afflicted by Garrote(requires promoted or higher)",
+
 	vanish_trigger1 = "Ihr habt gel\195\164utet?",
 	vanish_trigger2 = "Nun, wo war ich? Ah, ja...",
+	vanish_message = "Vanished! N\195\164chste in ~35 Sek!",
+	vanish_warning = "Vanish bald!",
+	vanish_bar = "N\195\164chste Vanish",
 
-	--garrote_trigger = "^([^%s]+) ([^%s]+) afflicted by Garrote", --change for garrote
+	garrote_trigger = "^([^%s]+) ([^%s]+) von Erdrosseln betroffen",
+	garrote_message = "Erdrosseln: %s",
 
 	engage_trigger = "Hm, unangek\195\188ndigte Besucher.*",
+	engage_message = "%s Engaged - Vanish in ~35 Sek!",
 
 	enrage_trigger = "%s wird w\195\188tend!",
+	enrage_message = "Enrage!",
+	enrage_warning = "Enrage bald!",
 
 	you = "Ihr",
 } end )
+
 
 ----------------------------------
 --   Module Declaration    --
