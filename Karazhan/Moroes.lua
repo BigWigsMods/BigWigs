@@ -52,6 +52,38 @@ L:RegisterTranslations("enUS", function() return {
 	you = "You",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	engage_name = "Alerte Engagement",
+	engage_desc = "Pr\195\169viens du d\195\169but du combat.",
+
+	vanish_name = "Alerte Disparition",
+	vanish_desc = "Pr\195\169viens quand Moroes disparait.",
+
+	garrote_name = "Alerte Garrot",
+	garrote_desc = "Pr\195\169viens des joueurs qui subissent le Garrot.",
+
+	enrage_name = "Alerte Enrager",
+	enrage_desc = "Pr\195\169viens quand Moroes devient enrag\195\169.",
+
+	vanish_trigger1 = "Vous avez sonn\195\169\194\160?",
+	vanish_trigger2 = "Bon, o\195\185 en \195\169tais-je\194\160? Ah, oui\226\128\166",
+	vanish_message = "Disparu ! Prochain dans ~35 secondes !",
+	vanish_warning = "Disparition imminente !",
+	vanish_bar = "Prochaine Disparition",
+
+	garrote_trigger = "^([^%s]+) ([^%s]+) les effets de Garrot",
+	garrote_message = "Garrot: %s",
+
+	engage_trigger = "Hum. Des visiteurs impr\195\169vus. Il va falloir se pr\195\169parer.",
+	engage_message = "Moroes Engag\195\169 - Disparition dans ~35 secondes !",
+
+	enrage_trigger = "%s devient fou furieux\194\160!",
+	enrage_message = "Enrag\195\169 !",
+	enrage_warning = "Enrag\195\169 Imminent !",
+
+	you = "Vous",
+} end)
+
 L:RegisterTranslations("deDE", function() return {
 	vanish_trigger1 = "Ihr habt gel\195\164utet?",
 	vanish_trigger2 = "Nun, wo war ich? Ah, ja...",

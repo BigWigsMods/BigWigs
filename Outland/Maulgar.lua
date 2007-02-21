@@ -56,6 +56,44 @@ L:RegisterTranslations("enUS", function() return {
 	whirlwind_warning2 = "Whirlwind Soon!",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	heal_name = "Alerte soin",
+	heal_desc = "Pr\195\169viens quand \197\146illaveugle le Voyant commence \195\160 lancer un soin.",
+
+	shield_name = "Alerte Bouclier",
+	shield_desc = "Pr\195\169viens quand \197\146illaveugle le Voyant se pose un bouclier.",
+
+	spellshield_name = "Alerte Bouclier anti-sort",
+	spellshield_desc = "Pr\195\169viens quand Krosh Brasemain se pose le bouclier anti-sort.",
+
+	whirlwind_name = "Alerte Tourbillon",
+	whirlwind_desc = "Pr\195\169viens quand Maulgar commence un Tourbillon.",
+
+	flurry_name = "Alerte Rafale",
+	flurry_desc = "Pr\195\169viens quand Maulgar est proche de Rafale et quand il gagne Rafale.",
+
+	heal_trigger = "\197\146illaveugle le Voyant commence \195\160 lancer Pri\195\168re de soins%.",
+	heal_message = "\197\146illaveugle lance une Pri\195\168re de soins !",
+	heal_bar = "Soin",
+
+	shield_trigger = "gagne Mot de pouvoir sup\195\169rieur\194\160: Bouclier",
+	shield_message = "Bouclier sur \197\146illaveugle !",
+
+	spellshield_trigger = "gagne Bouclier anti-sort%.",
+	spellshield_message = "Bouclier anti-sort sur Krosh !",
+
+	flurry_trigger = "Vous ne terrasserez pas la main de Gruul\194\160!",
+	flurry_message = "50% - Rafale !",
+	flurry_warning = "Rafale bient\195\180t !",
+
+	whirlwind_trigger = "gagne Tourbillon%.",
+	whirlwind_message = "Maulgar - Toubillon pour 15 secondes !",
+	whirlwind_bar = "Tourbillon",
+	whirlwind_nextbar = "Prochain Tourbillon",
+	whirlwind_warning1 = "Maulgar Engag\195\169 - Tourbillon dans ~50 secondes !",
+	whirlwind_warning2 = "Tourbillon bient\195\180t !",
+} end)
+
 L:RegisterTranslations("deDE", function() return {
 	heal_name = "Heal",
 	heal_desc = "Warn when Blindeye the Seer begins to cast a Heal",

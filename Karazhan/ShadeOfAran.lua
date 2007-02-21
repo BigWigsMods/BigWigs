@@ -122,6 +122,58 @@ L:RegisterTranslations("deDE", function() return {
 	flame_trigger = "wirkt Flammenkranz",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	adds_name = "Alerte El\195\169mentaires",
+	adds_desc = "Pr\195\169viens de l'apparition des \195\169l\195\169mentaires d'eau.",
+
+	drink_name = "Alerte Boisson",
+	drink_desc = ("Pr\195\169viens quand %s commence \195\160 boire."):format(boss),
+
+	engage_name = "Alerte Engagement",
+	engage_desc = "Pr\195\169viens du d\195\169but du combat.",
+
+	blizzard_name = "Alerte Blizzard",
+	blizzard_desc = "Pr\195\169viens de l'incantation du Blizzard.",
+
+	pull_name = "Alerte Attraction / Sort de zone",
+	pull_desc = "Pr\195\169viens de l'attraction magn\195\169tique et de l'explosion des arcanes.",
+
+	flame_name = "Alerte Couronne de flammes",
+	flame_desc = "Pr\195\169viens de l'incantation de Couronne de flammes.",
+
+	adds_message = "El\195\169mentaires Imminent !",
+	adds_warning = "El\195\169mentaires bient\195\180t",
+	-- adds_trigger = "I'm not finished yet! No, I have a few more tricks up my sleeve...",
+	adds_bar = "El\195\169mentaires",
+
+	drink_trigger = "Vous ne refuseriez pas \195\160 un vieil homme une boisson revigorante\194\160? Non, c\226\128\153est bien ce que je pensais.",
+	drink_warning = "Mana Faible - Boisson imminente !",
+	drink_message = "Boisson - Polymorphisme de zone !",
+	drink_bar = "Boisson",
+
+	engage_trigger1 = " Je refuse d'\195\170tre \195\160 nouveau tortur\195\169\194\160!",
+	engage_trigger2 = "Qui \195\170tes-vous\194\160? Qu\226\128\153est-ce que vous voulez\194\160? Ne m\226\128\153approchez pas\194\160!",
+	engage_trigger3 = "Je vous en supplie, arr\195\170tez\194\160! Mon fils\226\128\166 est devenu fou\194\160!",
+	engage_message = "%s Engag\195\169",
+
+	blizzard_trigger1 = "Retournez dans les t\195\169n\195\168bres glaciales\194\160!",
+	blizzard_trigger2 = "Je vais tous vous congeler\194\160!",
+	blizzard_message = "Blizzard !",
+
+	pull_message = "Explosion des Arcanes !",
+	pull_trigger1 = "Oui, oui, mon fils est assez puissant\226\128\166 mais moi aussi je poss\195\168de quelques pouvoirs\194\160!",
+	pull_trigger2 = "Je ne suis pas un simple bouffon\194\160! Je suis Niels Aran\194\160!",
+	pull_bar = "Explosion des Arcanes",
+
+	flame_warning = "Casting: Flame Wreath!",
+	flame_trigger1 = "Je vais vous montrer que ce chien battu a encore de bons crocs\194\160!",
+	flame_trigger2 = "Br\195\187lez, d\195\169mons de l\226\128\153enfer\194\160!",
+
+	flame_message = "Couronne de flammes !",
+	flame_bar = "Couronne de flammes",
+	flame_trigger = "commence \195\160 lancer Couronne de flammes",
+} end )
+
 ----------------------------------
 --   Module Declaration    --
 ----------------------------------
