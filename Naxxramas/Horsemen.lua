@@ -278,17 +278,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsHorsemen = BigWigs:NewModule(boss)
-BigWigsHorsemen.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
-BigWigsHorsemen.enabletrigger = { thane, mograine, zeliek, blaumeux }
-BigWigsHorsemen.toggleoptions = {"mark", "shieldwall", -1, "meteor", "void", "wrath", "bosskill"}
-BigWigsHorsemen.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
+mod.enabletrigger = { thane, mograine, zeliek, blaumeux }
+mod.toggleoptions = {"mark", "shieldwall", -1, "meteor", "void", "wrath", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsHorsemen:OnEnable()
+function mod:OnEnable()
 	self.marks = 1
 	self.deaths = 0
 	self.marked = nil
@@ -319,13 +319,13 @@ function BigWigsHorsemen:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "HorsemenMeteor", 5)
 end
 
-function BigWigsHorsemen:MarkEvent( msg )
+function mod:MarkEvent( msg )
 	if msg:find(L["marktrigger"]) and not self.marked then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenMark3")
 	end
 end
 
-function BigWigsHorsemen:SkillEvent( msg )
+function mod:SkillEvent( msg )
 	local t = GetTime()
 	if msg:find(L["meteortrigger"]) then
 		if not times["meteor"] or (times["meteor"] and (times["meteor"] + 8) < t) then
@@ -345,7 +345,7 @@ function BigWigsHorsemen:SkillEvent( msg )
 	end
 end
 
-function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
+function mod:BigWigs_RecvSync(sync, rest)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
@@ -368,7 +368,7 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 7, string.format( L["markwarn2"], self.marks ), "Urgent")
 		end
 		-- reset marked in 8 seconds
-		self:ScheduleEvent(function() BigWigsHorsemen.marked = nil end, 8)
+		self:ScheduleEvent(function() mod.marked = nil end, 8)
 	elseif sync == "HorsemenMeteor" then
 		if self.db.profile.meteor then
 			self:TriggerEvent("BigWigs_Message", L["meteorwarn"], "Important")
@@ -391,18 +391,18 @@ function BigWigsHorsemen:BigWigs_RecvSync(sync, rest)
 	end
 end
 
-function BigWigsHorsemen:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	local mob = select(3, msg:find(L["shieldwalltrigger"]))
 	if mob then self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..mob) end
 end
 
-function BigWigsHorsemen:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg == L["voidtrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "HorsemenVoid" )
 	end	
 end
 
-function BigWigsHorsemen:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
+function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 	if msg == string.format(UNITDIESOTHER, thane ) or
 		msg == string.format(UNITDIESOTHER, zeliek) or 
 		msg == string.format(UNITDIESOTHER, mograine) or

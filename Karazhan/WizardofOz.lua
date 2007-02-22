@@ -59,17 +59,17 @@ L:RegisterTranslations("deDE", function() return {
 --    Module Declaration   --
 ----------------------------------
 
-BigWigsWizardofOz = BigWigs:NewModule(boss)
-BigWigsWizardofOz.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-BigWigsWizardofOz.enabletrigger = {roar, tinhead, strawman, dorothee}
-BigWigsWizardofOz.toggleoptions = {"summon", "spawns", "bosskill"}
-BigWigsWizardofOz.revision = tonumber(("$Revision$"):sub(12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.enabletrigger = {roar, tinhead, strawman, dorothee}
+mod.toggleoptions = {"summon", "spawns", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsWizardofOz:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -79,7 +79,7 @@ end
 --    Event Handlers     --
 ------------------------------
 
-function BigWigsWizardofOz:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["summon_trigger"]) and self.db.profile.summon then
 		self:Message(L["summon_message"]:format(tito), "Attention")
 	elseif msg:find(L["engage_trigger"]) and self.db.profile.spawns then

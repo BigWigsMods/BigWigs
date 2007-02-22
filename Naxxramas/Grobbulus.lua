@@ -234,17 +234,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsGrobbulus = BigWigs:NewModule(boss)
-BigWigsGrobbulus.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
-BigWigsGrobbulus.enabletrigger = boss
-BigWigsGrobbulus.toggleoptions = { "youinjected", "otherinjected", "icon", "cloud", -1, "enrage", "bosskill" }
-BigWigsGrobbulus.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
+mod.enabletrigger = boss
+mod.toggleoptions = { "youinjected", "otherinjected", "icon", "cloud", -1, "enrage", "bosskill" }
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsGrobbulus:OnEnable()
+function mod:OnEnable()
 	started = nil
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -266,7 +266,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsGrobbulus:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync( sync, rest, nick )
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
@@ -301,13 +301,13 @@ function BigWigsGrobbulus:BigWigs_RecvSync( sync, rest, nick )
 	end
 end
 
-function BigWigsGrobbulus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	if  msg:find(L["cloud_trigger"] ) then
 		self:TriggerEvent("BigWigs_SendSync", "GrobbulusCloud")
 	end
 end
 
-function BigWigsGrobbulus:InjectEvent( msg )
+function mod:InjectEvent( msg )
 	local eplayer, etype = select(3, msg:find(L["inject_trigger"]))
 	if eplayer and etype then
 		if eplayer == L["you"] and etype == L["are"] then

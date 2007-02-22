@@ -18,17 +18,17 @@ L:RegisterTranslations("enUS", function() return {
 --    Module Declaration   --
 ----------------------------------
 
-BigWigsShadikith = BigWigs:NewModule(boss)
-BigWigsShadikith.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-BigWigsShadikith.enabletrigger = boss
-BigWigsShadikith.toggleoptions = {"bosskill"}
-BigWigsShadikith.revision = tonumber(("$Revision$"):sub(12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsShadikith:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -40,7 +40,7 @@ end
 --    Event Handlers     --
 ------------------------------
 
-function BigWigsShadikith:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync( sync, rest, nick )
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then

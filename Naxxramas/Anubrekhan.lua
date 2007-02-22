@@ -136,17 +136,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsAnubrekhan = BigWigs:NewModule(boss)
-BigWigsAnubrekhan.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
-BigWigsAnubrekhan.enabletrigger = boss
-BigWigsAnubrekhan.toggleoptions = {"locust", "bosskill"}
-BigWigsAnubrekhan.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"locust", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsAnubrekhan:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF", "LocustCast")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "LocustCast")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -158,7 +158,7 @@ function BigWigsAnubrekhan:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "AnubLocustSwarm", 10)
 end
 
-function BigWigsAnubrekhan:CHAT_MSG_MONSTER_YELL( msg )
+function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.locust and msg:find(L["starttrigger1"]) or msg == L["starttrigger2"] or msg == L["starttrigger3"] then
 		self:TriggerEvent("BigWigs_Message", L["engagewarn"], "Urgent")
 		self:ScheduleEvent("BigWigs_Message", 80, L["gainwarn10sec"], "Important")
@@ -166,19 +166,19 @@ function BigWigsAnubrekhan:CHAT_MSG_MONSTER_YELL( msg )
 	end
 end
 
-function BigWigsAnubrekhan:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if msg == L["gaintrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "AnubLocustSwarm")
 	end
 end
 
-function BigWigsAnubrekhan:LocustCast( msg )
+function mod:LocustCast( msg )
 	if msg == L["casttrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "AnubLocustInc")
 	end
 end
 
-function BigWigsAnubrekhan:BigWigs_RecvSync( sync )
+function mod:BigWigs_RecvSync( sync )
 	if sync == "AnubLocustInc" then
 		self:ScheduleEvent("bwanublocustinc", self.TriggerEvent, 3.25, self, "BigWigs_SendSync", "AnubLocustSwarm")
 		if self.db.profile.locust then

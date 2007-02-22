@@ -116,17 +116,17 @@ L:RegisterTranslations("zhTW", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsArlokk = BigWigs:NewModule(boss)
-BigWigsArlokk.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
-BigWigsArlokk.enabletrigger = boss
-BigWigsArlokk.toggleoptions = {"youmark", "othermark", "icon", "bosskill"}
-BigWigsArlokk.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"youmark", "othermark", "icon", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsArlokk:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
@@ -135,7 +135,7 @@ end
 --      Events              --
 ------------------------------
 
-function BigWigsArlokk:CHAT_MSG_MONSTER_YELL( msg )
+function mod:CHAT_MSG_MONSTER_YELL( msg )
 	local n = select(3, msg:find(L["mark_trigger"]))
 	if n then
 		if n == playerName and self.db.profile.youmark then

@@ -103,17 +103,17 @@ L:RegisterTranslations("koKR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsMarli = BigWigs:NewModule(boss)
-BigWigsMarli.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
-BigWigsMarli.enabletrigger = boss
-BigWigsMarli.toggleoptions = {"spider", "drain", "bosskill"}
-BigWigsMarli.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"spider", "drain", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsMarli:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
@@ -123,13 +123,13 @@ end
 --      Events              --
 ------------------------------
 
-function BigWigsMarli:CHAT_MSG_MONSTER_YELL( msg )
+function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.spider and msg:find(L["spiders_trigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["spiders_message"], "Attention")
 	end
 end
 
-function BigWigsMarli:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	if self.db.profile.drain and msg:find(L["drainlife_trigger"]) and lastdrain < (GetTime()-3) then
 		lastdrain = GetTime()
 		self:TriggerEvent("BigWigs_Message", L["drainlife_message"], "Urgent")

@@ -174,17 +174,17 @@ L:RegisterTranslations("koKR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsSartura = BigWigs:NewModule(boss)
-BigWigsSartura.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
-BigWigsSartura.enabletrigger = boss
-BigWigsSartura.toggleoptions = {"enrage", "whirlwind", "bosskill"}
-BigWigsSartura.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"enrage", "whirlwind", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsSartura:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
@@ -197,7 +197,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsSartura:BigWigs_RecvSync(sync)
+function mod:BigWigs_RecvSync(sync)
 	if sync == "SarturaWhirlwind" and self.db.profile.whirlwind then
 		self:TriggerEvent("BigWigs_Message", L["whirlwindonwarn"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 15, L["whirlwindoffwarn"], "Attention")
@@ -205,13 +205,13 @@ function BigWigsSartura:BigWigs_RecvSync(sync)
 	end
 end
 
-function BigWigsSartura:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if msg == L["whirlwindon"] then
 		self:TriggerEvent("BigWigs_SendSync", "SarturaWhirlwind")
 	end
 end
 
-function BigWigsSartura:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.enrage and msg:find(L["starttrigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["startwarn"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
@@ -225,7 +225,7 @@ function BigWigsSartura:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function BigWigsSartura:CHAT_MSG_MONSTER_EMOTE(msg)
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if self.db.profile.enrage and msg:find(L["enragetrigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Attention")
 	end

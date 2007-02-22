@@ -75,24 +75,24 @@ L:RegisterTranslations("koKR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsAyamiss = BigWigs:NewModule(boss)
-BigWigsAyamiss.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
-BigWigsAyamiss.enabletrigger = boss
-BigWigsAyamiss.toggleoptions = {"sacrifice", "bosskill"}
-BigWigsAyamiss.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"sacrifice", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsAyamiss:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath" )
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "CheckSacrifice")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "CheckSacrifice")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CheckSacrifice")
 end
 
-function BigWigsAyamiss:CheckSacrifice( msg )
+function mod:CheckSacrifice( msg )
 	local player, type = select(3, msg:find(L["sacrificetrigger"]))
 	if player and type then
 		if player == L["you"] and type == L["are"] then

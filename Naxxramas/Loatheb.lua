@@ -196,17 +196,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsLoatheb = BigWigs:NewModule(boss)
-BigWigsLoatheb.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
-BigWigsLoatheb.enabletrigger = boss
-BigWigsLoatheb.toggleoptions = {"doom", "spore", "curse", "bosskill"}
-BigWigsLoatheb.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"doom", "spore", "curse", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsLoatheb:OnEnable()
+function mod:OnEnable()
 	self.doomTime = 30
 	self.sporeCount = 1
 	self.doomCount = 1
@@ -233,7 +233,7 @@ function BigWigsLoatheb:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "LoathebRemoveCurse", 10)
 end
 
-function BigWigsLoatheb:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
@@ -247,7 +247,7 @@ function BigWigsLoatheb:BigWigs_RecvSync(sync, rest, nick)
 			self:ScheduleEvent("bwloathebtimerreduce4", "BigWigs_Message", 295, string.format(L["doomtimerwarn"], 5), "Important")
 			self:ScheduleEvent("bwloathebtimerreduce5", "BigWigs_Message", 300, L["doomtimerwarnnow"], "Important")
 
-			self:ScheduleEvent("bwloathebdoomtimerreduce", function () BigWigsLoatheb.doomTime = 15 end, 300)
+			self:ScheduleEvent("bwloathebdoomtimerreduce", function () mod.doomTime = 15 end, 300)
 
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Red")
 			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["doombar"], self.doomCount), 120, "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
@@ -288,13 +288,13 @@ function BigWigsLoatheb:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function BigWigsLoatheb:Event( msg )
+function mod:Event( msg )
 	if msg:find(L["doomtrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "LoathebDoom2 "..tostring(self.doomCount + 1))
 	end
 end
 
-function BigWigsLoatheb:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	if msg == L["sporespawntrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "LoathebSporeSpawn2 "..tostring(self.sporeCount + 1))
 	elseif msg == L["removecursetrigger"] then

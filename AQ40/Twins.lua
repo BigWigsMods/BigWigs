@@ -242,17 +242,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsTwins = BigWigs:NewModule(boss)
-BigWigsTwins.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
-BigWigsTwins.enabletrigger = {veklor, veknilash}
-BigWigsTwins.toggleoptions = {"bug", "teleport", "enrage", "heal", "bosskill"}
-BigWigsTwins.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
+mod.enabletrigger = {veklor, veknilash}
+mod.toggleoptions = {"bug", "teleport", "enrage", "heal", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsTwins:OnEnable()
+function mod:OnEnable()
 	started = nil
 	cachedUnitId = nil
 
@@ -272,14 +272,14 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsTwins:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if msg == string.format(UNITDIESOTHER, veklor) or msg == string.format(UNITDIESOTHER, veknilash) then
 		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s have been defeated"], boss), "Bosskill", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 	end
 end
 
-function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
@@ -316,13 +316,13 @@ function BigWigsTwins:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function BigWigsTwins:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["porttrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "TwinsTeleport")
 	end
 end
 
-function BigWigsTwins:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if msg:find(L["explodebugtrigger"]) and self.db.profile.bug then
 		self:TriggerEvent("BigWigs_Message", L["explodebugwarn"], "Personal", true)
 	elseif msg:find(L["porttrigger"]) then
@@ -330,15 +330,15 @@ function BigWigsTwins:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	end
 end
 
-function BigWigsTwins:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if not self.prior and (msg:find(L["healtrigger1"]) or msg:find(L["healtrigger2"])) and self.db.profile.heal then
 		self:TriggerEvent("BigWigs_Message", L["healwarn"], "Important")
 		self.prior = true
-		self:ScheduleEvent(function() BigWigsTwins.prior = nil end, 10)
+		self:ScheduleEvent(function() mod.prior = nil end, 10)
 	end
 end
 
-function BigWigsTwins:CHAT_MSG_MONSTER_EMOTE(msg)
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if (msg:find(L["enragetrigger"]) and self.db.profile.enrage) then
 		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
 	end
@@ -349,7 +349,7 @@ end
 -- (Because Blizz Fucked Up) --
 -------------------------------
 
-function BigWigsTwins:StartTargetScanner()
+function mod:StartTargetScanner()
 	if self:IsEventScheduled("bwtwinscanner") or not started then return end
 	self:CancelScheduledEvent("bwtwinscannercooldown")
 	self:ScheduleRepeatingEvent("bwtwinscanner", self.RepeatedScanner, 0.5, self)
@@ -361,7 +361,7 @@ local function validateTarget(unitId)
 		UnitAffectingCombat(unitId) and CheckInteractDistance(unitId, 4)
 end
 
-function BigWigsTwins:RepeatedScanner()
+function mod:RepeatedScanner()
 	if not UnitAffectingCombat("player") then
 		self:CancelScheduledEvent("bwtwinscanner")
 		self:CancelScheduledEvent("bwtwinscannercooldown")

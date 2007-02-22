@@ -142,23 +142,23 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsPatchwerk = BigWigs:NewModule(boss)
-BigWigsPatchwerk.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
-BigWigsPatchwerk.enabletrigger = boss
-BigWigsPatchwerk.toggleoptions = {"enrage", "bosskill"}
-BigWigsPatchwerk.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"enrage", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsPatchwerk:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
-function BigWigsPatchwerk:CHAT_MSG_MONSTER_YELL( msg )
+function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.enrage and ( msg == L["starttrigger1"] or msg == L["starttrigger2"] ) then
 		self:TriggerEvent("BigWigs_Message", L["startwarn"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["enragebartext"], 420, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
@@ -171,7 +171,7 @@ function BigWigsPatchwerk:CHAT_MSG_MONSTER_YELL( msg )
 	end
 end
 
-function BigWigsPatchwerk:CHAT_MSG_MONSTER_EMOTE( msg )
+function mod:CHAT_MSG_MONSTER_EMOTE( msg )
 	if msg == L["enragetrigger"] then
 		if self.db.profile.enrage then
 			self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")

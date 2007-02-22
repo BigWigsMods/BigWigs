@@ -28,17 +28,17 @@ L:RegisterTranslations("enUS", function() return {
 --   Module Declaration    --
 ----------------------------------
 
-BigWigsHyakiss = BigWigs:NewModule(boss)
-BigWigsHyakiss.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-BigWigsHyakiss.enabletrigger = boss
-BigWigsHyakiss.toggleoptions = {"web", "bosskill"}
-BigWigsHyakiss.revision = tonumber(("$Revision$"):sub(12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"web", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsHyakiss:OnEnable()
+function mod:OnEnable()
 	times = {}
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Web")
@@ -55,7 +55,7 @@ end
 --    Event Handlers     --
 ------------------------------
 
-function BigWigsHyakiss:Web(msg)
+function mod:Web(msg)
 	if msg:find(L["web_trigger"]) then
 		local webPlayer, webType = select(3, msg:find(L["web_trigger"]))
 		if webPlayer and webType then
@@ -70,7 +70,7 @@ function BigWigsHyakiss:Web(msg)
 	end
 end
 
-function BigWigsHyakiss:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "HyakissWeb" and rest and self.db.profile.web then
 		local t = GetTime()
 		if not times[rest] or (times[rest] and (times[rest] + 5) < t) then

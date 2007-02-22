@@ -258,17 +258,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsNoth = BigWigs:NewModule(boss)
-BigWigsNoth.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
-BigWigsNoth.enabletrigger = boss
-BigWigsNoth.toggleoptions = {"blink", "teleport", "curse", "wave", "bosskill"}
-BigWigsNoth.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"blink", "teleport", "curse", "wave", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsNoth:OnEnable()
+function mod:OnEnable()
 	self.timeroom = 90
 	self.timebalcony = 70
 	self.cursetime = 55
@@ -292,13 +292,13 @@ function BigWigsNoth:OnEnable()
 end
 
 
-function BigWigsNoth:Curse( msg )
+function mod:Curse( msg )
 	if msg:find(L["cursetrigger"]) and not self.prior then
 		self:TriggerEvent("BigWigs_SendSync", "NothCurse")
 	end
 end
 
-function BigWigsNoth:CHAT_MSG_MONSTER_YELL( msg )
+function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] then
 		self.timeroom = 90
 		self.timebalcony = 70
@@ -312,13 +312,13 @@ function BigWigsNoth:CHAT_MSG_MONSTER_YELL( msg )
 	end
 end
 
-function BigWigsNoth:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if msg == L["blinktrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "NothBlink")
 	end
 end
 
-function BigWigsNoth:BigWigs_RecvSync( sync )
+function mod:BigWigs_RecvSync( sync )
 	if sync == "NothCurse" then
 		if self.db.profile.curse then
 			self:TriggerEvent("BigWigs_Message", L["cursewarn"], "Important", nil, "Alarm")
@@ -336,11 +336,11 @@ function BigWigsNoth:BigWigs_RecvSync( sync )
 	end
 end
 
-function BigWigsNoth:BigWigs_Message(text)
+function mod:BigWigs_Message(text)
 	if text == L["curse10secwarn"] then self.prior = nil end
 end
 
-function BigWigsNoth:teleportToBalcony()
+function mod:teleportToBalcony()
 	if self.timeroom == 90 then
 		self.timeroom = 110
 	elseif self.timeroom == 110 then
@@ -366,7 +366,7 @@ function BigWigsNoth:teleportToBalcony()
 	self.wave2time = self.wave2time + 15
 end
 
-function BigWigsNoth:teleportToRoom()
+function mod:teleportToRoom()
 	if self.timebalcony == 70 then
 		self.timebalcony = 95
 	elseif self.timebalcony == 95 then

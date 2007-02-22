@@ -29,18 +29,18 @@ L:RegisterTranslations("enUS", function() return {
 --   Module Declaration    --
 ----------------------------------
 
-BigWigsKazzak = BigWigs:NewModule(boss)
-BigWigsKazzak.zonename = AceLibrary("Babble-Zone-2.2")["Hellfire Peninsula"]
-BigWigsKazzak.otherMenu = "Outland"
-BigWigsKazzak.enabletrigger = boss
-BigWigsKazzak.toggleoptions = {"enrage", "bosskill"}
-BigWigsKazzak.revision = tonumber(("$Revision$"):sub(12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Hellfire Peninsula"]
+mod.otherMenu = "Outland"
+mod.enabletrigger = boss
+mod.toggleoptions = {"enrage", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsKazzak:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -50,7 +50,7 @@ end
 --    Event Handlers     --
 ------------------------------
 
-function BigWigsKazzak:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if not self.db.profile.enrage then return end
 	if msg == L["enrage_trigger1"] then
 		self:Message(L["enrage_warning1"]:format(boss), "Attention")

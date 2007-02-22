@@ -125,37 +125,37 @@ L:RegisterTranslations("koKR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsAzuregos = BigWigs:NewModule(boss)
-BigWigsAzuregos.zonename = AceLibrary("Babble-Zone-2.2")["Azshara"]
-BigWigsAzuregos.otherMenu = "Azeroth"
-BigWigsAzuregos.enabletrigger = boss
-BigWigsAzuregos.toggleoptions = {"teleport", "shield", "bosskill"}
-BigWigsAzuregos.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Azshara"]
+mod.otherMenu = "Azeroth"
+mod.enabletrigger = boss
+mod.toggleoptions = {"teleport", "shield", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsAzuregos:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
-function BigWigsAzuregos:CHAT_MSG_MONSTER_YELL( msg )
+function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.teleport and msg:find(L["trigger1"]) then
 		self:Message(L["warn1"], "Important")
 	end
 end
 
-function BigWigsAzuregos:CHAT_MSG_SPELL_AURA_GONE_OTHER( msg )
+function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER( msg )
 	if self.db.profile.shield and msg:find(L["trigger2"]) then
 		self:Message(L["warn2"], "Attention")
 	end
 end
 
-function BigWigsAzuregos:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if self.db.profile.shield and arg1:find(L["trigger3"]) then
 		self:Message(L["warn3"], "Important")
 		self:Bar(L["shieldbar"], 10, "Spell_Frost_FrostShock")

@@ -170,24 +170,24 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsMajordomo = BigWigs:NewModule(boss)
-BigWigsMajordomo.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
-BigWigsMajordomo.enabletrigger = boss
-BigWigsMajordomo.toggleoptions = { "magic", "dmg", "bosskill" }
-BigWigsMajordomo.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
+mod.enabletrigger = boss
+mod.toggleoptions = { "magic", "dmg", "bosskill" }
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsMajordomo:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	aura = nil
 end
 
-function BigWigsMajordomo:VerifyEnable(unit)
+function mod:VerifyEnable(unit)
 	return UnitCanAttack("player", unit)
 end
 
@@ -195,14 +195,14 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsMajordomo:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["disabletrigger"] then
 		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 	end
 end
 
-function BigWigsMajordomo:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if msg:find(L["trigger1"]) and not aura and self.db.profile.magic then
 		self:NewPowers(1)
 	elseif msg:find(L["trigger2"]) and not aura and self.db.profile.dmg then
@@ -210,14 +210,14 @@ function BigWigsMajordomo:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	end
 end
 
-function BigWigsMajordomo:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
+function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 	if msg:find(L["trigger3"]) or msg:find(L["trigger4"]) and aura then
 		self:TriggerEvent("BigWigs_Message", aura == 1 and L["warn4"] or L["warn5"], "Attention")
 		aura = nil
 	end
 end
 
-function BigWigsMajordomo:NewPowers(power)
+function mod:NewPowers(power)
 	aura = power
 	self:TriggerEvent("BigWigs_Message", power == 1 and L["warn1"] or L["warn2"], "Important")
 	self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 30, "Interface\\Icons\\Spell_Frost_Wisp")

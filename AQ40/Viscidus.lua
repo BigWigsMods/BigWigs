@@ -211,17 +211,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsViscidus = BigWigs:NewModule(boss)
-BigWigsViscidus.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
-BigWigsViscidus.enabletrigger = boss
-BigWigsViscidus.toggleoptions = {"freeze", "volley", "toxinyou", "toxinother", "bosskill"}
-BigWigsViscidus.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"freeze", "volley", "toxinyou", "toxinother", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsViscidus:OnEnable()
+function mod:OnEnable()
 	prior = nil
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -234,7 +234,7 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-function BigWigsViscidus:CheckVis(msg)
+function mod:CheckVis(msg)
 	if not prior and self.db.profile.volley and msg:find(L["trigger6"]) then
 		self:TriggerEvent("BigWigs_Message", L["warn6"], "Urgent")
 		self:ScheduleEvent("BigWigs_Message", 7, L["warn7"], "Urgent")
@@ -254,7 +254,7 @@ function BigWigsViscidus:CheckVis(msg)
 	end
 end
 
-function BigWigsViscidus:CHAT_MSG_MONSTER_EMOTE(arg1)
+function mod:CHAT_MSG_MONSTER_EMOTE(arg1)
 	if not self.db.profile.freeze then return end
 	if arg1 == L["trigger1"] then
 		self:TriggerEvent("BigWigs_Message", L["warn1"], "Atention")
@@ -269,6 +269,6 @@ function BigWigsViscidus:CHAT_MSG_MONSTER_EMOTE(arg1)
 	end
 end
 
-function BigWigsViscidus:BigWigs_Message(text)
+function mod:BigWigs_Message(text)
 	if text == L["warn7"] then prior = nil end
 end

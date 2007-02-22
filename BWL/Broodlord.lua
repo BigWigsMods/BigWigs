@@ -132,17 +132,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsBroodlord = BigWigs:NewModule(boss)
-BigWigsBroodlord.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
-BigWigsBroodlord.enabletrigger = boss
-BigWigsBroodlord.toggleoptions = {"youms", "elsems", "msbar", "bosskill"}
-BigWigsBroodlord.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"youms", "elsems", "msbar", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsBroodlord:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "MSEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "MSEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "MSEvent")
@@ -153,7 +153,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsBroodlord:MSEvent(msg)
+function mod:MSEvent(msg)
 	local player, type = select(3, msg:find(L["trigger1"]))
 	if player and type then
 		if player == L["you"] and type == L["are"] and self.db.profile.youms then

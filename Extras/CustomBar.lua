@@ -89,11 +89,11 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsCustomBar = BigWigs:NewModule(L["Custom Bars"])
-BigWigsCustomBar.revision = tonumber(string.sub("$Revision$", 12, -3))
-BigWigsCustomBar.external = true
-BigWigsCustomBar.consoleCmd = L["CustomBars"]
-BigWigsCustomBar.consoleOptions = {
+local mod = BigWigs:NewModule(L["Custom Bars"])
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
+mod.external = true
+mod.consoleCmd = L["CustomBars"]
+mod.consoleOptions = {
 	type = "group",
 	name = L["Custom Bars"],
 	desc = L["Start a custom bar, either local or global."],
@@ -103,7 +103,7 @@ BigWigsCustomBar.consoleOptions = {
 			name = L["Global"],
 			desc = L["Starts a custom bar with the given parameters."],
 			get = false,
-			set = function(v) BigWigsCustomBar:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..v) end,
+			set = function(v) mod:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..v) end,
 			usage = L["<seconds> <bar text>"],
 			disabled = function() return (not IsRaidLeader() and not IsRaidOfficer()) and UnitInRaid("player") end,
 		},
@@ -112,7 +112,7 @@ BigWigsCustomBar.consoleOptions = {
 			name = L["Local"],
 			desc = L["Starts a custom bar with the given parameters."],
 			get = false,
-			set = function(v) BigWigsCustomBar:StartBar(v, nil, true) end,
+			set = function(v) mod:StartBar(v, nil, true) end,
 			usage = L["<seconds> <bar text>"],
 		},
 	},
@@ -122,7 +122,7 @@ BigWigsCustomBar.consoleOptions = {
 --      Initialization      --
 ------------------------------
 
-function BigWigsCustomBar:OnEnable()
+function mod:OnEnable()
 	self.enabled = true
 	times = {}
 
@@ -136,7 +136,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsCustomBar:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync ~= "BWCustomBar" or not rest or not nick or not self.enabled then return end
 
 	if UnitInRaid("player") then
@@ -159,7 +159,7 @@ end
 --      Utility             --
 ------------------------------
 
-function BigWigsCustomBar:StartBar(bar, nick, localOnly)
+function mod:StartBar(bar, nick, localOnly)
 	local seconds, barText = select(3, bar:find("(%d+) (.*)"))
 	if not seconds or not barText then return end
 	seconds = tonumber(seconds)
@@ -181,17 +181,17 @@ function BWCB(seconds, message)
 	local t = GetTime()
 	if ( not times[seconds] ) or ( times[seconds] and ( times[seconds] + 2 ) < t) then
 		times[seconds] = t
-		BigWigsCustomBar:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..seconds)
+		mod:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..seconds)
 	end
 end
 
 function BWLCB(seconds, message)
 	if message then seconds = tostring(seconds) .. " " .. message end
-	BigWigsCustomBar:StartBar(seconds, nil, true)
+	mod:StartBar(seconds, nil, true)
 end
 
 -- Shorthand slashcommand
-function BigWigsCustomBar:RegisterShortHand()
+function mod:RegisterShortHand()
 	if SlashCmdList then
 		SlashCmdList["BWCB_SHORTHAND"] = BWCB
 		setglobal("SLASH_BWCB_SHORTHAND1", "/"..L["bwcb"])

@@ -135,23 +135,23 @@ L:RegisterTranslations("zhTW", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsMoam = BigWigs:NewModule(boss)
-BigWigsMoam.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
-BigWigsMoam.enabletrigger = boss
-BigWigsMoam.toggleoptions = {"adds", "paralyze", "bosskill"}
-BigWigsMoam.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"adds", "paralyze", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsMoam:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath" )
 end
 
-function BigWigsMoam:AddsStart()
+function mod:AddsStart()
 	if self.db.profile.adds then
 		self:ScheduleEvent("BigWigs_Message", 30, format(L["addsincoming"], 60), "Attention")
 		self:ScheduleEvent("BigWigs_Message", 60, format(L["addsincoming"], 30), "Attention")
@@ -161,7 +161,7 @@ function BigWigsMoam:AddsStart()
 	end
 end
 
-function BigWigsMoam:CHAT_MSG_MONSTER_EMOTE( msg )
+function mod:CHAT_MSG_MONSTER_EMOTE( msg )
 	if msg == L["starttrigger"] then
 		if self.db.profile.adds then self:TriggerEvent("BigWigs_Message", L["startwarn"], "Important") end
 		self:AddsStart()
@@ -179,7 +179,7 @@ function BigWigsMoam:CHAT_MSG_MONSTER_EMOTE( msg )
 	end
 end
 
-function BigWigsMoam:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if  msg:find(L["returntrigger"]) then
 		if self.db.profile.paralyze then self:TriggerEvent("BigWigs_Message", L["returnwarn"], "Important") end
 		self:AddsStart()

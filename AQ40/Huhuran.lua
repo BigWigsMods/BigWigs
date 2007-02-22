@@ -187,17 +187,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsHuhuran = BigWigs:NewModule(boss)
-BigWigsHuhuran.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
-BigWigsHuhuran.enabletrigger = boss
-BigWigsHuhuran.toggleoptions = {"wyvern", "frenzy", "berserk", "bosskill"}
-BigWigsHuhuran.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"wyvern", "frenzy", "berserk", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsHuhuran:OnEnable()
+function mod:OnEnable()
 	prior = nil
 	berserkannounced = nil
 	started = nil
@@ -221,7 +221,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsHuhuran:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
@@ -237,7 +237,7 @@ function BigWigsHuhuran:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function BigWigsHuhuran:CHAT_MSG_MONSTER_EMOTE(arg1)
+function mod:CHAT_MSG_MONSTER_EMOTE(arg1)
 	if self.db.profile.frenzy and arg1 == L["frenzytrigger"] then
 		self:TriggerEvent("BigWigs_Message", L["frenzywarn"], "Urgent")
 	elseif self.db.profile.berserk and arg1 == L["berserktrigger"] then
@@ -253,7 +253,7 @@ function BigWigsHuhuran:CHAT_MSG_MONSTER_EMOTE(arg1)
 	end
 end
 
-function BigWigsHuhuran:UNIT_HEALTH(arg1)
+function mod:UNIT_HEALTH(arg1)
 	if not self.db.profile.berserk then return end
 	if UnitName(arg1) == boss then
 		local health = UnitHealth(arg1)
@@ -266,7 +266,7 @@ function BigWigsHuhuran:UNIT_HEALTH(arg1)
 	end
 end
 
-function BigWigsHuhuran:checkSting(arg1)
+function mod:checkSting(arg1)
 	if not self.db.profile.wyvern then return end
 	if not prior and arg1:find(L["stingtrigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["stingwarn"], "Urgent")
@@ -276,6 +276,6 @@ function BigWigsHuhuran:checkSting(arg1)
 	end
 end
 
-function BigWigsHuhuran:BigWigs_Message(text)
+function mod:BigWigs_Message(text)
 	if text == L["stingdelaywarn"] then prior = nil end
 end

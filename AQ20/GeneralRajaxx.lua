@@ -171,37 +171,38 @@ L:RegisterTranslations("koKR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsGeneralRajaxx = BigWigs:NewModule(boss)
-BigWigsGeneralRajaxx.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
-BigWigsGeneralRajaxx.enabletrigger = andorov
-BigWigsGeneralRajaxx.toggleoptions = {"wave", "bosskill"}
-BigWigsGeneralRajaxx.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
+mod.enabletrigger = andorov
+mod.toggleoptions = {"wave", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsGeneralRajaxx:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self.warnsets = {}
 	for i=1,9 do self.warnsets[L["trigger"..i]] = L["warn"..i] end
 end
 
-function BigWigsGeneralRajaxx:VerifyEnable(unit)
+function mod:VerifyEnable(unit)
 	return not rajdead
 end
 
-function BigWigsGeneralRajaxx:CHAT_MSG_MONSTER_YELL( msg )
+function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.wave and msg and self.warnsets[msg] then
 		self:TriggerEvent("BigWigs_Message", self.warnsets[msg], "Urgent")
 	end
 end
 
-function BigWigsGeneralRajaxx:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if msg == string.format(UNITDIESOTHER, self:ToString()) then
 		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(L2["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 		rajdead = true
 	end
 end
+

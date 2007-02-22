@@ -215,17 +215,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsSapphiron = BigWigs:NewModule(boss)
-BigWigsSapphiron.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
-BigWigsSapphiron.enabletrigger = boss
-BigWigsSapphiron.toggleoptions = { "berserk", "lifedrain", "deepbreath", "bosskill" }
-BigWigsSapphiron.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
+mod.enabletrigger = boss
+mod.toggleoptions = { "berserk", "lifedrain", "deepbreath", "bosskill" }
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsSapphiron:OnEnable()
+function mod:OnEnable()
 	time = nil
 	cachedUnitId = nil
 	lastTarget = nil
@@ -258,7 +258,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync( sync, rest, nick )
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
@@ -302,7 +302,7 @@ function BigWigsSapphiron:BigWigs_RecvSync( sync, rest, nick )
 	end
 end
 
-function BigWigsSapphiron:LifeDrain(msg)
+function mod:LifeDrain(msg)
 	if msg:find(L["lifedrain_trigger"]) or msg:find(L["lifedrain_trigger2"]) then
 		if not time or (time + 2) < GetTime() then
 			self:TriggerEvent("BigWigs_SendSync", "SapphironLifeDrain")
@@ -311,7 +311,7 @@ function BigWigsSapphiron:LifeDrain(msg)
 	end
 end
 
-function BigWigsSapphiron:CHAT_MSG_MONSTER_EMOTE(msg)
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg:find(L["deepbreath_trigger"]) then
 		if self.db.profile.deepbreath then
 			self:TriggerEvent("BigWigs_Message", L["deepbreath_warning"], "Important")
@@ -328,14 +328,14 @@ end
 --      Target Scanning     --
 ------------------------------
 
-function BigWigsSapphiron:StartTargetScanner()
+function mod:StartTargetScanner()
 	if self:IsEventScheduled("bwsapphtargetscanner") or not started then return end
 
 	-- Start a repeating event that scans the raid for targets every 1 second.
 	self:ScheduleRepeatingEvent("bwsapphtargetscanner", self.RepeatedTargetScanner, 1, self)
 end
 
-function BigWigsSapphiron:RepeatedTargetScanner()
+function mod:RepeatedTargetScanner()
 	if not UnitAffectingCombat("player") then
 		self:CancelScheduledEvent("bwsapphtargetscanner")
 		return

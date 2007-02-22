@@ -154,17 +154,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsFlamegor = BigWigs:NewModule(boss)
-BigWigsFlamegor.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
-BigWigsFlamegor.enabletrigger = boss
-BigWigsFlamegor.toggleoptions = {"wingbuffet", "shadowflame", "frenzy", "bosskill"}
-BigWigsFlamegor.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"wingbuffet", "shadowflame", "frenzy", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsFlamegor:OnEnable()
+function mod:OnEnable()
 	started = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -182,7 +182,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsFlamegor:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["wingbuffet_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "FlamegorWingBuffet2")
 	elseif msg == L["shadowflame_trigger"] then
@@ -190,7 +190,7 @@ function BigWigsFlamegor:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	end
 end
 
-function BigWigsFlamegor:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
@@ -209,7 +209,7 @@ function BigWigsFlamegor:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function BigWigsFlamegor:CHAT_MSG_MONSTER_EMOTE(msg)
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["frenzy_trigger"] and self.db.profile.frenzy then
 		self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Important")
 	end

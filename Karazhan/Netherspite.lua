@@ -75,17 +75,17 @@ L:RegisterTranslations("deDE", function() return {
 --    Module Declaration   --
 ----------------------------------
 
-BigWigsNetherspite = BigWigs:NewModule(boss)
-BigWigsNetherspite.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-BigWigsNetherspite.enabletrigger = boss
-BigWigsNetherspite.toggleoptions = {"voidzone", "netherbreath", "phase", "bosskill"}
-BigWigsNetherspite.revision = tonumber(("$Revision$"):sub(12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"voidzone", "netherbreath", "phase", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsNetherspite:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -103,7 +103,7 @@ end
 ------------------------------
 
 
-function BigWigsNetherspite:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync( sync, rest, nick )
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
@@ -119,7 +119,7 @@ function BigWigsNetherspite:BigWigs_RecvSync( sync, rest, nick )
 	end
 end
 
-function BigWigsNetherspite:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if not self.db.profile.phase then return end
 	if msg == L["phase1_trigger"] then
 		self:TriggerEvent("BigWigs_StopBar", self, L["netherbreath_warn"])
@@ -131,7 +131,7 @@ function BigWigsNetherspite:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	end	
 end
 
-function BigWigsNetherspite:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if self.db.profile.voidzone and msg:find( L["voidzone_trigger"] ) then
 		self:Message( L["voidzone_warn"]:format(voidcount), "Attention")
 		voidcount = voidcount + 1

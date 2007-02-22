@@ -113,17 +113,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsMagmadar = BigWigs:NewModule(boss)
-BigWigsMagmadar.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
-BigWigsMagmadar.enabletrigger = boss
-BigWigsMagmadar.toggleoptions = {"fear", "frenzy", "bosskill"}
-BigWigsMagmadar.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"fear", "frenzy", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsMagmadar:OnEnable()
+function mod:OnEnable()
 	self.prior = nil
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -140,13 +140,13 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsMagmadar:CHAT_MSG_MONSTER_EMOTE(msg)
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["trigger1"] and self.db.profile.frenzy then
 		self:TriggerEvent("BigWigs_Message", L["frenzywarn"], "Important", nil, "Alert")
 	end
 end
 
-function BigWigsMagmadar:BigWigs_RecvSync( sync ) 
+function mod:BigWigs_RecvSync( sync ) 
 	if sync ~= "MagmadarFear" then return end
 	if self.db.profile.fear then
 		self:TriggerEvent("BigWigs_StartBar", self, L["fearbar"], 30, "Interface\\Icons\\Spell_Shadow_PsychicScream")
@@ -155,13 +155,13 @@ function BigWigsMagmadar:BigWigs_RecvSync( sync )
 	end
 end
 
-function BigWigsMagmadar:Fear(msg)
+function mod:Fear(msg)
 	if not self.prior and msg:find(L["trigger2"]) then
 		self:TriggerEvent("BigWigs_SendSync", "MagmadarFear")
 		self.prior = true
 	end
 end
 
-function BigWigsMagmadar:BigWigs_Message(text)
+function mod:BigWigs_Message(text)
 	if text == L["fearalert"] then self.prior = nil end
 end

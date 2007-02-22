@@ -339,26 +339,26 @@ L:RegisterTranslations("zhTW", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsKelThuzad = BigWigs:NewModule(boss)
-BigWigsKelThuzad.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
-BigWigsKelThuzad.enabletrigger = boss
-BigWigsKelThuzad.toggleoptions = { "frostblast", "fissure", "mc", -1, "detonate", "detonateicon", -1 ,"guardians", "phase", "bosskill" }
-BigWigsKelThuzad.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
+mod.enabletrigger = boss
+mod.toggleoptions = { "frostblast", "fissure", "mc", -1, "detonate", "detonateicon", -1 ,"guardians", "phase", "bosskill" }
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsKelThuzad:OnRegister()
+function mod:OnRegister()
 	-- Big evul hack to enable the module when entering Kel'Thuzads chamber.
 	self:RegisterEvent("ZONE_CHANGED_INDOORS")
 end
 
-function BigWigsKelThuzad:OnDisable()
+function mod:OnDisable()
 	self:RegisterEvent("ZONE_CHANGED_INDOORS")
 end
 
-function BigWigsKelThuzad:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("ZONE_CHANGED_INDOORS")
 
 	self.warnedAboutPhase3Soon = nil
@@ -386,13 +386,13 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsKelThuzad:ZONE_CHANGED_INDOORS(msg)
+function mod:ZONE_CHANGED_INDOORS(msg)
 	if GetMinimapZoneText() ~= L["KELTHUZADCHAMBERLOCALIZEDLOLHAX"] or self.core:IsModuleActive(boss) then return end
 	-- Activate the Kel'Thuzad mod!
 	self.core:EnableModule(boss)
 end
 
-function BigWigsKelThuzad:UNIT_HEALTH(msg)
+function mod:UNIT_HEALTH(msg)
 	if not self.db.profile.phase then return end
 
 	if UnitName(msg) == boss then
@@ -406,7 +406,7 @@ function BigWigsKelThuzad:UNIT_HEALTH(msg)
 	end
 end
 
-function BigWigsKelThuzad:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.phase and msg == L["start_trigger"] then
 		self:TriggerEvent("BigWigs_Message", L["start_warning"], "Attention")
 		self:TriggerEvent("BigWigs_StartBar", self, L["start_bar"], 320 )
@@ -427,13 +427,13 @@ function BigWigsKelThuzad:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function BigWigsKelThuzad:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 	if msg == L["fissure_trigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "KelFizzure")
 	end
 end
 
-function BigWigsKelThuzad:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "KelDetonate" and rest and self.db.profile.detonate then
 		self:TriggerEvent("BigWigs_Message", string.format(L["detonate_warning"], rest), "Attention")
 		if self.db.profile.detonateicon then self:TriggerEvent("BigWigs_SetRaidIcon", rest ) end
@@ -450,7 +450,7 @@ function BigWigsKelThuzad:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function BigWigsKelThuzad:Affliction( msg )
+function mod:Affliction( msg )
 	if msg:find(L["detonate_trigger"]) then
 		local dplayer, dtype =  select(3, msg:find(L["detonate_trigger"]))
 		if dplayer and dtype then

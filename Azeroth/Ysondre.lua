@@ -34,18 +34,18 @@ L:RegisterTranslations("enUS", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsYsondre = BigWigs:NewModule(boss)
-BigWigsYsondre.zonename = {BZ["Ashenvale"], BZ["Duskwood"], BZ["The Hinterlands"], BZ["Feralas"]}
-BigWigsYsondre.otherMenu = "Azeroth"
-BigWigsYsondre.enabletrigger = boss
-BigWigsYsondre.toggleoptions = {"engage", -1, "noxious", "bosskill"}
-BigWigsYsondre.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = {BZ["Ashenvale"], BZ["Duskwood"], BZ["The Hinterlands"], BZ["Feralas"]}
+mod.otherMenu = "Azeroth"
+mod.enabletrigger = boss
+mod.toggleoptions = {"engage", -1, "noxious", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsYsondre:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
@@ -54,7 +54,7 @@ function BigWigsYsondre:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
-function BigWigsYsondre:Event( msg )
+function mod:Event( msg )
 	if (not self.prior and msg:find(L["noxious_trigger"])) then
 		self.prior = true
 		if self.db.profile.noxious then 
@@ -65,13 +65,13 @@ function BigWigsYsondre:Event( msg )
 	end
 end
 
-function BigWigsYsondre:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.engage and msg == L["engage_trigger"] then
 		self:Message(L["engage_message"], "Important")
 		self:Bar( L["noxious_bar"], 10, "Spell_Shadow_LifeDrain02")
 	end
 end
 
-function BigWigsYsondre:BigWigs_Message(text)
+function mod:BigWigs_Message(text)
 	if text == L["noxious_warn"] then self.prior = nil end
 end

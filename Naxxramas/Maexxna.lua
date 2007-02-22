@@ -197,17 +197,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsMaexxna = BigWigs:NewModule(boss)
-BigWigsMaexxna.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
-BigWigsMaexxna.enabletrigger = boss
-BigWigsMaexxna.toggleoptions = {"spray", "cocoon", "enrage", "bosskill"}
-BigWigsMaexxna.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"spray", "cocoon", "enrage", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsMaexxna:OnEnable()
+function mod:OnEnable()
 	self.enrageannounced = nil
 	prior = nil
 	times = {}
@@ -231,7 +231,7 @@ function BigWigsMaexxna:OnEnable()
 	-- because the web wrap happens to a lot of players at once.
 end
 
-function BigWigsMaexxna:SprayEvent( msg )
+function mod:SprayEvent( msg )
 	if msg:find(L["webspraytrigger"]) and not prior then
 		self:TriggerEvent("BigWigs_SendSync", "MaexxnaWebspray")
 	elseif msg:find(L["cocoontrigger"]) then
@@ -248,7 +248,7 @@ function BigWigsMaexxna:SprayEvent( msg )
 	end
 end
 
-function BigWigsMaexxna:BigWigs_RecvSync( sync, rest )
+function mod:BigWigs_RecvSync( sync, rest )
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
@@ -283,13 +283,13 @@ function BigWigsMaexxna:BigWigs_RecvSync( sync, rest )
 	end
 end
 
-function BigWigsMaexxna:CHAT_MSG_MONSTER_EMOTE( msg )
+function mod:CHAT_MSG_MONSTER_EMOTE( msg )
 	if msg == L["enragetrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "MaexxnaEnrage")
 	end
 end
 
-function BigWigsMaexxna:UNIT_HEALTH( msg )
+function mod:UNIT_HEALTH( msg )
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if (health > 30 and health <= 33 and not self.enrageannounced) then
@@ -301,7 +301,7 @@ function BigWigsMaexxna:UNIT_HEALTH( msg )
 	end
 end
 
-function BigWigsMaexxna:BigWigs_Message(text)
+function mod:BigWigs_Message(text)
 	if text == L["webspraywarn10sec"] then
 		prior = nil
 	end

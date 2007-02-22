@@ -44,18 +44,18 @@ L:RegisterTranslations("enUS", function() return {
 --    Module Declaration   --
 ----------------------------------
 
-BigWigsMagtheridon = BigWigs:NewModule(boss)
-BigWigsMagtheridon.zonename = AceLibrary("Babble-Zone-2.2")["Magtheridon's Lair"]
-BigWigsMagtheridon.otherMenu = "Outland"
-BigWigsMagtheridon.enabletrigger = boss
-BigWigsMagtheridon.toggleoptions = {"escape", "abyssal", "heal", "bosskill"}
-BigWigsMagtheridon.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Magtheridon's Lair"]
+mod.otherMenu = "Outland"
+mod.enabletrigger = boss
+mod.toggleoptions = {"escape", "abyssal", "heal", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsMagtheridon:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
@@ -70,7 +70,7 @@ end
 --    Event Handlers     --
 ------------------------------
 
-function BigWigsMagtheridon:CHAT_MSG_MONSTER_EMOTE(msg)
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if self.db.profile.escape and msg:find(L["escape_trigger1"]) then
 		self:Message(L["escape_warning1"], "Important")
 		self:Bar(L["escape_bar"], 120, "Ability_Rogue_Trip")
@@ -80,19 +80,19 @@ function BigWigsMagtheridon:CHAT_MSG_MONSTER_EMOTE(msg)
 	end
 end
 
-function BigWigsMagtheridon:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.escape and msg == L["escape_trigger2"] then
 		self:Message(L["escape_message"], "Important", nil, "Alert")
 	end
 end
 
-function BigWigsMagtheridon:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if self.db.profile.abyssal and msg:find(L["abyssal_trigger"]) then
 		self:Message(L["abyssal_message"], "Attention")
 	end
 end
 
-function BigWigsMagtheridon:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if self.db.profile.heal and msg:find(L["heal_trigger"]) then
 		self:Message(L["heal_message"], "Urgent", nil, "Alarm")
 		self:Bar(L["heal_message"], 2, "Spell_Shadow_ChillTouch")

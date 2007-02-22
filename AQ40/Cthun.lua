@@ -310,13 +310,13 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsCThun = BigWigs:NewModule(cthun)
-BigWigsCThun.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
-BigWigsCThun.enabletrigger = { eyeofcthun, cthun }
-BigWigsCThun.toggleoptions = { "rape", -1, "tentacle", "glare", "group", -1, "giant", "weakened", "bosskill" }
-BigWigsCThun.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(cthun)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
+mod.enabletrigger = { eyeofcthun, cthun }
+mod.toggleoptions = { "rape", -1, "tentacle", "glare", "group", -1, "giant", "weakened", "bosskill" }
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
-function BigWigsCThun:OnEnable()
+function mod:OnEnable()
 	target = nil
 	gianteye = nil
 	cthunstarted = nil
@@ -345,15 +345,15 @@ end
 --  Event Handlers  --
 ----------------------
 
-function BigWigsCThun:CHAT_MSG_MONSTER_EMOTE( arg1 )
+function mod:CHAT_MSG_MONSTER_EMOTE( arg1 )
 	if arg1 == L["weakenedtrigger"] then self:TriggerEvent("BigWigs_SendSync", "CThunWeakened") end
 end
 
-function BigWigsCThun:CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE( arg1 )
+function mod:CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE( arg1 )
 	if not cthunstarted and arg1 and arg1:find(L["eyebeam"]) then self:TriggerEvent("BigWigs_SendSync", "CThunStart") end
 end
 
-function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if (msg == string.format(UNITDIESOTHER, eyeofcthun)) then
 		self:TriggerEvent("BigWigs_SendSync", "CThunP2Start")
 	elseif (msg == string.format(UNITDIESOTHER, cthun)) then
@@ -362,7 +362,7 @@ function BigWigsCThun:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	end
 end
 
-function BigWigsCThun:BigWigs_RecvSync( sync )
+function mod:BigWigs_RecvSync( sync )
 	if sync == "CThunStart" then
 		self:CThunStart()
 	elseif sync == "CThunP2Start" then
@@ -376,7 +376,7 @@ end
 --   Sync Handlers   --
 -----------------------
 
-function BigWigsCThun:CThunStart()
+function mod:CThunStart()
 	if not cthunstarted then
 		cthunstarted = true
 
@@ -407,7 +407,7 @@ function BigWigsCThun:CThunStart()
 	end
 end
 
-function BigWigsCThun:CThunP2Start()
+function mod:CThunP2Start()
 	if not phase2started then
 		phase2started = true
 		tentacletime = timeP2Tentacle
@@ -451,7 +451,7 @@ function BigWigsCThun:CThunP2Start()
 
 end
 
-function BigWigsCThun:CThunWeakened()
+function mod:CThunWeakened()
 	if self.db.profile.weakened then
 		self:TriggerEvent("BigWigs_Message", L["weakened"], "Positive" )
 		self:TriggerEvent("BigWigs_StartBar", self, L["barWeakened"], timeWeakened, "Interface\\Icons\\INV_ValentinesCandy")
@@ -482,17 +482,17 @@ end
 -- Utility Functions --
 -----------------------
 
-function BigWigsCThun:OutOfWeaken()
+function mod:OutOfWeaken()
 	self:StartTentacleRape()
 	-- Also fires up a big claw here, but we don't warn for them?
 end
 
-function BigWigsCThun:StartTentacleRape()
+function mod:StartTentacleRape()
 	self:TentacleRape()
 	self:ScheduleRepeatingEvent("bwcthuntentacles", self.TentacleRape, tentacletime, self )
 end
 
-function BigWigsCThun:CheckTarget()
+function mod:CheckTarget()
 	local i
 	local newtarget = nil
 	if( UnitName("playertarget") == eyeofcthun ) then
@@ -510,7 +510,7 @@ function BigWigsCThun:CheckTarget()
 	end
 end
 
-function BigWigsCThun:GroupWarning()
+function mod:GroupWarning()
 	if target then
 		local i, name, group
 		for i = 1, GetNumRaidMembers(), 1 do
@@ -529,7 +529,7 @@ function BigWigsCThun:GroupWarning()
 	end
 end
 
-function BigWigsCThun:TentacleRape()
+function mod:TentacleRape()
 	if phase2started then
 		if gianteye then
 			gianteye = nil
@@ -550,7 +550,7 @@ function BigWigsCThun:TentacleRape()
 	end
 end
 
-function BigWigsCThun:DarkGlare()
+function mod:DarkGlare()
 	if self.db.profile.glare then
 		self:TriggerEvent("BigWigs_StartBar", self, L["barGreenBeam"], timeP1GlareDuration, "Interface\\Icons\\Spell_Nature_CallStorm")
 		self:TriggerEvent("BigWigs_StartBar", self, L["barGlare"], timeP1Glare, "Interface\\Icons\\Spell_Shadow_ShadowBolt")

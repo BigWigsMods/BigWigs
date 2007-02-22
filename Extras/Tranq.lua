@@ -81,14 +81,14 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsTranq = BigWigs:NewModule(L["Tranq"])
-BigWigsTranq.revision = tonumber(string.sub("$Revision$", 12, -3))
-BigWigsTranq.defaults = {
+local mod = BigWigs:NewModule(L["Tranq"])
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
+mod.defaults = {
 	bars = true,
 }
-BigWigsTranq.external = true
-BigWigsTranq.consoleCmd = L["Tranq"]
-BigWigsTranq.consoleOptions = {
+mod.external = true
+mod.consoleCmd = L["Tranq"]
+mod.consoleOptions = {
 	type = "group",
 	name = L["Tranq"],
 	desc = L["Options for the tranq module."],
@@ -97,9 +97,9 @@ BigWigsTranq.consoleOptions = {
 			type = "toggle",
 			name = L["Bars"],
 			desc = L["Toggle tranq bars on or off."],
-			get = function() return BigWigsTranq.db.profile.bars end,
+			get = function() return mod.db.profile.bars end,
 			set = function(v)
-				BigWigsTranq.db.profile.bars = v
+				mod.db.profile.bars = v
 			end,
 		},
 	}
@@ -109,7 +109,7 @@ BigWigsTranq.consoleOptions = {
 --      Initialization      --
 ------------------------------
 
-function BigWigsTranq:OnEnable()
+function mod:OnEnable()
 	local class = select(2, UnitClass("player"))
 	if class == "HUNTER" then
 		self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE")
@@ -126,13 +126,13 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsTranq:UNIT_SPELLCAST_SUCCEEDED(player, spell, rank)
+function mod:UNIT_SPELLCAST_SUCCEEDED(player, spell, rank)
 	if player == "player" and spell == L["Tranquilizing Shot"] then
 		self:TriggerEvent("BigWigs_SendSync", "TranqShotFired "..UnitName("player"))
 	end
 end
 
-function BigWigsTranq:CHAT_MSG_SPELL_SELF_BUFF(msg)
+function mod:CHAT_MSG_SPELL_SELF_BUFF(msg)
 	if not msg then
 		self:Debug("CHAT_MSG_SPELL_SELF_BUFF: msg is nil")
 	elseif msg:find(L["CHAT_MSG_SPELL_SELF_BUFF"]) then
@@ -140,7 +140,7 @@ function BigWigsTranq:CHAT_MSG_SPELL_SELF_BUFF(msg)
 	end
 end
 
-function BigWigsTranq:CHAT_MSG_SPELL_SELF_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_SELF_DAMAGE(msg)
 	if not msg then
 		self:Debug("CHAT_MSG_SPELL_SELF_DAMAGE: msg is nil")
 	elseif msg:find(L["CHAT_MSG_SPELL_SELF_DAMAGE"]) then
@@ -148,7 +148,7 @@ function BigWigsTranq:CHAT_MSG_SPELL_SELF_DAMAGE(msg)
 	end
 end
 
-function BigWigsTranq:BigWigs_RecvSync(sync, details, sender)
+function mod:BigWigs_RecvSync(sync, details, sender)
 	if sync == "TranqShotFired" then
 		self:TriggerEvent("BigWigs_TranqFired", details)
 	elseif sync == "TranqShotFail" then
@@ -156,13 +156,13 @@ function BigWigsTranq:BigWigs_RecvSync(sync, details, sender)
 	end
 end
 
-function BigWigsTranq:BigWigs_TranqFired(unitname)
+function mod:BigWigs_TranqFired(unitname)
 	if self.db.profile.bars then
 		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["Tranq - %s"], unitname), 20, "Interface\\Icons\\Spell_Nature_Drowsy")
 	end
 end
 
-function BigWigsTranq:BigWigs_TranqFail(unitname)
+function mod:BigWigs_TranqFail(unitname)
 	if self.db.profile.bars then
 		self:SetCandyBarColor(string.format(L["Tranq - %s"], unitname), "Red")
 		self:TriggerEvent("BigWigs_Message", format(L["%s's Tranq failed!"], unitname), "Important", nil, "Alarm")

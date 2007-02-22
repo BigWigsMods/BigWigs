@@ -193,18 +193,18 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsHeigan = BigWigs:NewModule(boss)
-BigWigsHeigan.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
-BigWigsHeigan.enabletrigger = boss
-BigWigsHeigan.wipemobs = { L["Eye Stalk"], L["Rotting Maggot"] }
-BigWigsHeigan.toggleoptions = {"engage", "teleport", "bosskill"}
-BigWigsHeigan.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
+mod.enabletrigger = boss
+mod.wipemobs = { L["Eye Stalk"], L["Rotting Maggot"] }
+mod.toggleoptions = {"engage", "teleport", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsHeigan:OnEnable()
+function mod:OnEnable()
 	self.toRoomTime = 45
 	self.toPlatformTime = 90
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -216,14 +216,14 @@ function BigWigsHeigan:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "HeiganTeleport", 10)
 end
 
-function BigWigsHeigan:CHAT_MSG_MONSTER_EMOTE( msg )
+function mod:CHAT_MSG_MONSTER_EMOTE( msg )
 	if msg == L["die_trigger"] then
 		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], boss), "Bosskill", nil, "Victory") end
 		self.core:ToggleModuleActive(self, false)
 	end
 end
 
-function BigWigsHeigan:CHAT_MSG_MONSTER_YELL( msg )
+function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if msg:find(L["starttrigger"]) or msg:find(L["starttrigger2"]) or msg:find(L["starttrigger3"]) then
 		if self.db.profile.engage then
 			self:TriggerEvent("BigWigs_Message", L["engage_message"], "Important")
@@ -239,7 +239,7 @@ function BigWigsHeigan:CHAT_MSG_MONSTER_YELL( msg )
 	end
 end
 
-function BigWigsHeigan:BigWigs_RecvSync( sync )
+function mod:BigWigs_RecvSync( sync )
 	if sync ~= "HeiganTeleport" then return end
 
 	self:ScheduleEvent( self.BackToRoom, self.toRoomTime, self )
@@ -252,7 +252,7 @@ function BigWigsHeigan:BigWigs_RecvSync( sync )
 	end
 end
 
-function BigWigsHeigan:BackToRoom()
+function mod:BackToRoom()
 	if self.db.profile.teleport then
 		self:TriggerEvent("BigWigs_Message", L["on_floor_message"], "Attention")
 		self:ScheduleEvent("bwheiganwarn2","BigWigs_Message", self.toPlatformTime-30, L["teleport_30sec_message"], "Urgent")

@@ -15,14 +15,14 @@ local coreSyncs = {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsComm = BigWigs:NewModule("Comm")
-BigWigsComm.revision = tonumber(string.sub("$Revision$", 12, -3))
+local plugin = BigWigs:NewModule("Comm")
+plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsComm:OnRegister()
+function plugin:OnRegister()
 	playerName = UnitName("player")
 
 	for k, v in pairs(coreSyncs) do
@@ -30,7 +30,7 @@ function BigWigsComm:OnRegister()
 	end
 end
 
-function BigWigsComm:OnEnable()
+function plugin:OnEnable()
 	self:RegisterEvent("CHAT_MSG_ADDON")
 	self:RegisterEvent("BigWigs_SendSync")
 	self:RegisterEvent("BigWigs_ThrottleSync")
@@ -40,7 +40,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsComm:CHAT_MSG_ADDON(prefix, message, type, sender)
+function plugin:CHAT_MSG_ADDON(prefix, message, type, sender)
 	if prefix ~= "BigWigs" or type ~= "RAID" then return end
 
 	local sync, rest = select(3, message:find("(%S+)%s*(.*)$"))
@@ -53,7 +53,7 @@ function BigWigsComm:CHAT_MSG_ADDON(prefix, message, type, sender)
 	end
 end
 
-function BigWigsComm:BigWigs_SendSync(msg)
+function plugin:BigWigs_SendSync(msg)
 	local sync, rest = select(3, msg:find("(%S+)%s*(.*)$"))
 
 	if not sync then return end
@@ -65,10 +65,10 @@ function BigWigsComm:BigWigs_SendSync(msg)
 	end
 end
 
-function BigWigsComm:BigWigs_ThrottleSync(msg, time)
+function plugin:BigWigs_ThrottleSync(msg, time)
 	assert(msg, "No message passed")
 	throt[msg] = time
 end
 
-function BigWigsComm:GetThrottleTable() return throt end
-function BigWigsComm:GetTimesTable() return times end
+function plugin:GetThrottleTable() return throt end
+function plugin:GetTimesTable() return times end

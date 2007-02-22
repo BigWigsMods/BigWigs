@@ -136,18 +136,18 @@ L:RegisterTranslations("deDE", function() return {
 --   Module Declaration    --
 ----------------------------------
 
-BigWigsMaulgar = BigWigs:NewModule(boss)
-BigWigsMaulgar.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
-BigWigsMaulgar.otherMenu = "Outland"
-BigWigsMaulgar.enabletrigger = boss
-BigWigsMaulgar.toggleoptions = {"shield", "spellshield", "whirlwind", "heal", "flurry", "bosskill"}
-BigWigsMaulgar.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
+mod.otherMenu = "Outland"
+mod.enabletrigger = boss
+mod.toggleoptions = {"shield", "spellshield", "whirlwind", "heal", "flurry", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsMaulgar:OnEnable()
+function mod:OnEnable()
 	started = nil
 	flurryannounced = nil
 
@@ -173,13 +173,13 @@ end
 --    Event Handlers     --
 ------------------------------
 
-function BigWigsMaulgar:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if self.db.profile.heal and msg:find(L["heal_trigger"]) then
 		self:Sync("BlindeyePrayer")
 	end
 end
 
-function BigWigsMaulgar:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if self.db.profile.shield and msg:find(L["shield_trigger"]) then
 		self:Sync("BlindeyeShield")
 	elseif self.db.profile.spellshield and msg:find(L["spellshield_trigger"]) then
@@ -189,7 +189,7 @@ function BigWigsMaulgar:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	end
 end
 
-function BigWigsMaulgar:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync( sync, rest, nick )
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
@@ -212,18 +212,18 @@ function BigWigsMaulgar:BigWigs_RecvSync( sync, rest, nick )
 	end
 end
 
-function BigWigsMaulgar:Nextwhirldwind()
+function mod:Nextwhirldwind()
 	self:DelayedMessage(45, L["whirlwind_warning2"], "Urgent")
 	self:Bar(L["whirlwind_nextbar"], 50, "Ability_Whirlwind")
 end
 
-function BigWigsMaulgar:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.flurry and msg:find(L["flurry_trigger"]) then
 		self:Message(L["flurry_message"], "Important")
 	end
 end
 
-function BigWigsMaulgar:UNIT_HEALTH(msg)
+function mod:UNIT_HEALTH(msg)
 	if not self.db.profile.flurry then return end
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)

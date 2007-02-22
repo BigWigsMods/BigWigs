@@ -55,17 +55,17 @@ L:RegisterTranslations("deDE", function() return {
 --    Module Declaration   --
 ----------------------------------
 
-BigWigsTerestian = BigWigs:NewModule(boss)
-BigWigsTerestian.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-BigWigsTerestian.enabletrigger = boss
-BigWigsTerestian.toggleoptions = {"sacrifice", "weak", "bosskill"}
-BigWigsTerestian.revision = tonumber(("$Revision$"):sub(12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"sacrifice", "weak", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsTerestian:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
 
@@ -78,7 +78,7 @@ end
 --     Event Handlers    --
 ------------------------------
 
-function BigWigsTerestian:CheckSacrifice(msg)
+function mod:CheckSacrifice(msg)
 	if not self.db.profile.sacrifice then return end
 	local splayer, stype = select(3, msg:find(L["sacrifice_trigger"]))
 	if splayer then
@@ -90,7 +90,7 @@ function BigWigsTerestian:CheckSacrifice(msg)
 	end
 end
 
-function BigWigsTerestian:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 	if self.db.profile.weak and msg:find(L["weak_trigger"]) then
 		self:Message(L["weak_message"], "Important", nil, "Alarm")
 		self:DelayedMessage(25, L["weak_warning1"], "Attention")

@@ -107,11 +107,11 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsRange = BigWigs:NewModule(L["Range"])
+local plugin = BigWigs:NewModule("Range")
 
-BigWigsRange.revision = tonumber(string.sub("$Revision$", 12, -3))
-BigWigsRange.consoleCmd = L["Range"]
-BigWigsRange.consoleOptions = {
+plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.consoleCmd = L["Range"]
+plugin.consoleOptions = {
 	type = "group",
 	name = L["Range"],
 	desc = L["Options for the combat log's range."],

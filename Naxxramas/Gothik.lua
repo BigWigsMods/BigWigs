@@ -291,21 +291,21 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsGothik = BigWigs:NewModule(boss)
-BigWigsGothik.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
-BigWigsGothik.enabletrigger = { boss }
-BigWigsGothik.wipemobs = {
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
+mod.enabletrigger = { boss }
+mod.wipemobs = {
 	L["rider_name"], L["deathknight_name"], L["trainee_name"],
 	L["spectral_rider_name"], L["spectral_deathknight_name"], L["spectral_trainee_name"]
 }
-BigWigsGothik.toggleoptions = { "room", -1, "add", "adddeath", "bosskill" }
-BigWigsGothik.revision = tonumber(string.sub("$Revision$", 12, -3))
+mod.toggleoptions = { "room", -1, "add", "adddeath", "bosskill" }
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsGothik:OnEnable()
+function mod:OnEnable()
 	self.wave = 0
 	self.tratime = 27
 	self.dktime = 77
@@ -320,7 +320,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsGothik:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
+function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 	if self.db.profile.adddeath and msg == string.format(UNITDIESOTHER, L["rider_name"]) then
 		self:TriggerEvent("BigWigs_Message", L["riderdiewarn"], "Important")
 	elseif self.db.profile.adddeath and msg == string.format(UNITDIESOTHER, L["deathknight_name"]) then
@@ -331,7 +331,7 @@ function BigWigsGothik:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 	end
 end
 
-function BigWigsGothik:StopRoom()
+function mod:StopRoom()
 	self:TriggerEvent("BigWigs_StopBar", self, L["inroombartext"])
 	self:CancelScheduledEvent("bwgothikwarn1")
 	self:CancelScheduledEvent("bwgothikwarn2")
@@ -351,12 +351,12 @@ function BigWigsGothik:StopRoom()
 	self:CancelScheduledEvent("bwgothikriderrepop")
 end
 
-function BigWigsGothik:WaveWarn(message, L, color)
+function mod:WaveWarn(message, L, color)
 	self.wave = self.wave + 1
 	if self.db.profile.add then self:TriggerEvent("BigWigs_Message", string.format(L["wave"], self.wave) .. message, color) end
 end
 
-function BigWigsGothik:Trainee()
+function mod:Trainee()
 	if self.db.profile.add then
 		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["trabar"], self.tranum), self.tratime, "Interface\\Icons\\Ability_Seal")
 	end
@@ -365,7 +365,7 @@ function BigWigsGothik:Trainee()
 	self.tranum = self.tranum + 1
 end
 
-function BigWigsGothik:DeathKnight()
+function mod:DeathKnight()
 	if self.db.profile.add then
 		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["dkbar"], self.dknum), self.dktime, "Interface\\Icons\\INV_Boots_Plate_08")
 	end
@@ -374,7 +374,7 @@ function BigWigsGothik:DeathKnight()
 	self.dknum = self.dknum + 1
 end
 
-function BigWigsGothik:Rider()
+function mod:Rider()
 	if self.db.profile.add then
 		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["riderbar"], self.ridernum), self.ridertime, "Interface\\Icons\\Spell_Shadow_DeathPact")
 	end
@@ -383,7 +383,7 @@ function BigWigsGothik:Rider()
 	self.ridernum = self.ridernum + 1
 end
 
-function BigWigsGothik:CHAT_MSG_MONSTER_YELL( msg )
+function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if msg == L["starttrigger1"] or msg == L["starttrigger2"] then
 		if self.db.profile.room then
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Important")

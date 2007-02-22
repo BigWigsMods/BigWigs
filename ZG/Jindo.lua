@@ -198,17 +198,17 @@ L:RegisterTranslations("koKR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsJindo = BigWigs:NewModule(boss)
-BigWigsJindo.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
-BigWigsJindo.enabletrigger = boss
-BigWigsJindo.toggleoptions = {"youcurse", "elsecurse", "icon", -1, "brainwash", "healing", "bosskill"}
-BigWigsJindo.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"youcurse", "elsecurse", "icon", -1, "brainwash", "healing", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsJindo:OnEnable()
+function mod:OnEnable()
 	playerName = UnitName("player")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
@@ -225,7 +225,7 @@ end
 --      Events              --
 ------------------------------
 
-function BigWigsJindo:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	if self.db.profile.brainwash and msg == L["triggerbrainwash"] then
 		self:TriggerEvent("BigWigs_Message", L["warnbrainwash"], "Urgent")
 	elseif self.db.profile.healing and msg == L["triggerhealing"] then
@@ -233,7 +233,7 @@ function BigWigsJindo:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	end
 end
 
-function BigWigsJindo:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync ~= "JindoCurse" or not rest then return end
 	local player = rest
 
@@ -250,7 +250,7 @@ function BigWigsJindo:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function BigWigsJindo:Event(msg)
+function mod:Event(msg)
 	local baPlayer = select(3, msg:find(L["triggercurse"]))
 	if baPlayer then
 		if baPlayer == L["you"] then

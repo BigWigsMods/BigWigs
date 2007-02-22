@@ -171,17 +171,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsGluth = BigWigs:NewModule(boss)
-BigWigsGluth.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
-BigWigsGluth.enabletrigger = boss
-BigWigsGluth.toggleoptions = {"enrage", "frenzy", "fear", "decimate", "bosskill"}
-BigWigsGluth.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"enrage", "frenzy", "fear", "decimate", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsGluth:OnEnable()
+function mod:OnEnable()
 	prior = nil
 	started = nil
 
@@ -204,13 +204,13 @@ function BigWigsGluth:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 end
 
-function BigWigsGluth:Frenzy( msg )
+function mod:Frenzy( msg )
 	if self.db.profile.frenzy and msg == L["frenzy_trigger"] then
 		self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Important")
 	end
 end
 
-function BigWigsGluth:Fear( msg )
+function mod:Fear( msg )
 	if self.db.profile.fear and not prior and msg:find(L["fear_trigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["fear_message"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["fear_bar"], 20, "Interface\\Icons\\Spell_Shadow_PsychicScream")
@@ -219,7 +219,7 @@ function BigWigsGluth:Fear( msg )
 	end
 end
 
-function BigWigsGluth:Decimate( msg )
+function mod:Decimate( msg )
 	if msg:find(L["decimatetrigger"]) and self.db.profile.decimate then
 		self:TriggerEvent("BigWigs_Message", L["decimatewarn"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["decimatebartext"], 105, "Interface\\Icons\\INV_Shield_01")
@@ -227,7 +227,7 @@ function BigWigsGluth:Decimate( msg )
 	end
 end
 
-function BigWigsGluth:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync( sync, rest, nick )
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
@@ -246,7 +246,7 @@ function BigWigsGluth:BigWigs_RecvSync( sync, rest, nick )
 	end
 end
 
-function BigWigsGluth:BigWigs_Message(text)
+function mod:BigWigs_Message(text)
 	if text == L["fear_warning"] then prior = nil end
 end
 

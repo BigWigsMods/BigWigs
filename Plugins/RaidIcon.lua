@@ -165,15 +165,15 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsRaidIcon = BigWigs:NewModule(L["Raid Icons"])
+local plugin = BigWigs:NewModule("Raid Icons")
 
-BigWigsRaidIcon.revision = tonumber(string.sub("$Revision$", 12, -3))
-BigWigsRaidIcon.defaultDB = {
+plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.defaultDB = {
 	place = true,
 	icon = 8,
 }
-BigWigsRaidIcon.consoleCmd = L["RaidIcon"]
-BigWigsRaidIcon.consoleOptions = {
+plugin.consoleCmd = L["RaidIcon"]
+plugin.consoleOptions = {
 	type = "group",
 	name = L["Raid Icons"],
 	desc = L["Options for Raid Icons."],
@@ -182,15 +182,15 @@ BigWigsRaidIcon.consoleOptions = {
 			type = "toggle",
 			name = L["Place Raid Icons"],
 			desc = L["Toggle placing of Raid Icons on players."],
-			get = function() return BigWigsRaidIcon.db.profile.place end,
-			set = function(v) BigWigsRaidIcon.db.profile.place = v end,
+			get = function() return plugin.db.profile.place end,
+			set = function(v) plugin.db.profile.place = v end,
 		},
 		[L["icon"]] = {
 			type = "text",
 			name = L["Set Icon"],
 			desc = L["Set which icon to place on players."],
-			get = function() return tostring(BigWigsRaidIcon.db.profile.icon) end,
-			set = function(v) BigWigsRaidIcon.db.profile.icon = tonumber(v) end,
+			get = function() return tostring(plugin.db.profile.icon) end,
+			set = function(v) plugin.db.profile.icon = tonumber(v) end,
 			validate = {
 				["1"] = L["Star"],
 				["2"] = L["Circle"],
@@ -209,7 +209,7 @@ BigWigsRaidIcon.consoleOptions = {
 --      Initialization      --
 ------------------------------
 
-function BigWigsRaidIcon:OnEnable()
+function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_SetRaidIcon")
 	self:RegisterEvent("BigWigs_RemoveRaidIcon")
 
@@ -218,7 +218,7 @@ function BigWigsRaidIcon:OnEnable()
 	end
 end
 
-function BigWigsRaidIcon:BigWigs_SetRaidIcon(player)
+function plugin:BigWigs_SetRaidIcon(player)
 	if not player or not self.db.profile.place then return end
 	local icon = self.db.profile.icon or 8
 	local num = GetNumRaidMembers()
@@ -232,7 +232,7 @@ function BigWigsRaidIcon:BigWigs_SetRaidIcon(player)
 	end
 end
 
-function BigWigsRaidIcon:BigWigs_RemoveRaidIcon()
+function plugin:BigWigs_RemoveRaidIcon()
 	if not lastplayer or not self.db.profile.place then return end
 	local num = GetNumRaidMembers()
 	for i = 1, num do

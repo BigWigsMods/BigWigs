@@ -128,11 +128,11 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsTest = BigWigs:NewModule(L["Test"])
-BigWigsTest.revision = tonumber(string.sub("$Revision$", 12, -3))
+local plugin = BigWigs:NewModule("Test")
+plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
 
-BigWigsTest.consoleCmd = L["Test"]
-BigWigsTest.consoleOptions = {
+plugin.consoleCmd = L["Test"]
+plugin.consoleOptions = {
 	type = "group",
 	name = L["Test"],
 	desc = L["Commands for testing bars, messages and synchronization."],
@@ -141,37 +141,37 @@ BigWigsTest.consoleOptions = {
 			type = "execute",
 			name = L["Local test"],
 			desc = L["Perform a local test of BigWigs."],
-			func = function() BigWigsTest:TriggerEvent("BigWigs_Test") end,
+			func = function() plugin:TriggerEvent("BigWigs_Test") end,
 		},
 		[L["sync"]] = {
 			type = "execute",
 			name = L["Sync test"],
 			desc = L["Perform a sync test of BigWigs."],
-			func = function() BigWigsTest:TriggerEvent("BigWigs_SyncTest") end,
+			func = function() plugin:TriggerEvent("BigWigs_SyncTest") end,
 			disabled = function() return ( not IsRaidLeader() and not IsRaidOfficer() ) end,
 		},
 	}
 }
 
-function BigWigsTest:OnEnable()
+function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_Test")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "TestSync", 5)
 	self:RegisterEvent("BigWigs_SyncTest")
 end
 
-function BigWigsTest:BigWigs_SyncTest()
+function plugin:BigWigs_SyncTest()
 	self:TriggerEvent("BigWigs_SendSync", "TestSync")
 end
 
-function BigWigsTest:BigWigs_RecvSync(sync)
+function plugin:BigWigs_RecvSync(sync)
 	if sync == "TestSync" then
 		self:TriggerEvent("BigWigs_Message", L["Testing Sync"], "Positive")
 		self:TriggerEvent("BigWigs_StartBar", self, L["Testing Sync"], 10, "Interface\\Icons\\Spell_Frost_FrostShock", true, "Green", "Blue", "Yellow", "Red")
 	end
 end
 
-function BigWigsTest:BigWigs_Test()
+function plugin:BigWigs_Test()
 	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar"], 15, "Interface\\Icons\\Spell_Nature_ResistNature")
 	self:TriggerEvent("BigWigs_Message", L["Testing"], "Attention", true, "Long")
 	self:ScheduleEvent("BigWigs_Message", 5, L["OMG Bear!"], "Important", true, "Alert")

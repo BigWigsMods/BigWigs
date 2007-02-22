@@ -326,17 +326,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsNefarian = BigWigs:NewModule(boss)
-BigWigsNefarian.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
-BigWigsNefarian.enabletrigger = { boss, victor }
-BigWigsNefarian.toggleoptions = {"shadowflame", "fear", "classcall", "otherwarn", "bosskill"}
-BigWigsNefarian.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
+mod.enabletrigger = { boss, victor }
+mod.toggleoptions = {"shadowflame", "fear", "classcall", "otherwarn", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsNefarian:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -365,7 +365,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsNefarian:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["landing_soon_trigger"]) then
 		self:TriggerEvent("BigWigs_StartBar", self, L["landing_warning"], 10, "Interface\\Icons\\INV_Misc_Head_Dragon_Black")
 		return
@@ -386,7 +386,7 @@ function BigWigsNefarian:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function BigWigsNefarian:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["fear_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "NefarianFear")
 	elseif msg:find(L["shadowflame_trigger"]) then
@@ -394,7 +394,7 @@ function BigWigsNefarian:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	end
 end
 
-function BigWigsNefarian:BigWigs_RecvSync( sync )
+function mod:BigWigs_RecvSync( sync )
 	if sync == "NefarianShadowflame" and self.db.profile.shadowflame then
 		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Important")
 	elseif sync == "NefarianFear" and self.db.profile.fear then

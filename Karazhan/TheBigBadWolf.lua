@@ -74,17 +74,17 @@ L:RegisterTranslations("frFR", function() return {
 --   Module Declaration    --
 ----------------------------------
 
-BigWigsTheBigBadWolf = BigWigs:NewModule(boss)
-BigWigsTheBigBadWolf.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-BigWigsTheBigBadWolf.enabletrigger = {lady, boss}
-BigWigsTheBigBadWolf.toggleoptions = {"youriding", "elseriding", "icon", "bosskill"}
-BigWigsTheBigBadWolf.revision = tonumber(("$Revision$"):sub(12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.enabletrigger = {lady, boss}
+mod.toggleoptions = {"youriding", "elseriding", "icon", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization     --
 ------------------------------
 
-function BigWigsTheBigBadWolf:OnEnable()
+function mod:OnEnable()
 	playerName = UnitName("player")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
@@ -97,7 +97,7 @@ end
 --     Event Handlers    --
 ------------------------------
 
-function BigWigsTheBigBadWolf:RidingEvent(msg)
+function mod:RidingEvent(msg)
 	local rplayer, rtype = select(3, msg:find(L["riding_trigger"]))
 	if rplayer then
 		if rplayer == L["you"] then

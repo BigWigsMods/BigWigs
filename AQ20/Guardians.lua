@@ -222,17 +222,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsGuardians = BigWigs:NewModule(boss)
-BigWigsGuardians.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
-BigWigsGuardians.enabletrigger = boss
-BigWigsGuardians.toggleoptions = {"summon", "explode", "enrage", -1, "plagueyou", "plagueother", "icon", "bosskill"}
-BigWigsGuardians.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"summon", "explode", "enrage", -1, "plagueyou", "plagueother", "icon", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsGuardians:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
@@ -245,13 +245,13 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsGuardians:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if msg == string.format(UNITDIESOTHER, boss) then
 		self.core:ToggleModuleActive(self, false)
 	end
 end
 
-function BigWigsGuardians:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if self.db.profile.explode and msg == L["explodetrigger"] then 
 		self:TriggerEvent("BigWigs_Message", L["explodewarn"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["explodewarn"], 6, "Interface\\Icons\\Spell_Fire_SelfDestruct")
@@ -260,7 +260,7 @@ function BigWigsGuardians:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	end
 end
 
-function BigWigsGuardians:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	if self.db.profile.summon and msg == L["summonguardtrigger"] then 
 		self:TriggerEvent("BigWigs_Message", L["summonguardwarn"], "Attention")
 	elseif self.db.profile.summon and msg == L["summonwarriortrigger"] then 
@@ -268,7 +268,7 @@ function BigWigsGuardians:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	end
 end
 
-function BigWigsGuardians:CheckPlague( msg )
+function mod:CheckPlague( msg )
 	local player, type = select(3, msg:find(L["plaguetrigger"]))
 	if player and type then
 		if self.db.profile.plagueyou and player == L["plagueyou"] and type == L["plagueare"] then

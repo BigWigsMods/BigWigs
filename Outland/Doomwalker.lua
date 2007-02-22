@@ -44,18 +44,18 @@ L:RegisterTranslations("enUS", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsDoomwalker = BigWigs:NewModule(boss, "AceHook-2.1")
-BigWigsDoomwalker.zonename = AceLibrary("Babble-Zone-2.2")["Shadowmoon Valley"]
-BigWigsDoomwalker.otherMenu = "Outland"
-BigWigsDoomwalker.enabletrigger = boss
-BigWigsDoomwalker.toggleoptions = { "overrun", "earthquake", "enrage", "bosskill" }
-BigWigsDoomwalker.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss, "AceHook-2.1")
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Shadowmoon Valley"]
+mod.otherMenu = "Outland"
+mod.enabletrigger = boss
+mod.toggleoptions = { "overrun", "earthquake", "enrage", "bosskill" }
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsDoomwalker:OnEnable()
+function mod:OnEnable()
 	started = nil
 	enrageAnnounced = nil
 
@@ -79,7 +79,7 @@ end
 --      Hooks               --
 ------------------------------
 
-function BigWigsDoomwalker:ChatFrame_MessageEventHandler(event, ...)
+function mod:ChatFrame_MessageEventHandler(event, ...)
 	if event:find("EMOTE") and (type(arg2) == "nil" or not arg2) then
 		arg2 = boss
 	end
@@ -90,7 +90,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsDoomwalker:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync( sync, rest, nick )
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
@@ -114,19 +114,19 @@ function BigWigsDoomwalker:BigWigs_RecvSync( sync, rest, nick )
 	end
 end
 
-function BigWigsDoomwalker:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 	if msg:find(L["earthquake_trigger"]) then
 		self:Sync("DoomwalkerEarthquake")
 	end
 end
 
-function BigWigsDoomwalker:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["overrun_trigger"]) then
 		self:Sync("DoomwalkerOverrun")
 	end
 end
 
-function BigWigsDoomwalker:UNIT_HEALTH(msg)
+function mod:UNIT_HEALTH(msg)
 	if not self.db.profile.enrage then return end
 	if UnitName(msg) == boss then
 		local health = UnitHealth(arg1)

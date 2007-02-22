@@ -244,17 +244,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsBaronGeddon = BigWigs:NewModule(boss)
-BigWigsBaronGeddon.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
-BigWigsBaronGeddon.enabletrigger = boss
-BigWigsBaronGeddon.toggleoptions = {"inferno", "service", -1, "bombtimer", "youbomb", "elsebomb", "icon", "bosskill"}
-BigWigsBaronGeddon.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"inferno", "service", -1, "bombtimer", "youbomb", "elsebomb", "icon", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsBaronGeddon:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
@@ -271,7 +271,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsBaronGeddon:Event(msg)
+function mod:Event(msg)
 	local player, type = select(3, msg:find(L["bomb_trigger"]))
 	if player and type then
 		if player == L["you"] and type == L["are"] then
@@ -281,20 +281,20 @@ function BigWigsBaronGeddon:Event(msg)
 	end
 end
 
-function BigWigsBaronGeddon:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if msg == L["inferno_trigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "GeddonInferno")
 	end
 end
 
-function BigWigsBaronGeddon:CHAT_MSG_MONSTER_EMOTE(msg)
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["service_trigger"] and self.db.profile.service then
 		self:TriggerEvent("BigWigs_StartBar", self, L["service_bar"], 5, "Interface\\Icons\\Spell_Shadow_MindBomb", "Red")
 		self:TriggerEvent("BigWigs_Message", L["service_message"], "Important")
 	end
 end
 
-function BigWigsBaronGeddon:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "GeddonBomb" and rest then
 		local player = rest
 		

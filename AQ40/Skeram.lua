@@ -164,17 +164,17 @@ L:RegisterTranslations("koKR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsSkeram = BigWigs:NewModule(boss)
-BigWigsSkeram.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
-BigWigsSkeram.enabletrigger = boss
-BigWigsSkeram.toggleoptions = {"ae", "split", -1, "mc", "icon", "bosskill"}
-BigWigsSkeram.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"ae", "split", -1, "mc", "icon", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsSkeram:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
@@ -187,7 +187,7 @@ end
 
 -- Note that we do not sync the MC at the moment, since you really only care
 -- about people that are MC'ed close to you anyway.
-function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
 	local player, type = select(3, msg:find(L["mcplayer"]))
 	if player and type then
 		if player == L["mcyou"] and type == L["mcare"] then
@@ -203,13 +203,13 @@ function BigWigsSkeram:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
 	end
 end
 
-function BigWigsSkeram:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg == L["aetrigger"] and self.db.profile.ae then
 		self:TriggerEvent("BigWigs_Message", L["aewarn"], "Urgent")
 	end
 end
 
-function BigWigsSkeram:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg:find(L["splittrigger"]) and self.db.profile.split then
 		self:TriggerEvent("BigWigs_Message", L["splitwarn"], "Important")
 	end

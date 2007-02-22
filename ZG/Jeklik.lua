@@ -126,17 +126,17 @@ L:RegisterTranslations("koKR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsJeklik = BigWigs:NewModule(boss)
-BigWigsJeklik.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
-BigWigsJeklik.enabletrigger = boss
-BigWigsJeklik.toggleoptions = {"swarm", "heal", "bomb", "bosskill"}
-BigWigsJeklik.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"swarm", "heal", "bomb", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsJeklik:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -146,13 +146,13 @@ end
 --      Events              --
 ------------------------------
 
-function BigWigsJeklik:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.bomb and msg:find(L["bomb_trigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["bomb_message"], "Attention")
 	end
 end
 
-function BigWigsJeklik:CHAT_MSG_MONSTER_EMOTE(msg)
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if self.db.profile.heal and msg:find(L["heal_trigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Urgent")
 	elseif self.db.profile.swarm and msg:find(L["swarm_trigger"]) then

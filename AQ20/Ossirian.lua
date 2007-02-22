@@ -149,17 +149,17 @@ L:RegisterTranslations("koKR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsOssirian = BigWigs:NewModule(boss)
-BigWigsOssirian.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
-BigWigsOssirian.enabletrigger = boss
-BigWigsOssirian.toggleoptions = {"supreme", "debuff", "bosskill"}
-BigWigsOssirian.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"supreme", "debuff", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsOssirian:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
@@ -167,20 +167,20 @@ function BigWigsOssirian:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "OssirianWeakness", 10)
 end
 
-function BigWigsOssirian:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if self.db.profile.supreme and arg1 == L["supremetrigger"] then
 		self:TriggerEvent("BigWigs_Message", L["supremewarn"], "Attention")
 	end
 end
 
-function BigWigsOssirian:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE( msg )
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE( msg )
 	local debuffName = select(3, msg:find(L["debufftrigger"]))
 	if debuffName and debuffName ~= L["expose"] and L:HasReverseTranslation(debuffName) then
 		self:TriggerEvent("BigWigs_SendSync", "OssirianWeakness "..L:GetReverseTranslation(debuffName))
 	end
 end
 
-function BigWigsOssirian:BigWigs_RecvSync(sync, debuffKey)
+function mod:BigWigs_RecvSync(sync, debuffKey)
 	if sync ~= "OssirianWeakness" or not debuffKey or not L:HasTranslation(debuffKey) then return end
 
 	if self.db.profile.debuff then

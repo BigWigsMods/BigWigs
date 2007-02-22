@@ -94,16 +94,16 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsSound = BigWigs:NewModule(L["Sounds"])
+local plugin = BigWigs:NewModule("Sounds")
 
-BigWigsSound.revision = tonumber(string.sub("$Revision$", 12, -3))
-BigWigsSound.defaultDB = {
+plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.defaultDB = {
 	defaultonly = false,
 	sound = true,
 	sounds = {},
 }
-BigWigsSound.consoleCmd = L["Sounds"]
-BigWigsSound.consoleOptions = {
+plugin.consoleCmd = L["Sounds"]
+plugin.consoleOptions = {
 	type = "group",
 	name = L["Sounds"],
 	desc = L["Options for sounds."],
@@ -118,19 +118,19 @@ BigWigsSound.consoleOptions = {
 			type = "toggle",
 			name = L["Default only"],
 			desc = L["Use only the default sound."],
-			get = function() return BigWigsSound.db.profile.defaultonly end,
-			set = function(v) BigWigsSound.db.profile.defaultonly = v end,
+			get = function() return plugin.db.profile.defaultonly end,
+			set = function(v) plugin.db.profile.defaultonly = v end,
 			order = 201,
-			disabled = function() return not BigWigsSound.core:IsModuleActive(BigWigsSound) end,
+			disabled = function() return not plugin.core:IsModuleActive(plugin) end,
 		},
 		[L["toggle"]] = {
 			type = "toggle",
 			name = L["Sounds"],
 			desc = L["Toggle all sounds on or off."],
-			get = function() return BigWigsSound.db.profile.sound end,
+			get = function() return plugin.db.profile.sound end,
 			set = function(v)
-				BigWigsSound.db.profile.sound = v
-				BigWigs:ToggleModuleActive(BigWigsSound, v)
+				plugin.db.profile.sound = v
+				BigWigs:ToggleModuleActive(plugin, v)
 			end,
 			order = 202,
 		},
@@ -141,27 +141,27 @@ BigWigsSound.consoleOptions = {
 --      Initialization      --
 ------------------------------
 
-function BigWigsSound:OnRegister()
+function plugin:OnRegister()
 	for k, v in pairs(sounds) do
 		self.defaultDB.sounds[k] = true
 		self.consoleOptions.args[k] = {
 			type = "toggle",
 			name = k,
 			desc = string.format(L["Toggle to enable or disable %q from being played, or Ctrl-Click to preview."], k),
-			get = function() return BigWigsSound.db.profile.sounds[k] end,
+			get = function() return plugin.db.profile.sounds[k] end,
 			set = function(v)
 				if IsControlKeyDown() then
 					PlaySoundFile(sounds[k])
 				else
-					BigWigsSound.db.profile.sounds[k] = v
+					plugin.db.profile.sounds[k] = v
 				end
 			end,
-			disabled = function() return not BigWigsSound.core:IsModuleActive(self) or BigWigsSound.db.profile.defaultonly end,
+			disabled = function() return not plugin.core:IsModuleActive(self) or plugin.db.profile.defaultonly end,
 		}
 	end
 end
 
-function BigWigsSound:OnEnable()
+function plugin:OnEnable()
 	if not self.db.profile.sound then
 		self.core:ToggleModuleActive(self, false)
 		return
@@ -171,14 +171,14 @@ function BigWigsSound:OnEnable()
 	self:RegisterEvent("BigWigs_Sound")
 end
 
-function BigWigsSound:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
+function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 	if not text or sound == false or broadcastonly or not self.db.profile.sound or (sound and not self.db.profile.sounds[sound]) then return end
 
 	if sounds[sound] and not self.db.profile.defaultonly then PlaySoundFile(sounds[sound])
 	else PlaySound("RaidWarning") end
 end
 
-function BigWigsSound:BigWigs_Sound( sound )
+function plugin:BigWigs_Sound( sound )
 	if not self.db.profile.sound or (sound and not self.db.profile.sounds[sound]) then return end
 	if sounds[sound] and not self.db.profile.defaultonly then PlaySoundFile(sounds[sound])
 	else PlaySound("RaidWarning") end

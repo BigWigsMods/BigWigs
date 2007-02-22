@@ -170,17 +170,17 @@ L:RegisterTranslations("zhTW", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsRazorgore = BigWigs:NewModule(boss)
-BigWigsRazorgore.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
-BigWigsRazorgore.enabletrigger = { boss, controller }
-BigWigsRazorgore.toggleoptions = { "mc", "eggs", "phase", "bosskill" }
-BigWigsRazorgore.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
+mod.enabletrigger = { boss, controller }
+mod.toggleoptions = { "mc", "eggs", "phase", "bosskill" }
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsRazorgore:OnEnable()
+function mod:OnEnable()
 	eggs = 0
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -195,7 +195,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsRazorgore:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["start_trigger"]) then
 		if self.db.profile.phase then
 			self:TriggerEvent("BigWigs_Message", L["start_message"], "Urgent")
@@ -211,13 +211,13 @@ function BigWigsRazorgore:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function BigWigsRazorgore:CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF(msg)
+function mod:CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF(msg)
 	if msg:find(L["egg_trigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "RazorgoreEgg "..tostring(eggs + 1))
 	end
 end
 
-function BigWigsRazorgore:BigWigs_RecvSync(sync, rest)
+function mod:BigWigs_RecvSync(sync, rest)
 	if sync ~= "RazorgoreEgg" or not rest then return end
 	rest = tonumber(rest)
 

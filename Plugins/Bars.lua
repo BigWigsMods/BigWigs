@@ -7,6 +7,7 @@
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsBars")
 local surface = AceLibrary("Surface-1.0")
 
+local colorModule = nil
 local anchor = nil
 
 ----------------------------
@@ -152,15 +153,15 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsBars = BigWigs:NewModule(L["Bars"])
-BigWigsBars.revision = tonumber(string.sub("$Revision$", 12, -3))
-BigWigsBars.defaultDB = {
+local plugin = BigWigs:NewModule("Bars")
+plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.defaultDB = {
 	growup = false,
 	scale = 1.0,
 	texture = "BantoBar",
 }
-BigWigsBars.consoleCmd = L["Bars"]
-BigWigsBars.consoleOptions = {
+plugin.consoleCmd = L["Bars"]
+plugin.consoleOptions = {
 	type = "group",
 	name = L["Bars"],
 	desc = L["Options for the timer bars."],
@@ -172,9 +173,9 @@ BigWigsBars.consoleOptions = {
 			get = function() return anchor:IsShown() end,
 			set = function(v)
 				if v then
-					BigWigsBars:BigWigs_ShowAnchors()
+					plugin:BigWigs_ShowAnchors()
 				else
-					BigWigsBars:BigWigs_HideAnchors()
+					plugin:BigWigs_HideAnchors()
 				end
 			end,
 			order = 1,
@@ -183,7 +184,7 @@ BigWigsBars.consoleOptions = {
 			type = "execute",
 			name = L["Reset position"],
 			desc = L["Reset the anchor position, moving it to the center of your screen."],
-			func = function() BigWigsBars:ResetAnchor() end,
+			func = function() plugin:ResetAnchor() end,
 			order = 2,
 		},
 		spacer = {
@@ -195,8 +196,8 @@ BigWigsBars.consoleOptions = {
 			type = "toggle",
 			name = L["Grow upwards"],
 			desc = L["Toggle bars grow upwards/downwards from anchor."],
-			get = function() return BigWigsBars.db.profile.growup end,
-			set = function(v) BigWigsBars.db.profile.growup = v end,
+			get = function() return plugin.db.profile.growup end,
+			set = function(v) plugin.db.profile.growup = v end,
 			order = 100,
 		},
 		[L["scale"]] = {
@@ -206,16 +207,16 @@ BigWigsBars.consoleOptions = {
 			min = 0.2,
 			max = 2.0,
 			step = 0.1,
-			get = function() return BigWigsBars.db.profile.scale end,
-			set = function(v) BigWigsBars.db.profile.scale = v end,
+			get = function() return plugin.db.profile.scale end,
+			set = function(v) plugin.db.profile.scale = v end,
 			order = 101,
 		},
 		[L["Texture"]] = {
 			type = "text",
 			name = L["Texture"],
 			desc = L["Set the texture for the timer bars."],
-			get = function() return BigWigsBars.db.profile.texture end,
-			set = function(v) BigWigsBars.db.profile.texture = v end,
+			get = function() return plugin.db.profile.texture end,
+			set = function(v) plugin.db.profile.texture = v end,
 			validate = surface:List(),
 			order = 102,
 		},
@@ -226,7 +227,7 @@ BigWigsBars.consoleOptions = {
 --      Initialization      --
 ------------------------------
 
-function BigWigsBars:OnRegister()
+function plugin:OnRegister()
 	local path = "Interface\\AddOns\\BigWigs\\Textures\\"
 	surface:Register("Otravi",   path.."otravi")
 	surface:Register("Smooth",   path.."smooth")
@@ -235,7 +236,7 @@ function BigWigsBars:OnRegister()
 	surface:Register("BantoBar", path.."default")
 end
 
-function BigWigsBars:OnEnable()
+function plugin:OnEnable()
 	if not surface:Fetch(self.db.profile.texture) then self.db.profile.texture = "BantoBar" end
 
 	if not anchor then
@@ -246,21 +247,27 @@ function BigWigsBars:OnEnable()
 	self:RegisterEvent("BigWigs_HideAnchors")
 	self:RegisterEvent("BigWigs_StartBar")
 	self:RegisterEvent("BigWigs_StopBar")
+
+	if self.core:HasModule("Colors") then
+		colorModule = self.core:GetModule("Colors")
+	else
+		colorModule = nil
+	end
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsBars:BigWigs_ShowAnchors()
+function plugin:BigWigs_ShowAnchors()
 	anchor:Show()
 end
 
-function BigWigsBars:BigWigs_HideAnchors()
+function plugin:BigWigs_HideAnchors()
 	anchor:Hide()
 end
 
-function BigWigsBars:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10)
+function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10)
 	if not text or not time then return end
 	local id = "BigWigsBar "..text
 	local u = self.db.profile.growup
@@ -271,9 +278,9 @@ function BigWigsBars:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, 
 	module:SetCandyBarGroupGrowth("BigWigsGroup", u)
 
 	local bc, balpha, txtc
-	if type(BigWigsColors) == "table" then
-		if type(otherc) ~= "boolean" or not otherc then c1, c2, c3, c4, c5, c6, c7, c8, c9, c10 = BigWigsColors:BarColor(time) end
-		bc, balpha, txtc = BigWigsColors.db.profile.bgc, BigWigsColors.db.profile.bga, BigWigsColors.db.profile.txtc
+	if type(colorModule) == "table" then
+		if type(otherc) ~= "boolean" or not otherc then c1, c2, c3, c4, c5, c6, c7, c8, c9, c10 = colorModule:BarColor(time) end
+		bc, balpha, txtc = colorModule.db.profile.bgc, colorModule.db.profile.bga, colorModule.db.profile.txtc
 	end
 
 	module:RegisterCandyBar(id, time, text, icon, c1, c2, c3, c4, c5, c6, c8, c9, c10)
@@ -287,7 +294,7 @@ function BigWigsBars:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, 
 	module:StartCandyBar(id, true)
 end
 
-function BigWigsBars:BigWigs_StopBar(module, text)
+function plugin:BigWigs_StopBar(module, text)
 	if not text then return end
 	module:UnregisterCandyBar("BigWigsBar "..text)
 end
@@ -296,7 +303,7 @@ end
 --    Create the Anchor     --
 ------------------------------
 
-function BigWigsBars:SetupFrames()
+function plugin:SetupFrames()
 	anchor = CreateFrame("Frame", "BigWigsBarAnchor", UIParent)
 	anchor:Hide()
 
@@ -357,21 +364,21 @@ function BigWigsBars:SetupFrames()
 	self:RestorePosition()
 end
 
-function BigWigsBars:ResetAnchor()
+function plugin:ResetAnchor()
 	anchor:ClearAllPoints()
 	anchor:SetPoint("CENTER", UIParent, "CENTER")
 	self.db.profile.posx = nil
 	self.db.profile.posy = nil
 end
 
-function BigWigsBars:SavePosition()
+function plugin:SavePosition()
 	local s = anchor:GetEffectiveScale()
 
 	self.db.profile.posx = anchor:GetLeft() * s
 	self.db.profile.posy = anchor:GetTop() * s
 end
 
-function BigWigsBars:RestorePosition()
+function plugin:RestorePosition()
 	local x = self.db.profile.posx
 	local y = self.db.profile.posy
 

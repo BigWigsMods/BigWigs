@@ -90,17 +90,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsGehennas = BigWigs:NewModule(boss)
-BigWigsGehennas.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
-BigWigsGehennas.enabletrigger = boss
-BigWigsGehennas.toggleoptions = {"curse", "bosskill"}
-BigWigsGehennas.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"curse", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsGehennas:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
@@ -113,7 +113,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsGehennas:Event(msg)
+function mod:Event(msg)
 	if (not prior and msg:find(L["trigger1"]) and not self.db.profile.notCurse) then
 		self:TriggerEvent("BigWigs_Message", L["warn2"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 25, L["warn1"], "Urgent")
@@ -122,6 +122,6 @@ function BigWigsGehennas:Event(msg)
 	end
 end
 
-function BigWigsGehennas:BigWigs_Message(msg)
+function mod:BigWigs_Message(msg)
 	if (msg == L["warn1"]) then prior = nil end
 end

@@ -101,17 +101,17 @@ L:RegisterTranslations("koKR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsVenoxis = BigWigs:NewModule(boss)
-BigWigsVenoxis.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
-BigWigsVenoxis.enabletrigger = boss
-BigWigsVenoxis.toggleoptions = {"renew", "phase", "bosskill"}
-BigWigsVenoxis.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"renew", "phase", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsVenoxis:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -121,13 +121,13 @@ end
 --      Events              --
 ------------------------------
 
-function BigWigsVenoxis:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if self.db.profile.renew and msg == L["renew_trigger"] then
 		self:TriggerEvent("BigWigs_Message", L["renew_message"], "Urgent")
 	end
 end
 
-function BigWigsVenoxis:CHAT_MSG_MONSTER_YELL( msg )
+function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.phase and msg:find(L["phase2_trigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["phase2_message"], "Attention")
 	end

@@ -179,11 +179,11 @@ L:RegisterTranslations("frFR", function() return {
 --      Addon Declaration      --
 ---------------------------------
 
-BigWigsVersionQuery = BigWigs:NewModule("Version Query")
+local plugin = BigWigs:NewModule("Version Query")
 
-BigWigsVersionQuery.revision = tonumber(string.sub("$Revision$", 12, -3))
-BigWigsVersionQuery.consoleCmd = L["Version"]
-BigWigsVersionQuery.consoleOptions = {
+plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.consoleCmd = L["Version"]
+plugin.consoleOptions = {
 	type = "group",
 	name = L["Version Query"],
 	desc = L["Commands for querying the raid for Big Wigs versions."],
@@ -192,13 +192,13 @@ BigWigsVersionQuery.consoleOptions = {
 			type = "execute",
 			name = L["BigWigs"],
 			desc = L["Runs a version query on the BigWigs core."],
-			func = function() BigWigsVersionQuery:QueryVersion("BigWigs") end,
+			func = function() plugin:QueryVersion("BigWigs") end,
 		},
 		[L["current"]] = {
 			type = "execute",
 			name = L["Current zone"],
 			desc = L["Runs a version query on your current zone."],
-			func = function() BigWigsVersionQuery:QueryVersion() end,
+			func = function() plugin:QueryVersion() end,
 		},
 		[L["zone"]] = {
 			type = "text",
@@ -206,7 +206,7 @@ BigWigsVersionQuery.consoleOptions = {
 			desc = L["Runs a version query on the given zone."],
 			usage = L["<zone>"],
 			get = false,
-			set = function(zone) BigWigsVersionQuery:QueryVersion(zone) end,
+			set = function(zone) plugin:QueryVersion(zone) end,
 		},
 	}
 }
@@ -215,7 +215,7 @@ BigWigsVersionQuery.consoleOptions = {
 --      Initialization      --
 ------------------------------
 
-function BigWigsVersionQuery:OnEnable()
+function plugin:OnEnable()
 	self.queryRunning = nil
 	self.responseTable = {}
 	self.zoneRevisions = nil
@@ -228,7 +228,7 @@ function BigWigsVersionQuery:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "BWVR", 0)
 end
 
-function BigWigsVersionQuery:PopulateRevisions()
+function plugin:PopulateRevisions()
 	self.zoneRevisions = {}
 	if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
 	for name, module in self.core:IterateModules() do
@@ -252,7 +252,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsVersionQuery:UpdateVersions()
+function plugin:UpdateVersions()
 	if not tablet:IsRegistered("BigWigs_VersionQuery") then
 		tablet:Register("BigWigs_VersionQuery",
 			"children", function()
@@ -292,7 +292,7 @@ function BigWigsVersionQuery:UpdateVersions()
 	end
 end
 
-function BigWigsVersionQuery:OnTooltipUpdate()
+function plugin:OnTooltipUpdate()
 	local infoCat = tablet:AddCategory(
 		"columns", 2,
 		"child_textR", 1,
@@ -331,14 +331,14 @@ function BigWigsVersionQuery:OnTooltipUpdate()
 		alertCat:AddLine(
 			"text", L["Notify people with older versions that there is a new version available."],
 			"wrap", true,
-			"func", function() BigWigsVersionQuery:AlertOldRevisions() end
+			"func", function() plugin:AlertOldRevisions() end
 		)
 	end
 
 	tablet:SetHint(L["Green versions are newer than yours, red are older, and white are the same."])
 end
 
-function BigWigsVersionQuery:AlertOldRevisions()
+function plugin:AlertOldRevisions()
 	if not self.responseTable or (not IsRaidLeader() and not IsRaidOfficer()) then return end
 	local myVersion = self.zoneRevisions[self.currentZone]
 	if not myVersion then return end
@@ -349,7 +349,7 @@ function BigWigsVersionQuery:AlertOldRevisions()
 	end
 end
 
-function BigWigsVersionQuery:QueryVersion(zone)
+function plugin:QueryVersion(zone)
 	if self.queryRunning then
 		self.core:Print(L["Query already running, please wait 5 seconds before trying again."])
 		return
@@ -399,7 +399,7 @@ function BigWigsVersionQuery:QueryVersion(zone)
 	self:TriggerEvent("BigWigs_SendSync", "BWVQ "..zone)
 end
 
-function BigWigsVersionQuery:GetVersion(zone)
+function plugin:GetVersion(zone)
 	if not self.zoneRevisions then self:PopulateRevisions() end
 	local rev = -1
 	if self.zoneRevisions[zone] then
@@ -412,7 +412,7 @@ function BigWigsVersionQuery:GetVersion(zone)
 end
 
 --[[ Parses the new style reply, which is "1111 <nick>" ]]
-function BigWigsVersionQuery:ParseReply(reply)
+function plugin:ParseReply(reply)
 	local first, last = reply:find(" ")
 	if not first or not last then return reply, nil end
 
@@ -429,7 +429,7 @@ end
 --  New Style:           REV QuereeNick
 --]]
 
-function BigWigsVersionQuery:BigWigs_RecvSync(sync, rest, nick)
+function plugin:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "BWVQ" and nick ~= UnitName("player") and rest then
 		self:TriggerEvent("BigWigs_SendSync", "BWVR " .. self:GetVersion(rest) .. " " .. nick)
 	elseif sync == "BWVR" and self.queryRunning and nick and rest then

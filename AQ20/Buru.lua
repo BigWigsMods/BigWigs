@@ -115,22 +115,22 @@ L:RegisterTranslations("koKR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsBuru = BigWigs:NewModule(boss)
-BigWigsBuru.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
-BigWigsBuru.enabletrigger = boss
-BigWigsBuru.toggleoptions = {"you", "other", "icon", "bosskill"}
-BigWigsBuru.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Ruins of Ahn'Qiraj"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"you", "other", "icon", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsBuru:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
-function BigWigsBuru:CHAT_MSG_MONSTER_EMOTE( msg )
+function mod:CHAT_MSG_MONSTER_EMOTE( msg )
 	if GetLocale() == "koKR" then
 		msg = msg:gsub("%%s|1이;가; ", "")
 	end

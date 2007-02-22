@@ -17,16 +17,16 @@ L:RegisterTranslations("enUS", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsGolemagg = BigWigs:NewModule(boss)
-BigWigsGolemagg.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
-BigWigsGolemagg.enabletrigger = boss
-BigWigsGolemagg.toggleoptions = {"bosskill"}
-BigWigsGolemagg.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsGolemagg:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end

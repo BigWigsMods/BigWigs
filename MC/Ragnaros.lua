@@ -218,18 +218,18 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsRagnaros = BigWigs:NewModule(boss)
-BigWigsRagnaros.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
-BigWigsRagnaros.enabletrigger = boss
-BigWigsRagnaros.wipemobs = { L["sonofflame"] }
-BigWigsRagnaros.toggleoptions = { "sondeath", "submerge", "emerge", "aoeknock", "bosskill" }
-BigWigsRagnaros.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
+mod.enabletrigger = boss
+mod.wipemobs = { L["sonofflame"] }
+mod.toggleoptions = { "sondeath", "submerge", "emerge", "aoeknock", "bosskill" }
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsRagnaros:OnEnable()
+function mod:OnEnable()
 	started = nil
 	self.sonsdead = 0
 
@@ -246,7 +246,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsRagnaros:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if msg == string.format(UNITDIESOTHER, L["sonofflame"]) then
 		self:TriggerEvent("BigWigs_SendSync", "RagnarosSonDead "..tostring(self.sonsdead + 1) )
 	else
@@ -254,7 +254,7 @@ function BigWigsRagnaros:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	end
 end
 
-function BigWigsRagnaros:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_ENABLED") then
@@ -279,7 +279,7 @@ function BigWigsRagnaros:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function BigWigsRagnaros:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["knockback_trigger"]) and self.db.profile.aoeknock then
 		self:TriggerEvent("BigWigs_Message", L["knockback_message"], "Important")
 		self:ScheduleEvent("bwragnarosaekbwarn", "BigWigs_Message", 23, L["knockback_soon_message"], "Urgent")
@@ -289,7 +289,7 @@ function BigWigsRagnaros:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function BigWigsRagnaros:Submerge()
+function mod:Submerge()
 	self:CancelScheduledEvent("bwragnarosaekbwarn")
 	self:TriggerEvent("BigWigs_StopBar", self, L["knockback_bar"])
 
@@ -304,7 +304,7 @@ function BigWigsRagnaros:Submerge()
 	self:ScheduleEvent("bwragnarosemerge", self.Emerge, 90, self)
 end
 
-function BigWigsRagnaros:EmergeCheck()
+function mod:EmergeCheck()
 	if UnitExists("target") and UnitName("target") == boss and UnitExists("targettarget") then
 		self:Emerge()
 		return
@@ -319,7 +319,7 @@ function BigWigsRagnaros:EmergeCheck()
 	end
 end
 
-function BigWigsRagnaros:Emerge()
+function mod:Emerge()
 	self:CancelScheduledEvent("bwragnarosemergecheck")
 	self:CancelScheduledEvent("bwragnarosemergewarn")
 	self:TriggerEvent("BigWigs_StopBar", self, L["emerge_bar"])

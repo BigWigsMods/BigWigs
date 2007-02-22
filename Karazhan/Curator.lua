@@ -119,17 +119,17 @@ L:RegisterTranslations("deDE", function() return {
 --   Module Declaration   --
 ----------------------------------
 
-BigWigsCurator = BigWigs:NewModule(boss)
-BigWigsCurator.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-BigWigsCurator.enabletrigger = boss
-BigWigsCurator.toggleoptions = {"weaken", "weaktime", "berserk", "enrage", "bosskill"}
-BigWigsCurator.revision = tonumber(("$Revision$"):sub(12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"weaken", "weaktime", "berserk", "enrage", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsCurator:OnEnable()
+function mod:OnEnable()
 	enrageannounced = nil
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -143,7 +143,7 @@ end
 --     Event Handlers    --
 ------------------------------
 
-function BigWigsCurator:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.berserk and msg == L["berserk_trigger"] then
 		self:Message(L["berserk_message"]:format(boss), "Attention")
 		self:Bar(L["berserk_bar"], 720, "INV_Shield_01")
@@ -167,7 +167,7 @@ function BigWigsCurator:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function BigWigsCurator:Evocation()
+function mod:Evocation()
 	if self.db.profile.weaktime then
 		self:Bar(L["weaktime_bar"], 109, "Spell_Nature_Purge")
 		self:ScheduleEvent("evoc1", "BigWigs_Message", 39, L["weaktime_message3"], "Positive")
@@ -176,7 +176,7 @@ function BigWigsCurator:Evocation()
 	end
 end
 
-function BigWigsCurator:UNIT_HEALTH(msg)
+function mod:UNIT_HEALTH(msg)
 	if not self.db.profile.enrage then return end
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)

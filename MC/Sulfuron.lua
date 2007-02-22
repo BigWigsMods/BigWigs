@@ -49,17 +49,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsSulfuron = BigWigs:NewModule(boss)
-BigWigsSulfuron.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
-BigWigsSulfuron.enabletrigger = boss
-BigWigsSulfuron.toggleoptions = {"inspire", -1, "heal", "bosskill"}
-BigWigsSulfuron.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"inspire", -1, "heal", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsSulfuron:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -72,19 +72,19 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsSulfuron:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if (msg:find(L["inspire_trigger"])) then
 		self:TriggerEvent("BigWigs_SendSync", "SulfuronInsp")
 	end
 end
 
-function BigWigsSulfuron:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if (msg:find(L["heal_trigger"])) then
 		self:TriggerEvent("BigWigs_SendSync", "SulfuronHeal")
 	end
 end
 
-function BigWigsSulfuron:BigWigs_RecvSync(sync)
+function mod:BigWigs_RecvSync(sync)
 	if (sync == "SulfuronInsp" and self.db.profile.inspire) then
 		self:TriggerEvent("BigWigs_Message", L["inpire_message"], "Attention")
 		self:TriggerEvent("BigWigs_StartBar", self, L["inspire_bar"], 10, "Interface\\Icons\\Ability_Warrior_BattleShout")

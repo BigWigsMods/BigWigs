@@ -7,6 +7,7 @@
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsMessages")
 local paint = AceLibrary("PaintChips-2.0")
 
+local colorModule = nil
 local messageFrame = nil
 local anchor = nil
 
@@ -217,16 +218,16 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsMessages = BigWigs:NewModule(L["Messages"])
+local plugin = BigWigs:NewModule("Messages")
 
-BigWigsMessages.revision = tonumber(string.sub("$Revision$", 12, -3))
-BigWigsMessages.defaultDB = {
+plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.defaultDB = {
 	display = L["RaidWarning frame"],
 	usecolors = true,
 	scale = 1.0,
 }
-BigWigsMessages.consoleCmd = L["Messages"]
-BigWigsMessages.consoleOptions = {
+plugin.consoleCmd = L["Messages"]
+plugin.consoleOptions = {
 	type = "group",
 	name = L["Messages"],
 	desc = L["Options for message display."],
@@ -238,19 +239,19 @@ BigWigsMessages.consoleOptions = {
 			get = function() return anchor:IsShown() end,
 			set = function(v)
 				if v then
-					BigWigsMessages:BigWigs_ShowAnchors()
+					plugin:BigWigs_ShowAnchors()
 				else
-					BigWigsMessages:BigWigs_HideAnchors()
+					plugin:BigWigs_HideAnchors()
 				end
 			end,
-			disabled = function() return (BigWigsMessages.db.profile.display ~= L["BigWigs frame"]) end,
+			disabled = function() return (plugin.db.profile.display ~= L["BigWigs frame"]) end,
 			order = 1,
 		},
 		[L["reset"]] = {
 			type = "execute",
 			name = L["Reset position"],
 			desc = L["Reset the anchor position, moving it to the center of your screen."],
-			func = function() BigWigsMessages:ResetAnchor() end,
+			func = function() plugin:ResetAnchor() end,
 			order = 2,
 		},
 		spacer = {
@@ -262,8 +263,8 @@ BigWigsMessages.consoleOptions = {
 			type = "toggle",
 			name = L["Use colors"],
 			desc = L["Toggles white only messages ignoring coloring."],
-			get = function() return BigWigsMessages.db.profile.usecolors end,
-			set = function(v) BigWigsMessages.db.profile.usecolors = v end,
+			get = function() return plugin.db.profile.usecolors end,
+			set = function(v) plugin.db.profile.usecolors = v end,
 			map = {[true] = L["|cffff0000Co|cffff00fflo|cff00ff00r|r"], [false] = L["White"]},
 			order = 100,
 		},
@@ -274,22 +275,22 @@ BigWigsMessages.consoleOptions = {
 			min = 0.2,
 			max = 2.0,
 			step = 0.1,
-			get = function() return BigWigsMessages.db.profile.scale end,
+			get = function() return plugin.db.profile.scale end,
 			set = function(v)
-				BigWigsMessages.db.profile.scale = v
+				plugin.db.profile.scale = v
 				if messageFrame then messageFrame:SetScale(v) end
 			end,
-			disabled = function() return (BigWigsMessages.db.profile.display ~= L["BigWigs frame"]) end,
+			disabled = function() return (plugin.db.profile.display ~= L["BigWigs frame"]) end,
 			order = 101,
 		},
 		[L["display"]] = {
 			type = "text",
 			name = L["Display"],
 			desc = L["Set where messages are displayed."],
-			get = function() return BigWigsMessages.db.profile.display end,
+			get = function() return plugin.db.profile.display end,
 			validate = {L["BigWigs frame"], L["RaidWarning frame"]},
 			set = function(v)
-				BigWigsMessages.db.profile.display = v
+				plugin.db.profile.display = v
 			end,
 			order = 102,
 		},
@@ -301,22 +302,22 @@ BigWigsMessages.consoleOptions = {
 ------------------------------
 
 if MikSBT then
-	table.insert(BigWigsMessages.consoleOptions.args[L["display"]].validate, L["Mik's Scrolling Battle Text"])
+	table.insert(plugin.consoleOptions.args[L["display"]].validate, L["Mik's Scrolling Battle Text"])
 end
 
 if SCT_Display_Message or ( SCT and SCT.DisplayMessage ) then
-	table.insert(BigWigsMessages.consoleOptions.args[L["display"]].validate, L["Scrolling Combat Text"])
+	table.insert(plugin.consoleOptions.args[L["display"]].validate, L["Scrolling Combat Text"])
 end
 
 if CombatText_AddMessage then
-	table.insert(BigWigsMessages.consoleOptions.args[L["display"]].validate, L["Floating Combat Text"])
+	table.insert(plugin.consoleOptions.args[L["display"]].validate, L["Floating Combat Text"])
 end
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsMessages:OnEnable()
+function plugin:OnEnable()
 	if not self.frames then
 		self:SetupFrames()
 	end
@@ -328,9 +329,15 @@ function BigWigsMessages:OnEnable()
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("BigWigs_ShowAnchors")
 	self:RegisterEvent("BigWigs_HideAnchors")
+
+	if self.core:HasModule("Colors") then
+		colorModule = self.core:GetModule("Colors")
+	else
+		colorModule = nil
+	end
 end
 
-function BigWigsMessages:CreateMsgFrame()
+function plugin:CreateMsgFrame()
 	messageFrame = CreateFrame("MessageFrame")
 	messageFrame:SetWidth(512)
 	messageFrame:SetHeight(80)
@@ -348,15 +355,15 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsMessages:BigWigs_ShowAnchors()
+function plugin:BigWigs_ShowAnchors()
 	anchor:Show()
 end
 
-function BigWigsMessages:BigWigs_HideAnchors()
+function plugin:BigWigs_HideAnchors()
 	anchor:Hide()
 end
 
-function BigWigsMessages:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
+function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 	if broadcastonly or not text then return end
 
 	local db = self.db.profile
@@ -366,8 +373,8 @@ function BigWigsMessages:BigWigs_Message(text, color, noraidsay, sound, broadcas
 		if type(color) == "table" and type(color.r) == "number" and type(color.g) == "number" and type(color.b) == "number" then
 			r, g, b = color.r, color.g, color.b
 		else
-			if type(BigWigsColors) == "table" and type(BigWigsColors.MsgColor) == "function" then
-				color = BigWigsColors:MsgColor(color)
+			if type(colorModule) == "table" and type(colorModule.MsgColor) == "function" then
+				color = colorModule:MsgColor(color)
 			end
 			r, g, b = select(2, paint:GetRGBPercent(color or "white"))
 		end
@@ -392,7 +399,7 @@ end
 --    Anchor                --
 ------------------------------
 
-function BigWigsMessages:SetupFrames()
+function plugin:SetupFrames()
 	anchor = CreateFrame("Frame", "BigWigsMessageAnchor", UIParent)
 	anchor:Hide()
 
@@ -453,21 +460,21 @@ function BigWigsMessages:SetupFrames()
 	self:RestorePosition()
 end
 
-function BigWigsMessages:ResetAnchor()
+function plugin:ResetAnchor()
 	anchor:ClearAllPoints()
 	anchor:SetPoint("CENTER", UIParent, "CENTER")
 	self.db.profile.posx = nil
 	self.db.profile.posy = nil
 end
 
-function BigWigsMessages:SavePosition()
+function plugin:SavePosition()
 	local s = anchor:GetEffectiveScale()
 
 	self.db.profile.posx = anchor:GetLeft() * s
 	self.db.profile.posy = anchor:GetTop() * s
 end
 
-function BigWigsMessages:RestorePosition()
+function plugin:RestorePosition()
 	local x = self.db.profile.posx
 	local y = self.db.profile.posy
 

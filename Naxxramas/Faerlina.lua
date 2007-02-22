@@ -170,17 +170,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsFaerlina = BigWigs:NewModule(boss)
-BigWigsFaerlina.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
-BigWigsFaerlina.enabletrigger = boss
-BigWigsFaerlina.toggleoptions = {"silence", "enrage", "bosskill"}
-BigWigsFaerlina.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"silence", "enrage", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsFaerlina:OnEnable()
+function mod:OnEnable()
 	self.enragetime = 60
 	self.enrageTimerStarted = 0
 	self.silencetime = 30
@@ -199,7 +199,7 @@ function BigWigsFaerlina:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "FaerlinaSilence", 5)
 end
 
-function BigWigsFaerlina:CHAT_MSG_MONSTER_YELL( msg )
+function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if not started and msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"] then
 		self:TriggerEvent("BigWigs_Message", L["startwarn"], "Orange")
 		if self.db.profile.enrage then
@@ -211,19 +211,19 @@ function BigWigsFaerlina:CHAT_MSG_MONSTER_YELL( msg )
 	end
 end
 
-function BigWigsFaerlina:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if msg == L["enragetrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "FaerlinaEnrage")
 	end
 end
 
-function BigWigsFaerlina:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE( msg )
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE( msg )
 	if msg == L["silencetrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "FaerlinaSilence")
 	end
 end
 
-function BigWigsFaerlina:BigWigs_RecvSync( sync )
+function mod:BigWigs_RecvSync( sync )
 	if sync == "FaerlinaEnrage" then
 		if self.db.profile.enrage then
 			self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Urgent")

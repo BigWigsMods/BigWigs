@@ -151,17 +151,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsVaelastrasz = BigWigs:NewModule(boss)
-BigWigsVaelastrasz.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
-BigWigsVaelastrasz.enabletrigger = boss
-BigWigsVaelastrasz.toggleoptions = {"youburning", "elseburning", "burningbar", -1, "icon", "bosskill"}
-BigWigsVaelastrasz.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"youburning", "elseburning", "burningbar", -1, "icon", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsVaelastrasz:OnEnable()
+function mod:OnEnable()
 	playerName = UnitName("player")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
@@ -177,7 +177,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsVaelastrasz:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync ~= "VaelBomb" or not rest then return end
 	local player = rest
 
@@ -197,7 +197,7 @@ function BigWigsVaelastrasz:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function BigWigsVaelastrasz:Event(msg)
+function mod:Event(msg)
 	local baPlayer = select(3, msg:find(L["trigger1"]))
 	if baPlayer then
 		if baPlayer == L["you"] then

@@ -32,17 +32,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsGarr = BigWigs:NewModule(boss)
-BigWigsGarr.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
-BigWigsGarr.enabletrigger = boss
-BigWigsGarr.toggleoptions = {"pulse", "bosskill"}
-BigWigsGarr.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"pulse", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsGarr:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
@@ -51,7 +51,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsGarr:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if (msg:find(L["pulse_trigger"])) then
 		self:TriggerEvent("BigWigs_StartBar", self, L["pulse_bar"], 18, "Interface\\Icons\\Spell_Holy_DispelMagic")
 	end

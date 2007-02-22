@@ -118,17 +118,17 @@ L:RegisterTranslations("koKR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsBugFamily = BigWigs:NewModule(boss)
-BigWigsBugFamily.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
-BigWigsBugFamily.enabletrigger = {kri, yauj, vem}
-BigWigsBugFamily.toggleoptions = {"fear", "heal", "bosskill"}
-BigWigsBugFamily.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
+mod.enabletrigger = {kri, yauj, vem}
+mod.toggleoptions = {"fear", "heal", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsBugFamily:OnEnable()
+function mod:OnEnable()
 	deaths = 0
 	fearstatus = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
@@ -144,7 +144,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsBugFamily:FearEvent(msg)
+function mod:FearEvent(msg)
 	if not fearstatus and msg:find(L["feartrigger"]) and self.db.profile.fear then
 		fearstatus = true
 		self:TriggerEvent("BigWigs_StartBar", self, L["fearbar"], 20, "Interface\\Icons\\Spell_Shadow_Possession")
@@ -153,11 +153,11 @@ function BigWigsBugFamily:FearEvent(msg)
 	end
 end
 
-function BigWigsBugFamily:BigWigs_Message(txt)
+function mod:BigWigs_Message(txt)
 	if fearstatus and txt == L["fearwarn2"] then fearstatus = nil end
 end
 
-function BigWigsBugFamily:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if (msg == string.format(UNITDIESOTHER, kri) or msg == string.format(UNITDIESOTHER, yauj) or msg == string.format(UNITDIESOTHER, vem)) then
 		deaths = deaths + 1
 		if (deaths == 3) then
@@ -167,7 +167,7 @@ function BigWigsBugFamily:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	end
 end
 
-function BigWigsBugFamily:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg == L["healtrigger"] and self.db.profile.heal then
 		self:TriggerEvent("BigWigs_Message", L["healwarn"], "Urgent")
 		self:TriggerEvent("BigWigs_StartBar", self, L["healwarn"], 2, "Interface\\Icons\\Spell_Holy_Heal")

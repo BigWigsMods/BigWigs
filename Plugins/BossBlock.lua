@@ -230,18 +230,18 @@ local blockstrings = {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsBossBlock = BigWigs:NewModule("BossBlock", "AceHook-2.1")
+local plugin = BigWigs:NewModule("BossBlock", "AceHook-2.1")
 
-BigWigsBossBlock.revision = tonumber(string.sub("$Revision$", 12, -3))
-BigWigsBossBlock.defaultDB = {
+plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.defaultDB = {
 	hideraidwarnchat = true,
 	hideraidwarn = true,
 	hideraidsay = true,
 	hideraidchat = true,
 	hidetells = true,
 }
-BigWigsBossBlock.consoleCmd = L["BossBlock"]
-BigWigsBossBlock.consoleOptions = {
+plugin.consoleCmd = L["BossBlock"]
+plugin.consoleOptions = {
 	type = "group",
 	name = L["BossBlock"],
 	desc = L["Suppress bossmod chat from other players."],
@@ -251,8 +251,8 @@ BigWigsBossBlock.consoleOptions = {
 			order = 101,
 			name = L["Suppress Raid Chat"],
 			desc = L["Suppress messages in the raid channel."],
-			get = function() return BigWigsBossBlock.db.profile.hideraidchat end,
-			set = function(v) BigWigsBossBlock.db.profile.hideraidchat = v end,
+			get = function() return plugin.db.profile.hideraidchat end,
+			set = function(v) plugin.db.profile.hideraidchat = v end,
 			map = map,
 		},
 		["rs"] = {
@@ -260,8 +260,8 @@ BigWigsBossBlock.consoleOptions = {
 			order = 102,
 			name = L["Suppress RaidSay"],
 			desc = L["Suppress CTRA RaidSay popup messages."],
-			get = function() return BigWigsBossBlock.db.profile.hideraidsay end,
-			set = function(v) BigWigsBossBlock.db.profile.hideraidsay = v end,
+			get = function() return plugin.db.profile.hideraidsay end,
+			set = function(v) plugin.db.profile.hideraidsay = v end,
 			map = map,
 			hidden = function() return not CT_RAMessageFrame end,
 		},
@@ -290,8 +290,8 @@ BigWigsBossBlock.consoleOptions = {
 			order = 105,
 			name = L["Suppress RaidWarn"],
 			desc = L["Suppress RaidWarn popup messages."],
-			get = function() return BigWigsBossBlock.db.profile.hideraidwarn end,
-			set = function(v) BigWigsBossBlock.db.profile.hideraidwarn = v end,
+			get = function() return plugin.db.profile.hideraidwarn end,
+			set = function(v) plugin.db.profile.hideraidwarn = v end,
 			map = map,
 		},
 		["rwchat"] = {
@@ -299,8 +299,8 @@ BigWigsBossBlock.consoleOptions = {
 			order = 106,
 			name = L["Suppress RaidWarn Chat"],
 			desc = L["Suppress RaidWarn messages in the chat frames."],
-			get = function() return BigWigsBossBlock.db.profile.hideraidwarnchat end,
-			set = function(v) BigWigsBossBlock.db.profile.hideraidwarnchat = v end,
+			get = function() return plugin.db.profile.hideraidwarnchat end,
+			set = function(v) plugin.db.profile.hideraidwarnchat = v end,
 			map = map,
 		},
 		["tell"] = {
@@ -308,8 +308,8 @@ BigWigsBossBlock.consoleOptions = {
 			order = 107,
 			name = L["Suppress Tells"],
 			desc = L["Suppress Tell messages."],
-			get = function() return BigWigsBossBlock.db.profile.hidetells end,
-			set = function(v) BigWigsBossBlock.db.profile.hidetells = v end,
+			get = function() return plugin.db.profile.hidetells end,
+			set = function(v) plugin.db.profile.hidetells = v end,
 			map = map,
 		},
 	},
@@ -319,7 +319,7 @@ BigWigsBossBlock.consoleOptions = {
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsBossBlock:OnEnable()
+function plugin:OnEnable()
 	self:Hook("ChatFrame_MessageEventHandler", true)
 	self:Hook(RaidWarningFrame, "AddMessage", "RWAddMessage", true)
 	if CT_RAMessageFrame then
@@ -328,7 +328,7 @@ function BigWigsBossBlock:OnEnable()
 end
 
 
-function BigWigsBossBlock:ChatFrame_MessageEventHandler(event)
+function plugin:ChatFrame_MessageEventHandler(event)
 	if self:IsChannelSuppressed(event) and self:IsSpam(arg1) then
 		self:Debug(L["Suppressing Chatframe"], event, arg1)
 		return
@@ -336,7 +336,7 @@ function BigWigsBossBlock:ChatFrame_MessageEventHandler(event)
 	return self.hooks["ChatFrame_MessageEventHandler"](event)
 end
 
-function BigWigsBossBlock:RWAddMessage(frame, message, r, g, b, a, t)
+function plugin:RWAddMessage(frame, message, r, g, b, a, t)
 	if self.db.profile.hideraidwarn and self:IsSpam(message) then
 		self:Debug(L["Suppressing RaidWarningFrame"], message)
 		return
@@ -344,7 +344,7 @@ function BigWigsBossBlock:RWAddMessage(frame, message, r, g, b, a, t)
 	self.hooks[RaidWarningFrame].AddMessage(frame, message, r, g, b, a, t)
 end
 
-function BigWigsBossBlock:CTRA_AddMessage(obj, text, r, g, b, a, t)
+function plugin:CTRA_AddMessage(obj, text, r, g, b, a, t)
 	if self.db.profile.hideraidsay and self:IsSpam(text) then
 		self:Debug(L["Suppressing CT_RAMessageFrame"], text)
 		return
@@ -352,13 +352,13 @@ function BigWigsBossBlock:CTRA_AddMessage(obj, text, r, g, b, a, t)
 	self.hooks[obj].AddMessage(obj, text, r, g, b, a, t)
 end
 
-function BigWigsBossBlock:IsSpam(text)
+function plugin:IsSpam(text)
 	if not text then return end
 	if blockstrings[text] then return true end
 	for _,regex in pairs(blockregexs) do if text:find(regex) then return true end end
 end
 
-function BigWigsBossBlock:IsChannelSuppressed(chan)
+function plugin:IsChannelSuppressed(chan)
 	if not raidchans[chan] then return end
 	return self.db.profile[raidchans[chan]]
 end

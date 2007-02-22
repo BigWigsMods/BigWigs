@@ -121,17 +121,17 @@ L:RegisterTranslations("deDE", function() return {
 --   Module Declaration    --
 ----------------------------------
 
-BigWigsMoroes = BigWigs:NewModule(boss)
-BigWigsMoroes.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-BigWigsMoroes.enabletrigger = boss
-BigWigsMoroes.toggleoptions = {"engage", "vanish", "enrage", -1, "garrote", "icon", "bosskill"}
-BigWigsMoroes.revision = tonumber(("$Revision$"):sub(12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"engage", "vanish", "enrage", -1, "garrote", "icon", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsMoroes:OnEnable()
+function mod:OnEnable()
 	enrageannounced = nil
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "GarroteEvent")
@@ -153,7 +153,7 @@ end
 --    Event Handlers     --
 ------------------------------
 
-function BigWigsMoroes:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.vanish and (msg == L["vanish_trigger1"] or msg == L["vanish_trigger2"]) then
 		self:Message(L["vanish_message"], "Urgent", nil, "Alert")
 		self:NextVanish()
@@ -163,18 +163,18 @@ function BigWigsMoroes:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function BigWigsMoroes:NextVanish()
+function mod:NextVanish()
 	self:Bar(L["vanish_bar"], 35, "Ability_Vanish")
 	self:DelayedMessage(30, L["vanish_warning"], "Attention")
 end
 
-function BigWigsMoroes:CHAT_MSG_MONSTER_EMOTE(msg)
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if self.db.profile.enrage and msg == L["enrage_trigger"] then
 		self:Message(L["enrage_message"], "Important", nil, "Alarm")
 	end
 end
 
-function BigWigsMoroes:UNIT_HEALTH(msg)
+function mod:UNIT_HEALTH(msg)
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 30 and health <= 34 and not enrageannounced then
@@ -188,7 +188,7 @@ function BigWigsMoroes:UNIT_HEALTH(msg)
 	end
 end
 
-function BigWigsMoroes:GarroteEvent(msg)
+function mod:GarroteEvent(msg)
 	local gplayer, gtype = select(3, msg:find(L["garrote_trigger"]))
 	if gplayer then
 		if gplayer == L["you"] then
@@ -198,7 +198,7 @@ function BigWigsMoroes:GarroteEvent(msg)
 	end
 end
 
-function BigWigsMoroes:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "MoroesGarrote" and rest and self.db.profile.garrote then
 		self:Message(L["garrote_message"]:format(rest), "Attention")
 		if self.db.profile.icon then

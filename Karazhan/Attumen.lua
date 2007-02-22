@@ -63,17 +63,17 @@ L:RegisterTranslations("deDE", function() return {
 --    Module Declaration   --
 ----------------------------------
 
-BigWigsAttumen = BigWigs:NewModule(boss)
-BigWigsAttumen.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-BigWigsAttumen.enabletrigger = horse
-BigWigsAttumen.toggleoptions = {"phase", "curse", "bosskill"}
-BigWigsAttumen.revision = tonumber(("$Revision$"):sub(12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.enabletrigger = horse
+mod.toggleoptions = {"phase", "curse", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsAttumen:OnEnable()
+function mod:OnEnable()
 	started = nil
 
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -92,7 +92,7 @@ end
 --     Event Handlers    --
 ------------------------------
 
-function BigWigsAttumen:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if not self.db.profile.phase then return end
 	if msg == L["phase3_trigger"] then
 		self:Message(L["phase3_message"]:format(boss), "Important")
@@ -101,7 +101,7 @@ function BigWigsAttumen:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function BigWigsAttumen:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync( sync, rest, nick )
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
@@ -113,7 +113,7 @@ function BigWigsAttumen:BigWigs_RecvSync( sync, rest, nick )
 	end
 end
 
-function BigWigsAttumen:CurseEvent(msg)
+function mod:CurseEvent(msg)
 	local cplayer, ctype = select(3, msg:find(L["curse_trigger"]))
 	if cplayer and self.db.profile.curse then
 		local id = nil

@@ -99,17 +99,17 @@ L:RegisterTranslations("zhTW", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsThekal = BigWigs:NewModule(boss)
-BigWigsThekal.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
-BigWigsThekal.enabletrigger = boss
-BigWigsThekal.toggleoptions = {"heal", "tiger", "bosskill"}
-BigWigsThekal.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"heal", "tiger", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsThekal:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
@@ -118,7 +118,7 @@ end
 --      Events              --
 ------------------------------
 
-function BigWigsThekal:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	if self.db.profile.tiger and msg == L["tigers_trigger"] then
 		self:TriggerEvent("BigWigs_Message", L["tigers_message"], "Attention")
 	elseif self.db.profile.heal and msg == L["heal_trigger"] then

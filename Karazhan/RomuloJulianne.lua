@@ -90,17 +90,17 @@ L:RegisterTranslations("deDE", function() return {
 --   Module Declaration    --
 ----------------------------------
 
-BigWigsRomuloJulianne = BigWigs:NewModule(boss)
-BigWigsRomuloJulianne.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-BigWigsRomuloJulianne.enabletrigger = {boy, girl}
-BigWigsRomuloJulianne.toggleoptions = {"phase", "heal", "buff", "poison"}
-BigWigsRomuloJulianne.revision = tonumber(("$Revision$"):sub(12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.enabletrigger = {boy, girl}
+mod.toggleoptions = {"phase", "heal", "buff", "poison"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsRomuloJulianne:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
@@ -114,7 +114,7 @@ end
 --     Event Handlers    --
 ------------------------------
 
-function BigWigsRomuloJulianne:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if not self.db.profile.phase then return end
 	if msg == L["phase1_trigger"] then
 		self:Message(L["phase1_message"]:format(girl), "Attention")
@@ -125,7 +125,7 @@ function BigWigsRomuloJulianne:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function BigWigsRomuloJulianne:PoisonEvent(msg)
+function mod:PoisonEvent(msg)
 	local pplayer, ptype = select(3, msg:find(L["poison_trigger"]))
 	if pplayer then
 		if pplayer == L["you"] then
@@ -137,13 +137,13 @@ function BigWigsRomuloJulianne:PoisonEvent(msg)
 	end
 end
 
-function BigWigsRomuloJulianne:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if self.db.profile.heal and msg:find(L["heal_trigger"]) then
 		self:Message(L["heal_message"]:format(girl), "Urgent")
 	end
 end
 
-function BigWigsRomuloJulianne:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if not self.db.profile.buff then return end
 	if msg:find(L["buff1_trigger"]) then
 		self:Message(L["buff1_message"]:format(boy), "Attention")

@@ -94,17 +94,17 @@ L:RegisterTranslations("deDE", function() return {
 --    Module Declaration   --
 ----------------------------------
 
-BigWigsMalchezaar = BigWigs:NewModule(boss)
-BigWigsMalchezaar.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-BigWigsMalchezaar.enabletrigger = boss
-BigWigsMalchezaar.toggleoptions = {"phase", "enfeeble", "nova", "infernals", "bosskill"}
-BigWigsMalchezaar.revision = tonumber(("$Revision$"):sub(12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"phase", "enfeeble", "nova", "infernals", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsMalchezaar:OnEnable()
+function mod:OnEnable()
 	afflict = nil
 	self:RegisterEvent("BigWigs_Message")
 
@@ -127,7 +127,7 @@ end
 --     Event Handlers    --
 ------------------------------
 
-function BigWigsMalchezaar:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.infernals and (msg == L["infernal_trigger1"] or msg == L["infernal_trigger2"]) then
 		self:Message(L["infernal_warning"], "Positive")
 		self:NextInfernal()
@@ -140,24 +140,24 @@ function BigWigsMalchezaar:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function BigWigsMalchezaar:NextInfernal()
+function mod:NextInfernal()
 	self:DelayedMessage(15, L["infernal_message"], "Urgent", nil, "Alert")
 	self:Bar(L["infernal_bar"], 20, "INV_Stone_05")
 end
 
-function BigWigsMalchezaar:EnfeebleEvent(msg)
+function mod:EnfeebleEvent(msg)
 	if not afflict and msg:find(L["enfeeble_trigger"]) then
 		self:Sync("MalchezaarEnfeeble")
 	end
 end
 
-function BigWigsMalchezaar:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["nova_trigger"]) then
 		self:Sync("MalchezaarNova")
 	end
 end
 
-function BigWigsMalchezaar:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "MalchezaarEnfeeble" then
 		if self.db.profile.enfeeble then
 			afflict = true
@@ -175,7 +175,7 @@ function BigWigsMalchezaar:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function BigWigsMalchezaar:BigWigs_Message(text)
+function mod:BigWigs_Message(text)
 	if text == L["enfeeble_warning"] then
 		afflict = nil
 	end

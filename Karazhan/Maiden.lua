@@ -106,17 +106,17 @@ L:RegisterTranslations("frFR", function() return {
 --   Module Declaration    --
 ----------------------------------
 
-BigWigsMaiden = BigWigs:NewModule(boss)
-BigWigsMaiden.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-BigWigsMaiden.enabletrigger = boss
-BigWigsMaiden.toggleoptions = {"engage", "repentance", -1, "holyfire", "icon", "bosskill"}
-BigWigsMaiden.revision = tonumber(("$Revision$"):sub(12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"engage", "repentance", -1, "holyfire", "icon", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsMaiden:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "HolyFireEvent")
@@ -133,7 +133,7 @@ end
 --    Event Handlers     --
 ------------------------------
 
-function BigWigsMaiden:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.engage and msg == L["engage_trigger"] then
 		self:Message(L["engage_message"], "Attention")
 		self:NextRepentance()
@@ -143,7 +143,7 @@ function BigWigsMaiden:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function BigWigsMaiden:HolyFireEvent(msg)
+function mod:HolyFireEvent(msg)
 	local bplayer, btype = select(3, msg:find(L["holyfire_trigger"]))
 	if bplayer then
 		if bplayer == L["you"] then
@@ -153,13 +153,13 @@ function BigWigsMaiden:HolyFireEvent(msg)
 	end
 end
 
-function BigWigsMaiden:NextRepentance()
+function mod:NextRepentance()
 	self:DelayedMessage(28, L["repentance_warning"], "Urgent", nil, "Alarm")
 	self:Bar(L["repentance_nextbar"], 33, "Spell_Holy_PrayerOfHealing")
 	self:Bar(L["repentance_bar"], 12, "Spell_Holy_PrayerOfHealing")
 end
 
-function BigWigsMaiden:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "MaidenHolyFire" and rest and self.db.profile.holyfire then
 		self:Message(L["holyfire_message"]:format(rest), "Important")
 		if self.db.profile.icon then

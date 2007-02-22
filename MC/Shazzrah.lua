@@ -119,17 +119,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsShazzrah = BigWigs:NewModule(boss)
-BigWigsShazzrah.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
-BigWigsShazzrah.enabletrigger = boss
-BigWigsShazzrah.toggleoptions = {"selfbuff", "blink", "bosskill"}
-BigWigsShazzrah.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"selfbuff", "blink", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsShazzrah:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -142,19 +142,19 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsShazzrah:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if (msg:find(L["trigger2"])) then
 		self:TriggerEvent("BigWigs_SendSync", "ShazzrahDeadenMagic")
 	end
 end
 
-function BigWigsShazzrah:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if (msg:find(L["trigger1"])) then
 		self:TriggerEvent("BigWigs_SendSync", "ShazzrahBlink")
 	end
 end
 
-function BigWigsShazzrah:BigWigs_RecvSync(sync)
+function mod:BigWigs_RecvSync(sync)
 	if (sync == "ShazzrahBlink" and self.db.profile.blink) then
 		self:TriggerEvent("BigWigs_Message", L["warn1"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 40, L["warn2"], "Urgent")

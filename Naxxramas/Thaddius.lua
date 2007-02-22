@@ -359,17 +359,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsThaddius = BigWigs:NewModule(boss)
-BigWigsThaddius.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
-BigWigsThaddius.enabletrigger = { boss, feugen, stalagg }
-BigWigsThaddius.toggleoptions = {"enrage", "charge", "polarity", -1, "power", "throw", "phase", "bosskill"}
-BigWigsThaddius.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
+mod.enabletrigger = { boss, feugen, stalagg }
+mod.toggleoptions = {"enrage", "charge", "polarity", -1, "power", "throw", "phase", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsThaddius:OnEnable()
+function mod:OnEnable()
 	self.enrageStarted = nil
 	self.addsdead = 0
 	self.teslawarn = nil
@@ -390,13 +390,13 @@ function BigWigsThaddius:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "StalaggPower", 4)
 end
 
-function BigWigsThaddius:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if msg == L["stalaggtrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "StalaggPower")
 	end
 end
 
-function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
+function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if msg:find(L["pstrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "ThaddiusPolarity")
 	elseif msg == L["starttrigger"] or msg == L["starttrigger1"] then
@@ -419,7 +419,7 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_YELL( msg )
 	end
 end
 
-function BigWigsThaddius:CHAT_MSG_MONSTER_EMOTE( msg )
+function mod:CHAT_MSG_MONSTER_EMOTE( msg )
 	if msg == L["enragetrigger"] then
 		if self.db.profile.enrage then self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important") end
 		self:TriggerEvent("BigWigs_StopBar", self, L["enragebartext"])
@@ -441,13 +441,13 @@ function BigWigsThaddius:CHAT_MSG_MONSTER_EMOTE( msg )
 	end
 end
 
-function BigWigsThaddius:PolarityCast( msg )
+function mod:PolarityCast( msg )
 	if self.db.profile.polarity and msg:find(L["trigger1"]) then
 		self:TriggerEvent("BigWigs_Message", L["pswarn1"], "Important")
 	end
 end
 
-function BigWigsThaddius:PLAYER_AURAS_CHANGED( msg )
+function mod:PLAYER_AURAS_CHANGED( msg )
 	local chargetype = nil
 	local iIterator = 1
 	while UnitDebuff("player", iIterator) do
@@ -483,7 +483,7 @@ function BigWigsThaddius:PLAYER_AURAS_CHANGED( msg )
 	self.previousCharge = chargetype
 end
 
-function BigWigsThaddius:BigWigs_RecvSync( sync )
+function mod:BigWigs_RecvSync( sync )
 	if sync == "ThaddiusPolarity" and self.db.profile.polarity then
 		self:RegisterEvent("PLAYER_AURAS_CHANGED")
 		self:ScheduleEvent("BigWigs_Message", 27, L["pswarn3"], "Important")
@@ -494,7 +494,7 @@ function BigWigsThaddius:BigWigs_RecvSync( sync )
 	end
 end
 
-function BigWigsThaddius:Throw()
+function mod:Throw()
 	if self.db.profile.throw then
 		self:TriggerEvent("BigWigs_StartBar", self, L["throwbar"], 20, "Interface\\Icons\\Ability_Druid_Maul")
 		self:ScheduleEvent("bwthaddiusthrowwarn", "BigWigs_Message", 15, L["throwwarn"], "Urgent")

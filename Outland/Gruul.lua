@@ -115,18 +115,18 @@ L:RegisterTranslations("deDE", function() return {
 --    Module Declaration   --
 ----------------------------------
 
-BigWigsGruul = BigWigs:NewModule(boss)
-BigWigsGruul.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
-BigWigsGruul.otherMenu = "Outland"
-BigWigsGruul.enabletrigger = boss
-BigWigsGruul.toggleoptions = {"engage", "grasp", "grow", -1, "cavein", "bosskill"}
-BigWigsGruul.revision = tonumber(("$Revision$"):sub(12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
+mod.otherMenu = "Outland"
+mod.enabletrigger = boss
+mod.toggleoptions = {"engage", "grasp", "grow", -1, "cavein", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsGruul:OnEnable()
+function mod:OnEnable()
 	slam = nil
 	grasp = nil
 	growcount = 1
@@ -145,13 +145,13 @@ end
 --    Event Handlers     --
 ------------------------------
 
-function BigWigsGruul:CHAT_MSG_MONSTER_SAY(msg)
+function mod:CHAT_MSG_MONSTER_SAY(msg)
 	if self.db.profile.engage and msg == L["engage_trigger"] then
 		self:Message(L["engage_message"], "Attention")
 	end
 end
 
-function BigWigsGruul:CHAT_MSG_MONSTER_EMOTE(msg)
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if self.db.profile.grow and msg == L["grow_trigger"] then
 		self:Message(L["grow_message"]:format(growcount), "Important")
 		growcount = growcount + 1
@@ -160,7 +160,7 @@ function BigWigsGruul:CHAT_MSG_MONSTER_EMOTE(msg)
 	end
 end
 
-function BigWigsGruul:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 	if not slam and self.db.profile.grasp and msg:find(L["grasp_trigger1"]) then
 		self:Message(L["grasp_message1"], "Attention")
 		self:DelayedMessage(70, L["grasp_warning"], "Urgent")
@@ -174,7 +174,7 @@ function BigWigsGruul:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 	end
 end
 
-function BigWigsGruul:BigWigs_Message(text)
+function mod:BigWigs_Message(text)
 	if text == L["grasp_warning"] then
 		slam = nil
 		grasp = nil

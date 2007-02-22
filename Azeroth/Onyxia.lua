@@ -163,18 +163,18 @@ L:RegisterTranslations("koKR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsOnyxia = BigWigs:NewModule(boss)
-BigWigsOnyxia.zonename = AceLibrary("Babble-Zone-2.2")["Onyxia's Lair"]
-BigWigsOnyxia.otherMenu = "Azeroth"
-BigWigsOnyxia.enabletrigger = boss
-BigWigsOnyxia.toggleoptions = {"deepbreath", "phase2", "phase3", "onyfear", "bosskill"}
-BigWigsOnyxia.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Onyxia's Lair"]
+mod.otherMenu = "Azeroth"
+mod.enabletrigger = boss
+mod.toggleoptions = {"deepbreath", "phase2", "phase3", "onyfear", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsOnyxia:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
@@ -185,13 +185,13 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsOnyxia:CHAT_MSG_MONSTER_EMOTE(msg)
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["deepbreath_trigger"] and self.db.profile.deepbreath then
 		self:Message( L["deepbreath_message"], "Important")
 	end
 end
 
-function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["phase2_trigger"]) then
 		if self.db.profile.phase2 then self:Message(L["phase2_message"], "Urgent") end
 	elseif msg:find(L["phase3_trigger"]) then
@@ -199,7 +199,7 @@ function BigWigsOnyxia:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function BigWigsOnyxia:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg == L["fear_trigger"] and self.db.profile.onyfear then
 		self:Message(L["fear_message"], "Important")
 	end

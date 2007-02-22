@@ -154,18 +154,18 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsRazuvious = BigWigs:NewModule(boss)
-BigWigsRazuvious.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
-BigWigsRazuvious.enabletrigger = { boss }
-BigWigsRazuvious.wipemobs = { understudy }
-BigWigsRazuvious.toggleoptions = {"shout", "shieldwall", "bosskill"}
-BigWigsRazuvious.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
+mod.enabletrigger = { boss }
+mod.wipemobs = { understudy }
+mod.toggleoptions = {"shout", "shieldwall", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsRazuvious:OnEnable()
+function mod:OnEnable()
 	self.timeShout = 30
 	self.prior = nil
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -187,7 +187,7 @@ function BigWigsRazuvious:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "RazuviousShieldwall", 5)
 end
 
-function BigWigsRazuvious:CHAT_MSG_MONSTER_YELL( msg )
+function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"] then
 		if self.db.profile.shout then
 			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Urgent", nil, "Alarm")
@@ -199,23 +199,23 @@ function BigWigsRazuvious:CHAT_MSG_MONSTER_YELL( msg )
 	end
 end
 
-function BigWigsRazuvious:BigWigs_Message(text)
+function mod:BigWigs_Message(text)
 	if text == L["shout7secwarn"] then self.prior = nil end
 end
 
-function BigWigsRazuvious:Shieldwall( msg ) 
+function mod:Shieldwall( msg ) 
 	if msg:find(L["shieldwalltrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "RazuviousShieldwall")
 	end
 end
 
-function BigWigsRazuvious:Shout( msg )
+function mod:Shout( msg )
 	if msg:find(L["shouttrigger"]) and not self.prior then
 		self:TriggerEvent("BigWigs_SendSync", "RazuviousShout")
 	end
 end
 
-function BigWigsRazuvious:noShout()	
+function mod:noShout()	
 	self:CancelScheduledEvent("bwrazuviousnoshout")
 	self:ScheduleEvent("bwrazuviousnoshout", self.noShout, self.timeShout - 5, self )
 	if self.db.profile.shout then
@@ -226,7 +226,7 @@ function BigWigsRazuvious:noShout()
 	end
 end
 
-function BigWigsRazuvious:BigWigs_RecvSync( sync )
+function mod:BigWigs_RecvSync( sync )
 	if sync == "RazuviousShout" then
 		self:CancelScheduledEvent("bwrazuviousnoshout")
 		self:ScheduleEvent("bwrazuviousnoshout", self.noShout, self.timeShout, self )

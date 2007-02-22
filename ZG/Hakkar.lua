@@ -228,17 +228,17 @@ L:RegisterTranslations("zhTW", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsHakkar = BigWigs:NewModule(boss)
-BigWigsHakkar.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
-BigWigsHakkar.enabletrigger = boss
-BigWigsHakkar.toggleoptions = { "drain", "enrage", -1, "mc", "icon", "bosskill" }
-BigWigsHakkar.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
+mod.enabletrigger = boss
+mod.toggleoptions = { "drain", "enrage", -1, "mc", "icon", "bosskill" }
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsHakkar:OnEnable()
+function mod:OnEnable()
 	self.prior = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE")
@@ -252,7 +252,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsHakkar:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["start_message"], "Important")
 		if self.db.profile.enrage then self:TriggerEvent("BigWigs_StartBar", self, L["Enrage"], 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy") end
@@ -262,14 +262,14 @@ function BigWigsHakkar:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 	if not self.prior and msg:find(L["drain_trigger"]) then
 		self.prior = true
 		self:BeginTimers()
 	end
 end
 
-function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
 	local mcplayer, mctype = select(3, msg:find(L["mindcontrol_trigger"]))
 	if mcplayer then
 		if mcplayer == L["you"] then
@@ -285,11 +285,11 @@ function BigWigsHakkar:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
 	end
 end
 
-function BigWigsHakkar:BigWigs_Message(text)
+function mod:BigWigs_Message(text)
 	if text == string.format(L["drain_warning"], 60) then self.prior = nil end
 end
 
-function BigWigsHakkar:BeginTimers(first)
+function mod:BeginTimers(first)
 	if self.db.profile.drain then
 		if not first then self:TriggerEvent("BigWigs_Message", L["drain_message"], "Attention") end
 		self:ScheduleEvent("bwhakkarld60", "BigWigs_Message", 30, string.format(L["drain_warning"], 60), "Attention")

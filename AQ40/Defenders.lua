@@ -300,17 +300,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsDefenders = BigWigs:NewModule(boss)
-BigWigsDefenders.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
-BigWigsDefenders.enabletrigger = boss
-BigWigsDefenders.toggleoptions = { "plagueyou", "plagueother", "icon", -1, "thunderclap", "meteor", "shadowstorm", "explode", "enrage", "bosskill"}
-BigWigsDefenders.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
+mod.enabletrigger = boss
+mod.toggleoptions = { "plagueyou", "plagueother", "icon", -1, "thunderclap", "meteor", "shadowstorm", "explode", "enrage", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsDefenders:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "CheckPlague")
@@ -333,13 +333,13 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsDefenders:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if msg == string.format(UNITDIESOTHER, boss) then
 		self.core:ToggleModuleActive(self, false)
 	end
 end
 
-function BigWigsDefenders:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "DefenderExplode" and self.db.profile.explode then
 		self:TriggerEvent("BigWigs_Message", L["explodewarn"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["explodewarn"], 6, "Interface\\Icons\\Spell_Fire_SelfDestruct")
@@ -354,7 +354,7 @@ function BigWigsDefenders:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function BigWigsDefenders:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if msg == L["explodetrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "DefenderExplode")
 	elseif msg == L["enragetrigger"] then
@@ -362,7 +362,7 @@ function BigWigsDefenders:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	end
 end
 
-function BigWigsDefenders:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if not self.db.profile.summon then return end
 	if msg == L["summonguardtrigger"] then
 		self:TriggerEvent("BigWigs_Message", L["summonguardwarn"], "Attention")
@@ -371,7 +371,7 @@ function BigWigsDefenders:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	end
 end
 
-function BigWigsDefenders:CheckPlague(msg)
+function mod:CheckPlague(msg)
 	local pplayer, ptype = select(3, msg:find(L["plaguetrigger"]))
 	if pplayer then
 		if self.db.profile.plagueyou and pplayer == L["plagueyou"] then
@@ -388,7 +388,7 @@ function BigWigsDefenders:CheckPlague(msg)
 	end
 end
 
-function BigWigsDefenders:Abilities(msg)
+function mod:Abilities(msg)
 	if msg:find(L["thunderclaptrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "DefenderThunderclap")
 	elseif msg:find(L["meteortrigger"]) then

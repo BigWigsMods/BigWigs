@@ -178,17 +178,17 @@ L:RegisterTranslations("frFR", function() return {
 --   Module Declaration    --
 ----------------------------------
 
-BigWigsAran = BigWigs:NewModule(boss)
-BigWigsAran.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-BigWigsAran.enabletrigger = boss
-BigWigsAran.toggleoptions = {"engage", "adds", "drink", -1, "blizzard", "pull", "flame", "bosskill"}
-BigWigsAran.revision = tonumber(("$Revision$"):sub(12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"engage", "adds", "drink", -1, "blizzard", "pull", "flame", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsAran:OnEnable()
+function mod:OnEnable()
 	drinkannounced = nil
 	addsannounced = nil
 
@@ -208,7 +208,7 @@ end
 --    Event Handlers     --
 ------------------------------
 
-function BigWigsAran:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.drink and msg == L["drink_trigger"] then
 		self:Message(L["drink_message"], "Positive")
 		self:Bar(L["drink_bar"], 15, "Spell_Fire_Fireball02")
@@ -225,21 +225,21 @@ function BigWigsAran:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function BigWigsAran:CHAT_MSG_MONSTER_SAY(msg)
+function mod:CHAT_MSG_MONSTER_SAY(msg)
 	if self.db.profile.adds and msg == L["adds_trigger"] then
 		self:Message(L["adds_message"], "Important")
 		self:Bar(L["adds_bar"], 90, "Spell_Frost_SummonWaterElemental_2")
 	end
 end
 
-function BigWigsAran:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if self.db.profile.flame and msg:find(L["flame_trigger"]) then
 		self:Message(L["flame_message"], "Important")
 		self:Bar(L["flame_bar"], 21, "Spell_Fire_Fire")
 	end
 end
 
-function BigWigsAran:UNIT_MANA(msg)
+function mod:UNIT_MANA(msg)
 	if not self.db.profile.drink then return end
 	if UnitName(msg) == boss then
 		local mana = UnitMana(msg)
@@ -252,7 +252,7 @@ function BigWigsAran:UNIT_MANA(msg)
 	end
 end
 
-function BigWigsAran:UNIT_HEALTH(msg)
+function mod:UNIT_HEALTH(msg)
 	if not self.db.profile.adds then return end
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)

@@ -330,17 +330,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsOuro = BigWigs:NewModule(boss)
-BigWigsOuro.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
-BigWigsOuro.enabletrigger = boss
-BigWigsOuro.toggleoptions = {"sweep", "sandblast", "scarab", -1, "emerge", "submerge", -1, "berserk", "bosskill"}
-BigWigsOuro.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"sweep", "sandblast", "scarab", -1, "emerge", "submerge", -1, "berserk", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsOuro:OnEnable()
+function mod:OnEnable()
 	berserkannounced = nil
 	started = nil
 
@@ -363,7 +363,7 @@ function BigWigsOuro:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "OuroBerserk", 10)
 end
 
-function BigWigsOuro:UNIT_HEALTH( msg )
+function mod:UNIT_HEALTH( msg )
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 20 and health <= 23 and not berserkannounced then
@@ -377,7 +377,7 @@ function BigWigsOuro:UNIT_HEALTH( msg )
 	end
 end
 
-function BigWigsOuro:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync( sync, rest, nick )
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
@@ -400,7 +400,7 @@ function BigWigsOuro:BigWigs_RecvSync( sync, rest, nick )
 	end
 end
 
-function BigWigsOuro:PossibleSubmerge()
+function mod:PossibleSubmerge()
 	if self.db.profile.emerge then
 		self:ScheduleEvent("bwouroemergewarn", "BigWigs_Message", 75, L["emergewarn"], "Important")
 		self:TriggerEvent("BigWigs_StartBar", self, L["possible_submerge_bar"], 90, "Interface\\Icons\\Spell_Nature_Earthquake")
@@ -409,7 +409,7 @@ function BigWigsOuro:PossibleSubmerge()
 	end
 end
 
-function BigWigsOuro:Berserk()
+function mod:Berserk()
 	self:CancelScheduledEvent("bwouroemergewarn")
 	self:CancelScheduledEvent("bwouroemergewarn2")
 	self:TriggerEvent("BigWigs_StopBar", self, L["emergebartext"])
@@ -421,7 +421,7 @@ function BigWigsOuro:Berserk()
 	end
 end
 
-function BigWigsOuro:Sweep()
+function mod:Sweep()
 	if self.db.profile.sweep then
 		self:TriggerEvent("BigWigs_Message", L["sweepannounce"], "Important")
 		self:ScheduleEvent("bwourosweepwarn", "BigWigs_Message", 16, L["sweepwarn"], "Important")
@@ -429,7 +429,7 @@ function BigWigsOuro:Sweep()
 	end
 end
 
-function BigWigsOuro:Sandblast()
+function mod:Sandblast()
 	if self.db.profile.sandblast then
 		self:TriggerEvent("BigWigs_Message", L["sandblastannounce"], "Important")
 		self:ScheduleEvent("bwouroblastwarn", "BigWigs_Message", 17, L["sandblastwarn"], "Important")
@@ -437,7 +437,7 @@ function BigWigsOuro:Sandblast()
 	end
 end
 
-function BigWigsOuro:Emerge()
+function mod:Emerge()
 	if self.db.profile.emerge then
 		self:TriggerEvent("BigWigs_Message", L["emergeannounce"], "Important")
 		self:PossibleSubmerge()
@@ -459,7 +459,7 @@ function BigWigsOuro:Emerge()
 	end
 end
 
-function BigWigsOuro:Submerge()
+function mod:Submerge()
 	self:CancelScheduledEvent("bwourosweepwarn")
 	self:CancelScheduledEvent("bwouroblastwarn")
 	self:CancelScheduledEvent("bwouroemergewarn")
@@ -477,7 +477,7 @@ function BigWigsOuro:Submerge()
 	end
 end
 
-function BigWigsOuro:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	if msg:find(L["emergetrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "OuroEmerge2")
 	elseif msg:find(L["submergetrigger"]) then
@@ -485,7 +485,7 @@ function BigWigsOuro:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	end
 end
 
-function BigWigsOuro:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 	if msg:find(L["sweeptrigger"]) then
 		self:TriggerEvent("BigWigs_SendSync", "OuroSweep")
 	elseif msg:find(L["sandblasttrigger"]) then
@@ -495,7 +495,7 @@ function BigWigsOuro:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 	end
 end
 
-function BigWigsOuro:CHAT_MSG_MONSTER_EMOTE( msg )
+function mod:CHAT_MSG_MONSTER_EMOTE( msg )
 	if msg == L["berserktrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "OuroBerserk")
 	end

@@ -270,17 +270,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsChromaggus = BigWigs:NewModule(boss)
-BigWigsChromaggus.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
-BigWigsChromaggus.enabletrigger = boss
-BigWigsChromaggus.toggleoptions = { "enrage", "frenzy", "breath", "vulnerability", "bosskill"}
-BigWigsChromaggus.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
+mod.enabletrigger = boss
+mod.toggleoptions = { "enrage", "frenzy", "breath", "vulnerability", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsChromaggus:OnEnable()
+function mod:OnEnable()
 	-- in the module itself for resetting via schedule
 	self.vulnerability = nil
 	twenty = nil
@@ -302,7 +302,7 @@ function BigWigsChromaggus:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "ChromaggusBreath", 10)
 end
 
-function BigWigsChromaggus:UNIT_HEALTH( msg )
+function mod:UNIT_HEALTH( msg )
 	if self.db.profile.enrage and UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 20 and health <= 23 and not twenty then
@@ -314,7 +314,7 @@ function BigWigsChromaggus:UNIT_HEALTH( msg )
 	end
 end
 
-function BigWigsChromaggus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 	local spellName = select(3, msg:find(L["breath_trigger"]))
 	if spellName then
 		local breath = L:HasReverseTranslation(spellName) and L:GetReverseTranslation(spellName) or nil
@@ -324,7 +324,7 @@ function BigWigsChromaggus:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 	end
 end
 
-function BigWigsChromaggus:BigWigs_RecvSync(sync, rest)
+function mod:BigWigs_RecvSync(sync, rest)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
@@ -357,19 +357,19 @@ function BigWigsChromaggus:BigWigs_RecvSync(sync, rest)
 	end
 end
 
-function BigWigsChromaggus:CHAT_MSG_MONSTER_EMOTE(msg)
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["frenzy_trigger"] and self.db.profile.frenzy then
 		self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Important")
 	elseif msg == L["vulnerability_trigger"] then
 		if self.db.profile.vulnerability then
 			self:TriggerEvent("BigWigs_Message", L["vulnerability_warning"], "Positive")
 		end
-		self:ScheduleEvent(function() BigWigsChromaggus.vulnerability = nil end, 2.5)
+		self:ScheduleEvent(function() mod.vulnerability = nil end, 2.5)
 	end
 end
 
 if (GetLocale() == "koKR") then
-	function BigWigsChromaggus:PlayerDamageEvents(msg)
+	function mod:PlayerDamageEvents(msg)
 		if (not self.vulnerability) then
 			local dmg, school, type = select(4, msg:find(L["vulnerability_test"]))
 			if ( type == L["hit"] or type == L["crit"] ) and tonumber(dmg or "") and school then
@@ -381,7 +381,7 @@ if (GetLocale() == "koKR") then
 		end
 	end
 else
-	function BigWigsChromaggus:PlayerDamageEvents(msg)
+	function mod:PlayerDamageEvents(msg)
 		if (not self.vulnerability) then
 			local type, dmg, school = select(3, msg:find(L["vulnerability_test"]))
 			if ( type == L["hit"] or type == L["crit"] ) and tonumber(dmg or "") and school then

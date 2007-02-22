@@ -221,17 +221,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsEbonroc = BigWigs:NewModule(boss)
-BigWigsEbonroc.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
-BigWigsEbonroc.enabletrigger = boss
-BigWigsEbonroc.toggleoptions = { "youcurse", "elsecurse", "shadowbar", -1, "wingbuffet", "shadowflame", -1, "bosskill" }
-BigWigsEbonroc.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Blackwing Lair"]
+mod.enabletrigger = boss
+mod.toggleoptions = { "youcurse", "elsecurse", "shadowbar", -1, "wingbuffet", "shadowflame", -1, "bosskill" }
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsEbonroc:OnEnable()
+function mod:OnEnable()
 	started = nil
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
@@ -251,7 +251,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg == L["shadowflame_trigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "EbonrocShadowflame")
 	elseif msg:find(L["wingbuffet_trigger"]) then
@@ -259,7 +259,7 @@ function BigWigsEbonroc:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	end
 end
 
-function BigWigsEbonroc:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
@@ -278,7 +278,7 @@ function BigWigsEbonroc:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function BigWigsEbonroc:Event(msg)
+function mod:Event(msg)
 	local player, type = select(3, msg:find(L["shadowcurse_trigger"]))
 	if (player and type) then
 		if (player == L["you"] and type == L["are"] and self.db.profile.youcurse) then

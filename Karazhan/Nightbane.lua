@@ -49,17 +49,17 @@ L:RegisterTranslations("enUS", function() return {
 --    Module Declaration   --
 ----------------------------------
 
-BigWigsNightbane = BigWigs:NewModule(boss)
-BigWigsNightbane.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-BigWigsNightbane.enabletrigger = boss
-BigWigsNightbane.toggleoptions = {"engage", "phase", "fear", "charr", "bosskill"}
-BigWigsNightbane.revision = tonumber(("$Revision$"):sub(12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"engage", "phase", "fear", "charr", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsNightbane:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -74,20 +74,20 @@ end
 --     Event Handlers    --
 ------------------------------
 
-function BigWigsNightbane:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "NightbaneFear" and self.db.profile.fear then
 		self:Bar(L["fear_bar"], 2, "Spell_Shadow_PsychicScream")
 		self:Message(L["fear_message"], "Positive")
 	end
 end
 
-function BigWigsNightbane:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["fear_trigger"]) then
 		self:Sync("NightbaneFear")
 	end
 end
 
-function BigWigsNightbane:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.engage and msg == L["engage_trigger"] then
 		self:Message(L["engage_message"]:format(boss), "Positive")
 	elseif self.db.profile.phase and msg == L["airphase_trigger"] then
@@ -97,7 +97,7 @@ function BigWigsNightbane:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function BigWigsNightbane:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 	if self.db.profile.charr and msg == L["charr_trigger"] then
 		self:Message(L["charr_message"], "Urgent", true, "Alarm")
 	end

@@ -127,17 +127,17 @@ L:RegisterTranslations("koKR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsMandokir = BigWigs:NewModule(boss)
-BigWigsMandokir.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
-BigWigsMandokir.enabletrigger = boss
-BigWigsMandokir.toggleoptions = {"you", "other", "icon", "bosskill"}
-BigWigsMandokir.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Gurub"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"you", "other", "icon", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsMandokir:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -147,13 +147,13 @@ end
 --      Events              --
 ------------------------------
 
-function BigWigsMandokir:CHAT_MSG_MONSTER_EMOTE(msg)
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg:find(L["enrage_trigger"]) then
 		self:TriggerEvent("BigWigs_Message", L["enraged_message"], "Urgent")
 	end
 end
 
-function BigWigsMandokir:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	local n = select(3, msg:find(L["watch_trigger"]))
 	if n then
 		if n == UnitName("player") and self.db.profile.you then

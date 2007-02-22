@@ -183,18 +183,18 @@ L:RegisterTranslations("koKR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsEmeriss = BigWigs:NewModule(boss)
-BigWigsEmeriss.zonename = {BZ["Ashenvale"], BZ["Duskwood"], BZ["The Hinterlands"], BZ["Feralas"]}
-BigWigsEmeriss.otherMenu = "Azeroth"
-BigWigsEmeriss.enabletrigger = boss
-BigWigsEmeriss.toggleoptions = {"engage", -1, "noxious", -1, "volatileyou", "volatileother", "icon", "bosskill"}
-BigWigsEmeriss.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = {BZ["Ashenvale"], BZ["Duskwood"], BZ["The Hinterlands"], BZ["Feralas"]}
+mod.otherMenu = "Azeroth"
+mod.enabletrigger = boss
+mod.toggleoptions = {"engage", -1, "noxious", -1, "volatileyou", "volatileother", "icon", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsEmeriss:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
@@ -203,7 +203,7 @@ function BigWigsEmeriss:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
-	function BigWigsEmeriss:Event( msg )
+	function mod:Event( msg )
 		if (not self.prior and msg:find(L["trigger2"])) then
 			self.prior = true
 			if self.db.profile.noxious then 
@@ -229,13 +229,13 @@ end
 		end
 	end
 
-function BigWigsEmeriss:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.engage and msg == L["engage_trigger"] then
 		self:Message( L["engage_message"], "Important")
 		self:Bar( L["bar1text"], 10, "Spell_Shadow_LifeDrain02")
 	end
 end
 
-function BigWigsEmeriss:BigWigs_Message(text)
+function mod:BigWigs_Message(text)
 	if text == L["warn3"] then self.prior = nil end
 end

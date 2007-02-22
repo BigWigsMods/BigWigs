@@ -202,17 +202,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsLucifron = BigWigs:NewModule(boss)
-BigWigsLucifron.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
-BigWigsLucifron.enabletrigger = boss
-BigWigsLucifron.toggleoptions = {"curse", "doom", -1, "mc", "icon", "bosskill"}
-BigWigsLucifron.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Molten Core"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"curse", "doom", -1, "mc", "icon", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsLucifron:OnEnable()
+function mod:OnEnable()
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
@@ -227,7 +227,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsLucifron:Event(msg)
+function mod:Event(msg)
 	if (not prior1 and msg:find(L["curse_trigger"]) and self.db.profile.curse) then
 		self:TriggerEvent("BigWigs_Message", L["curse_message"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 15, L["curse_warn"], "Urgent")
@@ -241,12 +241,12 @@ function BigWigsLucifron:Event(msg)
 	end
 end
 
-function BigWigsLucifron:BigWigs_Message(msg)
+function mod:BigWigs_Message(msg)
 	if (msg == L["curse_warn"]) then prior1 = nil
 	elseif (msg == L["doom_warn"]) then prior2 = nil end
 end
 
-function BigWigsLucifron:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
 	local mcplayer, mctype = select(3, msg:find(L["mc_trigger"]))
 	if mcplayer then
 		if mcplayer == L["you"] then

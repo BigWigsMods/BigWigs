@@ -70,17 +70,17 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-BigWigsFankriss = BigWigs:NewModule(boss)
-BigWigsFankriss.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
-BigWigsFankriss.enabletrigger = boss
-BigWigsFankriss.toggleoptions = {"worm", "bosskill"}
-BigWigsFankriss.revision = tonumber(string.sub("$Revision$", 12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"worm", "bosskill"}
+mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsFankriss:OnEnable()
+function mod:OnEnable()
 	worms = 0
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -93,13 +93,13 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function BigWigsFankriss:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg == L["wormtrigger"] then
 		self:TriggerEvent("BigWigs_SendSync", "FankrissWormSpawn "..tostring(worms + 1) )
 	end
 end
 
-function BigWigsFankriss:BigWigs_RecvSync(sync, rest)
+function mod:BigWigs_RecvSync(sync, rest)
 	if sync ~= "FankrissWormSpawn" then return end
 	if not rest then return end
 	rest = tonumber(rest)
