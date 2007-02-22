@@ -169,6 +169,6 @@ function BigWigs.modulePrototype:Whisper(player, text)
 	self:TriggerEvent("BigWigs_SendTell", player, text)
 end
 
-function BigWigs.modulePrototype:SetRaidIcon( player )
+function BigWigs.modulePrototype:Icon( player )
 	self:TriggerEvent("BigWigs_SetRaidIcon", player )
 end

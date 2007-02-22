@@ -113,7 +113,7 @@ function mod:RidingEvent(msg)
 			self:Bar(L["riding_bar"]:format(rplayer), 20,"INV_Chest_Cloth_18")
 		end
 		if self.db.profile.icon then 
-			self:SetRaidIcon(rplayer)
+			self:Icon(rplayer)
 		end
 	end
 end

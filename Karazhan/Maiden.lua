@@ -163,7 +163,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "MaidenHolyFire" and rest and self.db.profile.holyfire then
 		self:Message(L["holyfire_message"]:format(rest), "Important")
 		if self.db.profile.icon then
-			self:SetRaidIcon(rest)
+			self:Icon(rest)
 		end
 	end
 end

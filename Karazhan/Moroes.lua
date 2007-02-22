@@ -202,7 +202,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "MoroesGarrote" and rest and self.db.profile.garrote then
 		self:Message(L["garrote_message"]:format(rest), "Attention")
 		if self.db.profile.icon then
-			self:SetRaidIcon(rest)
+			self:Icon(rest)
 		end
 	end
 end
