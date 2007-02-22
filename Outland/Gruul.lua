@@ -36,7 +36,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	grow_trigger = "%s grows in size!",
 	grow_message = "Grows: (%d)",
-	grow_warning = "Grow (%d) in ~5sec",
 	grow_bar = "Grow (%d)",
 
 	grasp_trigger1 = "afflicted by Ground Slam",
@@ -67,7 +66,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	grow_trigger = "%s grandit\194\160!",
 	grow_message = "Croissance: (%d)",
-	grow_warning = "Croissance (%d) in ~5sec",
 	grow_bar = "Croissance (%d)",
 
 	grasp_trigger1 = " les effets .* Heurt terrestre",
@@ -98,7 +96,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	grow_trigger = "%s wird gr\195\182\195\159er!",
 	--grow_message = "Gruul w\195\164chst!", --enUS changed
-	--grow_warning = "Grow (%d) in ~5sec",
 	--grow_bar = "Grow (%d)",
 
 	grasp_trigger1 = "von Erde ersch\195\188ttern betroffen",
@@ -132,10 +129,12 @@ function mod:OnEnable()
 	growcount = 1
 
 	self:RegisterEvent("BigWigs_Message")
-
 	self:RegisterEvent("CHAT_MSG_MONSTER_SAY")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
+
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -156,11 +155,10 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 		self:Message(L["grow_message"]:format(growcount), "Important")
 		growcount = growcount + 1
 		self:Bar(L["grow_bar"]:format(growcount), 30, "Spell_Shadow_Charm")
-		self:DelayedMessage(25, L["grow_warning"]:format(growcount), "Attention")
 	end
 end
 
-function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
+function mod:Event(msg)
 	if not slam and self.db.profile.grasp and msg:find(L["grasp_trigger1"]) then
 		self:Message(L["grasp_message1"], "Attention")
 		self:DelayedMessage(70, L["grasp_warning"], "Urgent")
