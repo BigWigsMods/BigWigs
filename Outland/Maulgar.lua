@@ -25,6 +25,10 @@ L:RegisterTranslations("enUS", function() return {
 	spellshield_cmd = "spellshield",
 	spellshield_name = "Spell Shield",
 	spellshield_desc = "Warn when Krosh Firehand gains Spell Shield",
+	
+	summon_cmd = "summon",
+	summon_name = "Summon Wild Felhunter",
+	summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter",
 
 	whirlwind_cmd = "whirlwind",
 	whirlwind_name = "Whirldwind",
@@ -43,6 +47,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	spellshield_trigger = "gains Spell Shield.",
 	spellshield_message = "Spell Shield on Krosh!",
+	
+	summon_trigger = "begins to cast Summon Wild Felhunter.",
+	summon_message = "Felhunter being summoned!",
 
 	flurry_trigger = "You will not defeat the hand of Gruul!",
 	flurry_message = "50% - Flurry!",
@@ -140,7 +147,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = boss
-mod.toggleoptions = {"shield", "spellshield", "whirlwind", "heal", "flurry", "bosskill"}
+mod.toggleoptions = {"shield", "spellshield", "summon", "whirlwind", "heal", "flurry", "bosskill"}
 mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 ------------------------------
@@ -167,6 +174,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "BlindeyeShield", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KroshSpellShield", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MaulgarWhirldwind", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "OlmSummon", 5)
 end
 
 ------------------------------
@@ -176,6 +184,8 @@ end
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if self.db.profile.heal and msg:find(L["heal_trigger"]) then
 		self:Sync("BlindeyePrayer")
+	elseif self.db.profile.summon and msg:find(L["summon_trigger"]) then
+		self:Sync("OlmSummon")
 	end
 end
 
@@ -205,6 +215,8 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		self:Message(L["shield_message"], "Important")
 	elseif sync == "KroshSpellShield" then
 		self:Message(L["spellshield_message"], "Attention", nil, "Info")
+	elseif sync == "OlmSummon" then
+		self:Message(L["summon_message"], "Attention", nil, "Info")
 	elseif sync == "MaulgarWhirldwind" then
 		self:Message(L["whirlwind_message"], "Important")
 		self:Bar(L["whirlwind_bar"], 15, "Ability_Whirlwind")
