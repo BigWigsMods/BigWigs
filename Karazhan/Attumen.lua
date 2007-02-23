@@ -59,6 +59,29 @@ L:RegisterTranslations("deDE", function() return {
 	you = "Ihr",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	phase_name = "Phase",
+	phase_desc = "Avertir lors des changements de phase",
+
+	curse_name = "Mal\195\169diction",
+	curse_desc = "Avertir quand le tank \195\160 Pr\195\169sence immat\195\169rielle",
+
+	icon_name = "Ic\195\180ne",
+	icon_desc = "Place une ic\195\180ne sur la personne maudite (n\195\169cessite des droits)",
+
+	curse_trigger = "^([^%s]+) ([^%s]+) subit les effets DE Pr\195\169sence immat\195\169rielle.",
+	curse_message = "Mal\195\169diction sur %s",
+
+	phase1_message = "Phase 1 - %s",
+	phase2_trigger1 = "Vous pr\195\169f\195\169rez peut-\195\170tre vous mesurer \195\160 un adversaire plus redoutable ?!",
+	phase2_trigger2 = "Bien jou\195\169, Minuit !",
+	phase2_message = "Phase 2 - %s & Attumen",
+	phase3_trigger = "Viens, Minuit, allons disperser cette insignifiante racaille !",
+	phase3_message = "Phase 3 - %s",
+
+	you = "Vous",
+} end)
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------

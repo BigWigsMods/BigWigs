@@ -165,7 +165,7 @@ L:RegisterTranslations("frFR", function() return {
 	pull_trigger2 = "Je ne suis pas un simple bouffon\194\160! Je suis Niels Aran\194\160!",
 	pull_bar = "Explosion des Arcanes",
 
-	flame_warning = "Casting: Flame Wreath!",
+	flame_warning = "Lance : Couronne de flammes!",
 	flame_trigger1 = "Je vais vous montrer que ce chien battu a encore de bons crocs\194\160!",
 	flame_trigger2 = "Br\195\187lez, d\195\169mons de l\226\128\153enfer\194\160!",
 

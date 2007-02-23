@@ -54,6 +54,23 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Oh Tito, wir m\195\188ssen einfach einen Weg nach Hause finden!",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	summon_name = "Invoque Tito",
+	summon_desc = ("Avertir quand %s commence \195\160 invoquer %s"):format(dorothee, tito),
+
+	spawns_name = "Hostilit?",
+	spawns_desc = ("Montre le temps restant avant que %s, %s et %s deviennent hostile"):format(roar, tinhead, strawman),
+
+	spawns_roar = "%s attaque!",
+	spawns_strawman = "%s attaque!",
+	spawns_tinhead = "%s attaque!",
+	spawns_tito = "%s invoqu\195\169!",
+
+	summon_trigger = "Ne les laisse pas nous faire du mal, Tito ! Oh, tu ne le feras pas, hein ?",
+	summon_message = "Invocation de %s!",
+
+	engage_trigger = "Oh, Tito, nous devons trouver le moyen de rentrer \195\160 la maison ! Le vieux sorcier est notre dernier espoir ! Homme de paille, Graou, T\195\170te de fer-blanc, vous voulez bien? Attendez? Oh, regardez, nous avons des visiteurs !",
+} end)
 
 ----------------------------------
 --    Module Declaration   --

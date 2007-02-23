@@ -77,7 +77,7 @@ L:RegisterTranslations("frFR", function() return {
 	berserk_message = "%s engag\195\169, 12min avant berserk !",
 	berserk_bar = "Berserk",
 
-	--enrage_trigger = "Failure to comply will result in offensive action.",
+	enrage_trigger = "Toute d\195\169sob\195\169issance entra\195\174nera une action offensive",
 	enrage_message = "Enrag\195\169 !",
 	enrage_warning = "Enrag\195\169 imminent !",
 } end )

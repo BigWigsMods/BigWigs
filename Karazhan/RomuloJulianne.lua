@@ -85,6 +85,39 @@ L:RegisterTranslations("deDE", function() return {
 	you = "Ihr",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	phase_name = "Phases",
+	phase_desc = "Avertir lors des changements de phase",
+
+	poison_name = "Poison",
+	poison_desc = "Avertir quand quelqu'un est empoisonn\195\169",
+
+	heal_name = "Soin",
+	heal_desc = ("Avertir quand %s lance Amour \195\169ternel"):format(girl),
+
+	buff_name = "Buff",
+	buff_desc = ("Avertir quand %s et %s gagne leurs buffs"):format(boy, girl),
+
+	phase1_trigger = "Quel d\195\169mon es-tu pour me tourmenter ainsi?",
+	phase1_message = "Phase 1 - %s",
+	phase2_trigger = "Tu veux donc me provoquer ? Eh bien, \195\160 toi, enfant.",
+	phase2_message = "Phase 2 - %s",
+	phase3_trigger = "Viens, gentille nuit ; rends-moi mon Romulo !",
+	phase3_message = "Phase 3 - Both",
+
+	poison_trigger = "^([^%s]+) ([^%s]+) subit les effets DE Coup empoisonn\195\169",
+	poison_message = "%s est empoisonn\195\169!!",
+
+	heal_trigger = "commence \195\160 lancer Amour \195\169ternel.",
+	heal_message = "Julianne lance un soin!",
+
+	buff1_trigger = "gagne Hardiesse.",
+	buff1_message = "Dispel - Romulo gagne Hardiesse!",
+	buff2_trigger = "gagne D\195\169votion.",
+	buff2_message = "Dispel - Julianne gagne D\195\169votion!",
+
+	you = "Vous",
+} end)
 
 ----------------------------------
 --   Module Declaration    --
