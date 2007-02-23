@@ -22,10 +22,6 @@ L:RegisterTranslations("enUS", function() return {
 	curse_name = "Cursed Warriors",
 	curse_desc = "Warn when a warrior is cursed by Intangible Presence",
 
-	icon_cmd = "icon",
-	icon_name = "Icon",
-	icon_desc = "Place a Raid Icon on the cursed player(requires promoted or higher)",
-
 	curse_trigger = "^([^%s]+) ([^%s]+) afflicted by Intangible Presence",
 	curse_message = "Warrior Cursed - %s",
 
@@ -63,14 +59,13 @@ L:RegisterTranslations("frFR", function() return {
 	phase_name = "Phase",
 	phase_desc = "Avertir lors des changements de phase",
 
+--[[
 	curse_name = "Mal\195\169diction",
 	curse_desc = "Avertir quand le tank \195\160 Pr\195\169sence immat\195\169rielle",
 
-	icon_name = "Ic\195\180ne",
-	icon_desc = "Place une ic\195\180ne sur la personne maudite (n\195\169cessite des droits)",
-
 	curse_trigger = "^([^%s]+) ([^%s]+) subit les effets DE Pr\195\169sence immat\195\169rielle.",
 	curse_message = "Mal\195\169diction sur %s",
+  we are looking for cursed warriors, not any player  ]]
 
 	phase1_message = "Phase 1 - %s",
 	phase2_trigger1 = "Vous pr\195\169f\195\169rez peut-\195\170tre vous mesurer \195\160 un adversaire plus redoutable ?!",

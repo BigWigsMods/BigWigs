@@ -112,9 +112,9 @@ L:RegisterTranslations("frFR", function() return {
 	heal_message = "Julianne lance un soin!",
 
 	buff1_trigger = "gagne Hardiesse.",
-	buff1_message = "Dispel - Romulo gagne Hardiesse!",
+	buff1_message = "Romulo gagne Hardiesse!",
 	buff2_trigger = "gagne D\195\169votion.",
-	buff2_message = "Dispel - Julianne gagne D\195\169votion!",
+	buff2_message = "Julianne gagne D\195\169votion!",
 
 	you = "Vous",
 } end)
