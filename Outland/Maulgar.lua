@@ -58,10 +58,10 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	heal_name = "Alerte soin",
-	heal_desc = "Pr\195\169viens quand \197\146illaveugle le Voyant commence \195\160 lancer un soin.",
+	heal_desc = "Pr\195\169viens quand Oeillaveugle le Voyant commence \195\160 lancer un soin.",
 
 	shield_name = "Alerte Bouclier",
-	shield_desc = "Pr\195\169viens quand \197\146illaveugle le Voyant se pose un bouclier.",
+	shield_desc = "Pr\195\169viens quand Oeillaveugle le Voyant se pose un bouclier.",
 
 	spellshield_name = "Alerte Bouclier anti-sort",
 	spellshield_desc = "Pr\195\169viens quand Krosh Brasemain se pose le bouclier anti-sort.",
@@ -72,12 +72,12 @@ L:RegisterTranslations("frFR", function() return {
 	flurry_name = "Alerte Rafale",
 	flurry_desc = "Pr\195\169viens quand Maulgar est proche de Rafale et quand il gagne Rafale.",
 
-	heal_trigger = "\197\146illaveugle le Voyant commence \195\160 lancer Pri\195\168re de soins%.",
-	heal_message = "\197\146illaveugle lance une Pri\195\168re de soins !",
+	heal_trigger = "Oeillaveugle le Voyant commence \195\160 lancer Pri\195\168re de soins%.",
+	heal_message = "Oeillaveugle lance une Pri\195\168re de soins !",
 	heal_bar = "Soin",
 
 	shield_trigger = "gagne Mot de pouvoir sup\195\169rieur\194\160: Bouclier",
-	shield_message = "Bouclier sur \197\146illaveugle !",
+	shield_message = "Bouclier sur Oeillaveugle !",
 
 	spellshield_trigger = "gagne Bouclier anti-sort%.",
 	spellshield_message = "Bouclier anti-sort sur Krosh !",
