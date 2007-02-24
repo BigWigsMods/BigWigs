@@ -80,7 +80,7 @@ L:RegisterTranslations("frFR", function() return {
 	repentance_name = "Alerte Repentir",
 	repentance_desc = "Affiche le temps estim\195\169 du Repentir",
 
-	holyfire_name = "Alerte Terre sacr\195\169",
+	holyfire_name = "Alerte Flammes sacr\195\169",
 	holyfire_desc = "Pr\195\169viens quand quelqu'un est affect\195\169 par Flammes sacr\195\169es",
 
 	icon_name = "Placer une ic\195\180ne",
@@ -96,7 +96,7 @@ L:RegisterTranslations("frFR", function() return {
 	repentance_bar = "Repentir",
 	repentance_nextbar = "Prochain Repentir",
 
-	holyfire_trigger = "^(.+) (.+) subit les effets .* Flammes sacr\195\169es%.",
+	holyfire_trigger = "^(.+) (.+) les effets .* Flammes sacr\195\169es%.",
 	holyfire_message = "Flammes sacr\195\169es: %s",
 
 	you = "Vous",

@@ -55,21 +55,21 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	summon_name = "Invoque Tito",
-	summon_desc = ("Avertir quand %s commence \195\160 invoquer %s"):format(dorothee, tito),
+	summon_name = "Alerte Invocation de Tito",
+	summon_desc = ("Pr\195\169viens quand %s commence \195\160 invoquer %s."):format(dorothee, tito),
 
-	spawns_name = "Hostilit?",
-	spawns_desc = ("Montre le temps restant avant que %s, %s et %s deviennent hostile"):format(roar, tinhead, strawman),
+	spawns_name = "Alerte Hostilit\195\169",
+	spawns_desc = ("Montre le temps restant avant que %s, %s et %s deviennent hostiles."):format(roar, tinhead, strawman),
 
-	spawns_roar = "%s attaque!",
-	spawns_strawman = "%s attaque!",
-	spawns_tinhead = "%s attaque!",
-	spawns_tito = "%s invoqu\195\169!",
+	spawns_roar = "%s attaque !",
+	spawns_strawman = "%s attaque !",
+	spawns_tinhead = "%s attaque !",
+	spawns_tito = "%s invoqu\195\169 !",
 
-	summon_trigger = "Ne les laisse pas nous faire du mal, Tito ! Oh, tu ne le feras pas, hein ?",
-	summon_message = "Invocation de %s!",
+	summon_trigger = "Ne les laisse pas nous faire du mal, Tito\194\160! Oh, tu ne le feras pas, hein\194\160?",
+	summon_message = "Invocation de %s !",
 
-	engage_trigger = "Oh, Tito, nous devons trouver le moyen de rentrer \195\160 la maison ! Le vieux sorcier est notre dernier espoir ! Homme de paille, Graou, T\195\170te de fer-blanc, vous voulez bien? Attendez? Oh, regardez, nous avons des visiteurs !",
+	engage_trigger = "Oh, Tito, nous devons trouver le moyen de rentrer \195\160 la maison\194\160! Le vieux sorcier est notre dernier espoir\194\160! Homme de paille, Graou, T\195\170te de fer-blanc, vous voulez bien\194\160? Attendez\194\160? Oh, regardez, nous avons des visiteurs\194\160!",
 } end)
 
 ----------------------------------
