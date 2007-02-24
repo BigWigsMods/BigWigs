@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Nightbane"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local blast
 
 ----------------------------
 --      Localization     --
@@ -28,12 +29,19 @@ L:RegisterTranslations("enUS", function() return {
 	engage_name = "Engage",
 	engage_desc = "Engage alert",
 
+	blast_cmd = "blast",
+	blast_name = "Smoking Blast",
+	blast_desc = "Warn for Smoking Blast being cast",
+
 	fear_trigger = "cast Bellowing Roar",
 	fear_message = "Fear in 2 sec!",
 	fear_bar = "Fear",
 
 	charr_trigger = "You are afflicted by Charred Earth.",
 	charr_message = "Charred Earth on YOU!",
+
+	blast_trigger = "cast Smoking Blast",
+	blast_message = "Incoming Smoking Blast!",
 
 	airphase_trigger = "Miserable vermin. I shall exterminate you from the air!",
 	landphase_trigger1 = "Enough! I shall land and crush you myself!",
@@ -52,7 +60,7 @@ L:RegisterTranslations("enUS", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"engage", "phase", "fear", "charr", "bosskill"}
+mod.toggleoptions = {"engage", "phase", "fear", "blast", "charr", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -68,6 +76,8 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "NightbaneFear", 5)
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	blast = nil
+	self:RegisterEvent("BigWigs_Message")
 end
 
 ------------------------------
@@ -78,12 +88,17 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "NightbaneFear" and self.db.profile.fear then
 		self:Bar(L["fear_bar"], 2, "Spell_Shadow_PsychicScream")
 		self:Message(L["fear_message"], "Positive")
+	elseif sync == "NightbaneBlast" and self.db.profile.blast then
+		self:Message(L["blast_message"], "Urgent", nil, "Alert")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["fear_trigger"]) then
 		self:Sync("NightbaneFear")
+	elseif not blast and msg:find(L["blast_trigger"]) then
+		self:Sync("NightbaneBlast")
+		blast = true
 	end
 end
 
@@ -100,5 +115,11 @@ end
 function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 	if self.db.profile.charr and msg == L["charr_trigger"] then
 		self:Message(L["charr_message"], "Urgent", true, "Alarm")
+	end
+end
+
+function mod:BigWigs_Message(text)
+	if text == L["landphase_message"] then
+		blast = nil
 	end
 end
