@@ -143,7 +143,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	adds_message = "El\195\169mentaires Imminent !",
 	adds_warning = "El\195\169mentaires bient\195\180t",
-	-- adds_trigger = "I'm not finished yet! No, I have a few more tricks up my sleeve...",
+	adds_trigger = "Je ne suis pas encore vaincu\194\160! Non, j\226\128\153ai encore quelques tours dans mon sac\226\128\166",
 	adds_bar = "El\195\169mentaires",
 
 	drink_trigger = "Vous ne refuseriez pas \195\160 un vieil homme une boisson revigorante\194\160? Non, c\226\128\153est bien ce que je pensais.",
