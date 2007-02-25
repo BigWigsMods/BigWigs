@@ -1,5 +1,5 @@
 ------------------------------
---      Are you local?      --
+--      Are you local?    --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Doomwalker"]
@@ -8,7 +8,7 @@ local started = nil
 local enrageAnnounced = nil
 
 ----------------------------
---      Localization      --
+--      Localization     --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -41,15 +41,15 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 ----------------------------------
---      Module Declaration      --
+--   Module Declaration    --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss, "AceHook-2.1")
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Shadowmoon Valley"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = boss
-mod.toggleoptions = { "overrun", "earthquake", "enrage", "bosskill" }
-mod.revision = tonumber(string.sub("$Revision$", 12, -3))
+mod.toggleoptions = {"overrun", "earthquake", "enrage", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -76,7 +76,7 @@ function mod:OnEnable()
 end
 
 ------------------------------
---      Hooks               --
+--         Hooks               --
 ------------------------------
 
 function mod:ChatFrame_MessageEventHandler(event, ...)
@@ -87,7 +87,7 @@ function mod:ChatFrame_MessageEventHandler(event, ...)
 end
 
 ------------------------------
---      Event Handlers      --
+--    Event Handlers     --
 ------------------------------
 
 function mod:BigWigs_RecvSync( sync, rest, nick )
@@ -138,4 +138,3 @@ function mod:UNIT_HEALTH(msg)
 		end
 	end
 end
-

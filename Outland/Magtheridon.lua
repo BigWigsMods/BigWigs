@@ -49,7 +49,7 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Magtheridon's Lair"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = boss
 mod.toggleoptions = {"escape", "abyssal", "heal", "bosskill"}
-mod.revision = tonumber(string.sub("$Revision$", 12, -3))
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --

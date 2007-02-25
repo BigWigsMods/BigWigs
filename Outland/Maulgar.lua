@@ -25,7 +25,7 @@ L:RegisterTranslations("enUS", function() return {
 	spellshield_cmd = "spellshield",
 	spellshield_name = "Spell Shield",
 	spellshield_desc = "Warn when Krosh Firehand gains Spell Shield",
-	
+
 	summon_cmd = "summon",
 	summon_name = "Summon Wild Felhunter",
 	summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter",
@@ -47,7 +47,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	spellshield_trigger = "gains Spell Shield.",
 	spellshield_message = "Spell Shield on Krosh!",
-	
+
 	summon_trigger = "begins to cast Summon Wild Felhunter.",
 	summon_message = "Felhunter being summoned!",
 
@@ -73,6 +73,9 @@ L:RegisterTranslations("frFR", function() return {
 	spellshield_name = "Alerte Bouclier anti-sort",
 	spellshield_desc = "Pr\195\169viens quand Krosh Brasemain se pose le bouclier anti-sort.",
 
+	--summon_name = "Summon Wild Felhunter",
+	--summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter",
+
 	whirlwind_name = "Alerte Tourbillon",
 	whirlwind_desc = "Pr\195\169viens quand Maulgar commence un Tourbillon.",
 
@@ -88,6 +91,9 @@ L:RegisterTranslations("frFR", function() return {
 
 	spellshield_trigger = "gagne Bouclier anti-sort%.",
 	spellshield_message = "Bouclier anti-sort sur Krosh !",
+
+	--summon_trigger = "begins to cast Summon Wild Felhunter.",
+	--summon_message = "Felhunter being summoned!",
 
 	flurry_trigger = "Vous ne terrasserez pas la main de Gruul\194\160!",
 	flurry_message = "50% - Rafale !",
@@ -111,6 +117,9 @@ L:RegisterTranslations("deDE", function() return {
 	spellshield_name = "Zauberschild",
 	spellshield_desc = "Warnung wenn Krosh Feuerhand sein Zauberschild bekommt",
 
+	--summon_name = "Summon Wild Felhunter",
+	--summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter",
+
 	whirlwind_name = "Wirbelwind",
 	whirlwind_desc = "Warnung wenn Raufgar Wirbelwind bekommt",
 
@@ -126,6 +135,9 @@ L:RegisterTranslations("deDE", function() return {
 
 	spellshield_trigger = "bekommt 'Zauberschild'.",
 	spellshield_message = "Zauberschild auf Krosh!",
+
+	--summon_trigger = "begins to cast Summon Wild Felhunter.",
+	--summon_message = "Felhunter being summoned!",
 
 	flurry_trigger = "Ihr werdet die Hand von Gruul nicht besiegen!",
 	flurry_message = "50% - Schlaghagel!",
@@ -148,7 +160,7 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = boss
 mod.toggleoptions = {"shield", "spellshield", "summon", "whirlwind", "heal", "flurry", "bosskill"}
-mod.revision = tonumber(string.sub("$Revision$", 12, -3))
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -216,7 +228,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 	elseif sync == "KroshSpellShield" then
 		self:Message(L["spellshield_message"], "Attention", nil, "Info")
 	elseif sync == "OlmSummon" then
-		self:Message(L["summon_message"], "Attention", nil, "Info")
+		self:Message(L["summon_message"], "Attention", nil, "Long")
 	elseif sync == "MaulgarWhirldwind" then
 		self:Message(L["whirlwind_message"], "Important")
 		self:Bar(L["whirlwind_bar"], 15, "Ability_Whirlwind")
