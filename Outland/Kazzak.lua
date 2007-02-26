@@ -18,7 +18,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	enrage_trigger1 = "For the Legion! For Kil'Jaeden!",
 	enrage_trigger2 = "%s becomes enraged!",
-	enrage_warning1 = "%s Engaged- Enrage in 1min",
+	enrage_warning1 = "%s Engaged - Enrage in 1min",
 	enrage_warning2 = "Enrage in 5 sec",
 	enrage_message = "Enrage for 10sec!",
 	enrage_finished = "Enrage over",
