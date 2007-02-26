@@ -42,7 +42,7 @@ L:RegisterTranslations("enUS", function() return {
 	grasp_trigger2 = "afflicted by Gronn Lord's Grasp",
 	grasp_message1 = "Ground Slam - Grasp Incoming",
 	grasp_message2 = "Grasp Stacking - Shatter in ~5sec",
-	grasp_warning = "Grasp Soon!",
+	grasp_warning = "Ground Slam Soon",
 
 	shatter_trigger = "%s roars!",
 	shatter_message = "Shatter!",
@@ -75,7 +75,7 @@ L:RegisterTranslations("frFR", function() return {
 	grasp_trigger2 = " les effets .* Emprise du seigneur gronn",
 	grasp_message1 = "Heurt terrestre - Emprise Imminente !",
 	grasp_message2 = "Emprise - Fracasser dans ~5sec",
-	grasp_warning = "Emprise",
+	--grasp_warning = "Emprise", --enUS changed
 
 	shatter_trigger = "%s rugit\194\160!",
 	shatter_message = "Fracasser !",
@@ -108,7 +108,7 @@ L:RegisterTranslations("deDE", function() return {
 	grasp_trigger2 = "von Griff des Gronnlords betroffen",
 	--grasp_message1 = "Griff kommt!", --enUS changed
 	--grasp_message2 = "Griff des Gronnlords!", --enUS changed
-	grasp_warning = "Griff bald!",
+	--grasp_warning = "Griff bald!", --enUS changed
 
 	--shatter_trigger = "%s roars!",
 	--shatter_message = "Shatter!",
