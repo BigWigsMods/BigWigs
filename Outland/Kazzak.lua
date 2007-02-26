@@ -43,6 +43,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 end
 
 ------------------------------
@@ -50,12 +51,15 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if not self.db.profile.enrage then return end
-	if msg == L["enrage_trigger1"] then
+	if self.db.profile.enrage and msg == L["enrage_trigger1"] then
 		self:Message(L["enrage_warning1"]:format(boss), "Attention")
 		self:DelayedMessage(55, L["enrage_warning2"], "Urgent")
 		self:Bar(L["enrage_bar"], 60, "Spell_Shadow_UnholyFrenzy")
-	elseif msg == L["enrage_trigger2"] then
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
+	if self.db.profile.enrage and msg == L["enrage_trigger2"] then
 		self:Message(L["enrage_message"], "Important")
 		self:DelayedMessage(10, L["enrage_finished"], "Positive")
 		self:Bar(L["enrage_bar"], 10, "Spell_Shadow_UnholyFrenzy")
