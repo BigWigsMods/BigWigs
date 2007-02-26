@@ -80,7 +80,7 @@ L:RegisterTranslations("frFR", function() return {
 	--shatter_trigger = "%s roars!",
 	--shatter_message = "Shatter!",
 
-	cavein_trigger = "Vous subissez les effets .* Eboulement.",
+	cavein_trigger = "Vous subissez les effets de Eboulement.",
 	cavein_message = "Eboulement !",
 } end)
 
