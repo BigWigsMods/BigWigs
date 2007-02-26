@@ -156,8 +156,8 @@ end
 function mod:CHAT_MSG_MONSTER_SAY(msg)
 	if self.db.profile.engage and msg == L["engage_trigger"] then
 		self:Message(L["engage_message"]:format(boss), "Attention")
-		self:DelayedMessage(67, L["grasp_warning"], "Urgent")
-		self:Bar(L["grasp_warning"], 72, "Ability_ThunderClap")
+		self:DelayedMessage(35, L["grasp_warning"], "Urgent")
+		self:Bar(L["grasp_warning"], 40, "Ability_ThunderClap")
 	end
 end
 
