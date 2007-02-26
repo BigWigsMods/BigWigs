@@ -115,6 +115,39 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_warning = "Kurator bald in Rage!",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	berserk_name = "광기",
+	berserk_desc = "12분 후 광기 알림",
+
+	enrage_name = "광폭화",
+	enrage_desc = "체력 15% 시 광폭화 알림",
+
+	weaken_name = "약화",
+	weaken_desc = "약화된 상태인 동안 알림",
+
+	weaktime_name = "약화 카운트다운",
+	weaktime_desc = "다음 약화에 대한 바와 시간 카운트다운",
+
+	weaken_trigger = "현재 요청하신 내용은 처리가 불가능합니다.", -- "Your request cannot be processed.", -- check
+	weaken_message = "환기 - 20초 동안 약화!",
+	weaken_bar = "환기",
+	weaken_fade_message = "환기 종료 - 약화 종료!",
+	weaken_fade_warning = "5초 후 환기 종료!",
+
+	weaktime_message1 = "약 10초 후 환기",
+	weaktime_message2 = "약 30초 후 환기",
+	weaktime_message3 = "약 70초 후 환기",
+	weaktime_bar = "다음 환기",
+
+	berserk_trigger = "박물관에는 초대받은 손님만 입장할 수 있습니다.", -- "The Menagerie is for guests only.", -- check
+	berserk_message = "%s 전투 시작, 12분 후 광기!",
+	berserk_bar = "광기",
+
+	enrage_trigger = "Failure to comply will result in offensive action.", -- check
+	enrage_message = "광폭화!",
+	enrage_warning = "잠시 후 광폭화!",
+} end )
+
 ----------------------------------
 --   Module Declaration   --
 ----------------------------------

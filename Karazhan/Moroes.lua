@@ -116,6 +116,40 @@ L:RegisterTranslations("deDE", function() return {
 	you = "Ihr",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	engage_name = "전투시작",
+	engage_desc = ("%s 전투 시작 알림"):format(boss),
+
+	vanish_name = "소멸",
+	vanish_desc = "소멸 예상 시간",
+
+	garrote_name = "목조르기",
+	garrote_desc = "목조르기에 걸린 사람 알림",
+
+	enrage_name = "광폭화",
+	enrage_desc = ("%s 광폭화시 알림"):format(boss),
+
+	icon_name = "아이콘",
+	icon_desc = "목조르기에 걸린 사람에게 공격대 아이콘 지정(승급자 이상의 권한 필요)",
+
+	vanish_trigger1 = "You rang?", -- check
+	vanish_trigger2 = "Now, where was I? Oh, yes...", -- check
+	vanish_message = "사라짐! 다음은 약 35초 후!",
+	vanish_warning = "잠시후 사라짐!", 
+	vanish_bar = "다음 사라짐",
+
+	garrote_trigger = "^([^|;%s]*)(.*)목조르기에 걸렸습니다%.$", -- "^([^%s]+) ([^%s]+) afflicted by Garrote", -- check
+	garrote_message = "목조르기: %s",
+
+	engage_trigger = "Hm, unannounced visitors. Preparations must be made...", -- check
+	engage_message = "%s 전투 시작 - 약 35초 후 사라짐!",
+
+	enrage_trigger = "%s|1이;가; 격노 효과를 얻었습니다." -- "%s becomes enraged!", -- check
+	enrage_message = "격노!",
+	enrage_warning = "잠시 후 격노!",
+
+	you = "당신은",
+} end)
 
 ----------------------------------
 --   Module Declaration    --
