@@ -202,10 +202,10 @@ end
 
 function mod:Evocation()
 	if self.db.profile.weaktime then
-		self:Bar(L["weaktime_bar"], 109, "Spell_Nature_Purge")
-		self:ScheduleEvent("evoc1", "BigWigs_Message", 39, L["weaktime_message3"], "Positive")
-		self:ScheduleEvent("evoc2", "BigWigs_Message", 79, L["weaktime_message2"], "Attention")
-		self:ScheduleEvent("evoc3", "BigWigs_Message", 99, L["weaktime_message1"], "Urgent")
+		self:Bar(L["weaktime_bar"], 115, "Spell_Nature_Purge")
+		self:ScheduleEvent("evoc1", "BigWigs_Message", 45, L["weaktime_message3"], "Positive")
+		self:ScheduleEvent("evoc2", "BigWigs_Message", 85, L["weaktime_message2"], "Attention")
+		self:ScheduleEvent("evoc3", "BigWigs_Message", 105, L["weaktime_message1"], "Urgent")
 	end
 end
 
