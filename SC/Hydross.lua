@@ -7,7 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local debuff = {0, 10, 25, 50, 100}
 local currentPerc
-local hCount, cCount = 1, 1
+local count = 1
 
 local tooltip
 
@@ -100,33 +100,33 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["start_trigger"] then
-		hCount, cCount = 1, 1
+		count = 1
 		currentPerc = nil
 		if self.db.profile.stance then
-			self:Bar(string.format(L["hydross_bar"], debuff[hCount+1]), 15, "Spell_Frost_FrostBolt02")
+			self:Bar(string.format(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrostBolt02")
 		end
 		if self.db.profile.enrage then
 			self:Bar(L["enrage_bar"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
 	elseif msg == L["poison_stance_trigger"] then
-		self:TriggerEvent("BigWigs_StopBar", self, string.format(L["corruption_bar"], debuff[cCount] and debuff[cCount] or 250))
-		hCount, cCount = 1, 1
+		self:TriggerEvent("BigWigs_StopBar", self, string.format(L["corruption_bar"], debuff[count+1] and debuff[count+1] or 250))
+		count = 1
 		currentPerc = nil
 		if self.db.profile.stance then
 			self:Message(string.format(L["poison_stance"], match), "Important")
 		end
 		if self.db.profile.mark then
-			self:Bar(string.format(L["corruption_bar"], debuff[cCount+1]), 15, "Spell_Shadow_AbominationExplosion")
+			self:Bar(string.format(L["corruption_bar"], debuff[count+1]), 15, "Spell_Shadow_AbominationExplosion")
 		end
 	elseif msg == L["water_stance_trigger"] then
-		self:TriggerEvent("BigWigs_StopBar", self, string.format(L["hydross_bar"], debuff[hCount] and debuff[hCount] or 250))
-		hCount, cCount = 1, 1
+		self:TriggerEvent("BigWigs_StopBar", self, string.format(L["hydross_bar"], debuff[count+1] and debuff[count+1] or 250))
+		count = 1
 		currentPerc = nil
 		if self.db.profile.stance then
 			self:Message(string.format(L["water_stance"], match), "Important")
 		end
 		if self.db.profile.mark then
-			self:Bar(string.format(L["hydross_bar"], debuff[hCount+1]), 15, "Spell_Frost_FrostBolt02")
+			self:Bar(string.format(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrostBolt02")
 		end
 	end
 end
@@ -141,28 +141,26 @@ function mod:DebuffCheck()
 		if bName == L["hydross_trigger"] then
 			local match = select(3, HydrossTooltipTextLeft2:GetText():find("(%d+)"))
 			if match ~= currentPerc then
-				hCount = hCount + 1
+				count = count + 1
 				currentPerc = match
-				self:TriggerEvent("BigWigs_StopBar", self, string.format(L["hydross_bar"], debuff[hCount] and debuff[hCount] or 250))
+				self:TriggerEvent("BigWigs_StopBar", self, string.format(L["hydross_bar"], debuff[count] and debuff[count] or 250))
 				if self.db.profile.mark then
 					self:Message(string.format(L["debuff_warn"], match), "Important")
-					self:Bar(string.format(L["hydross_bar"], debuff[hCount+1] and debuff[hCount+1] or 250), 15, "Spell_Frost_FrostBolt02")
+					self:Bar(string.format(L["hydross_bar"], debuff[count+1] and debuff[count+1] or 250), 15, "Spell_Frost_FrostBolt02")
 				end
 			end
 		elseif bName == L["corruption_trigger"] then
 			local match = select(3, HydrossTooltipTextLeft2:GetText():find("(%d+)"))
 			if match ~= currentPerc then
-				cCount = cCount + 1
+				count = count + 1
 				currentPerc = match
-				self:TriggerEvent("BigWigs_StopBar", self, string.format(L["corruption_bar"], debuff[cCount] and debuff[cCount] or 250))
+				self:TriggerEvent("BigWigs_StopBar", self, string.format(L["corruption_bar"], debuff[count] and debuff[count] or 250))
 				if self.db.profile.mark then
 					self:Message(string.format(L["debuff_warn"], match), "Important")
-					self:Bar(string.format(L["corruption_bar"], debuff[cCount+1] and debuff[cCount+1] or 250), 15, "Spell_Shadow_AbominationExplosion")
+					self:Bar(string.format(L["corruption_bar"], debuff[count+1] and debuff[count+1] or 250), 15, "Spell_Shadow_AbominationExplosion")
 				end
 			end
 		end
 		i = i + 1
 	end
 end
-
-
