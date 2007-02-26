@@ -73,8 +73,8 @@ L:RegisterTranslations("frFR", function() return {
 	spellshield_name = "Alerte Bouclier anti-sort",
 	spellshield_desc = "Pr\195\169viens quand Krosh Brasemain se pose le bouclier anti-sort.",
 
-	--summon_name = "Summon Wild Felhunter",
-	--summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter",
+	summon_name = "Invocation d'un chasseur corrompu",
+	summon_desc = "Pr\195\169viens quand Olm l'Invocateur commence \195\160 lancer Invocation d'un chasseur corrompu sauvage",
 
 	whirlwind_name = "Alerte Tourbillon",
 	whirlwind_desc = "Pr\195\169viens quand Maulgar commence un Tourbillon.",
@@ -92,8 +92,8 @@ L:RegisterTranslations("frFR", function() return {
 	spellshield_trigger = "gagne Bouclier anti-sort%.",
 	spellshield_message = "Bouclier anti-sort sur Krosh !",
 
-	--summon_trigger = "begins to cast Summon Wild Felhunter.",
-	--summon_message = "Felhunter being summoned!",
+	summon_trigger = "commence \195\160 lancer Invocation d\226\128\153un chasseur corrompu sauvage.",
+	summon_message = "Invocation d'un chasseur corrompu!",
 
 	flurry_trigger = "Vous ne terrasserez pas la main de Gruul\194\160!",
 	flurry_message = "50% - Rafale !",
