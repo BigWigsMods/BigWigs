@@ -159,6 +159,8 @@ plugin.defaultDB = {
 	growup = false,
 	scale = 1.0,
 	texture = "BantoBar",
+	posx = nil,
+	posy = nil,
 }
 plugin.consoleCmd = L["Bars"]
 plugin.consoleOptions = {

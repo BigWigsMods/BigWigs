@@ -225,6 +225,8 @@ plugin.defaultDB = {
 	display = L["RaidWarning frame"],
 	usecolors = true,
 	scale = 1.0,
+	posx = nil,
+	posy = nil,
 }
 plugin.consoleCmd = L["Messages"]
 plugin.consoleOptions = {

@@ -100,7 +100,7 @@ plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
 plugin.defaultDB = {
 	defaultonly = false,
 	sound = true,
-	sounds = {},
+	sounds = { ["*"] = true },
 }
 plugin.consoleCmd = L["Sounds"]
 plugin.consoleOptions = {
@@ -143,7 +143,6 @@ plugin.consoleOptions = {
 
 function plugin:OnRegister()
 	for k, v in pairs(sounds) do
-		self.defaultDB.sounds[k] = true
 		self.consoleOptions.args[k] = {
 			type = "toggle",
 			name = k,
