@@ -74,25 +74,22 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	phase_name = "단계",
-	phase_desc = "단계 알림",
+	phase_desc = "새로운 단계 진입시 알림",
 
 	curse_name = "저주 걸린 전사",
-	curse_desc = "전사가 저주에 걸렸을 때 경고",
-
-	icon_name = "아이콘",
-	icon_desc = "저주 걸린 사람에게 아이콘 지정 (승급자 이상 요구)",
+	curse_desc = "전사가 무형의 저주에 걸렸을 때 경고",
 
 	curse_trigger = "^([^|;%s]*)(.*)무형의 존재에 걸렸습니다%.$",
 	curse_message = "저주 걸린 전사 - %s",
 
-	phase1_message = "1단계 - %s",
+	phase1_message = "1 단계 - %s",
 	phase2_trigger1 = "감히 누가 사냥꾼의 애마를 건드리느냐?",
-	phase2_trigger2 = "Cowards! Wretches!", --no check
-	phase2_message = "2단계 - %s & 사냥꾼 어튜멘",
+	phase2_trigger2 = "Cowards! Wretches!", -- check
+	phase2_message = "2 단계 - %s & 어튜멘",
 	phase3_trigger = "이랴! 이 오합지졸을 데리고 실컷 놀아보자!",
-	phase3_message = "3단계 - %s",
+	phase3_message = "3 단계 - %s",
 
-	you = "당신은",  --no check
+	you = "당신은",
 } end)
 
 ----------------------------------

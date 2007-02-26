@@ -74,14 +74,14 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	summon_name = "티토 소환",
-	summon_desc = ("%s의 %s 소환 경고"):format(dorothee, tito),
+	summon_desc = ("%s의 %s 소환 시 경고"):format(dorothee, tito),
 
-	spawns_name = "등장 시간",
-	spawns_desc = ("%s, %s, %s 등장 시간 경고"):format(roar, tinhead, strawman),
+	spawns_name = "등장 타이머",
+	spawns_desc = ("%s, %s 및 %s 등장 타이머 표시"):format(roar, tinhead, strawman),
 
-	spawns_roar = "%s 공격시작!",
-	spawns_strawman = "%s 공격시작!",
-	spawns_tinhead = "%s 공격시작!",
+	spawns_roar = "%s 공격!",
+	spawns_strawman = "%s 공격!",
+	spawns_tinhead = "%s 공격!",
 	spawns_tito = "%s 소환!",
 
 	summon_trigger = "티토! 우리를 보호해줘, 응? 그래 줄  있지, 티토?",

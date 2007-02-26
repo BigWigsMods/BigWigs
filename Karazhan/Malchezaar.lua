@@ -92,39 +92,39 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	phase_name = "단계",
-	phase_desc = "단계 알림",
+	phase_desc = "단계 변화 시 알림",
 
 	enfeeble_name = "쇠약",
-	enfeeble_desc = "쇠약 경고",
+	enfeeble_desc = "쇠약에 대한 재사용 대기시간 표시",
 
-	infernals_name = "황천의 원령 불지옥",
-	infernals_desc = "황천의 원령 불지옥 경고",
+	infernals_name = "불지옥",
+	infernals_desc = "불지옥 소환에 대한 재사용 대기시간 표시",
 
 	nova_name = "암흑 회오리",
-	nova_desc = "암흑 회오리 경고",
+	nova_desc = "암흑 회오리 예상 타이머",
 
 	phase1_trigger = "여기까지 오다니 정신이 나간 놈들이 분명하구나. 소원이라면 파멸을 시켜주마!",
 	phase2_trigger = "바보 같으니! 시간은 너의 몸을 태우는 불길이 되리라!",
 	phase3_trigger = "어찌 감히 이렇게 압도적인 힘에 맞서기를 꿈꾸느냐?",
-	phase1_message = "1단계 - 황천의 원령 불지옥 등장 약 40초후!",
-	phase2_message = "60% - 2단계",
-	phase3_message = "30% - 3단계",
+	phase1_message = "1 단계 - 약 40초 후 불지옥!",
+	phase2_message = "60% - 2 단계",
+	phase3_message = "30% - 3 단계",
 
 	enfeeble_trigger = "쇠약에 걸렸습니다.",
-	enfeeble_message = "쇠약! 다음은 약 30초후",
-	enfeeble_warning = "쇠약 까지 약 5초전!",
+	enfeeble_message = "쇠약! 다음은 약 30초 후",
+	enfeeble_warning = "약 5초 후 쇠약!",
 	enfeeble_bar = "쇠약",
 	enfeeble_nextbar = "다음 쇠약",
 
 	infernal_trigger1 = "이 말체자르님은 혼자가 아니시다. 너희는 나의 군대와 맞서야 한다!",
 	infernal_trigger2 = "모든 차원과 실체가 나를 향해 열려 있노라!",
-	infernal_bar = "황천의 원령 불지옥 등장",
-	infernal_warning = "황천의 원령 불지옥 등장 약 20초전!",
-	infernal_message = "황천의 원령 불지옥 등장 약 5초전!",
+	infernal_bar = "불지옥 등장",
+	infernal_warning = "약 20초 후 불지옥 등장!",
+	infernal_message = "약 5초 후 불지옥 등장!",
 
 	nova_trigger = "공작 말체자르|1이;가; 암흑 회오리 시전을 시작합니다.",
 	nova_message = "암흑 회오리!",
-	nova_bar = "암흑 회오리",
+	nova_bar = "~암흑 회오리",
 } end )
 
 ----------------------------------

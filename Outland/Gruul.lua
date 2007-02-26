@@ -117,6 +117,39 @@ L:RegisterTranslations("deDE", function() return {
 	cavein_message = "H\195\182hleneinst\195\188rz auf dich!",
 } end)
 
+L:RegisterTranslations("koKR", function() return {
+	engage_name = "전투 개시",
+	engage_desc = "전투 개시 알림",
+
+	grow_name = "성장",
+	grow_desc = "그룰의 성장에 대한 카운트와 경고",
+
+	grasp_name = "손아귀",
+	grasp_desc = "손아귀 경고와 타이머",
+
+	cavein_name = "당신의 함몰",
+	cavein_desc = "당신의 함몰에 대한 경고",
+
+	engage_trigger = "Come.... and die.", -- check
+	engage_message = "%s 전투 개시!",
+
+	grow_trigger = "%s grows in size!", -- check
+	grow_message = "성장: (%d)",
+	grow_bar = "(%d) 성장",
+
+	grasp_trigger1 = "땅 울리기에 걸렸습니다%.$",
+	grasp_trigger2 = "우두머리 그론의 손아귀에 걸렸습니다%.$",
+	grasp_message1 = "땅 울리기 - 잠시 후 손아귀",
+	grasp_message2 = "손아귀 대기 - 약 5초 후 석화",
+	grasp_warning = "잠시 후 땅 울리기",
+
+	shatter_trigger = "%s roars!", -- check
+	shatter_message = "석화!",
+
+	cavein_trigger = "^([^|;%s]*)(.*)함몰에 걸렸습니다%.$",
+	cavein_message = "당신은 함몰!",
+} end)
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------
