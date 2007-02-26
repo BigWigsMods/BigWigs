@@ -71,17 +71,17 @@ L:RegisterTranslations("deDE", function() return {
 --    Module Declaration   --
 ----------------------------------
 
-BigWigsHydross = BigWigs:NewModule(boss)
-BigWigsHydross.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
-BigWigsHydross.enabletrigger = boss
-BigWigsHydross.toggleoptions = {"stance", "mark", "enrage", "bosskill"}
-BigWigsHydross.revision = tonumber(("$Revision$"):sub(12, -3))
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"stance", "mark", "enrage", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
-function BigWigsHydross:OnEnable()
+function mod:OnEnable()
 	if not tooltip then
 		tooltip = CreateFrame("GameTooltip", "HydrossTooltip", UIParent, "GameTooltipTemplate")
 		tooltip:SetOwner(UIParent, "ANCHOR_NONE")
@@ -98,7 +98,7 @@ end
 --     Event Handlers    --
 ------------------------------
 
-function BigWigsHydross:CHAT_MSG_MONSTER_YELL(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["start_trigger"] then
 		hCount, cCount = 1, 1
 		currentPerc = nil
@@ -131,7 +131,7 @@ function BigWigsHydross:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function BigWigsHydross:DebuffCheck()
+function mod:DebuffCheck()
 	local i = 1
 	while true do
 		buffIndex = GetPlayerBuff(i, "HARMFUL")
