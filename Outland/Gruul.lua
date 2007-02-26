@@ -56,10 +56,10 @@ L:RegisterTranslations("frFR", function() return {
 	engage_desc = "Pr\195\169viens du d\195\169but du combat.",
 
 	grow_name = "Alerte Croissance",
-	--grow_desc = "Pr\195\169viens quand Gruul grandit.", --enUS changed
+	grow_desc = "Compte et avertis les croissances de Grull.",
 
 	grasp_name = "Alerte Emprise",
-	--grasp_desc = "Pr\195\169viens quand Gruul lance l'Emprise du seigneur gronn.", --enUS changed
+	grasp_desc = "Avertissement et d\195\169lais pour Emprise du seigneur gronn.",
 
 	cavein_name = "Alerte Eboulement sur vous",
 	cavein_desc = "Pr\195\169viens quand vous \195\170tes sous un \195\169boulement.",
@@ -73,12 +73,12 @@ L:RegisterTranslations("frFR", function() return {
 
 	grasp_trigger1 = " les effets .* Heurt terrestre",
 	grasp_trigger2 = " les effets .* Emprise du seigneur gronn",
-	--grasp_message1 = "Emprise Imminente !", --enUS changed
-	--grasp_message2 = "Emprise !", --enUS changed
+	grasp_message1 = "Heurt terrestre - Emprise Imminente !",
+	grasp_message2 = "Emprise - Fracasser dans ~5sec",
 	grasp_warning = "Emprise",
 
-	--shatter_trigger = "%s roars!",
-	--shatter_message = "Shatter!",
+	shatter_trigger = "%s rugit\194\160!",
+	shatter_message = "Fracasser !",
 
 	cavein_trigger = "Vous subissez les effets de Eboulement.",
 	cavein_message = "Eboulement !",
