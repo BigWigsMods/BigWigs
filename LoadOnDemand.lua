@@ -59,12 +59,16 @@ function BigWigsLoD:BigWigs_CoreEnabled()
 		loadWithCore = nil
 	end
 
-	self:LoadZone( GetRealZoneText() )
+	self:LoadZone(GetRealZoneText())
+	self:LoadZone(GetSubZoneText())
+	self:LoadZone(GetZoneText())
 end
 
 function BigWigsLoD:ZONE_CHANGED_NEW_AREA()
 	if BigWigs:IsActive() then
-		self:LoadZone( GetRealZoneText() )
+		self:LoadZone(GetRealZoneText())
+		self:LoadZone(GetSubZoneText())
+		self:LoadZone(GetZoneText())
 	end
 end
 

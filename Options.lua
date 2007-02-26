@@ -5,8 +5,13 @@ assert(BigWigs, "BigWigs not found!")
 --      Are you local?      --
 ------------------------------
 
+local BZ = AceLibrary("Babble-Zone-2.2")
+local LC = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsOptions")
 local tablet = AceLibrary("Tablet-2.0")
+local waterfall = AceLibrary:HasInstance("Waterfall-1.0") and AceLibrary("Waterfall-1.0") or nil
+
+local _G = getfenv(0)
 
 ----------------------------
 --      Localization      --
@@ -14,8 +19,9 @@ local tablet = AceLibrary("Tablet-2.0")
 
 L:RegisterTranslations("enUS", function() return {
 	["|cff00ff00Module running|r"] = true,
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt+Click|r to disable them. |cffeda55fCtrl+Alt+Click|r to disable Big Wigs completely."] = true,
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = true,
 	["|cffeda55fClick|r to enable."] = true,
+	["|cffeda55fShift-Click|r to open configuration window."] = true,
 	["Big Wigs is currently disabled."] = true,
 	["Active boss modules"] = true,
 	["All running modules have been reset."] = true,
@@ -28,8 +34,9 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00Module d\195\169marr\195\169|r",
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt+Click|r to disable them. |cffeda55fCtrl+Alt+Click|r to disable Big Wigs completely."] = "|cffeda55fClic|r pour red\195\169marrer les modules actifs. |cffeda55fAlt+Clic|r pour les d\195\169sactiver. |cffeda55fCtrl+Alt+Clic|r pour d\195\169sactiver Big Wigs compl\195\168tement.",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55fClic|r pour red\195\169marrer les modules actifs. |cffeda55fAlt+Clic|r pour les d\195\169sactiver. |cffeda55fCtrl-Alt+Clic|r pour d\195\169sactiver Big Wigs compl\195\168tement.",
 	["|cffeda55fClick|r to enable."] = "|cffeda55fClic|r pour activer.",
+	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Click|r to open configuration window.",
 	["Big Wigs is currently disabled."] = "Big Wigs est actuellement d\195\169sactiv\195\169.",
 	["Active boss modules"] = "Modules de boss actifs",
 	["All running modules have been reset."] = "Tous les modules actifs ont \195\169t\195\169 red\195\169marr\195\169s.",
@@ -42,8 +49,9 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00모듈 실행중|r",
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt+Click|r to disable them. |cffeda55fCtrl+Alt+Click|r to disable Big Wigs completely."] = "|cffeda55f클릭|r : 모두 초기화 |cffeda55f알트+클릭|r 비활성화 |cffeda55f컨트롤+알트+클릭|r : BigWigs 비활성화.",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55f클릭|r : 모두 초기화 |cffeda55f알트+클릭|r 비활성화 |cffeda55f컨트롤+알트+클릭|r : BigWigs 비활성화.",
 	["|cffeda55fClick|r to enable."] = "|cffeda55f클릭|r : 모듈 활성화.",
+	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Click|r to open configuration window.",
 	["Big Wigs is currently disabled."] = "BigWigs가 비활성화 되어 있습니다.",
 	["Active boss modules"] = "보스 모듈 활성화",
 	["All running modules have been reset."] = "모든 실행중인 모듈을 초기화합니다.",
@@ -56,8 +64,9 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00模块运行中|r",
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt+Click|r to disable them. |cffeda55fCtrl+Alt+Click|r to disable Big Wigs completely."] = "|cffeda55f点击|r图标重置所有运行中的模块。|cffeda55fAlt+点击|r图标关闭所有运行中的模块。|cffeda55fCtrl+Alt+点击|r图标关闭BigWigs。",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55f点击|r图标重置所有运行中的模块。|cffeda55fAlt+点击|r图标关闭所有运行中的模块。|cffeda55fCtrl-Alt+点击|r图标关闭BigWigs。",
 	["|cffeda55fClick|r to enable."] = "|cffeda55f点击|r图标开启BigWigs。",
+	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Click|r to open configuration window.",
 	["Big Wigs is currently disabled."] = "Big Wigs目前关闭。",
 	["Active boss modules"] = "激活首领模块",
 	["All running modules have been reset."] = "所有运行中的模块都已重置。",
@@ -66,8 +75,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00模組運作中|r",
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt+Click|r to disable them. |cffeda55fCtrl+Alt+Click|r to disable Big Wigs completely."] = "|cffeda55f點擊|r圖示重置所有運作中的模組。|cffeda55fAlt+點擊|r圖示關閉所有運作中的模組。|cffeda55fCtrl+Alt+點擊|r圖示關閉BigWigs。",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55f點擊|r圖示重置所有運作中的模組。|cffeda55fAlt+點擊|r圖示關閉所有運作中的模組。|cffeda55fCtrl-Alt+點擊|r圖示關閉BigWigs。",
 	["|cffeda55fClick|r to enable."] = "|cffeda55f點擊|r圖示開啟BigWigs。",
+	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Click|r to open configuration window.",
 	["Big Wigs is currently disabled."] = "Big Wigs目前關閉。",
 	["Active boss modules"] = "啟動首領模組",
 	["All running modules have been reset."] = "所有運行中的模組都已重置。",
@@ -78,8 +88,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00Modul aktiv|r",
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt+Click|r to disable them. |cffeda55fCtrl+Alt+Click|r to disable Big Wigs completely."] = "|cffeda55fKlicken|r, um alle laufenden Module zur\195\188ckzusetzen. |cffeda55fAlt+Klick|r um alle laufenden Module zu beenden. |cffeda55fStrg+Alt+Klick|r um BigWigs komplett zu beenden.",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55fKlicken|r, um alle laufenden Module zur\195\188ckzusetzen. |cffeda55fAlt+Klick|r um alle laufenden Module zu beenden. |cffeda55fStrg-Alt+Klick|r um BigWigs komplett zu beenden.",
 	["|cffeda55fClick|r to enable."] = "|cffeda55fKlicken|r um zu aktivieren.",
+	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Click|r to open configuration window.",
 	["Big Wigs is currently disabled."] = "Big Wigs ist gegenw\195\164rtig deaktiviert.",
 	["Active boss modules"] = "Aktive Boss Module",
 	["All running modules have been reset."] = "Alle laufenden Module wurden zur\195\188ckgesetzt.",
@@ -120,6 +131,15 @@ function BigWigsOptions:OnInitialize()
 			args = args,
 			order = 300,
 		}
+	end
+
+	-- Register with waterfall if it's available.
+	if waterfall then
+		waterfall:Register(
+			"BigWigs",
+			"aceOptions", BigWigs.cmdtable,
+			"treeType","SECTIONS"
+		)
 	end
 end
 
@@ -167,7 +187,11 @@ function BigWigsOptions:OnTooltipUpdate()
 				cat:AddLine("text", name, "func", function(mod) BigWigsOptions:ModuleAction(mod) end, "arg1", module)
 			end
 		end
-		tablet:SetHint(L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt+Click|r to disable them. |cffeda55fCtrl+Alt+Click|r to disable Big Wigs completely."])
+		local hint = L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."]
+		if waterfall then
+			hint = hint .. " " .. L["|cffeda55fShift-Click|r to open configuration window."]
+		end
+		tablet:SetHint(hint)
 	else
 		-- use a text line for this, since the hint is not shown when we are
 		-- detached.
@@ -176,6 +200,9 @@ function BigWigsOptions:OnTooltipUpdate()
 		tablet:SetHint(L["|cffeda55fClick|r to enable."])
 	end
 end
+
+-- God, blizzard sucks some times.
+local zoneFunctions = {"GetRealZoneText", "GetZoneText", "GetSubZoneText"}
 
 function BigWigsOptions:OnClick()
 	if BigWigs:IsActive() then
@@ -191,6 +218,20 @@ function BigWigsOptions:OnClick()
 				end
 				BigWigs:Print(L["All running modules have been disabled."])
 			end
+		elseif IsShiftKeyDown() and waterfall then
+			local subGroup = nil
+			for i = 1, #zoneFunctions do
+				local zone = _G[zoneFunctions[i]]()
+				if BZ:HasReverseTranslation(zone) then
+					zone = BZ:GetReverseTranslation(zone)
+					zone = LC:HasTranslation(zone) and LC[zone] or nil
+					if zone then
+						subGroup = zone
+						break
+					end
+				end
+			end
+			waterfall:Open("BigWigs", subGroup)
 		else
 			for name, module in BigWigs:IterateModules() do
 				if module:IsBossModule() and BigWigs:IsModuleActive(module) then
