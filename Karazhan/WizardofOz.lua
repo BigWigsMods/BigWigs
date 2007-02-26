@@ -72,6 +72,24 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Oh, Tito, nous devons trouver le moyen de rentrer \195\160 la maison\194\160! Le vieux sorcier est notre dernier espoir\194\160! Homme de paille, Graou, T\195\170te de fer-blanc, vous voulez bien\194\160? Attendez\194\160? Oh, regardez, nous avons des visiteurs\194\160!",
 } end)
 
+L:RegisterTranslations("koKR", function() return {
+	summon_name = "티토 소환",
+	summon_desc = ("%s의 %s 소환 경고"):format(dorothee, tito),
+
+	spawns_name = "등장 시간",
+	spawns_desc = ("%s, %s, %s 등장 시간 경고"):format(roar, tinhead, strawman),
+
+	spawns_roar = "%s 공격시작!",
+	spawns_strawman = "%s 공격시작!",
+	spawns_tinhead = "%s 공격시작!",
+	spawns_tito = "%s 소환!",
+
+	summon_trigger = "티토! 우리를 보호해줘, 응? 그래 줄  있지, 티토?",
+	summon_message = "%s 소환중!",
+
+	engage_trigger = "티토야, 우린 집으로 갈 방법을 찾아야 해!",
+} end)
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------

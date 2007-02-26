@@ -174,6 +174,58 @@ L:RegisterTranslations("frFR", function() return {
 	flame_trigger = "commence \195\160 lancer Couronne de flammes",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	adds_name = "창조된 정령",
+	adds_desc = "창조된 정령 경고",
+
+	drink_name = "물마심",
+	drink_desc = ("%s의 물마심 경고"):format(boss),
+
+	engage_name = "전투시작",
+	engage_desc = ("%s 전투시작 경고"):format(boss),
+
+	blizzard_name = "눈보라",
+	blizzard_desc = "눈보라 경고",
+
+	pull_name = "신비한 폭발",
+	pull_desc = "신비한 폭발 경고",
+
+	flame_name = "화염의 고리",
+	flame_desc = "화염의 고리 경고",
+
+	adds_message = "창조된 정령 소환!",
+	adds_warning = "곧 창조된 정령 소환",
+	adds_trigger = "아직 끝나지 않았어! 몇 가지 계략을 준비해 두었지...",
+	adds_bar = "창조된 정령 지속",
+
+	drink_trigger = "목 좀 축이게 해달라는 이 늙은이의 청을 뿌리칠 텐가? 아... 별로 기대도 안 했어.",
+	drink_warning = "마나 낮음 - 곧 물마심!",
+	drink_message = "물마심 - 광역 변이!",
+	drink_bar = "불덩이 작열",
+
+	engage_trigger1 = "똑같은 고통을 겪진 않겠다.",
+	engage_trigger2 = "너흰 누구냐? 원하는 게 뭐야? 가까이 오지 마!",
+	engage_trigger3 = "제발 그만! 내 아들... 그 아이는 미쳤어!",
+	engage_message = "%s 전투시작",
+
+	blizzard_trigger1 = "차가운 암흑으로 돌아가라!",
+	blizzard_trigger2 = "모두 얼려 버리겠다!",
+	blizzard_message = "눈보라!",
+
+	pull_message = "신비한 폭발!",
+	pull_trigger1 = "그래, 내 아들은 아주 강하지... 하지만, 내게도 힘은 있다!",
+	pull_trigger2 = "난 어릿광대 따위가 아니다! 나는 니엘라스 아란이다!",
+	pull_bar = "신비한 폭발",
+
+	flame_warning = "시전: 화염의 고리!",
+	flame_trigger1 = "너희에게 보여주마! 아무리 지친 개라도 송곳니는 있는 법!",
+	flame_trigger2 = "불타라, 지옥의 악마들아!",
+
+	flame_message = "화염의 고리!",
+	flame_bar = "화염의 고리",
+	flame_trigger = "화염의 고리|1을;를; 시전합니다.",
+} end )
+
 ----------------------------------
 --   Module Declaration    --
 ----------------------------------
@@ -243,7 +295,7 @@ function mod:UNIT_MANA(msg)
 	if not self.db.profile.drink then return end
 	if UnitName(msg) == boss then
 		local mana = UnitMana(msg)
-		if mana > 10000 and mana <= 20000 and not drinkannounced then
+		if mana > 33000 and mana <= 37000 and not drinkannounced then
 			self:Message(L["drink_warning"], "Urgent", nil, "Alert")
 			drinkannounced = true
 		elseif mana > 50000 and drinkannounced then

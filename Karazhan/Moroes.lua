@@ -118,35 +118,35 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	engage_name = "전투시작",
-	engage_desc = ("%s 전투 시작 알림"):format(boss),
+	engage_desc = ("%s 전투시작 경고"):format(boss),
 
 	vanish_name = "소멸",
-	vanish_desc = "소멸 예상 시간",
+	vanish_desc = "소멸 경고",
 
 	garrote_name = "목조르기",
-	garrote_desc = "목조르기에 걸린 사람 알림",
+	garrote_desc = "목조르기 경고",
 
-	enrage_name = "광폭화",
-	enrage_desc = ("%s 광폭화시 알림"):format(boss),
+	enrage_name = "격노",
+	enrage_desc = ("%s 격노 경고"):format(boss),
 
 	icon_name = "아이콘",
-	icon_desc = "목조르기에 걸린 사람에게 공격대 아이콘 지정(승급자 이상의 권한 필요)",
+	icon_desc = "목조르기 걸린 사람에게 아이콘 지정 (승급자 이상 요구)",
 
-	vanish_trigger1 = "You rang?", -- check
-	vanish_trigger2 = "Now, where was I? Oh, yes...", -- check
-	vanish_message = "사라짐! 다음은 약 35초 후!",
-	vanish_warning = "잠시후 사라짐!", 
-	vanish_bar = "다음 사라짐",
+	vanish_trigger1 = "절 부르셨습니까?",
+	vanish_trigger2 = "어디까지 했죠? 아, 맞아...",
+	vanish_message = "소멸! 다음은 약 35초후!",
+	vanish_warning = "곧 소멸!",
+	vanish_bar = "다음 소멸",
 
-	garrote_trigger = "^([^|;%s]*)(.*)목조르기에 걸렸습니다%.$", -- "^([^%s]+) ([^%s]+) afflicted by Garrote", -- check
+	garrote_trigger = "^([^|;%s]*)(.*)목조르기에 걸렸습니다%.$",
 	garrote_message = "목조르기: %s",
 
-	engage_trigger = "Hm, unannounced visitors. Preparations must be made...", -- check
-	engage_message = "%s 전투 시작 - 약 35초 후 사라짐!",
+	engage_trigger = "음, 예상치 못한 손님들이군. 준비를 해야겠어...",
+	engage_message = "모로스 전투시작 - 약 35초후 소멸!",
 
-	enrage_trigger = "%s|1이;가; 격노 효과를 얻었습니다." -- "%s becomes enraged!", -- check
+	enrage_trigger = "%s|1이;가; 분노에 휩싸입니다!",
 	enrage_message = "격노!",
-	enrage_warning = "잠시 후 격노!",
+	enrage_warning = "곧 격노!",
 
 	you = "당신은",
 } end)

@@ -103,29 +103,29 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	engage_name = "전투 시작",
-	engage_desc = ("%s 전투 시작 알림"):format(boss),
+	engage_name = "전투시작",
+	engage_desc = ("%s 전투시작 경고"):format(boss),
 
 	repentance_name = "참회",
-	repentance_desc = "참회 예상 시간",
+	repentance_desc = "참회 경고",
 
 	holyfire_name = "신성한 불꽃",
-	holyfire_desc = "신성한 불꽃에 걸린 사람 알림",
+	holyfire_desc = "신성한 불꽃 경고",
 
 	icon_name = "아이콘",
-	icon_desc = "신성한 불꽃에 걸린 사람에게 공격대 아이콘 지정(승급자 이상의 권한 필요)",
+	icon_desc = "신성한 불꽃 걸린 사람에게 아이콘 지정 (승급자 이상 요구)",
 
-	engage_trigger = "Your behavior will not be tolerated.", -- check
-	engage_message = "고결의 여신 전투 시작! 약 33초 후 참회",
+	engage_trigger = "너희의 행동은 그냥 넘길 수가 없다.",
+	engage_message = "고결의 여신 전투시작! 약 33초후 참회",
 
-	repentance_trigger1 = "그 부정한 생각을 떨쳐버려라.", -- "Cast out your corrupt thoughts.", -- check
-	repentance_trigger2 = "너희의 불순함을 반드시 정화하겠다.", -- "Your impurity must be cleansed.", -- check
-	repentance_message = "참회! 다음은 약 33초 후!",
-	repentance_warning = "잠시 후 참회!",
+	repentance_trigger1 = "그 부정한 생각을 떨쳐버려라.",
+	repentance_trigger2 = "너희의 불순함을 반드시 정화하겠다.",
+	repentance_message = "참회! 다음은 약 33초후!",
+	repentance_warning = "곧 참회!",
 	repentance_bar = "참회",
 	repentance_nextbar = "다음 참회",
 
-	holyfire_trigger = "^([^|;%s]*)(.*)신성한 불꽃에 걸렸습니다%.$", -- "^([^%s]+) ([^%s]+) afflicted by Holy Fire", -- check
+	holyfire_trigger = "^([^|;%s]*)(.*)신성한 불꽃에 걸렸습니다%.$",
 	holyfire_message = "신성한 불꽃: %s",
 
 	you = "당신은",

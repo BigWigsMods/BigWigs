@@ -116,36 +116,36 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	berserk_name = "광기",
-	berserk_desc = "12분 후 광기 알림",
+	berserk_name = "광폭화",
+	berserk_desc = "광폭화 경고",
 
-	enrage_name = "광폭화",
-	enrage_desc = "체력 15% 시 광폭화 알림",
+	enrage_name = "격노",
+	enrage_desc = "격노 경고",
 
 	weaken_name = "약화",
-	weaken_desc = "약화된 상태인 동안 알림",
+	weaken_desc = "약화 경고",
 
-	weaktime_name = "약화 카운트다운",
-	weaktime_desc = "다음 약화에 대한 바와 시간 카운트다운",
+	weaktime_name = "약화 타이머",
+	weaktime_desc = "약화까지 남은시간 경고",
 
-	weaken_trigger = "현재 요청하신 내용은 처리가 불가능합니다.", -- "Your request cannot be processed.", -- check
-	weaken_message = "환기 - 20초 동안 약화!",
+	weaken_trigger = "현재 요청하신 내용은 처리가 불가능합니다.",
+	weaken_message = "환기 - 20초간 약화!",
 	weaken_bar = "환기",
-	weaken_fade_message = "환기 종료 - 약화 종료!",
-	weaken_fade_warning = "5초 후 환기 종료!",
+	weaken_fade_message = "환기 종료 - 약화 끝!",
+	weaken_fade_warning = "환기 종료 5초전!",
 
-	weaktime_message1 = "약 10초 후 환기",
-	weaktime_message2 = "약 30초 후 환기",
-	weaktime_message3 = "약 70초 후 환기",
+	weaktime_message1 = "환기까지 약 10초전",
+	weaktime_message2 = "환기까지 약 30초전",
+	weaktime_message3 = "환기까지 약 70초전",
 	weaktime_bar = "다음 환기",
 
-	berserk_trigger = "박물관에는 초대받은 손님만 입장할 수 있습니다.", -- "The Menagerie is for guests only.", -- check
-	berserk_message = "%s 전투 시작, 12분 후 광기!",
-	berserk_bar = "광기",
+	berserk_trigger = "박물관에는 초대받은 손님만 입장하실 수 있습니다.",
+	berserk_message = "%s 전투시작! 12분뒤 공폭화!",
+	berserk_bar = "광폭화",
 
-	enrage_trigger = "Failure to comply will result in offensive action.", -- check
-	enrage_message = "광폭화!",
-	enrage_warning = "잠시 후 광폭화!",
+	enrage_trigger = "규칙 위반으로 경보가 발동됐습니다.",
+	enrage_message = "격노!",
+	enrage_warning = "곧 격노!",
 } end )
 
 ----------------------------------
