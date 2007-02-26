@@ -138,7 +138,8 @@ function BigWigsOptions:OnInitialize()
 		waterfall:Register(
 			"BigWigs",
 			"aceOptions", BigWigs.cmdtable,
-			"treeType","SECTIONS"
+			"treeType","SECTIONS",
+			"colorR", .6, "colorG", .5, "colorB", .8
 		)
 	end
 end
