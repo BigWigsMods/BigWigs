@@ -54,7 +54,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	engage_name = "Alerte Engagement",
-	engage_desc = "Pr\195\169viens du d\195\169but du combat.",
+	engage_desc = ("Pr\195\169viens quand %s est engag\195\169"):format(boss),
 
 	vanish_name = "Alerte Disparition",
 	vanish_desc = "Pr\195\169viens quand Moroes disparait.",
@@ -71,7 +71,7 @@ L:RegisterTranslations("frFR", function() return {
 	vanish_warning = "Disparition imminente !",
 	vanish_bar = "Prochaine Disparition",
 
-	garrote_trigger = "^([^%s]+) ([^%s]+) les effets de Garrot",
+	garrote_trigger = "^([^%s]+) ([^%s]+) les effets .* Garrot",
 	garrote_message = "Garrot: %s",
 
 	engage_trigger = "Hum. Des visiteurs impr\195\169vus. Il va falloir se pr\195\169parer.",

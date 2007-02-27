@@ -130,7 +130,7 @@ L:RegisterTranslations("frFR", function() return {
 	drink_desc = ("Pr\195\169viens quand %s commence \195\160 boire."):format(boss),
 
 	engage_name = "Alerte Engagement",
-	engage_desc = "Pr\195\169viens du d\195\169but du combat.",
+	engage_desc = ("Pr\195\169viens quand %s est engag\195\169"):format(boss),
 
 	blizzard_name = "Alerte Blizzard",
 	blizzard_desc = "Pr\195\169viens de l'incantation du Blizzard.",
@@ -151,7 +151,7 @@ L:RegisterTranslations("frFR", function() return {
 	drink_message = "Boisson - Polymorphisme de zone !",
 	drink_bar = "Boisson",
 
-	engage_trigger1 = " Je refuse d'\195\170tre \195\160 nouveau tortur\195\169\194\160!",
+	engage_trigger1 = "Je refuse d'\195\170tre \195\160 nouveau tortur\195\169\194\160!",
 	engage_trigger2 = "Qui \195\170tes-vous\194\160? Qu\226\128\153est-ce que vous voulez\194\160? Ne m\226\128\153approchez pas\194\160!",
 	engage_trigger3 = "Je vous en supplie, arr\195\170tez\194\160! Mon fils\226\128\166 est devenu fou\194\160!",
 	engage_message = "%s Engag\195\169",

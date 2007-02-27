@@ -51,6 +51,44 @@ L:RegisterTranslations("deDE", function() return {
 	weak_bar = "Geschw\195\164cht",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	sacrifice_name = "Sacrifice",
+	sacrifice_desc = "Pr\195\169viens quand un joueur est sacrifi\195\169",
+
+	weak_name = "Affaibli",
+	weak_desc = "Pr\195\169viens quand Terestian est affaibli",
+
+	sacrifice_you = "Vous",
+	sacrifice_trigger = "^([^%s]+) ([^%s]+) les effets .* Sacrifice",
+	sacrifice_message = "%s est sacrifi\195\169!",
+	sacrifice_bar = "Sacrifice: %s",
+
+	weak_trigger = "les effets .* Pacte rompu",
+	weak_message = "Affaibli pour 30sec!",
+	weak_warning1 = "Affaibli plus que  5sec!",
+	weak_warning2 = "Plus affaibli!",
+	weak_bar = "Affaibli",
+} end )
+
+L:RegisterTranslations("koKR", function() return {
+	sacrifice_name = "희생",
+	sacrifice_desc = "희생 경고",
+
+	weak_name = "약화",
+	weak_desc = "약화 경고",
+
+	sacrifice_you = "당신은",
+	sacrifice_trigger = "^([^|;%s]*)(.*)희생에 걸렸습니다%.$",
+	sacrifice_message = "%s 희생",
+	sacrifice_bar = "희생: %s",
+
+	weak_trigger = "깨진 서약에 걸렸습니다.",
+	weak_message = "30초간 약화!",
+	weak_warning1 = "약화 종료 5초전!",
+	weak_warning2 = "약화 종료!",
+	weak_bar = "약화",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------
