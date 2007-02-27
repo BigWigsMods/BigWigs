@@ -26,8 +26,8 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	--enrage_name = "Enrage",
-	--enrage_desc = "Timers for enrage",
+	enrage_name = "Alerte Enrager",
+	enrage_desc = "D\195\169lais entre p\195\169riode enrag\195\169.",
 
 	enrage_trigger1 = "Pour la L\195\169gion\194\160! Pour Kil\226\128\153Jaeden\194\160!",
 	enrage_trigger2 = "%s devient fou furieux\194\160!",

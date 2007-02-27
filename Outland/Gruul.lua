@@ -75,7 +75,7 @@ L:RegisterTranslations("frFR", function() return {
 	grasp_trigger2 = " les effets .* Emprise du seigneur gronn",
 	grasp_message1 = "Heurt terrestre - Emprise Imminente !",
 	grasp_message2 = "Emprise - Fracasser dans ~5sec",
-	--grasp_warning = "Emprise", --enUS changed
+	grasp_warning = "Heurt terrestre imminent",
 
 	shatter_trigger = "%s rugit\194\160!",
 	shatter_message = "Fracasser !",
