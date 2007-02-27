@@ -25,6 +25,19 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_bar = "Enrage",
 } end)
 
+L:RegisterTranslations("koKR", function() return {
+	enrage_name = "격노",
+	enrage_desc = "격노 경고",
+
+	enrage_trigger1 = "불타는 군단과 킬제덴을 위하여!",
+	enrage_trigger2 = "%s|1이;가; 분노에 휩싸입니다!",
+	enrage_warning1 = "%s 전투시작 - 격노까지 1분",
+	enrage_warning2 = "격노 5초전",
+	enrage_message = "10초간 격노!",
+	enrage_finished = "격노 종료",
+	enrage_bar = "격노",
+} end)
+
 ----------------------------------
 --   Module Declaration    --
 ----------------------------------
