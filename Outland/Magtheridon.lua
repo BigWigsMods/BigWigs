@@ -38,6 +38,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	heal_trigger = "begins to cast Dark Mending",
 	heal_message = "Healing!",
+
+	["Hellfire Channeler"] = true,
 } end)
 
 ----------------------------------
@@ -47,7 +49,7 @@ L:RegisterTranslations("enUS", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Magtheridon's Lair"]
 mod.otherMenu = "Outland"
-mod.enabletrigger = boss
+mod.enabletrigger = { L["Hellfire Channeler"], boss }
 mod.toggleoptions = {"escape", "abyssal", "heal", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
