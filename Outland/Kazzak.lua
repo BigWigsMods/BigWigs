@@ -25,6 +25,19 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_bar = "Enrage",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	--enrage_name = "Enrage",
+	--enrage_desc = "Timers for enrage",
+
+	enrage_trigger1 = "Pour la L\195\169gion\194\160! Pour Kil\226\128\153Jaeden\194\160!",
+	enrage_trigger2 = "%s devient fou furieux\194\160!",
+	enrage_warning1 = "%s Engag\195\169 - Enrag\195\169 dans 1min",
+	enrage_warning2 = "Enrag\195\169 dans 5 sec",
+	enrage_message = "Enrag\195\169 pendant 10sec!",
+	enrage_finished = "Enrag\195\169 fini",
+	enrage_bar = "Enrag\195\169",
+} end)
+
 L:RegisterTranslations("koKR", function() return {
 	enrage_name = "격노",
 	enrage_desc = "격노 경고",
