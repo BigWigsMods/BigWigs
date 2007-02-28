@@ -119,6 +119,40 @@ L:RegisterTranslations("frFR", function() return {
 	you = "Vous",
 } end)
 
+L:RegisterTranslations("koKR", function() return {
+	phase_name = "단계",
+	phase_desc = "새로운 단계 전입 시 알림",
+
+	poison_name = "독",
+	poison_desc = "독에 걸린 플레이어 알림",
+
+	heal_name = "치유",
+	heal_desc = ("%s|1이;가; 영원한 애정 시전 시 경고"):format(girl),
+
+	buff_name = "버프 알림",
+	buff_desc = ("%s|1와;과; %s 버프 획득 시 알림"):format(boy, girl),
+
+	phase1_trigger = "당신들은 대체 누구시기에 절 이리도 괴롭히나요?",
+	phase1_message = "1 단계 - %s",
+	phase2_trigger = "기어코 나를 화나게 하는구나. 그렇다면 받아라, 애송이!",
+	phase2_message = "2 단계 - %s",
+	phase3_trigger = "정다운 밤이시여, 어서 와서 나의 로밀로를 돌려주소서!",
+	phase3_message = "3 단계 - 모두",
+
+	poison_trigger = "^([^|;%s]*)(.*) Poisoned Thrust에 걸렸습니다%.$", -- check
+	poison_message = "독에 걸림: %s",
+
+	heal_trigger = "영원한 애정을 시전하기 시작합니다.",
+	heal_message = "%s 치유 시전!",
+
+	buff1_trigger = "기백 효과를 얻었습니다.", -- check
+	buff1_message = "%s 기백 효과 얻음!",
+	buff2_trigger = "헌신 효과를 얻었습니다.", -- check
+	buff2_message = "%s 헌신 효과 얻음!",
+
+	you = "당신은",
+} end)
+
 ----------------------------------
 --   Module Declaration    --
 ----------------------------------

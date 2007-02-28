@@ -84,7 +84,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	phase1_message = "1 단계 - %s",
 	phase2_trigger1 = "감히 누가 사냥꾼의 애마를 건드리느냐?",
-	phase2_trigger2 = "Cowards! Wretches!", -- check
+	phase2_trigger2 = "비겁하고 치사한 놈들!",
 	phase2_message = "2 단계 - %s & 어튜멘",
 	phase3_trigger = "이랴! 이 오합지졸을 데리고 실컷 놀아보자!",
 	phase3_message = "3 단계 - %s",

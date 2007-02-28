@@ -72,19 +72,19 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	sacrifice_name = "희생",
-	sacrifice_desc = "희생 경고",
+	sacrifice_desc = "플레이어의 희생에 대한 경고",
 
 	weak_name = "약화",
-	weak_desc = "약화 경고",
+	weak_desc = "약화 상태에 대한 경고",
 
 	sacrifice_you = "당신은",
 	sacrifice_trigger = "^([^|;%s]*)(.*)희생에 걸렸습니다%.$",
-	sacrifice_message = "%s 희생",
+	sacrifice_message = "%s님이 희생되었습니다!",
 	sacrifice_bar = "희생: %s",
 
 	weak_trigger = "깨진 서약에 걸렸습니다.",
 	weak_message = "30초간 약화!",
-	weak_warning1 = "약화 종료 5초전!",
+	weak_warning1 = "5초 후 약화 종료!",
 	weak_warning2 = "약화 종료!",
 	weak_bar = "약화",
 } end )
