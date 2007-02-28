@@ -31,11 +31,11 @@ L:RegisterTranslations("enUS", function() return {
 	buff_desc = ("Warn when %s and %s gain a self-buff"):format(boy, girl),
 
 	phase1_trigger = "What devil art thou, that dost torment me thus?",
-	phase1_message = "Phase 1 - %s",
+	phase1_message = "Act I - %s",
 	phase2_trigger = "Wilt thou provoke me? Then have at thee, boy!",
-	phase2_message = "Phase 2 - %s",
+	phase2_message = "Act II - %s",
 	phase3_trigger = "Come, gentle night; and give me back my Romulo!",
-	phase3_message = "Phase 3 - Both",
+	phase3_message = "Act III - Both",
 
 	poison_trigger = "^([^%s]+) ([^%s]+) afflicted by Poisoned Thrust",
 	poison_message = "Poisoned: %s",
