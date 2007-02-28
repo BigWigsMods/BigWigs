@@ -99,11 +99,11 @@ L:RegisterTranslations("frFR", function() return {
 	buff_desc = ("Pr\195\169viens quand %s et %s gagnent leurs buffs."):format(boy, girl),
 
 	phase1_trigger = "Quel d\195\169mon es-tu pour me tourmenter ainsi?",
---~ 	phase1_message = "Phase 1 - %s",
+ 	phase1_message = "Acte I - %s",
 	phase2_trigger = "Tu veux donc me provoquer ? Eh bien, \195\160 toi, enfant.",
---~ 	phase2_message = "Phase 2 - %s",
+ 	phase2_message = "Acte II - %s",
 	phase3_trigger = "Viens, gentille nuit ; rends-moi mon Romulo !",
-	phase3_message = "Phase 3 - Ensemble",
+	phase3_message = "Acte III - Ensemble",
 
 	poison_trigger = "^([^%s]+) ([^%s]+) les effets .* Coup empoisonn\195\169",
 	poison_message = "%s est empoisonn\195\169 !",
