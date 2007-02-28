@@ -177,19 +177,23 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.berserk and msg == L["berserk_trigger"] then
-		self:Message(L["berserk_message"]:format(boss), "Attention")
-		self:Bar(L["berserk_bar"], 720, "INV_Shield_01")
-	elseif self.db.profile.weaktime and msg == L["berserk_trigger"] then
-		self:Evocation()
-	elseif self.db.profile.weaken and msg == L["weaken_trigger"] then
-		self:Message(L["weaken_message"], "Important", nil, "Alarm")
-		self:Bar(L["weaken_bar"], 20, "Spell_Nature_Purge")
-		self:ScheduleEvent("weak1", "BigWigs_Message", 15, L["weaken_fade_warning"], "Urgent")
-		self:ScheduleEvent("weak2", "BigWigs_Message", 20, L["weaken_fade_message"], "Important", nil, "Alarm")
-		self:Evocation()
-	elseif self.db.profile.enrage and msg == L["enrage_trigger"] then
-		self:Message(L["enrage_message"], "Important")
+	if msg == L["weaken_trigger"] then -- This Happens everytime an evocate happens
+		if self.db.profile.weaken then
+			self:Message(L["weaken_message"], "Important", nil, "Alarm")
+			self:Bar(L["weaken_bar"], 20, "Spell_Nature_Purge")
+			self:ScheduleEvent("weak1", "BigWigs_Message", 15, L["weaken_fade_warning"], "Urgent")
+			self:ScheduleEvent("weak2", "BigWigs_Message", 20, L["weaken_fade_message"], "Important", nil, "Alarm")
+		end
+		if self.db.profile.weaktime then
+			self:Bar(L["weaktime_bar"], 115, "Spell_Nature_Purge")
+			self:ScheduleEvent("evoc1", "BigWigs_Message", 45, L["weaktime_message3"], "Positive")
+			self:ScheduleEvent("evoc2", "BigWigs_Message", 85, L["weaktime_message2"], "Attention")
+			self:ScheduleEvent("evoc3", "BigWigs_Message", 105, L["weaktime_message1"], "Urgent")
+		end
+	elseif msg == L["enrage_trigger"] then -- This only happens towards the end of the fight
+		if self.db.profile.enrage then
+			self:Message(L["enrage_message"], "Important")
+		end
 		self:CancelScheduledEvent("weak1")
 		self:CancelScheduledEvent("weak2")
 		self:CancelScheduledEvent("evoc1")
@@ -197,15 +201,17 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:CancelScheduledEvent("evoc3")
 		self:TriggerEvent("BigWigs_StopBar", self, L["weaken_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["weaktime_bar"])
-	end
-end
-
-function mod:Evocation()
-	if self.db.profile.weaktime then
-		self:Bar(L["weaktime_bar"], 115, "Spell_Nature_Purge")
-		self:ScheduleEvent("evoc1", "BigWigs_Message", 45, L["weaktime_message3"], "Positive")
-		self:ScheduleEvent("evoc2", "BigWigs_Message", 85, L["weaktime_message2"], "Attention")
-		self:ScheduleEvent("evoc3", "BigWigs_Message", 105, L["weaktime_message1"], "Urgent")
+	elseif msg == L["berserk_trigger"] then -- This only happens at the start of the fight
+		if self.db.profile.berserk then
+			self:Message(L["berserk_message"]:format(boss), "Attention")
+			self:Bar(L["berserk_bar"], 720, "INV_Shield_01")
+		end
+		if self.db.profile.weaktime then
+			self:Bar(L["weaktime_bar"], 109, "Spell_Nature_Purge")
+			self:ScheduleEvent("evoc1", "BigWigs_Message", 39, L["weaktime_message3"], "Positive")
+			self:ScheduleEvent("evoc2", "BigWigs_Message", 79, L["weaktime_message2"], "Attention")
+			self:ScheduleEvent("evoc3", "BigWigs_Message", 99, L["weaktime_message1"], "Urgent")
+		end
 	end
 end
 
