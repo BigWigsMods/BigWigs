@@ -168,6 +168,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:NextRepentance()
 	elseif self.db.profile.repentance and (msg == L["repentance_trigger1"] or msg == L["repentance_trigger2"]) then
 		self:Message(L["repentance_message"], "Important")
+		self:Bar(L["repentance_bar"], 12, "Spell_Holy_PrayerOfHealing")
 		self:NextRepentance()
 	end
 end
@@ -185,7 +186,6 @@ end
 function mod:NextRepentance()
 	self:DelayedMessage(28, L["repentance_warning"], "Urgent", nil, "Alarm")
 	self:Bar(L["repentance_nextbar"], 33, "Spell_Holy_PrayerOfHealing")
-	self:Bar(L["repentance_bar"], 12, "Spell_Holy_PrayerOfHealing")
 end
 
 function mod:BigWigs_RecvSync( sync, rest, nick )
