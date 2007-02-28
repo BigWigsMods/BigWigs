@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --     Are you local?     --
 ------------------------------
 
@@ -139,13 +139,13 @@ L:RegisterTranslations("koKR", function() return {
 	phase3_trigger = "정다운 밤이시여, 어서 와서 나의 로밀로를 돌려주소서!",
 	phase3_message = "3 단계 - 모두",
 
-	poison_trigger = "^([^|;%s]*)(.*) Poisoned Thrust에 걸렸습니다%.$", -- check
-	poison_message = "독에 걸림: %s",
+	poison_trigger = "^([^|;%s]*)(.*)독칼 찌르기에 걸렸습니다%.$", -- check
+	poison_message = "중독: %s",
 
-	heal_trigger = "영원한 애정을 시전하기 시작합니다.",
-	heal_message = "%s 치유 시전!",
+	heal_trigger = "영원한 사랑 시전을 시작합니다.",
+	heal_message = "%s|1이;가; 힐 시전 중!",
 
-	buff1_trigger = "기백 효과를 얻었습니다.", -- check
+	buff1_trigger = "사랑의 용기 효과를 얻었습니다.", -- check
 	buff1_message = "%s 기백 효과 얻음!",
 	buff2_trigger = "헌신 효과를 얻었습니다.", -- check
 	buff2_message = "%s 헌신 효과 얻음!",
