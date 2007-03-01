@@ -17,75 +17,91 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "WizardofOz",
 
-	summon_cmd = "summon",
-	summon_name = "Summon Tito",
-	summon_desc = ("Alert when %s begins to summon %s"):format(dorothee, tito),
-
 	spawns_cmd = "spawns",
 	spawns_name = "Spawn Timers",
-	spawns_desc = ("Shows timer for when %s, %s and %s become hostile"):format(roar, tinhead, strawman),
+	spawns_desc = "Timers for when the characters become active",
+
+	light_cmd = "chainlightning",
+	light_name = "Chain Lightning",
+	light_desc = "Warn for Chain Lightning being cast",
 
 	spawns_roar = "%s attacks!",
+	warning_roar = "%s in 5 sec",
 	spawns_strawman = "%s attacks!",
+	warning_strawman = "%s in 5 sec",
 	spawns_tinhead = "%s attacks!",
+	warning_tinhead = "%s in 5 sec",
 	spawns_tito = "%s summoned!",
+	warning_tito = "%s in 5 sec",
 
-	summon_trigger = "Don't let them hurt us Tito! Oh, you won't, will you?",
-	summon_message = "Summoning %s!",
+	light_trigger = "The Crone begins to cast Chain Lightning",
+	light_message = "Chain Lightning!",
 
 	engage_trigger = "Oh Tito, we simply must find a way home!",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	summon_name = "Tito rufen",
-	summon_desc = ("Warnt wenn %s beginnt %s zu rufen"):format(dorothee, tito),
-
 	spawns_name = "Spawn Timer",
-	spawns_desc = ("Timerbalken wann %s, %s und %s in den Kampf eingreifen"):format(roar, tinhead, strawman),
+	--spawns_desc = "Timers for when the characters become active",
+
+	--light_name = "Chain Lightning",
+	--light_desc = "Warn for Chain Lightning being cast",
 
 	spawns_roar = "%s greift an!",
+	--warning_roar = "%s in 5 sec",
 	spawns_strawman = "%s greift an!",
+	--warning_strawman = "%s in 5 sec",
 	spawns_tinhead = "%s greift an!",
+	--warning_tinhead = "%s in 5 sec",
 	spawns_tito = "%s gerufen!",
+	--warning_tito = "%s in 5 sec",
 
-	summon_trigger = "Lass' nicht zu, dass sie uns wehtun, Tito. Nein, das wirst du nicht, oder?",
-	summon_message = "%s herbeigerufen!",
+	--light_trigger = "The Crone begins to cast Chain Lightning",
+	--light_message = "Chain Lightning!",
 
 	engage_trigger = "Oh Tito, wir m\195\188ssen einfach einen Weg nach Hause finden!",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	summon_name = "Alerte Invocation de Tito",
-	summon_desc = ("Pr\195\169viens quand %s commence \195\160 invoquer %s."):format(dorothee, tito),
-
 	spawns_name = "Alerte Hostilit\195\169",
-	spawns_desc = ("Montre le temps restant avant que %s, %s et %s deviennent hostiles."):format(roar, tinhead, strawman),
+	--spawns_desc = "Timers for when the characters become active",
+
+	--light_name = "Chain Lightning",
+	--light_desc = "Warn for Chain Lightning being cast",
 
 	spawns_roar = "%s attaque !",
+	--warning_roar = "%s in 5 sec",
 	spawns_strawman = "%s attaque !",
+	--warning_strawman = "%s in 5 sec",
 	spawns_tinhead = "%s attaque !",
+	--warning_tinhead = "%s in 5 sec",
 	spawns_tito = "%s invoqu\195\169 !",
+	--warning_tito = "%s in 5 sec",
 
-	summon_trigger = "Ne les laisse pas nous faire du mal, Tito\194\160! Oh, tu ne le feras pas, hein\194\160?",
-	summon_message = "Invocation de %s !",
+	--light_trigger = "The Crone begins to cast Chain Lightning",
+	--light_message = "Chain Lightning!",
 
-	engage_trigger = "Oh, Tito, nous devons trouver le moyen de rentrer \195\160 la maison\194\160! Le vieux sorcier est notre dernier espoir\194\160! Homme de paille, Graou, T\195\170te de fer-blanc, vous voulez bien\194\160? Attendez\194\160? Oh, regardez, nous avons des visiteurs\194\160!",
+	engage_trigger = "Oh, Tito, nous devons trouver le moyen de rentrer \195\160 la maison\194\160! Le vieux sorcier est notre dernier espoir\194\160!",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	summon_name = "티토 소환",
-	summon_desc = ("%s의 %s 소환 시 경고"):format(dorothee, tito),
-
 	spawns_name = "등장 타이머",
-	spawns_desc = ("%s, %s 및 %s 등장 타이머 표시"):format(roar, tinhead, strawman),
+	--spawns_desc = "Timers for when the characters become active",
+
+	--light_name = "Chain Lightning",
+	--light_desc = "Warn for Chain Lightning being cast",
 
 	spawns_roar = "%s 공격!",
+	--warning_roar = "%s in 5 sec",
 	spawns_strawman = "%s 공격!",
+	--warning_strawman = "%s in 5 sec",
 	spawns_tinhead = "%s 공격!",
+	--warning_tinhead = "%s in 5 sec",
 	spawns_tito = "%s 소환!",
+	--warning_tito = "%s in 5 sec",
 
-	summon_trigger = "티토! 우리를 보호해줘, 응? 그래 줄  있지, 티토?",
-	summon_message = "%s 소환중!",
+	--light_trigger = "The Crone begins to cast Chain Lightning",
+	--light_message = "Chain Lightning!",
 
 	engage_trigger = "티토야, 우린 집으로 갈 방법을 찾아야 해!",
 } end)
@@ -97,7 +113,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = {roar, tinhead, strawman, dorothee}
-mod.toggleoptions = {"summon", "spawns", "bosskill"}
+mod.toggleoptions = {"spawns", "light", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -106,6 +122,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
@@ -115,12 +132,21 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg:find(L["summon_trigger"]) and self.db.profile.summon then
-		self:Message(L["summon_message"]:format(tito), "Attention")
-	elseif msg:find(L["engage_trigger"]) and self.db.profile.spawns then
+	if msg:find(L["engage_trigger"]) and self.db.profile.spawns then
 		self:Bar(L["spawns_roar"]:format(roar), 15, "INV_Staff_08")
+		self:DelayedMessage(10, L["warning_roar"]:format(roar), "Attention")
 		self:Bar(L["spawns_strawman"]:format(strawman), 25, "Ability_Druid_ChallangingRoar")
+		self:DelayedMessage(20, L["warning_strawman"]:format(strawman), "Attention")
 		self:Bar(L["spawns_tinhead"]:format(tinhead), 35, "INV_Chest_Plate06")
+		self:DelayedMessage(30, L["warning_tinhead"]:format(tinhead), "Attention")
 		self:Bar(L["spawns_tito"]:format(tito), 48, "Ability_Hunter_Pet_Wolf")
+		self:DelayedMessage(43, L["warning_tito"]:format(tito), "Attention")
+	end
+end
+
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+	if msg:find(L["light_trigger"]) and self.db.profile.light then
+		self:Message(L["light_message"], "Urgent")
+		self:Bar(L["light_message"], 2.5, "Spell_Nature_ChainLightning")
 	end
 end
