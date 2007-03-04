@@ -20,49 +20,49 @@ L:RegisterTranslations("enUS", function() return {
 
 	mark_cmd = "mark",
 	mark_name = "Mark",
-	mark_desc = "Show warnings and counters for marks.",
+	mark_desc = "Show warnings and counters for marks",
 
 	enrage_cmd = "enrage",
 	enrage_name = "Enrage",
-	enrage_desc = "Warn about enrage.",
+	enrage_desc = "Warn about enrage",
 
 	stance_cmd = "stance",
 	stance_name = "Stance changes",
-	stance_desc = "Warn when Hydross changes stances.",
+	stance_desc = ("Warn when %s changes stances"):format(boss),
 
 	start_trigger = "I cannot allow you to interfere!",
-	
+
 	hydross_trigger = "Mark of Hydross",
 	corruption_trigger = "Mark of Corruption",
-	
+
 	hydross_bar = "Next Mark of Hydross - %s%%",
 	corruption_bar = "Next Mark of Corruption - %s%%",
 	enrage_bar = "Enrage",
-	
+
 	debuff_warn = "Mark at %s%%!",
-	
+
 	poison_stance_trigger = "Aaghh, the poison...",
 	water_stance_trigger = "Better, much better.",
-	
+
 	poison_stance = "Hydross is now poisoned!",
 	water_stance = "Hydross is now cleaned again!",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
 	start_trigger = "Ich kann nicht zulassen, dass ihr Euch einmischt!",
-	
+
 	hydross_trigger = "Mal von Hydross",
 	corruption_trigger = "Mal der der Verderbnis",
-	
+
 	hydross_bar = "Next Mal von Hydross - %s%%",
 	corruption_bar = "Next Mal der der Verderbnis - %s%%",
 	enrage_bar = "Wutanfall",
-	
+
 	debuff_warn = "Mark bei %s%%!",
-	
+
 	poison_stance_trigger = "Aahh, das Gift...",
 	water_stance_trigger = "Besser, viel besser.",
-	
+
 	poison_stance = "Hydross ist nun vergiftet!",
 	water_stance = "Hydross ist wieder gereinigt!",
 } end)
