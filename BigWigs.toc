@@ -158,3 +158,4 @@ Karazhan\Shadikith.lua
 
 SC\SCBeta.lua
 SC\Hydross.lua
+SC\Karathress.lua

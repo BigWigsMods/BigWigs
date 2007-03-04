@@ -19,3 +19,4 @@
 
 SCBeta.lua
 Hydross.lua
+Karathress.lua
