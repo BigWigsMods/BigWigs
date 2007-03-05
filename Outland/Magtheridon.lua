@@ -14,7 +14,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	escape_cmd = "escape",
 	escape_name = "Escape",
-	escape_desc = "Countdown untill Magtheridon breaks free",
+	escape_desc = ("Countdown untill %s breaks free"):format(boss),
 
 	abyssal_cmd = "abyssal",
 	abyssal_name = "Burning Abyssal",
@@ -26,12 +26,12 @@ L:RegisterTranslations("enUS", function() return {
 
 	escape_trigger1 = "%%s's bonds begin to weaken!",
 	escape_trigger2 = "I... am... unleashed!",
-	escape_warning1 = "Magtheridon Engaged - Breaks free in 2min!",
+	escape_warning1 = "%s Engaged - Breaks free in 2min!",
 	escape_warning2 = "Breaks free in 1min!",
 	escape_warning3 = "Breaks free in 30sec!",
 	escape_warning4 = "Breaks free in 10sec!",
 	escape_bar = "Released...",
-	escape_message = "Magtheridon Released!",
+	escape_message = "%s Released!",
 
 	abyssal_trigger = "Hellfire Channeler 's Burning Abyssal hits",
 	abyssal_message = "Burning Abyssal Created",
@@ -49,7 +49,7 @@ L:RegisterTranslations("enUS", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Magtheridon's Lair"]
 mod.otherMenu = "Outland"
-mod.enabletrigger = { L["Hellfire Channeler"], boss }
+mod.enabletrigger = {L["Hellfire Channeler"], boss}
 mod.toggleoptions = {"escape", "abyssal", "heal", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -74,7 +74,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if self.db.profile.escape and msg:find(L["escape_trigger1"]) then
-		self:Message(L["escape_warning1"], "Important")
+		self:Message(L["escape_warning1"]:format(boss), "Important")
 		self:Bar(L["escape_bar"], 120, "Ability_Rogue_Trip")
 		self:DelayedMessage(60, L["escape_warning2"], "Positive")
 		self:DelayedMessage(90, L["escape_warning3"], "Attention")
@@ -84,7 +84,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.escape and msg == L["escape_trigger2"] then
-		self:Message(L["escape_message"], "Important", nil, "Alert")
+		self:Message(L["escape_message"]:format(boss), "Important", nil, "Alert")
 	end
 end
 
