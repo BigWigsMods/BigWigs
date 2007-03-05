@@ -127,7 +127,7 @@ L:RegisterTranslations("koKR", function() return {
 	poison_desc = "독에 걸린 플레이어 알림",
 
 	heal_name = "치유",
-	heal_desc = ("%s|1이;가; 영원한 애정 시전 시 경고"):format(girl),
+	heal_desc = ("%s|1이;가; 영원한 사랑 시전 시 경고"):format(girl),
 
 	buff_name = "버프 알림",
 	buff_desc = ("%s|1와;과; %s 버프 획득 시 알림"):format(boy, girl),
@@ -143,10 +143,10 @@ L:RegisterTranslations("koKR", function() return {
 	poison_message = "중독: %s",
 
 	heal_trigger = "영원한 사랑 시전을 시작합니다.",
-	heal_message = "%s|1이;가; 힐 시전 중!",
+	heal_message = "%s 치유 시전!",
 
 	buff1_trigger = "사랑의 용기 효과를 얻었습니다.", -- check
-	buff1_message = "%s 기백 효과 얻음!",
+	buff1_message = "%s 용기 효과 얻음!",
 	buff2_trigger = "헌신 효과를 얻었습니다.", -- check
 	buff2_message = "%s 헌신 효과 얻음!",
 

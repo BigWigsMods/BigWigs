@@ -183,7 +183,7 @@ L:RegisterTranslations("koKR", function() return {
 	summon_trigger = "소환사 올름|1이;가; 사나운 지옥사냥개 소환 시전을 시작합니다.",
 	summon_message = "지옥사냥개 소환!",
 
-	flurry_trigger = "You will not defeat the hand of Gruul!", -- check
+	flurry_trigger = "그룰님의 손아귀에서 벗어나지 못해!",
 	flurry_message = "50% - 질풍!",
 	flurry_warning = "잠시 후 질풍!",
 

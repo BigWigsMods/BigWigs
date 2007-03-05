@@ -86,22 +86,22 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	spawns_name = "등장 타이머",
-	--spawns_desc = "Timers for when the characters become active",
+	spawns_desc = "피조물 활동 시작에 대한 타이머",
 
-	--light_name = "Chain Lightning",
-	--light_desc = "Warn for Chain Lightning being cast",
+	light_name = "연쇄 번개",
+	light_desc = "연쇄 번개 시전에 대한 경고",
 
 	spawns_roar = "%s 공격!",
-	--warning_roar = "%s in 5 sec",
+	warning_roar = "5초 이내 %s",
 	spawns_strawman = "%s 공격!",
-	--warning_strawman = "%s in 5 sec",
+	warning_strawman = "5초 이내 %s",
 	spawns_tinhead = "%s 공격!",
-	--warning_tinhead = "%s in 5 sec",
+	warning_tinhead = "5초 이내 %s",
 	spawns_tito = "%s 소환!",
-	--warning_tito = "%s in 5 sec",
+	warning_tito = "5초 이내 %s",
 
-	--light_trigger = "The Crone begins to cast Chain Lightning",
-	--light_message = "Chain Lightning!",
+	light_trigger = "크론이 연쇄 번개 시전을 시작합니다.", -- check
+	light_message = "연쇄 번개!",
 
 	engage_trigger = "티토야, 우린 집으로 갈 방법을 찾아야 해!",
 } end)

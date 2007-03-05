@@ -174,16 +174,15 @@ L:RegisterTranslations("koKR", function() return {
 	["Load all %s modules."] = "모든 %s 모듈들을 불러옵니다.",
 
 	-- AceConsole zone commands
+	["Karazhan"] = "Karazhan",
 	["Zul'Gurub"] = "ZG",
 	["Molten Core"] = "MC",
 	["Blackwing Lair"] = "BWL",
 	["Ahn'Qiraj"] = "AQ40",
 	["Ruins of Ahn'Qiraj"] = "AQ20",
-	["Naxxramas"] = "낙스라마스",
-	--["Azeroth"] = "아제로스",
+	["Naxxramas"] = "Naxxramas",
 	["Azeroth"] = "Azeroth",
-	["Outland"] = "아웃랜드",
-	["Karazhan"] = "Karazhan",
+	["Outland"] = "Outland",
 	["Coilfang Reservoir"] = "SC",
 	["Serpentshrine Cavern"] = "SC",
 } end)
