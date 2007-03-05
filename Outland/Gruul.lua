@@ -130,10 +130,10 @@ L:RegisterTranslations("koKR", function() return {
 	cavein_name = "당신의 함몰",
 	cavein_desc = "당신의 함몰에 대한 경고",
 
-	engage_trigger = "Come.... and die.", -- check
+	engage_trigger = "이리 와서... 죽어.",
 	engage_message = "%s 전투 개시!",
 
-	grow_trigger = "%s grows in size!", -- check
+	grow_trigger = "%s|1이;가; 점점 커집니다!",
 	grow_message = "성장: (%d)",
 	grow_bar = "(%d) 성장",
 
@@ -143,10 +143,10 @@ L:RegisterTranslations("koKR", function() return {
 	grasp_message2 = "손아귀 대기 - 약 5초 후 석화",
 	grasp_warning = "잠시 후 땅 울리기",
 
-	shatter_trigger = "%s roars!", -- check
+	shatter_trigger = "%s|1이;가; 포효합니다!",
 	shatter_message = "석화!",
 
-	cavein_trigger = "^([^|;%s]*)(.*)함몰에 걸렸습니다%.$",
+	cavein_trigger = "당신은 함몰에 걸렸습니다.",
 	cavein_message = "당신은 함몰!",
 } end)
 
