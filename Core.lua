@@ -322,6 +322,8 @@ local options = {
 BigWigs.debugFrame = ChatFrame5
 BigWigs.revision = tonumber(("$Revision$"):sub(12, -3))
 
+BigWigs.cmdtable = options
+
 ------------------------------
 --      Initialization      --
 ------------------------------
@@ -329,7 +331,7 @@ BigWigs.revision = tonumber(("$Revision$"):sub(12, -3))
 function BigWigs:OnInitialize()
 	self:RegisterDB("BigWigsDB", "BigWigsDBPerChar")
 
-	self.cmdtable = options
+	-- self.cmdtable = options
 
 	self:RegisterChatCommand({"/bw", "/BigWigs"}, options, "BIGWIGS")
 
