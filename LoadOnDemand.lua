@@ -212,7 +212,7 @@ function BigWigsLoD:AddCoreMenu(consoleCommand, guiCommand)
 			name = guiCommand,
 			desc = string.format(LC["Options for bosses in %s."], guiCommand),
 			args = {},
-			disabled = function() return not BigWigs:IsActive() end,
+			disabled = "~IsActive",
 		}
 	end
 	if not opt[consoleCommand].args[LC["Load"]] then

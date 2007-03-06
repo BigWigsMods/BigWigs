@@ -4,6 +4,8 @@
 
 local enablezones, enablemobs = {}, {}
 
+local monitoring = nil
+
 ---------------------------------
 --      Addon Declaration      --
 ---------------------------------
@@ -23,7 +25,8 @@ function plugin:OnRegister()
 end
 
 function plugin:OnEnable()
-	self.monitoring = nil
+	monitoring = nil
+
 	self:RegisterEvent("BigWigs_RegisterForTargetting")
 	self:RegisterEvent("BigWigs_ModulePackLoaded", "ZONE_CHANGED_NEW_AREA")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
@@ -46,14 +49,13 @@ function plugin:BigWigs_RegisterForTargetting(zone, mob)
 	end
 end
 
-
 function plugin:ZONE_CHANGED_NEW_AREA()
-	if enablezones[GetRealZoneText()] then
-		self.monitoring = true
+	if not monitoring and (enablezones[GetRealZoneText()] or enablezones[GetSubZoneText()] or enablezones[GetZoneText()]) then
+		monitoring = true
 		self:RegisterEvent("PLAYER_TARGET_CHANGED")
 		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
-	elseif self.monitoring then
-		self.monitoring = nil
+	elseif monitoring then
+		monitoring = nil
 		self:UnregisterEvent("PLAYER_TARGET_CHANGED")
 		self:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
 	end
@@ -69,7 +71,7 @@ end
 
 function plugin:TargetCheck(unit)
 	local n = UnitName(unit)
-	if not n or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
-	if enablemobs[n] then self:TriggerEvent("BigWigs_TargetSeen", n, unit) end
+	if not n or not enablemobs[n] or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
+	self:TriggerEvent("BigWigs_TargetSeen", n, unit)
 end
 

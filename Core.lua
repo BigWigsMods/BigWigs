@@ -21,7 +21,7 @@ L:RegisterTranslations("enUS", function() return {
 	-- AceConsole strings
 	["Bosses"] = true,
 	["Options for bosses in %s."] = true, -- "Options for bosses in <zone>"
-	["Options for %s (r%s)."] = true,     -- "Options for <boss> (<revision>)"
+	["Options for %s (r%d)."] = true,     -- "Options for <boss> (<revision>)"
 	["Plugins"] = true,
 	["Options for plugins."] = true,
 	["Extras"] = true,
@@ -66,7 +66,7 @@ L:RegisterTranslations("frFR", function() return {
 	-- AceConsole strings
 	["Bosses"] = "Boss",
 	["Options for bosses in %s."] = "Options des boss dans %s.", -- "Options for bosses in <zone>"
-	["Options for %s (r%s)."] = "Options pour %s (r%s).",     -- "Options for <boss> (<revision>)"
+	["Options for %s (r%d)."] = "Options pour %s (r%d).",     -- "Options for <boss> (<revision>)"
 	-- ["Plugins"] = true,
 	["Options for plugins."] = "Options pour les plugins.",
 	-- ["Extras"] = true,
@@ -108,7 +108,7 @@ L:RegisterTranslations("deDE", function() return {
 	-- AceConsole strings
 	["Bosses"] = "Bosse",
 	["Options for bosses in %s."] = "Optionen f\195\188r Bosse in %s.", -- "Options for bosses in <zone>"
-	["Options for %s (r%s)."] = "Optionen f\195\188r %s (r%s).",     -- "Options for <boss> (<revision>)"
+	["Options for %s (r%d)."] = "Optionen f\195\188r %s (r%d).",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "Plugins",
 	["Options for plugins."] = "Optionen f\195\188r Plugins.",
 	["Extras"] = "Extras",
@@ -154,7 +154,7 @@ L:RegisterTranslations("koKR", function() return {
 	-- AceConsole strings
 	["Bosses"] = "보스들",
 	["Options for bosses in %s."] = "%s 에 보스들을 위한 설정", -- "Options for bosses in <zone>"
-	["Options for %s (r%s)."] = "%s에 대한 설정(r%s).",     -- "Options for <boss> (<revision>)"
+	["Options for %s (r%d)."] = "%s에 대한 설정(r%d).",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "플러그인들",
 	["Options for plugins."] = "플러그인 설정",
 	["Extras"] = "기타",
@@ -195,7 +195,7 @@ L:RegisterTranslations("zhCN", function() return {
 	-- AceConsole strings
 	["Bosses"] = "首领",
 	["Options for bosses in %s."] = "%s首领模块设置。", -- "Options for bosses in <zone>"
-	["Options for %s (r%s)."] = "%s模块设置 版本(r%s).",     -- "Options for <boss> (<revision>)"
+	["Options for %s (r%d)."] = "%s模块设置 版本(r%d).",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "插件",
 	["Options for plugins."] = "插件设置。",
 	["Extras"] = "额外",
@@ -238,7 +238,7 @@ L:RegisterTranslations("zhTW", function() return {
 	-- AceConsole strings
 	["Bosses"] = "首領",
 	["Options for bosses in %s."] = "%s首領模組選項。", -- "Options for bosses in <zone>"
-	["Options for %s (r%s)."] = "%s模組選項 版本(r%s).",     -- "Options for <boss> (<revision>)"
+	["Options for %s (r%d)."] = "%s模組選項 版本(r%d).",     -- "Options for <boss> (<revision>)"
 	["Extras"] = "其他",
 	["Options for extras."] = "其他模組選項",
 	["Plugins"] = "插件",
@@ -271,44 +271,53 @@ L:RegisterTranslations("zhTW", function() return {
 --      Addon Declaration      --
 ---------------------------------
 
-BigWigs = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDebug-2.0", "AceModuleCore-2.0", "AceConsole-2.0", "AceDB-2.0")
-BigWigs:SetModuleMixins("AceDebug-2.0", "AceEvent-2.0", "CandyBar-2.0")
-BigWigs:RegisterDB("BigWigsDB", "BigWigsDBPerChar")
-BigWigs.cmdtable = {type = "group", handler = BigWigs, args = {
-	[L["Bosses"]] = {
-		type = "header",
-		name = L["Bosses"],
-		order = 2,
-	},
-	["spacer"] = {
-		type = "header",
-		name = " ",
-		order = 200,
-	},
-	[L["Options"]] = {
-		type = "header",
-		name = L["Options"],
-		order = 201,
-	},
-	[L["Plugins"]] = {
-		type = "group",
-		name = L["Plugins"],
-		desc = L["Options for plugins."],
-		args = {},
-		disabled = function() return not BigWigs:IsActive() end,
-		order = 202,
-	},
-	[L["Extras"]] = {
-		type = "group",
-		name = L["Extras"],
-		desc = L["Options for extras."],
-		args = {},
-		disabled = function() return not BigWigs:IsActive() end,
-		order = 203,
-	},
-}}
+BigWigs = AceLibrary("AceAddon-2.0"):new(
+	"AceEvent-2.0",
+	"AceDebug-2.0",
+	"AceModuleCore-2.0",
+	"AceConsole-2.0",
+	"AceDB-2.0"
+)
 
-BigWigs:RegisterChatCommand({"/bw", "/BigWigs"}, BigWigs.cmdtable, "BIGWIGS")
+BigWigs:SetModuleMixins("AceDebug-2.0", "AceEvent-2.0", "CandyBar-2.0")
+
+local options = {
+	type = "group",
+	handler = BigWigs,
+	args = {
+		[L["Bosses"]] = {
+			type = "header",
+			name = L["Bosses"],
+			order = 1,
+		},
+		["spacer"] = {
+			type = "header",
+			name = " ",
+			order = 200,
+		},
+		[L["Options"]] = {
+			type = "header",
+			name = L["Options"],
+			order = 201,
+		},
+		[L["Plugins"]] = {
+			type = "group",
+			name = L["Plugins"],
+			desc = L["Options for plugins."],
+			args = {},
+			disabled = "~IsActive",
+			order = 202,
+		},
+		[L["Extras"]] = {
+			type = "group",
+			name = L["Extras"],
+			desc = L["Options for extras."],
+			args = {},
+			disabled = "~IsActive",
+			order = 203,
+		},
+	},
+}
 
 BigWigs.debugFrame = ChatFrame5
 BigWigs.revision = tonumber(("$Revision$"):sub(12, -3))
@@ -318,6 +327,12 @@ BigWigs.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function BigWigs:OnInitialize()
+	self:RegisterDB("BigWigsDB", "BigWigsDBPerChar")
+
+	self.cmdtable = options
+
+	self:RegisterChatCommand({"/bw", "/BigWigs"}, options, "BIGWIGS")
+
 	if not self.version then self.version = GetAddOnMetadata("BigWigs", "Version") end
 	self.version = (self.version or "2.0") .. " |cffff8888r" .. self.revision .. "|r"
 end
@@ -380,7 +395,8 @@ function BigWigs:OnDebugDisable() self:ToggleModuleDebugging(false) end
 function BigWigs:RegisterModule(name, module)
 	if module:IsRegistered() then
 		error(string.format("%q is already registered.", name))
-		return
+	elseif type(module.revision) ~= "number" then
+		error(string.format("%q does not have a valid revision field.", name))
 	end
 
 	if module:IsBossModule() then self:ToggleModuleActive(module, false) end
@@ -389,7 +405,7 @@ function BigWigs:RegisterModule(name, module)
 	local opts
 	if module:IsBossModule() and module.toggleoptions then
 		opts = {}
-		for _,v in pairs(module.toggleoptions) do if v ~= -1 then opts[v] = true end end
+		for i,v in ipairs(module.toggleoptions) do if v ~= -1 then opts[v] = true end end
 	end
 
 	if module.db and type(module.RegisterDefaults) == "function" then
@@ -403,78 +419,67 @@ function BigWigs:RegisterModule(name, module)
 	-- Set up AceConsole
 	if module:IsBossModule() then
 		local cons
-		local revision = type(module.revision) == "number" and module.revision or -1
-		local L2 = AceLibrary("AceLocale-2.2"):new("BigWigs"..name)
+		local ML = AceLibrary("AceLocale-2.2"):new("BigWigs"..name)
 		if module.toggleoptions then
-			local m = module
 			cons = {
 				type = "group",
 				name = name,
-				desc = string.format(L["Options for %s (r%s)."], name, revision),
+				desc = string.format(L["Options for %s (r%d)."], name, module.revision),
 				args = {
 					[L["Active"]] = {
 						type = "toggle",
 						name = L["Active"],
 						order = 1,
 						desc = L["Activate or deactivate this module."],
-						get = function() return m.core:IsModuleActive(m) end,
-						set = function() m.core:ToggleModuleActive(m) end,
+						get = function() return self:IsModuleActive(module) end,
+						set = function() self:ToggleModuleActive(module) end,
 					},
 					[L["Reboot"]] = {
 						type = "execute",
 						name = L["Reboot"],
 						order = 2,
 						desc = L["Reboot this module."],
-						func = function() m.core:TriggerEvent("BigWigs_RebootModule", m) end,
-						disabled = function() return not m.core:IsModuleActive(m) end,
+						func = function() self:TriggerEvent("BigWigs_RebootModule", module) end,
+						disabled = function() return not self:IsModuleActive(module) end,
 					},
 					[L["Debugging"]] = {
 						type = "toggle",
 						name = L["Debugging"],
 						desc = L["Show debug messages."],
+						handler = module,
 						order = 3,
-						get = function() return m:IsDebugging() end,
-						set = function(v) m:SetDebugging(v) end,
-						hidden = function() return not BigWigs:IsDebugging() end,
+						get = "IsDebugging",
+						set = "SetDebugging",
+						hidden = function() return not self:IsDebugging() end,
+					},
+					["headerSpacer"] = {
+						type = "header",
+						order = 4,
+						name = " ",
 					},
 				},
 			}
-			local x = 10
-			for _,v in pairs(module.toggleoptions) do
-				local val = v
-				x = x + 1
-				if x == 11 and v ~= "bosskill" then
-					cons.args["headerblankspotthingy"] = {
-						type = "header",
-						order = 4,
-					}
-				end
-				if v == -1 then
-					cons.args["blankspacer"..x] = {
+			for i, v in ipairs(module.toggleoptions) do
+				local x = i + 100
+				if type(v) == "number" then
+					cons.args["optionSpacer"..i] = {
 						type = "header",
 						order = x,
+						name = " ",
 					}
-				else
-					local l = v == "bosskill" and L or L2
+				elseif type(v) == "string" then
+					local l = v == "bosskill" and L or ML
+					cons.args[l[v.."_cmd"]] = {
+						type = "toggle",
+						order = v == "bosskill" and -1 or x,
+						name = l[v.."_name"],
+						desc = l[v.."_desc"],
+						get = function() return module.db.profile[v] end,
+						set = function(v) module.db.profile[v] = v end,
+					}
 					if l:HasTranslation(v.."_validate") then
-						cons.args[l[v.."_cmd"]] = {
-							type = "text",
-							order = v == "bosskill" and -1 or x,
-							name = l[v.."_name"],
-							desc = l[v.."_desc"],
-							get = function() return m.db.profile[val] end,
-							set = function(v) m.db.profile[val] = v end,
-							validate = l[v.."_validate"],
-						}
-					else
-						cons.args[l[v.."_cmd"]] = {
-							type = "toggle",
-							order = v == "bosskill" and -1 or x,
-							name = l[v.."_name"],
-							desc = l[v.."_desc"],
-							get = function() return m.db.profile[val] end,
-							set = function(v) m.db.profile[val] = v end,
-						}
+						cons.args[l[v.."_cmd"]].type = "text"
+						cons.args[l[v.."_cmd"]].validate = l[v.."_validate"]
 					end
 				end
 			end
@@ -482,7 +487,7 @@ function BigWigs:RegisterModule(name, module)
 
 		if cons or module.consoleOptions then
 			if module.external then
-				self.cmdtable.args[L["Extras"]].args[L2["cmd"]] = cons or module.consoleOptions
+				options.args[L["Extras"]].args[ML["cmd"]] = cons or module.consoleOptions
 			else
 				local consoleZone = nil
 				local guiZone = nil
@@ -494,23 +499,23 @@ function BigWigs:RegisterModule(name, module)
 					guiZone = moduleZone
 					consoleZone = L[BZ:GetReverseTranslation(moduleZone)]
 				end
-				if not self.cmdtable.args[consoleZone] then
-					self.cmdtable.args[consoleZone] = {
+				if not options.args[consoleZone] then
+					options.args[consoleZone] = {
 						type = "group",
 						name = guiZone,
 						desc = string.format(L["Options for bosses in %s."], guiZone),
 						args = {},
-						disabled = function() return not BigWigs:IsActive() end,
+						disabled = "~IsActive",
 					}
 				end
-				self.cmdtable.args[consoleZone].args[L2["cmd"]] = cons or module.consoleOptions
+				options.args[consoleZone].args[ML["cmd"]] = cons or module.consoleOptions
 			end
 		end
 	elseif module.consoleOptions then
 		if module.external then
-			self.cmdtable.args[L["Extras"]].args[module.consoleCmd or name] = cons or module.consoleOptions
+			options.args[L["Extras"]].args[module.consoleCmd or name] = module.consoleOptions
 		else
-			self.cmdtable.args[L["Plugins"]].args[module.consoleCmd or name] = cons or module.consoleOptions
+			options.args[L["Plugins"]].args[module.consoleCmd or name] = module.consoleOptions
 		end
 	end
 
@@ -519,7 +524,7 @@ function BigWigs:RegisterModule(name, module)
 		module:OnRegister()
 	end
 
-	self:TriggerEvent("BigWigs_ModuleRegistered", module.name)
+	self:TriggerEvent("BigWigs_ModuleRegistered", name)
 
 	-- Set up target monitoring, in case the monitor module has already initialized
 	if module.zonename and module.enabletrigger then
@@ -527,56 +532,41 @@ function BigWigs:RegisterModule(name, module)
 	end
 end
 
-
-function BigWigs:EnableModule(module, nosync)
-	local m = self:GetModule(module)
-	if m and m:IsBossModule() and not self:IsModuleActive(module) then
-		self:ToggleModuleActive(module, true)
-		self:TriggerEvent("BigWigs_Message", string.format(L["%s mod enabled"], m:ToString() or "??"), "Core", true)
-		if not nosync then
+function BigWigs:EnableModule(moduleName, noSync)
+	local m = self:GetModule(moduleName)
+	if m and m:IsBossModule() and not self:IsModuleActive(m) then
+		self:ToggleModuleActive(m, true)
+		m:Message(string.format(L["%s mod enabled"], moduleName or "??"), "Core", true)
+		if not noSync then
 			if not BB then BB = AceLibrary("Babble-Boss-2.2") end
-			self:TriggerEvent("BigWigs_SendSync", (m.external and "EnableExternal " or "EnableModule ") .. (m.synctoken or BB:GetReverseTranslation(module)))
+			m:Sync((m.external and "EnableExternal " or "EnableModule ") .. m.synctoken or BB:GetReverseTranslation(moduleName))
 		end
 	end
 end
-
 
 function BigWigs:BigWigs_RebootModule(module)
 	self:ToggleModuleActive(module, false)
 	self:ToggleModuleActive(module, true)
 end
 
-
 function BigWigs:BigWigs_RecvSync(sync, module)
-	if (sync == "EnableModule" or sync == "EnableExternal") and module then
+	if (sync == "EnableModule" or sync == "EnableExternal") and type(module) == "string" then
 		if not BB then BB = AceLibrary("Babble-Boss-2.2") end
 		local name = BB:HasTranslation(module) and BB[module] or module
-		if self:HasModule(name) and self:GetModule(name).zonename == GetRealZoneText() then
+		if self:HasModule(name) then
 			self:EnableModule(name, true)
 		end
 	end
 end
 
-
 function BigWigs:BigWigs_TargetSeen(mobname, unit)
-	local zone = GetRealZoneText()
-	for name,module in self:IterateModules() do
-		if module:IsBossModule() and self:ZoneIsTrigger(module, zone) and self:MobIsTrigger(module, mobname)
-			and (not module.VerifyEnable or module:VerifyEnable(unit)) then
+	for name, module in self:IterateModules() do
+		if not self:IsModuleActive(module) and (name == mobname or (module:IsBossModule() and self:MobIsTrigger(module, mobname)
+			and (not module.VerifyEnable or module:VerifyEnable(unit)))) then
 			self:EnableModule(name)
 		end
 	end
 end
-
-
-function BigWigs:ZoneIsTrigger(module, zone)
-	local t = module.zonename
-	if type(t) == "string" then return zone == t
-	elseif type(t) == "table" then
-		for _,mzone in pairs(t) do if mzone == zone then return true end end
-	end
-end
-
 
 function BigWigs:MobIsTrigger(module, name)
 	local t = module.enabletrigger

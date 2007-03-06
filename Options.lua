@@ -11,6 +11,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsOptions")
 local tablet = AceLibrary("Tablet-2.0")
 local waterfall = AceLibrary:HasInstance("Waterfall-1.0") and AceLibrary("Waterfall-1.0") or nil
 
+local hint = nil
 local _G = getfenv(0)
 
 ----------------------------
@@ -104,23 +105,30 @@ L:RegisterTranslations("deDE", function() return {
 ----------------------------
 
 BigWigsOptions = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDB-2.0", "FuBarPlugin-2.0")
-BigWigsOptions:RegisterDB("BigWigsFubarDB")
 
-BigWigsOptions.hasNoColor = true
-BigWigsOptions.hasIcon = "Interface\\AddOns\\BigWigs\\Icons\\core-enabled"
-BigWigsOptions.defaultMinimapPosition = 180
-BigWigsOptions.clickableTooltip = true
-BigWigsOptions.hideWithoutStandby = true
-BigWigsOptions.hideMenuTitle = true
-BigWigsOptions.OnMenuRequest = BigWigs.cmdtable
-
-BigWigs.hideMenuTitle = true
+BigWigsOptions.hasIcon = true
 
 -----------------------------
 --      Menu Handling      --
 -----------------------------
 
 function BigWigsOptions:OnInitialize()
+	self:RegisterDB("BigWigsFubarDB")
+
+	hint = L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."]
+	if waterfall then
+		hint = hint .. " " .. L["|cffeda55fShift-Click|r to open configuration window."]
+	end
+
+	self.hasNoColor = true
+	self.hasIcon = "Interface\\AddOns\\BigWigs\\Icons\\core-enabled"
+	self.defaultMinimapPosition = 180
+	self.clickableTooltip = true
+	self.hideWithoutStandby = true
+	self.hideMenuTitle = true
+	self.OnMenuRequest = BigWigs.cmdtable
+	BigWigs.hideMenuTitle = true
+
 	-- XXX Total hack :(
 	local args = AceLibrary("FuBarPlugin-2.0"):GetAceOptionsDataTable(self)
 	if not BigWigsOptions.OnMenuRequest.args[L["Menu"]] then
@@ -187,10 +195,6 @@ function BigWigsOptions:OnTooltipUpdate()
 			if module:IsBossModule() and BigWigs:IsModuleActive(module) then
 				cat:AddLine("text", name, "func", function(mod) BigWigsOptions:ModuleAction(mod) end, "arg1", module)
 			end
-		end
-		local hint = L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."]
-		if waterfall then
-			hint = hint .. " " .. L["|cffeda55fShift-Click|r to open configuration window."]
 		end
 		tablet:SetHint(hint)
 	else
