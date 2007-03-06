@@ -541,7 +541,7 @@ function BigWigs:EnableModule(moduleName, noSync)
 		m:Message(string.format(L["%s mod enabled"], moduleName or "??"), "Core", true)
 		if not noSync then
 			if not BB then BB = AceLibrary("Babble-Boss-2.2") end
-			m:Sync((m.external and "EnableExternal " or "EnableModule ") .. m.synctoken or BB:GetReverseTranslation(moduleName))
+			m:Sync((m.external and "EnableExternal " or "EnableModule ") .. (m.synctoken or BB:GetReverseTranslation(moduleName)))
 		end
 	end
 end
