@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?    --
 ------------------------------
 
@@ -31,6 +31,10 @@ L:RegisterTranslations("enUS", function() return {
 	cavein_name = "Cave In on You",
 	cavein_desc = "Warn for a Cave In on You",
 
+	silence_cmd = "silence",
+	silence_name = "Silence Warning",
+	silence_desc = "Warn when Gruul casts AOE Silence (Reverberation)",
+
 	engage_trigger = "Come.... and die.",
 	engage_message = "%s Engaged!",
 
@@ -46,6 +50,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	shatter_trigger = "%s roars!",
 	shatter_message = "Shatter!",
+	
+	reverb_trigger = "afflicted by Reverberation",
+	reverb_message = "AOE Silence",
+	reverb_warning = "AOE Silence in 5 seconds",	
 
 	cavein_trigger = "You are afflicted by Cave In.",
 	cavein_message = "Cave In on YOU!",
@@ -158,7 +166,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = boss
-mod.toggleoptions = {"engage", "grasp", "grow", -1, "cavein", "bosskill"}
+mod.toggleoptions = {"engage", "grasp", "grow", -1, "cavein", "silence", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -168,6 +176,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	slam = nil
 	grasp = nil
+	silence = nil
 	growcount = 1
 
 	self:RegisterEvent("BigWigs_Message")
@@ -191,6 +200,9 @@ function mod:CHAT_MSG_MONSTER_SAY(msg)
 		self:Message(L["engage_message"]:format(boss), "Attention")
 		self:DelayedMessage(35, L["grasp_warning"], "Urgent")
 		self:Bar(L["grasp_warning"], 40, "Ability_ThunderClap")
+
+		self:DelayedMessage(95, L["reverb_warning"], "Urgent")
+		self:Bar(L["reverb_message"], 100, "Spell_Holy_ImprovedResistanceAuras")		
 	end
 end
 
@@ -216,6 +228,11 @@ function mod:Event(msg)
 		grasp = true
 	elseif self.db.profile.cavein and msg == L["cavein_trigger"] then
 		self:Message(L["cavein_message"], "Personal", true, "Alarm")
+	elseif not silence and self.db.profile.silence and msg:find(L["reverb_trigger"]) then
+		self:Message(L["reverb_message"], "Attention")
+		self:DelayedMessage(40, L["reverb_warning"], "Urgent")
+		self:Bar(L["reverb_message"], 45, "Spell_Holy_ImprovedResistanceAuras")
+		silence = true
 	end
 end
 
@@ -223,5 +240,8 @@ function mod:BigWigs_Message(text)
 	if text == L["grasp_warning"] then
 		slam = nil
 		grasp = nil
+	end
+	if text == L["reverb_warning"] then
+		silence = nil
 	end
 end
