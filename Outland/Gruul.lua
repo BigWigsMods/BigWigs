@@ -159,7 +159,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	silence_trigger = "산울림에 걸렸습니다.",
 	silence_message = "광역 침묵",
-	--silence_warning = "5초 내 광역 침묵", --enUS changed
+	silence_warning = "잠시 후 광역 침묵!",
 
 	cavein_trigger = "당신은 함몰에 걸렸습니다.",
 	cavein_message = "당신은 함몰!",
