@@ -26,8 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 	curse_message = "Warrior Cursed - %s",
 
 	phase1_message = "Phase 1 - %s",
-	phase2_trigger1 = "Perhaps you would rather test yourselves against a more formidable opponent?!",
-	phase2_trigger2 = "Cowards! Wretches!",
+	phase2_trigger = "%s calls for her master!",
 	phase2_message = "Phase 2 - %s & Attumen",
 	phase3_trigger = "Come Midnight, let's disperse this petty rabble!",
 	phase3_message = "Phase 3 - %s",
@@ -46,8 +45,7 @@ L:RegisterTranslations("deDE", function() return {
 	curse_message = "Krieger verflucht - %s",
 
 	phase1_message = "Phase 1 - %s",
-	phase2_trigger1 = "Vielleicht m\195\182chtet Ihr Euch an einem Gegner messen, der Euch ebenb\195\188rtig ist?!",
-	phase2_trigger2 = "Feiglinge! Gesindel!",
+	--phase2_trigger = "",
 	phase2_message = "Phase 2 - %s & Attumen",
 	phase3_trigger = "Komm Mittnacht, lass' uns dieses Gesindel auseinander treiben!",
 	phase3_message = "Phase 3 - %s",
@@ -65,8 +63,7 @@ L:RegisterTranslations("frFR", function() return {
 	curse_trigger = "^([^%s]+) ([^%s]+) les effets .* Pr\195\169sence immat\195\169rielle",
 	curse_message = "Mal\195\169diction sur %s",
 
-	phase2_trigger1 = "Vous pr\195\169f\195\169rez peut-\195\170tre vous mesurer \195\160 un adversaire plus redoutable\194\160?!",
-	phase2_trigger2 = "Crapules\194\160! L\195\162ches\194\160!",
+	--phase2_trigger = "",
 	phase3_trigger = "Viens, Minuit, allons disperser cette insignifiante racaille\194\160!",
 
 	you = "Vous",
@@ -83,8 +80,7 @@ L:RegisterTranslations("koKR", function() return {
 	curse_message = "저주 걸린 전사 - %s",
 
 	phase1_message = "1 단계 - %s",
-	phase2_trigger1 = "감히 누가 사냥꾼의 애마를 건드리느냐?",
-	phase2_trigger2 = "비겁하고 치사한 놈들!",
+	--phase2_trigger = "",
 	phase2_message = "2 단계 - %s & 어튜멘",
 	phase3_trigger = "이랴! 이 오합지졸을 데리고 실컷 놀아보자!",
 	phase3_message = "3 단계 - %s",
@@ -111,6 +107,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "CurseEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "CurseEvent")
@@ -126,10 +123,13 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if not self.db.profile.phase then return end
-	if msg == L["phase3_trigger"] then
+	if self.db.profile.phase and msg == L["phase3_trigger"] then
 		self:Message(L["phase3_message"]:format(boss), "Important")
-	elseif msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"] then
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
+	if self.db.profile.phase and msg == L["phase2_trigger"] then
 		self:Message(L["phase2_message"]:format(horse), "Urgent")
 	end
 end
