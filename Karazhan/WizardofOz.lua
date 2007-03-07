@@ -100,7 +100,7 @@ L:RegisterTranslations("koKR", function() return {
 	spawns_tito = "%s 소환!",
 	warning_tito = "5초 이내 %s",
 
-	light_trigger = "마녀|1이;가; 연쇄 번개 시전을 시작합니다.", -- check
+	light_trigger = "마녀가 연쇄 번개 시전을 시작합니다.",
 	light_message = "연쇄 번개!",
 
 	engage_trigger = "티토야, 우린 집으로 갈 방법을 찾아야 해!",
