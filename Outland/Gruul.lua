@@ -32,7 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 	cavein_desc = "Warn for a Cave In on You",
 
 	silence_cmd = "silence",
-	silence_name = "Silence Warning",
+	silence_name = "Silence",
 	silence_desc = "Warn when Gruul casts AOE Silence (Reverberation)",
 
 	engage_trigger = "Come.... and die.",
@@ -50,10 +50,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	shatter_trigger = "%s roars!",
 	shatter_message = "Shatter!",
-	
-	reverb_trigger = "afflicted by Reverberation",
-	reverb_message = "AOE Silence",
-	reverb_warning = "AOE Silence in 5 seconds",	
+
+	silence_trigger = "afflicted by Reverberation",
+	silence_message = "AOE Silence",
+	silence_warning = "AOE Silence soon!",
 
 	cavein_trigger = "You are afflicted by Cave In.",
 	cavein_message = "Cave In on YOU!",
@@ -156,10 +156,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	shatter_trigger = "%s이 포효합니다!",
 	shatter_message = "석화!",
-	
-	reverb_trigger = "Reverberation에 걸렸습니다.", -- check
-	reverb_message = "광역 침묵",
-	reverb_warning = "5초 내 광역 침묵",	
+
+	silence_trigger = "산울림에 걸렸습니다.",
+	silence_message = "광역 침묵",
+	--silence_warning = "5초 내 광역 침묵", --enUS changed
 
 	cavein_trigger = "당신은 함몰에 걸렸습니다.",
 	cavein_message = "당신은 함몰!",
@@ -236,9 +236,9 @@ function mod:Event(msg)
 	elseif self.db.profile.cavein and msg == L["cavein_trigger"] then
 		self:Message(L["cavein_message"], "Personal", true, "Alarm")
 	elseif not silence and self.db.profile.silence and msg:find(L["reverb_trigger"]) then
-		self:Message(L["reverb_message"], "Attention")
-		self:DelayedMessage(40, L["reverb_warning"], "Urgent")
-		self:Bar(L["reverb_message"], 45, "Spell_Holy_ImprovedResistanceAuras")
+		self:Message(L["silence_message"], "Attention")
+		self:DelayedMessage(40, L["silence_warning"], "Urgent")
+		self:Bar(L["silence_message"], 45, "Spell_Holy_ImprovedResistanceAuras")
 		silence = true
 	end
 end
