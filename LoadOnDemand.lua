@@ -26,15 +26,16 @@ end
 function BigWigsLoD:OnEnable()
 	self:RegisterEvent("BigWigs_CoreEnabled")
 
-	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
+	self:RegisterEvent("ZONE_CHANGED", "ZoneChanged")
+	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChanged")
 	self:RegisterEvent("CHAT_MSG_SYSTEM")
 	self:RegisterEvent("BigWigs_JoinedGroup")
 	self:RegisterEvent("BigWigs_LeftGroup")
 
 	if AceLibrary("AceEvent-2.0"):IsFullyInitialized() then
-		self:ZONE_CHANGED_NEW_AREA()
+		self:ZoneChanged()
 	else
-		self:RegisterEvent("AceEvent_FullyInitialized", "ZONE_CHANGED_NEW_AREA")
+		self:RegisterEvent("AceEvent_FullyInitialized", "ZoneChanged")
 	end
 end
 
@@ -64,7 +65,7 @@ function BigWigsLoD:BigWigs_CoreEnabled()
 	self:LoadZone(GetZoneText())
 end
 
-function BigWigsLoD:ZONE_CHANGED_NEW_AREA()
+function BigWigsLoD:ZoneChanged()
 	if BigWigs:IsActive() then
 		self:LoadZone(GetRealZoneText())
 		self:LoadZone(GetSubZoneText())

@@ -18,8 +18,10 @@ plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function plugin:OnRegister()
-	for name,module in self.core:IterateModules() do
-		self:BigWigs_RegisterForTargetting(module.zonename, module.enabletrigger)
+	for name, module in self.core:IterateModules() do
+		if module.zonename and module.enabletrigger then
+			self:BigWigs_RegisterForTargetting(module.zonename, module.enabletrigger)
+		end
 	end
 	self:RegisterEvent("BigWigs_RegisterForTargetting")
 end
@@ -28,9 +30,10 @@ function plugin:OnEnable()
 	monitoring = nil
 
 	self:RegisterEvent("BigWigs_RegisterForTargetting")
-	self:RegisterEvent("BigWigs_ModulePackLoaded", "ZONE_CHANGED_NEW_AREA")
-	self:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-	self:ZONE_CHANGED_NEW_AREA()
+	self:RegisterEvent("BigWigs_ModulePackLoaded", "ZoneChanged")
+	self:RegisterEvent("ZONE_CHANGED", "ZoneChanged")
+	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChanged")
+	self:ZoneChanged()
 end
 
 ------------------------------
@@ -49,11 +52,13 @@ function plugin:BigWigs_RegisterForTargetting(zone, mob)
 	end
 end
 
-function plugin:ZONE_CHANGED_NEW_AREA()
-	if not monitoring and (enablezones[GetRealZoneText()] or enablezones[GetSubZoneText()] or enablezones[GetZoneText()]) then
-		monitoring = true
-		self:RegisterEvent("PLAYER_TARGET_CHANGED")
-		self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+function plugin:ZoneChanged()
+	if enablezones[GetRealZoneText()] or enablezones[GetSubZoneText()] or enablezones[GetZoneText()] then
+		if not monitoring then
+			monitoring = true
+			self:RegisterEvent("PLAYER_TARGET_CHANGED")
+			self:RegisterEvent("UPDATE_MOUSEOVER_UNIT")
+		end
 	elseif monitoring then
 		monitoring = nil
 		self:UnregisterEvent("PLAYER_TARGET_CHANGED")
