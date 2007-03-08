@@ -72,6 +72,9 @@ L:RegisterTranslations("frFR", function() return {
 	cavein_name = "Alerte Eboulement sur vous",
 	cavein_desc = "Pr\195\169viens quand vous \195\170tes sous un \195\169boulement.",
 
+	silence_name = "Silence",
+	silence_desc = "Pr\195\169viens quand Gruul lance sont Silence de zone(R\195\169verb\195\169ration)",
+
 	engage_trigger = "Venez\226\128\166 mourir.",
 	engage_message = "%s Engag\195\169 !",
 
@@ -87,6 +90,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	shatter_trigger = "%s rugit\194\160!",
 	shatter_message = "Fracasser !",
+	
+	silence_trigger = "les effets .* R?verb?ration.",
+	silence_message = "Silence de zone",
+	silence_warning = "Silence de zone imminent!",
 
 	cavein_trigger = "Vous subissez les effets de Eboulement.",
 	cavein_message = "Eboulement !",
