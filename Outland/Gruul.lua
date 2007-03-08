@@ -208,8 +208,8 @@ function mod:CHAT_MSG_MONSTER_SAY(msg)
 		self:DelayedMessage(35, L["grasp_warning"], "Urgent")
 		self:Bar(L["grasp_warning"], 40, "Ability_ThunderClap")
 
-		self:DelayedMessage(95, L["reverb_warning"], "Urgent")
-		self:Bar(L["reverb_message"], 100, "Spell_Holy_ImprovedResistanceAuras")		
+		self:DelayedMessage(95, L["silence_warning"], "Urgent")
+		self:Bar(L["silence_message"], 100, "Spell_Holy_ImprovedResistanceAuras")		
 	end
 end
 
@@ -235,7 +235,7 @@ function mod:Event(msg)
 		grasp = true
 	elseif self.db.profile.cavein and msg == L["cavein_trigger"] then
 		self:Message(L["cavein_message"], "Personal", true, "Alarm")
-	elseif not silence and self.db.profile.silence and msg:find(L["reverb_trigger"]) then
+	elseif not silence and self.db.profile.silence and msg:find(L["silence_trigger"]) then
 		self:Message(L["silence_message"], "Attention")
 		self:DelayedMessage(40, L["silence_warning"], "Urgent")
 		self:Bar(L["silence_message"], 45, "Spell_Holy_ImprovedResistanceAuras")
@@ -248,7 +248,7 @@ function mod:BigWigs_Message(text)
 		slam = nil
 		grasp = nil
 	end
-	if text == L["reverb_warning"] then
+	if text == L["silence_warning"] then
 		silence = nil
 	end
 end
