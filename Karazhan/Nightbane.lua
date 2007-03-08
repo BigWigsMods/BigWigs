@@ -5,6 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Nightbane"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local blast
+local bones
 
 ----------------------------
 --      Localization     --
@@ -33,8 +34,17 @@ L:RegisterTranslations("enUS", function() return {
 	blast_name = "Smoking Blast",
 	blast_desc = "Warn for Smoking Blast being cast",
 
+	bones_cmd = "bones",
+	bones_name = "Raid of Bones",
+	bones_desc = "Warn who Rain of Bones is on",
+
+	icon_cmd = "icon",
+	icon_name = "Raid Icon",
+	icon_desc = "Place a raid icon on the person afflicted by Rain of Bones(requires promoted or higher)",
+
 	fear_trigger = "cast Bellowing Roar",
 	fear_message = "Fear in 2 sec!",
+	fear_warning = "Fear Soon",
 	fear_bar = "Fear",
 
 	charr_trigger = "You are afflicted by Charred Earth.",
@@ -51,6 +61,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	engage_trigger = "What fools! I shall bring a quick end to your suffering!",
 	engage_message = "%s Engaged",
+
+	bones_trigger = "^([^%s]+) ([^%s]+) afflicted by Rain of Bones",
+	bones_message = "Rain of Bones on [%s]",
+
+	you = "You",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -69,8 +84,17 @@ L:RegisterTranslations("koKR", function() return {
 	blast_name = "불타는 돌풍",
 	blast_desc = "불타는 돌풍 시전에 대한 경고",
 
+	--bones_cmd = "bones",
+	--bones_name = "Raid of Bones",
+	--bones_desc = "Warn who Rain of Bones is on",
+
+	--icon_cmd = "icon",
+	--icon_name = "Raid Icon",
+	--icon_desc = "Place a raid icon on the person afflicted by Rain of Bones(requires promoted or higher)",
+
 	fear_trigger = "우레와 같은 울부짖음 시전을 시작합니다.",
 	fear_message = "2초 후 공포!",
+	--fear_warning = "Fear Soon",
 	fear_bar = "공포",
 
 	charr_trigger = "당신은 불타버린 대지에 걸렸습니다.",
@@ -87,6 +111,11 @@ L:RegisterTranslations("koKR", function() return {
 
 	engage_trigger = "정말 멍청하군! 고통 없이 빨리 끝내주마!",
 	engage_message = "%s 전투 개시",
+
+	--bones_trigger = "^([^%s]+) ([^%s]+) afflicted by Rain of Bones",
+	--bones_message = "Rain of Bones on [%s]",
+
+	--you = "You",
 } end )
 
 ----------------------------------
@@ -96,7 +125,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"engage", "phase", "fear", "blast", "charr", "bosskill"}
+mod.toggleoptions = {"engage", "phase", "fear", "charr", -1, "blast", "bones", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -108,11 +137,17 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "BonesEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "BonesEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "BonesEvent")
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "NightbaneFear", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "Bones", 5)
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	blast = nil
+	bones = nil
 	self:RegisterEvent("BigWigs_Message")
 end
 
@@ -124,8 +159,15 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "NightbaneFear" and self.db.profile.fear then
 		self:Bar(L["fear_bar"], 2, "Spell_Shadow_PsychicScream")
 		self:Message(L["fear_message"], "Positive")
+		self:Bar(L["fear_warning"], 40, "Spell_Shadow_PsychicScream")
+		self:DelayedMessage(38, L["fear_warning"], "Positive")
 	elseif sync == "NightbaneBlast" and self.db.profile.blast then
 		self:Message(L["blast_message"], "Urgent", nil, "Alert")
+	elseif sync == "Bones" and rest and self.db.profile.bones then
+		self:Message(L["bones_message"]:format(rest), "Attention")
+		if self.db.profile.icon then
+			self:Icon(rest)
+		end
 	end
 end
 
@@ -154,8 +196,24 @@ function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 	end
 end
 
+function mod:BonesEvent(msg)
+	if not bones then
+		local bplayer, btype = select(3, msg:find(L["bones_trigger"]))
+		if bplayer then
+			if bplayer == L["you"] then
+				bplayer = UnitName("player")
+			end
+			self:Sync("Bones "..bplayer)
+			bones = true
+		end
+	end
+end
+
 function mod:BigWigs_Message(text)
 	if text == L["landphase_message"] then
 		blast = nil
+	end
+	if text == L["airphase_message"] then
+		bones = nil
 	end
 end
