@@ -474,7 +474,7 @@ function BigWigs:RegisterModule(name, module)
 						name = l[v.."_name"],
 						desc = l[v.."_desc"],
 						get = function() return module.db.profile[v] end,
-						set = function(v) module.db.profile[v] = v end,
+						set = function(flag) module.db.profile[v] = flag end,
 					}
 					if l:HasTranslation(v.."_validate") then
 						cons.args[l[v.."_cmd"]].type = "text"
