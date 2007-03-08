@@ -80,7 +80,7 @@ L:RegisterTranslations("koKR", function() return {
 	curse_message = "저주 걸린 전사 - %s",
 
 	phase1_message = "1 단계 - %s",
-	--phase2_trigger = "",
+	phase2_trigger = "%s|1이;가; 주인을 부릅니다!",
 	phase2_message = "2 단계 - %s & 어튜멘",
 	phase3_trigger = "이랴! 이 오합지졸을 데리고 실컷 놀아보자!",
 	phase3_message = "3 단계 - %s",
