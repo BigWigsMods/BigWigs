@@ -90,8 +90,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	shatter_trigger = "%s rugit\194\160!",
 	shatter_message = "Fracasser !",
-	
-	silence_trigger = "les effets .* R?verb?ration.",
+
+	silence_trigger = "les effets .* R\195\169verb\195\169ration.",
 	silence_message = "Silence de zone",
 	silence_warning = "Silence de zone imminent!",
 
