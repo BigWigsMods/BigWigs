@@ -84,17 +84,15 @@ L:RegisterTranslations("koKR", function() return {
 	blast_name = "불타는 돌풍",
 	blast_desc = "불타는 돌풍 시전에 대한 경고",
 
-	--bones_cmd = "bones",
-	--bones_name = "Raid of Bones",
-	--bones_desc = "Warn who Rain of Bones is on",
+	bones_name = "뼈의 비",
+	bones_desc = "뼈의 비에 걸린 사람 경고",
 
-	--icon_cmd = "icon",
-	--icon_name = "Raid Icon",
-	--icon_desc = "Place a raid icon on the person afflicted by Rain of Bones(requires promoted or higher)",
+	icon_name = "공격대 아이콘",
+	icon_desc = "뼈의 비에 걸린 사람에게 공격대 아이콘 지정(승급자 이상 권한 요구)",
 
 	fear_trigger = "우레와 같은 울부짖음 시전을 시작합니다.",
 	fear_message = "2초 후 공포!",
-	--fear_warning = "Fear Soon",
+	fear_warning = "잠시 후 공포",
 	fear_bar = "공포",
 
 	charr_trigger = "당신은 불타버린 대지에 걸렸습니다.",
@@ -112,10 +110,10 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "정말 멍청하군! 고통 없이 빨리 끝내주마!",
 	engage_message = "%s 전투 개시",
 
-	--bones_trigger = "^([^%s]+) ([^%s]+) afflicted by Rain of Bones",
-	--bones_message = "Rain of Bones on [%s]",
+	bones_trigger = "^([^|;%s]*)(.*)뼈의 비에 걸렸습니다%.$",
+	bones_message = "[%s] 뼈의 비",
 
-	--you = "You",
+	you = "당신은",
 } end )
 
 ----------------------------------

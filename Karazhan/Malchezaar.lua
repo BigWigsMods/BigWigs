@@ -110,7 +110,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase2_message = "60% - 2 단계",
 	phase3_message = "30% - 3 단계",
 
-	enfeeble_trigger = "쇠약에 걸렸습니다.%.$",
+	enfeeble_trigger = "쇠약에 걸렸습니다%.$",
 	enfeeble_message = "쇠약! 다음은 약 30초 후",
 	enfeeble_warning = "약 5초 후 쇠약!",
 	enfeeble_bar = "쇠약",
