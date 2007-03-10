@@ -42,6 +42,10 @@ L:RegisterTranslations("enUS", function() return {
 	icon_name = "Raid Icon",
 	icon_desc = "Place a raid icon on the person afflicted by Rain of Bones(requires promoted or higher)",
 
+	whisper_cmd = "whisper",
+	whisper_name = "Whisper Player",
+	whisper_desc = "Whisper the person afflicted by Rain of Bones(requires promoted or higher)",
+
 	fear_trigger = "cast Bellowing Roar",
 	fear_message = "Fear in 2 sec!",
 	fear_warning = "Fear Soon",
@@ -64,6 +68,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	bones_trigger = "^([^%s]+) ([^%s]+) afflicted by Rain of Bones",
 	bones_message = "Rain of Bones on [%s]",
+	bones_whisper = "Rain of Bones on you!",
 
 	you = "You",
 } end )
@@ -90,6 +95,9 @@ L:RegisterTranslations("koKR", function() return {
 	icon_name = "공격대 아이콘",
 	icon_desc = "뼈의 비에 걸린 사람에게 공격대 아이콘 지정(승급자 이상 권한 요구)",
 
+	--whisper_name = "Whisper Player",
+	--whisper_desc = "Whisper the person afflicted by Rain of Bones(requires promoted or higher)",
+
 	fear_trigger = "우레와 같은 울부짖음 시전을 시작합니다.",
 	fear_message = "2초 후 공포!",
 	fear_warning = "잠시 후 공포",
@@ -112,6 +120,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	bones_trigger = "^([^|;%s]*)(.*)뼈의 비에 걸렸습니다%.$",
 	bones_message = "[%s] 뼈의 비",
+	--bones_whisper = "Rain of Bones on you!",
 
 	you = "당신은",
 } end )
@@ -123,7 +132,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"engage", "phase", "fear", "charr", -1, "blast", "bones", "icon", "bosskill"}
+mod.toggleoptions = {"engage", "phase", "fear", "blast", "charr", -1, "bones", "icon", "whisper", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -146,7 +155,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	blast = nil
 	bones = nil
-	self:RegisterEvent("BigWigs_Message")
 end
 
 ------------------------------
@@ -166,6 +174,9 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
+		if self.db.profile.whisper then
+			self:Whisper(rest, L["bones_whisper"])
+		end
 	end
 end
 
@@ -183,8 +194,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["engage_message"]:format(boss), "Positive")
 	elseif self.db.profile.phase and msg == L["airphase_trigger"] then
 		self:Message(L["airphase_message"], "Attention", nil, "Info")
+		bones = nil
 	elseif self.db.profile.phase and (msg == L["landphase_trigger1"] or msg == L["landphase_trigger2"]) then
 		self:Message(L["landphase_message"], "Important", nil, "Long")
+		blast = nil
 	end
 end
 
@@ -204,14 +217,5 @@ function mod:BonesEvent(msg)
 			self:Sync("Bones "..bplayer)
 			bones = true
 		end
-	end
-end
-
-function mod:BigWigs_Message(text)
-	if text == L["landphase_message"] then
-		blast = nil
-	end
-	if text == L["airphase_message"] then
-		bones = nil
 	end
 end
