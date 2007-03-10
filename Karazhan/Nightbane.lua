@@ -153,6 +153,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "Bones", 5)
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	blast = nil
 	bones = nil
 end
