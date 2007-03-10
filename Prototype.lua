@@ -137,6 +137,7 @@ function BigWigs.modulePrototype:CheckForWipe()
 			end
 		end
 		self.scanTable = nil
+		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		self:TriggerEvent("BigWigs_RebootModule", self)
 	elseif not running then
 		self:ScheduleRepeatingEvent(self:ToString().."_CheckWipe", self.CheckForWipe, 2, self)
