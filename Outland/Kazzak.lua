@@ -29,8 +29,8 @@ L:RegisterTranslations("frFR", function() return {
 	enrage_name = "Alerte Enrager",
 	enrage_desc = "D\195\169lais entre p\195\169riode enrag\195\169.",
 
-	enrage_trigger1 = "Pour la L\195\169gion ! Pour Kil'Jaeden !",
-	enrage_trigger2 = "%s devient fou furieux !",
+	enrage_trigger1 = "Pour la L\195\169gion\194\160! Pour Kil'Jaeden\194\160!",
+	enrage_trigger2 = "%s devient fou furieux\194\160!",
 	enrage_warning1 = "%s Engag\195\169 - Enrag\195\169 dans 1min",
 	enrage_warning2 = "Enrag\195\169 dans 5 sec",
 	enrage_message = "Enrag\195\169 pendant 10sec!",
