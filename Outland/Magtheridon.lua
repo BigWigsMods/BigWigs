@@ -66,6 +66,55 @@ L:RegisterTranslations("enUS", function() return {
 	["Hellfire Channeler"] = true,
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	escape_name = "Ausbruch",
+	escape_desc = ("Countdown bis %s ausbricht"):format(boss),
+
+	abyssal_name = "Brennender Schlund",
+	abyssal_desc = "Warnt, wenn ein Brennender Schlund gespawned wird",
+
+	heal_name = "Heilung",
+	heal_desc = "Warnt, wenn ein Kanalisierer anf\195\164ngt zu heilen",
+
+	nova_name = "Blast Nova", -- to translate
+	nova_desc = "Estimated Blast Nova timers", -- to translate
+
+	banish_name = "Verbannung",
+	banish_desc = ("Warnt, wenn ihr %s verbannt"):format(boss),
+
+	exhaust_name = "Ersch?pfung Anzeige",
+	exhaust_desc = "Timer f\195\188r Gedankenersch\195\182pfung",
+
+	escape_trigger1 = "Die Fesseln von %%s werden schw\195\164cher!",
+	escape_trigger2 = "Ich... bin... frei!",
+	escape_warning1 = "%s angegriffen - Ausbruch in 2min!",
+	escape_warning2 = "Ausbruch in 1min!",
+	escape_warning3 = "Ausbruch in 30sec!",
+	escape_warning4 = "Ausbruch in 10sec!",
+	escape_warning5 = "Ausbruch in 3sec!",
+	escape_bar = "Frei...",
+	escape_message = "%s frei!",
+
+	abyssal_trigger = "Kanalisierer des H\195\182llenfeuers wirkt Brennender Schlund",
+	abyssal_message = "Brennender Schlund gespawned",
+
+	heal_trigger = "beginnt Dunkle Besserung zu wirken",
+	heal_message = "Heilung!",
+
+	nova = "Blast Nova!", -- to translate
+	nova_warning = "Blast Nova Soon", -- to translate
+
+	banish_trigger = "Not again! Not again...", -- to translate
+	banish_message = "Verbannt f\195\188r ~10sec",
+	banish_bar = "Verbannt",
+
+	exhaust_trigger = "^([^%s]+) ([^%s]+) von Gedankenersch\195\182pfung betroffen", -- to verify
+	exhaust_bar = "[%s] ersch\195\182pft",
+
+	you = "Ihr",
+	["Hellfire Channeler"] = "Kanalisierer des H\195\182llenfeuers",
+} end)
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------
