@@ -13,6 +13,13 @@ local started = nil
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Terestian",
+	
+	engage_cmd = "engage",
+	engage_name = "Engage",
+	engage_desc = ("Alert when %s is engaged"):format(boss),
+	
+	engage_trigger = "Ah, you're just in time. The rituals are about to begin!",
+	engage_message = ("%s Engaged!"):format(boss),
 
 	sacrifice_name = "Sacrifice",
 	sacrifice_desc = "Warn for Sacrifice of players",
@@ -102,7 +109,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"sacrifice", "weak", "enrage", "bosskill"}
+mod.toggleoptions = {"engage", "sacrifice", "weak", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -111,6 +118,8 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	started = nil
+
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
@@ -128,6 +137,12 @@ end
 ------------------------------
 --     Event Handlers    --
 ------------------------------
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if self.db.profile.engage and msg == L["engage_trigger"] then
+		self:Message(L["engage_message"], "Attention")
+	end
+end
 
 function mod:CheckSacrifice(msg)
 	if not self.db.profile.sacrifice then return end
