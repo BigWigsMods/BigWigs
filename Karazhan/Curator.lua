@@ -15,7 +15,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	berserk_cmd = "berserk",
 	berserk_name = "Berserk",
-	berserk_desc = "Warn for berserk after 12min.",
+	berserk_desc = "Warn for berserk after 10min.",
 
 	enrage_cmd = "enrage",
 	enrage_name = "Enrage",
@@ -41,7 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 	weaktime_bar = "Next Evocation",
 
 	berserk_trigger = "The Menagerie is for guests only.",
-	berserk_message = "%s engaged, 12min to berserk!",
+	berserk_message = "%s engaged, 10min to berserk!",
 	berserk_bar = "Berserk",
 
 	enrage_trigger = "Failure to comply will result in offensive action.",
@@ -51,7 +51,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	berserk_name = "Alerte Berserk",
-	berserk_desc = "Pr\195\169viens du mode berserk apr\195\168s 12 minutes.",
+	berserk_desc = "Pr\195\169viens du mode berserk apr\195\168s 10 minutes.",
 
 	enrage_name = "Alerte Enrag\195\169",
 	enrage_desc = "Pr\195\169viens du mode enrag\195\169 \195\160 15%.",
@@ -74,7 +74,7 @@ L:RegisterTranslations("frFR", function() return {
 	weaktime_bar = "Prochaine Evocation",
 
 	berserk_trigger = "L'acc\195\168s \195\160 la M\195\169nagerie est r\195\169serv\195\169 aux invit\195\169s.",
-	berserk_message = "%s engag\195\169, 12min avant berserk !",
+	berserk_message = "%s engag\195\169, 10min avant berserk !",
 	berserk_bar = "Berserk",
 
 	enrage_trigger = "Toute d\195\169sob\195\169issance entra\195\174nera une action offensive",
@@ -84,7 +84,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	berserk_name = "Berserker",
-	berserk_desc = "Warnung f\195\188r Berserker nach 12min.",
+	berserk_desc = "Warnung f\195\188r Berserker nach 10min.",
 
 	enrage_name = "Rage",
 	enrage_desc = "Warnung f\195\188r Rage bei 15%.",
@@ -107,7 +107,7 @@ L:RegisterTranslations("deDE", function() return {
 	weaktime_bar = "N\195\164chste Hervorrufung",
 
 	berserk_trigger = "Die Menagerie ist nur f\195\188r G\195\164ste.",
-	berserk_message = "%s aktiviert, 12min bis Berserker!",
+	berserk_message = "%s aktiviert, 10min bis Berserker!",
 	berserk_bar = "Berserker",
 
 	enrage_trigger = "Die Nichteinhaltung wird zur Angriffshandlungen f\195\188hren.",
@@ -117,7 +117,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	berserk_name = "광폭화",
-	berserk_desc = "12분 후 광폭화 알림",
+	berserk_desc = "10분 후 광폭화 알림",
 
 	enrage_name = "격노",
 	enrage_desc = "체력 15% 시 격노 알림",
@@ -140,7 +140,7 @@ L:RegisterTranslations("koKR", function() return {
 	weaktime_bar = "다음 환기",
 
 	berserk_trigger = "박물관에는 초대받은 손님만 입장하실 수 있습니다.",
-	berserk_message = "%s 전투 개시, 12분 후 광폭화!",
+	berserk_message = "%s 전투 개시, 10분 후 광폭화!",
 	berserk_bar = "광폭화",
 
 	enrage_trigger = "규칙 위반으로 경보가 발동됐습니다.",
@@ -204,7 +204,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["berserk_trigger"] then -- This only happens at the start of the fight
 		if self.db.profile.berserk then
 			self:Message(L["berserk_message"]:format(boss), "Attention")
-			self:Bar(L["berserk_bar"], 720, "INV_Shield_01")
+			self:Bar(L["berserk_bar"], 600, "INV_Shield_01")
 		end
 		if self.db.profile.weaktime then
 			self:Bar(L["weaktime_bar"], 109, "Spell_Nature_Purge")
