@@ -33,7 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Debugging"] = true,
 	["Show debug messages."] = true,
 	["Options"] = true,
-	bosskill_cmd = "kill",
+	bosskill_cmd = "bosskill",
 	bosskill_name = "Boss death",
 	bosskill_desc = "Announce when the boss has been defeated.",
 
@@ -206,8 +206,6 @@ L:RegisterTranslations("zhCN", function() return {
 	["Reboot this module."] = "重启此模块",
 	["Debugging"] = "除错",
 	["Show debug messages."] = "显示除错信息。",
-	bosskill_name = "首领死亡",
-	bosskill_desc = "首领死亡时提示",
 
 	["Load"] = "载入",
 	["Load All"] = "载入所有",
@@ -423,37 +421,43 @@ function BigWigs:RegisterModule(name, module)
 			cons = {
 				type = "group",
 				name = name,
-				desc = string.format(L["Options for %s (r%d)."], name, module.revision),
+				desc = L["Options for %s (r%d)."]:format(name, module.revision),
+				pass = true,
+				get = function(key)
+					if key == "active" then
+						return self:IsModuleActive(module)
+					else
+						return module.db.profile[key]
+					end
+				end,
+				set = function(key, value)
+					if key == "active" then
+						self:ToggleModuleActive(module)
+					else
+						module.db.profile[key] = value
+					end
+				end,
+				func = function()
+					-- Only used by reboot.
+					self:TriggerEvent("BigWigs_RebootModule", module)
+				end,
 				args = {
-					[L["Active"]] = {
+					["active"] = {
 						type = "toggle",
 						name = L["Active"],
 						order = 1,
 						desc = L["Activate or deactivate this module."],
-						get = function() return self:IsModuleActive(module) end,
-						set = function() self:ToggleModuleActive(module) end,
 					},
-					[L["Reboot"]] = {
+					["reboot"] = {
 						type = "execute",
 						name = L["Reboot"],
 						order = 2,
 						desc = L["Reboot this module."],
-						func = function() self:TriggerEvent("BigWigs_RebootModule", module) end,
 						disabled = function() return not self:IsModuleActive(module) end,
-					},
-					[L["Debugging"]] = {
-						type = "toggle",
-						name = L["Debugging"],
-						desc = L["Show debug messages."],
-						handler = module,
-						order = 3,
-						get = "IsDebugging",
-						set = "SetDebugging",
-						hidden = function() return not self:IsDebugging() end,
 					},
 					["headerSpacer"] = {
 						type = "header",
-						order = 4,
+						order = 50,
 						name = " ",
 					},
 				},
@@ -473,8 +477,6 @@ function BigWigs:RegisterModule(name, module)
 						order = v == "bosskill" and -1 or x,
 						name = l[v.."_name"],
 						desc = l[v.."_desc"],
-						get = function() return module.db.profile[v] end,
-						set = function(flag) module.db.profile[v] = flag end,
 					}
 					if l:HasTranslation(v.."_validate") then
 						cons.args[l[v.."_cmd"]].type = "text"
