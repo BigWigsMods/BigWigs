@@ -82,7 +82,7 @@ L:RegisterTranslations("deDE", function() return {
 	banish_name = "Verbannung",
 	banish_desc = ("Warnt, wenn ihr %s verbannt"):format(boss),
 
-	exhaust_name = "Ersch?pfung Anzeige",
+	exhaust_name = "Ersch\195\182pfung",
 	exhaust_desc = "Timer f\195\188r Gedankenersch\195\182pfung",
 
 	escape_trigger1 = "Die Fesseln von %%s werden schw\195\164cher!",
