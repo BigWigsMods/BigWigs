@@ -6,28 +6,32 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsBossBlock")
 
 L:RegisterTranslations("enUS", function() return {
 	["BossBlock"] = true,
-	["Suppress bossmod chat from other players."] = true,
+	desc = "Automatically suppress boss warnings and emotes from players and other sources.",
 
-	["Suppress Raid Chat"] = true,
-	["Suppress messages in the raid channel."] = true,
+	["Boss emotes"] = true,
+	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = true,
 
-	["Suppress RaidWarn Chat"] = true,
-	["Suppress RaidWarn messages in the chat frames."] = true,
+	["Raid chat"] = true,
+	["Suppress messages sent to raid chat."] = true,
 
-	["Suppress RaidWarn"] = true,
-	["Suppress RaidWarn popup messages."] = true,
+	["Raid warning chat messages"] = true,
+	["Suppress raid warning messages from the chat window."] = true,
 
-	["Suppress RaidSay"] = true,
+	["Raid warning messages"] = true,
+	["Suppress raid warning messages from the raid message window."] = true,
+
+	["Raid say"] = true,
 	["Suppress CTRA RaidSay popup messages."] = true,
 	["Suppress oRA RaidSay popup messages."] = true,
 	["Suppress oRA2 RaidSay popup messages."] = true,
 
-	["Suppress Tells"] = true,
-	["Suppress Tell messages."] = true,
+	["Whispers"] = true,
+	["Suppress whispered messages."] = true,
 
 	["Suppressing Chatframe"] = true,
 	["Suppressing RaidWarningFrame"] = true,
 	["Suppressing CT_RAMessageFrame"] = true,
+	["Suppressing RaidBossEmoteFrame"] = true,
 
 	["Suppressed"] = true,
 	["Shown"] = true,
@@ -35,24 +39,24 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["BossBlock"] = "보스차단",
-	["Suppress bossmod chat from other players."] = "타인의 보스모드 대화 차단.",
+	desc = "타인의 보스모드 대화 차단.",
 
-	["Suppress Raid Chat"] = "공격대 대화 차단",
-	["Suppress messages in the raid channel."] = "공격대 채널에 메세지 차단.",
+	["Raid chat"] = "공격대 대화 차단",
+	["Suppress messages sent to raid chat."] = "공격대 채널에 메세지 차단.",
 
-	["Suppress RaidWarn Chat"] = "공격대경고 대화 차단",
-	["Suppress RaidWarn messages in the chat frames."] = "대화창에 공격대경고 메세지 차단",
+	["Raid warning chat messages"] = "공격대경고 대화 차단",
+	["Suppress raid warning messages from the chat window."] = "대화창에 공격대경고 메세지 차단",
 
-	["Suppress RaidWarn"] = "공격대경고 차단",
-	["Suppress RaidWarn popup messages."] = "공격대경고 알림 메세지 차단",
+	["Raid warning messages"] = "공격대경고 차단",
+	["Suppress raid warning messages from the raid message window."] = "공격대경고 알림 메세지 차단",
 
-	["Suppress RaidSay"] = "RaidSay 차단",
+	["Raid say"] = "RaidSay 차단",
 	["Suppress CTRA RaidSay popup messages."] = "CTRA RaidSay 알림 메세지 차단",
 	["Suppress oRA RaidSay popup messages."] = "oRA RaidSay 알림 메세지 차단",
 	["Suppress oRA2 RaidSay popup messages."] = "oRA2 RaidSay 알림 메세지 차단",
 
-	["Suppress Tells"] = "일반대화 차단",
-	["Suppress Tell messages."] = "일반대화 메세지 차단",
+	["Whispers"] = "일반대화 차단",
+	["Suppress whispered messages."] = "일반대화 메세지 차단",
 
 	["Suppressing Chatframe"] = "대화창 차단됨",
 	["Suppressing RaidWarningFrame"] = "공격대경고창 차단됨",
@@ -64,22 +68,22 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["BossBlock"] = "信息阻挡",
-	["Suppress bossmod chat from other players."] = "阻挡其他玩家的首领插件发送的信息。",
+	desc = "阻挡其他玩家的首领插件发送的信息。",
 
-	["Suppress Raid Chat"] = "阻挡团队频道",
-	["Suppress messages in the raid channel."] = "阻挡团队频道中的信息",
+	["Raid chat"] = "阻挡团队频道",
+	["Suppress messages sent to raid chat."] = "阻挡团队频道中的信息",
 
-	["Suppress RaidWarn Chat"] = "阻挡团队警告聊天",
-	["Suppress RaidWarn messages in the chat frames."] = "阻挡聊天窗体中的团队警告信息",
+	["Raid warning chat messages"] = "阻挡团队警告聊天",
+	["Suppress raid warning messages from the chat window."] = "阻挡聊天窗体中的团队警告信息",
 
-	["Suppress RaidWarn"] = "阻挡团队警告",
-	["Suppress RaidWarn popup messages."] = "阻挡团队警告中的信息",
+	["Raid warning messages"] = "阻挡团队警告",
+	["Suppress raid warning messages from the raid message window."] = "阻挡团队警告中的信息",
 
-	["Suppress RaidSay"] = "阻挡RS",
+	["Raid say"] = "阻挡RS",
 	["Suppress CTRA RaidSay popup messages."] = "阻挡团队助手(CTRA)的RS信息",
 
-	["Suppress Tells"] = "阻挡密语",
-	["Suppress Tell messages."] = "阻挡密语中的信息",
+	["Whispers"] = "阻挡密语",
+	["Suppress whispered messages."] = "阻挡密语中的信息",
 
 	["Suppressing Chatframe"] = "正在阻挡Chatframe",
 	["Suppressing RaidWarningFrame"] = "正在阻挡RaidWarningFrame",
@@ -91,22 +95,22 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["BossBlock"] = "訊息阻擋",
-	["Suppress bossmod chat from other players."] = "阻擋其他玩家的首領插件發送的訊息。",
+	desc = "阻擋其他玩家的首領插件發送的訊息。",
 
-	["Suppress Raid Chat"] = "阻擋團隊頻道",
-	["Suppress messages in the raid channel."] = "阻擋團隊頻道中的訊息",
+	["Raid chat"] = "阻擋團隊頻道",
+	["Suppress messages sent to raid chat."] = "阻擋團隊頻道中的訊息",
 
-	["Suppress RaidWarn Chat"] = "阻擋團隊警告聊天",
-	["Suppress RaidWarn messages in the chat frames."] = "阻擋聊天窗體中的團隊警告訊息",
+	["Raid warning chat messages"] = "阻擋團隊警告聊天",
+	["Suppress raid warning messages from the chat window."] = "阻擋聊天窗體中的團隊警告訊息",
 
-	["Suppress RaidWarn"] = "阻擋團隊警告",
-	["Suppress RaidWarn popup messages."] = "阻擋團隊警告中的訊息",
+	["Raid warning messages"] = "阻擋團隊警告",
+	["Suppress raid warning messages from the raid message window."] = "阻擋團隊警告中的訊息",
 
-	["Suppress RaidSay"] = "阻擋RS",
+	["Raid say"] = "阻擋RS",
 	["Suppress CTRA RaidSay popup messages."] = "阻擋團隊助手(CTRA)的RS訊息",
 
-	["Suppress Tells"] = "阻擋密語",
-	["Suppress Tell messages."] = "阻擋密語中的訊息",
+	["Whispers"] = "阻擋密語",
+	["Suppress whispered messages."] = "阻擋密語中的訊息",
 
 	["Suppressing Chatframe"] = "正在阻擋Chatframe",
 	["Suppressing RaidWarningFrame"] = "正在阻擋RaidWarningFrame",
@@ -118,24 +122,24 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["BossBlock"] = "BossBlock",
-	["Suppress bossmod chat from other players."] = "Bossmod Chat von anderen Spielern unterdr\195\188cken.",
+	desc = "Bossmod Chat von anderen Spielern unterdr\195\188cken.",
 
-	["Suppress Raid Chat"] = "Raid Chat unterdr\195\188cken",
-	["Suppress messages in the raid channel."] = "Nachrichten im Raid Channel unterdr\195\188cken",
+	["Raid chat"] = "Raid Chat unterdr\195\188cken",
+	["Suppress messages sent to raid chat."] = "Nachrichten im Raid Channel unterdr\195\188cken",
 
-	["Suppress RaidWarn Chat"] = "RaidWarn Chat unterdr\195\188cken",
-	["Suppress RaidWarn messages in the chat frames."] = "RaidWarn Nachrichten im Chat Fenster unterdr\195\188cken.",
+	["Raid warning chat messages"] = "RaidWarn Chat unterdr\195\188cken",
+	["Suppress raid warning messages from the chat window."] = "RaidWarn Nachrichten im Chat Fenster unterdr\195\188cken.",
 
-	["Suppress RaidWarn"] = "RaidWarn unterdr\195\188cken",
-	["Suppress RaidWarn popup messages."] = "RaidWarn Popup-Nachrichten unterdr\195\188cken.",
+	["Raid warning messages"] = "RaidWarn unterdr\195\188cken",
+	["Suppress raid warning messages from the raid message window."] = "RaidWarn Popup-Nachrichten unterdr\195\188cken.",
 
-	["Suppress RaidSay"] = "RaidSay unterdr\195\188cken",
+	["Raid say"] = "RaidSay unterdr\195\188cken",
 	["Suppress CTRA RaidSay popup messages."] = "CTRA RaidSay Popup Nachrichten unterdr\195\188cken.",
 	["Suppress oRA RaidSay popup messages."] = "oRA RaidSay Popup Nachrichten unterdr\195\188cken.",
 	["Suppress oRA2 RaidSay popup messages."] = "oRA2 RaidSay Popup Nachrichten unterdr\195\188cken.",
 
-	["Suppress Tells"] = "Fl\195\188stern unterdr\195\188cken",
-	["Suppress Tell messages."] = "Fl\195\188stern Nachrichten unterdr\195\188cken.",
+	["Whispers"] = "Fl\195\188stern unterdr\195\188cken",
+	["Suppress whispered messages."] = "Fl\195\188stern Nachrichten unterdr\195\188cken.",
 
 	["Suppressing Chatframe"] = "Chatframe unterdr\195\188ckt",
 	["Suppressing RaidWarningFrame"] = "RaidWarningFrame unterdr\195\188cket",
@@ -147,24 +151,24 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	--["BossBlock"] = true,
-	["Suppress bossmod chat from other players."] = "Supprime les messages des BossMods des autres joueurs.",
+	desc = "Supprime les messages des BossMods des autres joueurs.",
 
-	["Suppress Raid Chat"] = "Supprimer les messages du canal Raid",
-	["Suppress messages in the raid channel."] = "Supprime les messages du canal Raid.",
+	["Raid chat"] = "Supprimer les messages du canal Raid",
+	["Suppress messages sent to raid chat."] = "Supprime les messages du canal Raid.",
 
-	["Suppress RaidWarn Chat"] = "Supprimer les Avertissements Raid du chat",
-	["Suppress RaidWarn messages in the chat frames."] = "Supprime les messages de l'Avertissement Raid de la fen\195\170tre de discussion.",
+	["Raid warning chat messages"] = "Supprimer les Avertissements Raid du chat",
+	["Suppress raid warning messages from the chat window."] = "Supprime les messages de l'Avertissement Raid de la fen\195\170tre de discussion.",
 
-	["Suppress RaidWarn"] = "Supprimer les Avertissements Raid",
-	["Suppress RaidWarn popup messages."] = "Supprime les messages \195\160 l'\195\169cran de l'Avertissement Raid.",
+	["Raid warning messages"] = "Supprimer les Avertissements Raid",
+	["Suppress raid warning messages from the raid message window."] = "Supprime les messages \195\160 l'\195\169cran de l'Avertissement Raid.",
 
-	["Suppress RaidSay"] = "Supprimer les RaidSay",
+	["Raid say"] = "Supprimer les RaidSay",
 	["Suppress CTRA RaidSay popup messages."] = "Supprime les messages \195\160 l'\195\169cran du RaidSay de CTRA.",
 	["Suppress oRA RaidSay popup messages."] = "Supprime les messages \195\160 l'\195\169cran du RaidSay de oRA.",
 	["Suppress oRA2 RaidSay popup messages."] = "Supprime les messages \195\160 l'\195\169cran du RaidSay de oRA2.",
 
-	["Suppress Tells"] = "Supprimer les chuchotements",
-	["Suppress Tell messages."] = "Supprime les messages chuchot\195\169s.",
+	["Whispers"] = "Supprimer les chuchotements",
+	["Suppress whispered messages."] = "Supprime les messages chuchot\195\169s.",
 
 	["Suppressing Chatframe"] = "Suppression de la fen\195\170tre de discussion",
 	["Suppressing RaidWarningFrame"] = "Suppression du cadre de l'Avertissement Raid",
@@ -234,84 +238,76 @@ local plugin = BigWigs:NewModule("BossBlock", "AceHook-2.1")
 
 plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
 plugin.defaultDB = {
-	hideraidwarnchat = true,
-	hideraidwarn = true,
-	hideraidsay = true,
-	hideraidchat = true,
-	hidetells = true,
+	chat = true,
+	rs = true,
+	ora_rs = true,
+	ora2_rs = true,
+	rw = true,
+	rwchat = true,
+	tell = true,
+	boss = true,
 }
 plugin.consoleCmd = L["BossBlock"]
+
 plugin.consoleOptions = {
 	type = "group",
 	name = L["BossBlock"],
-	desc = L["Suppress bossmod chat from other players."],
-	args   = {
+	desc = L["desc"],
+	pass = true,
+	get = function(key) return plugin.db.profile[key] end,
+	set = function(key, value) plugin.db.profile[key] = value end,
+	args = {
 		["chat"] = {
 			type = "toggle",
-			order = 101,
-			name = L["Suppress Raid Chat"],
-			desc = L["Suppress messages in the raid channel."],
-			get = function() return plugin.db.profile.hideraidchat end,
-			set = function(v) plugin.db.profile.hideraidchat = v end,
+			name = L["Raid chat"],
+			desc = L["Suppress messages sent to raid chat."],
 			map = map,
 		},
 		["rs"] = {
 			type = "toggle",
-			order = 102,
-			name = L["Suppress RaidSay"],
+			name = L["Raid say"],
 			desc = L["Suppress CTRA RaidSay popup messages."],
-			get = function() return plugin.db.profile.hideraidsay end,
-			set = function(v) plugin.db.profile.hideraidsay = v end,
 			map = map,
 			hidden = function() return not CT_RAMessageFrame end,
 		},
 		["ora_rs"] = {
 			type = "toggle",
-			order = 103,
-			name = L["Suppress RaidSay"],
+			name = L["Raid say"],
 			desc = L["Suppress oRA RaidSay popup messages."],
-			get = function() return oRA_RaidSay:GetOpt("blockboss") end,
-			set = function(v) oRA_RaidSay:TogOpt("blockboss") end,
 			map = map,
 			hidden = function() return not oRA_RaidSay end,
 		},
 		["ora2_rs"] = {
 			type = "toggle",
-			order = 104,
-			name = L["Suppress RaidSay"],
+			name = L["Raid say"],
 			desc = L["Suppress oRA2 RaidSay popup messages."],
-			get = function() return oRAPRaidWarn.db.profile.bossblock end,
-			set = function(v) oRAPRaidWarn.db.profile.bossblock = v end,
 			map = map,
 			hidden = function() return not oRAPRaidWarn end,
 		},
 		["rw"] = {
 			type = "toggle",
-			order = 105,
-			name = L["Suppress RaidWarn"],
-			desc = L["Suppress RaidWarn popup messages."],
-			get = function() return plugin.db.profile.hideraidwarn end,
-			set = function(v) plugin.db.profile.hideraidwarn = v end,
+			name = L["Raid warning messages"],
+			desc = L["Suppress raid warning messages from the raid message window."],
 			map = map,
 		},
 		["rwchat"] = {
 			type = "toggle",
-			order = 106,
-			name = L["Suppress RaidWarn Chat"],
-			desc = L["Suppress RaidWarn messages in the chat frames."],
-			get = function() return plugin.db.profile.hideraidwarnchat end,
-			set = function(v) plugin.db.profile.hideraidwarnchat = v end,
+			name = L["Raid warning chat messages"],
+			desc = L["Suppress raid warning messages from the chat window."],
 			map = map,
 		},
 		["tell"] = {
 			type = "toggle",
-			order = 107,
-			name = L["Suppress Tells"],
-			desc = L["Suppress Tell messages."],
-			get = function() return plugin.db.profile.hidetells end,
-			set = function(v) plugin.db.profile.hidetells = v end,
+			name = L["Whispers"],
+			desc = L["Suppress whispered messages."],
 			map = map,
 		},
+		["boss"] = {
+			type = "toggle",
+			name = L["Boss emotes"],
+			desc = L["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."],
+			map = map,
+		}
 	},
 }
 
@@ -322,6 +318,7 @@ plugin.consoleOptions = {
 function plugin:OnEnable()
 	self:Hook("ChatFrame_MessageEventHandler", true)
 	self:Hook(RaidWarningFrame, "AddMessage", "RWAddMessage", true)
+	self:Hook(RaidBossEmoteFrame, "AddMessage", "RBEAddMessage", true)
 	if CT_RAMessageFrame then
 		self:Hook(CT_RAMessageFrame, "AddMessage", "CTRA_AddMessage", true)
 	end
@@ -342,6 +339,14 @@ function plugin:RWAddMessage(frame, message, r, g, b, a, t)
 		return
 	end
 	self.hooks[RaidWarningFrame].AddMessage(frame, message, r, g, b, a, t)
+end
+
+function plugin:RBEAddMessage(frame, message, r, g, b, a, t)
+	if self.db.profile.hidebossemotes and type(arg2) == "string" and BigWigs:HasModule(arg2) then
+		self:Debug(L["Suppressing RaidBossEmoteFrame"], message)
+		return
+	end
+	self.hooks[RaidBossEmoteFrame].AddMessage(frame, message, r, g, b, a, t)
 end
 
 function plugin:CTRA_AddMessage(obj, text, r, g, b, a, t)
