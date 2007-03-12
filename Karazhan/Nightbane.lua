@@ -164,10 +164,11 @@ end
 
 function mod:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "NightbaneFear" and self.db.profile.fear then
+		self:CancelScheduledEvent("fear")
 		self:Bar(L["fear_bar"], 2, "Spell_Shadow_PsychicScream")
 		self:Message(L["fear_message"], "Positive")
-		self:Bar(L["fear_warning"], 40, "Spell_Shadow_PsychicScream")
-		self:DelayedMessage(38, L["fear_warning"], "Positive")
+		self:Bar(L["fear_warning"], 37, "Spell_Shadow_PsychicScream")
+		self:ScheduleEvent("fear", "BigWigs_Message", 35, L["fear_warning"], "Positive")
 	elseif sync == "NightbaneBlast" and self.db.profile.blast then
 		self:Message(L["blast_message"], "Urgent", nil, "Alert")
 	elseif sync == "Bones" and rest and self.db.profile.bones then
@@ -196,6 +197,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif self.db.profile.phase and msg == L["airphase_trigger"] then
 		self:Message(L["airphase_message"], "Attention", nil, "Info")
 		bones = nil
+		self:CancelScheduledEvent("fear")
+		self:TriggerEvent("BigWigs_StopBar", self, L["fear_warning"])
 	elseif self.db.profile.phase and (msg == L["landphase_trigger1"] or msg == L["landphase_trigger2"]) then
 		self:Message(L["landphase_message"], "Important", nil, "Long")
 		blast = nil
