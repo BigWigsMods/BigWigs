@@ -21,9 +21,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Suppress raid warning messages from the raid message window."] = true,
 
 	["Raid say"] = true,
-	["Suppress CTRA RaidSay popup messages."] = true,
-	["Suppress oRA RaidSay popup messages."] = true,
-	["Suppress oRA2 RaidSay popup messages."] = true,
+	["Suppress RaidSay popup messages."] = true,
 
 	["Whispers"] = true,
 	["Suppress whispered messages."] = true,
@@ -51,9 +49,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Suppress raid warning messages from the raid message window."] = "공격대경고 알림 메세지 차단",
 
 	["Raid say"] = "RaidSay 차단",
-	["Suppress CTRA RaidSay popup messages."] = "CTRA RaidSay 알림 메세지 차단",
-	["Suppress oRA RaidSay popup messages."] = "oRA RaidSay 알림 메세지 차단",
-	["Suppress oRA2 RaidSay popup messages."] = "oRA2 RaidSay 알림 메세지 차단",
+	["Suppress RaidSay popup messages."] = "CTRA RaidSay 알림 메세지 차단",
 
 	["Whispers"] = "일반대화 차단",
 	["Suppress whispered messages."] = "일반대화 메세지 차단",
@@ -80,7 +76,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Suppress raid warning messages from the raid message window."] = "阻挡团队警告中的信息",
 
 	["Raid say"] = "阻挡RS",
-	["Suppress CTRA RaidSay popup messages."] = "阻挡团队助手(CTRA)的RS信息",
+	["Suppress RaidSay popup messages."] = "阻挡团队助手(CTRA)的RS信息",
 
 	["Whispers"] = "阻挡密语",
 	["Suppress whispered messages."] = "阻挡密语中的信息",
@@ -107,7 +103,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Suppress raid warning messages from the raid message window."] = "阻擋團隊警告中的訊息",
 
 	["Raid say"] = "阻擋RS",
-	["Suppress CTRA RaidSay popup messages."] = "阻擋團隊助手(CTRA)的RS訊息",
+	["Suppress RaidSay popup messages."] = "阻擋團隊助手(CTRA)的RS訊息",
 
 	["Whispers"] = "阻擋密語",
 	["Suppress whispered messages."] = "阻擋密語中的訊息",
@@ -134,9 +130,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Suppress raid warning messages from the raid message window."] = "RaidWarn Popup-Nachrichten unterdr\195\188cken.",
 
 	["Raid say"] = "RaidSay unterdr\195\188cken",
-	["Suppress CTRA RaidSay popup messages."] = "CTRA RaidSay Popup Nachrichten unterdr\195\188cken.",
-	["Suppress oRA RaidSay popup messages."] = "oRA RaidSay Popup Nachrichten unterdr\195\188cken.",
-	["Suppress oRA2 RaidSay popup messages."] = "oRA2 RaidSay Popup Nachrichten unterdr\195\188cken.",
+	["Suppress RaidSay popup messages."] = "CTRA RaidSay Popup Nachrichten unterdr\195\188cken.",
 
 	["Whispers"] = "Fl\195\188stern unterdr\195\188cken",
 	["Suppress whispered messages."] = "Fl\195\188stern Nachrichten unterdr\195\188cken.",
@@ -163,9 +157,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Suppress raid warning messages from the raid message window."] = "Supprime les messages \195\160 l'\195\169cran de l'Avertissement Raid.",
 
 	["Raid say"] = "Supprimer les RaidSay",
-	["Suppress CTRA RaidSay popup messages."] = "Supprime les messages \195\160 l'\195\169cran du RaidSay de CTRA.",
-	["Suppress oRA RaidSay popup messages."] = "Supprime les messages \195\160 l'\195\169cran du RaidSay de oRA.",
-	["Suppress oRA2 RaidSay popup messages."] = "Supprime les messages \195\160 l'\195\169cran du RaidSay de oRA2.",
+	["Suppress RaidSay popup messages."] = "Supprime les messages \195\160 l'\195\169cran du RaidSay de CTRA.",
 
 	["Whispers"] = "Supprimer les chuchotements",
 	["Suppress whispered messages."] = "Supprime les messages chuchot\195\169s.",
@@ -240,8 +232,6 @@ plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
 plugin.defaultDB = {
 	chat = true,
 	rs = true,
-	ora_rs = true,
-	ora2_rs = true,
 	rw = true,
 	rwchat = true,
 	tell = true,
@@ -266,23 +256,9 @@ plugin.consoleOptions = {
 		["rs"] = {
 			type = "toggle",
 			name = L["Raid say"],
-			desc = L["Suppress CTRA RaidSay popup messages."],
+			desc = L["Suppress RaidSay popup messages."],
 			map = map,
 			hidden = function() return not CT_RAMessageFrame end,
-		},
-		["ora_rs"] = {
-			type = "toggle",
-			name = L["Raid say"],
-			desc = L["Suppress oRA RaidSay popup messages."],
-			map = map,
-			hidden = function() return not oRA_RaidSay end,
-		},
-		["ora2_rs"] = {
-			type = "toggle",
-			name = L["Raid say"],
-			desc = L["Suppress oRA2 RaidSay popup messages."],
-			map = map,
-			hidden = function() return not oRAPRaidWarn end,
 		},
 		["rw"] = {
 			type = "toggle",
