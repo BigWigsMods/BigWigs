@@ -183,10 +183,10 @@ L:RegisterTranslations("frFR", function() return {
 ------------------------------
 
 local raidchans = {
-	CHAT_MSG_WHISPER = "hidetells",
-	CHAT_MSG_RAID = "hideraidchat",
-	CHAT_MSG_RAID_WARNING = "hideraidwarnchat",
-	CHAT_MSG_RAID_LEADER = "hideraidchat",
+	CHAT_MSG_WHISPER = "tell",
+	CHAT_MSG_RAID = "chat",
+	CHAT_MSG_RAID_WARNING = "rwchat",
+	CHAT_MSG_RAID_LEADER = "chat",
 }
 local map = {[true] = "|cffff0000"..L["Suppressed"].."|r", [false] = "|cff00ff00"..L["Shown"].."|r"}
 local blockregexs = {
@@ -334,7 +334,7 @@ function plugin:ChatFrame_MessageEventHandler(event)
 end
 
 function plugin:RWAddMessage(frame, message, r, g, b, a, t)
-	if self.db.profile.hideraidwarn and self:IsSpam(message) then
+	if self.db.profile.rw and self:IsSpam(message) then
 		self:Debug(L["Suppressing RaidWarningFrame"], message)
 		return
 	end
@@ -342,7 +342,7 @@ function plugin:RWAddMessage(frame, message, r, g, b, a, t)
 end
 
 function plugin:RBEAddMessage(frame, message, r, g, b, a, t)
-	if self.db.profile.hidebossemotes and type(arg2) == "string" and BigWigs:HasModule(arg2) then
+	if self.db.profile.boss and type(arg2) == "string" and BigWigs:HasModule(arg2) then
 		self:Debug(L["Suppressing RaidBossEmoteFrame"], message)
 		return
 	end
@@ -350,7 +350,7 @@ function plugin:RBEAddMessage(frame, message, r, g, b, a, t)
 end
 
 function plugin:CTRA_AddMessage(obj, text, r, g, b, a, t)
-	if self.db.profile.hideraidsay and self:IsSpam(text) then
+	if self.db.profile.rs and self:IsSpam(text) then
 		self:Debug(L["Suppressing CT_RAMessageFrame"], text)
 		return
 	end
