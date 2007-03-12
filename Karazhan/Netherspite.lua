@@ -28,6 +28,9 @@ L:RegisterTranslations("enUS", function() return {
 	netherbreath_name = "Netherbreath",
 	netherbreath_desc = "Warn for Netherbreath",
 
+	enrage_name = "Enrage",
+	enrage_desc = "Warn about enrage after 9min.",
+
 	phase1_message = "Withdrawal - Netherbreaths Over",
 	phase1_warning = "Netherspite Engaged - Rage in 60sec!",
 	phase1_bar = "Next Withdrawal",
@@ -35,6 +38,9 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_message = "Rage - Incoming Netherbreaths!",
 	phase2_bar = "Next Rage",
 	phase2_trigger = "%s goes into a nether-fed rage!",
+
+	enrage_warning = "Enrage in %d sec!",
+	enrage_bar = "Enrage",
 
 	voidzone_trigger = "casts Void Zone.",
 	voidzone_warn = "Void Zone (%d)!",
@@ -125,7 +131,7 @@ L:RegisterTranslations("frFR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"voidzone", "netherbreath", "phase", "bosskill"}
+mod.toggleoptions = {"voidzone", "netherbreath", "phase", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -159,6 +165,12 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		if self.db.profile.phase then
 			self:Message(L["phase1_warning"], "Important")
 			self:Bar(L["phase2_bar"], p1Duration, "Spell_ChargePositive")
+		end
+		if self.db.profile.enrage then
+			self:DelayedMessage(480, L["enrage_warning"]:format(60), "Attention")
+			self:DelayedMessage(510, L["enrage_warning"]:format(30), "Urgent")
+			self:DelayedMessage(530, L["enrage_warning"]:format(10), "Important")
+			self:Bar(L["enrage_bar"], 540, "Spell_Shadow_UnholyFrenzy")
 		end
 	elseif sync == "Netherbreath" and self.db.profile.netherbreath then
 		self:Message( L["netherbreath_warn"], "Urgent")

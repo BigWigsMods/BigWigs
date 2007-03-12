@@ -5,6 +5,8 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Terestian Illhoof"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
+local started = nil
+
 ----------------------------
 --      Localization     --
 ----------------------------
@@ -15,8 +17,14 @@ L:RegisterTranslations("enUS", function() return {
 	sacrifice_name = "Sacrifice",
 	sacrifice_desc = "Warn for Sacrifice of players",
 
+	enrage_name = "Enrage",
+	enrage_desc = "Warn about enrage after 10min.",
+
 	weak_name = "Weakened",
 	weak_desc = "Warn for weakened state",
+
+	enrage_warning = "Enrage in %d sec!",
+	enrage_bar = "Enrage",
 
 	sacrifice_you = "You",
 	sacrifice_trigger = "^([^%s]+) ([^%s]+) afflicted by Sacrifice",
@@ -94,7 +102,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"sacrifice", "weak", "bosskill"}
+mod.toggleoptions = {"sacrifice", "weak", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -102,12 +110,19 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
+	started = nil
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "CheckSacrifice")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "CheckSacrifice")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CheckSacrifice")
+
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
+	self:RegisterEvent("BigWigs_RecvSync")
 end
 
 ------------------------------
@@ -126,6 +141,21 @@ function mod:CheckSacrifice(msg)
 	end
 end
 
+function mod:BigWigs_RecvSync(sync, rest, nick)
+	if self:ValidateEngageSync() and not started then
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		started = true
+		if self.db.profile.enrage then
+			self:DelayedMessage(540, L["enrage_warning"]:format(60), "Attention")
+			self:DelayedMessage(570, L["enrage_warning"]:format(30), "Urgent")
+			self:DelayedMessage(590, L["enrage_warning"]:format(10), "Important")
+			self:Bar(L["enrage_bar"], 600, "Spell_Shadow_UnholyFrenzy")
+		end
+	end
+end
+
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 	if self.db.profile.weak and msg:find(L["weak_trigger"]) then
 		self:Message(L["weak_message"], "Important", nil, "Alarm")
@@ -134,3 +164,4 @@ function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 		self:Bar(L["weak_bar"], 30, "Spell_Shadow_Cripple")
 	end
 end
+
