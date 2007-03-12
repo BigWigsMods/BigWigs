@@ -12,11 +12,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Azuregos",
 
-	teleport_cmd = "teleport",
 	teleport_name = "Teleport Alert",
 	teleport_desc = "Warn for teleport",
 
-	shield_cmd = "shield",
 	shield_name = "Shield Alert",
 	shield_desc = "Warn for shield",
 

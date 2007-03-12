@@ -13,11 +13,9 @@ local BZ = AceLibrary("Babble-Zone-2.2")
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Lethon",
 
-	engage_cmd = "engage",
 	engage_name = "Engage Alert",
 	engage_desc = "Warn when Lethon is engaged",
 
-	noxious_cmd = "noxious",
 	noxious_name = "Noxious breath alert",
 	noxious_desc = "Warn for noxious breath",
 

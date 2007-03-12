@@ -12,7 +12,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Garr",
 
-	pulse_cmd = "pulse",
 	pulse_name = "Antimagic Pulse Bar",
 	pulse_desc = "Show a bar for Antimagic Pulse",
 

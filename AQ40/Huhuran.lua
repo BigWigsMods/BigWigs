@@ -15,15 +15,12 @@ local started
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Huhuran",
 
-	wyvern_cmd = "wyvern",
 	wyvern_name = "Wyvern Sting Alert",
 	wyvern_desc = "Warn for Wyvern Sting",
 
-	frenzy_cmd = "frenzy",
 	frenzy_name = "Frenzy Alert",
 	frenzy_desc = "Warn for Frenzy",
 
-	berserk_cmd = "berserk",
 	berserk_name = "Berserk Alert",
 	berserk_desc = "Warn for Berserk",
 

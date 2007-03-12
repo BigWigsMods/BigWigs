@@ -14,15 +14,12 @@ local started = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Loatheb",
 
-	doom_cmd = "doom",
 	doom_name = "Inevitable Doom Alert",
 	doom_desc = "Warn for Inevitable Doom",
 
-	spore_cmd = "spore",
 	spore_name = "Spore Spawning Alert",
 	spore_desc = "Warn when a spore spawns",
 
-	curse_cmd = "curse",
 	curse_name = "Remove Curse Alert",
 	curse_desc = "Warn when curses are removed from Loatheb",
 

@@ -12,7 +12,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Anubrekhan",
 
-	locust_cmd = "locust",
 	locust_name = "Locust Swarm Alert",
 	locust_desc = "Warn for Locust Swarm",
 

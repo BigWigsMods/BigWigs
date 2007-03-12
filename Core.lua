@@ -33,7 +33,6 @@ L:RegisterTranslations("enUS", function() return {
 	["Debugging"] = true,
 	["Show debug messages."] = true,
 	["Options"] = true,
-	bosskill_cmd = "bosskill",
 	bosskill_name = "Boss death",
 	bosskill_desc = "Announce when the boss has been defeated.",
 
@@ -78,7 +77,6 @@ L:RegisterTranslations("frFR", function() return {
 	["Debugging"] = "D\195\169boguage",
 	["Show debug messages."] = "Afficher les messages de d\195\169boguage.",
 	--["Options"] = true,
-	--bosskill_cmd = "kill",
 	bosskill_name = "D\195\169faite du boss",
 	bosskill_desc = "Pr\195\169viens quand le boss est vaincu.",
 
@@ -123,7 +121,6 @@ L:RegisterTranslations("deDE", function() return {
 	["Debugging"] = "Debugging",
 	["Show debug messages."] = "Zeige Debug Nachrichten.",
 	["Options"] = "Optionen",
-	-- bosskill_cmd = "kill",
 	bosskill_name = "Boss besiegt",
 	bosskill_desc = "Melde, wenn ein Boss besiegt wurde.",
 
@@ -472,15 +469,15 @@ function BigWigs:RegisterModule(name, module)
 					}
 				elseif type(v) == "string" then
 					local l = v == "bosskill" and L or ML
-					cons.args[l[v.."_cmd"]] = {
+					cons.args[v] = {
 						type = "toggle",
 						order = v == "bosskill" and -1 or x,
 						name = l[v.."_name"],
 						desc = l[v.."_desc"],
 					}
-					if l:HasTranslation(v.."_validate") then
-						cons.args[l[v.."_cmd"]].type = "text"
-						cons.args[l[v.."_cmd"]].validate = l[v.."_validate"]
+					if v ~= "bosskill" and l:HasTranslation(v.."_validate") then
+						cons.args[v].type = "text"
+						cons.args[v].validate = l[v.."_validate"]
 					end
 				end
 			end

@@ -12,15 +12,12 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Gothik",
 
-	room_cmd = "room",
 	room_name = "Room Arrival Warnings",
 	room_desc = "Warn for Gothik's arrival",
 
-	add_cmd = "add",
 	add_name = "Add Warnings",
 	add_desc = "Warn for adds",
 
-	adddeath_cmd = "adddeath",
 	adddeath_name = "Add Death Alert",
 	adddeath_desc = "Alerts when an add dies.",
 

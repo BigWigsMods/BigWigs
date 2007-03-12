@@ -12,19 +12,15 @@ local prior
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Viscidus",
-	volley_cmd = "volley",
 	volley_name = "Poison Volley Alert",
 	volley_desc = "Warn for Poison Volley",
 
-	toxinyou_cmd = "toxinyou",
 	toxinyou_name = "Toxin Cloud on You Alert",
 	toxinyou_desc = "Warn if you are standing in a toxin cloud",
 
-	toxinother_cmd = "toxinother",
 	toxinother_name = "Toxin Cloud on Others Alert",
 	toxinother_desc = "Warn if others are standing in a toxin cloud",
 
-	freeze_cmd = "freeze",
 	freeze_name = "Freezing States Alert",
 	freeze_desc = "Warn for the different frozen states",
 

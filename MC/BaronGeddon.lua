@@ -29,27 +29,21 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Baron",
 
-	service_cmd = "service",
 	service_name = "Last service",
 	service_desc = "Timer bar for Geddon's last service.",
 
-	inferno_cmd = "inferno",
 	inferno_name = "Inferno",
 	inferno_desc = "Timer bar for Geddons Inferno.",
 
-	bombtimer_cmd = "bombtimer",
 	bombtimer_name = "Bar for when the bomb goes off",
 	bombtimer_desc = "Shows a 10 second bar for when the bomb goes off at the target.",
 
-	youbomb_cmd = "youbomb",
 	youbomb_name = "You are the bomb alert",
 	youbomb_desc = "Warn when you are the bomb",
 
-	elsebomb_cmd = "elsebomb",
 	elsebomb_name = "Someone else is the bomb alert",
 	elsebomb_desc = "Warn when others are the bomb",
 
-	icon_cmd = "icon",
 	icon_name = "Raid Icon on bomb",
 	icon_desc = "Put a Raid Icon on the person who's the bomb. (Requires promoted or higher)",
 } end)

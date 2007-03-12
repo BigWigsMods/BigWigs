@@ -12,11 +12,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Moam",
 
-	adds_cmd = "adds",
 	adds_name = "Mana Fiend Alert",
 	adds_desc = "Warn for Mana fiends",
 
-	paralyze_cmd = "paralyze",
 	paralyze_name = "Paralyze Alert",
 	paralyze_desc = "Warn for Paralyze",
 

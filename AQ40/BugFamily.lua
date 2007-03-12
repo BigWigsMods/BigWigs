@@ -17,11 +17,9 @@ local fearstatus
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "BugFamily",
-	fear_cmd = "fear",
 	fear_name = "Fear Alert",
 	fear_desc = "Warn for Fear",
 
-	heal_cmd = "heal",
 	heal_name = "Heal Alert",
 	heal_desc = "Warn for Heal",
 

@@ -32,27 +32,21 @@ local tentacletime = timeP1Tentacle
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Cthun",
 
-	tentacle_cmd = "tentacle",
 	tentacle_name = "Tentacle Alert",
 	tentacle_desc = "Warn for Tentacles",
 
-	glare_cmd = "glare",
 	glare_name = "Dark Glare Alert",
 	glare_desc = "Warn for Dark Glare",
 
-	group_cmd = "group",
 	group_name = "Dark Glare Group Warning",
 	group_desc = "Warn for Dark Glare on Group X",
 
-	giant_cmd = "giant",
 	giant_name = "Giant Eye Alert",
 	giant_desc = "Warn for Giant Eyes",
 
-	weakened_cmd = "weakened",
 	weakened_name = "Weakened Alert",
 	weakened_desc = "Warn for Weakened State",
 
-	rape_cmd = "rape",
 	rape_name = "Rape jokes are funny",
 	rape_desc = "Some people like hentai jokes.",
 

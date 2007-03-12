@@ -15,19 +15,15 @@ local prior2
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Lucifron",
 
-	curse_cmd = "curse",
 	curse_name = "Lucifron's Curse alert",
 	curse_desc = "Warn for Lucifron's Curse",
 
-	doom_cmd = "dmg",
 	doom_name = "Impending Doom alert",
 	doom_desc = "Warn for Impending Doom",
 
-	mc_cmd = "mc",
 	mc_name = "Mind Control alert",
 	mc_desc = "Warn about afflicted players",
 
-	icon_cmd = "icon",
 	icon_name = "Place Icon",
 	icon_desc = "Place a skull icon on the mind controlled person (requires promoted or higher)",
 

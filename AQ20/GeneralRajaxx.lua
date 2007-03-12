@@ -17,7 +17,6 @@ local rajdead
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Rajaxx",
 
-	wave_cmd = "wave",
 	wave_name = "Wave Alert",
 	wave_desc = "Warn for incoming waves",
 

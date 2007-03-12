@@ -12,11 +12,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Thekal",
 
-	heal_cmd = "heal",
 	heal_name = "Heal Alert",
 	heal_desc = "Warn for healing",
 
-	tiger_cmd = "tiger",
 	tiger_name = "Tigers Alert",
 	tiger_desc = "Warn for incoming tigers",
 

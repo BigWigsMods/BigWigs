@@ -12,15 +12,12 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Buru",
 
-	you_cmd = "you",
 	you_name = "You're being watched alert",
 	you_desc = "Warn when you're being watched",
 
-	other_cmd = "other",
 	other_name = "Others being watched alert",
 	other_desc = "Warn when others are being watched",
 
-	icon_cmd = "icon",
 	icon_name = "Place icon",
 	icon_desc = "Place raid icon on watched person (requires promoted or higher)",
 

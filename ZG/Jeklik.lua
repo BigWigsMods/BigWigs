@@ -12,15 +12,12 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Jeklik",
 
-	heal_cmd = "heal",
 	heal_name = "Heal Alert",
 	heal_desc = "Warn for healing",
 
-	bomb_cmd = "bomb",
 	bomb_name = "Bomb Bat Alert",
 	bomb_desc = "Warn for Bomb Bats",
 
-	swarm_cmd = "swarm",
 	swarm_name = "Bat Swarm Alert",
 	swarm_desc = "Warn for the Bat swarms",
 

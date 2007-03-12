@@ -17,11 +17,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "WizardofOz",
 
-	spawns_cmd = "spawns",
 	spawns_name = "Spawn Timers",
 	spawns_desc = "Timers for when the characters become active",
 
-	light_cmd = "chainlightning",
 	light_name = "Chain Lightning",
 	light_desc = "Warn for Chain Lightning being cast",
 

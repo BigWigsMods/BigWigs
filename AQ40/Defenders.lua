@@ -12,39 +12,30 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Defender",
 
-	plagueyou_cmd = "plagueyou",
 	plagueyou_name = "Plague on you alert",
 	plagueyou_desc = "Warn if you got the Plague",
 
-	plagueother_cmd = "plagueother",
 	plagueother_name = "Plague on others alert",
 	plagueother_desc = "Warn if others got the Plague",
 
-	thunderclap_cmd = "thunderclap",
 	thunderclap_name = "Thunderclap Alert",
 	thunderclap_desc = "Warn for Thunderclap",
 
-	meteor_cmd = "meteor",
 	meteor_name = "Meteor Alert",
 	meteor_desc = "Warn for Meteor",
 
-	shadowstorm_cmd = "shadowstorm",
 	shadowstorm_name = "Shadow Storm",
 	shadowstorm_desc = "Warn for Shadow Storm",
 
-	explode_cmd = "explode",
 	explode_name = "Explode Alert",
 	explode_desc = "Warn for Explode",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Enrage Alert",
 	enrage_desc = "Warn for Enrage",
 
-	summon_cmd = "summon",
 	summon_name = "Summon Alert",
 	summon_desc = "Warn for add summons",
 
-	icon_cmd = "icon",
 	icon_name = "Place icon",
 	icon_desc = "Place raid icon on the last plagued person (requires promoted or higher)",
 

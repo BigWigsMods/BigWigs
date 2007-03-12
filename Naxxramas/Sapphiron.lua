@@ -17,15 +17,12 @@ local started
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Sapphiron",
 
-	deepbreath_cmd = "deepbreath",
 	deepbreath_name = "Ice Bomb Alert",
 	deepbreath_desc = "Warn when Sapphiron begins to cast Ice Bomb.",
 
-	lifedrain_cmd = "lifedrain",
 	lifedrain_name = "Life Drain",
 	lifedrain_desc = "Warns about the Life Drain curse.",
 
-	berserk_cmd = "berserk",
 	berserk_name = "Berserk",
 	berserk_desc = "Warn for berserk.",
 

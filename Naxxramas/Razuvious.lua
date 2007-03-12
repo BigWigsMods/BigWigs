@@ -13,11 +13,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Razuvious",
 
-	shout_cmd = "shout",
 	shout_name = "Shout Alert",
 	shout_desc = "Warn for disrupting shout",
 
-	shieldwall_cmd = "shieldwall",
 	shieldwall_name = "Shield Wall Timer",
 	shieldwall_desc = "Show timer for shieldwall",
 

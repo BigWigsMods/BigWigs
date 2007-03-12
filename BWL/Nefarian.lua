@@ -51,19 +51,15 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Nefarian",
 
-	shadowflame_cmd = "shadowflame",
 	shadowflame_name = "Shadow Flame alert",
 	shadowflame_desc = "Warn for Shadow Flame",
 
-	fear_cmd = "fear",
 	fear_name = "Warn for Fear",
 	fear_desc = "Warn when Nefarian casts AoE Fear",
 
-	classcall_cmd = "classcall",
 	classcall_name = "Class Call alert",
 	classcall_desc = "Warn for Class Calls",
 
-	otherwarn_cmd = "otherwarn",
 	otherwarn_name = "Other alerts",
 	otherwarn_desc = "Landing and Zerg warnings",
 } end)

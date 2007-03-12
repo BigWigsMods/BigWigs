@@ -13,23 +13,18 @@ local enrageannounced
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Moroes",
 
-	engage_cmd = "engage",
 	engage_name = "Engage",
 	engage_desc = ("Warn when %s is pulled"):format(boss),
 
-	vanish_cmd = "vanish",
 	vanish_name = "Vanish",
 	vanish_desc = "Vanish estimated timers",
 
-	garrote_cmd = "garrote",
 	garrote_name = "Garrote",
 	garrote_desc = "Notify of players afflicted by Garrote",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Enrage",
 	enrage_desc = ("Warn when %s becomes enraged"):format(boss),
 
-	icon_cmd = "icon",
 	icon_name = "Icon",
 	icon_desc = "Place a Raid Icon on the player afflicted by Garrote(requires promoted or higher)",
 

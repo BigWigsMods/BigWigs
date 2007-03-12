@@ -32,19 +32,15 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Ragnaros",
 
-	emerge_cmd = "emerge",
 	emerge_name = "Emerge alert",
 	emerge_desc = "Warn for Ragnaros Emerge",
 
-	sondeath_cmd = "sondeath",
 	sondeath_name = "Son of Flame dies",
 	sondeath_desc = "Warn when a son dies",
 
-	submerge_cmd = "submerge",
 	submerge_name = "Submerge alert",
 	submerge_desc = "Warn for Ragnaros Submerge & Sons of Flame",
 
-	aoeknock_cmd = "aoeknock",
 	aoeknock_name = "Knockback alert",
 	aoeknock_desc = "Warn for Wrath of Ragnaros knockback",
 } end)

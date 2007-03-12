@@ -14,11 +14,9 @@ local started
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Attumen",
 
-	phase_cmd = "phase",
 	phase_name = "Phase",
 	phase_desc = "Warn when entering a new Phase",
 
-	curse_cmd = "curse",
 	curse_name = "Cursed Warriors",
 	curse_desc = "Warn when a warrior is cursed by Intangible Presence",
 

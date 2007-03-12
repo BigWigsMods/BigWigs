@@ -13,23 +13,18 @@ local BZ = AceLibrary("Babble-Zone-2.2")
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Emeriss",
 
-	engage_cmd = "engage",
 	engage_name = "Engage Alert",
 	engage_desc = "Warn when Emeriss is engaged",
 
-	noxious_cmd = "noxious",
 	noxious_name = "Noxious breath alert",
 	noxious_desc = "Warn for noxious breath",
 
-	volatileyou_cmd = "volatileyou",
 	volatileyou_name = "Voltile infection on you alert",
 	volatileyou_desc = "Warn for volatile infection on you",
 
-	volatileother_cmd = "volatileother",
 	volatileother_name = "Volatile infection on others alert",
 	volatileother_desc = "Warn for volatile infection on others",
 
-	icon_cmd = "icon",
 	icon_name = "Place Icon",
 	icon_desc = "Place your selected raid icon on the afflicted person (requires promoted or higher)",
 

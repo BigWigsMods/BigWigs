@@ -13,19 +13,15 @@ local enrageannounced
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Curator",
 
-	berserk_cmd = "berserk",
 	berserk_name = "Berserk",
 	berserk_desc = "Warn for berserk after 10min.",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Enrage",
 	enrage_desc = "Warn for enrage at 15%.",
 
-	weaken_cmd = "weaken",
 	weaken_name = "Weaken",
 	weaken_desc = "Warn for weakened state",
 
-	weaktime_cmd = "weaktime",
 	weaktime_name = "Weaken Countdown",
 	weaktime_desc = "Countdown warning and bar untill next weaken.",
 

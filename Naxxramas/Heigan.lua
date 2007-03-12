@@ -12,11 +12,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Heigan",
 
-	teleport_cmd = "teleport",
 	teleport_name = "Teleport Alert",
 	teleport_desc = "Warn for Teleports.",
 
-	engage_cmd = "engage",
 	engage_name = "Engage Alert",
 	engage_desc = "Warn when Heigan is engaged.",
 

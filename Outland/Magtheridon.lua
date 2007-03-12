@@ -12,27 +12,21 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Magtheridon",
 
-	escape_cmd = "escape",
 	escape_name = "Escape",
 	escape_desc = ("Countdown untill %s breaks free"):format(boss),
 
-	abyssal_cmd = "abyssal",
 	abyssal_name = "Burning Abyssal",
 	abyssal_desc = "Warn when a Burning Abyssal is created",
 
-	heal_cmd = "heal",
 	heal_name = "Heal",
 	heal_desc = "Warn when a Hellfire Channeler starts to heal",
 
-	nova_cmd = "nova",
 	nova_name = "Blast Nova",
 	nova_desc = "Estimated Blast Nova timers",
 
-	banish_cmd = "banish",
 	banish_name = "Banish",
 	banish_desc = ("Warn when you Banish %s"):format(boss),
 
-	exhaust_cmd = "exhaust",
 	exhaust_name = "Disable Exhaustion Bars",
 	exhaust_desc = "Timer bars for Mind Exhaustion on players",
 

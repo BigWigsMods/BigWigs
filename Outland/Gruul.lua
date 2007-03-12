@@ -15,23 +15,18 @@ local growcount
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Gruul",
 
-	engage_cmd = "engage",
 	engage_name = "Engage",
 	engage_desc = "Warn when Grull is pulled",
 
-	grow_cmd = "grow",
 	grow_name = "Grow",
 	grow_desc = "Count and warn for Grull's grow",
 
-	grasp_cmd = "grasp",
 	grasp_name = "Grasp",
 	grasp_desc = "Grasp warnings and timers",
 
-	cavein_cmd = "cavein",
 	cavein_name = "Cave In on You",
 	cavein_desc = "Warn for a Cave In on You",
 
-	silence_cmd = "silence",
 	silence_name = "Silence",
 	silence_desc = "Warn when Gruul casts AOE Silence (Reverberation)",
 

@@ -20,15 +20,12 @@ L:RegisterTranslations("enUS", function() return {
 	warn1 = "Mortal Strike on you!",
 	warn2 = "Mortal Strike on %s!",
 
-	youms_cmd = "youms",
 	youms_name = "Mortal strike on you alert",
 	youms_desc = "Warn when you get mortal strike",
 
-	elsems_cmd = "elsems",
 	elsems_name = "Mortal strike on others alert",
 	elsems_desc = "Warn when someone else gets mortal strike",
 
-	msbar_cmd = "msbar",
 	msbar_name = "Mortal Strike bar",
 	msbar_desc = "Shows a bar with the Mortal Strike duration",
 } end )

@@ -14,19 +14,15 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "RomuloJulianne",
 
-	phase_cmd = "phase",
 	phase_name = "Phases",
 	phase_desc = "Warn when entering a new Phase",
 
-	poison_cmd = "poison",
 	poison_name = "Poison",
 	poison_desc = "Warn of a poisoned player",
 
-	heal_cmd = "heal",
 	heal_name = "Heal",
 	heal_desc = ("Warn when %s casts Eternal Affection"):format(girl),
 
-	buff_cmd = "buff",
 	buff_name = "Self-Buff Alert",
 	buff_desc = ("Warn when %s and %s gain a self-buff"):format(boy, girl),
 

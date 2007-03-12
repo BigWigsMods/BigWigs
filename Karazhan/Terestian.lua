@@ -12,11 +12,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Terestian",
 
-	sacrifice_cmd = "sacrifice",
 	sacrifice_name = "Sacrifice",
 	sacrifice_desc = "Warn for Sacrifice of players",
 
-	weak_cmd = "weak",
 	weak_name = "Weakened",
 	weak_desc = "Warn for weakened state",
 

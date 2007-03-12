@@ -12,19 +12,15 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Noth",
 
-	blink_cmd = "blink",
 	blink_name = "Blink Alert",
 	blink_desc = "Warn for blink",
 
-	teleport_cmd = "teleport",
 	teleport_name = "Teleport Alert",
 	teleport_desc = "Warn for teleport",
 
-	curse_cmd = "curse",
 	curse_name = "Curse Alert",
 	curse_desc = "Warn for curse",
 
-	wave_cmd = "wave",
 	wave_name = "Wave Alert",
 	wave_desc = "Warn for waves",
 

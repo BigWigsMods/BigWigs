@@ -14,11 +14,9 @@ local started = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Faerlina",
 
-	silence_cmd = "silence",
 	silence_name = "Silence Alert",
 	silence_desc = "Warn for silence",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Enrage Alert",
 	enrage_desc = "Warn for Enrage",
 

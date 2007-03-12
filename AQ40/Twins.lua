@@ -17,19 +17,15 @@ local cachedUnitId = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Twins",
 
-	bug_cmd = "bug",
 	bug_name = "Exploding Bug Alert",
 	bug_desc = "Warn for exploding bugs",
 
-	teleport_cmd = "teleport",
 	teleport_name = "Teleport Alert",
 	teleport_desc = "Warn for Teleport",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Enrage Alert",
 	enrage_desc = "Warn for Enrage",
 
-	heal_cmd = "heal",
 	heal_name = "Heal Alert",
 	heal_desc = "Warn for Twins Healing",
 

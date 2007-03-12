@@ -21,7 +21,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Gehennas",
 
-	curse_cmd = "curse",
 	curse_name = "Gehennas' Curse alert",
 	curse_desc = "Warn for Gehennas' Curse",
 } end)

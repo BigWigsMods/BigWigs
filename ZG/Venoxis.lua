@@ -12,11 +12,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Venoxis",
 
-	renew_cmd = "renew",
 	renew_name = "Renew Alert",
 	renew_desc = "Warn for Renew",
 
-	phase_cmd = "phase",
 	phase_name = "Phase 2 Alert",
 	phase_desc = "Warn for Phase 2",
 

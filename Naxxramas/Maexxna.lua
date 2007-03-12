@@ -16,15 +16,12 @@ local started
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Maexxna",
 
-	spray_cmd = "spray",
 	spray_name = "Web Spray Alert",
 	spray_desc = "Warn for webspray and spiders",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Enrage Alert",
 	enrage_desc = "Warn for enrage",
 
-	cocoon_cmd = "cocoon",
 	cocoon_name = "Cocoon Alert",
 	cocoon_desc = "Warn for Cocooned players",
 

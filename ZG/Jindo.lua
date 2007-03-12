@@ -12,23 +12,18 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Jindo",
 
-	brainwash_cmd = "brainwash",
 	brainwash_name = "Brainwash Totem Alert",
 	brainwash_desc = "Warn for Brainwash Totems",
 
-	healing_cmd = "healing",
 	healing_name = "Healing Totem Alert",
 	healing_desc = "Warn for Healing Totems",
 
-	youcurse_cmd = "youcurse",
 	youcurse_name = "You're cursed Alert",
 	youcurse_desc = "Warn when you get cursed",
 
-	elsecurse_cmd = "elsecurse",
 	elsecurse_name = "Others are cursed Alert",
 	elsecurse_desc = "Warn when others are cursed",
 
-	icon_cmd = "icon",
 	icon_name = "Place Icon",
 	icon_desc = "Place a skull icon on the cursed person (requires promoted or higher)",
 

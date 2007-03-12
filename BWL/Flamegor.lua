@@ -26,15 +26,12 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Flamegor",
 
-	wingbuffet_cmd = "wingbuffet",
 	wingbuffet_name = "Wing Buffet alert",
 	wingbuffet_desc = "Warn for Wing Buffet",
 
-	shadowflame_cmd = "shadowflame",
 	shadowflame_name = "Shadow Flame alert",
 	shadowflame_desc = "Warn for Shadow Flame",
 
-	frenzy_cmd = "frenzy",
 	frenzy_name = "Frenzy alert",
 	frenzy_desc = "Warn when for frenzy",
 } end)

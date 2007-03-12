@@ -12,7 +12,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Kazzak",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Enrage",
 	enrage_desc = "Timers for enrage",
 

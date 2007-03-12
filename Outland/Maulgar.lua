@@ -14,27 +14,21 @@ local flurryannounced
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Maulgar",
 
-	heal_cmd = "heal",
 	heal_name = "Heal",
 	heal_desc = "Warn when Blindeye the Seer begins to cast a Heal",
 
-	shield_cmd = "shield",
 	shield_name = "Shield",
 	shield_desc = "Warn when Blindeye the Seer gains Greater Power Word: Shield",
 
-	spellshield_cmd = "spellshield",
 	spellshield_name = "Spell Shield",
 	spellshield_desc = "Warn when Krosh Firehand gains Spell Shield",
 
-	summon_cmd = "summon",
 	summon_name = "Summon Wild Felhunter",
 	summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter",
 
-	whirlwind_cmd = "whirlwind",
 	whirlwind_name = "Whirldwind",
 	whirlwind_desc = "Warn when Maulgar gains Whirlwind",
 
-	flurry_cmd = "flurry",
 	flurry_name = "Flurry",
 	flurry_desc = "Warn when Maulgar is close to Flurry and gains Flurry",
 

@@ -14,35 +14,27 @@ local bones
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Nightbane",
 
-	fear_cmd = "fear",
 	fear_name = "Fear Alert",
 	fear_desc = "Warn for Bellowing Roar",
 
-	charr_cmd = "charr",
 	charr_name = "Charred Earth on You",
 	charr_desc = "Warn when you are on Charred Earth",
 
-	phase_cmd = "phase",
 	phase_name = "Phases",
 	phase_desc = ("Warn when %s switches between phases"):format(boss),
 
-	engage_cmd = "engage",
 	engage_name = "Engage",
 	engage_desc = "Engage alert",
 
-	blast_cmd = "blast",
 	blast_name = "Smoking Blast",
 	blast_desc = "Warn for Smoking Blast being cast",
 
-	bones_cmd = "bones",
 	bones_name = "Raid of Bones",
 	bones_desc = "Warn who Rain of Bones is on",
 
-	icon_cmd = "icon",
 	icon_name = "Raid Icon",
 	icon_desc = "Place a raid icon on the person afflicted by Rain of Bones(requires promoted or higher)",
 
-	whisper_cmd = "whisper",
 	whisper_name = "Whisper Player",
 	whisper_desc = "Whisper the person afflicted by Rain of Bones(requires promoted or higher)",
 

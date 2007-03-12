@@ -12,7 +12,6 @@ local worms
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Fankriss",
-	worm_cmd = "worm",
 	worm_name = "Worm Alert",
 	worm_desc = "Warn for Incoming Worms",
 

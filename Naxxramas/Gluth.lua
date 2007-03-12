@@ -15,19 +15,15 @@ local prior = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Gluth",
 
-	fear_cmd = "fear",
 	fear_name = "Fear Alert",
 	fear_desc = "Warn for fear",
 
-	frenzy_cmd = "frenzy",
 	frenzy_name = "Frenzy Alert",
 	frenzy_desc = "Warn for frenzy",
 
-	decimate_cmd = "decimate",
 	decimate_name = "Decimate Alert",
 	decimate_desc = "Warn for Decimate",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Enrage",
 	enrage_desc = "Timer for when he becomes enraged.",
 

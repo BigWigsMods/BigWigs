@@ -33,19 +33,15 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Hakkar",
 
-	drain_cmd = "drain",
 	drain_name = "Drain Alerts",
 	drain_desc = "Warn for Drains",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Enrage Alerts",
 	enrage_desc = "Warn for Enrage",
 
-	mc_cmd = "mc",
 	mc_name = "Mind Control",
 	mc_desc = "Alert when someone is mind controlled.",
 
-	icon_cmd = "icon",
 	icon_name = "Place Icon",
 	icon_desc = "Place a skull icon on the mind controlled person (requires promoted or higher)",
 } end)

@@ -12,27 +12,21 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Guardian",
 
-	summon_cmd = "summon",
 	summon_name = "Summon Alert",
 	summon_desc = "Warn for summoned adds",
 
-	plagueyou_cmd = "plagueyou",
 	plagueyou_name = "Plague on you alert",
 	plagueyou_desc = "Warn for plague on you",
 
-	plagueother_cmd = "plagueother",
 	plagueother_name = "Plague on others alert",
 	plagueother_desc = "Warn for plague on others",
 
-	icon_cmd = "icon",
 	icon_name = "Place icon",
 	icon_desc = "Place raid icon on the last plagued person (requires promoted or higher)",
 
-	explode_cmd = "explode",
 	explode_name = "Explode Alert",
 	explode_desc = "Warn for incoming explosion",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Enrage Alert",
 	enrage_desc = "Warn for enrage",
 

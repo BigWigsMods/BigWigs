@@ -14,15 +14,12 @@ local playerName = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "TheBigBadWolf",
 
-	youriding_cmd = "youriding",
 	youriding_name = "You are Red Riding Hood alert",
 	youriding_desc = "Warn when you are Red Riding Hood",
 
-	elseriding_cmd = "elseriding",
 	elseriding_name = "Others Red Riding Hood alert",
 	elseriding_desc = "Warn when others are Red Riding Hood",
 
-	icon_cmd = "icon",
 	icon_name = "Place Icon",
 	icon_desc = "Put a Raid Icon on the person who's Red Riding Hood. (Requires promoted or higher)",
 

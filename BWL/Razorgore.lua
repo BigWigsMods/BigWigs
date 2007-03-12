@@ -28,15 +28,12 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.",
 	phase2_message = "All eggs destroyed, Razorgore loose!",
 
-	mc_cmd = "mindcontrol",
 	mc_name = "Mind Control",
 	mc_desc = "Warn when players are mind controlled",
 
-	eggs_cmd = "eggs",
 	eggs_name = "Don't count eggs",
 	eggs_desc = "Don't count down the remaining eggs - this option does not work for everyone, we need better triggers.",
 
-	phase_cmd = "phase",
 	phase_name = "Phases",
 	phase_desc = "Alert on phase 1 and 2",
 } end)

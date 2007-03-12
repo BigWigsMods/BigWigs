@@ -11,11 +11,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Sartura",
-	enrage_cmd = "enrage",
 	enrage_name = "Enrage Alerts",
 	enrage_desc = "Warn for Enrage",
 
-	whirlwind_cmd = "whirlwind",
 	whirlwind_name = "Whirlwind Alert",
 	whirlwind_desc = "Warn for Whirlwind",
 

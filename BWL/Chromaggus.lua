@@ -15,19 +15,15 @@ local barcount
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Chromaggus",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Enrage",
 	enrage_desc = "Warn before Enrage at 20%",
 
-	frenzy_cmd = "frenzy",
 	frenzy_name = "Frenzy Alert",
 	frenzy_desc = "Warn for Frenzy",
 
-	breath_cmd = "breath",
 	breath_name = "Breath Alerts",
 	breath_desc = "Warn for Breaths",
 
-	vulnerability_cmd = "vulnerability",
 	vulnerability_name = "Vulnerability Alerts",
 	vulnerability_desc = "Warn for Vulnerability changes",
 

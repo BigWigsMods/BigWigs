@@ -14,27 +14,21 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Thaddius",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Enrage Alert",
 	enrage_desc = "Warn for Enrage",
 
-	phase_cmd = "phase",
 	phase_name = "Phase Alerts",
 	phase_desc = "Warn for Phase transitions",
 
-	polarity_cmd = "polarity",
 	polarity_name = "Polarity Shift Alert",
 	polarity_desc = "Warn for polarity shifts",
 
-	power_cmd = "power",
 	power_name = "Power Surge Alert",
 	power_desc = "Warn for Stalagg's power surge",
 
-	charge_cmd = "charge",
 	charge_name = "Charge Alert",
 	charge_desc = "Warn about Positive/Negative charge for yourself only.",
 
-	throw_cmd = "throw",
 	throw_name = "Throw Alerts",
 	throw_desc = "Warn about tank platform swaps.",
 

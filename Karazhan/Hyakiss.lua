@@ -13,7 +13,6 @@ local times
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Hyakiss",
 
-	web_cmd = "web",
 	web_name = "Web",
 	web_desc = "Alert when a player gets webbed.",
 

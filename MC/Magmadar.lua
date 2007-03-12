@@ -12,11 +12,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Magmadar",
 
-	fear_cmd = "fear",
 	fear_name = "Warn for Fear",
 	fear_desc = "Warn when Magmadar casts AoE Fear",
 
-	frenzy_cmd = "frenzy",
 	frenzy_name = "Frenzy alert",
 	frenzy_desc = "Warn when Magmadar goes into a frenzy",
 

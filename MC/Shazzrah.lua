@@ -21,11 +21,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Shazzrah",
 
-	selfbuff_cmd = "selfbuff",
 	selfbuff_name = "Self Buff Alert",
 	selfbuff_desc = "Warn when Shazzrah casts a Self Buff",
 
-	blink_cmd = "blink",
 	blink_name = "Blink Alert",
 	blink_desc = "Warn when Shazzrah Blinks",
 } end)

@@ -30,23 +30,18 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Ebonroc",
 
-	wingbuffet_cmd = "wingbuffet",
 	wingbuffet_name = "Wing Buffet alert",
 	wingbuffet_desc = "Warn for Wing Buffet",
 
-	shadowflame_cmd = "shadowflame",
 	shadowflame_name = "Shadow Flame alert",
 	shadowflame_desc = "Warn for Shadow Flame",
 
-	youcurse_cmd = "youcurse",
 	youcurse_name = "Shadow of Ebonroc on you alert",
 	youcurse_desc = "Warn when you got Shadow of Ebonroc",
 
-	elsecurse_cmd = "elsecurse",
 	elsecurse_name = "Shadow of Ebonroc on others alert",
 	elsecurse_desc = "Warn when others got Shadow of Ebonroc",
 
-	shadowbar_cmd = "cursebar",
 	shadowbar_name = "Shadow of Ebonroc timer bar",
 	shadowbar_desc = "Shows a timer bar when someone gets Shadow of Ebonroc",
 } end)

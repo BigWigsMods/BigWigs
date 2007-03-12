@@ -15,27 +15,21 @@ local started
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Ouro",
 
-	sweep_cmd = "sweep",
 	sweep_name = "Sweep Alert",
 	sweep_desc = "Warn for Sweeps",
 
-	sandblast_cmd = "sandblast",
 	sandblast_name = "Sandblast Alert",
 	sandblast_desc = "Warn for Sandblasts",
 
-	emerge_cmd = "emerge",
 	emerge_name = "Emerge Alert",
 	emerge_desc = "Warn for Emerge",
 
-	submerge_cmd = "submerge",
 	submerge_name = "Submerge Alert",
 	submerge_desc = "Warn for Submerge",
 
-	scarab_cmd = "scarab",
 	scarab_name = "Scarab Despawn Alert",
 	scarab_desc = "Warn for Scarab Despawn",
 
-	berserk_cmd = "berserk",
 	berserk_name = "Berserk",
 	berserk_desc = "Warn for when Ouro goes berserk",
 

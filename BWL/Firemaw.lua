@@ -24,11 +24,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Firemaw",
 
-	wingbuffet_cmd = "wingbuffet",
 	wingbuffet_name = "Wing Buffet alert",
 	wingbuffet_desc = "Warn for Wing Buffet",
 
-	shadowflame_cmd = "shadowflame",
 	shadowflame_name = "Shadow Flame alert",
 	shadowflame_desc = "Warn for Shadow Flame",
 } end)

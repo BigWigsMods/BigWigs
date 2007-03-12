@@ -33,11 +33,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Majordomo",
 
-	magic_cmd = "magic",
 	magic_name = "Magic Reflection alert",
 	magic_desc = "Warn for Magic Reflection",
 
-	dmg_cmd = "dmg",
 	dmg_name = "Damage Shields alert",
 	dmg_desc = "Warn for Damage Shields",
 } end)

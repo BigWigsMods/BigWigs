@@ -12,11 +12,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Ossirian",
 
-	supreme_cmd = "supreme",
 	supreme_name = "Supreme Alert",
 	supreme_desc = "Warn for Supreme Mode",
 
-	debuff_cmd = "debuff",
 	debuff_name = "Debuff Alert",
 	debuff_desc = "Warn for Defuff",
 

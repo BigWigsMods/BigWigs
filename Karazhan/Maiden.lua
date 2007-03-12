@@ -12,19 +12,15 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Maiden",
 
-	engage_cmd = "engage",
 	engage_name = "Engage",
 	engage_desc = ("Alert when %s is engaged"):format(boss),
 
-	repentance_cmd = "repentance",
 	repentance_name = "Repentance",
 	repentance_desc = "Estimated timer of Repentance",
 
-	holyfire_cmd = "holyfire",
 	holyfire_name = "Holy Fire",
 	holyfire_desc = "Alert when people are afflicted by Holy Fire",
 
-	icon_cmd = "icon",
 	icon_name = "Icon",
 	icon_desc = "Place a Raid Icon on the player afflicted by Holy Fire(requires promoted or higher)",
 

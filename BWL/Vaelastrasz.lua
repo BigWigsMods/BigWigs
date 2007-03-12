@@ -22,19 +22,15 @@ L:RegisterTranslations("enUS", function() return {
 	warn1 = "You are burning!",
 	warn2 = " is burning!",
 
-	youburning_cmd = "youburning",
 	youburning_name = "You are burning alert",
 	youburning_desc = "Warn when you are burning",
 
-	elseburning_cmd = "elseburning",
 	elseburning_name = "Someone else is burning alert",
 	elseburning_desc = "Warn when others are burning",
 
-	burningbar_cmd = "burningbar",
 	burningbar_name = "Burning Adrenaline bar",
 	burningbar_desc = "Shows a timer bar for Burning Adrenaline",
 
-	icon_cmd = "icon",
 	icon_name = "Raid Icon on bomb",
 	icon_desc = "Put a Raid Icon on the person who's the bomb. (Requires promoted or higher)",
 } end)

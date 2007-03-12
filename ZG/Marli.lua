@@ -14,11 +14,9 @@ local lastdrain = 0
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Marli",
 
-	spider_cmd = "spider",
 	spider_name = "Spider Alert",
 	spider_desc = "Warn when spiders spawn",
 
-	drain_cmd = "drain",
 	drain_name = "Drain Alert",
 	drain_desc = "Warn for life drain",
 

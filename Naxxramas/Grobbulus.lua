@@ -14,23 +14,18 @@ local started
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Grobbulus",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Enrage Alert",
 	enrage_desc = "Warn for Enrage",
 
-	youinjected_cmd = "youinjected",
 	youinjected_name = "You're injected Alert",
 	youinjected_desc = "Warn when you're injected",
 
-	otherinjected_cmd = "otherinjected",
 	otherinjected_name = "Others injected Alert",
 	otherinjected_desc = "Warn when others are injected",
 
-	icon_cmd = "icon",
 	icon_name = "Place Icon",
 	icon_desc = "Place a skull icon on an injected person. (Requires promoted or higher)",
 
-	cloud_cmd = "cloud",
 	cloud_name = "Poison Cloud",
 	cloud_desc = "Warn for Poison Clouds",
 

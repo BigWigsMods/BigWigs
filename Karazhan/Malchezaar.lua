@@ -13,19 +13,15 @@ local afflict
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Malchezaar",
 
-	phase_cmd = "engage",
 	phase_name = "Engage",
 	phase_desc = "Alert when changing phases",
 
-	enfeeble_cmd = "enfeeble",
 	enfeeble_name = "Enfeeble",
 	enfeeble_desc = "Show cooldown timer for enfeeble",
 
-	infernals_cmd = "infernals",
 	infernals_name = "Infernals",
 	infernals_desc = "Show cooldown timer for Infernal summons.",
 
-	nova_cmd = "nova",
 	nova_name = "Shadow Nova",
 	nova_desc = "Estimated Shadow Nova timers",
 

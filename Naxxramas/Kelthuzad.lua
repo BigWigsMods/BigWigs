@@ -17,31 +17,24 @@ L:RegisterTranslations("enUS", function() return {
 
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzad Chamber",
 
-	phase_cmd = "phase",
 	phase_name = "Phase Warnings",
 	phase_desc = "Warn for phases.",
 
-	mc_cmd = "mindcontrol",
 	mc_name = "Mind Control Alert",
 	mc_desc = "Alerts when people are mind controlled.",
 
-	fissure_cmd = "fissure",
 	fissure_name = "Shadow Fissure Alert",
 	fissure_desc = "Alerts about incoming Shadow Fizzures.",
 
-	frostblast_cmd = "frostblast",
 	frostblast_name = "Frost Blast Alert",
 	frostblast_desc = "Alerts when people get Frost Blasted.",
 
-	detonate_cmd = "detonate",
 	detonate_name = "Detonate Mana Warning",
 	detonate_desc = "Warns about Detonate Mana soon.",
 
-	detonateicon_cmd = "detonateicon",
 	detonateicon_name = "Raid Icon on Detonate",
 	detonateicon_desc = "Place a raid icon on people with Detonate Mana.",
 
-	guardians_cmd = "guardians",
 	guardians_name = "Guardian Spawns",
 	guardians_desc = "Warn for incoming Icecrown Guardians in phase 3.",
 

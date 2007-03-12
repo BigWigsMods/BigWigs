@@ -22,11 +22,9 @@ L:RegisterTranslations("enUS", function() return {
 	splitwarn = "Splitting!",
 
 	cmd = "Skeram",
-	mc_cmd = "mc",
 	mc_name = "Mind Control Alert",
 	mc_desc = "Warn for Mind Control",
 
-	ae_cmd = "ae",
 	ae_name = "Arcane Explosion Alert",
 	ae_desc = "Warn for Arcane Explosion",
 
@@ -34,7 +32,6 @@ L:RegisterTranslations("enUS", function() return {
 	split_name = "Split Alert",
 	split_desc = "Warn before Create Image",
 
-	icon_cmd = "icon",
 	icon_name = "Place Icon",
 	icon_desc = "Place a skull icon on the mind controlled person (requires promoted or higher)",
 } end )

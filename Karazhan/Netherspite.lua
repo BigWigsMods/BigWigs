@@ -19,15 +19,12 @@ local netherDuration = 5
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Netherspite",
 
-	phase_cmd = "phase",
 	phase_name = "Phases",
 	phase_desc = ("Warns when %s changes from one phase to another"):format(boss),
 
-	voidzone_cmd = "voidzone",
 	voidzone_name = "Voidzones",
 	voidzone_desc = "Warn for Voidzones",
 
-	netherbreath_cmd = "netherbreath",
 	netherbreath_name = "Netherbreath",
 	netherbreath_desc = "Warn for Netherbreath",
 

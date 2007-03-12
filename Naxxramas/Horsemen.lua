@@ -21,7 +21,6 @@ local started = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Horsemen",
 
-	mark_cmd = "mark",
 	mark_name = "Mark Alerts",
 	mark_desc = "Warn for marks",
 
@@ -29,15 +28,12 @@ L:RegisterTranslations("enUS", function() return {
 	shieldwall_name = "Shieldwall Alerts",
 	shieldwall_desc = "Warn for shieldwall",
 
-	void_cmd = "void",
 	void_name = "Void Zone Alerts",
 	void_desc = "Warn on Lady Blaumeux casting Void Zone.",
 
-	meteor_cmd = "meteor",
 	meteor_name = "Meteor Alerts",
 	meteor_desc = "Warn on Thane casting Meteor.",
 
-	wrath_cmd = "wrath",
 	wrath_name = "Holy Wrath Alerts",
 	wrath_desc = "Warn on Zeliek casting Wrath.",
 

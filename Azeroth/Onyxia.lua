@@ -12,19 +12,15 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Onyxia",
 
-	deepbreath_cmd = "deepbreath",
 	deepbreath_name = "Deep Breath alert",
 	deepbreath_desc = "Warn when Onyxia begins to cast Deep Breath ",
 
-	phase2_cmd = "phase2",
 	phase2_name = "Phase 2 alert",
 	phase2_desc = "Warn for Phase 2",
 
-	phase3_cmd = "phase3",
 	phase3_name = "Phase 3 alert",
 	phase3_desc = "Warn for Phase 3",
 
-	onyfear_cmd = "onyfear",
 	onyfear_name = "Fear",
 	onyfear_desc = "Warn for Bellowing Roar in phase 3",
 

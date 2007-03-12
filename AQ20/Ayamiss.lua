@@ -11,7 +11,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Ayamiss",
-	sacrifice_cmd = "sacrifice",
 	sacrifice_name = "Sacrifice Alert",
 	sacrifice_desc = "Warn for Sacrifice",
 

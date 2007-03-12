@@ -18,15 +18,12 @@ local tooltip
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Hydross",
 
-	mark_cmd = "mark",
 	mark_name = "Mark",
 	mark_desc = "Show warnings and counters for marks",
 
-	enrage_cmd = "enrage",
 	enrage_name = "Enrage",
 	enrage_desc = "Warn about enrage",
 
-	stance_cmd = "stance",
 	stance_name = "Stance changes",
 	stance_desc = ("Warn when %s changes stances"):format(boss),
 

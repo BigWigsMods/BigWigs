@@ -14,15 +14,12 @@ local playerName = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Arlokk",
 
-	youmark_cmd = "youmark",
 	youmark_name = "You're marked alert",
 	youmark_desc = "Warn when you are marked",
 
-	othermark_cmd = "othermark",
 	othermark_name = "Others are marked alert",
 	othermark_desc = "Warn when others are marked",
 
-	icon_cmd = "icon",
 	icon_name = "Place Icon",
 	icon_desc = "Place a skull icon on the marked person (requires promoted or higher)",
 

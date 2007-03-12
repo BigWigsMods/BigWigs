@@ -12,11 +12,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Sulfuron",
 
-	inspire_cmd = "inspire",
 	inspire_name = "Inpire Gain Alert",
 	inspire_desc = "Warn when Sulfuron gains Inspire",
 
-	heal_cmd = "heal",
 	heal_name = "Heal Alert",
 	heal_desc = "Warn when a Flamewaker Priest starts healing",
 

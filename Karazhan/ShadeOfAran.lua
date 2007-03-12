@@ -14,27 +14,21 @@ local addsannounced
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Aran",
 
-	adds_cmd = "adds",
 	adds_name = "Elementals",
 	adds_desc = "Warn about the water elemental adds spawning",
 
-	drink_cmd = "drink",
 	drink_name = "Drinking",
 	drink_desc = ("Warn when %s starts to drink"):format(boss),
 
-	engage_cmd = "engage",
 	engage_name = "Engage",
 	engage_desc = ("Warn when %s has been engaged"):format(boss),
 
-	blizzard_cmd = "blizzard",
 	blizzard_name = "Blizzard",
 	blizzard_desc = "Warn when Blizzard is being cast",
 
-	pull_cmd = "pull",
 	pull_name = "Pull/Super AE",
 	pull_desc = "Warn for the magnetic pull and Super Arcane Explosion",
 
-	flame_cmd = "flame",
 	flame_name = "Flame Wreath",
 	flame_desc = "Warn when Flame Wreath is being cast",
 
