@@ -217,7 +217,7 @@ end
 						self:Whisper(player, L["warn1"])
 					end
 					if self.db.profile.icon then
-						self:SetIcon(player)
+						self:Icon(player)
 					end
 				end
 			end
