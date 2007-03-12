@@ -134,7 +134,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
-		if self.db.profile.engage and  then
+		if self.db.profile.engage then
 			self:Message(L["engage_message"], "Attention")
 		end
 		if self.db.profile.enrage then
