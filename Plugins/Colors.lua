@@ -487,18 +487,18 @@ plugin.consoleOptions = {
 --      Initialization      --
 ------------------------------
 
-function plugin:OnRegister()
-	self:RegHex(self.db.profile)
-end
-
-function plugin:RegHex(hex)
+local function RegHex(hex)
 	if type(hex) == "string" then
 		PaintChips:RegisterHex(hex)
 	elseif type(hex) == "table" then
 		for _,hexx in pairs(hex) do
-			self:RegHex(hexx)
+			RegHex(hexx)
 		end
 	end
+end
+
+function plugin:OnEnable()
+	RegHex(self.db.profile)
 end
 
 ------------------------------
