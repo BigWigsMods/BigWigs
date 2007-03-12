@@ -318,7 +318,7 @@ function plugin:RWAddMessage(frame, message, r, g, b, a, t)
 end
 
 function plugin:RBEAddMessage(frame, message, r, g, b, a, t)
-	if self.db.profile.boss and type(arg2) == "string" and BigWigs:HasModule(arg2) then
+	if self.db.profile.boss and type(arg2) == "string" and BigWigs:HasModule(arg2) and BigWigs:IsModuleActive(arg2) then
 		self:Debug(L["Suppressing RaidBossEmoteFrame"], message)
 		return
 	end
