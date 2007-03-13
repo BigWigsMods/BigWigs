@@ -65,6 +65,58 @@ L:RegisterTranslations("enUS", function() return {
 	you = "You",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	fear_name = "Furcht Alarm",
+	fear_desc = "Warnt vor Dr\195\182hnendem Gebr\195\188ll",
+
+	charr_name = "Verbrannte Erde auf Dir",
+	charr_desc = "Warnt wenn du in der Verbrannten Erde stehst",
+
+	phase_name = "Phasen",
+	phase_desc = ("Warnt wenn %s die Phasen wechelt"):format(boss),
+
+	engage_name = "Engage",
+	engage_desc = "Engage alert",
+
+	blast_name = "Ablenkende Asche",
+	blast_desc = "Warnt vor Ablenkende Asche",
+
+	bones_name = "Knochenregen",
+	bones_desc = "Warnt wer den Knochenregen hat",
+
+	icon_name = "Raid Icon",
+	icon_desc = "Platziert ein Raid Icon auf den Spieler der vom Knochenregen betroffen ist(requires promoted or higher)",
+
+	whisper_name = "Whisper Player",
+	whisper_desc = "Fl\195\188stert den Spieler an der vom Knochenregen betroffen ist(requires promoted or higher)",
+
+	fear_trigger = "Schrecken der Nacht beginnt Dr\195\182hnendes Gebr\195\188ll zu wirken.",
+	fear_message = "Fear in 2 sek!",
+	fear_warning = "Fear Soon",
+	fear_bar = "Fear",
+
+	charr_trigger = "Ihr seid von Verbrannte Erde betroffen.",
+	charr_message = "Verbrannte Erde auf DIR!",
+
+	blast_trigger = "Schrecken der Nacht beginnt Ablenkende Asche zu wirken.",
+	blast_message = "Incoming Ablenkende Asche!",
+
+	airphase_trigger = "Abscheuliches Gew\195\188rm! Ich werde euch aus der Luft vernichten!",
+	landphase_trigger1 = "Genug! Ich werde landen und mich h\195\182chst pers\195\182nlich um Euch k\195\188mmern!",
+	landphase_trigger2 = "Insekten! Lasst mich Euch meine Kraft aus n\195\164chster N\195\164he demonstrieren!",
+	airphase_message = "Flug!",
+	landphase_message = "Landung!",
+
+	engage_trigger = "Narren! Ich werde Eurem Leiden ein schnelles Ende setzen!",
+	engage_message = "%s Engaged",
+
+	bones_trigger = "^([^%s]+) ([^%s]+) von Knochenregen betroffen",
+	bones_message = "Knochenregen auf [%s]",
+	bones_whisper = "Knochenregen auf DIR!",
+
+	you = "You",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	fear_name = "공포 경고",
 	fear_desc = "우레와 같은 울부짖음에 대한 경고",
