@@ -274,7 +274,7 @@ BigWigs = AceLibrary("AceAddon-2.0"):new(
 	"AceDB-2.0"
 )
 
-BigWigs:SetModuleMixins("AceDebug-2.0", "AceEvent-2.0", "CandyBar-2.0")
+BigWigs:SetModuleMixins("AceEvent-2.0", "CandyBar-2.0")
 
 local options = {
 	type = "group",
@@ -314,7 +314,6 @@ local options = {
 	},
 }
 
-BigWigs.debugFrame = ChatFrame5
 BigWigs.revision = tonumber(("$Revision$"):sub(12, -3))
 BigWigs.cmdtable = options
 
