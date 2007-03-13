@@ -15,6 +15,12 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_name = "Enrage",
 	enrage_desc = "Timers for enrage",
 
+	mark_name = "Mark",
+	mark_desc = "Warn for Mark of Kazzak on You",
+
+	twist_name = "Twist",
+	twist_desc = "Warn who has Twisted Reflection",
+
 	enrage_trigger1 = "For the Legion! For Kil'Jaeden!",
 	enrage_trigger2 = "%s becomes enraged!",
 	enrage_warning1 = "%s Engaged - Enrage in 50-60sec",
@@ -23,11 +29,25 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_finished = "Enrage over - Next in 50-60sec",
 	enrage_bar = "Enrage",
 	enraged_bar = "<Enraged>",
+
+	mark_trigger = "You are afflicted by Mark of Kazzak.",
+	mark_message = "Mark of Kazzak on You",
+
+	twist_trigger = "^([^%s]+) ([^%s]+) afflicted by Twisted Reflection",
+	twist_message = "Twisted Reflection: %s",
+
+	you = "You",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
 	enrage_name = "Alerte Enrager",
 	enrage_desc = "D\195\169lais entre p\195\169riode enrag\195\169.",
+
+	--mark_name = "Mark",
+	--mark_desc = "Warn for Mark of Kazzak on You",
+
+	--twist_name = "Twist",
+	--twist_desc = "Warn who has Twisted Reflection",
 
 	enrage_trigger1 = "Pour la L\195\169gion\194\160! Pour Kil'Jaeden\194\160!",
 	enrage_trigger2 = "%s devient fou furieux\194\160!",
@@ -37,11 +57,25 @@ L:RegisterTranslations("frFR", function() return {
 	--enrage_finished = "Enrag\195\169 fini", --enUS changed
 	enrage_bar = "Enrag\195\169",
 	--enraged_bar = "<Enraged>",
+
+	--mark_trigger = "You are afflicted by Mark of Kazzak.",
+	--mark_message = "Mark of Kazzak on You",
+
+	--twist_trigger = "^([^%s]+) ([^%s]+) afflicted by Twisted Reflection",
+	--twist_message = "Twisted Reflection: %s",
+
+	--you = "You",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
 	enrage_name = "격노",
 	enrage_desc = "격노에 대한 타이머",
+
+	--mark_name = "Mark",
+	--mark_desc = "Warn for Mark of Kazzak on You",
+
+	--twist_name = "Twist",
+	--twist_desc = "Warn who has Twisted Reflection",
 
 	enrage_trigger1 = "불타는 군단과 킬제덴을 위하여!",
 	enrage_trigger2 = "%s|1이;가; 분노에 휩싸입니다!",
@@ -51,6 +85,14 @@ L:RegisterTranslations("koKR", function() return {
 	--enrage_finished = "격노 종료", --enUS changed
 	enrage_bar = "격노",
 	--enraged_bar = "<Enraged>",
+
+	--mark_trigger = "You are afflicted by Mark of Kazzak.",
+	--mark_message = "Mark of Kazzak on You",
+
+	--twist_trigger = "^([^%s]+) ([^%s]+) afflicted by Twisted Reflection",
+	--twist_message = "Twisted Reflection: %s",
+
+	--you = "You",
 } end)
 
 ----------------------------------
@@ -61,7 +103,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Hellfire Peninsula"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = boss
-mod.toggleoptions = {"enrage", "bosskill"}
+mod.toggleoptions = {"enrage", "mark", "twist", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -73,6 +115,14 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "TwistEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "TwistEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "TwistEvent")
+
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "Twisted", 5)
 end
 
 ------------------------------
@@ -89,10 +139,32 @@ end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if self.db.profile.enrage and msg == L["enrage_trigger2"] then
-		self:Message(L["enrage_message"], "Important")
+		self:Message(L["enrage_message"], "Important", nil, "Alert")
 		self:DelayedMessage(10, L["enrage_finished"], "Positive")
 		self:Bar(L["enraged_bar"], 10, "Spell_Shadow_UnholyFrenzy")
 		self:DelayedMessage(49, L["enrage_warning2"], "Urgent")
 		self:Bar(L["enrage_bar"], 60, "Spell_Shadow_UnholyFrenzy")
+	end
+end
+
+function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
+	if self.db.profile.mark and msg == L["mark_trigger"] then
+		self:Message(L["mark_message"], "Positive", true, "Alarm")
+	end
+end
+
+function mod:TwistEvent(msg)
+	local tplayer, ttype = select(3, msg:find(L["twist_trigger"]))
+	if tplayer then
+		if tplayer == L["you"] then
+			tplayer = UnitName("player")
+		end
+		self:Sync("Twisted "..tplayer)
+	end
+end
+
+function mod:BigWigs_RecvSync(sync, rest, nick)
+	if sync == "Twisted" and rest and self.db.profile.twist then
+		self:Message(L["twist_message"]:format(rest), "Attention")
 	end
 end
