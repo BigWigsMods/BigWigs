@@ -6,8 +6,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local BB = AceLibrary("Babble-Boss-2.2")
 
 BigWigs.modulePrototype.core = BigWigs
-BigWigs.modulePrototype.debugFrame = ChatFrame5
-BigWigs.modulePrototype.revision = 1 -- To be overridden by the module!
 
 function BigWigs.modulePrototype:OnInitialize()
 	-- Unconditionally register, this shouldn't happen from any other place
@@ -20,11 +18,13 @@ function BigWigs.modulePrototype:IsBossModule()
 end
 
 function BigWigs.modulePrototype:GenericBossDeath(msg)
-	if msg == string.format(UNITDIESOTHER, self:ToString()) then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(L["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory") end
+	if msg == UNITDIESOTHER:format(self:ToString()) then
+		if self.db.profile.bosskill then
+			self:Message(L["%s has been defeated"]:format(self:ToString()), "Bosskill", nil, "Victory")
+		end
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
-		if self:IsDebugging() then
-			self:LevelDebug(1, "Boss dead, disabling.")
+		if self.core:IsDebugging() then
+			self.core:LevelDebug(1, "Boss dead, disabling.")
 		end
 		self.core:ToggleModuleActive(self, false)
 	end
@@ -103,8 +103,8 @@ function BigWigs.modulePrototype:CheckForEngage()
 	local go = self:Scan()
 	local running = self:IsEventScheduled(self:ToString().."_CheckStart")
 	if go then
-		if self:IsDebugging() then
-			self:LevelDebug(1, "Scan returned true, engaging.")
+		if self.core:IsDebugging() then
+			self.core:LevelDebug(1, "Scan returned true, engaging.")
 		end
 		self:CancelScheduledEvent(self:ToString().."_CheckStart")
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
@@ -128,8 +128,8 @@ function BigWigs.modulePrototype:CheckForWipe()
 
 	local go = self:Scan()
 	if not go then
-		if self:IsDebugging() then
-			self:LevelDebug(1, "Rebooting module.")
+		if self.core:IsDebugging() then
+			self.core:LevelDebug(1, "Rebooting module.")
 		end
 		if type(self.scanTable) == "table" then
 			for k in pairs(self.scanTable) do
