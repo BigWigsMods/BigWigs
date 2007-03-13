@@ -24,7 +24,7 @@ function BigWigs.modulePrototype:GenericBossDeath(msg)
 		end
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		if self.core:IsDebugging() then
-			self.core:LevelDebug(1, "Boss dead, disabling.")
+			self.core:Debug(self, "Boss dead, disabling.")
 		end
 		self.core:ToggleModuleActive(self, false)
 	end
@@ -104,7 +104,7 @@ function BigWigs.modulePrototype:CheckForEngage()
 	local running = self:IsEventScheduled(self:ToString().."_CheckStart")
 	if go then
 		if self.core:IsDebugging() then
-			self.core:LevelDebug(1, "Scan returned true, engaging.")
+			self.core:Debug(self, "Scan returned true, engaging.")
 		end
 		self:CancelScheduledEvent(self:ToString().."_CheckStart")
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
@@ -129,7 +129,7 @@ function BigWigs.modulePrototype:CheckForWipe()
 	local go = self:Scan()
 	if not go then
 		if self.core:IsDebugging() then
-			self.core:LevelDebug(1, "Rebooting module.")
+			self.core:Debug(self, "Rebooting module.")
 		end
 		if type(self.scanTable) == "table" then
 			for k in pairs(self.scanTable) do
