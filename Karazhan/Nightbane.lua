@@ -139,8 +139,8 @@ L:RegisterTranslations("koKR", function() return {
 	icon_name = "공격대 아이콘",
 	icon_desc = "뼈의 비에 걸린 사람에게 공격대 아이콘 지정(승급자 이상 권한 요구)",
 
-	--whisper_name = "Whisper Player",
-	--whisper_desc = "Whisper the person afflicted by Rain of Bones(requires promoted or higher)",
+	whisper_name = "귓속말 경고",
+	whisper_desc = "뼈의 비에 걸린 사람에게 귓속말 경고(승급자 이상 권한 요구)",
 
 	fear_trigger = "우레와 같은 울부짖음 시전을 시작합니다.",
 	fear_message = "2초 후 공포!",
@@ -164,7 +164,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	bones_trigger = "^([^|;%s]*)(.*)뼈의 비에 걸렸습니다%.$",
 	bones_message = "[%s] 뼈의 비",
-	--bones_whisper = "Rain of Bones on you!",
+	bones_whisper = "당신은 뼈의 비!",
 
 	you = "당신은",
 } end )

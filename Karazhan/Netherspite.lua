@@ -84,6 +84,9 @@ L:RegisterTranslations("koKR", function() return {
 	netherbreath_name = "황천의 숨결",
 	netherbreath_desc = "황천의 숨결 경고",
 
+	enrage_name = "격노",
+	enrage_desc = "9분 후 격노에 대한 알림.",
+
 	phase1_message = "물러남 - 황천의 숨결 종료!",
 	phase1_warning = "황천의 원령 전투 개시 - 60초 후 분노!",
 	phase1_bar = "다음 물러남",
@@ -91,6 +94,9 @@ L:RegisterTranslations("koKR", function() return {
 	phase2_message = "분노 - 황천의 숨결 시전!",
 	phase2_bar = "다음 분노",
 	phase2_trigger = "%s|1이;가; 황천의 기운을 받고 분노에 휩싸입니다!",
+
+	enrage_warning = "%d초 이내 격노!",
+	enrage_bar = "격노",
 
 	voidzone_trigger = "공허의 지대|1을;를; 시전합니다.",
 	voidzone_warn = "공허의 지대 (%d)!",

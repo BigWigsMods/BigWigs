@@ -82,11 +82,23 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	engage_name = "전투시작",
+	engage_desc = ("%s 전투 개시 알림"):format(boss),
+
+	engage_trigger = "Ah, you're just in time.", -- check
+	engage_message = ("%s 전투 개시!"):format(boss),
+
 	sacrifice_name = "희생",
 	sacrifice_desc = "플레이어의 희생에 대한 경고",
 
+	enrage_name = "격노",
+	enrage_desc = "10분 후 격노에 대한 알림.",
+
 	weak_name = "약화",
 	weak_desc = "약화 상태에 대한 경고",
+
+	enrage_warning = "%d초 이내 격노!",
+	enrage_bar = "격노",
 
 	sacrifice_you = "당신은",
 	sacrifice_trigger = "^([^|;%s]*)(.*)희생에 걸렸습니다%.$",

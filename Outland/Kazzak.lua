@@ -71,28 +71,28 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_name = "격노",
 	enrage_desc = "격노에 대한 타이머",
 
-	--mark_name = "Mark",
-	--mark_desc = "Warn for Mark of Kazzak on You",
+	mark_name = "징표",
+	mark_desc = "당신에 카자크의 징표 알림",
 
 	--twist_name = "Twist",
 	--twist_desc = "Warn who has Twisted Reflection",
 
 	enrage_trigger1 = "불타는 군단과 킬제덴을 위하여!",
 	enrage_trigger2 = "%s|1이;가; 분노에 휩싸입니다!",
-	enrage_warning1 = "%s 전투 개시 - 1분 후 격노",
-	--enrage_warning2 = "격노 5초 전", --enUS changed
+	enrage_warning1 = "%s 전투 개시 - 50-60초 후 격노",
+	enrage_warning2 = "잠시 후 격노!",
 	enrage_message = "10초간 격노!",
-	--enrage_finished = "격노 종료", --enUS changed
+	enrage_finished = "격노 종료 - 다음은 50-60초 후",
 	enrage_bar = "격노",
-	--enraged_bar = "<Enraged>",
+	enraged_bar = "<격노>",
 
-	--mark_trigger = "You are afflicted by Mark of Kazzak.",
-	--mark_message = "Mark of Kazzak on You",
+	mark_trigger = "당시은 카자크의 징표에 걸렸습니다.",
+	mark_message = "당신에 카자크의 징표",
 
 	--twist_trigger = "^([^%s]+) ([^%s]+) afflicted by Twisted Reflection",
 	--twist_message = "Twisted Reflection: %s",
 
-	--you = "You",
+	you = "당신은",
 } end)
 
 ----------------------------------
