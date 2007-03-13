@@ -303,7 +303,7 @@ end
 
 function plugin:ChatFrame_MessageEventHandler(event)
 	if self:IsChannelSuppressed(event) and self:IsSpam(arg1) then
-		self:Debug(L["Suppressing Chatframe"], event, arg1)
+		self.core:Debug(L["Suppressing Chatframe"], event, arg1)
 		return
 	end
 	return self.hooks["ChatFrame_MessageEventHandler"](event)
@@ -311,7 +311,7 @@ end
 
 function plugin:RWAddMessage(frame, message, r, g, b, a, t)
 	if self.db.profile.rw and self:IsSpam(message) then
-		self:Debug(L["Suppressing RaidWarningFrame"], message)
+		self.core:Debug(L["Suppressing RaidWarningFrame"], message)
 		return
 	end
 	self.hooks[RaidWarningFrame].AddMessage(frame, message, r, g, b, a, t)
@@ -319,7 +319,7 @@ end
 
 function plugin:RBEAddMessage(frame, message, r, g, b, a, t)
 	if self.db.profile.boss and type(arg2) == "string" and BigWigs:HasModule(arg2) and BigWigs:IsModuleActive(arg2) then
-		self:Debug(L["Suppressing RaidBossEmoteFrame"], message)
+		self.core:Debug(L["Suppressing RaidBossEmoteFrame"], message)
 		return
 	end
 	self.hooks[RaidBossEmoteFrame].AddMessage(frame, message, r, g, b, a, t)
@@ -327,7 +327,7 @@ end
 
 function plugin:CTRA_AddMessage(obj, text, r, g, b, a, t)
 	if self.db.profile.rs and self:IsSpam(text) then
-		self:Debug(L["Suppressing CT_RAMessageFrame"], text)
+		self.core:Debug(L["Suppressing CT_RAMessageFrame"], text)
 		return
 	end
 	self.hooks[obj].AddMessage(obj, text, r, g, b, a, t)
