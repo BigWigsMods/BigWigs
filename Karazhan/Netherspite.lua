@@ -4,13 +4,8 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Netherspite"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-
 local started
 local voidcount
-
-local p1Duration = 60
-local p2Duration = 30
-local netherDuration = 5
 
 ----------------------------
 --      Localization     --
@@ -170,7 +165,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		end
 		if self.db.profile.phase then
 			self:Message(L["phase1_warning"], "Important")
-			self:Bar(L["phase2_bar"], p1Duration, "Spell_ChargePositive")
+			self:Bar(L["phase2_bar"], 60, "Spell_ChargePositive")
 		end
 		if self.db.profile.enrage then
 			self:DelayedMessage(480, L["enrage_warning"]:format(60), "Attention")
@@ -180,7 +175,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		end
 	elseif sync == "Netherbreath" and self.db.profile.netherbreath then
 		self:Message( L["netherbreath_warn"], "Urgent")
-		self:Bar(L["netherbreath_warn"], netherDuration, "Spell_Arcane_MassDispel")
+		self:Bar(L["netherbreath_warn"], 5, "Spell_Arcane_MassDispel")
 	end
 end
 
@@ -189,10 +184,10 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["phase1_trigger"] then
 		self:TriggerEvent("BigWigs_StopBar", self, L["netherbreath_warn"])
 		self:Message(L["phase1_message"], "Important")
-		self:Bar(L["phase2_bar"], p1Duration, "Spell_ChargePositive")
+		self:Bar(L["phase2_bar"], 60, "Spell_ChargePositive")
 	elseif msg == L["phase2_trigger"] then
 		self:Message(L["phase2_message"], "Important")
-		self:Bar(L["phase1_bar"], p2Duration, "Spell_ChargeNegative")
+		self:Bar(L["phase1_bar"], 30, "Spell_ChargeNegative")
 	end	
 end
 
