@@ -15,19 +15,19 @@ local growcount
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Gruul",
 
-	engage_name = "Engage",
+	engage = "Engage",
 	engage_desc = "Warn when Grull is pulled",
 
-	grow_name = "Grow",
+	grow = "Grow",
 	grow_desc = "Count and warn for Grull's grow",
 
-	grasp_name = "Grasp",
+	grasp = "Grasp",
 	grasp_desc = "Grasp warnings and timers",
 
-	cavein_name = "Cave In on You",
+	cavein = "Cave In on You",
 	cavein_desc = "Warn for a Cave In on You",
 
-	silence_name = "Silence",
+	silence = "Silence",
 	silence_desc = "Warn when Gruul casts AOE Silence (Reverberation)",
 
 	engage_trigger = "Come.... and die.",
@@ -55,19 +55,19 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	engage_name = "Alerte Engagement",
+	engage = "Alerte Engagement",
 	engage_desc = "Pr\195\169viens du d\195\169but du combat.",
 
-	grow_name = "Alerte Croissance",
+	grow = "Alerte Croissance",
 	grow_desc = "Compte et avertis les croissances de Grull.",
 
-	grasp_name = "Alerte Emprise",
+	grasp = "Alerte Emprise",
 	grasp_desc = "Avertissement et d\195\169lais pour Emprise du seigneur gronn.",
 
-	cavein_name = "Alerte Eboulement sur vous",
+	cavein = "Alerte Eboulement sur vous",
 	cavein_desc = "Pr\195\169viens quand vous \195\170tes sous un \195\169boulement.",
 
-	silence_name = "Silence",
+	silence = "Silence",
 	silence_desc = "Pr\195\169viens quand Gruul lance sont Silence de zone(R\195\169verb\195\169ration)",
 
 	engage_trigger = "Venez\226\128\166 mourir.",
@@ -95,16 +95,16 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	engage_name = "Pull Warnung",
+	engage = "Pull Warnung",
 	engage_desc = "Warnt, wenn Gruul gepulled wird",
 
-	--grow_name = "Wachstum Warnung", --enUS changed
+	--grow = "Wachstum Warnung", --enUS changed
 	--grow_desc = "Warnt, wenn Gruul w\195\164chst", --enUS changed
 
-	grasp_name = "Griff Warnung",
+	grasp = "Griff Warnung",
 	--grasp_desc = "Warnt, wenn Gruul Griff des Gronnlords zaubert", --enUS changed
 
-	cavein_name = "H\195\182hleneinst\195\188rz auf dich",
+	cavein = "H\195\182hleneinst\195\188rz auf dich",
 	cavein_desc = "Warnt bei H\195\182hleneinst\195\188rz auf dir",
 
 	engage_trigger = "Kommt und sterbt.",
@@ -128,19 +128,19 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	engage_name = "전투 개시",
+	engage = "전투 개시",
 	engage_desc = "전투 개시 알림",
 
-	grow_name = "성장",
+	grow = "성장",
 	grow_desc = "그룰의 성장에 대한 카운트와 경고",
 
-	grasp_name = "손아귀",
+	grasp = "손아귀",
 	grasp_desc = "손아귀 경고와 타이머",
 
-	cavein_name = "당신의 함몰",
+	cavein = "당신의 함몰",
 	cavein_desc = "당신의 함몰에 대한 경고",
 
-	silence_name = "침묵 경고",
+	silence = "침묵 경고",
 	silence_desc = "그룰이 광역 침묵(Reverberation) 시전 시 경고",
 
 	engage_trigger = "이리 와서... 죽어.",

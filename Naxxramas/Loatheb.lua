@@ -14,13 +14,13 @@ local started = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Loatheb",
 
-	doom_name = "Inevitable Doom Alert",
+	doom = "Inevitable Doom Alert",
 	doom_desc = "Warn for Inevitable Doom",
 
-	spore_name = "Spore Spawning Alert",
+	spore = "Spore Spawning Alert",
 	spore_desc = "Warn when a spore spawns",
 
-	curse_name = "Remove Curse Alert",
+	curse = "Remove Curse Alert",
 	curse_desc = "Warn when curses are removed from Loatheb",
 
 	doombar = "Inevitable Doom %d",
@@ -47,13 +47,13 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	doom_name = "파멸 경고",
+	doom = "파멸 경고",
 	doom_desc = "피할 수 없는 파멸에 대한 경고",
 
-	spore_name = "포자 경고",
+	spore = "포자 경고",
 	spore_desc = "포자 소환에 대한 경고",
 
-	curse_name = "저주 해제 경고",
+	curse = "저주 해제 경고",
 	curse_desc = "로데브 저주 해제에 대한 경고",
 
 	doombar = "피할 수 없는 파멸 %d",
@@ -80,13 +80,13 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	doom_name = "Unausweichliches Schicksal",
+	doom = "Unausweichliches Schicksal",
 	doom_desc = "Warnung f\195\188r Unausweichliches Schicksal.",
 
-	spore_name = "Warnung bei Sporen",
+	spore = "Warnung bei Sporen",
 	spore_desc = "Warnung wenn Sporen auftauchen",
 
-	curse_name = "Fluch-Aufhebungs Warnung",
+	curse = "Fluch-Aufhebungs Warnung",
 	curse_desc = "Warnung wenn Fl\195\188che bei Loatheb aufgehoben wurden",
 
 	doombar = "Unausweichliches Schicksal %d",
@@ -113,13 +113,13 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	doom_name = "必然的厄运警报",
+	doom = "必然的厄运警报",
 	doom_desc = "必然的厄运警报",
 
-	spore_name = "孢子警报",
+	spore = "孢子警报",
 	spore_desc = "孢子警报",
 
-	curse_name = "诅咒驱散警报",
+	curse = "诅咒驱散警报",
 	curse_desc = "洛欧塞布驱散了一个诅咒效果时发出警报",
 
 	doombar = "必然的厄运",
@@ -146,13 +146,13 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	doom_name = "無可避免的末日警報",
+	doom = "無可避免的末日警報",
 	doom_desc = "無可避免的末日警報",
 
-	spore_name = "孢子警報",
+	spore = "孢子警報",
 	spore_desc = "孢子警報",
 
-	curse_name = "詛咒驅散警報",
+	curse = "詛咒驅散警報",
 	curse_desc = "洛斯伯驅散了一個詛咒效果時發出警報",
 
 	doombar = "無可避免的末日",

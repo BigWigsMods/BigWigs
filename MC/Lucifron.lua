@@ -15,16 +15,16 @@ local prior2
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Lucifron",
 
-	curse_name = "Lucifron's Curse alert",
+	curse = "Lucifron's Curse alert",
 	curse_desc = "Warn for Lucifron's Curse",
 
-	doom_name = "Impending Doom alert",
+	doom = "Impending Doom alert",
 	doom_desc = "Warn for Impending Doom",
 
-	mc_name = "Mind Control alert",
+	mc = "Mind Control alert",
 	mc_desc = "Warn about afflicted players",
 
-	icon_name = "Place Icon",
+	icon = "Place Icon",
 	icon_desc = "Place a skull icon on the mind controlled person (requires promoted or higher)",
 
 	curse_trigger = "afflicted by Lucifron",
@@ -45,16 +45,16 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
-	curse_name = "诅咒警报",
+	curse = "诅咒警报",
 	curse_desc = "诅咒警报",
 
-	doom_name = "末日降临警报",
+	doom = "末日降临警报",
 	doom_desc = "末日降临警报",
 
-	--mc_name = "Mind Control alert",
+	--mc = "Mind Control alert",
 	--mc_desc = "Warn about afflicted players",
 
-	icon_name = "标记精神控制",
+	icon = "标记精神控制",
 	icon_desc = "团队标记被精神控制者 (需要助力或更高权限)",
 
 	curse_trigger = "受到了鲁西弗隆的诅咒",
@@ -75,16 +75,16 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	curse_name = "詛咒警報",
+	curse = "詛咒警報",
 	curse_desc = "當魯西弗隆使用群體詛咒技能時發出警報",
 
-	doom_name = "末日降臨警報",
+	doom = "末日降臨警報",
 	doom_desc = "當魯西弗隆使用末日降臨技能時發出警報",
 
-	--mc_name = "Mind Control alert",
+	--mc = "Mind Control alert",
 	--mc_desc = "Warn about afflicted players",
 
-	icon_name = "標記被精神控制的隊友",
+	icon = "標記被精神控制的隊友",
 	icon_desc = "在被精神控制的隊友頭上設置標記 (需要助手或領隊權限)",
 
 	curse_trigger = "受到了魯西弗隆的詛咒",
@@ -105,16 +105,16 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	curse_name = "루시프론의 저주 경고",
+	curse = "루시프론의 저주 경고",
 	curse_desc = "루시프론의 저주에 대한 경고",
 
-	doom_name = "파멸의 예언 경고",
+	doom = "파멸의 예언 경고",
 	doom_desc = "파멸의 예언에 대한 경고",
 
-	mc_name = "정신 지배 경고",
+	mc = "정신 지배 경고",
 	mc_desc = "정신 지배에 걸린 사람에 대한 경고",
 
-	icon_name = "아이콘 지정",
+	icon = "아이콘 지정",
 	icon_desc = "정신 지배된 사람에게 해골 아이콘 지정 (승급자 이상 필요)",
 
 	curse_trigger = "루시프론의 저주에 걸렸습니다.",
@@ -135,16 +135,16 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	curse_name = "Lucifrons Fluch",
+	curse = "Lucifrons Fluch",
 	curse_desc = "Warnung vor Lucifrons Fluch.",
 
-	doom_name = "Drohende Verdammnis",
+	doom = "Drohende Verdammnis",
 	doom_desc = "Warnung vor Drohender Verdammnis.",
 
-	--mc_name = "Mind Control alert",
+	--mc = "Mind Control alert",
 	--mc_desc = "Warn about afflicted players",
 
-	icon_name = "Symbol",
+	icon = "Symbol",
 	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der unter Gedankenkontrolle steht. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 
 	curse_trigger = "von Lucifrons Fluch betroffen",
@@ -165,16 +165,16 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	curse_name = "Alerte Mal\195\169diction de Lucifron",
+	curse = "Alerte Mal\195\169diction de Lucifron",
 	curse_desc = "Pr\195\169viens des mal\195\169dictions de Lucifron.",
 
-	doom_name = "Alerte Mal\195\169diction imminente",
+	doom = "Alerte Mal\195\169diction imminente",
 	doom_desc = "Pr\195\169viens des mal\195\169dictions imminentes.",
 
-	mc_name = "Alerte Contr\195\180le mental",
+	mc = "Alerte Contr\195\180le mental",
 	mc_desc = "Pr\195\169viens quand un joueur est sous contr\195\180le mental.",
 
-	icon_name = "Placer une ic\195\180ne",
+	icon = "Placer une ic\195\180ne",
 	icon_desc = "Place une ic\195\180ne de raid sur la personne sous contr\195\180le mental (n\195\169cessite d'\195\170tre promu ou mieux).",
 
 	curse_trigger = "subit les effets de Mal\195\169diction de Lucifron",

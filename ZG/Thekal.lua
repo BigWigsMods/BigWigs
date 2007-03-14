@@ -12,10 +12,10 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Thekal",
 
-	heal_name = "Heal Alert",
+	heal = "Heal Alert",
 	heal_desc = "Warn for healing",
 
-	tiger_name = "Tigers Alert",
+	tiger = "Tigers Alert",
 	tiger_desc = "Warn for incoming tigers",
 
 	tigers_trigger = "High Priest Thekal performs Summon Zulian Guardians.",
@@ -26,10 +26,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	heal_name = "Heilung",
+	heal = "Heilung",
 	heal_desc = "Warnung, wenn Zealot Lor'Khan sich heilt.",
 
-	tiger_name = "Tiger",
+	tiger = "Tiger",
 	tiger_desc = "Warnung, wenn Hohepriester Thekal Tiger beschw\195\182rt.",
 
 	tigers_trigger = "Hohepriester Thekal f\195\188hrt Zulianische W\195\164chter beschw\195\182ren aus.",
@@ -40,10 +40,10 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	heal_name = "Alerte Soins",
+	heal = "Alerte Soins",
 	heal_desc = "Pr\195\169viens en cas de soin.",
 
-	tiger_name = "Alerte Tigres",
+	tiger = "Alerte Tigres",
 	tiger_desc = "Pr\195\169viens de l'invocation de tigres.",
 
 	tigers_trigger = "Grand pr\195\170tre Thekal ex\195\169cute Invocation de gardiens zuliens.",
@@ -54,10 +54,10 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	heal_name = "치유 경고",
+	heal = "치유 경고",
 	heal_desc = "치유에 대한 경고",
 
-	tiger_name = "호랑이 경고",
+	tiger = "호랑이 경고",
 	tiger_desc = "호랑이 소환시 경고",
 
 	tigers_trigger = "대사제 데칼|1이;가; 줄리안 수호표범 소환|1을;를; 사용했습니다.",
@@ -68,10 +68,10 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	heal_name = "治疗警报",
+	heal = "治疗警报",
 	heal_desc = "治疗警报",
 
-	tiger_name = "老虎警报",
+	tiger = "老虎警报",
 	tiger_desc = "小老虎出现时发出警报",
 
 	tigers_trigger = "高阶祭司塞卡尔使用召唤祖利安守护者。",
@@ -81,10 +81,10 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	heal_name = "治療警報",
+	heal = "治療警報",
 	heal_desc = "治療警報",
 
-	tiger_name = "老虎警報",
+	tiger = "老虎警報",
 	tiger_desc = "小老虎出現時發出警報",
 
 	tigers_trigger = "古拉巴什食腐者使用召喚祖利安守護者。",

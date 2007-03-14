@@ -33,10 +33,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Majordomo",
 
-	magic_name = "Magic Reflection alert",
+	magic = "Magic Reflection alert",
 	magic_desc = "Warn for Magic Reflection",
 
-	dmg_name = "Damage Shields alert",
+	dmg = "Damage Shields alert",
 	dmg_desc = "Warn for Damage Shields",
 } end)
 
@@ -58,10 +58,10 @@ L:RegisterTranslations("zhCN", function() return {
 	bar2text = "伤害反射护盾",
 	bar3text = "新的反射护盾",
 
-	magic_name = "魔法反射护盾警报",
+	magic = "魔法反射护盾警报",
 	magic_desc = "魔法反射护盾警报",
 
-	dmg_name = "伤害反射护盾警报",
+	dmg = "伤害反射护盾警报",
 	dmg_desc = "伤害反射护盾警报",
 } end)
 
@@ -83,10 +83,10 @@ L:RegisterTranslations("zhTW", function() return {
 	bar2text = "傷害護盾",
 	bar3text = "新生力量",
 
-	magic_name = "魔法反射警報",
+	magic = "魔法反射警報",
 	magic_desc = "通報週期性施放的魔法反射",
 
-	dmg_name = "傷害護盾警報",
+	dmg = "傷害護盾警報",
 	dmg_desc = "通報週期性施放的傷害護盾",
 } end)
 
@@ -108,10 +108,10 @@ L:RegisterTranslations("koKR", function() return {
 	bar2text = "피해 보호막",
 	bar3text = "새로운 버프",
 
-	magic_name = "마법 보호막 경고",
+	magic = "마법 보호막 경고",
 	magic_desc = "마법 보호막에 대한 경고",
 
-	dmg_name = "피해 보호막 경고",
+	dmg = "피해 보호막 경고",
 	dmg_desc = "피해 보호막에 대한 경고",
 } end)
 
@@ -133,10 +133,10 @@ L:RegisterTranslations("deDE", function() return {
 	bar2text = "Schadensschild",
 	bar3text = "N\195\164chstes Schild",
 
-	magic_name = "Magiereflexion",
+	magic = "Magiereflexion",
 	magic_desc = "Warnung, wenn Magiereflexion aktiv.",
 
-	dmg_name = "Schadensschild",
+	dmg = "Schadensschild",
 	dmg_desc = "Warnung, wenn Schadensschild aktiv.",
 } end)
 
@@ -157,10 +157,10 @@ L:RegisterTranslations("frFR", function() return {
 	bar2text = "Bouclier de d\195\169g\195\162ts",
 	bar3text = "Nouveaux Bouclier",
 
-	magic_name = "Alerte Bouclier de Sorts",
+	magic = "Alerte Bouclier de Sorts",
 	magic_desc = "Pr\195\169viens des boucliers de sorts.",
 
-	dmg_name = "Alerte Bouclier de D\195\169g\195\162ts",
+	dmg = "Alerte Bouclier de D\195\169g\195\162ts",
 	dmg_desc = "Pr\195\169viens des boucliers de d\195\169g\195\162ts.",
 } end)
 

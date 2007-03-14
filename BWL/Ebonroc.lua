@@ -30,19 +30,19 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Ebonroc",
 
-	wingbuffet_name = "Wing Buffet alert",
+	wingbuffet = "Wing Buffet alert",
 	wingbuffet_desc = "Warn for Wing Buffet",
 
-	shadowflame_name = "Shadow Flame alert",
+	shadowflame = "Shadow Flame alert",
 	shadowflame_desc = "Warn for Shadow Flame",
 
-	youcurse_name = "Shadow of Ebonroc on you alert",
+	youcurse = "Shadow of Ebonroc on you alert",
 	youcurse_desc = "Warn when you got Shadow of Ebonroc",
 
-	elsecurse_name = "Shadow of Ebonroc on others alert",
+	elsecurse = "Shadow of Ebonroc on others alert",
 	elsecurse_desc = "Warn when others got Shadow of Ebonroc",
 
-	shadowbar_name = "Shadow of Ebonroc timer bar",
+	shadowbar = "Shadow of Ebonroc timer bar",
 	shadowbar_desc = "Shows a timer bar when someone gets Shadow of Ebonroc",
 } end)
 
@@ -63,19 +63,19 @@ L:RegisterTranslations("zhCN", function() return {
 	wingbuffet_bar = "龙翼打击",
 	shadowcurse_bar = "%s - 埃博诺克之影",
 
-	wingbuffet_name = "龙翼打击警报",
+	wingbuffet = "龙翼打击警报",
 	wingbuffet_desc = "龙翼打击警报",
 
-	shadowflame_name = "暗影烈焰警报",
+	shadowflame = "暗影烈焰警报",
 	shadowflame_desc = "暗影烈焰警报",
 
-	youcurse_name = "玩家埃博诺克之影警报",
+	youcurse = "玩家埃博诺克之影警报",
 	youcurse_desc = "你中了埃博诺克之影时发出警报",
 
-	elsecurse_name = "队友埃博诺克之影警报",
+	elsecurse = "队友埃博诺克之影警报",
 	elsecurse_desc = "队友中了埃博诺克之影时发出警报",
 
-	shadowbar_name = "博诺克之影时间条",
+	shadowbar = "博诺克之影时间条",
 	shadowbar_desc = "显示博诺克之影持续时间的一个时间条",
 } end)
 
@@ -96,19 +96,19 @@ L:RegisterTranslations("zhTW", function() return {
 	wingbuffet_bar = "龍翼打擊",
 	shadowcurse_bar = "%s - 埃博諾克之影",
 
-	wingbuffet_name = "龍翼打擊警報",
+	wingbuffet = "龍翼打擊警報",
 	wingbuffet_desc = "當埃博諾克施放龍翼打擊時發出警報",
 
-	shadowflame_name = "暗影烈焰警報",
+	shadowflame = "暗影烈焰警報",
 	shadowflame_desc = "當埃博諾克施放暗影烈焰時發出警報",
 
-	youcurse_name = "埃博諾克之影警報",
+	youcurse = "埃博諾克之影警報",
 	youcurse_desc = "你中了埃博諾克之影時發出警報",
 
-	elsecurse_name = "隊友埃博諾克之影警報",
+	elsecurse = "隊友埃博諾克之影警報",
 	elsecurse_desc = "隊友中了埃博諾克之影時發出警報",
 
-	shadowbar_name = "埃博諾克之影時間條",
+	shadowbar = "埃博諾克之影時間條",
 	shadowbar_desc = "顯示埃博諾克之影持續時間的時間條",
 } end)
 
@@ -130,19 +130,19 @@ L:RegisterTranslations("koKR", function() return {
 	wingbuffet_bar = "폭풍 날개",
 	shadowcurse_bar = "%s - 에본로크의 그림자",
 
-	wingbuffet_name = "폭풍 날개 경고",
+	wingbuffet = "폭풍 날개 경고",
 	wingbuffet_desc = "폭풍 날개에 대한 경고",
 
-	shadowflame_name = "암흑의 불길 경고",
+	shadowflame = "암흑의 불길 경고",
 	shadowflame_desc = "암흑의 불길에 대한 경고",
 
-	youcurse_name = "자신의 에본로크의 그림자 경고",
+	youcurse = "자신의 에본로크의 그림자 경고",
 	youcurse_desc = "자신이 에본로크의 그림자에 걸렸을 때 경고",
 
-	elsecurse_name = "타인의 에본로크의 그림자 경고",
+	elsecurse = "타인의 에본로크의 그림자 경고",
 	elsecurse_desc = "타인이 에본로크의 그림자에 걸렸을 때 경고",
 
-	shadowbar_name = "에본로크의 그림자 타이머 바",
+	shadowbar = "에본로크의 그림자 타이머 바",
 	shadowbar_desc = "에본로크의 그림자가 걸렸을 때 타이머 바 표시",
 } end)
 
@@ -163,19 +163,19 @@ L:RegisterTranslations("deDE", function() return {
 	wingbuffet_bar = "Fl\195\188gelsto\195\159",
 	shadowcurse_bar = "%s - Schattenschwinges Schatten",
 
-	wingbuffet_name = "Fl\195\188gelsto\195\159",
+	wingbuffet = "Fl\195\188gelsto\195\159",
 	wingbuffet_desc = "Warnung, wenn Schattenschwinge Fl\195\188gelsto\195\159 wirkt.",
 
-	shadowflame_name = "Schattenflamme",
+	shadowflame = "Schattenflamme",
 	shadowflame_desc = "Warnung, wenn Schattenschwinge Schattenflamme wirkt.",
 
-	youcurse_name = "Schatten auf Dir",
+	youcurse = "Schatten auf Dir",
 	youcurse_desc = "Warnung, wenn Du Schattenschwinges Schatten hast.",
 
-	elsecurse_name = "Schatten auf Anderen",
+	elsecurse = "Schatten auf Anderen",
 	elsecurse_desc = "Warnung, wenn andere Spieler Schattenschwinges Schatten haben.",
 
-	shadowbar_name = "Schattenschwinges Schatten",
+	shadowbar = "Schattenschwinges Schatten",
 	shadowbar_desc = "Zeigt einen Anzeigebalken wenn jemand Schattenschwinges Schatten hat.",
 } end)
 
@@ -196,19 +196,19 @@ L:RegisterTranslations("frFR", function() return {
 	wingbuffet_bar = "Frappe des ailes",
 	shadowcurse_bar = "%s - Ombre de Roch\195\169b\195\168ne",
 
-	wingbuffet_name = "Alerte Frappe des ailes",
+	wingbuffet = "Alerte Frappe des ailes",
 	wingbuffet_desc = "Pr\195\169viens quand Roch\195\169b\195\168ne effectue sa Frappe des ailes.",
 
-	shadowflame_name = "Alerte Flamme d'ombre",
+	shadowflame = "Alerte Flamme d'ombre",
 	shadowflame_desc = "Pr\195\169viens quand l'incantation de la Flamme d'ombre est imminente.",
 
-	youcurse_name = "Alerte Ombre de Roch\195\169b\195\168ne sur vous",
+	youcurse = "Alerte Ombre de Roch\195\169b\195\168ne sur vous",
 	youcurse_desc = "Pr\195\169viens quand vous subissez l'Ombre de Roch\195\169b\195\168ne.",
 
-	elsecurse_name = "Alerte Ombre de Roch\195\169b\195\168ne sur les autres",
+	elsecurse = "Alerte Ombre de Roch\195\169b\195\168ne sur les autres",
 	elsecurse_desc = "Pr\195\169viens quand les autres subissent l'Ombre de Roch\195\169b\195\168ne.",
 
-	shadowbar_name = "Barre Ombre de Roch\195\169b\195\168ne",
+	shadowbar = "Barre Ombre de Roch\195\169b\195\168ne",
 	shadowbar_desc = "Affiche une barre temporelle quand quelqu'un subit l'Ombre de Roch\195\169b\195\168ne.",
 } end)
 

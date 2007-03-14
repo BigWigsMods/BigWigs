@@ -12,10 +12,10 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Sulfuron",
 
-	inspire_name = "Inpire Gain Alert",
+	inspire = "Inpire Gain Alert",
 	inspire_desc = "Warn when Sulfuron gains Inspire",
 
-	heal_name = "Heal Alert",
+	heal = "Heal Alert",
 	heal_desc = "Warn when a Flamewaker Priest starts healing",
 
 	inspire_trigger = "%s gains Inspire",
@@ -28,10 +28,10 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	inspire_name = "Alerte Inspirer",
+	inspire = "Alerte Inspirer",
 	inspire_desc = "Pr\195\169viens quand le Messager de Sulfuron gagne Inspirer.",
 
-	heal_name = "Alerte Soins",
+	heal = "Alerte Soins",
 	heal_desc = "Pr\195\169viens quand un Pr\195\170tre Attise-flammes commence \195\160 lancer un soin.",
 
 	inspire_trigger = "%s gagne Inspirer",

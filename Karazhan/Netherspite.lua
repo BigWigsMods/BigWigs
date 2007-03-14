@@ -14,16 +14,16 @@ local voidcount
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Netherspite",
 
-	phase_name = "Phases",
+	phase = "Phases",
 	phase_desc = ("Warns when %s changes from one phase to another"):format(boss),
 
-	voidzone_name = "Voidzones",
+	voidzone = "Voidzones",
 	voidzone_desc = "Warn for Voidzones",
 
-	netherbreath_name = "Netherbreath",
+	netherbreath = "Netherbreath",
 	netherbreath_desc = "Warn for Netherbreath",
 
-	enrage_name = "Enrage",
+	enrage = "Enrage",
 	enrage_desc = "Warn about enrage after 9min.",
 
 	phase1_message = "Withdrawal - Netherbreaths Over",
@@ -45,13 +45,13 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	phase_name = "Phase",
+	phase = "Phase",
 	phase_desc = ("Warnt wenn %s von einer Phase zur anderen wechselt"):format(boss),
 
-	voidzone_name = "Zone der Leere",
+	voidzone = "Zone der Leere",
 	voidzone_desc = "Warnt vor Zone der Leere",
 
-	netherbreath_name = "Netheratem",
+	netherbreath = "Netheratem",
 	netherbreath_desc = "Warnt vor Netheratem",
 
 	phase1_message = "Withdrawal - Netheratem vorbei",
@@ -70,16 +70,16 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	phase_name = "단계",
+	phase = "단계",
 	phase_desc = ("%s의 다음 단계로 변화 시 경고"):format(boss),
 
-	voidzone_name = "공허의 지대",
+	voidzone = "공허의 지대",
 	voidzone_desc = "공허의 지대 경고",
 
-	netherbreath_name = "황천의 숨결",
+	netherbreath = "황천의 숨결",
 	netherbreath_desc = "황천의 숨결 경고",
 
-	enrage_name = "격노",
+	enrage = "격노",
 	enrage_desc = "9분 후 격노에 대한 알림.",
 
 	phase1_message = "물러남 - 황천의 숨결 종료!",
@@ -101,13 +101,13 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	phase_name = "Alerte Phases",
+	phase = "Alerte Phases",
 	phase_desc = ("Pr\195\169viens quand %s passe d'une phase \195\160 l'autre"):format(boss),
 
-	voidzone_name = "Zone de vide",
+	voidzone = "Zone de vide",
 	voidzone_desc = "Annonce les Zone de vide",
 
-	netherbreath_name = "Souffle de N\195\169ant",
+	netherbreath = "Souffle de N\195\169ant",
 	netherbreath_desc = "Annonce les Souffle de N\195\169ant",
 
 	phase1_message = "Retrait - Plus de Souffle de N\195\169ant",

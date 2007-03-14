@@ -12,13 +12,13 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Kazzak",
 
-	enrage_name = "Enrage",
+	enrage = "Enrage",
 	enrage_desc = "Timers for enrage",
 
-	mark_name = "Mark",
+	mark = "Mark",
 	mark_desc = "Warn for Mark of Kazzak on You",
 
-	twist_name = "Twist",
+	twist = "Twist",
 	twist_desc = "Warn who has Twisted Reflection",
 
 	enrage_trigger1 = "For the Legion! For Kil'Jaeden!",
@@ -40,13 +40,13 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	enrage_name = "Alerte Enrager",
+	enrage = "Alerte Enrager",
 	enrage_desc = "D\195\169lais entre p\195\169riode enrag\195\169.",
 
-	--mark_name = "Mark",
+	--mark = "Mark",
 	--mark_desc = "Warn for Mark of Kazzak on You",
 
-	--twist_name = "Twist",
+	--twist = "Twist",
 	--twist_desc = "Warn who has Twisted Reflection",
 
 	enrage_trigger1 = "Pour la L\195\169gion\194\160! Pour Kil'Jaeden\194\160!",
@@ -68,13 +68,13 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	enrage_name = "격노",
+	enrage = "격노",
 	enrage_desc = "격노에 대한 타이머",
 
-	mark_name = "징표",
+	mark = "징표",
 	mark_desc = "당신에 카자크의 징표 알림",
 
-	--twist_name = "Twist",
+	--twist = "Twist",
 	--twist_desc = "Warn who has Twisted Reflection",
 
 	enrage_trigger1 = "불타는 군단과 킬제덴을 위하여!",

@@ -12,16 +12,16 @@ local prior
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Viscidus",
-	volley_name = "Poison Volley Alert",
+	volley = "Poison Volley Alert",
 	volley_desc = "Warn for Poison Volley",
 
-	toxinyou_name = "Toxin Cloud on You Alert",
+	toxinyou = "Toxin Cloud on You Alert",
 	toxinyou_desc = "Warn if you are standing in a toxin cloud",
 
-	toxinother_name = "Toxin Cloud on Others Alert",
+	toxinother = "Toxin Cloud on Others Alert",
 	toxinother_desc = "Warn if others are standing in a toxin cloud",
 
-	freeze_name = "Freezing States Alert",
+	freeze = "Freezing States Alert",
 	freeze_desc = "Warn for the different frozen states",
 
 	trigger1 	= "begins to slow!",
@@ -49,16 +49,16 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	volley_name = "Poison Volley Alert", -- ?
+	volley = "Poison Volley Alert", -- ?
 	volley_desc = "Warn for Poison Volley", -- ?
 
-	toxinyou_name = "Toxin Wolke",
+	toxinyou = "Toxin Wolke",
 	toxinyou_desc = "Warnung, wenn Du in einer Toxin Wolke stehst.",
 
-	toxinother_name = "Toxin Wolke auf Anderen",
+	toxinother = "Toxin Wolke auf Anderen",
 	toxinother_desc = "Warnung, wenn andere Spieler in einer Toxin Wolke stehen.",
 
-	freeze_name = "Freeze Phasen",
+	freeze = "Freeze Phasen",
 	freeze_desc = "Zeigt die verschiedenen Freeze Phasen an.",
 
 	trigger1 	= "wird langsamer!",
@@ -86,16 +86,16 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	volley_name = "毒性之箭警报",
+	volley = "毒性之箭警报",
 	volley_desc = "毒性之箭警报",
 
-	toxinyou_name = "玩家毒云警报",
+	toxinyou = "玩家毒云警报",
 	toxinyou_desc = "你站在毒云中时发出警报",
 
-	toxinother_name = "队友毒云警报",
+	toxinother = "队友毒云警报",
 	toxinother_desc = "队友站在毒云中时发出警报",
 
-	freeze_name = "冻结状态警报",
+	freeze = "冻结状态警报",
 	freeze_desc = "冻结状态警报",
 
 	trigger1 	= "的速度慢下来了！",
@@ -123,16 +123,16 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	volley_name = "毒性之箭警報",
+	volley = "毒性之箭警報",
 	volley_desc = "當維希度斯施放毒性之箭時時發出警報",
 
-	toxinyou_name = "玩家毒雲警報",
+	toxinyou = "玩家毒雲警報",
 	toxinyou_desc = "你站在毒雲中時發出警報",
 
-	toxinother_name = "隊友毒雲警報",
+	toxinother = "隊友毒雲警報",
 	toxinother_desc = "隊友站在毒雲中時發出警報",
 
-	freeze_name = "凍結狀態警報",
+	freeze = "凍結狀態警報",
 	freeze_desc = "友方被凍結時發出警報",
 
 	trigger1 	= "的速度慢下來了！",
@@ -160,16 +160,16 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	volley_name = "연발 독액 경고",
+	volley = "연발 독액 경고",
 	volley_desc = "연발 독액에 대한 경고",
 
-	toxinyou_name = "자신의 독구름 경고",
+	toxinyou = "자신의 독구름 경고",
 	toxinyou_desc = "자신이 독구름일 때 알림",
 
-	toxinother_name = "타인의 독구름 경고",
+	toxinother = "타인의 독구름 경고",
 	toxinother_desc = "타인이 독구름일 때 알림",
 
-	freeze_name = "빙결 상태 경고",
+	freeze = "빙결 상태 경고",
 	freeze_desc = "각각의 빙결 상태에 대한 경고",
 
 	trigger1 	= "%s|1이;가; 느려지기 시작했습니다!",	-- CHECK

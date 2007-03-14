@@ -33,16 +33,16 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Hakkar",
 
-	drain_name = "Drain Alerts",
+	drain = "Drain Alerts",
 	drain_desc = "Warn for Drains",
 
-	enrage_name = "Enrage Alerts",
+	enrage = "Enrage Alerts",
 	enrage_desc = "Warn for Enrage",
 
-	mc_name = "Mind Control",
+	mc = "Mind Control",
 	mc_desc = "Alert when someone is mind controlled.",
 
-	icon_name = "Place Icon",
+	icon = "Place Icon",
 	icon_desc = "Place a skull icon on the mind controlled person (requires promoted or higher)",
 } end)
 
@@ -66,16 +66,16 @@ L:RegisterTranslations("deDE", function() return {
 	["Enrage"] = "Wutanfall",
 	["Life Drain"] = "Bluttrinker",
 
-	drain_name = "Bluttrinker",
+	drain = "Bluttrinker",
 	drain_desc = "Warnung, wenn Hakkar Bluttrinker wirkt.",
 
-	enrage_name = "Wutanfall",
+	enrage = "Wutanfall",
 	enrage_desc = "Warnung, wenn Hakkar w\195\188tend wird.",
 
-	mc_name = "Gedankenkontrolle",
+	mc = "Gedankenkontrolle",
 	mc_desc = "Warnung wenn jemand unter Gedankenkontrolle steht.",
 
-	icon_name = "Symbol",
+	icon = "Symbol",
 	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der unter Gedankenkontrolle steht. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 } end)
 
@@ -101,16 +101,16 @@ L:RegisterTranslations("frFR", function() return {
 	["Enrage"] = "Enrager",
 	["Life Drain"] = "Drain de vie",
 
-	drain_name = "Alerte Drain",
+	drain = "Alerte Drain",
 	drain_desc = "Pr\195\169viens quand Hakkar fait ses drains de vie.",
 
-	enrage_name = "Alerte Enrager",
+	enrage = "Alerte Enrager",
 	enrage_desc = "Pr\195\169viens quand Hakkar devient enrag\195\169.",
 
-	mc_name = "Alerte Contr\195\180le Mental",
+	mc = "Alerte Contr\195\180le Mental",
 	mc_desc = "Pr\195\169viens quand quelqu'un est sous le contr\195\180le d'Hakkar.",
 
-	icon_name = "Placer une ic\195\180ne",
+	icon = "Placer une ic\195\180ne",
 	icon_desc = "Place une ic\195\180ne de raid sur la personne sous contr\195\180le mental (n\195\169cessite d'\195\170tre promu ou mieux).",	
 } end)
 
@@ -136,16 +136,16 @@ L:RegisterTranslations("koKR", function() return {
 	["Enrage"] = "격노",
 	["Life Drain"] = "생명력 흡수",
 
-	drain_name = "흡수 경고",
+	drain = "흡수 경고",
 	drain_desc = "흡수에 대한 경고",
 
-	enrage_name = "격노 경고",
+	enrage = "격노 경고",
 	enrage_desc = "격노에 대한 경고",
 
-	mc_name = "정신 지배",
+	mc = "정신 지배",
 	mc_desc = "정신 지배 되었을 때 경고",
 
-	icon_name = "아이콘 지정",
+	icon = "아이콘 지정",
 	icon_desc = "정신 지배된 사람에게 해골 아이콘 지정 (승급자 이상 필요)",
 } end)
 
@@ -172,16 +172,16 @@ L:RegisterTranslations("zhCN", function() return {
 	["Enrage"] = "激怒",
 	["Life Drain"] = "生命吸取",
 
-	drain_name = "生命吸取警报",
+	drain = "生命吸取警报",
 	drain_desc = "生命吸取警报",
 
-	enrage_name = "激怒警报",
+	enrage = "激怒警报",
 	enrage_desc = "激怒警报",
 
-	mc_name = "精神控制警报",
+	mc = "精神控制警报",
 	mc_desc = "哈卡使用精神控制时警报。",
 
-	icon_name = "标记精神控制",
+	icon = "标记精神控制",
 	icon_desc = "团队标记被精神控制者 (需要助力或更高权限)",
 } end)
 
@@ -207,16 +207,16 @@ L:RegisterTranslations("zhTW", function() return {
 	["Enrage"] = "狂怒",
 	["Life Drain"] = "血液虹吸",
 
-	drain_name = "血液虹吸警報",
+	drain = "血液虹吸警報",
 	drain_desc = "血液虹吸警報",
 
-	enrage_name = "狂怒警報",
+	enrage = "狂怒警報",
 	enrage_desc = "狂怒警報",
 
-	mc_name = "精神控制警報",
+	mc = "精神控制警報",
 	mc_desc = "哈卡使用精神控制時警報。",
 
-	icon_name = "標記被精神控制的隊友",
+	icon = "標記被精神控制的隊友",
 	icon_desc = "在被精神控制的隊友頭上設置標記 (需要助手或領隊權限)",
 } end)
 

@@ -12,16 +12,16 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Noth",
 
-	blink_name = "Blink Alert",
+	blink = "Blink Alert",
 	blink_desc = "Warn for blink",
 
-	teleport_name = "Teleport Alert",
+	teleport = "Teleport Alert",
 	teleport_desc = "Warn for teleport",
 
-	curse_name = "Curse Alert",
+	curse = "Curse Alert",
 	curse_desc = "Warn for curse",
 
-	wave_name = "Wave Alert",
+	wave = "Wave Alert",
 	wave_desc = "Warn for waves",
 
 	starttrigger1 = "Die, trespasser!",
@@ -58,16 +58,16 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	blink_name = "Blinzeln",
+	blink = "Blinzeln",
 	blink_desc = "Warnung, wenn Noth Blinzeln wirkt.",
 
-	teleport_name = "Teleport",
+	teleport = "Teleport",
 	teleport_desc = "Warnung vor Teleport.",
 
-	curse_name = "Fluch",
+	curse = "Fluch",
 	curse_desc = "Warnung, wenn Noth Fluch des Seuchenf\195\188rsten wirkt.",
 
-	wave_name = "Wellen",
+	wave = "Wellen",
 	wave_desc = "Warnung vor den ankommenden Gegner Wellen.",
 
 	starttrigger1 = "Sterbt, Eindringling!",
@@ -104,16 +104,16 @@ L:RegisterTranslations("deDE", function() return {
 
 
 L:RegisterTranslations("koKR", function() return {
-	blink_name = "점멸 경고",
+	blink = "점멸 경고",
 	blink_desc = "점멸에 대한 경고",
 
-	teleport_name = "순간이동 경고",
+	teleport = "순간이동 경고",
 	teleport_desc = "순간이동에 대한 경고",
 
-	curse_name = "저주 경고",
+	curse = "저주 경고",
 	curse_desc = "저주에 대한 경고",
 
-	wave_name = "웨이브 알림",
+	wave = "웨이브 알림",
 	wave_desc = "웨이브에 대한 알림",
 
 	starttrigger1 = "죽어라, 침입자들아!",
@@ -149,16 +149,16 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	blink_name = "闪现术警报",
+	blink = "闪现术警报",
 	blink_desc = "闪现术警报",
 
-	teleport_name = "传送警报",
+	teleport = "传送警报",
 	teleport_desc = "传送警报",
 
-	curse_name = "诅咒警报",
+	curse = "诅咒警报",
 	curse_desc = "诅咒警报",
 
-	wave_name = "小骷髅警报",
+	wave = "小骷髅警报",
 	wave_desc = "警报数波小骷髅",
 
 	starttrigger1 = "死吧，入侵者！",
@@ -194,16 +194,16 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	blink_name = "閃現術警報",
+	blink = "閃現術警報",
 	blink_desc = "閃現術警報",
 
-	teleport_name = "傳送警報",
+	teleport = "傳送警報",
 	teleport_desc = "傳送警報",
 
-	curse_name = "詛咒警報",
+	curse = "詛咒警報",
 	curse_desc = "詛咒警報",
 
-	wave_name = "小骷髏警報",
+	wave = "小骷髏警報",
 	wave_desc = "警報數波小骷髏",
 
 	starttrigger1 = "死吧，入侵者！",

@@ -12,7 +12,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Garr",
 
-	pulse_name = "Antimagic Pulse Bar",
+	pulse = "Antimagic Pulse Bar",
 	pulse_desc = "Show a bar for Antimagic Pulse",
 
 	pulse_trigger = "performs Antimagic Pulse",
@@ -20,7 +20,7 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	pulse_name = "Barre Impulsion anti-magique",
+	pulse = "Barre Impulsion anti-magique",
 	pulse_desc = "Affiche une barre temporelle pour l'Impulsion anti-magique.",
 
 	pulse_trigger = "effectue Impulsion anti-magique", -- à vérifier

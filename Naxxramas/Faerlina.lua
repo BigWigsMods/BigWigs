@@ -14,10 +14,10 @@ local started = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Faerlina",
 
-	silence_name = "Silence Alert",
+	silence = "Silence Alert",
 	silence_desc = "Warn for silence",
 
-	enrage_name = "Enrage Alert",
+	enrage = "Enrage Alert",
 	enrage_desc = "Warn for Enrage",
 
 	starttrigger1 = "Kneel before me, worm!",
@@ -42,10 +42,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	silence_name = "Stille",
+	silence = "Stille",
 	silence_desc = "Warnung vor Stille",
 
-	enrage_name = "Wutanfall",
+	enrage = "Wutanfall",
 	enrage_desc = "Warnung, wenn Gro\195\159witwe Faerlina w\195\188tend wird.",
 
 	starttrigger1 = "Kniet nieder, Wurm!",
@@ -70,10 +70,10 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	silence_name = "침묵 경고",
+	silence = "침묵 경고",
 	silence_desc = "침묵에 대한 경고",
 
-	enrage_name = "격노 경고",
+	enrage = "격노 경고",
 	enrage_desc = "격노에 대한 경고",
 
 	starttrigger1 = "내 앞에 무릎을 꿇어라, 벌레들아!",
@@ -98,10 +98,10 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	silence_name = "沉默警报",
+	silence = "沉默警报",
 	silence_desc = "沉默警报",
 
-	enrage_name = "激怒警报",
+	enrage = "激怒警报",
 	enrage_desc = "激怒警报",
 
 	starttrigger1 = "跪下求饶吧，懦夫！",
@@ -126,10 +126,10 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	silence_name = "沉默警報",
+	silence = "沉默警報",
 	silence_desc = "沉默警報",
 
-	enrage_name = "狂怒警報",
+	enrage = "狂怒警報",
 	enrage_desc = "狂怒警報",
 
 	starttrigger1 = "跪下求饒吧，懦夫！",

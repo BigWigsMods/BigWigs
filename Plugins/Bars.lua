@@ -9,6 +9,7 @@ local surface = AceLibrary("Surface-1.0")
 
 local colorModule = nil
 local anchor = nil
+local moduleBars = {}
 
 ----------------------------
 --      Localization      --
@@ -153,7 +154,7 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:NewModule("Bars")
+local plugin = BigWigs:NewModule("Bars", "CandyBar-2.0")
 plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
 plugin.defaultDB = {
 	growup = false,
@@ -249,6 +250,7 @@ function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_HideAnchors")
 	self:RegisterEvent("BigWigs_StartBar")
 	self:RegisterEvent("BigWigs_StopBar")
+	self:RegisterEvent("Ace2_AddonDisabled")
 
 	if self.core:HasModule("Colors") then
 		colorModule = self.core:GetModule("Colors")
@@ -260,6 +262,15 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function plugin:Ace2_AddonDisabled(module)
+	if moduleBars[module] then
+		for k in pairs(moduleBars[module]) do
+			self:UnregisterCandyBar(k)
+			moduleBars[module][k] = nil
+		end
+	end
+end
 
 function plugin:BigWigs_ShowAnchors()
 	anchor:Show()
@@ -275,9 +286,9 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 	local u = self.db.profile.growup
 
 	-- yes we try and register every time, we also set the point every time since people can change their mind midbar.
-	module:RegisterCandyBarGroup("BigWigsGroup")
-	module:SetCandyBarGroupPoint("BigWigsGroup", u and "BOTTOM" or "TOP", anchor, u and "TOP" or "BOTTOM", 0, 0)
-	module:SetCandyBarGroupGrowth("BigWigsGroup", u)
+	self:RegisterCandyBarGroup("BigWigsGroup")
+	self:SetCandyBarGroupPoint("BigWigsGroup", u and "BOTTOM" or "TOP", anchor, u and "TOP" or "BOTTOM", 0, 0)
+	self:SetCandyBarGroupGrowth("BigWigsGroup", u)
 
 	local bc, balpha, txtc
 	if type(colorModule) == "table" then
@@ -285,20 +296,25 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 		bc, balpha, txtc = colorModule.db.profile.bgc, colorModule.db.profile.bga, colorModule.db.profile.txtc
 	end
 
-	module:RegisterCandyBar(id, time, text, icon, c1, c2, c3, c4, c5, c6, c8, c9, c10)
-	module:RegisterCandyBarWithGroup(id, "BigWigsGroup")
-	module:SetCandyBarTexture( id, surface:Fetch( self.db.profile.texture) )
-	if bc then module:SetCandyBarBackgroundColor(id, bc, balpha) end
-	if txtc then module:SetCandyBarTextColor(id, txtc) end
+	if not moduleBars[module] then moduleBars[module] = {} end
+	moduleBars[module][id] = true
 
-	module:SetCandyBarScale(id, self.db.profile.scale or 1)
-	module:SetCandyBarFade(id, .5)
-	module:StartCandyBar(id, true)
+	self:RegisterCandyBar(id, time, text, icon, c1, c2, c3, c4, c5, c6, c8, c9, c10)
+	self:RegisterCandyBarWithGroup(id, "BigWigsGroup")
+	self:SetCandyBarTexture( id, surface:Fetch( self.db.profile.texture) )
+	if bc then self:SetCandyBarBackgroundColor(id, bc, balpha) end
+	if txtc then self:SetCandyBarTextColor(id, txtc) end
+
+	self:SetCandyBarScale(id, self.db.profile.scale or 1)
+	self:SetCandyBarFade(id, .5)
+	self:StartCandyBar(id, true)
 end
 
 function plugin:BigWigs_StopBar(module, text)
 	if not text then return end
-	module:UnregisterCandyBar("BigWigsBar "..text)
+	local id = "BigWigsBar "..text
+	self:UnregisterCandyBar(id)
+	moduleBars[module][id] = nil
 end
 
 ------------------------------

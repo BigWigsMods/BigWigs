@@ -28,13 +28,13 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.",
 	phase2_message = "All eggs destroyed, Razorgore loose!",
 
-	mc_name = "Mind Control",
+	mc = "Mind Control",
 	mc_desc = "Warn when players are mind controlled",
 
-	eggs_name = "Don't count eggs",
+	eggs = "Don't count eggs",
 	eggs_desc = "Don't count down the remaining eggs - this option does not work for everyone, we need better triggers.",
 
-	phase_name = "Phases",
+	phase = "Phases",
 	phase_desc = "Alert on phase 1 and 2",
 } end)
 
@@ -53,13 +53,13 @@ L:RegisterTranslations("koKR", function() return {
 	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.", -- CHECK
 	phase2_message = "모든 알이 파괴되었습니다, 서슬송곳니가 풀려납니다.", -- CHECK
 
-	mc_name = "정신 지배",
+	mc = "정신 지배",
 	mc_desc = "플레이어가 정신 지배 되었을 때 경고",
 
-	eggs_name = "알 개수 알림 미사용",
+	eggs = "알 개수 알림 미사용",
 	eggs_desc = "남은 알 개수 알림 미사용",
 
-	phase_name = "단계",
+	phase = "단계",
 	phase_desc = "단계 1 과 2 알림",
 } end)
 
@@ -78,13 +78,13 @@ L:RegisterTranslations("deDE", function() return {
 	phase2_trigger = "Razorgore the Untamed's Warming Flames heals Razorgore the Untamed for .*.", -- CHECK
 	phase2_message = "Alle Eier zerst\195\182rt!",
 
-	mc_name = "Gedankenkontrolle",
+	mc = "Gedankenkontrolle",
 	mc_desc = "Warnung, wenn Spieler \195\188bernommen werden.",
 
-	eggs_name = "Eier nicht z\195\164hlen",
+	eggs = "Eier nicht z\195\164hlen",
 	eggs_desc = "Die zerst\195\182rten Eier nicht z\195\164hlen.",
 
-	phase_name = "Phasen",
+	phase = "Phasen",
 	phase_desc = "Warnung beim Eintritt in Phase 1 und 2.",
 } end)
 
@@ -103,13 +103,13 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_trigger = "Flammes \195\169chauffantes .+ Tranchetripe l'Indompt\195\169 gu\195\169rit Tranchetripe l'Indompt\195\169 de .*%.",
 	phase2_message = "Tous les oeufs ont \195\169t\195\169 d\195\169truits !",
 
-	mc_name = "Alerte Contr\195\180le mental",
+	mc = "Alerte Contr\195\180le mental",
 	mc_desc = "Pr\195\169viens quand un joueur subit subit un contr\195\180le mental.",
 
-	eggs_name = "Ne pas compter les oeufs",
+	eggs = "Ne pas compter les oeufs",
 	eggs_desc = "Ne compte pas le nombre d'oeufs restants - cette option ne fonctionne pas chez tout le monde, un meilleur d\195\169clencheur doit \195\170tre trouv\195\169.",
 
-	phase_name = "Alerte Phases",
+	phase = "Alerte Phases",
 	phase_desc = "Pr\195\169viens de l'arriv\195\169e des phases 1 & 2.",
 } end)
 
@@ -128,13 +128,13 @@ L:RegisterTranslations("zhCN", function() return {
 	phase2_trigger = "狂野的拉佐格尔的温暖之焰为狂野的拉佐格尔恢复了.*点生命值。",
 	phase2_message = "所有龙蛋摧毁",
 
-	mc_name = "精神控制",
+	mc = "精神控制",
 	mc_desc = "当一个玩家使用精神控制时向团队发出警报。",
 
-	eggs_name = "取消龙蛋计数",
+	eggs = "取消龙蛋计数",
 	eggs_desc = "取消剩余龙蛋计数 - 该功能还在完善中。。。",
 
-	phase_name = "第二阶段警报",
+	phase = "第二阶段警报",
 	phase_desc = "第二阶段警报",
 } end)
 
@@ -153,13 +153,13 @@ L:RegisterTranslations("zhTW", function() return {
 	phase2_trigger = "狂野的拉佐格爾的溫暖之焰為狂野的拉佐格爾恢復了.*點生命力。",
 	phase2_message = "已摧毀所有龍蛋",
 
-	mc_name = "精神控制",
+	mc = "精神控制",
 	mc_desc = "當一個玩家使用精神控制時向團隊發出警報。",
 
-	eggs_name = "取消龍蛋計數",
+	eggs = "取消龍蛋計數",
 	eggs_desc = "取消剩餘龍蛋計數 - 該功能還在改善中。。。",
 
-	phase_name = "第二階段警報",
+	phase = "第二階段警報",
 	phase_desc = "第二階段警報",
 } end)
 

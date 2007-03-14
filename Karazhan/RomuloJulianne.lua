@@ -14,16 +14,16 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "RomuloJulianne",
 
-	phase_name = "Phases",
+	phase = "Phases",
 	phase_desc = "Warn when entering a new Phase",
 
-	poison_name = "Poison",
+	poison = "Poison",
 	poison_desc = "Warn of a poisoned player",
 
-	heal_name = "Heal",
+	heal = "Heal",
 	heal_desc = ("Warn when %s casts Eternal Affection"):format(girl),
 
-	buff_name = "Self-Buff Alert",
+	buff = "Self-Buff Alert",
 	buff_desc = ("Warn when %s and %s gain a self-buff"):format(boy, girl),
 
 	phase1_trigger = "What devil art thou, that dost torment me thus?",
@@ -48,16 +48,16 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	phase_name = "Phase",
+	phase = "Phase",
 	phase_desc = "Warnt wenn eine neue Phase beginnt",
 
-	poison_name = "Gift",
+	poison = "Gift",
 	poison_desc = "Warnt vor vergifteten Spielern",
 
-	heal_name = "Heilen",
+	heal = "Heilen",
 	heal_desc = ("Warnt wenn %s sich heilt"):format(girl),
 
-	buff_name = "Selbst-Buff Alarm",
+	buff = "Selbst-Buff Alarm",
 	buff_desc = ("Warnt wenn %s und %s sich selbst buffen"):format(boy, girl),
 
 	phase1_trigger = "Welch' Teufel bist du, dass du mich so folterst?",
@@ -82,16 +82,16 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	phase_name = "Alerte Phases",
+	phase = "Alerte Phases",
 	phase_desc = "Pr\195\169viens des changements de phase.",
 
-	poison_name = "Alerte Poison",
+	poison = "Alerte Poison",
 	poison_desc = "Pr\195\169viens quand quelqu'un est empoisonn\195\169.",
 
-	heal_name = "Alerte Soin",
+	heal = "Alerte Soin",
 	heal_desc = ("Pr\195\169viens quand %s lance Amour \195\169ternel."):format(girl),
 
-	buff_name = "Alerte Buff",
+	buff = "Alerte Buff",
 	buff_desc = ("Pr\195\169viens quand %s et %s gagnent leurs buffs."):format(boy, girl),
 
 	phase1_trigger = "Quel d\195\169mon es-tu pour me tourmenter ainsi?",
@@ -116,16 +116,16 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	phase_name = "단계",
+	phase = "단계",
 	phase_desc = "새로운 단계 전입 시 알림",
 
-	poison_name = "독",
+	poison = "독",
 	poison_desc = "독에 걸린 플레이어 알림",
 
-	heal_name = "치유",
+	heal = "치유",
 	heal_desc = ("%s|1이;가; 영원한 사랑 시전 시 경고"):format(girl),
 
-	buff_name = "버프 알림",
+	buff = "버프 알림",
 	buff_desc = ("%s|1와;과; %s 버프 획득 시 알림"):format(boy, girl),
 
 	phase1_trigger = "당신들은 대체 누구시기에 절 이리도 괴롭히나요?",

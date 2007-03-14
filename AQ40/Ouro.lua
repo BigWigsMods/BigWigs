@@ -15,22 +15,22 @@ local started
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Ouro",
 
-	sweep_name = "Sweep Alert",
+	sweep = "Sweep Alert",
 	sweep_desc = "Warn for Sweeps",
 
-	sandblast_name = "Sandblast Alert",
+	sandblast = "Sandblast Alert",
 	sandblast_desc = "Warn for Sandblasts",
 
-	emerge_name = "Emerge Alert",
+	emerge = "Emerge Alert",
 	emerge_desc = "Warn for Emerge",
 
-	submerge_name = "Submerge Alert",
+	submerge = "Submerge Alert",
 	submerge_desc = "Warn for Submerge",
 
-	scarab_name = "Scarab Despawn Alert",
+	scarab = "Scarab Despawn Alert",
 	scarab_desc = "Warn for Scarab Despawn",
 
-	berserk_name = "Berserk",
+	berserk = "Berserk",
 	berserk_desc = "Warn for when Ouro goes berserk",
 
 	sweeptrigger = "Ouro begins to cast Sweep",
@@ -66,22 +66,22 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	sweep_name = "Feger",
+	sweep = "Feger",
 	sweep_desc = "Warnung, wenn Ouro Feger wirkt.",
 
-	sandblast_name = "Sandsto\195\159",
+	sandblast = "Sandsto\195\159",
 	sandblast_desc = "Warnung, wenn Ouro Sandsto\195\159 wirkt.",
 
-	emerge_name = "Auftauchen",
+	emerge = "Auftauchen",
 	emerge_desc = "Warnung, wenn Ouro auftaucht.",
 
-	submerge_name = "Untertauchen",
+	submerge = "Untertauchen",
 	submerge_desc = "Warnung, wenn Ouro untertaucht.",
 
-	scarab_name = "Scarab Despawn Alert", -- ?
+	scarab = "Scarab Despawn Alert", -- ?
 	scarab_desc = "Warn for Scarab Despawn", -- ?
 
-	berserk_name = "Berserk",
+	berserk = "Berserk",
 	berserk_desc = "Warn for when Ouro goes berserk",
 
 	sweeptrigger = "Ouro begins to cast Sweep", -- ?
@@ -117,22 +117,22 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	sweep_name = "휩쓸기 경고",
+	sweep = "휩쓸기 경고",
 	sweep_desc = "휩쓸기에 대한 경고",
 
-	sandblast_name = "모래돌풍 경고",
+	sandblast = "모래돌풍 경고",
 	sandblast_desc = "모래돌풍에 대한 경고",
 
-	emerge_name = "등장 경고",
+	emerge = "등장 경고",
 	emerge_desc = "등장에 대한 경고",
 
-	submerge_name = "잠수 경고",
+	submerge = "잠수 경고",
 	submerge_desc = "잠수에 대한 경고",
 
-	scarab_name = "스카라베 소환 경고",
+	scarab = "스카라베 소환 경고",
 	scarab_desc = "스카라베 소환에 대한 경고",
 
-	berserk_name = "광폭화",
+	berserk = "광폭화",
 	berserk_desc = "아우로 광폭화 경고",
 
 	sweeptrigger = "아우로|1이;가; 휩쓸기|1을;를; 시전합니다.",
@@ -168,22 +168,22 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	sweep_name = "横扫警报",
+	sweep = "横扫警报",
 	sweep_desc = "横扫警报",
 
-	sandblast_name = "沙尘爆裂警报",
+	sandblast = "沙尘爆裂警报",
 	sandblast_desc = "沙尘爆裂警报",
 
-	emerge_name = "钻地警报",
+	emerge = "钻地警报",
 	emerge_desc = "钻地警报",
 
-	submerge_name = "钻出警报",
+	submerge = "钻出警报",
 	submerge_desc = "钻出警报",
 
-	scarab_name = "甲虫消失警报",
+	scarab = "甲虫消失警报",
 	scarab_desc = "甲虫消失警报",
 
-	berserk_name = "狂暴警报",
+	berserk = "狂暴警报",
 	berserk_desc = "当奥罗变得狂暴发出警报",
 
 	sweeptrigger = "奥罗开始施放横扫。",
@@ -219,22 +219,22 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	sweep_name = "橫掃警報",
+	sweep = "橫掃警報",
 	sweep_desc = "奧羅施放橫掃時發出警報",
 
-	sandblast_name = "沙塵爆裂警報",
+	sandblast = "沙塵爆裂警報",
 	sandblast_desc = "奧羅施放沙塵爆裂時發出警報",
 
-	emerge_name = "鑽地警報",
+	emerge = "鑽地警報",
 	emerge_desc = "奧羅鑽地時發出警報",
 
-	submerge_name = "鑽出警報",
+	submerge = "鑽出警報",
 	submerge_desc = "奧羅鑽出時發出警報",
 
-	scarab_name = "甲蟲消失警報",
+	scarab = "甲蟲消失警報",
 	scarab_desc = "甲蟲消失時發出警報",
 
-	berserk_name = "狂暴警報",
+	berserk = "狂暴警報",
 	berserk_desc = "當奧羅變得狂暴發出警報",
 
 	sweeptrigger = "奧羅開始施放橫掃。",
@@ -270,22 +270,22 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	sweep_name = "Sweep Alert",
+	sweep = "Sweep Alert",
 	sweep_desc = "Warn for Sweeps",
 
-	sandblast_name = "Sandblast Alert",
+	sandblast = "Sandblast Alert",
 	sandblast_desc = "Warn for Sandblasts",
 
-	emerge_name = "Emerge Alert",
+	emerge = "Emerge Alert",
 	emerge_desc = "Warn for Emerge",
 
-	submerge_name = "Submerge Alert",
+	submerge = "Submerge Alert",
 	submerge_desc = "Warn for Submerge",
 
-	scarab_name = "Scarab Despawn Alert",
+	scarab = "Scarab Despawn Alert",
 	scarab_desc = "Warn for Scarab Despawn",
 
-	berserk_name = "Berserk",
+	berserk = "Berserk",
 	berserk_desc = "Warn for when Ouro goes berserk",
 
 	sweeptrigger = "Ouro commence \195\160 lancer Balayer.",

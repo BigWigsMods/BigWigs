@@ -12,19 +12,19 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Jindo",
 
-	brainwash_name = "Brainwash Totem Alert",
+	brainwash = "Brainwash Totem Alert",
 	brainwash_desc = "Warn for Brainwash Totems",
 
-	healing_name = "Healing Totem Alert",
+	healing = "Healing Totem Alert",
 	healing_desc = "Warn for Healing Totems",
 
-	youcurse_name = "You're cursed Alert",
+	youcurse = "You're cursed Alert",
 	youcurse_desc = "Warn when you get cursed",
 
-	elsecurse_name = "Others are cursed Alert",
+	elsecurse = "Others are cursed Alert",
 	elsecurse_desc = "Warn when others are cursed",
 
-	icon_name = "Place Icon",
+	icon = "Place Icon",
 	icon_desc = "Place a skull icon on the cursed person (requires promoted or higher)",
 
 	triggerbrainwash = "Jin'do the Hexxer casts Summon Brain Wash Totem.",
@@ -42,19 +42,19 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	brainwash_name = "Gehirnw\195\164schetotem",
+	brainwash = "Gehirnw\195\164schetotem",
 	brainwash_desc = "Warnung, wenn Jin'do Gehirnw\195\164schetotem beschw\195\182rt.",
 
-	healing_name = "Heiltotem",
+	healing = "Heiltotem",
 	healing_desc = "Warnung, wenn Jin'do Heiltotem beschw\195\182rt.",
 
-	youcurse_name = "Du bist verflucht",
+	youcurse = "Du bist verflucht",
 	youcurse_desc = "Warnung, wenn Du verflucht bist.",
 
-	elsecurse_name = "Andere sind verflucht",
+	elsecurse = "Andere sind verflucht",
 	elsecurse_desc = "Warnung, wenn Andere verflucht sind.",
 
-	icon_name = "Symbol",
+	icon = "Symbol",
 	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der verflucht ist. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 
 	triggerbrainwash = "Jin'do der Verhexer wirkt Totem der Gehirnw\195\164sche beschw\195\182ren.",
@@ -72,19 +72,19 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	brainwash_name = "Alerte Totem de Contr\195\180le Mental",
+	brainwash = "Alerte Totem de Contr\195\180le Mental",
 	brainwash_desc = "Pr\195\169viens du pop de totem de contr\195\180le mental.",
 
-	healing_name = "Alerte Totem de soins",
+	healing = "Alerte Totem de soins",
 	healing_desc = "Pr\195\169viens du pop de totem de soins.",
 
-	youcurse_name = "Alerte quand vous \195\170tes maudit",
+	youcurse = "Alerte quand vous \195\170tes maudit",
 	youcurse_desc = "Pr\195\169viens quand vous \195\170tes maudit.",
 
-	elsecurse_name = "Alerte quand d'autres sont maudits",
+	elsecurse = "Alerte quand d'autres sont maudits",
 	elsecurse_desc = "Pr\195\169viens quand d'autres joueurs sont maudits.",
 
-	icon_name = "Ic\195\180ne de raid",
+	icon = "Ic\195\180ne de raid",
 	icon_desc = "Place une ic\195\180ne de raid sur la derni\195\168re personne maudite (requiert d'\195\170tre promus ou plus)",
 
 	triggerbrainwash = "Jin'do le Mal\195\169ficieur lance Invocation du totem de lavage de cerveau",
@@ -102,19 +102,19 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	brainwash_name = "洗脑图腾警报",
+	brainwash = "洗脑图腾警报",
 	brainwash_desc = "洗脑图腾警报",
 
-	healing_name = "治疗图腾警报",
+	healing = "治疗图腾警报",
 	healing_desc = "治疗图腾警报",
 
-	youcurse_name = "你中诅咒警报",
+	youcurse = "你中诅咒警报",
 	youcurse_desc = "你中诅咒警报",
 
-	elsecurse_name = "玩家诅咒警报",
+	elsecurse = "玩家诅咒警报",
 	elsecurse_desc = "玩家诅咒警报",
 
-	icon_name = "标记被诅咒玩家",
+	icon = "标记被诅咒玩家",
 	icon_desc = "团队标记被诅咒玩家 (需要助力或更高权限)",
 
 	triggerbrainwash = "妖术师金度施放了召唤洗脑图腾。",
@@ -131,19 +131,19 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	brainwash_name = "控制圖騰警報",
+	brainwash = "控制圖騰警報",
 	brainwash_desc = "控制圖騰警報",
 
-	healing_name = "治療圖騰警報",
+	healing = "治療圖騰警報",
 	healing_desc = "治療圖騰警報",
 
-	youcurse_name = "你中詛咒發出警報",
+	youcurse = "你中詛咒發出警報",
 	youcurse_desc = "你中詛咒發出警報",
 
-	elsecurse_name = "玩家詛咒發出警報",
+	elsecurse = "玩家詛咒發出警報",
 	elsecurse_desc = "玩家詛咒發出警報",
 
-	icon_name = "標記被詛咒的隊友",
+	icon = "標記被詛咒的隊友",
 	icon_desc = "在被詛咒的隊友頭上設置標記 (需要助手或領隊權限)",
 
 	triggerbrainwash = "妖術師金度施放了召喚洗腦圖騰。",
@@ -160,19 +160,19 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	brainwash_name = "세뇌의 토템 경고",
+	brainwash = "세뇌의 토템 경고",
 	brainwash_desc = "세뇌의 토템에 대한 경고",
 
-	healing_name = "치유의 수호물 경고",
+	healing = "치유의 수호물 경고",
 	healing_desc = "치유의 수호물에 대한 경고",
 
-	youcurse_name = "자신의 저주 알림",
+	youcurse = "자신의 저주 알림",
 	youcurse_desc = "자신이 저주에 걸렸을 때 알림",
 
-	elsecurse_name = "타인의 저주 알림",
+	elsecurse = "타인의 저주 알림",
 	elsecurse_desc = "타인이 저주에 걸렸을 때 알림",
 
-	icon_name = "아이콘 지정",
+	icon = "아이콘 지정",
 	icon_desc = "저주가 걸린 사람에게 해골 아이콘 지정 (승급자 이상 필요)",
 
 	triggerbrainwash = "주술사 진도|1이;가; 세뇌의 토템 소환|1을;를; 시전합니다.",

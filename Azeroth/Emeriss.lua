@@ -13,19 +13,19 @@ local BZ = AceLibrary("Babble-Zone-2.2")
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Emeriss",
 
-	engage_name = "Engage Alert",
+	engage = "Engage Alert",
 	engage_desc = "Warn when Emeriss is engaged",
 
-	noxious_name = "Noxious breath alert",
+	noxious = "Noxious breath alert",
 	noxious_desc = "Warn for noxious breath",
 
-	volatileyou_name = "Voltile infection on you alert",
+	volatileyou = "Voltile infection on you alert",
 	volatileyou_desc = "Warn for volatile infection on you",
 
-	volatileother_name = "Volatile infection on others alert",
+	volatileother = "Volatile infection on others alert",
 	volatileother_desc = "Warn for volatile infection on others",
 
-	icon_name = "Place Icon",
+	icon = "Place Icon",
 	icon_desc = "Place your selected raid icon on the afflicted person (requires promoted or higher)",
 
 	trigger1 = "^([^%s]+) ([^%s]+) afflicted by Volatile Infection",
@@ -46,13 +46,13 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	noxious_name = "Alerte Souffle naus\195\169abond",
+	noxious = "Alerte Souffle naus\195\169abond",
 	noxious_desc = "Pr\195\169viens quand Emeriss fait son Souffle naus\195\169abond.",
 
-	volatileyou_name = "Alerte Infection volatile sur vous",
+	volatileyou = "Alerte Infection volatile sur vous",
 	volatileyou_desc = "Pr\195\169viens quand vous \195\170tes touch\195\169 par l'Infection volatile.",
 
-	volatileother_name = "Alerte Infection volatile sur les autres",
+	volatileother = "Alerte Infection volatile sur les autres",
 	volatileother_desc = "Pr\195\169viens quand les autres sont touch\195\169s par l'Infection volatile.",
 
 	trigger1 = "^([^%s]+) ([^%s]+) les effets de Infection volatile.",
@@ -70,13 +70,13 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	noxious_name = "Giftiger Atem",
+	noxious = "Giftiger Atem",
 	noxious_desc = "Warnung vor Giftiger Atem.",
 
-	volatileyou_name = "Fl\195\188chtige Infektion",
+	volatileyou = "Fl\195\188chtige Infektion",
 	volatileyou_desc = "Warnung, wenn Fl\195\188chtige Infektion auf Dir.",
 
-	volatileother_name = "Fl\195\188chtige Infektion auf Anderen",
+	volatileother = "Fl\195\188chtige Infektion auf Anderen",
 	volatileother_desc = "Warnung, wenn Fl\195\188chtige Infektion auf anderen Spielern.",
 
 	trigger1 = "^([^%s]+) ([^%s]+) von Fl\195\188chtige Infektion betroffen",
@@ -94,13 +94,13 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	noxious_name = "毒性吐息警报",
+	noxious = "毒性吐息警报",
 	noxious_desc = "毒性吐息警报",
 
-	volatileyou_name = "玩家快速传染警报",
+	volatileyou = "玩家快速传染警报",
 	volatileyou_desc = "你中了快速传染时发出警报",
 
-	volatileother_name = "队友快速传染警报",
+	volatileother = "队友快速传染警报",
 	volatileother_desc = "队友中了快速传染时发出警报",
 
 	trigger1 = "^(.+)受(.+)了快速传染效果",
@@ -118,13 +118,13 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	noxious_name = "毒性吐息警報",
+	noxious = "毒性吐息警報",
 	noxious_desc = "毒性吐息警報",
 
-	volatileyou_name = "玩家快速傳染警報",
+	volatileyou = "玩家快速傳染警報",
 	volatileyou_desc = "你中了快速傳染時發出警報",
 
-	volatileother_name = "隊友快速傳染警報",
+	volatileother = "隊友快速傳染警報",
 	volatileother_desc = "隊友中了快速傳染時發出警報",
 
 	trigger1 = "^(.+)受到(.*)快速傳染效果的影響。",
@@ -142,19 +142,19 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_name = "광폭화 경고",
+	engage = "광폭화 경고",
 	engage_desc = "에메리스가 광폭화 되었을 때 경고",
 
-	noxious_name = "산성 숨결 경고",
+	noxious = "산성 숨결 경고",
 	noxious_desc = "산성 숨결에 대한 경고",
 
-	volatileyou_name = "자신의 대지의 오염 경고",
+	volatileyou = "자신의 대지의 오염 경고",
 	volatileyou_desc = "자신의 대지의 오염에 대한 경고",
 
-	volatileother_name = "타인의 대지의 오염 경고",
+	volatileother = "타인의 대지의 오염 경고",
 	volatileother_desc = "타인의 대지의 오염에 대한 경고",
 
-	icon_name = "아이콘 지정",
+	icon = "아이콘 지정",
 	icon_desc = "효과에 걸린 사람에게 선택된 공격대 아이콘을 지정합니다.(승급자 이상 요구)",
 
 	trigger1 = "^([^|;%s]*)(.*)대지의 오염에 걸렸습니다%.$",

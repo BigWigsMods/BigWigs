@@ -14,22 +14,22 @@ local flurryannounced
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Maulgar",
 
-	heal_name = "Heal",
+	heal = "Heal",
 	heal_desc = "Warn when Blindeye the Seer begins to cast a Heal",
 
-	shield_name = "Shield",
+	shield = "Shield",
 	shield_desc = "Warn when Blindeye the Seer gains Greater Power Word: Shield",
 
-	spellshield_name = "Spell Shield",
+	spellshield = "Spell Shield",
 	spellshield_desc = "Warn when Krosh Firehand gains Spell Shield",
 
-	summon_name = "Summon Wild Felhunter",
+	summon = "Summon Wild Felhunter",
 	summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter",
 
-	whirlwind_name = "Whirldwind",
+	whirlwind = "Whirldwind",
 	whirlwind_desc = "Warn when Maulgar gains Whirlwind",
 
-	flurry_name = "Flurry",
+	flurry = "Flurry",
 	flurry_desc = "Warn when Maulgar is close to Flurry and gains Flurry",
 
 	heal_trigger = "Blindeye the Seer begins to cast Prayer of Healing",
@@ -58,22 +58,22 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	heal_name = "Alerte soin",
+	heal = "Alerte soin",
 	heal_desc = "Pr\195\169viens quand Oeillaveugle le Voyant commence \195\160 lancer un soin.",
 
-	shield_name = "Alerte Bouclier",
+	shield = "Alerte Bouclier",
 	shield_desc = "Pr\195\169viens quand Oeillaveugle le Voyant se pose un bouclier.",
 
-	spellshield_name = "Alerte Bouclier anti-sort",
+	spellshield = "Alerte Bouclier anti-sort",
 	spellshield_desc = "Pr\195\169viens quand Krosh Brasemain se pose le bouclier anti-sort.",
 
-	summon_name = "Invocation d'un chasseur corrompu",
+	summon = "Invocation d'un chasseur corrompu",
 	summon_desc = "Pr\195\169viens quand Olm l'Invocateur commence \195\160 lancer Invocation d'un chasseur corrompu sauvage",
 
-	whirlwind_name = "Alerte Tourbillon",
+	whirlwind = "Alerte Tourbillon",
 	whirlwind_desc = "Pr\195\169viens quand Maulgar commence un Tourbillon.",
 
-	flurry_name = "Alerte Rafale",
+	flurry = "Alerte Rafale",
 	flurry_desc = "Pr\195\169viens quand Maulgar est proche de Rafale et quand il gagne Rafale.",
 
 	heal_trigger = "Oeillaveugle le Voyant commence \195\160 lancer Pri\195\168re de soins%.",
@@ -102,22 +102,22 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	heal_name = "Heal",
+	heal = "Heal",
 	heal_desc = "Warn when Blindeye the Seer begins to cast a Heal",
 
-	shield_name = "Schild",
+	shield = "Schild",
 	shield_desc = "Warnung wenn Blindauge der Seher Machtwort: Schild bekommt",
 
-	spellshield_name = "Zauberschild",
+	spellshield = "Zauberschild",
 	spellshield_desc = "Warnung wenn Krosh Feuerhand sein Zauberschild bekommt",
 
-	--summon_name = "Summon Wild Felhunter",
+	--summon = "Summon Wild Felhunter",
 	--summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter",
 
-	whirlwind_name = "Wirbelwind",
+	whirlwind = "Wirbelwind",
 	whirlwind_desc = "Warnung wenn Raufgar Wirbelwind bekommt",
 
-	flurry_name = "Schlaghagel",
+	flurry = "Schlaghagel",
 	flurry_desc = "Warnung wenn Raufgar kurz vor dem Schlaghagel steht und wenn er es bekommt",
 
 	heal_trigger = "Blindauge der Seher beginnt Gebet der Heilung.*",
@@ -146,22 +146,22 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	heal_name = "치유",
+	heal = "치유",
 	heal_desc = "블라인드아이가 치유 시전 시 경고",
 
-	shield_name = "보호막",
+	shield = "보호막",
 	shield_desc = "블라인드아이가 상급 신의 권능: 보호막 효과를 얻었을 때 알림",
 
-	spellshield_name = "주문 보호막",
+	spellshield = "주문 보호막",
 	spellshield_desc = "크로쉬가 주문 보호막 효과를 얻었을 때 알림",
 
-	summon_name = "사나운 지옥사냥개 소환",
+	summon = "사나운 지옥사냥개 소환",
 	summon_desc = "울름이 지옥사냥개 소환 시전 시 경고",
 
-	whirlwind_name = "소용돌이",
+	whirlwind = "소용돌이",
 	whirlwind_desc = "마울가르가 소용돌이 효과를 얻었을 때 알림",
 
-	flurry_name = "질풍",
+	flurry = "질풍",
 	flurry_desc = "마울가르의 질풍 효과 근접 및 획득 시 경고",
 
 	heal_trigger = "현자 블라인드아이|1이;가; 치유 시전을 시작합니다.",

@@ -11,7 +11,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Ayamiss",
-	sacrifice_name = "Sacrifice Alert",
+	sacrifice = "Sacrifice Alert",
 	sacrifice_desc = "Warn for Sacrifice",
 
 	sacrificetrigger = "^([^%s]+) ([^%s]+) afflicted by Paralyze",
@@ -21,7 +21,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	sacrifice_name = "Alerte Sacrifice",
+	sacrifice = "Alerte Sacrifice",
 	sacrifice_desc = "Pr\195\169viens lorsqu'un joueur est sacrifi\195\169.",
 
 	sacrificetrigger = "^([^%s]+) ([^%s]+) les effets de Paralysie%.$",
@@ -31,7 +31,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	sacrifice_name = "Opferung",
+	sacrifice = "Opferung",
 	sacrifice_desc = "Warnung, wenn ein Spieler geopfert wird.",
 
 	sacrificetrigger = "^([^%s]+) ([^%s]+) von Paralisieren betroffen.",
@@ -41,7 +41,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	sacrifice_name = "祭品警报",
+	sacrifice = "祭品警报",
 	sacrifice_desc = "玩家成为祭品时发出警报",
 
 	sacrificetrigger = "^(.+)受(.+)了麻痹效果的影响。",
@@ -51,7 +51,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	sacrifice_name = "祭品警報",
+	sacrifice = "祭品警報",
 	sacrifice_desc = "玩家成為祭品時發出警報",
 
 	sacrificetrigger = "^(.+)受到(.*)麻痹",
@@ -61,7 +61,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	sacrifice_name = "마비 경고",
+	sacrifice = "마비 경고",
 	sacrifice_desc = "마비에 대한 경고",
 
 	sacrificetrigger = "^([^|;%s]*)(.*)마비에 걸렸습니다%.$",

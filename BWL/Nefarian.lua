@@ -51,16 +51,16 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Nefarian",
 
-	shadowflame_name = "Shadow Flame alert",
+	shadowflame = "Shadow Flame alert",
 	shadowflame_desc = "Warn for Shadow Flame",
 
-	fear_name = "Warn for Fear",
+	fear = "Warn for Fear",
 	fear_desc = "Warn when Nefarian casts AoE Fear",
 
-	classcall_name = "Class Call alert",
+	classcall = "Class Call alert",
 	classcall_desc = "Warn for Class Calls",
 
-	otherwarn_name = "Other alerts",
+	otherwarn = "Other alerts",
 	otherwarn_desc = "Landing and Zerg warnings",
 } end)
 
@@ -102,16 +102,16 @@ L:RegisterTranslations("zhCN", function() return {
 	classcall_bar = "职业点名",
 	fear_bar = "可能恐惧",
 
-	shadowflame_name = "暗影烈焰警报",
+	shadowflame = "暗影烈焰警报",
 	shadowflame_desc = "暗影烈焰警报",
 
-	fear_name = "恐惧警报",
+	fear = "恐惧警报",
 	fear_desc = "恐惧警报",
 
-	classcall_name = "职业点名警报",
+	classcall = "职业点名警报",
 	classcall_desc = "职业点名警报",
 
-	otherwarn_name = "其他警报",
+	otherwarn = "其他警报",
 	otherwarn_desc = "降落与杂兵出现时发出警报",
 } end)
 
@@ -153,16 +153,16 @@ L:RegisterTranslations("zhTW", function() return {
 	classcall_bar = "職業點名",
 	fear_bar = "可能恐懼",
 
-	shadowflame_name = "暗影烈焰警報",
+	shadowflame = "暗影烈焰警報",
 	shadowflame_desc = "當奈法利安施放暗影烈焰時發出警報",
 
-	fear_name = "恐懼警報",
+	fear = "恐懼警報",
 	fear_desc = "當奈法利安施放群體恐懼時發出警報",
 
-	classcall_name = "職業點名警報",
+	classcall = "職業點名警報",
 	classcall_desc = "當奈法利安進行職業點名時發出警報",
 
-	otherwarn_name = "其他警報",
+	otherwarn = "其他警報",
 	otherwarn_desc = "降落及龍獸出現時發出警報",
 } end)
 
@@ -204,16 +204,16 @@ L:RegisterTranslations("koKR", function() return {
 	classcall_bar = "직업 지목",
 	fear_bar = "공포 가능",
 
-	shadowflame_name = "암흑의 불길 경고",
+	shadowflame = "암흑의 불길 경고",
 	shadowflame_desc = "암흑의 불길에 대한 경고",
 
-	fear_name = "공포 경고",
+	fear = "공포 경고",
 	fear_desc = "네파리안이 공포 시전시 경고",
 
-	classcall_name = "직업 지목 경고",
+	classcall = "직업 지목 경고",
 	classcall_desc = "직업 지목에 대한 경고",
 
-	otherwarn_name = "기타 경고",
+	otherwarn = "기타 경고",
 	otherwarn_desc = "착지와 소환에 대한 경고",
 } end)
 
@@ -255,16 +255,16 @@ L:RegisterTranslations("deDE", function() return {
 	classcall_bar = "Klassenruf",
 	fear_bar = "M\195\182gliche AoE Furcht",
 
-	shadowflame_name = "Schattenflamme",
+	shadowflame = "Schattenflamme",
 	shadowflame_desc = "Warnung, wenn Nefarian Schattenflamme wirkt.",
 
-	fear_name = "Furcht",
+	fear = "Furcht",
 	fear_desc = "Warnung, wenn Nefarian AoE Furcht wirkt.",
 
-	classcall_name = "Klassenruf",
+	classcall = "Klassenruf",
 	classcall_desc = "Warnung vor Klassenrufen.",
 
-	otherwarn_name = "Anderes",
+	otherwarn = "Anderes",
 	otherwarn_desc = "Warnung, wenn Nefarian landet und seine Diener ruft.",
 } end)
 
@@ -305,16 +305,16 @@ L:RegisterTranslations("frFR", function() return {
 	classcall_bar = "Appel des classes",
 	fear_bar = "Peur probable",
 
-	shadowflame_name = "Alerte Flamme d'ombre",
+	shadowflame = "Alerte Flamme d'ombre",
 	shadowflame_desc = "Pr\195\169viens quand Nefarian utilise sa Flamme d'ombre.",
 
-	fear_name = "Alerte Peur",
+	fear = "Alerte Peur",
 	fear_desc = "Pr\195\169viens quand Nefarian incante sa peur de zone.",
 
-	classcall_name = "Alertes Appel de classe",
+	classcall = "Alertes Appel de classe",
 	classcall_desc = "Signale les classes cibl\195\169s par l'appel de classe.",
 
-	otherwarn_name = "Autres alertes",
+	otherwarn = "Autres alertes",
 	otherwarn_desc = "Pr\195\169viens quand les Zergs arrivent et quand Nefarian atterit.",	
 } end)
 

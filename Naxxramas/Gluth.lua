@@ -15,16 +15,16 @@ local prior = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Gluth",
 
-	fear_name = "Fear Alert",
+	fear = "Fear Alert",
 	fear_desc = "Warn for fear",
 
-	frenzy_name = "Frenzy Alert",
+	frenzy = "Frenzy Alert",
 	frenzy_desc = "Warn for frenzy",
 
-	decimate_name = "Decimate Alert",
+	decimate = "Decimate Alert",
 	decimate_desc = "Warn for Decimate",
 
-	enrage_name = "Enrage",
+	enrage = "Enrage",
 	enrage_desc = "Timer for when he becomes enraged.",
 
 	frenzy_trigger = "%s goes into a frenzy!",
@@ -47,16 +47,16 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	fear_name = "공포 경고",
+	fear = "공포 경고",
 	fear_desc = "공포에 대한 경고",
 
-	frenzy_name = "광폭화 경고",
+	frenzy = "광폭화 경고",
 	frenzy_desc = "광폭화에 대한 경고",
 
-	decimate_name = "척살 경보",
+	decimate = "척살 경보",
 	decimate_desc = "척살에 대한 경고",
 
-	enrage_name = "격노",
+	enrage = "격노",
 	enrage_desc = "격노에 대한 타이머",
 
 	frenzy_trigger = "%s|1이;가; 광란의 상태에 빠집니다!", -- CHECK
@@ -79,13 +79,13 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	fear_name = "Furcht",
+	fear = "Furcht",
 	fear_desc = "Warnung vor AoE Furcht.",
 
-	frenzy_name = "Raserei",
+	frenzy = "Raserei",
 	frenzy_desc = "Warnung, wenn Gluth in Raserei ger\195\164t.",
 
-	decimate_name = "Dezimieren",
+	decimate = "Dezimieren",
 	decimate_desc = "Warnung vor Dezimieren.",
 
 	frenzy_trigger = "%s ger\195\164t in Raserei!",
@@ -105,13 +105,13 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	fear_name = "恐惧警报",
+	fear = "恐惧警报",
 	fear_desc = "恐惧警报",
 
-	frenzy_name = "狂暴警报",
+	frenzy = "狂暴警报",
 	frenzy_desc = "狂暴警报",
 
-	decimate_name = "残杀警报",
+	decimate = "残杀警报",
 	decimate_desc = "残杀警报",
 
 	frenzy_trigger = "%s变得狂怒无比！",
@@ -131,13 +131,13 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	fear_name = "恐懼警報",
+	fear = "恐懼警報",
 	fear_desc = "當古魯斯施放群體恐懼時發出警報",
 
-	frenzy_name = "狂暴警報",
+	frenzy = "狂暴警報",
 	frenzy_desc = "當古魯斯狂暴時發出警報",
 
-	decimate_name = "屠殺警報",
+	decimate = "屠殺警報",
 	decimate_desc = "當古魯斯屠殺時發出警報",
 
 	frenzy_trigger = "變得狂暴起來！",

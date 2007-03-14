@@ -12,10 +12,10 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Azuregos",
 
-	teleport_name = "Teleport Alert",
+	teleport = "Teleport Alert",
 	teleport_desc = "Warn for teleport",
 
-	shield_name = "Shield Alert",
+	shield = "Shield Alert",
 	shield_desc = "Warn for shield",
 
 	trigger1 = "Come, little ones",
@@ -30,10 +30,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	teleport_name = "Teleport",
+	teleport = "Teleport",
 	teleport_desc = "Warnung f\195\188r Azuregos Teleport.",
 
-	shield_name = "Magieschild",
+	shield = "Magieschild",
 	shield_desc = "Warnung, wenn Magieschild aktiv.",
 
 	trigger1 = "Tretet mir",
@@ -48,10 +48,10 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	teleport_name = "Alerte T\195\169l\195\169portation",
+	teleport = "Alerte T\195\169l\195\169portation",
 	teleport_desc = "Pr\195\169viens quans Azuregos t\195\169l\195\169porte quelqu'un.",
 
-	shield_name = "Alerte Bouclier",
+	shield = "Alerte Bouclier",
 	shield_desc = "Pr\195\169viens quand Azuregos est prot\195\169g\195\169 par un bouclier magique.",
 
 	trigger1 = "Venez m'affronter, mes petits !",
@@ -66,10 +66,10 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	teleport_name = "传送警报",
+	teleport = "传送警报",
 	teleport_desc = "传送警报",
 
-	shield_name = "护盾警报",
+	shield = "护盾警报",
 	shield_desc = "护盾警报",
 
 	trigger1 = "来吧，小子。面对我！",
@@ -84,10 +84,10 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	teleport_name = "傳送警報",
+	teleport = "傳送警報",
 	teleport_desc = "傳送警報",
 
-	shield_name = "護盾警報",
+	shield = "護盾警報",
 	shield_desc = "護盾警報",
 
 	trigger1 = "來吧，小子。面對我！",
@@ -102,10 +102,10 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	teleport_name = "소환 경고",
+	teleport = "소환 경고",
 	teleport_desc = "소환에 대한 경고",
 
-	shield_name = "보호막 경고",
+	shield = "보호막 경고",
 	shield_desc = "보호막에 대한 경고",
 
 	trigger1 = "오너라, 조무래기들아! 덤벼봐라!",

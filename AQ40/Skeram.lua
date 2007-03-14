@@ -22,17 +22,17 @@ L:RegisterTranslations("enUS", function() return {
 	splitwarn = "Splitting!",
 
 	cmd = "Skeram",
-	mc_name = "Mind Control Alert",
+	mc = "Mind Control Alert",
 	mc_desc = "Warn for Mind Control",
 
-	ae_name = "Arcane Explosion Alert",
+	ae = "Arcane Explosion Alert",
 	ae_desc = "Warn for Arcane Explosion",
 
 	split_cmd = "split", 
-	split_name = "Split Alert",
+	split = "Split Alert",
 	split_desc = "Warn before Create Image",
 
-	icon_name = "Place Icon",
+	icon = "Place Icon",
 	icon_desc = "Place a skull icon on the mind controlled person (requires promoted or higher)",
 } end )
 
@@ -48,13 +48,13 @@ L:RegisterTranslations("frFR", function() return {
 
 	splitwarn = "D\195\169multiplication !",
 
-	mc_name = "Alerte Contr\195\180le mental",
+	mc = "Alerte Contr\195\180le mental",
 	mc_desc = "Pr\195\169viens en cas de contr\195\180le mental.",
 
-	ae_name = "Alerte Explosion des arcanes",
+	ae = "Alerte Explosion des arcanes",
 	ae_desc = "Pr\195\169viens lorsque Skeram lance Explosion des arcanes.",
 
-	icon_name = "Placer une ic\195\180ne",
+	icon = "Placer une ic\195\180ne",
 	icon_desc = "Place une ic\195\180ne de raid sur la personne sous contr\195\180le mental (n\195\169cessite d'\195\170tre promu ou mieux).",
 } end )
 
@@ -69,16 +69,16 @@ L:RegisterTranslations("deDE", function() return {
 
 	splitwarn = "Abbilder!",
 
-	mc_name = "Gedankenkontrolle",
+	mc = "Gedankenkontrolle",
 	mc_desc = "Warnung, wenn jemand unter Gedankenkontrolle steht.",
 
-	ae_name = "Arkane Explosion",
+	ae = "Arkane Explosion",
 	ae_desc = "Warnung vor Arkaner Explosion.",
 
-	split_name = "Abbilder",
+	split = "Abbilder",
 	split_desc = "Warnung, wenn die Abbilder von Prophet Skeram erscheinen.",
 
-	icon_name = "Symbol",
+	icon = "Symbol",
 	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der unter Gedankenkontrolle steht. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 } end )
 
@@ -94,16 +94,16 @@ L:RegisterTranslations("zhCN", function() return {
 
 	splitwarn = "即将分裂！",
 
-	mc_name = "精神控制警报",
+	mc = "精神控制警报",
 	mc_desc = "精神控制警报",
 
-	ae_name = "魔爆术警报",
+	ae = "魔爆术警报",
 	ae_desc = "魔爆术警报",
 
-	split_name = "分裂警报",
+	split = "分裂警报",
 	split_desc = "预言者斯克拉姆即将复制镜像时发出警报",
 
-	icon_name = "标记精神控制",
+	icon = "标记精神控制",
 	icon_desc = "团队标记被精神控制者 (需要助力或更高权限)",
 } end )
 
@@ -119,16 +119,16 @@ L:RegisterTranslations("zhTW", function() return {
 
 	splitwarn = "即將分裂！",
 
-	mc_name = "精神控制警報",
+	mc = "精神控制警報",
 	mc_desc = "預言者斯克拉姆進行精神控制時發出警報",
 
-	ae_name = "魔爆術警報",
+	ae = "魔爆術警報",
 	ae_desc = "預言者斯克拉姆施放魔爆術時發出警報",
 
-	split_name = "幻影分身警報",
+	split = "幻影分身警報",
 	split_desc = "預言者斯克拉姆施放幻影分身時發出警報",
 
-	icon_name = "標記被精神控制的隊友",
+	icon = "標記被精神控制的隊友",
 	icon_desc = "在被精神控制的隊友頭上設置標記 (需要助手或領隊權限)",
 } end )
 
@@ -144,16 +144,16 @@ L:RegisterTranslations("koKR", function() return {
 
 	splitwarn = "곧 분리 됩니다.!! 경고!!",
 
-	mc_name = "정신 지배 경고",
+	mc = "정신 지배 경고",
 	mc_desc = "정신 지배에 대한 경고",
 
-	ae_name = "신비한 폭발 경고",
+	ae = "신비한 폭발 경고",
 	ae_desc = "신비한 폭발에 대한 경고",
 
-	split_name = "분리 경고",
+	split = "분리 경고",
 	split_desc = "이미지 생성 전 경고",
 
-	icon_name = "아이콘 지정",
+	icon = "아이콘 지정",
 	icon_desc = "정신 지배된 사람에게 해골 아이콘 지정 (승급자 이상 필요)",
 } end )
 

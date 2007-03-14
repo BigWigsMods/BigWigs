@@ -33,7 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Debugging"] = true,
 	["Show debug messages."] = true,
 	["Options"] = true,
-	bosskill_name = "Boss death",
+	bosskill = "Boss death",
 	bosskill_desc = "Announce when the boss has been defeated.",
 
 	["Load"] = true,
@@ -77,7 +77,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Debugging"] = "D\195\169boguage",
 	["Show debug messages."] = "Afficher les messages de d\195\169boguage.",
 	--["Options"] = true,
-	bosskill_name = "D\195\169faite du boss",
+	bosskill = "D\195\169faite du boss",
 	bosskill_desc = "Pr\195\169viens quand le boss est vaincu.",
 
 	["Load"] = "Charger",
@@ -121,7 +121,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Debugging"] = "Debugging",
 	["Show debug messages."] = "Zeige Debug Nachrichten.",
 	["Options"] = "Optionen",
-	bosskill_name = "Boss besiegt",
+	bosskill = "Boss besiegt",
 	bosskill_desc = "Melde, wenn ein Boss besiegt wurde.",
 
 	["Load"] = "Laden",
@@ -163,7 +163,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Debugging"] = "디버깅",
 	["Show debug messages."] = "디버그 메세지 표시",
 	["Options"] = "설정",
-	bosskill_name = "보스 사망",
+	bosskill = "보스 사망",
 	bosskill_desc = "보스를 물리쳤을 때 알림",
 
 	["Load"] = "불러오기",
@@ -208,7 +208,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Load All"] = "载入所有",
 	["Load all %s modules."] = "载入所有%s的模块",
 
-	bosskill_name = "首领死亡",
+	bosskill = "首领死亡",
 	bosskill_desc = "首领被击败时发出提示",
 
 	-- AceConsole zone commands
@@ -245,7 +245,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Debugging"] = "除錯",
 	["Show debug messages."] = "顯示除錯訊息。",
 
-	bosskill_name = "首領死亡",
+	bosskill = "首領死亡",
 	bosskill_desc = "首領被擊敗時發出提示。",
 
 	-- AceConsole zone commands
@@ -274,7 +274,7 @@ BigWigs = AceLibrary("AceAddon-2.0"):new(
 	"AceDB-2.0"
 )
 
-BigWigs:SetModuleMixins("AceEvent-2.0", "CandyBar-2.0")
+BigWigs:SetModuleMixins("AceEvent-2.0")
 
 local options = {
 	type = "group",
@@ -367,7 +367,7 @@ end
 function BigWigs:ToggleModuleDebugging(enable)
 	local frame = self.debugFrame or ChatFrame5
 	if enable then
-		self:Print(string.format(L["Debug enabled, output routed to %s."], frame:GetName()))
+		self:Print(L["Debug enabled, output routed to %s."]:format(frame:GetName()))
 	else
 		self:Print(L["Debug disabled."])
 	end
@@ -385,6 +385,7 @@ function BigWigs:OnDebugDisable() self:ToggleModuleDebugging(false) end
 --      Module Handling      --
 -------------------------------
 
+local opts = {}
 function BigWigs:RegisterModule(name, module)
 	if module:IsRegistered() then
 		error(string.format("%q is already registered.", name))
@@ -392,22 +393,20 @@ function BigWigs:RegisterModule(name, module)
 		error(string.format("%q does not have a valid revision field.", name))
 	end
 
-	if module:IsBossModule() then self:ToggleModuleActive(module, false) end
-
-	-- Set up DB
-	local opts
-	if module:IsBossModule() and module.toggleoptions then
-		opts = {}
-		for i,v in ipairs(module.toggleoptions) do if v ~= -1 then opts[v] = true end end
+	if module:IsBossModule() then
+		self:ToggleModuleActive(module, false)
+		for i,v in ipairs(module.toggleoptions) do
+			if type(v) == "string" then
+				opts[v] = true
+			end
+		end
+		self:RegisterDefaults(name, "profile", opts)
+		for i in ipairs(opts) do opts[i] = nil end
+		module.db = self:AcquireDBNamespace(name)
+	elseif type(module.defaultDB) == "table" then
+		self:RegisterDefaults(name, "profile", module.defaultDB)
+		module.db = self:AcquireDBNamespace(name)
 	end
-
-	if module.db and type(module.RegisterDefaults) == "function" then
-		module:RegisterDefaults("profile", opts or module.defaultDB or {})
-	else
-		self:RegisterDefaults(name, "profile", opts or module.defaultDB or {})
-	end
-
-	if not module.db then module.db = self:AcquireDBNamespace(name) end
 
 	-- Set up AceConsole
 	if module:IsBossModule() then
@@ -461,7 +460,7 @@ function BigWigs:RegisterModule(name, module)
 			for i, v in ipairs(module.toggleoptions) do
 				local x = i + 100
 				if type(v) == "number" then
-					cons.args["optionSpacer"..i] = {
+					cons.args[i] = {
 						type = "header",
 						order = x,
 						name = " ",
@@ -471,7 +470,7 @@ function BigWigs:RegisterModule(name, module)
 					cons.args[v] = {
 						type = "toggle",
 						order = v == "bosskill" and -1 or x,
-						name = l[v.."_name"],
+						name = l[v],
 						desc = l[v.."_desc"],
 					}
 					if v ~= "bosskill" and l:HasTranslation(v.."_validate") then
@@ -500,7 +499,7 @@ function BigWigs:RegisterModule(name, module)
 					options.args[consoleZone] = {
 						type = "group",
 						name = guiZone,
-						desc = string.format(L["Options for bosses in %s."], guiZone),
+						desc = L["Options for bosses in %s."]:format(guiZone),
 						args = {},
 						disabled = "~IsActive",
 					}
@@ -533,7 +532,7 @@ function BigWigs:EnableModule(moduleName, noSync)
 	local m = self:GetModule(moduleName)
 	if m and m:IsBossModule() and not self:IsModuleActive(m) then
 		self:ToggleModuleActive(m, true)
-		m:Message(string.format(L["%s mod enabled"], moduleName or "??"), "Core", true)
+		m:Message(L["%s mod enabled"]:format(moduleName or "??"), "Core", true)
 		if not noSync then
 			if not BB then BB = AceLibrary("Babble-Boss-2.2") end
 			m:Sync((m.external and "EnableExternal " or "EnableModule ") .. (m.synctoken or BB:GetReverseTranslation(moduleName)))

@@ -29,22 +29,22 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Baron",
 
-	service_name = "Last service",
+	service = "Last service",
 	service_desc = "Timer bar for Geddon's last service.",
 
-	inferno_name = "Inferno",
+	inferno = "Inferno",
 	inferno_desc = "Timer bar for Geddons Inferno.",
 
-	bombtimer_name = "Bar for when the bomb goes off",
+	bombtimer = "Bar for when the bomb goes off",
 	bombtimer_desc = "Shows a 10 second bar for when the bomb goes off at the target.",
 
-	youbomb_name = "You are the bomb alert",
+	youbomb = "You are the bomb alert",
 	youbomb_desc = "Warn when you are the bomb",
 
-	elsebomb_name = "Someone else is the bomb alert",
+	elsebomb = "Someone else is the bomb alert",
 	elsebomb_desc = "Warn when others are the bomb",
 
-	icon_name = "Raid Icon on bomb",
+	icon = "Raid Icon on bomb",
 	icon_desc = "Put a Raid Icon on the person who's the bomb. (Requires promoted or higher)",
 } end)
 
@@ -66,22 +66,22 @@ L:RegisterTranslations("zhCN", function() return {
 	service_message = "最后一次服务，5秒后迦顿爆炸！",
 	inferno_message = "10秒的地狱火！",
 
-	service_name = "最后自爆计时条",
+	service = "最后自爆计时条",
 	service_desc = "显示迦顿男爵最后自爆的计时条.",
 
-	inferno_name = "地狱火计时条",
+	inferno = "地狱火计时条",
 	inferno_desc = "显示迦顿男爵地狱火的计时条.",
 
-	bombtimer_name = "炸弹爆炸的计时条",
+	bombtimer = "炸弹爆炸的计时条",
 	bombtimer_desc = "显示一个目标10秒后爆炸的计时条。",
 
-	youbomb_name = "玩家炸弹警报",
+	youbomb = "玩家炸弹警报",
 	youbomb_desc = "你成为炸弹时发出警报",
 
-	elsebomb_name = "队友炸弹警报",
+	elsebomb = "队友炸弹警报",
 	elsebomb_desc = "队友成为炸弹时发出警报",
 
-	icon_name = "炸弹图标",
+	icon = "炸弹图标",
 	icon_desc = "在成为炸弹的队友头上标记骷髅图标（需要助理或领袖权限）",
 } end)
 
@@ -103,22 +103,22 @@ L:RegisterTranslations("zhTW", function() return {
 	service_message = "5 秒後迦頓爆炸！",
 	inferno_message = "施放地獄火10秒！",
 
-	service_name = "最後自爆計時條",
+	service = "最後自爆計時條",
 	service_desc = "顯示迦頓男爵最後自爆的計時條.",
 
-	inferno_name = "地獄火計時條",
+	inferno = "地獄火計時條",
 	inferno_desc = "顯示迦頓男爵地獄火的計時條.",
 
-	bombtimer_name = "Bar for when the bomb goes off",
+	bombtimer = "Bar for when the bomb goes off",
 	bombtimer_desc = "Shows a 10 second bar for when the bomb goes off at the target.",
 
-	youbomb_name = "玩家炸彈警報",
+	youbomb = "玩家炸彈警報",
 	youbomb_desc = "你成為炸彈時發出警報",
 
-	elsebomb_name = "隊友炸彈警報",
+	elsebomb = "隊友炸彈警報",
 	elsebomb_desc = "隊友成為炸彈時發出警報",
 
-	icon_name = "炸彈標記",
+	icon = "炸彈標記",
 	icon_desc = "在成為炸彈的隊友頭上標記（需要助理或領隊權限）",
 } end)
 
@@ -141,22 +141,22 @@ L:RegisterTranslations("koKR", function() return {
 	inferno_message = "10초동안 불지옥!",
 
 
-	service_name = "마지막 임무",
+	service = "마지막 임무",
 	service_desc = "게돈의 마지막 임무에 대한 타이머 바",
 
-	inferno_name = "불지옥",
+	inferno = "불지옥",
 	inferno_desc = "게돈 불지옥에 대한 타이머 바.",
 
-	bombtimer_name = "폭탄에 대한 바",
+	bombtimer = "폭탄에 대한 바",
 	bombtimer_desc = "대상에서 폭탄이 사라질 때에 대한 10초 바를 표시합니다.",
 
-	youbomb_name = "자신의 폭탄 경고",
+	youbomb = "자신의 폭탄 경고",
 	youbomb_desc = "자신이 폭탄 일때 경고",
 
-	elsebomb_name = "타인의 폭탄 경고",
+	elsebomb = "타인의 폭탄 경고",
 	elsebomb_desc = "타인이 폭탄 일때 경고",
 
-	icon_name = "폭탄에 공격대 아이콘 표시",
+	icon = "폭탄에 공격대 아이콘 표시",
 	icon_desc = "폭탄인 사람에게 공격대 아이콘 표시. (승급자 이상 요구)",
 } end)
 
@@ -178,22 +178,22 @@ L:RegisterTranslations("deDE", function() return {
 	service_message = "Letzter Dienst! Baron Geddon explodiert in 5 Sekunden!",
 	inferno_message = "Inferno f\195\188r 10 Sekunden!",
 
-	service_name = "Letzter Dienst",
+	service = "Letzter Dienst",
 	service_desc = "Timer Balken f\195\188r Baron Geddons letzten Dienst.",
 
-	inferno_name = "Inferno",
+	inferno = "Inferno",
 	inferno_desc = "Timer Balken f\195\188r Baron Geddons Inferno.",
 
-	bombtimer_name = "Bomben Timer",
+	bombtimer = "Bomben Timer",
 	bombtimer_desc = "Zeigt einen 10 Sekunden Timer f\195\188r die Explosion der Lebenden Bombe.",
 
-	youbomb_name = "Du bist die Bombe",
+	youbomb = "Du bist die Bombe",
 	youbomb_desc = "Warnung, wenn Du die Bombe bist.",
 
-	elsebomb_name = "X ist die Bombe",
+	elsebomb = "X ist die Bombe",
 	elsebomb_desc = "Warnung, wenn andere Spieler die Bombe sind",
 
-	icon_name = "Symbol",
+	icon = "Symbol",
 	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der die Bombe ist. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 } end)
 
@@ -215,22 +215,22 @@ L:RegisterTranslations("frFR", function() return {
 	service_message = "Dernier Service, Geddon explose dans 5 secondes !",
 	inferno_message = "Inferno pendant 10 secondes !",
 
-	service_name = "Alerte Dernier Service",
+	service = "Alerte Dernier Service",
 	service_desc = "Pr\195\169viens du dernier service de Geddon.",
 
-	inferno_name = "Alerte Inferno",
+	inferno = "Alerte Inferno",
 	inferno_desc = "Pr\195\169viens des Inferno de Geddon.",
 
-	bombtimer_name = "Barre Bombes Vivantes",
+	bombtimer = "Barre Bombes Vivantes",
 	bombtimer_desc = "Affiche une barre pour chaque Bombe vivante.",
 
-	youbomb_name = "Alerte quand vous \195\170tes la bombe",
+	youbomb = "Alerte quand vous \195\170tes la bombe",
 	youbomb_desc = "Pr\195\169viens quand vous \195\170tes la bombe.",
 
-	elsebomb_name = "Alerte quand d'autres sont la bombe",
+	elsebomb = "Alerte quand d'autres sont la bombe",
 	elsebomb_desc = "Pr\195\169viens quand d'autres joueurs sont la bombe.",
 
-	icon_name = "Ic\195\180ne de raid",
+	icon = "Ic\195\180ne de raid",
 	icon_desc = "Place une ic\195\180ne de raid sur la derni\195\168re personne qui est la bombe (requiert d'\195\170tre promus ou plus)",
 } end)
 

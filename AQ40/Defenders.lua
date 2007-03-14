@@ -12,31 +12,31 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Defender",
 
-	plagueyou_name = "Plague on you alert",
+	plagueyou = "Plague on you alert",
 	plagueyou_desc = "Warn if you got the Plague",
 
-	plagueother_name = "Plague on others alert",
+	plagueother = "Plague on others alert",
 	plagueother_desc = "Warn if others got the Plague",
 
-	thunderclap_name = "Thunderclap Alert",
+	thunderclap = "Thunderclap Alert",
 	thunderclap_desc = "Warn for Thunderclap",
 
-	meteor_name = "Meteor Alert",
+	meteor = "Meteor Alert",
 	meteor_desc = "Warn for Meteor",
 
-	shadowstorm_name = "Shadow Storm",
+	shadowstorm = "Shadow Storm",
 	shadowstorm_desc = "Warn for Shadow Storm",
 
-	explode_name = "Explode Alert",
+	explode = "Explode Alert",
 	explode_desc = "Warn for Explode",
 
-	enrage_name = "Enrage Alert",
+	enrage = "Enrage Alert",
 	enrage_desc = "Warn for Enrage",
 
-	summon_name = "Summon Alert",
+	summon = "Summon Alert",
 	summon_desc = "Warn for add summons",
 
-	icon_name = "Place icon",
+	icon = "Place icon",
 	icon_desc = "Place raid icon on the last plagued person (requires promoted or higher)",
 
 	explodetrigger = "Anubisath Defender gains Explode.",
@@ -62,31 +62,31 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	plagueyou_name = "Du hast die Seuche",
+	plagueyou = "Du hast die Seuche",
 	plagueyou_desc = "Warnung, wenn Du die Seuche hast.",
 
-	plagueother_name = "X hat die Seuche",
+	plagueother = "X hat die Seuche",
 	plagueother_desc = "Warnung, wenn andere Spieler die Seuche haben.",
 
-	thunderclap_name = "Donnerknall",
+	thunderclap = "Donnerknall",
 	thunderclap_desc = "Warnung, wenn Verteidiger des Anubisath Donnerknall wirkt.",
 
-	meteor_name = "Meteor",
+	meteor = "Meteor",
 	meteor_desc = "Warnung, wenn Verteidiger des Anubisath Meteor wirkt.",
 
-	shadowstorm_name = "Schattensturm",
+	shadowstorm = "Schattensturm",
 	shadowstorm_desc = "Warnung, wenn Verteidiger des Anubisath Schattensturm wirkt.",
 
-	explode_name = "Explosion",
+	explode = "Explosion",
 	explode_desc = "Warnung, wenn Verteidiger des Anubisath explodiert.",
 
-	enrage_name = "Wutanfall",
+	enrage = "Wutanfall",
 	enrage_desc = "Warnung, wenn Verteidiger des Anubisath w\195\188tend wird.",
 
-	summon_name = "Beschw\195\182rung",
+	summon = "Beschw\195\182rung",
 	summon_desc = "Warnung, wenn Verteidiger des Anubisath Schwarmwachen oder Krieger beschw\195\182rt.",
 
-	icon_name = "Symbol",
+	icon = "Symbol",
 	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der die Seuche hat. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 
 	explodetrigger = "Verteidiger des Anubisath bekommt 'Explodieren'.",
@@ -114,25 +114,25 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	plagueyou_name = "玩家瘟疫警报",
+	plagueyou = "玩家瘟疫警报",
 	plagueyou_desc = "你中了瘟疫时发出警报",
 
-	plagueother_name = "队友瘟疫警报",
+	plagueother = "队友瘟疫警报",
 	plagueother_desc = "队友中了瘟疫时发出警报",
 
-	thunderclap_name = "雷霆一击警报",
+	thunderclap = "雷霆一击警报",
 	thunderclap_desc = "阿努比萨斯防御者发动雷霆一击时发出警报",
 
-	explode_name = "爆炸警报",
+	explode = "爆炸警报",
 	explode_desc = "阿努比萨斯防御者即将爆炸时发出警报",
 
-	enrage_name = "狂怒警报",
+	enrage = "狂怒警报",
 	enrage_desc = "阿努比萨斯防御者进入狂怒状态时发出警报",
 
-	summon_name = "召唤警报",
+	summon = "召唤警报",
 	summon_desc = "阿努比萨斯防御者召唤增援时发出警报",
 
-	icon_name = "标记瘟疫",
+	icon = "标记瘟疫",
 	icon_desc = "团队标记中瘟疫的玩家 (需要助理或更高权限)",
 
 	explodetrigger = "阿努比萨斯防御者获得了爆炸的效果。",
@@ -155,25 +155,25 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 L:RegisterTranslations("zhTW", function() return {
-	plagueyou_name = "玩家瘟疫警報",
+	plagueyou = "玩家瘟疫警報",
 	plagueyou_desc = "你中了瘟疫時發出警報",
 
-	plagueother_name = "隊友瘟疫警報",
+	plagueother = "隊友瘟疫警報",
 	plagueother_desc = "隊友中了瘟疫時發出警報",
 
-	thunderclap_name = "雷霆一擊警報",
+	thunderclap = "雷霆一擊警報",
 	thunderclap_desc = "阿努比薩斯防禦者發動雷霆一擊時發出警報",
 
-	explode_name = "爆炸警報",
+	explode = "爆炸警報",
 	explode_desc = "阿努比薩斯防禦者即將爆炸時發出警報",
 
-	enrage_name = "狂怒警報",
+	enrage = "狂怒警報",
 	enrage_desc = "阿努比薩斯防禦者進入狂怒狀態時發出警報",
 
-	summon_name = "召喚警報",
+	summon = "召喚警報",
 	summon_desc = "阿努比薩斯防禦者召喚增援時發出警報",
 
-	icon_name = "標記瘟疫",
+	icon = "標記瘟疫",
 	icon_desc = "團隊標記中瘟疫的玩家 (需要助理或領隊權限)",
 
 	explodetrigger = "阿努比薩斯防禦者獲得了爆炸的效果。",
@@ -196,31 +196,31 @@ L:RegisterTranslations("zhTW", function() return {
 
 
 L:RegisterTranslations("koKR", function() return {
-	plagueyou_name = "자신의 역병 경고",
+	plagueyou = "자신의 역병 경고",
 	plagueyou_desc = "자신의 역병에 대한 경고",
 
-	plagueother_name = "타인의 역병 경고",
+	plagueother = "타인의 역병 경고",
 	plagueother_desc = "타인의 역병에 대한 경고",
 
-	thunderclap_name = "천둥벼락 경고",
+	thunderclap = "천둥벼락 경고",
 	thunderclap_desc = "천둥벼락에 대한 경고",
 
-	meteor_name = "유성 경고",
+	meteor = "유성 경고",
 	meteor_desc = "유성에 대한 경고",
 
-	shadowstorm_name = "암흑 폭풍 경고",
+	shadowstorm = "암흑 폭풍 경고",
 	shadowstorm_desc = "암흑 폭풍에 대한 경고",
 
-	explode_name = "폭발 경고",
+	explode = "폭발 경고",
 	explode_desc = "폭발에 대한 경고",
 
-	enrage_name = "분노 경고",
+	enrage = "분노 경고",
 	enrage_desc = "분노에 대한 경고",
 
-	summon_name = "소환 경고",
+	summon = "소환 경고",
 	summon_desc = "추가 소환에 대한 경고",
 
-	icon_name = "아이콘 지정",
+	icon = "아이콘 지정",
 	icon_desc = "마지막 역병에 걸린 사람에게 공격대 아이콘 지정(승급자 이상 필요)",
 
 	explodetrigger = "아누비사스 문지기|1이;가; 폭파 효과를 얻었습니다.",
@@ -247,25 +247,25 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	plagueyou_name = "Alerte Peste sur vous",
+	plagueyou = "Alerte Peste sur vous",
 	plagueyou_desc = "Pr\195\169viens quand vous avez la peste.",
 
-	plagueother_name = "Alerte Peste sur d'autres",
+	plagueother = "Alerte Peste sur d'autres",
 	plagueother_desc = "Pr\195\169viens quand d'autres joueurs ont la peste.",
 
-	thunderclap_name = "Alerte Coups de tonnerre",
+	thunderclap = "Alerte Coups de tonnerre",
 	thunderclap_desc = "Pr\195\169viens des Coups de tonnerre",
 
-	explode_name = "Alerte Explosion",
+	explode = "Alerte Explosion",
 	explode_desc = "Pr\195\169viens en cas d'explosion imminente.",
 
-	enrage_name = "Alerte Enrag\195\169",
+	enrage = "Alerte Enrag\195\169",
 	enrage_desc = "Pr\195\169viens quand le gardien s'enrage.",
 
-	summon_name = "Alerte invocation",
+	summon = "Alerte invocation",
 	summon_desc = "Pr\195\169viens quand le gardien invoque des adds.",
 
-	icon_name = "Placer une ic\195\180ne",
+	icon = "Placer une ic\195\180ne",
 	icon_desc = "Place une ic\195\180ne de raid sur le dernier personnage qui a la peste (requiert d'\195\170tre promus ou plus).",
 
 	explodewarn = "Explosion imminente !",

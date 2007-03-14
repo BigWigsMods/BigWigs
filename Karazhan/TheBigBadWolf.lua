@@ -14,13 +14,13 @@ local playerName = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "TheBigBadWolf",
 
-	youriding_name = "You are Red Riding Hood alert",
+	youriding = "You are Red Riding Hood alert",
 	youriding_desc = "Warn when you are Red Riding Hood",
 
-	elseriding_name = "Others Red Riding Hood alert",
+	elseriding = "Others Red Riding Hood alert",
 	elseriding_desc = "Warn when others are Red Riding Hood",
 
-	icon_name = "Place Icon",
+	icon = "Place Icon",
 	icon_desc = "Put a Raid Icon on the person who's Red Riding Hood. (Requires promoted or higher)",
 
 	riding_trigger = "^([^%s]+) gain(.*) Red Riding Hood",
@@ -32,13 +32,13 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	youriding_name = "Du bist Rotk\195\164ppchen Warnung",
+	youriding = "Du bist Rotk\195\164ppchen Warnung",
 	youriding_desc = "Warnung wenn du Rotk\195\164ppchen bist",
 
-	elseriding_name = "Andere sind Rotk\195\164ppchen Warnung",
+	elseriding = "Andere sind Rotk\195\164ppchen Warnung",
 	elseriding_desc = "Warnung wenn andere Rotk\195\164ppchen sind",
 
-	icon_name = "Zeige Icon",
+	icon = "Zeige Icon",
 	icon_desc = "Setzt ein Raid Icon auf die Person die Rotk\195\164ppchen ist.",
 
 	riding_trigger = "^([^%s]+) bekommt(.*) 'Rotk\195\164ppchen'",
@@ -50,13 +50,13 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	youriding_name = "Alerte Chaperon Rouge (soi)",
+	youriding = "Alerte Chaperon Rouge (soi)",
 	youriding_desc = "Pr\195\169viens quand vous \195\170tes le Chaperon Rouge",
 
-	elseriding_name = "Alerte Chaperon Rouge (autres)",
+	elseriding = "Alerte Chaperon Rouge (autres)",
 	elseriding_desc = "Pr\195\169viens quand les autres sont le Chaperon Rouge",
 
-	icon_name = "Placer une ic\195\180ne",
+	icon = "Placer une ic\195\180ne",
 	icon_desc = "Place une ic\195\180ne de raid sur le dernier personnage qui est le Chaperon Rouge (requiert d'\195\170tre promus ou plus).",
 
 	riding_trigger = "^([^%s]+) gagne(.*) Chaperon Rouge",
@@ -68,13 +68,13 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	youriding_name = "자신의 빨간 두건 알림",
+	youriding = "자신의 빨간 두건 알림",
 	youriding_desc = "자신이 빨간 두건에 걸리면 알림",
 
-	elseriding_name = "타인의 빨간 두건 알림",
+	elseriding = "타인의 빨간 두건 알림",
 	elseriding_desc = "타인이 빨간 두건에 걸리면 알림",
 
-	icon_name = "아이콘 지정",
+	icon = "아이콘 지정",
 	icon_desc = "빨간 두건인 사람에게 공격대 아이콘 지정(승급자 이상의 권한 필요)",
 
 	riding_trigger = "^([^|;%s]*)(.*)빨간 두건 효과를 얻었습니다%.$", -- "^([^%s]+) gain(.*) Red Riding Hood", -- check

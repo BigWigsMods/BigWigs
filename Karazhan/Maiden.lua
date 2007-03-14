@@ -12,16 +12,16 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Maiden",
 
-	engage_name = "Engage",
+	engage = "Engage",
 	engage_desc = ("Alert when %s is engaged"):format(boss),
 
-	repentance_name = "Repentance",
+	repentance = "Repentance",
 	repentance_desc = "Estimated timer of Repentance",
 
-	holyfire_name = "Holy Fire",
+	holyfire = "Holy Fire",
 	holyfire_desc = "Alert when people are afflicted by Holy Fire",
 
-	icon_name = "Icon",
+	icon = "Icon",
 	icon_desc = "Place a Raid Icon on the player afflicted by Holy Fire(requires promoted or higher)",
 
 	engage_trigger = "Your behavior will not be tolerated.",
@@ -41,16 +41,16 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	engage_name = "Engage",
+	engage = "Engage",
 	engage_desc = ("Warnt wenn %s w\195\188tend ist"):format(boss),
 
-	repentance_name = "Bu\195\159e",
+	repentance = "Bu\195\159e",
 	repentance_desc = "Ungef\195\164re Zeitangabe von Bu\195\159e",
 
-	holyfire_name = "Heiliges Feuer",
+	holyfire = "Heiliges Feuer",
 	holyfire_desc = "Warnt wenn Personen von Heiliges Feuer betroffen sind",
 
-	icon_name = "Icon",
+	icon = "Icon",
 	icon_desc = "Place a Raid Icon on the player afflicted by Holy Fire(requires promoted or higher)",
 
 	engage_trigger = "Euer Verhalten wird nicht toleriert.",
@@ -70,16 +70,16 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	engage_name = "Alerte Engagement",
+	engage = "Alerte Engagement",
 	engage_desc = ("Pr\195\169viens quand %s est engag\195\169e"):format(boss),
 
-	repentance_name = "Alerte Repentir",
+	repentance = "Alerte Repentir",
 	repentance_desc = "Affiche le temps estim\195\169 du Repentir",
 
-	holyfire_name = "Alerte Flammes sacr\195\169",
+	holyfire = "Alerte Flammes sacr\195\169",
 	holyfire_desc = "Pr\195\169viens quand quelqu'un est affect\195\169 par Flammes sacr\195\169es",
 
-	icon_name = "Placer une ic\195\180ne",
+	icon = "Placer une ic\195\180ne",
 	icon_desc = "Place une ic\195\180ne de raid sur le dernier personnage affect\195\169 par Flammes sacr\196\169es (requiert d'\195\170tre promus ou plus).",
 
 	engage_trigger = "Votre comportement est inacceptable.",
@@ -99,16 +99,16 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	engage_name = "전투 개시",
+	engage = "전투 개시",
 	engage_desc = ("%s 전투 개시 알림"):format(boss),
 
-	repentance_name = "참회",
+	repentance = "참회",
 	repentance_desc = "참회 예상 시간",
 
-	holyfire_name = "신성한 불꽃",
+	holyfire = "신성한 불꽃",
 	holyfire_desc = "신성한 불꽃에 걸린 사람 경고",
 
-	icon_name = "아이콘",
+	icon = "아이콘",
 	icon_desc = "신성한 불꽃에 걸린 사람에게 공격대 아이콘 지정(승급자 이상의 권한 필요)",
 
 	engage_trigger = "너희의 행동은 그냥 넘길 수가 없다.",

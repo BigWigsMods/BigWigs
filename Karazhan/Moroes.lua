@@ -13,19 +13,19 @@ local enrageannounced
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Moroes",
 
-	engage_name = "Engage",
+	engage = "Engage",
 	engage_desc = ("Warn when %s is pulled"):format(boss),
 
-	vanish_name = "Vanish",
+	vanish = "Vanish",
 	vanish_desc = "Vanish estimated timers",
 
-	garrote_name = "Garrote",
+	garrote = "Garrote",
 	garrote_desc = "Notify of players afflicted by Garrote",
 
-	enrage_name = "Enrage",
+	enrage = "Enrage",
 	enrage_desc = ("Warn when %s becomes enraged"):format(boss),
 
-	icon_name = "Icon",
+	icon = "Icon",
 	icon_desc = "Place a Raid Icon on the player afflicted by Garrote(requires promoted or higher)",
 
 	vanish_trigger1 = "You rang?",
@@ -48,16 +48,16 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	engage_name = "Alerte Engagement",
+	engage = "Alerte Engagement",
 	engage_desc = ("Pr\195\169viens quand %s est engag\195\169"):format(boss),
 
-	vanish_name = "Alerte Disparition",
+	vanish = "Alerte Disparition",
 	vanish_desc = "Pr\195\169viens quand Moroes disparait.",
 
-	garrote_name = "Alerte Garrot",
+	garrote = "Alerte Garrot",
 	garrote_desc = "Pr\195\169viens des joueurs qui subissent le Garrot.",
 
-	enrage_name = "Alerte Enrager",
+	enrage = "Alerte Enrager",
 	enrage_desc = "Pr\195\169viens quand Moroes devient enrag\195\169.",
 
 	vanish_trigger1 = "Vous avez sonn\195\169\194\160?",
@@ -80,16 +80,16 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	vanish_name = "Verschwinden",
+	vanish = "Verschwinden",
 	vanish_desc = "Ungef\195\164re Zeitangabe f\195\188r Verschwinden",
 
-	garrote_name = "Erdrosseln",
+	garrote = "Erdrosseln",
 	garrote_desc = "Warnt welche Spieler von Erdrosseln betroffen sind",
 
-	enrage_name = "Enrage",
+	enrage = "Enrage",
 	enrage_desc = ("Warnt wenn %s w\195\188tend wird"):format(boss),
 
-	icon_name = "Icon",
+	icon = "Icon",
 	icon_desc = "Platziert ein Schlachtzugssymbol bei dem Spieler, welcher von Erdrosseln betroffen ist (ben\195\182tigt 'bef\195\182rdert' oder h\195\182her)",
 
 	vanish_trigger1 = "Ihr habt gel\195\164utet?",
@@ -112,19 +112,19 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_name = "전투시작",
+	engage = "전투시작",
 	engage_desc = ("%s 전투 개시 알림"):format(boss),
 
-	vanish_name = "소멸",
+	vanish = "소멸",
 	vanish_desc = "소멸 예상 시간",
 
-	garrote_name = "목조르기",
+	garrote = "목조르기",
 	garrote_desc = "목조르기에 걸린 사람 알림",
 
-	enrage_name = "격노",
+	enrage = "격노",
 	enrage_desc = ("%s 격노 시 알림"):format(boss),
 
-	icon_name = "아이콘",
+	icon = "아이콘",
 	icon_desc = "목조르기에 걸린 사람에게 공격대 아이콘 지정(승급자 이상의 권한 필요)",
 
 	vanish_trigger1 = "절 부르셨습니까?",

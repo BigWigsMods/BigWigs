@@ -21,7 +21,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Gehennas",
 
-	curse_name = "Gehennas' Curse alert",
+	curse = "Gehennas' Curse alert",
 	curse_desc = "Warn for Gehennas' Curse",
 } end)
 
@@ -33,7 +33,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	bar1text = "基赫纳斯的诅咒",
 
-	curse_name = "诅咒警报",
+	curse = "诅咒警报",
 	curse_desc = "诅咒警报",
 } end)
 
@@ -45,7 +45,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	bar1text = "基赫納斯的詛咒",
 
-	curse_name = "詛咒警報",
+	curse = "詛咒警報",
 	curse_desc = "當基赫納斯使用反治療群體詛咒時發出警報",
 } end)
 
@@ -57,7 +57,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	bar1text = "게헨나스의 저주",
 
-	curse_name = "게헨나스의 저주 경고",
+	curse = "게헨나스의 저주 경고",
 	curse_desc = "게헨나스의 저주에 대한 경고",
 } end)
 
@@ -69,7 +69,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	bar1text = "Gehennas Fluch",
 
-	curse_name = "Gehennas Fluch",
+	curse = "Gehennas Fluch",
 	curse_desc = "Warnung, wenn Gehennas AoE Fluch wirkt.",
 } end)
 
@@ -81,7 +81,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	bar1text = "Mal\195\169diction de Gehennas",
 
-	curse_name = "Alerte Mal\195\169diction de Gehennas",
+	curse = "Alerte Mal\195\169diction de Gehennas",
 	curse_desc = "Pr\195\169viens des mal\195\169dictions de Gehennas.",
 } end)
 

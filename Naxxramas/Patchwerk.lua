@@ -12,7 +12,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Patchwerk",
 
-	enrage_name = "Enrage Alert",
+	enrage = "Enrage Alert",
 	enrage_desc = "Warn for Enrage",
 
 	enragetrigger = "%s goes into a berserker rage!",
@@ -33,7 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	enrage_name = "Wutanfall",
+	enrage = "Wutanfall",
 	enrage_desc = "Warnung, wenn Flickwerk w\195\188tend wird.",
 
 	enragetrigger = "%s f\195\164llt in Berserkerwut!",
@@ -54,7 +54,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	enrage_name = "격노 경고",
+	enrage = "격노 경고",
 	enrage_desc = "격노에 대한 경고",
 
 	enragetrigger = "%s|1이;가; 광폭해집니다!",
@@ -75,7 +75,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	enrage_name = "激怒警报",
+	enrage = "激怒警报",
 	enrage_desc = "激怒警报",
 
 	enragetrigger = "变得愤怒了！",
@@ -96,7 +96,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	enrage_name = "狂怒警報",
+	enrage = "狂怒警報",
 	enrage_desc = "狂怒警報",
 
 	enragetrigger = "變得極度狂暴而憤怒！",
@@ -117,7 +117,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	enrage_name = "Alerte Enrager",
+	enrage = "Alerte Enrager",
 	enrage_desc = "Préviens régulièrement quand Le Recousu devient enragé.",
 
 	enragetrigger = "%s devient fou furieux !",

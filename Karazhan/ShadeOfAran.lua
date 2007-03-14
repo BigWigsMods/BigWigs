@@ -14,22 +14,22 @@ local addsannounced
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Aran",
 
-	adds_name = "Elementals",
+	adds = "Elementals",
 	adds_desc = "Warn about the water elemental adds spawning",
 
-	drink_name = "Drinking",
+	drink = "Drinking",
 	drink_desc = ("Warn when %s starts to drink"):format(boss),
 
-	engage_name = "Engage",
+	engage = "Engage",
 	engage_desc = ("Warn when %s has been engaged"):format(boss),
 
-	blizzard_name = "Blizzard",
+	blizzard = "Blizzard",
 	blizzard_desc = "Warn when Blizzard is being cast",
 
-	pull_name = "Pull/Super AE",
+	pull = "Pull/Super AE",
 	pull_desc = "Warn for the magnetic pull and Super Arcane Explosion",
 
-	flame_name = "Flame Wreath",
+	flame = "Flame Wreath",
 	flame_desc = "Warn when Flame Wreath is being cast",
 
 	adds_message = "Elementals Incoming!",
@@ -66,22 +66,22 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	adds_name = "Wasserelementare",
+	adds = "Wasserelementare",
 	adds_desc = "Warnt vor den Wasserelementaren bei 40%.",
 
-	drink_name = "Trinken",
+	drink = "Trinken",
 	drink_desc = ("Warnt, wenn %s zu trinken beginnt."):format(boss),
 
-	engage_name = "Angriff",
+	engage = "Angriff",
 	engage_desc = ("Warnt, wenn %s angegriffen wurde."):format(boss),
 
-	blizzard_name = "Blizzard",
+	blizzard = "Blizzard",
 	blizzard_desc = "Warnt vor dem Blizzard.",
 
-	pull_name = "Magnet/Super-AE",
+	pull = "Magnet/Super-AE",
 	pull_desc = "Warnt vor dem Magnetpull und der Arkanen Explosion.",
 
-	flame_name = "Flammenkranz",
+	flame = "Flammenkranz",
 	flame_desc = "Warnt, wenn jemand vom Flammenkranz betroffen ist.",
 
 	adds_message = "Elementare!",
@@ -117,22 +117,22 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	adds_name = "Alerte El\195\169mentaires",
+	adds = "Alerte El\195\169mentaires",
 	adds_desc = "Pr\195\169viens de l'apparition des \195\169l\195\169mentaires d'eau.",
 
-	drink_name = "Alerte Boisson",
+	drink = "Alerte Boisson",
 	drink_desc = ("Pr\195\169viens quand %s commence \195\160 boire."):format(boss),
 
-	engage_name = "Alerte Engagement",
+	engage = "Alerte Engagement",
 	engage_desc = ("Pr\195\169viens quand %s est engag\195\169"):format(boss),
 
-	blizzard_name = "Alerte Blizzard",
+	blizzard = "Alerte Blizzard",
 	blizzard_desc = "Pr\195\169viens de l'incantation du Blizzard.",
 
-	pull_name = "Alerte Attraction / Sort de zone",
+	pull = "Alerte Attraction / Sort de zone",
 	pull_desc = "Pr\195\169viens de l'attraction magn\195\169tique et de l'explosion des arcanes.",
 
-	flame_name = "Alerte Couronne de flammes",
+	flame = "Alerte Couronne de flammes",
 	flame_desc = "Pr\195\169viens de l'incantation de Couronne de flammes.",
 
 	adds_message = "El\195\169mentaires Imminent !",
@@ -169,22 +169,22 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	adds_name = "물의 정령",
+	adds = "물의 정령",
 	adds_desc = "물의 정령 소환에 대한 경고",
 
-	drink_name = "음료 마시기",
+	drink = "음료 마시기",
 	drink_desc = ("%s의 음료 마시기 시작 시 알림"):format(boss),
 
-	engage_name = "전투 개시",
+	engage = "전투 개시",
 	engage_desc = ("%s 전투 개시 알림"):format(boss),
 
-	blizzard_name = "눈보라",
+	blizzard = "눈보라",
 	blizzard_desc = "눈보라 시전 시 경고",
 
-	pull_name = "전체 광역",
+	pull = "전체 광역",
 	pull_desc = "전체 광역 신비한 폭발에 대한 경고",
 
-	flame_name = "화염의 고리",
+	flame = "화염의 고리",
 	flame_desc = "화염의 고리 시전 시 경고",
 
 	adds_message = "정령 소환!",

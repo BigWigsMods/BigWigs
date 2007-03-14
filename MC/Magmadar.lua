@@ -12,10 +12,10 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Magmadar",
 
-	fear_name = "Warn for Fear",
+	fear = "Warn for Fear",
 	fear_desc = "Warn when Magmadar casts AoE Fear",
 
-	frenzy_name = "Frenzy alert",
+	frenzy = "Frenzy alert",
 	frenzy_desc = "Warn when Magmadar goes into a frenzy",
 
 	trigger1 = "%s goes into a killing frenzy!",
@@ -28,10 +28,10 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	fear_name = "공포 경고",
+	fear = "공포 경고",
 	fear_desc = "마그마다르 공포 시전 시 경고",
 
-	frenzy_name = "광폭화 경고",
+	frenzy = "광폭화 경고",
 	frenzy_desc = "마그마다르 광폭화 시 경고",
 
 	trigger1 = "%s|1이;가; 살기를 띤 듯한 광란의 상태에 빠집니다!",
@@ -44,10 +44,10 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
-	fear_name = "恐惧警报",
+	fear = "恐惧警报",
 	fear_desc = "恐惧警报",
 
-	frenzy_name = "狂暴警报",
+	frenzy = "狂暴警报",
 	frenzy_desc = "狂暴警报",
 
 	trigger1 = "变得狂怒无比！",
@@ -60,10 +60,10 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	fear_name = "群體恐懼警報",
+	fear = "群體恐懼警報",
 	fear_desc = "當瑪格曼達發動群體恐懼效果時發出警報",
 
-	frenzy_name = "狂暴警報",
+	frenzy = "狂暴警報",
 	frenzy_desc = "當瑪格曼達狂暴時發出警報",
 
 	trigger1 = "變得極為狂暴！",
@@ -76,10 +76,10 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	fear_name = "Furcht",
+	fear = "Furcht",
 	fear_desc = "Warnung, wenn Magmadar AoE Furcht wirkt.",
 
-	frenzy_name = "Raserei",
+	frenzy = "Raserei",
 	frenzy_desc = "Warnung, wenn Magmadar in Raserei ger\195\164t.",
 
 	trigger1 = "%s ger\195\164t in t\195\182dliche Raserei!",
@@ -92,10 +92,10 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	fear_name = "Alerte Peur",
+	fear = "Alerte Peur",
 	fear_desc = "Pr\195\169viens quand Magmadar lance sa peur de zone.",
 
-	frenzy_name = "Alerte Fr\195\169n\195\169sie",
+	frenzy = "Alerte Fr\195\169n\195\169sie",
 	frenzy_desc = "Pr\195\169viens quand Magmadar passe en fr\195\169n\195\169sie.",
 
 	trigger1 = "%s entre dans une fr\195\169n\195\169sie sanglante !",

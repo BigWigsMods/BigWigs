@@ -32,16 +32,16 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Ragnaros",
 
-	emerge_name = "Emerge alert",
+	emerge = "Emerge alert",
 	emerge_desc = "Warn for Ragnaros Emerge",
 
-	sondeath_name = "Son of Flame dies",
+	sondeath = "Son of Flame dies",
 	sondeath_desc = "Warn when a son dies",
 
-	submerge_name = "Submerge alert",
+	submerge = "Submerge alert",
 	submerge_desc = "Warn for Ragnaros Submerge & Sons of Flame",
 
-	aoeknock_name = "Knockback alert",
+	aoeknock = "Knockback alert",
 	aoeknock_desc = "Warn for Wrath of Ragnaros knockback",
 } end)
 
@@ -65,16 +65,16 @@ L:RegisterTranslations("zhCN", function() return {
 	sonofflame = "烈焰之子",
 	sonsdeadwarn = "%d/8个烈焰之子死亡了！",
 
-	emerge_name = "出现警报",
+	emerge = "出现警报",
 	emerge_desc = "出现警报",
 
-	sondeath_name = "烈焰之子死亡",
+	sondeath = "烈焰之子死亡",
 	sondeath_desc = "当一个烈焰之子死亡时发出警报",
 
-	submerge_name = "消失警报",
+	submerge = "消失警报",
 	submerge_desc = "消失警报",
 
-	aoeknock_name = "群体击退警报",
+	aoeknock = "群体击退警报",
 	aoeknock_desc = "群体击退警报",
 } end)
 
@@ -98,16 +98,16 @@ L:RegisterTranslations("zhTW", function() return {
 	sonofflame = "烈焰之子",
 	sonsdeadwarn = "%d/8 個烈焰之子死亡了！",
 
-	emerge_name = "出現警報",
+	emerge = "出現警報",
 	emerge_desc = "當拉格納羅斯出現消失時發出警報",
 
-	sondeath_name = "烈焰之子死亡",
+	sondeath = "烈焰之子死亡",
 	sondeath_desc = "當一個烈焰之子死亡時發出警報",
 
-	submerge_name = "消失警報",
+	submerge = "消失警報",
 	submerge_desc = "當拉格納羅斯消失時發出警報",
 
-	aoeknock_name = "群體擊退警報",
+	aoeknock = "群體擊退警報",
 	aoeknock_desc = "當拉格納羅斯發動擊退技能時發出警報",
 } end)
 
@@ -131,16 +131,16 @@ L:RegisterTranslations("koKR", function() return {
 	sonofflame = "화염의 수호물",
 	sonsdeadwarn = "%d/8 화염의 수호물 사망!",
 
-	emerge_name = "등장 경고",
+	emerge = "등장 경고",
 	emerge_desc = "라그나로스 등장에 대한 경고",
 
-	sondeath_name = "화염의 수호물 죽음",
+	sondeath = "화염의 수호물 죽음",
 	sondeath_desc = "화염의 수호물 죽음 알림",
 
-	submerge_name = "사라짐 경고",
+	submerge = "사라짐 경고",
 	submerge_desc = "라그나로스 사라짐 & 피조물에 대한 경고",
 
-	aoeknock_name = "튕겨냄 경고",
+	aoeknock = "튕겨냄 경고",
 	aoeknock_desc = "라그나로스의 튕겨냄 경고",
 } end)
 
@@ -164,16 +164,16 @@ L:RegisterTranslations("deDE", function() return {
 	sonofflame = "Sohn der Flamme",
 	sonsdeadwarn = "%d/8 S\195\182hne der Flamme tot!",
 
-	emerge_name = "Auftauchen",
+	emerge = "Auftauchen",
 	emerge_desc = "Warnung, wenn Ragnaros auftaucht.",
 
-	sondeath_name = "S\195\182hne der Flamme",
+	sondeath = "S\195\182hne der Flamme",
 	sondeath_desc = "Counter f\195\188r die get\195\182teten S\195\182ohne der Flamme.",
 
-	submerge_name = "Untertauchen",
+	submerge = "Untertauchen",
 	submerge_desc = "Warnung, wenn Ragnaros untertaucht und die S\195\182hne der Flamme erscheinen.",
 
-	aoeknock_name = "AoE Rundumschlag",
+	aoeknock = "AoE Rundumschlag",
 	aoeknock_desc = "Warnung, wenn Ragnaros AoE Rundumschlag wirkt.",
 } end)
 
@@ -197,16 +197,16 @@ L:RegisterTranslations("frFR", function() return {
 	sonofflame = "Fils des flammes",
 	sonsdeadwarn = "%d/8 Fils des flammes mort !",
 
-	emerge_name = "Alerte Emerge",
+	emerge = "Alerte Emerge",
 	emerge_desc = "Pr\195\169viens quand Ragnaros \195\169merge.",
 
-	sondeath_name = "Alerte mort des Fils",
+	sondeath = "Alerte mort des Fils",
 	sondeath_desc = "Pr\195\169viens de la mort d'un Fils des flammes.",
 
-	submerge_name = "Alerte Immersion",
+	submerge = "Alerte Immersion",
 	submerge_desc = "Pr\195\169viens de l'immersion de Ragnaros et l'arriv\195\169e des Fils des flammes.",
 
-	aoeknock_name = "Alerte Projection de zone",
+	aoeknock = "Alerte Projection de zone",
 	aoeknock_desc = "Pr\195\169viens des projections de zone.",
 } end)
 

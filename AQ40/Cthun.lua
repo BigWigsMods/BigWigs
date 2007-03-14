@@ -32,22 +32,22 @@ local tentacletime = timeP1Tentacle
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Cthun",
 
-	tentacle_name = "Tentacle Alert",
+	tentacle = "Tentacle Alert",
 	tentacle_desc = "Warn for Tentacles",
 
-	glare_name = "Dark Glare Alert",
+	glare = "Dark Glare Alert",
 	glare_desc = "Warn for Dark Glare",
 
-	group_name = "Dark Glare Group Warning",
+	group = "Dark Glare Group Warning",
 	group_desc = "Warn for Dark Glare on Group X",
 
-	giant_name = "Giant Eye Alert",
+	giant = "Giant Eye Alert",
 	giant_desc = "Warn for Giant Eyes",
 
-	weakened_name = "Weakened Alert",
+	weakened = "Weakened Alert",
 	weakened_desc = "Warn for Weakened State",
 
-	rape_name = "Rape jokes are funny",
+	rape = "Rape jokes are funny",
 	rape_desc = "Some people like hentai jokes.",
 
 	weakenedtrigger = "%s is weakened!",
@@ -88,19 +88,19 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	tentacle_name = "Tentakel",
+	tentacle = "Tentakel",
 	tentacle_desc = "Warnung vor Tentakeln.",
 
-	glare_name = "Dunkles Starren",
+	glare = "Dunkles Starren",
 	glare_desc = "Warnung vor Dunklem Starren.",
 
-	group_name = "Dunkles Starren Gruppe",
+	group = "Dunkles Starren Gruppe",
 	group_desc = "Warnung vor Dunklem Starren auf Gruppe X.",
 
-	giant_name = "Riesiges Auge",
+	giant = "Riesiges Auge",
 	giant_desc = "Riesiges Auge", -- ?
 
-	weakened_name = "Geschw\195\164cht",
+	weakened = "Geschw\195\164cht",
 	weakened_desc = "Warnung, wenn C'Thun geschw\195\164cht ist.",
 
 	weakenedtrigger = "%s ist geschw\195\164cht!",
@@ -140,19 +140,19 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	tentacle_name = "촉수 경고",
+	tentacle = "촉수 경고",
 	tentacle_desc = "촉수에 대한 경고",
 
-	glare_name = "암흑의 주시 경고",
+	glare = "암흑의 주시 경고",
 	glare_desc = "암흑의 주시에 대한 경고",
 
-	group_name = "암흑의 주시 파티 경고",
+	group = "암흑의 주시 파티 경고",
 	group_desc = "파티 X 에 암흑의 주시에 대한 경고",
 
-	giant_name = "거대한 눈 경고",
+	giant = "거대한 눈 경고",
 	giant_desc = "거대한 눈에 대한 경고",
 
-	weakened_name = "약화 경고",
+	weakened = "약화 경고",
 	weakened_desc = "약화 상태에 대한 경고",
 
 	weakenedtrigger 	= "%s|1이;가; 약해집니다!",
@@ -192,19 +192,19 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	tentacle_name = "触须警报",
+	tentacle = "触须警报",
 	tentacle_desc = "触须出现时发出警报",
 
-	glare_name = "黑暗闪耀警报",
+	glare = "黑暗闪耀警报",
 	glare_desc = "黑暗闪耀发动时发出警报",
 
-	group_name = "黑暗闪耀小队警报",
+	group = "黑暗闪耀小队警报",
 	group_desc = "黑暗闪耀发动时对小队X发出警报",
 
-	giant_name = "巨眼警报",
+	giant = "巨眼警报",
 	giant_desc = "巨眼出现时发出警报",
 
-	weakened_name = "虚弱警报",
+	weakened = "虚弱警报",
 	weakened_desc = "克苏恩被削弱时发出警报",
 
 	weakenedtrigger = "%s的力量被削弱了！",
@@ -244,19 +244,19 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	tentacle_name = "觸鬚警報",
+	tentacle = "觸鬚警報",
 	tentacle_desc = "觸鬚出現時發出警報",
 
-	glare_name = "黑暗閃耀警報",
+	glare = "黑暗閃耀警報",
 	glare_desc = "黑暗閃耀發動時發出警報",
 
-	group_name = "黑暗閃耀小隊警報",
+	group = "黑暗閃耀小隊警報",
 	group_desc = "黑暗閃耀發動時對小隊X發出警報",
 
-	giant_name = "巨眼警報",
+	giant = "巨眼警報",
 	giant_desc = "巨眼出現時發出警報",
 
-	weakened_name = "虛弱警報",
+	weakened = "虛弱警報",
 	weakened_desc = "克蘇恩被削弱時發出警報",
 
 	weakenedtrigger 	= "變弱了！",

@@ -14,10 +14,10 @@ local lastdrain = 0
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Marli",
 
-	spider_name = "Spider Alert",
+	spider = "Spider Alert",
 	spider_desc = "Warn when spiders spawn",
 
-	drain_name = "Drain Alert",
+	drain = "Drain Alert",
 	drain_desc = "Warn for life drain",
 
 	spiders_trigger = "Aid me my brood!$",
@@ -28,10 +28,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	spider_name = "Spinnen",
+	spider = "Spinnen",
 	spider_desc = "Warnung, wenn Hohepriesterin Mar'li Spinnen beschw\195\182rt.",
 
-	drain_name = "Blutsauger",
+	drain = "Blutsauger",
 	drain_desc = "Warnung, wenn Hohepriesterin Mar'li sich heilt.", 
 
 	spiders_trigger = "Helft mir, meine Brut!$",
@@ -42,10 +42,10 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	spider_name = "Alerte Araign\195\169e",
+	spider = "Alerte Araign\195\169e",
 	spider_desc = "Pr\195\169viens du pop d'araign\195\169e.",
 
-	drain_name = "Alerte Drain",
+	drain = "Alerte Drain",
 	drain_desc = "Pr\195\169viens d'un drain en cours.",
 
 	spiders_trigger = "., mes enfants !$",
@@ -56,10 +56,10 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	spider_name = "蜘蛛警报",
+	spider = "蜘蛛警报",
 	spider_desc = "小蜘蛛出现时发出警报",
 
-	drain_name = "吸取警报",
+	drain = "吸取警报",
 	drain_desc = "高阶祭司玛尔里使用生命吸取时发出警报",
 
 	spiders_trigger = "来为我作战吧，我的孩子们！$",
@@ -70,10 +70,10 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	spider_name = "蜘蛛警報",
+	spider = "蜘蛛警報",
 	spider_desc = "當高階祭司瑪爾里召喚蜘蛛時發出警報。",
 
-	drain_name = "生命吸取警報",
+	drain = "生命吸取警報",
 	drain_desc = "高階祭司瑪爾里使用生命吸取時發出警報",
 
 	spiders_trigger = "來幫助我吧，我的孩子們！$",
@@ -84,10 +84,10 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	spider_name = "거미 경고",
+	spider = "거미 경고",
 	spider_desc = "거미 소환 시 경고",
 
-	drain_name = "흡수 경고",
+	drain = "흡수 경고",
 	drain_desc = "생명령 흡수에 대한 경고",
 
 	spiders_trigger = "어미를 도와라!$",

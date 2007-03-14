@@ -14,10 +14,10 @@ local started
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Attumen",
 
-	phase_name = "Phase",
+	phase = "Phase",
 	phase_desc = "Warn when entering a new Phase",
 
-	curse_name = "Cursed Warriors",
+	curse = "Cursed Warriors",
 	curse_desc = "Warn when a warrior is cursed by Intangible Presence",
 
 	curse_trigger = "^([^%s]+) ([^%s]+) afflicted by Intangible Presence",
@@ -33,10 +33,10 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	phase_name = "Phase",
+	phase = "Phase",
 	phase_desc = "Warnt wenn eine neue Phase beginnt",
 
-	curse_name = "Verfluchter Krieger",
+	curse = "Verfluchter Krieger",
 	curse_desc = "Warnt wenn ein Krieger verflucht ist",
 
 	curse_trigger = "^([^%s]+) ([^%s]+) von K\195\182rperlose Pr\195\164senz betroffen.",
@@ -52,10 +52,10 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	phase_name = "Alerte Phase",
+	phase = "Alerte Phase",
 	phase_desc = "Pr\195\169viens des changements de phase.",
 
-	curse_name = "Alerte Guerriers maudits",
+	curse = "Alerte Guerriers maudits",
 	curse_desc = "Pr\195\169viens quand les guerriers subissent Pr\195\169sence immat\195\169rielle",
 
 	curse_trigger = "^([^%s]+) ([^%s]+) les effets .* Pr\195\169sence immat\195\169rielle",
@@ -68,10 +68,10 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	phase_name = "단계",
+	phase = "단계",
 	phase_desc = "새로운 단계 진입시 알림",
 
-	curse_name = "저주 걸린 전사",
+	curse = "저주 걸린 전사",
 	curse_desc = "전사가 무형의 저주에 걸렸을 때 경고",
 
 	curse_trigger = "^([^|;%s]*)(.*)무형의 존재에 걸렸습니다%.$",

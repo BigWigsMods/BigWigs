@@ -15,13 +15,13 @@ local started
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Huhuran",
 
-	wyvern_name = "Wyvern Sting Alert",
+	wyvern = "Wyvern Sting Alert",
 	wyvern_desc = "Warn for Wyvern Sting",
 
-	frenzy_name = "Frenzy Alert",
+	frenzy = "Frenzy Alert",
 	frenzy_desc = "Warn for Frenzy",
 
-	berserk_name = "Berserk Alert",
+	berserk = "Berserk Alert",
 	berserk_desc = "Warn for Berserk",
 
 	frenzytrigger = "%s goes into a frenzy!",
@@ -43,13 +43,13 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	wyvern_name = "Stich des Fl\195\188geldrachen",
+	wyvern = "Stich des Fl\195\188geldrachen",
 	wyvern_desc = "Warnung, wenn Huhuran Stich des Fl\195\188geldrachen wirkt.",
 
-	frenzy_name = "Raserei",
+	frenzy = "Raserei",
 	frenzy_desc = "Warnung, wenn Huhuran in Raserei ger\195\164t.",
 
-	berserk_name = "Berserkerwut",
+	berserk = "Berserkerwut",
 	berserk_desc = "Warnung, wenn Huhuran in Berserkerwut verf\195\164llt.",
 
 	frenzytrigger = "%s ger\195\164t in Raserei!",
@@ -71,13 +71,13 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	wyvern_name = "毒性之箭警报",
+	wyvern = "毒性之箭警报",
 	wyvern_desc = "毒性之箭警报",
 
-	frenzy_name = "狂暴警报",
+	frenzy = "狂暴警报",
 	frenzy_desc = "狂暴警报",
 
-	berserk_name = "极度狂暴警报",
+	berserk = "极度狂暴警报",
 	berserk_desc = "极度狂暴警报",
 
 	frenzytrigger = "%s变得狂怒无比！",
@@ -98,13 +98,13 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	wyvern_name = "毒性之箭警報",
+	wyvern = "毒性之箭警報",
 	wyvern_desc = "哈霍蘭公主毒性之箭的警報",
 
-	frenzy_name = "狂暴模式警報",
+	frenzy = "狂暴模式警報",
 	frenzy_desc = "當哈霍蘭公主進入狂暴模式時發出警報",
 
-	berserk_name = "極度狂暴模式警報",
+	berserk = "極度狂暴模式警報",
 	berserk_desc = "哈霍蘭公主進入極度狂暴模式的倒數警報",
 
 	frenzytrigger = "變得狂暴起來！",
@@ -125,13 +125,13 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	wyvern_name = "비룡 쐐기 경고",
+	wyvern = "비룡 쐐기 경고",
 	wyvern_desc = "비룡 쐐기에 대한 경고",
 
-	frenzy_name = "광폭화 경고",
+	frenzy = "광폭화 경고",
 	frenzy_desc = "광폭화에 대한 경고",
 
-	berserk_name = "광기 경고",
+	berserk = "광기 경고",
 	berserk_desc = "광기에 대한 경고",
 
 	frenzytrigger = "%s|1이;가; 광란의 상태에 빠집니다!",
@@ -152,13 +152,13 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	wyvern_name = "Alerte Piq\195\187re de wyverne",
+	wyvern = "Alerte Piq\195\187re de wyverne",
 	wyvern_desc = "Pr\195\169viens des piq\195\187res de wyverne.",
 
-	frenzy_name = "Alerte Fr\195\169n\195\169sie",
+	frenzy = "Alerte Fr\195\169n\195\169sie",
 	frenzy_desc = "Pr\195\169viens des fr\195\169n\195\169sies.",
 
-	berserk_name = "Alerte Enrag\195\169e",
+	berserk = "Alerte Enrag\195\169e",
 	berserk_desc = "Pr\195\169viens quand Huhuran est enrag\195\169e.",
 
 	frenzywarn = "Fr\195\169n\195\169sie - Tranq Shot !",

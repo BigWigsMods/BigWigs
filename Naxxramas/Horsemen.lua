@@ -21,20 +21,20 @@ local started = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Horsemen",
 
-	mark_name = "Mark Alerts",
+	mark = "Mark Alerts",
 	mark_desc = "Warn for marks",
 
 	shieldwall_cmd  = "shieldwall",
-	shieldwall_name = "Shieldwall Alerts",
+	shieldwall = "Shieldwall Alerts",
 	shieldwall_desc = "Warn for shieldwall",
 
-	void_name = "Void Zone Alerts",
+	void = "Void Zone Alerts",
 	void_desc = "Warn on Lady Blaumeux casting Void Zone.",
 
-	meteor_name = "Meteor Alerts",
+	meteor = "Meteor Alerts",
 	meteor_desc = "Warn on Thane casting Meteor.",
 
-	wrath_name = "Holy Wrath Alerts",
+	wrath = "Holy Wrath Alerts",
 	wrath_desc = "Warn on Zeliek casting Wrath.",
 
 	markbar = "Mark %d",
@@ -63,19 +63,19 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	mark_name = "징표 경고",
+	mark = "징표 경고",
 	mark_desc = "징표에 대한 경고",
 
-	shieldwall_name = "방패의벽 경고",
+	shieldwall = "방패의벽 경고",
 	shieldwall_desc = "방패의벽에 대한 경고",
 
-	void_name = "공허의 지대 경고",
+	void = "공허의 지대 경고",
 	void_desc = "여군주 블라미우스 공허의 지대 시전 경고.",
 
-	meteor_name = "유성 경고",
+	meteor = "유성 경고",
 	meteor_desc = "영주 코스아즈 유성 시전 경고.",
 
-	wrath_name = "성스러운 격노 경고",
+	wrath = "성스러운 격노 경고",
 	wrath_desc = "젤리에크 경 신성한 격노 시전 경고",
 
 	markbar = "징표 %d",
@@ -104,19 +104,19 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	mark_name = "Mal Alarm",
+	mark = "Mal Alarm",
 	mark_desc = "Warnt vor den Mal Debuffs",
 
-	shieldwall_name = "Schildwall",
+	shieldwall = "Schildwall",
 	shieldwall_desc = "Warnung vor Schildwall.",
 
-	void_name = "Zone der Leere Warnung",
+	void = "Zone der Leere Warnung",
 	void_desc = "Warnt, wenn Lady Blaumeux Zone der Leere zaubert.",
 
-	meteor_name = "Meteor Alarm",
+	meteor = "Meteor Alarm",
 	meteor_desc = "Warnt, wenn Thane Meteor zaubert.",
 
-	wrath_name = "Heiliger Zorn Alarm",
+	wrath = "Heiliger Zorn Alarm",
 	wrath_desc = "Warnt, wenn Sire Zeliek Heiliger Zorn zaubert.",
 
 	markbar = "Mal",
@@ -145,19 +145,19 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	mark_name = "标记警报",
+	mark = "标记警报",
 	mark_desc = "标记警报",
 
-	shieldwall_name = "盾墙警报",
+	shieldwall = "盾墙警报",
 	shieldwall_desc = "盾墙警报",
 
-	void_name = "虚空领域警报",
+	void = "虚空领域警报",
 	void_desc = "当施放虚空领域时警报",
 
-	meteor_name = "流星警报",
+	meteor = "流星警报",
 	meteor_desc = "库尔塔兹领主的流星警报",
 
-	wrath_name = "神圣之怒警报",
+	wrath = "神圣之怒警报",
 	wrath_desc = "瑟里耶克爵士的神圣之怒警报",
 
 	markbar = "标记 %d",
@@ -187,19 +187,19 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	mark_name = "標記警報",
+	mark = "標記警報",
 	mark_desc = "標記警報",
 
-	shieldwall_name = "盾牆警報",
+	shieldwall = "盾牆警報",
 	shieldwall_desc = "盾牆警報",
 
-	void_name = "虛空地區警報",
+	void = "虛空地區警報",
 	void_desc = "當布洛莫斯爵士施放虛空地區時警報",
 
-	meteor_name = "隕石術警報",
+	meteor = "隕石術警報",
 	meteor_desc = "寇斯艾茲族長的隕石術警報",
 
-	wrath_name = "神聖憤怒警報",
+	wrath = "神聖憤怒警報",
 	wrath_desc = "札里克爵士的神聖憤怒警報",
 
 	markbar = "印記 %d",
@@ -229,19 +229,19 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	mark_name = "Alertes Marques",
+	mark = "Alertes Marques",
 	mark_desc = "Annoncer les marques",
 
-	shieldwall_name = "Alertes Mur Protecteur",
+	shieldwall = "Alertes Mur Protecteur",
 	shieldwall_desc = "Annoncer les Murs Protecteur",
 
-	void_name = "Alertes Zones de Vide",
+	void = "Alertes Zones de Vide",
 	void_desc = "Annoncer les nouvelle Zone de Vide de Dame Blaumeux.",
 
-	meteor_name = "Alertes M\195\169t\195\169ores",
+	meteor = "Alertes M\195\169t\195\169ores",
 	meteor_desc = "Annoncer l'incantation des M\195\169t\195\169ores par Thane.",
 
-	wrath_name = "Alertes Col\195\168re Divine",
+	wrath = "Alertes Col\195\168re Divine",
 	wrath_desc = "Annoncer l'incantation de Col\195\168re par Zeliek.",
 
 	markbar = "Marque %d",

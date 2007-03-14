@@ -14,19 +14,19 @@ local started
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Grobbulus",
 
-	enrage_name = "Enrage Alert",
+	enrage = "Enrage Alert",
 	enrage_desc = "Warn for Enrage",
 
-	youinjected_name = "You're injected Alert",
+	youinjected = "You're injected Alert",
 	youinjected_desc = "Warn when you're injected",
 
-	otherinjected_name = "Others injected Alert",
+	otherinjected = "Others injected Alert",
 	otherinjected_desc = "Warn when others are injected",
 
-	icon_name = "Place Icon",
+	icon = "Place Icon",
 	icon_desc = "Place a skull icon on an injected person. (Requires promoted or higher)",
 
-	cloud_name = "Poison Cloud",
+	cloud = "Poison Cloud",
 	cloud_desc = "Warn for Poison Clouds",
 
 	inject_trigger = "^([^%s]+) ([^%s]+) afflicted by Mutating Injection",
@@ -51,19 +51,19 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	enrage_name = "Wutanfall",
+	enrage = "Wutanfall",
 	enrage_desc = "Warnung, wenn Grobbulus w\195\188tend wird.",
 
-	youinjected_name = "Du bist verseucht",
+	youinjected = "Du bist verseucht",
 	youinjected_desc = "Warnung, wenn Du von Mutagene Injektion betroffen bist.",
 
-	otherinjected_name = "X ist verseucht",
+	otherinjected = "X ist verseucht",
 	otherinjected_desc = "Warnung, wenn andere Spieler von Mutagene Injektion betroffen sind.",
 
-	icon_name = "Symbol",
+	icon = "Symbol",
 	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der von Mutagene Injektion betroffen ist. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 
-	cloud_name = "Giftwolke",
+	cloud = "Giftwolke",
 	cloud_desc = "Warnung vor Giftwolken.",
 
 	inject_trigger = "^([^%s]+) ([^%s]+) von Mutagene Injektion betroffen",
@@ -89,19 +89,19 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	enrage_name = "격노 경고",
+	enrage = "격노 경고",
 	enrage_desc = "격노에 대한 경고",
 
-	youinjected_name = "자신의 돌연변이 경고",
+	youinjected = "자신의 돌연변이 경고",
 	youinjected_desc = "자신이 돌연변이 시 경고",
 
-	otherinjected_name = "타인의 돌연변이 경고",
+	otherinjected = "타인의 돌연변이 경고",
 	otherinjected_desc = "타인이 돌연변이 시 경고",
 
-	icon_name = "아이콘 지정",
+	icon = "아이콘 지정",
 	icon_desc = "돌연변이 걸린 사람에게 아이콘 지정 (승급자 이상 요구)",
 
-	cloud_name = "독구름",
+	cloud = "독구름",
 	cloud_desc = "독구름에 대한 경고",
 
 	inject_trigger = "^([^|;%s]*)(.*)돌연변이 유발에 걸렸습니다%.$", --"(.*)돌연변이 유발에 걸렸습니다.",
@@ -122,19 +122,19 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	enrage_name = "激怒警报",
+	enrage = "激怒警报",
 	enrage_desc = "激怒警报",
 
-	youinjected_name = "玩家变异注射警报",
+	youinjected = "玩家变异注射警报",
 	youinjected_desc = "你中了变异注射时发出警报",
 
-	otherinjected_name = "队友变异注射警报",
+	otherinjected = "队友变异注射警报",
 	otherinjected_desc = "队友中了变异注射时发出警报",
 
-	icon_name = "标记图标",
+	icon = "标记图标",
 	icon_desc = "在中了变异注射的队友头上标记骷髅图标（需要助理或领袖权限）",
 
-	cloud_name = "毒云警报",
+	cloud = "毒云警报",
 	cloud_desc = "毒云警报",
 
 	inject_trigger = "^(.+)受(.+)了变异注射",
@@ -159,16 +159,16 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	enrage_name = "狂怒警報",
+	enrage = "狂怒警報",
 	enrage_desc = "狂怒警報",
 
-	youinjected_name = "突變注射警報",
+	youinjected = "突變注射警報",
 	youinjected_desc = "你中了突變注射時發出警報",
 
-	otherinjected_name = "隊友突變注射警報",
+	otherinjected = "隊友突變注射警報",
 	otherinjected_desc = "隊友中了突變注射時發出警報",
 
-	icon_name = "標記突變注射",
+	icon = "標記突變注射",
 	icon_desc = "在中了突變注射的隊友頭上標記骷髏標記（需要助理或領隊權限）",
 
 	inject_trigger = "^(.+)受到(.*)突變注射",
@@ -189,19 +189,19 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	enrage_name = "Alerte Enrager",
+	enrage = "Alerte Enrager",
 	enrage_desc = "Préviens régulièrement quand Grobbulus devient enragé.",
 
-	youinjected_name = "Alerte quand vous êtes injecté",
+	youinjected = "Alerte quand vous êtes injecté",
 	youinjected_desc = "Préviens quand vous êtes injecté.",
 
-	otherinjected_name = "Alerte quand les autres sont injectés",
+	otherinjected = "Alerte quand les autres sont injectés",
 	otherinjected_desc = "Préviens quand les autres sont injectés.",
 
-	icon_name = "Placer une icône",
+	icon = "Placer une icône",
 	icon_desc = "Place une icône sur la personne injectée. (nécessite d'être promu ou mieux)",
 
-	cloud_name = "Nuage de poison",
+	cloud = "Nuage de poison",
 	cloud_desc = "Préviens quand Globbulus lance ses nuages de poison.",
 
 	inject_trigger = "^([^%s]+) ([^%s]+) les effets de Injection mutante.",

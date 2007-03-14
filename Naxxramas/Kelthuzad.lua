@@ -17,25 +17,25 @@ L:RegisterTranslations("enUS", function() return {
 
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzad Chamber",
 
-	phase_name = "Phase Warnings",
+	phase = "Phase Warnings",
 	phase_desc = "Warn for phases.",
 
-	mc_name = "Mind Control Alert",
+	mc = "Mind Control Alert",
 	mc_desc = "Alerts when people are mind controlled.",
 
-	fissure_name = "Shadow Fissure Alert",
+	fissure = "Shadow Fissure Alert",
 	fissure_desc = "Alerts about incoming Shadow Fizzures.",
 
-	frostblast_name = "Frost Blast Alert",
+	frostblast = "Frost Blast Alert",
 	frostblast_desc = "Alerts when people get Frost Blasted.",
 
-	detonate_name = "Detonate Mana Warning",
+	detonate = "Detonate Mana Warning",
 	detonate_desc = "Warns about Detonate Mana soon.",
 
-	detonateicon_name = "Raid Icon on Detonate",
+	detonateicon = "Raid Icon on Detonate",
 	detonateicon_desc = "Place a raid icon on people with Detonate Mana.",
 
-	guardians_name = "Guardian Spawns",
+	guardians = "Guardian Spawns",
 	guardians_desc = "Warn for incoming Icecrown Guardians in phase 3.",
 
 	mc_trigger1 = "Your soul is bound to me, now!",
@@ -80,25 +80,25 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "켈투자드의 방",
 
-	phase_name = "단계 알림",
+	phase = "단계 알림",
 	phase_desc = "단계에 대한 알림.",
 
-	mc_name = "정신 지배",
+	mc = "정신 지배",
 	mc_desc = "정신 지배 경고.",
 
-	fissure_name = "어둠의 분열 경고",
+	fissure = "어둠의 분열 경고",
 	fissure_desc = "어둠의 분열 시전에 관한 경고.",
 
-	frostblast_name = "냉기작렬 경고",
+	frostblast = "냉기작렬 경고",
 	frostblast_desc = "냉기 작렬에 걸렸을 때 경고.",
 
-	detonate_name = "마나 폭발 경고",
+	detonate = "마나 폭발 경고",
 	detonate_desc = "마나 폭발에 대한 경고.",
 
-	detonateicon_name = "폭발 공격대 아이콘",
+	detonateicon = "폭발 공격대 아이콘",
 	detonateicon_desc = "마나 폭발인 사람에게 공격대 아이콘 지정.",
 
-	guardians_name = "수호자 생성",
+	guardians = "수호자 생성",
 	guardians_desc = "phase 3의 수호자 생성에 대한 알림.",
 
 	mc_trigger1 = "너의 영혼은 이제 내 것이다!", -- CHECK
@@ -143,25 +143,25 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gem\195\164cher",
 
-	phase_name = "Phasenwarnung",
+	phase = "Phasenwarnung",
 	phase_desc = "Warnt vor den verschiedenen Phasen.",
 
-	mc_name = "Gedankenkontrolle Warnung",
+	mc = "Gedankenkontrolle Warnung",
 	mc_desc = "Warnt, wenn Spieler von Gedankenkontrolle betroffen sind.",
 
-	fissure_name = "Schattenspalt Warnung",
+	fissure = "Schattenspalt Warnung",
 	fissure_desc = "Warnt vor Schattenspalt.",
 
-	frostblast_name = "Frostschlag Warnung",
+	frostblast = "Frostschlag Warnung",
 	frostblast_desc = "Warnt wenn Leute Frostschlag bekommen.",
 
-	detonate_name = "Detonierendes Mana Warnung",
+	detonate = "Detonierendes Mana Warnung",
 	detonate_desc = "Warnt vor Detonierendes Mana.",
 
-	detonateicon_name = "Schlachtzugicon bei Detonierung",
+	detonateicon = "Schlachtzugicon bei Detonierung",
 	detonateicon_desc = "Plaziert ein Icon auf Spielern mit Detonierendes Mana.",
 
-	guardians_name = "Guardian Spawns",
+	guardians = "Guardian Spawns",
 	guardians_desc = "Warn for incoming Icecrown Guardians in phase 3.",
 
 	mc_trigger1 = "Eure Seele geh\195\182rt jetzt mir!",
@@ -204,25 +204,25 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "克尔苏加德的大厅",
 
-	phase_name = "每个阶段警报",
+	phase = "每个阶段警报",
 	phase_desc = "每个阶段警报",
 
-	mc_name = "精神控制警报",
+	mc = "精神控制警报",
 	mc_desc = "当有人被精神控制后警报",
 
-	fissure_name = "暗影裂隙警报",
+	fissure = "暗影裂隙警报",
 	fissure_desc = "警报即将来领的暗影裂隙",
 
-	frostblast_name = "冰霜冲击警报",
+	frostblast = "冰霜冲击警报",
 	frostblast_desc = "当有人被冰霜冲击后警报",
 
-	detonate_name = "自爆法力警报",
+	detonate = "自爆法力警报",
 	detonate_desc = "警报即将来领的自爆法力",
 
-	detonateicon_name = "自爆法力标记",
+	detonateicon = "自爆法力标记",
 	detonateicon_desc = "标记即将自爆法力的人",
 
-	guardians_name = "寒冰皇冠卫士警报",
+	guardians = "寒冰皇冠卫士警报",
 	guardians_desc = "提前警报第三阶段召唤来的寒冰皇冠卫士",
 
 	mc_trigger1 = "你的灵魂现在属于我了！",
@@ -268,25 +268,25 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "科爾蘇加德的大廳",
 
-	phase_name = "每個階段警報",
+	phase = "每個階段警報",
 	phase_desc = "每個階段警報",
 
-	mc_name = "心靈控制警報",
+	mc = "心靈控制警報",
 	mc_desc = "當有人被心靈控制後警報",
 
-	fissure_name = "暗影裂縫警報",
+	fissure = "暗影裂縫警報",
 	fissure_desc = "警報即將來領的暗影裂縫",
 
-	frostblast_name = "冰霜衝擊警報",
+	frostblast = "冰霜衝擊警報",
 	frostblast_desc = "當有人被冰霜衝擊後警報",
 
-	detonate_name = "爆裂法力警報",
+	detonate = "爆裂法力警報",
 	detonate_desc = "警報即將來領的爆裂法力",
 
-	detonateicon_name = "爆裂法力標記",
+	detonateicon = "爆裂法力標記",
 	detonateicon_desc = "標記即將爆裂法力的人",
 
-	guardians_name = "寒冰皇冠守衛者警報",
+	guardians = "寒冰皇冠守衛者警報",
 	guardians_desc = "提前警報第三階段召喚來的寒冰皇冠守衛者",
 
 	mc_trigger1 = "你的靈魂現在屬於我了！",

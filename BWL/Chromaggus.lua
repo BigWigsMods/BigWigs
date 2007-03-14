@@ -15,16 +15,16 @@ local barcount
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Chromaggus",
 
-	enrage_name = "Enrage",
+	enrage = "Enrage",
 	enrage_desc = "Warn before Enrage at 20%",
 
-	frenzy_name = "Frenzy Alert",
+	frenzy = "Frenzy Alert",
 	frenzy_desc = "Warn for Frenzy",
 
-	breath_name = "Breath Alerts",
+	breath = "Breath Alerts",
 	breath_desc = "Warn for Breaths",
 
-	vulnerability_name = "Vulnerability Alerts",
+	vulnerability = "Vulnerability Alerts",
 	vulnerability_desc = "Warn for Vulnerability changes",
 
 	breath_trigger = "^Chromaggus begins to cast ([%w ]+)\.",
@@ -63,16 +63,16 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	enrage_name = "Wutanfall",
+	enrage = "Wutanfall",
 	enrage_desc = "Warnung, wenn Chromaggus w\195\188tend wird. (ab 20%).",
 
-	frenzy_name = "Raserei",
+	frenzy = "Raserei",
 	frenzy_desc = "Warnung, wenn Chromaggus in Raserei ger\195\164t.",
 
-	breath_name = "Atem",
+	breath = "Atem",
 	breath_desc = "Warnung, wenn Chromaggus seinen Atem wirkt.",
 
-	vulnerability_name = "Zauber-Verwundbarkeiten",
+	vulnerability = "Zauber-Verwundbarkeiten",
 	vulnerability_desc = "Warnung, wenn Chromagguss Zauber-Verwundbarkeit sich \195\164ndert.",
 
 	breath_trigger = "^Chromaggus beginnt (.+) zu wirken%.",
@@ -100,16 +100,16 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	enrage_name = "激怒警报",
+	enrage = "激怒警报",
 	enrage_desc = "20%生命激怒前发出警报。",
 
-	frenzy_name = "狂暴警报",
+	frenzy = "狂暴警报",
 	frenzy_desc = "狂暴警报",
 
-	breath_name = "吐息警报",
+	breath = "吐息警报",
 	breath_desc = "吐息警报",
 
-	vulnerability_name = "弱点警报",
+	vulnerability = "弱点警报",
 	vulnerability_desc = "克洛玛古斯弱点改变时发出警报",
 
 	breath_trigger = "^克洛玛古斯开始施放(.+)。",
@@ -144,16 +144,16 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	enrage_name = "狂暴警報",
+	enrage = "狂暴警報",
 	enrage_desc = "當克洛瑪古斯生命值剩 20% ，狂暴時發出警報。",
 
-	frenzy_name = "狂怒警報",
+	frenzy = "狂怒警報",
 	frenzy_desc = "當克洛瑪古斯狂怒時發出警報",
 
-	breath_name = "吐息警報",
+	breath = "吐息警報",
 	breath_desc = "當克洛瑪古斯吐息時發出警報",
 
-	vulnerability_name = "弱點改變警報",
+	vulnerability = "弱點改變警報",
 	vulnerability_desc = "當克洛瑪古斯弱點改變時發出警報",
 
 	breath_trigger = "^克洛瑪古斯開始施放(.+)。",
@@ -189,16 +189,16 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	enrage_name = "격노",
+	enrage = "격노",
 	enrage_desc = "20% 격노 전 경고",
 
-	frenzy_name = "광폭화 경고",
+	frenzy = "광폭화 경고",
 	frenzy_desc = "광폭화에 대한 경고",
 
-	breath_name = "브레스 경고",
+	breath = "브레스 경고",
 	breath_desc = "브레스에 대한 경고",
 
-	vulnerability_name = "약화 속성 경고",
+	vulnerability = "약화 속성 경고",
 	vulnerability_desc = "약화 속성 변경에 대한 경고",
 
 	breath_trigger = "크로마구스|1이;가; (.+)|1을;를; 시전합니다.",
@@ -226,16 +226,16 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	enrage_name = "Alerte Enrag\195\169",
+	enrage = "Alerte Enrag\195\169",
 	enrage_desc = "Pr\195\169viens quand Chromaggus s'enrage (\195\160 20%).",
 
-	frenzy_name = "Alerte Fr\195\169n\195\169sie",
+	frenzy = "Alerte Fr\195\169n\195\169sie",
 	frenzy_desc = "Pr\195\169viens quand Chromaggus entre dans des fr\195\169n\195\169sies sanglantes.",
 
-	breath_name = "Alerte Souffles",
+	breath = "Alerte Souffles",
 	breath_desc = "Pr\195\169viens quand Chromaggus souffle ainsi que leurs types.",
 
-	vulnerability_name = "Alerte Vuln\195\169rabilit\195\169s",
+	vulnerability = "Alerte Vuln\195\169rabilit\195\169s",
 	vulnerability_desc = "Pr\195\169viens quand la vuln\195\169rabilit\195\169 de Chromaggus change.",
 
 	breath_trigger = "^Chromaggus commence \195\160 lancer (.+)%.",

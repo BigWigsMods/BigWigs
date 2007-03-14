@@ -16,13 +16,13 @@ local started
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Maexxna",
 
-	spray_name = "Web Spray Alert",
+	spray = "Web Spray Alert",
 	spray_desc = "Warn for webspray and spiders",
 
-	enrage_name = "Enrage Alert",
+	enrage = "Enrage Alert",
 	enrage_desc = "Warn for enrage",
 
-	cocoon_name = "Cocoon Alert",
+	cocoon = "Cocoon Alert",
 	cocoon_desc = "Warn for Cocooned players",
 
 	cocoontrigger = "(.*) (.*) afflicted by Web Wrap.",
@@ -49,13 +49,13 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	spray_name = "Gespinstschauer",
+	spray = "Gespinstschauer",
 	spray_desc = "Warnung vor Gespinstschauer und Spinnen.",
 
-	enrage_name = "Wutanfall",
+	enrage = "Wutanfall",
 	enrage_desc = "Warnung wenn Maexxna w\195\188tend wird.",
 
-	cocoon_name = "Fangnetz",
+	cocoon = "Fangnetz",
 	cocoon_desc = "Warnung, wenn Spieler von Fangnetz betroffen sind.",
 
 	cocoontrigger = "(.*) (.*) von Fangnetz betroffen.",
@@ -82,13 +82,13 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	spray_name = "거미줄 뿌리기 경고",
+	spray = "거미줄 뿌리기 경고",
 	spray_desc = "거미줄 뿌리기와 거미 소환에 대한 경고",
 
-	enrage_name = "분노 경고",
+	enrage = "분노 경고",
 	enrage_desc = "분노에 대한 경고",
 
-	cocoon_name = "거미줄 감싸기 경고",
+	cocoon = "거미줄 감싸기 경고",
 	cocoon_desc = "거미줄 감싸기에 걸린 플레이어에 대한 경고",
 
 	cocoontrigger = "^([^|;%s]*)(.*)거미줄 감싸기에 걸렸습니다%.$",
@@ -115,13 +115,13 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	spray_name = "蛛网喷射警报",
+	spray = "蛛网喷射警报",
 	spray_desc = "蛛网喷射警报",
 
-	enrage_name = "激怒警报",
+	enrage = "激怒警报",
 	enrage_desc = "激怒警报",
 
-	cocoon_name = "蛛网裹体警报",
+	cocoon = "蛛网裹体警报",
 	cocoon_desc = "对被蛛网裹体的玩家发出警报",
 
 	cocoontrigger = "^(.+)受(.+)了蛛网裹体",
@@ -148,13 +148,13 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	spray_name = "撒網警報",
+	spray = "撒網警報",
 	spray_desc = "當梅克絲娜撒網及小蜘蛛出現時發出警報",
 
-	enrage_name = "狂怒警報",
+	enrage = "狂怒警報",
 	enrage_desc = "狂怒警報",
 
-	cocoon_name = "纏繞的蜘蛛網警報",
+	cocoon = "纏繞的蜘蛛網警報",
 	cocoon_desc = "玩家受到蜘蛛網纏繞發出警報",
 
 	cocoontrigger = "^(.+)受到(.*)纏繞的蜘蛛網",

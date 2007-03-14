@@ -12,10 +12,10 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Heigan",
 
-	teleport_name = "Teleport Alert",
+	teleport = "Teleport Alert",
 	teleport_desc = "Warn for Teleports.",
 
-	engage_name = "Engage Alert",
+	engage = "Engage Alert",
 	engage_desc = "Warn when Heigan is engaged.",
 
 	-- [[ Triggers ]]--
@@ -47,10 +47,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	teleport_name = "순간이동 경고",
+	teleport = "순간이동 경고",
 	teleport_desc = "순간이동에 대한 경고",
 
-	engage_name = "전투개시 알림",
+	engage = "전투개시 알림",
 	engage_desc = "헤이건 전투 개시 알림.",
 
 	-- [[ Triggers ]]--
@@ -82,10 +82,10 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	teleport_name = "Teleport",
+	teleport = "Teleport",
 	teleport_desc = "Warnung vor Teleport.",
 
-	engage_name = "Angriff",
+	engage = "Angriff",
 	engage_desc = "Warnung, wenn Heigan angegriffen wird.",
 
 	starttrigger = "Ihr geh\195\182rt mir...",
@@ -113,10 +113,10 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	teleport_name = "传送警报",
+	teleport = "传送警报",
 	teleport_desc = "传送警报",
 
-	engage_name = "激活警报",
+	engage = "激活警报",
 	engage_desc = "希尔盖激活时警告",
 
 	-- [[ Triggers ]]--
@@ -146,10 +146,10 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	teleport_name = "傳送警報",
+	teleport = "傳送警報",
 	teleport_desc = "傳送警報",
 
-	engage_name = "進入戰鬥警報",
+	engage = "進入戰鬥警報",
 	engage_desc = "海根進入戰鬥警告",
 
 	-- [[ Triggers ]]--

@@ -12,13 +12,13 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Jeklik",
 
-	heal_name = "Heal Alert",
+	heal = "Heal Alert",
 	heal_desc = "Warn for healing",
 
-	bomb_name = "Bomb Bat Alert",
+	bomb = "Bomb Bat Alert",
 	bomb_desc = "Warn for Bomb Bats",
 
-	swarm_name = "Bat Swarm Alert",
+	swarm = "Bat Swarm Alert",
 	swarm_desc = "Warn for the Bat swarms",
 
 	swarm_trigger = "emits a deafening shriek",
@@ -39,24 +39,24 @@ L:RegisterTranslations("frFR", function() return {
 	bomb_message = "Chauve-souris bombardier en approche !",
 	heal_message = "Commence \195\160 se soigner !",
 
-	heal_name = "Alerte Soins",
+	heal = "Alerte Soins",
 	heal_desc = "Pr\195\169viens lorsque le boss tente de se soigner.",
 
-	bomb_name = "Alerte Bombardier",
+	bomb = "Alerte Bombardier",
 	bomb_desc = "Pr\195\169viens des pops de chauve-souris bombardier.",
 
-	swarm_name = "Alerte Pack de chauve-souris",
+	swarm = "Alerte Pack de chauve-souris",
 	swarm_desc = "Pr\195\169viens des pops de pack de chauve-souris",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	heal_name = "Heilung",
+	heal = "Heilung",
 	heal_desc = "Warnung, wenn Jeklik versucht sich zu heilen.",
 
-	bomb_name = "Fledermaus-Bomben",
+	bomb = "Fledermaus-Bomben",
 	bomb_desc = "Warnung, wenn Fledermaus-Bomben im Anflug sind.",
 
-	swarm_name = "Fledermaus-Schwarm",
+	swarm = "Fledermaus-Schwarm",
 	swarm_desc = "Warnung, wenn Fledermaus-Schwarm im Anflug.",
 
 	swarm_trigger = "emits a deafening shriek", -- ?
@@ -69,13 +69,13 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	heal_name = "治疗警报",
+	heal = "治疗警报",
 	heal_desc = "高阶祭司耶克里克使用治疗时发出警报",
 
-	bomb_name = "炸弹蝙蝠警报",
+	bomb = "炸弹蝙蝠警报",
 	bomb_desc = "炸弹蝙蝠出现时发出警报",
 
-	swarm_name = "蝙蝠群警报",
+	swarm = "蝙蝠群警报",
 	swarm_desc = "蝙蝠群出现时发出警报",
 
 	swarm_trigger = "发出刺耳尖啸",
@@ -88,10 +88,10 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	heal_name = "治療警報",
+	heal = "治療警報",
 	heal_desc = "高階祭司耶克里克使用治療時發出警報",
 
-	bomb_name = "炸彈蝙蝠警報",
+	bomb = "炸彈蝙蝠警報",
 	bomb_desc = "炸彈蝙蝠出現時發出警報",
 
 	bomb_trigger = "我命令你把這些入侵者燒成灰燼！$",
@@ -101,13 +101,13 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	heal_name = "치유 경고",
+	heal = "치유 경고",
 	heal_desc = "치유에 대한 경고",
 
-	bomb_name = "폭탄 박쥐 경고",
+	bomb = "폭탄 박쥐 경고",
 	bomb_desc = "폭탄 박쥐에 대한 경고",
 
-	swarm_name = "박쥐 떼 경고",
+	swarm = "박쥐 떼 경고",
 	swarm_desc = "박쥐 떼에 대한 경고",
 
 	swarm_trigger = "emits a deafening shriek", -- CHECK

@@ -17,7 +17,7 @@ local rajdead
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Rajaxx",
 
-	wave_name = "Wave Alert",
+	wave = "Wave Alert",
 	wave_desc = "Warn for incoming waves",
 
 	trigger1 = "Kill first, ask questions later... Incoming!",
@@ -42,7 +42,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	wave_name = "Alerte Vagues",
+	wave = "Alerte Vagues",
 	wave_desc = "Pr\195\169viens de l'arriv\195\169e des vagues.",
 
 	trigger1 = "Ils arrivent. Essayez de ne pas vous faire tuer, bleusaille.",
@@ -67,7 +67,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	wave_name = "Wellen",
+	wave = "Wellen",
 	wave_desc = "Warnung vor den ankommenden Gegner Wellen.",
 
 	trigger1 = "Hier kommen sie. Bleibt am Leben, Welpen.",
@@ -92,7 +92,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	wave_name = "来袭警报",
+	wave = "来袭警报",
 	wave_desc = "当新一批敌人来袭时发出警报",
 
 	trigger1 = "它们来了。尽量别被它们干掉，新兵。",
@@ -117,7 +117,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	wave_name = "來襲警報",
+	wave = "來襲警報",
 	wave_desc = "當新一批敵人來襲時發出警報",
 
 	trigger1 = "先殺再說...他們來了！", --開戰了才警告
@@ -142,7 +142,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	wave_name = "단계 알림",
+	wave = "단계 알림",
 	wave_desc = "단계에 대한 알림",
 
 	trigger1 = "그들이 오고 있다. 자신의 몸을 지키도록 하라!",

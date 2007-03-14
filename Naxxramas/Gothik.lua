@@ -12,13 +12,13 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Gothik",
 
-	room_name = "Room Arrival Warnings",
+	room = "Room Arrival Warnings",
 	room_desc = "Warn for Gothik's arrival",
 
-	add_name = "Add Warnings",
+	add = "Add Warnings",
 	add_desc = "Warn for adds",
 
-	adddeath_name = "Add Death Alert",
+	adddeath = "Add Death Alert",
 	adddeath_desc = "Alerts when an add dies.",
 
 	--disabletrigger = "I... am... undone.",
@@ -27,12 +27,12 @@ L:RegisterTranslations("enUS", function() return {
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
 	startwarn = "Gothik the Harvester engaged! 4:30 till he's in the room.",
 
-	rider_name = "Unrelenting Rider",
-	spectral_rider_name = "Spectral Rider",
-	deathknight_name = "Unrelenting Deathknight",
-	spectral_deathknight_name = "Spektral Deathknight",
-	trainee_name = "Unrelenting Trainee",
-	spectral_trainee_name = "Spectral Trainee",
+	rider = "Unrelenting Rider",
+	spectral_rider = "Spectral Rider",
+	deathknight = "Unrelenting Deathknight",
+	spectral_deathknight = "Spektral Deathknight",
+	trainee = "Unrelenting Trainee",
+	spectral_trainee = "Spectral Trainee",
 
 	riderdiewarn = "Rider dead!",
 	dkdiewarn = "Death Knight dead!",
@@ -60,13 +60,13 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	room_name = "고딕 등장 경고",
+	room = "고딕 등장 경고",
 	room_desc = "고딕 등장에 대한 경고",
 
-	add_name = "애드 경고",
+	add = "애드 경고",
 	add_desc = "애드에 대한 경고",
 
-	adddeath_name = "애드 죽음 알림",
+	adddeath = "애드 죽음 알림",
 	adddeath_desc = "애드가 죽었을 때 알림.",
 
 	--disabletrigger = "내가... 죽는구나.", -- CHECK
@@ -75,12 +75,12 @@ L:RegisterTranslations("koKR", function() return {
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun", -- CHECK
 	startwarn = "영혼의 착취자 고딕 전투 시작! 4:30 후 고딕 등장.",
 
-	rider_name = "무자비한 죽음의 기병",
-	spectral_rider_name = "기병 망령",
-	deathknight_name = "무자비한 죽음의 기사",
-	spectral_deathknight_name = "죽음의 기사 망령",
-	trainee_name = "무자비한 훈련생",
-	spectral_trainee_name = "훈련생 유령",
+	rider = "무자비한 죽음의 기병",
+	spectral_rider = "기병 망령",
+	deathknight = "무자비한 죽음의 기사",
+	spectral_deathknight = "죽음의 기사 망령",
+	trainee = "무자비한 훈련생",
+	spectral_trainee = "훈련생 유령",
 
 	riderdiewarn = "기병 죽음! 무덤조 긴장하세요!",
 	dkdiewarn = "죽음의 기사 죽음!",
@@ -108,13 +108,13 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	room_name = "Ankunft",
+	room = "Ankunft",
 	room_desc = "Warnung, wenn Gothik in den Raum kommt.",
 
-	add_name = "Adds",
+	add = "Adds",
 	add_desc = "Warnung vor Adds.",
 
-	adddeath_name = "Add Stirbt",
+	adddeath = "Add Stirbt",
 	adddeath_desc = "Warnung, wenn ein Add stirbt.",
 
 	--disabletrigger = "I... am... undone.", -- ?
@@ -123,12 +123,12 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger2 = "Maz Azgala veni kamil toralar Naztheros zennshinagas.",
 	startwarn = "Gothik der Seelenj\195\164ger angegriffen! Im Raum in 4:30 Minuten!",
 
-	rider_name = "Unerbittlicher Reiter",
-	spectral_rider_name = "Spektraler Reiter",
-	deathknight_name = "Unerbittlicher Todesritter",
-	spectral_deathknight_name = "Spektraler Todesritter",
-	trainee_name = "Unerbittlicher Lehrling",
-	spectral_trainee_name = "Spektraler Lehrling",
+	rider = "Unerbittlicher Reiter",
+	spectral_rider = "Spektraler Reiter",
+	deathknight = "Unerbittlicher Todesritter",
+	spectral_deathknight = "Spektraler Todesritter",
+	trainee = "Unerbittlicher Lehrling",
+	spectral_trainee = "Spektraler Lehrling",
 
 	riderdiewarn = "Reiter tot!",
 	dkdiewarn = "Todesritter tot!",
@@ -156,13 +156,13 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	room_name = "进入房间警报",
+	room = "进入房间警报",
 	room_desc = "收割者戈提克进入房间时发出警报",
 
-	add_name = "增援警报",
+	add = "增援警报",
 	add_desc = "增援警报",
 
-	adddeath_name = "小怪计时及死亡通告",
+	adddeath = "小怪计时及死亡通告",
 	adddeath_desc = "小怪计时及死亡通告",
 
 	--disabletrigger = "事业……未尽……",
@@ -171,12 +171,12 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
 	startwarn = "收割者戈提克已激活 - 4:30后进入房间",
 
-	rider_name = "冷酷的骑兵",
-	spectral_rider_name = "骑兵",
-	deathknight_name = "冷酷的死亡骑士",
-	spectral_deathknight_name = "死亡骑士",
-	trainee_name = "冷酷的学徒",
-	spectral_trainee_name = "学徒",
+	rider = "冷酷的骑兵",
+	spectral_rider = "骑兵",
+	deathknight = "冷酷的死亡骑士",
+	spectral_deathknight = "死亡骑士",
+	trainee = "冷酷的学徒",
+	spectral_trainee = "学徒",
 
 	riderdiewarn = "骑兵已死亡！",
 	dkdiewarn = "死亡骑士已死亡！",
@@ -202,13 +202,13 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	room_name = "進入房間警報",
+	room = "進入房間警報",
 	room_desc = "收割者高希進入房間時發出警報",
 
-	add_name = "增援警報",
+	add = "增援警報",
 	add_desc = "增援警報",
 
-	adddeath_name = "小怪計時及死亡通告",
+	adddeath = "小怪計時及死亡通告",
 	adddeath_desc = "小怪計時及死亡通告",
 
 	--disabletrigger = "I... am... undone.", --?
@@ -217,12 +217,12 @@ L:RegisterTranslations("zhTW", function() return {
 	starttrigger2 = "我已經等待很久了。現在你們將面對靈魂的收割者。", --?
 	startwarn = "收割者高希已進入戰鬥 - 4:30 後進入房間",
 
-	rider_name = "冷酷的騎兵",
-	spectral_rider_name = "騎兵",
-	deathknight_name = "冷酷的死亡騎士",
-	spectral_deathknight_name = "死騎",
-	trainee_name = "冷酷的學徒",
-	spectral_trainee_name = "學徒",
+	rider = "冷酷的騎兵",
+	spectral_rider = "騎兵",
+	deathknight = "冷酷的死亡騎士",
+	spectral_deathknight = "死騎",
+	trainee = "冷酷的學徒",
+	spectral_trainee = "學徒",
 
 	riderdiewarn = "騎兵已死亡！",
 	dkdiewarn = "死亡騎士已死亡！",
@@ -254,12 +254,12 @@ L:RegisterTranslations("frFR", function() return {
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
 	startwarn = "Gothik le moissonneur engag\195\169! 4:30 avant son arriv\195\169e dans la salle.",
 
-	rider_name = "Cavalier tenace",
-	spectral_rider_name = "Cavalier spectral",
-	deathknight_name = "Chevalier de la mort tenace",
-	spectral_deathknight_name = "Chevalier de la mort spectral",
-	trainee_name = "Jeune recrue tenace",
-	spectral_trainee_name = "Jeune recrue spectral",
+	rider = "Cavalier tenace",
+	spectral_rider = "Cavalier spectral",
+	deathknight = "Chevalier de la mort tenace",
+	spectral_deathknight = "Chevalier de la mort spectral",
+	trainee = "Jeune recrue tenace",
+	spectral_trainee = "Jeune recrue spectral",
 
 	riderdiewarn = "Cavalier mort !",
 	dkdiewarn = "Chevalier de la mort mort !",
@@ -292,8 +292,8 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 mod.enabletrigger = { boss }
 mod.wipemobs = {
-	L["rider_name"], L["deathknight_name"], L["trainee_name"],
-	L["spectral_rider_name"], L["spectral_deathknight_name"], L["spectral_trainee_name"]
+	L["rider"], L["deathknight"], L["trainee"],
+	L["spectral_rider"], L["spectral_deathknight"], L["spectral_trainee"]
 }
 mod.toggleoptions = { "room", -1, "add", "adddeath", "bosskill" }
 mod.revision = tonumber(string.sub("$Revision$", 12, -3))
@@ -318,9 +318,9 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
-	if self.db.profile.adddeath and msg == string.format(UNITDIESOTHER, L["rider_name"]) then
+	if self.db.profile.adddeath and msg == string.format(UNITDIESOTHER, L["rider"]) then
 		self:TriggerEvent("BigWigs_Message", L["riderdiewarn"], "Important")
-	elseif self.db.profile.adddeath and msg == string.format(UNITDIESOTHER, L["deathknight_name"]) then
+	elseif self.db.profile.adddeath and msg == string.format(UNITDIESOTHER, L["deathknight"]) then
 		self:TriggerEvent("BigWigs_Message", L["dkdiewarn"], "Important")
 	elseif self.db.profile.bosskill and msg == string.format(UNITDIESOTHER, boss) then
 		self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], boss), "Bosskill", nil, "Victory")

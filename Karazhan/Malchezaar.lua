@@ -13,16 +13,16 @@ local afflict
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Malchezaar",
 
-	phase_name = "Engage",
+	phase = "Engage",
 	phase_desc = "Alert when changing phases",
 
-	enfeeble_name = "Enfeeble",
+	enfeeble = "Enfeeble",
 	enfeeble_desc = "Show cooldown timer for enfeeble",
 
-	infernals_name = "Infernals",
+	infernals = "Infernals",
 	infernals_desc = "Show cooldown timer for Infernal summons.",
 
-	nova_name = "Shadow Nova",
+	nova = "Shadow Nova",
 	nova_desc = "Estimated Shadow Nova timers",
 
 	phase1_trigger = "Madness has brought you here to me. I shall be your undoing!",
@@ -50,16 +50,16 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	phase_name = "Engage",
+	phase = "Engage",
 	phase_desc = "Warnt wenn eine neue Phase beginnt",
 
-	enfeeble_name = "Entkr\195\164ften",
+	enfeeble = "Entkr\195\164ften",
 	enfeeble_desc = "Zeige Timerbalken f\195\188r Entkr\195\164ften",
 
-	infernals_name = "Infernos",
+	infernals = "Infernos",
 	infernals_desc = "Zeige Timerbalken f\195\188r Infernos",
 
-	nova_name = "Schattennova",
+	nova = "Schattennova",
 	nova_desc = "Ungef\195\164re Zeitangabe f\195\188r Schattennova",
 
 	phase1_trigger = "Der Wahnsinn f\195\188hrte Euch zu mir. Ich werde Euch das Genick brechen!",
@@ -87,16 +87,16 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	phase_name = "단계",
+	phase = "단계",
 	phase_desc = "단계 변화 시 알림",
 
-	enfeeble_name = "쇠약",
+	enfeeble = "쇠약",
 	enfeeble_desc = "쇠약에 대한 재사용 대기시간 표시",
 
-	infernals_name = "불지옥",
+	infernals = "불지옥",
 	infernals_desc = "불지옥 소환에 대한 재사용 대기시간 표시",
 
-	nova_name = "암흑 회오리",
+	nova = "암흑 회오리",
 	nova_desc = "암흑 회오리 예상 타이머",
 
 	phase1_trigger = "여기까지 오다니 정신이 나간 놈들이 분명하구나. 소원이라면 파멸을 시켜주마!",

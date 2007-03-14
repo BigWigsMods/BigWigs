@@ -12,7 +12,7 @@ local worms
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Fankriss",
-	worm_name = "Worm Alert",
+	worm = "Worm Alert",
 	worm_desc = "Warn for Incoming Worms",
 
 	wormtrigger = "Fankriss the Unyielding casts Summon Worm.",
@@ -21,7 +21,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	worm_name = "Wurm beschw\195\182ren",
+	worm = "Wurm beschw\195\182ren",
 	worm_desc = "Warnung, wenn Fankriss einen Wurm beschw\195\182rt.",
 
 	wormtrigger = "Fankriss der Unnachgiebige wirkt Wurm beschw\195\182ren.",
@@ -30,7 +30,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	worm_name = "虫子警报",
+	worm = "虫子警报",
 	worm_desc = "召唤虫子出现时发出警报",
 
 	wormtrigger = "顽强的范克瑞斯施放了召唤虫子。",
@@ -39,7 +39,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	worm_name = "蟲子警報",
+	worm = "蟲子警報",
 	worm_desc = "范克里斯召喚蟲子時發出警報",
 
 	wormtrigger = "頑強的范克里斯施放了召喚蟲子。",
@@ -48,7 +48,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	worm_name = "벌레 경고",
+	worm = "벌레 경고",
 	worm_desc = "벌레에 대한 경고",
 
 	wormtrigger = "불굴의 판크리스|1이;가; 벌레 소환|1을;를; 시전합니다.",
@@ -61,7 +61,7 @@ L:RegisterTranslations("frFR", function() return {
 	wormwarn = "Invocation d'un ver ! (%d)",
 	wormbar = "Ver (%d) enrag\195\169 !",
 
-	worm_name = "Alerte Ver",
+	worm = "Alerte Ver",
 	worm_desc = "Pr\195\169viens de l'arriv\195\169e des vers.",
 } end )
 

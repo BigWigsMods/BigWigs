@@ -12,10 +12,10 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Ossirian",
 
-	supreme_name = "Supreme Alert",
+	supreme = "Supreme Alert",
 	supreme_desc = "Warn for Supreme Mode",
 
-	debuff_name = "Debuff Alert",
+	debuff = "Debuff Alert",
 	debuff_desc = "Warn for Defuff",
 
 	supremetrigger = "Ossirian the Unscarred gains Strength of Ossirian.",
@@ -34,10 +34,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	supreme_name = "Alerte Mode Supr\195\170me",
+	supreme = "Alerte Mode Supr\195\170me",
 	supreme_desc = "Pr\195\169viens lorsque Ossirian passe en mode supr\195\170me.",
 
-	debuff_name = "Sensibilit\195\169s",
+	debuff = "Sensibilit\195\169s",
 	debuff_desc = "Pr\195\169viens lorsque Ossirian change de Sensibilit\195\169.",
 
 	supremetrigger = "Ossirian l'Intouch\195\169 gagne Force d'Ossirian.",
@@ -56,10 +56,10 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	supreme_name = "St\195\164rke des Ossirian",
+	supreme = "St\195\164rke des Ossirian",
 	supreme_desc = "Warnung vor St\195\164rke des Ossirian.",
 
-	debuff_name = "Debuff",
+	debuff = "Debuff",
 	debuff_desc = "Warnung vor Debuff.",
 
 	supremetrigger = "Ossirian der Narbenlose bekommt 'St\195\164rke des Ossirian'.",
@@ -78,10 +78,10 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	supreme_name = "无敌警报",
+	supreme = "无敌警报",
 	supreme_desc = "奥斯里安进入无敌状态时发出警报",
 
-	debuff_name = "虚弱警报",
+	debuff = "虚弱警报",
 	debuff_desc = "奥斯里安受到虚弱效果影响时发出警报",
 
 	supremetrigger = "无疤者奥斯里安获得了奥斯里安之力的效果。",
@@ -100,10 +100,10 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	supreme_name = "無敵警報",
+	supreme = "無敵警報",
 	supreme_desc = "無疤者奧斯里安進入無敵狀態時發出警報",
 
-	debuff_name = "虛弱警報",
+	debuff = "虛弱警報",
 	debuff_desc = "無疤者奧斯里安受到虛弱效果影響時發出警報",
 
 	supremetrigger = "無疤者奧斯里安獲得了奧斯里安之力的效果。",
@@ -122,10 +122,10 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	supreme_name = "무적 경고",
+	supreme = "무적 경고",
 	supreme_desc = "무적 모드에 대한 경고",
 
-	debuff_name = "약화마법 경고",
+	debuff = "약화마법 경고",
 	debuff_desc = "약화마법에 대한 경고",
 
 	supremetrigger = "무적의 오시리안|1이;가; 오시리안의 힘 효과를 얻었습니다.",

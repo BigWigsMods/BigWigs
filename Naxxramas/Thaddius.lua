@@ -14,22 +14,22 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Thaddius",
 
-	enrage_name = "Enrage Alert",
+	enrage = "Enrage Alert",
 	enrage_desc = "Warn for Enrage",
 
-	phase_name = "Phase Alerts",
+	phase = "Phase Alerts",
 	phase_desc = "Warn for Phase transitions",
 
-	polarity_name = "Polarity Shift Alert",
+	polarity = "Polarity Shift Alert",
 	polarity_desc = "Warn for polarity shifts",
 
-	power_name = "Power Surge Alert",
+	power = "Power Surge Alert",
 	power_desc = "Warn for Stalagg's power surge",
 
-	charge_name = "Charge Alert",
+	charge = "Charge Alert",
 	charge_desc = "Warn about Positive/Negative charge for yourself only.",
 
-	throw_name = "Throw Alerts",
+	throw = "Throw Alerts",
 	throw_desc = "Warn about tank platform swaps.",
 
 	enragetrigger = "%s goes into a berserker rage!",
@@ -80,22 +80,22 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	enrage_name = "격노 경고",
+	enrage = "격노 경고",
 	enrage_desc = "격노에 대한 경고",
 
-	phase_name = "단계 경고",
+	phase = "단계 경고",
 	phase_desc = "단계 변경에 대한 경고",
 
-	polarity_name = "극성 변환 경고",
+	polarity = "극성 변환 경고",
 	polarity_desc = "극성 변환에 대한 경고",
 
-	power_name = "마력의 쇄도 경고",
+	power = "마력의 쇄도 경고",
 	power_desc = "스탈라그의 마력의 쇄도에 대한 경고",
 
-	charge_name = "대전 경고",
+	charge = "대전 경고",
 	charge_desc = "당신에게 걸린 전하의 극성 종류에 대한 경고",
 
-	throw_name = "던지기 경고",
+	throw = "던지기 경고",
 	throw_desc = "탱커 위치 변경에 대한 경고",
 
 	enragetrigger = "%s|1이;가; 광폭해집니다!",
@@ -146,19 +146,19 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	enrage_name = "Wutanfall",
+	enrage = "Wutanfall",
 	enrage_desc = "Warnung, wenn Thaddius w\195\188tend wird.",
 
-	phase_name = "Phasen",
+	phase = "Phasen",
 	phase_desc = "Anzeige der Phasenwechsel.",
 
-	polarity_name = "Polarit\195\164tsver\195\164nderung Warnung",
+	polarity = "Polarit\195\164tsver\195\164nderung Warnung",
 	polarity_desc = "Warnung f\195\188r Polarit\195\164tsver\195\164nderung",
 
-	power_name = "Energieschub Warnung",
+	power = "Energieschub Warnung",
 	power_desc = "Warnung f\195\188r Stalagg's Energieschub",
 
-	charge_name = "Ladungs-Warnung",
+	charge = "Ladungs-Warnung",
 	charge_desc = "Warnung bei positiver/negativer Aufladung bei euch selbst.",
 
 	enragetrigger = "verf\195\164llt in Berserkerwut",
@@ -202,22 +202,22 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	enrage_name = "激怒警报",
+	enrage = "激怒警报",
 	enrage_desc = "激怒警报",
 
-	phase_name = "阶段警报",
+	phase = "阶段警报",
 	phase_desc = "阶段转换时发出警报",
 
-	polarity_name = "极性转换警报",
+	polarity = "极性转换警报",
 	polarity_desc = "极性转换警报",
 
-	power_name = "力量振荡警报",
+	power = "力量振荡警报",
 	power_desc = "力量振荡警报",
 
-	charge_name = "电荷警报",
+	charge = "电荷警报",
 	charge_desc = "你身上的电荷效果发生变化时发出警报",
 
-	throw_name = "扔人提示",
+	throw = "扔人提示",
 	throw_desc = "当TANK开始转换平台时发出警报",
 
 	enragetrigger = "变得极度狂暴而愤怒！",
@@ -267,19 +267,19 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	enrage_name = "狂怒警報",
+	enrage = "狂怒警報",
 	enrage_desc = "狂怒警報",
 
-	phase_name = "階段警報",
+	phase = "階段警報",
 	phase_desc = "階段轉換時發出警報",
 
-	polarity_name = "極性轉換警報",
+	polarity = "極性轉換警報",
 	polarity_desc = "極性轉換警報",
 
-	power_name = "力量澎湃警報",
+	power = "力量澎湃警報",
 	power_desc = "力量澎湃警報",
 
-	charge_name = "電荷警報",
+	charge = "電荷警報",
 	charge_desc = "你身上的電荷效果發生變化時發出警報",
 
 	enragetrigger = "變得極度狂暴而憤怒！",

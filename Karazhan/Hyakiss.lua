@@ -13,7 +13,7 @@ local times
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Hyakiss",
 
-	web_name = "Web",
+	web = "Web",
 	web_desc = "Alert when a player gets webbed.",
 
 	web_trigger = "^([^%s]+) ([^%s]+) afflicted by Hyakiss' Web.",

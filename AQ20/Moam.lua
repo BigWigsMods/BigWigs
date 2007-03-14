@@ -12,10 +12,10 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Moam",
 
-	adds_name = "Mana Fiend Alert",
+	adds = "Mana Fiend Alert",
 	adds_desc = "Warn for Mana fiends",
 
-	paralyze_name = "Paralyze Alert",
+	paralyze = "Paralyze Alert",
 	paralyze_desc = "Warn for Paralyze",
 
 	starttrigger = "%s senses your fear.",
@@ -31,10 +31,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	adds_name = "Alerte El\195\169mentaires",
+	adds = "Alerte El\195\169mentaires",
 	adds_desc = "Pr\195\169viens lorsque les El\195\169mentaires apparaissents",
 
-	paralyze_name = "Alerte Paralysie",
+	paralyze = "Alerte Paralysie",
 	paralyze_desc = "Pr\195\169viens lorsque Moam entre en paralysie.",
 
 	starttrigger = "%s sent votre peur.",
@@ -52,10 +52,10 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	adds_name = "Manageister",
+	adds = "Manageister",
 	adds_desc = "Warnung, wenn Manageister erscheinen.",
 
-	paralyze_name = "Steinform",
+	paralyze = "Steinform",
 	paralyze_desc = "Warnung, wenn Moam in Steinform.",
 
 	starttrigger = "%s sp\195\188rt Eure Angst.",
@@ -73,10 +73,10 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	adds_name = "정령 경고",
+	adds = "정령 경고",
 	adds_desc = "정령에 대한 경고",
 
-	paralyze_name = "마비 경고",
+	paralyze = "마비 경고",
 	paralyze_desc = "마비에 대한 경고",
 
 	starttrigger = "%s|1이;가; 당신의 공포를 알아챕니다.",
@@ -92,10 +92,10 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	adds_name = "召唤警报",
+	adds = "召唤警报",
 	adds_desc = "召唤元素恶魔出现时发出警报",
 
-	paralyze_name = "石化警报",
+	paralyze = "石化警报",
 	paralyze_desc = "莫阿姆进入石化状态时发出警报",
 
 	starttrigger = "%s察觉到了你的恐惧。",
@@ -111,10 +111,10 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	adds_name = "召喚警報",
+	adds = "召喚警報",
 	adds_desc = "召喚元素惡魔出現時發出警報",
 
-	paralyze_name = "石化警報",
+	paralyze = "石化警報",
 	paralyze_desc = "莫阿姆進入石化狀態時發出警報",
 
 	starttrigger = "%s因神態失常而坐立不安。",

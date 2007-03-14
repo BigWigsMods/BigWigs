@@ -24,10 +24,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Firemaw",
 
-	wingbuffet_name = "Wing Buffet alert",
+	wingbuffet = "Wing Buffet alert",
 	wingbuffet_desc = "Warn for Wing Buffet",
 
-	shadowflame_name = "Shadow Flame alert",
+	shadowflame = "Shadow Flame alert",
 	shadowflame_desc = "Warn for Shadow Flame",
 } end)
 
@@ -41,10 +41,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	wingbuffet_bar = "龙翼打击",
 
-	wingbuffet_name = "龙翼打击警报",
+	wingbuffet = "龙翼打击警报",
 	wingbuffet_desc = "龙翼打击警报",
 
-	shadowflame_name = "暗影烈焰警报",
+	shadowflame = "暗影烈焰警报",
 	shadowflame_desc = "暗影烈焰警报",
 } end)
 
@@ -58,10 +58,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	wingbuffet_bar = "龍翼打擊",
 
-	wingbuffet_name = "龍翼打擊警報",
+	wingbuffet = "龍翼打擊警報",
 	wingbuffet_desc = "當費爾默施放龍翼打擊時發出警報",
 
-	shadowflame_name = "暗影烈焰警報",
+	shadowflame = "暗影烈焰警報",
 	shadowflame_desc = "當費爾默施放暗影烈焰時發出警報",
 } end)
 
@@ -76,10 +76,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	wingbuffet_bar = "폭풍 날개",
 	
-	wingbuffet_name = "폭풍 날개 경고",
+	wingbuffet = "폭풍 날개 경고",
 	wingbuffet_desc = "폭풍 날개에 대한 경고",
 	
-	shadowflame_name = "암흑의 불길 경고",
+	shadowflame = "암흑의 불길 경고",
 	shadowflame_desc = "암흑의 불길에 대한 경고",
 } end)
 
@@ -93,10 +93,10 @@ L:RegisterTranslations("deDE", function() return {
 
 	wingbuffet_bar = "Fl\195\188gelsto\195\159",
 
-	wingbuffet_name = "Fl\195\188gelsto\195\159",
+	wingbuffet = "Fl\195\188gelsto\195\159",
 	wingbuffet_desc = "Warnung, wenn Feuerschwinge Fl\195\188gelsto\195\159 wirkt.",
 
-	shadowflame_name = "Schattenflamme",
+	shadowflame = "Schattenflamme",
 	shadowflame_desc = "Warnung, wenn Feuerschwinge Schattenflamme wirkt.",
 } end)
 
@@ -110,10 +110,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	wingbuffet_bar = "Frappe des ailes",
 
-	wingbuffet_name = "Alerte Frappe des ailes",
+	wingbuffet = "Alerte Frappe des ailes",
 	wingbuffet_desc = "Pr\195\169viens quand Gueule-de-feu effectue sa Frappe des ailes.",
 
-	shadowflame_name = "Alerte Flamme d'ombre",
+	shadowflame = "Alerte Flamme d'ombre",
 	shadowflame_desc = "Pr\195\169viens quand l'incantation de la Flamme d'ombre est imminente.",
 } end)
 

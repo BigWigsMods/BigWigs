@@ -12,22 +12,22 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Magtheridon",
 
-	escape_name = "Escape",
+	escape = "Escape",
 	escape_desc = ("Countdown untill %s breaks free"):format(boss),
 
-	abyssal_name = "Burning Abyssal",
+	abyssal = "Burning Abyssal",
 	abyssal_desc = "Warn when a Burning Abyssal is created",
 
-	heal_name = "Heal",
+	heal = "Heal",
 	heal_desc = "Warn when a Hellfire Channeler starts to heal",
 
-	nova_name = "Blast Nova",
+	nova = "Blast Nova",
 	nova_desc = "Estimated Blast Nova timers",
 
-	banish_name = "Banish",
+	banish = "Banish",
 	banish_desc = ("Warn when you Banish %s"):format(boss),
 
-	exhaust_name = "Disable Exhaustion Bars",
+	exhaust = "Disable Exhaustion Bars",
 	exhaust_desc = "Timer bars for Mind Exhaustion on players",
 
 	escape_trigger1 = "%%s's bonds begin to weaken!",
@@ -61,22 +61,22 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	escape_name = "Ausbruch",
+	escape = "Ausbruch",
 	escape_desc = ("Countdown bis %s ausbricht"):format(boss),
 
-	abyssal_name = "Brennender Schlund",
+	abyssal = "Brennender Schlund",
 	abyssal_desc = "Warnt, wenn ein Brennender Schlund gespawned wird",
 
-	heal_name = "Heilung",
+	heal = "Heilung",
 	heal_desc = "Warnt, wenn ein Kanalisierer anf\195\164ngt zu heilen",
 
-	nova_name = "Blast Nova", -- to translate
+	nova = "Blast Nova", -- to translate
 	nova_desc = "Estimated Blast Nova timers", -- to translate
 
-	banish_name = "Verbannung",
+	banish = "Verbannung",
 	banish_desc = ("Warnt, wenn ihr %s verbannt"):format(boss),
 
-	exhaust_name = "Ersch\195\182pfung",
+	exhaust = "Ersch\195\182pfung",
 	exhaust_desc = "Timer f\195\188r Gedankenersch\195\182pfung",
 
 	escape_trigger1 = "Die Fesseln von %%s werden schw\195\164cher!",

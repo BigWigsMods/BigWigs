@@ -14,13 +14,13 @@ local enrageAnnounced = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Doomwalker",
 
-	overrun_name = "Overrun",
+	overrun = "Overrun",
 	overrun_desc = "Alert when Doomwalker uses his Overrun ability.",
 
-	earthquake_name = "Earthquake",
+	earthquake = "Earthquake",
 	earthquake_desc = "Alert when Doomwalker uses his Earthquake ability.",
 
-	enrage_name = "Enrage",
+	enrage = "Enrage",
 	enrage_desc = "Warn about enrage around 20% hitpoints.",
 
 	engage_message = "Doomwalker engaged, Earthquake in ~30sec!",

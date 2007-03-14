@@ -14,13 +14,13 @@ local playerName = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Arlokk",
 
-	youmark_name = "You're marked alert",
+	youmark = "You're marked alert",
 	youmark_desc = "Warn when you are marked",
 
-	othermark_name = "Others are marked alert",
+	othermark = "Others are marked alert",
 	othermark_desc = "Warn when others are marked",
 
-	icon_name = "Place Icon",
+	icon = "Place Icon",
 	icon_desc = "Place a skull icon on the marked person (requires promoted or higher)",
 
 	mark_trigger = "Feast on ([^%s]+), my pretties!$",
@@ -30,13 +30,13 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	youmark_name = "Alerte quand vous \195\170tes marqu\195\169",
+	youmark = "Alerte quand vous \195\170tes marqu\195\169",
 	youmark_desc = "Pr\195\169viens quand vous \195\170tes marqu\195\169.",
 
-	othermark_name = "Alerte quand d'autres sont marqu\195\169s",
+	othermark = "Alerte quand d'autres sont marqu\195\169s",
 	othermark_desc = "Pr\195\169viens quand d'autres joueurs sont marqu\195\169s.",
 
-	icon_name = "Ic\195\180ne de raid",
+	icon = "Ic\195\180ne de raid",
 	icon_desc = "Place une ic\195\180ne de raid sur la derni\195\168re personne marqu\195\169e (requiert d'\195\170tre promus ou plus)",
 
 	mark_trigger ="D\195\169vorez ([^%s]+), mes jolies !",
@@ -46,13 +46,13 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	youmark_name = "Du bist markiert",
+	youmark = "Du bist markiert",
 	youmark_desc = "Warnung, wenn Du markiert bist.",
 
-	othermark_name = "X ist markiert",
+	othermark = "X ist markiert",
 	othermark_desc = "Warnung, wenn andere Spieler markiert sind.",
 
-	icon_name = "Symbol",
+	icon = "Symbol",
 	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der markiert ist. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 
 	mark_trigger = "Labt euch an ([^%s]+), meine S\195\188\195\159en!$",
@@ -62,13 +62,13 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	youmark_name = "자신의 표적 경고",
+	youmark = "자신의 표적 경고",
 	youmark_desc = "자신이 표적이 됐을 때 경고",
 
-	othermark_name = "타인의 표적 경고",
+	othermark = "타인의 표적 경고",
 	othermark_desc = "타인이 표적이 됐을 때 경고",
 
-	icon_name = "아이콘 지정",
+	icon = "아이콘 지정",
 	icon_desc = "표적이된 사람에게 해골 아이콘 지정 (승급자 이상 필요)",
 
 	mark_trigger = "내 귀여운 것들아, (.+)%|1을;를; 잡아먹어라!$",
@@ -78,13 +78,13 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	youmark_name = "玩家标记警报",
+	youmark = "玩家标记警报",
 	youmark_desc = "当你被标记时发出警报",
 
-	othermark_name = "队友标记警报",
+	othermark = "队友标记警报",
 	othermark_desc = "当队友被标记时发出警报",
 
-	icon_name = "标记被标记者",
+	icon = "标记被标记者",
 	icon_desc = "团队标记被标记者 (需要助理或更高权限)",
 
 	mark_trigger = "吞噬(.+)的躯体吧！$",
@@ -94,13 +94,13 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	youmark_name = "玩家標記警報",
+	youmark = "玩家標記警報",
 	youmark_desc = "當高階祭司婭爾羅標記你給她的黑豹時發出警報。",
 
-	othermark_name = "隊友標記警報",
+	othermark = "隊友標記警報",
 	othermark_desc = "當高階祭司婭爾羅標記一個隊友給她的黑豹時發出警報。",
 
-	icon_name = "標記被標記者",
+	icon = "標記被標記者",
 	icon_desc = "團隊標記被標記者 (需要助理或更高權限)",
 
 	mark_trigger = "吞噬(.+)的軀體吧，我的小可愛們！$",

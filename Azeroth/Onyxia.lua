@@ -12,16 +12,16 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Onyxia",
 
-	deepbreath_name = "Deep Breath alert",
+	deepbreath = "Deep Breath alert",
 	deepbreath_desc = "Warn when Onyxia begins to cast Deep Breath ",
 
-	phase2_name = "Phase 2 alert",
+	phase2 = "Phase 2 alert",
 	phase2_desc = "Warn for Phase 2",
 
-	phase3_name = "Phase 3 alert",
+	phase3 = "Phase 3 alert",
 	phase3_desc = "Warn for Phase 3",
 
-	onyfear_name = "Fear",
+	onyfear = "Fear",
 	onyfear_desc = "Warn for Bellowing Roar in phase 3",
 
 	deepbreath_trigger = "%s takes in a deep breath...",
@@ -36,16 +36,16 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	deepbreath_name = "Alerte Grande inspiration",
+	deepbreath = "Alerte Grande inspiration",
 	deepbreath_desc = "Pr\195\169viens quand Onyxia se pr\195\169pare \195\160 prendre une grande inspiration.",
 
-	phase2_name = "Alerte Phase 2",
+	phase2 = "Alerte Phase 2",
 	phase2_desc = "Pr\195\169viens quand Onyxia passe en phase 2.",
 
-	phase3_name = "Alerte Phase 3",
+	phase3 = "Alerte Phase 3",
 	phase3_desc = "Pr\195\169viens quand Onyxia passe en phase 3.",
 
-	onyfear_name = "Alerte Peur",
+	onyfear = "Alerte Peur",
 	onyfear_desc = "Pr\195\169viens quand Onyxia utilise son Rugissement puissant en phase 3.",
 
 	deepbreath_trigger = "prend une grande inspiration...",
@@ -60,16 +60,16 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	deepbreath_name = "Tiefer Atem",
+	deepbreath = "Tiefer Atem",
 	deepbreath_desc = "Warnung, wenn Onyxia tief einatmet.",
 
-	phase2_name = "Phase 2",
+	phase2 = "Phase 2",
 	phase2_desc = "Warnung, wenn Onyxia abhebt und in Phase 2 eintritt.",
 
-	phase3_name = "Phase 3",
+	phase3 = "Phase 3",
 	phase3_desc = "Warnung, wenn Onyxia landet und in Phase 3 eintritt.",
 
-	onyfear_name = "Furcht",
+	onyfear = "Furcht",
 	onyfear_desc = "Warnung vor AoE Furcht in Phase 3.",
 
 	deepbreath_trigger = "%s atmet tief ein...",
@@ -84,16 +84,16 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	deepbreath_name = "深呼吸警报",
+	deepbreath = "深呼吸警报",
 	deepbreath_desc = "奥妮克希亚开始施放深呼吸时发出警报",
 
-	phase2_name = "第二阶段警报",
+	phase2 = "第二阶段警报",
 	phase2_desc = "第二阶段警报",
 
-	phase3_name = "第三阶段警报",
+	phase3 = "第三阶段警报",
 	phase3_desc = "第三阶段警报",
 
-	onyfear_name = "低沉咆哮",
+	onyfear = "低沉咆哮",
 	onyfear_desc = "第三阶段低沉咆哮警报",
 
 	deepbreath_trigger = "%s深深地吸了一口气……",
@@ -108,16 +108,16 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	deepbreath_name = "深呼吸警報",
+	deepbreath = "深呼吸警報",
 	deepbreath_desc = "奧妮克希亞開始施放深呼吸時發出警報",
 
-	phase2_name = "第二階段警報",
+	phase2 = "第二階段警報",
 	phase2_desc = "第二階段警報",
 
-	phase3_name = "第三階段警報",
+	phase3 = "第三階段警報",
 	phase3_desc = "第三階段警報",
 
-	onyfear_name = "低沉咆哮",
+	onyfear = "低沉咆哮",
 	onyfear_desc = "第三階段低沉咆哮警報",
 
 	deepbreath_trigger = "深深地吸了一口氣",
@@ -132,16 +132,16 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	deepbreath_name = "딥브레스 경고",
+	deepbreath = "딥브레스 경고",
 	deepbreath_desc = "오닉시아가 딥 브레스 시전 시 경고",
 
-	phase2_name = "2단계 경고",
+	phase2 = "2단계 경고",
 	phase2_desc = "2단계에 대한 경고",
 
-	phase3_name = "3단계 경고",
+	phase3 = "3단계 경고",
 	phase3_desc = "3단계에 대한 경고",
 
-	onyfear_name = "공포",
+	onyfear = "공포",
 	onyfear_desc = "3단계 공포에 대한 경고",
 
 	deepbreath_trigger = "%s|1이;가; 숨을 깊게 들이쉽니다.",

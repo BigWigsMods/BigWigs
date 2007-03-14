@@ -11,10 +11,10 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Sartura",
-	enrage_name = "Enrage Alerts",
+	enrage = "Enrage Alerts",
 	enrage_desc = "Warn for Enrage",
 
-	whirlwind_name = "Whirlwind Alert",
+	whirlwind = "Whirlwind Alert",
 	whirlwind_desc = "Warn for Whirlwind",
 
 	starttrigger = "defiling these sacred grounds",
@@ -37,10 +37,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	enrage_name = "Alerte Enrag\195\169",
+	enrage = "Alerte Enrag\195\169",
 	enrage_desc = "Pr\195\169viens quand Sartura est enrag\195\169.",
 
-	whirlwind_name = "Alerte Tourbillon",
+	whirlwind = "Alerte Tourbillon",
 	whirlwind_desc = "Pr\195\169viens des tourbillons.",
 
 	starttrigger = "Je vous condamne \195\160 mort !",
@@ -65,10 +65,10 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	enrage_name = "Wutanfall",
+	enrage = "Wutanfall",
 	enrage_desc = "Warnung, wenn Sartura w\195\188tend wird.",
 
-	whirlwind_name = "Wirbelwind",
+	whirlwind = "Wirbelwind",
 	whirlwind_desc = "Warnung, wenn Sartura Wirbelwind wirkt.",
 
 	starttrigger = "Ihr habt heiligen Boden entweiht",
@@ -91,10 +91,10 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	enrage_name = "激怒警报",
+	enrage = "激怒警报",
 	enrage_desc = "激怒警报",
 
-	whirlwind_name = "旋风斩警报",
+	whirlwind = "旋风斩警报",
 	whirlwind_desc = "旋风斩警报",
 
 	starttrigger = "我宣判你死刑",
@@ -117,10 +117,10 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	enrage_name = "狂暴警報",
+	enrage = "狂暴警報",
 	enrage_desc = "當沙爾圖拉狂暴時發出警報",
 
-	whirlwind_name = "旋風斬警報",
+	whirlwind = "旋風斬警報",
 	whirlwind_desc = "當沙爾圖拉施放旋風斬發出警報",
 
 	starttrigger = "我判你死刑！",
@@ -143,10 +143,10 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	enrage_name = "격노 경고",
+	enrage = "격노 경고",
 	enrage_desc = "격노에 대한 경고",
 
-	whirlwind_name = "소용돌이 경고",
+	whirlwind = "소용돌이 경고",
 	whirlwind_desc = "소용돌이에 대한 경고",
 
 	starttrigger = "성스러운 땅을 더럽힌 죗값을 받게 되리라. 고대의 법률은 거스를 수 없다! 침입자들을 처단하라!",

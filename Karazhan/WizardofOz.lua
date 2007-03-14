@@ -17,10 +17,10 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "WizardofOz",
 
-	spawns_name = "Spawn Timers",
+	spawns = "Spawn Timers",
 	spawns_desc = "Timers for when the characters become active",
 
-	light_name = "Chain Lightning",
+	light = "Chain Lightning",
 	light_desc = "Warn for Chain Lightning being cast",
 
 	spawns_roar = "%s attacks!",
@@ -39,10 +39,10 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	spawns_name = "Spawn Timer",
+	spawns = "Spawn Timer",
 	--spawns_desc = "Timers for when the characters become active",
 
-	--light_name = "Chain Lightning",
+	--light = "Chain Lightning",
 	--light_desc = "Warn for Chain Lightning being cast",
 
 	spawns_roar = "%s greift an!",
@@ -61,10 +61,10 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	spawns_name = "Alerte Hostilit\195\169",
+	spawns = "Alerte Hostilit\195\169",
 	--spawns_desc = "Timers for when the characters become active",
 
-	--light_name = "Chain Lightning",
+	--light = "Chain Lightning",
 	--light_desc = "Warn for Chain Lightning being cast",
 
 	spawns_roar = "%s attaque !",
@@ -83,10 +83,10 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	spawns_name = "등장 타이머",
+	spawns = "등장 타이머",
 	spawns_desc = "피조물 활동 시작에 대한 타이머",
 
-	light_name = "연쇄 번개",
+	light = "연쇄 번개",
 	light_desc = "연쇄 번개 시전에 대한 경고",
 
 	spawns_roar = "%s 공격!",

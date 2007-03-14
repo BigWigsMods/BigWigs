@@ -17,13 +17,13 @@ local started
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Sapphiron",
 
-	deepbreath_name = "Ice Bomb Alert",
+	deepbreath = "Ice Bomb Alert",
 	deepbreath_desc = "Warn when Sapphiron begins to cast Ice Bomb.",
 
-	lifedrain_name = "Life Drain",
+	lifedrain = "Life Drain",
 	lifedrain_desc = "Warns about the Life Drain curse.",
 
-	berserk_name = "Berserk",
+	berserk = "Berserk",
 	berserk_desc = "Warn for berserk.",
 
 	berserk_bar = "Berserk",
@@ -49,17 +49,17 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	deepbreath_name = "딥브레스 경고",
+	deepbreath = "딥브레스 경고",
 	deepbreath_desc = "사피론 딥 브레스 시전 시 경고.",
 
-	lifedrain_name = "생명력 흡수",
+	lifedrain = "생명력 흡수",
 	lifedrain_desc = "생명력 흡수 저주에 대한 경고.",
 
 	lifedrain_message = "생명력 흡수! 새로운 생명력 흡수 ~24초!",
 	lifedrain_warn1 = "5초간 생명력 흡수!",
 	lifedrain_bar = "생명력 흡수",
 
-	berserk_name = "광폭화",
+	berserk = "광폭화",
 	berserk_desc = "광폭화에 대한 경고.",
 
 	berserk_bar = "광폭화",
@@ -81,13 +81,13 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	deepbreath_name = "Frostatem Warnung",
+	deepbreath = "Frostatem Warnung",
 	deepbreath_desc = "Warnt, wenn Saphiron Frostatem zaubert.",
 
-	lifedrain_name = "Lebenssauger",
+	lifedrain = "Lebenssauger",
 	lifedrain_desc = "Warnt vor dem Lebenssauger Fluch.",
 
-	berserk_name = "Berserker",
+	berserk = "Berserker",
 	berserk_desc = "Warnt vor Berserker.",
 
 	berserk_bar = "Berserker",
@@ -113,13 +113,13 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	deepbreath_name = "深呼吸警报",
+	deepbreath = "深呼吸警报",
 	deepbreath_desc = "萨菲隆开始施放深呼吸时发出警报",
 
-	lifedrain_name = "生命吸取警报",
+	lifedrain = "生命吸取警报",
 	lifedrain_desc = "生命吸取诅咒时候发出警报",
 
-	berserk_name = "狂暴警报",
+	berserk = "狂暴警报",
 	berserk_desc = "狂暴警报",
 
 	berserk_bar = "狂暴",
@@ -145,13 +145,13 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	deepbreath_name = "深呼吸警報",
+	deepbreath = "深呼吸警報",
 	deepbreath_desc = "薩菲隆開始施放深呼吸時發出警報",
 
-	lifedrain_name = "生命吸取警報",
+	lifedrain = "生命吸取警報",
 	lifedrain_desc = "生命吸取詛咒時候發出警報",
 
-	berserk_name = "狂暴警報",
+	berserk = "狂暴警報",
 	berserk_desc = "狂暴警報",
 
 	berserk_bar = "狂暴",
@@ -177,13 +177,13 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	deepbreath_name = "Alerte Bombe de Glace",
+	deepbreath = "Alerte Bombe de Glace",
 	deepbreath_desc = "Annoncer quand Saphiron commence \195\160 lancer la Bombe.",
 
-	lifedrain_name = "Drain de vie",
+	lifedrain = "Drain de vie",
 	lifedrain_desc = "Annoncer les Drains de vie.",
 
-	berserk_name = "Berserk",
+	berserk = "Berserk",
 	berserk_desc = "Annoncer le berserk.",
 
 	berserk_bar = "Berserk",

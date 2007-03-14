@@ -12,13 +12,13 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Buru",
 
-	you_name = "You're being watched alert",
+	you = "You're being watched alert",
 	you_desc = "Warn when you're being watched",
 
-	other_name = "Others being watched alert",
+	other = "Others being watched alert",
 	other_desc = "Warn when others are being watched",
 
-	icon_name = "Place icon",
+	icon = "Place icon",
 	icon_desc = "Place raid icon on watched person (requires promoted or higher)",
 
 	watchtrigger = "sets eyes on (.+)!",
@@ -28,13 +28,13 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	you_name = "Alerte quand vous \195\170tes surveill\195\169",
+	you = "Alerte quand vous \195\170tes surveill\195\169",
 	you_desc = "Pr\195\169viens quand vous \195\170tes surveill\195\169.",
 
-	other_name = "Alerte quand d'autres sont surveill\195\169s",
+	other = "Alerte quand d'autres sont surveill\195\169s",
 	other_desc = "Pr\195\169viens quand d'autres joueurs sont surveill\195\169s.",
 
-	icon_name = "Placer une ic\195\180ne",
+	icon = "Placer une ic\195\180ne",
 	icon_desc = "Place une ic\195\180ne de raid sur le personnage surveill\195\169 (requiert d'\195\170tre promus ou plus).",
 
 	watchtrigger = "pose ses yeux sur (.+) !",
@@ -44,13 +44,13 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	you_name = "Du wirst beobachtet",
+	you = "Du wirst beobachtet",
 	you_desc = "Warnung, wenn Du beobachtet wirst.",
 
-	other_name = "X wird beobachtet",
+	other = "X wird beobachtet",
 	other_desc = "Warnung, wenn andere Spieler beobachtet werden.",
 
-	icon_name = "Symbol",
+	icon = "Symbol",
 	icon_desc = "Platziert ein Symbol \195\188ber dem Spieler, der beobachtet wird. (Ben\195\182tigt Anf\195\188hrer oder Bef\195\182rdert Status.)",
 
 	watchtrigger = "beh\195\164lt (.+) im Blickfeld!",
@@ -60,13 +60,13 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	you_name = "玩家凝视警报",
+	you = "玩家凝视警报",
 	you_desc = "当你被凝视时发出警报",
 
-	other_name = "队友凝视警报",
+	other = "队友凝视警报",
 	other_desc = "当队友被凝视时发出警报",
 
-	icon_name = "标记图标",
+	icon = "标记图标",
 	icon_desc = "在被凝视的队友头上标记团队图标（需要助理或领袖权限）",
 
 	watchtrigger = "凝视着(.+)！",
@@ -76,13 +76,13 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	you_name = "玩家凝視警報",
+	you = "玩家凝視警報",
 	you_desc = "當你被吞咽者布魯盯住時發出警報。",
 
-	other_name = "隊友凝視警報",
+	other = "隊友凝視警報",
 	other_desc = "當隊友被吞咽者布魯盯住時發出警報。",
 
-	icon_name = "標記圖標",
+	icon = "標記圖標",
 	icon_desc = "在被凝視的隊友頭上標記（需要助理或領隊權限）",
 
 	watchtrigger = "凝視著(.+)！",
@@ -92,13 +92,13 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	you_name = "당신을 노려봄 경고",
+	you = "당신을 노려봄 경고",
 	you_desc = "당신을 노려볼 때 경고",
 
-	other_name = "타인을 노려봄 경고",
+	other = "타인을 노려봄 경고",
 	other_desc = "타인을 노려볼 때 경고",
 
-	icon_name = "아이콘 지정",
+	icon = "아이콘 지정",
 	icon_desc = "노려보는 사람에게 레이드 아이콘 지정(승급자 이상 요구)",
 
 	watchtrigger = "(.+)|1을;를; 노려봅니다!",

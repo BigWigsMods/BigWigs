@@ -17,16 +17,16 @@ local cachedUnitId = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Twins",
 
-	bug_name = "Exploding Bug Alert",
+	bug = "Exploding Bug Alert",
 	bug_desc = "Warn for exploding bugs",
 
-	teleport_name = "Teleport Alert",
+	teleport = "Teleport Alert",
 	teleport_desc = "Warn for Teleport",
 
-	enrage_name = "Enrage Alert",
+	enrage = "Enrage Alert",
 	enrage_desc = "Warn for Enrage",
 
-	heal_name = "Heal Alert",
+	heal = "Heal Alert",
 	heal_desc = "Warn for Twins Healing",
 
 	porttrigger = "Twin Teleport",
@@ -53,16 +53,16 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	bug_name = "Explodierende K\195\164fer",
+	bug = "Explodierende K\195\164fer",
 	bug_desc = "Warnung vor explodierenden K\195\164fern.",
 
-	teleport_name = "Teleport",
+	teleport = "Teleport",
 	teleport_desc = "Warnung, wenn die Zwillings Imperatoren sich teleportieren.",
 
-	enrage_name = "Wutanfall",
+	enrage = "Wutanfall",
 	enrage_desc = "Warnung, wenn die Zwillings Imperatoren w\195\188tend werden.",
 
-	heal_name = "Heilung",
+	heal = "Heilung",
 	heal_desc = "Warnung, wenn die Zwillings Imperatoren sich heilen.",
 
 	porttrigger = "wirkt Zwillingsteleport.",
@@ -89,16 +89,16 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	bug_name = "爆炸虫警报",
+	bug = "爆炸虫警报",
 	bug_desc = "爆炸虫警报",
 
-	teleport_name = "传送警报",
+	teleport = "传送警报",
 	teleport_desc = "传送警报",
 
-	enrage_name = "激怒警报",
+	enrage = "激怒警报",
 	enrage_desc = "激怒警报",
 
-	heal_name = "治疗警报",
+	heal = "治疗警报",
 	heal_desc = "双子皇帝互相治疗时发出警报",
 
 	porttrigger = "施放了双子传送。",
@@ -125,16 +125,16 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	bug_name = "爆炸蟲警報",
+	bug = "爆炸蟲警報",
 	bug_desc = "雙子皇帝施放爆炸蟲時發出警報",
 
-	teleport_name = "傳送警報",
+	teleport = "傳送警報",
 	teleport_desc = "雙子皇帝施放雙子傳送時發出警報",
 
-	enrage_name = "狂怒警報",
+	enrage = "狂怒警報",
 	enrage_desc = "雙子皇帝的狂怒倒數計時與時警報",
 
-	heal_name = "治療警報",
+	heal = "治療警報",
 	heal_desc = "雙子皇帝互相治療時發出警報",
 
 	porttrigger = "施放了雙子傳送。",
@@ -161,16 +161,16 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	bug_name = "벌레 폭발 경고",
+	bug = "벌레 폭발 경고",
 	bug_desc = "벌레 폭발에 대한 경고",
 
-	teleport_name = "순간이동 경고",
+	teleport = "순간이동 경고",
 	teleport_desc = "순간이동에 대한 경고",
 
-	enrage_name = "격노 경고",
+	enrage = "격노 경고",
 	enrage_desc = "격노에 대한 경고",
 
-	heal_name = "치유 경고",
+	heal = "치유 경고",
 	heal_desc = "형제 치유에 대한 경고",
 
 	porttrigger = "쌍둥이 순간이동|1을;를; 시전합니다.",
@@ -198,16 +198,16 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	bug_name = "Alerte explosion d'insecte",
+	bug = "Alerte explosion d'insecte",
 	bug_desc = "Pr\195\169viens de l'explosion des insectes.",
 
-	teleport_name = "Alerte T\195\169l\195\169portation",
+	teleport = "Alerte T\195\169l\195\169portation",
 	teleport_desc = "Pr\195\169viens des t\195\169l\195\169portations.",
 
 	enrage_name =  "Alerte Enrag\195\169s",
 	enrage_desc = "Pr\195\169viens quand les jumeaux sont enrag\195\169s.",
 
-	heal_name = "Alerte soins",
+	heal = "Alerte soins",
 	heal_desc = "Pr\195\169viens quand les jumeaux se soignent.",
 
 	portwarn = "T\195\169l\195\169portation !",

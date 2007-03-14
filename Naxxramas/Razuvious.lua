@@ -13,10 +13,10 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Razuvious",
 
-	shout_name = "Shout Alert",
+	shout = "Shout Alert",
 	shout_desc = "Warn for disrupting shout",
 
-	shieldwall_name = "Shield Wall Timer",
+	shieldwall = "Shield Wall Timer",
 	shieldwall_desc = "Show timer for shieldwall",
 
 	startwarn = "Instructor Razuvious engaged! ~25sec to shout!",
@@ -38,10 +38,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	shout_name = "Unterbrechungsruf",
+	shout = "Unterbrechungsruf",
 	shout_desc = "Warnung, wenn Instruktor Razuvious Unterbrechungsruf wirkt.",
 
-	shieldwall_name = "Schildwall",
+	shieldwall = "Schildwall",
 	shieldwall_desc = "Timer f\195\188r Schildwall.",
 
 	startwarn = "Instruktor Razuvious angegriffen! Unterbrechungsruf in ~25 Sekunden!",
@@ -63,10 +63,10 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	shout_name = "외침 경고",
+	shout = "외침 경고",
 	shout_desc = "분열의 외침에 대한 경고",
 
-	shieldwall_name = "방패의 벽 타이머",
+	shieldwall = "방패의 벽 타이머",
 	shieldwall_desc = "방패의 벽에 대한 타이머 표시",
 
 	startwarn = "훈련교관 라주비어스 광폭화! 외침까지 25초!",
@@ -88,10 +88,10 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	shout_name = "怒吼警报",
+	shout = "怒吼警报",
 	shout_desc = "瓦解怒吼警报",
 
-	shieldwall_name = "盾墙计时器",
+	shieldwall = "盾墙计时器",
 	shieldwall_desc = "盾墙计时器",
 
 	startwarn = "教官拉苏维奥斯已激活，~25秒后瓦解怒吼",
@@ -113,10 +113,10 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	shout_name = "怒吼警報",
+	shout = "怒吼警報",
 	shout_desc = "混亂怒吼警報",
 
-	shieldwall_name = "盾牆計時器",
+	shieldwall = "盾牆計時器",
 	shieldwall_desc = "盾牆計時器",
 
 	startwarn = "講師拉祖維斯已進入戰鬥 - 25 秒後混亂怒吼",

@@ -13,19 +13,19 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Terestian",
 
 	engage_cmd = "engage",
-	engage_name = "Engage",
+	engage = "Engage",
 	engage_desc = ("Alert when %s is engaged"):format(boss),
 
 	engage_trigger = "Ah, you're just in time.",
 	engage_message = ("%s Engaged!"):format(boss),
 
-	sacrifice_name = "Sacrifice",
+	sacrifice = "Sacrifice",
 	sacrifice_desc = "Warn for Sacrifice of players",
 
-	enrage_name = "Enrage",
+	enrage = "Enrage",
 	enrage_desc = "Warn about enrage after 10min.",
 
-	weak_name = "Weakened",
+	weak = "Weakened",
 	weak_desc = "Warn for weakened state",
 
 	enrage_warning = "Enrage in %d sec!",
@@ -44,10 +44,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	sacrifice_name = "Opferung",
+	sacrifice = "Opferung",
 	sacrifice_desc = "Warnt welcher Spieler geopfert wird",
 
-	weak_name = "Geschw\195\164cht",
+	weak = "Geschw\195\164cht",
 	weak_desc = "Warnt wenn Terestian geschw\195\164cht ist",
 
 	sacrifice_you = "Ihr",
@@ -63,10 +63,10 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	sacrifice_name = "Sacrifice",
+	sacrifice = "Sacrifice",
 	sacrifice_desc = "Pr\195\169viens quand un joueur est sacrifi\195\169",
 
-	weak_name = "Affaibli",
+	weak = "Affaibli",
 	weak_desc = "Pr\195\169viens quand Terestian est affaibli",
 
 	sacrifice_you = "Vous",
@@ -82,19 +82,19 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_name = "전투시작",
+	engage = "전투시작",
 	engage_desc = ("%s 전투 개시 알림"):format(boss),
 
 	engage_trigger = "Ah, you're just in time.", -- check
 	engage_message = ("%s 전투 개시!"):format(boss),
 
-	sacrifice_name = "희생",
+	sacrifice = "희생",
 	sacrifice_desc = "플레이어의 희생에 대한 경고",
 
-	enrage_name = "격노",
+	enrage = "격노",
 	enrage_desc = "10분 후 격노에 대한 알림.",
 
-	weak_name = "약화",
+	weak = "약화",
 	weak_desc = "약화 상태에 대한 경고",
 
 	enrage_warning = "%d초 이내 격노!",

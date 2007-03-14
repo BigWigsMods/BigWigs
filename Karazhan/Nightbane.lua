@@ -14,28 +14,28 @@ local bones
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Nightbane",
 
-	fear_name = "Fear Alert",
+	fear = "Fear Alert",
 	fear_desc = "Warn for Bellowing Roar",
 
-	charr_name = "Charred Earth on You",
+	charr = "Charred Earth on You",
 	charr_desc = "Warn when you are on Charred Earth",
 
-	phase_name = "Phases",
+	phase = "Phases",
 	phase_desc = ("Warn when %s switches between phases"):format(boss),
 
-	engage_name = "Engage",
+	engage = "Engage",
 	engage_desc = "Engage alert",
 
-	blast_name = "Smoking Blast",
+	blast = "Smoking Blast",
 	blast_desc = "Warn for Smoking Blast being cast",
 
-	bones_name = "Raid of Bones",
+	bones = "Raid of Bones",
 	bones_desc = "Warn who Rain of Bones is on",
 
-	icon_name = "Raid Icon",
+	icon = "Raid Icon",
 	icon_desc = "Place a raid icon on the person afflicted by Rain of Bones(requires promoted or higher)",
 
-	whisper_name = "Whisper Player",
+	whisper = "Whisper Player",
 	whisper_desc = "Whisper the person afflicted by Rain of Bones(requires promoted or higher)",
 
 	fear_trigger = "cast Bellowing Roar",
@@ -66,28 +66,28 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	fear_name = "Furcht Alarm",
+	fear = "Furcht Alarm",
 	fear_desc = "Warnt vor Dr\195\182hnendem Gebr\195\188ll",
 
-	charr_name = "Verbrannte Erde auf Dir",
+	charr = "Verbrannte Erde auf Dir",
 	charr_desc = "Warnt wenn du in der Verbrannten Erde stehst",
 
-	phase_name = "Phasen",
+	phase = "Phasen",
 	phase_desc = ("Warnt wenn %s die Phasen wechelt"):format(boss),
 
-	engage_name = "Engage",
+	engage = "Engage",
 	engage_desc = "Engage alert",
 
-	blast_name = "Ablenkende Asche",
+	blast = "Ablenkende Asche",
 	blast_desc = "Warnt vor Ablenkende Asche",
 
-	bones_name = "Knochenregen",
+	bones = "Knochenregen",
 	bones_desc = "Warnt wer den Knochenregen hat",
 
-	icon_name = "Raid Icon",
+	icon = "Raid Icon",
 	icon_desc = "Platziert ein Raid Icon auf den Spieler der vom Knochenregen betroffen ist(requires promoted or higher)",
 
-	whisper_name = "Whisper Player",
+	whisper = "Whisper Player",
 	whisper_desc = "Fl\195\188stert den Spieler an der vom Knochenregen betroffen ist(requires promoted or higher)",
 
 	fear_trigger = "Schrecken der Nacht beginnt Dr\195\182hnendes Gebr\195\188ll zu wirken.",
@@ -118,28 +118,28 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	fear_name = "공포 경고",
+	fear = "공포 경고",
 	fear_desc = "우레와 같은 울부짖음에 대한 경고",
 
-	charr_name = "당신에 불타버린 대지",
+	charr = "당신에 불타버린 대지",
 	charr_desc = "당신이 불타버린 대지에 걸렸을 때 알림",
 
-	phase_name = "단계",
+	phase = "단계",
 	phase_desc = ("%s의 단계 변경 시 알림"):format(boss),
 
-	engage_name = "전투 개시",
+	engage = "전투 개시",
 	engage_desc = "전투 개시 알림",
 
-	blast_name = "불타는 돌풍",
+	blast = "불타는 돌풍",
 	blast_desc = "불타는 돌풍 시전에 대한 경고",
 
-	bones_name = "뼈의 비",
+	bones = "뼈의 비",
 	bones_desc = "뼈의 비에 걸린 사람 경고",
 
-	icon_name = "공격대 아이콘",
+	icon = "공격대 아이콘",
 	icon_desc = "뼈의 비에 걸린 사람에게 공격대 아이콘 지정(승급자 이상 권한 요구)",
 
-	whisper_name = "귓속말 경고",
+	whisper = "귓속말 경고",
 	whisper_desc = "뼈의 비에 걸린 사람에게 귓속말 경고(승급자 이상 권한 요구)",
 
 	fear_trigger = "우레와 같은 울부짖음 시전을 시작합니다.",

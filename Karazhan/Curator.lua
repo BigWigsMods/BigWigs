@@ -13,16 +13,16 @@ local enrageannounced
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Curator",
 
-	berserk_name = "Berserk",
+	berserk = "Berserk",
 	berserk_desc = "Warn for berserk after 10min.",
 
-	enrage_name = "Enrage",
+	enrage = "Enrage",
 	enrage_desc = "Warn for enrage at 15%.",
 
-	weaken_name = "Weaken",
+	weaken = "Weaken",
 	weaken_desc = "Warn for weakened state",
 
-	weaktime_name = "Weaken Countdown",
+	weaktime = "Weaken Countdown",
 	weaktime_desc = "Countdown warning and bar untill next weaken.",
 
 	weaken_trigger = "Your request cannot be processed.",
@@ -46,16 +46,16 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	berserk_name = "Alerte Berserk",
+	berserk = "Alerte Berserk",
 	berserk_desc = "Pr\195\169viens du mode berserk apr\195\168s 10 minutes.",
 
-	enrage_name = "Alerte Enrag\195\169",
+	enrage = "Alerte Enrag\195\169",
 	enrage_desc = "Pr\195\169viens du mode enrag\195\169 \195\160 15%.",
 
-	weaken_name = "Alerte Affaiblissement",
+	weaken = "Alerte Affaiblissement",
 	weaken_desc = "Pr\195\169viens quand le Conservateur est affaibli.",
 
-	weaktime_name = "Compteur d'affaiblissement",
+	weaktime = "Compteur d'affaiblissement",
 	weaktime_desc = "Affiche un compteur pour le nombre et le prochain affaiblissement.",
 
 	weaken_trigger = "Impossible de traiter votre requ\195\170te.",
@@ -79,16 +79,16 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	berserk_name = "Berserker",
+	berserk = "Berserker",
 	berserk_desc = "Warnung f\195\188r Berserker nach 10min.",
 
-	enrage_name = "Rage",
+	enrage = "Rage",
 	enrage_desc = "Warnung f\195\188r Rage bei 15%.",
 
-	weaken_name = "Schw\195\164chung",
+	weaken = "Schw\195\164chung",
 	--weaken_desc = "Warn for weakened state", --enUS changed
 
-	weaktime_name = "Schw\195\164chungs Timer",
+	weaktime = "Schw\195\164chungs Timer",
 	weaktime_desc = "Timer und Anzeige f\195\188r die n\195\164chste Schw\195\164chung.",
 
 	weaken_trigger = "Ihre Anfrage kann nicht bearbeitet werden.",
@@ -112,16 +112,16 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	berserk_name = "광폭화",
+	berserk = "광폭화",
 	berserk_desc = "10분 후 광폭화 알림",
 
-	enrage_name = "격노",
+	enrage = "격노",
 	enrage_desc = "체력 15% 시 격노 알림",
 
-	weaken_name = "약화",
+	weaken = "약화",
 	weaken_desc = "약화된 상태인 동안 알림",
 
-	weaktime_name = "약화 카운트다운",
+	weaktime = "약화 카운트다운",
 	weaktime_desc = "다음 약화에 대한 바와 시간 카운트다운",
 
 	weaken_trigger = "현재 요청하신 내용은 처리가 불가능합니다.",

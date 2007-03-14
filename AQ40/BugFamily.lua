@@ -17,10 +17,10 @@ local fearstatus
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "BugFamily",
-	fear_name = "Fear Alert",
+	fear = "Fear Alert",
 	fear_desc = "Warn for Fear",
 
-	heal_name = "Heal Alert",
+	heal = "Heal Alert",
 	heal_desc = "Warn for Heal",
 
 	healtrigger = "Princess Yauj begins to cast Great Heal.",
@@ -33,10 +33,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	fear_name = "Alerte Peur",
+	fear = "Alerte Peur",
 	fear_desc = "Pr\195\169viens des Peurs de zone.",
 
-	heal_name = "Alerte Soins",
+	heal = "Alerte Soins",
 	heal_desc = "Pr\195\169viens lors de l'incantation de soins.",
 
 	healtrigger = "Princesse Yauj commence \195\160 lancer Soins exceptionnels.",
@@ -49,10 +49,10 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	fear_name = "Furcht",
+	fear = "Furcht",
 	fear_desc = "Warnung, wenn wenn Prinzessin Yauj AoE Furcht wirkt.",
 
-	heal_name = "Heilung",
+	heal = "Heilung",
 	heal_desc = "Warnung, wenn Prinzessin Yauj versucht sich zu heilen.",
 
 	healtrigger = "Prinzessin Yauj beginnt Gro\195\159es Heilen zu wirken.",
@@ -65,10 +65,10 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	fear_name = "恐惧警报",
+	fear = "恐惧警报",
 	fear_desc = "敌人发动群体恐惧时发出警报",
 
-	heal_name = "治疗警报",
+	heal = "治疗警报",
 	heal_desc = "亚尔基公主施放治疗时发出警报",
 
 	healtrigger = "亚尔基公主开始施放强效治疗术。",
@@ -81,10 +81,10 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	fear_name = "恐懼警報",
+	fear = "恐懼警報",
 	fear_desc = "敵人發動群體恐懼時發出警報",
 
-	heal_name = "治療警報",
+	heal = "治療警報",
 	heal_desc = "亞爾基公主施放治療時發出警報",
 
 	healtrigger = "亞爾基公主開始施放強效治療術。",
@@ -97,10 +97,10 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	fear_name = "공포 경고",
+	fear = "공포 경고",
 	fear_desc = "공포에 대한 경고",
 
-	heal_name = "치유 경고",
+	heal = "치유 경고",
 	heal_desc = "치유에 대한 경고",
 
 	healtrigger = "공주 야우즈|1이;가; 상급 치유|1을;를; 시전합니다.",

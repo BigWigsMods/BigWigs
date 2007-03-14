@@ -12,7 +12,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Anubrekhan",
 
-	locust_name = "Locust Swarm Alert",
+	locust = "Locust Swarm Alert",
 	locust_desc = "Warn for Locust Swarm",
 
 	starttrigger1 = "Just a little taste...",
@@ -32,7 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	locust_name = "Heuschreckenschwarm",
+	locust = "Heuschreckenschwarm",
 	locust_desc = "Warnung, wenn Anub'Rekhan Heuschreckenschwarm wirkt.",
 
 	starttrigger1 = "Nur einmal kosten...",
@@ -52,7 +52,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	locust_name = "메뚜기 떼 경고",
+	locust = "메뚜기 떼 경고",
 	locust_desc = "메뚜기 떼에 대한 경고",
 
 	starttrigger1 = "어디 맛 좀 볼까...",
@@ -72,7 +72,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	locust_name = "虫群警报",
+	locust = "虫群警报",
 	locust_desc = "虫群警报",
 
 	starttrigger1 = "一些小点心……",
@@ -92,7 +92,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	locust_name = "蝗蟲風暴警告",
+	locust = "蝗蟲風暴警告",
 	locust_desc = "蝗蟲風暴的警報",
 
 	starttrigger1 = "一些小點心……",
@@ -112,7 +112,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	locust_name = "Alerte Nuée de sauterelles",
+	locust = "Alerte Nuée de sauterelles",
 	locust_desc = "Préviens quand Anub'Rekhan invoque ses Nuées de sauterelles.",
 
 	starttrigger1 = "Rien qu'une petite bouch\195\169e...",
