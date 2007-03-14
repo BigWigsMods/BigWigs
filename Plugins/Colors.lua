@@ -250,13 +250,13 @@ local plugin = BigWigs:NewModule("Colors")
 
 plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
 plugin.defaultDB = {
-	important = "ff0000", -- Red
-	personal = "ff0000", -- Red
-	urgent = "ff7f00", -- Orange
-	attention = "ffff00", -- Yellow
-	positive = "00ff00", -- Green
-	bosskill = "00ff00", -- Green
-	core = "00ffff", -- Cyan
+	Important = "ff0000", -- Red
+	Personal = "ff0000", -- Red
+	Urgent = "ff7f00", -- Orange
+	Attention = "ffff00", -- Yellow
+	Positive = "00ff00", -- Green
+	Bosskill = "00ff00", -- Green
+	Core = "00ffff", -- Cyan
 
 	short1 = "ffff00",
 	short2 = "ff7f00",
@@ -292,39 +292,39 @@ plugin.consoleOptions = {
 			name = L["Messages"],
 			order = 1,
 		},
-		["important"] = {
+		["Important"] = {
 			name = L["Important"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Important"]),
-			get = function() return get("important") end,
-			set = function(r, g, b) set("important", r, g, b) end,
+			get = function() return get("Important") end,
+			set = function(r, g, b) set("Important", r, g, b) end,
 			order = 2,
 		},
-		["personal"] = {
+		["Personal"] = {
 			name = L["Personal"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Personal"]),
-			get = function() return get("personal") end,
-			set = function(r, g, b) set("personal", r, g, b) end,
+			get = function() return get("Personal") end,
+			set = function(r, g, b) set("Personal", r, g, b) end,
 			order = 3,
 		},
-		["urgent"] = {
+		["Urgent"] = {
 			name = L["Urgent"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Urgent"]),
-			get = function() return get("urgent") end,
-			set = function(r, g, b) set("urgent", r, g, b) end,
+			get = function() return get("Urgent") end,
+			set = function(r, g, b) set("Urgent", r, g, b) end,
 			order = 4,
 		},
-		["attention"] = {
+		["Attention"] = {
 			name = L["Attention"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Attention"]),
-			get = function() return get("attention") end,
-			set = function(r, g, b) set("attention", r, g, b) end,
+			get = function() return get("Attention") end,
+			set = function(r, g, b) set("Attention", r, g, b) end,
 			order = 5,
 		},
-		["positive"] = {
+		["Positive"] = {
 			name = L["Positive"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Positive"]),
@@ -332,20 +332,20 @@ plugin.consoleOptions = {
 			set = function(r, g, b) set("positive", r, g, b) end,
 			order = 6,
 		},
-		["bosskill"] = {
+		["Bosskill"] = {
 			name = L["Bosskill"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Bosskill"]),
-			get = function() return get("bosskill") end,
-			set = function(r, g, b) set("bosskill", r, g, b) end,
+			get = function() return get("Bosskill") end,
+			set = function(r, g, b) set("Bosskill", r, g, b) end,
 			order = 7,
 		},
-		["core"] = {
+		["Core"] = {
 			name = L["Core"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Core"]),
-			get = function() return get("core") end,
-			set = function(r, g, b) set("core", r, g, b) end,
+			get = function() return get("Core") end,
+			set = function(r, g, b) set("Core", r, g, b) end,
 			order = 8,
 		},
 		["spacer1"] = { type = "header", name = " ", order = 9, },
@@ -520,7 +520,7 @@ plugin.consoleOptions = {
 			func = "ResetDB",
 			order = 16,
 		},
-	}
+	},
 }
 
 ------------------------------
@@ -589,7 +589,7 @@ function plugin:RGBToHex(r, g, b)
 end
 
 function plugin:MsgColor(hint)
-	local color = self.db.profile[hint:lower()]
+	local color = self.db.profile[hint]
 	if type(color) ~= "string" then return hint end
 	return color
 end
