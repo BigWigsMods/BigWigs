@@ -43,7 +43,7 @@ end
 function plugin:CHAT_MSG_ADDON(prefix, message, type, sender)
 	if prefix ~= "BigWigs" or type ~= "RAID" then return end
 
-	local sync, rest = select(3, message:find("(%S+)%s*(.*)$"))
+	local sync, rest = select(3, message:find("^(%S+)%s(.*)$"))
 	if not sync then return end
 
 	if throt[sync] == nil then throt[sync] = 1 end
@@ -54,7 +54,7 @@ function plugin:CHAT_MSG_ADDON(prefix, message, type, sender)
 end
 
 function plugin:BigWigs_SendSync(msg)
-	local sync, rest = select(3, msg:find("(%S+)%s*(.*)$"))
+	local sync, rest = select(3, msg:find("^(%S+)%s(.*)$"))
 
 	if not sync then return end
 
