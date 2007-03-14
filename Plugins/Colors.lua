@@ -548,9 +548,13 @@ end
 function plugin:UpdateColorTables()
 	if type(shortBar) == "table" then
 		for k in ipairs(shortBar) do shortBar[k] = nil end
+	else
+		shortBar = {}
 	end
 	if type(longBar) == "table" then
 		for k in ipairs(longBar) do longBar[k] = nil end
+	else
+		longBar = {}
 	end
 	local db = self.db.profile
 	for i = 1, db.short do
