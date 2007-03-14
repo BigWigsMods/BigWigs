@@ -7,6 +7,9 @@
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsColors")
 local PaintChips = AceLibrary("PaintChips-2.0")
 
+local shortBar
+local longBar
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -255,11 +258,29 @@ plugin.defaultDB = {
 	bosskill = "00ff00", -- Green
 	core = "00ffff", -- Cyan
 
-	shortbar = {"ffff00", "ff7f00", "ff0000"},
-	shortnr = 3,
-	longbar = {"00ff00", "ffff00", "ff7f00", "ff0000"},
-	longnr = 4,
+	short1 = "ffff00",
+	short2 = "ff7f00",
+	short3 = "ff0000",
+	short4 = "ff0000",
+	short = 3,
+
+	long1 = "00ff00",
+	long2 = "ffff00",
+	long3 = "ff7f00",
+	long4 = "ff0000",
+	long = 4,
 }
+
+local function get(key)
+	return select(2, PaintChips:GetRGBPercent(plugin.db.profile[key]))
+end
+
+local function set(key, r, g, b)
+	local hex = plugin:RGBToHex(r, g, b)
+	PaintChips:RegisterHex(hex)
+	plugin.db.profile[key] = hex
+end
+
 plugin.consoleCmd = L["Colors"]
 plugin.consoleOptions = {
 	type = "group",
@@ -275,56 +296,56 @@ plugin.consoleOptions = {
 			name = L["Important"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Important"]),
-			get = function() local _, r, g, b = PaintChips:GetRGBPercent(plugin.db.profile.important); return r, g, b end,
-			set = function(r, g, b) local hex = plugin:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); plugin.db.profile.important = hex end,
+			get = function() return get("important") end,
+			set = function(r, g, b) set("important", r, g, b) end,
 			order = 2,
 		},
 		["personal"] = {
 			name = L["Personal"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Personal"]),
-			get = function() local _, r, g, b = PaintChips:GetRGBPercent(plugin.db.profile.personal); return r, g, b end,
-			set = function(r, g, b) local hex = plugin:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); plugin.db.profile.personal = hex end,
+			get = function() return get("personal") end,
+			set = function(r, g, b) set("personal", r, g, b) end,
 			order = 3,
 		},
 		["urgent"] = {
 			name = L["Urgent"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Urgent"]),
-			get = function() local _, r, g, b = PaintChips:GetRGBPercent(plugin.db.profile.urgent); return r, g, b end,
-			set = function(r, g, b) local hex = plugin:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); plugin.db.profile.urgent = hex end,
+			get = function() return get("urgent") end,
+			set = function(r, g, b) set("urgent", r, g, b) end,
 			order = 4,
 		},
 		["attention"] = {
 			name = L["Attention"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Attention"]),
-			get = function() local _, r, g, b = PaintChips:GetRGBPercent(plugin.db.profile.attention); return r, g, b end,
-			set = function(r, g, b) local hex = plugin:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); plugin.db.profile.attention = hex end,
+			get = function() return get("attention") end,
+			set = function(r, g, b) set("attention", r, g, b) end,
 			order = 5,
 		},
 		["positive"] = {
 			name = L["Positive"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Positive"]),
-			get = function() local _, r, g, b = PaintChips:GetRGBPercent(plugin.db.profile.positive); return r, g, b end,
-			set = function(r, g, b) local hex = plugin:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); plugin.db.profile.positive = hex end,
+			get = function() return get("positive") end,
+			set = function(r, g, b) set("positive", r, g, b) end,
 			order = 6,
 		},
 		["bosskill"] = {
 			name = L["Bosskill"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Bosskill"]),
-			get = function() local _, r, g, b = PaintChips:GetRGBPercent(plugin.db.profile.bosskill); return r, g, b end,
-			set = function(r, g, b) local hex = plugin:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); plugin.db.profile.bosskill = hex end,
+			get = function() return get("bosskill") end,
+			set = function(r, g, b) set("bosskill", r, g, b) end,
 			order = 7,
 		},
 		["core"] = {
 			name = L["Core"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Core"]),
-			get = function() local _, r, g, b = PaintChips:GetRGBPercent(plugin.db.profile.core); return r, g, b end,
-			set = function(r, g, b) local hex = plugin:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); plugin.db.profile.core = hex end,
+			get = function() return get("core") end,
+			set = function(r, g, b) set("core", r, g, b) end,
 			order = 8,
 		},
 		["spacer1"] = { type = "header", name = " ", order = 9, },
@@ -340,47 +361,47 @@ plugin.consoleOptions = {
 			order = 11,
 			pass = true,
 			get = function(key)
-				if type(key) == "number" then
-					return select(2, PaintChips:GetRGBPercent(plugin.db.profile.shortbar[key]))
+				if key == "amount" then
+					return plugin.db.profile.short
 				else
-					return plugin.db.profile.shortnr
+					return select(2, PaintChips:GetRGBPercent(plugin.db.profile[key]))
 				end
 			end,
 			set = function(key, r, g, b)
-				if type(key) == "number" then
+				if key == "amount" then
+					plugin.db.profile.short = r
+				else
 					local hex = plugin:RGBToHex(r, g, b)
 					PaintChips:RegisterHex(hex)
-					plugin.db.profile.shortbar[key] = hex
-				else
-					plugin.db.profile.shortnr = r
+					plugin.db.profile[key] = hex
 				end
 			end,
 			args = {
-				[1] = {
+				["short1"] = {
 					name = L["Color %d"]:format(1),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["1st"]),
 					order = 1,
 				},
-				[2] = {
+				["short2"] = {
 					name = L["Color %d"]:format(2),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["2nd"]),
-					disabled = function() return plugin.db.profile.shortnr < 2 end,
+					disabled = function() return plugin.db.profile.short < 2 end,
 					order = 2,
 				},
-				[3] = {
+				["short3"] = {
 					name = L["Color %d"]:format(3),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["3rd"]),
-					disabled = function() return plugin.db.profile.shortnr < 3 end,
+					disabled = function() return plugin.db.profile.short < 3 end,
 					order = 3,
 				},
-				[4] = {
+				["short4"] = {
 					name = L["Color %d"]:format(4),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["4th"]),
-					disabled = function() return plugin.db.profile.shortnr < 4 end,
+					disabled = function() return plugin.db.profile.short < 4 end,
 					order = 4,
 				},
 				["amount"] = {
@@ -401,47 +422,47 @@ plugin.consoleOptions = {
 			order = 12,
 			pass = true,
 			get = function(key)
-				if type(key) == "number" then
-					return select(2, PaintChips:GetRGBPercent(plugin.db.profile.longbar[key]))
+				if key == "amount" then
+					return plugin.db.profile.long
 				else
-					return plugin.db.profile.longnr
+					return select(2, PaintChips:GetRGBPercent(plugin.db.profile[key]))
 				end
 			end,
 			set = function(key, r, g, b)
-				if type(key) == "number" then
+				if key == "amount" then
+					plugin.db.profile.long = r
+				else
 					local hex = plugin:RGBToHex(r, g, b)
 					PaintChips:RegisterHex(hex)
-					plugin.db.profile.longbar[key] = hex
-				else
-					plugin.db.profile.longnr = r
+					plugin.db[key] = hex
 				end
 			end,
 			args = {
-				[1] = {
+				["long1"] = {
 					name = L["Color %d"]:format(1),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["1st"]),
 					order = 1,
 				},
-				[2] = {
+				["long2"] = {
 					name = L["Color %d"]:format(2),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["2nd"]),
-					disabled = function() return plugin.db.profile.longnr < 2 end,
+					disabled = function() return plugin.db.profile.long < 2 end,
 					order = 2,
 				},
-				[3] = {
+				["long3"] = {
 					name = L["Color %d"]:format(3),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["3rd"]),
-					disabled = function() return plugin.db.profile.longnr < 3 end,
+					disabled = function() return plugin.db.profile.long < 3 end,
 					order = 3,
 				},
-				[4] = {
+				["long4"] = {
 					name = L["Color %d"]:format(4),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["4th"]),
-					disabled = function() return plugin.db.profile.longnr < 4 end,
+					disabled = function() return plugin.db.profile.long < 4 end,
 					order = 4,
 				},
 				["amount"] = {
@@ -460,24 +481,43 @@ plugin.consoleOptions = {
 			type = "color",
 			desc = L["Change the bar background color."],
 			hasAlpha = true,
-			get = function() if plugin.db.profile.bgc then local _, r, g, b = PaintChips:GetRGBPercent(plugin.db.profile.bgc); return r, g, b, plugin.db.profile.bga else return  0, .5, .5, .5 end end,
-			set = function(r, g, b, a) local hex = plugin:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); plugin.db.profile.bgc = hex; plugin.db.profile.bga = a end,
+			get = function()
+				if plugin.db.profile.bgc then
+					local r, g, b = select(2, PaintChips:GetRGBPercent(plugin.db.profile.bgc))
+					return r, g, b, plugin.db.profile.bga
+				else
+					return 0, .5, .5, .5
+				end
+			end,
+			set = function(r, g, b, a)
+				local hex = plugin:RGBToHex(r, g, b)
+				PaintChips:RegisterHex(hex)
+				plugin.db.profile.bgc = hex
+				plugin.db.profile.bga = a
+			end,
 			order = 13,
 		},
 		[L["Text"]] = {
 			name = L["Text"],
 			type = "color",
 			desc = L["Change the bar text color."],
-			get = function() if plugin.db.profile.txtc then local _, r, g, b = PaintChips:GetRGBPercent(plugin.db.profile.txtc); return r, g, b else return 1, 1, 1 end end,
-			set = function(r, g, b) local hex = plugin:RGBToHex(r, g, b); PaintChips:RegisterHex(hex); plugin.db.profile.txtc = hex end,
+			get = function()
+				if plugin.db.profile.txtc then
+					return get("txtc")
+				else
+					return 1, 1, 1
+				end
+			end,
+			set = function(r, g, b) set("txtc", r, g, b) end,
 			order = 14,
 		},
 		["spacer2"] = { type = "header", name = " ", order = 15, },
 		[L["Reset"]] = {
-			name = L["Reset"],
 			type = "execute",
+			name = L["Reset"],
 			desc = L["Resets all colors to defaults."],
-			func = function() plugin:ResetDB() end,
+			handler = plugin,
+			func = "ResetDB",
 			order = 16,
 		},
 	}
@@ -499,6 +539,22 @@ end
 
 function plugin:OnEnable()
 	RegHex(self.db.profile)
+end
+
+function plugin:UpdateColorTables()
+	if type(shortBar) == "table" then
+		for k in ipairs(shortBar) do shortBar[k] = nil end
+	end
+	if type(longBar) == "table" then
+		for k in ipairs(longBar) do longBar[k] = nil end
+	end
+	local db = self.db.profile
+	for i = 1, db.short do
+		shortBar[i] = db["short"..i]
+	end
+	for i = 1, db.long do
+		longBar[i] = db["long"..i]
+	end
 end
 
 ------------------------------
@@ -535,18 +591,11 @@ function plugin:MsgColor(hint)
 end
 
 function plugin:BarColor(time)
-	local d, n
 	if time <= 60 then
-		d = self.db.profile.shortbar
-		n = self.db.profile.shortnr
+		return unpack(shortBar)
 	else
-		d = self.db.profile.longbar
-		n = self.db.profile.longnr
+		return unpack(longBar)
 	end
-	if n == 4 then return d[1], d[2], d[3], d[4]
-	elseif n == 3 then return d[1], d[2], d[3]
-	elseif n == 2 then return d[1], d[2]
-	elseif n == 1 then return d[1] end
 end
 
 
