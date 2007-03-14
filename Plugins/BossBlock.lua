@@ -181,46 +181,7 @@ local raidchans = {
 	CHAT_MSG_RAID_LEADER = "chat",
 }
 local map = {[true] = "|cffff0000"..L["Suppressed"].."|r", [false] = "|cff00ff00"..L["Shown"].."|r"}
-local blockregexs = {
-	"%*+ .+ %*+$",
-}
-local blockstrings = {
-	-- enUS
-	["YOU HAVE THE PLAGUE!"] = true,
-	["YOU ARE THE BOMB!"] = true,
-	["YOU ARE BEING WATCHED!"] = true,
-	["YOU ARE CURSED!"] = true,
-	["YOU ARE BURNING!"] = true,
-	["YOU ARE AFFLICTED BY VOLATILE INFECTION!"] = true,
-	["YOU ARE MARKED!"] = true,
-
-	-- znCH
-	["你中了瘟疫！离开人群！"] = true,
-	["你是炸弹人！"] = true,
-	["你被盯上了！"] = true,
-	["你中了诅咒！"] = true,
-	["你正在燃烧！"] = true,
-	["你中了快速传染！"] = true,
-	["你被标记了！"] = true,
-
-	-- deDE
-	["DU HAST DIE SEUCHE!"] = true,
-	["DU BIST DIE BOMBE!"] = true,
-	["DU WIRST BEOBACHTET!"] = true,
-	["DU BIST VERFLUCHT!"] = true,
-	["DU BRENNST!"] = true,
-	-- ["YOU ARE AFFLICTED BY VOLATILE INFECTION!"] = true,
-	["DU BIST MARKIERT!"] = true,
-
-	-- frFR
-	["TU AS LA PESTE !"] = true,
-	["TU ES LA BOMBE !"] = true,
-	["TU ES SURVEILLE !"] = true,
-	["TU ES MAUDIT !"] = true,
-	["TU BRULES !"] = true,
-	["TU ES AFFLIGE PAR INFECTION VOLATILE !"] = true,
-	["TU ES MARQUE !"] = true,
-}
+local blockRx = "^%*%*%*%s.+%s%*%*%*$"
 
 ----------------------------------
 --      Module Declaration      --
@@ -334,9 +295,8 @@ function plugin:CTRA_AddMessage(obj, text, r, g, b, a, t)
 end
 
 function plugin:IsSpam(text)
-	if not text then return end
-	if blockstrings[text] then return true end
-	for _,regex in pairs(blockregexs) do if text:find(regex) then return true end end
+	if type(text) ~= "string" then return end
+	if text:find(blockRx) then return true end
 end
 
 function plugin:IsChannelSuppressed(chan)
