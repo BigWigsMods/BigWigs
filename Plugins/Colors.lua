@@ -539,6 +539,10 @@ end
 
 function plugin:OnEnable()
 	RegHex(self.db.profile)
+
+	if type(shortBar) ~= "table" then
+		self:UpdateColorTables()
+	end
 end
 
 function plugin:UpdateColorTables()
