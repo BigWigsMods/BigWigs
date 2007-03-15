@@ -204,7 +204,7 @@ L:RegisterTranslations("frFR", function() return {
 	teleport = "Alerte T\195\169l\195\169portation",
 	teleport_desc = "Pr\195\169viens des t\195\169l\195\169portations.",
 
-	enrage_name =  "Alerte Enrag\195\169s",
+	enrage =  "Alerte Enrag\195\169s", -- check
 	enrage_desc = "Pr\195\169viens quand les jumeaux sont enrag\195\169s.",
 
 	heal = "Alerte soins",
