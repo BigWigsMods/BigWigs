@@ -180,7 +180,7 @@ L:RegisterTranslations("koKR", function() return {
 	trigger6	= "연발 독액에 걸렸습니다",	-- CHECK
 	trigger7 	= "^([^|;%s]*)(.*)독소에 걸렸습니다%.$", -- CHECK
 
-	you 		= "",
+	you 		= "당신은",
 	are 		= "",
 
 	warn1 		= "1 단계 - 느려집니다!",

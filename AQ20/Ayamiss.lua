@@ -66,7 +66,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	sacrificetrigger = "^([^|;%s]*)(.*)마비에 걸렸습니다%.$",
 	sacrificewarn = "님이 마비에 걸렸습니다!",
-	you = "",
+	you = "당신은",
 	are = "",
 } end )
 

@@ -115,7 +115,7 @@ L:RegisterTranslations("koKR", function() return {
 	negativetype = "Interface\\Icons\\Spell_ChargeNegative",
 	stalaggtrigger = "스탈라그|1이;가; 마력의 쇄도 효과를 얻었습니다.",
 
-	you = "",
+	you = "당신은",
 	are = "",
 
 	enragewarn = "격노!",

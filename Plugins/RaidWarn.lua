@@ -32,23 +32,23 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	["RaidWarning"] = "공격대경고",
+	["RaidWarning"] = "공격대경보",
 
-	["Broadcast over RaidWarning"] = "공격대 경고로 알림",
+	["Broadcast over RaidWarning"] = "공격대 경보로 알림",
 	["Broadcast"] = "알림",
-	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = "공격대 경고로 알림 토글",
+--	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = true,
 
 	["Whisper"] = "귓속말",
-	["Whisper warnings"] = "귓속말 경고",
-	["Toggle whispering warnings to players."] = "플레이어에게 귓속말 경고 알림 토글",
-	
-	["Show whispers"] = "귓속말 표시",
-	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "BigWigs가 보낸 귓속말 표시 토글",
+	["Whisper warnings"] = "귓속말 경보",
+	["Toggle whispering warnings to players."] = "플레이어에게 귓속말 경보 알림을 전환합니다.",
+
+	["Show whispers"] = "귓속말 보기",
+--	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = true,
 
 	["Use Raidchannel"] = "공격대 채널 사용",
-	["Toggle using the raid channel instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "공격대 경고 혹은 채널 사용 토글",
+--	["Toggle using the raid channel instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = true,
 
-	desc = "공격대 경고 설정",
+	desc = "Lets you configure where BigWigs should send its boss messages in addition to the local output.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

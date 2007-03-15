@@ -136,7 +136,7 @@ L:RegisterTranslations("koKR", function() return {
 	detonate_possible_bar = "폭발 가능",
 	detonate_warning = "마나 폭발 걸림! < %s >",
 
-	you = "",
+	you = "당신은",
 	are = "",
 } end )
 

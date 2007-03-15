@@ -173,14 +173,14 @@ L:RegisterTranslations("koKR", function() return {
 	heal = "치유 경고",
 	heal_desc = "형제 치유에 대한 경고",
 
-	porttrigger = "쌍둥이 순간이동|1을;를; 시전합니다.",
+	porttrigger = "쌍둥이 순간이동",	--"쌍둥이 순간이동|1을;를; 시전합니다.",
 	portwarn = "순간 이동!",
 	portdelaywarn = "약 5초후 순간 이동!",
 	portdelaywarn2 = "약 10초후 순간 이동!",
 	bartext = "순간 이동",
 	explodebugtrigger = "(.+)|1이;가; 벌레 폭발 효과를 얻었습니다.",
 	explodebugwarn = "벌레 폭발!",
-	enragetrigger = "%s|1이;가; 격노 효과를 얻었습니다.", -- CHECK
+	enragetrigger = "격노 효과를 얻었습니다.", -- CHECK
 	enragewarn = "쌍둥이 격노!!",
 	healtrigger1 = "(.+)|1이;가; 형제 치유|1을;를;",
 	healtrigger2 = "(.+)의 형제 치유|1으로;로;",

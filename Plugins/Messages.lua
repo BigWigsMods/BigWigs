@@ -76,13 +76,14 @@ L:RegisterTranslations("koKR", function() return {
 	["BigWigs frame"] = "BigWigs 창",
 	["RaidWarning frame"] = "공격대경고 창",
 
-	["display"] = "디스플레이",
 	["Display"] = "디스플레이",
 	["Set where messages are displayed."] = "메세지 디스플레이 설정",
+--	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = true,
 
 	["Mik's Scrolling Battle Text"] = "MSBT",
 	["Scrolling Combat Text"] = "SCT",
 	["Floating Combat Text"] = "FCT",
+	["Chat frame"] = "대화창",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

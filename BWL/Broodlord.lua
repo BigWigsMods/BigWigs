@@ -90,7 +90,7 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("koKR", function() return {
 	trigger1 = "^([^|;%s]*)(.*)죽음의 일격에 걸렸습니다%.$",
 
-	you = "",
+	you = "당신은",
 	are = "",
 
 	warn1 = "당신은 죽음의 일격!",

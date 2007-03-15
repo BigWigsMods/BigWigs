@@ -117,7 +117,7 @@ L:RegisterTranslations("koKR", function() return {
 	shadowflame_trigger = "에본로크|1이;가; 암흑의 불길|1을;를; 시전합니다.",
 	shadowcurse_trigger = "^([^|;%s]*)(.*)에본로크의 그림자에 걸렸습니다%.$",
 
-	you = "",
+	you = "당신은",
 	are = "",
 
 	wingbuffet_message = "폭풍 날개! 다음은 30초 후!",

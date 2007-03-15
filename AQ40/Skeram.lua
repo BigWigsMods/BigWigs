@@ -139,7 +139,7 @@ L:RegisterTranslations("koKR", function() return {
 	mcplayer = "^([^|;%s]*)(.*)예언 실현에 걸렸습니다%.$",
 	mcplayerwarn = "%s 님이 정신지배되었습니다. 양변! 공포!",
 	mcbar = "예언: %s",
-	mcyou = "",
+	mcyou = "당신은",
 	mcare = "",
 
 	splitwarn = "곧 분리 됩니다.!! 경고!!",

@@ -37,26 +37,30 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["BossBlock"] = "보스차단",
-	desc = "타인의 보스모드 대화 차단.",
+	desc = "다른 플레이어와 외부요인으로 부터의 보스 경고와 감정표현을 자동으로 차단합니다.",
 
-	["Raid chat"] = "공격대 대화 차단",
-	["Suppress messages sent to raid chat."] = "공격대 채널에 메세지 차단.",
+	["Boss emotes"] = "보스 감정표현",
+--	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = "",
 
-	["Raid warning chat messages"] = "공격대경고 대화 차단",
-	["Suppress raid warning messages from the chat window."] = "대화창에 공격대경고 메세지 차단",
+	["Raid chat"] = "공격대 대화",
+	["Suppress messages sent to raid chat."] = "공격대 대화 메세지를 차단합니다.",
 
-	["Raid warning messages"] = "공격대경고 차단",
-	["Suppress raid warning messages from the raid message window."] = "공격대경고 알림 메세지 차단",
+	["Raid warning chat messages"] = "공격대 경보 대화 메세지",
+	["Suppress raid warning messages from the chat window."] = "대화창으로 부터 공격대 경보 메세지를 차단합니다.",
 
-	["Raid say"] = "RaidSay 차단",
-	["Suppress RaidSay popup messages."] = "CTRA RaidSay 알림 메세지 차단",
+	["Raid warning messages"] = "공격대 경보 메세지",
+	["Suppress raid warning messages from the raid message window."] = "공격대 메제지창으로 부터 공격대 경보 메세지를 차단합니다.",
 
-	["Whispers"] = "일반대화 차단",
-	["Suppress whispered messages."] = "일반대화 메세지 차단",
+	["Raid say"] = "Raid say",
+	["Suppress RaidSay popup messages."] = "RaidSay 팝업 메세지를 차단합니다.",
 
-	["Suppressing Chatframe"] = "대화창 차단됨",
-	["Suppressing RaidWarningFrame"] = "공격대경고창 차단됨",
-	["Suppressing CT_RAMessageFrame"] = "CR_RA메세지창 차단됨",
+	["Whispers"] = "귓속말",
+	["Suppress whispered messages."] = "귓속말 메세지를 차단합니다.",
+
+	["Suppressing Chatframe"] = "대화창 차단중",
+	["Suppressing RaidWarningFrame"] = "공격대경보창 차단중",
+	["Suppressing CT_RAMessageFrame"] = "CT_RAMessage창 차단중",
+	["Suppressing RaidBossEmoteFrame"] = "RaidBossEmote창 차단중",
 
 	["Suppressed"] = "차단됨",
 	["Shown"] = "표시함",

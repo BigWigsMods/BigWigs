@@ -168,7 +168,7 @@ L:RegisterTranslations("koKR", function() return {
 	engage_message = "에메리스 광폭화! - 약 10초 후 산성 숨결",
 	engage_trigger = "Hope is a DISEASE of the soul! This land shall wither and die!", -- check
 
-	isyou = "",
+	isyou = "당신은",
 	isare = "",
 
 	bar1text = "산성 숨결",

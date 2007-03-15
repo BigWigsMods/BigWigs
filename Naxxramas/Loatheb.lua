@@ -75,7 +75,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	startwarn = "로데브 전투시작!, 피할 수 없는 파멸까지 2 분!",
 
-	you = "",
+	you = "당신은",
 	are = "",
 } end )
 

@@ -106,7 +106,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	inject_trigger = "^([^|;%s]*)(.*)돌연변이 유발에 걸렸습니다%.$", --"(.*)돌연변이 유발에 걸렸습니다.",
 
-	you = "",
+	you = "당신은",
 	are = "",
 
 	startwarn = "그라불루스 전투 시작, 12분 후 격노!",

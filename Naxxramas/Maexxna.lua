@@ -110,7 +110,7 @@ L:RegisterTranslations("koKR", function() return {
 	cocoonbar = "거미줄 감싸기", -- CHECK
 	spiderbar = "거미 소환", -- CHECK
 
-	you = "",
+	you = "당신은",
 	are = "",
 } end )
 

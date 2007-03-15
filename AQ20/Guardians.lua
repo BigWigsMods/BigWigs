@@ -174,7 +174,7 @@ L:RegisterTranslations("koKR", function() return {
 	plaguetrigger = "^([^|;%s]*)(.*)역병에 걸렸습니다%.$",
 	plaguewarn = "님이 역병에 걸렸습니다. 피하세요!",
 	plaguewarnyou = "당신은 역병에 걸렸습니다.",
-	you = "",
+	you = "당신은",
 	are = "",
 } end )
 

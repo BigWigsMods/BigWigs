@@ -234,7 +234,7 @@ L:RegisterTranslations("koKR", function() return {
 	plaguetrigger = "^([^|;%s]*)(.*)역병에 걸렸습니다%.$", -- "(.*) 역병에 걸렸습니다.",
 	plaguewarn = "님은 역병에 걸렸습니다. 피하세요",
 	plagueyouwarn = "당신은 역병에 걸렸습니다! 떨어지세요!",
-	you = "", -- "you"
+	you = "당신은",
 	are = "", -- "are"
 
 	thunderclaptrigger = "아누비사스 문지기|1이;가; 천둥벼락|1으로;로; (.+)에게 (%d+)의",

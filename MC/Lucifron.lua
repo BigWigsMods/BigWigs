@@ -131,7 +131,7 @@ L:RegisterTranslations("koKR", function() return {
 	mc_message = "%s 정신 지배!",
 	mc_bar = "정배: %s",
 
-	--you = "",
+	you = "당신은",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

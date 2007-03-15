@@ -80,7 +80,7 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("koKR", function() return {
 	trigger1 = "^([^|;%s]*)(.*)불타는 아드레날린에 걸렸습니다%.$", --"(.*)불타는 아드레날린에 걸렸습니다.",
 
-	you = "",
+	you = "당신은",
 	are = "",
 
 	warn1 = "당신은 불타는 아드레날린에 걸렸습니다!",

@@ -127,7 +127,7 @@ L:RegisterTranslations("koKR", function() return {
 	inferno_trigger = "남작 게돈|1이;가; 불지옥 효과를 얻었습니다.", -- check
 	service_trigger = "%s|1이;가; 라그나로스를 위한 마지막 임무를 수행합니다...", -- check
 
-	you = "",
+	you = "당신은",
 	are = "",
 
 	bomb_message_you = "당신은 폭탄입니다!",

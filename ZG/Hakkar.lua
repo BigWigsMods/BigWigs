@@ -120,7 +120,7 @@ L:RegisterTranslations("koKR", function() return {
 	drain_trigger = "학카르|1이;가; (.+)의 피의 착취에 의해 (.+)의 자연 피해를 입었습니다.",
 	mindcontrol_trigger = "^([^|;%s]*)(.*)정신 착란에 걸렸습니다%.$", -- "(.*) (.*) afflicted by Cause Insanity", -- CHECK
 
-	you = "",
+	you = "당신은",
 	are = "",
 
 	flee = "도망쳐 봐야 소용없다, 어리석은 생명체여!", -- by turtl
