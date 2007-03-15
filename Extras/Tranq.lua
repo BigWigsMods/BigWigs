@@ -20,8 +20,8 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	CHAT_MSG_SPELL_SELF_BUFF = "(.+)의 광기|1을;를; 무효화하지 못했습니다.", --"You fail to dispel (.+)'s Frenzy.",
-	CHAT_MSG_SPELL_SELF_DAMAGE = "(.+)에게 평정의 사격|1을;를; 시전합니다.", --"You cast Tranquilizing Shot on (.+).",
+	CHAT_MSG_SPELL_SELF_BUFF = "당신은 (.+)에게 걸려 있는 광기|1을;를; 무효화하지 못했습니다.",
+	CHAT_MSG_SPELL_SELF_DAMAGE = "당신은 (.+)에게 평정의 사격|1을;를; 시전합니다.",
 
 	["Tranq - %s"] = "평정 - %s",
 	["%s's Tranq failed!"] = "%s의 평정 실패!",
