@@ -41,8 +41,8 @@ L:RegisterTranslations("enUS", function() return {
 	plaguetrigger = "^([^%s]+) ([^%s]+) afflicted by Plague%.$",
 	plaguewarn = " has the Plague!",
 	plaguewarnyou = "You have the Plague!",
-	plagueyou = "You",
-	plagueare = "are",
+	you = "You",
+	are = "are",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -75,8 +75,8 @@ L:RegisterTranslations("deDE", function() return {
 	plaguetrigger = "^([^%s]+) ([^%s]+) von Seuche betroffen%.$",
 	plaguewarn = " hat die Seuche!",
 	plaguewarnyou = "Du hast die Seuche!",
-	plagueyou = "Ihr",
-	plagueare = "seid",
+	you = "Ihr",
+	are = "seid",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -109,8 +109,8 @@ L:RegisterTranslations("zhCN", function() return {
 	plaguetrigger = "^(.+)受(.+)了瘟疫效果的影响。$",
 	plaguewarn = "受到瘟疫的影响！快躲开！",
 	plaguewarnyou = "你受到瘟疫的影响！快跑开！",
-	plagueyou = "你",
-	plagueare = "到",
+	you = "你",
+	are = "到",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -140,8 +140,8 @@ L:RegisterTranslations("zhTW", function() return {
 	plaguetrigger = "^(.+)受到(.*)瘟疫",
 	plaguewarn = "受到瘟疫的影響！快躲開！",
 	plaguewarnyou = "你受到瘟疫的影響！快跑開！",
-	plagueyou = "你",
-	plagueare = "了",
+	you = "你",
+	are = "了",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -174,8 +174,8 @@ L:RegisterTranslations("koKR", function() return {
 	plaguetrigger = "^([^|;%s]*)(.*)역병에 걸렸습니다%.$",
 	plaguewarn = "님이 역병에 걸렸습니다. 피하세요!",
 	plaguewarnyou = "당신은 역병에 걸렸습니다.",
-	plagueyou = "",
-	plagueare = "",
+	you = "",
+	are = "",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -208,8 +208,8 @@ L:RegisterTranslations("frFR", function() return {
 	plaguetrigger = "^([^%s]+) ([^%s]+) les effets de Peste%.$",
 	plaguewarn = " a la peste !",
 	plaguewarnyou = "Tu as la peste !",
-	plagueyou = "Vous",
-	plagueare = "subissez",
+	you = "Vous",
+	are = "subissez",
 } end )
 
 ----------------------------------
@@ -265,7 +265,7 @@ end
 function mod:CheckPlague( msg )
 	local player, type = select(3, msg:find(L["plaguetrigger"]))
 	if player and type then
-		if self.db.profile.plagueyou and player == L["plagueyou"] and type == L["plagueare"] then
+		if self.db.profile.plagueyou and player == L["you"] and type == L["are"] then
 			self:TriggerEvent("BigWigs_Message", L["plaguewarnyou"], "Personal", true)
 			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["plaguewarn"], "Attention", nil, nil, true )
 		elseif self.db.profile.plagueother then
