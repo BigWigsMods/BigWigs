@@ -74,8 +74,8 @@ L:RegisterTranslations("koKR", function() return {
 	mark = "징표",
 	mark_desc = "당신에 카자크의 징표 알림",
 
-	--twist = "Twist",
-	--twist_desc = "Warn who has Twisted Reflection",
+	twist = "어긋난 반사",
+	twist_desc = "어긋난 반사에 걸린 사람에 대한 경고",
 
 	enrage_trigger1 = "불타는 군단과 킬제덴을 위하여!",
 	enrage_trigger2 = "%s|1이;가; 분노에 휩싸입니다!",
@@ -89,8 +89,8 @@ L:RegisterTranslations("koKR", function() return {
 	mark_trigger = "당시은 카자크의 징표에 걸렸습니다.",
 	mark_message = "당신에 카자크의 징표",
 
-	--twist_trigger = "^([^%s]+) ([^%s]+) afflicted by Twisted Reflection",
-	--twist_message = "Twisted Reflection: %s",
+	twist_trigger = "^([^|;%s]*)(.*)어긋난 반사에 걸렸습니다%.$",
+	twist_message = "어긋난 반사: %s",
 
 	you = "당신은",
 } end)
