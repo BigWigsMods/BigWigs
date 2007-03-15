@@ -110,7 +110,6 @@ MC\Ragnaros.lua
 MC\Shazzrah.lua
 MC\Sulfuron.lua
 MC\Garr.lua
-MC\Golemagg.lua
 
 Azeroth\Azuregos.lua
 Azeroth\Emeriss.lua

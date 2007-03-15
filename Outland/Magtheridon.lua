@@ -46,7 +46,7 @@ L:RegisterTranslations("enUS", function() return {
 	heal_trigger = "begins to cast Dark Mending",
 	heal_message = "Healing!",
 
-	nova = "Blast Nova!",
+	nova_ = "Blast Nova!",
 	nova_warning = "Blast Nova Soon",
 
 	banish_trigger = "Not again! Not again...",
@@ -95,7 +95,7 @@ L:RegisterTranslations("deDE", function() return {
 	heal_trigger = "beginnt Dunkle Besserung zu wirken",
 	heal_message = "Heilung!",
 
-	nova = "Blast Nova!", -- to translate
+	nova_ = "Blast Nova!", -- to translate
 	nova_warning = "Blast Nova Soon", -- to translate
 
 	banish_trigger = "Not again! Not again...", -- to translate
@@ -168,9 +168,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if self.db.profile.nova and msg:find(L["nova"]) then
-		self:Message(L["nova"], "Positive")
-		self:Bar(L["nova"], 54, "Spell_Fire_SealOfFire")
+	if self.db.profile.nova and msg:find(L["nova_"]) then
+		self:Message(L["nova_"], "Positive")
+		self:Bar(L["nova_"], 54, "Spell_Fire_SealOfFire")
 		self:DelayedMessage(50, L["nova_warning"], "Urgent")
 	end
 end

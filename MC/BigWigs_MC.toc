@@ -28,4 +28,3 @@ Ragnaros.lua
 Shazzrah.lua
 Sulfuron.lua
 Garr.lua
-Golemagg.lua
