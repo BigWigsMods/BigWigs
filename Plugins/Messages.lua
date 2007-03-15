@@ -39,10 +39,12 @@ L:RegisterTranslations("enUS", function() return {
 	["Display"] = true,
 	["display"] = true,
 	["Set where messages are displayed."] = true,
+	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = true,
 
 	["Mik's Scrolling Battle Text"] = true,
 	["Scrolling Combat Text"] = true,
 	["Floating Combat Text"] = true,
+	["Chat frame"] = true,
 
 	["Test"] = true,
 	["Close"] = true,
@@ -227,6 +229,7 @@ plugin.defaultDB = {
 	scale = 1.0,
 	posx = nil,
 	posy = nil,
+	chat = nil,
 }
 plugin.consoleCmd = L["Messages"]
 plugin.consoleOptions = {
@@ -295,6 +298,14 @@ plugin.consoleOptions = {
 				plugin.db.profile.display = v
 			end,
 			order = 102,
+		},
+		["chat"] = {
+			type = "toggle",
+			name = L["Chat frame"],
+			desc = L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."],
+			get = function() return plugin.db.profile.chat end,
+			set = function(v) plugin.db.profile.chat = v end,
+			order = 103,
 		},
 	},
 }
@@ -394,6 +405,10 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 		CombatText_AddMessage(text, COMBAT_TEXT_SCROLL_FUNCTION, r, g, b, "sticky", nil)
 	else -- Default BigWigs Frame fallback
 		messageFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
+	end
+
+	if db.chat then
+		DEFAULT_CHAT_FRAME:AddMessage(text, r, g, b, 1)
 	end
 end
 
