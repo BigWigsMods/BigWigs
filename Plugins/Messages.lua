@@ -45,6 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Scrolling Combat Text"] = true,
 	["Floating Combat Text"] = true,
 	["Chat frame"] = true,
+	["chat"] = true,
 
 	["Test"] = true,
 	["Close"] = true,
@@ -299,7 +300,7 @@ plugin.consoleOptions = {
 			end,
 			order = 102,
 		},
-		["chat"] = {
+		[L["chat"]] = {
 			type = "toggle",
 			name = L["Chat frame"],
 			desc = L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."],
