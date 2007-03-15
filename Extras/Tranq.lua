@@ -81,9 +81,9 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-local mod = BigWigs:NewModule(L["Tranq"])
+local mod = BigWigs:NewModule("Tranq")
 mod.revision = tonumber(string.sub("$Revision$", 12, -3))
-mod.defaults = {
+mod.defaultDB = {
 	bars = true,
 }
 mod.external = true
