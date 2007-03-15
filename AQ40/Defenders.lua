@@ -50,8 +50,8 @@ L:RegisterTranslations("enUS", function() return {
 	plaguetrigger = "^([^%s]+) ([^%s]+) afflicted by Plague%.$",
 	plaguewarn = " has the Plague!",
 	plagueyouwarn = "You have the plague!",
-	plagueyou = "You",
-	plagueare = "are",
+	you = "You",
+	are = "are",
 
 	thunderclaptrigger = "^Anubisath Defender's Thunderclap",
 	thunderclapwarn = "Thunderclap!",
@@ -102,8 +102,8 @@ L:RegisterTranslations("deDE", function() return {
 	plaguetrigger = "^([^%s]+) ([^%s]+) von Seuche betroffen%.$",
 	plaguewarn = " hat die Seuche!",
 	plagueyouwarn = "Du hast die Seuche!",
-	plagueyou = "Ihr",
-	plagueare = "seid",
+	you = "Ihr",
+	are = "seid",
 
 	thunderclaptrigger = "^Verteidiger des Anubisath's Donnerknall",
 	thunderclapwarn = "Donnerknall!",
@@ -146,8 +146,8 @@ L:RegisterTranslations("zhCN", function() return {
 	plaguetrigger = "^(.+)受(.+)了瘟疫效果的影响。$",
 	plaguewarn = "受到瘟疫的影响！快躲开！",
 	plagueyouwarn = "你受到瘟疫的影响！快跑开！",
-	plagueyou = "你",
-	plagueare = "到",
+	you = "你",
+	are = "到",
 
 	thunderclaptrigger = "^阿努比萨斯防御者的雷霆一击击中(.+)造成%d+点伤害。",
 	thunderclapwarn = "雷霆一击发动！",
@@ -187,8 +187,8 @@ L:RegisterTranslations("zhTW", function() return {
 	plaguetrigger = "^(.+)受到(.*)瘟疫",
 	plaguewarn = "受到瘟疫的影響！快躲開！*",
 	plagueyouwarn = "你受到瘟疫的影響！快跑開！",
-	plagueyou = "你",
-	plagueare = "了",
+	you = "你",
+	are = "了",
 
 	thunderclaptrigger = "^阿努比薩斯防禦者的雷霆一擊擊中(.+)造成%d+點傷害。",
 	thunderclapwarn = "雷霆一擊發動！",
@@ -234,8 +234,8 @@ L:RegisterTranslations("koKR", function() return {
 	plaguetrigger = "^([^|;%s]*)(.*)역병에 걸렸습니다%.$", -- "(.*) 역병에 걸렸습니다.",
 	plaguewarn = "님은 역병에 걸렸습니다. 피하세요",
 	plagueyouwarn = "당신은 역병에 걸렸습니다! 떨어지세요!",
-	plagueyou = "", -- "you"
-	plagueare = "", -- "are"
+	you = "", -- "you"
+	are = "", -- "are"
 
 	thunderclaptrigger = "아누비사스 문지기|1이;가; 천둥벼락|1으로;로; (.+)에게 (%d+)의",
 	thunderclapwarn = "천둥벼락! - 멀리 떨어지세요",
@@ -281,8 +281,8 @@ L:RegisterTranslations("frFR", function() return {
 	summonguardtrigger = "D\195\169fenseur Anubisath lance Invocation d'un Garde-essaim Anubisath.",
 	summonwarriortrigger = "D\195\169fenseur Anubisath lance Invocation d'un Guerrier Anubisath.",
 	plaguetrigger = "^([^%s]+) ([^%s]+) les effets de Peste%.$",
-	plagueyou = "Vous",
-	plagueare = "subissez",
+	you = "Vous",
+	are = "subissez",
 
 	thunderclaptrigger = "^D\195\169fenseur Anubisath lance Coup de tonnerre",--not sure
 } end )
@@ -365,7 +365,7 @@ end
 function mod:CheckPlague(msg)
 	local pplayer, ptype = select(3, msg:find(L["plaguetrigger"]))
 	if pplayer then
-		if self.db.profile.plagueyou and pplayer == L["plagueyou"] then
+		if self.db.profile.plagueyou and pplayer == L["you"] then
 			self:TriggerEvent("BigWigs_Message", L["plagueyouwarn"], "Personal", true)
 			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["plaguewarn"], "Attention", nil, nil, true)
 		elseif self.db.profile.plagueother then
