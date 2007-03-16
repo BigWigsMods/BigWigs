@@ -86,7 +86,7 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_bar = "격노",
 	enraged_bar = "<격노>",
 
-	mark_trigger = "당시은 카자크의 징표에 걸렸습니다.",
+	mark_trigger = "당신은 카자크의 징표에 걸렸습니다.",
 	mark_message = "당신에 카자크의 징표",
 
 	twist_trigger = "^([^|;%s]*)(.*)어긋난 반사에 걸렸습니다%.$",
@@ -116,11 +116,10 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "TwistEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "TwistEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "TwistEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "Twisted", 5)
 end
@@ -147,13 +146,10 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	end
 end
 
-function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
+function mod:Event(msg)
 	if self.db.profile.mark and msg == L["mark_trigger"] then
 		self:Message(L["mark_message"], "Positive", true, "Alarm")
 	end
-end
-
-function mod:TwistEvent(msg)
 	local tplayer, ttype = select(3, msg:find(L["twist_trigger"]))
 	if tplayer then
 		if tplayer == L["you"] then

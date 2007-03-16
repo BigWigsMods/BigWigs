@@ -141,12 +141,12 @@ L:RegisterTranslations("koKR", function() return {
 	cavein_desc = "당신의 함몰에 대한 경고",
 
 	silence = "침묵 경고",
-	silence_desc = "그룰이 광역 침묵(Reverberation) 시전 시 경고",
+	silence_desc = "그룰이 광역 침묵(산울림) 시전 시 경고",
 
 	engage_trigger = "이리 와서... 죽어.",
 	engage_message = "%s 전투 개시!",
 
-	grow_trigger = "%s이 점점 커집니다!",
+	grow_trigger = "%s|1이;가; 점점 커집니다!",
 	grow_message = "성장: (%d)",
 	grow_bar = "(%d) 성장",
 
@@ -156,7 +156,7 @@ L:RegisterTranslations("koKR", function() return {
 	grasp_message2 = "손아귀 대기 - 약 5초 후 석화",
 	grasp_warning = "잠시 후 땅 울리기",
 
-	shatter_trigger = "%s이 포효합니다!",
+	shatter_trigger = "%s|1이;가; 포효합니다!",
 	shatter_message = "석화!",
 
 	silence_trigger = "산울림에 걸렸습니다.",
