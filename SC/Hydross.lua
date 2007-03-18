@@ -70,6 +70,7 @@ L:RegisterTranslations("deDE", function() return {
 
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
+mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
 mod.toggleoptions = {"stance", "mark", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

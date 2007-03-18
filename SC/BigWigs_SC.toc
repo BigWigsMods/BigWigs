@@ -13,6 +13,7 @@
 ## X-RelSite-Curse: 4356
 ## X-AceForum: 1222
 
+## X-BigWigs-Menu: Serpentshrine Cavern
 ## X-BigWigs-LoadInZone: Coilfang Reservoir
 
 ## Dependencies: BigWigs
