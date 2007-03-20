@@ -114,7 +114,7 @@ L:RegisterTranslations("deDE", function() return {
 	bones_message = "Knochenregen auf [%s]",
 	bones_whisper = "Knochenregen auf DIR!",
 
-	you = "You",
+	you = "Ihr",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
