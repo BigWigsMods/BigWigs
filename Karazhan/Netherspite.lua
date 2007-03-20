@@ -104,13 +104,13 @@ L:RegisterTranslations("frFR", function() return {
 	phase = "Alerte Phases",
 	phase_desc = ("Pr\195\169viens quand %s passe d'une phase \195\160 l'autre"):format(boss),
 
-	voidzone = "Zone de vide",
-	voidzone_desc = "Annonce les Zone de vide",
+	voidzone = "Zones du vide",
+	voidzone_desc = "Annonce les Zones du vide",
 
 	netherbreath = "Souffle de N\195\169ant",
-	netherbreath_desc = "Annonce les Souffle de N\195\169ant",
+	netherbreath_desc = "Annonce les Souffles du N\195\169ant",
 
-	phase1_message = "Retrait - Plus de Souffle de N\195\169ant",
+	phase1_message = "Retrait - Plus de Souffle du N\195\169ant",
 	phase1_warning = "D\195\169dain-du-N\195\169ant Engag\195\169 - Rage dans 60sec!",
 	phase1_bar = "Prochain retrait",
 	phase1_trigger = "%s se retire avec un cri en ouvrant un portail vers le N\195\169ant.",
@@ -119,10 +119,10 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_trigger = "%s entre dans une rage nourrie par le N\195\169ant\194\160!",
 
 	voidzone_trigger = "lance Zone de vide.",
-	voidzone_warn = "Zone de vide (%d)!",
+	voidzone_warn = "Zone du vide (%d)!",
 
 	netherbreath_trigger = "lance Affronter une cible al\195\169atoire.",
-	netherbreath_warn = "Souffle de N\195\169ant imminent !",
+	netherbreath_warn = "Souffle du N\195\169ant imminent !",
 } end )
 
 ----------------------------------

@@ -76,7 +76,7 @@ L:RegisterTranslations("frFR", function() return {
 	repentance = "Alerte Repentir",
 	repentance_desc = "Affiche le temps estim\195\169 du Repentir",
 
-	holyfire = "Alerte Flammes sacr\195\169",
+	holyfire = "Alerte Flammes sacr\195\169\es",
 	holyfire_desc = "Pr\195\169viens quand quelqu'un est affect\195\169 par Flammes sacr\195\169es",
 
 	icon = "Placer une ic\195\180ne",
