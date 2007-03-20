@@ -70,8 +70,8 @@ L:RegisterTranslations("deDE", function() return {
 	heal = "Heilung",
 	heal_desc = "Warnt, wenn ein Kanalisierer anf\195\164ngt zu heilen",
 
-	nova = "Blast Nova", -- to translate
-	nova_desc = "Estimated Blast Nova timers", -- to translate
+	nova = "Drucknova",
+	nova_desc = "Gesch\195\164tzte Drucknova Timer",
 
 	banish = "Verbannung",
 	banish_desc = ("Warnt, wenn ihr %s verbannt"):format(boss),
@@ -95,14 +95,14 @@ L:RegisterTranslations("deDE", function() return {
 	heal_trigger = "beginnt Dunkle Besserung zu wirken",
 	heal_message = "Heilung!",
 
-	nova_ = "Blast Nova!", -- to translate
-	nova_warning = "Blast Nova Soon", -- to translate
+	nova_ = "Drucknova",
+	nova_warning = "Drucknova bald",
 
 	banish_trigger = "Not again! Not again...", -- to translate
 	banish_message = "Verbannt f\195\188r ~10sec",
 	banish_bar = "Verbannt",
 
-	exhaust_trigger = "^([^%s]+) ([^%s]+) von Gedankenersch\195\182pfung betroffen", -- to verify
+	exhaust_trigger = "^([^%s]+) ([^%s]+) von Gedankenersch\195\182pfung betroffen",
 	exhaust_bar = "[%s] ersch\195\182pft",
 
 	you = "Ihr",
@@ -161,6 +161,8 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.escape and msg == L["escape_trigger2"] then
 		self:Message(L["escape_message"]:format(boss), "Important", nil, "Alert")
+		self:Bar(L["nova_"], 60, "Spell_Fire_SealOfFire")
+		self:DelayedMessage(55, L["nova_warning"], "Urgent")
 	elseif self.db.profile.banish and msg == L["banish_trigger"] then
 		self:Message(L["banish_message"], "Important", nil, "Info")
 		self:Bar(L["banish_bar"], 10, "Spell_Shadow_Cripple")
