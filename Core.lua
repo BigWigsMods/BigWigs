@@ -52,6 +52,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Outland"] = "Outland",
 	["Coilfang Reservoir"] = "SC",
 	["Serpentshrine Cavern"] = "SC",
+	["Tempest Keep"] = "TheEye",
+	["The Eye"] = "TheEye",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -96,6 +98,8 @@ L:RegisterTranslations("frFR", function() return {
 	["Outland"] = "Outreterre",
 	["Coilfang Reservoir"] = "SC",
 	["Serpentshrine Cavern"] = "SC",
+	["Tempest Keep"] = "TheEye",
+	["The Eye"] = "TheEye",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -141,6 +145,8 @@ L:RegisterTranslations("deDE", function() return {
 	["Karazhan"] = "Karazhan",
 	["Coilfang Reservoir"] = "SC",
 	["Serpentshrine Cavern"] = "SC",
+	["Tempest Keep"] = "TheEye",
+	["The Eye"] = "TheEye",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -182,6 +188,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Outland"] = "Outland",
 	["Coilfang Reservoir"] = "SC",
 	["Serpentshrine Cavern"] = "SC",
+	["Tempest Keep"] = "TheEye",
+	["The Eye"] = "TheEye",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -223,6 +231,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["Karazhan"] = "Karazhan",
 	["Coilfang Reservoir"] = "SC",
 	["Serpentshrine Cavern"] = "SC",
+	["Tempest Keep"] = "TheEye",
+	["The Eye"] = "TheEye",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -260,6 +270,8 @@ L:RegisterTranslations("zhTW", function() return {
 	["Karazhan"] = "Karazhan",
 	["Coilfang Reservoir"] = "SC",
 	["Serpentshrine Cavern"] = "SC",
+	["Tempest Keep"] = "TheEye",
+	["The Eye"] = "TheEye",
 } end)
 
 ---------------------------------

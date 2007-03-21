@@ -13,6 +13,7 @@ rmdir /s /q BigWigs_Karazhan
 rmdir /s /q BigWigs_Outland
 rmdir /s /q BigWigs_Extras
 rmdir /s /q BigWigs_Plugins
+rmdir /s /q BigWigs_TheEye
 
 rmdir /s /q BigWigs_Other
 
@@ -30,4 +31,4 @@ move Azeroth ..\BigWigs_Azeroth
 move Outland ..\BigWigs_Outland
 move Extras ..\BigWigs_Extras
 move Plugins ..\BigWigs_Plugins
-
+move TheEye ..\BigWigs_TheEye

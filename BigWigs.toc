@@ -161,3 +161,5 @@ SC\Karathress.lua
 SC\Leotheras.lua
 SC\Morogrim.lua
 SC\Vashj.lua
+
+TheEye\TheEyeBeta.lua

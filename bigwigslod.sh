@@ -13,6 +13,7 @@ rm -rf BigWigs_Karazhan
 rm -rf BigWigs_Outland
 rm -rf BigWigs_Extras
 rm -rf BigWigs_Plugins
+rm -rf BigWigs_TheEye
 
 rm -rf BigWigs_Other
 
@@ -30,3 +31,4 @@ mv Azeroth ../BigWigs_Azeroth
 mv Outland ../BigWigs_Outland
 mv Extras ../BigWigs_Extras
 mv Plugins ../BigWigs_Plugins
+mv TheEye ../BigWigs_TheEye
