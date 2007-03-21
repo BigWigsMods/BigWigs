@@ -211,7 +211,7 @@ function mod:CHAT_MSG_MONSTER_SAY(msg)
 		self:Bar(L["grasp_warning"], 40, "Ability_ThunderClap")
 
 		self:DelayedMessage(95, L["silence_warning"], "Urgent")
-		self:Bar(L["silence_message"], 100, "Spell_Holy_ImprovedResistanceAuras")		
+		self:Bar(L["silence_message"], 100, "Spell_Holy_ImprovedResistanceAuras")
 	end
 end
 
