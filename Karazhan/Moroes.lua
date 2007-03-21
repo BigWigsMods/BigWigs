@@ -60,6 +60,9 @@ L:RegisterTranslations("frFR", function() return {
 	enrage = "Alerte Enrager",
 	enrage_desc = "Pr\195\169viens quand Moroes devient enrag\195\169.",
 
+	icon = "Placer une ic\195\180ne",
+	icon_desc = "Place une ic\195\180ne de raid sur les joueurs affect\195\169 par le Garrot(requiert d'\195\170tre promus ou plus).",
+
 	vanish_trigger1 = "Vous avez sonn\195\169\194\160?",
 	vanish_trigger2 = "Bon, o\195\185 en \195\169tais-je\194\160? Ah, oui\226\128\166",
 	vanish_message = "Disparu ! Prochain dans ~35 secondes !",

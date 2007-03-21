@@ -63,11 +63,23 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	engage = "Alerte Engagement",
+	engage_desc = ("Pr\195\169viens quand %s est engag\195\169"):format(boss),
+
+	engage_trigger = "Ah, vous arrivez juste \195\160 temps.",
+	engage_message = ("%s Engag\195\169 - 10 minutes avant l'enrag\195\169!"):format(boss),
+
 	sacrifice = "Sacrifice",
 	sacrifice_desc = "Pr\195\169viens quand un joueur est sacrifi\195\169",
 
+	enrage = "Alerte Enrager",
+	enrage_desc = "Pr\195\169viens quand Terestian devient enrag\195\169 apr\195\168s 10 minutes.",
+
 	weak = "Affaibli",
 	weak_desc = "Pr\195\169viens quand Terestian est affaibli",
+
+	enrage_warning = "Enrag\195\169 dans %d sec!",
+	enrage_bar = "Enrag\195\169",
 
 	sacrifice_you = "Vous",
 	sacrifice_trigger = "^([^%s]+) ([^%s]+) les effets .* Sacrifice",
@@ -76,7 +88,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	weak_trigger = "les effets .* Pacte rompu",
 	weak_message = "Affaibli pour 30sec!",
-	weak_warning1 = "Affaibli plus que  5sec!",
+	weak_warning1 = "Affaibli plus que 5sec!",
 	weak_warning2 = "Plus affaibli!",
 	weak_bar = "Affaibli",
 } end )
