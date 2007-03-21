@@ -163,3 +163,4 @@ SC\Morogrim.lua
 SC\Vashj.lua
 
 TheEye\TheEyeBeta.lua
+TheEye\Alar.lua
