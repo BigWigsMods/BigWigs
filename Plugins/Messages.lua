@@ -410,7 +410,7 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 	end
 
 	if db.chat then
-		DEFAULT_CHAT_FRAME:AddMessage(text, r, g, b, 1)
+		self.core:CustomPrint(r, g, b, nil, nil, nil, text)
 	end
 end
 
