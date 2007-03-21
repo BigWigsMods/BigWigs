@@ -14,7 +14,7 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Alar",
 
 	rebirth = "Rebirth",
-	rebirth_desc = "Alern when Al'ar casts rebirth",
+	rebirth_desc = "Alert when Al'ar casts rebirth",
 
 	buffet = "Flame Buffet",
 	buffet_desc = "Approximate Flame Buffet Timers",
