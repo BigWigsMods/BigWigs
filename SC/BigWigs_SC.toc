@@ -23,4 +23,5 @@ Hydross.lua
 Karathress.lua
 Leotheras.lua
 Morogrim.lua
+Lurker.lua
 Vashj.lua
