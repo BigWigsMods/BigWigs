@@ -28,7 +28,7 @@ L:RegisterTranslations("enUS", function() return {
 	grave_message = "Watery Grave: %s",
 
 	gravealert_trigger = "sends his enemies",
-	gravealert_message = "Incoming Watery Graves!"
+	gravealert_message = "Incoming Watery Graves!",
 
 	murloc_trigger = "Murlocs",
 	murloc_message = "Incoming Murlocs!",
