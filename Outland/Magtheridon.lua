@@ -141,6 +141,8 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "Exhaustion", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "HellfireHeal", 2)
+	self:TriggerEvent("BigWigs_ThrottleSync", "HellfireAbyssal", 2)
 end
 
 ------------------------------
@@ -178,16 +180,15 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if self.db.profile.abyssal and msg:find(L["abyssal_trigger"]) then
-		self:Message(L["abyssal_message"], "Attention")
+	if msg:find(L["abyssal_trigger"]) then
+		self:Sync("HellfireAbyssal")
 	end
 end
 
 --hellfire channelers sometimes heal
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if self.db.profile.heal and msg:find(L["heal_trigger"]) then
-		self:Message(L["heal_message"], "Urgent", nil, "Alarm")
-		self:Bar(L["heal_message"], 2, "Spell_Shadow_ChillTouch")
+	if msg:find(L["heal_trigger"]) then
+		self:Sync("HellfireHeal")
 	end
 end
 
@@ -205,5 +206,10 @@ end
 function mod:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "Exhaustion" and rest and not self.db.profile.exhaust then
 		self:Bar(L["exhaust_bar"]:format(rest), 180, "Spell_Shadow_Teleport")
+	elseif sync == "HellfireHeal" and self.db.profile.heal then
+		self:Message(L["heal_message"], "Urgent", nil, "Alarm")
+		self:Bar(L["heal_message"], 2, "Spell_Shadow_ChillTouch")
+	elseif sync == "HellfireAbyssal" and self.db.profile.abyssal then
+		self:Message(L["abyssal_message"], "Attention")
 	end
 end
