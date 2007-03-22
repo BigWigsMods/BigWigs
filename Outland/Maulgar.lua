@@ -232,19 +232,19 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if self.db.profile.heal and msg:find(L["heal_trigger"]) then
+	if msg:find(L["heal_trigger"]) then
 		self:Sync("BlindeyePrayer")
-	elseif self.db.profile.summon and msg:find(L["summon_trigger"]) then
+	elseif msg:find(L["summon_trigger"]) then
 		self:Sync("OlmSummon")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if self.db.profile.shield and msg:find(L["shield_trigger"]) then
+	if msg:find(L["shield_trigger"]) then
 		self:Sync("BlindeyeShield")
-	elseif self.db.profile.spellshield and msg:find(L["spellshield_trigger"]) then
+	elseif msg:find(L["spellshield_trigger"]) then
 		self:Sync("KroshSpellShield")
-	elseif self.db.profile.whirlwind and msg:find(L["whirlwind_trigger"]) then
+	elseif msg:find(L["whirlwind_trigger"]) then
 		self:Sync("MaulgarWhirldwind")
 	end
 end
@@ -259,15 +259,15 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:Message(L["whirlwind_warning1"], "Attention")
 			self:Nextwhirldwind()
 		end
-	elseif sync == "BlindeyePrayer" then
+	elseif sync == "BlindeyePrayer" and self.db.profile.heal then
 		self:Message(L["heal_message"], "Important", nil, "Alarm")
-	elseif sync == "BlindeyeShield" then
+	elseif sync == "BlindeyeShield" and self.db.profile.shield then
 		self:Message(L["shield_message"], "Important")
-	elseif sync == "KroshSpellShield" then
+	elseif sync == "KroshSpellShield" and self.db.profile.spellshield then
 		self:Message(L["spellshield_message"], "Attention", nil, "Info")
-	elseif sync == "OlmSummon" then
+	elseif sync == "OlmSummon" and self.db.profile.summon then
 		self:Message(L["summon_message"], "Attention", nil, "Long")
-	elseif sync == "MaulgarWhirldwind" then
+	elseif sync == "MaulgarWhirldwind" and self.db.profile.whirlwind then
 		self:Message(L["whirlwind_message"], "Important")
 		self:Bar(L["whirlwind_bar"], 15, "Ability_Whirlwind")
 		self:Nextwhirldwind()
