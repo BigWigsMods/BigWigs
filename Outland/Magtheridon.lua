@@ -40,7 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 	escape_bar = "Released...",
 	escape_message = "%s Released!",
 
-	abyssal_trigger = "Hellfire Channeler 's Burning Abyssal hits",
+	abyssal_trigger = "Hellfire Channeler's Burning Abyssal hits",
 	abyssal_message = "Burning Abyssal Created",
 
 	heal_trigger = "begins to cast Dark Mending",
@@ -141,8 +141,8 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "Exhaustion", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "HellfireHeal", 2)
-	self:TriggerEvent("BigWigs_ThrottleSync", "HellfireAbyssal", 2)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFHeal", 1)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFAbyssal", 1)
 end
 
 ------------------------------
@@ -181,14 +181,14 @@ end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["abyssal_trigger"]) then
-		self:Sync("HellfireAbyssal")
+		self:Sync("MagHFAbyssal")
 	end
 end
 
 --hellfire channelers sometimes heal
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg:find(L["heal_trigger"]) then
-		self:Sync("HellfireHeal")
+		self:Sync("MagHFHeal")
 	end
 end
 
@@ -206,10 +206,10 @@ end
 function mod:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "Exhaustion" and rest and not self.db.profile.exhaust then
 		self:Bar(L["exhaust_bar"]:format(rest), 180, "Spell_Shadow_Teleport")
-	elseif sync == "HellfireHeal" and self.db.profile.heal then
+	elseif sync == "MagHFHeal" and self.db.profile.heal then
 		self:Message(L["heal_message"], "Urgent", nil, "Alarm")
 		self:Bar(L["heal_message"], 2, "Spell_Shadow_ChillTouch")
-	elseif sync == "HellfireAbyssal" and self.db.profile.abyssal then
+	elseif sync == "MagHFAbyssal" and self.db.profile.abyssal then
 		self:Message(L["abyssal_message"], "Attention")
 	end
 end
