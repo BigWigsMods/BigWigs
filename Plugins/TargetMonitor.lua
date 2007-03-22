@@ -20,27 +20,22 @@ plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
 function plugin:OnRegister()
 	for name, module in self.core:IterateModules() do
 		if module.zonename and module.enabletrigger then
-			self:BigWigs_RegisterForTargetting(module.zonename, module.enabletrigger)
+			self:RegisterForTargetting(module.zonename, module.enabletrigger)
 		end
 	end
-	self:RegisterEvent("BigWigs_RegisterForTargetting")
 end
 
 function plugin:OnEnable()
 	monitoring = nil
 
-	self:RegisterEvent("BigWigs_RegisterForTargetting")
 	self:RegisterEvent("BigWigs_ModulePackLoaded", "ZoneChanged")
 	self:RegisterEvent("ZONE_CHANGED", "ZoneChanged")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChanged")
+	self:RegisterEvent("BigWigs_ModuleRegistered")
 	self:ZoneChanged()
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
-
-function plugin:BigWigs_RegisterForTargetting(zone, mob)
+function plugin:RegisterForTargetting(zone, mob)
 	if type(zone) == "string" then enablezones[zone] = true
 	elseif type(zone) == "table" then
 		for _,z in pairs(zone) do enablezones[z] = true end
@@ -49,6 +44,17 @@ function plugin:BigWigs_RegisterForTargetting(zone, mob)
 	if type(mob) == "string" then enablemobs[mob] = true
 	elseif type(mob) == "table" then
 		for _,m in pairs(mob) do enablemobs[m] = true end
+	end
+end
+
+------------------------------
+--      Event Handlers      --
+------------------------------
+
+function plugin:BigWigs_ModuleRegistered(name)
+	local mod = self.core:GetModule(name)
+	if mod and mod.zonename and mod.enabletrigger then
+		self:RegisterForTargetting(mod.zonename, mod.enabletrigger)
 	end
 end
 

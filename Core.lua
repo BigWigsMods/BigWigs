@@ -449,20 +449,20 @@ function BigWigs:RegisterModule(name, module)
 					self:TriggerEvent("BigWigs_RebootModule", module)
 				end,
 				args = {
-					["active"] = {
+					active = {
 						type = "toggle",
 						name = L["Active"],
 						order = 1,
 						desc = L["Activate or deactivate this module."],
 					},
-					["reboot"] = {
+					reboot = {
 						type = "execute",
 						name = L["Reboot"],
 						order = 2,
 						desc = L["Reboot this module."],
 						disabled = function() return not self:IsModuleActive(module) end,
 					},
-					["headerSpacer"] = {
+					headerSpacer = {
 						type = "header",
 						order = 50,
 						name = " ",
@@ -479,11 +479,12 @@ function BigWigs:RegisterModule(name, module)
 					}
 				elseif type(v) == "string" then
 					local l = v == "bosskill" and L or ML
+					local desc = v.."_desc" -- String concatenation ftl! Not sure how we can get rid of this.
 					cons.args[v] = {
 						type = "toggle",
 						order = v == "bosskill" and -1 or x,
-						name = l[v],
-						desc = l[v.."_desc"],
+						name = l:HasTranslation(v) and l[v] or v,
+						desc = l:HasTranslation(desc) and l[desc] or v,
 					}
 					if v ~= "bosskill" and l:HasTranslation(v.."_validate") then
 						cons.args[v].type = "text"
@@ -533,11 +534,6 @@ function BigWigs:RegisterModule(name, module)
 	end
 
 	self:TriggerEvent("BigWigs_ModuleRegistered", name)
-
-	-- Set up target monitoring, in case the monitor module has already initialized
-	if module.zonename and module.enabletrigger then
-		self:TriggerEvent("BigWigs_RegisterForTargetting", module.zonename, module.enabletrigger)
-	end
 end
 
 function BigWigs:EnableModule(moduleName, noSync)
