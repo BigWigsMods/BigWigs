@@ -19,19 +19,15 @@ L:RegisterTranslations("enUS", function() return {
 	lazer = "Water Lazer",
 	lazer_desc = "Timers for Water Lazer(name?).\n\nThese timers my be innacurate, they are scheduled from pull.",
 
-	dive_warning1 = "%s Engaged - Dives in 90sec",
-	dive_warning2 = "Dives in 60sec",
-	dive_warning3 = "Dives in 30sec",
-	dive_warning4 = "Dives in 10sec",
-	dive_warning5 = "Dives in 5sec",
-	dive_bar1 = "Dives in",
+	engage_warning = "%s Engaged - Dives in 90sec",
 
-	dive_message1 = "Dives - Back in 60sec",
-	dive_message2 = "Back in 30sec",
-	dive_message3 = "Back in 10sec",
-	dive_message4 = "Back in 5sec",
-	dive_message5 = "Back - Dives in 90sec",
-	dive_bar2 = "Back in",
+	dive_warning = "Dives in %dsec!",
+	dive_bar = "Dives in",
+	dive_message = "Dives - Back in 60sec",
+
+	emerge_warning = "Back in %dsec",
+	emerge_message = "Back - Dives in 90sec",
+	emerge_bar = "Back in",
 
 	lazer_message1 = "Water Lazer!",
 	lazer_message2 = "Water Lazer Over!",
@@ -75,7 +71,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		end
 		self:NextDive()
 		if self.db.profile.under then
-			self:Message(L["dive_warning1"]:format(boss), "Attention")
+			self:Message(L["engage_warning"]:format(boss), "Attention")
 		end
 	end
 end
@@ -83,11 +79,11 @@ end
 --loop diving and lazer, no combat log events to register this, can become innacurate
 function mod:NextDive()
 	if self.db.profile.under then
-		self:DelayedMessage(30, L["dive_warning2"], "Positive")
-		self:DelayedMessage(60, L["dive_warning3"], "Positive")
-		self:DelayedMessage(80, L["dive_warning4"], "Positive")
-		self:DelayedMessage(85, L["dive_warning5"], "Urgent", nil, "Alarm")
-		self:Bar(L["dive_bar1"], 90, "Spell_Frost_ArcticWinds")
+		self:DelayedMessage(30, L["dive_warning"]:format(60), "Positive")
+		self:DelayedMessage(60, L["dive_warning"]:format(30), "Positive")
+		self:DelayedMessage(80, L["dive_warning"]:format(10), "Positive")
+		self:DelayedMessage(85, L["dive_warning"]:format(5), "Urgent", nil, "Alarm")
+		self:Bar(L["dive_bar"], 90, "Spell_Frost_ArcticWinds")
 	end
 
 	self:ScheduleEvent("bwdive", self.NextSurface, 90, self)
@@ -95,12 +91,12 @@ end
 
 function mod:NextSurface()
 	if self.db.profile.under then
-		self:Message(L["dive_message1"], "Attention")
-		self:DelayedMessage(30, L["dive_message2"], "Positive")
-		self:DelayedMessage(50, L["dive_message3"], "Positive")
-		self:DelayedMessage(55, L["dive_message4"], "Urgent", nil, "Alert")
-		self:DelayedMessage(60, L["dive_message5"], "Attention")
-		self:Bar(L["dive_bar2"], 60, "Spell_Frost_Stun")
+		self:Message(L["dive_message"], "Attention")
+		self:DelayedMessage(30, L["emerge_warning"]:format(30), "Positive")
+		self:DelayedMessage(50, L["emerge_warning"]:format(10), "Positive")
+		self:DelayedMessage(55, L["emerge_warning"]:format(5), "Urgent", nil, "Alert")
+		self:DelayedMessage(60, L["emerge_message"], "Attention")
+		self:Bar(L["emerge_bar"], 60, "Spell_Frost_Stun")
 	end
 	if self.db.profile.lazer then
 		self:Bar(L["lazer_bar1"], 65, "INV_Weapon_Rifle_02")
