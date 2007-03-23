@@ -111,7 +111,6 @@ plugin.consoleOptions = {
 		["spacer1"] = {
 			type = "header",
 			name = " ",
-			desc = " ",
 			order = 200,
 		},
 		[L["default"]] = {
@@ -121,7 +120,7 @@ plugin.consoleOptions = {
 			get = function() return plugin.db.profile.defaultonly end,
 			set = function(v) plugin.db.profile.defaultonly = v end,
 			order = 201,
-			disabled = function() return not plugin.core:IsModuleActive(plugin) end,
+			disabled = function() return not BigWigs:IsModuleActive(plugin) end,
 		},
 		[L["toggle"]] = {
 			type = "toggle",
@@ -141,6 +140,10 @@ plugin.consoleOptions = {
 --      Initialization      --
 ------------------------------
 
+local function ShouldDisable()
+	return not BigWigs:IsModuleActive(plugin) or plugin.db.profile.defaultonly
+end
+
 function plugin:OnRegister()
 	for k, v in pairs(sounds) do
 		self.consoleOptions.args[k] = {
@@ -155,7 +158,7 @@ function plugin:OnRegister()
 					plugin.db.profile.sounds[k] = v
 				end
 			end,
-			disabled = function() return not plugin.core:IsModuleActive(self) or plugin.db.profile.defaultonly end,
+			disabled = ShouldDisable,
 		}
 	end
 end

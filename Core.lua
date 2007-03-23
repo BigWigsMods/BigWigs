@@ -529,7 +529,6 @@ function BigWigs:RegisterModule(name, module)
 		end
 	end
 
-	module.registered = true
 	if type(module.OnRegister) == "function" then
 		module:OnRegister()
 	end
