@@ -16,8 +16,8 @@ L:RegisterTranslations("enUS", function() return {
 	dive = "Dive",
 	dive_desc = ("Timers for when %s dives.\n\nThese timers my be innacurate, they are scheduled from pull."):format(boss),
 
-	lazer = "Water Lazer",
-	lazer_desc = "Timers for Water Lazer(name?).\n\nThese timers my be innacurate, they are scheduled from pull.",
+	sprout = "Sprout",
+	sprout_desc = "Timers for Sprout.\n\nThese timers my be innacurate, they are scheduled from pull.",
 
 	engage_warning = "%s Engaged - Dives in 90sec",
 
@@ -29,10 +29,10 @@ L:RegisterTranslations("enUS", function() return {
 	emerge_message = "Back - Dives in 90sec",
 	emerge_bar = "Back in",
 
-	lazer_message1 = "Water Lazer!",
-	lazer_message2 = "Water Lazer Over!",
-	lazer_bar1 = "Water Lazer 1",
-	lazer_bar2 = "Water Lazer 2",
+	sprout_message1 = "Sprout!",
+	sprout_message2 = "Sprout Over!",
+	sprout_bar1 = "Sprout 1",
+	sprout_bar2 = "Sprout 2",
 } end )
 
 ----------------------------------
@@ -43,7 +43,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
 mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
-mod.toggleoptions = {"dive", "lazer", "bosskill"}
+mod.toggleoptions = {"dive", "sprout", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -98,20 +98,20 @@ function mod:NextSurface()
 		self:DelayedMessage(60, L["emerge_message"], "Attention")
 		self:Bar(L["emerge_bar"], 60, "Spell_Frost_Stun")
 	end
-	if self.db.profile.lazer then
-		self:Bar(L["lazer_bar1"], 65, "INV_Weapon_Rifle_02")
-		self:Bar(L["lazer_bar2"], 115, "INV_Weapon_Rifle_02")
-		self:DelayedMessage(65, L["lazer_message1"], "Attention")
-		self:DelayedMessage(85, L["lazer_message2"], "Positive")
-		self:DelayedMessage(115, L["lazer_message1"], "Attention")
-		self:DelayedMessage(135, L["lazer_message2"], "Positive")
-		self:ScheduleEvent("bwlazerbar1", self.LazerBar, 65, self)
-		self:ScheduleEvent("bwlazerbar2", self.LazerBar, 115, self)
+	if self.db.profile.sprout then
+		self:Bar(L["sprout_bar1"], 65, "INV_Weapon_Rifle_02")
+		self:Bar(L["sprout_bar2"], 115, "INV_Weapon_Rifle_02")
+		self:DelayedMessage(65, L["sprout_message1"], "Attention")
+		self:DelayedMessage(85, L["sprout_message2"], "Positive")
+		self:DelayedMessage(115, L["sprout_message1"], "Attention")
+		self:DelayedMessage(135, L["sprout_message2"], "Positive")
+		self:ScheduleEvent("bwlazerbar1", self.SproutBar, 65, self)
+		self:ScheduleEvent("bwlazerbar2", self.SproutBar, 115, self)
 	end
 
 	self:ScheduleEvent("bwsurface", self.NextDive, 60, self)
 end
 
-function mod:LazerBar()
-	self:Bar(L["lazer_message1"], 20, "INV_Weapon_Rifle_02")
+function mod:SproutBar()
+	self:Bar(L["sprout_message1"], 20, "INV_Weapon_Rifle_02")
 end
