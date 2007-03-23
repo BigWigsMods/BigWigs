@@ -5,12 +5,10 @@
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local BB = AceLibrary("Babble-Boss-2.2")
 
-BigWigs.modulePrototype.core = BigWigs
-
 function BigWigs.modulePrototype:OnInitialize()
 	-- Unconditionally register, this shouldn't happen from any other place
 	-- anyway.
-	self.core:RegisterModule(self.name, self)
+	BigWigs:RegisterModule(self.name, self)
 end
 
 function BigWigs.modulePrototype:IsBossModule()
@@ -23,10 +21,10 @@ function BigWigs.modulePrototype:GenericBossDeath(msg)
 			self:Message(L["%s has been defeated"]:format(self:ToString()), "Bosskill", nil, "Victory")
 		end
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
-		if self.core:IsDebugging() then
-			self.core:Debug(self, "Boss dead, disabling.")
+		if BigWigs:IsDebugging() then
+			BigWigs:Debug(self, "Boss dead, disabling.")
 		end
-		self.core:ToggleModuleActive(self, false)
+		BigWigs:ToggleModuleActive(self, false)
 	end
 end
 
@@ -103,8 +101,8 @@ function BigWigs.modulePrototype:CheckForEngage()
 	local go = self:Scan()
 	local running = self:IsEventScheduled(self:ToString().."_CheckStart")
 	if go then
-		if self.core:IsDebugging() then
-			self.core:Debug(self, "Scan returned true, engaging.")
+		if BigWigs:IsDebugging() then
+			BigWigs:Debug(self, "Scan returned true, engaging.")
 		end
 		self:CancelScheduledEvent(self:ToString().."_CheckStart")
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
@@ -128,8 +126,8 @@ function BigWigs.modulePrototype:CheckForWipe()
 
 	local go = self:Scan()
 	if not go then
-		if self.core:IsDebugging() then
-			self.core:Debug(self, "Rebooting module.")
+		if BigWigs:IsDebugging() then
+			BigWigs:Debug(self, "Rebooting module.")
 		end
 		if type(self.scanTable) == "table" then
 			for k in pairs(self.scanTable) do
@@ -142,10 +140,6 @@ function BigWigs.modulePrototype:CheckForWipe()
 	elseif not running then
 		self:ScheduleRepeatingEvent(self:ToString().."_CheckWipe", self.CheckForWipe, 2, self)
 	end
-end
-
-function BigWigs.modulePrototype:IsRegistered()
-	return self.registered
 end
 
 -- Shortcuts for common actions.

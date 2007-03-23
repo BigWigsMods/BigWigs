@@ -198,7 +198,7 @@ end
 
 function plugin:WhisperHandler(event)
 	if not self.db.profile.showwhispers and sentWhispers[arg1] then
-		self.core:Debug("Suppressing self-sent whisper.", event, arg1)
+		BigWigs:Debug("Suppressing self-sent whisper.", event, arg1)
 		return
 	end
 	return self.hooks["ChatFrame_MessageEventHandler"](event)

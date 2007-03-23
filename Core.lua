@@ -398,10 +398,11 @@ function BigWigs:OnDebugDisable() self:ToggleModuleDebugging(false) end
 -------------------------------
 
 local opts = {}
+
+-- We can't use the AceModuleCore :OnModuleCreated, since the properties on the
+-- module has not been set when it's triggered.
 function BigWigs:RegisterModule(name, module)
-	if module:IsRegistered() then
-		error(string.format("%q is already registered.", name))
-	elseif type(module.revision) ~= "number" then
+	if type(module.revision) ~= "number" then
 		error(string.format("%q does not have a valid revision field.", name))
 	end
 

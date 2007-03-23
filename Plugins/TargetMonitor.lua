@@ -18,7 +18,7 @@ plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
 ------------------------------
 
 function plugin:OnRegister()
-	for name, module in self.core:IterateModules() do
+	for name, module in BigWigs:IterateModules() do
 		if module.zonename and module.enabletrigger then
 			self:RegisterForTargetting(module.zonename, module.enabletrigger)
 		end
@@ -52,7 +52,7 @@ end
 ------------------------------
 
 function plugin:BigWigs_ModuleRegistered(name)
-	local mod = self.core:GetModule(name)
+	local mod = BigWigs:GetModule(name)
 	if mod and mod.zonename and mod.enabletrigger then
 		self:RegisterForTargetting(mod.zonename, mod.enabletrigger)
 	end

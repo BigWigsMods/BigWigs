@@ -252,8 +252,8 @@ function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_StopBar")
 	self:RegisterEvent("Ace2_AddonDisabled")
 
-	if self.core:HasModule("Colors") then
-		colorModule = self.core:GetModule("Colors")
+	if BigWigs:HasModule("Colors") then
+		colorModule = BigWigs:GetModule("Colors")
 	else
 		colorModule = nil
 	end

@@ -345,8 +345,8 @@ function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_ShowAnchors")
 	self:RegisterEvent("BigWigs_HideAnchors")
 
-	if self.core:HasModule("Colors") then
-		colorModule = self.core:GetModule("Colors")
+	if BigWigs:HasModule("Colors") then
+		colorModule = BigWigs:GetModule("Colors")
 	else
 		colorModule = nil
 	end
@@ -410,7 +410,7 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 	end
 
 	if db.chat then
-		self.core:CustomPrint(r, g, b, nil, nil, nil, text)
+		BigWigs:CustomPrint(r, g, b, nil, nil, nil, text)
 	end
 end
 

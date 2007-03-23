@@ -135,7 +135,7 @@ end
 
 function mod:CHAT_MSG_SPELL_SELF_BUFF(msg)
 	if not msg then
-		self.core:Debug("CHAT_MSG_SPELL_SELF_BUFF: msg is nil")
+		BigWigs:Debug("CHAT_MSG_SPELL_SELF_BUFF: msg is nil")
 	elseif msg:find(L["CHAT_MSG_SPELL_SELF_BUFF"]) then
 		self:TriggerEvent("BigWigs_SendSync", "TranqShotFail "..UnitName("player"))
 	end
@@ -143,7 +143,7 @@ end
 
 function mod:CHAT_MSG_SPELL_SELF_DAMAGE(msg)
 	if not msg then
-		self.core:Debug("CHAT_MSG_SPELL_SELF_DAMAGE: msg is nil")
+		BigWigs:Debug("CHAT_MSG_SPELL_SELF_DAMAGE: msg is nil")
 	elseif msg:find(L["CHAT_MSG_SPELL_SELF_DAMAGE"]) then
 		self:TriggerEvent("BigWigs_SendSync", "TranqShotFired "..UnitName("player"))
 	end

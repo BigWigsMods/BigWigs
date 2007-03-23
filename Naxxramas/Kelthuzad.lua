@@ -380,9 +380,9 @@ end
 ------------------------------
 
 function mod:ZONE_CHANGED_INDOORS(msg)
-	if GetMinimapZoneText() ~= L["KELTHUZADCHAMBERLOCALIZEDLOLHAX"] or self.core:IsModuleActive(boss) then return end
+	if GetMinimapZoneText() ~= L["KELTHUZADCHAMBERLOCALIZEDLOLHAX"] or BigWigs:IsModuleActive(boss) then return end
 	-- Activate the Kel'Thuzad mod!
-	self.core:EnableModule(boss)
+	BigWigs:EnableModule(boss)
 end
 
 function mod:UNIT_HEALTH(msg)

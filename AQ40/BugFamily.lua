@@ -160,7 +160,7 @@ function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 		deaths = deaths + 1
 		if (deaths == 3) then
 			if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], boss), "Bosskill", nil, "Victory") end
-			self.core:ToggleModuleActive(self, false)
+			BigWigs:ToggleModuleActive(self, false)
 		end
 	end
 end

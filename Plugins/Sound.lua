@@ -162,7 +162,7 @@ end
 
 function plugin:OnEnable()
 	if not self.db.profile.sound then
-		self.core:ToggleModuleActive(self, false)
+		BigWigs:ToggleModuleActive(self, false)
 		return
 	end
 

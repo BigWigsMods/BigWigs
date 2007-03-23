@@ -231,7 +231,7 @@ end
 function plugin:PopulateRevisions()
 	self.zoneRevisions = {}
 	if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
-	for name, module in self.core:IterateModules() do
+	for name, module in BigWigs:IterateModules() do
 		if module:IsBossModule() and type(module.zonename) == "string" then
 			-- Make sure to get the enUS zone name.
 			local zone = BZ:HasReverseTranslation(module.zonename) and BZ:GetReverseTranslation(module.zonename) or module.zonename
@@ -245,7 +245,7 @@ function plugin:PopulateRevisions()
 			end
 		end
 	end
-	self.zoneRevisions["BigWigs"] = self.core.revision
+	self.zoneRevisions["BigWigs"] = BigWigs.revision
 end
 
 ------------------------------
@@ -351,7 +351,7 @@ end
 
 function plugin:QueryVersion(zone)
 	if self.queryRunning then
-		self.core:Print(L["Query already running, please wait 5 seconds before trying again."])
+		BigWigs:Print(L["Query already running, please wait 5 seconds before trying again."])
 		return
 	end
 	if type(zone) ~= "string" or zone == "" then zone = GetRealZoneText() end
@@ -375,7 +375,7 @@ function plugin:QueryVersion(zone)
 	end
 
 	-- ZZZ |zone| should be translated here.
-	self.core:Print(L["Querying versions for "].."|cff"..COLOR_GREEN..zone.."|r.")
+	BigWigs:Print(L["Querying versions for "].."|cff"..COLOR_GREEN..zone.."|r.")
 
 	-- If this is a non-enUS zone, convert it to enUS.
 	if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
@@ -387,7 +387,7 @@ function plugin:QueryVersion(zone)
 	self:ScheduleEvent(
 		function()
 			self.queryRunning = nil
-			self.core:Print(L["Version query done."])
+			BigWigs:Print(L["Version query done."])
 		end, 5)
 
 	self.responseTable = {}

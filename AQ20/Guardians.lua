@@ -241,7 +241,7 @@ end
 
 function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if msg == string.format(UNITDIESOTHER, boss) then
-		self.core:ToggleModuleActive(self, false)
+		BigWigs:ToggleModuleActive(self, false)
 	end
 end
 

@@ -324,7 +324,7 @@ function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 		self:TriggerEvent("BigWigs_Message", L["dkdiewarn"], "Important")
 	elseif self.db.profile.bosskill and msg == string.format(UNITDIESOTHER, boss) then
 		self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], boss), "Bosskill", nil, "Victory")
-		self.core:ToggleModuleActive(self, false)
+		BigWigs:ToggleModuleActive(self, false)
 	end
 end
 
