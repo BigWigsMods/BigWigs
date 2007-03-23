@@ -51,6 +51,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	whisper_trigger = "^([^%s]+) ([^%s]+) afflicted by Insidious Whisper",
 	whisper_message = "Whisper: %s",
+
+	you = "You",
 } end )
 
 ----------------------------------
