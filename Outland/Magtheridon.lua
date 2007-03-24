@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Magtheridon"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local abycount
 
 ----------------------------
 --      Localization     --
@@ -41,7 +42,7 @@ L:RegisterTranslations("enUS", function() return {
 	escape_message = "%s Released!",
 
 	abyssal_trigger = "Hellfire Channeler's Burning Abyssal hits",
-	abyssal_message = "Burning Abyssal Created",
+	abyssal_message = "Burning Abyssal Created (%d)",
 
 	heal_trigger = "begins to cast Dark Mending",
 	heal_message = "Healing!",
@@ -90,7 +91,7 @@ L:RegisterTranslations("deDE", function() return {
 	escape_message = "%s frei!",
 
 	abyssal_trigger = "Kanalisierer des H\195\182llenfeuers wirkt Brennender Schlund",
-	abyssal_message = "Brennender Schlund gespawned",
+	abyssal_message = "Brennender Schlund gespawned (%d)",
 
 	heal_trigger = "beginnt Dunkle Besserung zu wirken",
 	heal_message = "Heilung!",
@@ -141,8 +142,9 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "Exhaustion", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFHeal", 1)
-	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFAbyssal", 1)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFHeal", 0.5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFAbyssal", 0.5)
+	abycount = 1
 end
 
 ------------------------------
@@ -151,7 +153,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if self.db.profile.escape and msg:find(L["escape_trigger1"]) then
-		self:Message(L["escape_warning1"]:format(boss), "Important")
+		self:Message(L["escape_warning1"]:format(boss), "Attention")
 		self:Bar(L["escape_bar"], 120, "Ability_Rogue_Trip")
 		self:DelayedMessage(60, L["escape_warning2"], "Positive")
 		self:DelayedMessage(90, L["escape_warning3"], "Attention")
@@ -163,8 +165,8 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.escape and msg == L["escape_trigger2"] then
 		self:Message(L["escape_message"]:format(boss), "Important", nil, "Alert")
-		self:Bar(L["nova_"], 60, "Spell_Fire_SealOfFire")
-		self:DelayedMessage(55, L["nova_warning"], "Urgent")
+		self:Bar(L["nova_"], 52, "Spell_Fire_SealOfFire")
+		self:DelayedMessage(50, L["nova_warning"], "Urgent")
 	elseif self.db.profile.banish and msg == L["banish_trigger"] then
 		self:Message(L["banish_message"], "Important", nil, "Info")
 		self:Bar(L["banish_bar"], 10, "Spell_Shadow_Cripple")
@@ -192,7 +194,7 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	end
 end
 
---mind exhastion bars can get spammy, upto 15 bars at a time, so off by default
+--mind exhastion bars can get spammy, so off by default
 function mod:ExhaustEvent(msg)
 	local eplayer, etype = select(3, msg:find(L["exhaust_trigger"]))
 	if eplayer then
@@ -205,11 +207,12 @@ end
 
 function mod:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "Exhaustion" and rest and not self.db.profile.exhaust then
-		self:Bar(L["exhaust_bar"]:format(rest), 180, "Spell_Shadow_Teleport")
+		self:Bar(L["exhaust_bar"]:format(rest), 90, "Spell_Shadow_Teleport")
 	elseif sync == "MagHFHeal" and self.db.profile.heal then
 		self:Message(L["heal_message"], "Urgent", nil, "Alarm")
 		self:Bar(L["heal_message"], 2, "Spell_Shadow_ChillTouch")
 	elseif sync == "MagHFAbyssal" and self.db.profile.abyssal then
-		self:Message(L["abyssal_message"], "Attention")
+		self:Message(L["abyssal_message"]:format(abycount), "Attention")
+		abycount = abycount + 1
 	end
 end
