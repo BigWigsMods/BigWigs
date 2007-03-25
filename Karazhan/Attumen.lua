@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Attumen the Huntsman"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local horse = AceLibrary("Babble-Boss-2.2")["Midnight"]
 local started
 
@@ -28,8 +29,6 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_message = "Phase 2 - %s & Attumen",
 	phase3_trigger = "Come Midnight, let's disperse this petty rabble!",
 	phase3_message = "Phase 3 - %s",
-
-	you = "You",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -47,8 +46,6 @@ L:RegisterTranslations("deDE", function() return {
 	phase2_message = "Phase 2 - %s & Attumen",
 	phase3_trigger = "Komm Mittnacht, lass' uns dieses Gesindel auseinander treiben!",
 	phase3_message = "Phase 3 - %s",
-
-	you = "Ihr",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -63,8 +60,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	--phase2_trigger = "",
 	phase3_trigger = "Viens, Minuit, allons disperser cette insignifiante racaille\194\160!",
-
-	you = "Vous",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -82,8 +77,6 @@ L:RegisterTranslations("koKR", function() return {
 	phase2_message = "2 단계 - %s & 어튜멘",
 	phase3_trigger = "이랴! 이 오합지졸을 데리고 실컷 놀아보자!",
 	phase3_message = "3 단계 - %s",
-
-	you = "당신은",
 } end)
 
 ----------------------------------
@@ -148,7 +141,7 @@ function mod:CurseEvent(msg)
 	local cplayer, ctype = select(3, msg:find(L["curse_trigger"]))
 	if cplayer and self.db.profile.curse then
 		local id = nil
-		if cplayer == L["you"] then
+		if cplayer == L2["you"] then
 			cplayer = UnitName("player")
 			id = "player"
 		else

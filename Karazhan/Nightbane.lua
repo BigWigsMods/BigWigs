@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Nightbane"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local blast
 local bones
 
@@ -61,8 +62,6 @@ L:RegisterTranslations("enUS", function() return {
 	bones_trigger = "^([^%s]+) ([^%s]+) afflicted by Rain of Bones",
 	bones_message = "Rain of Bones on [%s]",
 	bones_whisper = "Rain of Bones on you!",
-
-	you = "You",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -113,8 +112,6 @@ L:RegisterTranslations("deDE", function() return {
 	bones_trigger = "^([^%s]+) ([^%s]+) von Knochenregen betroffen",
 	bones_message = "Knochenregen auf [%s]",
 	bones_whisper = "Knochenregen auf DIR!",
-
-	you = "Ihr",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -165,8 +162,6 @@ L:RegisterTranslations("koKR", function() return {
 	bones_trigger = "^([^|;%s]*)(.*)뼈의 비에 걸렸습니다%.$",
 	bones_message = "[%s] 뼈의 비",
 	bones_whisper = "당신은 뼈의 비!",
-
-	you = "당신은",
 } end )
 
 ----------------------------------
@@ -255,7 +250,7 @@ function mod:Event(msg)
 	if not bones then
 		local bplayer, btype = select(3, msg:find(L["bones_trigger"]))
 		if bplayer then
-			if bplayer == L["you"] then
+			if bplayer == L2["you"] then
 				bplayer = UnitName("player")
 			end
 			self:Sync("Bones "..bplayer)

@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Moroes"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local enrageannounced
 
 ----------------------------
@@ -43,8 +44,6 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_trigger = "%s becomes enraged!",
 	enrage_message = "Enrage!",
 	enrage_warning = "Enrage Soon!",
-
-	you = "You",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -78,8 +77,6 @@ L:RegisterTranslations("frFR", function() return {
 	enrage_trigger = "%s devient fou furieux\194\160!",
 	enrage_message = "Enrag\195\169 !",
 	enrage_warning = "Enrag\195\169 Imminent !",
-
-	you = "Vous",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -110,8 +107,6 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_trigger = "%s wird w\195\188tend!",
 	enrage_message = "Enrage!",
 	enrage_warning = "Enrage bald!",
-
-	you = "Ihr",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -145,8 +140,6 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_trigger = "%s|1이;가; 분노에 휩싸입니다!",
 	enrage_message = "격노!",
 	enrage_warning = "잠시 후 격노!",
-
-	you = "당신은",
 } end)
 
 ----------------------------------
@@ -223,7 +216,7 @@ end
 function mod:GarroteEvent(msg)
 	local gplayer, gtype = select(3, msg:find(L["garrote_trigger"]))
 	if gplayer then
-		if gplayer == L["you"] then
+		if gplayer == L2["you"] then
 			gplayer = UnitName("player")
 		end
 		self:Sync("MoroesGarrote "..gplayer)

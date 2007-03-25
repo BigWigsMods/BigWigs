@@ -5,6 +5,7 @@
 local lady = AceLibrary("Babble-Boss-2.2")["Grandmother"]
 local boss = AceLibrary("Babble-Boss-2.2")["The Big Bad Wolf"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local playerName = nil
 
 ----------------------------
@@ -24,7 +25,6 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Put a Raid Icon on the person who's Red Riding Hood. (Requires promoted or higher)",
 
 	riding_trigger = "^([^%s]+) gain(.*) Red Riding Hood",
-	you = "You",
 
 	riding_youwarn = "You are Red Riding Hood!",
 	riding_otherwarn = "%s is Red Riding Hood!",
@@ -42,7 +42,6 @@ L:RegisterTranslations("deDE", function() return {
 	icon_desc = "Setzt ein Raid Icon auf die Person die Rotk\195\164ppchen ist.",
 
 	riding_trigger = "^([^%s]+) bekommt(.*) 'Rotk\195\164ppchen'",
-	you = "Ihr",
 
 	riding_youwarn = "Du bist Rotk\195\164ppchen!",
 	riding_otherwarn = "%s ist Rotk\195\164ppchen!",
@@ -60,7 +59,6 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une ic\195\180ne de raid sur le dernier personnage qui est le Chaperon Rouge (requiert d'\195\170tre promus ou plus).",
 
 	riding_trigger = "^([^%s]+) gagne(.*) Chaperon Rouge",
-	you = "Vous",
 
 	riding_youwarn = "Tu es le Chaperon Rouge !",
 	riding_otherwarn = "%s est le Chaperon Rouge !",
@@ -78,7 +76,6 @@ L:RegisterTranslations("koKR", function() return {
 	icon_desc = "빨간 두건인 사람에게 공격대 아이콘 지정(승급자 이상의 권한 필요)",
 
 	riding_trigger = "^([^|;%s]*)(.*)빨간 두건 효과를 얻었습니다%.$", -- "^([^%s]+) gain(.*) Red Riding Hood", -- check
-	you = "당신은",
 
 	riding_youwarn = "당신은 빨간 두건입니다!",
 	riding_otherwarn = "%s님이 빨간 두건입니다!",
@@ -115,7 +112,7 @@ end
 function mod:RidingEvent(msg)
 	local rplayer, rtype = select(3, msg:find(L["riding_trigger"]))
 	if rplayer then
-		if rplayer == L["you"] then
+		if rplayer == L2["you"] then
 			rplayer = playerName
 		end
 		if rplayer == playerName and self.db.profile.youriding then

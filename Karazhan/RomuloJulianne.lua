@@ -6,6 +6,7 @@ local boy = AceLibrary("Babble-Boss-2.2")["Romulo"]
 local girl = AceLibrary("Babble-Boss-2.2")["Julianne"]
 local boss = AceLibrary("Babble-Boss-2.2")["Romulo & Julianne"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 ----------------------------
 --      Localization     --
@@ -43,8 +44,6 @@ L:RegisterTranslations("enUS", function() return {
 	buff1_message = "%s gains Daring!",
 	buff2_trigger = "gains Devotion",
 	buff2_message = "%s gains Devotion!",
-
-	you = "You",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -77,8 +76,6 @@ L:RegisterTranslations("deDE", function() return {
 	buff1_message = "%s bekommt Wagemut!",
 	buff2_trigger = "bekommt 'Hingabe'.",
 	buff2_message = "%s bekommt Hingabe!",
-
-	you = "Ihr",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -111,8 +108,6 @@ L:RegisterTranslations("frFR", function() return {
 	buff1_message = "Romulo gagne Hardiesse !",
 	buff2_trigger = "gagne D\195\169votion%.",
 	buff2_message = "Julianne gagne D\195\169votion !",
-
-	you = "Vous",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -145,8 +140,6 @@ L:RegisterTranslations("koKR", function() return {
 	buff1_message = "%s 사랑의 용기 효과 얻음!",
 	buff2_trigger = "헌신 효과를 얻었습니다.", -- check
 	buff2_message = "%s 헌신 효과 얻음!",
-
-	you = "당신은",
 } end)
 
 ----------------------------------
@@ -191,7 +184,7 @@ end
 function mod:PoisonEvent(msg)
 	local pplayer, ptype = select(3, msg:find(L["poison_trigger"]))
 	if pplayer then
-		if pplayer == L["you"] then
+		if pplayer == L2["you"] then
 			pplayer = UnitName("player")
 		end
 		if self.db.profile.poison then

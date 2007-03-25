@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Maiden of Virtue"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 ----------------------------
 --      Localization     --
@@ -36,8 +37,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	holyfire_trigger = "^([^%s]+) ([^%s]+) afflicted by Holy Fire",
 	holyfire_message = "Holy Fire: %s",
-
-	you = "You",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -65,8 +64,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	holyfire_trigger = "^([^%s]+) ([^%s]+) von Heiliges Feuer betroffen",
 	holyfire_message = "Heiliges Feuer: %s",
-
-	you = "Ihr",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -94,8 +91,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	holyfire_trigger = "^(.+) (.+) les effets .* Flammes sacr\195\169es%.",
 	holyfire_message = "Flammes sacr\195\169es: %s",
-
-	you = "Vous",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -123,8 +118,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	holyfire_trigger = "^([^|;%s]*)(.*)신성한 불꽃에 걸렸습니다%.$",
 	holyfire_message = "신성한 불꽃: %s",
-
-	you = "당신은",
 } end)
 
 ----------------------------------
@@ -172,7 +165,7 @@ end
 function mod:HolyFireEvent(msg)
 	local bplayer, btype = select(3, msg:find(L["holyfire_trigger"]))
 	if bplayer then
-		if bplayer == L["you"] then
+		if bplayer == L2["you"] then
 			bplayer = UnitName("player")
 		end
 		self:Sync("MaidenHolyFire "..bplayer)

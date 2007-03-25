@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Hyakiss the Lurker"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local times
 
 ----------------------------
@@ -19,8 +20,6 @@ L:RegisterTranslations("enUS", function() return {
 	web_trigger = "^([^%s]+) ([^%s]+) afflicted by Hyakiss' Web.",
 	web_message = "%s has been webbed.",
 	web_bar = "Web: %s",
-
-	you = "You",
 } end )
 
 ----------------------------------
@@ -58,7 +57,7 @@ function mod:Web(msg)
 	if msg:find(L["web_trigger"]) then
 		local webPlayer, webType = select(3, msg:find(L["web_trigger"]))
 		if webPlayer and webType then
-			if webPlayer == L["you"] then
+			if webPlayer == L2["you"] then
 				webPlayer = UnitName("player")
 			end
 			local t = GetTime()
