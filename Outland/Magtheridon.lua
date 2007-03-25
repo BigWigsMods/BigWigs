@@ -81,7 +81,7 @@ L:RegisterTranslations("deDE", function() return {
 	exhaust_desc = "Timer f\195\188r Gedankenersch\195\182pfung",
 
 	escape_trigger1 = "Die Fesseln von %%s werden schw\195\164cher!",
-	escape_trigger2 = "Ich... bin... frei!",
+	escape_trigger2 = " Ich... bin... frei!",
 	escape_warning1 = "%s angegriffen - Ausbruch in 2min!",
 	escape_warning2 = "Ausbruch in 1min!",
 	escape_warning3 = "Ausbruch in 30sec!",
@@ -99,7 +99,7 @@ L:RegisterTranslations("deDE", function() return {
 	nova_ = "Drucknova",
 	nova_warning = "Drucknova bald",
 
-	banish_trigger = "Not again! Not again...", -- to translate
+	banish_trigger = "Nicht schon wieder! Nicht schon wieder...",
 	banish_message = "Verbannt f\195\188r ~10sec",
 	banish_bar = "Verbannt",
 
