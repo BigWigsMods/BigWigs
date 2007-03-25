@@ -176,7 +176,9 @@ end
 
 function mod:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "VashjStatic" and rest and self.db.profile.static then
-		self:Message(L["static_charge_message"]:format(rest), "Important", nil, "Alert")
+		local msg = L["static_charge_message"]:format(rest)
+		self:Message(msg, "Important", nil, "Alert")
+		self:Bar(msg, 20, "Spell_Nature_LightningOverload")
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
@@ -194,7 +196,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		if shieldsFaded == 4 and self.db.profile.phase then
 			self:Message(L["phase3_message"], "Important", nil, "Alarm")
 		elseif shieldsFaded < 4 and self.db.profile.barrier then
-			self:Message(L["barrier_down_message"]:format(shieldsFaded), "Positive")
+			self:Message(L["barrier_down_message"]:format(shieldsFaded), "Attention")
 		end
 	end
 end
