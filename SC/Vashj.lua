@@ -1,5 +1,5 @@
 ------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Lady Vashj"]
@@ -13,7 +13,7 @@ local playerName = nil
 local phaseTwoAnnounced = nil
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -28,7 +28,10 @@ L:RegisterTranslations("enUS", function() return {
 	static_desc = "Warn about Static Charge on players.",
 
 	icon = "Icon",
-	icon_desc = "Put an icon on players with Static Charge.",
+	icon_desc = "Put an icon on players with Static Charge and those who loot cores.",
+
+	barrier = "Barrier down",
+	barrier_desc = "Alert when the barriers go down.",
 
 	loot = "Tainted Core",
 	loot_desc = "Warn who loots the Tainted Cores.",
@@ -51,14 +54,14 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 ----------------------------------
---    Module Declaration   --
+--    Module Declaration        --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
 mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", -1, "static", "icon", -1, "bosskill"}
+mod.toggleoptions = {"phase", -1, "static", "icon", -1, "loot", "barrier", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -188,9 +191,9 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		self:CancelScheduledEvent("VashjNoDeformat")
 	elseif sync == "VashjBarrier" then
 		shieldsFaded = shieldsFaded + 1
-		if shieldsFaded == 4 then
+		if shieldsFaded == 4 and self.db.profile.phase then
 			self:Message(L["phase3_message"], "Important", nil, "Alarm")
-		elseif shieldsFaded < 4 then
+		elseif shieldsFaded < 4 and self.db.profile.barrier then
 			self:Message(L["barrier_down_message"]:format(shieldsFaded), "Positive")
 		end
 	end
