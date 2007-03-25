@@ -1,4 +1,4 @@
-﻿------------------------------
+¿------------------------------
 --      Are you local?    --
 ------------------------------
 
@@ -6,11 +6,11 @@ local boss = AceLibrary("Babble-Boss-2.2")["Lady Vashj"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local deformat = nil
+local checkedForDeformat = nil
 
 local shieldsFaded = 0
 local playerName = nil
 local phaseTwoAnnounced = nil
-local deformatMissingWarning = nil
 
 ----------------------------
 --      Localization     --
@@ -70,9 +70,14 @@ function mod:OnEnable()
 	if not deformat then
 		if AceLibrary:HasInstance("Deformat-2.0") then
 			deformat = AceLibrary("Deformat-2.0")
-		elseif not deformatMissingWarning then
-			BigWigs:Print(L["deformat"])
-			deformatMissingWarning = true
+		elseif not checkedForDeformat then
+			self:ScheduleEvent(function()
+				self:Sync("VashjDeformatCheck")
+				self:ScheduleEvent("VashjNoDeformat", function()
+					BigWigs:Print(L["deformat"])
+				end, 5)
+			end, 5)
+			checkedForDeformat = true
 		end
 	end
 
@@ -97,10 +102,12 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "VashjStatic", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VashjLoot", 2)
+	self:TriggerEvent("BigWigs_ThrottleSync", "VashjDeformatCheck", 0)
+	self:TriggerEvent("BigWigs_ThrottleSync", "VashjDeformat", 0)
 end
 
 ------------------------------
---    Event Handlers     --
+--    Event Handlers        --
 ------------------------------
 
 function mod:CHAT_MSG_LOOT(msg)
@@ -175,6 +182,10 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
+	elseif sync == "VashjDeformatCheck" and deformat then
+		self:Sync("VashjDeformat")
+	elseif sync == "VashjDeformat" and self:IsEventScheduled("VashjNoDeformat") then
+		self:CancelScheduledEvent("VashjNoDeformat")
 	end
 end
 
