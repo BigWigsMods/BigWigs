@@ -5,24 +5,48 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Lady Vashj"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
+local deformat = nil
+
+local shieldsFaded = 0
+local playerName = nil
+local phaseTwoAnnounced = nil
+local deformatMissingWarning = nil
+
 ----------------------------
 --      Localization     --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
+	deformat = "You need the Deformat-2.0 library in order to get loot warnings in phase 2.",
+
 	cmd = "Vashj",
 
-	lightning = "Forked Lightning",
-	lighting_desc = ("Warn when %s casts Forked Lightning"):format(boss),
+	phase = "Phase warnings",
+	phase_desc = "Warn when Vashj goes into the different phases.",
 
-	multishot = "Multi-Shot",
-	multishot_desc = "Warn on Incoming Multi-Shot",
+	static = "Static Charge",
+	static_desc = "Warn about Static Charge on players.",
 
-	lightning_trigger = "Lady Vashj begins to cast Forked Lightning",
-	lightning_message = "Casting Forked Lightning!",
+	icon = "Icon",
+	icon_desc = "Put an icon on players with Static Charge.",
 
-	multishot_trigger = "Lady Vashj begins to cast Multi-Shot",
-	multishot_message = "Incoming Multi-Shot!",
+	loot = "Tainted Core",
+	loot_desc = "Warn who loots the Tainted Cores.",
+
+	static_charge_trigger = "^(%S+) %S+ afflicted by Static Charge.$",
+	static_charge_message = "Static Charge on %s!",
+
+	loot_message = "%s looted a core!",
+
+	phase2_trigger = "The time is now! Leave none standing!",
+
+	phase2_soon_message = "Phase 2 soon!",
+	phase2_message = "Phase 2, adds incoming!",
+	phase3_message = "Phase 3!",
+
+	barrier_fades_trigger = "Magic Barrier fades from Lady Vashj.",
+
+	you = "You",
 } end )
 
 ----------------------------------
@@ -33,7 +57,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
 mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
-mod.toggleoptions = {"lightning", "multishot", "bosskill"}
+mod.toggleoptions = {"phase", -1, "static", "icon", -1, "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -41,32 +65,116 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+
+	-- Check if the player has Deformat.
+	if not deformat then
+		if AceLibrary:HasInstance("Deformat-2.0") then
+			deformat = AceLibrary("Deformat-2.0")
+		elseif not deformatMissingWarning then
+			BigWigs:Print(L["deformat"])
+			deformatMissingWarning = true
+		end
+	end
+
+	if deformat then
+		self:RegisterEvent("CHAT_MSG_LOOT")
+	end
+
+	playerName = UnitName("player")
+	phaseTwoAnnounced = nil
+
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Charge")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Charge")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Charge")
+
+	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "VashjLight", 2)
-	self:TriggerEvent("BigWigs_ThrottleSync", "VashjMulti", 2)
+	self:TriggerEvent("BigWigs_ThrottleSync", "VashjStatic", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "VashjLoot", 2)
 end
 
 ------------------------------
 --    Event Handlers     --
 ------------------------------
 
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg:find(L["lightning_trigger"]) then
-		self:Sync("VashjLight")
-	elseif msg:find(L["multishot_trigger"]) then
-		self:Sync("VashjMulti")
+function mod:CHAT_MSG_LOOT(msg)
+	local player, item = deformat(msg, LOOT_ITEM)
+	if not player then
+		item = deformat(msg, LOOT_ITEM_SELF)
+		if item then
+			player = playerName
+		end
+	end
+
+	if type(item) == "string" and type(player) == "string" then
+		local itemName, itemLink, itemRarity = GetItemInfo(item)
+		if itemRarity == 1 and itemLink then
+			local itemId = select(3, itemLink:find("item:(%d+):"))
+			if not itemId then return end
+			itemId = tonumber(itemId:trim())
+			if type(itemId) ~= "number" or itemId ~= 31088 then return end -- Tainted Core
+			self:Sync("VashjLoot " .. player)
+		end
+	end
+end
+
+function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
+	if msg == L["barrier_fades_trigger"] then
+		shieldsFaded = shieldsFaded + 1
+		if shieldsFaded == 4 then
+			self:Message(L["phase3_message"], "Important", nil, "Alarm")
+		end
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if not self.db.profile.phase then return end
+	if msg == L["phase2_trigger"] then
+		self:Message(L["phase2_message"], "Important", nil, "Alarm")
+		shieldsFaded = 0
+	end
+end
+
+function mod:UNIT_HEALTH(msg)
+	if not self.db.profile.phase then return end
+	if UnitName(msg) == boss then
+		local hp = UnitHealth(msg)
+		if hp > 70 and hp < 73 and not phaseTwoAnnounced then
+			self:Message(L["phase2_soon_message"], "Attention")
+			phaseTwoAnnounced = true
+		elseif hp > 80 and phaseTwoAnnounced then
+			phaseTwoAnnounced = nil
+		end
+	end
+end
+
+function mod:Charge(msg)
+	local splayer = select(3, msg:find(L["static_charge_trigger"]))
+	if splayer then
+		if splayer == L["you"] then
+			splayer = playerName
+		end
+		self:Sync("VashjStatic " .. splayer)
 	end
 end
 
 function mod:BigWigs_RecvSync( sync, rest, nick )
-	if sync == "VashjLight" and self.db.profile.lightning then
-		self:Message(L["lightning_message"], "Urgent")
-		self:Bar(L["lighning_message"], 2, "Spell_Nature_ChainLightning")
-	elseif sync == "VashjMulti" and self.db.profile.multishot then
-		self:Message(L["multishot_message"], "Attention")
-		self:Bar(L["multishot_message"], 1, "Ability_UpgradeMoonGlaive")
+	if sync == "VashjStatic" and rest and self.db.profile.static then
+		self:Message(L["static_charge_message"]:format(rest), "Important", nil, "Alert")
+		if self.db.profile.icon then
+			self:Icon(rest)
+		end
+	elseif sync == "VashjLoot" and rest and self.db.profile.loot then
+		self:Message(L["loot_message"]:format(rest), "Positive", nil, "Info")
+		if self.db.profile.icon then
+			self:Icon(rest)
+		end
 	end
 end
+
