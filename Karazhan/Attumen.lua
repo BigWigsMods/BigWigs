@@ -18,11 +18,11 @@ L:RegisterTranslations("enUS", function() return {
 	phase = "Phase",
 	phase_desc = "Warn when entering a new Phase",
 
-	curse = "Cursed Warriors",
-	curse_desc = "Warn when a warrior is cursed by Intangible Presence",
+	curse = "Cursed tanks",
+	curse_desc = "Warn when a warrior or druid is cursed by Intangible Presence",
 
 	curse_trigger = "^([^%s]+) ([^%s]+) afflicted by Intangible Presence",
-	curse_message = "Warrior Cursed - %s",
+	curse_message = "%s cursed!",
 
 	phase1_message = "Phase 1 - %s",
 	phase2_trigger = "%s calls for her master!",
@@ -153,8 +153,10 @@ function mod:CurseEvent(msg)
 			end
 		end
 		if not id then return end
-		if select(2, UnitClass(id)) == "WARRIOR" then
+		local class = select(2, UnitClass(id))
+		if class == "WARRIOR" or class == "DRUID" then
 			self:Message(L["curse_message"]:format(cplayer), "Attention")
 		end
 	end
 end
+
