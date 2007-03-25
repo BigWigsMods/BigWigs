@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Lady Vashj"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local deformat = nil
 local checkedForDeformat = nil
@@ -49,8 +50,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	barrier_down_message = "Barrier %d/4 down!",
 	barrier_fades_trigger = "Magic Barrier fades from Lady Vashj.",
-
-	you = "You",
 } end )
 
 ----------------------------------
@@ -167,7 +166,7 @@ end
 function mod:Charge(msg)
 	local splayer = select(3, msg:find(L["static_charge_trigger"]))
 	if splayer then
-		if splayer == L["you"] then
+		if splayer == L2["you"] then
 			splayer = playerName
 		end
 		self:Sync("VashjStatic " .. splayer)

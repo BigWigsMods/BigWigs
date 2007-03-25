@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Leotheras the Blind"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local imagewarn
 
 ----------------------------
@@ -51,8 +52,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	whisper_trigger = "^([^%s]+) ([^%s]+) afflicted by Insidious Whisper",
 	whisper_message = "Whisper: %s",
-
-	you = "You",
 } end )
 
 ----------------------------------
@@ -145,7 +144,7 @@ end
 function mod:Event(msg)
 	local wplayer, wtype = select(3, msg:find(L["whisper_trigger"]))
 	if wplayer then
-		if wplayer == L["you"] then
+		if wplayer == L2["you"] then
 			wplayer = UnitName("player")
 		end
 		self:Sync("LeoWhisp "..wplayer)

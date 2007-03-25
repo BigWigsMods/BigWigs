@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Morogrim Tidewalker"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 ----------------------------
 --      Localization     --
@@ -35,8 +36,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	grobules_trigger = "watery grobules",
 	grobules_message = "Incoming Grobules!",
-
-	you = "You",
 } end )
 
 ----------------------------------
@@ -83,7 +82,7 @@ end
 function mod:Event(msg)
 	local gplayer, gtype = select(3, msg:find(L["grave_trigger"]))
 	if gplayer then
-		if gplayer == L["you"] then
+		if gplayer == L2["you"] then
 			gplayer = UnitName("player")
 		end
 		self:Sync("MorogrimGrave "..gplayer)
