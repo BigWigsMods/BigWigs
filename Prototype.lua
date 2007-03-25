@@ -5,6 +5,13 @@
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local BB = AceLibrary("Babble-Boss-2.2")
 
+-- Provide some common translations here, so we don't have to replicate it in
+-- every freaking module.
+local commonWords = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+commonWords:RegisterTranslations("enUS", function() return {
+	you = "You",
+} end)
+
 function BigWigs.modulePrototype:OnInitialize()
 	-- Unconditionally register, this shouldn't happen from any other place
 	-- anyway.
