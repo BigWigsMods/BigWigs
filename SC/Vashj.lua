@@ -44,6 +44,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_message = "Phase 2, adds incoming!",
 	phase3_message = "Phase 3!",
 
+	barrier_down_message = "Barrier %d/4 down!",
 	barrier_fades_trigger = "Magic Barrier fades from Lady Vashj.",
 
 	you = "You",
@@ -87,6 +88,7 @@ function mod:OnEnable()
 
 	playerName = UnitName("player")
 	phaseTwoAnnounced = nil
+	shieldsFaded = 0
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("UNIT_HEALTH")
@@ -104,6 +106,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "VashjLoot", 2)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VashjDeformatCheck", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VashjDeformat", 0)
+	self:TriggerEvent("BigWigs_ThrottleSync", "VashjBarrier", 4)
 end
 
 ------------------------------
@@ -133,10 +136,7 @@ end
 
 function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 	if msg == L["barrier_fades_trigger"] then
-		shieldsFaded = shieldsFaded + 1
-		if shieldsFaded == 4 then
-			self:Message(L["phase3_message"], "Important", nil, "Alarm")
-		end
+		self:Sync("VashjBarrier")
 	end
 end
 
@@ -186,6 +186,13 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		self:Sync("VashjDeformat")
 	elseif sync == "VashjDeformat" and self:IsEventScheduled("VashjNoDeformat") then
 		self:CancelScheduledEvent("VashjNoDeformat")
+	elseif sync == "VashjBarrier" then
+		shieldsFaded = shieldsFaded + 1
+		if shieldsFaded == 4 then
+			self:Message(L["phase3_message"], "Important", nil, "Alarm")
+		elseif shieldsFaded < 4 then
+			self:Message(L["barrier_down_message"]:format(shieldsFaded), "Positive")
+		end
 	end
 end
 
