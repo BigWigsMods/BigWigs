@@ -314,7 +314,9 @@ function plugin:BigWigs_StopBar(module, text)
 	if not text then return end
 	local id = "BigWigsBar "..text
 	self:UnregisterCandyBar(id)
-	moduleBars[module][id] = nil
+	if moduleBars[module] then
+		moduleBars[module][id] = nil
+	end
 end
 
 ------------------------------
