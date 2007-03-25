@@ -60,8 +60,9 @@ function plugin:BigWigs_SendSync(msg)
 
 	if throt[sync] == nil then throt[sync] = 1 end
 	if throt[sync] == 0 or not times[sync] or (times[sync] + throt[sync]) <= GetTime() then	
+		times[sync] = GetTime()
 		SendAddonMessage("BigWigs", msg, "RAID")
-		self:CHAT_MSG_ADDON("BigWigs", msg, "RAID", playerName)
+		self:TriggerEvent("BigWigs_RecvSync", sync, rest, playerName)
 	end
 end
 
