@@ -15,10 +15,24 @@ L:RegisterTranslations("enUS", function() return {
 	enrage = "Enrage",
 	enrage_desc = "Enrage Timers",
 
+	totem = "Spitfire Totem",
+	totem_desc = "Warn for Spitfire Totem's and who cast them",
+
+	--heal = "Heal",
+	--heal_desc = "Warn when Caribdis casts a heal",
+
 	enrage_trigger = "Guards, attention!",
 	enrage_message = "%s engaged, Enrage in 10min",
 	enrage_min = "Enrage in %dmin",
 	enrage_sec = "Enrage in %dsec",
+
+	totem_trigger1 = "Guard Tidalvess casts Spitfire Totem",
+	totem_trigger2 = "Lord Karathress casts Spitfire Totem",
+	totem_message1 = "Tidalvess: Spitfire Totem",
+	totem_message2 = "Karathress: Spitfire Totem",
+
+	--heal_trigger = "", -need trigger and event name
+	--heal_message = "Caribdis Healing!",
 } end )
 
 ----------------------------------
@@ -29,7 +43,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
 mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
-mod.toggleoptions = {"enrage", "bosskill"}
+mod.toggleoptions = {"enrage", "totem", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -38,8 +52,14 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "KaraTotem", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "TidaTotem", 5)
 end
 
 ------------------------------
@@ -56,5 +76,21 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:DelayedMessage(590, L["enrage_sec"]:format(10), "Urgent")
 		self:DelayedMessage(600, L["enrage"], "Attention", nil, "Alarm")
 		self:Bar(L["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
+	end
+end
+
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+	if msg:find(L["totem_trigger1"]) then
+		self:Sync("TidaTotem")
+	elseif msg:find(L["totem_trigger2"]) then
+		self:Sync("KaraTotem")
+	end
+end
+
+function mod:BigWigs_RecvSync( sync, rest, nick )
+	if sync == "KaraTotem" and self.db.profile.totem then
+		self:Message(L["totem_message2"], "Urgent", nil, "Alarm")
+	elseif sync == "TidaTotem" and self.db.profile.totem then
+		self:Message(L["totem_message1"], "Attention")
 	end
 end
