@@ -4,6 +4,10 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["High King Maulgar"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local mage = AceLibrary("Babble-Boss-2.2")["Krosh Firehand"]
+local lock = AceLibrary("Babble-Boss-2.2")["Olm the Summoner"]
+local priest = AceLibrary("Babble-Boss-2.2")["Blindeye the Seer"]
+local shaman = AceLibrary("Babble-Boss-2.2")["Kiggler the Crazed"]
 local started
 local flurryannounced
 
@@ -197,6 +201,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = boss
+mod.wipemobs = {mage, lock, priest, shaman}
 mod.toggleoptions = {"shield", "spellshield", "summon", "whirlwind", "heal", "flurry", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
