@@ -13,27 +13,27 @@ commonWords:RegisterTranslations("enUS", function() return {
 	are = "are",
 } end)
 
-L:RegisterTranslations("deDE", function() return {
+commonWords:RegisterTranslations("deDE", function() return {
 	you = "Ihr",
 	are = "seid",
 } end )
 
-L:RegisterTranslations("koKR", function() return {
+commonWords:RegisterTranslations("koKR", function() return {
 	you = "당신은",
 	are = "",
 } end )
 
-L:RegisterTranslations("zhCN", function() return {
+commonWords:RegisterTranslations("zhCN", function() return {
 	you = "你",
 	are = "到",
 } end )
 
-L:RegisterTranslations("zhTW", function() return {
+commonWords:RegisterTranslations("zhTW", function() return {
 	you = "你",
 	are = "了",
 } end )
 
-L:RegisterTranslations("frFR", function() return {
+commonWords:RegisterTranslations("frFR", function() return {
 	you = "Vous",
 	are = "subissez",
 } end )
