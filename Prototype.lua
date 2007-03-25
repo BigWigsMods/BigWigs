@@ -1,4 +1,4 @@
---------------------------------
+﻿--------------------------------
 --      Module Prototype      --
 --------------------------------
 
@@ -10,7 +10,34 @@ local BB = AceLibrary("Babble-Boss-2.2")
 local commonWords = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 commonWords:RegisterTranslations("enUS", function() return {
 	you = "You",
+	are = "are",
 } end)
+
+L:RegisterTranslations("deDE", function() return {
+	you = "Ihr",
+	are = "seid",
+} end )
+
+L:RegisterTranslations("koKR", function() return {
+	you = "당신은",
+	are = "",
+} end )
+
+L:RegisterTranslations("zhCN", function() return {
+	you = "你",
+	are = "到",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	you = "你",
+	are = "了",
+} end )
+
+L:RegisterTranslations("frFR", function() return {
+	you = "Vous",
+	are = "subissez",
+} end )
+
 
 function BigWigs.modulePrototype:OnInitialize()
 	-- Unconditionally register, this shouldn't happen from any other place
