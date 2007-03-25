@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Doom Lord Kazzak"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 ----------------------------
 --      Localization     --
@@ -35,8 +36,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	twist_trigger = "^([^%s]+) ([^%s]+) afflicted by Twisted Reflection",
 	twist_message = "Twisted Reflection: %s",
-
-	you = "You",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -63,8 +62,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	--twist_trigger = "^([^%s]+) ([^%s]+) afflicted by Twisted Reflection",
 	--twist_message = "Twisted Reflection: %s",
-
-	--you = "You",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -91,8 +88,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	twist_trigger = "^([^|;%s]*)(.*)어긋난 반사에 걸렸습니다%.$",
 	twist_message = "어긋난 반사: %s",
-
-	you = "당신은",
 } end)
 
 ----------------------------------
@@ -152,7 +147,7 @@ function mod:Event(msg)
 	end
 	local tplayer, ttype = select(3, msg:find(L["twist_trigger"]))
 	if tplayer then
-		if tplayer == L["you"] then
+		if tplayer == L2["you"] then
 			tplayer = UnitName("player")
 		end
 		self:Sync("Twisted "..tplayer)

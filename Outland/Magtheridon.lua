@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Magtheridon"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local abycount
 
 ----------------------------
@@ -57,7 +58,6 @@ L:RegisterTranslations("enUS", function() return {
 	exhaust_trigger = "^([^%s]+) ([^%s]+) afflicted by Mind Exhaustion",
 	exhaust_bar = "[%s] Exhausted",
 
-	you = "You",
 	["Hellfire Channeler"] = true,
 } end)
 
@@ -106,7 +106,6 @@ L:RegisterTranslations("deDE", function() return {
 	exhaust_trigger = "^([^%s]+) ([^%s]+) von Gedankenersch\195\182pfung betroffen",
 	exhaust_bar = "[%s] ersch\195\182pft",
 
-	you = "Ihr",
 	["Hellfire Channeler"] = "Kanalisierer des H\195\182llenfeuers",
 } end)
 
@@ -141,7 +140,7 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "Exhaustion", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "Exhaustion", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFHeal", 0.5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFAbyssal", 0.5)
 	abycount = 1
@@ -198,7 +197,7 @@ end
 function mod:ExhaustEvent(msg)
 	local eplayer, etype = select(3, msg:find(L["exhaust_trigger"]))
 	if eplayer then
-		if eplayer == L["you"] then
+		if eplayer == L2["you"] then
 			eplayer = UnitName("player")
 		end
 		self:Sync("Exhaustion "..eplayer)
