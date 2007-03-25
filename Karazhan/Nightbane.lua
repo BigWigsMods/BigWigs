@@ -62,6 +62,8 @@ L:RegisterTranslations("enUS", function() return {
 	bones_trigger = "^([^%s]+) ([^%s]+) afflicted by Rain of Bones",
 	bones_message = "Rain of Bones on [%s]",
 	bones_whisper = "Rain of Bones on you!",
+
+	["Restless Skeleton"] = true,
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -171,6 +173,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = boss
+mod.wipemobs = {L["Restless Skeleton"]}
 mod.toggleoptions = {"engage", "phase", "fear", "blast", "charr", -1, "bones", "icon", "whisper", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
