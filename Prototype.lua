@@ -152,8 +152,14 @@ function BigWigs.modulePrototype:DelayedMessage(delay, text, priority, ...)
 	return self:ScheduleEvent("BigWigs_Message", delay, text, priority, ...)
 end
 
+local icons = setmetatable({}, {__index =
+	function(self, key)
+		self[key] = "Interface\\Icons\\" .. key
+		return self[key]
+	end
+})
 function BigWigs.modulePrototype:Bar(text, length, icon, ...)
-	self:TriggerEvent("BigWigs_StartBar", self, text, length, "Interface\\Icons\\" .. icon, ...)
+	self:TriggerEvent("BigWigs_StartBar", self, text, length, icons[icon], ...)
 end
 
 function BigWigs.modulePrototype:Sync(sync)
