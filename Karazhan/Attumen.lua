@@ -18,11 +18,11 @@ L:RegisterTranslations("enUS", function() return {
 	phase = "Phase",
 	phase_desc = "Warn when entering a new Phase",
 
-	curse = "Cursed tanks",
+	curse = "Cursed Tanks",
 	curse_desc = "Warn when a warrior or druid is cursed by Intangible Presence",
 
 	curse_trigger = "^([^%s]+) ([^%s]+) afflicted by Intangible Presence",
-	curse_message = "%s cursed!",
+	curse_message = "Tank Cursed - %s",
 
 	phase1_message = "Phase 1 - %s",
 	phase2_trigger = "%s calls for her master!",
