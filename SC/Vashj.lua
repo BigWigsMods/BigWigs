@@ -9,6 +9,8 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local deformat = nil
 local checkedForDeformat = nil
 
+local delayedElementalMessage = nil
+
 local shieldsFaded = 0
 local playerName = nil
 local phaseTwoAnnounced = nil
@@ -20,6 +22,8 @@ local phaseTwoAnnounced = nil
 L:RegisterTranslations("enUS", function() return {
 	deformat = "You need the Deformat-2.0 library in order to get loot warnings in phase 2. You can download it from http://files.wowace.com/Deformat/.",
 
+	["Tainted Elemental"] = true,
+
 	cmd = "Vashj",
 
 	phase = "Phase warnings",
@@ -30,6 +34,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	icon = "Icon",
 	icon_desc = "Put an icon on players with Static Charge and those who loot cores.",
+
+	elemental = "Tainted Elemental spawn",
+	elemental_desc = "Warn when the Tainted Elementals spawn during phase 2.",
 
 	barrier = "Barrier down",
 	barrier_desc = "Alert when the barriers go down.",
@@ -50,6 +57,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	barrier_down_message = "Barrier %d/4 down!",
 	barrier_fades_trigger = "Magic Barrier fades from Lady Vashj.",
+
+	elemental_bar = "Tainted Elemental Incoming",
+	elemental_soon_message = "Tainted Elemental soon!",
 } end )
 
 ----------------------------------
@@ -60,8 +70,24 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
 mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", -1, "static", "icon", -1, "loot", "barrier", "bosskill"}
+mod.toggleoptions = {"phase", -1, "static", "icon", -1, "elemental", "loot", "barrier", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
+
+--[[
+
+Maybe add in spawn timers in phase 2;
+
+The first Poison Elemental spawns exactly 1min into P2,
+and the following Poison Elementals spawn exactly 1min
+after the *death* of the previous Poison Elemental.
+Problem is that they despawn if not killed within a certain timer, and we can't really catch that.
+
+Coilfang Elites (nagas)  spawn every 50 seconds
+Coilfang Striders spawn every 1:03
+
+Also we might need some warnings for phase 3, specifically the Persuasion.
+
+]]
 
 ------------------------------
 --      Initialization      --
@@ -94,7 +120,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("UNIT_HEALTH")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Charge")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Charge")
@@ -142,11 +168,28 @@ function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 	end
 end
 
+local elemDies = UNITDIESOTHER:format(L["Tainted Elemental"])
+function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+	if msg == elemDies then
+		if self.db.profile.elemental then
+			self:Bar(L["elemental_bar"], 60, "Spell_Nature_ElementalShields")
+			delayedElementalMessage = self:DelayedMessage(55, L["elemental_soon_message"], "Important")
+		end
+	else
+		self:GenericBossDeath(msg)
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if not self.db.profile.phase then return end
 	if msg:find(L["phase2_trigger"]) then
-		self:Message(L["phase2_message"], "Important", nil, "Alarm")
+		if self.db.profile.phase then
+			self:Message(L["phase2_message"], "Important", nil, "Alarm")
+		end
 		shieldsFaded = 0
+		if self.db.profile.elemental then
+			self:Bar(L["elemental_bar"], 60, "Spell_Nature_ElementalShields")
+			delayedElementalMessage = self:DelayedMessage(55, L["elemental_soon_message"], "Important")
+		end
 	end
 end
 
@@ -194,6 +237,9 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		shieldsFaded = shieldsFaded + 1
 		if shieldsFaded == 4 and self.db.profile.phase then
 			self:Message(L["phase3_message"], "Important", nil, "Alarm")
+
+			self:CancelScheduledEvent(delayedElementalMessage)
+			self:TriggerEvent("BigWigs_StopBar", L["elemental_bar"])
 		elseif shieldsFaded < 4 and self.db.profile.barrier then
 			self:Message(L["barrier_down_message"]:format(shieldsFaded), "Attention")
 		end
