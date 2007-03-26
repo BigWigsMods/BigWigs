@@ -119,8 +119,8 @@ L:RegisterTranslations("koKR", function() return {
 	heal = "치유",
 	heal_desc = "지옥불 역술사 치유 시전시 경고",
 
-	nova = "파멸의 회오리",
-	nova_desc = "파멸의 회오리 지속시간 바",
+	nova = "파열의 회오리",
+	nova_desc = "파열의 회오리 지속시간 바",
 
 	banish = "추방",
 	banish_desc = ("%s 추방시 알림"):format(boss),
@@ -145,8 +145,8 @@ L:RegisterTranslations("koKR", function() return {
 	heal_trigger = "암흑의 치유 시전을 시작합니다.",
 	heal_message = "치유 시전!",
 
-	nova_ = "파멸의 회오리!",
-	nova_warning = "곧 파멸의 회오리",
+	nova_ = "파열의 회오리",
+	nova_warning = "곧 파열의 회오리",
 
 	banish_trigger = "안 돼, 다시 그럴 수는 없다!",
 	banish_message = "약 10초 동안 추방됨",
