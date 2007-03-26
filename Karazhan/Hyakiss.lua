@@ -57,7 +57,6 @@ function mod:Web(msg)
 			wplayer = UnitName("player")
 		end
 		self:Sync("HyakissWeb "..wplayer)
-		end
 	end
 end
 
