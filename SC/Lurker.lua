@@ -98,7 +98,7 @@ function mod:NextSurface()
 		self:DelayedMessage(60, L["emerge_message"], "Attention")
 		self:Bar(L["emerge_bar"], 60, "Spell_Frost_Stun")
 	end
-	if self.db.profile.sprout then
+	if self.db.profile.spout then
 		self:Bar(L["spout_bar1"], 65, "INV_Weapon_Rifle_02")
 		self:Bar(L["spout_bar2"], 115, "INV_Weapon_Rifle_02")
 		self:DelayedMessage(65, L["spout_message1"], "Attention")
@@ -115,3 +115,4 @@ end
 function mod:SpoutBar()
 	self:Bar(L["spout_message1"], 20, "INV_Weapon_Rifle_02")
 end
+
