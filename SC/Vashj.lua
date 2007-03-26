@@ -29,7 +29,7 @@ L:RegisterTranslations("enUS", function() return {
 	static_desc = "Warn about Static Charge on players.",
 
 	icon = "Icon",
-	icon_desc = "Put an icon on players with Static Charge and those who loot cores.(requires promoted or higher)",
+	icon_desc = "Put an icon on players with Static Charge and those who loot cores.",
 
 	barrier = "Barrier down",
 	barrier_desc = "Alert when the barriers go down.",
@@ -125,8 +125,8 @@ function mod:CHAT_MSG_LOOT(msg)
 	end
 
 	if type(item) == "string" and type(player) == "string" then
-		local itemName, itemLink, itemRarity = GetItemInfo(item)
-		if itemRarity == 1 and itemLink then
+		local itemLink, itemRarity = select(2, GetItemInfo(item))
+		if itemRarity and itemRarity == 1 and itemLink then
 			local itemId = select(3, itemLink:find("item:(%d+):"))
 			if not itemId then return end
 			itemId = tonumber(itemId:trim())
@@ -144,7 +144,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if not self.db.profile.phase then return end
-	if msg == L["phase2_trigger"] then
+	if msg:find(L["phase2_trigger"]) then
 		self:Message(L["phase2_message"], "Important", nil, "Alarm")
 		shieldsFaded = 0
 	end
@@ -154,7 +154,7 @@ function mod:UNIT_HEALTH(msg)
 	if not self.db.profile.phase then return end
 	if UnitName(msg) == boss then
 		local hp = UnitHealth(msg)
-		if hp > 70 and hp < 73 and not phaseTwoAnnounced then
+		if hp > 70 and hp < 75 and not phaseTwoAnnounced then
 			self:Message(L["phase2_soon_message"], "Attention")
 			phaseTwoAnnounced = true
 		elseif hp > 80 and phaseTwoAnnounced then
