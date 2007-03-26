@@ -189,8 +189,8 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "EnfeebleEvent")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "MalchezaarEnfeeble", 20)
-	self:TriggerEvent("BigWigs_ThrottleSync", "MalchezaarNova", 20)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MalchezaarEnfeeble", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MalchezaarNova", 10)
 end
 
 ------------------------------

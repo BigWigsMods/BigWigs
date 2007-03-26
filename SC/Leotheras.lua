@@ -82,7 +82,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "LeoWhisp", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "LeoWhisp", 2)
 
 	self:RegisterEvent("UNIT_HEALTH")
 	imagewarn = nil

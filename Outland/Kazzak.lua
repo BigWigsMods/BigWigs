@@ -116,7 +116,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "Twisted", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "Twisted", 2)
 end
 
 ------------------------------

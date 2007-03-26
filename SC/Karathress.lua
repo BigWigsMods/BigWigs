@@ -33,6 +33,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	--heal_trigger = "", -need trigger and event name
 	--heal_message = "Caribdis Healing!",
+
+	["Fathom-Guard Sharkkis"] = true, --hunter
+	["Fathom-Guard Tidalvess"] = true, --shaman
+	["Fathom-Guard Caribdis"] = , --priest
 } end )
 
 ----------------------------------
@@ -43,6 +47,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
 mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
+mod.wipemobs = {L["Fathom-Guard Sharkkis"], L["Fathom-Guard Tidalvess"], L["Fathom-Guard Caribdis"]}
 mod.toggleoptions = {"enrage", "totem", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 

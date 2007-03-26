@@ -224,10 +224,9 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "BlindeyeHeal", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "BlindeyePOH", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "BlindeyeShield", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "KroshSpellShield", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "BlindeyePrayer", 4)
+	self:TriggerEvent("BigWigs_ThrottleSync", "BlindeyeShield", 4)
+	self:TriggerEvent("BigWigs_ThrottleSync", "KroshSpellShield", 4)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MaulgarWhirldwind", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "OlmSummon", 5)
 end
