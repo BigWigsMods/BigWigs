@@ -45,6 +45,10 @@ function BigWigs.modulePrototype:OnInitialize()
 	BigWigs:RegisterModule(self.name, self)
 end
 
+function BigWigs.modulePrototype:IsModuleActive()
+	return BigWigs:IsModuleActive(self)
+end
+
 function BigWigs.modulePrototype:IsBossModule()
 	return self.zonename and self.enabletrigger and true
 end
@@ -149,9 +153,17 @@ function BigWigs.modulePrototype:CheckForEngage()
 	end
 end
 
+-- 2.1.0 compat
+local fdFunc = nil
+if type(UnitIsFeignDeath) == "function" then
+	fdFunc = function() return UnitIsFeignDeath("player") end
+else
+	fdFunc = function() return IsFeignDeath() end
+end
+
 function BigWigs.modulePrototype:CheckForWipe()
 	local running = self:IsEventScheduled(self:ToString().."_CheckWipe")
-	if IsFeignDeath() then
+	if fdFunc() then
 		if not running then
 			self:ScheduleRepeatingEvent(self:ToString().."_CheckWipe", self.CheckForWipe, 2, self)
 		end
