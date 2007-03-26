@@ -86,7 +86,7 @@ function mod:NextDive()
 		self:Bar(L["dive_bar"], 90, "Spell_Frost_ArcticWinds")
 	end
 
-	self:ScheduleEvent("bwdive", self.NextSurface, 90, self)
+	self:ScheduleEvent(self.NextSurface, 90, self)
 end
 
 function mod:NextSurface()
@@ -109,7 +109,7 @@ function mod:NextSurface()
 		self:ScheduleEvent("bwspoutbar2", self.SpoutBar, 115, self)
 	end
 
-	self:ScheduleEvent("bwsurface", self.NextDive, 60, self)
+	self:ScheduleEvent(self.NextDive, 60, self)
 end
 
 function mod:SpoutBar()

@@ -55,14 +55,14 @@ end
 
 function mod:Web(msg)
 	if msg:find(L["web_trigger"]) then
-		local webPlayer, webType = select(3, msg:find(L["web_trigger"]))
-		if webPlayer and webType then
-			if webPlayer == L2["you"] then
-				webPlayer = UnitName("player")
+		local wplayer, wtype = select(3, msg:find(L["web_trigger"]))
+		if wplayer and wtype then
+			if wplayer == L2["you"] and wtype == L2["are"] then
+				wplayer = UnitName("player")
 			end
 			local t = GetTime()
-			if not times[webPlayer] or (times[webPlayer] and (times[webPlayer] + 5) < t) then
-				self:Sync("HyakissWeb "..webPlayer)
+			if not times[wplayer] or (times[wplayer] and (times[wplayer] + 5) < t) then
+				self:Sync("HyakissWeb "..wplayer)
 			end
 		end
 	end

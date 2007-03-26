@@ -227,7 +227,7 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
+function mod:BigWigs_RecvSync(sync)
 	if sync == "MalchezaarEnfeeble" then
 		if self.db.profile.enfeeble then
 			afflict = true

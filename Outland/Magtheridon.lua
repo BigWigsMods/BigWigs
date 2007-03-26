@@ -245,15 +245,15 @@ end
 --mind exhastion bars can get spammy, so off by default
 function mod:ExhaustEvent(msg)
 	local eplayer, etype = select(3, msg:find(L["exhaust_trigger"]))
-	if eplayer then
-		if eplayer == L2["you"] then
+	if eplayer and etype then
+		if eplayer == L2["you"] and etype == L2["are"] then
 			eplayer = UnitName("player")
 		end
 		self:Sync("Exhaustion "..eplayer)
 	end
 end
 
-function mod:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "Exhaustion" and rest and not self.db.profile.exhaust then
 		self:Bar(L["exhaust_bar"]:format(rest), 90, "Spell_Shadow_Teleport")
 	elseif sync == "MagHFHeal" and self.db.profile.heal then

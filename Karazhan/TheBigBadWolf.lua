@@ -111,8 +111,8 @@ end
 
 function mod:RidingEvent(msg)
 	local rplayer, rtype = select(3, msg:find(L["riding_trigger"]))
-	if rplayer then
-		if rplayer == L2["you"] then
+	if rplayer and rtype then
+		if rplayer == L2["you"] and rtype == L2["are"] then
 			rplayer = playerName
 		end
 		if rplayer == playerName and self.db.profile.youriding then

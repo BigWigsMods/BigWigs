@@ -215,15 +215,15 @@ end
 
 function mod:GarroteEvent(msg)
 	local gplayer, gtype = select(3, msg:find(L["garrote_trigger"]))
-	if gplayer then
-		if gplayer == L2["you"] then
+	if gplayer and gtype then
+		if gplayer == L2["you"] and gtype == L2["are"] then
 			gplayer = UnitName("player")
 		end
 		self:Sync("MoroesGarrote "..gplayer)
 	end
 end
 
-function mod:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "MoroesGarrote" and rest and self.db.profile.garrote then
 		self:Message(L["garrote_message"]:format(rest), "Attention")
 		if self.db.profile.icon then

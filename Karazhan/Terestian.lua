@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Terestian Illhoof"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 ----------------------------
 --      Localization     --
@@ -31,7 +32,6 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_warning = "Enrage in %d sec!",
 	enrage_bar = "Enrage",
 
-	sacrifice_you = "You",
 	sacrifice_trigger = "^([^%s]+) ([^%s]+) afflicted by Sacrifice",
 	sacrifice_message = "%s is being Sacrificed!",
 	sacrifice_bar = "Sacrifice: %s",
@@ -50,7 +50,6 @@ L:RegisterTranslations("deDE", function() return {
 	weak = "Geschw\195\164cht",
 	weak_desc = "Warnt wenn Terestian geschw\195\164cht ist",
 
-	sacrifice_you = "Ihr",
 	sacrifice_trigger = "^([^%s]+) ([^%s]+) von Opferung betroffen",
 	sacrifice_message = "%s wird geopfert!",
 	sacrifice_bar = "Opferung: %s",
@@ -81,7 +80,6 @@ L:RegisterTranslations("frFR", function() return {
 	enrage_warning = "Enrag\195\169 dans %d sec!",
 	enrage_bar = "Enrag\195\169",
 
-	sacrifice_you = "Vous",
 	sacrifice_trigger = "^([^%s]+) ([^%s]+) les effets .* Sacrifice",
 	sacrifice_message = "%s est sacrifi\195\169!",
 	sacrifice_bar = "Sacrifice: %s",
@@ -112,7 +110,6 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_warning = "%d초 이내 격노!",
 	enrage_bar = "격노",
 
-	sacrifice_you = "당신은",
 	sacrifice_trigger = "^([^|;%s]*)(.*)희생에 걸렸습니다%.$",
 	sacrifice_message = "%s님이 희생되었습니다!",
 	sacrifice_bar = "희생: %s",
@@ -174,7 +171,7 @@ function mod:CheckSacrifice(msg)
 	if not self.db.profile.sacrifice then return end
 	local splayer, stype = select(3, msg:find(L["sacrifice_trigger"]))
 	if splayer then
-		if splayer == L["sacrifice_you"] then
+		if splayer == L2["you"] and stype == L2["are"] then
 			splayer = UnitName("player")
 		end
 		self:Message(L["sacrifice_message"]:format(splayer), "Attention")

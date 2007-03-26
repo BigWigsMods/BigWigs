@@ -146,8 +146,8 @@ function mod:Event(msg)
 		self:Message(L["mark_message"], "Positive", true, "Alarm")
 	end
 	local tplayer, ttype = select(3, msg:find(L["twist_trigger"]))
-	if tplayer then
-		if tplayer == L2["you"] then
+	if tplayer and ttype then
+		if tplayer == L2["you"] and ttype == L2["are"] then
 			tplayer = UnitName("player")
 		end
 		self:Sync("Twisted "..tplayer)

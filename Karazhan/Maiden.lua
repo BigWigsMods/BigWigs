@@ -164,8 +164,8 @@ end
 
 function mod:HolyFireEvent(msg)
 	local bplayer, btype = select(3, msg:find(L["holyfire_trigger"]))
-	if bplayer then
-		if bplayer == L2["you"] then
+	if bplayer and btype then
+		if bplayer == L2["you"] and btype == L2["are"] then
 			bplayer = UnitName("player")
 		end
 		self:Sync("MaidenHolyFire "..bplayer)
@@ -177,7 +177,7 @@ function mod:NextRepentance()
 	self:Bar(L["repentance_nextbar"], 33, "Spell_Holy_PrayerOfHealing")
 end
 
-function mod:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "MaidenHolyFire" and rest and self.db.profile.holyfire then
 		self:Message(L["holyfire_message"]:format(rest), "Important")
 		if self.db.profile.icon then

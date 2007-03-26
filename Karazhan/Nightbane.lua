@@ -203,7 +203,7 @@ end
 --     Event Handlers    --
 ------------------------------
 
-function mod:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "NightbaneFear" and self.db.profile.fear then
 		self:CancelScheduledEvent("fear")
 		self:Bar(L["fear_bar"], 2, "Spell_Shadow_PsychicScream")
@@ -252,8 +252,8 @@ function mod:Event(msg)
 	end
 	if not bones then
 		local bplayer, btype = select(3, msg:find(L["bones_trigger"]))
-		if bplayer then
-			if bplayer == L2["you"] then
+		if bplayer and btype then
+			if bplayer == L2["you"] and btype == L2["are"] then
 				bplayer = UnitName("player")
 			end
 			self:Sync("Bones "..bplayer)

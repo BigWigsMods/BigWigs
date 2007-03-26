@@ -29,7 +29,7 @@ L:RegisterTranslations("enUS", function() return {
 	static_desc = "Warn about Static Charge on players.",
 
 	icon = "Icon",
-	icon_desc = "Put an icon on players with Static Charge and those who loot cores.",
+	icon_desc = "Put an icon on players with Static Charge and those who loot cores.(requires promoted or higher)",
 
 	barrier = "Barrier down",
 	barrier_desc = "Alert when the barriers go down.",
@@ -164,9 +164,9 @@ function mod:UNIT_HEALTH(msg)
 end
 
 function mod:Charge(msg)
-	local splayer = select(3, msg:find(L["static_charge_trigger"]))
-	if splayer then
-		if splayer == L2["you"] then
+	local splayer, stype = select(3, msg:find(L["static_charge_trigger"]))
+	if splayer and stype then
+		if splayer == L2["you"] and stype == L2["are"] then
 			splayer = playerName
 		end
 		self:Sync("VashjStatic " .. splayer)

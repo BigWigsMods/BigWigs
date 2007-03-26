@@ -183,8 +183,8 @@ end
 
 function mod:PoisonEvent(msg)
 	local pplayer, ptype = select(3, msg:find(L["poison_trigger"]))
-	if pplayer then
-		if pplayer == L2["you"] then
+	if pplayer and ptype then
+		if pplayer == L2["you"] and ptype == L2["are"] then
 			pplayer = UnitName("player")
 		end
 		if self.db.profile.poison then

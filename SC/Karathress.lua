@@ -92,7 +92,7 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	end
 end
 
-function mod:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync(sync)
 	if sync == "KaraTotem" and self.db.profile.totem then
 		self:Message(L["totem_message2"], "Urgent", nil, "Alarm")
 	elseif sync == "TidaTotem" and self.db.profile.totem then

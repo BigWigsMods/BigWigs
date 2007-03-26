@@ -143,15 +143,15 @@ end
 
 function mod:Event(msg)
 	local wplayer, wtype = select(3, msg:find(L["whisper_trigger"]))
-	if wplayer then
-		if wplayer == L2["you"] then
+	if wplayer and wtype then
+		if wplayer == L2["you"] and wtype == L2["are"] then
 			wplayer = UnitName("player")
 		end
 		self:Sync("LeoWhisp "..wplayer)
 	end
 end
 
-function mod:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "LeoWhisp" and rest and self.db.profile.whisper then
 		self:Message(L["whisper_message"]:format(rest), "Attention")
 		self:Bar(L["whisper_message"], 30, "Spell_Shadow_ManaFeed")

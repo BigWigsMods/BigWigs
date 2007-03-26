@@ -81,15 +81,15 @@ end
 
 function mod:Event(msg)
 	local gplayer, gtype = select(3, msg:find(L["grave_trigger"]))
-	if gplayer then
-		if gplayer == L2["you"] then
+	if gplayer and gtype then
+		if gplayer == L2["you"] and gtype == L2["are"] then
 			gplayer = UnitName("player")
 		end
 		self:Sync("MoroGrave "..gplayer)
 	end
 end
 
-function mod:BigWigs_RecvSync( sync, rest, nick )
+function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "MoroGrave" and rest and self.db.profile.grave then
 		self:Message(L["grave_message"]:format(rest), "Urgent")
 		self:Bar(L["grave_message"]:format(rest), 5, "Spell_Shadow_DemonBreath")

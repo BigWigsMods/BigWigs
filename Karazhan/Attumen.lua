@@ -139,9 +139,9 @@ end
 
 function mod:CurseEvent(msg)
 	local cplayer, ctype = select(3, msg:find(L["curse_trigger"]))
-	if cplayer and self.db.profile.curse then
+	if cplayer and ctype and self.db.profile.curse then
 		local id = nil
-		if cplayer == L2["you"] then
+		if cplayer == L2["you"] and ctype == L2["are"] then
 			cplayer = UnitName("player")
 			id = "player"
 		else
