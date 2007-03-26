@@ -238,7 +238,9 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		if shieldsFaded == 4 and self.db.profile.phase then
 			self:Message(L["phase3_message"], "Important", nil, "Alarm")
 
-			self:CancelScheduledEvent(delayedElementalMessage)
+			if delayedElementalMessage and self:IsEventScheduled(delayedElementalMessage) then
+				self:CancelScheduledEvent(delayedElementalMessage)
+			end
 			self:TriggerEvent("BigWigs_StopBar", self, L["elemental_bar"])
 		elseif shieldsFaded < 4 and self.db.profile.barrier then
 			self:Message(L["barrier_down_message"]:format(shieldsFaded), "Attention")
