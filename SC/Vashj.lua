@@ -18,7 +18,7 @@ local phaseTwoAnnounced = nil
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	deformat = "You need the Deformat-2.0 library in order to get loot warnings in phase 2.",
+	deformat = "You need the Deformat-2.0 library in order to get loot warnings in phase 2. You can download it from http://files.wowace.com/Deformat/.",
 
 	cmd = "Vashj",
 
