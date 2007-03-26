@@ -36,7 +36,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Fathom-Guard Sharkkis"] = true, --hunter
 	["Fathom-Guard Tidalvess"] = true, --shaman
-	["Fathom-Guard Caribdis"] = , --priest
+	["Fathom-Guard Caribdis"] = true, --priest
 } end )
 
 ----------------------------------
