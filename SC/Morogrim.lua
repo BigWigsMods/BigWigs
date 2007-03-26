@@ -5,6 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Morogrim Tidewalker"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+local times
 
 ----------------------------
 --      Localization     --
@@ -59,7 +60,8 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "MoroGrave", 0.1)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MoroGrave", 0)
+	times = {}
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -85,14 +87,20 @@ function mod:Event(msg)
 		if gplayer == L2["you"] and gtype == L2["are"] then
 			gplayer = UnitName("player")
 		end
-		self:Sync("MoroGrave "..gplayer)
+		local t = GetTime()
+		if not times[gplayer] or (times[gplayer] and (times[gplayer] + 5) < t) then
+			self:Sync("MoroGrave "..gplayer)
+		end
 	end
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "MoroGrave" and rest and self.db.profile.grave then
-		self:Message(L["grave_message"]:format(rest), "Urgent")
-		self:Bar(L["grave_message"]:format(rest), 5, "Spell_Shadow_DemonBreath")
+		local t = GetTime()
+		if not times[rest] or (times[rest] and (times[rest] + 5) < t) then
+			self:Message(L["grave_message"]:format(rest), "Urgent")
+			self:Bar(L["grave_message"]:format(rest), 5, "Spell_Shadow_DemonBreath")
+			times[rest] = t
+		end
 	end
 end
-
