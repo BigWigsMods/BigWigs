@@ -52,6 +52,43 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_bar = "Enrage",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	enrage = "Wutanfall",
+	enrage_desc = "Warnt vor dem Wutanfall nach 10min.",
+
+	grave = "Nasses Grab",
+	grave_desc = "Zeigt an, wer im Nassen Grab ist",
+
+	gravealert = "N\195\164chstes Nasses Grab",
+	gravealert_desc = "Warnt vor dem n\195\164chsten Nassen Grab",
+
+	murloc = "Murlocs",
+	murloc_desc = "Warnt vor ankommenden Murlocs",
+
+	grobules = "Incoming Grobules", -- to translate
+	grobules_desc = "Warn for incoming Watery Grobules", -- to translate
+
+	grave_trigger = "^([^%s]+) ([^%s]+) von Nasses Grab betroffen",
+	grave_message = "Nasses Grab: %s",
+
+	gravealert_trigger = "schickt seine Feinde",
+	gravealert_message = "Nasses Grab kommt!",
+	grave_bar = "Nasses Grab",
+
+	murloc_bar = "n\195\164chste Murlocs",
+	murloc_trigger = "Murlocs",
+	murloc_message = "Murlocs kommen!",
+	murlocs_soon_message = "Murlocs bald!",
+
+	grobules_trigger = "watery grobules", -- to translate
+	grobules_message = "Incoming Grobules!", -- to translate
+
+	enrage_message = "%s angegriffen, Wutanfall in 10min!",
+	enrage_min = "Wutanfall in %d min",
+	enrage_sec = "Wunanfall in %d sec!",
+	enrage_bar = "Wutanfall",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------
