@@ -116,6 +116,56 @@ L:RegisterTranslations("deDE", function() return {
 	bones_whisper = "Knochenregen auf DIR!",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	fear = "Alerte Fear",
+	fear_desc = "Pr\195\169viens du Rugissement puissant.",
+
+	charr = "Terre calcin\195\169e",
+	charr_desc = "Pr\195\169viens lorsque vous vous trouvez sur une Terre calcin\195\169e.",
+
+	phase = "Alertes Phases",
+	phase_desc = ("Pr\195\169viens quand %s change de phase."):format(boss),
+
+	engage = "Alerte Engagement",
+	engage_desc = "Pr\195\169viens quand Plaie-de-Nuit est engag\195\169.",
+
+	blast = "Explosion de fum\195\169e",
+	blast_desc = "Pr\195\169viens lorsque Plaie-de-Nuit lance Explosion de fum\195\169e.",
+
+	bones = "Pluie d'os",
+	bones_desc = "Pr\195\169viens du joueur qui se prend la Pluie d'os de Plaie-de-Nuit.",
+
+	icon = "Placer une ic\195\180ne",
+	icon_desc = "Place une ic\195\180ne de raid sur le joueur affect\195\169 par la Pluie d'os(requiert d'\195\170tre promus ou plus).",
+
+	whisper = "Message",
+	whisper_desc = "Envoyer un message \195\160 la personne affect\195\169e par la Pluie d'os(requires promoted or higher)",
+
+	fear_trigger = "lance Rugissement puissant",
+	fear_message = "Fear dans 2 sec!",
+	fear_warning = "Fear proche !",
+	fear_bar = "Fear",
+
+	charr_trigger = "Vous subissez les effets de Terre calcin\195\169e.",
+	charr_message = "Terre calcin\195\169e sur VOUS !",
+
+	blast_trigger = "lance Explosion de fum\195\169e",
+	blast_message = "Explosion de fum\195\169e proche !",
+
+	airphase_trigger = "Mis\195\169rable vermine. Je vais vous exterminer des airs !",
+	landphase_trigger1 = "Enough! I shall land and crush you myself!",
+	landphase_trigger2 = "Insectes ! Je vais vous montrer de quel bois je me chauffe !",
+	airphase_message = "D\195\169ccolage !",
+	landphase_message = "Aterrissage !",
+
+	engage_trigger = "Fous ! Je vais mettre un terme \195\160 vos souffrances !",
+	engage_message = "Plaie-de-Nuit engag195\169",
+
+	bones_trigger = "^([^%s]+) ([^%s]+) subit les effets de Pluis d'os",
+	bones_message = "Pluie d'os sur [%s]",
+	bones_whisper = "Pluie d'os sur VOUS !",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	fear = "공포 경고",
 	fear_desc = "우레와 같은 울부짖음에 대한 경고",
