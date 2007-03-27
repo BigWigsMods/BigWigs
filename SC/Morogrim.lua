@@ -82,7 +82,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "MorogrimGrave", 0)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MoroGrave", 0)
 end
 
 ------------------------------
@@ -108,7 +108,7 @@ function mod:Event(msg)
 		if gplayer == L2["you"] and gtype == L2["are"] then
 			gplayer = UnitName("player")
 		end
-		self:Sync("MorogrimGrave " .. gplayer)
+		self:Sync("MoroGrave " .. gplayer)
 	end
 end
 
@@ -147,7 +147,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Bar(L["murloc_bar"], 60, "INV_Misc_Head_Murloc_01")
 			self:DelayedMessage(55, L["murlocs_soon_message"], "Attention")
 		end
-	elseif sync == "MorogrimGrave" and rest then
+	elseif sync == "MoroGrave" and rest then
 		inGrave[rest] = true
 		self:ScheduleEvent("Grave", self.GraveWarn, 0.5, self)
 	end
