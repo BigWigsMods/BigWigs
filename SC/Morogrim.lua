@@ -82,6 +82,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "MorogrimGrave", 0)
 end
 
 ------------------------------
@@ -107,18 +108,21 @@ function mod:Event(msg)
 		if gplayer == L2["you"] and gtype == L2["are"] then
 			gplayer = UnitName("player")
 		end
-		inGrave[#inGrave + 1] = gplayer
-		if #inGrave > 3 then
-			self:GraveWarn()
-		else
-			self:ScheduleEvent("Grave", self.GraveWarn, 0.4)
-		end
+		self:Sync("MorogrimGrave " .. gplayer)
 	end
 end
 
 function mod:GraveWarn()
-	if self.db.profile.grave and #inGrave > 0 then
-		self:Message(L["grave_message"]:format(table.concat(inGrave, ",")), "Important", nil, "Alert")
+	if self.db.profile.grave then
+		local msg = nil
+		for k in pairs(inGrave) do
+			if not msg then
+				msg = k
+			else
+				msg = msg .. ", " .. k
+			end
+		end
+		self:Message(L["grave_message"]:format(msg), "Important", nil, "Alert")
 	end
 	for k in pairs(inGrave) do inGrave[k] = nil end
 end
@@ -143,6 +147,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Bar(L["murloc_bar"], 60, "INV_Misc_Head_Murloc_01")
 			self:DelayedMessage(55, L["murlocs_soon_message"], "Attention")
 		end
+	elseif sync == "MorogrimGrave" and rest then
+		inGrave[rest] = true
 	end
 end
 
