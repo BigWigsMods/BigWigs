@@ -166,6 +166,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Magtheridon's Lair"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = {L["Hellfire Channeler"], boss}
+mod.wipemobs = {L["Hellfire Channeler"]}
 mod.toggleoptions = {"escape", -1, "abyssal", "heal", -1, "nova", "banish", -1, "exhaust", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -191,7 +192,7 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "Exhaustion", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFHeal", 0.5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFAbyssal", 0.5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFAbyssal", 0.8)
 	abycount = 1
 end
 
