@@ -13,26 +13,26 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Karathress",
 
 	enrage = "Enrage",
-	enrage_desc = "Enrage Timers",
+	enrage_desc = "Enrage timer.",
 
 	totem = "Spitfire Totem",
-	totem_desc = "Warn for Spitfire Totem's and who cast them",
+	totem_desc = "Warn for Spitfire Totems and who cast them.",
 
-	--heal = "Heal",
-	--heal_desc = "Warn when Caribdis casts a heal",
+	heal = "Heal",
+	heal_desc = "Warn when Caribdis casts a heal.",
 
 	enrage_trigger = "Guards, attention!",
 	enrage_message = "%s engaged, Enrage in 10min",
 	enrage_min = "Enrage in %dmin",
-	enrage_sec = "Enrage in %dsec",
+	enrage_sec = "Enrage in %dsec!",
 
 	totem_trigger1 = "Guard Tidalvess casts Spitfire Totem",
 	totem_trigger2 = "Lord Karathress casts Spitfire Totem",
 	totem_message1 = "Tidalvess: Spitfire Totem",
 	totem_message2 = "Karathress: Spitfire Totem",
 
-	--heal_trigger = "", -need trigger and event name
-	--heal_message = "Caribdis Healing!",
+	heal_trigger = "Caribdis begins to cast Healing Wave",
+	heal_message = "Caribdis casting heal!",
 
 	["Fathom-Guard Sharkkis"] = true, --hunter
 	["Fathom-Guard Tidalvess"] = true, --shaman
@@ -48,7 +48,7 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
 mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
 mod.wipemobs = {L["Fathom-Guard Sharkkis"], L["Fathom-Guard Tidalvess"], L["Fathom-Guard Caribdis"]}
-mod.toggleoptions = {"enrage", "totem", "bosskill"}
+mod.toggleoptions = {"heal", "enrage", "totem", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -58,6 +58,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -81,6 +82,12 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:DelayedMessage(590, L["enrage_sec"]:format(10), "Urgent")
 		self:DelayedMessage(600, L["enrage"], "Attention", nil, "Alarm")
 		self:Bar(L["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
+	end
+end
+
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+	if msg:find(L["heal_trigger"]) and self.db.profile.heal then
+		self:Message(L["heal_message"], "Important", nil, "Long")
 	end
 end
 
