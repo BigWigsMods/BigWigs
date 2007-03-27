@@ -149,6 +149,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	elseif sync == "MorogrimGrave" and rest then
 		inGrave[rest] = true
+		self:ScheduleEvent("Grave", self.GraveWarn, 0.5, self)
 	end
 end
 
