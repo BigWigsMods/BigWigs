@@ -39,6 +39,34 @@ L:RegisterTranslations("enUS", function() return {
 	["Fathom-Guard Caribdis"] = true, --priest
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	enrage = "Wutanfall",
+	enrage_desc = "Wutanfall Timer.",
+
+	totem = "Feuerspuckendes Totem",
+	totem_desc = "Warnt vor dem Feuerspuckenden Totem und wer es aufstellt.",
+
+	heal = "Heilung",
+	heal_desc = "Warnt, wenn Caribdis anf\195\164ngt zu heilen.",
+
+	enrage_trigger = "Achtung, Wachen! Wir haben Besuch...",
+	enrage_message = "%s angegriffen, Wutanfall in 10min",
+	enrage_min = "Wutanfall in %dmin",
+	enrage_sec = "Wutanfall in %dsec!",
+
+	totem_trigger1 = "Tiefenw\195\164chter Flutvess wirkt Feuerspuckendes Totem",
+	totem_trigger2 = "Tiefenlord Karathress wirkt Feuerspuckendes Totem",
+	totem_message1 = "Flutvess: Feuerspuckendes Totem",
+	totem_message2 = "Karathress: Feuerspuckendes Totem",
+
+	heal_trigger = "Caribdis beginnt Welle der Heilung zu wirken", --to verify
+	heal_message = "Caribdis heilt!",
+
+	["Fathom-Guard Sharkkis"] = "Tiefenw\195\164chter Haikis", --hunter
+	["Fathom-Guard Tidalvess"] = "Tiefenw\195\164chter Flutvess", --shaman
+	["Fathom-Guard Caribdis"] = "Tiefenw\195\164chter Caribdis", --priest
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------
