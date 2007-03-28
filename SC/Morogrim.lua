@@ -106,10 +106,6 @@ mod.enabletrigger = boss
 mod.toggleoptions = {"tidal", "enrage", "grave", "gravealert", "murloc", "grobules", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
---[[
-"<82.9> Morogrim Tidewalker begins to cast Tidal Wave. -[spell_CvCdmg]-", -- [883]
---]]
-
 ------------------------------
 --      Initialization      --
 ------------------------------
