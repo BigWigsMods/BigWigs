@@ -19,6 +19,9 @@ L:RegisterTranslations("enUS", function() return {
 	enrage = "Enrage",
 	enrage_desc = "Warn for the enrage after 10min.",
 
+	tidal = "Tidal Wave",
+	tidal_desc = "Warn when Morogrim casts Tidal Wave.",
+
 	grave = "Watery Grave",
 	grave_desc = "Alert who has watery grave.",
 
@@ -87,6 +90,9 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_min = "Wutanfall in %d min",
 	enrage_sec = "Wunanfall in %d sec!",
 	enrage_bar = "Wutanfall",
+	
+	tidal_trigger = "Morogrim Tidewalker begins to cast Tidal Wave.",
+	tidal_message = "Tidal Wave!",
 } end )
 
 ----------------------------------
@@ -97,8 +103,12 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
 mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
-mod.toggleoptions = {"enrage", "grave", "gravealert", "murloc", "grobules", "bosskill"}
+mod.toggleoptions = {"tidal", "enrage", "grave", "gravealert", "murloc", "grobules", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
+
+--[[
+"<82.9> Morogrim Tidewalker begins to cast Tidal Wave. -[spell_CvCdmg]-", -- [883]
+--]]
 
 ------------------------------
 --      Initialization      --
@@ -112,6 +122,8 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
@@ -120,11 +132,18 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MoroGrave", 0)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MoroTidal", 5)
 end
 
 ------------------------------
 --    Event Handlers     --
 ------------------------------
+
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+	if msg == L["tidal_trigger"] then
+		self:Sync("MoroTidal")
+	end
+end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if self.db.profile.gravealert and msg:find(L["gravealert_trigger"]) then
@@ -187,6 +206,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "MoroGrave" and rest then
 		inGrave[rest] = true
 		self:ScheduleEvent("Grave", self.GraveWarn, 0.5, self)
+	elseif sync == "MoroTidal" and self.db.profile.tidal then
+		self:Message(L["tidal_message"], "Urgent", nil, "Alarm")
 	end
 end
 
