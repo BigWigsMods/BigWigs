@@ -82,7 +82,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	fear = "恐懼警報",
-	fear_desc = "敵人發動群體恐懼時發出警報",
+	fear_desc = "亞爾基公主發動群體恐懼時發出警報",
 
 	heal = "治療警報",
 	heal_desc = "亞爾基公主施放治療時發出警報",

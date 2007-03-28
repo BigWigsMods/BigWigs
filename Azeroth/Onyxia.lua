@@ -120,7 +120,7 @@ L:RegisterTranslations("zhTW", function() return {
 	onyfear = "低沉咆哮",
 	onyfear_desc = "第三階段低沉咆哮警報",
 
-	deepbreath_trigger = "深深地吸了一口氣",
+	deepbreath_trigger = "%s深深地吸了一口氣",
 	phase2_trigger = "從上空",
 	phase3_trigger = "看起來需要再給你一次教訓",
 	fear_trigger = "奧妮克希亞開始施放低沉咆哮。",

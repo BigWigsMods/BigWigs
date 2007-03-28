@@ -99,11 +99,11 @@ L:RegisterTranslations("zhTW", function() return {
 	enrage = "狂怒警報",
 	enrage_desc = "狂怒警報",
 
-	enragetrigger = "變得極度狂暴而憤怒！",
-	enragetrigger2 = "%s becomes enraged!",
+	enragetrigger = "%s變得極度狂暴而憤怒！",
+	enragetrigger2 = "%s變得狂暴起來！",
 
 	enragewarn = "狂怒！",
-	enragewarn2 = "5% - Enrage!",
+	enragewarn2 = "5 % - 狂怒！",
 	starttrigger1 = "縫補者要跟你玩！",
 	starttrigger2 = "縫補者是科爾蘇加德的戰神！",
 	startwarn = "縫補者已進入戰鬥 - 7 分鐘後狂怒",

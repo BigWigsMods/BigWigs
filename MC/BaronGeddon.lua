@@ -109,8 +109,8 @@ L:RegisterTranslations("zhTW", function() return {
 	inferno = "地獄火計時條",
 	inferno_desc = "顯示迦頓男爵地獄火的計時條.",
 
-	bombtimer = "Bar for when the bomb goes off",
-	bombtimer_desc = "Shows a 10 second bar for when the bomb goes off at the target.",
+	bombtimer = "炸彈爆炸計時條",
+	bombtimer_desc = "顯示活化炸彈目標 10 秒後爆炸的計時條",
 
 	youbomb = "玩家炸彈警報",
 	youbomb_desc = "你成為炸彈時發出警報",

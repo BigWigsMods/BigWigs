@@ -117,7 +117,7 @@ L:RegisterTranslations("zhTW", function() return {
 	shout_desc = "混亂怒吼警報",
 
 	shieldwall = "盾牆計時器",
-	shieldwall_desc = "盾牆計時器",
+	shieldwall_desc = "學員盾牆計時器",
 
 	startwarn = "講師拉祖維斯已進入戰鬥 - 25 秒後混亂怒吼",
 
@@ -130,7 +130,7 @@ L:RegisterTranslations("zhTW", function() return {
 	shout7secwarn = "7秒後發動混亂怒吼",
 	shout3secwarn = "3秒後發動混亂怒吼！",
 	shoutwarn = "混亂怒吼！",
-	noshoutwarn = "沒吼！ 下次在 20 秒後發動",
+	noshoutwarn = "沒有怒吼！ 20 秒後再次發動！",
 	shoutbar = "混亂怒吼",
 
 	shieldwalltrigger   = "死亡騎士實習者獲得了盾牆的效果。",

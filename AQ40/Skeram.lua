@@ -109,6 +109,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	aetrigger = "預言者斯克拉姆開始施放魔爆術。",
+--	mctrigger = "預言者斯克拉姆開始施放充實。",
 	splittrigger = "預言者斯克拉姆施放了召喚幻象。",
 	aewarn = "施放魔爆術 - 迅速打斷！",
 	mcplayer = "^(.+)受到(.*)充實",

@@ -282,6 +282,9 @@ L:RegisterTranslations("zhTW", function() return {
 	charge = "電荷警報",
 	charge_desc = "你身上的電荷效果發生變化時發出警報",
 
+	throw = "投擲警報",
+	throw_desc = "主坦克轉換平台時發出警報",
+
 	enragetrigger = "變得極度狂暴而憤怒！",
 	starttrigger = "斯塔拉格要碾碎你！",
 	starttrigger1 = "主人要吃了你！",
@@ -322,6 +325,9 @@ L:RegisterTranslations("zhTW", function() return {
 	powersurgebar = "力量澎湃",
 
 	bar1text = "兩極移形",
+
+	throwbar = "投擲",
+	throwwarn = "~5 秒後投擲 MT！",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

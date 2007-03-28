@@ -141,8 +141,8 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	start_trigger = "入侵者",
 	start_message = "狂野的拉佐格爾進入戰鬥！",
-	start_soon = "Mob Spawn in 5sec!",
-	start_mob = "Mob Spawn",
+	start_soon = "5 秒後小兵出現！",
+	start_mob = "小兵出現",
 
 	mindcontrol_trigger = "愚蠢的(.+)，",
 	mindcontrol_message = "%s 被心靈控制",
@@ -154,7 +154,7 @@ L:RegisterTranslations("zhTW", function() return {
 	phase2_message = "已摧毀所有龍蛋",
 
 	mc = "精神控制",
-	mc_desc = "當一個玩家使用精神控制時向團隊發出警報。",
+	mc_desc = "當隊友被精神控制時發出警報",
 
 	eggs = "取消龍蛋計數",
 	eggs_desc = "取消剩餘龍蛋計數 - 該功能還在改善中。。。",

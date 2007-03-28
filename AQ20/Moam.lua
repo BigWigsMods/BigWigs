@@ -122,11 +122,11 @@ L:RegisterTranslations("zhTW", function() return {
 	addsbar = "召喚惡魔",
 	addsincoming = "將在 %s 秒後召喚惡魔！",
 	addstrigger = "%s吸取你的法力後變成了石頭。",
-	addswarn = "惡魔被召喚！術士放逐！莫阿姆石化90秒！",
-	paralyzebar = "石化",
+	addswarn = "元素惡魔出現！術士放逐！莫阿姆進入石化狀態 90 秒！",
+	paralyzebar = "石化狀態",
 	returnincoming = "將在 %s 秒後解除石化！",
 	returntrigger = "^莫阿姆充滿能量。$",
-	returnwarn = "已解除石化！ 90 秒後重新召喚惡魔！",
+	returnwarn = "已解除石化！ 90 秒後再次召喚元素惡魔！",
 } end )
 
 ----------------------------------

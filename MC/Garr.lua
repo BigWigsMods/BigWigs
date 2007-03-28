@@ -27,6 +27,16 @@ L:RegisterTranslations("frFR", function() return {
 	pulse_bar = "Impulsion anti-magique",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	cmd = "加爾",
+
+	pulse = "Antimagic Pulse Bar",
+	pulse_desc = "Show a bar for Antimagic Pulse",
+
+	pulse_trigger = "performs Antimagic Pulse",
+	pulse_bar = "Antimagic Pulse",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

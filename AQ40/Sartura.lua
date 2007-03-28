@@ -123,7 +123,7 @@ L:RegisterTranslations("zhTW", function() return {
 	whirlwind = "旋風斬警報",
 	whirlwind_desc = "當沙爾圖拉施放旋風斬發出警報",
 
-	starttrigger = "我判你死刑！",
+	starttrigger = "玷汙這些神聖之地",
 	startwarn = "沙爾圖拉已進入戰鬥 - 10分鐘後進入狂暴狀態",
 	enragetrigger = "沙爾圖拉獲得了狂怒的效果。",
 	enragewarn = "狂暴！狂暴！狂暴！",

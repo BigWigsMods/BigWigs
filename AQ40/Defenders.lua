@@ -164,6 +164,12 @@ L:RegisterTranslations("zhTW", function() return {
 	thunderclap = "雷霆一擊警報",
 	thunderclap_desc = "阿努比薩斯防禦者發動雷霆一擊時發出警報",
 
+	meteor = "隕石警報",
+	meteor_desc = "阿努比薩斯防禦者發動隕石時發出警報",
+
+	shadowstorm = "暗影箭警報",
+	shadowstorm_desc = "阿努比薩斯防禦者發動暗影箭時發出警報",
+
 	explode = "爆炸警報",
 	explode_desc = "阿努比薩斯防禦者即將爆炸時發出警報",
 
@@ -178,20 +184,30 @@ L:RegisterTranslations("zhTW", function() return {
 
 	explodetrigger = "阿努比薩斯防禦者獲得了爆炸的效果。",
 	explodewarn = "即將爆炸！近戰躲開！",
+
 	enragetrigger = "阿努比薩斯防禦者獲得了狂怒的效果。",
 	enragewarn = "進入狂怒狀態！",
+
 	summonguardtrigger = "阿努比薩斯防禦者施放了召喚阿努比薩斯蟲群衛士。",
 	summonguardwarn = "蟲群衛士已被召喚出來",
+
 	summonwarriortrigger = "阿努比薩斯防禦者施放了召喚阿努比薩斯戰士。",
 	summonwarriorwarn = "阿努比薩斯戰士已被召喚出來",
+
 	plaguetrigger = "^(.+)受到(.*)瘟疫",
 	plaguewarn = "受到瘟疫的影響！快躲開！*",
 	plagueyouwarn = "你受到瘟疫的影響！快跑開！",
 	you = "你",
 	are = "了",
 
-	thunderclaptrigger = "^阿努比薩斯防禦者的雷霆一擊擊中(.+)造成%d+點傷害。",
-	thunderclapwarn = "雷霆一擊發動！",
+	thunderclaptrigger = "^阿努比薩斯防禦者的雷霆一擊擊中你",
+	thunderclapwarn = "雷霆一擊！遠戰退後！",
+
+	meteortrigger = "^阿努比薩斯防禦者的隕石擊中你",
+	meteorwarn = "隕石！集中靠近!",
+
+	shadowstormtrigger = "^阿努比薩斯防禦者的暗影風暴擊中你",
+	shadowstormwarn = "暗影箭！遠戰靠近！",
 } end )
 
 

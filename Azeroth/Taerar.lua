@@ -28,6 +28,24 @@ L:RegisterTranslations("enUS", function() return {
 	noxious_bar = "Noxious Breath",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	cmd = "泰拉爾",
+
+	engage = "狂怒警報",
+	engage_desc = "當泰拉爾狂怒時發出警報",
+
+	noxious = "毒性吐息警報",
+	noxious_desc = "毒性吐息警報",
+
+	engage_message = "泰拉爾狂怒！ 10 秒後可能發動毒性吐息",
+	engage_trigger = "Peace is but a fleeting dream! Let the NIGHTMARE reign!",
+
+	noxious_trigger = "受到了毒性吐息效果的影響。",
+	noxious_warn = "5 秒後發動毒性吐息！",
+	noxious_message = "毒性吐息 - 30 秒後再次發動",
+	noxious_bar = "毒性吐息",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

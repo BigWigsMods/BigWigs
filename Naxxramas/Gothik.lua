@@ -217,12 +217,12 @@ L:RegisterTranslations("zhTW", function() return {
 	starttrigger2 = "我已經等待很久了。現在你們將面對靈魂的收割者。", --?
 	startwarn = "收割者高希已進入戰鬥 - 4:30 後進入房間",
 
-	rider = "冷酷的騎兵",
+	rider = "無情的騎兵",
 	spectral_rider = "騎兵",
-	deathknight = "冷酷的死亡騎士",
+	deathknight = "無情的死騎",
 	spectral_deathknight = "死騎",
-	trainee = "冷酷的學徒",
-	spectral_trainee = "學徒",
+	trainee = "無情的訓練師",
+	spectral_trainee = "訓練師",
 
 	riderdiewarn = "騎兵已死亡！",
 	dkdiewarn = "死亡騎士已死亡！",
@@ -233,12 +233,12 @@ L:RegisterTranslations("zhTW", function() return {
 	warn4 = "30 秒後進入房間！",
 	warn5 = "10 秒後進入房間！",
 
-	trawarn = "3 秒後學徒出現！",
+	trawarn = "3 秒後訓練師出現！",
 	dkwarn = "3 秒後死亡騎士出現！",
 	riderwarn = "3 秒後騎兵出現！",
 
-	trabar = "學徒 - %d",
-	dkbar = "死騎 - %d",
+	trabar = "訓練師 - %d",
+	dkbar = "死亡騎士 - %d",
 	riderbar = "騎兵 - %d",
 
 	inroomtrigger = "我已經等待很久了。現在你們將面對靈魂的收割者。",

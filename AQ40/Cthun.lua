@@ -257,9 +257,9 @@ L:RegisterTranslations("zhTW", function() return {
 	giant_desc = "巨眼出現時發出警報",
 
 	weakened = "虛弱警報",
-	weakened_desc = "克蘇恩被削弱時發出警報",
+	weakened_desc = "克蘇恩虛弱時發出警報",
 
-	weakenedtrigger 	= "變弱了！",
+	weakenedtrigger 	= "%s變弱了！",
 
 	tentacle1	= "眼球觸鬚出現！",
 	tentacle2	= "5秒後眼球觸鬚出現！",
@@ -282,7 +282,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	barTentacle	= "眼球觸鬚！",
 	barNoRape	= "巨眼、巨爪觸鬚！",
-	barWeakened	= "克蘇恩被削弱了！",
+	barWeakened	= "克蘇恩虛弱！",
 	barGlare	= "黑暗閃耀！",
 	barGiant	= "巨眼！",
 	barGreenBeam	= "綠光！",

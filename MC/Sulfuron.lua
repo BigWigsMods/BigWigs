@@ -43,6 +43,24 @@ L:RegisterTranslations("frFR", function() return {
 	heal_bar = "Gu\195\169rison t\195\169n\195\169breuse",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	cmd = "薩弗隆先驅者",
+
+	inspire = "Inpire Gain Alert",
+	inspire_desc = "Warn when Sulfuron gains Inspire",
+
+	heal = "治療警報",
+	heal_desc = "當火焰行者施放黑暗治療時發出警報",
+
+	inspire_trigger = "%s gains Inspire",
+	inpire_message = "Sulfuron gains Inspire!",
+	inspire_bar = "Inspire",
+
+	heal_trigger = "begins to cast Dark Mending",
+	heal_message = "A Flamewaker Priest is healing!",
+	heal_bar = "黑暗治療",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

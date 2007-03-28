@@ -98,6 +98,11 @@ L:RegisterTranslations("zhTW", function() return {
 	heal_trigger = "開始施放強效治療術！$",
 	bomb_message = "火焰投擲！ 注意閃躲！",
 	heal_message = "補血 -  馬上中斷！",
+
+	swarm = "蝙蝠群警報",
+	swarm_desc = "蝙蝠群出現時發出警報",
+	swarm_trigger = "發出了震耳欲聾的尖嘯聲",
+	swarm_message = "蝙蝠群來了！",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

@@ -130,7 +130,7 @@ L:RegisterTranslations("zhTW", function() return {
 	enrage_desc = "阿努比薩斯守衛者進入狂怒狀態時發出警報",
 
 	explodetrigger = "阿努比薩斯守衛者獲得了爆炸的效果。",
-	explodewarn = "即將爆炸！近戰躲開！",
+	explodewarn = "即將爆炸！快速擊殺！",
 	enragetrigger = "阿努比薩斯守衛者獲得了狂怒的效果。",
 	enragewarn = "進入狂怒狀態！",
 	summonguardtrigger = "阿努比薩斯守衛者施放了召喚阿努比薩斯蟲群衛士。",

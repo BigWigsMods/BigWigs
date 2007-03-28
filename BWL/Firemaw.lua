@@ -49,17 +49,17 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	wingbuffet_trigger = "費爾默開始施放龍翼打擊。",
+	wingbuffet_trigger = "費爾默開始施放羽翼攻擊。",
 	shadowflame_trigger = "費爾默開始施放暗影烈焰。",
 
-	wingbuffet_message = "龍翼打擊！ 30 秒後再次發動！",
-	wingbuffet_warning = "3 秒後龍翼打擊！",
+	wingbuffet_message = "羽翼攻擊！ 30 秒後再次發動！",
+	wingbuffet_warning = "3 秒後羽翼攻擊！",
 	shadowflame_warning = "暗影烈焰發動！",
 
-	wingbuffet_bar = "龍翼打擊",
+	wingbuffet_bar = "羽翼攻擊",
 
-	wingbuffet = "龍翼打擊警報",
-	wingbuffet_desc = "當費爾默施放龍翼打擊時發出警報",
+	wingbuffet = "羽翼攻擊警報",
+	wingbuffet_desc = "當費爾默施放羽翼攻擊時發出警報",
 
 	shadowflame = "暗影烈焰警報",
 	shadowflame_desc = "當費爾默施放暗影烈焰時發出警報",

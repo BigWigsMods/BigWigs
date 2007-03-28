@@ -171,6 +171,9 @@ L:RegisterTranslations("zhTW", function() return {
 	icon = "標記突變注射",
 	icon_desc = "在中了突變注射的隊友頭上標記骷髏標記（需要助理或領隊權限）",
 
+	cloud = "毒雲術",
+	cloud_desc = "當施放毒雲術時發出警報",
+
 	inject_trigger = "^(.+)受到(.*)突變注射",
 
 	you = "你",
@@ -186,6 +189,10 @@ L:RegisterTranslations("zhTW", function() return {
 	bomb_message_you = "你中突變注射了！",
 	bomb_message_other = "%s 中突變注射了！",
 	bomb_bar = "%s 被突變注射",
+
+	cloud_trigger = "%s施放了毒雲術。",
+	cloud_warn = "15 秒後再次施放毒雲！",
+	cloud_bar = "毒雲術",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

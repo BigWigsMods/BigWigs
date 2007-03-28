@@ -98,8 +98,8 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	wyvern = "毒性之箭警報",
-	wyvern_desc = "哈霍蘭公主毒性之箭的警報",
+	wyvern = "翼龍釘刺警報",
+	wyvern_desc = "哈霍蘭公主翼龍釘刺警報",
 
 	frenzy = "狂暴模式警報",
 	frenzy_desc = "當哈霍蘭公主進入狂暴模式時發出警報",
@@ -107,15 +107,15 @@ L:RegisterTranslations("zhTW", function() return {
 	berserk = "極度狂暴模式警報",
 	berserk_desc = "哈霍蘭公主進入極度狂暴模式的倒數警報",
 
-	frenzytrigger = "變得狂暴起來！",
-	berserktrigger = "進入狂暴狀態！",
+	frenzytrigger = "%s變得狂暴起來！",
+	berserktrigger = "%s進入狂暴狀態！",
 	frenzywarn = "狂暴警報 - 獵人立刻使用寧神射擊！",
 	berserkwarn = "極度狂暴 - 治療注意！",
 	berserksoonwarn = "即將極度狂暴 - 做好準備！",
 	stingtrigger = "^(.+)受到翼龍釘刺",
-	stingwarn = "毒性之箭！淨化近戰！",
-	stingdelaywarn = "3 秒後可能施放毒性之箭！",
-	bartext = "毒性之箭",
+	stingwarn = "翼龍釘刺！淨化 MT！",
+	stingdelaywarn = "3 秒後可能施放翼龍釘刺！",
+	bartext = "翼龍釘刺",
 
 	startwarn = "哈霍蘭公主已進入戰鬥 - 5 分鐘後進入極度狂暴狀態",
 	berserkbar = "極度狂暴",

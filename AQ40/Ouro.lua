@@ -252,8 +252,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	emergetrigger = "土堆施放了召喚奧羅甲蟲。",
 	emergeannounce = "奧羅鑽出了地面！",
-	emergewarn = "15 秒後潛入地下",
-	emergewarn2 = "15 sec to Ouro sumberge!",
+	emergewarn = "15 秒後可能潛入地下",
+	emergewarn2 = "15 秒後潛入地下",
 	emergebartext = "鑽出地面",
 
 	scarabdespawn = "10 秒後甲蟲消失", --Translate me
@@ -264,8 +264,8 @@ L:RegisterTranslations("zhTW", function() return {
 	submergewarn = "5 秒後將鑽出地面！",
 	submergebartext = "潛入地下",
 
-	berserktrigger = "%s goes into a berserker rage!",
-	berserkannounce = "Berserk - Berserk!",
+	berserktrigger = "%s進入狂暴狀態！",
+	berserkannounce = "奧羅狂暴！",
 	berserksoonwarn = "即將狂暴 - 做好準備！",
 } end )
 

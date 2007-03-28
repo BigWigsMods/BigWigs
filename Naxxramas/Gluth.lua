@@ -131,29 +131,29 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	fear = "恐懼警報",
-	fear_desc = "當古魯斯施放群體恐懼時發出警報",
+	fear = "恐嚇咆哮警報",
+	fear_desc = "當古魯斯施放恐嚇咆哮時發出警報",
 
 	frenzy = "狂暴警報",
 	frenzy_desc = "當古魯斯狂暴時發出警報",
 
-	decimate = "屠殺警報",
-	decimate_desc = "當古魯斯屠殺時發出警報",
+	decimate = "殘殺警報",
+	decimate_desc = "當古魯斯發動殘殺時發出警報",
 
-	frenzy_trigger = "變得狂暴起來！",
+	frenzy_trigger = "%s變得狂暴起來！",
 	fear_trigger = "恐嚇咆哮",
 
 	frenzy_message = "狂暴警報 - 獵人立刻使用寧神射擊！",
-	fear_warning = "5 秒後發動群體恐懼！",
-	fear_message = "群體恐懼 - 20 秒後再次發動",
+	fear_warning = "5 秒後發動恐嚇咆哮！",
+	fear_message = "恐嚇咆哮 - 20 秒後再次發動",
 
-	startwarn = "古魯斯已進入戰鬥 - 105 秒後僵屍出現！",
-	decimatesoonwarn = "屠殺來臨！",
-	decimatewarn = "屠殺 - AE僵屍！",
-	decimatetrigger = "屠殺",
+	startwarn = "古魯斯已進入戰鬥 - 105 秒後殭屍出現！",
+	decimatesoonwarn = "殘殺來臨！",
+	decimatewarn = "殘殺 - AE殭屍！",
+	decimatetrigger = "殘殺",
 
-	fear_bar = "群體恐懼",
-	decimatebartext = "屠殺",
+	fear_bar = "恐嚇咆哮",
+	decimatebartext = "殘殺",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
