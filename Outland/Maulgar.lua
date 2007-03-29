@@ -134,7 +134,7 @@ L:RegisterTranslations("deDE", function() return {
 	spellshield_trigger = "bekommt 'Zauberschild'.",
 	spellshield_message = "Zauberschild auf Krosh!",
 
-	--summon_trigger = "begins to cast Summon Wild Felhunter.",
+	summon_trigger = "beginnt Wilden Teufelsjäger beschwören zu wirken",
 	--summon_message = "Felhunter being summoned!",
 
 	flurry_trigger = "Ihr werdet die Hand von Gruul nicht besiegen!",
