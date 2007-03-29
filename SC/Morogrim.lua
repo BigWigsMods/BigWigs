@@ -53,6 +53,9 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_min = "Enrage in %d min",
 	enrage_sec = "Enrage in %d sec!",
 	enrage_bar = "Enrage",
+
+	tidal_trigger = "Morogrim Tidewalker begins to cast Tidal Wave.",
+	tidal_message = "Tidal Wave!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -90,9 +93,6 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_min = "Wutanfall in %d min",
 	enrage_sec = "Wunanfall in %d sec!",
 	enrage_bar = "Wutanfall",
-	
-	tidal_trigger = "Morogrim Tidewalker begins to cast Tidal Wave.",
-	tidal_message = "Tidal Wave!",
 } end )
 
 ----------------------------------
