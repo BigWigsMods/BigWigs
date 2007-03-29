@@ -36,6 +36,9 @@ L:RegisterTranslations("enUS", function() return {
 	flurry = "Flurry",
 	flurry_desc = "Warn when Maulgar is close to Flurry and gains Flurry",
 
+	smash = "Arcing Smash",
+	smash_desc = "Show a bar for estimated Arcing Smash",
+
 	heal_trigger = "Blindeye the Seer begins to cast Prayer of Healing",
 	heal_message = "Blindeye casting Prayer of Healing!",
 	heal_bar = "Healing",
@@ -59,6 +62,8 @@ L:RegisterTranslations("enUS", function() return {
 	whirlwind_nextbar = "~Next Whirlwind",
 	whirlwind_warning1 = "Maulgar Engaged - Whirldwind in ~50sec!",
 	whirlwind_warning2 = "Whirlwind Soon!",
+
+	smash_bar = "~Arcing Smash",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -202,7 +207,7 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = boss
 mod.wipemobs = {mage, lock, priest, shaman}
-mod.toggleoptions = {"shield", "spellshield", "summon", "whirlwind", "heal", "flurry", "bosskill"}
+mod.toggleoptions = {"shield", "spellshield", "heal", -1, "summon", -1, "whirlwind", "flurry", "smash", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -220,6 +225,10 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Event")
+
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
@@ -229,6 +238,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "KroshSpellShield", 4)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MaulgarWhirldwind", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "OlmSummon", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MaulgarSmash", 3)
 end
 
 ------------------------------
@@ -250,6 +260,12 @@ function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 		self:Sync("KroshSpellShield")
 	elseif msg:find(L["whirlwind_trigger"]) then
 		self:Sync("MaulgarWhirldwind")
+	end
+end
+
+function mod:Event(msg)
+	if msg:find(L["smash"]) then
+		self:Sync("MaulgarSmash")
 	end
 end
 
@@ -275,6 +291,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(L["whirlwind_message"], "Important")
 		self:Bar(L["whirlwind_bar"], 15, "Ability_Whirlwind")
 		self:Nextwhirldwind()
+	elseif sync == "MaulgarSmash" and self.db.profile.smash then
+		self:Bar(L["smash_bar"], 10, "Ability_Warrior_Cleave")
 	end
 end
 
