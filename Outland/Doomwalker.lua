@@ -37,6 +37,29 @@ L:RegisterTranslations("enUS", function() return {
 	overrun_bar = "Overrun Cooldown",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	overrun_desc = "Pr\195\169viens quand Marche-funeste utilise Overrun.",
+
+	earthquake = "S\195\169isme",
+	earthquake_desc = "Pr\195\169viens quand Marche-funeste utilise S\195\169isme.",
+
+	enrage = "Alerte Enrager",
+	enrage_desc = "Pr\195\169viens du mode enrag\195\169 \195\160 20%.",
+	enrage_soon_message = "Enrag\195\169 imminent !",
+
+	engage_message = "Marche-funeste Engag\195\169e, S\195\169isme dans ~30sec!",
+
+	earthquake_trigger = "Vous \195\170tes afflig\195\169s par S\195\169isme.",
+	earthquake_message = "S\195\169isme! Prochain dans ~70 secondes",
+	earthquake_bar = "S\195\169isme",
+
+	overrun_trigger = "^Marche-funeste.-surr\195\169gime!",
+	overrun_message = "Surr\195\169gime!",
+	overrun_soon_message = "Possible surr\195\169gime! bientot!",
+	overrun_bar = "Surr\195\169gime! Cooldown",
+} end)
+
+
 ----------------------------------
 --   Module Declaration    --
 ----------------------------------
