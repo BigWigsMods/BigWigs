@@ -23,6 +23,9 @@ L:RegisterTranslations("enUS", function() return {
 	sacrifice = "Sacrifice",
 	sacrifice_desc = "Warn for Sacrifice of players",
 
+	icon = "Icon",
+	icon_desc = "Place a raid icon on the sacrificed player(requires promoted or higher)",
+
 	enrage = "Enrage",
 	enrage_desc = "Warn about enrage after 10min.",
 
@@ -128,7 +131,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"engage", "sacrifice", "weak", "enrage", "bosskill"}
+mod.toggleoptions = {"engage", "weak", "enrage", -1, "sacrifice", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -176,6 +179,9 @@ function mod:CheckSacrifice(msg)
 		end
 		self:Message(L["sacrifice_message"]:format(splayer), "Attention")
 		self:Bar(L["sacrifice_bar"]:format(splayer), 30, "Spell_Shadow_AntiMagicShell")
+		if self.db.profile.icon then
+			self:Icon(splayer)
+		end
 	end
 end
 
