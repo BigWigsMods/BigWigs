@@ -6,6 +6,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["Magtheridon"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local abycount
+local debwarn
 
 ----------------------------
 --      Localization     --
@@ -32,6 +33,12 @@ L:RegisterTranslations("enUS", function() return {
 	exhaust = "Disable Exhaustion Bars",
 	exhaust_desc = "Timer bars for Mind Exhaustion on players",
 
+	debris = "Debris on You",
+	debris_desc = "Warn for Debris on You",
+
+	debrisinc = "Debris",
+	debrisinc_desc = "Warn for incoming debris at 30%",
+
 	escape_trigger1 = "%%s's bonds begin to weaken!",
 	escape_trigger2 = "I... am... unleashed!",
 	escape_warning1 = "%s Engaged - Breaks free in 2min!",
@@ -57,6 +64,13 @@ L:RegisterTranslations("enUS", function() return {
 
 	exhaust_trigger = "^([^%s]+) ([^%s]+) afflicted by Mind Exhaustion",
 	exhaust_bar = "[%s] Exhausted",
+
+	debris_trigger = "You are afflicted by Debris.",
+	debris_message = "Debris on YOU!",
+
+	debrisinc_trigger = "Let the walls of this prison tremble",
+	debrisinc_message = "30% - Incoming Debris!",
+	debrisinc_warning = "Debris Soon!"
 
 	["Hellfire Channeler"] = true,
 } end)
@@ -167,7 +181,7 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Magtheridon's Lair"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = {L["Hellfire Channeler"], boss}
 mod.wipemobs = {L["Hellfire Channeler"]}
-mod.toggleoptions = {"escape", -1, "abyssal", "heal", -1, "nova", "banish", -1, "exhaust", "bosskill"}
+mod.toggleoptions = {"escape", "abyssal", "heal", -1, "nova", "banish", -1, "debris", "debrisinc", -1, "exhaust", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -185,6 +199,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "ExhaustEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "ExhaustEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "ExhaustEvent")
+	self:RegisterEvent("UNIT_HEALTH")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -194,6 +209,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFHeal", 0.5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFAbyssal", 0.8)
 	abycount = 1
+	debwarn = nil
 end
 
 ------------------------------
@@ -219,6 +235,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif self.db.profile.banish and msg == L["banish_trigger"] then
 		self:Message(L["banish_message"], "Important", nil, "Info")
 		self:Bar(L["banish_bar"], 10, "Spell_Shadow_Cripple")
+	elseif self.db.profile.debrisinc and msg:find(L["debrisinc_trigger"]) then
+		self:Message(L["debrisinc_message"], "Positive")
 	end
 end
 
@@ -245,6 +263,9 @@ end
 
 --mind exhastion bars can get spammy, so off by default
 function mod:ExhaustEvent(msg)
+	if self.db.profile.debris and msg == L["debris_trigger"] then
+		self:Message(L["debris_message"], "Important", nil, "Alert")
+	end
 	local eplayer, etype = select(3, msg:find(L["exhaust_trigger"]))
 	if eplayer and etype then
 		if eplayer == L2["you"] and etype == L2["are"] then
@@ -256,12 +277,25 @@ end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "Exhaustion" and rest and not self.db.profile.exhaust then
-		self:Bar(L["exhaust_bar"]:format(rest), 90, "Spell_Shadow_Teleport")
+		self:Bar(L["exhaust_bar"]:format(rest), 75, "Spell_Shadow_Teleport")
 	elseif sync == "MagHFHeal" and self.db.profile.heal then
 		self:Message(L["heal_message"], "Urgent", nil, "Alarm")
 		self:Bar(L["heal_message"], 2, "Spell_Shadow_ChillTouch")
 	elseif sync == "MagHFAbyssal" and self.db.profile.abyssal then
 		self:Message(L["abyssal_message"]:format(abycount), "Attention")
 		abycount = abycount + 1
+	end
+end
+
+function mod:UNIT_HEALTH(msg)
+	if not self.db.profile.debrisinc then return end
+	if UnitName(msg) == boss then
+		local health = UnitHealth(msg)
+		if health > 31 and health <= 35 and not debwarn then
+			self:Message(L["debrisinc_warning"], "Positive")
+			debwarn = true
+		elseif health > 60 and debwarn then
+			debwarn = false
+		end
 	end
 end
