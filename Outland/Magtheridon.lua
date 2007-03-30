@@ -70,7 +70,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	debrisinc_trigger = "Let the walls of this prison tremble",
 	debrisinc_message = "30% - Incoming Debris!",
-	debrisinc_warning = "Debris Soon!"
+	debrisinc_warning = "Debris Soon!",
 
 	["Hellfire Channeler"] = true,
 } end)
