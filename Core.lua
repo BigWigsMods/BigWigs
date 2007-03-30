@@ -336,7 +336,7 @@ BigWigs.cmdtable = options
 function BigWigs:OnInitialize()
 	self:RegisterDB("BigWigsDB", "BigWigsDBPerChar")
 
-	self:RegisterChatCommand({"/bw", "/BigWigs"}, options, "BIGWIGS")
+	self:RegisterChatCommand("/bw", "/BigWigs", options, "BIGWIGS")
 
 	if not self.version then self.version = GetAddOnMetadata("BigWigs", "Version") end
 	self.version = (self.version or "2.0") .. " |cffff8888r" .. self.revision .. "|r"
@@ -445,10 +445,7 @@ function BigWigs:RegisterModule(name, module)
 						module.db.profile[key] = value
 					end
 				end,
-				func = function()
-					-- Only used by reboot.
-					self:TriggerEvent("BigWigs_RebootModule", module)
-				end,
+				func = "BigWigs_RebootModule",
 				args = {
 					active = {
 						type = "toggle",
@@ -461,7 +458,8 @@ function BigWigs:RegisterModule(name, module)
 						name = L["Reboot"],
 						order = 2,
 						desc = L["Reboot this module."],
-						disabled = function() return not self:IsModuleActive(module) end,
+						passValue = module,
+						disabled = "~IsModuleActive",
 					},
 					headerSpacer = {
 						type = "header",

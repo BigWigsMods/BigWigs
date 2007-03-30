@@ -45,10 +45,6 @@ function BigWigs.modulePrototype:OnInitialize()
 	BigWigs:RegisterModule(self.name, self)
 end
 
-function BigWigs.modulePrototype:IsModuleActive()
-	return BigWigs:IsModuleActive(self)
-end
-
 function BigWigs.modulePrototype:IsBossModule()
 	return self.zonename and self.enabletrigger and true
 end

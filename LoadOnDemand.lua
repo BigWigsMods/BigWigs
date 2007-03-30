@@ -205,13 +205,17 @@ function BigWigsLoD:LoadZone( zone )
 	end
 end
 
+local function hide(zone)
+	return not loadInZone[zone] or #loadInZone[zone] == 0
+end
+
 function BigWigsLoD:AddCoreMenu(consoleCommand, guiCommand)
 	local opt = BigWigs.cmdtable.args
 	if not opt[consoleCommand] then
 		opt[consoleCommand] = {
 			type = "group",
 			name = guiCommand,
-			desc = string.format(LC["Options for bosses in %s."], guiCommand),
+			desc = LC["Options for bosses in %s."]:format(guiCommand),
 			args = {},
 			disabled = "~IsActive",
 		}
@@ -220,10 +224,12 @@ function BigWigsLoD:AddCoreMenu(consoleCommand, guiCommand)
 		opt[consoleCommand].args[LC["Load"]] = {
 			type = "execute",
 			name = LC["Load All"],
-			desc = string.format( LC["Load all %s modules."], guiCommand ),
+			desc = LC["Load all %s modules."]:format(guiCommand),
 			order = 1,
-			func = function() BigWigsLoD:LoadZone( guiCommand ) end,
-			hidden = function() return not loadInZone[guiCommand] or #loadInZone[guiCommand] == 0 end,
+			passValue = guiCommand,
+			handler = BigWigsLoD,
+			func = "LoadZone",
+			hidden = hide,
 		}
 	end
 end
