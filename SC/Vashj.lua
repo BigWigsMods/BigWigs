@@ -207,9 +207,9 @@ function mod:UNIT_HEALTH(msg)
 end
 
 function mod:Charge(msg)
-	local splayer, stype = select(3, msg:find(L["static_charge_trigger"]))
-	if splayer and stype then
-		if splayer == L2["you"] and stype == L2["are"] then
+	local splayer = select(3, msg:find(L["static_charge_trigger"]))
+	if splayer then
+		if splayer == L2["you"] then
 			splayer = playerName
 		end
 		self:Sync("VashjStatic " .. splayer)
