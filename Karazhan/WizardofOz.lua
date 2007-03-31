@@ -23,14 +23,8 @@ L:RegisterTranslations("enUS", function() return {
 	light = "Chain Lightning",
 	light_desc = "Warn for Chain Lightning being cast",
 
-	spawns_roar = "%s attacks!",
-	warning_roar = "%s in 5 sec",
-	spawns_strawman = "%s attacks!",
-	warning_strawman = "%s in 5 sec",
-	spawns_tinhead = "%s attacks!",
-	warning_tinhead = "%s in 5 sec",
-	spawns_tito = "%s summoned!",
-	warning_tito = "%s in 5 sec",
+	spawns_bar = "%s attacks!",
+	spawns_warning = "%s in 5 sec",
 
 	light_trigger = "The Crone begins to cast Chain Lightning",
 	light_message = "Chain Lightning!",
@@ -45,14 +39,8 @@ L:RegisterTranslations("deDE", function() return {
 	--light = "Chain Lightning",
 	--light_desc = "Warn for Chain Lightning being cast",
 
-	spawns_roar = "%s greift an!",
-	--warning_roar = "%s in 5 sec",
-	spawns_strawman = "%s greift an!",
-	--warning_strawman = "%s in 5 sec",
-	spawns_tinhead = "%s greift an!",
-	--warning_tinhead = "%s in 5 sec",
-	spawns_tito = "%s gerufen!",
-	--warning_tito = "%s in 5 sec",
+	spawns_bar = "%s greift an!",
+	--spawns_warning = "%s in 5 sec",
 
 	--light_trigger = "The Crone begins to cast Chain Lightning",
 	--light_message = "Chain Lightning!",
@@ -67,19 +55,13 @@ L:RegisterTranslations("frFR", function() return {
 	--light = "Chain Lightning",
 	--light_desc = "Warn for Chain Lightning being cast",
 
-	spawns_roar = "%s attaque !",
-	--warning_roar = "%s in 5 sec",
-	spawns_strawman = "%s attaque !",
-	--warning_strawman = "%s in 5 sec",
-	spawns_tinhead = "%s attaque !",
-	--warning_tinhead = "%s in 5 sec",
-	spawns_tito = "%s invoqu\195\169 !",
-	--warning_tito = "%s in 5 sec",
+	spawns_bar = "%s attaque !",
+	--spawns_warning = "%s in 5 sec",
 
 	--light_trigger = "The Crone begins to cast Chain Lightning",
 	--light_message = "Chain Lightning!",
 
-	engage_trigger = "Oh, Tito, nous devons trouver le moyen de rentrer \195\160 la maison\194\160! Le vieux sorcier est notre dernier espoir\194\160!",
+	engage_trigger = "Oh, Tito, nous devons trouver le moyen de rentrer \195\160 la maison\194\160!",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -89,14 +71,8 @@ L:RegisterTranslations("koKR", function() return {
 	light = "연쇄 번개",
 	light_desc = "연쇄 번개 시전에 대한 경고",
 
-	spawns_roar = "%s 공격!",
-	warning_roar = "5초 이내 %s",
-	spawns_strawman = "%s 공격!",
-	warning_strawman = "5초 이내 %s",
-	spawns_tinhead = "%s 공격!",
-	warning_tinhead = "5초 이내 %s",
-	spawns_tito = "%s 소환!",
-	warning_tito = "5초 이내 %s",
+	spawns_bar = "%s 공격!",
+	spawns_warning = "5초 이내 %s",
 
 	light_trigger = "마녀가 연쇄 번개 시전을 시작합니다.",
 	light_message = "연쇄 번개!",
@@ -131,14 +107,14 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) and self.db.profile.spawns then
-		self:Bar(L["spawns_roar"]:format(roar), 15, "INV_Staff_08")
-		self:DelayedMessage(10, L["warning_roar"]:format(roar), "Attention")
-		self:Bar(L["spawns_strawman"]:format(strawman), 25, "Ability_Druid_ChallangingRoar")
-		self:DelayedMessage(20, L["warning_strawman"]:format(strawman), "Attention")
-		self:Bar(L["spawns_tinhead"]:format(tinhead), 35, "INV_Chest_Plate06")
-		self:DelayedMessage(30, L["warning_tinhead"]:format(tinhead), "Attention")
-		self:Bar(L["spawns_tito"]:format(tito), 48, "Ability_Hunter_Pet_Wolf")
-		self:DelayedMessage(43, L["warning_tito"]:format(tito), "Attention")
+		self:Bar(L["spawns_bar"]:format(roar), 15, "INV_Staff_08")
+		self:DelayedMessage(10, L["spawns_warning"]:format(roar), "Attention")
+		self:Bar(L["spawns_bar"]:format(strawman), 25, "Ability_Druid_ChallangingRoar")
+		self:DelayedMessage(20, L["spawns_warning"]:format(strawman), "Attention")
+		self:Bar(L["spawns_bar"]:format(tinhead), 35, "INV_Chest_Plate06")
+		self:DelayedMessage(30, L["spawns_warning"]:format(tinhead), "Attention")
+		self:Bar(L["spawns_bar"]:format(tito), 48, "Ability_Hunter_Pet_Wolf")
+		self:DelayedMessage(43, L["spawns_warning"]:format(tito), "Attention")
 	end
 end
 
