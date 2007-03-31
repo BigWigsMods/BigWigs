@@ -58,8 +58,12 @@ L:RegisterTranslations("frFR", function() return {
 	curse_trigger = "^([^%s]+) ([^%s]+) les effets .* Pr\195\169sence immat\195\169rielle",
 	curse_message = "Mal\195\169diction sur %s",
 
-	--phase2_trigger = "",
+	--phase1_message = "Phase 1 - %s",
+	phase2_trigger1 = "Bien jou\195\169, Minuit !",
+	phase2_trigger2 = "Vous pr\195\169f\195\169rez peut-\195\170tre vous mesurer \195\160 un adversaire plus redoutable ?!",
+	--phase2_message = "Phase 2 - %s & Attumen",
 	phase3_trigger = "Viens, Minuit, allons disperser cette insignifiante racaille\194\160!",
+	--phase3_message = "Phase 3 - %s",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
