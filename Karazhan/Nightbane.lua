@@ -127,29 +127,29 @@ L:RegisterTranslations("frFR", function() return {
 	phase_desc = ("Pr\195\169viens quand %s change de phase."):format(boss),
 
 	engage = "Alerte Engagement",
-	engage_desc = "Pr\195\169viens quand Plaie-de-Nuit est engag\195\169.",
+	engage_desc = "Pr\195\169viens quand Plaie-de-nuit est engag\195\169.",
 
 	blast = "Explosion de fum\195\169e",
-	blast_desc = "Pr\195\169viens lorsque Plaie-de-Nuit lance Explosion de fum\195\169e.",
+	blast_desc = "Pr\195\169viens lorsque Plaie-de-nuit lance Explosion de fum\195\169e.",
 
 	bones = "Pluie d'os",
-	bones_desc = "Pr\195\169viens du joueur qui se prend la Pluie d'os de Plaie-de-Nuit.",
+	bones_desc = "Pr\195\169viens le raid du joueur qui se prend la Pluie d'os de Plaie-de-nuit.",
 
 	icon = "Placer une ic\195\180ne",
 	icon_desc = "Place une ic\195\180ne de raid sur le joueur affect\195\169 par la Pluie d'os(requiert d'\195\170tre promus ou plus).",
 
 	whisper = "Message",
-	whisper_desc = "Envoyer un message \195\160 la personne affect\195\169e par la Pluie d'os(requires promoted or higher)",
+	whisper_desc = "Envoyer un message \195\160 la personne affect\195\169e par la Pluie d'os(requiert d'\195\170tre promus ou plus)",
 
-	fear_trigger = "lance Rugissement puissant",
+	fear_trigger = "Plaie-de-nuit commence \195\160 lancer Rugissement puissant.",
 	fear_message = "Fear dans 2 sec!",
 	fear_warning = "Fear proche !",
-	fear_bar = "Fear",
+	fear_bar = "Prochain fear",
 
 	charr_trigger = "Vous subissez les effets de Terre calcin\195\169e.",
 	charr_message = "Terre calcin\195\169e sur VOUS !",
 
-	blast_trigger = "lance Explosion de fum\195\169e",
+	blast_trigger = "Plaie-de-nuit commence \195\160 lancer Explosion de fum\195\169e.",
 	blast_message = "Explosion de fum\195\169e proche !",
 
 	airphase_trigger = "Mis\195\169rable vermine. Je vais vous exterminer des airs !",
@@ -158,8 +158,8 @@ L:RegisterTranslations("frFR", function() return {
 	airphase_message = "D\195\169ccolage !",
 	landphase_message = "Aterrissage !",
 
-	engage_trigger = "Fous ! Je vais mettre un terme \195\160 vos souffrances !",
-	engage_message = "Plaie-de-Nuit engag195\169",
+	engage_trigger = "Fous ! Je vais mettre un terme rapide \195\160 vos souffrances !",
+	engage_message = "Plaie-de-nuit engag195\169",
 
 	bones_trigger = "^([^%s]+) ([^%s]+) subit les effets de Pluis d'os",
 	bones_message = "Pluie d'os sur [%s]",
