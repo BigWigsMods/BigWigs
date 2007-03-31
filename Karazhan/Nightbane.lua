@@ -164,6 +164,8 @@ L:RegisterTranslations("frFR", function() return {
 	bones_trigger = "^([^%s]+) ([^%s]+) subit les effets de Pluis d'os",
 	bones_message = "Pluie d'os sur [%s]",
 	bones_whisper = "Pluie d'os sur VOUS !",
+
+	["Restless Skeleton"] = "Squelette sans repos",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
