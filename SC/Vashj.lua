@@ -10,6 +10,7 @@ local deformat = nil
 local checkedForDeformat = nil
 
 local delayedElementalMessage = nil
+local delayedStriderMessage = nil
 
 local shieldsFaded = 0
 local playerName = nil
@@ -38,6 +39,9 @@ L:RegisterTranslations("enUS", function() return {
 	elemental = "Tainted Elemental spawn",
 	elemental_desc = "Warn when the Tainted Elementals spawn during phase 2.",
 
+	strider = "Coilfang Strider spawn",
+	strider_desc = "Warn when the Coilfang Striders spawn during phase 2 (timer not checked, could be inaccurate).",
+
 	barrier = "Barrier down",
 	barrier_desc = "Alert when the barriers go down.",
 
@@ -60,6 +64,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	elemental_bar = "Tainted Elemental Incoming",
 	elemental_soon_message = "Tainted Elemental soon!",
+
+	strider_bar = "Strider Incoming",
+	strider_soon_message = "Strider soon!",
 } end )
 
 ----------------------------------
@@ -70,7 +77,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
 mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", -1, "static", "icon", -1, "elemental", "loot", "barrier", "bosskill"}
+mod.toggleoptions = {"phase", -1, "static", "icon", -1, "elemental", "strider", "loot", "barrier", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 --[[
@@ -180,6 +187,14 @@ function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	end
 end
 
+function mod:RepeatStrider()
+	if self.db.profile.strider then
+		self:Bar(L["strider_bar"], 63, "Spell_Nature_AstralRecal")
+		delayedStriderMessage = self:DelayedMessage(58, L["strider_soon_message"], "Attention")
+	end
+	self:ScheduleEvent("Strider", self.RepeatStrider, 63, self)
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["phase2_trigger"]) then
 		if self.db.profile.phase then
@@ -190,6 +205,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["elemental_bar"], 60, "Spell_Nature_ElementalShields")
 			delayedElementalMessage = self:DelayedMessage(55, L["elemental_soon_message"], "Important")
 		end
+		self:RepeatStrider()
 	end
 end
 
@@ -241,6 +257,10 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			if delayedElementalMessage and self:IsEventScheduled(delayedElementalMessage) then
 				self:CancelScheduledEvent(delayedElementalMessage)
 			end
+			if delayedStriderMessage and self:IsEventScheduled(delayedStriderMessage) then
+				self:CancelScheduledEvent(delayedStriderMessage)
+			end
+			self:CancelScheduledEvent("Strider")
 			self:TriggerEvent("BigWigs_StopBar", self, L["elemental_bar"])
 		elseif shieldsFaded < 4 and self.db.profile.barrier then
 			self:Message(L["barrier_down_message"]:format(shieldsFaded), "Attention")
