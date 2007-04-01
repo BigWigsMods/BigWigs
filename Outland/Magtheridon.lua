@@ -142,7 +142,7 @@ L:RegisterTranslations("koKR", function() return {
 	exhaust = "방출 바 비활성화",
 	exhaust_desc = "정신 방출에 걸린 플레이어에 대한 타이머 바",
 
-	escape_trigger1 = "%%s의 속박이 약해지기 시작합니다",
+	escape_trigger1 = "%s의 속박이 약해지기 시작합니다",
 
 	escape_trigger2 = "내가... 풀려났도다!",
 	escape_warning1 = "%s 전투 개시 - 2분 이내 속박 해제!",
