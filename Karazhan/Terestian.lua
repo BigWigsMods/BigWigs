@@ -72,13 +72,16 @@ L:RegisterTranslations("frFR", function() return {
 	engage_message = ("%s Engag\195\169 - 10 minutes avant l'enrag\195\169!"):format(boss),
 
 	sacrifice = "Sacrifice",
-	sacrifice_desc = "Pr\195\169viens quand un joueur est sacrifi\195\169",
+	sacrifice_desc = "Pr\195\169viens quand un joueur est sacrifi\195\169.",
 
 	enrage = "Alerte Enrager",
 	enrage_desc = "Pr\195\169viens quand Terestian devient enrag\195\169 apr\195\168s 10 minutes.",
 
 	weak = "Affaibli",
-	weak_desc = "Pr\195\169viens quand Terestian est affaibli",
+	weak_desc = "Pr\195\169viens quand Terestian est affaibli.",
+
+	icon = "Placer une ic\195\180ne",
+	icon_desc = "Place une ic\195\180ne de raid sur le joueur sacrifi\195\169(requiert d'\195\170tre promus ou plus).",
 
 	enrage_warning = "Enrag\195\169 dans %d sec!",
 	enrage_bar = "Enrag\195\169",
