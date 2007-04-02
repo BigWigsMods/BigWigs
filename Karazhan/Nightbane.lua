@@ -292,8 +292,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		bones = nil
 		self:CancelScheduledEvent("fear")
 		self:TriggerEvent("BigWigs_StopBar", self, L["fear_warning"])
+		self:Bar(L["landphase_message"], 57, "INV_Misc_Head_Dragon_01")
 	elseif self.db.profile.phase and (msg == L["landphase_trigger1"] or msg == L["landphase_trigger2"]) then
 		self:Message(L["landphase_message"], "Important", nil, "Long")
+		self:Bar(L["landphase_message"], 17, "INV_Misc_Head_Dragon_01")
 		blast = nil
 	end
 end
