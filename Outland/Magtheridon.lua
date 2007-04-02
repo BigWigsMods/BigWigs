@@ -123,6 +123,67 @@ L:RegisterTranslations("deDE", function() return {
 	["Hellfire Channeler"] = "Kanalisierer des H\195\182llenfeuers",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	escape = "Evasion",
+	escape_desc = ("compte \195\160 rebours avant que %s soit libre"):format(boss),
+
+	abyssal = "Abyssal ardent",
+	abyssal_desc = "Pr\195\169viens quand un Abyssal ardent est cr\195\169\195\169",
+
+	heal = "Soins",
+	heal_desc = "Pr\195\169viens quand un Canaliste des Flammes infernales commence a soigner",
+
+	nova = "Nova explosive",
+	nova_desc = "Estimation du temps de la Nova explosive!",
+
+	banish = "Ban",
+	banish_desc = ("Pr\195\169viens quand vous Bannez %s"):format(boss),
+
+	exhaust = "D\195\169sactiver la barre d'\195\169puisement",
+	exhaust_desc = "Barre de temps pour l'\195\169puisement d'esprit sur le joueur",
+
+	debris = "D\195\169bris sur vous",
+	debris_desc = "Pr\195\169viens pour les D\195\169bris sur vous",
+
+	debrisinc = "D\195\169bris",
+	debrisinc_desc = "Pr\195\169viens de l'arriver des d\195\169bris \195\160 30 %",
+
+	escape_trigger1 = "Les liens de %%s commencent \195\160 se rel\195\162cher !",
+	escape_trigger2 = "Me... voil\195\160... d\195\169cha\195\174n\195\169 !",
+	escape_warning1 = "%s Engag\195\169 - Libre dans 2 minutes!",
+	escape_warning2 = "Libre dans 1 minutes!",
+	escape_warning3 = "Libre dans 30 seconde!",
+	escape_warning4 = "Libre dans 10 seconde!",
+	escape_warning5 = "Libre dans 3 secondes!",
+	escape_bar = "Lib\195\169ration...",
+	escape_message = "%s Lib\195\169r\195\169!",
+
+	abyssal_trigger = "Canaliste des Flammes infernales lance Abyssal ardent",
+	abyssal_message = "Abyssal ardent cr\195\169\195\169 (%d)",
+
+	heal_trigger = "commence \195\160 lancer Gu\195\169rison t\195\169n\195\169breuse.",
+	heal_message = "il se soigne!",
+
+	nova_ = "Nova explosive!",
+	nova_warning = "Nova explosive bient\195\180t",
+
+	banish_trigger = "Pas! Pas encore...",
+	banish_message = "Bani pour ~10 secondes",
+	banish_bar = "Ban",
+
+	exhaust_trigger = "^([^%s]+) ([^%s]+) subit les effets DE Epuisement de l'esprit",
+	exhaust_bar = "[%s] Epuiser",
+
+	debris_trigger = "Vous subissez les effets de D\195\169bris.",
+	debris_message = "D\195\169bris sur VOUS!",
+
+	debrisinc_trigger = "Let the walls of this prison tremble",
+	debrisinc_message = "30% - arriver des D\195\169bris!",
+	debrisinc_warning = "D\195\169bris bientot!",
+
+	["Hellfire Channeler"] = "Canaliste des Flammes infernales",
+} end)
+
 L:RegisterTranslations("koKR", function() return {
 	escape = "탈출",
 	escape_desc = ("%s 속박 해제까지 카운트다운"):format(boss),
