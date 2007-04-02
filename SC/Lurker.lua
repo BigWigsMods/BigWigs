@@ -31,6 +31,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	spout_message1 = "Spout!",
 	spout_message2 = "Spout Over!",
+	spout_warning = "Spout in 3sec!",
 	spout_bar1 = "Spout 1",
 	spout_bar2 = "Spout 2",
 
@@ -105,8 +106,10 @@ function mod:NextSurface()
 	if self.db.profile.spout then
 		self:Bar(L["spout_bar1"], 65, "INV_Weapon_Rifle_02")
 		self:Bar(L["spout_bar2"], 115, "INV_Weapon_Rifle_02")
+		self:DelayedMessage(62, L["spout_warning"], "Attention")
 		self:DelayedMessage(65, L["spout_message1"], "Attention")
 		self:DelayedMessage(85, L["spout_message2"], "Positive")
+		self:DelayedMessage(112, L["spout_warning"], "Attention")
 		self:DelayedMessage(115, L["spout_message1"], "Attention")
 		self:DelayedMessage(135, L["spout_message2"], "Positive")
 		self:ScheduleEvent("bwspoutbar1", self.SpoutBar, 65, self)
