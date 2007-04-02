@@ -83,6 +83,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "LeoWhisp", 2)
+	self:TriggerEvent("BigWigs_ThrottleSync", "LeoWW", 4)
 
 	self:RegisterEvent("UNIT_HEALTH")
 	imagewarn = nil
@@ -121,10 +122,8 @@ function mod:DemonSoon()
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
-	if self.db.profile.whirlwind and msg:find(L["whirlwind_trigger"]) then
-		self:Message(L["whirlwind_gain"], "Important", nil, "Alert")
-		self:DelayedMessage(8, L["whirlwind_fade"], "Attention")
-		self:Bar(L["whirlwind_bar"], 8, "Ability_Whirlwind")
+	if msg:find(L["whirlwind_trigger"]) then
+		self:Sync("LeoWW")
 	end
 end
 
@@ -155,5 +154,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "LeoWhisp" and rest and self.db.profile.whisper then
 		self:Message(L["whisper_message"]:format(rest), "Attention")
 		self:Bar(L["whisper_message"], 30, "Spell_Shadow_ManaFeed")
+	elseif sync == "LeoWW" and self.db.profile.whirlwind then
+		self:Message(L["whirlwind_gain"], "Important", nil, "Alert")
+		self:DelayedMessage(8, L["whirlwind_fade"], "Attention")
+		self:Bar(L["whirlwind_bar"], 8, "Ability_Whirlwind")
 	end
 end
