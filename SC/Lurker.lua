@@ -70,7 +70,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		self:NextDive()
-		if self.db.profile.under then
+		if self.db.profile.dive then
 			self:Message(L["engage_warning"]:format(boss), "Attention")
 		end
 	end
@@ -78,7 +78,7 @@ end
 
 --loop diving and lazer, no combat log events to register this, can become innacurate
 function mod:NextDive()
-	if self.db.profile.under then
+	if self.db.profile.dive then
 		self:DelayedMessage(30, L["dive_warning"]:format(60), "Positive")
 		self:DelayedMessage(60, L["dive_warning"]:format(30), "Positive")
 		self:DelayedMessage(80, L["dive_warning"]:format(10), "Positive")
@@ -90,7 +90,7 @@ function mod:NextDive()
 end
 
 function mod:NextSurface()
-	if self.db.profile.under then
+	if self.db.profile.dive then
 		self:Message(L["dive_message"], "Attention")
 		self:DelayedMessage(30, L["emerge_warning"]:format(30), "Positive")
 		self:DelayedMessage(50, L["emerge_warning"]:format(10), "Positive")
