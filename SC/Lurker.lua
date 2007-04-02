@@ -19,14 +19,14 @@ L:RegisterTranslations("enUS", function() return {
 	spout = "Spout",
 	spout_desc = "Timers for Spout.\n\nThese timers my be innacurate, they are scheduled from pull.",
 
-	engage_warning = "%s Engaged - Dives in 90sec",
+	engage_warning = "%s Engaged - Possible Dive in 90sec",
 
-	dive_warning = "Dives in %dsec!",
-	dive_bar = "Dives in",
+	dive_warning = "Possible Dive in %dsec!",
+	dive_bar = "~Dives in",
 	dive_message = "Dives - Back in 60sec",
 
 	emerge_warning = "Back in %dsec",
-	emerge_message = "Back - Dives in 90sec",
+	emerge_message = "Back - Possible Dive in 90sec",
 	emerge_bar = "Back in",
 
 	spout_message1 = "Spout!",
