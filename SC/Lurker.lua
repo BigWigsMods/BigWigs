@@ -33,6 +33,9 @@ L:RegisterTranslations("enUS", function() return {
 	spout_message2 = "Spout Over!",
 	spout_bar1 = "Spout 1",
 	spout_bar2 = "Spout 2",
+
+	["Coilfang Guardian"] = true,
+	["Coilfang Ambusher"] = true,
 } end )
 
 ----------------------------------
@@ -43,6 +46,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
 mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
+mod.wipemobs = {L["Coilfang Guardian"], L["Coilfang Ambusher"]}
 mod.toggleoptions = {"dive", "spout", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
