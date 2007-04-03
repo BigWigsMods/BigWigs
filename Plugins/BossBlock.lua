@@ -151,19 +151,22 @@ L:RegisterTranslations("frFR", function() return {
 	--["BossBlock"] = true,
 	desc = "Supprime les messages des BossMods des autres joueurs.",
 
-	["Raid chat"] = "Supprimer les messages du canal Raid",
+	["Boss emotes"] = "Emotes des boss",
+	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = "Supprime les messages envoy\195\169s au cadre des \195\169motes des boss.\n\nCeci supprime uniquement les messages des boss connus par BigWigs, et les supprime uniquement de ce cadre, pas de la fen\195\170tre de discussion.",
+
+	["Raid chat"] = "Messages du canal Raid",
 	["Suppress messages sent to raid chat."] = "Supprime les messages du canal Raid.",
 
-	["Raid warning chat messages"] = "Supprimer les Avertissements Raid du chat",
+	["Raid warning chat messages"] = "Messages du chat de l'Avertissement Raid",
 	["Suppress raid warning messages from the chat window."] = "Supprime les messages de l'Avertissement Raid de la fen\195\170tre de discussion.",
 
-	["Raid warning messages"] = "Supprimer les Avertissements Raid",
+	["Raid warning messages"] = "Messages de l'Avertissement Raid",
 	["Suppress raid warning messages from the raid message window."] = "Supprime les messages \195\160 l'\195\169cran de l'Avertissement Raid.",
 
-	["Raid say"] = "Supprimer les RaidSay",
+	["Raid say"] = "RaidSay",
 	["Suppress RaidSay popup messages."] = "Supprime les messages \195\160 l'\195\169cran du RaidSay de CTRA.",
 
-	["Whispers"] = "Supprimer les chuchotements",
+	["Whispers"] = "Chuchotements",
 	["Suppress whispered messages."] = "Supprime les messages chuchot\195\169s.",
 
 	["Suppressing Chatframe"] = "Suppression de la fen\195\170tre de discussion",

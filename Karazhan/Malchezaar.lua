@@ -87,38 +87,38 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	phase = "Alerte Engagement",
-	phase_desc = "Pr\195\169viens des changements de phase",
+	phase = "Engagement",
+	phase_desc = "Pr\195\169viens des changements de phase.",
 
 	enfeeble = "Affaiblir",
-	enfeeble_desc = "Voir le d\195\169compte pour affaiblir",
+	enfeeble_desc = "Affiche le temps de recharge de Affaiblir.",
 
 	infernals = "Infernaux",
-	infernals_desc = "Voir le d\195\169compte pour l'invocation des Infernaux.",
+	infernals_desc = "Affiche le temps de recharge des invocations d'infernaux.",
 
 	nova = "Nova de l'ombre",
 	nova_desc = "Temps \195\169stim\195\169 pour la Nova de l'ombre",
 
-	phase1_trigger = "La folie vous a fait venir ici, devant moi. Et je serai votre perte !",
-	phase2_trigger = "Imb\195\169ciles heureux ! Le temps est le brasier dans lequel vous br\195\187lerez !",
+	phase1_trigger = "La folie vous a fait venir ici, devant moi. Et je serai votre perte\194\160!",
+	phase2_trigger = "Imb\195\169ciles heureux\194\160! Le temps est le brasier dans lequel vous br\195\187lerez\194\160!",
 	phase3_trigger = "Comment pouvez-vous esp\195\169rer r\195\169sister devant un tel pouvoir ?",
-	phase1_message = "Phase 1 - Infernal dans ~40sec!",
+	phase1_message = "Phase 1 - Infernal dans ~40 sec. !",
 	phase2_message = "60% - Phase 2",
 	phase3_message = "30% - Phase 3 ",
 
-	enfeeble_trigger = "subit les effets DE Affaiblir",
-	enfeeble_message = "Affaiblir! prochain dans ~30sec",
-	enfeeble_warning = "Affaiblir dans ~5sec!",
+	enfeeble_trigger = "subit les effets .* Affaiblir",
+	enfeeble_message = "Affaiblir ! Prochain dans ~30 sec.",
+	enfeeble_warning = "Affaiblir dans ~5 sec. !",
 	enfeeble_bar = "Affaiblir",
 	enfeeble_nextbar = "Prochain Affaiblir",
 
-	infernal_trigger1 = "Vous n'affrontez pas seulement Malchezzar, mais les l\195\169gions que je commande !",
-	infernal_trigger2 = "Toutes les r\195\169alit\195\169s, toutes les dimensions me sont ouvertes !",
+	infernal_trigger1 = "Vous n'affrontez pas seulement Malchezzar, mais les l\195\169gions que je commande\194\160!",
+	infernal_trigger2 = "Toutes les r\195\169alit\195\169s, toutes les dimensions me sont ouvertes\194\160!",
 	infernal_bar = "Arriv\195\169 d'infernal",
 	infernal_warning = "Arriv\195\169 d'infernal dans ~20sec!",
 	infernal_message = "Infernal dans ~5sec!",
 
-	nova_trigger = "Prince Malchezaar commence \195\160 lancer Nova de l'ombre.",
+	nova_trigger = "Prince Malchezaar commence \195\160 lancer Nova de l'ombre",
 	nova_message = "Nova de l'ombre !",
 	nova_bar = "~Arriv\195\169 de la Nova",
 } end )

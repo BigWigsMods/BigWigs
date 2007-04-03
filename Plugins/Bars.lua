@@ -148,6 +148,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	--["Test"] = true,
 	["Close"] = "Fermer",
+
+	--["reset"] = true,
+	["Reset position"] = "R\195\128Z position",
+	["Reset the anchor position, moving it to the center of your screen."] = "R\195\169initialise la position de l'ancre, la repla\195\167ant au centre de l'\195\169cran.",
 } end)
 
 ----------------------------------

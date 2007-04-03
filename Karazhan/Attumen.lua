@@ -50,17 +50,16 @@ L:RegisterTranslations("deDE", function() return {
 
 
 L:RegisterTranslations("frFR", function() return {
-	phase = "Alerte Phase",
+	phase = "Phase",
 	phase_desc = "Pr\195\169viens des changements de phase.",
 
-	curse = "Alerte Guerriers maudits",
-	curse_desc = "Pr\195\169viens quand les guerriers subissent Pr\195\169sence immat\195\169rielle",
+	curse = "Tanks maudits",
+	curse_desc = "Pr\195\169viens quand un guerrier ou un druide subit la Pr\195\169sence immat\195\169rielle.",
 
 	curse_trigger = "^([^%s]+) ([^%s]+) les effets .* Pr\195\169sence immat\195\169rielle",
-	curse_message = "Mal\195\169diction sur %s",
+	curse_message = "Tank maudit - %s",
 
 	phase1_message = "Phase 1 - %s",
-	phase1_trigger = "Bien jou\195\169, Minuit !",
 	phase2_trigger = "Vous pr\195\169f\195\169rez peut-\195\170tre vous mesurer \195\160 un adversaire plus redoutable ?!",
 	phase2_message = "Phase 2 - %s & Attumen",
 	phase3_trigger = "Viens, Minuit, allons disperser cette insignifiante racaille\194\160!",

@@ -117,51 +117,51 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	fear = "Alerte Fear",
-	fear_desc = "Pr\195\169viens du Rugissement puissant.",
+	fear = "Alerte Rugissement",
+	fear_desc = "Pr\195\169viens quand Plaie-de-nuit lance son Rugissement puissant.",
 
-	charr = "Terre calcin\195\169e",
-	charr_desc = "Pr\195\169viens lorsque vous vous trouvez sur une Terre calcin\195\169e.",
+	charr = "Terre calcin\195\169e sur vous",
+	charr_desc = "Pr\195\169viens quand vous \195\170tes dans la Terre calcin\195\169e.",
 
-	phase = "Alertes Phases",
+	phase = "Phases",
 	phase_desc = ("Pr\195\169viens quand %s change de phase."):format(boss),
 
-	engage = "Alerte Engagement",
+	engage = "Engagement",
 	engage_desc = "Pr\195\169viens quand Plaie-de-nuit est engag\195\169.",
 
 	blast = "Explosion de fum\195\169e",
-	blast_desc = "Pr\195\169viens lorsque Plaie-de-nuit lance Explosion de fum\195\169e.",
+	blast_desc = "Pr\195\169viens quand Explosion de fum\195\169e est incan\195\169.",
 
 	bones = "Pluie d'os",
-	bones_desc = "Pr\195\169viens le raid du joueur qui se prend la Pluie d'os de Plaie-de-nuit.",
+	bones_desc = "Pr\195\169viens quand quelqu'un est touch\195\169 par la Pluie d'os.",
 
-	icon = "Placer une ic\195\180ne",
-	icon_desc = "Place une ic\195\180ne de raid sur le joueur affect\195\169 par la Pluie d'os(requiert d'\195\170tre promus ou plus).",
+	icon = "Ic\195\180ne de raid",
+	icon_desc = "Place une ic\195\180ne de raid sur la personne affect\195\169e par Pluie d'os (n\195\169cessite d'\195\170tre promu ou mieux).",
 
-	whisper = "Message",
-	whisper_desc = "Envoyer un message \195\160 la personne affect\195\169e par la Pluie d'os(requiert d'\195\170tre promus ou plus)",
+	whisper = "Avertir joueur",
+	whisper_desc = "Pr\195\169viens en priv\195\169 la personne affect\195\169e par la Pluie d'os (n\195\169cessite d'\195\170tre promu ou mieux).",
 
-	fear_trigger = "Plaie-de-nuit commence \195\160 lancer Rugissement puissant.",
-	fear_message = "Fear dans 2 sec!",
-	fear_warning = "Fear proche !",
-	fear_bar = "Prochain fear",
+	fear_trigger = "lancer Rugissement puissant",
+	fear_message = "Rugissement dans 2 sec. !",
+	fear_warning = "Rugissement imminent !",
+	fear_bar = "Prochain rugissement",
 
-	charr_trigger = "Vous subissez les effets de Terre calcin\195\169e.",
+	charr_trigger = "Vous subissez les effets .* Terre calcin\195\169e.",
 	charr_message = "Terre calcin\195\169e sur VOUS !",
 
-	blast_trigger = "Plaie-de-nuit commence \195\160 lancer Explosion de fum\195\169e.",
-	blast_message = "Explosion de fum\195\169e proche !",
+	blast_trigger = "lancer Explosion de fum\195\169e.",
+	blast_message = "Explosion de fum\195\169e imminente !",
 
-	airphase_trigger = "Mis\195\169rable vermine. Je vais vous exterminer des airs !",
-	landphase_trigger1 = "Enough! I shall land and crush you myself!",
-	landphase_trigger2 = "Insectes ! Je vais vous montrer de quel bois je me chauffe !",
-	airphase_message = "D\195\169ccolage !",
-	landphase_message = "Aterrissage !",
+	airphase_trigger = "Mis\195\169rable vermine. Je vais vous exterminer des airs\194\160!",
+	landphase_trigger1 = "Assez\194\160! Je vais atterrir et vous \195\169craser moi-m\195\170me\194\160!",
+	landphase_trigger2 = "Insectes\194\160! Je vais vous montrer de quel bois je me chauffe\194\160!",
+	airphase_message = "D\195\169collage !",
+	landphase_message = "Atterrissage !",
 
-	engage_trigger = "Fous ! Je vais mettre un terme rapide \195\160 vos souffrances !",
-	engage_message = "Plaie-de-nuit engag195\169",
+	engage_trigger = "Fous\194\160! Je vais mettre un terme rapide \195\160 vos souffrances\194\160!",
+	engage_message = "Plaie-de-nuit engag\195\169",
 
-	bones_trigger = "^([^%s]+) ([^%s]+) subit les effets de Pluis d'os",
+	bones_trigger = "^([^%s]+) ([^%s]+) les effets .* Pluie d'os.",
 	bones_message = "Pluie d'os sur [%s]",
 	bones_whisper = "Pluie d'os sur VOUS !",
 

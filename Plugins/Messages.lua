@@ -209,13 +209,20 @@ L:RegisterTranslations("frFR", function() return {
 	["Display"] = "Affichage",
 	--["display"] = true,
 	["Set where messages are displayed."] = "D\195\169termine o\195\185 les messages sont affich\195\169s.",
+	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Affiche tous les messages de BigWigs dans la fen\195\170tre de discussion par d\195\169faut, en plus de son affichage normal.",
 
 	["Mik's Scrolling Battle Text"] = "Scrolling Battle Text de Mik",
 	--["Scrolling Combat Text"] = true,
 	["Floating Combat Text"] = "Message de combat flottant",
+	["Chat frame"] = "Fen\195\170tre de discussion",
+	--["chat"] = true,
 
 	--["Test"] = true,
 	["Close"] = "Fermer",
+
+	--["reset"] = true,
+	["Reset position"] = "R\195\128Z position",
+	["Reset the anchor position, moving it to the center of your screen."] = "R\195\169initialise la position de l'ancre, la repla\195\167ant au centre de l'\195\169cran.",
 } end)
 
 ----------------------------------
