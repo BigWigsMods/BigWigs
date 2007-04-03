@@ -55,6 +55,7 @@ L:RegisterTranslations("enUS", function() return {
 	landphase_trigger2 = "Insects! Let me show you my strength up close!",
 	airphase_message = "Flying!",
 	landphase_message = "Landing!",
+	summon_trigger = "An ancient being awakens in the distance...",
 
 	engage_trigger = "What fools! I shall bring a quick end to your suffering!",
 	engage_message = "%s Engaged",
@@ -236,6 +237,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
@@ -281,6 +283,12 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	elseif not blast and msg:find(L["blast_trigger"]) then
 		self:Sync("NightbaneBlast")
 		blast = true
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
+	if self.db.profile.phase and msg == L["summon_trigger"] then
+		self:Bar(L["landphase_message"], 34, "INV_Misc_Head_Dragon_01")
 	end
 end
 
