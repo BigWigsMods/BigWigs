@@ -64,6 +64,34 @@ L:RegisterTranslations("deDE", function() return {
 	water_stance = "Hydross ist wieder gereinigt!",
 } end)
 
+L:RegisterTranslations("koKR", function() return {
+	mark = "징표",
+	mark_desc = "징표에 대한 경고와 카운터 표시",
+
+	enrage = "격노",
+	enrage_desc = "격노에 대한 경고",
+
+	stance = "속성 변경",
+	stance_desc = ("%s의 속성 변경 시 경고"):format(boss),
+
+	start_trigger = "방해하도록 놔두지 않겠습니다!",
+
+	hydross_trigger = "히드로스의 징표",
+	corruption_trigger = "타락의 징표",
+
+	hydross_bar = "다음 히드로스의 징표 - %s%%",
+	corruption_bar = "다음 타락의 징표 - %s%%",
+	enrage_bar = "격노",
+
+	debuff_warn = "징표 - %s%%!",
+
+	poison_stance_trigger = "으아아, 독이...",
+	water_stance_trigger = "아... 기분이 훨씬 좋군.",
+
+	poison_stance = "히드로스가 중독되었습니다!",
+	water_stance = "히드로스가 정화되었습니다!",
+} end)
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------

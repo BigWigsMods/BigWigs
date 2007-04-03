@@ -59,6 +59,29 @@ L:RegisterTranslations("frFR", function() return {
 	overrun_bar = "Surr\195\169gime! Cooldown",
 } end)
 
+L:RegisterTranslations("koKR", function() return {
+	overrun = "괴멸",
+	overrun_desc = "파멸의 절단기의 괴멸 사용 가능 시 경고",
+
+	earthquake = "지진",
+	earthquake_desc = "파멸의 절단기의 지진 사용 가능 시 경고",
+
+	enrage = "격노",
+	enrage_desc = "체력 20%시 격노에 대한 경고",
+
+	engage_message = "파멸의 절단기 전투 개시, 약 30초 이내 지진!",
+	enrage_soon_message = "잠시 후 격노!",
+
+	earthquake_trigger = "당신은 지진에 걸렸습니다.",
+
+	earthquake_message = "지진! 다음은 약 70초 후!",
+	earthquake_bar = "지진",
+
+	overrun_trigger = "^파멸의 절단기.-괴멸", -- check "^Doomwalker.-Overrun",
+	overrun_message = "괴멸!",
+	overrun_soon_message = "잠시 후 괴멸 가능!",
+	overrun_bar = "괴멸 대기시간",
+} end)
 
 ----------------------------------
 --   Module Declaration    --

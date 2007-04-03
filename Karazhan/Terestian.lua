@@ -107,6 +107,9 @@ L:RegisterTranslations("koKR", function() return {
 	sacrifice = "희생",
 	sacrifice_desc = "플레이어의 희생에 대한 경고",
 
+	icon = "아이콘",
+	icon_desc = "희생에 걸린 플레이어에 공격대 아이콘 지정(승급자 이상 요구)",
+
 	enrage = "격노",
 	enrage_desc = "10분 후 격노에 대한 알림.",
 
