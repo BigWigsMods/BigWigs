@@ -110,44 +110,48 @@ end
 --     Utility Functions    --
 ------------------------------
 
+local function iterateZones(addon, override, ...)
+	for i = 1, select("#", ...) do
+		local z = (select(i, ...)):trim()
+		local zone = BZ:HasTranslation(z) and BZ[z] or nil
+		assert(zone, string.format("The zone %s, specified by the %s addon, does not exist in Babble-Zone.", z, addon))
+
+		if not loadInZone[zone] then loadInZone[zone] = {} end
+		table.insert( loadInZone[zone], addon)
+
+		if override then
+			table.insert( loadInZone[override], addon)
+		else
+			BigWigsLoD:AddCoreMenu(zone)
+		end
+	end
+end
+
 function BigWigsLoD:InitializeLoD()
 	local numAddons = GetNumAddOns()
-	local i, k, v
 	for i = 1, numAddons do
 		local name, _, _, enabled = GetAddOnInfo(i)
 		if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadInZone")
 			if meta then
+				if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
+
 				-- X-BW-Menu can override showing the modules in the
 				-- modules own specified zone submenu
 				local menu = GetAddOnMetadata(i, "X-BigWigs-Menu")
-				local menuConsoleCommand = nil
 				if menu then
-					if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
 					assert(BZ:HasTranslation(menu), string.format("The menu key %s, specified by %s, does not exist in Babble-Zone.", menu, name))
-					menuConsoleCommand = BZ[menu]
-				end
+					menu = BZ[menu]
+					if not loadInZone[menu] then loadInZone[menu] = {} end
 
-				for k, v in pairs({strsplit(",", meta)}) do
-					v = v:trim()
-					if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
-					local zone = BZ:HasTranslation(v) and BZ[v] or nil
-					assert(zone, string.format("The zone %s, specified by the %s addon, does not exist in Babble-Zone.", v, name))
-
-					if not loadInZone[zone] then loadInZone[zone] = {} end
-					table.insert( loadInZone[zone], name)
-	
-					if menuConsoleCommand then
-						-- Okay, so the addon wants to be put in a menu of
-						-- its own, and not one directed by the module
-						-- zones. This means we need a translation from BZ
-						-- for the actual module name as well.
-						self:AddCoreMenu(menuConsoleCommand)
-						if not loadInZone[menuConsoleCommand] then loadInZone[menuConsoleCommand] = {} end
-						table.insert( loadInZone[menuConsoleCommand], name)
-					else
-						self:AddCoreMenu(zone)
-					end
+					-- Okay, so the addon wants to be put in a menu of
+					-- its own, and not one directed by the module
+					-- zones. This means we need a translation from BZ
+					-- for the actual module name as well.
+					self:AddCoreMenu(menu)
+					iterateZones(name, menu, strsplit(",", meta))
+				else
+					iterateZones(name, nil, strsplit(",", meta))
 				end
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadWithCore")
@@ -162,7 +166,6 @@ end
 
 function BigWigsLoD:LoadZone( zone )
 	if loadInZone[zone] then
-		local i, v, k, z, j, addon
 		local addonsLoaded = {}
 		for i, v in ipairs( loadInZone[zone] ) do
 			if not IsAddOnLoaded( v ) then
