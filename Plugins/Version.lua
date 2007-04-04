@@ -1,6 +1,5 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
-local BWL = nil
 local BZ = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsVersionQuery")
 local tablet = AceLibrary("Tablet-2.0")
@@ -221,8 +220,6 @@ function plugin:OnEnable()
 	self.zoneRevisions = nil
 	self.currentZone = ""
 
-	BWL = AceLibrary("AceLocale-2.2"):new("BigWigs")
-
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "BWVQ", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "BWVR", 0)
@@ -235,13 +232,8 @@ function plugin:PopulateRevisions()
 		if module:IsBossModule() and type(module.zonename) == "string" then
 			-- Make sure to get the enUS zone name.
 			local zone = BZ:HasReverseTranslation(module.zonename) and BZ:GetReverseTranslation(module.zonename) or module.zonename
-			-- Get the abbreviated name from BW Core.
-			local zoneAbbr = BWL:HasTranslation(zone) and BWL:GetTranslation(zone) or nil
 			if not self.zoneRevisions[zone] or module.revision > self.zoneRevisions[zone] then
 				self.zoneRevisions[zone] = module.revision
-			end
-			if zoneAbbr and (not self.zoneRevisions[zoneAbbr] or module.revision > self.zoneRevisions[zoneAbbr]) then
-				self.zoneRevisions[zoneAbbr] = module.revision
 			end
 		end
 	end
@@ -357,17 +349,6 @@ function plugin:QueryVersion(zone)
 	if type(zone) ~= "string" or zone == "" then zone = GetRealZoneText() end
 	-- If this is a shorthand zone, convert it to enUS full.
 	-- Also, if this is a shorthand, we can't really know if the user is enUS or not.
-
-	if not BWL then BWL = AceLibrary("AceLocale-2.2"):new("BigWigs") end
-	if BWL ~= nil and type(zone) == "string" and BWL:HasReverseTranslation(zone) then
-		zone = BWL:GetReverseTranslation(zone)
-		-- If there is a translation for this to GetLocale(), get it, so we can
-		-- print the zone name in the correct locale.
-		if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
-		if BZ:HasTranslation(zone) then
-			zone = BZ:GetTranslation(zone)
-		end
-	end
 
 	if not zone then
 		error("The given zone is invalid.")

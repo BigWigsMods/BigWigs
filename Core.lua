@@ -39,21 +39,6 @@ L:RegisterTranslations("enUS", function() return {
 	["Load"] = true,
 	["Load All"] = true,
 	["Load all %s modules."] = true,
-
-	-- AceConsole zone commands
-	["Karazhan"] = true,
-	["Zul'Gurub"] = "ZG",
-	["Molten Core"] = "MC",
-	["Blackwing Lair"] = "BWL",
-	["Ahn'Qiraj"] = "AQ40",
-	["Ruins of Ahn'Qiraj"] = "AQ20",
-	["Naxxramas"] = "Naxxramas",
-	["Azeroth"] = "Azeroth",
-	["Outland"] = "Outland",
-	["Coilfang Reservoir"] = "SC",
-	["Serpentshrine Cavern"] = "SC",
-	["Tempest Keep"] = "TheEye",
-	["The Eye"] = "TheEye",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -85,21 +70,6 @@ L:RegisterTranslations("frFR", function() return {
 	["Load"] = "Charger",
 	["Load All"] = "Tout charger",
 	["Load all %s modules."] = "Charge tous les modules \"%s\".",
-
-	-- AceConsole zone commands
-	["Karazhan"] = "Karazhan",
-	["Zul'Gurub"] = "ZG",
-	["Molten Core"] = "MC",
-	["Blackwing Lair"] = "BWL",
-	["Ahn'Qiraj"] = "AQ40",
-	["Ruins of Ahn'Qiraj"] = "AQ20",
-	["Naxxramas"] = "Naxxramas",
-	["Azeroth"] = "Azeroth",
-	["Outland"] = "Outreterre",
-	["Coilfang Reservoir"] = "SC",
-	["Serpentshrine Cavern"] = "SC",
-	["Tempest Keep"] = "TheEye",
-	["The Eye"] = "TheEye",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -131,22 +101,6 @@ L:RegisterTranslations("deDE", function() return {
 	["Load"] = "Laden",
 	["Load All"] = "Alle Laden",
 	["Load all %s modules."] = "Alle %s Module laden.",
-
-	-- AceConsole zone commands
-	-- ["Karazhan"] = true,
-	["Zul'Gurub"] = "ZG",
-	["Molten Core"] = "MC",
-	["Blackwing Lair"] = "BWL",
-	["Ahn'Qiraj"] = "AQ40",
-	["Ruins of Ahn'Qiraj"] = "AQ20",
-	["Naxxramas"] = "Naxxramas",
-	["Azeroth"] = "Azeroth",
-	["Outland"] = "Scherbenwelt",
-	["Karazhan"] = "Karazhan",
-	["Coilfang Reservoir"] = "SC",
-	["Serpentshrine Cavern"] = "SC",
-	["Tempest Keep"] = "TheEye",
-	["The Eye"] = "TheEye",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -175,21 +129,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Load"] = "불러오기",
 	["Load All"] = "모두 불러오기",
 	["Load all %s modules."] = "모든 %s 모듈들을 불러옵니다.",
-
-	-- AceConsole zone commands
-	["Karazhan"] = "Karazhan",
-	["Zul'Gurub"] = "ZG",
-	["Molten Core"] = "MC",
-	["Blackwing Lair"] = "BWL",
-	["Ahn'Qiraj"] = "AQ40",
-	["Ruins of Ahn'Qiraj"] = "AQ20",
-	["Naxxramas"] = "Naxxramas",
-	["Azeroth"] = "Azeroth",
-	["Outland"] = "Outland",
-	["Coilfang Reservoir"] = "SC",
-	["Serpentshrine Cavern"] = "SC",
-	["Tempest Keep"] = "TheEye",
-	["The Eye"] = "TheEye",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -218,21 +157,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	bosskill = "首领死亡",
 	bosskill_desc = "首领被击败时发出提示",
-
-	-- AceConsole zone commands
-	["Zul'Gurub"] = "祖尔格拉布",
-	["Molten Core"] = "熔火之心",
-	["Blackwing Lair"] = "黑翼之巢",
-	["Ahn'Qiraj"] = "安其拉",
-	["Ruins of Ahn'Qiraj"] = "安其拉废墟",
-	["Naxxramas"] = "纳克萨玛斯",
-	["Azeroth"] = "Azeroth",
-	["Outland"] = "Outland",
-	["Karazhan"] = "Karazhan",
-	["Coilfang Reservoir"] = "SC",
-	["Serpentshrine Cavern"] = "SC",
-	["Tempest Keep"] = "TheEye",
-	["The Eye"] = "TheEye",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -257,21 +181,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	bosskill = "首領死亡",
 	bosskill_desc = "首領被擊敗時發出提示。",
-
-	-- AceConsole zone commands
-	["Zul'Gurub"] = "ZG",
-	["Molten Core"] = "MC",
-	["Blackwing Lair"] = "BWL",
-	["Ahn'Qiraj"] = "TAQ",
-	["Ruins of Ahn'Qiraj"] = "RAQ",
-	["Naxxramas"] = "NAX",
-	["Azeroth"] = "艾澤拉斯",
-	["Outland"] = "Outland",
-	["Karazhan"] = "Karazhan",
-	["Coilfang Reservoir"] = "SC",
-	["Serpentshrine Cavern"] = "SC",
-	["Tempest Keep"] = "TheEye",
-	["The Eye"] = "TheEye",
 } end)
 
 ---------------------------------
@@ -497,26 +406,22 @@ function BigWigs:RegisterModule(name, module)
 			if module.external then
 				options.args[L["Extras"]].args[ML["cmd"]] = cons or module.consoleOptions
 			else
-				local consoleZone = nil
-				local guiZone = nil
+				local zone = nil
 				if module.otherMenu then
-					consoleZone = L[module.otherMenu]
-					guiZone = BZ[module.otherMenu]
+					zone = BZ[module.otherMenu]
 				else
-					local moduleZone = type(module.zonename) == "table" and module.zonename[1] or module.zonename
-					guiZone = moduleZone
-					consoleZone = L[BZ:GetReverseTranslation(moduleZone)]
+					zone = type(module.zonename) == "table" and module.zonename[1] or module.zonename
 				end
-				if not options.args[consoleZone] then
-					options.args[consoleZone] = {
+				if not options.args[zone] then
+					options.args[zone] = {
 						type = "group",
-						name = guiZone,
-						desc = L["Options for bosses in %s."]:format(guiZone),
+						name = zone,
+						desc = L["Options for bosses in %s."]:format(zone),
 						args = {},
 						disabled = "~IsActive",
 					}
 				end
-				options.args[consoleZone].args[ML["cmd"]] = cons or module.consoleOptions
+				options.args[zone].args[ML["cmd"]] = cons or module.consoleOptions
 			end
 		end
 	elseif module.consoleOptions then

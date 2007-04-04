@@ -123,8 +123,9 @@ function BigWigsLoD:InitializeLoD()
 				local menu = GetAddOnMetadata(i, "X-BigWigs-Menu")
 				local menuConsoleCommand = nil
 				if menu then
-					assert(LC:HasTranslation(menu), string.format("The menu key %s, specified by %s, does not exist in the core translation table.", menu, name))
-					menuConsoleCommand = LC[menu]
+					if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
+					assert(BZ:HasTranslation(menu), string.format("The menu key %s, specified by %s, does not exist in Babble-Zone.", menu, name))
+					menuConsoleCommand = BZ[menu]
 				end
 
 				for k, v in pairs({strsplit(",", meta)}) do
@@ -141,18 +142,11 @@ function BigWigsLoD:InitializeLoD()
 						-- its own, and not one directed by the module
 						-- zones. This means we need a translation from BZ
 						-- for the actual module name as well.
-						local guiKey = BZ:HasTranslation(menu) and BZ[menu] or nil
-						assert(guiKey, string.format("%s's X-BigWigs-Menu (%s) has no translation available in Babble-Zone.", name, menu))
-						self:AddCoreMenu(menuConsoleCommand, guiKey)
-						if not loadInZone[guiKey] then loadInZone[guiKey] = {} end
-						table.insert( loadInZone[guiKey], name)
+						self:AddCoreMenu(menuConsoleCommand)
+						if not loadInZone[menuConsoleCommand] then loadInZone[menuConsoleCommand] = {} end
+						table.insert( loadInZone[menuConsoleCommand], name)
 					else
-						-- consoleZone is basically the zonename we want to show
-						-- in the console command options, like "MC" for Molten
-						-- Core, for example.
-						local consoleZone = LC:HasTranslation(v) and LC[v] or nil
-						assert(consoleZone, string.format("%s's zone, %s, has no translation appropriate for console usage.", name, zone))
-						self:AddCoreMenu(consoleZone, zone)
+						self:AddCoreMenu(zone)
 					end
 				end
 			end
@@ -209,24 +203,24 @@ local function hide(zone)
 	return not loadInZone[zone] or #loadInZone[zone] == 0
 end
 
-function BigWigsLoD:AddCoreMenu(consoleCommand, guiCommand)
+function BigWigsLoD:AddCoreMenu(zone)
 	local opt = BigWigs.cmdtable.args
-	if not opt[consoleCommand] then
-		opt[consoleCommand] = {
+	if not opt[zone] then
+		opt[zone] = {
 			type = "group",
-			name = guiCommand,
-			desc = LC["Options for bosses in %s."]:format(guiCommand),
+			name = zone,
+			desc = LC["Options for bosses in %s."]:format(zone),
 			args = {},
 			disabled = "~IsActive",
 		}
 	end
-	if not opt[consoleCommand].args[LC["Load"]] then
-		opt[consoleCommand].args[LC["Load"]] = {
+	if not opt[zone].args[LC["Load"]] then
+		opt[zone].args[LC["Load"]] = {
 			type = "execute",
 			name = LC["Load All"],
-			desc = LC["Load all %s modules."]:format(guiCommand),
+			desc = LC["Load all %s modules."]:format(zone),
 			order = 1,
-			passValue = guiCommand,
+			passValue = zone,
 			handler = BigWigsLoD,
 			func = "LoadZone",
 			hidden = hide,
