@@ -50,16 +50,16 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	spawns = "Alerte Hostilit\195\169",
-	--spawns_desc = "Timers for when the characters become active",
+	spawns_desc = "Timers pour les diff\195\169rents pops.",
 
-	--light = "Chain Lightning",
-	--light_desc = "Warn for Chain Lightning being cast",
+	light = "Cha\195\174ne d'\195\169clairs",
+	light_desc = "Pr\195\169viens quand La M\195\169g\195\168re commence \195\160 lancer sa Cha\195\174ne d'\195\169clairs.",
 
 	spawns_bar = "%s attaque !",
-	--spawns_warning = "%s in 5 sec",
+	spawns_warning = "%s dans 5 sec",
 
-	--light_trigger = "The Crone begins to cast Chain Lightning",
-	--light_message = "Chain Lightning!",
+	light_trigger = "La M\195\169g\195\168re commence \195\160 lancer Cha\195\174ne d'\195\169clairs",
+	light_message = "Cha\195\174ne d'\195\169clairs !",
 
 	engage_trigger = "Oh, Tito, nous devons trouver le moyen de rentrer \195\160 la maison\194\160!",
 } end)

@@ -60,7 +60,7 @@ L:RegisterTranslations("frFR", function() return {
 	curse_message = "Tank maudit - %s",
 
 	phase1_message = "Phase 1 - %s",
-	phase2_trigger = "Vous pr\195\169f\195\169rez peut-\195\170tre vous mesurer \195\160 un adversaire plus redoutable ?!",
+	phase2_trigger = "%s appelle son ma\195\174tre !",
 	phase2_message = "Phase 2 - %s & Attumen",
 	phase3_trigger = "Viens, Minuit, allons disperser cette insignifiante racaille\194\160!",
 	phase3_message = "Phase 3 - %s",
