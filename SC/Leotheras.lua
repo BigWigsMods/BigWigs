@@ -1,11 +1,11 @@
 ﻿------------------------------
 --      Are you local?    --
 ------------------------------
-
 local boss = AceLibrary("Babble-Boss-2.2")["Leotheras the Blind"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local imagewarn
+local wwhelp = 0
 
 ----------------------------
 --      Localization     --
@@ -35,15 +35,17 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_sec = "Enrage in %d sec",
 
 	whirlwind_trigger = "Leotheras the Blind gains Whirlwind",
-	whirlwind_gain = "Whirlwind for 8 sec",
+	whirlwind_gain = "Whirlwind for 12 sec",
 	whirlwind_fade = "Whirlwind Over",
 	whirlwind_bar = "Whirlwind",
+	whirlwind_bar2 = "next Whirlwind",
+	whirlwind_warn = "Whirlwind soon",
 
 	phase_trigger = "I am in control now",
-	phase_demon = "Demon Phase for ~40sec",
-	phase_demonsoon = "Demon Phase in ~5sec!",
-	phase_normal = "Normal Phase Soon",
-	demon_bar = "~Demon",
+	phase_demon = "Demon Phase for 60sec",
+	phase_demonsoon = "Demon Phase in 5sec!",
+	phase_normal = "Normal Phase in 5sec",
+	demon_bar = "Demon",
 	demon_nextbar = "Next Demon Phase",
 
 	image_trigger = "I am the master! Do you hear?",
@@ -51,7 +53,7 @@ L:RegisterTranslations("enUS", function() return {
 	image_warning = "Image Soon!",
 
 	whisper_trigger = "^([^%s]+) ([^%s]+) afflicted by Insidious Whisper",
-	whisper_message = "Whisper: %s",
+	whisper_message = "InnerDemon: %s",
 } end )
 
 ----------------------------------
@@ -71,7 +73,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
@@ -103,11 +105,16 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:DelayedMessage(590, L["enrage_sec"]:format(10), "Urgent")
 		self:DelayedMessage(600, L["enrage"], "Attention", nil, "Alarm")
 		self:Bar(L["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
+		self:DelayedMessage(3, L["whirlwind_warn"], "Attention")
+		wwhelp = 0
+		self:ScheduleEvent("bwdemon", self.DemonSoon, 16, self)
 	elseif self.db.profile.phase and msg:find(L["phase_trigger"]) then
 		self:Message(L["phase_demon"], "Attention")
-		self:DelayedMessage(40, L["phase_normal"], "Important")
-		self:Bar(L["demon_bar"], 40, "Spell_Shadow_Metamorphosis")
-		self:ScheduleEvent("bwdemon", self.DemonSoon, 40, self)
+		self:DelayedMessage(55, L["phase_normal"], "Important")
+		self:DelayedMessage(61, L["whirlwind_warn"], "Attention")
+		self:Bar(L["demon_bar"], 60, "Spell_Shadow_Metamorphosis")
+		self:ScheduleEvent("bwdemon", self.DemonSoon, 60, self)
+		wwhelp = 0
 	elseif msg:find(L["image_trigger"]) then
 		self:CancelScheduledEvent("bwdemon")
 		if self.db.profile.image then
@@ -117,14 +124,19 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:DemonSoon()
-	self:DelayedMessage(75, L["phase_demonsoon"], "Urgent")
-	self:Bar(L["demon_nextbar"], 80, "Spell_Shadow_Metamorphosis")
+	self:DelayedMessage(55, L["phase_demonsoon"], "Urgent")
+	self:Bar(L["demon_nextbar"], 60, "Spell_Shadow_Metamorphosis")
 end
 
-function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if msg:find(L["whirlwind_trigger"]) then
 		self:Sync("LeoWW")
 	end
+end
+
+function mod:WhirlwindBar()
+	self:Bar(L["whirlwind_bar2"], 18, "Ability_Whirlwind")
+	self:DelayedMessage(18, L["whirlwind_warn"], "Attention")
 end
 
 function mod:UNIT_HEALTH(msg)
@@ -156,7 +168,11 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Bar(L["whisper_message"], 30, "Spell_Shadow_ManaFeed")
 	elseif sync == "LeoWW" and self.db.profile.whirlwind then
 		self:Message(L["whirlwind_gain"], "Important", nil, "Alert")
-		self:DelayedMessage(8, L["whirlwind_fade"], "Attention")
-		self:Bar(L["whirlwind_bar"], 8, "Ability_Whirlwind")
+		self:DelayedMessage(12, L["whirlwind_fade"], "Attention")
+		self:Bar(L["whirlwind_bar"], 12, "Ability_Whirlwind")
+		if wwhelp == 0 or imagewarn then
+			self:ScheduleEvent("bwwhirlwind", self.WhirlwindBar, 12, self)
+		end
+		wwhelp = 1
 	end
 end
