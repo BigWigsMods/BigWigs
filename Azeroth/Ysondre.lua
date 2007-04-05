@@ -36,10 +36,11 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	cmd = "伊索德雷",
-
 	engage = "狂怒警報",
 	engage_desc = "當伊索德雷狂怒時發出警報",
+
+	--druids = "Druids Alert",
+	--druids_desc = "Warn for incoming druids",
 
 	noxious = "毒性吐息警報",
 	noxious_desc = "毒性吐息警報",
@@ -47,7 +48,11 @@ L:RegisterTranslations("zhTW", function() return {
 	engage_message = "伊索德雷狂怒！ 10 秒後可能發動毒性吐息",
 	engage_trigger = "The strands of LIFE have been severed! The Dreamers must be avenged!",
 
-	noxious_trigger = "受到了毒性吐息效果的影響。",
+	--druids_trigger = "Come forth, ye Dreamers - and claim your vengeance!",
+	--druids_message = "Incoming Druids!",
+
+	noxious_hit = "受到了毒性吐息效果的影響。",
+	--noxious_resist = "Noxious Breath was resisted",
 	noxious_warn = "5 秒後發動毒性吐息！",
 	noxious_message = "毒性吐息 - 30 秒後再次發動",
 	noxious_bar = "毒性吐息",
@@ -84,6 +89,10 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "YsoNox", 10)
 end
 
+------------------------------
+--      Event Handlers      --
+------------------------------
+
 function mod:Event(msg)
 	if msg:find(L["noxious_hit"]) or msg:find(L["noxious_resist"]) then
 		self:Sync("YsoNox")
@@ -93,7 +102,7 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.engage and msg == L["engage_trigger"] then
 		self:Message(L["engage_message"], "Attention")
-		self:Bar( L["noxious_bar"], 10, "Spell_Shadow_LifeDrain02")
+		self:Bar(L["noxious_bar"], 10, "Spell_Shadow_LifeDrain02")
 	elseif self.db.profile.druids and msg == L["druids_trigger"] then
 		self:Message(L["druids_message"], "Positive")
 	end
