@@ -14,7 +14,7 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Ysondre",
 
 	engage = "Engage Alert",
-	engage_desc = "Warn when Ysondre is engaged",
+	engage_desc = ("Warn when %s is engaged"):format(boss),
 
 	druids = "Druids Alert",
 	druids_desc = "Warn for incoming druids",
@@ -22,7 +22,7 @@ L:RegisterTranslations("enUS", function() return {
 	noxious = "Noxious breath alert",
 	noxious_desc = "Warn for noxious breath",
 
-	engage_message = "Ysondre Engaged! - Noxious Breath in ~10seconds",
+	engage_message = "%s Engaged! - Noxious Breath in ~10seconds",
 	engage_trigger = "The strands of LIFE have been severed! The Dreamers must be avenged!",
 
 	druids_trigger = "Come forth, ye Dreamers - and claim your vengeance!",
@@ -37,7 +37,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	engage = "狂怒警報",
-	engage_desc = "當伊索德雷狂怒時發出警報",
+	engage_desc = ("當%s狂怒時發出警報"):format(boss),
 
 	--druids = "Druids Alert",
 	--druids_desc = "Warn for incoming druids",
@@ -45,7 +45,7 @@ L:RegisterTranslations("zhTW", function() return {
 	noxious = "毒性吐息警報",
 	noxious_desc = "毒性吐息警報",
 
-	engage_message = "伊索德雷狂怒！ 10 秒後可能發動毒性吐息",
+	engage_message = "%s狂怒！ 10 秒後可能發動毒性吐息",
 	engage_trigger = "The strands of LIFE have been severed! The Dreamers must be avenged!",
 
 	--druids_trigger = "Come forth, ye Dreamers - and claim your vengeance!",
@@ -101,7 +101,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.engage and msg == L["engage_trigger"] then
-		self:Message(L["engage_message"], "Attention")
+		self:Message(L["engage_message"]:format(boss), "Attention")
 		self:Bar(L["noxious_bar"], 10, "Spell_Shadow_LifeDrain02")
 	elseif self.db.profile.druids and msg == L["druids_trigger"] then
 		self:Message(L["druids_message"], "Positive")
