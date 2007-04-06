@@ -195,7 +195,7 @@ L:RegisterTranslations("koKR", function() return {
 	heal_desc = "지옥불 역술사 치유 시전시 경고",
 
 	nova = "파열의 회오리",
-	nova_desc = "파열의 회오리 지속시간 바",
+	nova_desc = "파열의 회오리 예측",
 
 	banish = "추방",
 	banish_desc = ("%s 추방시 알림"):format(boss),
@@ -203,8 +203,13 @@ L:RegisterTranslations("koKR", function() return {
 	exhaust = "방출 바 비활성화",
 	exhaust_desc = "정신 방출에 걸린 플레이어에 대한 타이머 바",
 
-	escape_trigger1 = "%s의 속박이 약해지기 시작합니다",
+	debris = "당신에 파편",
+	debris_desc = "당신이 파편에 걸렸을때 알림",
 
+	debrisinc = "파편",
+	debrisinc_desc = "30% 파편 경고",
+
+	escape_trigger1 = "%%s의 속박이 약해지기 시작합니다",
 	escape_trigger2 = "내가... 풀려났도다!",
 	escape_warning1 = "%s 전투 개시 - 2분 이내 속박 해제!",
 	escape_warning2 = "속박 해제 1분 전!",
@@ -214,8 +219,8 @@ L:RegisterTranslations("koKR", function() return {
 	escape_bar = "풀려남...",
 	escape_message = "%s 풀려남!",
 
-	abyssal_trigger = "지옥불 역술사가 불타는 심연으로",
-	abyssal_message = "불타는 심연 생성됨 (%d)",
+	abyssal_trigger = "지옥불 역술사|1이;가; 불타는 심연|1을;를; 시전합니다.",
+	abyssal_message = "불타는 심연 (%d)",
 
 	heal_trigger = "암흑의 치유 시전을 시작합니다.",
 	heal_message = "치유 시전!",
@@ -229,6 +234,13 @@ L:RegisterTranslations("koKR", function() return {
 
 	exhaust_trigger = "^([^|;%s]*)(.*)정신 방출에 걸렸습니다%.$",
 	exhaust_bar = "[%s] 정신 방출",
+
+	debris_trigger = "당신은 파편에 걸렸습니다.",
+	debris_message = "당신에 파편!",
+
+	debrisinc_trigger = "그렇게 쉽게 당할 내가 아니다! 이 감옥의 벽이 흔들리고... 무너지라라!",
+	debrisinc_message = "30% - 잠시 후 파편!",
+	debrisinc_warning = "곧 파편!",
 
 	["Hellfire Channeler"] = "지옥불 역술사",
 } end)
