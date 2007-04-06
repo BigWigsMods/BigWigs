@@ -17,6 +17,9 @@ L:RegisterTranslations("enUS", function() return {
 	engage = "Engage Alert",
 	engage_desc = ("Warn when %s is engaged"):format(boss),
 
+	corruption = "Corruption",
+	corruption_desc = "Warn for incoming Corruption of the Earth",
+
 	noxious = "Noxious breath alert",
 	noxious_desc = "Warn for noxious breath",
 
@@ -36,6 +39,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	engage_message = "%s Engaged! - Noxious Breath in ~10seconds",
 	engage_trigger = "Hope is a DISEASE of the soul! This land shall wither and die!",
+
+	corruption_trigger = "Taste your world's corruption!",
+	corruption_message = "Incoming Corruption of the Earth!",
 
 	noxious_hit = "afflicted by Noxious Breath",
 	noxious_resist = "Noxious Breath was resisted",
@@ -171,7 +177,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = {BZ["Ashenvale"], BZ["Duskwood"], BZ["The Hinterlands"], BZ["Feralas"]}
 mod.otherMenu = "Azeroth"
 mod.enabletrigger = boss
-mod.toggleoptions = {"engage", -1, "noxious", -1, "volatileyou", "volatileother", "icon", "bosskill"}
+mod.toggleoptions = {"engage", "corruption", -1, "noxious", -1, "volatileyou", "volatileother", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -214,8 +220,10 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.engage and msg == L["engage_trigger"] then
-		self:Message(L["engage_message"]:format(boss), "Important")
+		self:Message(L["engage_message"]:format(boss), "Attention")
 		self:Bar(L["noxious_bar"], 10, "Spell_Shadow_LifeDrain02")
+	elseif self.db.profile.corruption and msg == L["corruption_trigger"] then
+		self:Message(L["corruption_message"], "Urgent")
 	end
 end
 
