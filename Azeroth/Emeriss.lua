@@ -224,6 +224,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["noxious_bar"], 10, "Spell_Shadow_LifeDrain02")
 	elseif self.db.profile.corruption and msg == L["corruption_trigger"] then
 		self:Message(L["corruption_message"], "Urgent")
+		self:Bar(L["corruption"], 10, "Ability_Creature_Cursed_03")
 	end
 end
 
