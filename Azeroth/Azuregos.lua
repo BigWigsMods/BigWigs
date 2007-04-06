@@ -12,21 +12,25 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Azuregos",
 
+	engage = "Engage Alert",
+	engage_desc = ("Warn when %s is engaged"):format(boss),
+
 	teleport = "Teleport Alert",
 	teleport_desc = "Warn for teleport",
 
 	shield = "Shield Alert",
 	shield_desc = "Warn for shield",
 
-	trigger1 = "Come, little ones",
-	trigger2 = "^Reflection fades from Azuregos",
-	trigger3 = "^Azuregos gains Reflection",
+	engage_trigger = "^This place is under my protection",
+	engage_message = "%s Engaged!",
 
-	warn1 = "Teleport!",
-	warn2 = "Magic Shield down!",
-	warn3 = "Magic Shield UP!",
+	teleport_trigger = "^Come, little ones",
+	teleport_message = "Teleport!",
 
-	shieldbar = "Magic Shield",
+	shield_trigger = "^Azuregos gains Reflection",
+	shield_down = "Magic Shield down!",
+	shield_up = "Magic Shield UP!",
+	shield_bar = "Magic Shield",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -36,15 +40,13 @@ L:RegisterTranslations("deDE", function() return {
 	shield = "Magieschild",
 	shield_desc = "Warnung, wenn Magieschild aktiv.",
 
-	trigger1 = "Tretet mir",
-	trigger2 = "Reflexion schwindet von Azuregos",
-	trigger3 = "^Azuregos bekommt 'Reflexion'",
+	teleport_trigger = "Tretet mir",
+	teleport_message = "Teleport!",
 
-	warn1 = "Teleport!",
-	warn2 = "Magieschild: Aus!",
-	warn3 = "Magieschild: Aktiv!",
-
-	shieldbar = "Magieschild",
+	shield_trigger = "^Azuregos bekommt 'Reflexion'",
+	shield_down = "Magieschild: Aus!",
+	shield_up = "Magieschild: Aktiv!",
+	shield_bar = "Magieschild",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -54,15 +56,13 @@ L:RegisterTranslations("frFR", function() return {
 	shield = "Alerte Bouclier",
 	shield_desc = "Pr\195\169viens quand Azuregos est prot\195\169g\195\169 par un bouclier magique.",
 
-	trigger1 = "Venez m'affronter, mes petits !",
-	trigger2 = "^Renvoi sur Azuregos vient de se dissiper.",
-	trigger3 = "^Azuregos gagne Renvoi.",
+	teleport_trigger = "Venez m'affronter, mes petits !",
+	teleport_message = "T\195\169l\195\169portation !",
 
-	warn1 = "T\195\169l\195\169portation !",
-	warn2 = "Bouclier magique dissip\195\169 !",
-	warn3 = "Bouclier magique en place !",
-
-	shieldbar = "Bouclier magique",
+	shield_trigger = "^Azuregos gagne Renvoi.",
+	shield_down = "Bouclier magique dissip\195\169 !",
+	shield_up = "Bouclier magique en place !",
+	shield_bar = "Bouclier magique",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -72,15 +72,13 @@ L:RegisterTranslations("zhCN", function() return {
 	shield = "护盾警报",
 	shield_desc = "护盾警报",
 
-	trigger1 = "来吧，小子。面对我！",
-	trigger2 = "^反射效果从艾索雷葛斯身上消失",
-	trigger3 = "^艾索雷葛斯获得了反射",
+	teleport_trigger = "来吧，小子。面对我！",
+	teleport_message = "传送发动！",
 
-	warn1 = "传送发动！",
-	warn2 = "魔法护盾消失！",
-	warn3 = "魔法护盾开启 - 不要施放法术！",
-
-	shieldbar = "魔法护盾",
+	shield_trigger = "^艾索雷葛斯获得了反射",
+	shield_down = "魔法护盾消失！",
+	shield_up = "魔法护盾开启 - 不要施放法术！",
+	shield_bar = "魔法护盾",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -90,15 +88,13 @@ L:RegisterTranslations("zhTW", function() return {
 	shield = "護盾警報",
 	shield_desc = "護盾警報",
 
-	trigger1 = "來吧，小子。面對我！",
-	trigger2 = "^反射效果從艾索雷葛斯身上消失",
-	trigger3 = "^艾索雷葛斯獲得了反射",
+	teleport_trigger = "來吧，小子。面對我！",
+	teleport_message = "傳送發動！",
 
-	warn1 = "傳送發動！",
-	warn2 = "魔法護盾消失！",
-	warn3 = "魔法護盾開啟 - 不要施放法術！",
-
-	shieldbar = "魔法護盾",
+	shield_trigger = "^艾索雷葛斯獲得了反射",
+	shield_down = "魔法護盾消失！",
+	shield_up = "魔法護盾開啟 - 不要施放法術！",
+	shield_bar = "魔法護盾",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -108,15 +104,13 @@ L:RegisterTranslations("koKR", function() return {
 	shield = "보호막 경고",
 	shield_desc = "보호막에 대한 경고",
 
-	trigger1 = "오너라, 조무래기들아! 덤벼봐라!",
-	trigger2 = "아주어고스의 몸에서 반사 효과가 사라졌습니다.",
-	trigger3 = "아주어고스|1이;가; 반사 효과를",
+	teleport_trigger = "오너라, 조무래기들아! 덤벼봐라!",
+	teleport_message = "강제 소환!",
 
-	warn1 = "강제 소환!",
-	warn2 = "마법 보호막 소멸!",
-	warn3 = "마법 보호막 동작 - 마법 공격 금지!",
-
-	shieldbar = "마법 보호막",
+	shield_trigger = "아주어고스|1이;가; 반사 효과를",
+	shield_down = "마법 보호막 소멸!",
+	shield_up = "마법 보호막 동작 - 마법 공격 금지!",
+	shield_bar = "마법 보호막",
 } end )
 
 ----------------------------------
@@ -127,8 +121,8 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Azshara"]
 mod.otherMenu = "Azeroth"
 mod.enabletrigger = boss
-mod.toggleoptions = {"teleport", "shield", "bosskill"}
-mod.revision = tonumber(string.sub("$Revision$", 12, -3))
+mod.toggleoptions = {"engage", "teleport", "shield", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -136,26 +130,35 @@ mod.revision = tonumber(string.sub("$Revision$", 12, -3))
 
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "AzuShield", 3)
 end
 
-function mod:CHAT_MSG_MONSTER_YELL( msg )
-	if self.db.profile.teleport and msg:find(L["trigger1"]) then
-		self:Message(L["warn1"], "Important")
+------------------------------
+--      Event Handlers      --
+------------------------------
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if self.db.profile.teleport and msg:find(L["teleport_trigger"]) then
+		self:Message(L["teleport_message"], "Important")
+	elseif self.db.profile.engage and msg:find(L["engage_trigger"]) then
+		self:Message(L["engage_message"]:format(boss), "Attention")
 	end
 end
 
-function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER( msg )
-	if self.db.profile.shield and msg:find(L["trigger2"]) then
-		self:Message(L["warn2"], "Attention")
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+	if msg:find(L["shield_trigger"]) then
+		self:Sync("AzuShield")
 	end
 end
 
-function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
-	if self.db.profile.shield and arg1:find(L["trigger3"]) then
-		self:Message(L["warn3"], "Important")
-		self:Bar(L["shieldbar"], 10, "Spell_Frost_FrostShock")
+function mod:BigWigs_RecvSync(sync)
+	if sync == "AzuShield" and self.db.profile.shield then
+		self:Message(L["shield_up"], "Attention")
+		self:Bar(L["shield_bar"], 10, "Spell_Frost_FrostShock")
+		self:DelayedMessage(10, L["shield_down"], "Positive")
 	end
 end
