@@ -8,6 +8,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local inGrave = {}
 local started = nil
+local grobulealert
 
 ----------------------------
 --      Localization     --
@@ -41,6 +42,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	grobules_trigger = "watery grobules",
 	grobules_message = "Incoming Grobules!",
+	grobules_warning = "Grobules Soon!",
 
 	tidal_trigger = "Morogrim Tidewalker begins to cast Tidal Wave.",
 	tidal_message = "Tidal Wave!",
@@ -69,6 +71,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	--grobules_trigger = "watery grobules", -- to translate
 	--grobules_message = "Incoming Grobules!", -- to translate
+	--grobules_warning = "Grobules Soon!",
 } end )
 
 ----------------------------------
@@ -89,6 +92,8 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	for k in pairs(inGrave) do inGrave[k] = nil end
 	started = nil
+	grobulealert = nil
+	self:RegisterEvent("UNIT_HEALTH")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
@@ -118,7 +123,7 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if self.db.profile.gravealert and msg:find(L["grave_trigger2"]) then
+	if self.db.profile.grave and msg:find(L["grave_trigger2"]) then
 		self:Bar(L["grave_nextbar"], 30, "Spell_Frost_ArcticWinds")
 		self:Bar(L["grave_bar"], 6, "Spell_Frost_ArcticWinds")
 	elseif self.db.profile.murloc and msg:find(L["murloc_trigger"]) then
@@ -174,3 +179,15 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
+function mod:UNIT_HEALTH(msg)
+	if not self.db.profile.grobules then return end
+	if UnitName(msg) == boss then
+		local health = UnitHealth(msg)
+		if health > 26 and health <= 30 and not grobulealert then
+			self:Message(L["grobules_warning"], "Positive")
+			grobulealert = true
+		elseif health > 50 and grobulealert then
+			grobulealert = false
+		end
+	end
+end
