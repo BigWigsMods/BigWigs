@@ -38,7 +38,8 @@ L:RegisterTranslations("enUS", function() return {
 	murloc_bar = "Murlocs incoming",
 	murloc_trigger = "Murlocs",
 	murloc_message = "Incoming Murlocs!",
-	murlocs_soon_message = "Murlocs soon!",
+	murloc_soon_message = "Murlocs soon!",
+	murloc_engaged = "%s Engaged, Murlocs in ~40sec",
 
 	grobules_trigger = "watery grobules",
 	grobules_message = "Incoming Grobules!",
@@ -67,7 +68,8 @@ L:RegisterTranslations("deDE", function() return {
 	murloc_bar = "n\195\164chste Murlocs",
 	murloc_trigger = "Murlocs",
 	murloc_message = "Murlocs kommen!",
-	murlocs_soon_message = "Murlocs bald!",
+	murloc_soon_message = "Murlocs bald!",
+	--murloc_engaged = "%s Engaged, Murlocs in ~40sec",
 
 	--grobules_trigger = "watery grobules", -- to translate
 	--grobules_message = "Incoming Grobules!", -- to translate
@@ -130,7 +132,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 		self:CancelScheduledEvent("murloc1")
 		self:Message(L["murloc_message"], "Positive")
 		self:Bar(L["murloc_bar"], 55, "INV_Misc_Head_Murloc_01")
-		self:ScheduleEvent("murloc1", "BigWigs_Message", 51, L["murlocs_soon_message"], "Attention")
+		self:ScheduleEvent("murloc1", "BigWigs_Message", 51, L["murloc_soon_message"], "Attention")
 	elseif self.db.profile.grobules and msg:find(L["grobules_trigger"]) then
 		self:Message(L["grobules_message"], "Important", nil, "Alert")
 	end
@@ -168,6 +170,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.murloc then
+			self:Message(L["murloc_engaged"]:format(boss), "Positive")
 			self:Bar(L["murloc_bar"], 40, "INV_Misc_Head_Murloc_01")
 			self:Bar(L["grave_nextbar"], 20, "Spell_Frost_ArcticWinds")
 		end
