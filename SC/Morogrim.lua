@@ -16,17 +16,11 @@ local started = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Morogrim",
 
-	enrage = "Enrage",
-	enrage_desc = "Warn for the enrage after 10min.",
-
 	tidal = "Tidal Wave",
 	tidal_desc = "Warn when Morogrim casts Tidal Wave.",
 
 	grave = "Watery Grave",
-	grave_desc = "Alert who has watery grave.",
-
-	gravealert = "Incoming Watery Grave",
-	gravealert_desc = "Warn for incoming Watery Graves.",
+	grave_desc = "Alert who has watery grave and durations.",
 
 	murloc = "Incoming Murlocs",
 	murloc_desc = "Warn for incoming murlocs.",
@@ -34,12 +28,11 @@ L:RegisterTranslations("enUS", function() return {
 	grobules = "Incoming Grobules",
 	grobules_desc = "Warn for incoming Watery Grobules.",
 
-	grave_trigger = "^([^%s]+) ([^%s]+) afflicted by Watery Grave",
+	grave_trigger1 = "^([^%s]+) ([^%s]+) afflicted by Watery Grave",
+	grave_trigger2 = "sends his enemies",
 	grave_message = "Watery Grave: %s",
-
-	gravealert_trigger = "sends his enemies",
-	gravealert_message = "Watery Graves soon!",
 	grave_bar = "Watery Graves",
+	grave_nextbar = "Next Watery Graves",
 
 	murloc_bar = "Murlocs incoming",
 	murloc_trigger = "Murlocs",
@@ -49,24 +42,13 @@ L:RegisterTranslations("enUS", function() return {
 	grobules_trigger = "watery grobules",
 	grobules_message = "Incoming Grobules!",
 
-	enrage_message = "%s engaged, enrage in 10min!",
-	enrage_min = "Enrage in %d min",
-	enrage_sec = "Enrage in %d sec!",
-	enrage_bar = "Enrage",
-
 	tidal_trigger = "Morogrim Tidewalker begins to cast Tidal Wave.",
 	tidal_message = "Tidal Wave!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	enrage = "Wutanfall",
-	enrage_desc = "Warnt vor dem Wutanfall nach 10min.",
-
 	grave = "Nasses Grab",
-	grave_desc = "Zeigt an, wer im Nassen Grab ist",
-
-	gravealert = "N\195\164chstes Nasses Grab",
-	gravealert_desc = "Warnt vor dem n\195\164chsten Nassen Grab",
+	--grave_desc = "Zeigt an, wer im Nassen Grab ist", --enUS changed
 
 	murloc = "Murlocs",
 	murloc_desc = "Warnt vor ankommenden Murlocs",
@@ -74,25 +56,19 @@ L:RegisterTranslations("deDE", function() return {
 	grobules = "Incoming Grobules", -- to translate
 	grobules_desc = "Warn for incoming Watery Grobules", -- to translate
 
-	grave_trigger = "^([^%s]+) ([^%s]+) von Nasses Grab betroffen",
+	grave_trigger1 = "^([^%s]+) ([^%s]+) von Nasses Grab betroffen",
+	grave_trigger2 = "schickt seine Feinde",
 	grave_message = "Nasses Grab: %s",
-
-	gravealert_trigger = "schickt seine Feinde",
-	gravealert_message = "Nasses Grab kommt!",
 	grave_bar = "Nasses Grab",
+	--grave_nextbar = "Next Watery Graves",
 
 	murloc_bar = "n\195\164chste Murlocs",
 	murloc_trigger = "Murlocs",
 	murloc_message = "Murlocs kommen!",
 	murlocs_soon_message = "Murlocs bald!",
 
-	grobules_trigger = "watery grobules", -- to translate
-	grobules_message = "Incoming Grobules!", -- to translate
-
-	enrage_message = "%s angegriffen, Wutanfall in 10min!",
-	enrage_min = "Wutanfall in %d min",
-	enrage_sec = "Wunanfall in %d sec!",
-	enrage_bar = "Wutanfall",
+	--grobules_trigger = "watery grobules", -- to translate
+	--grobules_message = "Incoming Grobules!", -- to translate
 } end )
 
 ----------------------------------
@@ -103,7 +79,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
 mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
-mod.toggleoptions = {"tidal", "enrage", "grave", "gravealert", "murloc", "grobules", "bosskill"}
+mod.toggleoptions = {"tidal", "grave", "murloc", "grobules", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -142,20 +118,21 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if self.db.profile.gravealert and msg:find(L["gravealert_trigger"]) then
-		self:Message(L["gravealert_message"], "Attention", nil, "Alarm")
-		self:Bar(L["grave_bar"], 30, "Spell_Frost_ArcticWinds")
+	if self.db.profile.gravealert and msg:find(L["grave_trigger2"]) then
+		self:Bar(L["grave_nextbar"], 30, "Spell_Frost_ArcticWinds")
+		self:Bar(L["grave_bar"], 6, "Spell_Frost_ArcticWinds")
 	elseif self.db.profile.murloc and msg:find(L["murloc_trigger"]) then
+		self:CancelScheduledEvent("murloc1")
 		self:Message(L["murloc_message"], "Positive")
-		self:Bar(L["murloc_bar"], 60, "INV_Misc_Head_Murloc_01")
-		self:DelayedMessage(55, L["murlocs_soon_message"], "Attention")
+		self:Bar(L["murloc_bar"], 55, "INV_Misc_Head_Murloc_01")
+		self:ScheduleEvent("murloc1", "BigWigs_Message", 51, L["murlocs_soon_message"], "Attention")
 	elseif self.db.profile.grobules and msg:find(L["grobules_trigger"]) then
 		self:Message(L["grobules_message"], "Important", nil, "Alert")
 	end
 end
 
 function mod:Event(msg)
-	local gplayer, gtype = select(3, msg:find(L["grave_trigger"]))
+	local gplayer, gtype = select(3, msg:find(L["grave_trigger1"]))
 	if gplayer and gtype then
 		if gplayer == L2["you"] and gtype == L2["are"] then
 			gplayer = UnitName("player")
@@ -185,19 +162,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		if self.db.profile.enrage then
-			self:Message(L["enrage_message"]:format(boss), "Important")
-			self:DelayedMessage(300, L["enrage_min"]:format(5), "Positive")
-			self:DelayedMessage(420, L["enrage_min"]:format(3), "Positive")
-			self:DelayedMessage(540, L["enrage_min"]:format(1), "Positive")
-			self:DelayedMessage(570, L["enrage_sec"]:format(30), "Positive")
-			self:DelayedMessage(590, L["enrage_sec"]:format(10), "Urgent")
-			self:DelayedMessage(600, L["enrage"], "Attention", nil, "Alarm")
-			self:Bar(L["enrage_bar"], 600, "Spell_Shadow_UnholyFrenzy")
-		end
 		if self.db.profile.murloc then
-			self:Bar(L["murloc_bar"], 60, "INV_Misc_Head_Murloc_01")
-			self:DelayedMessage(55, L["murlocs_soon_message"], "Attention")
+			self:Bar(L["murloc_bar"], 40, "INV_Misc_Head_Murloc_01")
+			self:Bar(L["grave_nextbar"], 20, "Spell_Frost_ArcticWinds")
 		end
 	elseif sync == "MoroGrave" and rest then
 		inGrave[rest] = true
