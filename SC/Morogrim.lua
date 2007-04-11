@@ -172,6 +172,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.murloc then
 			self:Message(L["murloc_engaged"]:format(boss), "Positive")
 			self:Bar(L["murloc_bar"], 40, "INV_Misc_Head_Murloc_01")
+		end
+		if self.db.profile.grave then
 			self:Bar(L["grave_nextbar"], 20, "Spell_Frost_ArcticWinds")
 		end
 	elseif sync == "MoroGrave" and rest then
