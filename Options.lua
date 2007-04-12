@@ -177,7 +177,7 @@ end
 --      FuBar Methods      --
 -----------------------------
 
-function BigWigsOptions:ModuleAction(module)
+local function moduleAction(module)
 	if IsAltKeyDown() then
 		BigWigs:ToggleModuleActive(module, false)
 		BigWigs:Print(L["%s disabled."]:format(module:ToString()))
@@ -185,7 +185,7 @@ function BigWigsOptions:ModuleAction(module)
 		BigWigs:BigWigs_RebootModule(module)
 		BigWigs:Print(L["%s reset."]:format(module:ToString()))
 	end
-	self:UpdateTooltip()
+	BigWigsOptions:UpdateTooltip()
 end
 
 function BigWigsOptions:OnTooltipUpdate()
@@ -193,7 +193,7 @@ function BigWigsOptions:OnTooltipUpdate()
 		local cat = tablet:AddCategory("text", L["Active boss modules"])
 		for name, module in BigWigs:IterateModules() do
 			if module:IsBossModule() and BigWigs:IsModuleActive(module) then
-				cat:AddLine("text", name, "func", BigWigsOptions.ModuleAction, "arg1", self, "arg2", module)
+				cat:AddLine("text", name, "func", moduleAction, "arg1", self, "arg2", module)
 			end
 		end
 		tablet:SetHint(hint)
@@ -201,7 +201,7 @@ function BigWigsOptions:OnTooltipUpdate()
 		-- use a text line for this, since the hint is not shown when we are
 		-- detached.
 		local cat = tablet:AddCategory("colums", 1)
-		cat:AddLine("text", L["Big Wigs is currently disabled."], "func", BigWigsOptions.OnClick, "arg1", self)
+		cat:AddLine("text", L["Big Wigs is currently disabled."], "func", self.OnClick, "arg1", self)
 		tablet:SetHint(L["|cffeda55fClick|r to enable."])
 	end
 end

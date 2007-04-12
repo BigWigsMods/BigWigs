@@ -5,7 +5,9 @@
 ------------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsBars")
-local surface = AceLibrary("Surface-1.0")
+
+local media = AceLibrary("SharedMedia-1.0")
+local mType = media.MediaType and media.MediaType.STATUSBAR or "statusbar"
 
 local colorModule = nil
 local anchor = nil
@@ -174,12 +176,13 @@ plugin.consoleOptions = {
 	type = "group",
 	name = L["Bars"],
 	desc = L["Options for the timer bars."],
+	handler = plugin,
 	args   = {
 		[L["anchor"]] = {
 			type = "toggle",
 			name = L["Show anchor"],
 			desc = L["Show the bar anchor frame."],
-			get = function() return anchor:IsShown() end,
+			get = function() return anchor and anchor:IsShown() end,
 			set = function(v)
 				if v then
 					plugin:BigWigs_ShowAnchors()
@@ -193,7 +196,7 @@ plugin.consoleOptions = {
 			type = "execute",
 			name = L["Reset position"],
 			desc = L["Reset the anchor position, moving it to the center of your screen."],
-			func = function() plugin:ResetAnchor() end,
+			func = "ResetAnchor",
 			order = 2,
 		},
 		spacer = {
@@ -226,7 +229,7 @@ plugin.consoleOptions = {
 			desc = L["Set the texture for the timer bars."],
 			get = function() return plugin.db.profile.texture end,
 			set = function(v) plugin.db.profile.texture = v end,
-			validate = surface:List(),
+			validate = media:List(mType),
 			order = 102,
 		},
 	},
@@ -237,20 +240,15 @@ plugin.consoleOptions = {
 ------------------------------
 
 function plugin:OnRegister()
-	local path = "Interface\\AddOns\\BigWigs\\Textures\\"
-	surface:Register("Otravi",   path.."otravi")
-	surface:Register("Smooth",   path.."smooth")
-	surface:Register("Glaze",    path.."glaze")
-	surface:Register("Charcoal", path.."Charcoal")
-	surface:Register("BantoBar", path.."default")
+	media:Register(mType, "Otravi", "Interface\\AddOns\\BigWigs\\Textures\\otravi")
+	media:Register(mType, "Smooth", "Interface\\AddOns\\BigWigs\\Textures\\smooth")
+	media:Register(mType, "Glaze", "Interface\\AddOns\\BigWigs\\Textures\\glaze")
+	media:Register(mType, "Charcoal", "Interface\\AddOns\\BigWigs\\Textures\\Charcoal")
+	media:Register(mType, "BantoBar", "Interface\\AddOns\\BigWigs\\Textures\\default")
 end
 
 function plugin:OnEnable()
-	if not surface:Fetch(self.db.profile.texture) then self.db.profile.texture = "BantoBar" end
-
-	if not anchor then
-		self:SetupFrames()
-	end
+	if not media:Fetch(mType, self.db.profile.texture, true) then self.db.profile.texture = "BantoBar" end
 
 	self:RegisterEvent("BigWigs_ShowAnchors")
 	self:RegisterEvent("BigWigs_HideAnchors")
@@ -279,10 +277,12 @@ function plugin:Ace2_AddonDisabled(module)
 end
 
 function plugin:BigWigs_ShowAnchors()
+	if not anchor then self:SetupFrames() end
 	anchor:Show()
 end
 
 function plugin:BigWigs_HideAnchors()
+	if not anchor then return end
 	anchor:Hide()
 end
 
@@ -293,6 +293,7 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 
 	-- yes we try and register every time, we also set the point every time since people can change their mind midbar.
 	self:RegisterCandyBarGroup("BigWigsGroup")
+	if not anchor then self:SetupFrames() end
 	self:SetCandyBarGroupPoint("BigWigsGroup", u and "BOTTOM" or "TOP", anchor, u and "TOP" or "BOTTOM", 0, 0)
 	self:SetCandyBarGroupGrowth("BigWigsGroup", u)
 
@@ -315,7 +316,7 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 
 	local db = self.db.profile
 
-	self:SetCandyBarTexture( id, surface:Fetch( db.texture) )
+	self:SetCandyBarTexture(id, media:Fetch(mType, db.texture))
 	if bc then self:SetCandyBarBackgroundColor(id, bc, balpha) end
 	if txtc then self:SetCandyBarTextColor(id, txtc) end
 
@@ -345,6 +346,8 @@ end
 ------------------------------
 
 function plugin:SetupFrames()
+	if anchor then return end
+
 	anchor = CreateFrame("Frame", "BigWigsBarAnchor", UIParent)
 	anchor:Hide()
 
@@ -406,6 +409,7 @@ function plugin:SetupFrames()
 end
 
 function plugin:ResetAnchor()
+	if not anchor then self:SetupFrames() end
 	anchor:ClearAllPoints()
 	anchor:SetPoint("CENTER", UIParent, "CENTER")
 	self.db.profile.posx = nil
@@ -413,6 +417,8 @@ function plugin:ResetAnchor()
 end
 
 function plugin:SavePosition()
+	if not anchor then self:SetupFrames() end
+
 	local s = anchor:GetEffectiveScale()
 
 	self.db.profile.posx = anchor:GetLeft() * s
@@ -420,6 +426,8 @@ function plugin:SavePosition()
 end
 
 function plugin:RestorePosition()
+	if not anchor then self:SetupFrames() end
+
 	local x = self.db.profile.posx
 	local y = self.db.profile.posy
 

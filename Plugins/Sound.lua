@@ -5,13 +5,16 @@
 ------------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsSound")
+local media = AceLibrary("SharedMedia-1.0")
+local mType = media.MediaType and media.MediaType.SOUND or "sound"
+local db = nil
 
 local sounds = {
-	Long = "Interface\\AddOns\\BigWigs\\Sounds\\Long.mp3",
-	Info = "Interface\\AddOns\\BigWigs\\Sounds\\Info.mp3",
-	Alert = "Interface\\AddOns\\BigWigs\\Sounds\\Alert.mp3",
-	Alarm = "Interface\\AddOns\\BigWigs\\Sounds\\Alarm.mp3",
-	Victory = "Interface\\AddOns\\BigWigs\\Sounds\\Victory.mp3",
+	["Long"] = "BigWigs: Long",
+	["Info"] = "BigWigs: Info",
+	["Alert"] = "BigWigs: Alert",
+	["Alarm"] = "BigWigs: Alarm",
+	["Victory"] = "BigWigs: Victory",
 }
 
 ----------------------------
@@ -22,7 +25,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Sounds"] = true,
 	["Options for sounds."] = true,
 
-	["Toggle to enable or disable %q from being played, or Ctrl-Click to preview."] = true,
+	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = true,
 	["toggle"] = true,
 	["Use sounds"] = true,
 	["Toggle all sounds on or off."] = true,
@@ -81,7 +84,6 @@ L:RegisterTranslations("frFR", function() return {
 	["Sounds"] = "Sons",
 	["Options for sounds."] = "Options concernant les sons.",
 
-	["Toggle to enable or disable %q from being played, or Ctrl-Click to preview."] = "Permet ou non de jouer le son %q. Ctrl-clic pour avoir un aper\195\167u.",
 	--["toggle"] = true,
 	["Use sounds"] = "Utiliser les sons",
 	["Toggle all sounds on or off."] = "Joue ou non les sons.",
@@ -100,7 +102,13 @@ plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
 plugin.defaultDB = {
 	defaultonly = false,
 	sound = true,
-	sounds = { ["*"] = true },
+	media = {
+		["Long"] = "BigWigs: Long",
+		["Info"] = "BigWigs: Info",
+		["Alert"] = "BigWigs: Alert",
+		["Alarm"] = "BigWigs: Alarm",
+		["Victory"] = "BigWigs: Victory",
+	},
 }
 plugin.consoleCmd = L["Sounds"]
 plugin.consoleOptions = {
@@ -145,26 +153,42 @@ local function ShouldDisable()
 end
 
 function plugin:OnRegister()
-	for k, v in pairs(sounds) do
+	db = self.db.profile
+
+	media:Register(mType, "BigWigs: Long", "Interface\\AddOns\\BigWigs\\Sounds\\Long.mp3")
+	media:Register(mType, "BigWigs: Info", "Interface\\AddOns\\BigWigs\\Sounds\\Info.mp3")
+	media:Register(mType, "BigWigs: Alert", "Interface\\AddOns\\BigWigs\\Sounds\\Alert.mp3")
+	media:Register(mType, "BigWigs: Alarm", "Interface\\AddOns\\BigWigs\\Sounds\\Alarm.mp3")
+	media:Register(mType, "BigWigs: Victory", "Interface\\AddOns\\BigWigs\\Sounds\\Victory.mp3")
+
+	local function get(sound)
+		return db.media[sound]
+	end
+
+	local function set(sound, value)
+		if IsControlKeyDown() then
+			PlaySoundFile(media:Fetch(mType, value))
+		else
+			db.media[sound] = value
+		end
+	end
+
+	for k in pairs(sounds) do
 		self.consoleOptions.args[k] = {
-			type = "toggle",
+			type = "text",
 			name = k,
-			desc = string.format(L["Toggle to enable or disable %q from being played, or Ctrl-Click to preview."], k),
-			get = function() return plugin.db.profile.sounds[k] end,
-			set = function(v)
-				if IsControlKeyDown() then
-					PlaySoundFile(sounds[k])
-				else
-					plugin.db.profile.sounds[k] = v
-				end
-			end,
+			desc = L["Set the sound to use for %q (Ctrl-Click a sound to preview.)"]:format(k),
+			passValue = k,
+			get = get,
+			set = set,
 			disabled = ShouldDisable,
+			validate = media:List(mType),
 		}
 	end
 end
 
 function plugin:OnEnable()
-	if not self.db.profile.sound then
+	if not db.sound then
 		BigWigs:ToggleModuleActive(self, false)
 		return
 	end
@@ -173,16 +197,24 @@ function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_Sound")
 end
 
-function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
-	if not text or sound == false or broadcastonly or not self.db.profile.sound or (sound and not self.db.profile.sounds[sound]) then return end
+local function play(sound)
+	if not db.defaultonly then
+		local s = db.media[sound] and media:Fetch(mType, db.media[sound]) or media:Fetch(mType, sound)
+		if type(s) == "string" then
+			PlaySoundFile(s)
+			return
+		end
+	end
+	PlaySound("RaidWarning")
+end
 
-	if sounds[sound] and not self.db.profile.defaultonly then PlaySoundFile(sounds[sound])
-	else PlaySound("RaidWarning") end
+function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
+	if not text or type(sound) ~= "string" or broadcastonly or not db.sound then return end
+	play(sound)
 end
 
 function plugin:BigWigs_Sound( sound )
-	if not self.db.profile.sound or (sound and not self.db.profile.sounds[sound]) then return end
-	if sounds[sound] and not self.db.profile.defaultonly then PlaySoundFile(sounds[sound])
-	else PlaySound("RaidWarning") end
+	if not db.sound or type(sound) ~= "string" then return end
+	play(sound)
 end
 
