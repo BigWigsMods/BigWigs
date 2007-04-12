@@ -11,6 +11,12 @@ local commonWords = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 commonWords:RegisterTranslations("enUS", function() return {
 	you = "You",
 	are = "are",
+
+	enrage_start = "%s Engaged - Enrage in %dmin",
+	enrage_end = "%s Enraged",
+	enrage_min = "Enrage in %d min",
+	enrage_sec = "Enrage in %d sec",
+	enrage = "Enrage",
 } end)
 
 commonWords:RegisterTranslations("deDE", function() return {
