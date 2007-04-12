@@ -34,6 +34,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Zone"] = true,
 	["zone"] = true,
 	["N/A"] = true,
+	["Not loaded"] = true,
 	["BigWigs"] = true,
 	["Runs a version query on the BigWigs core."] = true,
 	["Replies"] = true,
@@ -186,18 +187,20 @@ plugin.consoleOptions = {
 	type = "group",
 	name = L["Version Query"],
 	desc = L["Commands for querying the raid for Big Wigs versions."],
+	handler = plugin,
 	args = {
 		[L["BigWigs"]] = {
 			type = "execute",
 			name = L["BigWigs"],
 			desc = L["Runs a version query on the BigWigs core."],
-			func = function() plugin:QueryVersion("BigWigs") end,
+			passValue = "BigWigs",
+			func = "QueryVersion",
 		},
 		[L["current"]] = {
 			type = "execute",
 			name = L["Current zone"],
 			desc = L["Runs a version query on your current zone."],
-			func = function() plugin:QueryVersion() end,
+			func = "QueryVersion",
 		},
 		[L["zone"]] = {
 			type = "text",
@@ -205,7 +208,7 @@ plugin.consoleOptions = {
 			desc = L["Runs a version query on the given zone."],
 			usage = L["<zone>"],
 			get = false,
-			set = function(zone) plugin:QueryVersion(zone) end,
+			set = "QueryVersion",
 		},
 	}
 }
@@ -223,10 +226,13 @@ function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "BWVQ", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "BWVR", 0)
+
+	self:RegisterEvent("BigWigs_ModulePackLoaded", "PopulateRevisions")
 end
 
 function plugin:PopulateRevisions()
-	self.zoneRevisions = {}
+	if not self.zoneRevisions then self.zoneRevisions = {} end
+
 	if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
 	for name, module in BigWigs:IterateModules() do
 		if module:IsBossModule() and type(module.zonename) == "string" then
@@ -305,6 +311,8 @@ function plugin:OnTooltipUpdate()
 	for name, version in pairs(self.responseTable) do
 		if version == -1 then
 			cat:AddLine("text", name, "text2", "|cff"..COLOR_RED..L["N/A"].."|r")
+		elseif version == -2 then
+			cat:AddLine("text", name, "text2", "|cff"..COLOR_RED..L["Not loaded"].."|r")
 		else
 			if not self.zoneRevisions then self:PopulateRevisions() end
 			local color = COLOR_WHITE
@@ -387,8 +395,10 @@ function plugin:GetVersion(zone)
 		rev = self.zoneRevisions[zone]
 	elseif BigWigs:HasModule(zone) then
 		rev = BigWigs:GetModule(zone).revision
+	elseif BigWigsLoD and BigWigsLoD:HasAddOnsForZone(zone) then
+		rev = -2
 	end
-	if not rev then rev = -1 end
+	if type(rev) ~= "number" then rev = -1 end
 	return rev
 end
 

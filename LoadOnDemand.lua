@@ -164,6 +164,10 @@ function BigWigsLoD:InitializeLoD()
 	end
 end
 
+function BigWigsLoD:HasAddOnsForZone(zone)
+	return loadInZone[zone] and true or nil
+end
+
 function BigWigsLoD:LoadZone( zone )
 	if loadInZone[zone] then
 		local addonsLoaded = {}
