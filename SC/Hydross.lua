@@ -90,6 +90,34 @@ L:RegisterTranslations("koKR", function() return {
 	water_stance = "히드로스 정화!",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	mark = "Marque",
+	mark_desc = "Afficher les alertes et les compteurs des marques",
+
+	enrage = "Enrager",
+	enrage_desc = "Pr\195\169venir de l'enrage",
+
+	stance = "Changements d'\195\169tat",
+	stance_desc = ("Alerte quand %s change d'\195\169tat"):format(boss),
+
+	start_trigger = "Je ne peux pas vous laisser nous g\195\170ner\194\160!",
+
+	hydross_trigger = "Marque d'Hydross",
+	corruption_trigger = "Marque de corruption",
+
+	hydross_bar = "Prochaine Marque d'Hydross - %s%%",
+	corruption_bar = "Prochaine Marque de Corruption - %s%%",
+	enrage_bar = "Enrag\195\169",
+
+	debuff_warn = "Marque \195\160 %s%%!",
+
+	poison_stance_trigger = "Aaarrgh, le poison\226\128\166",
+	water_stance_trigger = "\195\135a va mieux. Beaucoup mieux.",
+
+	poison_stance = "Hydross est maintenant empoisonn\195\169 !",
+	water_stance = "Hydross est de nouveau sain !",
+} end)
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------
