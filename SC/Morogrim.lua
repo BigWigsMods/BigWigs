@@ -50,30 +50,34 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+
+	tidal = "Gezeitenwelle",
+	tidal_desc = "Warnt, wenn Morogrim Gezeitenwelle benutzt.",
+
 	grave = "Nasses Grab",
-	--grave_desc = "Zeigt an, wer im Nassen Grab ist", --enUS changed
+	grave_desc = "Zeigt an, wer im Nassen Grab ist und wie lange.",
 
 	murloc = "Murlocs",
-	murloc_desc = "Warnt vor ankommenden Murlocs",
+	murloc_desc = "Warnt vor ankommenden Murlocs.",
 
-	grobules = "Incoming Grobules", -- to translate
-	grobules_desc = "Warn for incoming Watery Grobules", -- to translate
+	grobules = "Wasserkugeln",
+	grobules_desc = "Warnt vor Wasserkugeln.",
 
 	grave_trigger1 = "^([^%s]+) ([^%s]+) von Nasses Grab betroffen",
 	grave_trigger2 = "schickt seine Feinde",
 	grave_message = "Nasses Grab: %s",
 	grave_bar = "Nasses Grab",
-	--grave_nextbar = "Next Watery Graves",
+	grave_nextbar = "n\195\164chstes Nasses Grab",
 
 	murloc_bar = "n\195\164chste Murlocs",
 	murloc_trigger = "Murlocs",
 	murloc_message = "Murlocs kommen!",
 	murloc_soon_message = "Murlocs bald!",
-	--murloc_engaged = "%s Engaged, Murlocs in ~40sec",
+	murloc_engaged = "%s angegriffen, Murlocs in ~40sec",
 
-	--grobules_trigger = "watery grobules", -- to translate
-	--grobules_message = "Incoming Grobules!", -- to translate
-	--grobules_warning = "Grobules Soon!",
+	grobules_trigger = "Wasserkugeln",
+	grobules_message = "Wasserkugeln kommen!",
+	grobules_warning = "Wasserkugeln bald!",
 } end )
 
 ----------------------------------
