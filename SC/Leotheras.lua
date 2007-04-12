@@ -30,9 +30,6 @@ L:RegisterTranslations("enUS", function() return {
 	whisper_desc = "Alert what players have Insidious Whisper",
 
 	enrage_trigger = "Finally, my banishment ends!",
-	enrage_message = "%s Engaged - Enrage in 10min",
-	enrage_min = "Enrage in %d min",
-	enrage_sec = "Enrage in %d sec",
 
 	whirlwind_trigger = "Leotheras the Blind gains Whirlwind",
 	whirlwind_gain = "Whirlwind for 12 sec",
@@ -97,14 +94,14 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.enrage and msg == L["enrage_trigger"] then
-		self:Message(L["enrage_message"]:format(boss), "Important")
-		self:DelayedMessage(300, L["enrage_min"]:format(5), "Positive")
-		self:DelayedMessage(420, L["enrage_min"]:format(3), "Positive")
-		self:DelayedMessage(540, L["enrage_min"]:format(1), "Positive")
-		self:DelayedMessage(570, L["enrage_sec"]:format(30), "Positive")
-		self:DelayedMessage(590, L["enrage_sec"]:format(10), "Urgent")
-		self:DelayedMessage(600, L["enrage"], "Attention", nil, "Alarm")
-		self:Bar(L["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
+		self:Message(L2["enrage_start"]:format(boss, 10), "Important")
+		self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
+		self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
+		self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
+		self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
+		self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
+		self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+		self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		self:DelayedMessage(3, L["whirlwind_warn"], "Attention")
 		wwhelp = 0
 		self:ScheduleEvent("bwdemon", self.DemonSoon, 16, self)

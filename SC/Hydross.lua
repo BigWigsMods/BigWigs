@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Hydross the Unstable"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local debuff = {0, 10, 25, 50, 100}
 local currentPerc
@@ -34,7 +35,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	hydross_bar = "Next Mark of Hydross - %s%%",
 	corruption_bar = "Next Mark of Corruption - %s%%",
-	enrage_bar = "Enrage",
 
 	debuff_warn = "Mark at %s%%!",
 
@@ -53,7 +53,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	hydross_bar = "Next Mal von Hydross - %s%%",
 	corruption_bar = "Next Mal der der Verderbnis - %s%%",
-	enrage_bar = "Wutanfall",
 
 	debuff_warn = "Mark bei %s%%!",
 
@@ -81,7 +80,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	hydross_bar = "다음 히드로스의 징표 - %s%%",
 	corruption_bar = "다음 타락의 징표 - %s%%",
-	enrage_bar = "격노",
 
 	debuff_warn = "징표 %s%%!",
 
@@ -132,7 +130,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(string.format(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrostBolt02")
 		end
 		if self.db.profile.enrage then
-			self:Bar(L["enrage_bar"], 600, "Spell_Shadow_UnholyFrenzy")
+			self:Message(L2["enrage_start"]:format(boss, 10), "Important")
+			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
+			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
+			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
+			self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
+			self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
+			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
 	elseif msg == L["poison_stance_trigger"] then
 		self:TriggerEvent("BigWigs_StopBar", self, string.format(L["corruption_bar"], debuff[count+1] and debuff[count+1] or 250))
