@@ -155,7 +155,6 @@ Karazhan\WizardofOz.lua
 Karazhan\Netherspite.lua
 Karazhan\Nightbane.lua
 
-SC\SCBeta.lua
 SC\Hydross.lua
 SC\Karathress.lua
 SC\Leotheras.lua

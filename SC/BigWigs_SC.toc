@@ -1,7 +1,7 @@
 ﻿## Interface: 20003
 
 ## Title: Big Wigs [|cffeda55fSerpentshrine Cavern|r]
-## Notes: (BETA) Big Wigs Serpentshrine Cavern Modules
+## Notes: Big Wigs Serpentshrine Cavern Modules
 ## Author: Ammo, Rabbit, Funkydude
 ## X-Credits: Tekkub Stoutwrithe(founding author) & Others
 ## Version: 2.0
@@ -18,7 +18,6 @@
 
 ## Dependencies: BigWigs
 
-SCBeta.lua
 Hydross.lua
 Karathress.lua
 Leotheras.lua
