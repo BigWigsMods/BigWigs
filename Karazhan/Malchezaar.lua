@@ -97,7 +97,7 @@ L:RegisterTranslations("frFR", function() return {
 	infernals_desc = "Affiche le temps de recharge des invocations d'infernaux.",
 
 	nova = "Nova de l'ombre",
-	nova_desc = "Temps \195\169stim\195\169 pour la Nova de l'ombre",
+	nova_desc = "Temps \195\169stim\195\169 pour la Nova de l'ombre.",
 
 	phase1_trigger = "La folie vous a fait venir ici, devant moi. Et je serai votre perte\194\160!",
 	phase2_trigger = "Imb\195\169ciles heureux\194\160! Le temps est le brasier dans lequel vous br\195\187lerez\194\160!",
@@ -114,13 +114,13 @@ L:RegisterTranslations("frFR", function() return {
 
 	infernal_trigger1 = "Vous n'affrontez pas seulement Malchezzar, mais les l\195\169gions que je commande\194\160!",
 	infernal_trigger2 = "Toutes les r\195\169alit\195\169s, toutes les dimensions me sont ouvertes\194\160!",
-	infernal_bar = "Arriv\195\169 d'infernal",
-	infernal_warning = "Arriv\195\169 d'infernal dans ~20sec!",
-	infernal_message = "Infernal dans ~5sec!",
+	infernal_bar = "Arriv\195\169e d'un infernal",
+	infernal_warning = "Arriv\195\169e d'un infernal dans ~20 sec. !",
+	infernal_message = "Infernal dans ~5 sec. !",
 
 	nova_trigger = "Prince Malchezaar commence \195\160 lancer Nova de l'ombre",
 	nova_message = "Nova de l'ombre !",
-	nova_bar = "~Arriv\195\169 de la Nova",
+	nova_bar = "~Arriv\195\169e de la Nova",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

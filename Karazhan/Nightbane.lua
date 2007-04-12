@@ -158,11 +158,12 @@ L:RegisterTranslations("frFR", function() return {
 	landphase_trigger2 = "Insectes\194\160! Je vais vous montrer de quel bois je me chauffe\194\160!",
 	airphase_message = "D\195\169collage !",
 	landphase_message = "Atterrissage !",
+	summon_trigger = "Dans le lointain, un \195\170tre ancien s'\195\169veille…",
 
 	engage_trigger = "Fous\194\160! Je vais mettre un terme rapide \195\160 vos souffrances\194\160!",
 	engage_message = "Plaie-de-nuit engag\195\169",
 
-	bones_trigger = "^([^%s]+) ([^%s]+) les effets .* Pluie d'os.",
+	bones_trigger = "^([^%s]+) ([^%s]+) les effets .* Pluie d'os",
 	bones_message = "Pluie d'os sur [%s]",
 	bones_whisper = "Pluie d'os sur VOUS !",
 

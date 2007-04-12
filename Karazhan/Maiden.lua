@@ -67,30 +67,30 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	engage = "Alerte Engagement",
-	engage_desc = ("Pr\195\169viens quand %s est engag\195\169e"):format(boss),
+	engage = "Engagement",
+	engage_desc = ("Pr\195\169viens quand %s est engag\195\169e."):format(boss),
 
-	repentance = "Alerte Repentir",
-	repentance_desc = "Affiche le temps estim\195\169 du Repentir",
+	repentance = "Repentir",
+	repentance_desc = "Affiche le temps de recharge de Repentir.",
 
-	holyfire = "Alerte Flammes sacr\195\169\es",
-	holyfire_desc = "Pr\195\169viens quand quelqu'un est affect\195\169 par Flammes sacr\195\169es",
+	holyfire = "Flammes sacr\195\169\es",
+	holyfire_desc = "Pr\195\169viens quand quelqu'un est affect\195\169 par Flammes sacr\195\169es.",
 
-	icon = "Placer une ic\195\180ne",
-	icon_desc = "Place une ic\195\180ne de raid sur le dernier personnage affect\195\169 par Flammes sacr\196\169es (requiert d'\195\170tre promus ou plus).",
+	icon = "Ic\195\180ne",
+	icon_desc = "Place une ic\195\180ne de raid sur le dernier joueur affect\195\169 par Flammes sacr\196\169es (n\196\169cessite d'\195\170tre promu ou mieux).",
 
 	engage_trigger = "Votre comportement est inacceptable.",
-	engage_message = "Damoiselle Engag\195\169e ! Repentir dans ~33 secondes",
+	engage_message = "Damoiselle engag\195\169e ! Repentir dans ~33 sec.",
 
 	repentance_trigger1 = "Chassez vos pens\195\169es corrompues.",
 	repentance_trigger2 = "Il faut se d\195\169barrasser de votre impuret\195\169.",
-	repentance_message = "Repentir ! Prochain dans ~33 secondes",
-	repentance_warning = "Repentir Imminent !",
+	repentance_message = "Repentir ! Prochain dans ~33 sec.",
+	repentance_warning = "Repentir imminent !",
 	repentance_bar = "Repentir",
 	repentance_nextbar = "Prochain Repentir",
 
-	holyfire_trigger = "^(.+) (.+) les effets .* Flammes sacr\195\169es%.",
-	holyfire_message = "Flammes sacr\195\169es: %s",
+	holyfire_trigger = "^(.+) (.+) les effets .* Flammes sacr\195\169es",
+	holyfire_message = "Flammes sacr\195\169es : %s",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
