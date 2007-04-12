@@ -166,6 +166,8 @@ plugin.defaultDB = {
 	texture = "BantoBar",
 	posx = nil,
 	posy = nil,
+	width = nil,
+	height = nil,
 }
 plugin.consoleCmd = L["Bars"]
 plugin.consoleOptions = {
@@ -304,12 +306,27 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 	moduleBars[module][id] = true
 
 	self:RegisterCandyBar(id, time, text, icon, c1, c2, c3, c4, c5, c6, c8, c9, c10)
-	self:RegisterCandyBarWithGroup(id, "BigWigsGroup")
-	self:SetCandyBarTexture( id, surface:Fetch( self.db.profile.texture) )
+
+	local groupId = "BigWigsGroup"
+	if type(module.GetBarGroupId) == "function" then
+		groupId = module:GetBarGroupId(text)
+	end
+	self:RegisterCandyBarWithGroup(id, groupId)
+
+	local db = self.db.profile
+
+	self:SetCandyBarTexture( id, surface:Fetch( db.texture) )
 	if bc then self:SetCandyBarBackgroundColor(id, bc, balpha) end
 	if txtc then self:SetCandyBarTextColor(id, txtc) end
 
-	self:SetCandyBarScale(id, self.db.profile.scale or 1)
+	if type(db.width) == "number" then
+		self:SetCandyBarWidth(id, db.width)
+	end
+	if type(db.height) == "number" then
+		self:SetCandyBarHeight(id, db.height)
+	end
+
+	self:SetCandyBarScale(id, db.scale or 1)
 	self:SetCandyBarFade(id, .5)
 	self:StartCandyBar(id, true)
 end
