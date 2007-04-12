@@ -60,6 +60,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	banish_trigger = "Not again! Not again...",
 	banish_message = "Banished for ~10sec",
+	banish_over_trigger = "Shadow Cage fades",
+	banish_over_message = "Banish Fades!",
 	banish_bar = "Banished",
 
 	exhaust_trigger = "^([^%s]+) ([^%s]+) afflicted by Mind Exhaustion",
@@ -268,6 +270,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
+	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "ExhaustEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "ExhaustEvent")
@@ -281,6 +284,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "Exhaustion", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFHeal", 0.5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFAbyssal", 0.8)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MagUnbanish", 5)
 	abycount = 1
 	debwarn = nil
 end
@@ -327,6 +331,12 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	end
 end
 
+function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
+	if msg:find(L["banish_over_trigger"]) then
+		self:Sync("MagUnbanish")
+	end
+end
+
 --hellfire channelers sometimes heal
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg:find(L["heal_trigger"]) then
@@ -357,6 +367,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "MagHFAbyssal" and self.db.profile.abyssal then
 		self:Message(L["abyssal_message"]:format(abycount), "Attention")
 		abycount = abycount + 1
+	elseif sync == "MagUnbanish" and self.db.profile.banish then
+		self:Message(L["banish_over_message"], "Attention")
+		self:TriggerEvent("BigWigs_StopBar", self, L["banish_bar"])
 	end
 end
 
