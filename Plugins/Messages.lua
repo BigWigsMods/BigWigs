@@ -360,7 +360,7 @@ local function createMsgFrame()
 
 	if not anchor then plugin:SetupFrames() end
 	messageFrame:SetPoint("TOP", anchor, "BOTTOM", 0, 0)
-	messageFrame:SetScale(self.db.profile.scale or 1)
+	messageFrame:SetScale(plugin.db.profile.scale or 1)
 	messageFrame:SetInsertMode("TOP")
 	messageFrame:SetFrameStrata("HIGH")
 	messageFrame:SetToplevel(true)
