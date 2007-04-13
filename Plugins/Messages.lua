@@ -245,12 +245,13 @@ plugin.consoleOptions = {
 	type = "group",
 	name = L["Messages"],
 	desc = L["Options for message display."],
-	args   = {
+	handler = plugin,
+	args = {
 		[L["anchor"]] = {
 			type = "toggle",
 			name = L["Show anchor"],
 			desc = L["Show the message anchor frame."],
-			get = function() return anchor:IsShown() end,
+			get = function() return anchor and anchor:IsShown() end,
 			set = function(v)
 				if v then
 					plugin:BigWigs_ShowAnchors()
@@ -265,7 +266,7 @@ plugin.consoleOptions = {
 			type = "execute",
 			name = L["Reset position"],
 			desc = L["Reset the anchor position, moving it to the center of your screen."],
-			func = function() plugin:ResetAnchor() end,
+			func = "ResetAnchor",
 			order = 2,
 		},
 		spacer = {
@@ -340,14 +341,6 @@ end
 ------------------------------
 
 function plugin:OnEnable()
-	if not self.frames then
-		self:SetupFrames()
-	end
-
-	if not messageFrame then
-		self:CreateMsgFrame()
-	end
-
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("BigWigs_ShowAnchors")
 	self:RegisterEvent("BigWigs_HideAnchors")
@@ -359,11 +352,13 @@ function plugin:OnEnable()
 	end
 end
 
-function plugin:CreateMsgFrame()
+local function createMsgFrame()
+	if messageFrame then return end
 	messageFrame = CreateFrame("MessageFrame")
 	messageFrame:SetWidth(512)
 	messageFrame:SetHeight(80)
 
+	if not anchor then plugin:SetupFrames() end
 	messageFrame:SetPoint("TOP", anchor, "BOTTOM", 0, 0)
 	messageFrame:SetScale(self.db.profile.scale or 1)
 	messageFrame:SetInsertMode("TOP")
@@ -378,10 +373,12 @@ end
 ------------------------------
 
 function plugin:BigWigs_ShowAnchors()
+	if not anchor then self:SetupFrames() end
 	anchor:Show()
 end
 
 function plugin:BigWigs_HideAnchors()
+	if not anchor then return end
 	anchor:Hide()
 end
 
@@ -413,6 +410,7 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 	elseif CombatText_AddMessage and display == L["Floating Combat Text"] then -- Blizzards FCT
 		CombatText_AddMessage(text, COMBAT_TEXT_SCROLL_FUNCTION, r, g, b, "sticky", nil)
 	else -- Default BigWigs Frame fallback
+		if not messageFrame then createMsgFrame() end
 		messageFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
 	end
 
@@ -426,6 +424,8 @@ end
 ------------------------------
 
 function plugin:SetupFrames()
+	if anchor then return end
+
 	anchor = CreateFrame("Frame", "BigWigsMessageAnchor", UIParent)
 	anchor:Hide()
 
@@ -487,6 +487,8 @@ function plugin:SetupFrames()
 end
 
 function plugin:ResetAnchor()
+	if not anchor then self:SetupFrames() end
+
 	anchor:ClearAllPoints()
 	anchor:SetPoint("CENTER", UIParent, "CENTER")
 	self.db.profile.posx = nil
@@ -494,6 +496,8 @@ function plugin:ResetAnchor()
 end
 
 function plugin:SavePosition()
+	if not anchor then self:SetupFrames() end
+
 	local s = anchor:GetEffectiveScale()
 
 	self.db.profile.posx = anchor:GetLeft() * s
@@ -501,6 +505,8 @@ function plugin:SavePosition()
 end
 
 function plugin:RestorePosition()
+	if not anchor then self:SetupFrames() end
+
 	local x = self.db.profile.posx
 	local y = self.db.profile.posy
 
