@@ -46,6 +46,23 @@ L:RegisterTranslations("zhTW", function() return {
 	noxious_bar = "毒性吐息",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	engage = "Alerte Engagement",
+	engage_desc = ("Pr\195\169viens quand %s est engag\195\169."):format(boss),
+
+	noxious = "Alerte Souffle naus\195\169abond",
+	noxious_desc = "Pr\195\169viens de l'arriv\195\169e des Souffles naus\195\169abonds.",
+
+	engage_message = "%s engag\195\169 ! - Souffle naus\195\169abond dans ~10 sec.",
+	engage_trigger = "Je sens l'OMBRE dans vos c\197\147urs. Il ne peut y avoir de repos pour les vilains\194\160!",
+
+	noxious_hit = "les effets de Souffle naus\195\169abond",
+	noxious_resist = "Souffle naus\195\169abond, mais .* r\195\169siste",
+	noxious_warn = "5 sec. avant Souffle naus\195\169abond !",
+	noxious_message = "Souffle naus\195\169abond - 30 sec. avant le suivant !",
+	noxious_bar = "Souffle naus\195\169abond",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

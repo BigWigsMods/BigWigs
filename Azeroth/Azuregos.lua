@@ -50,13 +50,19 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	engage = "Alerte Engagement",
+	engage_desc = ("Pr\195\169viens quand %s est engag\195\169."):format(boss),
+
 	teleport = "Alerte T\195\169l\195\169portation",
-	teleport_desc = "Pr\195\169viens quans Azuregos t\195\169l\195\169porte quelqu'un.",
+	teleport_desc = "Pr\195\169viens quand Azuregos t\195\169l\195\169porte quelqu'un.",
 
 	shield = "Alerte Bouclier",
 	shield_desc = "Pr\195\169viens quand Azuregos est prot\195\169g\195\169 par un bouclier magique.",
 
-	teleport_trigger = "Venez m'affronter, mes petits !",
+	engage_trigger = "^Cet endroit est sous ma protection",
+	engage_message = "%s engag\195\169 !",
+
+	teleport_trigger = "^Venez m'affronter, mes petits\194\160!",
 	teleport_message = "T\195\169l\195\169portation !",
 
 	shield_trigger = "^Azuregos gagne Renvoi.",

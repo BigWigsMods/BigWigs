@@ -37,7 +37,7 @@ L:RegisterTranslations("enUS", function() return {
 	volatile_you = "You are afflicted by Volatile Infection!",
 	volatile_other = " is afflicted by Volatile Infection!",
 
-	engage_message = "%s Engaged! - Noxious Breath in ~10seconds",
+	engage_message = "%s engag\195\169 ! - Souffle naus\195\169abond dans ~10 sec.",
 	engage_trigger = "Hope is a DISEASE of the soul! This land shall wither and die!",
 
 	corruption_trigger = "Taste your world's corruption!",
@@ -51,8 +51,14 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	engage = "Alerte Engagement",
+	engage_desc = ("Pr\195\169viens quand %s est engag\195\169."):format(boss),
+
+	corruption = "Alerte Corruption",
+	corruption_desc = "Pr\195\169viens de l'arriv\195\169e des Corruptions de la Terre.",
+
 	noxious = "Alerte Souffle naus\195\169abond",
-	noxious_desc = "Pr\195\169viens quand Emeriss fait son Souffle naus\195\169abond.",
+	noxious_desc = "Pr\195\169viens de l'arriv\195\169e des Souffles naus\195\169abonds.",
 
 	volatileyou = "Alerte Infection volatile sur vous",
 	volatileyou_desc = "Pr\195\169viens quand vous \195\170tes touch\195\169 par l'Infection volatile.",
@@ -60,15 +66,24 @@ L:RegisterTranslations("frFR", function() return {
 	volatileother = "Alerte Infection volatile sur les autres",
 	volatileother_desc = "Pr\195\169viens quand les autres sont touch\195\169s par l'Infection volatile.",
 
+	icon = "Placer une ic\195\180ne",
+	icon_desc = "Place une ic\195\180ne de raid sur la personne affect\195\169e (n\195\169cessite d'\195\170tre promu ou mieux).",
+
 	volatile_trigger = "^([^%s]+) ([^%s]+) les effets de Infection volatile.",
 
 	volatile_you = "Tu es infect\195\169 !",
 	volatile_other = " est infect\195\169 !",
 
-	noxious_hit = "les effets de Souffle naus\195\169abond.",
-	--noxious_resist = "Noxious Breath was resisted",
-	noxious_warn = "5 secondes avant le Souffle naus\195\169abond !",
-	noxious_message = "Souffle naus\195\169abond - 30 secondes avant le suivant !",
+	engage_message = "%s engag\195\169 ! - Souffle naus\195\169abond dans ~10 sec.",
+	engage_trigger = "L'espoir est une MALADIE de l'\195\162me\194\160! Ces terres vont fl\195\169trir et mourir\194\160!",
+
+	corruption_trigger = "Go\195\187tez la corruption de votre monde\194\160!", -- à vérifier
+	corruption_message = "Arrivée de la Corruption de la Terre !",
+
+	noxious_hit = "les effets de Souffle naus\195\169abond",
+	noxious_resist = "Souffle naus\195\169abond, mais .* r\195\169siste",
+	noxious_warn = "5 sec. avant Souffle naus\195\169abond !",
+	noxious_message = "Souffle naus\195\169abond - 30 sec. avant le suivant !",
 	noxious_bar = "Souffle naus\195\169abond",
 } end )
 
