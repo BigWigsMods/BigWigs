@@ -22,15 +22,12 @@ L:RegisterTranslations("enUS", function() return {
 	["Options for the timer bars."] = true,
 
 	["Show anchor"] = true,
-	["anchor"] = true,
 	["Show the bar anchor frame."] = true,
 
 	["Scale"] = true,
-	["scale"] = true,
 	["Set the bar scale."] = true,
 
 	["Grow upwards"] = true,
-	["up"] = true,
 	["Toggle bars grow upwards/downwards from anchor."] = true,
 
 	["Texture"] = true,
@@ -39,9 +36,11 @@ L:RegisterTranslations("enUS", function() return {
 	["Test"] = true,
 	["Close"] = true,
 
-	["reset"] = true,
 	["Reset position"] = true,
 	["Reset the anchor position, moving it to the center of your screen."] = true,
+
+	["Reverse"] = true,
+	["Toggles if bars are reversed (fill up instead of emptying)."] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -62,10 +61,6 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	["Bars"] = "计时条",
 
-	["anchor"] = "锚点",
-	["scale"] = "大小",
-	["up"] = "上",
-
 	["Options for the timer bars."] = "计时条设置/",
 	["Show the bar anchor frame."] = "显示计时条框体锚点。",
 	["Set the bar scale."] = "设置计时条缩放比例。",
@@ -85,10 +80,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["Bars"] = "計時條",
-
-	["anchor"] = "錨點",
-	["scale"] = "大小",
-	["up"] = "上",
 
 	["Options for the timer bars."] = "計時條設置",
 	["Show the bar anchor frame."] = "顯示計時條框架錨點。",
@@ -111,15 +102,12 @@ L:RegisterTranslations("deDE", function() return {
 	["Options for the timer bars."] = "Optionen f\195\188r die Anzeigebalken.",
 
 	["Show anchor"] = "Verankerung anzeigen",
-	-- ["anchor"] = true,
 	["Show the bar anchor frame."] = "Verankerung der Anzeigebalken anzeigen.",
 
 	["Scale"] = "Skalierung",
-	-- ["scale"] = true,
 	["Set the bar scale."] = "Skalierung der Anzeigebalken w\195\164hlen.",
 
 	["Grow upwards"] = "Nach oben fortsetzen",
-	-- ["up"] = true,
 	["Toggle bars grow upwards/downwards from anchor."] = "Anzeigebalken von der Verankerung aus nach oben/unten fortsetzen.",
 
 	["Texture"] = "Textur",
@@ -134,15 +122,12 @@ L:RegisterTranslations("frFR", function() return {
 	["Options for the timer bars."] = "Options concernant les barres temporelles.",
 
 	["Show anchor"] = "Afficher l'ancre",
-	--["anchor"] = true,
 	["Show the bar anchor frame."] = "Affiche l'ancre du cadre des barres.",
 
 	["Scale"] = "Taille",
-	--["scale"] = true,
 	["Set the bar scale."] = "D\195\169termine la taille des barres.",
 
 	["Grow upwards"] = "Ajouter vers le haut",
-	--["up"] = true,
 	["Toggle bars grow upwards/downwards from anchor."] = "Ajoute les nouvelles barres soit en haut de l'ancre, soit en bas de l'ancre.",
 
 	--["Texture"] = true,
@@ -151,7 +136,6 @@ L:RegisterTranslations("frFR", function() return {
 	--["Test"] = true,
 	["Close"] = "Fermer",
 
-	--["reset"] = true,
 	["Reset position"] = "R\195\128Z position",
 	["Reset the anchor position, moving it to the center of your screen."] = "R\195\169initialise la position de l'ancre, la repla\195\167ant au centre de l'\195\169cran.",
 } end)
@@ -170,6 +154,7 @@ plugin.defaultDB = {
 	posy = nil,
 	width = nil,
 	height = nil,
+	reverse = nil,
 }
 plugin.consoleCmd = L["Bars"]
 plugin.consoleOptions = {
@@ -177,26 +162,37 @@ plugin.consoleOptions = {
 	name = L["Bars"],
 	desc = L["Options for the timer bars."],
 	handler = plugin,
-	args   = {
-		[L["anchor"]] = {
+	pass = true,
+	func = "ResetAnchor",
+	get = function(key)
+		if key == "anchor" then
+			return anchor and anchor:IsShown()
+		else
+			return plugin.db.profile[key]
+		end
+	end,
+	set = function(key, value)
+		if key == "anchor" then
+			if value then
+				plugin:BigWigs_ShowAnchors()
+			else
+				plugin:BigWigs_HideAnchors()
+			end
+		else
+			plugin.db.profile[key] = value
+		end
+	end,
+	args = {
+		anchor = {
 			type = "toggle",
 			name = L["Show anchor"],
 			desc = L["Show the bar anchor frame."],
-			get = function() return anchor and anchor:IsShown() end,
-			set = function(v)
-				if v then
-					plugin:BigWigs_ShowAnchors()
-				else
-					plugin:BigWigs_HideAnchors()
-				end
-			end,
 			order = 1,
 		},
-		[L["reset"]] = {
+		reset = {
 			type = "execute",
 			name = L["Reset position"],
 			desc = L["Reset the anchor position, moving it to the center of your screen."],
-			func = "ResetAnchor",
 			order = 2,
 		},
 		spacer = {
@@ -204,33 +200,33 @@ plugin.consoleOptions = {
 			name = " ",
 			order = 50,
 		},
-		[L["up"]] = {
+		growup = {
 			type = "toggle",
 			name = L["Grow upwards"],
 			desc = L["Toggle bars grow upwards/downwards from anchor."],
-			get = function() return plugin.db.profile.growup end,
-			set = function(v) plugin.db.profile.growup = v end,
 			order = 100,
 		},
-		[L["scale"]] = {
+		reverse = {
+			type = "toggle",
+			name = L["Reverse"],
+			desc = L["Toggles if bars are reversed (fill up instead of emptying)."],
+			order = 101,
+		},
+		scale = {
 			type = "range",
 			name = L["Scale"],
 			desc = L["Set the bar scale."],
 			min = 0.2,
 			max = 2.0,
 			step = 0.1,
-			get = function() return plugin.db.profile.scale end,
-			set = function(v) plugin.db.profile.scale = v end,
-			order = 101,
+			order = 102,
 		},
-		[L["Texture"]] = {
+		texture = {
 			type = "text",
 			name = L["Texture"],
 			desc = L["Set the texture for the timer bars."],
-			get = function() return plugin.db.profile.texture end,
-			set = function(v) plugin.db.profile.texture = v end,
 			validate = media:List(mType),
-			order = 102,
+			order = 103,
 		},
 	},
 }
@@ -329,6 +325,7 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 
 	self:SetCandyBarScale(id, db.scale or 1)
 	self:SetCandyBarFade(id, .5)
+	self:SetCandyBarReversed(id, db.reverse)
 	self:StartCandyBar(id, true)
 end
 
