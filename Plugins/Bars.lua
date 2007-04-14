@@ -20,6 +20,27 @@ local movingBars = {}
 local DURATION = 0.5
 local _abs, _cos, _pi = math.abs, math.cos, math.pi
 
+local new, del
+do
+	local cache = setmetatable({},{__mode='k'})
+	function new()
+		local t = next(cache)
+		if t then
+			cache[t] = nil
+			return t
+		else
+			return {}
+		end
+	end
+	function del(t)
+		for k in pairs(t) do
+			t[k] = nil
+		end
+		cache[t] = true
+		return nil
+	end
+end
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -424,7 +445,7 @@ function plugin:UpdateBars()
 		local stop = opt.stop
 		count = count + 1
 		if stop < now then
-			movingBars[bar] = nil
+			movingBars[bar] = del(movingBars[bar])
 			self:RegisterCandyBarWithGroup(bar, "BigWigsEmphasizedGroup")
 			return
 		end
@@ -439,18 +460,17 @@ function plugin:UpdateBars()
 	end
 end
 
-local ac = AceLibrary("AceConsole-2.0")
 function plugin:EmphasizeBar(module, id)
 	setupEmphasizedGroup()
 	
 	if not self:IsEventScheduled("BigWigsBarMover") then
 		self:ScheduleRepeatingEvent("BigWigsBarMover",self.UpdateBars,0,self)
 	end
-
-	self:UnregisterCandyBarWithGroup(id, "BigWigsGroup")
-
+	
 	local centerX, centerY = self:GetCandyBarCenter(id)
 	local point, _, rpoint, xoffset, yoffset = self:GetCandyBarPoint(id)
+
+	self:UnregisterCandyBarWithGroup(id, "BigWigsGroup")
 	self:SetCandyBarPoint(id, "CENTER", "UIParent", "BOTTOMLEFT", centerX, centerY)
 	
 	local targetX, targetY = self:GetCandyBarNextBarPointInGroup("BigWigsEmphasizedGroup")
@@ -462,7 +482,7 @@ function plugin:EmphasizeBar(module, id)
 	local _, offsetTop, offsetBottom, _ = self:GetCandyBarOffsets(id)
 	local offsetY = u and centerY - offsetBottom or centerY - offsetTop 
 	
-	movingBars[id] = {}
+	movingBars[id] = new()
 	movingBars[id].stop = GetTime() + DURATION
 	movingBars[id].targetX = targetX + frameX
 	movingBars[id].targetY = targetY + frameY + offsetY
