@@ -107,7 +107,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	hydross_bar = "Prochaine Marque d'Hydross - %s%%",
 	corruption_bar = "Prochaine Marque de Corruption - %s%%",
-	enrage_bar = "Enrag\195\169",
 
 	debuff_warn = "Marque \195\160 %s%%!",
 
