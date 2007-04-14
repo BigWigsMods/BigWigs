@@ -54,6 +54,10 @@ local function loadZone(zone)
 			addonsLoaded[i] = nil
 		end
 		addonsLoaded = nil
+
+		-- Just collect garbage right away, since we will discard lots of unused
+		-- translations.
+		collectgarbage("collect")
 	end
 end
 
@@ -185,6 +189,10 @@ function BigWigsLoD:BigWigs_CoreEnabled()
 		end
 		-- This only happens once.
 		loadWithCore = nil
+
+		-- Just collect garbage right away, since we will discard lots of unused
+		-- translations.
+		collectgarbage("collect")
 	end
 
 	loadZone(GetRealZoneText())
