@@ -16,6 +16,10 @@ local emphasizeAnchor = nil
 local emphasizeTimers = {}
 local moduleBars = {}
 
+local movingBars = {}
+local DURATION = 0.5
+local _abs, _cos, _pi = math.abs, math.cos, math.pi
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -408,9 +412,61 @@ function plugin:BigWigs_StopBar(module, text)
 	end
 end
 
+-- copied from PitBull_BarFader
+local function CosineInterpolate(y1, y2, mu)
+	local mu2 = (1-_cos(mu*_pi))/2
+	return y1*(1-mu2)+y2*mu2
+end
+
+function plugin:UpdateBars()
+	local now, count = GetTime(), 0
+
+	for bar, opt in pairs(movingBars) do
+		local stop = opt.stop
+		count = count + 1
+		if stop < now then
+			movingBars[bar] = nil
+			self:RegisterCandyBarWithGroup(bar, "BigWigsEmphasizedGroup")
+			return
+		end
+		local point, rframe, rpoint, xoffset, yoffset = self:GetCandyBarPoint(bar)
+		xoffset = CosineInterpolate(xoffset, opt.targetX, 1 - ((stop - now) / DURATION) )
+		yoffset = CosineInterpolate(yoffset, opt.targetY, 1 - ((stop - now) / DURATION) )
+		self:SetCandyBarPoint(bar, point, rframe, rpoint, xoffset, yoffset)
+	end
+	
+	if count == 0 then
+		self:CancelScheduledEvent("BigWigsBarMover")
+	end
+end
+
+local ac = AceLibrary("AceConsole-2.0")
 function plugin:EmphasizeBar(module, id)
 	setupEmphasizedGroup()
-	self:RegisterCandyBarWithGroup(id, "BigWigsEmphasizedGroup")
+	
+	if not self:IsEventScheduled("BigWigsBarMover") then
+		self:ScheduleRepeatingEvent("BigWigsBarMover",self.UpdateBars,0,self)
+	end
+
+	self:UnregisterCandyBarWithGroup(id, "BigWigsGroup")
+
+	local centerX, centerY = self:GetCandyBarCenter(id)
+	local point, _, rpoint, xoffset, yoffset = self:GetCandyBarPoint(id)
+	self:SetCandyBarPoint(id, "CENTER", "UIParent", "BOTTOMLEFT", centerX, centerY)
+	
+	local targetX, targetY = self:GetCandyBarNextBarPointInGroup("BigWigsEmphasizedGroup")
+	local frame = getglobal("BigWigsEmphasizedBarAnchor")
+	local u = plugin.db.profile.growup
+	local frameX = frame:GetCenter()
+	local frameY = u and frame:GetTop() or frame:GetBottom()
+	
+	local _, offsetTop, offsetBottom, _ = self:GetCandyBarOffsets(id)
+	local offsetY = u and centerY - offsetBottom or centerY - offsetTop 
+	
+	movingBars[id] = {}
+	movingBars[id].stop = GetTime() + DURATION
+	movingBars[id].targetX = targetX + frameX
+	movingBars[id].targetY = targetY + frameY + offsetY
 end
 
 ------------------------------
@@ -538,4 +594,5 @@ function plugin:SavePosition()
 		self.db.profile.emphasizePosY = emphasizeAnchor:GetTop() * s
 	end
 end
+
 
