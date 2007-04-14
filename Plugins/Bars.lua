@@ -326,8 +326,7 @@ end
 function plugin:BigWigs_HideAnchors()
 	if not anchor then return end
 	anchor:Hide()
-	if self.db.profile.emphasize then
-		if not emphasizeAnchor then return end
+	if emphasizeAnchor then
 		emphasizeAnchor:Hide()
 	end
 end
