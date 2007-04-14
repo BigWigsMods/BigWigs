@@ -11,6 +11,9 @@ local mType = media.MediaType and media.MediaType.STATUSBAR or "statusbar"
 
 local colorModule = nil
 local anchor = nil
+local emphasizeAnchor = nil
+
+local emphasizeTimers = {}
 local moduleBars = {}
 
 ----------------------------
@@ -19,6 +22,8 @@ local moduleBars = {}
 
 L:RegisterTranslations("enUS", function() return {
 	["Bars"] = true,
+	["Emphasized Bars"] = true,
+
 	["Options for the timer bars."] = true,
 
 	["Show anchor"] = true,
@@ -35,6 +40,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Test"] = true,
 	["Close"] = true,
+
+	["Emphasize"] = true,
+	["Emphasize bars that are close to completion (<10sec) by moving them to a second anchor."] = true,
 
 	["Reset position"] = true,
 	["Reset the anchor position, moving it to the center of your screen."] = true,
@@ -161,8 +169,14 @@ plugin.defaultDB = {
 	growup = false,
 	scale = 1.0,
 	texture = "BantoBar",
+
 	posx = nil,
 	posy = nil,
+
+	emphasize = nil,
+	emphasizePosX = nil,
+	emphasizePosY = nil,
+
 	width = nil,
 	height = nil,
 	reverse = nil,
@@ -223,6 +237,12 @@ plugin.consoleOptions = {
 			desc = L["Toggles if bars are reversed (fill up instead of emptying)."],
 			order = 101,
 		},
+		emphasize = {
+			type = "toggle",
+			name = L["Emphasize"],
+			desc = L["Emphasize bars that are close to completion (<10sec) by moving them to a second anchor."],
+			order = 102,
+		},
 		scale = {
 			type = "range",
 			name = L["Scale"],
@@ -230,14 +250,14 @@ plugin.consoleOptions = {
 			min = 0.2,
 			max = 2.0,
 			step = 0.1,
-			order = 102,
+			order = 103,
 		},
 		texture = {
 			type = "text",
 			name = L["Texture"],
 			desc = L["Set the texture for the timer bars."],
 			validate = media:List(mType),
-			order = 103,
+			order = 104,
 		},
 	},
 }
@@ -281,16 +301,39 @@ function plugin:Ace2_AddonDisabled(module)
 			moduleBars[module][k] = nil
 		end
 	end
+	if emphasizeTimers[module] then
+		for k, v in pairs(emphasizeTimers[module]) do
+			self:CancelScheduledEvent(v)
+			emphasizeTimers[module][k] = nil
+		end
+	end
 end
 
 function plugin:BigWigs_ShowAnchors()
 	if not anchor then self:SetupFrames() end
 	anchor:Show()
+
+	if self.db.profile.emphasize then
+		if not emphasizeAnchor then self:SetupFrames(true) end
+		emphasizeAnchor:Show()
+	end
 end
 
 function plugin:BigWigs_HideAnchors()
 	if not anchor then return end
 	anchor:Hide()
+	if self.db.profile.emphasize then
+		if not emphasizeAnchor then return end
+		emphasizeAnchor:Hide()
+	end
+end
+
+local function setupEmphasizedGroup()
+	local u = plugin.db.profile.growup
+	plugin:RegisterCandyBarGroup("BigWigsEmphasizedGroup")
+	if not emphasizeAnchor then plugin:SetupFrames(true) end
+	plugin:SetCandyBarGroupPoint("BigWigsEmphasizedGroup", u and "BOTTOM" or "TOP", emphasizeAnchor, u and "TOP" or "BOTTOM", 0, 0)
+	plugin:SetCandyBarGroupGrowth("BigWigsEmphasizedGroup", u)
 end
 
 function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10)
@@ -315,13 +358,22 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 
 	self:RegisterCandyBar(id, time, text, icon, c1, c2, c3, c4, c5, c6, c8, c9, c10)
 
+	local db = self.db.profile
+
 	local groupId = "BigWigsGroup"
-	if type(module.GetBarGroupId) == "function" then
+	if db.emphasize then
+		if time > 11 then
+			if not emphasizeTimers[module] then emphasizeTimers[module] = {} end
+			emphasizeTimers[module][id] = self:ScheduleEvent(self.EmphasizeBar, time - 10, self, module, id)
+		else
+			groupId = "BigWigsEmphasizedGroup"
+			setupEmphasizedGroup()
+		end
+	end
+	if (not db.emphasize or (db.emphasize and time > 11)) and type(module.GetBarGroupId) == "function" then
 		groupId = module:GetBarGroupId(text)
 	end
 	self:RegisterCandyBarWithGroup(id, groupId)
-
-	local db = self.db.profile
 
 	self:SetCandyBarTexture(id, media:Fetch(mType, db.texture))
 	if bc then self:SetCandyBarBackgroundColor(id, bc, balpha) end
@@ -336,7 +388,10 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 
 	self:SetCandyBarScale(id, db.scale or 1)
 	self:SetCandyBarFade(id, .5)
-	self:SetCandyBarReversed(id, db.reverse)
+	if db.reverse then
+		self:SetCandyBarReversed(id, db.reverse)
+	end
+
 	self:StartCandyBar(id, true)
 end
 
@@ -347,104 +402,140 @@ function plugin:BigWigs_StopBar(module, text)
 	if moduleBars[module] then
 		moduleBars[module][id] = nil
 	end
+	if emphasizeTimers[module] and emphasizeTimers[module][id] then
+		self:CancelScheduledEvent(emphasizeTimers[module][id])
+		emphasizeTimers[module][id] = nil
+	end
+end
+
+function plugin:EmphasizeBar(module, id)
+	setupEmphasizedGroup()
+	self:RegisterCandyBarWithGroup(id, "BigWigsEmphasizedGroup")
 end
 
 ------------------------------
 --    Create the Anchor     --
 ------------------------------
 
-function plugin:SetupFrames()
-	if anchor then return end
+function plugin:SetupFrames(emphasize)
+	if not emphasize and anchor then return end
+	if emphasize and emphasizeAnchor then return end
 
-	anchor = CreateFrame("Frame", "BigWigsBarAnchor", UIParent)
-	anchor:Hide()
+	local frame = CreateFrame("Frame", emphasize and "BigWigsEmphasizedBarAnchor" or "BigWigsBarAnchor", UIParent)
+	frame:Hide()
 
-	anchor:SetWidth(120)
-	anchor:SetHeight(80)
+	frame:SetWidth(120)
+	frame:SetHeight(80)
 	
-	anchor:SetBackdrop({
+	frame:SetBackdrop({
 		bgFile = "Interface\\Tooltips\\UI-Tooltip-Background", tile = true, tileSize = 16,
 		edgeFile = "Interface\\AddOns\\BigWigs\\Textures\\otravi-semi-full-border", edgeSize = 32,
 		insets = {left = 1, right = 1, top = 20, bottom = 1},
 	})
 
-	anchor:SetBackdropColor(24/255, 24/255, 24/255)
-	anchor:ClearAllPoints()
-	anchor:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
-	anchor:EnableMouse(true)
-	anchor:RegisterForDrag("LeftButton")
-	anchor:SetMovable(true)
-	anchor:SetScript("OnDragStart", function() this:StartMoving() end)
-	anchor:SetScript("OnDragStop", function()
+	frame:SetBackdropColor(24/255, 24/255, 24/255)
+	frame:ClearAllPoints()
+	frame:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+	frame:EnableMouse(true)
+	frame:RegisterForDrag("LeftButton")
+	frame:SetMovable(true)
+	frame:SetScript("OnDragStart", function() this:StartMoving() end)
+	frame:SetScript("OnDragStop", function()
 		this:StopMovingOrSizing()
 		self:SavePosition()
 	end)
 
-	local cheader = anchor:CreateFontString(nil,"OVERLAY")
+	local cheader = frame:CreateFontString(nil, "OVERLAY")
 	cheader:ClearAllPoints()
 	cheader:SetWidth(110)
 	cheader:SetHeight(15)
-	cheader:SetPoint("TOP", anchor, "TOP", 0, -14)
+	cheader:SetPoint("TOP", frame, "TOP", 0, -14)
 	cheader:SetFont("Fonts\\FRIZQT__.TTF", 12)
 	cheader:SetJustifyH("LEFT")
-	cheader:SetText(L["Bars"])
+	cheader:SetText(emphasize and L["Emphasized Bars"] or L["Bars"])
 	cheader:SetShadowOffset(.8, -.8)
 	cheader:SetShadowColor(0, 0, 0, 1)
 
-	local close = anchor:CreateTexture(nil, "ARTWORK")
+	local close = frame:CreateTexture(nil, "ARTWORK")
 	close:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\otravi-close")
 	close:SetTexCoord(0, .625, 0, .9333)
 
 	close:SetWidth(20)
 	close:SetHeight(14)
-	close:SetPoint("TOPRIGHT", anchor, "TOPRIGHT", -7, -15)
+	close:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -7, -15)
 
 	local closebutton = CreateFrame("Button", nil)
-	closebutton:SetParent( anchor )
+	closebutton:SetParent( frame )
 	closebutton:SetWidth(20)
 	closebutton:SetHeight(14)
 	closebutton:SetPoint("CENTER", close, "CENTER")
 	closebutton:SetScript( "OnClick", function() self:BigWigs_HideAnchors() end )
 
-	local testbutton = CreateFrame("Button", nil, anchor, "UIPanelButtonTemplate")
+	local testbutton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
 	testbutton:SetWidth(60)
 	testbutton:SetHeight(25)
 	testbutton:SetText(L["Test"])
-	testbutton:SetPoint("CENTER", anchor, "CENTER", 0, -16)
+	testbutton:SetPoint("CENTER", frame, "CENTER", 0, -16)
 	testbutton:SetScript( "OnClick", function()  self:TriggerEvent("BigWigs_Test") end )
 
-	self:RestorePosition()
+	if emphasize then
+		emphasizeAnchor = frame
+
+		local x = self.db.profile.emphasizePosX
+		local y = self.db.profile.emphasizePosY
+		if x and y then
+			local scale = emphasizeAnchor:GetEffectiveScale()
+			emphasizeAnchor:ClearAllPoints()
+			emphasizeAnchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / scale, y / scale)
+		else
+			self:ResetAnchor("emphasize")
+		end
+
+	else
+		anchor = frame
+
+		local x = self.db.profile.posx
+		local y = self.db.profile.posy
+		if x and y then
+			local s = anchor:GetEffectiveScale()
+			anchor:ClearAllPoints()
+			anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+		else
+			self:ResetAnchor("normal")
+		end
+	end
 end
 
-function plugin:ResetAnchor()
-	if not anchor then self:SetupFrames() end
-	anchor:ClearAllPoints()
-	anchor:SetPoint("CENTER", UIParent, "CENTER")
-	self.db.profile.posx = nil
-	self.db.profile.posy = nil
+function plugin:ResetAnchor(specific)
+	if not specific or specific == "reset" or specific == "normal" then
+		if not anchor then self:SetupFrames() end
+		anchor:ClearAllPoints()
+		anchor:SetPoint("CENTER", UIParent, "CENTER")
+		self.db.profile.posx = nil
+		self.db.profile.posy = nil
+	end
+
+	if (not specific or specific == "reset" or specific == "emphasize") and self.db.profile.emphasize then
+		if not emphasizeAnchor then self:SetupFrames(true) end
+		emphasizeAnchor:ClearAllPoints()
+		emphasizeAnchor:SetPoint("CENTER", UIParent, "CENTER")
+		self.db.profile.emphasizePosX = nil
+		self.db.profile.emphasizePosY = nil
+	end
 end
 
 function plugin:SavePosition()
 	if not anchor then self:SetupFrames() end
 
 	local s = anchor:GetEffectiveScale()
-
 	self.db.profile.posx = anchor:GetLeft() * s
 	self.db.profile.posy = anchor:GetTop() * s
-end
 
-function plugin:RestorePosition()
-	if not anchor then self:SetupFrames() end
-
-	local x = self.db.profile.posx
-	local y = self.db.profile.posy
-
-	if x and y then
-		local s = anchor:GetEffectiveScale()
-		anchor:ClearAllPoints()
-		anchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
-	else
-		self:ResetAnchor()
+	if self.db.profile.emphasize then
+		if not emphasizeAnchor then self:SetupFrames(true) end
+		s = emphasizeAnchor:GetEffectiveScale()
+		self.db.profile.emphasizePosX = emphasizeAnchor:GetLeft() * s
+		self.db.profile.emphasizePosY = emphasizeAnchor:GetTop() * s
 	end
 end
 
