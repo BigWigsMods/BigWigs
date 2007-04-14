@@ -10,19 +10,14 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsTest")
 
 L:RegisterTranslations("enUS", function() return {
 	["Test"] = true,
-	["Test Bar"] = true,
-	["Test Bar 2"] = true,
-	["Test Bar 3"] = true,
-	["Test Bar 4"] = true,
+	["Test Bar %d"] = true,
 	["Testing"] = true,
 	["OMG Bear!"] = true,
 	["*RAWR*"] = true,
 	["Victory!"] = true,
 	["Commands for testing bars, messages and synchronization."] = true,
-	["local"] = true,
 	["Local test"] = true,
 	["Perform a local test of BigWigs."] = true,
-	["sync"] = true,
 	["Sync test"] = true,
 	["Perform a sync test of BigWigs."] = true,
 	["Testing Sync"] = true,
@@ -30,19 +25,14 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Test"] = "테스트",
-	["Test Bar"] = "테스트 바",
-	["Test Bar 2"] = "테스트 바 2",
-	["Test Bar 3"] = "테스트 바 3",
-	["Test Bar 4"] = "테스트 바 4",
+	["Test Bar %d"] = "테스트 바 %d",
 	["Testing"] = "테스트중",
 	["OMG Bear!"] = "OMG Bear!",
 	["*RAWR*"] = "*공격대경고*",
 	["Victory!"] = "승리!",
 	["Commands for testing bars, messages and synchronization."] = "테스트 설정",
---	["local"] = "지역",
 	["Local test"] = "지역 테스트",
 	["Perform a local test of BigWigs."] = "BigWigs의 지역 테스트 실행",
---	["sync"] = "동기화",
 	["Sync test"] = "동기화 테스트",
 	["Perform a sync test of BigWigs."] = "BigWigs의 동기화 테스트 실행",
 	["Testing Sync"] = "동기화 테스트 중",
@@ -50,10 +40,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["Test"] = "测试",
-	["Test Bar"] = "测试计时条",
-	["Test Bar 2"] = "测试计时条2",
-	["Test Bar 3"] = "测试计时条3",
-	["Test Bar 4"] = "测试计时条4",
+	["Test Bar %d"] = "测试计时条%d",
 	["Testing"] = "测试中",
 	["OMG Bear!"] = "老天！熊！",
 	["*RAWR*"] = "*RAWR*",
@@ -68,10 +55,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["Test"] = "測試",
-	["Test Bar"] = "測試計時條",
-	["Test Bar 2"] = "測試計時條2",
-	["Test Bar 3"] = "測試計時條3",
-	["Test Bar 4"] = "測試計時條4",
+	["Test Bar %d"] = "測試計時條%d",
 	["Testing"] = "測試中",
 	["OMG Bear!"] = "天哪！蘇聯北極熊！",
 	["*RAWR*"] = "*RAWR*",
@@ -86,19 +70,14 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Test"] = "Test",
-	["Test Bar"] = "Test Balken",
-	["Test Bar 2"] = "Test Balken 2",
-	["Test Bar 3"] = "Test Balken 3",
-	["Test Bar 4"] = "Test Balken 4",
+	["Test Bar %d"] = "Test Balken %d",
 	["Testing"] = "Teste",
 	["OMG Bear!"] = "OMG B\195\164r!",
 	["*RAWR*"] = "RAWR",
 	["Victory!"] = "Sieg!",
 	["Commands for testing bars, messages and synchronization."] = "Optionen f\195\188r den Test von BigWigs.",
-	-- ["local"] = true,
 	["Local test"] = "Lokaler Test",
 	["Perform a local test of BigWigs."] = "Lokalen Test von BigWigs durchf\195\188hren.",
-	-- ["sync"] = true,
 	["Sync test"] = "Synchronisations-Test",
 	["Perform a sync test of BigWigs."] = "Sychronisations-Test durchf\195\188hren.",
 	["Testing Sync"] = "Teste Synchronisation",
@@ -106,19 +85,14 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	--["Test"] = true,
-	["Test Bar"] = "Barre de test",
-	["Test Bar 2"] = "Barre de test 2",
-	["Test Bar 3"] = "Barre de test 3",
-	["Test Bar 4"] = "Barre de test 4",
+	["Test Bar %d"] = "Barre de test %d",
 	["Testing"] = "Test",
 	["OMG Bear!"] = "Un ours !",
 	["*RAWR*"] = "*GRRR*",
 	["Victory!"] = "Victoire !",
 	["Commands for testing bars, messages and synchronization."] = "Options concernant les tests.",
-	--["local"] = true,
 	["Local test"] = "Test local",
 	["Perform a local test of BigWigs."] = "Effectue un test local de BigWigs.",
-	--["sync"] = true,
 	["Sync test"] = "Test de synchronisation",
 	["Perform a sync test of BigWigs."] = "Effectue un test de synchronisation de BigWigs.",
 	["Testing Sync"] = "Test synchro",
@@ -136,18 +110,19 @@ plugin.consoleOptions = {
 	type = "group",
 	name = L["Test"],
 	desc = L["Commands for testing bars, messages and synchronization."],
-	args   = {
-		[L["local"]] = {
+	handler = plugin,
+	args = {
+		["local"] = {
 			type = "execute",
 			name = L["Local test"],
 			desc = L["Perform a local test of BigWigs."],
-			func = function() plugin:TriggerEvent("BigWigs_Test") end,
+			func = "BigWigs_Test",
 		},
-		[L["sync"]] = {
+		["sync"] = {
 			type = "execute",
 			name = L["Sync test"],
 			desc = L["Perform a sync test of BigWigs."],
-			func = function() plugin:TriggerEvent("BigWigs_SyncTest") end,
+			func = "BigWigs_SyncTest",
 			disabled = function() return ( not IsRaidLeader() and not IsRaidOfficer() ) end,
 		},
 	}
@@ -166,20 +141,21 @@ end
 
 function plugin:BigWigs_RecvSync(sync)
 	if sync == "TestSync" then
-		self:TriggerEvent("BigWigs_Message", L["Testing Sync"], "Positive")
-		self:TriggerEvent("BigWigs_StartBar", self, L["Testing Sync"], 10, "Interface\\Icons\\Spell_Frost_FrostShock", true, "Green", "Blue", "Yellow", "Red")
+		self:Message(L["Testing Sync"], "Positive")
+		self:Bar(L["Testing Sync"], 10, "Spell_Frost_FrostShock", true, "Green", "Blue", "Yellow", "Red")
 	end
 end
 
 function plugin:BigWigs_Test()
-	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar"], 15, "Interface\\Icons\\Spell_Nature_ResistNature")
-	self:TriggerEvent("BigWigs_Message", L["Testing"], "Attention", true, "Long")
-	self:ScheduleEvent("BigWigs_Message", 5, L["OMG Bear!"], "Important", true, "Alert")
-	self:ScheduleEvent("BigWigs_Message", 10, L["*RAWR*"], "Urgent", true, "Alarm")
-	self:ScheduleEvent("BigWigs_Message", 15, L["Victory!"], "Bosskill", true, "Victory")
+	self:Bar(L["Test Bar %d"]:format(1), 15, "Spell_Nature_ResistNature")
 
-	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar 2"], 10, "Interface\\Icons\\Spell_Nature_ResistNature")
-	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar 3"], 5, "Interface\\Icons\\Spell_Nature_ResistNature")
-	self:TriggerEvent("BigWigs_StartBar", self, L["Test Bar 4"], 3, "Interface\\Icons\\Spell_Nature_ResistNature", true, "black")
+	self:Message(L["Testing"], "Attention", true, "Long")
+	self:DelayedMessage(5, L["OMG Bear!"], "Important", true, "Alert")
+	self:DelayedMessage(10, L["*RAWR*"], "Urgent", true, "Alarm")
+	self:DelayedMessage(15, L["Victory!"], "Bosskill", true, "Victory")
+
+	self:Bar(L["Test Bar %d"]:format(2), 10, "Spell_Nature_ResistNature")
+	self:Bar(L["Test Bar %d"]:format(3), 5, "Spell_Nature_ResistNature")
+	self:Bar(L["Test Bar %d"]:format(4), 3, "Spell_Nature_ResistNature", true, "black")
 end
 

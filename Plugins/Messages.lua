@@ -20,15 +20,12 @@ L:RegisterTranslations("enUS", function() return {
 	["Options for message display."] = true,
 
 	["Show anchor"] = true,
-	["anchor"] = true,
 	["Show the message anchor frame."] = true,
 
 	["Use colors"] = true,
-	["color"] = true,
 	["Toggles white only messages ignoring coloring."] = true,
 
 	["Scale"] = true,
-	["scale"] = true,
 	["Set the message frame scale."] = true,
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = true,
@@ -37,7 +34,6 @@ L:RegisterTranslations("enUS", function() return {
 	["RaidWarning frame"] = true,
 
 	["Display"] = true,
-	["display"] = true,
 	["Set where messages are displayed."] = true,
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = true,
 
@@ -45,22 +41,16 @@ L:RegisterTranslations("enUS", function() return {
 	["Scrolling Combat Text"] = true,
 	["Floating Combat Text"] = true,
 	["Chat frame"] = true,
-	["chat"] = true,
 
 	["Test"] = true,
 	["Close"] = true,
 
-	["reset"] = true,
 	["Reset position"] = true,
 	["Reset the anchor position, moving it to the center of your screen."] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
 	["Messages"] = "메세지",
-
---	["anchor"] = "위치",
---	["color"] = "색상",
---	["scale"] = "크기",
 
 	["Options for message display."] = "메시지 창 옵션.",
 	["Show the message anchor frame."] = "메시지 위치 조정 프레임 보이기.",
@@ -89,10 +79,6 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	["Messages"] = "信息",
 
-	["anchor"] = "锚点",
-	["color"] = "颜色",
-	["scale"] = "大小",
-
 	["Options for message display."] = "信息框体设置。",
 	["Show the message anchor frame."] = "显示信息框体锚点。",
 	["Use colors"] = "发送彩色信息",
@@ -107,7 +93,6 @@ L:RegisterTranslations("zhCN", function() return {
 	["BigWigs frame"] = "BigWigs框体",
 	["RaidWarning frame"] = "团队警告框体",
 
-	["display"] = "显示",
 	["Display"] = "显示",
 	["Set where messages are displayed."] = "选择信息显示的位置",
 
@@ -121,10 +106,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["Messages"] = "訊息",
-
-	["anchor"] = "錨點",
-	["color"] = "顏色",
-	["scale"] = "大小",
 
 	["Options for message display."] = "訊息框架設置。",
 	["Show the message anchor frame."] = "顯示訊息訊息框架錨點。",
@@ -140,7 +121,6 @@ L:RegisterTranslations("zhTW", function() return {
 	["BigWigs frame"] = "BigWigs框架",
 	["RaidWarning frame"] = "團隊警告框架",
 
-	["display"] = "顯示",
 	["Display"] = "顯示",
 	["Set where messages are displayed."] = "選擇訊息顯示的位置",
 
@@ -157,15 +137,12 @@ L:RegisterTranslations("deDE", function() return {
 	["Options for message display."] = "Optionen f\195\188r das Nachrichtenfenster.",
 
 	["Show anchor"] = "Verankerung anzeigen",
-	-- ["anchor"] = true,
 	["Show the message anchor frame."] = "Verankerung des Nachrichtenfensters anzeigen.",
 
 	["Use colors"] = "Farben benutzen",
-	-- ["color"] = true,
 	["Toggles white only messages ignoring coloring."] = "Nachrichten farbig/wei\195\159 anzeigen.",
 
 	["Scale"] = "Skalierung",
-	-- ["scale"] = true,
 	["Set the message frame scale."] = "Skalierung des Nachrichtenfensters w\195\164hlen.",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Fa|cffff00ffr|cff00ff00be|r",
@@ -174,7 +151,6 @@ L:RegisterTranslations("deDE", function() return {
 	["RaidWarning frame"] = "RaidWarning Fenster",
 
 	["Display"] = "Anzeige",
-	-- ["display"] = true,
 	["Set where messages are displayed."] = "W\195\164hle, wo Nachrichten angezeigt werden sollen.",
 
 	-- ["Mik's Scrolling Battle Text"] = true,
@@ -190,15 +166,12 @@ L:RegisterTranslations("frFR", function() return {
 	["Options for message display."] = "Options concernant l'affichage des messages.",
 
 	["Show anchor"] = "Afficher l'ancre",
-	--["anchor"] = true,
 	["Show the message anchor frame."] = "Affiche l'ancre du cadre des messages.",
 
 	["Use colors"] = "Utiliser des couleurs",
-	--["color"] = true,
 	["Toggles white only messages ignoring coloring."] = "Utilise ou non des couleurs dans les messages à la place du blanc unique.",
 
 	["Scale"] = "Taille",
-	--["scale"] = true,
 	["Set the message frame scale."] = "D\195\169termine la taille du cadre des messages.",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Co|cffff00ffule|cff00ff00ur|r",
@@ -207,7 +180,6 @@ L:RegisterTranslations("frFR", function() return {
 	["RaidWarning frame"] = "Cadre des Avertissements Raid",
 
 	["Display"] = "Affichage",
-	--["display"] = true,
 	["Set where messages are displayed."] = "D\195\169termine o\195\185 les messages sont affich\195\169s.",
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Affiche tous les messages de BigWigs dans la fen\195\170tre de discussion par d\195\169faut, en plus de son affichage normal.",
 
@@ -215,12 +187,10 @@ L:RegisterTranslations("frFR", function() return {
 	--["Scrolling Combat Text"] = true,
 	["Floating Combat Text"] = "Message de combat flottant",
 	["Chat frame"] = "Fen\195\170tre de discussion",
-	--["chat"] = true,
 
 	--["Test"] = true,
 	["Close"] = "Fermer",
 
-	--["reset"] = true,
 	["Reset position"] = "R\195\128Z position",
 	["Reset the anchor position, moving it to the center of your screen."] = "R\195\169initialise la position de l'ancre, la repla\195\167ant au centre de l'\195\169cran.",
 } end)
@@ -247,7 +217,7 @@ plugin.consoleOptions = {
 	desc = L["Options for message display."],
 	handler = plugin,
 	args = {
-		[L["anchor"]] = {
+		anchor = {
 			type = "toggle",
 			name = L["Show anchor"],
 			desc = L["Show the message anchor frame."],
@@ -262,7 +232,7 @@ plugin.consoleOptions = {
 			disabled = function() return (plugin.db.profile.display ~= L["BigWigs frame"]) end,
 			order = 1,
 		},
-		[L["reset"]] = {
+		reset = {
 			type = "execute",
 			name = L["Reset position"],
 			desc = L["Reset the anchor position, moving it to the center of your screen."],
@@ -274,7 +244,7 @@ plugin.consoleOptions = {
 			name = " ",
 			order = 50,
 		},
-		[L["color"]] = {
+		color = {
 			type = "toggle",
 			name = L["Use colors"],
 			desc = L["Toggles white only messages ignoring coloring."],
@@ -283,7 +253,7 @@ plugin.consoleOptions = {
 			map = {[true] = L["|cffff0000Co|cffff00fflo|cff00ff00r|r"], [false] = L["White"]},
 			order = 100,
 		},
-		[L["scale"]] = {
+		scale = {
 			type = "range",
 			name = L["Scale"],
 			desc = L["Set the message frame scale."],
@@ -298,7 +268,7 @@ plugin.consoleOptions = {
 			disabled = function() return (plugin.db.profile.display ~= L["BigWigs frame"]) end,
 			order = 101,
 		},
-		[L["display"]] = {
+		display = {
 			type = "text",
 			name = L["Display"],
 			desc = L["Set where messages are displayed."],
@@ -309,7 +279,7 @@ plugin.consoleOptions = {
 			end,
 			order = 102,
 		},
-		[L["chat"]] = {
+		chat = {
 			type = "toggle",
 			name = L["Chat frame"],
 			desc = L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."],
@@ -325,15 +295,15 @@ plugin.consoleOptions = {
 ------------------------------
 
 if MikSBT then
-	table.insert(plugin.consoleOptions.args[L["display"]].validate, L["Mik's Scrolling Battle Text"])
+	table.insert(plugin.consoleOptions.args.display.validate, L["Mik's Scrolling Battle Text"])
 end
 
 if SCT_Display_Message or ( SCT and SCT.DisplayMessage ) then
-	table.insert(plugin.consoleOptions.args[L["display"]].validate, L["Scrolling Combat Text"])
+	table.insert(plugin.consoleOptions.args.display.validate, L["Scrolling Combat Text"])
 end
 
 if CombatText_AddMessage then
-	table.insert(plugin.consoleOptions.args[L["display"]].validate, L["Floating Combat Text"])
+	table.insert(plugin.consoleOptions.args.display.validate, L["Floating Combat Text"])
 end
 
 ------------------------------

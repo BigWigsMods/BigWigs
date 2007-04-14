@@ -9,6 +9,14 @@ local COLOR_GREEN = "00ff00"
 local COLOR_RED = "ff0000"
 local COLOR_WHITE = "ffffff"
 
+local queryRunning = nil
+
+local responseTable = {}
+local numResponses = 0
+
+local zoneRevisions = nil
+local currentZone = ""
+
 ---------------------------------
 --      Localization           --
 ---------------------------------
@@ -218,11 +226,6 @@ plugin.consoleOptions = {
 ------------------------------
 
 function plugin:OnEnable()
-	self.queryRunning = nil
-	self.responseTable = {}
-	self.zoneRevisions = nil
-	self.currentZone = ""
-
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "BWVQ", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "BWVR", 0)
@@ -231,19 +234,19 @@ function plugin:OnEnable()
 end
 
 function plugin:PopulateRevisions()
-	if not self.zoneRevisions then self.zoneRevisions = {} end
+	if not zoneRevisions then zoneRevisions = {} end
 
 	if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
 	for name, module in BigWigs:IterateModules() do
 		if module:IsBossModule() and type(module.zonename) == "string" then
 			-- Make sure to get the enUS zone name.
 			local zone = BZ:HasReverseTranslation(module.zonename) and BZ:GetReverseTranslation(module.zonename) or module.zonename
-			if not self.zoneRevisions[zone] or module.revision > self.zoneRevisions[zone] then
-				self.zoneRevisions[zone] = module.revision
+			if not zoneRevisions[zone] or module.revision > zoneRevisions[zone] then
+				zoneRevisions[zone] = module.revision
 			end
 		end
 	end
-	self.zoneRevisions["BigWigs"] = BigWigs.revision
+	zoneRevisions["BigWigs"] = BigWigs.revision
 end
 
 ------------------------------
@@ -300,25 +303,25 @@ function plugin:OnTooltipUpdate()
 		"child_text2G", 1,
 		"child_text2B", 1
     )
-	infoCat:AddLine("text", L["Zone"], "text2", self.currentZone)
-	infoCat:AddLine("text", L["Replies"], "text2", self.responses)
+	infoCat:AddLine("text", L["Zone"], "text2", currentZone)
+	infoCat:AddLine("text", L["Replies"], "text2", numResponses)
 	local cat = tablet:AddCategory(
 		"columns", 2,
 		"text", L["Player"],
 		"text2", L["Version"]
 	)
 	local hasOld = nil
-	for name, version in pairs(self.responseTable) do
+	for name, version in pairs(responseTable) do
 		if version == -1 then
 			cat:AddLine("text", name, "text2", "|cff"..COLOR_RED..L["N/A"].."|r")
 		elseif version == -2 then
 			cat:AddLine("text", name, "text2", "|cff"..COLOR_RED..L["Not loaded"].."|r")
 		else
-			if not self.zoneRevisions then self:PopulateRevisions() end
+			if not zoneRevisions then self:PopulateRevisions() end
 			local color = COLOR_WHITE
-			if self.zoneRevisions[self.currentZone] and version > self.zoneRevisions[self.currentZone] then
+			if zoneRevisions[currentZone] and version > zoneRevisions[currentZone] then
 				color = COLOR_GREEN
-			elseif self.zoneRevisions[self.currentZone] and version < self.zoneRevisions[self.currentZone] then
+			elseif zoneRevisions[currentZone] and version < zoneRevisions[currentZone] then
 				hasOld = true
 				color = COLOR_RED
 			end
@@ -326,12 +329,13 @@ function plugin:OnTooltipUpdate()
 		end
 	end
 
-	if self.responseTable and hasOld and (IsRaidLeader() or IsRaidOfficer()) then
+	if responseTable and hasOld and (IsRaidLeader() or IsRaidOfficer()) then
 		local alertCat = tablet:AddCategory("columns", 1)
 		alertCat:AddLine(
 			"text", L["Notify people with older versions that there is a new version available."],
 			"wrap", true,
-			"func", function() plugin:AlertOldRevisions() end
+			"func", self.AlertOldRevisions,
+			"arg1", self
 		)
 	end
 
@@ -339,18 +343,23 @@ function plugin:OnTooltipUpdate()
 end
 
 function plugin:AlertOldRevisions()
-	if not self.responseTable or (not IsRaidLeader() and not IsRaidOfficer()) then return end
-	local myVersion = self.zoneRevisions[self.currentZone]
+	if not responseTable or (not IsRaidLeader() and not IsRaidOfficer()) then return end
+	local myVersion = zoneRevisions[currentZone]
 	if not myVersion then return end
-	for name, version in pairs(self.responseTable) do
+	for name, version in pairs(responseTable) do
 		if version < myVersion then
 			self:TriggerEvent("BigWigs_SendTell", name, L["There seems to be a newer version of Big Wigs available for you, please upgrade."])
 		end
 	end
 end
 
+local function resetQueryRunning()
+	queryRunning = nil
+	BigWigs:Print(L["Version query done."])
+end
+
 function plugin:QueryVersion(zone)
-	if self.queryRunning then
+	if queryRunning then
 		BigWigs:Print(L["Query already running, please wait 5 seconds before trying again."])
 		return
 	end
@@ -370,29 +379,26 @@ function plugin:QueryVersion(zone)
 	if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
 	if BZ:HasReverseTranslation(zone) then zone = BZ:GetReverseTranslation(zone) end
 
-	self.currentZone = zone
+	currentZone = zone
 
-	self.queryRunning = true
-	self:ScheduleEvent(
-		function()
-			self.queryRunning = nil
-			BigWigs:Print(L["Version query done."])
-		end, 5)
+	queryRunning = true
+	self:ScheduleEvent(resetQueryRunning, 5)
 
-	self.responseTable = {}
+	responseTable = {}
 
-	if not self.zoneRevisions then self:PopulateRevisions() end
-	self.responseTable[UnitName("player")] = self:GetVersion(zone)
-	self.responses = 1
+	if not zoneRevisions then self:PopulateRevisions() end
+	responseTable[UnitName("player")] = self:GetVersion(zone)
+	numResponses = 1
+
 	self:UpdateVersions()
 	self:TriggerEvent("BigWigs_SendSync", "BWVQ "..zone)
 end
 
 function plugin:GetVersion(zone)
-	if not self.zoneRevisions then self:PopulateRevisions() end
+	if not zoneRevisions then self:PopulateRevisions() end
 	local rev = -1
-	if self.zoneRevisions[zone] then
-		rev = self.zoneRevisions[zone]
+	if zoneRevisions[zone] then
+		rev = zoneRevisions[zone]
 	elseif BigWigs:HasModule(zone) then
 		rev = BigWigs:GetModule(zone).revision
 	elseif BigWigsLoD and BigWigsLoD:HasAddOnsForZone(zone) then
@@ -423,14 +429,13 @@ end
 function plugin:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "BWVQ" and nick ~= UnitName("player") and rest then
 		self:TriggerEvent("BigWigs_SendSync", "BWVR " .. self:GetVersion(rest) .. " " .. nick)
-	elseif sync == "BWVR" and self.queryRunning and nick and rest then
+	elseif sync == "BWVR" and queryRunning and nick and rest then
 		local revision, queryNick = self:ParseReply(rest)
 		if revision and queryNick and queryNick == UnitName("player") then
-			self.responseTable[nick] = tonumber(revision)
-			self.responses = self.responses + 1
+			responseTable[nick] = tonumber(revision)
+			numResponses = numResponses + 1
 			self:UpdateVersions()
 		end
 	end
 end
-
 

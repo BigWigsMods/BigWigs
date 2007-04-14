@@ -7,6 +7,8 @@
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsRaidIcon")
 local lastplayer = nil
 
+local RL = nil
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -15,8 +17,6 @@ L:RegisterTranslations("enUS", function() return {
 	["Raid Icons"] = true,
 
 	["RaidIcon"] = true,
-	["place"] = true,
-	["icon"] = true,
 
 	["Place"] = true,
 	["Place Raid Icons"] = true,
@@ -110,10 +110,6 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("deDE", function() return {
 	["Raid Icons"] = "Schlachtzug-Symbole",
 
-	-- ["RaidIcon"] = true,
-	-- ["place"] = true,
-	-- ["icon"] = true,
-
 	["Place"] = "Platzierung",
 	["Place Raid Icons"] = "Schlachtzug-Symbole platzieren",
 	["Toggle placing of Raid Icons on players."] = "Schlachtzug-Symbole auf Spieler setzen.",
@@ -136,10 +132,6 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["Raid Icons"] = "Ic\195\180nes de raid",
-
-	--["RaidIcon"] = true,
-	--["place"] = true,
-	--["icon"] = true,
 
 	["Place"] = "Placement",
 	["Place Raid Icons"] = "Placer les ic\195\180nes de raid",
@@ -178,14 +170,14 @@ plugin.consoleOptions = {
 	name = L["Raid Icons"],
 	desc = L["Options for Raid Icons."],
 	args   = {
-		[L["place"]] = {
+		place = {
 			type = "toggle",
 			name = L["Place Raid Icons"],
 			desc = L["Toggle placing of Raid Icons on players."],
 			get = function() return plugin.db.profile.place end,
 			set = function(v) plugin.db.profile.place = v end,
 		},
-		[L["icon"]] = {
+		icon = {
 			type = "text",
 			name = L["Set Icon"],
 			desc = L["Set which icon to place on players."],
@@ -216,17 +208,29 @@ function plugin:OnEnable()
 	if type(self.db.profile.icon) ~= "number" then
 		self.db.profile.icon = 8
 	end
+
+	if AceLibrary:HasInstance("Roster-2.1") then
+		RL = AceLibrary("Roster-2.1")
+	end
 end
 
 function plugin:BigWigs_SetRaidIcon(player)
 	if not player or not self.db.profile.place then return end
 	local icon = self.db.profile.icon or 8
-	local num = GetNumRaidMembers()
-	for i = 1, num do
-		if UnitName("raid"..i) == player then
-			if not GetRaidTargetIndex("raid"..i) then
-				SetRaidTargetIcon("raid"..i, icon)
-				lastplayer = player
+	if RL then
+		local id = RL:GetUnitIDFromName(player)
+		if id and not GetRaidTargetIndex(id) then
+			SetRaidTargetIcon(id, icon)
+			lastplayer = player
+		end
+	else
+		local num = GetNumRaidMembers()
+		for i = 1, num do
+			if UnitName("raid"..i) == player then
+				if not GetRaidTargetIndex("raid"..i) then
+					SetRaidTargetIcon("raid"..i, icon)
+					lastplayer = player
+				end
 			end
 		end
 	end
@@ -234,10 +238,17 @@ end
 
 function plugin:BigWigs_RemoveRaidIcon()
 	if not lastplayer or not self.db.profile.place then return end
-	local num = GetNumRaidMembers()
-	for i = 1, num do
-		if UnitName("raid"..i) == lastplayer then
-			SetRaidTargetIcon("raid"..i, 0)
+	if RL then
+		local id = RL:GetUnitIDFromName(lastplayer)
+		if id then
+			SetRaidTargetIcon(id, 0)
+		end
+	else
+		local num = GetNumRaidMembers()
+		for i = 1, num do
+			if UnitName("raid"..i) == lastplayer then
+				SetRaidTargetIcon("raid"..i, 0)
+			end
 		end
 	end
 	lastplayer = nil

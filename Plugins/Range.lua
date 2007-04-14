@@ -14,15 +14,12 @@ L:RegisterTranslations("enUS", function() return {
 	["Range"] = true,
 	["Options for the combat log's range."] = true,
 
-	["mob"] = true,
 	["Creatures"] = true,
 	["Creature combat log range."] = true,
 
-	["death"] = true,
 	["Deaths"] = true,
 	["Death message range."] = true,
 
-	["reset"] = true,
 	["Reset to defaults"] = true,
 	["Resets all ranges to defaults."] = true,
 } end)
@@ -73,15 +70,12 @@ L:RegisterTranslations("deDE", function() return {
 	["Range"] = "Reichweite",
 	["Options for the combat log's range."] = "Optionen f\195\188r die Reichweite des Kampflogs.",
 
-	-- ["mob"] = true,
 	["Creatures"] = "Kreaturen",
 	["Creature combat log range."] = "Reichweite von Kreaturen-Nachrichten im Kampflog.",
 
-	-- ["death"] = true,
 	["Deaths"] = "Tode",
 	["Death message range."] = "Reichweite von Todes-Nachrichten im Kampflog.",
 
-	-- ["reset"] = true,
 	["Reset to defaults"] = "Zur\195\188cksetzen",
 	["Resets all ranges to defaults."] = "Auf Standard zur\195\188cksetzen.",
 } end)
@@ -90,15 +84,12 @@ L:RegisterTranslations("frFR", function() return {
 	["Range"] = "Port\195\169e",
 	["Options for the combat log's range."] = "Options concernant la port\195\169e du journal de combat.",
 
-	--["mob"] = true,
 	["Creatures"] = "Cr\195\169atures",
 	["Creature combat log range."] = "Port\195\169e du journal de combat des cr\195\169atures.",
 
-	--["death"] = true,
 	["Deaths"] = "Morts",
 	["Death message range."] = "Port\195\169e du journal de combat des d\195\169c\195\168s.",
 
-	--["reset"] = true,
 	["Reset to defaults"] = "R\195\128Z",
 	["Resets all ranges to defaults."] = "R\195\169initialise tous les param\195\168tres \195\160 leurs valeurs par d\195\169faut.",
 } end)
@@ -115,8 +106,8 @@ plugin.consoleOptions = {
 	type = "group",
 	name = L["Range"],
 	desc = L["Options for the combat log's range."],
-	args   = {
-		[L["mob"]] = {
+	args = {
+		mob = {
 			type = "range",
 			name = L["Creatures"],
 			desc = L["Creature combat log range."],
@@ -127,7 +118,7 @@ plugin.consoleOptions = {
 			get = function() return GetCVar("CombatLogRangeCreature") end,
 			set = function(v) SetCVar("CombatLogRangeCreature", v) end,
 		},
-		[L["death"]] = {
+		death = {
 			type = "range",
 			name = L["Deaths"],
 			desc = L["Death message range."],
@@ -138,7 +129,7 @@ plugin.consoleOptions = {
 			get = function() return GetCVar("CombatDeathLogRange") end,
 			set = function(v) SetCVar("CombatDeathLogRange", v) end,
 		},
-		[L["reset"]] = {
+		reset = {
 			type = "execute",
 			name = L["Reset to defaults"],
 			order = -1,
