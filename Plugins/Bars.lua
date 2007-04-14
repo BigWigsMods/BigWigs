@@ -45,17 +45,28 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Bars"] = "바",
+	["Options for the timer bars."] = "타이머 바에 대한 설정입니다.",
 
-	["Options for the timer bars."] = "Timer 바 옵션 조정.",
-	["Show the bar anchor frame."] = "바 위치 조정 프레임 보이기.",
-	["Set the bar scale."] = "바 크기 조절.",
-	["Grow upwards"] = "바 위로 생성",
-	["Toggle bars grow upwards/downwards from anchor."] = "바 표시 순서를 위/아래로 조정.",
+	["Show anchor"] = "고정 위치 표시",
+	["Show the bar anchor frame."] = "바의 고정 위치를 표시합니다.",
 
-	["Show anchor"] = "앵커 보이기",
-	["Scale"]= "크기",
+	["Scale"] = "크기",
+	["Set the bar scale."] = "바의 크기를 조절합니다.",
+
+	["Grow upwards"] = "생성 방향",
+	["Toggle bars grow upwards/downwards from anchor."] = "바의 생성 방향을 위/아래로 전환합니다.",
+
+	["Texture"] = "텍스쳐",
+	["Set the texture for the timer bars."] = "타이머 바의 텍스쳐를 설정합니다.",
 
 	["Test"] = "테스트",
+	["Close"] = "닫기",
+
+	["Reset position"] = "위치 초기화",
+	["Reset the anchor position, moving it to the center of your screen."] = "화면의 중앙으로 고정위치를 초기화합니다.",
+
+	["Reverse"] = "반전",
+	["Toggles if bars are reversed (fill up instead of emptying)."] = "바의 반전을 전환합니다(채우기 혹은 비움).",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

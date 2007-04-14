@@ -36,12 +36,13 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Sounds"] = "효과음",
-	["Options for sounds."] = "효과음 옵션.",
+	["Options for sounds."] = "효과음에 대한 설정입니다.",
 
+	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = "%q에 사용할 효과음을 설정합니다(미리듣기는 CTRL-클릭).",
 	["Use sounds"] = "효과음 사용",
-	["Toggle all sounds on or off."] = "효과음을 켜거나 끔.",
+	["Toggle all sounds on or off."] = "모든 효과음을 켜거나 끕니다.",
 	["Default only"] = "기본음",
-	["Use only the default sound."] = "기본음만 사용.",
+	["Use only the default sound."] = "기본음만을 사용합니다.",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

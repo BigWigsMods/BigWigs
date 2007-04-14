@@ -51,29 +51,36 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Messages"] = "메세지",
+	["Options for message display."] = "메세지 표시에 대한 설정입니다.",
 
-	["Options for message display."] = "메시지 창 옵션.",
-	["Show the message anchor frame."] = "메시지 위치 조정 프레임 보이기.",
+	["Show anchor"] = "고정 위치 표시",
+	["Show the message anchor frame."] = "메세지의 고정 위치를 표시합니다.",
+
 	["Use colors"] = "색상 사용",
-	["Toggles white only messages ignoring coloring."] = "메시지를 하얀 색으로 변경.",
+	["Toggles white only messages ignoring coloring."] = "메세지에 색상 사용을 설정합니다.",
 
-	["Show anchor"] = "앵커 보이기",
-	["Set the message frame scale."] = "메세지 창 크기 설정",
 	["Scale"] = "크기",
+	["Set the message frame scale."] = "메세지창의 크기를 설정합니다.",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000색|cffff00ff상|r",
-	["White"] = "화이트",
+	["White"] = "흰색",
 	["BigWigs frame"] = "BigWigs 창",
-	["RaidWarning frame"] = "공격대경고 창",
+	["RaidWarning frame"] = "공격대경보 창",
 
 	["Display"] = "디스플레이",
-	["Set where messages are displayed."] = "메세지 디스플레이 설정",
---	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = true,
+	["Set where messages are displayed."] = "메세지를 표시할 곳을 설정합니다.",
+	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "모든 BigWigs 메세지를 디스플레이 설정에 추가된 기본 대화창에 출력합니다.",
 
 	["Mik's Scrolling Battle Text"] = "MSBT",
 	["Scrolling Combat Text"] = "SCT",
 	["Floating Combat Text"] = "FCT",
 	["Chat frame"] = "대화창",
+
+	["Test"] = "테스트",
+	["Close"] = "닫기",
+
+	["Reset position"] = "위치 초기화",
+	["Reset the anchor position, moving it to the center of your screen."] = "화면의 중앙으로 고정 위치를 초기화합니다.",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

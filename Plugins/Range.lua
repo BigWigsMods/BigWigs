@@ -26,16 +26,16 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Range"] = "범위",
-	["Options for the combat log's range."] = "전투 로그의 범위에 대한 설정",
+	["Options for the combat log's range."] = "전투 로그의 범위에 대한 설정입니다.",
 
 	["Creatures"] = "NPC",
-	["Creature combat log range."] = "NPC 전투 로그 범위",
+	["Creature combat log range."] = "NPC 전투 로그의 범위를 설정합니다.",
 
 	["Deaths"] = "죽음",
-	["Death message range."] = "죽음 메세지 범위",
+	["Death message range."] = "죽음 메세지의 범위를 설정합니다.",
 
 	["Reset to defaults"] = "기본 설정 초기화",
-	["Resets all ranges to defaults."] = "모든 범위를 기본 설정으로 초기화",
+	["Resets all ranges to defaults."] = "모든 범위를 기본 설정으로 초기화합니다.",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

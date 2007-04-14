@@ -36,19 +36,19 @@ L:RegisterTranslations("koKR", function() return {
 
 	["Broadcast over RaidWarning"] = "공격대 경보로 알림",
 	["Broadcast"] = "알림",
---	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = true,
+	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = "공격대 경보 채널로 당신의 BigWigs 메세지를 알립니다.\n\n주의:만약 보스차단을 사용 중이라면 당신에게 메세지가 보이지 않을 수 있습니다.",
 
 	["Whisper"] = "귓속말",
 	["Whisper warnings"] = "귓속말 경보",
 	["Toggle whispering warnings to players."] = "플레이어에게 귓속말 경보 알림을 전환합니다.",
 
 	["Show whispers"] = "귓속말 보기",
---	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = true,
+	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "BigWigs에 의한 귓속말 메세지를 표시합니다.",
 
 	["Use Raidchannel"] = "공격대 채널 사용",
---	["Toggle using the raid channel instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = true,
+	["Toggle using the raid channel instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "공격대 경보 채널 대신 공격대 채널을 사용합니다.\n\n주의 : 만약 보스차단을 사용 중이라면 당신에게 메세지가 보이지 않을 수 있습니다.",
 
-	desc = "Lets you configure where BigWigs should send its boss messages in addition to the local output.",
+	desc = "BigWigs가 보스 메세지를 출력할 곳을 설정하세요.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

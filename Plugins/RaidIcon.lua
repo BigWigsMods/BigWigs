@@ -43,13 +43,13 @@ L:RegisterTranslations("koKR", function() return {
 
 	["Place"] = "지정",
 	["Place Raid Icons"] = "공격대 아이콘 지정",
-	["Toggle placing of Raid Icons on players."] = "플레이어에 공격대 아이콘 지정 토글",
+	["Toggle placing of Raid Icons on players."] = "플레이어에 공격대 아이콘을 지정합니다.",
 
 	["Icon"] = "아이콘",
 	["Set Icon"] = "아이콘 설정",
-	["Set which icon to place on players."] = "플레이어에 아이콘 지정을 위한 설정",
+	["Set which icon to place on players."] = "플레이어에 지정할 아이콘을 설정합니다.",
 
-	["Options for Raid Icons."] = "공격대 아이콘에 대한 설정",
+	["Options for Raid Icons."] = "공격대 아이콘에 대한 설정입니다.",
 
 	["Star"] = "별",
 	["Circle"] = "원",

@@ -53,7 +53,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Version Query"] = "버전 요청",
-	["Commands for querying the raid for Big Wigs versions."] = "BigQigs 버전에 대한 공격대 요청 명령.",
+	["Commands for querying the raid for Big Wigs versions."] = "BigQigs 버전에 대한 공격대 요청 관련 명령어입니다.",
 	["Query already running, please wait 5 seconds before trying again."] = "이미 요청 중, 5초후 다시 시도하세요.",
 	["Querying versions for "] = "버전 요청 중 : ",
 	["Big Wigs Version Query"] = "BigWigs 버전 요청",
@@ -65,11 +65,12 @@ L:RegisterTranslations("koKR", function() return {
 	["Current zone"] = "현재 지역",
 	["<zone>"] = "<지역>",
 	["Version query done."] = "버전 요청 완료.",
-	["Runs a version query on your current zone."] = "현재 지역에 동작 모듈 버전 요청",
-	["Closes the version query window."] = "버전 확인 창 닫기.",
-	["Runs a version query on the given zone."] = "정해진 지역에 동작 모듈 버전 요청.",
+	["Runs a version query on your current zone."] = "현재 지역내 동작 모듈의 버전 요청을 수행합니다.",
+	["Closes the version query window."] = "버전 확인 창을 닫습니다.",
+	["Runs a version query on the given zone."] = "주어진 지역내 동작 모듈의 버전 요청을 수행합니다.",
 	["Zone"] = "지역",
 	["N/A"] = "N/A",
+	["Not loaded"] = "로드되지 않았습니다",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
