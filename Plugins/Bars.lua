@@ -558,7 +558,7 @@ function plugin:UpdateBars()
 		if stop < now then
 			movingBars[bar] = del(movingBars[bar])
 			self:RegisterCandyBarWithGroup(bar, "BigWigsEmphasizedGroup")
-			self:SetCandyBarScale(bar, plugin.db.profile.emphasizescale or 1)
+			self:SetCandyBarScale(bar, plugin.db.profile.emphasizeScale or 1)
 			return
 		end
 		
@@ -610,7 +610,7 @@ function plugin:EmphasizeBar(module, id)
 	movingBars[id].targetX = (targetX * (UIParent:GetEffectiveScale() * db.emphasizeScale or 1)) + (frameX * frameScale)
 	movingBars[id].targetY = (targetY * (UIParent:GetEffectiveScale() * db.emphasizeScale or 1)) + ((frameY + offsetY) * frameScale)
 	movingBars[id].startScale = db.scale or 1
-	movingBars[id].stopScale = db.emphasizescale or 1
+	movingBars[id].stopScale = db.emphasizeScale or 1
 end
 
 ------------------------------
