@@ -70,9 +70,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Emphasize"] = true,
 	["Emphasize bars that are close to completion (<10sec) by moving them to a second anchor."] = true,
-	
-	["Emphasize Scale"] = true,
-	["Set the emphasize bar scale."] = true,
 
 	["Reset position"] = true,
 	["Reset the anchor position, moving it to the center of your screen."] = true,
@@ -286,10 +283,10 @@ plugin.consoleOptions = {
 			step = 0.1,
 			order = 103,
 		},
-		emphasizescale = {
+		emphasizeScale = {
 			type = "range",
-			name = L["Emphasize Scale"],
-			desc = L["Set the emphasize bar scale."],
+			name = "Emphasize Scale",
+			desc = "Set the emphasize bar scale.",
 			min = 0.2,
 			max = 2.0,
 			step = 0.1,
@@ -431,8 +428,10 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 			if db.emphasizeFlash then
 				self:FlashBar(module, id)
 			end
-			self:SetCandyBarScale(id, db.emphasizescale or 1)
+			self:SetCandyBarScale(id, db.emphasizeScale or 1)
 		end
+	else
+		self:SetCandyBarScale(id, db.scale or 1)
 	end
 	-- When using the emphasize option, custom bar groups from the modules are
 	-- not used when the bar reaches 10 seconds left, but moved to the
@@ -608,8 +607,8 @@ function plugin:EmphasizeBar(module, id)
 	
 	movingBars[id] = new()
 	movingBars[id].stop = GetTime() + DURATION
-	movingBars[id].targetX = (targetX * (UIParent:GetEffectiveScale() * db.emphasizescale or 1)) + (frameX * frameScale)
-	movingBars[id].targetY = (targetY * (UIParent:GetEffectiveScale() * db.emphasizescale or 1)) + ((frameY + offsetY) * frameScale)
+	movingBars[id].targetX = (targetX * (UIParent:GetEffectiveScale() * db.emphasizeScale or 1)) + (frameX * frameScale)
+	movingBars[id].targetY = (targetY * (UIParent:GetEffectiveScale() * db.emphasizeScale or 1)) + ((frameY + offsetY) * frameScale)
 	movingBars[id].startScale = db.scale or 1
 	movingBars[id].stopScale = db.emphasizescale or 1
 end
