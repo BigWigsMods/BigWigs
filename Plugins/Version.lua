@@ -348,7 +348,7 @@ function plugin:AlertOldRevisions()
 	local myVersion = zoneRevisions[currentZone]
 	if not myVersion then return end
 	for name, version in pairs(responseTable) do
-		if version < myVersion then
+		if version < myVersion and version > 0 then
 			self:TriggerEvent("BigWigs_SendTell", name, L["There seems to be a newer version of Big Wigs available for you, please upgrade."])
 		end
 	end
