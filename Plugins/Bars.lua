@@ -6,6 +6,7 @@
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsBars")
 
+local paint = AceLibrary("PaintChips-2.0")
 local media = AceLibrary("SharedMedia-1.0")
 local mType = media.MediaType and media.MediaType.STATUSBAR or "statusbar"
 
@@ -13,6 +14,7 @@ local colorModule = nil
 local anchor = nil
 local emphasizeAnchor = nil
 
+local flashTimers = {}
 local emphasizeTimers = {}
 local moduleBars = {}
 
@@ -199,6 +201,7 @@ plugin.defaultDB = {
 	posy = nil,
 
 	emphasize = nil,
+	emphasizeFlash = true,
 	emphasizePosX = nil,
 	emphasizePosY = nil,
 
@@ -320,16 +323,23 @@ end
 ------------------------------
 
 function plugin:Ace2_AddonDisabled(module)
-	if moduleBars[module] then
-		for k in pairs(moduleBars[module]) do
-			self:UnregisterCandyBar(k)
-			moduleBars[module][k] = nil
-		end
-	end
 	if emphasizeTimers[module] then
 		for k, v in pairs(emphasizeTimers[module]) do
 			self:CancelScheduledEvent(v)
 			emphasizeTimers[module][k] = nil
+		end
+	end
+	if flashTimers[module] then
+		for k, v in pairs(flashTimers[module]) do
+			self:CancelScheduledEvent(v)
+			flashTimers[module][k] = nil
+		end
+	end
+
+	if moduleBars[module] then
+		for k in pairs(moduleBars[module]) do
+			self:UnregisterCandyBar(k)
+			moduleBars[module][k] = nil
 		end
 	end
 end
@@ -389,9 +399,16 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 		if time > 11 then
 			if not emphasizeTimers[module] then emphasizeTimers[module] = {} end
 			emphasizeTimers[module][id] = self:ScheduleEvent(self.EmphasizeBar, time - 10, self, module, id)
+			if db.emphasizeFlash then
+				if not flashTimers[module] then flashTimers[module] = {} end
+				flashTimers[module][id] = self:ScheduleEvent(self.FlashBar, time - 10, self, module, id)
+			end
 		else
 			groupId = "BigWigsEmphasizedGroup"
 			setupEmphasizedGroup()
+			if db.emphasizeFlash then
+				self:FlashBar(module, id)
+			end
 		end
 	end
 	if (not db.emphasize or (db.emphasize and time > 11)) and type(module.GetBarGroupId) == "function" then
@@ -422,14 +439,76 @@ end
 function plugin:BigWigs_StopBar(module, text)
 	if not text then return end
 	local id = "BigWigsBar "..text
-	self:UnregisterCandyBar(id)
-	if moduleBars[module] then
-		moduleBars[module][id] = nil
-	end
+
 	if emphasizeTimers[module] and emphasizeTimers[module][id] then
 		self:CancelScheduledEvent(emphasizeTimers[module][id])
 		emphasizeTimers[module][id] = nil
 	end
+	if flashTimers[module] and flashTimers[module][id] then
+		self:CancelScheduledEvent(flashTimers[module][id])
+		flashTimers[module][id] = nil
+	end
+
+	self:UnregisterCandyBar(id)
+
+	if moduleBars[module] then
+		moduleBars[module][id] = nil
+	end
+end
+
+local flashColors
+local generateColors
+do
+	local function ColorGradient(perc, ...)
+		local num = select("#", ...) / 3
+		if perc >= 1 then
+			local r, g, b = select(num*3-2, ...)
+			return r, g, b
+		elseif perc <= 0 then
+			local r, g, b = ...
+			return r, g, b
+		end
+		local segment, relperc = math.modf(perc*(num-1))
+		local r1, g1, b1, r2, g2, b2 = select((segment*3)+1, ...)
+		return r1 + (r2-r1)*relperc, g1 + (g2-g1)*relperc, b1 + (b2-b1)*relperc
+	end
+	generateColors = function()
+		flashColors = {}
+		for i = 0.0, 1, 0.1 do
+			local r, g, b = ColorGradient(i, 255,0,0, 0,0,0)
+			local hex = string.format("%02x%02x%02x", r, g, b)
+			paint:RegisterHex(hex) -- We have to do this because CandyBar fails silently on hex codes not registered with paintchips ...
+			table.insert(flashColors, hex:lower()) -- hex:lower() because that's what PaintChips uses for the "name" .. wtf.
+		end
+	end
+end
+
+local flashBarUp, flashBarDown
+
+local currentColor = {}
+flashBarUp = function(id)
+	if not currentColor[id] then currentColor[id] = 1 end
+	plugin:SetCandyBarBackgroundColor(id, flashColors[currentColor[id]], 0.5)
+	if currentColor[id] == 10 then
+		plugin:ScheduleRepeatingEvent(id, flashBarDown, 0.1, id)
+		return
+	end
+	currentColor[id] = currentColor[id] + 1
+end
+flashBarDown = function(id)
+	plugin:SetCandyBarBackgroundColor(id, flashColors[currentColor[id]], 0.5)
+	if currentColor[id] == 1 then
+		plugin:ScheduleRepeatingEvent(id, flashBarUp, 0.1, id)
+		return
+	end
+	currentColor[id] = currentColor[id] - 1
+end
+
+function plugin:FlashBar(module, id)
+	if not flashColors then generateColors() end
+	-- Start flashing the bar
+	self:ScheduleRepeatingEvent(id, flashBarUp, 0.1, id)
+	self:ScheduleEvent(self.CancelScheduledEvent, 10, self, id)
 end
 
 -- copied from PitBull_BarFader
@@ -454,7 +533,7 @@ function plugin:UpdateBars()
 		yoffset = CosineInterpolate(yoffset, opt.targetY, 1 - ((stop - now) / DURATION) )
 		self:SetCandyBarPoint(bar, point, rframe, rpoint, xoffset, yoffset)
 	end
-	
+
 	if count == 0 then
 		self:CancelScheduledEvent("BigWigsBarMover")
 	end
@@ -474,13 +553,12 @@ function plugin:EmphasizeBar(module, id)
 	self:SetCandyBarPoint(id, "CENTER", "UIParent", "BOTTOMLEFT", centerX, centerY)
 	
 	local targetX, targetY = self:GetCandyBarNextBarPointInGroup("BigWigsEmphasizedGroup")
-	local frame = getglobal("BigWigsEmphasizedBarAnchor")
 	local u = plugin.db.profile.growup
-	local frameX = frame:GetCenter()
-	local frameY = u and frame:GetTop() or frame:GetBottom()
+	local frameX = emphasizeAnchor:GetCenter()
+	local frameY = u and emphasizeAnchor:GetTop() or emphasizeAnchor:GetBottom()
 	
 	local _, offsetTop, offsetBottom, _ = self:GetCandyBarOffsets(id)
-	local offsetY = u and centerY - offsetBottom or centerY - offsetTop 
+	local offsetY = u and centerY - offsetBottom or centerY - offsetTop
 	
 	movingBars[id] = new()
 	movingBars[id].stop = GetTime() + DURATION
