@@ -1,8 +1,8 @@
 ﻿assert( BigWigs, "BigWigs not found!")
 
-------------------------------
---      Are you local?      --
-------------------------------
+-----------------------------------------------------------------------
+--      Are you local?
+-----------------------------------------------------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsBars")
 
@@ -43,9 +43,9 @@ do
 	end
 end
 
-----------------------------
---      Localization      --
-----------------------------
+-----------------------------------------------------------------------
+--      Localization
+-----------------------------------------------------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	["Bars"] = true,
@@ -186,9 +186,9 @@ L:RegisterTranslations("frFR", function() return {
 	["Reset the anchor position, moving it to the center of your screen."] = "R\195\169initialise la position de l'ancre, la repla\195\167ant au centre de l'\195\169cran.",
 } end)
 
-----------------------------------
---      Module Declaration      --
-----------------------------------
+-----------------------------------------------------------------------
+--      Module Declaration
+-----------------------------------------------------------------------
 
 local plugin = BigWigs:NewModule("Bars", "CandyBar-2.0")
 plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
@@ -270,6 +270,8 @@ plugin.consoleOptions = {
 			name = L["Emphasize"],
 			desc = L["Emphasize bars that are close to completion (<10sec) by moving them to a second anchor."],
 			order = 102,
+			-- When AceConsole-2.0, Dewdrop and Waterfall-1.0 have been fixed,
+			-- we need to provide proper options for emphasized bars.
 		},
 		scale = {
 			type = "range",
@@ -290,9 +292,9 @@ plugin.consoleOptions = {
 	},
 }
 
-------------------------------
---      Initialization      --
-------------------------------
+-----------------------------------------------------------------------
+--      Initialization
+-----------------------------------------------------------------------
 
 function plugin:OnRegister()
 	media:Register(mType, "Otravi", "Interface\\AddOns\\BigWigs\\Textures\\otravi")
@@ -318,9 +320,9 @@ function plugin:OnEnable()
 	end
 end
 
-------------------------------
---      Event Handlers      --
-------------------------------
+-----------------------------------------------------------------------
+--      Event Handlers
+-----------------------------------------------------------------------
 
 function plugin:Ace2_AddonDisabled(module)
 	if emphasizeTimers[module] then
@@ -381,6 +383,8 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 	self:SetCandyBarGroupPoint("BigWigsGroup", u and "BOTTOM" or "TOP", anchor, u and "TOP" or "BOTTOM", 0, 0)
 	self:SetCandyBarGroupGrowth("BigWigsGroup", u)
 
+	-- We really need to clean up in the mess that is colors right now, and
+	-- possibly move away from PaintChips.
 	local bc, balpha, txtc
 	if type(colorModule) == "table" then
 		if type(otherc) ~= "boolean" or not otherc then c1, c2, c3, c4, c5, c6, c7, c8, c9, c10 = colorModule:BarColor(time) end
@@ -396,6 +400,8 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 
 	local groupId = "BigWigsGroup"
 	if db.emphasize then
+		-- If the bar is started at more than 11 seconds, it won't be emphasized
+		-- right away, but if it's started at 11 or less, it will be.
 		if time > 11 then
 			if not emphasizeTimers[module] then emphasizeTimers[module] = {} end
 			emphasizeTimers[module][id] = self:ScheduleEvent(self.EmphasizeBar, time - 10, self, module, id)
@@ -404,6 +410,8 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 				flashTimers[module][id] = self:ScheduleEvent(self.FlashBar, time - 10, self, module, id)
 			end
 		else
+			-- Since it's 11 or less, just start it at the emphasized group
+			-- right away.
 			groupId = "BigWigsEmphasizedGroup"
 			setupEmphasizedGroup()
 			if db.emphasizeFlash then
@@ -411,6 +419,9 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 			end
 		end
 	end
+	-- When using the emphasize option, custom bar groups from the modules are
+	-- not used when the bar reaches 10 seconds left, but moved to the
+	-- emphasized group regardless of custom groups.
 	if (not db.emphasize or (db.emphasize and time > 11)) and type(module.GetBarGroupId) == "function" then
 		groupId = module:GetBarGroupId(text)
 	end
@@ -456,25 +467,29 @@ function plugin:BigWigs_StopBar(module, text)
 	end
 end
 
+-----------------------------------------------------------------------
+--    Emphasized Background Flashing
+-----------------------------------------------------------------------
+
 local flashColors
 local generateColors
 do
 	local function ColorGradient(perc, ...)
-		local num = select("#", ...) / 3
 		if perc >= 1 then
-			local r, g, b = select(num*3-2, ...)
+			local r, g, b = select(select('#', ...) - 2, ...)
 			return r, g, b
 		elseif perc <= 0 then
 			local r, g, b = ...
 			return r, g, b
 		end
+		local num = select('#', ...) / 3
 		local segment, relperc = math.modf(perc*(num-1))
 		local r1, g1, b1, r2, g2, b2 = select((segment*3)+1, ...)
 		return r1 + (r2-r1)*relperc, g1 + (g2-g1)*relperc, b1 + (b2-b1)*relperc
 	end
 	generateColors = function()
 		flashColors = {}
-		for i = 0.0, 1, 0.1 do
+		for i = 0.1, 1, 0.1 do
 			local r, g, b = ColorGradient(i, 255,0,0, 0,0,0)
 			local hex = string.format("%02x%02x%02x", r, g, b)
 			paint:RegisterHex(hex) -- We have to do this because CandyBar fails silently on hex codes not registered with paintchips ...
@@ -489,7 +504,7 @@ local currentColor = {}
 flashBarUp = function(id)
 	if not currentColor[id] then currentColor[id] = 1 end
 	plugin:SetCandyBarBackgroundColor(id, flashColors[currentColor[id]], 0.5)
-	if currentColor[id] == 10 then
+	if currentColor[id] == #flashColors then
 		plugin:ScheduleRepeatingEvent(id, flashBarDown, 0.1, id)
 		return
 	end
@@ -510,6 +525,10 @@ function plugin:FlashBar(module, id)
 	self:ScheduleRepeatingEvent(id, flashBarUp, 0.1, id)
 	self:ScheduleEvent(self.CancelScheduledEvent, 10, self, id)
 end
+
+-----------------------------------------------------------------------
+--    Smooth Moving of Emphasized Bars
+-----------------------------------------------------------------------
 
 -- copied from PitBull_BarFader
 local function CosineInterpolate(y1, y2, mu)
@@ -541,25 +560,25 @@ end
 
 function plugin:EmphasizeBar(module, id)
 	setupEmphasizedGroup()
-	
+
 	if not self:IsEventScheduled("BigWigsBarMover") then
 		self:ScheduleRepeatingEvent("BigWigsBarMover",self.UpdateBars,0,self)
 	end
-	
+
 	local centerX, centerY = self:GetCandyBarCenter(id)
 	local point, _, rpoint, xoffset, yoffset = self:GetCandyBarPoint(id)
 
 	self:UnregisterCandyBarWithGroup(id, "BigWigsGroup")
 	self:SetCandyBarPoint(id, "CENTER", "UIParent", "BOTTOMLEFT", centerX, centerY)
-	
+
 	local targetX, targetY = self:GetCandyBarNextBarPointInGroup("BigWigsEmphasizedGroup")
 	local u = plugin.db.profile.growup
 	local frameX = emphasizeAnchor:GetCenter()
 	local frameY = u and emphasizeAnchor:GetTop() or emphasizeAnchor:GetBottom()
-	
+
 	local _, offsetTop, offsetBottom, _ = self:GetCandyBarOffsets(id)
 	local offsetY = u and centerY - offsetBottom or centerY - offsetTop
-	
+
 	movingBars[id] = new()
 	movingBars[id].stop = GetTime() + DURATION
 	movingBars[id].targetX = targetX + frameX
@@ -567,7 +586,7 @@ function plugin:EmphasizeBar(module, id)
 end
 
 ------------------------------
---    Create the Anchor     --
+--    Create the Anchors    --
 ------------------------------
 
 function plugin:SetupFrames(emphasize)
