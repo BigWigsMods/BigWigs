@@ -70,6 +70,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Emphasize"] = true,
 	["Emphasize bars that are close to completion (<10sec) by moving them to a second anchor."] = true,
+	
+	["Emphasize Scale"] = true,
+	["Set the emphasize bar scale."] = true,
 
 	["Reset position"] = true,
 	["Reset the anchor position, moving it to the center of your screen."] = true,
@@ -204,6 +207,7 @@ plugin.defaultDB = {
 	emphasizeFlash = true,
 	emphasizePosX = nil,
 	emphasizePosY = nil,
+	emphasizeScale = 1.0,
 
 	width = nil,
 	height = nil,
@@ -282,12 +286,21 @@ plugin.consoleOptions = {
 			step = 0.1,
 			order = 103,
 		},
+		emphasizescale = {
+			type = "range",
+			name = L["Emphasize Scale"],
+			desc = L["Set the emphasize bar scale."],
+			min = 0.2,
+			max = 2.0,
+			step = 0.1,
+			order = 104,
+		},
 		texture = {
 			type = "text",
 			name = L["Texture"],
 			desc = L["Set the texture for the timer bars."],
 			validate = media:List(mType),
-			order = 104,
+			order = 105,
 		},
 	},
 }
@@ -409,6 +422,7 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 				if not flashTimers[module] then flashTimers[module] = {} end
 				flashTimers[module][id] = self:ScheduleEvent(self.FlashBar, time - 10, self, module, id)
 			end
+			self:SetCandyBarScale(id, db.scale or 1)
 		else
 			-- Since it's 11 or less, just start it at the emphasized group
 			-- right away.
@@ -417,6 +431,7 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 			if db.emphasizeFlash then
 				self:FlashBar(module, id)
 			end
+			self:SetCandyBarScale(id, db.emphasizescale or 1)
 		end
 	end
 	-- When using the emphasize option, custom bar groups from the modules are
@@ -438,7 +453,6 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 		self:SetCandyBarHeight(id, db.height)
 	end
 
-	self:SetCandyBarScale(id, db.scale or 1)
 	self:SetCandyBarFade(id, .5)
 	if db.reverse then
 		self:SetCandyBarReversed(id, db.reverse)
@@ -540,17 +554,27 @@ function plugin:UpdateBars()
 	local now, count = GetTime(), 0
 
 	for bar, opt in pairs(movingBars) do
-		local stop = opt.stop
+		local stop, scale = opt.stop
 		count = count + 1
 		if stop < now then
 			movingBars[bar] = del(movingBars[bar])
 			self:RegisterCandyBarWithGroup(bar, "BigWigsEmphasizedGroup")
+			self:SetCandyBarScale(bar, plugin.db.profile.emphasizescale or 1)
 			return
 		end
-		local point, rframe, rpoint, xoffset, yoffset = self:GetCandyBarPoint(bar)
-		xoffset = CosineInterpolate(xoffset, opt.targetX, 1 - ((stop - now) / DURATION) )
-		yoffset = CosineInterpolate(yoffset, opt.targetY, 1 - ((stop - now) / DURATION) )
-		self:SetCandyBarPoint(bar, point, rframe, rpoint, xoffset, yoffset)
+		
+		local point, rframe, rpoint = self:GetCandyBarPoint(bar)
+		local effscale = self:GetCandyBarEffectiveScale(bar)
+		local centerX, centerY = self:GetCandyBarCenter(bar)
+		local tempX, tempY = centerX*effscale, centerY*effscale
+		
+		tempX = CosineInterpolate(tempX, opt.targetX, 1 - ((stop - now) / DURATION) )
+		tempY = CosineInterpolate(tempY, opt.targetY, 1 - ((stop - now) / DURATION) )
+		scale = (opt.stopScale - opt.startScale) * (1 - ((stop - now) / DURATION))
+		
+		self:SetCandyBarScale(bar, scale + opt.startScale)
+		effscale = self:GetCandyBarEffectiveScale(bar)
+		self:SetCandyBarPoint(bar, point, rframe, rpoint, tempX/effscale, tempY/effscale)
 	end
 
 	if count == 0 then
@@ -567,22 +591,27 @@ function plugin:EmphasizeBar(module, id)
 
 	local centerX, centerY = self:GetCandyBarCenter(id)
 	local point, _, rpoint, xoffset, yoffset = self:GetCandyBarPoint(id)
-
+	local offsetLeft, offsetTop, offsetBottom, _ = self:GetCandyBarOffsets(id)
+	local effscale = self:GetCandyBarEffectiveScale(id)
+	local db = plugin.db.profile
+	
 	self:UnregisterCandyBarWithGroup(id, "BigWigsGroup")
 	self:SetCandyBarPoint(id, "CENTER", "UIParent", "BOTTOMLEFT", centerX, centerY)
 
 	local targetX, targetY = self:GetCandyBarNextBarPointInGroup("BigWigsEmphasizedGroup")
-	local u = plugin.db.profile.growup
+	local u = db.growup
 	local frameX = emphasizeAnchor:GetCenter()
 	local frameY = u and emphasizeAnchor:GetTop() or emphasizeAnchor:GetBottom()
+	local frameScale = emphasizeAnchor:GetEffectiveScale()
 
-	local _, offsetTop, offsetBottom, _ = self:GetCandyBarOffsets(id)
 	local offsetY = u and centerY - offsetBottom or centerY - offsetTop
-
+	
 	movingBars[id] = new()
 	movingBars[id].stop = GetTime() + DURATION
-	movingBars[id].targetX = targetX + frameX
-	movingBars[id].targetY = targetY + frameY + offsetY
+	movingBars[id].targetX = (targetX * (UIParent:GetEffectiveScale() * db.emphasizescale or 1)) + (frameX * frameScale)
+	movingBars[id].targetY = (targetY * (UIParent:GetEffectiveScale() * db.emphasizescale or 1)) + ((frameY + offsetY) * frameScale)
+	movingBars[id].startScale = db.scale or 1
+	movingBars[id].stopScale = db.emphasizescale or 1
 end
 
 ------------------------------
