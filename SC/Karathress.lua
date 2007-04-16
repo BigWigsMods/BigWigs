@@ -81,7 +81,6 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -89,6 +88,7 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaraTotem", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "TidaTotem", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "CariHeal", 5)
 end
 
 ------------------------------
@@ -108,17 +108,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg:find(L["heal_trigger"]) and self.db.profile.heal then
-		self:Message(L["heal_message"], "Important", nil, "Long")
-	end
-end
-
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg:find(L["totem_trigger1"]) then
 		self:Sync("TidaTotem")
 	elseif msg:find(L["totem_trigger2"]) then
 		self:Sync("KaraTotem")
+	elseif msg:find(L["heal_trigger"]) then
+		self:Sync("CariHeal")
 	end
 end
 
@@ -127,5 +123,7 @@ function mod:BigWigs_RecvSync(sync)
 		self:Message(L["totem_message2"], "Urgent", nil, "Alarm")
 	elseif sync == "TidaTotem" and self.db.profile.totem then
 		self:Message(L["totem_message1"], "Attention")
+	elseif sync == "CariHeal" and self.db.profile.heal then
+		self:Message(L["heal_message"], "Important", nil, "Long")
 	end
 end
