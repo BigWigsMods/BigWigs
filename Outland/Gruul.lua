@@ -194,7 +194,7 @@ mod.otherMenu = "Outland"
 mod.enabletrigger = boss
 mod.toggleoptions = {"engage", "grasp", "grow", -1, "cavein", "silence", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
-mod.proximityCheck = function( unit ) return IsItemInRange(L["Heavy Netherweave Bandage"], unit ) end 
+mod.proximityCheck = function( unit ) return (IsItemInRange(L["Heavy Netherweave Bandage"], unit ) == 1 ) end 
 mod.proximitySilent = true
 
 ------------------------------
