@@ -1,4 +1,4 @@
-assert( BigWigs, "BigWigs not found!")
+﻿assert( BigWigs, "BigWigs not found!")
 
 -----------------------------------------------------------------------
 --      Are you local?
@@ -52,12 +52,22 @@ L:RegisterTranslations("enUS", function() return {
 	["Disable the proximity display."] = true,
 } end)
 
+L:RegisterTranslations("koKR", function() return {
+	--["Proximity"] = true,
+	--["Options for the Proximity Display."] = true,
+	["Nobody"] = "아무도 없음",
+	["Sound"] = "경고음",
+	--["Play sound on proximity."] = true,
+	--["Disabled"] = true,
+	--["Disable the proximity display."] = true,
+} end )
+
 -----------------------------------------------------------------------
 --      Module Declaration
 -----------------------------------------------------------------------
 
 local plugin = BigWigs:NewModule("Proximity")
-plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	posx = nil,
 	posy = nil,
@@ -121,7 +131,7 @@ end
 
 function plugin:Ace2_AddonDisabled(module)
 	if active == module then
-		self:CloseProximity()		
+		self:CloseProximity()
 	end
 end
 
@@ -205,7 +215,7 @@ function plugin:SetupFrames()
 
 	frame:SetWidth(200)
 	frame:SetHeight(100)
-	
+
 	frame:SetBackdrop({
 		bgFile = "Interface\\Tooltips\\UI-Tooltip-Background", tile = true, tileSize = 16,
 		edgeFile = "Interface\\AddOns\\BigWigs\\Textures\\otravi-semi-full-border", edgeSize = 32,
