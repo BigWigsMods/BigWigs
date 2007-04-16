@@ -219,26 +219,30 @@ function BigWigsOptions:OnTooltipUpdate()
 	if tooltipVisible then self:OnEnter() end
 end
 
+local tooltipModules = {}
 function BigWigsOptions:OnEnter()
 	if self:IsMinimapAttached() then
 		GameTooltip:SetOwner(self.minimapFrame, "ANCHOR_CURSOR")
 	else
 		GameTooltip:SetOwner(self.frame, "ANCHOR_CURSOR")
 	end
+	GameTooltip:AddLine("Big Wigs")
+	GameTooltip:AddLine("")
 	if BigWigs:IsActive() then
-		local x = {}
 		for name, module in BigWigs:IterateModules() do
 			if module:IsBossModule() and BigWigs:IsModuleActive(module) then
-				table.insert(x, name)
+				table.insert(tooltipModules, name)
 			end
 		end
-		if #x > 0 then
-			GameTooltip:AddLine(L["Active boss modules: %s."]:format(table.concat(x, ", ")), 1, 1, 1, 1, 1)
+		if #tooltipModules > 0 then
+			GameTooltip:AddLine(L["Active boss modules: %s."]:format(table.concat(tooltipModules, ", ")), 1, 1, 1, 1, 1)
 			GameTooltip:AddLine("")
+			for i in ipairs(tooltipModules) do tooltipModules[i] = nil end
 		end
 		GameTooltip:AddLine(hint, 0.2, 1, 0.2, 1, 1)
 	else
 		GameTooltip:AddLine(L["Big Wigs is currently disabled."])
+		GameTooltip:AddLine("")
 		GameTooltip:AddLine(L["|cffeda55fClick|r to enable."], 0.2, 1, 0.2, 1, 1)
 	end
 
@@ -247,8 +251,14 @@ function BigWigsOptions:OnEnter()
 	tooltipVisible = true
 end
 
+function BigWigsOptions:CloseTooltip()
+	self:OnLeave()
+end
+
 function BigWigsOptions:OnLeave()
-	GameTooltip:Hide()
-	tooltipVisible = nil
+	if tooltipVisible then
+		GameTooltip:Hide()
+		tooltipVisible = nil
+	end
 end
 
