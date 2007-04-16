@@ -1,5 +1,9 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
+if not AceLibrary:HasInstance("Tablet-2.0") then
+	return
+end
+
 local BZ = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsVersionQuery")
 local tablet = AceLibrary("Tablet-2.0")

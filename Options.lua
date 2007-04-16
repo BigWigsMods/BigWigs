@@ -8,7 +8,6 @@ assert(BigWigs, "BigWigs not found!")
 local BZ = AceLibrary("Babble-Zone-2.2")
 local LC = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsOptions")
-local tablet = AceLibrary("Tablet-2.0")
 local waterfall = AceLibrary:HasInstance("Waterfall-1.0") and AceLibrary("Waterfall-1.0") or nil
 
 local hint = nil
@@ -24,11 +23,9 @@ L:RegisterTranslations("enUS", function() return {
 	["|cffeda55fClick|r to enable."] = true,
 	["|cffeda55fShift-Click|r to open configuration window."] = true,
 	["Big Wigs is currently disabled."] = true,
-	["Active boss modules"] = true,
+	["Active boss modules: %s."] = true,
 	["All running modules have been reset."] = true,
 	["All running modules have been disabled."] = true,
-	["%s reset."] = true,
-	["%s disabled."] = true,
 	["Menu"] = true,
 	["Menu options."] = true,
 } end)
@@ -39,11 +36,9 @@ L:RegisterTranslations("frFR", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55fClic|r pour activer.",
 	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Clic|r pour ouvrir la fen\195\170tre de configuration.",
 	["Big Wigs is currently disabled."] = "Big Wigs est actuellement d\195\169sactiv\195\169.",
-	["Active boss modules"] = "Modules de boss actifs",
+	["Active boss modules: %s."] = "Modules de boss actifs: %s.",
 	["All running modules have been reset."] = "Tous les modules actifs ont \195\169t\195\169 red\195\169marr\195\169s.",
 	["All running modules have been disabled."] = "Tous les modules ont \195\169t\195\169 d\195\169sactiv\195\169s.",
-	["%s reset."] = "%s red\195\169marr\195\169.",
-	["%s disabled."] = "%s d\195\169sactiv\195\169.",
 	--["Menu"] = true,
 	["Menu options."] = "Options du menu.",
 } end)
@@ -54,11 +49,9 @@ L:RegisterTranslations("koKR", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55f클릭|r : 모듈 활성화.",
 	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fSHIFT-클릭|r : 환경설정 열기.",
 	["Big Wigs is currently disabled."] = "BigWigs가 비활성화 되어 있습니다.",
-	["Active boss modules"] = "보스 모듈 활성화",
+	--["Active boss modules: %s."] = "보스 모듈 활성화",
 	["All running modules have been reset."] = "모든 실행중인 모듈을 초기화합니다.",
 	["All running modules have been disabled."] = "모든 실행중인 모듈을 비활성화 합니다.",
-	["%s reset."] = "%s 초기화되었습니다.",
-	["%s disabled."] = "%s 비활성화 되었습니다.",
 	["Menu"] = "메뉴",
 	["Menu options."] = "메뉴 설정.",
 } end)
@@ -69,7 +62,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55f点击|r图标开启BigWigs。",
 	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Click|r to open configuration window.",
 	["Big Wigs is currently disabled."] = "Big Wigs目前关闭。",
-	["Active boss modules"] = "激活首领模块",
+	--["Active boss modules: %s."] = "激活首领模块",
 	["All running modules have been reset."] = "所有运行中的模块都已重置。",
 	["All running modules have been disabled."] = "所有运行中的模块都已关闭。",
 } end)
@@ -80,11 +73,9 @@ L:RegisterTranslations("zhTW", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55f點擊|r圖示開啟BigWigs。",
 	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Click|r to open configuration window.",
 	["Big Wigs is currently disabled."] = "Big Wigs目前關閉。",
-	["Active boss modules"] = "啟動首領模組",
+	--["Active boss modules: %s."] = "啟動首領模組",
 	["All running modules have been reset."] = "所有運行中的模組都已重置。",
 	["All running modules have been disabled."] = "所有運行中的模組都已關閉。",
-	["%s reset."] = "%s重置。",
-	["%s disabled."] = "%s關閉。",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -93,11 +84,9 @@ L:RegisterTranslations("deDE", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55fKlicken|r um zu aktivieren.",
 	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Click|r to open configuration window.",
 	["Big Wigs is currently disabled."] = "Big Wigs ist gegenw\195\164rtig deaktiviert.",
-	["Active boss modules"] = "Aktive Boss Module",
+	["Active boss modules: %s."] = "Aktive Boss Module: %s.",
 	["All running modules have been reset."] = "Alle laufenden Module wurden zur\195\188ckgesetzt.",
 	["All running modules have been disabled."] = "Alle laufenden Module wurden beendet.",
-	["%s reset."] = "%s zur\195\188ckgesetzt.",
-	["%s disabled."] = "%s beendet.",
 } end)
 
 ----------------------------
@@ -127,6 +116,8 @@ function BigWigsOptions:OnInitialize()
 	self.hideWithoutStandby = true
 	self.hideMenuTitle = true
 	self.OnMenuRequest = BigWigs.cmdtable
+	self.overrideTooltip = true
+
 	BigWigs.hideMenuTitle = true
 
 	-- XXX Total hack :(
@@ -177,35 +168,6 @@ end
 --      FuBar Methods      --
 -----------------------------
 
-local function moduleAction(module)
-	if IsAltKeyDown() then
-		BigWigs:ToggleModuleActive(module, false)
-		BigWigs:Print(L["%s disabled."]:format(module:ToString()))
-	else
-		BigWigs:BigWigs_RebootModule(module)
-		BigWigs:Print(L["%s reset."]:format(module:ToString()))
-	end
-	BigWigsOptions:UpdateTooltip()
-end
-
-function BigWigsOptions:OnTooltipUpdate()
-	if BigWigs:IsActive() then
-		local cat = tablet:AddCategory("text", L["Active boss modules"])
-		for name, module in BigWigs:IterateModules() do
-			if module:IsBossModule() and BigWigs:IsModuleActive(module) then
-				cat:AddLine("text", name, "func", moduleAction, "arg1", self, "arg2", module)
-			end
-		end
-		tablet:SetHint(hint)
-	else
-		-- use a text line for this, since the hint is not shown when we are
-		-- detached.
-		local cat = tablet:AddCategory("colums", 1)
-		cat:AddLine("text", L["Big Wigs is currently disabled."], "func", self.OnClick, "arg1", self)
-		tablet:SetHint(L["|cffeda55fClick|r to enable."])
-	end
-end
-
 -- God, blizzard sucks some times.
 local zoneFunctions = {"GetRealZoneText", "GetZoneText", "GetSubZoneText"}
 
@@ -250,5 +212,43 @@ function BigWigsOptions:OnClick()
 	end
 
 	self:UpdateTooltip()
+end
+
+local tooltipVisible = nil
+function BigWigsOptions:OnTooltipUpdate()
+	if tooltipVisible then self:OnEnter() end
+end
+
+function BigWigsOptions:OnEnter()
+	if self:IsMinimapAttached() then
+		GameTooltip:SetOwner(self.minimapFrame, "ANCHOR_CURSOR")
+	else
+		GameTooltip:SetOwner(self.frame, "ANCHOR_CURSOR")
+	end
+	if BigWigs:IsActive() then
+		local x = {}
+		for name, module in BigWigs:IterateModules() do
+			if module:IsBossModule() and BigWigs:IsModuleActive(module) then
+				table.insert(x, name)
+			end
+		end
+		if #x > 0 then
+			GameTooltip:AddLine(L["Active boss modules: %s."]:format(table.concat(x, ", ")), 1, 1, 1, 1, 1)
+			GameTooltip:AddLine("")
+		end
+		GameTooltip:AddLine(hint, 0.2, 1, 0.2, 1, 1)
+	else
+		GameTooltip:AddLine(L["Big Wigs is currently disabled."])
+		GameTooltip:AddLine(L["|cffeda55fClick|r to enable."], 0.2, 1, 0.2, 1, 1)
+	end
+
+	GameTooltip:Show()
+
+	tooltipVisible = true
+end
+
+function BigWigsOptions:OnLeave()
+	GameTooltip:Hide()
+	tooltipVisible = nil
 end
 

@@ -16,8 +16,8 @@
 ## X-AceForum: 1222
 ## X-License: See license.txt
 
-## OptionalDeps: Ace2, FuBar, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, TabletLib, SharedMediaLib, Media, MikScrollingBattleText, sct, Waterfall-1.0
-## X-Embeds: Ace2, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, TabletLib, SharedMediaLib, Waterfall-1.0
+## OptionalDeps: Ace2, FuBar, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, SharedMediaLib, Media, MikScrollingBattleText, sct, Waterfall-1.0
+## X-Embeds: Ace2, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, SharedMediaLib, Waterfall-1.0
 
 ## SavedVariables: BigWigsDB, BigWigsFubarDB
 ## SavedVariablesPerCharacter: BigWigsDBPerChar
@@ -37,7 +37,6 @@ Libs\AceTab-2.0\AceTab-2.0.lua
 Libs\Babble-Boss-2.2\Babble-Boss-2.2.lua
 Libs\Babble-Zone-2.2\Babble-Zone-2.2.lua
 Libs\Dewdrop-2.0\Dewdrop-2.0.lua
-Libs\Tablet-2.0\Tablet-2.0.lua
 Libs\FuBarPlugin-2.0\FuBarPlugin-2.0.lua
 Libs\PaintChips-2.0\PaintChips-2.0.lua
 Libs\CandyBar-2.0\CandyBar-2.0.lua
