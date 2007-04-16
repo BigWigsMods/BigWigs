@@ -64,6 +64,7 @@ Plugins\Test.lua
 Extras\CustomBar.lua
 Extras\Tranq.lua
 Extras\Discovery.lua
+Extras\Proximity.lua
 
 ZG\Arlokk.lua
 ZG\Jeklik.lua

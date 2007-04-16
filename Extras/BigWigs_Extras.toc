@@ -21,3 +21,4 @@
 
 CustomBar.lua
 Tranq.lua
+Proximity.lua

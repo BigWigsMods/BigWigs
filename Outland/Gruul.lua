@@ -8,6 +8,21 @@ local grasp
 local slam
 local growcount
 
+local bandages = {
+	[21991] = true, -- Heavy Netherweave Bandage
+	[21990] = true, -- Netherweave Bandage
+	[14530] = true, -- Heavy Runecloth Bandage
+	[14529] = true, -- Runecloth Bandage
+	[8545] = true, -- Heavy Mageweave Bandage
+	[8544] = true, -- Mageweave Bandage
+	[6451] = true, -- Heavy Silk Bandage
+	[6450] = true, -- Silk Bandage
+	[3531] = true, -- Heavy Wool Bandage
+	[3530] = true, -- Wool Bandage
+	[2581] = true, -- Heavy Linen Bandage
+	[1251] = true, -- Linen Bandage
+}
+
 ----------------------------
 --      Localization     --
 ----------------------------
@@ -177,6 +192,15 @@ mod.otherMenu = "Outland"
 mod.enabletrigger = boss
 mod.toggleoptions = {"engage", "grasp", "grow", -1, "cavein", "silence", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
+mod.proximityCheck = function( unit ) 
+	for k, v in pairs( bandages ) do
+		if IsItemInRange(k, unit) then
+			return true
+		end
+	end
+	return false
+end
+mod.proximitySilent = true
 
 ------------------------------
 --      Initialization      --
@@ -187,6 +211,7 @@ function mod:OnEnable()
 	grasp = nil
 	silence = nil
 	growcount = 1
+	self.proximitySilent = true
 
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("CHAT_MSG_MONSTER_SAY")
@@ -220,16 +245,22 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 		self:Message(L["grow_message"]:format(growcount), "Important")
 		growcount = growcount + 1
 		self:Bar(L["grow_bar"]:format(growcount), 30, "Spell_Shadow_Charm")
-	elseif self.db.profile.grasp and msg == L["shatter_trigger"] then
-		self:Message(L["shatter_message"], "Positive")
+	elseif msg == L["shatter_trigger"] then
+		self.proximitySilent = true
+		if self.db.profile.grasp then
+			self:Message(L["shatter_message"], "Positive")
+		end
 	end
 end
 
 function mod:Event(msg)
-	if not slam and self.db.profile.grasp and msg:find(L["grasp_trigger1"]) then
-		self:Message(L["grasp_message1"], "Attention")
-		self:DelayedMessage(67, L["grasp_warning"], "Urgent")
-		self:Bar(L["grasp_warning"], 72, "Ability_ThunderClap")
+	if not slam and msg:find(L["grasp_trigger1"]) then
+		if self.db.profile.grasp then
+			self:Message(L["grasp_message1"], "Attention")
+			self:DelayedMessage(67, L["grasp_warning"], "Urgent")
+			self:Bar(L["grasp_warning"], 72, "Ability_ThunderClap")
+		end
+		self.proximitySilent = nil
 		slam = true
 	elseif not grasp and self.db.profile.grasp and msg:find(L["grasp_trigger2"]) then
 		self:Message(L["grasp_message2"], "Urgent")
