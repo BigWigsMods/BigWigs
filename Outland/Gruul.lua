@@ -67,6 +67,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	cavein_trigger = "You are afflicted by Cave In.",
 	cavein_message = "Cave In on YOU!",
+
+	["Heavy Netherweave Bandage"] = true,
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -192,14 +194,7 @@ mod.otherMenu = "Outland"
 mod.enabletrigger = boss
 mod.toggleoptions = {"engage", "grasp", "grow", -1, "cavein", "silence", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
-mod.proximityCheck = function( unit ) 
-	for k, v in pairs( bandages ) do
-		if IsItemInRange(k, unit) then
-			return true
-		end
-	end
-	return false
-end
+mod.proximityCheck = function( unit ) return IsItemInRange(L["Heavy Netherweave Bandage"], unit ) end 
 mod.proximitySilent = true
 
 ------------------------------
