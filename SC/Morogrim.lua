@@ -41,7 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 	murloc_soon_message = "Murlocs soon!",
 	murloc_engaged = "%s Engaged, Murlocs in ~40sec",
 
-	grobules_trigger = "watery grobules",
+	grobules_trigger = "summons",
 	grobules_message = "Incoming Grobules!",
 	grobules_warning = "Grobules Soon!",
 
