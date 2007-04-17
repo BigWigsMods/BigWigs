@@ -42,10 +42,10 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
  
 	dive = "잠수",
-	dive_desc = ("% 초후 잠수 타이머.\n\n이 타이머는 풀링 시점에 맞춰서 작동하기에 정확하지 않습니다."):format(boss),
+	dive_desc = ("%s 초 후 잠수 타이머.\n\n이 타이머는 풀링 시점에 맞춰서 작동하기에 정확하지 않습니다."):format(boss),
 
 	spout = "분출",
-	spout_desc = "분출 타이머.\n\n이 타이머는 풀링 시점에 맞춰서 작동하기에 정확하지 않습니다.",
+	spout_desc = "분출 타이머.\n\n이 타이머는 풀링 시점에 맞춰서 작동하기에 정확하지 않습니다.)",
 
 	engage_warning = "%s 전투 시작 - 90초 이내 잠수",
 
