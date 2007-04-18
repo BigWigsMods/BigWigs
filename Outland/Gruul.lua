@@ -45,6 +45,9 @@ L:RegisterTranslations("enUS", function() return {
 	silence = "Silence",
 	silence_desc = "Warn when Gruul casts AOE Silence (Reverberation)",
 
+	proximity = "Proximity Alert",
+	proximity_desc = "Show the proximity window.",
+	
 	engage_trigger = "Come.... and die.",
 	engage_message = "%s Engaged!",
 
@@ -190,7 +193,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = boss
-mod.toggleoptions = {"engage", "grasp", "grow", -1, "cavein", "silence", "bosskill"}
+mod.toggleoptions = {"engage", "grasp", "grow", -1, "cavein", "silence", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) 
 	for k, v in pairs( bandages ) do
