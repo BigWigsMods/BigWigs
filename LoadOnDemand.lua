@@ -160,6 +160,7 @@ function BigWigsLoD:OnEnable()
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChanged")
 
 	self:RegisterEvent("CHAT_MSG_SYSTEM")
+
 	self:RegisterEvent("BigWigs_LeftGroup")
 
 	if AceLibrary("AceEvent-2.0"):IsFullyInitialized() then
@@ -200,6 +201,8 @@ function BigWigsLoD:BigWigs_CoreEnabled()
 end
 
 function BigWigsLoD:ZoneChanged()
+	if not UnitInRaid("player") then return end
+
 	local z1, z2, z3 = GetRealZoneText(), GetSubZoneText(), GetZoneText()
 	if loadInZone[z1] or loadInZone[z2] or loadInZone[z3] then
 		if BigWigs:IsActive() then
