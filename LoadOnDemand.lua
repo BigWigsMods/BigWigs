@@ -160,7 +160,6 @@ function BigWigsLoD:OnEnable()
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChanged")
 
 	self:RegisterEvent("CHAT_MSG_SYSTEM")
-	self:RegisterEvent("BigWigs_JoinedGroup")
 	self:RegisterEvent("BigWigs_LeftGroup")
 
 	if AceLibrary("AceEvent-2.0"):IsFullyInitialized() then
@@ -201,10 +200,16 @@ function BigWigsLoD:BigWigs_CoreEnabled()
 end
 
 function BigWigsLoD:ZoneChanged()
-	if BigWigs:IsActive() then
-		loadZone(GetRealZoneText())
-		loadZone(GetSubZoneText())
-		loadZone(GetZoneText())
+	local z1, z2, z3 = GetRealZoneText(), GetSubZoneText(), GetZoneText()
+	if loadInZone[z1] or loadInZone[z2] or loadInZone[z3] then
+		if BigWigs:IsActive() then
+			loadZone(GetRealZoneText())
+			loadZone(GetSubZoneText())
+			loadZone(GetZoneText())
+		else
+			-- BigWigs_CoreEnabled will check the zones.
+			BigWigs:ToggleActive(true)
+		end
 	end
 end
 
@@ -216,29 +221,6 @@ do
 		elseif msg:find(ERR_RAID_YOU_JOINED) then
 			self:TriggerEvent("BigWigs_JoinedGroup")
 		end
-	end
-end
-
-do
-	local battlegrounds = nil
-	local function InBattleground()
-		if not battlegrounds then
-			if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
-			battlegrounds = {
-				[BZ["Alterac Valley"]] = true,
-				[BZ["Arathi Basin"]] = true,
-				[BZ["Warsong Gulch"]] = true,
-				[BZ["Nagrand Arena"]] = true,
-				[BZ["Eye of the Storm"]] = true,
-				[BZ["Blade's Edge Arena"]] = true,
-			}
-		end
-		return battlegrounds[GetRealZoneText()] or battlegrounds[GetZoneText()] or nil
-	end
-
-	function BigWigsLoD:BigWigs_JoinedGroup()
-		if InBattleground() then return end
-		BigWigs:ToggleActive(true)
 	end
 end
 
