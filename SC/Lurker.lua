@@ -29,11 +29,11 @@ L:RegisterTranslations("enUS", function() return {
 	emerge_message = "Back - Possible Dive in 90sec",
 	emerge_bar = "Back in",
 
-	spout_message1 = "Spout!",
+	spout_message1 = "Casting Spout!",
 	spout_message2 = "Spout Over!",
 	spout_warning = "Spout in 3sec!",
-	spout_bar1 = "Spout 1",
-	spout_bar2 = "Spout 2",
+	spout_bar1 = "Spout 1 in ~",
+	spout_bar2 = "Spout 2 in ~",
 
 	["Coilfang Guardian"] = true,
 	["Coilfang Ambusher"] = true,
@@ -106,6 +106,13 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		if self.db.profile.dive then
 			self:Message(L["engage_warning"]:format(boss), "Attention")
 		end
+		if self.db.profile.spout then
+			self:DelayedMessage(42, L["spout_warning"], "Attention")
+			self:DelayedMessage(45, L["spout_message1"], "Attention")
+			self:DelayedMessage(65, L["spout_message2"], "Positive")
+			self:Bar(L["spout_bar1"], 45, "INV_Weapon_Rifle_02")
+			self:ScheduleEvent("bwspoutbar0", self.SpoutBar, 45, self)
+		end
 	end
 end
 
@@ -132,16 +139,16 @@ function mod:NextSurface()
 		self:Bar(L["emerge_bar"], 60, "Spell_Frost_Stun")
 	end
 	if self.db.profile.spout then
-		self:Bar(L["spout_bar1"], 65, "INV_Weapon_Rifle_02")
-		self:Bar(L["spout_bar2"], 115, "INV_Weapon_Rifle_02")
-		self:DelayedMessage(62, L["spout_warning"], "Attention")
-		self:DelayedMessage(65, L["spout_message1"], "Attention")
-		self:DelayedMessage(85, L["spout_message2"], "Positive")
-		self:DelayedMessage(112, L["spout_warning"], "Attention")
-		self:DelayedMessage(115, L["spout_message1"], "Attention")
-		self:DelayedMessage(135, L["spout_message2"], "Positive")
-		self:ScheduleEvent("bwspoutbar1", self.SpoutBar, 65, self)
-		self:ScheduleEvent("bwspoutbar2", self.SpoutBar, 115, self)
+		self:Bar(L["spout_bar1"], 70, "INV_Weapon_Rifle_02")
+		self:Bar(L["spout_bar2"], 120, "INV_Weapon_Rifle_02")
+		self:DelayedMessage(67, L["spout_warning"], "Attention")
+		self:DelayedMessage(70, L["spout_message1"], "Attention")
+		self:DelayedMessage(90, L["spout_message2"], "Positive")
+		self:DelayedMessage(117, L["spout_warning"], "Attention")
+		self:DelayedMessage(120, L["spout_message1"], "Attention")
+		self:DelayedMessage(140, L["spout_message2"], "Positive")
+		self:ScheduleEvent("bwspoutbar1", self.SpoutBar, 70, self)
+		self:ScheduleEvent("bwspoutbar2", self.SpoutBar, 120, self)
 	end
 
 	self:ScheduleEvent(self.NextDive, 60, self)
