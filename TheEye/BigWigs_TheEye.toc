@@ -20,3 +20,4 @@
 
 TheEyeBeta.lua
 Alar.lua
+Reaver.lua
