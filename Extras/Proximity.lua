@@ -149,7 +149,7 @@ function plugin:CloseProximity()
 end
 
 function plugin:OpenProximity()
-	if self.db.profile.disabled or not active or not type( proximityCheck[active] ) == "function" then return end
+	if self.db.profile.disabled or not active or not type( proximityCheck[active] ) == "function" or not active.db.profile.proximity then return end
 	self:SetupFrames()
 	local text = L["Proximity"]
 	if active.name then
