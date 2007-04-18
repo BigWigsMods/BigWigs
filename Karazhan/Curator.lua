@@ -24,6 +24,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	weaktime = "Weaken Countdown",
 	weaktime_desc = "Countdown warning and bar untill next weaken.",
+	
+	proximity = "Proximity Alert",
+	proximity_desc = "Show the proximity window.",
 
 	weaken_trigger = "Your request cannot be processed.",
 	weaken_message = "Evocation - Weakened for 20sec!",
@@ -151,7 +154,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"weaken", "weaktime", "berserk", "enrage", "bosskill"}
+mod.toggleoptions = {"weaken", "weaktime", "berserk", "enrage", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
