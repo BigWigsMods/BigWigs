@@ -203,9 +203,9 @@ function BigWigsLoD:ZoneChanged()
 	local z1, z2, z3 = GetRealZoneText(), GetSubZoneText(), GetZoneText()
 	if loadInZone[z1] or loadInZone[z2] or loadInZone[z3] then
 		if BigWigs:IsActive() then
-			loadZone(GetRealZoneText())
-			loadZone(GetSubZoneText())
-			loadZone(GetZoneText())
+			loadZone(z1)
+			loadZone(z2)
+			loadZone(z3)
 		else
 			-- BigWigs_CoreEnabled will check the zones.
 			BigWigs:ToggleActive(true)
