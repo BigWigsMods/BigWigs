@@ -85,9 +85,6 @@ L:RegisterTranslations("frFR", function() return {
 	silence = "Silence",
 	silence_desc = "Pr\195\169viens quand Gruul lance son Silence de zone (R\195\169verb\195\169ration).",
 
-	proximity = "Proximit\195\169",
-	proximity_desc = "Affiche la fen\195\170tre de proximit\195\169.",
-
 	engage_trigger = "Venez\226\128\166 mourir.",
 	engage_message = "%s engag\195\169 !",
 
