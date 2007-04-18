@@ -58,9 +58,6 @@ L:RegisterTranslations("frFR", function() return {
 	weaktime = "Compte \195\160 rebours Affaiblissement",
 	weaktime_desc = "Affiche un compte \195\160 rebours avant le prochain affaiblissement.",
 
-	proximity = "Proximit\195\169",
-	proximity_desc = "Affiche la fen\195\170tre de proximit\195\169.",
-
 	weaken_trigger = "Impossible de traiter votre requ\195\170te.",
 	weaken_message = "Evocation - Affaibli pendant 20 sec. !",
 	weaken_bar = "Evocation",
