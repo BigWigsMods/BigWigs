@@ -41,7 +41,7 @@ end
 ------------------------------
 
 function plugin:CHAT_MSG_ADDON(prefix, message, type, sender)
-	if prefix ~= "BigWigs" or type ~= "RAID" then return end
+	if prefix ~= "BigWigs" then return end
 
 	local sync, rest = select(3, message:find("(%S+)%s*(.*)$"))
 	if not sync then return end
