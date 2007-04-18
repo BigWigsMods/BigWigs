@@ -241,7 +241,7 @@ function plugin:UpdateProximity()
 	if #tooClose == 0 then
 		anchor.text:SetText(L["|cff777777Nobody|r"])
 	else
-		anchor.text:SetText(table_concat(tooClose, ", "))
+		anchor.text:SetText(table_concat(tooClose, "\n"))
 		for k in pairs(tooClose) do tooClose[k] = nil end
 		local t = time()
 		if t > lastplayed + 1 then
