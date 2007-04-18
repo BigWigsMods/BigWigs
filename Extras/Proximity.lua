@@ -8,10 +8,11 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsProximity")
 
 local RL
 local paintchips = AceLibrary("PaintChips-2.0")
-local active
-local anchor
-local lastplayed = 0
+local active = nil -- The module we're currently tracking proximity for.
+local anchor = nil
+local lastplayed = 0 -- When we last played an alarm sound for proximity.
 local playername
+local tooClose = {} -- List of players who are too close.
 
 local table_insert = table.insert
 local table_concat = table.concat
@@ -170,6 +171,10 @@ function plugin:OnEnable()
 	end
 end
 
+function plugin:OnDisable()
+	self:CloseProximity()
+end
+
 -----------------------------------------------------------------------
 --      Event Handlers
 -----------------------------------------------------------------------
@@ -206,6 +211,9 @@ function plugin:OpenProximity()
 	else
 		text = L["Proximity"]
 	end
+	for k in pairs(tooClose) do tooClose[k] = nil end
+	anchor.text:SetText(L["|cff777777Nobody|r"])
+
 	anchor.cheader:SetText(text)
 	anchor:Show()
 	if not self:IsEventScheduled("bwproximityupdate") then
@@ -213,7 +221,6 @@ function plugin:OpenProximity()
 	end
 end
 
-local tooClose = {}
 function plugin:UpdateProximity()
 	if not active or type( active.proximityCheck ) ~= "function" then return end
 
