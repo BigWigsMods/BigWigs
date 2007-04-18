@@ -8,11 +8,16 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsProximity")
 
 local RL
 local paintchips = AceLibrary("PaintChips-2.0")
-local proximityCheck = {}
 local active
 local anchor
 local lastplayed = 0
 local playername
+
+local table_insert = table.insert
+local table_concat = table.concat
+local UnitName = UnitName
+local UnitExists = UnitExists
+local UnitIsDeadOrGhost = UnitIsDeadOrGhost
 
 local coloredNames = setmetatable({}, {__index =
 	function(self, key)
@@ -45,11 +50,13 @@ local coloredNames = setmetatable({}, {__index =
 L:RegisterTranslations("enUS", function() return {
 	["Proximity"] = true,
 	["Options for the Proximity Display."] = true,
-	["Nobody"] = true,
+	["|cff777777Nobody|r"] = true,
 	["Sound"] = true,
 	["Play sound on proximity."] = true,
 	["Disabled"] = true,
 	["Disable the proximity display."] = true,
+	["Show"] = true,
+	["Show the proximity frame."] = true,
 
 	proximity = "Proximity Alert",
 	proximity_desc = "Show the proximity window.",
@@ -58,7 +65,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
 	--["Proximity"] = true,
 	--["Options for the Proximity Display."] = true,
-	["Nobody"] = "아무도 없음",
+	["|cff777777Nobody|r"] = "|cff777777아무도 없음|r",
 	["Sound"] = "경고음",
 	--["Play sound on proximity."] = true,
 	--["Disabled"] = true,
@@ -68,11 +75,14 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	["Proximity"] = "Proximité",
 	["Options for the Proximity Display."] = "Options concernant l'affichage de proximité.",
-	["Nobody"] = "Personne",
+	["|cff777777Nobody|r"] = "|cff777777Personne|r",
 	["Sound"] = "Son",
 	["Play sound on proximity."] = "Joue un son quand à proximité.",
 	["Disabled"] = "Désactivé",
 	["Disable the proximity display."] = "Désactive l'affichage de proximité.",
+
+	proximity = "Proximit\195\169",
+	proximity_desc = "Affiche la fen\195\170tre de proximit\195\169.",
 } end)
 
 -----------------------------------------------------------------------
@@ -109,18 +119,34 @@ plugin.consoleOptions = {
 			end
 		end
 	end,
+	func = function()
+		if anchor and active then
+			anchor:Show()
+		end
+	end,
 	args = {
+		anchor = {
+			type = "execute",
+			name = L["Show"],
+			desc = L["Show the proximity frame."],
+			order = 1,
+		},
+		spacer = {
+			type = "header",
+			name = " ",
+			order = 50,
+		},
 		sound = {
 			type = "toggle",
 			name = L["Sound"],
 			desc = L["Play sound on proximity."],
-			order = 1,
+			order = 100,
 		},
 		disabled = {
 			type = "toggle",
 			name = L["Disabled"],
 			desc = L["Disable the proximity display."],
-			order = 2,
+			order = 101,
 		}
 	}
 }
@@ -131,12 +157,14 @@ plugin.consoleOptions = {
 
 function plugin:OnRegister()
 	BigWigs:RegisterBossOption("proximity", L["proximity"], L["proximity_desc"])
+
+	playername = UnitName("player")
 end
 
 function plugin:OnEnable()
 	self:RegisterEvent("Ace2_AddonEnabled")
 	self:RegisterEvent("Ace2_AddonDisabled")
-	playername = UnitName("player")
+
 	if AceLibrary:HasInstance("Roster-2.1") then
 		RL = AceLibrary("Roster-2.1")
 	end
@@ -153,8 +181,11 @@ function plugin:Ace2_AddonDisabled(module)
 end
 
 function plugin:Ace2_AddonEnabled(module)
+	-- If this is the current module, we don't do anything, since this would
+	-- re-show the frame if the user had hidden it, etc.
+	if active and active == module then return end
+
 	if type( module.proximityCheck ) == "function" then
-		proximityCheck[module] = module.proximityCheck
 		active = module
 		self:OpenProximity()
 	end
@@ -166,51 +197,53 @@ function plugin:CloseProximity()
 end
 
 function plugin:OpenProximity()
-	if self.db.profile.disabled or not active or not type( proximityCheck[active] ) == "function" or not active.db.profile.proximity then return end
+	if self.db.profile.disabled or not active or type( active.proximityCheck ) ~= "function" or not active.db.profile.proximity then return end
 	self:SetupFrames()
-	local text = L["Proximity"]
+
+	local text = nil
 	if active.name then
-		text = text .. " ".. active.name
+		text = active.name
+	else
+		text = L["Proximity"]
 	end
 	anchor.cheader:SetText(text)
 	anchor:Show()
 	if not self:IsEventScheduled("bwproximityupdate") then
-		self:ScheduleRepeatingEvent("bwproximityupdate", function() self:UpdateProximity() end, .1)
+		self:ScheduleRepeatingEvent("bwproximityupdate", self.UpdateProximity, .1, self)
 	end
 end
 
+local tooClose = {}
 function plugin:UpdateProximity()
-	local tooclose = 0
-	local text = ""
-	local t
-	if not active or not type( proximityCheck[active] ) == "function" then return end
+	if not active or type( active.proximityCheck ) ~= "function" then return end
+
 	if RL then
 		for n, u in pairs(RL.roster) do
-			if u and u.name and u.class ~= "PET" and not UnitIsDeadOrGhost(u.unitid) then
-				if tooclose < 5 and u.name ~= playername and proximityCheck[active](u.unitid) then
-					text = text .. coloredNames[u.name] .. "\n"
-					tooclose = tooclose + 1
+			if u and u.name and u.class ~= "PET" and not UnitIsDeadOrGhost(u.unitid) and u.name ~= playername then
+				if active.proximityCheck(u.unitid) then
+					table_insert(tooClose, coloredNames[u.name])
 				end
 			end
+			if #tooClose > 4 then break end
 		end
 	else
 		local num = GetNumRaidMembers()
-		local unit
 		for i = 1, num do
-			unit = "raid"..i
+			local unit = "raid"..i
 			if UnitExists(unit) and not UnitIsDeadOrGhost(unit) and UnitName(unit) ~= playername then
-				if tooclose < 5 and proximityCheck[active](unit) then
-					text = text .. coloredNames[u.name] .. "\n"
-					tooclose = tooclose + 1
+				if active.proximityCheck(unit) then
+					table_insert(tooClose, coloredNames(UnitName(unit)))
 				end
 			end
+			if #tooClose > 4 then break end
 		end
 	end
-	if tooclose == 0 then
-		anchor.text:SetText("|cff777777"..L["Nobody"].."|r")
+	if #tooClose == 0 then
+		anchor.text:SetText(L["|cff777777Nobody|r"])
 	else
-		anchor.text:SetText(text)
-		t = time()
+		anchor.text:SetText(table_concat(tooClose, ", "))
+		for k in pairs(tooClose) do tooClose[k] = nil end
+		local t = time()
 		if t > lastplayed + 1 then
 			lastplayed = t
 			if self.db.profile.sound and UnitAffectingCombat("player") and not active.proximitySilent then
