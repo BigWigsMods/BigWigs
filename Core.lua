@@ -260,7 +260,7 @@ end
 -- have joined a raid group" message, so our LoadOnDemand addon loads Core
 -- anyway.
 function BigWigs:OnEnable(first)
-	if not first then
+	if not first or GetNumRaidMembers() > 0 then
 		-- this will trigger the LoadWithCore to load
 		self:TriggerEvent("BigWigs_CoreEnabled")
 
