@@ -158,6 +158,7 @@ function BigWigsLoD:OnEnable()
 
 	self:RegisterEvent("ZONE_CHANGED", "ZoneChanged")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChanged")
+	self:RegisterEvent("BigWigs_JoinedGroup", "ZoneChanged")
 
 	self:RegisterEvent("CHAT_MSG_SYSTEM")
 
