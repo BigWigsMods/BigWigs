@@ -50,6 +50,9 @@ L:RegisterTranslations("enUS", function() return {
 	["Play sound on proximity."] = true,
 	["Disabled"] = true,
 	["Disable the proximity display."] = true,
+
+	proximity = "Proximity Alert",
+	proximity_desc = "Show the proximity window.",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -125,6 +128,10 @@ plugin.consoleOptions = {
 -----------------------------------------------------------------------
 --      Initialization
 -----------------------------------------------------------------------
+
+function plugin:OnRegister()
+	BigWigs:RegisterBossOption("proximity", L["proximity"], L["proximity_desc"])
+end
 
 function plugin:OnEnable()
 	self:RegisterEvent("Ace2_AddonEnabled")
@@ -309,3 +316,4 @@ function plugin:SavePosition()
 	self.db.profile.posx = anchor:GetLeft() * s
 	self.db.profile.posy = anchor:GetTop() * s
 end
+

@@ -24,9 +24,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	weaktime = "Weaken Countdown",
 	weaktime_desc = "Countdown warning and bar untill next weaken.",
-	
-	proximity = "Proximity Alert",
-	proximity_desc = "Show the proximity window.",
 
 	weaken_trigger = "Your request cannot be processed.",
 	weaken_message = "Evocation - Weakened for 20sec!",

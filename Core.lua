@@ -6,6 +6,8 @@ local BZ = AceLibrary("Babble-Zone-2.2")
 local BB = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 
+local customBossOptions = {}
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -249,6 +251,8 @@ function BigWigs:OnInitialize()
 
 	if not self.version then self.version = GetAddOnMetadata("BigWigs", "Version") end
 	self.version = (self.version or "2.0") .. " |cffff8888r" .. self.revision .. "|r"
+
+	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
 end
 
 -- This works because after a reloadui, GetNumRaidMembers() will return the real
@@ -284,6 +288,12 @@ function BigWigs:OnDisable()
 	self:TriggerEvent("BigWigs_CoreDisabled")
 end
 
+function BigWigs:OnDebugEnable() self:ToggleModuleDebugging(true) end
+function BigWigs:OnDebugDisable() self:ToggleModuleDebugging(false) end
+
+-------------------------------
+--      API                  --
+-------------------------------
 
 function BigWigs:ToggleModuleDebugging(enable)
 	local frame = self.debugFrame or ChatFrame5
@@ -299,8 +309,13 @@ function BigWigs:ToggleModuleDebugging(enable)
 		end
 	end
 end
-function BigWigs:OnDebugEnable() self:ToggleModuleDebugging(true) end
-function BigWigs:OnDebugDisable() self:ToggleModuleDebugging(false) end
+
+function BigWigs:RegisterBossOption(key, name, desc)
+	if customBossOptions[key] then
+		error(string.format("The custom boss option %q has already been registered.", key))
+	end
+	customBossOptions[key] = { name, desc }
+end
 
 -------------------------------
 --      Module Handling      --
@@ -377,6 +392,7 @@ function BigWigs:RegisterModule(name, module)
 					},
 				},
 			}
+			local customBossOptionOrder = -100
 			for i, v in ipairs(module.toggleoptions) do
 				local x = i + 100
 				if type(v) == "number" then
@@ -386,17 +402,29 @@ function BigWigs:RegisterModule(name, module)
 						name = " ",
 					}
 				elseif type(v) == "string" then
-					local l = v == "bosskill" and L or ML
-					local desc = v.."_desc" -- String concatenation ftl! Not sure how we can get rid of this.
-					cons.args[v] = {
-						type = "toggle",
-						order = v == "bosskill" and -1 or x,
-						name = l:HasTranslation(v) and l[v] or v,
-						desc = l:HasTranslation(desc) and l[desc] or v,
-					}
-					if v ~= "bosskill" and l:HasTranslation(v.."_validate") then
-						cons.args[v].type = "text"
-						cons.args[v].validate = l[v.."_validate"]
+					local name, desc, order = nil, nil, nil
+					if customBossOptions[v] then
+						name = customBossOptions[v][1]
+						desc = customBossOptions[v][2]
+						order = customBossOptionOrder
+						customBossOptionOrder = customBossOptionOrder + 1
+					else
+						name = ML:HasTranslation(v) and ML[v] or nil
+						local descKey = v.."_desc" -- String concatenation ftl! Not sure how we can get rid of this.
+						desc = ML:HasTranslation(descKey) and ML[descKey] or v
+						order = x
+					end
+					if name then
+						cons.args[v] = {
+							type = "toggle",
+							order = order,
+							name = name,
+							desc = desc,
+						}
+						if order > 0 and ML:HasTranslation(v.."_validate") then
+							cons.args[v].type = "text"
+							cons.args[v].validate = l[v.."_validate"]
+						end
 					end
 				end
 			end
@@ -466,20 +494,20 @@ function BigWigs:BigWigs_RecvSync(sync, module)
 	end
 end
 
-function BigWigs:BigWigs_TargetSeen(mobname, unit)
-	for name, module in self:IterateModules() do
-		if not self:IsModuleActive(module) and (name == mobname or (module:IsBossModule() and self:MobIsTrigger(module, mobname)
-			and (not module.VerifyEnable or module:VerifyEnable(unit)))) then
-			self:EnableModule(name)
-		end
-	end
-end
-
-function BigWigs:MobIsTrigger(module, name)
+local function mobIsTrigger(module, name)
 	local t = module.enabletrigger
 	if type(t) == "string" then return name == t
 	elseif type(t) == "table" then
 		for _,mob in pairs(t) do if mob == name then return true end end
+	end
+end
+
+function BigWigs:BigWigs_TargetSeen(mobname, unit)
+	for name, module in self:IterateModules() do
+		if not self:IsModuleActive(module) and (name == mobname or (module:IsBossModule() and mobIsTrigger(module, mobname)
+			and (not module.VerifyEnable or module:VerifyEnable(unit)))) then
+			self:EnableModule(name)
+		end
 	end
 end
 

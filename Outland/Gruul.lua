@@ -45,9 +45,6 @@ L:RegisterTranslations("enUS", function() return {
 	silence = "Silence",
 	silence_desc = "Warn when Gruul casts AOE Silence (Reverberation)",
 
-	proximity = "Proximity Alert",
-	proximity_desc = "Show the proximity window.",
-	
 	engage_trigger = "Come.... and die.",
 	engage_message = "%s Engaged!",
 
