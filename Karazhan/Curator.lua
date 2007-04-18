@@ -49,23 +49,26 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	berserk = "Alerte Berserk",
-	berserk_desc = "Pr\195\169viens du mode berserk apr\195\168s 10 minutes.",
+	berserk = "Berserk",
+	berserk_desc = "Pr\195\169viens quand le Conservateur passe en mode berserk apr\195\168s 10 min.",
 
-	enrage = "Alerte Enrag\195\169",
-	enrage_desc = "Pr\195\169viens du mode enrag\195\169 \195\160 15%.",
+	enrage = "Enrager",
+	enrage_desc = "Pr\195\169viens quand le Conservateur devient enrag\195\169 \195\160 15%.",
 
-	weaken = "Alerte Affaiblissement",
+	weaken = "Affaiblissement",
 	weaken_desc = "Pr\195\169viens quand le Conservateur est affaibli.",
 
-	weaktime = "Compteur d'affaiblissement",
-	weaktime_desc = "Affiche un compteur pour le nombre et le prochain affaiblissement.",
+	weaktime = "Compte \195\160 rebours Affaiblissement",
+	weaktime_desc = "Affiche un compte \195\160 rebours avant le prochain affaiblissement.",
+
+	proximity = "Proximit\195\169",
+	proximity_desc = "Affiche la fen\195\170tre de proximit\195\169.",
 
 	weaken_trigger = "Impossible de traiter votre requ\195\170te.",
-	weaken_message = "Evocation - Affaibli pour 20 secondes !",
+	weaken_message = "Evocation - Affaibli pendant 20 sec. !",
 	weaken_bar = "Evocation",
-	weaken_fade_message = "Evocation termin\195\169e - Affaiblissement parti !",
-	weaken_fade_warning = "Evocation termin\195\169e dans 5 secondes !",
+	weaken_fade_message = "Evocation termin\195\169e - Fin de l'Affaiblissement !",
+	weaken_fade_warning = "Evocation termin\195\169e dans 5 sec. !",
 
 	weaktime_message1 = "Evocation dans ~10 secondes",
 	weaktime_message2 = "Evocation dans ~30 secondes",
@@ -73,12 +76,12 @@ L:RegisterTranslations("frFR", function() return {
 	weaktime_bar = "Prochaine Evocation",
 
 	berserk_trigger = "L'acc\195\168s \195\160 la M\195\169nagerie est r\195\169serv\195\169 aux invit\195\169s.",
-	berserk_message = "%s engag\195\169, 10min avant berserk !",
+	berserk_message = "%s engag\195\169, 10 min. avant berserk !",
 	berserk_bar = "Berserk",
 
-	enrage_trigger = "Toute d\195\169sob\195\169issance entra\195\174nera une action offensive",
+	enrage_trigger = "Toute d\195\169sob\195\169issance entra\195\174nera une action offensive.",
 	enrage_message = "Enrag\195\169 !",
-	enrage_warning = "Enrag\195\169 imminent !",
+	enrage_warning = "Enrager imminent !",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

@@ -169,7 +169,7 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	--["Messages"] = true,
+	["Messages"] = "Messages",
 	["Options for message display."] = "Options concernant l'affichage des messages.",
 
 	["Show anchor"] = "Afficher l'ancre",
@@ -179,7 +179,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Toggles white only messages ignoring coloring."] = "Utilise ou non des couleurs dans les messages à la place du blanc unique.",
 
 	["Scale"] = "Taille",
-	["Set the message frame scale."] = "D\195\169termine la taille du cadre des messages.",
+	["Set the message frame scale."] = "Détermine la taille du cadre des messages.",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Co|cffff00ffule|cff00ff00ur|r",
 	["White"] = "Blanc",
@@ -187,19 +187,19 @@ L:RegisterTranslations("frFR", function() return {
 	["RaidWarning frame"] = "Cadre des Avertissements Raid",
 
 	["Display"] = "Affichage",
-	["Set where messages are displayed."] = "D\195\169termine o\195\185 les messages sont affich\195\169s.",
-	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Affiche tous les messages de BigWigs dans la fen\195\170tre de discussion par d\195\169faut, en plus de son affichage normal.",
+	["Set where messages are displayed."] = "Détermine où les messages sont affichés.",
+	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Affiche tous les messages de BigWigs dans la fenêtre de discussion par défaut, en plus de son affichage normal.",
 
 	["Mik's Scrolling Battle Text"] = "Scrolling Battle Text de Mik",
-	--["Scrolling Combat Text"] = true,
+	["Scrolling Combat Text"] = "Scrolling Combat Text",
 	["Floating Combat Text"] = "Message de combat flottant",
 	["Chat frame"] = "Fen\195\170tre de discussion",
 
-	--["Test"] = true,
+	["Test"] = "Test",
 	["Close"] = "Fermer",
 
-	["Reset position"] = "R\195\128Z position",
-	["Reset the anchor position, moving it to the center of your screen."] = "R\195\169initialise la position de l'ancre, la repla\195\167ant au centre de l'\195\169cran.",
+	["Reset position"] = "RÀZ position",
+	["Reset the anchor position, moving it to the center of your screen."] = "Réinitialise la position de l'ancre, la replaçant au centre de l'écran.",
 } end)
 
 ----------------------------------

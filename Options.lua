@@ -31,15 +31,15 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	["|cff00ff00Module running|r"] = "|cff00ff00Module d\195\169marr\195\169|r",
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55fClic|r pour red\195\169marrer les modules actifs. |cffeda55fAlt+Clic|r pour les d\195\169sactiver. |cffeda55fCtrl-Alt+Clic|r pour d\195\169sactiver Big Wigs compl\195\168tement.",
+	["|cff00ff00Module running|r"] = "|cff00ff00Module actif|r",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55fClic|r pour redémarrer les modules actifs. |cffeda55fAlt+Clic|r pour les désactiver. |cffeda55fCtrl-Alt+Clic|r pour désactiver complètement Big Wigs.",
 	["|cffeda55fClick|r to enable."] = "|cffeda55fClic|r pour activer.",
-	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Clic|r pour ouvrir la fen\195\170tre de configuration.",
-	["Big Wigs is currently disabled."] = "Big Wigs est actuellement d\195\169sactiv\195\169.",
-	["Active boss modules: %s."] = "Modules de boss actifs: %s.",
-	["All running modules have been reset."] = "Tous les modules actifs ont \195\169t\195\169 red\195\169marr\195\169s.",
-	["All running modules have been disabled."] = "Tous les modules ont \195\169t\195\169 d\195\169sactiv\195\169s.",
-	--["Menu"] = true,
+	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Clic|r pour ouvrir la fenêtre de configuration.",
+	["Big Wigs is currently disabled."] = "Big Wigs est actuellement désactivé.",
+	["Active boss modules: %s."] = "Modules de boss actifs : %s.",
+	["All running modules have been reset."] = "Tous les modules actifs ont été redémarrés.",
+	["All running modules have been disabled."] = "Tous les modules  actifs ont été désactivés.",
+	["Menu"] = "Menu",
 	["Menu options."] = "Options du menu.",
 } end)
 

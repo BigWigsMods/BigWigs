@@ -85,12 +85,11 @@ L:RegisterTranslations("frFR", function() return {
 	["Sounds"] = "Sons",
 	["Options for sounds."] = "Options concernant les sons.",
 
-	--["toggle"] = true,
+	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = "Détermine le son à utiliser pour %q (Ctrl-clic sur un son pour avoir un aperçu).",
 	["Use sounds"] = "Utiliser les sons",
 	["Toggle all sounds on or off."] = "Joue ou non les sons.",
-	--["default"] = true,
-	["Default only"] = "Son par d\195\169faut uniquement",
-	["Use only the default sound."] = "Utilise uniquement le son par d\195\169faut.",
+	["Default only"] = "Son par défaut uniquement",
+	["Use only the default sound."] = "Utilise uniquement le son par défaut.",
 } end)
 
 ----------------------------------

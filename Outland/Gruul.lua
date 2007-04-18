@@ -73,32 +73,35 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	engage = "Alerte Engagement",
-	engage_desc = "Pr\195\169viens du d\195\169but du combat.",
+	engage = "Engagement",
+	engage_desc = "Pr\195\169viens quand Grull est engag\195\169.",
 
-	grow = "Alerte Croissance",
-	grow_desc = "Compte et avertis les croissances de Grull.",
+	grow = "Croissance",
+	grow_desc = "Compte et les croissances de Grull et préviens de ses arriv\195\169es.",
 
-	grasp = "Alerte Emprise",
+	grasp = "Emprise",
 	grasp_desc = "Avertissement et d\195\169lais pour Emprise du seigneur gronn.",
 
-	cavein = "Alerte Eboulement sur vous",
+	cavein = "Eboulement sur vous",
 	cavein_desc = "Pr\195\169viens quand vous \195\170tes sous un \195\169boulement.",
 
 	silence = "Silence",
-	silence_desc = "Pr\195\169viens quand Gruul lance sont Silence de zone(R\195\169verb\195\169ration)",
+	silence_desc = "Pr\195\169viens quand Gruul lance son Silence de zone (R\195\169verb\195\169ration).",
+
+	proximity = "Proximit\195\169",
+	proximity_desc = "Affiche la fen\195\170tre de proximit\195\169.",
 
 	engage_trigger = "Venez\226\128\166 mourir.",
-	engage_message = "%s Engag\195\169 !",
+	engage_message = "%s engag\195\169 !",
 
 	grow_trigger = "%s grandit\194\160!",
-	grow_message = "Croissance: (%d)",
+	grow_message = "Croissance : (%d)",
 	grow_bar = "Croissance (%d)",
 
-	grasp_trigger1 = " les effets .* Heurt terrestre",
-	grasp_trigger2 = " les effets .* Emprise du seigneur gronn",
-	grasp_message1 = "Heurt terrestre - Emprise Imminente !",
-	grasp_message2 = "Emprise - Fracasser dans ~5sec",
+	grasp_trigger1 = "les effets .* Heurt terrestre",
+	grasp_trigger2 = "les effets .* Emprise du seigneur gronn",
+	grasp_message1 = "Heurt terrestre - Emprise imminente",
+	grasp_message2 = "Emprise - Fracasser dans ~5 sec.",
 	grasp_warning = "Heurt terrestre imminent",
 
 	shatter_trigger = "%s rugit\194\160!",
@@ -106,10 +109,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	silence_trigger = "les effets .* R\195\169verb\195\169ration.",
 	silence_message = "Silence de zone",
-	silence_warning = "Silence de zone imminent!",
+	silence_warning = "Silence de zone imminent !",
 
 	cavein_trigger = "Vous subissez les effets de Eboulement.",
-	cavein_message = "Eboulement !",
+	cavein_message = "Eboulement sur VOUS !",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

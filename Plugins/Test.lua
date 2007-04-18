@@ -84,7 +84,7 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	--["Test"] = true,
+	["Test"] = "Test",
 	["Test Bar %d"] = "Barre de test %d",
 	["Testing"] = "Test",
 	["OMG Bear!"] = "Un ours !",

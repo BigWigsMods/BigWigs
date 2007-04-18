@@ -171,19 +171,22 @@ L:RegisterTranslations("frFR", function() return {
 	["Show the bar anchor frame."] = "Affiche l'ancre du cadre des barres.",
 
 	["Scale"] = "Taille",
-	["Set the bar scale."] = "D\195\169termine la taille des barres.",
+	["Set the bar scale."] = "Détermine la taille des barres.",
 
 	["Grow upwards"] = "Ajouter vers le haut",
 	["Toggle bars grow upwards/downwards from anchor."] = "Ajoute les nouvelles barres soit en haut de l'ancre, soit en bas de l'ancre.",
 
-	--["Texture"] = true,
-	["Set the texture for the timer bars."] = "D\195\169termine la texture des barres temporelles.",
+	["Texture"] = "Texture",
+	["Set the texture for the timer bars."] = "Détermine la texture des barres temporelles.",
 
-	--["Test"] = true,
+	["Test"] = "Test",
 	["Close"] = "Fermer",
 
-	["Reset position"] = "R\195\128Z position",
-	["Reset the anchor position, moving it to the center of your screen."] = "R\195\169initialise la position de l'ancre, la repla\195\167ant au centre de l'\195\169cran.",
+	["Reset position"] = "RÀZ position",
+	["Reset the anchor position, moving it to the center of your screen."] = "Réinitialise la position de l'ancre, la replaçant au centre de l'écran.",
+
+	["Reverse"] = "Inverser",
+	["Toggles if bars are reversed (fill up instead of emptying)."] = "Inverse ou non les barres (les remplir au lieu de les vider).",
 } end)
 
 -----------------------------------------------------------------------

@@ -6,6 +6,7 @@
 ## Notes-zhCN: 团队首领战信息提示插件，带有计时条。
 ## Notes-zhTW: 團隊首領戰訊息提示插件，帶有計時條。
 ## Notes-koKR: 각종 보스 경고를 위한 모듈화, 경량화 및 무관여적으로 접근합니다.
+## Notes-frFR: Approche modulaire, légère et non-intrusive des avertissements pour les rencontres avec les boss.
 ## Author: Ammo, Rabbit
 ## X-Credits: Tekkub Stoutwrithe (founding author), Shyva, Funkydude & Others
 ## Version: 2.0

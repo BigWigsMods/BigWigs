@@ -107,17 +107,17 @@ L:RegisterTranslations("frFR", function() return {
 
 	["Broadcast over RaidWarning"] = "Diffuser sur l'Avertissement Raid",
 	["Broadcast"] = "Diffuser",
-	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = "Diffuse ou non les messages sur l'Avertissement Raid.",
+	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = "Diffuse ou non les messages sur l'Avertissement Raid.\n\nNotez que vous ne verrez pas ces messages diffusés vous-même sauf si vous avez désactivé BossBlock.",
 
 	["Whisper"] = "Chuchoter",
 	["Whisper warnings"] = "Chuchoter les avertissements",
 	["Toggle whispering warnings to players."] = "Chuchote ou non les avertissements aux joueurs.",
 
 	["Show whispers"] = "Afficher les chuchotements",
-	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "Affiche ou non localement les chuchotements envoy\195\169s par BigWigs.",
+	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "Affiche ou non localement les chuchotements envoyés par BigWigs, par exemple quand les joueurs sont affectés par des choses telles que la peste ou similaire.",
 
 	["Use Raidchannel"] = "Utiliser le canal Raid",
-	["Toggle using the raid channel instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "Utilise ou non le canal Raid au lieu de l'Avertissement Raid pour les messages des boss.",
+	["Toggle using the raid channel instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "Utilise ou non le canal Raid au lieu de l'Avertissement Raid pour les messages des boss.\n\nMême chose ici ; vous ne verrez pas vos propres messages à moins que BossBlock ne soit désactivé.",
 
 	desc = "Options concernant l'Avertissement du Raid.",
 } end )

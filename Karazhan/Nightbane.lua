@@ -144,10 +144,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	fear_trigger = "lancer Rugissement puissant",
 	fear_message = "Rugissement dans 2 sec. !",
-	fear_warning = "Rugissement imminent !",
+	fear_warning = "Rugissement imminent",
 	fear_bar = "Prochain rugissement",
 
-	charr_trigger = "Vous subissez les effets .* Terre calcin\195\169e.",
+	charr_trigger = "Vous subissez les effets de Terre calcin\195\169e.",
 	charr_message = "Terre calcin\195\169e sur VOUS !",
 
 	blast_trigger = "lancer Explosion de fum\195\169e.",
@@ -158,7 +158,7 @@ L:RegisterTranslations("frFR", function() return {
 	landphase_trigger2 = "Insectes\194\160! Je vais vous montrer de quel bois je me chauffe\194\160!",
 	airphase_message = "D\195\169collage !",
 	landphase_message = "Atterrissage !",
-	summon_trigger = "Dans le lointain, un \195\170tre ancien s'\195\169veille…",
+	summon_trigger = "Dans le lointain, un \195\170tre ancien s'\195\169veille\226\128\166",
 
 	engage_trigger = "Fous\194\160! Je vais mettre un terme rapide \195\160 vos souffrances\194\160!",
 	engage_message = "Plaie-de-nuit engag\195\169",

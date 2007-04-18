@@ -62,6 +62,16 @@ L:RegisterTranslations("koKR", function() return {
 	--["Disable the proximity display."] = true,
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	["Proximity"] = "Proximité",
+	["Options for the Proximity Display."] = "Options concernant l'affichage de proximité.",
+	["Nobody"] = "Personne",
+	["Sound"] = "Son",
+	["Play sound on proximity."] = "Joue un son quand à proximité.",
+	["Disabled"] = "Désactivé",
+	["Disable the proximity display."] = "Désactive l'affichage de proximité.",
+} end)
+
 -----------------------------------------------------------------------
 --      Module Declaration
 -----------------------------------------------------------------------

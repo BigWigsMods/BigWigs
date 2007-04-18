@@ -148,33 +148,33 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	--["BossBlock"] = true,
+	["BossBlock"] = "BloquerBoss",
 	desc = "Supprime les messages des BossMods des autres joueurs.",
 
 	["Boss emotes"] = "Emotes des boss",
-	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = "Supprime les messages envoy\195\169s au cadre des \195\169motes des boss.\n\nCeci supprime uniquement les messages des boss connus par BigWigs, et les supprime uniquement de ce cadre, pas de la fen\195\170tre de discussion.",
+	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = "Supprime les messages envoyés au cadre des émotes des boss.\n\nCeci supprime uniquement les messages des boss connus par BigWigs, et les supprime uniquement de ce cadre, pas de la fenêtre de discussion.",
 
 	["Raid chat"] = "Messages du canal Raid",
 	["Suppress messages sent to raid chat."] = "Supprime les messages du canal Raid.",
 
 	["Raid warning chat messages"] = "Messages du chat de l'Avertissement Raid",
-	["Suppress raid warning messages from the chat window."] = "Supprime les messages de l'Avertissement Raid de la fen\195\170tre de discussion.",
+	["Suppress raid warning messages from the chat window."] = "Supprime les messages de l'Avertissement Raid de la fenêtre de discussion.",
 
 	["Raid warning messages"] = "Messages de l'Avertissement Raid",
-	["Suppress raid warning messages from the raid message window."] = "Supprime les messages \195\160 l'\195\169cran de l'Avertissement Raid.",
+	["Suppress raid warning messages from the raid message window."] = "Supprime les messages à l'écran de l'Avertissement Raid.",
 
 	["Raid say"] = "RaidSay",
-	["Suppress RaidSay popup messages."] = "Supprime les messages \195\160 l'\195\169cran du RaidSay de CTRA.",
+	["Suppress RaidSay popup messages."] = "Supprime les messages à l'écran du RaidSay de CTRA.",
 
 	["Whispers"] = "Chuchotements",
-	["Suppress whispered messages."] = "Supprime les messages chuchot\195\169s.",
+	["Suppress whispered messages."] = "Supprime les messages chuchotés.",
 
-	["Suppressing Chatframe"] = "Suppression de la fen\195\170tre de discussion",
+	["Suppressing Chatframe"] = "Suppression de la fenêtre de discussion",
 	["Suppressing RaidWarningFrame"] = "Suppression du cadre de l'Avertissement Raid",
 	["Suppressing CT_RAMessageFrame"] = "Suppression du cadre du RaidSay de CTRA",
 
-	["Suppressed"] = "Supprim\195\169",
-	["Shown"] = "Affich\195\169",
+	["Suppressed"] = "Supprimé",
+	["Shown"] = "Affiché",
 } end)
 
 ------------------------------
