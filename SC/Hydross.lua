@@ -6,6 +6,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["Hydross the Unstable"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
+local inTomb = {}
 local debuff = {0, 10, 25, 50, 100}
 local currentPerc
 local count = 1
@@ -23,10 +24,19 @@ L:RegisterTranslations("enUS", function() return {
 	mark_desc = "Show warnings and counters for marks",
 
 	enrage = "Enrage",
-	enrage_desc = "Warn about enrage",
+	enrage_desc = "Warn for enrage",
 
 	stance = "Stance changes",
 	stance_desc = ("Warn when %s changes stances"):format(boss),
+
+	sludge = "Vile Sludge",
+	sludge_desc = "Notify of players afflicted by Vile Sludge",
+
+	icon = "Vile Sludge Icon",
+	icon_desc = "Place a Raid Icon on the player afflicted by Vile Sludge",
+
+	tomb = "Water Tomb",
+	tomb_desc = "Notify of players afflicted by Water Tomb",
 
 	start_trigger = "I cannot allow you to interfere!",
 
@@ -43,24 +53,56 @@ L:RegisterTranslations("enUS", function() return {
 
 	poison_stance = "Hydross is now poisoned!",
 	water_stance = "Hydross is now cleaned again!",
+
+	sludge_trigger = "^([^%s]+) ([^%s]+) afflicted by Vile Sludge",
+	sludge_message = "Vile Sludge: %s",
+
+	tomb_trigger = "^([^%s]+) ([^%s]+) afflicted by Water Tomb",
+	tomb_message = "Water Tomb: %s",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
 	start_trigger = "Ich kann nicht zulassen, dass ihr Euch einmischt!",
 
+	mark = "Mal",
+	mark_desc = "Zeigt Warnungen und Anzahl des Mals.",
+
+	enrage = "Wutanfall",
+	enrage_desc = "Warnt vor Wutanfall.",
+
+	stance = "Phasenwechsel",
+	stance_desc = ("Warnt wenn %s seine Phase wechselt."):format(boss),
+
+	sludge = "\195\156bler Schlamm",
+	sludge_desc = "Warnt welche Spieler von \195\156bler Schlamm betroffen sind.",
+
+	icon = "\195\156bler Schlamm Icon",
+	icon_desc = "Platziert ein Schlachtzugssymbol auf dem Spieler, welcher von \195\156bler Schlamm betroffen ist (ben\195\182tigt 'bef\195\182rdert' oder h\195\182her)",
+
+	tomb = "Wassergrab",
+	tomb_desc = "Warnt welche Spieler von Wassergrab betroffen sind.",
+
+	start_trigger = "Ich kann nicht zulassen, dass Ihr Euch einmischt!",
+
 	hydross_trigger = "Mal von Hydross",
 	corruption_trigger = "Mal der der Verderbnis",
 
-	hydross_bar = "Next Mal von Hydross - %s%%",
-	corruption_bar = "Next Mal der der Verderbnis - %s%%",
+	hydross_bar = "N\195\164chstes Mal von Hydross - %s%%",
+	corruption_bar = "N\195\164chstes Mal der der Verderbnis - %s%%",
 
-	debuff_warn = "Mark bei %s%%!",
+	debuff_warn = "Mal bei %s%%!",
 
 	poison_stance_trigger = "Aahh, das Gift...",
 	water_stance_trigger = "Besser, viel besser.",
 
 	poison_stance = "Hydross ist nun vergiftet!",
 	water_stance = "Hydross ist wieder gereinigt!",
+
+	sludge_trigger = "^([^%s]+) ([^%s]+) von \195\156bler Schlamm betroffen",
+	sludge_message = "\195\156bler Schlamm: %s",
+
+	tomb_trigger = "^([^%s]+) ([^%s]+) von Wassergrab betroffen",
+	tomb_message = "Wassergrab: %s",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -125,7 +167,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
 mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
-mod.toggleoptions = {"stance", "mark", "enrage", "bosskill"}
+mod.toggleoptions = {"stance", "mark", "enrage", -1, "sludge", "icon", "tomb", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -133,6 +175,8 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
+	for k in pairs(inTomb) do inTomb[k] = nil end
+
 	if not tooltip then
 		tooltip = CreateFrame("GameTooltip", "HydrossTooltip", UIParent, "GameTooltipTemplate")
 		tooltip:SetOwner(UIParent, "ANCHOR_NONE")
@@ -143,6 +187,13 @@ function mod:OnEnable()
 
 	self:RegisterEvent("PLAYER_AURAS_CHANGED", "DebuffCheck")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
+
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "HydrossTomb", 0)
 end
 
 ------------------------------
@@ -203,8 +254,8 @@ function mod:DebuffCheck()
 				currentPerc = match
 				self:TriggerEvent("BigWigs_StopBar", self, string.format(L["hydross_bar"], debuff[count] and debuff[count] or 250))
 				if self.db.profile.mark then
-					self:Message(string.format(L["debuff_warn"], match), "Important")
-					self:Bar(string.format(L["hydross_bar"], debuff[count+1] and debuff[count+1] or 250), 15, "Spell_Frost_FrostBolt02")
+					self:Message(string.format(L["debuff_warn"], match), "Important", nil, "Alert")
+					self:Bar(string.format(L["hydross_bar"], debuff[count+1] and debuff[count+1] or 250), 15, "Spell_Frost_FrozenCore")
 				end
 			end
 		elseif bName == L["corruption_trigger"] then
@@ -214,11 +265,59 @@ function mod:DebuffCheck()
 				currentPerc = match
 				self:TriggerEvent("BigWigs_StopBar", self, string.format(L["corruption_bar"], debuff[count] and debuff[count] or 250))
 				if self.db.profile.mark then
-					self:Message(string.format(L["debuff_warn"], match), "Important")
-					self:Bar(string.format(L["corruption_bar"], debuff[count+1] and debuff[count+1] or 250), 15, "Spell_Shadow_AbominationExplosion")
+					self:Message(string.format(L["debuff_warn"], match), "Important", nil, "Alert")
+					self:Bar(string.format(L["corruption_bar"], debuff[count+1] and debuff[count+1] or 250), 15, "Spell_Nature_ElementalShields")
 				end
 			end
 		end
 		i = i + 1
+	end
+end
+
+function mod:Event(msg)
+	local gplayer, gtype = select(3, msg:find(L["sludge_trigger"]))
+	if gplayer and gtype then
+		if gplayer == L2["you"] and gtype == L2["are"] then
+			gplayer = UnitName("player")
+		end
+		self:Sync("HydrossSludge "..gplayer)
+	end
+
+	local tplayer, ttype = select(3, msg:find(L["tomb_trigger"]))
+	if tplayer and ttype then
+		if tplayer == L2["you"] and ttype == L2["are"] then
+			tplayer = UnitName("player")
+		end
+		self:Sync("HydrossTomb " ..tplayer)
+	end
+
+end
+
+function mod:TombWarn()
+	if self.db.profile.tomb then
+		local msg = nil
+		for k in pairs(inTomb) do
+			if not msg then
+				msg = k
+			else
+				msg = msg .. ", " .. k
+			end
+		end
+		self:Message(L["tomb_message"]:format(msg), "Attention")
+
+	end
+	for k in pairs(inTomb) do inTomb[k] = nil end
+end
+
+function mod:BigWigs_RecvSync(sync, rest, nick)
+	if sync == "HydrossSludge" and rest and self.db.profile.sludge then
+		self:Message(L["sludge_message"]:format(rest), "Attention")
+		self:Bar(L["sludge_message"]:format(rest), 24, "Spell_Nature_AbolishMagic")
+		if self.db.profile.icon then
+			self:Icon(rest)
+		end
+	elseif sync == "HydrossTomb" and rest then
+		inTomb[rest] = true
+		self:ScheduleEvent("Tomb", self.TombWarn, 0.5, self)
 	end
 end
