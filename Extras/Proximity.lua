@@ -186,10 +186,6 @@ function plugin:Ace2_AddonDisabled(module)
 end
 
 function plugin:Ace2_AddonEnabled(module)
-	-- If this is the current module, we don't do anything, since this would
-	-- re-show the frame if the user had hidden it, etc.
-	if active and active == module then return end
-
 	if type( module.proximityCheck ) == "function" then
 		active = module
 		self:OpenProximity()
