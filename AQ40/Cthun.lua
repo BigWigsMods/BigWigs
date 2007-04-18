@@ -309,7 +309,6 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Ahn'Qiraj"]
 mod.enabletrigger = { eyeofcthun, cthun }
 mod.toggleoptions = { "rape", -1, "tentacle", "glare", "group", -1, "giant", "weakened", "bosskill" }
 mod.revision = tonumber(string.sub("$Revision$", 12, -3))
-mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
 ------------------------------
 --      Initialization      --
