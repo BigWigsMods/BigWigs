@@ -196,14 +196,12 @@ function BigWigsLoD:BigWigs_CoreEnabled()
 	end
 
 	loadZone(GetRealZoneText())
-	loadZone(GetSubZoneText())
 	loadZone(GetZoneText())
 end
 
 function BigWigsLoD:ZoneChanged()
 	if BigWigs:IsActive() then
 		loadZone(GetRealZoneText())
-		loadZone(GetSubZoneText())
 		loadZone(GetZoneText())
 	end
 end
