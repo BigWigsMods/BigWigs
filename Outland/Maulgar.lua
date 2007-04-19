@@ -51,6 +51,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	summon_trigger = "begins to cast Summon Wild Felhunter.",
 	summon_message = "Felhunter being summoned!",
+	summon_bar = "~Next Felhunter Summon",
 
 	flurry_trigger = "You will not defeat the hand of Gruul!",
 	flurry_message = "50% - Flurry!",
@@ -292,6 +293,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(L["spellshield_message"], "Attention", nil, "Info")
 	elseif sync == "OlmSummon" and self.db.profile.summon then
 		self:Message(L["summon_message"], "Attention", nil, "Long")
+		self:Bar(L["summon_bar"], 50, "Spell_Shadow_SummonFelGuard")
 	elseif sync == "MaulgarWhirldwind" and self.db.profile.whirlwind then
 		self:Message(L["whirlwind_message"], "Important")
 		self:Bar(L["whirlwind_bar"], 15, "Ability_Whirlwind")
