@@ -369,8 +369,8 @@ function BigWigs:RegisterModule(name, module)
 						module.db.profile[key] = value
 
 						-- Invoke any custom boss option function handlers.
-						if customBossOptions[key] and type(customBossOptions[3]) == "function" then
-							customBossOptions[3](module)
+						if customBossOptions[key] and type(customBossOptions[key][3]) == "function" then
+							customBossOptions[key][3](module)
 						end
 					end
 				end,

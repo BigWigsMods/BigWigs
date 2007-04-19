@@ -57,11 +57,11 @@ L:RegisterTranslations("enUS", function() return {
 	["Sound"] = true,
 	["Play sound on proximity."] = true,
 	["Disabled"] = true,
-	["Disable the proximity display."] = true,
+	["Disable the proximity display for all modules that use it."] = true,
 	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = true,
 
-	proximity = "Proximity Alert",
-	proximity_desc = "Show the proximity window.",
+	proximity = "Proximity display",
+	proximity_desc = "Show the proximity window when appropriate for this encounter, listing players who are standing too close to you.",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -71,7 +71,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Sound"] = "경고음",
 	--["Play sound on proximity."] = true,
 	--["Disabled"] = true,
-	--["Disable the proximity display."] = true,
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -81,7 +80,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Sound"] = "Son",
 	["Play sound on proximity."] = "Joue un son quand à proximité.",
 	["Disabled"] = "Désactivé",
-	["Disable the proximity display."] = "Désactive l'affichage de proximité.",
+	["Disable the proximity display for all modules that use it."] = "Désactive l'affichage de proximité.",
 
 	proximity = "Proximit\195\169",
 	proximity_desc = "Affiche la fen\195\170tre de proximit\195\169.",
@@ -131,7 +130,7 @@ plugin.consoleOptions = {
 		disabled = {
 			type = "toggle",
 			name = L["Disabled"],
-			desc = L["Disable the proximity display."],
+			desc = L["Disable the proximity display for all modules that use it."],
 			order = 101,
 		}
 	}
@@ -187,12 +186,12 @@ function plugin:BigWigs_HideProximity(module)
 	self:CloseProximity()
 end
 
-function OnOptionToggled(module)
+OnOptionToggled = function(module)
 	if active and active == module then
 		if active.db.profile.proximity then
-			self:OpenProximity()
+			plugin:OpenProximity()
 		else
-			self:CloseProximity()
+			plugin:CloseProximity()
 		end
 	end
 end
