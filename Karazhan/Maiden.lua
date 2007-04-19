@@ -156,6 +156,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.engage and msg == L["engage_trigger"] then
 		self:Message(L["engage_message"], "Attention")
 		self:NextRepentance()
+
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif self.db.profile.repentance and (msg == L["repentance_trigger1"] or msg == L["repentance_trigger2"]) then
 		self:Message(L["repentance_message"], "Important")
 		self:Bar(L["repentance_bar"], 12, "Spell_Holy_PrayerOfHealing")

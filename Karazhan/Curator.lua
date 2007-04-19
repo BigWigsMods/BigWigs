@@ -209,6 +209,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:ScheduleEvent("evoc2", "BigWigs_Message", 79, L["weaktime_message2"], "Attention")
 			self:ScheduleEvent("evoc3", "BigWigs_Message", 99, L["weaktime_message1"], "Urgent")
 		end
+
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
 end
 
