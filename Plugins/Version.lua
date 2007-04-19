@@ -1,12 +1,8 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
-if not AceLibrary:HasInstance("Tablet-2.0") then
-	return
-end
-
 local BZ = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsVersionQuery")
-local tablet = AceLibrary("Tablet-2.0")
+local tablet = nil
 local dewdrop = AceLibrary("Dewdrop-2.0")
 
 local COLOR_GREEN = "00ff00"
@@ -259,42 +255,44 @@ end
 ------------------------------
 
 function plugin:UpdateVersions()
-	if not tablet:IsRegistered("BigWigs_VersionQuery") then
-		tablet:Register("BigWigs_VersionQuery",
-			"children", function()
-				tablet:SetTitle(L["Big Wigs Version Query"])
-				self:OnTooltipUpdate()
-			end,
-			"clickable", true,
-			"showTitleWhenDetached", true,
-			"showHintWhenDetached", true,
-			"cantAttach", true,
-			"menu", function()
-				dewdrop:AddLine(
-					"text", L["BigWigs"],
-					"tooltipTitle", L["BigWigs"],
-					"tooltipText", L["Runs a version query on the BigWigs core."],
-					"func", function() self:QueryVersion("BigWigs") end)
-				dewdrop:AddLine(
-					"text", L["Current zone"],
-					"tooltipTitle", L["Current zone"],
-					"tooltipText", L["Runs a version query on your current zone."],
-					"func", function() self:QueryVersion() end)
-				dewdrop:AddLine(
-					"text", L["Close window"],
-					"tooltipTitle", L["Close window"],
-					"tooltipText", L["Closes the version query window."],
-					"func", function()
-						tablet:Attach("BigWigs_VersionQuery")
-						dewdrop:Close()
-					end)
-			end
-		)
-	end
-	if tablet:IsAttached("BigWigs_VersionQuery") then
-		tablet:Detach("BigWigs_VersionQuery")
-	else
-		tablet:Refresh("BigWigs_VersionQuery")
+	if tablet then
+		if not tablet:IsRegistered("BigWigs_VersionQuery") then
+			tablet:Register("BigWigs_VersionQuery",
+				"children", function()
+					tablet:SetTitle(L["Big Wigs Version Query"])
+					self:OnTooltipUpdate()
+				end,
+				"clickable", true,
+				"showTitleWhenDetached", true,
+				"showHintWhenDetached", true,
+				"cantAttach", true,
+				"menu", function()
+					dewdrop:AddLine(
+						"text", L["BigWigs"],
+						"tooltipTitle", L["BigWigs"],
+						"tooltipText", L["Runs a version query on the BigWigs core."],
+						"func", function() self:QueryVersion("BigWigs") end)
+					dewdrop:AddLine(
+						"text", L["Current zone"],
+						"tooltipTitle", L["Current zone"],
+						"tooltipText", L["Runs a version query on your current zone."],
+						"func", function() self:QueryVersion() end)
+					dewdrop:AddLine(
+						"text", L["Close window"],
+						"tooltipTitle", L["Close window"],
+						"tooltipText", L["Closes the version query window."],
+						"func", function()
+							tablet:Attach("BigWigs_VersionQuery")
+							dewdrop:Close()
+						end)
+				end
+			)
+		end
+		if tablet:IsAttached("BigWigs_VersionQuery") then
+			tablet:Detach("BigWigs_VersionQuery")
+		else
+			tablet:Refresh("BigWigs_VersionQuery")
+		end
 	end
 end
 
@@ -307,7 +305,7 @@ function plugin:OnTooltipUpdate()
 		"child_text2R", 1,
 		"child_text2G", 1,
 		"child_text2B", 1
-    )
+	)
 	infoCat:AddLine("text", L["Zone"], "text2", currentZone)
 	infoCat:AddLine("text", L["Replies"], "text2", numResponses)
 	local cat = tablet:AddCategory(
@@ -368,6 +366,15 @@ function plugin:QueryVersion(zone)
 		BigWigs:Print(L["Query already running, please wait 5 seconds before trying again."])
 		return
 	end
+
+	if not tablet then
+		tablet = AceLibrary:HasInstance("Tablet-2.0") and AceLibrary("Tablet-2.0") or nil
+		if not tablet then
+			error("You need a copy of the Tablet-2.0 library to be able to *run* a version check right now. This should be fixed shortly.")
+			return
+		end
+	end
+
 	if type(zone) ~= "string" or zone == "" then zone = GetRealZoneText() end
 	-- If this is a shorthand zone, convert it to enUS full.
 	-- Also, if this is a shorthand, we can't really know if the user is enUS or not.
