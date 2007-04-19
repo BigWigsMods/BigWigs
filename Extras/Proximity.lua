@@ -198,7 +198,7 @@ end
 
 function plugin:Ace2_AddonDisabled(module)
 	if active and active == module then
-		self:ScheduleEvent("bwproximitydisable", self.CheckIfDisabled, .4, self)
+		self:BigWigs_HideProximity(active)
 	end
 end
 
@@ -212,12 +212,6 @@ function plugin:CloseAndDisableProximity()
 	if active then
 		active.db.profile.proximity = nil
 		BigWigs:Print(L["The proximity display has been disabled for %s, please use the boss modules options to enable it again."]:format(active:ToString()))
-	end
-end
-
-function plugin:CheckIfDisabled()
-	if not active or not BigWigs:IsModuleActive(active) then
-		self:BigWigs_HideProximity(active)
 	end
 end
 
