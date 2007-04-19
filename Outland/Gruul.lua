@@ -230,14 +230,14 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_SAY(msg)
-	if self.db.profile.engage and msg == L["engage_trigger"] then
-		self:Message(L["engage_message"]:format(boss), "Attention")
-		self:DelayedMessage(35, L["grasp_warning"], "Urgent")
-		self:Bar(L["grasp_warning"], 40, "Ability_ThunderClap")
-
-		self:DelayedMessage(95, L["silence_warning"], "Urgent")
-		self:Bar(L["silence_message"], 100, "Spell_Holy_ImprovedResistanceAuras")
-
+	if msg == L["engage_trigger"] then
+		if self.db.profile.engage then
+			self:Message(L["engage_message"]:format(boss), "Attention")
+			self:DelayedMessage(35, L["grasp_warning"], "Urgent")
+			self:Bar(L["grasp_warning"], 40, "Ability_ThunderClap")
+			self:DelayedMessage(95, L["silence_warning"], "Urgent")
+			self:Bar(L["silence_message"], 100, "Spell_Holy_ImprovedResistanceAuras")
+		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
 end

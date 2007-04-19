@@ -91,8 +91,9 @@ local mod = BigWigs:NewModule(boss, "AceHook-2.1")
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Shadowmoon Valley"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = boss
-mod.toggleoptions = {"overrun", "earthquake", "enrage", "bosskill"}
+mod.toggleoptions = {"overrun", "earthquake", "enrage", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
+mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
 ------------------------------
 --      Initialization      --
@@ -147,6 +148,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:Bar(L["overrun_bar"], 30, "Ability_BullRush")
 			self:DelayedMessage(28, L["overrun_soon_message"], "Attention")
 		end
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif sync == "DoomwalkerEarthquake" and self.db.profile.earthquake then
 		self:Message(L["earthquake_message"], "Important")
 		self:Bar(L["earthquake_bar"], 70, "Spell_Nature_Earthquake")

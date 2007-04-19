@@ -127,7 +127,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"engage", "repentance", -1, "holyfire", "icon", -1, "proximity", "bosskill"}
+mod.toggleoptions = {"engage", "repentance", -1, "holyfire", "icon", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
@@ -153,9 +153,11 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.engage and msg == L["engage_trigger"] then
-		self:Message(L["engage_message"], "Attention")
-		self:NextRepentance()
+	if msg == L["engage_trigger"] then
+		if self.db.profile.engage then
+			self:Message(L["engage_message"], "Attention")
+			self:NextRepentance()
+		end
 
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif self.db.profile.repentance and (msg == L["repentance_trigger1"] or msg == L["repentance_trigger2"]) then
