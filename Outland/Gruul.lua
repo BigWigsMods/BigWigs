@@ -237,6 +237,8 @@ function mod:CHAT_MSG_MONSTER_SAY(msg)
 
 		self:DelayedMessage(95, L["silence_warning"], "Urgent")
 		self:Bar(L["silence_message"], 100, "Spell_Holy_ImprovedResistanceAuras")
+
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
 end
 
@@ -285,3 +287,4 @@ function mod:BigWigs_Message(text)
 		silence = nil
 	end
 end
+
