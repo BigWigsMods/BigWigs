@@ -14,6 +14,8 @@ local lastplayed = 0 -- When we last played an alarm sound for proximity.
 local playername
 local tooClose = {} -- List of players who are too close.
 
+local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
+
 local table_insert = table.insert
 local table_concat = table.concat
 local UnitName = UnitName
@@ -56,8 +58,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Play sound on proximity."] = true,
 	["Disabled"] = true,
 	["Disable the proximity display."] = true,
-	["Show"] = true,
-	["Show the proximity frame."] = true,
+	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = true,
 
 	proximity = "Proximity Alert",
 	proximity_desc = "Show the proximity window.",
@@ -120,23 +121,7 @@ plugin.consoleOptions = {
 			end
 		end
 	end,
-	func = function()
-		if anchor and active then
-			anchor:Show()
-		end
-	end,
 	args = {
-		anchor = {
-			type = "execute",
-			name = L["Show"],
-			desc = L["Show the proximity frame."],
-			order = 1,
-		},
-		spacer = {
-			type = "header",
-			name = " ",
-			order = 50,
-		},
 		sound = {
 			type = "toggle",
 			name = L["Sound"],
@@ -157,14 +142,16 @@ plugin.consoleOptions = {
 -----------------------------------------------------------------------
 
 function plugin:OnRegister()
-	BigWigs:RegisterBossOption("proximity", L["proximity"], L["proximity_desc"])
+	BigWigs:RegisterBossOption("proximity", L["proximity"], L["proximity_desc"], OnOptionToggled)
 
 	playername = UnitName("player")
 end
 
 function plugin:OnEnable()
-	self:RegisterEvent("Ace2_AddonEnabled")
 	self:RegisterEvent("Ace2_AddonDisabled")
+
+	self:RegisterEvent("BigWigs_ShowProximity")
+	self:RegisterEvent("BigWigs_HideProximity")
 
 	if AceLibrary:HasInstance("Roster-2.1") then
 		RL = AceLibrary("Roster-2.1")
@@ -179,16 +166,59 @@ end
 --      Event Handlers
 -----------------------------------------------------------------------
 
-function plugin:Ace2_AddonDisabled(module)
-	if active == module then
-		self:CloseProximity()
+function plugin:BigWigs_ShowProximity(module)
+	if active then
+		error("The proximity module is already running.")
+	end
+
+	active = module
+
+	self:OpenProximity()
+end
+
+function plugin:BigWigs_HideProximity(module)
+	if not active then
+		error("No proximity module is currently active.")
+	elseif active ~= module then
+		error("The provided module is not the one currently running proximity checks.")
+	end
+
+	active = nil
+	self:CloseProximity()
+end
+
+function OnOptionToggled(module)
+	if active and active == module then
+		if active.db.profile.proximity then
+			self:OpenProximity()
+		else
+			self:CloseProximity()
+		end
 	end
 end
 
-function plugin:Ace2_AddonEnabled(module)
-	if type( module.proximityCheck ) == "function" then
-		active = module
-		self:OpenProximity()
+function plugin:Ace2_AddonDisabled(module)
+	if active and active == module then
+		self:ScheduleEvent("bwproximitydisable", self.CheckIfDisabled, .4, self)
+	end
+end
+
+-----------------------------------------------------------------------
+--      Util
+-----------------------------------------------------------------------
+
+function plugin:CloseAndDisableProximity()
+	self:CloseProximity()
+
+	if active then
+		active.db.profile.proximity = nil
+		BigWigs:Print(L["The proximity display has been disabled for %s, please use the boss modules options to enable it again."]:format(active:ToString()))
+	end
+end
+
+function plugin:CheckIfDisabled()
+	if not active or not BigWigs:IsModuleActive(active) then
+		self:BigWigs_HideProximity(active)
 	end
 end
 
@@ -198,7 +228,8 @@ function plugin:CloseProximity()
 end
 
 function plugin:OpenProximity()
-	if self.db.profile.disabled or not active or type( active.proximityCheck ) ~= "function" or not active.db.profile.proximity then return end
+	if self.db.profile.disabled or not active or type(active.proximityCheck) ~= "function" or not active.db.profile.proximity then return end
+
 	self:SetupFrames()
 
 	local text = nil
@@ -218,7 +249,7 @@ function plugin:OpenProximity()
 end
 
 function plugin:UpdateProximity()
-	if not active or type( active.proximityCheck ) ~= "function" then return end
+	if not active or type(active.proximityCheck) ~= "function" then return end
 
 	if RL then
 		for n, u in pairs(RL.roster) do
@@ -322,7 +353,7 @@ function plugin:SetupFrames()
 	closebutton:SetWidth(20)
 	closebutton:SetHeight(14)
 	closebutton:SetPoint("CENTER", close, "CENTER")
-	closebutton:SetScript( "OnClick", function() self:CloseProximity() end )
+	closebutton:SetScript( "OnClick", function() self:CloseAndDisableProximity() end )
 
 	anchor = frame
 

@@ -215,38 +215,38 @@ plugin.consoleOptions = {
 	get = function(key) return plugin.db.profile[key] end,
 	set = function(key, value) plugin.db.profile[key] = value end,
 	args = {
-		["chat"] = {
+		chat = {
 			type = "toggle",
 			name = L["Raid chat"],
 			desc = L["Suppress messages sent to raid chat."],
 			map = map,
 		},
-		["rs"] = {
+		rs = {
 			type = "toggle",
 			name = L["Raid say"],
 			desc = L["Suppress RaidSay popup messages."],
 			map = map,
 			hidden = function() return not CT_RAMessageFrame end,
 		},
-		["rw"] = {
+		rw = {
 			type = "toggle",
 			name = L["Raid warning messages"],
 			desc = L["Suppress raid warning messages from the raid message window."],
 			map = map,
 		},
-		["rwchat"] = {
+		rwchat = {
 			type = "toggle",
 			name = L["Raid warning chat messages"],
 			desc = L["Suppress raid warning messages from the chat window."],
 			map = map,
 		},
-		["tell"] = {
+		tell = {
 			type = "toggle",
 			name = L["Whispers"],
 			desc = L["Suppress whispered messages."],
 			map = map,
 		},
-		["boss"] = {
+		boss = {
 			type = "toggle",
 			name = L["Boss emotes"],
 			desc = L["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."],

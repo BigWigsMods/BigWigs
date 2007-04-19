@@ -143,22 +143,22 @@ plugin.consoleOptions = {
 	get = function(key) return plugin.db.profile[key] end,
 	set = function(key, value) plugin.db.profile[key] = value end,
 	args = {
-		["broadcast"] = {
+		broadcast = {
 			type = "toggle",
 			name = L["Broadcast"],
 			desc = L["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."],
 		},
-		["whisper"] = {
+		whisper = {
 			type = "toggle",
 			name = L["Whisper"],
 			desc = L["Toggle whispering warnings to players."],
 		},
-		["showwhispers"] = {
+		showwhispers = {
 			type = "toggle",
 			name = L["Show whispers"],
 			desc = L["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."],
 		},
-		["useraidchannel"] = {
+		useraidchannel = {
 			type = "toggle",
 			name = L["Use Raidchannel"],
 			desc = L["Toggle using the raid channel instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."],
@@ -181,7 +181,7 @@ end
 
 function plugin:BigWigs_Message(msg, color, noraidsay)
 	if not self.db.profile.broadcast or not msg or noraidsay or ( not IsRaidLeader() and not IsRaidOfficer() ) then
-		return 
+		return
 	end
 	if self.db.profile.useraidchannel then
 		SendChatMessage("*** "..msg.." ***", "RAID")

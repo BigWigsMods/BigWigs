@@ -310,11 +310,11 @@ function BigWigs:ToggleModuleDebugging(enable)
 	end
 end
 
-function BigWigs:RegisterBossOption(key, name, desc)
+function BigWigs:RegisterBossOption(key, name, desc, func)
 	if customBossOptions[key] then
 		error(string.format("The custom boss option %q has already been registered.", key))
 	end
-	customBossOptions[key] = { name, desc }
+	customBossOptions[key] = { name, desc, func }
 end
 
 -------------------------------
@@ -367,6 +367,11 @@ function BigWigs:RegisterModule(name, module)
 						self:ToggleModuleActive(module)
 					else
 						module.db.profile[key] = value
+
+						-- Invoke any custom boss option function handlers.
+						if customBossOptions[key] and type(customBossOptions[3]) == "function" then
+							customBossOptions[3](module)
+						end
 					end
 				end,
 				func = "BigWigs_RebootModule",
