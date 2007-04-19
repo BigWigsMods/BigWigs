@@ -117,25 +117,25 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	adds = "Alerte El\195\169mentaires",
-	adds_desc = "Pr\195\169viens de l'apparition des \195\169l\195\169mentaires d'eau.",
+	adds = "El\195\169mentaires",
+	adds_desc = "Pr\195\169viens quand les \195\169l\195\169mentaires d'eau apparaissent.",
 
-	drink = "Alerte Boisson",
+	drink = "Boisson",
 	drink_desc = ("Pr\195\169viens quand %s commence \195\160 boire."):format(boss),
 
-	engage = "Alerte Engagement",
-	engage_desc = ("Pr\195\169viens quand %s est engag\195\169"):format(boss),
+	engage = "Engagement",
+	engage_desc = ("Pr\195\169viens quand %s est engag\195\169."):format(boss),
 
-	blizzard = "Alerte Blizzard",
-	blizzard_desc = "Pr\195\169viens de l'incantation du Blizzard.",
+	blizzard = "Blizzard",
+	blizzard_desc = "Pr\195\169viens quand Blizzard est incant\195\169.",
 
-	pull = "Alerte Attraction / Sort de zone",
+	pull = "Attraction/Sort de zone",
 	pull_desc = "Pr\195\169viens de l'attraction magn\195\169tique et de l'explosion des arcanes.",
 
-	flame = "Alerte Couronne de flammes",
-	flame_desc = "Pr\195\169viens de l'incantation de Couronne de flammes.",
+	flame = "Couronne de flammes",
+	flame_desc = "Pr\195\169viens quand Couronne de flammes est incant\195\169.",
 
-	adds_message = "El\195\169mentaires Imminent !",
+	adds_message = "El\195\169mentaires imminent !",
 	adds_warning = "El\195\169mentaires bient\195\180t",
 	adds_trigger = "Je ne suis pas encore vaincu\194\160! Non, j\226\128\153ai encore quelques tours dans mon sac\226\128\166",
 	adds_bar = "El\195\169mentaires",
@@ -148,7 +148,7 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger1 = "Je refuse d'\195\170tre \195\160 nouveau tortur\195\169\194\160!",
 	engage_trigger2 = "Qui \195\170tes-vous\194\160? Qu\226\128\153est-ce que vous voulez\194\160? Ne m\226\128\153approchez pas\194\160!",
 	engage_trigger3 = "Je vous en supplie, arr\195\170tez\194\160! Mon fils\226\128\166 est devenu fou\194\160!",
-	engage_message = "%s Engag\195\169",
+	engage_message = "%s engag\195\169",
 
 	blizzard_trigger1 = "Retournez dans les t\195\169n\195\168bres glaciales\194\160!",
 	blizzard_trigger2 = "Je vais tous vous congeler\194\160!",
@@ -159,13 +159,13 @@ L:RegisterTranslations("frFR", function() return {
 	pull_trigger2 = "Je ne suis pas un simple bouffon\194\160! Je suis Niels Aran\194\160!",
 	pull_bar = "Explosion des Arcanes",
 
-	flame_warning = "Incantation de Couronne de flammes !",
+	flame_warning = "Incante : Couronne de flammes !",
 	flame_trigger1 = "Je vais vous montrer que ce chien battu a encore de bons crocs\194\160!",
 	flame_trigger2 = "Br\195\187lez, d\195\169mons de l\226\128\153enfer\194\160!",
 
 	flame_message = "Couronne de flammes !",
 	flame_bar = "Couronne de flammes",
-	flame_trigger = "commence \195\160 lancer Couronne de flammes",
+	flame_trigger = "lance Couronne de flammes",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

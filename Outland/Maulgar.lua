@@ -96,20 +96,21 @@ L:RegisterTranslations("frFR", function() return {
 	shield_trigger = "gagne Mot de pouvoir sup\195\169rieur\194\160: Bouclier",
 	shield_message = "Bouclier sur Oeillaveugle !",
 
-	spellshield_trigger = "gagne Bouclier anti-sort%.",
+	spellshield_trigger = "gagne Bouclier anti-sort",
 	spellshield_message = "Bouclier anti-sort sur Krosh !",
 
 	summon_trigger = "commence \195\160 lancer Invocation d'un chasseur corrompu sauvage.",
-	summon_message = "Chasseur corrompu invoqu\195\169 !",
+	summon_message = "Chasseur corrompu en cours d'invocation !",
+	summon_bar = "~Prochain Chasseur corrompu",
 
 	flurry_trigger = "Vous ne terrasserez pas la main de Gruul\194\160!",
 	flurry_message = "50% - Rafale !",
 	flurry_warning = "Rafale imminente !",
 
-	whirlwind_trigger = "gagne Tourbillon%.",
+	whirlwind_trigger = "gagne Tourbillon",
 	whirlwind_message = "Maulgar - Toubillon pendant 15 sec. !",
 	whirlwind_bar = "Tourbillon",
-	whirlwind_nextbar = "Prochain Tourbillon",
+	whirlwind_nextbar = "~Prochain Tourbillon",
 	whirlwind_warning1 = "Maulgar engag\195\169 - Tourbillon dans ~50 sec. !",
 	whirlwind_warning2 = "Tourbillon imminent !",
 
