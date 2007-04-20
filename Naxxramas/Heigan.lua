@@ -216,7 +216,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_EMOTE( msg )
 	if msg == L["die_trigger"] then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], boss), "Bosskill", nil, "Victory") end
+		if self.db.profile.bosskill then self:Message(string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], boss), "Bosskill", nil, "Victory") end
 		BigWigs:ToggleModuleActive(self, false)
 	end
 end
@@ -224,16 +224,16 @@ end
 function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if msg:find(L["starttrigger"]) or msg:find(L["starttrigger2"]) or msg:find(L["starttrigger3"]) then
 		if self.db.profile.engage then
-			self:TriggerEvent("BigWigs_Message", L["engage_message"], "Important")
+			self:Message(L["engage_message"], "Important")
 		end
 		if self.db.profile.teleport then
-			self:TriggerEvent("BigWigs_StartBar", self, L["teleport_bar"], self.toPlatformTime, "Interface\\Icons\\Spell_Arcane_Blink")
+			self:Bar(L["teleport_bar"], self.toPlatformTime, "Spell_Arcane_Blink")
 			self:ScheduleEvent("bwheiganwarn1", "BigWigs_Message", self.toPlatformTime-60, L["teleport_1min_message"], "Attention")
 			self:ScheduleEvent("bwheiganwarn2", "BigWigs_Message", self.toPlatformTime-30, L["teleport_30sec_message"], "Urgent")
 			self:ScheduleEvent("bwheiganwarn3", "BigWigs_Message", self.toPlatformTime-10, L["teleport_10sec_message"], "Important")
 		end
 	elseif msg:find(L["teleport_trigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "HeiganTeleport")
+		self:Sync("HeiganTeleport")
 	end
 end
 
@@ -243,18 +243,18 @@ function mod:BigWigs_RecvSync( sync )
 	self:ScheduleEvent( self.BackToRoom, self.toRoomTime, self )
 
 	if self.db.profile.teleport then
-		self:TriggerEvent("BigWigs_Message", string.format(L["on_platform_message"], self.toRoomTime), "Attention")
+		self:Message(string.format(L["on_platform_message"], self.toRoomTime), "Attention")
 		self:ScheduleEvent("bwheiganwarn2","BigWigs_Message", self.toRoomTime-30, L["to_floor_30sec_message"], "Urgent")
 		self:ScheduleEvent("bwheiganwarn3","BigWigs_Message", self.toRoomTime-10, L["to_floor_10sec_message"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["back_bar"], self.toRoomTime, "Interface\\Icons\\Spell_Magic_LesserInvisibilty")
+		self:Bar(L["back_bar"], self.toRoomTime, "Spell_Magic_LesserInvisibilty")
 	end
 end
 
 function mod:BackToRoom()
 	if self.db.profile.teleport then
-		self:TriggerEvent("BigWigs_Message", L["on_floor_message"], "Attention")
+		self:Message(L["on_floor_message"], "Attention")
 		self:ScheduleEvent("bwheiganwarn2","BigWigs_Message", self.toPlatformTime-30, L["teleport_30sec_message"], "Urgent")
 		self:ScheduleEvent("bwheiganwarn3","BigWigs_Message", self.toPlatformTime-10, L["teleport_10sec_message"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["teleport_bar"], self.toPlatformTime, "Interface\\Icons\\Spell_Arcane_Blink")
+		self:Bar(L["teleport_bar"], self.toPlatformTime, "Spell_Arcane_Blink")
 	end
 end

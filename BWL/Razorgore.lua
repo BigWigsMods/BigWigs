@@ -195,22 +195,22 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["start_trigger"]) then
 		if self.db.profile.phase then
-			self:TriggerEvent("BigWigs_Message", L["start_message"], "Urgent")
-			self:TriggerEvent("BigWigs_StartBar", self, L["start_mob"], 45, "Interface\\Icons\\Spell_Holy_PrayerOfHealing")
+			self:Message(L["start_message"], "Urgent")
+			self:Bar(L["start_mob"], 45, "Spell_Holy_PrayerOfHealing")
 			self:ScheduleEvent("BigWigs_Message", 40, L["start_soon"], "Important")
 		end
 		eggs = 0
 	elseif self.db.profile.mc then
 		local player = select(3, msg:find(L["mindcontrol_trigger"]))
 		if player then
-			self:TriggerEvent("BigWigs_Message", string.format(L["mindcontrol_message"], player), "Important")
+			self:Message(string.format(L["mindcontrol_message"], player), "Important")
 		end
 	end
 end
 
 function mod:CHAT_MSG_SPELL_FRIENDLYPLAYER_BUFF(msg)
 	if msg:find(L["egg_trigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "RazorgoreEgg "..tostring(eggs + 1))
+		self:Sync("RazorgoreEgg "..tostring(eggs + 1))
 	end
 end
 
@@ -221,11 +221,11 @@ function mod:BigWigs_RecvSync(sync, rest)
 	if rest == (eggs + 1) then
 		eggs = eggs + 1
 		if not self.db.profile.eggs then
-			self:TriggerEvent("BigWigs_Message", string.format(L["egg_message"], eggs), "Positive")
+			self:Message(string.format(L["egg_message"], eggs), "Positive")
 		end
 
 		if eggs == 30 and self.db.profile.phase then
-			self:TriggerEvent("BigWigs_Message", L["phase2_message"], "Important")
+			self:Message(L["phase2_message"], "Important")
 		end
 	end
 end

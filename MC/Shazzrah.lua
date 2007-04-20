@@ -142,22 +142,22 @@ end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if (msg:find(L["trigger2"])) then
-		self:TriggerEvent("BigWigs_SendSync", "ShazzrahDeadenMagic")
+		self:Sync("ShazzrahDeadenMagic")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if (msg:find(L["trigger1"])) then
-		self:TriggerEvent("BigWigs_SendSync", "ShazzrahBlink")
+		self:Sync("ShazzrahBlink")
 	end
 end
 
 function mod:BigWigs_RecvSync(sync)
 	if (sync == "ShazzrahBlink" and self.db.profile.blink) then
-		self:TriggerEvent("BigWigs_Message", L["warn1"], "Important")
+		self:Message(L["warn1"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 40, L["warn2"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 45, "Interface\\Icons\\Spell_Arcane_Blink")
+		self:Bar(L["bar1text"], 45, "Spell_Arcane_Blink")
 	elseif (sync == "ShazzrahDeadenMagic" and self.db.profile.selfbuff) then
-		self:TriggerEvent("BigWigs_Message", L["warn3"], "Important")
+		self:Message(L["warn3"], "Important")
 	end
 end

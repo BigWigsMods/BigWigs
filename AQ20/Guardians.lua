@@ -247,18 +247,18 @@ end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if self.db.profile.explode and msg == L["explodetrigger"] then 
-		self:TriggerEvent("BigWigs_Message", L["explodewarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["explodewarn"], 6, "Interface\\Icons\\Spell_Fire_SelfDestruct")
+		self:Message(L["explodewarn"], "Important")
+		self:Bar(L["explodewarn"], 6, "Spell_Fire_SelfDestruct")
 	elseif self.db.profile.enrage and msg == L["enragetrigger"] then 
-		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
+		self:Message(L["enragewarn"], "Important")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	if self.db.profile.summon and msg == L["summonguardtrigger"] then 
-		self:TriggerEvent("BigWigs_Message", L["summonguardwarn"], "Attention")
+		self:Message(L["summonguardwarn"], "Attention")
 	elseif self.db.profile.summon and msg == L["summonwarriortrigger"] then 
-		self:TriggerEvent("BigWigs_Message", L["summonwarriorwarn"], "Attention")
+		self:Message(L["summonwarriorwarn"], "Attention")
 	end
 end
 
@@ -266,15 +266,15 @@ function mod:CheckPlague( msg )
 	local player, type = select(3, msg:find(L["plaguetrigger"]))
 	if player and type then
 		if self.db.profile.plagueyou and player == L["you"] and type == L["are"] then
-			self:TriggerEvent("BigWigs_Message", L["plaguewarnyou"], "Personal", true)
-			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["plaguewarn"], "Attention", nil, nil, true )
+			self:Message(L["plaguewarnyou"], "Personal", true)
+			self:Message(UnitName("player") .. L["plaguewarn"], "Attention", nil, nil, true )
 		elseif self.db.profile.plagueother then
-			self:TriggerEvent("BigWigs_Message", player .. L["plaguewarn"], "Attention")
-			self:TriggerEvent("BigWigs_SendTell", player, L["plaguewarnyou"])
+			self:Message(player .. L["plaguewarn"], "Attention")
+			self:Whisper(player, L["plaguewarnyou"])
 		end
 
 		if self.db.profile.icon then
-			self:TriggerEvent("BigWigs_SetRaidIcon", player)
+			self:Icon(player)
 		end
 	end
 end

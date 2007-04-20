@@ -136,15 +136,15 @@ function mod:CHAT_MSG_MONSTER_YELL( msg )
 	local n = select(3, msg:find(L["mark_trigger"]))
 	if n then
 		if n == playerName and self.db.profile.youmark then
-			self:TriggerEvent("BigWigs_Message", L["mark_warning_self"], "Important", true, "Alarm")
-			self:TriggerEvent("BigWigs_Message", string.format(L["mark_warning_other"], UnitName("player")), "Attention", nil, nil, true)
+			self:Message(L["mark_warning_self"], "Important", true, "Alarm")
+			self:Message(string.format(L["mark_warning_other"], UnitName("player")), "Attention", nil, nil, true)
 		elseif self.db.profile.othermark then
-			self:TriggerEvent("BigWigs_Message", string.format(L["mark_warning_other"], n), "Attention")
-			self:TriggerEvent("BigWigs_SendTell", n, L["mark_warning_self"])
+			self:Message(string.format(L["mark_warning_other"], n), "Attention")
+			self:Whisper(n, L["mark_warning_self"])
 		end
 
 		if self.db.profile.icon then
-			self:TriggerEvent("BigWigs_SetRaidIcon", n)
+			self:Icon(n)
 		end
 
 	end

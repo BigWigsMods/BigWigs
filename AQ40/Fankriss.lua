@@ -94,7 +94,7 @@ end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg == L["wormtrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "FankrissWormSpawn "..tostring(worms + 1) )
+		self:Sync("FankrissWormSpawn "..tostring(worms + 1) )
 	end
 end
 
@@ -108,8 +108,8 @@ function mod:BigWigs_RecvSync(sync, rest)
 		-- or you reset your module and the rest doesn't. Anyway. it'll work a lot better than anything else.
 		worms = worms + 1
 		if self.db.profile.worm then
-			self:TriggerEvent("BigWigs_Message", string.format(L["wormwarn"], worms), "Urgent")
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["wormbar"], worms), 20, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+			self:Message(string.format(L["wormwarn"], worms), "Urgent")
+			self:Bar(string.format(L["wormbar"], worms), 20, "Spell_Shadow_UnholyFrenzy")
 		end	
 	end
 end

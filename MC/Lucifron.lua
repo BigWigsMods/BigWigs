@@ -225,14 +225,14 @@ end
 
 function mod:Event(msg)
 	if (not prior1 and msg:find(L["curse_trigger"]) and self.db.profile.curse) then
-		self:TriggerEvent("BigWigs_Message", L["curse_message"], "Important")
+		self:Message(L["curse_message"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 15, L["curse_warn"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["curse_bar"], 20, "Interface\\Icons\\Spell_Shadow_BlackPlague")
+		self:Bar(L["curse_bar"], 20, "Spell_Shadow_BlackPlague")
 		prior1 = true
 	elseif (not prior2 and msg:find(L["doom_trigger"]) and self.db.profile.doom) then
-		self:TriggerEvent("BigWigs_Message", L["doom_message"], "Important")
+		self:Message(L["doom_message"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 15, L["doom_warn"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["doom_bar"], 20, "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
+		self:Bar(L["doom_bar"], 20, "Spell_Shadow_NightOfTheDead")
 		prior2 = true
 	end
 end
@@ -249,11 +249,11 @@ function mod:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
 			mcplayer = UnitName("player")
 		end
 		if self.db.profile.mc then
-			self:TriggerEvent("BigWigs_Message", string.format(L["mc_message"], mcplayer), "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mc_bar"], mcplayer), 15, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
+			self:Message(string.format(L["mc_message"], mcplayer), "Important")
+			self:Bar(string.format(L["mc_bar"], mcplayer), 15, "Spell_Shadow_ShadowWordDominate")
 		end
 		if self.db.profile.icon then
-			self:TriggerEvent("BigWigs_SetRaidIcon", mcplayer)
+			self:Icon(mcplayer)
 		end
 	end
 end

@@ -5,8 +5,8 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Majordomo Executus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
-local Texture1 = "Interface\\Icons\\Spell_Frost_FrostShock"
-local Texture2 = "Interface\\Icons\\Spell_Shadow_AntiShadow"
+local Texture1 = "Spell_Frost_FrostShock"
+local Texture2 = "Spell_Shadow_AntiShadow"
 local aura
 
 ----------------------------
@@ -195,7 +195,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["disabletrigger"] then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory") end
+		if self.db.profile.bosskill then self:Message(string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], self:ToString()), "Bosskill", nil, "Victory") end
 		BigWigs:ToggleModuleActive(self, false)
 	end
 end
@@ -210,16 +210,16 @@ end
 
 function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 	if msg:find(L["trigger3"]) or msg:find(L["trigger4"]) and aura then
-		self:TriggerEvent("BigWigs_Message", aura == 1 and L["warn4"] or L["warn5"], "Attention")
+		self:Message(aura == 1 and L["warn4"] or L["warn5"], "Attention")
 		aura = nil
 	end
 end
 
 function mod:NewPowers(power)
 	aura = power
-	self:TriggerEvent("BigWigs_Message", power == 1 and L["warn1"] or L["warn2"], "Important")
-	self:TriggerEvent("BigWigs_StartBar", self, L["bar3text"], 30, "Interface\\Icons\\Spell_Frost_Wisp")
-	self:TriggerEvent("BigWigs_StartBar", self, power == 1 and L["bar1text"] or L["bar2text"], 10, power == 1 and Texture1 or Texture2)
+	self:Message(power == 1 and L["warn1"] or L["warn2"], "Important")
+	self:Bar(L["bar3text"], 30, "Spell_Frost_Wisp")
+	self:Bar(power == 1 and L["bar1text"] or L["bar2text"], 10, power == 1 and Texture1 or Texture2)
 	self:ScheduleEvent("BigWigs_Message", 25, L["warn3"], "Urgent")
 end
 

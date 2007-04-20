@@ -154,11 +154,11 @@ function mod:MSEvent(msg)
 	local player, type = select(3, msg:find(L["trigger1"]))
 	if player and type then
 		if player == L["you"] and type == L["are"] and self.db.profile.youms then
-			self:TriggerEvent("BigWigs_Message", L["warn1"], "Personal", true)
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["warn2"], UnitName("player")), 5, "Interface\\Icons\\Ability_Warrior_SavageBlow")
+			self:Message(L["warn1"], "Personal", true)
+			self:Bar(string.format(L["warn2"], UnitName("player")), 5, "Ability_Warrior_SavageBlow")
 		elseif self.db.profile.elsems then
-			self:TriggerEvent("BigWigs_Message", string.format(L["warn2"], player), "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["warn2"], player), 5, "Interface\\Icons\\Ability_Warrior_SavageBlow")
+			self:Message(string.format(L["warn2"], player), "Attention")
+			self:Bar(string.format(L["warn2"], player), 5, "Ability_Warrior_SavageBlow")
 		end
 	end
 end

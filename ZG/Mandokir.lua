@@ -146,7 +146,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg:find(L["enrage_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["enraged_message"], "Urgent")
+		self:Message(L["enraged_message"], "Urgent")
 	end
 end
 
@@ -154,14 +154,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	local n = select(3, msg:find(L["watch_trigger"]))
 	if n then
 		if n == UnitName("player") and self.db.profile.you then
-			self:TriggerEvent("BigWigs_Message", L["watched_warning_self"], "Personal", true, "Alarm")
-			self:TriggerEvent("BigWigs_Message", string.format(L["watched_warning_other"], UnitName("player")), "Attention", nil, nil, true)
+			self:Message(L["watched_warning_self"], "Personal", true, "Alarm")
+			self:Message(string.format(L["watched_warning_other"], UnitName("player")), "Attention", nil, nil, true)
 		elseif self.db.profile.other then
-			self:TriggerEvent("BigWigs_Message", string.format(L["watched_warning_other"], n), "Attention")
-			self:TriggerEvent("BigWigs_SendTell", n, L["watched_warning_self"])
+			self:Message(string.format(L["watched_warning_other"], n), "Attention")
+			self:Whisper(n, L["watched_warning_self"])
 		end
 		if self.db.profile.icon then
-			self:TriggerEvent("BigWigs_SetRaidIcon", n)
+			self:Icon(n)
 		end
 	end
 end

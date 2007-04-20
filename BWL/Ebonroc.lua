@@ -248,9 +248,9 @@ end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg == L["shadowflame_trigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "EbonrocShadowflame")
+		self:Sync("EbonrocShadowflame")
 	elseif msg:find(L["wingbuffet_trigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "EbonrocWingBuffet2")
+		self:Sync("EbonrocWingBuffet2")
 	end
 end
 
@@ -262,14 +262,14 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 		if self.db.profile.wingbuffet then
 			self:ScheduleEvent("BigWigs_Message", 24, L["wingbuffet_approx"], "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 29, "Interface\\Icons\\Spell_Fire_SelfDestruct")
+			self:Bar(L["wingbuffet_bar"], 29, "Spell_Fire_SelfDestruct")
 		end
 	elseif sync == "EbonrocWingBuffet2" and self.db.profile.wingbuffet then
-		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Important")
+		self:Message(L["wingbuffet_message"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 29, L["wingbuffet_warning"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct")
+		self:Bar(L["wingbuffet_bar"], 32, "Spell_Fire_SelfDestruct")
 	elseif sync == "EbonrocShadowflame" and self.db.profile.shadowflame then
-		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Important")
+		self:Message(L["shadowflame_warning"], "Important")
 	end
 end
 
@@ -277,14 +277,14 @@ function mod:Event(msg)
 	local player, type = select(3, msg:find(L["shadowcurse_trigger"]))
 	if (player and type) then
 		if (player == L["you"] and type == L["are"] and self.db.profile.youcurse) then
-			self:TriggerEvent("BigWigs_Message", L["shadowflame_message_you"], "Personal", true)
-			self:TriggerEvent("BigWigs_Message", UnitName("player") ..  L["shadowflame_message_other"], "Attention", nil, nil, true )
+			self:Message(L["shadowflame_message_you"], "Personal", true)
+			self:Message(UnitName("player") ..  L["shadowflame_message_other"], "Attention", nil, nil, true )
 		elseif (self.db.profile.elsecurse) then
-			self:TriggerEvent("BigWigs_Message", player .. L["shadowflame_message_other"], "Attention")
-			self:TriggerEvent("BigWigs_SendTell", player, L["shadowflame_message_you"])
+			self:Message(player .. L["shadowflame_message_other"], "Attention")
+			self:Whisper(player, L["shadowflame_message_you"])
 		end
 		if self.db.profile.shadowbar then
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["shadowcurse_bar"], player), 8, "Interface\\Icons\\Spell_Shadow_GatherShadows")
+			self:Bar(string.format(L["shadowcurse_bar"], player), 8, "Spell_Shadow_GatherShadows")
 		end
 	end
 end

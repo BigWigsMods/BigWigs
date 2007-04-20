@@ -244,7 +244,7 @@ end
 
 function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if msg == string.format(UNITDIESOTHER, L["sonofflame"]) then
-		self:TriggerEvent("BigWigs_SendSync", "RagnarosSonDead "..tostring(self.sonsdead + 1) )
+		self:Sync("RagnarosSonDead "..tostring(self.sonsdead + 1) )
 	else
 		self:GenericBossDeath(msg)
 	end
@@ -263,7 +263,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if rest == (self.sonsdead + 1) then
 			self.sonsdead = self.sonsdead + 1
 			if self.db.profile.sondeath then
-				self:TriggerEvent("BigWigs_Message", string.format(L["sonsdeadwarn"], self.sonsdead), "Urgent")
+				self:Message(string.format(L["sonsdeadwarn"], self.sonsdead), "Urgent")
 			end
 			if self.sonsdead == 8 then
 				self:CancelScheduledEvent("bwragnarosemerge")
@@ -277,9 +277,9 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["knockback_trigger"]) and self.db.profile.aoeknock then
-		self:TriggerEvent("BigWigs_Message", L["knockback_message"], "Important")
+		self:Message(L["knockback_message"], "Important")
 		self:ScheduleEvent("bwragnarosaekbwarn", "BigWigs_Message", 23, L["knockback_soon_message"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["knockback_bar"], 28, "Interface\\Icons\\Spell_Fire_SoulBurn")
+		self:Bar(L["knockback_bar"], 28, "Spell_Fire_SoulBurn")
 	elseif msg:find(L["submerge_trigger"]) then
 		self:Submerge()
 	end
@@ -290,11 +290,11 @@ function mod:Submerge()
 	self:TriggerEvent("BigWigs_StopBar", self, L["knockback_bar"])
 
 	if self.db.profile.submerge then
-		self:TriggerEvent("BigWigs_Message", L["submerge_message"], "Important")
+		self:Message(L["submerge_message"], "Important")
 	end
 	if self.db.profile.emerge then
 		self:ScheduleEvent("bwragnarosemergewarn", "BigWigs_Message", 75, L["emerge_soon_message"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["emerge_bar"], 90, "Interface\\Icons\\Spell_Fire_Volcano")
+		self:Bar(L["emerge_bar"], 90, "Spell_Fire_Volcano")
 	end
 	self:ScheduleRepeatingEvent("bwragnarosemergecheck", self.EmergeCheck, 2, self)
 	self:ScheduleEvent("bwragnarosemerge", self.Emerge, 90, self)
@@ -321,11 +321,11 @@ function mod:Emerge()
 	self:TriggerEvent("BigWigs_StopBar", self, L["emerge_bar"])
 
 	if self.db.profile.emerge then
-		self:TriggerEvent("BigWigs_Message", L["emerge_message"], "Attention")
+		self:Message(L["emerge_message"], "Attention")
 	end
 	if self.db.profile.submerge then
 		self:ScheduleEvent("BigWigs_Message", 120, L["submerge_60sec_message"], "Urgent")
 		self:ScheduleEvent("BigWigs_Message", 160, L["submerge_20sec_message"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["submerge_bar"], 180, "Interface\\Icons\\Spell_Fire_SelfDestruct")
+		self:Bar(L["submerge_bar"], 180, "Spell_Fire_SelfDestruct")
 	end
 end

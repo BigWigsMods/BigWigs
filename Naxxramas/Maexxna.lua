@@ -230,7 +230,7 @@ end
 
 function mod:SprayEvent( msg )
 	if msg:find(L["webspraytrigger"]) and not prior then
-		self:TriggerEvent("BigWigs_SendSync", "MaexxnaWebspray")
+		self:Sync("MaexxnaWebspray")
 	elseif msg:find(L["cocoontrigger"]) then
 		local wplayer,wtype = select(3, msg:find(L["cocoontrigger"]))
 		if wplayer and wtype then
@@ -239,7 +239,7 @@ function mod:SprayEvent( msg )
 			end
 			local t = GetTime()
 			if ( not times[wplayer] ) or ( times[wplayer] and ( times[wplayer] + 10 ) < t) then
-				self:TriggerEvent("BigWigs_SendSync", "MaexxnaCocoon "..wplayer)
+				self:Sync("MaexxnaCocoon "..wplayer)
 			end
 		end
 	end
@@ -259,30 +259,30 @@ function mod:BigWigs_RecvSync( sync, rest )
 		self:CancelScheduledEvent("bwmaexxna10")
 		self:CancelScheduledEvent("bwmaexxna5")
 
-		self:TriggerEvent("BigWigs_Message", L["webspraywarn"], "Important")
+		self:Message(L["webspraywarn"], "Important")
 		self:ScheduleEvent("bwmaexxna30", "BigWigs_Message", 10, L["webspraywarn30sec"], "Attention")
 		self:ScheduleEvent("bwmaexxna20", "BigWigs_Message", 20, L["webspraywarn20sec"], "Attention")
 		self:ScheduleEvent("bwmaexxna10", "BigWigs_Message", 30, L["webspraywarn10sec"], "Attention")
 		self:ScheduleEvent("bwmaexxna5", "BigWigs_Message", 35, L["webspraywarn5sec"], "Attention")
-		self:TriggerEvent("BigWigs_StartBar", self, L["cocoonbar"], 20, "Interface\\Icons\\Spell_Nature_Web" )
-		self:TriggerEvent("BigWigs_StartBar", self, L["spiderbar"], 30, "Interface\\Icons\\INV_Misc_MonsterSpiderCarapace_01" )
-		self:TriggerEvent("BigWigs_StartBar", self, L["webspraybar"], 40, "Interface\\Icons\\Ability_Ensnare" )
+		self:Bar(L["cocoonbar"], 20, "Spell_Nature_Web" )
+		self:Bar(L["spiderbar"], 30, "INV_Misc_MonsterSpiderCarapace_01" )
+		self:Bar(L["webspraybar"], 40, "Ability_Ensnare" )
 	elseif sync == "MaexxnaCocoon" then
 		local t = GetTime()
 		if ( not times[rest] ) or ( times[rest] and ( times[rest] + 10 ) < t) then
-			if self.db.profile.cocoon then self:TriggerEvent("BigWigs_Message", string.format(L["cocoonwarn"], rest), "Urgent" ) end
+			if self.db.profile.cocoon then self:Message(string.format(L["cocoonwarn"], rest), "Urgent" ) end
 			times[rest] = t
 		end
 	elseif sync == "MaexxnaEnrage" then
 		if self.db.profile.enrage then
-			self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
+			self:Message(L["enragewarn"], "Important")
 		end
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE( msg )
 	if msg == L["enragetrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "MaexxnaEnrage")
+		self:Sync("MaexxnaEnrage")
 	end
 end
 
@@ -290,7 +290,7 @@ function mod:UNIT_HEALTH( msg )
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if (health > 30 and health <= 33 and not self.enrageannounced) then
-			if self.db.profile.enrage then self:TriggerEvent("BigWigs_Message", L["enragesoonwarn"], "Important") end
+			if self.db.profile.enrage then self:Message(L["enragesoonwarn"], "Important") end
 			self.enrageannounced = true
 		elseif (health > 40 and self.enrageannounced) then
 			self.enrageannounced = nil

@@ -273,8 +273,8 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		if self.db.profile.enrage then
-			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["enragebar"], 720, "Interface\\Icons\\INV_Shield_01")
+			self:Message(L["startwarn"], "Attention")
+			self:Bar(L["enragebar"], 720, "INV_Shield_01")
 			self:ScheduleEvent("bwgrobbulusenragewarn1", "BigWigs_Message", 120, L["enrage10min"], "Attention")
 			self:ScheduleEvent("bwgrobbulusenragewarn2", "BigWigs_Message", 420, L["enrage5min"], "Urgent")
 			self:ScheduleEvent("bwgrobbulusenragewarn3", "BigWigs_Message", 660, L["enrage1min"], "Important")
@@ -284,28 +284,28 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 	elseif sync == "GrobbulusInject" and rest then
 		local player = rest
 		if self.db.profile.youinjected and player == UnitName("player") then
-			self:TriggerEvent("BigWigs_Message", L["bomb_message_you"], "Personal", true, "Alarm")
-			self:TriggerEvent("BigWigs_Message", string.format(L["bomb_message_other"], player), "Attention", nil, nil, true)
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["bomb_bar"], player), 10,"Interface\\Icons\\Spell_Shadow_CallofBone")
+			self:Message(L["bomb_message_you"], "Personal", true, "Alarm")
+			self:Message(string.format(L["bomb_message_other"], player), "Attention", nil, nil, true)
+			self:Bar(string.format(L["bomb_bar"], player), 10,"Spell_Shadow_CallofBone")
 		elseif self.db.profile.otherinjected then
-			self:TriggerEvent("BigWigs_Message", string.format(L["bomb_message_other"], player), "Attention")
-			self:TriggerEvent("BigWigs_SendTell", player, L["bomb_message_you"])
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["bomb_bar"], player), 10,"Interface\\Icons\\Spell_Shadow_CallofBone")
+			self:Message(string.format(L["bomb_message_other"], player), "Attention")
+			self:Whisper(player, L["bomb_message_you"])
+			self:Bar(string.format(L["bomb_bar"], player), 10,"Spell_Shadow_CallofBone")
 		end
 		if self.db.profile.icon then
-			self:TriggerEvent("BigWigs_SetRaidIcon", player)
+			self:Icon(player)
 		end
 	elseif sync == "GrobbulusCloud" then
 		if self.db.profile.cloud then
-			self:TriggerEvent("BigWigs_Message", L["cloud_warn"], "Urgent")
-			self:TriggerEvent("BigWigs_StartBar", self, L["cloud_bar"], 15, "Interface\\Icons\\Ability_Creature_Disease_02")
+			self:Message(L["cloud_warn"], "Urgent")
+			self:Bar(L["cloud_bar"], 15, "Ability_Creature_Disease_02")
 		end
 	end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	if  msg:find(L["cloud_trigger"] ) then
-		self:TriggerEvent("BigWigs_SendSync", "GrobbulusCloud")
+		self:Sync("GrobbulusCloud")
 	end
 end
 
@@ -315,6 +315,6 @@ function mod:InjectEvent( msg )
 		if eplayer == L["you"] and etype == L["are"] then
 			eplayer = UnitName("player")
 		end
-		self:TriggerEvent("BigWigs_SendSync", "GrobbulusInject "..eplayer)
+		self:Sync("GrobbulusInject "..eplayer)
 	end
 end

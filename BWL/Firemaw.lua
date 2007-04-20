@@ -151,9 +151,9 @@ end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["wingbuffet_trigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "FiremawWingBuffet2")
+		self:Sync("FiremawWingBuffet2")
 	elseif msg == L["shadowflame_trigger"] then 
-		self:TriggerEvent("BigWigs_SendSync", "FiremawShadowflame")
+		self:Sync("FiremawShadowflame")
 	end
 end
 
@@ -165,14 +165,14 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 		if self.db.profile.wingbuffet then
 			self:ScheduleEvent("BigWigs_Message", 24, L["wingbuffet_approx"], "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 29, "Interface\\Icons\\Spell_Fire_SelfDestruct")
+			self:Bar(L["wingbuffet_bar"], 29, "Spell_Fire_SelfDestruct")
 		end
 	elseif sync == "FiremawWingBuffet2" and self.db.profile.wingbuffet then
-		self:TriggerEvent("BigWigs_Message", L["wingbuffet_message"], "Important")
+		self:Message(L["wingbuffet_message"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 29, L["wingbuffet_warning"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["wingbuffet_bar"], 32, "Interface\\Icons\\Spell_Fire_SelfDestruct")
+		self:Bar(L["wingbuffet_bar"], 32, "Spell_Fire_SelfDestruct")
 	elseif sync == "FiremawShadowflame" and self.db.profile.shadowflame then
-		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Important")
+		self:Message(L["shadowflame_warning"], "Important")
 	end
 end
 

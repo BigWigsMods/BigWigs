@@ -270,7 +270,7 @@ end
 
 function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if msg == string.format(UNITDIESOTHER, veklor) or msg == string.format(UNITDIESOTHER, veknilash) then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s have been defeated"], boss), "Bosskill", nil, "Victory") end
+		if self.db.profile.bosskill then self:Message(string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s have been defeated"], boss), "Bosskill", nil, "Victory") end
 		BigWigs:ToggleModuleActive(self, false)
 	end
 end
@@ -284,13 +284,13 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.teleport then
 			self:ScheduleEvent("BigWigs_Message", 20, L["portdelaywarn2"], "Urgent")
 			self:ScheduleEvent("BigWigs_Message", 25, L["portdelaywarn"], "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 30, "Interface\\Icons\\Spell_Arcane_Blink")
+			self:Bar(L["bartext"], 30, "Spell_Arcane_Blink")
 
 			self:ScheduleEvent("bwtwinscannercooldown", self.StartTargetScanner, 20, self)
 		end
 		if self.db.profile.enrage then
-			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["enragebartext"], 900, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+			self:Message(L["startwarn"], "Important")
+			self:Bar(L["enragebartext"], 900, "Spell_Shadow_UnholyFrenzy")
 			self:ScheduleEvent("bwtwinswarn1", "BigWigs_Message", 300, L["warn1"], "Attention")
 			self:ScheduleEvent("bwtwinswarn2", "BigWigs_Message", 600, L["warn2"], "Attention")
 			self:ScheduleEvent("bwtwinswarn3", "BigWigs_Message", 720, L["warn3"], "Attention")
@@ -303,10 +303,10 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:CancelScheduledEvent("bwtwinscanner")
 		self:CancelScheduledEvent("bwtwinscannercooldown")
 
-		self:TriggerEvent("BigWigs_Message", L["portwarn"], "Attention")
+		self:Message(L["portwarn"], "Attention")
 		self:ScheduleEvent("BigWigs_Message", 20, L["portdelaywarn2"], "Urgent")
 		self:ScheduleEvent("BigWigs_Message", 25, L["portdelaywarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 30, "Interface\\Icons\\Spell_Arcane_Blink")
+		self:Bar(L["bartext"], 30, "Spell_Arcane_Blink")
 
 		self:ScheduleEvent("bwtwinscannercooldown", self.StartTargetScanner, 20, self)
 	end
@@ -314,21 +314,21 @@ end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["porttrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "TwinsTeleport")
+		self:Sync("TwinsTeleport")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if msg:find(L["explodebugtrigger"]) and self.db.profile.bug then
-		self:TriggerEvent("BigWigs_Message", L["explodebugwarn"], "Personal", true)
+		self:Message(L["explodebugwarn"], "Personal", true)
 	elseif msg:find(L["porttrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "TwinsTeleport")
+		self:Sync("TwinsTeleport")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if not self.prior and (msg:find(L["healtrigger1"]) or msg:find(L["healtrigger2"])) and self.db.profile.heal then
-		self:TriggerEvent("BigWigs_Message", L["healwarn"], "Important")
+		self:Message(L["healwarn"], "Important")
 		self.prior = true
 		self:ScheduleEvent(function() mod.prior = nil end, 10)
 	end
@@ -336,7 +336,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if (msg:find(L["enragetrigger"]) and self.db.profile.enrage) then
-		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
+		self:Message(L["enragewarn"], "Important")
 	end
 end
 
@@ -409,6 +409,6 @@ function mod:RepeatedScanner()
 	if not found or targetTarget then return end
 
 	self:CancelScheduledEvent("bwtwinscanner")
-	self:TriggerEvent("BigWigs_SendSync", "TwinsTeleport")
+	self:Sync("TwinsTeleport")
 end
 

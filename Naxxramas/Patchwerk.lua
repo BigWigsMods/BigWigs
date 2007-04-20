@@ -159,8 +159,8 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.enrage and ( msg == L["starttrigger1"] or msg == L["starttrigger2"] ) then
-		self:TriggerEvent("BigWigs_Message", L["startwarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["enragebartext"], 420, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+		self:Message(L["startwarn"], "Important")
+		self:Bar(L["enragebartext"], 420, "Spell_Shadow_UnholyFrenzy")
 		self:ScheduleEvent("bwpatchwarn1", "BigWigs_Message", 120, L["warn1"], "Attention")
 		self:ScheduleEvent("bwpatchwarn2", "BigWigs_Message", 240, L["warn2"], "Attention")
 		self:ScheduleEvent("bwpatchwarn3", "BigWigs_Message", 330, L["warn3"], "Urgent")
@@ -173,7 +173,7 @@ end
 function mod:CHAT_MSG_MONSTER_EMOTE( msg )
 	if msg == L["enragetrigger"] then
 		if self.db.profile.enrage then
-			self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
+			self:Message(L["enragewarn"], "Important")
 		end
 		self:TriggerEvent("BigWigs_StopBar", self, L["enragebartext"])
 		self:CancelScheduledEvent("bwpatchwarn1")
@@ -184,7 +184,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE( msg )
 		self:CancelScheduledEvent("bwpatchwarn6")
 	elseif msg == L["enragetrigger2"] then
 		if self.db.profile.enrage then
-			self:TriggerEvent("BigWigs_Message", L["enragewarn2"], "Important")
+			self:Message(L["enragewarn2"], "Important")
 		end
 	end
 end

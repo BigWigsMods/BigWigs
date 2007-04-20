@@ -317,7 +317,7 @@ end
 
 function mod:MarkEvent( msg )
 	if msg:find(L["marktrigger"]) and not self.marked then
-		self:TriggerEvent("BigWigs_SendSync", "HorsemenMark3")
+		self:Sync("HorsemenMark3")
 	end
 end
 
@@ -325,17 +325,17 @@ function mod:SkillEvent( msg )
 	local t = GetTime()
 	if msg:find(L["meteortrigger"]) then
 		if not times["meteor"] or (times["meteor"] and (times["meteor"] + 8) < t) then
-			self:TriggerEvent("BigWigs_SendSync", "HorsemenMeteor")
+			self:Sync("HorsemenMeteor")
 			times["meteor"] = t
 		end
 	elseif msg:find(L["wrathtrigger"]) then
 		if not times["wrath"] or (times["wrath"] and (times["wrath"] + 8) < t) then
-			self:TriggerEvent("BigWigs_SendSync", "HorsemenWrath")
+			self:Sync("HorsemenWrath")
 			times["wrath"] = t
 		end
 	elseif msg == L["voidtrigger"] then
 		if not times["void"] or (times["void"] and (times["void"] + 8) < t) then
-			self:TriggerEvent("BigWigs_SendSync", "HorsemenVoid" )
+			self:Sync("HorsemenVoid" )
 			times["void"] = t
 		end
 	end
@@ -348,53 +348,53 @@ function mod:BigWigs_RecvSync(sync, rest)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.mark then
-			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, string.format( L["markbar"], self.marks), 17, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde")
+			self:Message(L["startwarn"], "Attention")
+			self:Bar(string.format( L["markbar"], self.marks), 17, "Spell_Shadow_CurseOfAchimonde")
 			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 12, string.format( L["markwarn2"], self.marks ), "Urgent")
 		end
 	elseif sync == "HorsemenMark3" then
 		if self.marked then return end
 		self.marked = true
 		if self.db.profile.mark then
-			self:TriggerEvent("BigWigs_Message", string.format( L["markwarn1"], self.marks ), "Important")
+			self:Message(string.format( L["markwarn1"], self.marks ), "Important")
 		end
 		self.marks = self.marks + 1
 		if self.db.profile.mark then 
-			self:TriggerEvent("BigWigs_StartBar", self, string.format( L["markbar"], self.marks ), 12, "Interface\\Icons\\Spell_Shadow_CurseOfAchimonde")
+			self:Bar(string.format( L["markbar"], self.marks ), 12, "Spell_Shadow_CurseOfAchimonde")
 			self:ScheduleEvent("bwhorsemenmark2", "BigWigs_Message", 7, string.format( L["markwarn2"], self.marks ), "Urgent")
 		end
 		-- reset marked in 8 seconds
 		self:ScheduleEvent(function() mod.marked = nil end, 8)
 	elseif sync == "HorsemenMeteor" then
 		if self.db.profile.meteor then
-			self:TriggerEvent("BigWigs_Message", L["meteorwarn"], "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["meteorbar"], 12, "Interface\\Icons\\Spell_Fire_Fireball02")
+			self:Message(L["meteorwarn"], "Important")
+			self:Bar(L["meteorbar"], 12, "Spell_Fire_Fireball02")
 		end
 	elseif sync == "HorsemenWrath" then
 		if self.db.profile.wrath then
-			self:TriggerEvent("BigWigs_Message", L["wrathwarn"], "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["wrathbar"], 12, "Interface\\Icons\\Spell_Holy_Excorcism")
+			self:Message(L["wrathwarn"], "Important")
+			self:Bar(L["wrathbar"], 12, "Spell_Holy_Excorcism")
 		end
 	elseif sync == "HorsemenVoid" then
 		if self.db.profile.void then
-			self:TriggerEvent("BigWigs_Message", L["voidwarn"], "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["voidbar"], 12, "Interface\\Icons\\Spell_Frost_IceStorm")
+			self:Message(L["voidwarn"], "Important")
+			self:Bar(L["voidbar"], 12, "Spell_Frost_IceStorm")
 		end
 	elseif sync == "HorsemenShieldWall" and self.db.profile.shieldwall and rest then
-		self:TriggerEvent("BigWigs_Message", string.format(L["shieldwallwarn"], rest), "Attention")
+		self:Message(string.format(L["shieldwallwarn"], rest), "Attention")
 		self:ScheduleEvent("BigWigs_Message", 20, string.format(L["shieldwallwarn2"], rest), "Positive")
-		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["shieldwallbar"], rest), 20, "Interface\\Icons\\Ability_Warrior_ShieldWall")
+		self:Bar(string.format(L["shieldwallbar"], rest), 20, "Ability_Warrior_ShieldWall")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	local mob = select(3, msg:find(L["shieldwalltrigger"]))
-	if mob then self:TriggerEvent("BigWigs_SendSync", "HorsemenShieldWall "..mob) end
+	if mob then self:Sync("HorsemenShieldWall "..mob) end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg == L["voidtrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "HorsemenVoid" )
+		self:Sync("HorsemenVoid" )
 	end	
 end
 
@@ -405,7 +405,7 @@ function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 		msg == string.format(UNITDIESOTHER, blaumeux) then
 		self.deaths = self.deaths + 1
 		if self.deaths == 4 then
-			if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s have been defeated"], boss), "Bosskill", nil, "Victory") end
+			if self.db.profile.bosskill then self:Message(string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s have been defeated"], boss), "Bosskill", nil, "Victory") end
 			BigWigs:ToggleModuleActive(self, false)
 		end
 	end

@@ -344,18 +344,18 @@ end
 ----------------------
 
 function mod:CHAT_MSG_MONSTER_EMOTE( arg1 )
-	if arg1 == L["weakenedtrigger"] then self:TriggerEvent("BigWigs_SendSync", "CThunWeakened") end
+	if arg1 == L["weakenedtrigger"] then self:Sync("CThunWeakened") end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE( arg1 )
-	if not cthunstarted and arg1 and arg1:find(L["eyebeam"]) then self:TriggerEvent("BigWigs_SendSync", "CThunStart") end
+	if not cthunstarted and arg1 and arg1:find(L["eyebeam"]) then self:Sync("CThunStart") end
 end
 
 function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if (msg == string.format(UNITDIESOTHER, eyeofcthun)) then
-		self:TriggerEvent("BigWigs_SendSync", "CThunP2Start")
+		self:Sync("CThunP2Start")
 	elseif (msg == string.format(UNITDIESOTHER, cthun)) then
-		if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], cthun), "Bosskill", nil, "Victory") end
+		if self.db.profile.bosskill then self:Message(string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], cthun), "Bosskill", nil, "Victory") end
 		BigWigs:ToggleModuleActive(self, false)
 	end
 end
@@ -381,16 +381,16 @@ function mod:CThunStart()
 		self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE")
 		self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 
-		self:TriggerEvent("BigWigs_Message", L["startwarn"], "Attention")
+		self:Message(L["startwarn"], "Attention")
 
 		if self.db.profile.tentacle then
-			self:TriggerEvent("BigWigs_StartBar", self, self.db.profile.rape and L["barTentacle"] or L["barNoRape"], timeP1TentacleStart, "Interface\\Icons\\Spell_Nature_CallStorm")
+			self:Bar(self.db.profile.rape and L["barTentacle"] or L["barNoRape"], timeP1TentacleStart, "Spell_Nature_CallStorm")
 			self:ScheduleEvent("bwcthuntentacle2", "BigWigs_Message", timeP1TentacleStart - 5, self.db.profile.rape and L["tentacle2"] or L["norape2"], "Urgent" )
 			self:ScheduleEvent("bwcthuntentacle1", "BigWigs_Message", timeP1TentacleStart, self.db.profile.rape and L["tentacle1"] or L["norape1"], "Important" )
 		end
 
 		if self.db.profile.glare then
-			self:TriggerEvent("BigWigs_StartBar", self, L["barGlare"], timeP1GlareStart, "Interface\\Icons\\Spell_Shadow_ShadowBolt")
+			self:Bar(L["barGlare"], timeP1GlareStart, "Spell_Shadow_ShadowBolt")
 			self:ScheduleEvent("bwcthunglare2", "BigWigs_Message", timeP1GlareStart - 5, L["glare2"], "Urgent" )
 			self:ScheduleEvent("bwcthunglare1", "BigWigs_Message", timeP1GlareStart, L["glare1"], "Important" )
 		end
@@ -410,7 +410,7 @@ function mod:CThunP2Start()
 		phase2started = true
 		tentacletime = timeP2Tentacle
 
-		self:TriggerEvent("BigWigs_Message", L["phase2starting"], "Bosskill")
+		self:Message(L["phase2starting"], "Bosskill")
 
 		self:TriggerEvent("BigWigs_StopBar", self, L["barGlare"] )
 		self:TriggerEvent("BigWigs_StopBar", self, L["barTentacle"] )
@@ -435,13 +435,13 @@ function mod:CThunP2Start()
 		if self.db.profile.tentacle then
 			self:ScheduleEvent("bwcthuntentacle1", "BigWigs_Message", timeP2Tentacle + timeP2Offset -.1, self.db.profile.rape and L["tentacle1"] or L["norape1"], "Important")
 			self:ScheduleEvent("bwcthuntentacle2", "BigWigs_Message", timeP2Tentacle + timeP2Offset - 5, self.db.profile.rape and L["tentacle2"] or L["norape2"], "Urgent")
-			self:TriggerEvent("BigWigs_StartBar", self, self.db.profile.rape and L["barTentacle"] or L["barNoRape"], timeP2Tentacle + timeP2Offset, "Interface\\Icons\\Spell_Nature_CallStorm")
+			self:Bar(self.db.profile.rape and L["barTentacle"] or L["barNoRape"], timeP2Tentacle + timeP2Offset, "Spell_Nature_CallStorm")
 		end
 
 		if self.db.profile.giant then
 			self:ScheduleEvent("bwcthungiant1", "BigWigs_Message", timeP2Tentacle + timeP2Offset -.1, L["giant1"], "Important")
 			self:ScheduleEvent("bwcthungiant2", "BigWigs_Message", timeP2Tentacle + timeP2Offset - 5, L["giant2"], "Urgent")
-			self:TriggerEvent("BigWigs_StartBar", self, L["barGiant"], timeP2Tentacle + timeP2Offset, "Interface\\Icons\\Ability_EyeOfTheOwl")
+			self:Bar(L["barGiant"], timeP2Tentacle + timeP2Offset, "Ability_EyeOfTheOwl")
 		end
 
 		self:ScheduleEvent("bwcthunstarttentacles", self.StartTentacleRape, timeP2Tentacle + timeP2Offset, self )
@@ -451,8 +451,8 @@ end
 
 function mod:CThunWeakened()
 	if self.db.profile.weakened then
-		self:TriggerEvent("BigWigs_Message", L["weakened"], "Positive" )
-		self:TriggerEvent("BigWigs_StartBar", self, L["barWeakened"], timeWeakened, "Interface\\Icons\\INV_ValentinesCandy")
+		self:Message(L["weakened"], "Positive" )
+		self:Bar(L["barWeakened"], timeWeakened, "INV_ValentinesCandy")
 		self:ScheduleEvent("bwcthunweaken2", "BigWigs_Message", timeWeakened - 5, L["invulnerable2"], "Urgent")
 		self:ScheduleEvent("bwcthunweaken1", "BigWigs_Message", timeWeakened, L["invulnerable1"], "Important" )
 	end
@@ -516,8 +516,8 @@ function mod:GroupWarning()
 			if name == target then break end
 		end
 		if self.db.profile.group then
-			self:TriggerEvent("BigWigs_Message", string.format( L["groupwarning"], group, target), "Important")
-			self:TriggerEvent("BigWigs_SendTell", target, L["glarewarning"])
+			self:Message(string.format( L["groupwarning"], group, target), "Important")
+			self:Whisper(target, L["glarewarning"])
 		end
 	end
 	if firstWarning then
@@ -532,7 +532,7 @@ function mod:TentacleRape()
 		if gianteye then
 			gianteye = nil
 			if self.db.profile.giant then
-				self:TriggerEvent("BigWigs_StartBar", self, L["barGiant"], tentacletime, "Interface\\Icons\\Ability_EyeOfTheOwl")
+				self:Bar(L["barGiant"], tentacletime, "Ability_EyeOfTheOwl")
 				self:ScheduleEvent("bwcthungiant1", "BigWigs_Message", tentacletime -.1, L["giant1"], "Important")
 				self:ScheduleEvent("bwcthungiant2", "BigWigs_Message", tentacletime - 5, L["giant2"], "Urgent")
 				self:ScheduleEvent("bwcthungiant3", "BigWigs_Message", tentacletime - 10, L["giant3"], "Attention")
@@ -542,7 +542,7 @@ function mod:TentacleRape()
 		end
 	end
 	if self.db.profile.tentacle then
-		self:TriggerEvent("BigWigs_StartBar", self, self.db.profile.rape and L["barTentacle"] or L["barNoRape"], tentacletime, "Interface\\Icons\\Spell_Nature_CallStorm")
+		self:Bar(self.db.profile.rape and L["barTentacle"] or L["barNoRape"], tentacletime, "Spell_Nature_CallStorm")
 		self:ScheduleEvent("bwcthuntentacle1", "BigWigs_Message", tentacletime -.1, self.db.profile.rape and L["tentacle1"] or L["norape1"], "Important")
 		self:ScheduleEvent("bwcthuntentacle2", "BigWigs_Message", tentacletime -5, self.db.profile.rape and L["tentacle2"] or L["norape2"], "Urgent")
 	end
@@ -550,8 +550,8 @@ end
 
 function mod:DarkGlare()
 	if self.db.profile.glare then
-		self:TriggerEvent("BigWigs_StartBar", self, L["barGreenBeam"], timeP1GlareDuration, "Interface\\Icons\\Spell_Nature_CallStorm")
-		self:TriggerEvent("BigWigs_StartBar", self, L["barGlare"], timeP1Glare, "Interface\\Icons\\Spell_Shadow_ShadowBolt")
+		self:Bar(L["barGreenBeam"], timeP1GlareDuration, "Spell_Nature_CallStorm")
+		self:Bar(L["barGlare"], timeP1Glare, "Spell_Shadow_ShadowBolt")
 		self:ScheduleEvent("bwcthunglare1", "BigWigs_Message", timeP1Glare - .1, L["glare1"], "Important")
 		self:ScheduleEvent("bwcthunglare2", "BigWigs_Message", timeP1Glare - 5, L["glare2"], "Urgent")
 		self:ScheduleEvent("bwcthunpositions1", "BigWigs_Message", timeP1GlareDuration, L["positions1"], "Important")

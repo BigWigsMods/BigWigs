@@ -45,8 +45,8 @@ L:RegisterTranslations("enUS", function() return {
 	pstrigger = "Now you feel pain...",
 	trigger1 = "Thaddius begins to cast Polarity Shift",
 	chargetrigger = "You are afflicted by (%w+) Charge.",
-	positivetype = "Interface\\Icons\\Spell_ChargePositive",
-	negativetype = "Interface\\Icons\\Spell_ChargeNegative",
+	positivetype = "Spell_ChargePositive",
+	negativetype = "Spell_ChargeNegative",
 	stalaggtrigger = "Stalagg gains Power Surge.",
 
 	you = "You",
@@ -111,8 +111,8 @@ L:RegisterTranslations("koKR", function() return {
 	pstrigger = "자, 고통을 느껴봐라...", -- CHECK
 	trigger1 = "타디우스|1이;가; 극성 변환|1을;를; 시전합니다.",
 	chargetrigger = "(%w+)전하에 걸렸습니다.",
-	positivetype = "Interface\\Icons\\Spell_ChargePositive",
-	negativetype = "Interface\\Icons\\Spell_ChargeNegative",
+	positivetype = "Spell_ChargePositive",
+	negativetype = "Spell_ChargeNegative",
 	stalaggtrigger = "스탈라그|1이;가; 마력의 쇄도 효과를 얻었습니다.",
 
 	you = "당신은",
@@ -392,24 +392,24 @@ end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if msg == L["stalaggtrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "StalaggPower")
+		self:Sync("StalaggPower")
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if msg:find(L["pstrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "ThaddiusPolarity")
+		self:Sync("ThaddiusPolarity")
 	elseif msg == L["starttrigger"] or msg == L["starttrigger1"] then
 		if self.db.profile.phase and not self.stage1warn then
-			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Important")
+			self:Message(L["startwarn"], "Important")
 		end
 		self.stage1warn = true
 		self:Throw()
 		self:ScheduleRepeatingEvent( "bwthaddiusthrow", self.Throw, 21, self )
 	elseif msg:find(L["starttrigger2"]) or msg:find(L["starttrigger3"]) or msg:find(L["starttrigger4"]) then
-		if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L["startwarn2"], "Important") end
+		if self.db.profile.phase then self:Message(L["startwarn2"], "Important") end
 		if self.db.profile.enrage then
-			self:TriggerEvent("BigWigs_StartBar", self, L["enragebartext"], 300, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+			self:Bar(L["enragebartext"], 300, "Spell_Shadow_UnholyFrenzy")
 			self:ScheduleEvent("bwthaddiuswarn1", "BigWigs_Message", 120, L["warn1"], "Attention")
 			self:ScheduleEvent("bwthaddiuswarn2", "BigWigs_Message", 210, L["warn2"], "Attention")
 			self:ScheduleEvent("bwthaddiuswarn3", "BigWigs_Message", 240, L["warn3"], "Urgent")
@@ -421,7 +421,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_EMOTE( msg )
 	if msg == L["enragetrigger"] then
-		if self.db.profile.enrage then self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important") end
+		if self.db.profile.enrage then self:Message(L["enragewarn"], "Important") end
 		self:TriggerEvent("BigWigs_StopBar", self, L["enragebartext"])
 		self:CancelScheduledEvent("bwthaddiuswarn1")
 		self:CancelScheduledEvent("bwthaddiuswarn2")
@@ -431,19 +431,19 @@ function mod:CHAT_MSG_MONSTER_EMOTE( msg )
 	elseif msg == L["adddeath"] then
 		self.addsdead = self.addsdead + 1
 		if self.addsdead == 2 then
-			if self.db.profile.phase then self:TriggerEvent("BigWigs_Message", L["addsdownwarn"], "Attention") end
+			if self.db.profile.phase then self:Message(L["addsdownwarn"], "Attention") end
 			self:CancelScheduledEvent("bwthaddiusthrow")
 			self:CancelScheduledEvent("bwthaddiusthrowwarn")
 		end
 	elseif msg == L["teslaoverload"] and self.db.profile.phase and not self.teslawarn then
 		self.teslawarn = true
-		self:TriggerEvent("BigWigs_Message", L["thaddiusincoming"], "Important")
+		self:Message(L["thaddiusincoming"], "Important")
 	end
 end
 
 function mod:PolarityCast( msg )
 	if self.db.profile.polarity and msg:find(L["trigger1"]) then
-		self:TriggerEvent("BigWigs_Message", L["pswarn1"], "Important")
+		self:Message(L["pswarn1"], "Important")
 	end
 end
 
@@ -472,13 +472,13 @@ function mod:PLAYER_AURAS_CHANGED( msg )
 
 	if self.db.profile.charge then
 		if self.previousCharge and self.previousCharge == chargetype then
-			self:TriggerEvent("BigWigs_Message", L["nochange"], "Urgent", true, "Alarm")
+			self:Message(L["nochange"], "Urgent", true, "Alarm")
 		elseif chargetype == L["positivetype"] then
-			self:TriggerEvent("BigWigs_Message", L["poswarn"], "Positive", true, "Alarm")
+			self:Message(L["poswarn"], "Positive", true, "Alarm")
 		elseif chargetype == L["negativetype"] then
-			self:TriggerEvent("BigWigs_Message", L["negwarn"], "Important", true, "Alarm")
+			self:Message(L["negwarn"], "Important", true, "Alarm")
 		end
-		self:TriggerEvent("BigWigs_StartBar", self, L["polaritytickbar"], 6, chargetype, "Important")
+		self:Bar(L["polaritytickbar"], 6, chargetype, "Important")
 	end
 	self.previousCharge = chargetype
 end
@@ -487,16 +487,16 @@ function mod:BigWigs_RecvSync( sync )
 	if sync == "ThaddiusPolarity" and self.db.profile.polarity then
 		self:RegisterEvent("PLAYER_AURAS_CHANGED")
 		self:ScheduleEvent("BigWigs_Message", 27, L["pswarn3"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bar1text"], 30, "Interface\\Icons\\Spell_Nature_Lightning")
+		self:Bar(L["bar1text"], 30, "Spell_Nature_Lightning")
 	elseif sync == "StalaggPower" and self.db.profile.power then
-		self:TriggerEvent("BigWigs_Message", L["stalaggwarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["powersurgebar"], 10, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+		self:Message(L["stalaggwarn"], "Important")
+		self:Bar(L["powersurgebar"], 10, "Spell_Shadow_UnholyFrenzy")
 	end
 end
 
 function mod:Throw()
 	if self.db.profile.throw then
-		self:TriggerEvent("BigWigs_StartBar", self, L["throwbar"], 20, "Interface\\Icons\\Ability_Druid_Maul")
+		self:Bar(L["throwbar"], 20, "Ability_Druid_Maul")
 		self:ScheduleEvent("bwthaddiusthrowwarn", "BigWigs_Message", 15, L["throwwarn"], "Urgent")
 	end
 end

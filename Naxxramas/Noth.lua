@@ -290,7 +290,7 @@ end
 
 function mod:Curse( msg )
 	if msg:find(L["cursetrigger"]) and not self.prior then
-		self:TriggerEvent("BigWigs_SendSync", "NothCurse")
+		self:Sync("NothCurse")
 	end
 end
 
@@ -300,9 +300,9 @@ function mod:CHAT_MSG_MONSTER_YELL( msg )
 		self.timebalcony = 70
 
 		if self.db.profile.teleport then
-			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Important")
+			self:Message(L["startwarn"], "Important")
 			self:ScheduleEvent("BigWigs_Message", self.timeroom-10, L["teleportwarn2"], "Urgent")
-			self:TriggerEvent("BigWigs_StartBar", self, L["teleportbar"], self.timeroom, "Interface\\Icons\\Spell_Magic_LesserInvisibilty")
+			self:Bar(L["teleportbar"], self.timeroom, "Spell_Magic_LesserInvisibilty")
 		end
 		self:ScheduleEvent("bwnothtobalcony", self.teleportToBalcony, self.timeroom, self)
 	end
@@ -310,24 +310,24 @@ end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if msg == L["blinktrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "NothBlink")
+		self:Sync("NothBlink")
 	end
 end
 
 function mod:BigWigs_RecvSync( sync )
 	if sync == "NothCurse" then
 		if self.db.profile.curse then
-			self:TriggerEvent("BigWigs_Message", L["cursewarn"], "Important", nil, "Alarm")
+			self:Message(L["cursewarn"], "Important", nil, "Alarm")
 			self:ScheduleEvent("bwnothcurse", "BigWigs_Message", self.cursetime-10, L["curse10secwarn"], "Urgent")
-			self:TriggerEvent("BigWigs_StartBar", self, L["cursebar"], self.cursetime, "Interface\\Icons\\Spell_Shadow_AnimateDead")
-			self:TriggerEvent("BigWigs_StartBar", self, L["curseexplosion"], 10, "Interface\\Icons\\Spell_Shadow_AntiShadow")
+			self:Bar(L["cursebar"], self.cursetime, "Spell_Shadow_AnimateDead")
+			self:Bar(L["curseexplosion"], 10, "Spell_Shadow_AntiShadow")
 		end
 		self.prior = true
 	elseif sync == "NothBlink" then
 		if self.db.profile.blink then
-			self:TriggerEvent("BigWigs_Message", L["blinkwarn"], "Important")
+			self:Message(L["blinkwarn"], "Important")
 			self:ScheduleEvent("bwnothblink", "BigWigs_Message", 25, L["blinkwarn2"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["blinkbar"], 30, "Interface\\Icons\\Spell_Arcane_Blink")
+			self:Bar(L["blinkbar"], 30, "Spell_Arcane_Blink")
 		end
 	end
 end
@@ -349,13 +349,13 @@ function mod:teleportToBalcony()
 	self:TriggerEvent("BigWigs_StopBar", self, L["cursebar"])
 
 	if self.db.profile.teleport then 
-		self:TriggerEvent("BigWigs_Message", L["teleportwarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["backbar"], self.timebalcony, "Interface\\Icons\\Spell_Magic_LesserInvisibilty")
+		self:Message(L["teleportwarn"], "Important")
+		self:Bar(L["backbar"], self.timebalcony, "Spell_Magic_LesserInvisibilty")
 		self:ScheduleEvent("bwnothback", "BigWigs_Message", self.timebalcony - 10, L["backwarn2"], "Urgent")
 	end
 	if self.db.profile.wave then
-		self:TriggerEvent("BigWigs_StartBar", self, L["wave1bar"], self.wave1time, "Interface\\Icons\\Spell_ChargePositive" )
-		self:TriggerEvent("BigWigs_StartBar", self, L["wave2bar"], self.wave2time, "Interface\\Icons\\Spell_ChargePositive" )
+		self:Bar(L["wave1bar"], self.wave1time, "Spell_ChargePositive" )
+		self:Bar(L["wave2bar"], self.wave2time, "Spell_ChargePositive" )
 		self:ScheduleEvent("bwnothwave2inc", "BigWigs_Message", self.wave2time - 10, L["wave2_message"], "Urgent")
 	end
 	self:ScheduleEvent("bwnothtoroom", self.teleportToRoom, self.timebalcony, self)
@@ -370,8 +370,8 @@ function mod:teleportToRoom()
 	end
 
 	if self.db.profile.teleport then
-		self:TriggerEvent("BigWigs_Message", string.format(L["backwarn"], self.timeroom), "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["teleportbar"], self.timeroom, "Interface\\Icons\\Spell_Magic_LesserInvisibilty")
+		self:Message(string.format(L["backwarn"], self.timeroom), "Important")
+		self:Bar(L["teleportbar"], self.timeroom, "Spell_Magic_LesserInvisibilty")
 		self:ScheduleEvent("bwnothteleport", "BigWigs_Message", self.timeroom - 10, L["teleportwarn2"], "Urgent")
 	end
 	self.prior = nil

@@ -178,18 +178,18 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	local player = rest
 
 	if player == playerName and self.db.profile.youburning then
-		self:TriggerEvent("BigWigs_Message", L["warn1"], "Personal", true)
-		self:TriggerEvent("BigWigs_Message", playerName .. L["warn2"], "Attention", nil, nil, true)
+		self:Message(L["warn1"], "Personal", true)
+		self:Message(playerName .. L["warn2"], "Attention", nil, nil, true)
 	elseif self.db.profile.elseburning then
-		self:TriggerEvent("BigWigs_Message", player .. L["warn2"], "Attention")
-		self:TriggerEvent("BigWigs_SendTell", player, L["warn1"])
+		self:Message(player .. L["warn2"], "Attention")
+		self:Whisper(player, L["warn1"])
 	end
 
 	if self.db.profile.icon then 
-		self:TriggerEvent("BigWigs_SetRaidIcon", player)
+		self:Icon(player)
 	end
 	if self.db.profile.burningbar then
-		self:TriggerEvent("BigWigs_StartBar", self, player .. L["warn2"], 20, "Interface\\Icons\\INV_Gauntlets_03")
+		self:Bar(player .. L["warn2"], 20, "INV_Gauntlets_03")
 	end
 end
 
@@ -199,6 +199,6 @@ function mod:Event(msg)
 		if baPlayer == L["you"] then
 			baPlayer = playerName
 		end
-		self:TriggerEvent("BigWigs_SendSync", "VaelBomb "..baPlayer)
+		self:Sync("VaelBomb "..baPlayer)
 	end
 end

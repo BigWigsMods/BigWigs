@@ -266,8 +266,8 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:CancelScheduledEvent("bwsapphdelayed")
 		end
 		if self.db.profile.berserk then
-			self:TriggerEvent("BigWigs_Message", L["engage_message"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["berserk_bar"], 900, "Interface\\Icons\\INV_Shield_01")
+			self:Message(L["engage_message"], "Attention")
+			self:Bar(L["berserk_bar"], 900, "INV_Shield_01")
 			self:ScheduleEvent("bwsapphberserk1", "BigWigs_Message", 300, L["berserk_warn_10min"], "Attention")
 			self:ScheduleEvent("bwsapphberserk2", "BigWigs_Message", 600, L["berserk_warn_5min"], "Attention")
 			self:ScheduleEvent("bwsapphberserk3", "BigWigs_Message", 840, string.format(L["berserk_warn_rest"], 60), "Urgent")
@@ -282,8 +282,8 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:ScheduleEvent("besapphdelayed", self.StartTargetScanner, 5, self)
 		end
 	elseif sync == "SapphironLifeDrain" and self.db.profile.lifedrain then
-		self:TriggerEvent("BigWigs_Message", L["lifedrain_message"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 24, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
+		self:Message(L["lifedrain_message"], "Urgent")
+		self:Bar(L["lifedrain_bar"], 24, "Spell_Shadow_LifeDrain02")
 	elseif sync == "SapphironFlight" and self.db.profile.deepbreath and started then
 		if self:IsEventScheduled("bwsapphtargetscanner") then
 			self:CancelScheduledEvent("bwsapphtargetscanner")
@@ -291,8 +291,8 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		if self:IsEventScheduled("bwsapphdelayed") then
 			self:CancelScheduledEvent("bwsapphdelayed")
 		end
-		self:TriggerEvent("BigWigs_Message", L["deepbreath_incoming_message"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_incoming_bar"], 23, "Interface\\Icons\\Spell_Arcane_PortalIronForge")
+		self:Message(L["deepbreath_incoming_message"], "Urgent")
+		self:Bar(L["deepbreath_incoming_bar"], 23, "Spell_Arcane_PortalIronForge")
 		lastTarget = nil
 		cachedUnitId = nil
 		self:ScheduleEvent("besapphdelayed", self.StartTargetScanner, 50, self)
@@ -302,7 +302,7 @@ end
 function mod:LifeDrain(msg)
 	if msg:find(L["lifedrain_trigger"]) or msg:find(L["lifedrain_trigger2"]) then
 		if not time or (time + 2) < GetTime() then
-			self:TriggerEvent("BigWigs_SendSync", "SapphironLifeDrain")
+			self:Sync("SapphironLifeDrain")
 			time = GetTime()
 		end
 	end
@@ -311,12 +311,12 @@ end
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg:find(L["deepbreath_trigger"]) then
 		if self.db.profile.deepbreath then
-			self:TriggerEvent("BigWigs_Message", L["deepbreath_warning"], "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["deepbreath_bar"], 7, "Interface\\Icons\\Spell_Frost_FrostShock")
+			self:Message(L["deepbreath_warning"], "Important")
+			self:Bar(L["deepbreath_bar"], 7, "Spell_Frost_FrostShock")
 		end
 		self:TriggerEvent("BigWigs_StopBar", self, L["lifedrain_bar"])
 		if self.db.profile.lifedrain then
-			self:TriggerEvent("BigWigs_StartBar", self, L["lifedrain_bar"], 14, "Interface\\Icons\\Spell_Shadow_LifeDrain02")
+			self:Bar(L["lifedrain_bar"], 14, "Spell_Shadow_LifeDrain02")
 		end
 	end
 end
@@ -400,5 +400,5 @@ function mod:RepeatedTargetScanner()
 	if self:IsEventScheduled("bwsapphtargetscanner") then
 		self:CancelScheduledEvent("bwsapphtargetscanner")
 	end
-	self:TriggerEvent("BigWigs_SendSync", "SapphironFlight")
+	self:Sync("SapphironFlight")
 end

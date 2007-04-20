@@ -363,19 +363,19 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["landing_soon_trigger"]) then
-		self:TriggerEvent("BigWigs_StartBar", self, L["landing_warning"], 10, "Interface\\Icons\\INV_Misc_Head_Dragon_Black")
+		self:Bar(L["landing_warning"], 10, "INV_Misc_Head_Dragon_Black")
 		return
 	end
 	for i,v in pairs(warnpairs) do
 		if msg:find(i) then
 			if v[2] then
 				if self.db.profile.classcall then
-					self:TriggerEvent("BigWigs_Message", v[1], "Important")
+					self:Message(v[1], "Important")
 					self:ScheduleEvent("BigWigs_Message", 27, L["classcall_warning"], "Important")
-					self:TriggerEvent("BigWigs_StartBar", self, L["classcall_bar"], 30, "Interface\\Icons\\Spell_Shadow_Charm")
+					self:Bar(L["classcall_bar"], 30, "Spell_Shadow_Charm")
 				end
 			else
-				if self.db.profile.otherwarn then self:TriggerEvent("BigWigs_Message", v[1], "Important") end
+				if self.db.profile.otherwarn then self:Message(v[1], "Important") end
 			end
 			return
 		end
@@ -384,19 +384,19 @@ end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["fear_trigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "NefarianFear")
+		self:Sync("NefarianFear")
 	elseif msg:find(L["shadowflame_trigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "NefarianShadowflame")
+		self:Sync("NefarianShadowflame")
 	end
 end
 
 function mod:BigWigs_RecvSync( sync )
 	if sync == "NefarianShadowflame" and self.db.profile.shadowflame then
-		self:TriggerEvent("BigWigs_Message", L["shadowflame_warning"], "Important")
+		self:Message(L["shadowflame_warning"], "Important")
 	elseif sync == "NefarianFear" and self.db.profile.fear then
 		self:CancelScheduledEvent("bwneffearsoon")
-		self:TriggerEvent("BigWigs_Message", L["fear_warning"], "Important")
+		self:Message(L["fear_warning"], "Important")
 		self:ScheduleEvent("bwneffearsoon", "BigWigs_Message", 26, L["fear_soon_warning"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["fear_bar"], 32, "Interface\\Icons\\Spell_Shadow_PsychicScream")
+		self:Bar(L["fear_bar"], 32, "Spell_Shadow_PsychicScream")
 	end
 end

@@ -222,9 +222,9 @@ end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	if self.db.profile.brainwash and msg == L["triggerbrainwash"] then
-		self:TriggerEvent("BigWigs_Message", L["warnbrainwash"], "Urgent")
+		self:Message(L["warnbrainwash"], "Urgent")
 	elseif self.db.profile.healing and msg == L["triggerhealing"] then
-		self:TriggerEvent("BigWigs_Message", L["warnhealing"], "Important" )
+		self:Message(L["warnhealing"], "Important" )
 	end
 end
 
@@ -233,15 +233,15 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	local player = rest
 
 	if player == playerName and self.db.profile.youcurse then
-		self:TriggerEvent("BigWigs_Message", L["cursewarn_self"], "Personal", true)
-		self:TriggerEvent("BigWigs_Message", string.format(L["cursewarn_other"], playerName), "Attention", nil, nil, true)
+		self:Message(L["cursewarn_self"], "Personal", true)
+		self:Message(string.format(L["cursewarn_other"], playerName), "Attention", nil, nil, true)
 	elseif self.db.profile.elsecurse then
-		self:TriggerEvent("BigWigs_Message", string.format(L["cursewarn_other"], player), "Attention")
-		self:TriggerEvent("BigWigs_SendTell", player, L["cursewarn_self"])
+		self:Message(string.format(L["cursewarn_other"], player), "Attention")
+		self:Whisper(player, L["cursewarn_self"])
 	end
 
 	if self.db.profile.icon then 
-		self:TriggerEvent("BigWigs_SetRaidIcon", player)
+		self:Icon(player)
 	end
 end
 
@@ -251,6 +251,6 @@ function mod:Event(msg)
 		if baPlayer == L["you"] then
 			baPlayer = UnitName("player")
 		end
-		self:TriggerEvent("BigWigs_SendSync", "JindoCurse "..baPlayer)
+		self:Sync("JindoCurse "..baPlayer)
 	end
 end

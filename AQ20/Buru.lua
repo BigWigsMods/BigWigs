@@ -135,15 +135,15 @@ function mod:CHAT_MSG_MONSTER_EMOTE( msg )
 	if player then
 		if player == L["you"] and self.db.profile.you then
 			player = UnitName("player")
-			self:TriggerEvent("BigWigs_Message", L["watchwarnyou"], "Personal", true)
-			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["watchwarn"], "Attention", nil, nil, true)
+			self:Message(L["watchwarnyou"], "Personal", true)
+			self:Message(UnitName("player") .. L["watchwarn"], "Attention", nil, nil, true)
 		elseif self.db.profile.other then
-			self:TriggerEvent("BigWigs_Message", player .. L["watchwarn"], "Attention")
-			self:TriggerEvent("BigWigs_SendTell", player, L["watchwarnyou"])
+			self:Message(player .. L["watchwarn"], "Attention")
+			self:Whisper(player, L["watchwarnyou"])
 		end
 
 		if self.db.profile.icon then
-			self:TriggerEvent("BigWigs_SetRaidIcon", player )
+			self:Icon(player )
 		end
 	end
 end

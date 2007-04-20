@@ -271,20 +271,20 @@ function mod:Event(msg)
 		if player == L["you"] and type == L["are"] then
 			player = UnitName("player")
 		end
-		self:TriggerEvent("BigWigs_SendSync", "GeddonBomb "..player)
+		self:Sync("GeddonBomb "..player)
 	end
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if msg == L["inferno_trigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "GeddonInferno")
+		self:Sync("GeddonInferno")
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["service_trigger"] and self.db.profile.service then
-		self:TriggerEvent("BigWigs_StartBar", self, L["service_bar"], 5, "Interface\\Icons\\Spell_Shadow_MindBomb", "Red")
-		self:TriggerEvent("BigWigs_Message", L["service_message"], "Important")
+		self:Bar(L["service_bar"], 5, "Spell_Shadow_MindBomb", "Red")
+		self:Message(L["service_message"], "Important")
 	end
 end
 
@@ -293,22 +293,22 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		local player = rest
 		
 		if player == UnitName("player") and self.db.profile.youbomb then
-			self:TriggerEvent("BigWigs_Message", L["bomb_message_you"], "Personal", true)
-			self:TriggerEvent("BigWigs_Message", string.format(L["bomb_message_other"], player), "Attention", nil, nil, true )
+			self:Message(L["bomb_message_you"], "Personal", true)
+			self:Message(string.format(L["bomb_message_other"], player), "Attention", nil, nil, true )
 		elseif self.db.profile.elsebomb then
-			self:TriggerEvent("BigWigs_Message", string.format(L["bomb_message_other"], player), "Attention")
-			self:TriggerEvent("BigWigs_SendTell", player, L["bomb_message_you"])
+			self:Message(string.format(L["bomb_message_other"], player), "Attention")
+			self:Whisper(player, L["bomb_message_you"])
 		end
 
 		if self.db.profile.bombtimer then
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["bombtimer_bar"], player), 10, "Interface\\Icons\\Spell_Shadow_MindBomb", "Red")
+			self:Bar(string.format(L["bombtimer_bar"], player), 10, "Spell_Shadow_MindBomb", "Red")
 		end
 
 		if self.db.profile.icon then
-			self:TriggerEvent("BigWigs_SetRaidIcon", player)
+			self:Icon(player)
 		end
 	elseif sync == "GeddonInferno" and self.db.profile.inferno then
-		self:TriggerEvent("BigWigs_StartBar", self, L["inferno_bar"], 10, "Interface\\Icons\\Spell_Fire_SealOfFire", "Orange")
-		self:TriggerEvent("BigWigs_Message", L["inferno_message"], "Important")
+		self:Bar(L["inferno_bar"], 10, "Spell_Fire_SealOfFire", "Orange")
+		self:Message(L["inferno_message"], "Important")
 	end
 end

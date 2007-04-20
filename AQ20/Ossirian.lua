@@ -167,14 +167,14 @@ end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if self.db.profile.supreme and arg1 == L["supremetrigger"] then
-		self:TriggerEvent("BigWigs_Message", L["supremewarn"], "Attention")
+		self:Message(L["supremewarn"], "Attention")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE( msg )
 	local debuffName = select(3, msg:find(L["debufftrigger"]))
 	if debuffName and debuffName ~= L["expose"] and L:HasReverseTranslation(debuffName) then
-		self:TriggerEvent("BigWigs_SendSync", "OssirianWeakness "..L:GetReverseTranslation(debuffName))
+		self:Sync("OssirianWeakness "..L:GetReverseTranslation(debuffName))
 	end
 end
 
@@ -182,7 +182,7 @@ function mod:BigWigs_RecvSync(sync, debuffKey)
 	if sync ~= "OssirianWeakness" or not debuffKey or not L:HasTranslation(debuffKey) then return end
 
 	if self.db.profile.debuff then
-		self:TriggerEvent("BigWigs_Message", string.format(L["debuffwarn"], L[debuffKey]), "Important")
+		self:Message(string.format(L["debuffwarn"], L[debuffKey]), "Important")
 	end
 
 	self:CancelScheduledEvent("bwossiriansupreme1")
@@ -194,6 +194,6 @@ function mod:BigWigs_RecvSync(sync, debuffKey)
 		self:ScheduleEvent("bwossiriansupreme1", "BigWigs_Message", 30, string.format(L["supremedelaywarn"], 15), "Attention")
 		self:ScheduleEvent("bwossiriansupreme2", "BigWigs_Message", 35, string.format(L["supremedelaywarn"], 10), "Urgent")
 		self:ScheduleEvent("bwossiriansupreme3", "BigWigs_Message", 40, string.format(L["supremedelaywarn"], 5), "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 45, "Interface\\Icons\\Spell_Shadow_CurseOfTounges")
+		self:Bar(L["bartext"], 45, "Spell_Shadow_CurseOfTounges")
 	end
 end

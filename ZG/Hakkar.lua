@@ -250,8 +250,8 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["start_message"], "Important")
-		if self.db.profile.enrage then self:TriggerEvent("BigWigs_StartBar", self, L["Enrage"], 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy") end
+		self:Message(L["start_message"], "Important")
+		if self.db.profile.enrage then self:Bar(L["Enrage"], 600, "Spell_Shadow_UnholyFrenzy") end
 		self:BeginTimers(true)
 	elseif msg:find(L["flee"]) then
 		self:TriggerEvent("BigWigs_RebootModule", self)
@@ -272,11 +272,11 @@ function mod:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
 			mcplayer = UnitName("player")
 		end
 		if self.db.profile.mc then
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mindcontrol_bar"], mcplayer), 9.5, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
-			self:TriggerEvent("BigWigs_Message", string.format(L["mindcontrol_message"], mcplayer), "Urgent")
+			self:Bar(string.format(L["mindcontrol_bar"], mcplayer), 9.5, "Spell_Shadow_ShadowWordDominate")
+			self:Message(string.format(L["mindcontrol_message"], mcplayer), "Urgent")
 		end
 		if self.db.profile.icon then
-			self:TriggerEvent("BigWigs_SetRaidIcon", mcplayer)
+			self:Icon(mcplayer)
 		end
 	end
 end
@@ -287,11 +287,11 @@ end
 
 function mod:BeginTimers(first)
 	if self.db.profile.drain then
-		if not first then self:TriggerEvent("BigWigs_Message", L["drain_message"], "Attention") end
+		if not first then self:Message(L["drain_message"], "Attention") end
 		self:ScheduleEvent("bwhakkarld60", "BigWigs_Message", 30, string.format(L["drain_warning"], 60), "Attention")
 		self:ScheduleEvent("bwhakkarld45", "BigWigs_Message", 45, string.format(L["drain_warning"], 45), "Attention")
 		self:ScheduleEvent("bwhakkarld30", "BigWigs_Message", 60, string.format(L["drain_warning"], 30), "Urgent")
 		self:ScheduleEvent("bwhakkarld15", "BigWigs_Message", 75, string.format(L["drain_warning"], 15), "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["Life Drain"], 90, "Interface\\Icons\\Spell_Shadow_LifeDrain")
+		self:Bar(L["Life Drain"], 90, "Spell_Shadow_LifeDrain")
 	end
 end

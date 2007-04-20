@@ -90,22 +90,22 @@ end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if (msg:find(L["inspire_trigger"])) then
-		self:TriggerEvent("BigWigs_SendSync", "SulfuronInsp")
+		self:Sync("SulfuronInsp")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if (msg:find(L["heal_trigger"])) then
-		self:TriggerEvent("BigWigs_SendSync", "SulfuronHeal")
+		self:Sync("SulfuronHeal")
 	end
 end
 
 function mod:BigWigs_RecvSync(sync)
 	if (sync == "SulfuronInsp" and self.db.profile.inspire) then
-		self:TriggerEvent("BigWigs_Message", L["inpire_message"], "Attention")
-		self:TriggerEvent("BigWigs_StartBar", self, L["inspire_bar"], 10, "Interface\\Icons\\Ability_Warrior_BattleShout")
+		self:Message(L["inpire_message"], "Attention")
+		self:Bar(L["inspire_bar"], 10, "Ability_Warrior_BattleShout")
 	elseif (sync == "SulfuronHeal" and self.db.profile.heal) then
-		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["heal_bar"], 2, "Interface\\Icons\\Spell_Shadow_ChillTouch")
+		self:Message(L["heal_message"], "Important")
+		self:Bar(L["heal_bar"], 2, "Spell_Shadow_ChillTouch")
 	end
 end

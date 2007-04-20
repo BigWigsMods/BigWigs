@@ -192,23 +192,23 @@ function mod:CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE(msg)
 			player = UnitName("player")
 		end
 		if self.db.profile.mc then
-			self:TriggerEvent("BigWigs_Message", string.format(L["mcplayerwarn"], player), "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["mcbar"], player), 20, "Interface\\Icons\\Spell_Shadow_ShadowWordDominate")
+			self:Message(string.format(L["mcplayerwarn"], player), "Important")
+			self:Bar(string.format(L["mcbar"], player), 20, "Spell_Shadow_ShadowWordDominate")
 		end
 		if self.db.profile.icon then
-			self:TriggerEvent("BigWigs_SetRaidIcon", player)
+			self:Icon(player)
 		end
 	end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg == L["aetrigger"] and self.db.profile.ae then
-		self:TriggerEvent("BigWigs_Message", L["aewarn"], "Urgent")
+		self:Message(L["aewarn"], "Urgent")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg:find(L["splittrigger"]) and self.db.profile.split then
-		self:TriggerEvent("BigWigs_Message", L["splitwarn"], "Important")
+		self:Message(L["splitwarn"], "Important")
 	end
 end

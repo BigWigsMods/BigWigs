@@ -197,22 +197,22 @@ end
 
 function mod:BigWigs_RecvSync(sync)
 	if sync == "SarturaWhirlwind" and self.db.profile.whirlwind then
-		self:TriggerEvent("BigWigs_Message", L["whirlwindonwarn"], "Important")
+		self:Message(L["whirlwindonwarn"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 15, L["whirlwindoffwarn"], "Attention")
-		self:TriggerEvent("BigWigs_StartBar", self, L["whirlwindbartext"], 15, "Interface\\Icons\\Ability_Whirlwind")
+		self:Bar(L["whirlwindbartext"], 15, "Ability_Whirlwind")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if msg == L["whirlwindon"] then
-		self:TriggerEvent("BigWigs_SendSync", "SarturaWhirlwind")
+		self:Sync("SarturaWhirlwind")
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.enrage and msg:find(L["starttrigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["startwarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["bartext"], 600, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+		self:Message(L["startwarn"], "Important")
+		self:Bar(L["bartext"], 600, "Spell_Shadow_UnholyFrenzy")
 		self:ScheduleEvent("BigWigs_Message", 120, L["warn1"], "Attention")
 		self:ScheduleEvent("BigWigs_Message", 300, L["warn2"], "Attention")
 		self:ScheduleEvent("BigWigs_Message", 420, L["warn3"], "Attention")
@@ -225,6 +225,6 @@ end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if self.db.profile.enrage and msg:find(L["enragetrigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Attention")
+		self:Message(L["enragewarn"], "Attention")
 	end
 end

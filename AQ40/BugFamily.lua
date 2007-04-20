@@ -145,8 +145,8 @@ end
 function mod:FearEvent(msg)
 	if not fearstatus and msg:find(L["feartrigger"]) and self.db.profile.fear then
 		fearstatus = true
-		self:TriggerEvent("BigWigs_StartBar", self, L["fearbar"], 20, "Interface\\Icons\\Spell_Shadow_Possession")
-		self:TriggerEvent("BigWigs_Message", L["fearwarn1"], "Important")
+		self:Bar(L["fearbar"], 20, "Spell_Shadow_Possession")
+		self:Message(L["fearwarn1"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 15, L["fearwarn2"], "Urgent")
 	end
 end
@@ -159,7 +159,7 @@ function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if (msg == string.format(UNITDIESOTHER, kri) or msg == string.format(UNITDIESOTHER, yauj) or msg == string.format(UNITDIESOTHER, vem)) then
 		deaths = deaths + 1
 		if (deaths == 3) then
-			if self.db.profile.bosskill then self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], boss), "Bosskill", nil, "Victory") end
+			if self.db.profile.bosskill then self:Message(string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], boss), "Bosskill", nil, "Victory") end
 			BigWigs:ToggleModuleActive(self, false)
 		end
 	end
@@ -167,7 +167,7 @@ end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg == L["healtrigger"] and self.db.profile.heal then
-		self:TriggerEvent("BigWigs_Message", L["healwarn"], "Urgent")
-		self:TriggerEvent("BigWigs_StartBar", self, L["healwarn"], 2, "Interface\\Icons\\Spell_Holy_Heal")
+		self:Message(L["healwarn"], "Urgent")
+		self:Bar(L["healwarn"], 2, "Spell_Holy_Heal")
 	end
 end

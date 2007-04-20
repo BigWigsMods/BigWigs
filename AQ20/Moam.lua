@@ -155,31 +155,31 @@ function mod:AddsStart()
 		self:ScheduleEvent("BigWigs_Message", 60, format(L["addsincoming"], 30), "Attention")
 		self:ScheduleEvent("BigWigs_Message", 75, format(L["addsincoming"], 15), "Urgent")
 		self:ScheduleEvent("BigWigs_Message", 85, format(L["addsincoming"], 5), "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["addsbar"], 90, "Interface\\Icons\\Spell_Shadow_CurseOfTounges") 
+		self:Bar(L["addsbar"], 90, "Spell_Shadow_CurseOfTounges") 
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE( msg )
 	if msg == L["starttrigger"] then
-		if self.db.profile.adds then self:TriggerEvent("BigWigs_Message", L["startwarn"], "Important") end
+		if self.db.profile.adds then self:Message(L["startwarn"], "Important") end
 		self:AddsStart()
 	elseif msg == L["addstrigger"] then
 		if self.db.profile.adds then
-			self:TriggerEvent("BigWigs_Message", L["addswarn"], "Important")
+			self:Message(L["addswarn"], "Important")
 		end
 		if self.db.profile.paralyze then
 			self:ScheduleEvent("BigWigs_Message", 30, format(L["returnincoming"], 60), "Attention")
 			self:ScheduleEvent("BigWigs_Message", 60, format(L["returnincoming"], 30), "Attention")
 			self:ScheduleEvent("BigWigs_Message", 75, format(L["returnincoming"], 15), "Urgent")
 			self:ScheduleEvent("BigWigs_Message", 85, format(L["returnincoming"], 5), "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["paralyzebar"], 90, "Interface\\Icons\\Spell_Shadow_CurseOfTounges")
+			self:Bar(L["paralyzebar"], 90, "Spell_Shadow_CurseOfTounges")
 		end
 	end
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if  msg:find(L["returntrigger"]) then
-		if self.db.profile.paralyze then self:TriggerEvent("BigWigs_Message", L["returnwarn"], "Important") end
+		if self.db.profile.paralyze then self:Message(L["returnwarn"], "Important") end
 		self:AddsStart()
 	end
 end

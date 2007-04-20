@@ -362,7 +362,7 @@ function mod:UNIT_HEALTH( msg )
 		local health = UnitHealth(msg)
 		if health > 20 and health <= 23 and not berserkannounced then
 			if self.db.profile.berserk then
-				self:TriggerEvent("BigWigs_Message", L["berserksoonwarn"], "Important")
+				self:Message(L["berserksoonwarn"], "Important")
 			end
 			berserkannounced = true
 		elseif health > 30 and berserkannounced then
@@ -378,7 +378,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.emerge then
-			self:TriggerEvent("BigWigs_Message", L["engage_message"], "Attention")
+			self:Message(L["engage_message"], "Attention")
 			self:PossibleSubmerge()
 		end
 	elseif sync == "OuroSweep" then
@@ -397,9 +397,9 @@ end
 function mod:PossibleSubmerge()
 	if self.db.profile.emerge then
 		self:ScheduleEvent("bwouroemergewarn", "BigWigs_Message", 75, L["emergewarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["possible_submerge_bar"], 90, "Interface\\Icons\\Spell_Nature_Earthquake")
+		self:Bar(L["possible_submerge_bar"], 90, "Spell_Nature_Earthquake")
 		self:ScheduleEvent("bwouroemergewarn2", "BigWigs_Message", 165, L["emergewarn2"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["emergebartext"], 180, "Interface\\Icons\\Spell_Nature_Earthquake")
+		self:Bar(L["emergebartext"], 180, "Spell_Nature_Earthquake")
 	end
 end
 
@@ -411,45 +411,45 @@ function mod:Berserk()
 	self:UnregisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 
 	if self.db.profile.berserk then
-		self:TriggerEvent("BigWigs_Message", L["berserkannounce"], "Important")
+		self:Message(L["berserkannounce"], "Important")
 	end
 end
 
 function mod:Sweep()
 	if self.db.profile.sweep then
-		self:TriggerEvent("BigWigs_Message", L["sweepannounce"], "Important")
+		self:Message(L["sweepannounce"], "Important")
 		self:ScheduleEvent("bwourosweepwarn", "BigWigs_Message", 16, L["sweepwarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["sweepbartext"], 21, "Interface\\Icons\\Spell_Nature_Thorns")
+		self:Bar(L["sweepbartext"], 21, "Spell_Nature_Thorns")
 	end
 end
 
 function mod:Sandblast()
 	if self.db.profile.sandblast then
-		self:TriggerEvent("BigWigs_Message", L["sandblastannounce"], "Important")
+		self:Message(L["sandblastannounce"], "Important")
 		self:ScheduleEvent("bwouroblastwarn", "BigWigs_Message", 17, L["sandblastwarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["sandblastbartext"], 22, "Interface\\Icons\\Spell_Nature_Cyclone")
+		self:Bar(L["sandblastbartext"], 22, "Spell_Nature_Cyclone")
 	end
 end
 
 function mod:Emerge()
 	if self.db.profile.emerge then
-		self:TriggerEvent("BigWigs_Message", L["emergeannounce"], "Important")
+		self:Message(L["emergeannounce"], "Important")
 		self:PossibleSubmerge()
 	end
 
 	if self.db.profile.sweep then
 		self:ScheduleEvent("bwourosweepwarn", "BigWigs_Message", 16, L["sweepwarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["sweepbartext"], 21, "Interface\\Icons\\Spell_Nature_Thorns")
+		self:Bar(L["sweepbartext"], 21, "Spell_Nature_Thorns")
 	end	
 
 	if self.db.profile.sandblast then
 		self:ScheduleEvent("bwouroblastwarn", "BigWigs_Message", 17, L["sandblastwarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["sandblastbartext"], 22, "Interface\\Icons\\Spell_Nature_Cyclone")
+		self:Bar(L["sandblastbartext"], 22, "Spell_Nature_Cyclone")
 	end
 
 	if self.db.profile.scarab then
 		self:ScheduleEvent("bwscarabdespawn", "BigWigs_Message", 50, L["scarabdespawn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["scarabbar"], 60, "Interface\\Icons\\INV_Scarab_Clay")
+		self:Bar(L["scarabbar"], 60, "INV_Scarab_Clay")
 	end
 end
 
@@ -465,32 +465,32 @@ function mod:Submerge()
 	self:TriggerEvent("BigWigs_StopBar", self, L["possible_submerge_bar"])
 
 	if self.db.profile.submerge then
-		self:TriggerEvent("BigWigs_Message", L["submergeannounce"], "Important")
+		self:Message(L["submergeannounce"], "Important")
 		self:ScheduleEvent("bwsubmergewarn", "BigWigs_Message", 25, L["submergewarn"], "Important" )
-		self:TriggerEvent("BigWigs_StartBar", self, L["submergebartext"], 30, "Interface\\Icons\\Spell_Nature_Earthquake")
+		self:Bar(L["submergebartext"], 30, "Spell_Nature_Earthquake")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	if msg:find(L["emergetrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "OuroEmerge2")
+		self:Sync("OuroEmerge2")
 	elseif msg:find(L["submergetrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "OuroSubmerge")
+		self:Sync("OuroSubmerge")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE( msg )
 	if msg:find(L["sweeptrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "OuroSweep")
+		self:Sync("OuroSweep")
 	elseif msg:find(L["sandblasttrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "OuroSandblast")
+		self:Sync("OuroSandblast")
 	elseif msg:find(L["submergetrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "OuroSubmerge")
+		self:Sync("OuroSubmerge")
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE( msg )
 	if msg == L["berserktrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "OuroBerserk")
+		self:Sync("OuroBerserk")
 	end
 end

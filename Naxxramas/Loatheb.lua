@@ -237,7 +237,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.doom then
-			self:TriggerEvent("BigWigs_StartBar", self, L["doomtimerbar"], 300, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+			self:Bar(L["doomtimerbar"], 300, "Spell_Shadow_UnholyFrenzy")
 			self:ScheduleEvent("bwloathebtimerreduce1", "BigWigs_Message", 240, string.format(L["doomtimerwarn"], 60), "Attention")
 			self:ScheduleEvent("bwloathebtimerreduce2", "BigWigs_Message", 270, string.format(L["doomtimerwarn"], 30), "Attention")
 			self:ScheduleEvent("bwloathebtimerreduce3", "BigWigs_Message", 290, string.format(L["doomtimerwarn"], 10), "Urgent")
@@ -246,8 +246,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 
 			self:ScheduleEvent("bwloathebdoomtimerreduce", function () mod.doomTime = 15 end, 300)
 
-			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Red")
-			self:TriggerEvent("BigWigs_StartBar", self, string.format(L["doombar"], self.doomCount), 120, "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
+			self:Message(L["startwarn"], "Red")
+			self:Bar(string.format(L["doombar"], self.doomCount), 120, "Spell_Shadow_NightOfTheDead")
 			self:ScheduleEvent("bwloathebdoom", "BigWigs_Message", 115, string.format(L["doomwarn5sec"], self.doomCount), "Urgent")
 		end
 	elseif sync == "LoathebDoom2" and rest then
@@ -256,11 +256,11 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 
 		if rest == (self.doomCount + 1) then
 			if self.db.profile.doom then
-				self:TriggerEvent("BigWigs_Message", string.format(L["doomwarn"], self.doomCount, self.doomTime), "Important")
+				self:Message(string.format(L["doomwarn"], self.doomCount, self.doomTime), "Important")
 			end
 			self.doomCount = self.doomCount + 1
 			if self.db.profile.doom then
-				self:TriggerEvent("BigWigs_StartBar", self, string.format(L["doombar"], self.doomCount), self.doomTime, "Interface\\Icons\\Spell_Shadow_NightOfTheDead")
+				self:Bar(string.format(L["doombar"], self.doomCount), self.doomTime, "Spell_Shadow_NightOfTheDead")
 				self:ScheduleEvent("bwloathebdoom", "BigWigs_Message", self.doomTime - 5, string.format(L["doomwarn5sec"], self.doomCount), "Urgent")
 			end
 		end
@@ -270,31 +270,31 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 
 		if rest == (self.sporeCount + 1) then
 			if self.db.profile.spore then
-				self:TriggerEvent("BigWigs_Message", string.format(L["sporewarn"], self.sporeCount), "Important")
+				self:Message(string.format(L["sporewarn"], self.sporeCount), "Important")
 			end
 			self.sporeCount = self.sporeCount + 1
 			if self.db.profile.spore then
-				self:TriggerEvent("BigWigs_StartBar", self, string.format(L["sporebar"], self.sporeCount), 12, "Interface\\Icons\\Ability_TheBlackArrow")
+				self:Bar(string.format(L["sporebar"], self.sporeCount), 12, "Ability_TheBlackArrow")
 			end
 		end
 	elseif sync == "LoathebRemoveCurse" then
 		if self.db.profile.curse then
-			self:TriggerEvent("BigWigs_Message", L["removecursewarn"], "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["removecursebar"], 30, "Interface\\Icons\\Spell_Holy_RemoveCurse")
+			self:Message(L["removecursewarn"], "Important")
+			self:Bar(L["removecursebar"], 30, "Spell_Holy_RemoveCurse")
 		end
 	end
 end
 
 function mod:Event( msg )
 	if msg:find(L["doomtrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "LoathebDoom2 "..tostring(self.doomCount + 1))
+		self:Sync("LoathebDoom2 "..tostring(self.doomCount + 1))
 	end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	if msg == L["sporespawntrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "LoathebSporeSpawn2 "..tostring(self.sporeCount + 1))
+		self:Sync("LoathebSporeSpawn2 "..tostring(self.sporeCount + 1))
 	elseif msg == L["removecursetrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "LoathebRemoveCurse")
+		self:Sync("LoathebRemoveCurse")
 	end
 end

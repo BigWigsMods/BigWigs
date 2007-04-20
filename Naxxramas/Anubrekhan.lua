@@ -159,21 +159,21 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.locust and msg:find(L["starttrigger1"]) or msg == L["starttrigger2"] or msg == L["starttrigger3"] then
-		self:TriggerEvent("BigWigs_Message", L["engagewarn"], "Urgent")
+		self:Message(L["engagewarn"], "Urgent")
 		self:ScheduleEvent("BigWigs_Message", 80, L["gainwarn10sec"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["gainincbar"], 90, "Interface\\Icons\\Spell_Nature_InsectSwarm")
+		self:Bar(L["gainincbar"], 90, "Spell_Nature_InsectSwarm")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if msg == L["gaintrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "AnubLocustSwarm")
+		self:Sync("AnubLocustSwarm")
 	end
 end
 
 function mod:LocustCast( msg )
 	if msg == L["casttrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "AnubLocustInc")
+		self:Sync("AnubLocustInc")
 	end
 end
 
@@ -181,17 +181,17 @@ function mod:BigWigs_RecvSync( sync )
 	if sync == "AnubLocustInc" then
 		self:ScheduleEvent("bwanublocustinc", self.TriggerEvent, 3.25, self, "BigWigs_SendSync", "AnubLocustSwarm")
 		if self.db.profile.locust then
-			self:TriggerEvent("BigWigs_Message", L["castwarn"], "Orange")
-			self:TriggerEvent("BigWigs_StartBar", self, L["castwarn"], 3, "Interface\\Icons\\Spell_Nature_InsectSwarm" )
+			self:Message(L["castwarn"], "Orange")
+			self:Bar(L["castwarn"], 3, "Spell_Nature_InsectSwarm" )
 		end
 	elseif sync == "AnubLocustSwarm" then
 		self:CancelScheduledEvent("bwanublocustinc")
 		if self.db.profile.locust then
 			self:ScheduleEvent("BigWigs_Message", 20, L["gainendwarn"], "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["gainbar"], 20, "Interface\\Icons\\Spell_Nature_InsectSwarm")
-			self:TriggerEvent("BigWigs_Message", L["gainnextwarn"], "Urgent")
+			self:Bar(L["gainbar"], 20, "Spell_Nature_InsectSwarm")
+			self:Message(L["gainnextwarn"], "Urgent")
 			self:ScheduleEvent("BigWigs_Message", 75, L["gainwarn10sec"], "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["gainincbar"], 85, "Interface\\Icons\\Spell_Nature_InsectSwarm")
+			self:Bar(L["gainincbar"], 85, "Spell_Nature_InsectSwarm")
 		end
 	end
 end

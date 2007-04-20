@@ -319,11 +319,11 @@ end
 
 function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH( msg )
 	if self.db.profile.adddeath and msg == string.format(UNITDIESOTHER, L["rider"]) then
-		self:TriggerEvent("BigWigs_Message", L["riderdiewarn"], "Important")
+		self:Message(L["riderdiewarn"], "Important")
 	elseif self.db.profile.adddeath and msg == string.format(UNITDIESOTHER, L["deathknight"]) then
-		self:TriggerEvent("BigWigs_Message", L["dkdiewarn"], "Important")
+		self:Message(L["dkdiewarn"], "Important")
 	elseif self.db.profile.bosskill and msg == string.format(UNITDIESOTHER, boss) then
-		self:TriggerEvent("BigWigs_Message", string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], boss), "Bosskill", nil, "Victory")
+		self:Message(string.format(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], boss), "Bosskill", nil, "Victory")
 		BigWigs:ToggleModuleActive(self, false)
 	end
 end
@@ -350,12 +350,12 @@ end
 
 function mod:WaveWarn(message, L, color)
 	self.wave = self.wave + 1
-	if self.db.profile.add then self:TriggerEvent("BigWigs_Message", string.format(L["wave"], self.wave) .. message, color) end
+	if self.db.profile.add then self:Message(string.format(L["wave"], self.wave) .. message, color) end
 end
 
 function mod:Trainee()
 	if self.db.profile.add then
-		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["trabar"], self.tranum), self.tratime, "Interface\\Icons\\Ability_Seal")
+		self:Bar(string.format(L["trabar"], self.tranum), self.tratime, "Ability_Seal")
 	end
 	self:ScheduleEvent("bwgothiktrawarn", self.WaveWarn, self.tratime - 3, self, L["trawarn"], L, "Attention")
 	self:ScheduleRepeatingEvent("bwgothiktrarepop", self.Trainee, self.tratime, self)
@@ -364,7 +364,7 @@ end
 
 function mod:DeathKnight()
 	if self.db.profile.add then
-		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["dkbar"], self.dknum), self.dktime, "Interface\\Icons\\INV_Boots_Plate_08")
+		self:Bar(string.format(L["dkbar"], self.dknum), self.dktime, "INV_Boots_Plate_08")
 	end
 	self:ScheduleEvent("bwgothikdkwarn", self.WaveWarn, self.dktime - 3, self, L["dkwarn"], L, "Urgent")
 	self:ScheduleRepeatingEvent("bwgothikdkrepop", self.DeathKnight, self.dktime, self)
@@ -373,7 +373,7 @@ end
 
 function mod:Rider()
 	if self.db.profile.add then
-		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["riderbar"], self.ridernum), self.ridertime, "Interface\\Icons\\Spell_Shadow_DeathPact")
+		self:Bar(string.format(L["riderbar"], self.ridernum), self.ridertime, "Spell_Shadow_DeathPact")
 	end
 	self:ScheduleEvent("bwgothikriderwarn", self.WaveWarn, self.ridertime - 3, self, L["riderwarn"], L, "Important")
 	self:ScheduleRepeatingEvent("bwgothikriderrepop", self.Rider, self.ridertime, self)
@@ -383,8 +383,8 @@ end
 function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if msg == L["starttrigger1"] or msg == L["starttrigger2"] then
 		if self.db.profile.room then
-			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["inroombartext"], 270, "Interface\\Icons\\Spell_Magic_LesserInvisibilty")
+			self:Message(L["startwarn"], "Important")
+			self:Bar(L["inroombartext"], 270, "Spell_Magic_LesserInvisibilty")
 			self:ScheduleEvent("bwgothikwarn1", "BigWigs_Message", 90, L["warn1"], "Attention")
 			self:ScheduleEvent("bwgothikwarn2", "BigWigs_Message", 180, L["warn2"], "Attention")
 			self:ScheduleEvent("bwgothikwarn3", "BigWigs_Message", 210, L["warn3"], "Urgent")
@@ -404,7 +404,7 @@ function mod:CHAT_MSG_MONSTER_YELL( msg )
 		self.dktime = 25
 		self.ridertime = 30
 	elseif msg == L["inroomtrigger"] then
-		if self.db.profile.room then self:TriggerEvent("BigWigs_Message", L["inroomwarn"], "Important") end
+		if self.db.profile.room then self:Message(L["inroomwarn"], "Important") end
 		self:StopRoom()
 	end
 end

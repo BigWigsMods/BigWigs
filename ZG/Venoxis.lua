@@ -121,12 +121,12 @@ end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS( msg )
 	if self.db.profile.renew and msg == L["renew_trigger"] then
-		self:TriggerEvent("BigWigs_Message", L["renew_message"], "Urgent")
+		self:Message(L["renew_message"], "Urgent")
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.phase and msg:find(L["phase2_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["phase2_message"], "Attention")
+		self:Message(L["phase2_message"], "Attention")
 	end
 end

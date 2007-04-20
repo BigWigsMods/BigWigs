@@ -123,13 +123,13 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL( msg )
 	if self.db.profile.spider and msg:find(L["spiders_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["spiders_message"], "Attention")
+		self:Message(L["spiders_message"], "Attention")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF( msg )
 	if self.db.profile.drain and msg:find(L["drainlife_trigger"]) and lastdrain < (GetTime()-3) then
 		lastdrain = GetTime()
-		self:TriggerEvent("BigWigs_Message", L["drainlife_message"], "Urgent")
+		self:Message(L["drainlife_message"], "Urgent")
 	end
 end

@@ -150,14 +150,14 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.bomb and msg:find(L["bomb_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["bomb_message"], "Attention")
+		self:Message(L["bomb_message"], "Attention")
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if self.db.profile.heal and msg:find(L["heal_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["heal_message"], "Urgent")
+		self:Message(L["heal_message"], "Urgent")
 	elseif self.db.profile.swarm and msg:find(L["swarm_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["swarm_message"], "Urgent")
+		self:Message(L["swarm_message"], "Urgent")
 	end
 end

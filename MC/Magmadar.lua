@@ -140,22 +140,22 @@ end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["trigger1"] and self.db.profile.frenzy then
-		self:TriggerEvent("BigWigs_Message", L["frenzywarn"], "Important", nil, "Alert")
+		self:Message(L["frenzywarn"], "Important", nil, "Alert")
 	end
 end
 
 function mod:BigWigs_RecvSync( sync ) 
 	if sync ~= "MagmadarFear" then return end
 	if self.db.profile.fear then
-		self:TriggerEvent("BigWigs_StartBar", self, L["fearbar"], 30, "Interface\\Icons\\Spell_Shadow_PsychicScream")
-		self:TriggerEvent("BigWigs_Message", L["fearwarn"], "Important")
+		self:Bar(L["fearbar"], 30, "Spell_Shadow_PsychicScream")
+		self:Message(L["fearwarn"], "Important")
 		self:ScheduleEvent("BigWigs_Message", 25, L["fearalert"], "Urgent")
 	end
 end
 
 function mod:Fear(msg)
 	if not self.prior and msg:find(L["trigger2"]) then
-		self:TriggerEvent("BigWigs_SendSync", "MagmadarFear")
+		self:Sync("MagmadarFear")
 		self.prior = true
 	end
 end

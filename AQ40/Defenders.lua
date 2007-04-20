@@ -348,33 +348,33 @@ end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "DefenderExplode" and self.db.profile.explode then
-		self:TriggerEvent("BigWigs_Message", L["explodewarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["explodewarn"], 6, "Interface\\Icons\\Spell_Fire_SelfDestruct")
+		self:Message(L["explodewarn"], "Important")
+		self:Bar(L["explodewarn"], 6, "Spell_Fire_SelfDestruct")
 	elseif sync == "DefenderEnrage" and self.db.profile.enrage then
-		self:TriggerEvent("BigWigs_Message", L["enragewarn"], "Important")
+		self:Message(L["enragewarn"], "Important")
 	elseif sync == "DefenderThunderclap" and self.db.profile.thunderclap then
-		self:TriggerEvent("BigWigs_Message", L["thunderclapwarn"], "Important")
+		self:Message(L["thunderclapwarn"], "Important")
 	elseif sync == "DefenderMeteor" and self.db.profile.meteor then
-		self:TriggerEvent("BigWigs_Message", L["meteorwarn"], "Important")
+		self:Message(L["meteorwarn"], "Important")
 	elseif sync == "DefenderShadowstorm" and self.db.profile.shadowstorm then
-		self:TriggerEvent("BigWigs_Message", L["shadowstormwarn"], "Important")
+		self:Message(L["shadowstormwarn"], "Important")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if msg == L["explodetrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "DefenderExplode")
+		self:Sync("DefenderExplode")
 	elseif msg == L["enragetrigger"] then
-		self:TriggerEvent("BigWigs_SendSync", "DefenderEnrage")
+		self:Sync("DefenderEnrage")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if not self.db.profile.summon then return end
 	if msg == L["summonguardtrigger"] then
-		self:TriggerEvent("BigWigs_Message", L["summonguardwarn"], "Attention")
+		self:Message(L["summonguardwarn"], "Attention")
 	elseif msg == L["summonwarriortrigger"] then
-		self:TriggerEvent("BigWigs_Message", L["summonwarriorwarn"], "Attention")
+		self:Message(L["summonwarriorwarn"], "Attention")
 	end
 end
 
@@ -382,25 +382,25 @@ function mod:CheckPlague(msg)
 	local pplayer, ptype = select(3, msg:find(L["plaguetrigger"]))
 	if pplayer then
 		if self.db.profile.plagueyou and pplayer == L["you"] then
-			self:TriggerEvent("BigWigs_Message", L["plagueyouwarn"], "Personal", true)
-			self:TriggerEvent("BigWigs_Message", UnitName("player") .. L["plaguewarn"], "Attention", nil, nil, true)
+			self:Message(L["plagueyouwarn"], "Personal", true)
+			self:Message(UnitName("player") .. L["plaguewarn"], "Attention", nil, nil, true)
 		elseif self.db.profile.plagueother then
-			self:TriggerEvent("BigWigs_Message", pplayer .. L["plaguewarn"], "Attention")
-			self:TriggerEvent("BigWigs_SendTell", pplayer, L["plagueyouwarn"])
+			self:Message(pplayer .. L["plaguewarn"], "Attention")
+			self:Whisper(pplayer, L["plagueyouwarn"])
 		end
 
 		if self.db.profile.icon then
-			self:TriggerEvent("BigWigs_SetRaidIcon", pplayer)
+			self:Icon(pplayer)
 		end
 	end
 end
 
 function mod:Abilities(msg)
 	if msg:find(L["thunderclaptrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "DefenderThunderclap")
+		self:Sync("DefenderThunderclap")
 	elseif msg:find(L["meteortrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "DefenderMeteor")
+		self:Sync("DefenderMeteor")
 	elseif msg:find(L["shadowstormtrigger"]) then
-		self:TriggerEvent("BigWigs_SendSync", "DefenderShadowstorm")
+		self:Sync("DefenderShadowstorm")
 	end
 end

@@ -202,14 +202,14 @@ end
 
 function mod:Frenzy( msg )
 	if self.db.profile.frenzy and msg == L["frenzy_trigger"] then
-		self:TriggerEvent("BigWigs_Message", L["frenzy_message"], "Important")
+		self:Message(L["frenzy_message"], "Important")
 	end
 end
 
 function mod:Fear( msg )
 	if self.db.profile.fear and not prior and msg:find(L["fear_trigger"]) then
-		self:TriggerEvent("BigWigs_Message", L["fear_message"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["fear_bar"], 20, "Interface\\Icons\\Spell_Shadow_PsychicScream")
+		self:Message(L["fear_message"], "Important")
+		self:Bar(L["fear_bar"], 20, "Spell_Shadow_PsychicScream")
 		self:ScheduleEvent("BigWigs_Message", 15, L["fear_warning"], "Urgent")
 		prior = true
 	end
@@ -217,8 +217,8 @@ end
 
 function mod:Decimate( msg )
 	if msg:find(L["decimatetrigger"]) and self.db.profile.decimate then
-		self:TriggerEvent("BigWigs_Message", L["decimatewarn"], "Important")
-		self:TriggerEvent("BigWigs_StartBar", self, L["decimatebartext"], 105, "Interface\\Icons\\INV_Shield_01")
+		self:Message(L["decimatewarn"], "Important")
+		self:Bar(L["decimatebartext"], 105, "INV_Shield_01")
 		self:ScheduleEvent("BigWigs_Message", 100, L["decimatesoonwarn"], "Urgent")
 	end
 end
@@ -228,8 +228,8 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		if self.db.profile.decimate then
-			self:TriggerEvent("BigWigs_Message", L["startwarn"], "Attention")
-			self:TriggerEvent("BigWigs_StartBar", self, L["decimatebartext"], 105, "Interface\\Icons\\INV_Shield_01")
+			self:Message(L["startwarn"], "Attention")
+			self:Bar(L["decimatebartext"], 105, "INV_Shield_01")
 			self:ScheduleEvent("BigWigs_Message", 100, L["decimatesoonwarn"], "Urgent")
 		end
 		if self.db.profile.enrage then
@@ -237,7 +237,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:ScheduleEvent("BigWigs_Message", 300, string.format(L["enrage_warning"], 60), "Attention")
 			self:ScheduleEvent("BigWigs_Message", 330, string.format(L["enrage_warning"], 30), "Urgent")
 			self:ScheduleEvent("BigWigs_Message", 350, string.format(L["enrage_warning"], 10), "Important")
-			self:TriggerEvent("BigWigs_StartBar", self, L["enrage_bar"], 360, "Interface\\Icons\\Spell_Shadow_UnholyFrenzy")
+			self:Bar(L["enrage_bar"], 360, "Spell_Shadow_UnholyFrenzy")
 		end
 	end
 end

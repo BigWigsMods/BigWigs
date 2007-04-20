@@ -62,6 +62,6 @@ end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if (msg:find(L["pulse_trigger"])) then
-		self:TriggerEvent("BigWigs_StartBar", self, L["pulse_bar"], 18, "Interface\\Icons\\Spell_Holy_DispelMagic")
+		self:Bar(L["pulse_bar"], 18, "Spell_Holy_DispelMagic")
 	end
 end
