@@ -53,7 +53,7 @@ L:RegisterTranslations("frFR", function() return {
 	enrage_desc = "Pr\195\169viens quand le Conservateur devient enrag\195\169 \195\160 15%.",
 
 	weaken = "Affaiblissement",
-	weaken_desc = "Warnung f\195\188r den geschw\195\164chten Zustand",
+	weaken_desc = "Pr\195\169viens quand le Conservateur est affaibli.",
 
 	weaktime = "Compte \195\160 rebours Affaiblissement",
 	weaktime_desc = "Affiche un compte \195\160 rebours avant le prochain affaiblissement.",
@@ -86,7 +86,7 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_desc = "Warnung f\195\188r Rage bei 15%.",
 
 	weaken = "Schw\195\164chung",
-	--weaken_desc = "Warn for weakened state", --enUS changed
+	weaken_desc = "Warnung f\195\188r den geschw\195\164chten Zustand",
 
 	weaktime = "Schw\195\164chungs Timer",
 	weaktime_desc = "Timer und Anzeige f\195\188r die n\195\164chste Schw\195\164chung.",
