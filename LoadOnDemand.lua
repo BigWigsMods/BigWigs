@@ -1,13 +1,18 @@
-
+﻿
 ------------------------------
 --      Are you local?      --
 ------------------------------
 
 local LC = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local BZ = nil
+local grouped = nil
 
 local loadWithCore = nil
 local loadInZone = {}
+local enableZones = {}
+
+local BWRAID = 2
+local BWPARTY = 1
 
 ------------------------------
 --    Addon Declaration     --
@@ -90,12 +95,29 @@ local function addCoreMenu(zone)
 	end
 end
 
-local function iterateZones(addon, override, ...)
+local function RegisterEnableZone( zone, groupsize )
+	if type(zone) == "string" then
+		-- only update enablezones if content is of lower level than before.
+		-- if someone adds a party module to a zone that is already in the table as a raid, set the level of that zone to party
+		if not enableZones[zone] or ( enableZones[zone] and enableZones[zone] > groupsize ) then
+			enableZones[zone] = tonumber( groupsize ) -- needs to be a number.
+		end
+	elseif type(zone) == "table" then
+		for _,z in pairs(zone) do 
+			RegisterEnableZone( z, groupsize ) 
+		end
+	end
+end
+
+local function iterateZones(addon, override, partyContent, ...)
 	for i = 1, select("#", ...) do
 		local z = (select(i, ...)):trim()
 		local zone = BZ:HasTranslation(z) and BZ[z] or nil
 		assert(zone, string.format("The zone %s, specified by the %s addon, does not exist in Babble-Zone.", z, addon))
 
+		-- register the zone for enabling.
+		RegisterEnableZone( zone, partyContent and BWPARTY or BWRAID )
+		
 		if not loadInZone[zone] then loadInZone[zone] = {} end
 		table.insert( loadInZone[zone], addon)
 
@@ -115,7 +137,7 @@ local function initialize()
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadInZone")
 			if meta then
 				if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
-
+				local partyContent = GetAddOnMetadata(i, "X-BigWigs-LoadInParty")
 				-- X-BW-Menu can override showing the modules in the
 				-- modules own specified zone submenu
 				local menu = GetAddOnMetadata(i, "X-BigWigs-Menu")
@@ -130,9 +152,9 @@ local function initialize()
 					-- for the actual module name as well.
 
 					addCoreMenu(menu)
-					iterateZones(name, menu, strsplit(",", meta))
+					iterateZones(name, menu, partyContent, strsplit(",", meta))
 				else
-					iterateZones(name, nil, strsplit(",", meta))
+					iterateZones(name, nil, partyContent, strsplit(",", meta))
 				end
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadWithCore")
@@ -158,9 +180,8 @@ function BigWigsLoD:OnEnable()
 
 	self:RegisterEvent("ZONE_CHANGED", "ZoneChanged")
 	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "ZoneChanged")
+	self:RegisterEvent("BigWigs_JoinedGroup", "ZoneChanged")
 
-	self:RegisterEvent("CHAT_MSG_SYSTEM")
-	self:RegisterEvent("BigWigs_JoinedGroup")
 	self:RegisterEvent("BigWigs_LeftGroup")
 
 	if AceLibrary("AceEvent-2.0"):IsFullyInitialized() then
@@ -168,6 +189,20 @@ function BigWigsLoD:OnEnable()
 	else
 		self:RegisterEvent("AceEvent_FullyInitialized", "ZoneChanged")
 	end
+	
+	if AceLibrary:HasInstance("Roster-2.1") then
+		self:RegisterEvent("RosterLib_RosterUpdated", "CheckRoster")
+	else
+		self:RegisterBucketEvent({"RAID_ROSTER_UPDATE", "PARTY_MEMBERS_CHANGED"}, 1, "CheckRoster")
+	end
+
+	self:RegisterEvent("BigWigs_ModuleRegistered")
+	for name, module in BigWigs:IterateModules() do
+		if module.zonename then
+			RegisterEnableZone( module.zonename, module.partyContent and BWPARTY or BWRAID ) 
+		end
+	end	
+	
 end
 
 ------------------------------
@@ -199,26 +234,46 @@ function BigWigsLoD:BigWigs_CoreEnabled()
 	loadZone(GetZoneText())
 end
 
-function BigWigsLoD:ZoneChanged()
-	if BigWigs:IsActive() then
-		loadZone(GetRealZoneText())
-		loadZone(GetZoneText())
+function BigWigsLoD:BigWigs_ModuleRegistered(name)
+	local mod = BigWigs:GetModule(name)
+	if mod and mod.zonename then
+		RegisterEnableZone( mod.zonename, mod.partyContent and BWPARTY or BWRAID )
 	end
 end
 
-do
-	local playerLeft = ERR_RAID_MEMBER_REMOVED_S:format(UnitName("player"))
-	function BigWigsLoD:CHAT_MSG_SYSTEM( msg )
-		if msg:find(ERR_RAID_YOU_LEFT) or msg:find(playerLeft) then
-			self:TriggerEvent("BigWigs_LeftGroup")
-		elseif msg:find(ERR_RAID_YOU_JOINED) then
-			self:TriggerEvent("BigWigs_JoinedGroup")
+function BigWigsLoD:ZoneChanged()
+	if not grouped then return end
+
+	local z1, z2 = GetRealZoneText(), GetZoneText()
+	-- load party content in raid, but don't load raid content in a party...
+	if ( enableZones[z1] and enableZones[z1] <= grouped ) or ( enableZones[z2] and enableZones[z2] <= grouped ) then
+		if BigWigs:IsActive() and ( loadInZone[z1] or loadInZone[z2] ) then
+			loadZone(z1)
+			loadZone(z2)
+		else
+			-- BigWigs_CoreEnabled will check and load the zones.
+			BigWigs:ToggleActive( true )
 		end
 	end
+
 end
 
-function BigWigsLoD:BigWigs_JoinedGroup()
-	BigWigs:ToggleActive(true)
+function BigWigsLoD:CheckRoster()
+	if not grouped and GetNumRaidMembers() > 0 then
+		grouped = BWRAID
+		self:TriggerEvent("BigWigs_JoinedGroup", grouped)
+	elseif not grouped and GetNumPartyMembers() > 0 then
+		grouped = BWPARTY
+		self:TriggerEvent("BigWigs_JoinedGroup", grouped)	
+	elseif grouped then
+		if grouped == BWPARTY and GetNumRaidMembers() > 0 then
+			grouped = BWRAID
+			self:TriggerEvent("BigWigs_JoinedGroup", grouped)
+		elseif GetNumRaidMembers() == 0 and GetNumPartyMembers() == 0 then
+			grouped = nil
+			self:TriggerEvent("BigWigs_LeftGroup")
+		end
+	end
 end
 
 function BigWigsLoD:BigWigs_LeftGroup()
