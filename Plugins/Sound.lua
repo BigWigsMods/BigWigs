@@ -198,7 +198,7 @@ function plugin:OnEnable()
 end
 
 local function play(sound)
-	if not db.defaultonly then
+	if type(sound) == "string" and not db.defaultonly then
 		local s = db.media[sound] and media:Fetch(mType, db.media[sound]) or media:Fetch(mType, sound)
 		if type(s) == "string" then
 			PlaySoundFile(s)
@@ -209,12 +209,12 @@ local function play(sound)
 end
 
 function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
-	if not text or type(sound) ~= "string" or broadcastonly or not db.sound then return end
+	if not text or sound == false or broadcastonly or not db.sound then return end
 	play(sound)
 end
 
 function plugin:BigWigs_Sound( sound )
-	if not db.sound or type(sound) ~= "string" then return end
+	if not db.sound or sound == false then return end
 	play(sound)
 end
 
