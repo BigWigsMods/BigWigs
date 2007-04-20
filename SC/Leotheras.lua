@@ -6,6 +6,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local imagewarn
 local wwhelp = 0
+local beDemon = {}
 
 ----------------------------
 --      Localization     --
@@ -50,7 +51,8 @@ L:RegisterTranslations("enUS", function() return {
 	image_warning = "Image Soon!",
 
 	whisper_trigger = "^([^%s]+) ([^%s]+) afflicted by Insidious Whisper",
-	whisper_message = "InnerDemon: %s",
+	whisper_message = "Demon: %s",
+	whisper_bar = "Demons",
 } end )
 
 ----------------------------------
@@ -69,6 +71,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
+	for k in pairs(beDemon) do beDemon[k] = nil end
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 
@@ -81,7 +84,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "LeoWhisp", 2)
+	self:TriggerEvent("BigWigs_ThrottleSync", "LeoWhisp", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "LeoWW", 4)
 
 	self:RegisterEvent("UNIT_HEALTH")
@@ -159,10 +162,26 @@ function mod:Event(msg)
 	end
 end
 
+function mod:DemonWarn()
+	if self.db.profile.whisper then
+		local msg = nil
+		for k in pairs(beDemon) do
+			if not msg then
+				msg = k
+			else
+				msg = msg .. ", " .. k
+			end
+		end
+		self:Message(L["whisper_message"]:format(msg), "Attention")
+	end
+	for k in pairs(beDemon) do beDemon[k] = nil end
+end
+
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "LeoWhisp" and rest and self.db.profile.whisper then
-		self:Message(L["whisper_message"]:format(rest), "Attention")
-		self:Bar(L["whisper_message"], 30, "Spell_Shadow_ManaFeed")
+	if sync == "LeoWhisp" and rest then
+		beDemon[rest] = true
+		self:ScheduleEvent("ScanDemons", self.DemonWarn, 1, self)
+		self:Bar(L["whisper_bar"], 30, "Spell_Shadow_ManaFeed")
 	elseif sync == "LeoWW" and self.db.profile.whirlwind then
 		self:Message(L["whirlwind_gain"], "Important", nil, "Alert")
 		self:DelayedMessage(12, L["whirlwind_fade"], "Attention")
