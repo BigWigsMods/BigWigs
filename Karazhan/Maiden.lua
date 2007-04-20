@@ -41,7 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	engage = "Engage",
-	engage_desc = ("Warnt wenn %s w\195\188tend ist"):format(boss),
+	engage_desc = ("Warnt wenn %s angegangen wird"):format(boss),
 
 	repentance = "Bu\195\159e",
 	repentance_desc = "Ungef\195\164re Zeitangabe von Bu\195\159e",
@@ -50,7 +50,7 @@ L:RegisterTranslations("deDE", function() return {
 	holyfire_desc = "Warnt wenn Personen von Heiliges Feuer betroffen sind",
 
 	icon = "Icon",
-	icon_desc = "Place a Raid Icon on the player afflicted by Holy Fire(requires promoted or higher)",
+	icon_desc = "Platziert ein Schlachtzugssymbol bei dem Spieler, welcher vom Heiligen Feuer betroffen ist (ben\195\182tigt 'bef\195\182rdert' oder h\195\182her)",
 
 	engage_trigger = "Euer Verhalten wird nicht toleriert.",
 	engage_message = "Maid Engaged! Bu\195\159e in ~33 Sek!",

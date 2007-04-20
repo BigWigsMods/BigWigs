@@ -60,17 +60,17 @@ L:RegisterTranslations("deDE", function() return {
 	buff_desc = ("Warnt wenn %s und %s sich selbst buffen"):format(boy, girl),
 
 	phase1_trigger = "Welch' Teufel bist du, dass du mich so folterst?",
-	phase1_message = "Phase 1 - %s",
+	phase1_message = "Akt 1 - %s",
 	phase2_trigger = "Willst du mich zwingen? Knabe, sieh dich vor!",
-	phase2_message = "Phase 2 - %s",
+	phase2_message = "Akt 2 - %s",
 	phase3_trigger = "Komm, milde, liebevolle Nacht! Komm, gibt mir meinen Romulo zur\195\188ck!",
-	phase3_message = "Phase 3 - Beide",
+	phase3_message = "Akt 3 - Beide",
 
 	poison_trigger = "^([^%s]+) ([^%s]+) von Vergifteter Sto\195\159 betroffen.",
 	poison_message = "Vergiftet: %s",
 
 	heal_trigger = "beginnt Ewige Zuneigung zu wirken.",
-	heal_message = "%s casting Heal!",
+	heal_message = "%s wirkt Heilung!",
 
 	buff1_trigger = "bekommt 'Wagemutig'.",
 	buff1_message = "%s bekommt Wagemut!",

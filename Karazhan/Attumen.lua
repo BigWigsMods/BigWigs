@@ -35,14 +35,14 @@ L:RegisterTranslations("deDE", function() return {
 	phase = "Phase",
 	phase_desc = "Warnt wenn eine neue Phase beginnt",
 
-	curse = "Verfluchter Krieger",
-	curse_desc = "Warnt wenn ein Krieger verflucht ist",
+	curse = "Verfluchter Tank",
+	curse_desc = "Warnt wenn ein Tank verflucht ist",
 
 	curse_trigger = "^([^%s]+) ([^%s]+) von K\195\182rperlose Pr\195\164senz betroffen.",
-	curse_message = "Krieger verflucht - %s",
+	curse_message = "Tank verflucht - %s",
 
 	phase1_message = "Phase 1 - %s",
-	--phase2_trigger = "",
+	phase2_trigger = "%s ruft nach ihrem Meister!",
 	phase2_message = "Phase 2 - %s & Attumen",
 	phase3_trigger = "Komm Mittnacht, lass' uns dieses Gesindel auseinander treiben!",
 	phase3_message = "Phase 3 - %s",

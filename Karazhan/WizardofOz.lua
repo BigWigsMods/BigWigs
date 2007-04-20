@@ -34,16 +34,16 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	spawns = "Spawn Timer",
-	--spawns_desc = "Timers for when the characters become active",
+	spawns_desc = "Zeitanzeige bis die Charaktere Aktiv werden",
 
-	--light = "Chain Lightning",
-	--light_desc = "Warn for Chain Lightning being cast",
+	light = "Kettenblitzschlag",
+	light_desc = "Warnt wenn Kettenblitzschlag gewirkt wird",
 
 	spawns_bar = "%s greift an!",
-	--spawns_warning = "%s in 5 sec",
+	spawns_warning = "%s in 5 sek",
 
-	--light_trigger = "The Crone begins to cast Chain Lightning",
-	--light_message = "Chain Lightning!",
+	light_trigger = "Die b\195\182se Hexe beginnt Kettenblitzschlag zu wirken",
+	light_message = "Kettenblitzschlag!",
 
 	engage_trigger = "Oh Tito, wir m\195\188ssen einfach einen Weg nach Hause finden!",
 } end)

@@ -53,7 +53,7 @@ L:RegisterTranslations("frFR", function() return {
 	enrage_desc = "Pr\195\169viens quand le Conservateur devient enrag\195\169 \195\160 15%.",
 
 	weaken = "Affaiblissement",
-	weaken_desc = "Pr\195\169viens quand le Conservateur est affaibli.",
+	weaken_desc = "Warnung f\195\188r den geschw\195\164chten Zustand",
 
 	weaktime = "Compte \195\160 rebours Affaiblissement",
 	weaktime_desc = "Affiche un compte \195\160 rebours avant le prochain affaiblissement.",
