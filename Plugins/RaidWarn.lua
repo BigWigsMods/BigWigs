@@ -184,7 +184,11 @@ function plugin:BigWigs_Message(msg, color, noraidsay)
 		return
 	end
 	if self.db.profile.useraidchannel then
-		SendChatMessage("*** "..msg.." ***", "RAID")
+		if GetNumRaidMembers() > 0 then
+			SendChatMessage("*** "..msg.." ***", "RAID")
+		else
+			SendChatMessage("*** "..msg.." ***", "PARTY")
+		end
 	else
 		SendChatMessage("*** "..msg.." ***", "RAID_WARNING")
 	end
