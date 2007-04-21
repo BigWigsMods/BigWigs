@@ -25,8 +25,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Show whispers"] = true,
 	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = true,
 
-	["Use Raidchannel"] = true,
-	["Toggle using the raid channel instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = true,
+	["Broadcast to chat"] = true,
+	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = true,
 
 	desc = "Lets you configure where BigWigs should send its boss messages in addition to the local output.",
 } end )
@@ -45,8 +45,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Show whispers"] = "귓속말 보기",
 	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "BigWigs에 의한 귓속말 메세지를 표시합니다.",
 
-	["Use Raidchannel"] = "공격대 채널 사용",
-	["Toggle using the raid channel instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "공격대 경보 채널 대신 공격대 채널을 사용합니다.\n\n주의 : 만약 보스차단을 사용 중이라면 당신에게 메세지가 보이지 않을 수 있습니다.",
+	["Broadcast to chat"] = "공격대 채널 사용",
+	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "공격대 경보 채널 대신 공격대 채널을 사용합니다.\n\n주의 : 만약 보스차단을 사용 중이라면 당신에게 메세지가 보이지 않을 수 있습니다.",
 
 	desc = "BigWigs가 보스 메세지를 출력할 곳을 설정하세요.",
 } end )
@@ -62,8 +62,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["Whisper warnings"] = "密语警报",
 	["Toggle whispering warnings to players."] = "切换是否通过密语向玩家发送信息",
 
-	["Use Raidchannel"] = "使用团队聊天",
-	["Toggle using the raid channel instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "切换是否使用团队聊天来代替团队警告频道来播放boss的信息",
+	["Broadcast to chat"] = "使用团队聊天",
+	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "切换是否使用团队聊天来代替团队警告频道来播放boss的信息",
 
 	desc = "团队警告设置",
 } end )
@@ -79,8 +79,8 @@ L:RegisterTranslations("zhTW", function() return {
 	["Whisper warnings"] = "密語警報",
 	["Toggle whispering warnings to players."] = "切換是否通過密語向玩家發送訊息",
 
-	["Use Raidchannel"] = "使用團隊聊天",
-	["Toggle using the raid channel instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "切換是否使用團隊聊天來代替團隊警告頻道來播放boss的訊息",
+	["Broadcast to chat"] = "使用團隊聊天",
+	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "切換是否使用團隊聊天來代替團隊警告頻道來播放boss的訊息",
 
 	desc = "團隊警告選項",
 } end )
@@ -96,8 +96,8 @@ L:RegisterTranslations("deDE", function() return {
 	["Whisper warnings"] = "Warnungen fl\195\188stern",
 	["Toggle whispering warnings to players."] = "Warnungen an andere Spieler fl\195\188stern.",
 
-	["Use Raidchannel"] = "Schlachtzugschat benutzen",
-	["Toggle using the raid channel instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "Schlachtzugschat anstelle des Schlachtzugswarungschats für Boss Nachrichten benutzen.",
+	["Broadcast to chat"] = "Schlachtzugschat benutzen",
+	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "Schlachtzugschat anstelle des Schlachtzugswarungschats für Boss Nachrichten benutzen.",
 
 	desc = "Optionen f\195\188r RaidWarnung.",
 } end )
@@ -116,8 +116,8 @@ L:RegisterTranslations("frFR", function() return {
 	["Show whispers"] = "Afficher les chuchotements",
 	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "Affiche ou non localement les chuchotements envoyés par BigWigs, par exemple quand les joueurs sont affectés par des choses telles que la peste ou similaire.",
 
-	["Use Raidchannel"] = "Utiliser le canal Raid",
-	["Toggle using the raid channel instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "Utilise ou non le canal Raid au lieu de l'Avertissement Raid pour les messages des boss.\n\nMême chose ici ; vous ne verrez pas vos propres messages à moins que BossBlock ne soit désactivé.",
+	["Broadcast to chat"] = "Utiliser le canal Raid",
+	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "Utilise ou non le canal Raid au lieu de l'Avertissement Raid pour les messages des boss.\n\nMême chose ici ; vous ne verrez pas vos propres messages à moins que BossBlock ne soit désactivé.",
 
 	desc = "Options concernant l'Avertissement du Raid.",
 } end )
@@ -147,6 +147,7 @@ plugin.consoleOptions = {
 			type = "toggle",
 			name = L["Broadcast"],
 			desc = L["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."],
+			disabled = function() return plugin.db.profile.useraidchannel end,
 		},
 		whisper = {
 			type = "toggle",
@@ -160,8 +161,8 @@ plugin.consoleOptions = {
 		},
 		useraidchannel = {
 			type = "toggle",
-			name = L["Use Raidchannel"],
-			desc = L["Toggle using the raid channel instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."],
+			name = L["Broadcast to chat"],
+			desc = L["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."],
 		},
 	}
 }
@@ -180,11 +181,15 @@ function plugin:OnEnable()
 end
 
 function plugin:BigWigs_Message(msg, color, noraidsay)
-	if not self.db.profile.broadcast or not msg or noraidsay or ( not IsRaidLeader() and not IsRaidOfficer() ) then
+	if not self.db.profile.broadcast or not msg or noraidsay then
+		return
+	end
+	-- In a 5-man group, everyone can use the raid warning channel.
+	if UnitInRaid("player") and not IsRaidLeader() and not IsRaidOfficer() then
 		return
 	end
 	if self.db.profile.useraidchannel then
-		if GetNumRaidMembers() > 0 then
+		if UnitInRaid("player") then
 			SendChatMessage("*** "..msg.." ***", "RAID")
 		else
 			SendChatMessage("*** "..msg.." ***", "PARTY")
@@ -195,7 +200,8 @@ function plugin:BigWigs_Message(msg, color, noraidsay)
 end
 
 function plugin:BigWigs_SendTell(player, msg)
-	if not self.db.profile.whisper or not player or not msg or ( not IsRaidLeader() and not IsRaidOfficer() ) then return end
+	if not self.db.profile.whisper or not player or not msg then return end
+	if UnitInRaid("player") and not IsRaidLeader() and not IsRaidOfficer() then return end
 	sentWhispers[msg] = true
 	SendChatMessage(msg, "WHISPER", nil, player)
 end
