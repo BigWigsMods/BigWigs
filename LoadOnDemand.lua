@@ -29,7 +29,6 @@ local function loadZone(zone)
 		local addonsLoaded = {}
 		for i, v in ipairs( loadInZone[zone] ) do
 			if not IsAddOnLoaded( v ) then
-                ChatFrame1:AddMessage("Loading " .. v)
 				if LoadAddOn(v) then
 					BigWigsLoD:TriggerEvent("BigWigs_ModulePackLoaded", v)
 				else
