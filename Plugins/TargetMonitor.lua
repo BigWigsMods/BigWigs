@@ -17,16 +17,14 @@ plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
 --      Initialization      --
 ------------------------------
 
-function plugin:OnRegister()
+function plugin:OnEnable()
+	monitoring = nil
+
 	for name, module in BigWigs:IterateModules() do
 		if module.zonename and module.enabletrigger then
 			self:RegisterForTargetting(module.zonename, module.enabletrigger)
 		end
 	end
-end
-
-function plugin:OnEnable()
-	monitoring = nil
 
 	self:RegisterEvent("BigWigs_ModulePackLoaded", "ZoneChanged")
 	self:RegisterEvent("ZONE_CHANGED", "ZoneChanged")
