@@ -336,7 +336,8 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Naxxramas"]
 mod.enabletrigger = boss
 mod.toggleoptions = { "frostblast", "fissure", "mc", -1, "detonate", "detonateicon", -1 ,"guardians", "phase", "bosskill" }
-mod.revision = tonumber(string.sub("$Revision$", 12, -3))
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
+mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
 ------------------------------
 --      Initialization      --
@@ -403,10 +404,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.phase and msg == L["start_trigger"] then
 		self:Message(L["start_warning"], "Attention")
 		self:Bar(L["start_bar"], 320 )
-	elseif self.db.profile.phase and (msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"] or msg == L["phase2_trigger3"]) then
-		self:TriggerEvent("BigWigs_StopBar", self, L["start_bar"] )
-		self:Message(L["phase2_warning"], "Important")
-		self:Bar(L["phase2_bar"], 20 )
+	elseif msg == L["phase2_trigger1"] or msg == L["phase2_trigger2"] or msg == L["phase2_trigger3"] then
+		if self.db.profile.phase then
+			self:TriggerEvent("BigWigs_StopBar", self, L["start_bar"])
+			self:Message(L["phase2_warning"], "Important")
+			self:Bar(L["phase2_bar"], 20)
+		end
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif self.db.profile.phase and msg == L["phase3_trigger"] then
 		self:Message(L["phase3_warning"], "Attention")
 	elseif msg == L["mc_trigger1"] or msg == L["mc_trigger2"] then
