@@ -113,33 +113,41 @@ L:RegisterTranslations("deDE", function() return {
 	engage = "Pull Warnung",
 	engage_desc = "Warnt, wenn Gruul gepulled wird",
 
-	--grow = "Wachstum Warnung", --enUS changed
-	--grow_desc = "Warnt, wenn Gruul w\195\164chst", --enUS changed
+	grow = "Wachstum", 
+	grow_desc = "Warnt wenn Gruul Wachstum bekommt", 
 
-	grasp = "Griff Warnung",
-	--grasp_desc = "Warnt, wenn Gruul Griff des Gronnlords zaubert", --enUS changed
+	grasp = "Griff des Gronnlords",
+	grasp_desc = "Griff des Gronnlords warnung und Zeitanzeige", 
 
-	cavein = "H\195\182hleneinst\195\188rz auf dich",
-	cavein_desc = "Warnt bei H\195\182hleneinst\195\188rz auf dir",
+	cavein = "H\195\182hleneinst\195\188rz",
+	cavein_desc = "Warnt beim H\195\182hleneinst\195\188rz auf dir",
+
+	silence = "Stille",
+	silence_desc = "Warnt wenn Gruul stille (Nachwirken) wirkt",
 
 	engage_trigger = "Kommt und sterbt.",
 	engage_message = "%s gepullt!",
 
 	grow_trigger = "%s wird gr\195\182\195\159er!",
-	--grow_message = "Gruul w\195\164chst!", --enUS changed
-	--grow_bar = "Grow (%d)",
+	grow_message = "Wachstum: (%d)",
+	grow_bar = "Wachstum (%d)",
 
 	grasp_trigger1 = "von Erde ersch\195\188ttern betroffen",
 	grasp_trigger2 = "von Griff des Gronnlords betroffen",
-	--grasp_message1 = "Griff kommt!", --enUS changed
-	--grasp_message2 = "Griff des Gronnlords!", --enUS changed
-	--grasp_warning = "Griff bald!", --enUS changed
+	grasp_message1 = "Erde ersch\195\188tert - Griff kommt", 
+	grasp_message2 = "Griff - Zert\195\188mmern in ~5 sek",
+	grasp_warning = "Erde ersch\195\188tern bald!", 
 
-	--shatter_trigger = "%s roars!",
-	--shatter_message = "Shatter!",
+	shatter_trigger = "%s br\195\188llt!",
+	shatter_message = "Zertr\195\188mmern!",
+
+	silence_trigger = "von Nachklingen betroffen",
+	silence_message = "AOE Stille",
+	silence_warning = "AOE Stille bald!",
+
 
 	cavein_trigger = "Ihr seid von H\195\182hleneinst\195\188rz betroffen.",
-	cavein_message = "H\195\182hleneinst\195\188rz auf dich!",
+	cavein_message = "H\195\182hleneinst\195\188rz auf dir!",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
