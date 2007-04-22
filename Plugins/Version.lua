@@ -22,7 +22,7 @@ do
 	function new(...)
 		local t = next(cache)
 		if t then
-			list[t] = nil
+			cache[t] = nil
 			for i = 1, select("#", ...) do
 				t[i] = select(i, ...)
 			end
@@ -438,7 +438,12 @@ function plugin:QueryVersion(zone)
 	queryRunning = true
 	self:ScheduleEvent(resetQueryRunning, 5)
 
-	if responseTable then responseTable = del(responseTable) end
+	if responseTable then
+		for i in ipairs(responseTable) do
+			responseTable[i] = del(responseTable[i])
+		end
+		responseTable = del(responseTable)
+	end
 	responseTable = new()
 
 	if not zoneRevisions then self:PopulateRevisions() end
