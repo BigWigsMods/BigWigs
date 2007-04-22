@@ -36,12 +36,13 @@ L:RegisterTranslations("enUS", function() return {
 	whirlwind_gain = "Whirlwind for 12 sec",
 	whirlwind_fade = "Whirlwind Over",
 	whirlwind_bar = "Whirlwind",
-	whirlwind_bar2 = "next Whirlwind",
+	whirlwind_bar2 = "Next Whirlwind",
 	whirlwind_warn = "Whirlwind soon",
 
 	phase_trigger = "I am in control now",
 	phase_demon = "Demon Phase for 60sec",
 	phase_demonsoon = "Demon Phase in 5sec!",
+	phase_normalsoon = "Normal Phase in 5sec",
 	phase_normal = "Normal Phase in 5sec",
 	demon_bar = "Demon",
 	demon_nextbar = "Next Demon Phase",
@@ -110,7 +111,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:ScheduleEvent("bwdemon", self.DemonSoon, 16, self)
 	elseif self.db.profile.phase and msg:find(L["phase_trigger"]) then
 		self:Message(L["phase_demon"], "Attention")
-		self:DelayedMessage(55, L["phase_normal"], "Important")
+		self:DelayedMessage(55, L["phase_normalsoon"], "Important")
+		self:DelayedMessage(60, L["phase_normal"], "Important")
 		self:DelayedMessage(61, L["whirlwind_warn"], "Attention")
 		self:Bar(L["demon_bar"], 60, "Spell_Shadow_Metamorphosis")
 		self:ScheduleEvent("bwdemon", self.DemonSoon, 60, self)
@@ -180,7 +182,7 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "LeoWhisp" and rest then
 		beDemon[rest] = true
-		self:ScheduleEvent("ScanDemons", self.DemonWarn, 1, self)
+		self:ScheduleEvent("ScanDemons", self.DemonWarn, 2, self)
 		self:Bar(L["whisper_bar"], 30, "Spell_Shadow_ManaFeed")
 	elseif sync == "LeoWW" and self.db.profile.whirlwind then
 		self:Message(L["whirlwind_gain"], "Important", nil, "Alert")
