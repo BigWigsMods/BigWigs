@@ -166,8 +166,8 @@ end
 -----------------------------------------------------------------------
 
 function plugin:BigWigs_ShowProximity(module)
-	if active then
-		error("The proximity module is already running.")
+	if active and active ~= module then
+		error("The proximity module is already running for another boss module.")
 	end
 
 	active = module

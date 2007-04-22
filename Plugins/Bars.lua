@@ -207,7 +207,7 @@ plugin.defaultDB = {
 	emphasizeFlash = true,
 	emphasizePosX = nil,
 	emphasizePosY = nil,
-	emphasizeScale = 1.0,
+	emphasizeScale = 1.5,
 
 	width = nil,
 	height = nil,
@@ -331,6 +331,10 @@ function plugin:OnEnable()
 	else
 		colorModule = nil
 	end
+end
+
+function plugin:OnDisable()
+	self:BigWigs_HideAnchors()
 end
 
 -----------------------------------------------------------------------

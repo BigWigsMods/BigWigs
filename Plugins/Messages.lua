@@ -329,6 +329,10 @@ function plugin:OnEnable()
 	end
 end
 
+function plugin:OnDisable()
+	self:BigWigs_HideAnchors()
+end
+
 local function createMsgFrame()
 	if messageFrame then return end
 	messageFrame = CreateFrame("MessageFrame")
