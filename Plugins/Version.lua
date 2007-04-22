@@ -11,11 +11,34 @@ local COLOR_WHITE = "ffffff"
 
 local queryRunning = nil
 
-local responseTable = {}
-local numResponses = 0
+local responseTable = nil
 
 local zoneRevisions = nil
 local currentZone = ""
+
+local new, del
+do
+	local cache = setmetatable({},{__mode='k'})
+	function new(...)
+		local t = next(cache)
+		if t then
+			list[t] = nil
+			for i = 1, select("#", ...) do
+				t[i] = select(i, ...)
+			end
+			return t
+		else
+			return { ... }
+		end
+	end
+	function del(t)
+		for k in pairs(t) do
+			t[k] = nil
+		end
+		cache[t] = true
+		return nil
+	end
+end
 
 ---------------------------------
 --      Localization           --
@@ -296,7 +319,19 @@ function plugin:UpdateVersions()
 	end
 end
 
+local function sortResponses(a, b)
+	-- a should be before b if the version is higher, or if the version is the
+	-- same and the name is alphabetically before b.
+	if a[2] > b[2] or (a[2] == b[2] and a[1] > b[1]) then
+		return true
+	else
+		return false
+	end
+end
+
 function plugin:OnTooltipUpdate()
+	if not responseTable then return end
+
 	local infoCat = tablet:AddCategory(
 		"columns", 2,
 		"child_textR", 1,
@@ -307,14 +342,19 @@ function plugin:OnTooltipUpdate()
 		"child_text2B", 1
 	)
 	infoCat:AddLine("text", L["Zone"], "text2", currentZone)
-	infoCat:AddLine("text", L["Replies"], "text2", numResponses)
+	infoCat:AddLine("text", L["Replies"], "text2", #responseTable)
 	local cat = tablet:AddCategory(
 		"columns", 2,
 		"text", L["Player"],
 		"text2", L["Version"]
 	)
 	local hasOld = nil
-	for name, version in pairs(responseTable) do
+
+	table.sort(responseTable, sortResponses)
+
+	for i, info in ipairs(responseTable) do
+		local name = info[1]
+		local version = info[2]
 		if version == -1 then
 			cat:AddLine("text", name, "text2", "|cff"..COLOR_RED..L["N/A"].."|r")
 		elseif version == -2 then
@@ -349,7 +389,9 @@ function plugin:AlertOldRevisions()
 	if not responseTable or (not IsRaidLeader() and not IsRaidOfficer()) then return end
 	local myVersion = zoneRevisions[currentZone]
 	if not myVersion then return end
-	for name, version in pairs(responseTable) do
+	for i, info in ipairs(responseTable) do
+		local name = info[1]
+		local version = info[2]
 		if version < myVersion and version > 0 then
 			self:TriggerEvent("BigWigs_SendTell", name, L["There seems to be a newer version of Big Wigs available for you, please upgrade."])
 		end
@@ -396,11 +438,11 @@ function plugin:QueryVersion(zone)
 	queryRunning = true
 	self:ScheduleEvent(resetQueryRunning, 5)
 
-	responseTable = {}
+	if responseTable then responseTable = del(responseTable) end
+	responseTable = new()
 
 	if not zoneRevisions then self:PopulateRevisions() end
-	responseTable[UnitName("player")] = self:GetVersion(zone)
-	numResponses = 1
+	table.insert(responseTable, new(UnitName("player"), self:GetVersion(zone)))
 
 	self:UpdateVersions()
 	self:TriggerEvent("BigWigs_SendSync", "BWVQ "..zone)
@@ -444,8 +486,7 @@ function plugin:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "BWVR" and queryRunning and nick and rest then
 		local revision, queryNick = self:ParseReply(rest)
 		if revision and queryNick and queryNick == UnitName("player") then
-			responseTable[nick] = tonumber(revision)
-			numResponses = numResponses + 1
+			table.insert(responseTable, new(nick, tonumber(revision)))
 			self:UpdateVersions()
 		end
 	end
