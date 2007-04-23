@@ -158,8 +158,7 @@ function mod:CurseEvent(msg)
 			end
 		end
 		if not id then return end
-		local class = select(2, UnitClass(id))
-		if class == "WARRIOR" or class == "DRUID" then
+		if UnitPowerType(id) == 1 then
 			self:Message(L["curse_message"]:format(cplayer), "Attention")
 		end
 	end
