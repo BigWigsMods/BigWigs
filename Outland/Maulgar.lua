@@ -30,7 +30,7 @@ L:RegisterTranslations("enUS", function() return {
 	summon = "Summon Wild Felhunter",
 	summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter",
 
-	whirlwind = "Whirldwind",
+	whirlwind = "Whirlwind",
 	whirlwind_desc = "Warn when Maulgar gains Whirlwind",
 
 	flurry = "Flurry",
@@ -61,7 +61,7 @@ L:RegisterTranslations("enUS", function() return {
 	whirlwind_message = "Maulgar - Whirlwind for 15sec!",
 	whirlwind_bar = "Whirlwind",
 	whirlwind_nextbar = "~Next Whirlwind",
-	whirlwind_warning1 = "Maulgar Engaged - Whirldwind in ~50sec!",
+	whirlwind_warning1 = "Maulgar Engaged - Whirlwind in ~50sec!",
 	whirlwind_warning2 = "Whirlwind Soon!",
 
 	smash_bar = "~Arcing Smash",
