@@ -19,6 +19,9 @@ L:RegisterTranslations("enUS", function() return {
 	spout = "Spout",
 	spout_desc = "Timers for Spout.\n\nThese timers my be innacurate, they are scheduled from pull.",
 
+	whirl = "Whirl",
+	whirl_desc = "Whirl Timers",
+
 	engage_warning = "%s Engaged - Possible Dive in 90sec",
 
 	dive_warning = "Possible Dive in %dsec!",
@@ -34,6 +37,9 @@ L:RegisterTranslations("enUS", function() return {
 	spout_warning = "Spout in 3sec!",
 	spout_bar1 = "Spout 1 in ~",
 	spout_bar2 = "Spout 2 in ~",
+
+	whirl_bar = "Possible Whirl",
+	whirl_trigger = "Whirl",
 
 	["Coilfang Guardian"] = true,
 	["Coilfang Ambusher"] = true,
@@ -76,7 +82,7 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
 mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
 mod.wipemobs = {L["Coilfang Guardian"], L["Coilfang Ambusher"]}
-mod.toggleoptions = {"dive", "spout", "bosskill"}
+mod.toggleoptions = {"dive", "spout", "whirl", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -86,6 +92,10 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -105,6 +115,9 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		self:NextDive()
 		if self.db.profile.dive then
 			self:Message(L["engage_warning"]:format(boss), "Attention")
+		end
+		if self.db.profile.whirl then
+			self:Bar(L["whirl_bar"], 17, "Ability_Whirlwind")
 		end
 		if self.db.profile.spout then
 			self:DelayedMessage(42, L["spout_warning"], "Attention")
@@ -158,3 +171,8 @@ function mod:SpoutBar()
 	self:Bar(L["spout_message1"], 20, "INV_Weapon_Rifle_02")
 end
 
+function mod:Event(msg)
+	if self.db.profile.whirl and msg:find(L["whirl_trigger"]) then
+		self:Bar(L["whirl_bar"], 17, "Ability_Whirlwind")
+	end
+end
