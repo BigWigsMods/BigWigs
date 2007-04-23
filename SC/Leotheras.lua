@@ -44,7 +44,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase_demonsoon = "Demon Phase in 5sec!",
 	phase_normalsoon = "Normal Phase in 5sec",
 	phase_normal = "Normal Phase!",
-	demon_bar = "Demon",
+	demon_bar = "Demon Phase",
 	demon_nextbar = "Next Demon Phase",
 
 	image_trigger = "I am the master! Do you hear?",
