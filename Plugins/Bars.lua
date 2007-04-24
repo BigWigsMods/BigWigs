@@ -69,7 +69,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Close"] = true,
 
 	["Emphasize"] = true,
-	["Emphasize bars that are close to completion (<10sec)."] = true,
+	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = true,
 
 	["Enable"] = true,
 	["Enables emphasizing bars."] = true,
@@ -108,7 +108,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Close"] = "닫기",
 
 	["Emphasize"] = "강조",
-	["Emphasize bars that are close to completion (<10sec)."] = "만료에 가까워진 바를 강조합니다.(10초 이하).",
+	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "만료에 가까워진 바를 강조합니다.(10초 이하).",
 
 	["Enable"] = "사용",
 	["Enables emphasizing bars."] = "바 강조를 사용합니다.",
@@ -334,7 +334,7 @@ plugin.consoleOptions = {
 		emphasize = {
 			type = "group",
 			name = L["Emphasize"],
-			desc = L["Emphasize bars that are close to completion (<10sec)."],
+			desc = L["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."],
 			order = 201,
 			args = {
 				emphasize = {
@@ -549,13 +549,15 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 	if db.emphasize and (db.emphasizeMove or db.emphasizeFlash) then
 		-- If the bar is started at more than 11 seconds, it won't be emphasized
 		-- right away, but if it's started at 11 or less, it will be.
-		if time > 11 then
+		if time > 15 then
 			if db.emphasizeMove then
 				if not emphasizeTimers[module] then emphasizeTimers[module] = {} end
+				if emphasizeTimers[module][id] then self:CancelScheduledEvent(emphasizeTimers[module][id]) end
 				emphasizeTimers[module][id] = self:ScheduleEvent(self.EmphasizeBar, time - 10, self, module, id)
 			end
 			if db.emphasizeFlash then
 				if not flashTimers[module] then flashTimers[module] = {} end
+				if flashTimers[module][id] then self:CancelScheduledEvent(flashTimers[module][id]) end
 				flashTimers[module][id] = self:ScheduleEvent(self.FlashBar, time - 10, self, module, id)
 			end
 		else

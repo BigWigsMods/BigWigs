@@ -147,15 +147,15 @@ function plugin:BigWigs_RecvSync(sync)
 end
 
 function plugin:BigWigs_Test()
-	self:Bar(L["Test Bar %d"]:format(1), 15, "Spell_Nature_ResistNature")
+	self:Bar(L["Test Bar %d"]:format(4), 30, "Spell_Nature_ResistNature")
 
 	self:Message(L["Testing"], "Attention", true, "Long")
-	self:DelayedMessage(5, L["OMG Bear!"], "Important", true, "Alert")
-	self:DelayedMessage(10, L["*RAWR*"], "Urgent", true, "Alarm")
-	self:DelayedMessage(15, L["Victory!"], "Bosskill", true, "Victory")
+	self:DelayedMessage(10, L["OMG Bear!"], "Important", true, "Alert")
+	self:DelayedMessage(20, L["*RAWR*"], "Urgent", true, "Alarm")
+	self:DelayedMessage(30, L["Victory!"], "Bosskill", true, "Victory")
 
+	self:Bar(L["Test Bar %d"]:format(3), 20, "Spell_Nature_ResistNature")
 	self:Bar(L["Test Bar %d"]:format(2), 10, "Spell_Nature_ResistNature")
-	self:Bar(L["Test Bar %d"]:format(3), 5, "Spell_Nature_ResistNature")
-	self:Bar(L["Test Bar %d"]:format(4), 3, "Spell_Nature_ResistNature", true, "black")
+	self:Bar(L["Test Bar %d"]:format(1), 5, "Spell_Nature_ResistNature", true, "red")
 end
 
