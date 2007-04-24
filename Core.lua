@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -428,7 +428,7 @@ function BigWigs:RegisterModule(name, module)
 						}
 						if order > 0 and ML:HasTranslation(v.."_validate") then
 							cons.args[v].type = "text"
-							cons.args[v].validate = l[v.."_validate"]
+							cons.args[v].validate = ML[v.."_validate"]
 						end
 					end
 				end
