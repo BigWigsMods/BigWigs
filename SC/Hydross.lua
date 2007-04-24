@@ -43,8 +43,8 @@ L:RegisterTranslations("enUS", function() return {
 	hydross_trigger = "Mark of Hydross",
 	corruption_trigger = "Mark of Corruption",
 
-	hydross_bar = "Next Mark of Hydross - %s%%",
-	corruption_bar = "Next Mark of Corruption - %s%%",
+	hydross_bar = "Mark of Hydross - %s%%",
+	corruption_bar = "Mark of Corruption - %s%%",
 
 	debuff_warn = "Mark at %s%%!",
 
