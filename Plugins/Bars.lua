@@ -88,6 +88,8 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Bars"] = "바",
+	["Emphasized Bars"] = "강조 바",
+
 	["Options for the timer bars."] = "타이머 바에 대한 설정입니다.",
 
 	["Show anchor"] = "고정 위치 표시",
@@ -104,6 +106,17 @@ L:RegisterTranslations("koKR", function() return {
 
 	["Test"] = "테스트",
 	["Close"] = "닫기",
+
+	["Emphasize"] = "강조",
+	["Emphasize bars that are close to completion (<10sec)."] = "만료에 가까워진 바를 강조합니다.(10초 이하).",
+
+	["Enable"] = "사용",
+	["Enables emphasizing bars."] = "바 강조를 사용합니다.",
+	["Flash"] = "점멸",
+	["Flashes the background red for bars that are emphasized."] = "강조된 바에 붉은색 배경을 점멸합니다.",
+	["Move"] = "이동",
+	["Move bars that are emphasized to a second anchor."] = "강조된 바를 두번째 고정위치로 이동합니다.",
+	["Set the scale for emphasized bars."] = "강조된 바의 크기를 설정합니다.",
 
 	["Reset position"] = "위치 초기화",
 	["Reset the anchor position, moving it to the center of your screen."] = "화면의 중앙으로 고정위치를 초기화합니다.",

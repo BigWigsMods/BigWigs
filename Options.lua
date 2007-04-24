@@ -49,7 +49,7 @@ L:RegisterTranslations("koKR", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55f클릭|r : 모듈 활성화.",
 	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fSHIFT-클릭|r : 환경설정 열기.",
 	["Big Wigs is currently disabled."] = "BigWigs가 비활성화 되어 있습니다.",
-	--["Active boss modules: %s."] = "보스 모듈 활성화",
+	["Active boss modules: %s."] = "보스 모듈 사용: %s.",
 	["All running modules have been reset."] = "모든 실행중인 모듈을 초기화합니다.",
 	["All running modules have been disabled."] = "모든 실행중인 모듈을 비활성화 합니다.",
 	["Menu"] = "메뉴",

@@ -45,8 +45,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Show whispers"] = "귓속말 보기",
 	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "BigWigs에 의한 귓속말 메세지를 표시합니다.",
 
-	["Broadcast to chat"] = "공격대 채널 사용",
-	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "공격대 경보 채널 대신 공격대 채널을 사용합니다.\n\n주의 : 만약 보스차단을 사용 중이라면 당신에게 메세지가 보이지 않을 수 있습니다.",
+	["Broadcast to chat"] = "대화로 알림",
+	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "보스 메세지를 공격대 경보 채널 대신 파티 혹은 공격대 대화로 알림니다.\n\n주의 : 만약 보스차단을 사용 중이라면 당신에게 메세지가 보이지 않을 수 있습니다.",
 
 	desc = "BigWigs가 보스 메세지를 출력할 곳을 설정하세요.",
 } end )
