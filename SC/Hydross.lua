@@ -318,6 +318,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	elseif sync == "HydrossTomb" and rest then
 		inTomb[rest] = true
-		self:ScheduleEvent("Tomb", self.TombWarn, 0.5, self)
+		self:ScheduleEvent("Tomb", self.TombWarn, 1.5, self)
 	end
 end

@@ -215,7 +215,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	elseif sync == "MoroGrave" and rest then
 		inGrave[rest] = true
-		self:ScheduleEvent("Grave", self.GraveWarn, 0.5, self)
+		self:ScheduleEvent("Grave", self.GraveWarn, 1.5, self)
 	elseif sync == "MoroTidal" and self.db.profile.tidal then
 		self:Message(L["tidal_message"], "Urgent", nil, "Alarm")
 	end
