@@ -14,17 +14,12 @@ local colorModule = nil
 local anchor = nil
 local emphasizeAnchor = nil
 
-local flashTimers = {}
-local emphasizeTimers = {}
-local moduleBars = {}
-
-local movingBars = {}
 local DURATION = 0.5
 local _abs, _cos, _pi = math.abs, math.cos, math.pi
 
 local new, del
 do
-	local cache = setmetatable({},{__mode='k'})
+	local cache = setmetatable({},{__mode="k"})
 	function new()
 		local t = next(cache)
 		if t then
@@ -42,6 +37,11 @@ do
 		return nil
 	end
 end
+
+local flashTimers = nil
+local emphasizeTimers = nil
+local moduleBars = nil
+local movingBars = nil
 
 -----------------------------------------------------------------------
 --      Localization
@@ -400,10 +400,20 @@ function plugin:OnEnable()
 	else
 		colorModule = nil
 	end
+
+	flashTimers = new()
+	emphasizeTimers = new()
+	moduleBars = new()
+	movingBars = new()
 end
 
 function plugin:OnDisable()
 	self:BigWigs_HideAnchors()
+
+	flashTimers = del(flashTimers)
+	emphasizeTimers = del(emphasizeTimers)
+	moduleBars = del(moduleBars)
+	movingBars = del(movingBars)
 end
 
 -----------------------------------------------------------------------
@@ -427,9 +437,45 @@ function plugin:Ace2_AddonDisabled(module)
 
 	if moduleBars[module] then
 		for k in pairs(moduleBars[module]) do
+			if movingBars[k] then
+				movingBars[k] = del(movingBars[k])
+			end
 			self:UnregisterCandyBar(k)
 			moduleBars[module][k] = nil
 		end
+
+		if not next(movingBars) then
+			self:CancelScheduledEvent("BigWigsBarMover")
+		end
+	end
+end
+
+function plugin:BigWigs_StopBar(module, text)
+	if not text then return end
+	local id = "BigWigsBar "..text
+
+	if movingBars[id] then
+		movingBars[id] = del(movingBars[id])
+
+		if not next(movingBars) then
+			self:CancelScheduledEvent("BigWigsBarMover")
+		end
+	end
+
+	if emphasizeTimers[module] and emphasizeTimers[module][id] then
+		self:CancelScheduledEvent(emphasizeTimers[module][id])
+		emphasizeTimers[module][id] = nil
+	end
+
+	if flashTimers[module] and flashTimers[module][id] then
+		self:CancelScheduledEvent(flashTimers[module][id])
+		flashTimers[module][id] = nil
+	end
+
+	self:UnregisterCandyBar(id)
+
+	if moduleBars[module] then
+		moduleBars[module][id] = nil
 	end
 end
 
@@ -542,27 +588,6 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 	self:StartCandyBar(id, true)
 end
 
-function plugin:BigWigs_StopBar(module, text)
-	if not text then return end
-	local id = "BigWigsBar "..text
-
-	if emphasizeTimers[module] and emphasizeTimers[module][id] then
-		self:CancelScheduledEvent(emphasizeTimers[module][id])
-		emphasizeTimers[module][id] = nil
-	end
-
-	if flashTimers[module] and flashTimers[module][id] then
-		self:CancelScheduledEvent(flashTimers[module][id])
-		flashTimers[module][id] = nil
-	end
-
-	self:UnregisterCandyBar(id)
-
-	if moduleBars[module] then
-		moduleBars[module][id] = nil
-	end
-end
-
 -----------------------------------------------------------------------
 --    Emphasized Background Flashing
 -----------------------------------------------------------------------
@@ -578,7 +603,7 @@ do
 			local r, g, b = ...
 			return r, g, b
 		end
-		local num = select('#', ...) / 3
+		local num = select("#", ...) / 3
 		local segment, relperc = math.modf(perc*(num-1))
 		local r1, g1, b1, r2, g2, b2 = select((segment*3)+1, ...)
 		return r1 + (r2-r1)*relperc, g1 + (g2-g1)*relperc, b1 + (b2-b1)*relperc
@@ -598,7 +623,6 @@ local flashBarUp, flashBarDown
 
 local currentColor = {}
 flashBarUp = function(id)
-	if not currentColor[id] then currentColor[id] = 1 end
 	plugin:SetCandyBarBackgroundColor(id, flashColors[currentColor[id]], 0.5)
 	if currentColor[id] == #flashColors then
 		plugin:ScheduleRepeatingEvent(id, flashBarDown, 0.1, id)
@@ -618,6 +642,7 @@ end
 function plugin:FlashBar(module, id)
 	if not flashColors then generateColors() end
 	-- Start flashing the bar
+	currentColor[id] = 1
 	self:ScheduleRepeatingEvent(id, flashBarUp, 0.1, id)
 	self:ScheduleEvent(self.CancelScheduledEvent, 10, self, id)
 end
@@ -644,18 +669,19 @@ function plugin:UpdateBars()
 			self:SetCandyBarScale(bar, plugin.db.profile.emphasizeScale or 1)
 			return
 		end
-		
-		local point, rframe, rpoint = self:GetCandyBarPoint(bar)
+
 		local effscale = self:GetCandyBarEffectiveScale(bar)
 		local centerX, centerY = self:GetCandyBarCenter(bar)
 		local tempX, tempY = centerX*effscale, centerY*effscale
-		
+
 		tempX = CosineInterpolate(tempX, opt.targetX, 1 - ((stop - now) / DURATION) )
 		tempY = CosineInterpolate(tempY, opt.targetY, 1 - ((stop - now) / DURATION) )
 		scale = (opt.stopScale - opt.startScale) * (1 - ((stop - now) / DURATION))
-		
+
 		self:SetCandyBarScale(bar, scale + opt.startScale)
 		effscale = self:GetCandyBarEffectiveScale(bar)
+
+		local point, rframe, rpoint = self:GetCandyBarPoint(bar)
 		self:SetCandyBarPoint(bar, point, rframe, rpoint, tempX/effscale, tempY/effscale)
 	end
 

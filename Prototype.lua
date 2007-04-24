@@ -214,6 +214,7 @@ end
 
 local icons = setmetatable({}, {__index =
 	function(self, key)
+		if not key then return end
 		self[key] = "Interface\\Icons\\" .. key
 		return self[key]
 	end
