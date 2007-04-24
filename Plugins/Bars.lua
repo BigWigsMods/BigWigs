@@ -69,7 +69,15 @@ L:RegisterTranslations("enUS", function() return {
 	["Close"] = true,
 
 	["Emphasize"] = true,
-	["Emphasize bars that are close to completion (<10sec) by moving them to a second anchor."] = true,
+	["Emphasize bars that are close to completion (<10sec)."] = true,
+
+	["Enable"] = true,
+	["Enables emphasizing bars."] = true,
+	["Flash"] = true,
+	["Flashes the background red for bars that are emphasized."] = true,
+	["Move"] = true,
+	["Move bars that are emphasized to a second anchor."] = true,
+	["Set the scale for emphasized bars."] = true,
 
 	["Reset position"] = true,
 	["Reset the anchor position, moving it to the center of your screen."] = true,
@@ -203,7 +211,8 @@ plugin.defaultDB = {
 	posx = nil,
 	posy = nil,
 
-	emphasize = nil,
+	emphasize = true,
+	emphasizeMove = true,
 	emphasizeFlash = true,
 	emphasizePosX = nil,
 	emphasizePosY = nil,
@@ -214,43 +223,50 @@ plugin.defaultDB = {
 	reverse = nil,
 }
 plugin.consoleCmd = L["Bars"]
+
+local function getOption(key)
+	if key == "anchor" then
+		return anchor and anchor:IsShown()
+	else
+		return plugin.db.profile[key]
+	end
+end
+local function setOption(key, value)
+	if key == "anchor" then
+		if value then
+			plugin:BigWigs_ShowAnchors()
+		else
+			plugin:BigWigs_HideAnchors()
+		end
+	else
+		plugin.db.profile[key] = value
+	end
+end
+local function shouldDisableEmphasizeOption()
+	return not plugin.db.profile.emphasize
+end
+
 plugin.consoleOptions = {
 	type = "group",
 	name = L["Bars"],
 	desc = L["Options for the timer bars."],
 	handler = plugin,
-	pass = true,
-	func = "ResetAnchor",
-	get = function(key)
-		if key == "anchor" then
-			return anchor and anchor:IsShown()
-		else
-			return plugin.db.profile[key]
-		end
-	end,
-	set = function(key, value)
-		if key == "anchor" then
-			if value then
-				plugin:BigWigs_ShowAnchors()
-			else
-				plugin:BigWigs_HideAnchors()
-			end
-		else
-			plugin.db.profile[key] = value
-		end
-	end,
 	args = {
 		anchor = {
 			type = "toggle",
 			name = L["Show anchor"],
 			desc = L["Show the bar anchor frame."],
 			order = 1,
+			get = getOption,
+			set = setOption,
+			passValue = "anchor",
 		},
 		reset = {
 			type = "execute",
 			name = L["Reset position"],
 			desc = L["Reset the anchor position, moving it to the center of your screen."],
 			order = 2,
+			func = "ResetAnchor",
 		},
 		spacer = {
 			type = "header",
@@ -262,20 +278,71 @@ plugin.consoleOptions = {
 			name = L["Grow upwards"],
 			desc = L["Toggle bars grow upwards/downwards from anchor."],
 			order = 100,
+			get = getOption,
+			set = setOption,
+			passValue = "growup",
 		},
 		reverse = {
 			type = "toggle",
 			name = L["Reverse"],
 			desc = L["Toggles if bars are reversed (fill up instead of emptying)."],
 			order = 101,
+			get = getOption,
+			set = setOption,
+			passValue = "reverse",
 		},
 		emphasize = {
-			type = "toggle",
+			type = "group",
 			name = L["Emphasize"],
-			desc = L["Emphasize bars that are close to completion (<10sec) by moving them to a second anchor."],
+			desc = L["Emphasize bars that are close to completion (<10sec)."],
 			order = 102,
-			-- When AceConsole-2.0, Dewdrop and Waterfall-1.0 have been fixed,
-			-- we need to provide proper options for emphasized bars.
+			args = {
+				emphasize = {
+					type = "toggle",
+					name = L["Enable"],
+					desc = L["Enables emphasizing bars."],
+					get = getOption,
+					set = setOption,
+					passValue = "emphasize",
+					order = 1,
+				},
+				flash = {
+					type = "toggle",
+					name = L["Flash"],
+					desc = L["Flashes the background red for bars that are emphasized."],
+					get = getOption,
+					set = setOption,
+					passValue = "emphasizeFlash",
+					disabled = shouldDisableEmphasizeOption,
+					order = 2,
+				},
+				move = {
+					type = "toggle",
+					name = L["Move"],
+					desc = L["Move bars that are emphasized to a second anchor."],
+					get = getOption,
+					set = setOption,
+					passValue = "emphasizeMove",
+					disabled = shouldDisableEmphasizeOption,
+					order = 3,
+				},
+				scale = {
+					type = "range",
+					name = L["Scale"],
+					desc = L["Set the scale for emphasized bars."],
+					min = 0.2,
+					max = 2.0,
+					step = 0.1,
+					get = getOption,
+					set = setOption,
+					passValue = "emphasizeScale",
+					disabled = function()
+						if not plugin.db.profile.emphasizeMove then return true end
+						return shouldDisableEmphasizeOption()
+					end,
+					order = 4,
+				},
+			},
 		},
 		scale = {
 			type = "range",
@@ -285,22 +352,19 @@ plugin.consoleOptions = {
 			max = 2.0,
 			step = 0.1,
 			order = 103,
-		},
-		emphasizeScale = {
-			type = "range",
-			name = "Emphasize Scale",
-			desc = "Set the emphasize bar scale.",
-			min = 0.2,
-			max = 2.0,
-			step = 0.1,
-			order = 104,
+			get = getOption,
+			set = setOption,
+			passValue = "scale",
 		},
 		texture = {
 			type = "text",
 			name = L["Texture"],
 			desc = L["Set the texture for the timer bars."],
 			validate = media:List(mType),
-			order = 105,
+			order = 104,
+			get = getOption,
+			set = setOption,
+			passValue = "texture",
 		},
 	},
 }
@@ -348,6 +412,7 @@ function plugin:Ace2_AddonDisabled(module)
 			emphasizeTimers[module][k] = nil
 		end
 	end
+
 	if flashTimers[module] then
 		for k, v in pairs(flashTimers[module]) do
 			self:CancelScheduledEvent(v)
@@ -367,7 +432,7 @@ function plugin:BigWigs_ShowAnchors()
 	if not anchor then self:SetupFrames() end
 	anchor:Show()
 
-	if self.db.profile.emphasize then
+	if self.db.profile.emphasize and self.db.profile.emphasizeMove then
 		if not emphasizeAnchor then self:SetupFrames(true) end
 		emphasizeAnchor:Show()
 	end
@@ -416,34 +481,39 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 	local db = self.db.profile
 
 	local groupId = "BigWigsGroup"
-	if db.emphasize then
+	local scale = db.scale or 1
+	if db.emphasize and (db.emphasizeMove or db.emphasizeFlash) then
 		-- If the bar is started at more than 11 seconds, it won't be emphasized
 		-- right away, but if it's started at 11 or less, it will be.
 		if time > 11 then
-			if not emphasizeTimers[module] then emphasizeTimers[module] = {} end
-			emphasizeTimers[module][id] = self:ScheduleEvent(self.EmphasizeBar, time - 10, self, module, id)
+			if db.emphasizeMove then
+				if not emphasizeTimers[module] then emphasizeTimers[module] = {} end
+				emphasizeTimers[module][id] = self:ScheduleEvent(self.EmphasizeBar, time - 10, self, module, id)
+			end
 			if db.emphasizeFlash then
 				if not flashTimers[module] then flashTimers[module] = {} end
 				flashTimers[module][id] = self:ScheduleEvent(self.FlashBar, time - 10, self, module, id)
 			end
-			self:SetCandyBarScale(id, db.scale or 1)
 		else
 			-- Since it's 11 or less, just start it at the emphasized group
 			-- right away.
-			groupId = "BigWigsEmphasizedGroup"
-			setupEmphasizedGroup()
+			if db.emphasizeMove then
+				groupId = "BigWigsEmphasizedGroup"
+				setupEmphasizedGroup()
+				scale = db.emphasizeScale or 1
+			end
 			if db.emphasizeFlash then
 				self:FlashBar(module, id)
 			end
-			self:SetCandyBarScale(id, db.emphasizeScale or 1)
 		end
-	else
-		self:SetCandyBarScale(id, db.scale or 1)
 	end
+
+	self:SetCandyBarScale(id, scale)
+
 	-- When using the emphasize option, custom bar groups from the modules are
 	-- not used when the bar reaches 10 seconds left, but moved to the
 	-- emphasized group regardless of custom groups.
-	if (not db.emphasize or (db.emphasize and time > 11)) and type(module.GetBarGroupId) == "function" then
+	if groupId == "BigWigsGroup" and type(module.GetBarGroupId) == "function" then
 		groupId = module:GetBarGroupId(text)
 	end
 	self:RegisterCandyBarWithGroup(id, groupId)
@@ -475,6 +545,7 @@ function plugin:BigWigs_StopBar(module, text)
 		self:CancelScheduledEvent(emphasizeTimers[module][id])
 		emphasizeTimers[module][id] = nil
 	end
+
 	if flashTimers[module] and flashTimers[module][id] then
 		self:CancelScheduledEvent(flashTimers[module][id])
 		flashTimers[module][id] = nil
@@ -496,7 +567,7 @@ local generateColors
 do
 	local function ColorGradient(perc, ...)
 		if perc >= 1 then
-			local r, g, b = select(select('#', ...) - 2, ...)
+			local r, g, b = select(select("#", ...) - 2, ...)
 			return r, g, b
 		elseif perc <= 0 then
 			local r, g, b = ...
@@ -624,6 +695,11 @@ end
 --    Create the Anchors    --
 ------------------------------
 
+local anchorBackdrop = {
+	bgFile = "Interface\\Tooltips\\UI-Tooltip-Background", tile = true, tileSize = 16,
+	edgeFile = "Interface\\AddOns\\BigWigs\\Textures\\otravi-semi-full-border", edgeSize = 32,
+	insets = {left = 1, right = 1, top = 20, bottom = 1},
+}
 function plugin:SetupFrames(emphasize)
 	if not emphasize and anchor then return end
 	if emphasize and emphasizeAnchor then return end
@@ -633,12 +709,8 @@ function plugin:SetupFrames(emphasize)
 
 	frame:SetWidth(120)
 	frame:SetHeight(80)
-	
-	frame:SetBackdrop({
-		bgFile = "Interface\\Tooltips\\UI-Tooltip-Background", tile = true, tileSize = 16,
-		edgeFile = "Interface\\AddOns\\BigWigs\\Textures\\otravi-semi-full-border", edgeSize = 32,
-		insets = {left = 1, right = 1, top = 20, bottom = 1},
-	})
+
+	frame:SetBackdrop(anchorBackdrop)
 
 	frame:SetBackdropColor(24/255, 24/255, 24/255)
 	frame:ClearAllPoints()
@@ -717,12 +789,18 @@ function plugin:ResetAnchor(specific)
 	if not specific or specific == "reset" or specific == "normal" then
 		if not anchor then self:SetupFrames() end
 		anchor:ClearAllPoints()
-		anchor:SetPoint("CENTER", UIParent, "CENTER")
+		if self.db.profile.emphasize and self.db.profile.emphasizeMove then
+			local y = (UIParent:GetHeight() / 4) * 1.3
+			local scale = anchor:GetEffectiveScale()
+			anchor:SetPoint("CENTER", UIParent, "CENTER", 0, y / scale)
+		else
+			anchor:SetPoint("CENTER", UIParent, "CENTER")
+		end
 		self.db.profile.posx = nil
 		self.db.profile.posy = nil
 	end
 
-	if (not specific or specific == "reset" or specific == "emphasize") and self.db.profile.emphasize then
+	if (not specific or specific == "reset" or specific == "emphasize") and self.db.profile.emphasize and self.db.profile.emphasizeMove then
 		if not emphasizeAnchor then self:SetupFrames(true) end
 		emphasizeAnchor:ClearAllPoints()
 		emphasizeAnchor:SetPoint("CENTER", UIParent, "CENTER")
@@ -738,7 +816,7 @@ function plugin:SavePosition()
 	self.db.profile.posx = anchor:GetLeft() * s
 	self.db.profile.posy = anchor:GetTop() * s
 
-	if self.db.profile.emphasize then
+	if self.db.profile.emphasize and self.db.profile.emphasizeMove then
 		if not emphasizeAnchor then self:SetupFrames(true) end
 		s = emphasizeAnchor:GetEffectiveScale()
 		self.db.profile.emphasizePosX = emphasizeAnchor:GetLeft() * s
