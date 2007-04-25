@@ -81,9 +81,10 @@ L:RegisterTranslations("frFR", function() return {
 	["Play sound on proximity."] = "Joue un son quand à proximité.",
 	["Disabled"] = "Désactivé",
 	["Disable the proximity display for all modules that use it."] = "Désactive l'affichage de proximité.",
+	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "L'affichage de proximité a été désactivé pour %s. Veuillez utiliser les options du module du boss pour l'activer à nouveau.",
 
-	proximity = "Proximit\195\169",
-	proximity_desc = "Affiche la fen\195\170tre de proximit\195\169.",
+	proximity = "Proximité",
+	proximity_desc = "Affiche la fenêtre de proximité.",
 } end)
 
 -----------------------------------------------------------------------
