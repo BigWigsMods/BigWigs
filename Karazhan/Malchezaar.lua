@@ -201,8 +201,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.infernals and (msg == L["infernal_trigger1"] or msg == L["infernal_trigger2"]) then
 		self:Message(L["infernal_warning"], "Positive")
 		self:NextInfernal()
-	elseif self.db.profile.phase and msg == L["phase1_trigger"] then
-		self:Message(L["phase1_message"], "Positive")
+	elseif msg == L["phase1_trigger"] then
+		if self.db.profile.phase then
+			self:Message(L["phase1_message"], "Positive")
+		end
+		if self.db.profile.enfeeble then
+			self:DelayedMessage(25, L["enfeeble_warning"], "Attention")
+			self:Bar(L["enfeeble_nextbar"], 30, "Spell_Shadow_LifeDrain02")
+		end
 	elseif self.db.profile.phase and msg == L["phase2_trigger"] then
 		self:Message(L["phase2_message"], "Positive")
 	elseif self.db.profile.phase and msg == L["phase3_trigger"] then
