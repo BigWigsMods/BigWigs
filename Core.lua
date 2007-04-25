@@ -255,12 +255,9 @@ function BigWigs:OnInitialize()
 	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
 end
 
--- This works because after a reloadui, GetNumRaidMembers() will return the real
--- number. At initial login (or relog), it will say 0, but you will get a "You
--- have joined a raid group" message, so our LoadOnDemand addon loads Core
--- anyway.
 function BigWigs:OnEnable(first)
-	if not first or GetNumRaidMembers() > 0 then
+	-- We only really enable ourselves if we are told to do so by BigWigsLoD.
+	if not first then
 		-- this will trigger the LoadWithCore to load
 		self:TriggerEvent("BigWigs_CoreEnabled")
 
