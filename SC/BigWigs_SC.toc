@@ -14,7 +14,7 @@
 ## X-AceForum: 1222
 
 ## X-BigWigs-Menu: Serpentshrine Cavern
-## X-BigWigs-LoadInZone: Coilfang Reservoir
+## X-BigWigs-LoadInZone: Coilfang Reservoir, Serpentshrine Cavern
 
 ## Dependencies: BigWigs
 

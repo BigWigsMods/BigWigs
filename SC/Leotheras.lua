@@ -4,6 +4,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Leotheras the Blind"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+local BZ = AceLibrary("Babble-Zone-2.2")
 local imagewarn
 local wwhelp = 0
 local beDemon = {}
@@ -61,7 +62,7 @@ L:RegisterTranslations("enUS", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
+mod.zonename = {BZ["Coilfang Reservoir"], BZ["Serpentshrine Cavern"]}
 mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
 mod.toggleoptions = {"enrage", "whirlwind", "phase", "image", "whisper", "bosskill"}

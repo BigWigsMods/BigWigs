@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["The Lurker Below"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local BZ = AceLibrary("Babble-Zone-2.2")
 local started
 
 ----------------------------
@@ -78,7 +79,7 @@ L:RegisterTranslations("koKR", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Coilfang Reservoir"]
+mod.zonename = {BZ["Coilfang Reservoir"], BZ["Serpentshrine Cavern"]}
 mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
 mod.wipemobs = {L["Coilfang Guardian"], L["Coilfang Ambusher"]}
