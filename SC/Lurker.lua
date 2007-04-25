@@ -70,6 +70,9 @@ L:RegisterTranslations("koKR", function() return {
 	spout_bar1 = "분출 1",
 	spout_bar2 = "분출 2",
 
+	whirl_bar = "소용돌이 가능",
+	whirl_trigger = "소용돌이",
+
 	["Coilfang Guardian"] = "갈퀴송곳니 수호자",
 	["Coilfang Ambusher"] = "갈퀴송곳니 복병",
 } end )
