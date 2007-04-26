@@ -57,6 +57,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	nova_ = "Blast Nova!",
 	nova_warning = "Blast Nova Soon",
+	nova_cast = "Casting Blast Nova!",
 
 	banish_trigger = "Not again! Not again...",
 	banish_message = "Banished for ~10sec",
@@ -305,13 +306,20 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.escape and msg == L["escape_trigger2"] then
-		self:Message(L["escape_message"]:format(boss), "Important", nil, "Alert")
-		self:Bar(L["nova_"], 52, "Spell_Fire_SealOfFire")
-		self:DelayedMessage(50, L["nova_warning"], "Urgent")
-	elseif self.db.profile.banish and msg == L["banish_trigger"] then
-		self:Message(L["banish_message"], "Important", nil, "Info")
-		self:Bar(L["banish_bar"], 10, "Spell_Shadow_Cripple")
+	if msg == L["escape_trigger2"] then
+		if self.db.profile.escape then
+			self:Message(L["escape_message"]:format(boss), "Important", nil, "Alert")
+		end
+		if self.db.profile.nova then
+			self:Bar(L["nova_"], 52, "Spell_Fire_SealOfFire")
+			self:DelayedMessage(50, L["nova_warning"], "Urgent")
+		end
+	elseif msg == L["banish_trigger"] then
+		if self.db.profile.banish then
+			self:Message(L["banish_message"], "Important", nil, "Info")
+			self:Bar(L["banish_bar"], 10, "Spell_Shadow_Cripple")
+		end
+		self:TriggerEvent("BigWigs_StopBar", self, L["nova_cast"])
 	elseif self.db.profile.debrisinc and msg:find(L["debrisinc_trigger"]) then
 		self:Message(L["debrisinc_message"], "Positive")
 	end
@@ -321,6 +329,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if self.db.profile.nova and msg:find(L["nova_"]) then
 		self:Message(L["nova_"], "Positive")
 		self:Bar(L["nova_"], 54, "Spell_Fire_SealOfFire")
+		self:Bar(L["nova_cast"], 12, "Spell_Fire_SealOfFire")
 		self:DelayedMessage(50, L["nova_warning"], "Urgent")
 	end
 end
