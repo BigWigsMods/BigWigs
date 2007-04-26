@@ -49,7 +49,7 @@ L:RegisterTranslations("enUS", function() return {
 	demon_nextbar = "Next Demon Phase",
 
 	image_trigger = "I am the master! Do you hear?",
-	image_message = "Image Created!",
+	image_message = "15% - Image Created!",
 	image_warning = "Image Soon!",
 
 	whisper_trigger = "^([^%s]+) ([^%s]+) afflicted by Insidious Whisper",
