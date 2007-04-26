@@ -6,7 +6,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local BZ = AceLibrary("Babble-Zone-2.2")
 local imagewarn
-local wwhelp = 0
+local wwhelp
 local beDemon = {}
 
 ----------------------------
@@ -26,7 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase_desc = "Estimated demon phase timers",
 
 	image = "Image",
-	image_desc = "20% Image alerts",
+	image_desc = "15% Image Split Alerts",
 
 	whisper = "Insidious Whisper",
 	whisper_desc = "Alert what players have Insidious Whisper",
@@ -98,36 +98,56 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.enrage and msg == L["enrage_trigger"] then
-		self:Message(L2["enrage_start"]:format(boss, 10), "Important")
-		self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
-		self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
-		self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
-		self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
-		self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
-		self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
-		self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
-		self:DelayedMessage(3, L["whirlwind_warn"], "Attention")
+	if msg == L["enrage_trigger"] then
 		wwhelp = 0
-		self:ScheduleEvent("bwdemon", self.DemonSoon, 16, self)
-	elseif self.db.profile.phase and msg:find(L["phase_trigger"]) then
-		self:Message(L["phase_demon"], "Attention")
-		self:DelayedMessage(55, L["phase_normalsoon"], "Important")
-		self:DelayedMessage(60, L["phase_normal"], "Important")
-		self:DelayedMessage(61, L["whirlwind_warn"], "Attention")
-		self:Bar(L["demon_bar"], 60, "Spell_Shadow_Metamorphosis")
-		self:ScheduleEvent("bwdemon", self.DemonSoon, 60, self)
+		if self.db.profile.phase then
+			self:Engage()
+		end
+		if self.db.profile.enrage then
+			self:Message(L2["enrage_start"]:format(boss, 10), "Important")
+			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
+			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
+			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
+			self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
+			self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
+			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
+		end
+		if self.db.profile.whirlwind then
+			self:WhirlwindBar()
+		end
+	elseif msg:find(L["phase_trigger"]) then
 		wwhelp = 0
+		if self.db.profile.phase then
+			self:Message(L["phase_demon"], "Attention")
+			self:ScheduleEvent("normal1", "BigWigs_Message", 55, L["phase_normalsoon"], "Important")
+			self:ScheduleEvent("normal2", "BigWigs_Message", 60, L["phase_normal"], "Important")
+			self:Bar(L["demon_bar"], 60, "Spell_Shadow_Metamorphosis")
+			self:ScheduleEvent("bwdemon", self.DemonSoon, 60, self)
+		end
+		if self.db.profile.whirlwind then
+			self:DelayedMessage(61, L["whirlwind_warn"], "Attention")
+		end
 	elseif msg:find(L["image_trigger"]) then
 		self:CancelScheduledEvent("bwdemon")
+		self:CancelScheduledEvent("normal1")
+		self:CancelScheduledEvent("normal2")
+		self:CancelScheduledEvent("demon1")
+		self:TriggerEvent("BigWigs_StopBar", self, L["demon_bar"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["demonnext_bar"])
 		if self.db.profile.image then
 			self:Message(L["phase_demon"], "Important")
 		end
 	end
 end
 
+function mod:Engage()
+	self:DelayedMessage(70, L["phase_demonsoon"], "Urgent")
+	self:Bar(L["demon_nextbar"], 75, "Spell_Shadow_Metamorphosis")
+end
+
 function mod:DemonSoon()
-	self:DelayedMessage(55, L["phase_demonsoon"], "Urgent")
+	self:ScheduleEvent("demon1", "BigWigs_Message", 55, L["phase_demonsoon"], "Urgent")
 	self:Bar(L["demon_nextbar"], 60, "Spell_Shadow_Metamorphosis")
 end
 
@@ -146,10 +166,10 @@ function mod:UNIT_HEALTH(msg)
 	if not self.db.profile.image then return end
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
-		if health > 21 and health <= 24 and not imagewarn then
+		if health > 16 and health <= 19 and not imagewarn then
 			self:Message(L["image_warning"], "Urgent")
 			imagewarn = true
-		elseif health > 30 and imagewarn then
+		elseif health > 25 and imagewarn then
 			imagewarn = false
 		end
 	end
