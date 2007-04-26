@@ -31,9 +31,9 @@ L:RegisterTranslations("enUS", function() return {
 	repentance_trigger1 = "Cast out your corrupt thoughts.",
 	repentance_trigger2 = "Your impurity must be cleansed.",
 	repentance_message = "Repentance! Next in ~33sec",
-	repentance_warning = "Repentance Soon!",
+	repentance_warning = "Repentance Cooldown Over - Inc Soon!",
 	repentance_bar = "Repentance",
-	repentance_nextbar = "Next Repentance",
+	repentance_nextbar = "Repentance Cooldown",
 
 	holyfire_trigger = "^([^%s]+) ([^%s]+) afflicted by Holy Fire",
 	holyfire_message = "Holy Fire: %s",
@@ -161,6 +161,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif self.db.profile.repentance and (msg == L["repentance_trigger1"] or msg == L["repentance_trigger2"]) then
+		self:CancelScheduledEvent("rep1")
+		self:TriggerEvent("BigWigs_StopBar", self, L["repentance_nextbar"])
 		self:Message(L["repentance_message"], "Important")
 		self:Bar(L["repentance_bar"], 12, "Spell_Holy_PrayerOfHealing")
 		self:NextRepentance()
@@ -178,7 +180,7 @@ function mod:HolyFireEvent(msg)
 end
 
 function mod:NextRepentance()
-	self:DelayedMessage(28, L["repentance_warning"], "Urgent", nil, "Alarm")
+	self:ScheduleEvent("rep1", "BigWigs_Message", 33, L["repentance_warning"], "Urgent", nil, "Alarm")
 	self:Bar(L["repentance_nextbar"], 33, "Spell_Holy_PrayerOfHealing")
 end
 
