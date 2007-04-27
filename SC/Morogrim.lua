@@ -45,6 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 	grobules_trigger = "summons",
 	grobules_message = "Incoming Grobules!",
 	grobules_warning = "Grobules Soon!",
+	grobules_bar = "Grobules Despawn",
 
 	tidal_trigger = "Morogrim Tidewalker begins to cast Tidal Wave.",
 	tidal_message = "Tidal Wave!",
@@ -173,6 +174,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 		self:ScheduleEvent("murloc1", "BigWigs_Message", 41, L["murloc_soon_message"], "Attention")
 	elseif self.db.profile.grobules and msg:find(L["grobules_trigger"]) then
 		self:Message(L["grobules_message"], "Important", nil, "Alert")
+		self:Bar(L["grobules_bar"], 36, "INV_Elemental_Primal_Water")
 	end
 end
 
