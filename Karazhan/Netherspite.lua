@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Netherspite"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local started
 local voidcount
 
@@ -33,9 +34,6 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_message = "Rage - Incoming Netherbreaths!",
 	phase2_bar = "Next Rage",
 	phase2_trigger = "%s goes into a nether-fed rage!",
-
-	enrage_warning = "Enrage in %d sec!",
-	enrage_bar = "Enrage",
 
 	voidzone_trigger = "casts Void Zone.",
 	voidzone_warn = "Void Zone (%d)!",
@@ -90,9 +88,6 @@ L:RegisterTranslations("koKR", function() return {
 	phase2_bar = "다음 분노",
 	phase2_trigger = "%s|1이;가; 황천의 기운을 받고 분노에 휩싸입니다!",
 
-	enrage_warning = "%d초 이내 격노!",
-	enrage_bar = "격노",
-
 	voidzone_trigger = "공허의 지대|1을;를; 시전합니다.",
 	voidzone_warn = "공허의 지대 (%d)!",
 
@@ -120,9 +115,6 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_message = "Rage - Souffle de N\195\169ant imminent !",
 	phase2_bar = "Prochaine Rage",
 	phase2_trigger = "%s entre dans une rage nourrie par le N\195\169ant\194\160!",
-
-	enrage_warning = "Enrag\195\169 dans %d sec. !",
-	enrage_bar = "Enrager",
 
 	voidzone_trigger = "lance Zone de vide.",
 	voidzone_warn = "Zone du vide (%d) !",
@@ -174,10 +166,14 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Bar(L["phase2_bar"], 60, "Spell_ChargePositive")
 		end
 		if self.db.profile.enrage then
-			self:DelayedMessage(480, L["enrage_warning"]:format(60), "Attention")
-			self:DelayedMessage(510, L["enrage_warning"]:format(30), "Urgent")
-			self:DelayedMessage(530, L["enrage_warning"]:format(10), "Important")
-			self:Bar(L["enrage_bar"], 540, "Spell_Shadow_UnholyFrenzy")
+			self:Message(L2["enrage_start"]:format(boss, 9), "Attention")
+			self:DelayedMessage(240, L2["enrage_min"]:format(5), "Positive")
+			self:DelayedMessage(360, L2["enrage_min"]:format(3), "Positive")
+			self:DelayedMessage(480, L2["enrage_min"]:format(1), "Positive")
+			self:DelayedMessage(510, L2["enrage_sec"]:format(30), "Positive")
+			self:DelayedMessage(530, L2["enrage_sec"]:format(10), "Urgent")
+			self:DelayedMessage(540, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Bar(L2["enrage"], 540, "Spell_Shadow_UnholyFrenzy")
 		end
 	elseif sync == "Netherbreath" and self.db.profile.netherbreath then
 		self:Message( L["netherbreath_warn"], "Urgent")
