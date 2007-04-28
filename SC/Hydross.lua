@@ -209,7 +209,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(string.format(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrostBolt02")
 		end
 		if self.db.profile.enrage then
-			self:Message(L2["enrage_start"]:format(boss, 10), "Important")
+			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
 			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
 			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
 			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")

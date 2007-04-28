@@ -142,7 +142,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.enrage and msg:find(L["engage_trigger"]) then
-		self:Message(L2["enrage_start"]:format(boss, 10), "Important")
+		self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
 		self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
 		self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
 		self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
