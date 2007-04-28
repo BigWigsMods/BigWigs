@@ -13,12 +13,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Terestian",
 
-	engage_cmd = "engage",
-	engage = "Engage",
-	engage_desc = ("Alert when %s is engaged"):format(boss),
-
 	engage_trigger = "Ah, you're just in time.",
-	engage_message = ("%s Engaged!"):format(boss),
 
 	sacrifice = "Sacrifice",
 	sacrifice_desc = "Warn for Sacrifice of players",
@@ -31,9 +26,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	weak = "Weakened",
 	weak_desc = "Warn for weakened state",
-
-	enrage_warning = "Enrage in %d sec!",
-	enrage_bar = "Enrage",
 
 	sacrifice_trigger = "^([^%s]+) ([^%s]+) afflicted by Sacrifice",
 	sacrifice_message = "%s is being Sacrificed!",
@@ -65,11 +57,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage = "Engagement",
-	engage_desc = ("Pr\195\169viens quand %s est engag\195\169."):format(boss),
-
 	engage_trigger = "Ah, vous arrivez juste \195\160 temps.",
-	engage_message = ("%s engag\195\169 !"):format(boss),
 
 	sacrifice = "Sacrifice",
 	sacrifice_desc = "Pr\195\169viens quand un joueur est sacrifi\195\169.",
@@ -83,9 +71,6 @@ L:RegisterTranslations("frFR", function() return {
 	weak = "Affaibli",
 	weak_desc = "Pr\195\169viens quand Terestian est affaibli.",
 
-	enrage_warning = "Enrag\195\169 dans %d sec. !",
-	enrage_bar = "Enrag\195\169",
-
 	sacrifice_trigger = "^([^%s]+) ([^%s]+) les effets .* Sacrifice",
 	sacrifice_message = "%s est sacrifi\195\169 !",
 	sacrifice_bar = "Sacrifice : %s",
@@ -98,11 +83,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage = "전투시작",
-	engage_desc = ("%s 전투 개시 알림"):format(boss),
-
 	engage_trigger = "Ah, you're just in time.", -- check
-	engage_message = ("%s 전투 개시!"):format(boss),
 
 	sacrifice = "희생",
 	sacrifice_desc = "플레이어의 희생에 대한 경고",
@@ -115,9 +96,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	weak = "약화",
 	weak_desc = "약화 상태에 대한 경고",
-
-	enrage_warning = "%d초 이내 격노!",
-	enrage_bar = "격노",
 
 	sacrifice_trigger = "^([^|;%s]*)(.*)희생에 걸렸습니다%.$",
 	sacrifice_message = "%s님이 희생되었습니다!",
@@ -137,7 +115,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"engage", "weak", "enrage", -1, "sacrifice", "icon", "bosskill"}
+mod.toggleoptions = {"weak", "enrage", -1, "sacrifice", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -163,16 +141,15 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg:find(L["engage_trigger"]) then
-		if self.db.profile.engage then
-			self:Message(L["engage_message"], "Attention")
-		end
-		if self.db.profile.enrage then
-			self:DelayedMessage(540, L["enrage_warning"]:format(60), "Attention")
-			self:DelayedMessage(570, L["enrage_warning"]:format(30), "Urgent")
-			self:DelayedMessage(590, L["enrage_warning"]:format(10), "Important")
-			self:Bar(L["enrage_bar"], 600, "Spell_Shadow_UnholyFrenzy")
-		end
+	if self.db.profile.enrage and msg:find(L["engage_trigger"]) then
+		self:Message(L2["enrage_start"]:format(boss, 10), "Important")
+		self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
+		self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
+		self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
+		self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
+		self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
+		self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+		self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 	end
 end
 
