@@ -311,8 +311,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(L["escape_message"]:format(boss), "Important", nil, "Alert")
 		end
 		if self.db.profile.nova then
-			self:Bar(L["nova_"], 52, "Spell_Fire_SealOfFire")
-			self:DelayedMessage(50, L["nova_warning"], "Urgent")
+			self:Bar(L["nova_"], 58, "Spell_Fire_SealOfFire")
+			self:DelayedMessage(56, L["nova_warning"], "Urgent")
 		end
 	elseif msg == L["banish_trigger"] then
 		if self.db.profile.banish then
