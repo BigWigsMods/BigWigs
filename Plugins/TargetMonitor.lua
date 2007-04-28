@@ -20,7 +20,9 @@ plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
 function plugin:OnEnable()
 	monitoring = nil
 
-	for name, module in BigWigs:IterateModules() do
+	-- We can't use :IterateModules here, since nested :IterateModule calls fuck
+	-- up everything, and we're not going to wait for a AceModuleCore fix.
+	for name, module in pairs(BigWigs.modules) do
 		if module.zonename and module.enabletrigger then
 			self:RegisterForTargetting(module.zonename, module.enabletrigger)
 		end
