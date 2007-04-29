@@ -219,7 +219,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
 	elseif msg == L["poison_stance_trigger"] then
-		self:TriggerEvent("BigWigs_StopBar", self, string.format(L["corruption_bar"], debuff[count+1] and debuff[count+1] or 250))
+		self:TriggerEvent("BigWigs_StopBar", self, string.format(L["hydross_bar"], debuff[count+1] and debuff[count+1] or 250))
 		count = 1
 		currentPerc = nil
 		if self.db.profile.stance then
@@ -229,7 +229,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(string.format(L["corruption_bar"], debuff[count+1]), 15, "Spell_Shadow_AbominationExplosion")
 		end
 	elseif msg == L["water_stance_trigger"] then
-		self:TriggerEvent("BigWigs_StopBar", self, string.format(L["hydross_bar"], debuff[count+1] and debuff[count+1] or 250))
+		self:TriggerEvent("BigWigs_StopBar", self, string.format(L["corruption_bar"], debuff[count+1] and debuff[count+1] or 250))
 		count = 1
 		currentPerc = nil
 		if self.db.profile.stance then
@@ -238,6 +238,24 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if self.db.profile.mark then
 			self:Bar(string.format(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrostBolt02")
 		end
+	end
+end
+
+function mod:IncrementHydross(match)
+	count = count + 1
+	self:TriggerEvent("BigWigs_StopBar", self, string.format(L["hydross_bar"], debuff[count] and debuff[count] or 250))
+	if self.db.profile.mark then
+		self:Message(string.format(L["debuff_warn"], match), "Important", nil, "Alert")
+		self:Bar(string.format(L["hydross_bar"], debuff[count+1] and debuff[count+1] or 250), 15, "Spell_Frost_FrozenCore")
+	end
+end
+
+function mod:IncrementCorruption(match)
+	count = count + 1
+	self:TriggerEvent("BigWigs_StopBar", self, string.format(L["corruption_bar"], debuff[count] and debuff[count] or 250))
+	if self.db.profile.mark then
+		self:Message(string.format(L["debuff_warn"], match), "Important", nil, "Alert")
+		self:Bar(string.format(L["corruption_bar"], debuff[count+1] and debuff[count+1] or 250), 15, "Spell_Nature_ElementalShields")
 	end
 end
 
@@ -251,24 +269,14 @@ function mod:DebuffCheck()
 		if bName == L["hydross_trigger"] then
 			local match = select(3, HydrossTooltipTextLeft2:GetText():find("(%d+)"))
 			if match ~= currentPerc then
-				count = count + 1
 				currentPerc = match
-				self:TriggerEvent("BigWigs_StopBar", self, string.format(L["hydross_bar"], debuff[count] and debuff[count] or 250))
-				if self.db.profile.mark then
-					self:Message(string.format(L["debuff_warn"], match), "Important", nil, "Alert")
-					self:Bar(string.format(L["hydross_bar"], debuff[count+1] and debuff[count+1] or 250), 15, "Spell_Frost_FrozenCore")
-				end
+				self:IncrementHydross(match)
 			end
 		elseif bName == L["corruption_trigger"] then
 			local match = select(3, HydrossTooltipTextLeft2:GetText():find("(%d+)"))
 			if match ~= currentPerc then
-				count = count + 1
 				currentPerc = match
-				self:TriggerEvent("BigWigs_StopBar", self, string.format(L["corruption_bar"], debuff[count] and debuff[count] or 250))
-				if self.db.profile.mark then
-					self:Message(string.format(L["debuff_warn"], match), "Important", nil, "Alert")
-					self:Bar(string.format(L["corruption_bar"], debuff[count+1] and debuff[count+1] or 250), 15, "Spell_Nature_ElementalShields")
-				end
+				self:IncrementCorruption(match)
 			end
 		end
 		i = i + 1
