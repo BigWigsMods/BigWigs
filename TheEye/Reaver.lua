@@ -30,16 +30,16 @@ L:RegisterTranslations("enUS", function() return {
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon on the player targeted for Arcane Orb(requires promoted or higher)",
 
-	--pounding = "Pounding",
-	--pounding_desc = "Show Pounding timer bars",
+	pounding = "Pounding",
+	pounding_desc = "Show Pounding timer bars",
 
 	orb_other = "Orb(%s)",
 	orb_you = "Arcane Orb on YOU!",
 	orb_say = "Orb on Me!",
 
-	--pounding_trigger = "pounding",
-	--pounding_nextbar = "Next Pounding",
-	--pounding_bar = "<Pounding>",
+	pounding_trigger = "Pounding",
+	pounding_nextbar = "Next Pounding",
+	pounding_bar = "<Pounding>",
 } end )
 
 ----------------------------------
@@ -50,7 +50,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
-mod.toggleoptions = {"enrage", -1, "orbyou", "orbsay", "orbother", "icon", "bosskill"}
+mod.toggleoptions = {"enrage", "pounding", -1, "orbyou", "orbsay", "orbother", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -58,10 +58,14 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
+	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
+
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+
 	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "ReaverPound", 6)
 
 	started = nil
 	previous = nil
@@ -90,6 +94,9 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
+	elseif sync == "ReaverPound" and self.db.profile.pounding then
+		self:Bar(L["pounding_bar"], 3, "Ability_ThunderClap")
+		self:Bar(L["pounding_nextbar"], 12, "Ability_ThunderClap")
 	end
 end
 
@@ -135,5 +142,11 @@ function mod:Result(target)
 	end
 	if self.db.profile.icon then 
 		self:Icon(target)
+	end
+end
+
+function mod:UNIT_SPELLCAST_CHANNEL_START(msg)
+	if UnitName(msg) == boss and (UnitChannelInfo(msg)) == L["pounding_trigger"] then
+		self:Sync("ReaverPound")
 	end
 end
