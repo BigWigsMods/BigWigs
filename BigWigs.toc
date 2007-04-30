@@ -165,3 +165,5 @@ SC\Vashj.lua
 TheEye\TheEyeBeta.lua
 TheEye\Alar.lua
 TheEye\Reaver.lua
+TheEye\Kaelthas.lua
+
