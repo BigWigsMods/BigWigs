@@ -104,13 +104,19 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	engage = "전투 시작 알림",
+	engage_desc = ("%s 전투 시작 시 알림"):format(boss),
+
 	teleport = "소환 경고",
 	teleport_desc = "소환에 대한 경고",
 
 	shield = "보호막 경고",
 	shield_desc = "보호막에 대한 경고",
 
-	teleport_trigger = "오너라, 조무래기들아! 덤벼봐라!",
+	engage_trigger = "^This place is under my protection", -- check
+	engage_message = "%s 전투 시작!",
+
+	teleport_trigger = "^오너라, 조무래기들아! 덤벼봐라!",
 	teleport_message = "강제 소환!",
 
 	shield_trigger = "아주어고스|1이;가; 반사 효과를",

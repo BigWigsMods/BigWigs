@@ -65,12 +65,17 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	--["Proximity"] = true,
-	--["Options for the Proximity Display."] = true,
+	["Proximity"] = "접근",
+	["Options for the Proximity Display."] = "접근 표시에 대한 설정입니다.",
 	["|cff777777Nobody|r"] = "|cff777777아무도 없음|r",
-	["Sound"] = "경고음",
-	--["Play sound on proximity."] = true,
-	--["Disabled"] = true,
+	["Sound"] = "효과음",
+	["Play sound on proximity."] = "접근 표시에 효과음을 재생합니다.",
+	["Disabled"] = "미사용",
+	["Disable the proximity display for all modules that use it."] = "모든 모듈의 접근 표시를 비활성화 합니다.",
+	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "%s에 대한 접근 표시가 비활성화 되었습니다. 다시 사용하려면 해당 보스 모듈의 설정을 사용하세요.",
+
+	proximity = "접근 표시",
+	proximity_desc = "해당 보스전에서 필요 시 자신과 근접해 있는 플레이어 목록을 표시하는 접근 표시창을 표시합니다.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

@@ -112,9 +112,9 @@ L:RegisterTranslations("koKR", function() return {
 	repentance_trigger1 = "그 부정한 생각을 떨쳐버려라.",
 	repentance_trigger2 = "너희의 불순함을 반드시 정화하겠다.",
 	repentance_message = "참회! 다음은 약 33초 후!",
-	repentance_warning = "잠시 후 참회!",
+	repentance_warning = "참회 쿨다운 종료 - Inc Soon!",
 	repentance_bar = "참회",
-	repentance_nextbar = "다음 참회",
+	repentance_nextbar = "참회 쿨다운",
 
 	holyfire_trigger = "^([^|;%s]*)(.*)신성한 불꽃에 걸렸습니다%.$",
 	holyfire_message = "신성한 불꽃: %s",

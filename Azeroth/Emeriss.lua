@@ -154,8 +154,11 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage = "광폭화 경고",
-	engage_desc = ("%s가 광폭화 되었을 때 경고"):format(boss),
+	engage = "전투 시작 알림",
+	engage_desc = ("%s 전투 시작 시 알림"):format(boss),
+
+	corruption = "Corruption",
+	corruption_desc = "Warn for incoming Corruption of the Earth",
 
 	noxious = "산성 숨결 경고",
 	noxious_desc = "산성 숨결에 대한 경고",
@@ -177,8 +180,11 @@ L:RegisterTranslations("koKR", function() return {
 	engage_message = "%s 광폭화! - 약 10초 후 산성 숨결",
 	engage_trigger = "Hope is a DISEASE of the soul! This land shall wither and die!", -- check
 
+	corruption_trigger = "Taste your world's corruption!", -- check
+	corruption_message = "Incoming Corruption of the Earth!",
+
 	noxious_hit = "에메리스의 산성 숨결에 의해",
-	--noxious_resist = "Noxious Breath was resisted",
+	noxious_resist = "Noxious Breath was resisted", -- check
 	noxious_warn = "5초후 산성 숨결!",
 	noxious_message = "산성 숨결 - 30초후 재시전!",
 	noxious_bar = "산성 숨결",

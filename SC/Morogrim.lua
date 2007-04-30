@@ -110,6 +110,7 @@ L:RegisterTranslations("koKR", function() return {
 	grobules_trigger = "물방울",
 	grobules_message = "물방울 등장!",
 	grobules_warning = "잠시 후 물방울!",
+	grobules_bar = "물방울 사라짐",
 
 	tidal_trigger = "겅둥파도 모로그림|1이;가; 해일 시전을 시작합니다.",
 	tidal_message = "해일!",

@@ -173,15 +173,15 @@ L:RegisterTranslations("koKR", function() return {
 	fear_desc = "3단계 공포에 대한 경고",
 
 	deepbreath_trigger = "%s|1이;가; 숨을 깊게 들이쉽니다.",
-	--phase1_trigger = "How fortuitous",
+	phase1_trigger = "How fortuitous", -- check
 	phase2_trigger = "머리 위에서 모조리",
 	phase3_trigger = "혼이 더 나야 정신을 차리겠구나!",
 	fear_trigger = "오닉시아|1이;가; 우레와같은 울부짖음|1을;를; 시전합니다.", -- CHECK
 
 	deepbreath_message = "경고 : 오닉시아 딥 브레스, 구석으로 피하십시오!",
-	--phase1_message = "%s Engaged - Phase 1!",
-	phase2_message = "오닉시아 2단계 시작!",
-	phase3_message = "오닉시아 3단계 시작!",
+	phase1_message = "%s 전투 개시 - 1 단계!",
+	phase2_message = "65% - 잠시 후 2 단계!",
+	phase3_message = "40% - 잠시 후 3 단계!",
 	fear_message = "공포 경고, 1.5 초 전!",
 } end )
 
