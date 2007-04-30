@@ -37,8 +37,8 @@ L:RegisterTranslations("enUS", function() return {
 	whirlwind_gain = "Whirlwind for 12 sec",
 	whirlwind_fade = "Whirlwind Over",
 	whirlwind_bar = "Whirlwind",
-	whirlwind_bar2 = "Next Whirlwind",
-	whirlwind_warn = "Whirlwind soon",
+	whirlwind_bar2 = "~Whirlwind Cooldown",
+	whirlwind_warn = "Whirlwind Cooldown Over - Inc Soon",
 
 	phase_trigger = "I am in control now",
 	phase_demon = "Demon Phase for 60sec",
@@ -126,6 +126,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:ScheduleEvent("bwdemon", self.DemonSoon, 60, self)
 		end
 		if self.db.profile.whirlwind then
+			self:CancelScheduledEvent("ww1")
+			self:TriggerEvent("BigWigs_StopBar", self, L["whirlwind_bar2"])
 			self:DelayedMessage(61, L["whirlwind_warn"], "Attention")
 		end
 	elseif msg:find(L["image_trigger"]) then
@@ -158,8 +160,8 @@ function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 end
 
 function mod:WhirlwindBar()
-	self:Bar(L["whirlwind_bar2"], 18, "Ability_Whirlwind")
-	self:DelayedMessage(18, L["whirlwind_warn"], "Attention")
+	self:Bar(L["whirlwind_bar2"], 16, "Ability_Whirlwind")
+	self:ScheduleEvent("ww1", "BigWigs_Message", 16, L["whirlwind_warn"], "Attention")
 end
 
 function mod:UNIT_HEALTH(msg)
