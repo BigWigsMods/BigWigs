@@ -63,8 +63,8 @@ L:RegisterTranslations("deDE", function() return {
 	voidzone_trigger = "wirkt Zone der Leere.",
 	voidzone_warn = "Zone der Leere (%d)!",
 
-	netherbreath_trigger = "casts Face Random Target.",
-	netherbreath_warn = "Incoming Netheratem!",
+	netherbreath_trigger = "wirkt Zuf\195\164lligem Ziel zuwenden.",
+	netherbreath_warn = "Netheratem kommt!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

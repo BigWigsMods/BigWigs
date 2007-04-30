@@ -80,28 +80,28 @@ L:RegisterTranslations("deDE", function() return {
 	engage = "Engage",
 	engage_desc = "Engage alert",
 
-	blast = "Ablenkende Asche",
-	blast_desc = "Warnt vor Ablenkende Asche",
+	blast = "Rauchende Explosion",
+	blast_desc = "Warnt vor Rauchende Explosion",
 
 	bones = "Knochenregen",
 	bones_desc = "Warnt wer den Knochenregen hat",
 
 	icon = "Raid Icon",
-	icon_desc = "Platziert ein Raid Icon auf den Spieler der vom Knochenregen betroffen ist(requires promoted or higher)",
+	icon_desc = "Platziert ein Raid Icon auf den Spieler der vom Knochenregen betroffen ist (ben\195\182tigt 'bef\195\182rdert' oder h\195\182her)",
 
 	whisper = "Whisper Player",
-	whisper_desc = "Fl\195\188stert den Spieler an der vom Knochenregen betroffen ist(requires promoted or higher)",
+	whisper_desc = "Fl\195\188stert den Spieler an der vom Knochenregen betroffen ist (ben\195\182tigt 'bef\195\182rdert' oder h\195\182her)",
 
 	fear_trigger = "Schrecken der Nacht beginnt Dr\195\182hnendes Gebr\195\188ll zu wirken.",
-	fear_message = "Fear in 2 sek!",
-	fear_warning = "Fear Soon",
-	fear_bar = "Fear",
+	fear_message = "Furcht in 2sek!",
+	fear_warning = "Furcht bald",
+	fear_bar = "Furcht",
 
 	charr_trigger = "Ihr seid von Verbrannte Erde betroffen.",
 	charr_message = "Verbrannte Erde auf DIR!",
 
-	blast_trigger = "Schrecken der Nacht beginnt Ablenkende Asche zu wirken.",
-	blast_message = "Incoming Ablenkende Asche!",
+	blast_trigger = "Schrecken der Nacht beginnt Rauchende Explosion zu wirken.",
+	blast_message = "Rauchende Explosion kommt!",
 
 	airphase_trigger = "Abscheuliches Gew\195\188rm! Ich werde euch aus der Luft vernichten!",
 	landphase_trigger1 = "Genug! Ich werde landen und mich h\195\182chst pers\195\182nlich um Euch k\195\188mmern!",
@@ -110,7 +110,7 @@ L:RegisterTranslations("deDE", function() return {
 	landphase_message = "Landung!",
 
 	engage_trigger = "Narren! Ich werde Eurem Leiden ein schnelles Ende setzen!",
-	engage_message = "%s Engaged",
+	engage_message = "%s angegriffen",
 
 	bones_trigger = "^([^%s]+) ([^%s]+) von Knochenregen betroffen",
 	bones_message = "Knochenregen auf [%s]",
