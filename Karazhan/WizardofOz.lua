@@ -49,14 +49,14 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	spawns = "Alerte Hostilit\195\169",
-	spawns_desc = "Timers pour les diff\195\169rents pops.",
+	spawns = "Hostilit\195\169",
+	spawns_desc = "Affiche plusieurs barres indiquant quand les diff\195\169rents personnages passent \195\160 l'action.",
 
 	light = "Cha\195\174ne d'\195\169clairs",
 	light_desc = "Pr\195\169viens quand La M\195\169g\195\168re commence \195\160 lancer sa Cha\195\174ne d'\195\169clairs.",
 
 	spawns_bar = "%s attaque !",
-	spawns_warning = "%s dans 5 sec",
+	spawns_warning = "%s dans 5 sec.",
 
 	light_trigger = "La M\195\169g\195\168re commence \195\160 lancer Cha\195\174ne d'\195\169clairs",
 	light_message = "Cha\195\174ne d'\195\169clairs !",

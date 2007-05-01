@@ -138,12 +138,12 @@ L:RegisterTranslations("frFR", function() return {
 	adds_message = "El\195\169mentaires imminent !",
 	adds_warning = "El\195\169mentaires bient\195\180t",
 	adds_trigger = "Je ne suis pas encore vaincu\194\160! Non, j\226\128\153ai encore quelques tours dans mon sac\226\128\166",
-	adds_bar = "El\195\169mentaires",
+	adds_bar = "Disparation des \195\169l\195\169mentaires",
 
 	drink_trigger = "Vous ne refuseriez pas \195\160 un vieil homme une boisson revigorante\194\160? Non, c\226\128\153est bien ce que je pensais.",
 	drink_warning = "Mana Faible - Boisson imminente !",
 	drink_message = "Boisson - Polymorphisme de zone !",
-	drink_bar = "Boisson",
+	drink_bar = "Super Explosion pyrotechnique",
 
 	engage_trigger1 = "Je refuse d'\195\170tre \195\160 nouveau tortur\195\169\194\160!",
 	engage_trigger2 = "Qui \195\170tes-vous\194\160? Qu\226\128\153est-ce que vous voulez\194\160? Ne m\226\128\153approchez pas\194\160!",

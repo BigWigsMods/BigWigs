@@ -49,13 +49,13 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	youriding = "Alerte Chaperon Rouge (soi)",
+	youriding = "Chaperon Rouge (soi)",
 	youriding_desc = "Pr\195\169viens quand vous \195\170tes le Chaperon Rouge.",
 
-	elseriding = "Alerte Chaperon Rouge (autres)",
+	elseriding = "Chaperon Rouge (autres)",
 	elseriding_desc = "Pr\195\169viens quand les autres sont le Chaperon Rouge.",
 
-	icon = "Placer une ic\195\180ne",
+	icon = "Ic\195\180ne",
 	icon_desc = "Place une ic\195\180ne de raid sur la personne qui est le Chaperon Rouge (n\195\169cessite d'\195\170tre promu ou mieux).",
 
 	riding_trigger = "^([^%s]+) gagne(.*) Chaperon Rouge",

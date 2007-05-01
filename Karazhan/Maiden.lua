@@ -71,13 +71,13 @@ L:RegisterTranslations("frFR", function() return {
 	engage_desc = ("Pr\195\169viens quand %s est engag\195\169e."):format(boss),
 
 	repentance = "Repentir",
-	repentance_desc = "Affiche le temps de recharge de Repentir.",
+	repentance_desc = "Affiche le temps de recharge estim\195\169 de Repentir.",
 
 	holyfire = "Flammes sacr\195\169\es",
-	holyfire_desc = "Pr\195\169viens quand quelqu'un est affect\195\169 par Flammes sacr\195\169es.",
+	holyfire_desc = "Pr\195\169viens quand quelqu'un est affect\195\169 par les Flammes sacr\195\169es.",
 
 	icon = "Ic\195\180ne",
-	icon_desc = "Place une ic\195\180ne de raid sur le dernier joueur affect\195\169 par Flammes sacr\196\169es (n\196\169cessite d'\195\170tre promu ou mieux).",
+	icon_desc = "Place une ic\195\180ne de raid sur le dernier joueur affect\195\169 par les Flammes sacr\196\169es (n\196\169cessite d'\195\170tre promu ou mieux).",
 
 	engage_trigger = "Votre comportement est inacceptable.",
 	engage_message = "Damoiselle engag\195\169e ! Repentir dans ~33 sec.",
@@ -85,9 +85,9 @@ L:RegisterTranslations("frFR", function() return {
 	repentance_trigger1 = "Chassez vos pens\195\169es corrompues.",
 	repentance_trigger2 = "Il faut se d\195\169barrasser de votre impuret\195\169.",
 	repentance_message = "Repentir ! Prochain dans ~33 sec.",
-	repentance_warning = "Repentir imminent !",
+	repentance_warning = "Fin du cooldown Repentir - Bientôt !",
 	repentance_bar = "Repentir",
-	repentance_nextbar = "Prochain Repentir",
+	repentance_nextbar = "~Cooldown Repentir",
 
 	holyfire_trigger = "^(.+) (.+) les effets .* Flammes sacr\195\169es",
 	holyfire_message = "Flammes sacr\195\169es : %s",

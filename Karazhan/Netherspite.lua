@@ -108,11 +108,11 @@ L:RegisterTranslations("frFR", function() return {
 	enrage = "Enrager",
 	enrage_desc = "Pr\195\169viens quand D\195\169dain-du-N\195\169ant devient enrag\195\169 apr\195\168s 9 min.",
 
-	phase1_message = "Retrait - Plus de Souffle du N\195\169ant",
+	phase1_message = "Retrait - Fin des Souffles du N\195\169ant",
 	phase1_warning = "D\195\169dain-du-N\195\169ant engag\195\169 - Rage dans 60 sec. !",
-	phase1_bar = "Prochain retrait",
+	phase1_bar = "~Prochain retrait",
 	phase1_trigger = "%s se retire avec un cri en ouvrant un portail vers le N\195\169ant.",
-	phase2_message = "Rage - Souffle de N\195\169ant imminent !",
+	phase2_message = "Rage - Souffles de N\195\169ant imminent !",
 	phase2_bar = "Prochaine Rage",
 	phase2_trigger = "%s entre dans une rage nourrie par le N\195\169ant\194\160!",
 

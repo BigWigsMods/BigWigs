@@ -88,7 +88,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	phase = "Engagement",
-	phase_desc = "Pr\195\169viens des changements de phase.",
+	phase_desc = "Pr\195\169viens quand la rencontre entre dans une nouvelle phase.",
 
 	enfeeble = "Affaiblir",
 	enfeeble_desc = "Affiche le temps de recharge de Affaiblir.",
@@ -97,7 +97,7 @@ L:RegisterTranslations("frFR", function() return {
 	infernals_desc = "Affiche le temps de recharge des invocations d'infernaux.",
 
 	nova = "Nova de l'ombre",
-	nova_desc = "Temps \195\169stim\195\169 pour la Nova de l'ombre.",
+	nova_desc = "Pr\195\169viens quand Malchezaar est suceptible d'utiliser sa Nova de l'ombre.",
 
 	phase1_trigger = "La folie vous a fait venir ici, devant moi. Et je serai votre perte\194\160!",
 	phase2_trigger = "Imb\195\169ciles heureux\194\160! Le temps est le brasier dans lequel vous br\195\187lerez\194\160!",
@@ -120,7 +120,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	nova_trigger = "Prince Malchezaar commence \195\160 lancer Nova de l'ombre",
 	nova_message = "Nova de l'ombre !",
-	nova_bar = "~Arriv\195\169e de la Nova",
+	nova_bar = "~Cooldown Nova",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

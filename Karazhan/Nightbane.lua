@@ -119,7 +119,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	fear = "Alerte Rugissement",
+	fear = "Rugissement",
 	fear_desc = "Pr\195\169viens quand Plaie-de-nuit lance son Rugissement puissant.",
 
 	charr = "Terre calcin\195\169e sur vous",
@@ -146,7 +146,8 @@ L:RegisterTranslations("frFR", function() return {
 	fear_trigger = "lancer Rugissement puissant",
 	fear_message = "Rugissement dans 2 sec. !",
 	fear_warning = "Rugissement imminent",
-	fear_bar = "Prochain rugissement",
+	fear_bar = "Rugissement !",
+	fear_nextbar = "~Rugissement Fear",
 
 	charr_trigger = "Vous subissez les effets de Terre calcin\195\169e.",
 	charr_message = "Terre calcin\195\169e sur VOUS !",
@@ -162,7 +163,7 @@ L:RegisterTranslations("frFR", function() return {
 	summon_trigger = "Dans le lointain, un \195\170tre ancien s'\195\169veille\226\128\166",
 
 	engage_trigger = "Fous\194\160! Je vais mettre un terme rapide \195\160 vos souffrances\194\160!",
-	engage_message = "Plaie-de-nuit engag\195\169",
+	engage_message = "%s engag\195\169",
 
 	bones_trigger = "^([^%s]+) ([^%s]+) les effets .* Pluie d'os",
 	bones_message = "Pluie d'os sur [%s]",

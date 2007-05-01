@@ -51,7 +51,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	phase = "Phase",
-	phase_desc = "Pr\195\169viens des changements de phase.",
+	phase_desc = "Pr\195\169viens quand la rencontre entre dans une nouvelle phase.",
 
 	curse = "Tanks maudits",
 	curse_desc = "Pr\195\169viens quand un guerrier ou un druide subit la Pr\195\169sence immat\195\169rielle.",

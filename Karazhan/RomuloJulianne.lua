@@ -79,16 +79,16 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	phase = "Alerte Phases",
-	phase_desc = "Pr\195\169viens des changements de phase.",
+	phase = "Phases",
+	phase_desc = "Pr\195\169viens quand la rencontre entre dans une nouvelle phase.",
 
-	poison = "Alerte Poison",
-	poison_desc = "Pr\195\169viens quand quelqu'un est empoisonn\195\169.",
+	poison = "Poison",
+	poison_desc = "Pr\195\169viens quand un joueur est empoisonn\195\169.",
 
-	heal = "Alerte Soin",
+	heal = "Soin",
 	heal_desc = ("Pr\195\169viens quand %s lance Amour \195\169ternel."):format(girl),
 
-	buff = "Alerte Buff",
+	buff = "Buff",
 	buff_desc = ("Pr\195\169viens quand %s et %s gagnent leurs buffs."):format(boy, girl),
 
 	phase1_trigger = "Quel d\195\169mon es-tu pour me tourmenter ainsi?",
@@ -99,14 +99,14 @@ L:RegisterTranslations("frFR", function() return {
 	phase3_message = "Acte III - Ensemble",
 
 	poison_trigger = "^([^%s]+) ([^%s]+) les effets .* Coup empoisonn\195\169",
-	poison_message = "%s est empoisonn\195\169 !",
+	poison_message = "Empoisonn\195\169 : %s",
 
 	heal_trigger = "commence \195\160 lancer Amour \195\169ternel%.",
-	heal_message = "Julianne lance un soin!",
+	heal_message = "%s incante un soin !",
 
-	buff1_trigger = "gagne Hardiesse%.",
+	buff1_trigger = "gagne Hardiesse",
 	buff1_message = "Romulo gagne Hardiesse !",
-	buff2_trigger = "gagne D\195\169votion%.",
+	buff2_trigger = "gagne D\195\169votion",
 	buff2_message = "Julianne gagne D\195\169votion !",
 } end)
 
