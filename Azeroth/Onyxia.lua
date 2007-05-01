@@ -56,7 +56,7 @@ L:RegisterTranslations("frFR", function() return {
 	fear = "Alerte Peur",
 	fear_desc = "Pr\195\169viens quand Onyxia utilise son Rugissement puissant en phase 3.",
 
-	deepbreath_trigger = "prend une grande inspiration...",
+	deepbreath_trigger = "%s prend une grande inspiration...",
 	--phase1_trigger = "How fortuitous",
 	phase2_trigger = "un seul coup !",
 	phase3_trigger = "Il semble que vous ayez besoin d'une autre le\195\167on, mortels !",
