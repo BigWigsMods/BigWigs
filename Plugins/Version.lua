@@ -257,16 +257,26 @@ function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_ModulePackLoaded", "PopulateRevisions")
 end
 
+local function addZone(zone, rev)
+-- Make sure to get the enUS zone name.
+	local z = BZ:HasReverseTranslation(zone) and BZ:GetReverseTranslation(zone) or zone
+	if not zoneRevisions[z] or rev > zoneRevisions[z] then
+		zoneRevisions[z] = rev
+	end
+end
+
 function plugin:PopulateRevisions()
 	if not zoneRevisions then zoneRevisions = {} end
 
 	if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
 	for name, module in BigWigs:IterateModules() do
-		if module:IsBossModule() and type(module.zonename) == "string" then
-			-- Make sure to get the enUS zone name.
-			local zone = BZ:HasReverseTranslation(module.zonename) and BZ:GetReverseTranslation(module.zonename) or module.zonename
-			if not zoneRevisions[zone] or module.revision > zoneRevisions[zone] then
-				zoneRevisions[zone] = module.revision
+		if module:IsBossModule() then
+			if type(module.zonename) == "table" then
+				for i, v in ipairs(module.zonename) do
+					addZone(v, module.revision)
+				end
+			elseif type(module.zonename) == "string" then
+				addZone(module.zonename, module.revision)
 			end
 		end
 	end
