@@ -144,20 +144,20 @@ L:RegisterTranslations("koKR", function() return {
 	phase3_message = "30% - 3 단계",
 
 	enfeeble_trigger = "쇠약에 걸렸습니다%.$",
-	enfeeble_message = "쇠약! 다음은 약 30초 후",
-	enfeeble_warning = "약 5초 후 쇠약!",
+	enfeeble_message = "쇠약! 다음은 30초 후",
+	enfeeble_warning = "5초 후 쇠약!",
 	enfeeble_bar = "쇠약",
 	enfeeble_nextbar = "다음 쇠약",
 
 	infernal_trigger1 = "이 말체자르님은 혼자가 아니시다. 너희는 나의 군대와 맞서야 한다!",
 	infernal_trigger2 = "모든 차원과 실체가 나를 향해 열려 있노라!",
 	infernal_bar = "불지옥 등장",
-	infernal_warning = "약 20초 후 불지옥 등장!",
-	infernal_message = "약 5초 후 불지옥 등장!",
+	infernal_warning = "20초 후 불지옥 등장!",
+	infernal_message = "5초 후 불지옥 등장!",
 
 	nova_trigger = "공작 말체자르|1이;가; 암흑 회오리 시전을 시작합니다.",
 	nova_message = "암흑 회오리!",
-	nova_bar = "~암흑 회오리",
+	nova_bar = "~회오리 대기시간",
 } end )
 
 ----------------------------------

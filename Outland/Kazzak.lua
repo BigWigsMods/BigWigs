@@ -80,7 +80,7 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_warning2 = "잠시 후 격노!",
 	enrage_message = "10초간 격노!",
 	enrage_finished = "격노 종료 - 다음은 50-60초 후",
-	enrage_bar = "격노",
+	enrage_bar = "~격노",
 	enraged_bar = "<격노>",
 
 	mark_trigger = "당신은 카자크의 징표에 걸렸습니다.",

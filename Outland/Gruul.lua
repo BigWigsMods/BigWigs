@@ -180,6 +180,7 @@ L:RegisterTranslations("koKR", function() return {
 	grasp_message1 = "땅 울리기 - 잠시 후 손아귀",
 	grasp_message2 = "손아귀 대기 - 약 5초 후 석화",
 	grasp_warning = "잠시 후 땅 울리기",
+	grasp_bar = "~땅 울리기 대기시간",
 
 	shatter_trigger = "%s|1이;가; 포효합니다!",
 	shatter_message = "석화!",
@@ -187,6 +188,7 @@ L:RegisterTranslations("koKR", function() return {
 	silence_trigger = "산울림에 걸렸습니다.",
 	silence_message = "광역 침묵",
 	silence_warning = "잠시 후 광역 침묵!",
+	silence_bar = "~침묵 대기시간",
 
 	cavein_trigger = "당신은 함몰에 걸렸습니다.",
 	cavein_message = "당신은 함몰!",

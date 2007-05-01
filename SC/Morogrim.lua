@@ -99,9 +99,9 @@ L:RegisterTranslations("koKR", function() return {
 	grave_trigger2 = "자신의 적을 수중 무덤으로 내몹니다!",
 	grave_message = "수중 무덤: %s",
 	grave_bar = "수중 무덤",
-	grave_nextbar = "다음 수중 무덤",
+	grave_nextbar = "~수중 무덤 대기시간",
 
-	murloc_bar = "멀록 등장",
+	murloc_bar = "~멀록 등장 대기시간",
 	murloc_trigger = "멀록들",
 	murloc_message = "멀록 등장!",
 	murloc_soon_message = "잠시 후 멀록 등장!",

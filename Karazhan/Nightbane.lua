@@ -198,7 +198,7 @@ L:RegisterTranslations("koKR", function() return {
 	fear_trigger = "우레와 같은 울부짖음 시전을 시작합니다.",
 	fear_message = "2초 후 공포!",
 	fear_warning = "잠시 후 공포",
-	fear_bar = "공포",
+	fear_bar = "~공포 대기시간",
 
 	charr_trigger = "당신은 불타버린 대지에 걸렸습니다.",
 	charr_message = "당신에 불타버린 대지!",

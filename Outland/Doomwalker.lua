@@ -75,12 +75,12 @@ L:RegisterTranslations("koKR", function() return {
 	earthquake_trigger = "당신은 지진에 걸렸습니다.",
 
 	earthquake_message = "지진! 다음은 약 70초 후!",
-	earthquake_bar = "지진",
+	earthquake_bar = "~지진 대기시간",
 
 	overrun_trigger = "^파멸의 절단기.-괴멸", -- check "^Doomwalker.-Overrun",
 	overrun_message = "괴멸!",
 	overrun_soon_message = "잠시 후 괴멸 가능!",
-	overrun_bar = "괴멸 대기시간",
+	overrun_bar = "~괴멸 대기시간",
 } end)
 
 ----------------------------------

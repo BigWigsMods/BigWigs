@@ -199,7 +199,7 @@ L:RegisterTranslations("koKR", function() return {
 	heal_desc = "지옥불 역술사 치유 시전시 경고",
 
 	nova = "파열의 회오리",
-	nova_desc = "파열의 회오리 예측",
+	nova_desc = "파열의 회오리 지속시간 바",
 
 	banish = "추방",
 	banish_desc = ("%s 추방시 알림"):format(boss),
@@ -211,9 +211,10 @@ L:RegisterTranslations("koKR", function() return {
 	debris_desc = "당신이 파편에 걸렸을때 알림",
 
 	debrisinc = "파편",
-	debrisinc_desc = "30% 파편 경고",
+	debrisinc_desc = "30%일 때 파편에 대한 경고",
 
 	escape_trigger1 = "%%s의 속박이 약해지기 시작합니다",
+
 	escape_trigger2 = "내가... 풀려났도다!",
 	escape_warning1 = "%s 전투 개시 - 2분 이내 속박 해제!",
 	escape_warning2 = "속박 해제 1분 전!",
@@ -230,7 +231,9 @@ L:RegisterTranslations("koKR", function() return {
 	heal_message = "치유 시전!",
 
 	nova_ = "파열의 회오리",
+	nova_bar = "~파열의 회오리 대기시간",
 	nova_warning = "곧 파열의 회오리",
+	nova_cast = "파열의 회오리 시전!",
 
 	banish_trigger = "안 돼, 다시 그럴 수는 없다!",
 	banish_message = "약 10초 동안 추방됨",

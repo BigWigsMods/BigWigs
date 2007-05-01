@@ -57,6 +57,48 @@ L:RegisterTranslations("enUS", function() return {
 	whisper_bar = "Demons",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	enrage = "격노",
+	enrage_desc = "격노까지 시간",
+
+	whirlwind = "소용돌이",
+	whirlwind_desc = "소용돌이 타이머",
+
+	phase = "악마 형상",
+	phase_desc = "악마 형상 예측 타이머",
+
+	image = "이미지",
+	image_desc = "15% 이미지 분리 경고",
+
+	whisper = "음흉한 속삭임",
+	whisper_desc = "음흉한 속삭임에 걸린 플레이어 알림",
+
+	enrage_trigger = "드디어, 내가 풀려났도다!", -- check
+
+	whirlwind_trigger = "눈먼 레오테라스|1이;가; 소용돌이 효과를 얻었습니다.", -- check
+	whirlwind_gain = "12초간 소용돌이",
+	whirlwind_fade = "소용돌이 종료",
+	whirlwind_bar = "소용돌이",
+	whirlwind_bar2 = "~소용돌이 대기시간",
+	whirlwind_warn = "소용돌이 대기시간 종료 - 잠시 후",
+
+	phase_trigger = "지금부터는 내가 주인이다", -- check
+	phase_demon = "60초간 악마 형상",
+	phase_demonsoon = "악마 형상 5초 전!",
+	phase_normalsoon = "보통 형상 5초 전",
+	phase_normal = "보통 형상!",
+	demon_bar = "악마 형상",
+	demon_nextbar = "다음 악마 형상",
+
+	image_trigger = "누구나 마음속에 악마를 품고 살지...", -- check
+	image_message = "15% - 이미지 생성!",
+	image_warning = "곧 이미지!",
+
+	whisper_trigger = "^([^|;%s]*)(.*)음흉한 속삭임에 걸렸습니다%.$", -- check
+	whisper_message = "악마: %s",
+	whisper_bar = "악마",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------

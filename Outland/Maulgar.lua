@@ -197,6 +197,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	summon_trigger = "소환사 올름|1이;가; 사나운 지옥사냥개 소환 시전을 시작합니다.",
 	summon_message = "지옥사냥개 소환!",
+	summon_bar = "~지옥사냥개 대기시간",
 
 	flurry_trigger = "그룰님의 손아귀에서 벗어나지 못할 것이다!",
 	flurry_message = "50% - 질풍!",
@@ -205,7 +206,7 @@ L:RegisterTranslations("koKR", function() return {
 	whirlwind_trigger = "왕중왕 마울가르|1이;가; 소용돌이 효과를 얻었습니다.",
 	whirlwind_message = "마울가르 - 15초간 소용돌이!",
 	whirlwind_bar = "소용돌이",
-	whirlwind_nextbar = "~다음 소용돌이",
+	whirlwind_nextbar = "~소용돌이 대기시간",
 	whirlwind_warning1 = "마울가르 전투 개시 - 약 50초 후 소용돌이!",
 	whirlwind_warning2 = "잠시 후 소용돌이!",
 } end)

@@ -133,7 +133,7 @@ L:RegisterTranslations("koKR", function() return {
 	weaktime_message1 = "약 10초 후 환기",
 	weaktime_message2 = "약 30초 후 환기",
 	weaktime_message3 = "약 70초 후 환기",
-	weaktime_bar = "다음 환기",
+	weaktime_bar = "~환기 대기시간",
 
 	berserk_trigger = "박물관에는 초대받은 손님만 입장하실 수 있습니다.",
 	berserk_message = "%s 전투 개시, 10분 후 광폭화!",

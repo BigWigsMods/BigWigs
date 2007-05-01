@@ -129,7 +129,7 @@ L:RegisterTranslations("koKR", function() return {
 	vanish_trigger2 = "어디까지 했죠? 아, 맞아...",
 	vanish_message = "소멸! 다음은 약 35초 후!",
 	vanish_warning = "잠시 후 소멸!", 
-	vanish_bar = "다음 소멸",
+	vanish_bar = "~소멸 대기시간",
 
 	garrote_trigger = "^([^|;%s]*)(.*)목조르기에 걸렸습니다%.$",
 	garrote_message = "목조르기: %s",
