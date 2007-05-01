@@ -54,8 +54,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	whisper_trigger = "^([^%s]+) ([^%s]+) afflicted by Insidious Whisper",
 	whisper_message = "Demon: %s",
-	whisper_bar = "<Inner Demons Despawn>",
-	whisper_soon = "Inner Demon Cooldown",
+	whisper_bar = "Demons Despawn",
+	whisper_soon = "~Demons Cooldown",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -171,6 +171,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if self.db.profile.whirlwind then
 			self:CancelScheduledEvent("ww1")
 			self:TriggerEvent("BigWigs_StopBar", self, L["whirlwind_bar"])
+			self:TriggerEvent("BigWigs_StopBar", self, L["whirlwind_bar2"])
 			self:DelayedMessage(61, L["whirlwind_warn"], "Attention")
 		end
 		if self.db.profile.whisper then
