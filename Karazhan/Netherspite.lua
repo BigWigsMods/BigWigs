@@ -29,7 +29,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	phase1_message = "Withdrawal - Netherbreaths Over",
 	phase1_warning = "Netherspite Engaged - Rage in 60sec!",
-	phase1_bar = "Next Withdrawal",
+	phase1_bar = "~Next Withdrawal",
 	phase1_trigger = "%s cries out in withdrawal, opening gates to the nether.",
 	phase2_message = "Rage - Incoming Netherbreaths!",
 	phase2_bar = "Next Rage",

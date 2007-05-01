@@ -56,6 +56,7 @@ L:RegisterTranslations("enUS", function() return {
 	heal_message = "Healing!",
 
 	nova_ = "Blast Nova!",
+	nova_bar = "~Blast Nova Cooldown",
 	nova_warning = "Blast Nova Soon",
 	nova_cast = "Casting Blast Nova!",
 
@@ -311,7 +312,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(L["escape_message"]:format(boss), "Important", nil, "Alert")
 		end
 		if self.db.profile.nova then
-			self:Bar(L["nova_"], 58, "Spell_Fire_SealOfFire")
+			self:Bar(L["nova_bar"], 58, "Spell_Fire_SealOfFire")
 			self:DelayedMessage(56, L["nova_warning"], "Urgent")
 		end
 	elseif msg == L["banish_trigger"] then
@@ -328,7 +329,7 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if self.db.profile.nova and msg:find(L["nova_"]) then
 		self:Message(L["nova_"], "Positive")
-		self:Bar(L["nova_"], 54, "Spell_Fire_SealOfFire")
+		self:Bar(L["nova_bar"], 54, "Spell_Fire_SealOfFire")
 		self:Bar(L["nova_cast"], 12, "Spell_Fire_SealOfFire")
 		self:DelayedMessage(50, L["nova_warning"], "Urgent")
 	end

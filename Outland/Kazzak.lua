@@ -28,7 +28,7 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_warning2 = "Enrage soon!",
 	enrage_message = "Enraged for 10sec!",
 	enrage_finished = "Enrage over - Next in 50-60sec",
-	enrage_bar = "Enrage",
+	enrage_bar = "~Enrage",
 	enraged_bar = "<Enraged>",
 
 	mark_trigger = "You are afflicted by Mark of Kazzak.",

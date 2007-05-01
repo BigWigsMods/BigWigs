@@ -34,7 +34,7 @@ L:RegisterTranslations("enUS", function() return {
 	weaktime_message1 = "Evocation in ~10 seconds",
 	weaktime_message2 = "Evocation in ~30 seconds",
 	weaktime_message3 = "Evocation in ~70 seconds",
-	weaktime_bar = "Next Evocation",
+	weaktime_bar = "~Evocation Cooldown",
 
 	berserk_trigger = "The Menagerie is for guests only.",
 	berserk_message = "%s engaged, 10min to berserk!",

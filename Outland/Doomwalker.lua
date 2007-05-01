@@ -29,12 +29,12 @@ L:RegisterTranslations("enUS", function() return {
 	earthquake_trigger = "You are afflicted by Earthquake.",
 
 	earthquake_message = "Earthquake! ~70sec to next!",
-	earthquake_bar = "Earthquake",
+	earthquake_bar = "~Earthquake Cooldown",
 
 	overrun_trigger = "^Doomwalker.-Overrun",
 	overrun_message = "Overrun!",
 	overrun_soon_message = "Possible Overrun soon!",
-	overrun_bar = "Overrun Cooldown",
+	overrun_bar = "~Overrun Cooldown",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

@@ -57,6 +57,7 @@ L:RegisterTranslations("enUS", function() return {
 	grasp_message1 = "Ground Slam - Grasp Incoming",
 	grasp_message2 = "Grasp Stacking - Shatter in ~5sec",
 	grasp_warning = "Ground Slam Soon",
+	grasp_bar = "~Ground Slam Cooldown",
 
 	shatter_trigger = "%s roars!",
 	shatter_message = "Shatter!",
@@ -64,6 +65,7 @@ L:RegisterTranslations("enUS", function() return {
 	silence_trigger = "afflicted by Reverberation",
 	silence_message = "AOE Silence",
 	silence_warning = "AOE Silence soon!",
+	silence_bar = "~Silence Cooldown",
 
 	cavein_trigger = "You are afflicted by Cave In.",
 	cavein_message = "Cave In on YOU!",
@@ -242,9 +244,9 @@ function mod:CHAT_MSG_MONSTER_SAY(msg)
 		if self.db.profile.engage then
 			self:Message(L["engage_message"]:format(boss), "Attention")
 			self:DelayedMessage(35, L["grasp_warning"], "Urgent")
-			self:Bar(L["grasp_warning"], 40, "Ability_ThunderClap")
+			self:Bar(L["grasp_bar"], 40, "Ability_ThunderClap")
 			self:DelayedMessage(95, L["silence_warning"], "Urgent")
-			self:Bar(L["silence_message"], 100, "Spell_Holy_ImprovedResistanceAuras")
+			self:Bar(L["silence_bar"], 100, "Spell_Holy_ImprovedResistanceAuras")
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
@@ -268,7 +270,7 @@ function mod:Event(msg)
 		if self.db.profile.grasp then
 			self:Message(L["grasp_message1"], "Attention")
 			self:DelayedMessage(67, L["grasp_warning"], "Urgent")
-			self:Bar(L["grasp_warning"], 72, "Ability_ThunderClap")
+			self:Bar(L["grasp_bar"], 72, "Ability_ThunderClap")
 		end
 		self.proximitySilent = nil
 		slam = true
@@ -281,7 +283,7 @@ function mod:Event(msg)
 	elseif not silence and self.db.profile.silence and msg:find(L["silence_trigger"]) then
 		self:Message(L["silence_message"], "Attention")
 		self:DelayedMessage(40, L["silence_warning"], "Urgent")
-		self:Bar(L["silence_message"], 45, "Spell_Holy_ImprovedResistanceAuras")
+		self:Bar(L["silence_bar"], 45, "Spell_Holy_ImprovedResistanceAuras")
 		silence = true
 	end
 end

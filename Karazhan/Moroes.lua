@@ -33,7 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 	vanish_trigger2 = "Now, where was I? Oh, yes...",
 	vanish_message = "Vanished! Next in ~35sec!",
 	vanish_warning = "Vanish Soon!",
-	vanish_bar = "Next Vanish",
+	vanish_bar = "~Vanish Cooldown",
 
 	garrote_trigger = "^([^%s]+) ([^%s]+) afflicted by Garrote",
 	garrote_message = "Garrote: %s",

@@ -51,7 +51,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	summon_trigger = "begins to cast Summon Wild Felhunter.",
 	summon_message = "Felhunter being summoned!",
-	summon_bar = "~Next Felhunter Summon",
+	summon_bar = "~Felhunter Cooldown",
 
 	flurry_trigger = "You will not defeat the hand of Gruul!",
 	flurry_message = "50% - Flurry!",
@@ -60,7 +60,7 @@ L:RegisterTranslations("enUS", function() return {
 	whirlwind_trigger = "gains Whirlwind",
 	whirlwind_message = "Maulgar - Whirlwind for 15sec!",
 	whirlwind_bar = "Whirlwind",
-	whirlwind_nextbar = "~Next Whirlwind",
+	whirlwind_nextbar = "~Whirlwind Cooldown",
 	whirlwind_warning1 = "Maulgar Engaged - Whirlwind in ~50sec!",
 	whirlwind_warning2 = "Whirlwind Soon!",
 

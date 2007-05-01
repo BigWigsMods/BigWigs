@@ -42,7 +42,7 @@ L:RegisterTranslations("enUS", function() return {
 	fear_trigger = "cast Bellowing Roar",
 	fear_message = "Fear in 2 sec!",
 	fear_warning = "Fear Soon",
-	fear_bar = "Fear",
+	fear_bar = "~Fear Cooldown",
 
 	charr_trigger = "You are afflicted by Charred Earth.",
 	charr_message = "Charred Earth on YOU!",

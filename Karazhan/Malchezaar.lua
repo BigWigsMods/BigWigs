@@ -33,20 +33,20 @@ L:RegisterTranslations("enUS", function() return {
 	phase3_message = "30% - Phase 3 ",
 
 	enfeeble_trigger = "afflicted by Enfeeble",
-	enfeeble_message = "Enfeeble! next in ~30sec",
-	enfeeble_warning = "Enfeeble in ~5sec!",
+	enfeeble_message = "Enfeeble! next in 30sec",
+	enfeeble_warning = "Enfeeble in 5sec!",
 	enfeeble_bar = "Enfeeble",
 	enfeeble_nextbar = "Next Enfeeble",
 
 	infernal_trigger1 = "You face not Malchezzar alone, but the legions I command!",
 	infernal_trigger2 = "All realities, all dimensions are open to me!",
 	infernal_bar = "Incoming Infernal",
-	infernal_warning = "Infernal incoming in ~20sec!",
-	infernal_message = "Infernal in ~5sec!",
+	infernal_warning = "Infernal incoming in 20sec!",
+	infernal_message = "Infernal in 5sec!",
 
 	nova_trigger = "Prince Malchezaar begins to cast Shadow Nova",
 	nova_message = "Shadow Nova!",
-	nova_bar = "~Incoming Nova",
+	nova_bar = "~Nova Cooldown",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -70,16 +70,16 @@ L:RegisterTranslations("deDE", function() return {
 	phase3_message = "30% - Phase 3 ",
 
 	enfeeble_trigger = "von Entkr\195\164ften betroffen",
-	enfeeble_message = "Entkr\195\164ften! N\195\164chste in ~30 Sek",
-	enfeeble_warning = "Entkr\195\164ften in ~5 Sek!",
+	enfeeble_message = "Entkr\195\164ften! N\195\164chste in 30 Sek",
+	enfeeble_warning = "Entkr\195\164ften in 5 Sek!",
 	enfeeble_bar = "Entkr\195\164ften",
 	enfeeble_nextbar = "N\195\164chste Entkr\195\164ften",
 
 	infernal_trigger1 = "Ihr steht nicht nur vor Malchezzar allein, sondern vor den Legionen, die ich befehlige!",
 	infernal_trigger2 = "Alle Realit\195\164ten, alle Dimensionen stehen mir offen!",
 	infernal_bar = "Infernos",
-	infernal_warning = "Infernos in ~20 Sek!",
-	infernal_message = "Infernos in ~5 Sek!",
+	infernal_warning = "Infernos in 20 Sek!",
+	infernal_message = "Infernos in 5 Sek!",
 
 	nova_trigger = "Prinz Malchezaar beginnt Schattennova zu wirken",
 	nova_message = "Schattennova!",
@@ -107,16 +107,16 @@ L:RegisterTranslations("frFR", function() return {
 	phase3_message = "30% - Phase 3 ",
 
 	enfeeble_trigger = "subit les effets .* Affaiblir",
-	enfeeble_message = "Affaiblir ! Prochain dans ~30 sec.",
-	enfeeble_warning = "Affaiblir dans ~5 sec. !",
+	enfeeble_message = "Affaiblir ! Prochain dans 30 sec.",
+	enfeeble_warning = "Affaiblir dans 5 sec. !",
 	enfeeble_bar = "Affaiblir",
 	enfeeble_nextbar = "Prochain Affaiblir",
 
 	infernal_trigger1 = "Vous n'affrontez pas seulement Malchezzar, mais les l\195\169gions que je commande\194\160!",
 	infernal_trigger2 = "Toutes les r\195\169alit\195\169s, toutes les dimensions me sont ouvertes\194\160!",
 	infernal_bar = "Arriv\195\169e d'un infernal",
-	infernal_warning = "Arriv\195\169e d'un infernal dans ~20 sec. !",
-	infernal_message = "Infernal dans ~5 sec. !",
+	infernal_warning = "Arriv\195\169e d'un infernal dans 20 sec. !",
+	infernal_message = "Infernal dans 5 sec. !",
 
 	nova_trigger = "Prince Malchezaar commence \195\160 lancer Nova de l'ombre",
 	nova_message = "Nova de l'ombre !",
