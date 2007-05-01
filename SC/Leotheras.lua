@@ -54,7 +54,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	whisper_trigger = "^([^%s]+) ([^%s]+) afflicted by Insidious Whisper",
 	whisper_message = "Demon: %s",
-	whisper_bar = "Demons",
+	whisper_bar = "<Inner Demons UP!>",
+	whisper_soon = "Inner Demons in",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -169,8 +170,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		if self.db.profile.whirlwind then
 			self:CancelScheduledEvent("ww1")
-			self:TriggerEvent("BigWigs_StopBar", self, L["whirlwind_bar2"])
+			self:TriggerEvent("BigWigs_StopBar", self, L["whirlwind_bar"])
 			self:DelayedMessage(61, L["whirlwind_warn"], "Attention")
+		end
+		if self.db.profile.whisper then
+			self:Bar(L["whisper_soon"], 15, "Spell_Shadow_ManaFeed")
 		end
 	elseif msg:find(L["image_trigger"]) then
 		self:CancelScheduledEvent("bwdemon")
@@ -203,7 +207,7 @@ end
 
 function mod:WhirlwindBar()
 	self:Bar(L["whirlwind_bar2"], 16, "Ability_Whirlwind")
-	self:ScheduleEvent("ww1", "BigWigs_Message", 16, L["whirlwind_warn"], "Attention")
+	self:DelayedMessage(16, L["whirlwind_warn"], "Attention")
 end
 
 function mod:UNIT_HEALTH(msg)
@@ -251,7 +255,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Bar(L["whisper_bar"], 30, "Spell_Shadow_ManaFeed")
 	elseif sync == "LeoWW" and self.db.profile.whirlwind then
 		self:Message(L["whirlwind_gain"], "Important", nil, "Alert")
-		self:DelayedMessage(12, L["whirlwind_fade"], "Attention")
+		self:ScheduleEvent("ww1", "BigWigs_Message", 12, L["whirlwind_fade"], "Attention")
 		self:Bar(L["whirlwind_bar"], 12, "Ability_Whirlwind")
 		if wwhelp == 0 or imagewarn then
 			self:ScheduleEvent("bwwhirlwind", self.WhirlwindBar, 12, self)
