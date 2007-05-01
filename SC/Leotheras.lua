@@ -182,7 +182,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:CancelScheduledEvent("normal2")
 		self:CancelScheduledEvent("demon1")
 		self:TriggerEvent("BigWigs_StopBar", self, L["demon_bar"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["demonnext_bar"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["demon_nextbar"])
 		if self.db.profile.image then
 			self:Message(L["phase_demon"], "Important")
 		end
