@@ -129,7 +129,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "LeoWhisp", 0)
-	self:TriggerEvent("BigWigs_ThrottleSync", "LeoWW", 4)
+	self:TriggerEvent("BigWigs_ThrottleSync", "LeoWW", 10)
 
 	self:RegisterEvent("UNIT_HEALTH")
 	imagewarn = nil
