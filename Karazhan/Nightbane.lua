@@ -42,7 +42,8 @@ L:RegisterTranslations("enUS", function() return {
 	fear_trigger = "cast Bellowing Roar",
 	fear_message = "Fear in 2 sec!",
 	fear_warning = "Fear Soon",
-	fear_bar = "~Fear Cooldown",
+	fear_bar = "Fear!",
+	fear_nextbar = "~Fear Cooldown",
 
 	charr_trigger = "You are afflicted by Charred Earth.",
 	charr_message = "Charred Earth on YOU!",
@@ -263,7 +264,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:CancelScheduledEvent("fear")
 		self:Bar(L["fear_bar"], 2, "Spell_Shadow_PsychicScream")
 		self:Message(L["fear_message"], "Positive")
-		self:Bar(L["fear_warning"], 37, "Spell_Shadow_PsychicScream")
+		self:Bar(L["fear_nextbar"], 37, "Spell_Shadow_PsychicScream")
 		self:ScheduleEvent("fear", "BigWigs_Message", 35, L["fear_warning"], "Positive")
 	elseif sync == "NightbaneBlast" and self.db.profile.blast then
 		self:Message(L["blast_message"], "Urgent", nil, "Alert")

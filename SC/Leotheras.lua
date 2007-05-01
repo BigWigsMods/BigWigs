@@ -54,8 +54,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	whisper_trigger = "^([^%s]+) ([^%s]+) afflicted by Insidious Whisper",
 	whisper_message = "Demon: %s",
-	whisper_bar = "<Inner Demons UP!>",
-	whisper_soon = "Inner Demons in",
+	whisper_bar = "<Inner Demons Despawn>",
+	whisper_soon = "Inner Demon Cooldown",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
