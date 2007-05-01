@@ -265,7 +265,7 @@ function plugin:UpdateProximity()
 			local unit = "raid"..i
 			if UnitExists(unit) and not UnitIsDeadOrGhost(unit) and UnitName(unit) ~= playername then
 				if active.proximityCheck(unit) then
-					table_insert(tooClose, coloredNames(UnitName(unit)))
+					table_insert(tooClose, coloredNames[UnitName(unit)])
 				end
 			end
 			if #tooClose > 4 then break end
