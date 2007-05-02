@@ -2,11 +2,16 @@
 --     Are you local?     --
 ------------------------------
 
-local boy = AceLibrary("Babble-Boss-2.2")["Romulo"]
-local girl = AceLibrary("Babble-Boss-2.2")["Julianne"]
-local boss = AceLibrary("Babble-Boss-2.2")["Romulo & Julianne"]
+local BB = AceLibrary("Babble-Boss-2.2")
+
+local boss = BB["Romulo & Julianne"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+
+local boy = BB["Romulo"]
+local girl = BB["Julianne"]
+
+BB = nil
 
 ----------------------------
 --      Localization     --

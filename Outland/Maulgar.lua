@@ -2,12 +2,17 @@
 --      Are you local?    --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.2")["High King Maulgar"]
+local BB = AceLibrary("Babble-Boss-2.2")
+
+local boss = BB["High King Maulgar"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local mage = AceLibrary("Babble-Boss-2.2")["Krosh Firehand"]
-local lock = AceLibrary("Babble-Boss-2.2")["Olm the Summoner"]
-local priest = AceLibrary("Babble-Boss-2.2")["Blindeye the Seer"]
-local shaman = AceLibrary("Babble-Boss-2.2")["Kiggler the Crazed"]
+
+local mage = BB["Krosh Firehand"]
+local lock = BB["Olm the Summoner"]
+local priest = BB["Blindeye the Seer"]
+local shaman = BB["Kiggler the Crazed"]
+
+BB = nil
 local started
 local flurryannounced
 
@@ -218,7 +223,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
 mod.otherMenu = "Outland"
-mod.enabletrigger = boss
+mod.enabletrigger = {boss, mage, lock, priest, shaman}
 mod.wipemobs = {mage, lock, priest, shaman}
 mod.toggleoptions = {"shield", "spellshield", "heal", -1, "summon", -1, "whirlwind", "flurry", "smash", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

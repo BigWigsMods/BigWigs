@@ -2,13 +2,18 @@
 --     Are you local?     --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.2")["The Crone"]
-local roar = AceLibrary("Babble-Boss-2.2")["Roar"]
-local tinhead = AceLibrary("Babble-Boss-2.2")["Tinhead"]
-local strawman = AceLibrary("Babble-Boss-2.2")["Strawman"]
-local dorothee = AceLibrary("Babble-Boss-2.2")["Dorothee"]
-local tito = AceLibrary("Babble-Boss-2.2")["Tito"]
+local BB = AceLibrary("Babble-Boss-2.2")
+
+local boss = BB["The Crone"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+
+local roar = BB["Roar"]
+local tinhead = BB["Tinhead"]
+local strawman = BB["Strawman"]
+local dorothee = BB["Dorothee"]
+local tito = BB["Tito"]
+
+BB = nil
 
 ----------------------------
 --      Localization     --
