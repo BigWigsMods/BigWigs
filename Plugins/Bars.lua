@@ -706,29 +706,30 @@ function plugin:UpdateBars()
 end
 
 function plugin:EmphasizeBar(module, id)
+	local centerX, centerY = self:GetCandyBarCenter(id)
+	if type(centerX) ~= "number" or type(centerY) ~= "number" then return end
+
 	setupEmphasizedGroup()
 
 	if not self:IsEventScheduled("BigWigsBarMover") then
 		self:ScheduleRepeatingEvent("BigWigsBarMover",self.UpdateBars,0,self)
 	end
 
-	local centerX, centerY = self:GetCandyBarCenter(id)
-	local point, _, rpoint, xoffset, yoffset = self:GetCandyBarPoint(id)
-	local offsetLeft, offsetTop, offsetBottom, _ = self:GetCandyBarOffsets(id)
-	local effscale = self:GetCandyBarEffectiveScale(id)
-	local db = plugin.db.profile
-	
 	self:UnregisterCandyBarWithGroup(id, "BigWigsGroup")
 	self:SetCandyBarPoint(id, "CENTER", "UIParent", "BOTTOMLEFT", centerX, centerY)
 
 	local targetX, targetY = self:GetCandyBarNextBarPointInGroup("BigWigsEmphasizedGroup")
+
+	local db = plugin.db.profile
 	local u = db.growup
+
+	local offsetTop, offsetBottom = select(2, self:GetCandyBarOffsets(id))
+	local offsetY = u and centerY - offsetBottom or centerY - offsetTop
+
 	local frameX = emphasizeAnchor:GetCenter()
 	local frameY = u and emphasizeAnchor:GetTop() or emphasizeAnchor:GetBottom()
 	local frameScale = emphasizeAnchor:GetEffectiveScale()
 
-	local offsetY = u and centerY - offsetBottom or centerY - offsetTop
-	
 	movingBars[id] = new()
 	movingBars[id].stop = GetTime() + DURATION
 	movingBars[id].targetX = (targetX * (UIParent:GetEffectiveScale() * db.emphasizeScale or 1)) + (frameX * frameScale)
