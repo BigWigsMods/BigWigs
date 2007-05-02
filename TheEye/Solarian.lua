@@ -28,7 +28,7 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a Raid Icon on the player with Wrath of the Astromancer",
 
 	split = "Split",
-	split_desc "Warn for split & add spawn",
+	split_desc = "Warn for split & add spawn",
 
 	split_trigger = "casts Astromancer Split",
 
