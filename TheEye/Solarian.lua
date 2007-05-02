@@ -5,8 +5,11 @@
 local boss = AceLibrary("Babble-Boss-2.2")["High Astromancer Solarian"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+
 local p1
 local p2
+local wrath
+local split
 
 ----------------------------
 --      Localization      --
@@ -23,13 +26,12 @@ L:RegisterTranslations("enUS", function() return {
 
 	icon = "Icon",
 	icon_desc = "Place a Raid Icon on the player with Wrath of the Astromancer",
---[[
-	port = "Port",
-	port_desc "Warn for teleport & add spawn",
 
-	port_trigger = "??",	wtb a trigger..
-	port_mesage = "Ported! - Adds Incoming",
-]]
+	split = "Split",
+	split_desc "Warn for split & add spawn",
+
+	port_trigger = "casts Astromancer Split",
+	port_mesage = "Split! - Adds Incoming",
 
 	phase1_message = "Phase 1", --adds in 50sec?
 
@@ -38,6 +40,12 @@ L:RegisterTranslations("enUS", function() return {
 
 	wrath_trigger = "^([^%s]+) ([^%s]+) afflicted by Wrath of the Astromancer",
 	wrath_message = "Wrath: %s",
+
+	agent_warning = "Agents in 5 seconds",
+	agent_bar = "Agents",
+
+	priest_warning = "Priests/Solarian in 3 seconds",
+	priest_bar = "Priests/Solarian",
 } end )
 
 ----------------------------------
@@ -59,6 +67,7 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "debuff")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "debuff")
@@ -70,6 +79,8 @@ function mod:OnEnable()
 
 	p1 = nil
 	p2 = nil
+	split = 0
+	wrath = 0
 end
 
 ------------------------------
@@ -87,9 +98,24 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	elseif sync == "SolaWrath" and rest and self.db.profile.wrath then
 		self:Message(L["wrath_message"]:format(rest), "Attention")
+		self:Bar(L["wrath_message"]:format(rest), 8, "Spell_Arcane_Arcane02")
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
+	end
+end
+
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+	if msg:find(L["split_trigger"]) and (GetTime() - split > 1) then
+		split = GetTime()
+
+		-- Agents 5 seconds after the Split
+		self:Message(L["agent_warning"], "Important")
+		self:Bar(L["agent_bar"], 5, "Ability_Creature_Cursed_01")
+
+		-- Priests 15 seconds after Agents
+		self:DelayedMessage(17, L["priest_warning"], "Important")
+		self:Bar(L["priest_bar"], 20, "Spell_Holy_HolyBolt")
 	end
 end
 
@@ -108,7 +134,7 @@ end
 
 function mod:debuff(msg)
 	local wplayer, wtype = select(3, msg:find(L["wrath_trigger"]))
-	if wplayer and wtype then
+	if wplayer and wtype and (GetTime() - wrath > 1) then
 		if wplayer == L2["you"] and wtype == L2["are"] then
 			wplayer = UnitName("player")
 		end
