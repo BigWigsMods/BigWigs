@@ -58,13 +58,13 @@ Plugins\Sound.lua
 Plugins\RaidWarn.lua
 Plugins\BossBlock.lua
 Plugins\RaidIcon.lua
-Plugins\Version.lua
-Plugins\Test.lua
 
 Extras\CustomBar.lua
 Extras\Tranq.lua
 Extras\Discovery.lua
 Extras\Proximity.lua
+Extras\Version.lua
+Extras\Test.lua
 
 Outland\Doomwalker.lua
 Outland\Kazzak.lua

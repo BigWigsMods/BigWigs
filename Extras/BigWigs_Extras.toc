@@ -22,3 +22,6 @@
 CustomBar.lua
 Tranq.lua
 Proximity.lua
+Version.lua
+Test.lua
+

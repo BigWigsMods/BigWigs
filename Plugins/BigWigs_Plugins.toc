@@ -28,6 +28,4 @@ Sound.lua
 RaidWarn.lua
 BossBlock.lua
 RaidIcon.lua
-Version.lua
-Test.lua
 
