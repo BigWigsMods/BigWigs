@@ -19,7 +19,7 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Solarian",
 
 	phase = "Phase",
-	phase_desc = "Warn when Phase 2 is near",
+	phase_desc = "Warn for phase changes",
 
 	wrath = "Wrath Debuff",
 	wrath_desc = "Warn who has Wrath of the Astromancer",
@@ -30,21 +30,20 @@ L:RegisterTranslations("enUS", function() return {
 	split = "Split",
 	split_desc "Warn for split & add spawn",
 
-	port_trigger = "casts Astromancer Split",
-	port_mesage = "Split! - Adds Incoming",
+	split_trigger = "casts Astromancer Split",
 
 	phase1_message = "Phase 1", --adds in 50sec?
 
 	phase2_warning = "Phase 2 Soon!",
-	--phase2_message = "20% - Phase 2",	some kind of yell or emote surely
+	--phase2_message = "20% - Phase 2",	some kind of yell or emote to detect this surely
 
 	wrath_trigger = "^([^%s]+) ([^%s]+) afflicted by Wrath of the Astromancer",
 	wrath_message = "Wrath: %s",
 
-	agent_warning = "Agents in 5 seconds",
+	agent_warning = "Split! - Agents in 5 sec",
 	agent_bar = "Agents",
 
-	priest_warning = "Priests/Solarian in 3 seconds",
+	priest_warning = "Priests/Solarian in 3 sec",
 	priest_bar = "Priests/Solarian",
 } end )
 
@@ -56,7 +55,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", "wrath", "icon", "bosskill"}
+mod.toggleoptions = {"phase", "split", -1, "wrath", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -106,7 +105,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if msg:find(L["split_trigger"]) and (GetTime() - split > 1) then
+	if self.db.profile.split and msg:find(L["split_trigger"]) and (GetTime() - split > 1) then
 		split = GetTime()
 
 		-- Agents 5 seconds after the Split
