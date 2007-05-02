@@ -22,4 +22,4 @@ TheEyeBeta.lua
 Alar.lua
 Reaver.lua
 Kaelthas.lua
-
+Solarian.lua

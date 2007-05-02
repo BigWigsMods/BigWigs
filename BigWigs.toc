@@ -166,4 +166,4 @@ TheEye\TheEyeBeta.lua
 TheEye\Alar.lua
 TheEye\Reaver.lua
 TheEye\Kaelthas.lua
-
+TheEye\Solarian.lua
