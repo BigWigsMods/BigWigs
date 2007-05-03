@@ -83,6 +83,30 @@ L:RegisterTranslations("koKR", function() return {
 	overrun_bar = "~괴멸 대기시간",
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	overrun = "\195\156berrennen",
+	overrun_desc = "Warnt, wenn Verdammniswandler \195\156berrennen benutzt.",
+
+	earthquake = "Erdbeben",
+	earthquake_desc = "Warnt, wenn Verdammniswandler Erdbeben benutzt.",
+
+	enrage = "Wutanfall",
+	enrage_desc = "Warnt vor Wutanfall bei 20% Gesundheit.",
+
+	engage_message = "Verdammniswandler angegriffen, Erdbeben in ~30sec!",
+	enrage_soon_message = "Wutanfall bald!",
+
+	earthquake_trigger = "Ihr seid von Erdbeben betroffen.",
+
+	earthquake_message = "Erdbeben! ~70sec to next!",
+	earthquake_bar = "~Erdbeben Cooldown",
+
+	overrun_trigger = "^Verdammniswandler.-\195\156berrennen",
+	overrun_message = "\195\156berrennen!",
+	overrun_soon_message = "M?gliches \195\156berrennen bald!",
+	overrun_bar = "~\195\156berrennen Cooldown",
+} end)
+
 ----------------------------------
 --   Module Declaration    --
 ----------------------------------
