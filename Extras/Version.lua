@@ -335,9 +335,9 @@ local function sortResponses(a, b)
 	-- a should be before b if the version is higher, or if the version is the
 	-- same and the name is alphabetically before b.
 	if a[2] > b[2] or (a[2] == b[2] and a[1] > b[1]) then
-		return true
-	else
 		return false
+	else
+		return true
 	end
 end
 
