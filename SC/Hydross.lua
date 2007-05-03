@@ -89,7 +89,7 @@ L:RegisterTranslations("deDE", function() return {
 	corruption_trigger = "Mal der der Verderbnis",
 
 	hydross_bar = "Mal von Hydross - %s%%",
-	corruption_bar = "Mal der der Verderbnis - %s%%",
+	corruption_bar = "Mal der Verderbnis - %s%%",
 
 	debuff_warn = "Mal bei %s%%!",
 
