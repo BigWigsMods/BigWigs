@@ -38,7 +38,7 @@ L:RegisterTranslations("enUS", function() return {
 	orb_say = "Orb on Me!",
 
 	pounding_trigger = "Pounding",
-	pounding_nextbar = "Next Pounding",
+	pounding_nextbar = "~Pounding Cooldown",
 	pounding_bar = "<Pounding>",
 } end )
 
@@ -96,7 +96,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		end
 	elseif sync == "ReaverPound" and self.db.profile.pounding then
 		self:Bar(L["pounding_bar"], 3, "Ability_ThunderClap")
-		self:Bar(L["pounding_nextbar"], 12, "Ability_ThunderClap")
+		self:Bar(L["pounding_nextbar"], 13, "Ability_ThunderClap")
 	end
 end
 
