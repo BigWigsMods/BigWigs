@@ -75,6 +75,7 @@ function mod:OnEnable()
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWrath", 3)
+	self:TriggerEvent("BigWigs_ThrottleSync", "SolaSplit", 6)
 
 	p1 = nil
 	p2 = nil
@@ -101,13 +102,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
-	end
-end
-
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if self.db.profile.split and msg:find(L["split_trigger"]) and (GetTime() - split > 1) then
-		split = GetTime()
-
+	elseif sync == "SolaSplit" and self.db.profile.split then
 		-- Agents 5 seconds after the Split
 		self:Message(L["agent_warning"], "Important")
 		self:Bar(L["agent_bar"], 5, "Ability_Creature_Cursed_01")
@@ -115,6 +110,13 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 		-- Priests 15 seconds after Agents
 		self:DelayedMessage(17, L["priest_warning"], "Important")
 		self:Bar(L["priest_bar"], 20, "Spell_Holy_HolyBolt")
+	end
+end
+
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+	if msg:find(L["split_trigger"]) and (GetTime() - split > 1) then
+		split = GetTime()
+		self:Sync("SolaSplit")
 	end
 end
 
