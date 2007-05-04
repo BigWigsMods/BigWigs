@@ -226,7 +226,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		count = 1
 		currentPerc = nil
 		if self.db.profile.stance then
-			self:Message(string.format(L["poison_stance"], match), "Important")
+			self:Message(L["poison_stance"], "Important")
 		end
 		if self.db.profile.mark then
 			self:Bar(string.format(L["corruption_bar"], debuff[count+1]), 15, "Spell_Nature_ElementalShields")
@@ -237,7 +237,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		count = 1
 		currentPerc = nil
 		if self.db.profile.stance then
-			self:Message(string.format(L["water_stance"], match), "Important")
+			self:Message(L["water_stance"], "Important")
 		end
 		if self.db.profile.mark then
 			self:Bar(string.format(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrozenCore")
