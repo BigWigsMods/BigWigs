@@ -45,7 +45,6 @@ L:RegisterTranslations("enUS", function() return {
 	infernal_warning = "Infernal incoming in 20sec!",
 	infernal_message = "Infernal in 5sec!",
 
-	nova_trigger = "Prince Malchezaar begins to cast Shadow Nova",
 	nova_message = "Shadow Nova!",
 	nova_bar = "~Nova Cooldown",
 	nova_soon = "Shadow Nova Soon",
@@ -83,7 +82,6 @@ L:RegisterTranslations("deDE", function() return {
 	infernal_warning = "Infernos in 20 Sek!",
 	infernal_message = "Infernos in 5 Sek!",
 
-	nova_trigger = "Prinz Malchezaar beginnt Schattennova zu wirken",
 	nova_message = "Schattennova!",
 	nova_bar = "~Schattennova",
 } end )
@@ -120,7 +118,6 @@ L:RegisterTranslations("frFR", function() return {
 	infernal_warning = "Arriv\195\169e d'un infernal dans 20 sec. !",
 	infernal_message = "Infernal dans 5 sec. !",
 
-	nova_trigger = "Prince Malchezaar commence \195\160 lancer Nova de l'ombre",
 	nova_message = "Nova de l'ombre !",
 	nova_bar = "~Cooldown Nova",
 } end )
@@ -157,7 +154,6 @@ L:RegisterTranslations("koKR", function() return {
 	infernal_warning = "20초 후 불지옥 등장!",
 	infernal_message = "5초 후 불지옥 등장!",
 
-	nova_trigger = "공작 말체자르|1이;가; 암흑 회오리 시전을 시작합니다.",
 	nova_message = "암흑 회오리!",
 	nova_bar = "~회오리 대기시간",
 } end )
@@ -185,7 +181,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "EnfeebleEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "EnfeebleEvent")
@@ -234,8 +230,8 @@ function mod:EnfeebleEvent(msg)
 	end
 end
 
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg:find(L["nova_trigger"]) then
+function mod:UNIT_SPELLCAST_CHANNEL_START(msg)
+	if UnitName(msg) == boss and (UnitChannelInfo(msg)) == L["nova"] then
 		self:Sync("MalchezaarNova")
 	end
 end
@@ -256,8 +252,8 @@ function mod:BigWigs_RecvSync(sync)
 		self:Message(L["nova_message"], "Attention", nil, "Info")
 		self:Bar(L["nova_message"], 2, "Spell_Shadow_Shadowfury")
 		if not nova then
-			self:Bar(L["nova_bar"], 30, "Spell_Shadow_Shadowfury")
-			self:DelayedMessage(25, L["nova_soon"], "Positive")
+			self:Bar(L["nova_bar"], 25, "Spell_Shadow_Shadowfury")
+			self:DelayedMessage(20, L["nova_soon"], "Positive")
 		end
 	end
 end
