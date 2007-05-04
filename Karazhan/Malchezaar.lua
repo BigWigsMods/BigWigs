@@ -252,8 +252,9 @@ function mod:BigWigs_RecvSync(sync)
 		self:Message(L["nova_message"], "Attention", nil, "Info")
 		self:Bar(L["nova_message"], 2, "Spell_Shadow_Shadowfury")
 		if not nova then
+			self:CancelScheduledEvent("nova1")
 			self:Bar(L["nova_bar"], 25, "Spell_Shadow_Shadowfury")
-			self:DelayedMessage(20, L["nova_soon"], "Positive")
+			self:ScheduleEvent("nova1", "BigWigs_Message", 20, L["nova_soon"], "Positive")
 		end
 	end
 end
