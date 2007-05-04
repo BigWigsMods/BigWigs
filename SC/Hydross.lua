@@ -207,8 +207,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["start_trigger"] then
 		count = 1
 		currentPerc = nil
-		if self.db.profile.stance then
-			self:Bar(string.format(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrostBolt02")
+		if self.db.profile.mark then
+			self:Bar(string.format(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrozenCore")
 		end
 		if self.db.profile.enrage then
 			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
@@ -220,6 +220,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif msg == L["poison_stance_trigger"] then
 		self:TriggerEvent("BigWigs_StopBar", self, string.format(L["hydross_bar"], debuff[count+1] and debuff[count+1] or 250))
 		count = 1
@@ -228,7 +229,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(string.format(L["poison_stance"], match), "Important")
 		end
 		if self.db.profile.mark then
-			self:Bar(string.format(L["corruption_bar"], debuff[count+1]), 15, "Spell_Shadow_AbominationExplosion")
+			self:Bar(string.format(L["corruption_bar"], debuff[count+1]), 15, "Spell_Nature_ElementalShields")
 		end
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	elseif msg == L["water_stance_trigger"] then
@@ -239,7 +240,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(string.format(L["water_stance"], match), "Important")
 		end
 		if self.db.profile.mark then
-			self:Bar(string.format(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrostBolt02")
+			self:Bar(string.format(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrozenCore")
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
