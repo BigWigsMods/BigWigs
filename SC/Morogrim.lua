@@ -34,7 +34,7 @@ L:RegisterTranslations("enUS", function() return {
 	grave_trigger2 = "sends his enemies",
 	grave_message = "Watery Grave: %s",
 	grave_bar = "Watery Graves",
-	grave_nextbar = "~Watery Graves Cooldown",
+	grave_nextbar = "~Graves Cooldown",
 
 	murloc_bar = "~Murlocs Cooldown",
 	murloc_trigger = "Murlocs",
