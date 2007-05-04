@@ -47,6 +47,7 @@ L:RegisterTranslations("enUS", function() return {
 	nova_trigger = "Prince Malchezaar begins to cast Shadow Nova",
 	nova_message = "Shadow Nova!",
 	nova_bar = "~Nova Cooldown",
+	nova_soon = "Shadow Nova Soon",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -176,6 +177,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	afflict = nil
+	nova = true
 	self:RegisterEvent("BigWigs_Message")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -216,6 +218,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:CancelScheduledEvent("enf1")
 		self:TriggerEvent("BigWigs_StopBar", self, L["enfeeble_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["enfeeble_nextbar"])
+		nova = nil
 	end
 end
 
@@ -251,6 +254,10 @@ function mod:BigWigs_RecvSync(sync)
 	elseif sync == "MalchezaarNova" and self.db.profile.nova then
 		self:Message(L["nova_message"], "Attention", nil, "Info")
 		self:Bar(L["nova_message"], 2, "Spell_Shadow_Shadowfury")
+		if not nova then
+			self:Bar(L["nova_bar"], 30, "Spell_Shadow_Shadowfury")
+			self:DelayedMessage(25, L["nova_soon"], "Positive")
+		end
 	end
 end
 
