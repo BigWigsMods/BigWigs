@@ -8,7 +8,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local BZ = AceLibrary("Babble-Zone-2.2")
 
 local inTomb = {}
-local debuff = {0, 10, 25, 50, 100}
+local debuff = {0, 10, 25, 50, 100, 250}
 local currentPerc
 local count = 1
 
@@ -168,8 +168,16 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = {BZ["Coilfang Reservoir"], BZ["Serpentshrine Cavern"]}
 mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
-mod.toggleoptions = {"stance", "mark", "enrage", -1, "sludge", "icon", "tomb", "bosskill"}
+mod.toggleoptions = {"stance", "mark", "enrage", -1, "sludge", "icon", "tomb", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
+
+mod.proximityCheck = function( unit ) 
+	if CheckInteractDistance(unit, 3) then
+		return true
+	end
+	return false
+end
+mod.proximitySilent = true
 
 ------------------------------
 --      Initialization      --
@@ -228,6 +236,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if self.db.profile.mark then
 			self:Bar(string.format(L["corruption_bar"], debuff[count+1]), 15, "Spell_Shadow_AbominationExplosion")
 		end
+		self:TriggerEvent("BigWigs_HideProximity", self)
 	elseif msg == L["water_stance_trigger"] then
 		self:TriggerEvent("BigWigs_StopBar", self, string.format(L["corruption_bar"], debuff[count+1] and debuff[count+1] or 250))
 		count = 1
@@ -238,11 +247,22 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if self.db.profile.mark then
 			self:Bar(string.format(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrostBolt02")
 		end
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
 end
 
+-- returns the index of the mark in the debuff table, or the index of the last mark ( should not happen )
+local function getMark(match)
+	for i,v in ipairs(debuff) do
+		if v == tonumber(match) then
+			return i
+		end
+	end
+	return #debuff
+end
+
 function mod:IncrementHydross(match)
-	count = count + 1
+	count = getMark(match)
 	self:TriggerEvent("BigWigs_StopBar", self, string.format(L["hydross_bar"], debuff[count] and debuff[count] or 250))
 	if self.db.profile.mark then
 		self:Message(string.format(L["debuff_warn"], match), "Important", nil, "Alert")
@@ -251,7 +271,7 @@ function mod:IncrementHydross(match)
 end
 
 function mod:IncrementCorruption(match)
-	count = count + 1
+	count = getMark(match)
 	self:TriggerEvent("BigWigs_StopBar", self, string.format(L["corruption_bar"], debuff[count] and debuff[count] or 250))
 	if self.db.profile.mark then
 		self:Message(string.format(L["debuff_warn"], match), "Important", nil, "Alert")
