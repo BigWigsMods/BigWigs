@@ -28,11 +28,10 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_desc = "Warn about enrage after 9min.",
 
 	phase1_message = "Withdrawal - Netherbreaths Over",
-	phase1_warning = "Netherspite Engaged - Rage in 60sec!",
-	phase1_bar = "~Next Withdrawal",
+	phase1_bar = "~Possible Withdrawal",
 	phase1_trigger = "%s cries out in withdrawal, opening gates to the nether.",
 	phase2_message = "Rage - Incoming Netherbreaths!",
-	phase2_bar = "Next Rage",
+	phase2_bar = "~Possible Rage",
 	phase2_trigger = "%s goes into a nether-fed rage!",
 
 	voidzone_trigger = "casts Void Zone.",
@@ -53,7 +52,6 @@ L:RegisterTranslations("deDE", function() return {
 	netherbreath_desc = "Warnt vor Netheratem",
 
 	phase1_message = "Withdrawal - Netheratem vorbei",
-	phase1_warning = "Nethergroll Engaged - Rage in 60 Sek!",
 	phase1_bar = "Next Withdrawal",
 	phase1_trigger = "%s schreit auf und \195\182ffnet Tore zum Nether.",
 	phase2_message = "Rage - Incoming Netheratem!",
@@ -81,7 +79,6 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_desc = "9분 후 격노에 대한 알림.",
 
 	phase1_message = "물러남 - 황천의 숨결 종료!",
-	phase1_warning = "황천의 원령 전투 개시 - 60초 후 분노!",
 	phase1_bar = "~다음 물러남",
 	phase1_trigger = "%s|1이;가; 물러나며 고함을 지르더니 황천의 문을 엽니다.",
 	phase2_message = "분노 - 황천의 숨결 시전!",
@@ -109,7 +106,6 @@ L:RegisterTranslations("frFR", function() return {
 	enrage_desc = "Pr\195\169viens quand D\195\169dain-du-N\195\169ant devient enrag\195\169 apr\195\168s 9 min.",
 
 	phase1_message = "Retrait - Fin des Souffles du N\195\169ant",
-	phase1_warning = "D\195\169dain-du-N\195\169ant engag\195\169 - Rage dans 60 sec. !",
 	phase1_bar = "~Prochain retrait",
 	phase1_trigger = "%s se retire avec un cri en ouvrant un portail vers le N\195\169ant.",
 	phase2_message = "Rage - Souffles de N\195\169ant imminent !",
@@ -162,7 +158,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.phase then
-			self:Message(L["phase1_warning"], "Important")
 			self:Bar(L["phase2_bar"], 60, "Spell_ChargePositive")
 		end
 		if self.db.profile.enrage then
