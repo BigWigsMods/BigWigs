@@ -181,7 +181,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
+	self:RegisterEvent("UNIT_SPELLCAST_START")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "EnfeebleEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "EnfeebleEvent")
@@ -230,8 +230,8 @@ function mod:EnfeebleEvent(msg)
 	end
 end
 
-function mod:UNIT_SPELLCAST_CHANNEL_START(msg)
-	if UnitName(msg) == boss and (UnitChannelInfo(msg)) == L["nova"] then
+function mod:UNIT_SPELLCAST_START(msg)
+	if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["nova"] then
 		self:Sync("MalchezaarNova")
 	end
 end
