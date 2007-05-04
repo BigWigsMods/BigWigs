@@ -213,6 +213,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["phase2_message"], "Positive")
 	elseif self.db.profile.phase and msg == L["phase3_trigger"] then
 		self:Message(L["phase3_message"], "Positive")
+		self:CancelScheduledEvent("enf1")
+		self:TriggerEvent("BigWigs_StopBar", self, L["enfeeble_bar"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["enfeeble_nextbar"])
 	end
 end
 
@@ -238,7 +241,7 @@ function mod:BigWigs_RecvSync(sync)
 		if self.db.profile.enfeeble then
 			afflict = true
 			self:Message(L["enfeeble_message"], "Important", nil, "Alarm")
-			self:DelayedMessage(25, L["enfeeble_warning"], "Attention")
+			self:ScheduleEvent("enf1", "BigWigs_Message", 25, L["enfeeble_warning"], "Attention")
 			self:Bar(L["enfeeble_bar"], 7, "Spell_Shadow_LifeDrain02")
 			self:Bar(L["enfeeble_nextbar"], 30, "Spell_Shadow_LifeDrain02")
 		end
