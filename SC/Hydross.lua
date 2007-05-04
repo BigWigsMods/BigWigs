@@ -170,13 +170,7 @@ mod.otherMenu = "Serpentshrine Cavern"
 mod.enabletrigger = boss
 mod.toggleoptions = {"stance", "mark", "enrage", -1, "sludge", "icon", "tomb", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
-
-mod.proximityCheck = function( unit ) 
-	if CheckInteractDistance(unit, 3) then
-		return true
-	end
-	return false
-end
+mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 mod.proximitySilent = true
 
 ------------------------------
