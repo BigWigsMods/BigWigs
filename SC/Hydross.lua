@@ -55,11 +55,10 @@ L:RegisterTranslations("enUS", function() return {
 	poison_stance = "Hydross is now poisoned!",
 	water_stance = "Hydross is now cleaned again!",
 
-	sludge_trigger = "^([^%s]+) ([^%s]+) afflicted by Vile Sludge",
-	sludge_message = "Vile Sludge: %s",
+	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by (.*).$",
 
-	tomb_trigger = "^([^%s]+) ([^%s]+) afflicted by Water Tomb",
 	tomb_message = "Water Tomb: %s",
+	sludge_message = "Vile Sludge: %s",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -99,10 +98,9 @@ L:RegisterTranslations("deDE", function() return {
 	poison_stance = "Hydross ist nun vergiftet!",
 	water_stance = "Hydross ist wieder gereinigt!",
 
-	sludge_trigger = "^([^%s]+) ([^%s]+) von \195\156bler Schlamm betroffen",
-	sludge_message = "\195\156bler Schlamm: %s",
+	afflict_trigger = "^([^%s]+) ([^%s]+) von (.*) betroffen",
 
-	tomb_trigger = "^([^%s]+) ([^%s]+) von Wassergrab betroffen",
+	sludge_message = "\195\156bler Schlamm: %s",
 	tomb_message = "Wassergrab: %s",
 } end)
 
@@ -208,7 +206,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		count = 1
 		currentPerc = nil
 		if self.db.profile.mark then
-			self:Bar(string.format(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrozenCore")
+			self:Bar(L["hydross_bar"]:format(debuff[count+1]), 15, "Spell_Frost_FrozenCore")
 		end
 		if self.db.profile.enrage then
 			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
@@ -222,25 +220,25 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif msg == L["poison_stance_trigger"] then
-		self:TriggerEvent("BigWigs_StopBar", self, string.format(L["hydross_bar"], debuff[count+1] and debuff[count+1] or 250))
+		self:TriggerEvent("BigWigs_StopBar", self, L["hydross_bar"]:format(debuff[count+1] and debuff[count+1] or 250))
 		count = 1
 		currentPerc = nil
 		if self.db.profile.stance then
 			self:Message(L["poison_stance"], "Important")
 		end
 		if self.db.profile.mark then
-			self:Bar(string.format(L["corruption_bar"], debuff[count+1]), 15, "Spell_Nature_ElementalShields")
+			self:Bar(L["corruption_bar"]:format(debuff[count+1]), 15, "Spell_Nature_ElementalShields")
 		end
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	elseif msg == L["water_stance_trigger"] then
-		self:TriggerEvent("BigWigs_StopBar", self, string.format(L["corruption_bar"], debuff[count+1] and debuff[count+1] or 250))
+		self:TriggerEvent("BigWigs_StopBar", self, L["corruption_bar"]:format(debuff[count+1] and debuff[count+1] or 250))
 		count = 1
 		currentPerc = nil
 		if self.db.profile.stance then
 			self:Message(L["water_stance"], "Important")
 		end
 		if self.db.profile.mark then
-			self:Bar(string.format(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrozenCore")
+			self:Bar(L["hydross_bar"]:format(debuff[count+1]), 15, "Spell_Frost_FrozenCore")
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
@@ -258,19 +256,19 @@ end
 
 function mod:IncrementHydross(match)
 	count = getMark(match)
-	self:TriggerEvent("BigWigs_StopBar", self, string.format(L["hydross_bar"], debuff[count] and debuff[count] or 250))
+	self:TriggerEvent("BigWigs_StopBar", self, L["hydross_bar"]:format(debuff[count] and debuff[count] or 250))
 	if self.db.profile.mark then
-		self:Message(string.format(L["debuff_warn"], match), "Important", nil, "Alert")
-		self:Bar(string.format(L["hydross_bar"], debuff[count+1] and debuff[count+1] or 250), 15, "Spell_Frost_FrozenCore")
+		self:Message(L["debuff_warn"]:format(match), "Important", nil, "Alert")
+		self:Bar(L["hydross_bar"]:format(debuff[count+1] and debuff[count+1] or 250), 15, "Spell_Frost_FrozenCore")
 	end
 end
 
 function mod:IncrementCorruption(match)
 	count = getMark(match)
-	self:TriggerEvent("BigWigs_StopBar", self, string.format(L["corruption_bar"], debuff[count] and debuff[count] or 250))
+	self:TriggerEvent("BigWigs_StopBar", self, L["corruption_bar"]:format(debuff[count] and debuff[count] or 250))
 	if self.db.profile.mark then
-		self:Message(string.format(L["debuff_warn"], match), "Important", nil, "Alert")
-		self:Bar(string.format(L["corruption_bar"], debuff[count+1] and debuff[count+1] or 250), 15, "Spell_Nature_ElementalShields")
+		self:Message(L["debuff_warn"]:format(match), "Important", nil, "Alert")
+		self:Bar(L["corruption_bar"]:format(debuff[count+1] and debuff[count+1] or 250), 15, "Spell_Nature_ElementalShields")
 	end
 end
 
@@ -299,22 +297,17 @@ function mod:DebuffCheck()
 end
 
 function mod:Event(msg)
-	local gplayer, gtype = select(3, msg:find(L["sludge_trigger"]))
-	if gplayer and gtype then
-		if gplayer == L2["you"] and gtype == L2["are"] then
-			gplayer = UnitName("player")
+	local aPlayer, aType, aSpell = select(3, msg:find(L["afflict_trigger"]))
+	if aPlayer and aType then
+		if aPlayer == L2["you"] and aType == L2["are"] then
+			aPlayer = UnitName("player")
 		end
-		self:Sync("HydrossSludge "..gplayer)
-	end
-
-	local tplayer, ttype = select(3, msg:find(L["tomb_trigger"]))
-	if tplayer and ttype then
-		if tplayer == L2["you"] and ttype == L2["are"] then
-			tplayer = UnitName("player")
+		if aSpell == L["tomb"] then
+			self:Sync("HydrossTomb " .. player)
+		elseif aSpell == L["sludge"] then
+			self:Sync("HydrossSludge " .. player)
 		end
-		self:Sync("HydrossTomb " ..tplayer)
 	end
-
 end
 
 function mod:TombWarn()
