@@ -45,6 +45,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	priest_warning = "Priests/Solarian in 3 sec",
 	priest_bar = "Priests/Solarian",
+
+	["Solarium Priest"] = true,
+	["Solarium Agent"] = true,
 } end )
 
 ----------------------------------
@@ -55,6 +58,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
+mod.wipemobs = {L["Solarium Priest"], L["Solarium Agent"]}
 mod.toggleoptions = {"phase", "split", -1, "wrath", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
