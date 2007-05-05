@@ -21,8 +21,11 @@ L:RegisterTranslations("enUS", function() return {
 	phase = "Phase",
 	phase_desc = "Warn for phase changes",
 
-	wrath = "Wrath Debuff",
-	wrath_desc = "Warn who has Wrath of the Astromancer",
+	wrathyou = "Wrath Debuff on You",
+	wrathyou_desc = "Warn when you have Wrath of the Astromancer",
+
+	wrathother = "Wrath Debuff on Others",
+	wrathother_desc = "Warn about others that have Wrath of the Astromancer",
 
 	icon = "Icon",
 	icon_desc = "Place a Raid Icon on the player with Wrath of the Astromancer",
@@ -40,7 +43,8 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_message = "20% - Phase 2",
 
 	wrath_trigger = "^([^%s]+) ([^%s]+) afflicted by Wrath of the Astromancer",
-	wrath_message = "Wrath: %s",
+	wrath_other = "Wrath: %s",
+	wrath_you = "Wrath on YOU!",
 
 	agent_warning = "Split! - Agents in 6 sec",
 	agent_bar = "Agents",
@@ -61,8 +65,9 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
 mod.wipemobs = {L["Solarium Priest"], L["Solarium Agent"]}
-mod.toggleoptions = {"phase", "split", -1, "wrath", "icon", "bosskill"}
+mod.toggleoptions = {"phase", "split", -1, "wrathyou", "wrathother", "icon", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
+mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 4 ) end
 
 ------------------------------
 --      Initialization      --
@@ -103,9 +108,20 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Message(L["phase1_message"], "Positive")
 			self:Bar(L["split_bar"], 50, "Spell_Shadow_SealOfKings")
 		end
-	elseif sync == "SolaWrath" and rest and self.db.profile.wrath then
-		self:Message(L["wrath_message"]:format(rest), "Attention")
-		self:Bar(L["wrath_message"]:format(rest), 8, "Spell_Arcane_Arcane02")
+	elseif sync == "SolaWrath" and rest then
+		if rest == UnitName("player") then
+			if self.db.profile.wrathyou then
+				self:Message(L["wrath_you"], "Personal", true, "Long")
+				self:Message(L["wrath_other"]:format(rest), "Attention", nil, nil, true)
+				self:Bar(L["wrath_other"]:format(rest), 8, "Spell_Arcane_Arcane02")
+			end
+			self:CancelScheduledEvent("cancelProx")
+			self:TriggerEvent("BigWigs_ShowProximity", self)
+			self:ScheduleEvent("cancelProx", self.KillProx, 45, self)
+		elseif self.db.profile.wrathother then
+			self:Message(L["wrath_other"]:format(rest), "Attention")
+			self:Bar(L["wrath_other"]:format(rest), 8, "Spell_Arcane_Arcane02")
+		end
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
@@ -150,4 +166,8 @@ function mod:debuff(msg)
 		end
 		self:Sync("SolaWrath "..wplayer)
 	end
+end
+
+function mod:KillProx()
+	self:TriggerEvent("BigWigs_HideProximity", self)
 end
