@@ -40,7 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 	wrath_trigger = "^([^%s]+) ([^%s]+) afflicted by Wrath of the Astromancer",
 	wrath_message = "Wrath: %s",
 
-	agent_warning = "Split! - Agents in 5 sec",
+	agent_warning = "Split! - Agents in 6 sec",
 	agent_bar = "Agents",
 
 	priest_warning = "Priests/Solarian in 3 sec",
@@ -105,11 +105,11 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "SolaSplit" and self.db.profile.split then
 		-- Agents 5 seconds after the Split
 		self:Message(L["agent_warning"], "Important")
-		self:Bar(L["agent_bar"], 5, "Ability_Creature_Cursed_01")
+		self:Bar(L["agent_bar"], 6, "Ability_Creature_Cursed_01")
 
 		-- Priests 15 seconds after Agents
-		self:DelayedMessage(17, L["priest_warning"], "Important")
-		self:Bar(L["priest_bar"], 20, "Spell_Holy_HolyBolt")
+		self:DelayedMessage(19, L["priest_warning"], "Important")
+		self:Bar(L["priest_bar"], 22, "Spell_Holy_HolyBolt")
 	end
 end
 
