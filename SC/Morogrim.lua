@@ -99,7 +99,7 @@ L:RegisterTranslations("koKR", function() return {
 	grave_trigger2 = "자신의 적을 수중 무덤으로 내몹니다!",
 	grave_message = "수중 무덤: %s",
 	grave_bar = "수중 무덤",
-	grave_nextbar = "~수중 무덤 대기시간",
+	grave_nextbar = "~무덤 대기시간",
 
 	murloc_bar = "~멀록 등장 대기시간",
 	murloc_trigger = "멀록들",

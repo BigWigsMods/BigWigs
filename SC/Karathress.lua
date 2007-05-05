@@ -64,12 +64,11 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
- 
 	enrage = "격노",
-	enrage_desc = "격노 타이머.",
+	enrage_desc = "격노 타이머",
 
 	totem = "불 뿜는 토템",
-	totem_desc = "불 뿜는 토템을 누가 캐스팅하는지 경고합니다.",
+	totem_desc = "불 뿜는 토템을 시전 시 경고",
 
 	heal = "치유",
 	heal_desc = "카리브디스의 치유 시전을 경고합니다.",
@@ -81,13 +80,12 @@ L:RegisterTranslations("koKR", function() return {
 	totem_message1 = "타이달베스: 불뿜는 토템",
 	totem_message2 = "카라드레스: 불뿜는 토템",
 
-	heal_trigger = "Caribdis begins to cast Healing Wave",
-	heal_message = "Caribdis casting heal!",
+	heal_trigger = "칼리브디스|1이;가; 치유의 물결 시전을 시작합니다.", -- check
+	heal_message = "칼리브디스 치유 시전!",
 
 	["Fathom-Guard Sharkkis"] = "심연의 경비병 샤르키스", --hunter
 	["Fathom-Guard Tidalvess"] = "심연의 경비병 타이달베스", --shaman
 	["Fathom-Guard Caribdis"] = "심연의 경비병 카리브디스", --priest
- 
 } end )
 
 ----------------------------------

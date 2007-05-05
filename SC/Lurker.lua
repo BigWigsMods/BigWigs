@@ -47,7 +47,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
- 
 	dive = "잠수",
 	dive_desc = ("%s 초 후 잠수 타이머.\n\n이 타이머는 풀링 시점에 맞춰서 작동하기에 정확하지 않습니다."):format(boss),
 
@@ -59,21 +58,21 @@ L:RegisterTranslations("koKR", function() return {
 
 	engage_warning = "%s 전투 시작 - 90초 이내 잠수",
 
-	dive_warning = "%d초 안에 잠수!",
-	dive_bar = "~ 잠수",
-	dive_message = "잠수 - 60초후에 출현합니다.",
+	dive_warning = "%d초 이내 잠수!",
+	dive_bar = "~잠수",
+	dive_message = "잠수 - 60초 이내 출현",
 
 	emerge_warning = "%d초 이내 출현",
 	emerge_message = "출현 - 90초 이내 잠수",
 	emerge_bar = "출현",
 
-	spout_message1 = "분출!",
+	spout_message1 = "분출 시전!",
 	spout_message2 = "분출 종료!",
-	spout_warning = "3초내에 분출!",
-	spout_bar1 = "분출 1",
-	spout_bar2 = "분출 2",
+	spout_warning = "3초 이내 분출!",
+	spout_bar1 = "~분출 1",
+	spout_bar2 = "~분출 2",
 
-	whirl_bar = "소용돌이 가능",
+	whirl_bar = "소용돌이 주의",
 	whirl_trigger = "소용돌이",
 
 	["Coilfang Guardian"] = "갈퀴송곳니 수호자",

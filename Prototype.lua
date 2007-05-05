@@ -26,7 +26,7 @@ commonWords:RegisterTranslations("deDE", function() return {
 
 commonWords:RegisterTranslations("koKR", function() return {
 	you = "당신은",
-	are = "",
+	are = " ",
 
 	enrage_start = "%s 전투 개시 - %d분 후 격노",
 	enrage_end = "%s 격노",

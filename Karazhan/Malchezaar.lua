@@ -156,6 +156,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	nova_message = "암흑 회오리!",
 	nova_bar = "~회오리 대기시간",
+	nova_soon = "잠시 후 암흑 회오리",
 } end )
 
 ----------------------------------

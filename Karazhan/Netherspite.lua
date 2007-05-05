@@ -79,10 +79,10 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_desc = "9분 후 격노에 대한 알림.",
 
 	phase1_message = "물러남 - 황천의 숨결 종료!",
-	phase1_bar = "~다음 물러남",
+	phase1_bar = "~물러남 주의",
 	phase1_trigger = "%s|1이;가; 물러나며 고함을 지르더니 황천의 문을 엽니다.",
 	phase2_message = "분노 - 황천의 숨결 시전!",
-	phase2_bar = "다음 분노",
+	phase2_bar = "분노 주의",
 	phase2_trigger = "%s|1이;가; 황천의 기운을 받고 분노에 휩싸입니다!",
 
 	voidzone_trigger = "공허의 지대|1을;를; 시전합니다.",

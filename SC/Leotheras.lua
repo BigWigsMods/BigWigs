@@ -97,7 +97,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	whisper_trigger = "^([^|;%s]*)(.*)음흉한 속삭임에 걸렸습니다%.$", -- check
 	whisper_message = "악마: %s",
-	whisper_bar = "악마",
+	whisper_bar = "악마 사라짐",
+	whisper_soon = "~악마 대기시간",
 } end )
 
 ----------------------------------
