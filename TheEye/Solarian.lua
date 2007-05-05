@@ -31,11 +31,13 @@ L:RegisterTranslations("enUS", function() return {
 	split_desc = "Warn for split & add spawn",
 
 	split_trigger = "casts Astromancer Split",
+	split_bar = "~Next Split",
 
-	phase1_message = "Phase 1", --adds in 50sec?
+	phase1_message = "Phase 1 - Split in ~50sec",
 
 	phase2_warning = "Phase 2 Soon!",
-	--phase2_message = "20% - Phase 2",	some kind of yell or emote to detect this surely
+	phase2_trigger = "",	--some kind of yell or emote to detect this surely
+	phase2_message = "20% - Phase 2",
 
 	wrath_trigger = "^([^%s]+) ([^%s]+) afflicted by Wrath of the Astromancer",
 	wrath_message = "Wrath: %s",
@@ -98,7 +100,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.phase then
-			self:Message(L["phase1_message"], "Attention")
+			self:Message(L["phase1_message"], "Positive")
+			self:Bar(L["split_bar"], 50, "Spell_Shadow_SealOfKings")
 		end
 	elseif sync == "SolaWrath" and rest and self.db.profile.wrath then
 		self:Message(L["wrath_message"]:format(rest), "Attention")
@@ -107,6 +110,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Icon(rest)
 		end
 	elseif sync == "SolaSplit" and self.db.profile.split then
+		self:Bar(L["split_bar"], 90, "Spell_Shadow_SealOfKings")
+
 		-- Agents 5 seconds after the Split
 		self:Message(L["agent_warning"], "Important")
 		self:Bar(L["agent_bar"], 6, "Ability_Creature_Cursed_01")
