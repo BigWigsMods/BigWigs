@@ -317,9 +317,9 @@ function mod:Event(msg)
 			aPlayer = UnitName("player")
 		end
 		if aSpell == L["tomb"] then
-			self:Sync("HydrossTomb " .. player)
+			self:Sync("HydrossTomb " .. aPlayer)
 		elseif aSpell == L["sludge"] then
-			self:Sync("HydrossSludge " .. player)
+			self:Sync("HydrossSludge " .. aPlayer)
 		end
 	end
 end
