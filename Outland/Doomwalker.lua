@@ -103,7 +103,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	overrun_trigger = "^Verdammniswandler.-\195\156berrennen",
 	overrun_message = "\195\156berrennen!",
-	overrun_soon_message = "M?gliches \195\156berrennen bald!",
+	overrun_soon_message = "M\195\182gliches \195\156berrennen bald!",
 	overrun_bar = "~\195\156berrennen Cooldown",
 } end)
 
