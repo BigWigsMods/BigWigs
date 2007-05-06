@@ -116,7 +116,8 @@ function BigWigsOptions:OnInitialize()
 	self.hideWithoutStandby = true
 	self.hideMenuTitle = true
 	self.OnMenuRequest = BigWigs.cmdtable
-	self.overrideTooltip = true
+	self.blizzardTooltip = true
+	self.cannotDetachTooltip = true
 
 	BigWigs.hideMenuTitle = true
 
@@ -214,18 +215,8 @@ function BigWigsOptions:OnClick()
 	self:UpdateTooltip()
 end
 
-local tooltipVisible = nil
-function BigWigsOptions:OnTooltipUpdate()
-	if tooltipVisible then self:OnEnter() end
-end
-
 local tooltipModules = {}
-function BigWigsOptions:OnEnter()
-	if self:IsMinimapAttached() then
-		GameTooltip:SetOwner(self.minimapFrame, "ANCHOR_CURSOR")
-	else
-		GameTooltip:SetOwner(self.frame, "ANCHOR_CURSOR")
-	end
+function BigWigsOptions:OnTooltipUpdate()
 	GameTooltip:AddLine("Big Wigs")
 	GameTooltip:AddLine("")
 	if BigWigs:IsActive() then
@@ -245,20 +236,4 @@ function BigWigsOptions:OnEnter()
 		GameTooltip:AddLine("")
 		GameTooltip:AddLine(L["|cffeda55fClick|r to enable."], 0.2, 1, 0.2, 1, 1)
 	end
-
-	GameTooltip:Show()
-
-	tooltipVisible = true
 end
-
-function BigWigsOptions:CloseTooltip()
-	self:OnLeave()
-end
-
-function BigWigsOptions:OnLeave()
-	if tooltipVisible then
-		GameTooltip:Hide()
-		tooltipVisible = nil
-	end
-end
-
