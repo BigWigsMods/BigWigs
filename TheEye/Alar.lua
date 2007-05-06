@@ -17,6 +17,13 @@ L:RegisterTranslations("enUS", function() return {
 
 	rebirth_trigger = "Al'ar begins to cast Rebirth.",
 	rebirth_message = "Rebirth!",
+
+	flamepatch = "Flame Patch on You",
+	flamepatch_desc = "Warn for a Flame Patch on You",
+
+	flamepatch_trigger = "You are afflicted by Flame Patch.",
+	flamepatch_message = "Flame Patch on YOU!",
+
 } end )
 
 ----------------------------------
@@ -27,7 +34,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
-mod.toggleoptions = {"rebirth", "bosskill"}
+mod.toggleoptions = {"rebirth", "flamepatch", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -36,6 +43,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -49,6 +57,12 @@ end
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg == L["rebirth_trigger"] then
 		self:Sync("AlArRebirth")
+	end
+end
+
+function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
+	if self.db.profile.flamepatch and msg == L["flamepatch_trigger"] then
+		self:Message(L["flamepatch_message"], "Personal", true, "Alarm")
 	end
 end
 
