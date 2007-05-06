@@ -170,6 +170,6 @@ function mod:debuff(msg)
 end
 
 function mod:KillProx()
-	--the debuff lasts 45 sec, so we kill the proximity window after that
+	--if 45 sec passed and no extra debuff was applied to the player, proximity should stop
 	self:TriggerEvent("BigWigs_HideProximity", self)
 end
