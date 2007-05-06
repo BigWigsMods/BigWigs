@@ -115,9 +115,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 				self:Message(L["wrath_other"]:format(rest), "Attention", nil, nil, true)
 				self:Bar(L["wrath_other"]:format(rest), 8, "Spell_Arcane_Arcane02")
 			end
-			self:CancelScheduledEvent("cancelProx")
-			self:TriggerEvent("BigWigs_ShowProximity", self)
-			self:ScheduleEvent("cancelProx", self.KillProx, 45, self)
+			self:CancelScheduledEvent("cancelProx") --incase they get the debuff twice, don't kill early
+			self:TriggerEvent("BigWigs_ShowProximity", self) --you have the debuff, show the proximity window
+			self:ScheduleEvent("cancelProx", self.KillProx, 45, self) --secondary debuff lasts 45 seconds, lets kill proximity after that
 		elseif self.db.profile.wrathother then
 			self:Message(L["wrath_other"]:format(rest), "Attention")
 			self:Bar(L["wrath_other"]:format(rest), 8, "Spell_Arcane_Arcane02")
@@ -126,13 +126,14 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Icon(rest)
 		end
 	elseif sync == "SolaSplit" and self.db.profile.split then
+		--split is around 90 seconds after the previous
 		self:Bar(L["split_bar"], 90, "Spell_Shadow_SealOfKings")
 
-		-- Agents 5 seconds after the Split
+		-- Agents 6 seconds after the Split
 		self:Message(L["agent_warning"], "Important")
 		self:Bar(L["agent_bar"], 6, "Ability_Creature_Cursed_01")
 
-		-- Priests 15 seconds after Agents
+		-- Priests 22 seconds after Agents
 		self:DelayedMessage(19, L["priest_warning"], "Important")
 		self:Bar(L["priest_bar"], 22, "Spell_Holy_HolyBolt")
 	end
@@ -169,5 +170,6 @@ function mod:debuff(msg)
 end
 
 function mod:KillProx()
+	--the debuff lasts 45 sec, so we kill the proximity window after that
 	self:TriggerEvent("BigWigs_HideProximity", self)
 end
