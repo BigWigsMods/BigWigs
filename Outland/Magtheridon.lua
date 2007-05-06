@@ -129,61 +129,65 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	escape = "Evasion",
-	escape_desc = ("compte \195\160 rebours avant que %s soit libre"):format(boss),
+	escape_desc = ("compte \195\160 rebours avant que %s soit libre."):format(boss),
 
 	abyssal = "Abyssal ardent",
-	abyssal_desc = "Pr\195\169viens quand un Abyssal ardent est cr\195\169\195\169",
+	abyssal_desc = "Pr\195\169viens quand un Abyssal ardent est cr\195\169\195\169.",
 
 	heal = "Soins",
-	heal_desc = "Pr\195\169viens quand un Canaliste des Flammes infernales commence a soigner",
+	heal_desc = "Pr\195\169viens quand un Canaliste des Flammes infernales commence \195\160 soigner.",
 
 	nova = "Nova explosive",
-	nova_desc = "Estimation du temps de la Nova explosive!",
+	nova_desc = "Estimation du temps de la Nova explosive.",
 
-	banish = "Ban",
-	banish_desc = ("Pr\195\169viens quand vous bannissez %s"):format(boss),
+	banish = "Bannir",
+	banish_desc = ("Pr\195\169viens quand vous bannissez %s."):format(boss),
 
-	exhaust = "D\195\169sactiver la barre d'\195\169puisement",
-	exhaust_desc = "Barre de temps pour l'\195\169puisement d'esprit sur le joueur",
+	exhaust = "D\195\169sactiver les barres d'Epuisement",
+	exhaust_desc = "Barre temporelles pour l'Epuisement d'esprit des joueurs",
 
 	debris = "D\195\169bris sur vous",
-	debris_desc = "Pr\195\169viens pour les D\195\169bris sur vous",
+	debris_desc = "Pr\195\169viens quand les D\195\169bris tombent sur vous.",
 
 	debrisinc = "D\195\169bris",
-	debrisinc_desc = "Pr\195\169viens de l'arriver des d\195\169bris \195\160 30 %",
+	debrisinc_desc = "Pr\195\169viens quand les D\195\169bris commencent \195\160 tomber \195\160 30%.",
 
 	escape_trigger1 = "Les liens de %%s commencent \195\160 se rel\195\162cher !",
-	escape_trigger2 = "Me... voil\195\160... d\195\169cha\195\174n\195\169 !",
-	escape_warning1 = "%s Engag\195\169 - Libre dans 2 minutes!",
-	escape_warning2 = "Libre dans 1 minutes!",
-	escape_warning3 = "Libre dans 30 secondes!",
-	escape_warning4 = "Libre dans 10 secondes!",
-	escape_warning5 = "Libre dans 3 secondes!",
+	escape_trigger2 = "Me\226\128\166 voil\195\160\226\128\166 d\195\169cha\195\174n\195\169\194\160!",
+	escape_warning1 = "%s engag\195\169 - Libre dans 2 min. !",
+	escape_warning2 = "Libre dans 1 min. !",
+	escape_warning3 = "Libre dans 30 sec. !",
+	escape_warning4 = "Libre dans 10 sec. !",
+	escape_warning5 = "Libre dans 3 sec. !",
 	escape_bar = "Lib\195\169ration...",
-	escape_message = "%s Lib\195\169r\195\169!",
+	escape_message = "%s lib\195\169r\195\169 !",
 
 	abyssal_trigger = "Canaliste des Flammes infernales lance Abyssal ardent",
 	abyssal_message = "Abyssal ardent cr\195\169\195\169 (%d)",
 
-	heal_trigger = "commence \195\160 lancer Gu\195\169rison t\195\169n\195\169breuse.",
-	heal_message = "il se soigne!",
+	heal_trigger = "commence \195\160 lancer Gu\195\169rison t\195\169n\195\169breuse",
+	heal_message = "Soins !",
 
-	nova_ = "Nova explosive!",
-	nova_warning = "Nova explosive bient\195\180t",
+	nova_ = "Nova explosive !",
+	nova_bar = "~Cooldown Nova explosive",
+	nova_warning = "Nova explosive imminente",
+	nova_cast = "Incante une Nova explosive !",
 
-	banish_trigger = "Pas encore ! Pas encore...",
-	banish_message = "Banni pour ~10 secondes",
-	banish_bar = "Ban",
+	banish_trigger = "Pas encore\194\160! Pas encore\226\128\166",
+	banish_message = "Banni pendant ~10 sec.",
+	banish_over_trigger = "Cage d'ombre sur .% vient de se dissiper.",
+	banish_over_message = "Fin du ban !",
+	banish_bar = "Banni",
 
-	exhaust_trigger = "^([^%s]+) ([^%s]+) subit les effets DE Epuisement de l'esprit",
-	exhaust_bar = "[%s] Epuiser",
+	exhaust_trigger = "^([^%s]+) ([^%s]+) subit les effets .* Epuisement de l'esprit",
+	exhaust_bar = "[%s] \195\169puis\195\169",
 
 	debris_trigger = "Vous subissez les effets de D\195\169bris.",
-	debris_message = "D\195\169bris sur VOUS!",
+	debris_message = "D\195\169bris sur VOUS !",
 
 	debrisinc_trigger = "Que les murs de cette prison tremblent",
-	debrisinc_message = "30% - Arriv\195\169e des D\195\169bris!",
-	debrisinc_warning = "D\195\169bris bientot!",
+	debrisinc_message = "30% - Arriv\195\169e des D\195\169bris !",
+	debrisinc_warning = "D\195\169bris imminent !",
 
 	["Hellfire Channeler"] = "Canaliste des Flammes infernales",
 } end)

@@ -106,7 +106,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	summon_trigger = "commence \195\160 lancer Invocation d'un chasseur corrompu sauvage.",
 	summon_message = "Chasseur corrompu en cours d'invocation !",
-	summon_bar = "~Prochain Chasseur corrompu",
+	summon_bar = "~Cooldown Chasseur corrompu",
 
 	flurry_trigger = "Vous ne terrasserez pas la main de Gruul\194\160!",
 	flurry_message = "50% - Rafale !",
@@ -115,7 +115,7 @@ L:RegisterTranslations("frFR", function() return {
 	whirlwind_trigger = "gagne Tourbillon",
 	whirlwind_message = "Maulgar - Toubillon pendant 15 sec. !",
 	whirlwind_bar = "Tourbillon",
-	whirlwind_nextbar = "~Prochain Tourbillon",
+	whirlwind_nextbar = "~Cooldown Tourbillon",
 	whirlwind_warning1 = "Maulgar engag\195\169 - Tourbillon dans ~50 sec. !",
 	whirlwind_warning2 = "Tourbillon imminent !",
 

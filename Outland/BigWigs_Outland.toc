@@ -1,7 +1,9 @@
 ﻿## Interface: 20003
 
 ## Title: Big Wigs [|cffeda55fOutland|r]
+## Titre-frFR: Big Wigs [|cffeda55fOutreterre|r]
 ## Notes: Big Wigs Outland Modules
+## Notes-frFR: Modules Big Wigs concernant l'Outreterre.
 ## Author: Funkydude, Ammo, Rabbit
 ## X-Credits: Tekkub Stoutwrithe(founding author) & Others
 ## Version: 2.0

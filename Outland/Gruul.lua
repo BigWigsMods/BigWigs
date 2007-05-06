@@ -99,6 +99,7 @@ L:RegisterTranslations("frFR", function() return {
 	grasp_message1 = "Heurt terrestre - Emprise imminente",
 	grasp_message2 = "Emprise - Fracasser dans ~5 sec.",
 	grasp_warning = "Heurt terrestre imminent",
+	grasp_bar = "~Cooldown Heurt terrestre",
 
 	shatter_trigger = "%s rugit\194\160!",
 	shatter_message = "Fracasser !",
@@ -106,6 +107,7 @@ L:RegisterTranslations("frFR", function() return {
 	silence_trigger = "les effets .* R\195\169verb\195\169ration.",
 	silence_message = "Silence de zone",
 	silence_warning = "Silence de zone imminent !",
+	silence_bar = "~Cooldown Silence",
 
 	cavein_trigger = "Vous subissez les effets de Eboulement.",
 	cavein_message = "Eboulement sur VOUS !",
