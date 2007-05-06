@@ -99,3 +99,5 @@ TheEye\Reaver.lua
 TheEye\Kaelthas.lua
 TheEye\Solarian.lua
 
+BlackTemple\BlackTempleBeta.lua
+BlackTemple\Najentus.lua

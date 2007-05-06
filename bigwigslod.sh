@@ -7,6 +7,7 @@ rm -rf BigWigs_Outland
 rm -rf BigWigs_Extras
 rm -rf BigWigs_Plugins
 rm -rf BigWigs_TheEye
+rm -rf BigWigs_BlackTemple
 
 rm -rf BigWigs_Other
 
@@ -18,3 +19,4 @@ mv Outland ../BigWigs_Outland
 mv Extras ../BigWigs_Extras
 mv Plugins ../BigWigs_Plugins
 mv TheEye ../BigWigs_TheEye
+mv BlackTemple ../BigWigs_BlackTemple

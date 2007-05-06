@@ -133,7 +133,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(L["agent_warning"], "Important")
 		self:Bar(L["agent_bar"], 6, "Ability_Creature_Cursed_01")
 
-		-- Priests 22 seconds after Agents
+		-- Priests 22 seconds after the Split
 		self:DelayedMessage(19, L["priest_warning"], "Important")
 		self:Bar(L["priest_bar"], 22, "Spell_Holy_HolyBolt")
 	end
