@@ -6,11 +6,6 @@ local boss = AceLibrary("Babble-Boss-2.2")["High Astromancer Solarian"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
-local p1
-local p2
-local wrath
-local split
-
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -89,10 +84,9 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWrath", 1)
 	self:TriggerEvent("BigWigs_ThrottleSync", "SolaSplit", 6)
 
-	p1 = nil
-	p2 = nil
-	split = 0
-	wrath = 0
+	local p1 = nil
+	local p2 = nil
+	local split = 0
 end
 
 ------------------------------
@@ -115,14 +109,14 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			if self.db.profile.wrathyou then
 				self:Message(L["wrath_you"], "Personal", true, "Long")
 				self:Message(L["wrath_other"]:format(rest), "Attention", nil, nil, true)
-				self:Bar(L["wrath_other"]:format(rest), 8, "Spell_Arcane_Arcane02")
+				self:Bar(L["wrath_other"]:format(rest), 9, "Spell_Arcane_Arcane02")
 			end
 			self:CancelScheduledEvent("cancelProx") --incase they get the debuff twice, don't kill early
 			self:TriggerEvent("BigWigs_ShowProximity", self) --you have the debuff, show the proximity window
 			self:ScheduleEvent("cancelProx", self.KillProx, 10, self) --primary debuff lasts 10 seconds, lets kill proximity after that
 		elseif self.db.profile.wrathother then
 			self:Message(L["wrath_other"]:format(rest), "Attention")
-			self:Bar(L["wrath_other"]:format(rest), 8, "Spell_Arcane_Arcane02")
+			self:Bar(L["wrath_other"]:format(rest), 9, "Spell_Arcane_Arcane02")
 		end
 		if self.db.profile.icon then
 			self:Icon(rest)
@@ -164,7 +158,7 @@ end
 
 function mod:debuff(msg)
 	local wplayer, wtype = select(3, msg:find(L["wrath_trigger"]))
-	if wplayer and wtype and (GetTime() - wrath > 1) then
+	if wplayer and wtype then
 		if wplayer == L2["you"] and wtype == L2["are"] then
 			wplayer = UnitName("player")
 		end
