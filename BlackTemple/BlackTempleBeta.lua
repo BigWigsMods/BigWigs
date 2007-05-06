@@ -10,7 +10,7 @@ function BlackTempleBeta:OnEnable()
 	end
 end
 
-function TheEyeBeta:ZONE_CHANGED_NEW_AREA()
+function BlackTempleBeta:ZONE_CHANGED_NEW_AREA()
 	if GetRealZoneText() ~= BZ["Black Temple"] or warnedThisSession then return end
 	warnedThisSession = true
 	if not IsAddOnLoaded("Transcriptor") then
