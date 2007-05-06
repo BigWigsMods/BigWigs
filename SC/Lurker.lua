@@ -79,6 +79,39 @@ L:RegisterTranslations("koKR", function() return {
 	["Coilfang Ambusher"] = "갈퀴송곳니 복병",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	dive = "Plong\195\169es",
+	dive_desc = ("D\195\169lais avant que %s ne plonge.\n\nCes d\195\169lais peuvent \195\170tre impr\195\169cis : ils sont bas\195\169s sur le moment du pull."):format(boss),
+
+	spout = "Jet",
+	spout_desc = "D\195\169lais concernant les Jets.\n\nCes délais peuvent \195\170tre impr\195\169cis : ils sont bas\195\169s sur le moment du pull.",
+
+	whirl = "Tourbillonnement",
+	whirl_desc = "D\195\169lais concernant les Tourbillonnements.",
+
+	engage_warning = "%s engag\195\169 - Plong\195\169e probable dans 90 sec.",
+
+	dive_warning = "Plong\195\169e probable dans %d sec. !",
+	dive_bar = "~Plonge dans",
+	dive_message = "Plong\195\169e - De retour dans 60 sec.",
+
+	emerge_warning = "De retour dans %d sec.",
+	emerge_message = "De retour - Plong\195\169e probable dans 90 sec.",
+	emerge_bar = "De retour dans",
+
+	spout_message1 = "Incante un Jet !",
+	spout_message2 = "Fin du Jet !",
+	spout_warning = "Jet dans 3 sec. !",
+	spout_bar1 = "Jet 1 dans ~",
+	spout_bar2 = "Jet 2 dans ~",
+
+	whirl_bar = "Tourbillonnement probable",
+	whirl_trigger = "Tourbillonnement",
+
+	["Coilfang Guardian"] = "Gardien de Glisseroc", -- à vérifier
+	["Coilfang Ambusher"] = "Embusqu\195\169 de Glisseroc", -- à vérifier
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------

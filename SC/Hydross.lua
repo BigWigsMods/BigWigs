@@ -133,29 +133,43 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	mark = "Marque",
-	mark_desc = "Afficher les alertes et les compteurs des marques",
+	mark_desc = "Affiche les alertes et les compteurs des marques.",
 
 	enrage = "Enrager",
-	enrage_desc = "Pr\195\169venir de l'enrage",
+	enrage_desc = ("Pr\195\169viens quand %s devient enrag\195\169."):format(boss),
 
 	stance = "Changements d'\195\169tat",
-	stance_desc = ("Alerte quand %s change d'\195\169tat"):format(boss),
+	stance_desc = ("Pr\195\169viens quand %s change d'\195\169tat."):format(boss),
+
+	sludge = "Vase abominable",
+	sludge_desc = "Pr\195\169viens quand un joueur est affect\195\169 par la Vase abominable.",
+
+	icon = "Ic\195\180ne Vase abominable",
+	icon_desc = "Place une ic\195\180ne de raid sur le joueur affect\195\169 par la Vase abominable (n\195\169cessite d'\195\170tre promu ou mieux).",
+
+	tomb = "Tombe aquatique",
+	tomb_desc = "Pr\195\169viens quand des joueurs sont affect\195\169s par la Tombe aquatique.",
 
 	start_trigger = "Je ne peux pas vous laisser nous g\195\170ner\194\160!",
 
 	hydross_trigger = "Marque d'Hydross",
 	corruption_trigger = "Marque de corruption",
 
-	hydross_bar = "Prochaine Marque d'Hydross - %s%%",
-	corruption_bar = "Prochaine Marque de Corruption - %s%%",
+	hydross_bar = "Marque d'Hydross - %s%%",
+	corruption_bar = "Marque de Corruption - %s%%",
 
-	debuff_warn = "Marque \195\160 %s%%!",
+	debuff_warn = "Marque \195\160 %s%% !",
 
 	poison_stance_trigger = "Aaarrgh, le poison\226\128\166",
 	water_stance_trigger = "\195\135a va mieux. Beaucoup mieux.",
 
 	poison_stance = "Hydross est maintenant empoisonn\195\169 !",
 	water_stance = "Hydross est de nouveau sain !",
+
+	afflict_trigger = "^([^%s]+) ([^%s]+) les effets de (.*).$",
+
+	tomb_message = "Tombe aquatique : %s",
+	sludge_message = "Vase abominable : %s",
 } end)
 
 ----------------------------------

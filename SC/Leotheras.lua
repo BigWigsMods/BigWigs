@@ -101,6 +101,49 @@ L:RegisterTranslations("koKR", function() return {
 	whisper_soon = "~악마 대기시간",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	enrage = "Enrager",
+	enrage_desc = "Affiche le d\195\169lai avant que Leotheras ne devienne enrag\195\169.",
+
+	whirlwind = "Tourbillon",
+	whirlwind_desc = "Affiche les diff\195\169rentes dur\195\169es concernant le Tourbillon.",
+
+	phase = "Phase d\195\169mon",
+	phase_desc = "Affiche une estimation de la phase d\195\169mon.",
+
+	image = "Image",
+	image_desc = "Pr\195\169viens quand l'image est cr\195\169\195\169e à 15%.",
+
+	whisper = "Murmure insidieux",
+	whisper_desc = "Pr\195\169viens quand des joueurs subissent le Murmure insidieux.",
+
+	enrage_trigger = "Finally, my banishment ends!", -- to translate
+
+	whirlwind_trigger = "Leotheras l'Aveugle gagne Tourbillon",
+	whirlwind_gain = "Tourbillon pendant 12 sec.",
+	whirlwind_fade = "Fin du Tourbillon",
+	whirlwind_bar = "Tourbillon",
+	whirlwind_bar2 = "~Cooldown Tourbillon",
+	whirlwind_warn = "Fin du cooldown Tourbillon - Bient\195\180t !",
+
+	phase_trigger = "I am in control now", -- to translate
+	phase_demon = "Phase d\195\169mon pendant 60 sec.",
+	phase_demonsoon = "Phase d\195\169mon dans 5 sec. !",
+	phase_normalsoon = "Phase normal dans 5 sec.",
+	phase_normal = "Phase normale !",
+	demon_bar = "Phase d\195\169mon",
+	demon_nextbar = "Prochaine phase d\195\169mon",
+
+	image_trigger = "I am the master! Do you hear?", -- to translate
+	image_message = "15% - Image cr\195\169\195\169e !",
+	image_warning = "Image imminente !",
+
+	whisper_trigger = "^([^%s]+) ([^%s]+) les effets de Murmure insidieux",
+	whisper_message = "D\195\169mon : %s",
+	whisper_bar = "Disparition des d\195\169mons",
+	whisper_soon = "~Cooldown D\195\169mons",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------

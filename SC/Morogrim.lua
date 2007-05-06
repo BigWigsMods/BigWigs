@@ -116,6 +116,40 @@ L:RegisterTranslations("koKR", function() return {
 	tidal_message = "해일!",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	tidal = "Raz-de-mar\195\169e",
+	tidal_desc = "Pr\195\169viens quand Morogrim lance un Raz-de-mar\195\169e.",
+
+	grave = "Tombeau aquatique",
+	grave_desc = "Pr\195\169viens quand quelqu'un subit le Tombeau aquatique et indique sa dur\195\169e.",
+
+	murloc = "Arriv\195\169e des murlocs",
+	murloc_desc = "Pr\195\169viens de l'arriv\195\169e des murlocs.",
+
+	grobules = "Arriv\195\169e des grobules",
+	grobules_desc = "Pr\195\169viens de l'arriv\195\169e des grobules.",
+
+	grave_trigger1 = "^([^%s]+) ([^%s]+) les effets .* Tombeau aquatique",
+	grave_trigger2 = "envoye ses ennemis", -- à vérifier
+	grave_message = "Tombeau aquatique : %s",
+	grave_bar = "Tombeaux aquatique",
+	grave_nextbar = "~Cooldown Tombeaux",
+
+	murloc_bar = "~Cooldown Murlocs",
+	murloc_trigger = "Murlocs",
+	murloc_message = "Arriv\195\169e des murlocs !",
+	murloc_soon_message = "Murlocs bient\195\180t !",
+	murloc_engaged = "%s engag\195\169, Murlocs dans ~40 sec.",
+
+	grobules_trigger = "invoque", -- à vérifier
+	grobules_message = "Arriv\195\169e des Grobules !",
+	grobules_warning = "Grobules bient\195\180t !",
+	grobules_bar = "Disparation des Grobules",
+
+	tidal_trigger = "Morogrim Marcheur-des-flots commence \195\160 lancer Raz-de-mar\195\169e.",
+	tidal_message = "Raz-de-mar\195\169e !",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------
