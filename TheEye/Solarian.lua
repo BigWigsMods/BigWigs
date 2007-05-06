@@ -35,6 +35,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	split_trigger = "casts Astromancer Split",
 	split_bar = "~Next Split",
+	split_warning = "Split in ~7 sec",
 
 	phase1_message = "Phase 1 - Split in ~50sec",
 
@@ -85,7 +86,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWrath", 3)
+	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWrath", 1)
 	self:TriggerEvent("BigWigs_ThrottleSync", "SolaSplit", 6)
 
 	p1 = nil
@@ -107,6 +108,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.phase then
 			self:Message(L["phase1_message"], "Positive")
 			self:Bar(L["split_bar"], 50, "Spell_Shadow_SealOfKings")
+			self:DelayedMessage(43, L["split_warning"], "Important")
 		end
 	elseif sync == "SolaWrath" and rest then
 		if rest == UnitName("player") then
@@ -117,7 +119,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			end
 			self:CancelScheduledEvent("cancelProx") --incase they get the debuff twice, don't kill early
 			self:TriggerEvent("BigWigs_ShowProximity", self) --you have the debuff, show the proximity window
-			self:ScheduleEvent("cancelProx", self.KillProx, 45, self) --secondary debuff lasts 45 seconds, lets kill proximity after that
+			self:ScheduleEvent("cancelProx", self.KillProx, 10, self) --primary debuff lasts 10 seconds, lets kill proximity after that
 		elseif self.db.profile.wrathother then
 			self:Message(L["wrath_other"]:format(rest), "Attention")
 			self:Bar(L["wrath_other"]:format(rest), 8, "Spell_Arcane_Arcane02")
@@ -128,6 +130,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "SolaSplit" and self.db.profile.split then
 		--split is around 90 seconds after the previous
 		self:Bar(L["split_bar"], 90, "Spell_Shadow_SealOfKings")
+		self:DelayedMessage(83, L["split_warning"], "Important")
 
 		-- Agents 6 seconds after the Split
 		self:Message(L["agent_warning"], "Important")
@@ -170,6 +173,6 @@ function mod:debuff(msg)
 end
 
 function mod:KillProx()
-	--if 45 sec passed and no extra debuff was applied to the player, proximity should stop
+	--if 10 sec passed and no extra debuff was applied to the player, proximity should stop
 	self:TriggerEvent("BigWigs_HideProximity", self)
 end
