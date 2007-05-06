@@ -6,6 +6,10 @@ local boss = AceLibrary("Babble-Boss-2.2")["High Astromancer Solarian"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
+local p1
+local p2
+local split
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -84,9 +88,9 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWrath", 1)
 	self:TriggerEvent("BigWigs_ThrottleSync", "SolaSplit", 6)
 
-	local p1 = nil
-	local p2 = nil
-	local split = 0
+	p1 = nil
+	p2 = nil
+	split = 0
 end
 
 ------------------------------
