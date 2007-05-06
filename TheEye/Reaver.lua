@@ -42,7 +42,7 @@ L:RegisterTranslations("enUS", function() return {
 	pounding_bar = "<Pounding>",
 } end )
 
-L:RegisterTranslations("enUS", function() return {
+L:RegisterTranslations("deDE", function() return {
 	enrage = "Wutanfall",
 	enrage_desc = "Wutanfall Timer",
 
