@@ -26,6 +26,21 @@ L:RegisterTranslations("enUS", function() return {
 
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	rebirth = "Renaissance",
+	rebirth_desc = "Pr\195\169viens quand Al'ar incante sa renaissance.",
+
+	rebirth_trigger = "Al'ar commence \195\160 lancer Renaissance.",
+	rebirth_message = "Renaissance !",
+
+	flamepatch = "Gerbe de flammes sur vous",
+	flamepatch_desc = "Pr\195\169viens quand une Gerbe de flammes est sur vous.",
+
+	flamepatch_trigger = "Vous subissez les effets de Gerbe de flammes.",
+	flamepatch_message = "Gerbe de flammes sur VOUS !",
+
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

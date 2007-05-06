@@ -70,6 +70,34 @@ L:RegisterTranslations("deDE", function() return {
 	pounding_bar = "<H\195\164mmern>",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	enrage = "Enrager",
+	enrage_desc = "Affiche l\195\169 délai avant que le Saccageur du Vide ne devienne enrag\195\169.",
+
+	orbyou = "Orbe des arcanes sur vous",
+	orbyou_desc = "Pr\195\169viens quand vous \195\170tes cibl\195\169 par l'Orbe des arcanes.",
+
+	orbsay = "Dire - Orbe des arcanes",
+	orbsay_desc = "Fais dire \195\160 votre personnage qu'il est cibl\195\169 par l'Orbe des arcanes quand c'est le cas, afin d'aider les membres proches.",
+
+	orbother = "Orbe des arcanes sur les autres",
+	orbother_desc = "Pr\195\169viens quand les autres sont cibl\195\169s par l'Orbe des arcanes.",
+
+	icon = "Ic\195\180ne",
+	icon_desc = "Place une ic\195\180ne de raid sur la personne cibl\195\169e par l'Orbe des arcanes (n\195\169cessite d'\195\170tre promu ou mieux).",
+
+	pounding = "Mart\195\168lement ",
+	pounding_desc = "Affiche des barres temporelles pour les Mart\195\168lements.",
+
+	orb_other = "Orbe (%s)",
+	orb_you = "Orbe des arcanes sur VOUS !",
+	orb_say = "Orbe sur moi !",
+
+	pounding_trigger = "Mart\195\168lement",
+	pounding_nextbar = "~Cooldown Mart\195\168lement",
+	pounding_bar = "<Mart\195\168lement>",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
