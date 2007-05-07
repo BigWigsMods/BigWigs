@@ -685,19 +685,21 @@ function plugin:UpdateBars()
 			return
 		end
 
-		local effscale = self:GetCandyBarEffectiveScale(bar)
 		local centerX, centerY = self:GetCandyBarCenter(bar)
-		local tempX, tempY = centerX*effscale, centerY*effscale
+		if type(centerX) == "number" and type(centerY) == "number" then
+			local effscale = self:GetCandyBarEffectiveScale(bar)
+			local tempX, tempY = centerX*effscale, centerY*effscale
 
-		tempX = CosineInterpolate(tempX, opt.targetX, 1 - ((stop - now) / DURATION) )
-		tempY = CosineInterpolate(tempY, opt.targetY, 1 - ((stop - now) / DURATION) )
-		scale = (opt.stopScale - opt.startScale) * (1 - ((stop - now) / DURATION))
+			tempX = CosineInterpolate(tempX, opt.targetX, 1 - ((stop - now) / DURATION) )
+			tempY = CosineInterpolate(tempY, opt.targetY, 1 - ((stop - now) / DURATION) )
+			scale = (opt.stopScale - opt.startScale) * (1 - ((stop - now) / DURATION))
 
-		self:SetCandyBarScale(bar, scale + opt.startScale)
-		effscale = self:GetCandyBarEffectiveScale(bar)
+			self:SetCandyBarScale(bar, scale + opt.startScale)
+			effscale = self:GetCandyBarEffectiveScale(bar)
 
-		local point, rframe, rpoint = self:GetCandyBarPoint(bar)
-		self:SetCandyBarPoint(bar, point, rframe, rpoint, tempX/effscale, tempY/effscale)
+			local point, rframe, rpoint = self:GetCandyBarPoint(bar)
+			self:SetCandyBarPoint(bar, point, rframe, rpoint, tempX/effscale, tempY/effscale)
+		end
 	end
 
 	if count == 0 then
