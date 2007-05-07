@@ -170,8 +170,8 @@ function mod:debuff(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg:find(L["phase2_trigger"] then
-		if self.db.profile.phase the
+	if msg:find(L["phase2_trigger"]) then
+		if self.db.profile.phase then
 			self:Message(L["phase2_message"], "Personal")
 		end
 		self:CancelScheduledEvent("split1")
