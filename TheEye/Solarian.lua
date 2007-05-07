@@ -39,7 +39,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase1_message = "Phase 1 - Split in ~50sec",
 
 	phase2_warning = "Phase 2 Soon!",
-	phase2_trigger = "",	--some kind of yell or emote to detect this surely
+	phase2_trigger = "^I become",
 	phase2_message = "20% - Phase 2",
 
 	wrath_trigger = "^([^%s]+) ([^%s]+) afflicted by Wrath of the Astromancer",
@@ -78,6 +78,7 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "debuff")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "debuff")
@@ -109,18 +110,13 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:DelayedMessage(43, L["split_warning"], "Important")
 		end
 	elseif sync == "SolaWrath" and rest then
-		if rest == UnitName("player") then
-			if self.db.profile.wrathyou then
-				self:Message(L["wrath_you"], "Personal", true, "Long")
-				self:Message(L["wrath_other"]:format(rest), "Attention", nil, nil, true)
-				self:Bar(L["wrath_other"]:format(rest), 9, "Spell_Arcane_Arcane02")
-			end
-			self:CancelScheduledEvent("cancelProx") --incase they get the debuff twice, don't kill early
-			self:TriggerEvent("BigWigs_ShowProximity", self) --you have the debuff, show the proximity window
-			self:ScheduleEvent("cancelProx", self.KillProx, 10, self) --primary debuff lasts 10 seconds, lets kill proximity after that
+		if rest == UnitName("player") and self.db.profile.wrathyou then
+			self:Message(L["wrath_you"], "Personal", true, "Long")
+			self:Message(L["wrath_other"]:format(rest), "Attention", nil, nil, true)
+			self:Bar(L["wrath_other"]:format(rest), 8.5, "Spell_Arcane_Arcane02")
 		elseif self.db.profile.wrathother then
 			self:Message(L["wrath_other"]:format(rest), "Attention")
-			self:Bar(L["wrath_other"]:format(rest), 9, "Spell_Arcane_Arcane02")
+			self:Bar(L["wrath_other"]:format(rest), 8.5, "Spell_Arcane_Arcane02")
 		end
 		if self.db.profile.icon then
 			self:Icon(rest)
@@ -128,7 +124,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "SolaSplit" and self.db.profile.split then
 		--split is around 90 seconds after the previous
 		self:Bar(L["split_bar"], 90, "Spell_Shadow_SealOfKings")
-		self:DelayedMessage(83, L["split_warning"], "Important")
+		self:ScheduleEvent("split1", "BigWigs_Message", 83, L["split_warning"], "Important")
 
 		-- Agents 6 seconds after the Split
 		self:Message(L["agent_warning"], "Important")
@@ -165,12 +161,25 @@ function mod:debuff(msg)
 	if wplayer and wtype then
 		if wplayer == L2["you"] and wtype == L2["are"] then
 			wplayer = UnitName("player")
+			self:CancelScheduledEvent("cancelProx") --incase they get the debuff twice, don't kill early
+			self:TriggerEvent("BigWigs_ShowProximity", self) --you have the debuff, show the proximity window
+			self:ScheduleEvent("cancelProx", self.KillProx, 8.5, self) --primary debuff lasts ~8.5 seconds, lets kill proximity after that
 		end
 		self:Sync("SolaWrath "..wplayer)
 	end
 end
 
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg:find(L["phase2_trigger"] then
+		if self.db.profile.phase the
+			self:Message(L["phase2_message"], "Personal")
+		end
+		self:CancelScheduledEvent("split1")
+		self:TriggerEvent("BigWigs_StopBar", self, L["split_bar"])
+	end
+end
+
 function mod:KillProx()
-	--if 10 sec passed and no extra debuff was applied to the player, proximity should stop
+	--if 8.5 sec passed and no extra debuff was applied to the player, proximity should stop
 	self:TriggerEvent("BigWigs_HideProximity", self)
 end
