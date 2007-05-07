@@ -23,7 +23,7 @@ L:RegisterTranslations("enUS", function() return {
 	["|cffeda55fClick|r to enable."] = true,
 	["|cffeda55fShift-Click|r to open configuration window."] = true,
 	["Big Wigs is currently disabled."] = true,
-	["Active boss modules: %s."] = true,
+	["Active boss modules:"] = true,
 	["All running modules have been reset."] = true,
 	["All running modules have been disabled."] = true,
 	["Menu"] = true,
@@ -36,7 +36,7 @@ L:RegisterTranslations("frFR", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55fClic|r pour activer.",
 	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Clic|r pour ouvrir la fenêtre de configuration.",
 	["Big Wigs is currently disabled."] = "Big Wigs est actuellement désactivé.",
-	["Active boss modules: %s."] = "Modules de boss actifs : %s.",
+	["Active boss modules:"] = "Modules de boss actifs :",
 	["All running modules have been reset."] = "Tous les modules actifs ont été redémarrés.",
 	["All running modules have been disabled."] = "Tous les modules  actifs ont été désactivés.",
 	["Menu"] = "Menu",
@@ -49,7 +49,7 @@ L:RegisterTranslations("koKR", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55f클릭|r : 모듈 활성화.",
 	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fSHIFT-클릭|r : 환경설정 열기.",
 	["Big Wigs is currently disabled."] = "BigWigs가 비활성화 되어 있습니다.",
-	["Active boss modules: %s."] = "보스 모듈 사용: %s.",
+	["Active boss modules:"] = "보스 모듈 사용:",
 	["All running modules have been reset."] = "모든 실행중인 모듈을 초기화합니다.",
 	["All running modules have been disabled."] = "모든 실행중인 모듈을 비활성화 합니다.",
 	["Menu"] = "메뉴",
@@ -62,7 +62,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55f点击|r图标开启BigWigs。",
 	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Click|r to open configuration window.",
 	["Big Wigs is currently disabled."] = "Big Wigs目前关闭。",
-	--["Active boss modules: %s."] = "激活首领模块",
+	["Active boss modules:"] = "激活首领模块",
 	["All running modules have been reset."] = "所有运行中的模块都已重置。",
 	["All running modules have been disabled."] = "所有运行中的模块都已关闭。",
 } end)
@@ -73,7 +73,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55f點擊|r圖示開啟BigWigs。",
 	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Click|r to open configuration window.",
 	["Big Wigs is currently disabled."] = "Big Wigs目前關閉。",
-	--["Active boss modules: %s."] = "啟動首領模組",
+	["Active boss modules:"] = "啟動首領模組",
 	["All running modules have been reset."] = "所有運行中的模組都已重置。",
 	["All running modules have been disabled."] = "所有運行中的模組都已關閉。",
 } end)
@@ -84,7 +84,7 @@ L:RegisterTranslations("deDE", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55fKlicken|r um zu aktivieren.",
 	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Click|r to open configuration window.",
 	["Big Wigs is currently disabled."] = "Big Wigs ist gegenw\195\164rtig deaktiviert.",
-	["Active boss modules: %s."] = "Aktive Boss Module: %s.",
+	["Active boss modules:"] = "Aktive Boss Module:",
 	["All running modules have been reset."] = "Alle laufenden Module wurden zur\195\188ckgesetzt.",
 	["All running modules have been disabled."] = "Alle laufenden Module wurden beendet.",
 } end)
@@ -215,25 +215,24 @@ function BigWigsOptions:OnClick()
 	self:UpdateTooltip()
 end
 
-local tooltipModules = {}
 function BigWigsOptions:OnTooltipUpdate()
 	GameTooltip:AddLine("Big Wigs")
 	GameTooltip:AddLine("")
 	if BigWigs:IsActive() then
+		local added = nil
 		for name, module in BigWigs:IterateModules() do
 			if module:IsBossModule() and BigWigs:IsModuleActive(module) then
-				table.insert(tooltipModules, name)
+				if not added then
+					GameTooltip:AddLine(L["Active boss modules:"], 1, 1, 1)
+					added = true
+				end
+				GameTooltip:AddLine(name)
 			end
 		end
-		if #tooltipModules > 0 then
-			GameTooltip:AddLine(L["Active boss modules: %s."]:format(table.concat(tooltipModules, ", ")), 1, 1, 1, 1, 1)
-			GameTooltip:AddLine("")
-			for i in ipairs(tooltipModules) do tooltipModules[i] = nil end
-		end
-		GameTooltip:AddLine(hint, 0.2, 1, 0.2, 1, 1)
+		GameTooltip:AddLine(hint, 0.2, 1, 0.2, 1)
 	else
 		GameTooltip:AddLine(L["Big Wigs is currently disabled."])
 		GameTooltip:AddLine("")
-		GameTooltip:AddLine(L["|cffeda55fClick|r to enable."], 0.2, 1, 0.2, 1, 1)
+		GameTooltip:AddLine(L["|cffeda55fClick|r to enable."], 0.2, 1, 0.2)
 	end
 end
