@@ -41,7 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 	elemental_desc = "Warn when the Tainted Elementals spawn during phase 2.",
 
 	strider = "Coilfang Strider spawn",
-	strider_desc = "Warn when the Coilfang Striders spawn during phase 2 (timer not checked, could be inaccurate).",
+	strider_desc = "Warn when the Coilfang Striders spawn during phase 2.",
 
 	barrier = "Barrier down",
 	barrier_desc = "Alert when the barriers go down.",
@@ -58,7 +58,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	phase2_soon_message = "Phase 2 soon!",
 	phase2_message = "Phase 2, adds incoming!",
-	phase3_message = "Phase 3!",
+	phase3_message = "Phase 3 - Enrage in 4min!",
 
 	barrier_down_message = "Barrier %d/4 down!",
 	barrier_fades_trigger = "Magic Barrier fades from Lady Vashj.",
@@ -137,10 +137,7 @@ and the following Poison Elementals spawn exactly 1min
 after the *death* of the previous Poison Elemental.
 Problem is that they despawn if not killed within a certain timer, and we can't really catch that.
 
-Coilfang Elites (nagas)  spawn every 50 seconds
-Coilfang Striders spawn every 1:03
-
-Also we might need some warnings for phase 3, specifically the Persuasion.
+Naga spawn timer, 50 -> 47/45sec
 
 ]]
 
@@ -190,6 +187,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "VashjDeformatCheck", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VashjDeformat", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VashjBarrier", 4)
+	self:TriggerEvent("BigWigs_ThrottleSync", "VashjElemDied", 5)
 end
 
 ------------------------------
@@ -226,10 +224,7 @@ end
 local elemDies = UNITDIESOTHER:format(L["Tainted Elemental"])
 function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	if msg == elemDies then
-		if self.db.profile.elemental then
-			self:Bar(L["elemental_bar"], 60, "Spell_Nature_ElementalShields")
-			delayedElementalMessage = self:DelayedMessage(55, L["elemental_soon_message"], "Important")
-		end
+		self:Sync("VashjElemDied")
 	else
 		self:GenericBossDeath(msg)
 	end
@@ -288,6 +283,9 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
+	elseif sync == "VashjElemDied" and self.db.profile.elemental then
+		self:Bar(L["elemental_bar"], 60, "Spell_Nature_ElementalShields")
+		delayedElementalMessage = self:DelayedMessage(55, L["elemental_soon_message"], "Important")
 	elseif sync == "VashjLoot" and rest and self.db.profile.loot then
 		self:Message(L["loot_message"]:format(rest), "Positive", nil, "Info")
 		if self.db.profile.icon then
@@ -299,8 +297,16 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		self:CancelScheduledEvent("VashjNoDeformat")
 	elseif sync == "VashjBarrier" then
 		shieldsFaded = shieldsFaded + 1
-		if shieldsFaded == 4 and self.db.profile.phase then
-			self:Message(L["phase3_message"], "Important", nil, "Alarm")
+		if shieldsFaded == 4 then
+			if self.db.profile.phase then
+				self:Message(L["phase3_message"], "Important", nil, "Alarm")
+
+				self:Bar(L2["enrage"], 240, "Spell_Shadow_UnholyFrenzy")
+				self:DelayedMessage(180, L2["enrage_min"]:format(1), "Positive")
+				self:DelayedMessage(210, L2["enrage_sec"]:format(30), "Positive")
+				self:DelayedMessage(230, L2["enrage_sec"]:format(10), "Urgent")
+				self:DelayedMessage(240, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			end
 
 			if delayedElementalMessage and self:IsEventScheduled(delayedElementalMessage) then
 				self:CancelScheduledEvent(delayedElementalMessage)
