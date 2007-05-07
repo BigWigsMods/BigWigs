@@ -70,6 +70,53 @@ L:RegisterTranslations("enUS", function() return {
 	strider_soon_message = "Strider soon!",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	deformat = "2 단계에서 획득 경고를 위해 Deformat-2.0 라이브러리가 필요합니다. http://files.wowace.com/Deformat/ 에서 다운로드 할 수 있습니다.",
+
+	["Tainted Elemental"] = "오염된 정령",
+
+	phase = "단계 경고",
+	phase_desc = "바쉬가 다음 단계로 변경 시 알림.",
+
+	static = "전하 충전",
+	static_desc = "전하 충전에 걸린 플레이어 알림.",
+
+	icon = "아이콘",
+	icon_desc = "전하 충전에 걸린 플레이어와 핵을 획득한 플레이어에 아이콘 지정.",
+
+	elemental = "오염된 정령 등장",
+	elemental_desc = "단계 2에서 오염된 정령 등장 시 경고.",
+
+	strider = "포자손 등장",
+	strider_desc = "단계 2에서 포자손 등장 시 경고 (타이머로 검사 하지 않아 부정확 할 수 있습니다).",
+
+	barrier = "방어막 손실",
+	barrier_desc = "방어막 손실 시 알림",
+
+	loot = "오염된 핵",
+	loot_desc = "오염된 핵을 획득한 플레이어 알림",
+
+	static_charge_trigger = "^([^|;%s]*)(.*)전하 충전에 걸렸습니다%.$",
+	static_charge_message = "%s 전하 충전!",
+
+	loot_message = "%s 핵 획득!",
+
+	phase2_trigger = "때가 왔다! 살려두지 않겠다!",
+
+	phase2_soon_message = "잠시 후 2 단계!",
+	phase2_message = "2 단계, 애드 주의!",
+	phase3_message = "3 단계!",
+
+	barrier_down_message = "방어막 %d/4 손실!",
+	barrier_fades_trigger = "여군주 바쉬의 몸에서 마법 방어막 효과가 사라졌습니다.", -- check
+
+	elemental_bar = "오염된 정령 등장",
+	elemental_soon_message = "잠시 후 오염된 정령!",
+
+	strider_bar = "포자손 등장",
+	strider_soon_message = "잠시 후 포자손!",
+} end )
+
 ----------------------------------
 --    Module Declaration        --
 ----------------------------------
