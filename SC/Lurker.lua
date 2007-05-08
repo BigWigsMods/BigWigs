@@ -123,6 +123,8 @@ mod.enabletrigger = boss
 mod.wipemobs = {L["Coilfang Guardian"], L["Coilfang Ambusher"]}
 mod.toggleoptions = {"dive", "spout", "whirl", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
+mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
+mod.proximitySilent = true
 
 ------------------------------
 --      Initialization      --
@@ -178,6 +180,7 @@ function mod:NextDive()
 		self:Bar(L["dive_bar"], 90, "Spell_Frost_ArcticWinds")
 	end
 
+	self:TriggerEvent("BigWigs_ShowProximity", self)
 	self:ScheduleEvent(self.NextSurface, 90, self)
 end
 
@@ -203,6 +206,7 @@ function mod:NextSurface()
 		self:ScheduleEvent("bwspoutbar2", self.SpoutBar, 120, self)
 	end
 
+	self:TriggerEvent("BigWigs_HideProximity", self)
 	self:ScheduleEvent(self.NextDive, 60, self)
 end
 
