@@ -382,6 +382,15 @@ plugin.consoleOptions = {
 					end,
 					order = 4,
 				},
+				growup = {
+					type = "toggle",
+					name = L["Grow upwards"],
+					desc = L["Toggle bars grow upwards/downwards from anchor."],
+					order = 5,
+					get = getOption,
+					set = setOption,
+					passValue = "emphasizeGrowup",
+				},
 			},
 		},
 	},
@@ -511,7 +520,7 @@ function plugin:BigWigs_HideAnchors()
 end
 
 local function setupEmphasizedGroup()
-	local u = plugin.db.profile.growup
+	local u = plugin.db.profile.emphasizeGrowup
 	plugin:RegisterCandyBarGroup("BigWigsEmphasizedGroup")
 	if not emphasizeAnchor then plugin:SetupFrames(true) end
 	plugin:SetCandyBarGroupPoint("BigWigsEmphasizedGroup", u and "BOTTOM" or "TOP", emphasizeAnchor, u and "TOP" or "BOTTOM", 0, 0)
