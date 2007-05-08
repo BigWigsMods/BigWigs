@@ -83,7 +83,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "아, 때마춰 와줬군.", -- check
+	engage_trigger = "아, 때맞춰 와줬군.",
 
 	sacrifice = "희생",
 	sacrifice_desc = "플레이어의 희생에 대한 경고",

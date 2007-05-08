@@ -214,6 +214,7 @@ L:RegisterTranslations("koKR", function() return {
 	landphase_trigger2 = "하루살이 같은 놈들! 나의 힘을 똑똑히 보여주겠다!",
 	airphase_message = "비행!",
 	landphase_message = "착지!",
+	summon_trigger = "멀리에서 고대의 존재가 깨어나고 있다...",
 
 	engage_trigger = "정말 멍청하군! 고통 없이 빨리 끝내주마!",
 	engage_message = "%s 전투 개시",

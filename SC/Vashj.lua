@@ -88,7 +88,7 @@ L:RegisterTranslations("koKR", function() return {
 	elemental_desc = "단계 2에서 오염된 정령 등장 시 경고.",
 
 	strider = "포자손 등장",
-	strider_desc = "단계 2에서 포자손 등장 시 경고 (타이머로 검사 하지 않아 부정확 할 수 있습니다).",
+	strider_desc = "단계 2에서 포자손 등장 시 경고.",
 
 	barrier = "방어막 손실",
 	barrier_desc = "방어막 손실 시 알림",
@@ -105,7 +105,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	phase2_soon_message = "잠시 후 2 단계!",
 	phase2_message = "2 단계, 애드 주의!",
-	phase3_message = "3 단계!",
+	phase3_message = "3 단계 - 4분 이내 격노!",
 
 	barrier_down_message = "방어막 %d/4 손실!",
 	barrier_fades_trigger = "여군주 바쉬의 몸에서 마법 방어막 효과가 사라졌습니다.", -- check
