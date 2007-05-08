@@ -230,6 +230,7 @@ plugin.defaultDB = {
 	emphasizePosX = nil,
 	emphasizePosY = nil,
 	emphasizeScale = 1.5,
+	emphasizeGrowup = false,
 
 	width = nil,
 	height = nil,
