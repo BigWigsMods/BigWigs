@@ -6,6 +6,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["The Lurker Below"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local BZ = AceLibrary("Babble-Zone-2.2")
 local started
+local supress
 
 ----------------------------
 --      Localization     --
@@ -40,7 +41,6 @@ L:RegisterTranslations("enUS", function() return {
 	spout_bar2 = "Spout 2 in ~",
 
 	whirl_bar = "Possible Whirl",
-	whirl_trigger = "Whirl",
 
 	["Coilfang Guardian"] = true,
 	["Coilfang Ambusher"] = true,
@@ -73,7 +73,6 @@ L:RegisterTranslations("koKR", function() return {
 	spout_bar2 = "~분출 2",
 
 	whirl_bar = "소용돌이 주의",
-	whirl_trigger = "소용돌이",
 
 	["Coilfang Guardian"] = "갈퀴송곳니 수호자",
 	["Coilfang Ambusher"] = "갈퀴송곳니 복병",
@@ -106,7 +105,6 @@ L:RegisterTranslations("frFR", function() return {
 	spout_bar2 = "Jet 2 dans ~",
 
 	whirl_bar = "Tourbillonnement probable",
-	whirl_trigger = "Tourbillonnement",
 
 	["Coilfang Guardian"] = "Gardien de Glisseroc", -- à vérifier
 	["Coilfang Ambusher"] = "Embusqu\195\169 de Glisseroc", -- à vérifier
@@ -134,13 +132,13 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "LurkWhirl", 10)
 	started = nil
+	supress = nil
 end
 
 ------------------------------
@@ -161,12 +159,14 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:Bar(L["whirl_bar"], 17, "Ability_Whirlwind")
 		end
 		if self.db.profile.spout then
-			self:DelayedMessage(42, L["spout_warning"], "Attention")
-			self:DelayedMessage(45, L["spout_message1"], "Attention")
-			self:DelayedMessage(65, L["spout_message2"], "Positive")
-			self:Bar(L["spout_bar1"], 45, "INV_Weapon_Rifle_02")
-			self:ScheduleEvent("bwspoutbar0", self.SpoutBar, 45, self)
+			self:DelayedMessage(37, L["spout_warning"], "Attention")
+			self:DelayedMessage(40, L["spout_message1"], "Attention")
+			self:DelayedMessage(60, L["spout_message2"], "Positive")
+			self:Bar(L["spout_bar1"], 40, "INV_Weapon_Rifle_02")
+			self:ScheduleEvent("bwspoutbar0", self.SpoutBar, 40, self)
 		end
+	elseif sync == "LurkWhirl" then
+		self:Bar(L["whirl_bar"], 17, "Ability_Whirlwind")
 	end
 end
 
@@ -214,8 +214,14 @@ function mod:SpoutBar()
 	self:Bar(L["spout_message1"], 20, "INV_Weapon_Rifle_02")
 end
 
-function mod:Event(msg)
-	if self.db.profile.whirl and msg:find(L["whirl_trigger"]) then
-		self:Bar(L["whirl_bar"], 17, "Ability_Whirlwind")
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
+	if self.db.profile.whirl and msg:find(L["whirl"]) and not suppress then
+		supress = true
+		self:Sync("LurkWhirl")
+		self:ScheduleEvent(self.StopSupress, 10, self)
 	end
+end
+
+function mod:StopSupress()
+	supress = nil
 end
