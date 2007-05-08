@@ -182,12 +182,6 @@ function plugin:BigWigs_ShowProximity(module)
 end
 
 function plugin:BigWigs_HideProximity(module)
-	if not active then
-		error("No proximity module is currently active.")
-	elseif active ~= module then
-		error("The provided module is not the one currently running proximity checks.")
-	end
-
 	active = nil
 	self:CloseProximity()
 end
