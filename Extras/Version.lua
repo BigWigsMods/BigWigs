@@ -463,7 +463,6 @@ function plugin:QueryVersion(zone)
 
 	self:UpdateVersions()
 
-	BigWigs:Print("Sending BWVQ for " .. zone)
 	self:TriggerEvent("BigWigs_SendSync", "BWVQ "..zone)
 end
 
