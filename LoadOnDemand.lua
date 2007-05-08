@@ -78,9 +78,9 @@ local function addCoreMenu(zone)
 			desc = LC["Options for bosses in %s."]:format(zone),
 			args = {},
 			disabled = "~IsActive",
-			hidden = function()
+			--[[hidden = function()
 				return hide(zone)
-			end,
+			end,]]
 		}
 	end
 	if not opt[zone].args[LC["Load"]] then
