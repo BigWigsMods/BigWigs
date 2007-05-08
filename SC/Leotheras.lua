@@ -144,6 +144,49 @@ L:RegisterTranslations("frFR", function() return {
 	whisper_soon = "~Cooldown D\195\169mons",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	enrage = "Wutanfall",
+	enrage_desc = "Zeit bis zum Wutanfall",
+
+	whirlwind = "Wirbelwind",
+	whirlwind_desc = "Wirbelwind Timer",
+
+	phase = "D\195\164monenphase",
+	phase_desc = "Gesch\195\164tzte Timer f?r D\195\164monenphase",
+
+	image = "Abbild",
+	image_desc = "15% Abbild Spaltung Alarm",
+
+	whisper = "Heimt\195\188ckisches Gefl\195\188ster",
+	whisper_desc = "Zeigt an, welche Spieler von Heimt\195\188ckisches Gefl\195\188ster betroffen sind",
+
+	enrage_trigger = "Endlich hat meine Verbannung ein Ende!",
+
+	whirlwind_trigger = "Leotheras der Blinde bekommt Wirbelwind",
+	whirlwind_gain = "Wirbelwind f\195\188r 12sec",
+	whirlwind_fade = "Wirbelwind vorbei",
+	whirlwind_bar = "Wirbelwind",
+	whirlwind_bar2 = "~Wirbelwind Cooldown",
+	whirlwind_warn = "Wirbelwind Cooldown vorbei",
+
+	phase_trigger = "Ich habe jetzt die Kontrolle!",
+	phase_demon = "D\195\164monenphase Phase f\195\188r 60sec",
+	phase_demonsoon = "D\195\164monenphase in 5sec!",
+	phase_normalsoon = "Normale Phase in 5sec",
+	phase_normal = "Normale Phase!",
+	demon_bar = "D\195\164monenphase",
+	demon_nextbar = "n\195\164chste D\195\164monenphase",
+
+	image_trigger = "I am the master! Do you hear?", -- to translate
+	image_message = "15% - Image Created!", -- to translate
+	image_warning = "Image Soon!", -- to translate
+
+	whisper_trigger = "^([^%s]+) ([^%s]+) von Heimt\195\188ckisches Gefl\195\188ster betroffen",
+	whisper_message = "D\195\164mon: %s",
+	whisper_bar = "D\195\164monen Despawn",
+	whisper_soon = "~D\195\164monen Cooldown",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------
