@@ -152,10 +152,10 @@ L:RegisterTranslations("deDE", function() return {
 	whirlwind_desc = "Wirbelwind Timer",
 
 	phase = "D\195\164monenphase",
-	phase_desc = "Gesch\195\164tzte Timer f?r D\195\164monenphase",
+	phase_desc = "Gesch\195\164tzte Timer f\195\188r D\195\164monenphase",
 
-	image = "Abbild",
-	image_desc = "15% Abbild Spaltung Alarm",
+	image = "Schatten von Leotheras",
+	image_desc = "15% Schatten Abspaltung Alarm",
 
 	whisper = "Heimt\195\188ckisches Gefl\195\188ster",
 	whisper_desc = "Zeigt an, welche Spieler von Heimt\195\188ckisches Gefl\195\188ster betroffen sind",
@@ -177,9 +177,9 @@ L:RegisterTranslations("deDE", function() return {
 	demon_bar = "D\195\164monenphase",
 	demon_nextbar = "n\195\164chste D\195\164monenphase",
 
-	image_trigger = "I am the master! Do you hear?", -- to translate
-	image_message = "15% - Image Created!", -- to translate
-	image_warning = "Image Soon!", -- to translate
+	image_trigger = "Ich bin der Meister! H\195\182rt Ihr?",
+	image_message = "15% - Schatten von Leotheras!",
+	image_warning = "Schatten von Leotheras bald!",
 
 	whisper_trigger = "^([^%s]+) ([^%s]+) von Heimt\195\188ckisches Gefl\195\188ster betroffen",
 	whisper_message = "D\195\164mon: %s",
