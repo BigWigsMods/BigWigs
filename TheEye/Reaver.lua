@@ -98,6 +98,34 @@ L:RegisterTranslations("frFR", function() return {
 	pounding_bar = "<Mart\195\168lement>",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	enrage = "격노",
+	enrage_desc = "격노 타이머",
+
+	orbyou = "자신의 비전 보주",
+	orbyou_desc = "자신의 비전 보주 알림",
+
+	orbsay = "비전 보주 대화",
+	orbsay_desc = "당신이 비전 보주의 대상이 되었을 때 대화를 출력합니다",
+
+	orbother = "타인의 비전 보주",
+	orbother_desc = "타인의 비전 보주 알림",
+
+	icon = "공격대 아이콘",
+	icon_desc = "비전 보주 대상이된 플레이어에 공격대 아이콘 지정(승급자 이상 권한 필요)",
+
+	pounding = "울림",
+	pounding_desc = "울림 타이머 바 표시",
+
+	orb_other = "보주(%s)",
+	orb_you = "당신에 비전 보주!",
+	orb_say = "나에게 보주!",
+
+	pounding_trigger = "울림",
+	pounding_nextbar = "~울림 대기 시간",
+	pounding_bar = "<울림>",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
