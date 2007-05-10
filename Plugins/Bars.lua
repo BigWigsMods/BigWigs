@@ -391,6 +391,7 @@ plugin.consoleOptions = {
 					get = getOption,
 					set = setOption,
 					passValue = "emphasizeGrowup",
+					disabled = shouldDisableEmphasizeOption,
 				},
 			},
 		},
