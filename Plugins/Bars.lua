@@ -733,7 +733,7 @@ function plugin:EmphasizeBar(module, id)
 	local targetX, targetY = self:GetCandyBarNextBarPointInGroup("BigWigsEmphasizedGroup")
 
 	local db = plugin.db.profile
-	local u = db.growup
+	local u = db.emphasizeGrowup
 
 	local offsetTop, offsetBottom = select(2, self:GetCandyBarOffsets(id))
 	local offsetY = u and centerY - offsetBottom or centerY - offsetTop
