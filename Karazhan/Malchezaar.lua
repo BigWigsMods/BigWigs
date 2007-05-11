@@ -120,6 +120,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	nova_message = "Nova de l'ombre !",
 	nova_bar = "~Cooldown Nova",
+	nova_soon = "Nova de l'ombre imminente",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

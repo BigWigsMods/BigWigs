@@ -129,7 +129,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	escape = "Evasion",
-	escape_desc = ("compte \195\160 rebours avant que %s soit libre."):format(boss),
+	escape_desc = ("Compte \195\160 rebours avant que %s soit libre."):format(boss),
 
 	abyssal = "Abyssal ardent",
 	abyssal_desc = "Pr\195\169viens quand un Abyssal ardent est cr\195\169\195\169.",
@@ -175,7 +175,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	banish_trigger = "Pas encore\194\160! Pas encore\226\128\166",
 	banish_message = "Banni pendant ~10 sec.",
-	banish_over_trigger = "Cage d'ombre sur .% vient de se dissiper.",
+	banish_over_trigger = "Cage d'ombre sur Magtheridon vient de se dissiper.",
 	banish_over_message = "Fin du ban !",
 	banish_bar = "Banni",
 

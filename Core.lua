@@ -44,30 +44,30 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	["%s mod enabled"] = "Module %s activ\195\169",
-	["%s has been defeated"] = "%s a \195\169t\195\169 vaincu",     -- "<boss> has been defeated"
-	["%s have been defeated"] = "%s ont \195\169t\195\169 vaincus",    -- "<bosses> have been defeated"
+	["%s mod enabled"] = "Module %s activé",
+	["%s has been defeated"] = "%s a été vaincu(e)",     -- "<boss> has been defeated"
+	["%s have been defeated"] = "%s ont été vaincu(e)s",    -- "<bosses> have been defeated"
 
-	["Debug enabled, output routed to %s."] = "D\195\169boguage activ\195\169, output dirig\195\169 vers %s.",
-	["Debug disabled."] = "D\195\169boguage d\195\169sactiv\195\169.",
+	["Debug enabled, output routed to %s."] = "Déboguage activé, output dirigé vers %s.",
+	["Debug disabled."] = "Déboguage désactivé.",
 
 	-- AceConsole strings
 	["Bosses"] = "Boss",
-	["Options for bosses in %s."] = "Options des boss dans %s.", -- "Options for bosses in <zone>"
-	["Options for %s (r%d)."] = "Options pour %s (r%d).",     -- "Options for <boss> (<revision>)"
+	["Options for bosses in %s."] = "Options concernant les boss dans %s.", -- "Options for bosses in <zone>"
+	["Options for %s (r%d)."] = "Options concernant %s (r%d).",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "Plugins",
-	["Options for plugins."] = "Options pour les plugins.",
+	["Options for plugins."] = "Options concernant les plugins.",
 	["Extras"] = "Extras",
-	["Options for extras."] ="Options pour les extras.",
+	["Options for extras."] ="Options concernant les extras.",
 	["Active"] = "Actif",
-	["Activate or deactivate this module."] = "Active ou d\195\169sactive ce module.",
-	["Reboot"] = "Red\195\169marrer",
-	["Reboot this module."] = "Red\195\169marre ce module.",
-	["Debugging"] = "D\195\169boguage",
-	["Show debug messages."] = "Affiche les messages de d\195\169boguage.",
+	["Activate or deactivate this module."] = "Active ou désactive ce module.",
+	["Reboot"] = "Redémarrer",
+	["Reboot this module."] = "Redémarre ce module.",
+	["Debugging"] = "Déboguage",
+	["Show debug messages."] = "Affiche les messages de déboguage.",
 	["Options"] = "Options",
-	bosskill = "D\195\169faite du boss",
-	bosskill_desc = "Pr\195\169viens quand le boss est vaincu.",
+	bosskill = "Défaite du boss",
+	bosskill_desc = "Préviens quand le boss est vaincu.",
 
 	["Load"] = "Charger",
 	["Load All"] = "Tout charger",
