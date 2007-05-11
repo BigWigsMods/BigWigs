@@ -9,8 +9,6 @@ rmdir /s /q BigWigs_Plugins
 rmdir /s /q BigWigs_TheEye
 rmdir /s /q BigWigs_BlackTemple
 
-rmdir /s /q BigWigs_Other
-
 cd BigWigs
 
 move Karazhan ..\BigWigs_Karazhan

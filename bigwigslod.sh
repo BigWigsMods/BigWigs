@@ -9,8 +9,6 @@ rm -rf BigWigs_Plugins
 rm -rf BigWigs_TheEye
 rm -rf BigWigs_BlackTemple
 
-rm -rf BigWigs_Other
-
 cd BigWigs
 
 mv Karazhan ../BigWigs_Karazhan
