@@ -101,3 +101,5 @@ TheEye\Solarian.lua
 
 BlackTemple\BlackTempleBeta.lua
 BlackTemple\Najentus.lua
+
+Hyjal\HyjalBeta.lua

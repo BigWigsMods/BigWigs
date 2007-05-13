@@ -1,0 +1,19 @@
+﻿## Interface: 20003
+
+## Title: Big Wigs [|cffeda55fHyjal|r]
+## Notes: (BETA) Big Wigs Hyjal Modules
+## Author: Funkydude, Rabbit
+## Version: 2.0
+## LoadOnDemand: 1
+
+## X-Website: http://www.wowace.com/index.php/BigWigs
+## X-Category: Raid
+## X-RelSite-WoWI: 5086
+## X-RelSite-Curse: 4356
+## X-AceForum: 1222
+
+## X-BigWigs-LoadInZone: Hyjal Summit
+
+## Dependencies: BigWigs
+
+HyjalBeta.lua
