@@ -8,6 +8,7 @@ rm -rf BigWigs_Extras
 rm -rf BigWigs_Plugins
 rm -rf BigWigs_TheEye
 rm -rf BigWigs_BlackTemple
+rm -rf BigWigs_Hyjal
 
 cd BigWigs
 
@@ -18,3 +19,4 @@ mv Extras ../BigWigs_Extras
 mv Plugins ../BigWigs_Plugins
 mv TheEye ../BigWigs_TheEye
 mv BlackTemple ../BigWigs_BlackTemple
+mv Hyjal ../BigWigs_Hyjal

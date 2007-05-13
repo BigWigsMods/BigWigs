@@ -8,6 +8,7 @@ rmdir /s /q BigWigs_Extras
 rmdir /s /q BigWigs_Plugins
 rmdir /s /q BigWigs_TheEye
 rmdir /s /q BigWigs_BlackTemple
+rmdir /s /q BigWigs_Hyjal
 
 cd BigWigs
 
@@ -18,3 +19,4 @@ move Extras ..\BigWigs_Extras
 move Plugins ..\BigWigs_Plugins
 move TheEye ..\BigWigs_TheEye
 move BlackTemple ..\BigWigs_BlackTemple
+move Hyjal ..\BigWigs_Hyjal
