@@ -56,6 +56,46 @@ L:RegisterTranslations("enUS", function() return {
 	["Solarium Agent"] = true,
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	phase = "Phase",
+	phase_desc = "Warnt vor Phasenwechsel",
+
+	wrathyou = "Zorn Debuff auf Dir",
+	wrathyou_desc = "Warn wenn du von Zorn des Astronomen betroffen bist",
+
+	wrathother = "Zorn Debuff auf anderen",
+	wrathother_desc = "Warnt welche Spieler von Zorn des Astronomen betroffen sind",
+
+	icon = "Icon",
+	icon_desc = "Plaziert ein Schlachtzug Icon auf dem Spieler, der von Zorn des Astronomen betroffen ist",
+
+	split = "Spaltung",
+	split_desc = "Warnt vor Spaltung & Add Spawn",
+
+	split_trigger = "wirkt Spalten des Astronomen",
+	split_bar = "~N\195\164chste Spaltung",
+	split_warning = "Spaltung in ~7 sec",
+
+	phase1_message = "Phase 1 - Spaltung in ~50sec",
+
+	phase2_warning = "Phase 2 bald!",
+	phase2_trigger = "^Ich werde", --to verify
+	phase2_message = "20% - Phase 2",
+
+	wrath_trigger = "^([^%s]+) ([^%s]+) von Zorn des Astronomen betroffen",
+	wrath_other = "Zorn: %s",
+	wrath_you = "Zorn auf DIR!",
+
+	agent_warning = "Splittung! - Agenten in 6 sec",
+	agent_bar = "Agenten",
+
+	priest_warning = "Priester/Solarian in 3 sec",
+	priest_bar = "Priester/Solarian",
+
+	["Solarium Priest"] = "Solarispriester",
+	["Solarium Agent"] = "Solarisagent",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
