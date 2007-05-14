@@ -72,6 +72,9 @@ L:RegisterTranslations("enUS", function() return {
 	fear_trigger2 = "^Lord Sanguinar's Bellowing Roar fails. %S+ is immune.$",
 	fear_spell = "Bellowing Roar",
 
+	revive_bar = "Adds Revived",
+	revive_warning = "Adds Revived in 5sec!",
+
 	-- Weapons
 	["Devastation"] = true, -- Axe
 	["Cosmic Infuser"] = true, -- Staff
@@ -164,6 +167,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(telonicus, "Positive")
 	elseif msg == L["weapons_inc_trigger"] then
 		self:Message(L["weapons_inc_message"], "Positive")
+		self:Bar(L["revive_bar"], 95, "Spell_Holy_ReviveChampion")
+		self:DelayedMessage(90, L["revive_warning"], "Attention")
 	elseif msg == L["phase2_trigger"] then
 		self:Message(L["phase2_message"], "Positive")
 	elseif msg == L["phase3_trigger"] then
