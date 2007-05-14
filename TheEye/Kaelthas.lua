@@ -34,6 +34,9 @@ L:RegisterTranslations("enUS", function() return {
 	gaze = "Gaze",
 	gaze_desc = "Warn when Thaladred focuses on a player.",
 
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Icon over the player that Thaladred sets eyes on.",
+
 	fear = "Fear",
 	fear_desc = "Warn when about Bellowing Roar.",
 
@@ -57,7 +60,7 @@ L:RegisterTranslations("enUS", function() return {
 	conflag_spell = "Conflagration",
 	conflag_message = "Conflag on %s!",
 
-	gaze_trigger = "sets eyes on (%S+)!$",
+	gaze_trigger = "sets eyes on ([^%s]+)!$",
 	gaze_message = "Gaze on %s!",
 
 	fear_soon_message = "Fear soon!",
@@ -92,8 +95,8 @@ mod.wipemobs = {
 	L["Warp Slicer"], L["Netherstrand Longbow"], L["Phaseshift Bulwark"]
 }
 
-mod.toggleoptions = { "phase", -1, "temperament", "conflag", "gaze", "fear", "bosskill" }
-mod.revision = 3
+mod.toggleoptions = { "phase", -1, "temperament", "conflag", "gaze", "icon", "fear", "bosskill" }
+mod.revision = 4
 
 ------------------------------
 --      Initialization      --
@@ -136,14 +139,14 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_EMOTE(msg, mob)
-	if not self.db.profile.gaze then return end
-
-	if mob == thaladred then
-		local player = msg:find(L["gaze_trigger"])
-		if player then
-			self:Icon(player)
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
+	local player = select(3, msg:find(L["gaze_trigger"]))
+	if player then
+		if self.db.profile.gaze then
 			self:Message(L["gaze_message"]:format(player), "Important")
+		end
+		if self.db.profile.icon then
+			self:Icon(player)
 		end
 	end
 end
