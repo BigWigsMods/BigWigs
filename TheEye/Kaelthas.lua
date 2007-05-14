@@ -99,7 +99,8 @@ mod.wipemobs = {
 }
 
 mod.toggleoptions = { "phase", -1, "temperament", "conflag", "gaze", "icon", "fear", "bosskill" }
-mod.revision = 4
+mod.revision = 5
+mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
 ------------------------------
 --      Initialization      --
@@ -163,8 +164,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(sanguinar, "Positive")
 	elseif msg == L["capernian_inc_trigger"] then
 		self:Message(capernian, "Positive")
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif msg == L["telonicus_inc_trigger"] then
 		self:Message(telonicus, "Positive")
+		self:TriggerEvent("BigWigs_HideProximity", self)
 	elseif msg == L["weapons_inc_trigger"] then
 		self:Message(L["weapons_inc_message"], "Positive")
 		self:Bar(L["revive_bar"], 95, "Spell_Holy_ReviveChampion")
