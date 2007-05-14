@@ -203,7 +203,7 @@ function mod:debuff(msg)
 			wplayer = UnitName("player")
 			self:CancelScheduledEvent("cancelProx") --incase they get the debuff twice, don't kill early
 			self:TriggerEvent("BigWigs_ShowProximity", self) --you have the debuff, show the proximity window
-			self:ScheduleEvent("cancelProx", self.KillProx, 8.5, self) --primary debuff lasts ~8.5 seconds, lets kill proximity after that
+			self:ScheduleEvent("cancelProx", "BigWigs_HideProximity", 8.5, self) --primary debuff lasts ~8.5 seconds, lets kill proximity after that
 		end
 		self:Sync("SolaWrath "..wplayer)
 	end
@@ -217,9 +217,4 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:CancelScheduledEvent("split1")
 		self:TriggerEvent("BigWigs_StopBar", self, L["split_bar"])
 	end
-end
-
-function mod:KillProx()
-	--if 8.5 sec passed and no extra debuff was applied to the player, proximity should stop
-	self:TriggerEvent("BigWigs_HideProximity", self)
 end
