@@ -146,6 +146,51 @@ L:RegisterTranslations("koKR", function() return {
 	["Solarium Agent"] = "태양의 전당 요원",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	phase = "Phases",
+	phase_desc = "Pr\195\169viens quand la rencontre entre dans une nouvelle phase.",
+
+	wrath = "Incantation du Courroux",
+	wrath_desc = "Pr\195\169viens quand le Courroux est en cours d'incantation, et sa cible actuelle.",
+
+	wrathyou = "Courroux sur vous",
+	wrathyou_desc = "Pr\195\169viens quand vous subissez les effets du Courroux de l'Astromancien.",
+
+	wrathother = "Courroux sur les autres",
+	wrathother_desc = "Pr\195\169viens quand d'autres subissent les effets du Courroux de l'Astromancien.",
+
+	icon = "Ic\195\180ne",
+	icon_desc = "Place une ic\195\180ne de raid sur le joueur affect\195\169 par le Courroux de l'Astromancien (n\195\169cessite d'\195\170tre promu ou mieux).",
+
+	split = "Rupture",
+	split_desc = "Pr\195\169viens de l'arriv\195\169e des ruptures & des apparitions des adds.",
+
+	split_trigger = "lance Rupture de l'astromancien",
+	split_bar = "~Prochaine Rupture",
+	split_warning = "Rupture dans ~7 sec.",
+
+	phase1_message = "Phase 1 - Rupture dans ~50 sec.",
+
+	phase2_warning = "Phase 2 imminente !",
+	phase2_trigger = "^Je deviens",-- à vérifier
+	phase2_message = "20% - Phase 2",
+
+	wrath_trigger = "^([^%s]+) ([^%s]+) les effets de Courroux de l'Astromancien",
+	wrath_other = "Courroux : %s",
+	wrath_you = "Courroux sur VOUS !",
+	wrath_alert = "Courroux en incantation ! - cible : %s",
+	wrath_alert_trigger = "commence \195\160 lancer Courroux de l'Astromancien.$",
+
+	agent_warning = "Rupture ! - Agents dans 6 sec.",
+	agent_bar = "Agents",
+
+	priest_warning = "Pr\195\170tres/Solarian dans 3 sec.",
+	priest_bar = "Pr\195\170tres/Solarian",
+
+	["Solarium Priest"] = "Pr\195\170tre Solarium", -- à vérifier
+	["Solarium Agent"] = "Agent Solarium", -- à vérifier
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

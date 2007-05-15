@@ -2,6 +2,7 @@
 
 ## Title: Big Wigs [|cffeda55fPlugins|r]
 ## Notes: Big Wigs Core Plugins
+## Notes-frFR: Plugins du noyau de Big Wigs.
 ## Title-zhTW: Big Wigs [|cffeda55f附加元件|r]
 ## Notes-zhTW: Big Wigs 附加元件模組
 ## Author: Ammo, Rabbit
