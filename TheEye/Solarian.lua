@@ -96,6 +96,46 @@ L:RegisterTranslations("deDE", function() return {
 	["Solarium Agent"] = "Solarisagent",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	phase = "단계",
+	phase_desc = "단계 변경에 대한 알림",
+
+	wrathyou = "자신에 격노 디버프",
+	wrathyou_desc = "당신이 점성술사의 격노에 걸렸을 때 알림",
+
+	wrathother = "타인에 격노 디버프",
+	wrathother_desc = "타인이 점성술사의 격노에 걸렸을 때 알림",
+
+	icon = "아이콘",
+	icon_desc = "점성술사의 격노에 걸린 플레이어에 공격대 아이콘 지정",
+
+	split = "분리",
+	split_desc = "분리와 소환에 대한 경고",
+
+	split_trigger = "점성술사의 분리|1을;를; 시전합니다", -- check
+	split_bar = "~다음 분리",
+	split_warning = "약 7초 이내 분리",
+
+	phase1_message = "1 단계 - 약 50초 이내 분리",
+
+	phase2_warning = "잠시 후 2 단계!",
+	phase2_trigger = "^I become", -- check
+	phase2_message = "20% - 2 단계",
+
+	wrath_trigger = "^([^|;%s]*)(.*)점성술사의 격노에 걸렸습니다%.$", -- check
+	wrath_other = "격노: %s",
+	wrath_you = "당신에 격노!",
+
+	agent_warning = "분리! - 6초 이내 요원",
+	agent_bar = "요원",
+
+	priest_warning = "3초 이내 사제/솔라리안",
+	priest_bar = "사제/솔라리안",
+
+	["Solarium Priest"] = "태양의 전당 사제",
+	["Solarium Agent"] = "태양의 전당 요원",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
