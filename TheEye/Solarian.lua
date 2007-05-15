@@ -105,6 +105,9 @@ L:RegisterTranslations("koKR", function() return {
 	phase = "단계",
 	phase_desc = "단계 변경에 대한 알림",
 
+	wrath = "격노 시전",
+	wrath_desc = "격노 시전 시 경고와 현재 대상 알림",
+
 	wrathyou = "자신에 격노 디버프",
 	wrathyou_desc = "당신이 점성술사의 격노에 걸렸을 때 알림",
 
@@ -130,6 +133,8 @@ L:RegisterTranslations("koKR", function() return {
 	wrath_trigger = "^([^|;%s]*)(.*)점성술사의 격노에 걸렸습니다%.$", -- check
 	wrath_other = "격노: %s",
 	wrath_you = "당신에 격노!",
+	wrath_alert = "격노 시전! - 대상: %s",
+	wrath_alert_trigger = "점성술사의 격노 시전을 시작합니다.$",
 
 	agent_warning = "분리! - 6초 이내 요원",
 	agent_bar = "요원",
