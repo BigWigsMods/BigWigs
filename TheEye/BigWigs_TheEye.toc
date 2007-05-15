@@ -2,8 +2,8 @@
 
 ## Title: Big Wigs [|cffeda55fThe Eye|r]
 ## Notes: (BETA) Big Wigs The Eye Modules
-## Author: Ammo, Rabbit, Funkydude
-## X-Credits: Tekkub Stoutwrithe(founding author) & Others
+## Author: Rabbit, Funkydude
+## X-Credits: Daemona, Radon & Others
 ## Version: 2.0
 ## LoadOnDemand: 1
 
@@ -18,7 +18,6 @@
 
 ## Dependencies: BigWigs
 
-TheEyeBeta.lua
 Alar.lua
 Reaver.lua
 Kaelthas.lua

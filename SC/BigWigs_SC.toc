@@ -3,7 +3,7 @@
 ## Title: Big Wigs [|cffeda55fSerpentshrine Cavern|r]
 ## Notes: Big Wigs Serpentshrine Cavern Modules
 ## Author: Ammo, Rabbit, Funkydude
-## X-Credits: Tekkub Stoutwrithe(founding author) & Others
+## X-Credits: Cartas, SoLoR, Beffe, Silah, Prodomo, Radon, Tsigo & Others
 ## Version: 2.0
 ## LoadOnDemand: 1
 
