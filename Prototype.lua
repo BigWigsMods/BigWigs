@@ -75,50 +75,43 @@ end
 
 local function populateScanTable(mod)
 	if type(mod.scanTable) == "table" then return end
-	local x = mod.enabletrigger
-	if type(x) == "string" then x = {x} end
 	mod.scanTable = {}
-	for k, v in pairs(x) do
-		rawset(mod.scanTable, #mod.scanTable + 1, v)
+
+	local x = mod.enabletrigger
+	if type(x) == "string" then
+		mod.scanTable[x] = true
+	elseif type(x) == "table" then
+		for i, v in ipairs(x) do
+			mod.scanTable[v] = true
+		end
 	end
+
 	local a = mod.wipemobs
-	if a then
-		if type(a) == "string" then a = {a} end
-		for k,v in pairs(a) do rawset(mod.scanTable, #mod.scanTable + 1, v) end
+	if type(a) == "string" then
+		mod.scanTable[a] = true
+	elseif type(a) == "table" then
+		for i, v in ipairs(a) do
+			mod.scanTable[v] = true
+		end
 	end
 end
 
 function BigWigs.modulePrototype:Scan()
 	if not self.scanTable then populateScanTable(self) end
 
-	if UnitExists("target") and UnitAffectingCombat("target") then
-		local target = UnitName("target")
-		for _, mob in pairs(self.scanTable) do
-			if target == mob then
-				return true
-			end
-		end
+	if UnitExists("target") and UnitAffectingCombat("target") and self.scanTable[UnitName("target")] then
+		return true
 	end
 
-	if UnitExists("focus") and UnitAffectingCombat("focus") then
-		local target = UnitName("focus")
-		for _, mob in pairs(self.scanTable) do
-			if target == mob then
-				return true
-			end
-		end
+	if UnitExists("focus") and UnitAffectingCombat("focus") and self.scanTable[UnitName("focus")] then
+		return true
 	end
 
 	local num = GetNumRaidMembers()
 	for i = 1, num do
 		local raidUnit = string.format("raid%starget", i)
-		if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) then
-			local target = UnitName(raidUnit)
-			for _, mob in ipairs(self.scanTable) do
-				if target == mob then
-					return true
-				end
-			end
+		if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) and self.scanTable[UnitName(raidUnit)] then
+			return true
 		end
 	end
 	return false
@@ -135,7 +128,7 @@ function BigWigs.modulePrototype:ValidateEngageSync(sync, rest)
 	if sync ~= self:GetEngageSync() then return false end
 	local boss = BB:HasReverseTranslation(rest) and BB:GetReverseTranslation(rest) or rest
 	if not self.scanTable then populateScanTable(self) end
-	for _, mob in pairs(self.scanTable) do
+	for mob in pairs(self.scanTable) do
 		local translated = BB:HasReverseTranslation(mob) and BB:GetReverseTranslation(mob) or mob
 		if translated == rest or mob == rest then return true end
 	end
@@ -144,19 +137,15 @@ end
 
 function BigWigs.modulePrototype:CheckForEngage()
 	local go = self:Scan()
-	local running = self:IsEventScheduled(self:ToString().."_CheckStart")
 	if go then
 		if BigWigs:IsDebugging() then
 			BigWigs:Debug(self, "Scan returned true, engaging.")
 		end
-		self:CancelScheduledEvent(self:ToString().."_CheckStart")
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
-		local moduleName = BB:HasReverseTranslation(self:ToString()) and BB:GetReverseTranslation(self:ToString()) or self:ToString()
-		self:TriggerEvent("BigWigs_SendSync", self:GetEngageSync().." "..moduleName)
-	elseif not running then
-		self:ScheduleRepeatingEvent(self:ToString().."_CheckStart", self.CheckForEngage, .5, self)
+		local mod = self:ToString()
+		local moduleName = BB:HasReverseTranslation(mod) and BB:GetReverseTranslation(mod) or mod
+		self:Sync(self:GetEngageSync().." "..moduleName)
+	elseif UnitAffectingCombat("player") then
+		self:ScheduleEvent(self.CheckForEngage, .5, self)
 	end
 end
 
@@ -169,29 +158,20 @@ else
 end
 
 function BigWigs.modulePrototype:CheckForWipe()
-	local running = self:IsEventScheduled(self:ToString().."_CheckWipe")
-	if fdFunc() then
-		if not running then
-			self:ScheduleRepeatingEvent(self:ToString().."_CheckWipe", self.CheckForWipe, 2, self)
+	if not fdFunc() then
+		local go = self:Scan()
+		if not go then
+			if BigWigs:IsDebugging() then
+				BigWigs:Debug(self, "Rebooting module.")
+			end
+			self:TriggerEvent("BigWigs_RemoveRaidIcon")
+			self:TriggerEvent("BigWigs_RebootModule", self)
+			return
 		end
-		return
 	end
 
-	local go = self:Scan()
-	if not go then
-		if BigWigs:IsDebugging() then
-			BigWigs:Debug(self, "Rebooting module.")
-		end
-		if type(self.scanTable) == "table" then
-			for k in pairs(self.scanTable) do
-				self.scanTable[k] = nil
-			end
-		end
-		self.scanTable = nil
-		self:TriggerEvent("BigWigs_RemoveRaidIcon")
-		self:TriggerEvent("BigWigs_RebootModule", self)
-	elseif not running then
-		self:ScheduleRepeatingEvent(self:ToString().."_CheckWipe", self.CheckForWipe, 2, self)
+	if not UnitAffectingCombat("player") then
+		self:ScheduleEvent(self.CheckForWipe, 2, self)
 	end
 end
 
