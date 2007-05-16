@@ -127,7 +127,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase1_message = "1 단계 - 약 50초 이내 분리",
 
 	phase2_warning = "잠시 후 2 단계!",
-	phase2_trigger = "^I become", -- check
+	phase2_trigger = "^나는 공허의", -- check
 	phase2_message = "20% - 2 단계",
 
 	wrath_trigger = "^([^|;%s]*)(.*)점성술사의 격노에 걸렸습니다%.$", -- check
