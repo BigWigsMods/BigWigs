@@ -493,6 +493,16 @@ function BigWigs:BigWigs_RecvSync(sync, module)
 		if self:HasModule(name) then
 			self:EnableModule(name, true)
 		end
+	elseif sync == "BossDeath" and type(module) == "string" and self:HasModule(module) then
+		local mod = self:GetModule(module)
+		if mod.db.profile.bosskill then
+			mod:Message(L["%s has been defeated"]:format(module), "Bosskill", nil, "Victory")
+		end
+		mod:TriggerEvent("BigWigs_RemoveRaidIcon")
+		if self:IsDebugging() then
+			self:Debug(mod, "Boss dead, disabling.")
+		end
+		self:ToggleModuleActive(mod, false)
 	end
 end
 

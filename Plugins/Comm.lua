@@ -8,7 +8,8 @@ local throt, times = {}, {}
 local playerName = nil
 
 local coreSyncs = {
-	["BossEngaged"] = 5,
+	BossEngaged = 5,
+	BossDeath = 5,
 }
 
 ----------------------------------
@@ -73,3 +74,4 @@ end
 
 function plugin:GetThrottleTable() return throt end
 function plugin:GetTimesTable() return times end
+

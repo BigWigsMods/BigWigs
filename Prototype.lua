@@ -69,14 +69,7 @@ end
 
 function BigWigs.modulePrototype:GenericBossDeath(msg)
 	if msg == UNITDIESOTHER:format(self:ToString()) then
-		if self.db.profile.bosskill then
-			self:Message(L["%s has been defeated"]:format(self:ToString()), "Bosskill", nil, "Victory")
-		end
-		self:TriggerEvent("BigWigs_RemoveRaidIcon")
-		if BigWigs:IsDebugging() then
-			BigWigs:Debug(self, "Boss dead, disabling.")
-		end
-		BigWigs:ToggleModuleActive(self, false)
+		self:Sync("BossDeath " .. self:ToString())
 	end
 end
 
