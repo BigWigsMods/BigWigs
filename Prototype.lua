@@ -108,13 +108,23 @@ function BigWigs.modulePrototype:Scan()
 	end
 
 	local num = GetNumRaidMembers()
-	for i = 1, num do
-		local raidUnit = string.format("raid%starget", i)
-		if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) and self.scanTable[UnitName(raidUnit)] then
-			return true
+	if num == 0 then
+		num = GetNumPartyMembers()
+		for i = 1, num do
+			local partyUnit = string.format("party%starget", i)
+			if UnitExists(partyUnit) and UnitAffectingCombat(partyUnit) and self.scanTable[UnitName(partyUnit)] then
+				return true
+			end			
+		end
+	else
+		for i = 1, num do
+			local raidUnit = string.format("raid%starget", i)
+			if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) and self.scanTable[UnitName(raidUnit)] then
+				return true
+			end
 		end
 	end
-	return false
+	return false	
 end
 
 function BigWigs.modulePrototype:GetEngageSync()
