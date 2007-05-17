@@ -29,6 +29,9 @@ L:RegisterTranslations("enUS", function() return {
 	shield_warn = "Tidal Shield!",
 	shield_soon_warn = "Tidal Shield in 10sec!", 
 
+	enrage = "Enrage",
+	enrage_desc = "Warn for enrage",
+
 	icon = "Icon",
 	icon_desc = "Put an icon on players with Impaling Spine.",
 } end )
@@ -40,7 +43,7 @@ L:RegisterTranslations("enUS", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"shield", "spine", "icon",  "bosskill"}
+mod.toggleoptions = {"enrage", "shield", "spine", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -70,9 +73,22 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.shield and msg == L["start_trigger"] then
-		self:DelayedMessage(50, L["shield_soon_warn"], "Positive")
-		self:Bar(L["shield_bar"], 60, "Spell_Frost_FrostBolt02")
+	if msg == L["start_trigger"] then
+		if self.db.profile.shield and then
+			self:DelayedMessage(50, L["shield_soon_warn"], "Positive")
+			self:Bar(L["shield_bar"], 60, "Spell_Frost_FrostBolt02")
+		end
+		if self.db.profile.enrage then
+			self:Message(L2["enrage_start"]:format(boss, 8), "Attention")
+			self:DelayedMessage(180, L2["enrage_min"]:format(5), "Positive")
+			self:DelayedMessage(300, L2["enrage_min"]:format(3), "Positive")
+			self:DelayedMessage(420, L2["enrage_min"]:format(1), "Positive")
+			self:DelayedMessage(450, L2["enrage_sec"]:format(30), "Positive")
+			self:DelayedMessage(470, L2["enrage_sec"]:format(10), "Urgent")
+			self:DelayedMessage(475, L2["enrage_sec"]:format(5), "Urgent")
+			self:DelayedMessage(480, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Bar(L2["enrage"], 480, "Spell_Shadow_UnholyFrenzy")
+		end
 	end
 end
 
