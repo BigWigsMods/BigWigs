@@ -338,5 +338,7 @@ function mod:WrathCheck()
 			end
 		end
 	end
-	self:Message(L["wrath_alert"]:format(target), "Attention")
+	if target then
+		self:Message(L["wrath_alert"]:format(target), "Attention")
+	end
 end
