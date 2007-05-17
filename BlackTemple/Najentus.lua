@@ -74,7 +74,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["start_trigger"] then
-		if self.db.profile.shield and then
+		if self.db.profile.shield then
 			self:DelayedMessage(50, L["shield_soon_warn"], "Positive")
 			self:Bar(L["shield_bar"], 60, "Spell_Frost_FrostBolt02")
 		end
