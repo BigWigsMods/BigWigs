@@ -16,7 +16,7 @@ L:RegisterTranslations("enUS", function() return {
 	rebirth_desc = "Alert when Al'ar casts rebirth",
 
 	rebirth_trigger = "Al'ar begins to cast Rebirth.",
-	rebirth_message = "Rebirth!",
+	rebirth_message = "Rebirth! - Phase 2!",
 
 	flamepatch = "Flame Patch on You",
 	flamepatch_desc = "Warn for a Flame Patch on You",
