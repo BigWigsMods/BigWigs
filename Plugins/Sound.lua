@@ -10,11 +10,11 @@ local mType = media.MediaType and media.MediaType.SOUND or "sound"
 local db = nil
 
 local sounds = {
-	["Long"] = "BigWigs: Long",
-	["Info"] = "BigWigs: Info",
-	["Alert"] = "BigWigs: Alert",
-	["Alarm"] = "BigWigs: Alarm",
-	["Victory"] = "BigWigs: Victory",
+	Long = "BigWigs: Long",
+	Info = "BigWigs: Info",
+	Alert = "BigWigs: Alert",
+	Alarm = "BigWigs: Alarm",
+	Victory = "BigWigs: Victory",
 }
 
 ----------------------------
@@ -24,6 +24,12 @@ local sounds = {
 L:RegisterTranslations("enUS", function() return {
 	["Sounds"] = true,
 	["Options for sounds."] = true,
+
+	["Alarm"] = true,
+	["Info"] = true,
+	["Alert"] = true,
+	["Long"] = true,
+	["Victory"] = true,
 
 	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = true,
 	["toggle"] = true,
@@ -103,11 +109,11 @@ plugin.defaultDB = {
 	defaultonly = false,
 	sound = true,
 	media = {
-		["Long"] = "BigWigs: Long",
-		["Info"] = "BigWigs: Info",
-		["Alert"] = "BigWigs: Alert",
-		["Alarm"] = "BigWigs: Alarm",
-		["Victory"] = "BigWigs: Victory",
+		Long = "BigWigs: Long",
+		Info = "BigWigs: Info",
+		Alert = "BigWigs: Alert",
+		Alarm = "BigWigs: Alarm",
+		Victory = "BigWigs: Victory",
 	},
 }
 plugin.consoleCmd = L["Sounds"]
@@ -174,10 +180,11 @@ function plugin:OnRegister()
 	end
 
 	for k in pairs(sounds) do
+		local n = L:HasTranslation(k) and L[k] or k
 		self.consoleOptions.args[k] = {
 			type = "text",
-			name = k,
-			desc = L["Set the sound to use for %q (Ctrl-Click a sound to preview.)"]:format(k),
+			name = n,
+			desc = L["Set the sound to use for %q (Ctrl-Click a sound to preview.)"]:format(n),
 			passValue = k,
 			get = get,
 			set = set,
