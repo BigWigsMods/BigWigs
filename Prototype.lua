@@ -22,6 +22,12 @@ commonWords:RegisterTranslations("enUS", function() return {
 commonWords:RegisterTranslations("deDE", function() return {
 	you = "Ihr",
 	are = "seid",
+
+	enrage_start = "%s Angegriffen - Enrage in %dmin",
+	enrage_end = "%s Enraged",
+	enrage_min = "Enrage in %d min",
+	enrage_sec = "Enrage in %d sek",
+	enrage = "Enrage",
 } end )
 
 commonWords:RegisterTranslations("koKR", function() return {
