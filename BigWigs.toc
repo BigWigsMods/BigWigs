@@ -58,6 +58,7 @@ Plugins\Sound.lua
 Plugins\RaidWarn.lua
 Plugins\BossBlock.lua
 Plugins\RaidIcon.lua
+Plugins\Range.lua
 
 Extras\CustomBar.lua
 Extras\Tranq.lua
