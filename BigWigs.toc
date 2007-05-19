@@ -17,7 +17,7 @@
 ## X-AceForum: 1222
 ## X-License: See license.txt
 
-## OptionalDeps: Ace2, FuBar, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, SharedMediaLib, SharedMedia, MikScrollingBattleText, sct, Waterfall-1.0
+## OptionalDeps: FuBar, SharedMedia, MikScrollingBattleText, sct
 ## X-Embeds: Ace2, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, SharedMediaLib, Waterfall-1.0
 
 ## SavedVariables: BigWigsDB, BigWigsFubarDB
@@ -33,7 +33,6 @@ Libs\AceDebug-2.0\AceDebug-2.0.lua
 Libs\AceEvent-2.0\AceEvent-2.0.lua
 Libs\AceLocale-2.2\AceLocale-2.2.lua
 Libs\AceModuleCore-2.0\AceModuleCore-2.0.lua
-Libs\AceTab-2.0\AceTab-2.0.lua
 
 Libs\Babble-Boss-2.2\Babble-Boss-2.2.lua
 Libs\Babble-Zone-2.2\Babble-Zone-2.2.lua
@@ -103,3 +102,4 @@ BlackTemple\BlackTempleBeta.lua
 BlackTemple\Najentus.lua
 
 Hyjal\HyjalBeta.lua
+
