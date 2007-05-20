@@ -135,7 +135,7 @@ L:RegisterTranslations("zhTW", function() return {
 	enrage_desc = "開戰警告，同時進入九分鐘狂怒計時。",
 
 	phase1_message = "第一階段 - 留意光線門位置！",
-	phase1_warning = "尼德斯開戰！ 60 秒後狂怒狀態！",
+	--phase1_warning = "尼德斯開戰！ 60 秒後狂怒狀態！",
 	phase1_bar = "下一次返回",
 	phase1_trigger = "%s大聲呼喊撤退，打開通往地獄的門。",
 	phase2_message = "第二階段！地獄燃燒來臨！",

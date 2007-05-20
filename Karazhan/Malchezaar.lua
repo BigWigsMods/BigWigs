@@ -194,9 +194,9 @@ L:RegisterTranslations("zhTW", function() return {
 	infernal_warning = "地獄火在 20 秒內來臨!",
 	infernal_message = "地獄火在 5 秒內來臨!",
 
-	nova_trigger = "莫克札王子開始施放暗影新星",
 	nova_message = "暗影新星！",
 	nova_bar = "暗影新星計時",
+	nova_soon = "莫克札王子開始施放暗影新星",
 } end )
 
 ----------------------------------
