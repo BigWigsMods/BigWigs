@@ -16,18 +16,16 @@ L:RegisterTranslations("enUS", function() return {
 	start_trigger = "You will die in the name of Lady Vashj!",
 
 	spine = "Impaling Spine",
-	spine_desc = "Tells you who gets impaled",
+	spine_desc = "Tells you who gets impaled.",
 	spine_trigger = "^([^%s]+) ([^%s]+) afflicted by Impaling Spine.$",
 	spine_message = "Impaling Spine on %s!",
 
 	shield = "Tidal Shield",
 	shield_desc = "Timers for when Naj'entus will gain tidal shield.",
-	shield_trigger  = "High Warlord Naj'entus is afflicted by Tidal Shield.", 
-	shield_fade_trigger = "Tidal Shield fades from High Warlord Naj'entus.",
-	shield_bar = "Tidal Shield",
+	shield_trigger = "High Warlord Naj'entus is afflicted by Tidal Shield.", 
 	shield_nextbar = "Next Tidal Shield",
 	shield_warn = "Tidal Shield!",
-	shield_soon_warn = "Tidal Shield in 10sec!", 
+	shield_soon_warn = "Tidal Shield in ~10sec!", 
 
 	enrage = "Enrage",
 	enrage_desc = "Warn for enrage",
@@ -57,14 +55,12 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "NajShieldOn", 10)
-	self:TriggerEvent("BigWigs_ThrottleSync", "NajShieldGone", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "NajSpine", 2)
 end
 
@@ -76,7 +72,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["start_trigger"] then
 		if self.db.profile.shield then
 			self:DelayedMessage(50, L["shield_soon_warn"], "Positive")
-			self:Bar(L["shield_bar"], 60, "Spell_Frost_FrostBolt02")
+			self:Bar(L["shield_nextbar"], 60, "Spell_Frost_FrostBolt02")
 		end
 		if self.db.profile.enrage then
 			self:Message(L2["enrage_start"]:format(boss, 8), "Attention")
@@ -89,12 +85,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:DelayedMessage(480, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 480, "Spell_Shadow_UnholyFrenzy")
 		end
-	end
-end
-
-function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
-	if self.db.profile.shield and msg == L["shield_fade_trigger"] then
-		self:Sync("NajShieldGone")
 	end
 end
 
@@ -120,10 +110,10 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
-	elseif sync == "NajShieldGone" and self.db.profile.shield then
-		self:DelayedMessage(50, L["shield_soon_warn"], "Positive")
-		self:Bar(L["shield_nextbar"], 60, "Spell_Frost_FrostBolt02")
 	elseif sync == "NajShieldOn" and self.db.profile.shield then
 		self:Message(L["shield_warn"], "Important", nil, "Alert")
+		self:DelayedMessage(50, L["shield_soon_warn"], "Positive")
+		self:Bar(L["shield_nextbar"], 60, "Spell_Frost_FrostBolt02")
+		self:Bar(L["shield_warn"], 6, "Spell_Frost_FrostBolt02")
 	end
 end
