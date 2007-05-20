@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?    --
 ------------------------------
 
@@ -80,6 +80,25 @@ L:RegisterTranslations("koKR", function() return {
 	riding_youwarn = "당신은 빨간 두건입니다!",
 	riding_otherwarn = "%s님이 빨간 두건입니다!",
 	riding_bar = "빨간 두건 - %s",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	cmd = "大野狼",
+
+	youriding = "你變成小紅帽時警告",
+	youriding_desc = "當你變成小紅帽時警告",
+
+	elseriding = "隊友變成小紅帽時警告",
+	elseriding_desc = "當隊友變成小紅帽時警告",
+
+	icon = "團隊標記",
+	icon_desc = "對變成小紅帽的人員設置團隊標記（需要權限）",
+
+	riding_trigger = "^(.+)獲得了(.*)小紅帽的效果",
+
+	riding_youwarn = "你變成小紅帽了！",
+	riding_otherwarn ="[%s] 變成小紅帽了！",
+	riding_bar = "%s 快跑！",
 } end )
 
 ----------------------------------

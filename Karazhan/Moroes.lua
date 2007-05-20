@@ -142,6 +142,41 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_warning = "잠시 후 격노!",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	cmd = "摩洛",
+
+	engage = "開戰提示",
+	engage_desc = ("提示與 %s 開戰"):format(boss),
+
+	vanish = "消失預警",
+	vanish_desc = "消失預警計時",
+
+	garrote = "絞喉警告",
+	garrote_desc = "當人員受到絞喉時警告",
+
+	enrage = "狂怒",
+	enrage_desc = ("提示 %s 進入狂怒狀態"):format(boss),
+
+	icon = "團隊標記",
+	icon_desc = "對受到絞喉影響的人員設置團隊標記（需要權限）",
+
+	vanish_trigger1 = "你找我嗎?",
+	vanish_trigger2 = "呃，我說到哪了?喔，對了……",
+	vanish_message = "消失！下一次在 35 秒內！",
+	vanish_warning = "即將消失！",
+	vanish_bar = "下次消失計時",
+
+	garrote_trigger = "^(.+)受到(.*)絞喉",
+	garrote_message = "絞喉：[%s]",
+
+	engage_trigger = "嗯，突然上門的訪客。一定要做好準備……",
+	engage_message = "%s 開戰 - 35 秒內消失！",
+
+	enrage_trigger = "%s becomes enraged!",--要抓 combatlog
+	enrage_message = "狂怒！",
+	enrage_warning = "摩洛即將狂怒！",
+} end)
+
 ----------------------------------
 --   Module Declaration    --
 ----------------------------------

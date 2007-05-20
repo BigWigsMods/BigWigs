@@ -120,6 +120,35 @@ L:RegisterTranslations("koKR", function() return {
 	holyfire_message = "신성한 불꽃: %s",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	cmd = "虛幻魔女",
+
+	engage = "開戰提示",
+	engage_desc = ("提示與 %s 開戰"):format(boss),
+
+	repentance = "懺悔估計",
+	repentance_desc = "懺悔估計時間",
+
+	holyfire = "神聖之火警告",
+	holyfire_desc = "人員受到神聖之火攻擊時警告",
+
+	icon = "團隊標記",
+	icon_desc = "對受到神聖之火影響的人員設置團隊標記（需要權限）",
+
+	engage_trigger = "你的行為不能被容忍。",
+	engage_message = "戰鬥開始！33 秒後懺悔！",
+
+	repentance_trigger1 = "逐出你的腐敗思想。",
+	repentance_trigger2 = "你的不潔必須被淨化。",
+	repentance_message = "懺悔！33 秒後下一次懺悔！",
+	repentance_warning = "懺悔即將來臨！",
+	repentance_bar = "懺悔計時",
+	repentance_nextbar = "懺悔預備！治療群補上 HoT！",
+
+	holyfire_trigger = "^(.+)受到(.*)神聖之火",
+	holyfire_message = "神聖之火：[%s]",
+} end)
+
 ----------------------------------
 --   Module Declaration    --
 ----------------------------------

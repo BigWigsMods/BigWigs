@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?    --
 ------------------------------
 
@@ -19,6 +19,17 @@ L:RegisterTranslations("enUS", function() return {
 	web_trigger = "^([^%s]+) ([^%s]+) afflicted by Hyakiss' Web.",
 	web_message = "%s has been webbed.",
 	web_bar = "Web: %s",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	cmd = "亞奇斯",
+
+	web = "亞奇斯之網",
+	web_desc = "當人員受到亞奇斯之網影響時警告",
+
+	web_trigger = "^(.+)受到(.*)亞奇斯之網",
+	web_message = "%s 被網住了！",
+	web_bar = "亞奇斯之網：%s",
 } end )
 
 ----------------------------------

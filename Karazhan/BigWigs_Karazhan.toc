@@ -3,6 +3,7 @@
 ## Title: Big Wigs [|cffeda55fKarazhan|r]
 ## Notes: Big Wigs Karazhan Modules
 ## Notes-frFR: Modules Big Wigs concernant Karazhan.
+## Notes-zhTW: BigWigs 卡拉贊
 ## Author: Ammo, Rabbit, Funkydude
 ## X-Credits: Tekkub Stoutwrithe(founding author), Arelenda & Others
 ## Version: 2.0

@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --     Are you local?     --
 ------------------------------
 
@@ -145,6 +145,40 @@ L:RegisterTranslations("koKR", function() return {
 	buff1_message = "%s 사랑의 용기 효과 얻음!",
 	buff2_trigger = "헌신 효과를 얻었습니다.", -- check
 	buff2_message = "%s 헌신 효과 얻음!",
+} end)
+
+L:RegisterTranslations("zhTW", function() return {
+	cmd = "羅慕歐茱麗葉",
+
+	phase = "階段警告",
+	phase_desc = "當進入下一階段時警告",
+
+	poison = "中毒警告",
+	poison_desc = "當隊友中毒時警告",
+
+	heal = "治療警告",
+	heal_desc = ("當 %s 施放永恆的影響時警告"):format(girl),
+
+	buff = "自身 Buff 警告",
+	buff_desc = ("當 %s 與 %s 獲得狗男女強化時警告"):format(boy, girl),
+
+	phase1_trigger = "你是什麼樣的惡魔，讓我這樣的痛苦?",
+	phase1_message = "第一章 - %s 出現！",
+	phase2_trigger = "你想挑釁我嗎?下一個就輪到你了，小子!",
+	phase2_message = "第二章 - %s 出現！",
+	phase3_trigger = "來吧，溫和的夜晚；把我的羅慕歐還給我!",
+	phase3_message = "第三章 - 狗男女閃光！",
+
+	poison_trigger = "^(.+)受到(.*)毒勁",
+	poison_message = "中毒：[%s]",
+
+	heal_trigger = "開始施放永恆的影響",
+	heal_message = "%s 施放治療！",
+
+	buff1_trigger = "獲得了虔誠的效果。",
+	buff1_message = "%s 獲得虔誠效果！",
+	buff2_trigger = "獲得了膽量的效果。",
+	buff2_message = "%s 獲得膽量效果！",
 } end)
 
 ----------------------------------

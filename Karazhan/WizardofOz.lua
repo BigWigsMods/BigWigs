@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --     Are you local?     --
 ------------------------------
 
@@ -83,6 +83,22 @@ L:RegisterTranslations("koKR", function() return {
 	light_message = "연쇄 번개!",
 
 	engage_trigger = "티토야, 우린 집으로 갈 방법을 찾아야 해!",
+} end)
+
+L:RegisterTranslations("zhTW", function() return {
+	spawns = "啟動時間",
+	spawns_desc = "設定各角色啟動時間計時",
+
+	light = "閃電鏈警告",
+	light_desc = "警告閃電鏈施放",
+
+	spawns_bar = "%s 開始攻擊！",
+	spawns_warning = "%s 五秒內啟動！",
+
+	light_trigger = "老巫婆開始施放閃電鏈",
+	light_message = "閃電鏈！",
+
+	engage_trigger = "喔多多，我們一定要找到回家的路!",
 } end)
 
 ----------------------------------

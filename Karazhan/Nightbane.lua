@@ -224,6 +224,61 @@ L:RegisterTranslations("koKR", function() return {
 	bones_whisper = "당신은 뼈의 비!",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	cmd = "夜禍",
+
+	fear = "恐懼警告",
+	fear_desc = "低沉咆哮警告",
+
+	charr = "灼燒大地警告",
+	charr_desc = "當你受到灼燒大地時警告",
+
+	phase = "階段警告",
+	phase_desc = ("當 %s 切換狀態時警告"):format(boss),
+
+	engage = "開戰警告",
+	engage_desc = "開戰警告",
+
+	blast = "爆裂濃煙警告",
+	blast_desc = "當爆裂濃煙施放時警告",
+
+	bones = "碎骨之雨警告",
+	bones_desc = "當碎骨之雨施放時警告",
+
+	icon = "團隊標記",
+	icon_desc = "對受到碎骨之雨影響的人員設置團隊標記（需要權限）",
+
+	whisper = "玩家密語",
+	whisper_desc = "對受到碎骨之雨的人員使用密語通知（需要權限）",
+
+	fear_trigger = "施放低沉咆哮",
+	fear_message = "兩秒鐘內恐懼！",
+	fear_warning = "恐懼即將來臨！",
+	fear_bar = "恐懼計時",
+
+	charr_trigger = "你獲得了灼燒大地",
+	charr_message = "灼燒大地在你腳下！",
+
+	blast_trigger = "夜禍開始施放爆裂濃煙",
+	blast_message = "施放爆裂濃煙中！",
+
+	airphase_trigger = "悲慘的害蟲。我將讓你消失在空氣中!",
+	landphase_trigger1 = "夠了!我要親自挑戰你!",
+	landphase_trigger2 = "昆蟲!給你們近距離嚐嚐我的厲害!",
+	airphase_message = "升空準備！",
+	landphase_message = "落地準備！",
+	summon_trigger = "一個古老的生物在遠處甦醒過來……",
+
+	engage_trigger = "真是蠢蛋!我會快點結束你的痛苦!",
+	engage_message = "%s 開戰！",
+
+	bones_trigger = "^(.+)受到(.*)碎骨之雨",
+	bones_message = "[%s] 中了碎骨之雨",
+	bones_whisper = "你中了碎骨之雨！避開人群！",
+
+	["Restless Skeleton"] = "骸骨",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------

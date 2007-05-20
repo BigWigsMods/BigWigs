@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?    --
 ------------------------------
 
@@ -117,6 +117,36 @@ L:RegisterTranslations("frFR", function() return {
 
 	netherbreath_trigger = "lance Affronter une cible al\195\169atoire.",
 	netherbreath_warn = "Souffle du N\195\169ant imminent !",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	cmd = "Netherspite",
+
+	phase = "階段警告",
+	phase_desc = ("當 %s 切換狀態時警告"):format(boss),
+
+	voidzone = "虛空地區警告",
+	voidzone_desc = "警告虛空地區施放",
+
+	netherbreath = "地獄燃燒警告",
+	netherbreath_desc = "當地獄燃燒開始時警告",
+
+	enrage = "開戰警告",
+	enrage_desc = "開戰警告，同時進入九分鐘狂怒計時。",
+
+	phase1_message = "第一階段 - 留意光線門位置！",
+	phase1_warning = "尼德斯開戰！ 60 秒後狂怒狀態！",
+	phase1_bar = "下一次返回",
+	phase1_trigger = "%s大聲呼喊撤退，打開通往地獄的門。",
+	phase2_message = "第二階段！地獄燃燒來臨！",
+	phase2_bar = "下一次狂怒",
+	phase2_trigger = "%s陷入一陣狂怒!",
+
+	voidzone_trigger = "施放了虛空地區",
+	voidzone_warn = "虛空地區警告 - (%d)！",
+
+	netherbreath_trigger = "施放了切換模式",
+	netherbreath_warn = "放逐階段，地獄燃燒開始！",
 } end )
 
 ----------------------------------
