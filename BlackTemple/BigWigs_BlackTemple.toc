@@ -3,7 +3,7 @@
 ## Title: Big Wigs [|cffeda55fBlack Temple|r]
 ## Notes: (BETA) Big Wigs Black Temple Modules
 ## Author: Funkydude, Rabbit
-## X-Credits: Zonker
+## X-Credits: Zonker, Daemona
 ## Version: 2.0
 ## LoadOnDemand: 1
 
@@ -19,3 +19,4 @@
 
 BlackTempleBeta.lua
 Najentus.lua
+Gurtogg.lua
