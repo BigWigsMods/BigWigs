@@ -33,6 +33,9 @@ L:RegisterTranslations("enUS", function() return {
 	meteor_desc = "Estimated Meteor Timers.",
 	meteor_warning = "Possible Meteor in ~5sec",
 	meteor_message = "Meteor! - Next in ~55sec",
+
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Icon on the player with Melt Armor",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -57,7 +60,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
-mod.toggleoptions = {"rebirth", "meteor", "armor", "flamepatch", "bosskill"}
+mod.toggleoptions = {"rebirth", "meteor", "flamepatch", -1, "armor", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -76,9 +79,11 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "AlArRebirth", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "AlArArmor", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "AlArMeteor", 5)
 
 	self.prior = nil
 	self:RegisterEvent("BigWigs_Message")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
 ------------------------------
@@ -88,11 +93,8 @@ end
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg == L["rebirth_trigger"] then
 		self:Sync("AlArRebirth")
-	elseif self.db.profile.meteor and msg:find(L["meteor"]) then
-		self:Message(L["meteor_message"], "Attention")
-		self:DelayedMessage(50, L["meteor_warning"], "Important")
-		self:Bar(L["meteor"], 55, "Ability_Creature_Cursed_01")
-		self.prior = true
+	elseif msg:find(L["meteor"]) and not self.prior then
+		self:Sync("AlArMeteor")
 	end
 end
 
@@ -115,6 +117,14 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Message(L["armor_other"]:format(rest), "Attention")
 			self:Bar(L["armor_other"]:format(rest), 60, "Spell_Fire_Immolation")
 		end
+		if self.db.profile.icon then
+			self:Icon(rest)
+		end
+	elseif sync == "AlArMeteor" and self.db.profile.meteor then
+		self:Message(L["meteor_message"], "Attention")
+		self:DelayedMessage(50, L["meteor_warning"], "Important")
+		self:Bar(L["meteor"], 55, "Ability_Creature_Cursed_01")
+		self.prior = true
 	end
 end
 
