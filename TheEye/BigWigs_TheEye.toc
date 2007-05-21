@@ -1,7 +1,7 @@
 ﻿## Interface: 20003
 
 ## Title: Big Wigs [|cffeda55fThe Eye|r]
-## Notes: (BETA) Big Wigs The Eye Modules
+## Notes: Big Wigs The Eye Modules
 ## Author: Rabbit, Funkydude
 ## X-Credits: Daemona, Radon & Others
 ## Version: 2.0
