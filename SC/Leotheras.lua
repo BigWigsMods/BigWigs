@@ -117,16 +117,16 @@ L:RegisterTranslations("frFR", function() return {
 	whisper = "Murmure insidieux",
 	whisper_desc = "Pr\195\169viens quand des joueurs subissent le Murmure insidieux.",
 
-	enrage_trigger = "Finally, my banishment ends!", -- to translate
+	enrage_trigger = "Enfin, mon exil s'ach\195\168ve\194\160!", -- à vérifier
 
 	whirlwind_trigger = "Leotheras l'Aveugle gagne Tourbillon",
 	whirlwind_gain = "Tourbillon pendant 12 sec.",
 	whirlwind_fade = "Fin du Tourbillon",
 	whirlwind_bar = "Tourbillon",
 	whirlwind_bar2 = "~Cooldown Tourbillon",
-	whirlwind_warn = "Fin du cooldown Tourbillon - Bient\195\180t !",
+	whirlwind_warn = "Fin du cooldown Tourbillon - Imminent !",
 
-	phase_trigger = "I am in control now", -- to translate
+	phase_trigger = "Je prend le contr\195\180le", -- à vérifier
 	phase_demon = "Phase d\195\169mon pendant 60 sec.",
 	phase_demonsoon = "Phase d\195\169mon dans 5 sec. !",
 	phase_normalsoon = "Phase normal dans 5 sec.",
@@ -134,7 +134,7 @@ L:RegisterTranslations("frFR", function() return {
 	demon_bar = "Phase d\195\169mon",
 	demon_nextbar = "Prochaine phase d\195\169mon",
 
-	image_trigger = "I am the master! Do you hear?", -- to translate
+	image_trigger = "C'est moi le maître\194\160! Vous entendez\194\160?", -- à vérifier
 	image_message = "15% - Image cr\195\169\195\169e !",
 	image_warning = "Image imminente !",
 

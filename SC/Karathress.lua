@@ -98,7 +98,7 @@ L:RegisterTranslations("frFR", function() return {
 	heal = "Soins",
 	heal_desc = "Pr\195\169viens quand Caribdis incante un soin.",
 
-	enrage_trigger = "Guards, attention!", -- to translate
+	enrage_trigger = "Gardes, attention\194\160!", -- à vérifier
 
 	totem_trigger1 = "Garde-fonds Marevess lance Totem crache-feu",
 	totem_trigger2 = "Seigneur des fonds Karathress lance Totem crache-feu",

@@ -1,7 +1,9 @@
 ﻿## Interface: 20003
 
 ## Title: Big Wigs [|cffeda55fSerpentshrine Cavern|r]
+## Title-frFR: Big Wigs [|cffeda55fCaverne du sanctuaire du Serpent|r]
 ## Notes: Big Wigs Serpentshrine Cavern Modules
+## Notes-frFR: Modules Big Wigs concernant la Caverne du sanctuaire du Serpent.
 ## Author: Ammo, Rabbit, Funkydude
 ## X-Credits: Cartas, SoLoR, Beffe, Silah, Prodomo, Radon, Tsigo & Others
 ## Version: 2.0

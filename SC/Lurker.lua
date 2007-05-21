@@ -106,8 +106,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	whirl_bar = "Tourbillonnement probable",
 
-	["Coilfang Guardian"] = "Gardien de Glisseroc", -- à vérifier
-	["Coilfang Ambusher"] = "Embusqu\195\169 de Glisseroc", -- à vérifier
+	["Coilfang Guardian"] = "Gardien de Glisseroc",
+	["Coilfang Ambusher"] = "Embusqu\195\169 de Glisseroc",
 } end )
 
 ----------------------------------

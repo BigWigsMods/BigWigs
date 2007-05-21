@@ -138,12 +138,12 @@ L:RegisterTranslations("frFR", function() return {
 	murloc_bar = "~Cooldown Murlocs",
 	murloc_trigger = "Murlocs",
 	murloc_message = "Arriv\195\169e des murlocs !",
-	murloc_soon_message = "Murlocs bient\195\180t !",
+	murloc_soon_message = "Murlocs imminent !",
 	murloc_engaged = "%s engag\195\169, Murlocs dans ~40 sec.",
 
 	grobules_trigger = "invoque", -- à vérifier
 	grobules_message = "Arriv\195\169e des Grobules !",
-	grobules_warning = "Grobules bient\195\180t !",
+	grobules_warning = "Grobules imminent !",
 	grobules_bar = "Disparation des Grobules",
 
 	tidal_trigger = "Morogrim Marcheur-des-flots commence \195\160 lancer Raz-de-mar\195\169e.",
