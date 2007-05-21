@@ -1,4 +1,4 @@
-assert(BigWigs, "BigWigs not found!")
+﻿assert(BigWigs, "BigWigs not found!")
 
 ------------------------------
 --      Are you local?      --
