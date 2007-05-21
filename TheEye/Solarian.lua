@@ -178,7 +178,7 @@ L:RegisterTranslations("frFR", function() return {
 	wrath_trigger = "^([^%s]+) ([^%s]+) les effets de Courroux de l'Astromancien",
 	wrath_other = "Courroux : %s",
 	wrath_you = "Courroux sur VOUS !",
-	wrath_alert = "Courroux en incantation ! - cible : %s",
+	wrath_alert = "Courroux en incantation ! - Cible : %s",
 	wrath_alert_trigger = "commence \195\160 lancer Courroux de l'Astromancien.$",
 
 	agent_warning = "Rupture ! - Agents dans 6 sec.",
@@ -187,8 +187,8 @@ L:RegisterTranslations("frFR", function() return {
 	priest_warning = "Pr\195\170tres/Solarian dans 3 sec.",
 	priest_bar = "Pr\195\170tres/Solarian",
 
-	["Solarium Priest"] = "Pr\195\170tre Solarium", -- à vérifier
-	["Solarium Agent"] = "Agent Solarium", -- à vérifier
+	["Solarium Priest"] = "Pr\195\170tre du Solarium", -- à vérifier
+	["Solarium Agent"] = "Agent du Solarium", -- à vérifier
 } end )
 
 ----------------------------------

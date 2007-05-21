@@ -31,7 +31,7 @@ L:RegisterTranslations("frFR", function() return {
 	rebirth_desc = "Pr\195\169viens quand Al'ar incante sa renaissance.",
 
 	rebirth_trigger = "Al'ar commence \195\160 lancer Renaissance.",
-	rebirth_message = "Renaissance !",
+	rebirth_message = "Renaissance ! - Phase 2 !",
 
 	flamepatch = "Gerbe de flammes sur vous",
 	flamepatch_desc = "Pr\195\169viens quand une Gerbe de flammes est sur vous.",
