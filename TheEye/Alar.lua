@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Al'ar"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 ----------------------------
 --      Localization      --
@@ -13,20 +14,25 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Alar",
 
 	rebirth = "Rebirth",
-	rebirth_desc = "Alert when Al'ar casts rebirth",
+	rebirth_desc = "Alert when Al'ar casts rebirth.",
 	rebirth_trigger = "Al'ar begins to cast Rebirth.",
 	rebirth_message = "Rebirth! - Phase 2!",
 
 	flamepatch = "Flame Patch on You",
-	flamepatch_desc = "Warn for a Flame Patch on You",
+	flamepatch_desc = "Warn for a Flame Patch on You.",
 	flamepatch_trigger = "You are afflicted by Flame Patch.",
 	flamepatch_message = "Flame Patch on YOU!",
 
 	armor = "Melt Armor",
-	armor_desc = "Warn who gets Melt Armor",
+	armor_desc = "Warn who gets Melt Armor.",
 	armor_trigger = "^([^%s]+) ([^%s]+) afflicted by Melt Armor.$",
 	armor_other = "Melt Armor: %s",
 	armor_you = "Melt Amor on YOU!",
+
+	meteor = "Meteor",
+	meteor_desc = "Estimated Meteor Timers.",
+	meteor_warning = "Possible Meteor in ~5sec",
+	meteor_message = "Meteor! - Next in ~55sec",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -51,7 +57,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
-mod.toggleoptions = {"rebirth", "armor", "flamepatch", "bosskill"}
+mod.toggleoptions = {"rebirth", "meteor", "armor", "flamepatch", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -70,6 +76,9 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "AlArRebirth", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "AlArArmor", 5)
+
+	self.prior = nil
+	self:RegisterEvent("BigWigs_Message")
 end
 
 ------------------------------
@@ -79,6 +88,11 @@ end
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg == L["rebirth_trigger"] then
 		self:Sync("AlArRebirth")
+	elseif self.db.profile.meteor and msg:find(L["meteor"]) then
+		self:Message(L["meteor_message"], "Attention")
+		self:DelayedMessage(50, L["meteor_warning"], "Important")
+		self:Bar(L["meteor"], 55, "Ability_Creature_Cursed_01")
+		self.prior = true
 	end
 end
 
@@ -111,5 +125,11 @@ function mod:debuff(msg)
 			aplayer = UnitName("player")
 		end
 		self:Sync("AlArArmor "..aplayer)
+	end
+end
+
+function mod:BigWigs_Message(text)
+	if text == L["meteor_warning"] then
+		self.prior = nil
 	end
 end
