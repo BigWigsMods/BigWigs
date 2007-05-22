@@ -120,7 +120,7 @@ function BigWigs.modulePrototype:Scan()
 			local partyUnit = string.format("party%starget", i)
 			if UnitExists(partyUnit) and UnitAffectingCombat(partyUnit) and self.scanTable[UnitName(partyUnit)] then
 				return true
-			end			
+			end
 		end
 	else
 		for i = 1, num do
@@ -130,7 +130,7 @@ function BigWigs.modulePrototype:Scan()
 			end
 		end
 	end
-	return false	
+	return false
 end
 
 function BigWigs.modulePrototype:GetEngageSync()
@@ -142,12 +142,13 @@ end
 function BigWigs.modulePrototype:ValidateEngageSync(sync, rest)
 	if type(sync) ~= "string" or type(rest) ~= "string" then return false end
 	if sync ~= self:GetEngageSync() then return false end
-	local boss = BB:HasReverseTranslation(rest) and BB:GetReverseTranslation(rest) or rest
 	if not self.scanTable then populateScanTable(self) end
 	for mob in pairs(self.scanTable) do
 		local translated = BB:HasReverseTranslation(mob) and BB:GetReverseTranslation(mob) or mob
 		if translated == rest or mob == rest then return true end
 	end
+
+	local boss = BB:HasReverseTranslation(rest) and BB:GetReverseTranslation(rest) or rest
 	return boss == self:ToString() or rest == self:ToString()
 end
 
@@ -165,16 +166,8 @@ function BigWigs.modulePrototype:CheckForEngage()
 	end
 end
 
--- 2.1.0 compat
-local fdFunc = nil
-if type(UnitIsFeignDeath) == "function" then
-	fdFunc = function() return UnitIsFeignDeath("player") end
-else
-	fdFunc = function() return IsFeignDeath() end
-end
-
 function BigWigs.modulePrototype:CheckForWipe()
-	if not fdFunc() then
+	if not UnitIsFeignDeath("player") then
 		local go = self:Scan()
 		if not go then
 			if BigWigs:IsDebugging() then
