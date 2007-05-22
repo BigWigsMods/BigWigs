@@ -522,4 +522,3 @@ function BigWigs:BigWigs_TargetSeen(mobname, unit)
 		end
 	end
 end
-

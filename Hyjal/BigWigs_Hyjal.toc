@@ -1,4 +1,4 @@
-﻿## Interface: 20003
+﻿## Interface: 20100
 
 ## Title: Big Wigs [|cffeda55fHyjal|r]
 ## Notes: (BETA) Big Wigs Hyjal Modules
