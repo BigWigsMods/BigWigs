@@ -5,7 +5,6 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Morogrim Tidewalker"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-local BZ = AceLibrary("Babble-Zone-2.2")
 
 local inGrave = {}
 local started = nil
@@ -155,8 +154,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = {BZ["Coilfang Reservoir"], BZ["Serpentshrine Cavern"]}
-mod.otherMenu = "Serpentshrine Cavern"
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Serpentshrine Cavern"]
 mod.enabletrigger = boss
 mod.toggleoptions = {"tidal", "grave", "murloc", "grobules", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
