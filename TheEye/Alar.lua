@@ -28,12 +28,12 @@ L:RegisterTranslations("enUS", function() return {
 	armor_trigger = "^([^%s]+) ([^%s]+) afflicted by Melt Armor.$",
 	armor_other = "Melt Armor: %s",
 	armor_you = "Melt Amor on YOU!",
-
+--[[
 	meteor = "Meteor",
 	meteor_desc = "Estimated Meteor Timers.",
 	meteor_warning = "Possible Meteor in ~5sec",
 	meteor_message = "Meteor! - Next in ~55sec",
-
+]]
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon on the player with Melt Armor",
 } end )
@@ -60,7 +60,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
-mod.toggleoptions = {"rebirth", "meteor", "flamepatch", -1, "armor", "icon", "bosskill"}
+mod.toggleoptions = {"rebirth", "flamepatch", -1, "armor", "icon", "bosskill"} --meteor
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -79,11 +79,11 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "AlArRebirth", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "AlArArmor", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "AlArMeteor", 5)
+	--self:TriggerEvent("BigWigs_ThrottleSync", "AlArMeteor", 5)
 
-	self.prior = nil
-	self:RegisterEvent("BigWigs_Message")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	--self.prior = nil
+	--self:RegisterEvent("BigWigs_Message")
+	--self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
 ------------------------------
@@ -93,8 +93,8 @@ end
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg == L["rebirth_trigger"] then
 		self:Sync("AlArRebirth")
-	elseif msg:find(L["meteor"]) and not self.prior then
-		self:Sync("AlArMeteor")
+--	elseif msg:find(L["meteor"]) and not self.prior then
+--		self:Sync("AlArMeteor")
 	end
 end
 
@@ -120,11 +120,13 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
+--[[
 	elseif sync == "AlArMeteor" and self.db.profile.meteor then
 		self:Message(L["meteor_message"], "Attention")
 		self:DelayedMessage(50, L["meteor_warning"], "Important")
 		self:Bar(L["meteor"], 55, "Ability_Creature_Cursed_01")
 		self.prior = true
+]]
 	end
 end
 
@@ -138,8 +140,10 @@ function mod:debuff(msg)
 	end
 end
 
+--[[
 function mod:BigWigs_Message(text)
 	if text == L["meteor_warning"] then
 		self.prior = nil
 	end
 end
+]]
