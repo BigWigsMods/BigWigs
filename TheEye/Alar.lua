@@ -13,10 +13,13 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Alar",
 
-	rebirth = "Rebirth",
-	rebirth_desc = "Alert when Al'ar casts rebirth.",
-	rebirth_trigger = "Al'ar begins to cast Rebirth.",
-	rebirth_message = "Rebirth! - Phase 2!",
+	meteor = "Meteor",
+	meteor_desc = "Estimated Meteor Timers.",
+	meteor_warning = "Possible Meteor in ~5sec",
+	meteor_message = "Rebirth! - Meteor in ~47sec",
+	meteor_trigger = "Al'ar begins to cast Rebirth.",
+	meteor_bar = "Rebirth",
+	meteor_nextbar = "Next Meteor",
 
 	flamepatch = "Flame Patch on You",
 	flamepatch_desc = "Warn for a Flame Patch on You.",
@@ -28,22 +31,16 @@ L:RegisterTranslations("enUS", function() return {
 	armor_trigger = "^([^%s]+) ([^%s]+) afflicted by Melt Armor.$",
 	armor_other = "Melt Armor: %s",
 	armor_you = "Melt Amor on YOU!",
---[[
-	meteor = "Meteor",
-	meteor_desc = "Estimated Meteor Timers.",
-	meteor_warning = "Possible Meteor in ~5sec",
-	meteor_message = "Meteor! - Next in ~55sec",
-]]
+
 	icon = "Raid Icon",
-	icon_desc = "Place a Raid Icon on the player with Melt Armor",
+	icon_desc = "Place a Raid Icon on the player with Melt Armor".,
+
+	enrage = "Enrage",
+	enrage_desc = "Enrage Timers, may be innacurate, depends on catching the first Rebirth message.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	rebirth = "Renaissance",
-	rebirth_desc = "Pr\195\169viens quand Al'ar incante sa renaissance.",
-
-	rebirth_trigger = "Al'ar commence \195\160 lancer Renaissance.",
-	rebirth_message = "Renaissance ! - Phase 2 !",
+	meteor_trigger = "Al'ar commence \195\160 lancer Renaissance.",
 
 	flamepatch = "Gerbe de flammes sur vous",
 	flamepatch_desc = "Pr\195\169viens quand une Gerbe de flammes est sur vous.",
@@ -60,7 +57,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
-mod.toggleoptions = {"rebirth", "flamepatch", -1, "armor", "icon", "bosskill"} --meteor
+mod.toggleoptions = {"meteor", "flamepatch", -1, "armor", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -70,7 +67,6 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "debuff")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "debuff")
@@ -79,11 +75,11 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "AlArRebirth", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "AlArArmor", 5)
-	--self:TriggerEvent("BigWigs_ThrottleSync", "AlArMeteor", 5)
 
-	--self.prior = nil
-	--self:RegisterEvent("BigWigs_Message")
-	--self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+
+	self.prior = nil
 end
 
 ------------------------------
@@ -91,10 +87,8 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg == L["rebirth_trigger"] then
+	if msg == L["meteor_trigger"] then
 		self:Sync("AlArRebirth")
---	elseif msg:find(L["meteor"]) and not self.prior then
---		self:Sync("AlArMeteor")
 	end
 end
 
@@ -105,9 +99,23 @@ function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "AlArRebirth" and self.db.profile.rebirth then
-		self:Message(L["rebirth_message"], "Urgent", nil, "Alarm")
-		self:Bar(L["rebirth_message"], 2, "Spell_Fire_Burnout")
+	if sync == "AlArRebirth" then
+		if self.db.profile.meteor then
+			self:Message(L["meteor_message"], "Urgent", nil, "Alarm")
+			self:DelayedMessage(42, L["meteor_warning"], "Important")
+			self:Bar(L["meteor_bar"], 2, "Spell_Fire_Burnout")
+			self:Bar(L["meteor_nextbar"], 47, "Spell_Fire_Burnout")
+		end
+		if self.db.profile.enrage and not self.prior then
+			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
+			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
+			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
+			self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
+			self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
+			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
+			self.prior = true
+		end
 	elseif sync == "AlArArmor" and rest and self.db.profile.armor then
 		if rest == UnitName("player") then
 			self:Message(L["armor_you"], "Personal", true, "Long")
@@ -120,13 +128,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
---[[
-	elseif sync == "AlArMeteor" and self.db.profile.meteor then
-		self:Message(L["meteor_message"], "Attention")
-		self:DelayedMessage(50, L["meteor_warning"], "Important")
-		self:Bar(L["meteor"], 55, "Ability_Creature_Cursed_01")
-		self.prior = true
-]]
 	end
 end
 
@@ -139,11 +140,3 @@ function mod:debuff(msg)
 		self:Sync("AlArArmor "..aplayer)
 	end
 end
-
---[[
-function mod:BigWigs_Message(text)
-	if text == L["meteor_warning"] then
-		self.prior = nil
-	end
-end
-]]
