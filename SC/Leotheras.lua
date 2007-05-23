@@ -33,7 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_trigger = "Finally, my banishment ends!",
 
 	whirlwind_trigger = "Leotheras the Blind gains Whirlwind",
-	whirlwind_gain = "Whirlwind for 8 sec",
+	whirlwind_gain = "Whirlwind for 12 sec",
 	whirlwind_fade = "Whirlwind Over",
 	whirlwind_bar = "Whirlwind",
 	whirlwind_bar2 = "~Whirlwind Cooldown",
@@ -76,7 +76,7 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_trigger = "드디어, 내가 풀려났도다!", -- check
 
 	whirlwind_trigger = "눈먼 레오테라스|1이;가; 소용돌이 효과를 얻었습니다.", -- check
-	whirlwind_gain = "8초간 소용돌이",
+	whirlwind_gain = "12초간 소용돌이",
 	whirlwind_fade = "소용돌이 종료",
 	whirlwind_bar = "소용돌이",
 	whirlwind_bar2 = "~소용돌이 대기시간",
@@ -119,7 +119,7 @@ L:RegisterTranslations("frFR", function() return {
 	enrage_trigger = "Enfin, mon exil s'ach\195\168ve\194\160!", -- à vérifier
 
 	whirlwind_trigger = "Leotheras l'Aveugle gagne Tourbillon",
-	whirlwind_gain = "Tourbillon pendant 8 sec.",
+	whirlwind_gain = "Tourbillon pendant 12 sec.",
 	whirlwind_fade = "Fin du Tourbillon",
 	whirlwind_bar = "Tourbillon",
 	whirlwind_bar2 = "~Cooldown Tourbillon",
@@ -162,7 +162,7 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_trigger = "Endlich hat meine Verbannung ein Ende!",
 
 	whirlwind_trigger = "Leotheras der Blinde bekommt Wirbelwind",
-	whirlwind_gain = "Wirbelwind f\195\188r 8sec",
+	whirlwind_gain = "Wirbelwind f\195\188r 12sec",
 	whirlwind_fade = "Wirbelwind vorbei",
 	whirlwind_bar = "Wirbelwind",
 	whirlwind_bar2 = "~Wirbelwind Cooldown",
@@ -336,10 +336,10 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Bar(L["whisper_bar"], 30, "Spell_Shadow_ManaFeed")
 	elseif sync == "LeoWW" and self.db.profile.whirlwind then
 		self:Message(L["whirlwind_gain"], "Important", nil, "Alert")
-		self:ScheduleEvent("ww1", "BigWigs_Message", 8, L["whirlwind_fade"], "Attention")
-		self:Bar(L["whirlwind_bar"], 8, "Ability_Whirlwind")
+		self:ScheduleEvent("ww1", "BigWigs_Message", 12, L["whirlwind_fade"], "Attention")
+		self:Bar(L["whirlwind_bar"], 12, "Ability_Whirlwind")
 		if wwhelp == 0 or imagewarn then
-			self:ScheduleEvent("bwwhirlwind", self.WhirlwindBar, 8, self)
+			self:ScheduleEvent("bwwhirlwind", self.WhirlwindBar, 12, self)
 		end
 		wwhelp = 1
 	end
