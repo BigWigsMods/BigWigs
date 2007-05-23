@@ -14,32 +14,30 @@ local supress
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Lurker",
 
-	dive = "Dive",
-	dive_desc = ("Timers for when %s dives.\n\nThese timers my be innacurate, they are scheduled from pull."):format(boss),
-
-	spout = "Spout",
-	spout_desc = "Timers for Spout.\n\nThese timers my be innacurate, they are scheduled from pull.",
-
-	whirl = "Whirl",
-	whirl_desc = "Whirl Timers",
-
 	engage_warning = "%s Engaged - Possible Dive in 90sec",
 
+	dive = "Dive",
+	dive_desc = ("Timers for when %s dives.\n\nThese timers my be innacurate, they are scheduled from pull."):format(boss),
 	dive_warning = "Possible Dive in %dsec!",
 	dive_bar = "~Dives in",
 	dive_message = "Dives - Back in 60sec",
 
-	emerge_warning = "Back in %dsec",
-	emerge_message = "Back - Possible Dive in 90sec",
-	emerge_bar = "Back in",
-
+	spout = "Spout",
+	spout_desc = "Timers for Spout.\n\nThese timers my be innacurate, they are scheduled from pull.",
+	spout_trigger = "%s takes a deep breath."
 	spout_message1 = "Casting Spout!",
 	spout_message2 = "Spout Over!",
 	spout_warning = "Spout in 3sec!",
 	spout_bar1 = "Spout 1 in ~",
 	spout_bar2 = "Spout 2 in ~",
 
+	whirl = "Whirl",
+	whirl_desc = "Whirl Timers",
 	whirl_bar = "Possible Whirl",
+
+	emerge_warning = "Back in %dsec",
+	emerge_message = "Back - Possible Dive in 90sec",
+	emerge_bar = "Back in",
 
 	["Coilfang Guardian"] = true,
 	["Coilfang Ambusher"] = true,
@@ -131,6 +129,7 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+	--self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("BigWigs_RecvSync")
