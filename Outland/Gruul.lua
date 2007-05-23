@@ -228,7 +228,7 @@ function mod:OnEnable()
 	self.proximitySilent = true
 
 	self:RegisterEvent("BigWigs_Message")
-	self:RegisterEvent("CHAT_MSG_MONSTER_SAY")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
@@ -243,7 +243,7 @@ end
 --    Event Handlers     --
 ------------------------------
 
-function mod:CHAT_MSG_MONSTER_SAY(msg)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		if self.db.profile.engage then
 			self:Message(L["engage_message"]:format(boss), "Attention")
