@@ -33,7 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 	armor_you = "Melt Amor on YOU!",
 
 	icon = "Raid Icon",
-	icon_desc = "Place a Raid Icon on the player with Melt Armor".,
+	icon_desc = "Place a Raid Icon on the player with Melt Armor.",
 
 	enrage = "Enrage",
 	enrage_desc = "Enrage Timers, may be innacurate, depends on catching the first Rebirth message.",
@@ -57,7 +57,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
-mod.toggleoptions = {"meteor", "flamepatch", -1, "armor", "icon", "bosskill"}
+mod.toggleoptions = {"meteor", "flamepatch", -1, "armor", "icon", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -106,7 +106,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Bar(L["meteor_bar"], 2, "Spell_Fire_Burnout")
 			self:Bar(L["meteor_nextbar"], 47, "Spell_Fire_Burnout")
 		end
-		if self.db.profile.enrage and not self.prior then
+		if not self.prior and self.db.profile.enrage then
 			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
 			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
 			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
