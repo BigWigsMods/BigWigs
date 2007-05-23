@@ -229,7 +229,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["enrage_trigger"] then
 		wwhelp = 0
 		if self.db.profile.phase then
-			self:Engage()
+			self:DemonSoon()
 		end
 		if self.db.profile.enrage then
 			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
@@ -273,11 +273,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(L["image_message"], "Important")
 		end
 	end
-end
-
-function mod:Engage()
-	self:DelayedMessage(70, L["phase_demonsoon"], "Urgent")
-	self:Bar(L["demon_nextbar"], 75, "Spell_Shadow_Metamorphosis")
 end
 
 function mod:DemonSoon()
