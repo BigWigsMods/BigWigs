@@ -24,7 +24,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	spout = "Spout",
 	spout_desc = "Timers for Spout.\n\nThese timers my be innacurate, they are scheduled from pull.",
-	spout_trigger = "%s takes a deep breath."
+	spout_trigger = "%s takes a deep breath.",
 	spout_message1 = "Casting Spout!",
 	spout_message2 = "Spout Over!",
 	spout_warning = "Spout in 3sec!",
