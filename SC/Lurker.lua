@@ -6,6 +6,8 @@ local boss = AceLibrary("Babble-Boss-2.2")["The Lurker Below"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started
 local supress
+local found
+local occured
 
 ----------------------------
 --      Localization     --
@@ -17,19 +19,17 @@ L:RegisterTranslations("enUS", function() return {
 	engage_warning = "%s Engaged - Possible Dive in 90sec",
 
 	dive = "Dive",
-	dive_desc = ("Timers for when %s dives.\n\nThese timers my be innacurate, they are scheduled from pull."):format(boss),
+	dive_desc = ("Timers for when %s dives."):format(boss),
 	dive_warning = "Possible Dive in %dsec!",
 	dive_bar = "~Dives in",
 	dive_message = "Dives - Back in 60sec",
 
 	spout = "Spout",
-	spout_desc = "Timers for Spout.\n\nThese timers my be innacurate, they are scheduled from pull.",
-	spout_trigger = "%s takes a deep breath.",
-	spout_message1 = "Casting Spout!",
-	spout_message2 = "Spout Over!",
-	spout_warning = "Spout in 3sec!",
-	spout_bar1 = "Spout 1 in ~",
-	spout_bar2 = "Spout 2 in ~",
+	spout_desc = "Timers for Spout, may not always be accurate.",
+	spout_trigger = "%s takes a deep breath!",
+	spout_message = "Casting Spout!",
+	spout_warning = "Posible Spout in ~3sec!",
+	spout_bar = "Possible Spout",
 
 	whirl = "Whirl",
 	whirl_desc = "Whirl Timers",
@@ -45,10 +45,10 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	dive = "잠수",
-	dive_desc = ("%s 초 후 잠수 타이머.\n\n이 타이머는 풀링 시점에 맞춰서 작동하기에 정확하지 않습니다."):format(boss),
+	dive_desc = ("%s 초 후 잠수 타이머."):format(boss),
 
 	spout = "분출",
-	spout_desc = "분출 타이머.\n\n이 타이머는 풀링 시점에 맞춰서 작동하기에 정확하지 않습니다.)",
+	--spout_desc = "분출 타이머.\n\n이 타이머는 풀링 시점에 맞춰서 작동하기에 정확하지 않습니다.)", --enUS changed
 
 	whirl = "소용돌이",
 	whirl_desc = "소용돌이 타이머",
@@ -63,11 +63,8 @@ L:RegisterTranslations("koKR", function() return {
 	emerge_message = "출현 - 90초 이내 잠수",
 	emerge_bar = "출현",
 
-	spout_message1 = "분출 시전!",
-	spout_message2 = "분출 종료!",
+	spout_message = "분출 시전!",
 	spout_warning = "3초 이내 분출!",
-	spout_bar1 = "~분출 1",
-	spout_bar2 = "~분출 2",
 
 	whirl_bar = "소용돌이 주의",
 
@@ -77,10 +74,10 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	dive = "Plong\195\169es",
-	dive_desc = ("D\195\169lais avant que %s ne plonge.\n\nCes d\195\169lais peuvent \195\170tre impr\195\169cis : ils sont bas\195\169s sur le moment du pull."):format(boss),
+	dive_desc = ("D\195\169lais avant que %s ne plonge."):format(boss),
 
 	spout = "Jet",
-	spout_desc = "D\195\169lais concernant les Jets.\n\nCes délais peuvent \195\170tre impr\195\169cis : ils sont bas\195\169s sur le moment du pull.",
+	--spout_desc = "D\195\169lais concernant les Jets.\n\nCes délais peuvent \195\170tre impr\195\169cis : ils sont bas\195\169s sur le moment du pull.", --enUS changed
 
 	whirl = "Tourbillonnement",
 	whirl_desc = "D\195\169lais concernant les Tourbillonnements.",
@@ -95,11 +92,8 @@ L:RegisterTranslations("frFR", function() return {
 	emerge_message = "De retour - Plong\195\169e probable dans 90 sec.",
 	emerge_bar = "De retour dans",
 
-	spout_message1 = "Incante un Jet !",
-	spout_message2 = "Fin du Jet !",
+	spout_message = "Incante un Jet !",
 	spout_warning = "Jet dans 3 sec. !",
-	spout_bar1 = "Jet 1 dans ~",
-	spout_bar2 = "Jet 2 dans ~",
 
 	whirl_bar = "Tourbillonnement probable",
 
@@ -129,13 +123,15 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-	--self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "LurkWhirl", 10)
 	started = nil
 	supress = nil
+	found = nil
+	occured = nil
 end
 
 ------------------------------
@@ -157,62 +153,23 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		end
 		if self.db.profile.spout then
 			self:DelayedMessage(37, L["spout_warning"], "Attention")
-			self:DelayedMessage(40, L["spout_message1"], "Attention")
-			self:DelayedMessage(60, L["spout_message2"], "Positive")
 			self:Bar(L["spout_bar1"], 40, "INV_Weapon_Rifle_02")
-			self:ScheduleEvent("bwspoutbar0", self.SpoutBar, 40, self)
 		end
-	elseif sync == "LurkWhirl" then
+		found = nil
+		occured = nil
+		self:ScheduleRepeatingEvent("BWLurkerTargetSeek", self.DiveCheck, 0.2, self)
+	elseif sync == "LurkWhirl" and self.db.profile.whirl then
 		self:Bar(L["whirl_bar"], 17, "Ability_Whirlwind")
 	end
 end
 
---loop diving and lazer, no combat log events to register this, can become innacurate
-function mod:NextDive()
-	if self.db.profile.dive then
-		self:DelayedMessage(30, L["dive_warning"]:format(60), "Positive")
-		self:DelayedMessage(60, L["dive_warning"]:format(30), "Positive")
-		self:DelayedMessage(80, L["dive_warning"]:format(10), "Positive")
-		self:DelayedMessage(85, L["dive_warning"]:format(5), "Urgent", nil, "Alarm")
-		self:Bar(L["dive_bar"], 90, "Spell_Frost_ArcticWinds")
-	end
-
-	self:TriggerEvent("BigWigs_ShowProximity", self)
-	self:ScheduleEvent(self.NextSurface, 90, self)
-end
-
-function mod:NextSurface()
-	if self.db.profile.dive then
-		self:Message(L["dive_message"], "Attention")
-		self:DelayedMessage(30, L["emerge_warning"]:format(30), "Positive")
-		self:DelayedMessage(50, L["emerge_warning"]:format(10), "Positive")
-		self:DelayedMessage(55, L["emerge_warning"]:format(5), "Urgent", nil, "Alert")
-		self:DelayedMessage(60, L["emerge_message"], "Attention")
-		self:Bar(L["emerge_bar"], 60, "Spell_Frost_Stun")
-	end
-	if self.db.profile.spout then
-		self:Bar(L["spout_bar1"], 70, "INV_Weapon_Rifle_02")
-		self:Bar(L["spout_bar2"], 120, "INV_Weapon_Rifle_02")
-		self:DelayedMessage(67, L["spout_warning"], "Attention")
-		self:DelayedMessage(70, L["spout_message1"], "Attention")
-		self:DelayedMessage(90, L["spout_message2"], "Positive")
-		self:DelayedMessage(117, L["spout_warning"], "Attention")
-		self:DelayedMessage(120, L["spout_message1"], "Attention")
-		self:DelayedMessage(140, L["spout_message2"], "Positive")
-		self:ScheduleEvent("bwspoutbar1", self.SpoutBar, 70, self)
-		self:ScheduleEvent("bwspoutbar2", self.SpoutBar, 120, self)
-	end
-
-	self:TriggerEvent("BigWigs_HideProximity", self)
-	self:ScheduleEvent(self.NextDive, 60, self)
-end
-
-function mod:SpoutBar()
-	self:Bar(L["spout_message1"], 20, "INV_Weapon_Rifle_02")
+function mod:Spout()
+	self:Bar(L["spout_bar"], 70, "Spell_Frost_ChillingBlast")
+	self:DelayedMessage(67, L["spout_warning"], "Attention")
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if self.db.profile.whirl and msg:find(L["whirl"]) and not suppress then
+	if msg:find(L["whirl"]) and not suppress then
 		supress = true
 		self:Sync("LurkWhirl")
 		self:ScheduleEvent(self.StopSupress, 10, self)
@@ -221,4 +178,57 @@ end
 
 function mod:StopSupress()
 	supress = nil
+end
+
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+	if self.db.profile.spout and msg == L["spout_trigger"] then
+		self:Bar(L["spout_message"], 20, "Spell_Frost_ChillingBlast")
+		self:Bar(L["spout_bar"], 50, "Spell_Frost_ChillingBlast")
+		self:Message(L["spout_message"], "Attention")
+		self:ScheduleEvent("spout1", "BigWigs_Message", 47, L["spout_warning"], "Attention")
+		self:TriggerEvent("BigWigs_StopBar", self, L["whirl_bar"])
+	end
+end
+
+function mod:DiveCheck()
+	local num = GetNumRaidMembers()
+	for i = 1, num do
+		local unit = string.format("raid%starget", num)
+		if UnitExists(unit) and UnitName(unit) == boss then
+			found = true
+		else
+			found = nil
+		end
+	end
+
+	if found = true and occured = true then
+		if self.db.profile.dive then
+			self:DelayedMessage(30, L["dive_warning"]:format(60), "Positive")
+			self:DelayedMessage(60, L["dive_warning"]:format(30), "Positive")
+			self:DelayedMessage(80, L["dive_warning"]:format(10), "Positive")
+			self:DelayedMessage(85, L["dive_warning"]:format(5), "Urgent", nil, "Alarm")
+			self:Bar(L["dive_bar"], 90, "Spell_Frost_ArcticWinds")
+		end
+
+		self:TriggerEvent("BigWigs_ShowProximity", self)
+		occured = nil
+	elseif found = nil and occured = nil then
+		if self.db.profile.dive then
+			self:Message(L["dive_message"], "Attention")
+			self:DelayedMessage(30, L["emerge_warning"]:format(30), "Positive")
+			self:DelayedMessage(50, L["emerge_warning"]:format(10), "Positive")
+			self:DelayedMessage(55, L["emerge_warning"]:format(5), "Urgent", nil, "Alert")
+			self:DelayedMessage(60, L["emerge_message"], "Attention")
+			self:Bar(L["emerge_bar"], 60, "Spell_Frost_Stun")
+		end
+
+		self:TriggerEvent("BigWigs_HideProximity", self)
+		self:CancelScheduledEvent("spout1")
+		self:TriggerEvent("BigWigs_StopBar", self, L["spout_bar"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["whirl_bar"])
+		occured = true
+		if self.db.profile.spout then
+			self:Spout()
+		end
+	end
 end
