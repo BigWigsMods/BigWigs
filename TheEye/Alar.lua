@@ -5,6 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Al'ar"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+local started
 
 ----------------------------
 --      Localization      --
@@ -12,6 +13,8 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Alar",
+
+	engage_message = ("%s engaged - Phase 1"):format(boss),
 
 	meteor = "Meteor",
 	meteor_desc = "Estimated Meteor Timers.",
@@ -94,9 +97,10 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "AlArArmor", 5)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
-	self.prior = nil
+	started = nil
 end
 
 ------------------------------
@@ -116,7 +120,14 @@ function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "AlArRebirth" then
+	if self:ValidateEngageSync(sync, rest) and not started then
+		started = true
+		self.prior = nil
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		self:Message(L["engage_message"], "Attention")
+	elseif sync == "AlArRebirth" then
 		if self.db.profile.meteor then
 			self:Message(L["meteor_message"], "Urgent", nil, "Alarm")
 			self:DelayedMessage(42, L["meteor_warning"], "Important")
