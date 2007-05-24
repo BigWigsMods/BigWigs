@@ -14,7 +14,7 @@ local started
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Alar",
 
-	engage_message = ("%s engaged - Phase 1"):format(boss),
+	engage_message = "%s engaged - Phase 1",
 
 	meteor = "Meteor",
 	meteor_desc = "Estimated Meteor Timers.",
@@ -126,7 +126,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		self:Message(L["engage_message"], "Attention")
+		self:Message(L["engage_message"]:format(boss), "Attention")
 	elseif sync == "AlArRebirth" then
 		if self.db.profile.meteor then
 			self:Message(L["meteor_message"], "Urgent", nil, "Alarm")
