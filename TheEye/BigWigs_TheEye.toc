@@ -1,7 +1,9 @@
 ﻿## Interface: 20100
 
 ## Title: Big Wigs [|cffeda55fThe Eye|r]
+## Title-frFR: Big Wigs [|cffeda55fL'Oeil|r]
 ## Notes: Big Wigs The Eye Modules
+## Notes-frFR: Modules Big Wigs concernant L'Oeil.
 ## Author: Rabbit, Funkydude
 ## X-Credits: Daemona, Radon & Others
 ## Version: 2.0

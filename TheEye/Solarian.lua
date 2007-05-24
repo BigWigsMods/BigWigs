@@ -148,22 +148,22 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	phase = "Phases",
-	phase_desc = "Pr\195\169viens quand la rencontre entre dans une nouvelle phase.",
+	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
 
 	wrath = "Incantation du Courroux",
-	wrath_desc = "Pr\195\169viens quand le Courroux est en cours d'incantation, et sa cible actuelle.",
+	wrath_desc = "Préviens quand le Courroux est en cours d'incantation, et sa cible actuelle.",
 
 	wrathyou = "Courroux sur vous",
-	wrathyou_desc = "Pr\195\169viens quand vous subissez les effets du Courroux de l'Astromancien.",
+	wrathyou_desc = "Préviens quand vous subissez les effets du Courroux de l'Astromancien.",
 
 	wrathother = "Courroux sur les autres",
-	wrathother_desc = "Pr\195\169viens quand d'autres subissent les effets du Courroux de l'Astromancien.",
+	wrathother_desc = "Préviens quand d'autres subissent les effets du Courroux de l'Astromancien.",
 
-	icon = "Ic\195\180ne",
-	icon_desc = "Place une ic\195\180ne de raid sur le joueur affect\195\169 par le Courroux de l'Astromancien (n\195\169cessite d'\195\170tre promu ou mieux).",
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le joueur affecté par le Courroux de l'Astromancien (nécessite d'être promu ou mieux).",
 
 	split = "Rupture",
-	split_desc = "Pr\195\169viens de l'arriv\195\169e des ruptures & des apparitions des adds.",
+	split_desc = "Préviens de l'arrivée des ruptures & des apparitions des adds.",
 
 	split_trigger = "lance Rupture de l'astromancien",
 	split_bar = "~Prochaine Rupture",
@@ -175,19 +175,19 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_trigger = "^Je deviens",-- à vérifier
 	phase2_message = "20% - Phase 2",
 
-	wrath_trigger = "^([^%s]+) ([^%s]+) les effets de Courroux de l'Astromancien",
+	wrath_trigger = "^([^%s]+) ([^%s]+) les effets .* Courroux de l'Astromancien",
 	wrath_other = "Courroux : %s",
 	wrath_you = "Courroux sur VOUS !",
 	wrath_alert = "Courroux en incantation ! - Cible : %s",
-	wrath_alert_trigger = "commence \195\160 lancer Courroux de l'Astromancien.$",
+	wrath_alert_trigger = "commence à lancer Courroux de l'Astromancien.$",
 
 	agent_warning = "Rupture ! - Agents dans 6 sec.",
 	agent_bar = "Agents",
 
-	priest_warning = "Pr\195\170tres/Solarian dans 3 sec.",
-	priest_bar = "Pr\195\170tres/Solarian",
+	priest_warning = "Prêtres/Solarian dans 3 sec.",
+	priest_bar = "Prêtres/Solarian",
 
-	["Solarium Priest"] = "Pr\195\170tre du Solarium", -- à vérifier
+	["Solarium Priest"] = "Prêtre du Solarium", -- à vérifier
 	["Solarium Agent"] = "Agent du Solarium", -- à vérifier
 } end )
 

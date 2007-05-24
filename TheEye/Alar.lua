@@ -40,13 +40,30 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	meteor_trigger = "Al'ar commence \195\160 lancer Renaissance.",
+	meteor = "Météore",
+	meteor_desc = "Délais estimés entre les météores.",
+	meteor_warning = "Météore probable dans ~5 sec.",
+	meteor_message = "Renaissance ! - Météore dans ~47 sec.",
+	meteor_trigger = "Al'ar commence à lancer Renaissance.",
+	meteor_bar = "Renaissance",
+	meteor_nextbar = "Prochain météore",
 
 	flamepatch = "Gerbe de flammes sur vous",
-	flamepatch_desc = "Pr\195\169viens quand une Gerbe de flammes est sur vous.",
-
+	flamepatch_desc = "Préviens quand une Gerbe de flammes est sur vous.",
 	flamepatch_trigger = "Vous subissez les effets de Gerbe de flammes.",
 	flamepatch_message = "Gerbe de flammes sur VOUS !",
+
+	armor = "Fondre armure",
+	armor_desc = "Préviens quand un joueur est affecté par Fondre armure.",
+	armor_trigger = "^([^%s]+) ([^%s]+) les effets .* Fondre armure.$",
+	armor_other = "Fondre armure : %s",
+	armor_you = "Fondre armure sur VOUS !",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur la personne affectée par Fondre armure (nécessite d'être promu ou mieux).",
+
+	enrage = "Enrager",
+	enrage_desc = "Délais avant Enrager. Peut être imprécis, dépend si le premier message de Renaissance a été vu ou non.",
 } end )
 
 ----------------------------------

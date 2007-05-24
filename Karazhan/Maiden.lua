@@ -85,7 +85,7 @@ L:RegisterTranslations("frFR", function() return {
 	repentance_trigger1 = "Chassez vos pens\195\169es corrompues.",
 	repentance_trigger2 = "Il faut se d\195\169barrasser de votre impuret\195\169.",
 	repentance_message = "Repentir ! Prochain dans ~33 sec.",
-	repentance_warning = "Fin du cooldown Repentir - Bientôt !",
+	repentance_warning = "Fin du cooldown Repentir - Imminent !",
 	repentance_bar = "Repentir",
 	repentance_nextbar = "~Cooldown Repentir",
 
