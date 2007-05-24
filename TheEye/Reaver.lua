@@ -5,7 +5,6 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Void Reaver"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-local started
 local previous
 
 ----------------------------
@@ -15,29 +14,30 @@ local previous
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Reaver",
 
+	engage_trigger = "Alert! You are marked for extermination.",
+
 	enrage = "Enrage",
 	enrage_desc = "Enrage Timers",
 
 	orbyou = "Arcane Orb on You",
 	orbyou_desc = "Warn for Arcane Orb on you",
+	orb_you = "Arcane Orb on YOU!",
 
 	orbsay = "Arcane Orb Say",
 	orbsay_desc = "Print in say when you are targeted for arcane orb, can help nearby members with speech bubbles on",
+	orb_say = "Orb on Me!",
 
 	orbother = "Arcane Orb on Others",
 	orbother_desc = "Warn for Arcane Orb on others",
+	orb_other = "Orb(%s)",
 
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon on the player targeted for Arcane Orb(requires promoted or higher)",
 
 	pounding = "Pounding",
 	pounding_desc = "Show Pounding timer bars",
-
-	orb_other = "Orb(%s)",
-	orb_you = "Arcane Orb on YOU!",
-	orb_say = "Orb on Me!",
-
-	pounding_trigger = "Pounding",
+	pounding_trigger1 = "Alternative measure commencing...",
+	pounding_trigger2 = "Calculating force parameters...",
 	pounding_nextbar = "~Pounding Cooldown",
 	pounding_bar = "<Pounding>",
 } end )
@@ -65,7 +65,6 @@ L:RegisterTranslations("deDE", function() return {
 	orb_you = "Arkane Kugel auf DIR!",
 	orb_say = "Kugel auf Mir!",
 
-	pounding_trigger = "H\195\164mmern",
 	pounding_nextbar = "~H\195\164mmern Cooldown",
 	pounding_bar = "<H\195\164mmern>",
 } end )
@@ -93,7 +92,6 @@ L:RegisterTranslations("frFR", function() return {
 	orb_you = "Orbe des arcanes sur VOUS !",
 	orb_say = "Orbe sur moi !",
 
-	pounding_trigger = "Martèlement",
 	pounding_nextbar = "~Cooldown Martèlement",
 	pounding_bar = "<Martèlement>",
 } end )
@@ -121,7 +119,6 @@ L:RegisterTranslations("koKR", function() return {
 	orb_you = "당신에 비전 보주!",
 	orb_say = "나에게 보주!",
 
-	pounding_trigger = "울림",
 	pounding_nextbar = "~울림 대기 시간",
 	pounding_bar = "<울림>",
 } end )
@@ -142,16 +139,11 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "ReaverPound", 6)
-
-	started = nil
 	previous = nil
 end
 
@@ -159,12 +151,8 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:BigWigs_RecvSync( sync, rest, nick )
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["engage_trigger"] then
 		if self.db.profile.orbyou or self.db.profile.orbother then
 			self:ScheduleRepeatingEvent("BWReaverToTScan", self.OrbCheck, 0.2, self) --how often to scan the target, 0.2 seconds
 		end
@@ -178,7 +166,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
-	elseif sync == "ReaverPound" and self.db.profile.pounding then
+	elseif self.db.profile.pounding and (msg == L["pounding_trigger1"] or msg == L["pounding_trigger2"]) then
 		self:Bar(L["pounding_bar"], 3, "Ability_ThunderClap")
 		self:Bar(L["pounding_nextbar"], 13, "Ability_ThunderClap")
 	end
@@ -200,7 +188,7 @@ function mod:OrbCheck()
 			end
 		end
 	end
-	if target ~= previous then --spam protection
+	if target ~= previous and UnitExists(target) then --spam protection & wierdness protection
 		if target and id then
 			if UnitPowerType(id) == 0 then --if the player has mana it is most likely ranged, we don't want other units(energy/rage would be melee)
 				self:Result(target) --pass the unit with mana through
@@ -226,11 +214,5 @@ function mod:Result(target)
 	end
 	if self.db.profile.icon then 
 		self:Icon(target)
-	end
-end
-
-function mod:UNIT_SPELLCAST_CHANNEL_START(msg)
-	if UnitName(msg) == boss and (UnitChannelInfo(msg)) == L["pounding_trigger"] then
-		self:Sync("ReaverPound")
 	end
 end
