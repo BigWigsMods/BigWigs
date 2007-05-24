@@ -268,7 +268,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg:find(L["image_trigger"]) then
 		self:CancelScheduledEvent("bwdemon")
 		self:CancelScheduledEvent("normal1")
-		self:CancelScheduledEvent("normal2")
 		self:CancelScheduledEvent("demon1")
 		self:TriggerEvent("BigWigs_StopBar", self, L["demon_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["demon_nextbar"])
