@@ -40,7 +40,6 @@ L:RegisterTranslations("enUS", function() return {
 	whirlwind_warn = "Whirlwind Cooldown Over - Inc Soon",
 
 	phase_trigger = "I am in control now!$",
-	phase2_trigger = "Who's the master now?",
 	phase_demon = "Demon Phase for 60sec",
 	phase_demonsoon = "Demon Phase in 5sec!",
 	phase_normalsoon = "Normal Phase in 5sec",
@@ -230,7 +229,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["enrage_trigger"] then
 		wwhelp = 0
 		if self.db.profile.phase then
-			self:DemonSoon()
+			self:DelayedMessage(55, L["phase_demonsoon"], "Urgent")
+			self:Bar(L["demon_nextbar"], 60, "Spell_Shadow_Metamorphosis")
 		end
 		if self.db.profile.enrage then
 			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
@@ -253,6 +253,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(L["phase_demon"], "Attention")
 			self:ScheduleEvent("normal1", "BigWigs_Message", 55, L["phase_normalsoon"], "Important")
 			self:Bar(L["demon_bar"], 60, "Spell_Shadow_Metamorphosis")
+			self:ScheduleEvent("bwdemon", self.DemonSoon, 60, self)
 		end
 		if self.db.profile.whirlwind then
 			self:CancelScheduledEvent("ww1")
@@ -262,13 +263,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:TriggerEvent("BigWigs_StopBar", self, L["whirlwind_bar2"])
 		end
 		if self.db.profile.whisper then
-			self:Bar(L["whisper_soon"], 15, "Spell_Shadow_ManaFeed")
+			self:Bar(L["whisper_soon"], 23, "Spell_Shadow_ManaFeed")
 		end
-	elseif self.db.profile.phase and msg == L["phase2_trigger"] then
-			self:Message(L["phase_normal"], "Attention")
-			self:CancelScheduledEvent("normal1")
-			self:TriggerEvent("BigWigs_StopBar", self, L["demon_bar"])
-			self:DemonSoon()
 	elseif msg:find(L["image_trigger"]) then
 		self:CancelScheduledEvent("bwdemon")
 		self:CancelScheduledEvent("normal1")
@@ -283,8 +279,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:DemonSoon()
-	self:ScheduleEvent("demon1", "BigWigs_Message", 55, L["phase_demonsoon"], "Urgent")
-	self:Bar(L["demon_nextbar"], 60, "Spell_Shadow_Metamorphosis")
+	self:Message(L2["phase_normal"], "Important")
+	self:ScheduleEvent("demon1", "BigWigs_Message", 40, L["phase_demonsoon"], "Urgent")
+	self:Bar(L["demon_nextbar"], 45, "Spell_Shadow_Metamorphosis")
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
