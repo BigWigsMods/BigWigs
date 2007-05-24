@@ -102,21 +102,21 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	enrage = "Enrager",
-	enrage_desc = "Affiche le d\195\169lai avant que Leotheras ne devienne enrag\195\169.",
+	enrage_desc = "Affiche le délai avant que Leotheras ne devienne enragé.",
 
 	whirlwind = "Tourbillon",
-	whirlwind_desc = "Affiche les diff\195\169rentes dur\195\169es concernant le Tourbillon.",
+	whirlwind_desc = "Affiche les différentes durées concernant le Tourbillon.",
 
-	phase = "Phase d\195\169mon",
-	phase_desc = "Affiche une estimation de la phase d\195\169mon.",
+	phase = "Phase démon",
+	phase_desc = "Affiche une estimation de la phase démon.",
 
 	image = "Image",
-	image_desc = "Pr\195\169viens quand l'image est cr\195\169\195\169e à 15%.",
+	image_desc = "Préviens quand l'image est créée à 15%.",
 
 	whisper = "Murmure insidieux",
-	whisper_desc = "Pr\195\169viens quand des joueurs subissent le Murmure insidieux.",
+	whisper_desc = "Préviens quand des joueurs subissent le Murmure insidieux.",
 
-	enrage_trigger = "Enfin, mon exil s'ach\195\168ve\194\160!", -- à vérifier
+	enrage_trigger = "Enfin, mon exil s'achève !", -- à vérifier
 
 	whirlwind_trigger = "Leotheras l'Aveugle gagne Tourbillon",
 	whirlwind_gain = "Tourbillon pendant 12 sec.",
@@ -125,22 +125,22 @@ L:RegisterTranslations("frFR", function() return {
 	whirlwind_bar2 = "~Cooldown Tourbillon",
 	whirlwind_warn = "Fin du cooldown Tourbillon - Imminent !",
 
-	phase_trigger = "Je prend le contr\195\180le", -- à vérifier
-	phase_demon = "Phase d\195\169mon pendant 60 sec.",
-	phase_demonsoon = "Phase d\195\169mon dans 5 sec. !",
+	phase_trigger = "Je prend le contrôle", -- à vérifier
+	phase_demon = "Phase démon pendant 60 sec.",
+	phase_demonsoon = "Phase démon dans 5 sec. !",
 	phase_normalsoon = "Phase normal dans 5 sec.",
 	phase_normal = "Phase normale !",
-	demon_bar = "Phase d\195\169mon",
-	demon_nextbar = "Prochaine phase d\195\169mon",
+	demon_bar = "Phase démon",
+	demon_nextbar = "Prochaine phase démon",
 
-	image_trigger = "C'est moi le maître\194\160! Vous entendez\194\160?", -- à vérifier
-	image_message = "15% - Image cr\195\169\195\169e !",
+	image_trigger = "C'est moi le maître ! Vous entendez ?", -- à vérifier
+	image_message = "15% - Image créée !",
 	image_warning = "Image imminente !",
 
-	whisper_trigger = "^([^%s]+) ([^%s]+) les effets de Murmure insidieux",
-	whisper_message = "D\195\169mon : %s",
-	whisper_bar = "Disparition des d\195\169mons",
-	whisper_soon = "~Cooldown D\195\169mons",
+	whisper_trigger = "^([^%s]+) ([^%s]+) les effets .* Murmure insidieux",
+	whisper_message = "Démon : %s",
+	whisper_bar = "Disparition des démons",
+	whisper_soon = "~Cooldown Démons",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

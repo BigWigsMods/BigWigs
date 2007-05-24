@@ -116,17 +116,17 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	tidal = "Raz-de-mar\195\169e",
-	tidal_desc = "Pr\195\169viens quand Morogrim lance un Raz-de-mar\195\169e.",
+	tidal = "Raz-de-marée",
+	tidal_desc = "Préviens quand Morogrim lance un Raz-de-marée.",
 
 	grave = "Tombeau aquatique",
-	grave_desc = "Pr\195\169viens quand quelqu'un subit le Tombeau aquatique et indique sa dur\195\169e.",
+	grave_desc = "Préviens quand quelqu'un subit le Tombeau aquatique et indique sa durée.",
 
-	murloc = "Arriv\195\169e des murlocs",
-	murloc_desc = "Pr\195\169viens de l'arriv\195\169e des murlocs.",
+	murloc = "Arrivée des murlocs",
+	murloc_desc = "Préviens de l'arrivée des murlocs.",
 
-	grobules = "Arriv\195\169e des grobules",
-	grobules_desc = "Pr\195\169viens de l'arriv\195\169e des grobules.",
+	grobules = "Arrivée des globules",
+	grobules_desc = "Préviens de l'arrivée des globules.",
 
 	grave_trigger1 = "^([^%s]+) ([^%s]+) les effets .* Tombeau aquatique",
 	grave_trigger2 = "envoye ses ennemis", -- à vérifier
@@ -136,17 +136,17 @@ L:RegisterTranslations("frFR", function() return {
 
 	murloc_bar = "~Cooldown Murlocs",
 	murloc_trigger = "Murlocs",
-	murloc_message = "Arriv\195\169e des murlocs !",
+	murloc_message = "Arrivée des murlocs !",
 	murloc_soon_message = "Murlocs imminent !",
-	murloc_engaged = "%s engag\195\169, Murlocs dans ~40 sec.",
+	murloc_engaged = "%s engagé, murlocs dans ~40 sec.",
 
 	grobules_trigger = "invoque", -- à vérifier
-	grobules_message = "Arriv\195\169e des Grobules !",
-	grobules_warning = "Grobules imminent !",
-	grobules_bar = "Disparation des Grobules",
+	grobules_message = "Arrivée des globules !",
+	grobules_warning = "Globules imminent !",
+	grobules_bar = "Disparation des globules",
 
-	tidal_trigger = "Morogrim Marcheur-des-flots commence \195\160 lancer Raz-de-mar\195\169e.",
-	tidal_message = "Raz-de-mar\195\169e !",
+	tidal_trigger = "Morogrim Marcheur-des-flots commence à lancer Raz-de-marée.",
+	tidal_message = "Raz-de-marée !",
 } end )
 
 ----------------------------------

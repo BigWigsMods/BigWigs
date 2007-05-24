@@ -73,32 +73,30 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	dive = "Plong\195\169es",
-	dive_desc = ("D\195\169lais avant que %s ne plonge."):format(boss),
+	engage_warning = "%s engagé - Plongée probable dans 90 sec.",
+
+	dive = "Plongées",
+	dive_desc = ("Délais avant que %s ne plonge."):format(boss),
+	dive_warning = "Plongée probable dans %d sec. !",
+	dive_bar = "~Plonge dans",
+	dive_message = "Plongée - De retour dans 60 sec.",
 
 	spout = "Jet",
-	--spout_desc = "D\195\169lais concernant les Jets.\n\nCes délais peuvent \195\170tre impr\195\169cis : ils sont bas\195\169s sur le moment du pull.", --enUS changed
+	spout_desc = "Délais concernant les Jets. Pas toujours précis.",
+	spout_trigger = "%s takes a deep breath!", -- à traduire
+	spout_message = "Incante un Jet !",
+	spout_warning = "Jet probable dans ~3 sec. !",
 
 	whirl = "Tourbillonnement",
-	whirl_desc = "D\195\169lais concernant les Tourbillonnements.",
-
-	engage_warning = "%s engag\195\169 - Plong\195\169e probable dans 90 sec.",
-
-	dive_warning = "Plong\195\169e probable dans %d sec. !",
-	dive_bar = "~Plonge dans",
-	dive_message = "Plong\195\169e - De retour dans 60 sec.",
-
-	emerge_warning = "De retour dans %d sec.",
-	emerge_message = "De retour - Plong\195\169e probable dans 90 sec.",
-	emerge_bar = "De retour dans",
-
-	spout_message = "Incante un Jet !",
-	spout_warning = "Jet dans 3 sec. !",
-
+	whirl_desc = "Délais concernant les Tourbillonnements.",
 	whirl_bar = "Tourbillonnement probable",
 
+	emerge_warning = "De retour dans %d sec.",
+	emerge_message = "De retour - Plongée probable dans 90 sec.",
+	emerge_bar = "De retour dans",
+
 	["Coilfang Guardian"] = "Gardien de Glisseroc",
-	["Coilfang Ambusher"] = "Embusqu\195\169 de Glisseroc",
+	["Coilfang Ambusher"] = "Embusqué de Glisseroc",
 } end )
 
 ----------------------------------

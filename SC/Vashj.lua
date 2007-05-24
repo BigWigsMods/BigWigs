@@ -117,49 +117,49 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	deformat = "Vous avez besoin de la biblioth\195\168que Deformat-2.0 afin de recevoir les avertissements du butin en phase 2. Vous pouvez la t\195\169l\195\169charger \195\160 l'adresse suivante : http://files.wowace.com/Deformat/.",
+	deformat = "Vous avez besoin de la bibliothèque Deformat-2.0 afin de recevoir les avertissements du butin en phase 2. Vous pouvez la télécharger à l'adresse suivante : http://files.wowace.com/Deformat/.",
 
-	["Tainted Elemental"] = "El\195\169mentaire souill\195\169",
+	["Tainted Elemental"] = "Elémentaire souillé",
 
 	phase = "Phases",
-	phase_desc = "Pr\195\169viens quand la rencontre entre dans une nouvelle phase.",
+	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
 
 	static = "Charge statique",
-	static_desc = "Pr\195\169viens quand la Charge statique affecte un joueur.",
+	static_desc = "Préviens quand la Charge statique affecte un joueur.",
 
-	icon = "Ic\195\180ne",
-	icon_desc = "Place une ic\195\180ne de raid sur les joueurs affect\195\169s par la Charge statique et sur ceux qui ramassent les noyaux.",
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur les joueurs affectés par la Charge statique et sur ceux qui ramassent les noyaux.",
 
-	elemental = "El\195\169mentaires souill\195\169s",
-	elemental_desc = "Préviens quand les El\195\169mentaires souill\195\169s apparaissent durant la phase 2.",
+	elemental = "Elémentaires souillés",
+	elemental_desc = "Préviens quand les Elémentaires souillés apparaissent durant la phase 2.",
 
 	strider = "Trotteurs de Glisseroc",
-	strider_desc = "Pr\195\169viens quans les Trotteurs de Glisseroc apparaissent durant la phase 2.",
+	strider_desc = "Préviens quans les Trotteurs de Glisseroc apparaissent durant la phase 2.",
 
-	barrier = "Dissipation des barri\195\168res",
-	barrier_desc = "Pr\195\169viens quand les barri\195\168res se dissipent.",
+	barrier = "Dissipation des barrières",
+	barrier_desc = "Préviens quand les barrières se dissipent.",
 
-	loot = "Noyau souill\195\169",
-	loot_desc = "Pr\195\169viens quand un joueur ramasse un Noyau souill\195\169.",
+	loot = "Noyau souillé",
+	loot_desc = "Préviens quand un joueur ramasse un Noyau souillé.",
 
 	static_charge_trigger = "^(%S+) %S+ les effets Charge statique.$",
 	static_charge_message = "Charge statique sur %s !",
 
-	loot_message = "%s a ramass\195\169 un noyau !",
+	loot_message = "%s a ramassé un noyau !",
 
-	phase2_trigger = "L'heure est venue\194\160! N'\195\169pargnez personne\194\160!", -- à vérifier
+	phase2_trigger = "L'heure est venue ! N'épargnez personne !", -- à vérifier
 
 	phase2_soon_message = "Phase 2 imminente !",
-	phase2_message = "Phase 2, arriv\195\169e des adds !",
-	phase3_message = "Phase 3 - Enrag\195\169e dans 4 min. !",
+	phase2_message = "Phase 2, arrivée des adds !",
+	phase3_message = "Phase 3 - Enragée dans 4 min. !",
 
-	barrier_down_message = "Barri\195\168re %d/4 dissip\195\169e !",
-	barrier_fades_trigger = "Barri\195\168re magique sur Lady Vashj vient de se dissiper.",
+	barrier_down_message = "Barrière %d/4 dissipée !",
+	barrier_fades_trigger = "Barrière magique sur Lady Vashj vient de se dissiper.",
 
-	elemental_bar = "Arriv\195\169e d'un El\195\169mentaire souill\195\169",
-	elemental_soon_message = "El\195\169mentaire souill\195\169 imminent !",
+	elemental_bar = "Arrivée d'un Elémentaire souillé",
+	elemental_soon_message = "Elémentaire souillé imminent !",
 
-	strider_bar = "Arriv\195\169e d'un trotteur",
+	strider_bar = "Arrivée d'un trotteur",
 	strider_soon_message = "Trotteur imminent !",
 } end )
 

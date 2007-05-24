@@ -89,22 +89,22 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	enrage = "Enrager",
-	enrage_desc = "Affiche le d\195\169lai avant que Karathress ne devienne enrag\195\169.",
+	enrage_desc = "Affiche le délai avant que Karathress ne devienne enragé.",
 
 	totem = "Totem crache-feu",
-	totem_desc = "Pr\195\169viens quand un Totem crache-feu est pos\195\169 et indique son possesseur.",
+	totem_desc = "Préviens quand un Totem crache-feu est posé et indique son possesseur.",
 
 	heal = "Soins",
-	heal_desc = "Pr\195\169viens quand Caribdis incante un soin.",
+	heal_desc = "Préviens quand Caribdis incante un soin.",
 
-	enrage_trigger = "Gardes, attention\194\160!", -- à vérifier
+	enrage_trigger = "Gardes, attention !", -- à vérifier
 
 	totem_trigger1 = "Garde-fonds Marevess lance Totem crache-feu",
 	totem_trigger2 = "Seigneur des fonds Karathress lance Totem crache-feu",
 	totem_message1 = "Marevess : Totem crache-feu",
 	totem_message2 = "Karathress : Totem crache-feu",
 
-	heal_trigger = "Caribdis commence \195\160 lancer Vague de soins",
+	heal_trigger = "Caribdis commence à lancer Vague de soins",
 	heal_message = "Caribdis incante un soin !",
 
 	["Fathom-Guard Sharkkis"] = "Garde-fonds Squallis", --hunter
