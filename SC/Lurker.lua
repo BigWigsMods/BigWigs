@@ -201,7 +201,7 @@ function mod:DiveCheck()
 		end
 	end
 
-	if found = true and occured = true then
+	if found and occured then
 		if self.db.profile.dive then
 			self:DelayedMessage(30, L["dive_warning"]:format(60), "Positive")
 			self:DelayedMessage(60, L["dive_warning"]:format(30), "Positive")
@@ -212,7 +212,7 @@ function mod:DiveCheck()
 
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 		occured = nil
-	elseif found = nil and occured = nil then
+	elseif not found and not occured then
 		if self.db.profile.dive then
 			self:Message(L["dive_message"], "Attention")
 			self:DelayedMessage(30, L["emerge_warning"]:format(30), "Positive")
