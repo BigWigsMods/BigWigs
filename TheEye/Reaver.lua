@@ -188,7 +188,7 @@ function mod:OrbCheck()
 			end
 		end
 	end
-	if target ~= previous and UnitExists(target) then --spam protection & wierdness protection
+	if target ~= previous and UnitExists(id) then --spam protection & wierdness protection
 		if target and id then
 			if UnitPowerType(id) == 0 then --if the player has mana it is most likely ranged, we don't want other units(energy/rage would be melee)
 				self:Result(target) --pass the unit with mana through
