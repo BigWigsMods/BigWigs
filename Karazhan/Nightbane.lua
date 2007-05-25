@@ -320,7 +320,7 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "NightbaneFear" and self.db.profile.fear then
 		self:CancelScheduledEvent("fear")
-		self:Bar(L["fear_bar"], 2, "Spell_Shadow_PsychicScream")
+		self:Bar(L["fear_bar"], 2.5, "Spell_Shadow_PsychicScream")
 		self:Message(L["fear_message"], "Positive")
 		self:Bar(L["fear_nextbar"], 37, "Spell_Shadow_PsychicScream")
 		self:ScheduleEvent("fear", "BigWigs_Message", 35, L["fear_warning"], "Positive")
