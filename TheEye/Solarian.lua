@@ -5,10 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["High Astromancer Solarian"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-
-local p1
 local p2
-local split
 
 ----------------------------
 --      Localization      --
@@ -17,43 +14,41 @@ local split
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Solarian",
 
+	engage_trigger = "Tal anu'men no sin'dorei!",
+
 	phase = "Phase",
 	phase_desc = "Warn for phase changes",
+	phase1_message = "Phase 1 - Split in ~50sec",
+	phase2_warning = "Phase 2 Soon!",
+	phase2_trigger = "^I become",
+	phase2_message = "20% - Phase 2",
 
 	wrath = "Wrath Cast",
 	wrath_desc = "Warn when Wrath is being cast, and the current target",
+	wrath_trigger = "^([^%s]+) ([^%s]+) afflicted by Wrath of the Astromancer",
+	wrath_alert = "Casting Wrath! - Target: %s",
+	wrath_alert_trigger = "begins to cast Wrath of the Astromancer.$",
 
 	wrathyou = "Wrath Debuff on You",
 	wrathyou_desc = "Warn when you have Wrath of the Astromancer",
+	wrath_you = "Wrath on YOU!",
 
 	wrathother = "Wrath Debuff on Others",
 	wrathother_desc = "Warn about others that have Wrath of the Astromancer",
+	wrath_other = "Wrath: %s",
 
 	icon = "Icon",
 	icon_desc = "Place a Raid Icon on the player with Wrath of the Astromancer",
 
 	split = "Split",
 	split_desc = "Warn for split & add spawn",
-
-	split_trigger = "casts Astromancer Split",
+	split_trigger1 = "I will crush your delusions of grandeur!",
+	split_trigger2 = "You are hopelessly outmatched!",
 	split_bar = "~Next Split",
 	split_warning = "Split in ~7 sec",
 
-	phase1_message = "Phase 1 - Split in ~50sec",
-
-	phase2_warning = "Phase 2 Soon!",
-	phase2_trigger = "^I become",
-	phase2_message = "20% - Phase 2",
-
-	wrath_trigger = "^([^%s]+) ([^%s]+) afflicted by Wrath of the Astromancer",
-	wrath_other = "Wrath: %s",
-	wrath_you = "Wrath on YOU!",
-	wrath_alert = "Casting Wrath! - Target: %s",
-	wrath_alert_trigger = "begins to cast Wrath of the Astromancer.$",
-
 	agent_warning = "Split! - Agents in 6 sec",
 	agent_bar = "Agents",
-
 	priest_warning = "Priests/Solarian in 3 sec",
 	priest_bar = "Priests/Solarian",
 
@@ -77,7 +72,6 @@ L:RegisterTranslations("deDE", function() return {
 	split = "Spaltung",
 	split_desc = "Warnt vor Spaltung & Add Spawn",
 
-	split_trigger = "wirkt Spalten des Astronomen",
 	split_bar = "~N\195\164chste Spaltung",
 	split_warning = "Spaltung in ~7 sec",
 
@@ -120,7 +114,6 @@ L:RegisterTranslations("koKR", function() return {
 	split = "분리",
 	split_desc = "분리와 소환에 대한 경고",
 
-	split_trigger = "점성술사의 분리|1을;를; 시전합니다", -- check
 	split_bar = "~다음 분리",
 	split_warning = "약 7초 이내 분리",
 
@@ -165,7 +158,6 @@ L:RegisterTranslations("frFR", function() return {
 	split = "Rupture",
 	split_desc = "Préviens de l'arrivée des ruptures & des apparitions des adds.",
 
-	split_trigger = "lance Rupture de l'astromancien",
 	split_bar = "~Prochaine Rupture",
 	split_warning = "Rupture dans ~7 sec.",
 
@@ -200,19 +192,16 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
 mod.wipemobs = {L["Solarium Priest"], L["Solarium Agent"]}
-mod.toggleoptions = {"phase", "split", -1, "wrath", "wrathyou", "wrathother", "icon", "proximity", "bosskill"}
+mod.toggleoptions = {"phase", "split", -1, "wrath", "wrathyou", "wrathother", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
-mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 4 ) end
 
 ------------------------------
 --      Initialization      --
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
@@ -224,11 +213,8 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWrath", 1)
 	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWCast", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "SolaSplit", 6)
 
-	p1 = nil
 	p2 = nil
-	split = 0
 end
 
 ------------------------------
@@ -236,17 +222,7 @@ end
 ------------------------------
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not p1 then
-		p1 = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
-		if self.db.profile.phase then
-			self:Message(L["phase1_message"], "Positive")
-			self:Bar(L["split_bar"], 50, "Spell_Shadow_SealOfKings")
-			self:DelayedMessage(43, L["split_warning"], "Important")
-		end
-	elseif sync == "SolaWrath" and rest then
+	if sync == "SolaWrath" and rest then
 		if rest == UnitName("player") and self.db.profile.wrathyou then
 			self:Message(L["wrath_you"], "Personal", true, "Long")
 			self:Message(L["wrath_other"]:format(rest), "Attention", nil, nil, true)
@@ -261,25 +237,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "SolaWCast" and self.db.profile.wrath then
 		self:Bar(L["wrath"], 3, "Spell_Arcane_Arcane02")
 		self:ScheduleEvent("BWSolaToTScan", self.WrathCheck, 1, self) --target scan once, after 1 second
-	elseif sync == "SolaSplit" and self.db.profile.split then
-		--split is around 90 seconds after the previous
-		self:Bar(L["split_bar"], 90, "Spell_Shadow_SealOfKings")
-		self:ScheduleEvent("split1", "BigWigs_Message", 83, L["split_warning"], "Important")
-
-		-- Agents 6 seconds after the Split
-		self:Message(L["agent_warning"], "Important")
-		self:Bar(L["agent_bar"], 6, "Ability_Creature_Cursed_01")
-
-		-- Priests 22 seconds after the Split
-		self:DelayedMessage(19, L["priest_warning"], "Important")
-		self:Bar(L["priest_bar"], 22, "Spell_Holy_HolyBolt")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if msg:find(L["split_trigger"]) and (GetTime() - split > 1) then
-		split = GetTime()
-		self:Sync("SolaSplit")
 	end
 end
 
@@ -307,9 +264,6 @@ function mod:debuff(msg)
 	if wplayer and wtype then
 		if wplayer == L2["you"] and wtype == L2["are"] then
 			wplayer = UnitName("player")
-			self:CancelScheduledEvent("cancelProx") --incase they get the debuff twice, don't kill early
-			self:TriggerEvent("BigWigs_ShowProximity", self) --you have the debuff, show the proximity window
-			self:ScheduleEvent("cancelProx", "BigWigs_HideProximity", 8.5, self) --primary debuff lasts ~8.5 seconds, lets kill proximity after that
 		end
 		self:Sync("SolaWrath "..wplayer)
 	end
@@ -322,6 +276,22 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		self:CancelScheduledEvent("split1")
 		self:TriggerEvent("BigWigs_StopBar", self, L["split_bar"])
+	elseif self.db.profile.phase and msg == L["engage_trigger"] then
+		self:Message(L["phase1_message"], "Positive")
+		self:Bar(L["split_bar"], 50, "Spell_Shadow_SealOfKings")
+		self:DelayedMessage(43, L["split_warning"], "Important")
+	elseif self.db.profile.split and (msg == L["split_trigger1"] or msg == L["split_trigger2"]) then
+		--split is around 90 seconds after the previous
+		self:Bar(L["split_bar"], 90, "Spell_Shadow_SealOfKings")
+		self:ScheduleEvent("split1", "BigWigs_Message", 83, L["split_warning"], "Important")
+
+		-- Agents 6 seconds after the Split
+		self:Message(L["agent_warning"], "Important")
+		self:Bar(L["agent_bar"], 6, "Ability_Creature_Cursed_01")
+
+		-- Priests 22 seconds after the Split
+		self:DelayedMessage(19, L["priest_warning"], "Important")
+		self:Bar(L["priest_bar"], 22, "Spell_Holy_HolyBolt")
 	end
 end
 
