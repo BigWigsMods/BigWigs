@@ -39,7 +39,7 @@ L:RegisterTranslations("enUS", function() return {
 	enfeeble_bar = "Enfeeble",
 	enfeeble_nextbar = "Next Enfeeble",
 
-	infernal_trigger1 = "You face not Malchezzar alone, but the legions I command!",
+	infernal_trigger1 = "You face not Malchezaar alone, but the legions I command!",
 	infernal_trigger2 = "All realities, all dimensions are open to me!",
 	infernal_bar = "Incoming Infernal",
 	infernal_warning = "Infernal incoming in 20sec!",
