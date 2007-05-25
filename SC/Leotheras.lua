@@ -278,7 +278,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:DemonSoon()
-	self:Message(L2["phase_normal"], "Important")
+	self:Message(L["phase_normal"], "Important")
 	self:ScheduleEvent("demon1", "BigWigs_Message", 40, L["phase_demonsoon"], "Urgent")
 	self:Bar(L["demon_nextbar"], 45, "Spell_Shadow_Metamorphosis")
 end
