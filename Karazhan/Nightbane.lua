@@ -353,8 +353,14 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.engage and msg == L["engage_trigger"] then
-		self:Message(L["engage_message"]:format(boss), "Positive")
+	if msg == L["engage_trigger"] then
+		if self.db.profile.engage then
+			self:Message(L["engage_message"]:format(boss), "Positive")
+		end
+		if self.db.profile.fear then
+			self:Bar(L["fear_nextbar"], 35, "Spell_Shadow_PsychicScream")
+			self:ScheduleEvent("fear", "BigWigs_Message", 33, L["fear_warning"], "Positive")
+		end
 	elseif self.db.profile.phase and msg == L["airphase_trigger"] then
 		self:Message(L["airphase_message"], "Attention", nil, "Info")
 		bones = nil
