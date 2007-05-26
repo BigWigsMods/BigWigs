@@ -150,7 +150,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		end
 		if self.db.profile.spout then
 			self:DelayedMessage(37, L["spout_warning"], "Attention")
-			self:Bar(L["spout_bar1"], 40, "INV_Weapon_Rifle_02")
+			self:Bar(L["spout_bar"], 40, "INV_Weapon_Rifle_02")
 		end
 		found = nil
 		occured = nil
