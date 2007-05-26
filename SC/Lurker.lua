@@ -128,8 +128,6 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "LurkWhirl", 10)
 	started = nil
 	supress = nil
-	found = nil
-	occured = nil
 end
 
 ------------------------------
@@ -139,6 +137,8 @@ end
 function mod:BigWigs_RecvSync( sync, rest, nick )
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
+		found = nil
+		occured = nil
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
@@ -149,12 +149,10 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:Bar(L["whirl_bar"], 17, "Ability_Whirlwind")
 		end
 		if self.db.profile.spout then
-			self:DelayedMessage(37, L["spout_warning"], "Attention")
-			self:Bar(L["spout_bar"], 40, "INV_Weapon_Rifle_02")
+			self:DelayedMessage(34, L["spout_warning"], "Attention")
+			self:Bar(L["spout_bar"], 37, "INV_Weapon_Rifle_02")
 		end
-		found = nil
-		occured = nil
-		self:ScheduleRepeatingEvent("BWLurkerTargetSeek", self.DiveCheck, 0.2, self)
+		self:ScheduleEvent("BWDelayedCheck", 5, self.DelayCheck, self) -- delay check to give people time to target it
 	elseif sync == "LurkWhirl" and self.db.profile.whirl then
 		self:Bar(L["whirl_bar"], 17, "Ability_Whirlwind")
 	end
@@ -173,6 +171,10 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	end
 end
 
+function mod:DelayCheck()
+	self:ScheduleRepeatingEvent("BWLurkerTargetSeek", self.DiveCheck, 0.2, self)
+end
+
 function mod:StopSupress()
 	supress = nil
 end
@@ -188,13 +190,11 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 end
 
 function mod:DiveCheck()
-	local num = GetNumRaidMembers()
-	for i = 1, num do
-		local unit = string.format("raid%starget", num)
-		if UnitExists(unit) and UnitName(unit) == boss then
+	for i = 1, GetNumRaidMembers() do
+		if UnitName("raid"..i.."target") == boss then
 			found = true
 		else
-			found = nil
+			found = false
 		end
 	end
 
