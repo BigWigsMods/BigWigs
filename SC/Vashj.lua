@@ -163,6 +163,53 @@ L:RegisterTranslations("frFR", function() return {
 	strider_soon_message = "Trotteur imminent !",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	deformat = "Ihr ben\195\182tigt die Deformat-2.0 Library um Loot Warnungen in Phase 2 zu erhalten. Download m\195\182glich auf http://files.wowace.com/Deformat/.",
+
+	["Tainted Elemental"] = "Besudelter Elementar",
+
+	phase = "Phasen Warnung",
+	phase_desc = "Warnt, wenn Vashj ihre Phase wechselt.",
+
+	static = "Statische Aufladung",
+	static_desc = "Warnt vor Statischer Aufladung auf Spielern.",
+
+	icon = "Icon",
+	icon_desc = "Plaziert ein Icon auf Spielern mit Statische Aufladung und denen, die einen Besudelten Kern looten.",
+
+	elemental = "Besudelter Elementar spawn",
+	elemental_desc = "Warnt, wenn ein Besudelter Elementar w\195\164rend Phase 2 spawnt.",
+
+	strider = "Schreiter des Echsenkessels spawn",
+	strider_desc = "Warnt, wenn ein Schreiter des Echsenkessels w\195\164rend Phase 2 spawnt.",
+
+	barrier = "Barriere zerst\195\182rt",
+	barrier_desc = "Alarmiert, wenn die Barrieren in Phase 2 zerst\195\182rt werden.",
+
+	loot = "Besudelter Kern",
+	loot_desc = "Warnt wer einen Besudelten Kern lootet.",
+
+	static_charge_trigger = "^(%S+) %S+ von Statische Aufladung betroffen.$",
+	static_charge_message = "Statische Aufladung auf %s!",
+
+	loot_message = "%s hat einen Kern gelootet!",
+
+	phase2_trigger = "Die Zeit ist gekommen! Lasst keinen am Leben!",
+
+	phase2_soon_message = "Phase 2 bald!",
+	phase2_message = "Phase 2, Adds kommen!",
+	phase3_message = "Phase 3 - Wutanfall in 4min!",
+
+	barrier_down_message = "Barriere %d/4 zerst\195\182rt!",
+	barrier_fades_trigger = "Magiebarriere schwindet von Lady Vashj.",
+
+	elemental_bar = "Besudelter Elementar kommt",
+	elemental_soon_message = "Besudelter Elementar bald!",
+
+	strider_bar = "Schreiter kommt",
+	strider_soon_message = "Schreiter bald!",
+} end )
+
 ----------------------------------
 --    Module Declaration        --
 ----------------------------------
