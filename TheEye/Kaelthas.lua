@@ -40,6 +40,12 @@ L:RegisterTranslations("enUS", function() return {
 	fear = "Fear",
 	fear_desc = "Warn when about Bellowing Roar.",
 
+	pyro = "Pyroblast",
+	pyro_desc = "Show a 60 second timer for Pyroblast",
+	pyro_trigger = "%s begins to cast Pyroblast!",
+	pyro_warning = "Pyroblast in 5sec!",
+	pyro_message = "Casting Pyroblast!",
+
 	thaladred_inc_trigger = "Impressive. Let us see how your nerves hold up against the Darkener, Thaladred!",
 	sanguinar_inc_trigger = "You have persevered against some of my best advisors... but none can withstand the might of the Blood Hammer. Behold, Lord Sanguinar!",
 	capernian_inc_trigger = "Capernian will see to it that your stay here is a short one.",
@@ -95,11 +101,9 @@ mod.otherMenu = "The Eye"
 mod.enabletrigger = { boss, capernian, sanguinar, telonicus, thaladred }
 mod.wipemobs = {
 	L["Devastation"], L["Cosmic Infuser"], L["Infinity Blade"], L["Staff of Disintegration"],
-	L["Warp Slicer"], L["Netherstrand Longbow"], L["Phaseshift Bulwark"]
-}
-
-mod.toggleoptions = { "phase", -1, "temperament", "conflag", "gaze", "icon", "fear", "bosskill" }
-mod.revision = 5
+	L["Warp Slicer"], L["Netherstrand Longbow"], L["Phaseshift Bulwark"] }
+mod.toggleoptions = { "phase", -1, "temperament", "conflag", "gaze", "icon", "fear", "pyro", "bosskill" }
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
 ------------------------------
@@ -117,6 +121,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelTemper", 6)
@@ -176,6 +181,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["phase2_message"], "Positive")
 	elseif msg == L["phase3_trigger"] then
 		self:Message(L["phase3_message"], "Positive")
+	end
+end
+
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+	if self.db.profile.pyro and msg == L["pyro_trigger"] then
+		self:Bar(L["pyro"], 60, "Spell_Fire_Fireball02")
+		self:Message(L["pyro_message"], "Positive")
+		self:DelayedMesage(55, L["pyro_warning"], "Attention")
 	end
 end
 
