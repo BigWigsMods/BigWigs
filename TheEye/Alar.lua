@@ -43,6 +43,8 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	engage_message = "%s engagé - Phase 1",
+
 	meteor = "Météore",
 	meteor_desc = "Délais estimés entre les météores.",
 	meteor_warning = "Météore probable dans ~5 sec.",

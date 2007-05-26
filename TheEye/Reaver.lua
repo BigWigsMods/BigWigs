@@ -70,28 +70,30 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "Alerte ! Vous êtes désignés pour être exterminés.", -- à vérifier
+
 	enrage = "Enrager",
 	enrage_desc = "Affiche le délai avant que le Saccageur du Vide ne devienne enragé.",
 
 	orbyou = "Orbe des arcanes sur vous",
 	orbyou_desc = "Préviens quand vous êtes ciblé par l'Orbe des arcanes.",
+	orb_you = "Orbe des arcanes sur VOUS !",
 
 	orbsay = "Dire - Orbe des arcanes",
 	orbsay_desc = "Fais dire à votre personnage qu'il est ciblé par l'Orbe des arcanes quand c'est le cas, afin d'aider les membres proches.",
+	orb_say = "Orbe sur moi !",
 
 	orbother = "Orbe des arcanes sur les autres",
 	orbother_desc = "Préviens quand les autres sont ciblés par l'Orbe des arcanes.",
+	orb_other = "Orbe (%s)",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur la personne ciblée par l'Orbe des arcanes (nécessite d'être promu ou mieux).",
 
-	pounding = "Martèlement ",
+	pounding = "Martèlement",
 	pounding_desc = "Affiche des barres temporelles pour les Martèlements.",
-
-	orb_other = "Orbe (%s)",
-	orb_you = "Orbe des arcanes sur VOUS !",
-	orb_say = "Orbe sur moi !",
-
+	pounding_trigger1 = "Lancement des mesures alternatives…", -- à vérifier
+	pounding_trigger2 = "Calcul des paramètres de puissance…", -- à vérifier
 	pounding_nextbar = "~Cooldown Martèlement",
 	pounding_bar = "<Martèlement>",
 } end )
