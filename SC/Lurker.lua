@@ -142,7 +142,6 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		self:NextDive()
 		if self.db.profile.dive then
 			self:Message(L["engage_warning"]:format(boss), "Attention")
 		end
