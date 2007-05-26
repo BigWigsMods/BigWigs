@@ -17,37 +17,35 @@ local grobulealert
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Morogrim",
 
+	engage_trigger = "Flood of the deep, take you!",
+
 	tidal = "Tidal Wave",
 	tidal_desc = "Warn when Morogrim casts Tidal Wave.",
+	tidal_trigger = "Morogrim Tidewalker begins to cast Tidal Wave.",
+	tidal_message = "Tidal Wave!",
 
 	grave = "Watery Grave",
 	grave_desc = "Alert who has watery grave and durations.",
-
-	murloc = "Incoming Murlocs",
-	murloc_desc = "Warn for incoming murlocs.",
-
-	grobules = "Incoming Grobules",
-	grobules_desc = "Warn for incoming Watery Grobules.",
-
 	grave_trigger1 = "^([^%s]+) ([^%s]+) afflicted by Watery Grave",
 	grave_trigger2 = "sends his enemies",
 	grave_message = "Watery Grave: %s",
 	grave_bar = "Watery Graves",
 	grave_nextbar = "~Graves Cooldown",
 
+	murloc = "Incoming Murlocs",
+	murloc_desc = "Warn for incoming murlocs.",
 	murloc_bar = "~Murlocs Cooldown",
 	murloc_trigger = "Murlocs",
 	murloc_message = "Incoming Murlocs!",
 	murloc_soon_message = "Murlocs soon!",
 	murloc_engaged = "%s Engaged, Murlocs in ~40sec",
 
+	grobules = "Incoming Grobules",
+	grobules_desc = "Warn for incoming Watery Grobules.",
 	grobules_trigger = "summons",
 	grobules_message = "Incoming Grobules!",
 	grobules_warning = "Grobules Soon!",
 	grobules_bar = "Grobules Despawn",
-
-	tidal_trigger = "Morogrim Tidewalker begins to cast Tidal Wave.",
-	tidal_message = "Tidal Wave!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -175,10 +173,10 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -237,11 +235,16 @@ function mod:GraveWarn()
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+	if sync == "MoroGrave" and rest then
+		inGrave[rest] = true
+		self:ScheduleEvent("Grave", self.GraveWarn, 1.5, self)
+	elseif sync == "MoroTidal" and self.db.profile.tidal then
+		self:Message(L["tidal_message"], "Urgent", nil, "Alarm")
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["engage_trigger"] then
 		if self.db.profile.murloc then
 			self:Message(L["murloc_engaged"]:format(boss), "Positive")
 			self:Bar(L["murloc_bar"], 40, "INV_Misc_Head_Murloc_01")
@@ -249,11 +252,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.grave then
 			self:Bar(L["grave_nextbar"], 20, "Spell_Frost_ArcticWinds")
 		end
-	elseif sync == "MoroGrave" and rest then
-		inGrave[rest] = true
-		self:ScheduleEvent("Grave", self.GraveWarn, 1.5, self)
-	elseif sync == "MoroTidal" and self.db.profile.tidal then
-		self:Message(L["tidal_message"], "Urgent", nil, "Alarm")
 	end
 end
 
