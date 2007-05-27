@@ -82,11 +82,11 @@ L:RegisterTranslations("koKR", function() return {
 	whirlwind_bar2 = "~소용돌이 대기시간",
 	whirlwind_warn = "소용돌이 대기시간 종료 - 잠시 후",
 
-	phase_trigger = "꺼져라, 엘프 꼬맹이. 지금부터는 내가 주인이다!",
+	phase_trigger = "꺼져라, 엘프 꼬맹이. 지금부터는 내가 주인이다!$",
 	phase_demon = "60초간 악마 형상",
 	phase_demonsoon = "악마 형상 5초 전!",
 	phase_normalsoon = "보통 형상 5초 전",
-	phase_normal = "보통 형상!",
+	phase_normal = "보통 형상! - 잠시 후 소용돌이!",
 	demon_bar = "악마 형상",
 	demon_nextbar = "다음 악마 형상",
 

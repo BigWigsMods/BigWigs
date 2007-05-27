@@ -190,6 +190,9 @@ L:RegisterTranslations("koKR", function() return {
 	flurry = "질풍",
 	flurry_desc = "마울가르의 질풍 효과 근접 및 획득 시 경고",
 
+	smash = "Arcing Smash",
+	smash_desc = "Show a bar for estimated Arcing Smash",
+
 	heal_trigger = "현자 블라인드아이|1이;가; 치유 시전을 시작합니다.",
 	heal_message = "블라인드아이 치유 시전!",
 	heal_bar = "치유",
@@ -214,6 +217,8 @@ L:RegisterTranslations("koKR", function() return {
 	whirlwind_nextbar = "~소용돌이 대기시간",
 	whirlwind_warning1 = "마울가르 전투 개시 - 약 50초 후 소용돌이!",
 	whirlwind_warning2 = "잠시 후 소용돌이!",
+
+	smash_bar = "~Arcing Smash",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

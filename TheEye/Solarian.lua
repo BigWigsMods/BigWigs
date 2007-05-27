@@ -96,42 +96,41 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	engage_trigger = "Tal anu'men no sin'dorei!", -- check
+
 	phase = "단계",
 	phase_desc = "단계 변경에 대한 알림",
+	phase1_message = "1 단계 - 약 50초 이내 분리",
+	phase2_warning = "잠시 후 2 단계!",
+	phase2_trigger = "^나는 공허의", -- check
+	phase2_message = "20% - 2 단계",
 
 	wrath = "격노 시전",
 	wrath_desc = "격노 시전 시 경고와 현재 대상 알림",
+	wrath_trigger = "^([^|;%s]*)(.*)점성술사의 격노에 걸렸습니다%.$", -- check
+	wrath_alert = "격노 시전! - 대상: %s",
+	wrath_alert_trigger = "점성술사의 격노 시전을 시작합니다.$",
 
 	wrathyou = "자신에 격노 디버프",
 	wrathyou_desc = "당신이 점성술사의 격노에 걸렸을 때 알림",
+	wrath_you = "당신에 격노!",
 
 	wrathother = "타인에 격노 디버프",
 	wrathother_desc = "타인이 점성술사의 격노에 걸렸을 때 알림",
+	wrath_other = "격노: %s",
 
 	icon = "아이콘",
 	icon_desc = "점성술사의 격노에 걸린 플레이어에 공격대 아이콘 지정",
 
 	split = "분리",
 	split_desc = "분리와 소환에 대한 경고",
-
+	split_trigger1 = "I will crush your delusions of grandeur!", -- check
+	split_trigger2 = "You are hopelessly outmatched!", -- check
 	split_bar = "~다음 분리",
 	split_warning = "약 7초 이내 분리",
 
-	phase1_message = "1 단계 - 약 50초 이내 분리",
-
-	phase2_warning = "잠시 후 2 단계!",
-	phase2_trigger = "^나는 공허의", -- check
-	phase2_message = "20% - 2 단계",
-
-	wrath_trigger = "^([^|;%s]*)(.*)점성술사의 격노에 걸렸습니다%.$", -- check
-	wrath_other = "격노: %s",
-	wrath_you = "당신에 격노!",
-	wrath_alert = "격노 시전! - 대상: %s",
-	wrath_alert_trigger = "점성술사의 격노 시전을 시작합니다.$",
-
 	agent_warning = "분리! - 6초 이내 요원",
 	agent_bar = "요원",
-
 	priest_warning = "3초 이내 사제/솔라리안",
 	priest_bar = "사제/솔라리안",
 

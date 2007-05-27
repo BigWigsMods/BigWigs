@@ -80,37 +80,36 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	engage_trigger = "Flood of the deep, take you!", -- check
+
 	tidal = "해일",
 	tidal_desc = "모고그림의 해일 시전시 경고",
+	tidal_trigger = "겅둥파도 모로그림|1이;가; 해일 시전을 시작합니다.",
+	tidal_message = "해일!",
 
 	grave = "수중 무덤",
 	grave_desc = "수중 무덤에 걸린 사람과 지속시간 알림",
-
-	murloc = "멀록 등장",
-	murloc_desc = "멀록 등장에 대한 경고",
-
-	grobules = "물방울 등장",
-	grobules_desc = "물방울 등장에 대한 경고",
-
 	grave_trigger1 = "^([^|;%s]*)(.*)수중 무덤에 걸렸습니다%.$",
 	grave_trigger2 = "자신의 적을 수중 무덤으로 내몹니다!",
 	grave_message = "수중 무덤: %s",
 	grave_bar = "수중 무덤",
 	grave_nextbar = "~무덤 대기시간",
 
+	murloc = "멀록 등장",
+	murloc_desc = "멀록 등장에 대한 경고",
 	murloc_bar = "~멀록 등장 대기시간",
 	murloc_trigger = "멀록들",
 	murloc_message = "멀록 등장!",
 	murloc_soon_message = "잠시 후 멀록 등장!",
 	murloc_engaged = "%s 전투 시작, 약 40초 후 멀록",
 
+	grobules = "물방울 등장",
+	grobules_desc = "물방울 등장에 대한 경고",
 	grobules_trigger = "물방울",
 	grobules_message = "물방울 등장!",
 	grobules_warning = "잠시 후 물방울!",
 	grobules_bar = "물방울 사라짐",
 
-	tidal_trigger = "겅둥파도 모로그림|1이;가; 해일 시전을 시작합니다.",
-	tidal_message = "해일!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
