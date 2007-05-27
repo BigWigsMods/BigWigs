@@ -216,6 +216,58 @@ L:RegisterTranslations("koKR", function() return {
 	whirlwind_warning2 = "잠시 후 소용돌이!",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	cmd = "大君王莫卡爾",
+
+	heal = "治療",
+	heal_desc = "Warn when Blindeye the Seer begins to cast a Heal",
+
+	shield = "真言術:盾",
+	shield_desc = "Warn when Blindeye the Seer gains Greater Power Word: Shield",
+
+	spellshield = "法術護盾",
+	spellshield_desc = "Warn when Krosh Firehand gains Spell Shield",
+
+	summon = "召喚野生地獄獵犬",
+	summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter",
+
+	whirlwind = "旋風斬",
+	whirlwind_desc = "Warn when Maulgar gains Whirlwind",
+
+	flurry = "Flurry",
+	flurry_desc = "Warn when Maulgar is close to Flurry and gains Flurry",
+
+	smash = "圓弧斬",
+	smash_desc = "Show a bar for estimated Arcing Smash",
+
+	heal_trigger = "Blindeye the Seer begins to cast Prayer of Healing",
+	heal_message = "Blindeye casting Prayer of Healing!",
+	heal_bar = "Healing",
+
+	shield_trigger = "gains Greater Power Word: Shield",
+	shield_message = "Shield on Blindeye!",
+
+	spellshield_trigger = "gains Spell Shield.",
+	spellshield_message = "Spell Shield on Krosh!",
+
+	summon_trigger = "begins to cast Summon Wild Felhunter.",
+	summon_message = "Felhunter being summoned!",
+	summon_bar = "~Felhunter Cooldown",
+
+	flurry_trigger = "You will not defeat the hand of Gruul!",
+	flurry_message = "50% - Flurry!",
+	flurry_warning = "Flurry Soon!",
+
+	whirlwind_trigger = "gains Whirlwind",
+	whirlwind_message = "Maulgar - Whirlwind for 15sec!",
+	whirlwind_bar = "Whirlwind",
+	whirlwind_nextbar = "~Whirlwind Cooldown",
+	whirlwind_warning1 = "Maulgar Engaged - Whirlwind in ~50sec!",
+	whirlwind_warning2 = "Whirlwind Soon!",
+
+	smash_bar = "~Arcing Smash",
+} end)
+
 ----------------------------------
 --   Module Declaration    --
 ----------------------------------

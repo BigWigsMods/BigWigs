@@ -90,6 +90,34 @@ L:RegisterTranslations("koKR", function() return {
 	twist_message = "어긋난 반사: %s",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	cmd = "毀滅之王卡札克",
+
+	enrage = "狂怒",
+	enrage_desc = "狂怒計時",
+
+	mark = "印記",
+	mark_desc = "當你受到卡札克的印記時發出警報",
+
+	twist = "扭曲反射",
+	twist_desc = "當隊友受到扭曲反射時發出警報",
+
+	enrage_trigger1 = "為了軍團!為了基爾加德!",
+	enrage_trigger2 = "%s變得憤怒了!",
+	enrage_warning1 = "與 %s 進入戰鬥！ 50-60 秒後狂怒！",
+	enrage_warning2 = "即將狂怒！",
+	enrage_message = "狂怒狀態 10 秒！",
+	enrage_finished = "狂怒結束！ 50-60 秒後再次狂怒！",
+	enrage_bar = "狂怒",
+	enraged_bar = "已狂怒",
+
+	mark_trigger = "你受到卡札克的印記",
+	mark_message = "你受到卡札克的印記！",
+
+	twist_trigger = "(.+)受到(.*)扭曲反射",
+	twist_message = "扭曲反射: %s",
+} end)
+
 ----------------------------------
 --   Module Declaration    --
 ----------------------------------
