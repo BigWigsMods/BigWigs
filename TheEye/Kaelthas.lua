@@ -40,6 +40,11 @@ L:RegisterTranslations("enUS", function() return {
 	fear = "Fear",
 	fear_desc = "Warn when about Bellowing Roar.",
 
+	rebirth = "Phoenix Rebirth",
+	rebirth_desc = "Warn for Rebirth",
+	rebirth_trigger = "Phoenix begins to cast Rebirth.",
+	rebirth_warning = "Phoenix Rebirth in 5sec!",
+
 	pyro = "Pyroblast",
 	pyro_desc = "Show a 60 second timer for Pyroblast",
 	pyro_trigger = "%s begins to cast Pyroblast!",
@@ -102,7 +107,7 @@ mod.enabletrigger = { boss, capernian, sanguinar, telonicus, thaladred }
 mod.wipemobs = {
 	L["Devastation"], L["Cosmic Infuser"], L["Infinity Blade"], L["Staff of Disintegration"],
 	L["Warp Slicer"], L["Netherstrand Longbow"], L["Phaseshift Bulwark"] }
-mod.toggleoptions = { "phase", -1, "temperament", "conflag", "gaze", "icon", "fear", "pyro", "bosskill" }
+mod.toggleoptions = { "phase", -1, "temperament", "conflag", "gaze", "icon", "fear", "pyro", "rebirth", "bosskill" }
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
@@ -128,6 +133,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelConflag", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFearSoon", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFear", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "PhoenixRebirth", 5)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
@@ -145,6 +151,8 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 		self:Sync("KaelFearSoon")
 	elseif msg:find(L["fear_trigger2"]) or msg:find(L["fear_trigger1"]) then
 		self:Sync("KaelFear")
+	elseif msg == L["rebirth_trigger"] then
+		self:Sync("PhoenixRebirth")
 	end
 end
 
@@ -228,6 +236,14 @@ function mod:KaelFearSoon(rest, nick)
 	if not self.db.profile.fear then return end
 
 	self:Message(L["fear_soon_message"], "Urgent")
+end
+
+function mod:PhoenixRebirth(rest, nick)
+	if not self.db.profile.rebirth then return end
+
+	self:Message(L["rebirth"], "Urgent")
+	self:Bar(L["rebirth"], 45, "Spell_Fire_Burnout")
+	self:DelayedMesage(40, L["rebirth_warning"], "Attention")
 end
 
 function mod:KaelFear(rest, nick)
