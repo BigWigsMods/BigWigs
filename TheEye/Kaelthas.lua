@@ -196,7 +196,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if self.db.profile.pyro and msg == L["pyro_trigger"] then
 		self:Bar(L["pyro"], 60, "Spell_Fire_Fireball02")
 		self:Message(L["pyro_message"], "Positive")
-		self:DelayedMesage(55, L["pyro_warning"], "Attention")
+		self:DelayedMessage(55, L["pyro_warning"], "Attention")
 	end
 end
 
@@ -243,7 +243,7 @@ function mod:PhoenixRebirth(rest, nick)
 
 	self:Message(L["rebirth"], "Urgent")
 	self:Bar(L["rebirth"], 45, "Spell_Fire_Burnout")
-	self:DelayedMesage(40, L["rebirth_warning"], "Attention")
+	self:DelayedMessage(40, L["rebirth_warning"], "Attention")
 end
 
 function mod:KaelFear(rest, nick)
