@@ -138,41 +138,37 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	grow = "성장",
-	grow_desc = "그룰의 성장에 대한 카운트와 경고",
-
-	grasp = "손아귀",
-	grasp_desc = "손아귀 경고와 타이머",
-
-	cavein = "당신의 함몰",
-	cavein_desc = "당신의 함몰에 대한 경고",
-
-	silence = "침묵 경고",
-	silence_desc = "그룰이 광역 침묵(산울림) 시전 시 경고",
-
 	engage_trigger = "이리 와서... 죽어.",
 	engage_message = "%s 전투 개시!",
 
+	grow = "성장",
+	grow_desc = "그룰의 성장에 대한 카운트와 경고.",
 	grow_trigger = "%s|1이;가; 점점 커집니다!",
 	grow_message = "성장: (%d)",
 	grow_bar = "(%d) 성장",
 
-	--grasp_trigger1 = "땅 울리기에 걸렸습니다%.$", --yell 1
-	--grasp_trigger2 = "우두머리 그론의 손아귀에 걸렸습니다%.$", --yell 2
-	grasp_message = "땅 울리기 - 잠시 후 손아귀",
+	grasp = "손아귀",
+	grasp_desc = "손아귀 경고와 타이머.",
+	grasp_trigger1 = "Scurry.", -- yell 1 check
+	grasp_trigger2 = "No escape.", -- yell 2 check
+	grasp_message = "땅 울리기 - 약 10초 이내 석화!",
 	grasp_warning = "잠시 후 땅 울리기",
 	grasp_bar = "~땅 울리기 대기시간",
 
-	shatter_trigger = "%s|1이;가; 포효합니다!",
-	shatter_message = "석화!",
+	cavein = "당신의 함몰",
+	cavein_desc = "당신의 함몰에 대한 경고.",
+	cavein_trigger = "당신은 함몰에 걸렸습니다.",
+	cavein_message = "당신은 함몰!",
 
+	silence = "침묵 경고",
+	silence_desc = "그룰이 광역 침묵(산울림) 시전 시 경고.",
 	silence_trigger = "산울림에 걸렸습니다.",
 	silence_message = "광역 침묵",
 	silence_warning = "잠시 후 광역 침묵!",
 	silence_bar = "~침묵 대기시간",
 
-	cavein_trigger = "당신은 함몰에 걸렸습니다.",
-	cavein_message = "당신은 함몰!",
+	shatter_trigger = "%s|1이;가; 포효합니다!",
+	shatter_message = "석화!",
 } end)
 
 ----------------------------------

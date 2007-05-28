@@ -134,35 +134,20 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	fear = "공포 경고",
-	fear_desc = "우레와 같은 울부짖음에 대한 경고",
-
-	charr = "당신에 불타버린 대지",
-	charr_desc = "당신이 불타버린 대지에 걸렸을 때 알림",
-
-	phase = "단계",
-	phase_desc = ("%s의 단계 변경 시 알림"):format(boss),
-
-	engage = "전투 개시",
-	engage_desc = "전투 개시 알림",
-
-	blast = "불타는 돌풍",
-	blast_desc = "불타는 돌풍 시전에 대한 경고",
-
-	bones = "뼈의 비",
-	--bones_desc = "뼈의 비에 걸린 사람 경고", --enUS changed
-
+	fear_desc = "우레와 같은 울부짖음에 대한 경고.",
 	fear_trigger = "우레와 같은 울부짖음 시전을 시작합니다.",
 	fear_message = "2초 후 공포!",
 	fear_warning = "잠시 후 공포",
 	fear_bar = "공포!",
 	fear_nextbar = "~공포 대기시간",
 
+	charr = "당신에 불타버린 대지",
+	charr_desc = "당신이 불타버린 대지에 걸렸을 때 알림.",
 	charr_trigger = "당신은 불타버린 대지에 걸렸습니다.",
 	charr_message = "당신에 불타버린 대지!",
 
-	blast_trigger = "불타는 돌풍 시전을 시작합니다.",
-	blast_message = "잠시 후 불타는 돌풍!",
-
+	phase = "단계",
+	phase_desc = ("%s의 단계 변경 시 알림."):format(boss),
 	airphase_trigger = "이 더러운 기생충들, 내가 하늘에서 너희의 씨를 말리리라!",
 	landphase_trigger1 = "그만! 내 친히 내려가서 너희를 짓이겨주마!",
 	landphase_trigger2 = "하루살이 같은 놈들! 나의 힘을 똑똑히 보여주겠다!",
@@ -170,8 +155,19 @@ L:RegisterTranslations("koKR", function() return {
 	landphase_message = "착지!",
 	summon_trigger = "멀리에서 고대의 존재가 깨어나고 있다...",
 
+	engage = "전투 개시",
+	engage_desc = "전투 개시 알림.",
 	engage_trigger = "정말 멍청하군! 고통 없이 빨리 끝내주마!",
 	engage_message = "%s 전투 개시",
+
+	blast = "불타는 돌풍",
+	blast_desc = "불타는 돌풍 시전에 대한 경고",
+	blast_trigger = "불타는 돌풍 시전을 시작합니다.",
+	blast_message = "잠시 후 불타는 돌풍!",
+
+	bones = "뼈의 비",
+	bones_desc = "뼈의 비 시전 시작 시 알림.",
+	bones_message = "광역 뼈의 비!",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
