@@ -145,7 +145,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
 	phase1_message = "Phase 1 - Rupture dans ~50 sec.",
 	phase2_warning = "Phase 2 imminente !",
-	phase2_trigger = "^Je deviens",-- à vérifier
+	phase2_trigger = "^Je ne fais plus",
 	phase2_message = "20% - Phase 2",
 
 	wrath = "Incantation du Courroux",
@@ -167,8 +167,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	split = "Rupture",
 	split_desc = "Préviens de l'arrivée des ruptures & des apparitions des adds.",
-	split_trigger1 = "Je vais balayer vos illusions de grandeur !", -- à vérifier
-	split_trigger2 = "Vous êtes désespérément surpassés !", -- à vérifier
+	split_trigger1 = "Je vais balayer vos illusions de grandeur !",
+	split_trigger2 = "Vous êtes désespérément surclassés !",
 	split_bar = "~Prochaine Rupture",
 	split_warning = "Rupture dans ~7 sec.",
 
