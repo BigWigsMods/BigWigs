@@ -4,9 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Nightbane"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local blast
-local bones
 
 ----------------------------
 --      Localization     --
@@ -16,41 +14,20 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Nightbane",
 
 	fear = "Fear Alert",
-	fear_desc = "Warn for Bellowing Roar",
-
-	charr = "Charred Earth on You",
-	charr_desc = "Warn when you are on Charred Earth",
-
-	phase = "Phases",
-	phase_desc = ("Warn when %s switches between phases"):format(boss),
-
-	engage = "Engage",
-	engage_desc = "Engage alert",
-
-	blast = "Smoking Blast",
-	blast_desc = "Warn for Smoking Blast being cast",
-
-	bones = "Raid of Bones",
-	bones_desc = "Warn who Rain of Bones is on",
-
-	icon = "Raid Icon",
-	icon_desc = "Place a raid icon on the person afflicted by Rain of Bones(requires promoted or higher)",
-
-	whisper = "Whisper Player",
-	whisper_desc = "Whisper the person afflicted by Rain of Bones(requires promoted or higher)",
-
+	fear_desc = "Warn for Bellowing Roar.",
 	fear_trigger = "cast Bellowing Roar",
 	fear_message = "Fear in 2 sec!",
 	fear_warning = "Fear Soon",
 	fear_bar = "Fear!",
 	fear_nextbar = "~Fear Cooldown",
 
+	charr = "Charred Earth on You",
+	charr_desc = "Warn when you are on Charred Earth.",
 	charr_trigger = "You are afflicted by Charred Earth.",
 	charr_message = "Charred Earth on YOU!",
 
-	blast_trigger = "cast Smoking Blast",
-	blast_message = "Incoming Smoking Blast!",
-
+	phase = "Phases",
+	phase_desc = ("Warn when %s switches between phases."):format(boss),
 	airphase_trigger = "Miserable vermin. I shall exterminate you from the air!",
 	landphase_trigger1 = "Enough! I shall land and crush you myself!",
 	landphase_trigger2 = "Insects! Let me show you my strength up close!",
@@ -58,14 +35,19 @@ L:RegisterTranslations("enUS", function() return {
 	landphase_message = "Landing!",
 	summon_trigger = "An ancient being awakens in the distance...",
 
+	engage = "Engage",
+	engage_desc = "Engage alert.",
 	engage_trigger = "What fools! I shall bring a quick end to your suffering!",
 	engage_message = "%s Engaged",
 
-	bones_trigger = "^([^%s]+) ([^%s]+) afflicted by Rain of Bones",
-	bones_message = "Rain of Bones on [%s]",
-	bones_whisper = "Rain of Bones on you!",
+	blast = "Smoking Blast",
+	blast_desc = "Warn for Smoking Blast being cast",
+	blast_trigger = "cast Smoking Blast",
+	blast_message = "Incoming Smoking Blast!",
 
-	["Restless Skeleton"] = true,
+	bones = "Rain of Bones",
+	bones_desc = "Warn when Rain of Bones is being channeled.",
+	bones_message = "AoE Rain of Bones!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -85,13 +67,7 @@ L:RegisterTranslations("deDE", function() return {
 	blast_desc = "Warnt vor Rauchende Explosion",
 
 	bones = "Knochenregen",
-	bones_desc = "Warnt wer den Knochenregen hat",
-
-	icon = "Raid Icon",
-	icon_desc = "Platziert ein Raid Icon auf den Spieler der vom Knochenregen betroffen ist (ben\195\182tigt 'bef\195\182rdert' oder h\195\182her)",
-
-	whisper = "Whisper Player",
-	whisper_desc = "Fl\195\188stert den Spieler an der vom Knochenregen betroffen ist (ben\195\182tigt 'bef\195\182rdert' oder h\195\182her)",
+	--bones_desc = "Warnt wer den Knochenregen hat", --enUS changed
 
 	fear_trigger = "Schrecken der Nacht beginnt Dr\195\182hnendes Gebr\195\188ll zu wirken.",
 	fear_message = "Furcht in 2sek!",
@@ -112,10 +88,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	engage_trigger = "Narren! Ich werde Eurem Leiden ein schnelles Ende setzen!",
 	engage_message = "%s angegriffen",
-
-	bones_trigger = "^([^%s]+) ([^%s]+) von Knochenregen betroffen",
-	bones_message = "Knochenregen auf [%s]",
-	bones_whisper = "Knochenregen auf DIR!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -135,13 +107,7 @@ L:RegisterTranslations("frFR", function() return {
 	blast_desc = "Pr\195\169viens quand Explosion de fum\195\169e est incan\195\169.",
 
 	bones = "Pluie d'os",
-	bones_desc = "Pr\195\169viens quand quelqu'un est touch\195\169 par la Pluie d'os.",
-
-	icon = "Ic\195\180ne de raid",
-	icon_desc = "Place une ic\195\180ne de raid sur la personne affect\195\169e par Pluie d'os (n\195\169cessite d'\195\170tre promu ou mieux).",
-
-	whisper = "Avertir joueur",
-	whisper_desc = "Pr\195\169viens en priv\195\169 la personne affect\195\169e par la Pluie d'os (n\195\169cessite d'\195\170tre promu ou mieux).",
+	--bones_desc = "Pr\195\169viens quand quelqu'un est touch\195\169 par la Pluie d'os.", --enUS changed
 
 	fear_trigger = "lancer Rugissement puissant",
 	fear_message = "Rugissement dans 2 sec. !",
@@ -164,12 +130,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	engage_trigger = "Fous\194\160! Je vais mettre un terme rapide \195\160 vos souffrances\194\160!",
 	engage_message = "%s engag\195\169",
-
-	bones_trigger = "^([^%s]+) ([^%s]+) les effets .* Pluie d'os",
-	bones_message = "Pluie d'os sur [%s]",
-	bones_whisper = "Pluie d'os sur VOUS !",
-
-	["Restless Skeleton"] = "Squelette sans repos",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -189,13 +149,7 @@ L:RegisterTranslations("koKR", function() return {
 	blast_desc = "불타는 돌풍 시전에 대한 경고",
 
 	bones = "뼈의 비",
-	bones_desc = "뼈의 비에 걸린 사람 경고",
-
-	icon = "공격대 아이콘",
-	icon_desc = "뼈의 비에 걸린 사람에게 공격대 아이콘 지정(승급자 이상 권한 요구)",
-
-	whisper = "귓속말 경고",
-	whisper_desc = "뼈의 비에 걸린 사람에게 귓속말 경고(승급자 이상 권한 요구)",
+	--bones_desc = "뼈의 비에 걸린 사람 경고", --enUS changed
 
 	fear_trigger = "우레와 같은 울부짖음 시전을 시작합니다.",
 	fear_message = "2초 후 공포!",
@@ -218,15 +172,9 @@ L:RegisterTranslations("koKR", function() return {
 
 	engage_trigger = "정말 멍청하군! 고통 없이 빨리 끝내주마!",
 	engage_message = "%s 전투 개시",
-
-	bones_trigger = "^([^|;%s]*)(.*)뼈의 비에 걸렸습니다%.$",
-	bones_message = "[%s] 뼈의 비",
-	bones_whisper = "당신은 뼈의 비!",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	cmd = "夜禍",
-
 	fear = "恐懼警告",
 	fear_desc = "低沉咆哮警告",
 
@@ -243,13 +191,7 @@ L:RegisterTranslations("zhTW", function() return {
 	blast_desc = "當爆裂濃煙施放時警告",
 
 	bones = "碎骨之雨警告",
-	bones_desc = "當碎骨之雨施放時警告",
-
-	icon = "團隊標記",
-	icon_desc = "對受到碎骨之雨影響的人員設置團隊標記（需要權限）",
-
-	whisper = "玩家密語",
-	whisper_desc = "對受到碎骨之雨的人員使用密語通知（需要權限）",
+	--bones_desc = "當碎骨之雨施放時警告", --enUS changed
 
 	fear_trigger = "施放低沉咆哮",
 	fear_message = "兩秒鐘內恐懼！",
@@ -271,12 +213,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	engage_trigger = "真是蠢蛋!我會快點結束你的痛苦!",
 	engage_message = "%s 開戰！",
-
-	bones_trigger = "^(.+)受到(.*)碎骨之雨",
-	bones_message = "[%s] 中了碎骨之雨",
-	bones_whisper = "你中了碎骨之雨！避開人群！",
-
-	["Restless Skeleton"] = "骸骨",
 } end )
 
 ----------------------------------
@@ -286,8 +222,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = boss
-mod.wipemobs = {L["Restless Skeleton"]}
-mod.toggleoptions = {"engage", "phase", "fear", "blast", "charr", -1, "bones", "icon", "whisper", "bosskill"}
+mod.toggleoptions = {"engage", "phase", "fear", "blast", "charr", "bones", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -299,18 +234,15 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
+	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "NightbaneFear", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "Bones", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "NBFear", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "NBBlast", 15)
+	self:TriggerEvent("BigWigs_ThrottleSync", "NBBones", 15)
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	blast = nil
-	bones = nil
 end
 
 ------------------------------
@@ -318,31 +250,26 @@ end
 ------------------------------
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "NightbaneFear" and self.db.profile.fear then
+	if sync == "NBFear" and self.db.profile.fear then
 		self:CancelScheduledEvent("fear")
 		self:Bar(L["fear_bar"], 2.5, "Spell_Shadow_PsychicScream")
 		self:Message(L["fear_message"], "Positive")
 		self:Bar(L["fear_nextbar"], 37, "Spell_Shadow_PsychicScream")
 		self:ScheduleEvent("fear", "BigWigs_Message", 35, L["fear_warning"], "Positive")
-	elseif sync == "NightbaneBlast" and self.db.profile.blast then
+	elseif sync == "NBBlast" and not blast and self.db.profile.blast then
 		self:Message(L["blast_message"], "Urgent", nil, "Alert")
-	elseif sync == "Bones" and rest and self.db.profile.bones then
-		self:Message(L["bones_message"]:format(rest), "Attention")
-		if self.db.profile.icon then
-			self:Icon(rest)
-		end
-		if self.db.profile.whisper then
-			self:Whisper(rest, L["bones_whisper"])
-		end
+		blast = true
+	elseif sync == "NBBones" and self.db.profile.bones then
+		self:Message(L["bones_message"], "Urgent")
+		self:Bar(L["bones"], 11, "INV_Misc_Bone_10")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["fear_trigger"]) then
-		self:Sync("NightbaneFear")
+		self:Sync("NBFear")
 	elseif not blast and msg:find(L["blast_trigger"]) then
-		self:Sync("NightbaneBlast")
-		blast = true
+		self:Sync("NBBlast")
 	end
 end
 
@@ -354,6 +281,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
+		blast = nil
 		if self.db.profile.engage then
 			self:Message(L["engage_message"]:format(boss), "Positive")
 		end
@@ -363,7 +291,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	elseif self.db.profile.phase and msg == L["airphase_trigger"] then
 		self:Message(L["airphase_message"], "Attention", nil, "Info")
-		bones = nil
 		self:CancelScheduledEvent("fear")
 		self:TriggerEvent("BigWigs_StopBar", self, L["fear_warning"])
 		self:Bar(L["landphase_message"], 57, "INV_Misc_Head_Dragon_01")
@@ -374,18 +301,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:Event(msg)
+function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 	if self.db.profile.charr and msg == L["charr_trigger"] then
 		self:Message(L["charr_message"], "Urgent", true, "Alarm")
 	end
-	if not bones then
-		local bplayer, btype = select(3, msg:find(L["bones_trigger"]))
-		if bplayer and btype then
-			if bplayer == L2["you"] and btype == L2["are"] then
-				bplayer = UnitName("player")
-			end
-			self:Sync("Bones "..bplayer)
-			bones = true
-		end
+end
+
+function mod:UNIT_SPELLCAST_CHANNEL_START(msg)
+	if UnitName(msg) == boss and (UnitChannelInfo(msg)) == L["bones"] then
+		self:Sync("NBBones")
 	end
 end
