@@ -43,28 +43,30 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "Alarm! Eliminierung eingeleitet!",
+
 	enrage = "Wutanfall",
 	enrage_desc = "Wutanfall Timer",
 
 	orbyou = "Arkane Kugel auf dir",
 	orbyou_desc = "Warnt vor Arkane Kugel auf dir",
+	orb_you = "Arkane Kugel auf DIR!",
 
 	orbsay = "Arkane Kugel Ansage",
 	orbsay_desc = "Schreibt im Say, wenn eine Arkane Kugel auf deine Position fliegt, kann nahen Partymember mit aktivierten Sprechblasen helfen",
+	orb_say = "Kugel auf Mir!",
 
 	orbother = "Arkane Kugel auf Anderen",
 	orbother_desc = "Warn for Arcane Orb on others",
+	orb_other = "Kugel(%s)",
 
 	icon = "Raid Icon",
-	icon_desc = "Plaziert ein Raid Icon auf dem Spieler auf den Arkane Kugel zufliegt (ben?tigt Anf\195\188hrer oder Assistent)",
+	icon_desc = "Plaziert ein Raid Icon auf dem Spieler auf den Arkane Kugel zufliegt (ben\195\182tigt Anf\195\188hrer oder Assistent)",
 
 	pounding = "H\195\164mmern",
-	pounding_desc = "Timer Balken f?r H\195\164mmern",
-
-	orb_other = "Kugel(%s)",
-	orb_you = "Arkane Kugel auf DIR!",
-	orb_say = "Kugel auf Mir!",
-
+	pounding_desc = "Timer Balken f\195\188r H\195\164mmern",
+	pounding_trigger1 = "Alternative Ma\195\159nahmen werden eingeleitet...",
+	pounding_trigger2 = "Angriffsvektor wird berechnet...",
 	pounding_nextbar = "~H\195\164mmern Cooldown",
 	pounding_bar = "<H\195\164mmern>",
 } end )
