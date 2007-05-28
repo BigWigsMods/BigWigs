@@ -75,7 +75,7 @@ L:RegisterTranslations("enUS", function() return {
 	mc_trigger1 = "Obey me.",
 	mc_trigger2 = "Bow to my will.",
 	mc_bar = "Mind Control Cooldown",
-	mc_message = "Mind Control! Next in ~33+ sec."
+	mc_message = "Mind Control! Next in ~33+ sec.",
 
 	afflicted_trigger = "^(%S+) (%S+) afflicted by (.*).$",
 
