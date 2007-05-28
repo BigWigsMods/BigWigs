@@ -133,15 +133,15 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:DelayedMessage(50, L["next_phase_message"], "Attention")
 		end
 		if self.db.profile.enrage then
-			self:Message(L2["enrage_start"]:format(boss, 8), "Attention")
-			self:DelayedMessage(180, L2["enrage_min"]:format(5), "Positive")
-			self:DelayedMessage(300, L2["enrage_min"]:format(3), "Positive")
-			self:DelayedMessage(420, L2["enrage_min"]:format(1), "Positive")
-			self:DelayedMessage(450, L2["enrage_sec"]:format(30), "Positive")
-			self:DelayedMessage(470, L2["enrage_sec"]:format(10), "Urgent")
-			self:DelayedMessage(475, L2["enrage_sec"]:format(5), "Urgent")
-			self:DelayedMessage(480, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
-			self:Bar(L2["enrage"], 480, "Spell_Shadow_UnholyFrenzy")
+			self:Message(L2["enrage_start"]:format(boss, 15), "Attention")
+			self:DelayedMessage(300, L2["enrage_min"]:format(10), "Positive")
+			self:DelayedMessage(600, L2["enrage_min"]:format(5), "Positive")
+			self:DelayedMessage(840, L2["enrage_min"]:format(1), "Positive")
+			self:DelayedMessage(870, L2["enrage_sec"]:format(30), "Positive")
+			self:DelayedMessage(890, L2["enrage_sec"]:format(10), "Urgent")
+			self:DelayedMessage(895, L2["enrage_sec"]:format(5), "Urgent")
+			self:DelayedMessage(900, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Bar(L2["enrage"], 900, "Spell_Shadow_UnholyFrenzy")
 		end
 	end
 end
