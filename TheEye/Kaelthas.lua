@@ -72,6 +72,11 @@ L:RegisterTranslations("enUS", function() return {
 	phase3_message = "Phase 3 - Kael inc!",
 	phase3_bar = "Kael'thas incoming",
 
+	mc_trigger1 = "Obey me.",
+	mc_trigger2 = "Bow to my will.",
+	mc_bar = "Mind Control Cooldown",
+	mc_message = "Mind Control! Next in ~33+ sec."
+
 	afflicted_trigger = "^(%S+) (%S+) afflicted by (.*).$",
 
 	temperament_spell = "Chaotic Temperament",
@@ -178,8 +183,6 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if not self.db.profile.phase then return end
-
 	if msg == L["thaladred_inc_trigger"] then
 		self:Message(thaladred, "Positive")
 	elseif msg == L["sanguinar_inc_trigger"] then
@@ -205,6 +208,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["gravity_trigger1"] or msg == L["gravity_trigger2"] then
 		self:Message(L["gravity_message"], "Important")
 		self:Bar(L["gravity_bar"], 90, "Spell_Nature_UnrelentingStorm")
+	elseif msg == L["mc_trigger1"] or msg == L["mc_trigger2"] then
+		self:Message(L["mc_message"], "Urgent")
+		self:Bar(L["mc_bar"], 33, "Spell_Shadow_ShadowWordDominate")
 	end
 end
 
