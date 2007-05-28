@@ -161,8 +161,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	cmd = "莫克札王子",
-
 	phase = "開戰提示",
 	phase_desc = "開戰警示",
 

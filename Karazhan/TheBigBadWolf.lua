@@ -83,8 +83,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	cmd = "大野狼",
-
 	youriding = "你變成小紅帽時警告",
 	youriding_desc = "當你變成小紅帽時警告",
 

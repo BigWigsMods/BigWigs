@@ -148,8 +148,6 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	cmd = "羅慕歐茱麗葉",
-
 	phase = "階段警告",
 	phase_desc = "當進入下一階段時警告",
 

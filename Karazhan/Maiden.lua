@@ -121,8 +121,6 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	cmd = "虛幻魔女",
-
 	engage = "開戰提示",
 	engage_desc = ("提示與 %s 開戰"):format(boss),
 

@@ -221,8 +221,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	cmd = "艾蘭之影",
-
 	adds = "召喚水元素",
 	adds_desc = "當艾蘭召喚水元素出現時發出警告。",
 

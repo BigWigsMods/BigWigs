@@ -145,8 +145,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	cmd = "監護者",
-
 	berserk = "狂暴警告",
 	berserk_desc = "開戰十分鐘後提示無敵碾人狀態",
 
