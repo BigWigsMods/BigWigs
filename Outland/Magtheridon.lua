@@ -153,7 +153,7 @@ L:RegisterTranslations("frFR", function() return {
 	debrisinc_desc = "Préviens quand les Débris commencent à tomber à 30%.",
 
 	escape_trigger1 = "Les liens de %%s commencent à se relâcher !",
-	escape_trigger2 = "Me… voilà… déchaîné !",
+	escape_trigger2 = "Me... voilà... déchaîné !",
 	escape_warning1 = "%s engagé - Libre dans 2 min. !",
 	escape_warning2 = "Libre dans 1 min. !",
 	escape_warning3 = "Libre dans 30 sec. !",
@@ -168,12 +168,12 @@ L:RegisterTranslations("frFR", function() return {
 	heal_trigger = "commence à lancer Guérison ténèbreuse",
 	heal_message = "Soins !",
 
-	nova_ = "Nova explosive !",
+	nova_ = "nova explosive",
 	nova_bar = "~Cooldown Nova explosive",
 	nova_warning = "Nova explosive imminente",
 	nova_cast = "Incante une Nova explosive !",
 
-	banish_trigger = "Pas encore ! Pas encore…",
+	banish_trigger = "Pas encore ! Pas encore...",
 	banish_message = "Banni pendant ~10 sec.",
 	banish_over_trigger = "Cage d'ombre sur Magtheridon vient de se dissiper.",
 	banish_over_message = "Fin du ban !",
