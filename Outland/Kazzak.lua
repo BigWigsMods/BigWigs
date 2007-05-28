@@ -91,8 +91,6 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	cmd = "毀滅之王卡札克",
-
 	enrage = "狂怒",
 	enrage_desc = "狂怒計時",
 

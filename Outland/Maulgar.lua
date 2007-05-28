@@ -222,8 +222,6 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	cmd = "大君王莫卡爾",
-
 	heal = "治療",
 	heal_desc = "Warn when Blindeye the Seer begins to cast a Heal",
 
