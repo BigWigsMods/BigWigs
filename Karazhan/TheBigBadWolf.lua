@@ -14,7 +14,8 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 L:RegisterTranslations("enUS", function() return {
 	cmd = "TheBigBadWolf",
 
-	riding_trigger = "^([^%s]+) gain(.*) Red Riding Hood",
+	riding_trigger = "^([^%s]+) (.*) Red Riding Hood.$",
+	gain = "gain",
 
 	youriding = "You are Red Riding Hood alert.",
 	youriding_desc = "Warn when you are Red Riding Hood",
@@ -125,11 +126,12 @@ end
 ------------------------------
 
 function mod:RidingEvent(msg)
-	local rplayer = select(3, msg:find(L["riding_trigger"]))
-	if rplayer then
-		if rplayer == L2["you"] then
+	local rplayer, rtype = select(3, msg:find(L["riding_trigger"]))
+	if rplayer and rtype then
+		if rplayer == L2["you"] and rtype == L["gain"] then
 			rplayer = UnitName("player")
 		end
+
 		if rplayer == UnitName("player") and self.db.profile.youriding then
 			self:Message(L["riding_youwarn"], "Personal", true, "Long")
 			self:Message(L["riding_otherwarn"]:format(rplayer), "Attention", nil, nil, true)
