@@ -59,9 +59,18 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_trigger = "Perhaps I underestimated you. It would be unfair to make you fight all four advisors at once, but... fair treatment was never shown to my people. I'm just returning the favor.",
 	phase3_trigger = "Alas, sometimes one must take matters into one's own hands. Balamore shanal!",
 
+	flying_trigger = "I have not come this far to be stopped! The future I have planned will not be jeapordized! Now, you will taste true power!",
+	gravity_trigger1 = "Let us see how you fare when your world is turned upside down.",
+	gravity_trigger2 = "Having trouble staying grounded?",
+
+	gravity_bar = "Next Gravity Lapse",
+	gravity_message = "Gravity Lapse!",
+	flying_message = "Flying! Gravity Lapse in 1min",
+
 	weapons_inc_message = "Weapons incoming!",
 	phase2_message = "Phase 2 - Advisors and Weapons!",
 	phase3_message = "Phase 3 - Kael inc!",
+	phase3_bar = "Kael'thas incoming",
 
 	afflicted_trigger = "^(%S+) (%S+) afflicted by (.*).$",
 
@@ -187,8 +196,15 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:DelayedMessage(90, L["revive_warning"], "Attention")
 	elseif msg == L["phase2_trigger"] then
 		self:Message(L["phase2_message"], "Positive")
+		self:Bar(L["phase3_bar"], 180, "Spell_ChargePositive")
 	elseif msg == L["phase3_trigger"] then
 		self:Message(L["phase3_message"], "Positive")
+	elseif msg == L["flying_trigger"] then
+		self:Message(L["flying_message"], "Attention")
+		self:Bar(L["gravity_bar"], 60, "Spell_Nature_UnrelentingStorm")
+	elseif msg == L["gravity_trigger1"] or msg == L["gravity_trigger2"] then
+		self:Message(L["gravity_message"], "Important")
+		self:Bar(L["gravity_bar"], 90, "Spell_Nature_UnrelentingStorm")
 	end
 end
 
