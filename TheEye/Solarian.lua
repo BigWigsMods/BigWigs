@@ -139,7 +139,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Tal anu'men no sin'dorei !", -- à vérifier
+	engage_trigger = "Tal anu'men no sin'dorei!",
 
 	phase = "Phases",
 	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",

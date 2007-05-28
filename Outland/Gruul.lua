@@ -63,41 +63,37 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "Venez… mourir.",
+	engage_message = "%s engagé !",
+
 	grow = "Croissance",
-	grow_desc = "Compte et les croissances de Grull et préviens de ses arriv\195\169es.",
-
-	grasp = "Emprise",
-	grasp_desc = "Avertissement et d\195\169lais pour Emprise du seigneur gronn.",
-
-	cavein = "Eboulement sur vous",
-	cavein_desc = "Pr\195\169viens quand vous \195\170tes sous un \195\169boulement.",
-
-	silence = "Silence",
-	silence_desc = "Pr\195\169viens quand Gruul lance son Silence de zone (R\195\169verb\195\169ration).",
-
-	engage_trigger = "Venez\226\128\166 mourir.",
-	engage_message = "%s engag\195\169 !",
-
-	grow_trigger = "%s grandit\194\160!",
+	grow_desc = "Compte les croissances de Grull et préviens de ses arrivées.",
+	grow_trigger = "%s grandit !",
 	grow_message = "Croissance : (%d)",
 	grow_bar = "Croissance (%d)",
 
-	--grasp_trigger1 = "les effets .* Heurt terrestre", --yell 1
-	--grasp_trigger2 = "les effets .* Emprise du seigneur gronn", --yell 2
-	grasp_message = "Heurt terrestre - Emprise imminente",
+	grasp = "Emprise",
+	grasp_desc = "Avertissements et délais pour Emprise du seigneur gronn.",
+	grasp_trigger1 = "Cavalez.", -- à vérifier
+	grasp_trigger2 = "On ne s'échappe pas.", -- à vérifier
+	grasp_message = "Heurt terrestre - Emprise dans ~10 sec !",
 	grasp_warning = "Heurt terrestre imminent",
 	grasp_bar = "~Cooldown Heurt terrestre",
 
-	shatter_trigger = "%s rugit\194\160!",
-	shatter_message = "Fracasser !",
+	cavein = "Eboulement sur vous",
+	cavein_desc = "Préviens quand vous êtes sous un éboulement.",
+	cavein_trigger = "Vous subissez les effets de Eboulement.",
+	cavein_message = "Eboulement sur VOUS !",
 
-	silence_trigger = "les effets .* R\195\169verb\195\169ration.",
+	silence = "Silence",
+	silence_desc = "Préviens quand Gruul lance son Silence de zone (Réverbération).",
+	silence_trigger = "les effets .* Réverbération.",
 	silence_message = "Silence de zone",
 	silence_warning = "Silence de zone imminent !",
 	silence_bar = "~Cooldown Silence",
 
-	cavein_trigger = "Vous subissez les effets de Eboulement.",
-	cavein_message = "Eboulement sur VOUS !",
+	shatter_trigger = "%s rugit !",
+	shatter_message = "Fracasser !",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

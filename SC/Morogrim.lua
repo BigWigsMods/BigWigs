@@ -113,37 +113,35 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "Que les flots des profondeurs vous emportent !", -- à vérifier
+
 	tidal = "Raz-de-marée",
 	tidal_desc = "Préviens quand Morogrim lance un Raz-de-marée.",
+	tidal_trigger = "Morogrim Marcheur-des-flots commence à lancer Raz-de-marée.",
+	tidal_message = "Raz-de-marée !",
 
 	grave = "Tombeau aquatique",
 	grave_desc = "Préviens quand quelqu'un subit le Tombeau aquatique et indique sa durée.",
-
-	murloc = "Arrivée des murlocs",
-	murloc_desc = "Préviens de l'arrivée des murlocs.",
-
-	grobules = "Arrivée des globules",
-	grobules_desc = "Préviens de l'arrivée des globules.",
-
 	grave_trigger1 = "^([^%s]+) ([^%s]+) les effets .* Tombeau aquatique",
 	grave_trigger2 = "envoye ses ennemis", -- à vérifier
 	grave_message = "Tombeau aquatique : %s",
 	grave_bar = "Tombeaux aquatique",
 	grave_nextbar = "~Cooldown Tombeaux",
 
+	murloc = "Arrivée des murlocs",
+	murloc_desc = "Préviens de l'arrivée des murlocs.",
 	murloc_bar = "~Cooldown Murlocs",
 	murloc_trigger = "Murlocs",
 	murloc_message = "Arrivée des murlocs !",
 	murloc_soon_message = "Murlocs imminent !",
 	murloc_engaged = "%s engagé, murlocs dans ~40 sec.",
 
+	grobules = "Arrivée des globules",
+	grobules_desc = "Préviens de l'arrivée des globules.",
 	grobules_trigger = "invoque", -- à vérifier
 	grobules_message = "Arrivée des globules !",
 	grobules_warning = "Globules imminent !",
 	grobules_bar = "Disparation des globules",
-
-	tidal_trigger = "Morogrim Marcheur-des-flots commence à lancer Raz-de-marée.",
-	tidal_message = "Raz-de-marée !",
 } end )
 
 ----------------------------------

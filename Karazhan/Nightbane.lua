@@ -92,44 +92,40 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	fear = "Rugissement",
-	fear_desc = "Pr\195\169viens quand Plaie-de-nuit lance son Rugissement puissant.",
-
-	charr = "Terre calcin\195\169e sur vous",
-	charr_desc = "Pr\195\169viens quand vous \195\170tes dans la Terre calcin\195\169e.",
-
-	phase = "Phases",
-	phase_desc = ("Pr\195\169viens quand %s change de phase."):format(boss),
-
-	engage = "Engagement",
-	engage_desc = "Pr\195\169viens quand Plaie-de-nuit est engag\195\169.",
-
-	blast = "Explosion de fum\195\169e",
-	blast_desc = "Pr\195\169viens quand Explosion de fum\195\169e est incan\195\169.",
-
-	bones = "Pluie d'os",
-	--bones_desc = "Pr\195\169viens quand quelqu'un est touch\195\169 par la Pluie d'os.", --enUS changed
-
+	fear_desc = "Préviens quand Plaie-de-nuit lance son Rugissement puissant.",
 	fear_trigger = "lancer Rugissement puissant",
 	fear_message = "Rugissement dans 2 sec. !",
 	fear_warning = "Rugissement imminent",
 	fear_bar = "Rugissement !",
-	fear_nextbar = "~Rugissement Fear",
+	fear_nextbar = "~Cooldown Rugissement",
 
-	charr_trigger = "Vous subissez les effets de Terre calcin\195\169e.",
-	charr_message = "Terre calcin\195\169e sur VOUS !",
+	charr = "Terre calcinée sur vous",
+	charr_desc = "Préviens quand vous êtes dans la Terre calcinée.",
+	charr_trigger = "Vous subissez les effets de Terre calcinée.",
+	charr_message = "Terre calcinée sur VOUS !",
 
-	blast_trigger = "lancer Explosion de fum\195\169e.",
-	blast_message = "Explosion de fum\195\169e imminente !",
-
-	airphase_trigger = "Mis\195\169rable vermine. Je vais vous exterminer des airs\194\160!",
-	landphase_trigger1 = "Assez\194\160! Je vais atterrir et vous \195\169craser moi-m\195\170me\194\160!",
-	landphase_trigger2 = "Insectes\194\160! Je vais vous montrer de quel bois je me chauffe\194\160!",
-	airphase_message = "D\195\169collage !",
+	phase = "Phases",
+	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
+	airphase_trigger = "Misérable vermine. Je vais vous exterminer des airs !",
+	landphase_trigger1 = "Assez ! Je vais atterrir et vous écraser moi-même !",
+	landphase_trigger2 = "Insectes ! Je vais vous montrer de quel bois je me chauffe !",
+	airphase_message = "Décollage !",
 	landphase_message = "Atterrissage !",
-	summon_trigger = "Dans le lointain, un \195\170tre ancien s'\195\169veille\226\128\166",
+	summon_trigger = "Dans le lointain, un être ancien s'éveille…",
 
-	engage_trigger = "Fous\194\160! Je vais mettre un terme rapide \195\160 vos souffrances\194\160!",
-	engage_message = "%s engag\195\169",
+	engage = "Engagement",
+	engage_desc = "Préviens quand Plaie-de-nuit est engagé.",
+	engage_trigger = "Fous ! Je vais mettre un terme rapide à vos souffrances !",
+	engage_message = "%s engagé",
+
+	blast = "Explosion de fumée",
+	blast_desc = "Préviens quand Explosion de fumée est incanté.",
+	blast_trigger = "lancer Explosion de fumée.",
+	blast_message = "Explosion de fumée imminente !",
+
+	bones = "Pluie d'os",
+	bones_desc = "Préviens quand la Pluie d'os est canalisée.",
+	bones_message = "Pluie d'os de zone !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
