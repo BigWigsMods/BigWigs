@@ -4,9 +4,8 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Gruul the Dragonkiller"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local grasp
-local slam
 local growcount
+local silence
 
 local bandages = {
 	[21991] = true, -- Heavy Netherweave Bandage
@@ -30,51 +29,40 @@ local bandages = {
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Gruul",
 
-	engage = "Engage",
-	engage_desc = "Warn when Grull is pulled",
-
-	grow = "Grow",
-	grow_desc = "Count and warn for Grull's grow",
-
-	grasp = "Grasp",
-	grasp_desc = "Grasp warnings and timers",
-
-	cavein = "Cave In on You",
-	cavein_desc = "Warn for a Cave In on You",
-
-	silence = "Silence",
-	silence_desc = "Warn when Gruul casts AOE Silence (Reverberation)",
-
 	engage_trigger = "Come.... and die.",
 	engage_message = "%s Engaged!",
 
+	grow = "Grow",
+	grow_desc = "Count and warn for Grull's grow.",
 	grow_trigger = "%s grows in size!",
 	grow_message = "Grows: (%d)",
 	grow_bar = "Grow (%d)",
 
-	grasp_trigger1 = "afflicted by Ground Slam",
-	grasp_trigger2 = "afflicted by Gronn Lord's Grasp",
-	grasp_message1 = "Ground Slam - Grasp Incoming",
-	grasp_message2 = "Grasp Stacking - Shatter in ~5sec",
+	grasp = "Grasp",
+	grasp_desc = "Grasp warnings and timers.",
+	grasp_trigger1 = "Scurry.",
+	grasp_trigger2 = "No escape.",
+	grasp_message = "Ground Slam - Shatter in ~10sec!",
 	grasp_warning = "Ground Slam Soon",
 	grasp_bar = "~Ground Slam Cooldown",
 
-	shatter_trigger = "%s roars!",
-	shatter_message = "Shatter!",
+	cavein = "Cave In on You",
+	cavein_desc = "Warn for a Cave In on You.",
+	cavein_trigger = "You are afflicted by Cave In.",
+	cavein_message = "Cave In on YOU!",
 
+	silence = "Silence",
+	silence_desc = "Warn when Gruul casts AOE Silence (Reverberation).",
 	silence_trigger = "afflicted by Reverberation",
 	silence_message = "AOE Silence",
 	silence_warning = "AOE Silence soon!",
 	silence_bar = "~Silence Cooldown",
 
-	cavein_trigger = "You are afflicted by Cave In.",
-	cavein_message = "Cave In on YOU!",
+	shatter_trigger = "%s roars!",
+	shatter_message = "Shatter!",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	engage = "Engagement",
-	engage_desc = "Pr\195\169viens quand Grull est engag\195\169.",
-
 	grow = "Croissance",
 	grow_desc = "Compte et les croissances de Grull et préviens de ses arriv\195\169es.",
 
@@ -94,10 +82,9 @@ L:RegisterTranslations("frFR", function() return {
 	grow_message = "Croissance : (%d)",
 	grow_bar = "Croissance (%d)",
 
-	grasp_trigger1 = "les effets .* Heurt terrestre",
-	grasp_trigger2 = "les effets .* Emprise du seigneur gronn",
-	grasp_message1 = "Heurt terrestre - Emprise imminente",
-	grasp_message2 = "Emprise - Fracasser dans ~5 sec.",
+	--grasp_trigger1 = "les effets .* Heurt terrestre", --yell 1
+	--grasp_trigger2 = "les effets .* Emprise du seigneur gronn", --yell 2
+	grasp_message = "Heurt terrestre - Emprise imminente",
 	grasp_warning = "Heurt terrestre imminent",
 	grasp_bar = "~Cooldown Heurt terrestre",
 
@@ -114,9 +101,6 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	engage = "Pull Warnung",
-	engage_desc = "Warnt, wenn Gruul gepulled wird",
-
 	grow = "Wachstum", 
 	grow_desc = "Warnt wenn Gruul Wachstum bekommt", 
 
@@ -136,10 +120,9 @@ L:RegisterTranslations("deDE", function() return {
 	grow_message = "Wachstum: (%d)",
 	grow_bar = "Wachstum (%d)",
 
-	grasp_trigger1 = "von Erde ersch\195\188ttern betroffen",
-	grasp_trigger2 = "von Griff des Gronnlords betroffen",
-	grasp_message1 = "Erde ersch\195\188tert - Griff kommt", 
-	grasp_message2 = "Griff - Zert\195\188mmern in ~5 sek",
+	--grasp_trigger1 = "von Erde ersch\195\188ttern betroffen", --yell 1
+	--grasp_trigger2 = "von Griff des Gronnlords betroffen", --yell 2
+	grasp_message = "Erde ersch\195\188tert - Griff kommt", 
 	grasp_warning = "Erde ersch\195\188tern bald!", 
 
 	shatter_trigger = "%s br\195\188llt!",
@@ -155,9 +138,6 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	engage = "전투 개시",
-	engage_desc = "전투 개시 알림",
-
 	grow = "성장",
 	grow_desc = "그룰의 성장에 대한 카운트와 경고",
 
@@ -177,10 +157,9 @@ L:RegisterTranslations("koKR", function() return {
 	grow_message = "성장: (%d)",
 	grow_bar = "(%d) 성장",
 
-	grasp_trigger1 = "땅 울리기에 걸렸습니다%.$",
-	grasp_trigger2 = "우두머리 그론의 손아귀에 걸렸습니다%.$",
-	grasp_message1 = "땅 울리기 - 잠시 후 손아귀",
-	grasp_message2 = "손아귀 대기 - 약 5초 후 석화",
+	--grasp_trigger1 = "땅 울리기에 걸렸습니다%.$", --yell 1
+	--grasp_trigger2 = "우두머리 그론의 손아귀에 걸렸습니다%.$", --yell 2
+	grasp_message = "땅 울리기 - 잠시 후 손아귀",
 	grasp_warning = "잠시 후 땅 울리기",
 	grasp_bar = "~땅 울리기 대기시간",
 
@@ -204,7 +183,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = boss
-mod.toggleoptions = {"engage", "grasp", "grow", -1, "cavein", "silence", "proximity", "bosskill"}
+mod.toggleoptions = {"grasp", "grow", -1, "cavein", "silence", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) 
 	for k, v in pairs( bandages ) do
@@ -221,12 +200,6 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
-	slam = nil
-	grasp = nil
-	silence = nil
-	growcount = 1
-	self.proximitySilent = true
-
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -235,7 +208,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
@@ -245,14 +217,31 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
-		if self.db.profile.engage then
-			self:Message(L["engage_message"]:format(boss), "Attention")
+		silence = nil
+		growcount = 1
+		self.proximitySilent = true
+		self:TriggerEvent("BigWigs_ShowProximity", self)
+
+		self:Message(L["engage_message"]:format(boss), "Attention")
+
+		if self.db.profile.grasp then
 			self:DelayedMessage(35, L["grasp_warning"], "Urgent")
 			self:Bar(L["grasp_bar"], 40, "Ability_ThunderClap")
-			self:DelayedMessage(95, L["silence_warning"], "Urgent")
-			self:Bar(L["silence_bar"], 100, "Spell_Holy_ImprovedResistanceAuras")
 		end
-		self:TriggerEvent("BigWigs_ShowProximity", self)
+		if self.db.profile.silence then
+			self:DelayedMessage(97, L["silence_warning"], "Urgent")
+			self:Bar(L["silence_bar"], 102, "Spell_Holy_ImprovedResistanceAuras")
+		end
+		if self.db.profile.grow then
+			self:Bar(L["grow_bar"]:format(growcount), 30, "Spell_Shadow_Charm")
+		end
+	elseif msg == L["grasp_trigger1"] or msg == L["grasp_trigger2"] then
+		self.proximitySilent = nil
+
+		if self.db.profile.grasp then
+			self:Message(L["grasp_message"], "Attention")
+			self:Bar(L["shatter_message"], 10, "Ability_ThunderClap")
+		end
 	end
 end
 
@@ -263,42 +252,28 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 		self:Bar(L["grow_bar"]:format(growcount), 30, "Spell_Shadow_Charm")
 	elseif msg == L["shatter_trigger"] then
 		self.proximitySilent = true
+
 		if self.db.profile.grasp then
 			self:Message(L["shatter_message"], "Positive")
+			self:DelayedMessage(64, L["grasp_warning"], "Urgent")
+			self:Bar(L["grasp_bar"], 70, "Ability_ThunderClap")
 		end
 	end
 end
 
 function mod:Event(msg)
-	if not slam and msg:find(L["grasp_trigger1"]) then
-		if self.db.profile.grasp then
-			self:Message(L["grasp_message1"], "Attention")
-			self:DelayedMessage(67, L["grasp_warning"], "Urgent")
-			self:Bar(L["grasp_bar"], 72, "Ability_ThunderClap")
-		end
-		self.proximitySilent = nil
-		slam = true
-	elseif not grasp and self.db.profile.grasp and msg:find(L["grasp_trigger2"]) then
-		self:Message(L["grasp_message2"], "Urgent")
-		self:Bar(L["shatter_message"], 5, "Ability_ThunderClap")
-		grasp = true
-	elseif self.db.profile.cavein and msg == L["cavein_trigger"] then
+	if self.db.profile.cavein and msg == L["cavein_trigger"] then
 		self:Message(L["cavein_message"], "Personal", true, "Alarm")
 	elseif not silence and self.db.profile.silence and msg:find(L["silence_trigger"]) then
 		self:Message(L["silence_message"], "Attention")
-		self:DelayedMessage(40, L["silence_warning"], "Urgent")
+		self:DelayedMessage(41, L["silence_warning"], "Urgent")
 		self:Bar(L["silence_bar"], 45, "Spell_Holy_ImprovedResistanceAuras")
 		silence = true
 	end
 end
 
 function mod:BigWigs_Message(text)
-	if text == L["grasp_warning"] then
-		slam = nil
-		grasp = nil
-	end
 	if text == L["silence_warning"] then
 		silence = nil
 	end
 end
-
