@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Shade of Aran"]
@@ -8,58 +8,49 @@ local drinkannounced
 local addsannounced
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Aran",
-
-	adds = "Elementals",
-	adds_desc = "Warn about the water elemental adds spawning",
-
-	drink = "Drinking",
-	drink_desc = ("Warn when %s starts to drink"):format(boss),
-
-	engage = "Engage",
-	engage_desc = ("Warn when %s has been engaged"):format(boss),
-
-	blizzard = "Blizzard",
-	blizzard_desc = "Warn when Blizzard is being cast",
-
-	pull = "Pull/Super AE",
-	pull_desc = "Warn for the magnetic pull and Super Arcane Explosion",
-
-	flame = "Flame Wreath",
-	flame_desc = "Warn when Flame Wreath is being cast",
-
-	adds_message = "Elementals Incoming!",
-	adds_warning = "Elementals Soon",
-	adds_trigger = "I'm not finished yet! No, I have a few more tricks up my sleeve...",
-	adds_bar = "Elementals despawn",
-
-	drink_trigger = "Surely you wouldn't deny an old man a replenishing drink? No, no, I thought not.",
-	drink_warning = "Low Mana - Drinking Soon!",
-	drink_message = "Drinking - AoE Polymorph!",
-	drink_bar = "Super Pyroblast Incoming",
 
 	engage_trigger1 = "I'll not be tortured again!",
 	engage_trigger2 = "Who are you? What do you want? Stay away from me!",
 	engage_trigger3 = "Please, no more! My son... he's gone mad!",
 	engage_message = "%s Engaged",
 
+	adds = "Elementals",
+	adds_desc = "Warn about the water elemental adds spawning.",
+	adds_message = "Elementals Incoming!",
+	adds_warning = "Elementals Soon",
+	adds_trigger = "I'm not finished yet! No, I have a few more tricks up my sleeve...",
+	adds_bar = "Elementals despawn",
+
+	drink = "Drinking",
+	drink_desc = ("Warn when %s starts to drink."):format(boss),
+	drink_trigger = "Surely you wouldn't deny an old man a replenishing drink? No, no, I thought not.",
+	drink_warning = "Low Mana - Drinking Soon!",
+	drink_message = "Drinking - AoE Polymorph!",
+	drink_bar = "Super Pyroblast Incoming",
+
+	blizzard = "Blizzard",
+	blizzard_desc = "Warn when Blizzard is being cast.",
 	blizzard_trigger1 = "Back to the cold dark with you!",
 	blizzard_trigger2 = "I'll freeze you all!",
 	blizzard_message = "Blizzard!",
 
+	pull = "Pull/Super AE",
+	pull_desc = "Warn for the magnetic pull and Super Arcane Explosion.",
 	pull_message = "Arcane Explosion!",
 	pull_trigger1 = "Yes, yes my son is quite powerful... but I have powers of my own!",
 	pull_trigger2 = "I am not some simple jester! I am Nielas Aran!",
 	pull_bar = "Arcane Explosion",
 
+	flame = "Flame Wreath",
+	flame_desc = "Warn when Flame Wreath is being cast.",
 	flame_warning = "Casting: Flame Wreath!",
 	flame_trigger1 = "I'll show you: this beaten dog still has some teeth!",
 	flame_trigger2 = "Burn, you hellish fiends!",
-
 	flame_message = "Flame Wreath!",
 	flame_bar = "Flame Wreath",
 	flame_trigger = "casts Flame Wreath",
@@ -71,9 +62,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	drink = "Trinken",
 	drink_desc = ("Warnt, wenn %s zu trinken beginnt."):format(boss),
-
-	engage = "Angriff",
-	engage_desc = ("Warnt, wenn %s angegriffen wurde."):format(boss),
 
 	blizzard = "Blizzard",
 	blizzard_desc = "Warnt vor dem Blizzard.",
@@ -122,9 +110,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	drink = "Boisson",
 	drink_desc = ("Pr\195\169viens quand %s commence \195\160 boire."):format(boss),
-
-	engage = "Engagement",
-	engage_desc = ("Pr\195\169viens quand %s est engag\195\169."):format(boss),
 
 	blizzard = "Blizzard",
 	blizzard_desc = "Pr\195\169viens quand Blizzard est incant\195\169.",
@@ -175,9 +160,6 @@ L:RegisterTranslations("koKR", function() return {
 	drink = "음료 마시기",
 	drink_desc = ("%s의 음료 마시기 시작 시 알림"):format(boss),
 
-	engage = "전투 개시",
-	engage_desc = ("%s 전투 개시 알림"):format(boss),
-
 	blizzard = "눈보라",
 	blizzard_desc = "눈보라 시전 시 경고",
 
@@ -227,9 +209,6 @@ L:RegisterTranslations("zhTW", function() return {
 	drink = "喝水作弊",
 	drink_desc = ("當 %s 喝水回魔時提示"):format(boss),
 
-	engage = "開戰提示",
-	engage_desc = ("提示與 %s 開戰"):format(boss),
-
 	blizzard = "暴風雪警告",
 	blizzard_desc = "當暴風雪施放時發出警告",
 
@@ -273,13 +252,13 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 ----------------------------------
---   Module Declaration    --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"engage", "adds", "drink", -1, "blizzard", "pull", "flame", "bosskill"}
+mod.toggleoptions = {"adds", "drink", -1, "blizzard", "pull", "flame", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -287,10 +266,6 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	drinkannounced = nil
-	addsannounced = nil
-
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 
 	self:RegisterEvent("UNIT_MANA")
@@ -303,7 +278,7 @@ function mod:OnEnable()
 end
 
 ------------------------------
---    Event Handlers     --
+--      Event Handlers      --
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
@@ -318,7 +293,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["flame_bar"], 5, "Spell_Fire_Fire")
 	elseif self.db.profile.blizzard and (msg == L["blizzard_trigger1"] or msg == L["blizzard_trigger2"]) then
 		self:Message(L["blizzard_message"], "Attention")
-	elseif self.db.profile.engage and (msg == L["engage_trigger1"] or msg == L["engage_trigger2"] or msg == L["engage_trigger3"]) then
+	elseif msg == L["engage_trigger1"] or msg == L["engage_trigger2"] or msg == L["engage_trigger3"] then
+		drinkannounced = nil
+		addsannounced = nil
 		self:Message(L["engage_message"]:format(boss), "Positive")
 	end
 end
@@ -362,4 +339,3 @@ function mod:UNIT_HEALTH(msg)
 		end
 	end
 end
-

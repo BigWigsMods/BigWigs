@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Netherspite"]
@@ -9,24 +9,17 @@ local started
 local voidcount
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Netherspite",
 
-	phase = "Phases",
-	phase_desc = ("Warns when %s changes from one phase to another"):format(boss),
-
-	voidzone = "Voidzones",
-	voidzone_desc = "Warn for Voidzones",
-
-	netherbreath = "Netherbreath",
-	netherbreath_desc = "Warn for Netherbreath",
-
 	enrage = "Enrage",
 	enrage_desc = "Warn about enrage after 9min.",
 
+	phase = "Phases",
+	phase_desc = ("Warns when %s changes from one phase to another."):format(boss),
 	phase1_message = "Withdrawal - Netherbreaths Over",
 	phase1_bar = "~Possible Withdrawal",
 	phase1_trigger = "%s cries out in withdrawal, opening gates to the nether.",
@@ -34,9 +27,13 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_bar = "~Possible Rage",
 	phase2_trigger = "%s goes into a nether-fed rage!",
 
+	voidzone = "Voidzones",
+	voidzone_desc = "Warn for Voidzones.",
 	voidzone_trigger = "casts Void Zone.",
 	voidzone_warn = "Void Zone (%d)!",
 
+	netherbreath = "Netherbreath",
+	netherbreath_desc = "Warn for Netherbreath.",
 	netherbreath_trigger = "casts Face Random Target.",
 	netherbreath_warn = "Incoming Netherbreath!",
 } end )
@@ -147,7 +144,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 ----------------------------------
---    Module Declaration   --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -164,8 +161,10 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "Netherbreath", 3)
 
@@ -174,13 +173,14 @@ function mod:OnEnable()
 end
 
 ------------------------------
---    Event Handlers     --
+--      Event Handlers      --
 ------------------------------
 
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
+		voidcount = 1
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end

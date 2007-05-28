@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Prince Malchezaar"]
@@ -8,24 +8,14 @@ local afflict
 local nova
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Malchezaar",
 
 	phase = "Engage",
-	phase_desc = "Alert when changing phases",
-
-	enfeeble = "Enfeeble",
-	enfeeble_desc = "Show cooldown timer for enfeeble",
-
-	infernals = "Infernals",
-	infernals_desc = "Show cooldown timer for Infernal summons.",
-
-	nova = "Shadow Nova",
-	nova_desc = "Estimated Shadow Nova timers",
-
+	phase_desc = "Alert when changing phases.",
 	phase1_trigger = "Madness has brought you here to me. I shall be your undoing!",
 	phase2_trigger = "Simple fools! Time is the fire in which you'll burn!",
 	phase3_trigger = "How can you hope to stand against such overwhelming power?",
@@ -33,18 +23,24 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_message = "60% - Phase 2",
 	phase3_message = "30% - Phase 3 ",
 
-	enfeeble_trigger = "afflicted by Enfeeble",
+	enfeeble = "Enfeeble",
+	enfeeble_desc = "Show cooldown timer for enfeeble.",
+	enfeeble_trigger = "afflicted by Enfeeble.$",
 	enfeeble_message = "Enfeeble! next in 30sec",
 	enfeeble_warning = "Enfeeble in 5sec!",
 	enfeeble_bar = "Enfeeble",
 	enfeeble_nextbar = "Next Enfeeble",
 
+	infernals = "Infernals",
+	infernals_desc = "Show cooldown timer for Infernal summons.",
 	infernal_trigger1 = "You face not Malchezaar alone, but the legions I command!",
 	infernal_trigger2 = "All realities, all dimensions are open to me!",
 	infernal_bar = "Incoming Infernal",
 	infernal_warning = "Infernal incoming in 20sec!",
 	infernal_message = "Infernal in 5sec!",
 
+	nova = "Shadow Nova",
+	nova_desc = "Estimated Shadow Nova timers.",
 	nova_message = "Shadow Nova!",
 	nova_bar = "~Nova Cooldown",
 	nova_soon = "Shadow Nova Soon",
@@ -198,7 +194,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 ----------------------------------
---    Module Declaration   --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -212,11 +208,8 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	afflict = nil
-	nova = true
 	self:RegisterEvent("BigWigs_Message")
 
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -232,7 +225,7 @@ function mod:OnEnable()
 end
 
 ------------------------------
---     Event Handlers    --
+--      Event Handlers      --
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
@@ -240,6 +233,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["infernal_warning"], "Positive")
 		self:NextInfernal()
 	elseif msg == L["phase1_trigger"] then
+		afflict = nil
+		nova = true
+
 		if self.db.profile.phase then
 			self:Message(L["phase1_message"], "Positive")
 		end

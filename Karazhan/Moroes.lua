@@ -1,5 +1,5 @@
 ﻿------------------------------
---     Are you local?     --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Moroes"]
@@ -8,48 +8,39 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local enrageannounced
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Moroes",
 
-	engage = "Engage",
-	engage_desc = ("Warn when %s is pulled"):format(boss),
+	engage_trigger = "Hm, unannounced visitors. Preparations must be made...",
+	engage_message = "%s Engaged - Vanish in ~35sec!",
 
 	vanish = "Vanish",
-	vanish_desc = "Vanish estimated timers",
-
-	garrote = "Garrote",
-	garrote_desc = "Notify of players afflicted by Garrote",
-
-	enrage = "Enrage",
-	enrage_desc = ("Warn when %s becomes enraged"):format(boss),
-
-	icon = "Icon",
-	icon_desc = "Place a Raid Icon on the player afflicted by Garrote(requires promoted or higher)",
-
+	vanish_desc = "Vanish estimated timers.",
 	vanish_trigger1 = "You rang?",
 	vanish_trigger2 = "Now, where was I? Oh, yes...",
 	vanish_message = "Vanished! Next in ~35sec!",
 	vanish_warning = "Vanish Soon!",
 	vanish_bar = "~Vanish Cooldown",
 
-	garrote_trigger = "^([^%s]+) ([^%s]+) afflicted by Garrote",
+	garrote = "Garrote",
+	garrote_desc = "Notify of players afflicted by Garrote.",
+	garrote_trigger = "^([^%s]+) ([^%s]+) afflicted by Garrote.$",
 	garrote_message = "Garrote: %s",
 
-	engage_trigger = "Hm, unannounced visitors. Preparations must be made...",
-	engage_message = "%s Engaged - Vanish in ~35sec!",
+	icon = "Icon",
+	icon_desc = "Place a Raid Icon on the player afflicted by Garrote(requires promoted or higher).",
 
+	enrage = "Enrage",
+	enrage_desc = ("Warn when %s becomes enraged."):format(boss),
 	enrage_trigger = "%s becomes enraged!",
 	enrage_message = "Enrage!",
 	enrage_warning = "Enrage Soon!",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	engage = "Engagement",
-	engage_desc = ("Pr\195\169viens quand %s est engag\195\169."):format(boss),
-
 	vanish = "Disparition",
 	vanish_desc = ("Pr\195\169viens quand %s est suceptible de dispara\195\174tre."):format(boss),
 
@@ -110,9 +101,6 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage = "전투시작",
-	engage_desc = ("%s 전투 개시 알림"):format(boss),
-
 	vanish = "소멸",
 	vanish_desc = "소멸 예상 시간",
 
@@ -143,9 +131,6 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	engage = "開戰提示",
-	engage_desc = ("提示與 %s 開戰"):format(boss),
-
 	vanish = "消失預警",
 	vanish_desc = "消失預警計時",
 
@@ -176,13 +161,13 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 ----------------------------------
---   Module Declaration    --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"engage", "vanish", "enrage", -1, "garrote", "icon", "bosskill"}
+mod.toggleoptions = {"vanish", "enrage", -1, "garrote", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -190,8 +175,6 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	enrageannounced = nil
-
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "GarroteEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "GarroteEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "GarroteEvent")
@@ -201,23 +184,26 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MoroesGarrote", 5)
 end
 
 ------------------------------
---    Event Handlers     --
+--      Event Handlers      --
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.vanish and (msg == L["vanish_trigger1"] or msg == L["vanish_trigger2"]) then
 		self:Message(L["vanish_message"], "Urgent", nil, "Alert")
 		self:NextVanish()
-	elseif self.db.profile.engage and msg == L["engage_trigger"] then
+	elseif msg == L["engage_trigger"] then
+		enrageannounced = nil
 		self:Message(L["engage_message"]:format(boss), "Attention")
-		self:NextVanish()
+
+		if self.db.profile.vanish then
+			self:NextVanish()
+		end
 	end
 end
 

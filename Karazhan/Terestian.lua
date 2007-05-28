@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Terestian Illhoof"]
@@ -7,7 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -16,21 +16,19 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger = "Ah, you're just in time.",
 
 	sacrifice = "Sacrifice",
-	sacrifice_desc = "Warn for Sacrifice of players",
+	sacrifice_desc = "Warn for Sacrifice of players.",
+	sacrifice_trigger = "^([^%s]+) ([^%s]+) afflicted by Sacrifice.$",
+	sacrifice_message = "%s is being Sacrificed!",
+	sacrifice_bar = "Sacrifice: %s",
 
-	icon = "Icon",
-	icon_desc = "Place a raid icon on the sacrificed player(requires promoted or higher)",
+	icon = "Raid Icon",
+	icon_desc = "Place a raid icon on the sacrificed player(requires promoted or higher).",
 
 	enrage = "Enrage",
 	enrage_desc = "Warn about enrage after 10min.",
 
 	weak = "Weakened",
-	weak_desc = "Warn for weakened state",
-
-	sacrifice_trigger = "^([^%s]+) ([^%s]+) afflicted by Sacrifice",
-	sacrifice_message = "%s is being Sacrificed!",
-	sacrifice_bar = "Sacrifice: %s",
-
+	weak_desc = "Warn for weakened state.",
 	weak_trigger = "afflicted by Broken Pact",
 	weak_message = "Weakened for 30sec!",
 	weak_warning1 = "Weakened over in 5sec!",
@@ -135,7 +133,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 ----------------------------------
---    Module Declaration   --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -159,11 +157,10 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CheckSacrifice")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
 end
 
 ------------------------------
---     Event Handlers    --
+--      Event Handlers      --
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)

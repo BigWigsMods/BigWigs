@@ -1,6 +1,7 @@
 ﻿------------------------------
---     Are you local?     --
+--      Are you local?      --
 ------------------------------
+
 
 local boss = AceLibrary("Babble-Boss-2.2")["Attumen the Huntsman"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
@@ -9,26 +10,24 @@ local horse = AceLibrary("Babble-Boss-2.2")["Midnight"]
 local started
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Attumen",
 
 	phase = "Phase",
-	phase_desc = "Warn when entering a new Phase",
-
-	curse = "Cursed Tanks",
-	curse_desc = "Warn when a warrior or druid is cursed by Intangible Presence",
-
-	curse_trigger = "^([^%s]+) ([^%s]+) afflicted by Intangible Presence",
-	curse_message = "Tank Cursed - %s",
-
+	phase_desc = "Warn when entering a new Phase.",
 	phase1_message = "Phase 1 - %s",
 	phase2_trigger = "%s calls for her master!",
 	phase2_message = "Phase 2 - %s & Attumen",
 	phase3_trigger = "Come Midnight, let's disperse this petty rabble!",
 	phase3_message = "Phase 3 - %s",
+
+	curse = "Cursed Tanks",
+	curse_desc = "Warn when a warrior or druid is cursed by Intangible Presence.",
+	curse_trigger = "^([^%s]+) ([^%s]+) afflicted by Intangible Presence.$",
+	curse_message = "Tank Cursed - %s",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -102,12 +101,12 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 ----------------------------------
---    Module Declaration   --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
-mod.enabletrigger = horse
+mod.enabletrigger = {horse, boss}
 mod.toggleoptions = {"phase", "curse", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -132,7 +131,7 @@ function mod:OnEnable()
 end
 
 ------------------------------
---     Event Handlers    --
+--      Event Handlers      --
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)

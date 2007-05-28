@@ -1,5 +1,5 @@
 ﻿------------------------------
---     Are you local?     --
+--      Are you local?      --
 ------------------------------
 
 local BB = AceLibrary("Babble-Boss-2.2")
@@ -16,25 +16,23 @@ local tito = BB["Tito"]
 BB = nil
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "WizardofOz",
 
+	engage_trigger = "Oh Tito, we simply must find a way home!",
+
 	spawns = "Spawn Timers",
-	spawns_desc = "Timers for when the characters become active",
-
-	light = "Chain Lightning",
-	light_desc = "Warn for Chain Lightning being cast",
-
+	spawns_desc = "Timers for when the characters become active.",
 	spawns_bar = "%s attacks!",
 	spawns_warning = "%s in 5 sec",
 
+	light = "Chain Lightning",
+	light_desc = "Warn for Chain Lightning being cast.",
 	light_trigger = "The Crone begins to cast Chain Lightning",
 	light_message = "Chain Lightning!",
-
-	engage_trigger = "Oh Tito, we simply must find a way home!",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -102,7 +100,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 ----------------------------------
---    Module Declaration   --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -123,7 +121,7 @@ function mod:OnEnable()
 end
 
 ------------------------------
---    Event Handlers     --
+--      Event Handlers      --
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)

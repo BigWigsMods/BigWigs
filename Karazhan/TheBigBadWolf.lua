@@ -1,34 +1,33 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local lady = AceLibrary("Babble-Boss-2.2")["Grandmother"]
 local boss = AceLibrary("Babble-Boss-2.2")["The Big Bad Wolf"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-local playerName = nil
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "TheBigBadWolf",
 
-	youriding = "You are Red Riding Hood alert",
-	youriding_desc = "Warn when you are Red Riding Hood",
-
-	elseriding = "Others Red Riding Hood alert",
-	elseriding_desc = "Warn when others are Red Riding Hood",
-
-	icon = "Place Icon",
-	icon_desc = "Put a Raid Icon on the person who's Red Riding Hood. (Requires promoted or higher)",
-
 	riding_trigger = "^([^%s]+) gain(.*) Red Riding Hood",
 
+	youriding = "You are Red Riding Hood alert.",
+	youriding_desc = "Warn when you are Red Riding Hood",
 	riding_youwarn = "You are Red Riding Hood!",
+
+	elseriding = "Others Red Riding Hood alert.",
+	elseriding_desc = "Warn when others are Red Riding Hood",
 	riding_otherwarn = "%s is Red Riding Hood!",
+
 	riding_bar = "%s Running",
+
+	icon = "Raid Icon.",
+	icon_desc = "Put a Raid Icon on the person who's Red Riding Hood. (Requires promoted or higher)",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -75,7 +74,7 @@ L:RegisterTranslations("koKR", function() return {
 	icon = "아이콘 지정",
 	icon_desc = "빨간 두건인 사람에게 공격대 아이콘 지정(승급자 이상의 권한 필요)",
 
-	riding_trigger = "^([^|;%s]*)(.*)빨간 두건 효과를 얻었습니다%.$", -- "^([^%s]+) gain(.*) Red Riding Hood", -- check
+	riding_trigger = "^([^|;%s]*)(.*)빨간 두건 효과를 얻었습니다%.$",
 
 	riding_youwarn = "당신은 빨간 두건입니다!",
 	riding_otherwarn = "%s님이 빨간 두건입니다!",
@@ -100,7 +99,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 ----------------------------------
---   Module Declaration    --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -110,11 +109,10 @@ mod.toggleoptions = {"youriding", "elseriding", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
---      Initialization     --
+--      Initialization      --
 ------------------------------
 
 function mod:OnEnable()
-	playerName = UnitName("player")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS", "RidingEvent")
@@ -123,16 +121,16 @@ function mod:OnEnable()
 end
 
 ------------------------------
---     Event Handlers    --
+--      Event Handlers      --
 ------------------------------
 
 function mod:RidingEvent(msg)
 	local rplayer = select(3, msg:find(L["riding_trigger"]))
 	if rplayer then
 		if rplayer == L2["you"] then
-			rplayer = playerName
+			rplayer = UnitName("player")
 		end
-		if rplayer == playerName and self.db.profile.youriding then
+		if rplayer == UnitName("player") and self.db.profile.youriding then
 			self:Message(L["riding_youwarn"], "Personal", true, "Long")
 			self:Message(L["riding_otherwarn"]:format(rplayer), "Attention", nil, nil, true)
 			self:Bar(L["riding_bar"]:format(rplayer), 20,"INV_Chest_Cloth_18")

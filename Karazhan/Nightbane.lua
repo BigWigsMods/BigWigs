@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Nightbane"]
@@ -7,7 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local blast
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -41,7 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 	engage_message = "%s Engaged",
 
 	blast = "Smoking Blast",
-	blast_desc = "Warn for Smoking Blast being cast",
+	blast_desc = "Warn for Smoking Blast being cast.",
 	blast_trigger = "cast Smoking Blast",
 	blast_message = "Incoming Smoking Blast!",
 
@@ -208,7 +208,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 ----------------------------------
---    Module Declaration   --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -238,7 +238,7 @@ function mod:OnEnable()
 end
 
 ------------------------------
---     Event Handlers    --
+--      Event Handlers      --
 ------------------------------
 
 function mod:BigWigs_RecvSync(sync, rest, nick)

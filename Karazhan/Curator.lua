@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["The Curator"]
@@ -7,7 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local enrageannounced
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -15,34 +15,30 @@ L:RegisterTranslations("enUS", function() return {
 
 	berserk = "Berserk",
 	berserk_desc = "Warn for berserk after 10min.",
+	berserk_trigger = "The Menagerie is for guests only.",
+	berserk_message = "%s engaged, 10min to berserk!",
+	berserk_bar = "Berserk",
 
 	enrage = "Enrage",
 	enrage_desc = "Warn for enrage at 15%.",
+	enrage_trigger = "Failure to comply will result in offensive action.",
+	enrage_message = "Enrage!",
+	enrage_warning = "Enrage soon!",
 
 	weaken = "Weaken",
-	weaken_desc = "Warn for weakened state",
-
-	weaktime = "Weaken Countdown",
-	weaktime_desc = "Countdown warning and bar untill next weaken.",
-
+	weaken_desc = "Warn for weakened state.",
 	weaken_trigger = "Your request cannot be processed.",
 	weaken_message = "Evocation - Weakened for 20sec!",
 	weaken_bar = "Evocation",
 	weaken_fade_message = "Evocation Finished - Weakened Gone!",
 	weaken_fade_warning = "Evocation over in 5sec!",
 
+	weaktime = "Weaken Countdown",
+	weaktime_desc = "Countdown warning and bar untill next weaken.",
 	weaktime_message1 = "Evocation in ~10 seconds",
 	weaktime_message2 = "Evocation in ~30 seconds",
 	weaktime_message3 = "Evocation in ~70 seconds",
 	weaktime_bar = "~Evocation Cooldown",
-
-	berserk_trigger = "The Menagerie is for guests only.",
-	berserk_message = "%s engaged, 10min to berserk!",
-	berserk_bar = "Berserk",
-
-	enrage_trigger = "Failure to comply will result in offensive action.",
-	enrage_message = "Enrage!",
-	enrage_warning = "Enrage soon!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -178,7 +174,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 ----------------------------------
---   Module Declaration   --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -193,8 +189,6 @@ mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) en
 ------------------------------
 
 function mod:OnEnable()
-	enrageannounced = nil
-
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("UNIT_HEALTH")
 
@@ -203,7 +197,7 @@ function mod:OnEnable()
 end
 
 ------------------------------
---     Event Handlers    --
+--      Event Handlers      --
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
@@ -232,6 +226,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_StopBar", self, L["weaken_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["weaktime_bar"])
 	elseif msg == L["berserk_trigger"] then -- This only happens at the start of the fight
+		enrageannounced = nil
+		self:TriggerEvent("BigWigs_ShowProximity", self)
+
 		if self.db.profile.berserk then
 			self:Message(L["berserk_message"]:format(boss), "Attention")
 			self:Bar(L["berserk_bar"], 600, "INV_Shield_01")
@@ -242,8 +239,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:ScheduleEvent("evoc2", "BigWigs_Message", 79, L["weaktime_message2"], "Attention")
 			self:ScheduleEvent("evoc3", "BigWigs_Message", 99, L["weaktime_message1"], "Urgent")
 		end
-
-		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
 end
 

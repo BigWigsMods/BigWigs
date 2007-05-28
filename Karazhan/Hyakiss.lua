@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Hyakiss the Lurker"]
@@ -7,7 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -15,16 +15,14 @@ L:RegisterTranslations("enUS", function() return {
 
 	web = "Web",
 	web_desc = "Alert when a player gets webbed.",
-
-	web_trigger = "^([^%s]+) ([^%s]+) afflicted by Hyakiss' Web.",
-	web_message = "%s has been webbed.",
+	web_trigger = "^([^%s]+) ([^%s]+) afflicted by Hyakiss' Web.$",
+	web_message = "%s has been webbed!",
 	web_bar = "Web: %s",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
 	web = "亞奇斯之網",
 	web_desc = "當人員受到亞奇斯之網影響時警告",
-
 	web_trigger = "^(.+)受到(.*)亞奇斯之網",
 	web_message = "%s 被網住了！",
 	web_bar = "亞奇斯之網：%s",
@@ -33,14 +31,13 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("frFR", function() return {
 	web = "Rets",
 	web_desc = "Préviens quand un joueur se fait piégé par les Rets.",
-
 	web_trigger = "^([^%s]+) ([^%s]+) subit les effets .* Rets d'Hyakiss.",
 	web_message = "%s a été piégé par les Rets.",
 	web_bar = "Rets : %s",
 } end )
 
 ----------------------------------
---   Module Declaration    --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -65,7 +62,7 @@ function mod:OnEnable()
 end
 
 ------------------------------
---    Event Handlers     --
+--      Event Handlers      --
 ------------------------------
 
 function mod:Web(msg)

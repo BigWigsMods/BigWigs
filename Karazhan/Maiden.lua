@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Maiden of Virtue"]
@@ -7,27 +7,17 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Maiden",
 
-	engage = "Engage",
-	engage_desc = ("Alert when %s is engaged"):format(boss),
-
-	repentance = "Repentance",
-	repentance_desc = "Estimated timer of Repentance",
-
-	holyfire = "Holy Fire",
-	holyfire_desc = "Alert when people are afflicted by Holy Fire",
-
-	icon = "Icon",
-	icon_desc = "Place a Raid Icon on the player afflicted by Holy Fire(requires promoted or higher)",
-
 	engage_trigger = "Your behavior will not be tolerated.",
 	engage_message = "Maiden Engaged! Repentance in ~33sec",
 
+	repentance = "Repentance",
+	repentance_desc = "Estimated timer of Repentance.",
 	repentance_trigger1 = "Cast out your corrupt thoughts.",
 	repentance_trigger2 = "Your impurity must be cleansed.",
 	repentance_message = "Repentance! Next in ~33sec",
@@ -35,14 +25,16 @@ L:RegisterTranslations("enUS", function() return {
 	repentance_bar = "Repentance",
 	repentance_nextbar = "Repentance Cooldown",
 
-	holyfire_trigger = "^([^%s]+) ([^%s]+) afflicted by Holy Fire",
+	holyfire = "Holy Fire",
+	holyfire_desc = "Alert when people are afflicted by Holy Fire.",
+	holyfire_trigger = "^([^%s]+) ([^%s]+) afflicted by Holy Fire.$",
 	holyfire_message = "Holy Fire: %s",
+
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Icon on the player afflicted by Holy Fire(requires promoted or higher).",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	engage = "Engage",
-	engage_desc = ("Warnt wenn %s angegangen wird"):format(boss),
-
 	repentance = "Bu\195\159e",
 	repentance_desc = "Ungef\195\164re Zeitangabe von Bu\195\159e",
 
@@ -67,9 +59,6 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	engage = "Engagement",
-	engage_desc = ("Pr\195\169viens quand %s est engag\195\169e."):format(boss),
-
 	repentance = "Repentir",
 	repentance_desc = "Affiche le temps de recharge estim\195\169 de Repentir.",
 
@@ -94,9 +83,6 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	engage = "전투 개시",
-	engage_desc = ("%s 전투 개시 알림"):format(boss),
-
 	repentance = "참회",
 	repentance_desc = "참회 예상 시간",
 
@@ -121,9 +107,6 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	engage = "開戰提示",
-	engage_desc = ("提示與 %s 開戰"):format(boss),
-
 	repentance = "懺悔估計",
 	repentance_desc = "懺悔估計時間",
 
@@ -148,13 +131,13 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 ----------------------------------
---   Module Declaration    --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"engage", "repentance", -1, "holyfire", "icon", "proximity", "bosskill"}
+mod.toggleoptions = {"repentance", -1, "holyfire", "icon", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
@@ -176,12 +159,12 @@ function mod:OnEnable()
 end
 
 ------------------------------
---    Event Handlers     --
+--      Event Handlers      --
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
-		if self.db.profile.engage then
+		if self.db.profile.repentance then
 			self:Message(L["engage_message"], "Attention")
 			self:NextRepentance()
 		end

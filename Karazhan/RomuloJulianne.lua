@@ -1,5 +1,5 @@
 ﻿------------------------------
---     Are you local?     --
+--      Are you local?      --
 ------------------------------
 
 local BB = AceLibrary("Babble-Boss-2.2")
@@ -14,24 +14,14 @@ local girl = BB["Julianne"]
 BB = nil
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "RomuloJulianne",
 
 	phase = "Phases",
-	phase_desc = "Warn when entering a new Phase",
-
-	poison = "Poison",
-	poison_desc = "Warn of a poisoned player",
-
-	heal = "Heal",
-	heal_desc = ("Warn when %s casts Eternal Affection"):format(girl),
-
-	buff = "Self-Buff Alert",
-	buff_desc = ("Warn when %s and %s gain a self-buff"):format(boy, girl),
-
+	phase_desc = "Warn when entering a new Phase.",
 	phase1_trigger = "What devil art thou, that dost torment me thus?",
 	phase1_message = "Act I - %s",
 	phase2_trigger = "Wilt thou provoke me? Then have at thee, boy!",
@@ -39,12 +29,18 @@ L:RegisterTranslations("enUS", function() return {
 	phase3_trigger = "Come, gentle night; and give me back my Romulo!",
 	phase3_message = "Act III - Both",
 
-	poison_trigger = "^([^%s]+) ([^%s]+) afflicted by Poisoned Thrust",
+	poison = "Poison",
+	poison_desc = "Warn of a poisoned player.",
+	poison_trigger = "^([^%s]+) ([^%s]+) afflicted by Poisoned Thrust.$",
 	poison_message = "Poisoned: %s",
 
+	heal = "Heal",
+	heal_desc = ("Warn when %s casts Eternal Affection."):format(girl),
 	heal_trigger = "begins to cast Eternal Affection",
 	heal_message = "%s casting Heal!",
 
+	buff = "Self-Buff Alert",
+	buff_desc = ("Warn when %s and %s gain a self-buff."):format(boy, girl),
 	buff1_trigger = "gains Daring",
 	buff1_message = "%s gains Daring!",
 	buff2_trigger = "gains Devotion",
@@ -180,7 +176,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 ----------------------------------
---   Module Declaration    --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -204,7 +200,7 @@ function mod:OnEnable()
 end
 
 ------------------------------
---     Event Handlers    --
+--      Event Handlers      --
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
