@@ -152,7 +152,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:DelayedMessage(34, L["spout_warning"], "Attention")
 			self:Bar(L["spout_bar"], 37, "INV_Weapon_Rifle_02")
 		end
-		self:ScheduleEvent("BWDelayedCheck", 5, self.DelayCheck, self) -- delay check to give people time to target it
+		self:ScheduleEvent("BWLurkerCheck", self.DelayCheck, 5, self) -- delay check to give people time to target it
 	elseif sync == "LurkWhirl" and self.db.profile.whirl then
 		self:Bar(L["whirl_bar"], 17, "Ability_Whirlwind")
 	end
@@ -167,7 +167,7 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["whirl"]) and not suppress then
 		supress = true
 		self:Sync("LurkWhirl")
-		self:ScheduleEvent(self.StopSupress, 10, self)
+		self:ScheduleEvent("BWLurkerStop", self.StopSupress, 10, self)
 	end
 end
 
@@ -190,11 +190,14 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 end
 
 function mod:DiveCheck()
-	for i = 1, GetNumRaidMembers() do
-		if UnitName("raid"..i.."target") == boss then
-			found = true
-		else
-			found = false
+	if UnitName("target") == boss then
+		found = true
+	else
+		for i = 1, GetNumRaidMembers() do
+			if UnitName("raid"..i.."target") == boss then
+				found = true
+				break
+			end
 		end
 	end
 
@@ -229,3 +232,4 @@ function mod:DiveCheck()
 		end
 	end
 end
+
