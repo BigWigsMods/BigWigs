@@ -27,6 +27,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Vashj",
 
+	--engage_trigger1 = "I did not wish to lower myself by engaging your kind, but you leave me little choice...",
+	--engage_trigger2 = "I spit on you, surface filth!",
+	--engage_trigger3 = "Victory to Lord Illidan! ",
+	--engage_trigger4 = "",
+
 	phase = "Phase warnings",
 	phase_desc = "Warn when Vashj goes into the different phases.",
 	phase2_trigger = "The time is now! Leave none standing!",
@@ -38,6 +43,7 @@ L:RegisterTranslations("enUS", function() return {
 	static_desc = "Warn about Static Charge on players.",
 	static_charge_trigger = "^([^%s]+) ([^%s]+) afflicted by Static Charge.$",
 	static_charge_message = "Static Charge on %s!",
+	static_fade = "Static Charge fades from You.",
 
 	icon = "Icon",
 	icon_desc = "Put an icon on players with Static Charge and those who loot cores.",
@@ -205,6 +211,7 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Serpentshrine Cavern"]
 mod.enabletrigger = boss
 mod.toggleoptions = {"phase", -1, "static", "icon", -1, "elemental", "strider", "loot", "barrier", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
+mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
 ------------------------------
 --      Initialization      --
@@ -283,6 +290,8 @@ end
 function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 	if msg == L["barrier_fades_trigger"] then
 		self:Sync("VashjBarrier")
+	elseif msg == L["static_fade"] then
+		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
 end
 
@@ -314,6 +323,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			delayedElementalMessage = self:DelayedMessage(55, L["elemental_soon_message"], "Important")
 		end
 		self:RepeatStrider()
+--	elseif msg == L["engage_trigger1"] or msg == L["engage_trigger2"] or msg == L["engage_trigger3"] then
+--		phaseTwoAnnounced = nil
+--		shieldsFaded = 0
 	end
 end
 
@@ -335,6 +347,7 @@ function mod:Charge(msg)
 	if splayer and stype then
 		if splayer == L2["you"] and stype == L2["are"] then
 			splayer = playerName
+			self:TriggerEvent("BigWigs_ShowProximity", self)
 		end
 		self:Sync("VashjStatic " .. splayer)
 	end
