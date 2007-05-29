@@ -509,7 +509,6 @@ function plugin:BigWigs_RecvSync(sync, rest, nick)
 		self:TriggerEvent("BigWigs_SendSync", "BWVR " .. self:GetVersion(rest) .. " " .. nick)
 	elseif sync == "BWVR" and queryRunning and nick and rest then
 		local revision, queryNick = self:ParseReply(rest)
-		ChatFrame3:AddMessage("VQ BWVR: <" .. tostring(nick) .. "> @ " .. tostring(revision) .. " for " .. tostring(queryNick) .. " (" .. tostring(rest) .. ").")
 		if tonumber(revision) ~= nil and queryNick and queryNick == UnitName("player") then
 			table.insert(responseTable, new(nick, tonumber(revision)))
 			self:UpdateVersions()
