@@ -29,44 +29,37 @@ L:RegisterTranslations("enUS", function() return {
 
 	phase = "Phase warnings",
 	phase_desc = "Warn when Vashj goes into the different phases.",
+	phase2_trigger = "The time is now! Leave none standing!",
+	phase2_soon_message = "Phase 2 soon!",
+	phase2_message = "Phase 2, adds incoming!",
+	phase3_message = "Phase 3 - Enrage in 4min!",
 
 	static = "Static Charge",
 	static_desc = "Warn about Static Charge on players.",
+	static_charge_trigger = "^([^%s]+) ([^%s]+) afflicted by Static Charge.$",
+	static_charge_message = "Static Charge on %s!",
 
 	icon = "Icon",
 	icon_desc = "Put an icon on players with Static Charge and those who loot cores.",
 
 	elemental = "Tainted Elemental spawn",
 	elemental_desc = "Warn when the Tainted Elementals spawn during phase 2.",
-
-	strider = "Coilfang Strider spawn",
-	strider_desc = "Warn when the Coilfang Striders spawn during phase 2.",
-
-	barrier = "Barrier down",
-	barrier_desc = "Alert when the barriers go down.",
-
-	loot = "Tainted Core",
-	loot_desc = "Warn who loots the Tainted Cores.",
-
-	static_charge_trigger = "^(%S+) %S+ afflicted by Static Charge.$",
-	static_charge_message = "Static Charge on %s!",
-
-	loot_message = "%s looted a core!",
-
-	phase2_trigger = "The time is now! Leave none standing!",
-
-	phase2_soon_message = "Phase 2 soon!",
-	phase2_message = "Phase 2, adds incoming!",
-	phase3_message = "Phase 3 - Enrage in 4min!",
-
-	barrier_down_message = "Barrier %d/4 down!",
-	barrier_fades_trigger = "Magic Barrier fades from Lady Vashj.",
-
 	elemental_bar = "Tainted Elemental Incoming",
 	elemental_soon_message = "Tainted Elemental soon!",
 
+	strider = "Coilfang Strider spawn",
+	strider_desc = "Warn when the Coilfang Striders spawn during phase 2.",
 	strider_bar = "Strider Incoming",
 	strider_soon_message = "Strider soon!",
+
+	barrier = "Barrier down",
+	barrier_desc = "Alert when the barriers go down.",
+	barrier_down_message = "Barrier %d/4 down!",
+	barrier_fades_trigger = "Magic Barrier fades from Lady Vashj.",
+
+	loot = "Tainted Core",
+	loot_desc = "Warn who loots the Tainted Cores.",
+	loot_message = "%s looted a core!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -142,7 +135,7 @@ L:RegisterTranslations("frFR", function() return {
 	loot = "Noyau souillé",
 	loot_desc = "Préviens quand un joueur ramasse un Noyau souillé.",
 
-	static_charge_trigger = "^(%S+) %S+ les effets Charge statique.$",
+	static_charge_trigger = "^([^%s]+) ([^%s]+) les effets Charge statique.$",
 	static_charge_message = "Charge statique sur %s !",
 
 	loot_message = "%s a ramassé un noyau !",
@@ -189,7 +182,7 @@ L:RegisterTranslations("deDE", function() return {
 	loot = "Besudelter Kern",
 	loot_desc = "Warnt wer einen Besudelten Kern lootet.",
 
-	static_charge_trigger = "^(%S+) %S+ von Statische Aufladung betroffen.$",
+	static_charge_trigger = "^([^%s]+) ([^%s]+) von Statische Aufladung betroffen.$",
 	static_charge_message = "Statische Aufladung auf %s!",
 
 	loot_message = "%s hat einen Kern gelootet!",
@@ -211,7 +204,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 ----------------------------------
---    Module Declaration        --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -219,19 +212,6 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Serpentshrine Cavern"]
 mod.enabletrigger = boss
 mod.toggleoptions = {"phase", -1, "static", "icon", -1, "elemental", "strider", "loot", "barrier", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
-
---[[
-
-Maybe add in spawn timers in phase 2;
-
-The first Poison Elemental spawns exactly 1min into P2,
-and the following Poison Elementals spawn exactly 1min
-after the *death* of the previous Poison Elemental.
-Problem is that they despawn if not killed within a certain timer, and we can't really catch that.
-
-Naga spawn timer, 50 -> 47/45sec
-
-]]
 
 ------------------------------
 --      Initialization      --
@@ -283,7 +263,7 @@ function mod:OnEnable()
 end
 
 ------------------------------
---    Event Handlers        --
+--      Event Handlers      --
 ------------------------------
 
 function mod:CHAT_MSG_LOOT(msg)
@@ -358,9 +338,9 @@ function mod:UNIT_HEALTH(msg)
 end
 
 function mod:Charge(msg)
-	local splayer = select(3, msg:find(L["static_charge_trigger"]))
-	if splayer then
-		if splayer == L2["you"] then
+	local splayer, stype = select(3, msg:find(L["static_charge_trigger"]))
+	if splayer and stype then
+		if splayer == L2["you"] and stype == L2["are"] then
 			splayer = playerName
 		end
 		self:Sync("VashjStatic " .. splayer)

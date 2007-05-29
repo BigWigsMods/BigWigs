@@ -17,14 +17,14 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger = "Alert! You are marked for extermination.",
 
 	enrage = "Enrage",
-	enrage_desc = "Enrage Timers",
+	enrage_desc = "Enrage Timers.",
 
 	orbyou = "Arcane Orb on You",
-	orbyou_desc = "Warn for Arcane Orb on you",
+	orbyou_desc = "Warn for Arcane Orb on you.",
 	orb_you = "Arcane Orb on YOU!",
 
 	orbsay = "Arcane Orb Say",
-	orbsay_desc = "Print in say when you are targeted for arcane orb, can help nearby members with speech bubbles on",
+	orbsay_desc = "Print in say when you are targeted for arcane orb, can help nearby members with speech bubbles on.",
 	orb_say = "Orb on Me!",
 
 	orbother = "Arcane Orb on Others",
@@ -32,10 +32,10 @@ L:RegisterTranslations("enUS", function() return {
 	orb_other = "Orb(%s)",
 
 	icon = "Raid Icon",
-	icon_desc = "Place a Raid Icon on the player targeted for Arcane Orb(requires promoted or higher)",
+	icon_desc = "Place a Raid Icon on the player targeted for Arcane Orb(requires promoted or higher).",
 
 	pounding = "Pounding",
-	pounding_desc = "Show Pounding timer bars",
+	pounding_desc = "Show Pounding timer bars.",
 	pounding_trigger1 = "Alternative measure commencing...",
 	pounding_trigger2 = "Calculating force parameters...",
 	pounding_nextbar = "~Pounding Cooldown",

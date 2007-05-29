@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["The Lurker Below"]
@@ -10,7 +10,7 @@ local found
 local occured
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -32,7 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 	spout_bar = "Possible Spout",
 
 	whirl = "Whirl",
-	whirl_desc = "Whirl Timers",
+	whirl_desc = "Whirl Timers.",
 	whirl_bar = "Possible Whirl",
 
 	emerge_warning = "Back in %dsec",
@@ -100,7 +100,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 ----------------------------------
---    Module Declaration   --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -131,7 +131,7 @@ function mod:OnEnable()
 end
 
 ------------------------------
---    Event Handlers     --
+--      Event Handlers      --
 ------------------------------
 
 function mod:BigWigs_RecvSync( sync, rest, nick )

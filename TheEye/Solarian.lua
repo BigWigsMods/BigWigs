@@ -17,31 +17,31 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger = "Tal anu'men no sin'dorei!",
 
 	phase = "Phase",
-	phase_desc = "Warn for phase changes",
+	phase_desc = "Warn for phase changes.",
 	phase1_message = "Phase 1 - Split in ~50sec",
 	phase2_warning = "Phase 2 Soon!",
 	phase2_trigger = "^I become",
 	phase2_message = "20% - Phase 2",
 
 	wrath = "Wrath Cast",
-	wrath_desc = "Warn when Wrath is being cast, and the current target",
-	wrath_trigger = "^([^%s]+) ([^%s]+) afflicted by Wrath of the Astromancer",
+	wrath_desc = "Warn when Wrath is being cast, and the current target.",
+	wrath_trigger = "^([^%s]+) ([^%s]+) afflicted by Wrath of the Astromancer.$",
 	wrath_alert = "Casting Wrath! - Target: %s",
 	wrath_alert_trigger = "begins to cast Wrath of the Astromancer.$",
 
 	wrathyou = "Wrath Debuff on You",
-	wrathyou_desc = "Warn when you have Wrath of the Astromancer",
+	wrathyou_desc = "Warn when you have Wrath of the Astromancer.",
 	wrath_you = "Wrath on YOU!",
 
 	wrathother = "Wrath Debuff on Others",
-	wrathother_desc = "Warn about others that have Wrath of the Astromancer",
+	wrathother_desc = "Warn about others that have Wrath of the Astromancer.",
 	wrath_other = "Wrath: %s",
 
-	icon = "Icon",
-	icon_desc = "Place a Raid Icon on the player with Wrath of the Astromancer",
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Icon on the player with Wrath of the Astromancer(requires promoted or higher).",
 
 	split = "Split",
-	split_desc = "Warn for split & add spawn",
+	split_desc = "Warn for split & add spawn.",
 	split_trigger1 = "I will crush your delusions of grandeur!",
 	split_trigger2 = "You are hopelessly outmatched!",
 	split_bar = "~Next Split",
@@ -198,7 +198,6 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -211,8 +210,6 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWrath", 1)
 	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWCast", 5)
-
-	p2 = nil
 end
 
 ------------------------------
@@ -274,10 +271,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		self:CancelScheduledEvent("split1")
 		self:TriggerEvent("BigWigs_StopBar", self, L["split_bar"])
-	elseif self.db.profile.phase and msg == L["engage_trigger"] then
-		self:Message(L["phase1_message"], "Positive")
-		self:Bar(L["split_bar"], 50, "Spell_Shadow_SealOfKings")
-		self:DelayedMessage(43, L["split_warning"], "Important")
+	elseif msg == L["engage_trigger"] then
+		p2 = nil
+
+		if self.db.profile.phase then
+			self:Message(L["phase1_message"], "Positive")
+			self:Bar(L["split_bar"], 50, "Spell_Shadow_SealOfKings")
+			self:DelayedMessage(43, L["split_warning"], "Important")
+		end
 	elseif self.db.profile.split and (msg == L["split_trigger1"] or msg == L["split_trigger2"]) then
 		--split is around 90 seconds after the previous
 		self:Bar(L["split_bar"], 90, "Spell_Shadow_SealOfKings")

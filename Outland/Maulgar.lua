@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local BB = AceLibrary("Babble-Boss-2.2")
@@ -24,44 +24,29 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Maulgar",
 
 	heal = "Heal",
-	heal_desc = "Warn when Blindeye the Seer begins to cast a Heal",
-
-	shield = "Shield",
-	shield_desc = "Warn when Blindeye the Seer gains Greater Power Word: Shield",
-
-	spellshield = "Spell Shield",
-	spellshield_desc = "Warn when Krosh Firehand gains Spell Shield",
-
-	summon = "Summon Wild Felhunter",
-	summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter",
-
-	whirlwind = "Whirlwind",
-	whirlwind_desc = "Warn when Maulgar gains Whirlwind",
-
-	flurry = "Flurry",
-	flurry_desc = "Warn when Maulgar is close to Flurry and gains Flurry",
-
-	smash = "Arcing Smash",
-	smash_desc = "Show a bar for estimated Arcing Smash",
-
+	heal_desc = "Warn when Blindeye the Seer begins to cast a Heal.",
 	heal_trigger = "Blindeye the Seer begins to cast Prayer of Healing",
 	heal_message = "Blindeye casting Prayer of Healing!",
 	heal_bar = "Healing",
 
+	shield = "Shield",
+	shield_desc = "Warn when Blindeye the Seer gains Greater Power Word: Shield.",
 	shield_trigger = "gains Greater Power Word: Shield",
 	shield_message = "Shield on Blindeye!",
 
+	spellshield = "Spell Shield",
+	spellshield_desc = "Warn when Krosh Firehand gains Spell Shield.",
 	spellshield_trigger = "gains Spell Shield.",
 	spellshield_message = "Spell Shield on Krosh!",
 
+	summon = "Summon Wild Felhunter",
+	summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter.",
 	summon_trigger = "begins to cast Summon Wild Felhunter.",
 	summon_message = "Felhunter being summoned!",
 	summon_bar = "~Felhunter Cooldown",
 
-	flurry_trigger = "You will not defeat the hand of Gruul!",
-	flurry_message = "50% - Flurry!",
-	flurry_warning = "Flurry Soon!",
-
+	whirlwind = "Whirlwind",
+	whirlwind_desc = "Warn when Maulgar gains Whirlwind.",
 	whirlwind_trigger = "gains Whirlwind",
 	whirlwind_message = "Maulgar - Whirlwind for 15sec!",
 	whirlwind_bar = "Whirlwind",
@@ -69,6 +54,14 @@ L:RegisterTranslations("enUS", function() return {
 	whirlwind_warning1 = "Maulgar Engaged - Whirlwind in ~50sec!",
 	whirlwind_warning2 = "Whirlwind Soon!",
 
+	flurry = "Flurry",
+	flurry_desc = "Warn when Maulgar is close to Flurry and gains Flurry.",
+	flurry_trigger = "You will not defeat the hand of Gruul!",
+	flurry_message = "50% - Flurry!",
+	flurry_warning = "Flurry Soon!",
+
+	smash = "Arcing Smash",
+	smash_desc = "Show a bar for estimated Arcing Smash.",
 	smash_bar = "~Arcing Smash",
 } end)
 
@@ -272,7 +265,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 ----------------------------------
---   Module Declaration    --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -315,7 +308,7 @@ function mod:OnEnable()
 end
 
 ------------------------------
---    Event Handlers     --
+--      Event Handlers      --
 ------------------------------
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)

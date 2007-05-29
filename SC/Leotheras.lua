@@ -1,6 +1,7 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
+
 local boss = AceLibrary("Babble-Boss-2.2")["Leotheras the Blind"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
@@ -9,29 +10,18 @@ local wwhelp
 local beDemon = {}
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Leotheras",
 
 	enrage = "Enrage",
-	enrage_desc = "Time untill enrage",
-
-	whirlwind = "Whirlwind",
-	whirlwind_desc = "Whirlwind Timers",
-
-	phase = "Demon Phase",
-	phase_desc = "Estimated demon phase timers",
-
-	image = "Image",
-	image_desc = "15% Image Split Alerts",
-
-	whisper = "Insidious Whisper",
-	whisper_desc = "Alert what players have Insidious Whisper",
-
+	enrage_desc = "Time untill enrage.",
 	enrage_trigger = "Finally, my banishment ends!",
 
+	whirlwind = "Whirlwind",
+	whirlwind_desc = "Whirlwind Timers.",
 	whirlwind_trigger = "Leotheras the Blind gains Whirlwind",
 	whirlwind_gain = "Whirlwind for 12 sec",
 	whirlwind_fade = "Whirlwind Over",
@@ -39,6 +29,8 @@ L:RegisterTranslations("enUS", function() return {
 	whirlwind_bar2 = "~Whirlwind Cooldown",
 	whirlwind_warn = "Whirlwind Cooldown Over - Inc Soon",
 
+	phase = "Demon Phase",
+	phase_desc = "Estimated demon phase timers.",
 	phase_trigger = "I am in control now!$",
 	phase_demon = "Demon Phase for 60sec",
 	phase_demonsoon = "Demon Phase in 5sec!",
@@ -47,11 +39,15 @@ L:RegisterTranslations("enUS", function() return {
 	demon_bar = "Demon Phase",
 	demon_nextbar = "Next Demon Phase",
 
+	image = "Image",
+	image_desc = "15% Image Split Alerts.",
 	image_trigger = "I am the master! Do you hear?",
 	image_message = "15% - Image Created!",
 	image_warning = "Image Soon!",
 
-	whisper_trigger = "^([^%s]+) ([^%s]+) afflicted by Insidious Whisper",
+	whisper = "Insidious Whisper",
+	whisper_desc = "Alert what players have Insidious Whisper.",
+	whisper_trigger = "^([^%s]+) ([^%s]+) afflicted by Insidious Whisper.$",
 	whisper_message = "Demon: %s",
 	whisper_bar = "Demons Despawn",
 	whisper_soon = "~Demons Cooldown",
@@ -187,7 +183,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 ----------------------------------
---    Module Declaration   --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -222,7 +218,7 @@ function mod:OnEnable()
 end
 
 ------------------------------
---    Event Handlers     --
+--      Event Handlers      --
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)

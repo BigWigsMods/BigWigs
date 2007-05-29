@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Doomwalker"]
@@ -8,7 +8,7 @@ local started = nil
 local enrageAnnounced = nil
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -16,25 +16,21 @@ L:RegisterTranslations("enUS", function() return {
 
 	overrun = "Overrun",
 	overrun_desc = "Alert when Doomwalker uses his Overrun ability.",
-
-	earthquake = "Earthquake",
-	earthquake_desc = "Alert when Doomwalker uses his Earthquake ability.",
-
-	enrage = "Enrage",
-	enrage_desc = "Warn about enrage around 20% hitpoints.",
-
-	engage_message = "Doomwalker engaged, Earthquake in ~30sec!",
-	enrage_soon_message = "Enrage soon!",
-
-	earthquake_trigger = "You are afflicted by Earthquake.",
-
-	earthquake_message = "Earthquake! ~70sec to next!",
-	earthquake_bar = "~Earthquake Cooldown",
-
 	overrun_trigger = "^Doomwalker.-Overrun",
 	overrun_message = "Overrun!",
 	overrun_soon_message = "Possible Overrun soon!",
 	overrun_bar = "~Overrun Cooldown",
+
+	earthquake = "Earthquake",
+	earthquake_desc = "Alert when Doomwalker uses his Earthquake ability.",
+	earthquake_message = "Earthquake! ~70sec to next!",
+	earthquake_bar = "~Earthquake Cooldown",
+	earthquake_trigger = "You are afflicted by Earthquake.",
+
+	enrage = "Enrage",
+	enrage_desc = "Warn about enrage around 20% hitpoints.",
+	engage_message = "Doomwalker engaged, Earthquake in ~30sec!",
+	enrage_soon_message = "Enrage soon!",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -110,7 +106,7 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 ----------------------------------
---   Module Declaration    --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss, "AceHook-2.1")
@@ -148,7 +144,7 @@ end
 ------------------------------
 --         Hooks               --
 ------------------------------
-
+--need to check if we even still need this in wow 2.1
 function mod:ChatFrame_MessageEventHandler(event, ...)
 	if event:find("EMOTE") and (type(arg2) == "nil" or not arg2) then
 		arg2 = boss
@@ -157,7 +153,7 @@ function mod:ChatFrame_MessageEventHandler(event, ...)
 end
 
 ------------------------------
---    Event Handlers     --
+--      Event Handlers      --
 ------------------------------
 
 function mod:BigWigs_RecvSync( sync, rest, nick )

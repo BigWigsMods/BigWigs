@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Morogrim Tidewalker"]
@@ -7,11 +7,10 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local inGrave = {}
-local started = nil
 local grobulealert
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -26,7 +25,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	grave = "Watery Grave",
 	grave_desc = "Alert who has watery grave and durations.",
-	grave_trigger1 = "^([^%s]+) ([^%s]+) afflicted by Watery Grave",
+	grave_trigger1 = "^([^%s]+) ([^%s]+) afflicted by Watery Grave.$",
 	grave_trigger2 = "sends his enemies",
 	grave_message = "Watery Grave: %s",
 	grave_bar = "Watery Graves",
@@ -145,7 +144,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 ----------------------------------
---    Module Declaration   --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -159,9 +158,6 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	for k in pairs(inGrave) do inGrave[k] = nil end
-	started = nil
-	grobulealert = nil
 	self:RegisterEvent("UNIT_HEALTH")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
@@ -169,8 +165,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -182,8 +176,23 @@ function mod:OnEnable()
 end
 
 ------------------------------
---    Event Handlers     --
+--      Event Handlers      --
 ------------------------------
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["engage_trigger"] then
+		for k in pairs(inGrave) do inGrave[k] = nil end
+		grobulealert = nil
+
+		if self.db.profile.murloc then
+			self:Message(L["murloc_engaged"]:format(boss), "Positive")
+			self:Bar(L["murloc_bar"], 40, "INV_Misc_Head_Murloc_01")
+		end
+		if self.db.profile.grave then
+			self:Bar(L["grave_nextbar"], 20, "Spell_Frost_ArcticWinds")
+		end
+	end
+end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg == L["tidal_trigger"] then
@@ -237,18 +246,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:ScheduleEvent("Grave", self.GraveWarn, 1.5, self)
 	elseif sync == "MoroTidal" and self.db.profile.tidal then
 		self:Message(L["tidal_message"], "Urgent", nil, "Alarm")
-	end
-end
-
-function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["engage_trigger"] then
-		if self.db.profile.murloc then
-			self:Message(L["murloc_engaged"]:format(boss), "Positive")
-			self:Bar(L["murloc_bar"], 40, "INV_Misc_Head_Murloc_01")
-		end
-		if self.db.profile.grave then
-			self:Bar(L["grave_nextbar"], 20, "Spell_Frost_ArcticWinds")
-		end
 	end
 end
 

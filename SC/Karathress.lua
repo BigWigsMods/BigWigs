@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Fathom-Lord Karathress"]
@@ -7,7 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -15,20 +15,17 @@ L:RegisterTranslations("enUS", function() return {
 
 	enrage = "Enrage",
 	enrage_desc = "Enrage timer.",
+	enrage_trigger = "Guards, attention!",
 
 	totem = "Spitfire Totem",
 	totem_desc = "Warn for Spitfire Totems and who cast them.",
-
-	heal = "Heal",
-	heal_desc = "Warn when Caribdis casts a heal.",
-
-	enrage_trigger = "Guards, attention!",
-
 	totem_trigger1 = "Guard Tidalvess casts Spitfire Totem",
 	totem_trigger2 = "Lord Karathress casts Spitfire Totem",
 	totem_message1 = "Tidalvess: Spitfire Totem",
 	totem_message2 = "Karathress: Spitfire Totem",
 
+	heal = "Heal",
+	heal_desc = "Warn when Caribdis casts a heal.",
 	heal_trigger = "Caribdis begins to cast Healing Wave",
 	heal_message = "Caribdis casting heal!",
 
@@ -113,12 +110,12 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 ----------------------------------
---    Module Declaration   --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Serpentshrine Cavern"]
-mod.enabletrigger = boss
+mod.enabletrigger = {boss, L["Fathom-Guard Sharkkis"], L["Fathom-Guard Tidalvess"], L["Fathom-Guard Caribdis"]}
 mod.wipemobs = {L["Fathom-Guard Sharkkis"], L["Fathom-Guard Tidalvess"], L["Fathom-Guard Caribdis"]}
 mod.toggleoptions = {"heal", "enrage", "totem", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
@@ -141,7 +138,7 @@ function mod:OnEnable()
 end
 
 ------------------------------
---    Event Handlers     --
+--      Event Handlers      --
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)

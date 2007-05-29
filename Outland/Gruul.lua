@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Gruul the Dragonkiller"]
@@ -23,7 +23,7 @@ local bandages = {
 }
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
@@ -168,7 +168,7 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 ----------------------------------
---    Module Declaration   --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -204,7 +204,7 @@ function mod:OnEnable()
 end
 
 ------------------------------
---    Event Handlers     --
+--      Event Handlers      --
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)

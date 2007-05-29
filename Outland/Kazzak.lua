@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Doom Lord Kazzak"]
@@ -7,21 +7,14 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Kazzak",
 
 	enrage = "Enrage",
-	enrage_desc = "Timers for enrage",
-
-	mark = "Mark",
-	mark_desc = "Warn for Mark of Kazzak on You",
-
-	twist = "Twist",
-	twist_desc = "Warn who has Twisted Reflection",
-
+	enrage_desc = "Timers for enrage.",
 	enrage_trigger1 = "For the Legion! For Kil'Jaeden!",
 	enrage_trigger2 = "%s becomes enraged!",
 	enrage_warning1 = "%s Engaged - Enrage in 50-60sec",
@@ -31,10 +24,14 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_bar = "~Enrage",
 	enraged_bar = "<Enraged>",
 
+	mark = "Mark",
+	mark_desc = "Warn for Mark of Kazzak on You.",
 	mark_trigger = "You are afflicted by Mark of Kazzak.",
 	mark_message = "Mark of Kazzak on You",
 
-	twist_trigger = "^([^%s]+) ([^%s]+) afflicted by Twisted Reflection",
+	twist = "Twist",
+	twist_desc = "Warn who has Twisted Reflection.",
+	twist_trigger = "^([^%s]+) ([^%s]+) afflicted by Twisted Reflection.$",
 	twist_message = "Twisted Reflection: %s",
 } end)
 
@@ -117,7 +114,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 ----------------------------------
---   Module Declaration    --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -135,7 +132,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
@@ -146,7 +142,7 @@ function mod:OnEnable()
 end
 
 ------------------------------
---    Event Handlers     --
+--      Event Handlers      --
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)

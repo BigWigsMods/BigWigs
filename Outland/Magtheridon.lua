@@ -1,5 +1,5 @@
 ﻿------------------------------
---      Are you local?    --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Magtheridon"]
@@ -9,36 +9,14 @@ local abycount
 local debwarn
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Magtheridon",
 
 	escape = "Escape",
-	escape_desc = ("Countdown untill %s breaks free"):format(boss),
-
-	abyssal = "Burning Abyssal",
-	abyssal_desc = "Warn when a Burning Abyssal is created",
-
-	heal = "Heal",
-	heal_desc = "Warn when a Hellfire Channeler starts to heal",
-
-	nova = "Blast Nova",
-	nova_desc = "Estimated Blast Nova timers",
-
-	banish = "Banish",
-	banish_desc = ("Warn when you Banish %s"):format(boss),
-
-	exhaust = "Disable Exhaustion Bars",
-	exhaust_desc = "Timer bars for Mind Exhaustion on players",
-
-	debris = "Debris on You",
-	debris_desc = "Warn for Debris on You",
-
-	debrisinc = "Debris",
-	debrisinc_desc = "Warn for incoming debris at 30%",
-
+	escape_desc = ("Countdown untill %s breaks free."):format(boss),
 	escape_trigger1 = "%%s's bonds begin to weaken!",
 	escape_trigger2 = "I... am... unleashed!",
 	escape_warning1 = "%s Engaged - Breaks free in 2min!",
@@ -49,29 +27,43 @@ L:RegisterTranslations("enUS", function() return {
 	escape_bar = "Released...",
 	escape_message = "%s Released!",
 
+	abyssal = "Burning Abyssal",
+	abyssal_desc = "Warn when a Burning Abyssal is created.",
 	abyssal_trigger = "Hellfire Channeler's Burning Abyssal hits",
 	abyssal_message = "Burning Abyssal Created (%d)",
 
+	heal = "Heal",
+	heal_desc = "Warn when a Hellfire Channeler starts to heal.",
 	heal_trigger = "begins to cast Dark Mending",
 	heal_message = "Healing!",
 
+	nova = "Blast Nova",
+	nova_desc = "Estimated Blast Nova timers.",
 	nova_ = "Blast Nova!",
 	nova_bar = "~Blast Nova Cooldown",
 	nova_warning = "Blast Nova Soon",
 	nova_cast = "Casting Blast Nova!",
 
+	banish = "Banish",
+	banish_desc = ("Warn when you Banish %s."):format(boss),
 	banish_trigger = "Not again! Not again...",
 	banish_message = "Banished for ~10sec",
 	banish_over_trigger = "Shadow Cage fades",
 	banish_over_message = "Banish Fades!",
 	banish_bar = "Banished",
 
-	exhaust_trigger = "^([^%s]+) ([^%s]+) afflicted by Mind Exhaustion",
+	exhaust = "Disable Exhaustion Bars",
+	exhaust_desc = "Timer bars for Mind Exhaustion on players.",
+	exhaust_trigger = "^([^%s]+) ([^%s]+) afflicted by Mind Exhaustion.$",
 	exhaust_bar = "[%s] Exhausted",
 
+	debris = "Debris on You",
+	debris_desc = "Warn for Debris on You.",
 	debris_trigger = "You are afflicted by Debris.",
 	debris_message = "Debris on YOU!",
 
+	debrisinc = "Debris",
+	debrisinc_desc = "Warn for incoming debris at 30%.",
 	debrisinc_trigger = "Let the walls of this prison tremble",
 	debrisinc_message = "30% - Incoming Debris!",
 	debrisinc_warning = "Debris Soon!",
@@ -257,7 +249,7 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 ----------------------------------
---    Module Declaration   --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -299,17 +291,22 @@ function mod:OnEnable()
 end
 
 ------------------------------
---    Event Handlers     --
+--      Event Handlers      --
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
-	if self.db.profile.escape and msg:find(L["escape_trigger1"]) then
-		self:Message(L["escape_warning1"]:format(boss), "Attention")
-		self:Bar(L["escape_bar"], 120, "Ability_Rogue_Trip")
-		self:DelayedMessage(60, L["escape_warning2"], "Positive")
-		self:DelayedMessage(90, L["escape_warning3"], "Attention")
-		self:DelayedMessage(110, L["escape_warning4"], "Urgent")
-		self:DelayedMessage(117, L["escape_warning5"], "Urgent", nil, "Long")
+	if msg:find(L["escape_trigger1"]) then
+		abycount = 1
+		debwarn = nil
+
+		if self.db.profile.escape then
+			self:Message(L["escape_warning1"]:format(boss), "Attention")
+			self:Bar(L["escape_bar"], 120, "Ability_Rogue_Trip")
+			self:DelayedMessage(60, L["escape_warning2"], "Positive")
+			self:DelayedMessage(90, L["escape_warning3"], "Attention")
+			self:DelayedMessage(110, L["escape_warning4"], "Urgent")
+			self:DelayedMessage(117, L["escape_warning5"], "Urgent", nil, "Long")
+		end
 	end
 end
 

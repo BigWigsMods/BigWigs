@@ -1,5 +1,5 @@
 ﻿------------------------------
---     Are you local?     --
+--      Are you local?      --
 ------------------------------
 
 local boss = AceLibrary("Babble-Boss-2.2")["Hydross the Unstable"]
@@ -14,50 +14,45 @@ local count = 1
 local tooltip
 
 ----------------------------
---      Localization     --
+--      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Hydross",
 
-	mark = "Mark",
-	mark_desc = "Show warnings and counters for marks",
-
-	enrage = "Enrage",
-	enrage_desc = "Warn for enrage",
-
-	stance = "Stance changes",
-	stance_desc = ("Warn when %s changes stances"):format(boss),
-
-	sludge = "Vile Sludge",
-	sludge_desc = "Notify of players afflicted by Vile Sludge",
-
-	icon = "Vile Sludge Icon",
-	icon_desc = "Place a Raid Icon on the player afflicted by Vile Sludge",
-
-	tomb = "Water Tomb",
-	tomb_desc = "Notify of players afflicted by Water Tomb",
-
 	start_trigger = "I cannot allow you to interfere!",
 
+	mark = "Mark",
+	mark_desc = "Show warnings and counters for marks.",
 	hydross_trigger = "Mark of Hydross",
 	corruption_trigger = "Mark of Corruption",
-
 	hydross_bar = "Mark of Hydross - %s%%",
 	corruption_bar = "Mark of Corruption - %s%%",
 
-	debuff_warn = "Mark at %s%%!",
+	enrage = "Enrage",
+	enrage_desc = "Warn for enrage.",
 
+	stance = "Stance changes",
+	stance_desc = ("Warn when %s changes stances."):format(boss),
 	poison_stance_trigger = "Aaghh, the poison...",
 	water_stance_trigger = "Better, much better.",
-
 	poison_stance = "Hydross is now poisoned!",
 	water_stance = "Hydross is now cleaned again!",
 
-	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by (.*).$",
-
-	tomb_message = "Water Tomb: %s",
+	sludge = "Vile Sludge",
+	sludge_desc = "Notify of players afflicted by Vile Sludge.",
 	sludge_message = "Vile Sludge: %s",
+
+	tomb = "Water Tomb",
+	tomb_desc = "Notify of players afflicted by Water Tomb.",
+	tomb_message = "Water Tomb: %s",
+
+	icon = "Vile Sludge Icon",
+	icon_desc = "Place a Raid Icon on the player afflicted by Vile Sludge(requires promoted or higher).",
+
+	debuff_warn = "Mark at %s%%!",
+
+	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by (.*).$",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -186,7 +181,7 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 ----------------------------------
---    Module Declaration   --
+--      Module Declaration      --
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
@@ -224,7 +219,7 @@ function mod:OnEnable()
 end
 
 ------------------------------
---     Event Handlers    --
+--      Event Handlers      --
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)

@@ -36,7 +36,7 @@ L:RegisterTranslations("enUS", function() return {
 	armor_you = "Melt Amor on YOU!",
 
 	icon = "Raid Icon",
-	icon_desc = "Place a Raid Icon on the player with Melt Armor.",
+	icon_desc = "Place a Raid Icon on the player with Melt Armor(requires promoted or higher).",
 
 	enrage = "Enrage",
 	enrage_desc = "Enrage Timers, may be innacurate, depends on catching the first Rebirth message.",
