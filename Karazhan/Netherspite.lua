@@ -63,18 +63,11 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	phase = "단계",
-	phase_desc = ("%s의 다음 단계로 변화 시 경고"):format(boss),
-
-	voidzone = "공허의 지대",
-	voidzone_desc = "공허의 지대 경고",
-
-	netherbreath = "황천의 숨결",
-	netherbreath_desc = "황천의 숨결 경고",
-
 	enrage = "격노",
 	enrage_desc = "9분 후 격노에 대한 알림.",
 
+	phase = "단계",
+	phase_desc = ("%s의 다음 단계로 변화 시 경고."):format(boss),
 	phase1_message = "물러남 - 황천의 숨결 종료!",
 	phase1_bar = "~물러남 주의",
 	phase1_trigger = "%s|1이;가; 물러나며 고함을 지르더니 황천의 문을 엽니다.",
@@ -82,9 +75,13 @@ L:RegisterTranslations("koKR", function() return {
 	phase2_bar = "분노 주의",
 	phase2_trigger = "%s|1이;가; 황천의 기운을 받고 분노에 휩싸입니다!",
 
+	voidzone = "공허의 지대",
+	voidzone_desc = "공허의 지대 경고.",
 	voidzone_trigger = "공허의 지대|1을;를; 시전합니다.",
 	voidzone_warn = "공허의 지대 (%d)!",
 
+	netherbreath = "황천의 숨결",
+	netherbreath_desc = "황천의 숨결 경고.",
 	netherbreath_trigger = "무작위 대상 바라보기|1을;를; 시전합니다.",
 	netherbreath_warn = "황천의 숨결 시전!",
 } end )

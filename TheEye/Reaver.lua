@@ -104,27 +104,25 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "Alert! You are marked for extermination.", -- check
 
 	enrage = "격노",
-	enrage_desc = "격노 타이머",
+	enrage_desc = "격노 타이머.",
 
 	orbyou = "자신의 비전 보주",
-	orbyou_desc = "자신의 비전 보주 알림",
+	orbyou_desc = "자신의 비전 보주 알림.",
 	orb_you = "당신에 비전 보주!",
 
 	orbsay = "비전 보주 대화",
-	orbsay_desc = "당신이 비전 보주의 대상이 되었을 때 대화를 출력합니다",
+	orbsay_desc = "당신이 비전 보주의 대상이 되었을 때 대화를 출력합니다.",
 	orb_say = "나에게 보주!",
 
 	orbother = "타인의 비전 보주",
-	orbother_desc = "타인의 비전 보주 알림",
+	orbother_desc = "타인의 비전 보주 알림.",
 	orb_other = "보주(%s)",
 
 	icon = "공격대 아이콘",
-	icon_desc = "비전 보주 대상이된 플레이어에 공격대 아이콘 지정(승급자 이상 권한 필요)",
+	icon_desc = "비전 보주 대상이된 플레이어에 공격대 아이콘 지정(승급자 이상 권한 필요).",
 
 	pounding = "울림",
-	pounding_desc = "울림 타이머 바 표시",
-
-
+	pounding_desc = "울림 타이머 바 표시.",
 	pounding_trigger1 = "Alternative measure commencing...", -- check
 	pounding_trigger2 = "Calculating force parameters...", -- check
 	pounding_nextbar = "~울림 대기 시간",

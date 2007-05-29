@@ -94,7 +94,7 @@ L:RegisterTranslations("koKR", function() return {
 	armor_you = "당신에 방어구 녹이기!",
 
 	icon = "공격대 아이콘",
-	icon_desc = "방어구 녹이기에 걸린 플레이어에 공격대 아이콘을 지정합니다.",
+	icon_desc = "방어구 녹이기에 걸린 플레이어에 공격대 아이콘을 지정합니다(승급자 이상 권한 요구).",
 
 	enrage = "격노",
 	enrage_desc = "격노 타이머, 처음 환생 메세지를 기준으로 하여 정확하지 않을 수 있습니다.",

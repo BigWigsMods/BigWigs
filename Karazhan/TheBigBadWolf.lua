@@ -66,20 +66,21 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	youriding = "자신의 빨간 두건 알림",
+	riding_trigger = "^([^|;%s]*)(.*)빨간 두건 효과를 얻었습니다%.$", -- "^([^%s]+) gain(.*) Red Riding Hood", -- check
+	gain = " ",
+
+	youriding = "자신의 빨간 두건 알림.",
 	youriding_desc = "자신이 빨간 두건에 걸리면 알림",
-
-	elseriding = "타인의 빨간 두건 알림",
-	elseriding_desc = "타인이 빨간 두건에 걸리면 알림",
-
-	icon = "아이콘 지정",
-	icon_desc = "빨간 두건인 사람에게 공격대 아이콘 지정(승급자 이상의 권한 필요)",
-
-	riding_trigger = "^([^|;%s]*)(.*)빨간 두건 효과를 얻었습니다%.$",
-
 	riding_youwarn = "당신은 빨간 두건입니다!",
+
+	elseriding = "타인의 빨간 두건 알림.",
+	elseriding_desc = "타인이 빨간 두건에 걸리면 알림",
 	riding_otherwarn = "%s님이 빨간 두건입니다!",
+
 	riding_bar = "빨간 두건 - %s",
+
+	icon = "공격대 아이콘",
+	icon_desc = "빨간 두건인 사람에게 공격대 아이콘 지정(승급자 이상의 권한 필요)",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

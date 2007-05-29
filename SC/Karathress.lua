@@ -62,20 +62,17 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("koKR", function() return {
 	enrage = "격노",
 	enrage_desc = "격노 타이머",
+	enrage_trigger = "경비병! 여기 침입자들이 있다...",
 
 	totem = "불 뿜는 토템",
 	totem_desc = "불 뿜는 토템을 시전 시 경고",
-
-	heal = "치유",
-	heal_desc = "카리브디스의 치유 시전을 경고합니다.",
-
-	enrage_trigger = "경비병! 여기 침입자들이 있다...",
-
 	totem_trigger1 = "심연의 경비병 타이달베스|1이;가; 불 뿜는 토템|1을;를; 시전합니다.",
 	totem_trigger2 = "심연의 군주 카라드레스|1이;가; 불 뿜는 토템|1을;를; 시전합니다.",
 	totem_message1 = "타이달베스: 불뿜는 토템",
 	totem_message2 = "카라드레스: 불뿜는 토템",
 
+	heal = "치유",
+	heal_desc = "카리브디스의 치유 시전을 경고합니다.",
 	heal_trigger = "칼리브디스|1이;가; 치유의 물결 시전을 시작합니다.", -- check
 	heal_message = "칼리브디스 치유 시전!",
 

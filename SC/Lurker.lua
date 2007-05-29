@@ -61,7 +61,7 @@ L:RegisterTranslations("koKR", function() return {
 	spout_bar = "분출 가능",
 
 	whirl = "소용돌이",
-	whirl_desc = "소용돌이 타이머",
+	whirl_desc = "소용돌이 타이머.",
 	whirl_bar = "소용돌이 주의",
 
 	emerge_warning = "%d초 이내 출현",

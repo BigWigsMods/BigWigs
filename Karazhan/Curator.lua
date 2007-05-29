@@ -110,34 +110,30 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("koKR", function() return {
 	berserk = "광폭화",
 	berserk_desc = "10분 후 광폭화 알림",
+	berserk_trigger = "박물관에는 초대받은 손님만 입장하실 수 있습니다.",
+	berserk_message = "%s 전투 개시, 10분 후 광폭화!",
+	berserk_bar = "광폭화",
 
 	enrage = "격노",
 	enrage_desc = "체력 15% 시 격노 알림",
+	enrage_trigger = "규칙 위반으로 경보가 발동됐습니다.",
+	enrage_message = "격노!",
+	enrage_warning = "잠시 후 격노!",
 
 	weaken = "약화",
-	weaken_desc = "약화된 상태인 동안 알림",
-
-	weaktime = "약화 카운트다운",
-	weaktime_desc = "다음 약화에 대한 바와 시간 카운트다운",
-
+	weaken_desc = "약화된 상태인 동안 알림.",
 	weaken_trigger = "현재 요청하신 내용은 처리가 불가능합니다.",
 	weaken_message = "환기 - 20초간 약화!",
 	weaken_bar = "환기",
 	weaken_fade_message = "환기 종료 - 약화 종료!",
 	weaken_fade_warning = "5초 후 환기 종료!",
 
+	weaktime = "약화 카운트다운",
+	weaktime_desc = "다음 약화에 대한 바와 시간 카운트다운",
 	weaktime_message1 = "약 10초 후 환기",
 	weaktime_message2 = "약 30초 후 환기",
 	weaktime_message3 = "약 70초 후 환기",
 	weaktime_bar = "~환기 대기시간",
-
-	berserk_trigger = "박물관에는 초대받은 손님만 입장하실 수 있습니다.",
-	berserk_message = "%s 전투 개시, 10분 후 광폭화!",
-	berserk_bar = "광폭화",
-
-	enrage_trigger = "규칙 위반으로 경보가 발동됐습니다.",
-	enrage_message = "격노!",
-	enrage_warning = "잠시 후 격노!",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

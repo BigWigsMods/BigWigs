@@ -166,44 +166,29 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	heal = "치유",
-	heal_desc = "블라인드아이가 치유 시전 시 경고",
-
-	shield = "보호막",
-	shield_desc = "블라인드아이가 상급 신의 권능: 보호막 효과를 얻었을 때 알림",
-
-	spellshield = "주문 보호막",
-	spellshield_desc = "크로쉬가 주문 보호막 효과를 얻었을 때 알림",
-
-	summon = "사나운 지옥사냥개 소환",
-	summon_desc = "울름이 지옥사냥개 소환 시전 시 경고",
-
-	whirlwind = "소용돌이",
-	whirlwind_desc = "마울가르가 소용돌이 효과를 얻었을 때 알림",
-
-	flurry = "질풍",
-	flurry_desc = "마울가르의 질풍 효과 근접 및 획득 시 경고",
-
-	smash = "Arcing Smash",
-	smash_desc = "Show a bar for estimated Arcing Smash",
-
+	heal_desc = "블라인드아이가 치유 시전 시 경고.",
 	heal_trigger = "현자 블라인드아이|1이;가; 치유 시전을 시작합니다.",
 	heal_message = "블라인드아이 치유 시전!",
 	heal_bar = "치유",
 
+	shield = "보호막",
+	shield_desc = "블라인드아이가 상급 신의 권능: 보호막 효과를 얻었을 때 알림.",
 	shield_trigger = "상급 신의 권능: 보호막 효과를 얻었습니다.", -- check
 	shield_message = "블라인드아이 보호막!",
 
+	spellshield = "주문 보호막",
+	spellshield_desc = "크로쉬가 주문 보호막 효과를 얻었을 때 알림.",
 	spellshield_trigger = "크로쉬 파이어핸드|1이;가; 주문 보호막 효과를 얻었습니다.",
 	spellshield_message = "크로쉬 주문 보호막!",
 
+	summon = "사나운 지옥사냥개 소환",
+	summon_desc = "울름이 지옥사냥개 소환 시전 시 경고.",
 	summon_trigger = "소환사 올름|1이;가; 사나운 지옥사냥개 소환 시전을 시작합니다.",
 	summon_message = "지옥사냥개 소환!",
 	summon_bar = "~지옥사냥개 대기시간",
 
-	flurry_trigger = "그룰님의 손아귀에서 벗어나지 못할 것이다!",
-	flurry_message = "50% - 질풍!",
-	flurry_warning = "잠시 후 질풍!",
-
+	whirlwind = "소용돌이",
+	whirlwind_desc = "마울가르가 소용돌이 효과를 얻었을 때 알림.",
 	whirlwind_trigger = "왕중왕 마울가르|1이;가; 소용돌이 효과를 얻었습니다.",
 	whirlwind_message = "마울가르 - 15초간 소용돌이!",
 	whirlwind_bar = "소용돌이",
@@ -211,6 +196,14 @@ L:RegisterTranslations("koKR", function() return {
 	whirlwind_warning1 = "마울가르 전투 개시 - 약 50초 후 소용돌이!",
 	whirlwind_warning2 = "잠시 후 소용돌이!",
 
+	flurry = "질풍",
+	flurry_desc = "마울가르의 질풍 효과 근접 및 획득 시 경고.",
+	flurry_trigger = "그룰님의 손아귀에서 벗어나지 못할 것이다!",
+	flurry_message = "50% - 질풍!",
+	flurry_warning = "잠시 후 질풍!",
+
+	smash = "Arcing Smash",
+	smash_desc = "Show a bar for estimated Arcing Smash.",
 	smash_bar = "~Arcing Smash",
 } end)
 

@@ -154,49 +154,43 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	adds = "물의 정령",
-	adds_desc = "물의 정령 소환에 대한 경고",
-
-	drink = "음료 마시기",
-	drink_desc = ("%s의 음료 마시기 시작 시 알림"):format(boss),
-
-	blizzard = "눈보라",
-	blizzard_desc = "눈보라 시전 시 경고",
-
-	pull = "전체 광역",
-	pull_desc = "전체 광역 신비한 폭발에 대한 경고",
-
-	flame = "화염의 고리",
-	flame_desc = "화염의 고리 시전 시 경고",
-
-	adds_message = "정령 소환!",
-	adds_warning = "곧 정령 소환",
-	adds_trigger = "아직 끝나지 않았어! 몇 가지 계략을 준비해 두었지...",
-	adds_bar = "물의 정령",
-
-	drink_trigger = "목 좀 축이게 해달라는 이 늙은이의 청을 뿌리칠 텐가? 아... 별로 기대도 안 했어.",
-	drink_warning = "마나 낮음 - 잠시 후 음료 마시기!",
-	drink_message = "음료 마시기 - 광역 변이!",
-	drink_bar = "불덩이 작열 시전",
-
 	engage_trigger1 = "똑같은 고통을 겪진 않겠다.",
 	engage_trigger2 = "너흰 누구냐? 원하는 게 뭐야? 가까이 오지 마!",
 	engage_trigger3 = "제발 그만! 내 아들... 그 아이는 미쳤어!",
 	engage_message = "%s 전투 개시",
 
+	adds = "물의 정령",
+	adds_desc = "물의 정령 소환에 대한 경고.",
+	adds_message = "정령 소환!",
+	adds_warning = "곧 정령 소환",
+	adds_trigger = "아직 끝나지 않았어! 몇 가지 계략을 준비해 두었지...",
+	adds_bar = "물의 정령",
+
+	drink = "음료 마시기",
+	drink_desc = ("%s의 음료 마시기 시작 시 알림."):format(boss),
+	drink_trigger = "목 좀 축이게 해달라는 이 늙은이의 청을 뿌리칠 텐가? 아... 별로 기대도 안 했어.",
+	drink_warning = "마나 낮음 - 잠시 후 음료 마시기!",
+	drink_message = "음료 마시기 - 광역 변이!",
+	drink_bar = "불덩이 작열 시전",
+
+	blizzard = "눈보라",
+	blizzard_desc = "눈보라 시전 시 경고.",
 	blizzard_trigger1 = "차가운 암흑으로 돌아가라!",
 	blizzard_trigger2 = "모두 얼려 버리겠다!",
 	blizzard_message = "눈보라!",
 
+	pull = "전체 광역",
+	pull_desc = "전체 광역 신비한 폭발에 대한 경고.",
 	pull_message = "신비한 폭발!",
 	pull_trigger1 = "그래, 내 아들은 아주 강하지... 하지만, 내게도 힘은 있다!",
 	pull_trigger2 = "난 어릿광대 따위가 아니다! 나는 니엘라스 아란이다!",
 	pull_bar = "신비한 폭발",
 
+	flame = "화염의 고리",
+	flame_desc = "화염의 고리 시전 시 경고.",
 	flame_warning = "시전: 화염의 고리!",
 	flame_trigger1 = "너희에게 보여주마! 아무리 지친 개라도 송곳니는 있는 법!",
 	flame_trigger2 = "불타라, 지옥의 악마들아!",
-
 	flame_message = "화염의 고리!",
 	flame_bar = "화염의 고리",
 	flame_trigger = "화염의 고리|1을;를; 시전합니다.",

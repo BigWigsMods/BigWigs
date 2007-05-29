@@ -157,7 +157,7 @@ L:RegisterTranslations("koKR", function() return {
 	engage_message = "%s 전투 개시",
 
 	blast = "불타는 돌풍",
-	blast_desc = "불타는 돌풍 시전에 대한 경고",
+	blast_desc = "불타는 돌풍 시전에 대한 경고.",
 	blast_trigger = "불타는 돌풍 시전을 시작합니다.",
 	blast_message = "잠시 후 불타는 돌풍!",
 

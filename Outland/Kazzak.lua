@@ -63,14 +63,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	enrage = "격노",
-	enrage_desc = "격노에 대한 타이머",
-
-	mark = "징표",
-	mark_desc = "당신에 카자크의 징표 알림",
-
-	twist = "어긋난 반사",
-	twist_desc = "어긋난 반사에 걸린 사람에 대한 경고",
-
+	enrage_desc = "격노에 대한 타이머.",
 	enrage_trigger1 = "불타는 군단과 킬제덴을 위하여!",
 	enrage_trigger2 = "%s|1이;가; 분노에 휩싸입니다!",
 	enrage_warning1 = "%s 전투 개시 - 50-60초 후 격노",
@@ -80,9 +73,13 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_bar = "~격노",
 	enraged_bar = "<격노>",
 
+	mark = "징표",
+	mark_desc = "당신에 카자크의 징표 알림.",
 	mark_trigger = "당신은 카자크의 징표에 걸렸습니다.",
 	mark_message = "당신에 카자크의 징표",
 
+	twist = "어긋난 반사",
+	twist_desc = "어긋난 반사에 걸린 사람에 대한 경고.",
 	twist_trigger = "^([^|;%s]*)(.*)어긋난 반사에 걸렸습니다%.$",
 	twist_message = "어긋난 반사: %s",
 } end)

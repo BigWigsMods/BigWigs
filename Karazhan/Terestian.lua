@@ -84,21 +84,19 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "아, 때맞춰 와줬군.",
 
 	sacrifice = "희생",
-	sacrifice_desc = "플레이어의 희생에 대한 경고",
+	sacrifice_desc = "플레이어의 희생에 대한 경고.",
+	sacrifice_trigger = "^([^|;%s]*)(.*)희생에 걸렸습니다%.$",
+	sacrifice_message = "%s님이 희생되었습니다!",
+	sacrifice_bar = "희생: %s",
 
-	icon = "아이콘",
-	icon_desc = "희생에 걸린 플레이어에 공격대 아이콘 지정(승급자 이상 요구)",
+	icon = "공격대 아이콘",
+	icon_desc = "희생에 걸린 플레이어에 공격대 아이콘 지정(승급자 이상 요구).",
 
 	enrage = "격노",
 	enrage_desc = "10분 후 격노에 대한 알림.",
 
 	weak = "약화",
-	weak_desc = "약화 상태에 대한 경고",
-
-	sacrifice_trigger = "^([^|;%s]*)(.*)희생에 걸렸습니다%.$",
-	sacrifice_message = "%s님이 희생되었습니다!",
-	sacrifice_bar = "희생: %s",
-
+	weak_desc = "약화 상태에 대한 경고.",
 	weak_trigger = "깨진 서약에 걸렸습니다.",
 	weak_message = "30초간 약화!",
 	weak_warning1 = "5초 후 약화 종료!",
