@@ -59,7 +59,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_trigger = "Perhaps I underestimated you. It would be unfair to make you fight all four advisors at once, but... fair treatment was never shown to my people. I'm just returning the favor.",
 	phase3_trigger = "Alas, sometimes one must take matters into one's own hands. Balamore shanal!",
 
-	flying_trigger = "I have not come this far to be stopped! The future I have planned will not be jeapordized! Now, you will taste true power!",
+	flying_trigger = "I have not come this far to be stopped! The future I have planned will not be jeapordized! Now, you will taste true power!!",
 	gravity_trigger1 = "Let us see how you fare when your world is turned upside down.",
 	gravity_trigger2 = "Having trouble staying grounded?",
 
