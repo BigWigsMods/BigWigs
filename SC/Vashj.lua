@@ -75,8 +75,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	phase = "단계 경고",
 	phase_desc = "바쉬가 다음 단계로 변경 시 알림.",
-	phase2_trigger = "때가 왔다! 살려두지 않겠다!",
-	phase2_soon_message = "잠시 후 2 단계!",
+	phase2_trigger = "때가 왔다! 한 놈도 살려두지 마라!",
+ 	phase2_soon_message = "잠시 후 2 단계!",
 	phase2_message = "2 단계, 애드 주의!",
 	phase3_message = "3 단계 - 4분 이내 격노!",
 
@@ -98,10 +98,10 @@ L:RegisterTranslations("koKR", function() return {
 	strider_bar = "포자손 등장",
 	strider_soon_message = "잠시 후 포자손!",
 
-	barrier = "방어막 손실",
-	barrier_desc = "방어막 손실 시 알림",
-	barrier_down_message = "방어막 %d/4 손실!",
-	barrier_fades_trigger = "여군주 바쉬의 몸에서 마법 방어막 효과가 사라졌습니다.", -- check
+	barrier = "보호막 손실",
+	barrier_desc = "보호막 손실 시 알림",
+	barrier_down_message = "보호막 %d/4 손실!",
+	barrier_fades_trigger = "여군주 바쉬의 몸에서 마법 보호막 효과가 사라졌습니다.", -- check
 
 	loot = "오염된 핵",
 	loot_desc = "오염된 핵을 획득한 플레이어 알림",
