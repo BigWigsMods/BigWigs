@@ -17,18 +17,18 @@ L:RegisterTranslations("enUS", function() return {
 	riding_trigger = "^([^%s]+) (.*) Red Riding Hood.$",
 	gain = "gain",
 
-	youriding = "You are Red Riding Hood alert.",
-	youriding_desc = "Warn when you are Red Riding Hood",
+	youriding = "Red Riding Hood(You)",
+	youriding_desc = "Warn when you are Red Riding Hood.",
 	riding_youwarn = "You are Red Riding Hood!",
 
-	elseriding = "Others Red Riding Hood alert.",
-	elseriding_desc = "Warn when others are Red Riding Hood",
+	elseriding = "Red Riding Hood(Other)",
+	elseriding_desc = "Warn when others are Red Riding Hood.",
 	riding_otherwarn = "%s is Red Riding Hood!",
 
 	riding_bar = "%s Running",
 
-	icon = "Raid Icon.",
-	icon_desc = "Put a Raid Icon on the person who's Red Riding Hood. (Requires promoted or higher)",
+	icon = "Raid Icon",
+	icon_desc = "Put a Raid Icon on the person who's Red Riding Hood. (Requires promoted or higher).",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
