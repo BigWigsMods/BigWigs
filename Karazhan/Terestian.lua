@@ -55,24 +55,22 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Ah, vous arrivez juste \195\160 temps.",
+	engage_trigger = "Ah, vous arrivez juste à temps.",
 
 	sacrifice = "Sacrifice",
-	sacrifice_desc = "Pr\195\169viens quand un joueur est sacrifi\195\169.",
-
-	icon = "Ic\195\180ne",
-	icon_desc = "Place une ic\195\180ne de raid sur le joueur sacrifi\195\169 (n\195\169cessite d'\195\170tre promu ou mieux).",
-
-	enrage = "Enrager",
-	enrage_desc = "Pr\195\169viens quand Terestian devient enrag\195\169 apr\195\168s 10 minutes.",
-
-	weak = "Affaibli",
-	weak_desc = "Pr\195\169viens quand Terestian est affaibli.",
-
-	sacrifice_trigger = "^([^%s]+) ([^%s]+) les effets .* Sacrifice",
-	sacrifice_message = "%s est sacrifi\195\169 !",
+	sacrifice_desc = "Préviens quand un joueur est sacrifié.",
+	sacrifice_trigger = "^([^%s]+) ([^%s]+) les effets .* Sacrifice.$",
+	sacrifice_message = "%s est sacrifié !",
 	sacrifice_bar = "Sacrifice : %s",
 
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le joueur sacrifié (nécessite d'être promu ou mieux).",
+
+	enrage = "Enrager",
+	enrage_desc = "Préviens quand Terestian devient enragé après 10 min.",
+
+	weak = "Affaibli",
+	weak_desc = "Préviens quand Terestian est affaibli.",
 	weak_trigger = "les effets .* Pacte rompu",
 	weak_message = "Affaibli pendant 30 sec. !",
 	weak_warning1 = "Affaibli plus que 5 sec. !",

@@ -49,20 +49,20 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	youriding = "Chaperon Rouge (soi)",
-	youriding_desc = "Pr\195\169viens quand vous \195\170tes le Chaperon Rouge.",
-
-	elseriding = "Chaperon Rouge (autres)",
-	elseriding_desc = "Pr\195\169viens quand les autres sont le Chaperon Rouge.",
-
-	icon = "Ic\195\180ne",
-	icon_desc = "Place une ic\195\180ne de raid sur la personne qui est le Chaperon Rouge (n\195\169cessite d'\195\170tre promu ou mieux).",
-
 	riding_trigger = "^([^%s]+) gagne(.*) Chaperon Rouge",
 
-	riding_youwarn = "Tu es le Chaperon Rouge !",
+	youriding = "Chaperon Rouge (soi)",
+	youriding_desc = "Préviens quand vous êtes le Chaperon Rouge.",
+	riding_youwarn = "Vous êtes le Chaperon Rouge !",
+
+	elseriding = "Chaperon Rouge (autres)",
+	elseriding_desc = "Préviens quand les autres sont le Chaperon Rouge.",
 	riding_otherwarn = "%s est le Chaperon Rouge !",
+
 	riding_bar = "%s court",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur la personne qui est le Chaperon Rouge (nécessite d'être promu ou mieux).",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

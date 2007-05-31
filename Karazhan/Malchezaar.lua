@@ -84,36 +84,32 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	phase = "Engagement",
-	phase_desc = "Pr\195\169viens quand la rencontre entre dans une nouvelle phase.",
-
-	enfeeble = "Affaiblir",
-	enfeeble_desc = "Affiche le temps de recharge de Affaiblir.",
-
-	infernals = "Infernaux",
-	infernals_desc = "Affiche le temps de recharge des invocations d'infernaux.",
-
-	nova = "Nova de l'ombre",
-	nova_desc = "Pr\195\169viens quand Malchezaar est suceptible d'utiliser sa Nova de l'ombre.",
-
-	phase1_trigger = "La folie vous a fait venir ici, devant moi. Et je serai votre perte\194\160!",
-	phase2_trigger = "Imb\195\169ciles heureux\194\160! Le temps est le brasier dans lequel vous br\195\187lerez\194\160!",
-	phase3_trigger = "Comment pouvez-vous esp\195\169rer r\195\169sister devant un tel pouvoir ?",
+	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
+	phase1_trigger = "La folie vous a fait venir ici, devant moi. Et je serai votre perte !",
+	phase2_trigger = "Imbéciles heureux ! Le temps est le brasier dans lequel vous brûlerez !",
+	phase3_trigger = "Comment pouvez-vous espérer résister devant un tel pouvoir ?",
 	phase1_message = "Phase 1 - Infernal dans ~40 sec. !",
 	phase2_message = "60% - Phase 2",
 	phase3_message = "30% - Phase 3 ",
 
-	enfeeble_trigger = "subit les effets .* Affaiblir",
+	enfeeble = "Affaiblir",
+	enfeeble_desc = "Affiche le temps de recharge de Affaiblir.",
+	enfeeble_trigger = "subit les effets .* Affaiblir.$",
 	enfeeble_message = "Affaiblir ! Prochain dans 30 sec.",
 	enfeeble_warning = "Affaiblir dans 5 sec. !",
 	enfeeble_bar = "Affaiblir",
 	enfeeble_nextbar = "Prochain Affaiblir",
 
-	infernal_trigger1 = "Vous n'affrontez pas seulement Malchezzar, mais les l\195\169gions que je commande\194\160!",
-	infernal_trigger2 = "Toutes les r\195\169alit\195\169s, toutes les dimensions me sont ouvertes\194\160!",
-	infernal_bar = "Arriv\195\169e d'un infernal",
-	infernal_warning = "Arriv\195\169e d'un infernal dans 20 sec. !",
+	infernals = "Infernaux",
+	infernals_desc = "Affiche le temps de recharge des invocations d'infernaux.",
+	infernal_trigger1 = "Vous n'affrontez pas seulement Malchezzar, mais aussi les légions que je commande !",
+	infernal_trigger2 = "Toutes les réalités, toutes les dimensions me sont ouvertes !",
+	infernal_bar = "Arrivée d'un infernal",
+	infernal_warning = "Arrivée d'un infernal dans 20 sec. !",
 	infernal_message = "Infernal dans 5 sec. !",
 
+	nova = "Nova de l'ombre",
+	nova_desc = "Préviens quand Malchezaar est suceptible d'utiliser sa Nova de l'ombre.",
 	nova_message = "Nova de l'ombre !",
 	nova_bar = "~Cooldown Nova",
 	nova_soon = "Nova de l'ombre imminente",

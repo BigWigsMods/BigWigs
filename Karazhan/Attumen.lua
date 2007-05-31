@@ -50,19 +50,17 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	phase = "Phase",
-	phase_desc = "Pr\195\169viens quand la rencontre entre dans une nouvelle phase.",
+	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
+	phase1_message = "Phase 1 - %s",
+	phase2_trigger = "%s appelle son maître !",
+	phase2_message = "Phase 2 - %s & Attumen",
+	phase3_trigger = "Viens, Minuit, allons disperser cette insignifiante racaille !",
+	phase3_message = "Phase 3 - %s",
 
 	curse = "Tanks maudits",
-	curse_desc = "Pr\195\169viens quand un guerrier ou un druide subit la Pr\195\169sence immat\195\169rielle.",
-
-	curse_trigger = "^([^%s]+) ([^%s]+) les effets .* Pr\195\169sence immat\195\169rielle",
+	curse_desc = "Préviens quand un guerrier ou un druide subit la Présence immatérielle.",
+	curse_trigger = "^([^%s]+) ([^%s]+) les effets .* Présence immatérielle.$",
 	curse_message = "Tank maudit - %s",
-
-	phase1_message = "Phase 1 - %s",
-	phase2_trigger = "%s appelle son ma\195\174tre\194\160!",
-	phase2_message = "Phase 2 - %s & Attumen",
-	phase3_trigger = "Viens, Minuit, allons disperser cette insignifiante racaille\194\160!",
-	phase3_message = "Phase 3 - %s",
 } end)
 
 

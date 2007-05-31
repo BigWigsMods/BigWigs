@@ -87,30 +87,27 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	enrage = "Enrager",
+	enrage_desc = "Préviens quand Dédain-du-Néant devient enragé après 9 min.",
+
 	phase = "Phases",
-	phase_desc = ("Pr\195\169viens quand %s passe d'une phase \195\160 l'autre."):format(boss),
+	phase_desc = ("Préviens quand %s passe d'une phase à l'autre."):format(boss),
+	phase1_message = "Retrait - Fin des Souffles du Néant",
+	phase1_bar = "~Prochain retrait",
+	phase1_trigger = "%s se retire avec un cri en ouvrant un portail vers le Néant.",
+	phase2_message = "Rage - Souffles de Néant imminent !",
+	phase2_bar = "Prochaine Rage",
+	phase2_trigger = "%s entre dans une rage nourrie par le Néant !",
 
 	voidzone = "Zones du vide",
-	voidzone_desc = "Pr\195\169viens quand les Zones du vide apparaissent.",
-
-	netherbreath = "Souffle de N\195\169ant",
-	netherbreath_desc = "Pr\195\169viens de l'arriv\195\169e des Souffles du N\195\169ant.",
-
-	enrage = "Enrager",
-	enrage_desc = "Pr\195\169viens quand D\195\169dain-du-N\195\169ant devient enrag\195\169 apr\195\168s 9 min.",
-
-	phase1_message = "Retrait - Fin des Souffles du N\195\169ant",
-	phase1_bar = "~Prochain retrait",
-	phase1_trigger = "%s se retire avec un cri en ouvrant un portail vers le N\195\169ant.",
-	phase2_message = "Rage - Souffles de N\195\169ant imminent !",
-	phase2_bar = "Prochaine Rage",
-	phase2_trigger = "%s entre dans une rage nourrie par le N\195\169ant\194\160!",
-
+	voidzone_desc = "Préviens quand les Zones du vide apparaissent.",
 	voidzone_trigger = "lance Zone de vide.",
 	voidzone_warn = "Zone du vide (%d) !",
 
-	netherbreath_trigger = "lance Affronter une cible al\195\169atoire.",
-	netherbreath_warn = "Souffle du N\195\169ant imminent !",
+	netherbreath = "Souffle de Néant",
+	netherbreath_desc = "Préviens de l'arrivée des Souffles du Néant.",
+	netherbreath_trigger = "lance Affronter une cible aléatoire.",
+	netherbreath_warn = "Souffle du Néant imminent !",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

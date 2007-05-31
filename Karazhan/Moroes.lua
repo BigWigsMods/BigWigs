@@ -41,33 +41,30 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "Hum. Des visiteurs imprévus. Il va falloir se préparer.",
+	engage_message = "Moroes engagé - Disparition dans ~35 sec. !",
+
 	vanish = "Disparition",
-	vanish_desc = ("Pr\195\169viens quand %s est suceptible de dispara\195\174tre."):format(boss),
-
-	garrote = "Garrot",
-	garrote_desc = "Pr\195\169viens quand des joueurs subissent le Garrot.",
-
-	enrage = "Enrager",
-	enrage_desc = ("Pr\195\169viens quand %s devient enrag\195\169."):format(boss),
-
-	icon = "Ic\195\180ne",
-	icon_desc = "Place une ic\195\180ne de raid sur le dernier joueur affect\195\169 par le Garrot (n\195\169cessite d'\195\170tre promus ou mieux).",
-
-	vanish_trigger1 = "Vous avez sonn\195\169\194\160?",
-	vanish_trigger2 = "Bon, o\195\185 en \195\169tais-je\194\160? Ah, oui\226\128\166",
+	vanish_desc = ("Préviens quand %s est suceptible de disparaître."):format(boss),
+	vanish_trigger1 = "Vous avez sonné ?",
+	vanish_trigger2 = "Bon, où en étais-je ? Ah, oui…",
 	vanish_message = "Disparu ! Prochain dans ~35 sec. !",
 	vanish_warning = "Disparition imminente !",
 	vanish_bar = "~Cooldown Disparition",
 
-	garrote_trigger = "^([^%s]+) ([^%s]+) les effets .* Garrot",
+	garrote = "Garrot",
+	garrote_desc = "Préviens quand des joueurs subissent le Garrot.",
+	garrote_trigger = "^([^%s]+) ([^%s]+) les effets .* Garrot.$",
 	garrote_message = "Garrot : %s",
 
-	engage_trigger = "Hum. Des visiteurs impr\195\169vus. Il va falloir se pr\195\169parer.",
-	engage_message = "Moroes engag\195\169 - Disparition dans ~35 sec. !",
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Garrot (nécessite d'être promu ou mieux).",
 
-	enrage_trigger = "%s devient fou furieux\194\160!",
-	enrage_message = "Enrag\195\169 !",
-	enrage_warning = "Bient\195\180t enrag\195\169 !",
+	enrage = "Enrager",
+	enrage_desc = ("Préviens quand %s devient enragé."):format(boss),
+	enrage_trigger = "%s devient fou furieux !",
+	enrage_message = "Enragé !",
+	enrage_warning = "Bientôt enragé !",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

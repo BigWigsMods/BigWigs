@@ -31,8 +31,8 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("frFR", function() return {
 	web = "Rets",
 	web_desc = "Préviens quand un joueur se fait piégé par les Rets.",
-	web_trigger = "^([^%s]+) ([^%s]+) subit les effets .* Rets d'Hyakiss.",
-	web_message = "%s a été piégé par les Rets.",
+	web_trigger = "^([^%s]+) ([^%s]+) subit les effets .* Rets d'Hyakiss.$",
+	web_message = "%s a été piégé par les Rets !",
 	web_bar = "Rets : %s",
 } end )
 

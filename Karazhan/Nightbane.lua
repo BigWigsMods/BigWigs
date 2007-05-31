@@ -105,7 +105,7 @@ L:RegisterTranslations("frFR", function() return {
 	charr_message = "Terre calcinée sur VOUS !",
 
 	phase = "Phases",
-	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
+	phase_desc = ("Préviens quand %s passe d'une phase à l'autre."):format(boss),
 	airphase_trigger = "Misérable vermine. Je vais vous exterminer des airs !",
 	landphase_trigger1 = "Assez ! Je vais atterrir et vous écraser moi-même !",
 	landphase_trigger2 = "Insectes ! Je vais vous montrer de quel bois je me chauffe !",

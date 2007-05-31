@@ -43,35 +43,31 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	berserk = "Berserk",
-	berserk_desc = "Pr\195\169viens quand le Conservateur passe en mode berserk apr\195\168s 10 min.",
+	berserk_desc = "Préviens quand le Conservateur passe en mode berserk après 10 min.",
+	berserk_trigger = "L'accès à la Ménagerie est réservé aux invités.",
+	berserk_message = "%s engagé, 10 min. avant berserk !",
+	berserk_bar = "Berserk",
 
 	enrage = "Enrager",
-	enrage_desc = "Pr\195\169viens quand le Conservateur devient enrag\195\169 \195\160 15%.",
+	enrage_desc = "Préviens quand le Conservateur devient enragé à 15%.",
+	enrage_trigger = "Toute désobéissance entraînera une action offensive.",
+	enrage_message = "Enragé !",
+	enrage_warning = "Bientôt enragé !",
 
 	weaken = "Affaiblissement",
-	weaken_desc = "Pr\195\169viens quand le Conservateur est affaibli.",
-
-	weaktime = "Compte \195\160 rebours Affaiblissement",
-	weaktime_desc = "Affiche un compte \195\160 rebours et une barre temporelle avant le prochain Affaiblissement.",
-
-	weaken_trigger = "Impossible de traiter votre requ\195\170te.",
+	weaken_desc = "Préviens quand le Conservateur est affaibli.",
+	weaken_trigger = "Impossible de traiter votre requête.",
 	weaken_message = "Evocation - Affaibli pendant 20 sec. !",
 	weaken_bar = "Evocation",
-	weaken_fade_message = "Evocation termin\195\169e - Fin de l'Affaiblissement !",
-	weaken_fade_warning = "Evocation termin\195\169e dans 5 sec. !",
+	weaken_fade_message = "Evocation terminée - Fin de l'Affaiblissement !",
+	weaken_fade_warning = "Evocation terminée dans 5 sec. !",
 
+	weaktime = "Compte à rebours Affaiblissement",
+	weaktime_desc = "Affiche des avertissements et une barre temporelle indiquant le prochain Affaiblissement.",
 	weaktime_message1 = "Evocation dans ~10 sec.",
 	weaktime_message2 = "Evocation dans ~30 sec.",
 	weaktime_message3 = "Evocation dans ~70 sec.",
 	weaktime_bar = "~Cooldown Evocation",
-
-	berserk_trigger = "L'acc\195\168s \195\160 la M\195\169nagerie est r\195\169serv\195\169 aux invit\195\169s.",
-	berserk_message = "%s engag\195\169, 10 min. avant berserk !",
-	berserk_bar = "Berserk",
-
-	enrage_trigger = "Toute d\195\169sob\195\169issance entra\195\174nera une action offensive.",
-	enrage_message = "Enrag\195\169 !",
-	enrage_warning = "Bient\195\180t enrag\195\169 !",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

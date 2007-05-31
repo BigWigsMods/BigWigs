@@ -52,19 +52,17 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	spawns = "Hostilit\195\169",
-	spawns_desc = "Affiche plusieurs barres indiquant quand les diff\195\169rents personnages passent \195\160 l'action.",
+	engage_trigger = "Oh, Tito, nous devons trouver le moyen de rentrer à la maison !",
 
-	light = "Cha\195\174ne d'\195\169clairs",
-	light_desc = "Pr\195\169viens quand La M\195\169g\195\168re commence \195\160 lancer sa Cha\195\174ne d'\195\169clairs.",
-
+	spawns = "Hostilité",
+	spawns_desc = "Affiche plusieurs barres indiquant quand les différents personnages passent à l'action.",
 	spawns_bar = "%s attaque !",
 	spawns_warning = "%s dans 5 sec.",
 
-	light_trigger = "La M\195\169g\195\168re commence \195\160 lancer Cha\195\174ne d'\195\169clairs",
-	light_message = "Cha\195\174ne d'\195\169clairs !",
-
-	engage_trigger = "Oh, Tito, nous devons trouver le moyen de rentrer \195\160 la maison\194\160!",
+	light = "Chaîne d'éclairs",
+	light_desc = "Préviens quand la Chaîne d'éclairs est incanté.",
+	light_trigger = "La Mégère commence à lancer Chaîne d'éclairs",
+	light_message = "Chaîne d'éclairs !",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

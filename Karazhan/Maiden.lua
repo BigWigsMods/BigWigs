@@ -59,27 +59,25 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	repentance = "Repentir",
-	repentance_desc = "Affiche le temps de recharge estim\195\169 de Repentir.",
-
-	holyfire = "Flammes sacr\195\169\es",
-	holyfire_desc = "Pr\195\169viens quand quelqu'un est affect\195\169 par les Flammes sacr\195\169es.",
-
-	icon = "Ic\195\180ne",
-	icon_desc = "Place une ic\195\180ne de raid sur le dernier joueur affect\195\169 par les Flammes sacr\196\169es (n\196\169cessite d'\195\170tre promu ou mieux).",
-
 	engage_trigger = "Votre comportement est inacceptable.",
-	engage_message = "Damoiselle engag\195\169e ! Repentir dans ~33 sec.",
+	engage_message = "Damoiselle engagée ! Repentir dans ~33 sec.",
 
-	repentance_trigger1 = "Chassez vos pens\195\169es corrompues.",
-	repentance_trigger2 = "Il faut se d\195\169barrasser de votre impuret\195\169.",
+	repentance = "Repentir",
+	repentance_desc = "Préviens quand la Damoiselle de vertu est suceptible d'utiliser son Repentir.",
+	repentance_trigger1 = "Chassez vos pensées corrompues.",
+	repentance_trigger2 = "Il faut se débarrasser de votre impureté.",
 	repentance_message = "Repentir ! Prochain dans ~33 sec.",
 	repentance_warning = "Fin du cooldown Repentir - Imminent !",
 	repentance_bar = "Repentir",
 	repentance_nextbar = "~Cooldown Repentir",
 
-	holyfire_trigger = "^(.+) (.+) les effets .* Flammes sacr\195\169es",
-	holyfire_message = "Flammes sacr\195\169es : %s",
+	holyfire = "Flammes sacrées",
+	holyfire_desc = "Préviens quand quelqu'un est affecté par les Flammes sacrées.",
+	holyfire_trigger = "^([^%s]+) ([^%s]+) les effets .* Flammes sacrées.$",
+	holyfire_message = "Flammes sacrées : %s",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le joueur affecté par les Flammes sacrées (nécessite d'être promu ou mieux).",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

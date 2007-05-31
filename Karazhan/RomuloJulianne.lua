@@ -81,34 +81,30 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	phase = "Phases",
-	phase_desc = "Pr\195\169viens quand la rencontre entre dans une nouvelle phase.",
-
-	poison = "Poison",
-	poison_desc = "Pr\195\169viens quand un joueur est empoisonn\195\169.",
-
-	heal = "Soin",
-	heal_desc = ("Pr\195\169viens quand %s lance Amour \195\169ternel."):format(girl),
-
-	buff = "Buff",
-	buff_desc = ("Pr\195\169viens quand %s et %s gagnent leurs buffs."):format(boy, girl),
-
-	phase1_trigger = "Quel d\195\169mon es-tu pour me tourmenter ainsi?",
+	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
+	phase1_trigger = "Quel démon es-tu pour me tourmenter ainsi ?",
  	phase1_message = "Acte I - %s",
-	phase2_trigger = "Tu veux donc me provoquer ? Eh bien, \195\160 toi, enfant.",
+	phase2_trigger = "Tu veux donc me provoquer ? Eh bien, à toi, enfant.",
  	phase2_message = "Acte II - %s",
-	phase3_trigger = "Viens, gentille nuit ; rends-moi mon Romulo !",
+	phase3_trigger = "Viens, gentille nuit ; rends-moi mon Romulo !",
 	phase3_message = "Acte III - Ensemble",
 
-	poison_trigger = "^([^%s]+) ([^%s]+) les effets .* Coup empoisonn\195\169",
-	poison_message = "Empoisonn\195\169 : %s",
+	poison = "Poison",
+	poison_desc = "Préviens quand un joueur est empoisonné.",
+	poison_trigger = "^([^%s]+) ([^%s]+) les effets .* Coup empoisonné.$",
+	poison_message = "Empoisonné : %s",
 
-	heal_trigger = "commence \195\160 lancer Amour \195\169ternel%.",
+	heal = "Soin",
+	heal_desc = ("Préviens quand %s lance Amour éternel."):format(girl),
+	heal_trigger = "commence à lancer Amour éternel",
 	heal_message = "%s incante un soin !",
 
+	buff = "Buff",
+	buff_desc = ("Préviens quand %s et %s gagnent leurs buffs."):format(boy, girl),
 	buff1_trigger = "gagne Hardiesse",
 	buff1_message = "Romulo gagne Hardiesse !",
-	buff2_trigger = "gagne D\195\169votion",
-	buff2_message = "Julianne gagne D\195\169votion !",
+	buff2_trigger = "gagne Dévotion",
+	buff2_message = "Julianne gagne Dévotion !",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
