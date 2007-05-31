@@ -27,10 +27,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	cmd = "Vashj",
 
-	--engage_trigger1 = "I did not wish to lower myself by engaging your kind, but you leave me little choice...",
-	--engage_trigger2 = "I spit on you, surface filth!",
-	--engage_trigger3 = "Victory to Lord Illidan! ",
-	--engage_trigger4 = "",
+	engage_trigger1 = "I did not wish to lower myself by engaging your kind, but you leave me little choice...",
+	engage_trigger2 = "I spit on you, surface filth!",
+	engage_trigger3 = "Victory to Lord Illidan! ",
+	engage_trigger4 = "I'll split you from stem to stern!",
+	engage_message = "Entering Phase 1",
 
 	phase = "Phase warnings",
 	phase_desc = "Warn when Vashj goes into the different phases.",
@@ -239,6 +240,9 @@ function mod:OnEnable()
 	end
 
 	playerName = UnitName("player")
+
+	--the following 2 will be removed soon, im keeping it in just now for non enUS clients to translate the yells
+	--we are using yells instead to avoid any possible problems with CheckForWipe
 	phaseTwoAnnounced = nil
 	shieldsFaded = 0
 
@@ -328,9 +332,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			delayedElementalMessage = self:DelayedMessage(55, L["elemental_soon_message"], "Important")
 		end
 		self:RepeatStrider()
---	elseif msg == L["engage_trigger1"] or msg == L["engage_trigger2"] or msg == L["engage_trigger3"] then
---		phaseTwoAnnounced = nil
---		shieldsFaded = 0
+	elseif msg == L["engage_trigger1"] or msg == L["engage_trigger2"] or msg == L["engage_trigger3"] or msg == L["engage_trigger4"] then
+		phaseTwoAnnounced = nil
+		shieldsFaded = 0
+		self:Message(L["engage_message"], "Attention")
 	end
 end
 
