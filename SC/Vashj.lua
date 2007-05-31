@@ -43,7 +43,7 @@ L:RegisterTranslations("enUS", function() return {
 	static_desc = "Warn about Static Charge on players.",
 	static_charge_trigger = "^([^%s]+) ([^%s]+) afflicted by Static Charge.$",
 	static_charge_message = "Static Charge on %s!",
-	static_fade = "Static Charge fades from You.",
+	static_fade = "Static Charge fades from you.",
 
 	icon = "Icon",
 	icon_desc = "Put an icon on players with Static Charge and those who loot cores.",
@@ -209,7 +209,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Serpentshrine Cavern"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", -1, "static", "icon", -1, "elemental", "strider", "loot", "barrier", "bosskill"}
+mod.toggleoptions = {"phase", -1, "static", "icon", -1, "elemental", "strider", "loot", "barrier", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
