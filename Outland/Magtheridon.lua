@@ -157,7 +157,7 @@ L:RegisterTranslations("frFR", function() return {
 	abyssal_trigger = "Canaliste des Flammes infernales lance Abyssal ardent",
 	abyssal_message = "Abyssal ardent créé (%d)",
 
-	heal_trigger = "commence à lancer Guérison ténèbreuse",
+	heal_trigger = "commence à lancer Guérison ténébreuse",
 	heal_message = "Soins !",
 
 	nova_ = "nova explosive",
