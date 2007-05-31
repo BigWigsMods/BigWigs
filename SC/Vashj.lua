@@ -251,6 +251,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Charge")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
+	self:registerEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -290,7 +291,11 @@ end
 function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 	if msg == L["barrier_fades_trigger"] then
 		self:Sync("VashjBarrier")
-	elseif msg == L["static_fade"] then
+	end
+end
+
+function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
+	if msg == L["static_fade"] then
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
 end
