@@ -251,7 +251,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Charge")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
-	self:registerEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
+	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("BigWigs_RecvSync")
