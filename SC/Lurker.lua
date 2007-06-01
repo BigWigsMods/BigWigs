@@ -78,14 +78,15 @@ L:RegisterTranslations("frFR", function() return {
 	dive = "Plongées",
 	dive_desc = ("Délais avant que %s ne plonge."):format(boss),
 	dive_warning = "Plongée probable dans %d sec. !",
-	dive_bar = "~Plonge dans",
+	dive_bar = "~Plongée",
 	dive_message = "Plongée - De retour dans 60 sec.",
 
 	spout = "Jet",
 	spout_desc = "Délais concernant les Jets. Pas toujours précis.",
-	spout_trigger = "%s takes a deep breath!", -- à traduire
+	spout_trigger = "%s prend une grande inspiration !", -- à vérifier
 	spout_message = "Incante un Jet !",
 	spout_warning = "Jet probable dans ~3 sec. !",
+	spout_bar = "Jet probable",
 
 	whirl = "Tourbillonnement",
 	whirl_desc = "Délais concernant les Tourbillonnements.",

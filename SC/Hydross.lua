@@ -135,44 +135,39 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
+	start_trigger = "Je ne peux pas vous laisser nous gêner !",
+
 	mark = "Marque",
 	mark_desc = "Affiche les alertes et les compteurs des marques.",
+	hydross_trigger = "Marque d'Hydross",
+	corruption_trigger = "Marque de corruption",
+	hydross_bar = "Marque d'Hydross - %s%%",
+	corruption_bar = "Marque de Corruption - %s%%",
 
 	enrage = "Enrager",
 	enrage_desc = ("Préviens quand %s devient enragé."):format(boss),
 
 	stance = "Changements d'état",
 	stance_desc = ("Préviens quand %s change d'état."):format(boss),
+	poison_stance_trigger = "Aaarrgh, le poison…",
+	water_stance_trigger = "Ça va mieux. Beaucoup mieux.",
+	poison_stance = "Hydross est maintenant empoisonné !",
+	water_stance = "Hydross est de nouveau sain !",
 
 	sludge = "Vase abominable",
 	sludge_desc = "Préviens quand un joueur est affecté par la Vase abominable.",
+	sludge_message = "Vase abominable : %s",
+
+	tomb = "Tombe aquatique",
+	tomb_desc = "Préviens quand des joueurs sont affectés par la Tombe aquatique.",
+	tomb_message = "Tombe aquatique : %s",
 
 	icon = "Icône Vase abominable",
 	icon_desc = "Place une icône de raid sur le joueur affecté par la Vase abominable (nécessite d'être promu ou mieux).",
 
-	tomb = "Tombe aquatique",
-	tomb_desc = "Préviens quand des joueurs sont affectés par la Tombe aquatique.",
-
-	start_trigger = "Je ne peux pas vous laisser nous gêner !",
-
-	hydross_trigger = "Marque d'Hydross",
-	corruption_trigger = "Marque de corruption",
-
-	hydross_bar = "Marque d'Hydross - %s%%",
-	corruption_bar = "Marque de Corruption - %s%%",
-
 	debuff_warn = "Marque à %s%% !",
 
-	poison_stance_trigger = "Aaarrgh, le poison…",
-	water_stance_trigger = "Ça va mieux. Beaucoup mieux.",
-
-	poison_stance = "Hydross est maintenant empoisonné !",
-	water_stance = "Hydross est de nouveau sain !",
-
 	afflict_trigger = "^([^%s]+) ([^%s]+) les effets .* (.*).$",
-
-	tomb_message = "Tombe aquatique : %s",
-	sludge_message = "Vase abominable : %s",
 } end)
 
 ----------------------------------

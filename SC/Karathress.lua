@@ -84,20 +84,17 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	enrage = "Enrager",
 	enrage_desc = "Affiche le délai avant que Karathress ne devienne enragé.",
+	enrage_trigger = "Gardes, en position !",
 
 	totem = "Totem crache-feu",
 	totem_desc = "Préviens quand un Totem crache-feu est posé et indique son possesseur.",
-
-	heal = "Soins",
-	heal_desc = "Préviens quand Caribdis incante un soin.",
-
-	enrage_trigger = "Gardes, en position !",
-
 	totem_trigger1 = "Garde-fonds Marevess lance Totem crache-feu",
 	totem_trigger2 = "Seigneur des fonds Karathress lance Totem crache-feu",
 	totem_message1 = "Marevess : Totem crache-feu",
 	totem_message2 = "Karathress : Totem crache-feu",
 
+	heal = "Soins",
+	heal_desc = "Préviens quand Caribdis incante un soin.",
 	heal_trigger = "Caribdis commence à lancer Vague de soins",
 	heal_message = "Caribdis incante un soin !",
 

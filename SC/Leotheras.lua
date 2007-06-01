@@ -94,21 +94,10 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	enrage = "Enrager",
 	enrage_desc = "Affiche le délai avant que Leotheras ne devienne enragé.",
+	enrage_trigger = "Enfin, mon exil s'achève !", -- à vérifier
 
 	whirlwind = "Tourbillon",
 	whirlwind_desc = "Affiche les différentes durées concernant le Tourbillon.",
-
-	phase = "Phase démon",
-	phase_desc = "Affiche une estimation de la phase démon.",
-
-	image = "Image",
-	image_desc = "Préviens quand l'image est créée à 15%.",
-
-	whisper = "Murmure insidieux",
-	whisper_desc = "Préviens quand des joueurs subissent le Murmure insidieux.",
-
-	enrage_trigger = "Enfin, mon exil s'achève !", -- à vérifier
-
 	whirlwind_trigger = "Leotheras l'Aveugle gagne Tourbillon",
 	whirlwind_gain = "Tourbillon pendant 12 sec.",
 	whirlwind_fade = "Fin du Tourbillon",
@@ -116,6 +105,8 @@ L:RegisterTranslations("frFR", function() return {
 	whirlwind_bar2 = "~Cooldown Tourbillon",
 	whirlwind_warn = "Fin du cooldown Tourbillon - Imminent !",
 
+	phase = "Phase démon",
+	phase_desc = "Affiche une estimation de la phase démon.",
 	phase_trigger = "Je prend le contrôle", -- à vérifier
 	phase_demon = "Phase démon pendant 60 sec.",
 	phase_demonsoon = "Phase démon dans 5 sec. !",
@@ -124,11 +115,15 @@ L:RegisterTranslations("frFR", function() return {
 	demon_bar = "Phase démon",
 	demon_nextbar = "Prochaine phase démon",
 
+	image = "Image",
+	image_desc = "Préviens quand l'image est créée à 15%.",
 	image_trigger = "C'est moi le maître ! Vous entendez ?", -- à vérifier
 	image_message = "15% - Image créée !",
 	image_warning = "Image imminente !",
 
-	whisper_trigger = "^([^%s]+) ([^%s]+) les effets .* Murmure insidieux",
+	whisper = "Murmure insidieux",
+	whisper_desc = "Préviens quand des joueurs subissent le Murmure insidieux.",
+	whisper_trigger = "^([^%s]+) ([^%s]+) les effets .* Murmure insidieux.$",
 	whisper_message = "Démon : %s",
 	whisper_bar = "Disparition des démons",
 	whisper_soon = "~Cooldown Démons",

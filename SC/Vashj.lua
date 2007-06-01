@@ -115,46 +115,47 @@ L:RegisterTranslations("frFR", function() return {
 
 	["Tainted Elemental"] = "Elémentaire souillé",
 
+	engage_trigger1 = "J'espérais ne pas devoir m'abaisser à affronter des créatures de la surface, mais vous ne me laissez pas le choix…", -- à vérifier
+	engage_trigger2 = "Je te crache dessus, racaille de la surface !", -- à vérifier
+	engage_trigger3 = "Victoire au seigneur Illidan ! ", -- à vérifier
+	engage_trigger4 = "Je vais te déchirer de part en part !", -- à vérifier
+	engage_trigger5 = "Mort aux étrangers !", -- à vérifier
+	engage_message = "Début de la phase 1",
+
 	phase = "Phases",
 	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
+	phase2_trigger = "L'heure est venue ! N'épargnez personne !", -- à vérifier
+	phase2_soon_message = "Phase 2 imminente !",
+	phase2_message = "Phase 2, arrivée des adds !",
+	phase3_message = "Phase 3 - Enragée dans 4 min. !",
 
 	static = "Charge statique",
 	static_desc = "Préviens quand la Charge statique affecte un joueur.",
+	static_charge_trigger = "^([^%s]+) ([^%s]+) les effets Charge statique.$",
+	static_charge_message = "Charge statique sur %s !",
+	static_fade = "Charge statique vient de se dissiper.",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur les joueurs affectés par la Charge statique et sur ceux qui ramassent les noyaux.",
 
 	elemental = "Elémentaires souillés",
 	elemental_desc = "Préviens quand les Elémentaires souillés apparaissent durant la phase 2.",
-
-	strider = "Trotteurs de Glisseroc",
-	strider_desc = "Préviens quans les Trotteurs de Glisseroc apparaissent durant la phase 2.",
-
-	barrier = "Dissipation des barrières",
-	barrier_desc = "Préviens quand les barrières se dissipent.",
-
-	loot = "Noyau souillé",
-	loot_desc = "Préviens quand un joueur ramasse un Noyau souillé.",
-
-	static_charge_trigger = "^([^%s]+) ([^%s]+) les effets Charge statique.$",
-	static_charge_message = "Charge statique sur %s !",
-
-	loot_message = "%s a ramassé un noyau !",
-
-	phase2_trigger = "L'heure est venue ! N'épargnez personne !", -- à vérifier
-
-	phase2_soon_message = "Phase 2 imminente !",
-	phase2_message = "Phase 2, arrivée des adds !",
-	phase3_message = "Phase 3 - Enragée dans 4 min. !",
-
-	barrier_down_message = "Barrière %d/4 dissipée !",
-	barrier_fades_trigger = "Barrière magique sur Lady Vashj vient de se dissiper.",
-
 	elemental_bar = "Arrivée d'un Elémentaire souillé",
 	elemental_soon_message = "Elémentaire souillé imminent !",
 
+	strider = "Trotteurs de Glisseroc",
+	strider_desc = "Préviens quans les Trotteurs de Glisseroc apparaissent durant la phase 2.",
 	strider_bar = "Arrivée d'un trotteur",
 	strider_soon_message = "Trotteur imminent !",
+
+	barrier = "Dissipation des barrières",
+	barrier_desc = "Préviens quand les barrières se dissipent.",
+	barrier_down_message = "Barrière %d/4 dissipée !",
+	barrier_fades_trigger = "Barrière magique sur Dame Vashj vient de se dissiper.",
+
+	loot = "Noyau souillé",
+	loot_desc = "Préviens quand un joueur ramasse un Noyau souillé.",
+	loot_message = "%s a ramassé un noyau !",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
