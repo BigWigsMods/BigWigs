@@ -31,6 +31,7 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger2 = "I spit on you, surface filth!",
 	engage_trigger3 = "Victory to Lord Illidan! ",
 	engage_trigger4 = "I'll split you from stem to stern!",
+	engage_trigger5 = "Death to the outsiders!",
 	engage_message = "Entering Phase 1",
 
 	phase = "Phase warnings",
@@ -332,7 +333,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			delayedElementalMessage = self:DelayedMessage(55, L["elemental_soon_message"], "Important")
 		end
 		self:RepeatStrider()
-	elseif msg == L["engage_trigger1"] or msg == L["engage_trigger2"] or msg == L["engage_trigger3"] or msg == L["engage_trigger4"] then
+	elseif msg == L["engage_trigger1"] or msg == L["engage_trigger2"] or msg == L["engage_trigger3"]
+		or msg == L["engage_trigger4"] or msg == L["engage_trigger5"] then
+
 		phaseTwoAnnounced = nil
 		shieldsFaded = 0
 		self:Message(L["engage_message"], "Attention")
