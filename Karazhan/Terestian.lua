@@ -106,26 +106,24 @@ L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "啊，你來的正好。儀式正要開始!",
 
 	sacrifice = "犧牲警告",
-	sacrifice_desc = "當隊友受到犧牲效果時警告",
-
-	icon = "團隊標記",
-	icon_desc = "對受到犧牲的人員設置標記（需要權限）",
-
-	enrage = "狂怒",
-	enrage_desc = "開戰十分鐘後提示狂怒警告",
-
-	weak = "虛弱提示",
-	weak_desc = "提示泰瑞斯提安虛弱狀態",
-
+	sacrifice_desc = "當有玩家被犧牲時發送警告",
 	sacrifice_trigger = "^(.+)受到(.*)犧牲",
-	sacrifice_message = "%s 中了犧牲狀態，照顧一下！",
+	sacrifice_message = "%s 犧牲了 - 注意停手及治療",
 	sacrifice_bar = "犧牲：%s",
 
+	icon = "團隊標記",
+	icon_desc = "為犧牲的玩家設置標記（需要權限）",
+
+	enrage = "狂暴",
+	enrage_desc = "當進入戰鬥超過十分鐘時發送警告",
+
+	weak = "虛弱提示",
+	weak_desc = "當泰瑞斯提安進入虛弱狀態時發送警告",
 	weak_trigger = "受到破碎契印",
-	weak_message = "30 秒虛弱狀態",
-	weak_warning1 = "5 秒內結束虛弱狀態！",
-	weak_warning2 = "虛弱結束！",
-	weak_bar = "虛弱計時",
+	weak_message = "三十秒虛弱狀態開始",
+	weak_warning1 = "虛弱狀態將在五秒後結束",
+	weak_warning2 = "虛弱狀態結束",
+	weak_bar = "虛弱",
 } end )
 
 ----------------------------------

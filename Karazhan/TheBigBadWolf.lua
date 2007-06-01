@@ -84,6 +84,13 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
+	riding_trigger = "^(.+)獲得了(.*)小紅帽的效果",
+	gain = "獲得",
+
+	riding_youwarn = "你變成小紅帽了！",
+	riding_otherwarn ="[%s] 變成小紅帽了！",
+	riding_bar = "%s 快跑！",
+
 	youriding = "你變成小紅帽時警告",
 	youriding_desc = "當你變成小紅帽時警告",
 
@@ -91,13 +98,7 @@ L:RegisterTranslations("zhTW", function() return {
 	elseriding_desc = "當隊友變成小紅帽時警告",
 
 	icon = "團隊標記",
-	icon_desc = "對變成小紅帽的人員設置團隊標記（需要權限）",
-
-	riding_trigger = "^(.+)獲得了(.*)小紅帽的效果",
-
-	riding_youwarn = "你變成小紅帽了！",
-	riding_otherwarn ="[%s] 變成小紅帽了！",
-	riding_bar = "%s 快跑！",
+	icon_desc = "對變成小紅帽的玩家設置團隊標記（需要權限）",
 } end )
 
 ----------------------------------

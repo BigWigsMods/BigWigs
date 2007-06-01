@@ -81,19 +81,17 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	phase = "階段警告",
-	phase_desc = "進入下一個階段時發出警告",
-
-	curse = "詛咒警告",
-	curse_desc = "近戰受到無形守護的詛咒發出警告",
-
-	curse_trigger = "^(.+)受到(.*)無形守護",
-	curse_message = "近戰受到詛咒！儘速解除！",
-
+	phase_desc = "當進入下一個階段時發送警告",
 	phase1_message = "第一階段 - %s",
-	phase2_trigger = "%s呼叫他的主人!",
+	phase2_trigger = "%s 呼叫他的主人!",
 	phase2_message = "第二階段 - %s & 阿圖曼",
 	phase3_trigger = "來吧午夜，讓我們驅散這群小規模的烏合之眾!",
 	phase3_message = "第三階段 - %s",
+
+	curse = "詛咒警告",
+	curse_desc = "近戰受到無形守護的詛咒時發送警告",
+	curse_trigger = "^(.+)受到(.*)無形守護",
+	curse_message = "無形守護 - 請解咒",
 } end)
 
 ----------------------------------

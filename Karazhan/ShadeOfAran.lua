@@ -191,50 +191,44 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	adds = "召喚水元素",
-	adds_desc = "當艾蘭召喚水元素出現時發出警告。",
-
-	drink = "喝水作弊",
-	drink_desc = ("當 %s 喝水回魔時提示"):format(boss),
-
-	blizzard = "暴風雪警告",
-	blizzard_desc = "當暴風雪施放時發出警告",
-
-	pull = "磁力／祕法爆裂警告",
-	pull_desc = "當巨力磁力／祕法爆裂施放時警告",
-
-	flame = "烈焰火圈",
-	flame_desc = "當烈焰火圈施放時發出警告",
-
-	adds_message = "水元素出現！",
-	adds_warning = "即將召喚水元素！",
-	adds_trigger = "我還沒結束!不，我還有一些小伎倆沒施展出來",
-	adds_bar = "水元素計時",
-
-	drink_trigger = "想必你不會拒絕給一個老人補充飲品吧?不，不，我想不會。",
-	drink_warning = "低ＭＰ階段，艾蘭快要喝水作弊了！",
-	drink_message = "艾蘭喝水了！作弊！ - 範圍變形！",
-	drink_bar = "超級變形術計時",
-
 	engage_trigger1 = "我不會再被折磨了!",
 	engage_trigger2 = "你是誰?你想要什麼?離我遠一點!",
 	engage_trigger3 = "拜託，不要了!我的兒子……他已經瘋了!",
-	engage_message = "%s 開戰",
+	engage_message = "%s 戰鬥開始",
 
+	adds = "召喚水元素",
+	adds_desc = "當艾蘭之影召喚水元素時發送警告",
+	adds_message = "召喚水元素",
+	adds_warning = "艾蘭之影即將召喚水元素",
+	adds_trigger = "我還沒結束!不，我還有一些小伎倆沒施展出來",
+	adds_bar = "召喚水元素",
+
+	drink = "群體變羊",
+	drink_desc = ("當 %s 開始回魔時發送警告"):format(boss),
+	drink_trigger = "想必你不會拒絕給一個老人補充飲品吧?不，不，我想不會。",
+	drink_warning = "艾蘭之影魔力太低",
+	drink_message = "群體變羊術 - 艾蘭之影開始回魔",
+	drink_bar = "群體變羊術",
+
+	blizzard = "暴風雪警告",
+	blizzard_desc = "當艾蘭之影施放暴風雪時發送警告",
 	blizzard_trigger1 = "滾回你那冰冷的黑暗之中!",
 	blizzard_trigger2 = "我會把你們全都凍死!",
-	blizzard_message = "暴風雪！順時針移動！",
+	blizzard_message = "暴風雪 - 順時針方向走避",
 
-	pull_message = "祕法爆裂！向外散開！",
+	pull = "巨力磁力/奧爆術警告",
+	pull_desc = "當艾蘭之影施放巨力磁力及奧爆術時發送警告",
+	pull_message = "奧爆術 - 立刻向外圍跑",
 	pull_trigger1 = "是的，沒錯，我兒子的力量相當強大……但我有我自己的力量!",
 	pull_trigger2 = "我不是什麼普通的的小丑!我是聶拉斯·艾蘭!",
-	pull_bar = "祕法爆裂",
+	pull_bar = "奧爆術",
 
-	flame_warning = "烈焰火圈！全體禁止移動！",
+	flame = "烈焰火圈警告",
+	flame_desc = "當艾蘭之影施放烈焰火圈時發送警告",
+	flame_warning = "烈焰火圈 - 全部都別動",
 	flame_trigger1 = "我會讓你們看到：被打的狗也是會反擊的!",
 	flame_trigger2 = "燃燒吧，你這地獄的惡魔!",
-
-	flame_message = "烈焰火圈施放，禁止移動！",
+	flame_message = "艾蘭之影施放烈焰火圈",
 	flame_bar = "烈焰火圈",
 	flame_trigger = "施放烈焰火圈", --需要 Combatlog
 } end )

@@ -103,15 +103,6 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	repentance = "懺悔估計",
-	repentance_desc = "懺悔估計時間",
-
-	holyfire = "神聖之火警告",
-	holyfire_desc = "人員受到神聖之火攻擊時警告",
-
-	icon = "團隊標記",
-	icon_desc = "對受到神聖之火影響的人員設置團隊標記（需要權限）",
-
 	engage_trigger = "你的行為不能被容忍。",
 	engage_message = "戰鬥開始！33 秒後懺悔！",
 

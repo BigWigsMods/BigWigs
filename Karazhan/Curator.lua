@@ -133,36 +133,34 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	berserk = "狂暴警告",
-	berserk_desc = "開戰十分鐘後提示無敵碾人狀態",
+	berserk = "無敵警告",
+	berserk_desc = "進入戰鬥後十分鐘時發送無敵警告",
+	berserk_trigger = "展示廳是賓客專屬的。",
+	berserk_message = "%s 將在十分鐘後進入無敵狀態",
+	berserk_bar = "無敵",
 
-	enrage = "狂怒警告",
-	enrage_desc = "15% 時提示狂怒狀態",
-
-	weaken = "喚醒提醒",
-	weaken_desc = "喚醒狀態提示",
-
-	weaktime = "虛弱倒數",
-	weaktime_desc = "倒數計時下次虛弱來臨時間。",
-
-	weaken_trigger = "無法處理你的要求。",
-	weaken_message = "喚醒 - 20 秒虛弱狀態",
-	weaken_bar = "喚醒計時",
-	weaken_fade_message = "喚醒結束 - 虛弱狀態結束",
-	weaken_fade_warning = "喚醒 5 秒後結束",
-
-	weaktime_message1 = "10 秒後喚醒",
-	weaktime_message2 = "30 秒後喚醒",
-	weaktime_message3 = "70 秒後喚醒",
-	weaktime_bar = "喚醒冷卻計時",
-
-	berserk_trigger = "獸欄是賓客專屬的。",
-	berserk_message = "%s 開戰，10 分鐘後狂暴！",
-	berserk_bar = "狂暴計時",
-
+	enrage = "狂暴警告",
+	enrage_desc = "當監護者血量剩15%時發送警告",
 	enrage_trigger = "不順從就會招致攻擊性的行動。",
-	enrage_message = "狂怒！",
-	enrage_warning = "即將狂怒！留意治療！",
+	enrage_message = "狂暴",
+	enrage_warning = "監護者將會進入狂暴狀態",
+
+	weaken = "喚醒提示",
+	weaken_desc = "當監護者進入喚醒時發送警告",
+	weaken_trigger = "無法處理你的要求。",
+	weaken_message = "喚醒 - 20 秒虛弱時間開始",
+	weaken_bar = "喚醒",
+	weaken_fade_message = "喚醒結束 - 準備擊殺小電球",
+	weaken_fade_warning = "喚醒將於五秒後結束",
+
+	weaktime = "虛弱提示",
+	weaktime_desc = "顯示計時條預測下一次虛弱時間",
+	weaktime_message1 = "10 秒後監護者進入喚醒狀態",
+	weaktime_message2 = "30 秒後監護者進入喚醒狀態",
+	weaktime_message3 = "70 秒後監護者進入喚醒狀態",
+	weaktime_bar = "虛弱",
+
+
 } end )
 
 ----------------------------------

@@ -149,40 +149,36 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	phase = "開戰提示",
-	phase_desc = "開戰警示",
-
-	enfeeble = "削弱警告",
-	enfeeble_desc = "顯示削弱計時",
-
-	infernals = "地獄火警告",
-	infernals_desc = "顯示地獄火計時",
-
-	nova = "暗影新星",
-	nova_desc = "暗影新星計時提示",
-
+	phase = "階段提示",
+	phase_desc = "進入戰鬥及每一階段時發送警告",
 	phase1_trigger = "瘋狂把你帶到我的面前。我會成為你失敗的原因!",
 	phase2_trigger = "頭腦簡單的笨蛋!你在燃燒的是時間的火焰!",
 	phase3_trigger = "你怎能期望抵抗這樣勢不可擋的力量?",
-	phase1_message = "第一階段 - 地獄火在 40 秒內來臨！",
+	phase1_message = "第一階段 - 地獄火將在 40 秒後召喚",
 	phase2_message = "60% - 第二階段",
 	phase3_message = "30% - 第三階段",
 
+	enfeeble = "削弱警告",
+	enfeeble_desc = "顯示削弱計時條",
 	enfeeble_trigger = "^(.+)受到(.*)削弱",
-	enfeeble_message = "削弱！下一次施放在 30 秒後！",
-	enfeeble_warning = "削弱在 5 秒內來臨！",
+	enfeeble_message = "30 秒後下一次削弱",
+	enfeeble_warning = "5 秒後削弱",
 	enfeeble_bar = "削弱",
-	enfeeble_nextbar = "下一次削弱",
+	enfeeble_nextbar = "削弱倒數",
 
+	infernals = "地獄火警告",
+	infernals_desc = "顯示召喚地獄火計時條",
 	infernal_trigger1 = "你挑戰的不只是莫克札，而是我所率領的整個軍隊!",
 	infernal_trigger2 = "所有的實體，所有的空間對我來說都是開放的!",
-	infernal_bar = "地獄火計時",
-	infernal_warning = "地獄火在 20 秒內來臨!",
-	infernal_message = "地獄火在 5 秒內來臨!",
+	infernal_bar = "地獄火",
+	infernal_warning = "20 秒後召喚地獄火",
+	infernal_message = "5 秒後召喚地獄火",
 
-	nova_message = "暗影新星！",
-	nova_bar = "暗影新星計時",
-	nova_soon = "莫克札王子開始施放暗影新星",
+	nova = "暗影新星警告",
+	nova_desc = "顯示暗影新星計時條",
+	nova_message = "暗影新星",
+	nova_bar = "暗影新星倒數",
+	nova_soon = "即將施放暗影新星",
 } end )
 
 ----------------------------------

@@ -80,19 +80,17 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
+	engage_trigger = "喔多多，我們一定要找到回家的路!",
+
 	spawns = "啟動時間",
 	spawns_desc = "設定各角色啟動時間計時",
+	spawns_bar = "%s 開始攻擊",
+	spawns_warning = "%s 將在五秒後開始攻擊",
 
 	light = "閃電鏈警告",
-	light_desc = "警告閃電鏈施放",
-
-	spawns_bar = "%s 開始攻擊！",
-	spawns_warning = "%s 五秒內啟動！",
-
+	light_desc = "當施放悶電鏈時發送警告",
 	light_trigger = "老巫婆開始施放閃電鏈",
-	light_message = "閃電鏈！",
-
-	engage_trigger = "喔多多，我們一定要找到回家的路!",
+	light_message = "即將施放閃電鏈",
 } end)
 
 ----------------------------------

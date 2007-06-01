@@ -167,44 +167,41 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	fear = "恐懼警告",
-	fear_desc = "低沉咆哮警告",
+	fear = "低沉咆哮警告",
+	fear_desc = "當夜禍施放低沉咆哮時發送警告",
+	fear_trigger = "夜禍開始施放低沉咆哮。",
+	fear_message = "2 秒後施放低沉咆哮",
+	fear_warning = "即將施放低沉咆哮",
+	fear_bar = "恐懼",
+	fear_nextbar = "恐懼倒數",
 
 	charr = "灼燒大地警告",
-	charr_desc = "當你受到灼燒大地時警告",
+	charr_desc = "當夜禍對你施放灼燒大地時發送警告",
+	charr_trigger = "你受到灼燒大地的傷害。",
+	charr_message = "你中了灼燒大地",
 
 	phase = "階段警告",
-	phase_desc = ("當 %s 切換狀態時警告"):format(boss),
-
-	engage = "開戰警告",
-	engage_desc = "開戰警告",
-
-	blast = "爆裂濃煙警告",
-	blast_desc = "當爆裂濃煙施放時警告",
-
-	bones = "碎骨之雨警告",
-	--bones_desc = "當碎骨之雨施放時警告", --enUS changed
-
-	fear_trigger = "施放低沉咆哮",
-	fear_message = "兩秒鐘內恐懼！",
-	fear_warning = "恐懼即將來臨！",
-	fear_bar = "恐懼計時",
-
-	charr_trigger = "你獲得了灼燒大地",
-	charr_message = "灼燒大地在你腳下！",
-
-	blast_trigger = "夜禍開始施放爆裂濃煙",
-	blast_message = "施放爆裂濃煙中！",
-
+	phase_desc = ("當 %s 進入下一階段時發送警告"):format(boss),
 	airphase_trigger = "悲慘的害蟲。我將讓你消失在空氣中!",
 	landphase_trigger1 = "夠了!我要親自挑戰你!",
 	landphase_trigger2 = "昆蟲!給你們近距離嚐嚐我的厲害!",
-	airphase_message = "升空準備！",
-	landphase_message = "落地準備！",
+	airphase_message = "昇空",
+	landphase_message = "降落",
 	summon_trigger = "一個古老的生物在遠處甦醒過來……",
 
+	engage = "進入戰鬥",
+	engage_desc = "當戰鬥開始時發送警告",
 	engage_trigger = "真是蠢蛋!我會快點結束你的痛苦!",
-	engage_message = "%s 開戰！",
+	engage_message = "%s 進入戰鬥",
+
+	blast = "爆裂濃煙警告",
+	blast_desc = "當夜禍施放爆裂濃煙時發送警告",
+	blast_trigger = "夜禍開始施放爆裂濃煙。",
+	blast_message = "爆裂濃煙",
+
+	bones = "碎骨之雨警告",
+	bones_desc = "當有玩家中了碎骨之雨時發送警告",
+	bones_message = "碎骨之雨",
 } end )
 
 ----------------------------------
