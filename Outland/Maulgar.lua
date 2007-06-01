@@ -208,53 +208,46 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	heal = "治療",
-	heal_desc = "Warn when Blindeye the Seer begins to cast a Heal",
+	heal = "治療警告",
+	heal_desc = "當先知盲眼開始施放治療時發送警告",
+	heal_trigger = "先知盲眼開始施放治療禱言。",
+	heal_message = "先知盲眼施放群體治療 - 請中斷",
+	heal_bar = "治療",
 
-	shield = "真言術:盾",
-	shield_desc = "Warn when Blindeye the Seer gains Greater Power Word: Shield",
+	shield = "真言術:盾警告",
+	shield_desc = "當先知盲眼開始施放強效真言術:盾時發送警告",
+	shield_trigger = "先知盲眼獲得了強效真言術:盾的效果。",
+	shield_message = "先知盲眼施放強效真言術:盾 - 請快速擊破",
 
-	spellshield = "法術護盾",
-	spellshield_desc = "Warn when Krosh Firehand gains Spell Shield",
+	spellshield = "法術護盾警告",
+	spellshield_desc = "當克羅斯·火手施放法術護盾時發送警告",
+	spellshield_trigger = "克羅斯·火手獲得了法術護盾的效果。",
+	spellshield_message = "克羅斯·火手施放法術護盾 - 請偷取",
 
-	summon = "召喚野生地獄獵犬",
-	summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter",
+	summon = "召喚警告",
+	summon_desc = "當召喚者歐莫開始施放召喚野生地獄獵犬時發送警告",
+	summon_trigger = "召喚者歐莫開始施放召喚野生地獄獵犬。",
+	summon_message = "野生地獄獵犬要出來咬人嚕",
+	summon_bar = "召喚倒數",
 
-	whirlwind = "旋風斬",
-	whirlwind_desc = "Warn when Maulgar gains Whirlwind",
+	whirlwind = "旋風斬警告",
+	whirlwind_desc = "當大君王莫卡爾獲得旋風斬時發送警告",
+	whirlwind_trigger = "大君王莫卡爾獲得了旋風斬的效果。",
+	whirlwind_message = "大君王莫卡爾 - 旋風斬 15 秒",
+	whirlwind_bar = "旋風斬",
+	whirlwind_nextbar = "旋風斬倒數",
+	whirlwind_warning1 = "進入戰鬥 - 50 秒後施放旋風斬",
+	whirlwind_warning2 = "大君王莫卡爾即將施放旋風斬",
 
-	flurry = "Flurry",
-	flurry_desc = "Warn when Maulgar is close to Flurry and gains Flurry",
+	flurry = "亂舞警告",
+	flurry_desc = "當大君王莫卡爾即將亂舞及獲得亂舞時發送警告",
+	flurry_trigger = "你擊敗不了戈魯爾之手!",
+	flurry_message = "50% - 亂舞",
+	flurry_warning = "大君王莫卡爾即將施放亂舞",
 
-	smash = "圓弧斬",
-	smash_desc = "Show a bar for estimated Arcing Smash",
-
-	heal_trigger = "Blindeye the Seer begins to cast Prayer of Healing",
-	heal_message = "Blindeye casting Prayer of Healing!",
-	heal_bar = "Healing",
-
-	shield_trigger = "gains Greater Power Word: Shield",
-	shield_message = "Shield on Blindeye!",
-
-	spellshield_trigger = "gains Spell Shield.",
-	spellshield_message = "Spell Shield on Krosh!",
-
-	summon_trigger = "begins to cast Summon Wild Felhunter.",
-	summon_message = "Felhunter being summoned!",
-	summon_bar = "~Felhunter Cooldown",
-
-	flurry_trigger = "You will not defeat the hand of Gruul!",
-	flurry_message = "50% - Flurry!",
-	flurry_warning = "Flurry Soon!",
-
-	whirlwind_trigger = "gains Whirlwind",
-	whirlwind_message = "Maulgar - Whirlwind for 15sec!",
-	whirlwind_bar = "Whirlwind",
-	whirlwind_nextbar = "~Whirlwind Cooldown",
-	whirlwind_warning1 = "Maulgar Engaged - Whirlwind in ~50sec!",
-	whirlwind_warning2 = "Whirlwind Soon!",
-
-	smash_bar = "~Arcing Smash",
+	smash = "圓弧斬提示",
+	smash_desc = "顯示圓弧斬倒數計時條",
+	smash_bar = "圓弧斬",
 } end)
 
 ----------------------------------

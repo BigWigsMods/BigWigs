@@ -167,6 +167,40 @@ L:RegisterTranslations("koKR", function() return {
 	shatter_message = "석화!",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	engage_trigger = "來……受死吧。",
+	engage_message = "%s 進入戰鬥",
+
+	grow = "成長警告",
+	grow_desc = "計算並當戈魯爾成長時發送警告",
+	grow_trigger = "%s 變大了!",
+	grow_message = "成長 : (%d)",
+	grow_bar = "成長 (%d)",
+
+	grasp = "破碎警告",
+	grasp_desc = "當戈魯爾施放大地猛擊跟破碎時發送警告並顯示計時條",
+	grasp_trigger1 = "快跑。",
+	grasp_trigger2 = "待在這裡。",
+	grasp_message = "大地猛擊 - 10 秒內破碎",
+	grasp_warning = "戈魯爾即將施放大地猛擊",
+	grasp_bar = "大地猛擊",
+
+	cavein = "塌下警告",
+	cavein_desc = "當你在塌下的範圍時發送警告",
+	cavein_trigger = "你受到塌下的傷害",
+	cavein_message = "你在塌下的範圍",
+
+	silence = "沉默警告",
+	silence_desc = "當戈魯爾施放範圍沉默時發送警告 (迴響)",
+	silence_trigger = "受到迴響的傷害",
+	silence_message = "迴響 - 範圍沉默",
+	silence_warning = "戈魯爾即將施放迴響",
+	silence_bar = "迴響",
+
+	shatter_trigger = "%s 吼叫!",
+	shatter_message = "破碎",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
