@@ -75,6 +75,13 @@ L:RegisterTranslations("koKR", function() return {
 
 	["Tainted Elemental"] = "오염된 정령",
 
+	engage_trigger1 = "천한 놈들을 상대하며 품위를 손상시키고 싶진 않았는데... 제 손으로 무덤을 파는구나.",
+	engage_trigger2 = "육지에 사는 더러운 놈들같으니!",
+	engage_trigger3 = "일리단 군주님께 승리를!",
+	engage_trigger4 = "머리부터 발끝까지 성치 못할 줄 알아라!",
+	engage_trigger5 = "침입자들에게 죽음을!",
+	engage_message = "1단계 시작",
+
 	phase = "단계 경고",
 	phase_desc = "바쉬가 다음 단계로 변경 시 알림.",
 	phase2_trigger = "때가 왔다! 한 놈도 살려두지 마라!",
