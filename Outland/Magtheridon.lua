@@ -122,28 +122,6 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("frFR", function() return {
 	escape = "Evasion",
 	escape_desc = ("Compte à rebours avant que %s ne soit libre."):format(boss),
-
-	abyssal = "Abyssal ardent",
-	abyssal_desc = "Préviens quand un Abyssal ardent est créé.",
-
-	heal = "Soins",
-	heal_desc = "Préviens quand un Canaliste des Flammes infernales commence à soigner.",
-
-	nova = "Nova explosive",
-	nova_desc = "Estimation du temps de la Nova explosive.",
-
-	banish = "Bannir",
-	banish_desc = ("Préviens quand vous bannissez %s."):format(boss),
-
-	exhaust = "Désactiver les barres d'Epuisement",
-	exhaust_desc = "Barre temporelles pour l'Epuisement d'esprit des joueurs",
-
-	debris = "Débris sur vous",
-	debris_desc = "Préviens quand les Débris tombent sur vous.",
-
-	debrisinc = "Débris",
-	debrisinc_desc = "Préviens quand les Débris commencent à tomber à 30%.",
-
 	escape_trigger1 = "Les liens de %%s commencent à se relâcher !",
 	escape_trigger2 = "Me... voilà... déchaîné !",
 	escape_warning1 = "%s engagé - Libre dans 2 min. !",
@@ -154,29 +132,43 @@ L:RegisterTranslations("frFR", function() return {
 	escape_bar = "Libération…",
 	escape_message = "%s libéré !",
 
+	abyssal = "Abyssal ardent",
+	abyssal_desc = "Préviens quand un Abyssal ardent est créé.",
 	abyssal_trigger = "Canaliste des Flammes infernales lance Abyssal ardent",
 	abyssal_message = "Abyssal ardent créé (%d)",
 
+	heal = "Soins",
+	heal_desc = "Préviens quand un Canaliste des Flammes infernales commence à soigner.",
 	heal_trigger = "commence à lancer Guérison ténébreuse",
 	heal_message = "Soins !",
 
+	nova = "Nova explosive",
+	nova_desc = "Estimation du temps de la Nova explosive.",
 	nova_ = "nova explosive",
 	nova_bar = "~Cooldown Nova explosive",
 	nova_warning = "Nova explosive imminente",
 	nova_cast = "Incante une Nova explosive !",
 
+	banish = "Bannir",
+	banish_desc = ("Préviens quand vous bannissez %s."):format(boss),
 	banish_trigger = "Pas encore ! Pas encore...",
 	banish_message = "Banni pendant ~10 sec.",
 	banish_over_trigger = "Cage d'ombre sur Magtheridon vient de se dissiper.",
 	banish_over_message = "Fin du ban !",
 	banish_bar = "Banni",
 
-	exhaust_trigger = "^([^%s]+) ([^%s]+) les effets .* Epuisement de l'esprit",
+	exhaust = "Désactiver les barres d'Epuisement",
+	exhaust_desc = "Barre temporelles pour l'Epuisement d'esprit des joueurs",
+	exhaust_trigger = "^([^%s]+) ([^%s]+) les effets .* Epuisement de l'esprit.$",
 	exhaust_bar = "[%s] épuisé",
 
+	debris = "Débris sur vous",
+	debris_desc = "Préviens quand les Débris tombent sur vous.",
 	debris_trigger = "Vous subissez les effets de Débris.",
 	debris_message = "Débris sur VOUS !",
 
+	debrisinc = "Débris",
+	debrisinc_desc = "Préviens quand les Débris tombent à 30%.",
 	debrisinc_trigger = "Que les murs de cette prison tremblent",
 	debrisinc_message = "30% - Arrivée des Débris !",
 	debrisinc_warning = "Débris imminent !",

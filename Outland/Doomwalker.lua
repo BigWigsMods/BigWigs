@@ -34,27 +34,23 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	overrun = "Surr\195\169gime",
-	overrun_desc = "Pr\195\169viens quand Marche-funeste utilise sa capacit\195\169 Surr\195\169gime.",
+	overrun = "Renversement",
+	overrun_desc = "Préviens quand Marche-funeste utilise sa capacité Renversement.",
+	overrun_trigger = "^Marche-funeste.-Renversement",
+	overrun_message = "Renversement !",
+	overrun_soon_message = "Renversement imminent !",
+	overrun_bar = "~Cooldown Renversement",
 
-	earthquake = "S\195\169isme",
-	earthquake_desc = "Pr\195\169viens quand Marche-funeste utilise sa capacit\195\169 S\195\169isme.",
+	earthquake = "Séisme",
+	earthquake_desc = "Préviens quand Marche-funeste utilise sa capacité Séisme.",
+	earthquake_message = "Séisme ! Prochain dans ~70 sec. !",
+	earthquake_bar = "~Cooldown Séisme",
+	earthquake_trigger = "Vous subissez les effets de Séisme.",
 
 	enrage = "Enrager",
-	enrage_desc = "Pr\195\169viens quand Marche-funeste devient enrag\195\169 \195\160 ~20%.",
-
-	engage_message = "Marche-funeste engag\195\169, S\195\169isme dans ~30 sec. !",
-	enrage_soon_message = "Bient\195\180t enrag\195\169 !",
-
-	earthquake_trigger = "Vous subissez les effets de S\195\169isme.",
-
-	earthquake_message = "S\195\169isme ! Prochain dans ~70 sec. !",
-	earthquake_bar = "~Cooldown S\195\169isme",
-
-	overrun_trigger = "^Marche-funeste.-surr\195\169gime",
-	overrun_message = "Surr\195\169gime !",
-	overrun_soon_message = "Possible surr\195\169gime imminent !",
-	overrun_bar = "~Cooldown Surr\195\169gime",
+	enrage_desc = "Préviens quand Marche-funeste devient enragé à ~20%.",
+	engage_message = "Marche-funeste engagé, Séisme dans ~30 sec. !",
+	enrage_soon_message = "Bientôt enragé !",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

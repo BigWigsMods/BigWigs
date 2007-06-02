@@ -37,27 +37,24 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	enrage = "Enrager",
-	enrage_desc = "Pr\195\169viens quand Kazzak est suceptible de devenir enrag\195\169.",
+	enrage_desc = "Préviens quand Kazzak est suceptible de devenir enragé.",
+	enrage_trigger1 = "Pour la Légion ! Pour Kil'Jaeden !",
+	enrage_trigger2 = "%s devient fou furieux !",
+	enrage_warning1 = "%s engagé - Enragé dans 50-60 sec.",
+	enrage_warning2 = "Bientôt enragé !",
+	enrage_message = "Enragé pendant 10 sec. !",
+	enrage_finished = "Fin de l'Enrager - Prochain dans 50-60 sec.",
+	enrage_bar = "~Enrager",
+	enraged_bar = "<Enragé>",
 
 	mark = "Marque",
-	mark_desc = "Pr\195\169viens quand vous avez la Marque de Kazzak.",
-
-	twist = "Reflet tordu",
-	twist_desc = "Pr\195\169viens quand quelqu'un subit les effets de Reflet tordu.",
-
-	enrage_trigger1 = "Pour la L\195\169gion\194\160! Pour Kil'Jaeden\194\160!",
-	enrage_trigger2 = "%s devient fou furieux\194\160!",
-	enrage_warning1 = "%s engag\195\169 - Enrag\195\169 dans 50-60 sec.",
-	enrage_warning2 = "Bientôt enrag\195\169 !",
-	enrage_message = "Enrag\195\169 pendant 10 sec. !",
-	enrage_finished = "Enrag\195\169 fini",
-	enrage_bar = "~Enrager",
-	enraged_bar = "<Enrag\195\169>",
-
+	mark_desc = "Préviens quand vous avez la Marque de Kazzak.",
 	mark_trigger = "Vous subissez les effets de Marque de Kazzak.",
 	mark_message = "Marque de Kazzak sur VOUS",
 
-	twist_trigger = "^([^%s]+) ([^%s]+) les effets .* Reflet tordu",
+	twist = "Reflet tordu",
+	twist_desc = "Préviens quand quelqu'un subit les effets de Reflet tordu.",
+	twist_trigger = "^([^%s]+) ([^%s]+) les effets .* Reflet tordu.$",
 	twist_message = "Reflet tordu : %s",
 } end)
 

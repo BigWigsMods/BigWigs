@@ -67,51 +67,44 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	heal = "Soin",
-	heal_desc = "Pr\195\169viens quand Oeillaveugle le Voyant commence \195\160 lancer un soin.",
-
-	shield = "Bouclier",
-	shield_desc = "Pr\195\169viens quand Oeillaveugle le Voyant gagne Mot de pouvoir : Bouclier.",
-
-	spellshield = "Bouclier anti-sort",
-	spellshield_desc = "Pr\195\169viens quand Krosh Brasemain gagne Bouclier anti-sort.",
-
-	summon = "Chasseur corrompu sauvage",
-	summon_desc = "Pr\195\169viens quand Olm l'Invocateur commence \195\160 lancer Invocation d'un chasseur corrompu sauvage.",
-
-	whirlwind = "Tourbillon",
-	whirlwind_desc = "Pr\195\169viens quand Maulgar gagne Tourbillon.",
-
-	flurry = "Rafale",
-	flurry_desc = "Pr\195\169viens quand Maulgar est proche de Rafale et quand il gagne Rafale.",
-
-	smash = "Frappe en arc",
-	smash_desc = "Affiche une barre pour Frappe en arc.",
-
-	heal_trigger = "Oeillaveugle le Voyant commence \195\160 lancer Pri\195\168re de soins",
-	heal_message = "Oeillaveugle incante Pri\195\168re de soins !",
+	heal_desc = "Préviens quand Oeillaveugle le Voyant commence à lancer un soin.",
+	heal_trigger = "Oeillaveugle le Voyant commence à lancer Prière de soins",
+	heal_message = "Oeillaveugle incante une Prière de soins !",
 	heal_bar = "Soin",
 
-	shield_trigger = "gagne Mot de pouvoir sup\195\169rieur\194\160: Bouclier",
+	shield = "Bouclier",
+	shield_desc = "Préviens quand Oeillaveugle le Voyant gagne Mot de pouvoir : Bouclier.",
+	shield_trigger = "gagne Mot de pouvoir supérieur : Bouclier",
 	shield_message = "Bouclier sur Oeillaveugle !",
 
-	spellshield_trigger = "gagne Bouclier anti-sort",
+	spellshield = "Bouclier anti-sort",
+	spellshield_desc = "Préviens quand Krosh Brasemain gagne Bouclier anti-sort.",
+	spellshield_trigger = "gagne Bouclier anti-sort.",
 	spellshield_message = "Bouclier anti-sort sur Krosh !",
 
-	summon_trigger = "commence \195\160 lancer Invocation d'un chasseur corrompu sauvage.",
+	summon = "Chasseur corrompu sauvage",
+	summon_desc = "Préviens quand Olm l'Invocateur commence à lancer Invocation d'un chasseur corrompu sauvage.",
+	summon_trigger = "commence à lancer Invocation d'un chasseur corrompu sauvage.",
 	summon_message = "Chasseur corrompu en cours d'invocation !",
 	summon_bar = "~Cooldown Chasseur corrompu",
 
-	flurry_trigger = "Vous ne terrasserez pas la main de Gruul\194\160!",
-	flurry_message = "50% - Rafale !",
-	flurry_warning = "Rafale imminente !",
-
+	whirlwind = "Tourbillon",
+	whirlwind_desc = "Préviens quand Maulgar gagne Tourbillon.",
 	whirlwind_trigger = "gagne Tourbillon",
 	whirlwind_message = "Maulgar - Toubillon pendant 15 sec. !",
 	whirlwind_bar = "Tourbillon",
 	whirlwind_nextbar = "~Cooldown Tourbillon",
-	whirlwind_warning1 = "Maulgar engag\195\169 - Tourbillon dans ~50 sec. !",
+	whirlwind_warning1 = "Maulgar engagé - Tourbillon dans ~50 sec. !",
 	whirlwind_warning2 = "Tourbillon imminent !",
 
+	flurry = "Rafale",
+	flurry_desc = "Préviens quand Maulgar est proche de Rafale et quand il gagne Rafale.",
+	flurry_trigger = "Vous ne terrasserez pas la main de Gruul !",
+	flurry_message = "50% - Rafale !",
+	flurry_warning = "Rafale imminente !",
+
+	smash = "Frappe en arc",
+	smash_desc = "Affiche une barre pour Frappe en arc.",
 	smash_bar = "~Frappe en arc",
 } end)
 

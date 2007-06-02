@@ -74,8 +74,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	grasp = "Emprise",
 	grasp_desc = "Avertissements et délais pour Emprise du seigneur gronn.",
-	grasp_trigger1 = "Cavalez.", -- à vérifier
-	grasp_trigger2 = "On ne s'échappe pas.", -- à vérifier
+	grasp_trigger1 = "Cavalez.",
+	grasp_trigger2 = "On ne s'échappe pas.",
 	grasp_message = "Heurt terrestre - Emprise dans ~10 sec !",
 	grasp_warning = "Heurt terrestre imminent",
 	grasp_bar = "~Cooldown Heurt terrestre",
@@ -87,7 +87,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	silence = "Silence",
 	silence_desc = "Préviens quand Gruul lance son Silence de zone (Réverbération).",
-	silence_trigger = "les effets .* Réverbération.",
+	silence_trigger = "les effets .* Réverbération",
 	silence_message = "Silence de zone",
 	silence_warning = "Silence de zone imminent !",
 	silence_bar = "~Cooldown Silence",
