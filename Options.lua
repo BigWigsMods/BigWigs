@@ -38,7 +38,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Big Wigs is currently disabled."] = "Big Wigs est actuellement désactivé.",
 	["Active boss modules:"] = "Modules de boss actifs :",
 	["All running modules have been reset."] = "Tous les modules actifs ont été redémarrés.",
-	["All running modules have been disabled."] = "Tous les modules  actifs ont été désactivés.",
+	["All running modules have been disabled."] = "Tous les modules actifs ont été désactivés.",
 	["Menu"] = "Menu",
 	["Menu options."] = "Options du menu.",
 } end)

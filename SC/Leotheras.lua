@@ -94,7 +94,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	enrage = "Enrager",
 	enrage_desc = "Affiche le délai avant que Leotheras ne devienne enragé.",
-	enrage_trigger = "Enfin, mon exil s'achève !", -- à vérifier
+	enrage_trigger = "Enfin, mon exil s'achève !",
 
 	whirlwind = "Tourbillon",
 	whirlwind_desc = "Affiche les différentes durées concernant le Tourbillon.",
@@ -107,17 +107,17 @@ L:RegisterTranslations("frFR", function() return {
 
 	phase = "Phase démon",
 	phase_desc = "Affiche une estimation de la phase démon.",
-	phase_trigger = "Je prend le contrôle", -- à vérifier
+	phase_trigger = "Je prends le contrôle !$",
 	phase_demon = "Phase démon pendant 60 sec.",
 	phase_demonsoon = "Phase démon dans 5 sec. !",
 	phase_normalsoon = "Phase normal dans 5 sec.",
-	phase_normal = "Phase normale !",
+	phase_normal = "Phase normale ! - Tourbillon imminent !",
 	demon_bar = "Phase démon",
 	demon_nextbar = "Prochaine phase démon",
 
 	image = "Image",
 	image_desc = "Préviens quand l'image est créée à 15%.",
-	image_trigger = "C'est moi le maître ! Vous entendez ?", -- à vérifier
+	image_trigger = "C'est moi le maître ! Vous entendez ?",
 	image_message = "15% - Image créée !",
 	image_warning = "Image imminente !",
 
