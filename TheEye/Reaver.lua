@@ -101,7 +101,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "Alert! You are marked for extermination.", -- check
+	engage_trigger = "경고! 제거 대상 발견!",
 
 	enrage = "격노",
 	enrage_desc = "격노 타이머.",
@@ -123,8 +123,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	pounding = "울림",
 	pounding_desc = "울림 타이머 바 표시.",
-	pounding_trigger1 = "Alternative measure commencing...", -- check
-	pounding_trigger2 = "Calculating force parameters...", -- check
+	pounding_trigger1 = "대체 공격 실행 중...",
+	pounding_trigger2 = "파괴력 변수 계산 중...",
 	pounding_nextbar = "~울림 대기 시간",
 	pounding_bar = "<울림>",
 } end )
