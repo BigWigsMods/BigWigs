@@ -87,6 +87,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	gaze_trigger = "sets eyes on ([^%s]+)!$",
 	gaze_message = "Gaze on %s!",
+	gaze_bar = "Gaze cooldown",
 
 	fear_soon_message = "Fear soon!",
 	fear_message = "Fear!",
@@ -103,7 +104,7 @@ L:RegisterTranslations("enUS", function() return {
 	-- Weapons
 	["Devastation"] = true, -- Axe
 	["Cosmic Infuser"] = true, -- Staff
-	["Infinity Blade"] = true, -- Dagger
+	["Infinity Blades"] = true, -- Dagger
 	["Staff of Disintegration"] = true, -- Healer/druid staff
 	["Warp Slicer"] = true, -- Sword
 	["Netherstrand Longbow"] = true, -- Bow
@@ -119,7 +120,7 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = { boss, capernian, sanguinar, telonicus, thaladred }
 mod.wipemobs = {
-	L["Devastation"], L["Cosmic Infuser"], L["Infinity Blade"], L["Staff of Disintegration"],
+	L["Devastation"], L["Cosmic Infuser"], L["Infinity Blades"], L["Staff of Disintegration"],
 	L["Warp Slicer"], L["Netherstrand Longbow"], L["Phaseshift Bulwark"] }
 mod.toggleoptions = { "phase", -1, "temperament", "conflag", "gaze", "icon", "fear", "pyro", "rebirth", "bosskill" }
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
@@ -173,6 +174,7 @@ end
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	local player = select(3, msg:find(L["gaze_trigger"]))
 	if player then
+		self:Bar(L["gaze_bar"], 12, "Spell_Shadow_EvilEye")
 		if self.db.profile.gaze then
 			self:Message(L["gaze_message"]:format(player), "Important")
 		end
