@@ -174,7 +174,7 @@ end
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	local player = select(3, msg:find(L["gaze_trigger"]))
 	if player then
-		self:Bar(L["gaze_bar"], 12, "Spell_Shadow_EvilEye")
+		self:Bar(L["gaze_bar"], 9, "Spell_Shadow_EvilEye")
 		if self.db.profile.gaze then
 			self:Message(L["gaze_message"]:format(player), "Important")
 		end
