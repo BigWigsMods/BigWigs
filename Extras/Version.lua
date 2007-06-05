@@ -258,11 +258,6 @@ plugin.consoleOptions = {
 --      Initialization      --
 ------------------------------
 
-function plugin:OnEnable()
-	self:RegisterEvent("CHAT_MSG_ADDON")
-	self:RegisterEvent("BigWigs_ModulePackLoaded", populateRevisions)
-end
-
 local function addZone(zone, rev)
 -- Make sure to get the enUS zone name.
 	local z = BZ:HasReverseTranslation(zone) and BZ:GetReverseTranslation(zone) or zone
@@ -289,17 +284,92 @@ local function populateRevisions()
 	zoneRevisions["BigWigs"] = BigWigs.revision
 end
 
+function plugin:OnEnable()
+	self:RegisterEvent("CHAT_MSG_ADDON")
+	self:RegisterEvent("BigWigs_ModulePackLoaded", populateRevisions)
+end
+
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-function plugin:UpdateVersions()
+local function sortResponses(a, b)
+	-- a should be before b if the version is higher, or if the version is the
+	-- same and the name is alphabetically before b.
+	if a[2] > b[2] or (a[2] == b[2] and a[1] > b[1]) then
+		return false
+	else
+		return true
+	end
+end
+
+local function getFormattedVersionText(info)
+	local name = info[1]
+	local version = info[2]
+	if version == -1 then
+		return name, "|cff"..COLOR_RED..L["N/A"].."|r"
+	elseif version == -2 then
+		return name, "|cff"..COLOR_RED..L["Not loaded"].."|r"
+	else
+		if not zoneRevisions then populateRevisions() end
+		local color = COLOR_WHITE
+		if zoneRevisions[currentZone] and version > zoneRevisions[currentZone] then
+			color = COLOR_GREEN
+		elseif zoneRevisions[currentZone] and version < zoneRevisions[currentZone] then
+			hasOld = true
+			color = COLOR_RED
+		end
+		return name, "|cff" .. color .. version .. "|r"
+	end
+end
+
+local function updateTabletDisplay()
+	if not responseTable then return end
+
+	local infoCat = tablet:AddCategory(
+		"columns", 2,
+		"child_textR", 1,
+		"child_textG", 1,
+		"child_textB", 0,
+		"child_text2R", 1,
+		"child_text2G", 1,
+		"child_text2B", 1
+	)
+	infoCat:AddLine("text", L["Zone"], "text2", currentZone)
+	infoCat:AddLine("text", L["Replies"], "text2", #responseTable)
+	local cat = tablet:AddCategory(
+		"columns", 2,
+		"text", L["Player"],
+		"text2", L["Version"]
+	)
+
+	table.sort(responseTable, sortResponses)
+
+	for i, info in ipairs(responseTable) do
+		local t1, t2 = getFormattedVersionText(info)
+		cat:AddLine("text", t1, "text2", t2)
+	end
+
+	if responseTable and (IsRaidLeader() or IsRaidOfficer()) then
+		local alertCat = tablet:AddCategory("columns", 1)
+		alertCat:AddLine(
+			"text", L["Notify people with older versions that there is a new version available."],
+			"wrap", true,
+			"func", plugin.AlertOldRevisions,
+			"arg1", plugin
+		)
+	end
+
+	tablet:SetHint(L["Green versions are newer than yours, red are older, and white are the same."])
+end
+
+function plugin:UpdateDisplay()
 	if tablet then
 		if not tablet:IsRegistered("BigWigs_VersionQuery") then
 			tablet:Register("BigWigs_VersionQuery",
 				"children", function()
 					tablet:SetTitle(L["Big Wigs Version Query"])
-					self:OnTooltipUpdate()
+					updateTabletDisplay()
 				end,
 				"clickable", true,
 				"showTitleWhenDetached", true,
@@ -335,76 +405,6 @@ function plugin:UpdateVersions()
 	end
 end
 
-local function sortResponses(a, b)
-	-- a should be before b if the version is higher, or if the version is the
-	-- same and the name is alphabetically before b.
-	if a[2] > b[2] or (a[2] == b[2] and a[1] > b[1]) then
-		return false
-	else
-		return true
-	end
-end
-
-local function getFormattedVersionText(info)
-	local name = info[1]
-	local version = info[2]
-	if version == -1 then
-		return name, "|cff"..COLOR_RED..L["N/A"].."|r"
-	elseif version == -2 then
-		return name, "|cff"..COLOR_RED..L["Not loaded"].."|r"
-	else
-		if not zoneRevisions then populateRevisions() end
-		local color = COLOR_WHITE
-		if zoneRevisions[currentZone] and version > zoneRevisions[currentZone] then
-			color = COLOR_GREEN
-		elseif zoneRevisions[currentZone] and version < zoneRevisions[currentZone] then
-			hasOld = true
-			color = COLOR_RED
-		end
-		return name, "|cff" .. color .. version .. "|r"
-	end
-end
-
-function plugin:OnTooltipUpdate()
-	if not responseTable then return end
-
-	local infoCat = tablet:AddCategory(
-		"columns", 2,
-		"child_textR", 1,
-		"child_textG", 1,
-		"child_textB", 0,
-		"child_text2R", 1,
-		"child_text2G", 1,
-		"child_text2B", 1
-	)
-	infoCat:AddLine("text", L["Zone"], "text2", currentZone)
-	infoCat:AddLine("text", L["Replies"], "text2", #responseTable)
-	local cat = tablet:AddCategory(
-		"columns", 2,
-		"text", L["Player"],
-		"text2", L["Version"]
-	)
-
-	table.sort(responseTable, sortResponses)
-
-	for i, info in ipairs(responseTable) do
-		local t1, t2 = getFormattedVersionText(info)
-		cat:AddLine("text", t1, "text2", t2)
-	end
-
-	if responseTable and (IsRaidLeader() or IsRaidOfficer()) then
-		local alertCat = tablet:AddCategory("columns", 1)
-		alertCat:AddLine(
-			"text", L["Notify people with older versions that there is a new version available."],
-			"wrap", true,
-			"func", self.AlertOldRevisions,
-			"arg1", self
-		)
-	end
-
-	tablet:SetHint(L["Green versions are newer than yours, red are older, and white are the same."])
-end
-
 function plugin:AlertOldRevisions()
 	if not responseTable or (not IsRaidLeader() and not IsRaidOfficer()) then return end
 	local myVersion = zoneRevisions[currentZone]
@@ -422,7 +422,7 @@ local function resetQueryRunning()
 	queryRunning = nil
 
 	-- If the user doesn't have Tablet-2.0, just print everything to chat.
-	if not tablet and responseTable then
+	if responseTable then
 		table.sort(responseTable, sortResponses)
 		for i, info in ipairs(responseTable) do
 			local t1, t2 = getFormattedVersionText(info)
@@ -478,7 +478,7 @@ function plugin:QueryVersion(zone)
 	if not zoneRevisions then populateRevisions() end
 	table.insert(responseTable, new(UnitName("player"), self:GetVersion(zone)))
 
-	self:UpdateVersions()
+	self:UpdateDisplay()
 
 	SendAddonMessage("BWVQ", zone, "RAID")
 end
@@ -502,7 +502,7 @@ function plugin:CHAT_MSG_ADDON(prefix, message, distribution, sender)
 		SendAddonMessage("BWVR", self:GetVersion(message), "WHISPER", sender)
 	elseif prefix == "BWVR" and queryRunning then
 		table.insert(responseTable, new(sender, tonumber(message)))
-		self:UpdateVersions()
+		self:UpdateDisplay()
 	end
 end
 
