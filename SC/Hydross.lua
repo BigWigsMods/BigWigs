@@ -118,16 +118,16 @@ L:RegisterTranslations("koKR", function() return {
 	poison_stance = "히드로스 오염!",
 	water_stance = "히드로스 정화!",
 
-	sludge = "Vile Sludge",
-	sludge_desc = "Vile Sludge에 걸린 플레이어 알림.",
-	sludge_message = "Vile Sludge: %s",
+	sludge = "타락의 진흙", -- check
+	sludge_desc = "타락의 진흙에 걸린 플레이어 알림.", -- check
+	sludge_message = "타락의 진흙: %s", -- check
 
 	tomb = "수중 무덤",
 	tomb_desc = "수중 무덤에 걸린 플레이어 알림.",
 	tomb_message = "수중 무덤: %s",
 
-	icon = "Vile Sludge 아이콘",
-	icon_desc = "Vile Sludge에 걸린 플레이어에 공격대 아이콘 지정(승급자 이상 권한 요구).",
+	icon = "타락의 진흙 아이콘", -- check
+	icon_desc = "타락의 진흙에 걸린 플레이어에 공격대 아이콘 지정(승급자 이상 권한 요구).", -- check
 
 	debuff_warn = "징표 - %s%%!",
 
