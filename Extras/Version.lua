@@ -345,6 +345,26 @@ local function sortResponses(a, b)
 	end
 end
 
+local function getFormattedVersionText(info)
+	local name = info[1]
+	local version = info[2]
+	if version == -1 then
+		return name, "|cff"..COLOR_RED..L["N/A"].."|r"
+	elseif version == -2 then
+		return name, "|cff"..COLOR_RED..L["Not loaded"].."|r"
+	else
+		if not zoneRevisions then populateRevisions() end
+		local color = COLOR_WHITE
+		if zoneRevisions[currentZone] and version > zoneRevisions[currentZone] then
+			color = COLOR_GREEN
+		elseif zoneRevisions[currentZone] and version < zoneRevisions[currentZone] then
+			hasOld = true
+			color = COLOR_RED
+		end
+		return name, "|cff" .. color .. version .. "|r"
+	end
+end
+
 function plugin:OnTooltipUpdate()
 	if not responseTable then return end
 
@@ -364,31 +384,15 @@ function plugin:OnTooltipUpdate()
 		"text", L["Player"],
 		"text2", L["Version"]
 	)
-	local hasOld = nil
 
 	table.sort(responseTable, sortResponses)
 
 	for i, info in ipairs(responseTable) do
-		local name = info[1]
-		local version = info[2]
-		if version == -1 then
-			cat:AddLine("text", name, "text2", "|cff"..COLOR_RED..L["N/A"].."|r")
-		elseif version == -2 then
-			cat:AddLine("text", name, "text2", "|cff"..COLOR_RED..L["Not loaded"].."|r")
-		else
-			if not zoneRevisions then populateRevisions() end
-			local color = COLOR_WHITE
-			if zoneRevisions[currentZone] and version > zoneRevisions[currentZone] then
-				color = COLOR_GREEN
-			elseif zoneRevisions[currentZone] and version < zoneRevisions[currentZone] then
-				hasOld = true
-				color = COLOR_RED
-			end
-			cat:AddLine("text", name, "text2", "|cff"..color..version.."|r")
-		end
+		local t1, t2 = getFormattedVersionText(info)
+		cat:AddLine("text", t1, "text2", t2)
 	end
 
-	if responseTable and hasOld and (IsRaidLeader() or IsRaidOfficer()) then
+	if responseTable and (IsRaidLeader() or IsRaidOfficer()) then
 		local alertCat = tablet:AddCategory("columns", 1)
 		alertCat:AddLine(
 			"text", L["Notify people with older versions that there is a new version available."],
@@ -416,6 +420,15 @@ end
 
 local function resetQueryRunning()
 	queryRunning = nil
+
+	-- If the user doesn't have Tablet-2.0, just print everything to chat.
+	if not tablet and responseTable then
+		table.sort(responseTable, sortResponses)
+		for i, info in ipairs(responseTable) do
+			local t1, t2 = getFormattedVersionText(info)
+			DEFAULT_CHAT_FRAME:AddMessage(t1 .. ": " .. t2 .. ".")
+		end
+	end
 	BigWigs:Print(L["Version query done."])
 end
 
