@@ -124,7 +124,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	split = "분리",
 	split_desc = "분리와 소환에 대한 경고.",
-	split_trigger1 = " 오만한 콧대를 꺾어주마!", -- check
+	split_trigger1 = "오만한 콧대를 꺾어주마!", -- check
 	split_trigger2 = "한 줌의 희망마저 짓밟아주마!", -- check
 	split_bar = "~다음 분리",
 	split_warning = "약 7초 이내 분리",
