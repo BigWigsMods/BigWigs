@@ -259,9 +259,8 @@ plugin.consoleOptions = {
 ------------------------------
 
 function plugin:OnEnable()
-	self:RegisterEvent("BigWigs_RecvSync")
-
-	self:RegisterEvent("BigWigs_ModulePackLoaded", "PopulateRevisions")
+	self:RegisterEvent("CHAT_MSG_ADDON")
+	self:RegisterEvent("BigWigs_ModulePackLoaded", populateRevisions)
 end
 
 local function addZone(zone, rev)
@@ -272,7 +271,7 @@ local function addZone(zone, rev)
 	end
 end
 
-function plugin:PopulateRevisions()
+local function populateRevisions()
 	if not zoneRevisions then zoneRevisions = {} end
 
 	if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
@@ -377,7 +376,7 @@ function plugin:OnTooltipUpdate()
 		elseif version == -2 then
 			cat:AddLine("text", name, "text2", "|cff"..COLOR_RED..L["Not loaded"].."|r")
 		else
-			if not zoneRevisions then self:PopulateRevisions() end
+			if not zoneRevisions then populateRevisions() end
 			local color = COLOR_WHITE
 			if zoneRevisions[currentZone] and version > zoneRevisions[currentZone] then
 				color = COLOR_GREEN
@@ -463,18 +462,16 @@ function plugin:QueryVersion(zone)
 	end
 	responseTable = new()
 
-	if not zoneRevisions then self:PopulateRevisions() end
+	if not zoneRevisions then populateRevisions() end
 	table.insert(responseTable, new(UnitName("player"), self:GetVersion(zone)))
 
 	self:UpdateVersions()
 
-	self:TriggerEvent("BigWigs_ThrottleSync", "BWVQ", 0)
-	self:TriggerEvent("BigWigs_ThrottleSync", "BWVR", 0)
-	self:TriggerEvent("BigWigs_SendSync", "BWVQ "..zone)
+	SendAddonMessage("BWVQ", zone, "RAID")
 end
 
 function plugin:GetVersion(zone)
-	if not zoneRevisions then self:PopulateRevisions() end
+	if not zoneRevisions then populateRevisions() end
 	local rev = -1
 	if zoneRevisions[zone] then
 		rev = zoneRevisions[zone]
@@ -487,32 +484,20 @@ function plugin:GetVersion(zone)
 	return rev
 end
 
---[[ Parses the new style reply, which is "1111 <nick>" ]]
-function plugin:ParseReply(reply)
-	local first, last = reply:find(" ")
-	if not first or not last then return reply, nil end
-
-	local rev = reply:sub(1, first)
-	local nick = reply:sub(last + 1, reply:len())
-
-	return tonumber(rev), nick
+function plugin:CHAT_MSG_ADDON(prefix, message, distribution, sender)
+	if prefix == "BWVQ" and sender ~= UnitName("player") then
+		SendAddonMessage("BWVR", self:GetVersion(message), "WHISPER", sender)
+	elseif prefix == "BWVR" and queryRunning then
+		table.insert(responseTable, new(sender, tonumber(message)))
+		self:UpdateVersions()
+	end
 end
 
 --[[
 -- Version reply syntax history:
---  Old Style:           MC:REV BWL:REV ZG:REV
---  First Working Style: REV
---  New Style:           REV QuereeNick
+--  Old Style:            MC:REV BWL:REV ZG:REV
+--  First Working Style:  REV
+--  New Style:            REV QuereeNick
+--  CHAT_MSG_ADDON style: REV
 --]]
-function plugin:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BWVQ" and nick ~= UnitName("player") and rest then
-		self:TriggerEvent("BigWigs_SendSync", "BWVR " .. self:GetVersion(rest) .. " " .. nick)
-	elseif sync == "BWVR" and queryRunning and nick and rest then
-		local revision, queryNick = self:ParseReply(rest)
-		if tonumber(revision) ~= nil and queryNick and queryNick == UnitName("player") then
-			table.insert(responseTable, new(nick, tonumber(revision)))
-			self:UpdateVersions()
-		end
-	end
-end
 
