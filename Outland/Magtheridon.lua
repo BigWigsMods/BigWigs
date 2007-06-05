@@ -231,6 +231,63 @@ L:RegisterTranslations("koKR", function() return {
 	["Hellfire Channeler"] = "지옥불 역술사",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	escape = "釋放",
+	escape_desc = ("倒數計時，直到 %s 獲得自由"):format(boss),
+	escape_trigger1 = "%s的束縛開始變弱!",
+	escape_trigger2 = "我……被……釋放了!",
+	escape_warning1 = "與 %s 進入戰鬥 - 2 分鐘後 %s 獲得自由！",
+	escape_warning2 = "1 分鐘後獲得自由！",
+	escape_warning3 = "30 秒後獲得自由！",
+	escape_warning4 = "10 秒後獲得自由！",
+	escape_warning5 = "3 秒後獲得自由！",
+	escape_bar = "被釋放...",
+	escape_message = "%s 被釋放了！",
+
+	abyssal = "燃燒的深淵",
+	abyssal_desc = "當地獄火導魔師創造燃燒的深淵時發出警報",
+	abyssal_trigger = "地獄火導魔師施放了燃燒的深淵。",
+	abyssal_message = "燃燒的深淵已創造 (%d)",
+
+	heal = "治療",
+	heal_desc = "當地獄火導魔師開始施放黑暗治療時發出警報",
+	heal_trigger = "開始施放黑暗治療。",
+	heal_message = "黑暗治療！",
+
+	nova = "衝擊新星",
+	nova_desc = "衝擊新星計時",
+	nova_ = "衝擊新星！",
+	nova_bar = "衝擊新星冷卻",
+	nova_warning = "即將施放衝擊新星！",
+	nova_cast = "開始施放衝擊新星!",
+
+	banish = "放逐",
+	banish_desc = ("當你放逐 %s 時發出警報"):format(boss),
+	banish_trigger = "Not again! Not again...",
+	banish_message = "放逐 10 秒！",
+	banish_over_trigger = "Shadow Cage fades",
+	banish_over_message = "放逐結束！",
+	banish_bar = "放逐",
+
+	exhaust = "Disable Exhaustion Bars",
+	exhaust_desc = "Timer bars for Mind Exhaustion on players.",
+	exhaust_trigger = "^([^%s]+) ([^%s]+) afflicted by Mind Exhaustion.$",
+	exhaust_bar = "[%s] Exhausted",
+
+	debris = "Debris on You",
+	debris_desc = "Warn for Debris on You.",
+	debris_trigger = "You are afflicted by Debris.",
+	debris_message = "Debris on YOU!",
+
+	debrisinc = "Debris",
+	debrisinc_desc = "Warn for incoming debris at 30%.",
+	debrisinc_trigger = "Let the walls of this prison tremble",
+	debrisinc_message = "30% - Incoming Debris!",
+	debrisinc_warning = "Debris Soon!",
+
+	["Hellfire Channeler"] = "地獄火導魔師",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
