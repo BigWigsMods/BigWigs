@@ -111,6 +111,98 @@ L:RegisterTranslations("enUS", function() return {
 	["Phaseshift Bulwark"] = true, -- Shield
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	cmd = "캘타스",
+
+	phase = "단계 경고",
+	phase_desc = "단계 변경에 대한 알림.",
+
+	conflag = "거대한 불길",
+	conflag_desc = "플레이어에게 거대한 불길 경고.",
+
+	temperament = "혼돈의 기질",
+	temperament_desc = "플레이어에게 혼돈의 기질 경고.",
+
+	gaze = "주시",
+	gaze_desc = "플레이어에게 탈라드레드의 주시 경고.",
+
+	icon = "공격대 아이콘",
+	icon_desc = "탈라드레드의 주시 대상이된 플레이어에 공격대 아이콘 지정(승급자 이상 권한 필요).",
+
+	fear = "공포",
+	fear_desc = "우레와 같은 울부짖음 경고.",
+
+	rebirth = "불사조 환생",
+	rebirth_desc = "불사조 환생 경고",
+	rebirth_trigger = "블사조|1이;가; 환생 시전을 시작합니다.",
+	rebirth_warning = "약 5초 이내 불사조 환생!",
+
+	pyro = "불덩이 작렬",
+	pyro_desc = "불덩이 작렬에 대한 60초 타이머 표시.",
+	pyro_trigger = "%s|1이;가; 불덩이 작렬 시전을 시작합니다.",
+	pyro_warning = "약 5초 이내 불덩이 작렬!",
+	pyro_message = "불덩이 작열 시전!",
+
+	thaladred_inc_trigger = "암흑의 인도자 탈라드레드를 상대로 얼마나 버틸지 볼까?",
+	sanguinar_inc_trigger = "최고의 조언가를 상대로 잘도 버텨냈군. 허나 그 누구도 붉은 망치의 힘에는 대항할 수 없지. 보아라, 군주 생귀나르를!",
+	capernian_inc_trigger = "카퍼니안, 놈들이 여기 온 것을 후회하게 해 줘라.",
+	telonicus_inc_trigger = "좋아, 그 정도 실력이면 수석기술자 텔로니쿠스를 상대해 볼만하겠어.",
+	weapons_inc_trigger = "보다시피 내 무기고엔 굉장한 무기가 아주 많지.",
+	phase2_trigger = "네놈들을 과소평가했나 보군. 모두를 한꺼번에 상대하라는 건 불공평한 처사지. 나의 백성도 공평한 대접을 받은 적 없기는 매한가지. 받은 대로 돌려주겠다.",
+	phase3_trigger = "Alas, sometimes one must take matters into one's own hands. Balamore shanal!", -- check
+
+	flying_trigger = "I have not come this far to be stopped! The future I have planned will not be jeapordized! Now, you will taste true power!!", -- check
+	gravity_trigger1 = "Let us see how you fare when your world is turned upside down.", -- check
+	gravity_trigger2 = "Having trouble staying grounded?", -- check
+
+	gravity_bar = "다음 중력 붕괴",
+	gravity_message = "중력 붕괴!",
+	flying_message = "비행! 1분후 중력 붕괴",
+
+	weapons_inc_message = "무기 임박!",
+	phase2_message = "경고 2 - 조언가와 무기!",
+	phase3_message = "경고 3 - 캘타스!",
+	phase3_bar = "잠시후 캘타스",
+
+	mc_trigger1 = "나를 따르라.", -- check
+	mc_trigger2 = "Bow to my will.", -- check
+	mc_bar = "정신 지배 대기시간",
+	mc_message = "정신 지배! 다음은 약 33초 후!",
+
+	afflicted_trigger = "^([^|;%s]*)(.*)(.+)에 걸렸습니다%.$", -- check
+
+	temperament_spell = "혼돈의 기질",
+	temperament_message = "%s에게 혼돈의 기질 - 치유 시전시 침묵!",
+
+	conflag_spell = "거대한 불길",
+	conflag_message = "%s에게 거대한 불길!",
+
+	gaze_trigger = "암흑의 인도자 탈라드레드|1이;가; ([^%s]+)을 노려봅니다!$",
+	gaze_message = "%s 주시!",
+	gaze_bar = "주시 대기 시간",
+
+	fear_soon_message = "잠시 후 공포!",
+	fear_message = "공포!",
+	fear_bar = "공포 대기 시간",
+
+	fear_soon_trigger = "군주 생귀나르|1이;가; 우레와 같은 울부짖음 시전을 시작합니다.",
+	fear_trigger1 = "^군주 생귀나르|1이;가; 우레와 같은 울부짖음|1으로;로; %S|1을;를; 공격했지만 저항했습니다.$",
+	fear_trigger2 = "^군주 생귀나르|1이;가; 우레와 같은 울부짖음 사용에 실패했습니다. %S|1은;는; 면역입니다.$",
+	fear_spell = "우레와 같은 울부짖음",
+
+	revive_bar = "조언가 부활",
+	revive_warning = "5초후 조건가 부활!",
+
+	-- Weapons
+	["Devastation"] = "황폐의 도끼", -- Axe
+	["Cosmic Infuser"] = "붕괴의 지팡이", -- Staff
+	["Infinity Blades"] = "무한의 비수", -- Dagger
+	["Staff of Disintegration"] = "우주 에너지 주입기", -- Healer/druid staff
+	["Warp Slicer"] = "차원의 절단기", -- Sword
+	["Netherstrand Longbow"] = "황천매듭 장궁", -- Bow
+	["Phaseshift Bulwark"] = "위상 변화의 보루방패", -- Shield
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
