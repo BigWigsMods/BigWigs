@@ -201,6 +201,96 @@ L:RegisterTranslations("koKR", function() return {
 	["Phaseshift Bulwark"] = "위상 변화의 보루방패", -- Shield
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	phase = "Phases",
+	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
+
+	conflag = "Conflagration",
+	conflag_desc = "Préviens quand un joueur est touché par la Conflagration.",
+
+	temperament = "Tempérament chaotique",
+	temperament_desc = "Préviens quand un joueur est touché par le Tempérament chaotique.",
+
+	gaze = "Focalisation",
+	gaze_desc = "Préviens quand Thaladred se focalise sur un joueur.",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur la personne surveillée Thaladred (nécessite d'être promu ou mieux).",
+
+	fear = "Rugissement",
+	fear_desc = "Préviens quand le Seigneur Sanguinar utilise son Rugissement puissant.",
+
+	rebirth = "Renaissance du phoenix",
+	rebirth_desc = "Préviens quand le phoenix renaît.",
+	rebirth_trigger = "Phoenix commence à lancer Renaissance.", -- à vérifier
+	rebirth_warning = "Renaissance du phoenix dans 5 sec. !",
+
+	pyro = "Explosion pyrotechnique",
+	pyro_desc = "Affiche un compte à rebours de 60 secondes pour l'Explosion pyrotechnique.",
+	pyro_trigger = "%s commence à lancer une Explosion pyrotechnique !", -- à vérifier
+	pyro_warning = "Explosion pyrotechnique dans 5 sec. !",
+	pyro_message = "Explosion pyrotechnique en incantation !",
+
+	thaladred_inc_trigger = "Impressionnant. Voyons comment tiendront vos nerfs face à l'Assombrisseur, Thaladred !", -- à vérifier
+	sanguinar_inc_trigger = "Vous avez tenu tête à certains de mes plus talentueux conseillers… mais personne ne peut résister à la puissance du Marteau de sang. Je vous présente, le seigneur Sanguinar !", -- à vérifier
+	capernian_inc_trigger = "Capernian fera en sorte que votre séjour ici ne se prolonge pas.", -- à vérifier
+	telonicus_inc_trigger = "Bien, vous êtes digne de mesurer votre talent à celui de mon maître ingénieur, Telonicus.", -- à vérifier
+	weapons_inc_trigger = "Comme vous le voyez, j'ai plus d'une corde à mon arc…", -- à vérifier
+	phase2_trigger = "Peut-être vous ai-je sous-estimés. Il ne serait pas très loyal de vous faire combattre mes quatres conseillers en même temps, mais… mon peuple n'a jamais été traîté avec loyauté. Je ne fais que rendre la politesse.", -- à vérifier
+	phase3_trigger = "Il est hélas parfois nécessaire de prendre les choses en main soi-même. Balamore shanal !", -- à vérifier
+
+	flying_trigger = "Je ne suis pas arrivé si loin pour échouer maintenant ! Je ne laisserai pas l'avenir que je prépare être remis en cause ! Vous allez goûter à ma vraie puissance !", -- à vérifier
+	gravity_trigger1 = "Voyons comment vous vous débrouillerez une fois la tête en bas.", -- à vérifier
+	gravity_trigger2 = "On a du mal à garder les pieds sur terre ?", -- à vérifier
+
+	gravity_bar = "Prochaine Rupture de gravité",
+	gravity_message = "Rupture de gravité !",
+	flying_message = "En vol ! Rupture de gravité dans 1 min.",
+
+	weapons_inc_message = "Arrivée des armes !",
+	phase2_message = "Phase 2 - Conseillers et Armes !",
+	phase3_message = "Phase 3 - Kael arrive !",
+	phase3_bar = "Arrivée de Kael'thas",
+
+	mc_trigger1 = "Obéis-moi.", -- à vérifier
+	mc_trigger2 = "Soumets-toi à ma volonté.", -- à vérifier
+	mc_bar = "Cooldown Contrôle mental",
+	mc_message = "Contrôle mental ! Prochin dans ~33+ sec.",
+
+	afflicted_trigger = "^(%S+) (%S+) les effets de (.*).$",
+
+	temperament_spell = "Tempérament chaotique",
+	temperament_message = "Tempérament sur %s !",
+
+	conflag_spell = "Conflagration",
+	conflag_message = "Conflagration sur %s !",
+
+	gaze_trigger = "pose ses yeux sur (%S+) !$", -- à vérifier
+	gaze_message = "Focalisation sur %s !",
+	gaze_bar = "Cooldown Focalisation",
+
+	fear_soon_message = "Rugissement imminent !",
+	fear_message = "Rugissement !",
+	fear_bar = "Cooldown Rugissement",
+
+	fear_soon_trigger = "Seigneur Sanguinar commence à lancer Rugissement puissant.",
+	fear_trigger1 = "^Seigneur Sanguinar utilise Rugissement puissant, mais %S+ résiste.$",
+	fear_trigger2 = "^Seigneur Sanguinar utilise Rugissement puissant, mais %S+ est insensible.$",
+	fear_spell = "Rugissement puissant",
+
+	revive_bar = "Retour des conseillers",
+	revive_warning = "Retour des conseillers dans 5 sec. !",
+
+	-- Weapons
+	["Devastation"] = "Dévastation", -- Axe
+	["Cosmic Infuser"] = "Bâton d'infusion cosmique", -- Staff
+	["Infinity Blades"] = "Lame d'infinité", -- Dagger
+	["Staff of Disintegration"] = "Bâton de désintégration", -- Healer/druid staff
+	["Warp Slicer"] = "Tranchoir dimensionnel", -- Sword
+	["Netherstrand Longbow"] = "Arc long brins-de-Néant", -- Bow
+	["Phaseshift Bulwark"] = "Rempart de déphasage", -- Shield
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
