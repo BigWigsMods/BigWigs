@@ -422,7 +422,7 @@ local function resetQueryRunning()
 	queryRunning = nil
 
 	-- If the user doesn't have Tablet-2.0, just print everything to chat.
-	if responseTable then
+	if not tablet and responseTable then
 		table.sort(responseTable, sortResponses)
 		for i, info in ipairs(responseTable) do
 			local t1, t2 = getFormattedVersionText(info)
