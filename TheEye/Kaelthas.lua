@@ -112,8 +112,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	cmd = "캘타스",
-
 	phase = "단계 경고",
 	phase_desc = "단계 변경에 대한 알림.",
 
