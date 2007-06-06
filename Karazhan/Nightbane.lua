@@ -4,7 +4,6 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Nightbane"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local blast
 
 ----------------------------
 --      Localization      --
@@ -40,11 +39,6 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger = "What fools! I shall bring a quick end to your suffering!",
 	engage_message = "%s Engaged",
 
-	blast = "Smoking Blast",
-	blast_desc = "Warn for Smoking Blast being cast.",
-	blast_trigger = "cast Smoking Blast",
-	blast_message = "Incoming Smoking Blast!",
-
 	bones = "Rain of Bones",
 	bones_desc = "Warn when Rain of Bones is being channeled.",
 	bones_message = "AoE Rain of Bones!",
@@ -63,9 +57,6 @@ L:RegisterTranslations("deDE", function() return {
 	engage = "Engage",
 	engage_desc = "Engage alert",
 
-	blast = "Rauchende Explosion",
-	blast_desc = "Warnt vor Rauchende Explosion",
-
 	bones = "Knochenregen",
 	--bones_desc = "Warnt wer den Knochenregen hat", --enUS changed
 
@@ -76,9 +67,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	charr_trigger = "Ihr seid von Verbrannte Erde betroffen.",
 	charr_message = "Verbrannte Erde auf DIR!",
-
-	blast_trigger = "Schrecken der Nacht beginnt Rauchende Explosion zu wirken.",
-	blast_message = "Rauchende Explosion kommt!",
 
 	airphase_trigger = "Abscheuliches Gew\195\188rm! Ich werde euch aus der Luft vernichten!",
 	landphase_trigger1 = "Genug! Ich werde landen und mich h\195\182chst pers\195\182nlich um Euch k\195\188mmern!",
@@ -118,11 +106,6 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Fous ! Je vais mettre un terme rapide à vos souffrances !",
 	engage_message = "%s engagé",
 
-	blast = "Explosion de fumée",
-	blast_desc = "Préviens quand Explosion de fumée est incanté.",
-	blast_trigger = "lancer Explosion de fumée.",
-	blast_message = "Explosion de fumée imminente !",
-
 	bones = "Pluie d'os",
 	bones_desc = "Préviens quand la Pluie d'os est canalisée.",
 	bones_message = "Pluie d'os de zone !",
@@ -155,11 +138,6 @@ L:RegisterTranslations("koKR", function() return {
 	engage_desc = "전투 개시 알림.",
 	engage_trigger = "정말 멍청하군! 고통 없이 빨리 끝내주마!",
 	engage_message = "%s 전투 개시",
-
-	blast = "불타는 돌풍",
-	blast_desc = "불타는 돌풍 시전에 대한 경고.",
-	blast_trigger = "불타는 돌풍 시전을 시작합니다.",
-	blast_message = "잠시 후 불타는 돌풍!",
 
 	bones = "뼈의 비",
 	bones_desc = "뼈의 비 시전 시작 시 알림.",
@@ -194,11 +172,6 @@ L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "真是蠢蛋!我會快點結束你的痛苦!",
 	engage_message = "%s 進入戰鬥",
 
-	blast = "爆裂濃煙警告",
-	blast_desc = "當夜禍施放爆裂濃煙時發送警告",
-	blast_trigger = "夜禍開始施放爆裂濃煙。",
-	blast_message = "爆裂濃煙",
-
 	bones = "碎骨之雨警告",
 	bones_desc = "當有玩家中了碎骨之雨時發送警告",
 	bones_message = "碎骨之雨",
@@ -211,7 +184,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"engage", "phase", "fear", "blast", "charr", "bones", "bosskill"}
+mod.toggleoptions = {"engage", "phase", "fear", "charr", "bones", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -228,7 +201,6 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "NBFear", 10)
-	self:TriggerEvent("BigWigs_ThrottleSync", "NBBlast", 15)
 	self:TriggerEvent("BigWigs_ThrottleSync", "NBBones", 15)
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -245,9 +217,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(L["fear_message"], "Positive")
 		self:Bar(L["fear_nextbar"], 37, "Spell_Shadow_PsychicScream")
 		self:ScheduleEvent("fear", "BigWigs_Message", 35, L["fear_warning"], "Positive")
-	elseif sync == "NBBlast" and not blast and self.db.profile.blast then
-		self:Message(L["blast_message"], "Urgent", nil, "Alert")
-		blast = true
 	elseif sync == "NBBones" and self.db.profile.bones then
 		self:Message(L["bones_message"], "Urgent")
 		self:Bar(L["bones"], 11, "INV_Misc_Bone_10")
@@ -257,8 +226,6 @@ end
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["fear_trigger"]) then
 		self:Sync("NBFear")
-	elseif not blast and msg:find(L["blast_trigger"]) then
-		self:Sync("NBBlast")
 	end
 end
 
@@ -270,7 +237,6 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
-		blast = nil
 		if self.db.profile.engage then
 			self:Message(L["engage_message"]:format(boss), "Positive")
 		end
@@ -286,7 +252,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif self.db.profile.phase and (msg == L["landphase_trigger1"] or msg == L["landphase_trigger2"]) then
 		self:Message(L["landphase_message"], "Important", nil, "Long")
 		self:Bar(L["landphase_message"], 17, "INV_Misc_Head_Dragon_01")
-		blast = nil
 	end
 end
 
