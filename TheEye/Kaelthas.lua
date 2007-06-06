@@ -175,7 +175,7 @@ L:RegisterTranslations("koKR", function() return {
 	conflag_spell = "거대한 불길",
 	conflag_message = "%s에게 거대한 불길!",
 
-	gaze_trigger = "암흑의 인도자 탈라드레드|1이;가; ([^%s]+)을 노려봅니다!$",
+	gaze_trigger = "암흑의 인도자 탈라드레드|1이;가; ([^%s]+)|1을;를; 노려봅니다!$",
 	gaze_message = "%s 주시!",
 	gaze_bar = "주시 대기 시간",
 

@@ -107,7 +107,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	wrath = "격노 시전",
 	wrath_desc = "격노 시전 시 경고와 현재 대상 알림.",
-	wrath_trigger = "^([^|;%s]*)(.*)점성술사의 격노에 걸렸습니다%.$", -- check
+	wrath_trigger = "^([^|;%s]*)(.*)점성술사의 격노에 걸렸습니다%.$",
 	wrath_alert = "격노 시전! - 대상: %s",
 	wrath_alert_trigger = "점성술사의 격노 시전을 시작합니다.$",
 
@@ -124,8 +124,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	split = "분리",
 	split_desc = "분리와 소환에 대한 경고.",
-	split_trigger1 = "오만한 콧대를 꺾어주마!", -- check
-	split_trigger2 = "한 줌의 희망마저 짓밟아주마!", -- check
+	split_trigger1 = "그 오만한 콧대를 꺾어주마!",
+	split_trigger2 = "한 줌의 희망마저 짓밟아주마!",
 	split_bar = "~다음 분리",
 	split_warning = "약 7초 이내 분리",
 
