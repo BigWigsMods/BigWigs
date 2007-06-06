@@ -215,15 +215,15 @@ L:RegisterTranslations("frFR", function() return {
 	gaze_desc = "Préviens quand Thaladred se focalise sur un joueur.",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur la personne surveillée Thaladred (nécessite d'être promu ou mieux).",
+	icon_desc = "Place une icône de raid sur la personne surveillée par Thaladred (nécessite d'être promu ou mieux).",
 
 	fear = "Rugissement",
 	fear_desc = "Préviens quand le Seigneur Sanguinar utilise son Rugissement puissant.",
 
-	rebirth = "Renaissance du phoenix",
-	rebirth_desc = "Préviens quand le phoenix renaît.",
-	rebirth_trigger = "Phoenix commence à lancer Renaissance.", -- à vérifier
-	rebirth_warning = "Renaissance du phoenix dans 5 sec. !",
+	rebirth = "Renaissance du phénix",
+	rebirth_desc = "Préviens quand le phénix renaît.",
+	rebirth_trigger = "Phénix commence à lancer Renaissance.", -- à vérifier
+	rebirth_warning = "Renaissance du phénix dans 5 sec. !",
 
 	pyro = "Explosion pyrotechnique",
 	pyro_desc = "Affiche un compte à rebours de 60 secondes pour l'Explosion pyrotechnique.",
@@ -255,7 +255,7 @@ L:RegisterTranslations("frFR", function() return {
 	mc_trigger1 = "Obéis-moi.", -- à vérifier
 	mc_trigger2 = "Soumets-toi à ma volonté.", -- à vérifier
 	mc_bar = "Cooldown Contrôle mental",
-	mc_message = "Contrôle mental ! Prochin dans ~33+ sec.",
+	mc_message = "Contrôle mental ! Prochain dans ~33+ sec.",
 
 	afflicted_trigger = "^(%S+) (%S+) les effets de (.*).$",
 
@@ -284,7 +284,7 @@ L:RegisterTranslations("frFR", function() return {
 	-- Weapons
 	["Devastation"] = "Dévastation", -- Axe
 	["Cosmic Infuser"] = "Bâton d'infusion cosmique", -- Staff
-	["Infinity Blades"] = "Lame d'infinité", -- Dagger
+	["Infinity Blades"] = "Lames d'infinité", -- Dagger
 	["Staff of Disintegration"] = "Bâton de désintégration", -- Healer/druid staff
 	["Warp Slicer"] = "Tranchoir dimensionnel", -- Sword
 	["Netherstrand Longbow"] = "Arc long brins-de-Néant", -- Bow

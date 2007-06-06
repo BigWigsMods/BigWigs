@@ -150,8 +150,8 @@ L:RegisterTranslations("frFR", function() return {
 	elemental_bar = "Arrivée d'un Elémentaire souillé",
 	elemental_soon_message = "Elémentaire souillé imminent !",
 
-	strider = "Trotteurs de Glisseroc",
-	strider_desc = "Préviens quans les Trotteurs de Glisseroc apparaissent durant la phase 2.",
+	strider = "Trotteurs de Glissecroc",
+	strider_desc = "Préviens quans les Trotteurs de Glissecroc apparaissent durant la phase 2.",
 	strider_bar = "Arrivée d'un trotteur",
 	strider_soon_message = "Trotteur imminent !",
 
@@ -160,8 +160,8 @@ L:RegisterTranslations("frFR", function() return {
 	barrier_down_message = "Barrière %d/4 dissipée !",
 	barrier_fades_trigger = "Barrière magique sur Dame Vashj vient de se dissiper.",
 
-	loot = "Noyau souillé",
-	loot_desc = "Préviens quand un joueur ramasse un Noyau souillé.",
+	loot = "Noyau contaminé",
+	loot_desc = "Préviens quand un joueur ramasse un Noyau contaminé.",
 	loot_message = "%s a ramassé un noyau !",
 } end )
 
