@@ -145,8 +145,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	grasp = "손아귀",
 	grasp_desc = "손아귀 경고와 타이머.",
-	grasp_trigger1 = "Scurry.", -- yell 1 check
-	grasp_trigger2 = "No escape.", -- yell 2 check
+	grasp_trigger1 = "꺼져라.",
+	grasp_trigger2 = "숨을 곳은 없다.",
 	grasp_message = "땅 울리기 - 약 10초 이내 석화!",
 	grasp_warning = "잠시 후 땅 울리기",
 	grasp_bar = "~땅 울리기 대기시간",
