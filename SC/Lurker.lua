@@ -182,7 +182,7 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if self.db.profile.spout and msg == L["spout_trigger"] then
-		self:Bar(L["spout_message"], 20, "Spell_Frost_ChillingBlast")
+		self:Bar(L["spout_message"], 20, "Spell_Frost_ChillingBlast", nil, "Alert")
 		self:Bar(L["spout_bar"], 50, "Spell_Frost_ChillingBlast")
 		self:Message(L["spout_message"], "Attention")
 		self:ScheduleEvent("spout1", "BigWigs_Message", 47, L["spout_warning"], "Attention")
