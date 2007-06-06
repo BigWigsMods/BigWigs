@@ -58,7 +58,8 @@ L:RegisterTranslations("deDE", function() return {
 	engage_desc = "Engage alert",
 
 	bones = "Knochenregen",
-	--bones_desc = "Warnt wer den Knochenregen hat", --enUS changed
+	bones_desc = "Warnt wenn Knochenregen gewirkt wird.",
+	bones_message = "AoE Knochenregen!",
 
 	fear_trigger = "Schrecken der Nacht beginnt Dr\195\182hnendes Gebr\195\188ll zu wirken.",
 	fear_message = "Furcht in 2sek!",
@@ -73,6 +74,7 @@ L:RegisterTranslations("deDE", function() return {
 	landphase_trigger2 = "Insekten! Lasst mich Euch meine Kraft aus n\195\164chster N\195\164he demonstrieren!",
 	airphase_message = "Flug!",
 	landphase_message = "Landung!",
+	summon_trigger = "Etwas Uraltes erwacht in der Ferne...",
 
 	engage_trigger = "Narren! Ich werde Eurem Leiden ein schnelles Ende setzen!",
 	engage_message = "%s angegriffen",
