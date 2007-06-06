@@ -309,6 +309,7 @@ end
 
 function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
 	if msg == L["static_fade"] then
+		self:CancelScheduledEvent("cancelProx")
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
 end
@@ -368,7 +369,9 @@ function mod:Charge(msg)
 	if splayer and stype then
 		if splayer == L2["you"] and stype == L2["are"] then
 			splayer = playerName
+			self:CancelScheduledEvent("cancelProx")
 			self:TriggerEvent("BigWigs_ShowProximity", self)
+			self:ScheduleEvent("cancelProx", "BigWigs_HideProximity", 20, self)
 		end
 		self:Sync("VashjStatic " .. splayer)
 	end
