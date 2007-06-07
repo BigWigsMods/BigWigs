@@ -6,7 +6,6 @@ local boss = AceLibrary("Babble-Boss-2.2")["The Lurker Below"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started
 local supress
-local found
 local occured
 
 ----------------------------
@@ -138,13 +137,16 @@ end
 function mod:BigWigs_RecvSync( sync, rest, nick )
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
-		found = nil
-		occured = nil
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.dive then
 			self:Message(L["engage_warning"]:format(boss), "Attention")
+			self:DelayedMessage(30, L["dive_warning"]:format(60), "Positive")
+			self:DelayedMessage(60, L["dive_warning"]:format(30), "Positive")
+			self:DelayedMessage(80, L["dive_warning"]:format(10), "Positive")
+			self:DelayedMessage(85, L["dive_warning"]:format(5), "Urgent", nil, "Alarm")
+			self:Bar(L["dive_bar"], 90, "Spell_Frost_ArcticWinds")
 		end
 		if self.db.profile.whirl then
 			self:Bar(L["whirl_bar"], 17, "Ability_Whirlwind")
@@ -153,15 +155,11 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:DelayedMessage(34, L["spout_warning"], "Attention")
 			self:Bar(L["spout_bar"], 37, "INV_Weapon_Rifle_02")
 		end
-		self:ScheduleEvent("BWLurkerCheck", self.DelayCheck, 5, self) -- delay check to give people time to target it
+		--self:TriggerEvent("BigWigs_ShowProximity", self)
+		self:ScheduleRepeatingEvent("BWLurkerTargetSeek", self.DiveCheck, 1, self)
 	elseif sync == "LurkWhirl" and self.db.profile.whirl then
 		self:Bar(L["whirl_bar"], 17, "Ability_Whirlwind")
 	end
-end
-
-function mod:Spout()
-	self:Bar(L["spout_bar"], 70, "Spell_Frost_ChillingBlast")
-	self:DelayedMessage(67, L["spout_warning"], "Attention")
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
@@ -172,48 +170,28 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	end
 end
 
-function mod:DelayCheck()
-	self:ScheduleRepeatingEvent("BWLurkerTargetSeek", self.DiveCheck, 0.2, self)
-end
-
 function mod:StopSupress()
 	supress = nil
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if self.db.profile.spout and msg == L["spout_trigger"] then
-		self:Bar(L["spout_message"], 20, "Spell_Frost_ChillingBlast", nil, "Alert")
-		self:Bar(L["spout_bar"], 50, "Spell_Frost_ChillingBlast")
-		self:Message(L["spout_message"], "Attention")
-		self:ScheduleEvent("spout1", "BigWigs_Message", 47, L["spout_warning"], "Attention")
-		self:TriggerEvent("BigWigs_StopBar", self, L["whirl_bar"])
+	if msg == L["spout_trigger"] then
+		if self.db.profile.spout then
+			self:Bar(L["spout_message"], 20, "Spell_Frost_ChillingBlast", nil, "Alert")
+			self:Bar(L["spout_bar"], 50, "Spell_Frost_ChillingBlast")
+			self:Message(L["spout_message"], "Attention")
+			self:ScheduleEvent("spout1", "BigWigs_Message", 47, L["spout_warning"], "Attention")
+			self:TriggerEvent("BigWigs_StopBar", self, L["whirl_bar"])
+		end
+		occured = nil
 	end
 end
 
 function mod:DiveCheck()
-	if UnitName("target") == boss then
-		found = true
-	else
-		for i = 1, GetNumRaidMembers() do
-			if UnitName("raid"..i.."target") == boss then
-				found = true
-				break
-			end
-		end
-	end
+	if not self:Scan() and not occured then
+		occured = true
+		self:ScheduleEvent("BWLurkerUp", self.LurkerUP, 60, self)
 
-	if found and occured then
-		if self.db.profile.dive then
-			self:DelayedMessage(30, L["dive_warning"]:format(60), "Positive")
-			self:DelayedMessage(60, L["dive_warning"]:format(30), "Positive")
-			self:DelayedMessage(80, L["dive_warning"]:format(10), "Positive")
-			self:DelayedMessage(85, L["dive_warning"]:format(5), "Urgent", nil, "Alarm")
-			self:Bar(L["dive_bar"], 90, "Spell_Frost_ArcticWinds")
-		end
-
-		self:TriggerEvent("BigWigs_ShowProximity", self)
-		occured = nil
-	elseif not found and not occured then
 		if self.db.profile.dive then
 			self:Message(L["dive_message"], "Attention")
 			self:DelayedMessage(30, L["emerge_warning"]:format(30), "Positive")
@@ -227,10 +205,22 @@ function mod:DiveCheck()
 		self:CancelScheduledEvent("spout1")
 		self:TriggerEvent("BigWigs_StopBar", self, L["spout_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["whirl_bar"])
-		occured = true
+
 		if self.db.profile.spout then
-			self:Spout()
+			self:Bar(L["spout_bar"], 63, "Spell_Frost_ChillingBlast")
+			self:DelayedMessage(60, L["spout_warning"], "Attention")
 		end
 	end
 end
 
+function mod:LurkerUP()
+	if self.db.profile.dive then
+		self:DelayedMessage(30, L["dive_warning"]:format(60), "Positive")
+		self:DelayedMessage(60, L["dive_warning"]:format(30), "Positive")
+		self:DelayedMessage(80, L["dive_warning"]:format(10), "Positive")
+		self:DelayedMessage(85, L["dive_warning"]:format(5), "Urgent", nil, "Alarm")
+		self:Bar(L["dive_bar"], 90, "Spell_Frost_ArcticWinds")
+	end
+
+	self:TriggerEvent("BigWigs_ShowProximity", self)
+end
