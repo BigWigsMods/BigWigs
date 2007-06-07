@@ -226,7 +226,6 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
-	growcount = 1
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -245,7 +244,7 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		silence = nil
---		growcount = 1
+		growcount = 1
 		self.proximitySilent = true
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 
