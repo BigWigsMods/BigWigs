@@ -1,7 +1,6 @@
 ﻿## Interface: 20100
 
 ## Title: Big Wigs |cff7fff7f -Ace2-|r
-## Title-zhCN: |cff7fff7f-Ace2-|r Big Wigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
 ## Notes-zhCN: 团队首领战信息提示插件，带有计时条。
 ## Notes-zhTW: 團隊首領戰訊息提示插件，帶有計時條。
@@ -17,7 +16,7 @@
 ## X-AceForum: 1222
 ## X-License: See license.txt
 
-## OptionalDeps: FuBar, SharedMedia, MikScrollingBattleText, sct
+## OptionalDeps: Ace2, FuBar, SharedMedia, MikScrollingBattleText, sct
 ## X-Embeds: Ace2, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, SharedMediaLib, Waterfall-1.0
 
 ## SavedVariables: BigWigsDB, BigWigsFubarDB
