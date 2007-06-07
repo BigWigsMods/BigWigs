@@ -134,7 +134,7 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "이리 와서... 죽어.",
+	engage_trigger = "와서... 죽어라.",
 	engage_message = "%s 전투 개시!",
 
 	grow = "성장",
@@ -226,6 +226,7 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
+	growcount = 1
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -244,7 +245,7 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		silence = nil
-		growcount = 1
+--		growcount = 1
 		self.proximitySilent = true
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 
