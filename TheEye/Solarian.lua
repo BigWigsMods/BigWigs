@@ -96,13 +96,13 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "Tal anu'men no sin'dorei!", -- check
+	engage_trigger = "탈 아누멘 노 신도레이!",
 
 	phase = "단계",
 	phase_desc = "단계 변경에 대한 알림.",
 	phase1_message = "1 단계 - 약 50초 이내 분리",
 	phase2_warning = "잠시 후 2 단계!",
-	phase2_trigger = "^나는 공허의", -- check
+	phase2_trigger = "^나는 공허의",
 	phase2_message = "20% - 2 단계",
 
 	wrath = "격노 시전",
