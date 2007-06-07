@@ -33,10 +33,6 @@ L:RegisterTranslations("enUS", function() return {
 	wrathyou_desc = "Warn when you have Wrath of the Astromancer.",
 	wrath_you = "Wrath on YOU!",
 
-	wrathother = "Wrath Debuff on Others",
-	wrathother_desc = "Warn about others that have Wrath of the Astromancer.",
-	wrath_other = "Wrath: %s",
-
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon on the player with Wrath of the Astromancer(requires promoted or higher).",
 
@@ -51,9 +47,6 @@ L:RegisterTranslations("enUS", function() return {
 	agent_bar = "Agents",
 	priest_warning = "Priests/Solarian in 3 sec",
 	priest_bar = "Priests/Solarian",
-
-	["Solarium Priest"] = true,
-	["Solarium Agent"] = true,
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -62,9 +55,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	wrathyou = "Zorn Debuff auf Dir",
 	wrathyou_desc = "Warn wenn du von Zorn des Astronomen betroffen bist",
-
-	wrathother = "Zorn Debuff auf anderen",
-	wrathother_desc = "Warnt welche Spieler von Zorn des Astronomen betroffen sind",
 
 	icon = "Icon",
 	icon_desc = "Plaziert ein Schlachtzug Icon auf dem Spieler, der von Zorn des Astronomen betroffen ist",
@@ -82,7 +72,6 @@ L:RegisterTranslations("deDE", function() return {
 	phase2_message = "20% - Phase 2",
 
 	wrath_trigger = "^([^%s]+) ([^%s]+) von Zorn des Astronomen betroffen",
-	wrath_other = "Zorn: %s",
 	wrath_you = "Zorn auf DIR!",
 
 	agent_warning = "Splittung! - Agenten in 6 sec",
@@ -90,9 +79,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	priest_warning = "Priester/Solarian in 3 sec",
 	priest_bar = "Priester/Solarian",
-
-	["Solarium Priest"] = "Solarispriester",
-	["Solarium Agent"] = "Solarisagent",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -115,10 +101,6 @@ L:RegisterTranslations("koKR", function() return {
 	wrathyou_desc = "당신이 점성술사의 격노에 걸렸을 때 알림.",
 	wrath_you = "당신에 격노!",
 
-	wrathother = "타인에 격노 디버프",
-	wrathother_desc = "타인이 점성술사의 격노에 걸렸을 때 알림.",
-	wrath_other = "격노: %s",
-
 	icon = "공격대 아이콘",
 	icon_desc = "점성술사의 격노에 걸린 플레이어에 공격대 아이콘 지정(승급자 이상 권한 요구).",
 
@@ -133,9 +115,6 @@ L:RegisterTranslations("koKR", function() return {
 	agent_bar = "요원",
 	priest_warning = "3초 이내 사제/솔라리안",
 	priest_bar = "사제/솔라리안",
-
-	["Solarium Priest"] = "태양의 전당 사제",
-	["Solarium Agent"] = "태양의 전당 요원",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -158,10 +137,6 @@ L:RegisterTranslations("frFR", function() return {
 	wrathyou_desc = "Préviens quand vous subissez les effets du Courroux de l'Astromancien.",
 	wrath_you = "Courroux sur VOUS !",
 
-	wrathother = "Courroux sur les autres",
-	wrathother_desc = "Préviens quand d'autres subissent les effets du Courroux de l'Astromancien.",
-	wrath_other = "Courroux : %s",
-
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le joueur affecté par le Courroux de l'Astromancien (nécessite d'être promu ou mieux).",
 
@@ -176,9 +151,6 @@ L:RegisterTranslations("frFR", function() return {
 	agent_bar = "Agents",
 	priest_warning = "Prêtres/Solarian dans 3 sec.",
 	priest_bar = "Prêtres/Solarian",
-
-	["Solarium Priest"] = "Prêtre du Solarium",
-	["Solarium Agent"] = "Agent du Solarium",
 } end )
 
 ----------------------------------
@@ -189,8 +161,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
-mod.wipemobs = {L["Solarium Priest"], L["Solarium Agent"]}
-mod.toggleoptions = {"phase", "split", -1, "wrath", "wrathyou", "wrathother", "icon", "bosskill"}
+mod.toggleoptions = {"phase", "split", -1, "wrath", "wrathyou", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -208,7 +179,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWrath", 1)
+	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWrath", 600)
 	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWCast", 5)
 end
 
@@ -216,20 +187,8 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "SolaWrath" and rest then
-		if rest == UnitName("player") and self.db.profile.wrathyou then
-			self:Message(L["wrath_you"], "Personal", true, "Long")
-			self:Message(L["wrath_other"]:format(rest), "Attention", nil, nil, true)
-			self:Bar(L["wrath_other"]:format(rest), 8.5, "Spell_Arcane_Arcane02")
-		elseif self.db.profile.wrathother then
-			self:Message(L["wrath_other"]:format(rest), "Attention")
-			self:Bar(L["wrath_other"]:format(rest), 8.5, "Spell_Arcane_Arcane02")
-		end
-		if self.db.profile.icon then
-			self:Icon(rest)
-		end
-	elseif sync == "SolaWCast" and self.db.profile.wrath then
+function mod:BigWigs_RecvSync(sync)
+	if sync == "SolaWCast" and self.db.profile.wrath then
 		self:Bar(L["wrath"], 3, "Spell_Arcane_Arcane02")
 		self:ScheduleEvent("BWSolaToTScan", self.WrathCheck, 1, self) --target scan once, after 1 second
 	end
@@ -259,8 +218,13 @@ function mod:debuff(msg)
 	if wplayer and wtype then
 		if wplayer == L2["you"] and wtype == L2["are"] then
 			wplayer = UnitName("player")
+			if self.db.profile.wrathyou then
+				self:Message(L["wrath_you"], "Personal", true, "Alert")
+			end
 		end
-		self:Sync("SolaWrath "..wplayer)
+		if self.db.profile.icon then
+			self:Icon(wplayer)
+		end
 	end
 end
 
