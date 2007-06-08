@@ -291,6 +291,94 @@ L:RegisterTranslations("frFR", function() return {
 	["Phaseshift Bulwark"] = "Rempart de déphasage", -- Shield
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	phase = "Phasen",
+	phase_desc = "Warnt vor den verschiedenen Phasen des Encounters...",
+
+	conflag = "Gro\195\159brand",
+	conflag_desc = "Warnt vor Gro\195\159brand auf einem Spieler.",
+
+	temperament = "Chaotic Temperament", -- to translate
+	temperament_desc = "Warn about Chaotic Temperament on a player.", -- to translate
+
+	gaze = "Blick",
+	gaze_desc = "Warnt, wenn Thaladred sich auf einen Spieler fokussiert.",
+
+	icon = "Icon",
+	icon_desc = "Plaziert ein Icon auf dem Spieler, den Thaladred im Blick beh\195\164lt.",
+
+	fear = "Furcht",
+	fear_desc = "Warnt vor Dr\195\182hnendem Gebr\195\188ll.",
+
+	rebirth = "Ph\195\182nix Wiedergeburt",
+	rebirth_desc = "Warnt vor Wiedergeburt der Ph\195\182nix Eier",
+	rebirth_trigger = "Ph\195\182nix beginnt Wiedergeburt zu wirken.",
+	rebirth_warning = "Ph\195\182nix Wiedergeburt in 5sec!",
+
+	pyro = "Pyroschlag",
+	pyro_desc = "Zeigt einen 60 Sekunden Timer f\195\188r Pyroschlag",
+	pyro_trigger = "%s beginnt, Pyroschlag zu wirken!",
+	pyro_warning = "Pyroschlag in 5sec!",
+	pyro_message = "Pyroschlag!",
+
+	thaladred_inc_trigger = "Eindrucksvoll. Aber werdet Ihr auch mit Thaladred, dem Verfinsterer fertig?",
+	sanguinar_inc_trigger = "Ihr habt gegen einige meiner besten Berater bestanden... aber niemand kommt gegen die Macht des Bluthammers an. Zittert vor F\195\188rst Blutdurst!",
+	capernian_inc_trigger = "Capernian wird daf\195\188r sorgen, dass Euer Aufenthalt hier nicht lange w\195\164hrt.",
+	telonicus_inc_trigger = "Gut gemacht. Ihr habt Euch w\195\188rdig erwiesen, gegen meinen Meisteringenieur, Telonicus, anzutreten.",
+	weapons_inc_trigger = "Wie Ihr seht, habe ich viele Waffen in meinem Arsenal...",
+	phase2_trigger = "Vielleicht habe ich Euch untersch\195\164tzt. Es w\195\164re unfair, Euch gegen meine vier Berater gleichzeitig k\195\164mpfen zu lassen, aber... mein Volk wurde auch nie fair behandelt. Ich vergelte nur Gleiches mit Gleichem.",
+	phase3_trigger = "Ach, manchmal muss man die Sache selbst in die Hand nehmen. Balamore shanal!",
+	flying_trigger = "I have not come this far to be stopped! The future I have planned will not be jeapordized! Now, you will taste true power!!", -- to translate
+	gravity_trigger1 = "Let us see how you fare when your world is turned upside down.", -- to translate
+	gravity_trigger2 = "Having trouble staying grounded?", -- to translate
+
+	gravity_bar = "Next Gravity Lapse", -- to translate
+	gravity_message = "Gravity Lapse!", -- to translate
+	flying_message = "Flying! Gravity Lapse in 1min", -- to translate
+
+	weapons_inc_message = "Waffen kommen!",
+	phase2_message = "Phase 2 - Berater und Waffen!",
+	phase3_message = "Phase 3 - Kael'thas aktiv!",
+	phase3_bar = "Kael'thas aktiv",
+
+	mc_trigger1 = "Gehorcht mir!",
+	mc_trigger2 = "Beugt Euch meinem Willen!",
+	mc_bar = "Gedankenkontrolle Cooldown",
+	mc_message = "Gedankenkontrolle! N\195\164chste in ~33+ sec.",
+
+	afflicted_trigger = "^(%S+) (%S+) ist von (.*) betroffen.$",
+
+	temperament_spell = "Chaotic Temperament", -- to translate
+	temperament_message = "Temperament on %s!", -- to translate
+
+	conflag_spell = "Gro\195\159brand",
+	conflag_message = "Gro\195\159brand auf %s!",
+
+	gaze_trigger = "beh\195\164lt ([^%s]+) im Blickfeld!$",
+	gaze_message = "Blick auf %s!",
+
+	fear_soon_message = "Furcht bald!",
+	fear_message = "Furcht!",
+	fear_bar = "Furcht Cooldown",
+
+	fear_soon_trigger = "F\195\188rst Blutdurst beginnt Dr\195\182hnendes Gebr\195\188ll zu wirken.",
+	fear_trigger1 = "^F\195\188rst Blutdurst's Dr\195\182hnendes Gebr\195\188ll wurde von %S+ widerstanden.$",
+	fear_trigger2 = "^F\195\188rst Blutdurst versucht es mit Dr\195\182hnendes Gebr\195\188ll. Ein Fehlschlag, denn %S+ ist immun.$",
+	fear_spell = "Dr\195\182hnendes Gebr\195\188ll",
+
+	revive_bar = "Berater Wiederbelebung",
+	revive_warning = "Berater wiederbelebt in 5sec!",
+
+	-- Weapons
+	["Devastation"] = "Verw\195\188stung", -- Axe
+	["Cosmic Infuser"] = "Kosmische Macht", -- Mace
+	["Infinity Blades"] = "Klinge der Unendlichkeit", -- Dagger
+	["Staff of Disintegration"] = "Stab der Aufl\195\182sung", -- Healer/druid staff
+	["Warp Slicer"] = "Warpschnitter", -- Sword
+	["Netherstrand Longbow"] = "Netherbespannter Langbogen", -- Bow
+	["Phaseshift Bulwark"] = "Phasenverschobenes Bollwerk", -- Shield
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
@@ -456,4 +544,3 @@ function mod:KaelFear(rest, nick)
 	self:Message(L["fear_message"], "Attention")
 	self:Bar(L["fear_bar"], 30, "Spell_Shadow_Charm")
 end
-
