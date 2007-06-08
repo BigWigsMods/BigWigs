@@ -5,7 +5,6 @@
 local boss = AceLibrary("Babble-Boss-2.2")["The Lurker Below"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started
-local supress
 local occured = nil
 
 ----------------------------
@@ -127,7 +126,6 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "LurkWhirl", 10)
 	started = nil
-	supress = nil
 end
 
 ------------------------------
@@ -163,15 +161,9 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg:find(L["whirl"]) and not suppress then
-		supress = true
+	if msg:find(L["whirl"]) then
 		self:Sync("LurkWhirl")
-		self:ScheduleEvent("BWLurkerStop", self.StopSupress, 10, self)
 	end
-end
-
-function mod:StopSupress()
-	supress = nil
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
