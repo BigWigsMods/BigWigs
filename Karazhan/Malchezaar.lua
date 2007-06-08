@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Prince Malchezaar"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local afflict = nil
 local nova = true
 
 ----------------------------
@@ -195,6 +196,8 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
+	self:RegisterEvent("BigWigs_Message")
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -218,7 +221,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["infernal_warning"], "Positive")
 		self:NextInfernal()
 	elseif msg == L["phase1_trigger"] then
+		afflict = nil
 		nova = true
+
 		if self.db.profile.phase then
 			self:Message(L["phase1_message"], "Positive")
 		end
@@ -238,12 +243,12 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:NextInfernal()
-	self:DelayedMessage(10, L["infernal_message"], "Urgent", nil, "Alert")
-	self:Bar(L["infernal_bar"], 15, "INV_Stone_05")
+	self:DelayedMessage(15, L["infernal_message"], "Urgent", nil, "Alert")
+	self:Bar(L["infernal_bar"], 20, "INV_Stone_05")
 end
 
 function mod:EnfeebleEvent(msg)
-	if msg:find(L["enfeeble_trigger"]) then
+	if not afflict and msg:find(L["enfeeble_trigger"]) then
 		self:Sync("MalchezaarEnfeeble")
 	end
 end
@@ -257,6 +262,7 @@ end
 function mod:BigWigs_RecvSync(sync)
 	if sync == "MalchezaarEnfeeble" then
 		if self.db.profile.enfeeble then
+			afflict = true
 			self:Message(L["enfeeble_message"], "Important", nil, "Alarm")
 			self:ScheduleEvent("enf1", "BigWigs_Message", 25, L["enfeeble_warning"], "Attention")
 			self:Bar(L["enfeeble_bar"], 7, "Spell_Shadow_LifeDrain02")
@@ -270,8 +276,14 @@ function mod:BigWigs_RecvSync(sync)
 		self:Bar(L["nova_message"], 2, "Spell_Shadow_Shadowfury")
 		if not nova then
 			self:CancelScheduledEvent("nova1")
-			self:Bar(L["nova_bar"], 20, "Spell_Shadow_Shadowfury")
-			self:ScheduleEvent("nova1", "BigWigs_Message", 15, L["nova_soon"], "Positive")
+			self:Bar(L["nova_bar"], 25, "Spell_Shadow_Shadowfury")
+			self:ScheduleEvent("nova1", "BigWigs_Message", 20, L["nova_soon"], "Positive")
 		end
+	end
+end
+
+function mod:BigWigs_Message(text)
+	if text == L["enfeeble_warning"] then
+		afflict = nil
 	end
 end
