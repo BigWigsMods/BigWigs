@@ -29,4 +29,3 @@ Sound.lua
 RaidWarn.lua
 BossBlock.lua
 RaidIcon.lua
-Range.lua
