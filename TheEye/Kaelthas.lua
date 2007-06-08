@@ -302,7 +302,7 @@ mod.enabletrigger = { boss, capernian, sanguinar, telonicus, thaladred }
 mod.wipemobs = {
 	L["Devastation"], L["Cosmic Infuser"], L["Infinity Blades"], L["Staff of Disintegration"],
 	L["Warp Slicer"], L["Netherstrand Longbow"], L["Phaseshift Bulwark"] }
-mod.toggleoptions = { "phase", -1, "temperament", "conflag", "gaze", "icon", "fear", "pyro", "rebirth", "bosskill" }
+mod.toggleoptions = { "phase", -1, "temperament", "conflag", "gaze", "icon", "fear", "pyro", "rebirth", "proximity", "bosskill" }
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
