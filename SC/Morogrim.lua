@@ -82,7 +82,7 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "Flood of the deep, take you!", -- check
 
 	tidal = "해일",
-	tidal_desc = "모고그림의 해일 시전시 경고",
+	tidal_desc = "모로그림의 해일 시전시 경고",
 	tidal_trigger = "겅둥파도 모로그림|1이;가; 해일 시전을 시작합니다.",
 	tidal_message = "해일!",
 
