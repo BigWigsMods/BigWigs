@@ -328,6 +328,7 @@ L:RegisterTranslations("deDE", function() return {
 	weapons_inc_trigger = "Wie Ihr seht, habe ich viele Waffen in meinem Arsenal...",
 	phase2_trigger = "Vielleicht habe ich Euch untersch\195\164tzt. Es w\195\164re unfair, Euch gegen meine vier Berater gleichzeitig k\195\164mpfen zu lassen, aber... mein Volk wurde auch nie fair behandelt. Ich vergelte nur Gleiches mit Gleichem.",
 	phase3_trigger = "Ach, manchmal muss man die Sache selbst in die Hand nehmen. Balamore shanal!",
+	
 	flying_trigger = "I have not come this far to be stopped! The future I have planned will not be jeapordized! Now, you will taste true power!!", -- to translate
 	gravity_trigger1 = "Let us see how you fare when your world is turned upside down.", -- to translate
 	gravity_trigger2 = "Having trouble staying grounded?", -- to translate
@@ -356,6 +357,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	gaze_trigger = "beh\195\164lt ([^%s]+) im Blickfeld!$",
 	gaze_message = "Blick auf %s!",
+	gaze_bar = "Blick Cooldown",
 
 	fear_soon_message = "Furcht bald!",
 	fear_message = "Furcht!",
