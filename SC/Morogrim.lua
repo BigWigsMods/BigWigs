@@ -79,7 +79,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "Flood of the deep, take you!", -- check
+	engage_trigger = "심연의 해일이 집어삼키리라!",
 
 	tidal = "해일",
 	tidal_desc = "모로그림의 해일 시전시 경고",
