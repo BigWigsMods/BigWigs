@@ -190,7 +190,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	elseif sync == "Netherbreath" and self.db.profile.netherbreath then
 		self:Message( L["netherbreath_warn"], "Urgent")
-		self:Bar(L["netherbreath_warn"], 5, "Spell_Arcane_MassDispel")
+		self:Bar(L["netherbreath_warn"], 2.5, "Spell_Arcane_MassDispel")
 	end
 end
 
@@ -199,7 +199,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["phase1_trigger"] then
 		self:TriggerEvent("BigWigs_StopBar", self, L["netherbreath_warn"])
 		self:Message(L["phase1_message"], "Important")
-		self:Bar(L["phase2_bar"], 60, "Spell_ChargePositive")
+		self:Bar(L["phase2_bar"], 58, "Spell_ChargePositive")
 	elseif msg == L["phase2_trigger"] then
 		self:Message(L["phase2_message"], "Important")
 		self:Bar(L["phase1_bar"], 30, "Spell_ChargeNegative")
