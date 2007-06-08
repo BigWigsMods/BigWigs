@@ -195,9 +195,9 @@ L:RegisterTranslations("koKR", function() return {
 	flurry_message = "50% - 질풍!",
 	flurry_warning = "잠시 후 질풍!",
 
-	smash = "Arcing Smash",
-	smash_desc = "Show a bar for estimated Arcing Smash.",
-	smash_bar = "~Arcing Smash",
+	smash = "회전베기",
+	smash_desc = "회전베기 예측 바를 표시",
+	smash_bar = "~회전베기",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
