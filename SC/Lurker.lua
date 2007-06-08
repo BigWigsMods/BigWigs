@@ -6,7 +6,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["The Lurker Below"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started
 local supress
-local occured
+local occured = nil
 
 ----------------------------
 --      Localization      --
@@ -155,7 +155,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:DelayedMessage(34, L["spout_warning"], "Attention")
 			self:Bar(L["spout_bar"], 37, "INV_Weapon_Rifle_02")
 		end
-		--self:TriggerEvent("BigWigs_ShowProximity", self)
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 		self:ScheduleRepeatingEvent("BWLurkerTargetSeek", self.DiveCheck, 1, self)
 	elseif sync == "LurkWhirl" and self.db.profile.whirl then
 		self:Bar(L["whirl_bar"], 17, "Ability_Whirlwind")

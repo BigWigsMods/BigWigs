@@ -5,8 +5,8 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Leotheras the Blind"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-local imagewarn
-local wwhelp
+local imagewarn = nil
+local wwhelp = 0
 local beDemon = {}
 
 ----------------------------
@@ -204,7 +204,6 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "LeoWW", 10)
 
 	self:RegisterEvent("UNIT_HEALTH")
-	imagewarn = nil
 end
 
 ------------------------------
@@ -214,6 +213,7 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["enrage_trigger"] then
 		wwhelp = 0
+		imagewarn = nil
 		if self.db.profile.phase then
 			self:DelayedMessage(55, L["phase_demonsoon"], "Urgent")
 			self:Bar(L["demon_nextbar"], 60, "Spell_Shadow_Metamorphosis")

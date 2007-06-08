@@ -4,8 +4,8 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Gruul the Dragonkiller"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local growcount
-local silence
+local growcount = 1
+local silence = nil
 
 local bandages = {
 	[21991] = true, -- Heavy Netherweave Bandage

@@ -4,8 +4,8 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Prince Malchezaar"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local afflict
-local nova
+local afflict = nil
+local nova = true
 
 ----------------------------
 --      Localization      --

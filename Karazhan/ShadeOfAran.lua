@@ -4,8 +4,8 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Shade of Aran"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local drinkannounced
-local addsannounced
+local drinkannounced = nil
+local addsannounced = nil
 
 ----------------------------
 --      Localization      --

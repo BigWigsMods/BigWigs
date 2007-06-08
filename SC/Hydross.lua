@@ -8,7 +8,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local inTomb = {}
 local debuff = {0, 10, 25, 50, 100, 250, 500}
-local currentPerc
+local currentPerc = nil
 local count = 1
 
 local tooltip
