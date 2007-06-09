@@ -13,6 +13,14 @@ local sanguinar = BB["Lord Sanguinar"]
 local telonicus = BB["Master Engineer Telonicus"]
 local thaladred = BB["Thaladred the Darkener"]
 
+local axe = BB["Devastation"]
+local mace = BB["Cosmic Infuser"]
+local dagger = BB["Infinity Blades"]
+local staff = BB["Staff of Disintegration"]
+local sword = BB["Warp Slicer"]
+local bow = BB["Netherstrand Longbow"]
+local shield = BB["Phaseshift Bulwark"]
+
 BB = nil
 
 ----------------------------
@@ -100,15 +108,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	revive_bar = "Adds Revived",
 	revive_warning = "Adds Revived in 5sec!",
-
-	-- Weapons
-	["Devastation"] = true, -- Axe
-	["Cosmic Infuser"] = true, -- Staff
-	["Infinity Blades"] = true, -- Dagger
-	["Staff of Disintegration"] = true, -- Healer/druid staff
-	["Warp Slicer"] = true, -- Sword
-	["Netherstrand Longbow"] = true, -- Bow
-	["Phaseshift Bulwark"] = true, -- Shield
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -190,15 +189,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	revive_bar = "조언가 부활",
 	revive_warning = "5초 이내 조언가 부활!",
-
-	-- Weapons
-	["Devastation"] = "황폐의 도끼", -- Axe
-	["Cosmic Infuser"] = "붕괴의 지팡이", -- Staff
-	["Infinity Blades"] = "무한의 비수", -- Dagger
-	["Staff of Disintegration"] = "우주 에너지 주입기", -- Healer/druid staff
-	["Warp Slicer"] = "차원의 절단기", -- Sword
-	["Netherstrand Longbow"] = "황천매듭 장궁", -- Bow
-	["Phaseshift Bulwark"] = "위상 변화의 보루방패", -- Shield
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -280,15 +270,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	revive_bar = "Retour des conseillers",
 	revive_warning = "Retour des conseillers dans 5 sec. !",
-
-	-- Weapons
-	["Devastation"] = "Dévastation", -- Axe
-	["Cosmic Infuser"] = "Bâton d'infusion cosmique", -- Staff
-	["Infinity Blades"] = "Lames d'infinité", -- Dagger
-	["Staff of Disintegration"] = "Bâton de désintégration", -- Healer/druid staff
-	["Warp Slicer"] = "Tranchoir dimensionnel", -- Sword
-	["Netherstrand Longbow"] = "Arc long brins-de-Néant", -- Bow
-	["Phaseshift Bulwark"] = "Rempart de déphasage", -- Shield
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -370,15 +351,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	revive_bar = "Berater Wiederbelebung",
 	revive_warning = "Berater wiederbelebt in 5sec!",
-
-	-- Weapons
-	["Devastation"] = "Verw\195\188stung", -- Axe
-	["Cosmic Infuser"] = "Kosmische Macht", -- Mace
-	["Infinity Blades"] = "Klinge der Unendlichkeit", -- Dagger
-	["Staff of Disintegration"] = "Stab der Aufl\195\182sung", -- Healer/druid staff
-	["Warp Slicer"] = "Warpschnitter", -- Sword
-	["Netherstrand Longbow"] = "Netherbespannter Langbogen", -- Bow
-	["Phaseshift Bulwark"] = "Phasenverschobenes Bollwerk", -- Shield
 } end )
 
 ----------------------------------
@@ -389,9 +361,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = { boss, capernian, sanguinar, telonicus, thaladred }
-mod.wipemobs = {
-	L["Devastation"], L["Cosmic Infuser"], L["Infinity Blades"], L["Staff of Disintegration"],
-	L["Warp Slicer"], L["Netherstrand Longbow"], L["Phaseshift Bulwark"] }
+mod.wipemobs = { axe, mace, dagger, staff, sword, bow, shield }
 mod.toggleoptions = { "phase", -1, "temperament", "conflag", "gaze", "icon", "fear", "pyro", "rebirth", "proximity", "bosskill" }
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
