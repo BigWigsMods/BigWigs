@@ -30,6 +30,9 @@ BB = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Kael'thas",
 
+	engage_trigger = "^Energy. Power.",
+	engage_message = "Phase 1",
+
 	phase = "Phase warnings",
 	phase_desc = "Warn about the various phases of the encounter.",
 
@@ -60,7 +63,7 @@ L:RegisterTranslations("enUS", function() return {
 	pyro_warning = "Pyroblast in 5sec!",
 	pyro_message = "Casting Pyroblast!",
 
-	thaladred_inc_trigger = "Impressive. Let us see how your nerves hold up against the Darkener, Thaladred!",
+	thaladred_inc_trigger = "Impressive. Let us see how your nerves hold up against the Darkener, Thaladred! ",
 	sanguinar_inc_trigger = "You have persevered against some of my best advisors... but none can withstand the might of the Blood Hammer. Behold, Lord Sanguinar!",
 	capernian_inc_trigger = "Capernian will see to it that your stay here is a short one.",
 	telonicus_inc_trigger = "Well done, you have proven worthy to test your skills against my master engineer, Telonicus.",
@@ -427,11 +430,15 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["thaladred_inc_trigger"] then
+	if msg:find(L["engage_trigger"]) then
+		self:Bar(thaladred, 32, "Spell_Shadow_Charm")
+		self:Message(L["engage_message"], "Positive")
+	elseif msg == L["thaladred_inc_trigger"] then
 		self:Message(thaladred, "Positive")
 	elseif msg == L["sanguinar_inc_trigger"] then
 		self:Message(sanguinar, "Positive")
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
+		self:TriggerEvent("BigWigs_StopBar", self, L["gaze_bar"])
 	elseif msg == L["capernian_inc_trigger"] then
 		self:Message(capernian, "Positive")
 		self:TriggerEvent("BigWigs_ShowProximity", self)
