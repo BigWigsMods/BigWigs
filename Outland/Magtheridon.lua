@@ -2,11 +2,15 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.2")["Magtheridon"]
+local BB = AceLibrary("Babble-Boss-2.2")
+local boss = BB["Magtheridon"]
+local channeler = BB["Hellfire Channeler"]
+
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local abycount
 local debwarn
+BB = nil
 
 ----------------------------
 --      Localization      --
@@ -67,8 +71,6 @@ L:RegisterTranslations("enUS", function() return {
 	debrisinc_trigger = "Let the walls of this prison tremble",
 	debrisinc_message = "30% - Incoming Debris!",
 	debrisinc_warning = "Debris Soon!",
-
-	["Hellfire Channeler"] = true,
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -115,8 +117,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	exhaust_trigger = "^([^%s]+) ([^%s]+) von Gedankenersch\195\182pfung betroffen",
 	exhaust_bar = "[%s] ersch\195\182pft",
-
-	["Hellfire Channeler"] = "Kanalisierer des H\195\182llenfeuers",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -172,8 +172,6 @@ L:RegisterTranslations("frFR", function() return {
 	debrisinc_trigger = "Que les murs de cette prison tremblent",
 	debrisinc_message = "30% - Arrivée des Débris !",
 	debrisinc_warning = "Débris imminent !",
-
-	["Hellfire Channeler"] = "Canaliste des Flammes infernales",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -227,8 +225,6 @@ L:RegisterTranslations("koKR", function() return {
 	debrisinc_trigger = "그렇게 쉽게 당할 내가 아니다! 이 감옥의 벽이 흔들리고... 무너지라라!",
 	debrisinc_message = "30% - 잠시 후 파편!",
 	debrisinc_warning = "곧 파편!",
-
-	["Hellfire Channeler"] = "지옥불 역술사",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -284,8 +280,6 @@ L:RegisterTranslations("zhTW", function() return {
 	debrisinc_trigger = "Let the walls of this prison tremble",
 	debrisinc_message = "30% - Incoming Debris!",
 	debrisinc_warning = "Debris Soon!",
-
-	["Hellfire Channeler"] = "地獄火導魔師",
 } end)
 
 ----------------------------------
@@ -295,8 +289,8 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Magtheridon's Lair"]
 mod.otherMenu = "Outland"
-mod.enabletrigger = {L["Hellfire Channeler"], boss}
-mod.wipemobs = {L["Hellfire Channeler"]}
+mod.enabletrigger = {channeler, boss}
+mod.wipemobs = {channeler}
 mod.toggleoptions = {"escape", "abyssal", "heal", -1, "nova", "banish", -1, "debris", "debrisinc", -1, "exhaust", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
