@@ -96,7 +96,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	gaze_trigger = "sets eyes on ([^%s]+)!$",
 	gaze_message = "Gaze on %s!",
-	gaze_bar = "Gaze cooldown",
+	gaze_bar = "~Gaze cooldown",
 
 	fear_soon_message = "Fear soon!",
 	fear_message = "Fear!",
@@ -373,6 +373,7 @@ mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) en
 
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Afflicted")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Afflicted")
