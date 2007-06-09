@@ -30,10 +30,11 @@ L:RegisterTranslations("enUS", function() return {
 	weak = "Weakened",
 	weak_desc = "Warn for weakened state.",
 	weak_trigger = "afflicted by Broken Pact",
-	weak_message = "Weakened for 30sec!",
-	weak_warning1 = "Weakened over in 5sec!",
+	weak_message = "Weakened for ~30sec!",
+	weak_warning1 = "Weakened over in ~5sec!",
 	weak_warning2 = "Weakened over!",
-	weak_bar = "Weakened",
+	weak_bar = "~Weakened Fades",
+	weak_fade = "^Broken Pact fades",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -142,6 +143,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
@@ -191,5 +193,11 @@ function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 		self:DelayedMessage(25, L["weak_warning1"], "Attention")
 		self:DelayedMessage(30, L["weak_warning2"], "Attention")
 		self:Bar(L["weak_bar"], 30, "Spell_Shadow_Cripple")
+	end
+end
+
+function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
+	if self.db.profile.weak and msg:find(L["weak_fade"]) then
+		self:Message(L["weak_warning2"], "Attention", nil, "Info")
 	end
 end
