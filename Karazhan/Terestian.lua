@@ -190,8 +190,7 @@ end
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 	if self.db.profile.weak and msg:find(L["weak_trigger"]) then
 		self:Message(L["weak_message"], "Important", nil, "Alarm")
-		self:DelayedMessage(25, L["weak_warning1"], "Attention")
-		self:DelayedMessage(30, L["weak_warning2"], "Attention")
+		self:ScheduleEvent("weak1", "BigWigs_Message", 25, L["weak_warning1"], "Attention")
 		self:Bar(L["weak_bar"], 30, "Spell_Shadow_Cripple")
 	end
 end
@@ -199,5 +198,7 @@ end
 function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 	if self.db.profile.weak and msg:find(L["weak_fade"]) then
 		self:Message(L["weak_warning2"], "Attention", nil, "Info")
+		self:CancelScheduledEvent("weak1")
+		self:TriggerEvent("BigWigs_StopBar", self, L["weak_bar"])
 	end
 end
