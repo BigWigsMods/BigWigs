@@ -226,7 +226,6 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
@@ -295,11 +294,6 @@ function mod:Event(msg)
 		self:DelayedMessage(41, L["silence_warning"], "Urgent")
 		self:Bar(L["silence_bar"], 45, "Spell_Holy_ImprovedResistanceAuras")
 		silence = true
-	end
-end
-
-function mod:BigWigs_Message(text)
-	if text == L["silence_warning"] then
-		silence = nil
+		self:ScheduleEvent("BWGrullNilSilence", function() silence = nil end, 10, self)
 	end
 end
