@@ -251,7 +251,6 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = {boss, mage, lock, priest, shaman}
-mod.wipemobs = {mage, lock, priest, shaman}
 mod.toggleoptions = {"shield", "spellshield", "heal", -1, "summon", -1, "whirlwind", "flurry", "smash", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 

@@ -110,7 +110,6 @@ L:RegisterTranslations("frFR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Serpentshrine Cavern"]
 mod.enabletrigger = {boss, L["Fathom-Guard Sharkkis"], L["Fathom-Guard Tidalvess"], L["Fathom-Guard Caribdis"]}
-mod.wipemobs = {L["Fathom-Guard Sharkkis"], L["Fathom-Guard Tidalvess"], L["Fathom-Guard Caribdis"]}
 mod.toggleoptions = {"heal", "enrage", "totem", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 

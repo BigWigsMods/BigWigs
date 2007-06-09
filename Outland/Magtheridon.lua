@@ -290,7 +290,6 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Magtheridon's Lair"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = {channeler, boss}
-mod.wipemobs = {channeler}
 mod.toggleoptions = {"escape", "abyssal", "heal", -1, "nova", "banish", -1, "debris", "debrisinc", -1, "exhaust", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
