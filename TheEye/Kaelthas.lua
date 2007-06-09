@@ -132,13 +132,13 @@ L:RegisterTranslations("koKR", function() return {
 
 	rebirth = "불사조 환생",
 	rebirth_desc = "불사조 환생 경고",
-	rebirth_trigger = "블사조|1이;가; 환생 시전을 시작합니다.",
-	rebirth_warning = "약 5초 이내 불사조 환생!",
+	rebirth_trigger = "불사조|1이;가; 환생 시전을 시작합니다.",
+	rebirth_warning = "5초 이내 불사조 환생!",
 
 	pyro = "불덩이 작렬",
 	pyro_desc = "불덩이 작렬에 대한 60초 타이머 표시.",
 	pyro_trigger = "%s|1이;가; 불덩이 작렬 시전을 시작합니다.",
-	pyro_warning = "약 5초 이내 불덩이 작렬!",
+	pyro_warning = "5초 이내 불덩이 작렬!",
 	pyro_message = "불덩이 작열 시전!",
 
 	thaladred_inc_trigger = "암흑의 인도자 탈라드레드를 상대로 얼마나 버틸지 볼까?",
@@ -147,7 +147,7 @@ L:RegisterTranslations("koKR", function() return {
 	telonicus_inc_trigger = "좋아, 그 정도 실력이면 수석기술자 텔로니쿠스를 상대해 볼만하겠어.",
 	weapons_inc_trigger = "보다시피 내 무기고엔 굉장한 무기가 아주 많지.",
 	phase2_trigger = "네놈들을 과소평가했나 보군. 모두를 한꺼번에 상대하라는 건 불공평한 처사지. 나의 백성도 공평한 대접을 받은 적 없기는 매한가지. 받은 대로 돌려주겠다.",
-	phase3_trigger = "Alas, sometimes one must take matters into one's own hands. Balamore shanal!", -- check
+	phase3_trigger = "때론 직접 나서야 할 때도 있는 법이지. 발라모어 샤날!", -- check
 
 	flying_trigger = "I have not come this far to be stopped! The future I have planned will not be jeapordized! Now, you will taste true power!!", -- check
 	gravity_trigger1 = "Let us see how you fare when your world is turned upside down.", -- check
@@ -160,7 +160,7 @@ L:RegisterTranslations("koKR", function() return {
 	weapons_inc_message = "무기 임박!",
 	phase2_message = "경고 2 - 조언가와 무기!",
 	phase3_message = "경고 3 - 캘타스!",
-	phase3_bar = "잠시후 캘타스",
+	phase3_bar = "잠시 후 캘타스",
 
 	mc_trigger1 = "나를 따르라.", -- check
 	mc_trigger2 = "Bow to my will.", -- check
@@ -189,7 +189,7 @@ L:RegisterTranslations("koKR", function() return {
 	fear_spell = "우레와 같은 울부짖음",
 
 	revive_bar = "조언가 부활",
-	revive_warning = "5초후 조건가 부활!",
+	revive_warning = "5초 이내 조언가 부활!",
 
 	-- Weapons
 	["Devastation"] = "황폐의 도끼", -- Axe
