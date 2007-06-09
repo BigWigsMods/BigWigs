@@ -49,9 +49,10 @@ L:RegisterTranslations("enUS", function() return {
 	fear_desc = "Warn when about Bellowing Roar.",
 
 	rebirth = "Phoenix Rebirth",
-	rebirth_desc = "Warn for Rebirth",
+	rebirth_desc = "Approximate Phoenix Rebirth timers.",
 	rebirth_trigger = "Phoenix begins to cast Rebirth.",
-	rebirth_warning = "Phoenix Rebirth in 5sec!",
+	rebirth_warning = "Possible Rebirth in ~5sec!",
+	rebirth_bar = "~Possible Rebirth",
 
 	pyro = "Pyroblast",
 	pyro_desc = "Show a 60 second timer for Pyroblast",
@@ -506,7 +507,7 @@ function mod:PhoenixRebirth(rest, nick)
 	if not self.db.profile.rebirth then return end
 
 	self:Message(L["rebirth"], "Urgent")
-	self:Bar(L["rebirth"], 45, "Spell_Fire_Burnout")
+	self:Bar(L["rebirth_bar"], 45, "Spell_Fire_Burnout")
 	self:DelayedMessage(40, L["rebirth_warning"], "Attention")
 end
 
