@@ -245,6 +245,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_StopBar", self, L["corruption_bar"]:format(debuff[count+1] and debuff[count+1] or 500))
 		count = 1
 		currentPerc = nil
+		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		if self.db.profile.stance then
 			self:Message(L["water_stance"], "Important")
 		end

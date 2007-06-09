@@ -430,6 +430,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(thaladred, "Positive")
 	elseif msg == L["sanguinar_inc_trigger"] then
 		self:Message(sanguinar, "Positive")
+		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	elseif msg == L["capernian_inc_trigger"] then
 		self:Message(capernian, "Positive")
 		self:TriggerEvent("BigWigs_ShowProximity", self)

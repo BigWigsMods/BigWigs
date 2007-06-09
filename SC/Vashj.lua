@@ -333,6 +333,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["phase2_trigger"]) then
+		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		if self.db.profile.phase then
 			self:Message(L["phase2_message"], "Important", nil, "Alarm")
 		end
