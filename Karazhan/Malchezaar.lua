@@ -105,7 +105,7 @@ L:RegisterTranslations("frFR", function() return {
 	infernal_trigger2 = "Toutes les réalités, toutes les dimensions me sont ouvertes !",
 	infernal_bar = "Arrivée d'un infernal",
 	infernal_warning = "Arrivée d'un infernal dans 20 sec. !",
-	infernal_message = "Infernal dans 5 sec. !",
+	infernal_message = "Infernal ! Flammes infernales dans 5 sec. !",
 
 	nova = "Nova de l'ombre",
 	nova_desc = "Préviens quand Malchezaar est suceptible d'utiliser sa Nova de l'ombre.",

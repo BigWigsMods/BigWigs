@@ -115,7 +115,7 @@ L:RegisterTranslations("frFR", function() return {
 	adds_message = "Arrivée des élémentaires !",
 	adds_warning = "Elémentaires imminent",
 	adds_trigger = "Je ne suis pas encore vaincu ! Non, j’ai encore quelques tours dans mon sac…",
-	adds_bar = "Disparation des élémentaires",
+	adds_bar = "Fin des élémentaires",
 
 	drink = "Boisson",
 	drink_desc = ("Préviens quand %s commence à boire."):format(boss),

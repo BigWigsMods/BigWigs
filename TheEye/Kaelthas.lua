@@ -196,6 +196,9 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "^L'énergie. La puissance.", -- à vérifier
+	engage_message = "Phase 1",
+
 	phase = "Phases",
 	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
 
@@ -217,7 +220,8 @@ L:RegisterTranslations("frFR", function() return {
 	rebirth = "Renaissance du phénix",
 	rebirth_desc = "Préviens quand le phénix renaît.",
 	rebirth_trigger = "Phénix commence à lancer Renaissance.", -- à vérifier
-	rebirth_warning = "Renaissance du phénix dans 5 sec. !",
+	rebirth_warning = "Renaissance probable dans 5 sec. !",
+	rebirth_bar = "~Renaissance probable",
 
 	pyro = "Explosion pyrotechnique",
 	pyro_desc = "Affiche un compte à rebours de 60 secondes pour l'Explosion pyrotechnique.",
@@ -231,7 +235,7 @@ L:RegisterTranslations("frFR", function() return {
 	telonicus_inc_trigger = "Bien, vous êtes digne de mesurer votre talent à celui de mon maître ingénieur, Telonicus.", -- à vérifier
 	weapons_inc_trigger = "Comme vous le voyez, j'ai plus d'une corde à mon arc…", -- à vérifier
 	phase2_trigger = "Peut-être vous ai-je sous-estimés. Il ne serait pas très loyal de vous faire combattre mes quatres conseillers en même temps, mais… mon peuple n'a jamais été traîté avec loyauté. Je ne fais que rendre la politesse.", -- à vérifier
-	phase3_trigger = "Il est hélas parfois nécessaire de prendre les choses en main soi-même. Balamore shanal !", -- à vérifier
+	phase3_trigger = "Il est hélas parfois nécessaire de prendre les choses en main soi-même. Balamore shanal!", -- à vérifier
 
 	flying_trigger = "Je ne suis pas arrivé si loin pour échouer maintenant ! Je ne laisserai pas l'avenir que je prépare être remis en cause ! Vous allez goûter à ma vraie puissance !", -- à vérifier
 	gravity_trigger1 = "Voyons comment vous vous débrouillerez une fois la tête en bas.", -- à vérifier
