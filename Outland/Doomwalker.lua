@@ -14,6 +14,8 @@ local enrageAnnounced = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Doomwalker",
 
+	engage_trigger = "Do not proceed. You will be eliminated.", --verify
+
 	overrun = "Overrun",
 	overrun_desc = "Alert when Doomwalker uses his Overrun ability.",
 	overrun_trigger = "^Doomwalker.-Overrun",
