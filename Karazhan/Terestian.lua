@@ -30,7 +30,7 @@ L:RegisterTranslations("enUS", function() return {
 	weak = "Weakened",
 	weak_desc = "Warn for weakened state.",
 	weak_trigger = "afflicted by Broken Pact",
-	weak_message = "Weakened for ~30sec!",
+	weak_message = "Weakened for ~45sec!",
 	weak_warning1 = "Weakened over in ~5sec!",
 	weak_warning2 = "Weakened over!",
 	weak_bar = "~Weakened Fades",
@@ -49,7 +49,7 @@ L:RegisterTranslations("deDE", function() return {
 	sacrifice_bar = "Opferung: %s",
 
 	weak_trigger = "von Mal der Flamme betroffen",
-	weak_message = "Geschw\195\164cht f\195\188r 30 Sek!",
+	weak_message = "Geschw\195\164cht f\195\188r 45 Sek!",
 	weak_warning1 = "Geschw\195\164cht vorbei in 5 Sek!",
 	weak_warning2 = "Geschw\195\164cht vorbei!",
 	weak_bar = "Geschw\195\164cht",
@@ -73,7 +73,7 @@ L:RegisterTranslations("frFR", function() return {
 	weak = "Affaibli",
 	weak_desc = "Préviens quand Terestian est affaibli.",
 	weak_trigger = "les effets .* Pacte rompu",
-	weak_message = "Affaibli pendant ~30 sec. !",
+	weak_message = "Affaibli pendant ~45 sec. !",
 	weak_warning1 = "Fin de l'affaiblissement dans ~5 sec. !",
 	weak_warning2 = "Plus affaibli !",
 	weak_bar = "Fin Affaiblissement",
@@ -98,7 +98,7 @@ L:RegisterTranslations("koKR", function() return {
 	weak = "약화",
 	weak_desc = "약화 상태에 대한 경고.",
 	weak_trigger = "깨진 서약에 걸렸습니다.",
-	weak_message = "30초간 약화!",
+	weak_message = "45초간 약화!",
 	weak_warning1 = "5초 후 약화 종료!",
 	weak_warning2 = "약화 종료!",
 	weak_bar = "약화",
@@ -191,8 +191,8 @@ end
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 	if self.db.profile.weak and msg:find(L["weak_trigger"]) then
 		self:Message(L["weak_message"], "Important", nil, "Alarm")
-		self:ScheduleEvent("weak1", "BigWigs_Message", 25, L["weak_warning1"], "Attention")
-		self:Bar(L["weak_bar"], 30, "Spell_Shadow_Cripple")
+		self:ScheduleEvent("weak1", "BigWigs_Message", 40, L["weak_warning1"], "Attention")
+		self:Bar(L["weak_bar"], 45, "Spell_Shadow_Cripple")
 	end
 end
 
