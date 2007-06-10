@@ -190,7 +190,7 @@ function mod:OnEnable()
 	for k in pairs(inTomb) do inTomb[k] = nil end
 
 	if not tooltip then
-		tooltip = CreateFrame("GameTooltip", "HydrossTooltip", UIParent, "GameTooltipTemplate")
+		tooltip = CreateFrame("GameTooltip", "HydrossTooltip", nil, "GameTooltipTemplate")
 		tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 	end
 
