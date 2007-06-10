@@ -117,6 +117,28 @@ L:RegisterTranslations("zhTW", function() return {
 	holyfire_message = "神聖之火：[%s]",
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "Doncella de Virtud grita: Tu comportamiento no será tolerado.",
+	engage_message = "Doncella Activa! Arrepentimiento en ~33sec",
+
+	repentance = "Arrepentimiento",
+	repentance_desc = "Tiempo estimado al Arrepentimiento.",
+	repentance_trigger1 = "Expulsa tus pensamientos corruptos.",
+	repentance_trigger2 = "Tu impureza debe purificarse.",
+	repentance_message = "Proximo Arrepentimiento! en ~33sec",
+	repentance_warning = "Fin del Enfriamiento de Arrepentimiento - Lanzamiento proximo!",
+	repentance_bar = "Arrepentimiento",
+	repentance_nextbar = "Enfriamiento de Arrepentimiento",
+
+	holyfire = "Fuego Sagrado",
+	holyfire_desc = "Avisa cuando alguien sufre Fuego Sagrado.",
+	holyfire_trigger = "^([^%s]+) ([^%s]+) sufre Fuego Sagrado.$",
+	holyfire_message = "Fuego Sagrado: %s",
+
+	icon = "Icono de Raid",
+	icon_desc = "Pone un icono de raid en el juegador afectado por Fuego Sagrado(requiere promoted o mayor).",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

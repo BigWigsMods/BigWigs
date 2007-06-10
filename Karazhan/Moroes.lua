@@ -151,6 +151,33 @@ L:RegisterTranslations("zhTW", function() return {
 	enrage_warning = "摩洛即將進入憤怒狀態",
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "Mm, visitantes inesperados. Hay que hacer preparativos...",
+	engage_message = "%s Activado - Vanish en ~35sec!",
+
+	vanish = "Vanish",
+	vanish_desc = "Timers estimados para el Vanish.",
+	vanish_trigger1 = "¿Has llamado?",
+	vanish_trigger2 = "Bueno, ¿por dónde iba? Ah, sí...",
+	vanish_message = "Vanished! Siguiente en ~35sec!",
+	vanish_warning = "Vanish Pronto!",
+	vanish_bar = "~Enfriamiento de Vanish",
+
+	garrote = "Garrote",
+	garrote_desc = "Notifica que jugador ha sido afectado por Garrote.",
+	garrote_trigger = "^([^%s]+) ([^%s]+) sufre Garrote.$",
+	garrote_message = "Garrote: %s",
+
+	icon = "Icono",
+	icon_desc = "Pone un icono de Raid en el jugador afectado por Garrote(requiere promoted o mas alto).",
+
+	enrage = "Enfurecer",
+	enrage_desc = ("Avisa cuando %s se Enfurece"):format(boss),
+	enrage_trigger = "%s gana Enfurecer.",
+	enrage_message = "Enfurecido!",
+	enrage_warning = "Enfurecimiento Pronto!",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

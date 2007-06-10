@@ -163,6 +163,34 @@ L:RegisterTranslations("zhTW", function() return {
 	buff2_message = "%s 在施放增益狀態 - 請偷取",
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	phase = "Fases",
+	phase_desc = "Avisa cuando entra en una nueva fase.",
+	phase1_trigger = "¿Qué demonio sois que os atrevéis a atormentarme de esta guisa?",
+	phase1_message = "Acto I - %s",
+	phase2_trigger = "¡Qué bien resurge mi consuelo esto!",
+	phase2_message = "Acto II - %s",
+	phase3_trigger = "¡Ven, dulce noche; y devuélveme a mi Romulo!",
+	phase3_message = "Acto III - Ambos",
+
+	poison = "Veneno",
+	poison_desc = "Avisa del jugador envenenado.",
+	poison_trigger = "^([^%s]+) ([^%s]+) sufre Empujón envenenado.$",
+	poison_message = "Envenenado: %s",
+
+	heal = "Curacion",
+	heal_desc = ("Avisa cuando %s lanza Afección eterna."):format(girl),
+	heal_trigger = "comienza a lanzar Afección eterna",
+	heal_message = "%s Lanzando Curacion!",
+
+	buff = "Alerta de Auto-Buff",
+	buff_desc = ("Avisa cuando %s y %s reciben un self-buff."):format(boy, girl),
+	buff1_trigger = "gana Arrojo",
+	buff1_message = "%s gana Arrojo!",
+	buff2_trigger = "gana Devoción",
+	buff2_message = "%s gana Devoción.",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
