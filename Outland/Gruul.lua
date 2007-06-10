@@ -97,40 +97,37 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	grow = "Wachstum", 
-	grow_desc = "Warnt wenn Gruul Wachstum bekommt", 
-
-	grasp = "Griff des Gronnlords",
-	grasp_desc = "Griff des Gronnlords warnung und Zeitanzeige", 
-
-	cavein = "H\195\182hleneinst\195\188rz",
-	cavein_desc = "Warnt beim H\195\182hleneinst\195\188rz auf dir",
-
-	silence = "Stille",
-	silence_desc = "Warnt wenn Gruul stille (Nachwirken) wirkt",
-
 	engage_trigger = "Kommt und sterbt.",
 	engage_message = "%s gepullt!",
 
+	grow = "Wachstum", 
+	grow_desc = "Warnt wenn Gruul Wachstum bekommt", 
 	grow_trigger = "%s wird gr\195\182\195\159er!",
 	grow_message = "Wachstum: (%d)",
 	grow_bar = "Wachstum (%d)",
 
-	--grasp_trigger1 = "von Erde ersch\195\188ttern betroffen", --yell 1
-	--grasp_trigger2 = "von Griff des Gronnlords betroffen", --yell 2
+	grasp = "Griff des Gronnlords",
+	grasp_desc = "Griff des Gronnlords warnung und Zeitanzeige", 
+	grasp_trigger1 = "Husch.",
+	grasp_trigger2 = "Kein Entkommen.",
 	grasp_message = "Erde ersch\195\188tert - Griff kommt", 
-	grasp_warning = "Erde ersch\195\188tern bald!", 
+	grasp_warning = "Erde ersch\195\188tern bald!",
+	grasp_bar = "~Erde ersch\195\188tern Cooldown",
 
-	shatter_trigger = "%s br\195\188llt!",
-	shatter_message = "Zertr\195\188mmern!",
+	cavein = "H\195\182hleneinst\195\188rz",
+	cavein_desc = "Warnt beim H\195\182hleneinst\195\188rz auf dir",
+	cavein_trigger = "Ihr seid von H\195\182hleneinst\195\188rz betroffen.",
+	cavein_message = "H\195\182hleneinst\195\188rz auf dir!",
 
+	silence = "Stille",
+	silence_desc = "Warnt wenn Gruul stille (Nachwirken) wirkt",
 	silence_trigger = "von Nachklingen betroffen",
 	silence_message = "AOE Stille",
 	silence_warning = "AOE Stille bald!",
+	silence_bar = "~Stille Cooldown",
 
-
-	cavein_trigger = "Ihr seid von H\195\182hleneinst\195\188rz betroffen.",
-	cavein_message = "H\195\182hleneinst\195\188rz auf dir!",
+	shatter_trigger = "%s br\195\188llt!",
+	shatter_message = "Zertr\195\188mmern!",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

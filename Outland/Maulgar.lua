@@ -111,49 +111,42 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	heal = "Heilung",
 	heal_desc = "Warnt wenn Blindauge der Seher beginnt Heilung zu wirken",
-
-	shield = "Schild",
-	shield_desc = "Warnung wenn Blindauge der Seher Machtwort: Schild bekommt",
-
-	spellshield = "Zauberschild",
-	spellshield_desc = "Warnung wenn Krosh Feuerhand sein Zauberschild bekommt",
-
-	summon = "Wilder Teufelsj\195\164ger",
-	summon_desc = "Warnt wenn Olm der Beschw\195\182rer beginnt Wilden Teufelsj\195\164ger beschw\195\182ren zu wirken",
-
-	whirlwind = "Wirbelwind",
-	whirlwind_desc = "Warnung wenn Raufgar Wirbelwind bekommt",
-
-	flurry = "Schlaghagel",
-	flurry_desc = "Warnt wenn Raufgar kurz vor dem Schlaghagel steht und wenn er es bekommt",
-
-	smash = "Bogenzerkracher",
-	smash_desc = "Zeigt eine Bar f\195\188r den gesch\195\164tzten Bogenzerkracher",  
-
 	heal_trigger = "Blindauge der Seher beginnt Gebet der Heilung",
 	heal_message = "Blindauge der Seher wirkt Gebet der Heilung!",
 	heal_bar = "Heilung",
 
+	shield = "Schild",
+	shield_desc = "Warnung wenn Blindauge der Seher Machtwort: Schild bekommt",
 	shield_trigger = "bekommt 'Gro\195\159es Machtwort: Schild'.",
 	shield_message = "Schild auf Blindauge!",
 
+	spellshield = "Zauberschild",
+	spellshield_desc = "Warnung wenn Krosh Feuerhand sein Zauberschild bekommt",
 	spellshield_trigger = "bekommt 'Zauberschild'.",
 	spellshield_message = "Zauberschild auf Krosh!",
 
+	summon = "Wilder Teufelsj\195\164ger",
+	summon_desc = "Warnt wenn Olm der Beschw\195\182rer beginnt Wilden Teufelsj\195\164ger beschw\195\182ren zu wirken",
 	summon_trigger = "beginnt Wilden Teufelsj\195\164ger beschw\195\182ren zu wirken",
 	summon_message = "Teufelsj\195\164ger wurde beschworen!",
 
+	whirlwind = "Wirbelwind",
+	whirlwind_desc = "Warnung wenn Maulgar Wirbelwind bekommt",
+	whirlwind_trigger = "bekommt Wirbelwind",
+	whirlwind_message = "Maulgar - Wirbelwind f\195\188r 15sek!",
+	whirlwind_bar = "Wirbelwind",
+	whirlwind_nextbar = "~N\195\164chster Wirbelwind",
+	whirlwind_warning1 = "Maulgar angegriffen - Wirbelwind in ~50sek!",
+	whirlwind_warning2 = "Wirbelwind bald!",
+
+	flurry = "Schlaghagel",
+	flurry_desc = "Warnt wenn Maulgar kurz vor dem Schlaghagel steht und wenn er es bekommt",
 	flurry_trigger = "Ihr werdet die Hand von Gruul nicht besiegen!",
 	flurry_message = "50% - Schlaghagel!",
 	flurry_warning = "Schlaghagel bald!",
 
-	whirlwind_trigger = "bekommt Wirbelwind",
-	whirlwind_message = "Raufgar - Wirbelwind f\195\188r 15sek!",
-	whirlwind_bar = "Wirbelwind",
-	whirlwind_nextbar = "~N\195\164chster Wirbelwind",
-	whirlwind_warning1 = "Raufgar angegriffen - Wirbelwind in ~50sek!",
-	whirlwind_warning2 = "Wirbelwind bald!",
-
+	smash = "Bogenzerkracher",
+	smash_desc = "Zeigt eine Bar f\195\188r den gesch\195\164tzten Bogenzerkracher",  
 	smash_bar = "~Bogenzerkracher",
 } end)
 
