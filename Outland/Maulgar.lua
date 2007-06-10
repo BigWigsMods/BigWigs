@@ -13,8 +13,7 @@ local priest = BB["Blindeye the Seer"]
 local shaman = BB["Kiggler the Crazed"]
 
 BB = nil
-local started
-local flurryannounced
+local flurryannounced = nil
 
 ----------------------------
 --      Localization      --
@@ -22,6 +21,8 @@ local flurryannounced
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Maulgar",
+
+	engage_trigger = "Gronn are the real power in Outland!",
 
 	heal = "Heal",
 	heal_desc = "Warn when Blindeye the Seer begins to cast a Heal.",
@@ -252,9 +253,6 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	started = nil
-	flurryannounced = nil
-
 	self:RegisterEvent("UNIT_HEALTH")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -265,9 +263,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Event")
-
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "BlindeyePrayer", 4)
@@ -306,17 +301,8 @@ function mod:Event(msg)
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
-		if self.db.profile.whirlwind then
-			self:Message(L["whirlwind_warning1"], "Attention")
-			self:Nextwhirldwind()
-		end
-	elseif sync == "BlindeyePrayer" and self.db.profile.heal then
+function mod:BigWigs_RecvSync(sync)
+	if sync == "BlindeyePrayer" and self.db.profile.heal then
 		self:Message(L["heal_message"], "Important", nil, "Alarm")
 	elseif sync == "BlindeyeShield" and self.db.profile.shield then
 		self:Message(L["shield_message"], "Important")
@@ -342,6 +328,13 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.flurry and msg:find(L["flurry_trigger"]) then
 		self:Message(L["flurry_message"], "Important")
+	elseif msg == L["engage_trigger"] then
+		flurryannounced = nil
+
+		if self.db.profile.whirlwind then
+			self:Message(L["whirlwind_warning1"], "Attention")
+			self:Nextwhirldwind()
+		end
 	end
 end
 
