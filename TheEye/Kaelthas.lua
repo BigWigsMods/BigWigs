@@ -437,13 +437,17 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(thaladred, "Positive")
 	elseif msg == L["sanguinar_inc_trigger"] then
 		self:Message(sanguinar, "Positive")
+		self:Bar(sanguinar, 13, "Spell_Shadow_Charm")
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		self:TriggerEvent("BigWigs_StopBar", self, L["gaze_bar"])
 	elseif msg == L["capernian_inc_trigger"] then
 		self:Message(capernian, "Positive")
+		self:Bar(capernian, 7, "Spell_Shadow_Charm")
 		self:TriggerEvent("BigWigs_ShowProximity", self)
+		self:TriggerEvent("BigWigs_StopBar", self, L["fear_bar"])
 	elseif msg == L["telonicus_inc_trigger"] then
 		self:Message(telonicus, "Positive")
+		self:Bar(telonicus, 8, "Spell_Shadow_Charm")
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	elseif msg == L["weapons_inc_trigger"] then
 		self:Message(L["weapons_inc_message"], "Positive")
