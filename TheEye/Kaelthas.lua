@@ -174,7 +174,7 @@ L:RegisterTranslations("koKR", function() return {
 	mc_bar = "정신 지배 대기시간",
 	mc_message = "정신 지배! 다음은 약 33초 후!",
 
-	afflicted_trigger = "^([^|;%s]*)(.*)(.+)에 걸렸습니다%.$", -- check
+	afflicted_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$", -- check
 
 	temperament_spell = "혼돈의 기질",
 	temperament_message = "%s에게 혼돈의 기질 - 치유 시전시 침묵!",
