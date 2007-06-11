@@ -52,7 +52,6 @@ L:RegisterTranslations("frFR", function() return {
 	earthquake_bar = "~Cooldown Séisme",
 	earthquake_trigger = "Vous subissez les effets de Séisme.",
 
-	engage_message = "Marche-funeste engagé, Séisme dans ~30 sec. !",
 	enrage_soon_message = "Bientôt enragé !",
 } end)
 
