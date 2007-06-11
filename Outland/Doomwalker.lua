@@ -36,6 +36,9 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "Cessez toute activité. Vous allez être éliminés.",
+	engage_message = "Marche-funeste engagé, Séisme dans ~30 sec !",
+
 	overrun = "Renversement",
 	overrun_desc = "Préviens quand Marche-funeste utilise sa capacité Renversement.",
 	overrun_trigger = "^Marche-funeste.-Renversement",

@@ -67,6 +67,8 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "Les gronns sont la seule vraie puissance de l'Outreterre !",
+
 	heal = "Soin",
 	heal_desc = "Préviens quand Oeillaveugle le Voyant commence à lancer un soin.",
 	heal_trigger = "Oeillaveugle le Voyant commence à lancer Prière de soins",

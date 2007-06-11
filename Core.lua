@@ -71,7 +71,7 @@ L:RegisterTranslations("frFR", function() return {
 	bosskill = "Défaite du boss",
 	bosskill_desc = "Préviens quand le boss est vaincu.",
 	enrage = "Enrager",
-	--enrage_desc = "Warn when the boss enters an enraged state.",
+	enrage_desc = "Préviens quand le boss devient enragé.",
 
 	["Load"] = "Charger",
 	["Load All"] = "Tout charger",
