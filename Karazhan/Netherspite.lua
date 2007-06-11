@@ -15,9 +15,6 @@ local voidcount
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Netherspite",
 
-	enrage = "Enrage",
-	enrage_desc = "Warn about enrage after 9min.",
-
 	phase = "Phases",
 	phase_desc = ("Warns when %s changes from one phase to another."):format(boss),
 	phase1_message = "Withdrawal - Netherbreaths Over",
@@ -63,9 +60,6 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	enrage = "격노",
-	enrage_desc = "9분 후 격노에 대한 알림.",
-
 	phase = "단계",
 	phase_desc = ("%s의 다음 단계로 변화 시 경고."):format(boss),
 	phase1_message = "물러남 - 황천의 숨결 종료!",
@@ -87,9 +81,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	enrage = "Enrager",
-	enrage_desc = "Préviens quand Dédain-du-Néant devient enragé après 9 min.",
-
 	phase = "Phases",
 	phase_desc = ("Préviens quand %s passe d'une phase à l'autre."):format(boss),
 	phase1_message = "Retrait - Fin des Souffles du Néant",
@@ -111,9 +102,6 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	enrage = "狂暴警告",
-	enrage_desc = "當進入戰鬥九分鐘之後發送狂暴警告",
-
 	phase = "階段警告",
 	phase_desc = ("當 %s 進入下一階段時發送警告"):format(boss),
 	phase1_message = "撒退 - 第一階段光線門",

@@ -37,6 +37,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Options"] = true,
 	bosskill = "Boss death",
 	bosskill_desc = "Announce when the boss has been defeated.",
+	enrage = "Enrage",
+	enrage_desc = "Warn when the boss enters an enraged state.",
 
 	["Load"] = true,
 	["Load All"] = true,
@@ -68,6 +70,8 @@ L:RegisterTranslations("frFR", function() return {
 	["Options"] = "Options",
 	bosskill = "Défaite du boss",
 	bosskill_desc = "Préviens quand le boss est vaincu.",
+	enrage = "Enrager",
+	--enrage_desc = "Warn when the boss enters an enraged state.",
 
 	["Load"] = "Charger",
 	["Load All"] = "Tout charger",
@@ -99,6 +103,8 @@ L:RegisterTranslations("deDE", function() return {
 	["Options"] = "Optionen",
 	bosskill = "Boss besiegt",
 	bosskill_desc = "Melde, wenn ein Boss besiegt wurde.",
+	enrage = "Wutanfall",
+	--enrage_desc = "Warn when the boss enters an enraged state.",
 
 	["Load"] = "Laden",
 	["Load All"] = "Alle Laden",
@@ -127,6 +133,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Options"] = "설정",
 	bosskill = "보스 사망",
 	bosskill_desc = "보스를 물리쳤을 때 알림",
+	enrage = "격노",
+	--enrage_desc = "Warn when the boss enters an enraged state.",
 
 	["Load"] = "불러오기",
 	["Load All"] = "모두 불러오기",
@@ -159,6 +167,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	bosskill = "首领死亡",
 	bosskill_desc = "首领被击败时发出提示",
+	--enrage = "Enrage",
+	--enrage_desc = "Warn when the boss enters an enraged state.",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -183,6 +193,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	bosskill = "首領死亡",
 	bosskill_desc = "首領被擊敗時發出提示。",
+	enrage = "狂暴",
+	--enrage_desc = "Warn when the boss enters an enraged state.",
 } end)
 
 ---------------------------------
@@ -253,6 +265,7 @@ function BigWigs:OnInitialize()
 	self.version = (self.version or "2.0") .. " |cffff8888r" .. self.revision .. "|r"
 
 	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
+	self:RegisterBossOption("enrage", L["enrage"], L["enrage_desc"])
 end
 
 function BigWigs:OnEnable(first)

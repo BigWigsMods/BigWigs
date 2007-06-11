@@ -24,9 +24,6 @@ L:RegisterTranslations("enUS", function() return {
 	icon = "Raid Icon",
 	icon_desc = "Place a raid icon on the sacrificed player(requires promoted or higher).",
 
-	enrage = "Enrage",
-	enrage_desc = "Warn about enrage after 10min.",
-
 	weak = "Weakened",
 	weak_desc = "Warn for weakened state.",
 	weak_trigger = "afflicted by Broken Pact",
@@ -67,9 +64,6 @@ L:RegisterTranslations("frFR", function() return {
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le joueur sacrifié (nécessite d'être promu ou mieux).",
 
-	enrage = "Enrager",
-	enrage_desc = "Préviens quand Terestian devient enragé après 10 min.",
-
 	weak = "Affaibli",
 	weak_desc = "Préviens quand Terestian est affaibli.",
 	weak_trigger = "les effets .* Pacte rompu",
@@ -92,9 +86,6 @@ L:RegisterTranslations("koKR", function() return {
 	icon = "공격대 아이콘",
 	icon_desc = "희생에 걸린 플레이어에 공격대 아이콘 지정(승급자 이상 요구).",
 
-	enrage = "격노",
-	enrage_desc = "10분 후 격노에 대한 알림.",
-
 	weak = "약화",
 	weak_desc = "약화 상태에 대한 경고.",
 	weak_trigger = "깨진 서약에 걸렸습니다.",
@@ -115,9 +106,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	icon = "團隊標記",
 	icon_desc = "為犧牲的玩家設置標記（需要權限）",
-
-	enrage = "狂暴",
-	enrage_desc = "當進入戰鬥超過十分鐘時發送警告",
 
 	weak = "虛弱提示",
 	weak_desc = "當泰瑞斯提安進入虛弱狀態時發送警告",

@@ -24,9 +24,6 @@ L:RegisterTranslations("enUS", function() return {
 	target = "Target",
 	target_desc = "Warn who he targets during the kite phase, and put a raid icon on them.",
 
-	enrage = "Enrage",
-	enrage_desc = "Warn for enrage",
-
 	normal_phase_message = "Tank'n'spank!",
 	normal_phase_trigger = "Supremus punches the ground in anger!",
 

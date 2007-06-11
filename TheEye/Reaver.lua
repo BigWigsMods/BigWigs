@@ -16,9 +16,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	engage_trigger = "Alert! You are marked for extermination.",
 
-	enrage = "Enrage",
-	enrage_desc = "Enrage Timers.",
-
 	orbyou = "Arcane Orb on You",
 	orbyou_desc = "Warn for Arcane Orb on you.",
 	orb_you = "Arcane Orb on YOU!",
@@ -44,9 +41,6 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Alarm! Eliminierung eingeleitet!",
-
-	enrage = "Wutanfall",
-	enrage_desc = "Wutanfall Timer",
 
 	orbyou = "Arkane Kugel auf dir",
 	orbyou_desc = "Warnt vor Arkane Kugel auf dir",
@@ -74,9 +68,6 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Alerte ! Vous êtes désignés pour être exterminés.", -- à vérifier
 
-	enrage = "Enrager",
-	enrage_desc = "Affiche le délai avant que le Saccageur du Vide ne devienne enragé.",
-
 	orbyou = "Orbe des arcanes sur vous",
 	orbyou_desc = "Préviens quand vous êtes ciblé par l'Orbe des arcanes.",
 	orb_you = "Orbe des arcanes sur VOUS !",
@@ -102,9 +93,6 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "경고! 제거 대상 발견!",
-
-	enrage = "격노",
-	enrage_desc = "격노 타이머.",
 
 	orbyou = "자신의 비전 보주",
 	orbyou_desc = "자신의 비전 보주 알림.",

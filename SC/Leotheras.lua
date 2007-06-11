@@ -16,8 +16,6 @@ local beDemon = {}
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Leotheras",
 
-	enrage = "Enrage",
-	enrage_desc = "Time untill enrage.",
 	enrage_trigger = "Finally, my banishment ends!",
 
 	whirlwind = "Whirlwind",
@@ -54,8 +52,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	enrage = "격노",
-	enrage_desc = "격노까지 시간",
 	enrage_trigger = "드디어, 내가 풀려났도다!", -- check
 
 	whirlwind = "소용돌이",
@@ -92,8 +88,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	enrage = "Enrager",
-	enrage_desc = "Affiche le délai avant que Leotheras ne devienne enragé.",
 	enrage_trigger = "Enfin, mon exil s'achève !",
 
 	whirlwind = "Tourbillon",
@@ -130,9 +124,6 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	enrage = "Wutanfall",
-	enrage_desc = "Zeit bis zum Wutanfall",
-
 	whirlwind = "Wirbelwind",
 	whirlwind_desc = "Wirbelwind Timer",
 

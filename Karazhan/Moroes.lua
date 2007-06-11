@@ -33,8 +33,6 @@ L:RegisterTranslations("enUS", function() return {
 	icon = "Icon",
 	icon_desc = "Place a Raid Icon on the player afflicted by Garrote(requires promoted or higher).",
 
-	enrage = "Enrage",
-	enrage_desc = ("Warn when %s becomes enraged."):format(boss),
 	enrage_trigger = "%s becomes enraged!",
 	enrage_message = "Enrage!",
 	enrage_warning = "Enrage Soon!",
@@ -60,8 +58,6 @@ L:RegisterTranslations("frFR", function() return {
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Garrot (nécessite d'être promu ou mieux).",
 
-	enrage = "Enrager",
-	enrage_desc = ("Préviens quand %s devient enragé."):format(boss),
 	enrage_trigger = "%s devient fou furieux !",
 	enrage_message = "Enragé !",
 	enrage_warning = "Bientôt enragé !",
@@ -73,9 +69,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	garrote = "Erdrosseln",
 	garrote_desc = "Warnt welche Spieler von Erdrosseln betroffen sind",
-
-	enrage = "Enrage",
-	enrage_desc = ("Warnt wenn %s w\195\188tend wird"):format(boss),
 
 	icon = "Icon",
 	icon_desc = "Platziert ein Schlachtzugssymbol bei dem Spieler, welcher von Erdrosseln betroffen ist (ben\195\182tigt 'bef\195\182rdert' oder h\195\182her)",
@@ -117,8 +110,6 @@ L:RegisterTranslations("koKR", function() return {
 	icon = "아이콘",
 	icon_desc = "목조르기에 걸린 사람에게 공격대 아이콘 지정(승급자 이상의 권한 필요).",
 
-	enrage = "격노",
-	enrage_desc = ("%s 격노 시 알림."):format(boss),
 	enrage_trigger = "%s|1이;가; 분노에 휩싸입니다!",
 	enrage_message = "격노!",
 	enrage_warning = "잠시 후 격노!",
@@ -144,8 +135,6 @@ L:RegisterTranslations("zhTW", function() return {
 	icon = "標記圖示",
 	icon_desc = "為被絞喉的玩家設置團隊標記（需要權限）",
 
-	enrage = "憤怒",
-	enrage_desc = ("當 %s 進入憤怒狀態時發送警告"):format(boss),
 	enrage_trigger = "%s 變得憤怒了!",--要抓 combatlog
 	enrage_message = "憤怒",
 	enrage_warning = "摩洛即將進入憤怒狀態",
@@ -171,8 +160,6 @@ L:RegisterTranslations("esES", function() return {
 	icon = "Icono",
 	icon_desc = "Pone un icono de Raid en el jugador afectado por Garrote(requiere promoted o mas alto).",
 
-	enrage = "Enfurecer",
-	enrage_desc = ("Avisa cuando %s se Enfurece"):format(boss),
 	enrage_trigger = "%s gana Enfurecer.",
 	enrage_message = "Enfurecido!",
 	enrage_warning = "Enfurecimiento Pronto!",

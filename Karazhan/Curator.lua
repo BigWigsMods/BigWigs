@@ -19,8 +19,6 @@ L:RegisterTranslations("enUS", function() return {
 	berserk_message = "%s engaged, 10min to berserk!",
 	berserk_bar = "Berserk",
 
-	enrage = "Enrage",
-	enrage_desc = "Warn for enrage at 15%.",
 	enrage_trigger = "Failure to comply will result in offensive action.",
 	enrage_message = "Enrage!",
 	enrage_warning = "Enrage soon!",
@@ -48,8 +46,6 @@ L:RegisterTranslations("frFR", function() return {
 	berserk_message = "%s engagé, 10 min. avant berserk !",
 	berserk_bar = "Berserk",
 
-	enrage = "Enrager",
-	enrage_desc = "Préviens quand le Conservateur devient enragé à 15%.",
 	enrage_trigger = "Toute désobéissance entraînera une action offensive.",
 	enrage_message = "Enragé !",
 	enrage_warning = "Bientôt enragé !",
@@ -73,9 +69,6 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	berserk = "Berserker",
 	berserk_desc = "Warnung f\195\188r Berserker nach 10min.",
-
-	enrage = "Rage",
-	enrage_desc = "Warnung f\195\188r Rage bei 15%.",
 
 	weaken = "Schw\195\164chung",
 	weaken_desc = "Warnung f\195\188r den geschw\195\164chten Zustand",
@@ -110,8 +103,6 @@ L:RegisterTranslations("koKR", function() return {
 	berserk_message = "%s 전투 개시, 10분 후 광폭화!",
 	berserk_bar = "광폭화",
 
-	enrage = "격노",
-	enrage_desc = "체력 15% 시 격노 알림",
 	enrage_trigger = "규칙 위반으로 경보가 발동됐습니다.",
 	enrage_message = "격노!",
 	enrage_warning = "잠시 후 격노!",
@@ -139,8 +130,6 @@ L:RegisterTranslations("zhTW", function() return {
 	berserk_message = "%s 將在十分鐘後進入無敵狀態",
 	berserk_bar = "無敵",
 
-	enrage = "狂暴警告",
-	enrage_desc = "當監護者血量剩15%時發送警告",
 	enrage_trigger = "不順從就會招致攻擊性的行動。",
 	enrage_message = "狂暴",
 	enrage_warning = "監護者將會進入狂暴狀態",

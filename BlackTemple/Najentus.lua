@@ -27,9 +27,6 @@ L:RegisterTranslations("enUS", function() return {
 	shield_warn = "Tidal Shield!",
 	shield_soon_warn = "Tidal Shield in ~10sec!", 
 
-	enrage = "Enrage",
-	enrage_desc = "Warn for enrage",
-
 	icon = "Icon",
 	icon_desc = "Put an icon on players with Impaling Spine.",
 } end )

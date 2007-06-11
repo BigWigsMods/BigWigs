@@ -13,8 +13,6 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Karathress",
 
-	enrage = "Enrage",
-	enrage_desc = "Enrage timer.",
 	enrage_trigger = "Guards, attention!",
 
 	totem = "Spitfire Totem",
@@ -35,9 +33,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	enrage = "Wutanfall",
-	enrage_desc = "Wutanfall Timer.",
-
 	totem = "Feuerspuckendes Totem",
 	totem_desc = "Warnt vor dem Feuerspuckenden Totem und wer es aufstellt.",
 
@@ -60,8 +55,6 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	enrage = "격노",
-	enrage_desc = "격노 타이머",
 	enrage_trigger = "경비병! 여기 침입자들이 있다...",
 
 	totem = "불 뿜는 토템",
@@ -82,8 +75,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	enrage = "Enrager",
-	enrage_desc = "Affiche le délai avant que Karathress ne devienne enragé.",
 	enrage_trigger = "Gardes, en position !",
 
 	totem = "Totem crache-feu",

@@ -29,9 +29,6 @@ L:RegisterTranslations("enUS", function() return {
 	hydross_bar = "Mark of Hydross - %s%%",
 	corruption_bar = "Mark of Corruption - %s%%",
 
-	enrage = "Enrage",
-	enrage_desc = "Warn for enrage.",
-
 	stance = "Stance changes",
 	stance_desc = ("Warn when %s changes stances."):format(boss),
 	poison_stance_trigger = "Aaghh, the poison...",
@@ -60,9 +57,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	mark = "Mal",
 	mark_desc = "Zeigt Warnungen und Anzahl des Mals.",
-
-	enrage = "Wutanfall",
-	enrage_desc = "Warnt vor Wutanfall.",
 
 	stance = "Phasenwechsel",
 	stance_desc = ("Warnt wenn %s seine Phase wechselt."):format(boss),
@@ -108,9 +102,6 @@ L:RegisterTranslations("koKR", function() return {
 	hydross_bar = "히드로스의 징표 - %s%%",
 	corruption_bar = "타락의 징표 - %s%%",
 
-	enrage = "격노",
-	enrage_desc = "격노에 대한 경고.",
-
 	stance = "태세 변경",
 	stance_desc = ("%s의 태세 변경 시 경고."):format(boss),
 	poison_stance_trigger = "으아아, 독이...",
@@ -143,9 +134,6 @@ L:RegisterTranslations("frFR", function() return {
 	corruption_trigger = "Marque de corruption",
 	hydross_bar = "Marque d'Hydross - %s%%",
 	corruption_bar = "Marque de Corruption - %s%%",
-
-	enrage = "Enrager",
-	enrage_desc = ("Préviens quand %s devient enragé."):format(boss),
 
 	stance = "Changements d'état",
 	stance_desc = ("Préviens quand %s change d'état."):format(boss),
