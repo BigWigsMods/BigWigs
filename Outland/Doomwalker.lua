@@ -70,7 +70,6 @@ L:RegisterTranslations("koKR", function() return {
 	earthquake_bar = "~지진 대기시간",
 	earthquake_trigger = "당신은 지진에 걸렸습니다.",
 
-	engage_message = "파멸의 절단기 전투 개시, 약 30초 이내 지진!",
 	enrage_soon_message = "잠시 후 격노!",
 	enrage_trigger = "%s becomes enraged!", -- check
 	enrage_message = "격노!",
