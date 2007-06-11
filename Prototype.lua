@@ -62,6 +62,16 @@ commonWords:RegisterTranslations("frFR", function() return {
 	enrage = "Enrager",
 } end )
 
+commonWords:RegisterTranslations("esES", function() return {
+	you = "Tu",
+	are = "estas",
+
+	enrage_start = "%s Activado - Furor en %dmin",
+	enrage_end = "%s Enfurecido",
+	enrage_min = "Enfurecimiento en %d min",
+	enrage_sec = "Enfurecimiento en %d sec",
+	enrage = "Enfurecimiento",
+} end)
 
 function BigWigs.modulePrototype:OnInitialize()
 	-- Unconditionally register, this shouldn't happen from any other place
