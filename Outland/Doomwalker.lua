@@ -15,6 +15,7 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Doomwalker",
 
 	engage_trigger = "Do not proceed. You will be eliminated.", --verify
+	engage_message = "Doomwalker engaged, Earthquake in ~30sec!",
 
 	overrun = "Overrun",
 	overrun_desc = "Alert when Doomwalker uses his Overrun ability.",
@@ -29,10 +30,9 @@ L:RegisterTranslations("enUS", function() return {
 	earthquake_bar = "~Earthquake Cooldown",
 	earthquake_trigger = "You are afflicted by Earthquake.",
 
-	enrage = "Enrage",
-	enrage_desc = "Warn about enrage around 20% hitpoints.",
-	engage_message = "Doomwalker engaged, Earthquake in ~30sec!",
 	enrage_soon_message = "Enrage soon!",
+	enrage_trigger = "%s becomes enraged!",
+	enrage_message = "Enrage!",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -49,8 +49,6 @@ L:RegisterTranslations("frFR", function() return {
 	earthquake_bar = "~Cooldown Séisme",
 	earthquake_trigger = "Vous subissez les effets de Séisme.",
 
-	enrage = "Enrager",
-	enrage_desc = "Préviens quand Marche-funeste devient enragé à ~20%.",
 	engage_message = "Marche-funeste engagé, Séisme dans ~30 sec. !",
 	enrage_soon_message = "Bientôt enragé !",
 } end)
@@ -69,8 +67,6 @@ L:RegisterTranslations("koKR", function() return {
 	earthquake_bar = "~지진 대기시간",
 	earthquake_trigger = "당신은 지진에 걸렸습니다.",
 
-	enrage = "격노",
-	enrage_desc = "체력 20%시 격노에 대한 경고",
 	engage_message = "파멸의 절단기 전투 개시, 약 30초 이내 지진!",
 	enrage_soon_message = "잠시 후 격노!",
 } end)
@@ -81,9 +77,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	earthquake = "Erdbeben",
 	earthquake_desc = "Warnt, wenn Verdammniswandler Erdbeben benutzt.",
-
-	enrage = "Wutanfall",
-	enrage_desc = "Warnt vor Wutanfall bei 20% Gesundheit.",
 
 	engage_message = "Verdammniswandler angegriffen, Erdbeben in ~30sec!",
 	enrage_soon_message = "Wutanfall bald!",
@@ -110,6 +103,7 @@ mod.enabletrigger = boss
 mod.toggleoptions = {"overrun", "earthquake", "enrage", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
+mod.proximitySilent = true
 
 ------------------------------
 --      Initialization      --
@@ -119,11 +113,10 @@ function mod:OnEnable()
 	started = nil
 	enrageAnnounced = nil
 
-	self:Hook("ChatFrame_MessageEventHandler", "ChatFrame_MessageEventHandler", true)
-
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
 	self:RegisterEvent("UNIT_HEALTH")
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
@@ -133,17 +126,6 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "DoomwalkerEarthquake", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "DoomwalkerOverrun", 10)
-end
-
-------------------------------
---         Hooks               --
-------------------------------
---need to check if we even still need this in wow 2.1
-function mod:ChatFrame_MessageEventHandler(event, ...)
-	if event:find("EMOTE") and (type(arg2) == "nil" or not arg2) then
-		arg2 = boss
-	end
-	return self.hooks["ChatFrame_MessageEventHandler"](event, ...)
 end
 
 ------------------------------
@@ -184,6 +166,12 @@ end
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["overrun_trigger"]) then
 		self:Sync("DoomwalkerOverrun")
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
+	if self.db.profile.enrage and msg == L["enrage_trigger"] then
+		self:Message(L["enrage_message"], "Important", nil, "Alarm")
 	end
 end
 
