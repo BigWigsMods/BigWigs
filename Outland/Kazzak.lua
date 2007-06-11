@@ -13,8 +13,10 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Kazzak",
 
-	enrage_trigger1 = "The Legion will conquer all!",
-	enrage_trigger2 = "%s becomes enraged!",
+	engage_trigger1 = "The Legion will conquer all!",
+	engage_trigger2 = "All mortals will perish!",
+
+	enrage_trigger = "%s becomes enraged!",
 	enrage_warning1 = "%s Engaged - Enrage in 50-60sec",
 	enrage_warning2 = "Enrage soon!",
 	enrage_message = "Enraged for 10sec!",
@@ -34,8 +36,9 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	enrage_trigger1 = "Pour la Légion ! Pour Kil'Jaeden !",
-	enrage_trigger2 = "%s devient fou furieux !",
+	engage_trigger1 = "Pour la Légion ! Pour Kil'Jaeden !",
+
+	enrage_trigger = "%s devient fou furieux !",
 	enrage_warning1 = "%s engagé - Enragé dans 50-60 sec.",
 	enrage_warning2 = "Bientôt enragé !",
 	enrage_message = "Enragé pendant 10 sec. !",
@@ -55,8 +58,9 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	enrage_trigger1 = "불타는 군단과 킬제덴을 위하여!",
-	enrage_trigger2 = "%s|1이;가; 분노에 휩싸입니다!",
+	engage_trigger1 = "불타는 군단과 킬제덴을 위하여!",
+
+	enrage_trigger = "%s|1이;가; 분노에 휩싸입니다!",
 	enrage_warning1 = "%s 전투 개시 - 50-60초 후 격노",
 	enrage_warning2 = "잠시 후 격노!",
 	enrage_message = "10초간 격노!",
@@ -76,8 +80,9 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	enrage_trigger1 = "為了軍團!為了基爾加德!",
-	enrage_trigger2 = "%s變得憤怒了!",
+	engage_trigger1 = "為了軍團!為了基爾加德!",
+
+	enrage_trigger = "%s變得憤怒了!",
 	enrage_warning1 = "與 %s 進入戰鬥！ 50-60 秒後狂怒！",
 	enrage_warning2 = "即將狂怒！",
 	enrage_message = "狂怒狀態 10 秒！",
@@ -129,7 +134,7 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.enrage and msg == L["enrage_trigger1"] then
+	if self.db.profile.enrage and (msg == L["engage_trigger1"] or msg == L["engage_trigger2"]) then
 		self:Message(L["enrage_warning1"]:format(boss), "Attention")
 		self:DelayedMessage(49, L["enrage_warning2"], "Urgent")
 		self:Bar(L["enrage_bar"], 60, "Spell_Shadow_UnholyFrenzy")
@@ -137,7 +142,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
-	if self.db.profile.enrage and msg == L["enrage_trigger2"] then
+	if self.db.profile.enrage and msg == L["enrage_trigger"] then
 		self:Message(L["enrage_message"], "Important", nil, "Alert")
 		self:DelayedMessage(10, L["enrage_finished"], "Positive")
 		self:Bar(L["enraged_bar"], 10, "Spell_Shadow_UnholyFrenzy")
