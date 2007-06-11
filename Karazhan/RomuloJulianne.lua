@@ -166,11 +166,11 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("esES", function() return {
 	phase = "Fases",
 	phase_desc = "Avisa cuando entra en una nueva fase.",
-	phase1_trigger = "¿Qué demonio sois que os atrevéis a atormentarme de esta guisa?",
+	phase1_trigger = "Qué demonio sois que os atrevéis a atormentarme de esta guisa?",
 	phase1_message = "Acto I - %s",
-	phase2_trigger = "¡Qué bien resurge mi consuelo esto!",
+	phase2_trigger = "Qué bien resurge mi consuelo esto!",
 	phase2_message = "Acto II - %s",
-	phase3_trigger = "¡Ven, dulce noche; y devuélveme a mi Romulo!",
+	phase3_trigger = "Ven, dulce noche; y devuélveme a mi Romulo!",
 	phase3_message = "Acto III - Ambos",
 
 	poison = "Veneno",

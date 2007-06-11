@@ -146,8 +146,8 @@ L:RegisterTranslations("esES", function() return {
 
 	vanish = "Vanish",
 	vanish_desc = "Timers estimados para el Vanish.",
-	vanish_trigger1 = "¿Has llamado?",
-	vanish_trigger2 = "Bueno, ¿por dónde iba? Ah, sí...",
+	vanish_trigger1 = "Has llamado?",
+	vanish_trigger2 = "Bueno, por dónde iba? Ah, sí...",
 	vanish_message = "Vanished! Siguiente en ~35sec!",
 	vanish_warning = "Vanish Pronto!",
 	vanish_bar = "~Enfriamiento de Vanish",

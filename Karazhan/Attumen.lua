@@ -98,9 +98,9 @@ L:RegisterTranslations("esES", function() return {
 	phase = "Fase",
 	phase_desc = "Aviso cuando entra en una nueva Fase.",
 	phase1_message = "Fase 1 - %s",
-	phase2_trigger = "¡%s llama a su maestro!",
+	phase2_trigger = "%s llama a su maestro!",
 	phase2_message = "Fase 2 - %s & Attumen",
-	phase3_trigger = "¡Vamos, Medianoche, dispersemos esta muchedumbre insignificante!",
+	phase3_trigger = "Vamos, Medianoche, dispersemos esta muchedumbre insignificante!",
 	phase3_message = "Fase 3 - %s",
 
 	curse = "Tanques Malditos",

@@ -118,7 +118,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("esES", function() return {
-	engage_trigger = "Doncella de Virtud grita: Tu comportamiento no será tolerado.",
+	engage_trigger = "Tu comportamiento no será tolerado.",
 	engage_message = "Doncella Activa! Arrepentimiento en ~33sec",
 
 	repentance = "Arrepentimiento",
