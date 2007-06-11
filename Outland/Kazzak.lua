@@ -13,7 +13,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Kazzak",
 
-	enrage_trigger1 = "For the Legion! For Kil'Jaeden!",
+	enrage_trigger1 = "The Legion will conquer all!",
 	enrage_trigger2 = "%s becomes enraged!",
 	enrage_warning1 = "%s Engaged - Enrage in 50-60sec",
 	enrage_warning2 = "Enrage soon!",
