@@ -65,12 +65,12 @@ L:RegisterTranslations("koKR", function() return {
 	enraged_bar = "<격노>",
 
 	mark = "징표",
-	mark_desc = "당신에 카자크의 징표 알림.",
+	mark_desc = "당신에 카자크의 징표 시 알립니다.",
 	mark_trigger = "당신은 카자크의 징표에 걸렸습니다.",
 	mark_message = "당신에 카자크의 징표",
 
 	twist = "어긋난 반사",
-	twist_desc = "어긋난 반사에 걸린 사람에 대한 경고.",
+	twist_desc = "어긋난 반사에 걸린 사람에 대한 경고입니다.",
 	twist_trigger = "^([^|;%s]*)(.*)어긋난 반사에 걸렸습니다%.$",
 	twist_message = "어긋난 반사: %s",
 } end)

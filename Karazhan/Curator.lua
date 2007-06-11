@@ -98,7 +98,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	berserk = "광폭화",
-	berserk_desc = "10분 후 광폭화 알림",
+	berserk_desc = "10분 후 광폭화에 대해 알립니다.",
 	berserk_trigger = "박물관에는 초대받은 손님만 입장하실 수 있습니다.",
 	berserk_message = "%s 전투 개시, 10분 후 광폭화!",
 	berserk_bar = "광폭화",
@@ -108,7 +108,7 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_warning = "잠시 후 격노!",
 
 	weaken = "약화",
-	weaken_desc = "약화된 상태인 동안 알림.",
+	weaken_desc = "약화된 상태인 동안 알립니다.",
 	weaken_trigger = "현재 요청하신 내용은 처리가 불가능합니다.",
 	weaken_message = "환기 - 20초간 약화!",
 	weaken_bar = "환기",
@@ -116,7 +116,7 @@ L:RegisterTranslations("koKR", function() return {
 	weaken_fade_warning = "5초 후 환기 종료!",
 
 	weaktime = "약화 카운트다운",
-	weaktime_desc = "다음 약화에 대한 바와 시간 카운트다운",
+	weaktime_desc = "다음 약화에 대한 바와 시간을 카운트다운 합니다.",
 	weaktime_message1 = "약 10초 후 환기",
 	weaktime_message2 = "약 30초 후 환기",
 	weaktime_message3 = "약 70초 후 환기",

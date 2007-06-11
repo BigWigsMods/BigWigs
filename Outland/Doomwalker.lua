@@ -54,21 +54,26 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
+	engage_trigger = "Do not proceed. You will be eliminated.", -- check
+	engage_message = "파멸의 절단기 전투 개시, 약 30초 이내 지진!",
+
 	overrun = "괴멸",
-	overrun_desc = "파멸의 절단기의 괴멸 사용 가능 시 경고",
+	overrun_desc = "파멸의 절단기의 괴멸 사용 가능 시 경고합니다.",
 	overrun_trigger = "^파멸의 절단기.-괴멸", -- check "^Doomwalker.-Overrun",
 	overrun_message = "괴멸!",
 	overrun_soon_message = "잠시 후 괴멸 가능!",
 	overrun_bar = "~괴멸 대기시간",
 
 	earthquake = "지진",
-	earthquake_desc = "파멸의 절단기의 지진 사용 가능 시 경고",
+	earthquake_desc = "파멸의 절단기의 지진 사용 가능 시 경고합니다.",
 	earthquake_message = "지진! 다음은 약 70초 후!",
 	earthquake_bar = "~지진 대기시간",
 	earthquake_trigger = "당신은 지진에 걸렸습니다.",
 
 	engage_message = "파멸의 절단기 전투 개시, 약 30초 이내 지진!",
 	enrage_soon_message = "잠시 후 격노!",
+	enrage_trigger = "%s becomes enraged!", -- check
+	enrage_message = "격노!",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

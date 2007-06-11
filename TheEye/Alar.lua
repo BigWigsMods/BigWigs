@@ -69,7 +69,7 @@ L:RegisterTranslations("koKR", function() return {
 	engage_message = "%s 전투 개시 - 1 단계",
 
 	meteor = "유성",
-	meteor_desc = "대략적인 유성 타이머.",
+	meteor_desc = "대략적인 유성 타이머입니다.",
 	meteor_warning = "약 5초 이내 유성 주의",
 	meteor_message = "환생! - 약 47초 이내 유성",
 	meteor_trigger = "알라르|1이;가; 환생 시전을 시작합니다.",
@@ -77,18 +77,18 @@ L:RegisterTranslations("koKR", function() return {
 	meteor_nextbar = "다음 유성",
 
 	flamepatch = "당신에 화염 파편",
-	flamepatch_desc = "당신에 화염 파편에 대한 경고.",
+	flamepatch_desc = "당신에 화염 파편에 대한 경고입니다.",
 	flamepatch_trigger = "당신은 화염 파편에 걸렸습니다.",
 	flamepatch_message = "당신에 화염 파편!",
 
 	armor = "방어구 녹이기",
-	armor_desc = "방어구 녹이기에 걸린 사람 경고.",
+	armor_desc = "방어구 녹이기에 걸린 사람에 대한 경고입니다.",
 	armor_trigger =  "^([^|;%s]*)(.*)방어구 녹이기에 걸렸습니다.$",
 	armor_other = "방어구 녹이기: %s",
 	armor_you = "당신에 방어구 녹이기!",
 
-	icon = "공격대 아이콘",
-	icon_desc = "방어구 녹이기에 걸린 플레이어에 공격대 아이콘을 지정합니다(승급자 이상 권한 요구).",
+	icon = "전술 표시",
+	icon_desc = "방어구 녹이기에 걸린 플레이어에에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
 } end )
 
 ----------------------------------

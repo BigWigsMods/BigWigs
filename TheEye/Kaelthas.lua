@@ -115,40 +115,44 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	engage_trigger = "^Energy. Power.", -- check
+	engage_message = "1 단계",
+
 	phase = "단계 경고",
-	phase_desc = "단계 변경에 대한 알림.",
+	phase_desc = "단계 변경에 대해 알립니다.",
 
 	conflag = "거대한 불길",
-	conflag_desc = "플레이어에게 거대한 불길 경고.",
+	conflag_desc = "플레이어에게 거대한 불길을 경고합니다.",
 
 	temperament = "혼돈의 기질",
-	temperament_desc = "플레이어에게 혼돈의 기질 경고.",
+	temperament_desc = "플레이어에게 혼돈의 기질을 경고합니다.",
 
 	gaze = "주시",
-	gaze_desc = "플레이어에게 탈라드레드의 주시 경고.",
+	gaze_desc = "플레이어에게 탈라드레드의 주시를 경고합니다.",
 
-	icon = "공격대 아이콘",
-	icon_desc = "탈라드레드의 주시 대상이된 플레이어에 공격대 아이콘 지정(승급자 이상 권한 필요).",
+	icon = "전술 표시",
+	icon_desc = "탈라드레드의 주시 대상이된 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
 
 	fear = "공포",
-	fear_desc = "우레와 같은 울부짖음 경고.",
+	fear_desc = "우레와 같은 울부짖음에 대한 경고입니다.",
 
 	rebirth = "불사조 환생",
-	rebirth_desc = "불사조 환생 경고",
-	rebirth_trigger = "불사조|1이;가; 환생 시전을 시작합니다.",
+	rebirth_desc = "불사조 환생 접근 타이머입니다.",
+	rebirth_trigger = "불사조|1이;가; 환생 시전을 시작합니다.$", -- check
 	rebirth_warning = "5초 이내 불사조 환생!",
+	rebirth_bar = "~환생 가능",
 
 	pyro = "불덩이 작렬",
-	pyro_desc = "불덩이 작렬에 대한 60초 타이머 표시.",
-	pyro_trigger = "%s|1이;가; 불덩이 작렬 시전을 시작합니다.",
-	pyro_warning = "5초 이내 불덩이 작렬!",
+	pyro_desc = "불덩이 작렬에 대한 60초 타이머를 표시합니다.",
+	pyro_trigger = "%s|1이;가; 불덩이 작렬 시전을 시작합니다!$", -- check
+	pyro_warning = "약 5초 이내 불덩이 작렬!",
 	pyro_message = "불덩이 작열 시전!",
 
 	thaladred_inc_trigger = "암흑의 인도자 탈라드레드를 상대로 얼마나 버틸지 볼까?",
 	sanguinar_inc_trigger = "최고의 조언가를 상대로 잘도 버텨냈군. 허나 그 누구도 붉은 망치의 힘에는 대항할 수 없지. 보아라, 군주 생귀나르를!",
 	capernian_inc_trigger = "카퍼니안, 놈들이 여기 온 것을 후회하게 해 줘라.",
 	telonicus_inc_trigger = "좋아, 그 정도 실력이면 수석기술자 텔로니쿠스를 상대해 볼만하겠어.",
-	weapons_inc_trigger = "보다시피 내 무기고엔 굉장한 무기가 아주 많지.",
+	weapons_inc_trigger = "보다시피 내 무기고엔 굉장한 무기가 아주 많지....", -- check
 	phase2_trigger = "네놈들을 과소평가했나 보군. 모두를 한꺼번에 상대하라는 건 불공평한 처사지. 나의 백성도 공평한 대접을 받은 적 없기는 매한가지. 받은 대로 돌려주겠다.",
 	phase3_trigger = "때론 직접 나서야 할 때도 있는 법이지. 발라모어 샤날!", -- check
 
@@ -178,9 +182,9 @@ L:RegisterTranslations("koKR", function() return {
 	conflag_spell = "거대한 불길",
 	conflag_message = "%s에게 거대한 불길!",
 
-	gaze_trigger = "암흑의 인도자 탈라드레드|1이;가; ([^%s]+)|1을;를; 노려봅니다!$",
+	gaze_trigger = "([^%s]+)|1을;를; 노려봅니다!$", -- check
 	gaze_message = "%s 주시!",
-	gaze_bar = "주시 대기 시간",
+	gaze_bar = "~주시 대기 시간",
 
 	fear_soon_message = "잠시 후 공포!",
 	fear_message = "공포!",

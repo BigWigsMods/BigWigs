@@ -78,21 +78,22 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "아, 때맞춰 와줬군.",
 
 	sacrifice = "희생",
-	sacrifice_desc = "플레이어의 희생에 대한 경고.",
+	sacrifice_desc = "플레이어의 희생에 대한 경고입니다.",
 	sacrifice_trigger = "^([^|;%s]*)(.*)희생에 걸렸습니다%.$",
 	sacrifice_message = "%s님이 희생되었습니다!",
 	sacrifice_bar = "희생: %s",
 
-	icon = "공격대 아이콘",
-	icon_desc = "희생에 걸린 플레이어에 공격대 아이콘 지정(승급자 이상 요구).",
+	icon = "전술 표시",
+	icon_desc = "희생에 걸린 플레이어에게 전술 표시를 지정합니다 (승급자 이상 요구).",
 
 	weak = "약화",
-	weak_desc = "약화 상태에 대한 경고.",
+	weak_desc = "약화 상태에 대한 경고입니다.",
 	weak_trigger = "깨진 서약에 걸렸습니다.",
-	weak_message = "45초간 약화!",
-	weak_warning1 = "5초 후 약화 종료!",
+	weak_message = "약 45초간 약화!",
+	weak_warning1 = "약 5초 후 약화 종료!",
 	weak_warning2 = "약화 종료!",
-	weak_bar = "약화",
+	weak_bar = "~약화 사라짐",
+	weak_fade = "^Broken Pact fades", -- check
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

@@ -85,7 +85,7 @@ L:RegisterTranslations("koKR", function() return {
 	engage_message = "고결의 여신 전투 개시! 약 33초 후 참회",
 
 	repentance = "참회",
-	repentance_desc = "참회 예상 시간.",
+	repentance_desc = "참회 예상 시간입니다.",
 	repentance_trigger1 = "그 부정한 생각을 떨쳐버려라.",
 	repentance_trigger2 = "너희의 불순함을 반드시 정화하겠다.",
 	repentance_message = "참회! 다음은 약 33초 후!",
@@ -94,12 +94,12 @@ L:RegisterTranslations("koKR", function() return {
 	repentance_nextbar = "참회 쿨다운",
 
 	holyfire = "신성한 불꽃",
-	holyfire_desc = "신성한 불꽃에 걸린 사람 경고.",
+	holyfire_desc = "신성한 불꽃에 걸린 사람에 대한 경고입니다.",
 	holyfire_trigger = "^([^|;%s]*)(.*)신성한 불꽃에 걸렸습니다%.$",
 	holyfire_message = "신성한 불꽃: %s",
 
-	icon = "공격대 아이콘",
-	icon_desc = "신성한 불꽃에 걸린 사람에게 공격대 아이콘 지정(승급자 이상의 권한 필요).",
+	icon = "전술 표시",
+	icon_desc = "신성한 불꽃에 걸린 사람에게 전술 표시를 지정합니다 (승급자 이상의 권한 필요).",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

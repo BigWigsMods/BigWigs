@@ -83,37 +83,38 @@ L:RegisterTranslations("koKR", function() return {
 	engage_message = "1단계 시작",
 
 	phase = "단계 경고",
-	phase_desc = "바쉬가 다음 단계로 변경 시 알림.",
+	phase_desc = "바쉬가 다음 단계로 변경 시 알림니다.",
 	phase2_trigger = "때가 왔다! 한 놈도 살려두지 마라!",
  	phase2_soon_message = "잠시 후 2 단계!",
 	phase2_message = "2 단계, 애드 주의!",
 	phase3_message = "3 단계 - 4분 이내 격노!",
 
 	static = "전하 충전",
-	static_desc = "전하 충전에 걸린 플레이어 알림.",
+	static_desc = "전하 충전에 걸린 플레이어를 알립니다.",
 	static_charge_trigger = "^([^|;%s]*)(.*)전하 충전에 걸렸습니다%.$",
 	static_charge_message = "%s 전하 충전!",
+	static_fade = "당신의 전하 충전 사라짐.",
 
-	icon = "아이콘",
-	icon_desc = "전하 충전에 걸린 플레이어와 핵을 획득한 플레이어에 아이콘 지정.",
+	icon = "전술 표시",
+	icon_desc = "전하 충전에 걸린 플레이어와 핵을 획득한 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
 
 	elemental = "오염된 정령 등장",
-	elemental_desc = "단계 2에서 오염된 정령 등장 시 경고.",
+	elemental_desc = "2 단계에서 오염된 정령 등장 시 경고합니다.",
 	elemental_bar = "오염된 정령 등장",
 	elemental_soon_message = "잠시 후 오염된 정령!",
 
 	strider = "포자손 등장",
-	strider_desc = "단계 2에서 포자손 등장 시 경고.",
+	strider_desc = "2 단계에서 포자손 등장 시 경고합니다.",
 	strider_bar = "포자손 등장",
 	strider_soon_message = "잠시 후 포자손!",
 
 	barrier = "보호막 손실",
-	barrier_desc = "보호막 손실 시 알림",
+	barrier_desc = "보호막 손실 시 알립니다.",
 	barrier_down_message = "보호막 %d/4 손실!",
 	barrier_fades_trigger = "여군주 바쉬의 몸에서 마법 보호막 효과가 사라졌습니다.", -- check
 
 	loot = "오염된 핵",
-	loot_desc = "오염된 핵을 획득한 플레이어 알림",
+	loot_desc = "오염된 핵을 획득한 플레이어를 알립니다.",
 	loot_message = "%s 핵 획득!",
 } end )
 

@@ -24,13 +24,13 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Custom Bars"] = "사용자 바",
-	["Start a custom bar, either local or global."] = "사용자 바 시작, 전체 혹은 지역",
-	["Local"] = "지역",
-	["Global"] = "전체",
+	["Start a custom bar, either local or global."] = "글로벌 혹은 로컬 사용자 바를 시작합니다.",
+	["Local"] = "로컬",
+	["Global"] = "글로벌",
 	["<seconds> <bar text>"] = "<초> <바 텍스트>",
-	["Starts a custom bar with the given parameters."] = "입력한 매개변수로 사용자 바 시작",
+	["Starts a custom bar with the given parameters."] = "입력한 매개변수로 사용자 바를 시작합니다.",
 	["%s: %s"] = "%s: %s",
-	["%s: Timer [%s] finished."] = "%s: 타이머 [%s] 종료되었습니다.",
+	["%s: Timer [%s] finished."] = "%s: [%s] 타이머가 종료되었습니다.",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

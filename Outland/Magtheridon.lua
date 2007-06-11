@@ -176,7 +176,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	escape = "탈출",
-	escape_desc = ("%s 속박 해제까지 카운트다운."):format(boss),
+	escape_desc = ("%s 속박 해제까지 카운트다운합니다."):format(boss),
 	escape_trigger1 = "%%s의 속박이 약해지기 시작합니다",
 	escape_trigger2 = "내가... 풀려났도다!",
 	escape_warning1 = "%s 전투 개시 - 2분 이내 속박 해제!",
@@ -188,40 +188,40 @@ L:RegisterTranslations("koKR", function() return {
 	escape_message = "%s 풀려남!",
 
 	abyssal = "불타는 심연",
-	abyssal_desc = "불타는 심연 생성시 경고.",
+	abyssal_desc = "불타는 심연 생성 시 경고합니다.",
 	abyssal_trigger = "지옥불 역술사|1이;가; 불타는 심연|1으로;로;",
 	abyssal_message = "불타는 심연 생성 (%d)",
 
 	heal = "치유",
-	heal_desc = "지옥불 역술사 치유 시전시 경고.",
+	heal_desc = "지옥불 역술사 치유 시전 시 경고합니다.",
 	heal_trigger = "암흑의 치유 시전을 시작합니다.",
 	heal_message = "치유 시전!",
 
 	nova = "파열의 회오리",
-	nova_desc = "파열의 회오리 지속시간 바.",
+	nova_desc = "파열의 회오리 지속시간에 대한 바입니다.",
 	nova_ = "파열의 회오리",
 	nova_bar = "~파열의 회오리 대기시간",
 	nova_warning = "곧 파열의 회오리",
 	nova_cast = "파열의 회오리 시전!",
 
 	banish = "추방",
-	banish_desc = ("%s 추방시 알림."):format(boss),
+	banish_desc = ("%s 추방 시 알립니다."):format(boss),
 	banish_trigger = "안 돼, 다시 그럴 수는 없다!",
 	banish_message = "약 10초 동안 추방됨",
 	banish_bar = "추방됨",
 
 	exhaust = "방출 바 비활성화",
-	exhaust_desc = "정신 방출에 걸린 플레이어에 대한 타이머 바.",
+	exhaust_desc = "정신 방출에 걸린 플레이어에 대한 타이머 바입니다.",
 	exhaust_trigger = "^([^|;%s]*)(.*)정신 방출에 걸렸습니다%.$",
 	exhaust_bar = "[%s] 정신 방출",
 
 	debris = "당신에 파편",
-	debris_desc = "당신이 파편에 걸렸을때 알림.",
+	debris_desc = "당신이 파편에 걸렸을때 알립니다.",
 	debris_trigger = "당신은 파편에 걸렸습니다.",
 	debris_message = "당신에 파편!",
 
 	debrisinc = "파편",
-	debrisinc_desc = "30%일 때 파편에 대한 경고.",
+	debrisinc_desc = "30%일 때 파편에 대한 경고입니다.",
 	debrisinc_trigger = "그렇게 쉽게 당할 내가 아니다! 이 감옥의 벽이 흔들리고... 무너지라라!",
 	debrisinc_message = "30% - 잠시 후 파편!",
 	debrisinc_warning = "곧 파편!",

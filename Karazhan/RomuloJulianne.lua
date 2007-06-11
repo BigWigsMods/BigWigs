@@ -109,7 +109,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	phase = "단계",
-	phase_desc = "새로운 단계 전입 시 알림.",
+	phase_desc = "새로운 단계 진입 시 알립니다.",
 	phase1_trigger = "당신들은 대체 누구시기에 절 이리도 괴롭히나요?",
 	phase1_message = "1 단계 - %s",
 	phase2_trigger = "기어코 나를 화나게 하는구나. 그렇다면 받아라, 애송이!",
@@ -118,17 +118,17 @@ L:RegisterTranslations("koKR", function() return {
 	phase3_message = "3 단계 - 모두",
 
 	poison = "독",
-	poison_desc = "독에 걸린 플레이어 알림.",
+	poison_desc = "독에 걸린 플레이어를 알립니다.",
 	poison_trigger = "^([^|;%s]*)(.*)독칼 찌르기에 걸렸습니다%.$", -- check
 	poison_message = "중독: %s",
 
 	heal = "치유",
-	heal_desc = ("%s|1이;가; 영원한 사랑 시전 시 경고."):format(girl),
+	heal_desc = ("%s|1이;가; 영원한 사랑 시전 시 경고합니다."):format(girl),
 	heal_trigger = "영원한 사랑 시전을 시작합니다.",
 	heal_message = "%s 치유 시전 중!",
 
 	buff = "버프 알림",
-	buff_desc = ("%s|1와;과; %s 버프 획득 시 알림."):format(boy, girl),
+	buff_desc = ("%s|1와;과; %s 버프 획득 시 알립니다."):format(boy, girl),
 	buff1_trigger = "사랑의 용기 효과를 얻었습니다.", -- check
 	buff1_message = "%s 사랑의 용기 효과 얻음!",
 	buff2_trigger = "헌신 효과를 얻었습니다.", -- check

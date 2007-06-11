@@ -117,24 +117,24 @@ L:RegisterTranslations("koKR", function() return {
 	["%s have been defeated"] = "<%s> 물리쳤습니다.",    -- "<bosses> have been defeated"
 
 	-- AceConsole strings
-	["Bosses"] = "보스들",
-	["Options for bosses in %s."] = "%s 에 보스들을 위한 설정", -- "Options for bosses in <zone>"
-	["Options for %s (r%d)."] = "%s에 대한 설정(r%d).",     -- "Options for <boss> (<revision>)"
-	["Plugins"] = "플러그인들",
-	["Options for plugins."] = "플러그인 설정",
+	["Bosses"] = "보스",
+	["Options for bosses in %s."] = "%s에 보스들을 위한 설정입니다.", -- "Options for bosses in <zone>"
+	["Options for %s (r%d)."] = "%s에 대한 설정입니다 (r%d).",     -- "Options for <boss> (<revision>)"
+	["Plugins"] = "플러그인",
+	["Options for plugins."] = "플러그인 설정입니다.",
 	["Extras"] = "기타",
-	["Options for extras."] = "기타 설정.",
+	["Options for extras."] = "기타 설정입니다.",
 	["Active"] = "활성화",
-	["Activate or deactivate this module."] = "활성화 혹은 모둘 발견",
+	["Activate or deactivate this module."] = "해당 모듈을 활성화하거나 비활성화합니다.",
 	["Reboot"] = "재시작",
-	["Reboot this module."] = "모듈 재시작",
+	["Reboot this module."] = "해당 모듈을 재시작합니다.",
 	["Debugging"] = "디버깅",
-	["Show debug messages."] = "디버그 메세지 표시",
+	["Show debug messages."] = "디버그 메세지를 표시합니다.",
 	["Options"] = "설정",
 	bosskill = "보스 사망",
-	bosskill_desc = "보스를 물리쳤을 때 알림",
+	bosskill_desc = "보스를 물리쳤을 때 알림니다.",
 	enrage = "격노",
-	--enrage_desc = "Warn when the boss enters an enraged state.",
+	enrage_desc = "보스가 격노 상태로 변경 시 경고합니다.",
 
 	["Load"] = "불러오기",
 	["Load All"] = "모두 불러오기",

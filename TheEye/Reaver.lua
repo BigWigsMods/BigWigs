@@ -95,7 +95,7 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "경고! 제거 대상 발견!",
 
 	orbyou = "자신의 비전 보주",
-	orbyou_desc = "자신의 비전 보주 알림.",
+	orbyou_desc = "자신의 비전 보주를 알립니다.",
 	orb_you = "당신에 비전 보주!",
 
 	orbsay = "비전 보주 대화",
@@ -103,14 +103,14 @@ L:RegisterTranslations("koKR", function() return {
 	orb_say = "나에게 보주!",
 
 	orbother = "타인의 비전 보주",
-	orbother_desc = "타인의 비전 보주 알림.",
+	orbother_desc = "타인의 비전 보주를 알립니다.",
 	orb_other = "보주(%s)",
 
-	icon = "공격대 아이콘",
-	icon_desc = "비전 보주 대상이된 플레이어에 공격대 아이콘 지정(승급자 이상 권한 필요).",
+	icon = "전술 표시",
+	icon_desc = "비전 보주 대상이된 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
 
 	pounding = "울림",
-	pounding_desc = "울림 타이머 바 표시.",
+	pounding_desc = "울림에 대한 타이머 바를 표시합니다.",
 	pounding_trigger1 = "대체 공격 실행 중...",
 	pounding_trigger2 = "파괴력 변수 계산 중...",
 	pounding_nextbar = "~울림 대기 시간",

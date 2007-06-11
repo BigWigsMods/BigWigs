@@ -66,7 +66,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	phase = "단계",
-	phase_desc = "새로운 단계 진입시 알림.",
+	phase_desc = "새로운 단계 진입 시 알립니다.",
 	phase1_message = "1 단계 - %s",
 	phase2_trigger = "%s|1이;가; 주인을 부릅니다!",
 	phase2_message = "2 단계 - %s & 어튜멘",
@@ -74,7 +74,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase3_message = "3 단계 - %s",
 
 	curse = "저주 걸린 전사",
-	curse_desc = "전사가 무형의 저주에 걸렸을 때 경고.",
+	curse_desc = "전사가 무형의 저주에 걸렸을 때 경고합니다.",
 	curse_trigger = "^([^|;%s]*)(.*)무형의 존재에 걸렸습니다%.$",
 	curse_message = "저주 걸린 전사 - %s",
 } end)

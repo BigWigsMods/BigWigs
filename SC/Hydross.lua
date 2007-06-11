@@ -96,29 +96,29 @@ L:RegisterTranslations("koKR", function() return {
 	start_trigger = "방해하도록 놔두지 않겠습니다!",
 
 	mark = "징표",
-	mark_desc = "징표에 대한 경고와 카운터 표시.",
+	mark_desc = "징표에 대한 경고와 카운터를 표시합니다.",
 	hydross_trigger = "히드로스의 징표",
 	corruption_trigger = "타락의 징표",
 	hydross_bar = "히드로스의 징표 - %s%%",
 	corruption_bar = "타락의 징표 - %s%%",
 
 	stance = "태세 변경",
-	stance_desc = ("%s의 태세 변경 시 경고."):format(boss),
+	stance_desc = ("%s의 태세 변경 시 경고합니다."):format(boss),
 	poison_stance_trigger = "으아아, 독이...",
 	water_stance_trigger = "아... 기분이 훨씬 좋군.",
 	poison_stance = "히드로스 오염!",
 	water_stance = "히드로스 정화!",
 
 	sludge = "타락의 진흙", -- check
-	sludge_desc = "타락의 진흙에 걸린 플레이어 알림.", -- check
+	sludge_desc = "타락의 진흙에 걸린 플레이어를 알립니다.", -- check
 	sludge_message = "타락의 진흙: %s", -- check
 
 	tomb = "수중 무덤",
-	tomb_desc = "수중 무덤에 걸린 플레이어 알림.",
+	tomb_desc = "수중 무덤에 걸린 플레이어를 알립니다.",
 	tomb_message = "수중 무덤: %s",
 
-	icon = "타락의 진흙 아이콘", -- check
-	icon_desc = "타락의 진흙에 걸린 플레이어에 공격대 아이콘 지정(승급자 이상 권한 요구).", -- check
+	icon = "전술 표시", -- check
+	icon_desc = "타락의 진흙에 걸린 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).", -- check
 
 	debuff_warn = "징표 - %s%%!",
 

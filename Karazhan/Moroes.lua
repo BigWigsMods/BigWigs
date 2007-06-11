@@ -95,7 +95,7 @@ L:RegisterTranslations("koKR", function() return {
 	engage_message = "%s 전투 시작 - 약 35초 후 소멸!",
 
 	vanish = "소멸",
-	vanish_desc = "소멸 예상 시간.",
+	vanish_desc = "소멸 예상 시간입니다.",
 	vanish_trigger1 = "절 부르셨습니까?",
 	vanish_trigger2 = "어디까지 했죠? 아, 맞아...",
 	vanish_message = "소멸! 다음은 약 35초 후!",
@@ -103,12 +103,12 @@ L:RegisterTranslations("koKR", function() return {
 	vanish_bar = "~소멸 대기시간",
 
 	garrote = "목조르기",
-	garrote_desc = "목조르기에 걸린 사람 알림.",
+	garrote_desc = "목조르기에 걸린 사람을 알립니다.",
 	garrote_trigger = "^([^|;%s]*)(.*)목조르기에 걸렸습니다%.$",
 	garrote_message = "목조르기: %s",
 
-	icon = "아이콘",
-	icon_desc = "목조르기에 걸린 사람에게 공격대 아이콘 지정(승급자 이상의 권한 필요).",
+	icon = "전술 표시",
+	icon_desc = "목조르기에 걸린 사람에게 전술 표시를 지정합니다 (승급자 이상의 권한 필요).",
 
 	enrage_trigger = "%s|1이;가; 분노에 휩싸입니다!",
 	enrage_message = "격노!",

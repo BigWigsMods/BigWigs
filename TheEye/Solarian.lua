@@ -85,27 +85,27 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "탈 아누멘 노 신도레이!",
 
 	phase = "단계",
-	phase_desc = "단계 변경에 대한 알림.",
+	phase_desc = "단계 변경에 대해 알립니다.",
 	phase1_message = "1 단계 - 약 50초 이내 분리",
 	phase2_warning = "잠시 후 2 단계!",
 	phase2_trigger = "^나는 공허의",
 	phase2_message = "20% - 2 단계",
 
 	wrath = "격노 시전",
-	wrath_desc = "격노 시전 시 경고와 현재 대상 알림.",
+	wrath_desc = "격노 시전 시 경고와 현재 대상을 알립니다.",
 	wrath_trigger = "^([^|;%s]*)(.*)점성술사의 격노에 걸렸습니다%.$",
 	wrath_alert = "격노 시전! - 대상: %s",
 	wrath_alert_trigger = "점성술사의 격노 시전을 시작합니다.$",
 
 	wrathyou = "자신에 격노 디버프",
-	wrathyou_desc = "당신이 점성술사의 격노에 걸렸을 때 알림.",
+	wrathyou_desc = "당신이 점성술사의 격노에 걸렸을 때 알립니다.",
 	wrath_you = "당신에 격노!",
 
-	icon = "공격대 아이콘",
-	icon_desc = "점성술사의 격노에 걸린 플레이어에 공격대 아이콘 지정(승급자 이상 권한 요구).",
+	icon = "전술 표시",
+	icon_desc = "점성술사의 격노에 걸린 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
 
 	split = "분리",
-	split_desc = "분리와 소환에 대한 경고.",
+	split_desc = "분리와 소환에 대한 경고입니다.",
 	split_trigger1 = "그 오만한 콧대를 꺾어주마!",
 	split_trigger2 = "한 줌의 희망마저 짓밟아주마!",
 	split_bar = "~다음 분리",

@@ -45,21 +45,21 @@ L:RegisterTranslations("koKR", function() return {
 	engage_warning = "%s 전투 시작 - 90초 이내 잠수",
 
 	dive = "잠수",
-	dive_desc = ("%s 잠수 시 타이머."):format(boss),
+	dive_desc = ("%s 잠수 시 타이머입니다."):format(boss),
 
 	dive_warning = "%d초 이내 잠수!",
 	dive_bar = "~잠수",
 	dive_message = "잠수 - 60초 이내 출현",
 
 	spout = "분출",
-	spout_desc = "분출에 대한 타이머.항상 정확하지 않을 수 있습니다.",
+	spout_desc = "분출에 대한 타이머입니다. 항상 정확하지 않을 수 있습니다.",
 	spout_trigger = "%s|1이;가; 깊은 숨을 쉽니다!", -- check
 	spout_message = "분출 시전 중!",
 	spout_warning = "약 3초 이내 분출!",
 	spout_bar = "분출 가능",
 
 	whirl = "소용돌이",
-	whirl_desc = "소용돌이 타이머.",
+	whirl_desc = "소용돌이에 대한 타이머입니다.",
 	whirl_bar = "소용돌이 주의",
 
 	emerge_warning = "%d초 이내 출현",

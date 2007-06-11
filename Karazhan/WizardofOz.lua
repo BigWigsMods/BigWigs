@@ -69,12 +69,12 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "티토야, 우린 집으로 갈 방법을 찾아야 해!",
 
 	spawns = "등장 타이머",
-	spawns_desc = "피조물 활동 시작에 대한 타이머.",
+	spawns_desc = "피조물 활동 시작에 대한 타이머입니다.",
 	spawns_bar = "%s 공격!",
 	spawns_warning = "5초 이내 %s",
 
 	light = "연쇄 번개",
-	light_desc = "연쇄 번개 시전에 대한 경고.",
+	light_desc = "연쇄 번개 시전 시 경고합니다.",
 	light_trigger = "마녀가 연쇄 번개 시전을 시작합니다.",
 	light_message = "연쇄 번개!",
 } end)

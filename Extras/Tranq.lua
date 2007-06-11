@@ -27,8 +27,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Tranq - %s"] = "평정 - %s",
 	["%s's Tranq failed!"] = "%s의 평정 실패!",
 	["Tranq"] = "평정",
-	["Options for the tranq module."] = "평정 모듈에 대한 설정.",
-	["Toggle tranq bars on or off."] = "평정바 토글.",
+	["Options for the tranq module."] = "평정 모듈에 대한 설정입니다.",
+	["Toggle tranq bars on or off."] = "평정바를 켜거나 끕니다.",
 	["Bars"] = "바",
 } end)
 
