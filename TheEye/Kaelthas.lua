@@ -144,7 +144,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	pyro = "불덩이 작렬",
 	pyro_desc = "불덩이 작렬에 대한 60초 타이머를 표시합니다.",
-	pyro_trigger = "%s|1이;가; 불덩이 작렬 시전을 시작합니다!$", -- check
+	pyro_trigger = "%s|1이;가; 불덩이 작렬|1을;를 시전합니다!$", -- check
 	pyro_warning = "약 5초 이내 불덩이 작렬!",
 	pyro_message = "불덩이 작열 시전!",
 
@@ -169,8 +169,8 @@ L:RegisterTranslations("koKR", function() return {
 	phase3_message = "경고 3 - 캘타스!",
 	phase3_bar = "잠시 후 캘타스",
 
-	mc_trigger1 = "나를 따르라.", -- check
-	mc_trigger2 = "Bow to my will.", -- check
+	mc_trigger1 = "복종하라!",
+	mc_trigger2 = "내 의지에 굴복하라!",
 	mc_bar = "정신 지배 대기시간",
 	mc_message = "정신 지배! 다음은 약 33초 후!",
 
