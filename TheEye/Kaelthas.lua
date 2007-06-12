@@ -473,6 +473,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["phase4_bar"], 180, "Spell_ChargePositive")
 	elseif msg == L["phase4_trigger"] then
 		self:Message(L["phase4_message"], "Positive")
+		if self.db.profile.pyro then
+			self:Bar(L["pyro"], 60, "Spell_Fire_Fireball02")
+			self:DelayedMessage(55, L["pyro_warning"], "Attention")
+		end
 	elseif msg == L["flying_trigger"] then
 		self:Message(L["flying_message"], "Attention")
 		self:Bar(L["gravity_bar"], 60, "Spell_Nature_UnrelentingStorm")
