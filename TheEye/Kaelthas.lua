@@ -63,13 +63,16 @@ L:RegisterTranslations("enUS", function() return {
 	pyro_warning = "Pyroblast in 5sec!",
 	pyro_message = "Casting Pyroblast!",
 
+	toy = "Remote Toy on Tanks",
+	toy_desc = "Warn when a tnak has Remote Toy",
+
 	thaladred_inc_trigger = "Impressive. Let us see how your nerves hold up against the Darkener, Thaladred! ",
 	sanguinar_inc_trigger = "You have persevered against some of my best advisors... but none can withstand the might of the Blood Hammer. Behold, Lord Sanguinar!",
 	capernian_inc_trigger = "Capernian will see to it that your stay here is a short one.",
 	telonicus_inc_trigger = "Well done, you have proven worthy to test your skills against my master engineer, Telonicus.",
 	weapons_inc_trigger = "As you see, I have many weapons in my arsenal....",
-	phase2_trigger = "Perhaps I underestimated you. It would be unfair to make you fight all four advisors at once, but... fair treatment was never shown to my people. I'm just returning the favor.",
-	phase3_trigger = "Alas, sometimes one must take matters into one's own hands. Balamore shanal!",
+	phase3_trigger = "Perhaps I underestimated you. It would be unfair to make you fight all four advisors at once, but... fair treatment was never shown to my people. I'm just returning the favor.",
+	phase4_trigger = "Alas, sometimes one must take matters into one's own hands. Balamore shanal!",
 
 	flying_trigger = "I have not come this far to be stopped! The future I have planned will not be jeapordized! Now, you will taste true power!!",
 	gravity_trigger1 = "Let us see how you fare when your world is turned upside down.",
@@ -79,10 +82,10 @@ L:RegisterTranslations("enUS", function() return {
 	gravity_message = "Gravity Lapse!",
 	flying_message = "Flying! Gravity Lapse in 1min",
 
-	weapons_inc_message = "Weapons incoming!",
-	phase2_message = "Phase 2 - Advisors and Weapons!",
-	phase3_message = "Phase 3 - Kael inc!",
-	phase3_bar = "Kael'thas incoming",
+	weapons_inc_message = "Phase 2 - Weapons incoming!",
+	phase3_message = "Phase 3 - Advisors and Weapons!",
+	phase4_message = "Phase 4 - Kael inc!",
+	phase4_bar = "Kael'thas incoming",
 
 	mc_trigger1 = "Obey me.",
 	mc_trigger2 = "Bow to my will.",
@@ -112,6 +115,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	revive_bar = "Adds Revived",
 	revive_warning = "Adds Revived in 5sec!",
+
+	toy_message = "Toy on Tank: %s",
+	toy_trigger = "Remote Toy", --afflicted by ...
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -153,8 +159,8 @@ L:RegisterTranslations("koKR", function() return {
 	capernian_inc_trigger = "카퍼니안, 놈들이 여기 온 것을 후회하게 해 줘라.",
 	telonicus_inc_trigger = "좋아, 그 정도 실력이면 수석기술자 텔로니쿠스를 상대해 볼만하겠어.",
 	weapons_inc_trigger = "보다시피 내 무기고엔 굉장한 무기가 아주 많지....", -- check
-	phase2_trigger = "네놈들을 과소평가했나 보군. 모두를 한꺼번에 상대하라는 건 불공평한 처사지. 나의 백성도 공평한 대접을 받은 적 없기는 매한가지. 받은 대로 돌려주겠다.",
-	phase3_trigger = "때론 직접 나서야 할 때도 있는 법이지. 발라모어 샤날!", -- check
+	phase3_trigger = "네놈들을 과소평가했나 보군. 모두를 한꺼번에 상대하라는 건 불공평한 처사지. 나의 백성도 공평한 대접을 받은 적 없기는 매한가지. 받은 대로 돌려주겠다.",
+	phase4_trigger = "때론 직접 나서야 할 때도 있는 법이지. 발라모어 샤날!", -- check
 
 	flying_trigger = "I have not come this far to be stopped! The future I have planned will not be jeapordized! Now, you will taste true power!!", -- check
 	gravity_trigger1 = "Let us see how you fare when your world is turned upside down.", -- check
@@ -165,9 +171,9 @@ L:RegisterTranslations("koKR", function() return {
 	flying_message = "비행! 1분후 중력 붕괴",
 
 	weapons_inc_message = "무기 임박!",
-	phase2_message = "경고 2 - 조언가와 무기!",
-	phase3_message = "경고 3 - 캘타스!",
-	phase3_bar = "잠시 후 캘타스",
+	phase3_message = "경고 2 - 조언가와 무기!",
+	phase4_message = "경고 3 - 캘타스!",
+	phase4_bar = "잠시 후 캘타스",
 
 	mc_trigger1 = "복종하라!",
 	mc_trigger2 = "내 의지에 굴복하라!",
@@ -238,8 +244,8 @@ L:RegisterTranslations("frFR", function() return {
 	capernian_inc_trigger = "Capernian fera en sorte que votre séjour ici ne se prolonge pas.", -- à vérifier
 	telonicus_inc_trigger = "Bien, vous êtes digne de mesurer votre talent à celui de mon maître ingénieur, Telonicus.", -- à vérifier
 	weapons_inc_trigger = "Comme vous le voyez, j'ai plus d'une corde à mon arc…", -- à vérifier
-	phase2_trigger = "Peut-être vous ai-je sous-estimés. Il ne serait pas très loyal de vous faire combattre mes quatres conseillers en même temps, mais… mon peuple n'a jamais été traîté avec loyauté. Je ne fais que rendre la politesse.", -- à vérifier
-	phase3_trigger = "Il est hélas parfois nécessaire de prendre les choses en main soi-même. Balamore shanal!", -- à vérifier
+	phase3_trigger = "Peut-être vous ai-je sous-estimés. Il ne serait pas très loyal de vous faire combattre mes quatres conseillers en même temps, mais… mon peuple n'a jamais été traîté avec loyauté. Je ne fais que rendre la politesse.", -- à vérifier
+	phase4_trigger = "Il est hélas parfois nécessaire de prendre les choses en main soi-même. Balamore shanal!", -- à vérifier
 
 	flying_trigger = "Je ne suis pas arrivé si loin pour échouer maintenant ! Je ne laisserai pas l'avenir que je prépare être remis en cause ! Vous allez goûter à ma vraie puissance !", -- à vérifier
 	gravity_trigger1 = "Voyons comment vous vous débrouillerez une fois la tête en bas.", -- à vérifier
@@ -250,9 +256,9 @@ L:RegisterTranslations("frFR", function() return {
 	flying_message = "En vol ! Rupture de gravité dans 1 min.",
 
 	weapons_inc_message = "Arrivée des armes !",
-	phase2_message = "Phase 2 - Conseillers et Armes !",
-	phase3_message = "Phase 3 - Kael arrive !",
-	phase3_bar = "Arrivée de Kael'thas",
+	phase3_message = "Phase 2 - Conseillers et Armes !",
+	phase4_message = "Phase 3 - Kael arrive !",
+	phase4_bar = "Arrivée de Kael'thas",
 
 	mc_trigger1 = "Obéis-moi.", -- à vérifier
 	mc_trigger2 = "Soumets-toi à ma volonté.", -- à vérifier
@@ -319,9 +325,9 @@ L:RegisterTranslations("deDE", function() return {
 	capernian_inc_trigger = "Capernian wird daf\195\188r sorgen, dass Euer Aufenthalt hier nicht lange w\195\164hrt.",
 	telonicus_inc_trigger = "Gut gemacht. Ihr habt Euch w\195\188rdig erwiesen, gegen meinen Meisteringenieur, Telonicus, anzutreten.",
 	weapons_inc_trigger = "Wie Ihr seht, habe ich viele Waffen in meinem Arsenal...",
-	phase2_trigger = "Vielleicht habe ich Euch untersch\195\164tzt. Es w\195\164re unfair, Euch gegen meine vier Berater gleichzeitig k\195\164mpfen zu lassen, aber... mein Volk wurde auch nie fair behandelt. Ich vergelte nur Gleiches mit Gleichem.",
-	phase3_trigger = "Ach, manchmal muss man die Sache selbst in die Hand nehmen. Balamore shanal!",
-	
+	phase3_trigger = "Vielleicht habe ich Euch untersch\195\164tzt. Es w\195\164re unfair, Euch gegen meine vier Berater gleichzeitig k\195\164mpfen zu lassen, aber... mein Volk wurde auch nie fair behandelt. Ich vergelte nur Gleiches mit Gleichem.",
+	phase4_trigger = "Ach, manchmal muss man die Sache selbst in die Hand nehmen. Balamore shanal!",
+
 	flying_trigger = "I have not come this far to be stopped! The future I have planned will not be jeapordized! Now, you will taste true power!!", -- to translate
 	gravity_trigger1 = "Let us see how you fare when your world is turned upside down.", -- to translate
 	gravity_trigger2 = "Having trouble staying grounded?", -- to translate
@@ -331,9 +337,9 @@ L:RegisterTranslations("deDE", function() return {
 	flying_message = "Flying! Gravity Lapse in 1min", -- to translate
 
 	weapons_inc_message = "Waffen kommen!",
-	phase2_message = "Phase 2 - Berater und Waffen!",
-	phase3_message = "Phase 3 - Kael'thas aktiv!",
-	phase3_bar = "Kael'thas aktiv",
+	phase3_message = "Phase 2 - Berater und Waffen!",
+	phase4_message = "Phase 3 - Kael'thas aktiv!",
+	phase4_bar = "Kael'thas aktiv",
 
 	mc_trigger1 = "Gehorcht mir!",
 	mc_trigger2 = "Beugt Euch meinem Willen!",
@@ -374,7 +380,7 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = { boss, capernian, sanguinar, telonicus, thaladred }
 mod.wipemobs = { axe, mace, dagger, staff, sword, bow, shield }
-mod.toggleoptions = { "phase", -1, "temperament", "conflag", "gaze", "icon", "fear", "pyro", "rebirth", "proximity", "bosskill" }
+mod.toggleoptions = { "phase", -1, "temperament", "conflag", "toy", "gaze", "icon", "fear", "pyro", "rebirth", "proximity", "bosskill" }
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
@@ -398,7 +404,8 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelTemper", 6)
-	self:TriggerEvent("BigWigs_ThrottleSync", "KaelConflag", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "KaelConflag", 1)
+	self:TriggerEvent("BigWigs_ThrottleSync", "KaelToy", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFearSoon", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFear", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "PhoenixRebirth", 5)
@@ -461,11 +468,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["weapons_inc_message"], "Positive")
 		self:Bar(L["revive_bar"], 95, "Spell_Holy_ReviveChampion")
 		self:DelayedMessage(90, L["revive_warning"], "Attention")
-	elseif msg == L["phase2_trigger"] then
-		self:Message(L["phase2_message"], "Positive")
-		self:Bar(L["phase3_bar"], 180, "Spell_ChargePositive")
 	elseif msg == L["phase3_trigger"] then
 		self:Message(L["phase3_message"], "Positive")
+		self:Bar(L["phase4_bar"], 180, "Spell_ChargePositive")
+	elseif msg == L["phase4_trigger"] then
+		self:Message(L["phase4_message"], "Positive")
 	elseif msg == L["flying_trigger"] then
 		self:Message(L["flying_message"], "Attention")
 		self:Bar(L["gravity_bar"], 60, "Spell_Nature_UnrelentingStorm")
@@ -489,8 +496,10 @@ end
 function mod:Afflicted(msg)
 	local tPlayer, tType, tSpell = select(3, msg:find(L["afflicted_trigger"]))
 	if tPlayer and tType then
+		local id = nil
 		if tPlayer == L2["you"] and tType == L2["are"] then
 			tPlayer = UnitName("player")
+			id = "player"
 		end
 		if tSpell == L["conflag_spell"] then
 			self:Sync("KaelConflag " .. tPlayer)
@@ -498,6 +507,17 @@ function mod:Afflicted(msg)
 			self:Sync("KaelTemper " .. tPlayer)
 		elseif tSpell == L["fear_spell"] then
 			self:Sync("KaelFear")
+		elseif tSpell == L["toy_trigger"] then
+			for i = 1, GetNumRaidMembers() do
+				if UnitName("raid"..i) == tPlayer then
+					id = "raid"..i
+					break
+				end
+			end
+		end
+		if not id then return end
+		if UnitPowerType(id) == 1 then
+			self:Sync("KaelToy " .. tPlayer)
 		end
 	end
 end
@@ -516,6 +536,14 @@ function mod:KaelConflag(rest, nick)
 	local msg = L["conflag_message"]:format(rest)
 	self:Message(msg, "Attention")
 	self:Bar(msg, 10, "Spell_Fire_Incinerate")
+end
+
+function mod:KaelToy(rest, nick)
+	if not rest or not self.db.profile.toy then return end
+
+	local msg = L["toy_message"]:format(rest)
+	self:Message(msg, "Attention")
+	self:Bar(msg, 55, "INV_Misc_Urn_01")
 end
 
 function mod:KaelFearSoon(rest, nick)
