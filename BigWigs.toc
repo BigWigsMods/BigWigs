@@ -101,6 +101,7 @@ BlackTemple\Najentus.lua
 BlackTemple\Gurtogg.lua
 BlackTemple\Supremus.lua
 BlackTemple\Teron.lua
+BlackTemple\Souls.lua
 
 Hyjal\HyjalBeta.lua
 

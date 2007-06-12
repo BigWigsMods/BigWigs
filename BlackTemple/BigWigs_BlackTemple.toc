@@ -22,3 +22,4 @@ Najentus.lua
 Gurtogg.lua
 Supremus.lua
 Teron.lua
+Souls.lua
