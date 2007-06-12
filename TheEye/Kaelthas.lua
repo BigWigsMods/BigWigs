@@ -64,7 +64,7 @@ L:RegisterTranslations("enUS", function() return {
 	pyro_message = "Casting Pyroblast!",
 
 	toy = "Remote Toy on Tanks",
-	toy_desc = "Warn when a tnak has Remote Toy",
+	toy_desc = "Warn when a tank has Remote Toy.",
 
 	thaladred_inc_trigger = "Impressive. Let us see how your nerves hold up against the Darkener, Thaladred! ",
 	sanguinar_inc_trigger = "You have persevered against some of my best advisors... but none can withstand the might of the Blood Hammer. Behold, Lord Sanguinar!",
