@@ -106,7 +106,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	fear_soon_message = "Fear soon!",
 	fear_message = "Fear!",
-	fear_bar = "Fear Cooldown",
+	fear_bar = "~Fear Cooldown",
 
 	fear_soon_trigger = "Lord Sanguinar begins to cast Bellowing Roar.",
 	fear_trigger1 = "^Lord Sanguinar's Bellowing Roar was resisted by %S+.$",
@@ -543,7 +543,7 @@ function mod:KaelToy(rest, nick)
 
 	local msg = L["toy_message"]:format(rest)
 	self:Message(msg, "Attention")
-	self:Bar(msg, 55, "INV_Misc_Urn_01")
+	self:Bar(msg, 60, "INV_Misc_Urn_01")
 end
 
 function mod:KaelFearSoon(rest, nick)
@@ -564,5 +564,5 @@ function mod:KaelFear(rest, nick)
 	if not self.db.profile.fear then return end
 
 	self:Message(L["fear_message"], "Attention")
-	self:Bar(L["fear_bar"], 30, "Spell_Shadow_Charm")
+	self:Bar(L["fear_bar"], 30, "Spell_Shadow_PsychicScream")
 end
