@@ -13,6 +13,8 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Gurtogg",
 
+	engage_trigger = "Horde will... crush you.",
+
 	phase = "Phase Timers",
 	phase_desc = "Timers for switching between normal and Fel Rage phases.",
 	phase_rage_warning = "Fel Rage Phase in ~5 sec",
@@ -33,7 +35,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	acid = "Fel-Acid Breath",
 	acid_desc = "Warn who Fel-Acid Breath is being cast on.",
-	acid_trigger = "cast Fel-Acid Breath.$",
 	acid_message = "Fel-Acid Casting on: %s",
 
 	icon = "Raid Icon",
@@ -60,8 +61,9 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "debuff")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+	self:RegisterEvent("UNIT_SPELLCAST_START")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "GurRage", 10)
@@ -75,6 +77,8 @@ end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "GurRage" and rest and self.db.profile.rage then
+		self:CancelScheduledEvent("rage1")
+		self:TriggerEvent("BigWigs_StopBar", self, L["phase_normal_bar"])
 		if rest == UnitName("player") then
 			self:Message(L["rage_you"], "Personal", true, "Long")
 			self:Message(L["rage_other"]:format(rest), "Attention", nil, nil, true)
@@ -84,13 +88,23 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.whisper then
 			self:Whisper(rest, L["rage_you"])
 		end
+		if self.db.profile.phase then
+			self:Bar(L["phase_rage_bar"], 29, "Spell_Fire_ElementalDevastation")
+			self:DelayedMessage(24, L["phase_normal_warning"], "Important")
+		end
 	elseif sync == "GurAcid" and self.db.profile.acid then
 		self:Bar(L["acid"], 2, "Spell_Nature_Acid_01")
 		self:ScheduleEvent("BWAcidToTScan", self.AcidCheck, 0.2, self)
 	elseif sync == "GurNormal" and self.db.profile.phase then
 		self:Bar(L["phase_normal_bar"], 60, "Spell_Fire_ElementalDevastation")
-		self:DelayedMessage(55, L["phase_rage_warning"], "Important")
+		self:ScheduleEvent("rage1", "BigWigs_Message", 55, L["phase_rage_warning"], "Important")
 		self:Message(L["phase_normal"], "Attention")
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["engage_trigger"] then
+		self:BigWigs_RecvSync("GurNormal", nil, nil)
 	end
 end
 
@@ -101,14 +115,11 @@ function mod:debuff(msg)
 			rplayer = UnitName("player")
 		end
 		self:Sync("GurRage "..rplayer)
-		if self.db.profile.phase then
-			self:NormalPhase()
-		end
 	end
 end
 
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg:find(L["acid_trigger"]) then
+function mod:UNIT_SPELLCAST_START(msg)
+	if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["acid"] then
 		self:Sync("GurAcid")
 	end
 end
@@ -131,11 +142,6 @@ function mod:AcidCheck()
 			self:Icon(target)
 		end
 	end
-end
-
-function mod:NormalPhase()
-	self:Bar(L["phase_rage_bar"], 28, "Spell_Fire_ElementalDevastation")
-	self:DelayedMessage(23, L["phase_normal_warning"], "Important")
 end
 
 function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
