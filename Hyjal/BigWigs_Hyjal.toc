@@ -3,6 +3,7 @@
 ## Title: Big Wigs [|cffeda55fHyjal|r]
 ## Notes: (BETA) Big Wigs Hyjal Modules
 ## Author: Funkydude, Rabbit
+## X-Credits: Andii
 ## Version: 2.0
 ## LoadOnDemand: 1
 
@@ -17,3 +18,4 @@
 ## Dependencies: BigWigs
 
 HyjalBeta.lua
+Anetheron.lua

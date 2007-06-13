@@ -104,4 +104,5 @@ BlackTemple\Teron.lua
 BlackTemple\Souls.lua
 
 Hyjal\HyjalBeta.lua
+Hyjal\Anetheron.lua
 
