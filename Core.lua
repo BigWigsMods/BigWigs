@@ -141,34 +141,39 @@ L:RegisterTranslations("koKR", function() return {
 	["Load all %s modules."] = "모든 %s 모듈들을 불러옵니다.",
 } end)
 
+--Chinese Translate by: 月色狼影@CWDG
+--CWDG site: http://cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
-	["%s mod enabled"] = "%s模块已开启",
-	["%s has been defeated"] = "%s被击败了！",     -- "<boss> has been defeated"
-	["%s have been defeated"] = "%s被击败了！",    -- "<bosses> have been defeated"
+	["%s mod enabled"] = "%s 模块已启用",
+	["%s has been defeated"] = "%s 被击败了!",     -- "<boss> has been defeated"
+	["%s have been defeated"] = "%s 被击败了!",    -- "<bosses> have been defeated"
+
+	["Debug enabled, output routed to %s."] = "调试功能启用,输出到%s.",
+	["Debug disabled."] = "调试禁用.",
 
 	-- AceConsole strings
-	["Bosses"] = "首领",
-	["Options for bosses in %s."] = "%s首领模块设置。", -- "Options for bosses in <zone>"
-	["Options for %s (r%d)."] = "%s模块设置 版本(r%d).",     -- "Options for <boss> (<revision>)"
-	["Plugins"] = "插件",
-	["Options for plugins."] = "插件设置。",
-	["Extras"] = "额外",
-	["Options for extras."] = "额外的设置",
+	["Bosses"] = "首领模块",
+	["Options for bosses in %s."] = "%s首领模块设置.", -- "Options for bosses in <zone>"
+	["Options for %s (r%d)."] = "%s首领模块版本 (r%d).",     -- "Options for <boss> (<revision>)"
+	["Plugins"] = "综合设置",
+	["Options for plugins."] = "对各功能进行设置。",
+	["Extras"] = "附加功能",
+	["Options for extras."] = "对附加功能设置",
 	["Active"] = "激活",
-	["Activate or deactivate this module."] = "激活或关闭此模块。",
-	["Reboot"] = "重启",
-	["Reboot this module."] = "重启此模块",
-	["Debugging"] = "除错",
-	["Show debug messages."] = "显示除错信息。",
-
-	["Load"] = "载入",
-	["Load All"] = "载入所有",
-	["Load all %s modules."] = "载入所有%s的模块",
-
+	["Activate or deactivate this module."] = "激活或关闭此模块",
+	["Reboot"] = "重置",
+	["Reboot this module."] = "重置此模块",
+	["Debugging"] = "调试",
+	["Show debug messages."] = "显示调试信息",
+	["Options"] = "设置",
 	bosskill = "首领死亡",
-	bosskill_desc = "首领被击败时发出提示",
-	--enrage = "Enrage",
-	--enrage_desc = "Warn when the boss enters an enraged state.",
+	bosskill_desc = "首领被击杀时显示提示信息",
+	enrage = "狂暴",
+	enrage_desc = "首领进入狂暴状态时发出警报.",
+
+	["Load"] = "加载",
+	["Load All"] = "加载所有",
+	["Load all %s modules."] = "加载所有%s模块.",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

@@ -83,32 +83,41 @@ L:RegisterTranslations("koKR", function() return {
 	["Reset the anchor position, moving it to the center of your screen."] = "화면의 중앙으로 고정 위치를 초기화합니다.",
 } end)
 
+--Chinese Translate by 月色狼影@CWDG
+--CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
-	["Messages"] = "信息",
+	["Messages"] = "信息提示",
+	["Options for message display."] = "信息显示模式及相关设置。",
 
-	["Options for message display."] = "信息框体设置。",
-	["Show the message anchor frame."] = "显示信息框体锚点。",
+	["Show anchor"] = "显示信息框体",
+	["Show the message anchor frame."] = "显示信息框，可以移动设置信息显示位置（仅针对使用BW窗口模式）。",
+
 	["Use colors"] = "发送彩色信息",
-	["Toggles white only messages ignoring coloring."] = "切换是否只发送单色信息。",
 
-	["Show anchor"] = "显示锚点",
-	["Set the message frame scale."] = "设置信息框体缩放比例",
+	["Toggles white only messages ignoring coloring."] = "选择是否只发送单色信息。",
+
 	["Scale"] = "缩放",
+	["Set the message frame scale."] = "调整信息文字大小",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000颜|cffff00ff色|r",
 	["White"] = "白色",
-	["BigWigs frame"] = "BigWigs框体",
-	["RaidWarning frame"] = "团队警告框体",
+	["BigWigs frame"] = "BigWigs窗口模式",
+	["RaidWarning frame"] = "团队通告(RW)模式",
 
 	["Display"] = "显示",
-	["Set where messages are displayed."] = "选择信息显示的位置",
+	["Set where messages are displayed."] = "设置显示信息的位置",
+	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "除了增加显示设置之外,将所有BigWigs信息输出到默认聊天框.",
 
-	["Mik's Scrolling Battle Text"] = "Mik's滚动战斗信息",
+	["Mik's Scrolling Battle Text"] = "米克式战斗信息",
 	["Scrolling Combat Text"] = "滚动战斗信息",
 	["Floating Combat Text"] = "浮动战斗信息",
+	["Chat frame"] = "聊天框",
 
 	["Test"] = "测试",
 	["Close"] = "关闭",
+
+	["Reset position"] = "重置位置",
+	["Reset the anchor position, moving it to the center of your screen."] = "重置信息显示位置，移动到默认屏幕的中间位置。",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

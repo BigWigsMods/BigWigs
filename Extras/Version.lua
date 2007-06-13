@@ -125,32 +125,36 @@ L:RegisterTranslations("deDE", function() return {
 	["Notify people with older versions that there is a new version available."] = "Personen mit einer \195\164lteren BigWigs Version benachrichtigen, dass eine neue Version bereit steht.",
 } end )
 
+--Chinese Translate by 月色狼影@CWDG
+--CWDG site: http://cwowaddon.com
+
 L:RegisterTranslations("zhCN", function() return {
-	["Version Query"] = "检查版本",
-	["Commands for querying the raid for Big Wigs versions."] = "这个命令检查Big Wigs的版本",
-	["Query already running, please wait 5 seconds before trying again."] = "检查中，请等5秒后再尝试",
-	["Querying versions for "] = "检查版本 ",
-	["Big Wigs Version Query"] = "Big Wigs版本检查",
+	["Version Query"] = "版本检测",
+	["Commands for querying the raid for Big Wigs versions."] = "bigwigs版本检测参数",
+	["Query already running, please wait 5 seconds before trying again."] = "正在查询中,请等待5秒后再次尝试.",
+	["Querying versions for "] = "正在检测版本 ",
+	["Big Wigs Version Query"] = "BigWigs版本检测",
 	["Close window"] = "关闭窗口", -- I know, it's really a Tablet.
-	["Showing version for "] = "显示版本 ",
-	["Green versions are newer than yours, red are older, and white are the same."] = "绿色的版本比你的新，红色的比你的旧，白色的是相同",
+	["Showing version for "] = "显示版本: ",
+	["Green versions are newer than yours, red are older, and white are the same."] = "绿色版本比您的新,红色比您的低,白色与您的版本相同.",
 	["Player"] = "玩家",
 	["Version"] = "版本",
-	["Current zone"] = "目前区域",
+	["Current zone"] = "当前区域",
 	["<zone>"] = "<区域>",
-	["Version query done."] = "完成检查版本",
-	["Runs a version query on your current zone."] = "检查当前区域的版本",
-	["Closes the version query window."] = "关掉目前的检查版本窗口",
-	["current"] = "目前",
-	["Runs a version query on the given zone."] = "检查指定区域的版本",
+	["Version query done."] = "版本检测已完成",
+	["Runs a version query on your current zone."] = "对当前区域进行版本检测.",
+	["Closes the version query window."] = "关闭版本查询窗口.",
+	["current"] = "当前",
+	["Runs a version query on the given zone."] = "在给指定的区域进行版本查询.",
 	["Zone"] = "区域",
 	["zone"] = "区域",
 	["N/A"] = "N/A",
 	["BigWigs"] = "BigWigs",
-	["Runs a version query on the BigWigs core."] = "检查BigWigs内核的版本",
-	["Replies"] = "回复的数量",
-	["Ancient"] = "旧的",
-} end )
+	["Runs a version query on the BigWigs core."] = "在BigWigs核心部分运行版本查询",
+	["Replies"] = "回应人数",
+	["Ancient"] = "旧版本",
+	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "发现Big Wigs新版本，请升级！",
+	["Notify people with older versions that there is a new version available."] = "通知使用旧版本的用户请升级到最新。",
 
 L:RegisterTranslations("zhTW", function() return {
 	["Version Query"] = "檢查版本",

@@ -32,16 +32,19 @@ L:RegisterTranslations("koKR", function() return {
 	["Bars"] = "바",
 } end)
 
+--Chinese Translate by 月色狼影@CWDG
+--CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
-	CHAT_MSG_SPELL_SELF_BUFF = "你未能驱散(.+)的狂暴。",
-	CHAT_MSG_SPELL_SELF_DAMAGE = "你对(.+)施放了宁神射击。",
+	CHAT_MSG_SPELL_SELF_BUFF = "未能驱散(.+)的狂暴。",
+	CHAT_MSG_SPELL_SELF_DAMAGE = "对(.+)施放了宁神射击。",
+	["Tranquilizing Shot"] = "宁神射击",
 
 	["Tranq - %s"] = "宁神射击 - %s",
 	["%s's Tranq failed!"] = "%s的宁神射击失败了！",
 	["Tranq"] = "宁神射击",
 	["Options for the tranq module."] = "设置宁神射击模块.",
-	["Toggle tranq bars on or off."] = "开启或禁用宁神射击计时条.",
-	["Bars"] = "宁神射击计时条",
+	["Toggle tranq bars on or off."] = "启用或禁用宁神射击计时条.",
+	["Bars"] = "宁神射击计时条",	
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

@@ -125,23 +125,45 @@ L:RegisterTranslations("koKR", function() return {
 	["Toggles if bars are reversed (fill up instead of emptying)."] = "바의 반전을 전환합니다(채우기 혹은 비움).",
 } end)
 
+--Chinese Translate by 月色狼影@CWDG
+--CWDG site: http://cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["Bars"] = "计时条",
+	["Emphasized Bars"] = "醒目记时条",
+	
+	["Options for the timer bars."] = "计时条设置",
 
-	["Options for the timer bars."] = "计时条设置/",
-	["Show the bar anchor frame."] = "显示计时条框体锚点。",
-	["Set the bar scale."] = "设置计时条缩放比例。",
-	["Grow upwards"] = "向上排列",
-	["Toggle bars grow upwards/downwards from anchor."] = "切换计时条从锚点向下/向上排列。",
+	["Show anchor"] = "显示计时条框体",
+	["Show the bar anchor frame."] = "显示计时条框体，可以对其计时条进行移动。",
 
-	["Show anchor"] = "显示锚点",
 	["Scale"] = "缩放",
+	["Set the bar scale."] = "调整计时条缩放比例。",
+
+	["Grow upwards"] = "向上延伸",
+	["Toggle bars grow upwards/downwards from anchor."] = "切换计时条向上/向下排列。",
+
+	["Texture"] = "材质",
+	["Set the texture for the timer bars."] = "为计时条设定材质",
 
 	["Test"] = "测试",
 	["Close"] = "关闭",
 
-	["Texture"] = "材质",
-	["Set the texture for the timer bars."] = "为计时条设定材质。",
+	["Emphasize"] = "醒目",
+	["Emphasize bars that are close to completion (<10sec) by moving them to a second anchor."] = "当小于10秒计时时,醒目记时条将移动到你指定的位置.",
+	
+	["Enable"] = "启用",
+	["Enables emphasizing bars."] = "启用醒目记时条",
+	["Flash"] = "闪烁",
+	["Flashes the background red for bars that are emphasized."] = "当记时条为醒目状态时,背景将红光闪烁.",
+	["Move"] = "移动",
+	["Move bars that are emphasized to a second anchor."] = "设置醒目记时条显示的位置.",
+	["Set the scale for emphasized bars."] = "设置醒目记时条的比例.",
+
+	["Reset position"] = "重置位置",
+	["Reset the anchor position, moving it to the center of your screen."] = "重置计时条显示位置,移动到默认屏幕的中间位置。",
+
+	["Reverse"] = "倒转",
+	["Toggles if bars are reversed (fill up instead of emptying)."] = "切换记时条反向（记时条排列顺序反转）",
 } end)
 
 

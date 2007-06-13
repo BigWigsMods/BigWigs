@@ -56,15 +56,19 @@ L:RegisterTranslations("koKR", function() return {
 	["Menu options."] = "메뉴 설정.",
 } end)
 
+--Chinese Translate by: 月色狼影@CWDG
+--CWDG site: http://cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
-	["|cff00ff00Module running|r"] = "|cff00ff00模块运行中|r",
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55f点击|r图标重置所有运行中的模块。|cffeda55fAlt+点击|r图标关闭所有运行中的模块。|cffeda55fCtrl-Alt+点击|r图标关闭BigWigs。",
-	["|cffeda55fClick|r to enable."] = "|cffeda55f点击|r图标开启BigWigs。",
-	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Click|r to open configuration window.",
-	["Big Wigs is currently disabled."] = "Big Wigs目前关闭。",
-	["Active boss modules:"] = "激活首领模块",
-	["All running modules have been reset."] = "所有运行中的模块都已重置。",
-	["All running modules have been disabled."] = "所有运行中的模块都已关闭。",
+	["|cff00ff00Module running|r"] = "|cff00ff00首领模块运行中|r",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "你可以|cffeda55f点击|r图标重置所有运行中的模块; \n或者|cffeda55fAlt-点击|r可以禁用所有首领模块;\n或者 |cffeda55fCtrl-Alt-点击|r 可以禁用BigWigs所有功能.",
+	["|cffeda55fClick|r to enable."] = "|cffeda55f点击|r启用.",
+	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-点击|r打开设置面板.",
+	["Big Wigs is currently disabled."] = "BigWigs当前已被禁用.",
+	["Active boss modules:"] = "激活首领模块:",
+	["All running modules have been reset."] = "所有运行中的模块都已重置",
+	["All running modules have been disabled."] = "所有运行中的模块都已禁用",
+	["Menu"] = "目录",
+	["Menu options."] = "目录设置",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

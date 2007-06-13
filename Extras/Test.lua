@@ -38,19 +38,21 @@ L:RegisterTranslations("koKR", function() return {
 	["Testing Sync"] = "동기화 테스트 중",
 } end)
 
+--Chinese Translate by 月色狼影@CWDG
+--CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["Test"] = "测试",
-	["Test Bar %d"] = "测试计时条%d",
-	["Testing"] = "测试中",
-	["OMG Bear!"] = "老天！熊！",
-	["*RAWR*"] = "*RAWR*",
+	["Test Bar %d"] = "测试记时条%d",
+	["Testing"] = "测试中……",
+	["OMG Bear!"] = "OMG! BEAR!",
+	["*RAWR*"] = "*团队通知*",
 	["Victory!"] = "胜利！",
-	["Commands for testing bars, messages and synchronization."] = "测试选项",
+	["Commands for testing bars, messages and synchronization."] = "设置测试计时条、信息及同步选项。",
 	["Local test"] = "本地测试",
-	["Perform a local test of BigWigs."] = "执行一次本地测试。",
+	["Perform a local test of BigWigs."] = "执行BigWigs本地测试。",
 	["Sync test"] = "同步测试",
-	["Perform a sync test of BigWigs."] = "执行一次同步测试（需要助力或更高权限）。",
-	["Testing Sync"] = "同步测试中",
+	["Perform a sync test of BigWigs."] = "执行BigWigs同步测试（需要助力或更高权限）。",
+	["Testing Sync"] = "同步测试中......",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

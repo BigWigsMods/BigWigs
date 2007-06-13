@@ -64,6 +64,23 @@ L:RegisterTranslations("enUS", function() return {
 	proximity_desc = "Show the proximity window when appropriate for this encounter, listing players who are standing too close to you.",
 } end)
 
+--Chinese Translate by 月色狼影@CWDG
+--CWDG site: http://Cwowaddon.com
+L:RegisterTranslations("zhCN", function() return {
+	["Proximity"] = "近距离",
+	["Options for the Proximity Display."] = "设置近距离显示.",
+	["|cff777777Nobody|r"] = "|cff777777无人|r",
+	["Sound"] = "声音",
+	["Play sound on proximity."] = "近距离时声音提示",
+	["Disabled"] = "禁用",
+	["Disable the proximity display for all modules that use it."] = "禁用所有BOSS模块使用此功能.",
+	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "为%s禁用近距离显示功能，若要再次使用请设置BOSS模块选项。",
+
+	proximity = "近距离显示",
+	proximity_desc = "显示近距离窗口,列出距离你很近的玩家。",
+} end)
+
+
 L:RegisterTranslations("koKR", function() return {
 	["Proximity"] = "접근",
 	["Options for the Proximity Display."] = "접근 표시에 대한 설정입니다.",

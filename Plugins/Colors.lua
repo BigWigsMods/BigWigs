@@ -90,34 +90,38 @@ L:RegisterTranslations("koKR", function() return {
 	["4th"] = "넷째",
 } end)
 
+--Chinese Translate by 月色狼影@CWDG
+--CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["Colors"] = "颜色",
 
-	["Messages"] = "信息",
+	["Messages"] = "信息提示",
 	["Bars"] = "计时条",
-	["Short bars"] = "短计时条",
-	["Long bars"] = "长计时条",
+	["Short"] = "短",
+	["Long"] = "长",
+	["Short bars"] = "短时间计时条",
+	["Long bars"] = "长时间计时条",
 	["Color %d"] = "颜色 %d",
-	["Number of colors"] = "颜色数量",
+	["Number of colors"] = "显示颜色数量",
 	["Background"] = "背景",
 	["Text"] = "文本",
 	["Reset"] = "重置",
 
-	["Colors of messages and bars."] = "信息文字与计时条颜色。",
-	["Change the color for %q messages."] = "变更%q信息的颜色。",
-	["Colors for short bars (< 1 minute)."] = "短时计时条（小于一分钟）的颜色。",
-	["Colors for long bars (> 1 minute)."] = "长时计时条（大于一分钟）的颜色。",
-	["Change the %s color."] = "变更颜色%s。",
-	["Number of colors the bar has."] = "计时条颜色数量。",
-	["Change the bar background color."] = "变更背景颜色。",
-	["Change the bar text color."] = "变更文本颜色。",
-	["Resets all colors to defaults."] = "全部重置为默认状态。",
+	["Colors of messages and bars."] = "设置信息文字与计时条的颜色。",
+	["Change the color for %q messages."] = "改变%q信息的颜色。",
+	["Colors for short bars (< 1 minute)."] = "短时间计时条 (<1 分钟)的颜色。",
+	["Colors for long bars (> 1 minute)."] = "长时间计时条 (> 1分钟)的颜色。",
+	["Change the %s color."] = "改变 %s 颜色。",
+	["Number of colors the bar has."] = "计时条的颜色数量。",
+	["Change the bar background color."] = "改变计时条背景颜色。",
+	["Change the bar text color."] = "改变计时条文本显示颜色",
+	["Resets all colors to defaults."] = "重置所有颜色为默认",
 
 	["Important"] = "重要",
 	["Personal"] = "个人",
 	["Urgent"] = "紧急",
 	["Attention"] = "注意",
-	["Positive"] = "积极",
+	["Positive"] = "醒目",
 	["Bosskill"] = "首领击杀",
 	["Core"] = "核心",
 

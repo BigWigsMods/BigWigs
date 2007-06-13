@@ -61,22 +61,26 @@ L:RegisterTranslations("koKR", function() return {
 	["Skull"] = "해골",
 } end )
 
+--Chinese Translate by 月色狼影@CWDG
+--CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
-	["Raid Icons"] = "团队图标",
+	["Raid Icons"] = "团队标记",
 
-	["Place"] = "标记",
-	["Place Raid Icons"] = "标记团队图标",
-	["Toggle placing of Raid Icons on players."] = "切换是否在玩家身上标记团队图标",
+	["RaidIcon"] = "团队标记",
+
+	["Place"] = "设置",
+	["Place Raid Icons"] = "允许团队标记",
+	["Toggle placing of Raid Icons on players."] = "选择是否在玩家身上显示团队图标标记 .",
 
 	["Icon"] = "图标",
-	["Set Icon"] = "设置图标",
-	["Set which icon to place on players."] = "设置玩家身上标记的图标。",
+	["Set Icon"] = "设置标记",
+	["Set which icon to place on players."] = "设置玩家身上团队标记.",
 
-	["Options for Raid Icons."] = "团队图标设置",
+	["Options for Raid Icons."] = "团队标记设置",
 
-	["Star"] = "星星",
+	["Star"] = "星形",
 	["Circle"] = "圆圈",
-	["Diamond"] = "钻石",
+	["Diamond"] = "棱形",
 	["Triangle"] = "三角",
 	["Moon"] = "月亮",
 	["Square"] = "方形",

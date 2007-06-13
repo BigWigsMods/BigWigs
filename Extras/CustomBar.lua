@@ -33,18 +33,20 @@ L:RegisterTranslations("koKR", function() return {
 	["%s: Timer [%s] finished."] = "%s: [%s] 타이머가 종료되었습니다.",
 } end)
 
+--Chinese Translate by 月色狼影@CWDG
+--CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["bwcb"] = "bwcb",
-	["bwlcb"] = "bwlcb",
-	["CustomBars"] = "自制时间条",
-	["Custom Bars"] = "自制时间条",
-	["Start a custom bar, either local or global."] = "激活一条自制时间条，本地或者全局",
+	["bwlcb"] = "bwcb",
+	["CustomBars"] = "自定义计时条",
+	["Custom Bars"] = "自定义计时条",
+	["Start a custom bar, either local or global."] = "启动自定义时间条,本地或全局",
 	["Local"] = "本地",
 	["Global"] = "全局",
-	["<seconds> <bar text>"] = "<seconds> <bar text>",
-	["Starts a custom bar with the given parameters."] = "激活一条带参数的自制时间条",
+	["<seconds> <bar text>"] = "<秒> <计时条名字>",
+	["Starts a custom bar with the given parameters."] = "启动自定义时间条",
 	["%s: %s"] = "%s: %s",
-	["%s: Timer [%s] finished."] = "%s: 计时器 [%s] 到时间",
+	["%s: Timer [%s] finished."] = "%s: 计时器 [%s] 到时间.",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

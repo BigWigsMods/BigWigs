@@ -51,6 +51,27 @@ L:RegisterTranslations("koKR", function() return {
 	desc = "BigWigs가 보스 메세지를 출력할 곳을 설정하세요.",
 } end )
 
+--Chinese Translate by 月色狼影@CWDG
+--CWDG site: http://Cwowaddon.com
+L:RegisterTranslations("zhCN", function() return {
+	["RaidWarning"] = "团队通知",
+
+	["Broadcast over RaidWarning"] = "通过团队通知(RW)发送警报信息。",
+	["Broadcast"] = "广播(RW)",
+	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = "在Raid空闲时,通过团队警报频道发送您的BigWigs信息。\n\n备注:若你不想看到这些信息,只需禁用\"信息阻止\".",
+
+	["Whisper"] = "密语",
+	["Whisper warnings"] = "密语警报",
+	["Toggle whispering warnings to players."] = "通过密语向玩家发送信息",
+
+	["Show whispers"] = "显示密语",
+	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "显示通过BigWigs发送的本地信息, 举例来说当玩家中瘟疫或相似的警报信息.",
+
+	["Broadcast to chat"] = "广播到聊天框",
+	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "通过广播BOSS信息到每个队伍或者团队频道代替团队警告频道\n\n同样;若你不想看到这些信息,只需禁用\"信息阻止\"",
+
+	desc = "设置除本地输出之外的,BigWigs发送的BOSS预警信息.",
+} end )
 L:RegisterTranslations("zhCN", function() return {
 	["RaidWarning"] = "团队警报",
 

@@ -66,30 +66,36 @@ L:RegisterTranslations("koKR", function() return {
 	["Shown"] = "표시함",
 } end)
 
+--Chinese Translate by 月色狼影
+--CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
-	["BossBlock"] = "信息阻挡",
-	desc = "阻挡其他玩家的首领插件发送的信息。",
+	["BossBlock"] = "信息阻止",
+	desc = "自动阻止其他玩家或其他来源的Boss预警信息和表情.",
 
-	["Raid chat"] = "阻挡团队频道",
-	["Suppress messages sent to raid chat."] = "阻挡团队频道中的信息",
+	["Boss emotes"] = "Boss表情",
+	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = "阻止信息发送到团队Boss表情框体.\n\n只阻止BigWigs有的部分,而只阻止的是显示在信息框体,而非聊天窗口.",
 
-	["Raid warning chat messages"] = "阻挡团队警告聊天",
-	["Suppress raid warning messages from the chat window."] = "阻挡聊天窗体中的团队警告信息",
+	["Raid chat"] = "团队频道",
+	["Suppress messages sent to raid chat."] = "禁止信息发送到团队频道",
 
-	["Raid warning messages"] = "阻挡团队警告",
-	["Suppress raid warning messages from the raid message window."] = "阻挡团队警告中的信息",
+	["Raid warning chat messages"] = "团队警报频道信息",
+	["Suppress raid warning messages from the chat window."] = "阻止聊天窗口下的团队警报信息",
 
-	["Raid say"] = "阻挡RS",
-	["Suppress RaidSay popup messages."] = "阻挡团队助手(CTRA)的RS信息",
+	["Raid warning messages"] = "团队警报信息",
+	["Suppress raid warning messages from the raid message window."] = "阻止团队信息窗口下的团队警报信息.",
 
-	["Whispers"] = "阻挡密语",
-	["Suppress whispered messages."] = "阻挡密语中的信息",
+	["Raid say"] = "RS信息",
+	["Suppress RaidSay popup messages."] = "阻止RS弹出的信息",
 
-	["Suppressing Chatframe"] = "正在阻挡Chatframe",
-	["Suppressing RaidWarningFrame"] = "正在阻挡RaidWarningFrame",
-	["Suppressing CT_RAMessageFrame"] = "正在阻挡CT_RAMessageFrame",
+	["Whispers"] = "密语",
+	["Suppress whispered messages."] = "阻止密语信息",
 
-	["Suppressed"] = "阻挡",
+	["Suppressing Chatframe"] = "正在阻止来自于聊天框中的信息",
+	["Suppressing RaidWarningFrame"] = "正在阻止来自于团队通告的信息",
+	["Suppressing CT_RAMessageFrame"] = "正在阻止来自于CT_RA的RS信息",
+	["Suppressing RaidBossEmoteFrame"] = "正在阻止来自于团队Boss表情的信息",
+
+	["Suppressed"] = "阻止",
 	["Shown"] = "显示",
 } end)
 

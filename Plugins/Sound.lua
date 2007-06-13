@@ -51,16 +51,25 @@ L:RegisterTranslations("koKR", function() return {
 	["Use only the default sound."] = "기본음만을 사용합니다.",
 } end)
 
+--Chinese Translate by 月色狼影@CWDG
+--CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["Sounds"] = "声音",
-	["Options for sounds."] = "声音的选项",
+	["Options for sounds."] = "声音设置",
+	
+	["Alarm"] = "警报",
+	["Info"] = "信息",
+	["Alert"] = "警惕",
+	["Long"] = "长计时",
+	["Victory"] = "胜利",
 
+	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = "设置使用%q声音（Ctrl-点击可以预览效果）",
 	["toggle"] = "选择",
 	["Use sounds"] = "使用声音",
-	["Toggle all sounds on or off."] = "切换是否使用声音。",
-	["default"] = "默认",
-	["Default only"] = "只用默认",
-	["Use only the default sound."] = "只用默认声音",
+	["Toggle all sounds on or off."] = "选择声音的开或关。",
+	["default"] = "预设",
+	["Default only"] = "预设",
+	["Use only the default sound."] = "只选用预设声音",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

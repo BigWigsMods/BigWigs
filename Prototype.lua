@@ -41,9 +41,17 @@ commonWords:RegisterTranslations("koKR", function() return {
 	enrage = "격노",
 } end )
 
+--Chinese Transalte by 月色狼影@CWDG
+--CWDG site: http://Cwowaddon.com
 commonWords:RegisterTranslations("zhCN", function() return {
 	you = "你",
 	are = "到",
+	
+	enrage_start = "%s 狂暴 - %d分后狂暴",
+	enrage_end = "%s 已狂暴",
+	enrage_min = "%d分后狂暴！",
+	enrage_sec = "%d秒后狂暴！",
+	enrage = "狂暴",
 } end )
 
 commonWords:RegisterTranslations("zhTW", function() return {
