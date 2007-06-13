@@ -155,6 +155,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Ancient"] = "旧版本",
 	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "发现Big Wigs新版本，请升级！",
 	["Notify people with older versions that there is a new version available."] = "通知使用旧版本的用户请升级到最新。",
+} end )
 
 L:RegisterTranslations("zhTW", function() return {
 	["Version Query"] = "檢查版本",
