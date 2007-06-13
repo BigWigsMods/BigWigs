@@ -3,8 +3,8 @@
 ------------------------------
 
 local BB = AceLibrary("Babble-Boss-2.2")
+local suffering = BB["Essence of Suffering"]
 local desire = BB["Essence of Desire"]
-local grief = BB["Essence of Grief"]
 local anger = BB["Essence of Anger"]
 local boss = BB["Reliquary of Souls"]
 BB = nil
@@ -36,7 +36,7 @@ L:RegisterTranslations("enUS", function() return {
 
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
-mod.enabletrigger = {boss, desire, grief, anger}
+mod.enabletrigger = {boss, desire, suffering, anger}
 mod.toggleoptions = {"enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
