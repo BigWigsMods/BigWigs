@@ -170,9 +170,9 @@ L:RegisterTranslations("koKR", function() return {
 	gravity_message = "중력 붕괴!",
 	flying_message = "비행! 1분후 중력 붕괴",
 
-	weapons_inc_message = "무기 임박!",
-	phase3_message = "경고 2 - 조언가와 무기!",
-	phase4_message = "경고 3 - 캘타스!",
+	weapons_inc_message = "2 단계 - 무기 임박!",
+	phase3_message = "3 단계 - 조언가와 무기!",
+	phase4_message = "4 단계 - 캘타스!",
 	phase4_bar = "잠시 후 캘타스",
 
 	mc_trigger1 = "복종하라!",
@@ -194,7 +194,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	fear_soon_message = "잠시 후 공포!",
 	fear_message = "공포!",
-	fear_bar = "공포 대기 시간",
+	fear_bar = "~공포 대기 시간",
 
 	fear_soon_trigger = "군주 생귀나르|1이;가; 우레와 같은 울부짖음 시전을 시작합니다.",
 	fear_trigger1 = "^군주 생귀나르|1이;가; 우레와 같은 울부짖음|1으로;로; %S|1을;를; 공격했지만 저항했습니다.$",
