@@ -121,7 +121,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "^Energy. Power.", -- check
+	engage_trigger = "^나의 백성은",
 	engage_message = "1 단계",
 
 	phase = "단계 경고",
@@ -150,21 +150,24 @@ L:RegisterTranslations("koKR", function() return {
 
 	pyro = "불덩이 작렬",
 	pyro_desc = "불덩이 작렬에 대한 60초 타이머를 표시합니다.",
-	pyro_trigger = "%s|1이;가; 불덩이 작렬|1을;를 시전합니다!$", -- check
+	pyro_trigger = "%s|1이;가; 불덩이 작렬을 시전합니다!$", -- check
 	pyro_warning = "약 5초 이내 불덩이 작렬!",
 	pyro_message = "불덩이 작열 시전!",
+
+	toy = "Remote Toy on Tanks",
+	toy_desc = "Warn when a tank has Remote Toy.",
 
 	thaladred_inc_trigger = "암흑의 인도자 탈라드레드를 상대로 얼마나 버틸지 볼까?",
 	sanguinar_inc_trigger = "최고의 조언가를 상대로 잘도 버텨냈군. 허나 그 누구도 붉은 망치의 힘에는 대항할 수 없지. 보아라, 군주 생귀나르를!",
 	capernian_inc_trigger = "카퍼니안, 놈들이 여기 온 것을 후회하게 해 줘라.",
 	telonicus_inc_trigger = "좋아, 그 정도 실력이면 수석기술자 텔로니쿠스를 상대해 볼만하겠어.",
-	weapons_inc_trigger = "보다시피 내 무기고엔 굉장한 무기가 아주 많지....", -- check
+	weapons_inc_trigger = "보다시피 내 무기고엔 굉장한 무기가 아주 많지.",
 	phase3_trigger = "네놈들을 과소평가했나 보군. 모두를 한꺼번에 상대하라는 건 불공평한 처사지. 나의 백성도 공평한 대접을 받은 적 없기는 매한가지. 받은 대로 돌려주겠다.",
-	phase4_trigger = "때론 직접 나서야 할 때도 있는 법이지. 발라모어 샤날!", -- check
+	phase4_trigger = "때론 직접 나서야 할 때도 있는 법이지. 발라모어 샤날!",
 
-	flying_trigger = "I have not come this far to be stopped! The future I have planned will not be jeapordized! Now, you will taste true power!!", -- check
-	gravity_trigger1 = "Let us see how you fare when your world is turned upside down.", -- check
-	gravity_trigger2 = "Having trouble staying grounded?", -- check
+	flying_trigger = "이대로 물러날 내가 아니다! 반드시 내가 설계한 미래를 실현하리라! 이제 진정한 힘을 느껴 보아라!",
+	gravity_trigger1 = "세상을 거꾸로 뒤집으면 어떻게 되는지 구경해 볼까..",
+	gravity_trigger2 = "마냥 서 있기만 하려니 힘들지 않나?",
 
 	gravity_bar = "다음 중력 붕괴",
 	gravity_message = "중력 붕괴!",
@@ -203,6 +206,9 @@ L:RegisterTranslations("koKR", function() return {
 
 	revive_bar = "조언가 부활",
 	revive_warning = "5초 이내 조언가 부활!",
+
+	toy_message = "Toy on Tank: %s",
+	toy_trigger = "Remote Toy", --afflicted by ... -- check
 } end )
 
 L:RegisterTranslations("frFR", function() return {
