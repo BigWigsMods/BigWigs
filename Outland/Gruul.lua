@@ -248,8 +248,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["engage_message"]:format(boss), "Attention")
 
 		if self.db.profile.grasp then
-			self:DelayedMessage(35, L["grasp_warning"], "Urgent")
-			self:Bar(L["grasp_bar"], 40, "Ability_ThunderClap")
+			self:DelayedMessage(30, L["grasp_warning"], "Urgent")
+			self:Bar(L["grasp_bar"], 33, "Ability_ThunderClap")
 		end
 		if self.db.profile.silence then
 			self:DelayedMessage(97, L["silence_warning"], "Urgent")
@@ -289,8 +289,8 @@ function mod:Event(msg)
 		self:Message(L["cavein_message"], "Personal", true, "Alarm")
 	elseif not silence and self.db.profile.silence and msg:find(L["silence_trigger"]) then
 		self:Message(L["silence_message"], "Attention")
-		self:DelayedMessage(41, L["silence_warning"], "Urgent")
-		self:Bar(L["silence_bar"], 45, "Spell_Holy_ImprovedResistanceAuras")
+		self:DelayedMessage(28, L["silence_warning"], "Urgent")
+		self:Bar(L["silence_bar"], 31, "Spell_Holy_ImprovedResistanceAuras")
 		silence = true
 		self:ScheduleEvent("BWGrullNilSilence", function() silence = nil end, 10, self)
 	end
