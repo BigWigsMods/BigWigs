@@ -75,7 +75,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	light = "연쇄 번개",
 	light_desc = "연쇄 번개 시전 시 경고합니다.",
-	light_trigger = "마녀가 연쇄 번개 시전을 시작합니다.",
+	light_trigger = "연쇄 번개 시전을 시작합니다.", -- check
 	light_message = "연쇄 번개!",
 } end)
 

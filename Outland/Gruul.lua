@@ -144,7 +144,7 @@ L:RegisterTranslations("koKR", function() return {
 	grasp_desc = "손아귀 경고와 타이머입니다.",
 	grasp_trigger1 = "꺼져라.",
 	grasp_trigger2 = "숨을 곳은 없다.",
-	grasp_message = "땅 울리기 - 약 10초 이내 석화!",
+	grasp_message = "땅 울리기 - 약 10초 이내 산산조각!",
 	grasp_warning = "잠시 후 땅 울리기",
 	grasp_bar = "~땅 울리기 대기시간",
 
@@ -161,7 +161,7 @@ L:RegisterTranslations("koKR", function() return {
 	silence_bar = "~침묵 대기시간",
 
 	shatter_trigger = "%s|1이;가; 포효합니다!",
-	shatter_message = "석화!",
+	shatter_message = "산산조각!",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

@@ -93,7 +93,7 @@ L:RegisterTranslations("koKR", function() return {
 	weak_warning1 = "약 5초 후 약화 종료!",
 	weak_warning2 = "약화 종료!",
 	weak_bar = "~약화 사라짐",
-	weak_fade = "^Broken Pact fades", -- check
+	weak_fade = "깨진 서약 효과가 사라졌습니다.", -- check
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
