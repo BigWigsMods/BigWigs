@@ -2,25 +2,25 @@
 ..\FrameXML\UI.xsd">
 
 <!--LIBS START-->
-<Script file="AceLibrary\AceLibrary.lua"/>
-<Script file="AceOO-2.0\AceOO-2.0.lua"/>
-<Script file="AceAddon-2.0\AceAddon-2.0.lua"/>
-<Script file="AceConsole-2.0\AceConsole-2.0.lua"/>
-<Script file="AceDB-2.0\AceDB-2.0.lua"/>
-<Script file="AceDebug-2.0\AceDebug-2.0.lua"/>
-<Script file="AceEvent-2.0\AceEvent-2.0.lua"/>
-<Script file="AceHook-2.1\AceHook-2.1.lua"/>
-<Script file="AceModuleCore-2.0\AceModuleCore-2.0.lua"/>
-<Script file="AceLocale-2.2\AceLocale-2.2.lua"/>
+<Script file="Libs\AceLibrary\AceLibrary.lua"/>
+<Script file="Libs\AceOO-2.0\AceOO-2.0.lua"/>
+<Script file="Libs\AceAddon-2.0\AceAddon-2.0.lua"/>
+<Script file="Libs\AceConsole-2.0\AceConsole-2.0.lua"/>
+<Script file="Libs\AceDB-2.0\AceDB-2.0.lua"/>
+<Script file="Libs\AceDebug-2.0\AceDebug-2.0.lua"/>
+<Script file="Libs\AceEvent-2.0\AceEvent-2.0.lua"/>
+<Script file="Libs\AceHook-2.1\AceHook-2.1.lua"/>
+<Script file="Libs\AceModuleCore-2.0\AceModuleCore-2.0.lua"/>
+<Script file="Libs\AceLocale-2.2\AceLocale-2.2.lua"/>
 
-<Script file="Babble-Boss-2.2\Babble-Boss-2.2.lua"/>
-<Script file="Babble-Zone-2.2\Babble-Zone-2.2.lua"/>
-<Script file="Dewdrop-2.0\Dewdrop-2.0.lua"/>
-<Script file="FuBarPlugin-2.0\FuBarPlugin-2.0.lua"/>
-<Script file="PaintChips-2.0\PaintChips-2.0.lua"/>
-<Script file="CandyBar-2.0\CandyBar-2.0.lua"/>
-<Script file="SharedMedia-1.0\SharedMedia-1.0.lua"/>
-<Script file="Waterfall-1.0\Waterfall-1.0.lua"/>
+<Script file="Libs\Babble-Boss-2.2\Babble-Boss-2.2.lua"/>
+<Script file="Libs\Babble-Zone-2.2\Babble-Zone-2.2.lua"/>
+<Script file="Libs\Dewdrop-2.0\Dewdrop-2.0.lua"/>
+<Script file="Libs\FuBarPlugin-2.0\FuBarPlugin-2.0.lua"/>
+<Script file="Libs\PaintChips-2.0\PaintChips-2.0.lua"/>
+<Script file="Libs\CandyBar-2.0\CandyBar-2.0.lua"/>
+<Script file="Libs\SharedMedia-1.0\SharedMedia-1.0.lua"/>
+<Script file="Libs\Waterfall-1.0\Waterfall-1.0.lua"/>
 <!--LIBS END-->
 
 <!--LOD STUFF START-->
