@@ -410,8 +410,8 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelTemper", 6)
-	self:TriggerEvent("BigWigs_ThrottleSync", "KaelConflag", 1)
-	self:TriggerEvent("BigWigs_ThrottleSync", "KaelToy", 3)
+	self:TriggerEvent("BigWigs_ThrottleSync", "KaelConflag", 0.5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "KaelToy2", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFearSoon", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFear", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "PhoenixRebirth", 5)
@@ -524,10 +524,10 @@ function mod:Afflicted(msg)
 					break
 				end
 			end
-		end
-		if not id then return end
-		if UnitPowerType(id) == 1 then
-			self:Sync("KaelToy " .. tPlayer)
+			if not id then return end
+			if UnitPowerType(id) == 1 then
+				self:Sync("KaelToy2 " .. tPlayer)
+			end
 		end
 	end
 end
@@ -548,7 +548,7 @@ function mod:KaelConflag(rest, nick)
 	self:Bar(msg, 10, "Spell_Fire_Incinerate")
 end
 
-function mod:KaelToy(rest, nick)
+function mod:KaelToy2(rest, nick)
 	if not rest or not self.db.profile.toy then return end
 
 	local msg = L["toy_message"]:format(rest)
