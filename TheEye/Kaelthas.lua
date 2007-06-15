@@ -245,6 +245,9 @@ L:RegisterTranslations("frFR", function() return {
 	pyro_warning = "Explosion pyrotechnique dans 5 sec. !",
 	pyro_message = "Explosion pyrotechnique en incantation !",
 
+	toy = "Jouet à distance sur tanks",
+	toy_desc = "Préviens quand un tank a le Jouet à distance.",
+
 	thaladred_inc_trigger = "Impressionnant. Voyons comment tiendront vos nerfs face à l'Assombrisseur, Thaladred !", -- à vérifier
 	sanguinar_inc_trigger = "Vous avez tenu tête à certains de mes plus talentueux conseillers… mais personne ne peut résister à la puissance du Marteau de sang. Je vous présente, le seigneur Sanguinar !", -- à vérifier
 	capernian_inc_trigger = "Capernian fera en sorte que votre séjour ici ne se prolonge pas.", -- à vérifier
@@ -294,6 +297,9 @@ L:RegisterTranslations("frFR", function() return {
 
 	revive_bar = "Retour des conseillers",
 	revive_warning = "Retour des conseillers dans 5 sec. !",
+
+	toy_message = "Jouet à distance sur le tank : %s",
+	toy_trigger = "Jouet à distance",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

@@ -1,7 +1,7 @@
 ﻿## Interface: 20100
 
 ## Title: Big Wigs [|cffeda55fOutland|r]
-## Titre-frFR: Big Wigs [|cffeda55fOutreterre|r]
+## Title-frFR: Big Wigs [|cffeda55fOutreterre|r]
 ## Notes: Big Wigs Outland Modules
 ## Notes-frFR: Modules Big Wigs concernant l'Outreterre.
 ## Author: Funkydude, Ammo, Rabbit

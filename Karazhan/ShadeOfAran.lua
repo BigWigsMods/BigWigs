@@ -134,7 +134,7 @@ L:RegisterTranslations("frFR", function() return {
 	pull_desc = "Préviens de l'attraction magnétique et de l'explosion des arcanes.",
 	pull_message = "Explosion des Arcanes !",
 	pull_trigger1 = "Oui, oui, mon fils est assez puissant… mais moi aussi je possède quelques pouvoirs !",
-	pull_trigger2 = "Je ne suis pas un simple bouffon ! Je suis Niels Aran !",
+	pull_trigger2 = "Je ne suis pas un simple bouffon ! Je suis Nielas Aran !",
 	pull_bar = "Explosion des Arcanes",
 
 	flame = "Couronne de flammes",

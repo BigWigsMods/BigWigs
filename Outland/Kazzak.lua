@@ -36,7 +36,8 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger1 = "Pour la Légion ! Pour Kil'Jaeden !",
+	engage_trigger1 = "La Légion envahira l'univers !", -- à vérifier
+	engage_trigger2 = "Que les mortels périssent tous !", -- à vérifier
 
 	enrage_trigger = "%s devient fou furieux !",
 	enrage_warning1 = "%s engagé - Enragé dans 50-60 sec.",

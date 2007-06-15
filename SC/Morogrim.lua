@@ -121,7 +121,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	grave = "Tombeau aquatique",
 	grave_desc = "Préviens quand quelqu'un subit le Tombeau aquatique et indique sa durée.",
-	grave_trigger1 = "^([^%s]+) ([^%s]+) les effets .* Tombeau aquatique",
+	grave_trigger1 = "^([^%s]+) ([^%s]+) les effets .* Tombeau aquatique.$",
 	grave_trigger2 = "envoye ses ennemis", -- à vérifier
 	grave_message = "Tombeau aquatique : %s",
 	grave_bar = "Tombeaux aquatique",
