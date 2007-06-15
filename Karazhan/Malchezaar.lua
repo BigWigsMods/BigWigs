@@ -5,6 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Prince Malchezaar"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local nova = true
+local count = 1
 
 ----------------------------
 --      Localization      --
@@ -43,6 +44,10 @@ L:RegisterTranslations("enUS", function() return {
 	nova_message = "Shadow Nova!",
 	nova_bar = "~Nova Cooldown",
 	nova_soon = "Shadow Nova Soon",
+
+	despawn = "Disable Infernal Despawn Timers",
+	despawn_desc = "Timers for infernal despawn.",
+	despawn_bar = "Infernal (%d) Despawns",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -187,7 +192,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", "enfeeble", "nova", "infernals", "bosskill"}
+mod.toggleoptions = {"phase", "enfeeble", "nova", -1, "infernals", "despawn", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -214,11 +219,17 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.infernals and (msg == L["infernal_trigger1"] or msg == L["infernal_trigger2"]) then
-		self:Message(L["infernal_warning"], "Positive")
-		self:NextInfernal()
+	if msg == L["infernal_trigger1"] or msg == L["infernal_trigger2"] then
+		if self.db.profile.infernals then
+			self:Message(L["infernal_warning"], "Positive")
+			self:NextInfernal()
+		end
+		if not self.db.profile.despawn then
+			self:ScheduleEvent("BWInfernalDespawn", self.DespawnTimer, 20, self)
+		end
 	elseif msg == L["phase1_trigger"] then
 		nova = true
+		count = 1
 
 		if self.db.profile.phase then
 			self:Message(L["phase1_message"], "Positive")
@@ -241,6 +252,11 @@ end
 function mod:NextInfernal()
 	self:DelayedMessage(15, L["infernal_message"], "Urgent", nil, "Alert")
 	self:Bar(L["infernal_bar"], 20, "INV_Stone_05")
+end
+
+function mod:DespawnTimer()
+	self:Bar(L["despawn_bar"]:format(count), 180, "INV_SummerFest_Symbol_Medium")
+	count = count + 1
 end
 
 function mod:EnfeebleEvent(msg)
