@@ -11,6 +11,7 @@ local checkedForDeformat = nil
 
 local delayedElementalMessage = nil
 local delayedStriderMessage = nil
+local delayedNagaMessage = nil
 
 local shieldsFaded = 0
 local playerName = nil
@@ -59,6 +60,11 @@ L:RegisterTranslations("enUS", function() return {
 	strider_desc = "Warn when the Coilfang Striders spawn during phase 2.",
 	strider_bar = "Strider Incoming",
 	strider_soon_message = "Strider soon!",
+
+	naga = "Coilfang Elite Naga spawn",
+	naga_desc = "Warn when the Coilfang Elite Naga spawn during phase 2.",
+	naga_bar = "Naga Incoming",
+	naga_soon_message = "Naga soon!",
 
 	barrier = "Barrier down",
 	barrier_desc = "Alert when the barriers go down.",
@@ -220,7 +226,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Serpentshrine Cavern"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", -1, "static", "icon", -1, "elemental", "strider", "loot", "barrier", "proximity", "bosskill"}
+mod.toggleoptions = {"phase", -1, "static", "icon", -1, "elemental", "strider","naga", "loot", "barrier", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
@@ -331,6 +337,13 @@ function mod:RepeatStrider()
 	end
 	self:ScheduleEvent("Strider", self.RepeatStrider, 63, self)
 end
+function mod:RepeatNaga()
+	if self.db.profile.naga then
+		self:Bar(L["naga_bar"], 47.5, "INV_Misc_MonsterHead_02")
+		delayedStriderMessage = self:DelayedMessage(42.5, L["naga_soon_message"], "Attention")
+	end
+	self:ScheduleEvent("Naga", self.RepeatNaga, 47.5, self)
+end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["phase2_trigger"]) then
@@ -418,7 +431,11 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			if delayedStriderMessage and self:IsEventScheduled(delayedStriderMessage) then
 				self:CancelScheduledEvent(delayedStriderMessage)
 			end
+			if delayedNagaMessage and self:IsEventScheduled(delayedNagaMessage) then
+				self:CancelScheduledEvent(delayedNagaMessage)
+			end
 			self:CancelScheduledEvent("Strider")
+			self:CancelScheduledEvent("Naga")
 			self:TriggerEvent("BigWigs_StopBar", self, L["elemental_bar"])
 		elseif shieldsFaded < 4 and self.db.profile.barrier then
 			self:Message(L["barrier_down_message"]:format(shieldsFaded), "Attention")
