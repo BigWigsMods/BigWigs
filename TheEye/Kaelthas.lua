@@ -154,8 +154,8 @@ L:RegisterTranslations("koKR", function() return {
 	pyro_warning = "약 5초 이내 불덩이 작렬!",
 	pyro_message = "불덩이 작열 시전!",
 
-	toy = "Remote Toy on Tanks",
-	toy_desc = "Warn when a tank has Remote Toy.",
+	toy = "탱커에 원격조종 장난감",
+	toy_desc = "탱커가 원격조종 장난감에 걸릴 시 경고합니다.",
 
 	thaladred_inc_trigger = "암흑의 인도자 탈라드레드를 상대로 얼마나 버틸지 볼까?",
 	sanguinar_inc_trigger = "최고의 조언가를 상대로 잘도 버텨냈군. 허나 그 누구도 붉은 망치의 힘에는 대항할 수 없지. 보아라, 군주 생귀나르를!",
@@ -207,8 +207,8 @@ L:RegisterTranslations("koKR", function() return {
 	revive_bar = "조언가 부활",
 	revive_warning = "5초 이내 조언가 부활!",
 
-	toy_message = "Toy on Tank: %s",
-	toy_trigger = "Remote Toy", --afflicted by ... -- check
+	toy_message = "탱커에 장난감: %s",
+	toy_trigger = "원격조종 장난감", --afflicted by ... -- check
 } end )
 
 L:RegisterTranslations("frFR", function() return {

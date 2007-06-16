@@ -71,7 +71,7 @@ L:RegisterTranslations("koKR", function() return {
 	meteor = "유성",
 	meteor_desc = "대략적인 유성 타이머입니다.",
 	meteor_warning = "약 5초 이내 유성 주의",
-	meteor_message = "환생! - 약 47초 이내 유성",
+	meteor_message = "유성! 다음은 약 54초 이내",
 	meteor_nextbar = "다음 유성",
 
 	flamepatch = "당신에 화염 파편",
