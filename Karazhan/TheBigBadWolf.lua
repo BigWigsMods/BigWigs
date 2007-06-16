@@ -51,11 +51,11 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("frFR", function() return {
 	riding_trigger = "^([^%s]+) gagne(.*) Chaperon Rouge",
 
-	youriding = "Chaperon Rouge (soi)",
+	youriding = "Chaperon Rouge (vous)",
 	youriding_desc = "Préviens quand vous êtes le Chaperon Rouge.",
 	riding_youwarn = "Vous êtes le Chaperon Rouge !",
 
-	elseriding = "Chaperon Rouge (autres)",
+	elseriding = "Chaperon Rouge (les autres)",
 	elseriding_desc = "Préviens quand les autres sont le Chaperon Rouge.",
 	riding_otherwarn = "%s est le Chaperon Rouge !",
 

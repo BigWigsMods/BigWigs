@@ -87,7 +87,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_trigger = "Tu veux donc me provoquer ? Eh bien, à toi, enfant.",
  	phase2_message = "Acte II - %s",
 	phase3_trigger = "Viens, gentille nuit ; rends-moi mon Romulo !",
-	phase3_message = "Acte III - Ensemble",
+	phase3_message = "Acte III - Les deux",
 
 	poison = "Poison",
 	poison_desc = "Préviens quand un joueur est empoisonné.",

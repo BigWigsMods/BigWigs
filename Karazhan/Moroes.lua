@@ -51,7 +51,7 @@ L:RegisterTranslations("frFR", function() return {
 	vanish_bar = "~Cooldown Disparition",
 
 	garrote = "Garrot",
-	garrote_desc = "Préviens quand des joueurs subissent le Garrot.",
+	garrote_desc = "Préviens quand un joueur subit les effets du Garrot.",
 	garrote_trigger = "^([^%s]+) ([^%s]+) les effets .* Garrot.$",
 	garrote_message = "Garrot : %s",
 

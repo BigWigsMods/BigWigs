@@ -122,7 +122,7 @@ L:RegisterTranslations("frFR", function() return {
 	drink_trigger = "Vous ne refuseriez pas à un vieil homme une boisson revigorante ? Non, c’est bien ce que je pensais.",
 	drink_warning = "Mana Faible - Boisson imminente !",
 	drink_message = "Boisson - Polymorphisme de zone !",
-	drink_bar = "Super Explosion pyrotechnique",
+	drink_bar = "Super Explosion pyro.",
 
 	blizzard = "Blizzard",
 	blizzard_desc = "Préviens quand Blizzard est incanté.",

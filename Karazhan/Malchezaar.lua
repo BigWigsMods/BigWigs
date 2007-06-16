@@ -117,6 +117,10 @@ L:RegisterTranslations("frFR", function() return {
 	nova_message = "Nova de l'ombre !",
 	nova_bar = "~Cooldown Nova",
 	nova_soon = "Nova de l'ombre imminente",
+
+	despawn = "Désactiver les délais de disparition des infernaux",
+	despawn_desc = "Délais pour la disparition des infernaux.",
+	despawn_bar = "Disparition infernal (%d)",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

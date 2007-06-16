@@ -72,12 +72,12 @@ L:RegisterTranslations("frFR", function() return {
 	repentance_nextbar = "~Cooldown Repentir",
 
 	holyfire = "Flammes sacrées",
-	holyfire_desc = "Préviens quand quelqu'un est affecté par les Flammes sacrées.",
+	holyfire_desc = "Préviens quand un joueur subit les effets des Flammes sacrées.",
 	holyfire_trigger = "^([^%s]+) ([^%s]+) les effets .* Flammes sacrées.$",
 	holyfire_message = "Flammes sacrées : %s",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le joueur affecté par les Flammes sacrées (nécessite d'être promu ou mieux).",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par les Flammes sacrées (nécessite d'être promu ou mieux).",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

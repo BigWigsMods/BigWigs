@@ -159,13 +159,18 @@ L:RegisterTranslations("frFR", function() return {
 
 	elemental = "Elémentaires souillés",
 	elemental_desc = "Préviens quand les Elémentaires souillés apparaissent durant la phase 2.",
-	elemental_bar = "Arrivée d'un Elémentaire souillé",
+	elemental_bar = "Prochain élémentaire souillé",
 	elemental_soon_message = "Elémentaire souillé imminent !",
 
 	strider = "Trotteurs de Glissecroc",
 	strider_desc = "Préviens quans les Trotteurs de Glissecroc apparaissent durant la phase 2.",
-	strider_bar = "Arrivée d'un trotteur",
+	strider_bar = "Prochain trotteur",
 	strider_soon_message = "Trotteur imminent !",
+
+	naga = "Nagas élites de Glissecroc",
+	naga_desc = "Préviens quand les Nagas élites de Glissecroc apparaissent durant la phase 2.",
+	naga_bar = "Prochain naga",
+	naga_soon_message = "Naga imminent !",
 
 	barrier = "Dissipation des barrières",
 	barrier_desc = "Préviens quand les barrières se dissipent.",

@@ -47,7 +47,7 @@ L:RegisterTranslations("frFR", function() return {
 	meteor = "Météore",
 	meteor_desc = "Délais estimés entre les météores.",
 	meteor_warning = "Météore probable dans ~5 sec.",
-	meteor_message = "Renaissance ! - Météore dans ~47 sec.",
+	meteor_message = "Météore ! Prochain dans ~54 sec.",
 	meteor_nextbar = "Prochain météore",
 
 	flamepatch = "Gerbe de flammes sur vous",

@@ -54,13 +54,13 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Oh, Tito, nous devons trouver le moyen de rentrer à la maison !",
 
-	spawns = "Hostilité",
+	spawns = "Délais d'activité",
 	spawns_desc = "Affiche plusieurs barres indiquant quand les différents personnages passent à l'action.",
 	spawns_bar = "%s attaque !",
 	spawns_warning = "%s dans 5 sec.",
 
 	light = "Chaîne d'éclairs",
-	light_desc = "Préviens quand la Chaîne d'éclairs est incanté.",
+	light_desc = "Préviens quand la Chaîne d'éclairs est incantée.",
 	light_trigger = "La Mégère commence à lancer Chaîne d'éclairs",
 	light_message = "Chaîne d'éclairs !",
 } end)

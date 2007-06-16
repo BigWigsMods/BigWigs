@@ -84,10 +84,10 @@ L:RegisterTranslations("frFR", function() return {
 	phase = "Phases",
 	phase_desc = ("Préviens quand %s passe d'une phase à l'autre."):format(boss),
 	phase1_message = "Retrait - Fin des Souffles du Néant",
-	phase1_bar = "~Prochain retrait",
+	phase1_bar = "~Retrait probable",
 	phase1_trigger = "%s se retire avec un cri en ouvrant un portail vers le Néant.",
 	phase2_message = "Rage - Souffles de Néant imminent !",
-	phase2_bar = "Prochaine Rage",
+	phase2_bar = "~Rage probable",
 	phase2_trigger = "%s entre dans une rage nourrie par le Néant !",
 
 	voidzone = "Zones du vide",

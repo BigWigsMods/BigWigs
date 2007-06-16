@@ -41,7 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	berserk = "Berserk",
-	berserk_desc = "Préviens quand le Conservateur passe en mode berserk après 10 min.",
+	berserk_desc = "Préviens quand le Conservateur passe en berserk après 10 min.",
 	berserk_trigger = "L'accès à la Ménagerie est réservé aux invités.",
 	berserk_message = "%s engagé, 10 min. avant berserk !",
 	berserk_bar = "Berserk",
