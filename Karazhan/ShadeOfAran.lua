@@ -275,7 +275,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["flame_bar"], 5, "Spell_Fire_Fire")
 	elseif self.db.profile.blizzard and (msg == L["blizzard_trigger1"] or msg == L["blizzard_trigger2"]) then
 		self:Message(L["blizzard_message"], "Attention")
-		self:Bar(L["blizzard_message"], 40, "Spell_Frost_IceStorm")
+		self:Bar(L["blizzard_message"], 36, "Spell_Frost_IceStorm")
 	elseif msg == L["engage_trigger1"] or msg == L["engage_trigger2"] or msg == L["engage_trigger3"] then
 		drinkannounced = nil
 		addsannounced = nil
