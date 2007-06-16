@@ -134,6 +134,6 @@ end
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["light_trigger"]) and self.db.profile.light then
 		self:Message(L["light_message"], "Urgent")
-		self:Bar(L["light_message"], 2.5, "Spell_Nature_ChainLightning")
+		self:Bar(L["light_message"], 2, "Spell_Nature_ChainLightning")
 	end
 end
