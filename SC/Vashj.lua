@@ -357,6 +357,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			delayedElementalMessage = self:DelayedMessage(55, L["elemental_soon_message"], "Important")
 		end
 		self:RepeatStrider()
+		self:RepeatNaga()
 	elseif msg == L["engage_trigger1"] or msg == L["engage_trigger2"] or msg == L["engage_trigger3"]
 		or msg == L["engage_trigger4"] or msg == L["engage_trigger5"] then
 
