@@ -5,7 +5,11 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Al'ar"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-local started
+
+local started = nil
+local prior = nil
+local fireball = nil
+local occured = true
 
 ----------------------------
 --      Localization      --
@@ -19,9 +23,7 @@ L:RegisterTranslations("enUS", function() return {
 	meteor = "Meteor",
 	meteor_desc = "Estimated Meteor Timers.",
 	meteor_warning = "Possible Meteor in ~5sec",
-	meteor_message = "Rebirth! - Meteor in ~47sec",
-	meteor_trigger = "Al'ar begins to cast Rebirth.",
-	meteor_bar = "Rebirth",
+	meteor_message = "Meteor! Next in ~54sec",
 	meteor_nextbar = "Next Meteor",
 
 	flamepatch = "Flame Patch on You",
@@ -46,8 +48,6 @@ L:RegisterTranslations("frFR", function() return {
 	meteor_desc = "Délais estimés entre les météores.",
 	meteor_warning = "Météore probable dans ~5 sec.",
 	meteor_message = "Renaissance ! - Météore dans ~47 sec.",
-	meteor_trigger = "Al'ar commence à lancer Renaissance.",
-	meteor_bar = "Renaissance",
 	meteor_nextbar = "Prochain météore",
 
 	flamepatch = "Gerbe de flammes sur vous",
@@ -72,8 +72,6 @@ L:RegisterTranslations("koKR", function() return {
 	meteor_desc = "대략적인 유성 타이머입니다.",
 	meteor_warning = "약 5초 이내 유성 주의",
 	meteor_message = "환생! - 약 47초 이내 유성",
-	meteor_trigger = "알라르|1이;가; 환생 시전을 시작합니다.",
-	meteor_bar = "환생",
 	meteor_nextbar = "다음 유성",
 
 	flamepatch = "당신에 화염 파편",
@@ -115,7 +113,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "debuff")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "AlArRebirth", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "AlArArmor", 5)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -129,12 +126,6 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg == L["meteor_trigger"] then
-		self:Sync("AlArRebirth")
-	end
-end
-
 function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 	if self.db.profile.flamepatch and msg == L["flamepatch_trigger"] then
 		self:Message(L["flamepatch_message"], "Personal", true, "Alarm")
@@ -144,28 +135,15 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
-		self.prior = nil
+		prior = nil
+		fireball = nil
+		occured = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		self:Message(L["engage_message"]:format(boss), "Attention")
-	elseif sync == "AlArRebirth" then
-		if self.db.profile.meteor then
-			self:Message(L["meteor_message"], "Urgent", nil, "Alarm")
-			self:DelayedMessage(42, L["meteor_warning"], "Important")
-			self:Bar(L["meteor_bar"], 2, "Spell_Fire_Burnout")
-			self:Bar(L["meteor_nextbar"], 47, "Spell_Fire_Burnout")
-		end
-		if not self.prior and self.db.profile.enrage then
-			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
-			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
-			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
-			self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
-			self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
-			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
-			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
-			self.prior = true
-		end
+		self:ScheduleRepeatingEvent("BWAlarTargetSeek", self.AlarCheck, 1, self)
+		self:ScheduleEvent("BWAlarNilOccured", function() occured = nil end, 15, self)
 	elseif sync == "AlArArmor" and rest and self.db.profile.armor then
 		if rest == UnitName("player") then
 			self:Message(L["armor_you"], "Personal", true, "Long")
@@ -178,6 +156,30 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
+	end
+end
+
+function mod:AlarCheck()
+	if not self:Scan() and not occured then
+		occured = true
+		if not prior and self.db.profile.enrage then
+			self:DelayedMessage(320, L2["enrage_min"]:format(5), "Positive")
+			self:DelayedMessage(440, L2["enrage_min"]:format(3), "Positive")
+			self:DelayedMessage(560, L2["enrage_min"]:format(1), "Positive")
+			self:DelayedMessage(590, L2["enrage_sec"]:format(30), "Positive")
+			self:DelayedMessage(610, L2["enrage_sec"]:format(10), "Urgent")
+			self:DelayedMessage(615, L2["enrage_sec"]:format(5), "Urgent")
+			self:DelayedMessage(620, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Bar(L2["enrage"], 620, "Spell_Shadow_UnholyFrenzy")
+			prior = true
+		end
+		if fireball and self.db.profile.meteor then
+			self:Message(L["meteor_message"], "Urgent", nil, "Alarm")
+			self:DelayedMessage(49, L["meteor_warning"], "Important")
+			self:Bar(L["meteor_nextbar"], 54, "Spell_Fire_Burnout")
+		end
+		fireball = true
+		self:ScheduleEvent("BWAlarNilOccured", function() occured = nil end, 15, self)
 	end
 end
 
