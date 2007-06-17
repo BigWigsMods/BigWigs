@@ -81,7 +81,8 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	engage_trigger1 = "為了軍團!為了基爾加德!",
+	engage_trigger1 = "燃燒軍團將征服一切!",
+	engage_trigger2 = "可憐的凡人!",
 
 	enrage_trigger = "%s變得憤怒了!",
 	enrage_warning1 = "與 %s 進入戰鬥！ 50-60 秒後狂怒！",
