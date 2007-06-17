@@ -39,9 +39,6 @@ L:RegisterTranslations("enUS", function() return {
 	conflag = "Conflagration",
 	conflag_desc = "Warn about Conflagration on a player.",
 
-	temperament = "Chaotic Temperament",
-	temperament_desc = "Warn about Chaotic Temperament on a player.",
-
 	gaze = "Gaze",
 	gaze_desc = "Warn when Thaladred focuses on a player.",
 
@@ -94,9 +91,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	afflicted_trigger = "^(%S+) (%S+) afflicted by (.*).$",
 
-	temperament_spell = "Chaotic Temperament",
-	temperament_message = "Temperament on %s!",
-
 	conflag_spell = "Conflagration",
 	conflag_message = "Conflag on %s!",
 
@@ -129,9 +123,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	conflag = "거대한 불길",
 	conflag_desc = "플레이어에게 거대한 불길을 경고합니다.",
-
-	temperament = "혼돈의 기질",
-	temperament_desc = "플레이어에게 혼돈의 기질을 경고합니다.",
 
 	gaze = "주시",
 	gaze_desc = "플레이어에게 탈라드레드의 주시를 경고합니다.",
@@ -185,9 +176,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	afflicted_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$", -- check
 
-	temperament_spell = "혼돈의 기질",
-	temperament_message = "%s에게 혼돈의 기질 - 치유 시전시 침묵!",
-
 	conflag_spell = "거대한 불길",
 	conflag_message = "%s에게 거대한 불길!",
 
@@ -220,9 +208,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	conflag = "Conflagration",
 	conflag_desc = "Préviens quand un joueur est touché par la Conflagration.",
-
-	temperament = "Tempérament chaotique",
-	temperament_desc = "Préviens quand un joueur est touché par le Tempérament chaotique.",
 
 	gaze = "Focalisation",
 	gaze_desc = "Préviens quand Thaladred se focalise sur un joueur.",
@@ -276,9 +261,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	afflicted_trigger = "^(%S+) (%S+) les effets de (.*).$",
 
-	temperament_spell = "Tempérament chaotique",
-	temperament_message = "Tempérament sur %s !",
-
 	conflag_spell = "Conflagration",
 	conflag_message = "Conflagration sur %s !",
 
@@ -303,14 +285,14 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "^Energie. Kraft.",
+	engage_message = "Phase 1",
+
 	phase = "Phasen",
 	phase_desc = "Warnt vor den verschiedenen Phasen des Encounters...",
 
 	conflag = "Gro\195\159brand",
 	conflag_desc = "Warnt vor Gro\195\159brand auf einem Spieler.",
-
-	temperament = "Chaotic Temperament", -- to translate
-	temperament_desc = "Warn about Chaotic Temperament on a player.", -- to translate
 
 	gaze = "Blick",
 	gaze_desc = "Warnt, wenn Thaladred sich auf einen Spieler fokussiert.",
@@ -360,9 +342,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	afflicted_trigger = "^(%S+) (%S+) ist von (.*) betroffen.$",
 
-	temperament_spell = "Chaotic Temperament", -- to translate
-	temperament_message = "Temperament on %s!", -- to translate
-
 	conflag_spell = "Gro\195\159brand",
 	conflag_message = "Gro\195\159brand auf %s!",
 
@@ -381,6 +360,9 @@ L:RegisterTranslations("deDE", function() return {
 
 	revive_bar = "Berater Wiederbelebung",
 	revive_warning = "Berater wiederbelebt in 5sec!",
+
+	toy_message = "Spielzeug auf Tank: %s",
+	toy_trigger = "Ferngesteuertes Spielzeug",
 } end )
 
 ----------------------------------
@@ -392,7 +374,7 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = { boss, capernian, sanguinar, telonicus, thaladred }
 mod.wipemobs = { axe, mace, dagger, staff, sword, bow, shield }
-mod.toggleoptions = { "phase", -1, "temperament", "conflag", "toy", "gaze", "icon", "fear", "pyro", "rebirth", "proximity", "bosskill" }
+mod.toggleoptions = { "phase", -1, "conflag", "toy", "gaze", "icon", "fear", "pyro", "rebirth", "proximity", "bosskill" }
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
@@ -415,7 +397,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "KaelTemper", 6)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelConflag", 0.5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelToy2", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFearSoon", 5)
@@ -519,8 +500,6 @@ function mod:Afflicted(msg)
 		end
 		if tSpell == L["conflag_spell"] then
 			self:Sync("KaelConflag " .. tPlayer)
-		elseif tSpell == L["temperament_spell"] then
-			self:Sync("KaelTemper " .. tPlayer)
 		elseif tSpell == L["fear_spell"] then
 			self:Sync("KaelFear")
 		elseif tSpell == L["toy_trigger"] then
@@ -536,14 +515,6 @@ function mod:Afflicted(msg)
 			end
 		end
 	end
-end
-
-function mod:KaelTemper(rest, nick)
-	if not rest or not self.db.profile.temperament then return end
-
-	local msg = L["temperament_message"]:format(rest)
-	self:Message(msg, "Attention")
-	self:Bar(msg, 8, "Spell_Arcane_ArcanePotency")
 end
 
 function mod:KaelConflag(rest, nick)
