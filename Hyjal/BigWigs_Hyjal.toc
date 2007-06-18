@@ -2,6 +2,7 @@
 
 ## Title: Big Wigs [|cffeda55fHyjal|r]
 ## Notes: (BETA) Big Wigs Hyjal Modules
+## Notes-frFR: Modules Big Wigs concernant Hyjal (BETA).
 ## Author: Funkydude, Rabbit
 ## X-Credits: Andii
 ## Version: 2.0

@@ -29,6 +29,24 @@ L:RegisterTranslations("enUS", function() return {
 	swarm_bar = "~Swarm Cooldown",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "Vous défendez un monde condamné ! Fuyez, si vous voulez avoir une chance de faire durer vos vies pathétiques !", -- à vérifier
+
+	inferno = "Inferno",
+	inferno_desc = "Temps de recharge approximatif pour l'Inferno.",
+	inferno_trigger = "commence à exécuter Inferno.$",
+	inferno_message = "Incante un inferno !",
+	inferno_warning = "Inferno imminent !",
+	inferno_bar = "~Cooldown Inferno",
+
+	swarm = "Vol de charognards",
+	swarm_desc = "Temps de recharge approximatif pour le Vol de charognards.",
+	swarm_trigger1 = "La Peste soit sur vous !", -- à vérifier
+	swarm_trigger2 = "L'essaim est affamé.", -- à vérifier
+	swarm_message = "Essaim ! - Prochain dans ~11 sec.",
+	swarm_bar = "~Cooldown Essaim",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

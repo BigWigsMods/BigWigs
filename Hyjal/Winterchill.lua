@@ -27,6 +27,21 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a Raid Icon on the player afflicted by Icebolt (requires promoted or higher).",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	decay = "Mort & décomposition sur vous",
+	decay_desc = "Préviens quand la Mort & décomposition est sur vous.",
+	decay_trigger = "Vous subissez les effets de Mort & décomposition.",
+	decay_message = "Mort & décomposition sur VOUS !",
+
+	icebolt = "Eclair de glace",
+	icebolt_desc = "Avertissements concernant l'Eclair de glace.",
+	icebolt_trigger = "Eclair de glace touche ([^%s]+)",
+	icebolt_message = "Eclair de glace sur %s !",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Eclair de glace (nécessite d'être promu ou mieux).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
