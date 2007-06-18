@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -28,18 +28,33 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	decay = "Mort & d�composition sur vous",
-	decay_desc = "Pr�viens quand la Mort & d�composition est sur vous.",
-	decay_trigger = "Vous subissez les effets de Mort & d�composition.",
-	decay_message = "Mort & d�composition sur VOUS !",
+	decay = "Mort & dcomposition sur vous",
+	decay_desc = "Prviens quand la Mort & dcomposition est sur vous.",
+	decay_trigger = "Vous subissez les effets de Mort & dcomposition.",
+	decay_message = "Mort & dcomposition sur VOUS !",
 
 	icebolt = "Eclair de glace",
 	icebolt_desc = "Avertissements concernant l'Eclair de glace.",
 	icebolt_trigger = "Eclair de glace touche ([^%s]+)",
 	icebolt_message = "Eclair de glace sur %s !",
 
-	icon = "Ic�ne",
-	icon_desc = "Place une ic�ne de raid sur le dernier joueur affect� par l'Eclair de glace (n�cessite d'�tre promu ou mieux).",
+	icon = "Icne",
+	icon_desc = "Place une icne de raid sur le dernier joueur affect par l'Eclair de glace (ncessite d'tre promu ou mieux).",
+} end )
+
+L:RegisterTranslations("koKR", function() return {
+	decay = "당신에 죽음과 부패",
+	decay_desc = "당신에 걸린 죽음과 부패를 알립니다.",
+	decay_trigger = "당신은 죽음과 부패에 걸렸습니다.",
+	decay_message = "당신에 죽음과 부패!",
+
+	icebolt = "얼음 화살",
+	icebolt_desc = "얼음 화살 경고.",
+	icebolt_trigger = "^([^|;%s]*)(.*)얼음 화살에 걸렸습니다.", -- "Icebolt hits ([^%s]+)",
+	icebolt_message = "%s에 얼음 화살!",
+	
+	icon = "전술 표시",
+	icon_desc = "얼음 화살에 걸린 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
 } end )
 
 ----------------------------------
