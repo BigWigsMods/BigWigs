@@ -5,8 +5,10 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Supremus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-
 local started = nil
+
+local UnitName = UnitName
+local UnitExists = UnitExists
 
 ----------------------------
 --      Localization     --
@@ -87,7 +89,7 @@ local function findTarget()
 	else
 		local num = GetNumRaidMembers()
 		for i = 1, num do
-			local unit = string.format("raid%starget", num)
+			local unit = ("raid%starget"):format(num)
 			if UnitExists(unit) and UnitName(unit) == boss then
 				return UnitName(unit .. "target")
 			end

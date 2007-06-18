@@ -7,6 +7,11 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local previous
 
+local UnitName = UnitName
+local GetNumRaidMembers = GetNumRaidMembers
+local UnitExists = UnitExists
+local UnitPowerType = UnitPowerType
+
 ----------------------------
 --      Localization      --
 ----------------------------
