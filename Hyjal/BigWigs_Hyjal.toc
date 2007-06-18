@@ -19,3 +19,4 @@
 
 HyjalBeta.lua
 Anetheron.lua
+Winterchill.lua
