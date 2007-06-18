@@ -12,10 +12,6 @@ local waterfall = AceLibrary:HasInstance("Waterfall-1.0") and AceLibrary("Waterf
 
 local hint = nil
 local _G = getfenv(0)
-local GameTooltip = GameTooltip
-local IsAltKeyDown = IsAltKeyDown
-local IsControlKeyDown = IsControlKeyDown
-local IsShiftKeyDown = IsShiftKeyDown
 
 ----------------------------
 --      Localization      --

@@ -5,14 +5,9 @@
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local BB = AceLibrary("Babble-Boss-2.2")
 
-local type = type
-local ipairs = ipairs
 local UnitExists = UnitExists
 local UnitAffectingCombat = UnitAffectingCombat
 local UnitName = UnitName
-local UnitIsFeignDeath = UnitIsFeignDeath
-local pairs = pairs
-local setmetatable = setmetatable
 
 -- Provide some common translations here, so we don't have to replicate it in
 -- every freaking module.

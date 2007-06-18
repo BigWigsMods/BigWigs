@@ -7,9 +7,6 @@ local BB = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 
 local customBossOptions = {}
-local pairs = pairs
-local ipairs = ipairs
-local type = type
 
 ----------------------------
 --      Localization      --
