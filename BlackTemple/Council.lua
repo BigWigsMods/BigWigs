@@ -21,7 +21,7 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "TheIllidariCouncil",
 
 	immune = "Immunity Warning",
-	immune_desc "Warn when Malande becomes immune to spells or melee attacks.",
+	immune_desc = "Warn when Malande becomes immune to spells or melee attacks.",
 	immune_spell_trigger = "Lady Malande gains Blessing of Spell Warding.",
 	immune_melee_trigger = "Lady Malande gains Blessing of Protection.",
 	immune_message = "Malande: %s Immune for 15sec!",
@@ -116,7 +116,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(L["immune_message"]:format(L["spell"]), "Positive", nil, "Alarm")
 		self:Bar(L["immune_bar"]:format(L["spell"]), 15, "Spell_Holy_SealOfRighteousness")
 	elseif sync == "MalMelee" and self.db.profile.immune then
-		self:Message(L["immune_message"]:format(L["melee"]), "Positive", nil "Alert")
+		self:Message(L["immune_message"]:format(L["melee"]), "Positive", nil, "Alert")
 		self:Bar(L["immune_bar"]:format(L["melee"]), 15, "Spell_Holy_SealOfProtection")
 	elseif sync == "MalShield" and self.db.profile.shield then
 		self:Message(L["shield_message"], "Important", nil, "Long")
