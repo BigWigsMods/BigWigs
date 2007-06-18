@@ -163,7 +163,7 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	end
 end
 
-function mod:Poison()
+function mod:Poison(msg)
 	local pplayer, ptype = select(3, msg:find(L["poison_trigger"]))
 	if pplayer and ptype then
 		if pplayer == L2["you"] and ptype == L2["are"] then
