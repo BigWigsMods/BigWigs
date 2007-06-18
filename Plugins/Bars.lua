@@ -599,12 +599,14 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 			if db.emphasizeMove then
 				if not emphasizeTimers[module] then emphasizeTimers[module] = {} end
 				if emphasizeTimers[module][id] then self:CancelScheduledEvent(emphasizeTimers[module][id]) end
-				emphasizeTimers[module][id] = self:ScheduleEvent(self.EmphasizeBar, time - 10, self, module, id)
+				emphasizeTimers[module][id] = "BigWigs-Plugins-Bars-" .. math.random()
+				self:ScheduleEvent(emphasizeTimers[module][id], self.EmphasizeBar, time - 10, self, module, id)
 			end
 			if db.emphasizeFlash then
 				if not flashTimers[module] then flashTimers[module] = {} end
 				if flashTimers[module][id] then self:CancelScheduledEvent(flashTimers[module][id]) end
-				flashTimers[module][id] = self:ScheduleEvent(self.FlashBar, time - 10, self, module, id)
+				flashTimers[module][id] = "BigWigs-Plugins-Bars-" .. math.random()
+				self:ScheduleEvent(flashTimers[module][id], self.FlashBar, time - 10, self, module, id)
 			end
 		else
 			-- Since it's 11 or less, just start it at the emphasized group
