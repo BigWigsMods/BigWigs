@@ -5,6 +5,15 @@
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local BB = AceLibrary("Babble-Boss-2.2")
 
+local type = type
+local ipairs = ipairs
+local UnitExists = UnitExists
+local UnitAffectingCombat = UnitAffectingCombat
+local UnitName = UnitName
+local UnitIsFeignDeath = UnitIsFeignDeath
+local pairs = pairs
+local setmetatable = setmetatable
+
 -- Provide some common translations here, so we don't have to replicate it in
 -- every freaking module.
 local commonWords = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
@@ -46,7 +55,7 @@ commonWords:RegisterTranslations("koKR", function() return {
 commonWords:RegisterTranslations("zhCN", function() return {
 	you = "你",
 	are = "到",
-	
+
 	enrage_start = "%s 狂暴 - %d分后狂暴",
 	enrage_end = "%s 已狂暴",
 	enrage_min = "%d分后狂暴！",
@@ -135,14 +144,14 @@ function BigWigs.modulePrototype:Scan()
 	if num == 0 then
 		num = GetNumPartyMembers()
 		for i = 1, num do
-			local partyUnit = string.format("party%starget", i)
+			local partyUnit = ("party%starget"):format(i)
 			if UnitExists(partyUnit) and UnitAffectingCombat(partyUnit) and self.scanTable[UnitName(partyUnit)] then
 				return true
 			end
 		end
 	else
 		for i = 1, num do
-			local raidUnit = string.format("raid%starget", i)
+			local raidUnit = ("raid%starget"):format(i)
 			if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) and self.scanTable[UnitName(raidUnit)] then
 				return true
 			end

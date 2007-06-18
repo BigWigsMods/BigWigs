@@ -7,6 +7,9 @@ local BB = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 
 local customBossOptions = {}
+local pairs = pairs
+local ipairs = ipairs
+local type = type
 
 ----------------------------
 --      Localization      --
@@ -327,7 +330,7 @@ end
 
 function BigWigs:RegisterBossOption(key, name, desc, func)
 	if customBossOptions[key] then
-		error(string.format("The custom boss option %q has already been registered.", key))
+		error("The custom boss option %q has already been registered."):format(key)
 	end
 	customBossOptions[key] = { name, desc, func }
 end
@@ -342,7 +345,7 @@ local opts = {}
 -- module has not been set when it's triggered.
 function BigWigs:RegisterModule(name, module)
 	if type(module.revision) ~= "number" then
-		error(string.format("%q does not have a valid revision field.", name))
+		error("%q does not have a valid revision field."):format(name)
 	end
 
 	if module:IsBossModule() then
