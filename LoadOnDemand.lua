@@ -13,6 +13,18 @@ local enableZones = {}
 local BWRAID = 2
 local BWPARTY = 1
 
+local ipairs = ipairs
+local pairs = pairs
+local type = type
+local table_insert = table.insert
+local assert = assert
+local collectgarbage = collectgarbage
+local GetNumRaidMembers = GetNumRaidMembers
+local GetNumPartyMembers = GetNumPartyMembers
+local IsAddOnLoaded = IsAddOnLoaded
+local LoadAddOn = LoadAddOn
+local select = select
+
 ------------------------------
 --    Addon Declaration     --
 ------------------------------
@@ -34,7 +46,7 @@ local function loadZone(zone)
 					BigWigsLoD:TriggerEvent("BigWigs_ModulePackLoaded", v, true)
 				end
 			end
-			table.insert(addonsLoaded, v)
+			table_insert(addonsLoaded, v)
 			loadInZone[zone][i] = nil
 		end
 		if #loadInZone[zone] == 0 then
@@ -114,16 +126,16 @@ local function iterateZones(addon, override, partyContent, ...)
 	for i = 1, select("#", ...) do
 		local z = (select(i, ...)):trim()
 		local zone = BZ:HasTranslation(z) and BZ[z] or nil
-		assert(zone, string.format("The zone %s, specified by the %s addon, does not exist in Babble-Zone.", z, addon))
+		assert(zone, ("The zone %s, specified by the %s addon, does not exist in Babble-Zone."):format(z, addon))
 
 		-- register the zone for enabling.
 		registerEnableZone( zone, partyContent and BWPARTY or BWRAID )
 		
 		if not loadInZone[zone] then loadInZone[zone] = {} end
-		table.insert( loadInZone[zone], addon)
+		table_insert( loadInZone[zone], addon)
 
 		if override then
-			table.insert( loadInZone[override], addon)
+			table_insert( loadInZone[override], addon)
 		else
 			addCoreMenu(zone)
 		end
@@ -143,7 +155,7 @@ local function initialize()
 				-- modules own specified zone submenu
 				local menu = GetAddOnMetadata(i, "X-BigWigs-Menu")
 				if menu then
-					assert(BZ:HasTranslation(menu), string.format("The menu key %s, specified by %s, does not exist in Babble-Zone.", menu, name))
+					assert(BZ:HasTranslation(menu), ("The menu key %s, specified by %s, does not exist in Babble-Zone."):format(menu, name))
 					menu = BZ[menu]
 					if not loadInZone[menu] then loadInZone[menu] = {} end
 
@@ -162,7 +174,7 @@ local function initialize()
 			if meta then
 				-- register this addon for loading with core
 				if type(loadWithCore) ~= "table" then loadWithCore = {} end
-				table.insert( loadWithCore, name )
+				table_insert( loadWithCore, name )
 			end
 		end
 	end
