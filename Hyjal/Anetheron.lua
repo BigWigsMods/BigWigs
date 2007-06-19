@@ -50,19 +50,19 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "멸망에 처한 세계의 수호자들이여, 구차한 목숨이라도 건지려면 어서 달아나라!",
 
-	inferno = "지옥불정령",
-	inferno_desc = "대략적인 지옥불정령 대기시간 타이머입니다.",
-	inferno_trigger = "지옥불정령 사용을 시작합니다.$",
-	inferno_message = "지옥불정령 시전 중!",
-	inferno_warning = "잠시 후 지옥불정령!",
-	inferno_bar = "~지옥불정령 대기시간",
+	inferno = "불지옥",
+	inferno_desc = "대략적인 불지옥 대기시간 타이머입니다.",
+	inferno_trigger = "불지옥 사용을 시작합니다.$",
+	inferno_message = "불지옥 시전 중!",
+	inferno_warning = "잠시 후 불지옥!",
+	inferno_bar = "~불지옥 대기시간",
 
 	swarm = "흡혈박쥐 떼",
 	swarm_desc = "대략적인 흡혈박쥐 떼 대기시간 타이머입니다.",
 	swarm_trigger1 = "역병에 뒤덮이리라!",
 	swarm_trigger2 = "박쥐들이 많이 굶주렸구나.",
 	swarm_message = "박쥐 떼! - 다음은 약 11초 이내",
-	swarm_bar = "~흡혈박쥐 떼 대기시간",
+	swarm_bar = "~박쥐 떼 대기시간",
 } end )
 
 ----------------------------------
