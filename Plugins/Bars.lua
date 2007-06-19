@@ -480,21 +480,21 @@ end
 -----------------------------------------------------------------------
 
 function plugin:Ace2_AddonDisabled(module)
-	if emphasizeTimers[module] then
-		for k, v in pairs(emphasizeTimers[module]) do
-			self:CancelScheduledEvent(v)
-			emphasizeTimers[module][k] = nil
-		end
-	end
-
-	if flashTimers[module] then
-		for k, v in pairs(flashTimers[module]) do
-			self:CancelScheduledEvent(v)
-			flashTimers[module][k] = nil
-		end
-	end
-
 	if moduleBars[module] then
+		if emphasizeTimers[module] then
+			for k, v in pairs(emphasizeTimers[module]) do
+				self:CancelScheduledEvent(v)
+				emphasizeTimers[module][k] = nil
+			end
+		end
+
+		if flashTimers[module] then
+			for k, v in pairs(flashTimers[module]) do
+				self:CancelScheduledEvent(v)
+				flashTimers[module][k] = nil
+			end
+		end
+
 		for k in pairs(moduleBars[module]) do
 			if movingBars[k] then
 				movingBars[k] = del(movingBars[k])
@@ -511,29 +511,28 @@ end
 
 function plugin:BigWigs_StopBar(module, text)
 	if not text then return end
-	local id = "BigWigsBar "..text
+	if moduleBars[module] then
+		local id = "BigWigsBar "..text
 
-	if movingBars[id] then
-		movingBars[id] = del(movingBars[id])
+		if movingBars[id] then
+			movingBars[id] = del(movingBars[id])
+		end
 
 		if not next(movingBars) then
 			self:CancelScheduledEvent("BigWigsBarMover")
 		end
-	end
 
-	if emphasizeTimers[module] and emphasizeTimers[module][id] then
-		self:CancelScheduledEvent(emphasizeTimers[module][id])
-		emphasizeTimers[module][id] = nil
-	end
+		if emphasizeTimers[module] and emphasizeTimers[module][id] then
+			self:CancelScheduledEvent(emphasizeTimers[module][id])
+			emphasizeTimers[module][id] = nil
+		end
 
-	if flashTimers[module] and flashTimers[module][id] then
-		self:CancelScheduledEvent(flashTimers[module][id])
-		flashTimers[module][id] = nil
-	end
+		if flashTimers[module] and flashTimers[module][id] then
+			self:CancelScheduledEvent(flashTimers[module][id])
+			flashTimers[module][id] = nil
+		end
 
-	self:UnregisterCandyBar(id)
-
-	if moduleBars[module] then
+		self:UnregisterCandyBar(id)
 		moduleBars[module][id] = nil
 	end
 end
@@ -593,23 +592,23 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 	local groupId = "BigWigsGroup"
 	local scale = db.scale or 1
 	if db.emphasize and (db.emphasizeMove or db.emphasizeFlash) then
-		-- If the bar is started at more than 11 seconds, it won't be emphasized
-		-- right away, but if it's started at 11 or less, it will be.
+		-- If the bar is started at more than 15 seconds, it won't be emphasized
+		-- right away, but if it's started at 15 or less, it will be.
 		if time > 15 then
 			if db.emphasizeMove then
 				if not emphasizeTimers[module] then emphasizeTimers[module] = {} end
 				if emphasizeTimers[module][id] then self:CancelScheduledEvent(emphasizeTimers[module][id]) end
-				emphasizeTimers[module][id] = "BigWigs-Plugins-Bars-" .. math.random()
+				emphasizeTimers[module][id] = "BigWigs-EmphasizeBar-" .. math.random()
 				self:ScheduleEvent(emphasizeTimers[module][id], self.EmphasizeBar, time - 10, self, module, id)
 			end
 			if db.emphasizeFlash then
 				if not flashTimers[module] then flashTimers[module] = {} end
 				if flashTimers[module][id] then self:CancelScheduledEvent(flashTimers[module][id]) end
-				flashTimers[module][id] = "BigWigs-Plugins-Bars-" .. math.random()
+				flashTimers[module][id] = "BigWigs-FlashBar-" .. math.random()
 				self:ScheduleEvent(flashTimers[module][id], self.FlashBar, time - 10, self, module, id)
 			end
 		else
-			-- Since it's 11 or less, just start it at the emphasized group
+			-- Since it's 15 or less, just start it at the emphasized group
 			-- right away.
 			if db.emphasizeMove then
 				groupId = "BigWigsEmphasizedGroup"
@@ -704,6 +703,7 @@ end
 
 function plugin:FlashBar(module, id)
 	if not flashColors then generateColors() end
+	if flashTimers[module] then flashTimers[module][id] = nil end
 	-- Start flashing the bar
 	currentColor[id] = 1
 	self:ScheduleRepeatingEvent(id, flashBarUp, 0.1, id)
@@ -759,10 +759,12 @@ function plugin:EmphasizeBar(module, id)
 	local centerX, centerY = self:GetCandyBarCenter(id)
 	if type(centerX) ~= "number" or type(centerY) ~= "number" then return end
 
+	if emphasizeTimers[module] then emphasizeTimers[module][id] = nil end
+
 	setupEmphasizedGroup()
 
 	if not self:IsEventScheduled("BigWigsBarMover") then
-		self:ScheduleRepeatingEvent("BigWigsBarMover",self.UpdateBars,0,self)
+		self:ScheduleRepeatingEvent("BigWigsBarMover", self.UpdateBars, 0, self)
 	end
 
 	self:UnregisterCandyBarWithGroup(id, "BigWigsGroup")
