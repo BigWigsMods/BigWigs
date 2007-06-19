@@ -322,13 +322,13 @@ L:RegisterTranslations("deDE", function() return {
 	phase3_trigger = "Vielleicht habe ich Euch untersch\195\164tzt. Es w\195\164re unfair, Euch gegen meine vier Berater gleichzeitig k\195\164mpfen zu lassen, aber... mein Volk wurde auch nie fair behandelt. Ich vergelte nur Gleiches mit Gleichem.",
 	phase4_trigger = "Ach, manchmal muss man die Sache selbst in die Hand nehmen. Balamore shanal!",
 
-	flying_trigger = "I have not come this far to be stopped! The future I have planned will not be jeapordized! Now, you will taste true power!!", -- to translate
-	gravity_trigger1 = "Let us see how you fare when your world is turned upside down.", -- to translate
-	gravity_trigger2 = "Having trouble staying grounded?", -- to translate
+	flying_trigger = "Ich bin nicht so weit gekommen, um jetzt noch aufgehalten zu werden! Die Zukunft, die ich geplant habe, darf nicht gef\195\164hrdet werden. Jetzt bekommt Ihr wahre Macht zu sp\195\188ren!",
+	gravity_trigger1 = "Mal sehen, wie Ihr klarkommt, wenn Eure Welt auf den Kopf gestellt wird.",
+	gravity_trigger2 = "Ihr verliert wohl den Boden unter den F\195\188\195\159en?",
 
-	gravity_bar = "Next Gravity Lapse", -- to translate
-	gravity_message = "Gravity Lapse!", -- to translate
-	flying_message = "Flying! Gravity Lapse in 1min", -- to translate
+	gravity_bar = "N\195\164chster Gravitationsverlust",
+	gravity_message = "Gravitationsverlust!",
+	flying_message = "Schweben! Gravitationsverlust in 1min",
 
 	weapons_inc_message = "Waffen kommen!",
 	phase3_message = "Phase 2 - Berater und Waffen!",

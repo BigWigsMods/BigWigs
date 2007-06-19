@@ -187,46 +187,52 @@ L:RegisterTranslations("deDE", function() return {
 
 	["Tainted Elemental"] = "Besudelter Elementar",
 
+	engage_trigger1 = "Normalerweise würde ich mich nicht herablassen, Euresgleichen persönlich gegenüberzutreten, aber ihr lasst mir keine Wahl...",
+	engage_trigger2 = "I spit on you, surface filth!", -- to translate
+	engage_trigger3 = "Victory to Lord Illidan! ", -- to translate
+	engage_trigger4 = "I'll split you from stem to stern!", -- to translate
+	engage_trigger5 = "Death to the outsiders!", -- to translate
+	engage_message = "Phase 1",
+	
 	phase = "Phasen Warnung",
 	phase_desc = "Warnt, wenn Vashj ihre Phase wechselt.",
-
-	static = "Statische Aufladung",
-	static_desc = "Warnt vor Statischer Aufladung auf Spielern.",
-
-	icon = "Icon",
-	icon_desc = "Plaziert ein Icon auf Spielern mit Statische Aufladung und denen, die einen Besudelten Kern looten.",
-
-	elemental = "Besudelter Elementar spawn",
-	elemental_desc = "Warnt, wenn ein Besudelter Elementar w\195\164rend Phase 2 spawnt.",
-
-	strider = "Schreiter des Echsenkessels spawn",
-	strider_desc = "Warnt, wenn ein Schreiter des Echsenkessels w\195\164rend Phase 2 spawnt.",
-
-	barrier = "Barriere zerst\195\182rt",
-	barrier_desc = "Alarmiert, wenn die Barrieren in Phase 2 zerst\195\182rt werden.",
-
-	loot = "Besudelter Kern",
-	loot_desc = "Warnt wer einen Besudelten Kern lootet.",
-
-	static_charge_trigger = "^([^%s]+) ([^%s]+) von Statische Aufladung betroffen.$",
-	static_charge_message = "Statische Aufladung auf %s!",
-
-	loot_message = "%s hat einen Kern gelootet!",
-
 	phase2_trigger = "Die Zeit ist gekommen! Lasst keinen am Leben!",
-
 	phase2_soon_message = "Phase 2 bald!",
 	phase2_message = "Phase 2, Adds kommen!",
 	phase3_message = "Phase 3 - Wutanfall in 4min!",
+	
+	static = "Statische Aufladung",
+	static_desc = "Warnt vor Statischer Aufladung auf Spielern.",
+	static_charge_trigger = "^([^%s]+) ([^%s]+) von Statische Aufladung betroffen.$",
+	static_charge_message = "Statische Aufladung auf %s!",
+	static_fade = "'Statische Aufladung' schwindet von Euch.",
 
-	barrier_down_message = "Barriere %d/4 zerst\195\182rt!",
-	barrier_fades_trigger = "Magiebarriere schwindet von Lady Vashj.",
-
+	icon = "Icon",
+	icon_desc = "Plaziert ein Icon auf Spielern mit Statische Aufladung und denen, die einen Besudelten Kern looten.",
+	
+	elemental = "Besudelter Elementar spawn",
+	elemental_desc = "Warnt, wenn ein Besudelter Elementar w\195\164rend Phase 2 spawnt.",
 	elemental_bar = "Besudelter Elementar kommt",
 	elemental_soon_message = "Besudelter Elementar bald!",
 
+	strider = "Schreiter des Echsenkessels spawn",
+	strider_desc = "Warnt, wenn ein Schreiter des Echsenkessels w\195\164rend Phase 2 spawnt.",
 	strider_bar = "Schreiter kommt",
 	strider_soon_message = "Schreiter bald!",
+	
+	naga = "Nagasoldat spawn",
+	naga_desc = "Warnt, wenn ein Nagasoldat w\195\164rend Phase 2 spawnt.",
+	naga_bar = "Nagasoldat kommt",
+	naga_soon_message = "Nagasoldat bald!",
+	
+	barrier = "Barriere zerst\195\182rt",
+	barrier_desc = "Alarmiert, wenn die Barrieren in Phase 2 zerst\195\182rt werden.",
+	barrier_down_message = "Barriere %d/4 zerst\195\182rt!",
+	barrier_fades_trigger = "Magiebarriere schwindet von Lady Vashj.",
+
+	loot = "Besudelter Kern",
+	loot_desc = "Warnt wer einen Besudelten Kern lootet.",
+	loot_message = "%s hat einen Kern gelootet!",
 } end )
 
 ----------------------------------
@@ -453,4 +459,3 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		end
 	end
 end
-
