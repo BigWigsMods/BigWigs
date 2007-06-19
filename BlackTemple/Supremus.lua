@@ -89,7 +89,7 @@ local function findTarget()
 	else
 		local num = GetNumRaidMembers()
 		for i = 1, num do
-			local unit = ("raid%starget"):format(num)
+			local unit = ("raid%starget"):format(i)
 			if UnitExists(unit) and UnitName(unit) == boss then
 				return UnitName(unit .. "target")
 			end
