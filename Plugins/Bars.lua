@@ -149,7 +149,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Close"] = "关闭",
 
 	["Emphasize"] = "醒目",
-	["Emphasize bars that are close to completion (<10sec) by moving them to a second anchor."] = "当小于10秒计时时,醒目记时条将移动到你指定的位置.",
+	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "高亮显示接近完成的计时条（小于10秒），同样要注意的是如果一个计时起始值小于15秒时会立刻被高亮显示.",
 	
 	["Enable"] = "启用",
 	["Enables emphasizing bars."] = "启用醒目记时条",
