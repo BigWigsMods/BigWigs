@@ -9,6 +9,8 @@ local anger = BB["Essence of Anger"]
 local boss = BB["Reliquary of Souls"]
 BB = nil
 
+local drained = {}
+
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local death = AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"]:format(boss)
 
@@ -29,7 +31,6 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_nextbar = "Next Enrage",
 	enrage_warning = "Enrage in 5 sec!",
 
-	-- Considering this part of enrage, since it is a soft enrage
 	desire_trigger  = "You can have anything you desire... for a price.", 
 	desire_start = "Essence of Desire - Zero mana in 160 sec", 
 	desire_bar = "Zero Mana", 
@@ -46,7 +47,13 @@ L:RegisterTranslations("enUS", function() return {
 	deaden_desc = "Warns you when Deaden is being cast.",
 	deaden_trigger = "Essence of Desire begins to cast Deaden.",
 	deaden_message = "Casting Deaden!",
+	deaden_warn = "Deaden in ~5sec.",
+	deaden_nextbar = "Next Deaden.",
 
+	drain = "Soul Drain",
+	drain_desc = "Warn who has Soul Drain.",
+	drain_trigger = "^([^%s]+) ([^%s]+) afflicted by Soul Drain.$",
+	drain_message = "Soul Drain: %s",
 } end )
 
 ----------------------------------
@@ -56,7 +63,7 @@ L:RegisterTranslations("enUS", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = {boss, desire, suffering, anger}
-mod.toggleoptions = {"enrage", "runeshield", "deaden", "bosskill"}
+mod.toggleoptions = {"enrage", "runeshield", "deaden", "drain", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -65,11 +72,21 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
-	
+
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "drain")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "drain")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "drain")
+
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "RoSDrain", 0)
+	self:TriggerEvent("BigWigs_ThrottleSync", "RoSShield", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "RoSWin", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "RoSDeaden", 5)
 end
 
 ------------------------------
@@ -77,10 +94,13 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["engage_trigger"] and self.db.profile.enrage then
-		self:Message(L["enrage_start"], "Positive")
-		self:Bar(L["enrage_nextbar"], 47, "Spell_Shadow_UnholyFrenzy")
-		self:DelayedMessage(42, L["enrage_warning"], "Urgent")
+	if msg == L["engage_trigger"] then
+		for k in pairs(drained) do drained[k] = nil end
+		if self.db.profile.enrage then
+			self:Message(L["enrage_start"], "Positive")
+			self:Bar(L["enrage_nextbar"], 47, "Spell_Shadow_UnholyFrenzy")
+			self:DelayedMessage(42, L["enrage_warning"], "Urgent")
+		end
 	elseif msg == L["desire_trigger"] and self.db.profile.enrage then
 		self:Message(L["desire_start"], "Positive")
 		self:Bar(L["desire_bar"], 160, "Spell_Shadow_UnholyFrenzy")
@@ -99,22 +119,62 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 end
 
 function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
-	if self.db.profile.bosskill and msg == UNITDIESOTHER:format(anger) then
-		self:Message(death, "Bosskill", nil, "Victory")
-		BigWigs:ToggleModuleActive(self, false)
+	if msg == UNITDIESOTHER:format(anger) then
+		self:Sync("RoSWin")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if msg == L["runeshield_trigger"] and self.db.profile.runeshield then
-		self:Message(L["runeshield_message"], "Attention")
-		self:Bar(L["runeshield_nextbar"], 15, "Spell_Arcane_Blast")
-		self:DelayedMessage(12, L["runeshield_warn"], "Urgent")
+	if msg == L["runeshield_trigger"] then
+		self:Sync("RoSShield")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg == L["deaden_trigger"] and self.db.profile.deaden then
+	if msg == L["deaden_trigger"] then
+		self:Sync("RoSDeaden")
+	end
+end
+
+function mod:drain(msg)
+	local dplayer, dtype = select(3, msg:find(L["drain_trigger"]))
+	if dplayer and dtype then
+		if dplayer == L2["you"] and dtype == L2["are"] then
+			dplayer = UnitName("player")
+		end
+		self:Sync("RoSDrain "..dplayer)
+	end
+end
+
+function mod:DrainWarn()
+	if self.db.profile.drain then
+		local msg = nil
+		for k in pairs(drained) do
+			if not msg then
+				msg = k
+			else
+				msg = msg .. ", " .. k
+			end
+		end
+		self:Message(L["drain_message"]:format(msg), "Important", nil, "Alert")
+	end
+	for k in pairs(drained) do drained[k] = nil end
+end
+
+function mod:BigWigs_RecvSync(sync, rest, nick)
+	if sync == "RoSDrain" and rest then
+		drained[rest] = true
+		self:ScheduleEvent("BWDrainWarn", self.DrainWarn, 1.5, self)
+	elseif sync == "RoSShield" and self.db.profile.runeshield then
+		self:Message(L["runeshield_message"], "Attention")
+		self:Bar(L["runeshield_nextbar"], 15, "Spell_Arcane_Blast")
+		self:DelayedMessage(12, L["runeshield_warn"], "Urgent")
+	elseif sync == "RoSWin" and self.db.profile.bosskill then
+		self:Message(death, "Bosskill", nil, "Victory")
+		BigWigs:ToggleModuleActive(self, false)
+	elseif sync == "RoSDeaden" and self.db.profile.deaden then
 		self:Message(L["deaden_message"], "Attention")
+		self:Bar(L["deaden_nextbar"], 30, "Spell_Shadow_SoulLeech_1")
+		self:DelayedMessage(25, L["deaden_warn"], "Urgent")
 	end
 end
