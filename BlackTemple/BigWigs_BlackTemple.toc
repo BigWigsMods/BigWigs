@@ -24,3 +24,4 @@ Supremus.lua
 Teron.lua
 Souls.lua
 Council.lua
+Illidan.lua

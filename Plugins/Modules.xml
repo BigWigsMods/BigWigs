@@ -57,6 +57,7 @@
 <Script file="..\BlackTemple\Teron.lua"/>
 <Script file="..\BlackTemple\Souls.lua"/>
 <Script file="..\BlackTemple\Council.lua"/>
+<Script file="..\BlackTemple\Illidan.lua"/>
 
 <Script file="..\Hyjal\HyjalBeta.lua"/>
 <Script file="..\Hyjal\Anetheron.lua"/>
