@@ -12,6 +12,7 @@ BB = nil
 local drained = {}
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local death = AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"]:format(boss)
 
 ----------------------------
