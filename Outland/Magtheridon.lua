@@ -366,9 +366,9 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if self.db.profile.nova and msg:find(L["nova_"]) then
 		self:Message(L["nova_"], "Positive")
-		self:Bar(L["nova_bar"], 54, "Spell_Fire_SealOfFire")
+		self:Bar(L["nova_bar"], 51, "Spell_Fire_SealOfFire")
 		self:Bar(L["nova_cast"], 12, "Spell_Fire_SealOfFire")
-		self:DelayedMessage(50, L["nova_warning"], "Urgent")
+		self:DelayedMessage(48, L["nova_warning"], "Urgent")
 	end
 end
 
