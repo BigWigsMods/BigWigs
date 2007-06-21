@@ -23,5 +23,6 @@ Gurtogg.lua
 Supremus.lua
 Teron.lua
 Souls.lua
+Shahraz.lua
 Council.lua
 Illidan.lua
