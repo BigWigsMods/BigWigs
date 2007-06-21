@@ -187,20 +187,20 @@ L:RegisterTranslations("deDE", function() return {
 
 	["Tainted Elemental"] = "Besudelter Elementar",
 
-	engage_trigger1 = "Normalerweise würde ich mich nicht herablassen, Euresgleichen persönlich gegenüberzutreten, aber ihr lasst mir keine Wahl...",
-	engage_trigger2 = "I spit on you, surface filth!", -- to translate
+	engage_trigger1 = "Normalerweise w\195\188rde ich mich nicht herablassen, Euresgleichen pers\195\182nlich gegen\195\188berzutreten, aber ihr lasst mir keine Wahl...",
+	engage_trigger2 = "Ich spucke auf Euch, Oberfl�chenbewohner", -- to verify
 	engage_trigger3 = "Victory to Lord Illidan! ", -- to translate
 	engage_trigger4 = "I'll split you from stem to stern!", -- to translate
-	engage_trigger5 = "Death to the outsiders!", -- to translate
+	engage_trigger5 = "Tod den Eindringlingen!",
 	engage_message = "Phase 1",
-	
+
 	phase = "Phasen Warnung",
 	phase_desc = "Warnt, wenn Vashj ihre Phase wechselt.",
 	phase2_trigger = "Die Zeit ist gekommen! Lasst keinen am Leben!",
 	phase2_soon_message = "Phase 2 bald!",
 	phase2_message = "Phase 2, Adds kommen!",
 	phase3_message = "Phase 3 - Wutanfall in 4min!",
-	
+
 	static = "Statische Aufladung",
 	static_desc = "Warnt vor Statischer Aufladung auf Spielern.",
 	static_charge_trigger = "^([^%s]+) ([^%s]+) von Statische Aufladung betroffen.$",
@@ -209,7 +209,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	icon = "Icon",
 	icon_desc = "Plaziert ein Icon auf Spielern mit Statische Aufladung und denen, die einen Besudelten Kern looten.",
-	
+
 	elemental = "Besudelter Elementar spawn",
 	elemental_desc = "Warnt, wenn ein Besudelter Elementar w\195\164rend Phase 2 spawnt.",
 	elemental_bar = "Besudelter Elementar kommt",
@@ -219,12 +219,12 @@ L:RegisterTranslations("deDE", function() return {
 	strider_desc = "Warnt, wenn ein Schreiter des Echsenkessels w\195\164rend Phase 2 spawnt.",
 	strider_bar = "Schreiter kommt",
 	strider_soon_message = "Schreiter bald!",
-	
-	naga = "Nagasoldat spawn",
-	naga_desc = "Warnt, wenn ein Nagasoldat w\195\164rend Phase 2 spawnt.",
-	naga_bar = "Nagasoldat kommt",
-	naga_soon_message = "Nagasoldat bald!",
-	
+
+	naga = "Naga Elite spawn",
+	naga_desc = "Warnt, wenn ein Naga Elite w\195\164rend Phase 2 spawnt.",
+	naga_bar = "Naga Elite kommt",
+	naga_soon_message = "Naga Elite bald!",
+
 	barrier = "Barriere zerst\195\182rt",
 	barrier_desc = "Alarmiert, wenn die Barrieren in Phase 2 zerst\195\182rt werden.",
 	barrier_down_message = "Barriere %d/4 zerst\195\182rt!",
