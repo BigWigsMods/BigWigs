@@ -71,7 +71,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Alerte ! Vous êtes désignés pour être exterminés.", -- à vérifier
+	engage_trigger = "Alerte ! Vous êtes désignés pour être exterminés.",
 
 	orbyou = "Orbe des arcanes sur vous",
 	orbyou_desc = "Préviens quand vous êtes ciblé par l'Orbe des arcanes.",
@@ -90,8 +90,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	pounding = "Martèlement",
 	pounding_desc = "Affiche des barres temporelles pour les Martèlements.",
-	pounding_trigger1 = "Lancement des mesures alternatives…", -- à vérifier
-	pounding_trigger2 = "Calcul des paramètres de puissance…", -- à vérifier
+	pounding_trigger1 = "Lancement des mesures alternatives...",
+	pounding_trigger2 = "Calcul des paramètres de puissance...",
 	pounding_nextbar = "~Cooldown Martèlement",
 	pounding_bar = "<Martèlement>",
 } end )
