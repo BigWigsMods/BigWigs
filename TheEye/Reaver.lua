@@ -71,7 +71,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Alerte ! Vous êtes désignés pour être exterminés.",
+	engage_trigger = "Alerte ! Vous êtes désigné pour extermination.",
 
 	orbyou = "Orbe des arcanes sur vous",
 	orbyou_desc = "Préviens quand vous êtes ciblé par l'Orbe des arcanes.",
