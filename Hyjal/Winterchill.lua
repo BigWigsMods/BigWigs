@@ -12,7 +12,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Winterchill",
-	
+
 	decay = "Death & Decay on You",
 	decay_desc = "Warn for Death & Decay on You.",
 	decay_trigger = "You are afflicted by Death & Decay.",
@@ -22,7 +22,7 @@ L:RegisterTranslations("enUS", function() return {
 	icebolt_desc = "Icebolt warnings.",
 	icebolt_trigger = "Icebolt hits ([^%s]+)",
 	icebolt_message = "Icebolt on %s!",
-	
+
 	icon = "Icon",
 	icon_desc = "Place a Raid Icon on the player afflicted by Icebolt (requires promoted or higher).",
 } end )
@@ -52,9 +52,24 @@ L:RegisterTranslations("koKR", function() return {
 	icebolt_desc = "얼음 화살 경고.",
 	icebolt_trigger = "^([^|;%s]*)(.*)얼음 화살에 걸렸습니다.", -- "Icebolt hits ([^%s]+)",
 	icebolt_message = "%s에 얼음 화살!",
-	
+
 	icon = "전술 표시",
 	icon_desc = "얼음 화살에 걸린 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
+} end )
+
+L:RegisterTranslations("deDE", function() return {
+	decay = "Tod & Verfall auf dir",
+	decay_desc = "Warnt vor Tod & Verfall auf dir.",
+	decay_trigger = "Ihr seid von Tod & Verfall betroffen.",
+	decay_message = "Tod & Verfall auf DIR!",
+
+	icebolt = "Eisblitz",
+	icebolt_desc = "Eisblitz Warnung.",
+	icebolt_trigger = "Eisblitz trifft ([^%s]+)",
+	icebolt_message = "Eisblitz on %s!",
+
+	icon = "Icon",
+	icon_desc = "Plaziert ein Raid Icon auf dem Spieler, der von Eisblitz betroffen ist (ben\195\182tigt Anf\195\188hrer oder Assistent).",
 } end )
 
 ----------------------------------
@@ -77,7 +92,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "WinterchillBolt", 5)
-	
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
