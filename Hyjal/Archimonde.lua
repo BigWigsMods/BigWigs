@@ -18,15 +18,15 @@ L:RegisterTranslations("enUS", function() return {
 	grip = "Grip of the Legion",
 	grip_desc = "Warn who has Grip of the Legion.",
 	grip_trigger = "^([^%s]+) ([^%s]+) afflicted by Grip of the Legion.$",
-	grip_you = "Grip of the Legion on YOU!",
-	grip_other = "%s has Grip of the Legion!",
+	grip_you = "Grip on you!",
+	grip_other = "Grip on %s!",
 
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon on the player with Grip of the Legion.",
 
 	fear = "Fear",
 	fear_desc = "Fear Timers.",
-	fear_message = "Fear! - Next in ~30sec",
+	fear_message = "Fear, next in ~13sec!",
 	fear_bar = "~Fear Cooldown",
 	fear_warning = "Fear Soon!",
 } end )
@@ -63,7 +63,7 @@ end
 ------------------------------
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "ArchGrip" and rest and self.db.profile.grip then 
+	if sync == "ArchGrip" and rest and self.db.profile.grip then
 		local other = L["grip_other"]:format(rest)
 		if rest == UnitName("player") then
 			self:Message(L["grip_you"], "Personal", true, "Long")
@@ -77,9 +77,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Icon(rest)
 		end
 	elseif sync == "ArchFear" and self.db.profile.fear then
-		self:Bar(L["fear_bar"], 30, "Spell_Shadow_DeathScream")
+		self:Bar(L["fear_bar"], 13, "Spell_Shadow_DeathScream")
 		self:Message(L["fear_message"], "Important")
-		self:DelayedMessage(25, L["fear_warning"], "Urgent")
 	end
 end
 
@@ -98,3 +97,4 @@ function mod:UNIT_SPELLCAST_START(msg)
 		self:Sync("ArchFear")
 	end
 end
+
