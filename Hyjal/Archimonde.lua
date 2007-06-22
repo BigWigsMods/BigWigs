@@ -26,7 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	fear = "Fear",
 	fear_desc = "Fear Timers.",
-	fear_message = "Fear, next in ~13sec!",
+	fear_message = "Fear, next in ~30sec!",
 	fear_bar = "~Fear Cooldown",
 	fear_warning = "Fear Soon!",
 } end )
@@ -77,8 +77,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Icon(rest)
 		end
 	elseif sync == "ArchFear" and self.db.profile.fear then
-		self:Bar(L["fear_bar"], 13, "Spell_Shadow_DeathScream")
+		self:Bar(L["fear_bar"], 30, "Spell_Shadow_DeathScream")
 		self:Message(L["fear_message"], "Important")
+		self:DelayedMessage(25, L["fear_warning"], "Urgent")
 	end
 end
 
