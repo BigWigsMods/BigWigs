@@ -104,7 +104,7 @@ L:RegisterTranslations("deDE", function() return {
 	bosskill = "Boss besiegt",
 	bosskill_desc = "Melde, wenn ein Boss besiegt wurde.",
 	enrage = "Wutanfall",
-	--enrage_desc = "Warn when the boss enters an enraged state.",
+	enrage_desc = "Melde, wenn ein Boss in einen Wutanfall Status geht.",
 
 	["Load"] = "Laden",
 	["Load All"] = "Alle Laden",
@@ -540,5 +540,3 @@ function BigWigs:BigWigs_TargetSeen(mobname, unit)
 		end
 	end
 end
-
-

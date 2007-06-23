@@ -43,6 +43,33 @@ L:RegisterTranslations("enUS", function() return {
 	punch_trigger = "Supremus casts Molten Punch.",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	phase = "Phasen",
+	phase_desc = "Warnt vor den verschiedenen Phasen.",
+
+	punch = "Glühender Hieb",
+	punch_desc = "Warnt, wenn Supremus Glühender Hieb benutzt und zeigt einen Countdown an.",
+
+	target = "Verfolgtes Ziel",
+	target_desc = "Warnt wer wärend der Kitephase verfolgt wird und markiert ihn mit einem Icon.",
+
+	normal_phase_message = "Tank'n'spank!",
+	normal_phase_trigger = "Supremus schlägt wütend auf den Boden!",
+
+	kite_phase_message = "Kitephase!",
+	kite_phase_trigger = "Der Boden beginnt aufzubrechen!",
+
+	next_phase_bar = "Nächste Phase",
+	next_phase_message = "Phasenwechsel in 10sec!",
+
+	target_trigger = "Supremus wählt ein neues Ziel!",
+	target_message = "%s wird verfolgt!",
+	target_message_nounit = "Neues Ziel!",
+
+	punch_message = "Hieb!",
+	punch_trigger = "Supremus wirkt Glühender Hieb.",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------
@@ -144,4 +171,3 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	end
 end
-

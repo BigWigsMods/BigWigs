@@ -22,13 +22,32 @@ L:RegisterTranslations("enUS", function() return {
 
 	shield = "Tidal Shield",
 	shield_desc = "Timers for when Naj'entus will gain tidal shield.",
-	shield_trigger = "High Warlord Naj'entus is afflicted by Tidal Shield.", 
+	shield_trigger = "High Warlord Naj'entus is afflicted by Tidal Shield.",
 	shield_nextbar = "Next Tidal Shield",
 	shield_warn = "Tidal Shield!",
-	shield_soon_warn = "Tidal Shield in ~10sec!", 
+	shield_soon_warn = "Tidal Shield in ~10sec!",
 
 	icon = "Icon",
 	icon_desc = "Put an icon on players with Impaling Spine.",
+} end )
+
+L:RegisterTranslations("deDE", function() return {
+	start_trigger = "Im Namen Lady Vashjs werdet Ihr sterben!",
+
+	spine = "Aufspießender Stachel",
+	spine_desc = "Sagt euch, wer aufgespießt wird.",
+	spine_trigger = "^([^%s]+) ([^%s]+) von Aufspießender Stachel betroffen.$",
+	spine_message = "Aufspießender Stachel auf %s!",
+
+	shield = "Gezeitenschild",
+	shield_desc = "Timer f\195\188r Gezeigenschild von Naj'entus.",
+	shield_trigger = "Oberster Kriegsf\195\188rst Naj'entus ist von Gezeitenschild betroffen.",
+	shield_nextbar = "N\195\164chstes Gezeitenschild",
+	shield_warn = "Gezeitenschild!",
+	shield_soon_warn = "Gezeitenschild in ~10sec!",
+
+	icon = "Icon",
+	icon_desc = "Plaziert ein Icon auf Spielern mit Aufspießendem Stachel.",
 } end )
 
 ----------------------------------
