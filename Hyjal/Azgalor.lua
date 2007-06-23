@@ -23,6 +23,17 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a Raid Icon on the player afflicted by Doom (requires promoted or higher).",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	doom = "Destin funeste",
+	doom_desc = "Préviens quand un joueur subit les effets du Destin funeste.",
+	doom_trigger = "^([^%s]+) ([^%s]+) les effets .* Destin funeste.$",
+	doom_other = "Destin funeste sur %s",
+	doom_you = "Destin funeste sur VOUS !",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Destin funeste (nécessite d'être promu ou mieux).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

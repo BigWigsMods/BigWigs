@@ -31,6 +31,25 @@ L:RegisterTranslations("enUS", function() return {
 	fear_warning = "Fear Soon!",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "Votre résistance est futile.", -- à vérifier
+
+	grip = "Poigne de la Légion",
+	grip_desc = "Préviens quand un joueur subit les effets de la Poigne de la Légion.",
+	grip_trigger = "^([^%s]+) ([^%s]+) les effets .* Poigne de la Légion.$",
+	grip_you = "Poigne sur VOUS !",
+	grip_other = "Poigne sur %s !",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par la Poigne de la Légion.",
+
+	fear = "Fear",
+	fear_desc = "Délais concernant les fears.",
+	fear_message = "Fear, prochain dans ~30 sec. !",
+	fear_bar = "~Cooldown Fear",
+	fear_warning = "Fear imminent !",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
