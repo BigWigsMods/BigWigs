@@ -10,6 +10,7 @@ local boss = BB["Reliquary of Souls"]
 BB = nil
 
 local drained = {}
+local spiteIt = {}
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
@@ -53,8 +54,13 @@ L:RegisterTranslations("enUS", function() return {
 
 	drain = "Soul Drain",
 	drain_desc = "Warn who has Soul Drain.",
-	drain_trigger = "^([^%s]+) ([^%s]+) afflicted by Soul Drain.$",
 	drain_message = "Soul Drain: %s",
+
+	spite = "Spite",
+	spite_desc = "Warn who has Spite.",
+	spite_message = "Spite: %s",
+
+	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by ([^%s]+).$",
 } end )
 
 ----------------------------------
@@ -64,7 +70,7 @@ L:RegisterTranslations("enUS", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = {boss, desire, suffering, anger}
-mod.toggleoptions = {"enrage", "runeshield", "deaden", "drain", "bosskill"}
+mod.toggleoptions = {"enrage", "runeshield", "deaden", "drain", "spite", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -79,12 +85,13 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "drain")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "drain")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "drain")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "AfflictEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "AfflictEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "AfflictEvent")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "RoSDrain", 0)
+	self:TriggerEvent("BigWigs_ThrottleSync", "RoSSpite", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RoSShield", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RoSWin", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RoSDeaden", 5)
@@ -97,6 +104,7 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		for k in pairs(drained) do drained[k] = nil end
+		for k in pairs(spiteIt) do spiteIt[k] = nil end
 		if self.db.profile.enrage then
 			self:Message(L["enrage_start"], "Positive")
 			self:Bar(L["enrage_nextbar"], 47, "Spell_Shadow_UnholyFrenzy")
@@ -137,13 +145,17 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	end
 end
 
-function mod:drain(msg)
-	local dplayer, dtype = select(3, msg:find(L["drain_trigger"]))
-	if dplayer and dtype then
-		if dplayer == L2["you"] and dtype == L2["are"] then
-			dplayer = UnitName("player")
+function mod:AfflictEvent(msg)
+	local Aplayer, Atype, Aspell = select(3, msg:find(L["afflict_trigger"]))
+	if Aplayer and Atype then
+		if Aplayer == L2["you"] and Atype == L2["are"] then
+			Aplayer = UnitName("player")
 		end
-		self:Sync("RoSDrain "..dplayer)
+		if Aspell == L["drain"] then
+			self:Sync("RoSDrain "..Aplayer)
+		elseif Aspell == L["spite"] then
+			self:Sync("RoSSpite "..Aplayer)
+		end
 	end
 end
 
@@ -162,10 +174,28 @@ function mod:DrainWarn()
 	for k in pairs(drained) do drained[k] = nil end
 end
 
+function mod:SpiteWarn()
+	if self.db.profile.spite then
+		local msg = nil
+		for k in pairs(spiteIt) do
+			if not msg then
+				msg = k
+			else
+				msg = msg .. ", " .. k
+			end
+		end
+		self:Message(L["spite_message"]:format(msg), "Important", nil, "Alert")
+	end
+	for k in pairs(spiteIt) do spiteIt[k] = nil end
+end
+
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "RoSDrain" and rest then
 		drained[rest] = true
 		self:ScheduleEvent("BWDrainWarn", self.DrainWarn, 1.5, self)
+	elseif sync == "RoSSpite" and rest then
+		spiteIt[rest] = true
+		self:ScheduleEvent("BWSpiteWarn", self.SpiteWarn, 0.5, self) --I very much doubt latency will allow this small a timer in 1 message
 	elseif sync == "RoSShield" and self.db.profile.runeshield then
 		self:Message(L["runeshield_message"], "Attention")
 		self:Bar(L["runeshield_nextbar"], 15, "Spell_Arcane_Blast")
