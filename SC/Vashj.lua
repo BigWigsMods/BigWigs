@@ -273,11 +273,6 @@ function mod:OnEnable()
 
 	playerName = UnitName("player")
 
-	--the following 2 will be removed soon, im keeping it in just now for non enUS clients to translate the yells
-	--we are using yells instead to avoid any possible problems with CheckForWipe
-	phaseTwoAnnounced = nil
-	shieldsFaded = 0
-
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
