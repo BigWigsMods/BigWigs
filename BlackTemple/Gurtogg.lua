@@ -59,9 +59,9 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "debuff")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "debuff")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "debuff")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "RageEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "RageEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "RageEvent")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("UNIT_SPELLCAST_START")
@@ -70,7 +70,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "GurRage", 10)
-	self:TriggerEvent("BigWigs_ThrottleSync", "GurAcid", 3)
+	self:TriggerEvent("BigWigs_ThrottleSync", "GurAcid", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "GurNormal", 10)
 end
 
@@ -92,8 +92,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Whisper(rest, L["rage_you"])
 		end
 		if self.db.profile.phase then
-			self:Bar(L["phase_rage_bar"], 29, "Spell_Fire_ElementalDevastation")
-			self:DelayedMessage(24, L["phase_normal_warning"], "Important")
+			self:Bar(L["phase_rage_bar"], 28, "Spell_Fire_ElementalDevastation")
+			self:DelayedMessage(23, L["phase_normal_warning"], "Important")
 		end
 	elseif sync == "GurAcid" and self.db.profile.acid then
 		self:Bar(L["acid"], 2, "Spell_Nature_Acid_01")
@@ -107,11 +107,12 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
-		self:BigWigs_RecvSync("GurNormal", nil, nil)
+		self:Bar(L["phase_normal_bar"], 52, "Spell_Fire_ElementalDevastation")
+		self:ScheduleEvent("rage1", "BigWigs_Message", 47, L["phase_rage_warning"], "Important")
 	end
 end
 
-function mod:debuff(msg)
+function mod:RageEvent(msg)
 	local rplayer, rtype = select(3, msg:find(L["rage_trigger"]))
 	if rplayer and rtype then
 		if rplayer == L2["you"] and rtype == L2["are"] then
@@ -143,6 +144,7 @@ function mod:AcidCheck()
 		self:Message(L["acid_message"]:format(target), "Attention")
 		if self.db.profile.icon then
 			self:Icon(target)
+			self:ScheduleEvent("ClearIcon", "BigWigs_RemoveRaidIcon", 5, self)
 		end
 	end
 end
