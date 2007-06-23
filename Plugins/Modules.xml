@@ -63,6 +63,7 @@
 <Script file="..\Hyjal\HyjalBeta.lua"/>
 <Script file="..\Hyjal\Anetheron.lua"/>
 <Script file="..\Hyjal\Winterchill.lua"/>
+<Script file="..\Hyjal\Azgalor.lua"/>
 <Script file="..\Hyjal\Archimonde.lua"/>
 
 </Ui>
