@@ -6,7 +6,6 @@ local boss = AceLibrary("Babble-Boss-2.2")["Leotheras the Blind"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local imagewarn = nil
-local wwhelp = 0
 local beDemon = {}
 
 ----------------------------
@@ -20,7 +19,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	whirlwind = "Whirlwind",
 	whirlwind_desc = "Whirlwind Timers.",
-	whirlwind_trigger = "Leotheras the Blind gains Whirlwind",
+	whirlwind_trigger = "Leotheras the Blind gains Whirlwind.",
 	whirlwind_gain = "Whirlwind for 12 sec",
 	whirlwind_fade = "Whirlwind Over",
 	whirlwind_bar = "Whirlwind",
@@ -92,7 +91,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	whirlwind = "Tourbillon",
 	whirlwind_desc = "Affiche les différentes durées concernant le Tourbillon.",
-	whirlwind_trigger = "Leotheras l'Aveugle gagne Tourbillon",
+	whirlwind_trigger = "Leotheras l'Aveugle gagne Tourbillon.",
 	whirlwind_gain = "Tourbillon pendant 12 sec.",
 	whirlwind_fade = "Fin du Tourbillon",
 	whirlwind_bar = "Tourbillon",
@@ -138,7 +137,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	enrage_trigger = "Endlich hat meine Verbannung ein Ende!",
 
-	whirlwind_trigger = "Leotheras der Blinde bekommt Wirbelwind",
+	whirlwind_trigger = "Leotheras der Blinde bekommt Wirbelwind.",
 	whirlwind_gain = "Wirbelwind f\195\188r 12sec",
 	whirlwind_fade = "Wirbelwind vorbei",
 	whirlwind_bar = "Wirbelwind",
@@ -178,14 +177,12 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	for k in pairs(beDemon) do beDemon[k] = nil end
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
-
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "WWEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "WWEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "WWEvent")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -203,8 +200,9 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["enrage_trigger"] then
-		wwhelp = 0
 		imagewarn = nil
+		for k in pairs(beDemon) do beDemon[k] = nil end
+
 		if self.db.profile.phase then
 			self:DelayedMessage(55, L["phase_demonsoon"], "Urgent")
 			self:Bar(L["demon_nextbar"], 60, "Spell_Shadow_Metamorphosis")
@@ -223,7 +221,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:WhirlwindBar()
 		end
 	elseif msg:find(L["phase_trigger"]) then
-		wwhelp = 0
 		if self.db.profile.phase then
 			self:CancelScheduledEvent("demon1")
 			self:TriggerEvent("BigWigs_StopBar", self, L["demon_nextbar"])
@@ -261,7 +258,7 @@ function mod:DemonSoon()
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if msg:find(L["whirlwind_trigger"]) then
+	if msg == L["whirlwind_trigger"] then
 		self:Sync("LeoWW")
 	end
 end
@@ -284,7 +281,7 @@ function mod:UNIT_HEALTH(msg)
 	end
 end
 
-function mod:Event(msg)
+function mod:WWEvent(msg)
 	local wplayer, wtype = select(3, msg:find(L["whisper_trigger"]))
 	if wplayer and wtype then
 		if wplayer == L2["you"] and wtype == L2["are"] then
@@ -318,9 +315,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(L["whirlwind_gain"], "Important", nil, "Alert")
 		self:ScheduleEvent("ww1", "BigWigs_Message", 12, L["whirlwind_fade"], "Attention")
 		self:Bar(L["whirlwind_bar"], 12, "Ability_Whirlwind")
-		if wwhelp == 0 or imagewarn then
-			self:ScheduleEvent("bwwhirlwind", self.WhirlwindBar, 12, self)
-		end
-		wwhelp = 1
+		self:ScheduleEvent("bwwhirlwind", self.WhirlwindBar, 12, self)
 	end
 end
