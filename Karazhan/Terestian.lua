@@ -110,11 +110,12 @@ L:RegisterTranslations("zhTW", function() return {
 
 	weak = "虛弱提示",
 	weak_desc = "當泰瑞斯提安進入虛弱狀態時發送警告",
-	weak_trigger = "受到破碎契印",
-	weak_message = "三十秒虛弱狀態開始",
-	weak_warning1 = "虛弱狀態將在五秒後結束",
-	weak_warning2 = "虛弱狀態結束",
+	weak_trigger = "受到破碎契印的傷害。",
+	weak_message = "進入虛弱狀態 45 秒！",
+	weak_warning1 = "虛弱狀態 5 秒後結束！",
+	weak_warning2 = "虛弱狀態結束！",
 	weak_bar = "虛弱",
+	weak_fade = "破碎契印效果從",
 } end )
 
 ----------------------------------
