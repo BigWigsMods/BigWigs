@@ -77,7 +77,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	gravity_bar = "Next Gravity Lapse",
 	gravity_message = "Gravity Lapse!",
-	flying_message = "Flying! Gravity Lapse in 1min",
+	flying_message = "Phase 5 - Gravity Lapse in 1min",
 
 	weapons_inc_message = "Phase 2 - Weapons incoming!",
 	phase3_message = "Phase 3 - Advisors and Weapons!",
