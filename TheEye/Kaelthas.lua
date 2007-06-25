@@ -50,7 +50,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	rebirth = "Phoenix Rebirth",
 	rebirth_desc = "Approximate Phoenix Rebirth timers.",
-	rebirth_trigger = "Phoenix begins to cast Rebirth.",
+	rebirth_trigger1 = "Anar'anel belore!",
+	rebirth_trigger2 = "By the power of the sun!",
 	rebirth_warning = "Possible Rebirth in ~5sec!",
 	rebirth_bar = "~Possible Rebirth",
 
@@ -401,7 +402,6 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelToy2", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFearSoon", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFear", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "PhoenixRebirth", 5)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
@@ -419,8 +419,6 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 		self:Sync("KaelFearSoon")
 	elseif msg:find(L["fear_trigger2"]) or msg:find(L["fear_trigger1"]) then
 		self:Sync("KaelFear")
-	elseif msg == L["rebirth_trigger"] then
-		self:Sync("PhoenixRebirth")
 	end
 end
 
@@ -479,6 +477,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["mc_trigger1"] or msg == L["mc_trigger2"] then
 		self:Message(L["mc_message"], "Urgent")
 		self:Bar(L["mc_bar"], 33, "Spell_Shadow_ShadowWordDominate")
+	elseif self.db.profile.rebirth and (msg == L["rebirth_trigger1"] or msg == L["rebirth_trigger2"]) then
+		self:Message(L["rebirth"], "Urgent")
+		self:Bar(L["rebirth_bar"], 45, "Spell_Fire_Burnout")
+		self:DelayedMessage(40, L["rebirth_warning"], "Attention")
 	end
 end
 
@@ -537,14 +539,6 @@ function mod:KaelFearSoon(rest, nick)
 	if not self.db.profile.fear then return end
 
 	self:Message(L["fear_soon_message"], "Urgent")
-end
-
-function mod:PhoenixRebirth(rest, nick)
-	if not self.db.profile.rebirth then return end
-
-	self:Message(L["rebirth"], "Urgent")
-	self:Bar(L["rebirth_bar"], 45, "Spell_Fire_Burnout")
-	self:DelayedMessage(40, L["rebirth_warning"], "Attention")
 end
 
 function mod:KaelFear(rest, nick)
