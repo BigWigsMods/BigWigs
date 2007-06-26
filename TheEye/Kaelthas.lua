@@ -23,6 +23,8 @@ local shield = BB["Phaseshift Bulwark"]
 
 BB = nil
 
+local MCd = {}
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -33,20 +35,29 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger = "^Energy. Power.",
 	engage_message = "Phase 1",
 
-	phase = "Phase warnings",
-	phase_desc = "Warn about the various phases of the encounter.",
-
 	conflag = "Conflagration",
 	conflag_desc = "Warn about Conflagration on a player.",
+	conflag_spell = "Conflagration",
+	conflag_message = "Conflag on %s!",
 
 	gaze = "Gaze",
 	gaze_desc = "Warn when Thaladred focuses on a player.",
+	gaze_trigger = "sets eyes on ([^%s]+)!$",
+	gaze_message = "Gaze on %s!",
+	gaze_bar = "~Gaze cooldown",
 
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon over the player that Thaladred sets eyes on.",
 
 	fear = "Fear",
 	fear_desc = "Warn when about Bellowing Roar.",
+	fear_soon_message = "Fear soon!",
+	fear_message = "Fear!",
+	fear_bar = "~Fear Cooldown",
+	fear_soon_trigger = "Lord Sanguinar begins to cast Bellowing Roar.",
+	fear_trigger1 = "^Lord Sanguinar's Bellowing Roar was resisted by %S+.$",
+	fear_trigger2 = "^Lord Sanguinar's Bellowing Roar fails. %S+ is immune.$",
+	fear_spell = "Bellowing Roar",
 
 	rebirth = "Phoenix Rebirth",
 	rebirth_desc = "Approximate Phoenix Rebirth timers.",
@@ -63,7 +74,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	toy = "Remote Toy on Tanks",
 	toy_desc = "Warn when a tank has Remote Toy.",
+	toy_message = "Toy on Tank: %s",
+	toy_trigger = "Remote Toy", --afflicted by ...
 
+	phase = "Phase warnings",
+	phase_desc = "Warn about the various phases of the encounter.",
 	thaladred_inc_trigger = "Impressive. Let us see how your nerves hold up against the Darkener, Thaladred! ",
 	sanguinar_inc_trigger = "You have persevered against some of my best advisors... but none can withstand the might of the Blood Hammer. Behold, Lord Sanguinar!",
 	capernian_inc_trigger = "Capernian will see to it that your stay here is a short one.",
@@ -75,7 +90,6 @@ L:RegisterTranslations("enUS", function() return {
 	flying_trigger = "I have not come this far to be stopped! The future I have planned will not be jeopardized! Now you will taste true power!!",
 	gravity_trigger1 = "Let us see how you fare when your world is turned upside down.",
 	gravity_trigger2 = "Having trouble staying grounded?",
-
 	gravity_bar = "Next Gravity Lapse",
 	gravity_message = "Gravity Lapse!",
 	flying_message = "Phase 5 - Gravity Lapse in 1min",
@@ -85,34 +99,14 @@ L:RegisterTranslations("enUS", function() return {
 	phase4_message = "Phase 4 - Kael inc!",
 	phase4_bar = "Kael'thas incoming",
 
-	mc_trigger1 = "Obey me.",
-	mc_trigger2 = "Bow to my will.",
-	mc_bar = "Mind Control Cooldown",
-	mc_message = "Mind Control! Next in ~33+ sec.",
+	mc = "Mind Control",
+	mc_desc = "Warn who has Mind Control.",
+	mc_message = "Mind Control: %s",
 
 	afflicted_trigger = "^(%S+) (%S+) afflicted by (.*).$",
 
-	conflag_spell = "Conflagration",
-	conflag_message = "Conflag on %s!",
-
-	gaze_trigger = "sets eyes on ([^%s]+)!$",
-	gaze_message = "Gaze on %s!",
-	gaze_bar = "~Gaze cooldown",
-
-	fear_soon_message = "Fear soon!",
-	fear_message = "Fear!",
-	fear_bar = "~Fear Cooldown",
-
-	fear_soon_trigger = "Lord Sanguinar begins to cast Bellowing Roar.",
-	fear_trigger1 = "^Lord Sanguinar's Bellowing Roar was resisted by %S+.$",
-	fear_trigger2 = "^Lord Sanguinar's Bellowing Roar fails. %S+ is immune.$",
-	fear_spell = "Bellowing Roar",
-
 	revive_bar = "Adds Revived",
 	revive_warning = "Adds Revived in 5sec!",
-
-	toy_message = "Toy on Tank: %s",
-	toy_trigger = "Remote Toy", --afflicted by ...
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -169,11 +163,6 @@ L:RegisterTranslations("koKR", function() return {
 	phase3_message = "3 단계 - 조언가와 무기!",
 	phase4_message = "4 단계 - 캘타스!",
 	phase4_bar = "잠시 후 캘타스",
-
-	mc_trigger1 = "복종하라!",
-	mc_trigger2 = "내 의지에 굴복하라!",
-	mc_bar = "정신 지배 대기시간",
-	mc_message = "정신 지배! 다음은 약 33초 후!",
 
 	afflicted_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$", -- check
 
@@ -255,11 +244,6 @@ L:RegisterTranslations("frFR", function() return {
 	phase4_message = "Phase 3 - Kael arrive !",
 	phase4_bar = "Arrivée de Kael'thas",
 
-	mc_trigger1 = "Obéis-moi.", -- à vérifier
-	mc_trigger2 = "Soumets-toi à ma volonté.", -- à vérifier
-	mc_bar = "Cooldown Contrôle mental",
-	mc_message = "Contrôle mental ! Prochain dans ~33+ sec.",
-
 	afflicted_trigger = "^(%S+) (%S+) les effets de (.*).$",
 
 	conflag_spell = "Conflagration",
@@ -336,11 +320,6 @@ L:RegisterTranslations("deDE", function() return {
 	phase4_message = "Phase 3 - Kael'thas aktiv!",
 	phase4_bar = "Kael'thas aktiv",
 
-	mc_trigger1 = "Gehorcht mir!",
-	mc_trigger2 = "Beugt Euch meinem Willen!",
-	mc_bar = "Gedankenkontrolle Cooldown",
-	mc_message = "Gedankenkontrolle! N\195\164chste in ~33+ sec.",
-
 	afflicted_trigger = "^(%S+) (%S+) ist von (.*) betroffen.$",
 
 	conflag_spell = "Gro\195\159brand",
@@ -375,7 +354,7 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = { boss, capernian, sanguinar, telonicus, thaladred }
 mod.wipemobs = { axe, mace, dagger, staff, sword, bow, shield }
-mod.toggleoptions = { "phase", -1, "conflag", "toy", "gaze", "icon", "fear", "pyro", "rebirth", "proximity", "bosskill" }
+mod.toggleoptions = { "phase", -1, "conflag", "mc", "toy", "gaze", "icon", "fear", "pyro", "rebirth", "proximity", "bosskill" }
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
@@ -402,6 +381,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelToy2", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFearSoon", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFear", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "KaelMC", 0)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
@@ -439,6 +419,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) then
 		self:Bar(thaladred, 32, "Spell_Shadow_Charm")
 		self:Message(L["engage_message"], "Positive")
+		for k in pairs(MCd) do MCd[k] = nil end
 	elseif msg == L["thaladred_inc_trigger"] then
 		self:Message(thaladred, "Positive")
 	elseif msg == L["sanguinar_inc_trigger"] then
@@ -504,6 +485,8 @@ function mod:Afflicted(msg)
 			self:Sync("KaelConflag " .. tPlayer)
 		elseif tSpell == L["fear_spell"] then
 			self:Sync("KaelFear")
+		elseif tSpell == L["mc"] then
+			self:Sync("KaelMC")
 		elseif tSpell == L["toy_trigger"] then
 			for i = 1, GetNumRaidMembers() do
 				if UnitName("raid"..i) == tPlayer then
@@ -546,4 +529,24 @@ function mod:KaelFear(rest, nick)
 
 	self:Message(L["fear_message"], "Attention")
 	self:Bar(L["fear_bar"], 30, "Spell_Shadow_PsychicScream")
+end
+
+function mod:KaelMC(rest, nick)
+	MCd[rest] = true
+	self:ScheduleEvent("BWMindControlWarn", self.MCWarn, 1.2, self)
+end
+
+function mod:MCWarn()
+	if self.db.profile.mc then
+		local msg = nil
+		for k in pairs(MCd) do
+			if not msg then
+				msg = k
+			else
+				msg = msg .. ", " .. k
+			end
+		end
+		self:Message(L["mc_message"]:format(msg), "Important", nil, "Alert")
+	end
+	for k in pairs(MCd) do MCd[k] = nil end
 end
