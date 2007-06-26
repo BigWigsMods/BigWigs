@@ -7,7 +7,6 @@
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsCustomBar")
 
 local times = nil
-local enabled
 
 L:RegisterTranslations("enUS", function() return {
 	["bwcb"] = true,
@@ -126,7 +125,7 @@ mod.consoleOptions = {
 ------------------------------
 
 function mod:OnEnable()
-	enabled = true
+	self.enabled = true
 	times = {}
 
 	self:RegisterShortHand()
@@ -140,7 +139,7 @@ end
 ------------------------------
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync ~= "BWCustomBar" or not rest or not nick or not enabled then return end
+	if sync ~= "BWCustomBar" or not rest or not nick or not self.enabled then return end
 
 	if UnitInRaid("player") then
 		for i = 1, GetNumRaidMembers() do
