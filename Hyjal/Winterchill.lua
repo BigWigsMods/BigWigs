@@ -50,7 +50,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	icebolt = "얼음 화살",
 	icebolt_desc = "얼음 화살 경고.",
-	icebolt_trigger = "^([^|;%s]*)(.*)얼음 화살에 걸렸습니다.", -- "Icebolt hits ([^%s]+)",
+	icebolt_trigger = "격노한 윈터칠|1이;가; 얼음 화살|1으로;로; ([^|;%s]*)", -- "Icebolt hits ([^%s]+)",
 	icebolt_message = "%s에 얼음 화살!",
 
 	icon = "전술 표시",
