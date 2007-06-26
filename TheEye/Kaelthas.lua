@@ -277,27 +277,48 @@ L:RegisterTranslations("deDE", function() return {
 
 	conflag = "Gro\195\159brand",
 	conflag_desc = "Warnt vor Gro\195\159brand auf einem Spieler.",
+	conflag_spell = "Gro\195\159brand",
+	conflag_message = "Gro\195\159brand auf %s!",
 
 	gaze = "Blick",
 	gaze_desc = "Warnt, wenn Thaladred sich auf einen Spieler fokussiert.",
+	gaze_trigger = "beh\195\164lt ([^%s]+) im Blickfeld!$",
+	gaze_message = "Blick auf %s!",
+	gaze_bar = "Blick Cooldown",
 
 	icon = "Icon",
 	icon_desc = "Plaziert ein Icon auf dem Spieler, den Thaladred im Blick beh\195\164lt.",
 
 	fear = "Furcht",
 	fear_desc = "Warnt vor Dr\195\182hnendem Gebr\195\188ll.",
+	fear_soon_message = "Furcht bald!",
+	fear_message = "Furcht!",
+	fear_bar = "Furcht Cooldown",
+	fear_soon_trigger = "F\195\188rst Blutdurst beginnt Dr\195\182hnendes Gebr\195\188ll zu wirken.",
+	fear_trigger1 = "^F\195\188rst Blutdurst's Dr\195\182hnendes Gebr\195\188ll wurde von %S+ widerstanden.$",
+	fear_trigger2 = "^F\195\188rst Blutdurst versucht es mit Dr\195\182hnendes Gebr\195\188ll. Ein Fehlschlag, denn %S+ ist immun.$",
+	fear_spell = "Dr\195\182hnendes Gebr\195\188ll",
 
 	rebirth = "Ph\195\182nix Wiedergeburt",
-	rebirth_desc = "Warnt vor Wiedergeburt der Ph\195\182nix Eier",
-	rebirth_trigger = "Ph\195\182nix beginnt Wiedergeburt zu wirken.",
+	rebirth_desc = "Warnt vor Wiedergeburt der Ph\195\182nix Eier.",
+	rebirth_trigger1 = "Anar'anel belore!",
+	rebirth_trigger2 = "Bei der Macht der Sonne!",
 	rebirth_warning = "Ph\195\182nix Wiedergeburt in 5sec!",
+	rebirth_bar = "~M\195\182gliche Wiedergeburt",
 
 	pyro = "Pyroschlag",
-	pyro_desc = "Zeigt einen 60 Sekunden Timer f\195\188r Pyroschlag",
+	pyro_desc = "Zeigt einen 60 Sekunden Timer f\195\188r Pyroschlag.",
 	pyro_trigger = "%s beginnt, Pyroschlag zu wirken!",
 	pyro_warning = "Pyroschlag in 5sec!",
 	pyro_message = "Pyroschlag!",
 
+	toy = "Spielzeug auf Tank's",
+	toy_desc = "Warnt wenn ein Tank ein Ferngesteuertes Spielzeug ist.",
+	toy_message = "Spielzeug auf Tank: %s",
+	toy_trigger = "Ferngesteuertes Spielzeug",
+
+	phase = "Phasen Warnungen",
+	phase_desc = "Warnt vor den verschiedenen Phasen des Encounters.",
 	thaladred_inc_trigger = "Eindrucksvoll. Aber werdet Ihr auch mit Thaladred, dem Verfinsterer fertig?",
 	sanguinar_inc_trigger = "Ihr habt gegen einige meiner besten Berater bestanden... aber niemand kommt gegen die Macht des Bluthammers an. Zittert vor F\195\188rst Blutdurst!",
 	capernian_inc_trigger = "Capernian wird daf\195\188r sorgen, dass Euer Aufenthalt hier nicht lange w\195\164hrt.",
@@ -309,7 +330,6 @@ L:RegisterTranslations("deDE", function() return {
 	flying_trigger = "Ich bin nicht so weit gekommen, um jetzt noch aufgehalten zu werden! Die Zukunft, die ich geplant habe, darf nicht gef\195\164hrdet werden. Jetzt bekommt Ihr wahre Macht zu sp\195\188ren!",
 	gravity_trigger1 = "Mal sehen, wie Ihr klarkommt, wenn Eure Welt auf den Kopf gestellt wird.",
 	gravity_trigger2 = "Ihr verliert wohl den Boden unter den F\195\188\195\159en?",
-
 	gravity_bar = "N\195\164chster Gravitationsverlust",
 	gravity_message = "Gravitationsverlust!",
 	flying_message = "Schweben! Gravitationsverlust in 1min",
@@ -319,29 +339,14 @@ L:RegisterTranslations("deDE", function() return {
 	phase4_message = "Phase 3 - Kael'thas aktiv!",
 	phase4_bar = "Kael'thas aktiv",
 
+	mc = "Gedankenkontrolle",
+	mc_desc = "Warnt wer von Gedankenkontrolle betroffen ist.",
+	mc_message = "Gedankenkontrolle: %s",
+
 	afflicted_trigger = "^(%S+) (%S+) ist von (.*) betroffen.$",
-
-	conflag_spell = "Gro\195\159brand",
-	conflag_message = "Gro\195\159brand auf %s!",
-
-	gaze_trigger = "beh\195\164lt ([^%s]+) im Blickfeld!$",
-	gaze_message = "Blick auf %s!",
-	gaze_bar = "Blick Cooldown",
-
-	fear_soon_message = "Furcht bald!",
-	fear_message = "Furcht!",
-	fear_bar = "Furcht Cooldown",
-
-	fear_soon_trigger = "F\195\188rst Blutdurst beginnt Dr\195\182hnendes Gebr\195\188ll zu wirken.",
-	fear_trigger1 = "^F\195\188rst Blutdurst's Dr\195\182hnendes Gebr\195\188ll wurde von %S+ widerstanden.$",
-	fear_trigger2 = "^F\195\188rst Blutdurst versucht es mit Dr\195\182hnendes Gebr\195\188ll. Ein Fehlschlag, denn %S+ ist immun.$",
-	fear_spell = "Dr\195\182hnendes Gebr\195\188ll",
 
 	revive_bar = "Berater Wiederbelebung",
 	revive_warning = "Berater wiederbelebt in 5sec!",
-
-	toy_message = "Spielzeug auf Tank: %s",
-	toy_trigger = "Ferngesteuertes Spielzeug",
 } end )
 
 ----------------------------------

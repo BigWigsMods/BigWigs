@@ -113,6 +113,20 @@ L:RegisterTranslations("frFR", function() return {
 	proximity_desc = "Affiche la fenêtre de proximité.",
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	["Proximity"] = "N\195\164he",
+	["Options for the Proximity Display."] = "Optionen f\195\188r die N\195\164he Anzeige.",
+	["|cff777777Nobody|r"] = "|cff777777Niemand|r",
+	["Sound"] = "Sound",
+	["Play sound on proximity."] = "Spielt einen Sound bei N\195\164he ab.",
+	["Disabled"] = "Deaktivieren",
+	["Disable the proximity display for all modules that use it."] = "Deaktiviert die N\195\164he Anzeige f\195\188r alle Module die sie benutzen.",
+	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "Die N\195\164he Anzeige wurde deaktiviert f\195\188r %s, bitte benutze die Boss Modul Optionen um sie wieder zu aktivieren.",
+
+	proximity = "N\195\164he Anzeige",
+	proximity_desc = "Zeigt das N\195\164he Fenster wenn ben\195\182tigt passsend zu diesem Encounter an, auflistend die Spieler die dir zu Nahe stehn.",
+} end)
+
 -----------------------------------------------------------------------
 --      Module Declaration
 -----------------------------------------------------------------------
