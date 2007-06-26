@@ -113,23 +113,34 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "^나의 백성은",
 	engage_message = "1 단계",
 
-	phase = "단계 경고",
-	phase_desc = "단계 변경에 대해 알립니다.",
-
 	conflag = "거대한 불길",
 	conflag_desc = "플레이어에게 거대한 불길을 경고합니다.",
+	conflag_spell = "거대한 불길",
+	conflag_message = "%s에게 거대한 불길!",
 
 	gaze = "주시",
 	gaze_desc = "플레이어에게 탈라드레드의 주시를 경고합니다.",
+	gaze_trigger = "([^%s]+)|1을;를; 노려봅니다!$", -- check
+	gaze_message = "%s 주시!",
+	gaze_bar = "~주시 대기 시간",
 
 	icon = "전술 표시",
 	icon_desc = "탈라드레드의 주시 대상이된 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
 
 	fear = "공포",
 	fear_desc = "우레와 같은 울부짖음에 대한 경고입니다.",
+	fear_soon_message = "잠시 후 공포!",
+	fear_message = "공포!",
+	fear_bar = "~공포 대기 시간",
+	fear_soon_trigger = "군주 생귀나르|1이;가; 우레와 같은 울부짖음 시전을 시작합니다.",
+	fear_trigger1 = "^군주 생귀나르|1이;가; 우레와 같은 울부짖음|1으로;로; %S|1을;를; 공격했지만 저항했습니다.$",
+	fear_trigger2 = "^군주 생귀나르|1이;가; 우레와 같은 울부짖음 사용에 실패했습니다. %S|1은;는; 면역입니다.$",
+	fear_spell = "우레와 같은 울부짖음",
 
 	rebirth = "불사조 환생",
 	rebirth_desc = "불사조 환생 접근 타이머입니다.",
+	rebirth_trigger1 = "Anar'anel belore!", -- check
+	rebirth_trigger2 = "By the power of the sun!", -- check
 	rebirth_trigger = "불사조|1이;가; 환생 시전을 시작합니다.$", -- check
 	rebirth_warning = "5초 이내 불사조 환생!",
 	rebirth_bar = "~환생 가능",
@@ -142,7 +153,11 @@ L:RegisterTranslations("koKR", function() return {
 
 	toy = "탱커에 원격조종 장난감",
 	toy_desc = "탱커가 원격조종 장난감에 걸릴 시 경고합니다.",
+	toy_message = "탱커에 장난감: %s",
+	toy_trigger = "원격조종 장난감", --afflicted by ... -- check
 
+	phase = "단계 경고",
+	phase_desc = "단계 변경에 대해 알립니다.",
 	thaladred_inc_trigger = "암흑의 인도자 탈라드레드를 상대로 얼마나 버틸지 볼까?",
 	sanguinar_inc_trigger = "최고의 조언가를 상대로 잘도 버텨냈군. 허나 그 누구도 붉은 망치의 힘에는 대항할 수 없지. 보아라, 군주 생귀나르를!",
 	capernian_inc_trigger = "카퍼니안, 놈들이 여기 온 것을 후회하게 해 줘라.",
@@ -154,39 +169,24 @@ L:RegisterTranslations("koKR", function() return {
 	flying_trigger = "이대로 물러날 내가 아니다! 반드시 내가 설계한 미래를 실현하리라! 이제 진정한 힘을 느껴 보아라!",
 	gravity_trigger1 = "세상을 거꾸로 뒤집으면 어떻게 되는지 구경해 볼까..",
 	gravity_trigger2 = "마냥 서 있기만 하려니 힘들지 않나?",
-
 	gravity_bar = "다음 중력 붕괴",
 	gravity_message = "중력 붕괴!",
-	flying_message = "비행! 1분후 중력 붕괴",
+	flying_message = "5 단계 - 1분후 중력 붕괴",
 
 	weapons_inc_message = "2 단계 - 무기 임박!",
 	phase3_message = "3 단계 - 조언가와 무기!",
 	phase4_message = "4 단계 - 캘타스!",
 	phase4_bar = "잠시 후 캘타스",
 
+	mc = "정신 지배",
+	mc_desc = "정신 지배에 걸린 사람을 알립니다.",
+	mc_message = "정신 지배: %s",
+
 	afflicted_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$", -- check
-
-	conflag_spell = "거대한 불길",
-	conflag_message = "%s에게 거대한 불길!",
-
-	gaze_trigger = "([^%s]+)|1을;를; 노려봅니다!$", -- check
-	gaze_message = "%s 주시!",
-	gaze_bar = "~주시 대기 시간",
-
-	fear_soon_message = "잠시 후 공포!",
-	fear_message = "공포!",
-	fear_bar = "~공포 대기 시간",
-
-	fear_soon_trigger = "군주 생귀나르|1이;가; 우레와 같은 울부짖음 시전을 시작합니다.",
-	fear_trigger1 = "^군주 생귀나르|1이;가; 우레와 같은 울부짖음|1으로;로; %S|1을;를; 공격했지만 저항했습니다.$",
-	fear_trigger2 = "^군주 생귀나르|1이;가; 우레와 같은 울부짖음 사용에 실패했습니다. %S|1은;는; 면역입니다.$",
-	fear_spell = "우레와 같은 울부짖음",
 
 	revive_bar = "조언가 부활",
 	revive_warning = "5초 이내 조언가 부활!",
 
-	toy_message = "탱커에 장난감: %s",
-	toy_trigger = "원격조종 장난감", --afflicted by ... -- check
 } end )
 
 L:RegisterTranslations("frFR", function() return {
