@@ -105,7 +105,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 local plugin = BigWigs:NewModule("Test")
-plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.external = true
 
 plugin.consoleCmd = L["Test"]

@@ -252,7 +252,7 @@ L:RegisterTranslations("frFR", function() return {
 
 local plugin = BigWigs:NewModule("Colors")
 
-plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	Important = "ff0000", -- Red
 	Personal = "ff0000", -- Red
@@ -600,7 +600,7 @@ function plugin:ResetDB()
 end
 
 function plugin:RGBToHex(r, g, b)
-	return format("%02x%02x%02x", r*255, g*255, b*255)
+	return ("%02x%02x%02x"):format(r*255, g*255, b*255)
 end
 
 function plugin:MsgColor(hint)

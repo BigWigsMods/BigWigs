@@ -21,6 +21,10 @@ local table_concat = table.concat
 local UnitName = UnitName
 local UnitExists = UnitExists
 local UnitIsDeadOrGhost = UnitIsDeadOrGhost
+local UnitAffectingCombat = UnitAffectingCombat
+local pairs = pairs
+local type = type
+
 
 local coloredNames = setmetatable({}, {__index =
 	function(self, key)

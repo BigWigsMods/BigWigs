@@ -217,7 +217,7 @@ L:RegisterTranslations("frFR", function() return {
 
 local plugin = BigWigs:NewModule("Messages")
 
-plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	display = L["RaidWarning frame"],
 	usecolors = true,

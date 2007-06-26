@@ -250,7 +250,7 @@ L:RegisterTranslations("frFR", function() return {
 -----------------------------------------------------------------------
 
 local plugin = BigWigs:NewModule("Bars", "CandyBar-2.0")
-plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	growup = false,
 	scale = 1.0,
@@ -674,7 +674,7 @@ do
 		flashColors = {}
 		for i = 0.1, 1, 0.1 do
 			local r, g, b = ColorGradient(i, 255,0,0, 0,0,0)
-			local hex = string.format("%02x%02x%02x", r, g, b)
+			local hex = ("%02x%02x%02x"):format(r, g, b)
 			paint:RegisterHex(hex) -- We have to do this because CandyBar fails silently on hex codes not registered with paintchips ...
 			table.insert(flashColors, hex:lower()) -- hex:lower() because that's what PaintChips uses for the "name" .. wtf.
 		end

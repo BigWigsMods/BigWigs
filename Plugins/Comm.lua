@@ -17,7 +17,7 @@ local coreSyncs = {
 ----------------------------------
 
 local plugin = BigWigs:NewModule("Comm")
-plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --

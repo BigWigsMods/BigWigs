@@ -7,6 +7,11 @@
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsRaidWarn")
 local sentWhispers = nil
 
+local UnitInRaid = UnitInRaid
+local IsRaidLeader = IsRaidLeader
+local IsRaidOfficer = IsRaidOfficer
+local SendChatMessage = SendChatMessage
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -148,7 +153,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 local plugin = BigWigs:NewModule("RaidWarning", "AceHook-2.1")
-plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	whisper = false,
 	broadcast = false,

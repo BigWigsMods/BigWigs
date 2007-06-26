@@ -202,7 +202,7 @@ local blockRx = "^%*%*%*%s.+%s%*%*%*$"
 
 local plugin = BigWigs:NewModule("BossBlock", "AceHook-2.1")
 
-plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	chat = true,
 	rs = true,

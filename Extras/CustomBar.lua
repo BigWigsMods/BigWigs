@@ -7,6 +7,7 @@
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsCustomBar")
 
 local times = nil
+local enabled
 
 L:RegisterTranslations("enUS", function() return {
 	["bwcb"] = true,
@@ -92,7 +93,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(L["Custom Bars"])
-mod.revision = tonumber(string.sub("$Revision$", 12, -3))
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.external = true
 mod.consoleCmd = L["CustomBars"]
 mod.consoleOptions = {
@@ -125,7 +126,7 @@ mod.consoleOptions = {
 ------------------------------
 
 function mod:OnEnable()
-	self.enabled = true
+	enabled = true
 	times = {}
 
 	self:RegisterShortHand()
@@ -139,7 +140,7 @@ end
 ------------------------------
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync ~= "BWCustomBar" or not rest or not nick or not self.enabled then return end
+	if sync ~= "BWCustomBar" or not rest or not nick or not enabled then return end
 
 	if UnitInRaid("player") then
 		for i = 1, GetNumRaidMembers() do
@@ -170,10 +171,10 @@ function mod:StartBar(bar, nick, localOnly)
 	if not nick then nick = L["Local"] end
 	if seconds == 0 then
 		self:CancelScheduledEvent("bwcb"..nick..barText)
-		self:TriggerEvent("BigWigs_StopBar", self, string.format(L["%s: %s"], nick, barText))
+		self:TriggerEvent("BigWigs_StopBar", self, L["%s: %s"]:format(nick, barText))
 	else
-		self:ScheduleEvent("bwcb"..nick..barText, "BigWigs_Message", seconds, string.format(L["%s: Timer [%s] finished."], nick, barText), "Attention", localOnly)
-		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["%s: %s"], nick, barText), seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+		self:ScheduleEvent("bwcb"..nick..barText, "BigWigs_Message", seconds, L["%s: Timer [%s] finished."]:format(nick, barText), "Attention", localOnly)
+		self:TriggerEvent("BigWigs_StartBar", self, L["%s: %s"]:format(nick, barText), seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 	end
 end
 

@@ -44,7 +44,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Tranq"] = "宁神射击",
 	["Options for the tranq module."] = "设置宁神射击模块.",
 	["Toggle tranq bars on or off."] = "启用或禁用宁神射击计时条.",
-	["Bars"] = "宁神射击计时条",	
+	["Bars"] = "宁神射击计时条",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -86,7 +86,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule("Tranq")
-mod.revision = tonumber(string.sub("$Revision$", 12, -3))
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.defaultDB = {
 	bars = true,
 }
@@ -162,14 +162,14 @@ end
 
 function mod:BigWigs_TranqFired(unitname)
 	if self.db.profile.bars then
-		self:TriggerEvent("BigWigs_StartBar", self, string.format(L["Tranq - %s"], unitname), 20, "Interface\\Icons\\Spell_Nature_Drowsy")
+		self:TriggerEvent("BigWigs_StartBar", self, L["Tranq - %s"]:format(unitname), 20, "Interface\\Icons\\Spell_Nature_Drowsy")
 	end
 end
 
 function mod:BigWigs_TranqFail(unitname)
 	if self.db.profile.bars then
-		self:SetCandyBarColor(string.format(L["Tranq - %s"], unitname), "Red")
-		self:TriggerEvent("BigWigs_Message", format(L["%s's Tranq failed!"], unitname), "Important", nil, "Alarm")
+		self:SetCandyBarColor(L["Tranq - %s"]:format(unitname), "Red")
+		self:TriggerEvent("BigWigs_Message", L["%s's Tranq failed!"]:format(unitname), "Important", nil, "Alarm")
 	end
 end
 

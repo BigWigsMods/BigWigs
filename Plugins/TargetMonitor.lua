@@ -11,7 +11,7 @@ local monitoring = nil
 ---------------------------------
 
 local plugin = BigWigs:NewModule("Target Monitor")
-plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
 --      Initialization      --

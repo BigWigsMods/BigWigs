@@ -163,7 +163,7 @@ L:RegisterTranslations("frFR", function() return {
 
 local plugin = BigWigs:NewModule("Raid Icons")
 
-plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	place = true,
 	icon = 8,
