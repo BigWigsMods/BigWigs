@@ -141,7 +141,6 @@ L:RegisterTranslations("koKR", function() return {
 	rebirth_desc = "불사조 환생 접근 타이머입니다.",
 	rebirth_trigger1 = "아나라넬 벨로레!",
 	rebirth_trigger2 = "태양의 힘으로!",
-	rebirth_trigger = "불사조|1이;가; 환생 시전을 시작합니다.$", -- check
 	rebirth_warning = "5초 이내 불사조 환생!",
 	rebirth_bar = "~환생 가능",
 
