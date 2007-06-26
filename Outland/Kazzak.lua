@@ -59,7 +59,8 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger1 = "불타는 군단과 킬제덴을 위하여!",
+	engage_trigger1 = "불타는 군단이 온 세상을 지배하리라!",
+	engage_trigger2 = "필멸의 종족은 모두 멸망하리라!",
 
 	enrage_trigger = "%s|1이;가; 분노에 휩싸입니다!",
 	enrage_warning1 = "%s 전투 개시 - 50-60초 후 격노",
