@@ -455,9 +455,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["gravity_trigger1"] or msg == L["gravity_trigger2"] then
 		self:Message(L["gravity_message"], "Important")
 		self:Bar(L["gravity_bar"], 90, "Spell_Nature_UnrelentingStorm")
-	elseif msg == L["mc_trigger1"] or msg == L["mc_trigger2"] then
-		self:Message(L["mc_message"], "Urgent")
-		self:Bar(L["mc_bar"], 33, "Spell_Shadow_ShadowWordDominate")
+	--elseif msg == L["mc_trigger1"] or msg == L["mc_trigger2"] then
+	--	self:Message(L["mc_message"], "Urgent")
+	--	self:Bar(L["mc_bar"], 33, "Spell_Shadow_ShadowWordDominate")
 	elseif self.db.profile.rebirth and (msg == L["rebirth_trigger1"] or msg == L["rebirth_trigger2"]) then
 		self:Message(L["rebirth"], "Urgent")
 		self:Bar(L["rebirth_bar"], 45, "Spell_Fire_Burnout")
