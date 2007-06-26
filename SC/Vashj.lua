@@ -2,9 +2,13 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.2")["Lady Vashj"]
+local BB = AceLibrary("Babble-Boss-2.2")
+local boss = BB["Lady Vashj"]
+local elite = BB["Coilfang Elite"]
+local strider = BB["Coilfang Strider"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+BB = nil
 
 local deformat = nil
 local checkedForDeformat = nil
@@ -242,6 +246,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Serpentshrine Cavern"]
 mod.enabletrigger = boss
+mod.wipemobs = {elite, strider, L["Tainted Elemental"]}
 mod.toggleoptions = {"phase", -1, "static", "icon", -1, "elemental", "strider","naga", "loot", "barrier", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
