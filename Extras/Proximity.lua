@@ -66,6 +66,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	proximity = "Proximity display",
 	proximity_desc = "Show the proximity window when appropriate for this encounter, listing players who are standing too close to you.",
+	
+	font = "Fonts\\FRIZQT__.TTF",
 } end)
 
 --Chinese Translate by 月色狼影@CWDG
@@ -82,6 +84,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	proximity = "近距离显示",
 	proximity_desc = "显示近距离窗口,列出距离你很近的玩家。",
+	
+	font = "Fonts\\FRIZQT__.TTF",
 } end)
 
 
@@ -97,6 +101,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	proximity = "접근 표시",
 	proximity_desc = "해당 보스전에서 필요 시 자신과 근접해 있는 플레이어 목록을 표시하는 접근 표시창을 표시합니다.",
+	
+	font = "Fonts\\2002.TTF",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -111,6 +117,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	proximity = "Proximité",
 	proximity_desc = "Affiche la fenêtre de proximité.",
+	
+	font = "Fonts\\FRIZQT__.TTF",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -125,6 +133,8 @@ L:RegisterTranslations("deDE", function() return {
 
 	proximity = "N\195\164he Anzeige",
 	proximity_desc = "Zeigt das N\195\164he Fenster wenn ben\195\182tigt passsend zu diesem Encounter an, auflistend die Spieler die dir zu Nahe stehn.",
+	
+	font = "Fonts\\FRIZQT__.TTF",
 } end)
 
 -----------------------------------------------------------------------
@@ -351,7 +361,7 @@ function plugin:SetupFrames()
 	cheader:SetWidth(190)
 	cheader:SetHeight(15)
 	cheader:SetPoint("TOP", frame, "TOP", 0, -14)
-	cheader:SetFont("Fonts\\FRIZQT__.TTF", 12)
+	cheader:SetFont(L["font"], 12)
 	cheader:SetJustifyH("LEFT")
 	cheader:SetText(L["Proximity"])
 	cheader:SetShadowOffset(.8, -.8)
@@ -365,7 +375,7 @@ function plugin:SetupFrames()
 	text:SetPoint( "TOP", frame, "TOP", 0, -35 )
 	text:SetJustifyH("CENTER")
 	text:SetJustifyV("TOP")
-	text:SetFont("Fonts\\FRIZQT__.TTF", 12)
+	text:SetFont(L["font"], 12)
 	frame.text = text
 
 	local close = frame:CreateTexture(nil, "ARTWORK")
