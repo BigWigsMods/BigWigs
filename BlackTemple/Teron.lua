@@ -25,6 +25,19 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a Raid Icon on players with Shadow of Death.",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	start_trigger = "Die Rache ist mein!",
+
+	shadow = "Schatten des Todes",
+	shadow_desc = "Informiert Euch, wer Schatten des Todes bekommt.",
+	shadow_trigger = "^([^%s]+) ([^%s]+) von Schatten des Todes betroffen.$",
+	shadow_other = "Schatten des Todes: %s!",
+	shadow_you = "Schatten des Todes auf DIR!",
+
+	icon = "Icon",
+	icon_desc = "Plaziert ein Schlachtzug Icon auf dem Spieler mit Schatten des Todes.",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
