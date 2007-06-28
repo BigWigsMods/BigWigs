@@ -106,6 +106,7 @@ L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "你的行為不能被容忍。",
 	engage_message = "戰鬥開始！33 秒後懺悔！",
 
+	repentance = "懺悔",
 	repentance_trigger1 = "逐出你的腐敗思想。",
 	repentance_trigger2 = "你的不潔必須被淨化。",
 	repentance_message = "懺悔！33 秒後下一次懺悔！",
@@ -113,8 +114,13 @@ L:RegisterTranslations("zhTW", function() return {
 	repentance_bar = "懺悔計時",
 	repentance_nextbar = "懺悔預備！治療群補上 HoT！",
 
+	holyfire = "神聖之火",
+	holyfire_desc = "Alert when people are afflicted by Holy Fire.",
 	holyfire_trigger = "^(.+)受到(.*)神聖之火",
 	holyfire_message = "神聖之火：[%s]",
+
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Icon on the player afflicted by Holy Fire(requires promoted or higher).",
 } end)
 
 L:RegisterTranslations("esES", function() return {
