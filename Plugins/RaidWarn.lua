@@ -11,6 +11,7 @@ local UnitInRaid = UnitInRaid
 local IsRaidLeader = IsRaidLeader
 local IsRaidOfficer = IsRaidOfficer
 local SendChatMessage = SendChatMessage
+local GetNumPartyMembers = GetNumPartyMembers
 
 ----------------------------
 --      Localization      --
@@ -212,6 +213,8 @@ function plugin:BigWigs_Message(msg, color, noraidsay)
 	end
 	-- In a 5-man group, everyone can use the raid warning channel.
 	if UnitInRaid("player") and not IsRaidLeader() and not IsRaidOfficer() then
+		return
+	elseif GetNumPartyMembers() == 0 and not UnitInRaid("player") then
 		return
 	end
 	if self.db.profile.useraidchannel then
