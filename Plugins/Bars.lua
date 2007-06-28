@@ -953,6 +953,12 @@ local function onClickCandybar(barname,button)
 			"cursorX", true,
 			"cursorY", true
 		)
+	elseif button=="LeftButton" then
+		if anchor and anchor:IsShown() then
+			plugin:BigWigs_HideAnchors()
+		else
+			plugin:BigWigs_ShowAnchors()
+		end
 	end
 end
 
