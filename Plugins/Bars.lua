@@ -9,6 +9,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsBars")
 local paint = AceLibrary("PaintChips-2.0")
 local media = AceLibrary("SharedMedia-1.0")
 local mType = media.MediaType and media.MediaType.STATUSBAR or "statusbar"
+local dew = AceLibrary("Dewdrop-2.0")
 
 local colorModule = nil
 local anchor = nil
@@ -55,6 +56,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Show anchor"] = true,
 	["Show the bar anchor frame."] = true,
+	
+	["Allow Alt+Click"] = true,
+	["Show the menu on alt-rightclicking the bars. Means that you cannot alt+click game world items under the bars."] = true,
 
 	["Scale"] = true,
 	["Set the bar scale."] = true,
@@ -250,8 +254,9 @@ L:RegisterTranslations("frFR", function() return {
 -----------------------------------------------------------------------
 
 local plugin = BigWigs:NewModule("Bars", "CandyBar-2.0")
-plugin.revision = tonumber(("$Revision$"):sub(12, -3))
+plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
 plugin.defaultDB = {
+	altclick = true,
 	growup = false,
 	scale = 1.0,
 	texture = "BantoBar",
@@ -316,6 +321,15 @@ plugin.consoleOptions = {
 			desc = L["Reset the anchor position, moving it to the center of your screen."],
 			order = 2,
 			func = "ResetAnchor",
+		},
+		altclick = {
+			type = "toggle",
+			name = L["Allow Alt+Click"],
+			desc = L["Show the menu on alt-rightclicking the bars. Means that you cannot alt+click game world items under the bars."],
+			order = 3,
+			get = getOption,
+			set = setOption,
+			passValue = "altclick",
 		},
 		spacer = {
 			type = "header",
@@ -453,6 +467,7 @@ function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_StartBar")
 	self:RegisterEvent("BigWigs_StopBar")
 	self:RegisterEvent("Ace2_AddonDisabled")
+	self:RegisterEvent("MODIFIER_STATE_CHANGED")
 
 	if BigWigs:HasModule("Colors") then
 		colorModule = BigWigs:GetModule("Colors")
@@ -924,3 +939,23 @@ function plugin:SavePosition()
 end
 
 
+-------------------------------
+-- Alt+Click / Drag handling --
+-------------------------------
+
+local function onClickCandybar(barname,button)
+	if button=="RightButton" then
+		dew:Open( this, "children", function() dew:FeedAceOptionsTable(plugin.consoleOptions) end, "cursorX", true, "cursorY", true )
+	end
+end 
+
+function plugin:MODIFIER_STATE_CHANGED(key,state)
+	if key=="ALT" and plugin.db.profile.altclick then
+		for _,v in pairs(moduleBars) do
+			for k,_ in pairs(v) do
+				self:SetCandyBarOnClick(k, state == 1 and onClickCandybar or nil);
+			end
+		end
+	end
+	
+end
