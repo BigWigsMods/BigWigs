@@ -20,7 +20,7 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Magtheridon",
 
 	escape = "Escape",
-	escape_desc = ("Countdown untill %s breaks free."):format(boss),
+	escape_desc = ("Countdown until %s breaks free."):format(boss),
 	escape_trigger1 = "%%s's bonds begin to weaken!",
 	escape_trigger2 = "I... am... unleashed!",
 	escape_warning1 = "%s Engaged - Breaks free in 2min!",
