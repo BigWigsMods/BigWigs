@@ -56,9 +56,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Show anchor"] = true,
 	["Show the bar anchor frame."] = true,
-	
-	["Allow Alt+Click"] = true,
-	["Show the menu on alt-rightclicking the bars. Means that you cannot alt+click game world items under the bars."] = true,
+
+	["Enable menu"] = true,
+	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = true,
 
 	["Scale"] = true,
 	["Set the bar scale."] = true,
@@ -169,7 +169,6 @@ L:RegisterTranslations("zhCN", function() return {
 	["Reverse"] = "倒转",
 	["Toggles if bars are reversed (fill up instead of emptying)."] = "切换记时条反向（记时条排列顺序反转）",
 } end)
-
 
 L:RegisterTranslations("zhTW", function() return {
 	["Bars"] = "計時條",
@@ -324,8 +323,8 @@ plugin.consoleOptions = {
 		},
 		altclick = {
 			type = "toggle",
-			name = L["Allow Alt+Click"],
-			desc = L["Show the menu on alt-rightclicking the bars. Means that you cannot alt+click game world items under the bars."],
+			name = L["Enable menu"],
+			desc = L["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."],
 			order = 3,
 			get = getOption,
 			set = setOption,
@@ -943,19 +942,27 @@ end
 -- Alt+Click / Drag handling --
 -------------------------------
 
+local function feed()
+	dew:FeedAceOptionsTable(plugin.consoleOptions)
+end
+
 local function onClickCandybar(barname,button)
-	if button=="RightButton" then
-		dew:Open( this, "children", function() dew:FeedAceOptionsTable(plugin.consoleOptions) end, "cursorX", true, "cursorY", true )
+	if button == "RightButton" then
+		dew:Open(this,
+			"children", feed,
+			"cursorX", true,
+			"cursorY", true
+		)
 	end
-end 
+end
 
 function plugin:MODIFIER_STATE_CHANGED(key,state)
-	if key=="ALT" and plugin.db.profile.altclick then
+	if key == "ALT" and plugin.db.profile.altclick then
 		for _,v in pairs(moduleBars) do
-			for k,_ in pairs(v) do
-				self:SetCandyBarOnClick(k, state == 1 and onClickCandybar or nil);
+			for k in pairs(v) do
+				self:SetCandyBarOnClick(k, state == 1 and onClickCandybar or nil)
 			end
 		end
 	end
-	
 end
+
