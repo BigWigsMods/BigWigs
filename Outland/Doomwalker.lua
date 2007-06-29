@@ -4,7 +4,6 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Doomwalker"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local started = nil
 local enrageAnnounced = nil
 
 ----------------------------
@@ -14,12 +13,13 @@ local enrageAnnounced = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Doomwalker",
 
-	engage_trigger = "Do not proceed. You will be eliminated.", --verify
+	engage_trigger = "Do not proceed. You will be eliminated.",
 	engage_message = "Doomwalker engaged, Earthquake in ~30sec!",
 
 	overrun = "Overrun",
 	overrun_desc = "Alert when Doomwalker uses his Overrun ability.",
-	overrun_trigger = "^Doomwalker.-Overrun",
+	overrun_trigger1 = "Engage maximum speed.",
+	overrun_trigger2 = "Trajectory locked.",
 	overrun_message = "Overrun!",
 	overrun_soon_message = "Possible Overrun soon!",
 	overrun_bar = "~Overrun Cooldown",
@@ -28,7 +28,8 @@ L:RegisterTranslations("enUS", function() return {
 	earthquake_desc = "Alert when Doomwalker uses his Earthquake ability.",
 	earthquake_message = "Earthquake! ~70sec to next!",
 	earthquake_bar = "~Earthquake Cooldown",
-	earthquake_trigger = "You are afflicted by Earthquake.",
+	earthquake_trigger1 = "Tectonic disruption commencing.",
+	earthquake_trigger2 = "Magnitude set. Release.",
 
 	enrage_soon_message = "Enrage soon!",
 	enrage_trigger = "%s becomes enraged!",
@@ -41,7 +42,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	overrun = "Renversement",
 	overrun_desc = "Préviens quand Marche-funeste utilise sa capacité Renversement.",
-	overrun_trigger = "^Marche-funeste.-Renversement",
+	--overrun_trigger1 = "",
+	--overrun_trigger2 = "",
 	overrun_message = "Renversement !",
 	overrun_soon_message = "Renversement imminent !",
 	overrun_bar = "~Cooldown Renversement",
@@ -50,7 +52,8 @@ L:RegisterTranslations("frFR", function() return {
 	earthquake_desc = "Préviens quand Marche-funeste utilise sa capacité Séisme.",
 	earthquake_message = "Séisme ! Prochain dans ~70 sec. !",
 	earthquake_bar = "~Cooldown Séisme",
-	earthquake_trigger = "Vous subissez les effets de Séisme.",
+	--earthquake_trigger1 = "",
+	--earthquake_trigger2 = "",
 
 	enrage_soon_message = "Bientôt enragé !",
 } end)
@@ -61,7 +64,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	overrun = "괴멸",
 	overrun_desc = "파멸의 절단기의 괴멸 사용 가능 시 경고합니다.",
-	overrun_trigger = "^파멸의 절단기.-괴멸", -- check "^Doomwalker.-Overrun",
+	--overrun_trigger1 = "",
+	--overrun_trigger2 = "",
 	overrun_message = "괴멸!",
 	overrun_soon_message = "잠시 후 괴멸 가능!",
 	overrun_bar = "~괴멸 대기시간",
@@ -70,7 +74,8 @@ L:RegisterTranslations("koKR", function() return {
 	earthquake_desc = "파멸의 절단기의 지진 사용 가능 시 경고합니다.",
 	earthquake_message = "지진! 다음은 약 70초 후!",
 	earthquake_bar = "~지진 대기시간",
-	earthquake_trigger = "당신은 지진에 걸렸습니다.",
+	--earthquake_trigger1 = "",
+	--earthquake_trigger2 = "",
 
 	enrage_soon_message = "잠시 후 격노!",
 	enrage_trigger = "%s becomes enraged!", -- check
@@ -87,12 +92,14 @@ L:RegisterTranslations("deDE", function() return {
 	engage_message = "Verdammniswandler angegriffen, Erdbeben in ~30sec!",
 	enrage_soon_message = "Wutanfall bald!",
 
-	earthquake_trigger = "Ihr seid von Erdbeben betroffen.",
+	--earthquake_trigger1 = "",
+	--earthquake_trigger2 = "",
 
 	earthquake_message = "Erdbeben! ~70sec to next!",
 	earthquake_bar = "~Erdbeben Cooldown",
 
-	overrun_trigger = "^Verdammniswandler.-\195\156berrennen",
+	--overrun_trigger1 = "",
+	--overrun_trigger2 = "",
 	overrun_message = "\195\156berrennen!",
 	overrun_soon_message = "M\195\182gliches \195\156berrennen bald!",
 	overrun_bar = "~\195\156berrennen Cooldown",
@@ -104,7 +111,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	overrun = "超越",
 	overrun_desc = "當厄運行者發動 超越 技能時發出警報",
-	overrun_trigger = "厄運行者開始施放超越。",
+	--overrun_trigger1 = "",
+	--overrun_trigger2 = "",
 	overrun_message = "發動超越！",
 	overrun_soon_message = "即將發動超越！",
 	overrun_bar = "超越冷卻",
@@ -113,7 +121,8 @@ L:RegisterTranslations("zhTW", function() return {
 	earthquake_desc = "當厄運行者發動地震術時發出警報",
 	earthquake_message = "地震術！ 70 秒後再次發動！",
 	earthquake_bar = "地震術 冷卻",
-	earthquake_trigger = "受到地震術",
+	--earthquake_trigger1 = "",
+	--earthquake_trigger2 = "",
 
 	enrage_soon_message = "即將狂怒！",
 	enrage_trigger = "%s變得憤怒了!",
@@ -124,7 +133,7 @@ L:RegisterTranslations("zhTW", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-local mod = BigWigs:NewModule(boss, "AceHook-2.1")
+local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Shadowmoon Valley"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = boss
@@ -138,62 +147,37 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
-	started = nil
-	enrageAnnounced = nil
-
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "DoomwalkerEarthquake", 10)
-	self:TriggerEvent("BigWigs_ThrottleSync", "DoomwalkerOverrun", 10)
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-function mod:BigWigs_RecvSync( sync, rest, nick )
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["engage_trigger"] then
+		enrageAnnounced = nil
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 		if self.db.profile.earthquake then
 			self:Message(L["engage_message"], "Attention")
 			self:Bar(L["earthquake_bar"], 30, "Spell_Nature_Earthquake")
 		end
 		if self.db.profile.overrun then
-			self:Bar(L["overrun_bar"], 30, "Ability_BullRush")
-			self:DelayedMessage(28, L["overrun_soon_message"], "Attention")
+			self:Bar(L["overrun_bar"], 26, "Ability_BullRush")
+			self:DelayedMessage(24, L["overrun_soon_message"], "Attention")
 		end
-		self:TriggerEvent("BigWigs_ShowProximity", self)
-	elseif sync == "DoomwalkerEarthquake" and self.db.profile.earthquake then
-		self:Message(L["earthquake_message"], "Important")
-		self:Bar(L["earthquake_bar"], 70, "Spell_Nature_Earthquake")
-	elseif sync == "DoomwalkerOverrun" and self.db.profile.overrun then
+	elseif self.db.profile.overrun and (msg == L["overrun_trigger1"] or msg == L["overrun_trigger2"])
 		self:Message(L["overrun_message"], "Important")
 		self:Bar(L["overrun_bar"], 30, "Ability_BullRush")
 		self:DelayedMessage(28, L["overrun_soon_message"], "Attention")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
-	if msg:find(L["earthquake_trigger"]) then
-		self:Sync("DoomwalkerEarthquake")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg:find(L["overrun_trigger"]) then
-		self:Sync("DoomwalkerOverrun")
+	elseif self.db.profile.earthquake and (msg == L["earthquake_trigger1"] or msg == L["earthquake_trigger2"])
+		self:Message(L["earthquake_message"], "Important")
+		self:Bar(L["earthquake_bar"], 70, "Spell_Nature_Earthquake")
 	end
 end
 
