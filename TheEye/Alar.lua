@@ -23,7 +23,7 @@ L:RegisterTranslations("enUS", function() return {
 	meteor = "Meteor",
 	meteor_desc = "Estimated Meteor Timers.",
 	meteor_warning = "Possible Meteor in ~5sec",
-	meteor_message = "Meteor! Next in ~54sec",
+	meteor_message = "Meteor! Next in ~52sec",
 	meteor_nextbar = "Next Meteor",
 
 	flamepatch = "Flame Patch on You",
@@ -47,7 +47,7 @@ L:RegisterTranslations("frFR", function() return {
 	meteor = "Météore",
 	meteor_desc = "Délais estimés entre les météores.",
 	meteor_warning = "Météore probable dans ~5 sec.",
-	meteor_message = "Météore ! Prochain dans ~54 sec.",
+	meteor_message = "Météore ! Prochain dans ~52 sec.",
 	meteor_nextbar = "Prochain météore",
 
 	flamepatch = "Gerbe de flammes sur vous",
@@ -71,7 +71,7 @@ L:RegisterTranslations("koKR", function() return {
 	meteor = "유성",
 	meteor_desc = "대략적인 유성 타이머입니다.",
 	meteor_warning = "약 5초 이내 유성 주의",
-	meteor_message = "유성! 다음은 약 54초 이내",
+	meteor_message = "유성! 다음은 약 52초 이내",
 	meteor_nextbar = "다음 유성",
 
 	flamepatch = "당신에 화염 파편",
@@ -105,11 +105,9 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "debuff")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "debuff")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "debuff")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "DebuffEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "DebuffEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "DebuffEvent")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "AlArArmor", 5)
@@ -124,12 +122,6 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
-function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
-	if self.db.profile.flamepatch and msg == L["flamepatch_trigger"] then
-		self:Message(L["flamepatch_message"], "Personal", true, "Alarm")
-	end
-end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
@@ -174,15 +166,19 @@ function mod:AlarCheck()
 		end
 		if fireball and self.db.profile.meteor then
 			self:Message(L["meteor_message"], "Urgent", nil, "Alarm")
-			self:DelayedMessage(49, L["meteor_warning"], "Important")
-			self:Bar(L["meteor_nextbar"], 54, "Spell_Fire_Burnout")
+			self:DelayedMessage(47, L["meteor_warning"], "Important")
+			self:Bar(L["meteor_nextbar"], 52, "Spell_Fire_Burnout")
 		end
 		fireball = true
 		self:ScheduleEvent("BWAlarNilOccured", function() occured = nil end, 15, self)
 	end
 end
 
-function mod:debuff(msg)
+function mod:DebuffEvent(msg)
+	if self.db.profile.flamepatch and msg == L["flamepatch_trigger"] then
+		self:Message(L["flamepatch_message"], "Personal", true, "Alarm")
+	end
+
 	local aplayer, atype = select(3, msg:find(L["armor_trigger"]))
 	if aplayer and atype then
 		if aplayer == L2["you"] and atype == L2["are"] then
