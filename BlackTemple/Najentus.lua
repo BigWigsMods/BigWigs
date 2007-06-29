@@ -50,6 +50,25 @@ L:RegisterTranslations("deDE", function() return {
 	icon_desc = "Plaziert ein Icon auf Spielern mit Aufspießendem Stachel.",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	start_trigger = "여군주 바쉬의 이름으로 사형에 처하노라!",
+
+	spine = "꿰뚫는 돌기",
+	spine_desc = "꿰뚫는 돌기에 걸린 사람을 알림니다.",
+	spine_trigger = "^([^|;%s]*)(.*)꿰뚫는 돌기에 걸렸습니다.$",
+	spine_message = "%s에게 꿰뚫는 돌기!",
+
+	shield = "해일의 보호막",
+	shield_desc = "대장군 나젠투스가 해일의 보호막을 얻을 떄를 위한 타이머 입니다.",
+	shield_trigger = "대장군 나젠투스|1이;가; 해일의 보호막에 걸렸습니다.",
+	shield_nextbar = "다음 해일의 보호막",
+	shield_warn = "해일의 보호막!",
+	shield_soon_warn = "약 10초 후 해일의 보호막!",
+
+	icon = "전술 표시",
+	icon_desc = "꿰뚫는 돌기에 걸린 플레이어에게 전술 표시를 지정합니다.",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------

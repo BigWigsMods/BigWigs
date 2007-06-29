@@ -38,6 +38,19 @@ L:RegisterTranslations("deDE", function() return {
 	icon_desc = "Plaziert ein Schlachtzug Icon auf dem Spieler mit Schatten des Todes.",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	start_trigger = "복수는 나의 것이다!",
+
+	shadow = "죽음의 어둠",
+	shadow_desc = "죽음의 어둠에 걸린 사람을 알림니다.",
+	shadow_trigger = "^([^|;%s]*)(.*)죽음의 어둠에 걸렸습니다.$",
+	shadow_other = "죽음의 어둠: %s!",
+	shadow_you = "당신에 죽음의 어둠!",
+
+	icon = "전술 표시",
+	icon_desc = "죽음의 어둠에 걸린 사람에게 전술 표시를 지정합니다.",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
