@@ -171,11 +171,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["overrun_bar"], 26, "Ability_BullRush")
 			self:DelayedMessage(24, L["overrun_soon_message"], "Attention")
 		end
-	elseif self.db.profile.overrun and (msg == L["overrun_trigger1"] or msg == L["overrun_trigger2"])
+	elseif self.db.profile.overrun and (msg == L["overrun_trigger1"] or msg == L["overrun_trigger2"]) then
 		self:Message(L["overrun_message"], "Important")
 		self:Bar(L["overrun_bar"], 30, "Ability_BullRush")
 		self:DelayedMessage(28, L["overrun_soon_message"], "Attention")
-	elseif self.db.profile.earthquake and (msg == L["earthquake_trigger1"] or msg == L["earthquake_trigger2"])
+	elseif self.db.profile.earthquake and (msg == L["earthquake_trigger1"] or msg == L["earthquake_trigger2"]) then
 		self:Message(L["earthquake_message"], "Important")
 		self:Bar(L["earthquake_bar"], 70, "Spell_Nature_Earthquake")
 	end
