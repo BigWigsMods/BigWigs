@@ -13,10 +13,6 @@ BB = nil
 local deformat = nil
 local checkedForDeformat = nil
 
-local delayedElementalMessage = nil
-local delayedStriderMessage = nil
-local delayedNagaMessage = nil
-
 local shieldsFaded = 0
 local playerName = nil
 local phaseTwoAnnounced = nil
@@ -44,6 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_trigger = "The time is now! Leave none standing!",
 	phase2_soon_message = "Phase 2 soon!",
 	phase2_message = "Phase 2, adds incoming!",
+	phase3_trigger = "You may want to take cover.",
 	phase3_message = "Phase 3 - Enrage in 4min!",
 
 	static = "Static Charge",
@@ -349,7 +346,7 @@ end
 function mod:RepeatStrider()
 	if self.db.profile.strider then
 		self:Bar(L["strider_bar"], 63, "Spell_Nature_AstralRecal")
-		delayedStriderMessage = self:DelayedMessage(58, L["strider_soon_message"], "Attention")
+		self:ScheduleEvent("StriderWarn", "BigWigs_Message", 58, L["strider_soon_message"], "Attention")
 	end
 	self:ScheduleEvent("Strider", self.RepeatStrider, 63, self)
 end
@@ -357,7 +354,7 @@ end
 function mod:RepeatNaga()
 	if self.db.profile.naga then
 		self:Bar(L["naga_bar"], 47.5, "INV_Misc_MonsterHead_02")
-		delayedNagaMessage = self:DelayedMessage(42.5, L["naga_soon_message"], "Attention")
+		self:ScheduleEvent("NagaWarn", "BigWigs_Message", 42.5, L["naga_soon_message"], "Attention")
 	end
 	self:ScheduleEvent("Naga", self.RepeatNaga, 47.5, self)
 end
@@ -381,6 +378,22 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		phaseTwoAnnounced = nil
 		shieldsFaded = 0
 		self:Message(L["engage_message"], "Attention")
+--[[
+	elseif self.db.profile.phase and msg == L["phase3_trigger"] then
+		self:Message(L["phase3_message"], "Important", nil, "Alarm")
+		self:Bar(L2["enrage"], 240, "Spell_Shadow_UnholyFrenzy")
+		self:DelayedMessage(180, L2["enrage_min"]:format(1), "Positive")
+		self:DelayedMessage(210, L2["enrage_sec"]:format(30), "Positive")
+		self:DelayedMessage(230, L2["enrage_sec"]:format(10), "Urgent")
+		self:DelayedMessage(240, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+
+		self:CancelScheduledEvent("ElemWarn")
+		self:CancelScheduledEvent("StriderWarn")
+		self:CancelScheduledEvent("NagaWarn")
+		self:CancelScheduledEvent("Strider")
+		self:CancelScheduledEvent("Naga")
+		self:TriggerEvent("BigWigs_StopBar", self, L["elemental_bar"])
+]]
 	end
 end
 
@@ -420,7 +433,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		end
 	elseif sync == "VashjElemDied" and self.db.profile.elemental then
 		self:Bar(L["elemental_bar"], 60, "Spell_Nature_ElementalShields")
-		delayedElementalMessage = self:DelayedMessage(55, L["elemental_soon_message"], "Important")
+		self:ScheduleEvent("ElemWarn", "BigWigs_Message", 55, L["elemental_soon_message"], "Important")
 	elseif sync == "VashjLoot" and rest and self.db.profile.loot then
 		self:Message(L["loot_message"]:format(rest), "Positive", nil, "Info")
 		if self.db.profile.icon then
@@ -435,7 +448,6 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		if shieldsFaded == 4 then
 			if self.db.profile.phase then
 				self:Message(L["phase3_message"], "Important", nil, "Alarm")
-
 				self:Bar(L2["enrage"], 240, "Spell_Shadow_UnholyFrenzy")
 				self:DelayedMessage(180, L2["enrage_min"]:format(1), "Positive")
 				self:DelayedMessage(210, L2["enrage_sec"]:format(30), "Positive")
@@ -443,15 +455,9 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 				self:DelayedMessage(240, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
 			end
 
-			if delayedElementalMessage and self:IsEventScheduled(delayedElementalMessage) then
-				self:CancelScheduledEvent(delayedElementalMessage)
-			end
-			if delayedStriderMessage and self:IsEventScheduled(delayedStriderMessage) then
-				self:CancelScheduledEvent(delayedStriderMessage)
-			end
-			if delayedNagaMessage and self:IsEventScheduled(delayedNagaMessage) then
-				self:CancelScheduledEvent(delayedNagaMessage)
-			end
+			self:CancelScheduledEvent("ElemWarn")
+			self:CancelScheduledEvent("StriderWarn")
+			self:CancelScheduledEvent("NagaWarn")
 			self:CancelScheduledEvent("Strider")
 			self:CancelScheduledEvent("Naga")
 			self:TriggerEvent("BigWigs_StopBar", self, L["elemental_bar"])
