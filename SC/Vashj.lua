@@ -353,10 +353,11 @@ function mod:RepeatStrider()
 	end
 	self:ScheduleEvent("Strider", self.RepeatStrider, 63, self)
 end
+
 function mod:RepeatNaga()
 	if self.db.profile.naga then
 		self:Bar(L["naga_bar"], 47.5, "INV_Misc_MonsterHead_02")
-		delayedStriderMessage = self:DelayedMessage(42.5, L["naga_soon_message"], "Attention")
+		delayedNagaMessage = self:DelayedMessage(42.5, L["naga_soon_message"], "Attention")
 	end
 	self:ScheduleEvent("Naga", self.RepeatNaga, 47.5, self)
 end
