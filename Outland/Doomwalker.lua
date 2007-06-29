@@ -42,8 +42,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	overrun = "Renversement",
 	overrun_desc = "Préviens quand Marche-funeste utilise sa capacité Renversement.",
-	--overrun_trigger1 = "",
-	--overrun_trigger2 = "",
+	overrun_trigger1 = "Vitesse maximale enclenchée.", -- à vérifier
+	overrun_trigger2 = "Trajectoire verrouillée.", -- à vérifier
 	overrun_message = "Renversement !",
 	overrun_soon_message = "Renversement imminent !",
 	overrun_bar = "~Cooldown Renversement",
@@ -52,8 +52,8 @@ L:RegisterTranslations("frFR", function() return {
 	earthquake_desc = "Préviens quand Marche-funeste utilise sa capacité Séisme.",
 	earthquake_message = "Séisme ! Prochain dans ~70 sec. !",
 	earthquake_bar = "~Cooldown Séisme",
-	--earthquake_trigger1 = "",
-	--earthquake_trigger2 = "",
+	earthquake_trigger1 = "Début de la perturbation tectonique.", -- à vérifier
+	earthquake_trigger2 = "Magnitude réglée. Déclenchement.", -- à vérifier
 
 	enrage_soon_message = "Bientôt enragé !",
 } end)

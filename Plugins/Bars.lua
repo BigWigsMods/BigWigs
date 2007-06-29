@@ -218,6 +218,9 @@ L:RegisterTranslations("frFR", function() return {
 	["Show anchor"] = "Afficher l'ancre",
 	["Show the bar anchor frame."] = "Affiche l'ancre du cadre des barres.",
 
+	["Enable menu"] = "Activer le menu",
+	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "Affiche le menu de configuration des barres via un Alt-Clic droit.\n\nNotez qu'une fois cette option activée, vous ne pourrez plus faire de Alt-Clic sur ce qui se trouve sous les barres.",
+
 	["Scale"] = "Taille",
 	["Set the bar scale."] = "Détermine la taille des barres.",
 
