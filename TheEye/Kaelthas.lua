@@ -189,17 +189,17 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "^L'énergie. La puissance.", -- à vérifier
+	engage_trigger = "^L'énergie. La puissance.",
 	engage_message = "Phase 1",
 
-	conflag = "Conflagration",
-	conflag_desc = "Préviens quand un joueur est touché par la Conflagration.",
-	conflag_spell = "Conflagration",
-	conflag_message = "Conflagration sur %s !",
+	conflag = "Déflagration",
+	conflag_desc = "Préviens quand un joueur subit les effets de la Déflagration.",
+	conflag_spell = "Déflagration",
+	conflag_message = "Déflag. sur %s !",
 
 	gaze = "Focalisation",
 	gaze_desc = "Préviens quand Thaladred se focalise sur un joueur.",
-	gaze_trigger = "pose ses yeux sur (%S+) !$", -- à vérifier
+	gaze_trigger = "pose ses yeux sur (%S+) !$",
 	gaze_message = "Focalisation sur %s !",
 	gaze_bar = "Cooldown Focalisation",
 
@@ -217,43 +217,43 @@ L:RegisterTranslations("frFR", function() return {
 	fear_spell = "Rugissement puissant",
 
 	rebirth = "Renaissance du phénix",
-	rebirth_desc = "Préviens quand le phénix renaît.",
-	rebirth_trigger1 = "Anar'anel belore!", -- à vérifier
-	rebirth_trigger2 = "Par le pouvoir du soleil !", -- à vérifier
+	rebirth_desc = "Préviens quand le phénix est suceptible de renaitre.",
+	rebirth_trigger1 = "Anar'anel belore !",
+	rebirth_trigger2 = "Par le pouvoir du soleil !",
 	rebirth_warning = "Renaissance probable dans 5 sec. !",
 	rebirth_bar = "~Renaissance probable",
 
 	pyro = "Explosion pyrotechnique",
 	pyro_desc = "Affiche un compte à rebours de 60 secondes pour l'Explosion pyrotechnique.",
-	pyro_trigger = "%s commence à lancer une Explosion pyrotechnique !", -- à vérifier
+	pyro_trigger = "%s commence à lancer une explosion pyrotechnique !",
 	pyro_warning = "Explosion pyrotechnique dans 5 sec. !",
 	pyro_message = "Explosion pyrotechnique en incantation !",
 
 	toy = "Jouet à distance sur tanks",
 	toy_desc = "Préviens quand un tank subit les effets du Jouet à distance.",
-	toy_message = "Jouet à distance sur le tank : %s",
+	toy_message = "Jouet sur le tank : %s",
 	toy_trigger = "Jouet à distance",
 
 	phase = "Phases",
 	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
-	thaladred_inc_trigger = "Impressionnant. Voyons comment tiendront vos nerfs face à l'Assombrisseur, Thaladred !", -- à vérifier
-	sanguinar_inc_trigger = "Vous avez tenu tête à certains de mes plus talentueux conseillers... mais personne ne peut résister à la puissance du Marteau de sang. Je vous présente, le seigneur Sanguinar !", -- à vérifier
-	capernian_inc_trigger = "Capernian fera en sorte que votre séjour ici ne se prolonge pas.", -- à vérifier
-	telonicus_inc_trigger = "Bien, vous êtes digne de mesurer votre talent à celui de mon maître ingénieur, Telonicus.", -- à vérifier
-	weapons_inc_trigger = "Comme vous le voyez, j'ai plus d'une corde à mon arc…", -- à vérifier
-	phase3_trigger = "Peut-être vous ai-je sous-estimés. Il ne serait pas très loyal de vous faire combattre mes quatres conseillers en même temps, mais... mon peuple n'a jamais été traîté avec loyauté. Je ne fais que rendre la politesse.", -- à vérifier
-	phase4_trigger = "Il est hélas parfois nécessaire de prendre les choses en main soi-même. Balamore shanal!", -- à vérifier
+	thaladred_inc_trigger = "Impressionnant. Voyons comment tiendront vos nerfs face à l'Assombrisseur, Thaladred !",
+	sanguinar_inc_trigger = "Vous avez tenu tête à certains de mes plus talentueux conseillers... Mais personne ne peut résister à la puissance du Marteau de sang. Je vous présente le seigneur Sanguinar !",
+	capernian_inc_trigger = "Capernian fera en sorte que votre séjour ici ne se prolonge pas.",
+	telonicus_inc_trigger = "Bien, vous êtes dignes de mesurer votre talent à celui de mon maître ingénieur, Telonicus.",
+	weapons_inc_trigger = "Comme vous le voyez, j'ai plus d'une corde à mon arc…",
+	phase3_trigger = "Peut-être vous ai-je sous-estimés. Il ne serait pas très loyal de vous faire combattre mes quatres conseillers en même temps, mais... mon peuple n'a jamais été traité avec loyauté. Je ne fais que rendre la politesse.",
+	phase4_trigger = "Il est hélas parfois nécessaire de prendre les choses en main soi-même. Balamore shanal !",
 
-	flying_trigger = "Je ne suis pas arrivé si loin pour échouer maintenant ! Je ne laisserai pas l'avenir que je prépare être remis en cause ! Vous allez goûter à ma vraie puissance !", -- à vérifier
-	gravity_trigger1 = "Voyons comment vous vous débrouillerez une fois la tête en bas.", -- à vérifier
-	gravity_trigger2 = "On a du mal à garder les pieds sur terre ?", -- à vérifier
-	gravity_bar = "Prochaine Rupture de gravité",
+	flying_trigger = "Je ne suis pas arrivé si loin pour échouer maintenant ! Je ne laisserai pas l'avenir que je prépare être remis en cause ! Vous allez goûter à ma vraie puissance !",
+	gravity_trigger1 = "Voyons comment vous vous débrouillerez une fois la tête en bas.",
+	gravity_trigger2 = "On a du mal à garder les pieds sur terre ?",
+	gravity_bar = "Prochaine Rupture",
 	gravity_message = "Rupture de gravité !",
 	flying_message = "Phase 5 - Rupture de gravité dans 1 min.",
 
-	weapons_inc_message = "Arrivée des armes !",
+	weapons_inc_message = "Phase 2 - Arrivée des armes !",
 	phase3_message = "Phase 3 - Conseillers et Armes !",
-	phase4_message = "Phase 4 - Kael arrive !",
+	phase4_message = "Phase 4 - Arrivée de Kael !",
 	phase4_bar = "Arrivée de Kael'thas",
 
 	mc = "Contrôle mental",
