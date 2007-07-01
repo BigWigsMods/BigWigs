@@ -42,6 +42,10 @@ L:RegisterTranslations("enUS", function() return {
 	pounding_trigger2 = "Calculating force parameters...",
 	pounding_nextbar = "~Pounding Cooldown",
 	pounding_bar = "<Pounding>",
+
+	knock = "Knock Away",
+	knock_desc = "Knock Away cooldown bar.",
+	knock_bar = "~Knock Away Cooldown",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -130,7 +134,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
-mod.toggleoptions = {"enrage", "pounding", -1, "orbyou", "orbsay", "orbother", "icon", "bosskill"}
+mod.toggleoptions = {"enrage", "pounding", "knock", -1, "orbyou", "orbsay", "orbother", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -142,6 +146,13 @@ function mod:OnEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "KnockAway")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "KnockAway")
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "KnockAway")
+
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "ReavKA", 7)
 
 	previous = nil
 end
@@ -168,6 +179,18 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif self.db.profile.pounding and (msg == L["pounding_trigger1"] or msg == L["pounding_trigger2"]) then
 		self:Bar(L["pounding_bar"], 3, "Ability_ThunderClap")
 		self:Bar(L["pounding_nextbar"], 13, "Ability_ThunderClap")
+	end
+end
+
+function mod:KnockAway(msg)
+	if msg:find(L["knock"]) then
+		self:Sync("ReavKA")
+	end
+end
+
+function mod:BigWigs_RecvSync(sync)
+	if sync == "ReavKA" and self.db.profile.knock then
+		self:Bar(L["knock_bar"], 20, "INV_Gauntlets_05")
 	end
 end
 
