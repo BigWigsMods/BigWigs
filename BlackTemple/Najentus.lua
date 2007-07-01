@@ -20,6 +20,10 @@ L:RegisterTranslations("enUS", function() return {
 	spine_trigger = "^([^%s]+) ([^%s]+) afflicted by Impaling Spine.$",
 	spine_message = "Impaling Spine on %s!",
 
+	spinesay = "Spine Say",
+	spinesay_desc = "Print in say when you have a Spine, can help nearby members with speech bubbles on.",
+	spinesay_message = "Spine on me!",
+
 	shield = "Tidal Shield",
 	shield_desc = "Timers for when Naj'entus will gain tidal shield.",
 	shield_trigger = "High Warlord Naj'entus is afflicted by Tidal Shield.",
@@ -76,7 +80,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"enrage", "shield", "spine", "icon", "bosskill"}
+mod.toggleoptions = {"enrage", "shield", "spine", "spinesay", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -134,6 +138,9 @@ function mod:Spine(msg)
 	if splayer and stype then
 		if splayer == L2["you"] and stype == L2["are"] then
 			splayer = UnitName("player")
+			if self.db.profile.spinesay then
+				SendChatMessage(L["spinesay_message"], "SAY")
+			end
 		end
 		self:Sync("NajSpine " .. splayer)
 	end
