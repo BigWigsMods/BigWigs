@@ -28,6 +28,9 @@ L:RegisterTranslations("enUS", function() return {
 	["Scale"] = true,
 	["Set the message frame scale."] = true,
 
+	["MSBT Scrollarea"] = true,
+	["Set the MSBT scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."] = true,
+
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = true,
 	["White"] = true,
 	["BigWigs frame"] = true,
@@ -220,6 +223,7 @@ local plugin = BigWigs:NewModule("Messages")
 plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	display = L["RaidWarning frame"],
+	msbtArea = nil,
 	usecolors = true,
 	scale = 1.0,
 	posx = nil,
@@ -232,19 +236,30 @@ plugin.consoleOptions = {
 	name = L["Messages"],
 	desc = L["Options for message display."],
 	handler = plugin,
+	pass = true,
+	get = function(key)
+		if key == "anchor" then
+			return anchor and anchor:IsShown()
+		else
+			return plugin.db.profile[key]
+		end
+	end,
+	set = function(key, val)
+		if key == "anchor" then
+			if val then
+				plugin:BigWigs_ShowAnchors()
+			else
+				plugin:BigWigs_HideAnchors()
+			end
+		else
+			plugin.db.profile[key] = val
+		end
+	end,
 	args = {
 		anchor = {
 			type = "toggle",
 			name = L["Show anchor"],
 			desc = L["Show the message anchor frame."],
-			get = function() return anchor and anchor:IsShown() end,
-			set = function(v)
-				if v then
-					plugin:BigWigs_ShowAnchors()
-				else
-					plugin:BigWigs_HideAnchors()
-				end
-			end,
 			disabled = function() return (plugin.db.profile.display ~= L["BigWigs frame"]) end,
 			order = 1,
 		},
@@ -264,8 +279,6 @@ plugin.consoleOptions = {
 			type = "toggle",
 			name = L["Use colors"],
 			desc = L["Toggles white only messages ignoring coloring."],
-			get = function() return plugin.db.profile.usecolors end,
-			set = function(v) plugin.db.profile.usecolors = v end,
 			map = {[true] = L["|cffff0000Co|cffff00fflo|cff00ff00r|r"], [false] = L["White"]},
 			order = 100,
 		},
@@ -276,11 +289,6 @@ plugin.consoleOptions = {
 			min = 0.2,
 			max = 2.0,
 			step = 0.1,
-			get = function() return plugin.db.profile.scale end,
-			set = function(v)
-				plugin.db.profile.scale = v
-				if messageFrame then messageFrame:SetScale(v) end
-			end,
 			disabled = function() return (plugin.db.profile.display ~= L["BigWigs frame"]) end,
 			order = 101,
 		},
@@ -288,20 +296,14 @@ plugin.consoleOptions = {
 			type = "text",
 			name = L["Display"],
 			desc = L["Set where messages are displayed."],
-			get = function() return plugin.db.profile.display end,
 			validate = {L["BigWigs frame"], L["RaidWarning frame"]},
-			set = function(v)
-				plugin.db.profile.display = v
-			end,
 			order = 102,
 		},
 		chat = {
 			type = "toggle",
 			name = L["Chat frame"],
 			desc = L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."],
-			get = function() return plugin.db.profile.chat end,
-			set = function(v) plugin.db.profile.chat = v end,
-			order = 103,
+			order = 104,
 		},
 	},
 }
@@ -312,6 +314,14 @@ plugin.consoleOptions = {
 
 if MikSBT then
 	table.insert(plugin.consoleOptions.args.display.validate, L["Mik's Scrolling Battle Text"])
+	plugin.consoleOptions.args.msbtArea = {
+		type = "text",
+		name = L["MSBT Scrollarea"],
+		desc = L["Set the MSBT scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."],
+		validate = MikSBT.GetScrollAreaList(),
+		order = 103,
+		disabled = function() return (plugin.db.profile.display ~= L["Mik's Scrolling Battle Text"]) end,
+	}
 end
 
 if SCT_Display_Message or ( SCT and SCT.DisplayMessage ) then
@@ -394,13 +404,14 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 	if display == L["RaidWarning frame"] then
 		RaidWarningFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
 	elseif MikSBT and display == L["Mik's Scrolling Battle Text"] then
-		MikSBT.DisplayMessage(text, MikSBT.DISPLAYTYPE_NOTIFICATION, false, r * 255, g * 255, b * 255)
+		MikSBT.DisplayMessage(text, db.msbtArea or MikSBT.DISPLAYTYPE_NOTIFICATION, false, r * 255, g * 255, b * 255)
 	elseif SCT and SCT_MSG_FRAME and display == L["Scrolling Combat Text"] then -- SCT 5.x
 		SCT_MSG_FRAME:AddMessage( text, r, g, b, 1 )
 	elseif CombatText_AddMessage and display == L["Floating Combat Text"] then -- Blizzards FCT
 		CombatText_AddMessage(text, COMBAT_TEXT_SCROLL_FUNCTION, r, g, b, "sticky", nil)
 	else -- Default BigWigs Frame fallback
 		if not messageFrame then createMsgFrame() end
+		messageFrame:SetScale(db.scale)
 		messageFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
 	end
 
@@ -421,7 +432,7 @@ function plugin:SetupFrames()
 
 	anchor:SetWidth(120)
 	anchor:SetHeight(80)
-	
+
 	anchor:SetBackdrop({
 		bgFile = "Interface\\Tooltips\\UI-Tooltip-Background", tile = true, tileSize = 16,
 		edgeFile = "Interface\\AddOns\\BigWigs\\Textures\\otravi-semi-full-border", edgeSize = 32,
