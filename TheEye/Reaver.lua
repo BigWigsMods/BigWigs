@@ -45,6 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	knock = "Knock Away",
 	knock_desc = "Knock Away cooldown bar.",
+	knock_trigger = "^Void Reaver 's Knock Away",
 	knock_bar = "~Knock Away Cooldown",
 } end )
 
@@ -152,7 +153,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "KnockAway")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "ReavKA", 7)
+	self:TriggerEvent("BigWigs_ThrottleSync", "ReavKA2", 7)
 
 	previous = nil
 end
@@ -183,13 +184,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:KnockAway(msg)
-	if msg:find(L["knock"]) then
-		self:Sync("ReavKA")
+	if msg:find(L["knock_trigger"]) then
+		self:Sync("ReavKA2")
 	end
 end
 
 function mod:BigWigs_RecvSync(sync)
-	if sync == "ReavKA" and self.db.profile.knock then
+	if sync == "ReavKA2" and self.db.profile.knock then
 		self:Bar(L["knock_bar"], 20, "INV_Gauntlets_05")
 	end
 end
