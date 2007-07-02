@@ -158,6 +158,39 @@ L:RegisterTranslations("frFR", function() return {
 	afflict_trigger = "^([^%s]+) ([^%s]+) les effets .* (.*).$",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	start_trigger = "我不准你涉入這件事!",
+
+	mark = "印記",
+	mark_desc = "印記警報及計數",
+	hydross_trigger = "海卓司印記",
+	corruption_trigger = "墮落印記",
+	hydross_bar = "海卓司印記(冰霜) - %s%%",
+	corruption_bar = "墮落印記(自然) - %s%%",
+
+	stance = "形態改變",
+	stance_desc = ("當 %s 改變型態時發出警報"):format(boss),
+	poison_stance_trigger = "啊，毒……",
+	water_stance_trigger = "很好，舒服多了。",
+	poison_stance = "海卓司轉為毒型態！",
+	water_stance = "海卓司轉為水狀態！",
+
+	sludge = "Vile Sludge",
+	sludge_desc = "Notify of players afflicted by Vile Sludge.",
+	sludge_message = "Vile Sludge: %s",
+
+	tomb = "水之墳",
+	tomb_desc = "通報玩家受到水之墳",
+	tomb_message = "水之墳: %s",
+
+	icon = "Vile Sludge Icon",
+	icon_desc = "Place a Raid Icon on the player afflicted by Vile Sludge(requires promoted or higher).",
+
+	debuff_warn = "印記施放於 %s%%",
+
+	afflict_trigger = "^(.+)受到(.*)",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
