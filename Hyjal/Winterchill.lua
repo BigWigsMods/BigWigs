@@ -50,7 +50,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	icebolt = "얼음 화살",
 	icebolt_desc = "얼음 화살 경고.",
-	icebolt_trigger = "격노한 윈터칠|1이;가; 얼음 화살|1으로;로; ([^|;%s]*)", -- "Icebolt hits ([^%s]+)",
+	icebolt_trigger = "얼음 화살|1으로;로; ([^|;%s]*)에게", -- "Icebolt hits ([^%s]+)",
 	icebolt_message = "%s에 얼음 화살!",
 
 	icon = "전술 표시",
@@ -114,6 +114,10 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if player then
 		if player == L2["you"] then
 			player = UnitName("player")
+		else
+			if GetLocale() == "koKR" and player == "당신" then -- special case for korean translation
+				player = UnitName("player")
+			end
 		end
 		self:Sync("WinterchillBolt " .. player)
 	end
