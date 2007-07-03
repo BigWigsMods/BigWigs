@@ -27,7 +27,8 @@ L:RegisterTranslations("enUS", function() return {
 	enfeeble_desc = "Show cooldown timer for enfeeble.",
 	enfeeble_trigger = "afflicted by Enfeeble.$",
 	enfeeble_message = "Enfeeble! next in 30sec",
-	enfeeble_warning = "Enfeeble in 5sec!",
+	enfeeble_warning1 = "Enfeeble in 5sec!",
+	enfeeble_warning2 = "Enfeeble in 10sec!",
 	enfeeble_bar = "Enfeeble",
 	enfeeble_nextbar = "Next Enfeeble",
 
@@ -72,7 +73,8 @@ L:RegisterTranslations("deDE", function() return {
 
 	enfeeble_trigger = "von Entkr\195\164ften betroffen",
 	enfeeble_message = "Entkr\195\164ften! N\195\164chste in 30 Sek",
-	enfeeble_warning = "Entkr\195\164ften in 5 Sek!",
+	enfeeble_warning1 = "Entkr\195\164ften in 5 Sek!",
+	enfeeble_warning2 = "Entkr\195\164ften in 10 Sek!",
 	enfeeble_bar = "Entkr\195\164ften",
 	enfeeble_nextbar = "N\195\164chste Entkr\195\164ften",
 
@@ -100,7 +102,8 @@ L:RegisterTranslations("frFR", function() return {
 	enfeeble_desc = "Affiche le temps de recharge de Affaiblir.",
 	enfeeble_trigger = "subit les effets .* Affaiblir.$",
 	enfeeble_message = "Affaiblir ! Prochain dans 30 sec.",
-	enfeeble_warning = "Affaiblir dans 5 sec. !",
+	enfeeble_warning1 = "Affaiblir dans 5 sec. !",
+	enfeeble_warning2 = "Affaiblir dans 10 sec. !",
 	enfeeble_bar = "Affaiblir",
 	enfeeble_nextbar = "Prochain Affaiblir",
 
@@ -137,7 +140,8 @@ L:RegisterTranslations("koKR", function() return {
 	enfeeble_desc = "쇠약에 대한 재사용 대기시간을 표시합니다.",
 	enfeeble_trigger = "쇠약에 걸렸습니다%.$",
 	enfeeble_message = "쇠약! 다음은 30초 후",
-	enfeeble_warning = "5초 후 쇠약!",
+	enfeeble_warning1 = "5초 후 쇠약!",
+	enfeeble_warning2 = "10초 후 쇠약!",
 	enfeeble_bar = "쇠약",
 	enfeeble_nextbar = "다음 쇠약",
 
@@ -170,7 +174,8 @@ L:RegisterTranslations("zhTW", function() return {
 	enfeeble_desc = "顯示削弱計時條",
 	enfeeble_trigger = "^(.+)受到(.*)削弱",
 	enfeeble_message = "30 秒後下一次削弱",
-	enfeeble_warning = "5 秒後削弱",
+	enfeeble_warning1 = "5 秒後削弱",
+	enfeeble_warning2 = "10 秒後削弱",
 	enfeeble_bar = "削弱",
 	enfeeble_nextbar = "削弱倒數",
 
@@ -247,6 +252,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif self.db.profile.phase and msg == L["phase3_trigger"] then
 		self:Message(L["phase3_message"], "Positive")
 		self:CancelScheduledEvent("enf1")
+		self:CancelScheduledEvent("enf2")
 		self:TriggerEvent("BigWigs_StopBar", self, L["enfeeble_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["enfeeble_nextbar"])
 		nova = nil
@@ -279,7 +285,8 @@ function mod:BigWigs_RecvSync(sync)
 	if sync == "MalchezaarEnfeeble" then
 		if self.db.profile.enfeeble then
 			self:Message(L["enfeeble_message"], "Important", nil, "Alarm")
-			self:ScheduleEvent("enf1", "BigWigs_Message", 25, L["enfeeble_warning"], "Attention")
+			self:ScheduleEvent("enf1", "BigWigs_Message", 25, L["enfeeble_warning1"], "Attention")
+			self:ScheduleEvent("enf2", "BigWigs_Message", 20, L["enfeeble_warning2"], "Attention")
 			self:Bar(L["enfeeble_bar"], 7, "Spell_Shadow_LifeDrain02")
 			self:Bar(L["enfeeble_nextbar"], 30, "Spell_Shadow_LifeDrain02")
 		end
