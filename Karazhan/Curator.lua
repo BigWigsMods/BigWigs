@@ -125,14 +125,14 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	berserk = "無敵警告",
-	berserk_desc = "進入戰鬥後十分鐘時發送無敵警告",
+	berserk_desc = "進入戰鬥後 10 分鐘時發出無敵警告",
 	berserk_trigger = "展示廳是賓客專屬的。",
-	berserk_message = "%s 將在十分鐘後進入無敵狀態",
+	berserk_message = "%s 將在 10 分鐘後進入無敵狀態",
 	berserk_bar = "無敵",
 
 	enrage_trigger = "不順從就會招致攻擊性的行動。",
 	enrage_message = "狂暴",
-	enrage_warning = "監護者將會進入狂暴狀態",
+	enrage_warning = "監護者即將進入狂暴狀態",
 
 	weaken = "喚醒提示",
 	weaken_desc = "當監護者進入喚醒時發送警告",
@@ -140,7 +140,7 @@ L:RegisterTranslations("zhTW", function() return {
 	weaken_message = "喚醒 - 20 秒虛弱時間開始",
 	weaken_bar = "喚醒",
 	weaken_fade_message = "喚醒結束 - 準備擊殺小電球",
-	weaken_fade_warning = "喚醒將於五秒後結束",
+	weaken_fade_warning = "喚醒將於 5 秒後結束",
 
 	weaktime = "虛弱提示",
 	weaktime_desc = "顯示計時條預測下一次虛弱時間",

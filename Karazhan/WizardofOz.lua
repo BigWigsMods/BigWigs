@@ -85,7 +85,7 @@ L:RegisterTranslations("zhTW", function() return {
 	spawns = "啟動時間",
 	spawns_desc = "設定各角色啟動時間計時",
 	spawns_bar = "%s 開始攻擊",
-	spawns_warning = "%s 將在五秒後開始攻擊",
+	spawns_warning = "%s 將在 5 秒後開始攻擊",
 
 	light = "閃電鏈警告",
 	light_desc = "當施放悶電鏈時發送警告",

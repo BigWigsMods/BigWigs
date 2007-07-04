@@ -115,12 +115,12 @@ L:RegisterTranslations("zhTW", function() return {
 	repentance_nextbar = "懺悔預備！治療群補上 HoT！",
 
 	holyfire = "神聖之火",
-	holyfire_desc = "Alert when people are afflicted by Holy Fire.",
+	holyfire_desc = "當隊友受到神聖之火時發出警報",
 	holyfire_trigger = "^(.+)受到(.*)神聖之火",
 	holyfire_message = "神聖之火：[%s]",
 
-	icon = "Raid Icon",
-	icon_desc = "Place a Raid Icon on the player afflicted by Holy Fire(requires promoted or higher).",
+	icon = "團隊標記",
+	icon_desc = "為受到神聖之火的玩家設置團隊標記（需要權限）",
 } end)
 
 L:RegisterTranslations("esES", function() return {

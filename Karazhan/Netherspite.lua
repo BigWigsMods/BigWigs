@@ -106,10 +106,10 @@ L:RegisterTranslations("zhTW", function() return {
 	phase_desc = ("當 %s 進入下一階段時發送警告"):format(boss),
 	phase1_message = "撒退 - 第一階段光線門",
 	phase1_bar = "地獄吐息 - 撒退",
-	phase1_trigger = "%s 大聲呼喊撤退，打開通往地獄的門。",
+	phase1_trigger = "%s大聲呼喊撤退，打開通往地獄的門。",
 	phase2_message = "狂怒 - 第二階段自我放逐",
 	phase2_bar = "地獄吐息 - 狂怒",
-	phase2_trigger = "%s 陷入一陣狂怒!",
+	phase2_trigger = "%s陷入一陣狂怒!",
 
 	voidzone = "虛空地區警告",
 	voidzone_desc = "當尼德斯施放虛空地區時發送警告",
