@@ -99,6 +99,9 @@ L:RegisterTranslations("koKR", function() return {
 	["Show anchor"] = "고정 위치 표시",
 	["Show the bar anchor frame."] = "바의 고정 위치를 표시합니다.",
 
+	["Enable menu"] = "메뉴 사용",
+	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "ALT-우클릭으로 바 환경설정 메뉴를 표시합니다.\n\n이 설정을 사용 하면, 더이상 바 아래 게임 내 아이템에 ALT-클릭을 사용할 수 없습니다.",
+
 	["Scale"] = "크기",
 	["Set the bar scale."] = "바의 크기를 조절합니다.",
 

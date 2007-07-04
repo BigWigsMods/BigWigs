@@ -44,6 +44,35 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a Raid Icon on who Fel-Acid Breath is being cast on (requires promoted or higher).",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	engage_trigger = "호드가... 박살내주마.",
+
+	phase = "단계 타이머",
+	phase_desc = "마의 분노 단계와 보통 단계 간의 변경에 대한 타이머입니다.",
+	phase_rage_warning = "약 5초 이내 마의 분노 단계",
+	phase_normal_warning = "약 5초 이내 마의 분노 종료",
+	phase_normal = "마의 분노 단계 종료",
+	phase_normal_trigger =  "구르토그 블러드보일의 몸에서 마의 분노 효과가 사라졌습니다.",
+	phase_normal_bar = "다음 분노 형상",
+	phase_rage_bar = "다음 보통 형상",
+
+	rage = "마의 분노",
+	rage_desc = "마의 분노에 걸린 사람을 알립니다.",
+	rage_trigger = "^([^|;%s]*)(.*)마의 분노에 걸렸습니다.$", -- check
+	rage_you = "당신은 마의 분노!!",
+	rage_other = "%s 마의 분노!",
+
+	whisper = "귓속말",
+	whisper_desc = "마의 분노에 걸린 플레이어에게 귓속말을 보냅니다 (승급자 이상 권한 요구).",
+
+	acid = "지옥 산성 숨결",
+	acid_desc = "지옥 산성 숨결의 시전 대상을 알립니다.",
+	acid_message = "지옥 산성 숨결 시전 중 : %s",
+
+	icon = "전술 표시",
+	icon_desc = "지옥 산성 숨결의 시전 대상에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

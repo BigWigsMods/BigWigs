@@ -65,6 +65,9 @@ L:RegisterTranslations("koKR", function() return {
 	["Scale"] = "크기",
 	["Set the message frame scale."] = "메세지창의 크기를 설정합니다.",
 
+	["MSBT Scrollarea"] = "MSBT 메세지",
+	["Set the MSBT scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."] = "메세지를 표시 할 영역을 MSBT 메세지로 설정합니다.\n\n새로운 영역의 목록을 가져오려면 사용자 인터페이스를 재시작하세요.",
+
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000색|cffff00ff상|r",
 	["White"] = "흰색",
 	["BigWigs frame"] = "BigWigs 창",

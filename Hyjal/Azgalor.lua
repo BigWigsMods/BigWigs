@@ -34,6 +34,17 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Destin funeste (nécessite d'être promu ou mieux).",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	doom = "파멸",
+	doom_desc = "파멸에 대한 경고입니다.",
+	doom_trigger = "^([^|;%s]*)(.*)파멸에 걸렸습니다.$",
+	doom_other = "%s에 파멸",
+	doom_you = "당신에 파멸!",
+
+	icon = "전술 표시",
+	icon_desc = "파멸에 걸린 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 요구).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
