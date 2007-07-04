@@ -80,7 +80,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", -1, "rage", "whisper", -1, "acid", "icon", "bosskill"}
+mod.toggleoptions = {"phase", -1, "rage", "whisper", -1, "acid", "icon", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -136,8 +136,21 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
-		self:Bar(L["phase_normal_bar"], 52, "Spell_Fire_ElementalDevastation")
-		self:ScheduleEvent("rage1", "BigWigs_Message", 47, L["phase_rage_warning"], "Important")
+		if self.db.profile.phase then
+			self:Bar(L["phase_normal_bar"], 52, "Spell_Fire_ElementalDevastation")
+			self:ScheduleEvent("rage1", "BigWigs_Message", 47, L["phase_rage_warning"], "Important")
+		end
+		if self.db.profile.enrage then
+			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
+			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
+			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
+			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
+			self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
+			self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
+			self:DelayedMessage(595, L2["enrage_sec"]:format(5), "Urgent")
+			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
+		end
 	end
 end
 
