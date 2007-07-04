@@ -244,7 +244,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(L["phase1_message"], "Positive")
 		end
 		if self.db.profile.enfeeble then
-			self:DelayedMessage(25, L["enfeeble_warning"], "Attention")
+			self:ScheduleEvent("enf1", "BigWigs_Message", 25, L["enfeeble_warning1"], "Attention")
+			self:ScheduleEvent("enf2", "BigWigs_Message", 20, L["enfeeble_warning2"], "Attention")
 			self:Bar(L["enfeeble_nextbar"], 30, "Spell_Shadow_LifeDrain02")
 		end
 	elseif self.db.profile.phase and msg == L["phase2_trigger"] then
