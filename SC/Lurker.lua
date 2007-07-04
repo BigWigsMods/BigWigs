@@ -98,6 +98,34 @@ L:RegisterTranslations("frFR", function() return {
 	["Coilfang Ambusher"] = "Embusqué de Glisseroc",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	engage_warning = "%s Engaged - M\195\182gliches abtauchen in 90sek",
+
+	dive = "Tauchen",
+	dive_desc = ("Zeitanzeige wann %s taucht."):format(boss),
+	dive_warning = "M\195\182gliches abtauchen in %dsek!",
+	dive_bar = "~Tauchen",
+	dive_message = "Abgetaucht - Zur\195\188ck in 60sek",
+
+	spout = "Schwall",
+	spout_desc = "Zeitanzeige f\195\188r Schwall, m\195\182glicherweise nicht sehr akkurat.",
+	spout_trigger = "%s atmet tief ein!",
+	spout_message = "Wirkt Schwall!",
+	spout_warning = "M\195\182glicher Schwall in ~3sek!",
+	spout_bar = "M\195\182glicher Schwall",
+
+	whirl = "Wirbel",
+	whirl_desc = "Zeitanzeige f\195\188r Wirbel.",
+	whirl_bar = "M\195\182glicher wirbel",
+
+	emerge_warning = "Zur\195\182ck in %dsek",
+	emerge_message = "Aufgetaucht - M\195\182glicher Schwall in 90sek",
+	emerge_bar = "Auftauchen",
+
+	["Coilfang Guardian"] = "W\195\164chter des Echsenkessels",
+	["Coilfang Ambusher"] = "Wegelagerer des Echsenkessels",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
