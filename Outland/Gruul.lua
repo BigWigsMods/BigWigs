@@ -179,7 +179,7 @@ L:RegisterTranslations("zhTW", function() return {
 	grasp_trigger1 = "快跑。",
 	grasp_trigger2 = "待在這裡。",
 	grasp_message = "大地猛擊 - 10 秒內破碎",
-	grasp_warning = "戈魯爾即將施放大地猛擊",
+	grasp_warning = "大地猛擊即將來臨！",
 	grasp_bar = "大地猛擊",
 
 	cavein = "塌下警告",
@@ -194,7 +194,7 @@ L:RegisterTranslations("zhTW", function() return {
 	silence_warning = "戈魯爾即將施放迴響",
 	silence_bar = "迴響",
 
-	shatter_trigger = "%s 吼叫!",
+	shatter_trigger = "%s吼叫!",
 	shatter_message = "破碎",
 } end)
 
