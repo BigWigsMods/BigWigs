@@ -143,6 +143,38 @@ L:RegisterTranslations("frFR", function() return {
 	grobules_bar = "Disparation des globules",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	engage_trigger = "水很深，抓住你!",
+
+	tidal = "海嘯",
+	tidal_desc = "警示海嘯施放",
+	tidal_trigger = "潮行者開始施放海嘯",
+	tidal_message = "海嘯 - 留意 MT 血量",
+
+	grave = "水之墓",
+	grave_desc = "當玩家受到水之墓時通知團隊",
+	grave_trigger1 = "^(.+)受到(.*)水之墓",
+	grave_trigger2 = "將敵人放進",
+	grave_message = "水之墓：%s",
+	grave_bar = "水之墓計時",
+	grave_nextbar = "水之墓冷卻",
+
+	murloc = "魚人警示",
+	murloc_desc = "魚人來臨時警示",
+	murloc_bar = "魚人冷卻",
+	murloc_trigger = "魚人",
+	murloc_message = "魚人出現！",
+	murloc_soon_message = "魚人即將出現，準備 AE！",
+	murloc_engaged = "%s 開戰 - 魚人在 40 秒內出現！",
+
+	grobules = "水珠警示",
+	grobules_desc = "當水珠來臨時警示",
+	grobules_trigger = "召喚",
+	grobules_message = "水珠出現！避開水球！",
+	grobules_warning = "水珠即將出現！",
+	grobules_bar = "水珠消失",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
