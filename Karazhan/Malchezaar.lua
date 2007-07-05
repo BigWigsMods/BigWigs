@@ -192,6 +192,10 @@ L:RegisterTranslations("zhTW", function() return {
 	nova_message = "暗影新星",
 	nova_bar = "暗影新星倒數",
 	nova_soon = "即將施放暗影新星",
+
+	despawn = "取消地獄火消失計時條",
+	despawn_desc = "地獄火消失計時條",
+	despawn_bar = "地獄火 (%d) 消失！",
 } end )
 
 ----------------------------------
