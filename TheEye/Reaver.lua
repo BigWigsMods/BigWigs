@@ -127,6 +127,37 @@ L:RegisterTranslations("koKR", function() return {
 	pounding_bar = "<울림>",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	engage_trigger = "警告!你被標記要消滅。",
+
+	orbyou = "秘法寶珠瞄準你",
+	orbyou_desc = "當秘法寶珠目標為你時警告",
+	orb_you = "秘法寶珠在你身上！",
+
+	orbsay = "以 Say 通知秘法寶珠",
+	orbsay_desc = "當秘法寶珠目標為你時，以 Say 通知周圍隊員。",
+	orb_say = "秘法寶珠瞄準我！請避開！",
+
+	orbother = "秘法寶珠瞄準其他人",
+	orbother_desc = "當秘法寶珠在團員身上時警示。",
+	orb_other = "寶珠目標：%s",
+
+	icon = "團隊標記",
+	icon_desc = "當團員為秘法寶珠目標時，設置團隊標記（需要權限）",
+
+	pounding = "猛擊",
+	pounding_desc = "顯示猛擊計時條。",
+	pounding_trigger1 = "選擇性測量開始....",
+	pounding_trigger2 = "計算力量參數...",
+	pounding_nextbar = "猛擊冷卻",
+	pounding_bar = "<猛擊>",
+
+	knock = "Knock Away",
+	knock_desc = "Knock Away cooldown bar.",
+	knock_trigger = "^Void Reaver 's Knock Away",
+	knock_bar = "~Knock Away Cooldown",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
