@@ -76,6 +76,12 @@ L:RegisterTranslations("zhTW", function() return {
 	["Sounds"] = "聲音",
 	["Options for sounds."] = "聲音的選項",
 
+	["Alarm"] = "鬧鈴",
+	["Info"] = "資訊",
+	["Alert"] = "警告",
+	["Long"] = "長響",
+	["Victory"] = "勝利",
+
 	["toggle"] = "選擇",
 	["Use sounds"] = "使用聲音",
 	["Toggle all sounds on or off."] = "切換是否使用聲音。",

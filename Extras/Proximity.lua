@@ -137,6 +137,22 @@ L:RegisterTranslations("deDE", function() return {
 	font = "Fonts\\FRIZQT__.TTF",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	["Proximity"] = "鄰近顯示",
+	["Options for the Proximity Display."] = "設定鄰近顯示選項。",
+	["|cff777777Nobody|r"] = "|cff777777無人|r",
+	["Sound"] = "音效",
+	["Play sound on proximity."] = "當有人太靠近時發出音效。",
+	["Disabled"] = "停用",
+	["Disable the proximity display for all modules that use it."] = "停用鄰近顯示功能。",
+	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "模組 %s 的鄰近顯示功能已停用，請用模組選單啟用它。",
+
+	proximity = "鄰近顯示",
+	proximity_desc = "在適當的情形下，當有人太靠近時，現示清單。",
+
+	font = "Fonts\\FRIZQT__.TTF"
+} end)
+
 -----------------------------------------------------------------------
 --      Module Declaration
 -----------------------------------------------------------------------

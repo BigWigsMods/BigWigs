@@ -178,21 +178,41 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["Bars"] = "計時條",
+	["Emphasized Bars"] = "突顯計時條",
 
 	["Options for the timer bars."] = "計時條設置",
+
+	["Show anchor"] = "顯示錨點",
 	["Show the bar anchor frame."] = "顯示計時條框架錨點。",
+
+	["Scale"] = "縮放",
 	["Set the bar scale."] = "設置計時條縮放比例。",
+
 	["Grow upwards"] = "向上排列",
 	["Toggle bars grow upwards/downwards from anchor."] = "切換計時條從錨點向下/向上排列。",
 
-	["Show anchor"] = "顯示錨點",
-	["Scale"] = "縮放",
+	["Texture"] = "材質",
+	["Set the texture for the timer bars."] = "設定計時條的材質花紋。",
 
 	["Test"] = "測試",
 	["Close"] = "關閉",
 
-	["Texture"] = "材質",
-	["Set the texture for the timer bars."] = "設定計時條的材質花紋",
+	["Emphasize"] = "突顯",
+	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "當計時條快結束時(少於十秒)，以突顯方式展示。如果本來就少於15秒，則一開始就會以突顯方式展示。",
+
+	["Enable"] = "啟用",
+	["Enables emphasizing bars."] = "啟用突顯顯計時條。",
+	["Flash"] = "閃爍",
+	["Flashes the background red for bars that are emphasized."] = "以紅色閃爍背景的方式來突顯。",
+	["Move"] = "移動",
+	["Move bars that are emphasized to a second anchor."] = "將要凸顯得計時條移動到不同的位置。",
+	["Set the scale for emphasized bars."] = "設置突顯計時條縮放比例`.",
+
+	["Reset position"] = "重置位置",
+	["Reset the anchor position, moving it to the center of your screen."] = "重置定位點，將它移至螢幕中央。",
+
+	["Reverse"] = "反向",
+	["Toggles if bars are reversed (fill up instead of emptying)."] = "以反向的方式顯示(填滿而非變空)。",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

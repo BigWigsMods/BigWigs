@@ -106,8 +106,11 @@ L:RegisterTranslations("zhTW", function() return {
 	["Whisper warnings"] = "密語警報",
 	["Toggle whispering warnings to players."] = "切換是否通過密語向玩家發送訊息",
 
+	["Show whispers"] = "顯示密語",
+	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "切換是否顯示本地發送的警報密語，例如當玩家有溫疫時。",
+
 	["Broadcast to chat"] = "使用團隊聊天",
-	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "切換是否使用團隊聊天來代替團隊警告頻道來播放boss的訊息",
+	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "切換是否使用團隊聊天來代替團隊警告頻道來播放首領的訊息",
 
 	desc = "團隊警告選項",
 } end )

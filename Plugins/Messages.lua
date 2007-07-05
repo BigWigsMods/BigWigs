@@ -128,15 +128,16 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["Messages"] = "訊息",
-
 	["Options for message display."] = "訊息框架設置。",
+
+	["Show anchor"] = "顯示錨點",
 	["Show the message anchor frame."] = "顯示訊息訊息框架錨點。",
+
 	["Use colors"] = "發送彩色訊息",
 	["Toggles white only messages ignoring coloring."] = "切換是否只發送單色訊息。",
 
-	["Show anchor"] = "顯示錨點",
-	["Set the message frame scale."] = "設置訊息框架縮放比例",
 	["Scale"] = "縮放",
+	["Set the message frame scale."] = "設置訊息框架縮放比例",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000顏|cffff00ff色|r",
 	["White"] = "白色",
@@ -145,13 +146,18 @@ L:RegisterTranslations("zhTW", function() return {
 
 	["Display"] = "顯示",
 	["Set where messages are displayed."] = "選擇訊息顯示的位置",
+	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "除了選擇的顯示位置外，也顯示在聊天頻道上。",
 
 	["Mik's Scrolling Battle Text"] = "Mik's滾動戰鬥訊息",
 	["Scrolling Combat Text"] = "滾動戰鬥訊息",
 	["Floating Combat Text"] = "浮動戰鬥訊息",
+	["Chat frame"] = "聊天頻道",
 
 	["Test"] = "測試",
 	["Close"] = "關閉",
+
+	["Reset position"] = "重置位置",
+	["Reset the anchor position, moving it to the center of your screen."] = "重置定位點，將它移至螢幕中央",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

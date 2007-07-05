@@ -180,8 +180,11 @@ L:RegisterTranslations("zhTW", function() return {
 	["N/A"] = "N/A",
 	["BigWigs"] = "BigWigs",
 	["Runs a version query on the BigWigs core."] = "檢查BigWigs核心的版本",
-	["Replies"] = "回復的數量",
-	["Ancient"] = "舊的",
+	["Replies"] = "回應人數",
+	["Ancient"] = "舊版本",
+	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "發現 BigWigs 新版本，可以考慮升級！",
+	["Notify people with older versions that there is a new version available."] = "通知使用舊版本使用者升級到最新版本。",
+
 } end )
 
 L:RegisterTranslations("frFR", function() return {
