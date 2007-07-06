@@ -162,7 +162,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 		self:Message(L["engage_message"]:format(boss), "Attention")
 		self:ScheduleRepeatingEvent("BWAlarTargetSeek", self.AlarCheck, 1, self)
-		self:ScheduleEvent("BWAlarNilOccured", nilOccured, 15)
 	elseif sync == "AlArArmor" and rest and self.db.profile.armor then
 		local other = L["armor_other"]:format(rest)
 		if rest == UnitName("player") then
@@ -198,7 +197,7 @@ function mod:AlarCheck()
 			self:Bar(L["meteor_nextbar"], 52, "Spell_Fire_Burnout")
 		end
 		fireball = true
-		self:ScheduleEvent("BWAlarNilOccured", nilOccured, 15)
+		self:ScheduleEvent("BWAlarNilOccured", nilOccured, 25)
 	end
 end
 
