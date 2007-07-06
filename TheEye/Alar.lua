@@ -164,15 +164,14 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:ScheduleRepeatingEvent("BWAlarTargetSeek", self.AlarCheck, 1, self)
 		self:ScheduleEvent("BWAlarNilOccured", nilOccured, 15)
 	elseif sync == "AlArArmor" and rest and self.db.profile.armor then
+		local other = L["armor_other"]:format(rest)
 		if rest == UnitName("player") then
-			local other = L["armor_other"]:format(rest)
 			self:Message(L["armor_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
-			self:Bar(other, 60, "Spell_Fire_Immolation")
 		else
 			self:Message(other, "Attention")
-			self:Bar(other, 60, "Spell_Fire_Immolation")
 		end
+		self:Bar(other, 60, "Spell_Fire_Immolation")
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
