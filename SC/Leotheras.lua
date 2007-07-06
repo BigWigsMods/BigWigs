@@ -35,6 +35,12 @@ L:RegisterTranslations("enUS", function() return {
 	phase_normal = "Normal Phase! - Whirlwind Soon!",
 	demon_bar = "Demon Phase",
 	demon_nextbar = "Next Demon Phase",
+	
+	mindcontrol = "Mind Control",
+	mindcontrol_desc = "Warn which players are Mind Controlled.",
+	mindcontrol_trigger = "^([^%s]+) ([^%s]+) afflicted by Consuming Madness.$",
+	mindcontrol_warning = "Mind Controlled: %s",
+	
 
 	image = "Image",
 	image_desc = "15% Image Split Alerts.",
@@ -169,7 +175,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Serpentshrine Cavern"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"enrage", "whirlwind", "phase", "image", "whisper", "bosskill"}
+mod.toggleoptions = {"enrage", "whirlwind", "phase", "image", "whisper", "mindcontrol", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -180,9 +186,10 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "WWEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "WWEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "WWEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "WMEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "WMEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "WMEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE", "WMEvent")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -281,13 +288,25 @@ function mod:UNIT_HEALTH(msg)
 	end
 end
 
-function mod:WWEvent(msg)
+function mod:WMEvent(msg)
 	local wplayer, wtype = select(3, msg:find(L["whisper_trigger"]))
 	if wplayer and wtype then
 		if wplayer == L2["you"] and wtype == L2["are"] then
 			wplayer = UnitName("player")
 		end
 		self:Sync("LeoWhisp "..wplayer)
+		return
+	end
+
+	if self.db.profile.mindcontrol then
+		local mcplayer, mctype = select(3, msg:find(L["mindcontrol_trigger"]))
+		if mcplayer and mctype then
+			if mcplayer == L2["you"] and mctype == L2["are"] then
+				mcplayer = UnitName("player")
+			end
+			self:Message(L["mindcontrol_warning"]:format(mcplayer), "Urgent", nil, "Alert")
+			return
+		end
 	end
 end
 
