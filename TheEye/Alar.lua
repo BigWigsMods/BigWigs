@@ -147,6 +147,10 @@ end
 --      Event Handlers      --
 ------------------------------
 
+local function nilOccured()
+	occured = nil
+end
+
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
@@ -158,7 +162,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 		self:Message(L["engage_message"]:format(boss), "Attention")
 		self:ScheduleRepeatingEvent("BWAlarTargetSeek", self.AlarCheck, 1, self)
-		self:ScheduleEvent("BWAlarNilOccured", function() occured = nil end, 15, self)
+		self:ScheduleEvent("BWAlarNilOccured", nilOccured, 15)
 	elseif sync == "AlArArmor" and rest and self.db.profile.armor then
 		if rest == UnitName("player") then
 			local other = L["armor_other"]:format(rest)
@@ -195,7 +199,7 @@ function mod:AlarCheck()
 			self:Bar(L["meteor_nextbar"], 52, "Spell_Fire_Burnout")
 		end
 		fireball = true
-		self:ScheduleEvent("BWAlarNilOccured", function() occured = nil end, 15, self)
+		self:ScheduleEvent("BWAlarNilOccured", nilOccured, 15)
 	end
 end
 
@@ -212,3 +216,4 @@ function mod:DebuffEvent(msg)
 		self:Sync("AlArArmor "..aplayer)
 	end
 end
+
