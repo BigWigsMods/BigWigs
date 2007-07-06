@@ -118,7 +118,7 @@ L:RegisterTranslations("deDE", function() return {
 	whirl_desc = "Zeitanzeige f\195\188r Wirbel.",
 	whirl_bar = "M\195\182glicher wirbel",
 
-	emerge_warning = "Zur\195\182ck in %dsek",
+	emerge_warning = "Zur\195\188ck in %dsek",
 	emerge_message = "Aufgetaucht - M\195\182glicher Schwall in 90sek",
 	emerge_bar = "Auftauchen",
 
