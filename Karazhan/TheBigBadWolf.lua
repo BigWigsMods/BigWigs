@@ -101,6 +101,24 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "對變成小紅帽的玩家設置團隊標記（需要權限）",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	riding_trigger = "^([^%s]+) (.*) Caperucita Roja.$",
+	gain = "gana",
+
+	youriding = "Caperucita Roja (Tu)",
+	youriding_desc = "Avisa cuando eres Caperucita Roja.",
+	riding_youwarn = "Eres Caperucita Roja!",
+
+	elseriding = "Caperucita Roja (Otros)",
+	elseriding_desc = "Avisa cuando otros son Caperucita Roja.",
+	riding_otherwarn = "%s es Caperucita Roja!",
+
+	riding_bar = "%s Corriendo",
+
+	icon = "Icono de Raid",
+	icon_desc = "Pone un icono de raid en la persoan que es Caperucita Roja (Requiere promoted or mayor).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

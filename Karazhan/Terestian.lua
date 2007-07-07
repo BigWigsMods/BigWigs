@@ -118,6 +118,28 @@ L:RegisterTranslations("zhTW", function() return {
 	weak_fade = "破碎契印效果從",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "Ah, justo a tiempo. Los rituales están a punto de empezar.",
+
+	sacrifice = "Sacrificio",
+	sacrifice_desc = "Avisa del Sacrificio de los jugadores.",
+	sacrifice_trigger = "^([^%s]+) ([^%s]+) sufre Sacrificio.$",
+	sacrifice_message = "%s esta siendo sacrificado!",
+	sacrifice_bar = "Sacrificio: %s",
+
+	icon = "Icono de Raid",
+	icon_desc = "Pone un icono de raid en el jugador sacrificado (requiere promoted o mayor).",
+
+	weak = "Debilitado",
+	weak_desc = "Avisa de estado de debilidad.",
+	weak_trigger = "sufre Pacto roto.",
+	weak_message = "Debilitado por ~45sec!",
+	weak_warning1 = "Debilitado finaliza en ~5sec!",
+	weak_warning2 = "Debilidad finalizado!",
+	weak_bar = "~Debilidad desaparece",
+	weak_fade = "^Pacto roto desaparece",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

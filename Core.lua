@@ -202,6 +202,39 @@ L:RegisterTranslations("zhTW", function() return {
 	--enrage_desc = "Warn when the boss enters an enraged state.",
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	["%s mod enabled"] = "Modulo %s activado",
+	["%s has been defeated"] = "%s Ha sido derrotado",     -- "<boss> has been defeated"
+	["%s have been defeated"] = "%s Han sido derrotados",    -- "<bosses> have been defeated"
+
+	["Debug enabled, output routed to %s."] = "Depuracion activa, salida redirigida a %s.",
+	["Debug disabled."] = "Depuracion desactivado.",
+
+	-- AceConsole strings
+	["Bosses"] = "Boss",
+	["Options for bosses in %s."] = "Opciones relacionadas con el boss %s.", -- "Options for bosses in <zone>"
+	["Options for %s (r%d)."] = "Opciones para %s (r%d).",     -- "Options for <boss> (<revision>)"
+	["Plugins"] = "Plugins",
+	["Options for plugins."] = "Opciones relativas a los plugins.",
+	["Extras"] = "Extras",
+	["Options for extras."] ="Opcioner relativas a los extras.",
+	["Active"] = "Activo",
+	["Activate or deactivate this module."] = "Activa o desactiva este modulo.",
+	["Reboot"] = "Reiniciar",
+	["Reboot this module."] = "Reiniciar el modulo.",
+	["Debugging"] = "Depuracion",
+	["Show debug messages."] = "Mostrar mensajes de depuracion.",
+	["Options"] = "Opciones",
+	bosskill = "Derrota del boss",
+	bosskill_desc = "Avisa de la derrota del boss.",
+	enrage = "Enfurecimiento",
+	enrage_desc = "Avisa cuando el boss gana enfurecimiento.",
+
+	["Load"] = "Cargar",
+	["Load All"] = "Cargar todo",
+	["Load all %s modules."] = "Cargar todos los modulos \"%s\".",
+} end)
+
 ---------------------------------
 --      Addon Declaration      --
 ---------------------------------

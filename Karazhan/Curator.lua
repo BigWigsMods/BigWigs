@@ -148,8 +148,33 @@ L:RegisterTranslations("zhTW", function() return {
 	weaktime_message2 = "30 秒後監護者進入喚醒狀態",
 	weaktime_message3 = "70 秒後監護者進入喚醒狀態",
 	weaktime_bar = "虛弱",
+} end )
 
+L:RegisterTranslations("esES", function() return {
+	berserk = "Rabioso",
+	berserk_desc = "Avisa del modo Rabioso tras 10min.",
+	berserk_trigger = "La Sala de los Animales es solo para invitados.",
+	berserk_message = "%s Activado, 10min hasta rabioso!",
+	berserk_bar = "Rabioso",
 
+	enrage_trigger = "Su no cumplimiento resultará en una acción ofensiva.",
+	enrage_message = "Enfurecido!",
+	enrage_warning = "Efurecimiento pronto!",
+
+	weaken = "Debilidad",
+	weaken_desc = "Aviso del estado de debilidad.",
+	weaken_trigger = "Su solicitud no puede ser procesada.",
+	weaken_message = "Evocacion - Debilidad durante 20sec!",
+	weaken_bar = "Evocacion",
+	weaken_fade_message = "Evocacion Finalizada - Debilidad desaparecida!",
+	weaken_fade_warning = "Evocacion en unos 5sec!",
+
+	weaktime = "Cuenta atras de Debilidad",
+	weaktime_desc = "Barra de cuenta atras hasta la proxima debilidad.",
+	weaktime_message1 = "Evocacion en ~10 segundos",
+	weaktime_message2 = "Evocacion en ~30 segundos",
+	weaktime_message3 = "Evocacion en ~70 segundos",
+	weaktime_bar = "~Enfriamiento de Evocacion",
 } end )
 
 ----------------------------------

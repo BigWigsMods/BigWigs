@@ -93,6 +93,20 @@ L:RegisterTranslations("zhTW", function() return {
 	light_message = "即將施放閃電鏈",
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "Oh, Tito, tenemos que encontrar la forma de volver a casa!",
+
+	spawns = "Timers de Activacion",
+	spawns_desc = "Timers para cuando los persoanjes se activan.",
+	spawns_bar = "%s attacks!",
+	spawns_warning = "%s en 5 sec",
+
+	light = "Cadena de Relampagos",
+	light_desc = "Avisa del casteo de Cadena de Relampagos.",
+	light_trigger = "La Vieja Bruja comienza a lanzar Cadena de relámpagos",
+	light_message = "Cadena de Relampagos!",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
