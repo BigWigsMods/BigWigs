@@ -77,6 +77,12 @@ L:RegisterTranslations("koKR", function() return {
 	phase_normal = "보통 형상! - 잠시 후 소용돌이!",
 	demon_bar = "악마 형상",
 	demon_nextbar = "다음 악마 형상",
+	
+	mindcontrol = "정신 지배",
+	mindcontrol_desc = "정신 지배에 걸린 플레이어를 알립니다.",
+	mindcontrol_trigger = "^([^|;%s]*)(.*)Consuming Madness에 걸렸습니다%.$", -- check
+	mindcontrol_warning = "정신 지배: %s",
+	
 
 	image = "이미지",
 	image_desc = "15% 이미지 분리에 대한 경고입니다.",

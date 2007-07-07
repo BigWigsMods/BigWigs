@@ -50,6 +50,25 @@ L:RegisterTranslations("frFR", function() return {
 	fear_warning = "Fear imminent !",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	engage_trigger = "아무리 저항해도 소용없다!",
+
+	grip = "군단의 손아귀",
+	grip_desc = "군단의 손아귀에 걸린 사람을 알립니다.",
+	grip_trigger =  "^([^|;%s]*)(.*)군단의 손아귀에 걸렸습니다.$",
+	grip_you = "당신에 손아귀!",
+	grip_other = "%s에 손아귀!",
+
+	icon = "전술 표시",
+	icon_desc = "군단의 손아귀에 걸린 플레이어에 전술 표시를 지정합니다.",
+
+	fear = "공포",
+	fear_desc = "공포 타이머입니다.",
+	fear_message = "공포, 다음은 약 30초 이내!",
+	fear_bar = "~공포 대기시간",
+	fear_warning = "잠시 후 공포!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
