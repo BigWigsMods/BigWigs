@@ -65,6 +65,24 @@ L:RegisterTranslations("koKR", function() return {
 	swarm_bar = "~박쥐 떼 대기시간",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "Ihr verteidigt eine verlorene Welt! Flieht! Vielleicht verl\195\164ngert dies Euer erb\195\164rmliches Leben!",
+
+	inferno = "Inferno",
+	inferno_desc = "gesch\195\164tzte Inferno Cooldown Timer.",
+	inferno_trigger = "beginnt Inferno zu wirken.$",
+	inferno_message = "zaubert Inferno!",
+	inferno_warning = "Inferno bald!",
+	inferno_bar = "~Inferno Cooldown",
+
+	swarm = "Aasschwarm",
+	swarm_desc = "gesch\195\164tzte Aasschwarm Cooldown Timer.",
+	swarm_trigger1 = "M\195\182ge die Pest \195\188ber Euch kommen!",
+	swarm_trigger2 = "Der Schwarm ist hungrig!",
+	swarm_message = "Aasschwarm! - N\195\164chster in ~11sec",
+	swarm_bar = "~Aasschwarm Cooldown",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

@@ -73,6 +73,35 @@ L:RegisterTranslations("koKR", function() return {
 	icon_desc = "지옥 산성 숨결의 시전 대상에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "Horde... wird Euch zerschmettern.",
+
+	phase = "Phasen Timer",
+	phase_desc = "Timer f\195\164r den Wechsel zwischen normaler und Teufelswut Phase.",
+	phase_rage_warning = "Teufelswut Phase in ~5 sec",
+	phase_normal_warning = "Teufelswut vorbei in ~5 sec",
+	phase_normal = "Teufelswut Phase vorbei",
+	phase_normal_trigger = "Teufelswut schwindet von Gurtogg Siedeblut.",
+	phase_normal_bar = "N\195\164chste Teufelswut Phase",
+	phase_rage_bar = "N\195\164chste Normale Phase",
+
+	rage = "Teufelswut",
+	rage_desc = "Warnt, wer Teufelswut bekommt.",
+	rage_trigger = "^([^%s]+) ([^%s]+) von Teufelswut betroffen.$",
+	rage_you = "Du hast Teufelswut!!",
+	rage_other = "%s hat Teufelswut!",
+
+	whisper = "Fl\195\164stern",
+	whisper_desc = "Fl\195\164stert dem Spieler mit Teufelswut (ben\195\182tigt Assistent oder h\195\182her).",
+
+	acid = "Teufelss\195\164ureatem",
+	acid_desc = "Warnt auf wen Teufelss\195\164ureatem gezaubert wird.",
+	acid_message = "Teufelss\195\164ureatem auf: %s",
+
+	icon = "Raid Icon",
+	icon_desc = "Plaziert ein Raid Icon auf dem Spieler, der Teufelss\195\164ureatem abbekommt (ben\195\182tigt Assistent oder h\195\182her).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
