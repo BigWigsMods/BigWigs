@@ -5,6 +5,9 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Anetheron"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
+local UnitName = UnitName
+local GetNumRaidMembers = GetNumRaidMembers
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -17,9 +20,12 @@ L:RegisterTranslations("enUS", function() return {
 	inferno = "Inferno",
 	inferno_desc = "Approximate Inferno cooldown timers.",
 	inferno_trigger = "begins to perform Inferno.$",
-	inferno_message = "Casting Inferno!",
+	inferno_message = "Casting Inferno on %s!",
 	inferno_warning = "Inferno Soon!",
 	inferno_bar = "~Inferno Cooldown",
+
+	icon = "Raid Target Icon",
+	icon_desc = "Place a Raid Target Icon on the player that Inferno is being cast on(requires promoted or higher).",
 
 	swarm = "Carrion Swarm",
 	swarm_desc = "Approximate Carrion Swarm cooldown timers.",
@@ -35,7 +41,7 @@ L:RegisterTranslations("frFR", function() return {
 	inferno = "Inferno",
 	inferno_desc = "Temps de recharge approximatif pour l'Inferno.",
 	inferno_trigger = "commence à exécuter Inferno.$",
-	inferno_message = "Incante un inferno !",
+	inferno_message = "Incante un inferno %s!",
 	inferno_warning = "Inferno imminent !",
 	inferno_bar = "~Cooldown Inferno",
 
@@ -53,7 +59,7 @@ L:RegisterTranslations("koKR", function() return {
 	inferno = "불지옥",
 	inferno_desc = "대략적인 불지옥 대기시간 타이머입니다.",
 	inferno_trigger = "불지옥 사용을 시작합니다.$",
-	inferno_message = "불지옥 시전 중!",
+	inferno_message = "불지옥 시전 중%s!",
 	inferno_warning = "잠시 후 불지옥!",
 	inferno_bar = "~불지옥 대기시간",
 
@@ -71,7 +77,7 @@ L:RegisterTranslations("deDE", function() return {
 	inferno = "Inferno",
 	inferno_desc = "gesch\195\164tzte Inferno Cooldown Timer.",
 	inferno_trigger = "beginnt Inferno zu wirken.$",
-	inferno_message = "zaubert Inferno!",
+	inferno_message = "zaubert Inferno %s!",
 	inferno_warning = "Inferno bald!",
 	inferno_bar = "~Inferno Cooldown",
 
@@ -90,7 +96,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Hyjal Summit"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"inferno", "swarm", "bosskill"}
+mod.toggleoptions = {"inferno", "icon", "swarm", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -112,9 +118,9 @@ end
 
 function mod:BigWigs_RecvSync(sync)
 	if sync == "AnethInf" and self.db.profile.inferno then
-		self:Message(L["inferno_message"], "Important", nil, "Alert")
 		self:DelayedMessage(45, L["inferno_warning"], "Positive")
 		self:Bar(L["inferno_bar"], 50, "Spell_Fire_Incinerate")
+		self:ScheduleEvent("BWInfernoToTScan", self.InfernoCheck, 0.5, self)
 	end
 end
 
@@ -128,5 +134,26 @@ end
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["inferno_trigger"]) then
 		self:Sync("AnethInf")
+	end
+end
+
+function mod:InfernoCheck()
+	local target
+	if UnitName("target") == boss then
+		target = UnitName("targettarget")
+	else
+		for i = 1, GetNumRaidMembers() do
+			if UnitName("raid"..i.."target") == boss then
+				target = UnitName("raid"..i.."targettarget")
+				break
+			end
+		end
+	end
+	if target then
+		self:Message(L["inferno_message"]:format(target), "Important", nil, "Alert")
+		if self.db.profile.icon then
+			self:Icon(target)
+			self:ScheduleEvent("ClearIcon", "BigWigs_RemoveRaidIcon", 5, self)
+		end
 	end
 end
