@@ -6,6 +6,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["Supremus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local started = nil
+local previous = nil
 
 local UnitName = UnitName
 local UnitExists = UnitExists
@@ -34,7 +35,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	target = "Target",
 	target_desc = "Warn who he targets during the kite phase, and put a raid icon on them.",
-	target_trigger = "Supremus acquires a new target!",
 	target_message = "%s being chased!",
 	target_message_nounit = "New target!",
 
@@ -61,7 +61,6 @@ L:RegisterTranslations("deDE", function() return {
 	next_phase_bar = "Nächste Phase",
 	next_phase_message = "Phasenwechsel in 10sec!",
 
-	target_trigger = "Supremus wählt ein neues Ziel!",
 	target_message = "%s wird verfolgt!",
 	target_message_nounit = "Neues Ziel!",
 
@@ -88,7 +87,6 @@ L:RegisterTranslations("koKR", function() return {
 	next_phase_bar = "다음 형상",
 	next_phase_message = "10초 이내 형상 변경!",
 
-	target_trigger = "궁극의 심연에게 새로운 대상이 필요합니다!",
 	target_message = "%s 추적 중!",
 	target_message_nounit = "새로운 대상!",
 
@@ -112,6 +110,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	started = nil
+	previous = nil
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
@@ -149,25 +148,39 @@ function mod:TargetCheck()
 			end
 		end
 	end
-	if target then
-		self:Message(L["target_message"]:format(target), "Attention")
-		if self.db.profile.icon then
-			self:Icon(target)
+	if target ~= previous then
+		if target then
+			self:Message(L["target_message"]:format(target), "Attention")
+			if self.db.profile.icon then
+				self:Icon(target)
+			end
+			previous = target
+		else
+			previous = nil
 		end
 	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if msg == L["normal_phase_trigger"] and self.db.profile.phase then
-		self:Message(L["normal_phase_message"], "Positive")
-		self:Bar(L["next_phase_bar"], 60, "INV_Helmet_08")
-		self:DelayedMessage(50, L["next_phase_message"], "Attention")
-	elseif msg == L["kite_phase_trigger"] and self.db.profile.phase then
-		self:Message(L["kite_phase_message"]:format(boss), "Positive")
-		self:Bar(L["next_phase_bar"], 60, "Spell_Fire_MoltenBlood")
-		self:DelayedMessage(50, L["next_phase_message"], "Attention")
-	elseif msg == L["target_trigger"] and self.db.profile.target then
-		self:ScheduleEvent("BWToTScan", self.TargetCheck, 0.5, self)
+	if msg == L["normal_phase_trigger"] then
+		if self.db.profile.phase then
+			self:Message(L["normal_phase_message"], "Positive")
+			self:Bar(L["next_phase_bar"], 60, "INV_Helmet_08")
+			self:DelayedMessage(50, L["next_phase_message"], "Attention")
+		end
+		if self.db.profile.target then
+			self:CancelScheduledEvent("BWSupremusToTScan")
+			self:TriggerEvent("BigWigs_RemoveRaidIcon")
+		end
+	elseif msg == L["kite_phase_trigger"] then
+		if self.db.profile.phase then
+			self:Message(L["kite_phase_message"]:format(boss), "Positive")
+			self:Bar(L["next_phase_bar"], 60, "Spell_Fire_MoltenBlood")
+			self:DelayedMessage(50, L["next_phase_message"], "Attention")
+		end
+		if self.db.profile.target then
+			self:ScheduleRepeatingEvent("BWSupremusToTScan", self.TargetCheck, 1, self)
+		end
 	end
 end
 
