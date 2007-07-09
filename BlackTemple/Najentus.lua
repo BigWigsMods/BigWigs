@@ -160,6 +160,5 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(L["shield_warn"], "Important", nil, "Alert")
 		self:DelayedMessage(50, L["shield_soon_warn"], "Positive")
 		self:Bar(L["shield_nextbar"], 60, "Spell_Frost_FrostBolt02")
-		self:Bar(L["shield_warn"], 6, "Spell_Frost_FrostBolt02")
 	end
 end
