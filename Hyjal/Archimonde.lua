@@ -78,6 +78,8 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Hyjal Summit"]
 mod.enabletrigger = boss
 mod.toggleoptions = {"grip", "icon", "fear", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
+mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
+mod.proximitySilent = true
 
 ------------------------------
 --      Initialization      --
@@ -88,9 +90,10 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ArchGrip", 2)
 	self:TriggerEvent("BigWigs_ThrottleSync", "ArchFear", 5)
+	self:TriggerEvent("BigWigs_ShowProximity", self)
 
 	self:RegisterEvent("UNIT_SPELLCAST_START")
-
+	
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "GripEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "GripEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "GripEvent")
