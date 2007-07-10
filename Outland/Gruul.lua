@@ -184,7 +184,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	cavein = "塌下警告",
 	cavein_desc = "當你在塌下的範圍時發送警告",
-	cavein_trigger = "你受到塌下的傷害",
+	cavein_trigger = "你受到塌下的傷害。",
 	cavein_message = "你在塌下的範圍",
 
 	silence = "沉默警告",

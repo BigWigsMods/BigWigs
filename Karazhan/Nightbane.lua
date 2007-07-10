@@ -174,7 +174,7 @@ L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "真是蠢蛋!我會快點結束你的痛苦!",
 	engage_message = "%s 進入戰鬥",
 
-	bones = "碎骨之雨警告",
+	bones = "碎骨之雨",
 	bones_desc = "當有玩家中了碎骨之雨時發送警告",
 	bones_message = "碎骨之雨",
 } end )

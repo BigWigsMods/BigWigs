@@ -199,7 +199,11 @@ L:RegisterTranslations("zhTW", function() return {
 	bosskill = "首領死亡",
 	bosskill_desc = "首領被擊敗時發出提示。",
 	enrage = "狂暴",
-	--enrage_desc = "Warn when the boss enters an enraged state.",
+    enrage_desc = "首領進入狂暴狀態時發出提示",
+
+    ["Load"] = "載入",
+    ["Load All"] = "載入全部",
+    ["Load all %s modules."] = "載入全部%s模組",
 } end)
 
 L:RegisterTranslations("esES", function() return {

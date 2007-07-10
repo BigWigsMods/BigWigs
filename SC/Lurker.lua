@@ -126,6 +126,34 @@ L:RegisterTranslations("deDE", function() return {
 	["Coilfang Ambusher"] = "Wegelagerer des Echsenkessels",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+    engage_warning = "%s 開始攻擊 - 約90秒後下潛",
+
+    dive = "潛水",
+    dive_desc = ("%s下潛計時器"):format(boss),
+    dive_warning = "大約%d秒後下潛!",
+    dive_bar = "~下潛",
+    dive_message = "潛水! 請就位打小兵 (60秒後王再次出現)",
+
+    spout = "噴射",
+    spout_desc = "噴射計時器, 僅供參考, 不一定準確。",
+    spout_trigger = "%s深深的吸了一口氣!",
+    spout_message = "噴水了!!被噴到是小白",
+    spout_warning = "約3秒後噴水!",
+    spout_bar = "噴射",
+
+    whirl = "旋風",
+    whirl_desc = "旋風計時器",
+    whirl_bar = "旋風",
+
+    emerge_warning = "%d秒後浮現",
+    emerge_message = "浮現 - 近戰請等旋風結束上前 (再約90秒後下潛)",
+    emerge_bar = "浮現",
+
+    ["Coilfang Guardian"] = "盤牙護衛",
+    ["Coilfang Ambusher"] = "盤牙伏擊者",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

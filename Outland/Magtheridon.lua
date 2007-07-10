@@ -230,9 +230,9 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	escape = "釋放",
 	escape_desc = ("倒數計時，直到 %s 獲得自由"):format(boss),
-	escape_trigger1 = "%s的束縛開始變弱!",
+	escape_trigger1 = "束縛開始變弱",
 	escape_trigger2 = "我……被……釋放了!",
-	escape_warning1 = "與 %s 進入戰鬥 - 2 分鐘後 %s 獲得自由！",
+	escape_warning1 = "與 %s 進入戰鬥 - 2 分鐘後獲得自由！",
 	escape_warning2 = "1 分鐘後獲得自由！",
 	escape_warning3 = "30 秒後獲得自由！",
 	escape_warning4 = "10 秒後獲得自由！",
