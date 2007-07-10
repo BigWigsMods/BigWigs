@@ -255,8 +255,6 @@ L:RegisterTranslations("zhTW", function() return {
 	nova_ = "衝擊新星！",
 	nova_bar = "衝擊新星冷卻",
 	nova_warning = "即將施放衝擊新星！",
-	nova_warning2 = "預計 5 秒！骰子準備就位！",
-	nova_warning3 = "衝擊新星！按下骰子！",
 	nova_cast = "開始施放衝擊新星!",
 
 	banish = "驅逐",
@@ -282,8 +280,6 @@ L:RegisterTranslations("zhTW", function() return {
 	debrisinc_trigger = "我不會這麼輕易就被擊敗!讓這座監獄的牆壁震顫……然後崩塌!",
 	debrisinc_message = "30% - 殘骸來臨!",
 	debrisinc_warning = "殘骸即將來臨!",
-
-	["Hellfire Channeler"] = "地獄火導魔師",
 } end)
 
 ----------------------------------
