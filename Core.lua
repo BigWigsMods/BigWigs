@@ -373,155 +373,159 @@ end
 --      Module Handling      --
 -------------------------------
 
-local opts = {}
+do
+	local opts = {}
+	local active = {
+		type = "toggle",
+		name = L["Active"],
+		order = 1,
+		desc = L["Activate or deactivate this module."],
+	}
+	local headerSpacer = {
+		type = "header",
+		order = 50,
+		name = " ",
+	}
 
--- We can't use the AceModuleCore :OnModuleCreated, since the properties on the
--- module has not been set when it's triggered.
-function BigWigs:RegisterModule(name, module)
-	if type(module.revision) ~= "number" then
-		error("%q does not have a valid revision field."):format(name)
-	end
-
-	if module:IsBossModule() then
-		self:ToggleModuleActive(module, false)
-		for i,v in ipairs(module.toggleoptions) do
-			if type(v) == "string" then
-				opts[v] = true
-			end
+	-- We can't use the AceModuleCore :OnModuleCreated, since the properties on the
+	-- module has not been set when it's triggered.
+	function BigWigs:RegisterModule(name, module)
+		if type(module.revision) ~= "number" then
+			error("%q does not have a valid revision field."):format(name)
 		end
-		self:RegisterDefaults(name, "profile", opts)
-		for i in ipairs(opts) do opts[i] = nil end
-		module.db = self:AcquireDBNamespace(name)
-	elseif type(module.defaultDB) == "table" then
-		self:RegisterDefaults(name, "profile", module.defaultDB)
-		module.db = self:AcquireDBNamespace(name)
-	end
 
-	-- Set up AceConsole
-	if module:IsBossModule() then
-		local cons
-		local ML = AceLibrary("AceLocale-2.2"):new("BigWigs"..name)
-		if module.toggleoptions then
-			cons = {
-				type = "group",
-				name = name,
-				desc = L["Options for %s (r%d)."]:format(name, module.revision),
-				pass = true,
-				get = function(key)
-					if key == "active" then
-						return self:IsModuleActive(module)
-					else
-						return module.db.profile[key]
-					end
-				end,
-				set = function(key, value)
-					if key == "active" then
-						self:ToggleModuleActive(module)
-					else
-						module.db.profile[key] = value
-
-						-- Invoke any custom boss option function handlers.
-						if customBossOptions[key] and type(customBossOptions[key][3]) == "function" then
-							customBossOptions[key][3](module)
+		if module:IsBossModule() then
+			self:ToggleModuleActive(module, false)
+			for i,v in ipairs(module.toggleoptions) do
+				if type(v) == "string" then
+					opts[v] = true
+				end
+			end
+			self:RegisterDefaults(name, "profile", opts)
+			for i in ipairs(opts) do opts[i] = nil end
+			module.db = self:AcquireDBNamespace(name)
+		elseif type(module.defaultDB) == "table" then
+			self:RegisterDefaults(name, "profile", module.defaultDB)
+			module.db = self:AcquireDBNamespace(name)
+		end
+	-- 661
+		-- Set up AceConsole
+		if module:IsBossModule() then
+			local cons = module.consoleOptions
+			local ML = AceLibrary("AceLocale-2.2"):new("BigWigs"..name)
+			if module.toggleoptions then
+				cons = {
+					type = "group",
+					name = name,
+					desc = L["Options for %s (r%d)."]:format(name, module.revision),
+					pass = true,
+					get = function(key)
+						if key == "active" then
+							return self:IsModuleActive(module)
+						else
+							return module.db.profile[key]
 						end
-					end
-				end,
-				func = "BigWigs_RebootModule",
-				args = {
-					active = {
-						type = "toggle",
-						name = L["Active"],
-						order = 1,
-						desc = L["Activate or deactivate this module."],
+					end,
+					set = function(key, value)
+						if key == "active" then
+							self:ToggleModuleActive(module)
+						else
+							module.db.profile[key] = value
+
+							-- Invoke any custom boss option function handlers.
+							if customBossOptions[key] and type(customBossOptions[key][3]) == "function" then
+								customBossOptions[key][3](module)
+							end
+						end
+					end,
+					args = {
+						active = active,
+						reboot = {
+							type = "execute",
+							name = L["Reboot"],
+							order = 2,
+							desc = L["Reboot this module."],
+							func = "BigWigs_RebootModule",
+							passValue = module,
+							disabled = "~IsModuleActive",
+						},
+						headerSpacer = headerSpacer,
 					},
-					reboot = {
-						type = "execute",
-						name = L["Reboot"],
-						order = 2,
-						desc = L["Reboot this module."],
-						passValue = module,
-						disabled = "~IsModuleActive",
-					},
-					headerSpacer = {
-						type = "header",
-						order = 50,
-						name = " ",
-					},
-				},
-			}
-			local customBossOptionOrder = -100
-			for i, v in ipairs(module.toggleoptions) do
-				local x = i + 100
-				if type(v) == "number" then
-					cons.args[i] = {
-						type = "header",
-						order = x,
-						name = " ",
-					}
-				elseif type(v) == "string" then
-					local name, desc, order = nil, nil, nil
-					if customBossOptions[v] then
-						name = customBossOptions[v][1]
-						desc = customBossOptions[v][2]
-						order = customBossOptionOrder
-						customBossOptionOrder = customBossOptionOrder + 1
-					else
-						name = ML:HasTranslation(v) and ML[v] or nil
-						local descKey = v.."_desc" -- String concatenation ftl! Not sure how we can get rid of this.
-						desc = ML:HasTranslation(descKey) and ML[descKey] or v
-						order = x
-					end
-					if name then
-						cons.args[v] = {
-							type = "toggle",
-							order = order,
-							name = name,
-							desc = desc,
+				}
+				local customBossOptionOrder = -100
+				for i, v in ipairs(module.toggleoptions) do
+					local x = i + 100
+					if type(v) == "number" then
+						cons.args[i] = {
+							type = "header",
+							order = x,
+							name = " ",
 						}
-						if order > 0 and ML:HasTranslation(v.."_validate") then
-							cons.args[v].type = "text"
-							cons.args[v].validate = ML[v.."_validate"]
+					elseif type(v) == "string" then
+						local name, desc, order
+						if customBossOptions[v] then
+							name = customBossOptions[v][1]
+							desc = customBossOptions[v][2]
+							order = customBossOptionOrder
+							customBossOptionOrder = customBossOptionOrder + 1
+						else
+							name = ML:HasTranslation(v) and ML[v]
+							local descKey = v.."_desc" -- String concatenation ftl! Not sure how we can get rid of this.
+							desc = ML:HasTranslation(descKey) and ML[descKey] or v
+							order = x
+						end
+						if name then
+							cons.args[v] = {
+								type = "toggle",
+								order = order,
+								name = name,
+								desc = desc,
+							}
+							if order > 0 and ML:HasTranslation(v.."_validate") then
+								cons.args[v].type = "text"
+								cons.args[v].validate = ML[v.."_validate"]
+							end
 						end
 					end
 				end
 			end
-		end
 
-		if cons or module.consoleOptions then
-			if module.external then
-				options.args[L["Extras"]].args[ML["cmd"]] = cons or module.consoleOptions
-			else
-				local zone = nil
-				if module.otherMenu then
-					zone = BZ[module.otherMenu]
+			if cons then
+				if module.external then
+					options.args[L["Extras"]].args[ML["cmd"]] = cons
 				else
-					zone = type(module.zonename) == "table" and module.zonename[1] or module.zonename
+					local zone = nil
+					if module.otherMenu then
+						zone = BZ[module.otherMenu]
+					else
+						zone = type(module.zonename) == "table" and module.zonename[1] or module.zonename
+					end
+					if not options.args[zone] then
+						options.args[zone] = {
+							type = "group",
+							name = zone,
+							desc = L["Options for bosses in %s."]:format(zone),
+							args = {},
+							disabled = "~IsActive",
+						}
+					end
+					options.args[zone].args[ML["cmd"]] = cons
 				end
-				if not options.args[zone] then
-					options.args[zone] = {
-						type = "group",
-						name = zone,
-						desc = L["Options for bosses in %s."]:format(zone),
-						args = {},
-						disabled = "~IsActive",
-					}
-				end
-				options.args[zone].args[ML["cmd"]] = cons or module.consoleOptions
+			end
+		elseif module.consoleOptions then
+			if module.external then
+				options.args[L["Extras"]].args[module.consoleCmd or name] = module.consoleOptions
+			else
+				options.args[L["Plugins"]].args[module.consoleCmd or name] = module.consoleOptions
 			end
 		end
-	elseif module.consoleOptions then
-		if module.external then
-			options.args[L["Extras"]].args[module.consoleCmd or name] = module.consoleOptions
-		else
-			options.args[L["Plugins"]].args[module.consoleCmd or name] = module.consoleOptions
+
+		if type(module.OnRegister) == "function" then
+			module:OnRegister()
 		end
-	end
 
-	if type(module.OnRegister) == "function" then
-		module:OnRegister()
+		self:TriggerEvent("BigWigs_ModuleRegistered", name)
 	end
-
-	self:TriggerEvent("BigWigs_ModuleRegistered", name)
 end
 
 function BigWigs:EnableModule(moduleName, noSync)
@@ -542,13 +546,14 @@ function BigWigs:BigWigs_RebootModule(module)
 end
 
 function BigWigs:BigWigs_RecvSync(sync, module)
-	if (sync == "EnableModule" or sync == "EnableExternal") and type(module) == "string" then
+	if not module then return end
+	if sync == "EnableModule" or sync == "EnableExternal" then
 		if not BB then BB = AceLibrary("Babble-Boss-2.2") end
 		local name = BB:HasTranslation(module) and BB[module] or module
 		if self:HasModule(name) then
 			self:EnableModule(name, true)
 		end
-	elseif sync == "BossDeath" and type(module) == "string" and self:HasModule(module) then
+	elseif sync == "BossDeath" and self:HasModule(module) then
 		local mod = self:GetModule(module)
 		if mod.db.profile.bosskill then
 			mod:Message(L["%s has been defeated"]:format(module), "Bosskill", nil, "Victory")
@@ -561,19 +566,22 @@ function BigWigs:BigWigs_RecvSync(sync, module)
 	end
 end
 
-local function mobIsTrigger(module, name)
-	local t = module.enabletrigger
-	if type(t) == "string" then return name == t
-	elseif type(t) == "table" then
-		for _,mob in pairs(t) do if mob == name then return true end end
+do
+	local function mobIsTrigger(module, name)
+		local t = module.enabletrigger
+		if type(t) == "string" then return name == t
+		elseif type(t) == "table" then
+			for i,mob in ipairs(t) do if mob == name then return true end end
+		end
 	end
-end
 
-function BigWigs:BigWigs_TargetSeen(mobname, unit)
-	for name, module in self:IterateModules() do
-		if not self:IsModuleActive(module) and (name == mobname or (module:IsBossModule() and mobIsTrigger(module, mobname)
-			and (not module.VerifyEnable or module:VerifyEnable(unit)))) then
-			self:EnableModule(name)
+	function BigWigs:BigWigs_TargetSeen(mobname, unit)
+		for name, module in self:IterateModules() do
+			if not self:IsModuleActive(module) and (name == mobname or (module:IsBossModule() and mobIsTrigger(module, mobname)
+				and (not module.VerifyEnable or module:VerifyEnable(unit)))) then
+				self:EnableModule(name)
+			end
 		end
 	end
 end
+
