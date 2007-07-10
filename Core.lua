@@ -389,10 +389,11 @@ do
 
 	-- We can't use the AceModuleCore :OnModuleCreated, since the properties on the
 	-- module has not been set when it's triggered.
-	function BigWigs:RegisterModule(name, module)
+	function BigWigs:RegisterModule(module)
 		if type(module.revision) ~= "number" then
 			error("%q does not have a valid revision field."):format(name)
 		end
+		local name = module.name
 
 		if module:IsBossModule() then
 			self:ToggleModuleActive(module, false)
@@ -408,7 +409,7 @@ do
 			self:RegisterDefaults(name, "profile", module.defaultDB)
 			module.db = self:AcquireDBNamespace(name)
 		end
-	-- 661
+
 		-- Set up AceConsole
 		if module:IsBossModule() then
 			local cons = module.consoleOptions
@@ -462,26 +463,26 @@ do
 							name = " ",
 						}
 					elseif type(v) == "string" then
-						local name, desc, order
+						local optName, optDesc, optOrder
 						if customBossOptions[v] then
-							name = customBossOptions[v][1]
-							desc = customBossOptions[v][2]
-							order = customBossOptionOrder
+							optName = customBossOptions[v][1]
+							optDesc = customBossOptions[v][2]
+							optOrder = customBossOptionOrder
 							customBossOptionOrder = customBossOptionOrder + 1
 						else
-							name = ML:HasTranslation(v) and ML[v]
+							optName = ML:HasTranslation(v) and ML[v]
 							local descKey = v.."_desc" -- String concatenation ftl! Not sure how we can get rid of this.
-							desc = ML:HasTranslation(descKey) and ML[descKey] or v
-							order = x
+							optDesc = ML:HasTranslation(descKey) and ML[descKey] or v
+							optOrder = x
 						end
-						if name then
+						if optName then
 							cons.args[v] = {
 								type = "toggle",
-								order = order,
-								name = name,
-								desc = desc,
+								order = optOrder,
+								name = optName,
+								desc = optDesc,
 							}
-							if order > 0 and ML:HasTranslation(v.."_validate") then
+							if optOrder > 0 and ML:HasTranslation(v.."_validate") then
 								cons.args[v].type = "text"
 								cons.args[v].validate = ML[v.."_validate"]
 							end

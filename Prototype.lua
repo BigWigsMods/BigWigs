@@ -88,7 +88,7 @@ commonWords:RegisterTranslations("esES", function() return {
 function BigWigs.modulePrototype:OnInitialize()
 	-- Unconditionally register, this shouldn't happen from any other place
 	-- anyway.
-	BigWigs:RegisterModule(self.name, self)
+	BigWigs:RegisterModule(self)
 end
 
 function BigWigs.modulePrototype:IsBossModule()
@@ -139,14 +139,14 @@ function BigWigs.modulePrototype:Scan()
 	if num == 0 then
 		num = GetNumPartyMembers()
 		for i = 1, num do
-			local partyUnit = ("party%starget"):format(i)
+			local partyUnit = "party" .. i .. "target"
 			if UnitExists(partyUnit) and UnitAffectingCombat(partyUnit) and self.scanTable[UnitName(partyUnit)] then
 				return true
 			end
 		end
 	else
 		for i = 1, num do
-			local raidUnit = ("raid%starget"):format(i)
+			local raidUnit = "raid" .. i .. "target"
 			if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) and self.scanTable[UnitName(raidUnit)] then
 				return true
 			end
@@ -238,3 +238,4 @@ end
 function BigWigs.modulePrototype:Icon( player )
 	self:TriggerEvent("BigWigs_SetRaidIcon", player )
 end
+
