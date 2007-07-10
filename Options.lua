@@ -207,13 +207,9 @@ function BigWigsOptions:OnClick()
 			local subGroup = nil
 			for i = 1, #zoneFunctions do
 				local zone = _G[zoneFunctions[i]]()
-				if BZ:HasReverseTranslation(zone) then
-					zone = BZ:GetReverseTranslation(zone)
-					zone = LC:HasTranslation(zone) and LC[zone] or nil
-					if zone then
-						subGroup = zone
-						break
-					end
+				if zone and BZ:HasReverseTranslation(zone) then
+					subGroup = BZ:GetReverseTranslation(zone)
+					break
 				end
 			end
 			waterfall:Open("BigWigs", subGroup)
@@ -234,7 +230,6 @@ end
 
 function BigWigsOptions:OnTooltipUpdate()
 	GameTooltip:AddLine("Big Wigs")
-	GameTooltip:AddLine("")
 	if BigWigs:IsActive() then
 		local added = nil
 		for name, module in BigWigs:IterateModules() do
@@ -249,7 +244,7 @@ function BigWigsOptions:OnTooltipUpdate()
 		GameTooltip:AddLine(hint, 0.2, 1, 0.2, 1)
 	else
 		GameTooltip:AddLine(L["Big Wigs is currently disabled."])
-		GameTooltip:AddLine("")
 		GameTooltip:AddLine(L["|cffeda55fClick|r to enable."], 0.2, 1, 0.2)
 	end
 end
+
