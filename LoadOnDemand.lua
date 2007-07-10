@@ -13,18 +13,6 @@ local enableZones = {}
 local BWRAID = 2
 local BWPARTY = 1
 
-local ipairs = ipairs
-local pairs = pairs
-local type = type
-local table_insert = table.insert
-local assert = assert
-local collectgarbage = collectgarbage
-local GetNumRaidMembers = GetNumRaidMembers
-local GetNumPartyMembers = GetNumPartyMembers
-local IsAddOnLoaded = IsAddOnLoaded
-local LoadAddOn = LoadAddOn
-local select = select
-
 ------------------------------
 --    Addon Declaration     --
 ------------------------------
@@ -46,7 +34,7 @@ local function loadZone(zone)
 					BigWigsLoD:TriggerEvent("BigWigs_ModulePackLoaded", v, true)
 				end
 			end
-			table_insert(addonsLoaded, v)
+			table.insert(addonsLoaded, v)
 			loadInZone[zone][i] = nil
 		end
 		if #loadInZone[zone] == 0 then
@@ -90,9 +78,6 @@ local function addCoreMenu(zone)
 			desc = LC["Options for bosses in %s."]:format(zone),
 			args = {},
 			disabled = "~IsActive",
-			--[[hidden = function()
-				return hide(zone)
-			end,]]
 		}
 	end
 	if not opt[zone].args[LC["Load"]] then
@@ -132,10 +117,10 @@ local function iterateZones(addon, override, partyContent, ...)
 		registerEnableZone( zone, partyContent and BWPARTY or BWRAID )
 		
 		if not loadInZone[zone] then loadInZone[zone] = {} end
-		table_insert( loadInZone[zone], addon)
+		table.insert( loadInZone[zone], addon)
 
 		if override then
-			table_insert( loadInZone[override], addon)
+			table.insert( loadInZone[override], addon)
 		else
 			addCoreMenu(zone)
 		end
@@ -174,7 +159,7 @@ local function initialize()
 			if meta then
 				-- register this addon for loading with core
 				if type(loadWithCore) ~= "table" then loadWithCore = {} end
-				table_insert( loadWithCore, name )
+				table.insert( loadWithCore, name )
 			end
 		end
 	end
