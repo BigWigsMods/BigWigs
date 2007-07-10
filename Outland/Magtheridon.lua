@@ -33,12 +33,12 @@ L:RegisterTranslations("enUS", function() return {
 
 	abyssal = "Burning Abyssal",
 	abyssal_desc = "Warn when a Burning Abyssal is created.",
-	abyssal_trigger = "Hellfire Channeler's Burning Abyssal hits",
+	abyssal_trigger = "^Hellfire Channeler's Burning Abyssal hits",
 	abyssal_message = "Burning Abyssal Created (%d)",
 
 	heal = "Heal",
 	heal_desc = "Warn when a Hellfire Channeler starts to heal.",
-	heal_trigger = "begins to cast Dark Mending",
+	heal_trigger = "begins to cast Dark Mending%.$",
 	heal_message = "Healing!",
 
 	nova = "Blast Nova",
@@ -52,13 +52,13 @@ L:RegisterTranslations("enUS", function() return {
 	banish_desc = ("Warn when you Banish %s."):format(boss),
 	banish_trigger = "Not again! Not again...",
 	banish_message = "Banished for ~10sec",
-	banish_over_trigger = "Shadow Cage fades",
+	banish_over_trigger = "^Shadow Cage fades",
 	banish_over_message = "Banish Fades!",
 	banish_bar = "Banished",
 
 	exhaust = "Disable Exhaustion Bars",
 	exhaust_desc = "Timer bars for Mind Exhaustion on players.",
-	exhaust_trigger = "^([^%s]+) ([^%s]+) afflicted by Mind Exhaustion.$",
+	exhaust_trigger = "^([^%s]+) ([^%s]+) afflicted by Mind Exhaustion%.$",
 	exhaust_bar = "[%s] Exhausted",
 
 	debris = "Debris on You",
@@ -115,7 +115,7 @@ L:RegisterTranslations("deDE", function() return {
 	banish_message = "Verbannt f\195\188r ~10sec",
 	banish_bar = "Verbannt",
 
-	exhaust_trigger = "^([^%s]+) ([^%s]+) von Gedankenersch\195\182pfung betroffen",
+	exhaust_trigger = "^([^%s]+) ([^%s]+) von Gedankenersch\195\182pfung betroffen%.$",
 	exhaust_bar = "[%s] ersch\195\182pft",
 } end)
 
@@ -159,7 +159,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	exhaust = "Désactiver les barres d'Epuisement",
 	exhaust_desc = "Barre temporelles pour l'Epuisement d'esprit des joueurs",
-	exhaust_trigger = "^([^%s]+) ([^%s]+) les effets .* Epuisement de l'esprit.$",
+	exhaust_trigger = "^([^%s]+) ([^%s]+) les effets .* Epuisement de l'esprit%.$",
 	exhaust_bar = "[%s] épuisé",
 
 	debris = "Débris sur vous",

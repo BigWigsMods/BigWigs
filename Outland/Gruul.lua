@@ -53,7 +53,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	silence = "Silence",
 	silence_desc = "Warn when Gruul casts AOE Silence (Reverberation).",
-	silence_trigger = "afflicted by Reverberation",
+	silence_trigger = "afflicted by Reverberation%.$",
 	silence_message = "AOE Silence",
 	silence_warning = "AOE Silence soon!",
 	silence_bar = "~Silence Cooldown",

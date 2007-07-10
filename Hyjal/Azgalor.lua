@@ -15,7 +15,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	doom = "Doom",
 	doom_desc = "Warn for Doom.",
-	doom_trigger = "^([^%s]+) ([^%s]+) afflicted by Doom.$",
+	doom_trigger = "^([^%s]+) ([^%s]+) afflicted by Doom%.$",
 	doom_other = "Doom on %s",
 	doom_you = "Doom on YOU!",
 
@@ -26,7 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("frFR", function() return {
 	doom = "Destin funeste",
 	doom_desc = "Préviens quand un joueur subit les effets du Destin funeste.",
-	doom_trigger = "^([^%s]+) ([^%s]+) les effets .* Destin funeste.$",
+	doom_trigger = "^([^%s]+) ([^%s]+) les effets .* Destin funeste%.$",
 	doom_other = "Destin funeste sur %s",
 	doom_you = "Destin funeste sur VOUS !",
 

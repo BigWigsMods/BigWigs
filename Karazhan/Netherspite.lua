@@ -26,12 +26,12 @@ L:RegisterTranslations("enUS", function() return {
 
 	voidzone = "Voidzones",
 	voidzone_desc = "Warn for Voidzones.",
-	voidzone_trigger = "casts Void Zone.",
+	voidzone_trigger = "casts Void Zone%.$",
 	voidzone_warn = "Void Zone (%d)!",
 
 	netherbreath = "Netherbreath",
 	netherbreath_desc = "Warn for Netherbreath.",
-	netherbreath_trigger = "casts Face Random Target.",
+	netherbreath_trigger = "casts Face Random Target%.$",
 	netherbreath_warn = "Incoming Netherbreath!",
 } end )
 

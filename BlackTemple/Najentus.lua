@@ -17,7 +17,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	spine = "Impaling Spine",
 	spine_desc = "Tells you who gets impaled.",
-	spine_trigger = "^([^%s]+) ([^%s]+) afflicted by Impaling Spine.$",
+	spine_trigger = "^([^%s]+) ([^%s]+) afflicted by Impaling Spine%.$",
 	spine_message = "Impaling Spine on %s!",
 
 	spinesay = "Spine Say",
@@ -40,7 +40,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	spine = "Aufspießender Stachel",
 	spine_desc = "Sagt euch, wer aufgespießt wird.",
-	spine_trigger = "^([^%s]+) ([^%s]+) von Aufspießender Stachel betroffen.$",
+	spine_trigger = "^([^%s]+) ([^%s]+) von Aufspießender Stachel betroffen%.$",
 	spine_message = "Aufspießender Stachel auf %s!",
 
 	shield = "Gezeitenschild",

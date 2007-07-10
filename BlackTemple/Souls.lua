@@ -60,7 +60,7 @@ L:RegisterTranslations("enUS", function() return {
 	spite_desc = "Warn who has Spite.",
 	spite_message = "Spite: %s",
 
-	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by ([^%s]+).$",
+	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by ([^%s]+)%.$",
 } end )
 
 ----------------------------------

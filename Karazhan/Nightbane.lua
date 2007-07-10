@@ -14,7 +14,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	fear = "Fear Alert",
 	fear_desc = "Warn for Bellowing Roar.",
-	fear_trigger = "cast Bellowing Roar",
+	fear_trigger = "cast Bellowing Roar%.$",
 	fear_message = "Fear in 2 sec!",
 	fear_warning = "Fear Soon",
 	fear_bar = "Fear!",

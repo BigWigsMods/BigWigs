@@ -22,7 +22,7 @@ BB = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "WizardofOz",
 
-	engage_trigger = "Oh Tito, we simply must find a way home!",
+	engage_trigger = "^Oh Tito, we simply must find a way home!",
 
 	spawns = "Spawn Timers",
 	spawns_desc = "Timers for when the characters become active.",
@@ -31,7 +31,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	light = "Chain Lightning",
 	light_desc = "Warn for Chain Lightning being cast.",
-	light_trigger = "The Crone begins to cast Chain Lightning",
+	light_trigger = "The Crone begins to cast Chain Lightning.",
 	light_message = "Chain Lightning!",
 } end)
 
@@ -45,14 +45,14 @@ L:RegisterTranslations("deDE", function() return {
 	spawns_bar = "%s greift an!",
 	spawns_warning = "%s in 5 sek",
 
-	light_trigger = "Die b\195\182se Hexe beginnt Kettenblitzschlag zu wirken",
+	light_trigger = "Die b\195\182se Hexe beginnt Kettenblitzschlag zu wirken.",
 	light_message = "Kettenblitzschlag!",
 
-	engage_trigger = "Oh Tito, wir m\195\188ssen einfach einen Weg nach Hause finden!",
+	engage_trigger = "^Oh Tito, wir m\195\188ssen einfach einen Weg nach Hause finden!",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Oh, Tito, nous devons trouver le moyen de rentrer à la maison !",
+	engage_trigger = "^Oh, Tito, nous devons trouver le moyen de rentrer à la maison !",
 
 	spawns = "Délais d'activité",
 	spawns_desc = "Affiche plusieurs barres indiquant quand les différents personnages passent à l'action.",
@@ -61,7 +61,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	light = "Chaîne d'éclairs",
 	light_desc = "Préviens quand la Chaîne d'éclairs est incantée.",
-	light_trigger = "La Mégère commence à lancer Chaîne d'éclairs",
+	light_trigger = "La Mégère commence à lancer Chaîne d'éclairs.",
 	light_message = "Chaîne d'éclairs !",
 } end)
 
@@ -94,7 +94,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("esES", function() return {
-	engage_trigger = "Oh, Tito, tenemos que encontrar la forma de volver a casa!",
+	engage_trigger = "^Oh, Tito, tenemos que encontrar la forma de volver a casa!",
 
 	spawns = "Timers de Activacion",
 	spawns_desc = "Timers para cuando los persoanjes se activan.",
@@ -103,7 +103,7 @@ L:RegisterTranslations("esES", function() return {
 
 	light = "Cadena de Relampagos",
 	light_desc = "Avisa del casteo de Cadena de Relampagos.",
-	light_trigger = "La Vieja Bruja comienza a lanzar Cadena de relámpagos",
+	light_trigger = "La Vieja Bruja comienza a lanzar Cadena de relámpagos.",
 	light_message = "Cadena de Relampagos!",
 } end)
 
@@ -146,7 +146,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg:find(L["light_trigger"]) and self.db.profile.light then
+	if msg == L["light_trigger"] and self.db.profile.light then
 		self:Message(L["light_message"], "Urgent")
 		self:Bar(L["light_message"], 2, "Spell_Nature_ChainLightning")
 	end

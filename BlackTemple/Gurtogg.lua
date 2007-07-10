@@ -29,7 +29,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	rage = "Fel Rage",
 	rage_desc = "Warn who gets Fel Rage.",
-	rage_trigger = "^([^%s]+) ([^%s]+) afflicted by Fel Rage.$",
+	rage_trigger = "^([^%s]+) ([^%s]+) afflicted by Fel Rage%.$",
 	rage_you = "You have Fel Rage!!",
 	rage_other = "%s has Fel Rage!",
 
@@ -87,7 +87,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	rage = "Teufelswut",
 	rage_desc = "Warnt, wer Teufelswut bekommt.",
-	rage_trigger = "^([^%s]+) ([^%s]+) von Teufelswut betroffen.$",
+	rage_trigger = "^([^%s]+) ([^%s]+) von Teufelswut betroffen%.$",
 	rage_you = "Du hast Teufelswut!!",
 	rage_other = "%s hat Teufelswut!",
 
@@ -221,7 +221,7 @@ function mod:AcidCheck()
 end
 
 function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
-	if msg:find(L["phase_normal_trigger"]) then
+	if msg == L["phase_normal_trigger"] then
 		self:Sync("GurNormal")
 	end
 end

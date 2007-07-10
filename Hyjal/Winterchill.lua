@@ -18,13 +18,21 @@ L:RegisterTranslations("enUS", function() return {
 	decay_trigger = "You are afflicted by Death & Decay.",
 	decay_message = "Death & Decay on YOU!",
 
+--[[
+	decaycast = "Death & Decay Cast",
+	decaycast_desc = "Warn when Death % Decay is being cast.",
+	decaycast_trigger = "",
+	decaycast_bar = "~Possible Death & Decay /// Next Death & Decay",
+	decasycast_message = "Casting Death & Decay!",
+]]
+
 	icebolt = "Icebolt",
 	icebolt_desc = "Icebolt warnings.",
-	icebolt_trigger = "Icebolt hits ([^%s]+)",
+	icebolt_trigger = "^([^%s]+) ([^%s]+) afflicted by Icebolt%.$",
 	icebolt_message = "Icebolt on %s!",
 
-	icon = "Icon",
-	icon_desc = "Place a Raid Icon on the player afflicted by Icebolt (requires promoted or higher).",
+	icon = "Raid Target Icon",
+	icon_desc = "Place a Raid Target Icon on the player afflicted by Icebolt (requires promoted or higher).",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -35,7 +43,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	icebolt = "Eclair de glace",
 	icebolt_desc = "Avertissements concernant l'Eclair de glace.",
-	icebolt_trigger = "Eclair de glace touche ([^%s]+)",
+	--icebolt_trigger = "Eclair de glace touche ([^%s]+)", --enUS changed
 	icebolt_message = "Eclair de glace sur %s !",
 
 	icon = "Icône",
@@ -50,7 +58,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	icebolt = "얼음 화살",
 	icebolt_desc = "얼음 화살 경고.",
-	icebolt_trigger = "얼음 화살|1으로;로; ([^|;%s]*)에게", -- "Icebolt hits ([^%s]+)",
+	--icebolt_trigger = "얼음 화살|1으로;로; ([^|;%s]*)에게", -- "Icebolt hits ([^%s]+)", --enUS changed
 	icebolt_message = "%s에 얼음 화살!",
 
 	icon = "전술 표시",
@@ -60,7 +68,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	decay = "Tod & Verfall auf dir",
 	decay_desc = "Warnt vor Tod & Verfall auf dir.",
-	decay_trigger = "Ihr seid von Tod & Verfall betroffen.",
+	--decay_trigger = "Ihr seid von Tod & Verfall betroffen.", --enUS changed
 	decay_message = "Tod & Verfall auf DIR!",
 
 	icebolt = "Eisblitz",
@@ -87,11 +95,12 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "AfflictEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "AfflictEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "AfflictEvent")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "WinterchillBolt", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "WCBolt", 5)
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
@@ -101,7 +110,7 @@ end
 ------------------------------
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "WinterchillBolt" and rest and self.db.profile.icebolt then
+	if sync == "WCBolt" and rest and self.db.profile.icebolt then
 		self:Message(L["icebolt_message"]:format(rest), "Important", nil, "Alert")
 		if self.db.profile.icon then
 			self:Icon(rest)
@@ -109,22 +118,16 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	local player = select(3, msg:find(L["icebolt_trigger"]))
-	if player then
-		if player == L2["you"] then
-			player = UnitName("player")
-		else
-			if GetLocale() == "koKR" and player == "당신" then -- special case for korean translation
-				player = UnitName("player")
-			end
-		end
-		self:Sync("WinterchillBolt " .. player)
-	end
-end
-
-function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
+function mod:AfflictEvent(msg)
 	if self.db.profile.decay and msg == L["decay_trigger"] then
 		self:Message(L["decay_message"], "Personal", true, "Alarm")
+	end
+
+	local iplayer, itype = select(3, msg:find(L["icebolt_trigger"]))
+	if iplayer and itype then
+		if iplayer == L2["you"] and itype == L2["are"] then
+			iplayer = UnitName("player")
+		end
+		self:Sync("WCBolt "..iplayer)
 	end
 end

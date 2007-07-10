@@ -13,18 +13,18 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Karathress",
 
-	enrage_trigger = "Guards, attention!",
+	enrage_trigger = "^Guards, attention!",
 
 	totem = "Spitfire Totem",
 	totem_desc = "Warn for Spitfire Totems and who cast them.",
-	totem_trigger1 = "Guard Tidalvess casts Spitfire Totem",
-	totem_trigger2 = "Lord Karathress casts Spitfire Totem",
+	totem_trigger1 = "Guard Tidalvess casts Spitfire Totem%.$",
+	totem_trigger2 = "Lord Karathress casts Spitfire Totem%.$",
 	totem_message1 = "Tidalvess: Spitfire Totem",
 	totem_message2 = "Karathress: Spitfire Totem",
 
 	heal = "Heal",
 	heal_desc = "Warn when Caribdis casts a heal.",
-	heal_trigger = "Caribdis begins to cast Healing Wave",
+	heal_trigger = "Caribdis begins to cast Healing Wave%.$",
 	heal_message = "Caribdis casting heal!",
 
 	["Fathom-Guard Sharkkis"] = true, --hunter

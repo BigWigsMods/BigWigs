@@ -17,7 +17,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	grip = "Grip of the Legion",
 	grip_desc = "Warn who has Grip of the Legion.",
-	grip_trigger = "^([^%s]+) ([^%s]+) afflicted by Grip of the Legion.$",
+	grip_trigger = "^([^%s]+) ([^%s]+) afflicted by Grip of the Legion%.$",
 	grip_you = "Grip on you!",
 	grip_other = "Grip on %s!",
 
@@ -36,7 +36,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	grip = "Poigne de la Légion",
 	grip_desc = "Préviens quand un joueur subit les effets de la Poigne de la Légion.",
-	grip_trigger = "^([^%s]+) ([^%s]+) les effets .* Poigne de la Légion.$",
+	grip_trigger = "^([^%s]+) ([^%s]+) les effets .* Poigne de la Légion%.$",
 	grip_you = "Poigne sur VOUS !",
 	grip_other = "Poigne sur %s !",
 
@@ -139,4 +139,3 @@ function mod:UNIT_SPELLCAST_START(msg)
 		self:Sync("ArchFear")
 	end
 end
-

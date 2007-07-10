@@ -31,7 +31,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	twist = "Twist",
 	twist_desc = "Warn who has Twisted Reflection.",
-	twist_trigger = "^([^%s]+) ([^%s]+) afflicted by Twisted Reflection.$",
+	twist_trigger = "^([^%s]+) ([^%s]+) afflicted by Twisted Reflection%.$",
 	twist_message = "Twisted Reflection: %s",
 } end)
 
@@ -54,7 +54,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	twist = "Reflet tordu",
 	twist_desc = "Préviens quand quelqu'un subit les effets de Reflet tordu.",
-	twist_trigger = "^([^%s]+) ([^%s]+) les effets .* Reflet tordu.$",
+	twist_trigger = "^([^%s]+) ([^%s]+) les effets .* Reflet tordu%.$",
 	twist_message = "Reflet tordu : %s",
 } end)
 

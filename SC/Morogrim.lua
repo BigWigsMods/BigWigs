@@ -25,7 +25,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	grave = "Watery Grave",
 	grave_desc = "Alert who has watery grave and durations.",
-	grave_trigger1 = "^([^%s]+) ([^%s]+) afflicted by Watery Grave.$",
+	grave_trigger1 = "^([^%s]+) ([^%s]+) afflicted by Watery Grave%.$",
 	grave_trigger2 = "sends his enemies",
 	grave_message = "Watery Grave: %s",
 	grave_bar = "Watery Graves",
@@ -61,7 +61,7 @@ L:RegisterTranslations("deDE", function() return {
 	grobules = "Wasserkugeln",
 	grobules_desc = "Warnt vor Wasserkugeln.",
 
-	grave_trigger1 = "^([^%s]+) ([^%s]+) von Nasses Grab betroffen",
+	grave_trigger1 = "^([^%s]+) ([^%s]+) von Nasses Grab betroffen%.$",
 	grave_trigger2 = "schickt seine Feinde",
 	grave_message = "Nasses Grab: %s",
 	grave_bar = "Nasses Grab",
@@ -121,7 +121,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	grave = "Tombeau aquatique",
 	grave_desc = "Préviens quand quelqu'un subit le Tombeau aquatique et indique sa durée.",
-	grave_trigger1 = "^([^%s]+) ([^%s]+) les effets .* Tombeau aquatique.$",
+	grave_trigger1 = "^([^%s]+) ([^%s]+) les effets .* Tombeau aquatique%.$",
 	grave_trigger2 = "envoye ses ennemis", -- à vérifier
 	grave_message = "Tombeau aquatique : %s",
 	grave_bar = "Tombeaux aquatique",

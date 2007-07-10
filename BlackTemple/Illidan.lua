@@ -15,7 +15,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	parasite = "Parasitic Shadowfiend",
 	parasite_desc = "Warn who has Parasitic Shadowfiend.",
-	parasite_trigger = "^([^%s]+) ([^%s]+) afflicted by Parasitic Shadowfiend.$",
+	parasite_trigger = "^([^%s]+) ([^%s]+) afflicted by Parasitic Shadowfiend%.$",
 	parasite_you = "You have a Parasite!",
 	parasite_other = "%s has a Parasite!",
 

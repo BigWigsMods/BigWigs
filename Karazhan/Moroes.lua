@@ -27,7 +27,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	garrote = "Garrote",
 	garrote_desc = "Notify of players afflicted by Garrote.",
-	garrote_trigger = "^([^%s]+) ([^%s]+) afflicted by Garrote.$",
+	garrote_trigger = "^([^%s]+) ([^%s]+) afflicted by Garrote%.$",
 	garrote_message = "Garrote: %s",
 
 	icon = "Icon",
@@ -52,7 +52,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	garrote = "Garrot",
 	garrote_desc = "Préviens quand un joueur subit les effets du Garrot.",
-	garrote_trigger = "^([^%s]+) ([^%s]+) les effets .* Garrot.$",
+	garrote_trigger = "^([^%s]+) ([^%s]+) les effets .* Garrot%.$",
 	garrote_message = "Garrot : %s",
 
 	icon = "Icône",
@@ -79,7 +79,7 @@ L:RegisterTranslations("deDE", function() return {
 	vanish_warning = "Verschwinden bald!",
 	vanish_bar = "N\195\164chste Verschwinden",
 
-	garrote_trigger = "^([^%s]+) ([^%s]+) von Erdrosseln betroffen",
+	garrote_trigger = "^([^%s]+) ([^%s]+) von Erdrosseln betroffen%.$",
 	garrote_message = "Erdrosseln: %s",
 
 	engage_trigger = "Hm, unangek\195\188ndigte Besucher. Es m\195\188ssen Vorbereitungen getroffen werden...",
@@ -154,7 +154,7 @@ L:RegisterTranslations("esES", function() return {
 
 	garrote = "Garrote",
 	garrote_desc = "Notifica que jugador ha sido afectado por Garrote.",
-	garrote_trigger = "^([^%s]+) ([^%s]+) sufre Garrote.$",
+	garrote_trigger = "^([^%s]+) ([^%s]+) sufre Garrote%.$",
 	garrote_message = "Garrote: %s",
 
 	icon = "Icono",

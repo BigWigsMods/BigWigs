@@ -26,29 +26,29 @@ L:RegisterTranslations("enUS", function() return {
 
 	heal = "Heal",
 	heal_desc = "Warn when Blindeye the Seer begins to cast a Heal.",
-	heal_trigger = "Blindeye the Seer begins to cast Prayer of Healing",
+	heal_trigger = "Blindeye the Seer begins to cast Prayer of Healing.",
 	heal_message = "Blindeye casting Prayer of Healing!",
 	heal_bar = "Healing",
 
 	shield = "Shield",
 	shield_desc = "Warn when Blindeye the Seer gains Greater Power Word: Shield.",
-	shield_trigger = "gains Greater Power Word: Shield",
+	shield_trigger = "gains Greater Power Word: Shield%.$",
 	shield_message = "Shield on Blindeye!",
 
 	spellshield = "Spell Shield",
 	spellshield_desc = "Warn when Krosh Firehand gains Spell Shield.",
-	spellshield_trigger = "gains Spell Shield.",
+	spellshield_trigger = "gains Spell Shield%.$",
 	spellshield_message = "Spell Shield on Krosh!",
 
 	summon = "Summon Wild Felhunter",
 	summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter.",
-	summon_trigger = "begins to cast Summon Wild Felhunter.",
+	summon_trigger = "begins to cast Summon Wild Felhunter%.$",
 	summon_message = "Felhunter being summoned!",
 	summon_bar = "~Felhunter Cooldown",
 
 	whirlwind = "Whirlwind",
 	whirlwind_desc = "Warn when Maulgar gains Whirlwind.",
-	whirlwind_trigger = "gains Whirlwind",
+	whirlwind_trigger = "gains Whirlwind%.$",
 	whirlwind_message = "Maulgar - Whirlwind for 15sec!",
 	whirlwind_bar = "Whirlwind",
 	whirlwind_nextbar = "~Whirlwind Cooldown",
@@ -71,7 +71,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	heal = "Soin",
 	heal_desc = "Préviens quand Oeillaveugle le Voyant commence à lancer un soin.",
-	heal_trigger = "Oeillaveugle le Voyant commence à lancer Prière de soins",
+	heal_trigger = "Oeillaveugle le Voyant commence à lancer Prière de soins.",
 	heal_message = "Oeillaveugle incante une Prière de soins !",
 	heal_bar = "Soin",
 
@@ -114,7 +114,7 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	heal = "Heilung",
 	heal_desc = "Warnt wenn Blindauge der Seher beginnt Heilung zu wirken",
-	heal_trigger = "Blindauge der Seher beginnt Gebet der Heilung",
+	heal_trigger = "Blindauge der Seher beginnt Gebet der Heilung.",
 	heal_message = "Blindauge der Seher wirkt Gebet der Heilung!",
 	heal_bar = "Heilung",
 
@@ -282,7 +282,7 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if msg:find(L["heal_trigger"]) then
+	if msg == L["heal_trigger"] then
 		self:Sync("BlindeyePrayer")
 	elseif msg:find(L["summon_trigger"]) then
 		self:Sync("OlmSummon")
@@ -330,7 +330,7 @@ function mod:Nextwhirldwind()
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.flurry and msg:find(L["flurry_trigger"]) then
+	if self.db.profile.flurry and msg == L["flurry_trigger"] then
 		self:Message(L["flurry_message"], "Important")
 	elseif msg == L["engage_trigger"] then
 		flurryannounced = nil

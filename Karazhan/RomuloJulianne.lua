@@ -31,19 +31,19 @@ L:RegisterTranslations("enUS", function() return {
 
 	poison = "Poison",
 	poison_desc = "Warn of a poisoned player.",
-	poison_trigger = "^([^%s]+) ([^%s]+) afflicted by Poisoned Thrust.$",
+	poison_trigger = "^([^%s]+) ([^%s]+) afflicted by Poisoned Thrust%.$",
 	poison_message = "Poisoned: %s",
 
 	heal = "Heal",
 	heal_desc = ("Warn when %s casts Eternal Affection."):format(girl),
-	heal_trigger = "begins to cast Eternal Affection",
+	heal_trigger = "begins to cast Eternal Affection%.$",
 	heal_message = "%s casting Heal!",
 
 	buff = "Self-Buff Alert",
 	buff_desc = ("Warn when %s and %s gain a self-buff."):format(boy, girl),
-	buff1_trigger = "gains Daring",
+	buff1_trigger = "gains Daring%.$",
 	buff1_message = "%s gains Daring!",
-	buff2_trigger = "gains Devotion",
+	buff2_trigger = "gains Devotion%.$",
 	buff2_message = "%s gains Devotion!",
 } end)
 
@@ -67,7 +67,7 @@ L:RegisterTranslations("deDE", function() return {
 	phase3_trigger = "Komm, milde, liebevolle Nacht! Komm, gibt mir meinen Romulo zur\195\188ck!",
 	phase3_message = "Akt 3 - Beide",
 
-	poison_trigger = "^([^%s]+) ([^%s]+) von Vergifteter Sto\195\159 betroffen.",
+	poison_trigger = "^([^%s]+) ([^%s]+) von Vergifteter Sto\195\159 betroffen%.$",
 	poison_message = "Vergiftet: %s",
 
 	heal_trigger = "beginnt Ewige Zuneigung zu wirken.",
@@ -91,7 +91,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	poison = "Poison",
 	poison_desc = "Préviens quand un joueur est empoisonné.",
-	poison_trigger = "^([^%s]+) ([^%s]+) les effets .* Coup empoisonné.$",
+	poison_trigger = "^([^%s]+) ([^%s]+) les effets .* Coup empoisonné%.$",
 	poison_message = "Empoisonné : %s",
 
 	heal = "Soin",
@@ -175,7 +175,7 @@ L:RegisterTranslations("esES", function() return {
 
 	poison = "Veneno",
 	poison_desc = "Avisa del jugador envenenado.",
-	poison_trigger = "^([^%s]+) ([^%s]+) sufre Empujón envenenado.$",
+	poison_trigger = "^([^%s]+) ([^%s]+) sufre Empujón envenenado%.$",
 	poison_message = "Envenenado: %s",
 
 	heal = "Curacion",

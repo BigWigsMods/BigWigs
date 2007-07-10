@@ -13,11 +13,11 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Terestian",
 
-	engage_trigger = "Ah, you're just in time.",
+	engage_trigger = "^Ah, you're just in time.",
 
 	sacrifice = "Sacrifice",
 	sacrifice_desc = "Warn for Sacrifice of players.",
-	sacrifice_trigger = "^([^%s]+) ([^%s]+) afflicted by Sacrifice.$",
+	sacrifice_trigger = "^([^%s]+) ([^%s]+) afflicted by Sacrifice%.$",
 	sacrifice_message = "%s is being Sacrificed!",
 	sacrifice_bar = "Sacrifice: %s",
 
@@ -26,7 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	weak = "Weakened",
 	weak_desc = "Warn for weakened state.",
-	weak_trigger = "afflicted by Broken Pact",
+	weak_trigger = "afflicted by Broken Pact%.$",
 	weak_message = "Weakened for ~45sec!",
 	weak_warning1 = "Weakened over in ~5sec!",
 	weak_warning2 = "Weakened over!",
@@ -41,7 +41,7 @@ L:RegisterTranslations("deDE", function() return {
 	weak = "Geschw\195\164cht",
 	weak_desc = "Warnt wenn Terestian geschw\195\164cht ist",
 
-	sacrifice_trigger = "^([^%s]+) ([^%s]+) von Opferung betroffen",
+	sacrifice_trigger = "^([^%s]+) ([^%s]+) von Opferung betroffen%.$",
 	sacrifice_message = "%s wird geopfert!",
 	sacrifice_bar = "Opferung: %s",
 
@@ -57,7 +57,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	sacrifice = "Sacrifice",
 	sacrifice_desc = "Préviens quand un joueur est sacrifié.",
-	sacrifice_trigger = "^([^%s]+) ([^%s]+) les effets .* Sacrifice.$",
+	sacrifice_trigger = "^([^%s]+) ([^%s]+) les effets .* Sacrifice%.$",
 	sacrifice_message = "%s est sacrifié !",
 	sacrifice_bar = "Sacrifice : %s",
 
@@ -123,7 +123,7 @@ L:RegisterTranslations("esES", function() return {
 
 	sacrifice = "Sacrificio",
 	sacrifice_desc = "Avisa del Sacrificio de los jugadores.",
-	sacrifice_trigger = "^([^%s]+) ([^%s]+) sufre Sacrificio.$",
+	sacrifice_trigger = "^([^%s]+) ([^%s]+) sufre Sacrificio%.$",
 	sacrifice_message = "%s esta siendo sacrificado!",
 	sacrifice_bar = "Sacrificio: %s",
 

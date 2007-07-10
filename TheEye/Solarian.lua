@@ -28,9 +28,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	wrath = "Wrath Cast",
 	wrath_desc = "Warn when Wrath is being cast, and the current target.",
-	wrath_trigger = "^([^%s]+) ([^%s]+) afflicted by Wrath of the Astromancer.$",
+	wrath_trigger = "^([^%s]+) ([^%s]+) afflicted by Wrath of the Astromancer%.$",
 	wrath_alert = "Casting Wrath! - Target: %s",
-	wrath_alert_trigger = "begins to cast Wrath of the Astromancer.$",
+	wrath_alert_trigger = "begins to cast Wrath of the Astromancer%.$",
 
 	wrathyou = "Wrath Debuff on You",
 	wrathyou_desc = "Warn when you have Wrath of the Astromancer.",
@@ -74,7 +74,7 @@ L:RegisterTranslations("deDE", function() return {
 	phase2_trigger = "^Ich werde", --to verify
 	phase2_message = "20% - Phase 2",
 
-	wrath_trigger = "^([^%s]+) ([^%s]+) von Zorn des Astronomen betroffen",
+	wrath_trigger = "^([^%s]+) ([^%s]+) von Zorn des Astronomen betroffen%.$",
 	wrath_you = "Zorn auf DIR!",
 
 	agent_warning = "Splittung! - Agenten in 6 sec",
@@ -132,7 +132,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	wrath = "Incantation du Courroux",
 	wrath_desc = "Préviens quand le Courroux est en cours d'incantation, et sa cible actuelle.",
-	wrath_trigger = "^([^%s]+) ([^%s]+) les effets .* Courroux de l'Astromancien.$",
+	wrath_trigger = "^([^%s]+) ([^%s]+) les effets .* Courroux de l'Astromancien%.$",
 	wrath_alert = "Courroux en incantation ! - Cible : %s",
 	wrath_alert_trigger = "commence à lancer Courroux de l'Astromancien.$",
 

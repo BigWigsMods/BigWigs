@@ -20,7 +20,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	attraction = "Fatal Attraction",
 	attraction_desc = "Warn who has Fatal Attraction.",
-	attraction_trigger = "^([^%s]+) ([^%s]+) afflicted by Fatal Attraction.$",
+	attraction_trigger = "^([^%s]+) ([^%s]+) afflicted by Fatal Attraction%.$",
 	attraction_message = "Attraction: %s",
 } end )
 

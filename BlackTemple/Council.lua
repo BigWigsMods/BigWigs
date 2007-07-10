@@ -37,7 +37,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	poison = "Deadly Poison",
 	poison_desc = "Warn for Deadly Poison on players.",
-	poison_trigger = "^([^%s]+) ([^%s]+) afflicted by Deadly Poison.$",
+	poison_trigger = "^([^%s]+) ([^%s]+) afflicted by Deadly Poison%.$",
 	poison_other = "%s has Deadly Poison!",
 	poison_you = "Deadly Poison on YOU!",
 

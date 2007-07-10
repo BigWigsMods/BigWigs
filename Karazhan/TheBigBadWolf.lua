@@ -14,7 +14,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 L:RegisterTranslations("enUS", function() return {
 	cmd = "TheBigBadWolf",
 
-	riding_trigger = "^([^%s]+) (.*) Red Riding Hood.$",
+	riding_trigger = "^([^%s]+) ([^%s]+) Red Riding Hood%.$",
 	gain = "gain",
 
 	youriding = "Red Riding Hood(You)",
@@ -32,24 +32,26 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	riding_trigger = "^([^%s]+) ([^%s]+) 'Rotk\195\164ppchen'%.$",
+	--gain = "gain",
+
 	youriding = "Du bist Rotk\195\164ppchen Warnung",
 	youriding_desc = "Warnung wenn du Rotk\195\164ppchen bist",
+	riding_youwarn = "Du bist Rotk\195\164ppchen!",
 
 	elseriding = "Andere sind Rotk\195\164ppchen Warnung",
 	elseriding_desc = "Warnung wenn andere Rotk\195\164ppchen sind",
+	riding_otherwarn = "%s ist Rotk\195\164ppchen!",
+
+	riding_bar = "%s rennt",
 
 	icon = "Zeige Icon",
 	icon_desc = "Setzt ein Raid Icon auf die Person die Rotk\195\164ppchen ist.",
-
-	riding_trigger = "^([^%s]+) bekommt(.*) 'Rotk\195\164ppchen'",
-
-	riding_youwarn = "Du bist Rotk\195\164ppchen!",
-	riding_otherwarn = "%s ist Rotk\195\164ppchen!",
-	riding_bar = "%s rennt",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	riding_trigger = "^([^%s]+) gagne(.*) Chaperon Rouge",
+	riding_trigger = "^([^%s]+) ([^%s]+) Chaperon Rouge%.$",
+	--gain = "gain",
 
 	youriding = "Chaperon Rouge (vous)",
 	youriding_desc = "Préviens quand vous êtes le Chaperon Rouge.",
@@ -66,8 +68,8 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	riding_trigger = "^([^|;%s]*)(.*)빨간 두건 효과를 얻었습니다%.$", -- "^([^%s]+) gain(.*) Red Riding Hood", -- check
-	gain = " ",
+	riding_trigger = "^([^|;%s]*)(.*)빨간 두건 효과를 얻었습니다%.$",
+	gain = " ", --you gain(you gain buff),  you gains(player by the name of 'you'), you might want a real trigger to prevent problems
 
 	youriding = "자신의 빨간 두건을 알립니다.",
 	youriding_desc = "자신이 빨간 두건에 걸리면 알림",
@@ -102,7 +104,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	riding_trigger = "^([^%s]+) (.*) Caperucita Roja.$",
+	riding_trigger = "^([^%s]+) ([^%s]+) Caperucita Roja%.$",
 	gain = "gana",
 
 	youriding = "Caperucita Roja (Tu)",

@@ -27,7 +27,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	holyfire = "Holy Fire",
 	holyfire_desc = "Alert when people are afflicted by Holy Fire.",
-	holyfire_trigger = "^([^%s]+) ([^%s]+) afflicted by Holy Fire.$",
+	holyfire_trigger = "^([^%s]+) ([^%s]+) afflicted by Holy Fire%.$",
 	holyfire_message = "Holy Fire: %s",
 
 	icon = "Raid Icon",
@@ -54,7 +54,7 @@ L:RegisterTranslations("deDE", function() return {
 	repentance_bar = "Bu\195\159e",
 	repentance_nextbar = "N\195\164chste Bu\195\159e",
 
-	holyfire_trigger = "^([^%s]+) ([^%s]+) von Heiliges Feuer betroffen",
+	holyfire_trigger = "^([^%s]+) ([^%s]+) von Heiliges Feuer betroffen%.$",
 	holyfire_message = "Heiliges Feuer: %s",
 } end)
 
@@ -73,7 +73,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	holyfire = "Flammes sacrées",
 	holyfire_desc = "Préviens quand un joueur subit les effets des Flammes sacrées.",
-	holyfire_trigger = "^([^%s]+) ([^%s]+) les effets .* Flammes sacrées.$",
+	holyfire_trigger = "^([^%s]+) ([^%s]+) les effets .* Flammes sacrées%.$",
 	holyfire_message = "Flammes sacrées : %s",
 
 	icon = "Icône",
@@ -138,7 +138,7 @@ L:RegisterTranslations("esES", function() return {
 
 	holyfire = "Fuego Sagrado",
 	holyfire_desc = "Avisa cuando alguien sufre Fuego Sagrado.",
-	holyfire_trigger = "^([^%s]+) ([^%s]+) sufre Fuego Sagrado.$",
+	holyfire_trigger = "^([^%s]+) ([^%s]+) sufre Fuego Sagrado%.$",
 	holyfire_message = "Fuego Sagrado: %s",
 
 	icon = "Icono de Raid",

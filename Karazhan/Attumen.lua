@@ -26,7 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	curse = "Cursed Tanks",
 	curse_desc = "Warn when a warrior or druid is cursed by Intangible Presence.",
-	curse_trigger = "^([^%s]+) ([^%s]+) afflicted by Intangible Presence.$",
+	curse_trigger = "^([^%s]+) ([^%s]+) afflicted by Intangible Presence%.$",
 	curse_message = "Tank Cursed - %s",
 } end)
 
@@ -37,7 +37,7 @@ L:RegisterTranslations("deDE", function() return {
 	curse = "Verfluchter Tank",
 	curse_desc = "Warnt wenn ein Tank verflucht ist",
 
-	curse_trigger = "^([^%s]+) ([^%s]+) von K\195\182rperlose Pr\195\164senz betroffen.",
+	curse_trigger = "^([^%s]+) ([^%s]+) von K\195\182rperlose Pr\195\164senz betroffen%.$",
 	curse_message = "Tank verflucht - %s",
 
 	phase1_message = "Phase 1 - %s",
@@ -59,7 +59,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	curse = "Tanks maudits",
 	curse_desc = "Préviens quand un guerrier ou un druide est maudit par la Présence immatérielle.",
-	curse_trigger = "^([^%s]+) ([^%s]+) les effets .* Présence immatérielle.$",
+	curse_trigger = "^([^%s]+) ([^%s]+) les effets .* Présence immatérielle%.$",
 	curse_message = "Tank maudit - %s",
 } end)
 
@@ -105,7 +105,7 @@ L:RegisterTranslations("esES", function() return {
 
 	curse = "Tanques Malditos",
 	curse_desc = "Avisa cuando un guerrero o un druida es afectado por Presencia intangible.",
-	curse_trigger = "^([^%s]+) ([^%s]+) sufre Presencia intangible.$",
+	curse_trigger = "^([^%s]+) ([^%s]+) sufre Presencia intangible%.$",
 	curse_message = "Tanque Maldito - %s",
 } end)
 

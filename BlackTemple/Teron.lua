@@ -17,7 +17,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	shadow = "Shadow of Death",
 	shadow_desc = "Tells you who has Shadow of Death.",
-	shadow_trigger = "^([^%s]+) ([^%s]+) afflicted by Shadow of Death.$",
+	shadow_trigger = "^([^%s]+) ([^%s]+) afflicted by Shadow of Death%.$",
 	shadow_other = "Shadow of Death: %s!",
 	shadow_you = "Shadow of Death on YOU!",
 
@@ -30,7 +30,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	shadow = "Schatten des Todes",
 	shadow_desc = "Informiert Euch, wer Schatten des Todes bekommt.",
-	shadow_trigger = "^([^%s]+) ([^%s]+) von Schatten des Todes betroffen.$",
+	shadow_trigger = "^([^%s]+) ([^%s]+) von Schatten des Todes betroffen%.$",
 	shadow_other = "Schatten des Todes: %s!",
 	shadow_you = "Schatten des Todes auf DIR!",
 

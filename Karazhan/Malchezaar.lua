@@ -25,7 +25,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	enfeeble = "Enfeeble",
 	enfeeble_desc = "Show cooldown timer for enfeeble.",
-	enfeeble_trigger = "afflicted by Enfeeble.$",
+	enfeeble_trigger = "afflicted by Enfeeble%.$",
 	enfeeble_message = "Enfeeble! next in 30sec",
 	enfeeble_warning1 = "Enfeeble in 5sec!",
 	enfeeble_warning2 = "Enfeeble in 10sec!",

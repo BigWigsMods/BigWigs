@@ -53,7 +53,7 @@ L:RegisterTranslations("enUS", function() return {
 	flame_trigger2 = "Burn, you hellish fiends!",
 	flame_message = "Flame Wreath!",
 	flame_bar = "Flame Wreath",
-	flame_trigger = "casts Flame Wreath",
+	flame_trigger = "casts Flame Wreath%.$",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

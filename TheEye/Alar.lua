@@ -33,9 +33,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	armor = "Melt Armor",
 	armor_desc = "Warn who gets Melt Armor.",
-	armor_trigger = "^([^%s]+) ([^%s]+) afflicted by Melt Armor.$",
+	armor_trigger = "^([^%s]+) ([^%s]+) afflicted by Melt Armor%.$",
 	armor_other = "Melt Armor: %s",
-	armor_you = "Melt Amor on YOU!",
+	armor_you = "Melt Armor on YOU!",
 
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon on the player with Melt Armor(requires promoted or higher).",
@@ -57,7 +57,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	armor = "Fondre armure",
 	armor_desc = "Préviens quand un joueur est affecté par Fondre armure.",
-	armor_trigger = "^([^%s]+) ([^%s]+) les effets .* Fondre armure.$",
+	armor_trigger = "^([^%s]+) ([^%s]+) les effets .* Fondre armure%.$",
 	armor_other = "Fondre armure : %s",
 	armor_you = "Fondre armure sur VOUS !",
 

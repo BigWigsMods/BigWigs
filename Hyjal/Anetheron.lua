@@ -19,7 +19,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	inferno = "Inferno",
 	inferno_desc = "Approximate Inferno cooldown timers.",
-	inferno_trigger = "begins to perform Inferno.$",
 	inferno_message = "Casting Inferno on %s!",
 	inferno_warning = "Inferno Soon!",
 	inferno_bar = "~Inferno Cooldown",
@@ -40,7 +39,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	inferno = "Inferno",
 	inferno_desc = "Temps de recharge approximatif pour l'Inferno.",
-	inferno_trigger = "commence à exécuter Inferno.$",
 	inferno_message = "Incante un inferno %s!",
 	inferno_warning = "Inferno imminent !",
 	inferno_bar = "~Cooldown Inferno",
@@ -58,7 +56,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	inferno = "불지옥",
 	inferno_desc = "대략적인 불지옥 대기시간 타이머입니다.",
-	inferno_trigger = "불지옥 사용을 시작합니다.$",
 	inferno_message = "불지옥 시전 중%s!",
 	inferno_warning = "잠시 후 불지옥!",
 	inferno_bar = "~불지옥 대기시간",
@@ -76,7 +73,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	inferno = "Inferno",
 	inferno_desc = "gesch\195\164tzte Inferno Cooldown Timer.",
-	inferno_trigger = "beginnt Inferno zu wirken.$",
 	inferno_message = "zaubert Inferno %s!",
 	inferno_warning = "Inferno bald!",
 	inferno_bar = "~Inferno Cooldown",
@@ -106,7 +102,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
+	self:RegisterEvent("UNIT_SPELLCAST_START")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "AnethInf", 10)
@@ -131,8 +127,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg:find(L["inferno_trigger"]) then
+function mod:UNIT_SPELLCAST_START(msg)
+	if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["inferno"] then
 		self:Sync("AnethInf")
 	end
 end

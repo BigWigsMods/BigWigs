@@ -15,7 +15,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	web = "Web",
 	web_desc = "Alert when a player gets webbed.",
-	web_trigger = "^([^%s]+) ([^%s]+) afflicted by Hyakiss' Web.$",
+	web_trigger = "^([^%s]+) ([^%s]+) afflicted by Hyakiss' Web%.$",
 	web_message = "%s has been webbed!",
 	web_bar = "Web: %s",
 } end )
@@ -33,7 +33,7 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("frFR", function() return {
 	web = "Rets",
 	web_desc = "Préviens quand un joueur se fait piégé par les Rets.",
-	web_trigger = "^([^%s]+) ([^%s]+) subit les effets .* Rets d'Hyakiss.$",
+	web_trigger = "^([^%s]+) ([^%s]+) subit les effets .* Rets d'Hyakiss%.$",
 	web_message = "%s a été piégé par les Rets !",
 	web_bar = "Rets : %s",
 } end )

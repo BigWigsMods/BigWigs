@@ -45,7 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	static = "Static Charge",
 	static_desc = "Warn about Static Charge on players.",
-	static_charge_trigger = "^([^%s]+) ([^%s]+) afflicted by Static Charge.$",
+	static_charge_trigger = "^([^%s]+) ([^%s]+) afflicted by Static Charge%.$",
 	static_charge_message = "Static Charge on %s!",
 	static_fade = "Static Charge fades from you.",
 
@@ -152,7 +152,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	static = "Charge statique",
 	static_desc = "Préviens quand la Charge statique affecte un joueur.",
-	static_charge_trigger = "^([^%s]+) ([^%s]+) les effets Charge statique.$",
+	static_charge_trigger = "^([^%s]+) ([^%s]+) les effets Charge statique%.$",
 	static_charge_message = "Charge statique sur %s !",
 	static_fade = "Charge statique vient de se dissiper.",
 
@@ -205,7 +205,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	static = "Statische Aufladung",
 	static_desc = "Warnt vor Statischer Aufladung auf Spielern.",
-	static_charge_trigger = "^([^%s]+) ([^%s]+) von Statische Aufladung betroffen.$",
+	static_charge_trigger = "^([^%s]+) ([^%s]+) von Statische Aufladung betroffen%.$",
 	static_charge_message = "Statische Aufladung auf %s!",
 	static_fade = "'Statische Aufladung' schwindet von Euch.",
 
