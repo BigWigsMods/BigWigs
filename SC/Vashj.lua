@@ -10,9 +10,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 BB = nil
 
-local deformat = nil
-local checkedForDeformat = nil
-
 local shieldsFaded = 0
 local playerName = nil
 local phaseTwoAnnounced = nil
@@ -22,8 +19,6 @@ local phaseTwoAnnounced = nil
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	deformat = "You need the Deformat-2.0 library in order to get loot warnings in phase 2. You can download it from http://files.wowace.com/Deformat/.",
-
 	["Tainted Elemental"] = true,
 
 	cmd = "Vashj",
@@ -78,8 +73,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	deformat = "2 단계에서 획득 경고를 위해 Deformat-2.0 라이브러리가 필요합니다. http://files.wowace.com/Deformat/ 에서 다운로드 할 수 있습니다.",
-
 	["Tainted Elemental"] = "오염된 정령",
 
 	engage_trigger1 = "천한 놈들을 상대하며 품위를 손상시키고 싶진 않았는데... 제 손으로 무덤을 파는구나.",
@@ -131,8 +124,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	deformat = "Vous avez besoin de la bibliothèque Deformat-2.0 afin de recevoir les avertissements du butin en phase 2. Vous pouvez la télécharger à l'adresse suivante : http://files.wowace.com/Deformat/.",
-
 	["Tainted Elemental"] = "Elémentaire souillé",
 
 	engage_trigger1 = "J'espérais ne pas devoir m'abaisser à affronter des créatures de la surface, mais vous ne me laissez pas le choix…", -- à vérifier
@@ -185,8 +176,6 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	deformat = "Ihr ben\195\182tigt die Deformat-2.0 Library um Loot Warnungen in Phase 2 zu erhalten. Download m\195\182glich auf http://files.wowace.com/Deformat/.",
-
 	["Tainted Elemental"] = "Besudelter Elementar",
 
 	engage_trigger1 = "Normalerweise w\195\188rde ich mich nicht herablassen, Euresgleichen pers\195\182nlich gegen\195\188berzutreten, aber ihr lasst mir keine Wahl...",
@@ -254,27 +243,9 @@ mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) en
 ------------------------------
 
 function mod:OnEnable()
-
-	-- Check if the player has Deformat.
-	if not deformat then
-		if AceLibrary:HasInstance("Deformat-2.0") then
-			deformat = AceLibrary("Deformat-2.0")
-		elseif not checkedForDeformat then
-			self:ScheduleEvent(function()
-				self:Sync("VashjDeformatCheck")
-				self:ScheduleEvent("VashjNoDeformat", function()
-					BigWigs:Print(L["deformat"])
-				end, 5)
-			end, 5)
-			checkedForDeformat = true
-		end
-	end
-
-	if deformat then
-		self:RegisterEvent("CHAT_MSG_LOOT")
-	end
-
 	playerName = UnitName("player")
+
+	self:RegisterEvent("CHAT_MSG_LOOT")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("UNIT_HEALTH")
@@ -301,23 +272,27 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:CHAT_MSG_LOOT(msg)
-	local player, item = deformat(msg, LOOT_ITEM)
-	if not player then
-		item = deformat(msg, LOOT_ITEM_SELF)
-		if item then
-			player = playerName
+do
+	local lootItem = '^' .. LOOT_ITEM:gsub("%%s", "(.-)") .. '$'
+	local lootItemSelf = '^' .. LOOT_ITEM_SELF:gsub("%%s", "(.*)") .. '$'
+	function mod:CHAT_MSG_LOOT(msg)
+		local player, item = select(3, msg:find(lootItem))
+		if not player then
+			item = select(3, msg:find(lootItemSelf))
+			if item then
+				player = playerName
+			end
 		end
-	end
 
-	if type(item) == "string" and type(player) == "string" then
-		local itemLink, itemRarity = select(2, GetItemInfo(item))
-		if itemRarity and itemRarity == 1 and itemLink then
-			local itemId = select(3, itemLink:find("item:(%d+):"))
-			if not itemId then return end
-			itemId = tonumber(itemId:trim())
-			if type(itemId) ~= "number" or itemId ~= 31088 then return end -- Tainted Core
-			self:Sync("VashjLoot " .. player)
+		if type(item) == "string" and type(player) == "string" then
+			local itemLink, itemRarity = select(2, GetItemInfo(item))
+			if itemRarity and itemRarity == 1 and itemLink then
+				local itemId = select(3, itemLink:find("item:(%d+):"))
+				if not itemId then return end
+				itemId = tonumber(itemId:trim())
+				if type(itemId) ~= "number" or itemId ~= 31088 then return end -- Tainted Core
+				self:Sync("VashjLoot " .. player)
+			end
 		end
 	end
 end
@@ -335,12 +310,14 @@ function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
 	end
 end
 
-local elemDies = UNITDIESOTHER:format(L["Tainted Elemental"])
-function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
-	if msg == elemDies then
-		self:Sync("VashjElemDied")
-	else
-		self:GenericBossDeath(msg)
+do
+	local elemDies = UNITDIESOTHER:format(L["Tainted Elemental"])
+	function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+		if msg == elemDies then
+			self:Sync("VashjElemDied")
+		else
+			self:GenericBossDeath(msg)
+		end
 	end
 end
 
@@ -440,10 +417,8 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
-	elseif sync == "VashjDeformatCheck" and deformat then
+	elseif sync == "VashjDeformatCheck" then
 		self:Sync("VashjDeformat")
-	elseif sync == "VashjDeformat" and self:IsEventScheduled("VashjNoDeformat") then
-		self:CancelScheduledEvent("VashjNoDeformat")
 	elseif sync == "VashjBarrier" then
 		shieldsFaded = shieldsFaded + 1
 		if shieldsFaded == 4 then
@@ -467,3 +442,4 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		end
 	end
 end
+
