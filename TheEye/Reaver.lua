@@ -209,7 +209,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
 	elseif self.db.profile.pounding and (msg == L["pounding_trigger1"] or msg == L["pounding_trigger2"]) then
-		self:Bar(L["pounding_bar"], 3, "Ability_ThunderClap")
 		self:Bar(L["pounding_nextbar"], 13, "Ability_ThunderClap")
 	end
 end
