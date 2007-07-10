@@ -15,34 +15,47 @@ L:RegisterTranslations("enUS", function() return {
 
 	doom = "Doom",
 	doom_desc = "Warn for Doom.",
-	doom_trigger = "^([^%s]+) ([^%s]+) afflicted by Doom%.$",
 	doom_other = "Doom on %s",
 	doom_you = "Doom on YOU!",
+	
+	hoa = "Howl of Azgalor",
+	hoa_desc = "Warn for Howl of Azgalor.",
+	hoa_bar = "~Howl Cooldown",
+	hoa_message = "AOE Silence",
+	hoa_warning = "AOE Silence Soon!",
+	
+	rof = "Rain of Fire",
+	rof_desc = "Warn when Rain of Fire is on you.",
+	rof_you = "Rain of Fire on YOU!",
 
 	icon = "Icon",
 	icon_desc = "Place a Raid Icon on the player afflicted by Doom (requires promoted or higher).",
+	
+	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by (.*).$",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
 	doom = "Destin funeste",
 	doom_desc = "Préviens quand un joueur subit les effets du Destin funeste.",
-	doom_trigger = "^([^%s]+) ([^%s]+) les effets .* Destin funeste%.$",
 	doom_other = "Destin funeste sur %s",
 	doom_you = "Destin funeste sur VOUS !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Destin funeste (nécessite d'être promu ou mieux).",
+	
+	afflict_trigger = "^([^%s]+) ([^%s]+) les effets .* (.*).$",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
 	doom = "파멸",
 	doom_desc = "파멸에 대한 경고입니다.",
-	doom_trigger = "^([^|;%s]*)(.*)파멸에 걸렸습니다.$",
 	doom_other = "%s에 파멸",
 	doom_you = "당신에 파멸!",
 
 	icon = "전술 표시",
 	icon_desc = "파멸에 걸린 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 요구).",
+	
+	afflict_trigger = "^([^|;%s]*)(.*)(.+)에 걸렸습니다%.$",
 } end )
 
 ----------------------------------
@@ -52,7 +65,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Hyjal Summit"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"doom", "icon", "bosskill"}
+mod.toggleoptions = {"doom", "hoa", "rof", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -60,12 +73,13 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "DoomEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "DoomEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "DoomEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "AzDoom", 2)
+	self:TriggerEvent("BigWigs_ThrottleSync", "AzHOA", 2)
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
@@ -74,14 +88,27 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:DoomEvent(msg)
-	local dplayer, dtype = select(3, msg:find(L["doom_trigger"]))
-	if dplayer and dtype then
-		if dplayer == L2["you"] and dtype == L2["are"] then
-			dplayer = UnitName("player")
+function mod:Event(msg)
+	local aPlayer, aType, aSpell = select(3, msg:find(L["afflict_trigger"]))
+	if aPlayer and aType then
+		if aPlayer == L2["you"] and aType == L2["are"] then
+			aPlayer = UnitName("player")
+			if aSpell == L["rof"] then
+				self:RainOfFire()
+			end
 		end
-		self:Sync("AzDoom "..dplayer)
+		if aSpell == L["doom"] then
+			self:Sync("AzDoom ".. aPlayer)
+		elseif aSpell == L["hoa"] then
+			self:Sync("AzHOA ".. aPlayer)
+		end
 	end
+end
+
+function mod:RainOfFire()
+	if self.db.profile.rof then
+		self:Message(L["rof_you"], "Urgent", true, "Alarm")
+	end 
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
@@ -98,5 +125,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
+	elseif sync == "AzHOA" and rest and self.db.profile.hoa then
+		self:Message(L["hoa_message"], "Important")
+		self:Bar(L["hoa_bar"], 16, "Spell_Shadow_ImpPhaseShift")
+		self:DelayedMessage(15, L["hoa_warning"], "Important")
 	end
 end
