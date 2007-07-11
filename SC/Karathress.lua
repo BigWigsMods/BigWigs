@@ -13,18 +13,18 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Karathress",
 
-	enrage_trigger = "^Guards, attention!",
+	enrage_trigger = "Guards, attention! We have visitors....",
 
 	totem = "Spitfire Totem",
 	totem_desc = "Warn for Spitfire Totems and who cast them.",
-	totem_trigger1 = "Guard Tidalvess casts Spitfire Totem%.$",
-	totem_trigger2 = "Lord Karathress casts Spitfire Totem%.$",
+	totem_trigger1 = "Fathom-Guard Tidalvess casts Spitfire Totem.",
+	totem_trigger2 = "Fathom-Lord Karathress casts Spitfire Totem.",
 	totem_message1 = "Tidalvess: Spitfire Totem",
 	totem_message2 = "Karathress: Spitfire Totem",
 
 	heal = "Heal",
 	heal_desc = "Warn when Caribdis casts a heal.",
-	heal_trigger = "Caribdis begins to cast Healing Wave%.$",
+	heal_trigger = "Fathom-Guard Caribdis begins to cast Healing Wave.",
 	heal_message = "Caribdis casting heal!",
 
 	["Fathom-Guard Sharkkis"] = true, --hunter
@@ -41,12 +41,12 @@ L:RegisterTranslations("deDE", function() return {
 
 	enrage_trigger = "Achtung, Wachen! Wir haben Besuch...",
 
-	totem_trigger1 = "Tiefenw\195\164chter Flutvess wirkt Feuerspuckendes Totem",
-	totem_trigger2 = "Tiefenlord Karathress wirkt Feuerspuckendes Totem",
+	totem_trigger1 = "Tiefenw\195\164chter Flutvess wirkt Feuerspuckendes Totem.",
+	totem_trigger2 = "Tiefenlord Karathress wirkt Feuerspuckendes Totem.",
 	totem_message1 = "Flutvess: Feuerspuckendes Totem",
 	totem_message2 = "Karathress: Feuerspuckendes Totem",
 
-	heal_trigger = "Caribdis beginnt Welle der Heilung zu wirken", --to verify
+	heal_trigger = "Tiefenw\195\164chter Caribdis beginnt Welle der Heilung zu wirken.", --to verify
 	heal_message = "Caribdis heilt!",
 
 	["Fathom-Guard Sharkkis"] = "Tiefenw\195\164chter Haikis", --hunter
@@ -55,18 +55,18 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	enrage_trigger = "^경비병! 여기 침입자들이 있다...",
+	enrage_trigger = "경비병! 여기 침입자들이 있다...",
 
 	totem = "불 뿜는 토템",
 	totem_desc = "불 뿜는 토템을 시전 시 경고합니다.",
-	totem_trigger1 = "심연의 경비병 타이달베스|1이;가; 불 뿜는 토템|1을;를; 시전합니다%.$",
-	totem_trigger2 = "심연의 군주 카라드레스|1이;가; 불 뿜는 토템|1을;를; 시전합니다%.$",
+	--totem_trigger1 = "심연의 경비병 타이달베스|1이;가; 불 뿜는 토템|1을;를; 시전합니다%.$",
+	--totem_trigger2 = "심연의 군주 카라드레스|1이;가; 불 뿜는 토템|1을;를; 시전합니다%.$",
 	totem_message1 = "타이달베스: 불뿜는 토템",
 	totem_message2 = "카라드레스: 불뿜는 토템",
 
 	heal = "치유",
 	heal_desc = "카리브디스의 치유 시전을 경고합니다.",
-	heal_trigger = "칼리브디스|1이;가; 치유의 물결 시전을 시작합니다%.$", -- check
+	--heal_trigger = "칼리브디스|1이;가; 치유의 물결 시전을 시작합니다%.$", -- check
 	heal_message = "칼리브디스 치유 시전!",
 
 	["Fathom-Guard Sharkkis"] = "심연의 경비병 샤르키스", --hunter
@@ -75,18 +75,18 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	enrage_trigger = "Gardes, en position !",
+	--enrage_trigger = "Guards, attention! We have visitors....",
 
 	totem = "Totem crache-feu",
 	totem_desc = "Préviens quand un Totem crache-feu est posé et indique son possesseur.",
-	totem_trigger1 = "Garde-fonds Marevess lance Totem crache-feu",
-	totem_trigger2 = "Seigneur des fonds Karathress lance Totem crache-feu",
+	totem_trigger1 = "Garde-fonds Marevess lance Totem crache-feu.",
+	totem_trigger2 = "Seigneur des fonds Karathress lance Totem crache-feu.",
 	totem_message1 = "Marevess : Totem crache-feu",
 	totem_message2 = "Karathress : Totem crache-feu",
 
 	heal = "Soins",
 	heal_desc = "Préviens quand Caribdis incante un soin.",
-	heal_trigger = "Caribdis commence à lancer Vague de soins",
+	heal_trigger = "Garde-fonds Caribdis commence à lancer Vague de soins.",
 	heal_message = "Caribdis incante un soin !",
 
 	["Fathom-Guard Sharkkis"] = "Garde-fonds Squallis", --hunter
@@ -95,7 +95,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	enrage_trigger = "Guards, attention!",
+	--enrage_trigger = "Guards, attention! We have visitors....",
 
 	totem = "飛火圖騰",
 	totem_desc = "飛火圖騰施放警示。",
@@ -146,7 +146,7 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.enrage and msg:find(L["enrage_trigger"]) then
+	if self.db.profile.enrage and msg == L["enrage_trigger"] then
 		self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
 		self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
 		self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
@@ -159,11 +159,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if msg:find(L["totem_trigger1"]) then
+	if msg == L["totem_trigger1"] then
 		self:Sync("TidaTotem")
-	elseif msg:find(L["totem_trigger2"]) then
+	elseif msg == L["totem_trigger2"] then
 		self:Sync("KaraTotem")
-	elseif msg:find(L["heal_trigger"]) then
+	elseif msg == L["heal_trigger"] then
 		self:Sync("CariHeal")
 	end
 end
