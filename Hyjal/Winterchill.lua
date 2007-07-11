@@ -87,7 +87,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Hyjal Summit"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"decay", -1, "icebolt", "icon", "bosskill"}
+mod.toggleoptions = {"decay", -1, "icebolt", "icon", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -102,6 +102,9 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "WCBolt", 5)
 
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
@@ -114,6 +117,22 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(L["icebolt_message"]:format(rest), "Important", nil, "Alert")
 		if self.db.profile.icon then
 			self:Icon(rest)
+		end
+	elseif self:ValidateEngageSync(sync, rest) and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		if self.db.profile.enrage then
+			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
+			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
+			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
+			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
+			self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
+			self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
+			self:DelayedMessage(595, L2["enrage_sec"]:format(5), "Urgent")
+			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
 	end
 end
