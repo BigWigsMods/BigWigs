@@ -83,7 +83,7 @@ L:RegisterTranslations("zhTW", function() return {
 	phase = "階段警告",
 	phase_desc = "當進入下一個階段時發送警告",
 	phase1_message = "第一階段 - %s",
-	phase2_trigger = "%s呼叫他的主人!",
+	phase2_trigger = "%s呼叫她的主人!",
 	phase2_message = "第二階段 - %s & 阿圖曼",
 	phase3_trigger = "來吧午夜，讓我們驅散這群小規模的烏合之眾!",
 	phase3_message = "第三階段 - %s",
