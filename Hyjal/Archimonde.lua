@@ -154,7 +154,7 @@ end
 function mod:UNIT_SPELLCAST_START(msg)
 	if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["fear"] then
 		self:Sync("ArchFear")
-	elseif if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["burst"] then
+	elseif UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["burst"] then
 		self:Sync("ArchBurst")
 	end
 end
