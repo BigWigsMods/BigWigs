@@ -25,29 +25,31 @@ L:RegisterTranslations("enUS", function() return {
 
 	grave = "Watery Grave",
 	grave_desc = "Alert who has watery grave and durations.",
-	grave_trigger1 = "^([^%s]+) ([^%s]+) afflicted by Watery Grave%.$",
-	grave_trigger2 = "sends his enemies",
+	grave_trigger = "^([^%s]+) ([^%s]+) afflicted by Watery Grave%.$",
 	grave_message = "Watery Grave: %s",
 	grave_bar = "Watery Graves",
 	grave_nextbar = "~Graves Cooldown",
 
-	murloc = "Incoming Murlocs",
+	murloc = "Murlocs",
 	murloc_desc = "Warn for incoming murlocs.",
 	murloc_bar = "~Murlocs Cooldown",
-	murloc_trigger = "Murlocs",
+	murloc_trigger1 = "By the tides!",
+	murloc_trigger2 = "Destroy them, my subjects!",
 	murloc_message = "Incoming Murlocs!",
 	murloc_soon_message = "Murlocs soon!",
 	murloc_engaged = "%s Engaged, Murlocs in ~40sec",
 
-	grobules = "Incoming Grobules",
+	grobules = "Grobules",
 	grobules_desc = "Warn for incoming Watery Grobules.",
-	grobules_trigger = "summons",
+	grobules_trigger1 = "Soon it will be finished!",
+	grobules_trigger2 = "There is nowhere to hide!",
 	grobules_message = "Incoming Grobules!",
 	grobules_warning = "Grobules Soon!",
 	grobules_bar = "Grobules Despawn",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+--	engage_trigger = "Flood of the deep, take you!",
 
 	tidal = "Gezeitenwelle",
 	tidal_desc = "Warnt, wenn Morogrim Gezeitenwelle benutzt.",
@@ -61,19 +63,20 @@ L:RegisterTranslations("deDE", function() return {
 	grobules = "Wasserkugeln",
 	grobules_desc = "Warnt vor Wasserkugeln.",
 
-	grave_trigger1 = "^([^%s]+) ([^%s]+) von Nasses Grab betroffen%.$",
-	grave_trigger2 = "schickt seine Feinde",
+	grave_trigger = "^([^%s]+) ([^%s]+) von Nasses Grab betroffen%.$",
 	grave_message = "Nasses Grab: %s",
 	grave_bar = "Nasses Grab",
 	grave_nextbar = "n\195\164chstes Nasses Grab",
 
 	murloc_bar = "n\195\164chste Murlocs",
-	murloc_trigger = "Murlocs",
+	--murloc_trigger1 = "By the tides!",
+	--murloc_trigger2 = "Destroy them, my subjects!",
 	murloc_message = "Murlocs kommen!",
 	murloc_soon_message = "Murlocs bald!",
 	murloc_engaged = "%s angegriffen, Murlocs in ~40sec",
 
-	grobules_trigger = "Wasserkugeln",
+	--grobules_trigger1 = "Soon it will be finished!",
+	--grobules_trigger2 = "There is nowhere to hide!",
 	grobules_message = "Wasserkugeln kommen!",
 	grobules_warning = "Wasserkugeln bald!",
 } end )
@@ -88,8 +91,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	grave = "수중 무덤",
 	grave_desc = "수중 무덤에 걸린 사람과 지속시간을 알림니다.",
-	grave_trigger1 = "^([^|;%s]*)(.*)수중 무덤에 걸렸습니다%.$",
-	grave_trigger2 = "자신의 적을 수중 무덤으로 내몹니다!",
+	grave_trigger = "^([^|;%s]*)(.*)수중 무덤에 걸렸습니다%.$",
 	grave_message = "수중 무덤: %s",
 	grave_bar = "수중 무덤",
 	grave_nextbar = "~무덤 대기시간",
@@ -97,14 +99,16 @@ L:RegisterTranslations("koKR", function() return {
 	murloc = "멀록 등장",
 	murloc_desc = "멀록 등장에 대한 경고입니다.",
 	murloc_bar = "~멀록 등장 대기시간",
-	murloc_trigger = "멀록들",
+	--murloc_trigger1 = "By the tides!",
+	--murloc_trigger2 = "Destroy them, my subjects!",
 	murloc_message = "멀록 등장!",
 	murloc_soon_message = "잠시 후 멀록 등장!",
 	murloc_engaged = "%s 전투 시작, 약 40초 후 멀록",
 
 	grobules = "물방울 등장",
 	grobules_desc = "물방울 등장에 대한 경고입니다.",
-	grobules_trigger = "물방울",
+	--grobules_trigger1 = "Soon it will be finished!",
+	--grobules_trigger2 = "There is nowhere to hide!",
 	grobules_message = "물방울 등장!",
 	grobules_warning = "잠시 후 물방울!",
 	grobules_bar = "물방울 사라짐",
@@ -121,8 +125,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	grave = "Tombeau aquatique",
 	grave_desc = "Préviens quand quelqu'un subit le Tombeau aquatique et indique sa durée.",
-	grave_trigger1 = "^([^%s]+) ([^%s]+) les effets .* Tombeau aquatique%.$",
-	grave_trigger2 = "envoye ses ennemis", -- à vérifier
+	grave_trigger = "^([^%s]+) ([^%s]+) les effets .* Tombeau aquatique%.$",
 	grave_message = "Tombeau aquatique : %s",
 	grave_bar = "Tombeaux aquatique",
 	grave_nextbar = "~Cooldown Tombeaux",
@@ -130,14 +133,16 @@ L:RegisterTranslations("frFR", function() return {
 	murloc = "Arrivée des murlocs",
 	murloc_desc = "Préviens de l'arrivée des murlocs.",
 	murloc_bar = "~Cooldown Murlocs",
-	murloc_trigger = "Murlocs",
+	--murloc_trigger1 = "By the tides!",
+	--murloc_trigger2 = "Destroy them, my subjects!",
 	murloc_message = "Arrivée des murlocs !",
 	murloc_soon_message = "Murlocs imminent !",
 	murloc_engaged = "%s engagé, murlocs dans ~40 sec.",
 
 	grobules = "Arrivée des globules",
 	grobules_desc = "Préviens de l'arrivée des globules.",
-	grobules_trigger = "invoque", -- à vérifier
+	--grobules_trigger1 = "Soon it will be finished!",
+	--grobules_trigger2 = "There is nowhere to hide!",
 	grobules_message = "Arrivée des globules !",
 	grobules_warning = "Globules imminent !",
 	grobules_bar = "Disparation des globules",
@@ -153,8 +158,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	grave = "水之墓",
 	grave_desc = "當玩家受到水之墓時通知團隊",
-	grave_trigger1 = "^(.+)受到(.*)水之墓",
-	grave_trigger2 = "將敵人放進",
+	grave_trigger = "^(.+)受到(.*)水之墓",
 	grave_message = "水之墓：%s",
 	grave_bar = "水之墓計時",
 	grave_nextbar = "水之墓冷卻",
@@ -162,14 +166,16 @@ L:RegisterTranslations("zhTW", function() return {
 	murloc = "魚人警示",
 	murloc_desc = "魚人來臨時警示",
 	murloc_bar = "魚人冷卻",
-	murloc_trigger = "魚人",
+	--murloc_trigger1 = "By the tides!",
+	--murloc_trigger2 = "Destroy them, my subjects!",
 	murloc_message = "魚人出現！",
 	murloc_soon_message = "魚人即將出現，準備 AE！",
 	murloc_engaged = "%s 開戰 - 魚人在 40 秒內出現！",
 
 	grobules = "水珠警示",
 	grobules_desc = "當水珠來臨時警示",
-	grobules_trigger = "召喚",
+	--grobules_trigger1 = "Soon it will be finished!",
+	--grobules_trigger2 = "There is nowhere to hide!",
 	grobules_message = "水珠出現！避開水球！",
 	grobules_warning = "水珠即將出現！",
 	grobules_bar = "水珠消失",
@@ -198,7 +204,6 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
@@ -223,6 +228,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if self.db.profile.grave then
 			self:Bar(L["grave_nextbar"], 20, "Spell_Frost_ArcticWinds")
 		end
+	elseif self.db.profile.murloc and (msg == L["murloc_trigger1"] or msg == L["murloc_trigger2"]) then
+		self:CancelScheduledEvent("murloc1")
+		self:Message(L["murloc_message"], "Positive")
+		self:Bar(L["murloc_bar"], 45, "INV_Misc_Head_Murloc_01")
+		self:ScheduleEvent("murloc1", "BigWigs_Message", 41, L["murloc_soon_message"], "Attention")
+	elseif self.db.profile.grobules and (msg == L["grobules_trigger1"] or msg == L["grobules_trigger2"]) then
+		self:Message(L["grobules_message"], "Important", nil, "Alert")
+		self:Bar(L["grobules_bar"], 36, "INV_Elemental_Primal_Water")
 	end
 end
 
@@ -232,23 +245,8 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if self.db.profile.grave and msg:find(L["grave_trigger2"]) then
-		self:Bar(L["grave_nextbar"], 30, "Spell_Frost_ArcticWinds")
-		self:Bar(L["grave_bar"], 6, "Spell_Frost_ArcticWinds")
-	elseif self.db.profile.murloc and msg:find(L["murloc_trigger"]) then
-		self:CancelScheduledEvent("murloc1")
-		self:Message(L["murloc_message"], "Positive")
-		self:Bar(L["murloc_bar"], 45, "INV_Misc_Head_Murloc_01")
-		self:ScheduleEvent("murloc1", "BigWigs_Message", 41, L["murloc_soon_message"], "Attention")
-	elseif self.db.profile.grobules and msg:find(L["grobules_trigger"]) then
-		self:Message(L["grobules_message"], "Important", nil, "Alert")
-		self:Bar(L["grobules_bar"], 36, "INV_Elemental_Primal_Water")
-	end
-end
-
 function mod:Event(msg)
-	local gplayer, gtype = select(3, msg:find(L["grave_trigger1"]))
+	local gplayer, gtype = select(3, msg:find(L["grave_trigger"]))
 	if gplayer and gtype then
 		if gplayer == L2["you"] and gtype == L2["are"] then
 			gplayer = UnitName("player")
@@ -268,6 +266,8 @@ function mod:GraveWarn()
 			end
 		end
 		self:Message(L["grave_message"]:format(msg), "Important", nil, "Alert")
+		self:Bar(L["grave_nextbar"], 28.5, "Spell_Frost_ArcticWinds")
+		self:Bar(L["grave_bar"], 4.5, "Spell_Frost_ArcticWinds")
 	end
 	for k in pairs(inGrave) do inGrave[k] = nil end
 end
