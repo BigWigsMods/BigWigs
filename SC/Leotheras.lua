@@ -28,7 +28,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	phase = "Demon Phase",
 	phase_desc = "Estimated demon phase timers.",
-	phase_trigger = "I am in control now!$",
+	phase_trigger = "Be gone, trifling elf.  I am in control now!",
 	phase_demon = "Demon Phase for 60sec",
 	phase_demonsoon = "Demon Phase in 5sec!",
 	phase_normalsoon = "Normal Phase in 5sec",
@@ -43,7 +43,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	image = "Image",
 	image_desc = "15% Image Split Alerts.",
-	image_trigger = "I am the master! Do you hear?",
+	image_trigger = "No... no! What have you done? I am the master! Do you hear me? I am... aaggh! Can't... contain him.",
 	image_message = "15% - Image Created!",
 	image_warning = "Image Soon!",
 
@@ -231,7 +231,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if self.db.profile.whirlwind then
 			self:WhirlwindBar()
 		end
-	elseif msg:find(L["phase_trigger"]) then
+	elseif msg == L["phase_trigger"] then
 		if self.db.profile.phase then
 			self:CancelScheduledEvent("demon1")
 			self:TriggerEvent("BigWigs_StopBar", self, L["demon_nextbar"])
@@ -250,7 +250,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if self.db.profile.whisper then
 			self:Bar(L["whisper_soon"], 23, "Spell_Shadow_ManaFeed")
 		end
-	elseif msg:find(L["image_trigger"]) then
+	elseif msg == L["image_trigger"] then
 		self:CancelScheduledEvent("bwdemon")
 		self:CancelScheduledEvent("normal1")
 		self:CancelScheduledEvent("demon1")
