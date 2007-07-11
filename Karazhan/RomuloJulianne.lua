@@ -124,14 +124,14 @@ L:RegisterTranslations("koKR", function() return {
 
 	heal = "치유",
 	heal_desc = ("%s|1이;가; 영원한 사랑 시전 시 경고합니다."):format(girl),
-	heal_trigger = "영원한 사랑 시전을 시작합니다.",
+	heal_trigger = "영원한 사랑 시전을 시작합니다%.$",
 	heal_message = "%s 치유 시전 중!",
 
 	buff = "버프 알림",
 	buff_desc = ("%s|1와;과; %s 버프 획득 시 알립니다."):format(boy, girl),
-	buff1_trigger = "사랑의 용기 효과를 얻었습니다.", -- check
+	buff1_trigger = "사랑의 용기 효과를 얻었습니다%.$", -- check
 	buff1_message = "%s 사랑의 용기 효과 얻음!",
-	buff2_trigger = "헌신 효과를 얻었습니다.", -- check
+	buff2_trigger = "헌신 효과를 얻었습니다%.$", -- check
 	buff2_message = "%s 헌신 효과 얻음!",
 } end)
 

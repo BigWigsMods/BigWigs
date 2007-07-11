@@ -155,7 +155,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	silence = "침묵 경고",
 	silence_desc = "그룰이 광역 침묵(산울림) 시전 시 경고합니다.",
-	silence_trigger = "산울림에 걸렸습니다.",
+	silence_trigger = "산울림에 걸렸습니다%.$",
 	silence_message = "광역 침묵",
 	silence_warning = "잠시 후 광역 침묵!",
 	silence_bar = "~침묵 대기시간",

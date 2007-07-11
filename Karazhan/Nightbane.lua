@@ -116,7 +116,7 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("koKR", function() return {
 	fear = "공포 경고",
 	fear_desc = "우레와 같은 울부짖음에 대한 경고입니다.",
-	fear_trigger = "우레와 같은 울부짖음 시전을 시작합니다.",
+	fear_trigger = "우레와 같은 울부짖음 시전을 시작합니다%.$",
 	fear_message = "2초 후 공포!",
 	fear_warning = "잠시 후 공포",
 	fear_bar = "공포!",

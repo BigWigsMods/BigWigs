@@ -194,7 +194,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	heal = "치유",
 	heal_desc = "지옥불 역술사 치유 시전 시 경고합니다.",
-	heal_trigger = "암흑의 치유 시전을 시작합니다.",
+	heal_trigger = "암흑의 치유 시전을 시작합니다%.$",
 	heal_message = "치유 시전!",
 
 	nova = "파열의 회오리",
@@ -208,6 +208,8 @@ L:RegisterTranslations("koKR", function() return {
 	banish_desc = ("%s 추방 시 알립니다."):format(boss),
 	banish_trigger = "안 돼, 다시 그럴 수는 없다!",
 	banish_message = "약 10초 동안 추방됨",
+	banish_over_trigger = "^Shadow Cage fades", -- check
+	banish_over_message = "추방 종료!",
 	banish_bar = "추방됨",
 
 	exhaust = "방출 바 비활성화",

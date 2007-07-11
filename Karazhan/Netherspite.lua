@@ -71,12 +71,12 @@ L:RegisterTranslations("koKR", function() return {
 
 	voidzone = "공허의 지대",
 	voidzone_desc = "공허의 지대에 대한 경고입니다.",
-	voidzone_trigger = "공허의 지대|1을;를; 시전합니다.",
+	voidzone_trigger = "공허의 지대|1을;를; 시전합니다%.$",
 	voidzone_warn = "공허의 지대 (%d)!",
 
 	netherbreath = "황천의 숨결",
 	netherbreath_desc = "황천의 숨결에 대한 경고입니다.",
-	netherbreath_trigger = "무작위 대상 바라보기|1을;를; 시전합니다.",
+	netherbreath_trigger = "무작위 대상 바라보기|1을;를; 시전합니다%.$",
 	netherbreath_warn = "황천의 숨결 시전!",
 } end )
 

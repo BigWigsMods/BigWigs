@@ -68,7 +68,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	riding_trigger = "^([^|;%s]*)(.*)빨간 두건 효과를 얻었습니다%.$",
+	riding_trigger = "^([^|;%s]*)(.*)빨간 두건 효과를 얻었습니다%.$", -- "^([^%s]+) gain(.*) Red Riding Hood", -- check
 	gain = " ", --you gain(you gain buff),  you gains(player by the name of 'you'), you might want a real trigger to prevent problems
 
 	youriding = "자신의 빨간 두건을 알립니다.",

@@ -98,7 +98,7 @@ L:RegisterTranslations("koKR", function() return {
 	wrath_desc = "격노 시전 시 경고와 현재 대상을 알립니다.",
 	wrath_trigger = "^([^|;%s]*)(.*)점성술사의 격노에 걸렸습니다%.$",
 	wrath_alert = "격노 시전! - 대상: %s",
-	wrath_alert_trigger = "점성술사의 격노 시전을 시작합니다.$",
+	wrath_alert_trigger = "점성술사의 격노 시전을 시작합니다%.$",
 
 	wrathyou = "자신에 격노 디버프",
 	wrathyou_desc = "당신이 점성술사의 격노에 걸렸을 때 알립니다.",

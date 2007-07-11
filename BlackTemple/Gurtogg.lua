@@ -58,7 +58,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	rage = "마의 분노",
 	rage_desc = "마의 분노에 걸린 사람을 알립니다.",
-	rage_trigger = "^([^|;%s]*)(.*)마의 분노에 걸렸습니다.$", -- check
+	rage_trigger = "^([^|;%s]*)(.*)마의 분노에 걸렸습니다%.$", -- check
 	rage_you = "당신은 마의 분노!!",
 	rage_other = "%s 마의 분노!",
 

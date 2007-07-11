@@ -81,7 +81,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	armor = "방어구 녹이기",
 	armor_desc = "방어구 녹이기에 걸린 사람에 대한 경고입니다.",
-	armor_trigger =  "^([^|;%s]*)(.*)방어구 녹이기에 걸렸습니다.$",
+	armor_trigger =  "^([^|;%s]*)(.*)방어구 녹이기에 걸렸습니다%.$",
 	armor_other = "방어구 녹이기: %s",
 	armor_you = "당신에 방어구 녹이기!",
 

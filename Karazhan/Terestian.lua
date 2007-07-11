@@ -75,7 +75,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "아, 때맞춰 와줬군.",
+	engage_trigger = "^아, 때맞춰 와줬군.",
 
 	sacrifice = "희생",
 	sacrifice_desc = "플레이어의 희생에 대한 경고입니다.",
@@ -88,7 +88,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	weak = "약화",
 	weak_desc = "약화 상태에 대한 경고입니다.",
-	weak_trigger = "깨진 서약에 걸렸습니다.",
+	weak_trigger = "깨진 서약에 걸렸습니다%.$",
 	weak_message = "약 45초간 약화!",
 	weak_warning1 = "약 5초 후 약화 종료!",
 	weak_warning2 = "약화 종료!",

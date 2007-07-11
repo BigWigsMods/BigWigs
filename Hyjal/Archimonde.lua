@@ -55,7 +55,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	grip = "군단의 손아귀",
 	grip_desc = "군단의 손아귀에 걸린 사람을 알립니다.",
-	grip_trigger =  "^([^|;%s]*)(.*)군단의 손아귀에 걸렸습니다.$",
+	grip_trigger =  "^([^|;%s]*)(.*)군단의 손아귀에 걸렸습니다%.$",
 	grip_you = "당신에 손아귀!",
 	grip_other = "%s에 손아귀!",
 

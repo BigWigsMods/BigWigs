@@ -71,27 +71,26 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("koKR", function() return {
 	phase = "형상",
 	phase_desc = "다른 형상에 대한 경고입니다.",
-
-	punch = "화산 폭발",
-	punch_desc = "화산 폭발 시 경고와 쿨다운 타이머바를 표시합니다.",
-
-	target = "대상",
-	target_desc = "솔개 형상에서 대상을 알리고 전술 표시를 지정합니다.",
-
 	normal_phase_message = "탱킹'n'딜링!",
 	normal_phase_trigger =  "궁극의 심연이 분노하여 땅을 내리찍습니다!",
-
 	kite_phase_message = "%s 풀려남!",
 	kite_phase_trigger = "땅이 갈라져서 열리기 시작합니다!",
-
 	next_phase_bar = "다음 형상",
 	next_phase_message = "10초 이내 형상 변경!",
 
+	punch = "화산 폭발",
+	punch_desc = "화산 폭발 시 경고와 쿨다운 타이머바를 표시합니다.",
+	punch_message = "화산 폭발!",
+	punch_bar = "~폭발 가능!",
+	punch_trigger = "궁극의 심연|1이;가; 화산 폭발|1을;를; 시전합니다.",
+
+	target = "대상",
+	target_desc = "솔개 형상에서 대상을 알리고 전술 표시를 지정합니다.",
 	target_message = "%s 추적 중!",
 	target_message_nounit = "새로운 대상!",
 
-	punch_message = "폭발!",
-	punch_trigger = "궁극의 심연|1이;가; 화산 폭발|1을;를; 시전합니다.",
+	icon = "전술 표시",
+	icon_desc = "추적 중인 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
 } end )
 
 ----------------------------------

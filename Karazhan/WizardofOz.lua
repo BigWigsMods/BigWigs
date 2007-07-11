@@ -66,7 +66,7 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "티토야, 우린 집으로 갈 방법을 찾아야 해!",
+	engage_trigger = "^티토야, 우린 집으로 갈 방법을 찾아야 해!",
 
 	spawns = "등장 타이머",
 	spawns_desc = "피조물 활동 시작에 대한 타이머입니다.",

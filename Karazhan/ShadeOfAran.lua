@@ -187,7 +187,7 @@ L:RegisterTranslations("koKR", function() return {
 	flame_trigger2 = "불타라, 지옥의 악마들아!",
 	flame_message = "화염의 고리!",
 	flame_bar = "화염의 고리",
-	flame_trigger = "화염의 고리|1을;를; 시전합니다.",
+	flame_trigger = "화염의 고리|1을;를; 시전합니다%.$",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
