@@ -17,20 +17,20 @@ L:RegisterTranslations("enUS", function() return {
 	doom_desc = "Warn for Doom.",
 	doom_other = "Doom on %s",
 	doom_you = "Doom on YOU!",
-	
+
 	hoa = "Howl of Azgalor",
 	hoa_desc = "Warn for Howl of Azgalor.",
 	hoa_bar = "~Howl Cooldown",
 	hoa_message = "AOE Silence",
 	hoa_warning = "AOE Silence Soon!",
-	
+
 	rof = "Rain of Fire",
 	rof_desc = "Warn when Rain of Fire is on you.",
 	rof_you = "Rain of Fire on YOU!",
 
 	icon = "Icon",
 	icon_desc = "Place a Raid Icon on the player afflicted by Doom (requires promoted or higher).",
-	
+
 	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by (.*).$",
 } end )
 
@@ -42,7 +42,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Destin funeste (nécessite d'être promu ou mieux).",
-	
+
 	afflict_trigger = "^([^%s]+) ([^%s]+) les effets .* (.*).$",
 } end )
 
@@ -54,7 +54,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	icon = "전술 표시",
 	icon_desc = "파멸에 걸린 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 요구).",
-	
+
 	afflict_trigger = "^([^|;%s]*)(.*)(.+)에 걸렸습니다%.$",
 } end )
 
@@ -65,7 +65,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Hyjal Summit"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"doom", "hoa", "rof", "icon", "bosskill"}
+mod.toggleoptions = {"doom", "hoa", "rof", "icon", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -76,6 +76,9 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
+
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "AzDoom", 2)
@@ -93,8 +96,8 @@ function mod:Event(msg)
 	if aPlayer and aType then
 		if aPlayer == L2["you"] and aType == L2["are"] then
 			aPlayer = UnitName("player")
-			if aSpell == L["rof"] then
-				self:RainOfFire()
+			if aSpell == L["rof"] and self.db.profile.rof then
+				self:Message(L["rof_you"], "Urgent", true, "Alarm")
 			end
 		end
 		if aSpell == L["doom"] then
@@ -103,12 +106,6 @@ function mod:Event(msg)
 			self:Sync("AzHOA ".. aPlayer)
 		end
 	end
-end
-
-function mod:RainOfFire()
-	if self.db.profile.rof then
-		self:Message(L["rof_you"], "Urgent", true, "Alarm")
-	end 
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
@@ -129,5 +126,21 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(L["hoa_message"], "Important")
 		self:Bar(L["hoa_bar"], 16, "Spell_Shadow_ImpPhaseShift")
 		self:DelayedMessage(15, L["hoa_warning"], "Important")
+	elseif self:ValidateEngageSync(sync, rest) and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		if self.db.profile.enrage then
+			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
+			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
+			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
+			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
+			self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
+			self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
+			self:DelayedMessage(595, L2["enrage_sec"]:format(5), "Urgent")
+			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
+		end
 	end
 end
