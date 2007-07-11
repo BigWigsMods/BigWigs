@@ -6,6 +6,9 @@ local boss = AceLibrary("Babble-Boss-2.2")["Archimonde"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
+local UnitName = UnitName
+local pName = nil
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -29,6 +32,15 @@ L:RegisterTranslations("enUS", function() return {
 	fear_message = "Fear, next in ~30sec!",
 	fear_bar = "~Fear Cooldown",
 	fear_warning = "Fear Soon!",
+
+	burst = "Air Burst",
+	burst_desc = "Warn who Air Burst is being cast on.",
+	burst_other = "Air Burst on -%s-",
+	burst_you = "Air Burst on YOU!",
+
+	burstsay = "Air Burst Say",
+	burstsay_desc = "Print in say when you are targetted for Air Burst, can help nearby members with speech bubbles on.",
+	burstsay_message = "Air Burst on me!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -76,7 +88,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Hyjal Summit"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"grip", "icon", "fear", "bosskill"}
+mod.toggleoptions = {"grip", "icon", "fear", "burst", "burstsay", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 mod.proximitySilent = true
@@ -90,13 +102,16 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ArchGrip", 2)
 	self:TriggerEvent("BigWigs_ThrottleSync", "ArchFear", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "ArchBurst", 5)
 	self:TriggerEvent("BigWigs_ShowProximity", self)
 
 	self:RegisterEvent("UNIT_SPELLCAST_START")
-	
+
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "GripEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "GripEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "GripEvent")
+
+	pName = UnitName("player")
 end
 
 ------------------------------
@@ -121,6 +136,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Bar(L["fear_bar"], 30, "Spell_Shadow_DeathScream")
 		self:Message(L["fear_message"], "Important")
 		self:DelayedMessage(25, L["fear_warning"], "Urgent")
+	elseif sync == "ArchBurst" and self.db.profile.burst then
+		self:ScheduleEvent("BWBurstToTScan", self.TargetCheck, 0.3, self)
 	end
 end
 
@@ -137,5 +154,35 @@ end
 function mod:UNIT_SPELLCAST_START(msg)
 	if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["fear"] then
 		self:Sync("ArchFear")
+	elseif if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["burst"] then
+		self:Sync("ArchBurst")
+	end
+end
+
+function mod:TargetCheck()
+	local target
+	if UnitName("target") == boss then
+		target = UnitName("targettarget")
+	elseif UnitName("focus") == boss then
+		target = UnitName("focustarget")
+	else
+		local num = GetNumRaidMembers()
+		for i = 1, num do
+			if UnitName("raid"..i.."target") == boss then
+				target = UnitName("raid"..i.."targettarget")
+				break
+			end
+		end
+	end
+	if target then
+		if target == pName then
+			self:Message(L["burst_you"], "Personal", true, "Long")
+			self:Message(L["burst_other"]:format(target), "Attention", nil, nil, true)
+			if self.db.profile.burstsay then
+				SendChatMessage(L["burstsay_message"], "SAY")
+			end
+		else
+			self:Message(L["burst_other"]:format(target), "Attention")
+		end
 	end
 end
