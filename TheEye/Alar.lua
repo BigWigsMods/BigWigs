@@ -162,6 +162,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 		self:Message(L["engage_message"]:format(boss), "Attention")
 		self:ScheduleRepeatingEvent("BWAlarTargetSeek", self.AlarCheck, 1, self)
+		self:ScheduleEvent("BWAlarNilOccured", nilOccured, 25) --this is here to prevent target problems
 	elseif sync == "AlArArmor" and rest and self.db.profile.armor then
 		local other = L["armor_other"]:format(rest)
 		if rest == UnitName("player") then
@@ -214,4 +215,3 @@ function mod:DebuffEvent(msg)
 		self:Sync("AlArArmor "..aplayer)
 	end
 end
-
