@@ -8,7 +8,8 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local p2 = nil
 
 local UnitName = UnitName
-local GetNumRaidMembers = GetNumRaidMembers
+local num = GetNumRaidMembers()
+local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -220,7 +221,7 @@ function mod:debuff(msg)
 	local wplayer, wtype = select(3, msg:find(L["wrath_trigger"]))
 	if wplayer and wtype then
 		if wplayer == L2["you"] and wtype == L2["are"] then
-			wplayer = UnitName("player")
+			wplayer = pName
 			if self.db.profile.wrathyou then
 				self:Message(L["wrath_you"], "Personal", true, "Alert")
 			end
@@ -266,8 +267,10 @@ function mod:WrathCheck()
 	local target
 	if UnitName("target") == boss then
 		target = UnitName("targettarget")
+	elseif UnitName("focus") == boss then
+		target = UnitName("focustarget")
 	else
-		for i = 1, GetNumRaidMembers() do
+		for i = 1, num do
 			if UnitName("raid"..i.."target") == boss then
 				target = UnitName("raid"..i.."targettarget")
 				break
