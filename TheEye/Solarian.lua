@@ -7,8 +7,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local p2 = nil
 
-local UnitName = UnitName
-local num = GetNumRaidMembers()
 local pName = UnitName("player")
 
 ----------------------------
@@ -270,6 +268,7 @@ function mod:WrathCheck()
 	elseif UnitName("focus") == boss then
 		target = UnitName("focustarget")
 	else
+		local num = GetNumRaidMembers()
 		for i = 1, num do
 			if UnitName("raid"..i.."target") == boss then
 				target = UnitName("raid"..i.."targettarget")
