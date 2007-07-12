@@ -7,9 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local started = nil
 local previous = nil
-
 local UnitName = UnitName
-local UnitExists = UnitExists
 
 ----------------------------
 --      Localization     --

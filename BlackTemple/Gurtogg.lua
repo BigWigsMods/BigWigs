@@ -5,9 +5,8 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Gurtogg Bloodboil"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-
 local UnitName = UnitName
-local GetNumRaidMembers = GetNumRaidMembers
+local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -142,7 +141,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "GurRage" and rest and self.db.profile.rage then
 		self:CancelScheduledEvent("rage1")
 		self:TriggerEvent("BigWigs_StopBar", self, L["phase_normal_bar"])
-		if rest == UnitName("player") then
+		if rest == pName then
 			self:Message(L["rage_you"], "Personal", true, "Long")
 			self:Message(L["rage_other"]:format(rest), "Attention", nil, nil, true)
 		else
@@ -189,7 +188,7 @@ function mod:RageEvent(msg)
 	local rplayer, rtype = select(3, msg:find(L["rage_trigger"]))
 	if rplayer and rtype then
 		if rplayer == L2["you"] and rtype == L2["are"] then
-			rplayer = UnitName("player")
+			rplayer = pName
 		end
 		self:Sync("GurRage "..rplayer)
 	end
@@ -205,8 +204,11 @@ function mod:AcidCheck()
 	local target
 	if UnitName("target") == boss then
 		target = UnitName("targettarget")
+	elseif UnitName("focus") == boss then
+		target = UnitName("focustarget")
 	else
-		for i = 1, GetNumRaidMembers() do
+		local num = GetNumRaidMembers()
+		for i = 1, num do
 			if UnitName("raid"..i.."target") == boss then
 				target = UnitName("raid"..i.."targettarget")
 				break
