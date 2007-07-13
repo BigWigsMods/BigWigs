@@ -371,6 +371,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Afflicted")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Afflicted")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Afflicted")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE", "Afflicted")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 
@@ -379,11 +380,11 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "KaelConflag", 0.5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "KaelConflag", 0.8)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelToy2", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFearSoon", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFear", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "KaelMC", 0)
+	self:TriggerEvent("BigWigs_ThrottleSync", "KaelMC2", 0)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
@@ -488,7 +489,7 @@ function mod:Afflicted(msg)
 		elseif tSpell == L["fear_spell"] then
 			self:Sync("KaelFear")
 		elseif tSpell == L["mc"] then
-			self:Sync("KaelMC")
+			self:Sync("KaelMC2 " .. tPlayer)
 		elseif tSpell == L["toy_trigger"] then
 			for i = 1, GetNumRaidMembers() do
 				if UnitName("raid"..i) == tPlayer then
@@ -533,7 +534,7 @@ function mod:KaelFear(rest, nick)
 	self:Bar(L["fear_bar"], 30, "Spell_Shadow_PsychicScream")
 end
 
-function mod:KaelMC(rest, nick)
+function mod:KaelMC2(rest, nick)
 	MCd[rest] = true
 	self:ScheduleEvent("BWMindControlWarn", self.MCWarn, 1.2, self)
 end
