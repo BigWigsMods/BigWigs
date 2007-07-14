@@ -78,22 +78,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	desc = "设置除本地输出之外的,BigWigs发送的BOSS预警信息.",
 } end )
-L:RegisterTranslations("zhCN", function() return {
-	["RaidWarning"] = "团队警报",
-
-	["Broadcast over RaidWarning"] = "通过团队警告频道发送信息",
-	["Broadcast"] = "广播",
-	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = "切换是否通过团队警告频道发送信息",
-
-	["Whisper"] = "密语",
-	["Whisper warnings"] = "密语警报",
-	["Toggle whispering warnings to players."] = "切换是否通过密语向玩家发送信息",
-
-	["Broadcast to chat"] = "使用团队聊天",
-	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "切换是否使用团队聊天来代替团队警告频道来播放boss的信息",
-
-	desc = "团队警告设置",
-} end )
 
 L:RegisterTranslations("zhTW", function() return {
 	["RaidWarning"] = "團隊警報",
