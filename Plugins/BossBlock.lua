@@ -149,7 +149,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Raid say"] = "RaidSay unterdr\195\188cken",
 	["Suppress RaidSay popup messages."] = "CTRA RaidSay Popup Nachrichten unterdr\195\188cken.",
 
-	["Whispers"] = "Fl\195\188stern unterdr\195\188cken",,
+	["Whispers"] = "Fl\195\188stern unterdr\195\188cken",
 	["Suppress whispered messages."] = "Fl\195\188stern-Nachrichten unterdr\195\188cken.",
 
 	["Suppressing Chatframe"] = "Chatframe unterdr\195\188ckt",
