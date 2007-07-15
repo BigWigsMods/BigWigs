@@ -162,31 +162,39 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Messages"] = "Nachrichten",
-	["Options for message display."] = "Optionen f\195\188r das Nachrichtenfenster.",
+	["Options for message display."] = "Optionen f\195\188r die Anzeige von Nachrichten.",
 
 	["Show anchor"] = "Verankerung anzeigen",
-	["Show the message anchor frame."] = "Verankerung des Nachrichtenfensters anzeigen.",
+	["Show the message anchor frame."] = "Die Verankerung des Nachrichtenfensters anzeigen.",
 
-	["Use colors"] = "Farben benutzen",
+	["Use colors"] = "Farben verwenden",
 	["Toggles white only messages ignoring coloring."] = "Nachrichten farbig/wei\195\159 anzeigen.",
 
 	["Scale"] = "Skalierung",
-	["Set the message frame scale."] = "Skalierung des Nachrichtenfensters w\195\164hlen.",
+	["Set the message frame scale."] = "Die Skalierung des Nachrichtenfensters festlegen.",
+
+	["MSBT Scrollarea"] = "MSBT-Scrollbereich",
+	["Set the MSBT scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."] = "Den MSBT-Scrollbereich festlegen, in dem die Nachrichten erscheinen sollen.\n\nLade dein Interface neu um neue Bereiche in die Liste zu bekommen.",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Fa|cffff00ffr|cff00ff00be|r",
 	["White"] = "Wei\195\159",
-	["BigWigs frame"] = "BigWigs Fenster",
-	["RaidWarning frame"] = "RaidWarning Fenster",
+	["BigWigs frame"] = "BigWigs-Fenster",
+	["RaidWarning frame"] = "Raidwarnung-Fenster",
 
 	["Display"] = "Anzeige",
-	["Set where messages are displayed."] = "W\195\164hle, wo Nachrichten angezeigt werden sollen.",
+	["Set where messages are displayed."] = "Festlegen, wo die Nachrichten angezeigt werden.",
+	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Gibt alle BigsWigs-Nachrichten im Standard-Chatfenster aus, zus\195\164tzlich zur Anzeige-Einstellung.",
 
-	-- ["Mik's Scrolling Battle Text"] = true,
-	-- ["Scrolling Combat Text"] = true,
-	-- ["Floating Combat Text"] = true,
+	["Mik's Scrolling Battle Text"] = "Mik's Scrolling Battle Text",
+	["Scrolling Combat Text"] = "Scrolling Combat Text",
+	["Floating Combat Text"] = "Floating Combat Text",
+	["Chat frame"] = "Chatfenster",
 
 	["Test"] = "Test",
 	["Close"] = "Schlie\195\159en",
+
+	["Reset position"] = "Position zur\195\188cksetzen",
+	["Reset the anchor position, moving it to the center of your screen."] = "Die Verankerungsposition zur\195\188cksetzen (bewegt alles zur Mitte deines Interfaces).",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
