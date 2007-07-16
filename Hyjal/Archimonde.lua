@@ -79,6 +79,16 @@ L:RegisterTranslations("koKR", function() return {
 	fear_message = "공포, 다음은 약 30초 이내!",
 	fear_bar = "~공포 대기시간",
 	fear_warning = "잠시 후 공포!",
+
+	burst = "대기 파열 경보",
+	burst_desc = "대기 파열의 시전 대상을 알림니다.",
+	burst_other = "대기 파열 -%s-",
+	burst_you = "당신에 대기 파열!",
+
+	burstsay = "대기 파열 알림",
+	burstsay_desc = "자신이 대기 파열의 대상이 되었을 때 일반 대화로 알립니다.",
+	burstsay_message = "저! 대기 파열! 피하세요!!",
+
 } end )
 
 ----------------------------------
