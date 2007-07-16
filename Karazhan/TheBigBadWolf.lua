@@ -61,7 +61,7 @@ L:RegisterTranslations("frFR", function() return {
 	elseriding_desc = "Préviens quand les autres sont le Chaperon Rouge.",
 	riding_otherwarn = "%s est le Chaperon Rouge !",
 
-	riding_bar = "%s court",
+	riding_bar = "Chaperon : %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur la personne qui est le Chaperon Rouge (nécessite d'être promu ou mieux).",

@@ -130,19 +130,19 @@ L:RegisterTranslations("frFR", function() return {
 	grave_bar = "Tombeaux aquatique",
 	grave_nextbar = "~Cooldown Tombeaux",
 
-	murloc = "Arrivée des murlocs",
+	murloc = "Murlocs",
 	murloc_desc = "Préviens de l'arrivée des murlocs.",
 	murloc_bar = "~Cooldown Murlocs",
-	--murloc_trigger1 = "By the tides!",
-	--murloc_trigger2 = "Destroy them, my subjects!",
+	murloc_trigger1 = "Par les marées !", -- à vérifier
+	murloc_trigger2 = "Détruisez-les, mes sujets !", -- à vérifier
 	murloc_message = "Arrivée des murlocs !",
 	murloc_soon_message = "Murlocs imminent !",
 	murloc_engaged = "%s engagé, murlocs dans ~40 sec.",
 
-	grobules = "Arrivée des globules",
+	grobules = "Globules",
 	grobules_desc = "Préviens de l'arrivée des globules.",
-	--grobules_trigger1 = "Soon it will be finished!",
-	--grobules_trigger2 = "There is nowhere to hide!",
+	grobules_trigger1 = "Bientôt, ce sera terminé !", -- à vérifier
+	grobules_trigger2 = "Il est impossible de m'échapper !", -- à vérifier
 	grobules_message = "Arrivée des globules !",
 	grobules_warning = "Globules imminent !",
 	grobules_bar = "Disparation des globules",

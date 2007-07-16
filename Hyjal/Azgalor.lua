@@ -40,6 +40,16 @@ L:RegisterTranslations("frFR", function() return {
 	doom_other = "Destin funeste sur %s",
 	doom_you = "Destin funeste sur VOUS !",
 
+	hoa = "Hurlement de terreur",
+	hoa_desc = "Préviens de l'arrivée des Hurlements de terreur.",
+	hoa_bar = "~Cooldown Hurlement",
+	hoa_message = "Silence de zone",
+	hoa_warning = "Silence de zone imminent !",
+
+	rof = "Pluie de feu",
+	rof_desc = "Préviens quand la Pluie de feu est sur vous.",
+	rof_you = "Pluie de feu sur VOUS !",
+
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Destin funeste (nécessite d'être promu ou mieux).",
 

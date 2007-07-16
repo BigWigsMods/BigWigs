@@ -43,7 +43,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	icebolt = "Eclair de glace",
 	icebolt_desc = "Avertissements concernant l'Eclair de glace.",
-	--icebolt_trigger = "Eclair de glace touche ([^%s]+)", --enUS changed
+	icebolt_trigger = "^([^%s]+) ([^%s]+) les effets .* Eclair de glace%.$",
 	icebolt_message = "Eclair de glace sur %s !",
 
 	icon = "Icône",

@@ -60,6 +60,15 @@ L:RegisterTranslations("frFR", function() return {
 	fear_message = "Fear, prochain dans ~30 sec. !",
 	fear_bar = "~Cooldown Fear",
 	fear_warning = "Fear imminent !",
+
+	burst = "Jaillissement d'air",
+	burst_desc = "Préviens sur qui le Jaillissement d'air est incanté.",
+	burst_other = "Jaillissement d'air sur -%s-",
+	burst_you = "Jaillissement d'air sur VOUS !",
+
+	burstsay = "Dire - Jaillissement d'air",
+	burstsay_desc = "Fais dire à votre personnage que vous êtes ciblé par le Jaillissement d'air, afin d'aider les membres proches ayant les bulles de dialogue d'activés.",
+	burstsay_message = "Jaillissement d'air sur moi !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
