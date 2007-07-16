@@ -81,8 +81,8 @@ L:RegisterTranslations("koKR", function() return {
 	fear_warning = "잠시 후 공포!",
 
 	burst = "대기 파열 경보",
-	burst_desc = "대기 파열의 시전 대상을 알림니다.",
-	burst_other = "대기 파열 -%s-",
+	burst_desc = "대기 파열 시전 대상을 알립니다.",
+	burst_other = "-%s- 대기 파열",
 	burst_you = "당신에 대기 파열!",
 
 	burstsay = "대기 파열 알림",

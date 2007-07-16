@@ -66,11 +66,11 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "너희를 기다리는 건 고통과 슬픔뿐이야!",
 
-	enrage_start = "47초 후 격노",
+	enrage_start = "약 47초 후 격노",
 	enrage_trigger = "%s|1이;가; 분노에 휩싸입니다!",
-	enrage_message = "15초간 격노!",
+	enrage_message = "15초 동안 격노!",
 	enrage_bar = "<격노>",
-	enrage_next = "격노 종료 - 다음은 32초 후",
+	enrage_next = "격노 종료 - 다음은 약 32초 후",
 	enrage_nextbar = "다음 격노",
 	enrage_warning = "5초 후 격노!",
 
@@ -84,17 +84,17 @@ L:RegisterTranslations("koKR", function() return {
 	runeshield_trigger = "욕망의 정수|1이;가; 룬 보호막 효과를 얻었습니다.",
 	runeshield_message = "룬 보호막!",
 	runeshield_nextbar = "다음 룬 보호막",
-	runeshield_warn = "3초 후 룬 보호막.",
+	runeshield_warn = "약 3초 후 룬 보호막",
 
 	deaden = "쇠약",
-	deaden_desc = "쇠약을 시전할 때를 알림니다.t.",
+	deaden_desc = "쇠약 시전 시 알립니다.",
 	deaden_trigger = "욕망의 정수|1이;가; 쇠약 시전을 시작합니다.",
 	deaden_message = "쇠약 시전!",
-	deaden_warn = "5초 후 쇠약.",
-	deaden_nextbar = "다음 쇠약.",
+	deaden_warn = "약 5초 후 쇠약!",
+	deaden_nextbar = "다음 쇠약",
 
 	drain = "영혼 흡수",
-	drain_desc = "영혼 흡수에 걸린 대상을 알림니다.",
+	drain_desc = "영혼 흡수에 걸린 대상을 알립니다.",
 	drain_message = "영혼 흡수: %s",
 
 	spite = "Spite",
