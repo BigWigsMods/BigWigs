@@ -143,7 +143,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	static = "Charge statique",
 	static_desc = "Préviens quand la Charge statique affecte un joueur.",
-	static_charge_trigger = "^([^%s]+) ([^%s]+) les effets Charge statique%.$",
+	static_charge_trigger = "^([^%s]+) ([^%s]+) les effets .* Charge statique%.$",
 	static_charge_message = "Charge statique sur %s !",
 	static_fade = "Charge statique vient de se dissiper.",
 
