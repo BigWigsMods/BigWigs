@@ -99,6 +99,11 @@ L:RegisterTranslations("frFR", function() return {
 	pounding_trigger2 = "Calcul des paramètres de puissance...",
 	pounding_nextbar = "~Cooldown Martèlement",
 	pounding_bar = "<Martèlement>",
+
+	knock = "Repousser au loin",
+	knock_desc = "Affiche une barre temporelle indiquant quand le Saccageur du Vide est suceptible d'utiliser son Repousser au loin.",
+	knock_trigger = "Repousser au loin de Saccageur du Vide",
+	knock_bar = "~Cooldown Repousser au loin",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
