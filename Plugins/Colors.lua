@@ -275,12 +275,36 @@ plugin.defaultDB = {
 	long = 4,
 }
 
+local function updateColorTables()
+	if type(shortBar) == "table" then
+		for k in ipairs(shortBar) do shortBar[k] = nil end
+	else
+		shortBar = {}
+	end
+	if type(longBar) == "table" then
+		for k in ipairs(longBar) do longBar[k] = nil end
+	else
+		longBar = {}
+	end
+	local db = plugin.db.profile
+	for i = 1, db.short do
+		shortBar[i] = db[string.format("%s%d", "short", i)]
+	end
+	for i = 1, db.long do
+		longBar[i] = db[string.format("%s%d", "long", i)]
+	end
+end
+
+local function RGBToHex(r, g, b)
+	return ("%02x%02x%02x"):format(r*255, g*255, b*255)
+end
+
 local function get(key)
 	return select(2, PaintChips:GetRGBPercent(plugin.db.profile[key]))
 end
 
 local function set(key, r, g, b)
-	local hex = plugin:RGBToHex(r, g, b)
+	local hex = RGBToHex(r, g, b)
 	PaintChips:RegisterHex(hex)
 	plugin.db.profile[key] = hex
 end
@@ -291,12 +315,12 @@ plugin.consoleOptions = {
 	name = L["Colors"],
 	desc = L["Colors of messages and bars."],
 	args = {
-		["messages"] = {
+		messages = {
 			type = "header",
 			name = L["Messages"],
 			order = 1,
 		},
-		["Important"] = {
+		Important = {
 			name = L["Important"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Important"]),
@@ -305,7 +329,7 @@ plugin.consoleOptions = {
 			set = set,
 			order = 2,
 		},
-		["Personal"] = {
+		Personal = {
 			name = L["Personal"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Personal"]),
@@ -314,7 +338,7 @@ plugin.consoleOptions = {
 			set = set,
 			order = 3,
 		},
-		["Urgent"] = {
+		Urgent = {
 			name = L["Urgent"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Urgent"]),
@@ -323,7 +347,7 @@ plugin.consoleOptions = {
 			set = set,
 			order = 4,
 		},
-		["Attention"] = {
+		Attention = {
 			name = L["Attention"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Attention"]),
@@ -332,7 +356,7 @@ plugin.consoleOptions = {
 			set = set,
 			order = 5,
 		},
-		["Positive"] = {
+		Positive = {
 			name = L["Positive"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Positive"]),
@@ -341,7 +365,7 @@ plugin.consoleOptions = {
 			set = set,
 			order = 6,
 		},
-		["Bosskill"] = {
+		Bosskill = {
 			name = L["Bosskill"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Bosskill"]),
@@ -350,7 +374,7 @@ plugin.consoleOptions = {
 			set = set,
 			order = 7,
 		},
-		["Core"] = {
+		Core = {
 			name = L["Core"],
 			type = "color",
 			desc = L["Change the color for %q messages."]:format(L["Core"]),
@@ -359,63 +383,64 @@ plugin.consoleOptions = {
 			set = set,
 			order = 8,
 		},
-		["spacer1"] = { type = "header", name = " ", order = 9, },
-		["bars"] = {
+		spacer1 = { type = "header", name = " ", order = 9, },
+		bars = {
 			type = "header",
 			name = L["Bars"],
 			order = 10,
 		},
-		["short"] = {
+		["Bar-Short"] = {
 			type = "group",
 			name = L["Short bars"],
 			desc = L["Colors for short bars (< 1 minute)."],
 			order = 11,
 			pass = true,
 			get = function(key)
-				if key == "amount" then
+				if key == "Amount" then
 					return plugin.db.profile.short
-				else
-					return select(2, PaintChips:GetRGBPercent(plugin.db.profile[key]))
+				elseif type(key) == "number" then
+					return select(2, PaintChips:GetRGBPercent(plugin.db.profile[string.format("%s%d", "short", key)]))
 				end
 			end,
 			set = function(key, r, g, b)
-				if key == "amount" then
+				if key == "Amount" then
 					plugin.db.profile.short = r
-				else
-					local hex = plugin:RGBToHex(r, g, b)
+				elseif type(key) == "number" then
+					local hex = RGBToHex(r, g, b)
 					PaintChips:RegisterHex(hex)
-					plugin.db.profile[key] = hex
+					plugin.db.profile[string.format("%s%d", "short", key)] = hex
 				end
+				updateColorTables()
 			end,
 			args = {
-				["short1"] = {
+				[1] = {
 					name = L["Color %d"]:format(1),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["1st"]),
 					order = 1,
 				},
-				["short2"] = {
+				[2] = {
 					name = L["Color %d"]:format(2),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["2nd"]),
 					disabled = function() return plugin.db.profile.short < 2 end,
 					order = 2,
 				},
-				["short3"] = {
+				[3] = {
 					name = L["Color %d"]:format(3),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["3rd"]),
 					disabled = function() return plugin.db.profile.short < 3 end,
 					order = 3,
 				},
-				["short4"] = {
+				[4] = {
 					name = L["Color %d"]:format(4),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["4th"]),
 					disabled = function() return plugin.db.profile.short < 4 end,
 					order = 4,
 				},
-				["amount"] = {
+				Amount = {
 					name = L["Number of colors"],
 					type = "range",
 					desc = L["Number of colors the bar has."],
@@ -426,57 +451,58 @@ plugin.consoleOptions = {
 				},
 			},
 		},
-		[L["Long"]] = {
+		["Bar-Long"] = {
 			type = "group",
 			name = L["Long bars"],
 			desc = L["Colors for long bars (> 1 minute)."],
 			order = 12,
 			pass = true,
 			get = function(key)
-				if key == "amount" then
+				if key == "Amount" then
 					return plugin.db.profile.long
-				else
-					return select(2, PaintChips:GetRGBPercent(plugin.db.profile[key]))
+				elseif type(key) == "number" then
+					return select(2, PaintChips:GetRGBPercent(plugin.db.profile[string.format("%s%d", "long", key)]))
 				end
 			end,
 			set = function(key, r, g, b)
-				if key == "amount" then
+				if key == "Amount" then
 					plugin.db.profile.long = r
-				else
-					local hex = plugin:RGBToHex(r, g, b)
+				elseif type(key) == "number" then
+					local hex = RGBToHex(r, g, b)
 					PaintChips:RegisterHex(hex)
-					plugin.db[key] = hex
+					plugin.db[string.format("%s%d", "long", key)] = hex
 				end
+				updateColorTables()
 			end,
 			args = {
-				["long1"] = {
+				[1] = {
 					name = L["Color %d"]:format(1),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["1st"]),
 					order = 1,
 				},
-				["long2"] = {
+				[2] = {
 					name = L["Color %d"]:format(2),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["2nd"]),
 					disabled = function() return plugin.db.profile.long < 2 end,
 					order = 2,
 				},
-				["long3"] = {
+				[3] = {
 					name = L["Color %d"]:format(3),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["3rd"]),
 					disabled = function() return plugin.db.profile.long < 3 end,
 					order = 3,
 				},
-				["long4"] = {
+				[4] = {
 					name = L["Color %d"]:format(4),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["4th"]),
 					disabled = function() return plugin.db.profile.long < 4 end,
 					order = 4,
 				},
-				["amount"] = {
+				Amount = {
 					name = L["Number of colors"],
 					type = "range",
 					desc = L["Number of colors the bar has."],
@@ -487,7 +513,7 @@ plugin.consoleOptions = {
 				},
 			},
 		},
-		[L["Background"]] = {
+		["Bar-Background"] = {
 			name = L["Background"],
 			type = "color",
 			desc = L["Change the bar background color."],
@@ -501,14 +527,14 @@ plugin.consoleOptions = {
 				end
 			end,
 			set = function(r, g, b, a)
-				local hex = plugin:RGBToHex(r, g, b)
+				local hex = RGBToHex(r, g, b)
 				PaintChips:RegisterHex(hex)
 				plugin.db.profile.bgc = hex
 				plugin.db.profile.bga = a
 			end,
 			order = 13,
 		},
-		[L["Text"]] = {
+		["Bar-Text"] = {
 			name = L["Text"],
 			type = "color",
 			desc = L["Change the bar text color."],
@@ -522,8 +548,8 @@ plugin.consoleOptions = {
 			set = function(r, g, b) set("txtc", r, g, b) end,
 			order = 14,
 		},
-		["spacer2"] = { type = "header", name = " ", order = 15, },
-		[L["Reset"]] = {
+		spacer2 = { type = "header", name = " ", order = 15, },
+		Reset = {
 			type = "execute",
 			name = L["Reset"],
 			desc = L["Resets all colors to defaults."],
@@ -552,27 +578,7 @@ function plugin:OnEnable()
 	RegHex(self.db.profile)
 
 	if type(shortBar) ~= "table" then
-		self:UpdateColorTables()
-	end
-end
-
-function plugin:UpdateColorTables()
-	if type(shortBar) == "table" then
-		for k in ipairs(shortBar) do shortBar[k] = nil end
-	else
-		shortBar = {}
-	end
-	if type(longBar) == "table" then
-		for k in ipairs(longBar) do longBar[k] = nil end
-	else
-		longBar = {}
-	end
-	local db = self.db.profile
-	for i = 1, db.short do
-		shortBar[i] = db["short"..i]
-	end
-	for i = 1, db.long do
-		longBar[i] = db["long"..i]
+		updateColorTables()
 	end
 end
 
@@ -599,10 +605,6 @@ function plugin:ResetDB()
 	copyTable(self.db.profile, self.defaultDB)
 end
 
-function plugin:RGBToHex(r, g, b)
-	return ("%02x%02x%02x"):format(r*255, g*255, b*255)
-end
-
 function plugin:MsgColor(hint)
 	local color = self.db.profile[hint]
 	if type(color) ~= "string" then return hint end
@@ -616,5 +618,4 @@ function plugin:BarColor(time)
 		return unpack(longBar)
 	end
 end
-
 
