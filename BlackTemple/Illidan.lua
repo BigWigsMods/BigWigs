@@ -32,6 +32,16 @@ L:RegisterTranslations("enUS", function() return {
 	eyeblast_desc = "Warn when Eye Blast is cast.",
 	eyeblast_trigger = "Stare into the eyes of the Betrayer!",
 	eyeblast_message = "Eye Blast!",
+
+	flame = "Agonizing Flames",
+	flame_desc = "Warn who has Agonizing Flames.",
+	flame_trigger = "^([^%s]+) ([^%s]+) afflicted by Agonizing Flames%.$",
+	flame_message = "%s has Agonizing Flames!",
+
+	demons = "Shadow Demons",
+	demons_desc = "Warn when Illidan is summoning Shadow Demons.",
+	demons_trigger = "Summon Shadow Demons",
+	demons_message = "Shadow Demons!",
 } end )
 
 ----------------------------------
@@ -41,7 +51,7 @@ L:RegisterTranslations("enUS", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"parasite", "eyeblast", "barrage", "bosskill"}
+mod.toggleoptions = {"parasite", "eyeblast", "barrage", "flame", "demons", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -60,6 +70,8 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "AfflictEvent")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("UNIT_SPELLCAST_START")
+
 	pName = UnitName("player")
 end
 
@@ -83,6 +95,10 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	elseif sync == "IliBara" and rest and self.db.profile.barrage then
 		self:Message(L["barrage_message"]:format(rest), "Important", nil, "Alert")
+	elseif sync == "IliFlame" and rest and self.db.profile.flame then
+		self:Message(L["flame_message"]:format(rest), "Important", nil, "Alert")
+	elseif sync == "IliDemons" and self.db.profile.demons then
+		self:Message(L["demons_message"], "Important", nil, "Alert")
 	end
 end
 
@@ -102,10 +118,24 @@ function mod:AfflictEvent(msg)
 		end
 		self:Sync("IliBara "..bplayer)
 	end
+
+	local fplayer, ftype = select(3, msg:find(L["flame_trigger"]))
+	if fplayer and ftype then
+		if fplayer == L2["you"] and ftype == L2["are"] then
+			fplayer = pName
+		end
+		self:Sync("IliFlame "..fplayer)
+	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["eyeblast_trigger"] then
 		self:Message(L["eyeblast_message"], "Important", nil, "Alert")
+	end
+end
+
+function mod:UNIT_SPELLCAST_START(msg)
+	if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["demons_trigger"] then
+		self:Sync("IliDemons")
 	end
 end
