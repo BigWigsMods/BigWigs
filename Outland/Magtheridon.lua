@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -242,10 +242,10 @@ L:RegisterTranslations("zhTW", function() return {
 	escape_bar = "被釋放...",
 	escape_message = "%s 被釋放了！",
 
-	abyssal = "燃燒的深淵",
-	abyssal_desc = "當地獄火導魔師創造燃燒的深淵時發出警報",
-	abyssal_trigger = "地獄火導魔師施放了燃燒的深淵。",
-	abyssal_message = "燃燒的深淵已創造 (%d)",
+        abyssal = "燃燒的冥淵火",    --智缺迪偷改了名字
+        abyssal_desc = "當地獄火導魔師創造燃燒的冥淵火時發出警報",
+        abyssal_trigger = "地獄火導魔師施放了燃燒的冥淵火。",
+        abyssal_message = "燃燒的冥淵火已創造 (%d)",
 
 	heal = "黑暗治療",
 	heal_desc = "當地獄火導魔師開始治療時發出警報",
@@ -254,7 +254,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	nova = "衝擊新星",
 	nova_desc = "衝擊新星計時",
-	nova_ = "衝擊新星！",
+        nova_ = "衝擊新星!",              --！改成! 
 	nova_bar = "衝擊新星冷卻",
 	nova_warning = "即將施放衝擊新星！",
 	nova_cast = "開始施放衝擊新星!",

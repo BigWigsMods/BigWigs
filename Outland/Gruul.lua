@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -170,7 +170,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	grow = "成長警告",
 	grow_desc = "計算並當戈魯爾成長時發送警告",
-	grow_trigger = "%s 變大了!",
+	grow_trigger = "%s變大了!",
 	grow_message = "成長 : (%d)",
 	grow_bar = "成長 (%d)",
 
