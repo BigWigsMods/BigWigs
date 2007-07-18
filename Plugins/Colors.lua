@@ -5,7 +5,6 @@
 ------------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsColors")
-local PaintChips = AceLibrary("PaintChips-2.0")
 
 local shortBar
 local longBar
@@ -254,25 +253,32 @@ local plugin = BigWigs:NewModule("Colors")
 
 plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
-	Important = "ff0000", -- Red
-	Personal = "ff0000", -- Red
-	Urgent = "ff7f00", -- Orange
-	Attention = "ffff00", -- Yellow
-	Positive = "00ff00", -- Green
-	Bosskill = "00ff00", -- Green
-	Core = "00ffff", -- Cyan
+	Important = { r = 1, g = 0, b = 0 }, -- Red
+	Personal = { r = 1, g = 0, b = 0 }, -- Red
+	Urgent = { r = 1, g = 0.5, b = 0 }, -- Orange
+	Attention = { r = 1, g = 1, b = 0 }, -- Yellow
+	Positive = { r = 0, g = 1, b = 0 }, -- Green
+	Bosskill = { r = 0, g = 1, b = 0 }, -- Green
+	Core = { r = 0, g = 1, b = 1 }, -- Cyan
 
-	short1 = "ffff00",
-	short2 = "ff7f00",
-	short3 = "ff0000",
-	short4 = "ff0000",
-	short = 3,
+	barBackground = { r = 0.6, g = 0.1, b = 0, a = 0.5 },
+	barTextColor = { r = 1, g = 1, b = 1 },
 
-	long1 = "00ff00",
-	long2 = "ffff00",
-	long3 = "ff7f00",
-	long4 = "ff0000",
-	long = 4,
+	short = {
+		amount = 3,
+		[1] = { r = 1, g = 1, b = 0 },
+		[2] = { r = 1, g = 0.5, b = 0 },
+		[3] = { r = 1, g = 0, b = 0 },
+		[4] = { r = 1, g = 0, b = 0 },
+	},
+
+	long = {
+		amount = 4,
+		[1] = { r = 0, g = 1, b = 0 },
+		[2] = { r = 1, g = 1, b = 0 },
+		[3] = { r = 1, g = 0.5, b = 0 },
+		[4] = { r = 1, g = 0, b = 0 },
+	},
 }
 
 local function updateColorTables()
@@ -287,26 +293,29 @@ local function updateColorTables()
 		longBar = {}
 	end
 	local db = plugin.db.profile
-	for i = 1, db.short do
-		shortBar[i] = db[string.format("%s%d", "short", i)]
+	for i = 1, db.short.amount do
+		table.insert(shortBar, db.short[i].r)
+		table.insert(shortBar, db.short[i].g)
+		table.insert(shortBar, db.short[i].b)
 	end
-	for i = 1, db.long do
-		longBar[i] = db[string.format("%s%d", "long", i)]
+	for i = 1, db.long.amount do
+		table.insert(longBar, db.long[i].r)
+		table.insert(longBar, db.long[i].g)
+		table.insert(longBar, db.long[i].b)
 	end
-end
-
-local function RGBToHex(r, g, b)
-	return ("%02x%02x%02x"):format(r*255, g*255, b*255)
 end
 
 local function get(key)
-	return select(2, PaintChips:GetRGBPercent(plugin.db.profile[key]))
+	local t = plugin.db.profile[key]
+	return t.r, t.g, t.b, t.a
 end
 
-local function set(key, r, g, b)
-	local hex = RGBToHex(r, g, b)
-	PaintChips:RegisterHex(hex)
-	plugin.db.profile[key] = hex
+local function set(key, r, g, b, a)
+	local t = plugin.db.profile[key]
+	t.r = r
+	t.g = g
+	t.b = b
+	t.a = a
 end
 
 plugin.consoleCmd = L["Colors"]
@@ -397,18 +406,20 @@ plugin.consoleOptions = {
 			pass = true,
 			get = function(key)
 				if key == "Amount" then
-					return plugin.db.profile.short
+					return plugin.db.profile.short.amount
 				elseif type(key) == "number" then
-					return select(2, PaintChips:GetRGBPercent(plugin.db.profile[string.format("%s%d", "short", key)]))
+					local t = plugin.db.profile.short[key]
+					return t.r, t.g, t.b
 				end
 			end,
 			set = function(key, r, g, b)
 				if key == "Amount" then
-					plugin.db.profile.short = r
+					plugin.db.profile.short.amount = r
 				elseif type(key) == "number" then
-					local hex = RGBToHex(r, g, b)
-					PaintChips:RegisterHex(hex)
-					plugin.db.profile[string.format("%s%d", "short", key)] = hex
+					local t = plugin.db.profile.short[key]
+					t.r = r
+					t.g = g
+					t.b = b
 				end
 				updateColorTables()
 			end,
@@ -423,21 +434,21 @@ plugin.consoleOptions = {
 					name = L["Color %d"]:format(2),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["2nd"]),
-					disabled = function() return plugin.db.profile.short < 2 end,
+					disabled = function() return plugin.db.profile.short.amount < 2 end,
 					order = 2,
 				},
 				[3] = {
 					name = L["Color %d"]:format(3),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["3rd"]),
-					disabled = function() return plugin.db.profile.short < 3 end,
+					disabled = function() return plugin.db.profile.short.amount < 3 end,
 					order = 3,
 				},
 				[4] = {
 					name = L["Color %d"]:format(4),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["4th"]),
-					disabled = function() return plugin.db.profile.short < 4 end,
+					disabled = function() return plugin.db.profile.short.amount < 4 end,
 					order = 4,
 				},
 				Amount = {
@@ -459,18 +470,20 @@ plugin.consoleOptions = {
 			pass = true,
 			get = function(key)
 				if key == "Amount" then
-					return plugin.db.profile.long
+					return plugin.db.profile.long.amount
 				elseif type(key) == "number" then
-					return select(2, PaintChips:GetRGBPercent(plugin.db.profile[string.format("%s%d", "long", key)]))
+					local t = plugin.db.profile.long[key]
+					return t.r, t.g, t.b
 				end
 			end,
 			set = function(key, r, g, b)
 				if key == "Amount" then
-					plugin.db.profile.long = r
+					plugin.db.profile.long.amount = r
 				elseif type(key) == "number" then
-					local hex = RGBToHex(r, g, b)
-					PaintChips:RegisterHex(hex)
-					plugin.db[string.format("%s%d", "long", key)] = hex
+					local t = plugin.db.profile.long[key]
+					t.r = r
+					t.g = g
+					t.b = b
 				end
 				updateColorTables()
 			end,
@@ -485,21 +498,21 @@ plugin.consoleOptions = {
 					name = L["Color %d"]:format(2),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["2nd"]),
-					disabled = function() return plugin.db.profile.long < 2 end,
+					disabled = function() return plugin.db.profile.long.amount < 2 end,
 					order = 2,
 				},
 				[3] = {
 					name = L["Color %d"]:format(3),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["3rd"]),
-					disabled = function() return plugin.db.profile.long < 3 end,
+					disabled = function() return plugin.db.profile.long.amount < 3 end,
 					order = 3,
 				},
 				[4] = {
 					name = L["Color %d"]:format(4),
 					type = "color",
 					desc = L["Change the %s color."]:format(L["4th"]),
-					disabled = function() return plugin.db.profile.long < 4 end,
+					disabled = function() return plugin.db.profile.long.amount < 4 end,
 					order = 4,
 				},
 				Amount = {
@@ -518,34 +531,18 @@ plugin.consoleOptions = {
 			type = "color",
 			desc = L["Change the bar background color."],
 			hasAlpha = true,
-			get = function()
-				if plugin.db.profile.bgc then
-					local r, g, b = select(2, PaintChips:GetRGBPercent(plugin.db.profile.bgc))
-					return r, g, b, plugin.db.profile.bga
-				else
-					return 0, .5, .5, .5
-				end
-			end,
-			set = function(r, g, b, a)
-				local hex = RGBToHex(r, g, b)
-				PaintChips:RegisterHex(hex)
-				plugin.db.profile.bgc = hex
-				plugin.db.profile.bga = a
-			end,
+			get = get,
+			set = set,
+			passValue = "barBackground",
 			order = 13,
 		},
 		["Bar-Text"] = {
 			name = L["Text"],
 			type = "color",
 			desc = L["Change the bar text color."],
-			get = function()
-				if plugin.db.profile.txtc then
-					return get("txtc")
-				else
-					return 1, 1, 1
-				end
-			end,
-			set = function(r, g, b) set("txtc", r, g, b) end,
+			get = get,
+			set = set,
+			passValue = "barTextColor",
 			order = 14,
 		},
 		spacer2 = { type = "header", name = " ", order = 15, },
@@ -564,19 +561,7 @@ plugin.consoleOptions = {
 --      Initialization      --
 ------------------------------
 
-local function RegHex(hex)
-	if type(hex) == "string" then
-		PaintChips:RegisterHex(hex)
-	elseif type(hex) == "table" then
-		for _,hexx in pairs(hex) do
-			RegHex(hexx)
-		end
-	end
-end
-
 function plugin:OnEnable()
-	RegHex(self.db.profile)
-
 	if type(shortBar) ~= "table" then
 		updateColorTables()
 	end
@@ -605,10 +590,17 @@ function plugin:ResetDB()
 	copyTable(self.db.profile, self.defaultDB)
 end
 
+function plugin:HasMessageColor(hint)
+	return self.db.profile[hint] and true or nil
+end
+
 function plugin:MsgColor(hint)
-	local color = self.db.profile[hint]
-	if type(color) ~= "string" then return hint end
-	return color
+	local t = self.db.profile[hint]
+	if t then
+		return t.r, t.g, t.b
+	else
+		return 1, 1, 1
+	end
 end
 
 function plugin:BarColor(time)

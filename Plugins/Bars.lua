@@ -628,7 +628,7 @@ local function setupEmphasizedGroup()
 	plugin:SetCandyBarGroupGrowth("BigWigsEmphasizedGroup", u)
 end
 
-function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10)
+function plugin:BigWigs_StartBar(module, text, time, icon, otherc, ...)
 	if not text or not time then return end
 	local id = "BigWigsBar "..text
 	local u = self.db.profile.growup
@@ -639,18 +639,14 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 	self:SetCandyBarGroupPoint("BigWigsGroup", u and "BOTTOM" or "TOP", anchor, u and "TOP" or "BOTTOM", 0, 0)
 	self:SetCandyBarGroupGrowth("BigWigsGroup", u)
 
-	-- We really need to clean up in the mess that is colors right now, and
-	-- possibly move away from PaintChips.
-	local bc, balpha, txtc
-	if type(colorModule) == "table" then
-		if type(otherc) ~= "boolean" or not otherc then c1, c2, c3, c4, c5, c6, c7, c8, c9, c10 = colorModule:BarColor(time) end
-		bc, balpha, txtc = colorModule.db.profile.bgc, colorModule.db.profile.bga, colorModule.db.profile.txtc
-	end
-
 	if not moduleBars[module] then moduleBars[module] = {} end
 	moduleBars[module][id] = true
 
-	self:RegisterCandyBar(id, time, text, icon, c1, c2, c3, c4, c5, c6, c8, c9, c10)
+	if type(colorModule) == "table" and (type(otherc) ~= "boolean" or not otherc) then
+		self:RegisterCandyBar(id, time, text, icon, colorModule:BarColor(time))
+	else
+		self:RegisterCandyBar(id, time, text, icon, ...)
+	end
 
 	local db = self.db.profile
 
@@ -697,8 +693,13 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, c1, c2, c3, c
 	self:RegisterCandyBarWithGroup(id, groupId)
 
 	self:SetCandyBarTexture(id, media:Fetch(mType, db.texture))
-	if bc then self:SetCandyBarBackgroundColor(id, bc, balpha) end
-	if txtc then self:SetCandyBarTextColor(id, txtc) end
+
+	if type(colorModule) == "table" then
+		local bg = colorModule.db.profile.barBackground
+		self:SetCandyBarBackgroundColor(id, bg.r, bg.g, bg.b, bg.a)
+		local txt = colorModule.db.profile.barTextColor
+		self:SetCandyBarTextColor(id, txt.r, txt.g, txt.b, txt.a)
+	end
 
 	if type(db.width) == "number" then
 		self:SetCandyBarWidth(id, db.width)
@@ -738,11 +739,10 @@ do
 	generateColors = function()
 		flashColors = {}
 		for i = 0.1, 1, 0.1 do
-			local r, g, b = ColorGradient(i, 255,0,0, 0,0,0)
-			local hex = ("%02x%02x%02x"):format(r, g, b)
-			paint:RegisterHex(hex) -- We have to do this because CandyBar fails silently on hex codes not registered with paintchips ...
-			table.insert(flashColors, hex:lower()) -- hex:lower() because that's what PaintChips uses for the "name" .. wtf.
+			local r, g, b = ColorGradient(i, 1,0,0, 0,0,0)
+			table.insert(flashColors, {r, g, b, 0.5})
 		end
+		BigWigs:PrintLiteral(flashColors)
 	end
 end
 
@@ -750,7 +750,7 @@ local flashBarUp, flashBarDown
 
 local currentColor = {}
 flashBarUp = function(id)
-	plugin:SetCandyBarBackgroundColor(id, flashColors[currentColor[id]], 0.5)
+	plugin:SetCandyBarBackgroundColor(id, unpack(flashColors[currentColor[id]]))
 	if currentColor[id] == #flashColors then
 		plugin:ScheduleRepeatingEvent(id, flashBarDown, 0.1, id)
 		return
@@ -758,7 +758,7 @@ flashBarUp = function(id)
 	currentColor[id] = currentColor[id] + 1
 end
 flashBarDown = function(id)
-	plugin:SetCandyBarBackgroundColor(id, flashColors[currentColor[id]], 0.5)
+	plugin:SetCandyBarBackgroundColor(id, unpack(flashColors[currentColor[id]]))
 	if currentColor[id] == 1 then
 		plugin:ScheduleRepeatingEvent(id, flashBarUp, 0.1, id)
 		return

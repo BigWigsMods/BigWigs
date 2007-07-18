@@ -5,7 +5,7 @@
 ------------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsMessages")
-local paint = AceLibrary("PaintChips-2.0")
+local paint = AceLibrary:HasInstance("PaintChips-2.0") and AceLibrary("PaintChips-2.0") or nil
 
 local colorModule = nil
 local messageFrame = nil
@@ -408,10 +408,9 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 	if db.usecolors then
 		if type(color) == "table" and type(color.r) == "number" and type(color.g) == "number" and type(color.b) == "number" then
 			r, g, b = color.r, color.g, color.b
-		else
-			if type(colorModule) == "table" and type(colorModule.MsgColor) == "function" then
-				color = colorModule:MsgColor(color)
-			end
+		elseif type(colorModule) == "table" and colorModule:HasMessageColor(color) then
+			r, g, b = colorModule:MsgColor(color)
+		elseif paint then
 			r, g, b = select(2, paint:GetRGBPercent(color or "white"))
 		end
 	end
