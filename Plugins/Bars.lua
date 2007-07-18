@@ -345,6 +345,13 @@ local function setOption(key, value)
 	else
 		plugin.db.profile[key] = value
 	end
+	if key == "growup" and anchor then
+		plugin:SetCandyBarGroupPoint("BigWigsGroup", value and "BOTTOM" or "TOP", anchor, value and "TOP" or "BOTTOM", 0, 0)
+		plugin:SetCandyBarGroupGrowth("BigWigsGroup", value)
+	elseif key == "emphasizeGrowup" and emphasizeAnchor then
+		plugin:SetCandyBarGroupPoint("BigWigsEmphasizedGroup", value and "BOTTOM" or "TOP", emphasizeAnchor, value and "TOP" or "BOTTOM", 0, 0)
+		plugin:SetCandyBarGroupGrowth("BigWigsEmphasizedGroup", value)
+	end
 end
 local function shouldDisableEmphasizeOption()
 	return not plugin.db.profile.emphasize
@@ -620,24 +627,10 @@ function plugin:BigWigs_HideAnchors()
 	end
 end
 
-local function setupEmphasizedGroup()
-	local u = plugin.db.profile.emphasizeGrowup
-	plugin:RegisterCandyBarGroup("BigWigsEmphasizedGroup")
-	if not emphasizeAnchor then plugin:SetupFrames(true) end
-	plugin:SetCandyBarGroupPoint("BigWigsEmphasizedGroup", u and "BOTTOM" or "TOP", emphasizeAnchor, u and "TOP" or "BOTTOM", 0, 0)
-	plugin:SetCandyBarGroupGrowth("BigWigsEmphasizedGroup", u)
-end
-
 function plugin:BigWigs_StartBar(module, text, time, icon, otherc, ...)
 	if not text or not time then return end
 	local id = "BigWigsBar "..text
-	local u = self.db.profile.growup
-
-	-- yes we try and register every time, we also set the point every time since people can change their mind midbar.
-	self:RegisterCandyBarGroup("BigWigsGroup")
 	if not anchor then self:SetupFrames() end
-	self:SetCandyBarGroupPoint("BigWigsGroup", u and "BOTTOM" or "TOP", anchor, u and "TOP" or "BOTTOM", 0, 0)
-	self:SetCandyBarGroupGrowth("BigWigsGroup", u)
 
 	if not moduleBars[module] then moduleBars[module] = {} end
 	moduleBars[module][id] = true
@@ -673,7 +666,7 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, ...)
 			-- right away.
 			if db.emphasizeMove then
 				groupId = "BigWigsEmphasizedGroup"
-				setupEmphasizedGroup()
+				if not emphasizeAnchor then self:SetupFrames(true) end
 				scale = db.emphasizeScale or 1
 			end
 			if db.emphasizeFlash then
@@ -742,7 +735,6 @@ do
 			local r, g, b = ColorGradient(i, 1,0,0, 0,0,0)
 			table.insert(flashColors, {r, g, b, 0.5})
 		end
-		BigWigs:PrintLiteral(flashColors)
 	end
 end
 
@@ -826,7 +818,7 @@ function plugin:EmphasizeBar(module, id)
 
 	if emphasizeTimers[module] then emphasizeTimers[module][id] = nil end
 
-	setupEmphasizedGroup()
+	if not emphasizeAnchor then self:SetupFrames(true) end
 
 	if not self:IsEventScheduled("BigWigsBarMover") then
 		self:ScheduleRepeatingEvent("BigWigsBarMover", self.UpdateBars, 0, self)
@@ -946,6 +938,18 @@ function plugin:SetupFrames(emphasize)
 		else
 			self:ResetAnchor("normal")
 		end
+	end
+
+	if emphasize then
+		local value = self.db.profile.emphasizeGrowup
+		self:RegisterCandyBarGroup("BigWigsEmphasizedGroup")
+		self:SetCandyBarGroupPoint("BigWigsEmphasizedGroup", value and "BOTTOM" or "TOP", emphasizeAnchor, value and "TOP" or "BOTTOM", 0, 0)
+		self:SetCandyBarGroupGrowth("BigWigsEmphasizedGroup", value)
+	else
+		local value = self.db.profile.growup
+		self:RegisterCandyBarGroup("BigWigsGroup")
+		self:SetCandyBarGroupPoint("BigWigsGroup", value and "BOTTOM" or "TOP", anchor, value and "TOP" or "BOTTOM", 0, 0)
+		self:SetCandyBarGroupGrowth("BigWigsGroup", value)
 	end
 end
 
