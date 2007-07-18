@@ -33,12 +33,12 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_nextbar = "Next Enrage",
 	enrage_warning = "Enrage in 5 sec!",
 
-	desire_trigger  = "You can have anything you desire... for a price.", 
-	desire_start = "Essence of Desire - Zero mana in 160 sec", 
-	desire_bar = "Zero Mana", 
+	desire_trigger  = "You can have anything you desire... for a price.",
+	desire_start = "Essence of Desire - Zero mana in 160 sec",
+	desire_bar = "Zero Mana",
 	desire_warn = "Zero Mana in 30sec!",
 
-	runeshield = "Rune Shield", 
+	runeshield = "Rune Shield",
 	runeshield_desc = "Timers for when Essence of Desire will gain rune shield.",
 	runeshield_trigger = "Essence of Desire gains Rune Shield.",
 	runeshield_message = "Rune Shield!",
@@ -74,12 +74,12 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_nextbar = "다음 격노",
 	enrage_warning = "5초 후 격노!",
 
-	desire_trigger  = "선택은 자유지만... 대가는 치러야 하는 법.", 
-	desire_start = "욕망의 정수 - 160초 후 마나 0", 
-	desire_bar = "마나 0", 
+	desire_trigger  = "선택은 자유지만... 대가는 치러야 하는 법.",
+	desire_start = "욕망의 정수 - 160초 후 마나 0",
+	desire_bar = "마나 0",
 	desire_warn = "30초 후 마나 0!",
 
-	runeshield = "룬 보호막", 
+	runeshield = "룬 보호막",
 	runeshield_desc = "욕망의 정수가 룬 보호막을 얻을 떄에 대한 타이머 입니다.",
 	runeshield_trigger = "욕망의 정수|1이;가; 룬 보호막 효과를 얻었습니다.",
 	runeshield_message = "룬 보호막!",
@@ -97,11 +97,11 @@ L:RegisterTranslations("koKR", function() return {
 	drain_desc = "영혼 흡수에 걸린 대상을 알립니다.",
 	drain_message = "영혼 흡수: %s",
 
-	spite = "Spite",
-	spite_desc = "Warn who has Spite.",
-	spite_message = "Spite: %s",
+	spite = "원한",
+	spite_desc = "원한에 걸린 대상을 알립니다.",
+	spite_message = "원한: %s",
 
-	afflict_trigger ="^([^|;%s]*)(.*)(.+)에 걸렸습니다%.$",
+	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$", -- Check
 } end )
 
 ----------------------------------
