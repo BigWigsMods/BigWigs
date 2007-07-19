@@ -157,9 +157,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 	buff = "狀態警告",
 	buff_desc = ("當 %s 和 %s 施放狀態時發送警告"):format(boy, girl),
-	buff1_trigger = "獲得了虔誠的效果。",
+	buff1_trigger = "獲得了膽量的效果。",
 	buff1_message = "%s 在施放增益狀態 - 請偷取",
-	buff2_trigger = "獲得了膽量的效果。",
+	buff2_trigger = "獲得了虔誠的效果。",
 	buff2_message = "%s 在施放增益狀態 - 請偷取",
 } end)
 

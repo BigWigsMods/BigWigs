@@ -135,7 +135,7 @@ L:RegisterTranslations("zhTW", function() return {
 	icon = "標記圖示",
 	icon_desc = "為被絞喉的玩家設置團隊標記（需要權限）",
 
-	enrage_trigger = "%s 變得憤怒了!",--要抓 combatlog
+	enrage_trigger = "%s變得憤怒了!",--要抓 combatlog
 	enrage_message = "憤怒",
 	enrage_warning = "摩洛即將進入憤怒狀態",
 } end)
