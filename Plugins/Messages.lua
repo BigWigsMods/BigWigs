@@ -40,6 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Set where messages are displayed."] = true,
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = true,
 
+	["Parrot"] = true,
 	["Mik's Scrolling Battle Text"] = true,
 	["Scrolling Combat Text"] = true,
 	["Floating Combat Text"] = true,
@@ -349,6 +350,10 @@ if CombatText_AddMessage then
 	table.insert(plugin.consoleOptions.args.display.validate, L["Floating Combat Text"])
 end
 
+if Parrot then
+	table.insert(plugin.consoleOptions.args.display.validate, L["Parrot"])
+end
+
 ------------------------------
 --      Initialization      --
 ------------------------------
@@ -425,6 +430,8 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 		SCT_MSG_FRAME:AddMessage( text, r, g, b, 1 )
 	elseif CombatText_AddMessage and display == L["Floating Combat Text"] then -- Blizzards FCT
 		CombatText_AddMessage(text, COMBAT_TEXT_SCROLL_FUNCTION, r, g, b, "sticky", nil)
+	elseif Parrot and display == L["Parrot"] then
+		Parrot:ShowMessage(text, "Notification", false, string.format("%02x%02x%02x", r*255, g*255, b*255))
 	else -- Default BigWigs Frame fallback
 		if not messageFrame then createMsgFrame() end
 		messageFrame:SetScale(db.scale)
