@@ -111,7 +111,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = {boss, desire, suffering, anger}
-mod.toggleoptions = {"enrage", "runeshield", "deaden", "drain", "spite", "bosskill"}
+mod.toggleoptions = {"enrage", "drain", -1, "runeshield", "deaden", -1, "spite", -1, "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
