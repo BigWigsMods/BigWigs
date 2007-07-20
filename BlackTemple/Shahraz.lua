@@ -24,6 +24,17 @@ L:RegisterTranslations("enUS", function() return {
 	attraction_message = "Attraction: %s",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	engage_trigger = "흥... 관광하러 온 거야?",
+	engage_message = "%s 전투 개시",
+
+	attraction = "치명적인 매력",
+	attraction_desc = "치명적인 매력에 걸린 사람을 알립니다.",
+	attraction_trigger = "^([^|;%s]*)(.*)치명적인 매력에 걸렸습니다%.$",
+	attraction_message = "매력: %s",
+} end )
+
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
