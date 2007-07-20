@@ -28,8 +28,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Scale"] = true,
 	["Set the message frame scale."] = true,
 
-	["MSBT Scrollarea"] = true,
-	["Set the MSBT scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."] = true,
+	["%s Scrollarea"] = true,
+	["Set the %s scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."] = true,
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = true,
 	["White"] = true,
@@ -41,7 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = true,
 
 	["Parrot"] = true,
-	["Mik's Scrolling Battle Text"] = true,
+	["MSBT"] = true,
 	["Scrolling Combat Text"] = true,
 	["Floating Combat Text"] = true,
 	["Chat frame"] = true,
@@ -66,8 +66,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Scale"] = "크기",
 	["Set the message frame scale."] = "메세지창의 크기를 설정합니다.",
 
-	["MSBT Scrollarea"] = "MSBT 메세지",
-	["Set the MSBT scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."] = "메세지를 표시 할 영역을 MSBT 메세지로 설정합니다.\n\n새로운 영역의 목록을 가져오려면 사용자 인터페이스를 재시작하세요.",
+	["%s Scrollarea"] = "%s 메세지",
+	["Set the %s scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."] = "메세지를 표시 할 영역을 %s 메세지로 설정합니다.\n\n새로운 영역의 목록을 가져오려면 사용자 인터페이스를 재시작하세요.",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000색|cffff00ff상|r",
 	["White"] = "흰색",
@@ -78,7 +78,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Set where messages are displayed."] = "메세지를 표시할 곳을 설정합니다.",
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "모든 BigWigs 메세지를 디스플레이 설정에 추가된 기본 대화창에 출력합니다.",
 
-	["Mik's Scrolling Battle Text"] = "MSBT",
+	["MSBT"] = "MSBT",
 	["Scrolling Combat Text"] = "SCT",
 	["Floating Combat Text"] = "FCT",
 	["Chat frame"] = "대화창",
@@ -115,7 +115,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Set where messages are displayed."] = "设置显示信息的位置",
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "除了增加显示设置之外,将所有BigWigs信息输出到默认聊天框.",
 
-	["Mik's Scrolling Battle Text"] = "米克式战斗信息",
+	["MSBT"] = "米克式战斗信息",
 	["Scrolling Combat Text"] = "滚动战斗信息",
 	["Floating Combat Text"] = "浮动战斗信息",
 	["Chat frame"] = "聊天框",
@@ -149,7 +149,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Set where messages are displayed."] = "選擇訊息顯示的位置",
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "除了選擇的顯示位置外，也顯示在聊天頻道上。",
 
-	["Mik's Scrolling Battle Text"] = "Mik's滾動戰鬥訊息",
+	["MSBT"] = "Mik's滾動戰鬥訊息",
 	["Scrolling Combat Text"] = "滾動戰鬥訊息",
 	["Floating Combat Text"] = "浮動戰鬥訊息",
 	["Chat frame"] = "聊天頻道",
@@ -174,8 +174,8 @@ L:RegisterTranslations("deDE", function() return {
 	["Scale"] = "Skalierung",
 	["Set the message frame scale."] = "Die Skalierung des Nachrichtenfensters festlegen.",
 
-	["MSBT Scrollarea"] = "MSBT-Scrollbereich",
-	["Set the MSBT scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."] = "Den MSBT-Scrollbereich festlegen, in dem die Nachrichten erscheinen sollen.\n\nLade dein Interface neu um neue Bereiche in die Liste zu bekommen.",
+	["%s Scrollarea"] = "%s-Scrollbereich",
+	["Set the %s scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."] = "Den %s-Scrollbereich festlegen, in dem die Nachrichten erscheinen sollen.\n\nLade dein Interface neu um neue Bereiche in die Liste zu bekommen.",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Fa|cffff00ffr|cff00ff00be|r",
 	["White"] = "Wei\195\159",
@@ -186,7 +186,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Set where messages are displayed."] = "Festlegen, wo die Nachrichten angezeigt werden.",
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Gibt alle BigsWigs-Nachrichten im Standard-Chatfenster aus, zus\195\164tzlich zur Anzeige-Einstellung.",
 
-	["Mik's Scrolling Battle Text"] = "Mik's Scrolling Battle Text",
+	["MSBT"] = "MSBT",
 	["Scrolling Combat Text"] = "Scrolling Combat Text",
 	["Floating Combat Text"] = "Floating Combat Text",
 	["Chat frame"] = "Chatfenster",
@@ -220,7 +220,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Set where messages are displayed."] = "Détermine où les messages sont affichés.",
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Affiche tous les messages de BigWigs dans la fenêtre de discussion par défaut, en plus de son affichage normal.",
 
-	["Mik's Scrolling Battle Text"] = "Scrolling Battle Text de Mik",
+	["MSBT"] = "Scrolling Battle Text de Mik",
 	["Scrolling Combat Text"] = "Scrolling Combat Text",
 	["Floating Combat Text"] = "Message de combat flottant",
 	["Chat frame"] = "Fen\195\170tre de discussion",
@@ -241,7 +241,6 @@ local plugin = BigWigs:NewModule("Messages")
 plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	display = L["RaidWarning frame"],
-	msbtArea = nil,
 	usecolors = true,
 	scale = 1.0,
 	posx = nil,
@@ -331,14 +330,14 @@ plugin.consoleOptions = {
 ------------------------------
 
 if MikSBT then
-	table.insert(plugin.consoleOptions.args.display.validate, L["Mik's Scrolling Battle Text"])
+	table.insert(plugin.consoleOptions.args.display.validate, L["MSBT"])
 	plugin.consoleOptions.args.msbtArea = {
 		type = "text",
-		name = L["MSBT Scrollarea"],
-		desc = L["Set the MSBT scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."],
+		name = L["%s Scrollarea"]:format(L["MSBT"]),
+		desc = L["Set the %s scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."]:format(L["MSBT"]),
 		validate = MikSBT.GetScrollAreaList(),
 		order = 103,
-		disabled = function() return (plugin.db.profile.display ~= L["Mik's Scrolling Battle Text"]) end,
+		disabled = function() return (plugin.db.profile.display ~= L["MSBT"]) end,
 	}
 end
 
@@ -352,6 +351,16 @@ end
 
 if Parrot then
 	table.insert(plugin.consoleOptions.args.display.validate, L["Parrot"])
+	if Parrot.GetScrollAreasValidate then
+		plugin.consoleOptions.args.parrotArea = {
+			type = "text",
+			name = L["%s Scrollarea"]:format(L["Parrot"]),
+			desc = L["Set the %s scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."]:format(L["Parrot"]),
+			validate = Parrot:GetScrollAreasValidate(),
+			order = 103,
+			disabled = function() return (plugin.db.profile.display ~= L["Parrot"]) end,
+		}
+	end
 end
 
 ------------------------------
@@ -424,14 +433,14 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 
 	if display == L["RaidWarning frame"] then
 		RaidWarningFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
-	elseif MikSBT and display == L["Mik's Scrolling Battle Text"] then
+	elseif MikSBT and display == L["MSBT"] then
 		MikSBT.DisplayMessage(text, db.msbtArea or MikSBT.DISPLAYTYPE_NOTIFICATION, false, r * 255, g * 255, b * 255)
 	elseif SCT and SCT_MSG_FRAME and display == L["Scrolling Combat Text"] then -- SCT 5.x
 		SCT_MSG_FRAME:AddMessage( text, r, g, b, 1 )
 	elseif CombatText_AddMessage and display == L["Floating Combat Text"] then -- Blizzards FCT
 		CombatText_AddMessage(text, COMBAT_TEXT_SCROLL_FUNCTION, r, g, b, "sticky", nil)
 	elseif Parrot and display == L["Parrot"] then
-		Parrot:ShowMessage(text, "Notification", false, string.format("%02x%02x%02x", r*255, g*255, b*255))
+		Parrot:ShowMessage(text, db.parrotArea or "Notification", false, string.format("%02x%02x%02x", r*255, g*255, b*255))
 	else -- Default BigWigs Frame fallback
 		if not messageFrame then createMsgFrame() end
 		messageFrame:SetScale(db.scale)
