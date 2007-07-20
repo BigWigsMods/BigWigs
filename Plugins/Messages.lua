@@ -440,7 +440,7 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 	elseif CombatText_AddMessage and display == L["Floating Combat Text"] then -- Blizzards FCT
 		CombatText_AddMessage(text, COMBAT_TEXT_SCROLL_FUNCTION, r, g, b, "sticky", nil)
 	elseif Parrot and display == L["Parrot"] then
-		Parrot:ShowMessage(text, db.parrotArea or "Notification", false, string.format("%02x%02x%02x", r*255, g*255, b*255))
+		Parrot:ShowMessage(text, db.parrotArea or "Notification", false, r, g, b)
 	else -- Default BigWigs Frame fallback
 		if not messageFrame then createMsgFrame() end
 		messageFrame:SetScale(db.scale)
