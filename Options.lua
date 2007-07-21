@@ -209,8 +209,8 @@ function BigWigsOptions:OnClick()
 			local subGroup = nil
 			for i = 1, #zoneFunctions do
 				local zone = _G[zoneFunctions[i]]()
-				if zone and BZ:HasReverseTranslation(zone) then
-					subGroup = BZ:GetReverseTranslation(zone)
+				if zone and self.OnMenuRequest.args[zone] then
+					subGroup = zone
 					break
 				end
 			end
