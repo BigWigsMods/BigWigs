@@ -141,7 +141,7 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "ArchGrip" and rest and self.db.profile.grip then
 		local other = L["grip_other"]:format(rest)
-		if rest == UnitName("player") then
+		if rest == pName then
 			self:Message(L["grip_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
 			self:Bar(other, 10, "Spell_Shadow_SoulLeech_3")
@@ -185,7 +185,7 @@ function mod:GripEvent(msg)
 	local gplayer, gtype = select(3, msg:find(L["grip_trigger"]))
 	if gplayer and gtype then
 		if gplayer == L2["you"] and gtype == L2["are"] then
-			gplayer = UnitName("player")
+			gplayer = pName
 		end
 		self:Sync("ArchGrip "..gplayer)
 	end
