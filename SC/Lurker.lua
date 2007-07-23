@@ -26,7 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 	spout_desc = "Timers for Spout, may not always be accurate.",
 	spout_trigger = "%s takes a deep breath!",
 	spout_message = "Casting Spout!",
-	spout_warning = "Posible Spout in ~3sec!",
+	spout_warning = "Possible Spout in ~3sec!",
 	spout_bar = "Possible Spout",
 
 	whirl = "Whirl",
