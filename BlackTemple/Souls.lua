@@ -11,6 +11,7 @@ BB = nil
 
 local drained = {}
 local spiteIt = {}
+local pName = nil
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
@@ -136,6 +137,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "RoSShield", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RoSWin", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RoSDeaden", 5)
+	pName = UnitName("player")
 end
 
 ------------------------------
@@ -190,7 +192,7 @@ function mod:AfflictEvent(msg)
 	local Aplayer, Atype, Aspell = select(3, msg:find(L["afflict_trigger"]))
 	if Aplayer and Atype then
 		if Aplayer == L2["you"] and Atype == L2["are"] then
-			Aplayer = UnitName("player")
+			Aplayer = pName
 		end
 		if Aspell == L["drain"] then
 			self:Sync("RoSDrain "..Aplayer)
