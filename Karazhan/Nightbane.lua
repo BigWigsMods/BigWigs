@@ -157,7 +157,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	charr = "灼燒大地警告",
 	charr_desc = "當夜禍對你施放灼燒大地時發送警告",
-        charr_trigger = "你受到了灼燒大地效果的影響。", 
+	charr_trigger = "你受到了灼燒大地效果的影響。", 
 	charr_message = "你中了灼燒大地",
 
 	phase = "階段警告",
