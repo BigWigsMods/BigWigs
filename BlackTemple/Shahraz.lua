@@ -6,6 +6,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["Mother Shahraz"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
+local pName = nil
 local attracted = {}
 
 ----------------------------
@@ -59,6 +60,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ShaAttra", 0)
+	pName = UnitName("player")
 end
 
 ------------------------------
@@ -83,7 +85,7 @@ function mod:fatal(msg)
 	local aplayer, atype = select(3, msg:find(L["attraction_trigger"]))
 	if aplayer and atype then
 		if aplayer == L2["you"] and atype == L2["are"] then
-			aplayer = UnitName("player")
+			aplayer = pName
 		end
 		self:Sync("ShaAttra "..aplayer)
 	end
