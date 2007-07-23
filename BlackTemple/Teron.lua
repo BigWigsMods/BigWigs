@@ -6,6 +6,8 @@ local boss = AceLibrary("Babble-Boss-2.2")["Teron Gorefiend"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
+local pName = nil
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -66,25 +68,26 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "death")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "death")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "death")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "SoD")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "SoD")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "SoD")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "TeronShadow", 3)
+	pName = UnitName("player")
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-function mod:death(msg)
+function mod:SoD(msg)
 	local splayer, stype = select(3, msg:find(L["shadow_trigger"]))
 	if splayer and stype then
 		if splayer == L2["you"] and stype == L2["are"] then
-			splayer = UnitName("player")
+			splayer = pName
 		end
 		self:Sync("TeronShadow " .. splayer)
 	end
@@ -93,7 +96,7 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "TeronShadow" and rest and self.db.profile.shadow then
 		local other = L["shadow_other"]:format(rest)
-		if rest == UnitName("player") then
+		if rest == pName then
 			self:Message(L["shadow_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
 			self:Bar(other, 55, "Spell_Arcane_PrismaticCloak")

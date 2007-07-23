@@ -13,6 +13,8 @@ BB = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
+local pName = nil
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -49,26 +51,11 @@ L:RegisterTranslations("enUS", function() return {
 	circle_trigger = "Lady Malande begins to cast Circle of Healing.",
 	circle_message = "Casting Circle of Healing!",
 	circle_heal_trigger = "^Lady Malande 's Circle of Healing heals",
-	circle_fail_trigger = "interrupted", --GIVE ME A FUCKING EVENT OK
+	circle_fail_trigger = "interrupted", --event?
 	circle_heal_message = "Healed! - Next in ~20sec",
 	circle_fail_message = "Interrupted! - Next in ~12sec",
 	circle_bar = "~Circle of Healing Cooldown",
 } end )
-
---[[
-DEV INFO
-
-Debuff "Deadly Poison" -> Raid Warning -> Deadly Poison on <Name> (needs healing attention because it ticks for 1k and is followed by an envenom for 4-6k)
-
-Boss cast -> "Lady Malande begins to cast Circle of Healing." -> Raid Warning (needs to be interupted asap, rotation), cooldown ~12sec, 20+sec after successful cast,
-
-warning "Reflective Shield" on Malande "Lady Malande gains Reflective Shield." 
-
-Lady Malande -> Buff "Lady Malande gains Blessing of Spell Warding" -> 15 Sec Spell immune
-
-Lady Malande -> Buff "Lady Malande gains Blessing of Protection" -> 15 sec melee immune
-
-]]
 
 ----------------------------------
 --      Module Declaration      --
@@ -92,9 +79,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Poison")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Poison")
 
-	--self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	--self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalSpell", 5)
@@ -104,6 +88,8 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalCHeal", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalCFail", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "CouncilPoison", 2)
+
+	pName = UnitName("player")
 end
 
 ------------------------------
@@ -131,7 +117,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Bar(L["circle_bar"], 12, "Spell_Holy_CircleOfRenewal")
 	elseif sync == "CouncilPoison" and rest and self.db.profile.poison then
 		local other = L["poison_other"]:format(rest)
-		if rest == UnitName("player") then
+		if rest == pName then
 			self:Message(L["poison_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
 		else
@@ -159,7 +145,7 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	elseif msg == L["circle_heal_trigger"] then
 		self:Sync("MalCHeal")
 	elseif msg:find(L["circle_fail_trigger"]) then
-		self:Sync("MalCFail") --im aware this won't work ;) it seemes UNIT_SPELLCAST_INTERRUPTED only fires for friendly targets, not sure how to pick it up
+		self:Sync("MalCFail") --doesn't work
 	end
 end
 
@@ -167,7 +153,7 @@ function mod:Poison(msg)
 	local pplayer, ptype = select(3, msg:find(L["poison_trigger"]))
 	if pplayer and ptype then
 		if pplayer == L2["you"] and ptype == L2["are"] then
-			pplayer = UnitName("player")
+			pplayer = pName
 		end
 		self:Sync("CouncilPoison "..pplayer)
 	end

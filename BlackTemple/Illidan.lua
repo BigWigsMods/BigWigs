@@ -82,7 +82,7 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "IliPara" and rest and self.db.profile.parasite then 
 		local other = L["parasite_other"]:format(rest)
-		if rest == UnitName("player") then
+		if rest == pName then
 			self:Message(L["parasite_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
 			self:Bar(other, 10, "Spell_Shadow_SoulLeech_3")
