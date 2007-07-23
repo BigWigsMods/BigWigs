@@ -68,12 +68,12 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	decay = "Tod & Verfall auf dir",
 	decay_desc = "Warnt vor Tod & Verfall auf dir.",
-	--decay_trigger = "Ihr seid von Tod & Verfall betroffen.", --enUS changed
+	decay_trigger = "Ihr seid von Tod & Verfall betroffen.",
 	decay_message = "Tod & Verfall auf DIR!",
 
 	icebolt = "Eisblitz",
 	icebolt_desc = "Eisblitz Warnung.",
-	icebolt_trigger = "Eisblitz trifft ([^%s]+)",
+	--icebolt_trigger = "Eisblitz trifft ([^%s]+)", --enUS changed
 	icebolt_message = "Eisblitz on %s!",
 
 	icon = "Icon",
