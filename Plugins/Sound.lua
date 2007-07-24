@@ -32,10 +32,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Victory"] = true,
 
 	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = true,
-	["toggle"] = true,
 	["Use sounds"] = true,
 	["Toggle all sounds on or off."] = true,
-	["default"] = true,
 	["Default only"] = true,
 	["Use only the default sound."] = true,
 } end)
@@ -56,7 +54,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	["Sounds"] = "声音",
 	["Options for sounds."] = "声音设置",
-	
+
 	["Alarm"] = "警报",
 	["Info"] = "信息",
 	["Alert"] = "警惕",
@@ -64,10 +62,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["Victory"] = "胜利",
 
 	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = "设置使用%q声音（Ctrl-点击可以预览效果）",
-	["toggle"] = "选择",
 	["Use sounds"] = "使用声音",
 	["Toggle all sounds on or off."] = "选择声音的开或关。",
-	["default"] = "预设",
 	["Default only"] = "预设",
 	["Use only the default sound."] = "只选用预设声音",
 } end)
@@ -82,10 +78,8 @@ L:RegisterTranslations("zhTW", function() return {
 	["Long"] = "長響",
 	["Victory"] = "勝利",
 
-	["toggle"] = "選擇",
 	["Use sounds"] = "使用聲音",
 	["Toggle all sounds on or off."] = "切換是否使用聲音。",
-	["default"] = "預設",
 	["Default only"] = "只用預設",
 	["Use only the default sound."] = "只用預設聲音",
 } end)
@@ -101,13 +95,12 @@ L:RegisterTranslations("deDE", function() return {
 	["Victory"] = "Sieg",
 
 	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = "Lege den Ton fest, welcher f\195\188r %q verwendet werden soll (Strg-Klicken um eine Vorschau den Tons zu h\195\182ren).",
-	["toggle"] = "Ein/Ausschalten",
 	["Use sounds"] = "T\195\182ne verwenden",
 	["Toggle all sounds on or off."] = "Schalte alle T\195\182ne ein oder aus.",
-	["default"] = "standard",
 	["Default only"] = "Nur Standard",
 	["Use only the default sound."] = "Nur den Standardton verwenden.",
 } end)
+
 
 L:RegisterTranslations("frFR", function() return {
 	["Sounds"] = "Sons",
@@ -148,12 +141,12 @@ plugin.consoleOptions = {
 	name = L["Sounds"],
 	desc = L["Options for sounds."],
 	args = {
-		["spacer1"] = {
+		spacer1 = {
 			type = "header",
 			name = " ",
 			order = 200,
 		},
-		[L["default"]] = {
+		default = {
 			type = "toggle",
 			name = L["Default only"],
 			desc = L["Use only the default sound."],
@@ -162,7 +155,7 @@ plugin.consoleOptions = {
 			order = 201,
 			disabled = function() return not BigWigs:IsModuleActive(plugin) end,
 		},
-		[L["toggle"]] = {
+		toggle = {
 			type = "toggle",
 			name = L["Sounds"],
 			desc = L["Toggle all sounds on or off."],

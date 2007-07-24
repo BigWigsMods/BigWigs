@@ -139,14 +139,14 @@ function BigWigs.modulePrototype:Scan()
 	if num == 0 then
 		num = GetNumPartyMembers()
 		for i = 1, num do
-			local partyUnit = "party" .. i .. "target"
+			local partyUnit = string.format("%s%d%s", "party", i, "target")
 			if UnitExists(partyUnit) and UnitAffectingCombat(partyUnit) and self.scanTable[UnitName(partyUnit)] then
 				return true
 			end
 		end
 	else
 		for i = 1, num do
-			local raidUnit = "raid" .. i .. "target"
+			local raidUnit = string.format("%s%d%s", "raid", i, "target")
 			if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) and self.scanTable[UnitName(raidUnit)] then
 				return true
 			end
@@ -208,23 +208,27 @@ end
 
 -- Shortcuts for common actions.
 
-function BigWigs.modulePrototype:Message(text, priority, ...)
-	self:TriggerEvent("BigWigs_Message", text, priority, ...)
+function BigWigs.modulePrototype:Message(...)
+	self:TriggerEvent("BigWigs_Message", ...)
 end
 
-function BigWigs.modulePrototype:DelayedMessage(delay, text, priority, ...)
-	return self:ScheduleEvent("BigWigs_Message", delay, text, priority, ...)
+function BigWigs.modulePrototype:DelayedMessage(delay, ...)
+	local id = string.format("BigWigs-DelayedMessage-%d", math.random(1, 1000))
+	self:ScheduleEvent(id, "BigWigs_Message", delay, ...)
+	return id
 end
 
-local icons = setmetatable({}, {__index =
-	function(self, key)
-		if not key then return end
-		self[key] = "Interface\\Icons\\" .. key
-		return self[key]
+do
+	local icons = setmetatable({}, {__index =
+		function(self, key)
+			if not key then return end
+			self[key] = "Interface\\Icons\\" .. key
+			return self[key]
+		end
+	})
+	function BigWigs.modulePrototype:Bar(text, length, icon, ...)
+		self:TriggerEvent("BigWigs_StartBar", self, text, length, icons[icon], ...)
 	end
-})
-function BigWigs.modulePrototype:Bar(text, length, icon, ...)
-	self:TriggerEvent("BigWigs_StartBar", self, text, length, icons[icon], ...)
 end
 
 function BigWigs.modulePrototype:Sync(sync)
@@ -235,7 +239,7 @@ function BigWigs.modulePrototype:Whisper(player, text)
 	self:TriggerEvent("BigWigs_SendTell", player, text)
 end
 
-function BigWigs.modulePrototype:Icon( player )
-	self:TriggerEvent("BigWigs_SetRaidIcon", player )
+function BigWigs.modulePrototype:Icon(player)
+	self:TriggerEvent("BigWigs_SetRaidIcon", player)
 end
 
