@@ -35,6 +35,15 @@ L:RegisterTranslations("koKR", function() return {
 	attraction_message = "매력: %s",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "So... business or pleasure?", -- à traduire
+	engage_message = "%s engagée",
+
+	attraction = "Liaison fatale",
+	attraction_desc = "Préviens quand un joueur subit les effets de la Liaison fatale.",
+	attraction_trigger = "^([^%s]+) ([^%s]+) les effets .* Liaison fatale%.$",
+	attraction_message = "Liaison : %s",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

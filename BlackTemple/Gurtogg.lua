@@ -101,6 +101,35 @@ L:RegisterTranslations("deDE", function() return {
 	icon_desc = "Plaziert ein Raid Icon auf dem Spieler, der Teufelss\195\164ureatem abbekommt (ben\195\182tigt Assistent oder h\195\182her).",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "Horde will... crush you.", -- à traduire
+
+	phase = "Délais entre les phases",
+	phase_desc = "Délais entre les phases normales et les phases de Gangrerage.",
+	phase_rage_warning = "Phase de Gangrerage dans ~5 sec.",
+	phase_normal_warning = "Gangrerage terminée dans ~5 sec.",
+	phase_normal = "Fin de la phase de Gangrerage",
+	phase_normal_trigger = "Gangrerage sur Gurtogg Fièvresang vient de se dissiper.",
+	phase_normal_bar = "Prochaine phase de rage",
+	phase_rage_bar = "Prochaine phase normale",
+
+	rage = "Gangrerage",
+	rage_desc = "Préviens quand un joueur subit les effets de la Gangrerage.",
+	rage_trigger = "^([^%s]+) ([^%s]+) les effets .* Gangrerage%.$",
+	rage_you = "Vous avez la Gangrerage !",
+	rage_other = "%s a la Gangrerage !",
+
+	whisper = "Chuchoter",
+	whisper_desc = "Chuchote au dernier joueur affecté par la Gangrerage (nécessite d'être promu ou mieux).",
+
+	acid = "Souffle d'acide gangrené",
+	acid_desc = "Préviens sur qui le Souffle d'acide gangrené est incanté.",
+	acid_message = "Souffle d'acide gangrené incanté sur : %s",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le joueur sur qui le Souffle d'acide gangrené est incanté (nécessite d'être promu ou mieux).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

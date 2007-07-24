@@ -91,6 +91,31 @@ L:RegisterTranslations("koKR", function() return {
 	icon_desc = "추적 중인 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	phase = "Phase",
+	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
+	normal_phase_message = "Phase de tanking !",
+	normal_phase_trigger = "Supremus punches the ground in anger!", -- à traduire
+	kite_phase_message = "Phase de kitting !",
+	kite_phase_trigger = "The ground begins to crack open!", -- à traduire
+	next_phase_bar = "Prochain phase",
+	next_phase_message = "Changement de phase dans 10 sec. !",
+
+	punch = "Punch de la fournaise",
+	punch_desc = "Préviens quand Supremus utilise son Punch de la fournaise, et affiche une barre de cooldown.",
+	punch_message = "Punch de la fournaise !",
+	punch_bar = "~Punch probable",
+	punch_trigger = "Supremus lance Punch de la fournaise.",
+
+	target = "Cible",
+	target_desc = "Indique la personne pourchassée pendant la phase de kitting.",
+	target_message = "%s being chased!", -- à traduire
+	target_message_nounit = "Nouvelle cible !",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur pourchassé (nécessite d'être promu ou mieux).",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------

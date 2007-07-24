@@ -105,6 +105,47 @@ L:RegisterTranslations("koKR", function() return {
 	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$", -- Check
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "Pain and suffering are all that await you!", -- à traduire
+
+	enrage_start = "Enragé dans ~47 sec.",
+	enrage_trigger = "%s becomes enraged!", -- à traduire
+	enrage_message = "Enragé pendant 15 sec. !",
+	enrage_bar = "<Enragé>",
+	enrage_next = "Fin de l'Enrager - Prochain dans ~32 sec.",
+	enrage_nextbar = "Prochain Enrager",
+	enrage_warning = "Enrager dans 5 sec. !",
+
+	desire_trigger  = "You can have anything you desire... for a price.", -- à traduire
+	desire_start = "Essence de désir - Zéro mana dans 160 sec.",
+	desire_bar = "Zéro Mana",
+	desire_warn = "Zéro Mana dasn 30 sec. !",
+
+	runeshield = "Bouclier runique",
+	runeshield_desc = "Délais concernant le Bouclier runique de l'Essence de désir.",
+	runeshield_trigger = "Essence de désir gagne Bouclier runique.", -- à vérifier
+	runeshield_message = "Bouclier runique !",
+	runeshield_nextbar = "Prochain Bouclier runique",
+	runeshield_warn = "Bouclier runique dans ~3 sec.",
+
+	deaden = "Emousser",
+	deaden_desc = "Préviens quand Emousser est incanté.",
+	deaden_trigger = "Essence de désir commence à lancer Emousser.", -- à vérifier
+	deaden_message = "Emousser en incantation !",
+	deaden_warn = "Emousser dans ~5 sec.",
+	deaden_nextbar = "Prochain Emousser",
+
+	drain = "Drain d'âme",
+	drain_desc = "Préviens quand un joueur subit les effets du Draine d'âme.",
+	drain_message = "Drain d'âme : %s",
+
+	spite = "Dépit",
+	spite_desc = "Préviens quand un joueur subit les effets du Dépit.",
+	spite_message = "Dépit : %s",
+
+	afflict_trigger = "^([^%s]+) ([^%s]+) les effets .* ([^%s]+)%.$",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

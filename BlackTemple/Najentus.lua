@@ -77,6 +77,29 @@ L:RegisterTranslations("koKR", function() return {
 	icon_desc = "꿰뚫는 돌기에 걸린 플레이어에게 전술 표시를 지정합니다.",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	start_trigger = "You will die in the name of Lady Vashj!", -- à traduire
+
+	spine = "Epine de perforation",
+	spine_desc = "Préviens quand un joueur subit les effets de l'Epine de perforation.",
+	spine_trigger = "^([^%s]+) ([^%s]+) les effets .* Epine de perforation%.$",
+	spine_message = "Epine de perforation sur %s!",
+
+	spinesay = "Epine de perforation (dire)",
+	spinesay_desc = "Fais dire à votre personnage qu'il a une épine quand c'est le cas, afin d'aider les membres proches.",
+	spinesay_message = "Epine sur moi !",
+
+	shield = "Bouclier de flots",
+	shield_desc = "Délais concernant le Bouclier de flots de Naj'entus.",
+	shield_trigger = "Grand seigneur de guerre Naj'entus subit les effets .* Bouclier de flots.",
+	shield_nextbar = "Prochain Bouclier de flots",
+	shield_warn = "Bouclier de flots !",
+	shield_soon_warn = "Bouclier de flots dans ~10 sec. !",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Epine de perforation (nécessite d'être promu ou mieux).",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------

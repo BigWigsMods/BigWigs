@@ -269,8 +269,8 @@ L:RegisterTranslations("frFR", function() return {
 	["Enable menu"] = "Activer le menu",
 	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "Affiche le menu de configuration des barres via un Alt-Clic droit.\n\nNotez qu'une fois cette option activée, vous ne pourrez plus faire de Alt-Clic sur ce qui se trouve sous les barres.",
 
-	["Scale"] = "Taille",
-	["Set the bar scale."] = "Détermine la taille des barres.",
+	["Scale"] = "Echelle",
+	["Set the bar scale."] = "Détermine l'échelle des barres.",
 
 	["Grow upwards"] = "Ajouter vers le haut",
 	["Toggle bars grow upwards/downwards from anchor."] = "Ajoute les nouvelles barres soit en haut de l'ancre, soit en bas de l'ancre.",
@@ -290,7 +290,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Flashes the background red for bars that are emphasized."] = "Fais clignoter le fond rouge des barres mises en évidence.",
 	["Move"] = "Déplacer",
 	["Move bars that are emphasized to a second anchor."] = "Déplace les barres mises en évidence vers une seconde ancre.",
-	["Set the scale for emphasized bars."] = "Détermine la taille des barres mises en évidence.",
+	["Set the scale for emphasized bars."] = "Détermine l'échelle des barres mises en évidence.",
 
 	["Reset position"] = "RÀZ position",
 	["Reset the anchor position, moving it to the center of your screen."] = "Réinitialise la position de l'ancre, la replaçant au centre de l'écran.",

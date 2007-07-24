@@ -1,7 +1,9 @@
 ﻿## Interface: 20100
 
 ## Title: Big Wigs [|cffeda55fBlack Temple|r]
+## Title-frFR: Big Wigs [|cffeda55fTemple noir|r]
 ## Notes: (BETA) Big Wigs Black Temple Modules
+## Notes-frFR: Modules Big Wigs concernant le Temple noir (BETA).
 ## Author: Funkydude, Rabbit
 ## X-Credits: Zonker, Daemona, kirr, Andii
 ## Version: 2.0

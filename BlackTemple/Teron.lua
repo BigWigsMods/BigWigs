@@ -53,6 +53,19 @@ L:RegisterTranslations("koKR", function() return {
 	icon_desc = "죽음의 어둠에 걸린 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	start_trigger = "Vengeance is mine!", -- à traduire
+
+	shadow = "Ombre de la mort",
+	shadow_desc = "Préviens quand un joueur subit les effets de l'Ombre de la mort.",
+	shadow_trigger = "^([^%s]+) ([^%s]+) les effets .* Ombre de la mort%.$",
+	shadow_other = "Ombre de la mort : %s!",
+	shadow_you = "Ombre de la mort sur VOUS !",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Ombre de la mort (nécessite d'être promu ou mieux).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

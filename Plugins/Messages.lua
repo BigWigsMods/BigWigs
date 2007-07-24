@@ -208,8 +208,11 @@ L:RegisterTranslations("frFR", function() return {
 	["Use colors"] = "Utiliser des couleurs",
 	["Toggles white only messages ignoring coloring."] = "Utilise ou non des couleurs dans les messages à la place du blanc unique.",
 
-	["Scale"] = "Taille",
-	["Set the message frame scale."] = "Détermine la taille du cadre des messages.",
+	["Scale"] = "Echelle",
+	["Set the message frame scale."] = "Détermine l'échelle du cadre des messages.",
+
+	["%s Scrollarea"] = "Zone de défilement de %s",
+	["Set the %s scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."] = "Détermine la zone de défilement de %s où les messages doivent apparaître.\n\nRechargez votre interface utilisateur pour obtenir les nouvelles zones dans la liste.",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Co|cffff00ffule|cff00ff00ur|r",
 	["White"] = "Blanc",
@@ -220,10 +223,11 @@ L:RegisterTranslations("frFR", function() return {
 	["Set where messages are displayed."] = "Détermine où les messages sont affichés.",
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Affiche tous les messages de BigWigs dans la fenêtre de discussion par défaut, en plus de son affichage normal.",
 
-	["MSBT"] = "Scrolling Battle Text de Mik",
+	["Parrot"] = "Parrot",
+	["MSBT"] = "MSBT",
 	["Scrolling Combat Text"] = "Scrolling Combat Text",
 	["Floating Combat Text"] = "Message de combat flottant",
-	["Chat frame"] = "Fen\195\170tre de discussion",
+	["Chat frame"] = "Fenêtre de discussion",
 
 	["Test"] = "Test",
 	["Close"] = "Fermer",

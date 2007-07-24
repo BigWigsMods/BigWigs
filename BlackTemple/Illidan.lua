@@ -44,6 +44,37 @@ L:RegisterTranslations("enUS", function() return {
 	demons_message = "Shadow Demons!",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	parasite = "Ombrefiel parasite",
+	parasite_desc = "Préviens quand un joueur subit les effets de l'Ombrefiel parasite.",
+	parasite_trigger = "^([^%s]+) ([^%s]+) les effets .* Ombrefiel parasite%.$", -- à vérifier
+	parasite_you = "Vous avez un parasite !",
+	parasite_other = "%s a un parasite !",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Ombrefiel parasite (nécessite d'être promu ou mieux).",
+
+	barrage = "Barrage noir",
+	barrage_desc = "Préviens quand un joueur subit les effets du Barrage noir.",
+	barrage_trigger = "^([^%s]+) ([^%s]+) les effets .* Barrage noir%.$",
+	barrage_message = "%s est dans le barrage !",
+
+	eyeblast = "Energie oculaire",
+	eyeblast_desc = "Préviens quand l'Energie oculaire est incanté.",
+	eyeblast_trigger = "Stare into the eyes of the Betrayer!", -- à traduire
+	eyeblast_message = "Energie oculaire !",
+
+	flame = "Flammes déchirantes",
+	flame_desc = "Préviens quand un joueur subit les effets des Flammes déchirantes.",
+	flame_trigger = "^([^%s]+) ([^%s]+) les effets .* Flammes déchirantes%.$",
+	flame_message = "%s a les Flammes déchirantes !",
+
+	demons = "Démons des ombres",
+	demons_desc = "Préviens quand Illidan invoque des démons des ombres.",
+	demons_trigger = "Invocation de démons des ombres",
+	demons_message = "Démons des ombres !",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

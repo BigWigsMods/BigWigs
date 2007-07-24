@@ -57,6 +57,42 @@ L:RegisterTranslations("enUS", function() return {
 	circle_bar = "~Circle of Healing Cooldown",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	immune = "Immunité",
+	immune_desc = "Préviens quand Malande devient insernsible aux sorts ou aux attaques de melée.",
+	immune_spell_trigger = "Dame Malande gagne Bénédiction de protection contre les sorts.",
+	immune_melee_trigger = "Dame Malande gagne Bénédiction de protection.",
+	immune_message = "Malande : insensible %s pendant 15 sec. !",
+	immune_bar = "Insensible %s !",
+
+	spell = "aux sorts",
+	melee = "en melée",
+
+	shield = "Bouclier réflecteur",
+	shield_desc = "Préviens quand Malande gagne son Bouclier réflecteur.",
+	shield_trigger = "Dame Malande gagne Bouclier réflecteur.",
+	shield_message = "Bouclier réflecteur sur Malande !",
+
+	poison = "Poison mortel",
+	poison_desc = "Préviens quand un joueur subit les effets du Poison mortel.",
+	poison_trigger = "^([^%s]+) ([^%s]+) les effets .* Poison mortel%.$",
+	poison_other = "%s a le Poison mortel !",
+	poison_you = "Poison mortel sur VOUS !",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Poison mortel (nécessite d'être promu ou mieux).",
+
+	circle = "Cercle de soins",
+	circle_desc = "Préviens quand Malande commence à lancer son Cercle de soins.",
+	circle_trigger = "Dame Malande commence à lancer Cercle de soins.",
+	circle_message = "Cercle de soins en incantation !",
+	circle_heal_trigger = "^Cercle de soins .* Dame Malande soigne",
+	circle_fail_trigger = "interrupted", --event?
+	circle_heal_message = "Soigné ! - Prochain dans ~20 sec.",
+	circle_fail_message = "Interrompu ! - Prochain dans ~12 sec.",
+	circle_bar = "~Cooldown Cercle de soins",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
