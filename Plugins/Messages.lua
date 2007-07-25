@@ -28,22 +28,11 @@ L:RegisterTranslations("enUS", function() return {
 	["Scale"] = true,
 	["Set the message frame scale."] = true,
 
-	["%s Scrollarea"] = true,
-	["Set the %s scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."] = true,
-
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = true,
 	["White"] = true,
-	["BigWigs frame"] = true,
-	["RaidWarning frame"] = true,
 
-	["Display"] = true,
-	["Set where messages are displayed."] = true,
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = true,
 
-	["Parrot"] = true,
-	["MSBT"] = true,
-	["Scrolling Combat Text"] = true,
-	["Floating Combat Text"] = true,
 	["Chat frame"] = true,
 
 	["Test"] = true,
@@ -66,21 +55,11 @@ L:RegisterTranslations("koKR", function() return {
 	["Scale"] = "크기",
 	["Set the message frame scale."] = "메세지창의 크기를 설정합니다.",
 
-	["%s Scrollarea"] = "%s 메세지",
-	["Set the %s scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."] = "메세지를 표시 할 영역을 %s 메세지로 설정합니다.\n\n새로운 영역의 목록을 가져오려면 사용자 인터페이스를 재시작하세요.",
-
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000색|cffff00ff상|r",
 	["White"] = "흰색",
-	["BigWigs frame"] = "BigWigs 창",
-	["RaidWarning frame"] = "공격대경보 창",
 
-	["Display"] = "디스플레이",
-	["Set where messages are displayed."] = "메세지를 표시할 곳을 설정합니다.",
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "모든 BigWigs 메세지를 디스플레이 설정에 추가된 기본 대화창에 출력합니다.",
 
-	["MSBT"] = "MSBT",
-	["Scrolling Combat Text"] = "SCT",
-	["Floating Combat Text"] = "FCT",
 	["Chat frame"] = "대화창",
 
 	["Test"] = "테스트",
@@ -100,7 +79,6 @@ L:RegisterTranslations("zhCN", function() return {
 	["Show the message anchor frame."] = "显示信息框，可以移动设置信息显示位置（仅针对使用BW窗口模式）。",
 
 	["Use colors"] = "发送彩色信息",
-
 	["Toggles white only messages ignoring coloring."] = "选择是否只发送单色信息。",
 
 	["Scale"] = "缩放",
@@ -108,16 +86,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000颜|cffff00ff色|r",
 	["White"] = "白色",
-	["BigWigs frame"] = "BigWigs窗口模式",
-	["RaidWarning frame"] = "团队通告(RW)模式",
 
-	["Display"] = "显示",
-	["Set where messages are displayed."] = "设置显示信息的位置",
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "除了增加显示设置之外,将所有BigWigs信息输出到默认聊天框.",
 
-	["MSBT"] = "米克式战斗信息",
-	["Scrolling Combat Text"] = "滚动战斗信息",
-	["Floating Combat Text"] = "浮动战斗信息",
 	["Chat frame"] = "聊天框",
 
 	["Test"] = "测试",
@@ -142,16 +113,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000顏|cffff00ff色|r",
 	["White"] = "白色",
-	["BigWigs frame"] = "BigWigs框架",
-	["RaidWarning frame"] = "團隊警告框架",
 
-	["Display"] = "顯示",
-	["Set where messages are displayed."] = "選擇訊息顯示的位置",
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "除了選擇的顯示位置外，也顯示在聊天頻道上。",
 
-	["MSBT"] = "Mik's滾動戰鬥訊息",
-	["Scrolling Combat Text"] = "滾動戰鬥訊息",
-	["Floating Combat Text"] = "浮動戰鬥訊息",
 	["Chat frame"] = "聊天頻道",
 
 	["Test"] = "測試",
@@ -174,21 +138,11 @@ L:RegisterTranslations("deDE", function() return {
 	["Scale"] = "Skalierung",
 	["Set the message frame scale."] = "Die Skalierung des Nachrichtenfensters festlegen.",
 
-	["%s Scrollarea"] = "%s-Scrollbereich",
-	["Set the %s scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."] = "Den %s-Scrollbereich festlegen, in dem die Nachrichten erscheinen sollen.\n\nLade dein Interface neu um neue Bereiche in die Liste zu bekommen.",
-
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Fa|cffff00ffr|cff00ff00be|r",
 	["White"] = "Wei\195\159",
-	["BigWigs frame"] = "BigWigs-Fenster",
-	["RaidWarning frame"] = "Raidwarnung-Fenster",
 
-	["Display"] = "Anzeige",
-	["Set where messages are displayed."] = "Festlegen, wo die Nachrichten angezeigt werden.",
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Gibt alle BigsWigs-Nachrichten im Standard-Chatfenster aus, zus\195\164tzlich zur Anzeige-Einstellung.",
 
-	["MSBT"] = "MSBT",
-	["Scrolling Combat Text"] = "Scrolling Combat Text",
-	["Floating Combat Text"] = "Floating Combat Text",
 	["Chat frame"] = "Chatfenster",
 
 	["Test"] = "Test",
@@ -211,22 +165,11 @@ L:RegisterTranslations("frFR", function() return {
 	["Scale"] = "Echelle",
 	["Set the message frame scale."] = "Détermine l'échelle du cadre des messages.",
 
-	["%s Scrollarea"] = "Zone de défilement de %s",
-	["Set the %s scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."] = "Détermine la zone de défilement de %s où les messages doivent apparaître.\n\nRechargez votre interface utilisateur pour obtenir les nouvelles zones dans la liste.",
-
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Co|cffff00ffule|cff00ff00ur|r",
 	["White"] = "Blanc",
-	["BigWigs frame"] = "Cadre de BigWigs",
-	["RaidWarning frame"] = "Cadre des Avertissements Raid",
 
-	["Display"] = "Affichage",
-	["Set where messages are displayed."] = "Détermine où les messages sont affichés.",
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Affiche tous les messages de BigWigs dans la fenêtre de discussion par défaut, en plus de son affichage normal.",
 
-	["Parrot"] = "Parrot",
-	["MSBT"] = "MSBT",
-	["Scrolling Combat Text"] = "Scrolling Combat Text",
-	["Floating Combat Text"] = "Message de combat flottant",
 	["Chat frame"] = "Fenêtre de discussion",
 
 	["Test"] = "Test",
@@ -240,11 +183,11 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:NewModule("Messages")
+local plugin = BigWigs:NewModule("Messages", "Sink-1.0")
 
 plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
-	display = L["RaidWarning frame"],
+	sink10OutputSink = "BigWigs",
 	usecolors = true,
 	scale = 1.0,
 	posx = nil,
@@ -281,7 +224,7 @@ plugin.consoleOptions = {
 			type = "toggle",
 			name = L["Show anchor"],
 			desc = L["Show the message anchor frame."],
-			disabled = function() return (plugin.db.profile.display ~= L["BigWigs frame"]) end,
+			disabled = function() return plugin.db.profile.sink10OutputSink ~= "BigWigs" end,
 			order = 1,
 		},
 		reset = {
@@ -302,6 +245,7 @@ plugin.consoleOptions = {
 			desc = L["Toggles white only messages ignoring coloring."],
 			map = {[true] = L["|cffff0000Co|cffff00fflo|cff00ff00r|r"], [false] = L["White"]},
 			order = 100,
+			disabled = function() return not colorModule end,
 		},
 		scale = {
 			type = "range",
@@ -310,15 +254,8 @@ plugin.consoleOptions = {
 			min = 0.2,
 			max = 2.0,
 			step = 0.1,
-			disabled = function() return (plugin.db.profile.display ~= L["BigWigs frame"]) end,
+			disabled = function() return plugin.db.profile.sink10OutputSink ~= "BigWigs" end,
 			order = 101,
-		},
-		display = {
-			type = "text",
-			name = L["Display"],
-			desc = L["Set where messages are displayed."],
-			validate = {L["BigWigs frame"], L["RaidWarning frame"]},
-			order = 102,
 		},
 		chat = {
 			type = "toggle",
@@ -330,46 +267,12 @@ plugin.consoleOptions = {
 }
 
 ------------------------------
---   Optional Dependancies  --
-------------------------------
-
-if MikSBT then
-	table.insert(plugin.consoleOptions.args.display.validate, L["MSBT"])
-	plugin.consoleOptions.args.msbtArea = {
-		type = "text",
-		name = L["%s Scrollarea"]:format(L["MSBT"]),
-		desc = L["Set the %s scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."]:format(L["MSBT"]),
-		validate = MikSBT.GetScrollAreaList(),
-		order = 103,
-		disabled = function() return (plugin.db.profile.display ~= L["MSBT"]) end,
-	}
-end
-
-if SCT_Display_Message or ( SCT and SCT.DisplayMessage ) then
-	table.insert(plugin.consoleOptions.args.display.validate, L["Scrolling Combat Text"])
-end
-
-if CombatText_AddMessage then
-	table.insert(plugin.consoleOptions.args.display.validate, L["Floating Combat Text"])
-end
-
-if Parrot then
-	table.insert(plugin.consoleOptions.args.display.validate, L["Parrot"])
-	if Parrot.GetScrollAreasValidate then
-		plugin.consoleOptions.args.parrotArea = {
-			type = "text",
-			name = L["%s Scrollarea"]:format(L["Parrot"]),
-			desc = L["Set the %s scrollarea where messages should appear.\n\nReload your user interface to get new areas in the list."]:format(L["Parrot"]),
-			validate = Parrot:GetScrollAreasValidate(),
-			order = 103,
-			disabled = function() return (plugin.db.profile.display ~= L["Parrot"]) end,
-		}
-	end
-end
-
-------------------------------
 --      Initialization      --
 ------------------------------
+
+function plugin:OnRegister()
+	self.consoleOptions.args.output = AceLibrary("Sink-1.0"):GetAceOptionsDataTable(self).output
+end
 
 function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_Message")
@@ -417,11 +320,16 @@ function plugin:BigWigs_HideAnchors()
 	anchor:Hide()
 end
 
+function plugin:Print(text, r, g, b)
+	if not messageFrame then createMsgFrame() end
+	messageFrame:SetScale(self.db.profile.scale)
+	messageFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
+end
+
 function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 	if broadcastonly or not text then return end
 
 	local db = self.db.profile
-
 	local r, g, b = 1, 1, 1 -- Default to white.
 	if db.usecolors then
 		if type(color) == "table" and type(color.r) == "number" and type(color.g) == "number" and type(color.b) == "number" then
@@ -433,24 +341,7 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 		end
 	end
 
-	local display = db.display
-
-	if display == L["RaidWarning frame"] then
-		RaidWarningFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
-	elseif MikSBT and display == L["MSBT"] then
-		MikSBT.DisplayMessage(text, db.msbtArea or MikSBT.DISPLAYTYPE_NOTIFICATION, false, r * 255, g * 255, b * 255)
-	elseif SCT and SCT_MSG_FRAME and display == L["Scrolling Combat Text"] then -- SCT 5.x
-		SCT_MSG_FRAME:AddMessage( text, r, g, b, 1 )
-	elseif CombatText_AddMessage and display == L["Floating Combat Text"] then -- Blizzards FCT
-		CombatText_AddMessage(text, COMBAT_TEXT_SCROLL_FUNCTION, r, g, b, "sticky", nil)
-	elseif Parrot and display == L["Parrot"] then
-		Parrot:ShowMessage(text, db.parrotArea or "Notification", false, r, g, b)
-	else -- Default BigWigs Frame fallback
-		if not messageFrame then createMsgFrame() end
-		messageFrame:SetScale(db.scale)
-		messageFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
-	end
-
+	self:Pour(text, r, g, b)
 	if db.chat then
 		BigWigs:CustomPrint(r, g, b, nil, nil, nil, text)
 	end

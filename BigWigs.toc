@@ -17,8 +17,8 @@
 ## X-AceForum: 1222
 ## X-License: See license.txt
 
-## OptionalDeps: Ace2, FuBar, SharedMedia, MikScrollingBattleText, sct
-## X-Embeds: Ace2, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, SharedMediaLib, Waterfall-1.0
+## OptionalDeps: Ace2, FuBar, SharedMedia
+## X-Embeds: Ace2, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, SharedMediaLib, Waterfall-1.0, SinkLib
 
 ## SavedVariables: BigWigsDB, BigWigsFubarDB
 ## SavedVariablesPerCharacter: BigWigsDBPerChar
@@ -31,3 +31,4 @@ Prototype.lua
 Options.lua
 
 Plugins\Modules.xml
+

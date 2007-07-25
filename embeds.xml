@@ -20,4 +20,7 @@
 <Script file="Libs\CandyBar-2.0\CandyBar-2.0.lua"/>
 <Script file="Libs\SharedMedia-1.0\SharedMedia-1.0.lua"/>
 <Script file="Libs\Waterfall-1.0\Waterfall-1.0.lua"/>
+<Script file="Libs\Sink-1.0\Sink-1.0.lua"/>
+
 </Ui>
+
