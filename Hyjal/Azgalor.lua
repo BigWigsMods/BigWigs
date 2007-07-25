@@ -62,10 +62,20 @@ L:RegisterTranslations("koKR", function() return {
 	doom_other = "%s에 파멸",
 	doom_you = "당신에 파멸!",
 
+	 hoa = "아즈갈로의 울부짖음",
+	 hoa_desc = "아즈갈로의 울부짖음을 경보합니다.",
+	 hoa_bar = "~침묵 대기시간",
+	 hoa_message = "광역 침묵",
+	 hoa_warning = "곧 광역 침묵!",
+
+	 rof = "불의 비",
+	 rof_desc = "자신에게 불의 비가 내릴때를 알림니다.",
+	 rof_you = "당신에 불의 비!",
+
 	icon = "전술 표시",
 	icon_desc = "파멸에 걸린 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 요구).",
 
-	afflict_trigger = "^([^|;%s]*)(.*)(.+)에 걸렸습니다%.$",
+	afflict_trigger =  "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
 } end )
 
 ----------------------------------
