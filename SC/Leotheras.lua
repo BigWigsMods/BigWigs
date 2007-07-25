@@ -69,7 +69,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	phase = "악마 형상",
 	phase_desc = "악마 형상 예측 타이머입니다.",
-	phase_trigger = "꺼져라, 엘프 꼬맹이. 지금부터는 내가 주인이다!$",
+	phase_trigger = "꺼져라, 엘프 꼬맹이. 지금부터는 내가 주인이다!",
 	phase_demon = "60초간 악마 형상",
 	phase_demonsoon = "악마 형상 5초 전!",
 	phase_normalsoon = "보통 형상 5초 전",
@@ -79,7 +79,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	mindcontrol = "정신 지배",
 	mindcontrol_desc = "정신 지배에 걸린 플레이어를 알립니다.",
-	mindcontrol_trigger = "^([^|;%s]*)(.*)Consuming Madness에 걸렸습니다%.$", -- check
+	mindcontrol_trigger = "^([^|;%s]*)(.*)잠식하는 광기에 걸렸습니다%.$", -- check
 	mindcontrol_warning = "정신 지배: %s",
 
 	image = "이미지",
