@@ -139,14 +139,14 @@ function BigWigs.modulePrototype:Scan()
 	if num == 0 then
 		num = GetNumPartyMembers()
 		for i = 1, num do
-			local partyUnit = "party"..i.."target"
+			local partyUnit = "party" .. i .. "target"
 			if UnitExists(partyUnit) and UnitAffectingCombat(partyUnit) and self.scanTable[UnitName(partyUnit)] then
 				return true
 			end
 		end
 	else
 		for i = 1, num do
-			local raidUnit = "raid"..i.."target"
+			local raidUnit = "raid" .. i .. "target"
 			if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) and self.scanTable[UnitName(raidUnit)] then
 				return true
 			end
