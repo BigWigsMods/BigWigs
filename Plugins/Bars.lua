@@ -652,13 +652,13 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, ...)
 			if db.emphasizeMove then
 				if not emphasizeTimers[module] then emphasizeTimers[module] = {} end
 				if emphasizeTimers[module][id] then self:CancelScheduledEvent(emphasizeTimers[module][id]) end
-				emphasizeTimers[module][id] = string.format("%s%d", "BigWigs-EmphasizeBar-", math.random(1, 1000))
+				emphasizeTimers[module][id] = "BigWigs-EmphasizeBar-" .. math.random(1, 1000)
 				self:ScheduleEvent(emphasizeTimers[module][id], self.EmphasizeBar, time - 10, self, module, id)
 			end
 			if db.emphasizeFlash then
 				if not flashTimers[module] then flashTimers[module] = {} end
 				if flashTimers[module][id] then self:CancelScheduledEvent(flashTimers[module][id]) end
-				flashTimers[module][id] = string.format("%s%d", "BigWigs-FlashBar-", math.random(1, 1000))
+				flashTimers[module][id] = "BigWigs-FlashBar-" ..  math.random(1, 1000)
 				self:ScheduleEvent(flashTimers[module][id], self.FlashBar, time - 10, self, module, id)
 			end
 		else
