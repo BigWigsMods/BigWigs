@@ -10,6 +10,7 @@ local paint = AceLibrary("PaintChips-2.0")
 local media = AceLibrary("SharedMedia-1.0")
 local mType = media.MediaType and media.MediaType.STATUSBAR or "statusbar"
 local dew = AceLibrary("Dewdrop-2.0")
+local count = 1
 
 local colorModule = nil
 local anchor = nil
@@ -304,7 +305,7 @@ L:RegisterTranslations("frFR", function() return {
 -----------------------------------------------------------------------
 
 local plugin = BigWigs:NewModule("Bars", "CandyBar-2.0")
-plugin.revision = tonumber(string.sub("$Revision$", 12, -3))
+plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	altclick = true,
 	growup = false,
@@ -649,16 +650,19 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, ...)
 		-- If the bar is started at more than 15 seconds, it won't be emphasized
 		-- right away, but if it's started at 15 or less, it will be.
 		if time > 15 then
+			if count == 100 then count = 1 end
 			if db.emphasizeMove then
 				if not emphasizeTimers[module] then emphasizeTimers[module] = {} end
 				if emphasizeTimers[module][id] then self:CancelScheduledEvent(emphasizeTimers[module][id]) end
-				emphasizeTimers[module][id] = "BigWigs-EmphasizeBar-" .. math.random(1, 1000)
+				emphasizeTimers[module][id] = "BigWigs-EmphasizeBar-" .. count
+				count = count + 1
 				self:ScheduleEvent(emphasizeTimers[module][id], self.EmphasizeBar, time - 10, self, module, id)
 			end
 			if db.emphasizeFlash then
 				if not flashTimers[module] then flashTimers[module] = {} end
 				if flashTimers[module][id] then self:CancelScheduledEvent(flashTimers[module][id]) end
-				flashTimers[module][id] = "BigWigs-FlashBar-" ..  math.random(1, 1000)
+				flashTimers[module][id] = "BigWigs-FlashBar-" .. count
+				count = count + 1
 				self:ScheduleEvent(flashTimers[module][id], self.FlashBar, time - 10, self, module, id)
 			end
 		else

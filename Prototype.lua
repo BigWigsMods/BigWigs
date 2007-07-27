@@ -8,6 +8,7 @@ local BB = AceLibrary("Babble-Boss-2.2")
 local UnitExists = UnitExists
 local UnitAffectingCombat = UnitAffectingCombat
 local UnitName = UnitName
+local count = 1
 
 -- Provide some common translations here, so we don't have to replicate it in
 -- every freaking module.
@@ -213,7 +214,9 @@ function BigWigs.modulePrototype:Message(...)
 end
 
 function BigWigs.modulePrototype:DelayedMessage(delay, ...)
-	local id = "BigWigs-DelayedMessage-" .. math.random(1, 1000)
+	if count == 100 then count = 1 end
+	local id = "BigWigs-DelayedMessage-" .. count
+	count = count + 1
 	self:ScheduleEvent(id, "BigWigs_Message", delay, ...)
 	return id
 end
