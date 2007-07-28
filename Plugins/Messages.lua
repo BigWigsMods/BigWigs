@@ -271,6 +271,7 @@ plugin.consoleOptions = {
 ------------------------------
 
 function plugin:OnRegister()
+	self:RegisterSink("BigWigs", "BigWigs", nil, "Print")
 	self.consoleOptions.args.output = AceLibrary("Sink-1.0"):GetAceOptionsDataTable(self).output
 end
 
@@ -320,7 +321,7 @@ function plugin:BigWigs_HideAnchors()
 	anchor:Hide()
 end
 
-function plugin:Print(text, r, g, b)
+function plugin:Print(addon, text, r, g, b)
 	if not messageFrame then createMsgFrame() end
 	messageFrame:SetScale(self.db.profile.scale)
 	messageFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
