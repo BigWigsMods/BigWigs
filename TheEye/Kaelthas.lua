@@ -237,11 +237,11 @@ L:RegisterTranslations("frFR", function() return {
 	phase = "Phases",
 	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
 	thaladred_inc_trigger = "Impressionnant. Voyons comment tiendront vos nerfs face à l'Assombrisseur, Thaladred !",
-	sanguinar_inc_trigger = "Vous avez tenu tête à certains de mes plus talentueux conseillers... Mais personne ne peut résister à la puissance du Marteau de sang. Je vous présente le seigneur Sanguinar !",
+	sanguinar_inc_trigger = "Vous avez tenu tête à certains de mes plus talentueux conseillers… Mais personne ne peut résister à la puissance du Marteau de sang. Je vous présente le seigneur Sanguinar !",
 	capernian_inc_trigger = "Capernian fera en sorte que votre séjour ici ne se prolonge pas.",
 	telonicus_inc_trigger = "Bien, vous êtes dignes de mesurer votre talent à celui de mon maître ingénieur, Telonicus.",
 	weapons_inc_trigger = "Comme vous le voyez, j'ai plus d'une corde à mon arc…",
-	phase3_trigger = "Peut-être vous ai-je sous-estimés. Il ne serait pas très loyal de vous faire combattre mes quatres conseillers en même temps, mais... mon peuple n'a jamais été traité avec loyauté. Je ne fais que rendre la politesse.",
+	phase3_trigger = "Peut-être vous ai-je sous-estimés. Il ne serait pas très loyal de vous faire combattre mes quatre conseillers en même temps mais… mon peuple n'a jamais été traité avec loyauté. Je ne fais que rendre la politesse.",
 	phase4_trigger = "Il est hélas parfois nécessaire de prendre les choses en main soi-même. Balamore shanal !",
 
 	flying_trigger = "Je ne suis pas arrivé si loin pour échouer maintenant ! Je ne laisserai pas l'avenir que je prépare être remis en cause ! Vous allez goûter à ma vraie puissance !",
@@ -260,7 +260,7 @@ L:RegisterTranslations("frFR", function() return {
 	mc_desc = "Préviens quand des joueurs subissent les effets du Contrôle mental.",
 	mc_message = "Contrôle mental : %s",
 
-	afflicted_trigger = "^(%S+) (%S+) les effets de (.*).$",
+	afflicted_trigger = "^(%S+) (%S+) les effets .* (.*).$",
 
 	revive_bar = "Retour des conseillers",
 	revive_warning = "Retour des conseillers dans 5 sec. !",
