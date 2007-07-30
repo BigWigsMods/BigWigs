@@ -90,10 +90,10 @@ L:RegisterTranslations("koKR", function() return {
 	barrage_trigger = "^([^|;%s]*)(.*)암흑의 탄막에 걸렸습니다%.$",
 	barrage_message = "%s에게 탄막!",
 
-	eyeblast = "Eye Blast",
-	eyeblast_desc = "Warn when Eye Blast is cast.",
-	eyeblast_trigger = "Stare into the eyes of the Betrayer!",
-	eyeblast_message = "Eye Blast!",
+	eyeblast = "안광",
+	eyeblast_desc = "안광이 시전될 때를 알림니다.",
+	eyeblast_trigger = "배신자의 눈을 똑바로 쳐다봐라!",
+	eyeblast_message = "안광!",
 
 	flame = "Agonizing Flames",
 	flame_desc = "Warn who has Agonizing Flames.",
