@@ -75,6 +75,37 @@ L:RegisterTranslations("frFR", function() return {
 	demons_message = "Démons des ombres !",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	parasite = "어둠의 흡혈마귀",
+	parasite_desc = "어둠의 흡혈마귀에 걸린 사람을 알림니다.",
+	parasite_trigger = "^([^|;%s]*)(.*)어둠의 흡혈마귀에 걸렸습니다%.$",
+	parasite_you = "당신에게 흡혈마귀!",
+	parasite_other = "%s에게 흡혈마귀!",
+
+	icon = "전술 표시",
+	icon_desc = "어둠의 흡혈마귀에 걸린 사람에게 전술 표시를 지정합니다 (승급자 이상의 권한 필요).",
+
+	barrage = "암흑의 탄막",
+	barrage_desc = "암흑의 탄막에 걸린 사람을 알림니다.",
+	barrage_trigger = "^([^|;%s]*)(.*)암흑의 탄막에 걸렸습니다%.$",
+	barrage_message = "%s에게 탄막!",
+
+	eyeblast = "Eye Blast",
+	eyeblast_desc = "Warn when Eye Blast is cast.",
+	eyeblast_trigger = "Stare into the eyes of the Betrayer!",
+	eyeblast_message = "Eye Blast!",
+
+	flame = "Agonizing Flames",
+	flame_desc = "Warn who has Agonizing Flames.",
+	flame_trigger = "^([^%s]+) ([^%s]+) afflicted by Agonizing Flames%.$",
+	flame_message = "%s has Agonizing Flames!",
+
+	demons = "Shadow Demons",
+	demons_desc = "Warn when Illidan is summoning Shadow Demons.",
+	demons_trigger = "Summon Shadow Demons",
+	demons_message = "Shadow Demons!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
@@ -111,7 +142,7 @@ end
 ------------------------------
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "IliPara" and rest and self.db.profile.parasite then 
+	if sync == "IliPara" and rest and self.db.profile.parasite then
 		local other = L["parasite_other"]:format(rest)
 		if rest == pName then
 			self:Message(L["parasite_you"], "Personal", true, "Long")

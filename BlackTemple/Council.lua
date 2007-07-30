@@ -93,6 +93,43 @@ L:RegisterTranslations("frFR", function() return {
 	circle_bar = "~Cooldown Cercle de soins",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	immune = "면역 경보",
+	immune_desc = "말란데가 주문이나 근접 공격에 면역이 될 때를 알림니다.",
+	immune_spell_trigger = "여군주 말란데|1이;가; 주문 수호의 축복 효과를 얻었습니다.",
+	immune_melee_trigger = "여군주 말란데|1이;가; 보호의 축복 효과를 얻었습니다.",
+	immune_message = "말란데: %s 15초 동안 면역!",
+	immune_bar = "%s 면역!",
+
+	spell = "주문",
+	melee = "근접",
+
+	shield = "반사의 보호막",
+	shield_desc = "말란데가 반사의 보호막을 얻을 때를 알림니다.",
+	shield_trigger = "여군주 말란데|1이;가; 반사의 보호막 효과를 얻었습니다.",
+	shield_message = "말란데에게 반사의 보호막!",
+
+	poison = "맹독",
+	poison_desc = "맹독에 걸린 사람을 알림니다.",
+	poison_trigger = "^([^|;%s]*)(.*)맹독에 걸렸습니다%.$",
+	poison_other = "%s에게 맹독!",
+	poison_you = "당신에게 맹독!",
+
+	icon = "전술 표시",
+	icon_desc = "맹독에 걸린 사람에게 전술 표시를 지정합니다 (승급자 이상의 권한 필요).",
+
+	circle = "치유의 마법진",
+	circle_desc = "말란데의 치유의 마법진 시전을 알립니다.",
+	circle_trigger = "여군주 말란데|1이;가; 치유의 마법진 시전을 시작합니다.",
+	circle_message = "치유의 마법진 시전!",
+	circle_heal_trigger = "^여군주 말란데의 치유의 마법진|1으로;로;",
+	circle_fail_trigger = "방해를 받아 취소되었습니다.", --event?
+	circle_heal_message = "치유됨! - 다음은 약 20초 후",
+	circle_fail_message = "방해됨! - 다음은 약 12초 후",
+	circle_bar = "~치유의 마법진 대기 시간",
+} end )
+
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
