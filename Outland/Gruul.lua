@@ -284,6 +284,10 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	end
 end
 
+local function nilSilence()
+	silence = nil
+end
+
 function mod:Event(msg)
 	if self.db.profile.cavein and msg == L["cavein_trigger"] then
 		self:Message(L["cavein_message"], "Personal", true, "Alarm")
@@ -292,6 +296,6 @@ function mod:Event(msg)
 		self:DelayedMessage(28, L["silence_warning"], "Urgent")
 		self:Bar(L["silence_bar"], 31, "Spell_Holy_ImprovedResistanceAuras")
 		silence = true
-		self:ScheduleEvent("BWGrullNilSilence", function() silence = nil end, 10, self)
+		self:ScheduleEvent("BWGrullNilSilence", nilSilence, 10)
 	end
 end

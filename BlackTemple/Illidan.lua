@@ -16,7 +16,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	parasite = "Parasitic Shadowfiend",
 	parasite_desc = "Warn who has Parasitic Shadowfiend.",
-	parasite_trigger = "^([^%s]+) ([^%s]+) afflicted by Parasitic Shadowfiend%.$",
 	parasite_you = "You have a Parasite!",
 	parasite_other = "%s has a Parasite!",
 
@@ -25,7 +24,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	barrage = "Dark Barrage",
 	barrage_desc = "Warn who has Dark Barrage.",
-	barrage_trigger = "^([^%s]+) ([^%s]+) afflicted by Dark Barrage%.$",
 	barrage_message = "%s is being Barraged!",
 
 	eyeblast = "Eye Blast",
@@ -35,19 +33,19 @@ L:RegisterTranslations("enUS", function() return {
 
 	flame = "Agonizing Flames",
 	flame_desc = "Warn who has Agonizing Flames.",
-	flame_trigger = "^([^%s]+) ([^%s]+) afflicted by Agonizing Flames%.$",
 	flame_message = "%s has Agonizing Flames!",
 
 	demons = "Shadow Demons",
 	demons_desc = "Warn when Illidan is summoning Shadow Demons.",
 	demons_trigger = "Summon Shadow Demons",
 	demons_message = "Shadow Demons!",
+
+	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by ([^%s]+)%.$",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
 	parasite = "Ombrefiel parasite",
 	parasite_desc = "Préviens quand un joueur subit les effets de l'Ombrefiel parasite.",
-	parasite_trigger = "^([^%s]+) ([^%s]+) les effets .* Ombrefiel parasite%.$", -- à vérifier
 	parasite_you = "Vous avez un parasite !",
 	parasite_other = "%s a un parasite !",
 
@@ -56,7 +54,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	barrage = "Barrage noir",
 	barrage_desc = "Préviens quand un joueur subit les effets du Barrage noir.",
-	barrage_trigger = "^([^%s]+) ([^%s]+) les effets .* Barrage noir%.$",
 	barrage_message = "%s est dans le barrage !",
 
 	eyeblast = "Energie oculaire",
@@ -66,7 +63,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	flame = "Flammes déchirantes",
 	flame_desc = "Préviens quand un joueur subit les effets des Flammes déchirantes.",
-	flame_trigger = "^([^%s]+) ([^%s]+) les effets .* Flammes déchirantes%.$",
 	flame_message = "%s a les Flammes déchirantes !",
 
 	demons = "Démons des ombres",
@@ -78,7 +74,6 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("koKR", function() return {
 	parasite = "어둠의 흡혈마귀",
 	parasite_desc = "어둠의 흡혈마귀에 걸린 사람을 알림니다.",
-	parasite_trigger = "^([^|;%s]*)(.*)어둠의 흡혈마귀에 걸렸습니다%.$",
 	parasite_you = "당신에게 흡혈마귀!",
 	parasite_other = "%s에게 흡혈마귀!",
 
@@ -87,7 +82,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	barrage = "암흑의 탄막",
 	barrage_desc = "암흑의 탄막에 걸린 사람을 알림니다.",
-	barrage_trigger = "^([^|;%s]*)(.*)암흑의 탄막에 걸렸습니다%.$",
 	barrage_message = "%s에게 탄막!",
 
 	eyeblast = "안광",
@@ -97,7 +91,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	flame = "Agonizing Flames",
 	flame_desc = "Warn who has Agonizing Flames.",
-	flame_trigger = "^([^%s]+) ([^%s]+) afflicted by Agonizing Flames%.$",
 	flame_message = "%s has Agonizing Flames!",
 
 	demons = "Shadow Demons",
@@ -165,28 +158,18 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 end
 
 function mod:AfflictEvent(msg)
-	local pplayer, ptype = select(3, msg:find(L["parasite_trigger"]))
-	if pplayer and ptype then
-		if pplayer == L2["you"] and ptype == L2["are"] then
-			pplayer = pName
+	local player, type, spell = select(3, msg:find(L["afflict_trigger"]))
+	if player and type then
+		if player == L2["you"] and type == L2["are"] then
+			player = pName
 		end
-		self:Sync("IliPara "..pplayer)
-	end
-
-	local bplayer, btype = select(3, msg:find(L["barrage_trigger"]))
-	if bplayer and btype then
-		if bplayer == L2["you"] and btype == L2["are"] then
-			bplayer = pName
+		if spell == L["parasite"] then
+			self:Sync("IliPara "..player)
+		elseif spell == L["barrage"] then
+			self:Sync("IliBara "..player)
+		elseif spell == L["flame"] then
+			self:Sync("IliFlame "..player)
 		end
-		self:Sync("IliBara "..bplayer)
-	end
-
-	local fplayer, ftype = select(3, msg:find(L["flame_trigger"]))
-	if fplayer and ftype then
-		if fplayer == L2["you"] and ftype == L2["are"] then
-			fplayer = pName
-		end
-		self:Sync("IliFlame "..fplayer)
 	end
 end
 

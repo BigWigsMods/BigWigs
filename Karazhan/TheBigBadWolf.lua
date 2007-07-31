@@ -6,6 +6,7 @@ local lady = AceLibrary("Babble-Boss-2.2")["Grandmother"]
 local boss = AceLibrary("Babble-Boss-2.2")["The Big Bad Wolf"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+local pName = nil
 
 ----------------------------
 --      Localization      --
@@ -141,6 +142,8 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS", "RidingEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS", "RidingEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_BUFFS", "RidingEvent")
+
+	pName = UnitName("player")
 end
 
 ------------------------------
@@ -151,10 +154,10 @@ function mod:RidingEvent(msg)
 	local rplayer, rtype = select(3, msg:find(L["riding_trigger"]))
 	if rplayer and rtype then
 		if rplayer == L2["you"] and rtype == L["gain"] then
-			rplayer = UnitName("player")
+			rplayer = pName
 		end
 
-		if rplayer == UnitName("player") and self.db.profile.youriding then
+		if rplayer == pName and self.db.profile.youriding then
 			self:Message(L["riding_youwarn"], "Personal", true, "Long")
 			self:Message(L["riding_otherwarn"]:format(rplayer), "Attention", nil, nil, true)
 			self:Bar(L["riding_bar"]:format(rplayer), 20,"INV_Chest_Cloth_18")

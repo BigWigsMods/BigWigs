@@ -134,14 +134,16 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) and self.db.profile.spawns then
-		self:Bar(L["spawns_bar"]:format(roar), 15, "INV_Staff_08")
-		self:DelayedMessage(10, L["spawns_warning"]:format(roar), "Attention")
-		self:Bar(L["spawns_bar"]:format(strawman), 25, "Ability_Druid_ChallangingRoar")
-		self:DelayedMessage(20, L["spawns_warning"]:format(strawman), "Attention")
-		self:Bar(L["spawns_bar"]:format(tinhead), 35, "INV_Chest_Plate06")
-		self:DelayedMessage(30, L["spawns_warning"]:format(tinhead), "Attention")
-		self:Bar(L["spawns_bar"]:format(tito), 48, "Ability_Hunter_Pet_Wolf")
-		self:DelayedMessage(43, L["spawns_warning"]:format(tito), "Attention")
+		local swarn = L["spawns_warning"]
+		local sbar = L["spawns_bar"]
+		self:Bar(sbar:format(roar), 15, "INV_Staff_08")
+		self:DelayedMessage(10, swarn:format(roar), "Attention")
+		self:Bar(sbar:format(strawman), 25, "Ability_Druid_ChallangingRoar")
+		self:DelayedMessage(20, swarn:format(strawman), "Attention")
+		self:Bar(sbar:format(tinhead), 35, "INV_Chest_Plate06")
+		self:DelayedMessage(30, swarn:format(tinhead), "Attention")
+		self:Bar(sbar:format(tito), 48, "Ability_Hunter_Pet_Wolf")
+		self:DelayedMessage(43, swarn:format(tito), "Attention")
 	end
 end
 

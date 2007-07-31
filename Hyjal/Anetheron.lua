@@ -140,6 +140,8 @@ function mod:InfernoCheck()
 	local target
 	if UnitName("target") == boss then
 		target = UnitName("targettarget")
+	elseif UnitName("focus") == boss then
+		target = UnitName("focustarget")
 	else
 		for i = 1, GetNumRaidMembers() do
 			if UnitName("raid"..i.."target") == boss then

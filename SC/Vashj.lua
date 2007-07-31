@@ -11,7 +11,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 BB = nil
 
 local shieldsFaded = 0
-local playerName = nil
+local pName = nil
 local phaseTwoAnnounced = nil
 
 ----------------------------
@@ -243,7 +243,7 @@ mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) en
 ------------------------------
 
 function mod:OnEnable()
-	playerName = UnitName("player")
+	pName = UnitName("player")
 
 	self:RegisterEvent("CHAT_MSG_LOOT")
 
@@ -280,7 +280,7 @@ do
 		if not player then
 			item = select(3, msg:find(lootItemSelf))
 			if item then
-				player = playerName
+				player = pName
 			end
 		end
 
@@ -392,7 +392,7 @@ function mod:Charge(msg)
 	local splayer, stype = select(3, msg:find(L["static_charge_trigger"]))
 	if splayer and stype then
 		if splayer == L2["you"] and stype == L2["are"] then
-			splayer = playerName
+			splayer = pName
 			self:CancelScheduledEvent("cancelProx")
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 			self:ScheduleEvent("cancelProx", "BigWigs_HideProximity", 20, self)

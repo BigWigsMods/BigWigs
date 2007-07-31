@@ -191,7 +191,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	elseif msg == L["phase2_trigger"] then
 		self:Message(L["phase2_message"], "Important")
 		self:Bar(L["phase1_bar"], 30, "Spell_ChargeNegative")
-	end	
+	end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)

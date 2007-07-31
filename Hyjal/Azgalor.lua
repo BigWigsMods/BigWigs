@@ -5,6 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Azgalor"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+local pName = nil
 
 ----------------------------
 --      Localization      --
@@ -104,6 +105,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "AzDoom", 2)
 	self:TriggerEvent("BigWigs_ThrottleSync", "AzHOA", 2)
 
+	pName = UnitName("player")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
@@ -115,7 +117,7 @@ function mod:Event(msg)
 	local aPlayer, aType, aSpell = select(3, msg:find(L["afflict_trigger"]))
 	if aPlayer and aType then
 		if aPlayer == L2["you"] and aType == L2["are"] then
-			aPlayer = UnitName("player")
+			aPlayer = pName
 			if aSpell == L["rof"] and self.db.profile.rof then
 				self:Message(L["rof_you"], "Urgent", true, "Alarm")
 			end
@@ -131,7 +133,7 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "AzDoom" and rest and self.db.profile.doom then
 		local other = L["doom_other"]:format(rest)
-		if rest == UnitName("player") then
+		if rest == pName then
 			self:Message(L["doom_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
 			self:Bar(other, 19, "Ability_Creature_Cursed_02")

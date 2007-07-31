@@ -241,10 +241,11 @@ function mod:DiveCheck()
 		self:ScheduleEvent("BWLurkerUp", self.LurkerUP, 60, self)
 
 		if self.db.profile.dive then
+			local ewarn = L["emerge_warning"]
 			self:Message(L["dive_message"], "Attention")
-			self:DelayedMessage(30, L["emerge_warning"]:format(30), "Positive")
-			self:DelayedMessage(50, L["emerge_warning"]:format(10), "Positive")
-			self:DelayedMessage(55, L["emerge_warning"]:format(5), "Urgent", nil, "Alert")
+			self:DelayedMessage(30, ewarn:format(30), "Positive")
+			self:DelayedMessage(50, ewarn:format(10), "Positive")
+			self:DelayedMessage(55, ewarn:format(5), "Urgent", nil, "Alert")
 			self:DelayedMessage(60, L["emerge_message"], "Attention")
 			self:Bar(L["emerge_bar"], 60, "Spell_Frost_Stun")
 		end
@@ -263,10 +264,11 @@ end
 
 function mod:LurkerUP()
 	if self.db.profile.dive then
-		self:DelayedMessage(30, L["dive_warning"]:format(60), "Positive")
-		self:DelayedMessage(60, L["dive_warning"]:format(30), "Positive")
-		self:DelayedMessage(80, L["dive_warning"]:format(10), "Positive")
-		self:DelayedMessage(85, L["dive_warning"]:format(5), "Urgent", nil, "Alarm")
+		local dwarn = L["dive_warning"]
+		self:DelayedMessage(30, dwarn:format(60), "Positive")
+		self:DelayedMessage(60, dwarn:format(30), "Positive")
+		self:DelayedMessage(80, dwarn:format(10), "Positive")
+		self:DelayedMessage(85, dwarn:format(5), "Urgent", nil, "Alarm")
 		self:Bar(L["dive_bar"], 90, "Spell_Frost_ArcticWinds")
 	end
 
