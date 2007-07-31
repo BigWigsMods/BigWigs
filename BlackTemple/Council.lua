@@ -51,7 +51,7 @@ L:RegisterTranslations("enUS", function() return {
 	circle_trigger = "Lady Malande begins to cast Circle of Healing.",
 	circle_message = "Casting Circle of Healing!",
 	circle_heal_trigger = "^Lady Malande 's Circle of Healing heals",
-	circle_fail_trigger = "interrupted", --event?
+	circle_fail_trigger = "^([^%s]+) interrupts? Lady Malande's Circle of Healing%.$",
 	circle_heal_message = "Healed! - Next in ~20sec",
 	circle_fail_message = "Interrupted! - Next in ~12sec",
 	circle_bar = "~Circle of Healing Cooldown",
@@ -137,7 +137,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = {malande, gathios, zerevor, veras}
-mod.toggleoptions = {"immune", "shield", "circle", "poison", "icon", "bosskill"}
+mod.toggleoptions = {"immune", "shield", "circle", -1, "poison", "icon", -1, "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -151,6 +151,11 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Poison")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Poison")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Poison")
+	
+	self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE", "Interrupt")
+	self:RegisterEvent("CHAT_MSG_SPELL_PARTY_DAMAGE", "Interrupt")
+	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE", "Interrupt") -- might not be needed?
+	self:RegisterEvent("CHAT_MSG_SPELL_HOSTILEPLAYER_DAMAGE", "Interrupt")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -173,12 +178,15 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "MalSpell" and self.db.profile.immune then
 		self:Message(L["immune_message"]:format(L["spell"]), "Positive", nil, "Alarm")
+		self:TriggerEvent("BigWigs_StopBar", self, L["immune_message"]:format(L["melee"]))
 		self:Bar(L["immune_bar"]:format(L["spell"]), 15, "Spell_Holy_SealOfRighteousness")
 	elseif sync == "MalMelee" and self.db.profile.immune then
 		self:Message(L["immune_message"]:format(L["melee"]), "Positive", nil, "Alert")
+		self:TriggerEvent("BigWigs_StopBar", self, L["immune_message"]:format(L["spell"]))
 		self:Bar(L["immune_bar"]:format(L["melee"]), 15, "Spell_Holy_SealOfProtection")
 	elseif sync == "MalShield" and self.db.profile.shield then
 		self:Message(L["shield_message"], "Important", nil, "Long")
+		self:Bar(L["shield_message"], 20, "Spell_Holy_PowerWordShield")
 	elseif sync == "MalCCast" and self.db.profile.circle then
 		self:Message(L["circle_message"], "Attention", nil, "Info")
 		self:Bar(L["circle"], 2.5, "Spell_Holy_CircleOfRenewal")
@@ -217,8 +225,6 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 		self:Sync("MalCCast")
 	elseif msg == L["circle_heal_trigger"] then
 		self:Sync("MalCHeal")
-	elseif msg:find(L["circle_fail_trigger"]) then
-		self:Sync("MalCFail") --doesn't work
 	end
 end
 
@@ -229,5 +235,11 @@ function mod:Poison(msg)
 			pplayer = pName
 		end
 		self:Sync("CouncilPoison "..pplayer)
+	end
+end
+
+function mod:Interrupt(msg)
+	if msg:find(L["circle_fail_trigger"]) then
+		self:Sync("MalCFail")
 	end
 end
