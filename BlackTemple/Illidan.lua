@@ -73,19 +73,19 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	parasite = "어둠의 흡혈마귀",
-	parasite_desc = "어둠의 흡혈마귀에 걸린 사람을 알림니다.",
-	parasite_you = "당신에게 흡혈마귀!",
-	parasite_other = "%s에게 흡혈마귀!",
+	parasite_desc = "어둠의 흡혈마귀에 걸린 사람을 알립니다.",
+	parasite_you = "당신에 흡혈마귀!",
+	parasite_other = "%s에 흡혈마귀!",
 
 	icon = "전술 표시",
-	icon_desc = "어둠의 흡혈마귀에 걸린 사람에게 전술 표시를 지정합니다 (승급자 이상의 권한 필요).",
+	icon_desc = "어둠의 흡혈마귀에 걸린 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
 
 	barrage = "암흑의 탄막",
-	barrage_desc = "암흑의 탄막에 걸린 사람을 알림니다.",
+	barrage_desc = "암흑의 탄막에 걸린 사람을 알립니다.",
 	barrage_message = "%s에게 탄막!",
 
 	eyeblast = "안광",
-	eyeblast_desc = "안광이 시전될 때를 알림니다.",
+	eyeblast_desc = "안광 시전 시 알립니다.",
 	eyeblast_trigger = "배신자의 눈을 똑바로 쳐다봐라!",
 	eyeblast_message = "안광!",
 
@@ -97,6 +97,8 @@ L:RegisterTranslations("koKR", function() return {
 	demons_desc = "Warn when Illidan is summoning Shadow Demons.",
 	demons_trigger = "Summon Shadow Demons",
 	demons_message = "Shadow Demons!",
+
+	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
 } end )
 
 ----------------------------------
