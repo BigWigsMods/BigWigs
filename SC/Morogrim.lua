@@ -116,7 +116,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Que les flots des profondeurs vous emportent !", -- à vérifier
+	engage_trigger = "Que les flots des profondeurs vous emportent !",
 
 	tidal = "Raz-de-marée",
 	tidal_desc = "Préviens quand Morogrim lance un Raz-de-marée.",
@@ -133,16 +133,16 @@ L:RegisterTranslations("frFR", function() return {
 	murloc = "Murlocs",
 	murloc_desc = "Préviens de l'arrivée des murlocs.",
 	murloc_bar = "~Cooldown Murlocs",
-	murloc_trigger1 = "Par les marées !", -- à vérifier
-	murloc_trigger2 = "Détruisez-les, mes sujets !", -- à vérifier
+	murloc_trigger1 = "Par les marées !",
+	murloc_trigger2 = "Détruisez-les, mes sujets !",
 	murloc_message = "Arrivée des murlocs !",
 	murloc_soon_message = "Murlocs imminent !",
 	murloc_engaged = "%s engagé, murlocs dans ~40 sec.",
 
 	grobules = "Globules",
 	grobules_desc = "Préviens de l'arrivée des globules.",
-	grobules_trigger1 = "Bientôt, ce sera terminé !", -- à vérifier
-	grobules_trigger2 = "Il est impossible de m'échapper !", -- à vérifier
+	grobules_trigger1 = "Bientôt, ce sera terminé.",
+	grobules_trigger2 = "Il est impossible de m'échapper !",
 	grobules_message = "Arrivée des globules !",
 	grobules_warning = "Globules imminent !",
 	grobules_bar = "Disparation des globules",

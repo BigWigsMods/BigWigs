@@ -81,7 +81,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	spout = "Jet",
 	spout_desc = "Délais concernant les Jets. Pas toujours précis.",
-	spout_trigger = "%s prend une grande inspiration !", -- à vérifier
+	spout_trigger = "%s inspire profondément !",
 	spout_message = "Incante un Jet !",
 	spout_warning = "Jet probable dans ~3 sec. !",
 	spout_bar = "Jet probable",

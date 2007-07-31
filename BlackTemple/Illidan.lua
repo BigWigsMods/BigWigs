@@ -69,6 +69,8 @@ L:RegisterTranslations("frFR", function() return {
 	demons_desc = "Préviens quand Illidan invoque des démons des ombres.",
 	demons_trigger = "Invocation de démons des ombres",
 	demons_message = "Démons des ombres !",
+
+	afflict_trigger = "^([^%s]+) ([^%s]+) les effets .* ([^%s]+)%.$",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
