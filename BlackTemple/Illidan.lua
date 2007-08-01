@@ -178,7 +178,7 @@ function mod:AfflictEvent(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["eyeblast_trigger"] then
+	if self.db.profile.eyeblast and msg == L["eyeblast_trigger"] then
 		self:Message(L["eyeblast_message"], "Important", nil, "Alert")
 	end
 end
