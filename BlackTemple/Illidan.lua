@@ -82,9 +82,9 @@ L:RegisterTranslations("koKR", function() return {
 	icon = "전술 표시",
 	icon_desc = "어둠의 흡혈마귀에 걸린 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
 
-	barrage = "암흑의 탄막",
-	barrage_desc = "암흑의 탄막에 걸린 사람을 알립니다.",
-	barrage_message = "%s에게 탄막!",
+	barrage = "암흑의 보호막",
+	barrage_desc = "암흑의 보호막에 걸린 사람을 알립니다.",
+	barrage_message = "%s에 탄막!",
 
 	eyeblast = "안광",
 	eyeblast_desc = "안광 시전 시 알립니다.",
