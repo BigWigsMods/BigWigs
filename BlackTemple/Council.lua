@@ -97,10 +97,20 @@ L:RegisterTranslations("frFR", function() return {
 	circle_trigger = "Dame Malande commence à lancer Cercle de soins.",
 	circle_message = "Cercle de soins en incantation !",
 	circle_heal_trigger = "^Cercle de soins .* Dame Malande soigne",
-	circle_fail_trigger = "interrupted", --event?
+	circle_fail_trigger = "^([^%s]+) interrompt Dame Malande qui lance Cercle de soins%.$", -- + "Dame Malande lance un Cercle de soins que vous interrompez." ?
 	circle_heal_message = "Soigné ! - Prochain dans ~20 sec.",
 	circle_fail_message = "Interrompu ! - Prochain dans ~12 sec.",
 	circle_bar = "~Cooldown Cercle de soins",
+
+	strike = "Choc de flammes",
+	strike_desc = "Préviens quand un joueur est ciblé par le Choc de flammes.",
+	strike_trigger = "Grand néantomancien Zerevor commence à lancer Choc de flammes.",
+	strike_you = "Choc de flammes sur VOUS !",
+	strike_other = "Choc de flammes sur %s",
+
+	strikesay = "Dire - Choc de flammes",
+	strikesay_desc = "Fais dire à votre personnage que vous êtes ciblé par le Choc de flammes quand c'est le cas, afin d'aider les membres proches ayant les bulles de dialogue d'activés.",
+	strikesay_message = "Choc de flammes sur moi !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

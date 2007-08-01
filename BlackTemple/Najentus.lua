@@ -78,7 +78,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	start_trigger = "You will die in the name of Lady Vashj!", -- à traduire
+	start_trigger = "Vous allez mourir, au nom de dame Vashj !",
 
 	spine = "Epine de perforation",
 	spine_desc = "Préviens quand un joueur subit les effets de l'Epine de perforation.",
