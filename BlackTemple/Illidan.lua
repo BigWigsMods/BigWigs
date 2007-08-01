@@ -75,7 +75,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	parasite = "어둠의 흡혈마귀",
-	parasite_desc = "어둠의 흡혈마귀에 걸린 사람을 알립니다.",
+	parasite_desc = "어둠의 흡혈마귀에 걸린 플레이어를 알립니다.",
 	parasite_you = "당신에 흡혈마귀!",
 	parasite_other = "%s에 흡혈마귀!",
 
@@ -83,7 +83,7 @@ L:RegisterTranslations("koKR", function() return {
 	icon_desc = "어둠의 흡혈마귀에 걸린 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
 
 	barrage = "암흑의 보호막",
-	barrage_desc = "암흑의 보호막에 걸린 사람을 알립니다.",
+	barrage_desc = "암흑의 보호막에 걸린 플레이어를 알립니다.",
 	barrage_message = "%s에 탄막!",
 
 	eyeblast = "안광",
@@ -91,14 +91,14 @@ L:RegisterTranslations("koKR", function() return {
 	eyeblast_trigger = "배신자의 눈을 똑바로 쳐다봐라!",
 	eyeblast_message = "안광!",
 
-	flame = "Agonizing Flames",
-	flame_desc = "Warn who has Agonizing Flames.",
-	flame_message = "%s has Agonizing Flames!",
+	flame = "고뇌의 불꽃",
+	flame_desc = "고뇌의 불꽃에 걸린 플레이어를 알립니다.",
+	flame_message = "%s에 고뇌의 불꽃!",
 
-	demons = "Shadow Demons",
-	demons_desc = "Warn when Illidan is summoning Shadow Demons.",
-	demons_trigger = "Summon Shadow Demons",
-	demons_message = "Shadow Demons!",
+	demons = "어둠의 악마",
+	demons_desc = "어둠의 악마 소환 시 알립니다.",
+	demons_trigger = "어둠의 악마 소환",
+	demons_message = "어둠의 악마!",
 
 	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
 } end )
