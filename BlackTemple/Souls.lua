@@ -61,6 +61,11 @@ L:RegisterTranslations("enUS", function() return {
 	spite_desc = "Warn who has Spite.",
 	spite_message = "Spite: %s",
 
+	scream = "Soul Scream",
+	scream_desc = "Show a cooldown bar for Soul Scream.",
+	scream_trigger = "^Essence of Anger's Soul Scream ",
+	scream_bar = "~Soul Scream Cooldown",
+
 	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by ([^%s]+)%.$",
 } end )
 
@@ -153,7 +158,7 @@ L:RegisterTranslations("frFR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = {boss, desire, suffering, anger}
-mod.toggleoptions = {"enrage", "drain", -1, "runeshield", "deaden", -1, "spite", -1, "bosskill"}
+mod.toggleoptions = {"enrage", "drain", -1, "runeshield", "deaden", -1, "spite", "scream", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -178,6 +183,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "RoSShield", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RoSWin", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RoSDeaden", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "RoSScream", 4)
 	pName = UnitName("player")
 end
 
@@ -226,6 +232,8 @@ end
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg == L["deaden_trigger"] then
 		self:Sync("RoSDeaden")
+	elseif msg:find(L["scream_trigger"]) then
+		self:Sync("RoSScream")
 	end
 end
 
@@ -291,5 +299,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(L["deaden_message"], "Attention")
 		self:Bar(L["deaden_nextbar"], 30, "Spell_Shadow_SoulLeech_1")
 		self:DelayedMessage(25, L["deaden_warn"], "Urgent")
+	elseif sync == "RoSScream" and self.db.profile.scream then
+		self:Bar(L["scream_bar"], 10, "Spell_Shadow_ConeOfSilence")
 	end
 end
