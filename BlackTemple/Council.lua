@@ -55,16 +55,6 @@ L:RegisterTranslations("enUS", function() return {
 	circle_heal_message = "Healed! - Next in ~20sec",
 	circle_fail_message = "Interrupted! - Next in ~12sec",
 	circle_bar = "~Circle of Healing Cooldown",
-
-	strike = "Flamestrike",
-	strike_desc = "Warn who is targetted for Flamestrike.",
-	strike_trigger = "High Nethermancer Zerevor begins to cast Flamestrike.",
-	strike_you = "Flame Strike on YOU!",
-	strike_other = "Flame strike on %s",
-
-	strikesay = "Flamestrike Say",
-	strikesay_desc = "Print in say when you are targeted for Flamestrike. (Can help nearby members with speech bubbles on)",
-	strikesay_message = "Flamestrike on me!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -101,16 +91,6 @@ L:RegisterTranslations("frFR", function() return {
 	circle_heal_message = "Soigné ! - Prochain dans ~20 sec.",
 	circle_fail_message = "Interrompu ! - Prochain dans ~12 sec.",
 	circle_bar = "~Cooldown Cercle de soins",
-
-	strike = "Choc de flammes",
-	strike_desc = "Préviens quand un joueur est ciblé par le Choc de flammes.",
-	strike_trigger = "Grand néantomancien Zerevor commence à lancer Choc de flammes.",
-	strike_you = "Choc de flammes sur VOUS !",
-	strike_other = "Choc de flammes sur %s",
-
-	strikesay = "Dire - Choc de flammes",
-	strikesay_desc = "Fais dire à votre personnage que vous êtes ciblé par le Choc de flammes quand c'est le cas, afin d'aider les membres proches ayant les bulles de dialogue d'activés.",
-	strikesay_message = "Choc de flammes sur moi !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -156,7 +136,7 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = {malande, gathios, zerevor, veras}
-mod.toggleoptions = {"immune", "shield", "circle", -1, "poison", "icon", -1, "strike", "strikesay", "bosskill"}
+mod.toggleoptions = {"immune", "shield", "circle", -1, "poison", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -166,7 +146,6 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Poison")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Poison")
@@ -186,7 +165,6 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalCHeal", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalCFail", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "CouncilPoison", 2)
-	self:TriggerEvent("BigWigs_ThrottleSync", "ZerFlame", 4)
 
 	pName = UnitName("player")
 end
@@ -217,8 +195,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "MalCFail" and self.db.profile.circle then
 		self:Message(L["circle_fail_message"], "Urgent")
 		self:Bar(L["circle_bar"], 12, "Spell_Holy_CircleOfRenewal")
-	elseif sync == "ZerFlame" and self.db.profile.strike then
-		self:ScheduleEvent("BWFlameToTScan", self.TargetCheck, 0.3, self)
 	elseif sync == "CouncilPoison" and rest and self.db.profile.poison then
 		local other = L["poison_other"]:format(rest)
 		if rest == pName then
@@ -243,12 +219,6 @@ function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	end
 end
 
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg == L["strike_trigger"] then
-		self:Sync("ZerFlame")
-	end
-end
-
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg == L["circle_trigger"] then
 		self:Sync("MalCCast")
@@ -270,34 +240,5 @@ end
 function mod:Interrupt(msg)
 	if msg:find(L["circle_fail_trigger"]) then
 		self:Sync("MalCFail")
-	end
-end
-
-function mod:TargetCheck()
-	local target
-	if UnitName("target") == boss then
-		target = UnitName("targettarget")
-	elseif UnitName("focus") == boss then
-		target = UnitName("focustarget")
-	else
-		local num = GetNumRaidMembers()
-		for i = 1, num do
-			if UnitName("raid"..i.."target") == boss then
-				target = UnitName("raid"..i.."targettarget")
-				break
-			end
-		end
-	end
-	if target then
-		local fstrike = L["strike_other"]:format(target)
-		if target == pName then
-			self:Message(L["strike_you"], "Personal", true, "Long")
-			self:Message(fstrike, "Attention", nil, nil, true)
-			if self.db.profile.burstsay then
-				SendChatMessage(L["strikesay_message"], "SAY")
-			end
-		else
-			self:Message(fstrike, "Attention")
-		end
 	end
 end
