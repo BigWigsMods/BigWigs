@@ -240,7 +240,7 @@ function mod:AuraGone(msg)
 end
 
 function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
-	if self.db.profile.sacrifice and msg:find(L["sacrifice_fade"] then
+	if self.db.profile.sacrifice and msg:find(L["sacrifice_fade"]) then
 		self:TriggerEvent("BigWigs_StopBar", self, L["sacrifice_bar"]:format(pName))
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	end
