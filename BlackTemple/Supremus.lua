@@ -95,9 +95,9 @@ L:RegisterTranslations("frFR", function() return {
 	phase = "Phase",
 	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
 	normal_phase_message = "Phase de tanking !",
-	normal_phase_trigger = "Supremus punches the ground in anger!", -- à traduire
+	normal_phase_trigger = "De rage, Supremus frappe le sol !",
 	kite_phase_message = "Phase de kitting !",
-	kite_phase_trigger = "The ground begins to crack open!", -- à traduire
+	kite_phase_trigger = "Le sol commence à se fissurer !",
 	next_phase_bar = "Prochain phase",
 	next_phase_message = "Changement de phase dans 10 sec. !",
 
@@ -109,7 +109,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	target = "Cible",
 	target_desc = "Indique la personne pourchassée pendant la phase de kitting.",
-	target_message = "%s being chased!", -- à traduire
+	target_message = "%s est poursuivi !",
 	target_message_nounit = "Nouvelle cible !",
 
 	icon = "Icône",

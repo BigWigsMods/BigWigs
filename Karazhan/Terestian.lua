@@ -65,7 +65,7 @@ L:RegisterTranslations("frFR", function() return {
 	sacrifice = "Sacrifice",
 	sacrifice_desc = "Préviens quand un joueur est sacrifié.",
 	sacrifice_trigger = "^([^%s]+) ([^%s]+) les effets .* Sacrifice%.$",
-	--sacrifice_fade = "^Sacrifice fades from ([^%s]+)%.$",
+	sacrifice_fade = "^Sacrifice sur ([^%s]+) vient de se dissiper%.$",
 	sacrifice_message = "%s est sacrifié !",
 	sacrifice_bar = "Sacrifice : %s",
 

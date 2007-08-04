@@ -113,29 +113,29 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Pain and suffering are all that await you!", -- à traduire
 
-	enrage_start = "Enragé dans ~47 sec.",
+	enrage_start = "Enragée dans ~47 sec.",
 	enrage_trigger = "%s becomes enraged!", -- à traduire
-	enrage_message = "Enragé pendant 15 sec. !",
-	enrage_bar = "<Enragé>",
+	enrage_message = "Enragée pendant 15 sec. !",
+	enrage_bar = "<Enragée>",
 	enrage_next = "Fin de l'Enrager - Prochain dans ~32 sec.",
 	enrage_nextbar = "Prochain Enrager",
 	enrage_warning = "Enrager dans 5 sec. !",
 
 	desire_trigger  = "You can have anything you desire... for a price.", -- à traduire
-	desire_start = "Essence de désir - Zéro mana dans 160 sec.",
+	desire_start = "Essence du désir - Zéro mana dans 160 sec.",
 	desire_bar = "Zéro Mana",
 	desire_warn = "Zéro Mana dasn 30 sec. !",
 
 	runeshield = "Bouclier runique",
-	runeshield_desc = "Délais concernant le Bouclier runique de l'Essence de désir.",
-	runeshield_trigger = "Essence de désir gagne Bouclier runique.", -- à vérifier
+	runeshield_desc = "Délais concernant le Bouclier runique de l'Essence du désir.",
+	runeshield_trigger = "Essence du désir gagne Bouclier runique.",
 	runeshield_message = "Bouclier runique !",
 	runeshield_nextbar = "Prochain Bouclier runique",
 	runeshield_warn = "Bouclier runique dans ~3 sec.",
 
 	deaden = "Emousser",
 	deaden_desc = "Préviens quand Emousser est incanté.",
-	deaden_trigger = "Essence de désir commence à lancer Emousser.", -- à vérifier
+	deaden_trigger = "Essence du désir commence à lancer Emousser.",
 	deaden_message = "Emousser en incantation !",
 	deaden_warn = "Emousser dans ~5 sec.",
 	deaden_nextbar = "Prochain Emousser",
