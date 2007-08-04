@@ -88,7 +88,7 @@ L:RegisterTranslations("koKR", function() return {
 	sacrifice = "희생",
 	sacrifice_desc = "플레이어의 희생에 대한 경고입니다.",
 	sacrifice_trigger = "^([^|;%s]*)(.*)희생에 걸렸습니다%.$",
-	--sacrifice_fade = "^Sacrifice fades from ([^%s]+)%.$",
+	sacrifice_fade = "^([^%s]+)의 몸에서 희생 효과가 사라졌습니다%.$",
 	sacrifice_message = "%s님이 희생되었습니다!",
 	sacrifice_bar = "희생: %s",
 
