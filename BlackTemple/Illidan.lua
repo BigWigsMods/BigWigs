@@ -124,10 +124,10 @@ L:RegisterTranslations("koKR", function() return {
 	eyeblast_trigger = "배신자의 눈을 똑바로 쳐다봐라!",
 	eyeblast_message = "안광!",
 
-	shear = "Shear",
-	shear_desc = "Warn about Shear on players.",
-	shear_message = "Shear on %s!",
-	shear_bar = "Shear: %s",
+	shear = "베어내기",
+	shear_desc = "베어내기에 걸린 플레이어를 알립니다.",
+	shear_message = "%s에 베어내기!",
+	shear_bar = "베어내기: %s",
 
 	flame = "고뇌의 불꽃",
 	flame_desc = "고뇌의 불꽃에 걸린 플레이어를 알립니다.",
@@ -140,28 +140,28 @@ L:RegisterTranslations("koKR", function() return {
 
 	phase = "단계",
 	phase_desc = "단계 변경에 대해 알립니다.",
-	phase2_soon_message = "곧 2 단계!",
+	phase2_soon_message = "잠시 후 2 단계!",
 	phase2_trigger = "Blade of Azzinoth casts Summon Tear of Azzinoth.",
-	phase2_message = "2 단계 - 아지노스의 쌍날검!",
+	phase2_message = "2 단계 - 아지노스의 칼날!",
 	phase3_message = "3 단계!",
 	demon_phase_trigger = "Behold the power... of the demon within!",
 	demon_phase_message = "악마 변신!",
 	phase4_trigger = "Is this it, mortals? Is this all the fury you can muster?",
-	phase4_soon_message = "곧 4 단계!",
+	phase4_soon_message = "잠시 후 4 단계!",
 	phase4_message = "4 단계 - 마이에브 등장!",
 
 	flameburst = "화염 폭발",
 	flameburst_desc = "일리단의 화염 폭발 사용을 알립니다.",
 	flameburst_message = "화염 폭발!",
 	flameburst_cooldown_bar = "화염 폭발 대기시간",
-	flameburst_cooldown_warn = "잠시후 화염 폭발!",
+	flameburst_cooldown_warn = "잠시 후 화염 폭발!",
 	flameburst_warn = "5초 이내 화염 폭발!",
 
-	enrage_trigger = "일리단 스톰레이지이|1이;가; 격노 효과를 얻었습니다.",
-	enrage_message = "격노!",
+	enrage_trigger = "일리단 스톰레이지이|1이;가; 분노 효과를 얻었습니다.",
+	enrage_message = "분노!",
 
 	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
-	["Flame of Azzinoth"] = "Flame of Azzinoth",
+	["Flame of Azzinoth"] = "아지노스의 불꽃",
 } end )
 
 ----------------------------------
