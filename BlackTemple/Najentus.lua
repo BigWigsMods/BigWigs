@@ -104,7 +104,7 @@ L:RegisterTranslations("frFR", function() return {
 --CWDG site: http://Cwowaddon.com
 --高阶督军纳因图斯
 --Lady Vashj 瓦丝琪
-L:RegisterTranslations("enUS", function() return {
+L:RegisterTranslations("zhCN", function() return {
 	start_trigger = "You will die in the name of Lady Vashj!",
 
 	spine = "穿刺之脊",--Impaling Spine 穿刺之脊

@@ -194,7 +194,7 @@ L:RegisterTranslations("koKR", function() return {
 --Chinese Translate by 月色狼影@CWDG
 --CWDG site: http://Cwowaddon.com
 --伊利丹·怒风
-L:RegisterTranslations("enUS", function() return {
+L:RegisterTranslations("zhCN", function() return {
 	parasite = "寄生暗影魔",--Parasitic Shadowfiend 寄生暗影魔
 	parasite_desc = "当队员中寄生暗影魔时发出警告.",
 	parasite_you = "你中了>寄生暗影魔<!",
