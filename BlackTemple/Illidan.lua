@@ -91,8 +91,13 @@ L:RegisterTranslations("frFR", function() return {
 
 	eyeblast = "Energie oculaire",
 	eyeblast_desc = "Préviens quand l'Energie oculaire est incanté.",
-	eyeblast_trigger = "Stare into the eyes of the Betrayer!", -- à traduire
+	eyeblast_trigger = "Soutenez le regard du Traître !", -- à vérifier
 	eyeblast_message = "Energie oculaire !",
+
+	shear = "Tonte", -- (tonte ? -_- )
+	shear_desc = "Préviens quand un joueur subit les effets de la Tonte.",
+	shear_message = "Tonte sur %s !",
+	shear_bar = "Tonte : %s",
 
 	flame = "Flammes déchirantes",
 	flame_desc = "Préviens quand un joueur subit les effets des Flammes déchirantes.",
@@ -103,7 +108,30 @@ L:RegisterTranslations("frFR", function() return {
 	demons_trigger = "Invocation de démons des ombres",
 	demons_message = "Démons des ombres !",
 
+	phase = "Phases",
+	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
+	phase2_soon_message = "Phase 2 imminente !",
+	phase2_trigger = "Lame d'Azzinoth lance Invocation de la Larme d'Azzinoth.",
+	phase2_message = "Phase 2 - Lames d'Azzinoth !",
+	phase3_message = "Phase 3 !",
+	demon_phase_trigger = "Contemplez la puissance… du démon intérieur !", -- à vérifier
+	demon_phase_message = "Forme de démon !",
+	phase4_trigger = "C'est tout, mortels ? Est-ce là toute la fureur que vous pouvez évoquer ?", -- à vérifier
+	phase4_soon_message = "Phase 4 imminente !",
+	phase4_message = "Phase 4 - Arrivée de Maiev !",
+
+	flameburst = "Explosion de flammes",
+	flameburst_desc = "Préviens quand Illidan utilise son Explosion de flammes.",
+	flameburst_message = "Explosion de flammes !",
+	flameburst_cooldown_bar = "~Cooldown Explosion",
+	flameburst_cooldown_warn = "Explosion de flammes imminente !",
+	flameburst_warn = "Explosion de flammes dans ~5 sec !",
+
+	enrage_trigger = "Illidan Hurlorage gagne Enrager.",
+	enrage_message = "Enragé !",
+
 	afflict_trigger = "^([^%s]+) ([^%s]+) les effets .* ([^%s]+)%.$",
+	["Flame of Azzinoth"] = "Flamme d'Azzinoth", -- à  vérifier
 } end )
 
 L:RegisterTranslations("koKR", function() return {

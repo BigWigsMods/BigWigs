@@ -111,17 +111,17 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Pain and suffering are all that await you!", -- à traduire
+	engage_trigger = "Douleur et souffrance, voilà tout ce qui vous attend !", -- à vérifier
 
 	enrage_start = "Enragée dans ~47 sec.",
-	enrage_trigger = "%s becomes enraged!", -- à traduire
+	enrage_trigger = "%s devient fou furieux !", -- à vérifier
 	enrage_message = "Enragée pendant 15 sec. !",
 	enrage_bar = "<Enragée>",
 	enrage_next = "Fin de l'Enrager - Prochain dans ~32 sec.",
 	enrage_nextbar = "Prochain Enrager",
 	enrage_warning = "Enrager dans 5 sec. !",
 
-	desire_trigger  = "You can have anything you desire... for a price.", -- à traduire
+	desire_trigger  = "Vous pouvez avoir tout ce que vous désirez… en y mettant le prix.", -- à vérifier
 	desire_start = "Essence du désir - Zéro mana dans 160 sec.",
 	desire_bar = "Zéro Mana",
 	desire_warn = "Zéro Mana dasn 30 sec. !",

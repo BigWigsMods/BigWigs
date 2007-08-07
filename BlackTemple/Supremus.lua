@@ -98,7 +98,7 @@ L:RegisterTranslations("frFR", function() return {
 	normal_phase_trigger = "De rage, Supremus frappe le sol !",
 	kite_phase_message = "Phase de kitting !",
 	kite_phase_trigger = "Le sol commence à se fissurer !",
-	next_phase_bar = "Prochain phase",
+	next_phase_bar = "Prochaine phase",
 	next_phase_message = "Changement de phase dans 10 sec. !",
 
 	punch = "Punch de la fournaise",
@@ -113,7 +113,7 @@ L:RegisterTranslations("frFR", function() return {
 	target_message_nounit = "Nouvelle cible !",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur pourchassé (nécessite d'être promu ou mieux).",
+	icon_desc = "Place une icône de raid sur le dernier joueur poursuivi (nécessite d'être promu ou mieux).",
 } end )
 
 ----------------------------------

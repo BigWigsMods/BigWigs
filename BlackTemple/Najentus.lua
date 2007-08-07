@@ -85,7 +85,7 @@ L:RegisterTranslations("frFR", function() return {
 	spine_trigger = "^([^%s]+) ([^%s]+) les effets .* Epine de perforation%.$",
 	spine_message = "Epine de perforation sur %s !",
 
-	spinesay = "Epine de perforation (dire)",
+	spinesay = "Dire - Epine de perforation",
 	spinesay_desc = "Fais dire à votre personnage qu'il a une épine quand c'est le cas, afin d'aider les membres proches.",
 	spinesay_message = "Epine sur moi !",
 
