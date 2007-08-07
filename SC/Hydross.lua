@@ -109,20 +109,20 @@ L:RegisterTranslations("koKR", function() return {
 	poison_stance = "히드로스 오염!",
 	water_stance = "히드로스 정화!",
 
-	sludge = "타락의 진흙", -- check
-	sludge_desc = "타락의 진흙에 걸린 플레이어를 알립니다.", -- check
-	sludge_message = "타락의 진흙: %s", -- check
+	sludge = "타락의 진흙",
+	sludge_desc = "타락의 진흙에 걸린 플레이어를 알립니다.",
+	sludge_message = "타락의 진흙: %s",
 
 	tomb = "수중 무덤",
 	tomb_desc = "수중 무덤에 걸린 플레이어를 알립니다.",
 	tomb_message = "수중 무덤: %s",
 
-	icon = "전술 표시", -- check
-	icon_desc = "타락의 진흙에 걸린 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).", -- check
+	icon = "전술 표시",
+	icon_desc = "타락의 진흙에 걸린 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
 
 	debuff_warn = "징표 - %s%%!",
 
-	afflict_trigger = "^([^|;%s]*)(.*)(.+)에 걸렸습니다%.$", -- check
+	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
