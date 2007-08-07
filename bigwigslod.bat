@@ -20,3 +20,5 @@ move Plugins ..\BigWigs_Plugins
 move TheEye ..\BigWigs_TheEye
 move BlackTemple ..\BigWigs_BlackTemple
 move Hyjal ..\BigWigs_Hyjal
+
+rmdir /s /q modules.xml

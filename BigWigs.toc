@@ -30,5 +30,5 @@ Core.lua
 Prototype.lua
 Options.lua
 
-Plugins\Modules.xml
+modules.xml
 

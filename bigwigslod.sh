@@ -20,3 +20,5 @@ mv Plugins ../BigWigs_Plugins
 mv TheEye ../BigWigs_TheEye
 mv BlackTemple ../BigWigs_BlackTemple
 mv Hyjal ../BigWigs_Hyjal
+
+rm -rf modules.xml
