@@ -7,15 +7,12 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local pName = nil
 
-local p2deaths = 0
-
 ----------------------------
 --      Localization      --
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Illidan",
-	["Flame of Azzinoth"] = true,
 
 	parasite = "Parasitic Shadowfiend",
 	parasite_desc = "Warn who has Parasitic Shadowfiend.",
@@ -42,19 +39,6 @@ L:RegisterTranslations("enUS", function() return {
 	demons_desc = "Warn when Illidan is summoning Shadow Demons.",
 	demons_trigger = "Summon Shadow Demons",
 	demons_message = "Shadow Demons!",
-	demons_warning = "Shadow Demons in 5 seconds!",
-	
-	landing_bar = "Landing",
-	
-	demon_bar = "~Demon phase",
-	demon_message = "Demon phase in ~5 seconds!",
-	demon_trigger = "Behold the power... of the demon within!",
-	
-	normal_bar = "Normal phase",
-	normal_message = "Normal phase in ~5 seconds!",
-	
-	phase1_trigger = "You are not prepared!",
-	phase4_trigger = "Is this it, mortals? Is this all the fury you can muster?",
 
 	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by ([^%s]+)%.$",
 } end )
@@ -126,7 +110,6 @@ L:RegisterTranslations("koKR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = boss
-mod.wipemobs = { boss, L["Flame of Azzinoth"] }
 mod.toggleoptions = {"parasite", "eyeblast", "barrage", "flame", "demons", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -135,13 +118,11 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "IliPara", 2)
 	self:TriggerEvent("BigWigs_ThrottleSync", "IliBara", 2)
-	self:TriggerEvent("BigWigs_ThrottleSync", "IliPhase3", 2)
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "AfflictEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "AfflictEvent")
@@ -177,11 +158,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(L["flame_message"]:format(rest), "Important", nil, "Alert")
 	elseif sync == "IliDemons" and self.db.profile.demons then
 		self:Message(L["demons_message"], "Important", nil, "Alert")
-	elseif sync == "IliPhase3" then
-		self:Bar(L["landing_bar"], 15, "Spell_Shadow_FocusedPower")
-		
-		self:Bar(L["demon_bar"], 80, "Spell_Shadow_Metamorphosis")
-		self:ScheduleEvent("demonwarn", "BigWigs_Message", 75, L["demon_message"], "Urgent")
 	end
 end
 
@@ -204,26 +180,6 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.eyeblast and msg == L["eyeblast_trigger"] then
 		self:Message(L["eyeblast_message"], "Important", nil, "Alert")
-	elseif msg == L["phase1_trigger"] then
-		p2deaths = 0
-	elseif msg == L["phase4_trigger"] then
-		self:CancelScheduledEvent("demonwarn")
-		self:CancelScheduledEvent("normalwarn")
-		self:CancelScheduledEvent("normaltrigger")
-		self:CancelScheduledEvent("demonswarn")
-		
-		self:TriggerEvent("BigWigs_StopBar", self, L["normal_bar"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["demon_bar"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["demons_message"])
-	elseif msg == L["demon_trigger"] then
-		self:Bar(L["normal_bar"], 60, "Spell_Shadow_FocusedPower")
-		self:ScheduleEvent("normalwarn", "BigWigs_Message", 65, L["normal_message"], "Important")
-		self:ScheduleEvent("normaltrigger", self.NormalTrigger, 70, self)
-		
-		if self.db.profile.demons then
-			self:Bar(L["demons_message"], 30, "Spell_Shadow_SoulLeech_3")
-			self:ScheduleEvent("demonswarn", "BigWigs_Message", 25, L["demons_warning"], "Urgent")
-		end
 	end
 end
 
@@ -231,20 +187,4 @@ function mod:UNIT_SPELLCAST_START(msg)
 	if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["demons_trigger"] then
 		self:Sync("IliDemons")
 	end
-end
-
-function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
-	if msg == UNITDIESOTHER:format(L["Flame of Azzinoth"]) then
-		p2deaths = p2deaths + 1
-		if p2deaths == 2 then
-			self:Sync("IliPhase3")
-		end
-	else
-		self:GenericBossDeath(msg)
-	end
-end
-
-function mod:NormalTrigger()
-	self:Bar(L["demon_bar"], 60, "Spell_Shadow_Metamorphosis")
-	self:ScheduleEvent("demonwarn", "BigWigs_Message", 55, L["demon_message"], "Important")
 end
