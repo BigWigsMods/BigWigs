@@ -191,6 +191,38 @@ L:RegisterTranslations("koKR", function() return {
 	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
 	["Flame of Azzinoth"] = "아지노스의 불꽃",
 } end )
+--Chinese Translate by 月色狼影@CWDG
+--CWDG site: http://Cwowaddon.com
+--伊利丹·怒风
+L:RegisterTranslations("enUS", function() return {
+	parasite = "寄生暗影魔",--Parasitic Shadowfiend 寄生暗影魔
+	parasite_desc = "当队员中寄生暗影魔时发出警告.",
+	parasite_you = "你中了>寄生暗影魔<!",
+	parasite_other = "%s 中了>寄生暗影魔<!",
+
+	icon = "团队标记",
+	icon_desc = "为中了寄生暗影魔的队员打上团队标记.",
+
+	barrage = "黑暗壁垒",--Dark Barrage 黑暗壁垒
+	barrage_desc = "当玩家中了黑暗壁垒时发出警报.",
+	barrage_message = "%s 中了黑暗壁垒!",
+
+	eyeblast = "魔眼冲击",--Eye Blast 魔眼冲击
+	eyeblast_desc = "当施放魔眼冲击时发出警报.",
+	eyeblast_trigger = "Stare into the eyes of the Betrayer!",
+	eyeblast_message = "魔眼冲击!",
+
+	flame = "苦痛之焰",--Agonizing Flames 苦痛之焰
+	flame_desc = "当中了苦痛之焰时发出警报",
+	flame_message = "%s 中了>苦痛之焰<!",
+
+	demons = "影魔",
+	demons_desc = "当伊利丹召唤影魔时发出警报.",
+	demons_trigger = "召唤影魔",
+	demons_message = "影魔!",
+
+	afflict_trigger = "^([^%s]+)受([^%s]+)了([^%s]+)效果的影响。$",--%s受到了%s效果的影响。
+} end )
 
 ----------------------------------
 --      Module Declaration      --

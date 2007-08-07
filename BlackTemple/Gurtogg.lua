@@ -130,6 +130,38 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le joueur sur qui le Souffle d'acide gangrené est incanté (nécessite d'être promu ou mieux).",
 } end )
 
+--Chinese Translate by 月色狼影@CWDG
+--CWDG site: http://Cwowaddon.com
+--古尔图格·血沸
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "Horde will... crush you.",
+
+	phase = "阶段计时",
+	phase_desc = "普通或邪能狂怒状态转换阶段计时",
+	phase_rage_warning = "邪能狂怒 发动 ~5秒 后",--Fel Rage 邪能狂怒
+	phase_normal_warning = "邪能狂怒 结束 ~5秒 后",
+	phase_normal = "邪能狂怒 阶段结束",
+	phase_normal_trigger = "邪能狂怒的效果从古尔图格·血沸身上消失。",--%s效果从%s身上消失。 check
+	phase_normal_bar = "下一 邪能狂怒",
+	phase_rage_bar = "下一 普通阶段",
+
+	rage = "邪能狂怒",
+	rage_desc = "当获得邪能狂怒时发出警报",
+	rage_trigger = "^([^%s]+)受([^%s]+)了邪能狂怒效果的影响。$",
+	rage_you = "你中了 邪能狂怒!!",
+	rage_other = "%s 中了 邪能狂怒!",
+
+	whisper = "密语",
+	whisper_desc = "当完家中了邪能狂怒进行密语提醒(需要助理或更高权限).",
+
+	acid = "邪酸吐息",--Fel-Acid Breath 邪酸吐息
+	acid_desc = "当谁受到邪酸吐息攻击时发出警报.",
+	acid_message = "邪酸吐息施放在: %s",
+
+	icon = "团队标记",
+	icon_desc = "给中了邪酸吐息的队员打上团队标记(需要助理以上的权限).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

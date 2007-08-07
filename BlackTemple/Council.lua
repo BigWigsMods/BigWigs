@@ -51,7 +51,7 @@ L:RegisterTranslations("enUS", function() return {
 	circle_trigger = "Lady Malande begins to cast Circle of Healing.",
 	circle_message = "Casting Circle of Healing!",
 	circle_heal_trigger = "^Lady Malande 's Circle of Healing heals",
-	circle_fail_trigger = "^([^%s]+) interrupts? Lady Malande's Circle of Healing%.$",
+	circle_fail_trigger = "^([^%s]+) interrupts Lady Malande's Circle of Healing%.$",
 	circle_heal_message = "Healed! - Next in ~20sec",
 	circle_fail_message = "Interrupted! - Next in ~12sec",
 	circle_bar = "~Circle of Healing Cooldown",
@@ -127,6 +127,44 @@ L:RegisterTranslations("koKR", function() return {
 	circle_heal_message = "치유됨! - 다음은 약 20초 이내",
 	circle_fail_message = "차단됨! - 다음은 약 12초 이내",
 	circle_bar = "~치유의 마법진 대기 시간",
+} end )
+--Chinese Translate by 月色狼影@CWDG
+--CWDG site: http://Cwowaddon.com
+--伊利达雷议会
+L:RegisterTranslations("zhCN", function() return {
+	immune = "免疫警报",
+	immune_desc = "当玛兰德免疫法术活近战攻击时发出警报",
+	immune_spell_trigger = "女公爵玛兰德获得了法术结界祝福",--女公爵玛兰德
+	immune_melee_trigger = "女公爵玛兰德获得了保护祝福",
+	immune_message = "玛兰德: %s 免疫——15秒!",
+	immune_bar = "%s 免疫!",
+
+	spell = "法术",
+	melee = "近战",
+
+	shield = "反射护盾",
+	shield_desc = "当玛兰德获得反射护盾时发出警报",
+	shield_trigger = "女公爵玛兰德获得了反射护盾",
+	shield_message = "反射护盾! 注意!",
+
+	poison = "致命毒药",
+	poison_desc = "当玩家受到致命毒药时发出警报.",
+	poison_trigger = "^([^%s]+)受([^%s]+)了致命毒药效果的影响。$",
+	poison_other = "%s 中了 致命毒药!",
+	poison_you = ">你<——致命毒药!",
+
+	icon = "团队标记",
+	icon_desc = "为中致命毒药的玩家打上团队标记.",
+
+	circle = "治疗之环",
+	circle_desc = "当玛兰德开始施放治疗之环时发出警报",
+	circle_trigger = "女公爵玛兰德开始施放治疗之环",
+	circle_message = "正在施放 治疗之环!",
+	circle_heal_trigger = "^女公爵玛兰德的治疗之环治疗",
+	circle_fail_trigger = "^([^%s]+)打断了公爵玛兰德的治疗之环", --GIVE ME A FUCKING EVENT OK
+	circle_heal_message = "治疗 成功! - ~20秒后再次发动",
+	circle_fail_message = "打断! - ~12s秒后再次发动 治疗之环",
+	circle_bar = "~治疗之环 CD",
 } end )
 
 ----------------------------------

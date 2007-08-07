@@ -100,6 +100,32 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Epine de perforation (nécessite d'être promu ou mieux).",
 } end )
 
+--Chinese Translate by 月色狼影@CWDG
+--CWDG site: http://Cwowaddon.com
+--高阶督军纳因图斯
+--Lady Vashj 瓦丝琪
+L:RegisterTranslations("enUS", function() return {
+	start_trigger = "You will die in the name of Lady Vashj!",
+
+	spine = "穿刺之脊",--Impaling Spine 穿刺之脊
+	spine_desc = "谁中了穿刺时告诉你.",
+	spine_trigger = "^([^%s]+)受([^%s]+)了穿刺之脊效果的影响。$",
+	spine_message = "穿刺之脊 %s!",
+
+	spinesay = "穿刺警报",--Spine Say
+	spinesay_desc = "当你中了穿刺会自动喊话,能帮助周围队员避让.",
+	spinesay_message = "穿刺 我了 XO!",
+
+	shield = "海潮之盾",--Tidal Shield 海潮之盾
+	shield_desc = "当纳因图斯获得海潮之盾后计时.",
+	shield_trigger = "高阶督军纳因图斯受到了海潮之盾效果的影响",
+	shield_nextbar = "下一次 海潮之盾",
+	shield_warn = "海潮之盾!",
+	shield_soon_warn = "海潮之盾 ~10秒 后发动!",
+
+	icon = "团队标记",
+	icon_desc = "给中了穿刺之脊的玩家打上团队标记.",
+} end )
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------
