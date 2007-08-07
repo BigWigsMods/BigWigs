@@ -124,6 +124,11 @@ L:RegisterTranslations("koKR", function() return {
 	eyeblast_trigger = "배신자의 눈을 똑바로 쳐다봐라!",
 	eyeblast_message = "안광!",
 
+	shear = "Shear",
+	shear_desc = "Warn about Shear on players.",
+	shear_message = "Shear on %s!",
+	shear_bar = "Shear: %s",
+
 	flame = "고뇌의 불꽃",
 	flame_desc = "고뇌의 불꽃에 걸린 플레이어를 알립니다.",
 	flame_message = "%s에 고뇌의 불꽃!",
@@ -133,7 +138,30 @@ L:RegisterTranslations("koKR", function() return {
 	demons_trigger = "어둠의 악마 소환",
 	demons_message = "어둠의 악마!",
 
+	phase = "단계",
+	phase_desc = "단계 변경에 대해 알립니다.",
+	phase2_soon_message = "곧 2 단계!",
+	phase2_trigger = "Blade of Azzinoth casts Summon Tear of Azzinoth.",
+	phase2_message = "2 단계 - 아지노스의 쌍날검!",
+	phase3_message = "3 단계!",
+	demon_phase_trigger = "Behold the power... of the demon within!",
+	demon_phase_message = "악마 변신!",
+	phase4_trigger = "Is this it, mortals? Is this all the fury you can muster?",
+	phase4_soon_message = "곧 4 단계!",
+	phase4_message = "4 단계 - 마이에브 등장!",
+
+	flameburst = "화염 폭발",
+	flameburst_desc = "일리단의 화염 폭발 사용을 알립니다.",
+	flameburst_message = "화염 폭발!",
+	flameburst_cooldown_bar = "화염 폭발 대기시간",
+	flameburst_cooldown_warn = "잠시후 화염 폭발!",
+	flameburst_warn = "5초 이내 화염 폭발!",
+
+	enrage_trigger = "일리단 스톰레이지이|1이;가; 격노 효과를 얻었습니다.",
+	enrage_message = "격노!",
+
 	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
+	["Flame of Azzinoth"] = "Flame of Azzinoth",
 } end )
 
 ----------------------------------
@@ -179,7 +207,7 @@ end
 ------------------------------
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "IliPara" and rest and self.db.profile.parasite then 
+	if sync == "IliPara" and rest and self.db.profile.parasite then
 		local other = L["parasite_other"]:format(rest)
 		if rest == UnitName("player") then
 			self:Message(L["parasite_you"], "Personal", true, "Long")
