@@ -169,12 +169,12 @@ L:RegisterTranslations("koKR", function() return {
 	phase = "단계",
 	phase_desc = "단계 변경에 대해 알립니다.",
 	phase2_soon_message = "잠시 후 2 단계!",
-	phase2_trigger = "Blade of Azzinoth casts Summon Tear of Azzinoth.",
-	phase2_message = "2 단계 - 아지노스의 칼날!",
+	phase2_trigger = "아지노스의 칼날|1이;가; 아지노스의 눈물 소환|1을;를; 시전합니다.",
+	phase2_message = "2 단계 - 아지노스의 불꽃!",
 	phase3_message = "3 단계!",
-	demon_phase_trigger = "Behold the power... of the demon within!",
+	demon_phase_trigger = "내 안에 깃든... 악마의 힘을 보여주마!",
 	demon_phase_message = "악마 변신!",
-	phase4_trigger = "Is this it, mortals? Is this all the fury you can muster?",
+	phase4_trigger = "나만큼 널 증오하는 이가 또 있을까? 일리단! 네게 받아야 할 빚이 남았다!",
 	phase4_soon_message = "잠시 후 4 단계!",
 	phase4_message = "4 단계 - 마이에브 등장!",
 
@@ -185,8 +185,8 @@ L:RegisterTranslations("koKR", function() return {
 	flameburst_cooldown_warn = "잠시 후 화염 폭발!",
 	flameburst_warn = "5초 이내 화염 폭발!",
 
-	enrage_trigger = "일리단 스톰레이지이|1이;가; 분노 효과를 얻었습니다.",
-	enrage_message = "분노!",
+	enrage_trigger = "일리단 스톰레이지이|1이;가; 격노 효과를 얻었습니다.",
+	enrage_message = "격노!",
 
 	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
 	["Flame of Azzinoth"] = "아지노스의 불꽃",
