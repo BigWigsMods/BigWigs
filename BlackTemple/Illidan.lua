@@ -30,6 +30,9 @@ L:RegisterTranslations("enUS", function() return {
 	barrage = "Dark Barrage",
 	barrage_desc = "Warn who has Dark Barrage.",
 	barrage_message = "%s is being Barraged!",
+	barrage_warn = true,
+	barrage_warn_bar = true,
+	barrage_bar = true,
 
 	eyeblast = "Eye Blast",
 	eyeblast_desc = "Warn when Eye Blast is cast.",
@@ -49,6 +52,7 @@ L:RegisterTranslations("enUS", function() return {
 	demons_desc = "Warn when Illidan is summoning Shadow Demons.",
 	demons_trigger = "Summon Shadow Demons",
 	demons_message = "Shadow Demons!",
+	demons_warn = true,
 
 	phase = "Phases",
 	phase_desc = "Warns when Illidan goes into different stages.",
@@ -78,60 +82,60 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	parasite = "Ombrefiel parasite",
-	parasite_desc = "Préviens quand un joueur subit les effets de l'Ombrefiel parasite.",
+	parasite_desc = "Previens quand un joueur subit les effets de l'Ombrefiel parasite.",
 	parasite_you = "Vous avez un parasite !",
 	parasite_other = "%s a un parasite !",
 
-	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Ombrefiel parasite (nécessite d'être promu ou mieux).",
+	icon = "Icone",
+	icon_desc = "Place une icone de raid sur le dernier joueur affecte par l'Ombrefiel parasite (necessite d'etre promu ou mieux).",
 
 	barrage = "Barrage noir",
-	barrage_desc = "Préviens quand un joueur subit les effets du Barrage noir.",
+	barrage_desc = "Previens quand un joueur subit les effets du Barrage noir.",
 	barrage_message = "%s est dans le barrage !",
 
 	eyeblast = "Energie oculaire",
-	eyeblast_desc = "Préviens quand l'Energie oculaire est incanté.",
-	eyeblast_trigger = "Soutenez le regard du Traître !", -- à vérifier
+	eyeblast_desc = "Previens quand l'Energie oculaire est incante.",
+	eyeblast_trigger = "Soutenez le regard du Traitre?!", -- a verifier
 	eyeblast_message = "Energie oculaire !",
 
 	shear = "Tonte", -- (tonte ? -_- )
-	shear_desc = "Préviens quand un joueur subit les effets de la Tonte.",
+	shear_desc = "Previens quand un joueur subit les effets de la Tonte.",
 	shear_message = "Tonte sur %s !",
 	shear_bar = "Tonte : %s",
 
-	flame = "Flammes déchirantes",
-	flame_desc = "Préviens quand un joueur subit les effets des Flammes déchirantes.",
-	flame_message = "%s a les Flammes déchirantes !",
+	flame = "Flammes dechirantes",
+	flame_desc = "Previens quand un joueur subit les effets des Flammes dechirantes.",
+	flame_message = "%s a les Flammes dechirantes !",
 
-	demons = "Démons des ombres",
-	demons_desc = "Préviens quand Illidan invoque des démons des ombres.",
-	demons_trigger = "Invocation de démons des ombres",
-	demons_message = "Démons des ombres !",
+	demons = "Demons des ombres",
+	demons_desc = "Previens quand Illidan invoque des demons des ombres.",
+	demons_trigger = "Invocation de demons des ombres",
+	demons_message = "Demons des ombres !",
 
 	phase = "Phases",
-	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
+	phase_desc = "Previens quand la rencontre entre dans une nouvelle phase.",
 	phase2_soon_message = "Phase 2 imminente !",
 	phase2_trigger = "Lame d'Azzinoth lance Invocation de la Larme d'Azzinoth.",
 	phase2_message = "Phase 2 - Lames d'Azzinoth !",
 	phase3_message = "Phase 3 !",
-	demon_phase_trigger = "Contemplez la puissance… du démon intérieur !", -- à vérifier
-	demon_phase_message = "Forme de démon !",
-	phase4_trigger = "C'est tout, mortels ? Est-ce là toute la fureur que vous pouvez évoquer ?", -- à vérifier
+	demon_phase_trigger = "Contemplez la puissance… du demon interieur?!", -- a verifier
+	demon_phase_message = "Forme de demon !",
+	phase4_trigger = "C'est tout, mortels?? Est-ce la toute la fureur que vous pouvez evoquer??", -- a verifier
 	phase4_soon_message = "Phase 4 imminente !",
-	phase4_message = "Phase 4 - Arrivée de Maiev !",
+	phase4_message = "Phase 4 - Arrivee de Maiev !",
 
 	flameburst = "Explosion de flammes",
-	flameburst_desc = "Préviens quand Illidan utilise son Explosion de flammes.",
+	flameburst_desc = "Previens quand Illidan utilise son Explosion de flammes.",
 	flameburst_message = "Explosion de flammes !",
 	flameburst_cooldown_bar = "~Cooldown Explosion",
 	flameburst_cooldown_warn = "Explosion de flammes imminente !",
 	flameburst_warn = "Explosion de flammes dans ~5 sec !",
 
 	enrage_trigger = "Illidan Hurlorage gagne Enrager.",
-	enrage_message = "Enragé !",
+	enrage_message = "Enrage !",
 
 	afflict_trigger = "^([^%s]+) ([^%s]+) les effets .* ([^%s]+)%.$",
-	["Flame of Azzinoth"] = "Flamme d'Azzinoth", -- à  vérifier
+	["Flame of Azzinoth"] = "Flamme d'Azzinoth", -- a  verifier
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -145,7 +149,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	barrage = "암흑의 보호막",
 	barrage_desc = "암흑의 보호막에 걸린 플레이어를 알립니다.",
-	barrage_message = "%s에 탄막!",
+	barrage_message = "%s에 집중포화!",
+	barrage_bar = "집중포화 중",
+	barrage_warn = "잠시 후 집중포화! 전원 만피 유지",
+	barrage_warn_bar = "집중포화 대기시간",
 
 	eyeblast = "안광",
 	eyeblast_desc = "안광 시전 시 알립니다.",
@@ -165,15 +172,16 @@ L:RegisterTranslations("koKR", function() return {
 	demons_desc = "어둠의 악마 소환 시 알립니다.",
 	demons_trigger = "어둠의 악마 소환",
 	demons_message = "어둠의 악마!",
+	demons_warn = "잠시 후 어둠의 악마 소환!",
 
 	phase = "단계",
 	phase_desc = "단계 변경에 대해 알립니다.",
 	phase2_soon_message = "잠시 후 2 단계!",
 	phase2_trigger = "아지노스의 칼날|1이;가; 아지노스의 눈물 소환|1을;를; 시전합니다.",
 	phase2_message = "2 단계 - 아지노스의 불꽃!",
-	phase3_message = "3 단계!",
+	phase3_message = "3 단계 시작!",
 	demon_phase_trigger = "내 안에 깃든... 악마의 힘을 보여주마!",
-	demon_phase_message = "악마 변신!",
+	demon_phase_message = "악마 변신! 전원 거리 유지",
 	phase4_trigger = "나만큼 널 증오하는 이가 또 있을까? 일리단! 네게 받아야 할 빚이 남았다!",
 	phase4_soon_message = "잠시 후 4 단계!",
 	phase4_message = "4 단계 - 마이에브 등장!",
@@ -193,35 +201,35 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 --Chinese Translate by 月色狼影@CWDG
 --CWDG site: http://Cwowaddon.com
---伊利丹·怒风
+--伊利丹·怒?
 L:RegisterTranslations("zhCN", function() return {
 	parasite = "寄生暗影魔",--Parasitic Shadowfiend 寄生暗影魔
-	parasite_desc = "当队员中寄生暗影魔时发出警告.",
-	parasite_you = "你中了>寄生暗影魔<!",
+	parasite_desc = "???中寄生暗影魔??出警告.",
+	parasite_you = "?中了>寄生暗影魔<!",
 	parasite_other = "%s 中了>寄生暗影魔<!",
 
-	icon = "团队标记",
-	icon_desc = "为中了寄生暗影魔的队员打上团队标记.",
+	icon = "????",
+	icon_desc = "?中了寄生暗影魔的??打上????.",
 
-	barrage = "黑暗壁垒",--Dark Barrage 黑暗壁垒
-	barrage_desc = "当玩家中了黑暗壁垒时发出警报.",
-	barrage_message = "%s 中了黑暗壁垒!",
+	barrage = "黑暗壁?",--Dark Barrage 黑暗壁?
+	barrage_desc = "?玩家中了黑暗壁???出警?.",
+	barrage_message = "%s 中了黑暗壁?!",
 
-	eyeblast = "魔眼冲击",--Eye Blast 魔眼冲击
-	eyeblast_desc = "当施放魔眼冲击时发出警报.",
+	eyeblast = "魔眼??",--Eye Blast 魔眼??
+	eyeblast_desc = "?施放魔眼????出警?.",
 	eyeblast_trigger = "Stare into the eyes of the Betrayer!",
-	eyeblast_message = "魔眼冲击!",
+	eyeblast_message = "魔眼??!",
 
 	flame = "苦痛之焰",--Agonizing Flames 苦痛之焰
-	flame_desc = "当中了苦痛之焰时发出警报",
+	flame_desc = "?中了苦痛之焰??出警?",
 	flame_message = "%s 中了>苦痛之焰<!",
 
 	demons = "影魔",
-	demons_desc = "当伊利丹召唤影魔时发出警报.",
-	demons_trigger = "召唤影魔",
+	demons_desc = "?伊利丹召?影魔??出警?.",
+	demons_trigger = "召?影魔",
 	demons_message = "影魔!",
 
-	afflict_trigger = "^([^%s]+)受([^%s]+)了([^%s]+)效果的影响。$",--%s受到了%s效果的影响。
+	afflict_trigger = "^([^%s]+)受([^%s]+)了([^%s]+)效果的影?。$",--%s受到了%s效果的影?。
 } end )
 
 ----------------------------------
@@ -231,10 +239,12 @@ L:RegisterTranslations("zhCN", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", "parasite", "shear", "eyeblast", "barrage", "flame", "demons", "flameburst", "enrage", "bosskill"}
+mod.toggleoptions = {"phase", "parasite", "shear", "eyeblast", "barrage", "flame", "demons", "flameburst", "enrage", "proximity", "bosskill"}
 mod.wipemobs = {L["Flame of Azzinoth"]}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
+mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3.5 ) end -- Proximity Warning
+mod.proximitySilent = true -- Proximity Warning
 ------------------------------
 --      Initialization      --
 ------------------------------
@@ -315,6 +325,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if flamesDead == 2 then
 			if self.db.profile.phase then
 				self:Message(L["phase3_message"], "Important", nil, "Alarm")
+				self:TriggerEvent("BigWigs_ShowProximity", self) -- Proximity Warning
 			end
 			self:CancelScheduledEvent("BarrageWarn")
 		end
@@ -439,4 +450,3 @@ function mod:FlameWarn()
 	end
 	for k in pairs(flamed) do flamed[k] = nil end
 end
-
