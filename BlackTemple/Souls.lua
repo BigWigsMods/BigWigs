@@ -35,6 +35,7 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_warning = "Enrage in 5 sec!",
 
 	desire_trigger  = "You can have anything you desire... for a price.",
+	desire_cot = "Shi shi rikk rukadare shi tichar kar x gular ", --Curse of Tongues trigger
 	desire_start = "Essence of Desire - Zero mana in 160 sec",
 	desire_bar = "Zero Mana",
 	desire_warn = "Zero Mana in 30sec!",
@@ -205,7 +206,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["enrage_nextbar"], 47, "Spell_Shadow_UnholyFrenzy")
 			self:DelayedMessage(42, L["enrage_warning"], "Urgent")
 		end
-	elseif msg == L["desire_trigger"] and self.db.profile.enrage then
+	elseif self.db.profile.enrage and (msg == L["desire_trigger"] or msg == L["desire_cot"]) then
 		self:Message(L["desire_start"], "Positive")
 		self:Bar(L["desire_bar"], 160, "Spell_Shadow_UnholyFrenzy")
 		self:DelayedMessage(130, L["desire_warn"], "Urgent")
