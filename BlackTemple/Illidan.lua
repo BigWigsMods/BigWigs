@@ -30,9 +30,9 @@ L:RegisterTranslations("enUS", function() return {
 	barrage = "Dark Barrage",
 	barrage_desc = "Warn who has Dark Barrage.",
 	barrage_message = "%s is being Barraged!",
-	barrage_warn = true,
-	barrage_warn_bar = true,
-	barrage_bar = true,
+	barrage_warn = "Barrage Soon!",
+	barrage_warn_bar = "~Next Barrage",
+	barrage_bar = "Barrage: %s",
 
 	eyeblast = "Eye Blast",
 	eyeblast_desc = "Warn when Eye Blast is cast.",
@@ -52,7 +52,7 @@ L:RegisterTranslations("enUS", function() return {
 	demons_desc = "Warn when Illidan is summoning Shadow Demons.",
 	demons_trigger = "Summon Shadow Demons",
 	demons_message = "Shadow Demons!",
-	demons_warn = true,
+	demons_warn = "Demons Soon!",
 
 	phase = "Phases",
 	phase_desc = "Warns when Illidan goes into different stages.",
@@ -439,7 +439,6 @@ function mod:FlameWarn()
 	if self.db.profile.flame then
 		local msg = nil
 		for k in pairs(flamed) do
-			self:Bar(L["flame_message"]:format(k), 60, "Spell_Fire_BlueImmolation")
 			if not msg then
 				msg = k
 			else
