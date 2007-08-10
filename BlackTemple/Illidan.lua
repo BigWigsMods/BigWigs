@@ -150,9 +150,9 @@ L:RegisterTranslations("koKR", function() return {
 	barrage = "암흑의 보호막",
 	barrage_desc = "암흑의 보호막에 걸린 플레이어를 알립니다.",
 	barrage_message = "%s에 집중포화!",
-	barrage_bar = "집중포화 중",
 	barrage_warn = "잠시 후 집중포화! 전원 만피 유지",
 	barrage_warn_bar = "집중포화 대기시간",
+	barrage_bar = "집중포화: %s",
 
 	eyeblast = "안광",
 	eyeblast_desc = "안광 시전 시 알립니다.",
@@ -199,6 +199,7 @@ L:RegisterTranslations("koKR", function() return {
 	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
 	["Flame of Azzinoth"] = "아지노스의 불꽃",
 } end )
+
 --Chinese Translate by 月色狼影@CWDG
 --CWDG site: http://Cwowaddon.com
 --伊利丹·怒?
