@@ -69,7 +69,6 @@ commonWords:RegisterTranslations("zhTW", function() return {
 	enrage_sec = "%d秒後狂暴！",
 	enrage = "狂暴",
 } end )
-} end )
 
 commonWords:RegisterTranslations("frFR", function() return {
 	you = "Vous",
