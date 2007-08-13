@@ -50,7 +50,6 @@
 <Script file="TheEye\Kaelthas.lua"/>
 <Script file="TheEye\Solarian.lua"/>
 
-<Script file="BlackTemple\BlackTempleBeta.lua"/>
 <Script file="BlackTemple\Najentus.lua"/>
 <Script file="BlackTemple\Gurtogg.lua"/>
 <Script file="BlackTemple\Supremus.lua"/>
@@ -60,7 +59,6 @@
 <Script file="BlackTemple\Council.lua"/>
 <Script file="BlackTemple\Illidan.lua"/>
 
-<Script file="Hyjal\HyjalBeta.lua"/>
 <Script file="Hyjal\Anetheron.lua"/>
 <Script file="Hyjal\Winterchill.lua"/>
 <Script file="Hyjal\Azgalor.lua"/>

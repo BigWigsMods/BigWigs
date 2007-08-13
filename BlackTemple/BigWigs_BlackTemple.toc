@@ -21,7 +21,6 @@
 
 ## Dependencies: BigWigs
 
-BlackTempleBeta.lua
 Najentus.lua
 Gurtogg.lua
 Supremus.lua

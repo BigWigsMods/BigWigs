@@ -18,7 +18,6 @@
 
 ## Dependencies: BigWigs
 
-HyjalBeta.lua
 Anetheron.lua
 Winterchill.lua
 Archimonde.lua
