@@ -32,10 +32,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	phase = "Phase warnings",
 	phase_desc = "Warn when Vashj goes into the different phases.",
-	phase2_trigger = "The time is now! Leave none standing!",
+	phase2_trigger = "The time is now! Leave none standing! ",
 	phase2_soon_message = "Phase 2 soon!",
 	phase2_message = "Phase 2, adds incoming!",
-	phase3_trigger = "You may want to take cover.",
+	phase3_trigger = "You may want to take cover. ",
 	phase3_message = "Phase 3 - Enrage in 4min!",
 
 	static = "Static Charge",
@@ -338,7 +338,7 @@ function mod:RepeatNaga()
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg:find(L["phase2_trigger"]) then
+	if msg == L["phase2_trigger"] then
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		if self.db.profile.phase then
 			self:Message(L["phase2_message"], "Important", nil, "Alarm")
@@ -356,7 +356,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		phaseTwoAnnounced = nil
 		shieldsFaded = 0
 		self:Message(L["engage_message"], "Attention")
---[[
 	elseif self.db.profile.phase and msg == L["phase3_trigger"] then
 		self:Message(L["phase3_message"], "Important", nil, "Alarm")
 		self:Bar(L2["enrage"], 240, "Spell_Shadow_UnholyFrenzy")
@@ -371,7 +370,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:CancelScheduledEvent("Strider")
 		self:CancelScheduledEvent("Naga")
 		self:TriggerEvent("BigWigs_StopBar", self, L["elemental_bar"])
-]]
 	end
 end
 
@@ -421,23 +419,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		self:Sync("VashjDeformat")
 	elseif sync == "VashjBarrier" then
 		shieldsFaded = shieldsFaded + 1
-		if shieldsFaded == 4 then
-			if self.db.profile.phase then
-				self:Message(L["phase3_message"], "Important", nil, "Alarm")
-				self:Bar(L2["enrage"], 240, "Spell_Shadow_UnholyFrenzy")
-				self:DelayedMessage(180, L2["enrage_min"]:format(1), "Positive")
-				self:DelayedMessage(210, L2["enrage_sec"]:format(30), "Positive")
-				self:DelayedMessage(230, L2["enrage_sec"]:format(10), "Urgent")
-				self:DelayedMessage(240, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
-			end
-
-			self:CancelScheduledEvent("ElemWarn")
-			self:CancelScheduledEvent("StriderWarn")
-			self:CancelScheduledEvent("NagaWarn")
-			self:CancelScheduledEvent("Strider")
-			self:CancelScheduledEvent("Naga")
-			self:TriggerEvent("BigWigs_StopBar", self, L["elemental_bar"])
-		elseif shieldsFaded < 4 and self.db.profile.barrier then
+		if shieldsFaded < 4 and self.db.profile.barrier then
 			self:Message(L["barrier_down_message"]:format(shieldsFaded), "Attention")
 		end
 	end
