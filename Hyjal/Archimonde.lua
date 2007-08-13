@@ -29,9 +29,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	fear = "Fear",
 	fear_desc = "Fear Timers.",
-	fear_message = "Fear, next in ~30sec!",
+	fear_message = "Fear, next in ~ 43-63sec!",
 	fear_bar = "~Fear Cooldown",
-	fear_warning = "Fear Soon!",
+	fear_warning = "Fear Cooldown Over - Inc Soon!",
 
 	burst = "Air Burst",
 	burst_desc = "Warn who Air Burst is being cast on.",
@@ -153,9 +153,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Icon(rest)
 		end
 	elseif sync == "ArchFear" and self.db.profile.fear then
-		self:Bar(L["fear_bar"], 30, "Spell_Shadow_DeathScream")
+		self:Bar(L["fear_bar"], 43, "Spell_Shadow_DeathScream")
 		self:Message(L["fear_message"], "Important")
-		self:DelayedMessage(25, L["fear_warning"], "Urgent")
+		self:DelayedMessage(43, L["fear_warning"], "Urgent")
 	elseif sync == "ArchBurst" and self.db.profile.burst then
 		self:ScheduleEvent("BWBurstToTScan", self.TargetCheck, 0.3, self)
 	end
@@ -175,8 +175,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
 		if self.db.profile.fear then
-			self:Bar(L["fear_bar"], 30, "Spell_Shadow_DeathScream")
-			self:DelayedMessage(25, L["fear_warning"], "Urgent")
+			self:Bar(L["fear_bar"], 40, "Spell_Shadow_DeathScream")
+			self:DelayedMessage(40, L["fear_warning"], "Urgent")
 		end
 	end
 end
