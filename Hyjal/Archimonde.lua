@@ -55,11 +55,11 @@ L:RegisterTranslations("frFR", function() return {
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par la Poigne de la Légion.",
 
-	fear = "Fear",
-	fear_desc = "Délais concernant les fears.",
-	fear_message = "Fear, prochain dans ~30 sec. !",
-	fear_bar = "~Cooldown Fear",
-	fear_warning = "Fear imminent !",
+	fear = "Peur",
+	fear_desc = "Délais concernant les Peurs.",
+	fear_message = "Peur, prochain dans ~43-63 sec. !",
+	fear_bar = "~Cooldown Peur",
+	fear_warning = "Fin du cooldown Peur - Imminent !",
 
 	burst = "Jaillissement d'air",
 	burst_desc = "Préviens sur qui le Jaillissement d'air est incanté.",

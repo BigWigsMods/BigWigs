@@ -92,6 +92,9 @@ L:RegisterTranslations("frFR", function() return {
 	barrage = "Barrage noir",
 	barrage_desc = "Previens quand un joueur subit les effets du Barrage noir.",
 	barrage_message = "%s est dans le barrage !",
+	barrage_warn = "Barrage imminent !",
+	barrage_warn_bar = "~Prochain Barrage",
+	barrage_bar = "Barrage : %s",
 
 	eyeblast = "Energie oculaire",
 	eyeblast_desc = "Previens quand l'Energie oculaire est incante.",
@@ -111,6 +114,7 @@ L:RegisterTranslations("frFR", function() return {
 	demons_desc = "Previens quand Illidan invoque des demons des ombres.",
 	demons_trigger = "Invocation de demons des ombres",
 	demons_message = "Demons des ombres !",
+	demons_warn = "Démons imminent !",
 
 	phase = "Phases",
 	phase_desc = "Previens quand la rencontre entre dans une nouvelle phase.",
