@@ -247,9 +247,9 @@ mod.enabletrigger = boss
 mod.toggleoptions = {"phase", "parasite", "shear", "eyeblast", "barrage", "flame", "demons", "flameburst", "enrage", "proximity", "bosskill"}
 mod.wipemobs = {L["Flame of Azzinoth"]}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
+mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3.5 ) end
+mod.proximitySilent = true
 
-mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3.5 ) end -- Proximity Warning
-mod.proximitySilent = true -- Proximity Warning
 ------------------------------
 --      Initialization      --
 ------------------------------
@@ -258,9 +258,15 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "IliPara", 2)
-	self:TriggerEvent("BigWigs_ThrottleSync", "IliBara", 2)
+	self:TriggerEvent("BigWigs_ThrottleSync", "IliPara", 3)
+	self:TriggerEvent("BigWigs_ThrottleSync", "IliBara", 4)
 	self:TriggerEvent("BigWigs_ThrottleSync", "IliFlame", 0)
+	self:TriggerEvent("BigWigs_ThrottleSync", "IliDemons", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "IliBurst", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "IliEnrage", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "IliPhase2", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "IliFlameDied", 3)
+	self:TriggerEvent("BigWigs_ThrottleSync", "IliShear", 3)
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "AfflictEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "AfflictEvent")
