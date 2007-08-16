@@ -147,14 +147,14 @@ L:RegisterTranslations("deDE", function() return {
 
 	enrage_trigger = "Endlich hat meine Verbannung ein Ende!",
 
-	whirlwind_trigger = "Leotheras der Blinde bekommt Wirbelwind.",
+	whirlwind_trigger = "Leotheras der Blinde bekommt 'Wirbelwind'.",
 	whirlwind_gain = "Wirbelwind f\195\188r 12sec",
 	whirlwind_fade = "Wirbelwind vorbei",
 	whirlwind_bar = "Wirbelwind",
 	whirlwind_bar2 = "~Wirbelwind Cooldown",
 	whirlwind_warn = "Wirbelwind Cooldown vorbei",
 
-	phase_trigger = "Ich habe jetzt die Kontrolle!",
+	phase_trigger = "Hinfort, unbedeutender Elf. Ich habe jetzt die Kontrolle!",
 	phase_demon = "D\195\164monenphase Phase f\195\188r 60sec",
 	phase_demonsoon = "D\195\164monenphase in 5sec!",
 	phase_normalsoon = "Normale Phase in 5sec",
