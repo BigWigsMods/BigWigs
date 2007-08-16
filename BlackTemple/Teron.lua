@@ -54,7 +54,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	start_trigger = "A moi la vengeance !", -- à vérifier
+	start_trigger = "À moi la vengeance !",
 
 	shadow = "Ombre de la mort",
 	shadow_desc = "Préviens quand un joueur subit les effets de l'Ombre de la mort.",

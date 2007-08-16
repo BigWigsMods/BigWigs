@@ -3,9 +3,9 @@
 ## Title: Big Wigs [|cffeda55fBlack Temple|r]
 ## Title-zhCN: Big Wigs [|cffeda55f黑暗神殿|r]
 ## Title-frFR: Big Wigs [|cffeda55fTemple noir|r]
-## Notes: (BETA) Big Wigs Black Temple Modules
-## Notes-zhCN: (BETA) Big Wigs 黑暗神殿模块
-## Notes-frFR: Modules Big Wigs concernant le Temple noir (BETA).
+## Notes: Big Wigs Black Temple Modules
+## Notes-zhCN: Big Wigs 黑暗神殿模块
+## Notes-frFR: Modules Big Wigs concernant le Temple noir.
 ## Author: Funkydude, Rabbit
 ## X-Credits: Zonker, Daemona, kirr, Andii
 ## Version: 2.0

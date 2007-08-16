@@ -98,7 +98,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	eyeblast = "Energie oculaire",
 	eyeblast_desc = "Previens quand l'Energie oculaire est incante.",
-	eyeblast_trigger = "Soutenez le regard du Traitre?!", -- a verifier
+	eyeblast_trigger = "Soutenez le regard du Traitre !", -- a verifier
 	eyeblast_message = "Energie oculaire !",
 
 	shear = "Tonte", -- (tonte ? -_- )
@@ -122,9 +122,9 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_trigger = "Lame d'Azzinoth lance Invocation de la Larme d'Azzinoth.",
 	phase2_message = "Phase 2 - Lames d'Azzinoth !",
 	phase3_message = "Phase 3 !",
-	demon_phase_trigger = "Contemplez la puissance… du demon interieur?!", -- a verifier
+	demon_phase_trigger = "Contemplez la puissance… du demon interieur !", -- a verifier
 	demon_phase_message = "Forme de demon !",
-	phase4_trigger = "C'est tout, mortels?? Est-ce la toute la fureur que vous pouvez evoquer??", -- a verifier
+	phase4_trigger = "C'est tout, mortels ? Est-ce la toute la fureur que vous pouvez evoquer ?", -- a verifier
 	phase4_soon_message = "Phase 4 imminente !",
 	phase4_message = "Phase 4 - Arrivee de Maiev !",
 

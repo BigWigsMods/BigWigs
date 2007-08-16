@@ -93,11 +93,11 @@ L:RegisterTranslations("frFR", function() return {
 	["*RAWR*"] = "*GRRR*",
 	["Victory!"] = "Victoire !",
 	["Commands for testing bars, messages and synchronization."] = "Options concernant les tests.",
-	["Local test"] = "Test local",
+	["Local test"] = "Tester localement",
 	["Perform a local test of BigWigs."] = "Effectue un test local de BigWigs.",
-	["Sync test"] = "Test de synchronisation",
+	["Sync test"] = "Tester la synchronisation",
 	["Perform a sync test of BigWigs."] = "Effectue un test de synchronisation de BigWigs.",
-	["Testing Sync"] = "Test synchro",
+	["Testing Sync"] = "Test de synchro",
 } end)
 
 ----------------------------------

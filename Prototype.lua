@@ -74,10 +74,10 @@ commonWords:RegisterTranslations("frFR", function() return {
 	you = "Vous",
 	are = "subissez",
 
-	enrage_start = "%s engagé - Enragé dans %d min.",
+	enrage_start = "%s engagé - Enrager dans %d min.",
 	enrage_end = "%s enragé",
-	enrage_min = "Enragé dans %d min.",
-	enrage_sec = "Enragé dans %d sec.",
+	enrage_min = "Enrager dans %d min.",
+	enrage_sec = "Enrager dans %d sec.",
 	enrage = "Enrager",
 } end )
 

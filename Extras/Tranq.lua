@@ -72,12 +72,13 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	CHAT_MSG_SPELL_SELF_BUFF = "Vous n'avez pas r\195\169ussi \195\160 dissiper le fr\195\169n\195\169sie de (.+).";
+	CHAT_MSG_SPELL_SELF_BUFF = "Vous n'avez pas réussi à dissiper le Frénésie de (.+).";
 	CHAT_MSG_SPELL_SELF_DAMAGE = "Vous lancez Tir tranquillisant sur (.+).",
+	["Tranquilizing Shot"] = "Tir tranquillisant",
 
-	["%s's Tranq failed!"] = "Le Tranq de %s a \195\169chou\195\169 !",
-	["Options for the tranq module."] = "Options du module Tranq",
-	["Toggle tranq bars on or off."] = "Afficher ou masquer les barres de Tranq",
+	["%s's Tranq failed!"] = "Le Tir tranq. de %s a échoué !",
+	["Options for the tranq module."] = "Options concernant le module du Tir tranquilisant.",
+	["Toggle tranq bars on or off."] = "Affiche ou non les barres des Tirs tranquillisants.",
 	["Bars"] = "Barres",
 } end)
 

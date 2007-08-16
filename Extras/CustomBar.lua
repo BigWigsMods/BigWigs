@@ -78,13 +78,14 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	["Custom Bars"] = "Barres personnalis\195\169es",
-	["Start a custom bar, either local or global."] = "D\195\169marre une barre personnalis\195\169e, soit personnelle, soit globale.",
+	["Custom Bars"] = "Barres personnalisées",
+	["Start a custom bar, either local or global."] = "Démarre une barre personnalisée, soit personnelle, soit globale.",
 	["Local"] = "Personnelle",
 	["Global"] = "Globale",
 	["<seconds> <bar text>"] = "<secondes> <texte de la barre>",
-	["Starts a custom bar with the given parameters."] = "D\195\169marre une barre personnalis\195\169e avec les param\195\168tres indiqu\195\169s",
-	["%s: Timer [%s] finished."] = "%s: Compteur [%s] termin\195\169.",
+	["Starts a custom bar with the given parameters."] = "Démarre une barre personnalisée avec les paramètres indiqués.",
+	["%s: %s"] = "%s : %s",
+	["%s: Timer [%s] finished."] = "%s: Délai [%s] terminé.",
 } end)
 
 ----------------------------------
