@@ -15,6 +15,7 @@ local RL = nil
 
 L:RegisterTranslations("enUS", function() return {
 	["Raid Icons"] = true,
+	["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = true,
 
 	["RaidIcon"] = true,
 
@@ -26,7 +27,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Set Icon"] = true,
 	["Set which icon to place on players."] = true,
 
-	["Options for Raid Icons."] = true,
+	["Use the %q icon when automatically placing raid icons for boss abilities."] = true,
 
 	["Star"] = true,
 	["Circle"] = true,
@@ -48,8 +49,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Icon"] = "아이콘",
 	["Set Icon"] = "아이콘 설정",
 	["Set which icon to place on players."] = "플레이어에 지정할 아이콘을 설정합니다.",
-
-	["Options for Raid Icons."] = "공격대 아이콘에 대한 설정입니다.",
 
 	["Star"] = "별",
 	["Circle"] = "원",
@@ -76,8 +75,6 @@ L:RegisterTranslations("zhCN", function() return {
 	["Set Icon"] = "设置标记",
 	["Set which icon to place on players."] = "设置玩家身上团队标记.",
 
-	["Options for Raid Icons."] = "团队标记设置",
-
 	["Star"] = "星形",
 	["Circle"] = "圆圈",
 	["Diamond"] = "棱形",
@@ -98,8 +95,6 @@ L:RegisterTranslations("zhTW", function() return {
 	["Icon"] = "圖標",
 	["Set Icon"] = "設置圖示",
 	["Set which icon to place on players."] = "設置玩家身上標記的圖示。",
-
-	["Options for Raid Icons."] = "團隊圖示設置",
 
 	["Star"] = "星星",
 	["Circle"] = "圓圈",
@@ -122,8 +117,6 @@ L:RegisterTranslations("deDE", function() return {
 	["Set Icon"] = "Symbol platzieren",
 	["Set which icon to place on players."] = "W\195\164hle, welches Symbol auf Spieler gesetzt wird.",
 
-	["Options for Raid Icons."] = "Optionen f\195\188r Schlachtzug-Symbole.",
-
 	["Star"] = "Stern",
 	["Circle"] = "Kreis",
 	["Diamond"] = "Diamant",
@@ -144,8 +137,6 @@ L:RegisterTranslations("frFR", function() return {
 	["Icon"] = "Icône",
 	["Set Icon"] = "Déterminer l'icône",
 	["Set which icon to place on players."] = "Détermine quelle icône sera placée sur les joueurs.",
-
-	["Options for Raid Icons."] = "Options concernant les icônes de raid.",
 
 	["Star"] = "étoile",
 	["Circle"] = "cercle",
@@ -168,11 +159,22 @@ plugin.defaultDB = {
 	place = true,
 	icon = 8,
 }
+
+local function get(key)
+	return plugin.db.profile.icon == key
+end
+local function set(key, val)
+	plugin.db.profile.icon = key
+end
+local function disabled()
+	return not plugin.db.profile.place
+end
+
 plugin.consoleCmd = L["RaidIcon"]
 plugin.consoleOptions = {
 	type = "group",
 	name = L["Raid Icons"],
-	desc = L["Options for Raid Icons."],
+	desc = L["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."],
 	args   = {
 		place = {
 			type = "toggle",
@@ -180,25 +182,102 @@ plugin.consoleOptions = {
 			desc = L["Toggle placing of Raid Icons on players."],
 			get = function() return plugin.db.profile.place end,
 			set = function(v) plugin.db.profile.place = v end,
+			order = 1,
 		},
-		icon = {
-			type = "text",
-			name = L["Set Icon"],
-			desc = L["Set which icon to place on players."],
-			get = function() return tostring(plugin.db.profile.icon) end,
-			set = function(v) plugin.db.profile.icon = tonumber(v) end,
-			validate = {
-				["1"] = L["Star"],
-				["2"] = L["Circle"],
-				["3"] = L["Diamond"],
-				["4"] = L["Triangle"],
-				["5"] = L["Moon"],
-				["6"] = L["Square"],
-				["7"] = L["Cross"],
-				["8"] = L["Skull"]
-			},
+		spacer = {
+			type = "header",
+			name = " ",
+			order = 50,
 		},
-	}
+		Star = {
+			type = "toggle",
+			name = L["Star"],
+			desc = L["Use the %q icon when automatically placing raid icons for boss abilities."]:format(L["Star"]),
+			isRadio = true,
+			get = get,
+			set = set,
+			disabled = disabled,
+			order = 101,
+			passValue = 1,
+		},
+		Circle = {
+			type = "toggle",
+			name = L["Circle"],
+			desc = L["Use the %q icon when automatically placing raid icons for boss abilities."]:format(L["Circle"]),
+			isRadio = true,
+			get = get,
+			set = set,
+			disabled = disabled,
+			order = 102,
+			passValue = 2,
+		},
+		Diamond = {
+			type = "toggle",
+			name = L["Diamond"],
+			desc = L["Use the %q icon when automatically placing raid icons for boss abilities."]:format(L["Diamond"]),
+			isRadio = true,
+			get = get,
+			set = set,
+			disabled = disabled,
+			order = 103,
+			passValue = 3,
+		},
+		Triangle = {
+			type = "toggle",
+			name = L["Triangle"],
+			desc = L["Use the %q icon when automatically placing raid icons for boss abilities."]:format(L["Triangle"]),
+			isRadio = true,
+			get = get,
+			set = set,
+			disabled = disabled,
+			order = 104,
+			passValue = 4,
+		},
+		Moon = {
+			type = "toggle",
+			name = L["Moon"],
+			desc = L["Use the %q icon when automatically placing raid icons for boss abilities."]:format(L["Moon"]),
+			isRadio = true,
+			get = get,
+			set = set,
+			disabled = disabled,
+			order = 105,
+			passValue = 5,
+		},
+		Square = {
+			type = "toggle",
+			name = L["Square"],
+			desc = L["Use the %q icon when automatically placing raid icons for boss abilities."]:format(L["Square"]),
+			isRadio = true,
+			get = get,
+			set = set,
+			disabled = disabled,
+			order = 106,
+			passValue = 6,
+		},
+		Cross = {
+			type = "toggle",
+			name = L["Cross"],
+			desc = L["Use the %q icon when automatically placing raid icons for boss abilities."]:format(L["Cross"]),
+			isRadio = true,
+			get = get,
+			set = set,
+			disabled = disabled,
+			order = 107,
+			passValue = 7,
+		},
+		Skull = {
+			type = "toggle",
+			name = L["Skull"],
+			desc = L["Use the %q icon when automatically placing raid icons for boss abilities."]:format(L["Skull"]),
+			isRadio = true,
+			get = get,
+			set = set,
+			disabled = disabled,
+			order = 108,
+			passValue = 8,
+		},
+	},
 }
 
 ------------------------------
