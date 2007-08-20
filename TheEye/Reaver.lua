@@ -91,7 +91,7 @@ L:RegisterTranslations("frFR", function() return {
 	orb_other = "Orbe (%s)",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur la personne ciblée par l'Orbe des arcanes (nécessite d'être promu ou mieux).",
+	icon_desc = "Place une icône de raid sur la dernière personne ciblée par l'Orbe des arcanes (nécessite d'être promu ou mieux).",
 
 	pounding = "Martèlement",
 	pounding_desc = "Affiche des barres temporelles pour les Martèlements.",

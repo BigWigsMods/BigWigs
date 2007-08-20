@@ -129,6 +129,9 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["Raid Icons"] = "Icônes de raid",
+	["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "Détermine l'icône que Big Wigs doit utiliser lors du placement des icônes de raid sur les joueurs affectés par les capacités des boss (ex. la bombe de Geddon).",
+
+	["RaidIcon"] = "IcôneRaid",
 
 	["Place"] = "Placement",
 	["Place Raid Icons"] = "Placer les icônes de raid",
@@ -138,14 +141,16 @@ L:RegisterTranslations("frFR", function() return {
 	["Set Icon"] = "Déterminer l'icône",
 	["Set which icon to place on players."] = "Détermine quelle icône sera placée sur les joueurs.",
 
-	["Star"] = "étoile",
-	["Circle"] = "cercle",
-	["Diamond"] = "diamant",
-	["Triangle"] = "triangle",
-	["Moon"] = "lune",
-	["Square"] = "carré",
-	["Cross"] = "croix",
-	["Skull"] = "crâne",
+	["Use the %q icon when automatically placing raid icons for boss abilities."] = "Utilise l'icône %q lors des placements automatiques des icônes de raid pour les capacités des boss.",
+
+	["Star"] = "Étoile",
+	["Circle"] = "Cercle",
+	["Diamond"] = "Diamant",
+	["Triangle"] = "Triangle",
+	["Moon"] = "Lune",
+	["Square"] = "Carré",
+	["Cross"] = "Croix",
+	["Skull"] = "Crâne",
 } end )
 
 ----------------------------------

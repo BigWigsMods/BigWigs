@@ -44,7 +44,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Votre résistance est futile.", -- à vérifier
+	engage_trigger = "Votre résistance est futile.",
 
 	grip = "Poigne de la Légion",
 	grip_desc = "Préviens quand un joueur subit les effets de la Poigne de la Légion.",
