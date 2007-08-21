@@ -87,6 +87,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase2_trigger = "때가 왔다! 한 놈도 살려두지 마라!",
  	phase2_soon_message = "잠시 후 2 단계!",
 	phase2_message = "2 단계, 애드 주의!",
+	phase3_trigger = "숨을 곳이나 마련해 둬라!",
 	phase3_message = "3 단계 - 4분 이내 격노!",
 
 	static = "전하 충전",
@@ -179,7 +180,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Tainted Elemental"] = "Besudelter Elementar",
 
 	engage_trigger1 = "Normalerweise w\195\188rde ich mich nicht herablassen, Euresgleichen pers\195\182nlich gegen\195\188berzutreten, aber ihr lasst mir keine Wahl...",
-	engage_trigger2 = "Ich spucke auf Euch, Oberfl�chenbewohner", -- to verify
+	engage_trigger2 = "Ich spucke auf Euch, Oberflchenbewohner", -- to verify
 	engage_trigger3 = "Victory to Lord Illidan! ", -- to translate
 	engage_trigger4 = "I'll split you from stem to stern!", -- to translate
 	engage_trigger5 = "Tod den Eindringlingen!",
