@@ -152,7 +152,9 @@ L:RegisterTranslations("zhCN", function() return {
 	["Options for bosses in %s."] = "%s首领模块设置.", -- "Options for bosses in <zone>"
 	["Options for %s (r%d)."] = "%s首领模块版本 (r%d).",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "综合设置",
+	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "他们是Bigwigs最关键的核心 - 比如信息显示, 记时条以及其他必要的功能.",
 	["Extras"] = "附加功能",
+	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "附加功能是第三方插件,是Bigwigs功能的一个增强.",
 	["Active"] = "激活",
 	["Activate or deactivate this module."] = "激活或关闭此模块",
 	["Reboot"] = "重置",

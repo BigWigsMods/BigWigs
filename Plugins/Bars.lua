@@ -173,7 +173,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Reset position"] = "重置位置",
 	["Reset the anchor position, moving it to the center of your screen."] = "重置计时条显示位置,移动到默认屏幕的中间位置。",
 
-	["Reverse"] = "倒转",
+	["Reverse"] = "反转",
 	["Toggles if bars are reversed (fill up instead of emptying)."] = "切换记时条反向（记时条排列顺序反转）",
 } end)
 
