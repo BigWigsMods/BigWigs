@@ -247,8 +247,17 @@ function mod:OrbCheck()
 		end
 	end
 	if target ~= previous and UnitExists(id) then --spam protection & wierdness protection
+		local paladin = nil
+		local Index = 1
+		while UnitBuff(id, Index) do
+			local name = UnitBuff(id, Index)
+			if name == L2["RF"] then
+				paladin = true
+			end
+			Index = Index + 1
+		end
 		if target and id then
-			if UnitPowerType(id) == 0 then --if the player has mana it is most likely ranged, we don't want other units(energy/rage would be melee)
+			if UnitPowerType(id) == 0 and not paladin then --if the player has mana it is most likely ranged, we don't want other units(energy/rage would be melee)
 				self:Result(target) --pass the unit with mana through
 			end
 			previous = target --create spam protection filter

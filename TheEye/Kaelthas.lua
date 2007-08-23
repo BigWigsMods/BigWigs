@@ -498,7 +498,17 @@ function mod:Afflicted(msg)
 				end
 			end
 			if not id then return end
-			if UnitPowerType(id) == 1 then
+
+			local paladin = nil
+			local Index = 1
+			while UnitBuff(id, Index) do
+				local name = UnitBuff(id, Index)
+				if name == L2["RF"] then
+					paladin = true
+				end
+				Index = Index + 1
+			end
+			if UnitPowerType(id) == 1 or paladin then
 				self:Sync("KaelToy2 " .. tPlayer)
 			end
 		end

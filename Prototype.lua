@@ -22,6 +22,8 @@ commonWords:RegisterTranslations("enUS", function() return {
 	enrage_min = "Enrage in %d min",
 	enrage_sec = "Enrage in %d sec",
 	enrage = "Enrage",
+
+	RF = "Righteous Fury",
 } end)
 
 commonWords:RegisterTranslations("deDE", function() return {
@@ -33,6 +35,8 @@ commonWords:RegisterTranslations("deDE", function() return {
 	enrage_min = "Enrage in %d min",
 	enrage_sec = "Enrage in %d sek",
 	enrage = "Enrage",
+
+	RF = "Zorn der Gerechtigkeit",
 } end )
 
 commonWords:RegisterTranslations("koKR", function() return {
@@ -44,6 +48,8 @@ commonWords:RegisterTranslations("koKR", function() return {
 	enrage_min = "%d분 후 격노",
 	enrage_sec = "%d초 후 격노",
 	enrage = "격노",
+
+	RF = "정의의 격노",
 } end )
 
 --Chinese Transalte by 月色狼影@CWDG
@@ -57,17 +63,21 @@ commonWords:RegisterTranslations("zhCN", function() return {
 	enrage_min = "%d分后狂暴！",
 	enrage_sec = "%d秒后狂暴！",
 	enrage = "狂暴",
+
+	RF = "\230\173\163\228\185\137\228\185\139\230\128\146", --fix please
 } end )
 
 commonWords:RegisterTranslations("zhTW", function() return {
 	you = "你",
 	are = "了",
-	
+
 	enrage_start = "%s 狂暴 - %d分後狂暴",
 	enrage_end = "%s 已狂暴",
 	enrage_min = "%d分後狂暴！",
 	enrage_sec = "%d秒後狂暴！",
 	enrage = "狂暴",
+
+	RF = "正義之怒",
 } end )
 
 commonWords:RegisterTranslations("frFR", function() return {
@@ -79,6 +89,8 @@ commonWords:RegisterTranslations("frFR", function() return {
 	enrage_min = "Enrager dans %d min.",
 	enrage_sec = "Enrager dans %d sec.",
 	enrage = "Enrager",
+
+	RF = "Fureur vertueuse",
 } end )
 
 commonWords:RegisterTranslations("esES", function() return {
@@ -90,6 +102,8 @@ commonWords:RegisterTranslations("esES", function() return {
 	enrage_min = "Enfurecimiento en %d min",
 	enrage_sec = "Enfurecimiento en %d sec",
 	enrage = "Enfurecimiento",
+
+	RF = "Furia justa",
 } end)
 
 function BigWigs.modulePrototype:OnInitialize()
