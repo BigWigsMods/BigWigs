@@ -24,6 +24,9 @@ local shield = BB["Phaseshift Bulwark"]
 BB = nil
 
 local MCd = {}
+local UnitBuff = UnitBuff
+local UnitName = UnitName
+local UnitPowerType = UnitPowerType
 
 ----------------------------
 --      Localization      --
@@ -491,7 +494,8 @@ function mod:Afflicted(msg)
 		elseif tSpell == L["mc"] then
 			self:Sync("KaelMC2 " .. tPlayer)
 		elseif tSpell == L["toy_trigger"] then
-			for i = 1, GetNumRaidMembers() do
+			local num = GetNumRaidMembers()
+			for i = 1, num do
 				if UnitName("raid"..i) == tPlayer then
 					id = "raid"..i
 					break

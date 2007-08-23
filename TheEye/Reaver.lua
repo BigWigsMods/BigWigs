@@ -8,9 +8,9 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local previous
 
 local UnitName = UnitName
-local GetNumRaidMembers = GetNumRaidMembers
 local UnitExists = UnitExists
 local UnitPowerType = UnitPowerType
+local UnitBuff = UnitBuff
 
 ----------------------------
 --      Localization      --
@@ -238,7 +238,8 @@ function mod:OrbCheck()
 		id = "targettarget"
 	else
 		--if Void Reaver isn't your target, scan raid members targets, hopefully one of them has him targeted and we can get hes target from there
-		for i = 1, GetNumRaidMembers() do
+		local num = GetNumRaidMembers()
+		for i = 1, num do
 			if UnitName("raid"..i.."target") == boss then
 				target = UnitName("raid"..i.."targettarget")
 				id = "raid"..i.."targettarget"

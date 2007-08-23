@@ -9,6 +9,10 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local horse = AceLibrary("Babble-Boss-2.2")["Midnight"]
 local started
 
+local UnitBuff = UnitBuff
+local UnitName = UnitName
+local UnitPowerType = UnitPowerType
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -175,7 +179,8 @@ function mod:CurseEvent(msg)
 			cplayer = UnitName("player")
 			id = "player"
 		else
-			for i = 1, GetNumRaidMembers() do
+			local num = GetNumRaidMembers()
+			for i = 1, num do
 				if UnitName("raid"..i) == cplayer then
 					id = "raid"..i
 					break
