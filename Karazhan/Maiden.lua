@@ -63,10 +63,10 @@ L:RegisterTranslations("frFR", function() return {
 	engage_message = "Damoiselle engagée ! Repentir dans ~33 sec.",
 
 	repentance = "Repentir",
-	repentance_desc = "Préviens quand la Damoiselle de vertu est suceptible d'utiliser son Repentir.",
+	repentance_desc = "Préviens quand la Damoiselle de vertu est susceptible d'utiliser son Repentir.",
 	repentance_trigger1 = "Chassez vos pensées corrompues.",
 	repentance_trigger2 = "Il faut se débarrasser de votre impureté.",
-	repentance_message = "Repentir ! Prochain dans ~33 sec.",
+	repentance_message = "Repentir ! Prochain pas avant ~33 sec.",
 	repentance_warning = "Fin du cooldown Repentir - Imminent !",
 	repentance_bar = "Repentir",
 	repentance_nextbar = "~Cooldown Repentir",
