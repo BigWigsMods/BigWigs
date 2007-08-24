@@ -82,64 +82,64 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	parasite = "Ombrefiel parasite",
-	parasite_desc = "Previens quand un joueur subit les effets de l'Ombrefiel parasite.",
+	parasite_desc = "Préviens quand un joueur subit les effets de l'Ombrefiel parasite.",
 	parasite_you = "Vous avez un parasite !",
 	parasite_other = "%s a un parasite !",
 
-	icon = "Icone",
-	icon_desc = "Place une icone de raid sur le dernier joueur affecte par l'Ombrefiel parasite (necessite d'etre promu ou mieux).",
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Ombrefiel parasite (nécessite d'être promu ou mieux).",
 
 	barrage = "Barrage noir",
-	barrage_desc = "Previens quand un joueur subit les effets du Barrage noir.",
+	barrage_desc = "Préviens quand un joueur subit les effets du Barrage noir.",
 	barrage_message = "%s est dans le barrage !",
 	barrage_warn = "Barrage imminent !",
 	barrage_warn_bar = "~Prochain Barrage",
 	barrage_bar = "Barrage : %s",
 
 	eyeblast = "Energie oculaire",
-	eyeblast_desc = "Previens quand l'Energie oculaire est incante.",
-	eyeblast_trigger = "Soutenez le regard du Traitre !", -- a verifier
+	eyeblast_desc = "Préviens quand l'Energie oculaire est incanté.",
+	eyeblast_trigger = "Soutenez le regard du Traître !", -- à vérifier
 	eyeblast_message = "Energie oculaire !",
 
 	shear = "Tonte", -- (tonte ? -_- )
-	shear_desc = "Previens quand un joueur subit les effets de la Tonte.",
+	shear_desc = "Préviens quand un joueur subit les effets de la Tonte.",
 	shear_message = "Tonte sur %s !",
 	shear_bar = "Tonte : %s",
 
-	flame = "Flammes dechirantes",
-	flame_desc = "Previens quand un joueur subit les effets des Flammes dechirantes.",
-	flame_message = "%s a les Flammes dechirantes !",
+	flame = "Flammes déchirantes",
+	flame_desc = "Préviens quand un joueur subit les effets des Flammes déchirantes.",
+	flame_message = "%s a les Flammes déchirantes !",
 
-	demons = "Demons des ombres",
-	demons_desc = "Previens quand Illidan invoque des demons des ombres.",
-	demons_trigger = "Invocation de demons des ombres",
-	demons_message = "Demons des ombres !",
+	demons = "Démons des ombres",
+	demons_desc = "Préviens quand Illidan invoque des démons des ombres.",
+	demons_trigger = "Invocation de démons des ombres",
+	demons_message = "Démons des ombres !",
 	demons_warn = "Démons imminent !",
 
 	phase = "Phases",
-	phase_desc = "Previens quand la rencontre entre dans une nouvelle phase.",
+	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
 	phase2_soon_message = "Phase 2 imminente !",
 	phase2_trigger = "Lame d'Azzinoth lance Invocation de la Larme d'Azzinoth.",
 	phase2_message = "Phase 2 - Lames d'Azzinoth !",
 	phase3_message = "Phase 3 !",
-	demon_phase_trigger = "Contemplez la puissance… du demon interieur !", -- a verifier
-	demon_phase_message = "Forme de demon !",
-	phase4_trigger = "C'est tout, mortels ? Est-ce la toute la fureur que vous pouvez evoquer ?", -- a verifier
+	demon_phase_trigger = "Contemplez la puissance… du démon intérieur !", -- à vérifier
+	demon_phase_message = "Forme de démon !",
+	phase4_trigger = "C'est tout, mortels ? Est-ce là toute la fureur que vous pouvez évoquer ?", -- à vérifier
 	phase4_soon_message = "Phase 4 imminente !",
-	phase4_message = "Phase 4 - Arrivee de Maiev !",
+	phase4_message = "Phase 4 - Arrivée de Maiev !",
 
 	flameburst = "Explosion de flammes",
-	flameburst_desc = "Previens quand Illidan utilise son Explosion de flammes.",
+	flameburst_desc = "Préviens quand Illidan utilise son Explosion de flammes.",
 	flameburst_message = "Explosion de flammes !",
 	flameburst_cooldown_bar = "~Cooldown Explosion",
 	flameburst_cooldown_warn = "Explosion de flammes imminente !",
 	flameburst_warn = "Explosion de flammes dans ~5 sec !",
 
 	enrage_trigger = "Illidan Hurlorage gagne Enrager.",
-	enrage_message = "Enrage !",
+	enrage_message = "Enragé !",
 
 	afflict_trigger = "^([^%s]+) ([^%s]+) les effets .* ([^%s]+)%.$",
-	["Flame of Azzinoth"] = "Flamme d'Azzinoth", -- a  verifier
+	["Flame of Azzinoth"] = "Flamme d'Azzinoth", -- à vérifier
 } end )
 
 L:RegisterTranslations("koKR", function() return {
