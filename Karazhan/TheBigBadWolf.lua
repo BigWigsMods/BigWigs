@@ -5,7 +5,6 @@
 local lady = AceLibrary("Babble-Boss-2.2")["Grandmother"]
 local boss = AceLibrary("Babble-Boss-2.2")["The Big Bad Wolf"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local pName = nil
 
 ----------------------------
@@ -16,7 +15,6 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "TheBigBadWolf",
 
 	riding_trigger = "^([^%s]+) ([^%s]+) Red Riding Hood%.$",
-	gain = "gain",
 
 	youriding = "Red Riding Hood(You)",
 	youriding_desc = "Warn when you are Red Riding Hood.",
@@ -34,7 +32,6 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	riding_trigger = "^([^%s]+) ([^%s]+) 'Rotk\195\164ppchen'%.$",
-	--gain = "gain",
 
 	youriding = "Du bist Rotk\195\164ppchen Warnung",
 	youriding_desc = "Warnung wenn du Rotk\195\164ppchen bist",
@@ -52,7 +49,6 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	riding_trigger = "^([^%s]+) ([^%s]+) Chaperon Rouge%.$",
-	--gain = "gain",
 
 	youriding = "Chaperon Rouge (vous)",
 	youriding_desc = "Préviens quand vous êtes le Chaperon Rouge.",
@@ -69,8 +65,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	riding_trigger = "^([^|;%s]*)(.*)빨간 두건 효과를 얻었습니다%.$", -- "^([^%s]+) gain(.*) Red Riding Hood", -- check
-	gain = " ", --you gain(you gain buff),  you gains(player by the name of 'you'), you might want a real trigger to prevent problems
+	riding_trigger = "^([^|;%s]*)(.*)빨간 두건 효과를 얻었습니다%.$",
 
 	youriding = "자신의 빨간 두건을 알립니다.",
 	youriding_desc = "자신이 빨간 두건에 걸리면 알림",
@@ -88,7 +83,6 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	riding_trigger = "^(.+)獲得了(.*)小紅帽的效果",
-	gain = "獲得",
 
 	riding_youwarn = "你變成小紅帽了！",
 	riding_otherwarn ="[%s] 變成小紅帽了！",
@@ -106,7 +100,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("esES", function() return {
 	riding_trigger = "^([^%s]+) ([^%s]+) Caperucita Roja%.$",
-	gain = "gana",
 
 	youriding = "Caperucita Roja (Tu)",
 	youriding_desc = "Avisa cuando eres Caperucita Roja.",
@@ -139,9 +132,9 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS", "RidingEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS", "RidingEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_BUFFS", "RidingEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS", "OtherRiding")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_BUFFS", "OtherRiding")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS")
 
 	pName = UnitName("player")
 end
@@ -150,24 +143,29 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:RidingEvent(msg)
-	local rplayer, rtype = select(3, msg:find(L["riding_trigger"]))
-	if rplayer and rtype then
-		if rplayer == L2["you"] and rtype == L["gain"] then
-			rplayer = pName
-		end
-
-		if rplayer == pName and self.db.profile.youriding then
-			self:Message(L["riding_youwarn"], "Personal", true, "Long")
-			self:Message(L["riding_otherwarn"]:format(rplayer), "Attention", nil, nil, true)
-			self:Bar(L["riding_bar"]:format(rplayer), 20,"INV_Chest_Cloth_18")
-		elseif self.db.profile.elseriding then
+function mod:OtherRiding(msg)
+	local rplayer = select(3, msg:find(L["riding_trigger"]))
+	if rplayer then
+		if self.db.profile.elseriding then
 			self:Message(L["riding_otherwarn"]:format(rplayer), "Attention")
 			self:Whisper(rplayer, L["riding_youwarn"])
 			self:Bar(L["riding_bar"]:format(rplayer), 20,"INV_Chest_Cloth_18")
 		end
 		if self.db.profile.icon then 
 			self:Icon(rplayer)
+		end
+	end
+end
+
+function mod:CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS(msg)
+	if msg:find(L["riding_trigger"]) then
+		if self.db.profile.youriding then
+			self:Message(L["riding_youwarn"], "Personal", true, "Long")
+			self:Message(L["riding_otherwarn"]:format(pName), "Attention", nil, nil, true)
+			self:Bar(L["riding_bar"]:format(pName), 20,"INV_Chest_Cloth_18")
+		end
+		if self.db.profile.icon then 
+			self:Icon(pName)
 		end
 	end
 end
