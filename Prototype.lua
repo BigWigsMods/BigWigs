@@ -63,8 +63,7 @@ commonWords:RegisterTranslations("zhCN", function() return {
 	enrage_min = "%d分后狂暴！",
 	enrage_sec = "%d秒后狂暴！",
 	enrage = "狂暴",
-
-	RF = "\230\173\163\228\185\137\228\185\139\230\128\146", --fix please
+	RF = "正义之怒",
 } end )
 
 commonWords:RegisterTranslations("zhTW", function() return {
