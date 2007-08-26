@@ -12,6 +12,7 @@ BB = nil
 local drained = {}
 local spiteIt = {}
 local pName = nil
+local stop = nil
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
@@ -274,6 +275,7 @@ function mod:DrainWarn()
 end
 
 function mod:SpiteWarn()
+	if stop then return end
 	if self.db.profile.spite then
 		local msg = nil
 		for k in pairs(spiteIt) do
@@ -285,6 +287,12 @@ function mod:SpiteWarn()
 		end
 		self:Message(L["spite_message"]:format(msg), "Important", nil, "Alert")
 	end
+	stop = true
+	self:ScheduleEvent("BWRoSNilStop", nilStop, 4)
+end
+
+local function nilStop()
+	stop = nil
 	for k in pairs(spiteIt) do spiteIt[k] = nil end
 end
 
@@ -294,7 +302,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:ScheduleEvent("BWDrainWarn", self.DrainWarn, 1.5, self)
 	elseif sync == "RoSSpite" and rest then
 		spiteIt[rest] = true
-		self:ScheduleEvent("BWSpiteWarn", self.SpiteWarn, 0.5, self) --I very much doubt latency will allow this small a timer in 1 message
+		self:ScheduleEvent("BWSpiteWarn", self.SpiteWarn, 0.3, self)
 	elseif sync == "RoSShield" and self.db.profile.runeshield then
 		self:Message(L["runeshield_message"], "Attention")
 		self:Bar(L["runeshield_nextbar"], 15, "Spell_Arcane_Blast")

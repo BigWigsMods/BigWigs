@@ -8,6 +8,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local pName = nil
 local attracted = {}
+local stop
 
 ----------------------------
 --      Localization      --
@@ -67,6 +68,7 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ShaAttra", 0)
 	pName = UnitName("player")
+	stop = nil
 end
 
 ------------------------------
@@ -76,7 +78,7 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "ShaAttra" and rest then
 		attracted[rest] = true
-		self:ScheduleEvent("BWAttractionWarn", self.AttractionWarn, 1.5, self)
+		self:ScheduleEvent("BWAttractionWarn", self.AttractionWarn, 0.5, self)
 	end
 end
 
@@ -107,7 +109,13 @@ function mod:FatalAtt(msg)
 	end
 end
 
+local function nilStop()
+	stop = nil
+	for k in pairs(attracted) do attracted[k] = nil end
+end
+
 function mod:AttractionWarn()
+	if stop then return end
 	if self.db.profile.attraction then
 		local msg = nil
 		for k in pairs(attracted) do
@@ -119,5 +127,6 @@ function mod:AttractionWarn()
 		end
 		self:Message(L["attraction_message"]:format(msg), "Important", nil, "Alert")
 	end
-	for k in pairs(attracted) do attracted[k] = nil end
+	stop = true
+	self:ScheduleEvent("BWShahrazNilStop", nilStop, 4)
 end
