@@ -159,6 +159,53 @@ L:RegisterTranslations("frFR", function() return {
 	afflict_trigger = "^([^%s]+) ([^%s]+) les effets .* ([^%s]+)%.$",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "Auf Euch warten nur Schmerz und Leid!",
+
+	enrage_start = "Wutanfall in ~47sec",
+	enrage_trigger = "%s wird wütend!",
+	enrage_message = "Wutanfall für 15sek!",
+	enrage_bar = "<Wutanfall>",
+	enrage_next = "Wutanfall Vorbei - Nächster in ~32sec",
+	enrage_nextbar = "Nächster Wutanfall",
+	enrage_warning = "Wutanfall in 5 sek!",
+
+	desire_trigger  = "Du kannst alles haben was du dir wünscht... für einen Preis.", --Check
+	desire_cot = "Maz archim zekul refir daz Maz soran maez me ruk buras Zekul", --Curse of Tongues trigger
+	desire_start = "Essenz der Begierde - Null Mana in 160 sek",
+	desire_bar = "Null Mana",
+	desire_warn = "Null Mana in 30sek!",
+
+	runeshield = "Runenschild",
+	runeshield_desc = "Timer wann Essenz der Begierde das Runenschild bekommen wird.",
+	runeshield_trigger = "Essenz der Begierde bekommt Runenschild.",
+	runeshield_message = "Runenschild!",
+	runeshield_nextbar = "Nächstes Runenschild",
+	runeshield_warn = "Runenschild in ~3sek.",
+
+	deaden = "Abstumpfen",
+	deaden_desc = "Warnt dich wenn Abstumpfen gezaubert wird.",
+	deaden_trigger = "Essenz der Begierde beginnt Abstumpfen zu wirken.",
+	deaden_message = "Zaubert Abstumpfen!",
+	deaden_warn = "Abstumpfen in ~5sek.",
+	deaden_nextbar = "Nächstes Abstumpfen.",
+
+	drain = "Seelensauger",
+	drain_desc = "Warnt wer Seelensauger hat.",
+	drain_message = "Seelensauger: %s",
+
+	spite = "Bosheit",
+	spite_desc = "Warnt wer Bosheit hat.",
+	spite_message = "Bosheit: %s",
+
+	scream = "Seelenschrei",
+	scream_desc = "Zeige eine Cooldownleiste für Seelenschrei.",
+	scream_trigger = "^Essenz des Zorns's Seelenschrei ",
+	scream_bar = "~Seelenschrei Cooldown",
+
+	afflict_trigger = "^([^%s]+) ([^%s]+) ist von ([^%s]+)%.$ betroffen.", --check
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
