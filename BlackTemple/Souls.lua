@@ -306,6 +306,11 @@ function mod:AfflictEvent(msg)
 	end
 end
 
+local function nilStop()
+	stop = nil
+	for k in pairs(spiteIt) do spiteIt[k] = nil end
+end
+
 function mod:DrainWarn()
 	if self.db.profile.drain then
 		local msg = nil
@@ -336,11 +341,6 @@ function mod:SpiteWarn()
 	end
 	stop = true
 	self:ScheduleEvent("BWRoSNilStop", nilStop, 4)
-end
-
-local function nilStop()
-	stop = nil
-	for k in pairs(spiteIt) do spiteIt[k] = nil end
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
