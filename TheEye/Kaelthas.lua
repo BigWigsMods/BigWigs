@@ -110,6 +110,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	revive_bar = "Adds Revived",
 	revive_warning = "Adds Revived in 5sec!",
+
+	dead_message = "%s dies",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -368,7 +370,7 @@ mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) en
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Afflicted")
@@ -551,6 +553,30 @@ end
 function mod:KaelMC2(rest, nick)
 	MCd[rest] = true
 	self:ScheduleEvent("BWMindControlWarn", self.MCWarn, 1.2, self)
+end
+
+do
+	local die = UNITDIESOTHER
+	local dead = L["dead_message"]
+	function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+		if msg == die:format(axe) then
+			self:Message(dead:format(axe), "Attention")
+		elseif msg == die:format(mace) then
+			self:Message(dead:format(mace), "Attention")
+		elseif msg == die:format(dagger) then
+			self:Message(dead:format(dagger), "Attention")
+		elseif msg == die:format(staff) then
+			self:Message(dead:format(staff), "Attention")
+		elseif msg == die:format(sword) then
+			self:Message(dead:format(sword), "Attention")
+		elseif msg == die:format(bow) then
+			self:Message(dead:format(bow), "Attention")
+		elseif msg == die:format(shield) then
+			self:Message(dead:format(shield), "Attention")
+		else
+			self:GenericBossDeath(msg)
+		end
+	end
 end
 
 function mod:MCWarn()
