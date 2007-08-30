@@ -259,7 +259,7 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "IliPara", 3)
+	self:TriggerEvent("BigWigs_ThrottleSync", "IliPara", 1.7)
 	self:TriggerEvent("BigWigs_ThrottleSync", "IliBara", 4)
 	self:TriggerEvent("BigWigs_ThrottleSync", "IliFlame", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "IliDemons", 5)
