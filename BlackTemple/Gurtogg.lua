@@ -23,7 +23,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase_normal_warning = "Fel Rage over in ~5 sec",
 	phase_normal = "Fel Rage Phase Over",
 	phase_normal_trigger = "Fel Rage fades from Gurtogg Bloodboil.",
-	phase_normal_bar = "Next Rage Phase",
+	phase_normal_bar = "~Approximate Rage Phase",
 	phase_rage_bar = "Next Normal Phase",
 
 	rage = "Fel Rage",
