@@ -323,6 +323,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "IliEnrage" and self.db.profile.enrage then
 		self:Message(L["enrage_message"], "Important", nil, "Alert")
 	elseif sync == "IliPhase2" then
+		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		flamesDead = 0
 		if self.db.profile.barrage then
 			self:Bar(L["barrage_warn_bar"], 80, "Spell_Shadow_PainSpike")
