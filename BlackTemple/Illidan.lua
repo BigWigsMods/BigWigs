@@ -76,7 +76,7 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_trigger = "Illidan Stormrage gains Enrage.",
 	enrage_message = "Enraged!",
 
-	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by ([^%s]+)%.$",
+	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by (.*).$",
 	["Flame of Azzinoth"] = true,
 } end )
 
