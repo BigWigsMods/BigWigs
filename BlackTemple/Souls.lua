@@ -262,8 +262,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:DelayedMessage(130, L["desire_warn"], "Urgent")
 		end
 		if self.db.profile.deaden then
-			self:Bar(L["deaden_nextbar"], 30, "Spell_Shadow_SoulLeech_1")
-			self:DelayedMessage(25, L["deaden_warn"], "Urgent")
+			self:Bar(L["deaden_nextbar"], 28, "Spell_Shadow_SoulLeech_1")
+			self:DelayedMessage(23, L["deaden_warn"], "Urgent")
 		end
 	end
 end
