@@ -256,6 +256,7 @@ mod.proximitySilent = true
 
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "IliPara", 3)
