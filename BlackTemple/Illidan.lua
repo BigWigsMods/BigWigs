@@ -133,13 +133,13 @@ L:RegisterTranslations("frFR", function() return {
 	flameburst_message = "Explosion de flammes !",
 	flameburst_cooldown_bar = "~Cooldown Explosion",
 	flameburst_cooldown_warn = "Explosion de flammes imminente !",
-	flameburst_warn = "Explosion de flammes dans ~5 sec !",
+	flameburst_warn = "Explosion de flammes dans ~5 sec. !",
 
 	enrage_trigger = "Illidan Hurlorage gagne Enrager.",
 	enrage_message = "Enragé !",
 
 	afflict_trigger = "^([^%s]+) ([^%s]+) les effets .* ([^%s]+)%.$",
-	["Flame of Azzinoth"] = "Flamme d'Azzinoth", -- à vérifier
+	["Flame of Azzinoth"] = "Flamme d'Azzinoth",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

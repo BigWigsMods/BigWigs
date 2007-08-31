@@ -144,7 +144,7 @@ L:RegisterTranslations("frFR", function() return {
 	deaden_nextbar = "Prochain Emousser",
 
 	drain = "Drain d'âme",
-	drain_desc = "Préviens quand un joueur subit les effets du Draine d'âme.",
+	drain_desc = "Préviens quand un joueur subit les effets du Drain d'âme.",
 	drain_message = "Drain d'âme : %s",
 
 	spite = "Dépit",
@@ -153,7 +153,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	scream = "Cri de l'âme",
 	scream_desc = "Affiche une barre de cooldown pour le Cri de l'âme.",
-	scream_trigger = "^Cri de l'âme de Essence de colère ",
+	scream_trigger = "^Cri de l'âme de Essence de la colère ",
 	scream_bar = "~Cooldown Cri de l'âme",
 
 	afflict_trigger = "^([^%s]+) ([^%s]+) les effets .* ([^%s]+)%.$",

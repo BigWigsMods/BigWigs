@@ -40,8 +40,8 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger2 = "Que les mortels périssent tous !",
 
 	enrage_trigger = "%s devient fou furieux !",
-	enrage_warning1 = "%s engagé - Enragé dans 50-60 sec.",
-	enrage_warning2 = "Bientôt enragé !",
+	enrage_warning1 = "%s engagé - Enrager dans 50-60 sec.",
+	enrage_warning2 = "Enrager imminent !",
 	enrage_message = "Enragé pendant 10 sec. !",
 	enrage_finished = "Fin de l'Enrager - Prochain dans 50-60 sec.",
 	enrage_bar = "~Enrager",

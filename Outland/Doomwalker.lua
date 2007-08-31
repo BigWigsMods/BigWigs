@@ -38,7 +38,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Cessez toute activité. Vous allez être éliminés.",
-	engage_message = "Marche-funeste engagé, Séisme dans ~30 sec !",
+	engage_message = "Marche-funeste engagé, Séisme dans ~30 sec. !",
 
 	overrun = "Renversement",
 	overrun_desc = "Préviens quand Marche-funeste utilise sa capacité Renversement.",
@@ -55,7 +55,9 @@ L:RegisterTranslations("frFR", function() return {
 	earthquake_trigger1 = "Début de la perturbation tectonique.",
 	earthquake_trigger2 = "Magnitude réglée. Déclenchement.",
 
-	enrage_soon_message = "Bientôt enragé !",
+	enrage_soon_message = "Enrager imminent !",
+	enrage_trigger = "%s devient fou furieux !",
+	enrage_message = "Enrager !",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

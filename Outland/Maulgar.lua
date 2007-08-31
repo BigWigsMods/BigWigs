@@ -77,23 +77,23 @@ L:RegisterTranslations("frFR", function() return {
 
 	shield = "Bouclier",
 	shield_desc = "Préviens quand Oeillaveugle le Voyant gagne Mot de pouvoir : Bouclier.",
-	shield_trigger = "gagne Mot de pouvoir supérieur : Bouclier",
+	shield_trigger = "gagne Mot de pouvoir supérieur : Bouclier%.$",
 	shield_message = "Bouclier sur Oeillaveugle !",
 
 	spellshield = "Bouclier anti-sort",
 	spellshield_desc = "Préviens quand Krosh Brasemain gagne Bouclier anti-sort.",
-	spellshield_trigger = "gagne Bouclier anti-sort.",
+	spellshield_trigger = "gagne Bouclier anti%-sort%.$",
 	spellshield_message = "Bouclier anti-sort sur Krosh !",
 
 	summon = "Chasseur corrompu sauvage",
 	summon_desc = "Préviens quand Olm l'Invocateur commence à lancer Invocation d'un chasseur corrompu sauvage.",
-	summon_trigger = "commence à lancer Invocation d'un chasseur corrompu sauvage.",
+	summon_trigger = "commence à lancer Invocation d'un chasseur corrompu sauvage%.$",
 	summon_message = "Chasseur corrompu en cours d'invocation !",
 	summon_bar = "~Cooldown Chasseur corrompu",
 
 	whirlwind = "Tourbillon",
 	whirlwind_desc = "Préviens quand Maulgar gagne Tourbillon.",
-	whirlwind_trigger = "gagne Tourbillon",
+	whirlwind_trigger = "gagne Tourbillon%.$",
 	whirlwind_message = "Maulgar - Toubillon pendant 15 sec. !",
 	whirlwind_bar = "Tourbillon",
 	whirlwind_nextbar = "~Cooldown Tourbillon",

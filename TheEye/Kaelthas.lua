@@ -269,6 +269,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	revive_bar = "Retour des conseillers",
 	revive_warning = "Retour des conseillers dans 5 sec. !",
+
+	dead_message = "%s meurt",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

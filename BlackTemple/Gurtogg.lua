@@ -110,7 +110,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase_normal_warning = "Gangrerage terminée dans ~5 sec.",
 	phase_normal = "Fin de la phase de Gangrerage",
 	phase_normal_trigger = "Gangrerage sur Gurtogg Fièvresang vient de se dissiper.",
-	phase_normal_bar = "Prochaine phase de rage",
+	phase_normal_bar = "~Prochaine phase de rage",
 	phase_rage_bar = "Prochaine phase normale",
 
 	rage = "Gangrerage",

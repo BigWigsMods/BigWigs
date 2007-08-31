@@ -87,7 +87,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	silence = "Silence",
 	silence_desc = "Préviens quand Gruul lance son Silence de zone (Réverbération).",
-	silence_trigger = "les effets .* Réverbération",
+	silence_trigger = "les effets .* Réverbération%.$",
 	silence_message = "Silence de zone",
 	silence_warning = "Silence de zone imminent !",
 	silence_bar = "~Cooldown Silence",
