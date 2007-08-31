@@ -69,8 +69,8 @@ L:RegisterTranslations("deDE", function() return {
 	grave_nextbar = "n\195\164chstes Nasses Grab",
 
 	murloc_bar = "n\195\164chste Murlocs",
-	--murloc_trigger1 = "By the tides!",
-	--murloc_trigger2 = "Destroy them, my subjects!",
+	murloc_trigger1 = "Bei den Gezeiten!",
+	murloc_trigger2 = "Vernichtet sie, meine Diener!",
 	murloc_message = "Murlocs kommen!",
 	murloc_soon_message = "Murlocs bald!",
 	murloc_engaged = "%s angegriffen, Murlocs in ~40sec",
