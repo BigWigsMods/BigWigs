@@ -39,6 +39,7 @@ L:RegisterTranslations("enUS", function() return {
 	spellshield_desc = "Warn when Krosh Firehand gains Spell Shield.",
 	spellshield_trigger = "gains Spell Shield%.$",
 	spellshield_message = "Spell Shield on Krosh!",
+	spellshield_bar = "~Spell Shield Cooldown",
 
 	summon = "Summon Wild Felhunter",
 	summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter.",
@@ -84,6 +85,7 @@ L:RegisterTranslations("frFR", function() return {
 	spellshield_desc = "Préviens quand Krosh Brasemain gagne Bouclier anti-sort.",
 	spellshield_trigger = "gagne Bouclier anti%-sort%.$",
 	spellshield_message = "Bouclier anti-sort sur Krosh !",
+	--spellshield_bar = "~Spell Shield Cooldown",
 
 	summon = "Chasseur corrompu sauvage",
 	summon_desc = "Préviens quand Olm l'Invocateur commence à lancer Invocation d'un chasseur corrompu sauvage.",
@@ -127,6 +129,7 @@ L:RegisterTranslations("deDE", function() return {
 	spellshield_desc = "Warnung wenn Krosh Feuerhand sein Zauberschild bekommt",
 	spellshield_trigger = "bekommt 'Zauberschild'.",
 	spellshield_message = "Zauberschild auf Krosh!",
+	--spellshield_bar = "~Spell Shield Cooldown",
 
 	summon = "Wilder Teufelsj\195\164ger",
 	summon_desc = "Warnt wenn Olm der Beschw\195\182rer beginnt Wilden Teufelsj\195\164ger beschw\195\182ren zu wirken",
@@ -171,6 +174,7 @@ L:RegisterTranslations("koKR", function() return {
 	spellshield_desc = "크로쉬가 주문 보호막 효과를 얻었을 때 알립니다.",
 	spellshield_trigger = "크로쉬 파이어핸드|1이;가; 주문 보호막 효과를 얻었습니다%.$",
 	spellshield_message = "크로쉬 주문 보호막!",
+	--spellshield_bar = "~Spell Shield Cooldown",
 
 	summon = "사나운 지옥사냥개 소환",
 	summon_desc = "울름이 지옥사냥개 소환 시전 시 경고합니다.",
@@ -214,6 +218,7 @@ L:RegisterTranslations("zhTW", function() return {
 	spellshield_desc = "當克羅斯·火手施放法術護盾時發送警告",
 	spellshield_trigger = "克羅斯·火手獲得了法術護盾的效果。",
 	spellshield_message = "火手施放法術護盾 - 法師偷取！",
+	--spellshield_bar = "~Spell Shield Cooldown",
 
 	summon = "召喚警告",
 	summon_desc = "當召喚者歐莫開始施放召喚野生地獄獵犬時發送警告",
@@ -312,6 +317,7 @@ function mod:BigWigs_RecvSync(sync)
 		self:Message(L["shield_message"], "Important")
 	elseif sync == "KroshSpellShield" and self.db.profile.spellshield then
 		self:Message(L["spellshield_message"], "Attention", nil, "Info")
+		self:Bar(L["spellshield_bar"], 30, "Spell_MageArmor")
 	elseif sync == "OlmSummon" and self.db.profile.summon then
 		self:Message(L["summon_message"], "Attention", nil, "Long")
 		self:Bar(L["summon_bar"], 50, "Spell_Shadow_SummonFelGuard")
@@ -338,6 +344,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if self.db.profile.whirlwind then
 			self:Message(L["whirlwind_warning1"], "Attention")
 			self:Nextwhirldwind()
+		end
+		if self.db.profile.spellshield then
+			self:Bar(L["spellshield_bar"], 30, "Spell_MageArmor")
 		end
 	end
 end
