@@ -99,6 +99,34 @@ L:RegisterTranslations("koKR", function() return {
 	burstsay_message = "저! 대기 파열! 피하세요!!",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "Euer Widerstand ist sinnlos!",
+
+	grip = "Würgegriff der Legion",
+	grip_desc = "Warnt wer den Würgegriff der Legion hat.",
+	grip_trigger = "^([^%s]+) ([^%s]+) ist von Würgegriff der Legion betroffen%.$",
+	grip_you = "Würgegriff auf DIR!",
+	grip_other = "Würgegriff auf %s!",
+
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Plaziert ein Schlachtzug Symbol auf Spielern mit Würgegriff der Legion Debuff.",
+
+	fear = "Furcht",
+	fear_desc = "Furcht Timer.",
+	fear_message = "Furcht, nächster in ~ 43-63sek!",
+	fear_bar = "~Furcht Cooldown",
+	fear_warning = "Furcht Cooldown Vorbei - Neue Furcht Bald!",
+
+	burst = "Windbö",
+	burst_desc = "Warnt auf wen Windbö gezaubert wird.",
+	burst_other = "Windbö auf -%s-",
+	burst_you = "Windbö auf DIR!",
+
+	burstsay = "Windbö Sagen",
+	burstsay_desc = "Schreibe in /sagen wenn du das Ziel von Windbö bist, dies kann angrenzenden Membern mit aktivierten Sprechblasen helfen.",
+	burstsay_message = "Windbö auf mir!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
