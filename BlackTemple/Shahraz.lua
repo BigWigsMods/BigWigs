@@ -43,6 +43,15 @@ L:RegisterTranslations("frFR", function() return {
 	attraction_message = "Liaison : %s",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "Also... Geschäft oder Vergnügen?",
+
+	attraction = "Verhängnisvolle Affäre",
+	attraction_desc = "Warnt wer die Verhängnisvolle Affäre hat.",
+	attraction_trigger = "^([^%s]+) ([^%s]+) ist von Verhängnisvolle Affäre betroffen%.$",
+	attraction_message = "Affäre: %s",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
