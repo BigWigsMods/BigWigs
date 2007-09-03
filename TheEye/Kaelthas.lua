@@ -125,7 +125,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	gaze = "주시",
 	gaze_desc = "플레이어에게 탈라드레드의 주시를 경고합니다.",
-	gaze_trigger = "([^%s]+)|1을;를; 노려봅니다!$", -- check
+	gaze_trigger = "([^%s]+)|1을;를; 노려봅니다!$",
 	gaze_message = "%s 주시!",
 	gaze_bar = "~주시 대기 시간",
 
@@ -151,14 +151,14 @@ L:RegisterTranslations("koKR", function() return {
 
 	pyro = "불덩이 작렬",
 	pyro_desc = "불덩이 작렬에 대한 60초 타이머를 표시합니다.",
-	pyro_trigger = "%s|1이;가; 불덩이 작렬을 시전합니다!$", -- check
+	pyro_trigger = "%s|1이;가; 불덩이 작렬을 시전합니다!$",
 	pyro_warning = "약 5초 이내 불덩이 작렬!",
 	pyro_message = "불덩이 작열 시전!",
 
 	toy = "탱커에 원격조종 장난감",
 	toy_desc = "탱커가 원격조종 장난감에 걸릴 시 경고합니다.",
 	toy_message = "탱커에 장난감: %s",
-	toy_trigger = "원격조종 장난감", --afflicted by ... -- check
+	toy_trigger = "원격조종 장난감",
 
 	phase = "단계 경고",
 	phase_desc = "단계 변경에 대해 알립니다.",
@@ -186,11 +186,12 @@ L:RegisterTranslations("koKR", function() return {
 	mc_desc = "정신 지배에 걸린 사람을 알립니다.",
 	mc_message = "정신 지배: %s",
 
-	afflicted_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$", -- check
+	afflicted_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
 
 	revive_bar = "조언가 부활",
 	revive_warning = "5초 이내 조언가 부활!",
 
+	dead_message = "%s 처치! 루팅하세요!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
