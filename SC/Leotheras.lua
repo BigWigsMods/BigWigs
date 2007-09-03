@@ -32,7 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase_demon = "Demon Phase for 60sec",
 	phase_demonsoon = "Demon Phase in 5sec!",
 	phase_normalsoon = "Normal Phase in 5sec",
-	phase_normal = "Normal Phase! - Whirlwind Soon!",
+	phase_normal = "Normal Phase!",
 	demon_bar = "Demon Phase",
 	demon_nextbar = "Next Demon Phase",
 
@@ -73,7 +73,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase_demon = "60초간 악마 형상",
 	phase_demonsoon = "악마 형상 5초 전!",
 	phase_normalsoon = "보통 형상 5초 전",
-	phase_normal = "보통 형상! - 잠시 후 소용돌이!",
+	phase_normal = "보통 형상!",
 	demon_bar = "악마 형상",
 	demon_nextbar = "다음 악마 형상",
 
@@ -114,7 +114,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase_demon = "Phase démon pendant 60 sec.",
 	phase_demonsoon = "Phase démon dans 5 sec. !",
 	phase_normalsoon = "Phase normal dans 5 sec.",
-	phase_normal = "Phase normale ! - Tourbillon imminent !",
+	phase_normal = "Phase normale !",
 	demon_bar = "Phase démon",
 	demon_nextbar = "Prochaine phase démon",
 
@@ -246,6 +246,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:CancelScheduledEvent("bwwhirlwind")
 			self:TriggerEvent("BigWigs_StopBar", self, L["whirlwind_bar"])
 			self:TriggerEvent("BigWigs_StopBar", self, L["whirlwind_bar2"])
+			self:ScheduleEvent("BWAfterDemon", self.WhirlwindBar, 60, self)
 		end
 		if self.db.profile.whisper then
 			self:Bar(L["whisper_soon"], 23, "Spell_Shadow_ManaFeed")
