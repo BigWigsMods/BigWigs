@@ -167,6 +167,43 @@ L:RegisterTranslations("zhCN", function() return {
 	circle_bar = "~治疗之环 CD",
 } end )
 
+
+L:RegisterTranslations("deDE", function() return {
+	immune = "Immunitäts Warnung",
+	immune_desc = "Warnen wenn Malande immun gegen Zauber oder Nahkampfangriffe wird.",
+	immune_spell_trigger = "Lady Malande bekommt Segen der Zauberabwehr.",
+	immune_melee_trigger = "Lady Malande bekommt Segen des Schutzes.",
+	immune_message = "Malande: %s Immun für 15sec!",
+	immune_bar = "%s Immun!",
+
+	spell = "Zauber",
+	melee = "Nahkampf",
+
+	shield = "Reflektierendes Schild",
+	shield_desc = "Warnt wenn Malande Reflektierendes Schild bekommt.",
+	shield_trigger = "Lady Malande bekommt Reflektierendes Schild.",
+	shield_message = "Reflektierendes Schild auf Malande!",
+
+	poison = "Tödliches Gift",
+	poison_desc = "Warnt wenn Tödliches Gift auf Spielern ist .",
+	poison_trigger = "^([^%s]+) ([^%s]+) ist von Tödliches Gift betroffen%.$",
+	poison_other = "%s hat Tödliches Gift!",
+	poison_you = "Tödliches Gift on DIR!",
+
+	icon = "Schlachtgruppen Symbol",
+	icon_desc = "Plaziert ein Schlachtgruppen Symbol auf Spielern mit Tödliches Gift.",
+
+	circle = "Kreis der Heilung",
+	circle_desc = "Warnt wenn Malande anfängt Kreis der Heilung zu zaubern.",
+	circle_trigger = "Lady Malande beginnt Kreis der Heilung zu wirken.",
+	circle_message = "Zaubert Kreis der Heilung!",
+	circle_heal_trigger = "^Lady Malande 's Kreis der Heilung heilt",
+	circle_fail_trigger = "^([^%s]+) unterbricht Lady Malande's Kreis der Heilung%.$",
+	circle_heal_message = "Geheilt! - Nächster in ~20sek",
+	circle_fail_message = "Unterbrochen! - Nächster in ~12sek",
+	circle_bar = "~Kreis der Heilung Cooldown",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
