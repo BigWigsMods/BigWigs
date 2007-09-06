@@ -68,7 +68,7 @@ L:RegisterTranslations("enUS", function() return {
 	scream_trigger = "^Essence of Anger's Soul Scream ",
 	scream_bar = "~Soul Scream Cooldown",
 
-	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by ([^%s]+)%.$",
+	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by (.*).$",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
