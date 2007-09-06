@@ -75,7 +75,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	enrage_trigger = "Gardes, en position ! Nous avons de la visite…", -- à vérifier
+	enrage_trigger = "Gardes, en position ! Nous avons de la visite…",
 
 	totem = "Totem crache-feu",
 	totem_desc = "Préviens quand un Totem crache-feu est posé et indique son possesseur.",

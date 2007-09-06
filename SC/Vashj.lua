@@ -140,7 +140,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_soon_message = "Phase 2 imminente !",
 	phase2_message = "Phase 2, arrivée des adds !",
 	phase3_trigger = "Il faudrait peut-être vous mettre à l'abri.",
-	phase3_message = "Phase 3 - Enragée dans 4 min. !",
+	phase3_message = "Phase 3 - Enrager dans 4 min. !",
 
 	static = "Charge statique",
 	static_desc = "Préviens quand la Charge statique affecte un joueur.",

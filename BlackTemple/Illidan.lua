@@ -91,14 +91,14 @@ L:RegisterTranslations("frFR", function() return {
 
 	barrage = "Barrage noir",
 	barrage_desc = "Préviens quand un joueur subit les effets du Barrage noir.",
-	barrage_message = "%s est dans le barrage !",
+	barrage_message = "%s subit le Barrage !",
 	barrage_warn = "Barrage imminent !",
 	barrage_warn_bar = "~Prochain Barrage",
 	barrage_bar = "Barrage : %s",
 
 	eyeblast = "Energie oculaire",
 	eyeblast_desc = "Préviens quand l'Energie oculaire est incanté.",
-	eyeblast_trigger = "Soutenez le regard du Traître !", -- à vérifier
+	eyeblast_trigger = "Soutenez le regard du Traître !",
 	eyeblast_message = "Energie oculaire !",
 
 	shear = "Tonte", -- (tonte ? -_- )
@@ -122,9 +122,9 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_trigger = "Lame d'Azzinoth lance Invocation de la Larme d'Azzinoth.",
 	phase2_message = "Phase 2 - Lames d'Azzinoth !",
 	phase3_message = "Phase 3 !",
-	demon_phase_trigger = "Contemplez la puissance… du démon intérieur !", -- à vérifier
+	demon_phase_trigger = "Contemplez la puissance... du démon intérieur !", -- à vérifier
 	demon_phase_message = "Forme de démon !",
-	phase4_trigger = "C'est tout, mortels ? Est-ce là toute la fureur que vous pouvez évoquer ?", -- à vérifier
+	phase4_trigger = "C'est tout, mortels ? Est-ce là toute la fureur que vous pouvez évoquer ?",
 	phase4_soon_message = "Phase 4 imminente !",
 	phase4_message = "Phase 4 - Arrivée de Maiev !",
 

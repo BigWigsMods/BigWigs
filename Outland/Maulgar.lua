@@ -74,7 +74,7 @@ L:RegisterTranslations("frFR", function() return {
 	heal_desc = "Préviens quand Oeillaveugle le Voyant commence à lancer un soin.",
 	heal_trigger = "Oeillaveugle le Voyant commence à lancer Prière de soins.",
 	heal_message = "Oeillaveugle incante une Prière de soins !",
-	heal_bar = "Soin",
+	heal_bar = "Soin en cours",
 
 	shield = "Bouclier",
 	shield_desc = "Préviens quand Oeillaveugle le Voyant gagne Mot de pouvoir : Bouclier.",
@@ -85,7 +85,7 @@ L:RegisterTranslations("frFR", function() return {
 	spellshield_desc = "Préviens quand Krosh Brasemain gagne Bouclier anti-sort.",
 	spellshield_trigger = "gagne Bouclier anti%-sort%.$",
 	spellshield_message = "Bouclier anti-sort sur Krosh !",
-	--spellshield_bar = "Next Spell Shield",
+	spellshield_bar = "Prochain Bouclier",
 
 	summon = "Chasseur corrompu sauvage",
 	summon_desc = "Préviens quand Olm l'Invocateur commence à lancer Invocation d'un chasseur corrompu sauvage.",
