@@ -116,14 +116,14 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Douleur et souffrance, voilà tout ce qui vous attend !", -- à vérifier
 
 	enrage_start = "Enragée dans ~47 sec.",
-	enrage_trigger = "%s devient fou furieux !", -- à vérifier
+	enrage_trigger = "%s devient folle furieuse !", -- à vérifier
 	enrage_message = "Enragée pendant 15 sec. !",
 	enrage_bar = "<Enragée>",
 	enrage_next = "Fin de l'Enrager - Prochain dans ~32 sec.",
 	enrage_nextbar = "Prochain Enrager",
 	enrage_warning = "Enrager dans 5 sec. !",
 
-	desire_trigger  = "Vous pouvez avoir tout ce que vous désirez… en y mettant le prix.", -- à vérifier
+	desire_trigger  = "Vous pouvez avoir tout ce que vous désirez... en y mettant le prix.", -- à vérifier
 	desire_cot = "Shi shi rikk rukadare shi tichar kar x gular ", --Curse of Tongues trigger
 	desire_start = "Essence du désir - Zéro mana dans 160 sec.",
 	desire_bar = "Zéro Mana",

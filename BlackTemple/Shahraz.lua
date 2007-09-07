@@ -35,7 +35,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Alors… vous êtes en vacances ?", -- à vérifier
+	engage_trigger = "Alors... vous êtes en vacances ?", -- à vérifier
 
 	attraction = "Liaison fatale",
 	attraction_desc = "Préviens quand un joueur subit les effets de la Liaison fatale.",

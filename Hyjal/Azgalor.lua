@@ -41,8 +41,8 @@ L:RegisterTranslations("frFR", function() return {
 	doom_other = "Destin funeste sur %s",
 	doom_you = "Destin funeste sur VOUS !",
 
-	hoa = "Hurlement de terreur",
-	hoa_desc = "Préviens de l'arrivée des Hurlements de terreur.",
+	hoa = "Hurlement d'Azgalor",
+	hoa_desc = "Préviens de l'arrivée des Hurlements d'Azgalor.",
 	hoa_bar = "~Cooldown Hurlement",
 	hoa_message = "Silence de zone",
 	hoa_warning = "Silence de zone imminent !",
