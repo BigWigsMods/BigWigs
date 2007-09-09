@@ -27,6 +27,9 @@ local MCd = {}
 local UnitBuff = UnitBuff
 local UnitName = UnitName
 local UnitPowerType = UnitPowerType
+local fmt = string.format
+local pName = nil
+local stop = nil
 
 ----------------------------
 --      Localization      --
@@ -45,7 +48,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	gaze = "Gaze",
 	gaze_desc = "Warn when Thaladred focuses on a player.",
-	gaze_trigger = "sets eyes on ([^%s]+)!$",
+	gaze_trigger = "sets eyes on (%S+)!$",
 	gaze_message = "Gaze on %s!",
 	gaze_bar = "~Gaze cooldown",
 
@@ -393,12 +396,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFearSoon", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFear", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelMC2", 0)
-end
-
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if type(self[sync]) == "function" then
-		self[sync](self, rest, nick)
-	end
+	pName = UnitName("player")
 end
 
 ------------------------------
@@ -418,7 +416,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if player then
 		self:Bar(L["gaze_bar"], 9, "Spell_Shadow_EvilEye")
 		if self.db.profile.gaze then
-			self:Message(L["gaze_message"]:format(player), "Important")
+			self:Message(fmt(L["gaze_message"], player), "Important")
 		end
 		if self.db.profile.icon then
 			self:Icon(player)
@@ -489,7 +487,7 @@ function mod:Afflicted(msg)
 	if tPlayer and tType then
 		local id = nil
 		if tPlayer == L2["you"] and tType == L2["are"] then
-			tPlayer = UnitName("player")
+			tPlayer = pName
 			id = "player"
 		end
 		if tSpell == L["conflag_spell"] then
@@ -501,8 +499,9 @@ function mod:Afflicted(msg)
 		elseif tSpell == L["toy_trigger"] then
 			local num = GetNumRaidMembers()
 			for i = 1, num do
-				if UnitName("raid"..i) == tPlayer then
-					id = "raid"..i
+				local raid = fmt("%s%d", "raid", i)
+				if UnitName(raid) == tPlayer then
+					id = raid
 					break
 				end
 			end
@@ -524,65 +523,57 @@ function mod:Afflicted(msg)
 	end
 end
 
-function mod:KaelConflag(rest, nick)
-	if not rest or not self.db.profile.conflag then return end
-
-	local msg = L["conflag_message"]:format(rest)
-	self:Message(msg, "Attention")
-	self:Bar(msg, 10, "Spell_Fire_Incinerate")
-end
-
-function mod:KaelToy2(rest, nick)
-	if not rest or not self.db.profile.toy then return end
-
-	local msg = L["toy_message"]:format(rest)
-	self:Message(msg, "Attention")
-	self:Bar(msg, 60, "INV_Misc_Urn_01")
-end
-
-function mod:KaelFearSoon(rest, nick)
-	if not self.db.profile.fear then return end
-
-	self:Message(L["fear_soon_message"], "Urgent")
-end
-
-function mod:KaelFear(rest, nick)
-	if not self.db.profile.fear then return end
-
-	self:Message(L["fear_message"], "Attention")
-	self:Bar(L["fear_bar"], 30, "Spell_Shadow_PsychicScream")
-end
-
-function mod:KaelMC2(rest, nick)
-	MCd[rest] = true
-	self:ScheduleEvent("BWMindControlWarn", self.MCWarn, 1.2, self)
+function mod:BigWigs_RecvSync(sync, rest, nick)
+	if sync == "KaelConflag" and rest and self.db.profile.conflag then
+		local msg = fmt(L["conflag_message"], rest)
+		self:Message(msg, "Attention")
+		self:Bar(msg, 10, "Spell_Fire_Incinerate")
+	elseif sync == "KaelToy2" and rest and self.db.profile.toy then
+		local msg = fmt(L["toy_message"], rest)
+		self:Message(msg, "Attention")
+		self:Bar(msg, 60, "INV_Misc_Urn_01")
+	elseif sync == "KaelFearSoon" and self.db.profile.fear then
+		self:Message(L["fear_soon_message"], "Urgent")
+	elseif sync == "KaelFear" and self.db.profile.fear then
+		self:Message(L["fear_message"], "Attention")
+		self:Bar(L["fear_bar"], 30, "Spell_Shadow_PsychicScream")
+	elseif sync == "KaelMC2" and rest and not stop then
+		MCd[rest] = true
+		self:ScheduleEvent("BWMindControlWarn", self.MCWarn, 0.3, self)
+	end
 end
 
 do
 	local die = UNITDIESOTHER
 	local dead = L["dead_message"]
 	function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
-		if msg == die:format(axe) then
-			self:Message(dead:format(axe), "Attention")
-		elseif msg == die:format(mace) then
-			self:Message(dead:format(mace), "Attention")
-		elseif msg == die:format(dagger) then
-			self:Message(dead:format(dagger), "Attention")
-		elseif msg == die:format(staff) then
-			self:Message(dead:format(staff), "Attention")
-		elseif msg == die:format(sword) then
-			self:Message(dead:format(sword), "Attention")
-		elseif msg == die:format(bow) then
-			self:Message(dead:format(bow), "Attention")
-		elseif msg == die:format(shield) then
-			self:Message(dead:format(shield), "Attention")
+		if msg == fmt(die, axe) then
+			self:Message(fmt(dead, axe), "Attention")
+		elseif msg == fmt(die, mace) then
+			self:Message(fmt(dead, mace), "Attention")
+		elseif msg == fmt(die, dagger) then
+			self:Message(fmt(dead, dagger), "Attention")
+		elseif msg == fmt(die, staff) then
+			self:Message(fmt(dead, staff), "Attention")
+		elseif msg == fmt(die, sword) then
+			self:Message(fmt(dead, sword), "Attention")
+		elseif msg == fmt(die, bow) then
+			self:Message(fmt(dead, bow), "Attention")
+		elseif msg == fmt(die, shield) then
+			self:Message(fmt(dead, shield), "Attention")
 		else
 			self:GenericBossDeath(msg)
 		end
 	end
 end
 
+local function nilStop()
+	stop = nil
+	for k in pairs(MCd) do MCd[k] = nil end
+end
+
 function mod:MCWarn()
+	if stop then return end
 	if self.db.profile.mc then
 		local msg = nil
 		for k in pairs(MCd) do
@@ -592,7 +583,8 @@ function mod:MCWarn()
 				msg = msg .. ", " .. k
 			end
 		end
-		self:Message(L["mc_message"]:format(msg), "Important", nil, "Alert")
+		self:Message(fmt(L["mc_message"], msg), "Important", nil, "Alert")
 	end
-	for k in pairs(MCd) do MCd[k] = nil end
+	stop = true
+	self:ScheduleEvent("BWShahrazNilStop", nilStop, 5)
 end

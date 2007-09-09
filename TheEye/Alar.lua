@@ -10,6 +10,8 @@ local started = nil
 local prior = nil
 local fireball = nil
 local occured = true
+local pName = nil
+local fmt = string.format
 
 ----------------------------
 --      Localization      --
@@ -33,7 +35,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	armor = "Melt Armor",
 	armor_desc = "Warn who gets Melt Armor.",
-	armor_trigger = "^([^%s]+) ([^%s]+) afflicted by Melt Armor%.$",
+	armor_trigger = "^(%S+) (%S+) afflicted by Melt Armor%.$",
 	armor_other = "Melt Armor: %s",
 	armor_you = "Melt Armor on YOU!",
 
@@ -141,6 +143,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	started = nil
+	pName = UnitName("player")
 end
 
 ------------------------------
@@ -160,11 +163,11 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		self:Message(L["engage_message"]:format(boss), "Attention")
+		self:Message(fmt(L["engage_message"], boss), "Attention")
 		self:ScheduleRepeatingEvent("BWAlarTargetSeek", self.AlarCheck, 1, self)
 		self:ScheduleEvent("BWAlarNilOccured", nilOccured, 25) --this is here to prevent target problems
 	elseif sync == "AlArArmor" and rest and self.db.profile.armor then
-		local other = L["armor_other"]:format(rest)
+		local other = fmt(L["armor_other"], rest)
 		if rest == UnitName("player") then
 			self:Message(L["armor_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
@@ -182,13 +185,13 @@ function mod:AlarCheck()
 	if not self:Scan() and not occured then
 		occured = true
 		if not prior and self.db.profile.enrage then
-			self:DelayedMessage(320, L2["enrage_min"]:format(5), "Positive")
-			self:DelayedMessage(440, L2["enrage_min"]:format(3), "Positive")
-			self:DelayedMessage(560, L2["enrage_min"]:format(1), "Positive")
-			self:DelayedMessage(590, L2["enrage_sec"]:format(30), "Positive")
-			self:DelayedMessage(610, L2["enrage_sec"]:format(10), "Urgent")
-			self:DelayedMessage(615, L2["enrage_sec"]:format(5), "Urgent")
-			self:DelayedMessage(620, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:DelayedMessage(320, fmt(L2["enrage_min"], 5), "Positive")
+			self:DelayedMessage(440, fmt(L2["enrage_min"], 3), "Positive")
+			self:DelayedMessage(560, fmt(L2["enrage_min"], 1), "Positive")
+			self:DelayedMessage(590, fmt(L2["enrage_sec"], 30), "Positive")
+			self:DelayedMessage(610, fmt(L2["enrage_sec"], 10), "Urgent")
+			self:DelayedMessage(615, fmt(L2["enrage_sec"], 5), "Urgent")
+			self:DelayedMessage(620, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 620, "Spell_Shadow_UnholyFrenzy")
 			prior = true
 		end
@@ -210,7 +213,7 @@ function mod:DebuffEvent(msg)
 	local aplayer, atype = select(3, msg:find(L["armor_trigger"]))
 	if aplayer and atype then
 		if aplayer == L2["you"] and atype == L2["are"] then
-			aplayer = UnitName("player")
+			aplayer = pName
 		end
 		self:Sync("AlArArmor "..aplayer)
 	end

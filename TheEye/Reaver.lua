@@ -11,6 +11,7 @@ local UnitName = UnitName
 local UnitExists = UnitExists
 local UnitPowerType = UnitPowerType
 local UnitBuff = UnitBuff
+local fmt = string.format
 
 ----------------------------
 --      Localization      --
@@ -204,13 +205,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:ScheduleRepeatingEvent("BWReaverToTScan", self.OrbCheck, 0.2, self) --how often to scan the target, 0.2 seconds
 		end
 		if self.db.profile.enrage then
-			self:Message(L2["enrage_start"]:format(boss, 10), "Important")
-			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
-			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
-			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
-			self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
-			self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
-			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Message(fmt(L2["enrage_start"], boss, 10), "Important")
+			self:DelayedMessage(300, fmt(L2["enrage_min"], 5), "Positive")
+			self:DelayedMessage(420, fmt(L2["enrage_min"], 3), "Positive")
+			self:DelayedMessage(540, fmt(L2["enrage_min"], 1), "Positive")
+			self:DelayedMessage(570, fmt(L2["enrage_sec"], 30), "Positive")
+			self:DelayedMessage(590, fmt(L2["enrage_sec"], 10), "Urgent")
+			self:DelayedMessage(600, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
 	elseif self.db.profile.pounding and (msg == L["pounding_trigger1"] or msg == L["pounding_trigger2"]) then
@@ -240,9 +241,10 @@ function mod:OrbCheck()
 		--if Void Reaver isn't your target, scan raid members targets, hopefully one of them has him targeted and we can get hes target from there
 		local num = GetNumRaidMembers()
 		for i = 1, num do
-			if UnitName("raid"..i.."target") == boss then
-				target = UnitName("raid"..i.."targettarget")
-				id = "raid"..i.."targettarget"
+			local tt = fmt("%s%d%s", "raid", i, "targettarget")
+			if UnitName(fmt("%s%d%s", "raid", i, "target")) == boss then
+				target = UnitName(tt)
+				id = tt
 				break
 			end
 		end
@@ -271,14 +273,14 @@ end
 function mod:Result(target)
 	if target == UnitName("player") and self.db.profile.orbyou then
 		self:Message(L["orb_you"], "Personal", true, "Long")
-		self:Message(L["orb_other"]:format(target), "Attention", nil, nil, true)
+		self:Message(fmt(L["orb_other"], target), "Attention", nil, nil, true)
 
 		--this is handy for player with speech bubbles enabled to see if nearby players are being hit and run away from them
 		if self.db.profile.orbsay then
 			SendChatMessage(L["orb_say"], "SAY")
 		end
 	elseif self.db.profile.orbother then
-		self:Message(L["orb_other"]:format(target), "Attention")
+		self:Message(fmt(L["orb_other"], target), "Attention")
 	end
 	if self.db.profile.icon then 
 		self:Icon(target)

@@ -256,17 +256,19 @@ function BigWigsLoD:ZoneChanged()
 end
 
 function BigWigsLoD:CheckRoster()
-	if not grouped and GetNumRaidMembers() > 0 then
+	local raid = GetNumRaidMembers()
+	local party = GetNumPartyMembers()
+	if not grouped and raid > 0 then
 		grouped = BWRAID
 		self:TriggerEvent("BigWigs_JoinedGroup", grouped)
-	elseif not grouped and GetNumPartyMembers() > 0 then
+	elseif not grouped and party > 0 then
 		grouped = BWPARTY
 		self:TriggerEvent("BigWigs_JoinedGroup", grouped)
 	elseif grouped then
-		if grouped == BWPARTY and GetNumRaidMembers() > 0 then
+		if grouped == BWPARTY and raid > 0 then
 			grouped = BWRAID
 			self:TriggerEvent("BigWigs_JoinedGroup", grouped)
-		elseif GetNumRaidMembers() == 0 and GetNumPartyMembers() == 0 then
+		elseif raid == 0 and party == 0 then
 			grouped = nil
 			self:TriggerEvent("BigWigs_LeftGroup")
 		end

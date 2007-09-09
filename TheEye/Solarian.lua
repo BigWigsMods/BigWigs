@@ -7,7 +7,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local p2 = nil
 
-local pName = UnitName("player")
+local pName = nil
+local UnitName = UnitName
+local fmt = string.format
 
 ----------------------------
 --      Localization      --
@@ -27,7 +29,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	wrath = "Wrath Cast",
 	wrath_desc = "Warn when Wrath is being cast, and the current target.",
-	wrath_trigger = "^([^%s]+) ([^%s]+) afflicted by Wrath of the Astromancer%.$",
+	wrath_trigger = "^(%S+) (%S+) afflicted by Wrath of the Astromancer%.$",
 	wrath_alert = "Casting Wrath! - Target: %s",
 	wrath_alert_trigger = "begins to cast Wrath of the Astromancer%.$",
 
@@ -175,14 +177,14 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "debuff")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "debuff")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "debuff")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "WrathAff")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "WrathAff")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "WrathAff")
 
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWrath", 600)
 	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWCast", 5)
+	pName = UnitName("player")
 end
 
 ------------------------------
@@ -215,7 +217,7 @@ function mod:UNIT_HEALTH(msg)
 	end
 end
 
-function mod:debuff(msg)
+function mod:WrathAff(msg)
 	local wplayer, wtype = select(3, msg:find(L["wrath_trigger"]))
 	if wplayer and wtype then
 		if wplayer == L2["you"] and wtype == L2["are"] then
@@ -270,13 +272,13 @@ function mod:WrathCheck()
 	else
 		local num = GetNumRaidMembers()
 		for i = 1, num do
-			if UnitName("raid"..i.."target") == boss then
-				target = UnitName("raid"..i.."targettarget")
+			if UnitName(fmt("%s%d%s", "raid", i, "target")) == boss then
+				target = UnitName(fmt("%s%d%s", "raid", i, "targettarget"))
 				break
 			end
 		end
 	end
 	if target then
-		self:Message(L["wrath_alert"]:format(target), "Attention")
+		self:Message(fmt(L["wrath_alert"], target), "Attention")
 	end
 end

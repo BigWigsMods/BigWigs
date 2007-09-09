@@ -9,6 +9,7 @@ local UnitExists = UnitExists
 local UnitAffectingCombat = UnitAffectingCombat
 local UnitName = UnitName
 local count = 1
+local fmt = string.format
 
 -- Provide some common translations here, so we don't have to replicate it in
 -- every freaking module.
@@ -116,7 +117,8 @@ function BigWigs.modulePrototype:IsBossModule()
 end
 
 function BigWigs.modulePrototype:GenericBossDeath(msg)
-	if msg == UNITDIESOTHER:format(self:ToString()) then
+	local die = UNITDIESOTHER
+	if msg == fmt(die, self:ToString()) then
 		self:Sync("BossDeath " .. self:ToString())
 	end
 end
@@ -159,14 +161,14 @@ function BigWigs.modulePrototype:Scan()
 	if num == 0 then
 		num = GetNumPartyMembers()
 		for i = 1, num do
-			local partyUnit = "party" .. i .. "target"
+			local partyUnit = fmt("%s%d%s", "party", i, "target")
 			if UnitExists(partyUnit) and UnitAffectingCombat(partyUnit) and self.scanTable[UnitName(partyUnit)] then
 				return true
 			end
 		end
 	else
 		for i = 1, num do
-			local raidUnit = "raid" .. i .. "target"
+			local raidUnit = fmt("%s%d%s", "raid", i, "target")
 			if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) and self.scanTable[UnitName(raidUnit)] then
 				return true
 			end
@@ -234,7 +236,7 @@ end
 
 function BigWigs.modulePrototype:DelayedMessage(delay, ...)
 	if count == 100 then count = 1 end
-	local id = "BigWigs-DelayedMessage-" .. count
+	local id = fmt("%s%d", "BigWigs-DelayedMessage-", count)
 	count = count + 1
 	self:ScheduleEvent(id, "BigWigs_Message", delay, ...)
 	return id
