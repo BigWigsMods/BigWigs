@@ -12,6 +12,7 @@ BB = nil
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+local death = AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"]:format(boss)
 
 local pName = nil
 
@@ -231,7 +232,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE", "Interrupt") -- might not be needed?
 	self:RegisterEvent("CHAT_MSG_SPELL_HOSTILEPLAYER_DAMAGE", "Interrupt")
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalSpell", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalMelee", 5)
@@ -270,6 +271,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "MalCFail" and self.db.profile.circle then
 		self:Message(L["circle_fail_message"], "Urgent")
 		self:Bar(L["circle_bar"], 12, "Spell_Holy_CircleOfRenewal")
+	elseif sync == "TICWin" and self.db.profile.bosskill then
+		self:Message(death, "Bosskill", nil, "Victory")
+		BigWigs:ToggleModuleActive(self, false)
 	elseif sync == "CouncilPoison" and rest and self.db.profile.poison then
 		local other = L["poison_other"]:format(rest)
 		if rest == pName then
@@ -281,6 +285,13 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
+	end
+end
+
+function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+	local die = UNITDIESOTHER
+	if msg == die:format(malande) then
+		self:Sync("TICWin")
 	end
 end
 
