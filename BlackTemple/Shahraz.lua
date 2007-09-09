@@ -21,7 +21,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	attraction = "Fatal Attraction",
 	attraction_desc = "Warn who has Fatal Attraction.",
-	attraction_trigger = "^([^%s]+) ([^%s]+) afflicted by Fatal Attraction%.$",
+	attraction_trigger = "^(%S+) (%S+) afflicted by Fatal Attraction%.$",
 	attraction_message = "Attraction: %s",
 } end )
 
@@ -88,7 +88,7 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "ShaAttra" and rest then
 		attracted[rest] = true
-		self:ScheduleEvent("BWAttractionWarn", self.AttractionWarn, 0.5, self)
+		self:ScheduleEvent("BWAttractionWarn", self.AttractionWarn, 0.3, self)
 	end
 end
 
@@ -97,13 +97,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		for k in pairs(attracted) do attracted[k] = nil end
 		if self.db.profile.enrage then
 			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
-			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
-			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
-			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
-			self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
-			self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
-			self:DelayedMessage(595, L2["enrage_sec"]:format(5), "Urgent")
-			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			--Don't use :DelayedMessage as we get mutiple messages on rare occasions :CheckForWipe doesn't kick in due to the enounter style
+			self:ScheduleEvent("en1", "BigWigs_Message", 300, L2["enrage_min"]:format(5), "Positive")
+			self:ScheduleEvent("en2", "BigWigs_Message", 420, L2["enrage_min"]:format(3), "Positive")
+			self:ScheduleEvent("en3", "BigWigs_Message", 540, L2["enrage_min"]:format(1), "Positive")
+			self:ScheduleEvent("en4", "BigWigs_Message", 570, L2["enrage_sec"]:format(30), "Positive")
+			self:ScheduleEvent("en5", "BigWigs_Message", 590, L2["enrage_sec"]:format(10), "Urgent")
+			self:ScheduleEvent("en6", "BigWigs_Message", 595, L2["enrage_sec"]:format(5), "Urgent")
+			self:ScheduleEvent("en7", "BigWigs_Message", 600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
 	end
@@ -120,7 +121,7 @@ function mod:FatalAtt(msg)
 end
 
 local function nilStop()
-	stop = nil
+	stop = nil --allow syncs
 	for k in pairs(attracted) do attracted[k] = nil end
 end
 
@@ -138,5 +139,7 @@ function mod:AttractionWarn()
 		self:Message(L["attraction_message"]:format(msg), "Important", nil, "Alert")
 	end
 	stop = true
-	self:ScheduleEvent("BWShahrazNilStop", nilStop, 4)
+	--start accepting syncs again after 6 seconds, by blocking syncs we can
+	--warn earlier without caring about latency displaying messages twice
+	self:ScheduleEvent("BWShahrazNilStop", nilStop, 6)
 end
