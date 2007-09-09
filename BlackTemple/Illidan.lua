@@ -188,7 +188,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase3_message = "3 단계 시작!",
 	demon_phase_trigger = "내 안에 깃든... 악마의 힘을 보여주마!",
 	demon_phase_message = "악마 변신! 전원 거리 유지",
-	--demon_bar = "Next Normal Phase",
+	demon_bar = "다음 일반 단계",
 	phase4_trigger = "나만큼 널 증오하는 이가 또 있을까? 일리단! 네게 받아야 할 빚이 남았다!",
 	phase4_soon_message = "잠시 후 4 단계!",
 	phase4_message = "4 단계 - 마이에브 등장!",
