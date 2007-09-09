@@ -125,7 +125,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase3_message = "Phase 3 !",
 	demon_phase_trigger = "Contemplez la puissance... du démon intérieur !", -- à vérifier
 	demon_phase_message = "Forme de démon !",
-	--demon_bar = "Next Normal Phase",
+	demon_bar = "Prochaine phase normale",
 	phase4_trigger = "C'est tout, mortels ? Est-ce là toute la fureur que vous pouvez évoquer ?",
 	phase4_soon_message = "Phase 4 imminente !",
 	phase4_message = "Phase 4 - Arrivée de Maiev !",

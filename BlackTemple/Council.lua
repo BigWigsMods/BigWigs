@@ -60,7 +60,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	immune = "Immunité",
-	immune_desc = "Préviens quand Malande devient insernsible aux sorts ou aux attaques de melée.",
+	immune_desc = "Préviens quand Malande devient insensible aux sorts ou aux attaques de melée.",
 	immune_spell_trigger = "Dame Malande gagne Bénédiction de protection contre les sorts.",
 	immune_melee_trigger = "Dame Malande gagne Bénédiction de protection.",
 	immune_message = "Malande : insensible %s pendant 15 sec. !",
