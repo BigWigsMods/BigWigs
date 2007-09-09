@@ -62,6 +62,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase3_message = "Phase 3!",
 	demon_phase_trigger = "Behold the power... of the demon within!",
 	demon_phase_message = "Demon Form!",
+	demon_bar = "Next Normal Phase",
 	phase4_trigger = "Is this it, mortals? Is this all the fury you can muster?",
 	phase4_soon_message = "Phase 4 soon!",
 	phase4_message = "Phase 4 - Maiev Incoming!",
@@ -124,6 +125,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase3_message = "Phase 3 !",
 	demon_phase_trigger = "Contemplez la puissance... du démon intérieur !", -- à vérifier
 	demon_phase_message = "Forme de démon !",
+	--demon_bar = "Next Normal Phase",
 	phase4_trigger = "C'est tout, mortels ? Est-ce là toute la fureur que vous pouvez évoquer ?",
 	phase4_soon_message = "Phase 4 imminente !",
 	phase4_message = "Phase 4 - Arrivée de Maiev !",
@@ -186,6 +188,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase3_message = "3 단계 시작!",
 	demon_phase_trigger = "내 안에 깃든... 악마의 힘을 보여주마!",
 	demon_phase_message = "악마 변신! 전원 거리 유지",
+	--demon_bar = "Next Normal Phase",
 	phase4_trigger = "나만큼 널 증오하는 이가 또 있을까? 일리단! 네게 받아야 할 빚이 남았다!",
 	phase4_soon_message = "잠시 후 4 단계!",
 	phase4_message = "4 단계 - 마이에브 등장!",
@@ -377,6 +380,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		if self.db.profile.phase then
 			self:Message(L["demon_phase_message"], "Important", nil, "Alarm")
+			self:Bar(L["demon_bar"], 65, "Spell_Shadow_Metamorphosis")
 		end
 		if self.db.profile.flameburst then
 			self:DelayedMessage(15, L["flameburst_cooldown_warn"], "Positive")
