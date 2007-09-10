@@ -586,5 +586,5 @@ function mod:MCWarn()
 		self:Message(fmt(L["mc_message"], msg), "Important", nil, "Alert")
 	end
 	stop = true
-	self:ScheduleEvent("BWShahrazNilStop", nilStop, 5)
+	self:ScheduleEvent("BWKaelthasNilStop", nilStop, 5)
 end
