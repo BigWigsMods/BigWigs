@@ -26,7 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 	charr_message = "Charred Earth on YOU!",
 
 	phase = "Phases",
-	phase_desc = ("Warn when %s switches between phases."):format(boss),
+	phase_desc = "Warn when Nightbane switches between phases.",
 	airphase_trigger = "Miserable vermin. I shall exterminate you from the air!",
 	landphase_trigger1 = "Enough! I shall land and crush you myself!",
 	landphase_trigger2 = "Insects! Let me show you my strength up close!",
@@ -52,7 +52,7 @@ L:RegisterTranslations("deDE", function() return {
 	charr_desc = "Warnt wenn du in der Verbrannten Erde stehst",
 
 	phase = "Phasen",
-	phase_desc = ("Warnt wenn %s die Phasen wechelt"):format(boss),
+	phase_desc = "Warnt wenn Schrecken der Nacht die Phasen wechelt",
 
 	engage = "Engage",
 	engage_desc = "Engage alert",
@@ -95,7 +95,7 @@ L:RegisterTranslations("frFR", function() return {
 	charr_message = "Terre calcinée sur VOUS !",
 
 	phase = "Phases",
-	phase_desc = ("Préviens quand %s passe d'une phase à l'autre."):format(boss),
+	phase_desc = "Préviens quand Plaie-de-nuit passe d'une phase à l'autre.",
 	airphase_trigger = "Misérable vermine. Je vais vous exterminer des airs !",
 	landphase_trigger1 = "Assez ! Je vais atterrir et vous écraser moi-même !",
 	landphase_trigger2 = "Insectes ! Je vais vous montrer de quel bois je me chauffe !",
@@ -128,7 +128,7 @@ L:RegisterTranslations("koKR", function() return {
 	charr_message = "당신에 불타버린 대지!",
 
 	phase = "단계",
-	phase_desc = ("%s의 단계 변경 시 알립니다."):format(boss),
+	phase_desc = "파멸의 어둠의 단계 변경 시 알립니다.",
 	airphase_trigger = "이 더러운 기생충들, 내가 하늘에서 너희의 씨를 말리리라!",
 	landphase_trigger1 = "그만! 내 친히 내려가서 너희를 짓이겨주마!",
 	landphase_trigger2 = "하루살이 같은 놈들! 나의 힘을 똑똑히 보여주겠다!",
@@ -161,7 +161,7 @@ L:RegisterTranslations("zhTW", function() return {
 	charr_message = "你中了灼燒大地",
 
 	phase = "階段警告",
-	phase_desc = ("當 %s 進入下一階段時發送警告"):format(boss),
+	phase_desc = "當 夜禍 進入下一階段時發送警告",
 	airphase_trigger = "悲慘的害蟲。我將讓你消失在空氣中!",
 	landphase_trigger1 = "夠了!我要親自挑戰你!",
 	landphase_trigger2 = "昆蟲!給你們近距離嚐嚐我的厲害!",

@@ -12,6 +12,7 @@ local started
 local UnitBuff = UnitBuff
 local UnitName = UnitName
 local UnitPowerType = UnitPowerType
+local fmt = string.format
 
 ----------------------------
 --      Localization      --
@@ -30,7 +31,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	curse = "Cursed Tanks",
 	curse_desc = "Warn when a warrior or druid is cursed by Intangible Presence.",
-	curse_trigger = "^([^%s]+) ([^%s]+) afflicted by Intangible Presence%.$",
+	curse_trigger = "^(%S+) (%S+) afflicted by Intangible Presence%.$",
 	curse_message = "Tank Cursed - %s",
 } end)
 
@@ -167,13 +168,13 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.phase and msg == L["phase3_trigger"] then
-		self:Message(L["phase3_message"]:format(boss), "Important")
+		self:Message(fmt(L["phase3_message"], boss), "Important")
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if self.db.profile.phase and msg == L["phase2_trigger"] then
-		self:Message(L["phase2_message"]:format(horse), "Urgent")
+		self:Message(fmt(L["phase2_message"], horse), "Urgent")
 	end
 end
 
@@ -184,7 +185,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.phase then
-			self:Message(L["phase1_message"]:format(horse), "Attention")
+			self:Message(fmt(L["phase1_message"], horse), "Attention")
 		end
 	end
 end
@@ -199,8 +200,9 @@ function mod:CurseEvent(msg)
 		else
 			local num = GetNumRaidMembers()
 			for i = 1, num do
-				if UnitName("raid"..i) == cplayer then
-					id = "raid"..i
+				local raid = fmt("%s%d", "raid", i)
+				if UnitName(raid) == cplayer then
+					id = raid
 					break
 				end
 			end
@@ -217,7 +219,7 @@ function mod:CurseEvent(msg)
 			Index = Index + 1
 		end
 		if UnitPowerType(id) == 1 or paladin then
-			self:Message(L["curse_message"]:format(cplayer), "Attention")
+			self:Message(fmt(L["curse_message"], cplayer), "Attention")
 		end
 	end
 end

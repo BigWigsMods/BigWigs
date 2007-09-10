@@ -8,6 +8,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsRaidIcon")
 local lastplayer = nil
 
 local RL = nil
+local UnitName = UnitName
+local fmt = string.format
+local SetIcon = SetRaidTargetIcon
 
 ----------------------------
 --      Localization      --
@@ -199,7 +202,7 @@ plugin.consoleOptions = {
 		Star = {
 			type = "toggle",
 			name = L["Star"],
-			desc = L["Use the %q icon when automatically placing raid icons for boss abilities."]:format(L["Star"]),
+			desc = fmt(L["Use the %q icon when automatically placing raid icons for boss abilities."], L["Star"]),
 			isRadio = true,
 			get = get,
 			set = set,
@@ -210,7 +213,7 @@ plugin.consoleOptions = {
 		Circle = {
 			type = "toggle",
 			name = L["Circle"],
-			desc = L["Use the %q icon when automatically placing raid icons for boss abilities."]:format(L["Circle"]),
+			desc = fmt(L["Use the %q icon when automatically placing raid icons for boss abilities."], L["Circle"]),
 			isRadio = true,
 			get = get,
 			set = set,
@@ -221,7 +224,7 @@ plugin.consoleOptions = {
 		Diamond = {
 			type = "toggle",
 			name = L["Diamond"],
-			desc = L["Use the %q icon when automatically placing raid icons for boss abilities."]:format(L["Diamond"]),
+			desc = fmt(L["Use the %q icon when automatically placing raid icons for boss abilities."], L["Diamond"]),
 			isRadio = true,
 			get = get,
 			set = set,
@@ -232,7 +235,7 @@ plugin.consoleOptions = {
 		Triangle = {
 			type = "toggle",
 			name = L["Triangle"],
-			desc = L["Use the %q icon when automatically placing raid icons for boss abilities."]:format(L["Triangle"]),
+			desc = fmt(L["Use the %q icon when automatically placing raid icons for boss abilities."], L["Triangle"]),
 			isRadio = true,
 			get = get,
 			set = set,
@@ -243,7 +246,7 @@ plugin.consoleOptions = {
 		Moon = {
 			type = "toggle",
 			name = L["Moon"],
-			desc = L["Use the %q icon when automatically placing raid icons for boss abilities."]:format(L["Moon"]),
+			desc = fmt(L["Use the %q icon when automatically placing raid icons for boss abilities."], L["Moon"]),
 			isRadio = true,
 			get = get,
 			set = set,
@@ -254,7 +257,7 @@ plugin.consoleOptions = {
 		Square = {
 			type = "toggle",
 			name = L["Square"],
-			desc = L["Use the %q icon when automatically placing raid icons for boss abilities."]:format(L["Square"]),
+			desc = fmt(L["Use the %q icon when automatically placing raid icons for boss abilities."], L["Square"]),
 			isRadio = true,
 			get = get,
 			set = set,
@@ -265,7 +268,7 @@ plugin.consoleOptions = {
 		Cross = {
 			type = "toggle",
 			name = L["Cross"],
-			desc = L["Use the %q icon when automatically placing raid icons for boss abilities."]:format(L["Cross"]),
+			desc = fmt(L["Use the %q icon when automatically placing raid icons for boss abilities."], L["Cross"]),
 			isRadio = true,
 			get = get,
 			set = set,
@@ -276,7 +279,7 @@ plugin.consoleOptions = {
 		Skull = {
 			type = "toggle",
 			name = L["Skull"],
-			desc = L["Use the %q icon when automatically placing raid icons for boss abilities."]:format(L["Skull"]),
+			desc = fmt(L["Use the %q icon when automatically placing raid icons for boss abilities."], L["Skull"]),
 			isRadio = true,
 			get = get,
 			set = set,
@@ -307,18 +310,20 @@ end
 function plugin:BigWigs_SetRaidIcon(player)
 	if not player or not self.db.profile.place then return end
 	local icon = self.db.profile.icon or 8
+	local GetIndex = GetRaidTargetIndex
 	if RL then
 		local id = RL:GetUnitIDFromName(player)
-		if id and not GetRaidTargetIndex(id) then
-			SetRaidTargetIcon(id, icon)
+		if id and not GetIndex(id) then
+			SetIcon(id, icon)
 			lastplayer = player
 		end
 	else
 		local num = GetNumRaidMembers()
 		for i = 1, num do
-			if UnitName("raid"..i) == player then
-				if not GetRaidTargetIndex("raid"..i) then
-					SetRaidTargetIcon("raid"..i, icon)
+			local raid = fmt("%s%d", "raid", i)
+			if UnitName(raid) == player then
+				if not GetIndex(raid) then
+					SetIcon(raid, icon)
 					lastplayer = player
 				end
 			end
@@ -331,13 +336,14 @@ function plugin:BigWigs_RemoveRaidIcon()
 	if RL then
 		local id = RL:GetUnitIDFromName(lastplayer)
 		if id then
-			SetRaidTargetIcon(id, 0)
+			SetIcon(id, 0)
 		end
 	else
 		local num = GetNumRaidMembers()
 		for i = 1, num do
-			if UnitName("raid"..i) == lastplayer then
-				SetRaidTargetIcon("raid"..i, 0)
+			local raid = fmt("%s%d", "raid", i)
+			if UnitName(raid) == lastplayer then
+				SetIcon(raid, 0)
 			end
 		end
 	end

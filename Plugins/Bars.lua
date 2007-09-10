@@ -18,6 +18,7 @@ local emphasizeAnchor = nil
 
 local DURATION = 0.5
 local _abs, _cos, _pi = math.abs, math.cos, math.pi
+local fmt = string.format
 
 local new, del
 do
@@ -654,14 +655,14 @@ function plugin:BigWigs_StartBar(module, text, time, icon, otherc, ...)
 			if db.emphasizeMove then
 				if not emphasizeTimers[module] then emphasizeTimers[module] = {} end
 				if emphasizeTimers[module][id] then self:CancelScheduledEvent(emphasizeTimers[module][id]) end
-				emphasizeTimers[module][id] = "BigWigs-EmphasizeBar-" .. count
+				emphasizeTimers[module][id] = fmt("%s%d", "BigWigs-EmphasizeBar-", count)
 				count = count + 1
 				self:ScheduleEvent(emphasizeTimers[module][id], self.EmphasizeBar, time - 10, self, module, id)
 			end
 			if db.emphasizeFlash then
 				if not flashTimers[module] then flashTimers[module] = {} end
 				if flashTimers[module][id] then self:CancelScheduledEvent(flashTimers[module][id]) end
-				flashTimers[module][id] = "BigWigs-FlashBar-" .. count
+				flashTimers[module][id] = fmt("%s%d", "BigWigs-FlashBar-", count)
 				count = count + 1
 				self:ScheduleEvent(flashTimers[module][id], self.FlashBar, time - 10, self, module, id)
 			end

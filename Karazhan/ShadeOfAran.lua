@@ -27,7 +27,7 @@ L:RegisterTranslations("enUS", function() return {
 	adds_bar = "Elementals despawn",
 
 	drink = "Drinking",
-	drink_desc = ("Warn when %s starts to drink."):format(boss),
+	drink_desc = "Warn when Aran starts to drink.",
 	drink_trigger = "Surely you wouldn't deny an old man a replenishing drink? No, no, I thought not.",
 	drink_warning = "Low Mana - Drinking Soon!",
 	drink_message = "Drinking - AoE Polymorph!",
@@ -61,7 +61,7 @@ L:RegisterTranslations("deDE", function() return {
 	adds_desc = "Warnt vor den Wasserelementaren bei 40%.",
 
 	drink = "Trinken",
-	drink_desc = ("Warnt, wenn %s zu trinken beginnt."):format(boss),
+	drink_desc = "Warnt, wenn Arans Schemen zu trinken beginnt.",
 
 	blizzard = "Blizzard",
 	blizzard_desc = "Warnt vor dem Blizzard.",
@@ -118,7 +118,7 @@ L:RegisterTranslations("frFR", function() return {
 	adds_bar = "Fin des élémentaires",
 
 	drink = "Boisson",
-	drink_desc = ("Préviens quand %s commence à boire."):format(boss),
+	drink_desc = "Préviens quand Ombre d'Aran commence à boire.",
 	drink_trigger = "Vous ne refuseriez pas à un vieil homme une boisson revigorante ? Non, c’est bien ce que je pensais.",
 	drink_warning = "Mana Faible - Boisson imminente !",
 	drink_message = "Boisson - Polymorphisme de zone !",
@@ -161,7 +161,7 @@ L:RegisterTranslations("koKR", function() return {
 	adds_bar = "물의 정령",
 
 	drink = "음료 마시기",
-	drink_desc = ("%s의 음료 마시기 시작 시 알립니다."):format(boss),
+	drink_desc = "아란의 망령의 음료 마시기 시작 시 알립니다.",
 	drink_trigger = "목 좀 축이게 해달라는 이 늙은이의 청을 뿌리칠 텐가? 아... 별로 기대도 안 했어.",
 	drink_warning = "마나 낮음 - 잠시 후 음료 마시기!",
 	drink_message = "음료 마시기 - 광역 변이!",
@@ -204,7 +204,7 @@ L:RegisterTranslations("zhTW", function() return {
 	adds_bar = "召喚水元素",
 
 	drink = "群體變羊",
-	drink_desc = ("當 %s 開始回魔時發送警告"):format(boss),
+	drink_desc = "當 埃蘭之影 開始回魔時發送警告",
 	drink_trigger = "想必你不會拒絕給一個老人補充飲品吧?不，不，我想不會。",
 	drink_warning = "埃蘭之影魔力太低",
 	drink_message = "群體變羊術 - 埃蘭之影開始回魔",

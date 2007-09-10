@@ -12,7 +12,7 @@ local tinhead = BB["Tinhead"]
 local strawman = BB["Strawman"]
 local dorothee = BB["Dorothee"]
 local tito = BB["Tito"]
-
+local fmt = string.format
 BB = nil
 
 ----------------------------
@@ -132,18 +132,20 @@ end
 --      Event Handlers      --
 ------------------------------
 
+--Need to make some hack to enable for this addon someday, latency sometimes means they yell before the f* curtains are up >.<
+--Probably use GetSubZoneText()
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) and self.db.profile.spawns then
 		local swarn = L["spawns_warning"]
 		local sbar = L["spawns_bar"]
-		self:Bar(sbar:format(roar), 15, "INV_Staff_08")
-		self:DelayedMessage(10, swarn:format(roar), "Attention")
-		self:Bar(sbar:format(strawman), 25, "Ability_Druid_ChallangingRoar")
-		self:DelayedMessage(20, swarn:format(strawman), "Attention")
-		self:Bar(sbar:format(tinhead), 35, "INV_Chest_Plate06")
-		self:DelayedMessage(30, swarn:format(tinhead), "Attention")
-		self:Bar(sbar:format(tito), 48, "Ability_Hunter_Pet_Wolf")
-		self:DelayedMessage(43, swarn:format(tito), "Attention")
+		self:Bar(fmt(sbar, roar), 15, "INV_Staff_08")
+		self:DelayedMessage(10, fmt(swarn, roar), "Attention")
+		self:Bar(fmt(sbar, strawman), 25, "Ability_Druid_ChallangingRoar")
+		self:DelayedMessage(20, fmt(swarn, strawman), "Attention")
+		self:Bar(fmt(sbar, tinhead), 35, "INV_Chest_Plate06")
+		self:DelayedMessage(30, fmt(swarn, tinhead), "Attention")
+		self:Bar(fmt(sbar, tito), 48, "Ability_Hunter_Pet_Wolf")
+		self:DelayedMessage(43, fmt(swarn, tito), "Attention")
 	end
 end
 

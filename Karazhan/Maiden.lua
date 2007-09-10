@@ -27,7 +27,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	holyfire = "Holy Fire",
 	holyfire_desc = "Alert when people are afflicted by Holy Fire.",
-	holyfire_trigger = "^([^%s]+) ([^%s]+) afflicted by Holy Fire%.$",
+	holyfire_trigger = "^(%S+) (%S+) afflicted by Holy Fire%.$",
 	holyfire_message = "Holy Fire: %s",
 
 	icon = "Raid Icon",

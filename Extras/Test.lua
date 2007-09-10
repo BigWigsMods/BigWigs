@@ -3,6 +3,7 @@
 ------------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsTest")
+local fmt = string.format
 
 ----------------------------
 --      Localization      --
@@ -10,7 +11,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsTest")
 
 L:RegisterTranslations("enUS", function() return {
 	["Test"] = true,
-	["Test Bar %d"] = true,
+	["Test Bar "] = true,
 	["Testing"] = true,
 	["OMG Bear!"] = true,
 	["*RAWR*"] = true,
@@ -25,7 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Test"] = "테스트",
-	["Test Bar %d"] = "테스트 바 %d",
+	["Test Bar "] = "테스트 바 ",
 	["Testing"] = "테스트중",
 	["OMG Bear!"] = "OMG 생성!",
 	["*RAWR*"] = "*공격대경고*",
@@ -42,7 +43,7 @@ L:RegisterTranslations("koKR", function() return {
 --CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["Test"] = "测试",
-	["Test Bar %d"] = "测试记时条%d",
+	["Test Bar "] = "测试记时条",
 	["Testing"] = "测试中……",
 	["OMG Bear!"] = "OMG! BEAR!",
 	["*RAWR*"] = "*团队通知*",
@@ -57,7 +58,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["Test"] = "測試",
-	["Test Bar %d"] = "測試計時條%d",
+	["Test Bar "] = "測試計時條",
 	["Testing"] = "測試中",
 	["OMG Bear!"] = "天哪！蘇聯北極熊！",
 	["*RAWR*"] = "*RAWR*",
@@ -72,7 +73,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Test"] = "Test",
-	["Test Bar %d"] = "Test Balken %d",
+	["Test Bar "] = "Test Balken ",
 	["Testing"] = "Teste",
 	["OMG Bear!"] = "OMG B\195\164r!",
 	["*RAWR*"] = "RAWR",
@@ -87,7 +88,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["Test"] = "Test",
-	["Test Bar %d"] = "Barre de test %d",
+	["Test Bar "] = "Barre de test ",
 	["Testing"] = "Test",
 	["OMG Bear!"] = "Un ours !",
 	["*RAWR*"] = "*GRRR*",
@@ -150,15 +151,15 @@ function plugin:BigWigs_RecvSync(sync)
 end
 
 function plugin:BigWigs_Test()
-	self:Bar(L["Test Bar %d"]:format(4), 30, "Spell_Nature_ResistNature")
+	self:Bar(fmt("%s%d", L["Test Bar "], 4), 30, "Spell_Nature_ResistNature")
 
 	self:Message(L["Testing"], "Attention", true, "Long")
 	self:DelayedMessage(10, L["OMG Bear!"], "Important", true, "Alert")
 	self:DelayedMessage(20, L["*RAWR*"], "Urgent", true, "Alarm")
 	self:DelayedMessage(30, L["Victory!"], "Bosskill", true, "Victory")
 
-	self:Bar(L["Test Bar %d"]:format(3), 20, "Spell_Nature_ResistNature")
-	self:Bar(L["Test Bar %d"]:format(2), 10, "Spell_Nature_ResistNature")
-	self:Bar(L["Test Bar %d"]:format(1), 5, "Spell_Nature_ResistNature", true, "red")
+	self:Bar(fmt("%s%d", L["Test Bar "], 3), 20, "Spell_Nature_ResistNature")
+	self:Bar(fmt("%s%d", L["Test Bar "], 2), 10, "Spell_Nature_ResistNature")
+	self:Bar(fmt("%s%d", L["Test Bar "], 1), 5, "Spell_Nature_ResistNature", true, "red")
 end
 

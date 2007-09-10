@@ -8,6 +8,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsColors")
 
 local shortBar
 local longBar
+local fmt = string.format
 
 ----------------------------
 --      Localization      --
@@ -22,7 +23,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Long"] = true,
 	["Short bars"] = true,
 	["Long bars"] = true,
-	["Color %d"] = true,
+	["Color "] = true,
 	["Number of colors"] = true,
 	["Background"] = true,
 	["Text"] = true,
@@ -59,7 +60,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Bars"] = "바",
 	["Short bars"] = "짧은바",
 	["Long bars"] = "긴바",
-	["Color %d"] = "색상 %d",
+	["Color "] = "색상 ",
 	["Number of colors"] = "색상의 수",
 	["Background"] = "배경",
 	["Text"] = "글자",
@@ -100,7 +101,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Long"] = "长",
 	["Short bars"] = "短时间计时条",
 	["Long bars"] = "长时间计时条",
-	["Color %d"] = "颜色 %d",
+	["Color "] = "颜色 ",
 	["Number of colors"] = "显示颜色数量",
 	["Background"] = "背景",
 	["Text"] = "文本",
@@ -137,7 +138,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Bars"] = "計時條",
 	["Short bars"] = "短計時條",
 	["Long bars"] = "長計時條",
-	["Color %d"] = "顏色 %d",
+	["Color "] = "顏色 ",
 	["Number of colors"] = "顏色數量",
 	["Background"] = "背景",
 	["Text"] = "文字",
@@ -176,7 +177,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Long"] = "Lang",
 	["Short bars"] = "Kurze Anzeigebalken",
 	["Long bars"] = "Lange Anzeigebalken",
-	["Color %d"] =  "Farbe %d",
+	["Color "] =  "Farbe ",
 	["Number of colors"] = "Anzahl der Farben",
 	["Background"] = "Hintergrund",
 	["Text"] = "Text",
@@ -215,7 +216,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Long"] = "Long",
 	["Short bars"] = "BarresCourtes",
 	["Long bars"] = "BarresLongues",
-	["Color %d"] = "Couleur %d",
+	["Color "] = "Couleur ",
 	["Number of colors"] = "Nombre de couleurs",
 	["Background"] = "Fond",
 	["Text"] = "Texte",
@@ -332,7 +333,7 @@ plugin.consoleOptions = {
 		Important = {
 			name = L["Important"],
 			type = "color",
-			desc = L["Change the color for %q messages."]:format(L["Important"]),
+			desc = fmt(L["Change the color for %q messages."], L["Important"]),
 			passValue = "Important",
 			get = get,
 			set = set,
@@ -341,7 +342,7 @@ plugin.consoleOptions = {
 		Personal = {
 			name = L["Personal"],
 			type = "color",
-			desc = L["Change the color for %q messages."]:format(L["Personal"]),
+			desc = fmt(L["Change the color for %q messages."], L["Personal"]),
 			passValue = "Personal",
 			get = get,
 			set = set,
@@ -350,7 +351,7 @@ plugin.consoleOptions = {
 		Urgent = {
 			name = L["Urgent"],
 			type = "color",
-			desc = L["Change the color for %q messages."]:format(L["Urgent"]),
+			desc = fmt(L["Change the color for %q messages."], L["Urgent"]),
 			passValue = "Urgent",
 			get = get,
 			set = set,
@@ -359,7 +360,7 @@ plugin.consoleOptions = {
 		Attention = {
 			name = L["Attention"],
 			type = "color",
-			desc = L["Change the color for %q messages."]:format(L["Attention"]),
+			desc = fmt(L["Change the color for %q messages."], L["Attention"]),
 			passValue = "Attention",
 			get = get,
 			set = set,
@@ -368,7 +369,7 @@ plugin.consoleOptions = {
 		Positive = {
 			name = L["Positive"],
 			type = "color",
-			desc = L["Change the color for %q messages."]:format(L["Positive"]),
+			desc = fmt(L["Change the color for %q messages."], L["Positive"]),
 			passValue = "Positive",
 			get = get,
 			set = set,
@@ -377,7 +378,7 @@ plugin.consoleOptions = {
 		Bosskill = {
 			name = L["Bosskill"],
 			type = "color",
-			desc = L["Change the color for %q messages."]:format(L["Bosskill"]),
+			desc = fmt(L["Change the color for %q messages."], L["Bosskill"]),
 			passValue = "Bosskill",
 			get = get,
 			set = set,
@@ -386,7 +387,7 @@ plugin.consoleOptions = {
 		Core = {
 			name = L["Core"],
 			type = "color",
-			desc = L["Change the color for %q messages."]:format(L["Core"]),
+			desc = fmt(L["Change the color for %q messages."], L["Core"]),
 			passValue = "Core",
 			get = get,
 			set = set,
@@ -425,29 +426,29 @@ plugin.consoleOptions = {
 			end,
 			args = {
 				[1] = {
-					name = L["Color %d"]:format(1),
+					name = fmt("%s%d", L["Color "], 1),
 					type = "color",
-					desc = L["Change the %s color."]:format(L["1st"]),
+					desc = fmt(L["Change the %s color."], L["1st"]),
 					order = 1,
 				},
 				[2] = {
-					name = L["Color %d"]:format(2),
+					name = fmt("%s%d", L["Color "], 2),
 					type = "color",
-					desc = L["Change the %s color."]:format(L["2nd"]),
+					desc = fmt(L["Change the %s color."], L["2nd"]),
 					disabled = function() return plugin.db.profile.short.amount < 2 end,
 					order = 2,
 				},
 				[3] = {
-					name = L["Color %d"]:format(3),
+					name = fmt("%s%d", L["Color "], 3),
 					type = "color",
-					desc = L["Change the %s color."]:format(L["3rd"]),
+					desc = fmt(L["Change the %s color."], L["3rd"]),
 					disabled = function() return plugin.db.profile.short.amount < 3 end,
 					order = 3,
 				},
 				[4] = {
-					name = L["Color %d"]:format(4),
+					name = fmt("%s%d", L["Color "], 4),
 					type = "color",
-					desc = L["Change the %s color."]:format(L["4th"]),
+					desc = fmt(L["Change the %s color."], L["4th"]),
 					disabled = function() return plugin.db.profile.short.amount < 4 end,
 					order = 4,
 				},
@@ -489,29 +490,29 @@ plugin.consoleOptions = {
 			end,
 			args = {
 				[1] = {
-					name = L["Color %d"]:format(1),
+					name = fmt("%s%d", L["Color "], 1),
 					type = "color",
-					desc = L["Change the %s color."]:format(L["1st"]),
+					desc = fmt(L["Change the %s color."], L["1st"]),
 					order = 1,
 				},
 				[2] = {
-					name = L["Color %d"]:format(2),
+					name = fmt("%s%d", L["Color "], 2),
 					type = "color",
-					desc = L["Change the %s color."]:format(L["2nd"]),
+					desc = fmt(L["Change the %s color."], L["2nd"]),
 					disabled = function() return plugin.db.profile.long.amount < 2 end,
 					order = 2,
 				},
 				[3] = {
-					name = L["Color %d"]:format(3),
+					name = fmt("%s%d", L["Color "], 3),
 					type = "color",
-					desc = L["Change the %s color."]:format(L["3rd"]),
+					desc = fmt(L["Change the %s color."], L["3rd"]),
 					disabled = function() return plugin.db.profile.long.amount < 3 end,
 					order = 3,
 				},
 				[4] = {
-					name = L["Color %d"]:format(4),
+					name = fmt("%s%d", L["Color "], 4),
 					type = "color",
-					desc = L["Change the %s color."]:format(L["4th"]),
+					desc = fmt(L["Change the %s color."], L["4th"]),
 					disabled = function() return plugin.db.profile.long.amount < 4 end,
 					order = 4,
 				},

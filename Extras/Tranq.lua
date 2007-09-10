@@ -5,10 +5,11 @@
 ----------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsTranq")
+local pName = nil
 
 L:RegisterTranslations("enUS", function() return {
-	CHAT_MSG_SPELL_SELF_BUFF = "You fail to dispel (.+)'s Frenzy.",
-	CHAT_MSG_SPELL_SELF_DAMAGE = "You cast Tranquilizing Shot on (.+).",
+	CHAT_MSG_SPELL_SELF_BUFF = "^You fail to dispel (.+)'s Frenzy%.$",
+	CHAT_MSG_SPELL_SELF_DAMAGE = "^You cast Tranquilizing Shot on (.+).$",
 	["Tranquilizing Shot"] = true,
 
 	["Tranq - %s"] = true,
@@ -76,7 +77,9 @@ L:RegisterTranslations("frFR", function() return {
 	CHAT_MSG_SPELL_SELF_DAMAGE = "Vous lancez Tir tranquillisant sur (.+).",
 	["Tranquilizing Shot"] = "Tir tranquillisant",
 
+	--["Tranq - %s"] = true,
 	["%s's Tranq failed!"] = "Le Tir tranq. de %s a échoué !",
+	--["Tranq"] = true,
 	["Options for the tranq module."] = "Options concernant le module du Tir tranquilisant.",
 	["Toggle tranq bars on or off."] = "Affiche ou non les barres des Tirs tranquillisants.",
 	["Bars"] = "Barres",
@@ -125,6 +128,7 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:RegisterEvent("BigWigs_TranqFired", 5)
 	self:RegisterEvent("BigWigs_TranqFail", 5)
+	pName = UnitName("player")
 end
 
 ------------------------------
@@ -133,7 +137,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(player, spell, rank)
 	if player == "player" and spell == L["Tranquilizing Shot"] then
-		self:TriggerEvent("BigWigs_SendSync", "TranqShotFired "..UnitName("player"))
+		self:TriggerEvent("BigWigs_SendSync", "TranqShotFired "..pName)
 	end
 end
 
@@ -141,7 +145,7 @@ function mod:CHAT_MSG_SPELL_SELF_BUFF(msg)
 	if not msg then
 		BigWigs:Debug("CHAT_MSG_SPELL_SELF_BUFF: msg is nil")
 	elseif msg:find(L["CHAT_MSG_SPELL_SELF_BUFF"]) then
-		self:TriggerEvent("BigWigs_SendSync", "TranqShotFail "..UnitName("player"))
+		self:TriggerEvent("BigWigs_SendSync", "TranqShotFail "..pName)
 	end
 end
 
@@ -149,7 +153,7 @@ function mod:CHAT_MSG_SPELL_SELF_DAMAGE(msg)
 	if not msg then
 		BigWigs:Debug("CHAT_MSG_SPELL_SELF_DAMAGE: msg is nil")
 	elseif msg:find(L["CHAT_MSG_SPELL_SELF_DAMAGE"]) then
-		self:TriggerEvent("BigWigs_SendSync", "TranqShotFired "..UnitName("player"))
+		self:TriggerEvent("BigWigs_SendSync", "TranqShotFired "..pName)
 	end
 end
 

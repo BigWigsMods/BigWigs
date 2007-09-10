@@ -5,6 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Netherspite"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+local fmt = string.format
 local started
 local voidcount
 
@@ -16,7 +17,7 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Netherspite",
 
 	phase = "Phases",
-	phase_desc = ("Warns when %s changes from one phase to another."):format(boss),
+	phase_desc = "Warns when Netherspite changes from one phase to another.",
 	phase1_message = "Withdrawal - Netherbreaths Over",
 	phase1_bar = "~Possible Withdrawal",
 	phase1_trigger = "%s cries out in withdrawal, opening gates to the nether.",
@@ -37,7 +38,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	phase = "Phase",
-	phase_desc = ("Warnt wenn %s von einer Phase zur anderen wechselt"):format(boss),
+	phase_desc = "Warnt wenn Nethergroll von einer Phase zur anderen wechselt",
 
 	voidzone = "Zone der Leere",
 	voidzone_desc = "Warnt vor Zone der Leere",
@@ -61,7 +62,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	phase = "단계",
-	phase_desc = ("%s의 다음 단계로 변화 시 경고합니다."):format(boss),
+	phase_desc = "황천의 원령의 다음 단계로 변화 시 경고합니다.",
 	phase1_message = "물러남 - 황천의 숨결 종료!",
 	phase1_bar = "~물러남 주의",
 	phase1_trigger = "%s|1이;가; 물러나며 고함을 지르더니 황천의 문을 엽니다.",
@@ -82,7 +83,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	phase = "Phases",
-	phase_desc = ("Préviens quand %s passe d'une phase à l'autre."):format(boss),
+	phase_desc = "Préviens quand Dédain-du-Néant passe d'une phase à l'autre.",
 	phase1_message = "Retrait - Fin des Souffles du Néant",
 	phase1_bar = "~Retrait probable",
 	phase1_trigger = "%s se retire avec un cri en ouvrant un portail vers le Néant.",
@@ -103,7 +104,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	phase = "階段警告",
-	phase_desc = ("當 %s 進入下一階段時發送警告"):format(boss),
+	phase_desc = "當 尼德斯 進入下一階段時發送警告",
 	phase1_message = "撒退 - 第一階段光線門",
 	phase1_bar = "地獄吐息 - 撒退",
 	phase1_trigger = "%s大聲呼喊撤退，打開通往地獄的門。",
@@ -127,7 +128,7 @@ L:RegisterTranslations("zhTW", function() return {
 --虚空幽龙
 L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段警报",
-	phase_desc = ("当%s进入下一阶段时发出警报."):format(boss),
+	phase_desc = "当虚空幽龙进入下一阶段时发出警报.",
 	phase1_message = "Withdrawal - Netherbreaths Over",
 	phase1_bar = "~Possible Withdrawal",
 	phase1_trigger = "%s cries out in withdrawal, opening gates to the nether.",
@@ -191,13 +192,13 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Bar(L["phase2_bar"], 60, "Spell_ChargePositive")
 		end
 		if self.db.profile.enrage then
-			self:Message(L2["enrage_start"]:format(boss, 9), "Attention")
-			self:DelayedMessage(240, L2["enrage_min"]:format(5), "Positive")
-			self:DelayedMessage(360, L2["enrage_min"]:format(3), "Positive")
-			self:DelayedMessage(480, L2["enrage_min"]:format(1), "Positive")
-			self:DelayedMessage(510, L2["enrage_sec"]:format(30), "Positive")
-			self:DelayedMessage(530, L2["enrage_sec"]:format(10), "Urgent")
-			self:DelayedMessage(540, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Message(fmt(L2["enrage_start"], boss, 9), "Attention")
+			self:DelayedMessage(240, fmt(L2["enrage_min"], 5), "Positive")
+			self:DelayedMessage(360, fmt(L2["enrage_min"], 3), "Positive")
+			self:DelayedMessage(480, fmt(L2["enrage_min"], 1), "Positive")
+			self:DelayedMessage(510, fmt(L2["enrage_sec"], 30), "Positive")
+			self:DelayedMessage(530, fmt(L2["enrage_sec"], 10), "Urgent")
+			self:DelayedMessage(540, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 540, "Spell_Shadow_UnholyFrenzy")
 		end
 	elseif sync == "Netherbreath" and self.db.profile.netherbreath then
@@ -220,7 +221,7 @@ end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if self.db.profile.voidzone and msg:find( L["voidzone_trigger"] ) then
-		self:Message( L["voidzone_warn"]:format(voidcount), "Attention")
+		self:Message(fmt(L["voidzone_warn"], voidcount), "Attention")
 		voidcount = voidcount + 1
 	elseif msg:find(L["netherbreath_trigger"]) then
 		self:Sync("Netherbreath")

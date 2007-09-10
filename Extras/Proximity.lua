@@ -18,6 +18,7 @@ local OnOptionToggled = nil -- Function invoked when the proximity option is tog
 
 local table_insert = table.insert
 local table_concat = table.concat
+local fmt = string.format
 local UnitName = UnitName
 local UnitExists = UnitExists
 local UnitIsDeadOrGhost = UnitIsDeadOrGhost
@@ -272,7 +273,7 @@ function plugin:CloseAndDisableProximity()
 
 	if active then
 		active.db.profile.proximity = nil
-		BigWigs:Print(L["The proximity display has been disabled for %s, please use the boss modules options to enable it again."]:format(active:ToString()))
+		BigWigs:Print(fmt(L["The proximity display has been disabled for %s, please use the boss modules options to enable it again."], active:ToString()))
 	end
 end
 
@@ -317,7 +318,7 @@ function plugin:UpdateProximity()
 	else
 		local num = GetNumRaidMembers()
 		for i = 1, num do
-			local unit = "raid"..i
+			local unit = fmt("%s%d", "raid", i)
 			if UnitExists(unit) and not UnitIsDeadOrGhost(unit) and UnitName(unit) ~= playername then
 				if active.proximityCheck(unit) then
 					table_insert(tooClose, coloredNames[UnitName(unit)])

@@ -15,7 +15,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	web = "Web",
 	web_desc = "Alert when a player gets webbed.",
-	web_trigger = "^([^%s]+) ([^%s]+) afflicted by Hyakiss' Web%.$",
+	web_trigger = "^(%S+) (%S+) afflicted by Hyakiss' Web%.$",
 	web_message = "%s has been webbed!",
 	web_bar = "Web: %s",
 } end )

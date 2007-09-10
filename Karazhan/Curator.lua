@@ -4,7 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["The Curator"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local enrageannounced = nil
+local enrageWarn = nil
 
 ----------------------------
 --      Localization      --
@@ -260,7 +260,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_StopBar", self, L["weaken_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["weaktime_bar"])
 	elseif msg == L["berserk_trigger"] then -- This only happens at the start of the fight
-		enrageannounced = nil
+		enrageWarn = nil
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 
 		if self.db.profile.berserk then
@@ -280,11 +280,11 @@ function mod:UNIT_HEALTH(msg)
 	if not self.db.profile.enrage then return end
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
-		if health > 16 and health <= 19 and not enrageannounced then
+		if health > 16 and health <= 19 and not enrageWarn then
 			self:Message(L["enrage_warning"], "Positive")
-			enrageannounced = true
-		elseif health > 50 and enrageannounced then
-			enrageannounced = false
+			enrageWarn = true
+		elseif health > 50 and enrageWarn then
+			enrageWarn = false
 		end
 	end
 end

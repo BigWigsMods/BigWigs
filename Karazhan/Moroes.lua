@@ -5,7 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Moroes"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-local enrageannounced = nil
+local enrageWarn = nil
 
 ----------------------------
 --      Localization      --
@@ -18,7 +18,7 @@ L:RegisterTranslations("enUS", function() return {
 	engage_message = "%s Engaged - Vanish in ~35sec!",
 
 	vanish = "Vanish",
-	vanish_desc = "Vanish estimated timers.",
+	vanish_desc = "Estimated timers for when Moroes next vanishes.",
 	vanish_trigger1 = "You rang?",
 	vanish_trigger2 = "Now, where was I? Oh, yes...",
 	vanish_message = "Vanished! Next in ~35sec!",
@@ -27,7 +27,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	garrote = "Garrote",
 	garrote_desc = "Notify of players afflicted by Garrote.",
-	garrote_trigger = "^([^%s]+) ([^%s]+) afflicted by Garrote%.$",
+	garrote_trigger = "^(%S+) (%S+) afflicted by Garrote%.$",
 	garrote_message = "Garrote: %s",
 
 	icon = "Icon",
@@ -43,7 +43,7 @@ L:RegisterTranslations("frFR", function() return {
 	engage_message = "Moroes engagé - Disparition dans ~35 sec. !",
 
 	vanish = "Disparition",
-	vanish_desc = ("Préviens quand %s est suceptible de disparaître."):format(boss),
+	vanish_desc = "Préviens quand Moroes est suceptible de disparaître.",
 	vanish_trigger1 = "Vous avez sonné ?",
 	vanish_trigger2 = "Bon, où en étais-je ? Ah, oui…",
 	vanish_message = "Disparu ! Prochain dans ~35 sec. !",
@@ -232,7 +232,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["vanish_message"], "Urgent", nil, "Alert")
 		self:NextVanish()
 	elseif msg == L["engage_trigger"] then
-		enrageannounced = nil
+		enrageWarn = nil
 		self:Message(L["engage_message"]:format(boss), "Attention")
 
 		if self.db.profile.vanish then
@@ -255,13 +255,13 @@ end
 function mod:UNIT_HEALTH(msg)
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
-		if health > 30 and health <= 34 and not enrageannounced then
+		if health > 30 and health <= 34 and not enrageWarn then
 			if self.db.profile.enrage then
 				self:Message(L["enrage_warning"], "Positive", nil, "Info")
 			end
-			enrageannounced = true
-		elseif health > 40 and enrageannounced then
-			enrageannounced = nil
+			enrageWarn = true
+		elseif health > 40 and enrageWarn then
+			enrageWarn = nil
 		end
 	end
 end

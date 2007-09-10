@@ -7,6 +7,7 @@
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsCustomBar")
 
 local times = nil
+fmt = string.format
 
 L:RegisterTranslations("enUS", function() return {
 	["bwcb"] = true,
@@ -18,7 +19,6 @@ L:RegisterTranslations("enUS", function() return {
 	["Global"] = true,
 	["<seconds> <bar text>"] = true,
 	["Starts a custom bar with the given parameters."] = true,
-	["%s: %s"] = true,
 	["%s: Timer [%s] finished."] = true,
 } end)
 
@@ -29,7 +29,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Global"] = "글로벌",
 	["<seconds> <bar text>"] = "<초> <바 텍스트>",
 	["Starts a custom bar with the given parameters."] = "입력한 매개변수로 사용자 바를 시작합니다.",
-	["%s: %s"] = "%s: %s",
 	["%s: Timer [%s] finished."] = "%s: [%s] 타이머가 종료되었습니다.",
 } end)
 
@@ -45,7 +44,6 @@ L:RegisterTranslations("zhCN", function() return {
 	["Global"] = "全局",
 	["<seconds> <bar text>"] = "<秒> <计时条名字>",
 	["Starts a custom bar with the given parameters."] = "启动自定义时间条",
-	["%s: %s"] = "%s: %s",
 	["%s: Timer [%s] finished."] = "%s: 计时器 [%s] 到时间.",
 } end)
 
@@ -59,7 +57,6 @@ L:RegisterTranslations("zhTW", function() return {
 	["Global"] = "全域",
 	["<seconds> <bar text>"] = "<秒> <列文字>",
 	["Starts a custom bar with the given parameters."] = "開始一個包含參數的自定時間條",
-	["%s: %s"] = "%s: %s",
 	["%s: Timer [%s] finished."] = "%s: 計時器 [%s] 終了。",
 } end)
 
@@ -73,7 +70,6 @@ L:RegisterTranslations("deDE", function() return {
 	["Global"] = "Global",
 	["<seconds> <bar text>"] = "<Sekunden> <Balkentext>",
 	["Starts a custom bar with the given parameters."] = "Einen individuellen Anzeigebalken mit den gegebenen Parametern starten. \n<Sekunden> <Balkentext>",
-	-- ["%s: %s"] = true,
 	["%s: Timer [%s] finished."] = "%s: Timer [%s] beendet.",
 } end)
 
@@ -84,7 +80,6 @@ L:RegisterTranslations("frFR", function() return {
 	["Global"] = "Globale",
 	["<seconds> <bar text>"] = "<secondes> <texte de la barre>",
 	["Starts a custom bar with the given parameters."] = "Démarre une barre personnalisée avec les paramètres indiqués.",
-	["%s: %s"] = "%s : %s",
 	["%s: Timer [%s] finished."] = "%s: Délai [%s] terminé.",
 } end)
 
@@ -143,7 +138,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync ~= "BWCustomBar" or not rest or not nick or not self.enabled then return end
 
 	if UnitInRaid("player") then
-		for i = 1, GetNumRaidMembers() do
+		local num = GetNumRaidMembers()
+		for i = 1, num do
 			local name, rank = GetRaidRosterInfo(i)
 			if name == nick then
 				if rank == 0 then
@@ -171,16 +167,16 @@ function mod:StartBar(bar, nick, localOnly)
 	if not nick then nick = L["Local"] end
 	if seconds == 0 then
 		self:CancelScheduledEvent("bwcb"..nick..barText)
-		self:TriggerEvent("BigWigs_StopBar", self, L["%s: %s"]:format(nick, barText))
+		self:TriggerEvent("BigWigs_StopBar", self, nick..": "..barText)
 	else
-		self:ScheduleEvent("bwcb"..nick..barText, "BigWigs_Message", seconds, L["%s: Timer [%s] finished."]:format(nick, barText), "Attention", localOnly)
-		self:TriggerEvent("BigWigs_StartBar", self, L["%s: %s"]:format(nick, barText), seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
+		self:ScheduleEvent("bwcb"..nick..barText, "BigWigs_Message", seconds, fmt(L["%s: Timer [%s] finished."], nick, barText), "Attention", localOnly)
+		self:TriggerEvent("BigWigs_StartBar", self, nick..": "..barText, seconds, "Interface\\Icons\\INV_Misc_PocketWatch_01")
 	end
 end
 
 -- For easy use in macros.
 function BWCB(seconds, message)
-	if message then seconds = tostring(seconds) .. " " .. message end
+	if message then seconds = fmt("%d %s", seconds, message) end
 	local t = GetTime()
 	if ( not times[seconds] ) or ( times[seconds] and ( times[seconds] + 2 ) < t) then
 		times[seconds] = t
@@ -189,7 +185,7 @@ function BWCB(seconds, message)
 end
 
 function BWLCB(seconds, message)
-	if message then seconds = tostring(seconds) .. " " .. message end
+	if message then seconds = fmt("%d %s", seconds, message) end
 	mod:StartBar(seconds, nil, true)
 end
 

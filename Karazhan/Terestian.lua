@@ -6,6 +6,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["Terestian Illhoof"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local pName = nil
+local fmt = string.format
 
 ----------------------------
 --      Localization      --
@@ -18,7 +19,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	sacrifice = "Sacrifice",
 	sacrifice_desc = "Warn for Sacrifice of players.",
-	sacrifice_trigger = "^([^%s]+) ([^%s]+) afflicted by Sacrifice%.$",
+	sacrifice_trigger = "^(%S+) (%S+) afflicted by Sacrifice%.$",
 	sacrifice_fade = "^Sacrifice fades from ([^%s]+)%.$",
 	sacrifice_message = "%s is being Sacrificed!",
 	sacrifice_bar = "Sacrifice: %s",
@@ -189,13 +190,13 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.enrage and msg:find(L["engage_trigger"]) then
-		self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
-		self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
-		self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
-		self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
-		self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
-		self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
-		self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+		self:Message(fmt(L2["enrage_start"], boss, 10), "Attention")
+		self:DelayedMessage(300, fmt(L2["enrage_min"], 5), "Positive")
+		self:DelayedMessage(420, fmt(L2["enrage_min"], 3), "Positive")
+		self:DelayedMessage(540, fmt(L2["enrage_min"], 1), "Positive")
+		self:DelayedMessage(570, fmt(L2["enrage_sec"], 30), "Positive")
+		self:DelayedMessage(590, fmt(L2["enrage_sec"], 10), "Urgent")
+		self:DelayedMessage(600, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
 		self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 	end
 end
@@ -207,8 +208,8 @@ function mod:CheckSacrifice(msg)
 		if splayer == L2["you"] and stype == L2["are"] then
 			splayer = pName
 		end
-		self:Message(L["sacrifice_message"]:format(splayer), "Attention")
-		self:Bar(L["sacrifice_bar"]:format(splayer), 30, "Spell_Shadow_AntiMagicShell")
+		self:Message(fmt(L["sacrifice_message"], splayer), "Attention")
+		self:Bar(fmt(L["sacrifice_bar"], splayer), 30, "Spell_Shadow_AntiMagicShell")
 		if self.db.profile.icon then
 			self:Icon(splayer)
 		end
@@ -233,7 +234,7 @@ function mod:AuraGone(msg)
 	if self.db.profile.sacrifice then
 		local sfade = select(3, msg:find(L["sacrifice_fade"]))
 		if sfade then
-			self:TriggerEvent("BigWigs_StopBar", self, L["sacrifice_bar"]:format(sfade))
+			self:TriggerEvent("BigWigs_StopBar", self, fmt(L["sacrifice_bar"], sfade))
 			self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		end
 	end
@@ -241,7 +242,7 @@ end
 
 function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
 	if self.db.profile.sacrifice and msg:find(L["sacrifice_fade"]) then
-		self:TriggerEvent("BigWigs_StopBar", self, L["sacrifice_bar"]:format(pName))
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["sacrifice_bar"], pName))
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	end
 end

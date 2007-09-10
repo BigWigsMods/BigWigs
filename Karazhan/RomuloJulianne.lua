@@ -10,6 +10,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local boy = BB["Romulo"]
 local girl = BB["Julianne"]
+local fmt = string.format
 
 BB = nil
 
@@ -31,16 +32,16 @@ L:RegisterTranslations("enUS", function() return {
 
 	poison = "Poison",
 	poison_desc = "Warn of a poisoned player.",
-	poison_trigger = "^([^%s]+) ([^%s]+) afflicted by Poisoned Thrust%.$",
+	poison_trigger = "^(%S+) (%S+) afflicted by Poisoned Thrust%.$",
 	poison_message = "Poisoned: %s",
 
 	heal = "Heal",
-	heal_desc = ("Warn when %s casts Eternal Affection."):format(girl),
+	heal_desc = "Warn when Julianne casts Eternal Affection.",
 	heal_trigger = "begins to cast Eternal Affection%.$",
 	heal_message = "%s casting Heal!",
 
 	buff = "Self-Buff Alert",
-	buff_desc = ("Warn when %s and %s gain a self-buff."):format(boy, girl),
+	buff_desc = "Warn when Romulo & Julianne gain a self-buff.",
 	buff1_trigger = "gains Daring%.$",
 	buff1_message = "%s gains Daring!",
 	buff2_trigger = "gains Devotion%.$",
@@ -55,10 +56,10 @@ L:RegisterTranslations("deDE", function() return {
 	poison_desc = "Warnt vor vergifteten Spielern",
 
 	heal = "Heilen",
-	heal_desc = ("Warnt wenn %s sich heilt"):format(girl),
+	heal_desc = "Warnt wenn Julianne sich heilt",
 
 	buff = "Selbst-Buff Alarm",
-	buff_desc = ("Warnt wenn %s und %s sich selbst buffen"):format(boy, girl),
+	buff_desc = "Warnt wenn Romulo und Julianne sich selbst buffen",
 
 	phase1_trigger = "Welch' Teufel bist du, dass du mich so folterst?",
 	phase1_message = "Akt 1 - %s",
@@ -95,12 +96,12 @@ L:RegisterTranslations("frFR", function() return {
 	poison_message = "Empoisonné : %s",
 
 	heal = "Soin",
-	heal_desc = ("Préviens quand %s lance Amour éternel."):format(girl),
+	heal_desc = "Préviens quand Julianne lance Amour éternel.",
 	heal_trigger = "commence à lancer Amour éternel",
 	heal_message = "%s incante un soin !",
 
 	buff = "Buff",
-	buff_desc = ("Préviens quand %s et %s gagnent leurs buffs."):format(boy, girl),
+	buff_desc = "Préviens quand Romulo et Julianne gagnent leurs buffs.",
 	buff1_trigger = "gagne Hardiesse",
 	buff1_message = "Romulo gagne Hardiesse !",
 	buff2_trigger = "gagne Dévotion",
@@ -123,12 +124,12 @@ L:RegisterTranslations("koKR", function() return {
 	poison_message = "중독: %s",
 
 	heal = "치유",
-	heal_desc = ("%s|1이;가; 영원한 사랑 시전 시 경고합니다."):format(girl),
+	heal_desc = "줄리엔|1이;가; 영원한 사랑 시전 시 경고합니다.",
 	heal_trigger = "영원한 사랑 시전을 시작합니다%.$",
 	heal_message = "%s 치유 시전 중!",
 
 	buff = "버프 알림",
-	buff_desc = ("%s|1와;과; %s 버프 획득 시 알립니다."):format(boy, girl),
+	buff_desc = "로밀로|1와;과; 줄리엔 버프 획득 시 알립니다.",
 	buff1_trigger = "사랑의 용기 효과를 얻었습니다%.$", -- check
 	buff1_message = "%s 사랑의 용기 효과 얻음!",
 	buff2_trigger = "헌신 효과를 얻었습니다%.$", -- check
@@ -151,12 +152,12 @@ L:RegisterTranslations("zhTW", function() return {
 	poison_message = "%s 中毒 - 請解毒",
 
 	heal = "治療警告",
-	heal_desc = ("當 %s 施放永恆的影響時發送警告"):format(girl),
+	heal_desc = "當 茱麗葉 施放永恆的影響時發送警告",
 	heal_trigger = "開始施放永恆的影響",
 	heal_message = "%s 正在施放治療術 - 請中斷",
 
 	buff = "狀態警告",
-	buff_desc = ("當 %s 和 %s 施放狀態時發送警告"):format(boy, girl),
+	buff_desc = "當 羅慕歐 和 茱麗葉 施放狀態時發送警告",
 	buff1_trigger = "獲得了膽量的效果。",
 	buff1_message = "%s 在施放增益狀態 - 請偷取",
 	buff2_trigger = "獲得了虔誠的效果。",
@@ -179,12 +180,12 @@ L:RegisterTranslations("esES", function() return {
 	poison_message = "Envenenado: %s",
 
 	heal = "Curacion",
-	heal_desc = ("Avisa cuando %s lanza Afección eterna."):format(girl),
+	heal_desc = "Avisa cuando Julianne lanza Afección eterna.",
 	heal_trigger = "comienza a lanzar Afección eterna",
 	heal_message = "%s Lanzando Curacion!",
 
 	buff = "Alerta de Auto-Buff",
-	buff_desc = ("Avisa cuando %s y %s reciben un self-buff."):format(boy, girl),
+	buff_desc = "Avisa cuando Romulo y Julianne reciben un self-buff.",
 	buff1_trigger = "gana Arrojo",
 	buff1_message = "%s gana Arrojo!",
 	buff2_trigger = "gana Devoción",
@@ -222,9 +223,9 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if not self.db.profile.phase then return end
 	if msg == L["phase1_trigger"] then
-		self:Message(L["phase1_message"]:format(girl), "Attention")
+		self:Message(fmt(L["phase1_message"], girl), "Attention")
 	elseif msg == L["phase2_trigger"] then
-		self:Message(L["phase2_message"]:format(boy), "Attention")
+		self:Message(fmt(L["phase2_message"], boy), "Attention")
 	elseif msg == L["phase3_trigger"] then
 		self:Message(L["phase3_message"], "Attention")
 	end
@@ -237,22 +238,22 @@ function mod:PoisonEvent(msg)
 			pplayer = UnitName("player")
 		end
 		if self.db.profile.poison then
-			self:Message(L["poison_message"]:format(pplayer), "Important")
+			self:Message(fmt(L["poison_message"], pplayer), "Important")
 		end
 	end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if self.db.profile.heal and msg:find(L["heal_trigger"]) then
-		self:Message(L["heal_message"]:format(girl), "Urgent")
+		self:Message(fmt(L["heal_message"], girl), "Urgent")
 	end
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if not self.db.profile.buff then return end
 	if msg:find(L["buff1_trigger"]) then
-		self:Message(L["buff1_message"]:format(boy), "Attention")
+		self:Message(fmt(L["buff1_message"], boy), "Attention")
 	elseif msg:find(L["buff2_trigger"]) then
-		self:Message(L["buff2_message"]:format(girl), "Attention")
+		self:Message(fmt(L["buff2_message"], girl), "Attention")
 	end
 end

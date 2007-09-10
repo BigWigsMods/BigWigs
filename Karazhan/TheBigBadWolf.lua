@@ -14,7 +14,7 @@ local pName = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "TheBigBadWolf",
 
-	riding_trigger = "^([^%s]+) ([^%s]+) Red Riding Hood%.$",
+	riding_trigger = "^(%S+) (%S+) Red Riding Hood%.$",
 
 	youriding = "Red Riding Hood(You)",
 	youriding_desc = "Warn when you are Red Riding Hood.",

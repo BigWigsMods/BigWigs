@@ -80,6 +80,9 @@ end
 
 function plugin:TargetCheck(unit)
 	local n = UnitName(unit)
+	local UnitIsCorpse = UnitIsCorpse
+	local UnitIsDead = UnitIsDead
+	local UnitPlayerControlled  = UnitPlayerControlled
 	if not n or not enablemobs[n] or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
 	self:TriggerEvent("BigWigs_TargetSeen", n, unit)
 end
