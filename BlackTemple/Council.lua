@@ -172,7 +172,7 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("deDE", function() return {
 	immune = "Immunitäts Warnung",
 	immune_desc = "Warnen wenn Malande immun gegen Zauber oder Nahkampfangriffe wird.",
-	immune_spell_trigger = "Lady Malande bekommt Segen der Zauberabwehr.",
+	immune_spell_trigger = "Lady Malande bekommt Segen des Zauberschutzes.",
 	immune_melee_trigger = "Lady Malande bekommt Segen des Schutzes.",
 	immune_message = "Malande: %s Immun für 15sec!",
 	immune_bar = "%s Immun!",
@@ -180,10 +180,10 @@ L:RegisterTranslations("deDE", function() return {
 	spell = "Zauber",
 	melee = "Nahkampf",
 
-	shield = "Reflektierendes Schild",
-	shield_desc = "Warnt wenn Malande Reflektierendes Schild bekommt.",
-	shield_trigger = "Lady Malande bekommt Reflektierendes Schild.",
-	shield_message = "Reflektierendes Schild auf Malande!",
+	shield = "Reflektierender Schild",
+	shield_desc = "Warnt wenn Malande Reflektierender Schild bekommt.",
+	shield_trigger = "Lady Malande bekommt Reflektierender Schild.",
+	shield_message = "Reflektierender Schild auf Malande!",
 
 	poison = "Tödliches Gift",
 	poison_desc = "Warnt wenn Tödliches Gift auf Spielern ist .",
