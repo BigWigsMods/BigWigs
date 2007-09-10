@@ -122,6 +122,30 @@ L:RegisterTranslations("zhTW", function() return {
 	netherbreath_warn = "地獄吐息",
 } end )
 
+--Chinese Translation: 月色狼影@CWDG
+--CWDG site: http://cwowaddon.com
+--虚空幽龙
+L:RegisterTranslations("zhCN", function() return {
+	phase = "阶段警报",
+	phase_desc = ("当%s进入下一阶段时发出警报."):format(boss),
+	phase1_message = "Withdrawal - Netherbreaths Over",
+	phase1_bar = "~Possible Withdrawal",
+	phase1_trigger = "%s cries out in withdrawal, opening gates to the nether.",
+	phase2_message = "Rage - Incoming Netherbreaths!",
+	phase2_bar = "~Possible Rage",
+	phase2_trigger = "%s goes into a nether-fed rage!",
+
+	voidzone = "Voidzones",
+	voidzone_desc = "Warn for Voidzones.",
+	voidzone_trigger = "casts Void Zone.",
+	voidzone_warn = "Void Zone (%d)!",
+
+	netherbreath = "Netherbreath",
+	netherbreath_desc = "Warn for Netherbreath.",
+	netherbreath_trigger = "casts Face Random Target.",
+	netherbreath_warn = "Incoming Netherbreath!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
