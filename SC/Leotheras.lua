@@ -7,6 +7,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local imagewarn = nil
 local beDemon = {}
+local pName = nil
+local fmt = string.format
+local stop
 
 ----------------------------
 --      Localization      --
@@ -38,7 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	mindcontrol = "Mind Control",
 	mindcontrol_desc = "Warn which players are Mind Controlled.",
-	mindcontrol_trigger = "^([^%s]+) ([^%s]+) afflicted by Consuming Madness%.$",
+	mindcontrol_trigger = "^(%S+) (%S+) afflicted by Consuming Madness%.$",
 	mindcontrol_warning = "Mind Controlled: %s",
 
 	image = "Image",
@@ -49,7 +52,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	whisper = "Insidious Whisper",
 	whisper_desc = "Alert what players have Insidious Whisper.",
-	whisper_trigger = "^([^%s]+) ([^%s]+) afflicted by Insidious Whisper%.$",
+	whisper_trigger = "^(%S+) (%S+) afflicted by Insidious Whisper%.$",
 	whisper_message = "Demon: %s",
 	whisper_bar = "Demons Despawn",
 	whisper_soon = "~Demons Cooldown",
@@ -243,6 +246,8 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "LeoWW", 10)
 
 	self:RegisterEvent("UNIT_HEALTH")
+	pName = UnitName("player")
+	stop = nil
 end
 
 ------------------------------
@@ -259,13 +264,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["demon_nextbar"], 60, "Spell_Shadow_Metamorphosis")
 		end
 		if self.db.profile.enrage then
-			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
-			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
-			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
-			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
-			self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
-			self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
-			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Message(fmt(L2["enrage_start"], boss, 10), "Attention")
+			self:DelayedMessage(300, fmt(L2["enrage_min"], 5), "Positive")
+			self:DelayedMessage(420, fmt(L2["enrage_min"], 3), "Positive")
+			self:DelayedMessage(540, fmt(L2["enrage_min"], 1), "Positive")
+			self:DelayedMessage(570, fmt(L2["enrage_sec"], 30), "Positive")
+			self:DelayedMessage(590, fmt(L2["enrage_sec"], 10), "Urgent")
+			self:DelayedMessage(600, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
 		if self.db.profile.whirlwind then
@@ -316,8 +321,8 @@ function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 end
 
 function mod:WhirlwindBar()
-	self:Bar(L["whirlwind_bar2"], 16, "Ability_Whirlwind")
-	self:ScheduleEvent("ww2", "BigWigs_Message", 16, L["whirlwind_warn"], "Attention")
+	self:Bar(L["whirlwind_bar2"], 15, "Ability_Whirlwind")
+	self:ScheduleEvent("ww2", "BigWigs_Message", 15, L["whirlwind_warn"], "Attention")
 end
 
 function mod:UNIT_HEALTH(msg)
@@ -337,7 +342,7 @@ function mod:WMEvent(msg)
 	local wplayer, wtype = select(3, msg:find(L["whisper_trigger"]))
 	if wplayer and wtype then
 		if wplayer == L2["you"] and wtype == L2["are"] then
-			wplayer = UnitName("player")
+			wplayer = pName
 		end
 		self:Sync("LeoWhisp "..wplayer)
 		return
@@ -347,15 +352,21 @@ function mod:WMEvent(msg)
 		local mcplayer, mctype = select(3, msg:find(L["mindcontrol_trigger"]))
 		if mcplayer and mctype then
 			if mcplayer == L2["you"] and mctype == L2["are"] then
-				mcplayer = UnitName("player")
+				mcplayer = pName
 			end
-			self:Message(L["mindcontrol_warning"]:format(mcplayer), "Urgent", nil, "Alert")
+			self:Message(fmt(L["mindcontrol_warning"], mcplayer), "Urgent", nil, "Alert")
 			return
 		end
 	end
 end
 
+local function nilStop()
+	stop = nil
+	for k in pairs(beDemon) do beDemon[k] = nil end
+end
+
 function mod:DemonWarn()
+	if stop then return end
 	if self.db.profile.whisper then
 		local msg = nil
 		for k in pairs(beDemon) do
@@ -365,15 +376,16 @@ function mod:DemonWarn()
 				msg = msg .. ", " .. k
 			end
 		end
-		self:Message(L["whisper_message"]:format(msg), "Attention")
+		self:Message(fmt(L["whisper_message"], msg), "Attention")
 	end
-	for k in pairs(beDemon) do beDemon[k] = nil end
+	stop = true
+	self:ScheduleEvent("BWLeoNilStop", nilStop, 6)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "LeoWhisp" and rest then
+	if sync == "LeoWhisp" and not stop and rest then
 		beDemon[rest] = true
-		self:ScheduleEvent("ScanDemons", self.DemonWarn, 2, self)
+		self:ScheduleEvent("ScanDemons", self.DemonWarn, 0.3, self)
 		self:Bar(L["whisper_bar"], 30, "Spell_Shadow_ManaFeed")
 	elseif sync == "LeoWW" and self.db.profile.whirlwind then
 		self:Message(L["whirlwind_gain"], "Important", nil, "Alert")

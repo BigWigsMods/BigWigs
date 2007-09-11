@@ -68,7 +68,7 @@ L:RegisterTranslations("enUS", function() return {
 	scream_trigger = "^Essence of Anger's Soul Scream ",
 	scream_bar = "~Soul Scream Cooldown",
 
-	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by (.*).$",
+	afflict_trigger = "^(%S+) (%S+) afflicted by (.*).$",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -353,7 +353,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "RoSDrain" and rest then
 		drained[rest] = true
 		self:ScheduleEvent("BWDrainWarn", self.DrainWarn, 1.5, self)
-	elseif sync == "RoSSpite" and rest then
+	elseif sync == "RoSSpite" and not stop and rest then
 		spiteIt[rest] = true
 		self:ScheduleEvent("BWSpiteWarn", self.SpiteWarn, 0.3, self)
 	elseif sync == "RoSShield" and self.db.profile.runeshield then

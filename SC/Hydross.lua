@@ -9,7 +9,10 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local inTomb = {}
 local debuff = {0, 10, 25, 50, 100, 250, 500}
 local currentPerc = nil
+local fmt = string.format
 local count = 1
+local pName = nil
+local stop
 
 local tooltip
 
@@ -30,7 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 	corruption_bar = "Mark of Corruption - %s%%",
 
 	stance = "Stance changes",
-	stance_desc = ("Warn when %s changes stances."):format(boss),
+	stance_desc = "Warn when Hydross changes stances.",
 	poison_stance_trigger = "Aaghh, the poison...",
 	water_stance_trigger = "Better, much better.",
 	poison_stance = "Hydross is now poisoned!",
@@ -49,7 +52,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	debuff_warn = "Mark at %s%%!",
 
-	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by (.*).$",
+	afflict_trigger = "^(%S+) (%S+) afflicted by (.*).$",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -59,7 +62,7 @@ L:RegisterTranslations("deDE", function() return {
 	mark_desc = "Zeigt Warnungen und Anzahl des Mals.",
 
 	stance = "Phasenwechsel",
-	stance_desc = ("Warnt wenn %s seine Phase wechselt."):format(boss),
+	stance_desc = "Warnt wenn Hydross der Unstete seine Phase wechselt.",
 
 	sludge = "\195\156bler Schlamm",
 	sludge_desc = "Warnt welche Spieler von \195\156bler Schlamm betroffen sind.",
@@ -103,7 +106,7 @@ L:RegisterTranslations("koKR", function() return {
 	corruption_bar = "타락의 징표 - %s%%",
 
 	stance = "태세 변경",
-	stance_desc = ("%s의 태세 변경 시 경고합니다."):format(boss),
+	stance_desc = "불안정한 히드로스의 태세 변경 시 경고합니다.",
 	poison_stance_trigger = "으아아, 독이...",
 	water_stance_trigger = "아... 기분이 훨씬 좋군.",
 	poison_stance = "히드로스 오염!",
@@ -136,7 +139,7 @@ L:RegisterTranslations("frFR", function() return {
 	corruption_bar = "Marque de Corruption - %s%%",
 
 	stance = "Changements d'état",
-	stance_desc = ("Préviens quand %s change d'état."):format(boss),
+	stance_desc = "Préviens quand Hydross l'Instable change d'état.",
 	poison_stance_trigger = "Aaarrgh, le poison…",
 	water_stance_trigger = "Ça va mieux. Beaucoup mieux.",
 	poison_stance = "Hydross est maintenant empoisonné !",
@@ -169,7 +172,7 @@ L:RegisterTranslations("zhTW", function() return {
 	corruption_bar = "墮落印記(自然) - %s%%",
 
 	stance = "形態改變",
-	stance_desc = ("當 %s 改變型態時發出警報"):format(boss),
+	stance_desc = "當 不穩定者海卓司 改變型態時發出警報",
 	poison_stance_trigger = "啊，毒……",
 	water_stance_trigger = "很好，舒服多了。",
 	poison_stance = "海卓司轉為毒型態！",
@@ -227,6 +230,8 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "HydrossTomb", 0)
+	pName = UnitName("player")
+	stop = nil
 end
 
 ------------------------------
@@ -238,32 +243,32 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		count = 1
 		currentPerc = nil
 		if self.db.profile.mark then
-			self:Bar(L["hydross_bar"]:format(debuff[count+1]), 15, "Spell_Frost_FrozenCore")
+			self:Bar(fmt(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrozenCore")
 		end
 		if self.db.profile.enrage then
-			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
-			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
-			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
-			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
-			self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
-			self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
-			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Message(fmt(L2["enrage_start"], boss, 10), "Attention")
+			self:DelayedMessage(300, fmt(L2["enrage_min"], 5), "Positive")
+			self:DelayedMessage(420, fmt(L2["enrage_min"], 3), "Positive")
+			self:DelayedMessage(540, fmt(L2["enrage_min"], 1), "Positive")
+			self:DelayedMessage(570, fmt(L2["enrage_sec"], 30), "Positive")
+			self:DelayedMessage(590, fmt(L2["enrage_sec"], 10), "Urgent")
+			self:DelayedMessage(600, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif msg == L["poison_stance_trigger"] then
-		self:TriggerEvent("BigWigs_StopBar", self, L["hydross_bar"]:format(debuff[count+1] and debuff[count+1] or 500))
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["hydross_bar"], debuff[count+1] and debuff[count+1] or 500))
 		count = 1
 		currentPerc = nil
 		if self.db.profile.stance then
 			self:Message(L["poison_stance"], "Important")
 		end
 		if self.db.profile.mark then
-			self:Bar(L["corruption_bar"]:format(debuff[count+1]), 15, "Spell_Nature_ElementalShields")
+			self:Bar(fmt(L["corruption_bar"], debuff[count+1]), 15, "Spell_Nature_ElementalShields")
 		end
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	elseif msg == L["water_stance_trigger"] then
-		self:TriggerEvent("BigWigs_StopBar", self, L["corruption_bar"]:format(debuff[count+1] and debuff[count+1] or 500))
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["corruption_bar"], debuff[count+1] and debuff[count+1] or 500))
 		count = 1
 		currentPerc = nil
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
@@ -271,7 +276,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(L["water_stance"], "Important")
 		end
 		if self.db.profile.mark then
-			self:Bar(L["hydross_bar"]:format(debuff[count+1]), 15, "Spell_Frost_FrozenCore")
+			self:Bar(fmt(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrozenCore")
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
@@ -289,19 +294,19 @@ end
 
 function mod:IncrementHydross(match)
 	count = getMark(match)
-	self:TriggerEvent("BigWigs_StopBar", self, L["hydross_bar"]:format(debuff[count] and debuff[count] or 500))
+	self:TriggerEvent("BigWigs_StopBar", self, fmt(L["hydross_bar"], debuff[count] and debuff[count] or 500))
 	if self.db.profile.mark then
-		self:Message(L["debuff_warn"]:format(match), "Important", nil, "Alert")
-		self:Bar(L["hydross_bar"]:format(debuff[count+1] and debuff[count+1] or 500), 15, "Spell_Frost_FrozenCore")
+		self:Message(fmt(L["debuff_warn"], match), "Important", nil, "Alert")
+		self:Bar(fmt(L["hydross_bar"], debuff[count+1] and debuff[count+1] or 500), 15, "Spell_Frost_FrozenCore")
 	end
 end
 
 function mod:IncrementCorruption(match)
 	count = getMark(match)
-	self:TriggerEvent("BigWigs_StopBar", self, L["corruption_bar"]:format(debuff[count] and debuff[count] or 500))
+	self:TriggerEvent("BigWigs_StopBar", self, fmt(L["corruption_bar"], debuff[count] and debuff[count] or 500))
 	if self.db.profile.mark then
-		self:Message(L["debuff_warn"]:format(match), "Important", nil, "Alert")
-		self:Bar(L["corruption_bar"]:format(debuff[count+1] and debuff[count+1] or 500), 15, "Spell_Nature_ElementalShields")
+		self:Message(fmt(L["debuff_warn"], match), "Important", nil, "Alert")
+		self:Bar(fmt(L["corruption_bar"], debuff[count+1] and debuff[count+1] or 500), 15, "Spell_Nature_ElementalShields")
 	end
 end
 
@@ -333,7 +338,7 @@ function mod:Event(msg)
 	local aPlayer, aType, aSpell = select(3, msg:find(L["afflict_trigger"]))
 	if aPlayer and aType then
 		if aPlayer == L2["you"] and aType == L2["are"] then
-			aPlayer = UnitName("player")
+			aPlayer = pName
 		end
 		if aSpell == L["tomb"] then
 			self:Sync("HydrossTomb " .. aPlayer)
@@ -343,7 +348,13 @@ function mod:Event(msg)
 	end
 end
 
+local function nilStop()
+	stop = nil
+	for k in pairs(inTomb) do inTomb[k] = nil end
+end
+
 function mod:TombWarn()
+	if stop then return end
 	if self.db.profile.tomb then
 		local msg = nil
 		for k in pairs(inTomb) do
@@ -353,21 +364,21 @@ function mod:TombWarn()
 				msg = msg .. ", " .. k
 			end
 		end
-		self:Message(L["tomb_message"]:format(msg), "Attention")
-
+		self:Message(fmt(L["tomb_message"], msg), "Attention")
 	end
-	for k in pairs(inTomb) do inTomb[k] = nil end
+	stop = true
+	self:ScheduleEvent("BWHydrossNilStop", nilStop, 3.5)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "HydrossSludge" and rest and self.db.profile.sludge then
-		self:Message(L["sludge_message"]:format(rest), "Attention")
-		self:Bar(L["sludge_message"]:format(rest), 24, "Spell_Nature_AbolishMagic")
+		self:Message(fmt(L["sludge_message"], rest), "Attention")
+		self:Bar(fmt(L["sludge_message"], rest), 24, "Spell_Nature_AbolishMagic")
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
-	elseif sync == "HydrossTomb" and rest then
+	elseif sync == "HydrossTomb" and not stop and rest then
 		inTomb[rest] = true
-		self:ScheduleEvent("Tomb", self.TombWarn, 1.5, self)
+		self:ScheduleEvent("BWTombWarn", self.TombWarn, 0.3, self)
 	end
 end

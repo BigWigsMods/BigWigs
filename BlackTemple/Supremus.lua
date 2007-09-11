@@ -8,6 +8,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local started = nil
 local previous = nil
 local UnitName = UnitName
+local fmt = string.format
 
 ----------------------------
 --      Localization     --
@@ -164,15 +165,15 @@ function mod:TargetCheck()
 	else
 		local num = GetNumRaidMembers()
 		for i = 1, num do
-			if UnitName("raid"..i.."target") == boss then
-				target = UnitName("raid"..i.."targettarget")
+			if UnitName(fmt("%s%d%s", "raid", i, "target")) == boss then
+				target = UnitName(fmt("%s%d%s", "raid", i, "targettarget"))
 				break
 			end
 		end
 	end
 	if target ~= previous then
 		if target then
-			self:Message(L["target_message"]:format(target), "Attention")
+			self:Message(fmt(L["target_message"], target), "Attention")
 			if self.db.profile.icon then
 				self:Icon(target)
 			end
@@ -196,7 +197,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 		end
 	elseif msg == L["kite_phase_trigger"] then
 		if self.db.profile.phase then
-			self:Message(L["kite_phase_message"]:format(boss), "Positive")
+			self:Message(fmt(L["kite_phase_message"], boss), "Positive")
 			self:Bar(L["next_phase_bar"], 60, "Spell_Fire_MoltenBlood")
 			self:DelayedMessage(50, L["next_phase_message"], "Attention")
 		end
@@ -221,14 +222,14 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:DelayedMessage(50, L["next_phase_message"], "Attention")
 		end
 		if self.db.profile.enrage then
-			self:Message(L2["enrage_start"]:format(boss, 15), "Attention")
-			self:DelayedMessage(300, L2["enrage_min"]:format(10), "Positive")
-			self:DelayedMessage(600, L2["enrage_min"]:format(5), "Positive")
-			self:DelayedMessage(840, L2["enrage_min"]:format(1), "Positive")
-			self:DelayedMessage(870, L2["enrage_sec"]:format(30), "Positive")
-			self:DelayedMessage(890, L2["enrage_sec"]:format(10), "Urgent")
-			self:DelayedMessage(895, L2["enrage_sec"]:format(5), "Urgent")
-			self:DelayedMessage(900, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Message(fmt(L2["enrage_start"], boss, 15), "Attention")
+			self:DelayedMessage(300, fmt(L2["enrage_min"], 10), "Positive")
+			self:DelayedMessage(600, fmt(L2["enrage_min"], 5), "Positive")
+			self:DelayedMessage(840, fmt(L2["enrage_min"], 1), "Positive")
+			self:DelayedMessage(870, fmt(L2["enrage_sec"], 30), "Positive")
+			self:DelayedMessage(890, fmt(L2["enrage_sec"], 10), "Urgent")
+			self:DelayedMessage(895, fmt(L2["enrage_sec"], 5), "Urgent")
+			self:DelayedMessage(900, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 900, "Spell_Shadow_UnholyFrenzy")
 		end
 	end

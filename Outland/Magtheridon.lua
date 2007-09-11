@@ -20,7 +20,7 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Magtheridon",
 
 	escape = "Escape",
-	escape_desc = ("Countdown until %s breaks free."):format(boss),
+	escape_desc = "Countdown until Magtheridon breaks free.",
 	escape_trigger1 = "%%s's bonds begin to weaken!",
 	escape_trigger2 = "I... am... unleashed!",
 	escape_warning1 = "%s Engaged - Breaks free in 2min!",
@@ -49,7 +49,7 @@ L:RegisterTranslations("enUS", function() return {
 	nova_cast = "Casting Blast Nova!",
 
 	banish = "Banish",
-	banish_desc = ("Warn when you Banish %s."):format(boss),
+	banish_desc = "Warn when you Banish Magtheridon.",
 	banish_trigger = "Not again! Not again...",
 	banish_message = "Banished for ~10sec",
 	banish_over_trigger = "^Shadow Cage fades",
@@ -58,7 +58,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	exhaust = "Disable Exhaustion Bars",
 	exhaust_desc = "Timer bars for Mind Exhaustion on players.",
-	exhaust_trigger = "^([^%s]+) ([^%s]+) afflicted by Mind Exhaustion%.$",
+	exhaust_trigger = "^(%S+) (%S+) afflicted by Mind Exhaustion%.$",
 	exhaust_bar = "[%s] Exhausted",
 
 	debris = "Debris on You",
@@ -75,7 +75,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	escape = "Ausbruch",
-	escape_desc = ("Countdown bis %s ausbricht"):format(boss),
+	escape_desc = "Countdown bis Magtheridon ausbricht",
 
 	abyssal = "Brennender Schlund",
 	abyssal_desc = "Warnt, wenn ein Brennender Schlund gespawned wird",
@@ -87,7 +87,7 @@ L:RegisterTranslations("deDE", function() return {
 	nova_desc = "Gesch\195\164tzte Drucknova Timer",
 
 	banish = "Verbannung",
-	banish_desc = ("Warnt, wenn ihr %s verbannt"):format(boss),
+	banish_desc = "Warnt, wenn ihr Magtheridon verbannt",
 
 	exhaust = "Ersch\195\182pfung",
 	exhaust_desc = "Timer f\195\188r Gedankenersch\195\182pfung",
@@ -121,7 +121,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	escape = "Evasion",
-	escape_desc = ("Compte à rebours avant que %s ne soit libre."):format(boss),
+	escape_desc = "Compte à rebours avant que Magtheridon ne soit libre.",
 	escape_trigger1 = "Les liens de %%s commencent à se relâcher !",
 	escape_trigger2 = "Me... voilà... déchaîné !",
 	escape_warning1 = "%s engagé - Libre dans 2 min. !",
@@ -150,7 +150,7 @@ L:RegisterTranslations("frFR", function() return {
 	nova_cast = "Incante une Nova explosive !",
 
 	banish = "Bannir",
-	banish_desc = ("Préviens quand vous bannissez %s."):format(boss),
+	banish_desc = "Préviens quand vous bannissez Magtheridon.",
 	banish_trigger = "Pas encore ! Pas encore...",
 	banish_message = "Banni pendant ~10 sec.",
 	banish_over_trigger = "Cage d'ombre sur Magtheridon vient de se dissiper.",
@@ -176,7 +176,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	escape = "탈출",
-	escape_desc = ("%s 속박 해제까지 카운트다운합니다."):format(boss),
+	escape_desc = "마그테리돈 속박 해제까지 카운트다운합니다.",
 	escape_trigger1 = "%%s의 속박이 약해지기 시작합니다",
 	escape_trigger2 = "내가... 풀려났도다!",
 	escape_warning1 = "%s 전투 개시 - 2분 이내 속박 해제!",
@@ -205,7 +205,7 @@ L:RegisterTranslations("koKR", function() return {
 	nova_cast = "파열의 회오리 시전!",
 
 	banish = "추방",
-	banish_desc = ("%s 추방 시 알립니다."):format(boss),
+	banish_desc = "마그테리돈 추방 시 알립니다.",
 	banish_trigger = "안 돼, 다시 그럴 수는 없다!",
 	banish_message = "약 10초 동안 추방됨",
 	banish_over_trigger = "^Shadow Cage fades", -- check
@@ -231,7 +231,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	escape = "釋放",
-	escape_desc = ("倒數計時，直到 %s 獲得自由"):format(boss),
+	escape_desc = "倒數計時，直到 瑪瑟里頓 獲得自由",
 	escape_trigger1 = "束縛開始變弱",
 	escape_trigger2 = "我……被……釋放了!",
 	escape_warning1 = "與 %s 進入戰鬥 - 2 分鐘後獲得自由！",
@@ -260,7 +260,7 @@ L:RegisterTranslations("zhTW", function() return {
 	nova_cast = "開始施放衝擊新星!",
 
 	banish = "驅逐",
-	banish_desc = ("當你驅逐 %s."):format(boss),
+	banish_desc = "當你驅逐 瑪瑟里頓.",
 	banish_trigger = "別再來了!別再來了……",
 	banish_message = "驅逐成功 - 衝擊新星巳中斷",
 	banish_over_trigger = "暗影之握效果從瑪瑟里頓身上消失",

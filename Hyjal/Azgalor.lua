@@ -32,7 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 	icon = "Icon",
 	icon_desc = "Place a Raid Icon on the player afflicted by Doom (requires promoted or higher).",
 
-	afflict_trigger = "^([^%s]+) ([^%s]+) afflicted by (.*).$",
+	afflict_trigger = "^(%S+) (%S+) afflicted by (.*).$",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

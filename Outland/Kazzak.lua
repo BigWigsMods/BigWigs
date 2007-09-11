@@ -31,7 +31,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	twist = "Twist",
 	twist_desc = "Warn who has Twisted Reflection.",
-	twist_trigger = "^([^%s]+) ([^%s]+) afflicted by Twisted Reflection%.$",
+	twist_trigger = "^(%S+) (%S+) afflicted by Twisted Reflection%.$",
 	twist_message = "Twisted Reflection: %s",
 } end)
 

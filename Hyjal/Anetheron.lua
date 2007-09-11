@@ -6,7 +6,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["Anetheron"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local UnitName = UnitName
-local GetNumRaidMembers = GetNumRaidMembers
+local fmt = string.format
 
 ----------------------------
 --      Localization      --
@@ -143,15 +143,16 @@ function mod:InfernoCheck()
 	elseif UnitName("focus") == boss then
 		target = UnitName("focustarget")
 	else
-		for i = 1, GetNumRaidMembers() do
-			if UnitName("raid"..i.."target") == boss then
-				target = UnitName("raid"..i.."targettarget")
+		local num = GetNumRaidMembers()
+		for i = 1, num do
+			if UnitName(fmt("%s%d%s", "raid", i, "target")) == boss then
+				target = UnitName(fmt("%s%d%s", "raid", i, "targettarget"))
 				break
 			end
 		end
 	end
 	if target then
-		self:Message(L["inferno_message"]:format(target), "Important", nil, "Alert")
+		self:Message(fmt(L["inferno_message"], target), "Important", nil, "Alert")
 		if self.db.profile.icon then
 			self:Icon(target)
 			self:ScheduleEvent("ClearIcon", "BigWigs_RemoveRaidIcon", 5, self)

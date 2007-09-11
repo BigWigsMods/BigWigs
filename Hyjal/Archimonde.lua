@@ -8,6 +8,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local UnitName = UnitName
 local pName = nil
+local fmt = string.format
 
 ----------------------------
 --      Localization      --
@@ -20,7 +21,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	grip = "Grip of the Legion",
 	grip_desc = "Warn who has Grip of the Legion.",
-	grip_trigger = "^([^%s]+) ([^%s]+) afflicted by Grip of the Legion%.$",
+	grip_trigger = "^(%S+) (%S+) afflicted by Grip of the Legion%.$",
 	grip_you = "Grip on you!",
 	grip_other = "Grip on %s!",
 
@@ -168,7 +169,7 @@ end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "ArchGrip" and rest and self.db.profile.grip then
-		local other = L["grip_other"]:format(rest)
+		local other = fmt(L["grip_other"], rest)
 		if rest == pName then
 			self:Message(L["grip_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
@@ -192,14 +193,14 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		if self.db.profile.enrage then
-			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
-			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
-			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
-			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
-			self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
-			self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
-			self:DelayedMessage(595, L2["enrage_sec"]:format(5), "Urgent")
-			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Message(fmt(L2["enrage_start"], boss, 10), "Attention")
+			self:DelayedMessage(300, fmt(L2["enrage_min"], 5), "Positive")
+			self:DelayedMessage(420, fmt(L2["enrage_min"], 3), "Positive")
+			self:DelayedMessage(540, fmt(L2["enrage_min"], 1), "Positive")
+			self:DelayedMessage(570, fmt(L2["enrage_sec"], 30), "Positive")
+			self:DelayedMessage(590, fmt(L2["enrage_sec"], 10), "Urgent")
+			self:DelayedMessage(595, fmt(L2["enrage_sec"], 5), "Urgent")
+			self:DelayedMessage(600, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
 		if self.db.profile.fear then
@@ -236,8 +237,8 @@ function mod:TargetCheck()
 	else
 		local num = GetNumRaidMembers()
 		for i = 1, num do
-			if UnitName("raid"..i.."target") == boss then
-				target = UnitName("raid"..i.."targettarget")
+			if UnitName(fmt("%s%d%s", "raid", i, "target")) == boss then
+				target = UnitName(fmt("%s%d%s", "raid", i, "targettarget"))
 				break
 			end
 		end
@@ -245,12 +246,12 @@ function mod:TargetCheck()
 	if target then
 		if target == pName then
 			self:Message(L["burst_you"], "Personal", true, "Long")
-			self:Message(L["burst_other"]:format(target), "Attention", nil, nil, true)
+			self:Message(fmt(L["burst_other"], target), "Attention", nil, nil, true)
 			if self.db.profile.burstsay then
 				SendChatMessage(L["burstsay_message"], "SAY")
 			end
 		else
-			self:Message(L["burst_other"]:format(target), "Attention")
+			self:Message(fmt(L["burst_other"], target), "Attention")
 		end
 	end
 end

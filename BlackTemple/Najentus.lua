@@ -17,7 +17,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	spine = "Impaling Spine",
 	spine_desc = "Tells you who gets impaled.",
-	spine_trigger = "^([^%s]+) ([^%s]+) afflicted by Impaling Spine%.$",
+	spine_trigger = "^(%S+) (%S+) afflicted by Impaling Spine%.$",
 	spine_message = "Impaling Spine on %s!",
 
 	spinesay = "Spine Say",

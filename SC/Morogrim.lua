@@ -8,6 +8,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local inGrave = {}
 local grobulealert = nil
+local stop
 
 ----------------------------
 --      Localization      --
@@ -25,7 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	grave = "Watery Grave",
 	grave_desc = "Alert who has watery grave and durations.",
-	grave_trigger = "^([^%s]+) ([^%s]+) afflicted by Watery Grave%.$",
+	grave_trigger = "^(%S+) (%S+) afflicted by Watery Grave%.$",
 	grave_message = "Watery Grave: %s",
 	grave_bar = "Watery Graves",
 	grave_nextbar = "~Graves Cooldown",
@@ -210,6 +211,7 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MoroGrave", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MoroTidal", 5)
+	srop = nil
 end
 
 ------------------------------
@@ -255,7 +257,13 @@ function mod:Event(msg)
 	end
 end
 
+local function nilStop()
+	stop = nil
+	for k in pairs(inGrave) do inGrave[k] = nil end
+end
+
 function mod:GraveWarn()
+	if stop then return end
 	if self.db.profile.grave then
 		local msg = nil
 		for k in pairs(inGrave) do
@@ -269,13 +277,14 @@ function mod:GraveWarn()
 		self:Bar(L["grave_nextbar"], 28.5, "Spell_Frost_ArcticWinds")
 		self:Bar(L["grave_bar"], 4.5, "Spell_Frost_ArcticWinds")
 	end
-	for k in pairs(inGrave) do inGrave[k] = nil end
+	stop = true
+	self:ScheduleEvent("BWMoroNilStop", nilStop, 5)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "MoroGrave" and rest then
+	if sync == "MoroGrave" and not stop and rest then
 		inGrave[rest] = true
-		self:ScheduleEvent("Grave", self.GraveWarn, 1.5, self)
+		self:ScheduleEvent("Grave", self.GraveWarn, 0.4, self)
 	elseif sync == "MoroTidal" and self.db.profile.tidal then
 		self:Message(L["tidal_message"], "Urgent", nil, "Alarm")
 	end

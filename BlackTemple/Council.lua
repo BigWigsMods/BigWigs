@@ -40,7 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	poison = "Deadly Poison",
 	poison_desc = "Warn for Deadly Poison on players.",
-	poison_trigger = "^([^%s]+) ([^%s]+) afflicted by Deadly Poison%.$",
+	poison_trigger = "^(%S+) (%S+) afflicted by Deadly Poison%.$",
 	poison_other = "%s has Deadly Poison!",
 	poison_you = "Deadly Poison on YOU!",
 
@@ -52,7 +52,7 @@ L:RegisterTranslations("enUS", function() return {
 	circle_trigger = "Lady Malande begins to cast Circle of Healing.",
 	circle_message = "Casting Circle of Healing!",
 	circle_heal_trigger = "^Lady Malande 's Circle of Healing heals",
-	circle_fail_trigger = "^([^%s]+) interrupts Lady Malande's Circle of Healing%.$",
+	circle_fail_trigger = "^(%S+) interrupts Lady Malande's Circle of Healing%.$",
 	circle_heal_message = "Healed! - Next in ~20sec",
 	circle_fail_message = "Interrupted! - Next in ~12sec",
 	circle_bar = "~Circle of Healing Cooldown",

@@ -6,6 +6,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["Gurtogg Bloodboil"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local UnitName = UnitName
+local fmt = string.format
 local pName = nil
 
 ----------------------------
@@ -28,7 +29,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	rage = "Fel Rage",
 	rage_desc = "Warn who gets Fel Rage.",
-	rage_trigger = "^([^%s]+) ([^%s]+) afflicted by Fel Rage%.$",
+	rage_trigger = "^(%S+) (%S+) afflicted by Fel Rage%.$",
 	rage_you = "You have Fel Rage!!",
 	rage_other = "%s has Fel Rage!",
 
@@ -205,9 +206,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:TriggerEvent("BigWigs_StopBar", self, L["phase_normal_bar"])
 		if rest == pName then
 			self:Message(L["rage_you"], "Personal", true, "Long")
-			self:Message(L["rage_other"]:format(rest), "Attention", nil, nil, true)
+			self:Message(fmt(L["rage_other"], rest), "Attention", nil, nil, true)
 		else
-			self:Message(L["rage_other"]:format(rest), "Attention")
+			self:Message(fmt(L["rage_other"], rest), "Attention")
 		end
 		if self.db.profile.whisper then
 			self:Whisper(rest, L["rage_you"])
@@ -233,14 +234,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:ScheduleEvent("rage1", "BigWigs_Message", 47, L["phase_rage_warning"], "Important")
 		end
 		if self.db.profile.enrage then
-			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
-			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
-			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
-			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
-			self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
-			self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
-			self:DelayedMessage(595, L2["enrage_sec"]:format(5), "Urgent")
-			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Message(fmt(L2["enrage_start"], boss, 10), "Attention")
+			self:DelayedMessage(300, fmt(L2["enrage_min"], 5), "Positive")
+			self:DelayedMessage(420, fmt(L2["enrage_min"], 3), "Positive")
+			self:DelayedMessage(540, fmt(L2["enrage_min"], 1), "Positive")
+			self:DelayedMessage(570, fmt(L2["enrage_sec"], 30), "Positive")
+			self:DelayedMessage(590, fmt(L2["enrage_sec"], 10), "Urgent")
+			self:DelayedMessage(595, fmt(L2["enrage_sec"], 5), "Urgent")
+			self:DelayedMessage(600, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
 	end
@@ -271,14 +272,14 @@ function mod:AcidCheck()
 	else
 		local num = GetNumRaidMembers()
 		for i = 1, num do
-			if UnitName("raid"..i.."target") == boss then
-				target = UnitName("raid"..i.."targettarget")
+			if UnitName(fmt("%s%d%s", "raid", i, "target")) == boss then
+				target = UnitName(fmt("%s%d%s", "raid", i, "targettarget"))
 				break
 			end
 		end
 	end
 	if target then
-		self:Message(L["acid_message"]:format(target), "Attention")
+		self:Message(fmt(L["acid_message"], target), "Attention")
 		if self.db.profile.icon then
 			self:Icon(target)
 			self:ScheduleEvent("ClearIcon", "BigWigs_RemoveRaidIcon", 5, self)

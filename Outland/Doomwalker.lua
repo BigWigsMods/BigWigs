@@ -192,7 +192,7 @@ end
 function mod:UNIT_HEALTH(msg)
 	if not self.db.profile.enrage then return end
 	if UnitName(msg) == boss then
-		local health = UnitHealth(arg1)
+		local health = UnitHealth(msg)
 		if health > 20 and health <= 25 and not enrageAnnounced then
 			self:Message(L["enrage_soon_message"], "Urgent")
 			enrageAnnounced = true

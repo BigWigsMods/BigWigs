@@ -40,7 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	static = "Static Charge",
 	static_desc = "Warn about Static Charge on players.",
-	static_charge_trigger = "^([^%s]+) ([^%s]+) afflicted by Static Charge%.$",
+	static_charge_trigger = "^(%S+) (%S+) afflicted by Static Charge%.$",
 	static_charge_message = "Static Charge on %s!",
 	static_fade = "Static Charge fades from you.",
 

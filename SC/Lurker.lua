@@ -6,6 +6,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["The Lurker Below"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started
 local occured = nil
+local fmt = string.format
 
 ----------------------------
 --      Localization      --
@@ -17,7 +18,7 @@ L:RegisterTranslations("enUS", function() return {
 	engage_warning = "%s Engaged - Possible Dive in 90sec",
 
 	dive = "Dive",
-	dive_desc = ("Timers for when %s dives."):format(boss),
+	dive_desc = "Timers for when The Lurker Below dives.",
 	dive_warning = "Possible Dive in %dsec!",
 	dive_bar = "~Dives in",
 	dive_message = "Dives - Back in 60sec",
@@ -45,7 +46,7 @@ L:RegisterTranslations("koKR", function() return {
 	engage_warning = "%s 전투 시작 - 90초 이내 잠수",
 
 	dive = "잠수",
-	dive_desc = ("%s 잠수 시 타이머입니다."):format(boss),
+	dive_desc = "심연의 잠복꾼 잠수 시 타이머입니다.",
 
 	dive_warning = "%d초 이내 잠수!",
 	dive_bar = "~잠수",
@@ -74,7 +75,7 @@ L:RegisterTranslations("frFR", function() return {
 	engage_warning = "%s engagé - Plongée probable dans 90 sec.",
 
 	dive = "Plongées",
-	dive_desc = ("Délais avant que %s ne plonge."):format(boss),
+	dive_desc = "Délais avant que Le Rôdeur d'En-bas ne plonge.",
 	dive_warning = "Plongée probable dans %d sec. !",
 	dive_bar = "~Plongée",
 	dive_message = "Plongée - De retour dans 60 sec.",
@@ -102,7 +103,7 @@ L:RegisterTranslations("deDE", function() return {
 	engage_warning = "%s Engaged - M\195\182gliches abtauchen in 90sek",
 
 	dive = "Tauchen",
-	dive_desc = ("Zeitanzeige wann %s taucht."):format(boss),
+	dive_desc = "Zeitanzeige wann Das Grauen aus der Tiefe taucht.",
 	dive_warning = "M\195\182gliches abtauchen in %dsek!",
 	dive_bar = "~Tauchen",
 	dive_message = "Abgetaucht - Zur\195\188ck in 60sek",
@@ -130,7 +131,7 @@ L:RegisterTranslations("zhTW", function() return {
 	engage_warning = "%s 開始攻擊 - 約90秒後下潛",
 
 	dive = "潛水",
-	dive_desc = ("%s下潛計時器"):format(boss),
+	dive_desc = "海底潛伏者下潛計時器",
 	dive_warning = "大約%d秒後下潛!",
 	dive_bar = "~下潛",
 	dive_message = "潛水! 請就位打小兵 (60秒後王再次出現)",
@@ -195,11 +196,11 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.dive then
-			self:Message(L["engage_warning"]:format(boss), "Attention")
-			self:DelayedMessage(30, L["dive_warning"]:format(60), "Positive")
-			self:DelayedMessage(60, L["dive_warning"]:format(30), "Positive")
-			self:DelayedMessage(80, L["dive_warning"]:format(10), "Positive")
-			self:DelayedMessage(85, L["dive_warning"]:format(5), "Urgent", nil, "Alarm")
+			self:Message(fmt(L["engage_warning"], boss), "Attention")
+			self:DelayedMessage(30, fmt(L["dive_warning"], 60), "Positive")
+			self:DelayedMessage(60, fmt(L["dive_warning"], 30), "Positive")
+			self:DelayedMessage(80, fmt(L["dive_warning"], 10), "Positive")
+			self:DelayedMessage(85, fmt(L["dive_warning"], 5), "Urgent", nil, "Alarm")
 			self:Bar(L["dive_bar"], 90, "Spell_Frost_ArcticWinds")
 		end
 		if self.db.profile.whirl then
@@ -243,9 +244,9 @@ function mod:DiveCheck()
 		if self.db.profile.dive then
 			local ewarn = L["emerge_warning"]
 			self:Message(L["dive_message"], "Attention")
-			self:DelayedMessage(30, ewarn:format(30), "Positive")
-			self:DelayedMessage(50, ewarn:format(10), "Positive")
-			self:DelayedMessage(55, ewarn:format(5), "Urgent", nil, "Alert")
+			self:DelayedMessage(30, fmt(ewarn, 30), "Positive")
+			self:DelayedMessage(50, fmt(ewarn, 10), "Positive")
+			self:DelayedMessage(55, fmt(ewarn, 5), "Urgent", nil, "Alert")
 			self:DelayedMessage(60, L["emerge_message"], "Attention")
 			self:Bar(L["emerge_bar"], 60, "Spell_Frost_Stun")
 		end
@@ -265,10 +266,10 @@ end
 function mod:LurkerUP()
 	if self.db.profile.dive then
 		local dwarn = L["dive_warning"]
-		self:DelayedMessage(30, dwarn:format(60), "Positive")
-		self:DelayedMessage(60, dwarn:format(30), "Positive")
-		self:DelayedMessage(80, dwarn:format(10), "Positive")
-		self:DelayedMessage(85, dwarn:format(5), "Urgent", nil, "Alarm")
+		self:DelayedMessage(30, fmt(dwarn, 60), "Positive")
+		self:DelayedMessage(60, fmt(dwarn, 30), "Positive")
+		self:DelayedMessage(80, fmt(dwarn, 10), "Positive")
+		self:DelayedMessage(85, fmt(dwarn, 5), "Urgent", nil, "Alarm")
 		self:Bar(L["dive_bar"], 90, "Spell_Frost_ArcticWinds")
 	end
 

@@ -28,7 +28,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	icebolt = "Icebolt",
 	icebolt_desc = "Icebolt warnings.",
-	icebolt_trigger = "^([^%s]+) ([^%s]+) afflicted by Icebolt%.$",
+	icebolt_trigger = "^(%S+) (%S+) afflicted by Icebolt%.$",
 	icebolt_message = "Icebolt on %s!",
 
 	icon = "Raid Target Icon",
