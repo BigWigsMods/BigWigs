@@ -95,7 +95,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	--enrage_trigger = "Guards, attention! We have visitors....",
+	enrage_trigger = "守衛，注意!我們有訪客了……",
 
 	totem = "飛火圖騰",
 	totem_desc = "飛火圖騰施放警示。",

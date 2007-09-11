@@ -357,6 +357,83 @@ L:RegisterTranslations("deDE", function() return {
 	revive_bar = "Berater Wiederbelebung",
 	revive_warning = "Berater wiederbelebt in 5sec!",
 } end )
+L:RegisterTranslations("zhTW", function() return {
+	engage_trigger = "魔法，能量，我的人民陷入其中不能自拔……",
+	engage_message = "第一階段 - 四顧問！",
+
+	conflag = "燃燒",
+	conflag_desc = "當玩家受到燃燒時警告。",
+	conflag_spell = "燃燒",
+	conflag_message = "燃燒：[%s]",
+
+	gaze = "凝視",
+	gaze_desc = "當目標受到凝視時警示",
+	gaze_trigger = "凝視著([^%s]+)!$",
+	gaze_message = "凝視：[%s] - 快跑！",
+	gaze_bar = "凝視冷卻",
+
+	icon = "團隊標記",
+	icon_desc = "當目標受到凝視時設置骷髏標記",
+
+	fear = "恐懼",
+	fear_desc = "低沉咆哮警示",
+	fear_soon_message = "即將恐懼！",
+	fear_message = "恐懼！",
+	fear_bar = "恐懼冷卻",
+	fear_soon_trigger = "桑古納爾開始施放低沉咆哮",
+	fear_trigger1 = "桑古納爾的低沉咆哮被",
+	fear_trigger2 = "桑古納爾的低沉咆哮施放失敗。",
+	fear_spell = "低沉咆哮",
+
+	rebirth = "鳳凰復生",
+	rebirth_desc = "顯示鳳凰復生的計時",
+	rebirth_trigger1 = "Anar'anel belore!",
+	rebirth_trigger2 = "以太陽之名!",
+	rebirth_warning = "五秒內鳳凰可能復生！",
+	rebirth_bar = "大略復生時間",
+
+	pyro = "炎爆術",
+	pyro_desc = "顯示一個 60 秒的炎爆術計時",
+	pyro_trigger = "開始施放炎爆術",
+	pyro_warning = "五秒內施放炎爆術！",
+	pyro_message = "炎爆術！",
+
+	toy = "遙控玩具",
+	toy_desc = "當坦克受到遙控玩具影響時警示",
+	toy_message = "遙控玩具：[%s]",
+	toy_trigger = "遙控玩具", --afflicted by ...
+
+	phase = "階段警示",
+	phase_desc = "開啟各階段警示",
+	thaladred_inc_trigger = "讓我們看看你們這些大膽的狂徒如何反抗晦暗者薩拉瑞德的力量!",
+	sanguinar_inc_trigger = "你已經努力的打敗了我的幾位最忠誠的諫言者…但是沒有人可以抵抗血錘的力量。等著看桑古納爾的力量吧!",
+	capernian_inc_trigger = "卡普尼恩將保證你們不會在這裡停留太久。",
+	telonicus_inc_trigger = "做得好，你已經證明你的實力足以挑戰我的工程大師泰隆尼卡斯。",
+	weapons_inc_trigger = "你們看，我的個人收藏中有許多武器……",
+	phase3_trigger = "也許我低估了你。要你一次對付四位諫言者也許對你來說是不太公平，但是……我的人民從未得到公平的對待。我只是以牙還牙而已。",
+	phase4_trigger = "唉，有些時候，有些事情，必須得親自解決才行。",
+
+	flying_trigger = "我的心血是不會被你們輕易浪費的！我精心謀劃的未來是不會被你們輕易破壞的！感受我真正的力量吧！",
+	gravity_trigger1 = "如果世界變的上下顛倒，你們會怎麼辦呢？",
+	gravity_trigger2 = "站不住腳了嗎？",
+	gravity_bar = "下一次重力流逝",
+	gravity_message = "重力流逝！",
+	flying_message = "第五階段 - 1 分鐘內重力流逝！",
+
+	weapons_inc_message = "第二階段 - 武器即將出現！",
+	phase3_message = "第三階段 - 顧問群重生！",
+	phase4_message = "第四階段 - 王子來臨！",
+	phase4_bar = "凱爾薩斯來臨",
+
+	mc = "精神控制",
+	mc_desc = "精神控制警示",
+	mc_message = "精神控制：[%s]",
+
+	afflicted_trigger = "^(.+)受到()(.*)的傷害",
+
+	revive_bar = "顧問重生",
+	revive_warning = "顧問在五秒內活動！Tank、Healer 準備就位！",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

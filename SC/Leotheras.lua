@@ -171,6 +171,46 @@ L:RegisterTranslations("deDE", function() return {
 	whisper_bar = "D\195\164monen Despawn",
 	whisper_soon = "~D\195\164monen Cooldown",
 } end )
+L:RegisterTranslations("zhTW", function() return {
+	enrage_trigger = "終於，我的放逐結束了!",
+
+	whirlwind = "旋風斬",
+	whirlwind_desc = "旋風斬計時",
+	whirlwind_trigger = "盲目者李奧薩拉斯獲得了旋風斬的效果。",
+	whirlwind_gain = "旋風斬 - 持續 12 秒。",
+	whirlwind_fade = "旋風斬終止！",
+	whirlwind_bar = "旋風斬",
+	whirlwind_bar2 = "旋風斬冷卻",
+	whirlwind_warn = "冷卻結束 - 旋風斬即將來臨！",
+
+	phase = "惡魔型態",
+	phase_desc = "惡魔型態計時",
+	phase_trigger = "消失吧，微不足道的精靈。現在開始由我掌管!",
+	phase_demon = "惡魔型態 - 持續 60 秒！",
+	phase_demonsoon = "5 秒內進入惡魔型態！",
+	phase_normalsoon = "5 秒內回到普通型態！",
+	phase_normal = "普通型態 - 旋風斬即將來臨！",
+	demon_bar = "惡魔型態",
+	demon_nextbar = "下一次惡魔型態",
+
+	mindcontrol = "心靈控制",
+	mindcontrol_desc = "當隊友受到心控時警告",
+	mindcontrol_trigger = "^(.+)受到(.*)吞噬瘋狂",
+	mindcontrol_warning = "心控：[%s]",
+
+	image = "影分身",
+	image_desc = "15% 分身警告",
+	image_trigger = "不…不!你做了什麼?我是主人!你沒聽見我在說話嗎?我…..阿!無法…控制它。",
+	image_message = "15% - 分身出現！",
+	image_warning = "分身即將出現！",
+
+	whisper = "陰險之語",
+	whisper_desc = "當隊友受到陰險之語時警告",
+	whisper_trigger = "^(.+)受到(.*)陰險之語",
+	whisper_message = "內心的惡靈：[%s]",
+	whisper_bar = "惡靈消失計時",
+	whisper_soon = "惡靈冷卻",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

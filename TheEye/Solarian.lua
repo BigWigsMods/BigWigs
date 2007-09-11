@@ -157,6 +157,42 @@ L:RegisterTranslations("frFR", function() return {
 	priest_bar = "Prêtres/Solarian",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	engage_trigger = "與血精靈為敵者死!",
+
+	phase = "階段警告",
+	phase_desc = "當階段轉換時警告",
+	phase1_message = "第一階段 - 50 秒內分身！",
+	phase2_warning = "即將進入第二階段！",
+	phase2_trigger = "^I become",
+	phase2_message = "20% - 第二階段！",
+
+	wrath = "星術師之怒施放",
+	wrath_desc = "當星術師之怒施放警告同時提示施放目標。",
+	wrath_trigger = "^(.+)受到(.*)星術師之怒",
+	wrath_alert = "星術師之怒 - 目標：[%s]",
+	wrath_alert_trigger = "開始施放星術師之怒",
+
+	wrathyou = "自身星術師之怒警示",
+	wrathyou_desc = "當你受到星術師之怒時警示",
+	wrath_you = "你中了星術師之怒！",
+
+	icon = "團隊標記",
+	icon_desc = "當隊友受到星術師之怒時設置標記（需要權限）",
+
+	split = "分身警告",
+	split_desc = "當分身與小兵出現時警示。",
+	split_trigger1 = "我將會擊碎你偉大的妄想!",
+	split_trigger2 = "你絕望的獲勝!",
+	split_bar = "下一次分身",
+	split_warning = "7 秒內分身來臨！",
+
+	agent_warning = "分身！ - 6 秒內毀滅間諜出現！",
+	agent_bar = "間諜計時",
+	priest_warning = "5 秒內牧師、星術師出現！",
+	priest_bar = "牧師、星術師計時",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
