@@ -73,7 +73,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	holyfire = "Flammes sacrées",
 	holyfire_desc = "Préviens quand un joueur subit les effets des Flammes sacrées.",
-	holyfire_trigger = "^([^%s]+) ([^%s]+) les effets .* Flammes sacrées%.$",
+	holyfire_trigger = "^(%S+) (%S+) les effets .* Flammes sacrées%.$",
 	holyfire_message = "Flammes sacrées : %s",
 
 	icon = "Icône",

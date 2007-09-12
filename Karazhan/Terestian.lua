@@ -61,11 +61,11 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Ah, vous arrivez juste à temps.",
+	engage_trigger = "^Ah, vous arrivez juste à temps.",
 
 	sacrifice = "Sacrifice",
 	sacrifice_desc = "Préviens quand un joueur est sacrifié.",
-	sacrifice_trigger = "^([^%s]+) ([^%s]+) les effets .* Sacrifice%.$",
+	sacrifice_trigger = "^(%S+) (%S+) les effets .* Sacrifice%.$",
 	sacrifice_fade = "^Sacrifice sur ([^%s]+) vient de se dissiper%.$",
 	sacrifice_message = "%s est sacrifié !",
 	sacrifice_bar = "Sacrifice : %s",
@@ -75,12 +75,12 @@ L:RegisterTranslations("frFR", function() return {
 
 	weak = "Affaibli",
 	weak_desc = "Préviens quand Terestian est affaibli.",
-	weak_trigger = "les effets .* Pacte rompu",
+	weak_trigger = "les effets .* Pacte rompu%.$",
 	weak_message = "Affaibli pendant ~45 sec. !",
 	weak_warning1 = "Fin de l'Affaiblissement dans ~5 sec. !",
 	weak_warning2 = "Affaiblissement terminé !",
 	weak_bar = "~Fin Affaiblissement",
-	weak_fade = "^Pacte rompu sur Terestian Malsabot vient de se dissiper.$",
+	weak_fade = "^Pacte rompu sur Terestian Malsabot vient de se dissiper%.$",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

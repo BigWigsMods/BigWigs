@@ -73,8 +73,8 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	CHAT_MSG_SPELL_SELF_BUFF = "Vous n'avez pas réussi à dissiper le Frénésie de (.+).";
-	CHAT_MSG_SPELL_SELF_DAMAGE = "Vous lancez Tir tranquillisant sur (.+).",
+	CHAT_MSG_SPELL_SELF_BUFF = "^Vous n'avez pas réussi à dissiper le Frénésie de (.+).$";
+	CHAT_MSG_SPELL_SELF_DAMAGE = "^Vous lancez Tir tranquillisant sur (.+).$",
 	["Tranquilizing Shot"] = "Tir tranquillisant",
 
 	--["Tranq - %s"] = true,

@@ -116,7 +116,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	rage = "Gangrerage",
 	rage_desc = "Préviens quand un joueur subit les effets de la Gangrerage.",
-	rage_trigger = "^([^%s]+) ([^%s]+) les effets .* Gangrerage%.$",
+	rage_trigger = "^(%S+) (%S+) les effets .* Gangrerage%.$",
 	rage_you = "Vous avez la Gangrerage !",
 	rage_other = "%s a la Gangrerage !",
 

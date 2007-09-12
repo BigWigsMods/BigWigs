@@ -156,7 +156,7 @@ L:RegisterTranslations("frFR", function() return {
 	scream_trigger = "^Cri de l'âme de Essence de la colère ",
 	scream_bar = "~Cooldown Cri de l'âme",
 
-	afflict_trigger = "^([^%s]+) ([^%s]+) les effets .* ([^%s]+)%.$",
+	afflict_trigger = "^(%S+) (%S+) les effets .* (.*).$",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

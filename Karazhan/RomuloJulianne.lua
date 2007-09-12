@@ -92,19 +92,19 @@ L:RegisterTranslations("frFR", function() return {
 
 	poison = "Poison",
 	poison_desc = "Préviens quand un joueur est empoisonné.",
-	poison_trigger = "^([^%s]+) ([^%s]+) les effets .* Coup empoisonné%.$",
+	poison_trigger = "^(%S+) (%S+) les effets .* Coup empoisonné%.$",
 	poison_message = "Empoisonné : %s",
 
 	heal = "Soin",
 	heal_desc = "Préviens quand Julianne lance Amour éternel.",
-	heal_trigger = "commence à lancer Amour éternel",
+	heal_trigger = "commence à lancer Amour éternel%.$",
 	heal_message = "%s incante un soin !",
 
 	buff = "Buff",
 	buff_desc = "Préviens quand Romulo et Julianne gagnent leurs buffs.",
-	buff1_trigger = "gagne Hardiesse",
+	buff1_trigger = "gagne Hardiesse%.$",
 	buff1_message = "Romulo gagne Hardiesse !",
-	buff2_trigger = "gagne Dévotion",
+	buff2_trigger = "gagne Dévotion%.$",
 	buff2_message = "Julianne gagne Dévotion !",
 } end)
 

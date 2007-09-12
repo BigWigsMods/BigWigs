@@ -48,7 +48,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	riding_trigger = "^([^%s]+) ([^%s]+) Chaperon Rouge%.$",
+	riding_trigger = "^(%S+) (%S+) Chaperon Rouge%.$",
 
 	youriding = "Chaperon Rouge (vous)",
 	youriding_desc = "Préviens quand vous êtes le Chaperon Rouge.",

@@ -159,7 +159,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	exhaust = "Désactiver les barres d'Epuisement",
 	exhaust_desc = "Barre temporelles pour l'Epuisement d'esprit des joueurs",
-	exhaust_trigger = "^([^%s]+) ([^%s]+) les effets .* Epuisement de l'esprit%.$",
+	exhaust_trigger = "^(%S+) (%S+) les effets .* Epuisement de l'esprit%.$",
 	exhaust_bar = "[%s] épuisé",
 
 	debris = "Débris sur vous",

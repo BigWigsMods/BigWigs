@@ -82,7 +82,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	spine = "Epine de perforation",
 	spine_desc = "Préviens quand un joueur subit les effets de l'Epine de perforation.",
-	spine_trigger = "^([^%s]+) ([^%s]+) les effets .* Epine de perforation%.$",
+	spine_trigger = "^(%S+) (%S+) les effets .* Epine de perforation%.$",
 	spine_message = "Epine de perforation sur %s !",
 
 	spinesay = "Dire - Epine de perforation",

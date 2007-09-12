@@ -30,7 +30,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase3_message = "Phase 3 - %s",
 
 	curse = "Cursed Tanks",
-	curse_desc = "Warn when a warrior or druid is cursed by Intangible Presence.",
+	curse_desc = "Warn when a tank is cursed by Intangible Presence.",
 	curse_trigger = "^(%S+) (%S+) afflicted by Intangible Presence%.$",
 	curse_message = "Tank Cursed - %s",
 } end)
@@ -63,8 +63,8 @@ L:RegisterTranslations("frFR", function() return {
 	phase3_message = "Phase 3 - %s",
 
 	curse = "Tanks maudits",
-	curse_desc = "Préviens quand un guerrier ou un druide est maudit par la Présence immatérielle.",
-	curse_trigger = "^([^%s]+) ([^%s]+) les effets .* Présence immatérielle%.$",
+	curse_desc = "Préviens quand un tank est maudit par la Présence immatérielle.",
+	curse_trigger = "^(%S+) (%S+) les effets .* Présence immatérielle%.$",
 	curse_message = "Tank maudit - %s",
 } end)
 

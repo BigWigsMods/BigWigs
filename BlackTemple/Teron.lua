@@ -58,8 +58,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	shadow = "Ombre de la mort",
 	shadow_desc = "Préviens quand un joueur subit les effets de l'Ombre de la mort.",
-	shadow_trigger = "^([^%s]+) ([^%s]+) les effets .* Ombre de la mort%.$",
-	shadow_other = "Ombre de la mort : %s!",
+	shadow_trigger = "^(%S+) (%S+) les effets .* Ombre de la mort%.$",
+	shadow_other = "Ombre de la mort : %s !",
 	shadow_you = "Ombre de la mort sur VOUS !",
 
 	icon = "Icône",

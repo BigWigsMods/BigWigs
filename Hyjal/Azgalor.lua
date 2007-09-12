@@ -54,7 +54,7 @@ L:RegisterTranslations("frFR", function() return {
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Destin funeste (nécessite d'être promu ou mieux).",
 
-	afflict_trigger = "^([^%s]+) ([^%s]+) les effets .* (.*).$",
+	afflict_trigger = "^(%S+) (%S+) les effets .* (.*).$",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

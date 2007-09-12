@@ -76,7 +76,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	poison = "Poison mortel",
 	poison_desc = "Préviens quand un joueur subit les effets du Poison mortel.",
-	poison_trigger = "^([^%s]+) ([^%s]+) les effets .* Poison mortel%.$",
+	poison_trigger = "^(%S+) (%S+) les effets .* Poison mortel%.$",
 	poison_other = "%s a le Poison mortel !",
 	poison_you = "Poison mortel sur VOUS !",
 
@@ -88,7 +88,7 @@ L:RegisterTranslations("frFR", function() return {
 	circle_trigger = "Dame Malande commence à lancer Cercle de soins.",
 	circle_message = "Cercle de soins en incantation !",
 	circle_heal_trigger = "^Cercle de soins .* Dame Malande soigne",
-	circle_fail_trigger = "^([^%s]+) interrompt Dame Malande qui lance Cercle de soins%.$", -- + "Dame Malande lance un Cercle de soins que vous interrompez." ?
+	circle_fail_trigger = "^(%S+) interrompt Dame Malande qui lance Cercle de soins%.$", -- + "Dame Malande lance un Cercle de soins que vous interrompez." ?
 	circle_heal_message = "Soigné ! - Prochain dans ~20 sec.",
 	circle_fail_message = "Interrompu ! - Prochain dans ~12 sec.",
 	circle_bar = "~Cooldown Cercle de soins",

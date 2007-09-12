@@ -121,6 +121,11 @@ L:RegisterTranslations("frFR", function() return {
 	demon_bar = "Phase démon",
 	demon_nextbar = "Prochaine phase démon",
 
+	mindcontrol = "Contrôle mental",
+	mindcontrol_desc = "Préviens quand un joueur subit les effets du Contrôle mental.",
+	mindcontrol_trigger = "^(%S+) (%S+) les effets .* Folie dévorante%.$",
+	mindcontrol_warning = "Contrôle mental : %s",
+
 	image = "Image",
 	image_desc = "Préviens quand l'image est créée à 15%.",
 	image_trigger = "Non… Non ! Mais qu'avez-vous fait ? C'est moi le maître ! Vous entendez ? Moi ! Je suis… Aaargh ! Impossible… de… retenir…", -- à vérifier
@@ -129,7 +134,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	whisper = "Murmure insidieux",
 	whisper_desc = "Préviens quand des joueurs subissent le Murmure insidieux.",
-	whisper_trigger = "^([^%s]+) ([^%s]+) les effets .* Murmure insidieux.$",
+	whisper_trigger = "^(%S+) (%S+) les effets .* Murmure insidieux.$",
 	whisper_message = "Démon : %s",
 	whisper_bar = "Disparition des démons",
 	whisper_soon = "~Cooldown Démons",

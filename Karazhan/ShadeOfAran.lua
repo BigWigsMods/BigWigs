@@ -118,7 +118,7 @@ L:RegisterTranslations("frFR", function() return {
 	adds_bar = "Fin des élémentaires",
 
 	drink = "Boisson",
-	drink_desc = "Préviens quand Ombre d'Aran commence à boire.",
+	drink_desc = "Préviens quand l'Ombre d'Aran commence à boire.",
 	drink_trigger = "Vous ne refuseriez pas à un vieil homme une boisson revigorante ? Non, c’est bien ce que je pensais.",
 	drink_warning = "Mana Faible - Boisson imminente !",
 	drink_message = "Boisson - Polymorphisme de zone !",
@@ -144,7 +144,7 @@ L:RegisterTranslations("frFR", function() return {
 	flame_trigger2 = "Brûlez, démons de l’enfer !",
 	flame_message = "Couronne de flammes !",
 	flame_bar = "Couronne de flammes",
-	flame_trigger = "lance Couronne de flammes",
+	flame_trigger = "lance Couronne de flammes%.$",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

@@ -39,7 +39,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	attraction = "Liaison fatale",
 	attraction_desc = "Préviens quand un joueur subit les effets de la Liaison fatale.",
-	attraction_trigger = "^([^%s]+) ([^%s]+) les effets .* Liaison fatale%.$",
+	attraction_trigger = "^(%S+) (%S+) les effets .* Liaison fatale%.$",
 	attraction_message = "Liaison : %s",
 } end )
 

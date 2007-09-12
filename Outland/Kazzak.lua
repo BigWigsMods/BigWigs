@@ -54,7 +54,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	twist = "Reflet tordu",
 	twist_desc = "Préviens quand quelqu'un subit les effets de Reflet tordu.",
-	twist_trigger = "^([^%s]+) ([^%s]+) les effets .* Reflet tordu%.$",
+	twist_trigger = "^(%S+) (%S+) les effets .* Reflet tordu%.$",
 	twist_message = "Reflet tordu : %s",
 } end)
 

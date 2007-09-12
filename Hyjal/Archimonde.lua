@@ -49,7 +49,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	grip = "Poigne de la Légion",
 	grip_desc = "Préviens quand un joueur subit les effets de la Poigne de la Légion.",
-	grip_trigger = "^([^%s]+) ([^%s]+) les effets .* Poigne de la Légion%.$",
+	grip_trigger = "^(%S+) (%S+) les effets .* Poigne de la Légion%.$",
 	grip_you = "Poigne sur VOUS !",
 	grip_other = "Poigne sur %s !",
 

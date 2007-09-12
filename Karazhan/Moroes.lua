@@ -43,7 +43,7 @@ L:RegisterTranslations("frFR", function() return {
 	engage_message = "Moroes engagé - Disparition dans ~35 sec. !",
 
 	vanish = "Disparition",
-	vanish_desc = "Préviens quand Moroes est suceptible de disparaître.",
+	vanish_desc = "Préviens quand Moroes est susceptible de disparaître.",
 	vanish_trigger1 = "Vous avez sonné ?",
 	vanish_trigger2 = "Bon, où en étais-je ? Ah, oui…",
 	vanish_message = "Disparu ! Prochain dans ~35 sec. !",
@@ -52,7 +52,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	garrote = "Garrot",
 	garrote_desc = "Préviens quand un joueur subit les effets du Garrot.",
-	garrote_trigger = "^([^%s]+) ([^%s]+) les effets .* Garrot%.$",
+	garrote_trigger = "^(%S+) (%S+) les effets .* Garrot%.$",
 	garrote_message = "Garrot : %s",
 
 	icon = "Icône",
