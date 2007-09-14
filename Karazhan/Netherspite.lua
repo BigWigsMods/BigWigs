@@ -128,7 +128,7 @@ L:RegisterTranslations("zhTW", function() return {
 --虚空幽龙
 L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段警报",
-	phase_desc = ("当%s进入下一阶段时发出警报."):format(boss),
+	phase_desc = "当虚空幽龙进入下一阶段时发出警报.",
 	phase1_message = "Withdrawal - Netherbreaths Over",
 	phase1_bar = "~Possible Withdrawal",
 	phase1_trigger = "%s cries out in withdrawal, opening gates to the nether.",
