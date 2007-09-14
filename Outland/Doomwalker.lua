@@ -131,6 +131,31 @@ L:RegisterTranslations("zhTW", function() return {
 	enrage_message = "狂怒！",
 } end)
 
+--末日行者
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "Do not proceed. You will be eliminated.",
+	engage_message = "末日行者激活,30秒后发动地震术!",
+
+	overrun = "泛滥",
+	overrun_desc = "当末日行者使用泛滥技能时发出警报.",
+	overrun_trigger1 = "Engage maximum speed.",
+	overrun_trigger2 = "Trajectory locked.",
+	overrun_message = "泛滥!",
+	overrun_soon_message = "即将发动 泛滥!",
+	overrun_bar = "~泛滥 冷却",
+
+	earthquake = "地震术",
+	earthquake_desc = "当末日行者施放地震术时发出警告.",
+	earthquake_message = "地震术! ~70秒后再次发动!",
+	earthquake_bar = "~地震术 冷却",
+	earthquake_trigger1 = "Tectonic disruption commencing.",
+	earthquake_trigger2 = "Magnitude set. Release.",
+
+	enrage_soon_message = "即将狂怒!",
+	enrage_trigger = "%s becomes enraged!",
+	enrage_message = "狂怒!",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

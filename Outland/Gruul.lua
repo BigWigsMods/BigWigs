@@ -198,6 +198,41 @@ L:RegisterTranslations("zhTW", function() return {
 	shatter_message = "破碎",
 } end)
 
+--屠龙者格鲁尔
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "来了……就得死。",
+	engage_message = "%s 激活!",
+
+	grow = "成长",
+	grow_desc = "计算并当屠龙者格鲁尔成长时发出警告.",
+	grow_trigger = "%s grows in size!",
+	grow_message = "成长: (%d)",
+	grow_bar = "成长 (%d)",
+
+	grasp = "碎裂",
+	grasp_desc = "碎裂警报计时",
+	grasp_trigger1 = "Scurry.",
+	grasp_trigger2 = "No escape.",
+	grasp_message = "大地冲击 - 10秒后破碎!",
+	grasp_warning = "大地冲击发动",
+	grasp_bar = "~大地冲击 冷却",
+
+	cavein = "Cave In on You",
+	cavein_desc = "Warn for a Cave In on You.",
+	cavein_trigger = "You are afflicted by Cave In.",
+	cavein_message = "Cave In on YOU!",
+
+	silence = "Silence",
+	silence_desc = "Warn when Gruul casts AOE Silence (Reverberation).",
+	silence_trigger = "afflicted by Reverberation%.$",
+	silence_message = "AOE Silence",
+	silence_warning = "AOE Silence soon!",
+	silence_bar = "~Silence Cooldown",
+
+	shatter_trigger = "%s roars!",
+	shatter_message = "Shatter!",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
