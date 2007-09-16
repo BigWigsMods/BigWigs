@@ -102,7 +102,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	weapons_inc_message = "Phase 2 - Weapons incoming!",
 	phase3_message = "Phase 3 - Advisors and Weapons!",
-	phase4_message = "Phase 4 - Kael'thas incomming!",
+	phase4_message = "Phase 4 - Kael'thas incoming!",
 	phase4_bar = "Kael'thas incoming",
 
 	mc = "Mind Control",
