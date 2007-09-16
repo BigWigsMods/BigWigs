@@ -7,7 +7,7 @@
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsCustomBar")
 
 local times = nil
-fmt = string.format
+local fmt = string.format
 
 L:RegisterTranslations("enUS", function() return {
 	["bwcb"] = true,
