@@ -9,7 +9,6 @@ local anger = BB["Essence of Anger"]
 local boss = BB["Reliquary of Souls"]
 BB = nil
 
-local drained = {}
 local spiteIt = {}
 local pName = nil
 local stop = nil
@@ -55,10 +54,6 @@ L:RegisterTranslations("enUS", function() return {
 	deaden_warn = "Deaden in ~5sec.",
 	deaden_nextbar = "Next Deaden.",
 
-	drain = "Soul Drain",
-	drain_desc = "Warn who has Soul Drain.",
-	drain_message = "Soul Drain: %s",
-
 	spite = "Spite",
 	spite_desc = "Warn who has Spite.",
 	spite_message = "Spite: %s",
@@ -101,10 +96,6 @@ L:RegisterTranslations("koKR", function() return {
 	deaden_warn = "약 5초 후 쇠약!",
 	deaden_nextbar = "다음 쇠약",
 
-	drain = "영혼 흡수",
-	drain_desc = "영혼 흡수에 걸린 대상을 알립니다.",
-	drain_message = "영혼 흡수: %s",
-
 	spite = "원한",
 	spite_desc = "원한에 걸린 대상을 알립니다.",
 	spite_message = "원한: %s",
@@ -142,10 +133,6 @@ L:RegisterTranslations("frFR", function() return {
 	deaden_message = "Emousser en incantation !",
 	deaden_warn = "Emousser dans ~5 sec.",
 	deaden_nextbar = "Prochain Emousser",
-
-	drain = "Drain d'âme",
-	drain_desc = "Préviens quand un joueur subit les effets du Drain d'âme.",
-	drain_message = "Drain d'âme : %s",
 
 	spite = "Dépit",
 	spite_desc = "Préviens quand un joueur subit les effets du Dépit.",
@@ -190,10 +177,6 @@ L:RegisterTranslations("deDE", function() return {
 	deaden_warn = "Abstumpfen in ~5sek.",
 	deaden_nextbar = "Nächstes Abstumpfen.",
 
-	drain = "Seelensauger",
-	drain_desc = "Warnt wer Seelensauger hat.",
-	drain_message = "Seelensauger: %s",
-
 	spite = "Bosheit",
 	spite_desc = "Warnt wer Bosheit hat.",
 	spite_message = "Bosheit: %s",
@@ -210,9 +193,9 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-local mod = BigWigs:NewModule(boss)
+local mod = BigWigs:NewModule(suffering)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
-mod.enabletrigger = {boss, desire, suffering, anger}
+mod.enabletrigger = {desire, suffering, anger}
 mod.toggleoptions = {"enrage", "drain", -1, "runeshield", "deaden", -1, "spite", "scream", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -233,7 +216,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "AfflictEvent")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "RoSDrain", 0)
+	self:TriggerEvent("BigWigs_ThrottleSync", "RoSDrain", 300)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RoSSpite", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RoSShield", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RoSWin", 5)
@@ -248,7 +231,6 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
-		for k in pairs(drained) do drained[k] = nil end
 		for k in pairs(spiteIt) do spiteIt[k] = nil end
 		if self.db.profile.enrage then
 			self:Message(L["enrage_start"], "Positive")
@@ -299,15 +281,13 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function mod:AfflictEvent(msg)
-	local Aplayer, Atype, Aspell = select(3, msg:find(L["afflict_trigger"]))
-	if Aplayer and Atype then
-		if Aplayer == L2["you"] and Atype == L2["are"] then
-			Aplayer = pName
+	local aPlayer, aType, aSpell = select(3, msg:find(L["afflict_trigger"]))
+	if aPlayer and aType then
+		if aPlayer == L2["you"] and aType == L2["are"] then
+			aPlayer = pName
 		end
-		if Aspell == L["drain"] then
-			self:Sync("RoSDrain "..Aplayer)
-		elseif Aspell == L["spite"] then
-			self:Sync("RoSSpite "..Aplayer)
+		if aSpell == L["spite"] then
+			self:Sync("RoSSpite "..aPlayer)
 		end
 	end
 end
@@ -315,21 +295,6 @@ end
 local function nilStop()
 	stop = nil
 	for k in pairs(spiteIt) do spiteIt[k] = nil end
-end
-
-function mod:DrainWarn()
-	if self.db.profile.drain then
-		local msg = nil
-		for k in pairs(drained) do
-			if not msg then
-				msg = k
-			else
-				msg = msg .. ", " .. k
-			end
-		end
-		self:Message(L["drain_message"]:format(msg), "Important", nil, "Alert")
-	end
-	for k in pairs(drained) do drained[k] = nil end
 end
 
 function mod:SpiteWarn()
@@ -350,10 +315,7 @@ function mod:SpiteWarn()
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "RoSDrain" and rest then
-		drained[rest] = true
-		self:ScheduleEvent("BWDrainWarn", self.DrainWarn, 1.5, self)
-	elseif sync == "RoSSpite" and not stop and rest then
+	if sync == "RoSSpite" and not stop and rest then
 		spiteIt[rest] = true
 		self:ScheduleEvent("BWSpiteWarn", self.SpiteWarn, 0.3, self)
 	elseif sync == "RoSShield" and self.db.profile.runeshield then
