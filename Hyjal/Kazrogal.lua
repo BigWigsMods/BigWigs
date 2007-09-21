@@ -37,6 +37,15 @@ L:RegisterTranslations("enUS", function() return {
 	--marks, enrage?
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	range = "Reichweite Überprüfen",
+	range_desc = "Aktiviert die Nähe Anzeige wenn du wenig Mana und das Mal von Kaz'rogal hast.",
+	range_gain = "Ihr seid von Mal von Kaz'rogal betroffen.",
+	range_fade = "Mal von Kaz'rogal schwindet von Euch.",
+
+	--marks, enrage?
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
