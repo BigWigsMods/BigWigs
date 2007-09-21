@@ -136,7 +136,7 @@ L:RegisterTranslations("frFR", function() return {
 	hydross_trigger = "Marque d'Hydross",
 	corruption_trigger = "Marque de corruption",
 	hydross_bar = "Marque d'Hydross - %s%%",
-	corruption_bar = "Marque de Corruption - %s%%",
+	corruption_bar = "Marque de corruption - %s%%",
 
 	stance = "Changements d'état",
 	stance_desc = "Préviens quand Hydross l'Instable change d'état.",
@@ -158,7 +158,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	debuff_warn = "Marque à %s%% !",
 
-	afflict_trigger = "^(%S+) (%S+) les effets .* (.*).$",
+	afflict_trigger = "^(%S+) (%S+) les effets d?e?|?2? (.*).$",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

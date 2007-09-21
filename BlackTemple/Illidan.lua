@@ -140,7 +140,7 @@ L:RegisterTranslations("frFR", function() return {
 	enrage_trigger = "Illidan Hurlorage gagne Enrager.",
 	enrage_message = "Enragé !",
 
-	afflict_trigger = "^(%S+) (%S+) les effets .* (.*).$",
+	afflict_trigger = "^(%S+) (%S+) les effets d?e?|?2? (.*).$",
 	["Flame of Azzinoth"] = "Flamme d'Azzinoth",
 } end )
 

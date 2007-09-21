@@ -162,7 +162,7 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
-	["BossBlock"] = "BloquerBoss",
+	["BossBlock"] = "Bloquer BossMods",
 	desc = "Supprime les messages des BossMods des autres joueurs.",
 
 	["Boss emotes"] = "Emotes des boss",
