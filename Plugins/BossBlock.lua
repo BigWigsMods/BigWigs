@@ -308,7 +308,7 @@ do
 		local t = mod and mod.enabletrigger and type(mod.enabletrigger) or nil
 		if not t then return end
 		if t == "table" then
-			for i, v in pairs(mod.enabletrigger) do
+			for i, v in ipairs(mod.enabletrigger) do
 				bossmobs[v] = not bossmobs[v] and true or nil
 			end
 		elseif t == "string" then
