@@ -13,7 +13,7 @@ local spiteIt = {}
 local pName = nil
 local stop = nil
 
-local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..suffering)
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local death = AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"]:format(boss)
 
@@ -193,7 +193,7 @@ L:RegisterTranslations("deDE", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-local mod = BigWigs:NewModule(suffering)
+local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = {desire, suffering, anger}
 mod.toggleoptions = {"enrage", "drain", -1, "runeshield", "deaden", -1, "spite", "scream", "bosskill"}

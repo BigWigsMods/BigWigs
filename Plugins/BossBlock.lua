@@ -280,6 +280,8 @@ function plugin:OnEnable()
 	if CT_RAMessageFrame then
 		self:Hook(CT_RAMessageFrame, "AddMessage", "CTRA_AddMessage", true)
 	end
+	self:RegisterEvent("Ace2_AddonEnabled", "BossModEnableDisable")
+	self:RegisterEvent("Ace2_AddonDisabled", "BossModEnableDisable")
 end
 
 
@@ -299,12 +301,28 @@ function plugin:RWAddMessage(frame, message, r, g, b, a, t)
 	self.hooks[RaidWarningFrame].AddMessage(frame, message, r, g, b, a, t)
 end
 
-function plugin:RBEAddMessage(frame, message, r, g, b, a, t)
-	if self.db.profile.boss and type(arg2) == "string" and BigWigs:HasModule(arg2) and BigWigs:IsModuleActive(arg2) then
-		BigWigs:Debug(L["Suppressing RaidBossEmoteFrame"], message)
-		return
+do
+	local bossmobs = {}
+
+	function plugin:BossModEnableDisable(mod)
+		local t = mod and mod.enabletrigger and type(mod.enabletrigger) or nil
+		if not t then return end
+		if t == "table" then
+			for i, v in pairs(mod.enabletrigger) do
+				bossmobs[v] = not bossmobs[v] and true or nil
+			end
+		elseif t == "string" then
+			bossmobs[mod.enabletrigger] = not bossmobs[mod.enabletrigger] and true or nil
+		end
 	end
-	self.hooks[RaidBossEmoteFrame].AddMessage(frame, message, r, g, b, a, t)
+
+	function plugin:RBEAddMessage(frame, message, r, g, b, a, t)
+		if self.db.profile.boss and type(arg2) == "string" and bossmobs[arg2] then
+			BigWigs:Debug(L["Suppressing RaidBossEmoteFrame"], message)
+			return
+		end
+		self.hooks[RaidBossEmoteFrame].AddMessage(frame, message, r, g, b, a, t)
+	end
 end
 
 function plugin:CTRA_AddMessage(obj, text, r, g, b, a, t)
