@@ -22,3 +22,4 @@ Anetheron.lua
 Winterchill.lua
 Archimonde.lua
 Azgalor.lua
+Kazrogal.lua

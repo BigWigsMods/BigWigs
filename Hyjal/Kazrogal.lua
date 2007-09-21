@@ -1,0 +1,83 @@
+﻿------------------------------
+--      Are you local?      --
+------------------------------
+
+local boss = AceLibrary("Babble-Boss-2.2")["Kaz'rogal"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+
+local UnitMana = UnitMana
+local IsItemInRange = IsItemInRange
+local bandages = {
+	[21991] = true, -- Heavy Netherweave Bandage
+	[21990] = true, -- Netherweave Bandage
+	[14530] = true, -- Heavy Runecloth Bandage
+	[14529] = true, -- Runecloth Bandage
+	[8545] = true, -- Heavy Mageweave Bandage
+	[8544] = true, -- Mageweave Bandage
+	[6451] = true, -- Heavy Silk Bandage
+	[6450] = true, -- Silk Bandage
+	[3531] = true, -- Heavy Wool Bandage
+	[3530] = true, -- Wool Bandage
+	[2581] = true, -- Heavy Linen Bandage
+	[1251] = true, -- Linen Bandage
+}
+
+----------------------------
+--      Localization      --
+----------------------------
+
+L:RegisterTranslations("enUS", function() return {
+	cmd = "Kazrogal",
+
+	range = "Range Check",
+	range_desc = "Show the proximity box when you are low on mana and have the Mark of Kaz'rogal.",
+	range_gain = "You are afflicted by Mark of Kaz'rogal.",
+	range_fade = "Mark of Kaz'rogal fades from you.",
+
+	--marks, enrage?
+} end )
+
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+local mod = BigWigs:NewModule(boss)
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Hyjal Summit"]
+mod.enabletrigger = boss
+mod.toggleoptions = {"range", "proximity", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
+mod.proximityCheck = function( unit ) 
+	for k, v in pairs( bandages ) do
+		if IsItemInRange( k, unit) == 1 then
+			return true
+		end
+	end
+	return false
+end
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function mod:OnEnable()
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
+	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
+
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+end
+
+------------------------------
+--      Event Handlers      --
+------------------------------
+
+function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
+	if self.db.profile.range and msg == L["range_gain"] and UnitMana("player") < 4000 then
+		self:TriggerEvent("BigWigs_ShowProximity", self)
+	end
+end
+
+function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
+	if self.db.profile.range and msg == L["range_fade"] then
+		self:TriggerEvent("BigWigs_HideProximity", self)
+	end
+end

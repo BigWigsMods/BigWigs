@@ -63,5 +63,6 @@
 <Script file="Hyjal\Winterchill.lua"/>
 <Script file="Hyjal\Azgalor.lua"/>
 <Script file="Hyjal\Archimonde.lua"/>
+<Script file="Hyjal\Kazrogal.lua"/>
 
 </Ui>
