@@ -72,19 +72,22 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	engage_trigger = "Ihr verteidigt eine verlorene Welt! Flieht! Vielleicht verl\195\164ngert dies Euer erb\195\164rmliches Leben!",
+	engage_trigger = "Ihr verteidigt eine verlorene Welt! Flieht! Vielleicht verlängert dies Euer erbärmliches Leben!",
 
 	inferno = "Inferno",
-	inferno_desc = "gesch\195\164tzte Inferno Cooldown Timer.",
+	inferno_desc = "Geschätzter Inferno Cooldown Timer.",
 	inferno_message = "zaubert Inferno %s!",
 	inferno_warning = "Inferno bald!",
 	inferno_bar = "~Inferno Cooldown",
 
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Plaziert ein Schlachtzug Symbol auf den Spieler auf den Inferno gezaubert wird (benötigt Assistent oder höher).",
+
 	swarm = "Aasschwarm",
-	swarm_desc = "gesch\195\164tzte Aasschwarm Cooldown Timer.",
-	swarm_trigger1 = "M\195\182ge die Pest \195\188ber Euch kommen!",
+	swarm_desc = "Geschätzter Aasschwarm Cooldown Timer.",
+	swarm_trigger1 = "Möge die Pest über Euch kommen!",
 	swarm_trigger2 = "Der Schwarm ist hungrig!",
-	swarm_message = "Aasschwarm! - N\195\164chster in ~11sec",
+	swarm_message = "Aasschwarm! - Nächster in ~11sec",
 	swarm_bar = "~Aasschwarm Cooldown",
 } end )
 
