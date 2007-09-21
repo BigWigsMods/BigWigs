@@ -46,6 +46,13 @@ L:RegisterTranslations("deDE", function() return {
 	--marks, enrage?
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	range = "Vérification de portée",
+	range_desc = "Affiche la fenêtre de proximité quand votre mana est faible et que vous avez la Marque de Kaz'rogal.",
+	range_gain = "Vous subissez les effets de Marque de Kaz'rogal.",
+	range_fade = "Marque de Kaz'rogal vient de se dissiper.",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
