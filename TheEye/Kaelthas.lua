@@ -269,7 +269,7 @@ L:RegisterTranslations("frFR", function() return {
 	mc_desc = "Préviens quand des joueurs subissent les effets du Contrôle mental.",
 	mc_message = "Contrôle mental : %s",
 
-	afflicted_trigger = "^(%S+) (%S+) les effets d?e?|?2? (.*).$",
+	afflicted_trigger = "^(%S+) (%S+) les effets [de|2]+ (.*).$",
 
 	revive_bar = "Retour des conseillers",
 	revive_warning = "Retour des conseillers dans 5 sec. !",

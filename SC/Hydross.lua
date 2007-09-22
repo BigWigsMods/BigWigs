@@ -158,7 +158,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	debuff_warn = "Marque à %s%% !",
 
-	afflict_trigger = "^(%S+) (%S+) les effets d?e?|?2? (.*).$",
+	afflict_trigger = "^(%S+) (%S+) les effets [de|2]+ (.*).$",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
