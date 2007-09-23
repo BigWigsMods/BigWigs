@@ -40,35 +40,32 @@ L:RegisterTranslations("enUS", function() return {
 	murloc_soon_message = "Murlocs soon!",
 	murloc_engaged = "%s Engaged, Murlocs in ~40sec",
 
-	grobules = "Grobules",
-	grobules_desc = "Warn for incoming Watery Grobules.",
-	grobules_trigger1 = "Soon it will be finished!",
-	grobules_trigger2 = "There is nowhere to hide!",
-	grobules_message = "Incoming Grobules!",
-	grobules_warning = "Grobules Soon!",
-	grobules_bar = "Grobules Despawn",
+	globules = "Globules",
+	globules_desc = "Warn for incoming Watery Globules.",
+	globules_trigger1 = "Soon it will be finished!",
+	globules_trigger2 = "There is nowhere to hide!",
+	globules_message = "Incoming Globules!",
+	globules_warning = "Globules Soon!",
+	globules_bar = "Globules Despawn",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
---	engage_trigger = "Flood of the deep, take you!",
+	engage_trigger = "Die Fluten der Tiefen werden euch verschlingen!",
 
 	tidal = "Gezeitenwelle",
 	tidal_desc = "Warnt, wenn Morogrim Gezeitenwelle benutzt.",
+	tidal_trigger = "Morogrim Gezeitenwandler beginnt Gezeitenwelle zu wirken.",
+	tidal_message = "Gezeitenwelle!",
 
 	grave = "Nasses Grab",
 	grave_desc = "Zeigt an, wer im Nassen Grab ist und wie lange.",
-
-	murloc = "Murlocs",
-	murloc_desc = "Warnt vor ankommenden Murlocs.",
-
-	grobules = "Wasserkugeln",
-	grobules_desc = "Warnt vor Wasserkugeln.",
-
-	grave_trigger = "^([^%s]+) ([^%s]+) von Nasses Grab betroffen%.$",
+	grave_trigger = "^(%S+) (%S+) von Nasses Grab betroffen%.$",
 	grave_message = "Nasses Grab: %s",
 	grave_bar = "Nasses Grab",
 	grave_nextbar = "n\195\164chstes Nasses Grab",
 
+	murloc = "Murlocs",
+	murloc_desc = "Warnt vor ankommenden Murlocs.",
 	murloc_bar = "n\195\164chste Murlocs",
 	murloc_trigger1 = "Bei den Gezeiten!",
 	murloc_trigger2 = "Vernichtet sie, meine Diener!",
@@ -76,10 +73,13 @@ L:RegisterTranslations("deDE", function() return {
 	murloc_soon_message = "Murlocs bald!",
 	murloc_engaged = "%s angegriffen, Murlocs in ~40sec",
 
-	--grobules_trigger1 = "Soon it will be finished!",
-	--grobules_trigger2 = "There is nowhere to hide!",
-	grobules_message = "Wasserkugeln kommen!",
-	grobules_warning = "Wasserkugeln bald!",
+	globules = "Wasserkugeln",
+	globules_desc = "Warnt vor Wasserkugeln.",
+	globules_trigger1 = "Bald ist es vor\195\188ber!",
+	globules_trigger2 = "Es gibt kein Entkommen!",
+	globules_message = "Wasserkugeln kommen!",
+	globules_warning = "Wasserkugeln bald!",
+	globules_bar = "Wasserkugeln Despawn",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -106,14 +106,13 @@ L:RegisterTranslations("koKR", function() return {
 	murloc_soon_message = "잠시 후 멀록 등장!",
 	murloc_engaged = "%s 전투 시작, 약 40초 후 멀록",
 
-	grobules = "물방울 등장",
-	grobules_desc = "물방울 등장에 대한 경고입니다.",
-	grobules_trigger1 = "곧 끝장내주마!",
-	grobules_trigger2 = "숨을 곳은 아무 데도 없다!",
-	grobules_message = "물방울 등장!",
-	grobules_warning = "잠시 후 물방울!",
-	grobules_bar = "물방울 사라짐",
-
+	globules = "물방울 등장",
+	globules_desc = "물방울 등장에 대한 경고입니다.",
+	globules_trigger1 = "곧 끝장내주마!",
+	globules_trigger2 = "숨을 곳은 아무 데도 없다!",
+	globules_message = "물방울 등장!",
+	globules_warning = "잠시 후 물방울!",
+	globules_bar = "물방울 사라짐",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -140,13 +139,13 @@ L:RegisterTranslations("frFR", function() return {
 	murloc_soon_message = "Murlocs imminent !",
 	murloc_engaged = "%s engagé, murlocs dans ~40 sec.",
 
-	grobules = "Globules",
-	grobules_desc = "Préviens de l'arrivée des globules.",
-	grobules_trigger1 = "Bientôt, ce sera terminé.",
-	grobules_trigger2 = "Il est impossible de m'échapper !",
-	grobules_message = "Arrivée des globules !",
-	grobules_warning = "Globules imminent !",
-	grobules_bar = "Disparation des globules",
+	globules = "Globules",
+	globules_desc = "Préviens de l'arrivée des globules.",
+	globules_trigger1 = "Bientôt, ce sera terminé.",
+	globules_trigger2 = "Il est impossible de m'échapper !",
+	globules_message = "Arrivée des globules !",
+	globules_warning = "Globules imminent !",
+	globules_bar = "Disparation des globules",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -173,13 +172,13 @@ L:RegisterTranslations("zhTW", function() return {
 	murloc_soon_message = "魚人即將出現，準備 AE！",
 	murloc_engaged = "%s 開戰 - 魚人在 40 秒內出現！",
 
-	grobules = "水珠警示",
-	grobules_desc = "當水珠來臨時警示",
-	--grobules_trigger1 = "Soon it will be finished!",
-	--grobules_trigger2 = "There is nowhere to hide!",
-	grobules_message = "水珠出現！避開水球！",
-	grobules_warning = "水珠即將出現！",
-	grobules_bar = "水珠消失",
+	globules = "水珠警示",
+	globules_desc = "當水珠來臨時警示",
+	--globules_trigger1 = "Soon it will be finished!",
+	--globules_trigger2 = "There is nowhere to hide!",
+	globules_message = "水珠出現！避開水球！",
+	globules_warning = "水珠即將出現！",
+	globules_bar = "水珠消失",
 } end )
 
 ----------------------------------
@@ -189,7 +188,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Serpentshrine Cavern"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"tidal", "grave", "murloc", "grobules", "bosskill"}
+mod.toggleoptions = {"tidal", "grave", "murloc", "globules", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -235,9 +234,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["murloc_message"], "Positive")
 		self:Bar(L["murloc_bar"], 45, "INV_Misc_Head_Murloc_01")
 		self:ScheduleEvent("murloc1", "BigWigs_Message", 41, L["murloc_soon_message"], "Attention")
-	elseif self.db.profile.grobules and (msg == L["grobules_trigger1"] or msg == L["grobules_trigger2"]) then
-		self:Message(L["grobules_message"], "Important", nil, "Alert")
-		self:Bar(L["grobules_bar"], 36, "INV_Elemental_Primal_Water")
+	elseif self.db.profile.globules and (msg == L["globules_trigger1"] or msg == L["globules_trigger2"]) then
+		self:Message(L["globules_message"], "Important", nil, "Alert")
+		self:Bar(L["globules_bar"], 36, "INV_Elemental_Primal_Water")
 	end
 end
 
@@ -291,11 +290,11 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 end
 
 function mod:UNIT_HEALTH(msg)
-	if not self.db.profile.grobules then return end
+	if not self.db.profile.globules then return end
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 26 and health <= 30 and not grobulealert then
-			self:Message(L["grobules_warning"], "Positive")
+			self:Message(L["globules_warning"], "Positive")
 			grobulealert = true
 		elseif health > 50 and grobulealert then
 			grobulealert = false
