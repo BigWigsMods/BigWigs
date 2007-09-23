@@ -79,6 +79,28 @@ L:RegisterTranslations("koKR", function() return {
 	afflict_trigger =  "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	doom = "Verdammnis",
+	doom_desc = "Warnt vor Verdammnis.",
+	doom_other = "Verdammnis auf %s",
+	doom_you = "Verdammnis auf DIR!",
+
+	hoa = "Geheul des Azgalor",
+	hoa_desc = "Warnt vor Geheul des Azgalor.",
+	hoa_bar = "~Geheul Cooldown",
+	hoa_message = "AOE Stille",
+	hoa_warning = "AOE Stille Bald!",
+
+	rof = "Feuerregen",
+	rof_desc = "Warnt wenn Feuerregen auf dir ist.",
+	rof_you = "Feuerregen auf DIR!",
+
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Plaziere ein Schlachtzug Symbol auf Spielern die von Verdammnis betroffen sind (benötigt Assistent oder höher).",
+
+	afflict_trigger = "^(%S+) (%S+) ist von (.*) betroffen.$",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

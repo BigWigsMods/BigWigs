@@ -73,11 +73,11 @@ L:RegisterTranslations("deDE", function() return {
 
 	icebolt = "Eisblitz",
 	icebolt_desc = "Eisblitz Warnung.",
-	--icebolt_trigger = "Eisblitz trifft ([^%s]+)", --enUS changed
-	icebolt_message = "Eisblitz on %s!",
+	icebolt_trigger = "^(%S+) (%S+) ist von Eisblitz betroffen%.$",
+	icebolt_message = "Eisblitz auf %s!",
 
-	icon = "Icon",
-	icon_desc = "Plaziert ein Raid Icon auf dem Spieler, der von Eisblitz betroffen ist (ben\195\182tigt Anf\195\188hrer oder Assistent).",
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Plaziere ein Schlachtzug Symbol auf Spielern die von Eisblitz betroffen sind (benötigt Assistent oder höher).",
 } end )
 
 ----------------------------------

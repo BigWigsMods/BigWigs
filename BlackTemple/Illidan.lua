@@ -240,6 +240,69 @@ L:RegisterTranslations("zhCN", function() return {
 	afflict_trigger = "^([^%s]+)受([^%s]+)了([^%s]+)效果的影响。$",--%s受到了%s效果的影响。
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	parasite = "Schädlicher Schattengeist",
+	parasite_desc = "Warnt wer von Schädlicher Schattengeist betroffen ist.",
+	parasite_you = "Du hast einen Parasiten!",
+	parasite_other = "%s hat einen Parasiten!",
+
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Plaziere ein Schlachtzug Symbol auf Spielern die von Schädlicher Schattengeist betroffen sind.",
+
+	barrage = "Dark Barrage",
+	barrage_desc = "Warnt wer von Dark Barrage betroffen ist.",
+	barrage_message = "%s is being Barraged!",
+	barrage_warn = "Barrage Soon!",
+	barrage_warn_bar = "~Next Barrage",
+	barrage_bar = "Barrage: %s",
+
+	eyeblast = "Augenschlag",
+	eyeblast_desc = "Warnt wenn Augenschlag gezaubert wird.",
+	eyeblast_trigger = "Stare into the eyes of the Betrayer!",
+	eyeblast_message = "Augenschlag!",
+
+	shear = "Abscheren",
+	shear_desc = "Warnt bei Abscheren auf Spielern.",
+	shear_message = "Abscheren auf %s!",
+	shear_bar = "Abscheren: %s",
+
+	flame = "Agonizing Flames",
+	flame_desc = "Warnt wer von Agonizing Flames betroffen ist.",
+	flame_message = "%s hat Agonizing Flames!",
+
+	demons = "Schattendämonen",
+	demons_desc = "Warnt wenn Illidan Schattendämonen beschwört.",
+	demons_trigger = "Summon Shadow Demons",
+	demons_message = "Schattendämonen!",
+	demons_warn = "Dämonen Bald!",
+
+	phase = "Phasen",
+	phase_desc = "Warnt wenn Illidan in die verschiedenen Phasen geht.",
+	phase2_soon_message = "Phase 2 Bald!",
+	phase2_trigger = "Blade of Azzinoth casts Summon Tear of Azzinoth.",
+	phase2_message = "Phase 2 - Klingen von Azzinoth!",
+	phase3_message = "Phase 3!",
+	demon_phase_trigger = "Behold the power... of the demon within!",
+	demon_phase_message = "Dämonen Form!",
+	demon_bar = "Nächste Normale Phase",
+	phase4_trigger = "Is this it, mortals? Is this all the fury you can muster?",
+	phase4_soon_message = "Phase 4 bald!",
+	phase4_message = "Phase 4 - Maiev kommt!",
+
+	flameburst = "Flammenschlag",
+	flameburst_desc = "Warnt wenn Illidan Flammenschlag benutzen wird.",
+	flameburst_message = "Flammenschlag!",
+	flameburst_cooldown_bar = "Flammenschlag cooldown",
+	flameburst_cooldown_warn = "Flammenschlag bald!",
+	flameburst_warn = "Flame Burst in ~5sec!",
+
+	enrage_trigger = "Illidan Stormrage wird wütend.",
+	enrage_message = "Wütend!",
+
+	afflict_trigger = "^(%S+) (%S+) ist von (.*) betroffen.$",
+	["Flame of Azzinoth"] = "Flamme von Azzinoth",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

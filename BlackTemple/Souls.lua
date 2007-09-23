@@ -186,7 +186,7 @@ L:RegisterTranslations("deDE", function() return {
 	scream_trigger = "^Essenz des Zorns's Seelenschrei ",
 	scream_bar = "~Seelenschrei Cooldown",
 
-	afflict_trigger = "^([^%s]+) ([^%s]+) ist von ([^%s]+)%.$ betroffen.", --check
+	afflict_trigger = "^([^%s]+) ([^%s]+) ist von (.*) betroffen.$",
 } end )
 
 ----------------------------------
