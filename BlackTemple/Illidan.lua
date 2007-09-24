@@ -285,7 +285,7 @@ L:RegisterTranslations("deDE", function() return {
 	demon_phase_trigger = "Erzittert vor der Macht des Dämonen!",
 	demon_phase_message = "Dämonen Form!",
 	demon_bar = "Nächste Normale Phase",
-	phase4_trigger = "Is this it, mortals? Is this all the fury you can muster?",
+	phase4_trigger = "War's das schon. Sterbliche? Ist das alles was Ihr zu bieten habt??",
 	phase4_soon_message = "Phase 4 bald!",
 	phase4_message = "Phase 4 - Maiev kommt!",
 
