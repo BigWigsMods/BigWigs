@@ -346,8 +346,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		shieldsFaded = 0
 		if self.db.profile.elemental then
-			self:Bar(L["elemental_bar"], 60, "Spell_Nature_ElementalShields")
-			delayedElementalMessage = self:DelayedMessage(55, L["elemental_soon_message"], "Important")
+			self:Bar(L["elemental_bar"], 53, "Spell_Nature_ElementalShields")
+			delayedElementalMessage = self:DelayedMessage(48, L["elemental_soon_message"], "Important")
 		end
 		self:RepeatStrider()
 		self:RepeatNaga()
@@ -409,8 +409,8 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:Icon(rest)
 		end
 	elseif sync == "VashjElemDied" and self.db.profile.elemental then
-		self:Bar(L["elemental_bar"], 60, "Spell_Nature_ElementalShields")
-		self:ScheduleEvent("ElemWarn", "BigWigs_Message", 55, L["elemental_soon_message"], "Important")
+		self:Bar(L["elemental_bar"], 53, "Spell_Nature_ElementalShields")
+		self:ScheduleEvent("ElemWarn", "BigWigs_Message", 48, L["elemental_soon_message"], "Important")
 	elseif sync == "VashjLoot" and rest and self.db.profile.loot then
 		self:Message(L["loot_message"]:format(rest), "Positive", nil, "Info")
 		if self.db.profile.icon then
