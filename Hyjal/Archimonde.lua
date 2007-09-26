@@ -8,7 +8,22 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local UnitName = UnitName
 local pName = nil
+local IsItemInRange = IsItemInRange
 local fmt = string.format
+local bandages = {
+	[21991] = true, -- Heavy Netherweave Bandage
+	[21990] = true, -- Netherweave Bandage
+	[14530] = true, -- Heavy Runecloth Bandage
+	[14529] = true, -- Runecloth Bandage
+	[8545] = true, -- Heavy Mageweave Bandage
+	[8544] = true, -- Mageweave Bandage
+	[6451] = true, -- Heavy Silk Bandage
+	[6450] = true, -- Silk Bandage
+	[3531] = true, -- Heavy Wool Bandage
+	[3530] = true, -- Wool Bandage
+	[2581] = true, -- Heavy Linen Bandage
+	[1251] = true, -- Linen Bandage
+}
 
 ----------------------------
 --      Localization      --
@@ -135,9 +150,16 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Hyjal Summit"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"grip", "icon", "fear", "burst", "burstsay", "bosskill"}
+mod.toggleoptions = {"grip", "icon", "fear", "burst", "burstsay", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
-mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
+mod.proximityCheck = function( unit ) 
+	for k, v in pairs( bandages ) do
+		if IsItemInRange( k, unit) == 1 then
+			return true
+		end
+	end
+	return false
+end
 mod.proximitySilent = true
 
 ------------------------------
@@ -150,7 +172,6 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "ArchGrip", 2)
 	self:TriggerEvent("BigWigs_ThrottleSync", "ArchFear", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "ArchBurst", 5)
-	self:TriggerEvent("BigWigs_ShowProximity", self)
 
 	self:RegisterEvent("UNIT_SPELLCAST_START")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -207,6 +228,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["fear_bar"], 40, "Spell_Shadow_DeathScream")
 			self:DelayedMessage(40, L["fear_warning"], "Urgent")
 		end
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
 end
 
