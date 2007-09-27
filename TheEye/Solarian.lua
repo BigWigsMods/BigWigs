@@ -31,7 +31,6 @@ L:RegisterTranslations("enUS", function() return {
 	wrath_desc = "Warn when Wrath is being cast, and the current target.",
 	wrath_trigger = "^(%S+) (%S+) afflicted by Wrath of the Astromancer%.$",
 	wrath_alert = "Casting Wrath! - Target: %s",
-	wrath_alert_trigger = "begins to cast Wrath of the Astromancer%.$",
 
 	wrathyou = "Wrath Debuff on You",
 	wrathyou_desc = "Warn when you have Wrath of the Astromancer.",
@@ -95,18 +94,17 @@ L:RegisterTranslations("koKR", function() return {
 	phase2_trigger = "^나는 공허의",
 	phase2_message = "20% - 2 단계",
 
-	wrath = "격노 시전",
-	wrath_desc = "격노 시전 시 경고와 현재 대상을 알립니다.",
-	wrath_trigger = "^([^|;%s]*)(.*)점성술사의 격노에 걸렸습니다%.$",
-	wrath_alert = "격노 시전! - 대상: %s",
-	wrath_alert_trigger = "점성술사의 격노 시전을 시작합니다%.$",
+	wrath = "분노",
+	wrath_desc = "분노에 걸린 대상을 알립니다.",
+	wrath_trigger = "^([^|;%s]*)(.*)점성술사의 분노에 걸렸습니다%.$",
+	wrath_alert = "분노 시전! - 대상: %s",
 
-	wrathyou = "자신에 격노 디버프",
-	wrathyou_desc = "당신이 점성술사의 격노에 걸렸을 때 알립니다.",
-	wrath_you = "당신에 격노!",
+	wrathyou = "자신에 분노 디버프",
+	wrathyou_desc = "당신이 점성술사의 분노에 걸렸을 때 알립니다.",
+	wrath_you = "당신에 분노!",
 
 	icon = "전술 표시",
-	icon_desc = "점성술사의 격노에 걸린 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
+	icon_desc = "점성술사의 분노에 걸린 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
 
 	split = "분리",
 	split_desc = "분리와 소환에 대한 경고입니다.",
@@ -135,7 +133,6 @@ L:RegisterTranslations("frFR", function() return {
 	wrath_desc = "Préviens quand le Courroux est en cours d'incantation, et sa cible actuelle.",
 	wrath_trigger = "^([^%s]+) ([^%s]+) les effets .* Courroux de l'Astromancien%.$",
 	wrath_alert = "Courroux en incantation ! - Cible : %s",
-	wrath_alert_trigger = "commence à lancer Courroux de l'Astromancien.$",
 
 	wrathyou = "Courroux sur vous",
 	wrathyou_desc = "Préviens quand vous subissez les effets du Courroux de l'Astromancien.",
@@ -171,7 +168,6 @@ L:RegisterTranslations("zhTW", function() return {
 	wrath_desc = "當星術師之怒施放警告同時提示施放目標。",
 	wrath_trigger = "^(.+)受到(.*)星術師之怒",
 	wrath_alert = "星術師之怒 - 目標：[%s]",
-	wrath_alert_trigger = "開始施放星術師之怒",
 
 	wrathyou = "自身星術師之怒警示",
 	wrathyou_desc = "當你受到星術師之怒時警示",
@@ -210,7 +206,6 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "WrathAff")
@@ -218,7 +213,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "WrathAff")
 
 	self:RegisterEvent("UNIT_HEALTH")
-	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWCast", 5)
 	pName = UnitName("player")
 end
@@ -226,19 +220,6 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
-function mod:BigWigs_RecvSync(sync)
-	if sync == "SolaWCast" and self.db.profile.wrath then
-		self:Bar(L["wrath"], 3, "Spell_Arcane_Arcane02")
-		self:ScheduleEvent("BWSolaToTScan", self.WrathCheck, 1, self) --target scan once, after 1 second
-	end
-end
-
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg:find(L["wrath_alert_trigger"]) then
-		self:Sync("SolaWCast")
-	end
-end
 
 function mod:UNIT_HEALTH(msg)
 	if not self.db.profile.phase then return end
@@ -262,6 +243,10 @@ function mod:WrathAff(msg)
 				self:Message(L["wrath_you"], "Personal", true, "Alert")
 			end
 		end
+
+		self:Message(fmt(L["wrath_alert"], wplayer), "Attention")
+		self:Bar(L["wrath"]..": "..wplayer, 6, "Spell_Arcane_Arcane02")
+
 		if self.db.profile.icon then
 			self:Icon(wplayer)
 		end
@@ -298,23 +283,3 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
---Wrath is usually around a 3 second cast, and she takes a target, so we scan her target to try give some early advantage :)
-function mod:WrathCheck()
-	local target
-	if UnitName("target") == boss then
-		target = UnitName("targettarget")
-	elseif UnitName("focus") == boss then
-		target = UnitName("focustarget")
-	else
-		local num = GetNumRaidMembers()
-		for i = 1, num do
-			if UnitName(fmt("%s%d%s", "raid", i, "target")) == boss then
-				target = UnitName(fmt("%s%d%s", "raid", i, "targettarget"))
-				break
-			end
-		end
-	end
-	if target then
-		self:Message(fmt(L["wrath_alert"], target), "Attention")
-	end
-end
