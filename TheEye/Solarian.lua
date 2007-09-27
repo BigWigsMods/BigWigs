@@ -9,7 +9,6 @@ local p2 = nil
 
 local pName = nil
 local UnitName = UnitName
-local fmt = string.format
 
 ----------------------------
 --      Localization      --
@@ -27,13 +26,10 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_trigger = "^I become",
 	phase2_message = "20% - Phase 2",
 
-	wrath = "Wrath Cast",
-	wrath_desc = "Warn when Wrath is being cast, and the current target.",
+	wrath = "Wrath Debuff",
+	wrath_desc = "Warn who is afflicted by Wrath of the Astromancer.",
 	wrath_trigger = "^(%S+) (%S+) afflicted by Wrath of the Astromancer%.$",
-	wrath_alert = "Casting Wrath! - Target: %s",
-
-	wrathyou = "Wrath Debuff on You",
-	wrathyou_desc = "Warn when you have Wrath of the Astromancer.",
+	wrath_other = "Wrath on %s",
 	wrath_you = "Wrath on YOU!",
 
 	icon = "Raid Icon",
@@ -53,33 +49,33 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	--engage_trigger = "Tal anu'men no sin'dorei!",
+
 	phase = "Phase",
 	phase_desc = "Warnt vor Phasenwechsel",
+	phase1_message = "Phase 1 - Spaltung in ~50sec",
+	phase2_warning = "Phase 2 bald!",
+	phase2_trigger = "^Ich werde", --to verify
+	phase2_message = "20% - Phase 2",
 
-	wrathyou = "Zorn Debuff auf Dir",
-	wrathyou_desc = "Warn wenn du von Zorn des Astronomen betroffen bist",
+	--wrath = "Wrath Debuff",
+	--wrath_desc = "Warn who is afflicted by Wrath of the Astromancer.",
+	wrath_trigger = "^([^%s]+) ([^%s]+) von Zorn des Astronomen betroffen%.$",
+	--wrath_other = "Wrath on %s",
+	wrath_you = "Zorn auf DIR!",
 
 	icon = "Icon",
 	icon_desc = "Plaziert ein Schlachtzug Icon auf dem Spieler, der von Zorn des Astronomen betroffen ist",
 
 	split = "Spaltung",
 	split_desc = "Warnt vor Spaltung & Add Spawn",
-
+	--split_trigger1 = "I will crush your delusions of grandeur!",
+	--split_trigger2 = "You are hopelessly outmatched!",
 	split_bar = "~N\195\164chste Spaltung",
 	split_warning = "Spaltung in ~7 sec",
 
-	phase1_message = "Phase 1 - Spaltung in ~50sec",
-
-	phase2_warning = "Phase 2 bald!",
-	phase2_trigger = "^Ich werde", --to verify
-	phase2_message = "20% - Phase 2",
-
-	wrath_trigger = "^([^%s]+) ([^%s]+) von Zorn des Astronomen betroffen%.$",
-	wrath_you = "Zorn auf DIR!",
-
 	agent_warning = "Splittung! - Agenten in 6 sec",
 	agent_bar = "Agenten",
-
 	priest_warning = "Priester/Solarian in 3 sec",
 	priest_bar = "Priester/Solarian",
 } end )
@@ -95,12 +91,9 @@ L:RegisterTranslations("koKR", function() return {
 	phase2_message = "20% - 2 단계",
 
 	wrath = "분노",
-	wrath_desc = "분노에 걸린 대상을 알립니다.",
+	--wrath_desc = "분노에 걸린 대상을 알립니다.", --enUS changed
 	wrath_trigger = "^([^|;%s]*)(.*)점성술사의 분노에 걸렸습니다%.$",
-	wrath_alert = "분노 시전! - 대상: %s",
-
-	wrathyou = "자신에 분노 디버프",
-	wrathyou_desc = "당신이 점성술사의 분노에 걸렸을 때 알립니다.",
+	--wrath_other = "Wrath on %s",
 	wrath_you = "당신에 분노!",
 
 	icon = "전술 표시",
@@ -130,12 +123,9 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_message = "20% - Phase 2",
 
 	wrath = "Incantation du Courroux",
-	wrath_desc = "Préviens quand le Courroux est en cours d'incantation, et sa cible actuelle.",
+	--wrath_desc = "Préviens quand le Courroux est en cours d'incantation, et sa cible actuelle.", --enUS changed
 	wrath_trigger = "^([^%s]+) ([^%s]+) les effets .* Courroux de l'Astromancien%.$",
-	wrath_alert = "Courroux en incantation ! - Cible : %s",
-
-	wrathyou = "Courroux sur vous",
-	wrathyou_desc = "Préviens quand vous subissez les effets du Courroux de l'Astromancien.",
+	--wrath_other = "Wrath on %s",
 	wrath_you = "Courroux sur VOUS !",
 
 	icon = "Icône",
@@ -165,12 +155,9 @@ L:RegisterTranslations("zhTW", function() return {
 	phase2_message = "20% - 第二階段！",
 
 	wrath = "星術師之怒施放",
-	wrath_desc = "當星術師之怒施放警告同時提示施放目標。",
+	--wrath_desc = "當星術師之怒施放警告同時提示施放目標。", --enUS changed
 	wrath_trigger = "^(.+)受到(.*)星術師之怒",
-	wrath_alert = "星術師之怒 - 目標：[%s]",
-
-	wrathyou = "自身星術師之怒警示",
-	wrathyou_desc = "當你受到星術師之怒時警示",
+	--wrath_other = "Wrath on %s",
 	wrath_you = "你中了星術師之怒！",
 
 	icon = "團隊標記",
@@ -197,7 +184,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", "split", -1, "wrath", "wrathyou", "icon", "bosskill"}
+mod.toggleoptions = {"phase", "split", -1, "wrath", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -213,7 +200,8 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "WrathAff")
 
 	self:RegisterEvent("UNIT_HEALTH")
-	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWCast", 5)
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWrath", 3)
 	pName = UnitName("player")
 end
 
@@ -234,22 +222,29 @@ function mod:UNIT_HEALTH(msg)
 	end
 end
 
+function mod:BigWigs_RecvSync(sync, rest, nick)
+	if sync == "SolaWrath" and rest and self.db.profile.wrath then
+		local other = L["wrath_other"]:format(rest)
+		if rest == UnitName("player") then
+			self:Message(L["wrath_you"], "Personal", true, "Long")
+			self:Message(other, "Attention", nil, nil, true)
+		else
+			self:Message(other, "Attention")
+		end
+		self:Bar(other, 6, "Spell_Arcane_Arcane02")
+		if self.db.profile.icon then
+			self:Icon(rest)
+		end
+	end
+end 
+
 function mod:WrathAff(msg)
 	local wplayer, wtype = select(3, msg:find(L["wrath_trigger"]))
 	if wplayer and wtype then
 		if wplayer == L2["you"] and wtype == L2["are"] then
 			wplayer = pName
-			if self.db.profile.wrathyou then
-				self:Message(L["wrath_you"], "Personal", true, "Alert")
-			end
 		end
-
-		self:Message(fmt(L["wrath_alert"], wplayer), "Attention")
-		self:Bar(L["wrath"]..": "..wplayer, 6, "Spell_Arcane_Arcane02")
-
-		if self.db.profile.icon then
-			self:Icon(wplayer)
-		end
+		self:Sync("SolaWrath "..aplayer)
 	end
 end
 
@@ -282,4 +277,3 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["priest_bar"], 22, "Spell_Holy_HolyBolt")
 	end
 end
-
