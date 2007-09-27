@@ -45,7 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	fear = "Fear",
 	fear_desc = "Fear Timers.",
-	fear_message = "Fear, next in ~ 43-63sec!",
+	fear_message = "Fear, next in ~ 42sec!",
 	fear_bar = "~Fear Cooldown",
 	fear_warning = "Fear Cooldown Over - Inc Soon!",
 
@@ -73,7 +73,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	fear = "Peur",
 	fear_desc = "Délais concernant les Peurs.",
-	fear_message = "Peur, prochain dans ~43-63 sec. !",
+	fear_message = "Peur, prochain dans ~42 sec. !",
 	fear_bar = "~Cooldown Peur",
 	fear_warning = "Fin du cooldown Peur - Imminent !",
 
@@ -101,7 +101,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	fear = "공포",
 	fear_desc = "공포 타이머입니다.",
-	fear_message = "공포, 다음은 약 43-63초 이내!",
+	fear_message = "공포, 다음은 약 ~42초 이내!",
 	fear_bar = "~공포 대기시간",
 	fear_warning = "공포 대기시간 종료 - 잠시 후 공포!",
 
@@ -129,7 +129,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	fear = "Furcht",
 	fear_desc = "Furcht Timer.",
-	fear_message = "Furcht, nächster in ~ 43-63sek!",
+	fear_message = "Furcht, nächster in ~ 42sek!",
 	fear_bar = "~Furcht Cooldown",
 	fear_warning = "Furcht Cooldown Vorbei - Neue Furcht Bald!",
 
@@ -203,9 +203,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Icon(rest)
 		end
 	elseif sync == "ArchFear" and self.db.profile.fear then
-		self:Bar(L["fear_bar"], 43, "Spell_Shadow_DeathScream")
+		self:Bar(L["fear_bar"], 41.5, "Spell_Shadow_DeathScream")
 		self:Message(L["fear_message"], "Important")
-		self:DelayedMessage(43, L["fear_warning"], "Urgent")
+		self:DelayedMessage(41.5, L["fear_warning"], "Urgent")
 	elseif sync == "ArchBurst" and self.db.profile.burst then
 		self:ScheduleEvent("BWBurstToTScan", self.TargetCheck, 0.3, self)
 	end
