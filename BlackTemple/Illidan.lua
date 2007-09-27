@@ -19,6 +19,11 @@ local flamed = { }
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Illidan",
 
+	berserk = "Berserk",
+	berserk_desc = "Warn for berserk after 25min.",
+	berserk_trigger = "You are not prepared!",
+	berserk_message = "%s engaged, 25min to berserk!",
+
 	parasite = "Parasitic Shadowfiend",
 	parasite_desc = "Warn who has Parasitic Shadowfiend.",
 	parasite_you = "You have a Parasite!",
@@ -74,7 +79,7 @@ L:RegisterTranslations("enUS", function() return {
 	flameburst_cooldown_warn = "Flame Burst soon!",
 	flameburst_warn = "Flame Burst in ~5sec!",
 
-	enrage_trigger = "Illidan Stormrage gains Enrage.",
+	enrage_trigger = "Feel the hatred of ten thousand years!",
 	enrage_message = "Enraged!",
 
 	afflict_trigger = "^(%S+) (%S+) afflicted by (.*).$",
@@ -82,6 +87,11 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	--berserk = "Berserk",
+	--berserk_desc = "Warn for berserk after 25min.",
+	--berserk_trigger = "You are not prepared!",
+	--berserk_message = "%s engaged, 25min to berserk!",
+
 	parasite = "Ombrefiel parasite",
 	parasite_desc = "Préviens quand un joueur subit les effets de l'Ombrefiel parasite.",
 	parasite_you = "Vous avez un parasite !",
@@ -137,7 +147,7 @@ L:RegisterTranslations("frFR", function() return {
 	flameburst_cooldown_warn = "Explosion de flammes imminente !",
 	flameburst_warn = "Explosion de flammes dans ~5 sec. !",
 
-	enrage_trigger = "Illidan Hurlorage gagne Enrager.",
+	--enrage_trigger = "Feel the hatred of ten thousand years!",
 	enrage_message = "Enragé !",
 
 	afflict_trigger = "^(%S+) (%S+) les effets [de|2]+ (.*).$",
@@ -145,6 +155,11 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	--berserk = "Berserk",
+	--berserk_desc = "Warn for berserk after 25min.",
+	--berserk_trigger = "You are not prepared!",
+	--berserk_message = "%s engaged, 25min to berserk!",
+
 	parasite = "어둠의 흡혈마귀",
 	parasite_desc = "어둠의 흡혈마귀에 걸린 플레이어를 알립니다.",
 	parasite_you = "당신에 흡혈마귀!",
@@ -200,7 +215,7 @@ L:RegisterTranslations("koKR", function() return {
 	flameburst_cooldown_warn = "잠시 후 화염 폭발!",
 	flameburst_warn = "약 5초 이내 화염 폭발!",
 
-	enrage_trigger = "일리단 스톰레이지이|1이;가; 격노 효과를 얻었습니다.",
+	--enrage_trigger = "Feel the hatred of ten thousand years!",
 	enrage_message = "격노!",
 
 	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
@@ -211,6 +226,11 @@ L:RegisterTranslations("koKR", function() return {
 --CWDG site: http://Cwowaddon.com
 --伊利丹·怒风
 L:RegisterTranslations("zhCN", function() return {
+	--berserk = "Berserk",
+	--berserk_desc = "Warn for berserk after 25min.",
+	--berserk_trigger = "You are not prepared!",
+	--berserk_message = "%s engaged, 25min to berserk!",
+
 	parasite = "寄生暗影魔",--Parasitic Shadowfiend 寄生暗影魔
 	parasite_desc = "当队员中寄生暗影魔时发出警告.",
 	parasite_you = "你中了>寄生暗影魔<!",
@@ -241,6 +261,11 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	--berserk = "Berserk",
+	--berserk_desc = "Warn for berserk after 25min.",
+	--berserk_trigger = "You are not prepared!",
+	--berserk_message = "%s engaged, 25min to berserk!",
+
 	parasite = "Schädlicher Schattengeist",
 	parasite_desc = "Warnt wer von Schädlicher Schattengeist betroffen ist.",
 	parasite_you = "Du hast einen Parasiten!",
@@ -296,7 +321,7 @@ L:RegisterTranslations("deDE", function() return {
 	flameburst_cooldown_warn = "Flammenschlag bald!",
 	flameburst_warn = "Flammenschlag in ~5sek!",
 
-	enrage_trigger = "Illidan Stormrage wird wütend.",
+	--enrage_trigger = "Feel the hatred of ten thousand years!",
 	enrage_message = "Wütend!",
 
 	afflict_trigger = "^(%S+) (%S+) ist von (.*) betroffen.$",
@@ -310,7 +335,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", "parasite", "shear", "eyeblast", "barrage", "flame", "demons", "flameburst", "enrage", "proximity", "bosskill"}
+mod.toggleoptions = {"berserk", "phase", "parasite", "shear", "eyeblast", "barrage", "flame", "demons", "flameburst", "enrage", "proximity", "bosskill"}
 mod.wipemobs = {L["Flame of Azzinoth"]}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3.5 ) end
@@ -330,7 +355,6 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "IliFlame", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "IliDemons", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "IliBurst", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "IliEnrage", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "IliPhase2", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "IliFlameDied", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "IliShear", 3)
@@ -340,9 +364,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "AfflictEvent")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	--self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("UNIT_SPELLCAST_START")
@@ -383,12 +405,10 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "IliBurst" and self.db.profile.flameburst then
 		bCount = bCount + 1
 		self:Message(L["flameburst_message"], "Important", nil, "Alert")
-		if bCount < 3 then	-- He'll only do three times before transforming again
+		if bCount < 3 then -- He'll only do three times before transforming again
 			self:Bar(L["flameburst"], 20, "Spell_Fire_BlueRainOfFire")
 			self:DelayedMessage(15, L["flameburst_warn"], "Positive")
 		end
-	elseif sync == "IliEnrage" and self.db.profile.enrage then
-		self:Message(L["enrage_message"], "Important", nil, "Alert")
 	elseif sync == "IliPhase2" then
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		flamesDead = 0
@@ -453,6 +473,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if self.db.profile.phase then
 			self:Message(L["phase4_message"], "Important", nil, "Alarm")
 		end
+	elseif self.db.profile.enrage and msg == L["enrage_trigger"] then
+		self:Message(L["enrage_message"], "Important", nil, "Alert")
+	elseif self.db.profile.berserk and msg == L["berserk_trigger"] then
+		self:Message(L["berserk_message"]:format(boss), "Attention")
+		self:Bar(L["berserk_bar"], 1500, "Spell_Nature_Reincarnation")
 	end
 end
 
@@ -465,12 +490,6 @@ end
 function mod:UNIT_SPELLCAST_START(msg)
 	if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["demons_trigger"] then
 		self:Sync("IliDemons")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if msg == L["enrage_trigger"] then
-		self:Sync("IliEnrage")
 	end
 end
 
@@ -497,13 +516,7 @@ function mod:UNIT_HEALTH(msg)
 		end
 	end
 end
---[[
-function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
-	if msg == L["caged_trigger"] then
-		self:Sync("IliCaged")
-	end
-end
-]]
+
 do
 	local flameDies = UNITDIESOTHER:format(L["Flame of Azzinoth"])
 	function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
