@@ -29,6 +29,7 @@ L:RegisterTranslations("enUS", function() return {
 	wrath = "Wrath Debuff",
 	wrath_desc = "Warn who is afflicted by Wrath of the Astromancer.",
 	wrath_trigger = "^(%S+) (%S+) afflicted by Wrath of the Astromancer%.$",
+	wrath_fade = "Wrath of the Astromancer fades from you.",
 	wrath_other = "Wrath on %s",
 	wrath_you = "Wrath on YOU!",
 
@@ -61,6 +62,7 @@ L:RegisterTranslations("deDE", function() return {
 	--wrath = "Wrath Debuff",
 	--wrath_desc = "Warn who is afflicted by Wrath of the Astromancer.",
 	wrath_trigger = "^([^%s]+) ([^%s]+) von Zorn des Astronomen betroffen%.$",
+	--wrath_fade = "Wrath of the Astromancer fades from you.",
 	--wrath_other = "Wrath on %s",
 	wrath_you = "Zorn auf DIR!",
 
@@ -93,6 +95,7 @@ L:RegisterTranslations("koKR", function() return {
 	wrath = "분노",
 	--wrath_desc = "분노에 걸린 대상을 알립니다.", --enUS changed
 	wrath_trigger = "^([^|;%s]*)(.*)점성술사의 분노에 걸렸습니다%.$",
+	--wrath_fade = "Wrath of the Astromancer fades from you.",
 	--wrath_other = "Wrath on %s",
 	wrath_you = "당신에 분노!",
 
@@ -125,6 +128,7 @@ L:RegisterTranslations("frFR", function() return {
 	wrath = "Courroux de l'Astromancien",
 	wrath_desc = "Préviens quand un joueur subit les effets du Courroux de l'Astromancien.",
 	wrath_trigger = "^(%S+) (%S+) les effets .* Courroux de l'Astromancien%.$",
+	--wrath_fade = "Wrath of the Astromancer fades from you.",
 	wrath_other = "Courroux sur %s",
 	wrath_you = "Courroux sur VOUS !",
 
@@ -157,6 +161,7 @@ L:RegisterTranslations("zhTW", function() return {
 	wrath = "星術師之怒施放",
 	--wrath_desc = "當星術師之怒施放警告同時提示施放目標。", --enUS changed
 	wrath_trigger = "^(.+)受到(.*)星術師之怒",
+	--wrath_fade = "Wrath of the Astromancer fades from you.",
 	--wrath_other = "Wrath on %s",
 	wrath_you = "你中了星術師之怒！",
 
@@ -184,8 +189,9 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", "split", -1, "wrath", "icon", "bosskill"}
+mod.toggleoptions = {"phase", "split", -1, "wrath", "icon", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
+mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
 ------------------------------
 --      Initialization      --
@@ -242,9 +248,21 @@ function mod:WrathAff(msg)
 	local wplayer, wtype = select(3, msg:find(L["wrath_trigger"]))
 	if wplayer and wtype then
 		if wplayer == L2["you"] and wtype == L2["are"] then
+			self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 			wplayer = pName
+			self:CancelScheduledEvent("cancelProx")
+			self:TriggerEvent("BigWigs_ShowProximity", self)
+			self:ScheduleEvent("cancelProx", "BigWigs_HideProximity", 6, self)
 		end
 		self:Sync("SolaWrath "..wplayer)
+	end
+end
+
+function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
+	if msg == L["wrath_fade"] then
+		self:CancelScheduledEvent("cancelProx")
+		self:TriggerEvent("BigWigs_HideProximity", self)
+		self:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 	end
 end
 
