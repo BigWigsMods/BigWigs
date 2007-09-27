@@ -4,6 +4,7 @@
 ## Title-frFR: Big Wigs [|cffeda55fCaverne du sanctuaire du Serpent|r]
 ## Notes: Big Wigs Serpentshrine Cavern Modules
 ## Notes-frFR: Modules Big Wigs concernant la Caverne du sanctuaire du Serpent.
+## Notes-koKR: Big Wigs 불뱀 제단 경고
 ## Author: Ammo, Rabbit, Funkydude
 ## X-Credits: Cartas, SoLoR, Beffe, Silah, Prodomo, Radon, Tsigo & Others
 ## Version: 2.0

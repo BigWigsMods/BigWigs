@@ -78,6 +78,7 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_warning = "5초 후 격노!",
 
 	desire_trigger  = "선택은 자유지만... 대가는 치러야 하는 법.",
+	desire_cot = "Shi shi rikk rukadare shi tichar kar x gular ", --Curse of Tongues trigger
 	desire_start = "욕망의 정수 - 160초 후 마나 0",
 	desire_bar = "마나 0",
 	desire_warn = "30초 후 마나 0!",
@@ -99,6 +100,11 @@ L:RegisterTranslations("koKR", function() return {
 	spite = "원한",
 	spite_desc = "원한에 걸린 대상을 알립니다.",
 	spite_message = "원한: %s",
+
+	scream = "Soul Scream",
+	scream_desc = "Show a cooldown bar for Soul Scream.",
+	scream_trigger = "^Essence of Anger's Soul Scream ", -- check
+	scream_bar = "~Soul Scream Cooldown",
 
 	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$", -- Check
 } end )

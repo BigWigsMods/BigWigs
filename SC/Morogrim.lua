@@ -97,7 +97,7 @@ L:RegisterTranslations("koKR", function() return {
 	grave_bar = "수중 무덤",
 	grave_nextbar = "~무덤 대기시간",
 
-	murloc = "멀록 등장",
+	murloc = "멀록",
 	murloc_desc = "멀록 등장에 대한 경고입니다.",
 	murloc_bar = "~멀록 등장 대기시간",
 	murloc_trigger1 = "바다의 힘으로!",
@@ -106,7 +106,7 @@ L:RegisterTranslations("koKR", function() return {
 	murloc_soon_message = "잠시 후 멀록 등장!",
 	murloc_engaged = "%s 전투 시작, 약 40초 후 멀록",
 
-	globules = "물방울 등장",
+	globules = "물방울",
 	globules_desc = "물방울 등장에 대한 경고입니다.",
 	globules_trigger1 = "곧 끝장내주마!",
 	globules_trigger2 = "숨을 곳은 아무 데도 없다!",

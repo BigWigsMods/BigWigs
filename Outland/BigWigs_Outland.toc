@@ -4,6 +4,7 @@
 ## Title-frFR: Big Wigs [|cffeda55fOutreterre|r]
 ## Notes: Big Wigs Outland Modules
 ## Notes-frFR: Modules Big Wigs concernant l'Outreterre.
+## Notes-koKR: Big Wigs 아웃랜드 경고
 ## Author: Funkydude, Ammo, Rabbit
 ## X-Credits: Tekkub Stoutwrithe(founding author) & Others
 ## Version: 2.0

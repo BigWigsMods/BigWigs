@@ -79,7 +79,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase3_message = "3 단계 - %s",
 
 	curse = "저주 걸린 전사",
-	curse_desc = "전사가 무형의 저주에 걸렸을 때 경고합니다.",
+	curse_desc = "탱커가 무형의 저주에 걸렸을 때 경고합니다.",
 	curse_trigger = "^([^|;%s]*)(.*)무형의 존재에 걸렸습니다%.$",
 	curse_message = "저주 걸린 전사 - %s",
 } end)

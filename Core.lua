@@ -119,7 +119,9 @@ L:RegisterTranslations("koKR", function() return {
 	["Options for bosses in %s."] = "%s에 보스들을 위한 설정입니다.", -- "Options for bosses in <zone>"
 	["Options for %s (r%d)."] = "%s에 대한 설정입니다 (r%d).",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "플러그인",
+	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Big Wigs의 주요 기능을 다루는 플러그인 입니다. - 메세지 및 타이머 바 표시 기능, 기타 주요 기능 등.",
 	["Extras"] = "기타",
+--	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = true, -- check
 	["Active"] = "활성화",
 	["Activate or deactivate this module."] = "해당 모듈을 활성화하거나 비활성화합니다.",
 	["Reboot"] = "재시작",

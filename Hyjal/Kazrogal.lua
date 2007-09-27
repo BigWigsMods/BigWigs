@@ -53,6 +53,15 @@ L:RegisterTranslations("frFR", function() return {
 	range_fade = "Marque de Kaz'rogal vient de se dissiper.",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	range = "거리 확인",
+	range_desc = "Show the proximity box when you are low on mana and have the Mark of Kaz'rogal.",
+	range_gain = "You are afflicted by Mark of Kaz'rogal.", -- check
+	range_fade = "Mark of Kaz'rogal fades from you.", --check
+
+	--marks, enrage?
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

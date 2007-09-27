@@ -109,9 +109,9 @@ L:RegisterTranslations("koKR", function() return {
 	strider_bar = "포자손 등장",
 	strider_soon_message = "잠시 후 포자손!",
 
-	naga = "정예병 등장",
-	naga_desc = "2 단계에서 정예병 등장 시 경고합니다.",
-	naga_bar = "정예병 등장",
+	naga = "갈퀴송곳니 정예병 나가 등장",
+	naga_desc = "2 단계에서 갈퀴송곳니 정예병 나가 등장 시 경고합니다.",
+	naga_bar = "갈퀴송곳니 정예병 등장",
 	naga_soon_message = "잠시 후 정예병!",
 
 	barrier = "보호막 손실",

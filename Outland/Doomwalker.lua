@@ -66,8 +66,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	overrun = "괴멸",
 	overrun_desc = "파멸의 절단기의 괴멸 사용 가능 시 경고합니다.",
-	--overrun_trigger1 = "",
-	--overrun_trigger2 = "",
+	overrun_trigger1 = "Engage maximum speed.", -- check
+	overrun_trigger2 = "Trajectory locked.", -- check
 	overrun_message = "괴멸!",
 	overrun_soon_message = "잠시 후 괴멸 가능!",
 	overrun_bar = "~괴멸 대기시간",
@@ -76,8 +76,8 @@ L:RegisterTranslations("koKR", function() return {
 	earthquake_desc = "파멸의 절단기의 지진 사용 가능 시 경고합니다.",
 	earthquake_message = "지진! 다음은 약 70초 후!",
 	earthquake_bar = "~지진 대기시간",
-	--earthquake_trigger1 = "",
-	--earthquake_trigger2 = "",
+	earthquake_trigger1 = "Tectonic disruption commencing.", -- check
+	earthquake_trigger2 = "Magnitude set. Release.", -- check
 
 	enrage_soon_message = "잠시 후 격노!",
 	enrage_trigger = "%s becomes enraged!", -- check

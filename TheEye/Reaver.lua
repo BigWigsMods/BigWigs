@@ -131,6 +131,11 @@ L:RegisterTranslations("koKR", function() return {
 	pounding_trigger2 = "파괴력 변수 계산 중...",
 	pounding_nextbar = "~울림 대기 시간",
 	pounding_bar = "<울림>",
+
+	knock = "Knock Away",
+	knock_desc = "Knock Away cooldown bar.",
+	knock_trigger = "^Void Reaver 's Knock Away", -- check
+	knock_bar = "~Knock Away Cooldown",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

@@ -95,7 +95,7 @@ L:RegisterTranslations("koKR", function() return {
 	engage_message = "%s 전투 시작 - 약 35초 후 소멸!",
 
 	vanish = "소멸",
-	vanish_desc = "소멸 예상 시간입니다.",
+	vanish_desc = "모로스의 다음 소멸에 대한 예상 타이머입니다.",
 	vanish_trigger1 = "절 부르셨습니까?",
 	vanish_trigger2 = "어디까지 했죠? 아, 맞아...",
 	vanish_message = "소멸! 다음은 약 35초 후!",

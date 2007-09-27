@@ -103,7 +103,7 @@ L:RegisterTranslations("koKR", function() return {
 	fear_desc = "공포 타이머입니다.",
 	fear_message = "공포, 다음은 약 43-63초 이내!",
 	fear_bar = "~공포 대기시간",
-	fear_warning = "잠시 후 공포!",
+	fear_warning = "공포 대기시간 종료 - 잠시 후 공포!",
 
 	burst = "대기 파열",
 	burst_desc = "대기 파열 시전 대상을 알립니다.",

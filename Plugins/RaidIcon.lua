@@ -44,6 +44,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Raid Icons"] = "공격대 아이콘",
+--	["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = true,
 
 	["Place"] = "지정",
 	["Place Raid Icons"] = "공격대 아이콘 지정",
@@ -52,6 +53,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Icon"] = "아이콘",
 	["Set Icon"] = "아이콘 설정",
 	["Set which icon to place on players."] = "플레이어에 지정할 아이콘을 설정합니다.",
+
+--	["Use the %q icon when automatically placing raid icons for boss abilities."] = true,
 
 	["Star"] = "별",
 	["Circle"] = "원",

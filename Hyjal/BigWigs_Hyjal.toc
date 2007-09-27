@@ -3,6 +3,7 @@
 ## Title: Big Wigs [|cffeda55fHyjal|r]
 ## Notes: Big Wigs Hyjal Modules
 ## Notes-frFR: Modules Big Wigs concernant Hyjal.
+## Notes-koKR: Big Wigs 하이잘 경고
 ## Author: Funkydude, Rabbit
 ## X-Credits: Andii, tsigo
 ## Version: 2.0

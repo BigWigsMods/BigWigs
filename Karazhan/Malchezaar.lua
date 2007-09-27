@@ -150,14 +150,18 @@ L:RegisterTranslations("koKR", function() return {
 	infernal_trigger1 = "이 말체자르님은 혼자가 아니시다. 너희는 나의 군대와 맞서야 한다!",
 	infernal_trigger2 = "모든 차원과 실체가 나를 향해 열려 있노라!",
 	infernal_bar = "불지옥 등장",
-	infernal_warning = "20초 후 불지옥 등장!",
-	infernal_message = "5초 후 불지옥 등장!",
+	infernal_warning = "20초 이내 불지옥 등장!",
+	infernal_message = "불지옥 등장! 5초 이내 지옥불!",
 
 	nova = "암흑 회오리",
 	nova_desc = "암흑 회오리 예상 타이머입니다.",
 	nova_message = "암흑 회오리!",
 	nova_bar = "~회오리 대기시간",
 	nova_soon = "잠시 후 암흑 회오리",
+
+	despawn = "불지옥 사라짐 타이머 비활성화",
+	despawn_desc = "불지옥 사라짐에 대한 타이머입니다.",
+	despawn_bar = "지옥불 (%d) 사라짐",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

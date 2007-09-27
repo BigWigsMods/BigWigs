@@ -6,6 +6,7 @@
 ## Notes: Big Wigs Black Temple Modules
 ## Notes-zhCN: Big Wigs 黑暗神殿模块
 ## Notes-frFR: Modules Big Wigs concernant le Temple noir.
+## Notes-koKR: Big Wigs 검은 사원 경고
 ## Author: Funkydude, Rabbit
 ## X-Credits: Zonker, Daemona, kirr, Andii
 ## Version: 2.0
