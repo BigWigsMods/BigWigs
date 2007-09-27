@@ -244,7 +244,7 @@ function mod:WrathAff(msg)
 		if wplayer == L2["you"] and wtype == L2["are"] then
 			wplayer = pName
 		end
-		self:Sync("SolaWrath "..aplayer)
+		self:Sync("SolaWrath "..wplayer)
 	end
 end
 
