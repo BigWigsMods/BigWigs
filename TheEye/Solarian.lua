@@ -122,14 +122,14 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_trigger = "^Je ne fais plus",
 	phase2_message = "20% - Phase 2",
 
-	wrath = "Incantation du Courroux",
-	--wrath_desc = "Préviens quand le Courroux est en cours d'incantation, et sa cible actuelle.", --enUS changed
-	wrath_trigger = "^([^%s]+) ([^%s]+) les effets .* Courroux de l'Astromancien%.$",
-	--wrath_other = "Wrath on %s",
+	wrath = "Courroux de l'Astromancien",
+	wrath_desc = "Préviens quand un joueur subit les effets du Courroux de l'Astromancien.",
+	wrath_trigger = "^(%S+) (%S+) les effets .* Courroux de l'Astromancien%.$",
+	wrath_other = "Courroux sur %s",
 	wrath_you = "Courroux sur VOUS !",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le joueur affecté par le Courroux de l'Astromancien (nécessite d'être promu ou mieux).",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Courroux de l'Astromancien (nécessite d'être promu ou mieux).",
 
 	split = "Rupture",
 	split_desc = "Préviens de l'arrivée des ruptures & des apparitions des adds.",

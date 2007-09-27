@@ -250,7 +250,7 @@ L:RegisterTranslations("frFR", function() return {
 	capernian_inc_trigger = "Capernian fera en sorte que votre séjour ici ne se prolonge pas.",
 	telonicus_inc_trigger = "Bien, vous êtes dignes de mesurer votre talent à celui de mon maître ingénieur, Telonicus.",
 	weapons_inc_trigger = "Comme vous le voyez, j'ai plus d'une corde à mon arc…",
-	phase3_trigger = "Peut-être vous ai-je sous-estimés. Il ne serait pas très loyal de vous faire combattre mes quatre conseillers en même temps mais… mon peuple n'a jamais été traité avec loyauté. Je ne fais que rendre la politesse.",
+	phase3_trigger = "Peut-être vous ai-je sous-estimés. Il ne serait pas très loyal de vous faire combattre mes quatre conseillers en même temps, mais… mon peuple n'a jamais été traité avec loyauté. Je ne fais que rendre la politesse.",
 	phase4_trigger = "Il est hélas parfois nécessaire de prendre les choses en main soi-même. Balamore shanal !",
 
 	flying_trigger = "Je ne suis pas arrivé si loin pour échouer maintenant ! Je ne laisserai pas l'avenir que je prépare être remis en cause ! Vous allez goûter à ma vraie puissance !",

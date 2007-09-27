@@ -110,12 +110,12 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Douleur et souffrance, voilà tout ce qui vous attend !", -- à vérifier
+	engage_trigger = "Douleur et souffrance, voilà tout ce qui vous attend !",
 
-	enrage_start = "Enragée dans ~47 sec.",
-	enrage_trigger = "%s devient folle furieuse !", -- à vérifier
-	enrage_message = "Enragée pendant 15 sec. !",
-	enrage_bar = "<Enragée>",
+	enrage_start = "Enrager dans ~47 sec.",
+	enrage_trigger = "%s devient fou furieux !",
+	enrage_message = "Enragé pendant 15 sec. !",
+	enrage_bar = "<Enragé>",
 	enrage_next = "Fin de l'Enrager - Prochain dans ~32 sec.",
 	enrage_nextbar = "Prochain Enrager",
 	enrage_warning = "Enrager dans 5 sec. !",
@@ -123,8 +123,8 @@ L:RegisterTranslations("frFR", function() return {
 	desire_trigger  = "Vous pouvez avoir tout ce que vous désirez... en y mettant le prix.", -- à vérifier
 	desire_cot = "Shi shi rikk rukadare shi tichar kar x gular ", --Curse of Tongues trigger
 	desire_start = "Essence du désir - Zéro mana dans 160 sec.",
-	desire_bar = "Zéro Mana",
-	desire_warn = "Zéro Mana dasn 30 sec. !",
+	desire_bar = "Zéro mana",
+	desire_warn = "Zéro mana dans 30 sec. !",
 
 	runeshield = "Bouclier runique",
 	runeshield_desc = "Délais concernant le Bouclier runique de l'Essence du désir.",
@@ -146,7 +146,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	scream = "Cri de l'âme",
 	scream_desc = "Affiche une barre de cooldown pour le Cri de l'âme.",
-	scream_trigger = "^Cri de l'âme de Essence de la colère ",
+	scream_trigger = "^Cri de l'âme .* Essence de la colère ",
 	scream_bar = "~Cooldown Cri de l'âme",
 
 	afflict_trigger = "^(%S+) (%S+) les effets [de|2]+ (.*).$",
