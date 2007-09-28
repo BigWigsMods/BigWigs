@@ -10,9 +10,10 @@ local zerevor = BB["High Nethermancer Zerevor"]
 local veras = BB["Veras Darkshadow"]
 BB = nil
 
+local fmt = string.format
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-local death = AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"]:format(boss)
+local death = AceLibrary("AceLocale-2.2"):new("BigWigs")fmt("%s has been defeated", boss)
 
 local pName = nil
 
@@ -22,6 +23,8 @@ local pName = nil
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "TheIllidariCouncil",
+
+	engage_trigger = "",
 
 	immune = "Immunity Warning",
 	immune_desc = "Warn when Malande becomes immune to spells or melee attacks.",
@@ -59,6 +62,8 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	--engage_trigger = "",
+
 	immune = "Immunité",
 	immune_desc = "Préviens quand Malande devient insensible aux sorts ou aux attaques de melée.",
 	immune_spell_trigger = "Dame Malande gagne Bénédiction de protection contre les sorts.",
@@ -95,6 +100,8 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	--engage_trigger = "",
+
 	immune = "면역 경고",
 	immune_desc = "말란데가 주문 혹은 근접 공격에 면역 시 알립니다.",
 	immune_spell_trigger = "여군주 말란데|1이;가; 주문 수호의 축복 효과를 얻었습니다.",
@@ -129,10 +136,13 @@ L:RegisterTranslations("koKR", function() return {
 	circle_fail_message = "차단됨! - 다음은 약 12초 이내",
 	circle_bar = "~치유의 마법진 대기 시간",
 } end )
+
 --Chinese Translate by 月色狼影@CWDG
 --CWDG site: http://Cwowaddon.com
 --伊利达雷议会
 L:RegisterTranslations("zhCN", function() return {
+	--engage_trigger = "",
+
 	immune = "免疫警报",
 	immune_desc = "当玛兰德免疫法术活近战攻击时发出警报",
 	immune_spell_trigger = "女公爵玛兰德获得了法术结界祝福",--女公爵玛兰德
@@ -162,7 +172,7 @@ L:RegisterTranslations("zhCN", function() return {
 	circle_trigger = "女公爵玛兰德开始施放治疗之环",
 	circle_message = "正在施放 治疗之环!",
 	circle_heal_trigger = "^女公爵玛兰德的治疗之环治疗",
-	circle_fail_trigger = "^([^%s]+)打断了公爵玛兰德的治疗之环", --GIVE ME A FUCKING EVENT OK
+	circle_fail_trigger = "^([^%s]+)打断了公爵玛兰德的治疗之环",
 	circle_heal_message = "治疗 成功! - ~20秒后再次发动",
 	circle_fail_message = "打断! - ~12s秒后再次发动 治疗之环",
 	circle_bar = "~治疗之环 CD",
@@ -170,6 +180,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 L:RegisterTranslations("deDE", function() return {
+	--engage_trigger = "",
+
 	immune = "Immunitäts Warnung",
 	immune_desc = "Warnen wenn Malande immun gegen Zauber oder Nahkampfangriffe wird.",
 	immune_spell_trigger = "Lady Malande bekommt Segen des Zauberschutzes.",
@@ -212,7 +224,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = {malande, gathios, zerevor, veras}
-mod.toggleoptions = {"immune", "shield", "circle", -1, "poison", "icon", "bosskill"}
+mod.toggleoptions = {"immune", "shield", "circle", -1, "poison", "icon", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -222,6 +234,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Poison")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Poison")
@@ -233,6 +246,8 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_HOSTILEPLAYER_DAMAGE", "Interrupt")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	--self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe") --turn on when we get the engage trigger
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalSpell", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalMelee", 5)
@@ -252,13 +267,13 @@ end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "MalSpell" and self.db.profile.immune then
-		self:Message(L["immune_message"]:format(L["spell"]), "Positive", nil, "Alarm")
-		self:TriggerEvent("BigWigs_StopBar", self, L["immune_message"]:format(L["melee"]))
-		self:Bar(L["immune_bar"]:format(L["spell"]), 15, "Spell_Holy_SealOfRighteousness")
+		self:Message(fmt(L["immune_message"], L["spell"]), "Positive", nil, "Alarm")
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["immune_message"], L["melee"]))
+		self:Bar(fmt(L["immune_bar"], L["spell"]), 15, "Spell_Holy_SealOfRighteousness")
 	elseif sync == "MalMelee" and self.db.profile.immune then
-		self:Message(L["immune_message"]:format(L["melee"]), "Positive", nil, "Alert")
-		self:TriggerEvent("BigWigs_StopBar", self, L["immune_message"]:format(L["spell"]))
-		self:Bar(L["immune_bar"]:format(L["melee"]), 15, "Spell_Holy_SealOfProtection")
+		self:Message(fmt(L["immune_message"], L["melee"]), "Positive", nil, "Alert")
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["immune_message"], L["spell"]))
+		self:Bar(fmt(L["immune_bar"], L["melee"]), 15, "Spell_Holy_SealOfProtection")
 	elseif sync == "MalShield" and self.db.profile.shield then
 		self:Message(L["shield_message"], "Important", nil, "Long")
 		self:Bar(L["shield_message"], 20, "Spell_Holy_PowerWordShield")
@@ -275,7 +290,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(death, "Bosskill", nil, "Victory")
 		BigWigs:ToggleModuleActive(self, false)
 	elseif sync == "CouncilPoison" and rest and self.db.profile.poison then
-		local other = L["poison_other"]:format(rest)
+		local other = fmt(L["poison_other"], rest)
 		if rest == pName then
 			self:Message(L["poison_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
@@ -288,9 +303,23 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if self.db.profile.enrage and msg == L["engage_trigger"] then
+		self:Message(fmt(L2["enrage_start"], boss, 15), "Attention")
+		self:DelayedMessage(300, fmt(L2["enrage_min"], 10), "Positive")
+		self:DelayedMessage(600, fmt(L2["enrage_min"], 5), "Positive")
+		self:DelayedMessage(840, fmt(L2["enrage_min"], 1), "Positive")
+		self:DelayedMessage(870, fmt(L2["enrage_sec"], 30), "Positive")
+		self:DelayedMessage(890, fmt(L2["enrage_sec"], 10), "Urgent")
+		self:DelayedMessage(895, fmt(L2["enrage_sec"], 5), "Urgent")
+		self:DelayedMessage(900, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
+		self:Bar(L2["enrage"], 900, "Spell_Shadow_UnholyFrenzy")
+	end
+end
+
 function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 	local die = UNITDIESOTHER
-	if msg == die:format(malande) then
+	if msg == fmt(die, malande) then
 		self:Sync("TICWin")
 	end
 end
