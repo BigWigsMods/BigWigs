@@ -9,6 +9,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local pName = nil
 local attracted = {}
 local UnitDebuff = UnitDebuff
+local enrageWarn = nil
 local stop
 
 --debuffs
@@ -37,6 +38,17 @@ L:RegisterTranslations("enUS", function() return {
 	debuff = "Debuff Timers",
 	debuff_desc = "Show the current debuff and the time until the next one.",
 	debuff_bar = "Next Debuff",
+
+	berserk = "Berserk",
+	berserk_desc = "Warn for berserk after 10min.",
+	berserk_start = "%s engaged, 10 min to berserk!",
+	berserk_min = "Berserk in %d min",
+	berserk_sec = "Berserk in %d sec",
+	berserk_end = "%s goes Berserk!",
+
+	enrage_warning = "Enrage soon!",
+	enrage_message = "10% - Enraged",
+	enrage_trigger = "%s becomes enraged!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -50,6 +62,17 @@ L:RegisterTranslations("koKR", function() return {
 	--debuff = "Debuff Timers",
 	--debuff_desc = "Show the current debuff and the time until the next one.",
 	--debuff_bar = "Next Debuff",
+
+	--berserk = "Berserk",
+	--berserk_desc = "Warn for berserk after 10min.",
+	--berserk_start = "%s engaged, 10 min to berserk!",
+	--berserk_min = "Berserk in %d min",
+	--berserk_sec = "Berserk in %d sec",
+	--berserk_end = "%s goes Berserk!",
+
+	--enrage_warning = "Enrage soon!",
+	--enrage_message = "10% - Enraged",
+	--enrage_trigger = "%s becomes enraged!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -63,6 +86,17 @@ L:RegisterTranslations("frFR", function() return {
 	--debuff = "Debuff Timers",
 	--debuff_desc = "Show the current debuff and the time until the next one.",
 	--debuff_bar = "Next Debuff",
+
+	--berserk = "Berserk",
+	--berserk_desc = "Warn for berserk after 10min.",
+	--berserk_start = "%s engaged, 10 min to berserk!",
+	--berserk_min = "Berserk in %d min",
+	--berserk_sec = "Berserk in %d sec",
+	--berserk_end = "%s goes Berserk!",
+
+	--enrage_warning = "Enrage soon!",
+	--enrage_message = "10% - Enraged",
+	--enrage_trigger = "%s becomes enraged!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -76,6 +110,17 @@ L:RegisterTranslations("deDE", function() return {
 	--debuff = "Debuff Timers",
 	--debuff_desc = "Show the current debuff and the time until the next one.",
 	--debuff_bar = "Next Debuff",
+
+	--berserk = "Berserk",
+	--berserk_desc = "Warn for berserk after 10min.",
+	--berserk_start = "%s engaged, 10 min to berserk!",
+	--berserk_min = "Berserk in %d min",
+	--berserk_sec = "Berserk in %d sec",
+	--berserk_end = "%s goes Berserk!",
+
+	--enrage_warning = "Enrage soon!",
+	--enrage_message = "10% - Enraged",
+	--enrage_trigger = "%s becomes enraged!",
 } end )
 
 ----------------------------------
@@ -85,7 +130,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"attraction", "debuff", "enrage", "bosskill"}
+mod.toggleoptions = {"attraction", "debuff", "berserk", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -96,12 +141,14 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "FatalAtt")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "FatalAtt")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "FatalAtt")
 
 	self:RegisterEvent("PLAYER_AURAS_CHANGED")
+	self:RegisterEvent("UNIT_HEALTH")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ShaAttra", 0)
@@ -132,17 +179,17 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		for k in pairs(attracted) do attracted[k] = nil end
-		if self.db.profile.enrage then
-			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
+		if self.db.profile.berserk then
+			self:Message(L2["berserk_start"]:format(boss, 10), "Attention")
 			--Don't use :DelayedMessage as we get mutiple messages on rare occasions :CheckForWipe doesn't kick in due to the enounter style
-			self:ScheduleEvent("en1", "BigWigs_Message", 300, L2["enrage_min"]:format(5), "Positive")
-			self:ScheduleEvent("en2", "BigWigs_Message", 420, L2["enrage_min"]:format(3), "Positive")
-			self:ScheduleEvent("en3", "BigWigs_Message", 540, L2["enrage_min"]:format(1), "Positive")
-			self:ScheduleEvent("en4", "BigWigs_Message", 570, L2["enrage_sec"]:format(30), "Positive")
-			self:ScheduleEvent("en5", "BigWigs_Message", 590, L2["enrage_sec"]:format(10), "Urgent")
-			self:ScheduleEvent("en6", "BigWigs_Message", 595, L2["enrage_sec"]:format(5), "Urgent")
-			self:ScheduleEvent("en7", "BigWigs_Message", 600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
-			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
+			self:ScheduleEvent("en1", "BigWigs_Message", 300, L["berserk_min"]:format(5), "Positive")
+			self:ScheduleEvent("en2", "BigWigs_Message", 420, L["berserk_min"]:format(3), "Positive")
+			self:ScheduleEvent("en3", "BigWigs_Message", 540, L["berserk_min"]:format(1), "Positive")
+			self:ScheduleEvent("en4", "BigWigs_Message", 570, L["berserk_sec"]:format(30), "Positive")
+			self:ScheduleEvent("en5", "BigWigs_Message", 590, L["berserk_sec"]:format(10), "Urgent")
+			self:ScheduleEvent("en6", "BigWigs_Message", 595, L["berserk_sec"]:format(5), "Urgent")
+			self:ScheduleEvent("en7", "BigWigs_Message", 600, L["berserk_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Bar(L2["berserk"], 600, "Spell_Nature_Reincarnation")
 		end
 	end
 end
@@ -213,4 +260,23 @@ function mod:AttractionWarn()
 	--start accepting syncs again after 6 seconds, by blocking syncs we can
 	--warn earlier without caring about latency displaying messages twice
 	self:ScheduleEvent("BWShahrazNilStop", nilStop, 6)
+end
+
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+	if self.db.profile.enrage and msg == L["enrage_trigger"] then
+		self:Message(L["enrage_message"], "Important")
+	end
+end
+
+function mod:UNIT_HEALTH(msg)
+	if not self.db.profile.enrage then return end
+	if UnitName(msg) == boss then
+		local health = UnitHealth(msg)
+		if health > 12 and health <= 14 and not enrageWarn then
+			self:Message(L["enrage_warning"], "Positive")
+			enrageWarn = true
+		elseif health > 50 and enrageWarn then
+			enrageWarn = false
+		end
+	end
 end
