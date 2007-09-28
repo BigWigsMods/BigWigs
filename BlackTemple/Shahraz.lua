@@ -10,6 +10,7 @@ local pName = nil
 local attracted = {}
 local UnitDebuff = UnitDebuff
 local enrageWarn = nil
+local restype = nil
 local stop
 
 --debuffs
@@ -213,26 +214,34 @@ function mod:PLAYER_AURAS_CHANGED(msg)
 	while UnitDebuff("player", i) do --loop debuff scan
 		local name, _, texture = UnitDebuff("player", i) --save name & debuff
 
-		--If we find a known texture(debuff Prismatic Aura: Resistance)
-		--show a countdown bar and create a message with the name of the debuff
-		if texture == shadow then
-			self:Message(name, "Attention")
-			self:Bar(bar, 15, all)
-		elseif texture == holy then
-			self:Message(name, "Attention")
-			self:Bar(bar, 15, all)
-		elseif texture == arcane then
-			self:Message(name, "Attention")
-			self:Bar(bar, 15, all)
-		elseif texture == nature then
-			self:Message(name, "Attention")
-			self:Bar(bar, 15, all)
-		elseif texture == fire then
-			self:Message(name, "Attention")
-			self:Bar(bar, 15, all)
-		elseif texture == frost then
-			self:Message(name, "Attention")
-			self:Bar(bar, 15, all)
+		if texture ~= restype then --spam protection
+			--If we find a known texture(debuff Prismatic Aura: Resistance)
+			--show a countdown bar and create a message with the name of the debuff
+			if texture == shadow then
+				self:Message(name, "Attention")
+				self:Bar(bar, 15, all)
+				restype = texture
+			elseif texture == holy then
+				self:Message(name, "Attention")
+				self:Bar(bar, 15, all)
+				restype = texture
+			elseif texture == arcane then
+				self:Message(name, "Attention")
+				self:Bar(bar, 15, all)
+				restype = texture
+			elseif texture == nature then
+				self:Message(name, "Attention")
+				self:Bar(bar, 15, all)
+				restype = texture
+			elseif texture == fire then
+				self:Message(name, "Attention")
+				self:Bar(bar, 15, all)
+				restype = texture
+			elseif texture == frost then
+				self:Message(name, "Attention")
+				self:Bar(bar, 15, all)
+				restype = texture
+			end
 		end
 		i = i + 1 --increase counter
 	end
