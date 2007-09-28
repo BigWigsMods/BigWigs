@@ -60,7 +60,7 @@ L:RegisterTranslations("enUS", function() return {
 	circle_heal_trigger = "^Lady Malande 's Circle of Healing heals",
 	circle_fail_trigger = "^(%S+) interrupts Lady Malande's Circle of Healing%.$",
 	circle_heal_message = "Healed! - Next in ~20sec",
-	circle_fail_message = "Interrupted! - Next in ~12sec",
+	circle_fail_message = "%s Interrupted! - Next in ~12sec",
 	circle_bar = "~Circle of Healing Cooldown",
 } end )
 
@@ -101,7 +101,7 @@ L:RegisterTranslations("frFR", function() return {
 	circle_heal_trigger = "^Cercle de soins .* Dame Malande soigne",
 	circle_fail_trigger = "^(%S+) interrompt Dame Malande qui lance Cercle de soins%.$", -- + "Dame Malande lance un Cercle de soins que vous interrompez." ?
 	circle_heal_message = "Soigné ! - Prochain dans ~20 sec.",
-	circle_fail_message = "Interrompu ! - Prochain dans ~12 sec.",
+	circle_fail_message = "%s Interrompu ! - Prochain dans ~12 sec.",
 	circle_bar = "~Cooldown Cercle de soins",
 } end )
 
@@ -142,7 +142,7 @@ L:RegisterTranslations("koKR", function() return {
 	circle_heal_trigger = "^여군주 말란데의 치유의 마법진|1으로;로;",
 	circle_fail_trigger = "^([^%s]+)|1이;가; 여군주 말란데의 치유의 마법진|1을;를; 차단했습니다%.$",
 	circle_heal_message = "치유됨! - 다음은 약 20초 이내",
-	circle_fail_message = "차단됨! - 다음은 약 12초 이내",
+	circle_fail_message = "%s 차단됨! - 다음은 약 12초 이내",
 	circle_bar = "~치유의 마법진 대기 시간",
 } end )
 
@@ -186,7 +186,7 @@ L:RegisterTranslations("zhCN", function() return {
 	circle_heal_trigger = "^女公爵玛兰德的治疗之环治疗",
 	circle_fail_trigger = "^([^%s]+)打断了公爵玛兰德的治疗之环",
 	circle_heal_message = "治疗 成功! - ~20秒后再次发动",
-	circle_fail_message = "打断! - ~12s秒后再次发动 治疗之环",
+	circle_fail_message = "%s 打断! - ~12s秒后再次发动 治疗之环",
 	circle_bar = "~治疗之环 CD",
 } end )
 
@@ -228,7 +228,7 @@ L:RegisterTranslations("deDE", function() return {
 	circle_heal_trigger = "^Lady Malande 's Kreis der Heilung heilt",
 	circle_fail_trigger = "^([^%s]+) unterbricht Lady Malande's Kreis der Heilung%.$",
 	circle_heal_message = "Geheilt! - Nächster in ~20sek",
-	circle_fail_message = "Unterbrochen! - Nächster in ~12sek",
+	circle_fail_message = "%s Unterbrochen! - Nächster in ~12sek",
 	circle_bar = "~Kreis der Heilung Cooldown",
 } end )
 
@@ -269,7 +269,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalShield", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalCCast", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalCHeal", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "MalCFail", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "ICKick", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "CouncilPoison", 2)
 
 	pName = UnitName("player")
@@ -298,8 +298,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "MalCHeal" and self.db.profile.circle then
 		self:Message(L["circle_heal_message"], "Urgent")
 		self:Bar(L["circle_bar"], 20, "Spell_Holy_CircleOfRenewal")
-	elseif sync == "MalCFail" and self.db.profile.circle then
-		self:Message(L["circle_fail_message"], "Urgent")
+	elseif sync == "ICKick" and rest and self.db.profile.circle then
+		self:Message(fmt(L["circle_fail_message"], rest), "Urgent")
 		self:Bar(L["circle_bar"], 12, "Spell_Holy_CircleOfRenewal")
 	elseif sync == "TICWin" and self.db.profile.bosskill then
 		self:Message(death, "Bosskill", nil, "Victory")
@@ -368,7 +368,11 @@ function mod:Poison(msg)
 end
 
 function mod:Interrupt(msg)
-	if msg:find(L["circle_fail_trigger"]) then
-		self:Sync("MalCFail")
+	local player = select(3, msg:find(L["circle_fail_trigger"]))
+	if player then
+		if player == L2["you"] then --prob need something better than this
+			player = pName
+		end
+		self:Sync("ICKick "..player)
 	end
 end
