@@ -157,12 +157,12 @@ function mod:OnEnable()
 	stop = nil
 
 	--setup debuffs
-	shadow = "INV_Misc_Gem_Amethyst_01"
-	holy = "INV_Misc_Gem_Topaz_01"
-	arcane = "INV_Misc_Gem_Sapphire_01"
-	nature = "INV_Misc_Gem_Emerald_01"
-	fire = "INV_Misc_Gem_Opal_01"
-	frost = "INV_Misc_Gem_Crystal_02"
+	shadow = "Interface\\Icons\\INV_Misc_Gem_Amethyst_01"
+	holy = "Interface\\Icons\\INV_Misc_Gem_Topaz_01"
+	arcane = "Interface\\Icons\\INV_Misc_Gem_Sapphire_01"
+	nature = "Interface\\Icons\\INV_Misc_Gem_Emerald_01"
+	fire = "Interface\\Icons\\INV_Misc_Gem_Opal_01"
+	frost = "Interface\\Icons\\INV_Misc_Gem_Crystal_02"
 	all = "INV_Misc_Gem_Variety_02"
 end
 
@@ -213,7 +213,7 @@ function mod:PLAYER_AURAS_CHANGED(msg)
 	local bar = L["debuff_bar"] --don't need to repeat this in every bar
 	local i = 1 --setup counter
 	while UnitDebuff("player", i) do --loop debuff scan
-		local name, _, texture = UnitDebuff("player", i) --save name & debuff
+		local name, _, texture = UnitDebuff("player", i) --save name & texture
 
 		if texture ~= restype then --spam protection
 			--If we find a known texture(debuff Prismatic Aura: Resistance)
