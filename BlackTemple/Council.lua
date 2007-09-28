@@ -24,7 +24,10 @@ local pName = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "TheIllidariCouncil",
 
-	engage_trigger = "",
+	engage_trigger1 = "You wish to test me?",
+	engage_trigger2 = "Common... such a crude language. Bandal!",
+	engage_trigger3 = "I have better things to do..",
+	engage_trigger4 = "Flee, or die!",
 
 	immune = "Immunity Warning",
 	immune_desc = "Warn when Malande becomes immune to spells or melee attacks.",
@@ -62,7 +65,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	--engage_trigger = "",
+	--engage_trigger1 = "You wish to test me?",
+	--engage_trigger2 = "Common... such a crude language. Bandal!",
+	--engage_trigger3 = "I have better things to do..",
+	--engage_trigger4 = "Flee, or die!",
 
 	immune = "Immunité",
 	immune_desc = "Préviens quand Malande devient insensible aux sorts ou aux attaques de melée.",
@@ -100,7 +106,10 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	--engage_trigger = "",
+	--engage_trigger1 = "You wish to test me?",
+	--engage_trigger2 = "Common... such a crude language. Bandal!",
+	--engage_trigger3 = "I have better things to do..",
+	--engage_trigger4 = "Flee, or die!",
 
 	immune = "면역 경고",
 	immune_desc = "말란데가 주문 혹은 근접 공격에 면역 시 알립니다.",
@@ -141,7 +150,10 @@ L:RegisterTranslations("koKR", function() return {
 --CWDG site: http://Cwowaddon.com
 --伊利达雷议会
 L:RegisterTranslations("zhCN", function() return {
-	--engage_trigger = "",
+	--engage_trigger1 = "You wish to test me?",
+	--engage_trigger2 = "Common... such a crude language. Bandal!",
+	--engage_trigger3 = "I have better things to do..",
+	--engage_trigger4 = "Flee, or die!",
 
 	immune = "免疫警报",
 	immune_desc = "当玛兰德免疫法术活近战攻击时发出警报",
@@ -180,7 +192,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 L:RegisterTranslations("deDE", function() return {
-	--engage_trigger = "",
+	--engage_trigger1 = "You wish to test me?",
+	--engage_trigger2 = "Common... such a crude language. Bandal!",
+	--engage_trigger3 = "I have better things to do..",
+	--engage_trigger4 = "Flee, or die!",
 
 	immune = "Immunitäts Warnung",
 	immune_desc = "Warnen wenn Malande immun gegen Zauber oder Nahkampfangriffe wird.",
@@ -246,7 +261,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_HOSTILEPLAYER_DAMAGE", "Interrupt")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
-	--self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe") --turn on when we get the engage trigger
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalSpell", 5)
@@ -304,7 +319,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.enrage and msg == L["engage_trigger"] then
+	if self.db.profile.enrage and (msg == L["engage_trigger1"] or msg == L["engage_trigger2"] or msg == L["engage_trigger3"] or msg == L["engage_trigger4"]) then
 		self:Message(fmt(L2["enrage_start"], boss, 15), "Attention")
 		self:DelayedMessage(300, fmt(L2["enrage_min"], 10), "Positive")
 		self:DelayedMessage(600, fmt(L2["enrage_min"], 5), "Positive")
