@@ -163,7 +163,7 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_nextbar = "Nächster Wutanfall",
 	enrage_warning = "Wutanfall in 5 sek!",
 
-	desire_trigger  = "Du kannst alles haben was du dir wünscht... für einen Preis.", --Check
+	desire_trigger  = "Ihr könnt alles haben, was Ihr wollt... doch es hat einen Preis.",
 	desire_cot = "Maz archim zekul refir daz Maz soran maez me ruk buras Zekul", --Curse of Tongues trigger
 	desire_start = "Essenz der Begierde - Null Mana in 160 sek",
 	desire_bar = "Null Mana",
