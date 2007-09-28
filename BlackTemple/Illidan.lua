@@ -261,10 +261,10 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	--berserk = "Berserk",
-	--berserk_desc = "Warn for berserk after 25min.",
-	--berserk_trigger = "You are not prepared!",
-	--berserk_message = "%s engaged, 25min to berserk!",
+	berserk = "Berserker",
+	berserk_desc = "Warnt wann Illidan zum Berserker wird.",
+	berserk_trigger = "Ihr wisst nicht, was Euch erwartet!",
+	berserk_message = "%s gepullt, 25min bis er zum Berserker wird!",
 
 	parasite = "Schädlicher Schattengeist",
 	parasite_desc = "Warnt wer von Schädlicher Schattengeist betroffen ist.",
@@ -321,7 +321,7 @@ L:RegisterTranslations("deDE", function() return {
 	flameburst_cooldown_warn = "Flammenschlag bald!",
 	flameburst_warn = "Flammenschlag in ~5sek!",
 
-	--enrage_trigger = "Feel the hatred of ten thousand years!",
+	enrage_trigger = "Fühlt dem Haß von 10 tausend Jahren!",
 	enrage_message = "Wütend!",
 
 	afflict_trigger = "^(%S+) (%S+) ist von (.*) betroffen.$",

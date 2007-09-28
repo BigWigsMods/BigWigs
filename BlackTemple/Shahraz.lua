@@ -108,20 +108,20 @@ L:RegisterTranslations("deDE", function() return {
 	attraction_trigger = "^([^%s]+) ([^%s]+) ist von Verhängnisvolle Affäre betroffen%.$",
 	attraction_message = "Affäre: %s",
 
-	--debuff = "Debuff Timers",
-	--debuff_desc = "Show the current debuff and the time until the next one.",
-	--debuff_bar = "Next Debuff",
+	debuff = "Debuff Timer",
+	debuff_desc = "Zeigt den gegenwärtigen Debuff und die Zeit bis zum nächsten an.",
+	debuff_bar = "Nächster Debuff",
 
-	--berserk = "Berserk",
-	--berserk_desc = "Warn for berserk after 10min.",
-	--berserk_start = "%s engaged, 10 min to berserk!",
-	--berserk_min = "Berserk in %d min",
-	--berserk_sec = "Berserk in %d sec",
-	--berserk_end = "%s goes Berserk!",
+	berserk = "Berserker",
+	berserk_desc = "Warnt wann Shahraz zum Berserker wird.",
+	berserk_start = "%s gepullt, 10 min bis sie zum Berserker wird!",
+	berserk_min = "Berserker in %d min",
+	berserk_sec = "Berserker in %d sek",
+	berserk_end = "%s wird zum Berserker!",
 
-	--enrage_warning = "Enrage soon!",
-	--enrage_message = "10% - Enraged",
-	--enrage_trigger = "%s becomes enraged!",
+	enrage_warning = "Wütend bald!",
+	enrage_message = "10% - Wütend",
+	enrage_trigger = "%s wird wütend!",
 } end )
 
 ----------------------------------
