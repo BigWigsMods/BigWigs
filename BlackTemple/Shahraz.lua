@@ -8,7 +8,17 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local pName = nil
 local attracted = {}
+local UnitDebuff = UnitDebuff
 local stop
+
+--debuffs
+local shadow
+local holy
+local arcane
+local nature
+local fire
+local frost
+local all
 
 ----------------------------
 --      Localization      --
@@ -23,6 +33,10 @@ L:RegisterTranslations("enUS", function() return {
 	attraction_desc = "Warn who has Fatal Attraction.",
 	attraction_trigger = "^(%S+) (%S+) afflicted by Fatal Attraction%.$",
 	attraction_message = "Attraction: %s",
+
+	debuff = "Debuff Timers",
+	debuff_desc = "Show the current debuff and the time until the next one.",
+	debuff_bar = "Next Debuff",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -32,6 +46,10 @@ L:RegisterTranslations("koKR", function() return {
 	attraction_desc = "치명적인 매력에 걸린 사람을 알립니다.",
 	attraction_trigger = "^([^|;%s]*)(.*)치명적인 매력에 걸렸습니다%.$",
 	attraction_message = "매력: %s",
+
+	--debuff = "Debuff Timers",
+	--debuff_desc = "Show the current debuff and the time until the next one.",
+	--debuff_bar = "Next Debuff",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -41,6 +59,10 @@ L:RegisterTranslations("frFR", function() return {
 	attraction_desc = "Préviens quand un joueur subit les effets de la Liaison fatale.",
 	attraction_trigger = "^(%S+) (%S+) les effets .* Liaison fatale%.$",
 	attraction_message = "Liaison : %s",
+
+	--debuff = "Debuff Timers",
+	--debuff_desc = "Show the current debuff and the time until the next one.",
+	--debuff_bar = "Next Debuff",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -50,6 +72,10 @@ L:RegisterTranslations("deDE", function() return {
 	attraction_desc = "Warnt wer die Verhängnisvolle Affäre hat.",
 	attraction_trigger = "^([^%s]+) ([^%s]+) ist von Verhängnisvolle Affäre betroffen%.$",
 	attraction_message = "Affäre: %s",
+
+	--debuff = "Debuff Timers",
+	--debuff_desc = "Show the current debuff and the time until the next one.",
+	--debuff_bar = "Next Debuff",
 } end )
 
 ----------------------------------
@@ -59,7 +85,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"attraction", "enrage", "bosskill"}
+mod.toggleoptions = {"attraction", "debuff", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -75,10 +101,21 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "FatalAtt")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "FatalAtt")
 
+	self:RegisterEvent("PLAYER_AURAS_CHANGED")
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ShaAttra", 0)
 	pName = UnitName("player")
 	stop = nil
+
+	--setup debuffs
+	shadow = "INV_Misc_Gem_Amethyst_01"
+	holy = "INV_Misc_Gem_Topaz_01"
+	arcane = "INV_Misc_Gem_Sapphire_01"
+	nature = "INV_Misc_Gem_Emerald_01"
+	fire = "INV_Misc_Gem_Opal_01"
+	frost = "INV_Misc_Gem_Crystal_02"
+	all = "INV_Misc_Gem_Variety_02"
 end
 
 ------------------------------
@@ -117,6 +154,40 @@ function mod:FatalAtt(msg)
 			aplayer = pName
 		end
 		self:Sync("ShaAttra "..aplayer)
+	end
+end
+
+function mod:PLAYER_AURAS_CHANGED(msg)
+	--don't even scan anything if we don't want it on
+	if not self.db.profile.debuff then return end
+
+	local bar = L["debuff_bar"] --don't need to repeat this in every bar
+	local i = 1 --setup counter
+	while UnitDebuff("player", i) do --loop debuff scan
+		local name, _, texture = UnitDebuff("player", i) --save name & debuff
+
+		--If we find a known texture(debuff Prismatic Aura: Resistance)
+		--show a countdown bar and create a message with the name of the debuff
+		if texture == shadow then
+			self:Message(name, "Attention")
+			self:Bar(bar, 15, all)
+		elseif texture == holy then
+			self:Message(name, "Attention")
+			self:Bar(bar, 15, all)
+		elseif texture == arcane then
+			self:Message(name, "Attention")
+			self:Bar(bar, 15, all)
+		elseif texture == nature then
+			self:Message(name, "Attention")
+			self:Bar(bar, 15, all)
+		elseif texture == fire then
+			self:Message(name, "Attention")
+			self:Bar(bar, 15, all)
+		elseif texture == frost then
+			self:Message(name, "Attention")
+			self:Bar(bar, 15, all)
+		end
+		i = i + 1 --increase counter
 	end
 end
 
