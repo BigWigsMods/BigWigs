@@ -87,10 +87,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	--berserk = "Berserk",
-	--berserk_desc = "Warn for berserk after 25min.",
-	--berserk_trigger = "You are not prepared!",
-	--berserk_message = "%s engaged, 25min to berserk!",
+	berserk = "Berserk",
+	berserk_desc = "Préviens quand Illidan passe en berserk après 25 min.",
+	berserk_trigger = "Vous n'êtes pas prêts !", -- à vérifier
+	berserk_message = "%s engagé, 25 min. avant berserk !",
 
 	parasite = "Ombrefiel parasite",
 	parasite_desc = "Préviens quand un joueur subit les effets de l'Ombrefiel parasite.",
@@ -147,7 +147,7 @@ L:RegisterTranslations("frFR", function() return {
 	flameburst_cooldown_warn = "Explosion de flammes imminente !",
 	flameburst_warn = "Explosion de flammes dans ~5 sec. !",
 
-	--enrage_trigger = "Feel the hatred of ten thousand years!",
+	enrage_trigger = "Goûtez à dix mille ans de haine !", -- à vérifier
 	enrage_message = "Enragé !",
 
 	afflict_trigger = "^(%S+) (%S+) les effets [de|2]+ (.*).$",

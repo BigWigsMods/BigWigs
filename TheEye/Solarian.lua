@@ -125,10 +125,10 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_trigger = "^Je ne fais plus",
 	phase2_message = "20% - Phase 2",
 
-	wrath = "Courroux de l'Astromancien",
-	wrath_desc = "Préviens quand un joueur subit les effets du Courroux de l'Astromancien.",
-	wrath_trigger = "^(%S+) (%S+) les effets .* Courroux de l'Astromancien%.$",
-	--wrath_fade = "Wrath of the Astromancer fades from you.",
+	wrath = "Courroux de l'astromancienne",
+	wrath_desc = "Préviens quand un joueur subit les effets du Courroux de l'astromancienne.",
+	wrath_trigger = "^(%S+) (%S+) les effets .* Courroux de l'astromancienne%.$",
+	wrath_fade = "Courroux de l'astromancienne vient de se dissiper.",
 	wrath_other = "Courroux sur %s",
 	wrath_you = "Courroux sur VOUS !",
 

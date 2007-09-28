@@ -65,10 +65,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	--engage_trigger1 = "You wish to test me?",
-	--engage_trigger2 = "Common... such a crude language. Bandal!",
-	--engage_trigger3 = "I have better things to do..",
-	--engage_trigger4 = "Flee, or die!",
+	engage_trigger1 = "Vous voulez me tester ?", -- à vérifier
+	engage_trigger2 = "Allons donc... quelle grossièreté. Bandal !", -- à vérifier
+	engage_trigger3 = "J'ai mieux à faire...", -- à vérifier
+	engage_trigger4 = "Fuyez, ou mourrez !", -- à vérifier
 
 	immune = "Immunité",
 	immune_desc = "Préviens quand Malande devient insensible aux sorts ou aux attaques de melée.",
@@ -101,7 +101,7 @@ L:RegisterTranslations("frFR", function() return {
 	circle_heal_trigger = "^Cercle de soins .* Dame Malande soigne",
 	circle_fail_trigger = "^(%S+) interrompt Dame Malande qui lance Cercle de soins%.$", -- + "Dame Malande lance un Cercle de soins que vous interrompez." ?
 	circle_heal_message = "Soigné ! - Prochain dans ~20 sec.",
-	circle_fail_message = "%s Interrompu ! - Prochain dans ~12 sec.",
+	circle_fail_message = "Interrompu par %s ! - Prochain dans ~12 sec.",
 	circle_bar = "~Cooldown Cercle de soins",
 } end )
 

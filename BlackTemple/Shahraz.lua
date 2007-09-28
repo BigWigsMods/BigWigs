@@ -84,20 +84,20 @@ L:RegisterTranslations("frFR", function() return {
 	attraction_trigger = "^(%S+) (%S+) les effets .* Liaison fatale%.$",
 	attraction_message = "Liaison : %s",
 
-	--debuff = "Debuff Timers",
-	--debuff_desc = "Show the current debuff and the time until the next one.",
-	--debuff_bar = "Next Debuff",
+	debuff = "Affaiblissements",
+	debuff_desc = "Affiche l'affaiblissement actuel et le délai avant le prochain.",
+	debuff_bar = "Prochain affaiblissement",
 
-	--berserk = "Berserk",
-	--berserk_desc = "Warn for berserk after 10min.",
-	--berserk_start = "%s engaged, 10 min to berserk!",
-	--berserk_min = "Berserk in %d min",
-	--berserk_sec = "Berserk in %d sec",
-	--berserk_end = "%s goes Berserk!",
+	berserk = "Berserk",
+	berserk_desc = "Préviens quand Mère Shahraz passe en berserker après 10 min.",
+	berserk_start = "%s engagée, 10 min. avant berserk !",
+	berserk_min = "Berserk dans %d min.",
+	berserk_sec = "Berserk dans %d sec.",
+	berserk_end = "%s passe en berserk !",
 
-	--enrage_warning = "Enrage soon!",
-	--enrage_message = "10% - Enraged",
-	--enrage_trigger = "%s becomes enraged!",
+	enrage_warning = "Enrager imminent !",
+	enrage_message = "10% - Enragée",
+	enrage_trigger = "%s devient folle furieuse !", -- à vérifier
 } end )
 
 L:RegisterTranslations("deDE", function() return {
