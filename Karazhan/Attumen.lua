@@ -84,6 +84,24 @@ L:RegisterTranslations("koKR", function() return {
 	curse_message = "저주 걸린 전사 - %s",
 } end)
 
+--Chinese Translation: 月色狼影@CWDG
+--CWDG site: http://cwowaddon.com
+--猎手阿图门
+L:RegisterTranslations("zhCN", function() return {
+	phase = "阶段警报",
+	phase_desc = "当进入下一阶段时发出警告",
+	phase1_message = "阶段 1 - %s",
+	phase2_trigger = "%s呼叫她的主人！",--check
+	phase2_message = "阶段 2 - %s & 阿图门",
+	phase3_trigger = "来吧，午夜，让我们解决这群乌合之众！",
+	phase3_message = "阶段 3 - %s",
+
+	curse = "诅咒警报",
+	curse_desc = "当近战受到无形的诅咒时发出警告",
+	curse_trigger = "^(%S+)受(%S+)了无形效果的影响。",
+	curse_message = "%s中无形 - 速度解！",
+} end)
+
 L:RegisterTranslations("zhTW", function() return {
 	phase = "階段警告",
 	phase_desc = "當進入下一個階段時發送警告",
@@ -114,23 +132,6 @@ L:RegisterTranslations("esES", function() return {
 	curse_message = "Tanque Maldito - %s",
 } end)
 
---Chinese Translation: 月色狼影@CWDG
---CWDG site: http://cwowaddon.com
---猎手阿图门
-L:RegisterTranslations("zhCN", function() return {
-	phase = "阶段警报",
-	phase_desc = "当进入下一阶段时发出警告",
-	phase1_message = "阶段 1 - %s",
-	phase2_trigger = "%s calls for her master!",
-	phase2_message = "阶段 2 - %s & 阿图门",
-	phase3_trigger = "来吧，午夜，让我们解决这群乌合之众！",
-	phase3_message = "阶段 3 - %s",
-
-	curse = "诅咒警报",
-	curse_desc = "当近战受到无形的诅咒时发出警告",
-	curse_trigger = "^([^%s]+)受([^%s]+)了无形效果的影响",
-	curse_message = "%s中无形 - 速度解！",
-} end)
 
 ----------------------------------
 --      Module Declaration      --

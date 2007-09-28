@@ -123,6 +123,37 @@ L:RegisterTranslations("koKR", function() return {
 	weaktime_bar = "~환기 대기시간",
 } end )
 
+--Chinese Translation: 月色狼影@CWDG
+--CWDG site: http://cwowaddon.com
+--馆长
+L:RegisterTranslations("zhCN", function() return {
+	berserk = "无敌",
+	berserk_desc = "进入战斗10分钟后发送无敌警告",
+	berserk_trigger = "展览厅只对嘉宾开放。",
+	berserk_message = "%s 激活, 10分钟后进入无敌！！",
+	berserk_bar = "无敌",
+
+	enrage_trigger = "不合作将导致攻击行动。",
+	enrage_message = "狂暴!",
+	enrage_warning = "监护者将进入狂暴！",
+
+	weaken = "唤醒",
+	weaken_desc = "当监护者进入唤醒时发送警告",
+	weaken_trigger = "你的请求未能得到批准。",
+	weaken_message = "唤醒 - 20秒虚弱计时开始",
+	weaken_bar = "唤醒",
+	weaken_fade_message = "唤醒结束 - 准备击杀小电球！",
+	weaken_fade_warning = "5秒后 唤醒 结束！",
+
+	weaktime = "虚弱提示",
+	weaktime_desc = "显示计时条预计下一次虚弱的时间",
+	weaktime_message1 = "唤醒  大约10秒后",
+	weaktime_message2 = "唤醒  大约30秒后",
+	weaktime_message3 = "唤醒  大约70秒后",
+	weaktime_bar = "~虚弱",
+} end )
+
+
 L:RegisterTranslations("zhTW", function() return {
 	berserk = "無敵警告",
 	berserk_desc = "進入戰鬥後 10 分鐘時發出無敵警告",
@@ -175,36 +206,6 @@ L:RegisterTranslations("esES", function() return {
 	weaktime_message2 = "Evocacion en ~30 segundos",
 	weaktime_message3 = "Evocacion en ~70 segundos",
 	weaktime_bar = "~Enfriamiento de Evocacion",
-} end )
-
---Chinese Translation: 月色狼影@CWDG
---CWDG site: http://cwowaddon.com
---馆长
-L:RegisterTranslations("zhCN", function() return {
-	berserk = "无敌",
-	berserk_desc = "进入战斗10分钟后发送无敌警告",
-	berserk_trigger = "展览厅只对嘉宾开放",
-	berserk_message = "%s 激活, 10分钟后进入无敌！！",
-	berserk_bar = "无敌",
-
-	enrage_trigger = "不合作将导致攻击行动",
-	enrage_message = "狂暴!",
-	enrage_warning = "监护者将进入狂暴！",
-
-	weaken = "唤醒",
-	weaken_desc = "当监护者进入唤醒时发送警告",
-	weaken_trigger = "你的请求未能得到批准",
-	weaken_message = "唤醒 - 20秒虚弱计时开始",
-	weaken_bar = "唤醒",
-	weaken_fade_message = "唤醒结束 - 准备击杀小电球！",
-	weaken_fade_warning = "5秒后 唤醒 结束！",
-
-	weaktime = "虚弱提示",
-	weaktime_desc = "显示计时条预计下一次虚弱的时间",
-	weaktime_message1 = "唤醒  大约10秒后",
-	weaktime_message2 = "唤醒  大约30秒后",
-	weaktime_message3 = "唤醒  大约70秒后",
-	weaktime_bar = "~虚弱",
 } end )
 
 ----------------------------------

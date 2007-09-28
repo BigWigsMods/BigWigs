@@ -115,6 +115,35 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_warning = "잠시 후 격노!",
 } end)
 
+--Chinese Translation: 月色狼影@CWDG
+--CWDG site: http://cwowaddon.com
+--莫罗斯
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "啊，不速之客。我得准备一下……",
+	engage_message = "%s 激活 - ~35 秒后将 消失!",
+
+	vanish = "消失",
+	vanish_desc = "消失 预计冷却计时条.",
+	vanish_trigger1 = "You rang?",
+	vanish_trigger2 = "Now, where was I? Oh, yes...",
+	vanish_message = "消失! 35 秒后再次消失！",
+	vanish_warning = "即将 消失！",
+	vanish_bar = "消失 冷却",
+
+	garrote = "绞喉",
+	garrote_desc = "当队员受到绞喉时发送警告.",
+	garrote_trigger = "^([^%s]+)受([^%s]+)了绞喉效果的影响",
+	garrote_message = "绞喉: %s",
+
+	icon = "标记",
+	icon_desc = "当队员受到绞喉时，标上团队标记(需要团长或者助理).",
+
+	enrage_trigger = "%s变得愤怒了！",--check
+	enrage_message = "激怒!",
+	enrage_warning = "即将 激怒!",
+
+} end)
+
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "嗯，突然上門的訪客。一定要做好準備……",
 	engage_message = "%s 進入戰鬥 - 將於 35 秒後消失",
@@ -165,34 +194,6 @@ L:RegisterTranslations("esES", function() return {
 	enrage_warning = "Enfurecimiento Pronto!",
 } end)
 
---Chinese Translation: 月色狼影@CWDG
---CWDG site: http://cwowaddon.com
---莫罗斯
-L:RegisterTranslations("zhCN", function() return {
-	engage_trigger = "啊，不速之客。我得准备一下……",
-	engage_message = "%s 激活 - ~35 秒后将 消失!",
-
-	vanish = "消失",
-	vanish_desc = "消失 预计冷却计时条.",
-	vanish_trigger1 = "You rang?",
-	vanish_trigger2 = "Now, where was I? Oh, yes...",
-	vanish_message = "消失! 35 秒后再次消失！",
-	vanish_warning = "即将 消失！",
-	vanish_bar = "消失 冷却",
-
-	garrote = "绞喉",
-	garrote_desc = "当队员受到绞喉时发送警告.",
-	garrote_trigger = "^([^%s]+)受([^%s]+)了绞喉效果的影响",
-	garrote_message = "绞喉: %s",
-
-	icon = "标记",
-	icon_desc = "当队员受到绞喉时，标上团队标记(需要团长或者助理).",
-
-	enrage_trigger = "%s becomes enraged!",
-	enrage_message = "激怒!",
-	enrage_warning = "即将 激怒!",
-
-} end)
 
 ----------------------------------
 --      Module Declaration      --

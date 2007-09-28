@@ -190,6 +190,50 @@ L:RegisterTranslations("koKR", function() return {
 	flame_trigger = "화염의 고리|1을;를; 시전합니다%.$",
 } end )
 
+--埃兰之影
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger1 = "I'll not be tortured again!",
+	engage_trigger2 = "Who are you? What do you want? Stay away from me!",
+	engage_trigger3 = "Please, no more! My son... he's gone mad!",
+	engage_message = "%s 战斗开始",
+
+	adds = "水元素",
+	adds_desc = "当召唤水元素时发出警报",
+	adds_message = "水元素 来临",
+	adds_warning = "水元素即将召唤",
+	adds_trigger = "还没完呢！我还有几招没有用呢……",
+	adds_bar = "召唤水元素",
+
+	drink = "群体变形",
+	drink_desc = "当埃兰回魔时发出警报",
+	drink_trigger = "Surely you wouldn't deny an old man a replenishing drink? No, no, I thought not.",
+	drink_warning = "低发力 - 即将回魔!",
+	drink_message = "回魔 - 群体变形!",
+	drink_bar = "群体变形术",
+
+	blizzard = "暴风雪",
+	blizzard_desc = "当暴风雪开始施放发出警报",
+	blizzard_trigger1 = "回到寒冷的黑暗中去吧！",
+	blizzard_trigger2 = "我要把你们全都冻住！",
+	blizzard_message = "暴风雪",
+
+	pull = "磁力/魔爆术",
+	pull_desc = "磁力/魔爆术时发出警报",
+	pull_message = "魔爆术!",
+	pull_trigger1 = "Yes, yes my son is quite powerful... but I have powers of my own!",
+	pull_trigger2 = "I am not some simple jester! I am Nielas Aran!",
+	pull_bar = "魔爆术",
+
+	flame = "烈焰花环",
+	flame_desc = "当烈焰花环开始施放时发出警报",
+	flame_warning = "施放: 烈焰花环!",
+	flame_trigger1 = "I'll show you: this beaten dog still has some teeth!",
+	flame_trigger2 = "Burn, you hellish fiends!",
+	flame_message = "烈焰花环!",
+	flame_bar = "烈焰花环",
+	flame_trigger = "施放烈焰花环。$",
+} end )
+
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger1 = "我不會再被折磨了!",
 	engage_trigger2 = "你是誰?你想要什麼?離我遠一點!",

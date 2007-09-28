@@ -146,6 +146,40 @@ L:RegisterTranslations("koKR", function() return {
 	bones_message = "광역 뼈의 비!",
 } end )
 
+--夜之魇
+L:RegisterTranslations("zhCN", function() return {
+	fear = "恐惧警报",
+	fear_desc = "低沉咆哮警报",
+	fear_trigger = "施放了低沉咆哮。$",
+	fear_message = "2秒后 恐惧",
+	fear_warning = "恐惧!",
+	fear_bar = "恐惧!",
+	fear_nextbar = "~恐惧 CD",
+
+	charr = "灼烧土地警报",
+	charr_desc = "当你中了灼烧土地发出警报",
+	charr_trigger = "你受到了灼烧土地效果的影响。$",
+	charr_message = ">你< 中了 灼烧土地",
+
+	phase = "阶段警报",
+	phase_desc = "当夜之魇进入下阶段发送预警",
+	airphase_trigger = "Miserable vermin. I shall exterminate you from the air!",
+	landphase_trigger1 = "Enough! I shall land and crush you myself!",
+	landphase_trigger2 = "Insects! Let me show you my strength up close!",
+	airphase_message = "升空",
+	landphase_message = "降落",
+	summon_trigger = "An ancient being awakens in the distance...",
+
+	engage = "激活",
+	engage_desc = "进入战斗后发出警报",
+	engage_trigger = "What fools! I shall bring a quick end to your suffering!",
+	engage_message = "%s 激活",
+
+	bones = "白骨之雨",
+	bones_desc = "当团队中了白骨之雨后发出警报",
+	bones_message = "白骨之雨",
+} end )
+
 L:RegisterTranslations("zhTW", function() return {
 	fear = "低沉咆哮警告",
 	fear_desc = "當夜禍施放低沉咆哮時發送警告",

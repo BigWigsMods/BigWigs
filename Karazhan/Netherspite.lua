@@ -102,6 +102,30 @@ L:RegisterTranslations("frFR", function() return {
 	netherbreath_warn = "Souffle du Néant imminent !",
 } end )
 
+--Chinese Translation: 月色狼影@CWDG
+--CWDG site: http://cwowaddon.com
+--虚空幽龙
+L:RegisterTranslations("zhCN", function() return {
+	phase = "阶段警报",
+	phase_desc = "当虚空幽龙进入下一阶段时发出警报.",
+	phase1_message = "快撤! - 虚空吐息来临",
+	phase1_bar = "~虚空吐息 - 撤退",
+	phase1_trigger = "%s cries out in withdrawal, opening gates to the nether.",
+	phase2_message = "狂怒 - 地狱吐息来临",
+	phase2_bar = "~地狱吐息 - 狂怒",
+	phase2_trigger = "%s goes into a nether-fed rage!",
+
+	voidzone = "虚空领域",
+	voidzone_desc = "虚空领域警报",
+	voidzone_trigger = "施放了虚空领域。$",
+	voidzone_warn = "虚空领域 (%d)!",
+
+	netherbreath = "虚空吐息",
+	netherbreath_desc = "虚空吐息警报",
+	netherbreath_trigger = "施放了Face Random Target",
+	netherbreath_warn = "虚空吐息来临",
+} end )
+
 L:RegisterTranslations("zhTW", function() return {
 	phase = "階段警告",
 	phase_desc = "當 尼德斯 進入下一階段時發送警告",
@@ -123,29 +147,6 @@ L:RegisterTranslations("zhTW", function() return {
 	netherbreath_warn = "地獄吐息",
 } end )
 
---Chinese Translation: 月色狼影@CWDG
---CWDG site: http://cwowaddon.com
---虚空幽龙
-L:RegisterTranslations("zhCN", function() return {
-	phase = "阶段警报",
-	phase_desc = "当虚空幽龙进入下一阶段时发出警报.",
-	phase1_message = "Withdrawal - Netherbreaths Over",
-	phase1_bar = "~Possible Withdrawal",
-	phase1_trigger = "%s cries out in withdrawal, opening gates to the nether.",
-	phase2_message = "Rage - Incoming Netherbreaths!",
-	phase2_bar = "~Possible Rage",
-	phase2_trigger = "%s goes into a nether-fed rage!",
-
-	voidzone = "Voidzones",
-	voidzone_desc = "Warn for Voidzones.",
-	voidzone_trigger = "casts Void Zone.",
-	voidzone_warn = "Void Zone (%d)!",
-
-	netherbreath = "Netherbreath",
-	netherbreath_desc = "Warn for Netherbreath.",
-	netherbreath_trigger = "casts Face Random Target.",
-	netherbreath_warn = "Incoming Netherbreath!",
-} end )
 
 ----------------------------------
 --      Module Declaration      --

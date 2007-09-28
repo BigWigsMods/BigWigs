@@ -81,6 +81,23 @@ L:RegisterTranslations("koKR", function() return {
 	icon_desc = "빨간 두건인 사람에게 전술 표시를 지정합니다 (승급자 이상의 권한 필요).",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	riding_trigger = "^(%S+)受(%S+)了小红帽效果的影响。$",
+
+	youriding = "小红帽(你)",
+	youriding_desc = "当你变成小红帽 发出警报",
+	riding_youwarn = "你变成小红帽!",
+
+	elseriding = "小红帽(队友)",
+	elseriding_desc = "当其他人变成小红帽发出警报!",
+	riding_otherwarn = "%s 变成小红帽了!",
+
+	riding_bar = "%s 快跑",
+
+	icon = "团队标记",
+	icon_desc = "给中了小红帽的打上团队标记(需要团队助理或更高的权利).",
+} end )
+
 L:RegisterTranslations("zhTW", function() return {
 	riding_trigger = "^(.+)獲得了(.*)小紅帽的效果",
 

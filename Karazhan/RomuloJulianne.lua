@@ -136,6 +136,35 @@ L:RegisterTranslations("koKR", function() return {
 	buff2_message = "%s 헌신 효과 얻음!",
 } end)
 
+--罗密欧&朱丽叶
+L:RegisterTranslations("zhCN", function() return {
+	phase = "阶段警报",
+	phase_desc = "当进入下阶段发出警报",
+	phase1_trigger = "What devil art thou, that dost torment me thus?",
+	phase1_message = "第 I 幕 - %s",
+	phase2_trigger = "Wilt thou provoke me? Then have at thee, boy!",
+	phase2_message = "第 II 幕 - %s",
+	phase3_trigger = "来吧，可爱的黑颜的夜，把我的罗密欧给我！",
+	phase3_message = "第 III 幕 - 同时出场",
+
+	poison = "中毒",
+	poison_desc = "当有玩家中毒时发出警报",
+	poison_trigger = "^(%S+)受(%S+)了浸毒之刺效果的影响。$",
+	poison_message = "浸毒之刺: %s",
+
+	heal = "治疗",
+	heal_desc = "当朱丽叶施放",
+	heal_trigger = "开始施放永恒之爱。$",
+	heal_message = "%s 施放治疗",
+
+	buff = "自身BUFF警报",
+	buff_desc = "当罗密欧与朱丽叶获得BUFF发出警报",
+	buff1_trigger = "获得了卤莽的效果。$",
+	buff1_message = "%s 获得 卤莽!",
+	buff2_trigger = "获得了虔诚光环。$",
+	buff2_message = "%s 获得 虔诚光环!",
+} end)
+
 L:RegisterTranslations("zhTW", function() return {
 	phase = "階段提示",
 	phase_desc = "當戰鬥進入下一個階段時發送警告",

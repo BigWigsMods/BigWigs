@@ -106,6 +106,30 @@ L:RegisterTranslations("koKR", function() return {
 	weak_fade = "깨진 서약 효과가 사라졌습니다.", -- check
 } end )
 
+--特雷斯坦·邪蹄
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "^啊，你们来的正是时候。仪式就要开始了！",
+
+	sacrifice = "牺牲",
+	sacrifice_desc = "当玩家受到牺牲时发出警报",
+	sacrifice_trigger = "^(%S+)受(%S+)了牺牲效果的影响。$",
+	sacrifice_fade = "^牺牲效果从%s身上消失。$",
+	sacrifice_message = "%s 牺牲了 -- 注意停手!",
+	sacrifice_bar = "牺牲: %s",
+
+	icon = "团队标记",
+	icon_desc = "受到牺牲效果的队友打上标记(需要助理或更高权利).",
+
+	weak = "虚弱",
+	weak_desc = "虚弱阶段发出警报",
+	weak_trigger = "受到了破碎契约效果的影响。$",
+	weak_message = "进入虚弱状态! ~45秒!",
+	weak_warning1 = "~5秒后 虚弱状态结束!",
+	weak_warning2 = "虚弱结束!",
+	weak_bar = "~虚弱",
+	weak_fade = "^破碎契约效果从",
+} end )
+
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "啊，你來的正好。儀式正要開始!",
 
