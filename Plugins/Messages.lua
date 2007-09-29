@@ -9,6 +9,7 @@ local paint = AceLibrary:HasInstance("PaintChips-2.0") and AceLibrary("PaintChip
 
 local colorModule = nil
 local messageFrame = nil
+local msgShadowFrame = nil
 local anchor = nil
 
 ----------------------------
@@ -293,11 +294,30 @@ end
 
 local function createMsgFrame()
 	if messageFrame then return end
+
+	--create the text shadow frame (copy of text frame, but offset down and right by 1)
+	msgShadowFrame = CreateFrame("MessageFrame")
+	msgShadowFrame:SetWidth(512)
+	msgShadowFrame:SetHeight(80)
+
+	--create the normal text frame
 	messageFrame = CreateFrame("MessageFrame")
 	messageFrame:SetWidth(512)
 	messageFrame:SetHeight(80)
 
+	--create the anchor for the frame if it doesn't yet exist
 	if not anchor then plugin:SetupFrames() end
+
+	--shadow frame properties
+	msgShadowFrame:SetPoint("TOP", anchor, "BOTTOM", 1, -1)
+	msgShadowFrame:SetScale(plugin.db.profile.scale or 1)
+	msgShadowFrame:SetInsertMode("TOP")
+	msgShadowFrame:SetFrameStrata("HIGH")
+	msgShadowFrame:SetToplevel(true)
+	msgShadowFrame:SetFontObject(GameFontNormalLarge)
+	msgShadowFrame:Show()
+
+	--text frame properties
 	messageFrame:SetPoint("TOP", anchor, "BOTTOM", 0, 0)
 	messageFrame:SetScale(plugin.db.profile.scale or 1)
 	messageFrame:SetInsertMode("TOP")
@@ -323,7 +343,11 @@ end
 
 function plugin:Print(addon, text, r, g, b)
 	if not messageFrame then createMsgFrame() end
+	--set scale
+	msgShadowFrame:SetScale(self.db.profile.scale)
 	messageFrame:SetScale(self.db.profile.scale)
+	--print msg to shadow frame first (in black), then normal text frame (in color)
+	msgShadowFrame:AddMessage(text, 0, 0, 0, 2, UIERRORS_HOLD_TIME)
 	messageFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
 end
 
