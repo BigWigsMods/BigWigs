@@ -9,7 +9,6 @@ local paint = AceLibrary:HasInstance("PaintChips-2.0") and AceLibrary("PaintChip
 
 local colorModule = nil
 local messageFrame = nil
-local msgShadowFrame = nil
 local anchor = nil
 
 ----------------------------
@@ -25,6 +24,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Use colors"] = true,
 	["Toggles white only messages ignoring coloring."] = true,
+
+	["Text shadow"] = true,
+	["Show a shadow behind message text."] = true,
 
 	["Scale"] = true,
 	["Set the message frame scale."] = true,
@@ -52,6 +54,9 @@ L:RegisterTranslations("koKR", function() return {
 
 	["Use colors"] = "색상 사용",
 	["Toggles white only messages ignoring coloring."] = "메세지에 색상 사용을 설정합니다.",
+
+	--["Text shadow"] = true,
+	--["Show a shadow behind message text."] = true,
 
 	["Scale"] = "크기",
 	["Set the message frame scale."] = "메세지창의 크기를 설정합니다.",
@@ -82,6 +87,9 @@ L:RegisterTranslations("zhCN", function() return {
 	["Use colors"] = "发送彩色信息",
 	["Toggles white only messages ignoring coloring."] = "选择是否只发送单色信息。",
 
+	--["Text shadow"] = true,
+	--["Show a shadow behind message text."] = true,
+
 	["Scale"] = "缩放",
 	["Set the message frame scale."] = "调整信息文字大小",
 
@@ -108,6 +116,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 	["Use colors"] = "發送彩色訊息",
 	["Toggles white only messages ignoring coloring."] = "切換是否只發送單色訊息。",
+
+	--["Text shadow"] = true,
+	--["Show a shadow behind message text."] = true,
 
 	["Scale"] = "縮放",
 	["Set the message frame scale."] = "設置訊息框架縮放比例",
@@ -136,6 +147,9 @@ L:RegisterTranslations("deDE", function() return {
 	["Use colors"] = "Farben verwenden",
 	["Toggles white only messages ignoring coloring."] = "Nachrichten farbig/wei\195\159 anzeigen.",
 
+	--["Text shadow"] = true,
+	--["Show a shadow behind message text."] = true,
+
 	["Scale"] = "Skalierung",
 	["Set the message frame scale."] = "Die Skalierung des Nachrichtenfensters festlegen.",
 
@@ -162,6 +176,9 @@ L:RegisterTranslations("frFR", function() return {
 
 	["Use colors"] = "Utiliser des couleurs",
 	["Toggles white only messages ignoring coloring."] = "Utilise ou non des couleurs dans les messages à la place du blanc unique.",
+
+	--["Text shadow"] = true,
+	--["Show a shadow behind message text."] = true,
 
 	["Scale"] = "Echelle",
 	["Set the message frame scale."] = "Détermine l'échelle du cadre des messages.",
@@ -193,6 +210,7 @@ plugin.defaultDB = {
 	scale = 1.0,
 	posx = nil,
 	posy = nil,
+	shadow = true,
 	chat = nil,
 }
 plugin.consoleCmd = L["Messages"]
@@ -248,6 +266,12 @@ plugin.consoleOptions = {
 			order = 100,
 			disabled = function() return not colorModule end,
 		},
+		shadow = {
+			type = "toggle",
+			name = L["Text shadow"],
+			desc = L["Show a shadow behind message text."],
+			order = 101,
+		},
 		scale = {
 			type = "range",
 			name = L["Scale"],
@@ -256,7 +280,7 @@ plugin.consoleOptions = {
 			max = 2.0,
 			step = 0.1,
 			disabled = function() return plugin.db.profile.sink10OutputSink ~= "BigWigs" end,
-			order = 101,
+			order = 102,
 		},
 		chat = {
 			type = "toggle",
@@ -294,30 +318,11 @@ end
 
 local function createMsgFrame()
 	if messageFrame then return end
-
-	--create the text shadow frame (copy of text frame, but offset down and right by 1)
-	msgShadowFrame = CreateFrame("MessageFrame")
-	msgShadowFrame:SetWidth(512)
-	msgShadowFrame:SetHeight(80)
-
-	--create the normal text frame
 	messageFrame = CreateFrame("MessageFrame")
 	messageFrame:SetWidth(512)
 	messageFrame:SetHeight(80)
 
-	--create the anchor for the frame if it doesn't yet exist
 	if not anchor then plugin:SetupFrames() end
-
-	--shadow frame properties
-	msgShadowFrame:SetPoint("TOP", anchor, "BOTTOM", 1, -1)
-	msgShadowFrame:SetScale(plugin.db.profile.scale or 1)
-	msgShadowFrame:SetInsertMode("TOP")
-	msgShadowFrame:SetFrameStrata("HIGH")
-	msgShadowFrame:SetToplevel(true)
-	msgShadowFrame:SetFontObject(GameFontNormalLarge)
-	msgShadowFrame:Show()
-
-	--text frame properties
 	messageFrame:SetPoint("TOP", anchor, "BOTTOM", 0, 0)
 	messageFrame:SetScale(plugin.db.profile.scale or 1)
 	messageFrame:SetInsertMode("TOP")
@@ -343,12 +348,12 @@ end
 
 function plugin:Print(addon, text, r, g, b)
 	if not messageFrame then createMsgFrame() end
-	--set scale
-	msgShadowFrame:SetScale(self.db.profile.scale)
 	messageFrame:SetScale(self.db.profile.scale)
-	--print msg to shadow frame first (in black), then normal text frame (in color)
-	msgShadowFrame:AddMessage(text, 0, 0, 0, 2, UIERRORS_HOLD_TIME)
 	messageFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
+	if plugin.db.profile.shadow then
+		messageFrame:SetShadowColor(0, 0, 0)
+		messageFrame:SetShadowOffset(1, 2)
+	end
 end
 
 function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
