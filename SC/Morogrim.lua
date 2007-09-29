@@ -149,7 +149,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	engage_trigger = "水很深，抓住你!",
+	engage_trigger = "深海的洪水，淹沒吧!",
 
 	tidal = "海嘯",
 	tidal_desc = "警示海嘯施放",

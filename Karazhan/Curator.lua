@@ -163,10 +163,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	enrage_trigger = "不順從就會招致攻擊性的行動。",
 	enrage_message = "狂暴",
-	enrage_warning = "監護者即將進入狂暴狀態",
+	enrage_warning = "館長即將進入狂暴狀態",
 
 	weaken = "喚醒提示",
-	weaken_desc = "當監護者進入喚醒時發送警告",
+	weaken_desc = "當館長進入喚醒時發送警告",
 	weaken_trigger = "無法處理你的要求。",
 	weaken_message = "喚醒 - 20 秒虛弱時間開始",
 	weaken_bar = "喚醒",
@@ -175,9 +175,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 	weaktime = "虛弱提示",
 	weaktime_desc = "顯示計時條預測下一次虛弱時間",
-	weaktime_message1 = "10 秒後監護者進入喚醒狀態",
-	weaktime_message2 = "30 秒後監護者進入喚醒狀態",
-	weaktime_message3 = "70 秒後監護者進入喚醒狀態",
+	weaktime_message1 = "10 秒後館長進入喚醒狀態",
+	weaktime_message2 = "30 秒後館長進入喚醒狀態",
+	weaktime_message3 = "70 秒後館長進入喚醒狀態",
 	weaktime_bar = "虛弱",
 } end )
 
