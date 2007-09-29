@@ -250,9 +250,7 @@ function mod:WrathAff(msg)
 		if wplayer == L2["you"] and wtype == L2["are"] then
 			self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 			wplayer = pName
-			self:CancelScheduledEvent("cancelProx")
 			self:TriggerEvent("BigWigs_ShowProximity", self)
-			self:ScheduleEvent("cancelProx", "BigWigs_HideProximity", 6, self)
 		end
 		self:Sync("SolaWrath "..wplayer)
 	end
@@ -260,7 +258,6 @@ end
 
 function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
 	if msg == L["wrath_fade"] then
-		self:CancelScheduledEvent("cancelProx")
 		self:TriggerEvent("BigWigs_HideProximity", self)
 		self:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 	end
