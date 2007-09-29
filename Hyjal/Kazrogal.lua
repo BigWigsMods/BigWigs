@@ -7,6 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local UnitMana = UnitMana
 local IsItemInRange = IsItemInRange
+local class = select(2, UnitClass("player"))
 local bandages = {
 	[21991] = true, -- Heavy Netherweave Bandage
 	[21990] = true, -- Netherweave Bandage
@@ -85,8 +86,9 @@ end
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
+	if class ~= "WARRIOR" and class ~= "ROGUE" then
+		self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
+	end
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
@@ -95,14 +97,23 @@ end
 --      Event Handlers      --
 ------------------------------
 
+local function HideProx()
+	self:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
+	self:TriggerEvent("BigWigs_HideProximity", self)
+end
+
 function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 	if self.db.profile.range and msg == L["range_gain"] and UnitMana("player") < 4000 then
 		self:TriggerEvent("BigWigs_ShowProximity", self)
+		self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
+		self:ScheduleEvent("BWHideProx", HideProx, 5)
 	end
 end
 
 function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
 	if self.db.profile.range and msg == L["range_fade"] then
+		self:CancelScheduledEvent("BWHideProx")
+		self:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
 end

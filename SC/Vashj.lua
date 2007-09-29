@@ -257,7 +257,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Charge")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -301,13 +300,6 @@ end
 function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 	if msg == L["barrier_fades_trigger"] then
 		self:Sync("VashjBarrier")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
-	if msg == L["static_fade"] then
-		self:CancelScheduledEvent("cancelProx")
-		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
 end
 
@@ -387,16 +379,29 @@ function mod:UNIT_HEALTH(msg)
 	end
 end
 
+local function HideProx()
+	self:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
+	self:TriggerEvent("BigWigs_HideProximity", self)
+end
+
 function mod:Charge(msg)
 	local splayer, stype = select(3, msg:find(L["static_charge_trigger"]))
 	if splayer and stype then
 		if splayer == L2["you"] and stype == L2["are"] then
+			self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 			splayer = pName
-			self:CancelScheduledEvent("cancelProx")
 			self:TriggerEvent("BigWigs_ShowProximity", self)
-			self:ScheduleEvent("cancelProx", "BigWigs_HideProximity", 20, self)
+			self:ScheduleEvent("BWHideProx", HideProx, 20)
 		end
 		self:Sync("VashjStatic " .. splayer)
+	end
+end
+
+function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
+	if msg == L["static_fade"] then
+		self:CancelScheduledEvent("BWHideProx")
+		self:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
+		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
 end
 

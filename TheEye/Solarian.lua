@@ -244,6 +244,11 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	end
 end 
 
+local function HideProx()
+	self:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
+	self:TriggerEvent("BigWigs_HideProximity", self)
+end
+
 function mod:WrathAff(msg)
 	local wplayer, wtype = select(3, msg:find(L["wrath_trigger"]))
 	if wplayer and wtype then
@@ -251,6 +256,7 @@ function mod:WrathAff(msg)
 			self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 			wplayer = pName
 			self:TriggerEvent("BigWigs_ShowProximity", self)
+			self:ScheduleEvent("BWHideProx", HideProx, 6)
 		end
 		self:Sync("SolaWrath "..wplayer)
 	end
@@ -260,6 +266,7 @@ function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
 	if msg == L["wrath_fade"] then
 		self:TriggerEvent("BigWigs_HideProximity", self)
 		self:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
+		self:CancelScheduledEvent("BWHideProx")
 	end
 end
 
