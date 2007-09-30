@@ -83,6 +83,10 @@ L:RegisterTranslations("enUS", function() return {
 	toy_message = "Toy on Tank: %s",
 	toy_trigger = "Remote Toy", --afflicted by ...
 
+	hunter = "Remote Toy on Hunters",
+	hunter_desc = "Warn when a hunter has Remote Toy.",
+	hunter_message = "Toy on Hunter: %s",
+
 	phase = "Phase warnings",
 	phase_desc = "Warn about the various phases of the encounter.",
 	thaladred_inc_trigger = "Impressive. Let us see how your nerves hold up against the Darkener, Thaladred! ",
@@ -163,6 +167,10 @@ L:RegisterTranslations("koKR", function() return {
 	toy_message = "탱커에 장난감: %s",
 	toy_trigger = "원격조종 장난감",
 
+	--hunter = "Remote Toy on Hunters",
+	--hunter_desc = "Warn when a hunter has Remote Toy.",
+	--hunter_message = "Toy on Hunter: %s",
+
 	phase = "단계 경고",
 	phase_desc = "단계 변경에 대해 알립니다.",
 	thaladred_inc_trigger = "암흑의 인도자 탈라드레드를 상대로 얼마나 버틸지 볼까?",
@@ -242,6 +250,10 @@ L:RegisterTranslations("frFR", function() return {
 	toy_desc = "Préviens quand un tank subit les effets du Jouet à distance.",
 	toy_message = "Jouet sur le tank : %s",
 	toy_trigger = "Jouet à distance",
+
+	--hunter = "Remote Toy on Hunters",
+	--hunter_desc = "Warn when a hunter has Remote Toy.",
+	--hunter_message = "Toy on Hunter: %s",
 
 	phase = "Phases",
 	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
@@ -326,6 +338,10 @@ L:RegisterTranslations("deDE", function() return {
 	toy_message = "Spielzeug auf Tank: %s",
 	toy_trigger = "Ferngesteuertes Spielzeug",
 
+	--hunter = "Remote Toy on Hunters",
+	--hunter_desc = "Warn when a hunter has Remote Toy.",
+	--hunter_message = "Toy on Hunter: %s",
+
 	phase = "Phasen Warnungen",
 	phase_desc = "Warnt vor den verschiedenen Phasen des Encounters.",
 	thaladred_inc_trigger = "Eindrucksvoll. Aber werdet Ihr auch mit Thaladred, dem Verfinsterer fertig?",
@@ -403,6 +419,10 @@ L:RegisterTranslations("zhTW", function() return {
 	toy_message = "遙控玩具：[%s]",
 	toy_trigger = "遙控玩具", --afflicted by ...
 
+	--hunter = "Remote Toy on Hunters",
+	--hunter_desc = "Warn when a hunter has Remote Toy.",
+	--hunter_message = "Toy on Hunter: %s",
+
 	phase = "階段警示",
 	phase_desc = "開啟各階段警示",
 	thaladred_inc_trigger = "讓我們看看你們這些大膽的狂徒如何反抗晦暗者薩拉瑞德的力量!",
@@ -444,7 +464,7 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = { boss, capernian, sanguinar, telonicus, thaladred }
 mod.wipemobs = { axe, mace, dagger, staff, sword, bow, shield }
-mod.toggleoptions = { "phase", -1, "conflag", "mc", "toy", "gaze", "icon", "fear", "pyro", "rebirth", "proximity", "bosskill" }
+mod.toggleoptions = { "phase", -1, "conflag", "mc", "toy", "hunter", "gaze", "icon", "fear", "pyro", "rebirth", "proximity", "bosskill" }
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
@@ -470,6 +490,7 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelConflag", 0.8)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelToy2", 3)
+	self:TriggerEvent("BigWigs_ThrottleSync", "ToyHunter", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFearSoon", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFear", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelMC2", 0)
@@ -541,9 +562,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["gravity_trigger1"] or msg == L["gravity_trigger2"] then
 		self:Message(L["gravity_message"], "Important")
 		self:Bar(L["gravity_bar"], 90, "Spell_Nature_UnrelentingStorm")
-	--elseif msg == L["mc_trigger1"] or msg == L["mc_trigger2"] then
-	--	self:Message(L["mc_message"], "Urgent")
-	--	self:Bar(L["mc_bar"], 33, "Spell_Shadow_ShadowWordDominate")
 	elseif self.db.profile.rebirth and (msg == L["rebirth_trigger1"] or msg == L["rebirth_trigger2"]) then
 		self:Message(L["rebirth"], "Urgent")
 		self:Bar(L["rebirth_bar"], 45, "Spell_Fire_Burnout")
@@ -595,6 +613,8 @@ function mod:Afflicted(msg)
 			end
 			if UnitPowerType(id) == 1 or paladin then
 				self:Sync("KaelToy2 " .. tPlayer)
+			elseif select(2, UnitClass(id)) == "HUNTER" then
+				self:Sync("ToyHunter " .. tPlayer)
 			end
 		end
 	end
@@ -607,6 +627,10 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Bar(msg, 10, "Spell_Fire_Incinerate")
 	elseif sync == "KaelToy2" and rest and self.db.profile.toy then
 		local msg = fmt(L["toy_message"], rest)
+		self:Message(msg, "Attention")
+		self:Bar(msg, 60, "INV_Misc_Urn_01")
+	elseif sync == "ToyHunter" and rest and self.db.profile.hunter then
+		local msg = fmt(L["hunter_message"], rest)
 		self:Message(msg, "Attention")
 		self:Bar(msg, 60, "INV_Misc_Urn_01")
 	elseif sync == "KaelFearSoon" and self.db.profile.fear then
