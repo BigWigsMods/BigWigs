@@ -177,7 +177,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	poison = "中毒警告",
 	poison_desc = "當有玩家中毒時發送警告",
-	poison_trigger = "^(.+)受到(.*)毒勁",
+	poison_trigger = "^(.+)受到(.*)毒刺",
 	poison_message = "%s 中毒 - 請解毒",
 
 	heal = "治療警告",
