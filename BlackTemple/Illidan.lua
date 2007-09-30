@@ -23,6 +23,7 @@ L:RegisterTranslations("enUS", function() return {
 	berserk_desc = "Warn for berserk after 25min.",
 	berserk_trigger = "You are not prepared!",
 	berserk_message = "%s engaged, 25min to berserk!",
+	berserk_bar = "Berserk Cooldown",
 
 	parasite = "Parasitic Shadowfiend",
 	parasite_desc = "Warn who has Parasitic Shadowfiend.",
@@ -91,6 +92,7 @@ L:RegisterTranslations("frFR", function() return {
 	berserk_desc = "Préviens quand Illidan passe en berserk après 25 min.",
 	berserk_trigger = "Vous n'êtes pas prêts !", -- à vérifier
 	berserk_message = "%s engagé, 25 min. avant berserk !",
+	--berserk_bar = "Berserk Cooldown",
 
 	parasite = "Ombrefiel parasite",
 	parasite_desc = "Préviens quand un joueur subit les effets de l'Ombrefiel parasite.",
@@ -159,6 +161,7 @@ L:RegisterTranslations("koKR", function() return {
 	--berserk_desc = "Warn for berserk after 25min.",
 	--berserk_trigger = "You are not prepared!",
 	--berserk_message = "%s engaged, 25min to berserk!",
+	--berserk_bar = "Berserk Cooldown",
 
 	parasite = "어둠의 흡혈마귀",
 	parasite_desc = "어둠의 흡혈마귀에 걸린 플레이어를 알립니다.",
@@ -230,6 +233,7 @@ L:RegisterTranslations("zhCN", function() return {
 	--berserk_desc = "Warn for berserk after 25min.",
 	--berserk_trigger = "You are not prepared!",
 	--berserk_message = "%s engaged, 25min to berserk!",
+	--berserk_bar = "Berserk Cooldown", 
 
 	parasite = "寄生暗影魔",--Parasitic Shadowfiend 寄生暗影魔
 	parasite_desc = "当队员中寄生暗影魔时发出警告.",
@@ -265,6 +269,7 @@ L:RegisterTranslations("deDE", function() return {
 	berserk_desc = "Warnt wann Illidan zum Berserker wird.",
 	berserk_trigger = "Ihr wisst nicht, was Euch erwartet!",
 	berserk_message = "%s gepullt, 25min bis er zum Berserker wird!",
+	berserk_bar = "Berserker Cooldown",
 
 	parasite = "Schädlicher Schattengeist",
 	parasite_desc = "Warnt wer von Schädlicher Schattengeist betroffen ist.",
