@@ -119,9 +119,9 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("frFR", function() return {
 	["RaidWarning"] = "Avertissement du Raid",
 
-	["Broadcast over RaidWarning"] = "Diffuser sur l'Avertissement Raid",
+	["Broadcast over RaidWarning"] = "Diffuser sur l'Avertissement raid",
 	["Broadcast"] = "Diffuser",
-	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = "Diffuse ou non les messages sur l'Avertissement Raid.\n\nNotez que vous ne verrez pas ces messages diffusés vous-même sauf si vous avez désactivé BossBlock.",
+	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = "Diffuse ou non vos messages BigWigs sur l'Avertissement Raid.\n\nNotez que vous ne verrez pas les messages que vous diffusez sauf si vous avez désactivé Bloquer BossMods.",
 
 	["Whisper"] = "Chuchoter",
 	["Whisper warnings"] = "Chuchoter les avertissements",
@@ -131,7 +131,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "Affiche ou non localement les chuchotements envoyés par BigWigs, par exemple quand les joueurs sont affectés par des choses telles que la peste ou similaire.",
 
 	["Broadcast to chat"] = "Diffuser sur le canal",
-	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "Diffuse ou non les messages soit sur le canal Groupe, soit sur le canal Raid au lieu de l'Avertissement Raid pour les messages des boss.\n\nMême chose ici ; vous ne verrez pas vos propres messages à moins que BossBlock ne soit désactivé.",
+	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "Diffuse ou non les messages soit sur le canal Groupe, soit sur le canal Raid au lieu de l'Avertissement Raid.\n\nMême chose ici : vous ne verrez pas vos propres messages à moins que Bloquer BossMods ne soit désactivé.",
 
 	desc = "Vous permet de déterminer où BigWigs doit envoyer ses messages en plus de ses messages locaux.",
 } end )

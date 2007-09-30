@@ -107,7 +107,9 @@ L:RegisterTranslations("frFR", function() return {
 	["Options for sounds."] = "Options concernant les sons.",
 
 	["Alarm"] = "Alarme",
+	["Info"] = "Info",
 	["Alert"] = "Alerte",
+	["Long"] = "Long",
 	["Victory"] = "Victoire",
 
 	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = "Détermine le son à utiliser pour %q (Ctrl-clic sur un son pour avoir un aperçu).",

@@ -284,12 +284,12 @@ L:RegisterTranslations("frFR", function() return {
 	["Close"] = "Fermer",
 
 	["Emphasize"] = "Mise en évidence",
-	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "Met en évidence les barres proches de la fin (< 10 sec.). Les barres qui durent au total moins de 15 secondes seront directement mises en évidence.",
+	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "Met en évidence les barres proches de la fin (< 10 sec.). Les barres d'une durée initiale de moins de 15 secondes seront directement mises en évidence.",
 
 	["Enable"] = "Activer",
 	["Enables emphasizing bars."] = "Active la mise en évidence des barres.",
 	["Flash"] = "Clignoter",
-	["Flashes the background red for bars that are emphasized."] = "Fais clignoter le fond rouge des barres mises en évidence.",
+	["Flashes the background red for bars that are emphasized."] = "Fais clignoter en rouge l'arrière-plan des barres mises en évidence.",
 	["Move"] = "Déplacer",
 	["Move bars that are emphasized to a second anchor."] = "Déplace les barres mises en évidence vers une seconde ancre.",
 	["Set the scale for emphasized bars."] = "Détermine l'échelle des barres mises en évidence.",

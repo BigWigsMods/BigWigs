@@ -177,8 +177,8 @@ L:RegisterTranslations("frFR", function() return {
 	["Use colors"] = "Utiliser des couleurs",
 	["Toggles white only messages ignoring coloring."] = "Utilise ou non des couleurs dans les messages à la place du blanc unique.",
 
-	--["Text shadow"] = true,
-	--["Show a shadow behind message text."] = true,
+	["Text shadow"] = "Texte ombré",
+	["Show a shadow behind message text."] = "Affiche une ombre derrière le texte des messages.",
 
 	["Scale"] = "Echelle",
 	["Set the message frame scale."] = "Détermine l'échelle du cadre des messages.",
