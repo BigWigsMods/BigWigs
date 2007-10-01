@@ -60,20 +60,20 @@ L:RegisterTranslations("koKR", function() return {
 	attraction_trigger = "^([^|;%s]*)(.*)치명적인 매력에 걸렸습니다%.$",
 	attraction_message = "매력: %s",
 
-	--debuff = "Debuff Timers",
-	--debuff_desc = "Show the current debuff and the time until the next one.",
-	--debuff_bar = "Next Debuff",
+	debuff = "디버프 타이머",
+	debuff_desc = "변화의 보호막으로 인한 디버프와 다음 디버프 시간을 보여줍니다.",
+	debuff_bar = "다음 디버프",
 
-	--berserk = "Berserk",
-	--berserk_desc = "Warn for berserk after 10min.",
-	--berserk_start = "%s engaged, 10 min to berserk!",
-	--berserk_min = "Berserk in %d min",
-	--berserk_sec = "Berserk in %d sec",
-	--berserk_end = "%s goes Berserk!",
+	berserk = "광폭화",
+	berserk_desc = "10분후 광폭화에 대한 경고입니다.",
+	berserk_start = "%s 시작, 10분후 광폭화!",
+	berserk_min = "%d 분 이내 광폭화",
+	berserk_sec = "%d 초 이내 광폭화",
+	berserk_end = "%s 광폭화!",
 
-	--enrage_warning = "Enrage soon!",
-	--enrage_message = "10% - Enraged",
-	--enrage_trigger = "%s becomes enraged!",
+	enrage_warning = "곧 격노!",
+	enrage_message = "10% - 격노",
+	enrage_trigger = "%s|1이;가; 분노에 휩싸입니다!$",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

@@ -132,10 +132,10 @@ L:RegisterTranslations("koKR", function() return {
 	pounding_nextbar = "~울림 대기 시간",
 	pounding_bar = "<울림>",
 
-	knock = "Knock Away",
-	knock_desc = "Knock Away cooldown bar.",
-	knock_trigger = "^Void Reaver 's Knock Away", -- check
-	knock_bar = "~Knock Away Cooldown",
+	knock = "날려버리기",
+	knock_desc = "날려버리기 대기시간 바를 표시합니다.",
+	knock_trigger = "^공허의 절단기|1이;가; 날려버리기|1으로;로;",
+	knock_bar = "~날려버리기 대기시간",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -287,7 +287,7 @@ function mod:Result(target)
 	elseif self.db.profile.orbother then
 		self:Message(fmt(L["orb_other"], target), "Attention")
 	end
-	if self.db.profile.icon then 
+	if self.db.profile.icon then
 		self:Icon(target)
 	end
 end

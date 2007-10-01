@@ -167,9 +167,9 @@ L:RegisterTranslations("koKR", function() return {
 	toy_message = "탱커에 장난감: %s",
 	toy_trigger = "원격조종 장난감",
 
-	--hunter = "Remote Toy on Hunters",
-	--hunter_desc = "Warn when a hunter has Remote Toy.",
-	--hunter_message = "Toy on Hunter: %s",
+	hunter = "사냥꾼에 원격조종 장난감",
+	hunter_desc = "사냥꾼이 원격조종 장난감에 걸릴 시 경고합니다.",
+	hunter_message = "사냥꾼에 장난감: %s",
 
 	phase = "단계 경고",
 	phase_desc = "단계 변경에 대해 알립니다.",

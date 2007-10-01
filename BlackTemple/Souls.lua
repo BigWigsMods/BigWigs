@@ -101,10 +101,10 @@ L:RegisterTranslations("koKR", function() return {
 	spite_desc = "원한에 걸린 대상을 알립니다.",
 	spite_message = "원한: %s",
 
-	scream = "Soul Scream",
-	scream_desc = "Show a cooldown bar for Soul Scream.",
-	scream_trigger = "^Essence of Anger's Soul Scream ", -- check
-	scream_bar = "~Soul Scream Cooldown",
+	scream = "영혼의 절규",
+	scream_desc = "영혼의 절규 재사용 시간을 표시합니다.",
+	scream_trigger = "^격노의 정수|1이;가; 영혼의 절규|1으로;로;", -- check
+	scream_bar = "~영혼의 절규 재사용 시간",
 
 	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$", -- Check
 } end )
