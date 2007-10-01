@@ -157,11 +157,11 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	--berserk = "Berserk",
-	--berserk_desc = "Warn for berserk after 25min.",
-	--berserk_trigger = "You are not prepared!",
-	--berserk_message = "%s engaged, 25min to berserk!",
-	--berserk_bar = "Berserk Cooldown",
+	berserk = "광폭화",
+	berserk_desc = "25분 후의 광폭화를 알립니다.",
+	berserk_trigger = "너흰 아직 준비가 안 됐다!",
+	berserk_message = "%s 시작, 25분 후 광폭화!",
+	berserk_bar = "광폭화 대기시간",
 
 	parasite = "어둠의 흡혈마귀",
 	parasite_desc = "어둠의 흡혈마귀에 걸린 플레이어를 알립니다.",
@@ -218,7 +218,7 @@ L:RegisterTranslations("koKR", function() return {
 	flameburst_cooldown_warn = "잠시 후 화염 폭발!",
 	flameburst_warn = "약 5초 이내 화염 폭발!",
 
-	--enrage_trigger = "Feel the hatred of ten thousand years!",
+	enrage_trigger = "만년 동안 응어리진 증오를 보여주마!",
 	enrage_message = "격노!",
 
 	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
@@ -233,7 +233,7 @@ L:RegisterTranslations("zhCN", function() return {
 	--berserk_desc = "Warn for berserk after 25min.",
 	--berserk_trigger = "You are not prepared!",
 	--berserk_message = "%s engaged, 25min to berserk!",
-	--berserk_bar = "Berserk Cooldown", 
+	--berserk_bar = "Berserk Cooldown",
 
 	parasite = "寄生暗影魔",--Parasitic Shadowfiend 寄生暗影魔
 	parasite_desc = "当队员中寄生暗影魔时发出警告.",
