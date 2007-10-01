@@ -24,9 +24,6 @@ commonWords:RegisterTranslations("enUS", function() return {
 	enrage_sec = "Enrage in %d sec",
 	enrage = "Enrage",
 
-  berserk = "Berserk",
-	berserk_start = "%s engaged, 10 min to berserk!",
-
 	RF = "Righteous Fury",
 } end)
 

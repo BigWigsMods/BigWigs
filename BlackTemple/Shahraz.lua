@@ -182,7 +182,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		for k in pairs(attracted) do attracted[k] = nil end
 		restype = nil
 		if self.db.profile.berserk then
-			self:Message(L2["berserk_start"]:format(boss, 10), "Attention")
+			self:Message(L["berserk_start"]:format(boss, 10), "Attention")
 			--Don't use :DelayedMessage as we get mutiple messages on rare occasions :CheckForWipe doesn't kick in due to the enounter style
 			self:ScheduleEvent("en1", "BigWigs_Message", 300, L["berserk_min"]:format(5), "Positive")
 			self:ScheduleEvent("en2", "BigWigs_Message", 420, L["berserk_min"]:format(3), "Positive")
@@ -191,7 +191,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:ScheduleEvent("en5", "BigWigs_Message", 590, L["berserk_sec"]:format(10), "Urgent")
 			self:ScheduleEvent("en6", "BigWigs_Message", 595, L["berserk_sec"]:format(5), "Urgent")
 			self:ScheduleEvent("en7", "BigWigs_Message", 600, L["berserk_end"]:format(boss), "Attention", nil, "Alarm")
-			self:Bar(L2["berserk"], 600, "Spell_Nature_Reincarnation")
+			self:Bar(L["berserk"], 600, "Spell_Nature_Reincarnation")
 		end
 	end
 end
