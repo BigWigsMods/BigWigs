@@ -85,8 +85,8 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	["Sounds"] = "T\195\182ne",
-	["Options for sounds."] = "Optionen f\195\188r T\195\182ne",
+	["Sounds"] = "Töne",
+	["Options for sounds."] = "Optionen für Töne",
 
 	["Alarm"] = "Alarm",
 	["Info"] = "Info",
@@ -94,9 +94,9 @@ L:RegisterTranslations("deDE", function() return {
 	["Long"] = "Lang",
 	["Victory"] = "Sieg",
 
-	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = "Lege den Ton fest, welcher f\195\188r %q verwendet werden soll (Strg-Klicken um eine Vorschau den Tons zu h\195\182ren).",
-	["Use sounds"] = "T\195\182ne verwenden",
-	["Toggle all sounds on or off."] = "Schalte alle T\195\182ne ein oder aus.",
+	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = "Lege den Ton fest, welcher für %q verwendet werden soll (Strg-Klicken um eine Vorschau den Tons zu hören).",
+	["Use sounds"] = "Töne verwenden",
+	["Toggle all sounds on or off."] = "Schalte alle Töne ein oder aus.",
 	["Default only"] = "Nur Standard",
 	["Use only the default sound."] = "Nur den Standardton verwenden.",
 } end)

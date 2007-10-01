@@ -83,19 +83,21 @@ L:RegisterTranslations("deDE", function() return {
 	["%s has been defeated"] = "%s wurde besiegt",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s wurden besiegt",    -- "<bosses> have been defeated"
 
+	["Debug enabled, output routed to %s."] = "Debuggen aktiviert, Ausgabe umgeleitet zu %s.",
+	["Debug disabled."] = "DEbuggen Deaktiviert.",
+
 	-- AceConsole strings
 	["Bosses"] = "Bosse",
-	["Options for bosses in %s."] = "Optionen f\195\188r Bosse in %s.", -- "Options for bosses in <zone>"
-	["Options for %s (r%d)."] = "Optionen f\195\188r %s (r%d).",     -- "Options for <boss> (<revision>)"
+	["Options for bosses in %s."] = "Optionen für Bosse in %s.", -- "Options for bosses in <zone>"
+	["Options for %s (r%d)."] = "Optionen für %s (r%d).",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "Plugins",
+	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Plugins stellen die Grundfunktionen von Big Wigs zur verfügung -  wie das Anzeigen von Nachrichten, Zeitbalken, und weiteren benötigten Funktionen.",
 	["Extras"] = "Extras",
-	-- ["toggle"] = true,
+	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "Extras sind Externe Plugin Addons und eingebaute zusätzliche Plugins ohne die Big Wigs auch korrekt funktioniert.",
 	["Active"] = "Aktivieren",
 	["Activate or deactivate this module."] = "Aktiviert oder deaktiviert dieses Modul.",
-	-- ["reboot"] = true,
 	["Reboot"] = "Neustarten",
 	["Reboot this module."] = "Startet dieses Modul neu.",
-	-- ["debug"] = true,
 	["Debugging"] = "Debugging",
 	["Show debug messages."] = "Zeige Debug Nachrichten.",
 	["Options"] = "Optionen",

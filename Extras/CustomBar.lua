@@ -73,6 +73,8 @@ L:RegisterTranslations("deDE", function() return {
 	["<seconds> <bar text>"] = "<Sekunden> <Balkentext>",
 	["Starts a custom bar with the given parameters."] = "Einen individuellen Anzeigebalken mit den gegebenen Parametern starten. \n<Sekunden> <Balkentext>",
 	["%s: Timer [%s] finished."] = "%s: Timer [%s] beendet.",
+	["Other addons"] = "Andere Addons",
+	["Allows Big Wigs to show custom bars initiated from other addons, like Deadly Boss Mods 3.0.\n\nOnly shows these bars if you're not running a local copy of the other addon."] = "Erlaubt BigWigs Individuelle Anzeigebalken anzuzeigen die von anderen Addons generiert wurden, wie Deadly Boss Mods 3.0.\n\nDiese Anzeigebalken werden nur angezeigt wenn du selbst keine eigene Version des entsprechenden Addons laufen hast.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

@@ -139,32 +139,32 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Messages"] = "Nachrichten",
-	["Options for message display."] = "Optionen f\195\188r die Anzeige von Nachrichten.",
+	["Options for message display."] = "Optionen für die Anzeige von Nachrichten.",
 
 	["Show anchor"] = "Verankerung anzeigen",
 	["Show the message anchor frame."] = "Die Verankerung des Nachrichtenfensters anzeigen.",
 
 	["Use colors"] = "Farben verwenden",
-	["Toggles white only messages ignoring coloring."] = "Nachrichten farbig/wei\195\159 anzeigen.",
+	["Toggles white only messages ignoring coloring."] = "Nachrichten farbig/weiß anzeigen.",
 
-	--["Text shadow"] = true,
-	--["Show a shadow behind message text."] = true,
+	["Text shadow"] = "Text Schatten",
+	["Show a shadow behind message text."] = "Einen Schattenrand hinter Nachrichten Texten anzeigen.",
 
 	["Scale"] = "Skalierung",
 	["Set the message frame scale."] = "Die Skalierung des Nachrichtenfensters festlegen.",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Fa|cffff00ffr|cff00ff00be|r",
-	["White"] = "Wei\195\159",
+	["White"] = "Weiß",
 
-	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Gibt alle BigsWigs-Nachrichten im Standard-Chatfenster aus, zus\195\164tzlich zur Anzeige-Einstellung.",
+	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Gibt alle BigsWigs-Nachrichten im Standard-Chatfenster aus, zusätzlich zur Anzeige-Einstellung.",
 
 	["Chat frame"] = "Chatfenster",
 
 	["Test"] = "Test",
-	["Close"] = "Schlie\195\159en",
+	["Close"] = "Schließen",
 
-	["Reset position"] = "Position zur\195\188cksetzen",
-	["Reset the anchor position, moving it to the center of your screen."] = "Die Verankerungsposition zur\195\188cksetzen (bewegt alles zur Mitte deines Interfaces).",
+	["Reset position"] = "Position zurücksetzen",
+	["Reset the anchor position, moving it to the center of your screen."] = "Die Verankerungsposition zurücksetzen (bewegt alles zur Mitte deines Interfaces).",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

@@ -31,11 +31,11 @@ commonWords:RegisterTranslations("deDE", function() return {
 	you = "Ihr",
 	are = "seid",
 
-	enrage_start = "%s Angegriffen - Enrage in %dmin",
-	enrage_end = "%s Enraged",
-	enrage_min = "Enrage in %d min",
-	enrage_sec = "Enrage in %d sek",
-	enrage = "Enrage",
+	enrage_start = "%s Angegriffen - Wütend in %dmin",
+	enrage_end = "%s Wütend",
+	enrage_min = "Wütend in %d min",
+	enrage_sec = "Wütend in %d sek",
+	enrage = "Wütend",
 
 	RF = "Zorn der Gerechtigkeit",
 } end )

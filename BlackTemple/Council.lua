@@ -192,10 +192,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 L:RegisterTranslations("deDE", function() return {
-	--engage_trigger1 = "You wish to test me?",
-	--engage_trigger2 = "Common... such a crude language. Bandal!",
-	--engage_trigger3 = "I have better things to do..",
-	--engage_trigger4 = "Flee, or die!",
+	engage_trigger1 = "Ihr wollt mich testen?",
+	engage_trigger2 = "Gemeinsprache... welch barbarische Zunge. Bandal!",
+	engage_trigger3 = "Ich habe bessere sachen zu tun..",
+	engage_trigger4 = "Flieht, oder sterbt!",
 
 	immune = "Immunitäts Warnung",
 	immune_desc = "Warnen wenn Malande immun gegen Zauber oder Nahkampfangriffe wird.",

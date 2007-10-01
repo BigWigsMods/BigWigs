@@ -123,17 +123,17 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	["Proximity"] = "N\195\164he",
-	["Options for the Proximity Display."] = "Optionen f\195\188r die N\195\164he Anzeige.",
+	["Proximity"] = "Nähe",
+	["Options for the Proximity Display."] = "Optionen für die Nähe Anzeige.",
 	["|cff777777Nobody|r"] = "|cff777777Niemand|r",
 	["Sound"] = "Sound",
-	["Play sound on proximity."] = "Spielt einen Sound bei N\195\164he ab.",
+	["Play sound on proximity."] = "Spielt einen Sound bei Nähe ab.",
 	["Disabled"] = "Deaktivieren",
-	["Disable the proximity display for all modules that use it."] = "Deaktiviert die N\195\164he Anzeige f\195\188r alle Module die sie benutzen.",
-	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "Die N\195\164he Anzeige wurde deaktiviert f\195\188r %s, bitte benutze die Boss Modul Optionen um sie wieder zu aktivieren.",
+	["Disable the proximity display for all modules that use it."] = "Deaktiviert die Nähe Anzeige für alle Module die sie benutzen.",
+	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "Die Nähe Anzeige wurde deaktiviert für %s, bitte benutze die Boss Modul Optionen um sie wieder zu aktivieren.",
 
-	proximity = "N\195\164he Anzeige",
-	proximity_desc = "Zeigt das N\195\164he Fenster wenn ben\195\182tigt passsend zu diesem Encounter an, auflistend die Spieler die dir zu Nahe stehn.",
+	proximity = "Nähe Anzeige",
+	proximity_desc = "Zeigt das Nähe Fenster wenn benötigt passsend zu diesem Encounter an, auflistend die Spieler die dir zu Nahe stehn.",
 
 	font = "Fonts\\FRIZQT__.TTF",
 } end)

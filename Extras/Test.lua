@@ -75,14 +75,14 @@ L:RegisterTranslations("deDE", function() return {
 	["Test"] = "Test",
 	["Test Bar "] = "Test Balken ",
 	["Testing"] = "Teste",
-	["OMG Bear!"] = "OMG B\195\164r!",
+	["OMG Bear!"] = "OMG Bär!",
 	["*RAWR*"] = "RAWR",
 	["Victory!"] = "Sieg!",
-	["Commands for testing bars, messages and synchronization."] = "Optionen f\195\188r den Test von BigWigs.",
+	["Commands for testing bars, messages and synchronization."] = "Optionen für den Test von BigWigs.",
 	["Local test"] = "Lokaler Test",
-	["Perform a local test of BigWigs."] = "Lokalen Test von BigWigs durchf\195\188hren.",
+	["Perform a local test of BigWigs."] = "Lokalen Test von BigWigs durchführen.",
 	["Sync test"] = "Synchronisations-Test",
-	["Perform a sync test of BigWigs."] = "Sychronisations-Test durchf\195\188hren.",
+	["Perform a sync test of BigWigs."] = "Sychronisations-Test durchführen.",
 	["Testing Sync"] = "Teste Synchronisation",
 } end)
 

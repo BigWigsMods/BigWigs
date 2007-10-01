@@ -221,13 +221,13 @@ L:RegisterTranslations("deDE", function() return {
 	["Bars"] = "Anzeigebalken",
 	["Emphasized Bars"] = "Hervorgehobene Anzeigebalken",
 
-	["Options for the timer bars."] = "Optionen f\195\188r die Timer-Anzeigebalken.",
+	["Options for the timer bars."] = "Optionen für die Timer-Anzeigebalken.",
 
 	["Show anchor"] = "Verankerung anzeigen",
 	["Show the bar anchor frame."] = "Die Verankerung der Balken anzeigen.",
 
-	["Enable menu"] = "Men\195\188 aktivieren",
-	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "Das Balken-Konfigurationsmen\195\188 via Alt-Rechtsklick anzeigen.\n\nBeachte, da\195\159 wenn diese Option aktiviert ist, du keine Gegenst\195\164nde mehr Alt-Klicken kannst.",
+	["Enable menu"] = "Menü aktivieren",
+	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "Das Balken-Konfigurationsmenü via Alt-Rechtsklick anzeigen.\n\nBeachte, daß wenn diese Option aktiviert ist, du keine Gegenstände mehr Alt-Klicken kannst.",
 
 	["Scale"] = "Skalierung",
 	["Set the bar scale."] = "Die Skalierung der Anzeigebalken festlegen.",
@@ -236,10 +236,10 @@ L:RegisterTranslations("deDE", function() return {
 	["Toggle bars grow upwards/downwards from anchor."] = "Anzeigebalken von der Verankerung aus nach oben/unten fortsetzen.",
 
 	["Texture"] = "Textur",
-	["Set the texture for the timer bars."] = "Die Textur f\195\188r die Timer-Balken festlegen.",
+	["Set the texture for the timer bars."] = "Die Textur für die Timer-Balken festlegen.",
 
 	["Test"] = "Test",
-	["Close"] = "Schlie\195\159en",
+	["Close"] = "Schließen",
 
 	["Emphasize"] = "Hervorheben",
 	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "Anzeigebalken hervorheben die kurz vor Abschluss sind (<10sek). Anzeigebalken die mit einem Timer von weniger als 15 Sekunden starten werden von Beginn weg als hervorgehobene Balken dargestellt.",
@@ -247,16 +247,16 @@ L:RegisterTranslations("deDE", function() return {
 	["Enable"] = "Aktivieren",
 	["Enables emphasizing bars."] = "Aktiviert hervorgehobene Anzeigebalken.",
 	["Flash"] = "Blinken",
-	["Flashes the background red for bars that are emphasized."] = "L\195\164sst den Hintergrund von hervorgehobenen Anzeigebalken rot blinken.",
+	["Flashes the background red for bars that are emphasized."] = "Lässt den Hintergrund von hervorgehobenen Anzeigebalken rot blinken.",
 	["Move"] = "Bewegen",
 	["Move bars that are emphasized to a second anchor."] = "Hervorgehobene Anzeigebalken zu einem zweiten Ankerpunkt bewegen.",
-	["Set the scale for emphasized bars."] = "Die Skalierung f\195\188r hervorgehobene Anzeigebalken festlegen.",
+	["Set the scale for emphasized bars."] = "Die Skalierung für hervorgehobene Anzeigebalken festlegen.",
 
-	["Reset position"] = "Position zur\195\188cksetzen",
-	["Reset the anchor position, moving it to the center of your screen."] = "Die Verankerungsposition zur\195\188cksetzen (bewegt die Balken zur Mitte deines Interfaces).",
+	["Reset position"] = "Position zurücksetzen",
+	["Reset the anchor position, moving it to the center of your screen."] = "Die Verankerungsposition zurücksetzen (bewegt die Balken zur Mitte deines Interfaces).",
 
 	["Reverse"] = "Umkehren",
-	["Toggles if bars are reversed (fill up instead of emptying)."] = "Legt fest, ob sich die Anzeigebalken f\195\188llen oder leeren sollen.",
+	["Toggles if bars are reversed (fill up instead of emptying)."] = "Legt fest, ob sich die Anzeigebalken füllen oder leeren sollen.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

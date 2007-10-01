@@ -102,18 +102,21 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("deDE", function() return {
 	["RaidWarning"] = "RaidWarnung",
 
-	["Broadcast over RaidWarning"] = "Verbreiten \195\188ber Sclachtzugswarnung",
+	["Broadcast over RaidWarning"] = "Verbreiten über Schlachtzugswarnung",
 	["Broadcast"] = "Verbreiten",
-	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = "Meldungen \195\188ber Schlachtzugswarnung an Alle senden.",
+	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = "Meldungen über Schlachtzugswarnung an Alle senden.",
 
-	["Whisper"] = "Fl\195\188stern",
-	["Whisper warnings"] = "Warnungen fl\195\188stern",
-	["Toggle whispering warnings to players."] = "Warnungen an andere Spieler fl\195\188stern.",
+	["Whisper"] = "Flüstern",
+	["Whisper warnings"] = "Warnungen flüstern",
+	["Toggle whispering warnings to players."] = "Warnungen an andere Spieler flüstern.",
+
+	["Show whispers"] = "Zeige Flüstern",
+	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "Aktiviere das Lokale anzeigen von Flüstern Nachrichten, zum Beispiel wenn Spieler sachen wie die Seuche oder ähnlich haben.",
 
 	["Broadcast to chat"] = "Schlachtzugschat benutzen",
 	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "Schlachtzugschat anstelle des Schlachtzugswarungschats für Boss Nachrichten benutzen.",
 
-	desc = "Optionen f\195\188r RaidWarnung.",
+	desc = "Läst dich Justieren wohin BigWigs die Boss Nachrichten sendet, neben der Lokalen Anzeige.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
