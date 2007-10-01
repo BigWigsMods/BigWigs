@@ -164,8 +164,13 @@ function mod:CHAT_MSG_ADDON(prefix, message, dist, sender)
 	if not DBM and prefix == "LVBM" and self.enabled then
 		-- Note: I've (Kemayo) only tested this with DBM 3.0; other versions might need different handling.
 		local length, text = message:match("STSBT ([%d%.]+) [^%s]+ (.*)")
-		if length then
-			self:StartBar(length.." "..text, sender, true)
+		if length and text then
+			local id = fmt("%d %s", length, text)
+			local t = GetTime()
+			if not times[id] or (times[id] and (times[id] + 1) < t) then
+				times[id] = t
+				self:StartBar(id, sender, true)
+			end
 		end
 	end
 end
@@ -215,7 +220,7 @@ end
 function BWCB(seconds, message)
 	if message then seconds = fmt("%d %s", seconds, message) end
 	local t = GetTime()
-	if ( not times[seconds] ) or ( times[seconds] and ( times[seconds] + 2 ) < t) then
+	if not times[seconds] or (times[seconds] and (times[seconds] + 2) < t) then
 		times[seconds] = t
 		mod:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..seconds)
 	end
