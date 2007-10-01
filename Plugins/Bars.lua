@@ -1023,7 +1023,7 @@ local function onClickCandybar(barname,button)
 end
 
 function plugin:MODIFIER_STATE_CHANGED(key,state)
-	if key == "ALT" and plugin.db.profile.altclick then
+	if ( key == "RALT" or key == "LALT" ) and plugin.db.profile.altclick then
 		for _,v in pairs(moduleBars) do
 			for k in pairs(v) do
 				self:SetCandyBarOnClick(k, state == 1 and onClickCandybar or nil)
