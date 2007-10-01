@@ -159,10 +159,10 @@ L:RegisterTranslations("zhTW", function() return {
 	phase2_message = "20% - 第二階段！",
 
 	wrath = "星術師之怒施放",
-	--wrath_desc = "當星術師之怒施放警告同時提示施放目標。", --enUS changed
+	wrath_desc = "警報隊友受到星術師之怒。", --enUS changed
 	wrath_trigger = "^(.+)受到(.*)星術師之怒",
 	--wrath_fade = "Wrath of the Astromancer fades from you.",
-	--wrath_other = "Wrath on %s",
+	wrath_other = "星術師之怒: %s",
 	wrath_you = "你中了星術師之怒！",
 
 	icon = "團隊標記",
@@ -175,8 +175,8 @@ L:RegisterTranslations("zhTW", function() return {
 	split_bar = "下一次分身",
 	split_warning = "7 秒內分身來臨！",
 
-	agent_warning = "分身！ - 6 秒內毀滅間諜出現！",
-	agent_bar = "間諜計時",
+	agent_warning = "分身！ - 6 秒內密探出現！",
+	agent_bar = "密探計時",
 	priest_warning = "5 秒內牧師、星術師出現！",
 	priest_bar = "牧師、星術師計時",
 } end )

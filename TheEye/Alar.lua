@@ -100,10 +100,10 @@ L:RegisterTranslations("zhTW", function() return {
 	meteor_message = "隕石術！- 下一次約 54 秒。",
 	meteor_nextbar = "下一次隕石術",
 
-	flamepatch = "更新烈焰",
-	flamepatch_desc = "當你受到更新烈焰時警告",
-	flamepatch_trigger = "你受到更新烈焰的傷害。",
-	flamepatch_message = "你中了更新烈焰！",
+	flamepatch = "烈焰助長",
+	flamepatch_desc = "當你受到烈焰助長時警告",
+	flamepatch_trigger = "你受到烈焰助長的傷害。",
+	flamepatch_message = "你中了烈焰助長！",
 
 	armor = "熔化護甲",
 	armor_desc = "當某人受到熔化護甲時提示",

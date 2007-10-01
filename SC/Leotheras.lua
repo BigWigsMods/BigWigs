@@ -184,7 +184,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	whirlwind = "旋風斬",
 	whirlwind_desc = "旋風斬計時",
-	whirlwind_trigger = "盲目者李奧薩拉斯獲得了旋風斬的效果。",
+	whirlwind_trigger = "『盲目者』李奧薩拉斯獲得了旋風斬的效果。",
 	whirlwind_gain = "旋風斬 - 持續 12 秒。",
 	whirlwind_fade = "旋風斬終止！",
 	whirlwind_bar = "旋風斬",
@@ -208,7 +208,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	image = "影分身",
 	image_desc = "15% 分身警告",
-	image_trigger = "不…不!你做了什麼?我是主人!你沒聽見我在說話嗎?我…..阿!無法…控制它。",
+	image_trigger = "不…不!你做了什麼?我是主人!你沒聽見我在說話嗎?我…..啊!無法…控制它。",
 	image_message = "15% - 分身出現！",
 	image_warning = "分身即將出現！",
 

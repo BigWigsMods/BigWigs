@@ -165,7 +165,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	knock = "擊退",
 	knock_desc = "擊退冷卻計時條。",
-	knock_trigger = "虛無劫掠者的擊退",
+	knock_trigger = "虛無搶奪者的擊退",
 	knock_bar = "~擊退冷卻計時",
 } end )
 
