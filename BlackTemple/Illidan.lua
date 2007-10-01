@@ -92,7 +92,7 @@ L:RegisterTranslations("frFR", function() return {
 	berserk_desc = "Préviens quand Illidan passe en berserk après 25 min.",
 	berserk_trigger = "Vous n'êtes pas prêts !", -- à vérifier
 	berserk_message = "%s engagé, 25 min. avant berserk !",
-	--berserk_bar = "Berserk Cooldown",
+	berserk_bar = "Cooldown Berserk",
 
 	parasite = "Ombrefiel parasite",
 	parasite_desc = "Préviens quand un joueur subit les effets de l'Ombrefiel parasite.",

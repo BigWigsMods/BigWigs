@@ -71,14 +71,14 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger4 = "Fuyez, ou mourrez !", -- à vérifier
 
 	immune = "Immunité",
-	immune_desc = "Préviens quand Malande devient insensible aux sorts ou aux attaques de melée.",
+	immune_desc = "Préviens quand Malande devient insensible aux sorts ou aux attaques de mêlée.",
 	immune_spell_trigger = "Dame Malande gagne Bénédiction de protection contre les sorts.",
 	immune_melee_trigger = "Dame Malande gagne Bénédiction de protection.",
 	immune_message = "Malande : insensible %s pendant 15 sec. !",
 	immune_bar = "Insensible %s !",
 
 	spell = "aux sorts",
-	melee = "en melée",
+	melee = "en mêlée",
 
 	shield = "Bouclier réflecteur",
 	shield_desc = "Préviens quand Malande gagne son Bouclier réflecteur.",

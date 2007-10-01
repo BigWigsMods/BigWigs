@@ -110,7 +110,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	target = "Cible",
 	target_desc = "Indique la personne pourchassée pendant la phase de kitting.",
-	target_message = "%s est poursuivi !",
+	target_message = "%s est poursuivi(e) !",
 	target_message_nounit = "Nouvelle cible !",
 
 	icon = "Icône",

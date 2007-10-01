@@ -251,9 +251,9 @@ L:RegisterTranslations("frFR", function() return {
 	toy_message = "Jouet sur le tank : %s",
 	toy_trigger = "Jouet à distance",
 
-	--hunter = "Remote Toy on Hunters",
-	--hunter_desc = "Warn when a hunter has Remote Toy.",
-	--hunter_message = "Toy on Hunter: %s",
+	hunter = "Jouet à distance sur chasseurs",
+	hunter_desc = "Préviens quand un chasseur subit les effets du Jouet à distance.",
+	hunter_message = "Jouet sur chasseur : %s",
 
 	phase = "Phases",
 	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
