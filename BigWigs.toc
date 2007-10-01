@@ -13,8 +13,8 @@
 ## X-Website: http://wowace.com/wiki/BigWigs
 ## X-Category: Raid
 ## X-RelSite-WoWI: 5086
-## X-RelSite-Curse: 4356
-## X-AceForum: 1222
+## X-RelSite-Curse: 3299
+## X-AceForum: 1762
 ## X-License: See license.txt
 
 ## OptionalDeps: Ace2, FuBar, SharedMedia

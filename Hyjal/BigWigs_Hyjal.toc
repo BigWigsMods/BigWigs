@@ -12,8 +12,8 @@
 ## X-Website: http://www.wowace.com/index.php/BigWigs
 ## X-Category: Raid
 ## X-RelSite-WoWI: 5086
-## X-RelSite-Curse: 4356
-## X-AceForum: 1222
+## X-RelSite-Curse: 3299
+## X-AceForum: 6580
 
 ## X-BigWigs-LoadInZone: Hyjal Summit
 
