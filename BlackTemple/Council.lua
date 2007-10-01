@@ -192,9 +192,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 L:RegisterTranslations("deDE", function() return {
-	engage_trigger1 = "Ihr wollt mich testen?",
+	engage_trigger1 = "Wollt Ihr mich auf die Probe stellen?",
 	engage_trigger2 = "Gemeinsprache... welch barbarische Zunge. Bandal!",
-	engage_trigger3 = "Ich habe bessere sachen zu tun..",
+	engage_trigger3 = "Ich habe besseres zu tun..",
 	engage_trigger4 = "Flieht, oder sterbt!",
 
 	immune = "Immunitäts Warnung",
