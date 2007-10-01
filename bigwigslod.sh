@@ -9,6 +9,7 @@ rm -rf BigWigs_Plugins
 rm -rf BigWigs_TheEye
 rm -rf BigWigs_BlackTemple
 rm -rf BigWigs_Hyjal
+rm -rf BigWigs_ZulAman
 
 cd BigWigs
 
@@ -20,5 +21,6 @@ mv Plugins ../BigWigs_Plugins
 mv TheEye ../BigWigs_TheEye
 mv BlackTemple ../BigWigs_BlackTemple
 mv Hyjal ../BigWigs_Hyjal
+mv ZulAman ../BigWigs_ZulAman
 
 rm -rf modules.xml

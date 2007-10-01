@@ -1,0 +1,21 @@
+﻿## Interface: 20200
+
+## Title: Big Wigs [|cffeda55fZul'Aman (BETA)|r]
+## Notes: Big Wigs Zul'Aman (BETA) Modules
+## Author: Funkydude, Rabbit
+## Version: 2.0
+## LoadOnDemand: 1
+
+## X-Website: http://www.wowace.com/index.php/BigWigs
+## X-Category: Raid
+## X-RelSite-WoWI: 5086
+## X-RelSite-Curse: 4356
+## X-AceForum: 1222
+
+## X-BigWigs-LoadInZone: Zul'Aman
+
+## Dependencies: BigWigs
+
+# boss.lua
+# boss.lua
+

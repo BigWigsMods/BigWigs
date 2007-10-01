@@ -65,4 +65,7 @@
 <Script file="Hyjal\Archimonde.lua"/>
 <Script file="Hyjal\Kazrogal.lua"/>
 
+<!-- <Script file="ZulAman\boss.lua"/> -->
+<!-- <Script file="ZulAman\boss.lua"/> -->
+
 </Ui>
