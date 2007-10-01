@@ -77,12 +77,14 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["Custom Bars"] = "Barres personnalisées",
-	["Start a custom bar, either local or global."] = "Démarre une barre personnalisée, soit personnelle, soit globale.",
-	["Local"] = "Personnelle",
+	["Start a custom bar, either local or global."] = "Démarre une barre personnalisée, soit locale, soit globale.",
+	["Local"] = "Locale",
 	["Global"] = "Globale",
 	["<seconds> <bar text>"] = "<secondes> <texte de la barre>",
 	["Starts a custom bar with the given parameters."] = "Démarre une barre personnalisée avec les paramètres indiqués.",
 	["%s: Timer [%s] finished."] = "%s: Délai [%s] terminé.",
+	["Other addons"] = "Autres addons",
+	["Allows Big Wigs to show custom bars initiated from other addons, like Deadly Boss Mods 3.0.\n\nOnly shows these bars if you're not running a local copy of the other addon."] = "Autorise Big Wigs à afficher les barres personnalisées lancées par les autres addons, tel que Deadly Boss Mods 3.0.\n\nElles ne seront affichées que si vous n'utilisez pas vous-même ces autres addons.",
 } end)
 
 ----------------------------------
