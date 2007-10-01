@@ -20,6 +20,8 @@ L:RegisterTranslations("enUS", function() return {
 	["<seconds> <bar text>"] = true,
 	["Starts a custom bar with the given parameters."] = true,
 	["%s: Timer [%s] finished."] = true,
+	["Other addons"] = true,
+	["Allows Big Wigs to show custom bars initiated from other addons, like Deadly Boss Mods 3.0.\n\nOnly shows these bars if you're not running a local copy of the other addon."] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -87,10 +89,13 @@ L:RegisterTranslations("frFR", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-local mod = BigWigs:NewModule(L["Custom Bars"])
+local mod = BigWigs:NewModule("Custom Bars")
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.external = true
 mod.consoleCmd = L["CustomBars"]
+mod.defaultDB = {
+	otherAddons = true,
+}
 mod.consoleOptions = {
 	type = "group",
 	name = L["Custom Bars"],
@@ -104,6 +109,7 @@ mod.consoleOptions = {
 			set = function(v) mod:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..v) end,
 			usage = L["<seconds> <bar text>"],
 			disabled = function() return (not IsRaidLeader() and not IsRaidOfficer()) and UnitInRaid("player") end,
+			order = 1,
 		},
 		[L["Local"]] = {
 			type = "text",
@@ -112,6 +118,20 @@ mod.consoleOptions = {
 			get = false,
 			set = function(v) mod:StartBar(v, nil, true) end,
 			usage = L["<seconds> <bar text>"],
+			order = 2,
+		},
+		spacer = {
+			type = "header",
+			name = " ",
+			order = 50,
+		},
+		otherAddons = {
+			type = "toggle",
+			name = L["Other addons"],
+			desc = L["Allows Big Wigs to show custom bars initiated from other addons, like Deadly Boss Mods 3.0.\n\nOnly shows these bars if you're not running a local copy of the other addon."],
+			get = function() return mod.db.profile.otherAddons end,
+			set = function(v) mod.db.profile.otherAddons = v end,
+			order = 100,
 		},
 	},
 }
@@ -127,12 +147,29 @@ function mod:OnEnable()
 	self:RegisterShortHand()
 
 	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterEvent("CHAT_MSG_ADDON")
 	self:TriggerEvent("BigWigs_ThrottleSync", "BWCustomBar", 0)
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+-- Thanks to Kemayo's external BigWigs_DBMCustomBars module for the initial
+-- code.
+function mod:CHAT_MSG_ADDON(prefix, message, dist, sender)
+	if not self.enabled or not self.db.profile.otherAddons then return end
+
+	-- DBM
+	if not DBM and prefix == "LVBM" and self.enabled then
+		-- Note: I've (Kemayo) only tested this with DBM 3.0; other versions might need different handling.
+		local length, text = message:match("STSBT ([%d%.]+) [^%s]+ (.*)")
+		if length then
+			self:StartBar(length.." "..text, sender, true)
+		end
+	end
+end
+
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync ~= "BWCustomBar" or not rest or not nick or not self.enabled then return end
