@@ -245,8 +245,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 end 
 
 local function HideProx()
-	self:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
-	self:TriggerEvent("BigWigs_HideProximity", self)
+	mod:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
+	mod:TriggerEvent("BigWigs_HideProximity", self)
 end
 
 function mod:WrathAff(msg)
