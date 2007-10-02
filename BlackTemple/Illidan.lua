@@ -23,7 +23,6 @@ L:RegisterTranslations("enUS", function() return {
 	berserk_desc = "Warn for berserk after 25min.",
 	berserk_trigger = "You are not prepared!",
 	berserk_message = "%s engaged, 25min to berserk!",
-	berserk_bar = "Berserk Cooldown",
 
 	parasite = "Parasitic Shadowfiend",
 	parasite_desc = "Warn who has Parasitic Shadowfiend.",
@@ -78,12 +77,12 @@ L:RegisterTranslations("enUS", function() return {
 	flameburst_message = "Flame Burst!",
 	flameburst_cooldown_bar = "Flame Burst cooldown",
 	flameburst_cooldown_warn = "Flame Burst soon!",
-	flameburst_warn = "Flame Burst in ~5sec!",
+	flameburst_warn = "Flame Burst in 5sec!",
 
 	enrage_trigger = "Feel the hatred of ten thousand years!",
 	enrage_message = "Enraged!",
 
-	afflict_trigger = "^(%S+) (%S+) afflicted by (.*).$",
+	afflict_trigger = "^(%S+) (%S+) afflicted by (.+)%.$",
 	["Flame of Azzinoth"] = true,
 } end )
 
@@ -92,7 +91,6 @@ L:RegisterTranslations("frFR", function() return {
 	berserk_desc = "Préviens quand Illidan passe en berserk après 25 min.",
 	berserk_trigger = "Vous n'êtes pas prêts !", -- à vérifier
 	berserk_message = "%s engagé, 25 min. avant berserk !",
-	berserk_bar = "Cooldown Berserk",
 
 	parasite = "Ombrefiel parasite",
 	parasite_desc = "Préviens quand un joueur subit les effets de l'Ombrefiel parasite.",
@@ -147,7 +145,7 @@ L:RegisterTranslations("frFR", function() return {
 	flameburst_message = "Explosion de flammes !",
 	flameburst_cooldown_bar = "~Cooldown Explosion",
 	flameburst_cooldown_warn = "Explosion de flammes imminente !",
-	flameburst_warn = "Explosion de flammes dans ~5 sec. !",
+	flameburst_warn = "Explosion de flammes dans 5 sec. !",
 
 	enrage_trigger = "Goûtez à dix mille ans de haine !", -- à vérifier
 	enrage_message = "Enragé !",
@@ -161,7 +159,6 @@ L:RegisterTranslations("koKR", function() return {
 	berserk_desc = "25분 후의 광폭화를 알립니다.",
 	berserk_trigger = "너흰 아직 준비가 안 됐다!",
 	berserk_message = "%s 시작, 25분 후 광폭화!",
-	berserk_bar = "광폭화 대기시간",
 
 	parasite = "어둠의 흡혈마귀",
 	parasite_desc = "어둠의 흡혈마귀에 걸린 플레이어를 알립니다.",
@@ -233,7 +230,6 @@ L:RegisterTranslations("zhCN", function() return {
 	--berserk_desc = "Warn for berserk after 25min.",
 	--berserk_trigger = "You are not prepared!",
 	--berserk_message = "%s engaged, 25min to berserk!",
-	--berserk_bar = "Berserk Cooldown",
 
 	parasite = "寄生暗影魔",--Parasitic Shadowfiend 寄生暗影魔
 	parasite_desc = "当队员中寄生暗影魔时发出警告.",
@@ -269,7 +265,6 @@ L:RegisterTranslations("deDE", function() return {
 	berserk_desc = "Warnt wann Illidan zum Berserker wird.",
 	berserk_trigger = "Ihr wisst nicht, was Euch erwartet!",
 	berserk_message = "%s gepullt, 25min bis er zum Berserker wird!",
-	berserk_bar = "Berserker Cooldown",
 
 	parasite = "Schädlicher Schattengeist",
 	parasite_desc = "Warnt wer von Schädlicher Schattengeist betroffen ist.",
@@ -324,7 +319,7 @@ L:RegisterTranslations("deDE", function() return {
 	flameburst_message = "Flammenschlag!",
 	flameburst_cooldown_bar = "Flammenschlag cooldown",
 	flameburst_cooldown_warn = "Flammenschlag bald!",
-	flameburst_warn = "Flammenschlag in ~5sek!",
+	flameburst_warn = "Flammenschlag in 5sek!",
 
 	enrage_trigger = "Fühlt dem Haß von 10 tausend Jahren!",
 	enrage_message = "Wütend!",
@@ -384,7 +379,7 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "IliPara" and rest and self.db.profile.parasite then
 		local other = L["parasite_other"]:format(rest)
-		if rest == UnitName("player") then
+		if rest == pName then
 			self:Message(L["parasite_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
 			self:Bar(other, 10, "Spell_Shadow_SoulLeech_3")
@@ -482,7 +477,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["enrage_message"], "Important", nil, "Alert")
 	elseif self.db.profile.berserk and msg == L["berserk_trigger"] then
 		self:Message(L["berserk_message"]:format(boss), "Attention")
-		self:Bar(L["berserk_bar"], 1500, "Spell_Nature_Reincarnation")
+		self:Bar(L["berserk"], 1500, "Spell_Nature_Reincarnation")
 	end
 end
 
