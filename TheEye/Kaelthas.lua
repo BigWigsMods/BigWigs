@@ -527,6 +527,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(thaladred, 32, "Spell_Shadow_Charm")
 		self:Message(L["engage_message"], "Positive")
 		for k in pairs(MCd) do MCd[k] = nil end
+		stop = nil
 	elseif msg == L["thaladred_inc_trigger"] then
 		self:Message(thaladred, "Positive")
 	elseif msg == L["sanguinar_inc_trigger"] then
