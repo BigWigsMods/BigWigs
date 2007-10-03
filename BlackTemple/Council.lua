@@ -77,12 +77,12 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger3 = "J'ai mieux à faire...", -- à vérifier
 	engage_trigger4 = "Fuyez, ou mourrez !", -- à vérifier
 
-	--vanish = "Vanish",
-	--vanish_desc = "Estimated timers for Vanish.",
-	--vanish_trigger = "Veras Darkshadow gains Vanish.",
-	--vanish_message = "Veras: Vanished! Back in ~30sec",
-	--vanish_warning = "Vanish Over - %s back!",
-	--vanish_bar = "Veras Stealthed",
+	vanish = "Disparition",
+	vanish_desc = "Délais estimés concernant la Disparition de Veras.",
+	vanish_trigger = "Veras Ombrenoir gagne Disparition.",
+	vanish_message = "Veras : Disparu ! De retour dans ~30 sec.",
+	vanish_warning = "Fin de la Disparition - %s est de retour !",
+	vanish_bar = "Veras camouflé",
 
 	immune = "Immunité",
 	immune_desc = "Préviens quand Malande devient insensible aux sorts ou aux attaques de mêlée.",

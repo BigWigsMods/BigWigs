@@ -141,8 +141,8 @@ L:RegisterTranslations("frFR", function() return {
 	wrath_other = "Courroux sur %s",
 	wrath_you = "Courroux sur VOUS !",
 
-	--whisper = "Whisper",
-	--whisper_desc = "Whisper the player with Wrath Debuff (requires promoted or higher).",
+	whisper = "Chuchoter",
+	whisper_desc = "Préviens par chuchotement le dernier joueur affecté par le Courroux de l'Astromancien (nécessite d'être promu ou mieux).",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Courroux de l'Astromancien (nécessite d'être promu ou mieux).",

@@ -120,7 +120,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	["RaidWarning"] = "Avertissement du Raid",
+	["RaidWarning"] = "Avertissement du raid",
 
 	["Broadcast over RaidWarning"] = "Diffuser sur l'Avertissement raid",
 	["Broadcast"] = "Diffuser",
