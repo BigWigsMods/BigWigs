@@ -29,6 +29,13 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger3 = "I have better things to do..",
 	engage_trigger4 = "Flee, or die!",
 
+	vanish = "Vanish",
+	vanish_desc = "Estimated timers for Vanish.",
+	vanish_trigger = "Veras Darkshadow gains Vanish.",
+	vanish_message = "Veras: Vanished! Back in ~30sec",
+	vanish_warning = "Vanish Over - %s back!",
+	vanish_bar = "Veras Stealthed",
+
 	immune = "Immunity Warning",
 	immune_desc = "Warn when Malande becomes immune to spells or melee attacks.",
 	immune_spell_trigger = "Lady Malande gains Blessing of Spell Warding.",
@@ -70,6 +77,13 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger3 = "J'ai mieux à faire...", -- à vérifier
 	engage_trigger4 = "Fuyez, ou mourrez !", -- à vérifier
 
+	--vanish = "Vanish",
+	--vanish_desc = "Estimated timers for Vanish.",
+	--vanish_trigger = "Veras Darkshadow gains Vanish.",
+	--vanish_message = "Veras: Vanished! Back in ~30sec",
+	--vanish_warning = "Vanish Over - %s back!",
+	--vanish_bar = "Veras Stealthed",
+
 	immune = "Immunité",
 	immune_desc = "Préviens quand Malande devient insensible aux sorts ou aux attaques de mêlée.",
 	immune_spell_trigger = "Dame Malande gagne Bénédiction de protection contre les sorts.",
@@ -110,6 +124,13 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger2 = "수준 낮은 언어를 쓰는 족속이로군... 반달!",
 	engage_trigger3 = "이깐놈들이나 상대해야 하다니..",
 	engage_trigger4 = "꺼져! 안그러면 죽는다!",
+
+	--vanish = "Vanish",
+	--vanish_desc = "Estimated timers for Vanish.",
+	--vanish_trigger = "Veras Darkshadow gains Vanish.",
+	--vanish_message = "Veras: Vanished! Back in ~30sec",
+	--vanish_warning = "Vanish Over - %s back!",
+	--vanish_bar = "Veras Stealthed",
 
 	immune = "면역 경고",
 	immune_desc = "말란데가 주문 혹은 근접 공격에 면역 시 알립니다.",
@@ -155,6 +176,13 @@ L:RegisterTranslations("zhCN", function() return {
 	--engage_trigger3 = "I have better things to do..",
 	--engage_trigger4 = "Flee, or die!",
 
+	--vanish = "Vanish",
+	--vanish_desc = "Estimated timers for Vanish.",
+	--vanish_trigger = "Veras Darkshadow gains Vanish.",
+	--vanish_message = "Veras: Vanished! Back in ~30sec",
+	--vanish_warning = "Vanish Over - %s back!",
+	--vanish_bar = "Veras Stealthed",
+
 	immune = "免疫警报",
 	immune_desc = "当玛兰德免疫法术活近战攻击时发出警报",
 	immune_spell_trigger = "女公爵玛兰德获得了法术结界祝福",--女公爵玛兰德
@@ -196,6 +224,13 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger2 = "Gemeinsprache... welch barbarische Zunge. Bandal!",
 	engage_trigger3 = "Ich habe besseres zu tun..",
 	engage_trigger4 = "Flieht, oder sterbt!",
+
+	--vanish = "Vanish",
+	--vanish_desc = "Estimated timers for Vanish.",
+	--vanish_trigger = "Veras Darkshadow gains Vanish.",
+	--vanish_message = "Veras: Vanished! Back in ~30sec",
+	--vanish_warning = "Vanish Over - %s back!",
+	--vanish_bar = "Veras Stealthed",
 
 	immune = "Immunitäts Warnung",
 	immune_desc = "Warnen wenn Malande immun gegen Zauber oder Nahkampfangriffe wird.",
@@ -239,7 +274,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = {malande, gathios, zerevor, veras}
-mod.toggleoptions = {"immune", "shield", "circle", -1, "poison", "icon", "enrage", "bosskill"}
+mod.toggleoptions = {"immune", "shield", "vanish", "circle", -1, "poison", "icon", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -301,6 +336,10 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "ICKick" and rest and self.db.profile.circle then
 		self:Message(fmt(L["circle_fail_message"], rest), "Urgent")
 		self:Bar(L["circle_bar"], 12, "Spell_Holy_CircleOfRenewal")
+	elseif sync == "VerVanish" and self.db.profile.vanish then
+		self:Message(L["vanish_message"], "Urgent", nil, "Alert")
+		self:Bar(L["vanish_bar"], 30, "Ability_Vanish")
+		self:DelayedMessage(30, fmt(L["vanish_warning"], veras), "Attention")
 	elseif sync == "TICWin" and self.db.profile.bosskill then
 		self:Message(death, "Bosskill", nil, "Victory")
 		BigWigs:ToggleModuleActive(self, false)
@@ -346,6 +385,8 @@ function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 		self:Sync("MalMelee")
 	elseif msg == L["shield_trigger"] then
 		self:Sync("MalShield")
+	elseif msg == L["vanish_trigger"] then
+		self:Sync("VerVanish")
 	end
 end
 
