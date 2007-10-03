@@ -33,6 +33,9 @@ L:RegisterTranslations("enUS", function() return {
 	wrath_other = "Wrath on %s",
 	wrath_you = "Wrath on YOU!",
 
+	whisper = "Whisper",
+	whisper_desc = "Whisper the player with Wrath Debuff (requires promoted or higher).",
+
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon on the player with Wrath of the Astromancer(requires promoted or higher).",
 
@@ -65,6 +68,9 @@ L:RegisterTranslations("deDE", function() return {
 	--wrath_fade = "Wrath of the Astromancer fades from you.",
 	--wrath_other = "Wrath on %s",
 	wrath_you = "Zorn auf DIR!",
+
+	--whisper = "Whisper",
+	--whisper_desc = "Whisper the player with Wrath Debuff (requires promoted or higher).",
 
 	icon = "Icon",
 	icon_desc = "Plaziert ein Schlachtzug Icon auf dem Spieler, der von Zorn des Astronomen betroffen ist",
@@ -99,6 +105,9 @@ L:RegisterTranslations("koKR", function() return {
 	wrath_other = "%s에 분노",
 	wrath_you = "당신에 분노!",
 
+	whisper = "귓속말",
+	whisper_desc = "분노 디버프에 걸린 플레이어에게 귓속말을 보냅니다 (승급자 이상 권한 요구).",
+
 	icon = "전술 표시",
 	icon_desc = "점성술사의 분노에 걸린 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
 
@@ -131,6 +140,9 @@ L:RegisterTranslations("frFR", function() return {
 	wrath_fade = "Courroux de l'astromancienne vient de se dissiper.",
 	wrath_other = "Courroux sur %s",
 	wrath_you = "Courroux sur VOUS !",
+
+	--whisper = "Whisper",
+	--whisper_desc = "Whisper the player with Wrath Debuff (requires promoted or higher).",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Courroux de l'Astromancien (nécessite d'être promu ou mieux).",
@@ -165,6 +177,9 @@ L:RegisterTranslations("zhTW", function() return {
 	wrath_other = "星術師之怒: %s",
 	wrath_you = "你中了星術師之怒！",
 
+	--whisper = "Whisper",
+	--whisper_desc = "Whisper the player with Wrath Debuff (requires promoted or higher).",
+
 	icon = "團隊標記",
 	icon_desc = "當隊友受到星術師之怒時設置標記（需要權限）",
 
@@ -189,7 +204,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", "split", -1, "wrath", "icon", "proximity", "bosskill"}
+mod.toggleoptions = {"phase", "split", -1, "wrath", "whisper", "icon", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
@@ -237,12 +252,15 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		else
 			self:Message(other, "Attention")
 		end
+		if self.db.profile.whisper then
+			self:Whisper(rest, L["wrath_you"])
+		end
 		self:Bar(other, 6, "Spell_Arcane_Arcane02")
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
 	end
-end 
+end
 
 local function HideProx()
 	mod:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
