@@ -177,8 +177,8 @@ L:RegisterTranslations("zhTW", function() return {
 	wrath_other = "星術師之怒: %s",
 	wrath_you = "你中了星術師之怒！",
 
-	--whisper = "Whisper",
-	--whisper_desc = "Whisper the player with Wrath Debuff (requires promoted or higher).",
+	whisper = "發送密語",
+	whisper_desc = "發送密語給受到星術師之怒的玩家（需要權限）",
 
 	icon = "團隊標記",
 	icon_desc = "當隊友受到星術師之怒時設置標記（需要權限）",
