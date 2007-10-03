@@ -20,8 +20,6 @@ L:RegisterTranslations("enUS", function() return {
 	["<seconds> <bar text>"] = true,
 	["Starts a custom bar with the given parameters."] = true,
 	["%s: Timer [%s] finished."] = true,
-	["Other addons"] = true,
-	["Allows Big Wigs to show custom bars initiated from other addons, like Deadly Boss Mods 3.0.\n\nOnly shows these bars if you're not running a local copy of the other addon."] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -73,8 +71,6 @@ L:RegisterTranslations("deDE", function() return {
 	["<seconds> <bar text>"] = "<Sekunden> <Balkentext>",
 	["Starts a custom bar with the given parameters."] = "Einen individuellen Anzeigebalken mit den gegebenen Parametern starten. \n<Sekunden> <Balkentext>",
 	["%s: Timer [%s] finished."] = "%s: Timer [%s] beendet.",
-	["Other addons"] = "Andere Addons",
-	["Allows Big Wigs to show custom bars initiated from other addons, like Deadly Boss Mods 3.0.\n\nOnly shows these bars if you're not running a local copy of the other addon."] = "Erlaubt BigWigs Individuelle Anzeigebalken anzuzeigen die von anderen Addons generiert wurden, wie Deadly Boss Mods 3.0.\n\nDiese Anzeigebalken werden nur angezeigt wenn du selbst keine eigene Version des entsprechenden Addons laufen hast.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -85,8 +81,6 @@ L:RegisterTranslations("frFR", function() return {
 	["<seconds> <bar text>"] = "<secondes> <texte de la barre>",
 	["Starts a custom bar with the given parameters."] = "Démarre une barre personnalisée avec les paramètres indiqués.",
 	["%s: Timer [%s] finished."] = "%s: Délai [%s] terminé.",
-	["Other addons"] = "Autres addons",
-	["Allows Big Wigs to show custom bars initiated from other addons, like Deadly Boss Mods 3.0.\n\nOnly shows these bars if you're not running a local copy of the other addon."] = "Autorise Big Wigs à afficher les barres personnalisées lancées par les autres addons, tel que Deadly Boss Mods 3.0.\n\nElles ne seront affichées que si vous n'utilisez pas vous-même ces autres addons.",
 } end)
 
 ----------------------------------
@@ -124,19 +118,6 @@ mod.consoleOptions = {
 			usage = L["<seconds> <bar text>"],
 			order = 2,
 		},
-		spacer = {
-			type = "header",
-			name = " ",
-			order = 50,
-		},
-		otherAddons = {
-			type = "toggle",
-			name = L["Other addons"],
-			desc = L["Allows Big Wigs to show custom bars initiated from other addons, like Deadly Boss Mods 3.0.\n\nOnly shows these bars if you're not running a local copy of the other addon."],
-			get = function() return mod.db.profile.otherAddons end,
-			set = function(v) mod.db.profile.otherAddons = v end,
-			order = 100,
-		},
 	},
 }
 
@@ -151,34 +132,12 @@ function mod:OnEnable()
 	self:RegisterShortHand()
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:RegisterEvent("CHAT_MSG_ADDON")
 	self:TriggerEvent("BigWigs_ThrottleSync", "BWCustomBar", 0)
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
--- Thanks to Kemayo's external BigWigs_DBMCustomBars module for the initial
--- code.
-function mod:CHAT_MSG_ADDON(prefix, message, dist, sender)
-	if not self.enabled or not self.db.profile.otherAddons then return end
-
-	-- DBM
-	if not DBM and prefix == "LVBM" and self.enabled then
-		-- Note: I've (Kemayo) only tested this with DBM 3.0; other versions might need different handling.
-		local length, text = message:match("STSBT ([%d%.]+) [^%s]+ (.*)")
-		if length and text then
-			local id = fmt("%d %s", length, text)
-			local t = GetTime()
-			if not times[id] or (times[id] and (times[id] + 1) < t) then
-				times[id] = t
-				self:StartBar(id, sender, true)
-			end
-		end
-	end
-end
-
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync ~= "BWCustomBar" or not rest or not nick or not self.enabled then return end
