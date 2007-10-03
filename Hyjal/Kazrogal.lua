@@ -56,9 +56,9 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	range = "거리 확인",
-	range_desc = "Show the proximity box when you are low on mana and have the Mark of Kaz'rogal.",
-	range_gain = "You are afflicted by Mark of Kaz'rogal.", -- check
-	range_fade = "Mark of Kaz'rogal fades from you.", --check
+	range_desc = "카즈로갈의 징표가 걸렸을 때 마나가 낮은 상태가 되면 접근 경고창을 띄웁니다.",
+	range_gain = "당신은 카즈로갈의 징표에 걸렸습니다.", -- check
+	range_fade = "당신의 몸에서 카즈로갈의 징표 효과가 사라졌습니다.", --check
 
 	--marks, enrage?
 } end )
@@ -72,7 +72,7 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Hyjal Summit"]
 mod.enabletrigger = boss
 mod.toggleoptions = {"range", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
-mod.proximityCheck = function( unit ) 
+mod.proximityCheck = function( unit )
 	for k, v in pairs( bandages ) do
 		if IsItemInRange( k, unit) == 1 then
 			return true
