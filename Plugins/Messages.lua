@@ -332,6 +332,8 @@ local function createMsgFrame()
 	messageFrame:Show()
 end
 
+
+
 ------------------------------
 --      Event Handlers      --
 ------------------------------
@@ -353,6 +355,8 @@ function plugin:Print(addon, text, r, g, b)
 	if plugin.db.profile.shadow then
 		messageFrame:SetShadowColor(0, 0, 0)
 		messageFrame:SetShadowOffset(1, 2)
+	else
+		messageFrame:SetShadowColor(0,0,0,0)
 	end
 end
 
