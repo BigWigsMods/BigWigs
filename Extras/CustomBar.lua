@@ -98,7 +98,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.external = true
 mod.consoleCmd = L["CustomBars"]
 mod.defaultDB = {
-	otherAddons = true,
+	otherAddons = false,
 }
 mod.consoleOptions = {
 	type = "group",
