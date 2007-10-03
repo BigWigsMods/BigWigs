@@ -263,6 +263,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["enrage_trigger"] then
 		imagewarn = nil
 		for k in pairs(beDemon) do beDemon[k] = nil end
+		stop = nil
 
 		if self.db.profile.phase then
 			self:DelayedMessage(55, L["phase_demonsoon"], "Urgent")

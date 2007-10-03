@@ -238,6 +238,7 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		for k in pairs(spiteIt) do spiteIt[k] = nil end
+		stop = nil
 		if self.db.profile.enrage then
 			self:Message(L["enrage_start"], "Positive")
 			self:Bar(L["enrage_nextbar"], 47, "Spell_Shadow_UnholyFrenzy")

@@ -242,6 +242,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["start_trigger"] then
 		count = 1
 		currentPerc = nil
+		stop = nil
 		if self.db.profile.mark then
 			self:Bar(fmt(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrozenCore")
 		end

@@ -210,7 +210,6 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MoroGrave", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MoroTidal", 5)
-	srop = nil
 end
 
 ------------------------------
@@ -221,6 +220,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		for k in pairs(inGrave) do inGrave[k] = nil end
 		grobulealert = nil
+		stop = nil
 
 		if self.db.profile.murloc then
 			self:Message(L["murloc_engaged"]:format(boss), "Positive")

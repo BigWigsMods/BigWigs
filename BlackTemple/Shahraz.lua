@@ -181,6 +181,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		for k in pairs(attracted) do attracted[k] = nil end
 		restype = nil
+		stop = nil
 		if self.db.profile.berserk then
 			self:Message(L["berserk_start"]:format(boss, 10), "Attention")
 			--Don't use :DelayedMessage as we get mutiple messages on rare occasions :CheckForWipe doesn't kick in due to the enounter style
