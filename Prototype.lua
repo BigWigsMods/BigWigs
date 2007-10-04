@@ -254,8 +254,16 @@ do
 	end
 end
 
-function BigWigs.modulePrototype:Sync(sync)
-	self:TriggerEvent("BigWigs_SendSync", sync)
+function BigWigs.modulePrototype:Sync(sync, b, ...)
+	if b then
+		local full = fmt("%s %s", sync, tostring(b))
+		for i = 1, select("#", ...) do
+			full = fmt("%s %s", full, tostring(select(i, ...)))
+		end
+		self:TriggerEvent("BigWigs_SendSync", full)
+	else
+		self:TriggerEvent("BigWigs_SendSync", sync)
+	end
 end
 
 function BigWigs.modulePrototype:Whisper(player, text)
