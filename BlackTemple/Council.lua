@@ -121,16 +121,16 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger1 = "날 시험하겠다고?",
-	engage_trigger2 = "수준 낮은 언어를 쓰는 족속이로군... 반달!",
+	engage_trigger2 = "수준 낮은 언어를 쓰는 족속이로군. 반달!",
 	engage_trigger3 = "이깐놈들이나 상대해야 하다니..",
 	engage_trigger4 = "꺼져! 안그러면 죽는다!",
 
-	--vanish = "Vanish",
-	--vanish_desc = "Estimated timers for Vanish.",
-	--vanish_trigger = "Veras Darkshadow gains Vanish.",
-	--vanish_message = "Veras: Vanished! Back in ~30sec",
-	--vanish_warning = "Vanish Over - %s back!",
-	--vanish_bar = "Veras Stealthed",
+	vanish = "소멸",
+	vanish_desc = "베라스의 소멸에 대한 예상 타이머입니다.",
+	vanish_trigger = "베라스 다크섀도우|1이;가; 은신 효과를 얻었습니다.",
+	vanish_message = "베라스: 소멸! 30초이내 출현",
+	vanish_warning = "소멸 종료 - %s 출현!",
+	vanish_bar = "베라스 은신",
 
 	immune = "면역 경고",
 	immune_desc = "말란데가 주문 혹은 근접 공격에 면역 시 알립니다.",
