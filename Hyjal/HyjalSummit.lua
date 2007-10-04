@@ -102,13 +102,13 @@ function mod:UPDATE_WORLD_STATES()
 	if num == 0 then
 		self:Sync("SummitReset")
 	elseif num and num > currentWave then
-		self:Sync("SummitWave "..num.." "..GetSubZoneText())
+		self:Sync(fmt("%s%d %s", "SummitWave ", num, GetSubZoneText()))
 	end
 end
 
 do
-	local proudmooreDies = UNITDIESOTHER:format(proudmoore)
-	local thrallDies = UNITDIESOTHER:format(thrall)
+	local proudmooreDies = fmt(UNITDIESOTHER, proudmoore)
+	local thrallDies = fmt(UNITDIESOTHER, thrall)
 	function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 		if msg == proudmooreDies or msg == thrallDies then
 			self:Sync("SummitReset")
