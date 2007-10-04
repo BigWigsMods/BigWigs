@@ -3,6 +3,8 @@
 ------------------------------
 
 local name = AceLibrary("Babble-Zone-2.2")["Hyjal Summit"]
+local allianceBase = AceLibrary("Babble-Zone-2.2")["Alliance Base"]
+local hordeEncampment = AceLibrary("Babble-Zone-2.2")["Horde Encampment"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..name)
 
 local winterchill = AceLibrary("Babble-Boss-2.2")["Rage Winterchill"]
@@ -19,7 +21,9 @@ local tonumber = tonumber
 local nextBoss = nil
 local currentWave = 0
 local allianceWaveTimes = {127.5, 127.5, 127.5, 127.5, 127.5, 127.5, 127.5, 140}
+local RWCwaveTimes = allianceWaveTimes --need more accurate times
 local hordeWaveTimes = {135, 190, 190, 195, 140, 165, 195, 225}
+local KRwaveTimes = hordeWaveTimes --need more accurate times
 
 ----------------------------
 --      Localization      --
@@ -76,7 +80,9 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "SummitWave", 2)
 	self:TriggerEvent("BigWigs_ThrottleSync", "SummitNext", 2)
-	self:TriggerEvent("BigWigs_ThrottleSync", "SummitReset", 2)
+--~ 	throttling these 2 will cause an errant 'wave 1' message when thrall/jaina die
+--~ 	self:TriggerEvent("BigWigs_ThrottleSync", "SummitReset", 2)
+--~ 	self:TriggerEvent("BigWigs_ThrottleSync", "SummitClear", 2)
 end
 
 function mod:GOSSIP_SHOW()
@@ -84,13 +90,13 @@ function mod:GOSSIP_SHOW()
 	local gossip = GetGossipOptions()
 	if gossip and target == thrall or target == proudmoore then
 		if gossip == L["My companions and I are with you, Lady Proudmoore."] then
-			self:Sync("SummitNext", "RWC") -- Rage Winterchill is next
+			self:Sync("SummitNext RWC") -- Rage Winterchill is next
 		elseif gossip == L["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] then
-			self:Sync("SummitNext", "Anatheron") -- Anatheron is next
+			self:Sync("SummitNext Anatheron") -- Anatheron is next
 		elseif gossip == L["I am with you, Thrall."] then
-			self:Sync("SummitNext", "KazRogal") -- Kaz'Rogal is next
+			self:Sync("SummitNext KazRogal") -- Kaz'Rogal is next
 		elseif gossip == L["We have nothing to fear."] then
-			self:Sync("SummitNext", "AzGalor") -- Az'Galor is next
+			self:Sync("SummitNext AzGalor") -- Az'Galor is next
 		end
 	end
 end
@@ -100,7 +106,7 @@ function mod:UPDATE_WORLD_STATES()
 	local uiType, state, text = GetWorldStateUIInfo(3)
 	local num = tonumber((text or ""):match("(%d)") or nil)
 	if num == 0 then
-		self:Sync("SummitReset")
+		self:Sync("SummitClear")  --reseting wave here will clear nextBoss, clear instead
 	elseif num and num > currentWave then
 		self:Sync(fmt("%s%d %s", "SummitWave ", num, GetSubZoneText()))
 	end
@@ -131,10 +137,18 @@ function mod:BigWigs_RecvSync( sync, rest )
 		local wave, zone = strmatch(rest, "(%d+) (.*)")
 		if not wave or not zone then return end
 		local waveTimes
-		if zone == BZ["Alliance Base"] then
-			waveTimes = allianceWaveTimes
-		elseif zone == BZ["Horde Encampment"] then
-			waveTimes = hordeWaveTimes
+		if zone == allianceBase then
+			if nextBoss == winterchill then
+				waveTimes = RWCwaveTimes
+			else
+				waveTimes = allianceWaveTimes
+			end
+		elseif zone == hordeEncampment then
+			if nextBoss == kazrogal then
+				waveTimes = KRwaveTimes
+			else
+				waveTimes = hordeWaveTimes
+			end
 		else
 			return
 		end
@@ -165,6 +179,14 @@ function mod:BigWigs_RecvSync( sync, rest )
 		end
 	elseif sync == "SummitReset" then
 		self:TriggerEvent("BigWigs_RebootModule", self)
+	elseif sync == "SummitClear" then
+		--not sure how to cancel bars since they have different names
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["~%s spawn."], nextBoss))
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["~Wave %d spawn."], currentWave + 1))
+		currentWave = 0
+		self:CancelScheduledEvent("BigWigsSummitTimersDM90")
+		self:CancelScheduledEvent("BigWigsSummitTimersDM60")
+		self:CancelScheduledEvent("BigWigsSummitTimersDM30")
 	end
 end
 
