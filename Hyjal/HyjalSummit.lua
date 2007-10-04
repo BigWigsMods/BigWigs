@@ -1,0 +1,166 @@
+------------------------------
+--      Are you local?      --
+------------------------------
+
+local name = AceLibrary("Babble-Zone-2.2")["Hyjal Summit"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..name)
+
+
+local winterchill = AceLibrary("Babble-Boss-2.2")["Rage Winterchill"]
+local anatheron = AceLibrary("Babble-Boss-2.2")["Anetheron"]
+local kazrogal = AceLibrary("Babble-Boss-2.2")["Kaz'rogal"]
+local azgalor = AceLibrary("Babble-Boss-2.2")["Azgalor"]
+
+local fmt = string.format
+local strmatch = string.match
+local GetRealZoneText = GetRealZoneText
+local GetSubZoneText = GetSubZoneText
+local tonumber = tonumber
+
+local currentWave = 0
+local allianceWaveTimes = {127.5, 127.5, 127.5, 127.5, 127.5, 127.5, 127.5, 140}
+local hordeWaveTimes = {135, 190, 190, 195, 140, 165, 195, 225}
+
+----------------------------
+--      Localization      --
+----------------------------
+
+L:RegisterTranslations("enUS", function() return {
+	cmd = "summit",
+
+	wave = "Wave Warnings",
+	wave_desc = "Announce approximate warning messages for the next wave.",
+	
+	["Boss"] = true,
+	["in ~%d sec"] = true,
+	["~%s spawn."] = true,
+	["Wave %d incoming."] = true,
+	["Wave %d "] = true,
+	["Thrall"] = true,
+	["Lady Jaina Proudmoore"] = true,
+	["Lady Jaina Proudmoore dies."] = true,
+	["Thrall dies."] = true,
+	
+	["My companions and I are with you, Lady Proudmoore."] = true, -- Rage Winterchill 
+	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = true, -- Anatheron
+	["I am with you, Thrall."] = true, -- Kaz'Rogal
+	["We have nothing to fear."] = true, -- Az'Galor
+} end )
+
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+local thrall = L["Thrall"]
+local proudmoore = L["Lady Jaina Proudmoore"]
+
+
+local mod = BigWigs:NewModule(name)
+mod.zonename = name
+mod.enabletrigger = { thrall, proudmoore }
+mod.toggleoptions = {"wave"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
+mod.synctoken = name
+
+
+
+local nextBoss = L["Boss"]
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function mod:OnEnable()
+	currentWave = 0
+	nextBoss = L["Boss"]
+	self:RegisterEvent("UPDATE_WORLD_STATES")
+	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:RegisterEvent("GOSSIP_SHOW")
+	self:RegisterEvent("QUEST_PROGRESS", "GOSSIP_SHOW")
+
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "SummitWave", 2)	
+	self:TriggerEvent("BigWigs_ThrottleSync", "SummitNext", 2)	
+	self:TriggerEvent("BigWigs_ThrottleSync", "SummitReset", 2)
+end
+
+
+function mod:GOSSIP_SHOW()
+	local target = UnitName("target")
+	local gossip = GetGossipOptions()
+	if gossip and target == thrall or target == proudmoore then
+		if gossip == L["My companions and I are with you, Lady Proudmoore."] then
+			self:Sync( "SummitNext", "RWC" ) -- Rage Winterchill is next
+		elseif gossip == L["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] then
+			self:Sync( "SummitNext", "Anatheron" ) -- Anatheron is next
+		elseif gossip == L["I am with you, Thrall."] then
+			self:Sync( "SummitNext", "KazRogal" ) -- Kaz'Rogal is next
+		elseif gossip == L["We have nothing to fear."] then
+			self:Sync( "SummitNext", "AzGalor" ) -- Az'Galor is next
+		end
+	end
+end
+
+function mod:UPDATE_WORLD_STATES()
+	if self.zonename ~= GetRealZoneText() then return end -- bail out in case we were left running in another zone
+	local uiType, state, text = GetWorldStateUIInfo(3)
+	local num = tonumber((text or ""):match("(%d)") or nil)
+	if num == 0 then
+		self:Sync("SummitReset")
+	elseif num and num > currentWave then
+		self:Sync("SummitWave "..num.." "..GetSubZoneText())
+	end	
+end
+
+function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+	if msg == L["Lady Jaina Proudmoore dies."] or msg == L["Thrall dies."] then
+		self:Sync("SummitReset")
+	end
+end
+
+function mod:BigWigs_RecvSync( sync, rest )
+	if sync == "SummitNext" and rest then
+		if rest == "RWC" then
+			nextBoss = winterchill
+		elseif rest == "Anatheron" then
+			nextBoss = anatheron
+		elseif rest == "KazRogal" then
+			nextBoss = kazrogal
+		elseif rest == "AzGalor" then
+			nextBoss = azgalor
+		end
+	elseif sync == "SummitWave" and rest then
+		local waveTimes
+		local wave,zone = strmatch( rest, "(%d+) (.*)")
+		if zone == BZ["Alliance Base"] then
+			waveTimes = allianceWaveTimes
+		elseif zone == BZ["Horde Encampment"] then
+			waveTimes = hordeWaveTimes
+		else
+			return
+		end
+		wave = tonumber(wave)
+		if wave and wave > currentWave and waveTimes[wave] then
+			currentWave = wave
+			local wtime = waveTimes[wave]
+			self:Message(fmt(L["Wave %d incoming."], wave), "Attention")
+			local msg
+			if wave == 8 then
+				msg = nextBoss .. " " .. L["in ~%d sec"] -- time is formatted later
+				self:Bar(fmt( L["~%s spawn."], nextBoss ), wtime)
+			else
+				msg = fmt( L["Wave %d "], (wave+1)).. L["in ~%d sec"] -- time is formatted later
+				self:Bar(fmt(L["~Wave %d spawn."],(wave+1)), wtime)
+			end
+			self:CancelScheduledEvent("BigWigsSummitTimersDM90")
+			self:CancelScheduledEvent("BigWigsSummitTimersDM60")
+			self:CancelScheduledEvent("BigWigsSummitTimersDM30")
+			self:ScheduleEvent("BigWigsSummitTimersDM90", "BigWigs_Message", wtime-90, fmt(msg, 90), "Urgent")
+			self:ScheduleEvent("BigWigsSummitTimersDM60", "BigWigs_Message", wtime-60, fmt(msg, 60), "Urgent")
+			self:ScheduleEvent("BigWigsSummitTimersDM30", "BigWigs_Message", wtime-30, fmt(msg, 30), "Urgent")
+		end		
+	elseif sync == "SummitReset" then
+		self:TriggerEvent("BigWigs_RebootModule", self)
+	end
+end
+
