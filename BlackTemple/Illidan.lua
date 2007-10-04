@@ -112,7 +112,7 @@ L:RegisterTranslations("frFR", function() return {
 	eyeblast_trigger = "Soutenez le regard du Traître !",
 	eyeblast_message = "Energie oculaire !",
 
-	shear = "Tonte", -- (tonte ? -_- )
+	shear = "Tonte",
 	shear_desc = "Préviens quand un joueur subit les effets de la Tonte.",
 	shear_message = "Tonte sur %s !",
 	shear_bar = "Tonte : %s",

@@ -71,6 +71,26 @@ L:RegisterTranslations("koKR", function() return {
 --	["We have nothing to fear."] = true, -- Az'Galor
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	wave = "Avertissements des vagues",
+	wave_desc = "Préviens quand la prochaine vague est susceptible d'arriver.",
+
+	["~%s spawn."] = "~Apparition %s.",
+	["~Wave %d spawn."] = "~Apparition vague %d.",
+	["Wave %d incoming."] = "Arrivée de la vague %d.",
+	["%s in ~%d sec"] = "%s dans ~%d sec.",
+	["Wave %d in ~%d sec"] = "Vague %d dans ~%d sec.",
+
+	["Boss"] = "Boss",
+	["Thrall"] = "Thrall",
+	["Lady Jaina Proudmoore"] = "Dame Jaina Portvaillant",
+
+	--["My companions and I are with you, Lady Proudmoore."] = true, -- Rage Winterchill
+	--["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = true, -- Anatheron
+	--["I am with you, Thrall."] = true, -- Kaz'Rogal
+	["We have nothing to fear."] = "Nous n'avons rien à craindre.", -- Az'Galor
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

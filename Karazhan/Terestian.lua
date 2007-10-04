@@ -73,8 +73,8 @@ L:RegisterTranslations("frFR", function() return {
 	sacrifice_fade = "^Sacrifice sur ([^%s]+) vient de se dissiper%.$",
 	sacrifice_message = "%s est sacrifié !",
 	sacrifice_bar = "Sacrifice : %s",
-	--sacrifice_soon = "Sacrifice soon!",
-	--sacrifice_soonbar = "~Possible Sacrifice",
+	sacrifice_soon = "Sacrifice imminent !",
+	sacrifice_soonbar = "~Sacrifice probable",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le joueur sacrifié (nécessite d'être promu ou mieux).",
