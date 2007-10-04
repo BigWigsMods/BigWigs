@@ -117,8 +117,7 @@ function BigWigs.modulePrototype:IsBossModule()
 end
 
 function BigWigs.modulePrototype:GenericBossDeath(msg)
-	local die = UNITDIESOTHER
-	if msg == fmt(die, self:ToString()) then
+	if msg == fmt(UNITDIESOTHER, self:ToString()) then
 		self:Sync("BossDeath " .. self:ToString())
 	end
 end
