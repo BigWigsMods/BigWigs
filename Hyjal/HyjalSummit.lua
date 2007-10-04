@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -49,6 +49,26 @@ L:RegisterTranslations("enUS", function() return {
 	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = true, -- Anatheron
 	["I am with you, Thrall."] = true, -- Kaz'Rogal
 	["We have nothing to fear."] = true, -- Az'Galor
+} end )
+
+L:RegisterTranslations("koKR", function() return {
+	wave = "공격 경고",
+	wave_desc = "다음 공격에 대한 접근 경고 메세지를 알립니다.",
+
+	["~%s spawn."] = "~%s 등장.",
+	["~Wave %d spawn."] = "%d 공격 등장.",
+	["Wave %d incoming."] = "%d 공격 시작.",
+	["%s in ~%d sec"] = "~%d 초 이내 %s",
+	["Wave %d in ~%d sec"] = "약 %d 초후 %d 공",
+
+	["Boss"] = "보스",
+	["Thrall"] = "스랄",
+	["Lady Jaina Proudmoore"] = "여군주 제이나 프라우드무어",
+
+--	["My companions and I are with you, Lady Proudmoore."] = true, -- Rage Winterchill
+--	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = true, -- Anatheron
+--	["I am with you, Thrall."] = true, -- Kaz'Rogal
+--	["We have nothing to fear."] = true, -- Az'Galor
 } end )
 
 ----------------------------------
