@@ -98,8 +98,8 @@ L:RegisterTranslations("koKR", function() return {
 	sacrifice_fade = "^([^%s]+)의 몸에서 희생 효과가 사라졌습니다%.$",
 	sacrifice_message = "%s님이 희생되었습니다!",
 	sacrifice_bar = "희생: %s",
-	--sacrifice_soon = "Sacrifice soon!",
-	--sacrifice_soonbar = "~Possible Sacrifice",
+	sacrifice_soon = "잠시후 희생!",
+	sacrifice_soonbar = "~희생 대기시간",
 
 	icon = "전술 표시",
 	icon_desc = "희생에 걸린 플레이어에게 전술 표시를 지정합니다 (승급자 이상 요구).",
