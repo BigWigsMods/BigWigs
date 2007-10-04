@@ -23,6 +23,8 @@ L:RegisterTranslations("enUS", function() return {
 	sacrifice_fade = "^Sacrifice fades from ([^%s]+)%.$",
 	sacrifice_message = "%s is being Sacrificed!",
 	sacrifice_bar = "Sacrifice: %s",
+	sacrifice_soon = "Sacrifice soon!",
+	sacrifice_soonbar = "~Possible Sacrifice",
 
 	icon = "Raid Icon",
 	icon_desc = "Place a raid icon on the sacrificed player(requires promoted or higher).",
@@ -46,6 +48,8 @@ L:RegisterTranslations("deDE", function() return {
 	--sacrifice_fade = "^Sacrifice fades from ([^%s]+)%.$",
 	sacrifice_message = "%s wird geopfert!",
 	sacrifice_bar = "Opferung: %s",
+	--sacrifice_soon = "Sacrifice soon!",
+	--sacrifice_soonbar = "~Possible Sacrifice",
 
 	--icon = "Raid Icon",
 	--icon_desc = "Place a raid icon on the sacrificed player(requires promoted or higher).",
@@ -69,6 +73,8 @@ L:RegisterTranslations("frFR", function() return {
 	sacrifice_fade = "^Sacrifice sur ([^%s]+) vient de se dissiper%.$",
 	sacrifice_message = "%s est sacrifié !",
 	sacrifice_bar = "Sacrifice : %s",
+	--sacrifice_soon = "Sacrifice soon!",
+	--sacrifice_soonbar = "~Possible Sacrifice",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le joueur sacrifié (nécessite d'être promu ou mieux).",
@@ -92,6 +98,8 @@ L:RegisterTranslations("koKR", function() return {
 	sacrifice_fade = "^([^%s]+)의 몸에서 희생 효과가 사라졌습니다%.$",
 	sacrifice_message = "%s님이 희생되었습니다!",
 	sacrifice_bar = "희생: %s",
+	--sacrifice_soon = "Sacrifice soon!",
+	--sacrifice_soonbar = "~Possible Sacrifice",
 
 	icon = "전술 표시",
 	icon_desc = "희생에 걸린 플레이어에게 전술 표시를 지정합니다 (승급자 이상 요구).",
@@ -116,6 +124,8 @@ L:RegisterTranslations("zhCN", function() return {
 	sacrifice_fade = "^牺牲效果从%s身上消失。$",
 	sacrifice_message = "%s 牺牲了 -- 注意停手!",
 	sacrifice_bar = "牺牲: %s",
+	--sacrifice_soon = "Sacrifice soon!",
+	--sacrifice_soonbar = "~Possible Sacrifice",
 
 	icon = "团队标记",
 	icon_desc = "受到牺牲效果的队友打上标记(需要助理或更高权利).",
@@ -139,6 +149,8 @@ L:RegisterTranslations("zhTW", function() return {
 	--sacrifice_fade = "^Sacrifice fades from ([^%s]+)%.$",
 	sacrifice_message = "%s 犧牲了 - 注意停手及治療",
 	sacrifice_bar = "犧牲：%s",
+	--sacrifice_soon = "Sacrifice soon!",
+	--sacrifice_soonbar = "~Possible Sacrifice",
 
 	icon = "團隊標記",
 	icon_desc = "為犧牲的玩家設置標記（需要權限）",
@@ -162,6 +174,8 @@ L:RegisterTranslations("esES", function() return {
 	--sacrifice_fade = "^Sacrifice fades from ([^%s]+)%.$",
 	sacrifice_message = "%s esta siendo sacrificado!",
 	sacrifice_bar = "Sacrificio: %s",
+	--sacrifice_soon = "Sacrifice soon!",
+	--sacrifice_soonbar = "~Possible Sacrifice",
 
 	icon = "Icono de Raid",
 	icon_desc = "Pone un icono de raid en el jugador sacrificado (requiere promoted o mayor).",
@@ -237,6 +251,8 @@ function mod:CheckSacrifice(msg)
 		if self.db.profile.icon then
 			self:Icon(splayer)
 		end
+		self:ScheduleEvent("sac1", "BigWigs_Message", 40, L["sacrifice_soon"], "Positive")
+		self:Bar(L["sacrifice_soonbar"], 42, "Spell_Shadow_Cripple")
 	end
 end
 
