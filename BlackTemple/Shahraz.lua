@@ -97,7 +97,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	enrage_warning = "Enrager imminent !",
 	enrage_message = "10% - Enragée",
-	--enrage_trigger = "Stop toying with my emotions!",
+	enrage_trigger = "Arrêtez de jouer aves mes sentiments !", -- à vérifier
 } end )
 
 L:RegisterTranslations("deDE", function() return {
