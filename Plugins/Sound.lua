@@ -194,7 +194,6 @@ function plugin:OnRegister()
 
 	local function set(sound, value)
 		if IsControlKeyDown() then
-			PlaySound("GLUESCREENSMALLBUTTONMOUSEDOWN") --remove when PlaySoundFile fixed by blizzard
 			PlaySoundFile(media:Fetch(mType, value))
 		else
 			db.media[sound] = value
@@ -230,7 +229,6 @@ local function play(sound)
 	if type(sound) == "string" and not db.defaultonly then
 		local s = db.media[sound] and media:Fetch(mType, db.media[sound]) or media:Fetch(mType, sound)
 		if type(s) == "string" then
-			PlaySound("GLUESCREENSMALLBUTTONMOUSEDOWN") --remove when PlaySoundFile fixed by blizzard
 			PlaySoundFile(s)
 			return
 		end
