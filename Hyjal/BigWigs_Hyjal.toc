@@ -24,3 +24,4 @@ Winterchill.lua
 Archimonde.lua
 Azgalor.lua
 Kazrogal.lua
+HyjalSummit.lua

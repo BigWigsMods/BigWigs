@@ -64,6 +64,7 @@
 <Script file="Hyjal\Azgalor.lua"/>
 <Script file="Hyjal\Archimonde.lua"/>
 <Script file="Hyjal\Kazrogal.lua"/>
+<Script file="Hyjal\HyjalSummit.lua"/>
 
 <!-- <Script file="ZulAman\boss.lua"/> -->
 <!-- <Script file="ZulAman\boss.lua"/> -->
