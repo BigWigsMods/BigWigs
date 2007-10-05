@@ -49,7 +49,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	enrage_warning = "Enrage soon!",
 	enrage_message = "10% - Enraged",
-	enrage_trigger = "%s becomes enraged!",
+	enrage_trigger = "Stop toying with my emotions!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -73,7 +73,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	enrage_warning = "곧 격노!",
 	enrage_message = "10% - 격노",
-	enrage_trigger = "%s|1이;가; 분노에 휩싸입니다!$",
+	--enrage_trigger = "Stop toying with my emotions!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -97,7 +97,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	enrage_warning = "Enrager imminent !",
 	enrage_message = "10% - Enragée",
-	enrage_trigger = "%s devient folle furieuse !", -- à vérifier
+	--enrage_trigger = "Stop toying with my emotions!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -121,7 +121,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	enrage_warning = "Wütend bald!",
 	enrage_message = "10% - Wütend",
-	enrage_trigger = "%s wird wütend!",
+	--enrage_trigger = "Stop toying with my emotions!",
 } end )
 
 ----------------------------------
@@ -142,7 +142,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "FatalAtt")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "FatalAtt")
@@ -194,6 +193,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:ScheduleEvent("en7", "BigWigs_Message", 600, L["berserk_end"]:format(boss), "Attention", nil, "Alarm")
 			self:Bar(L["berserk"], 600, "Spell_Nature_Reincarnation")
 		end
+	elseif self.db.profile.enrage and msg == L["enrage_trigger"] then
+		self:Message(L["enrage_message"], "Important")
 	end
 end
 
@@ -271,12 +272,6 @@ function mod:AttractionWarn()
 	--start accepting syncs again after 6 seconds, by blocking syncs we can
 	--warn earlier without caring about latency displaying messages twice
 	self:ScheduleEvent("BWShahrazNilStop", nilStop, 6)
-end
-
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if self.db.profile.enrage and msg == L["enrage_trigger"] then
-		self:Message(L["enrage_message"], "Important")
-	end
 end
 
 function mod:UNIT_HEALTH(msg)
