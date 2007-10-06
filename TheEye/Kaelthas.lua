@@ -374,6 +374,91 @@ L:RegisterTranslations("deDE", function() return {
 	revive_warning = "Berater wiederbelebt in 5sec!",
 } end )
 
+--凯尔萨斯·逐日者
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "^魔法，能量，我的人民陷入其中不能自拔……",
+	engage_message = "第一阶段",
+
+	conflag = "燃烧",
+	conflag_desc = "当一队友中了燃烧发出警报",
+	conflag_spell = "燃烧",
+	conflag_message = "%s 中了燃烧!",
+
+	gaze = "凝视",
+	gaze_desc = "当亵渎者萨拉德雷凝视队友发出警报",
+	gaze_trigger = "凝视着(%S+)！$",
+	gaze_message = "凝视 %s!",
+	gaze_bar = "~凝视 CD",
+
+	icon = "团队标记",
+	icon_desc = "给受到凝视的队友打上团队标记",
+
+	fear = "恐惧",
+	fear_desc = "当施放低沉咆哮发出警报",
+	fear_soon_message = "即将恐惧!",
+	fear_message = "恐惧!",
+	fear_bar = "~恐惧 CD",
+	fear_soon_trigger = "萨古纳尔男爵开始施放低沉咆哮。",
+	fear_trigger1 = "^萨古纳尔男爵的低沉咆哮被%S+抵抗了。$",
+	fear_trigger2 = "^萨古纳尔男爵的低沉咆哮施放失败。%S+对此免疫。$",
+	fear_spell = "低沉咆哮",
+
+	rebirth = "凤凰复生",
+	rebirth_desc = "凤凰复生计时",
+	rebirth_trigger1 = "Anar'anel belore!",
+	rebirth_trigger2 = "By the power of the sun!",
+	rebirth_warning = "~5秒后 凤凰 复生!",
+	rebirth_bar = "~凤凰重生",
+
+	pyro = "炎爆术",
+	pyro_desc = "显示60秒的炎爆术记时条",
+	pyro_trigger = "%s开始施放炎爆术！",--check
+	pyro_warning = "5秒后 炎爆术!",
+	pyro_message = "正在施放 炎爆术!",
+
+	toy = "遥控玩具(坦克)",
+	toy_desc = "当坦克受到遥控玩具发出警报",
+	toy_message = "遥控坦克: %s",
+	toy_trigger = "遥控玩具", --afflicted by ...
+
+	hunter = "遥控玩具(猎人)",
+	hunter_desc = "当猎人受到遥控玩具发出警报",
+	hunter_message = "遥控猎人: %s",
+
+	phase = "阶段警报",
+	phase_desc = "每阶段首领来领发出警报",
+	thaladred_inc_trigger = "让我们来看看你们如何面对亵渎者萨拉德雷！ ",
+	sanguinar_inc_trigger = "你们击败了我最强大的顾问……但是没有人能战胜鲜血之锤。出来吧，萨古纳尔男爵！",
+	capernian_inc_trigger = "卡波妮娅会很快解决你们的。",
+	telonicus_inc_trigger = "干得不错。看来你们有能力挑战我的首席技师，塔隆尼库斯。",
+	weapons_inc_trigger = " 你们看，我的个人收藏中有许多武器……",
+	phase3_trigger = "也许我确实低估了你们。虽然让你们同时面对我的四位顾问显得有些不公平，但是我的人民从来都没有得到过公平的待遇。我只是在以牙还牙。",
+	phase4_trigger = "唉，有些时候，有些事情，必须得亲自解决才行。Balamore shanal！",
+
+	flying_trigger = "我的心血是不会被你们轻易浪费的！我精心谋划的未来是不会被你们轻易破坏的！感受我真正的力量吧！",
+	gravity_trigger1 = "如果世界变得上下颠倒，你们会怎么办呢？",
+	gravity_trigger2 = "站不住脚了吗？",
+	gravity_bar = "下个 引力失效",
+	gravity_message = "引力失效!",
+	flying_message = "阶段 5 - 1分钟后引力失效",
+
+	weapons_inc_message = "阶段 2 - 准备与神器作战!",
+	phase3_message = "阶段 3 - 顾问复生!",
+	phase4_message = "阶段 4 - 凯尔萨斯!",
+	phase4_bar = "凯尔萨斯 来临",
+
+	mc = "精神控制",
+	mc_desc = "当队友被精神控制发出警报",
+	mc_message = "精神控制: %s",
+
+	afflicted_trigger = "^(%S+)受(%S+)了(.*)效果的影响。$",
+
+	revive_bar = "凤凰复活",
+	revive_warning = "5秒后 凤凰复活",
+
+	dead_message = "%s死亡了。",
+} end )
+
 --zhTW語系：Peroth＠暴風祭壇
 --site：http://blog.pixnet.net/Neriak
 L:RegisterTranslations("zhTW", function() return {

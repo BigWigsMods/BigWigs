@@ -52,7 +52,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	web = "希亚其斯之网",
 	web_desc = "当队员受到希亚其斯之网时发出警告",
-	web_trigger = "^([^%s]+)受([^%s]+)了希亚其斯之网",
+	web_trigger = "^(%S+)受(%S+)了希亚其斯之网效果的影响。$",
 	web_message = "%s 被网住了！",
 	web_bar = "希亚其斯之网: %s",
 } end )

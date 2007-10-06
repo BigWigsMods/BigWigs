@@ -148,6 +148,40 @@ L:RegisterTranslations("frFR", function() return {
 	globules_bar = "Disparation des globules",
 } end )
 
+--莫洛格里·踏潮者
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "深渊中的洪水会淹没你们！",
+
+	tidal = "海潮之波",
+	tidal_desc = "当首领施放海潮之波发出警报",
+	tidal_trigger = "莫洛格里·踏潮者开始施放海潮之波。",
+	tidal_message = "海潮之波!",
+
+	grave = "水之墓穴",
+	grave_desc = "当受到水之墓穴发出警报",
+	grave_trigger = "^(%S+)受(%S+)了水之墓穴效果的影响。$",
+	grave_message = "水之墓穴: %s",
+	grave_bar = "水之墓穴",
+	grave_nextbar = "~水之墓穴 冷却",
+
+	murloc = "鱼群",
+	murloc_desc = "鱼群来临发出警报",
+	murloc_bar = "~鱼群 冷却",
+	murloc_trigger1 = "By the tides!",
+	murloc_trigger2 = "Destroy them, my subjects!",
+	murloc_message = "鱼群 来临!",
+	murloc_soon_message = "即将出现 鱼群! 准备AOE",
+	murloc_engaged = "%s 激活, ~40秒后 鱼群 出现",
+
+	globules = "水泡",
+	globules_desc = "水泡来临报警",
+	globules_trigger1 = "Soon it will be finished!",
+	globules_trigger2 = "There is nowhere to hide!",
+	globules_message = "水泡 来临!",
+	globules_warning = "即将水泡!",
+	globules_bar = "水泡 消失",
+} end )
+
 --zhTW語系：Peroth＠暴風祭壇
 --site：http://blog.pixnet.net/Neriak
 L:RegisterTranslations("zhTW", function() return {

@@ -212,7 +212,7 @@ L:RegisterTranslations("zhCN", function() return {
 	grasp = "碎裂",
 	grasp_desc = "碎裂警报计时",
 	grasp_trigger1 = "跑啊。",
-	grasp_trigger2 = "休想逃走。",
+	grasp_trigger2 = "站住。",
 	grasp_message = "大地冲击 - 10秒后破碎!",
 	grasp_warning = "大地冲击发动",
 	grasp_bar = "~大地冲击 冷却",

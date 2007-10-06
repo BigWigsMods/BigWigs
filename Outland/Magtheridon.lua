@@ -229,6 +229,62 @@ L:RegisterTranslations("koKR", function() return {
 	debrisinc_warning = "곧 파편!",
 } end)
 
+--玛瑟里顿
+L:RegisterTranslations("zhCN", function() return {
+	escape = "释放",
+	escape_desc = "玛瑟里顿获得自由倒计时",
+	escape_trigger1 = "%s的禁锢开始变弱！",
+	escape_trigger2 = "我……自由了！",
+	escape_warning1 = "%s 激活- 2分钟后获得自由",
+	escape_warning2 = "1分后 自由!",
+	escape_warning3 = "30秒后 自由",
+	escape_warning4 = "10秒后 自由!",
+	escape_warning5 = "3秒后 自由!",
+	escape_bar = "已释放",
+	escape_message = "%s 已释放!",
+
+	abyssal = "深渊燃魔",
+	abyssal_desc = "当创建一个深渊燃魔时发出警报",
+	abyssal_trigger = "^地狱火导魔者的深渊燃魔击中",
+	abyssal_message = "深渊燃魔创建 (%d)",
+
+	heal = "治疗",
+	heal_desc = "当地狱火导魔者施放治疗发出警报",
+	heal_trigger = "开始施放黑暗治愈。$",
+	heal_message = "治疗!",
+
+	nova = "冲击新星",
+	nova_desc = "冲击新星计时",
+	nova_ = "冲击新星!",
+	nova_bar = "~冲击新星 CD",
+	nova_warning = "即将 冲击新星",
+	nova_cast = "开始施放冲击新星！",
+
+	banish = "放逐术",
+	banish_desc = ("当你放逐%s发出警报."):format(boss),
+	banish_trigger = "Not again! Not again...",
+	banish_message = "放逐成功 - 10秒 ",
+	banish_over_trigger = "^暗影牢笼从",
+	banish_over_message = "放逐消失!",
+	banish_bar = "放逐中",
+
+	exhaust = "禁用心灵疲倦计时",
+	exhaust_desc = "心灵疲倦记时条",
+	exhaust_trigger = "^(%S+)受(%S+)了心灵疲倦效果的影响。",
+	exhaust_bar = "[%s] 心灵疲倦",
+
+	debris = "碎片(你)",
+	debris_desc = "当你中了碎片发出警报",
+	debris_trigger = "你受到了碎片效果的影响。",
+	debris_message = "碎片 >你<!",
+
+	debrisinc = "碎片",
+	debrisinc_desc = "当首领30%血量时发出警报.",
+	debrisinc_trigger = "Let the walls of this prison tremble",
+	debrisinc_message = "30% - 碎片来临!",
+	debrisinc_warning = "即将 碎片!",
+} end)
+
 L:RegisterTranslations("zhTW", function() return {
 	escape = "釋放",
 	escape_desc = "倒數計時，直到 瑪瑟里頓 獲得自由",

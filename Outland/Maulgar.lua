@@ -202,6 +202,53 @@ L:RegisterTranslations("koKR", function() return {
 	smash_bar = "~회전베기",
 } end)
 
+--莫加尔大王
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "戈隆才是外域的主宰！",
+
+	heal = "治疗",
+	heal_desc = "当盲眼先知开始施放治疗发出警报",
+	heal_trigger = "盲眼先知开始施放治疗治疗祷言。",--治疗祷言
+	heal_message = "盲眼开始施放治疗祷言",
+	heal_bar = "治疗",
+
+	shield = "盾",
+	shield_desc = "当盲眼获得强效真言术：盾发出警报",
+	shield_trigger = "获得了强效真言术：盾的效果。$",
+	shield_message = "盲眼 上盾了!",
+
+	spellshield = "法术护盾",
+	spellshield_desc = "当克洛什·火拳获得法术护盾发出警报.",
+	spellshield_trigger = "获得了法术护盾的效果。$",
+	spellshield_message = "克洛什 法术护盾",
+	spellshield_bar = "下一个 法术护盾",
+
+	summon = "召唤地狱犬",
+	summon_desc = "当召唤者沃尔姆施放召唤地狱犬发出警报",
+	summon_trigger = "开始施放召唤地狱犬。$",
+	summon_message = "地狱犬 开始召唤",
+	summon_bar = "~地狱犬 计时",
+
+	whirlwind = "旋风斩",
+	whirlwind_desc = "当莫加尔获得旋风斩发出警报",
+	whirlwind_trigger = "获得了旋风斩的效果。$",
+	whirlwind_message = "莫加尔 - 旋风斩 - 15秒",
+	whirlwind_bar = "旋风斩",
+	whirlwind_nextbar = "~旋风斩 CD",
+	whirlwind_warning1 = "莫加尔 激活 - ~50秒后旋风斩",
+	whirlwind_warning2 = "即将旋风斩!",
+
+	flurry = "乱舞",
+	flurry_desc = "当莫加尔乱舞消失及获得乱舞发出警报",
+	flurry_trigger = "休想打败格鲁尔之手！",
+	flurry_message = "50% - 乱舞!",
+	flurry_warning = "即将乱舞!",
+
+	smash = "圆弧斩",
+	smash_desc = "显示一个圆弧斩大约时间条",
+	smash_bar = "~圆弧斩",
+} end)
+
 L:RegisterTranslations("zhTW", function() return {
 	heal = "治療警告",
 	heal_desc = "當先知盲眼開始施放治療時發送警告",

@@ -227,6 +227,59 @@ L:RegisterTranslations("deDE", function() return {
 	loot_message = "%s hat einen Kern gelootet!",
 } end )
 
+--瓦丝琪
+L:RegisterTranslations("zhCN", function() return {
+	["Tainted Elemental"] = "被污染的元素",
+
+	engage_trigger1 = "我本不想屈尊与你们交战，但是你们让我别无选择……",
+	engage_trigger2 = "我唾弃你们，地表的渣滓！",
+	engage_trigger3 = "伊利丹大人必胜！",
+	engage_trigger4 = "I'll split you from stem to stern!",
+	engage_trigger5 = "Death to the outsiders!",
+	engage_message = "进入阶段 1",
+
+	phase = "阶段警报",
+	phase_desc = "首领进入不同阶段发出警报",
+	phase2_trigger = "机会来了！一个活口都不要留下！ ",
+	phase2_soon_message = "即将 阶段 2",
+	phase2_message = "阶段 2, 援兵 来临!",
+	phase3_trigger = "你们最好找掩护。 ",
+	phase3_message = "阶段 3 - 4分后 激怒!",
+
+	static = "静电冲能",
+	static_desc = "中了静电充能发出警报",
+	static_charge_trigger = "^(%S+)受(%S+)了静电充能效果的影响。$",
+	static_charge_message = "静电充能 --> %s!",
+	static_fade = "静电充能效果从你身上消失了。",
+
+	icon = "标记",
+	icon_desc = "给中了静电冲能和污染之核的玩家打上标记",
+
+	elemental = "被污染的元素",
+	elemental_desc = "在阶段2,被污染的元素计时",
+	elemental_bar = "被污染的元素 来临",
+	elemental_soon_message = "被污染的元素 即将出现!",
+
+	strider = "盘牙巡逻者",
+	strider_desc = "在阶段2,盘牙巡逻者计时",
+	strider_bar = "巡逻者 来临",
+	strider_soon_message = "即将 巡逻者出现!",
+
+	naga = "盘牙精英",
+	naga_desc = "在2阶段,盘牙精英计时",
+	naga_bar = "精英 来临",
+	naga_soon_message = "即将 精英出现!",
+
+	barrier = "护盾击碎",
+	barrier_desc = "当护盾击碎发出警报",
+	barrier_down_message = "护盾 - %d/4 击碎!",
+	barrier_fades_trigger = "魔法屏障效果从瓦丝琪的身上消失。",
+
+	loot = "污染之核",
+	loot_desc = "对拾取了污染之核的队友发出警报",
+	loot_message = "%s 拾取了 污染之核!",
+} end )
+
 --zhTW語系：Peroth＠暴風祭壇
 --site：http://blog.pixnet.net/Neriak
 L:RegisterTranslations("zhTW", function() return {

@@ -193,8 +193,8 @@ L:RegisterTranslations("koKR", function() return {
 --埃兰之影
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger1 = "I'll not be tortured again!",
-	engage_trigger2 = "Who are you? What do you want? Stay away from me!",
-	engage_trigger3 = "Please, no more! My son... he's gone mad!",
+	engage_trigger2 = "你们是谁？你们想要什么？离我远点！",
+	engage_trigger3 = "求求你们，不要这样！我的儿子……已经疯了！",
 	engage_message = "%s 战斗开始",
 
 	adds = "水元素",
@@ -206,7 +206,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	drink = "群体变形",
 	drink_desc = "当埃兰回魔时发出警报",
-	drink_trigger = "Surely you wouldn't deny an old man a replenishing drink? No, no, I thought not.",
+	drink_trigger = "你们应该不会不让一个可怜的老人喝点东西吧？不，不，当然不会。",
 	drink_warning = "低发力 - 即将回魔!",
 	drink_message = "回魔 - 群体变形!",
 	drink_bar = "群体变形术",
@@ -220,15 +220,15 @@ L:RegisterTranslations("zhCN", function() return {
 	pull = "磁力/魔爆术",
 	pull_desc = "磁力/魔爆术时发出警报",
 	pull_message = "魔爆术!",
-	pull_trigger1 = "Yes, yes my son is quite powerful... but I have powers of my own!",
-	pull_trigger2 = "I am not some simple jester! I am Nielas Aran!",
+	pull_trigger1 = "没错，我的儿子非常强大……但我也有自己的力量！",
+	pull_trigger2 = "我不是某个可笑的小丑，我是聂拉斯·埃兰！",
 	pull_bar = "魔爆术",
 
 	flame = "烈焰花环",
 	flame_desc = "当烈焰花环开始施放时发出警报",
 	flame_warning = "施放: 烈焰花环!",
-	flame_trigger1 = "I'll show you: this beaten dog still has some teeth!",
-	flame_trigger2 = "Burn, you hellish fiends!",
+	flame_trigger1 = "我要让你们知道，老狗也有几颗牙！",
+	flame_trigger2 = "燃烧吧，地狱的恶魔！",
 	flame_message = "烈焰花环!",
 	flame_bar = "烈焰花环",
 	flame_trigger = "施放烈焰花环。$",

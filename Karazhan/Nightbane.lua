@@ -150,7 +150,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	fear = "恐惧警报",
 	fear_desc = "低沉咆哮警报",
-	fear_trigger = "施放了低沉咆哮。$",
+	fear_trigger = "开始施放低沉咆哮。$",
 	fear_message = "2秒后 恐惧",
 	fear_warning = "恐惧!",
 	fear_bar = "恐惧!",
@@ -163,8 +163,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	phase = "阶段警报",
 	phase_desc = "当夜之魇进入下阶段发送预警",
-	airphase_trigger = "Miserable vermin. I shall exterminate you from the air!",
-	landphase_trigger1 = "Enough! I shall land and crush you myself!",
+	airphase_trigger = "可怜的渣滓。我要腾空而起，让你尝尝毁灭的滋味！",
+	landphase_trigger1 = "够了！我要落下来把你们打得粉碎！",
 	landphase_trigger2 = "Insects! Let me show you my strength up close!",
 	airphase_message = "升空",
 	landphase_message = "降落",
@@ -172,7 +172,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	engage = "激活",
 	engage_desc = "进入战斗后发出警报",
-	engage_trigger = "What fools! I shall bring a quick end to your suffering!",
+	engage_trigger = "愚蠢的家伙！我会很快终结你们的痛苦！",
 	engage_message = "%s 激活",
 
 	bones = "白骨之雨",

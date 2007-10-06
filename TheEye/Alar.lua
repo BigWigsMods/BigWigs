@@ -115,6 +115,30 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "對受到熔化護甲的目標設置團隊標記（需要權限）",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	engage_message = "%s 激活 - 阶段 1",
+
+	meteor = "流行",
+	meteor_desc = "流行记时条",
+	meteor_warning = "5秒后 可能 流星",
+	meteor_message = "流行! ~52秒后再次发动",
+	meteor_nextbar = "下次 流行",
+
+	flamepatch = "烈焰之地(你)",
+	flamepatch_desc = "烈焰之地于你警报",
+	flamepatch_trigger = "你受到了烈焰之地效果的影响。",
+	flamepatch_message = "烈焰之地 >你<!",
+
+	armor = "熔化护甲",
+	armor_desc = "当队友获得熔化护甲发出警报",
+	armor_trigger = "^(%S+)受(%S+)了熔化护甲效果的影响。$",
+	armor_other = "熔化护甲: %s",
+	armor_you = "熔化护甲 >你<!",
+
+	icon = "团队标记",
+	icon_desc = "给中了熔化护甲的队员打上团队标记(需要助理或更高权限).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

@@ -104,6 +104,30 @@ L:RegisterTranslations("zhTW", function() return {
 	twist_message = "扭曲反射: %s",
 } end)
 
+--卡扎克
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger1 = "军团将会征服一切！",
+	engage_trigger2 = "所有的凡人都将灭亡！",
+
+	enrage_trigger = "%s变得愤怒了！",
+	enrage_warning1 = "%s 激活 - 50-60秒后 激怒",
+	enrage_warning2 = "即将激怒!",
+	enrage_message = "10秒后 激怒",
+	enrage_finished = "激活结束 - 50-60秒后再次发动",
+	enrage_bar = "~狂怒",
+	enraged_bar = "<已狂怒>",
+
+	mark = "印记",
+	mark_desc = "当你受到卡扎克的印记发出警报",
+	mark_trigger = "你受到了卡扎克的印记效果的影响。",
+	mark_message = "卡扎克的印记 >你<",
+
+	twist = "扭曲反射",
+	twist_desc = "当队友受到扭曲反射发出警报",
+	twist_trigger = "^(%S+)受(%S+)了扭曲反射效果的影响。$",
+	twist_message = "扭曲反射: %s",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

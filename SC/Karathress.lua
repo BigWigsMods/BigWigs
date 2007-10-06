@@ -116,6 +116,27 @@ L:RegisterTranslations("zhTW", function() return {
 	["Fathom-Guard Caribdis"] = "深淵守衛卡利迪斯",
 } end )
 
+--深水领主卡拉瑟雷斯
+L:RegisterTranslations("zhCN", function() return {
+	enrage_trigger = "卫兵！提高警惕！我们有客人来了……",
+
+	totem = "飞火图腾",
+	totem_desc = "当飞火图腾被施放发出警报",
+	totem_trigger1 = "深水卫士泰达维斯施放了飞火图腾。",
+	totem_trigger2 = "深水领主卡拉瑟雷斯施放了飞火图腾。",
+	totem_message1 = "泰达维斯: 飞火图腾",
+	totem_message2 = "卡拉瑟雷斯: 飞火图腾",
+
+	heal = "治疗",
+	heal_desc = "当卡莉蒂丝施放治疗术发出警报",
+	heal_trigger = "深水卫士卡莉蒂丝开始施放治疗波。",
+	heal_message = "卡莉蒂丝正在施放治疗!",
+
+	["Fathom-Guard Sharkkis"] = "深水卫士沙克基斯", --hunter
+	["Fathom-Guard Tidalvess"] = "深水卫士泰达维斯", --shaman
+	["Fathom-Guard Caribdis"] = "深水卫士卡莉蒂丝", --priest
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

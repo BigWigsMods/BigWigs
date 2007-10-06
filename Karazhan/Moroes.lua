@@ -132,7 +132,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	garrote = "绞喉",
 	garrote_desc = "当队员受到绞喉时发送警告.",
-	garrote_trigger = "^([^%s]+)受([^%s]+)了绞喉效果的影响",
+	garrote_trigger = "^([^%s]+)受([^%s]+)了绞喉效果的影响。$",
 	garrote_message = "绞喉: %s",
 
 	icon = "标记",

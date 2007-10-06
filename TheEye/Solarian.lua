@@ -160,6 +160,40 @@ L:RegisterTranslations("frFR", function() return {
 	priest_bar = "Prêtres/Solarian",
 } end )
 
+--大星术师索兰莉安
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "Tal anu'men no sin'dorei!",
+
+	phase = "阶段",
+	phase_desc = "阶段改变警报",
+	phase1_message = "阶段 1 - ~50秒后分裂",
+	phase2_warning = "即将 阶段 2!",
+	phase2_trigger = "^I become",
+	phase2_message = "20% - 阶段 2",
+
+	wrath = "愤怒Debuff",
+	wrath_desc = "当受到星术师之怒发出警报",
+	wrath_trigger = "^(%S+)受(%S+)了星术师之怒效果的影响。$",
+	wrath_fade = "星术师之怒效果从你身上消失了。",
+	wrath_other = "愤怒 --> %s",
+	wrath_you = "愤怒 >你<!",
+
+	icon = "团队标记",
+	icon_desc = "给受到星术师之怒的队友打上团队标记",
+
+	split = "分裂",
+	split_desc = "当分裂和增加救援发出警报",
+	split_trigger1 = "I will crush your delusions of grandeur!",
+	split_trigger2 = "You are hopelessly outmatched!",
+	split_bar = "~下次 分裂",
+	split_warning = "~7秒后 分裂",
+
+	agent_warning = "分裂! - 6秒后 密探",
+	agent_bar = "密探",
+	priest_warning = "3秒后增加 牧师/星术师",
+	priest_bar = "牧师/星术师",
+} end )
+
 --zhTW語系：Peroth＠暴風祭壇
 --site：http://blog.pixnet.net/Neriak
 L:RegisterTranslations("zhTW", function() return {

@@ -129,7 +129,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	berserk = "无敌",
 	berserk_desc = "进入战斗10分钟后发送无敌警告",
-	berserk_trigger = "展览厅只对嘉宾开放。",
+	berserk_trigger = "展览厅只对访客开放。",
 	berserk_message = "%s 激活, 10分钟后进入无敌！！",
 	berserk_bar = "无敌",
 

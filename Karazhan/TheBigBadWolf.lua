@@ -82,7 +82,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	riding_trigger = "^(%S+)受(%S+)了小红帽效果的影响。$",
+	riding_trigger = "^(%S+)获得了小红帽的效果。$",
 
 	youriding = "小红帽(你)",
 	youriding_desc = "当你变成小红帽 发出警报",

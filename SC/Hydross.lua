@@ -161,6 +161,40 @@ L:RegisterTranslations("frFR", function() return {
 	afflict_trigger = "^(%S+) (%S+) les effets [de|2]+ (.*).$",
 } end)
 
+--不稳定的海度斯
+L:RegisterTranslations("zhCN", function() return {
+	start_trigger = "我不能允许你们介入！",
+
+	mark = "印记",
+	mark_desc = "显示印记警报及计数",
+	hydross_trigger = "海度斯印记",
+	corruption_trigger = "腐蚀印记",
+	hydross_bar = "海度斯印记 - %s%%",
+	corruption_bar = "腐蚀印记 - %s%%",
+
+	stance = "形态改变",
+	stance_desc = "海度斯毒性改变",
+	poison_stance_trigger = "啊……毒性侵袭了我……",
+	water_stance_trigger = "感觉好多了。",
+	poison_stance = "毒形态!",
+	water_stance = "水形态!",
+
+	sludge = "肮脏的淤泥怪",
+	sludge_desc = "当临近的队友变成肮脏的淤泥怪发出警报.",
+	sludge_message = "肮脏的淤泥怪: %s",
+
+	tomb = "水之墓",
+	tomb_desc = "当临近队友成为水之墓发出警报.",
+	tomb_message = "水之墓: %s",
+
+	icon = "肮脏的淤泥怪标记",
+	icon_desc = "为受到肮脏的淤泥怪的队友打上标记(需要助理或更高权限).",
+
+	debuff_warn = "印记施放于 %s%%!",
+
+	afflict_trigger = "^(%S+)受(%S+)了(.*)效果的影响。$",
+} end)
+
 L:RegisterTranslations("zhTW", function() return {
 	start_trigger = "我不准你涉入這件事!",
 

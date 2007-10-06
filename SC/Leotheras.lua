@@ -179,6 +179,49 @@ L:RegisterTranslations("deDE", function() return {
 	whisper_bar = "D\195\164monen Despawn",
 	whisper_soon = "~D\195\164monen Cooldown",
 } end )
+
+--盲眼者莱欧瑟拉斯
+L:RegisterTranslations("zhCN", function() return {
+	enrage_trigger = "我的放逐终于结束了！",
+
+	whirlwind = "旋风斩",
+	whirlwind_desc = "旋风斩计时",
+	whirlwind_trigger = "盲眼者莱欧瑟拉斯获得了旋风斩的效果。",
+	whirlwind_gain = "旋风斩 - 12秒",
+	whirlwind_fade = "旋风斩 结束",
+	whirlwind_bar = "旋风斩",
+	whirlwind_bar2 = "~旋风斩 CD",
+	whirlwind_warn = "冷却结束 - 即将 心魔",
+
+	phase = "恶魔形态",
+	phase_desc = "恶魔形态计时",
+	phase_trigger = "滚开吧，脆弱的精灵。现在我说了算！",
+	phase_demon = "恶魔形态 - 60秒",
+	phase_demonsoon = "5秒后 恶魔形态!",
+	phase_normalsoon = "5秒后 正常形态",
+	phase_normal = "正常形态!",
+	demon_bar = "恶魔形态",
+	demon_nextbar = "下一 恶魔阶段",
+
+	mindcontrol = "精神控制",
+	mindcontrol_desc = "当玩家受到精神控制发出警报",
+	mindcontrol_trigger = "^(%S+)受(%S+)了噬体疯狂效果的影响。$",
+	mindcontrol_warning = "精神控制: %s",
+
+	image = "镜像",
+	image_desc = "15%镜像分裂警报.",
+	image_trigger = "不……不！你在干什么？我才是主宰！你听到没有？我……啊啊啊啊！控制……不住了。",
+	image_message = "15% - 镜像 出现!",
+	image_warning = "即将 镜像!",
+
+	whisper = "因斯迪安低语",
+	whisper_desc = "当玩家受到因斯迪安低语发出警报",
+	whisper_trigger = "^(%S+)受(%S+)了因斯迪安低语效果的影响。$",
+	whisper_message = "恶魔: %s",
+	whisper_bar = "恶魔消失",
+	whisper_soon = "~恶魔 冷却",
+}end )
+
 --zhTW語系：Peroth＠暴風祭壇
 --site：http://blog.pixnet.net/Neriak
 L:RegisterTranslations("zhTW", function() return {
