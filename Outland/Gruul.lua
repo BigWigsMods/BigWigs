@@ -313,8 +313,8 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 
 		if self.db.profile.grasp then
 			self:Message(L["shatter_message"], "Positive")
-			self:DelayedMessage(64, L["grasp_warning"], "Urgent")
-			self:Bar(L["grasp_bar"], 70, "Ability_ThunderClap")
+			self:DelayedMessage(56, L["grasp_warning"], "Urgent")
+			self:Bar(L["grasp_bar"], 62, "Ability_ThunderClap")
 		end
 	end
 end
