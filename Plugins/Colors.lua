@@ -246,6 +246,45 @@ L:RegisterTranslations("frFR", function() return {
 	["4th"] = "4ème",
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	["Colors"] = "Colores",
+
+	["Messages"] = "Mensajes",
+	["Bars"] = "Barras",
+	["Short"] = "Cortas",
+	["Long"] = "Largas",
+	["Short bars"] = "Barras cortas",
+	["Long bars"] = "Barras largas",
+	["Color "] = "Color",
+	["Number of colors"] = "N\195\186mero de colores",
+	["Background"] = "Fondo",
+	["Text"] = "Texto",
+	["Reset"] = "Resetear",
+
+	["Colors of messages and bars."] = "Color de mensajes y barras",
+	["Change the color for %q messages."] = "Cambiar el color para %q mensajes",
+	["Colors for short bars (< 1 minute)."] = "Color para las barras cortas (< 1 minuto).",
+	["Colors for long bars (> 1 minute)."] = "Color para barras largas (>1 minuto).",
+	["Change the %s color."] = "Cambiar el %s color",
+	["Number of colors the bar has."] = "N\195\186mero de colores que tiene la barra.",
+	["Change the bar background color."] = "Cambiar el color del fondo de la barra.",
+	["Change the bar text color."] = "Cambiar el color del texto de la barra",
+	["Resets all colors to defaults."] = "Resetea todos los colores a los de por defecto.",
+
+	["Important"] = "Importante",
+	["Personal"] = "Personal",
+	["Urgent"] = "Urgente",
+	["Attention"] = "Atenci\195\179n",
+	["Positive"] = "Positivo",
+	["Bosskill"] = "Muerte de Jefe",
+	["Core"] = "N\195\186cleo",
+
+	["1st"] = "1º",
+	["2nd"] = "2º",
+	["3rd"] = "3º",
+	["4th"] = "4º",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

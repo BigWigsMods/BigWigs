@@ -119,6 +119,22 @@ L:RegisterTranslations("frFR", function() return {
 	["Use only the default sound."] = "Utilise uniquement le son par défaut.",
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	["Sounds"] = "Sonidos",
+	["Options for sounds."] = "Opciones de los sonidos",
+
+	["Alarm"] = "Alarma",
+	["Info"] = "Informaci\195\179n",
+	["Alert"] = "Alerta",
+	["Long"] = "Largo",
+	["Victory"] = "Victoria",
+
+	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = "Establece el sonido a usar para %q (Ctrl-Click en un sonido para escucharlo)",
+	["Toggle all sounds on or off."] = "Activa o desactiva todos los sonidos",
+	["Default only"] = "Solo por defecto",
+	["Use only the default sound."] = "Usar solo el sonido por defecto",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

@@ -147,7 +147,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	["Enable menu"] = "菜单启用",
 	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "Alt+右击显示计时条设置菜单.\n\n备注:当设置被启用后,在计时条下方你不需要一直Alt+点击游戏世界物品.",
-	
+
 	["Scale"] = "缩放",
 	["Set the bar scale."] = "调整计时条缩放比例。",
 
@@ -162,7 +162,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	["Emphasize"] = "醒目",
 	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "高亮显示接近完成的计时条（小于10秒），同样要注意的是如果一个计时起始值小于15秒时会立刻被高亮显示.",
-	
+
 	["Enable"] = "启用",
 	["Enables emphasizing bars."] = "启用醒目记时条",
 	["Flash"] = "闪烁",
@@ -299,6 +299,48 @@ L:RegisterTranslations("frFR", function() return {
 
 	["Reverse"] = "Inverser",
 	["Toggles if bars are reversed (fill up instead of emptying)."] = "Inverse ou non les barres (les remplir au lieu de les vider).",
+} end)
+
+L:RegisterTranslations("esES", function() return {
+	["Bars"] = "Barras",
+	["Emphasized Bars"] = "Barras Enfatizadas",
+
+	["Options for the timer bars."] = "Opciones para las barras temporizadoras",
+
+	["Show anchor"] = "Mostrar ancla",
+	["Show the bar anchor frame."] = "Mostrar el ancla de la ventana de la barra",
+
+	["Enable menu"] = "Activar menu",
+	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "Muestra el menu de configuraci\195\179n en Alt-Cilck dcho.\n\nCuando esta opci\195\179n est\195\161 activada no puedes Alt-Click los objetos por debajo de las barras",
+
+	["Scale"] = "Escala",
+	["Set the bar scale."] = "Establece la escala de las barras",
+
+	["Grow upwards"] = "Crecer hacia arriba",
+	["Toggle bars grow upwards/downwards from anchor."] = "Muestra las barras hacia arriba/abajo desde el ancla",
+
+	["Texture"] = "Textura",
+	["Set the texture for the timer bars."] = "Establece la textura para las barras temporizadoras",
+
+	["Test"] = "Probar",
+	["Close"] = "Cerrar",
+
+	["Emphasize"] = "Emfatizar",
+	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "Enfatiza las barras que est\195\161n a punto de completarse (<10 seg). Las barras que empezados a menos de 15 seg tambi\195\169 ser\195\161n enfatizadas",
+
+	["Enable"] = "Activar",
+	["Enables emphasizing bars."] = "Activa las barras enfatizadas",
+	["Flash"] = "Destelleo",
+	["Flashes the background red for bars that are emphasized."] = "Destellea el fondo en rojo para las barras que son enfatizadas",
+	["Move"] = "Mover",
+	["Move bars that are emphasized to a second anchor."] = "Mueve las barras que son enfatizadas a un segundo ancla",
+	["Set the scale for emphasized bars."] = "Establece la escala para las barras enfatizadas",
+
+	["Reset position"] = "Resetear posici\195\179n",
+	["Reset the anchor position, moving it to the center of your screen."] = "Resetea la posici\195\179n del ancla, moviendola al centro de la pantalla",
+
+	["Reverse"] = "Invertir",
+	["Toggles if bars are reversed (fill up instead of emptying)."] = "Muestra las barras invirtiendolas (se llenan en vez de vaciarse).",
 } end)
 
 -----------------------------------------------------------------------

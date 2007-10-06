@@ -192,6 +192,37 @@ L:RegisterTranslations("frFR", function() return {
 	["Shown"] = "Affiché",
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	["BossBlock"] = "Bloques de Jefes",
+	desc = "Suprime autom\195\161ticamnete los avisos de los jefes y emociones de jugadores y otras fuentes.",
+
+	["Boss emotes"] = "Emociones de Jefes",
+	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = "Suprime los mensajes enviados a la ventana de emociones del Jefe de banda.\n\nSolo suprime los mensajes de Jefes de los cuales BigWigs conoce, y solo suprime que se muestren en dicha ventana, no en el chat",
+
+	["Raid chat"] = "Chat de Banda",
+	["Suppress messages sent to raid chat."] = "Suprime los mensajes enviados al chat de banda",
+
+	["Raid warning chat messages"] = "Mensajes de aviso de banda",
+	["Suppress raid warning messages from the chat window."] = "Suprime los mensajes de aviso de la banda de la ventana de chat",
+
+	["Raid warning messages"] = "Mensajes de aviso de banda",
+	["Suppress raid warning messages from the raid message window."] = "Suprime los mensajes de aviso de banda en la ventana de mensajes de banda",
+
+	["Raid say"] = "Decir en banda",
+	["Suppress RaidSay popup messages."] = "Suprime los mensajes de Decir en banda",
+
+	["Whispers"] = "Susurros",
+	["Suppress whispered messages."] = "Suprime los mensajes susurrados",
+
+	["Suppressing Chatframe"] = "Suprimiendo Ventana de chat",
+	["Suppressing RaidWarningFrame"] = "Suprimiendo Ventana de Aviso de Banda",
+	["Suppressing CT_RAMessageFrame"] = "Suprimiendo Ventana de CTRA",
+	["Suppressing RaidBossEmoteFrame"] = "Suprimiendo Ventana de emociones de Jefe",
+
+	["Suppressed"] = "Suprimido",
+	["Shown"] = "Mostrado",
+} end)
+
 ------------------------------
 --      Are you local?      --
 ------------------------------

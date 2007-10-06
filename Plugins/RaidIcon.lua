@@ -164,6 +164,32 @@ L:RegisterTranslations("frFR", function() return {
 	["Skull"] = "Crâne",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	["Raid Icons"] = "Iconos de Banda",
+	["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "Configura que \195\173conos deber\195\173a usar BigWigs al colocarlos sobre jugadores en importantes habilidades del jefe tipo 'Bomba'",
+
+	["RaidIcon"] = "Icono de banda",
+
+	["Place"] = "Colocar",
+	["Place Raid Icons"] = "Colocar \195\173conos de banda",
+	["Toggle placing of Raid Icons on players."] = "Activa colocar iconos de banda sobre jugadores",
+
+	["Icon"] = "Icono",
+	["Set Icon"] = "Establecer Icono",
+	["Set which icon to place on players."] = "Establece que Icono colocar sobre los jugadores",
+
+	["Use the %q icon when automatically placing raid icons for boss abilities."] = "Usar el \195\173cono %q cuando coloque automaticamente \195\173conos de banda para habilidades de Jefes",
+
+	["Star"] = "Estrella",
+	["Circle"] = "Circulo",
+	["Diamond"] = "Diamante",
+	["Triangle"] = "Triangulo",
+	["Moon"] = "Luna",
+	["Square"] = "Cuadrado",
+	["Cross"] = "Cruz",
+	["Skull"] = "Calavera",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

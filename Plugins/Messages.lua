@@ -197,6 +197,36 @@ L:RegisterTranslations("frFR", function() return {
 	["Reset the anchor position, moving it to the center of your screen."] = "Réinitialise la position de l'ancre, la replaçant au centre de l'écran.",
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	["Messages"] = "Mensajes",
+	["Options for message display."] = "Opciones para mostrar mensajes",
+
+	["Show anchor"] = "Mostrar ancla",
+	["Show the message anchor frame."] = "Mostrar la ventana del ancla de los mensajes",
+
+	["Use colors"] = "Usar colores",
+	["Toggles white only messages ignoring coloring."] = "Mostrar solo mensajes en blanco, ignorando colores",
+
+	["Text shadow"] = "Sombra del texto",
+	["Show a shadow behind message text."] = "Muestra una sombra detras del texto del mensaje",
+
+	["Scale"] = "Escala",
+	["Set the message frame scale."] = "Establece la escala del mensaje",
+
+	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Co|cffff00fflo|cff00ff00r|r",
+	["White"] = "Blanco",
+
+	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Salida de todos los mensaje de BigWigs al canal de chat por defecto adem\195\161s de las preferencias de ventana",
+
+	["Chat frame"] = "Ventana de chat",
+
+	["Test"] = "Probar",
+	["Close"] = "Cerrar",
+
+	["Reset position"] = "Resetear posici\195\179n",
+	["Reset the anchor position, moving it to the center of your screen."] = "Resetea la posici\195\179n del ancla, moviendola al centro de la pantalla",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
