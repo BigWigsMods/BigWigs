@@ -139,8 +139,8 @@ L:RegisterTranslations("zhTW", function() return {
 	spout = "噴射",
 	spout_desc = "噴射計時器, 僅供參考, 不一定準確。",
 	spout_trigger = "%s深深的吸了一口氣!",
-	spout_message = "噴水了!!被噴到是小白",
-	spout_warning = "約3秒後噴水!",
+	spout_message = "噴射開始！注意閃避！",
+	spout_warning = "約3秒後噴射！",
 	spout_bar = "噴射",
 
 	whirl = "旋風",

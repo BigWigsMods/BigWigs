@@ -126,6 +126,30 @@ L:RegisterTranslations("zhCN", function() return {
 	icon = "团队标记",
 	icon_desc = "给中了穿刺之脊的玩家打上团队标记.",
 } end )
+
+L:RegisterTranslations("zhTW", function() return {
+	start_trigger = "你會以瓦許女士之名而死!",
+
+	spine = "尖刺脊椎",
+	spine_desc = "告訴你誰獲得尖刺脊椎",
+	spine_trigger = "^(.+)受到(了?)尖刺脊椎效果的影響。.$",
+	spine_message = "Impaling Spine on %s!",
+
+	spinesay = "Spine Say",
+	spinesay_desc = "Print in say when you have a Spine, can help nearby members with speech bubbles on.",
+	spinesay_message = "Spine on me!",
+
+	shield = "潮汐之盾",
+	shield_desc = "Timers for when Naj'entus will gain tidal shield.",
+	shield_trigger = "高階督軍納珍塔斯受到潮汐之盾",
+	shield_nextbar = "下一次潮汐之盾",
+	shield_warn = "潮汐之盾!",
+	shield_soon_warn = "潮汐之盾在 ~10秒內施放!",
+
+	icon = "Icon",
+	icon_desc = "Put an icon on players with Impaling Spine.",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------

@@ -71,11 +71,11 @@ commonWords:RegisterTranslations("zhTW", function() return {
 	you = "你",
 	are = "了",
 
-	enrage_start = "%s 狂暴 - %d分後狂暴",
-	enrage_end = "%s 已狂暴",
-	enrage_min = "%d分後狂暴！",
-	enrage_sec = "%d秒後狂暴！",
-	enrage = "狂暴",
+	enrage_start = "%s 狂怒 - %d分後狂怒",
+	enrage_end = "%s 已狂怒",
+	enrage_min = "%d分後狂怒！",
+	enrage_sec = "%d秒後狂怒！",
+	enrage = "狂怒",
 
 	RF = "正義之怒",
 } end )

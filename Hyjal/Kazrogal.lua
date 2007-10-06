@@ -63,6 +63,13 @@ L:RegisterTranslations("koKR", function() return {
 	--marks, enrage?
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	range = "Range Check",
+	range_desc = "Show the proximity box when you are low on mana and have the Mark of Kaz'rogal.",
+	range_gain = "你受到了卡茲洛加的印記",
+	range_fade = "卡茲洛加的印記效果從你身上消失了。",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

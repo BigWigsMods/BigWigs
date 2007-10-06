@@ -80,6 +80,8 @@ L:RegisterTranslations("zhTW", function() return {
 	["Active boss modules:"] = "啟動首領模組",
 	["All running modules have been reset."] = "所有運行中的模組都已重置。",
 	["All running modules have been disabled."] = "所有運行中的模組都已關閉。",
+	["Menu"] = "選單",
+	["Menu options."] = "選單設置",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

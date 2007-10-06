@@ -373,8 +373,11 @@ L:RegisterTranslations("deDE", function() return {
 	revive_bar = "Berater Wiederbelebung",
 	revive_warning = "Berater wiederbelebt in 5sec!",
 } end )
+
+--zhTW語系：Peroth＠暴風祭壇
+--site：http://blog.pixnet.net/Neriak
 L:RegisterTranslations("zhTW", function() return {
-	engage_trigger = "魔法，能量，我的人民陷入其中不能自拔……",
+	engage_trigger = "魔法，能量，我的人民陷入其中不能自拔……自從太陽之井被摧毀之後就是如此。歡迎來到未來。真遺憾，你們無法阻止什麼。沒有人可以阻止我了﹗(薩拉斯語)為了人民的正義!",
 	engage_message = "第一階段 - 四顧問！",
 
 	conflag = "燃燒",
@@ -403,8 +406,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	rebirth = "鳳凰復生",
 	rebirth_desc = "顯示鳳凰復生的計時",
-	rebirth_trigger1 = "Anar'anel belore!",
-	rebirth_trigger2 = "以太陽之名!",
+	rebirth_trigger1 = "(薩拉斯語)以太陽之名!",
+	rebirth_trigger2 = "(薩拉斯語)以太陽之名!",
 	rebirth_warning = "五秒內鳳凰可能復生！",
 	rebirth_bar = "大略復生時間",
 
@@ -419,9 +422,9 @@ L:RegisterTranslations("zhTW", function() return {
 	toy_message = "遙控玩具：[%s]",
 	toy_trigger = "遙控玩具", --afflicted by ...
 
-	--hunter = "Remote Toy on Hunters",
-	--hunter_desc = "Warn when a hunter has Remote Toy.",
-	--hunter_message = "Toy on Hunter: %s",
+	hunter = "遙控玩具 - 獵人",
+	hunter_desc = "當獵人受到遙控玩具影響時警示。",
+	hunter_message = "遙控玩具：[%s]",
 
 	phase = "階段警示",
 	phase_desc = "開啟各階段警示",
@@ -431,11 +434,11 @@ L:RegisterTranslations("zhTW", function() return {
 	telonicus_inc_trigger = "做得好，你已經證明你的實力足以挑戰我的工程大師泰隆尼卡斯。",
 	weapons_inc_trigger = "你們看，我的個人收藏中有許多武器……",
 	phase3_trigger = "也許我低估了你。要你一次對付四位諫言者也許對你來說是不太公平，但是……我的人民從未得到公平的對待。我只是以牙還牙而已。",
-	phase4_trigger = "唉，有些時候，有些事情，必須得親自解決才行。",
+	phase4_trigger = "唉，有些時候，有些事情，必須得親自解決才行。(薩拉斯語)受死吧!",
 
-	flying_trigger = "我的心血是不會被你們輕易浪費的！我精心謀劃的未來是不會被你們輕易破壞的！感受我真正的力量吧！",
-	gravity_trigger1 = "如果世界變的上下顛倒，你們會怎麼辦呢？",
-	gravity_trigger2 = "站不住腳了嗎？",
+	flying_trigger = "我的心血是不會被你們輕易浪費的!我精心謀劃的未來是不會被你們輕易破壞的!感受我真正的力量吧!",
+	gravity_trigger1 = "如果世界變的上下顛倒，你們會怎麼辦呢?",
+	gravity_trigger2 = "站不住腳了嗎?",
 	gravity_bar = "下一次重力流逝",
 	gravity_message = "重力流逝！",
 	flying_message = "第五階段 - 1 分鐘內重力流逝！",
@@ -449,7 +452,7 @@ L:RegisterTranslations("zhTW", function() return {
 	mc_desc = "精神控制警示",
 	mc_message = "精神控制：[%s]",
 
-	afflicted_trigger = "^(.+)受到()(.*)的傷害",
+	afflicted_trigger = "^(.+)受到(了?)(.*)效果的影響。.$",
 
 	revive_bar = "顧問重生",
 	revive_warning = "顧問在五秒內活動！Tank、Healer 準備就位！",

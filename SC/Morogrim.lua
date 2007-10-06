@@ -148,6 +148,8 @@ L:RegisterTranslations("frFR", function() return {
 	globules_bar = "Disparation des globules",
 } end )
 
+--zhTW語系：Peroth＠暴風祭壇
+--site：http://blog.pixnet.net/Neriak
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "深海的洪水，淹沒吧!",
 
@@ -166,16 +168,16 @@ L:RegisterTranslations("zhTW", function() return {
 	murloc = "魚人警示",
 	murloc_desc = "魚人來臨時警示",
 	murloc_bar = "魚人冷卻",
-	murloc_trigger1 = "順應情勢!",
-	murloc_trigger2 = "毀滅他們，我的屬下們!",
+	murloc_trigger1 = "以浪潮之名!",
+	murloc_trigger2 = "毀滅他們，我的服從者!",
 	murloc_message = "魚人出現！",
 	murloc_soon_message = "魚人即將出現，準備 AE！",
 	murloc_engaged = "%s 開戰 - 魚人在 40 秒內出現！",
 
 	globules = "水珠警示",
 	globules_desc = "當水珠來臨時警示",
-	--globules_trigger1 = "Soon it will be finished!",
-	--globules_trigger2 = "There is nowhere to hide!",
+	globules_trigger1 = "很快，這一切都將結束!",
+	globules_trigger2 = "這裡是無處可躲的!",
 	globules_message = "水珠出現！避開水球！",
 	globules_warning = "水珠即將出現！",
 	globules_bar = "水珠消失",

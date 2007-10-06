@@ -91,6 +91,26 @@ L:RegisterTranslations("deDE", function() return {
 	swarm_bar = "~Aasschwarm Cooldown",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	engage_trigger = "你們要守護的世界躲不了毀滅的命運!逃離這兒，也許可以延長你們那可悲的生命!",
+
+	inferno = "地獄火",
+	inferno_desc = "Approximate Inferno cooldown timers.",
+	inferno_message = "Casting Inferno on %s!",
+	inferno_warning = "地獄火即將到來!",
+	inferno_bar = "~地獄火 Cooldown",
+
+	icon = "Raid Target Icon",
+	icon_desc = "Place a Raid Target Icon on the player that Inferno is being cast on(requires promoted or higher).",
+
+	swarm = "腐肉成群",
+	swarm_desc = "Approximate Carrion Swarm cooldown timers.",
+	swarm_trigger1 = "Pestilence upon you!",
+	swarm_trigger2 = "The swarm is eager to feed.",
+	swarm_message = "Swarm! - Next in ~11sec",
+	swarm_bar = "~Swarm Cooldown",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

@@ -179,8 +179,10 @@ L:RegisterTranslations("deDE", function() return {
 	whisper_bar = "D\195\164monen Despawn",
 	whisper_soon = "~D\195\164monen Cooldown",
 } end )
+--zhTW語系：Peroth＠暴風祭壇
+--site：http://blog.pixnet.net/Neriak
 L:RegisterTranslations("zhTW", function() return {
-	enrage_trigger = "終於，我的放逐結束了!",
+	enrage_trigger = "終於結束了我的流放生涯!",
 
 	whirlwind = "旋風斬",
 	whirlwind_desc = "旋風斬計時",

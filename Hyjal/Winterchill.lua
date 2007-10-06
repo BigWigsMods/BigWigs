@@ -80,6 +80,21 @@ L:RegisterTranslations("deDE", function() return {
 	icon_desc = "Plaziere ein Schlachtzug Symbol auf Spielern die von Eisblitz betroffen sind (benötigt Assistent oder höher).",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	decay = "死亡凋零 on You",
+	decay_desc = "Warn for 死亡凋零 on You.",
+	decay_trigger = "你受到了死亡凋零效果的影響。",
+	decay_message = "死亡凋零 on YOU!",
+
+	icebolt = "Icebolt",
+	icebolt_desc = "Icebolt warnings.",
+	icebolt_trigger = "^(.+)受到(了?)寒冰箭效果的影響。.$",
+	icebolt_message = "Icebolt on %s!",
+
+	icon = "Raid Target Icon",
+	icon_desc = "Place a Raid Target Icon on the player afflicted by Icebolt (requires promoted or higher).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

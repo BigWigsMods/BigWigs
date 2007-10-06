@@ -191,7 +191,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	debuff_warn = "印記施放於 %s%%",
 
-	afflict_trigger = "^(.+)受到()(.*)的傷害。$",
+	afflict_trigger = "^(.+)受到(了?)(.*)效果的影響。.$",
 } end)
 
 ----------------------------------

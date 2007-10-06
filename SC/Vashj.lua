@@ -227,6 +227,60 @@ L:RegisterTranslations("deDE", function() return {
 	loot_message = "%s hat einen Kern gelootet!",
 } end )
 
+--zhTW語系：Peroth＠暴風祭壇
+--site：http://blog.pixnet.net/Neriak
+L:RegisterTranslations("zhTW", function() return {
+	["Tainted Elemental"] = "污染的元素",
+
+	engage_trigger1 = "我不想要因為跟你這種人交手而降低我自己的身份，但是你們讓我別無選擇……",
+	engage_trigger2 = "我唾棄你們，地表的渣滓!",
+	engage_trigger3 = "伊利丹王必勝!",
+	engage_trigger4 = "I'll split you from stem to stern!", -- need chatlog.
+	engage_trigger5 = "我要把你們全部殺死!",
+	engage_message = "第一階段 - 開戰！",
+
+	phase = "階段警示",
+	phase_desc = "當瓦許進入不同的階段時警示",
+	phase2_trigger = "機會來了!一個活口都不要留下!",
+	phase2_soon_message = "即將進入第二階段！",
+	phase2_message = "第二階段 - 護衛出現！",
+	phase3_trigger = "你們最好找掩護。",
+	phase3_message = "第三階段 - 4 分鐘內狂怒！",
+
+	static = "靜電衝鋒",
+	static_desc = "當玩家受到靜電衝鋒時警示",
+	static_charge_trigger = "^(.+)受到(.*)靜電衝鋒",
+	static_charge_message = "靜電衝鋒：[%s]",
+	static_fade = "靜電衝鋒效果從你身上消失了。",
+
+	icon = "團隊標記",
+	icon_desc = "對受到靜電衝鋒及拾取核心的玩家設置團隊標記（需要權限）",
+
+	elemental = "污染的元素警示",
+	elemental_desc = "當第二階段污染的元素出現時警示",
+	elemental_bar = "污染的元素計時",
+	elemental_soon_message = "污染的元素即將出現！優先集火！",
+
+	strider = "盤牙旅行者警示",
+	strider_desc = "當第二階段盤牙旅行者出現時警示",
+	strider_bar = "盤牙旅行者計時",
+	strider_soon_message = "盤牙旅行者即將出現！牧師漸隱！",
+
+	naga = "盤牙精英警示",
+	naga_desc = "當第二階段盤牙精英出現時警示",
+	naga_bar = "盤牙精英計時",
+	naga_soon_message = "盤牙精英即將出現！中央坦克注意！",
+
+	barrier = "魔法屏障消失警示",
+	barrier_desc = "當瓦許女士的魔法屏障消失時警示",
+	barrier_down_message = "魔法屏障 %d/4 解除！",
+	barrier_fades_trigger = "魔法屏障效果從瓦許女士身上消失。",
+
+	loot = "受污染的核心警示",
+	loot_desc = "提示誰拾取了受污染的核心",
+	loot_message = "%s 撿到核心！快使用妙傳！",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

@@ -117,6 +117,31 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le dernier joueur poursuivi (nécessite d'être promu ou mieux).",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	phase = "Phases",
+	phase_desc = "Warn about the different phases.",
+	normal_phase_message = "Tank'n'spank!",
+	normal_phase_trigger = "瑟普莫斯憤怒的捶擊地面!",
+	kite_phase_message = "%s loose!",
+	kite_phase_trigger = "地上開始裂開!",
+	next_phase_bar = "Next phase",
+	next_phase_message = "Phase change in 10sec!",
+
+	punch = "Molten Punch",
+	punch_desc = "Alert when he does Molten Punch, and display a countdown bar.",
+	punch_message = "Molten Punch!",
+	punch_bar = "~Possible Punch!",
+	punch_trigger = "施放了熔火之擊。",
+
+	target = "Target",
+	target_desc = "Warn who he targets during the kite phase, and put a raid icon on them.",
+	target_message = "%s being chased!",
+	target_message_nounit = "New target!",
+
+	icon = "Raid Target Icon",
+	icon_desc = "Place a Raid Target Icon on the player being chased(requires promoted or higher).",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------
