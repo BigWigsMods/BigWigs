@@ -8,7 +8,7 @@
 ## Notes-koKR: 각종 보스 경고를 위한 모듈화, 경량화 및 무관여적으로 접근합니다.
 ## Notes-frFR: Approche modulaire, légère et non-intrusive des avertissements pour les rencontres avec les boss.
 ## Author: Ammo, Rabbit, Funkydude
-## X-Credits: Pettigrow (frFR), Gamefaq (deDE), Daemona, Tekkub Stoutwrithe (BigWigs 1) & More
+## X-Credits: Pettigrow (frFR), Gamefaq (deDE), Daemona, wolftankk@cwdg (zhCN), Tekkub Stoutwrithe (BigWigs 1) & More
 ## Version: 2.0
 ## X-Website: http://wowace.com/wiki/BigWigs
 ## X-Category: Raid

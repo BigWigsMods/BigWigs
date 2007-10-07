@@ -36,8 +36,8 @@ L:RegisterTranslations("koKR", function() return {
 --Chinese Translate by 月色狼影@CWDG
 --CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
-	CHAT_MSG_SPELL_SELF_BUFF = "未能驱散(.+)的狂暴。",
-	CHAT_MSG_SPELL_SELF_DAMAGE = "对(.+)施放了宁神射击。",
+	CHAT_MSG_SPELL_SELF_BUFF = "未能驱散(.+)的狂暴。$",
+	CHAT_MSG_SPELL_SELF_DAMAGE = "对(.+)施放了宁神射击。$",
 	["Tranquilizing Shot"] = "宁神射击",
 
 	["Tranq - %s"] = "宁神射击 - %s",

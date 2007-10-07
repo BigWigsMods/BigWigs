@@ -124,8 +124,8 @@ L:RegisterTranslations("zhCN", function() return {
 	sacrifice_fade = "^牺牲效果从%s身上消失。$",
 	sacrifice_message = "%s 牺牲了 -- 注意停手!",
 	sacrifice_bar = "牺牲: %s",
-	--sacrifice_soon = "Sacrifice soon!",
-	--sacrifice_soonbar = "~Possible Sacrifice",
+	sacrifice_soon = "即将 牺牲!",
+	sacrifice_soonbar = "~可能 牺牲",
 
 	icon = "团队标记",
 	icon_desc = "受到牺牲效果的队友打上标记(需要助理或更高权利).",

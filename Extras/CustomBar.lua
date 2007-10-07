@@ -43,7 +43,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Start a custom bar, either local or global."] = "启动自定义时间条,本地或全局",
 	["Local"] = "本地",
 	["Global"] = "全局",
-	["<time> <bar text>"] = "<秒> <计时条名字>",
+	["<time> <bar text>"] = "<时间> <计时条名字>",
 	["Starts a custom bar with the given parameters."] = "启动自定义时间条",
 	["%s: Timer [%s] finished."] = "%s: 计时器 [%s] 到时间.",
 } end)

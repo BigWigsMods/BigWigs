@@ -152,7 +152,7 @@ L:RegisterTranslations("zhCN", function() return {
 	earthquake_trigger2 = "Magnitude set. Release.",
 
 	enrage_soon_message = "即将狂怒!",
-	enrage_trigger = "%s becomes enraged!",
+	enrage_trigger = "%s变得愤怒了！",
 	enrage_message = "狂怒!",
 } end)
 
