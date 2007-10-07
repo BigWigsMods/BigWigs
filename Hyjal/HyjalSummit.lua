@@ -59,7 +59,7 @@ L:RegisterTranslations("koKR", function() return {
 	["~Wave %d spawn."] = "%d 공격 등장.",
 	["Wave %d incoming."] = "%d 공격 시작.",
 	["%s in ~%d sec"] = "~%d 초 이내 %s",
-	["Wave %d in ~%d sec"] = "약 %d 초후 %d 공",
+	["Wave %d in ~%d sec"] = "%d 번째 공격 ~%d 초후",
 
 	["Boss"] = "보스",
 	["Thrall"] = "스랄",
