@@ -22,8 +22,8 @@ local nextBoss = nil
 local currentWave = 0
 local allianceWaveTimes = {127.5, 127.5, 127.5, 127.5, 127.5, 127.5, 127.5, 140}
 local RWCwaveTimes = allianceWaveTimes --need more accurate times
+local KRwaveTimes = {135, 160, 190, 165, 140, 130, 195, 225} --need more accurate times
 local hordeWaveTimes = {135, 190, 190, 195, 140, 165, 195, 225}
-local KRwaveTimes = hordeWaveTimes --need more accurate times
 
 ----------------------------
 --      Localization      --
@@ -201,6 +201,7 @@ function mod:BigWigs_RecvSync( sync, rest )
 			self:CancelScheduledEvent("BigWigsSummitTimersDM90")
 			self:CancelScheduledEvent("BigWigsSummitTimersDM60")
 			self:CancelScheduledEvent("BigWigsSummitTimersDM30")
+			self:TriggerEvent("BigWigs_StopBar", self, fmt(L["~Wave %d spawn."], currentWave))
 
 			local wtime = waveTimes[wave]
 			if wave == 8 then
