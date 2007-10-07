@@ -82,14 +82,14 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	decay = "死亡凋零 on You",
-	decay_desc = "Warn for 死亡凋零 on You.",
+	decay_desc = "死亡凋零警告 on You.",
 	decay_trigger = "你受到了死亡凋零效果的影響。",
 	decay_message = "死亡凋零 on YOU!",
 
-	icebolt = "Icebolt",
-	icebolt_desc = "Icebolt warnings.",
-	icebolt_trigger = "^(.+)受到(了?)寒冰箭效果的影響。.$",
-	icebolt_message = "Icebolt on %s!",
+	icebolt = "寒冰箭",
+	icebolt_desc = "寒冰箭警告",
+	icebolt_trigger = "^(.+)受到(了?)寒冰箭效果的影響。$",
+	icebolt_message = "寒冰箭 on %s!",
 
 	icon = "Raid Target Icon",
 	icon_desc = "Place a Raid Target Icon on the player afflicted by Icebolt (requires promoted or higher).",
