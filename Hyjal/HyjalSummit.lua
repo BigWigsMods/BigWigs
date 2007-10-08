@@ -55,20 +55,20 @@ L:RegisterTranslations("koKR", function() return {
 	wave = "공격 경고",
 	wave_desc = "다음 공격에 대한 접근 경고 메세지를 알립니다.",
 
-	["~%s spawn"] = "~%s 등장.",
-	["~Wave %d spawn"] = "%d 공격 등장.",
-	["Wave %d incoming!"] = "%d 공격 시작.",
+	["~%s spawn"] = "~%s 등장",
+	["~Wave %d spawn"] = "%d 번째 공격 등장",
+	["Wave %d incoming!"] = "%d 번째 공격 시작",
 	["%s in ~%d sec!"] = "~%d 초 이내 %s",
-	["Wave %d in ~%d sec!"] = "%d 번째 공격 ~%d 초후",
+	["Wave %d in ~%d sec!"] = "약 %2$d 초후 %1$d 번째 공격",
 
 	["Boss"] = "보스",
 	["Thrall"] = "스랄",
 	["Lady Jaina Proudmoore"] = "여군주 제이나 프라우드무어",
 
---	["My companions and I are with you, Lady Proudmoore."] = true, -- Rage Winterchill
---	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = true, -- Anatheron
---	["I am with you, Thrall."] = true, -- Kaz'Rogal
---	["We have nothing to fear."] = true, -- Az'Galor
+	["My companions and I are with you, Lady Proudmoore."] = "제 동료와 저는 프라우드무어님, 당신과 함께 하겠습니다.", -- Rage Winterchill
+	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "아키몬드가 어떤 군대를 보내던 우리는 준비가 되어 있습니다. 프라우드무어 님.", -- Anatheron
+	["I am with you, Thrall."] = "당신과 함께 하겠습니다. 대족장님.", -- Kaz'Rogal
+	["We have nothing to fear."] = "두려워할 것은 아무것도 없습니다.", -- Az'Galor
 } end )
 
 L:RegisterTranslations("frFR", function() return {
