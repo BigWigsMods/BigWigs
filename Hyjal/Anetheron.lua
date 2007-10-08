@@ -111,6 +111,27 @@ L:RegisterTranslations("zhTW", function() return {
 	swarm_bar = "~Swarm Cooldown",
 } end )
 
+--安纳塞隆
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "You are defenders of a doomed world! Flee here, and perhaps you will prolong your pathetic lives!",
+
+	inferno = "地狱火",
+	inferno_desc = "显示地狱火冷却记时条",
+	inferno_message = "正在施放 地狱火 >%s<!",
+	inferno_warning = "即将 地狱火!",
+	inferno_bar = "~地狱火 冷却",
+
+	icon = "团队标记",
+	icon_desc = "为在玩家上施放地狱火的玩家打上团队标记(需要权限).",
+
+	swarm = "腐臭虫群",
+	swarm_desc = "腐臭虫群冷却计时",
+	swarm_trigger1 = "Pestilence upon you!",
+	swarm_trigger2 = "The swarm is eager to feed.",
+	swarm_message = "虫群! - 下一波 ~11秒后",
+	swarm_bar = "~虫群 冷却",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

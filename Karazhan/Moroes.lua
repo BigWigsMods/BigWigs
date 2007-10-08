@@ -124,8 +124,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	vanish = "消失",
 	vanish_desc = "消失 预计冷却计时条.",
-	vanish_trigger1 = "You rang?",
-	vanish_trigger2 = "Now, where was I? Oh, yes...",
+	vanish_trigger1 = "你叫我吗？",
+	vanish_trigger2 = "我说到哪里了？哦，对了……",
 	vanish_message = "消失! 35 秒后再次消失！",
 	vanish_warning = "即将 消失！",
 	vanish_bar = "消失 冷却",
