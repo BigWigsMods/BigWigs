@@ -328,6 +328,74 @@ L:RegisterTranslations("deDE", function() return {
 	["Flame of Azzinoth"] = "Flamme von Azzinoth",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	berserk = "狂暴",
+	berserk_desc = "警告 25 分鐘後狂暴",
+	berserk_trigger = "你們還沒準備好!!",
+	berserk_message = "%s 開戰了, 25 分鐘後狂暴!",
+
+	parasite = "寄生暗影惡魔",
+	parasite_desc = "當隊員中寄生暗影惡魔時發出警告",
+	parasite_you = "你中了>寄生暗影惡魔<!",
+	parasite_other = "%s 中了>寄生暗影惡魔<!",
+
+	icon = "團隊標記",
+	icon_desc = "為中了寄生暗影魔的隊員打上團隊標記.",
+
+	barrage = "黑暗侵襲",
+	barrage_desc = "當玩家中了黑暗侵襲時發出警報",
+	barrage_message = "%s 中了黑暗侵襲!",
+	barrage_warn = "侵襲即將來臨!",
+	barrage_warn_bar = "~下一次侵襲",
+	barrage_bar = "侵襲: %s",
+
+	eyeblast = "暗眼衝擊波",
+	eyeblast_desc = "當施放暗眼衝擊波時發出警報",
+	eyeblast_trigger = "直視背叛者的雙眼吧!",
+	eyeblast_message = "暗眼衝擊波!",
+
+	shear = "Shear",
+	shear_desc = "Warn about Shear on players.",
+	shear_message = "Shear on %s!",
+	shear_bar = "Shear: %s",
+
+	flame = "苦惱之焰",
+	flame_desc = "當玩家中了苦惱之焰時發出警報",
+	flame_message = "%s 中了苦惱之焰!",
+
+	demons = "暗影惡魔",
+	demons_desc = "當召喚暗影惡魔時發出警報",
+	demons_trigger = "召喚暗影惡魔",
+	demons_message = "暗影惡魔!",
+	demons_warn = "暗影惡魔即將來臨!",
+
+	phase = "階段",
+	phase_desc = "當變換不同階段時發出警報",
+	phase2_soon_message = "階段 2 即將來臨!",
+	phase2_trigger = "埃辛諾斯之刃施放了召喚埃辛諾斯之淚。",
+	phase2_message = "階段 2 - 埃辛諾斯之刃!",
+	phase3_message = "階段 3!",
+	demon_phase_trigger = "感受我體內的惡魔之力吧!",
+	demon_phase_message = "惡魔型態!",
+	demon_bar = "下一個普通階段",
+	phase4_trigger = "你們就這點本事嗎?這就是你們全部的能耐?",
+	phase4_soon_message = "階段 4 即將來臨!",
+	phase4_message = "階段 4 - 瑪翼夫來臨!",
+
+	flameburst = "烈焰爆擊",
+	flameburst_desc = "當即將施放烈焰爆擊時發出警報",
+	flameburst_message = "烈焰爆擊!",
+	flameburst_cooldown_bar = "烈焰爆擊冷卻",
+	flameburst_cooldown_warn = "烈焰爆擊即將來臨!",
+	flameburst_warn = "烈焰爆擊 5 秒內來臨!",
+
+	enrage_trigger = "感受一萬年的仇恨吧!",
+	enrage_message = "狂怒!",
+
+	afflict_trigger = "^(.+)受到(了?)(.*)效果的影響。$",
+	["Flame of Azzinoth"] = "埃辛諾斯火焰",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
