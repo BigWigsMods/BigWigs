@@ -331,7 +331,7 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	berserk = "狂暴",
 	berserk_desc = "警告 25 分鐘後狂暴",
-	berserk_trigger = "你們還沒準備好!!",
+	berserk_trigger = "你們還沒準備好!",
 	berserk_message = "%s 開戰了, 25 分鐘後狂暴!",
 
 	parasite = "寄生暗影惡魔",
