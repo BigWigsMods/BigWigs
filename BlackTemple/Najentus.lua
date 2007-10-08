@@ -132,7 +132,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	spine = "尖刺脊椎",
 	spine_desc = "告訴你誰獲得尖刺脊椎",
-	spine_trigger = "^(.+)受到(了?)尖刺脊椎效果的影響。.$",
+	spine_trigger = "^(.+)受到(了?)尖刺脊椎效果的影響。$",
 	spine_message = "Impaling Spine on %s!",
 
 	spinesay = "Spine Say",
