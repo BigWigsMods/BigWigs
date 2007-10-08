@@ -537,7 +537,7 @@ L:RegisterTranslations("zhTW", function() return {
 	mc_desc = "精神控制警示",
 	mc_message = "精神控制：[%s]",
 
-	afflicted_trigger = "^(.+)受到(了?)(.*)效果的影響。.$",
+	afflicted_trigger = "^(.+)受到(了?)(.*)效果的影響。$",
 
 	revive_bar = "顧問重生",
 	revive_warning = "顧問在五秒內活動！Tank、Healer 準備就位！",
