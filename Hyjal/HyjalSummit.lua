@@ -91,6 +91,25 @@ L:RegisterTranslations("frFR", function() return {
 	["We have nothing to fear."] = "Nous n'avons rien à craindre.", -- Az'Galor
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	wave = "Wellen Warnungen",
+	wave_desc = "Ausgeben von Warnungs Nachrichten für die nächste Welle.",
+
+	["~%s spawn."] = "~%s spawnt.",
+	["~Wave %d spawn."] = "~Welle %d spawnt.",
+	["Wave %d incoming."] = "Welle %d kommt.",
+	["%s in ~%d sec"] = "%s in ~%d sek",
+	["Wave %d in ~%d sec"] = "Welle %d in ~%d sek",
+
+	["Boss"] = "Boss",
+	["Thrall"] = "Thrall",
+	["Lady Jaina Proudmoore"] = "Lady Jaina Proudmoore",
+
+	--["My companions and I are with you, Lady Proudmoore."] = true, -- Rage Winterchill
+	--["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = true, -- Anatheron
+	--["I am with you, Thrall."] = true, -- Kaz'Rogal
+	--["We have nothing to fear."] = true, -- Az'Galor
+} end )
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

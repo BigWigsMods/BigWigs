@@ -53,38 +53,38 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	--engage_trigger = "Tal anu'men no sin'dorei!",
+	engage_trigger = "Tal anu'men no sin'dorei!",
 
-	phase = "Phase",
-	phase_desc = "Warnt vor Phasenwechsel",
+	phase = "Phasen",
+	phase_desc = "Warnung bei Phasenwechsel.",
 	phase1_message = "Phase 1 - Spaltung in ~50sec",
 	phase2_warning = "Phase 2 bald!",
-	phase2_trigger = "^Ich werde", --to verify
+	phase2_trigger = "^Ich werde",
 	phase2_message = "20% - Phase 2",
 
-	--wrath = "Wrath Debuff",
-	--wrath_desc = "Warn who is afflicted by Wrath of the Astromancer.",
+	wrath = "Zorn des Astronomen",
+	wrath_desc = "Warnt wer von Zorn des Astronomen betroffen ist.",
 	wrath_trigger = "^([^%s]+) ([^%s]+) von Zorn des Astronomen betroffen%.$",
-	--wrath_fade = "Wrath of the Astromancer fades from you.",
-	--wrath_other = "Wrath on %s",
+	wrath_fade = "Zorn des Astronomen schwindet von Euch..",
+	wrath_other = "Zorn auf %s",
 	wrath_you = "Zorn auf DIR!",
 
-	--whisper = "Whisper",
-	--whisper_desc = "Whisper the player with Wrath Debuff (requires promoted or higher).",
+	whisper = "Flüstern",
+	whisper_desc = "Warnung an Spieler mit Zorn Debuff flüstern(benötigt Asssitent oder höher).",
 
-	icon = "Icon",
-	icon_desc = "Plaziert ein Schlachtzug Icon auf dem Spieler, der von Zorn des Astronomen betroffen ist",
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Plaziere ein Schlachtzug Symbol auf dem Spieler, der von Zorn des Astronomen betroffen ist.",
 
 	split = "Spaltung",
-	split_desc = "Warnt vor Spaltung & Add Spawn",
-	--split_trigger1 = "I will crush your delusions of grandeur!",
-	--split_trigger2 = "You are hopelessly outmatched!",
-	split_bar = "~N\195\164chste Spaltung",
-	split_warning = "Spaltung in ~7 sec",
+	split_desc = "Warnt vor Spaltung & Add Spawn.",
+	split_trigger1 = "Ich werde Euch Euren Hochmut austreiben!",
+	split_trigger2 = "Ich werde eins mit der Leere!",
+	split_bar = "~Nächste Spaltung",
+	split_warning = "Spaltung in ~7 sek",
 
-	agent_warning = "Splittung! - Agenten in 6 sec",
+	agent_warning = "Splittung! - Agenten in 6 sek",
 	agent_bar = "Agenten",
-	priest_warning = "Priester/Solarian in 3 sec",
+	priest_warning = "Priester/Solarian in 3 sek",
 	priest_bar = "Priester/Solarian",
 } end )
 
