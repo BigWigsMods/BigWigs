@@ -73,7 +73,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	enrage_warning = "곧 격노!",
 	enrage_message = "10% - 격노",
-	--enrage_trigger = "Stop toying with my emotions!",
+	enrage_trigger = "날 화나게 하지 마라!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
