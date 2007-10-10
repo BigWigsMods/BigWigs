@@ -60,7 +60,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	scream = "Soul Scream",
 	scream_desc = "Show a cooldown bar for Soul Scream.",
-	scream_trigger = "^Essence of Anger's Soul Scream ",
+	scream_trigger = "^Essence of Anger 's Soul Scream ",
 	scream_bar = "~Soul Scream Cooldown",
 
 	afflict_trigger = "^(%S+) (%S+) afflicted by (.*).$",
@@ -189,7 +189,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	scream = "Seelenschrei",
 	scream_desc = "Zeige eine Cooldownleiste für Seelenschrei.",
-	scream_trigger = "^Essenz des Zorns's Seelenschrei ",
+	scream_trigger = "^Essenz des Zorns 's Seelenschrei ",
 	scream_bar = "~Seelenschrei Cooldown",
 
 	afflict_trigger = "^([^%s]+) ([^%s]+) ist von (.*) betroffen.$",
