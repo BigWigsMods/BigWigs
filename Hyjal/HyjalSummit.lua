@@ -20,6 +20,7 @@ local tonumber = tonumber
 
 local nextBoss = nil
 local currentWave = 0
+local waveBar = nil
 local allianceWaveTimes = {127.5, 127.5, 127.5, 127.5, 127.5, 127.5, 127.5, 140}
 local RWCwaveTimes = allianceWaveTimes --need more accurate times
 local KRwaveTimes = {135, 160, 190, 165, 140, 130, 195, 225} --need more accurate times
@@ -131,6 +132,7 @@ mod.synctoken = name
 function mod:OnEnable()
 	currentWave = 0
 	nextBoss = L["Boss"]
+	waveBar = ""
 	self:RegisterEvent("UPDATE_WORLD_STATES")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("GOSSIP_SHOW")
@@ -220,7 +222,8 @@ function mod:BigWigs_RecvSync( sync, rest )
 			self:CancelScheduledEvent("BigWigsSummitTimersDM90")
 			self:CancelScheduledEvent("BigWigsSummitTimersDM60")
 			self:CancelScheduledEvent("BigWigsSummitTimersDM30")
-			self:TriggerEvent("BigWigs_StopBar", self, fmt(L["~Wave %d spawn"], currentWave))
+			self:TriggerEvent("BigWigs_StopBar", self, waveBar )
+			-- self:TriggerEvent("BigWigs_StopBar", self, fmt(L["~Wave %d spawn"], currentWave))
 
 			local wtime = waveTimes[wave]
 			if wave == 8 then
@@ -228,21 +231,22 @@ function mod:BigWigs_RecvSync( sync, rest )
 				self:ScheduleEvent("BigWigsSummitTimersDM90", "BigWigs_Message", wtime - 90, fmt(msg, nextBoss, 90), "Attention")
 				self:ScheduleEvent("BigWigsSummitTimersDM60", "BigWigs_Message", wtime - 60, fmt(msg, nextBoss, 60), "Attention")
 				self:ScheduleEvent("BigWigsSummitTimersDM30", "BigWigs_Message", wtime - 30, fmt(msg, nextBoss, 30), "Urgent")
-				self:Bar(fmt(L["~%s spawn"], nextBoss), wtime, "Spell_Fire_FelImmolation")
+				waveBar = fmt(L["~%s spawn"], nextBoss)
+				self:Bar(waveBar, wtime, "Spell_Fire_FelImmolation")
 			else
 				local msg = L["Wave %d in ~%d sec!"]
 				self:ScheduleEvent("BigWigsSummitTimersDM90", "BigWigs_Message", wtime - 90, fmt(msg, wave + 1, 90), "Attention")
 				self:ScheduleEvent("BigWigsSummitTimersDM60", "BigWigs_Message", wtime - 60, fmt(msg, wave + 1, 60), "Attention")
 				self:ScheduleEvent("BigWigsSummitTimersDM30", "BigWigs_Message", wtime - 30, fmt(msg, wave + 1, 30), "Urgent")
-				self:Bar(fmt(L["~Wave %d spawn"], wave + 1), wtime, "Spell_Holy_Crusade")
+				waveBar = fmt(L["~Wave %d spawn"], wave + 1)
+				self:Bar(waveBar, wtime, "Spell_Holy_Crusade")
 			end
 		end
 	elseif sync == "SummitReset" then
 		self:TriggerEvent("BigWigs_RebootModule", self)
 	elseif sync == "SummitClear" then
 		--not sure how to cancel bars since they have different names
-		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["~%s spawn"], nextBoss))
-		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["~Wave %d spawn"], currentWave + 1))
+		self:TriggerEvent("BigWigs_StopBar", self, waveBar)
 		currentWave = 0
 		self:CancelScheduledEvent("BigWigsSummitTimersDM90")
 		self:CancelScheduledEvent("BigWigsSummitTimersDM60")
