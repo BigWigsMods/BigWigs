@@ -139,6 +139,30 @@ L:RegisterTranslations("zhCN", function() return {
 	icon_desc = "给中了熔化护甲的队员打上团队标记(需要助理或更高权限).",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	engage_message = "%s angegriffen - Phase 1",
+
+	meteor = "Meteor",
+	meteor_desc = "Geschätzte Meteor Timer.",
+	meteor_warning = "Möglicher Meteor in ~5sek",
+	meteor_message = "Meteor! Nächster in ~52sek",
+	meteor_nextbar = "Nächster Meteor",
+
+	flamepatch = "Flammenfeld auf Dir",
+	flamepatch_desc = "Warnt vor Flammenfeld auf Dir.",
+	flamepatch_trigger = "Ihr seid von Flammenfeld betroffen.",
+	flamepatch_message = "Flammenfeld auf DIR!",
+
+	armor = "Rüstung Schmelzen",
+	armor_desc = "Warnt wer von Rüstung Schmelzen betroffen ist.",
+	armor_trigger = "^(%S+) (%S+) ist von Rüstung Schmelzen betroffen%.$",
+	armor_other = "Rüstung Schmelzen: %s",
+	armor_you = "Rüstung Schmelzen auf DIR!",
+
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Plaziert ein Schlachtzug Symbol auf Spielern mit Rüstung Schmelzen(benötigt Assistent oder höher).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

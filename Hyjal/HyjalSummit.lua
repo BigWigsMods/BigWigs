@@ -96,11 +96,11 @@ L:RegisterTranslations("deDE", function() return {
 	wave = "Wellen Warnungen",
 	wave_desc = "Ausgeben von Warnungs Nachrichten für die nächste Welle.",
 
-	["~%s spawn."] = "~%s spawnt.",
-	["~Wave %d spawn."] = "~Welle %d spawnt.",
-	["Wave %d incoming."] = "Welle %d kommt.",
-	["%s in ~%d sec"] = "%s in ~%d sek",
-	["Wave %d in ~%d sec"] = "Welle %d in ~%d sek",
+	["~%s spawn"] = "~%s spawnt.",
+	["~Wave %d spawn"] = "~Welle %d spawnt.",
+	["Wave %d incoming!"] = "Welle %d kommt!",
+	["%s in ~%d sec!"] = "%s in ~%d sek!",
+	["Wave %d in ~%d sec!"] = "Welle %d in ~%d sek!",
 
 	["Boss"] = "Boss",
 	["Thrall"] = "Thrall",
