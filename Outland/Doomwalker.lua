@@ -61,13 +61,13 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "Do not proceed. You will be eliminated.", -- check
+	engage_trigger = "접근 금지. 너희는 제거될 것이다.",
 	engage_message = "파멸의 절단기 전투 개시, 약 30초 이내 지진!",
 
 	overrun = "괴멸",
 	overrun_desc = "파멸의 절단기의 괴멸 사용 가능 시 경고합니다.",
-	overrun_trigger1 = "Engage maximum speed.", -- check
-	overrun_trigger2 = "Trajectory locked.", -- check
+	overrun_trigger1 = "전속력 추진.", -- check
+	overrun_trigger2 = "경로 설정 완료.", -- check
 	overrun_message = "괴멸!",
 	overrun_soon_message = "잠시 후 괴멸 가능!",
 	overrun_bar = "~괴멸 대기시간",
@@ -76,11 +76,11 @@ L:RegisterTranslations("koKR", function() return {
 	earthquake_desc = "파멸의 절단기의 지진 사용 가능 시 경고합니다.",
 	earthquake_message = "지진! 다음은 약 70초 후!",
 	earthquake_bar = "~지진 대기시간",
-	earthquake_trigger1 = "Tectonic disruption commencing.", -- check
-	earthquake_trigger2 = "Magnitude set. Release.", -- check
+	earthquake_trigger1 = "지각 붕괴 실행 중.", -- check
+	earthquake_trigger2 = "진도 조정 완료. 방출.", -- check
 
 	enrage_soon_message = "잠시 후 격노!",
-	enrage_trigger = "%s becomes enraged!", -- check
+	enrage_trigger = "%s|1이;가; 분노에 휩싸입니다!", -- check
 	enrage_message = "격노!",
 } end)
 

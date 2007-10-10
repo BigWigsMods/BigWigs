@@ -152,12 +152,12 @@ L:RegisterTranslations("deDE", function() return {
 	flurry_warning = "Schlaghagel bald!",
 
 	smash = "Bogenzerkracher",
-	smash_desc = "Zeigt eine Bar f\195\188r den gesch\195\164tzten Bogenzerkracher",  
+	smash_desc = "Zeigt eine Bar f\195\188r den gesch\195\164tzten Bogenzerkracher",
 	smash_bar = "~Bogenzerkracher",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "Gronn are the real power in Outland!", -- check
+	engage_trigger = "그론이 아웃랜드에 진정한 강자다!", -- check
 
 	heal = "치유",
 	heal_desc = "블라인드아이가 치유 시전 시 경고합니다.",
