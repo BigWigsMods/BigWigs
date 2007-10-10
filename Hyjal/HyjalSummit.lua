@@ -104,12 +104,12 @@ L:RegisterTranslations("deDE", function() return {
 
 	["Boss"] = "Boss",
 	["Thrall"] = "Thrall",
-	["Lady Jaina Proudmoore"] = "Lady Jaina Proudmoore",
+	["Lady Jaina Proudmoore"] = "Lady Jaina Prachtmeer",
 
-	--["My companions and I are with you, Lady Proudmoore."] = true, -- Rage Winterchill
-	--["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = true, -- Anatheron
-	--["I am with you, Thrall."] = true, -- Kaz'Rogal
-	--["We have nothing to fear."] = true, -- Az'Galor
+	["My companions and I are with you, Lady Proudmoore."] = "Meine Gefährten und ich werden Euch zur Seite stehen, Lady Prachtmeer.", -- Rage Winterchill
+	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "Was auch immer Archimonde gegen uns ins Feld schicken mag, wir sind bereit, Lady Prachtmeer.", -- Anatheron
+	["I am with you, Thrall."] = "Ich werde Euch zur Seite stehen, Thrall!", -- Kaz'Rogal
+	["We have nothing to fear."] = "Wir haben nichts zu befürchten.", -- Az'Galor
 } end )
 ----------------------------------
 --      Module Declaration      --
@@ -253,4 +253,3 @@ function mod:BigWigs_RecvSync( sync, rest )
 		self:CancelScheduledEvent("BigWigsSummitTimersDM30")
 	end
 end
-
