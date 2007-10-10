@@ -79,7 +79,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Alors... vous êtes en vacances ?", -- à vérifier
+	engage_trigger = "Alors... Vous êtes en vacances ?",
 
 	attraction = "Liaison fatale",
 	attraction_desc = "Préviens quand un joueur subit les effets de la Liaison fatale.",
@@ -99,7 +99,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	enrage_warning = "Enrager imminent !",
 	enrage_message = "10% - Enragée",
-	enrage_trigger = "Arrêtez de jouer avec mes sentiments !", -- à vérifier
+	enrage_trigger = "Arrêtez de jouer avec mes sentiments !",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
