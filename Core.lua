@@ -50,7 +50,7 @@ L:RegisterTranslations("frFR", function() return {
 	["%s has been defeated"] = "%s a été vaincu(e)",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s ont été vaincu(e)s",    -- "<bosses> have been defeated"
 
-	["Debug enabled, output routed to %s."] = "Déboguage activé, output dirigé vers %s.",
+	["Debug enabled, output routed to %s."] = "Déboguage activé, sortie dirigée vers %s.",
 	["Debug disabled."] = "Déboguage désactivé.",
 
 	-- AceConsole strings

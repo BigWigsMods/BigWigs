@@ -76,11 +76,11 @@ L:RegisterTranslations("frFR", function() return {
 	wave = "Avertissements des vagues",
 	wave_desc = "Préviens quand la prochaine vague est susceptible d'arriver.",
 
-	["~%s spawn"] = "~Apparition %s.",
-	["~Wave %d spawn"] = "~Apparition vague %d.",
-	["Wave %d incoming!"] = "Arrivée de la vague %d.",
-	["%s in ~%d sec!"] = "%s dans ~%d sec.",
-	["Wave %d in ~%d sec!"] = "Vague %d dans ~%d sec.",
+	["~%s spawn"] = "~Apparition %s",
+	["~Wave %d spawn"] = "~Apparition vague %d",
+	["Wave %d incoming!"] = "Arrivée de la vague %d !",
+	["%s in ~%d sec!"] = "%s dans ~%d sec. !",
+	["Wave %d in ~%d sec!"] = "Vague %d dans ~%d sec. !",
 
 	["Boss"] = "Boss",
 	["Thrall"] = "Thrall",
