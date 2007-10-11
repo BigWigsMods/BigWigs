@@ -153,14 +153,14 @@ L:RegisterTranslations("deDE", function() return {
 	flamepatch_trigger = "Ihr seid von Flammenfeld betroffen.",
 	flamepatch_message = "Flammenfeld auf DIR!",
 
-	armor = "Rüstung Schmelzen",
-	armor_desc = "Warnt wer von Rüstung Schmelzen betroffen ist.",
-	armor_trigger = "^(%S+) (%S+) ist von Rüstung Schmelzen betroffen%.$",
-	armor_other = "Rüstung Schmelzen: %s",
-	armor_you = "Rüstung Schmelzen auf DIR!",
+	armor = "Rüstungsschmelze",
+	armor_desc = "Warnt wer von Rüstungsschmelze betroffen ist.",
+	armor_trigger = "^(%S+) (%S+) ist von Rüstungsschmelze betroffen%.$",
+	armor_other = "Rüstungsschmelze: %s",
+	armor_you = "Rüstungsschmelze auf DIR!",
 
 	icon = "Schlachtzug Symbol",
-	icon_desc = "Plaziert ein Schlachtzug Symbol auf Spielern mit Rüstung Schmelzen(benötigt Assistent oder höher).",
+	icon_desc = "Plaziert ein Schlachtzug Symbol auf Spielern mit Rüstungsschmelze(benötigt Assistent oder höher).",
 } end )
 
 ----------------------------------

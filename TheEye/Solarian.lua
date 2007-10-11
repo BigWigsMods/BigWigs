@@ -65,7 +65,7 @@ L:RegisterTranslations("deDE", function() return {
 	wrath = "Zorn des Astronomen",
 	wrath_desc = "Warnt wer von Zorn des Astronomen betroffen ist.",
 	wrath_trigger = "^([^%s]+) ([^%s]+) von Zorn des Astronomen betroffen%.$",
-	wrath_fade = "Zorn des Astronomen schwindet von Euch..",
+	wrath_fade = "Zorn des Astronomen schwindet von Euch.",
 	wrath_other = "Zorn auf %s",
 	wrath_you = "Zorn auf DIR!",
 
@@ -78,7 +78,7 @@ L:RegisterTranslations("deDE", function() return {
 	split = "Spaltung",
 	split_desc = "Warnt vor Spaltung & Add Spawn.",
 	split_trigger1 = "Ich werde Euch Euren Hochmut austreiben!",
-	split_trigger2 = "Ich werde eins mit der Leere!",
+	split_trigger2 = "Ihr seid eindeutig in der Unterzahl!",
 	split_bar = "~Nächste Spaltung",
 	split_warning = "Spaltung in ~7 sek",
 

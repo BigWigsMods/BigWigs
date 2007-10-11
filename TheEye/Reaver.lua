@@ -75,10 +75,10 @@ L:RegisterTranslations("deDE", function() return {
 	pounding_nextbar = "~Hämmern Cooldown",
 	pounding_bar = "<Hämmern>",
 
-	knock = "Wegstoßen",
-	knock_desc = "Warnt vor Wegstoßen.",
-	knock_trigger = "^Void Reaver 's Wegstoßen",
-	knock_bar = "~Wegstoßen Cooldown",
+	knock = "Wegschlagen",
+	knock_desc = "Warnt vor Wegschlagen.",
+	knock_trigger = "^Leerhäschers Wegschlagen",
+	knock_bar = "~Wegschlagen Cooldown",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
