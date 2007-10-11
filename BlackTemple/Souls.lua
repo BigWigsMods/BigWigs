@@ -121,7 +121,7 @@ L:RegisterTranslations("frFR", function() return {
 	enrage_warning = "Enrager dans 5 sec. !",
 
 	desire_trigger  = "Vous pouvez avoir tout ce que vous désirez... en y mettant le prix.",
-	desire_cot = "Shi shi rikk rukadare shi tichar kar x gular ", --Curse of Tongues trigger -- to translate
+	desire_cot = "Maev revola refir veni re daz maev azrathu il o kieldaz no veni ", --Curse of Tongues trigger
 	desire_start = "Essence du désir - Zéro mana dans 160 sec.",
 	desire_bar = "Zéro mana",
 	desire_warn = "Zéro mana dans 30 sec. !",
