@@ -371,9 +371,9 @@ function mod:OnEnable()
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Charge")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Charge")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Charge")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "AfflictEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "AfflictEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "AfflictEvent")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -504,7 +504,7 @@ local function HideProx()
 	mod:TriggerEvent("BigWigs_HideProximity", self)
 end
 
-function mod:Charge(msg)
+function mod:AfflictEvent(msg)
 	local splayer, stype = select(3, msg:find(L["static_charge_trigger"]))
 	if splayer and stype then
 		if splayer == L2["you"] and stype == L2["are"] then
@@ -514,6 +514,7 @@ function mod:Charge(msg)
 			self:ScheduleEvent("BWHideProx", HideProx, 20)
 		end
 		self:Sync("VashjStatic " .. splayer)
+		return
 	end
 
 	local pplayer, ptype = select(3, msg:find(L["loot_paralyze"]))
@@ -522,6 +523,7 @@ function mod:Charge(msg)
 			pplayer = pName
 		end
 		self:Sync("VLootUpdate ", "pplayer")
+		return
 	end
 end
 
