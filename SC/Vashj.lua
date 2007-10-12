@@ -542,7 +542,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:Icon(rest)
 		end
 	elseif sync == "VLootUpdate" and rest and self.db.profile.loot then
-		self:Message(L["loot_update"], "Important", nil, "Alert")
+		self:Message(L["loot_update"]:format(rest), "Attention")
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
