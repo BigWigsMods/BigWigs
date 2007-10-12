@@ -32,7 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 	weaken_fade_warning = "Evocation over in 5sec!",
 
 	weaktime = "Weaken Countdown",
-	weaktime_desc = "Countdown warning and bar untill next weaken.",
+	weaktime_desc = "Countdown warning and bar until next weaken.",
 	weaktime_message1 = "Evocation in ~10 seconds",
 	weaktime_message2 = "Evocation in ~30 seconds",
 	weaktime_message3 = "Evocation in ~70 seconds",
