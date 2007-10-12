@@ -70,7 +70,7 @@ L:RegisterTranslations("enUS", function() return {
 	loot = "Tainted Core",
 	loot_desc = "Warn who loots the Tainted Cores.",
 	loot_message = "%s looted a core!",
-	loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$"
+	loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$",
 	loot_update = "Core on > %s",
 } end )
 
