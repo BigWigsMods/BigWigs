@@ -53,9 +53,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	enrage_trigger = "날 화나게 하지 마라!",
-
---	engage_trigger = "흥... 관광하러 온 거야?",
+	engage_trigger = "흥... 관광하러 온 거야?",
 
 	attraction = "치명적인 매력",
 	attraction_desc = "치명적인 매력에 걸린 사람을 알립니다.",

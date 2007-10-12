@@ -157,7 +157,7 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "그론이 아웃랜드에 진정한 강자다!", -- check
+	engage_trigger = "그론이 아웃랜드의 진정한 강자다!",
 
 	heal = "치유",
 	heal_desc = "블라인드아이가 치유 시전 시 경고합니다.",
