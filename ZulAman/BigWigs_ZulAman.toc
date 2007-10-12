@@ -18,4 +18,5 @@
 
 # boss.lua
 # boss.lua
+ZulAmanBeta.lua
 
