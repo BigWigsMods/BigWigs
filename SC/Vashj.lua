@@ -70,6 +70,8 @@ L:RegisterTranslations("enUS", function() return {
 	loot = "Tainted Core",
 	loot_desc = "Warn who loots the Tainted Cores.",
 	loot_message = "%s looted a core!",
+	loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$"
+	loot_update = "Core on > %s",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -122,6 +124,8 @@ L:RegisterTranslations("koKR", function() return {
 	loot = "오염된 핵",
 	loot_desc = "오염된 핵을 획득한 플레이어를 알립니다.",
 	loot_message = "%s 핵 획득!",
+	--loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$"
+	--loot_update = "Core on > %s",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -174,6 +178,8 @@ L:RegisterTranslations("frFR", function() return {
 	loot = "Noyau contaminé",
 	loot_desc = "Préviens quand un joueur ramasse un Noyau contaminé.",
 	loot_message = "%s a ramassé un noyau !",
+	--loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$"
+	--loot_update = "Core on > %s",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -225,6 +231,8 @@ L:RegisterTranslations("deDE", function() return {
 	loot = "Besudelter Kern",
 	loot_desc = "Warnt wer einen Besudelten Kern lootet.",
 	loot_message = "%s hat einen Kern gelootet!",
+	--loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$"
+	--loot_update = "Core on > %s",
 } end )
 
 --瓦丝琪
@@ -278,6 +286,8 @@ L:RegisterTranslations("zhCN", function() return {
 	loot = "污染之核",
 	loot_desc = "对拾取了污染之核的队友发出警报",
 	loot_message = "%s 拾取了 污染之核!",
+	--loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$"
+	--loot_update = "Core on > %s",
 } end )
 
 --zhTW語系：Peroth＠暴風祭壇
@@ -332,6 +342,8 @@ L:RegisterTranslations("zhTW", function() return {
 	loot = "受污染的核心警示",
 	loot_desc = "提示誰拾取了受污染的核心",
 	loot_message = "%s 撿到核心！快使用妙傳！",
+	--loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$"
+	--loot_update = "Core on > %s",
 } end )
 
 ----------------------------------
@@ -368,6 +380,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "VashjStatic", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "VLootUpdate", 1.1)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VashjLoot", 2)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VashjDeformatCheck", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VashjDeformat", 0)
@@ -502,6 +515,14 @@ function mod:Charge(msg)
 		end
 		self:Sync("VashjStatic " .. splayer)
 	end
+
+	local pplayer, ptype = select(3, msg:find(L["loot_paralyze"]))
+	if pplayer and ptype then
+		if pplayer == L2["you"] and ptype == L2["are"] then
+			pplayer = pName
+		end
+		self:Sync("VLootUpdate ", "pplayer")
+	end
 end
 
 function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
@@ -517,6 +538,11 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		local msg = L["static_charge_message"]:format(rest)
 		self:Message(msg, "Important", nil, "Alert")
 		self:Bar(msg, 20, "Spell_Nature_LightningOverload")
+		if self.db.profile.icon then
+			self:Icon(rest)
+		end
+	elseif sync == "VLootUpdate" and rest and self.db.profile.loot then
+		self:Message(L["loot_update"], "Important", nil, "Alert")
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
