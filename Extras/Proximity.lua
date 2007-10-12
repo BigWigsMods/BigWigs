@@ -154,6 +154,22 @@ L:RegisterTranslations("zhTW", function() return {
 	font = "Fonts\\FZBWJW.TTF"
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	["Proximity"] = "Proximidad",
+	["Options for the Proximity Display."] = "Opciones para la ventana de proximidad",
+	["|cff777777Nobody|r"] = "|cff777777Nadie|r",
+	["Sound"] = "Sonido",
+	["Play sound on proximity."] = "Tocar sonido cuando est\195\169 en proximidad",
+	["Disabled"] = "Desactivado",
+	["Disable the proximity display for all modules that use it."] = "Desactivar la ventana de proximidad para todos los m\195\179dulos que lo usen",
+	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "La ventana de proximidad ha sido desactivada por %s, por favor use las opciones de los m\195\179dulos de jefes para activarlo de nuevo",
+
+	proximity = "Ventana de proximidad",
+	proximity_desc = "Muestra la ventana de proximidad cuando sea apropiado para este encuentro, listando los jugadores que est\195\161n demasiado cerca de t\195\173.",
+
+	font = "Fonts\\FRIZQT__.TTF",
+} end)
+
 -----------------------------------------------------------------------
 --      Module Declaration
 -----------------------------------------------------------------------

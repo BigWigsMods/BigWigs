@@ -101,6 +101,21 @@ L:RegisterTranslations("frFR", function() return {
 	["Testing Sync"] = "Test de synchro",
 } end)
 
+L:RegisterTranslations("eSES", function() return {
+	["Test"] = "Probar",
+	["Test Bar "] = "Barra de prueba",
+	["Testing"] = "Probando",
+	["OMG Bear!"] = "\194\161Dios mio, Oso!",
+	["*RAWR*"] = "*RAWR*",
+	["Victory!"] = "\194\161Victoria!",
+	["Commands for testing bars, messages and synchronization."] = "Comando para probar las barras, mensajes y sincronizaci\195\179n",
+	["Local test"] = "Prueba local",
+	["Perform a local test of BigWigs."] = "Realiza una prueba local de BigWigs",
+	["Sync test"] = "Prueba de sinc.",
+	["Perform a sync test of BigWigs."] = "Realiza una prueba de sincronizaci\195\179n de BigWigs",
+	["Testing Sync"] = "Probando sinc.",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

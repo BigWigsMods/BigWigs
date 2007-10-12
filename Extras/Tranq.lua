@@ -85,6 +85,19 @@ L:RegisterTranslations("frFR", function() return {
 	["Bars"] = "Barres",
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	CHAT_MSG_SPELL_SELF_BUFF = "^Fallas en disipar (.+)'s Frenes\195\173%.$",
+	CHAT_MSG_SPELL_SELF_DAMAGE = "^Lanzas Disparo tranquilizante en (.+).$",
+	["Tranquilizing Shot"] = "Disparo tranquilizante",
+
+	["Tranq - %s"] = "Tranq - %s",
+	["%s's Tranq failed!"] = "Tranq de %s fallado!",
+	["Tranq"] = "Tranq",
+	["Options for the tranq module."] = "Opciones para el modulo de tranq.",
+	["Toggle tranq bars on or off."] = "Mostrar barras de tranq.",
+	["Bars"] = "Barras",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

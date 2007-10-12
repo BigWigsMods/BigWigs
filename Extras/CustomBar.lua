@@ -85,6 +85,20 @@ L:RegisterTranslations("frFR", function() return {
 	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Durée invalide (|cffff0000%q|r) ou texte de barre manquant dans une barre personnalisée lancée par |cffd9d919%s|r. <durée> peut être soit un nombre en secondes, soit au format M:S, ou encore au format Mm. Par exemple : 5, 1:20 ou 2m.",
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	["bwcb"] = "bwcb",
+	["bwlcb"] = "bwlcb",
+	["CustomBars"] = "BarrasPersonales",
+	["Custom Bars"] = "Barras Personales",
+	["Start a custom bar, either local or global."] = "Comienza una barra personal, ya sea local o global",
+	["Local"] = "Local",
+	["Global"] = "Global",
+	["<time> <bar text>"] = "<tiempo> <Texto de barra>",
+	["Starts a custom bar with the given parameters."] = "Comienza una barra personal con los parametros dados",
+	["%s: Timer [%s] finished."] = "%s: Temporizador [%s] finalizado",
+	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Tiempo inv\195\161lido (|cffff0000%q|r) o texto de barra ausente en una barra personal comenzada por |cffd9d919%s|r. <tiempo> puede ser un n\195\186mero en segundos, una pareja M:S, o Mm. Por ejemplo 5, 1:20 or 2m.",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

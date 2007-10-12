@@ -215,6 +215,36 @@ L:RegisterTranslations("frFR", function() return {
 	["Notify people with older versions that there is a new version available."] = "Préviens les personnes possédant des versions anciennes qu'une nouvelle version est disponible.",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	["Version Query"] = "Interrogatorio de versi\195\179n",
+	["Commands for querying the raid for Big Wigs versions."] = "Comandos para interrogar a la banda sobre versiones de BigWigs",
+	["Query already running, please wait 5 seconds before trying again."] = "Interrogatorio en proceso, por favor, espere 5 segundos antes de intentarlo de nuevo",
+	["Querying versions for "] = "Interrogando versiones de ",
+	["Big Wigs Version Query"] = "Interrogatorio de la versi\195\179n de Big Wigs",
+	["Close window"] = "Cerrar ventana", -- I know, it's really a Tablet.
+	["Showing version for "] = "Mostrando versi\195\179n de ",
+	["Green versions are newer than yours, red are older, and white are the same."] = "En verde versiones m\195\161s modernas, en rojo m\195\161s antiguas, en blanco iguales",
+	["Player"] = "Jugador",
+	["Version"] = "Versi\195\179n",
+	["Current zone"] = "Zona actual",
+	["<zone>"] = "<zona>",
+	["Version query done."] = "Interrogatorio de versi\195\179n realizada",
+	["Runs a version query on your current zone."] = "Ejecuta un interrogatorio de versi\195\179n en tu zona actual",
+	["Closes the version query window."] = "Cierra la ventana de interrogatorio de versi\195\179n",
+	["current"] = "Actual",
+	["Runs a version query on the given zone."] = "Ejecuta un interrogatorio de versi\195\179n en la zona dada",
+	["Zone"] = "Zona",
+	["zone"] = "zona",
+	["N/A"] = "N/A",
+	["Not loaded"] = "No cargado",
+	["BigWigs"] = "BigWigs",
+	["Runs a version query on the BigWigs core."] = "Ejecuta un interrogatorio de versi\195\179n en el n\195\186cleo de BigWigs",
+	["Replies"] = "Respuestas",
+	["Ancient"] = "Antigua",
+	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "Parece que hay una nueva versi\195\179n de Big Wigs disponible para t\195\173, por favor actualicese",
+	["Notify people with older versions that there is a new version available."] = "Notificar a gente con versiones antiguas que hay una nueva versi\195\179n disponible",
+} end )
+
 ---------------------------------
 --      Addon Declaration      --
 ---------------------------------
