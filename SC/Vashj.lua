@@ -124,8 +124,8 @@ L:RegisterTranslations("koKR", function() return {
 	loot = "오염된 핵",
 	loot_desc = "오염된 핵을 획득한 플레이어를 알립니다.",
 	loot_message = "%s 핵 획득!",
-	--loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$"
-	--loot_update = "Core on > %s",
+	loot_paralyze = "^([^|;%s]*)(.*)마비에 걸렸습니다%.$",
+	loot_update = "핵 > %s",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
