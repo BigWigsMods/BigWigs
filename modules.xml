@@ -66,6 +66,7 @@
 <Script file="Hyjal\Kazrogal.lua"/>
 <Script file="Hyjal\HyjalSummit.lua"/>
 
+<Script file="ZulAman\Nalorakk.lua"/>
 <Script file="ZulAman\Halazzi.lua"/>
 <Script file="ZulAman\Jan'alai.lua"/>
 
