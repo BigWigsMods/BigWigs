@@ -47,6 +47,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Starts a custom bar with the given parameters."] = "启动自定义时间条",
 	["%s: Timer [%s] finished."] = "%s: 计时条 [%s] 到时间.",
 	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m.",
+} end)
 
 L:RegisterTranslations("zhTW", function() return {
 	["bwcb"] = "bwcb",
