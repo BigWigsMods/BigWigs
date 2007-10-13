@@ -332,18 +332,6 @@ function plugin:ChatFrame_MessageEventHandler(event)
 	return self.hooks["ChatFrame_MessageEventHandler"](event)
 end
 
-do
-	local rwf = _G.RaidWarningFrame
-	local rbe = _G.RaidBossEmoteFrame
-	function plugin:RW23AddMessage(frame, message, colorInfo)
-		if frame == rwf then
-			self:RWAddMessage(frame, message, colorInfo)
-		elseif frame == rbe then
-			self:RBEAddMessage(frame, message, colorInfo)
-		end
-	end
-end
-
 function plugin:RWAddMessage(frame, message, r, g, b, a, t)
 	if self.db.profile.rw and self:IsSpam(message) then
 		BigWigs:Debug(L["Suppressing RaidWarningFrame"], message)
@@ -364,6 +352,22 @@ do
 			end
 		elseif t == "string" then
 			bossmobs[mod.enabletrigger] = not bossmobs[mod.enabletrigger] and true or nil
+		end
+	end
+
+	-- XXX: 2.3.0 compat
+	do
+		local rwf = _G.RaidWarningFrame
+		local rbe = _G.RaidBossEmoteFrame
+		function plugin:RW23AddMessage(frame, message, colorInfo)
+			if frame == rwf and self.db.profile.rw and self:IsSpam(message) then
+				BigWigs:Debug(L["Suppressing RaidWarningFrame"], message)
+				return
+			elseif frame == rbe and self.db.profile.boss and type(arg2) == "string" and bossmobs[arg2] then
+				BigWigs:Debug(L["Suppressing RaidBossEmoteFrame"], message)
+				return
+			end
+			self.hooks["RaidNotice_AddMessage"](frame, message, colorInfo)
 		end
 	end
 
