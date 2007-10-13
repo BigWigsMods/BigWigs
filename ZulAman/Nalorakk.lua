@@ -13,6 +13,7 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Nalorakk",
 
 	engage_trigger = "You be dead soon enough!",
+	engage_message = "%s Engaged - Bear Form in 45sec!",
 
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
@@ -48,12 +49,17 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if not self.db.profile.phase then return end
+	local normal = L["normal_message"]
+	local show = L["bear_message"]
 
 	if msg == L["phase_bear"] then
-		local show = L["bear_message"]
 		self:Message(show, "Attention")
 		self:Bar(show, 30, "Ability_Racial_BearForm")
 	elseif msg == L["phase_normal"] then
-		self:Message(L["normal_message"], "Attention")
+		self:Message(normal, "Positive")
+		self:Bar(normal, 45, "INV_Misc_Head_Troll_01")
+	elseif msg == L["engage_trigger"] then
+		self:Message(L["engage_message"]:format(boss), "Positive")
+		self:Bar(normal, 45, "INV_Misc_Head_Troll_01")
 	end
 end
