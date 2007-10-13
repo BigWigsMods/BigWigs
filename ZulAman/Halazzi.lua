@@ -53,12 +53,14 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if msg == L["totem_trigger"] then
+	if self.db.profile.totem and msg == L["totem_trigger"] then
 		self:Message(L["totem_message"], "Attention")
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if not self.db.profile.phase then return end
+
 	if msg == L["phase_spirit"] then
 		self:Message(L["spirit_message"], "Attention")
 	elseif msg == L["phase_normal"] then

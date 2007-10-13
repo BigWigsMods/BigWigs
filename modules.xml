@@ -67,6 +67,6 @@
 <Script file="Hyjal\HyjalSummit.lua"/>
 
 <Script file="ZulAman\Halazzi.lua"/>
-<!-- <Script file="ZulAman\boss.lua"/> -->
+<Script file="ZulAman\Jan'alai.lua"/>
 
 </Ui>

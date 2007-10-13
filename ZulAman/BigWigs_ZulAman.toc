@@ -20,6 +20,6 @@
 
 # Nalorakk.lua
 Halazzi.lua
-# 
+Jan'alai.lua
 ZulAmanBeta.lua
 
