@@ -2,7 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.2")["Nalorakk"]
+local boss = AceLibrary("Babble-Boss-2.2")["Akil'zon"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 ----------------------------
@@ -10,16 +10,14 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 ----------------------------
 
 L:RegisterTranslations("enUS", function() return {
-	cmd = "Nalorakk",
+	cmd = "Akil'zon",
 
-	engage_trigger = "You be dead soon enough!",
+	engage_trigger = "I be da predator! You da prey...",
 
-	phase = "Phases",
-	phase_desc = "Warn for phase changes.",
-	phase_bear = "",
-	phase_normal = "",
-	normal_message = "Normal Phase!",
-	bear_message = "Bear Phase!",
+	elec = "Electrical Storm",
+	elec_desc = "Warn who has Electrical Storm.",
+	elec_trigger = "An electrical storm appears!",
+	elec_message = "Storm on %s!",
 } end )
 
 ----------------------------------
@@ -29,7 +27,7 @@ L:RegisterTranslations("enUS", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Aman"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", "bosskill"}
+mod.toggleoptions = {"elec", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -37,7 +35,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
@@ -46,12 +44,10 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if not self.db.profile.phase then return end
-
-	if msg == L["phase_bear"] then
-		self:Message(L["bear_message"], "Attention")
-	elseif msg == L["phase_normal"] then
-		self:Message(L["normal_message"], "Attention")
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, b, player) --test
+	if self.db.profile.elec and msg == L["elec_trigger"] then
+		local show = L["elec_message"]:format(player)
+		self:Message(show, "Attention")
+		self:Bar(show, 8, "Spell_Nature_EyeOfTheStorm")
 	end
 end

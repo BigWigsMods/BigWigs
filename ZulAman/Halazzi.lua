@@ -20,7 +20,7 @@ L:RegisterTranslations("enUS", function() return {
 	totem_message = "Incoming Lightning Totem!",
 
 	phase = "Phases",
-	phase_desc = "Warn for phase changes",
+	phase_desc = "Warn for phase changes.",
 	phase_spirit = "I fight wit' untamed spirit....",
 	phase_normal = "Spirit, come back to me!",
 	normal_message = "Normal Phase!",
