@@ -13,7 +13,7 @@ local kazrogal = AceLibrary("Babble-Boss-2.2")["Kaz'rogal"]
 local azgalor = AceLibrary("Babble-Boss-2.2")["Azgalor"]
 
 local fmt = string.format
-local strmatch = string.match
+local match = string.match
 local GetRealZoneText = GetRealZoneText
 local GetSubZoneText = GetSubZoneText
 local tonumber = tonumber
@@ -50,6 +50,8 @@ L:RegisterTranslations("enUS", function() return {
 	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = true, -- Anatheron
 	["I am with you, Thrall."] = true, -- Kaz'Rogal
 	["We have nothing to fear."] = true, -- Az'Galor
+
+	["Please remove BigWigs_WaveTimers, it is deprecated."] = true,
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -122,7 +124,7 @@ local mod = BigWigs:NewModule(name)
 mod.zonename = name
 mod.enabletrigger = { thrall, proudmoore }
 mod.toggleoptions = {"wave"}
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
+mod.revision = tonumber(match("$Revision$", "%d+"))
 mod.synctoken = name
 
 ------------------------------
@@ -144,6 +146,9 @@ function mod:OnEnable()
 --~ 	throttling these 2 will cause an errant 'wave 1' message when thrall/jaina die
 --~ 	self:TriggerEvent("BigWigs_ThrottleSync", "SummitReset", 2)
 --~ 	self:TriggerEvent("BigWigs_ThrottleSync", "SummitClear", 2)
+	if IsAddOnLoaded("BigWigs_WaveTimers") then
+		BigWigs:Print(L["Please remove BigWigs_WaveTimers, it is deprecated."])
+	end
 end
 
 function mod:GOSSIP_SHOW()
@@ -165,7 +170,7 @@ end
 function mod:UPDATE_WORLD_STATES()
 	if self.zonename ~= GetRealZoneText() then return end -- bail out in case we were left running in another zone
 	local uiType, state, text = GetWorldStateUIInfo(3)
-	local num = tonumber((text or ""):match("(%d)") or nil)
+	local num = tonumber(match(text or "", "(%d)") or nil)
 	if num == 0 then
 		self:Sync("SummitClear")  --reseting wave here will clear nextBoss, clear instead
 	elseif num and num > currentWave then
@@ -195,7 +200,7 @@ function mod:BigWigs_RecvSync( sync, rest )
 			nextBoss = azgalor
 		end
 	elseif sync == "SummitWave" and rest then
-		local wave, zone = strmatch(rest, "(%d+) (.*)")
+		local wave, zone = match(rest, "(%d+) (.*)")
 		if not wave or not zone then return end
 		local waveTimes
 		if zone == allianceBase then
