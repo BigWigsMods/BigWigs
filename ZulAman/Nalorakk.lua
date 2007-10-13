@@ -16,8 +16,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
-	phase_bear = "",
-	phase_normal = "",
+	phase_bear = "You call on da beast, you gonna get more dan you bargain for!",
+	phase_normal = "Make way for Nalorakk!",
 	normal_message = "Normal Phase!",
 	bear_message = "Bear Phase!",
 } end )
@@ -50,7 +50,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if not self.db.profile.phase then return end
 
 	if msg == L["phase_bear"] then
-		self:Message(L["bear_message"], "Attention")
+		local show = L["bear_message"]
+		self:Message(show, "Attention")
+		self:Bar(show, 30, "Ability_Racial_BearForm")
 	elseif msg == L["phase_normal"] then
 		self:Message(L["normal_message"], "Attention")
 	end
