@@ -13,6 +13,7 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Halazzi",
 
 	engage_trigger = "Get on ya knees and bow.... to da fang and claw!",
+	engage_message = "%s Engaged - Spirit form in ~33sec",
 
 	totem = "Totem",
 	totem_desc = "Warn when Halazzi casts a Lightning Totem.",
@@ -68,6 +69,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["spirit_bar"], 60, "Spell_Nature_Regenerate")
 	elseif msg == L["phase_normal"] then
 		self:Message(L["normal_message"], "Attention")
+		self:Bar(L["normal_bar"], 33, "INV_Misc_Head_Troll_01")
+	elseif msg == L["engage_trigger"] then
+		self:Message(L["engage_message"]:format(boss), "Attention")
 		self:Bar(L["normal_bar"], 33, "INV_Misc_Head_Troll_01")
 	end
 end
