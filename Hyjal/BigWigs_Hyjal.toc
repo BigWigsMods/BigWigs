@@ -5,7 +5,7 @@
 ## Notes-frFR: Modules Big Wigs concernant Hyjal.
 ## Notes-koKR: Big Wigs 하이잘 경고
 ## Author: Funkydude, Rabbit
-## X-Credits: Andii, tsigo
+## X-Credits: Andii, tsigo, Mecdemort
 ## Version: 2.0
 ## LoadOnDemand: 1
 
