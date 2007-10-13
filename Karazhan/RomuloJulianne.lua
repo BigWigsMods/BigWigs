@@ -161,7 +161,7 @@ L:RegisterTranslations("zhCN", function() return {
 	buff_desc = "当罗密欧与朱丽叶获得BUFF发出警报",
 	buff1_trigger = "获得了卤莽的效果。$",
 	buff1_message = "%s 获得 卤莽!",
-	buff2_trigger = "获得了虔诚光环。$",
+	buff2_trigger = "获得了虔诚光环的效果。$",
 	buff2_message = "%s 获得 虔诚光环!",
 } end)
 

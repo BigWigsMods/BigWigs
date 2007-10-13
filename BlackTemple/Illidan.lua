@@ -226,10 +226,10 @@ L:RegisterTranslations("koKR", function() return {
 --CWDG site: http://Cwowaddon.com
 --伊利丹·怒风
 L:RegisterTranslations("zhCN", function() return {
-	--berserk = "Berserk",
-	--berserk_desc = "Warn for berserk after 25min.",
-	--berserk_trigger = "You are not prepared!",
-	--berserk_message = "%s engaged, 25min to berserk!",
+	berserk = "狂暴",
+	berserk_desc = "25分钟后狂暴警报",
+	berserk_trigger = "You are not prepared!",
+	berserk_message = "%s 激活, 25分钟后狂暴!",
 
 	parasite = "寄生暗影魔",--Parasitic Shadowfiend 寄生暗影魔
 	parasite_desc = "当队员中寄生暗影魔时发出警告.",
@@ -242,11 +242,19 @@ L:RegisterTranslations("zhCN", function() return {
 	barrage = "黑暗壁垒",--Dark Barrage 黑暗壁垒
 	barrage_desc = "当玩家中了黑暗壁垒时发出警报.",
 	barrage_message = "%s 中了黑暗壁垒!",
+	barrage_warn = "即将 黑暗壁垒!",
+	barrage_warn_bar = "~下一波 黑暗壁垒",
+	barrage_bar = "壁垒: %s",
 
 	eyeblast = "魔眼冲击",--Eye Blast 魔眼冲击
 	eyeblast_desc = "当施放魔眼冲击时发出警报.",
 	eyeblast_trigger = "Stare into the eyes of the Betrayer!",
 	eyeblast_message = "魔眼冲击!",
+
+	shear = "剪切",
+	shear_desc = "剪切玩家警报",
+	shear_message = "剪切 %s!",
+	shear_bar = "剪切: %s",
 
 	flame = "苦痛之焰",--Agonizing Flames 苦痛之焰
 	flame_desc = "当中了苦痛之焰时发出警报",
@@ -257,7 +265,33 @@ L:RegisterTranslations("zhCN", function() return {
 	demons_trigger = "召唤影魔",
 	demons_message = "影魔!",
 
+	demons_warn = "即将 影魔!",
+
+	phase = "阶段",
+	phase_desc = "当伊利丹进入不同阶段发出警报.",
+	phase2_soon_message = "即将阶段 2!",
+	phase2_trigger = "Blade of Azzinoth casts Summon Tear of Azzinoth.",
+	phase2_message = "阶段 2 - 埃辛诺斯双刃!",
+	phase3_message = "阶段3!",
+	demon_phase_trigger = "Behold the power... of the demon within!",
+	demon_phase_message = "影魔形态!",
+	demon_bar = "下一 普通阶段",
+	phase4_trigger = "Is this it, mortals? Is this all the fury you can muster?",
+	phase4_soon_message = "即将阶段4!",
+	phase4_message = "阶段 4 - 玛维·影歌来临!",
+
+	flameburst = "烈焰爆击",
+	flameburst_desc = "当伊利丹使用烈焰爆击发出警报",
+	flameburst_message = "烈焰爆击!",
+	flameburst_cooldown_bar = "烈焰爆击 冷却",
+	flameburst_cooldown_warn = "即将 烈焰爆击!",
+	flameburst_warn = "5秒后 烈焰爆击!",
+
+	enrage_trigger = "Feel the hatred of ten thousand years!",
+	enrage_message = "狂暴!",
+
 	afflict_trigger = "^([^%s]+)受([^%s]+)了([^%s]+)效果的影响。$",--%s受到了%s效果的影响。
+	["Flame of Azzinoth"] = "埃辛诺斯之焰",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

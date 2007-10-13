@@ -73,7 +73,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Show whispers"] = "显示密语",
 	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "显示通过BigWigs发送的本地信息, 举例来说当玩家中瘟疫或相似的警报信息.",
 
-	["Broadcast to chat"] = "广播到聊天框",
+	["Broadcast to chat"] = "广播到聊天频道",
 	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "通过广播BOSS信息到每个队伍或者团队频道代替团队警告频道\n\n同样;若你不想看到这些信息,只需禁用\"信息阻止\"",
 
 	desc = "设置除本地输出之外的,BigWigs发送的BOSS预警信息.",

@@ -214,7 +214,7 @@ L:RegisterTranslations("zhCN", function() return {
 	grasp_trigger1 = "跑啊。",
 	grasp_trigger2 = "站住。",
 	grasp_message = "大地冲击 - 10秒后破碎!",
-	grasp_warning = "大地冲击发动",
+	grasp_warning = "大地冲击 即将发动",
 	grasp_bar = "~大地冲击 冷却",
 
 	cavein = "洞穴震颤",

@@ -85,10 +85,11 @@ L:RegisterTranslations("zhCN", function() return {
 	["Show the message anchor frame."] = "显示信息框，可以移动设置信息显示位置（仅针对使用BW窗口模式）。",
 
 	["Use colors"] = "发送彩色信息",
+
 	["Toggles white only messages ignoring coloring."] = "选择是否只发送单色信息。",
 
-	--["Text shadow"] = true,
-	--["Show a shadow behind message text."] = true,
+	["Text shadow"] = "文字阴影",
+	["Show a shadow behind message text."] = "在信息文字上增加一个阴影",
 
 	["Scale"] = "缩放",
 	["Set the message frame scale."] = "调整信息文字大小",

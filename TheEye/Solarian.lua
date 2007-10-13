@@ -177,6 +177,9 @@ L:RegisterTranslations("zhCN", function() return {
 	wrath_fade = "星术师之怒效果从你身上消失了。",
 	wrath_other = "愤怒 --> %s",
 	wrath_you = "愤怒 >你<!",
+	
+	whisper = "密语",
+	whisper_desc = "发送密语给中了愤怒的玩家 (需要权限).",
 
 	icon = "团队标记",
 	icon_desc = "给受到星术师之怒的队友打上团队标记",

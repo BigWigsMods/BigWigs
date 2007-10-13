@@ -95,6 +95,22 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "Place a Raid Target Icon on the player afflicted by Icebolt (requires promoted or higher).",
 } end )
 
+--雷基·冬寒
+L:RegisterTranslations("zhCN", function() return {
+	decay = "死亡凋零",
+	decay_desc = "你中了死亡凋零发出警报",
+	decay_trigger = "你受到了死亡凋零效果的影响。",
+	decay_message = "你中了 死亡凋零! 逃离",
+
+	icebolt = "寒冰箭",
+	icebolt_desc = "寒冰箭警报",
+	icebolt_trigger = "^(%S+)受(%S+)了寒冰箭效果的影响。$",
+	icebolt_message = "%s 中了 寒冰箭!",
+
+	icon = "团队标记",
+	icon_desc = "给中了寒冰箭的玩家打上标记(需要权限).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

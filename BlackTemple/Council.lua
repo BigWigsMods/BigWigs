@@ -176,17 +176,17 @@ L:RegisterTranslations("zhCN", function() return {
 	--engage_trigger3 = "I have better things to do..",
 	--engage_trigger4 = "Flee, or die!",
 
-	--vanish = "Vanish",
-	--vanish_desc = "Estimated timers for Vanish.",
-	--vanish_trigger = "Veras Darkshadow gains Vanish.",
-	--vanish_message = "Veras: Vanished! Back in ~30sec",
-	--vanish_warning = "Vanish Over - %s back!",
-	--vanish_bar = "Veras Stealthed",
+	vanish = "消失",
+	vanish_desc = "消失记时条.",
+	vanish_trigger = "薇尔莱丝·深影获得了消失的效果。",
+	vanish_message = "薇尔莱丝: 消失! 30秒重新出现",
+	vanish_warning = "消失结束 - %s 出现!",
+	vanish_bar = "消失",
 
 	immune = "免疫警报",
 	immune_desc = "当玛兰德免疫法术活近战攻击时发出警报",
-	immune_spell_trigger = "女公爵玛兰德获得了法术结界祝福",--女公爵玛兰德
-	immune_melee_trigger = "女公爵玛兰德获得了保护祝福",
+	immune_spell_trigger = "女公爵玛兰德获得了法术结界祝福的效果。",--女公爵玛兰德
+	immune_melee_trigger = "女公爵玛兰德获得了保护祝福的效果。",
 	immune_message = "玛兰德: %s 免疫——15秒!",
 	immune_bar = "%s 免疫!",
 
@@ -209,10 +209,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	circle = "治疗之环",
 	circle_desc = "当玛兰德开始施放治疗之环时发出警报",
-	circle_trigger = "女公爵玛兰德开始施放治疗之环",
+	circle_trigger = "女公爵玛兰德开始施放治疗之环。",
 	circle_message = "正在施放 治疗之环!",
 	circle_heal_trigger = "^女公爵玛兰德的治疗之环治疗",
-	circle_fail_trigger = "^([^%s]+)打断了公爵玛兰德的治疗之环",
+	circle_fail_trigger = "^([^%s]+)打断了公爵玛兰德的治疗之环。",
 	circle_heal_message = "治疗 成功! - ~20秒后再次发动",
 	circle_fail_message = "%s 打断! - ~12s秒后再次发动 治疗之环",
 	circle_bar = "~治疗之环 CD",

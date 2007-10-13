@@ -108,11 +108,32 @@ L:RegisterTranslations("deDE", function() return {
 	["Thrall"] = "Thrall",
 	["Lady Jaina Proudmoore"] = "Lady Jaina Prachtmeer",
 
-	["My companions and I are with you, Lady Proudmoore."] = "Meine Gef�hrten und ich werden Euch zur Seite stehen, Lady Prachtmeer.", -- Rage Winterchill
+	["My companions and I are with you, Lady Proudmoore."] = "Meine Gefhrten und ich werden Euch zur Seite stehen, Lady Prachtmeer.", -- Rage Winterchill
 	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "Was auch immer Archimonde gegen uns ins Feld schicken mag, wir sind bereit, Lady Prachtmeer.", -- Anatheron
 	["I am with you, Thrall."] = "Ich werde Euch zur Seite stehen, Thrall!", -- Kaz'Rogal
-	["We have nothing to fear."] = "Wir haben nichts zu bef�rchten.", -- Az'Galor
+	["We have nothing to fear."] = "Wir haben nichts zu befrchten.", -- Az'Galor
 } end )
+
+L:RegisterTranslations("zhCN", function() return {
+	wave = "阶段警报",
+	wave_desc = "通告下一波来临警报信息",
+
+	["~%s spawn"] = "~%s 出现.",
+	["~Wave %d spawn"] = "~第%d波 出现.",
+	["Wave %d incoming!"] = "第%d波 来临!",
+	["%s in ~%d sec!"] = "在~%d秒后 %s !",
+	["Wave %d in ~%d sec!"] = "在~%d秒后 第%d波!",
+
+	["Boss"] = "首领",
+	["Thrall"] = "萨尔",
+	["Lady Jaina Proudmoore"] = "吉安娜·普罗德摩尔",
+
+	["My companions and I are with you, Lady Proudmoore."] = "My companions and I are with you, Lady Proudmoore.", -- Rage Winterchill
+	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "We are ready for whatever Archimonde might send our way, Lady Proudmoore.", -- Anatheron
+	["I am with you, Thrall."] = "I am with you, Thrall.", -- Kaz'Rogal
+	["We have nothing to fear."] = "We have nothing to fear.", -- Az'Galor
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

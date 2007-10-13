@@ -191,7 +191,7 @@ L:RegisterTranslations("zhCN", function() return {
 	whirlwind_fade = "旋风斩 结束",
 	whirlwind_bar = "旋风斩",
 	whirlwind_bar2 = "~旋风斩 CD",
-	whirlwind_warn = "冷却结束 - 即将 心魔",
+	whirlwind_warn = "冷却结束 - 即将发动",
 
 	phase = "恶魔形态",
 	phase_desc = "恶魔形态计时",

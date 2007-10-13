@@ -52,6 +52,30 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_trigger = "Stop toying with my emotions!",
 } end )
 
+--莎赫拉丝主母
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "So... business or pleasure?",
+
+	attraction = "致命吸引",
+	attraction_desc = "中了致命吸引发出警报",
+	attraction_trigger = "^(%S+)受(%S+)了致命吸引效果的影响。$",
+	attraction_message = "致命吸引: %s",
+
+	debuff = "Debuff计时",
+	debuff_desc = "显示debuff直到下一个的计时.",
+	debuff_bar = "下一Debuff",
+
+	berserk = "狂暴",
+	berserk_desc = "10分钟后狂暴警报",
+	berserk_start = "%s 激活, 10分钟狂暴!",
+	berserk_min = "%d分钟后 狂暴",
+	berserk_sec = "%d秒后 狂暴",
+	berserk_end = "%s 进入狂暴!",
+
+	enrage_warning = "即将狂暴!",
+	enrage_message = "10% - 狂暴",
+	enrage_trigger = "Stop toying with my emotions!",
+} end )
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "흥... 관광하러 온 거야?",
 

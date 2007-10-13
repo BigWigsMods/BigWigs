@@ -66,6 +66,20 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Ombre de la mort (nécessite d'être promu ou mieux).",
 } end )
 
+--塔隆·血魔
+L:RegisterTranslations("zhCN", function() return {
+	start_trigger = "Vengeance is mine!",
+
+	shadow = "死亡之影",
+	shadow_desc = "当谁中了死亡之影将告诉你",
+	shadow_trigger = "^(%S+)受(%S+)了死亡之影效果的影响。$",
+	shadow_other = "死亡之影: %s!",
+	shadow_you = "你 中了死亡之影!",
+
+	icon = "团队标记",
+	icon_desc = "给中了死亡之影的玩家打上团队标记",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

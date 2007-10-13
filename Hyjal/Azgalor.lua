@@ -101,6 +101,29 @@ L:RegisterTranslations("deDE", function() return {
 	afflict_trigger = "^(%S+) (%S+) ist von (.*) betroffen.$",
 } end )
 
+--阿兹加洛
+L:RegisterTranslations("zhCN", function() return {
+	doom = "诅咒",
+	doom_desc = "诅咒警报.",
+	doom_other = "%s中了诅咒",
+	doom_you = "你中了诅咒!",
+
+	hoa = "阿兹加洛之嚎",
+	hoa_desc = "阿兹加洛之嚎警报.",
+	hoa_bar = "~阿兹加洛之嚎 冷却",
+	hoa_message = "群体沉默",
+	hoa_warning = "即将 群体沉默!",
+
+	rof = "火焰之雨",
+	rof_desc = "当你受到火焰之雨发出警报.",
+	rof_you = ">你< 火焰之雨!",
+
+	icon = "团队标记",
+	icon_desc = "给受到诅咒的队员打上标记(需要权限).",
+
+	afflict_trigger = "^(%S+)受(%S+)了(.*)效果的影响。$",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

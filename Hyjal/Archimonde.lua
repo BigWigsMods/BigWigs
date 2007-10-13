@@ -143,6 +143,34 @@ L:RegisterTranslations("deDE", function() return {
 	burstsay_message = "Windbö auf mir!",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "Your resistance is insignificant.",
+
+	grip = "军团之握",
+	grip_desc = "警报谁中了军团之握",
+	grip_trigger = "^(%S+)受(%S+)了军团之握效果的影响。$",
+	grip_you = "你中了 军团之握!",
+	grip_other = "%s中了 军团之握!",
+
+	icon = "团队标记",
+	icon_desc = "给中了军团之握的队友打上团队标记.",
+
+	fear = "恐惧",
+	fear_desc = "恐惧计时.",
+	fear_message = "恐惧, ~ 42秒后再次发动!",
+	fear_bar = "~恐惧 冷却",
+	fear_warning = "恐惧冷却结束 - 即将发动!",
+
+	burst = "空气爆裂",
+	burst_desc = "当开始施放空气爆裂时发出警报.",
+	burst_other = "空气爆裂 -%s-",
+	burst_you = "空气爆裂 >你<!",
+
+	burstsay = "空气爆裂(说)",
+	burstsay_desc = "当你为空气爆裂目标时警报周围,以帮助附近的队友远离.",
+	burstsay_message = "我中了 空气爆裂! 离开我....",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
