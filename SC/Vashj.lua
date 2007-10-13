@@ -522,7 +522,7 @@ function mod:AfflictEvent(msg)
 		if pplayer == L2["you"] and ptype == L2["are"] then
 			pplayer = pName
 		end
-		self:Sync("VLootUpdate ", "pplayer")
+		self:Sync("VLootUpdate " .. pplayer)
 		return
 	end
 end
