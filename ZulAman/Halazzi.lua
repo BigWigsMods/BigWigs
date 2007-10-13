@@ -24,7 +24,9 @@ L:RegisterTranslations("enUS", function() return {
 	phase_spirit = "I fight wit' untamed spirit....",
 	phase_normal = "Spirit, come back to me!",
 	normal_message = "Normal Phase!",
+	normal_bar = "~Possible Spirit Phase",
 	spirit_message = "Spirit Phase!",
+	spirit_bar = "~Possible Normal Phase",
 } end )
 
 ----------------------------------
@@ -62,8 +64,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if not self.db.profile.phase then return end
 
 	if msg == L["phase_spirit"] then
-		self:Message(L["spirit_message"], "Attention")
+		self:Message(L["spirit_message"], "Urgent")
+		self:Bar(L["spirit_bar"], 60, "Spell_Nature_Regenerate")
 	elseif msg == L["phase_normal"] then
 		self:Message(L["normal_message"], "Attention")
+		self:Bar(L["normal_bar"], 33, "INV_Misc_Head_Troll_01")
 	end
 end
