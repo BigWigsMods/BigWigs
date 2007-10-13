@@ -18,7 +18,8 @@
 
 ## Dependencies: BigWigs
 
-# boss.lua
-# boss.lua
+# Nalorakk.lua
+Halazzi.lua
+# 
 ZulAmanBeta.lua
 
