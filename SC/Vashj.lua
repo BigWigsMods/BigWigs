@@ -178,7 +178,7 @@ L:RegisterTranslations("frFR", function() return {
 	loot = "Noyau contaminé",
 	loot_desc = "Préviens quand un joueur ramasse un Noyau contaminé.",
 	loot_message = "%s a ramassé un noyau !",
-	loot_paralyze = "^(%S+) (%S+) les effets .* Paralysie%.$"
+	loot_paralyze = "^(%S+) (%S+) les effets .* Paralysie%.$",
 	loot_update = "Noyau sur > %s",
 } end )
 
@@ -231,7 +231,7 @@ L:RegisterTranslations("deDE", function() return {
 	loot = "Besudelter Kern",
 	loot_desc = "Warnt wer einen Besudelten Kern lootet.",
 	loot_message = "%s hat einen Kern gelootet!",
-	--loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$"
+	--loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$",
 	--loot_update = "Core on > %s",
 } end )
 
@@ -286,7 +286,7 @@ L:RegisterTranslations("zhCN", function() return {
 	loot = "污染之核",
 	loot_desc = "对拾取了污染之核的队友发出警报",
 	loot_message = "%s 拾取了 污染之核!",
-	--loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$"
+	--loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$",
 	--loot_update = "Core on > %s",
 } end )
 
@@ -342,7 +342,7 @@ L:RegisterTranslations("zhTW", function() return {
 	loot = "受污染的核心警示",
 	loot_desc = "提示誰拾取了受污染的核心",
 	loot_message = "%s 撿到核心！快使用妙傳！",
-	--loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$"
+	--loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$",
 	--loot_update = "Core on > %s",
 } end )
 
