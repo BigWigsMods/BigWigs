@@ -307,8 +307,15 @@ plugin.consoleOptions = {
 
 function plugin:OnEnable()
 	self:Hook("ChatFrame_MessageEventHandler", true)
-	self:Hook(RaidWarningFrame, "AddMessage", "RWAddMessage", true)
-	self:Hook(RaidBossEmoteFrame, "AddMessage", "RBEAddMessage", true)
+
+	-- XXX: 2.3.0 compat
+	if type(RaidNotice_AddMessage) == "function" then
+		self:Hook("RaidNotice_AddMessage", "RW23AddMessage", true)
+	else
+		self:Hook(RaidWarningFrame, "AddMessage", "RWAddMessage", true)
+		self:Hook(RaidBossEmoteFrame, "AddMessage", "RBEAddMessage", true)
+	end
+
 	if CT_RAMessageFrame then
 		self:Hook(CT_RAMessageFrame, "AddMessage", "CTRA_AddMessage", true)
 	end
@@ -323,6 +330,18 @@ function plugin:ChatFrame_MessageEventHandler(event)
 		return
 	end
 	return self.hooks["ChatFrame_MessageEventHandler"](event)
+end
+
+do
+	local rwf = _G.RaidWarningFrame
+	local rbe = _G.RaidBossEmoteFrame
+	function plugin:RW23AddMessage(frame, message, colorInfo)
+		if frame == rwf then
+			self:RWAddMessage(frame, message, colorInfo)
+		elseif frame == rbe then
+			self:RBEAddMessage(frame, message, colorInfo)
+		end
+	end
 end
 
 function plugin:RWAddMessage(frame, message, r, g, b, a, t)
