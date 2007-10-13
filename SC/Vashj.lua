@@ -178,8 +178,8 @@ L:RegisterTranslations("frFR", function() return {
 	loot = "Noyau contaminé",
 	loot_desc = "Préviens quand un joueur ramasse un Noyau contaminé.",
 	loot_message = "%s a ramassé un noyau !",
-	--loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$"
-	--loot_update = "Core on > %s",
+	loot_paralyze = "^(%S+) (%S+) les effets .* Paralysie%.$"
+	loot_update = "Noyau sur > %s",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
