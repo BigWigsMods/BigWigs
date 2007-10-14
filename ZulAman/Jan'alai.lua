@@ -84,28 +84,32 @@ end
 --      Event Handlers      --
 ------------------------------
 
+local function ScanTarget()
+	local target
+	if UnitName("target") == boss then
+		target = UnitName("targettarget")
+	elseif UnitName("focus") == boss then
+		target = UnitName("focustarget")
+	else
+		local num = GetNumRaidMembers()
+		for i = 1, num do
+			if UnitName(fmt("%s%d%s", "raid", i, "target")) == boss then
+				target = UnitName(fmt("%s%d%s", "raid", i, "targettarget"))
+				break
+			end
+		end
+	end
+	if target then
+		self:Message(fmt(L["flame_message"], target), "Attention")
+		if self.db.profile.icon then
+			self:Icon(target)
+		end
+	end
+end
+
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if self.db.profile.flame and msg == L["flame_trigger"] then
-		local target
-		if UnitName("target") == boss then
-			target = UnitName("targettarget")
-		elseif UnitName("focus") == boss then
-			target = UnitName("focustarget")
-		else
-			local num = GetNumRaidMembers()
-			for i = 1, num do
-				if UnitName(fmt("%s%d%s", "raid", i, "target")) == boss then
-					target = UnitName(fmt("%s%d%s", "raid", i, "targettarget"))
-					break
-				end
-			end
-		end
-		if target then
-			self:Message(fmt(L["flame_message"], target), "Attention")
-			if self.db.profile.icon then
-				self:Icon(target)
-			end
-		end
+		self:ScheduleEvent("BWFlameToTScan", ScanTarget, 0.2)
 	end
 end
 
@@ -127,3 +131,4 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L2["enrage"], 300, "Spell_Shadow_UnholyFrenzy")
 	end
 end
+
