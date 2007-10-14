@@ -59,6 +59,28 @@ L:RegisterTranslations("frFR", function() return {
 	adds_message = "Arrivée des adds !",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	engage_trigger = "바람의 혼이 너희를 파멸시킨다!",
+
+	flame = "화염 숨결",
+	flame_desc = "잔알라이가 대상자방향으로 화염 숨결을 시전하는지 알립니다.",
+	flame_trigger = "잔알라이|1이;가; 화염 숨결 시전을 시작합니다.",
+	flame_message = "%s에 화염 숨결!",
+
+	icon = "전술 표시",
+	icon_desc = "화염 숨결 대상이된 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+
+	bomb = "불폭탄",
+	bomb_desc = "불폭탄에 대한 타이머를 표시합니다.",
+	bomb_trigger = "불태워 주지!",
+	bomb_message = "잠시후 불폭탄!",
+
+	adds = "부화사 등장",
+	adds_desc = "부화사 등장에 대한 경고입니다.",
+	adds_trigger = "내 부화기 어딨지? 저 알 부화시키는 일 하자!",
+	adds_message = "잠시후 부화사 등장!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
