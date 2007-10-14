@@ -48,6 +48,23 @@ L:RegisterTranslations("koKR", function() return {
 	icon_desc = "전기 폭풍 대상이된 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "Moi, chuis le prédateur ! Vous, z'êtes la proie…",
+	engage_message = "%s engagé - Orage dans ~55 sec. !",
+
+	elec = "Orage électrique",
+	elec_desc = "Préviens quand un joueur subit les effets de l'Orage électrique.",
+	elec_trigger = "^(%S+) (%S+) les effets .* Orage électrique%.$",
+	elec_bar = "~Cooldown Orage",
+	elec_message = "Orage sur %s !",
+
+	ping = "Ping",
+	ping_desc = "Indique votre position actuelle sur la minicarte si vous subissez les effets de l'Orage électrique.",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Orage électrique (nécessite d'être promu ou mieux).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

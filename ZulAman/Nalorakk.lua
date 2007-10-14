@@ -38,13 +38,13 @@ L:RegisterTranslations("frFR", function() return {
 	phase_bear = "Vous d'mandez la bête, j'vais vous donner la bête !",
 	phase_normal = "Place, voilà le Nalorakk !",
 	normal_message = "Phase normale !",
-	--normal_bar = "Next Bear Phase",
-	--normal_soon = "Normal Phase in 10sec",
-	--normal_warning = "Normal Phase in 5sec",
+	normal_bar = "Prochaine phase ours",
+	normal_soon = "Phase normale dans 10 sec.",
+	normal_warning = "Phase normale dans 5 sec.",
 	bear_message = "Phase ours !",
-	--bear_bar = "Next Normal Phase",
-	--bear_soon = "Bear Phase in 10sec",
-	--bear_warning = "Bear Phase in 5sec",
+	bear_bar = "Prochaine phase normale",
+	bear_soon = "Phase ours dans 10 sec.",
+	bear_warning = "Phase ours dans 5 sec.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
