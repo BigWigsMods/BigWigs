@@ -100,7 +100,7 @@ local function ScanTarget()
 		end
 	end
 	if target then
-		self:Message(fmt(L["flame_message"], target), "Attention")
+		self:Message(fmt(L["flame_message"], target), "Important")
 		if self.db.profile.icon then
 			self:Icon(target)
 		end
@@ -116,7 +116,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.bomb and msg == L["bomb_trigger"] then
-		self:Message(L["bomb_message"], "Attention")
+		self:Message(L["bomb_message"], "Urgent")
 		self:Bar(L["bomb"], 12, "Spell_Fire_Fire")
 	elseif self.db.profile.adds and msg == L["adds_trigger"] then
 		self:Message(L["adds_message"], "Positive")
