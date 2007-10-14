@@ -72,8 +72,6 @@ function mod:Siphon(msg)
 		if splayer == L2["you"] and stype == L2["are"] then
 			splayer = pName
 		end
-		local show = L["soul_message"]:format(splayer)
-		self:Message(show, "Urgent")
-		self:Bar(show, 30, "Spell_Shadow_SoulLeech_2")
+		self:Message(L["soul_message"]:format(splayer), "Urgent")
 	end
 end
