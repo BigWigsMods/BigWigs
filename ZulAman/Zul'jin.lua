@@ -6,6 +6,8 @@ local boss = AceLibrary("Babble-Boss-2.2")["Zul'jin"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
+local pName = nil
+
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -57,6 +59,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	pName = UnitName("player")
 end
 
 ------------------------------

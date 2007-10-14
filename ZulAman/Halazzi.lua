@@ -8,7 +8,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local hp = nil
 local UnitName = UnitName
 local UnitHealth = UnitHealth
-local first, second, third, fourth, fifth, sixth
+local first, second
 
 ----------------------------
 --      Localization      --
@@ -87,7 +87,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["phase_normal"] then
 		self:Message(L["normal_message"], "Attention")
 	elseif msg == L["engage_trigger"] then
-		hp = nil; first = nil; second = nil; third = nil; fourth = nil; fifth = nil; sixth = nil;
+		hp = nil; first = nil; second = nil;
 	end
 end
 
@@ -96,23 +96,13 @@ function mod:UNIT_HEALTH(msg)
 
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
-		if health == 75 and not first then
+		if not first and (health == 75 or health == 50 or health == 25) then
 			first = true
+			second = nil
 			self:Sync("HalHP ", health)
-		elseif health == 50 and not second then
+		elseif not second and (health == 80 or health == 55 or health == 30) then
 			second = true
-			self:Sync("HalHP ", health)
-		elseif health == 25 and not third then
-			third = true
-			self:Sync("HalHP ", health)
-		elseif health == 80 and not fourth then
-			fourth = true
-			self:Sync("HalSoon")
-		elseif health == 55 and not fifth then
-			fifth = true
-			self:Sync("HalSoon")
-		elseif health == 30 and not sixth then
-			sixth = true
+			first = nil
 			self:Sync("HalSoon")
 		end
 	end
