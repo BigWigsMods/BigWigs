@@ -58,7 +58,7 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.bolts and msg == L["bolts_message"] then
+	if self.db.profile.bolts and msg == L["bolts_trigger"] then
 		self:Message(L["bolts_message"], "Important")
 		self:Bar(L["bolts"], 10, "Spell_Shadow_ShadowBolt")
 	end
