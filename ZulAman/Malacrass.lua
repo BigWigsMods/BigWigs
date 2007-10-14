@@ -26,6 +26,18 @@ L:RegisterTranslations("enUS", function() return {
 	soul_desc = "Warn who is afflicted by Siphon Soul.",
 	soul_trigger = "^(%S+) (%S+) afflicted by Siphon Soul%.$",
 	soul_message = "Siphon: %s",
+
+	totem = "Totem",
+	totem_desc = "Warn when a Fire Nova Totem is casted.",
+	totem_trigger = "Hex Lord Malacrass casts Fire Nova Totem.",
+	totem_message = "Fire Nova Totem!",
+
+	heal = "Heal",
+	heal_desc = "Warn when Malacrass casts a heal.",
+	heal_flash = "Flash Heal",
+	heal_light = "Holy Light",
+	heal_wave = "Healing Wave",
+	heal_message = "Casting Heal!",
 } end )
 
 ----------------------------------
@@ -35,7 +47,7 @@ L:RegisterTranslations("enUS", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Aman"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"bolts", "soul", "bosskill"}
+mod.toggleoptions = {"bolts", "soul", "totem", "heal", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -47,10 +59,16 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Siphon")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Siphon")
 
+	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("UNIT_SPELLCAST_START")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	pName = UnitName("player")
+
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "MalaHeal", 3)
+	self:TriggerEvent("BigWigs_ThrottleSync", "MalaTotem", 5)
 end
 
 ------------------------------
@@ -64,6 +82,12 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
+function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
+	if msg == L["totem_trigger"] then
+		self:Sync("MalaTotem")
+	end
+end
+
 function mod:Siphon(msg)
 	if not self.db.profile.soul then return end
 
@@ -73,5 +97,22 @@ function mod:Siphon(msg)
 			splayer = pName
 		end
 		self:Message(L["soul_message"]:format(splayer), "Urgent")
+	end
+end
+
+function mod:BigWigs_RecvSync(sync)
+	if sync == "MalaHeal" and self.db.profile.heal then
+		local show = L["heal_message"]
+		self:Message(show, "Positive")
+		self:Bar(show, 2, "Spell_Nature_MagicImmunity")
+	elseif sync == "MalaTotem" and self.db.profile.totem then
+		self:Message(L["totem_message"], "Urgent")
+	end
+end
+
+function mod:UNIT_SPELLCAST_START(msg)
+	if UnitName(msg) == boss and ((UnitCastingInfo(msg)) == L["heal_flash"] or (UnitCastingInfo(msg)) == L["heal_wave"]
+	or (UnitCastingInfo(msg)) == L["heal_light"]) then
+		self:Sync("MalaHeal")
 	end
 end
