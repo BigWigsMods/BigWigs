@@ -20,7 +20,13 @@ L:RegisterTranslations("enUS", function() return {
 	phase_bear = "You call on da beast, you gonna get more dan you bargain for!",
 	phase_normal = "Make way for Nalorakk!",
 	normal_message = "Normal Phase!",
+	normal_bar = "Next Bear Phase",
+	normal_soon = "Normal Phase in 10sec",
+	normal_warning = "Normal Phase in 5sec",
 	bear_message = "Bear Phase!",
+	bear_bar = "Next Normal Phase",
+	bear_soon = "Bear Phase in 10sec",
+	bear_warning = "Bear Phase in 5sec",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -32,7 +38,13 @@ L:RegisterTranslations("frFR", function() return {
 	phase_bear = "Vous d'mandez la bête, j'vais vous donner la bête !",
 	phase_normal = "Place, voilà le Nalorakk !",
 	normal_message = "Phase normale !",
+	--normal_bar = "Next Bear Phase",
+	--normal_soon = "Normal Phase in 10sec",
+	--normal_warning = "Normal Phase in 5sec",
 	bear_message = "Phase ours !",
+	--bear_bar = "Next Normal Phase",
+	--bear_soon = "Bear Phase in 10sec",
+	--bear_warning = "Bear Phase in 5sec",
 } end )
 
 ----------------------------------
@@ -61,17 +73,21 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if not self.db.profile.phase then return end
-	local normal = L["normal_message"]
-	local show = L["bear_message"]
 
 	if msg == L["phase_bear"] then
-		self:Message(show, "Attention")
-		self:Bar(show, 30, "Ability_Racial_BearForm")
+		self:Message(L["bear_message"], "Attention")
+		self:DelayedMessage(25, L["normal_warning"], "Attention")
+		self:DelayedMessage(20, L["normal_soon"], "Urgent")
+		self:Bar(L["bear_bar"], 30, "Ability_Racial_BearForm")
 	elseif msg == L["phase_normal"] then
-		self:Message(normal, "Positive")
-		self:Bar(normal, 45, "INV_Misc_Head_Troll_01")
+		self:Message(L["normal_message"], "Positive")
+		self:DelayedMessage(40, L["bear_warning"], "Attention")
+		self:DelayedMessage(35, L["bear_soon"], "Urgent")
+		self:Bar(L["normal_bar"], 45, "INV_Misc_Head_Troll_01")
 	elseif msg == L["engage_trigger"] then
 		self:Message(L["engage_message"]:format(boss), "Positive")
-		self:Bar(normal, 45, "INV_Misc_Head_Troll_01")
+		self:DelayedMessage(40, L["bear_warning"], "Attention")
+		self:DelayedMessage(35, L["bear_soon"], "Urgent")
+		self:Bar(L["normal_bar"], 45, "INV_Misc_Head_Troll_01")
 	end
 end
