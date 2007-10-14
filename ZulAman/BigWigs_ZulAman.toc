@@ -2,8 +2,6 @@
 
 ## Title: Big Wigs [|cffeda55fZul'Aman (BETA)|r]
 ## Notes: Big Wigs Zul'Aman (BETA) Modules
-## Title-zhCN: Big Wigs [|cffeda55f×æ°¢Âü(BETA)|r]
-## Notes: Big Wigs ×æ°¢Âü(BETA)Ä£¿é
 ## Author: Funkydude, Rabbit
 ## Version: 2.0
 ## LoadOnDemand: 1
@@ -12,7 +10,7 @@
 ## X-Category: Raid
 ## X-RelSite-WoWI: 5086
 ## X-RelSite-Curse: 3299
-# X-AceForum: 
+## X-AceForum: 9278
 
 ## X-BigWigs-LoadInZone: Zul'Aman
 
