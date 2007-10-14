@@ -4,6 +4,8 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Jan'alai"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+
 local fmt = string.format
 local UnitName = UnitName
 
@@ -20,6 +22,9 @@ L:RegisterTranslations("enUS", function() return {
 	flame_desc = "Warn who Jan'alai casts Flame Strike on.",
 	flame_trigger = "Jan'alai begins to cast Flame Breath.",
 	flame_message = "Flame Breath on %s!",
+
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Target Icon on the player targetted by Flame Breath. (requires promoted or higher)",
 
 	bomb = "Fire Bomb",
 	bomb_desc = "Show timers for Fire Bomb.",
@@ -39,7 +44,7 @@ L:RegisterTranslations("enUS", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Aman"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"bomb", "adds", "flame", "icon", "bosskill"}
+mod.toggleoptions = {"bomb", "adds", -1, "flame", "icon", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -89,5 +94,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["bomb"], 12, "Spell_Fire_Fire")
 	elseif self.db.profile.adds and msg == L["adds_trigger"] then
 		self:Message(L["adds_message"], "Positive")
+	elseif self.db.profile.enrage and msg == L["engage_trigger"] then
+		self:Message(fmt(L2["enrage_start"], boss, 5), "Attention")
+		self:DelayedMessage(120, fmt(L2["enrage_min"], 3), "Positive")
+		self:DelayedMessage(240, fmt(L2["enrage_min"], 1), "Positive")
+		self:DelayedMessage(270, fmt(L2["enrage_sec"], 30), "Positive")
+		self:DelayedMessage(290, fmt(L2["enrage_sec"], 10), "Urgent")
+		self:DelayedMessage(295, fmt(L2["enrage_sec"], 5), "Urgent")
+		self:DelayedMessage(300, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
+		self:Bar(L2["enrage"], 300, "Spell_Shadow_UnholyFrenzy")
 	end
 end
