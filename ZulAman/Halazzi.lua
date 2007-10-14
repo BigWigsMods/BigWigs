@@ -5,7 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Halazzi"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
-local hp = nil
+local hp = 100
 local UnitName = UnitName
 local UnitHealth = UnitHealth
 local first, second
@@ -87,7 +87,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["phase_normal"] then
 		self:Message(L["normal_message"], "Attention")
 	elseif msg == L["engage_trigger"] then
-		hp = nil; first = nil; second = nil;
+		hp = 100; first = nil; second = nil;
 	end
 end
 
@@ -99,7 +99,7 @@ function mod:UNIT_HEALTH(msg)
 		if not first and (health == 75 or health == 50 or health == 25) then
 			first = true
 			second = nil
-			self:Sync("HalHP ", health)
+			self:Sync("HalHP " .. health)
 		elseif not second and (health == 80 or health == 55 or health == 30) then
 			second = true
 			first = nil
