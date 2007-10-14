@@ -37,6 +37,28 @@ L:RegisterTranslations("enUS", function() return {
 	adds_message = "Incoming Adds!",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "Les esprits du vent, ils vont être votre fin !",
+
+	flame = "Souffle de flammes",
+	flame_desc = "Préviens sur qui Jan'alai incante son Souffle de flammes.",
+	flame_trigger = "Jan'alai commence à lancer Souffle de flammes.",
+	flame_message = "Souffle de flammes sur %s !",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Souffle de flammes (nécessite d'être promu ou mieux).",
+
+	bomb = "Bombes incendiaires",
+	bomb_desc = "Affiche les délais concernant les bombes incendiaires.",
+	bomb_trigger = "J'vais vous cramer !",
+	bomb_message = "Arrivée des bombes incendiaires !",
+
+	adds = "Adds",
+	adds_desc = "Préviens de l'arrivée des adds.",
+	adds_trigger = "Où sont mes perce-coque ? Au boulot ! Faut qu'ça éclose !",
+	adds_message = "Arrivée des adds !",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

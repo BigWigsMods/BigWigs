@@ -23,6 +23,18 @@ L:RegisterTranslations("enUS", function() return {
 	bear_message = "Bear Phase!",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "Vous s'rez mort bien vite !",
+	engage_message = "%s engagé - Forme d'ours dans 45 sec. !",
+
+	phase = "Phase",
+	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
+	phase_bear = "Vous d'mandez la bête, j'vais vous donner la bête !",
+	phase_normal = "Place, voilà le Nalorakk !",
+	normal_message = "Phase normale !",
+	bear_message = "Phase ours !",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
