@@ -62,6 +62,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:Siphon(msg)
+	if not self.db.profile.soul then return end
+
 	local splayer, stype = select(3, msg:find(L["soul_trigger"]))
 	if splayer and stype then
 		if splayer == L2["you"] and stype == L2["are"] then
