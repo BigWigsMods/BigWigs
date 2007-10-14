@@ -14,8 +14,8 @@ function ZulAmanBeta:ZONE_CHANGED_NEW_AREA()
 	if GetRealZoneText() ~= BZ["Zul'Aman"] or warnedThisSession then return end
 	warnedThisSession = true
 	if not IsAddOnLoaded("Transcriptor") then
-		self:Print("The BigWigs boss modules for Zul'Aman are not complete yet, by far, and we need your help.")
-		self:Print("Please download and install Transcriptor from http://files.wowace.com/Transcriptor/")
+		self:Print("The BigWigs boss modules for Zul'Aman are in Beta! Timers may be wrong and bugs may appear!")
+		self:Print("You can download and install Transcriptor from http://files.wowace.com/Transcriptor/")
 		self:Print("It records what happens during an encounter, and you can then post the log on our forums.")
 		self:Print("Thanks!")
 	else
