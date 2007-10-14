@@ -24,6 +24,9 @@ L:RegisterTranslations("enUS", function() return {
 	elec_bar = "~Storm Cooldown",
 	elec_message = "Storm on %s!",
 
+	ping = "Ping",
+	ping_desc = "Ping your current location if you are afflicted by Electrical Storm.",
+
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Target Icon on the player with Electrical Storm. (requires promoted or higher)",
 } end )
@@ -35,7 +38,7 @@ L:RegisterTranslations("enUS", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Aman"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"elec", "icon", "bosskill"}
+mod.toggleoptions = {"elec", "ping", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -67,6 +70,9 @@ function mod:Storm(msg)
 	if eplayer and etype then
 		if eplayer == L2["you"] and etype == L2["are"] then
 			eplayer = pName
+			if self.db.profile.ping then
+				Minimap:PingLocation(CURSOR_OFFSET_X, CURSOR_OFFSET_Y)
+			end
 		end
 		self:Sync("AkilElec ", eplayer)
 	end
