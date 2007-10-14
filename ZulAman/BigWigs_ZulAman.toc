@@ -22,5 +22,6 @@ Nalorakk.lua
 Halazzi.lua
 Jan'alai.lua
 Akil'zon.lua
+Malacrass.lua
 ZulAmanBeta.lua
 
