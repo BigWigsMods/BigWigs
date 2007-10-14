@@ -31,6 +31,7 @@ L:RegisterTranslations("enUS", function() return {
 	normal_message = "Normal Phase!",
 	spirit_message = "%d HP! - Spirit Phase!",
 	spirit_soon = "Spirit Phase soon!",
+	spirit_bar = "~Possible Normal Phase",
 } end )
 
 ----------------------------------
