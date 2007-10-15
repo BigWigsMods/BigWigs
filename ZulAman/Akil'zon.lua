@@ -38,13 +38,14 @@ L:RegisterTranslations("koKR", function() return {
 
 	elec = "전기 폭풍",
 	elec_desc = "부화사 등장에 대한 경고입니다.",
-	elec_trigger = "^([^|;%s]*)(.*)전기 폭풍에 걸렸습니다%.$",
+	--elec_trigger = "^([^|;%s]*)(.*)전기 폭풍에 걸렸습니다%.$",
+	elec_trigger = "^([^|;%s]*)(.*)Electrical Storm에 걸렸습니다%.$", -- 현재 PTR 서버, 스킬명 한글화 안되어 있음
 	elec_bar = "~폭풍 대기 시간",
 	elec_message = "%s에 폭풍!",
 
 	ping = "미니맵 표시",
 	ping_desc = "당신이 전기 폭풍에 걸렸을때 현재 위치를 미니맵에 표시합니다.",
-	--ping_message = "Storm - Pinging your location!",
+	ping_message = "폭풍 - 현재 위치 미니맵에 찍는 중!",
 
 	icon = "전술 표시",
 	icon_desc = "전기 폭풍 대상이된 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 필요)",

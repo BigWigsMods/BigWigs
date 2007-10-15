@@ -40,6 +40,34 @@ L:RegisterTranslations("enUS", function() return {
 	heal_message = "Casting Heal!",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	engage_trigger = "네게 그림자가 드리우리라...",
+
+	bolts = "영혼의 화살",
+	bolts_desc = "말라크라스의 영혼의 화살 시전을 알림.",
+	bolts_trigger = "네 영혼이 피를 흘리리라!",
+	bolts_message = "영혼의 화살 시전!",
+
+	soul = "영혼 착취",
+	soul_desc = "누가 영혼 착취에 걸렸는지 알립니다.",
+	--soul_trigger = "^([^|;%s]*)(.*)영혼 착취에 걸렸습니다%.$",
+	soul_trigger = "^([^|;%s]*)(.*)Siphon Soul에 걸렸습니다%.$", -- 현재 PTR에 한글화 안되어 있을 듯(?)
+	soul_message = "착취: %s",
+
+	totem = "토템",
+	totem_desc = "불꽃 회오리 토템 시전시 알립니다.",
+	totem_trigger = "주술 군주 말라크라스|1이;가; 불꽃 회오리 토템을 시전을 시작합니다.",
+	totem_message = "불꽃 회오리 토템!",
+
+	heal = "치유",
+	heal_desc = "말라크라스의 치유 마법 시전을 알립니다.",
+	heal_flash = "주술 군주 말라크라스|1이;가; 순간 치유 시전을 시작합니다.",
+	heal_light = "주술 군주 말라크라스|1이;가; 성스러운 빛 시전을 시작합니다.",
+	heal_wave = "주술 군주 말라크라스|1이;가; 치유의 물결 시전을 시작합니다.",
+	heal_message = "치유 마법 시전!",
+} end )
+
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
