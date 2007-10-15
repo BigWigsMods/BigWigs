@@ -81,6 +81,28 @@ L:RegisterTranslations("koKR", function() return {
 	adds_message = "잠시후 부화사 등장!",
 } end )
 
++L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "Die Geister der Winde besiegeln Euer Schicksal!",
+
+	flame = "Flame Breath",
+	flame_desc = "Warn who Jan'alai casts Flame Strike on.",
+	flame_trigger = "Jan'alai beginnt Flammenatem zu wirken.",
+	flame_message = "Flame Breath on %s!",
+
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Target Icon on the player targetted by Flame Breath. (requires promoted or higher)",
+
+	bomb = "Fire Bomb",
+	bomb_desc = "Show timers for Fire Bomb.",
+	bomb_trigger = "Jetzt sollt Ihr brennen!",
+	bomb_message = "Incoming Fire Bombs!",
+
+	adds = "Adds",
+	adds_desc = "Warn for Incoming Adds.",
+	adds_trigger = "Wo is' meine Brut? Was ist mit den Eiern?",
+	adds_message = "Incoming Adds!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
