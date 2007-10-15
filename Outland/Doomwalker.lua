@@ -76,8 +76,8 @@ L:RegisterTranslations("koKR", function() return {
 	earthquake_desc = "파멸의 절단기의 지진 사용 가능 시 경고합니다.",
 	earthquake_message = "지진! 다음은 약 70초 후!",
 	earthquake_bar = "~지진 대기시간",
-	earthquake_trigger1 = "지각 붕괴 실행 중.", -- check
-	earthquake_trigger2 = "진도 조정 완료. 방출.", -- check
+	earthquake_trigger1 = "지각 붕괴 실행 중...",
+	earthquake_trigger2 = "진도 조정 완료. 방출!",
 
 	enrage_soon_message = "잠시 후 격노!",
 	enrage_trigger = "%s|1이;가; 분노에 휩싸입니다!", -- check
