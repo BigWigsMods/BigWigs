@@ -92,6 +92,8 @@ L:RegisterTranslations("frFR", function() return {
 	--["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = true, -- Anatheron
 	--["I am with you, Thrall."] = true, -- Kaz'Rogal
 	["We have nothing to fear."] = "Nous n'avons rien à craindre.", -- Az'Galor
+
+	["Please remove BigWigs_WaveTimers, it is deprecated."] = "Veuillez enlever BigWigs_WaveTimers, qui est obsolète.",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

@@ -158,13 +158,16 @@ L:RegisterTranslations("frFR", function() return {
 	["Messages"] = "Messages",
 	["Options for message display."] = "Options concernant l'affichage des messages.",
 
+	["BigWigs Anchor"] = "Ancre de BigWigs",
+	["Output Settings"] = "Paramètres de sortie",
+
 	["Show anchor"] = "Afficher l'ancre",
-	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "Affiche l'ancre du cadre des messages.",
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "Affiche l'ancre du cadre des messages.\n\nNotez que l'ancre est uniquement utilisable si vous avez choisi 'BigWigs' comme Sortie.",
 
 	["Use colors"] = "Utiliser des couleurs",
 	["Toggles white only messages ignoring coloring."] = "Utilise ou non des couleurs dans les messages à la place du blanc unique.",
 
-	["Scale"] = "Echelle",
+	["Scale"] = "Échelle",
 	["Set the message frame scale."] = "Détermine l'échelle du cadre des messages.",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Co|cffff00ffule|cff00ff00ur|r",
