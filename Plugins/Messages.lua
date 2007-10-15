@@ -19,8 +19,11 @@ L:RegisterTranslations("enUS", function() return {
 	["Messages"] = true,
 	["Options for message display."] = true,
 
+	["BigWigs Anchor"] = true,
+	["Output Settings"] = true,
+
 	["Show anchor"] = true,
-	["Show the message anchor frame."] = true,
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = true,
 
 	["Use colors"] = true,
 	["Toggles white only messages ignoring coloring."] = true,
@@ -47,7 +50,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Options for message display."] = "메세지 표시에 대한 설정입니다.",
 
 	["Show anchor"] = "고정 위치 표시",
-	["Show the message anchor frame."] = "메세지의 고정 위치를 표시합니다.",
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "메세지의 고정 위치를 표시합니다.",
 
 	["Use colors"] = "색상 사용",
 	["Toggles white only messages ignoring coloring."] = "메세지에 색상 사용을 설정합니다.",
@@ -74,7 +77,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Options for message display."] = "信息显示模式及相关设置。",
 
 	["Show anchor"] = "显示信息框体",
-	["Show the message anchor frame."] = "显示信息框，可以移动设置信息显示位置（仅针对使用BW窗口模式）。",
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "显示信息框，可以移动设置信息显示位置（仅针对使用BW窗口模式）。",
 
 	["Use colors"] = "发送彩色信息",
 
@@ -102,7 +105,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Options for message display."] = "訊息框架設置。",
 
 	["Show anchor"] = "顯示錨點",
-	["Show the message anchor frame."] = "顯示訊息訊息框架錨點。",
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "顯示訊息訊息框架錨點。",
 
 	["Use colors"] = "發送彩色訊息",
 	["Toggles white only messages ignoring coloring."] = "切換是否只發送單色訊息。",
@@ -129,7 +132,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Options for message display."] = "Optionen für die Anzeige von Nachrichten.",
 
 	["Show anchor"] = "Verankerung anzeigen",
-	["Show the message anchor frame."] = "Die Verankerung des Nachrichtenfensters anzeigen.",
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "Die Verankerung des Nachrichtenfensters anzeigen.",
 
 	["Use colors"] = "Farben verwenden",
 	["Toggles white only messages ignoring coloring."] = "Nachrichten farbig/weiß anzeigen.",
@@ -156,7 +159,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Options for message display."] = "Options concernant l'affichage des messages.",
 
 	["Show anchor"] = "Afficher l'ancre",
-	["Show the message anchor frame."] = "Affiche l'ancre du cadre des messages.",
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "Affiche l'ancre du cadre des messages.",
 
 	["Use colors"] = "Utiliser des couleurs",
 	["Toggles white only messages ignoring coloring."] = "Utilise ou non des couleurs dans les messages à la place du blanc unique.",
@@ -183,7 +186,7 @@ L:RegisterTranslations("esES", function() return {
 	["Options for message display."] = "Opciones para mostrar mensajes",
 
 	["Show anchor"] = "Mostrar ancla",
-	["Show the message anchor frame."] = "Mostrar la ventana del ancla de los mensajes",
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "Mostrar la ventana del ancla de los mensajes",
 
 	["Use colors"] = "Usar colores",
 	["Toggles white only messages ignoring coloring."] = "Mostrar solo mensajes en blanco, ignorando colores",
@@ -221,6 +224,11 @@ plugin.defaultDB = {
 	chat = nil,
 }
 plugin.consoleCmd = L["Messages"]
+
+local function bwAnchorDisabled()
+	return plugin.db.profile.sink10OutputSink ~= "BigWigs"
+end
+
 plugin.consoleOptions = {
 	type = "group",
 	name = L["Messages"],
@@ -246,32 +254,49 @@ plugin.consoleOptions = {
 		end
 	end,
 	args = {
+		generalHeader = {
+			type = "header",
+			name = L["Output Settings"],
+			order = 1,
+		},
+		chat = {
+			type = "toggle",
+			name = L["Chat frame"],
+			desc = L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."],
+			order = 101,
+		},
+		usecolors = {
+			type = "toggle",
+			name = L["Use colors"],
+			desc = L["Toggles white only messages ignoring coloring."],
+			map = {[true] = L["|cffff0000Co|cffff00fflo|cff00ff00r|r"], [false] = L["White"]},
+			order = 102,
+			disabled = function() return not colorModule end,
+		},
+		spacer = {
+			type = "header",
+			name = " ",
+			order = 200,
+		},
+		bigWigsHeader = {
+			type = "header",
+			name = L["BigWigs Anchor"],
+			order = 300,
+		},
 		anchor = {
 			type = "toggle",
 			name = L["Show anchor"],
-			desc = L["Show the message anchor frame."],
-			disabled = function() return plugin.db.profile.sink10OutputSink ~= "BigWigs" end,
-			order = 1,
+			desc = L["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."],
+			disabled = bwAnchorDisabled,
+			order = 400,
 		},
 		reset = {
 			type = "execute",
 			name = L["Reset position"],
 			desc = L["Reset the anchor position, moving it to the center of your screen."],
 			func = "ResetAnchor",
-			order = 2,
-		},
-		spacer = {
-			type = "header",
-			name = " ",
-			order = 50,
-		},
-		color = {
-			type = "toggle",
-			name = L["Use colors"],
-			desc = L["Toggles white only messages ignoring coloring."],
-			map = {[true] = L["|cffff0000Co|cffff00fflo|cff00ff00r|r"], [false] = L["White"]},
-			order = 100,
-			disabled = function() return not colorModule end,
+			disabled = bwAnchorDisabled,
+			order = 401,
 		},
 		scale = {
 			type = "range",
@@ -280,14 +305,8 @@ plugin.consoleOptions = {
 			min = 0.2,
 			max = 2.0,
 			step = 0.1,
-			disabled = function() return plugin.db.profile.sink10OutputSink ~= "BigWigs" end,
-			order = 101,
-		},
-		chat = {
-			type = "toggle",
-			name = L["Chat frame"],
-			desc = L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."],
-			order = 103,
+			disabled = bwAnchorDisabled,
+			order = 402,
 		},
 	},
 }
@@ -299,6 +318,7 @@ plugin.consoleOptions = {
 function plugin:OnRegister()
 	self:RegisterSink("BigWigs", "BigWigs", nil, "Print")
 	self.consoleOptions.args.output = AceLibrary("Sink-1.0"):GetAceOptionsDataTable(self).output
+	self.consoleOptions.args.output.order = 100
 end
 
 function plugin:OnEnable()
@@ -332,8 +352,6 @@ local function createMsgFrame()
 	messageFrame:SetFontObject(GameFontNormalLarge)
 	messageFrame:Show()
 end
-
-
 
 ------------------------------
 --      Event Handlers      --
