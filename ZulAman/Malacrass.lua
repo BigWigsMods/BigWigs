@@ -84,7 +84,7 @@ end
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg == L["totem_trigger"] then
 		self:Sync("MalaTotem")
-	elseif msg == L["heal_flash"] or msg == L["heal_wave"] or msg == L["heal_light"]) then
+	elseif msg == L["heal_flash"] or msg == L["heal_wave"] or msg == L["heal_light"] then
 		self:Sync("MalaHeal")
 	end
 end
