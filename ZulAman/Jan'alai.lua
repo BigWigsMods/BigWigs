@@ -81,7 +81,7 @@ L:RegisterTranslations("koKR", function() return {
 	adds_message = "잠시후 부화사 등장!",
 } end )
 
-+L:RegisterTranslations("deDE", function() return {
+L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Die Geister der Winde besiegeln Euer Schicksal!",
 
 	flame = "Flame Breath",

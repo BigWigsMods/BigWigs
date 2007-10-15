@@ -62,11 +62,11 @@ L:RegisterTranslations("frFR", function() return {
 	elec_trigger = "^(%S+) (%S+) les effets .* Orage électrique%.$",
 	elec_bar = "~Cooldown Orage",
 	elec_message = "Orage sur %s !",
-	--elec_warning = "Storm soon!",
+	elec_warning = "Orage imminent !",
 
 	ping = "Ping",
 	ping_desc = "Indique votre position actuelle sur la minicarte si vous subissez les effets de l'Orage électrique.",
-	--ping_message = "Storm - Pinging your location!",
+	ping_message = "Orage - position signalée sur la minicarte !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Orage électrique (nécessite d'être promu ou mieux).",

@@ -52,6 +52,24 @@ L:RegisterTranslations("koKR", function() return {
 	spirit_bar = "~보통 단계",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	--engage_trigger = "Get on ya knees and bow.... to da fang and claw!",
+
+	totem = "Totem",
+	totem_desc = "Préviens quand Halazzi incante un Totem de foudre.",
+	totem_trigger = "Halazzi commence à lancer Totem de foudre.",
+	totem_message = "Arrivée d'un Totem de foudre !",
+
+	phase = "Phase",
+	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
+	--phase_spirit = "I fight wit' untamed spirit....",
+	--phase_normal = "Spirit, come back to me!",
+	normal_message = "Phase normale !",
+	spirit_message = "%d PV ! - Phase esprit !",
+	spirit_soon = "Phase esprit imminente !",
+	spirit_bar = "~Phase normale probable",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
