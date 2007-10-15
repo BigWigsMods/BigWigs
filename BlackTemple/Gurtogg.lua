@@ -131,6 +131,35 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le joueur sur qui le Souffle d'acide gangrené est incanté (nécessite d'être promu ou mieux).",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	engage_trigger = "部落會……毀滅你們。",
+
+	phase = "階段計時器",
+	phase_desc = "普通階段與惡魔之怒階段計時",
+	phase_rage_warning = "5 秒後惡魔之怒階段",
+	phase_normal_warning = "5 秒後結束惡魔之怒",
+	phase_normal = "惡魔之怒階段結束",
+	phase_normal_trigger = "惡魔之怒效果從葛塔格·血沸身上消失。",
+	phase_normal_bar = "~即將惡魔之怒階段",
+	phase_rage_bar = "下一個普通階段",
+
+	rage = "惡魔之怒",
+	rage_desc = "提示誰受到惡魔之怒",
+	rage_trigger = "^(.+)受到(.*)惡魔之怒效果的影響。$",
+	rage_you = "你受到惡魔之怒!!",
+	rage_other = "%s 受到惡魔之怒!",
+
+	whisper = "發送密語",
+	whisper_desc = "發送密語給受到惡魔之怒的玩家 (需要權限)",
+
+	acid = "Fel-Acid Breath",
+	acid_desc = "Warn who Fel-Acid Breath is being cast on.",
+	acid_message = "Fel-Acid Casting on: %s",
+
+	icon = "團隊標記",
+	icon_desc = "放置團隊標記在受到 Fel-Acid Breath 的隊友頭上 (需要權限)",
+} end )
+
 --Chinese Translate by 月色狼影@CWDG
 --CWDG site: http://Cwowaddon.com
 --古尔图格·血沸

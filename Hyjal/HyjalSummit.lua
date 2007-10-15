@@ -134,6 +134,26 @@ L:RegisterTranslations("zhCN", function() return {
 	["We have nothing to fear."] = "We have nothing to fear.", -- Az'Galor
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	wave = "階段警報",
+	wave_desc = "通報下一波小怪來臨訊息",
+
+	["~%s spawn"] = "~%s 出現",
+	["~Wave %d spawn"] = "~第 %d 波 出現",
+	["Wave %d incoming!"] = "第 %d 波 即將來臨!",
+	["%s in ~%d sec!"] = "在 ~%d 秒後 %s !",
+	["Wave %d in ~%d sec!"] = "在 ~%d 秒後 第 %d 波!",
+
+	["Boss"] = "首領",
+	["Thrall"] = "索爾",
+	["Lady Jaina Proudmoore"] = "珍娜·普勞德摩爾女士",
+
+	["My companions and I are with you, Lady Proudmoore."] = "我和我的同伴都與你同在，普勞德摩爾女士。", -- Rage Winterchill
+	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "不管阿克蒙德要派誰來對付我們，我們都已經準備好了，普勞德摩爾女士。", -- Anatheron
+	["I am with you, Thrall."] = "我與你同在，索爾。", -- Kaz'Rogal
+	["We have nothing to fear."] = "我們無所畏懼。", -- Az'Galor
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

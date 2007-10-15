@@ -81,18 +81,18 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	decay = "死亡凋零 on You",
-	decay_desc = "死亡凋零警告 on You.",
+	decay = "死亡凋零",
+	decay_desc = "通報你受到死亡凋零",
 	decay_trigger = "你受到了死亡凋零效果的影響。",
-	decay_message = "死亡凋零 on YOU!",
+	decay_message = "你受到死亡凋零!",
 
 	icebolt = "寒冰箭",
 	icebolt_desc = "寒冰箭警告",
-	icebolt_trigger = "^(.+)受到(了?)寒冰箭效果的影響。$",
-	icebolt_message = "寒冰箭 on %s!",
+	icebolt_trigger = "^(.+)受到(.*)寒冰箭效果的影響。$",
+	icebolt_message = "寒冰箭: %s!",
 
-	icon = "Raid Target Icon",
-	icon_desc = "Place a Raid Target Icon on the player afflicted by Icebolt (requires promoted or higher).",
+	icon = "團隊標記",
+	icon_desc = "在受到寒冰箭的隊友頭上標記 (需要權限)",
 } end )
 
 --雷基·冬寒

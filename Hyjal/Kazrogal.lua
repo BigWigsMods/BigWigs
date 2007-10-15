@@ -64,8 +64,8 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	range = "Range Check",
-	range_desc = "Show the proximity box when you are low on mana and have the Mark of Kaz'rogal.",
+	range = "距離檢查",
+	range_desc = "當你低量法力且受到卡茲洛加的印記時顯示距離框",
 	range_gain = "你受到了卡茲洛加的印記",
 	range_fade = "卡茲洛加的印記效果從你身上消失了。",
 } end )

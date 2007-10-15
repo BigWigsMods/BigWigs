@@ -118,14 +118,14 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	phase = "Phases",
-	phase_desc = "Warn about the different phases.",
-	normal_phase_message = "Tank'n'spank!",
+	phase = "階段",
+	phase_desc = "提示階段",
+	normal_phase_message = "坦&殺!",
 	normal_phase_trigger = "瑟普莫斯憤怒的捶擊地面!",
-	kite_phase_message = "%s loose!",
+	kite_phase_message = "%s 釋放!",
 	kite_phase_trigger = "地上開始裂開!",
-	next_phase_bar = "Next phase",
-	next_phase_message = "Phase change in 10sec!",
+	next_phase_bar = "下一個階段",
+	next_phase_message = "10 秒內改變階段!",
 
 	punch = "Molten Punch",
 	punch_desc = "Alert when he does Molten Punch, and display a countdown bar.",
@@ -133,13 +133,13 @@ L:RegisterTranslations("zhTW", function() return {
 	punch_bar = "~Possible Punch!",
 	punch_trigger = "施放了熔火之擊。",
 
-	target = "Target",
-	target_desc = "Warn who he targets during the kite phase, and put a raid icon on them.",
-	target_message = "%s being chased!",
-	target_message_nounit = "New target!",
+	target = "目標",
+	target_desc = "警報在風箏階段誰是主要目標，並在他頭上放團隊標記。",
+	target_message = "%s 被盯上!",
+	target_message_nounit = "新目標!",
 
-	icon = "Raid Target Icon",
-	icon_desc = "Place a Raid Target Icon on the player being chased(requires promoted or higher).",
+	icon = "目標標記",
+	icon_desc = "在被盯上的隊友頭上標記 (需要權限)",
 } end )
 
 --苏普雷姆斯

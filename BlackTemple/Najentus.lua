@@ -131,23 +131,23 @@ L:RegisterTranslations("zhTW", function() return {
 	start_trigger = "你會以瓦許女士之名而死!",
 
 	spine = "尖刺脊椎",
-	spine_desc = "告訴你誰獲得尖刺脊椎",
-	spine_trigger = "^(.+)受到(了?)尖刺脊椎效果的影響。$",
-	spine_message = "Impaling Spine on %s!",
+	spine_desc = "通知你誰受到尖刺脊椎",
+	spine_trigger = "^(.+)受到(.*)尖刺脊椎效果的影響。$",
+	spine_message = "尖刺脊椎: %s!",
 
-	spinesay = "Spine Say",
-	spinesay_desc = "Print in say when you have a Spine, can help nearby members with speech bubbles on.",
-	spinesay_message = "Spine on me!",
+	spinesay = "尖刺脊椎通報",
+	spinesay_desc = "當你中了尖刺脊椎會時自動喊話，讓周圍隊友迴避。",
+	spinesay_message = "我中了尖刺脊椎了，離開我!",
 
 	shield = "潮汐之盾",
-	shield_desc = "Timers for when Naj'entus will gain tidal shield.",
+	shield_desc = "潮汐之盾計時",
 	shield_trigger = "高階督軍納珍塔斯受到潮汐之盾",
 	shield_nextbar = "下一次潮汐之盾",
 	shield_warn = "潮汐之盾!",
 	shield_soon_warn = "潮汐之盾在 ~10秒內施放!",
 
-	icon = "Icon",
-	icon_desc = "Put an icon on players with Impaling Spine.",
+	icon = "團隊標記",
+	icon_desc = "在受到尖刺脊椎的隊友頭上標記。",
 } end )
 
 ----------------------------------

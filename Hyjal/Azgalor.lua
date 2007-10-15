@@ -101,6 +101,28 @@ L:RegisterTranslations("deDE", function() return {
 	afflict_trigger = "^(%S+) (%S+) ist von (.*) betroffen.$",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	doom = "災厄降臨",
+	doom_desc = "災厄降臨警報",
+	doom_other = "災厄降臨: %s",
+	doom_you = "你受到災厄降臨!",
+
+	hoa = "亞茲加洛之吼",
+	hoa_desc = "亞茲加洛之吼警報",
+	hoa_bar = "~亞茲加洛之吼冷卻",
+	hoa_message = "群體沉默",
+	hoa_warning = "即將發動群體沉默!",
+
+	rof = "火焰之雨",
+	rof_desc = "當你在火焰之雨範圍時發出警報",
+	rof_you = "你受到火焰之雨!",
+
+	icon = "團對標記",
+	icon_desc = "在受到災厄降臨的隊友頭上標記 (需要權限)",
+
+	afflict_trigger = "^(.+)受到(.*)效果的影響。",
+} end )
+
 --阿兹加洛
 L:RegisterTranslations("zhCN", function() return {
 	doom = "诅咒",
