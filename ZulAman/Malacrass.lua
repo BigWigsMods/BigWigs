@@ -34,9 +34,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	heal = "Heal",
 	heal_desc = "Warn when Malacrass casts a heal.",
-	heal_flash = "Flash Heal",
-	heal_light = "Holy Light",
-	heal_wave = "Healing Wave",
+	heal_flash = "Hex Lord Malacrass begins to cast Flash Heal.",
+	heal_light = "Hex Lord Malacrass begins to cast Holy Light.",
+	heal_wave = "Hex Lord Malacrass begins to cast Healing Wave.",
 	heal_message = "Casting Heal!",
 } end )
 
@@ -61,7 +61,6 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("UNIT_SPELLCAST_START")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	pName = UnitName("player")
@@ -85,6 +84,8 @@ end
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg == L["totem_trigger"] then
 		self:Sync("MalaTotem")
+	elseif msg == L["heal_flash"] or msg == L["heal_wave"] or msg == L["heal_light"]) then
+		self:Sync("MalaHeal")
 	end
 end
 
@@ -107,12 +108,5 @@ function mod:BigWigs_RecvSync(sync)
 		self:Bar(show, 2, "Spell_Nature_MagicImmunity")
 	elseif sync == "MalaTotem" and self.db.profile.totem then
 		self:Message(L["totem_message"], "Urgent")
-	end
-end
-
-function mod:UNIT_SPELLCAST_START(msg)
-	if UnitName(msg) == boss and ((UnitCastingInfo(msg)) == L["heal_flash"] or (UnitCastingInfo(msg)) == L["heal_wave"]
-	or (UnitCastingInfo(msg)) == L["heal_light"]) then
-		self:Sync("MalaHeal")
 	end
 end

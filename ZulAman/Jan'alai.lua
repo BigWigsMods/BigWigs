@@ -135,7 +135,6 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	end
 end
 
-
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.bomb and msg == L["bomb_trigger"] then
 		self:Message(L["bomb_message"], "Urgent")
@@ -153,4 +152,3 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L2["enrage"], 300, "Spell_Shadow_UnholyFrenzy")
 	end
 end
-
