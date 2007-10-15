@@ -122,9 +122,9 @@ local function ScanTarget()
 		end
 	end
 	if target then
-		self:Message(fmt(L["flame_message"], target), "Important")
-		if self.db.profile.icon then
-			self:Icon(target)
+		mod:Message(fmt(L["flame_message"], target), "Important")
+		if mod.db.profile.icon then
+			mod:Icon(target)
 		end
 	end
 end
