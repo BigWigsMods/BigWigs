@@ -76,7 +76,7 @@ L:RegisterTranslations("koKR", function() return {
 	bomb_message = "잠시후 불폭탄!",
 
 	adds = "부화사 등장",
-	adds_desc = "부화사 등장에 대한 경고입니다.",
+	adds_desc = "부화사 등장에 대해 경고합니다.",
 	adds_trigger = "내 부화기 어딨지? 저 알 부화시키는 일 하자!",
 	adds_message = "잠시후 부화사 등장!",
 } end )
@@ -163,6 +163,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["bomb"], 12, "Spell_Fire_Fire")
 	elseif self.db.profile.adds and msg == L["adds_trigger"] then
 		self:Message(L["adds_message"], "Positive")
+		self:Bar(L["adds"], 90, "INV_Misc_Head_Troll_01")
 	elseif self.db.profile.enrage and msg == L["engage_trigger"] then
 		self:Message(fmt(L2["enrage_start"], boss, 5), "Attention")
 		self:DelayedMessage(120, fmt(L2["enrage_min"], 3), "Positive")

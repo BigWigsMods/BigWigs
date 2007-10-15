@@ -23,6 +23,7 @@ L:RegisterTranslations("enUS", function() return {
 	elec_trigger = "^(%S+) (%S+) afflicted by Electrical Storm%.$",
 	elec_bar = "~Storm Cooldown",
 	elec_message = "Storm on %s!",
+	elec_warning = "Storm soon!",
 
 	ping = "Ping",
 	ping_desc = "Ping your current location if you are afflicted by Electrical Storm.",
@@ -34,14 +35,15 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "내가 끝장내리라! 네놈을 제물 삼아...",
-	engage_message = "%s 전투 시작 - ~55이내 폭풍!",
+	engage_message = "%s 전투 시작 - ~55초 이내 폭풍!",
 
 	elec = "전기 폭풍",
-	elec_desc = "부화사 등장에 대한 경고입니다.",
+	elec_desc = "전기 폭풍에 걸린 플레이어를 알립니다.",
 	--elec_trigger = "^([^|;%s]*)(.*)전기 폭풍에 걸렸습니다%.$",
 	elec_trigger = "^([^|;%s]*)(.*)Electrical Storm에 걸렸습니다%.$", -- 현재 PTR 서버, 스킬명 한글화 안되어 있음
 	elec_bar = "~폭풍 대기 시간",
 	elec_message = "%s에 폭풍!",
+	elec_warning = "잠시후 폭풍!",
 
 	ping = "미니맵 표시",
 	ping_desc = "당신이 전기 폭풍에 걸렸을때 현재 위치를 미니맵에 표시합니다.",
@@ -60,6 +62,7 @@ L:RegisterTranslations("frFR", function() return {
 	elec_trigger = "^(%S+) (%S+) les effets .* Orage électrique%.$",
 	elec_bar = "~Cooldown Orage",
 	elec_message = "Orage sur %s !",
+	elec_warning = "storm soon!",
 
 	ping = "Ping",
 	ping_desc = "Indique votre position actuelle sur la minicarte si vous subissez les effets de l'Orage électrique.",
@@ -123,6 +126,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		self:Message(L["engage_message"]:format(boss), "Positive")
 		self:Bar(L["elec_bar"], 55, "Spell_Lightning_LightningBolt01")
+		self:DelayedMessage(43, L["elec_warning"], "Urgent")
 	end
 end
 
@@ -132,6 +136,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(show, "Attention")
 		self:Bar(show, 8, "Spell_Nature_EyeOfTheStorm")
 		self:Bar(L["elec_bar"], 55, "Spell_Lightning_LightningBolt01")
+		self:DelayedMessage(48, L["elec_warning"], "Urgent")
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
