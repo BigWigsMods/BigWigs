@@ -62,7 +62,7 @@ L:RegisterTranslations("frFR", function() return {
 	elec_trigger = "^(%S+) (%S+) les effets .* Orage électrique%.$",
 	elec_bar = "~Cooldown Orage",
 	elec_message = "Orage sur %s !",
-	elec_warning = "storm soon!",
+	--elec_warning = "Storm soon!",
 
 	ping = "Ping",
 	ping_desc = "Indique votre position actuelle sur la minicarte si vous subissez les effets de l'Orage électrique.",

@@ -29,7 +29,7 @@ L:RegisterTranslations("enUS", function() return {
 	phase_spirit = "I fight wit' untamed spirit....",
 	phase_normal = "Spirit, come back to me!",
 	normal_message = "Normal Phase!",
-	spirit_message = "%d HP! - Spirit Phase!",
+	spirit_message = "%d%% HP! - Spirit Phase!",
 	spirit_soon = "Spirit Phase soon!",
 	spirit_bar = "~Possible Normal Phase",
 } end )
@@ -47,7 +47,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase_spirit = "나는 야생의 영혼과 한 편이다...",
 	phase_normal = "영혼이여! 돌아오라!",
 	normal_message = "보통 단계!",
-	spirit_message = "%d HP! - 영혼 단계!",
+	spirit_message = "%d%% HP! - 영혼 단계!",
 	spirit_soon = "곧 영혼 단계!",
 	spirit_bar = "~보통 단계",
 } end )
