@@ -298,8 +298,8 @@ L:RegisterTranslations("zhTW", function() return {
 	engage_trigger1 = "我不想要因為跟你這種人交手而降低我自己的身份，但是你們讓我別無選擇……",
 	engage_trigger2 = "我唾棄你們，地表的渣滓!",
 	engage_trigger3 = "伊利丹王必勝!",
-	engage_trigger4 = "I'll split you from stem to stern!", -- need chatlog.
-	engage_trigger5 = "我要把你們全部殺死!",
+	engage_trigger4 = "我要把你們全部殺死!", -- need chatlog.
+	engage_trigger5 = "入侵者都要死!",
 	engage_message = "第一階段 - 開戰！",
 
 	phase = "階段警示",
@@ -342,8 +342,8 @@ L:RegisterTranslations("zhTW", function() return {
 	loot = "受污染的核心警示",
 	loot_desc = "提示誰拾取了受污染的核心",
 	loot_message = "%s 撿到核心！快使用妙傳！",
-	--loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$",
-	--loot_update = "Core on > %s",
+	loot_paralyze = "^(.+)受到(.*)麻痹效果的影響。$",
+	loot_update = "拿到受污染的核心: %s",
 } end )
 
 ----------------------------------

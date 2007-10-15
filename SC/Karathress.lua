@@ -100,15 +100,15 @@ L:RegisterTranslations("zhTW", function() return {
 	enrage_trigger = "守衛，注意!我們有訪客了……",
 
 	totem = "飛火圖騰",
-	totem_desc = "飛火圖騰施放警示。",
-	totem_trigger1 = "深淵守衛提達費斯施放了飛火圖騰",
-	totem_trigger2 = "深淵之王卡拉薩瑞斯施放了飛火圖騰",
+	totem_desc = "飛火圖騰施放警示",
+	totem_trigger1 = "深淵守衛提達費斯施放了飛火圖騰。",
+	totem_trigger2 = "深淵之王卡拉薩瑞斯施放了飛火圖騰。",
 	totem_message1 = "提達費斯：飛火圖騰",
 	totem_message2 = "卡拉薩瑞斯：飛火圖騰",
 
 	heal = "治療術",
 	heal_desc = "當卡利迪斯施放治療術時警示",
-	heal_trigger = "卡利迪斯開始施放治療波",
+	heal_trigger = "卡利迪斯開始施放治療波。",
 	heal_message = "治療波 - 快中斷！",
 
 	["Fathom-Guard Sharkkis"] = "深淵守衛沙卡奇斯",
