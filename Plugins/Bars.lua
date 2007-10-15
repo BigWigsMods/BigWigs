@@ -1005,9 +1005,7 @@ function plugin:ResetAnchor(specific)
 		if not anchor then self:SetupFrames() end
 		anchor:ClearAllPoints()
 		if self.db.profile.emphasize and self.db.profile.emphasizeMove then
-			local y = (UIParent:GetHeight() / 4) * 1.3
-			local scale = anchor:GetEffectiveScale()
-			anchor:SetPoint("CENTER", UIParent, "CENTER", 0, y / scale)
+			anchor:SetPoint("TOP", UIParent, "TOP", 0, -25)
 		else
 			anchor:SetPoint("CENTER", UIParent, "CENTER")
 		end
