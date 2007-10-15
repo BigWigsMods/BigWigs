@@ -25,9 +25,6 @@ L:RegisterTranslations("enUS", function() return {
 	["Use colors"] = true,
 	["Toggles white only messages ignoring coloring."] = true,
 
-	["Text shadow"] = true,
-	["Show a shadow behind message text."] = true,
-
 	["Scale"] = true,
 	["Set the message frame scale."] = true,
 
@@ -55,9 +52,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Use colors"] = "색상 사용",
 	["Toggles white only messages ignoring coloring."] = "메세지에 색상 사용을 설정합니다.",
 
-	--["Text shadow"] = true,
-	--["Show a shadow behind message text."] = true,
-
 	["Scale"] = "크기",
 	["Set the message frame scale."] = "메세지창의 크기를 설정합니다.",
 
@@ -75,8 +69,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Reset the anchor position, moving it to the center of your screen."] = "화면의 중앙으로 고정 위치를 초기화합니다.",
 } end)
 
---Chinese Translate by 月色狼影@CWDG
---CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["Messages"] = "信息提示",
 	["Options for message display."] = "信息显示模式及相关设置。",
@@ -87,9 +79,6 @@ L:RegisterTranslations("zhCN", function() return {
 	["Use colors"] = "发送彩色信息",
 
 	["Toggles white only messages ignoring coloring."] = "选择是否只发送单色信息。",
-
-	["Text shadow"] = "文字阴影",
-	["Show a shadow behind message text."] = "在信息文字上增加一个阴影",
 
 	["Scale"] = "缩放",
 	["Set the message frame scale."] = "调整信息文字大小",
@@ -118,9 +107,6 @@ L:RegisterTranslations("zhTW", function() return {
 	["Use colors"] = "發送彩色訊息",
 	["Toggles white only messages ignoring coloring."] = "切換是否只發送單色訊息。",
 
-	--["Text shadow"] = true,
-	--["Show a shadow behind message text."] = true,
-
 	["Scale"] = "縮放",
 	["Set the message frame scale."] = "設置訊息框架縮放比例",
 
@@ -147,9 +133,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	["Use colors"] = "Farben verwenden",
 	["Toggles white only messages ignoring coloring."] = "Nachrichten farbig/weiß anzeigen.",
-
-	["Text shadow"] = "Text Schatten",
-	["Show a shadow behind message text."] = "Einen Schattenrand hinter Nachrichten Texten anzeigen.",
 
 	["Scale"] = "Skalierung",
 	["Set the message frame scale."] = "Die Skalierung des Nachrichtenfensters festlegen.",
@@ -178,9 +161,6 @@ L:RegisterTranslations("frFR", function() return {
 	["Use colors"] = "Utiliser des couleurs",
 	["Toggles white only messages ignoring coloring."] = "Utilise ou non des couleurs dans les messages à la place du blanc unique.",
 
-	["Text shadow"] = "Texte ombré",
-	["Show a shadow behind message text."] = "Affiche une ombre derrière le texte des messages.",
-
 	["Scale"] = "Echelle",
 	["Set the message frame scale."] = "Détermine l'échelle du cadre des messages.",
 
@@ -208,9 +188,6 @@ L:RegisterTranslations("esES", function() return {
 	["Use colors"] = "Usar colores",
 	["Toggles white only messages ignoring coloring."] = "Mostrar solo mensajes en blanco, ignorando colores",
 
-	["Text shadow"] = "Sombra del texto",
-	["Show a shadow behind message text."] = "Muestra una sombra detras del texto del mensaje",
-
 	["Scale"] = "Escala",
 	["Set the message frame scale."] = "Establece la escala del mensaje",
 
@@ -236,12 +213,11 @@ local plugin = BigWigs:NewModule("Messages", "Sink-1.0")
 
 plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
-	sink10OutputSink = "BigWigs",
+	sink10OutputSink = "RaidWarning",
 	usecolors = true,
 	scale = 1.0,
 	posx = nil,
-	posy = nil,
-	shadow = true,
+	posy = -150,
 	chat = nil,
 }
 plugin.consoleCmd = L["Messages"]
@@ -297,12 +273,6 @@ plugin.consoleOptions = {
 			order = 100,
 			disabled = function() return not colorModule end,
 		},
-		shadow = {
-			type = "toggle",
-			name = L["Text shadow"],
-			desc = L["Show a shadow behind message text."],
-			order = 101,
-		},
 		scale = {
 			type = "range",
 			name = L["Scale"],
@@ -311,13 +281,13 @@ plugin.consoleOptions = {
 			max = 2.0,
 			step = 0.1,
 			disabled = function() return plugin.db.profile.sink10OutputSink ~= "BigWigs" end,
-			order = 102,
+			order = 101,
 		},
 		chat = {
 			type = "toggle",
 			name = L["Chat frame"],
 			desc = L["Outputs all BigWigs messages to the default chat frame in addition to the display setting."],
-			order = 104,
+			order = 103,
 		},
 	},
 }
@@ -383,12 +353,6 @@ function plugin:Print(addon, text, r, g, b)
 	if not messageFrame then createMsgFrame() end
 	messageFrame:SetScale(self.db.profile.scale)
 	messageFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
-	if plugin.db.profile.shadow then
-		messageFrame:SetShadowColor(0, 0, 0)
-		messageFrame:SetShadowOffset(1, 2)
-	else
-		messageFrame:SetShadowColor(0,0,0,0)
-	end
 end
 
 function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
@@ -433,7 +397,7 @@ function plugin:SetupFrames()
 
 	anchor:SetBackdropColor(24/255, 24/255, 24/255)
 	anchor:ClearAllPoints()
-	anchor:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+	anchor:SetPoint("TOP", UIParent, "TOP", 0, -150)
 	anchor:EnableMouse(true)
 	anchor:RegisterForDrag("LeftButton")
 	anchor:SetMovable(true)
@@ -483,9 +447,9 @@ function plugin:ResetAnchor()
 	if not anchor then self:SetupFrames() end
 
 	anchor:ClearAllPoints()
-	anchor:SetPoint("CENTER", UIParent, "CENTER")
+	anchor:SetPoint("TOP", UIParent, "TOP", 0, -150)
 	self.db.profile.posx = nil
-	self.db.profile.posy = nil
+	self.db.profile.posy = -150
 end
 
 function plugin:SavePosition()
