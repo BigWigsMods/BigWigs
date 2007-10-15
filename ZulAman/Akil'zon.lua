@@ -26,6 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	ping = "Ping",
 	ping_desc = "Ping your current location if you are afflicted by Electrical Storm.",
+	ping_message = "Storm - Pinging your location!",
 
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Target Icon on the player with Electrical Storm. (requires promoted or higher)",
@@ -43,6 +44,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	ping = "미니맵 표시",
 	ping_desc = "당신이 전기 폭풍에 걸렸을때 현재 위치를 미니맵에 표시합니다.",
+	--ping_message = "Storm - Pinging your location!",
 
 	icon = "전술 표시",
 	icon_desc = "전기 폭풍 대상이된 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
@@ -60,6 +62,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	ping = "Ping",
 	ping_desc = "Indique votre position actuelle sur la minicarte si vous subissez les effets de l'Orage électrique.",
+	--ping_message = "Storm - Pinging your location!",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Orage électrique (nécessite d'être promu ou mieux).",
@@ -106,6 +109,7 @@ function mod:Storm(msg)
 			eplayer = pName
 			if self.db.profile.ping then
 				Minimap:PingLocation(CURSOR_OFFSET_X, CURSOR_OFFSET_Y)
+				BigWigs:Print(L["ping_message"])
 			end
 		end
 		self:Sync("AkilElec ", eplayer)
