@@ -50,13 +50,12 @@ L:RegisterTranslations("koKR", function() return {
 
 	soul = "영혼 착취",
 	soul_desc = "누가 영혼 착취에 걸렸는지 알립니다.",
-	--soul_trigger = "^([^|;%s]*)(.*)영혼 착취에 걸렸습니다%.$",
-	soul_trigger = "^([^|;%s]*)(.*)Siphon Soul에 걸렸습니다%.$", -- 현재 PTR에 한글화 안되어 있을 듯(?)
+	soul_trigger = "^([^|;%s]*)(.*)영혼 착취에 걸렸습니다%.$",
 	soul_message = "착취: %s",
 
 	totem = "토템",
 	totem_desc = "불꽃 회오리 토템 시전시 알립니다.",
-	totem_trigger = "주술 군주 말라크라스|1이;가; 불꽃 회오리 토템을 시전을 시작합니다.",
+	totem_trigger = "주술 군주 말라크라스|1이;가; 불꽃 회오리 토템|1을;를; 시전을 시작합니다.",
 	totem_message = "불꽃 회오리 토템!",
 
 	heal = "치유",
@@ -71,25 +70,25 @@ L:RegisterTranslations("frFR", function() return {
 	--engage_trigger = "Da shadow gonna fall on you....",
 
 	bolts = "Eclairs spirituels",
-	bolts_desc = "Préviens quand Malacrass commence à canaliser ses Eclairs spirituels.",
+	bolts_desc = "Previens quand Malacrass commence a canaliser ses Eclairs spirituels.",
 	--bolts_trigger = "Your soul gonna bleed!",
-	bolts_message = "Arrivée des Eclairs spirituels !",
+	bolts_message = "Arrivee des Eclairs spirituels !",
 
-	soul = "Siphonner l'âme",
-	soul_desc = "Préviens quand un joueur subit les effets de Siphonner l'âme.",
-	soul_trigger = "^(%S+) (%S+) les effets .* Siphonner l'âme%.$",
+	soul = "Siphonner l'ame",
+	soul_desc = "Previens quand un joueur subit les effets de Siphonner l'ame.",
+	soul_trigger = "^(%S+) (%S+) les effets .* Siphonner l'ame%.$",
 	soul_message = "Siphon : %s",
 
 	totem = "Totem",
-	totem_desc = "Préviens quand un Totem Nova de feu est incanté.",
-	totem_trigger = "Seigneur des maléfices Malacrass lance Totem Nova de feu.",
+	totem_desc = "Previens quand un Totem Nova de feu est incante.",
+	totem_trigger = "Seigneur des malefices Malacrass lance Totem Nova de feu.",
 	totem_message = "Totem Nova de feu !",
 
 	heal = "Soin",
-	heal_desc = "Préviens quand Malacrass incante un soin.",
-	heal_flash = "Seigneur des maléfices Malacrass commence à lancer Soins rapides.",
-	heal_light = "Seigneur des maléfices Malacrass commence à lancer Lumière sacrée.",
-	heal_wave = "Seigneur des maléfices Malacrass commence à lancer Vague de soins.",
+	heal_desc = "Previens quand Malacrass incante un soin.",
+	heal_flash = "Seigneur des malefices Malacrass commence a lancer Soins rapides.",
+	heal_light = "Seigneur des malefices Malacrass commence a lancer Lumiere sacree.",
+	heal_wave = "Seigneur des malefices Malacrass commence a lancer Vague de soins.",
 	heal_message = "Incante un soin !",
 } end )
 
