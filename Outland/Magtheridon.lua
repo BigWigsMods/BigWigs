@@ -208,7 +208,7 @@ L:RegisterTranslations("koKR", function() return {
 	banish_desc = "마그테리돈 추방 시 알립니다.",
 	banish_trigger = "안 돼, 다시 그럴 수는 없다!",
 	banish_message = "약 10초 동안 추방됨",
-	banish_over_trigger = "^암흑의 우리 사라짐", -- check
+	banish_over_trigger = "^어둠의 우리 효과가 사라졌습니다.",
 	banish_over_message = "추방 종료!",
 	banish_bar = "추방됨",
 
