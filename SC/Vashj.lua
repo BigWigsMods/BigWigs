@@ -131,11 +131,11 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	["Tainted Elemental"] = "Elémentaire souillé",
 
-	engage_trigger1 = "J'espérais ne pas devoir m'abaisser à affronter des créatures de la surface, mais vous ne me laissez pas le choix…", -- à vérifier
-	engage_trigger2 = "Je te crache dessus, racaille de la surface !", -- à vérifier
+	engage_trigger1 = "J'espérais ne pas devoir m'abaisser à affronter des créatures de la surface, mais vous ne me laissez pas le choix...",
+	engage_trigger2 = "Je te crache dessus, racaille de la surface !",
 	engage_trigger3 = "Victoire au seigneur Illidan !",
-	engage_trigger4 = "Je vais te déchirer de part en part !", -- à vérifier
-	engage_trigger5 = "Mort aux étrangers !", -- à vérifier
+	engage_trigger4 = "Je vais te déchirer de part en part !",
+	engage_trigger5 = "Mort aux étrangers !",
 	engage_message = "Début de la phase 1",
 
 	phase = "Phases",
