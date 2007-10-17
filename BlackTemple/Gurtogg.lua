@@ -152,12 +152,12 @@ L:RegisterTranslations("zhTW", function() return {
 	whisper = "發送密語",
 	whisper_desc = "發送密語給受到惡魔之怒的玩家 (需要權限)",
 
-	acid = "Fel-Acid Breath",
-	acid_desc = "Warn who Fel-Acid Breath is being cast on.",
-	acid_message = "Fel-Acid Casting on: %s",
+	acid = "魔化酸液噴吐",
+	acid_desc = "提示誰受到魔化酸液噴吐",
+	acid_message = "魔化酸液噴吐在: %s 身上",
 
 	icon = "團隊標記",
-	icon_desc = "放置團隊標記在受到 Fel-Acid Breath 的隊友頭上 (需要權限)",
+	icon_desc = "放置團隊標記在受到魔化酸液噴吐的隊友頭上 (需要權限)",
 } end )
 
 --Chinese Translate by 月色狼影@CWDG

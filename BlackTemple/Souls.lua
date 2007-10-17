@@ -239,6 +239,49 @@ L:RegisterTranslations("zhCN", function() return {
 	afflict_trigger = "^(%S+)受(%S+)了(.*)效果的影响。$",
 } end )
 
+L:RegisterTranslations("enUS", function() return {
+	engage_trigger = "Pain and suffering are all that await you!",
+
+	enrage_start = "狂怒在 ~47sec",
+	enrage_trigger = "%s becomes enraged!",
+	enrage_message = "狂怒 15 秒!",
+	enrage_bar = "<狂怒>",
+	enrage_next = "狂怒結束 - 下一次 ~32sec",
+	enrage_nextbar = "下一次狂怒",
+	enrage_warning = "狂怒在 5 秒內!",
+
+	desire_trigger  = "You can have anything you desire... for a price.",
+	desire_cot = "Shi shi rikk rukadare shi tichar kar x gular ", --Curse of Tongues trigger
+	desire_start = "慾望精華 - Zero mana in 160 sec",
+	desire_bar = "Zero Mana",
+	desire_warn = "Zero Mana in 30sec!",
+
+	runeshield = "符文護盾",
+	runeshield_desc = "慾望精華將獲得符文護盾計時條",
+	runeshield_trigger = "慾望精華獲得了符文護盾",
+	runeshield_message = "符文護盾!",
+	runeshield_nextbar = "下一次符文護盾",
+	runeshield_warn = "符文護盾 ~3秒內.",
+
+	deaden = "麻木",
+	deaden_desc = "當麻木開始施放時警告",
+	deaden_trigger = "慾望精華開始施放麻木。",
+	deaden_message = "正在施放麻木!",
+	deaden_warn = "麻木 ~5秒內.",
+	deaden_nextbar = "下一次麻木",
+
+	spite = "惡意",
+	spite_desc = "警告誰有惡意",
+	spite_message = "惡意: %s",
+
+	scream = "靈魂尖嘯",
+	scream_desc = "顯示靈魂尖嘯冷卻條",
+	scream_trigger = "^憤怒精華的靈魂尖嘯",
+	scream_bar = "~靈魂尖嘯冷卻",
+
+	afflict_trigger = "^(.+)受到(了?)(.*)效果的影響。$",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

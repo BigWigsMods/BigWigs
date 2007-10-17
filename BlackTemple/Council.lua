@@ -218,6 +218,53 @@ L:RegisterTranslations("zhCN", function() return {
 	circle_bar = "~治疗之环 CD",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	engage_trigger1 = "你們要考驗我嗎?",
+	engage_trigger2 = "Common... such a crude language. Bandal!",
+	engage_trigger3 = "I have better things to do..",
+	engage_trigger4 = "Flee, or die!",
+
+	vanish = "消失",
+	vanish_desc = "消失計時條.",
+	vanish_trigger = "維拉斯·深影獲得了消失",
+	vanish_message = "維拉斯: 消失! ~30秒回來",
+	vanish_warning = "消失結束 - %s 回來了!",
+	vanish_bar = "維拉斯潛行",
+
+	immune = "免疫警告",
+	immune_desc = "當瑪蘭黛女士免疫法術或近戰時警告",
+	immune_spell_trigger = "瑪蘭黛女士獲得了法術結界祝福",
+	immune_melee_trigger = "瑪蘭黛女士獲得了保護祝福",
+	immune_message = "瑪蘭黛: %s 15秒免疫!",
+	immune_bar = "%s 免疫!",
+
+	spell = "法術",
+	melee = "近戰",
+
+	shield = "反射護盾",
+	shield_desc = "當瑪蘭黛女士獲得了反射護盾時警告",
+	shield_trigger = "瑪蘭黛女士獲得了反射護盾",
+	shield_message = "反射護盾在瑪蘭黛女士身上!",
+
+	poison = "致命毒藥",
+	poison_desc = "當玩家受到致命毒藥時警告",
+	poison_trigger = "^(.+)受到(.*)致命毒藥效果的影響。$",
+	poison_other = "%s 中了致命毒藥!",
+	poison_you = "致命毒藥在你身上!",
+
+	icon = "團隊標記",
+	icon_desc = "為中了致命毒藥的隊員打上團隊標記.",
+
+	circle = "治療之環",
+	circle_desc = "當瑪蘭黛女士開始施放治療之環時警告",
+	circle_trigger = "瑪蘭黛女士開始施放治療之環。",
+	circle_message = "正在施放治療之環!",
+	circle_heal_trigger = "^瑪蘭黛女士的治療之環治療了",
+	circle_fail_trigger = "^(.+)打斷了瑪蘭黛女士的治療之環。$",
+	circle_heal_message = "被治療了! - 下一次 ~20秒",
+	circle_fail_message = "%s 中斷了! - 下一次 ~12秒",
+	circle_bar = "~治療之環冷卻",
+} end )
 
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger1 = "Wollt Ihr mich auf die Probe stellen?",

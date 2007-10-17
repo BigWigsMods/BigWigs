@@ -80,6 +80,19 @@ L:RegisterTranslations("zhCN", function() return {
 	icon_desc = "给中了死亡之影的玩家打上团队标记",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	start_trigger = "我要復仇!", -- Vengeance is mine!
+
+	shadow = "死亡之影",
+	shadow_desc = "當誰中了死亡之影將告訴你",
+	shadow_trigger = "^(.+)受到(.*)死亡之影效果的影響。$",
+	shadow_other = "死亡之影: %s!",
+	shadow_you = "你 中了死亡之影!",
+
+	icon = "團隊標記",
+	icon_desc = "給中了死亡之影的玩家打上團隊標記",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

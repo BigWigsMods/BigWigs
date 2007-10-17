@@ -108,7 +108,7 @@ L:RegisterTranslations("zhTW", function() return {
 	swarm_trigger1 = "Pestilence upon you!",
 	swarm_trigger2 = "The swarm is eager to feed.",
 	swarm_message = "腐肉成群! - 11 秒後下一次",
-	swarm_bar = "~腐肉成群 Cooldown",
+	swarm_bar = "~腐肉成群冷卻",
 } end )
 
 --安纳塞隆

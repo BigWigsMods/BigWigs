@@ -76,6 +76,31 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage_message = "10% - 狂暴",
 	enrage_trigger = "Stop toying with my emotions!",
 } end )
+
+L:RegisterTranslations("zhTW", function() return {
+	engage_trigger = "是辦正事還找樂子呢?",
+
+	attraction = "致命的吸引力",
+	attraction_desc = "當玩家中致命的吸引力發出警報",
+	attraction_trigger = "^(.+)受到(.*)致命的吸引力",
+	attraction_message = "致命的吸引力: %s",
+
+	debuff = "Debuff 計時",
+	debuff_desc = "顯示debuff直到下一個計時",
+	debuff_bar = "下一個計時",
+
+	berserk = "狂暴",
+	berserk_desc = "10 分鐘狂暴警報",
+	berserk_start = "%s 開打了, 10 分鐘後狂暴",
+	berserk_min = "%d 分鐘後狂暴",
+	berserk_sec = "%d 秒鐘後狂暴",
+	berserk_end = "%s 要狂暴了!",
+
+	enrage_warning = "即將狂怒!",
+	enrage_message = "10% - 狂怒",
+	enrage_trigger = "Stop toying with my emotions!",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "흥... 관광하러 온 거야?",
 
