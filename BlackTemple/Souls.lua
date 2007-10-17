@@ -240,21 +240,21 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("enUS", function() return {
-	engage_trigger = "Pain and suffering are all that await you!",
+	engage_trigger = "等待你們的只有痛苦與折磨﹗",
 
-	enrage_start = "狂怒在 ~47sec",
-	enrage_trigger = "%s becomes enraged!",
-	enrage_message = "狂怒 15 秒!",
-	enrage_bar = "<狂怒>",
-	enrage_next = "狂怒結束 - 下一次 ~32sec",
-	enrage_nextbar = "下一次狂怒",
-	enrage_warning = "狂怒在 5 秒內!",
+	enrage_start = "憤怒在 ~47sec",
+	enrage_trigger = "%s變得憤怒了!",
+	enrage_message = "憤怒 15 秒!",
+	enrage_bar = "<憤怒>",
+	enrage_next = "憤怒結束 - 下一次 ~32秒",
+	enrage_nextbar = "下一次憤怒",
+	enrage_warning = "憤怒在 5 秒內!",
 
-	desire_trigger  = "You can have anything you desire... for a price.",
+	desire_trigger  = "你可以得到任何你想要的東西……只要付得起代價。",
 	desire_cot = "Shi shi rikk rukadare shi tichar kar x gular ", --Curse of Tongues trigger
-	desire_start = "慾望精華 - Zero mana in 160 sec",
-	desire_bar = "Zero Mana",
-	desire_warn = "Zero Mana in 30sec!",
+	desire_start = "慾望精華 - 160 秒內沒魔",
+	desire_bar = "沒魔",
+	desire_warn = "30 秒內沒魔!",
 
 	runeshield = "符文護盾",
 	runeshield_desc = "慾望精華將獲得符文護盾計時條",

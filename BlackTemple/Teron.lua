@@ -81,7 +81,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	start_trigger = "我要復仇!", -- Vengeance is mine!
+	start_trigger = "我要復仇﹗", -- Vengeance is mine!
 
 	shadow = "死亡之影",
 	shadow_desc = "當誰中了死亡之影將告訴你",
