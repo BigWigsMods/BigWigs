@@ -98,7 +98,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	enrage_warning = "即將狂怒!",
 	enrage_message = "10% - 狂怒",
-	enrage_trigger = "Stop toying with my emotions!",
+	enrage_trigger = "不要浪費我的感情了！",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
