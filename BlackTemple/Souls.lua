@@ -251,7 +251,7 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_warning = "憤怒在 5 秒內!",
 
 	desire_trigger  = "你可以得到任何你想要的東西……只要付得起代價。",
-	desire_cot = "Shi shi rikk rukadare shi tichar kar x gular ", --Curse of Tongues trigger
+	desire_cot = "[惡魔語] Zennshinagas", -- 語言詛咒觸發
 	desire_start = "慾望精華 - 160 秒內沒魔",
 	desire_bar = "沒魔",
 	desire_warn = "30 秒內沒魔!",
