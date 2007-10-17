@@ -70,25 +70,25 @@ L:RegisterTranslations("frFR", function() return {
 	--engage_trigger = "Da shadow gonna fall on you....",
 
 	bolts = "Eclairs spirituels",
-	bolts_desc = "Previens quand Malacrass commence a canaliser ses Eclairs spirituels.",
+	bolts_desc = "Préviens quand Malacrass commence à canaliser ses Eclairs spirituels.",
 	--bolts_trigger = "Your soul gonna bleed!",
-	bolts_message = "Arrivee des Eclairs spirituels !",
+	bolts_message = "Arrivée des Eclairs spirituels !",
 
-	soul = "Siphonner l'ame",
-	soul_desc = "Previens quand un joueur subit les effets de Siphonner l'ame.",
-	soul_trigger = "^(%S+) (%S+) les effets .* Siphonner l'ame%.$",
+	soul = "Siphonner l'âme",
+	soul_desc = "Préviens quand un joueur subit les effets de Siphonner l'âme.",
+	soul_trigger = "^(%S+) (%S+) les effets .* Siphonner l'âme%.$",
 	soul_message = "Siphon : %s",
 
 	totem = "Totem",
-	totem_desc = "Previens quand un Totem Nova de feu est incante.",
-	totem_trigger = "Seigneur des malefices Malacrass lance Totem Nova de feu.",
+	totem_desc = "Préviens quand un Totem Nova de feu est incanté.",
+	totem_trigger = "Seigneur des maléfices Malacrass lance Totem Nova de feu.",
 	totem_message = "Totem Nova de feu !",
 
 	heal = "Soin",
-	heal_desc = "Previens quand Malacrass incante un soin.",
-	heal_flash = "Seigneur des malefices Malacrass commence a lancer Soins rapides.",
-	heal_light = "Seigneur des malefices Malacrass commence a lancer Lumiere sacree.",
-	heal_wave = "Seigneur des malefices Malacrass commence a lancer Vague de soins.",
+	heal_desc = "Préviens quand Malacrass incante un soin.",
+	heal_flash = "Seigneur des maléfices Malacrass commence à lancer Soins rapides.",
+	heal_light = "Seigneur des maléfices Malacrass commence à lancer Lumière sacrée.",
+	heal_wave = "Seigneur des maléfices Malacrass commence à lancer Vague de soins.",
 	heal_message = "Incante un soin !",
 } end )
 

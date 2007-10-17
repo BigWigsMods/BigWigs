@@ -56,12 +56,12 @@ L:RegisterTranslations("frFR", function() return {
 	--engage_trigger = "Get on ya knees and bow.... to da fang and claw!",
 
 	totem = "Totem",
-	totem_desc = "Previens quand Halazzi incante un Totem de foudre.",
-	totem_trigger = "Halazzi commence a lancer Totem de foudre.",
-	totem_message = "Arrivee d'un Totem de foudre !",
+	totem_desc = "Préviens quand Halazzi incante un Totem de foudre.",
+	totem_trigger = "Halazzi commence à lancer Totem de foudre.",
+	totem_message = "Arrivée d'un Totem de foudre !",
 
 	phase = "Phase",
-	phase_desc = "Previens quand la rencontre entre dans une nouvelle phase.",
+	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
 	--phase_spirit = "I fight wit' untamed spirit....",
 	--phase_normal = "Spirit, come back to me!",
 	normal_message = "Phase normale !",
