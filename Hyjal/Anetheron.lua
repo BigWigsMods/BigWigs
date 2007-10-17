@@ -105,8 +105,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	swarm = "腐肉成群",
 	swarm_desc = "腐肉成群冷卻計時器",
-	swarm_trigger1 = "Pestilence upon you!",
-	swarm_trigger2 = "The swarm is eager to feed.",
+	swarm_trigger1 = "願瘟疫降臨在你身上!",
+	swarm_trigger2 = "蟲群們渴望進食",
 	swarm_message = "腐肉成群! - 11 秒後下一次",
 	swarm_bar = "~腐肉成群冷卻",
 } end )
