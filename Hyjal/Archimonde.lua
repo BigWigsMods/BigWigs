@@ -171,6 +171,34 @@ L:RegisterTranslations("zhCN", function() return {
 	burstsay_message = "我中了 空气爆裂! 离开我....",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	engage_trigger = "你反抗是沒有用的。",
+
+	grip = "軍團之握",
+	grip_desc = "受到軍團之握時發送警告",
+	grip_trigger = "^^(.+)受到(.*)軍團之握",
+	grip_you = "軍團之握在你身上!",
+	grip_other = "軍團之握在 %s 身上!",
+
+	icon = "團隊標記",
+	icon_desc = "在受到軍團之握的隊友頭上標記 (需要權限)",
+
+	fear = "恐懼術",
+	fear_desc = "恐懼術計時器",
+	fear_message = "恐懼術, 下次來臨 ~ 42秒!",
+	fear_bar = "~恐懼術冷卻中",
+	fear_warning = "恐懼術冷卻完畢 - 即將來臨!",
+
+	burst = "空氣炸裂",
+	burst_desc = "當空氣炸裂施放時時發送警告",
+	burst_other = "空氣炸裂在 %s 身上",
+	burst_you = "空氣炸裂在你身上!",
+
+	burstsay = "空氣炸裂(說)",
+	burstsay_desc = "當你為空氣爆裂目標時警報周圍,以幫助附近的隊友遠離.",
+	burstsay_message = "空氣炸裂在我身上!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
