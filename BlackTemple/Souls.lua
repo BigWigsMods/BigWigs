@@ -239,7 +239,7 @@ L:RegisterTranslations("zhCN", function() return {
 	afflict_trigger = "^(%S+)受(%S+)了(.*)效果的影响。$",
 } end )
 
-L:RegisterTranslations("enUS", function() return {
+L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "等待你們的只有痛苦與折磨﹗",
 
 	enrage_start = "憤怒在 ~47sec",
