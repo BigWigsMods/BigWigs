@@ -15,7 +15,8 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local death = fmt(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], boss)
 
-local pName = nil
+local started = nil
+local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -26,7 +27,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	engage_trigger1 = "You wish to test me?",
 	engage_trigger2 = "Common... such a crude language. Bandal!",
-	engage_trigger3 = "I have better things to do..",
+	engage_trigger3 = "I have better things to do...",
 	engage_trigger4 = "Flee, or die!",
 
 	vanish = "Vanish",
@@ -329,6 +330,8 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
+	started = nil
+
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -344,6 +347,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalSpell", 5)
@@ -353,14 +357,23 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalCHeal", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "ICKick", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "CouncilPoison", 2)
-
-	pName = UnitName("player")
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
+function mod:Engage()
+	self:Message(fmt(L2["enrage_start"], boss, 15), "Attention")
+	self:DelayedMessage(300, fmt(L2["enrage_min"], 10), "Positive")
+	self:DelayedMessage(600, fmt(L2["enrage_min"], 5), "Positive")
+	self:DelayedMessage(840, fmt(L2["enrage_min"], 1), "Positive")
+	self:DelayedMessage(870, fmt(L2["enrage_sec"], 30), "Positive")
+	self:DelayedMessage(890, fmt(L2["enrage_sec"], 10), "Urgent")
+	self:DelayedMessage(895, fmt(L2["enrage_sec"], 5), "Urgent")
+	self:DelayedMessage(900, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
+	self:Bar(L2["enrage"], 900, "Spell_Shadow_UnholyFrenzy")
+end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "MalSpell" and self.db.profile.immune then
@@ -401,27 +414,33 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
+	elseif self:ValidateEngageSync(sync, rest) and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		if self.db.profile.enrage then
+			self:Engage()
+		end
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.enrage and (msg == L["engage_trigger1"] or msg == L["engage_trigger2"] or msg == L["engage_trigger3"] or msg == L["engage_trigger4"]) then
-		self:Message(fmt(L2["enrage_start"], boss, 15), "Attention")
-		self:DelayedMessage(300, fmt(L2["enrage_min"], 10), "Positive")
-		self:DelayedMessage(600, fmt(L2["enrage_min"], 5), "Positive")
-		self:DelayedMessage(840, fmt(L2["enrage_min"], 1), "Positive")
-		self:DelayedMessage(870, fmt(L2["enrage_sec"], 30), "Positive")
-		self:DelayedMessage(890, fmt(L2["enrage_sec"], 10), "Urgent")
-		self:DelayedMessage(895, fmt(L2["enrage_sec"], 5), "Urgent")
-		self:DelayedMessage(900, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
-		self:Bar(L2["enrage"], 900, "Spell_Shadow_UnholyFrenzy")
+	if self.db.profile.enrage and (
+		msg:find(L["engage_trigger1"]) or
+		msg:find(L["engage_trigger2"]) or
+		msg:find(L["engage_trigger3"]) or
+		msg:find(L["engage_trigger4"])) then
+		self:Engage()
 	end
 end
 
-function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
-	local die = UNITDIESOTHER
-	if msg == fmt(die, malande) then
-		self:Sync("TICWin")
+do
+	local malDies = UNITDIESOTHER:format(malande)
+	function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
+		if msg == malDies then
+			self:Sync("TICWin")
+		end
 	end
 end
 
@@ -464,3 +483,4 @@ function mod:Interrupt(msg)
 		self:Sync("ICKick "..player)
 	end
 end
+
