@@ -243,7 +243,7 @@ L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "等待你們的只有痛苦與折磨﹗",
 
 	enrage_start = "憤怒在 ~47sec",
-	enrage_trigger = "%s變得憤怒了!",
+	enrage_trigger = "受難精華變得憤怒了!",
 	enrage_message = "憤怒 15 秒!",
 	enrage_bar = "<憤怒>",
 	enrage_next = "憤怒結束 - 下一次 ~32秒",

@@ -158,7 +158,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	garrote = "絞喉警告",
 	garrote_desc = "當有玩家被絞喉時發送警告",
-	garrote_trigger = "^(.+)受到(.*)絞喉",
+	garrote_trigger = "^(.+)受到([了]*)絞喉",
 	garrote_message = "%s 被絞喉了",
 
 	icon = "標記圖示",

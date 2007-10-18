@@ -189,12 +189,12 @@ L:RegisterTranslations("zhTW", function() return {
 
 	tidal = "海嘯",
 	tidal_desc = "警示海嘯施放",
-	tidal_trigger = "潮行者開始施放海嘯",
+	tidal_trigger = "莫洛葛利姆·潮行者開始施放海嘯。",
 	tidal_message = "海嘯 - 留意 MT 血量",
 
 	grave = "水之墓",
 	grave_desc = "當玩家受到水之墓時通知團隊",
-	grave_trigger = "^(.+)受到(.*)水之墓",
+	grave_trigger = "^(.+)受到([了]*)水之墓",
 	grave_message = "水之墓：%s",
 	grave_bar = "水之墓計時",
 	grave_nextbar = "水之墓冷卻",

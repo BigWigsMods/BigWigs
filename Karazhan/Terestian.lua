@@ -145,7 +145,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	sacrifice = "犧牲警告",
 	sacrifice_desc = "當有玩家被犧牲時發送警告",
-	sacrifice_trigger = "^(.+)受到(.*)犧牲",
+	sacrifice_trigger = "^(.+)受到([了]*)犧牲",
 	sacrifice_fade = "^犧牲效果從%s身上消失。$",
 	sacrifice_message = "%s 犧牲了 - 注意停手及治療",
 	sacrifice_bar = "犧牲：%s",
