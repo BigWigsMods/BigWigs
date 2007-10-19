@@ -364,6 +364,7 @@ end
 ------------------------------
 
 function mod:Engage()
+	started = true
 	self:Message(fmt(L2["enrage_start"], boss, 15), "Attention")
 	self:DelayedMessage(300, fmt(L2["enrage_min"], 10), "Positive")
 	self:DelayedMessage(600, fmt(L2["enrage_min"], 5), "Positive")
@@ -415,7 +416,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Icon(rest)
 		end
 	elseif self:ValidateEngageSync(sync, rest) and not started then
-		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
@@ -436,7 +436,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 do
-	local malDies = UNITDIESOTHER:format(malande)
+	local malDies = fmt(UNITDIESOTHER, malande)
 	function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 		if msg == malDies then
 			self:Sync("TICWin")
