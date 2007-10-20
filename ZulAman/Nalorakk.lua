@@ -48,13 +48,13 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "황천으로 곧 보내주마!",
+	engage_trigger = "저승으로 보내주마!",
 	engage_message = "%s 전투 시작 - 45초후 곰 변신!",
 
 	phase = "상태",
 	phase_desc = "상태 변환에 대해 경고합니다.",
-	phase_bear = "네놈이 저 야수 녀석을 불렀구나, 기대했던 것보다 더한 걸 느끼게 될 것이다!",
-	phase_normal = "날로라크님을 위해 길을 열어라!",
+	phase_bear = "너희들이 짐승을 불러냈다. 놀랄 준비나 해라!",
+	phase_normal = "날로라크 나가신다!",
 	normal_message = "보통 상태!",
 	normal_bar = "다음 곰 변신",
 	normal_soon = "보통 상태 10초 전",

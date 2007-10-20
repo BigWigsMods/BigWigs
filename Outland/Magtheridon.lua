@@ -224,7 +224,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	debrisinc = "파편",
 	debrisinc_desc = "30%일 때 파편에 대한 경고입니다.",
-	debrisinc_trigger = "그렇게 쉽게 당할 내가 아니다! 이 감옥의 벽이 흔들리고... 무너지라라!",
+	debrisinc_trigger = "그렇게 쉽게 당할 내가 아니다! 이 감옥의 벽이 흔들리고... 무너지리라!",
 	debrisinc_message = "30% - 잠시 후 파편!",
 	debrisinc_warning = "곧 파편!",
 } end)
