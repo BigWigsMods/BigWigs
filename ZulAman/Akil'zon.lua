@@ -116,7 +116,7 @@ function mod:Storm(msg)
 				BigWigs:Print(L["ping_message"])
 			end
 		end
-		self:Sync("AkilElec ", eplayer)
+		self:Sync("AkilElec", eplayer)
 	end
 end
 
