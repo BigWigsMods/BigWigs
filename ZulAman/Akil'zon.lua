@@ -34,16 +34,15 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "내가 끝장내리라! 네놈을 제물 삼아...",
+	engage_trigger = "나는 사냥꾼이다! 너흰 먹이감이고...",
 	engage_message = "%s 전투 시작 - ~55초 이내 폭풍!",
 
-	elec = "전기 폭풍",
-	elec_desc = "전기 폭풍에 걸린 플레이어를 알립니다.",
-	--elec_trigger = "^([^|;%s]*)(.*)전기 폭풍에 걸렸습니다%.$",
-	elec_trigger = "^([^|;%s]*)(.*)Electrical Storm에 걸렸습니다%.$", -- 현재 PTR 서버, 스킬명 한글화 안되어 있음
+	elec = "전하 폭풍",
+	elec_desc = "전하 폭풍에 걸린 플레이어를 알립니다.",
+	elec_trigger = "^([^|;%s]*)(.*)전하 폭풍에 걸렸습니다%.$",
 	elec_bar = "~폭풍 대기 시간",
-	elec_message = "%s에 폭풍!",
-	elec_warning = "잠시후 폭풍!",
+	elec_message = "%s에 전하 폭풍!",
+	elec_warning = "잠시후 전하 폭풍!",
 
 	ping = "미니맵 표시",
 	ping_desc = "당신이 전기 폭풍에 걸렸을때 현재 위치를 미니맵에 표시합니다.",
