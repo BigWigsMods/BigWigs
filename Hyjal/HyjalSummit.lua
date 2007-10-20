@@ -143,8 +143,8 @@ L:RegisterTranslations("zhTW", function() return {
 	["~%s spawn"] = "~%s 出現",
 	["~Wave %d spawn"] = "~第 %d 波 出現",
 	["Wave %d incoming!"] = "第 %d 波 即將來臨!",
-	["%s in ~%d sec!"] = "在 ~%d 秒後 %s !",
-	["Wave %d in ~%d sec!"] = "在 ~%d 秒後 第 %d 波!",
+	["%s in ~%d sec!"] = "%s 在 ~%d 秒!",
+	["Wave %d in ~%d sec!"] = "第 %d 波在 ~%d 秒後!",
 
 	["Boss"] = "首領",
 	["Thrall"] = "索爾",
@@ -154,6 +154,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "不管阿克蒙德要派誰來對付我們，我們都已經準備好了，普勞德摩爾女士。", -- Anatheron
 	["I am with you, Thrall."] = "我與你同在，索爾。", -- Kaz'Rogal
 	["We have nothing to fear."] = "我們無所畏懼。", -- Az'Galor
+	["Please remove BigWigs_WaveTimers, it is deprecated."] = "請移除 BigWigs_WaveTimer，他已經過期了。",
 } end )
 
 ----------------------------------
