@@ -84,23 +84,23 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Die Geister der Winde besiegeln Euer Schicksal!",
 
-	flame = "Flame Breath",
-	flame_desc = "Warn who Jan'alai casts Flame Strike on.",
+	flame = "Flammenatem",
+	flame_desc = "Warnt auf wen Flammenatem von Jan'alai gewirkt wird.",
 	flame_trigger = "Jan'alai beginnt Flammenatem zu wirken.",
-	flame_message = "Flame Breath on %s!",
+	flame_message = "Flammenatem auf %s!",
 
-	icon = "Raid Icon",
-	icon_desc = "Place a Raid Target Icon on the player targetted by Flame Breath. (requires promoted or higher)",
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Plaziert ein Schlachtgruppen Symbol auf Spielern auf die Flammenatem gewirkt wird(benötigt Assistent oder höher).",
 
-	bomb = "Fire Bomb",
-	bomb_desc = "Show timers for Fire Bomb.",
+	bomb = "Feuerbombe",
+	bomb_desc = "Zeigt Timer für Feuerbomben an.",
 	bomb_trigger = "Jetzt sollt Ihr brennen!",
-	bomb_message = "Incoming Fire Bombs!",
+	bomb_message = "Neue Feuerbomben!",
 
-	adds = "Adds",
-	adds_desc = "Warn for Incoming Adds.",
+	adds = "Brutwächter",
+	adds_desc = "Warnt wenn Brutwächter gerufen werden.",
 	adds_trigger = "Wo is' meine Brut? Was ist mit den Eiern?",
-	adds_message = "Incoming Adds!",
+	adds_message = "Brutwächter wurden gerufen!",
 } end )
 
 ----------------------------------

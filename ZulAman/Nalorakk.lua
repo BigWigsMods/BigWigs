@@ -65,6 +65,24 @@ L:RegisterTranslations("koKR", function() return {
 	bear_warning = "곰 변신 5초 전",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "Ihr sterbt noch schnell genug!",
+	engage_message = "%s Gepullt - Bär Form in 45seK!",
+
+	phase = "Phasen",
+	phase_desc = "Warnt vor Phasen Änderrungen.",
+	phase_bear = "Ihr provoziert die Bestie, jetzt werdet Ihr sie kennenlernen!",
+	phase_normal = "Macht Platz für Nalorakk!",
+	normal_message = "Normale Phase!",
+	normal_bar = "Nächste Bär Phase",
+	normal_soon = "Normale Phase in 10sek",
+	normal_warning = "Normale Phase in 5sek",
+	bear_message = "Bär Phase!",
+	bear_bar = "Nächste Normale Phase",
+	bear_soon = "Bär Phase in 10sek",
+	bear_warning = "Bär Phase in 5sek",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
