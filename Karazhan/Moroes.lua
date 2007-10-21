@@ -141,7 +141,6 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage_trigger = "%s变得愤怒了！",--check
 	enrage_message = "激怒!",
 	enrage_warning = "即将 激怒!",
-
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

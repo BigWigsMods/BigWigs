@@ -248,7 +248,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	eyeblast = "魔眼冲击",--Eye Blast 魔眼冲击
 	eyeblast_desc = "当施放魔眼冲击时发出警报.",
-	eyeblast_trigger = "Stare into the eyes of the Betrayer!",
+	eyeblast_trigger = "直视背叛者的双眼吧！",
 	eyeblast_message = "魔眼冲击!",
 
 	shear = "剪切",
@@ -264,19 +264,18 @@ L:RegisterTranslations("zhCN", function() return {
 	demons_desc = "当伊利丹召唤影魔时发出警报.",
 	demons_trigger = "召唤影魔",
 	demons_message = "影魔!",
-
 	demons_warn = "即将 影魔!",
 
 	phase = "阶段",
 	phase_desc = "当伊利丹进入不同阶段发出警报.",
 	phase2_soon_message = "即将阶段 2!",
-	phase2_trigger = "Blade of Azzinoth casts Summon Tear of Azzinoth.",
+	phase2_trigger = "埃辛诺斯之刃施放了召唤埃辛诺斯之泪。",
 	phase2_message = "阶段 2 - 埃辛诺斯双刃!",
 	phase3_message = "阶段3!",
-	demon_phase_trigger = "Behold the power... of the demon within!",
+	demon_phase_trigger = "感受我体内的恶魔之力吧！",
 	demon_phase_message = "影魔形态!",
 	demon_bar = "下一 普通阶段",
-	phase4_trigger = "Is this it, mortals? Is this all the fury you can muster?",
+	phase4_trigger = "你们就这点本事吗？这就是你们全部的能耐？",
 	phase4_soon_message = "即将阶段4!",
 	phase4_message = "阶段 4 - 玛维·影歌来临!",
 

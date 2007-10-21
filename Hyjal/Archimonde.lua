@@ -143,6 +143,7 @@ L:RegisterTranslations("deDE", function() return {
 	burstsay_message = "Windbö auf mir!",
 } end )
 
+--阿克蒙德
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "Your resistance is insignificant.",
 

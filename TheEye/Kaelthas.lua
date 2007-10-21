@@ -376,7 +376,7 @@ L:RegisterTranslations("deDE", function() return {
 
 --凯尔萨斯·逐日者
 L:RegisterTranslations("zhCN", function() return {
-	engage_trigger = "^魔法，能量，我的人民陷入其中不能自拔……",
+	engage_trigger = "^魔法，能量，我的人民陷入其中不能自拔……自从太阳之井被摧毁之后就是如此。欢迎来到未来。真遗憾，你们无法阻止什么。没有人可以阻止我了！Selama ashal’anore！",
 	engage_message = "第一阶段",
 
 	conflag = "燃烧",

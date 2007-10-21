@@ -113,7 +113,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 --安纳塞隆
 L:RegisterTranslations("zhCN", function() return {
-	engage_trigger = "You are defenders of a doomed world! Flee here, and perhaps you will prolong your pathetic lives!",
+	engage_trigger = "你们在守护一个注定要毁灭的世界！逃跑吧，那样也许你们还能多活几天！",
 
 	inferno = "地狱火",
 	inferno_desc = "显示地狱火冷却记时条",

@@ -70,6 +70,7 @@ L:RegisterTranslations("zhTW", function() return {
 	range_fade = "卡茲洛加的印記效果從你身上消失了。",
 } end )
 
+--卡兹洛加
 L:RegisterTranslations("zhCN", function() return {
 	range = "范围检测",
 	range_desc = "当你低发力以及中了卡兹洛加印记,显示范围检测表.",

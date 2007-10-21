@@ -172,10 +172,10 @@ L:RegisterTranslations("koKR", function() return {
 --CWDG site: http://Cwowaddon.com
 --伊利达雷议会
 L:RegisterTranslations("zhCN", function() return {
-	--engage_trigger1 = "You wish to test me?",
-	--engage_trigger2 = "Common... such a crude language. Bandal!",
-	--engage_trigger3 = "I have better things to do..",
-	--engage_trigger4 = "Flee, or die!",
+	engage_trigger1 = "你们要考验我吗？",
+	engage_trigger2 = "通用语……多么粗俗的语言。Bandal！",
+	engage_trigger3 = "我还有更重要的事情要做……",
+	engage_trigger4 = "不逃走就受死吧！",
 
 	vanish = "消失",
 	vanish_desc = "消失记时条.",
@@ -196,7 +196,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	shield = "反射护盾",
 	shield_desc = "当玛兰德获得反射护盾时发出警报",
-	shield_trigger = "女公爵玛兰德获得了反射护盾",
+	shield_trigger = "女公爵玛兰德获得了反射护盾的效果。",
 	shield_message = "反射护盾! 注意!",
 
 	poison = "致命毒药",

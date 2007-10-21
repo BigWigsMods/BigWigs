@@ -54,7 +54,7 @@ L:RegisterTranslations("enUS", function() return {
 
 --莎赫拉丝主母
 L:RegisterTranslations("zhCN", function() return {
-	engage_trigger = "So... business or pleasure?",
+	engage_trigger = "是办正事还是找乐子呢？",
 
 	attraction = "致命吸引",
 	attraction_desc = "中了致命吸引发出警报",
@@ -74,7 +74,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	enrage_warning = "即将狂暴!",
 	enrage_message = "10% - 狂暴",
-	enrage_trigger = "Stop toying with my emotions!",
+	enrage_trigger = "不要浪费我的感情了！",--Stop toying with my emotions!  Check
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

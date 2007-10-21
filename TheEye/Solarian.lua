@@ -168,7 +168,7 @@ L:RegisterTranslations("zhCN", function() return {
 	phase_desc = "阶段改变警报",
 	phase1_message = "阶段 1 - ~50秒后分裂",
 	phase2_warning = "即将 阶段 2!",
-	phase2_trigger = "^I become",
+	phase2_trigger = "^我受够了！现在我要让你们看看宇宙的愤怒！",
 	phase2_message = "20% - 阶段 2",
 
 	wrath = "愤怒Debuff",

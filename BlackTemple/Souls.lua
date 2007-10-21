@@ -197,7 +197,7 @@ L:RegisterTranslations("deDE", function() return {
 
 --Reliquary of Souls check
 L:RegisterTranslations("zhCN", function() return {
-	engage_trigger = "Pain and suffering are all that await you!",
+	engage_trigger = "等待你们的只有痛苦与折磨！",
 
 	enrage_start = "~47秒后 激怒",
 	enrage_trigger = "%s变得愤怒了！",
@@ -207,14 +207,14 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage_nextbar = "下一 愤怒",
 	enrage_warning = "5秒后 愤怒!",
 
-	desire_trigger  = "You can have anything you desire... for a price.",
+	desire_trigger  = "你可以获得任何你想要的东西……只要付得起代价。",
 	desire_cot = "Shi shi rikk rukadare shi tichar kar x gular ", --Curse of Tongues trigger
 	desire_start = "欲望精华 - 160秒后 零法力",
 	desire_bar = "零法力",
 	desire_warn = "30秒后 零法力!",
 
 	runeshield = "符文护盾",
-	runeshield_desc = "Timers for when Essence of Desire will gain rune shield.",
+	runeshield_desc = "欲望精华获得了符文护盾计时",
 	runeshield_trigger = "欲望精华获得了符文护盾的效果。",
 	runeshield_message = "符文护盾!",
 	runeshield_nextbar = "下个 符文护盾",

@@ -261,7 +261,7 @@ L:RegisterTranslations("zhCN", function() return {
 	nova_cast = "开始施放冲击新星！",
 
 	banish = "放逐术",
-	banish_desc = ("当你放逐%s发出警报."):format(boss),
+	banish_desc = "当你放逐玛瑟里顿发出警报.",
 	banish_trigger = "Not again! Not again...",
 	banish_message = "放逐成功 - 10秒 ",
 	banish_over_trigger = "^暗影牢笼从",

@@ -110,10 +110,10 @@ L:RegisterTranslations("zhCN", function() return {
 	phase_desc = "当虚空幽龙进入下一阶段时发出警报.",
 	phase1_message = "快撤! - 虚空吐息来临",
 	phase1_bar = "~虚空吐息 - 撤退",
-	phase1_trigger = "%s cries out in withdrawal, opening gates to the nether.",
+	phase1_trigger = "%s在撤退中大声呼喊着，打开了回到虚空的传送门。",
 	phase2_message = "狂怒 - 地狱吐息来临",
 	phase2_bar = "~地狱吐息 - 狂怒",
-	phase2_trigger = "%s goes into a nether-fed rage!",
+	phase2_trigger = "%s的怒火甚至可以充满整个虚空！",
 
 	voidzone = "虚空领域",
 	voidzone_desc = "虚空领域警报",
@@ -122,7 +122,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	netherbreath = "虚空吐息",
 	netherbreath_desc = "虚空吐息警报",
-	netherbreath_trigger = "施放了Face Random Target",
+	netherbreath_trigger = "施放了Face Random Target。$",
 	netherbreath_warn = "虚空吐息来临",
 } end )
 

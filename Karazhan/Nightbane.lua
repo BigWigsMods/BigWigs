@@ -165,10 +165,10 @@ L:RegisterTranslations("zhCN", function() return {
 	phase_desc = "当夜之魇进入下阶段发送预警",
 	airphase_trigger = "可怜的渣滓。我要腾空而起，让你尝尝毁灭的滋味！",
 	landphase_trigger1 = "够了！我要落下来把你们打得粉碎！",
-	landphase_trigger2 = "Insects! Let me show you my strength up close!",
+	landphase_trigger2 = "没用的虫子！让你们见识一下我的力量吧！",
 	airphase_message = "升空",
 	landphase_message = "降落",
-	summon_trigger = "An ancient being awakens in the distance...",
+	summon_trigger = "一个远古的生物在远处被唤醒了……",
 
 	engage = "激活",
 	engage_desc = "进入战斗后发出警报",

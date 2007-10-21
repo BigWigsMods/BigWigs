@@ -68,7 +68,7 @@ L:RegisterTranslations("frFR", function() return {
 
 --塔隆·血魔
 L:RegisterTranslations("zhCN", function() return {
-	start_trigger = "Vengeance is mine!",
+	start_trigger = "我要复仇！",
 
 	shadow = "死亡之影",
 	shadow_desc = "当谁中了死亡之影将告诉你",
