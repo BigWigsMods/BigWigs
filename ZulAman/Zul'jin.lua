@@ -49,13 +49,13 @@ L:RegisterTranslations("koKR", function() return {
 
 	form = "변신 알림",
 	form_desc = "줄진이 변신할 때 알립니다.",
-	form_bear_trigger = "보아라, 내 새로운 기술을... 형제 곰으로 변신하는 것 같이 말이다...",
+	form_bear_trigger = "새로운 기술을 익혔지... 내 형제의 곰처럼...",  -- Check
 	form_bear_message = "2단계 - 곰!",
-	form_eagle_trigger = "이 독수리의 눈 밖을 벗어나서 숨진 못할 것이니!",
+	form_eagle_trigger = "독수리의 눈을 피할수는 없다!",  -- Check
 	form_eagle_message = "3단계 - 독수리!",
-	form_lynx_trigger = "내 새로운 형제인 이빨과 발톱의 위력을 소개 하마!",
+	form_lynx_trigger = "내 새로운 형제... 송곳니와 발톱을 보아라!",  -- Check
 	form_lynx_message = "4단계 - 스라소니!",
-	form_dragonhawk_trigger = "용매를 보겠다고 하늘을 올려다볼 필요가 없게 해 주마!",
+	form_dragonhawk_trigger = "용매를 하늘에서만 찾을 필요는 없다!",  -- Check
 	form_dragonhawk_message = "5단계 - 용매!",
 } end )
 

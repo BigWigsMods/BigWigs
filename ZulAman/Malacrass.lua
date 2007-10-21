@@ -41,11 +41,11 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "네게 그림자가 드리우리라...",  -- 어둠이 네게 다가온다
+	engage_trigger = "너희에게 그림자가 드리우리라...",  -- Check
 
 	bolts = "영혼의 화살",
 	bolts_desc = "말라크라스의 영혼의 화살 시전을 알립니다.",
-	bolts_trigger = "네 영혼이 피를 흘리리라!",
+	bolts_trigger = "네 영혼이 피를 흘리리라!",  -- Check
 	bolts_message = "영혼의 화살 시전!",
 
 	soul = "영혼 착취",
