@@ -35,10 +35,13 @@ L:RegisterTranslations("enUS", function() return {
 	["Debugging"] = true,
 	["Show debug messages."] = true,
 	["Options"] = true,
+
 	bosskill = "Boss death",
 	bosskill_desc = "Announce when the boss has been defeated.",
 	enrage = "Enrage",
 	enrage_desc = "Warn when the boss enters an enraged state.",
+	berserk = "Berserk",
+	berserk_desc = "Warn when the boss goes Berserk.",
 
 	["Load"] = true,
 	["Load All"] = true,
@@ -68,10 +71,13 @@ L:RegisterTranslations("frFR", function() return {
 	["Debugging"] = "Déboguage",
 	["Show debug messages."] = "Affiche les messages de déboguage.",
 	["Options"] = "Options",
+
 	bosskill = "Défaite du boss",
 	bosskill_desc = "Préviens quand le boss est vaincu.",
 	enrage = "Enrager",
 	enrage_desc = "Préviens quand le boss devient enragé.",
+	--berserk = "Berserk",
+	--berserk_desc = "Warn when the boss goes Berserk.",
 
 	["Load"] = "Charger",
 	["Load All"] = "Tout charger",
@@ -101,10 +107,13 @@ L:RegisterTranslations("deDE", function() return {
 	["Debugging"] = "Debugging",
 	["Show debug messages."] = "Zeige Debug Nachrichten.",
 	["Options"] = "Optionen",
+
 	bosskill = "Boss besiegt",
 	bosskill_desc = "Melde, wenn ein Boss besiegt wurde.",
 	enrage = "Wutanfall",
 	enrage_desc = "Melde, wenn ein Boss in einen Wutanfall Status geht.",
+	--berserk = "Berserk",
+	--berserk_desc = "Warn when the boss goes Berserk.",
 
 	["Load"] = "Laden",
 	["Load All"] = "Alle Laden",
@@ -131,10 +140,13 @@ L:RegisterTranslations("koKR", function() return {
 	["Debugging"] = "디버깅",
 	["Show debug messages."] = "디버그 메세지를 표시합니다.",
 	["Options"] = "설정",
+
 	bosskill = "보스 사망",
 	bosskill_desc = "보스를 물리쳤을 때 알림니다.",
 	enrage = "격노",
 	enrage_desc = "보스가 격노 상태로 변경 시 경고합니다.",
+	--berserk = "Berserk",
+	--berserk_desc = "Warn when the boss goes Berserk.",
 
 	["Load"] = "불러오기",
 	["Load All"] = "모두 불러오기",
@@ -142,7 +154,6 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 --Chinese Translate by: 月色狼影@CWDG
---CWDG site: http://cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["%s mod enabled"] = "%s 模块已启用",
 	["%s has been defeated"] = "%s 被击败了!",     -- "<boss> has been defeated"
@@ -166,10 +177,13 @@ L:RegisterTranslations("zhCN", function() return {
 	["Debugging"] = "调试",
 	["Show debug messages."] = "显示调试信息",
 	["Options"] = "设置",
+
 	bosskill = "首领死亡",
 	bosskill_desc = "首领被击杀时显示提示信息",
 	enrage = "狂暴",
 	enrage_desc = "首领进入狂暴状态时发出警报.",
+	--berserk = "Berserk",
+	--berserk_desc = "Warn when the boss goes Berserk.",
 
 	["Load"] = "加载",
 	["Load All"] = "加载所有",
@@ -198,6 +212,8 @@ L:RegisterTranslations("zhTW", function() return {
 	bosskill_desc = "首領被擊敗時發出提示。",
 	enrage = "狂怒",
 	enrage_desc = "首領進入狂怒狀態時發出提示",
+	--berserk = "Berserk",
+	--berserk_desc = "Warn when the boss goes Berserk.",
 
 	["Load"] = "載入",
 	["Load All"] = "載入全部",
@@ -225,10 +241,13 @@ L:RegisterTranslations("esES", function() return {
 	["Debugging"] = "Depuracion",
 	["Show debug messages."] = "Mostrar mensajes de depuracion.",
 	["Options"] = "Opciones",
+
 	bosskill = "Derrota del boss",
 	bosskill_desc = "Avisa de la derrota del boss.",
 	enrage = "Enfurecimiento",
 	enrage_desc = "Avisa cuando el boss gana enfurecimiento.",
+	--berserk = "Berserk",
+	--berserk_desc = "Warn when the boss goes Berserk.",
 
 	["Load"] = "Cargar",
 	["Load All"] = "Cargar todo",
@@ -304,6 +323,7 @@ function BigWigs:OnInitialize()
 
 	self:RegisterBossOption("bosskill", L["bosskill"], L["bosskill_desc"])
 	self:RegisterBossOption("enrage", L["enrage"], L["enrage_desc"])
+	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"])
 end
 
 function BigWigs:OnEnable(first)

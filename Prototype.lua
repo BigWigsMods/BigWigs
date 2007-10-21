@@ -18,11 +18,17 @@ commonWords:RegisterTranslations("enUS", function() return {
 	you = "You",
 	are = "are",
 
-	enrage_start = "%s Engaged - Enrage in %dmin",
+	enrage_start = "%s Engaged - Enrage in %d min",
 	enrage_end = "%s Enraged",
 	enrage_min = "Enrage in %d min",
 	enrage_sec = "Enrage in %d sec",
 	enrage = "Enrage",
+
+	berserk_start = "%s Engaged - Berserk in %d min",
+	berserk_end = "%s goes Berserk",
+	berserk_min = "Berserk in %d min",
+	berserk_sec = "Berserk in %d sec",
+	berserk = "Berserk",
 
 	RF = "Righteous Fury",
 } end)
@@ -37,6 +43,12 @@ commonWords:RegisterTranslations("deDE", function() return {
 	enrage_sec = "Wütend in %d sek",
 	enrage = "Wütend",
 
+	--berserk_start = "%s Engaged - Berserk in %d min",
+	--berserk_end = "%s goes Berserk",
+	--berserk_min = "Berserk in %d min",
+	--berserk_sec = "Berserk in %d sec",
+	--berserk = "Berserk",
+
 	RF = "Zorn der Gerechtigkeit",
 } end )
 
@@ -49,6 +61,12 @@ commonWords:RegisterTranslations("koKR", function() return {
 	enrage_min = "%d분 후 격노",
 	enrage_sec = "%d초 후 격노",
 	enrage = "격노",
+
+	--berserk_start = "%s Engaged - Berserk in %d min",
+	--berserk_end = "%s goes Berserk",
+	--berserk_min = "Berserk in %d min",
+	--berserk_sec = "Berserk in %d sec",
+	--berserk = "Berserk",
 
 	RF = "정의의 격노",
 } end )
@@ -64,6 +82,13 @@ commonWords:RegisterTranslations("zhCN", function() return {
 	enrage_min = "%d分后狂暴！",
 	enrage_sec = "%d秒后狂暴！",
 	enrage = "狂暴",
+
+	--berserk_start = "%s Engaged - Berserk in %d min",
+	--berserk_end = "%s goes Berserk",
+	--berserk_min = "Berserk in %d min",
+	--berserk_sec = "Berserk in %d sec",
+	--berserk = "Berserk",
+
 	RF = "正义之怒",
 } end )
 
@@ -76,6 +101,12 @@ commonWords:RegisterTranslations("zhTW", function() return {
 	enrage_min = "%d分後狂怒！",
 	enrage_sec = "%d秒後狂怒！",
 	enrage = "狂怒",
+
+	--berserk_start = "%s Engaged - Berserk in %d min",
+	--berserk_end = "%s goes Berserk",
+	--berserk_min = "Berserk in %d min",
+	--berserk_sec = "Berserk in %d sec",
+	--berserk = "Berserk",
 
 	RF = "正義之怒",
 } end )
@@ -90,6 +121,12 @@ commonWords:RegisterTranslations("frFR", function() return {
 	enrage_sec = "Enrager dans %d sec.",
 	enrage = "Enrager",
 
+	--berserk_start = "%s Engaged - Berserk in %d min",
+	--berserk_end = "%s goes Berserk",
+	--berserk_min = "Berserk in %d min",
+	--berserk_sec = "Berserk in %d sec",
+	--berserk = "Berserk",
+
 	RF = "Fureur vertueuse",
 } end )
 
@@ -102,6 +139,12 @@ commonWords:RegisterTranslations("esES", function() return {
 	enrage_min = "Enfurecimiento en %d min",
 	enrage_sec = "Enfurecimiento en %d sec",
 	enrage = "Enfurecimiento",
+
+	--berserk_start = "%s Engaged - Berserk in %d min",
+	--berserk_end = "%s goes Berserk",
+	--berserk_min = "Berserk in %d min",
+	--berserk_sec = "Berserk in %d sec",
+	--berserk = "Berserk",
 
 	RF = "Furia justa",
 } end)
