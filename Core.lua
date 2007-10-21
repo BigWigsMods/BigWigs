@@ -145,8 +145,8 @@ L:RegisterTranslations("koKR", function() return {
 	bosskill_desc = "보스를 물리쳤을 때 알림니다.",
 	enrage = "격노",
 	enrage_desc = "보스가 격노 상태로 변경 시 경고합니다.",
-	--berserk = "Berserk",
-	--berserk_desc = "Warn when the boss goes Berserk.",
+	berserk = "광폭화",
+	berserk_desc = "보스가 언제 광폭화가 되는지 경고합니다.",
 
 	["Load"] = "불러오기",
 	["Load All"] = "모두 불러오기",

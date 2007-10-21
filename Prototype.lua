@@ -62,11 +62,11 @@ commonWords:RegisterTranslations("koKR", function() return {
 	enrage_sec = "%d초 후 격노",
 	enrage = "격노",
 
-	--berserk_start = "%s Engaged - Berserk in %d min",
-	--berserk_end = "%s goes Berserk",
-	--berserk_min = "Berserk in %d min",
-	--berserk_sec = "Berserk in %d sec",
-	--berserk = "Berserk",
+	berserk_start = "%s 전투 개시 - %d분 후 광폭화",
+	berserk_end = "%s 광폭화",
+	berserk_min = "%d분 후 광폭화",
+	berserk_sec = "%d초 후 광폭화",
+	berserk = "광폭화",
 
 	RF = "정의의 격노",
 } end )
