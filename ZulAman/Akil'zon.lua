@@ -71,6 +71,25 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Orage électrique (nécessite d'être promu ou mieux).",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "Ich bin der Jäger! Ihr seid die Beute...",
+	engage_message = "%s angegriffen - Sturm in ~55sec!",
+
+	elec = "Elektrischer Sturm",
+	elec_desc = "Gib Warnung mit dem Spielernamen des Ziels von Elektrischer Sturm aus.",
+	elec_trigger = "^(%S+) (%S+) von Elektrischer Sturm betroffen%.$",
+	elec_bar = "~Sturm Cooldown",
+	elec_message = "Sturm auf %s!",
+	elec_warning = "Sturm bald!",
+
+	ping = "Ping",
+	ping_desc = "Pinge deinen Standort, wenn du von Elektrischer Sturm betroffen bist.",
+	ping_message = "Sturm - Pinge deinen Standort!",
+
+	icon = "Schlachtzugsymbol",
+	icon_desc = "Platziere ein Schlachtzugsymbol auf dem Spieler, der von Elektrischer Sturm betroffen ist (benötigt Assistent oder höher).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
