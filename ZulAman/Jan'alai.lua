@@ -110,7 +110,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Aman"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"bomb", "adds", -1, "flame", "icon", "enrage", "bosskill"}
+mod.toggleoptions = {"bomb", "adds", -1, "flame", "icon", "enrage", "berserk", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -164,14 +164,25 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif self.db.profile.adds and msg == L["adds_trigger"] then
 		self:Message(L["adds_message"], "Positive")
 		self:Bar(L["adds"], 90, "INV_Misc_Head_Troll_01")
-	elseif self.db.profile.enrage and msg == L["engage_trigger"] then
-		self:Message(fmt(L2["enrage_start"], boss, 5), "Attention")
-		self:DelayedMessage(120, fmt(L2["enrage_min"], 3), "Positive")
-		self:DelayedMessage(240, fmt(L2["enrage_min"], 1), "Positive")
-		self:DelayedMessage(270, fmt(L2["enrage_sec"], 30), "Positive")
-		self:DelayedMessage(290, fmt(L2["enrage_sec"], 10), "Urgent")
-		self:DelayedMessage(295, fmt(L2["enrage_sec"], 5), "Urgent")
-		self:DelayedMessage(300, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
-		self:Bar(L2["enrage"], 300, "Spell_Shadow_UnholyFrenzy")
+	elseif msg == L["engage_trigger"] then
+		if self.db.profile.enrage then
+			self:Message(fmt(L2["enrage_start"], boss, 5), "Attention")
+			self:DelayedMessage(120, fmt(L2["enrage_min"], 3), "Positive")
+			self:DelayedMessage(240, fmt(L2["enrage_min"], 1), "Positive")
+			self:DelayedMessage(270, fmt(L2["enrage_sec"], 30), "Positive")
+			self:DelayedMessage(290, fmt(L2["enrage_sec"], 10), "Urgent")
+			self:DelayedMessage(295, fmt(L2["enrage_sec"], 5), "Urgent")
+			self:DelayedMessage(300, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
+			self:Bar(L2["enrage"], 300, "Spell_Shadow_UnholyFrenzy")
+		end
+		if self.db.profile.berserk then
+			self:DelayedMessage(360, fmt(L2["berserk_min"], 3), "Positive")
+			self:DelayedMessage(480, fmt(L2["berserk_min"], 1), "Positive")
+			self:DelayedMessage(510, fmt(L2["berserk_sec"], 30), "Positive")
+			self:DelayedMessage(530, fmt(L2["berserk_sec"], 10), "Urgent")
+			self:DelayedMessage(535, fmt(L2["berserk_sec"], 5), "Urgent")
+			self:DelayedMessage(540, fmt(L2["berserk_end"], boss), "Attention", nil, "Alarm")
+			self:Bar(L2["berserk"], 540, "Spell_Nature_Reincarnation")
+		end
 	end
 end
