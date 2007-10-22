@@ -66,7 +66,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	range = "距離檢查",
 	range_desc = "當你低量法力且受到卡茲洛加的印記時顯示距離框",
-	range_gain = "你受到了卡茲洛加的印記",
+	range_gain = "你受到了卡茲洛加的印記效果的影響。",
 	range_fade = "卡茲洛加的印記效果從你身上消失了。",
 } end )
 

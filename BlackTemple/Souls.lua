@@ -279,7 +279,7 @@ L:RegisterTranslations("zhTW", function() return {
 	scream_trigger = "^憤怒精華的靈魂尖嘯",
 	scream_bar = "~靈魂尖嘯冷卻",
 
-	afflict_trigger = "^(.+)受到(了?)(.*)效果的影響。$",
+	afflict_trigger = "^(.+)受([到了]*)(.*)效果的影響。$",
 } end )
 
 ----------------------------------

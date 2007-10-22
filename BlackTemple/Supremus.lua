@@ -131,7 +131,7 @@ L:RegisterTranslations("zhTW", function() return {
 	punch_desc = "Alert when he does Molten Punch, and display a countdown bar.",
 	punch_message = "Molten Punch!",
 	punch_bar = "~Possible Punch!",
-	punch_trigger = "施放了熔火之擊。",
+	punch_trigger = "瑟普莫斯施放了熔火之擊。",
 
 	target = "目標",
 	target_desc = "警報在風箏階段誰是主要目標，並在他頭上放團隊標記。",

@@ -248,7 +248,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	mindcontrol = "心靈控制",
 	mindcontrol_desc = "當隊友受到心控時警告",
-	mindcontrol_trigger = "^(.+)受到([了]*)吞噬瘋狂",
+	mindcontrol_trigger = "^(.+)受([到了]*)吞噬瘋狂效果的影響。",
 	mindcontrol_warning = "心控：[%s]",
 
 	image = "影分身",
@@ -259,7 +259,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	whisper = "陰險之語",
 	whisper_desc = "當隊友受到陰險之語時警告",
-	whisper_trigger = "^(.+)受到([了]*)陰險之語",
+	whisper_trigger = "^(.+)受([到了]*)陰險之語效果的影響。",
 	whisper_message = "內心的惡靈：[%s]",
 	whisper_bar = "惡靈消失計時",
 	whisper_soon = "惡靈冷卻",

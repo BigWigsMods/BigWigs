@@ -325,7 +325,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	exhaust = "關閉心靈耗損計時條",
 	exhaust_desc = "玩家中心靈耗損時計時器",
-	exhaust_trigger = "^(.+)受到([了]*)心靈耗損",
+	exhaust_trigger = "^(.+)受([到了]*)心靈耗損效果的影響。",
 	exhaust_bar = "[%s] 心靈耗損",
 
 	debris = "你中了殘骸",

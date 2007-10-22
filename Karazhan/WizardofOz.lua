@@ -103,7 +103,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	light = "閃電鏈警告",
 	light_desc = "當施放悶電鏈時發送警告",
-	light_trigger = "老巫婆開始施放閃電鏈",
+	light_trigger = "老巫婆開始施放閃電鏈。",
 	light_message = "即將施放閃電鏈",
 } end)
 

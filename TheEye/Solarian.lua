@@ -211,7 +211,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	wrath = "星術師之怒施放",
 	wrath_desc = "警報隊友受到星術師之怒。", --enUS changed
-	wrath_trigger = "^(.+)受到([了]*)星術師之怒",
+	wrath_trigger = "^(.+)受([到了]*)星術師之怒效果的影響。",
 	wrath_fade = "星術師之怒效果從你身上消失了。",
 	wrath_other = "星術師之怒: %s",
 	wrath_you = "你中了星術師之怒！快跑！",

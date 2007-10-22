@@ -88,7 +88,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	icebolt = "寒冰箭",
 	icebolt_desc = "寒冰箭警告",
-	icebolt_trigger = "^(.+)受到([了]*)寒冰箭效果的影響。$",
+	icebolt_trigger = "^(.+)受([到了]*)寒冰箭效果的影響。$",
 	icebolt_message = "寒冰箭: %s!",
 
 	icon = "團隊標記",

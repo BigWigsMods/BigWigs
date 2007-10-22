@@ -107,7 +107,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	armor = "熔化護甲",
 	armor_desc = "當某人受到熔化護甲時提示",
-	armor_trigger = "^(.+)受到([了]*)熔化護甲",
+	armor_trigger = "^(.+)受([到了]*)熔化護甲效果的影響。",
 	armor_other = "熔化護甲：%s",
 	armor_you = "你受到熔化護甲！",
 

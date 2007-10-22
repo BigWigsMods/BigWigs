@@ -132,7 +132,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	spine = "尖刺脊椎",
 	spine_desc = "通知你誰受到尖刺脊椎",
-	spine_trigger = "^(.+)受到([了]*)尖刺脊椎效果的影響。$",
+	spine_trigger = "^(.+)受([到了]*)尖刺脊椎效果的影響。$",
 	spine_message = "尖刺脊椎: %s!",
 
 	spinesay = "尖刺脊椎通報",
@@ -141,7 +141,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	shield = "潮汐之盾",
 	shield_desc = "潮汐之盾計時",
-	shield_trigger = "高階督軍納珍塔斯受到潮汐之盾",
+	shield_trigger = "高階督軍納珍塔斯受到潮汐之盾效果的影響。",
 	shield_nextbar = "下一次潮汐之盾",
 	shield_warn = "潮汐之盾!",
 	shield_soon_warn = "潮汐之盾在 ~10秒內施放!",

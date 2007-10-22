@@ -113,7 +113,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	curse = "詛咒警告",
 	curse_desc = "近戰受到無形守護的詛咒時發送警告",
-	curse_trigger = "^(.+)受到([了]*)無形守護",
+	curse_trigger = "^(.+)受([到了]*)無形守護效果的影響。",
 	curse_message = "無形守護詛咒 - %s",
 } end)
 

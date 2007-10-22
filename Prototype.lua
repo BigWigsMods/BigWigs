@@ -94,7 +94,7 @@ commonWords:RegisterTranslations("zhCN", function() return {
 
 commonWords:RegisterTranslations("zhTW", function() return {
 	you = "你",
-	are = "了",
+	are = "到了",
 
 	enrage_start = "%s 狂怒 - %d分後狂怒",
 	enrage_end = "%s 已狂怒",

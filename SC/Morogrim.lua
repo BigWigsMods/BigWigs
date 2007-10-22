@@ -194,7 +194,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	grave = "水之墓",
 	grave_desc = "當玩家受到水之墓時通知團隊",
-	grave_trigger = "^(.+)受到([了]*)水之墓",
+	grave_trigger = "^(.+)受([到了]*)水之墓效果的影響。",
 	grave_message = "水之墓：%s",
 	grave_bar = "水之墓計時",
 	grave_nextbar = "水之墓冷卻",
