@@ -112,8 +112,8 @@ L:RegisterTranslations("deDE", function() return {
 	bosskill_desc = "Melde, wenn ein Boss besiegt wurde.",
 	enrage = "Wutanfall",
 	enrage_desc = "Melde, wenn ein Boss in einen Wutanfall Status geht.",
-	--berserk = "Berserk",
-	--berserk_desc = "Warn when the boss goes Berserk.",
+	berserk = "Berserker",
+	berserk_desc = "Melde, wenn ein Boss in den Berserker Status geht.",
 
 	["Load"] = "Laden",
 	["Load All"] = "Alle Laden",

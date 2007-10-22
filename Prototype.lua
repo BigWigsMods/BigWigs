@@ -43,11 +43,11 @@ commonWords:RegisterTranslations("deDE", function() return {
 	enrage_sec = "Wütend in %d sek",
 	enrage = "Wütend",
 
-	--berserk_start = "%s Engaged - Berserk in %d min",
-	--berserk_end = "%s goes Berserk",
-	--berserk_min = "Berserk in %d min",
-	--berserk_sec = "Berserk in %d sec",
-	--berserk = "Berserk",
+	berserk_start = "%s Angegriffen - Berserker in %d min",
+	berserk_end = "%s wird zum Berserker",
+	berserk_min = "Berserker in %d min",
+	berserk_sec = "Berserker in %d sek",
+	berserk = "Berserker",
 
 	RF = "Zorn der Gerechtigkeit",
 } end )
