@@ -249,7 +249,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	poison = "致命毒藥",
 	poison_desc = "當玩家受到致命毒藥時警告",
-	poison_trigger = "^(.+)受([到了]*)致命毒藥效果的影響。$",
+	poison_trigger = "^(.+)受(到[了]*)致命毒藥效果的影響。$",
 	poison_other = "%s 中了致命毒藥!",
 	poison_you = "致命毒藥在你身上!",
 

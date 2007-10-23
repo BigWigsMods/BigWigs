@@ -82,7 +82,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	attraction = "致命的吸引力",
 	attraction_desc = "當玩家中致命的吸引力發出警報",
-	attraction_trigger = "^(.+)受([到了]*)致命的吸引力效果的影響。",
+	attraction_trigger = "^(.+)受(到[了]*)致命的吸引力效果的影響。",
 	attraction_message = "致命的吸引力: %s",
 
 	debuff = "Debuff 計時",

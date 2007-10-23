@@ -142,7 +142,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	holyfire = "神聖之火",
 	holyfire_desc = "當隊友受到神聖之火時發出警報",
-	holyfire_trigger = "^(.+)受([到了]*)神聖之火效果的影響。",
+	holyfire_trigger = "^(.+)受(到[了]*)神聖之火效果的影響。",
 	holyfire_message = "神聖之火：[%s]",
 
 	icon = "團隊標記",

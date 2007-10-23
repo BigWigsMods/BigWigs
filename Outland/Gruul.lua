@@ -189,7 +189,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	silence = "沉默警告",
 	silence_desc = "當戈魯爾施放範圍沉默時發送警告 (迴響)",
-	silence_trigger = "受([到了]*)迴響效果的影響。",
+	silence_trigger = "受(到[了]*)迴響效果的影響。",
 	silence_message = "迴響 - 範圍沉默",
 	silence_warning = "戈魯爾即將施放迴響",
 	silence_bar = "迴響",

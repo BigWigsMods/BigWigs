@@ -462,7 +462,8 @@ L:RegisterTranslations("zhCN", function() return {
 --zhTW語系：Peroth＠暴風祭壇
 --site：http://blog.pixnet.net/Neriak
 L:RegisterTranslations("zhTW", function() return {
-	engage_trigger = "魔法，能量，我的人民陷入其中不能自拔……自從太陽之井被摧毀之後就是如此。歡迎來到未來。真遺憾，你們無法阻止什麼。沒有人可以阻止我了﹗(薩拉斯語)為了人民的正義!",
+	engage_trigger = "魔法，能量，我的人民陷入其中不能自拔……自從太陽之井被摧毀之後就是如此。歡迎來到未來。真遺憾，你們無法阻止什麼。沒有人可以阻止我了﹗",
+	-- engage_trigger = "魔法，能量，我的人民陷入其中不能自拔……自從太陽之井被摧毀之後就是如此。歡迎來到未來。真遺憾，你們無法阻止什麼。沒有人可以阻止我了﹗(薩拉斯語)為了人民的正義!",
 	engage_message = "第一階段 - 四顧問！",
 
 	conflag = "燃燒",
@@ -537,7 +538,7 @@ L:RegisterTranslations("zhTW", function() return {
 	mc_desc = "精神控制警示",
 	mc_message = "精神控制：[%s]",
 
-	afflicted_trigger = "^(.+)受([到了]*)(.*)效果的影響。$",
+	afflicted_trigger = "^(.+)受(到[了]*)(.*)效果的影響。$",
 
 	revive_bar = "顧問重生",
 	revive_warning = "顧問在五秒內活動！Tank、Healer 準備就位！",

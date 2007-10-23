@@ -100,7 +100,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	twist = "扭曲反射",
 	twist_desc = "當隊友受到扭曲反射時發出警報",
-	twist_trigger = "(.+)受([到了]*)扭曲反射效果的影響。",
+	twist_trigger = "(.+)受(到[了]*)扭曲反射效果的影響。",
 	twist_message = "扭曲反射: %s",
 } end)
 

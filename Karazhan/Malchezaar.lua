@@ -218,7 +218,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	enfeeble = "削弱警告",
 	enfeeble_desc = "顯示削弱計時條",
-	enfeeble_trigger = "^(.+)受([到了]*)削弱效果的影響。",
+	enfeeble_trigger = "^(.+)受(到[了]*)削弱效果的影響。",
 	enfeeble_message = "30 秒後下一次削弱",
 	enfeeble_warning1 = "5 秒後削弱",
 	enfeeble_warning2 = "10 秒後削弱",

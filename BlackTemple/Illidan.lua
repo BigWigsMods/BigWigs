@@ -425,7 +425,7 @@ L:RegisterTranslations("zhTW", function() return {
 	enrage_trigger = "感受一萬年的仇恨吧!",
 	enrage_message = "狂怒!",
 
-	afflict_trigger = "^(.+)受([到了]*)(.*)效果的影響。$",
+	afflict_trigger = "^(.+)受(到[了]*)(.*)效果的影響。$",
 	["Flame of Azzinoth"] = "埃辛諾斯火焰",
 } end )
 

@@ -312,7 +312,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	static = "靜電衝鋒",
 	static_desc = "當玩家受到靜電衝鋒時警示",
-	static_charge_trigger = "^(.+)受([到了]*)靜電衝鋒效果的影響。",
+	static_charge_trigger = "^(.+)受(到[了]*)靜電衝鋒效果的影響。",
 	static_charge_message = "靜電衝鋒：[%s]",
 	static_fade = "靜電衝鋒效果從你身上消失了。",
 
@@ -342,7 +342,7 @@ L:RegisterTranslations("zhTW", function() return {
 	loot = "受污染的核心警示",
 	loot_desc = "提示誰拾取了受污染的核心",
 	loot_message = "%s 撿到核心！快使用妙傳！",
-	loot_paralyze = "^(.+)受([到了]*)麻痹效果的影響。$",
+	loot_paralyze = "^(.+)受(到[了]*)麻痹效果的影響。$",
 	loot_update = "拿到受污染的核心: %s",
 } end )
 

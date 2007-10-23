@@ -145,7 +145,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	rage = "惡魔之怒",
 	rage_desc = "提示誰受到惡魔之怒",
-	rage_trigger = "^(.+)受([到了]*)惡魔之怒效果的影響。$",
+	rage_trigger = "^(.+)受(到[了]*)惡魔之怒效果的影響。$",
 	rage_you = "你受到惡魔之怒!!",
 	rage_other = "%s 受到惡魔之怒!",
 

@@ -177,7 +177,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	grip = "軍團之握",
 	grip_desc = "受到軍團之握時發送警告",
-	grip_trigger = "^(.+)受([到了]*)軍團之握效果的影響。",
+	grip_trigger = "^(.+)受(到[了]*)軍團之握效果的影響。",
 	grip_you = "軍團之握在你身上!",
 	grip_other = "軍團之握在 %s 身上!",
 
