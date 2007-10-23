@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -60,7 +60,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "바람의 혼이 너희를 쓸어내리라!", -- Check
+	engage_trigger = "바람의 혼이 너희를 쓸어내리라!",
 
 	flame = "화염 숨결",
 	flame_desc = "잔알라이가 대상자방향으로 화염 숨결을 시전하는지 알립니다.",
@@ -72,12 +72,12 @@ L:RegisterTranslations("koKR", function() return {
 
 	bomb = "불폭탄",
 	bomb_desc = "불폭탄에 대한 타이머를 표시합니다.",
-	bomb_trigger = "태워 버리겠다!", -- Check
+	bomb_trigger = "태워버리겠다!",
 	bomb_message = "잠시후 불폭탄!",
 
 	adds = "부화사 등장",
 	adds_desc = "부화사 등장에 대해 경고합니다.",
-	adds_trigger = "다 어디갔지? 당장 알을 부화시켜라!", -- Check
+	adds_trigger = "다 어디 갔지? 당장 알을 부화시켜!",
 	adds_message = "잠시후 부화사 등장!",
 } end )
 
