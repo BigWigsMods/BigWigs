@@ -272,7 +272,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	spite = "惡意",
 	spite_desc = "警告誰有惡意",
-	spite_message = "惡意: %s",
+	spite_message = "惡意：[%s]",
 
 	scream = "靈魂尖嘯",
 	scream_desc = "顯示靈魂尖嘯冷卻條",

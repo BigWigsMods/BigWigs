@@ -102,7 +102,7 @@ L:RegisterTranslations("zhTW", function() return {
 	riding_trigger = "^(.+)獲得了小紅帽的效果",
 
 	riding_youwarn = "你變成小紅帽了！",
-	riding_otherwarn ="[%s] 變成小紅帽了！",
+	riding_otherwarn ="小紅帽：[%s] ",
 	riding_bar = "%s 快跑！",
 
 	youriding = "你變成小紅帽時警告",

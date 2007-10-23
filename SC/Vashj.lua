@@ -343,7 +343,7 @@ L:RegisterTranslations("zhTW", function() return {
 	loot_desc = "提示誰拾取了受污染的核心",
 	loot_message = "%s 撿到核心！快使用妙傳！",
 	loot_paralyze = "^(.+)受(到[了]*)麻痹效果的影響。$",
-	loot_update = "拿到受污染的核心: %s",
+	loot_update = "拿到受污染的核心：[%s]",
 } end )
 
 ----------------------------------

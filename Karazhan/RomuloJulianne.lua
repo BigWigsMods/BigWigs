@@ -178,7 +178,7 @@ L:RegisterTranslations("zhTW", function() return {
 	poison = "中毒警告",
 	poison_desc = "當有玩家中毒時發送警告",
 	poison_trigger = "^(.+)受(到[了]*)毒刺效果的影響。",
-	poison_message = "%s 中毒 - 請解毒",
+	poison_message = "中毒：[%s] - 請解毒",
 
 	heal = "治療警告",
 	heal_desc = "當 茱麗葉 施放永恆的影響時發送警告",

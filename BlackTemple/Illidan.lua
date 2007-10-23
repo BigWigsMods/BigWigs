@@ -370,7 +370,7 @@ L:RegisterTranslations("zhTW", function() return {
 	parasite = "寄生暗影惡魔",
 	parasite_desc = "當隊員中寄生暗影惡魔時發出警告",
 	parasite_you = "你中了>寄生暗影惡魔<!",
-	parasite_other = "%s 中了>寄生暗影惡魔<!",
+	parasite_other = "寄生暗影惡魔：[%s]",
 
 	icon = "團隊標記",
 	icon_desc = "為中了寄生暗影魔的隊員打上團隊標記.",
@@ -380,7 +380,7 @@ L:RegisterTranslations("zhTW", function() return {
 	barrage_message = "%s 中了黑暗侵襲!",
 	barrage_warn = "侵襲即將來臨!",
 	barrage_warn_bar = "~下一次侵襲",
-	barrage_bar = "侵襲: %s",
+	barrage_bar = "侵襲：[%s]",
 
 	eyeblast = "暗眼衝擊波",
 	eyeblast_desc = "當施放暗眼衝擊波時發出警報",
@@ -394,7 +394,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	flame = "苦惱之焰",
 	flame_desc = "當玩家中了苦惱之焰時發出警報",
-	flame_message = "%s 中了苦惱之焰!",
+	flame_message = "苦惱之焰：[%s]",
 
 	demons = "暗影惡魔",
 	demons_desc = "當召喚暗影惡魔時發出警報",

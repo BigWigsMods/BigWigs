@@ -265,7 +265,7 @@ L:RegisterTranslations("zhTW", function() return {
 	spellshield_desc = "當克羅斯·火手施放法術護盾時發送警告",
 	spellshield_trigger = "克羅斯·火手獲得了法術護盾的效果。",
 	spellshield_message = "火手施放法術護盾 - 法師偷取！",
-	--spellshield_bar = "Next Spell Shield",
+	spellshield_bar = "法術護盾",
 
 	summon = "召喚警告",
 	summon_desc = "當召喚者歐莫開始施放召喚野生地獄獵犬時發送警告",

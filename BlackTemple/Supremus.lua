@@ -127,15 +127,15 @@ L:RegisterTranslations("zhTW", function() return {
 	next_phase_bar = "下一個階段",
 	next_phase_message = "10 秒內改變階段!",
 
-	punch = "Molten Punch",
-	punch_desc = "Alert when he does Molten Punch, and display a countdown bar.",
-	punch_message = "Molten Punch!",
-	punch_bar = "~Possible Punch!",
+	punch = "熔火之擊",
+	punch_desc = "警報在施放熔火之擊，顯示冷卻條",
+	punch_message = "熔火之擊!",
+	punch_bar = "~可能施放熔火之擊!",
 	punch_trigger = "瑟普莫斯施放了熔火之擊。",
 
 	target = "目標",
 	target_desc = "警報在風箏階段誰是主要目標，並在他頭上放團隊標記。",
-	target_message = "%s 被盯上!",
+	target_message = "被盯上：[%s]",
 	target_message_nounit = "新目標!",
 
 	icon = "目標標記",

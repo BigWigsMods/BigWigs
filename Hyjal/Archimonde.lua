@@ -179,7 +179,7 @@ L:RegisterTranslations("zhTW", function() return {
 	grip_desc = "受到軍團之握時發送警告",
 	grip_trigger = "^(.+)受(到[了]*)軍團之握效果的影響。",
 	grip_you = "軍團之握在你身上!",
-	grip_other = "軍團之握在 %s 身上!",
+	grip_other = "軍團之握：[%s]",
 
 	icon = "團隊標記",
 	icon_desc = "在受到軍團之握的隊友頭上標記 (需要權限)",
@@ -192,7 +192,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	burst = "空氣炸裂",
 	burst_desc = "當空氣炸裂施放時時發送警告",
-	burst_other = "空氣炸裂在 %s 身上",
+	burst_other = "空氣炸裂：[%s]",
 	burst_you = "空氣炸裂在你身上!",
 
 	burstsay = "空氣炸裂(說)",

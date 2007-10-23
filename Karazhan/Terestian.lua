@@ -148,7 +148,7 @@ L:RegisterTranslations("zhTW", function() return {
 	sacrifice_trigger = "^(.+)受(到[了]*)犧牲效果的影響。$",
 	sacrifice_fade = "^犧牲效果從%s身上消失。$",
 	sacrifice_message = "%s 犧牲了 - 注意停手及治療",
-	sacrifice_bar = "犧牲：%s",
+	sacrifice_bar = "犧牲：[%s]",
 	sacrifice_soon = "即將施放犧牲!",
 	sacrifice_soonbar = "~可能施放犧牲",
 

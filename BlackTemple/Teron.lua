@@ -86,7 +86,7 @@ L:RegisterTranslations("zhTW", function() return {
 	shadow = "死亡之影",
 	shadow_desc = "當誰中了死亡之影將告訴你",
 	shadow_trigger = "^(.+)受(到[了]*)死亡之影效果的影響。$",
-	shadow_other = "死亡之影: %s!",
+	shadow_other = "死亡之影：[%s]",
 	shadow_you = "你 中了死亡之影!",
 
 	icon = "團隊標記",
