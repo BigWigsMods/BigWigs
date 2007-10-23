@@ -76,8 +76,8 @@ L:RegisterTranslations("frFR", function() return {
 	bosskill_desc = "Préviens quand le boss est vaincu.",
 	enrage = "Enrager",
 	enrage_desc = "Préviens quand le boss devient enragé.",
-	--berserk = "Berserk",
-	--berserk_desc = "Warn when the boss goes Berserk.",
+	berserk = "Berserk",
+	berserk_desc = "Préviens quand le boss passe en berserk.",
 
 	["Load"] = "Charger",
 	["Load All"] = "Tout charger",

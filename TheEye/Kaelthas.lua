@@ -248,7 +248,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	toy = "Jouet à distance sur tanks",
 	toy_desc = "Préviens quand un tank subit les effets du Jouet à distance.",
-	toy_message = "Jouet sur le tank : %s",
+	toy_message = "Jouet sur tank : %s",
 	toy_trigger = "Jouet à distance",
 
 	hunter = "Jouet à distance sur chasseurs",
@@ -273,8 +273,8 @@ L:RegisterTranslations("frFR", function() return {
 	flying_message = "Phase 5 - Rupture de gravité dans 1 min.",
 
 	weapons_inc_message = "Phase 2 - Arrivée des armes !",
-	phase3_message = "Phase 3 - Conseillers et Armes !",
-	phase4_message = "Phase 4 - Arrivée de Kael !",
+	phase3_message = "Phase 3 - Conseillers et armes !",
+	phase4_message = "Phase 4 - Arrivée de Kael'thas !",
 	phase4_bar = "Arrivée de Kael'thas",
 
 	mc = "Contrôle mental",

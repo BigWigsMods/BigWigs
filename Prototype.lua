@@ -115,17 +115,17 @@ commonWords:RegisterTranslations("frFR", function() return {
 	you = "Vous",
 	are = "subissez",
 
-	enrage_start = "%s engagé(e) - Enrager dans %d min.",
-	enrage_end = "%s enragé(e)",
+	enrage_start = "%s engagé - Enrager dans %d min.",
+	enrage_end = "%s enragé",
 	enrage_min = "Enrager dans %d min.",
 	enrage_sec = "Enrager dans %d sec.",
 	enrage = "Enrager",
 
-	--berserk_start = "%s Engaged - Berserk in %d min",
-	--berserk_end = "%s goes Berserk",
-	--berserk_min = "Berserk in %d min",
-	--berserk_sec = "Berserk in %d sec",
-	--berserk = "Berserk",
+	berserk_start = "%s engagé - Berserk dans %d min.",
+	berserk_end = "%s devient berserk",
+	berserk_min = "Berserk dans %d min.",
+	berserk_sec = "Berserk dans %d sec.",
+	berserk = "Berserk",
 
 	RF = "Fureur vertueuse",
 } end )
