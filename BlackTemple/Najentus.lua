@@ -136,8 +136,8 @@ L:RegisterTranslations("zhTW", function() return {
 	spine_message = "尖刺脊椎：[%s]",
 
 	spinesay = "尖刺脊椎通報",
-	spinesay_desc = "當你中了尖刺脊椎會時自動喊話，讓周圍隊友迴避。",
-	spinesay_message = "我中了尖刺脊椎了，離開我!",
+	spinesay_desc = "當你中了尖刺脊椎會時自動喊話，讓周圍隊友幫忙。",
+	spinesay_message = "我中刺了！麻煩拔一下！",
 
 	shield = "潮汐之盾",
 	shield_desc = "潮汐之盾計時",
