@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -49,7 +49,7 @@ L:RegisterTranslations("koKR", function() return {
 	ping_message = "폭풍 - 현재 위치 미니맵에 찍는 중!",
 
 	icon = "전술 표시",
-	icon_desc = "전기 폭풍 대상이된 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+	icon_desc = "전하 폭풍 대상이된 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

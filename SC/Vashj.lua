@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -119,7 +119,7 @@ L:RegisterTranslations("koKR", function() return {
 	barrier = "보호막 손실",
 	barrier_desc = "보호막 손실 시 알립니다.",
 	barrier_down_message = "보호막 %d/4 손실!",
-	barrier_fades_trigger = "여군주 바쉬의 몸에서 마법 보호막 효과가 사라졌습니다.", -- check
+	barrier_fades_trigger = "여군주 바쉬의 몸에서 마법 보호막 효과가 사라졌습니다.",
 
 	loot = "오염된 핵",
 	loot_desc = "오염된 핵을 획득한 플레이어를 알립니다.",

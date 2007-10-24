@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -59,11 +59,11 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	enrage_trigger = "드디어, 내가 풀려났도다!", -- check
+	enrage_trigger = "드디어, 내가 풀려났도다!",
 
 	whirlwind = "소용돌이",
 	whirlwind_desc = "소용돌이에 대한 타이머입니다.",
-	whirlwind_trigger = "눈먼 레오테라스|1이;가; 소용돌이 효과를 얻었습니다.", -- check
+	whirlwind_trigger = "눈먼 레오테라스|1이;가; 소용돌이 효과를 얻었습니다.",
 	whirlwind_gain = "12초간 소용돌이",
 	whirlwind_fade = "소용돌이 종료",
 	whirlwind_bar = "소용돌이",
@@ -82,18 +82,18 @@ L:RegisterTranslations("koKR", function() return {
 
 	mindcontrol = "정신 지배",
 	mindcontrol_desc = "정신 지배에 걸린 플레이어를 알립니다.",
-	mindcontrol_trigger = "^([^|;%s]*)(.*)잠식하는 광기에 걸렸습니다%.$", -- check
+	mindcontrol_trigger = "^([^|;%s]*)(.*)잠식하는 광기에 걸렸습니다%.$",
 	mindcontrol_warning = "정신 지배: %s",
 
 	image = "이미지",
 	image_desc = "15% 이미지 분리에 대한 경고입니다.",
-	image_trigger = "누구나 마음속에 악마를 품고 살지...", -- check
+	image_trigger = "안 돼... 안 돼! 무슨 짓이냐? 내가 주인이야! 내 말 듣지 못해? 나란 말이야! 내가... 으아악! 놈을 억누를 수... 없... 어.",
 	image_message = "15% - 이미지 생성!",
 	image_warning = "곧 이미지!",
 
 	whisper = "음흉한 속삭임",
 	whisper_desc = "음흉한 속삭임에 걸린 플레이어를 알립니다.",
-	whisper_trigger = "^([^|;%s]*)(.*)음흉한 속삭임에 걸렸습니다%.$", -- check
+	whisper_trigger = "^([^|;%s]*)(.*)음흉한 속삭임에 걸렸습니다%.$",
 	whisper_message = "악마: %s",
 	whisper_bar = "악마 사라짐",
 	whisper_soon = "~악마 대기시간",

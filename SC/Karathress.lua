@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -66,7 +66,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	heal = "치유",
 	heal_desc = "카리브디스의 치유 시전을 경고합니다.",
-	heal_trigger = "칼리브디스|1이;가; 치유의 물결 시전을 시작합니다.", -- check
+	heal_trigger = "칼리브디스|1이;가; 치유의 물결 시전을 시작합니다.",
 	heal_message = "칼리브디스 치유 시전!",
 
 	["Fathom-Guard Sharkkis"] = "심연의 경비병 샤르키스", --hunter

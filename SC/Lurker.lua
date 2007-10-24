@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -54,7 +54,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	spout = "분출",
 	spout_desc = "분출에 대한 타이머입니다. 항상 정확하지 않을 수 있습니다.",
-	spout_trigger = "%s|1이;가; 깊은 숨을 쉽니다!", -- check
+	spout_trigger = "%s|1이;가; 깊은 숨을 쉽니다!",
 	spout_message = "분출 시전 중!",
 	spout_warning = "약 3초 이내 분출!",
 	spout_bar = "분출 가능",
