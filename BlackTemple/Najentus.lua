@@ -219,7 +219,7 @@ function mod:Spine(msg)
 				SendChatMessage(L["spinesay_message"], "SAY")
 			end
 		end
-		self:Sync("NajSpine " .. splayer)
+		self:Sync("NajSpine", splayer)
 	end
 end
 
@@ -231,7 +231,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	elseif sync == "NajShieldOn" and self.db.profile.shield then
 		self:Message(L["shield_warn"], "Important", nil, "Alert")
-		self:DelayedMessage(50, L["shield_soon_warn"], "Positive")
-		self:Bar(L["shield_nextbar"], 60, "Spell_Frost_FrostBolt02")
+		self:DelayedMessage(46, L["shield_soon_warn"], "Positive")
+		self:Bar(L["shield_nextbar"], 56, "Spell_Frost_FrostBolt02")
 	end
 end
