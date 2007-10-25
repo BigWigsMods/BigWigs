@@ -25,7 +25,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	ghost = "Ghost",
 	ghost_desc = "Ghost timers.",
-	ghost_bar "Ghost: %s",
+	ghost_bar = "Ghost: %s",
 
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon on players with Shadow of Death.",
@@ -42,7 +42,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	--ghost = "Ghost",
 	--ghost_desc = "Ghost timers.",
-	--ghost_bar "Ghost: %s",
+	--ghost_bar = "Ghost: %s",
 
 	icon = "Icon",
 	icon_desc = "Plaziert ein Schlachtzug Icon auf dem Spieler mit Schatten des Todes.",
@@ -59,7 +59,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	--ghost = "Ghost",
 	--ghost_desc = "Ghost timers.",
-	--ghost_bar "Ghost: %s",
+	--ghost_bar = "Ghost: %s",
 
 	icon = "전술 표시",
 	icon_desc = "죽음의 어둠에 걸린 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
@@ -76,7 +76,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	--ghost = "Ghost",
 	--ghost_desc = "Ghost timers.",
-	--ghost_bar "Ghost: %s",
+	--ghost_bar = "Ghost: %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Ombre de la mort (nécessite d'être promu ou mieux).",
@@ -94,7 +94,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	--ghost = "Ghost",
 	--ghost_desc = "Ghost timers.",
-	--ghost_bar "Ghost: %s",
+	--ghost_bar = "Ghost: %s",
 
 	icon = "团队标记",
 	icon_desc = "给中了死亡之影的玩家打上团队标记",
@@ -111,7 +111,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	--ghost = "Ghost",
 	--ghost_desc = "Ghost timers.",
-	--ghost_bar "Ghost: %s",
+	--ghost_bar = "Ghost: %s",
 
 	icon = "團隊標記",
 	icon_desc = "給中了死亡之影的玩家打上團隊標記",

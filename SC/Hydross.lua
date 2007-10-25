@@ -45,7 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	tomb = "Water Tomb",
 	tomb_desc = "Notify of players afflicted by Water Tomb.",
-	tomb_message = "Water Tomb: [|cff0064C8%s|r]",
+	tomb_message = "Water Tomb: %s",
 
 	icon = "Vile Sludge Icon",
 	icon_desc = "Place a Raid Icon on the player afflicted by Vile Sludge(requires promoted or higher).",
@@ -92,7 +92,7 @@ L:RegisterTranslations("deDE", function() return {
 	afflict_trigger = "^([^%s]+) ([^%s]+) von (.*) betroffen",
 
 	sludge_message = "\195\156bler Schlamm: %s",
-	tomb_message = "Wassergrab: [|cff0064C8%s|r]",
+	tomb_message = "Wassergrab: %s",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -118,7 +118,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	tomb = "수중 무덤",
 	tomb_desc = "수중 무덤에 걸린 플레이어를 알립니다.",
-	tomb_message = "수중 무덤: [|cff0064C8%s|r]",
+	tomb_message = "수중 무덤: %s",
 
 	icon = "전술 표시",
 	icon_desc = "타락의 진흙에 걸린 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
@@ -151,7 +151,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	tomb = "Tombe aquatique",
 	tomb_desc = "Préviens quand des joueurs sont affectés par la Tombe aquatique.",
-	tomb_message = "Tombe aquatique : [|cff0064C8%s|r]",
+	tomb_message = "Tombe aquatique : %s",
 
 	icon = "Icône Vase abominable",
 	icon_desc = "Place une icône de raid sur le joueur affecté par la Vase abominable (nécessite d'être promu ou mieux).",
@@ -185,7 +185,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	tomb = "水之墓",
 	tomb_desc = "当临近队友成为水之墓发出警报.",
-	tomb_message = "水之墓: [|cff0064C8%s|r]",
+	tomb_message = "水之墓: %s",
 
 	icon = "肮脏的淤泥怪标记",
 	icon_desc = "为受到肮脏的淤泥怪的队友打上标记(需要助理或更高权限).",
@@ -218,7 +218,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	tomb = "水之墳",
 	tomb_desc = "通報玩家受到水之墳",
-	tomb_message = "水之墳：: [|cff0064C8%s|r]",
+	tomb_message = "水之墳：: %s",
 
 	icon = "混濁污泥標記",
 	icon_desc = "對受到混濁污泥的目標設置標記（需要權限）",

@@ -103,7 +103,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	mc = "Mind Control",
 	mc_desc = "Warn who has Mind Control.",
-	mc_message = "Mind Control: [|cff0064C8%s|r]",
+	mc_message = "Mind Control: %s",
 
 	afflicted_trigger = "^(%S+) (%S+) afflicted by (.*).$",
 
@@ -182,7 +182,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	mc = "정신 지배",
 	mc_desc = "정신 지배에 걸린 사람을 알립니다.",
-	mc_message = "정신 지배: [|cff0064C8%s|r]",
+	mc_message = "정신 지배: %s",
 
 	afflicted_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
 
@@ -261,7 +261,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	mc = "Contrôle mental",
 	mc_desc = "Préviens quand des joueurs subissent les effets du Contrôle mental.",
-	mc_message = "Contrôle mental : [|cff0064C8%s|r]",
+	mc_message = "Contrôle mental : %s",
 
 	afflicted_trigger = "^(%S+) (%S+) les effets [de|2]+ (.*).$",
 
@@ -343,7 +343,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	mc = "Gedankenkontrolle",
 	mc_desc = "Warnt wer von Gedankenkontrolle betroffen ist.",
-	mc_message = "Gedankenkontrolle: [|cff0064C8%s|r]",
+	mc_message = "Gedankenkontrolle: %s",
 
 	afflicted_trigger = "^(%S+) (%S+) ist von (.*) betroffen.$",
 
@@ -425,7 +425,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	mc = "精神控制",
 	mc_desc = "当队友被精神控制发出警报",
-	mc_message = "精神控制: [|cff0064C8%s|r]",
+	mc_message = "精神控制: %s",
 
 	afflicted_trigger = "^(%S+)受(%S+)了(.*)效果的影响。$",
 
@@ -445,12 +445,12 @@ L:RegisterTranslations("zhTW", function() return {
 	conflag = "燃燒",
 	conflag_desc = "當玩家受到燃燒時警告。",
 	conflag_spell = "燃燒",
-	conflag_message = "燃燒：[%s]",
+	conflag_message = "燃燒：%s",
 
 	gaze = "凝視",
 	gaze_desc = "當目標受到凝視時警示",
 	gaze_trigger = "凝視著([^%s]+)!$",
-	gaze_message = "凝視：[%s] - 快跑！",
+	gaze_message = "凝視：%s - 快跑！",
 	gaze_bar = "凝視冷卻",
 
 	icon = "團隊標記",
@@ -481,7 +481,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	toyall = "遙控玩具",
 	--toyall_desc = "當坦克受到遙控玩具影響時警示",
-	--toyall_message = "遙控玩具：[%s]",
+	--toyall_message = "遙控玩具：%s",
 
 	phase = "階段警示",
 	phase_desc = "開啟各階段警示",
@@ -507,7 +507,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	mc = "精神控制",
 	mc_desc = "精神控制警示",
-	mc_message = "精神控制：: [|cff0064C8%s|r]",
+	mc_message = "精神控制：: %s",
 
 	afflicted_trigger = "^(.+)受(到[了]*)(.*)效果的影響。$",
 
