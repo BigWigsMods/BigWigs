@@ -23,6 +23,10 @@ L:RegisterTranslations("enUS", function() return {
 	shadow_other = "Shadow of Death: %s!",
 	shadow_you = "Shadow of Death on YOU!",
 
+	ghost = "Ghost",
+	ghost_desc = "Ghost timers.",
+	ghost_bar "Ghost: %s",
+
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon on players with Shadow of Death.",
 } end )
@@ -35,6 +39,10 @@ L:RegisterTranslations("deDE", function() return {
 	shadow_trigger = "^([^%s]+) ([^%s]+) von Schatten des Todes betroffen%.$",
 	shadow_other = "Schatten des Todes: %s!",
 	shadow_you = "Schatten des Todes auf DIR!",
+
+	--ghost = "Ghost",
+	--ghost_desc = "Ghost timers.",
+	--ghost_bar "Ghost: %s",
 
 	icon = "Icon",
 	icon_desc = "Plaziert ein Schlachtzug Icon auf dem Spieler mit Schatten des Todes.",
@@ -49,6 +57,10 @@ L:RegisterTranslations("koKR", function() return {
 	shadow_other = "죽음의 어둠: %s!",
 	shadow_you = "당신에 죽음의 어둠!",
 
+	--ghost = "Ghost",
+	--ghost_desc = "Ghost timers.",
+	--ghost_bar "Ghost: %s",
+
 	icon = "전술 표시",
 	icon_desc = "죽음의 어둠에 걸린 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
 } end )
@@ -61,6 +73,10 @@ L:RegisterTranslations("frFR", function() return {
 	shadow_trigger = "^(%S+) (%S+) les effets .* Ombre de la mort%.$",
 	shadow_other = "Ombre de la mort : %s !",
 	shadow_you = "Ombre de la mort sur VOUS !",
+
+	--ghost = "Ghost",
+	--ghost_desc = "Ghost timers.",
+	--ghost_bar "Ghost: %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Ombre de la mort (nécessite d'être promu ou mieux).",
@@ -76,6 +92,10 @@ L:RegisterTranslations("zhCN", function() return {
 	shadow_other = "死亡之影: %s!",
 	shadow_you = "你 中了死亡之影!",
 
+	--ghost = "Ghost",
+	--ghost_desc = "Ghost timers.",
+	--ghost_bar "Ghost: %s",
+
 	icon = "团队标记",
 	icon_desc = "给中了死亡之影的玩家打上团队标记",
 } end )
@@ -89,6 +109,10 @@ L:RegisterTranslations("zhTW", function() return {
 	shadow_other = "死亡之影：[%s]",
 	shadow_you = "你 中了死亡之影!",
 
+	--ghost = "Ghost",
+	--ghost_desc = "Ghost timers.",
+	--ghost_bar "Ghost: %s",
+
 	icon = "團隊標記",
 	icon_desc = "給中了死亡之影的玩家打上團隊標記",
 } end )
@@ -100,7 +124,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"shadow", "icon", "bosskill"}
+mod.toggleoptions = {"shadow", "ghost", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -129,7 +153,7 @@ function mod:SoD(msg)
 		if splayer == L2["you"] and stype == L2["are"] then
 			splayer = pName
 		end
-		self:Sync("TeronShadow " .. splayer)
+		self:Sync("TeronShadow", splayer)
 	end
 end
 
@@ -144,8 +168,13 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Message(other, "Attention")
 			self:Bar(other, 55, "Spell_Arcane_PrismaticCloak")
 		end
+		self:ScheduleEvent("BWTeronGhost"..rest, self.Ghost, 55, rest)
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
 	end
+end
+
+function mod:Ghost(rest)
+	self:Bar(L["ghost_bar"]:format(rest), 60, "Spell_Magic_LesserInvisibilty")
 end
