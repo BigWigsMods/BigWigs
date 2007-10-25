@@ -24,9 +24,6 @@ local shield = BB["Phaseshift Bulwark"]
 BB = nil
 
 local MCd = {}
-local UnitBuff = UnitBuff
-local UnitName = UnitName
-local UnitPowerType = UnitPowerType
 local fmt = string.format
 local pName = nil
 local stop = nil
@@ -78,14 +75,9 @@ L:RegisterTranslations("enUS", function() return {
 	pyro_warning = "Pyroblast in 5sec!",
 	pyro_message = "Casting Pyroblast!",
 
-	toy = "Remote Toy on Tanks",
-	toy_desc = "Warn when a tank has Remote Toy.",
-	toy_message = "Toy on Tank: %s",
-	toy_trigger = "Remote Toy", --afflicted by ...
-
-	hunter = "Remote Toy on Hunters",
-	hunter_desc = "Warn when a hunter has Remote Toy.",
-	hunter_message = "Toy on Hunter: %s",
+	toyall = "Remote Toy",
+	toyall_desc = "Warn when a player has Remote Toy.",
+	toyall_message = "Toy: %s",
 
 	phase = "Phase warnings",
 	phase_desc = "Warn about the various phases of the encounter.",
@@ -162,14 +154,9 @@ L:RegisterTranslations("koKR", function() return {
 	pyro_warning = "약 5초 이내 불덩이 작렬!",
 	pyro_message = "불덩이 작열 시전!",
 
-	toy = "탱커에 원격조종 장난감",
-	toy_desc = "탱커가 원격조종 장난감에 걸릴 시 경고합니다.",
-	toy_message = "탱커에 장난감: %s",
-	toy_trigger = "원격조종 장난감",
-
-	hunter = "사냥꾼에 원격조종 장난감",
-	hunter_desc = "사냥꾼이 원격조종 장난감에 걸릴 시 경고합니다.",
-	hunter_message = "사냥꾼에 장난감: %s",
+	toyall = "원격조종 장난감",
+	--toyall_desc = "탱커가 원격조종 장난감에 걸릴 시 경고합니다.",
+	--toyall_message = "탱커에 장난감: %s",
 
 	phase = "단계 경고",
 	phase_desc = "단계 변경에 대해 알립니다.",
@@ -246,14 +233,9 @@ L:RegisterTranslations("frFR", function() return {
 	pyro_warning = "Explosion pyrotechnique dans 5 sec. !",
 	pyro_message = "Explosion pyrotechnique en incantation !",
 
-	toy = "Jouet à distance sur tanks",
-	toy_desc = "Préviens quand un tank subit les effets du Jouet à distance.",
-	toy_message = "Jouet sur tank : %s",
-	toy_trigger = "Jouet à distance",
-
-	hunter = "Jouet à distance sur chasseurs",
-	hunter_desc = "Préviens quand un chasseur subit les effets du Jouet à distance.",
-	hunter_message = "Jouet sur chasseur : %s",
+	toyall = "Jouet à distance",
+	--toyall_desc = "Préviens quand un tank subit les effets du Jouet à distance.",
+	--toyall_message = "Jouet sur tank : %s",
 
 	phase = "Phases",
 	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
@@ -333,14 +315,9 @@ L:RegisterTranslations("deDE", function() return {
 	pyro_warning = "Pyroschlag in 5sec!",
 	pyro_message = "Pyroschlag!",
 
-	toy = "Ferngesteuertes Spielzeug auf Tank's",
-	toy_desc = "Warnt wenn ein Tank ein Ferngesteuertes Spielzeug ist.",
-	toy_message = "Spielzeug auf Tank: %s",
-	toy_trigger = "Ferngesteuertes Spielzeug",
-
-	hunter = "Ferngesteuertes Spielzeug auf Jägern",
-	hunter_desc = "Warnt wenn ein Jäger Ferngesteuertes Spielzeug hat.",
-	hunter_message = "Spielzeug auf Jäger: %s",
+	toyall = "Ferngesteuertes Spielzeug",
+	--toyall_desc = "Warnt wenn ein Tank ein Ferngesteuertes Spielzeug ist.",
+	--toyall_message = "Spielzeug auf Tank: %s",
 
 	phase = "Phasen Warnungen",
 	phase_desc = "Warnt vor den verschiedenen Phasen des Encounters.",
@@ -416,10 +393,9 @@ L:RegisterTranslations("zhCN", function() return {
 	pyro_warning = "5秒后 炎爆术!",
 	pyro_message = "正在施放 炎爆术!",
 
-	toy = "遥控玩具(坦克)",
-	toy_desc = "当坦克受到遥控玩具发出警报",
-	toy_message = "遥控坦克: %s",
-	toy_trigger = "遥控玩具", --afflicted by ...
+	toyall = "遥控玩具",
+	--toyall_desc = "当坦克受到遥控玩具发出警报",
+	--toyall_message = "遥控坦克: %s",
 
 	hunter = "遥控玩具(猎人)",
 	hunter_desc = "当猎人受到遥控玩具发出警报",
@@ -503,14 +479,9 @@ L:RegisterTranslations("zhTW", function() return {
 	pyro_warning = "五秒內施放炎爆術！",
 	pyro_message = "炎爆術！",
 
-	toy = "遙控玩具",
-	toy_desc = "當坦克受到遙控玩具影響時警示",
-	toy_message = "遙控玩具：[%s]",
-	toy_trigger = "遙控玩具", --afflicted by ...
-
-	hunter = "遙控玩具 - 獵人",
-	hunter_desc = "當獵人受到遙控玩具影響時警示。",
-	hunter_message = "遙控玩具：[%s]",
+	toyall = "遙控玩具",
+	--toyall_desc = "當坦克受到遙控玩具影響時警示",
+	--toyall_message = "遙控玩具：[%s]",
 
 	phase = "階段警示",
 	phase_desc = "開啟各階段警示",
@@ -553,7 +524,7 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = { boss, capernian, sanguinar, telonicus, thaladred }
 mod.wipemobs = { axe, mace, dagger, staff, sword, bow, shield }
-mod.toggleoptions = { "phase", -1, "conflag", "mc", "toy", "hunter", "gaze", "icon", "fear", "pyro", "rebirth", "proximity", "bosskill" }
+mod.toggleoptions = { "phase", -1, "conflag", "mc", "toyall", "gaze", "icon", "fear", "pyro", "rebirth", "proximity", "bosskill" }
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
@@ -578,8 +549,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelConflag", 0.8)
-	self:TriggerEvent("BigWigs_ThrottleSync", "KaelToy2", 3)
-	self:TriggerEvent("BigWigs_ThrottleSync", "ToyHunter", 3)
+	self:TriggerEvent("BigWigs_ThrottleSync", "KSToy", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFearSoon", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFear", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelMC2", 0)
@@ -670,42 +640,17 @@ end
 function mod:Afflicted(msg)
 	local tPlayer, tType, tSpell = select(3, msg:find(L["afflicted_trigger"]))
 	if tPlayer and tType then
-		local id = nil
 		if tPlayer == L2["you"] and tType == L2["are"] then
 			tPlayer = pName
-			id = "player"
 		end
 		if tSpell == L["conflag_spell"] then
-			self:Sync("KaelConflag " .. tPlayer)
+			self:Sync("KaelConflag", tPlayer)
 		elseif tSpell == L["fear_spell"] then
 			self:Sync("KaelFear")
 		elseif tSpell == L["mc"] then
-			self:Sync("KaelMC2 " .. tPlayer)
-		elseif tSpell == L["toy_trigger"] then
-			local num = GetNumRaidMembers()
-			for i = 1, num do
-				local raid = fmt("%s%d", "raid", i)
-				if UnitName(raid) == tPlayer then
-					id = raid
-					break
-				end
-			end
-			if not id then return end
-
-			local paladin = nil
-			local Index = 1
-			while UnitBuff(id, Index) do
-				local name = UnitBuff(id, Index)
-				if name == L2["RF"] then
-					paladin = true
-				end
-				Index = Index + 1
-			end
-			if UnitPowerType(id) == 1 or paladin then
-				self:Sync("KaelToy2 " .. tPlayer)
-			elseif select(2, UnitClass(id)) == "HUNTER" then
-				self:Sync("ToyHunter " .. tPlayer)
-			end
+			self:Sync("KaelMC2", tPlayer)
+		elseif tSpell == L["toyall"] then
+			self:Sync("KSToy", tPlayer)
 		end
 	end
 end
@@ -715,12 +660,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		local msg = fmt(L["conflag_message"], rest)
 		self:Message(msg, "Attention")
 		self:Bar(msg, 10, "Spell_Fire_Incinerate")
-	elseif sync == "KaelToy2" and rest and self.db.profile.toy then
-		local msg = fmt(L["toy_message"], rest)
-		self:Message(msg, "Attention")
-		self:Bar(msg, 60, "INV_Misc_Urn_01")
-	elseif sync == "ToyHunter" and rest and self.db.profile.hunter then
-		local msg = fmt(L["hunter_message"], rest)
+	elseif sync == "KSToy" and rest and self.db.profile.toyall then
+		local msg = fmt(L["toyall_message"], rest)
 		self:Message(msg, "Attention")
 		self:Bar(msg, 60, "INV_Misc_Urn_01")
 	elseif sync == "KaelFearSoon" and self.db.profile.fear then
