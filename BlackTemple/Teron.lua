@@ -74,9 +74,9 @@ L:RegisterTranslations("frFR", function() return {
 	shadow_other = "Ombre de la mort : %s !",
 	shadow_you = "Ombre de la mort sur VOUS !",
 
-	--ghost = "Ghost",
-	--ghost_desc = "Ghost timers.",
-	--ghost_bar = "Ghost: %s",
+	ghost = "Fantôme",
+	ghost_desc = "Indique la durée restante de la forme fantôme de chaque joueur.",
+	ghost_bar = "Fantôme : %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Ombre de la mort (nécessite d'être promu ou mieux).",

@@ -234,8 +234,8 @@ L:RegisterTranslations("frFR", function() return {
 	pyro_message = "Explosion pyrotechnique en incantation !",
 
 	toyall = "Jouet à distance",
-	--toyall_desc = "Préviens quand un tank subit les effets du Jouet à distance.",
-	--toyall_message = "Jouet sur tank : %s",
+	toyall_desc = "Préviens quand un joueur subit les effets du Jouet à distance.",
+	toyall_message = "Jouet : %s",
 
 	phase = "Phases",
 	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
