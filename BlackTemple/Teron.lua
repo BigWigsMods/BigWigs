@@ -168,7 +168,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Message(other, "Attention")
 			self:Bar(other, 55, "Spell_Arcane_PrismaticCloak")
 		end
-		self:ScheduleEvent("BWTeronGhost"..rest, self.Ghost, 55, rest)
+		self:ScheduleEvent("BWTeronGhost"..rest, self.Ghost, 55, self, rest)
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end
@@ -176,5 +176,5 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 end
 
 function mod:Ghost(rest)
-	self:Bar(L["ghost_bar"]:format(rest), 60, "Spell_Magic_LesserInvisibilty")
+	self:Bar(L["ghost_bar"]:format(rest), 60, "Ability_Druid_Dreamstate")
 end
