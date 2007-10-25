@@ -30,7 +30,7 @@ L:RegisterTranslations("enUS", function() return {
 	attraction = "Fatal Attraction",
 	attraction_desc = "Warn who has Fatal Attraction.",
 	attraction_trigger = "^(%S+) (%S+) afflicted by Fatal Attraction%.$",
-	attraction_message = "Attraction: [|cff0064C8%s|r]",
+	attraction_message = "Attraction: %s",
 
 	debuff = "Debuff Timers",
 	debuff_desc = "Show the current debuff and the time until the next one.",
@@ -47,7 +47,7 @@ L:RegisterTranslations("zhCN", function() return {
 	attraction = "致命吸引",
 	attraction_desc = "中了致命吸引发出警报",
 	attraction_trigger = "^(%S+)受(%S+)了致命吸引效果的影响。$",
-	attraction_message = "致命吸引: [|cff0064C8%s|r]",
+	attraction_message = "致命吸引: %s",
 
 	debuff = "Debuff计时",
 	debuff_desc = "显示debuff直到下一个的计时.",
@@ -63,7 +63,7 @@ L:RegisterTranslations("zhTW", function() return {
 	attraction = "致命的吸引力",
 	attraction_desc = "當玩家中致命的吸引力發出警報",
 	attraction_trigger = "^(.+)受(到[了]*)致命的吸引力效果的影響。",
-	attraction_message = "致命的吸引力：: [|cff0064C8%s|r]",
+	attraction_message = "致命的吸引力：: %s",
 
 	debuff = "Debuff 計時",
 	debuff_desc = "顯示debuff直到下一個計時",
@@ -79,7 +79,7 @@ L:RegisterTranslations("koKR", function() return {
 	attraction = "치명적인 매력",
 	attraction_desc = "치명적인 매력에 걸린 사람을 알립니다.",
 	attraction_trigger = "^([^|;%s]*)(.*)치명적인 매력에 걸렸습니다%.$",
-	attraction_message = "매력: [|cff0064C8%s|r]",
+	attraction_message = "매력: %s",
 
 	debuff = "디버프 타이머",
 	debuff_desc = "변화의 보호막으로 인한 디버프와 다음 디버프 시간을 보여줍니다.",
@@ -95,7 +95,7 @@ L:RegisterTranslations("frFR", function() return {
 	attraction = "Liaison fatale",
 	attraction_desc = "Préviens quand un joueur subit les effets de la Liaison fatale.",
 	attraction_trigger = "^(%S+) (%S+) les effets .* Liaison fatale%.$",
-	attraction_message = "Liaison: [|cff0064C8%s|r]",
+	attraction_message = "Liaison: %s",
 
 	debuff = "Affaiblissements",
 	debuff_desc = "Affiche l'affaiblissement actuel et le délai avant le prochain.",
@@ -111,7 +111,7 @@ L:RegisterTranslations("deDE", function() return {
 	attraction = "Verhängnisvolle Affäre",
 	attraction_desc = "Warnt wer die Verhängnisvolle Affäre hat.",
 	attraction_trigger = "^([^%s]+) ([^%s]+) ist von Verhängnisvolle Affäre betroffen%.$",
-	attraction_message = "Affäre: [|cff0064C8%s|r]",
+	attraction_message = "Affäre: %s",
 
 	debuff = "Debuff Timer",
 	debuff_desc = "Zeigt den gegenwärtigen Debuff und die Zeit bis zum nächsten an.",
