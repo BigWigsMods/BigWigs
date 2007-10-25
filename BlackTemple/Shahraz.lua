@@ -11,6 +11,7 @@ local attracted = {}
 local UnitDebuff = UnitDebuff
 local sub = string.sub
 local enrageWarn = nil
+local started = nil
 local restype = nil
 local stop
 
@@ -137,6 +138,7 @@ mod.revision = tonumber(sub("$Revision$", 12, -3))
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "FatalAtt")
@@ -150,6 +152,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "ShaAttra", 0)
 	pName = UnitName("player")
 	stop = nil
+	started = nil
 
 	--setup debuffs
 	shadow = "Interface\\Icons\\INV_Misc_Gem_Amethyst_01"
@@ -164,10 +167,31 @@ end
 --      Event Handlers      --
 ------------------------------
 
+function mod:Berserk()
+	started = true
+	self:Message(L2["berserk_start"]:format(boss, 10), "Attention")
+	--Don't use :DelayedMessage as we get mutiple messages on rare occasions :CheckForWipe doesn't kick in due to the enounter style
+	self:ScheduleEvent("en1", "BigWigs_Message", 300, L2["berserk_min"]:format(5), "Positive")
+	self:ScheduleEvent("en2", "BigWigs_Message", 420, L2["berserk_min"]:format(3), "Positive")
+	self:ScheduleEvent("en3", "BigWigs_Message", 540, L2["berserk_min"]:format(1), "Positive")
+	self:ScheduleEvent("en4", "BigWigs_Message", 570, L2["berserk_sec"]:format(30), "Positive")
+	self:ScheduleEvent("en5", "BigWigs_Message", 590, L2["berserk_sec"]:format(10), "Urgent")
+	self:ScheduleEvent("en6", "BigWigs_Message", 595, L2["berserk_sec"]:format(5), "Urgent")
+	self:ScheduleEvent("en7", "BigWigs_Message", 600, L2["berserk_end"]:format(boss), "Attention", nil, "Alarm")
+	self:Bar(L2["berserk"], 600, "Spell_Nature_Reincarnation")
+end
+
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "ShaAttra" and rest then
 		attracted[rest] = true
 		self:ScheduleEvent("BWAttractionWarn", self.AttractionWarn, 0.3, self)
+	elseif self:ValidateEngageSync(sync, rest) and not started then
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		if self.db.profile.berserk then
+			self:Berserk()
+		end
 	end
 end
 
@@ -177,16 +201,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		restype = nil
 		stop = nil
 		if self.db.profile.berserk then
-			self:Message(L2["berserk_start"]:format(boss, 10), "Attention")
-			--Don't use :DelayedMessage as we get mutiple messages on rare occasions :CheckForWipe doesn't kick in due to the enounter style
-			self:ScheduleEvent("en1", "BigWigs_Message", 300, L2["berserk_min"]:format(5), "Positive")
-			self:ScheduleEvent("en2", "BigWigs_Message", 420, L2["berserk_min"]:format(3), "Positive")
-			self:ScheduleEvent("en3", "BigWigs_Message", 540, L2["berserk_min"]:format(1), "Positive")
-			self:ScheduleEvent("en4", "BigWigs_Message", 570, L2["berserk_sec"]:format(30), "Positive")
-			self:ScheduleEvent("en5", "BigWigs_Message", 590, L2["berserk_sec"]:format(10), "Urgent")
-			self:ScheduleEvent("en6", "BigWigs_Message", 595, L2["berserk_sec"]:format(5), "Urgent")
-			self:ScheduleEvent("en7", "BigWigs_Message", 600, L2["berserk_end"]:format(boss), "Attention", nil, "Alarm")
-			self:Bar(L2["berserk"], 600, "Spell_Nature_Reincarnation")
+			self:Berserk()
 		end
 	elseif self.db.profile.enrage and msg == L["enrage_trigger"] then
 		self:Message(L["enrage_message"], "Important")
