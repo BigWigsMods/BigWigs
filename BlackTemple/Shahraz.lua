@@ -9,18 +9,13 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local pName = nil
 local attracted = {}
 local UnitDebuff = UnitDebuff
+local sub = string.sub
 local enrageWarn = nil
 local restype = nil
 local stop
 
 --debuffs
-local shadow
-local holy
-local arcane
-local nature
-local fire
-local frost
-local all
+local shadow, holy, arcane, nature, fire, frost
 
 ----------------------------
 --      Localization      --
@@ -34,18 +29,10 @@ L:RegisterTranslations("enUS", function() return {
 	attraction = "Fatal Attraction",
 	attraction_desc = "Warn who has Fatal Attraction.",
 	attraction_trigger = "^(%S+) (%S+) afflicted by Fatal Attraction%.$",
-	attraction_message = "Attraction: %s",
+	attraction_message = "Attraction: [|cff0064C8%s|r]",
 
 	debuff = "Debuff Timers",
 	debuff_desc = "Show the current debuff and the time until the next one.",
-	debuff_bar = "Next Debuff",
-
-	berserk = "Berserk",
-	berserk_desc = "Warn for berserk after 10min.",
-	berserk_start = "%s engaged, 10 min to berserk!",
-	berserk_min = "Berserk in %d min",
-	berserk_sec = "Berserk in %d sec",
-	berserk_end = "%s goes Berserk!",
 
 	enrage_warning = "Enrage soon!",
 	enrage_message = "10% - Enraged",
@@ -59,18 +46,10 @@ L:RegisterTranslations("zhCN", function() return {
 	attraction = "致命吸引",
 	attraction_desc = "中了致命吸引发出警报",
 	attraction_trigger = "^(%S+)受(%S+)了致命吸引效果的影响。$",
-	attraction_message = "致命吸引: %s",
+	attraction_message = "致命吸引: [|cff0064C8%s|r]",
 
 	debuff = "Debuff计时",
 	debuff_desc = "显示debuff直到下一个的计时.",
-	debuff_bar = "下一Debuff",
-
-	berserk = "狂暴",
-	berserk_desc = "10分钟后狂暴警报",
-	berserk_start = "%s 激活, 10分钟狂暴!",
-	berserk_min = "%d分钟后 狂暴",
-	berserk_sec = "%d秒后 狂暴",
-	berserk_end = "%s 进入狂暴!",
 
 	enrage_warning = "即将狂暴!",
 	enrage_message = "10% - 狂暴",
@@ -83,18 +62,10 @@ L:RegisterTranslations("zhTW", function() return {
 	attraction = "致命的吸引力",
 	attraction_desc = "當玩家中致命的吸引力發出警報",
 	attraction_trigger = "^(.+)受(到[了]*)致命的吸引力效果的影響。",
-	attraction_message = "致命的吸引力：[%s]",
+	attraction_message = "致命的吸引力：: [|cff0064C8%s|r]",
 
 	debuff = "Debuff 計時",
 	debuff_desc = "顯示debuff直到下一個計時",
-	debuff_bar = "下一個計時",
-
-	berserk = "狂暴",
-	berserk_desc = "10 分鐘狂暴警報",
-	berserk_start = "%s 開打了, 10 分鐘後狂暴",
-	berserk_min = "%d 分鐘後狂暴",
-	berserk_sec = "%d 秒鐘後狂暴",
-	berserk_end = "%s 要狂暴了!",
 
 	enrage_warning = "即將狂怒!",
 	enrage_message = "10% - 狂怒",
@@ -107,18 +78,10 @@ L:RegisterTranslations("koKR", function() return {
 	attraction = "치명적인 매력",
 	attraction_desc = "치명적인 매력에 걸린 사람을 알립니다.",
 	attraction_trigger = "^([^|;%s]*)(.*)치명적인 매력에 걸렸습니다%.$",
-	attraction_message = "매력: %s",
+	attraction_message = "매력: [|cff0064C8%s|r]",
 
 	debuff = "디버프 타이머",
 	debuff_desc = "변화의 보호막으로 인한 디버프와 다음 디버프 시간을 보여줍니다.",
-	debuff_bar = "다음 디버프",
-
-	berserk = "광폭화",
-	berserk_desc = "10분후 광폭화에 대한 경고입니다.",
-	berserk_start = "%s 시작, 10분후 광폭화!",
-	berserk_min = "%d 분 이내 광폭화",
-	berserk_sec = "%d 초 이내 광폭화",
-	berserk_end = "%s 광폭화!",
 
 	enrage_warning = "곧 격노!",
 	enrage_message = "10% - 격노",
@@ -131,18 +94,10 @@ L:RegisterTranslations("frFR", function() return {
 	attraction = "Liaison fatale",
 	attraction_desc = "Préviens quand un joueur subit les effets de la Liaison fatale.",
 	attraction_trigger = "^(%S+) (%S+) les effets .* Liaison fatale%.$",
-	attraction_message = "Liaison : %s",
+	attraction_message = "Liaison: [|cff0064C8%s|r]",
 
 	debuff = "Affaiblissements",
 	debuff_desc = "Affiche l'affaiblissement actuel et le délai avant le prochain.",
-	debuff_bar = "Prochain affaiblissement",
-
-	berserk = "Berserk",
-	berserk_desc = "Préviens quand Mère Shahraz passe en berserker après 10 min.",
-	berserk_start = "%s engagée, 10 min. avant berserk !",
-	berserk_min = "Berserk dans %d min.",
-	berserk_sec = "Berserk dans %d sec.",
-	berserk_end = "%s passe en berserk !",
 
 	enrage_warning = "Enrager imminent !",
 	enrage_message = "10% - Enragée",
@@ -155,18 +110,10 @@ L:RegisterTranslations("deDE", function() return {
 	attraction = "Verhängnisvolle Affäre",
 	attraction_desc = "Warnt wer die Verhängnisvolle Affäre hat.",
 	attraction_trigger = "^([^%s]+) ([^%s]+) ist von Verhängnisvolle Affäre betroffen%.$",
-	attraction_message = "Affäre: %s",
+	attraction_message = "Affäre: [|cff0064C8%s|r]",
 
 	debuff = "Debuff Timer",
 	debuff_desc = "Zeigt den gegenwärtigen Debuff und die Zeit bis zum nächsten an.",
-	debuff_bar = "Nächster Debuff",
-
-	berserk = "Berserker",
-	berserk_desc = "Warnt wann Shahraz zum Berserker wird.",
-	berserk_start = "%s gepullt, 10 min bis sie zum Berserker wird!",
-	berserk_min = "Berserker in %d min",
-	berserk_sec = "Berserker in %d sek",
-	berserk_end = "%s wird zum Berserker!",
 
 	enrage_warning = "Wütend bald!",
 	enrage_message = "10% - Wütend",
@@ -181,7 +128,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = boss
 mod.toggleoptions = {"attraction", "debuff", "berserk", "enrage", "bosskill"}
-mod.revision = tonumber(("$Revision$"):sub(12, -3))
+mod.revision = tonumber(sub("$Revision$", 12, -3))
 
 ------------------------------
 --      Initialization      --
@@ -211,7 +158,6 @@ function mod:OnEnable()
 	nature = "Interface\\Icons\\INV_Misc_Gem_Emerald_01"
 	fire = "Interface\\Icons\\INV_Misc_Gem_Opal_01"
 	frost = "Interface\\Icons\\INV_Misc_Gem_Crystal_02"
-	all = "INV_Misc_Gem_Variety_02"
 end
 
 ------------------------------
@@ -231,16 +177,16 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		restype = nil
 		stop = nil
 		if self.db.profile.berserk then
-			self:Message(L["berserk_start"]:format(boss, 10), "Attention")
+			self:Message(L2["berserk_start"]:format(boss, 10), "Attention")
 			--Don't use :DelayedMessage as we get mutiple messages on rare occasions :CheckForWipe doesn't kick in due to the enounter style
-			self:ScheduleEvent("en1", "BigWigs_Message", 300, L["berserk_min"]:format(5), "Positive")
-			self:ScheduleEvent("en2", "BigWigs_Message", 420, L["berserk_min"]:format(3), "Positive")
-			self:ScheduleEvent("en3", "BigWigs_Message", 540, L["berserk_min"]:format(1), "Positive")
-			self:ScheduleEvent("en4", "BigWigs_Message", 570, L["berserk_sec"]:format(30), "Positive")
-			self:ScheduleEvent("en5", "BigWigs_Message", 590, L["berserk_sec"]:format(10), "Urgent")
-			self:ScheduleEvent("en6", "BigWigs_Message", 595, L["berserk_sec"]:format(5), "Urgent")
-			self:ScheduleEvent("en7", "BigWigs_Message", 600, L["berserk_end"]:format(boss), "Attention", nil, "Alarm")
-			self:Bar(L["berserk"], 600, "Spell_Nature_Reincarnation")
+			self:ScheduleEvent("en1", "BigWigs_Message", 300, L2["berserk_min"]:format(5), "Positive")
+			self:ScheduleEvent("en2", "BigWigs_Message", 420, L2["berserk_min"]:format(3), "Positive")
+			self:ScheduleEvent("en3", "BigWigs_Message", 540, L2["berserk_min"]:format(1), "Positive")
+			self:ScheduleEvent("en4", "BigWigs_Message", 570, L2["berserk_sec"]:format(30), "Positive")
+			self:ScheduleEvent("en5", "BigWigs_Message", 590, L2["berserk_sec"]:format(10), "Urgent")
+			self:ScheduleEvent("en6", "BigWigs_Message", 595, L2["berserk_sec"]:format(5), "Urgent")
+			self:ScheduleEvent("en7", "BigWigs_Message", 600, L2["berserk_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Bar(L2["berserk"], 600, "Spell_Nature_Reincarnation")
 		end
 	elseif self.db.profile.enrage and msg == L["enrage_trigger"] then
 		self:Message(L["enrage_message"], "Important")
@@ -253,7 +199,7 @@ function mod:FatalAtt(msg)
 		if aplayer == L2["you"] and atype == L2["are"] then
 			aplayer = pName
 		end
-		self:Sync("ShaAttra "..aplayer)
+		self:Sync("ShaAttra", aplayer)
 	end
 end
 
@@ -261,8 +207,8 @@ function mod:PLAYER_AURAS_CHANGED(msg)
 	--don't even scan anything if we don't want it on
 	if not self.db.profile.debuff then return end
 
-	local bar = L["debuff_bar"] --don't need to repeat this in every bar
 	local i = 1 --setup counter
+	local rpt = nil
 	while UnitDebuff("player", i) do --loop debuff scan
 		local name, _, texture = UnitDebuff("player", i) --save name & texture
 
@@ -271,31 +217,44 @@ function mod:PLAYER_AURAS_CHANGED(msg)
 			--show a countdown bar and create a message with the name of the debuff
 			if texture == shadow then
 				self:Message(name, "Attention")
-				self:Bar(bar, 15, all)
+				self:Bar(name, 15, sub(shadow, 17, -1))
 				restype = texture
+				rpt = true
 			elseif texture == holy then
 				self:Message(name, "Attention")
-				self:Bar(bar, 15, all)
+				self:Bar(name, 15, sub(holy, 17, -1))
 				restype = texture
+				rpt = true
 			elseif texture == arcane then
 				self:Message(name, "Attention")
-				self:Bar(bar, 15, all)
+				self:Bar(name, 15, sub(arcane, 17, -1))
 				restype = texture
+				rpt = true
 			elseif texture == nature then
 				self:Message(name, "Attention")
-				self:Bar(bar, 15, all)
+				self:Bar(name, 15, sub(nature, 17, -1))
 				restype = texture
+				rpt = true
 			elseif texture == fire then
 				self:Message(name, "Attention")
-				self:Bar(bar, 15, all)
+				self:Bar(name, 15, sub(fire, 17, -1))
 				restype = texture
+				rpt = true
 			elseif texture == frost then
 				self:Message(name, "Attention")
-				self:Bar(bar, 15, all)
+				self:Bar(name, 15, sub(frost, 17, -1))
 				restype = texture
+				rpt = true
 			end
 		end
-		i = i + 1 --increase counter
+		i = i + 1 --increment counter
+	end
+
+	--If we don't have a recognised debuff, clear the spam filter,
+	--this should be a fix for getting the same debuff twice,
+	--assuming every time we do get 2 in a row, we loose the previous one first
+	if not rpt then
+		restype = nil
 	end
 end
 
