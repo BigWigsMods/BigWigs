@@ -57,9 +57,9 @@ L:RegisterTranslations("koKR", function() return {
 	shadow_other = "죽음의 어둠: %s!",
 	shadow_you = "당신에 죽음의 어둠!",
 
-	--ghost = "Ghost",
-	--ghost_desc = "Ghost timers.",
-	--ghost_bar = "Ghost: %s",
+	ghost = "영혼",
+	ghost_desc = "영혼 타이머.",
+	ghost_bar = "영혼: %s",
 
 	icon = "전술 표시",
 	icon_desc = "죽음의 어둠에 걸린 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",

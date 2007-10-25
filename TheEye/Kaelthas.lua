@@ -155,8 +155,8 @@ L:RegisterTranslations("koKR", function() return {
 	pyro_message = "불덩이 작열 시전!",
 
 	toyall = "원격조종 장난감",
-	--toyall_desc = "탱커가 원격조종 장난감에 걸릴 시 경고합니다.",
-	--toyall_message = "탱커에 장난감: %s",
+	toyall_desc = "원격조종 장난감에 걸릴 시 경고합니다.",
+	toyall_message = "장난감: %s",
 
 	phase = "단계 경고",
 	phase_desc = "단계 변경에 대해 알립니다.",
