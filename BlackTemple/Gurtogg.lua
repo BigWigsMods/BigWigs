@@ -259,8 +259,8 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		if self.db.profile.phase then
-			self:Bar(L["phase_normal_bar"], 52, "Spell_Fire_ElementalDevastation")
-			self:ScheduleEvent("rage1", "BigWigs_Message", 47, L["phase_rage_warning"], "Important")
+			self:Bar(L["phase_normal_bar"], 49, "Spell_Fire_ElementalDevastation")
+			self:ScheduleEvent("rage1", "BigWigs_Message", 44, L["phase_rage_warning"], "Important")
 		end
 		if self.db.profile.enrage then
 			self:Message(fmt(L2["enrage_start"], boss, 10), "Attention")
