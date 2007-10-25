@@ -56,7 +56,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	spite = "Spite",
 	spite_desc = "Warn who has Spite.",
-	spite_message = "Spite: %s",
+	spite_message = "Spite: [|cff0064C8%s|r]",
 
 	scream = "Soul Scream",
 	scream_desc = "Show a cooldown bar for Soul Scream.",
@@ -99,7 +99,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	spite = "원한",
 	spite_desc = "원한에 걸린 대상을 알립니다.",
-	spite_message = "원한: %s",
+	spite_message = "원한: [|cff0064C8%s|r]",
 
 	scream = "영혼의 절규",
 	scream_desc = "영혼의 절규 재사용 시간을 표시합니다.",
@@ -142,7 +142,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	spite = "Dépit",
 	spite_desc = "Préviens quand un joueur subit les effets du Dépit.",
-	spite_message = "Dépit : %s",
+	spite_message = "Dépit : [|cff0064C8%s|r]",
 
 	scream = "Cri de l'âme",
 	scream_desc = "Affiche une barre de cooldown pour le Cri de l'âme.",
@@ -185,7 +185,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	spite = "Bosheit",
 	spite_desc = "Warnt wer Bosheit hat.",
-	spite_message = "Bosheit: %s",
+	spite_message = "Bosheit: [|cff0064C8%s|r]",
 
 	scream = "Seelenschrei",
 	scream_desc = "Zeige eine Cooldownleiste für Seelenschrei.",
@@ -229,7 +229,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	spite = "敌意",
 	spite_desc = "当谁中了敌意发出警报",
-	spite_message = "敌意: %s",
+	spite_message = "敌意: [|cff0064C8%s|r]",
 
 	scream = "灵魂尖啸",
 	scream_desc = "显示灵魂尖啸冷却记时条",
@@ -272,7 +272,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	spite = "惡意",
 	spite_desc = "警告誰有惡意",
-	spite_message = "惡意：[%s]",
+	spite_message = "惡意：: [|cff0064C8%s|r]",
 
 	scream = "靈魂尖嘯",
 	scream_desc = "顯示靈魂尖嘯冷卻條",

@@ -68,7 +68,7 @@ L:RegisterTranslations("enUS", function() return {
 	circle_heal_trigger = "^Lady Malande 's Circle of Healing heals",
 	circle_fail_trigger = "^(%S+) interrupts Lady Malande's Circle of Healing%.$",
 	circle_heal_message = "Healed! - Next in ~20sec",
-	circle_fail_message = "%s Interrupted! - Next in ~12sec",
+	circle_fail_message = "|cff0064C8%s|r Interrupted! - Next in ~12sec",
 	circle_bar = "~Circle of Healing Cooldown",
 } end )
 
@@ -116,7 +116,7 @@ L:RegisterTranslations("frFR", function() return {
 	circle_heal_trigger = "^Cercle de soins .* Dame Malande soigne",
 	circle_fail_trigger = "^(%S+) interrompt Dame Malande qui lance Cercle de soins%.$", -- + "Dame Malande lance un Cercle de soins que vous interrompez." ?
 	circle_heal_message = "Soigné ! - Prochain dans ~20 sec.",
-	circle_fail_message = "Interrompu par %s ! - Prochain dans ~12 sec.",
+	circle_fail_message = "Interrompu par |cff0064C8%s|r ! - Prochain dans ~12 sec.",
 	circle_bar = "~Cooldown Cercle de soins",
 } end )
 
@@ -164,7 +164,7 @@ L:RegisterTranslations("koKR", function() return {
 	circle_heal_trigger = "^여군주 말란데의 치유의 마법진|1으로;로;",
 	circle_fail_trigger = "^([^%s]+)|1이;가; 여군주 말란데의 치유의 마법진|1을;를; 차단했습니다%.$",
 	circle_heal_message = "치유됨! - 다음은 약 20초 이내",
-	circle_fail_message = "%s 차단됨! - 다음은 약 12초 이내",
+	circle_fail_message = "|cff0064C8%s|r 차단됨! - 다음은 약 12초 이내",
 	circle_bar = "~치유의 마법진 대기 시간",
 } end )
 
@@ -215,7 +215,7 @@ L:RegisterTranslations("zhCN", function() return {
 	circle_heal_trigger = "^女公爵玛兰德的治疗之环治疗",
 	circle_fail_trigger = "^([^%s]+)打断了公爵玛兰德的治疗之环。",
 	circle_heal_message = "治疗 成功! - ~20秒后再次发动",
-	circle_fail_message = "%s 打断! - ~12s秒后再次发动 治疗之环",
+	circle_fail_message = "|cff0064C8%s|r 打断! - ~12s秒后再次发动 治疗之环",
 	circle_bar = "~治疗之环 CD",
 } end )
 
@@ -263,7 +263,7 @@ L:RegisterTranslations("zhTW", function() return {
 	circle_heal_trigger = "^瑪蘭黛女士的治療之環治療了",
 	circle_fail_trigger = "^(.+)打斷了瑪蘭黛女士的治療之環。$",
 	circle_heal_message = "被治療了! - 下一次 ~20秒",
-	circle_fail_message = "%s 中斷了! - 下一次 ~12秒",
+	circle_fail_message = "|cff0064C8%s|r 中斷了! - 下一次 ~12秒",
 	circle_bar = "~治療之環冷卻",
 } end )
 
@@ -311,7 +311,7 @@ L:RegisterTranslations("deDE", function() return {
 	circle_heal_trigger = "^Lady Malande 's Kreis der Heilung heilt",
 	circle_fail_trigger = "^([^%s]+) unterbricht Lady Malande's Kreis der Heilung%.$",
 	circle_heal_message = "Geheilt! - Nächster in ~20sek",
-	circle_fail_message = "%s Unterbrochen! - Nächster in ~12sek",
+	circle_fail_message = "|cff0064C8%s|r Unterbrochen! - Nächster in ~12sek",
 	circle_bar = "~Kreis der Heilung Cooldown",
 } end )
 

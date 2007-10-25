@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["The Curator"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local enrageWarn = nil
 
 ----------------------------
@@ -13,11 +14,7 @@ local enrageWarn = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Curator",
 
-	berserk = "Berserk",
-	berserk_desc = "Warn for berserk after 10min.",
 	berserk_trigger = "The Menagerie is for guests only.",
-	berserk_message = "%s engaged, 10min to berserk!",
-	berserk_bar = "Berserk",
 
 	enrage_trigger = "Failure to comply will result in offensive action.",
 	enrage_message = "Enrage!",
@@ -40,11 +37,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	berserk = "Berserk",
-	berserk_desc = "Préviens quand le Conservateur passe en berserk après 10 min.",
 	berserk_trigger = "L'accès à la Ménagerie est réservé aux invités.",
-	berserk_message = "%s engagé, 10 min. avant berserk !",
-	berserk_bar = "Berserk",
 
 	enrage_trigger = "Toute désobéissance entraînera une action offensive.",
 	enrage_message = "Enragé !",
@@ -67,41 +60,30 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	berserk = "Berserker",
-	berserk_desc = "Warnung f\195\188r Berserker nach 10min.",
+	berserk_trigger = "Die Menagerie ist nur f\195\188r G\195\164ste.",
+
+	enrage_trigger = "Die Nichteinhaltung wird zur Angriffshandlungen f\195\188hren.",
+	enrage_message = "Kurator in Rage!",
+	enrage_warning = "Kurator bald in Rage!",
 
 	weaken = "Schw\195\164chung",
 	weaken_desc = "Warnung f\195\188r den geschw\195\164chten Zustand",
-
-	weaktime = "Schw\195\164chungs Timer",
-	weaktime_desc = "Timer und Anzeige f\195\188r die n\195\164chste Schw\195\164chung.",
-
 	weaken_trigger = "Ihre Anfrage kann nicht bearbeitet werden.",
 	weaken_message = "Hervorrufung f\195\188r 20 sekunden!",
 	weaken_bar = "Hervorrufung",
 	weaken_fade_message = "Hervorrufung beendet - Kurator nicht mehr geschw\195\164cht!",
 	weaken_fade_warning = "Hervorrufung in 5 sekunden beendet!",
 
+	weaktime = "Schw\195\164chungs Timer",
+	weaktime_desc = "Timer und Anzeige f\195\188r die n\195\164chste Schw\195\164chung.",
 	weaktime_message1 = "Hervorrufung in ~10 sekunden",
 	weaktime_message2 = "Hervorrufung in ~30 sekunden",
 	weaktime_message3 = "Hervorrufung in ~70 sekunden",
 	weaktime_bar = "N\195\164chste Hervorrufung",
-
-	berserk_trigger = "Die Menagerie ist nur f\195\188r G\195\164ste.",
-	berserk_message = "%s aktiviert, 10min bis Berserker!",
-	berserk_bar = "Berserker",
-
-	enrage_trigger = "Die Nichteinhaltung wird zur Angriffshandlungen f\195\188hren.",
-	enrage_message = "Kurator in Rage!",
-	enrage_warning = "Kurator bald in Rage!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	berserk = "광폭화",
-	berserk_desc = "10분 후 광폭화에 대해 알립니다.",
 	berserk_trigger = "박물관에는 초대받은 손님만 입장하실 수 있습니다.",
-	berserk_message = "%s 전투 개시, 10분 후 광폭화!",
-	berserk_bar = "광폭화",
 
 	enrage_trigger = "규칙 위반으로 경보가 발동됐습니다.",
 	enrage_message = "격노!",
@@ -127,11 +109,7 @@ L:RegisterTranslations("koKR", function() return {
 --CWDG site: http://cwowaddon.com
 --馆长
 L:RegisterTranslations("zhCN", function() return {
-	berserk = "无敌",
-	berserk_desc = "进入战斗10分钟后发送无敌警告",
 	berserk_trigger = "展览厅只对访客开放。",
-	berserk_message = "%s 激活, 10分钟后进入无敌！！",
-	berserk_bar = "无敌",
 
 	enrage_trigger = "不合作将导致攻击行动。",
 	enrage_message = "狂暴!",
@@ -155,11 +133,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 L:RegisterTranslations("zhTW", function() return {
-	berserk = "無敵警告",
-	berserk_desc = "進入戰鬥後 10 分鐘時發出無敵警告",
 	berserk_trigger = "展示廳是賓客專屬的。",
-	berserk_message = "%s 將在 10 分鐘後進入無敵狀態",
-	berserk_bar = "無敵",
 
 	enrage_trigger = "不順從就會招致攻擊性的行動。",
 	enrage_message = "狂暴",
@@ -182,11 +156,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	berserk = "Rabioso",
-	berserk_desc = "Avisa del modo Rabioso tras 10min.",
 	berserk_trigger = "La Sala de los Animales es solo para invitados.",
-	berserk_message = "%s Activado, 10min hasta rabioso!",
-	berserk_bar = "Rabioso",
 
 	enrage_trigger = "Su no cumplimiento resultará en una acción ofensiva.",
 	enrage_message = "Enfurecido!",
@@ -265,8 +235,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 
 		if self.db.profile.berserk then
-			self:Message(L["berserk_message"]:format(boss), "Attention")
-			self:Bar(L["berserk_bar"], 600, "INV_Shield_01")
+			self:Message(L2["berserk_start"]:format(boss, 10), "Attention")
+			self:Bar(L2["berserk"], 10, "Spell_Nature_Reincarnation")
 		end
 		if self.db.profile.weaktime then
 			self:Bar(L["weaktime_bar"], 109, "Spell_Nature_Purge")

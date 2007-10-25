@@ -32,7 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	orbother = "Arcane Orb on Others",
 	orbother_desc = "Warn for Arcane Orb on others",
-	orb_other = "Orb(%s)",
+	orb_other = "Orb(|cff0064C8%s|r)",
 
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon on the player targeted for Arcane Orb(requires promoted or higher).",
@@ -63,7 +63,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	orbother = "Arkane Kugel auf Anderen",
 	orbother_desc = "Warnt vor Arkane Kugel auf anderen Spielern.",
-	orb_other = "Kugel(%s)",
+	orb_other = "Kugel(|cff0064C8%s|r)",
 
 	icon = "Schlachtzug Symbol",
 	icon_desc = "Plaziert ein Schlachtzug Symbol auf dem Spieler auf den Arkane Kugel zufliegt (benötigt Assistent oder höher)",
@@ -94,7 +94,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	orbother = "Orbe des arcanes sur les autres",
 	orbother_desc = "Préviens quand les autres sont ciblés par l'Orbe des arcanes.",
-	orb_other = "Orbe (%s)",
+	orb_other = "Orbe(|cff0064C8%s|r)",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur la dernière personne ciblée par l'Orbe des arcanes (nécessite d'être promu ou mieux).",
@@ -125,7 +125,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	orbother = "타인의 비전 보주",
 	orbother_desc = "타인의 비전 보주를 알립니다.",
-	orb_other = "보주(%s)",
+	orb_other = "보주(|cff0064C8%s|r)",
 
 	icon = "전술 표시",
 	icon_desc = "비전 보주 대상이된 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
@@ -156,7 +156,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	orbother = "奥术宝珠(其他)",
 	orbother_desc = "其他队友中了奥术宝珠发出警报",
-	orb_other = "宝珠 --> (%s)",
+	orb_other = "宝珠(|cff0064C8%s|r)",
 
 	icon = "团队标记",
 	icon_desc = "为中了奥术宝珠打上团队标记(需要助理或更高的权限).",
@@ -187,7 +187,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	orbother = "秘法寶珠瞄準其他人",
 	orbother_desc = "當秘法寶珠在團員身上時警示。",
-	orb_other = "寶珠目標：[%s]",
+	orb_other = "寶珠目標：(|cff0064C8%s|r)",
 
 	icon = "團隊標記",
 	icon_desc = "當團員為秘法寶珠目標時，設置團隊標記（需要權限）",

@@ -27,7 +27,7 @@ L:RegisterTranslations("enUS", function() return {
 	grave = "Watery Grave",
 	grave_desc = "Alert who has watery grave and durations.",
 	grave_trigger = "^(%S+) (%S+) afflicted by Watery Grave%.$",
-	grave_message = "Watery Grave: %s",
+	grave_message = "Watery Grave: [|cff0064C8%s|r]",
 	grave_bar = "Watery Graves",
 	grave_nextbar = "~Graves Cooldown",
 
@@ -60,7 +60,7 @@ L:RegisterTranslations("deDE", function() return {
 	grave = "Nasses Grab",
 	grave_desc = "Zeigt an, wer im Nassen Grab ist und wie lange.",
 	grave_trigger = "^(%S+) (%S+) von Nasses Grab betroffen%.$",
-	grave_message = "Nasses Grab: %s",
+	grave_message = "Nasses Grab: [|cff0064C8%s|r]",
 	grave_bar = "Nasses Grab",
 	grave_nextbar = "n\195\164chstes Nasses Grab",
 
@@ -93,7 +93,7 @@ L:RegisterTranslations("koKR", function() return {
 	grave = "수중 무덤",
 	grave_desc = "수중 무덤에 걸린 사람과 지속시간을 알림니다.",
 	grave_trigger = "^([^|;%s]*)(.*)수중 무덤에 걸렸습니다%.$",
-	grave_message = "수중 무덤: %s",
+	grave_message = "수중 무덤: [|cff0064C8%s|r]",
 	grave_bar = "수중 무덤",
 	grave_nextbar = "~무덤 대기시간",
 
@@ -126,7 +126,7 @@ L:RegisterTranslations("frFR", function() return {
 	grave = "Tombeau aquatique",
 	grave_desc = "Préviens quand quelqu'un subit le Tombeau aquatique et indique sa durée.",
 	grave_trigger = "^([^%s]+) ([^%s]+) les effets .* Tombeau aquatique%.$",
-	grave_message = "Tombeau aquatique : %s",
+	grave_message = "Tombeau aquatique : [|cff0064C8%s|r]",
 	grave_bar = "Tombeaux aquatique",
 	grave_nextbar = "~Cooldown Tombeaux",
 
@@ -160,7 +160,7 @@ L:RegisterTranslations("zhCN", function() return {
 	grave = "水之墓穴",
 	grave_desc = "当受到水之墓穴发出警报",
 	grave_trigger = "^(%S+)受(%S+)了水之墓穴效果的影响。$",
-	grave_message = "水之墓穴: %s",
+	grave_message = "水之墓穴: [|cff0064C8%s|r]",
 	grave_bar = "水之墓穴",
 	grave_nextbar = "~水之墓穴 冷却",
 
@@ -195,7 +195,7 @@ L:RegisterTranslations("zhTW", function() return {
 	grave = "水之墓",
 	grave_desc = "當玩家受到水之墓時通知團隊",
 	grave_trigger = "^(.+)受(到[了]*)水之墓效果的影響。",
-	grave_message = "水之墓：[%s]",
+	grave_message = "水之墓：: [|cff0064C8%s|r]",
 	grave_bar = "水之墓計時",
 	grave_nextbar = "水之墓冷卻",
 

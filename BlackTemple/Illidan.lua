@@ -11,6 +11,7 @@ local p2Announced = nil
 local p4Announced = nil
 local flamesDead = 0
 local flamed = { }
+local fmt = string.format
 
 ----------------------------
 --      Localization      --
@@ -19,10 +20,7 @@ local flamed = { }
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Illidan",
 
-	berserk = "Berserk",
-	berserk_desc = "Warn for berserk after 25min.",
 	berserk_trigger = "You are not prepared!",
-	berserk_message = "%s engaged, 25min to berserk!",
 
 	parasite = "Parasitic Shadowfiend",
 	parasite_desc = "Warn who has Parasitic Shadowfiend.",
@@ -87,10 +85,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	berserk = "Berserk",
-	berserk_desc = "Préviens quand Illidan passe en berserk après 25 min.",
 	berserk_trigger = "Vous n'êtes pas prêts !", -- à vérifier
-	berserk_message = "%s engagé, 25 min. avant berserk !",
 
 	parasite = "Ombrefiel parasite",
 	parasite_desc = "Préviens quand un joueur subit les effets de l'Ombrefiel parasite.",
@@ -155,10 +150,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	berserk = "광폭화",
-	berserk_desc = "25분 후의 광폭화를 알립니다.",
 	berserk_trigger = "너흰 아직 준비가 안 됐다!",
-	berserk_message = "%s 시작, 25분 후 광폭화!",
 
 	parasite = "어둠의 흡혈마귀",
 	parasite_desc = "어둠의 흡혈마귀에 걸린 플레이어를 알립니다.",
@@ -226,10 +218,7 @@ L:RegisterTranslations("koKR", function() return {
 --CWDG site: http://Cwowaddon.com
 --伊利丹·怒风
 L:RegisterTranslations("zhCN", function() return {
-	berserk = "狂暴",
-	berserk_desc = "25分钟后狂暴警报",
 	berserk_trigger = "You are not prepared!",
-	berserk_message = "%s 激活, 25分钟后狂暴!",
 
 	parasite = "寄生暗影魔",--Parasitic Shadowfiend 寄生暗影魔
 	parasite_desc = "当队员中寄生暗影魔时发出警告.",
@@ -294,10 +283,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	berserk = "Berserker",
-	berserk_desc = "Warnt wann Illidan zum Berserker wird.",
 	berserk_trigger = "Ihr wisst nicht, was Euch erwartet!",
-	berserk_message = "%s gepullt, 25min bis er zum Berserker wird!",
 
 	parasite = "Schädlicher Schattengeist",
 	parasite_desc = "Warnt wer von Schädlicher Schattengeist betroffen ist.",
@@ -362,10 +348,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	berserk = "狂暴",
-	berserk_desc = "警告 25 分鐘後狂暴",
 	berserk_trigger = "你們還沒準備好!",
-	berserk_message = "%s 開戰了, 25 分鐘後狂暴!",
 
 	parasite = "寄生暗影惡魔",
 	parasite_desc = "當隊員中寄生暗影惡魔時發出警告",
@@ -479,7 +462,7 @@ end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "IliPara" and rest and self.db.profile.parasite then
-		local other = L["parasite_other"]:format(rest)
+		local other = fmt(L["parasite_other"], rest)
 		if rest == pName then
 			self:Message(L["parasite_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
@@ -492,8 +475,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Icon(rest)
 		end
 	elseif sync == "IliBara" and rest and self.db.profile.barrage then
-		self:Message(L["barrage_message"]:format(rest), "Important", nil, "Alert")
-		self:Bar(L["barrage_bar"]:format(rest), 10, "Spell_Shadow_PainSpike")
+		self:Message(fmt(L["barrage_message"], rest), "Important", nil, "Alert")
+		self:Bar(fmt(L["barrage_bar"], rest), 10, "Spell_Shadow_PainSpike")
 
 		self:Bar(L["barrage_warn_bar"], 50, "Spell_Shadow_PainSpike")
 		self:ScheduleEvent("BarrageWarn", "BigWigs_Message", 47, L["barrage_warn"], "Important")
@@ -530,8 +513,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:CancelScheduledEvent("BarrageWarn")
 		end
 	elseif sync == "IliShear" and self.db.profile.shear and rest then
-		self:Message(L["shear_message"]:format(rest), "Important", nil, "Alert")
-		self:Bar(L["shear_bar"]:format(rest), 7, "Spell_Shadow_FocusedPower")
+		self:Message(fmt(L["shear_message"], rest), "Important", nil, "Alert")
+		self:Bar(fmt(L["shear_bar"], rest), 7, "Spell_Shadow_FocusedPower")
 	end
 end
 
@@ -542,13 +525,13 @@ function mod:AfflictEvent(msg)
 			player = pName
 		end
 		if spell == L["parasite"] then
-			self:Sync("IliPara "..player)
+			self:Sync("IliPara", player)
 		elseif spell == L["barrage"] then
-			self:Sync("IliBara "..player)
+			self:Sync("IliBara", player)
 		elseif spell == L["flame"] then
-			self:Sync("IliFlame "..player)
+			self:Sync("IliFlame", player)
 		elseif spell == L["shear"] then
-			self:Sync("IliShear "..player)
+			self:Sync("IliShear", player)
 		end
 	end
 end
@@ -577,8 +560,17 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif self.db.profile.enrage and msg == L["enrage_trigger"] then
 		self:Message(L["enrage_message"], "Important", nil, "Alert")
 	elseif self.db.profile.berserk and msg == L["berserk_trigger"] then
-		self:Message(L["berserk_message"]:format(boss), "Attention")
-		self:Bar(L["berserk"], 1500, "Spell_Nature_Reincarnation")
+		self:Message(fmt(L2["berserk_start"], boss, 25), "Attention")
+		self:DelayedMessage(600, fmt(L2["berserk_min"], 15), "Positive")
+		self:DelayedMessage(900, fmt(L2["berserk_min"], 10), "Positive")
+		self:DelayedMessage(1200, fmt(L2["berserk_min"], 5), "Positive")
+		self:DelayedMessage(1320, fmt(L2["berserk_min"], 3), "Positive")
+		self:DelayedMessage(1440, fmt(L2["berserk_min"], 1), "Positive")
+		self:DelayedMessage(1470, fmt(L2["berserk_sec"], 30), "Positive")
+		self:DelayedMessage(1490, fmt(L2["berserk_sec"], 10), "Urgent")
+		self:DelayedMessage(1495, fmt(L2["berserk_sec"], 5), "Urgent")
+		self:DelayedMessage(1500, fmt(L2["berserk_end"], boss), "Attention", nil, "Alarm")
+		self:Bar(L2["berserk"], 1500, "Spell_Nature_Reincarnation")
 	end
 end
 
@@ -619,7 +611,7 @@ function mod:UNIT_HEALTH(msg)
 end
 
 do
-	local flameDies = UNITDIESOTHER:format(L["Flame of Azzinoth"])
+	local flameDies = fmt(UNITDIESOTHER, L["Flame of Azzinoth"])
 	function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
 		if msg == flameDies then
 			self:Sync("IliFlameDied")
@@ -639,7 +631,7 @@ function mod:FlameWarn()
 				msg = msg .. ", " .. k
 			end
 		end
-		self:Message(L["flame_message"]:format(msg), "Important", nil, "Alert")
+		self:Message(fmt(L["flame_message"], msg), "Important", nil, "Alert")
 	end
 	for k in pairs(flamed) do flamed[k] = nil end
 end

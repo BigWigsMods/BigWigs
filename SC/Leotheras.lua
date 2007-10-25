@@ -53,7 +53,7 @@ L:RegisterTranslations("enUS", function() return {
 	whisper = "Insidious Whisper",
 	whisper_desc = "Alert what players have Insidious Whisper.",
 	whisper_trigger = "^(%S+) (%S+) afflicted by Insidious Whisper%.$",
-	whisper_message = "Demon: %s",
+	whisper_message = "Demon: [|cff0064C8%s|r]",
 	whisper_bar = "Demons Despawn",
 	whisper_soon = "~Demons Cooldown",
 } end )
@@ -94,7 +94,7 @@ L:RegisterTranslations("koKR", function() return {
 	whisper = "음흉한 속삭임",
 	whisper_desc = "음흉한 속삭임에 걸린 플레이어를 알립니다.",
 	whisper_trigger = "^([^|;%s]*)(.*)음흉한 속삭임에 걸렸습니다%.$",
-	whisper_message = "악마: %s",
+	whisper_message = "악마: [|cff0064C8%s|r]",
 	whisper_bar = "악마 사라짐",
 	whisper_soon = "~악마 대기시간",
 } end )
@@ -135,7 +135,7 @@ L:RegisterTranslations("frFR", function() return {
 	whisper = "Murmure insidieux",
 	whisper_desc = "Préviens quand des joueurs subissent le Murmure insidieux.",
 	whisper_trigger = "^(%S+) (%S+) les effets .* Murmure insidieux.$",
-	whisper_message = "Démon : %s",
+	whisper_message = "Démon : [|cff0064C8%s|r]",
 	whisper_bar = "Disparition des démons",
 	whisper_soon = "~Cooldown Démons",
 } end )
@@ -175,7 +175,7 @@ L:RegisterTranslations("deDE", function() return {
 	image_warning = "Schatten von Leotheras bald!",
 
 	whisper_trigger = "^([^%s]+) ([^%s]+) von Heimt\195\188ckisches Gefl\195\188ster betroffen",
-	whisper_message = "D\195\164mon: %s",
+	whisper_message = "D\195\164mon: [|cff0064C8%s|r]",
 	whisper_bar = "D\195\164monen Despawn",
 	whisper_soon = "~D\195\164monen Cooldown",
 } end )
@@ -217,7 +217,7 @@ L:RegisterTranslations("zhCN", function() return {
 	whisper = "因斯迪安低语",
 	whisper_desc = "当玩家受到因斯迪安低语发出警报",
 	whisper_trigger = "^(%S+)受(%S+)了因斯迪安低语效果的影响。$",
-	whisper_message = "恶魔: %s",
+	whisper_message = "恶魔: [|cff0064C8%s|r]",
 	whisper_bar = "恶魔消失",
 	whisper_soon = "~恶魔 冷却",
 }end )
@@ -260,7 +260,7 @@ L:RegisterTranslations("zhTW", function() return {
 	whisper = "陰險之語",
 	whisper_desc = "當隊友受到陰險之語時警告",
 	whisper_trigger = "^(.+)受(到[了]*)陰險之語效果的影響。",
-	whisper_message = "內心的惡靈：[%s]",
+	whisper_message = "內心的惡靈：: [|cff0064C8%s|r]",
 	whisper_bar = "惡靈消失計時",
 	whisper_soon = "惡靈冷卻",
 } end )
