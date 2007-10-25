@@ -33,8 +33,8 @@ local hordeWaveTimes = {135, 190, 190, 195, 140, 165, 195, 225}
 L:RegisterTranslations("enUS", function() return {
 	cmd = "summit",
 
-	wave = "Wave Warnings",
-	wave_desc = "Announce approximate warning messages for the next wave.",
+	waves = "Wave Warnings",
+	waves_desc = "Announce approximate warning messages for the next wave.",
 
 	["~%s spawn"] = true,
 	["~Wave %d spawn"] = true,
@@ -55,8 +55,8 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	wave = "공격 경고",
-	wave_desc = "다음 공격에 대한 접근 경고 메세지를 알립니다.",
+	waves = "공격 경고",
+	waves_desc = "다음 공격에 대한 접근 경고 메세지를 알립니다.",
 
 	["~%s spawn"] = "~%s 등장",
 	["~Wave %d spawn"] = "%d 번째 공격 등장",
@@ -75,8 +75,8 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	wave = "Avertissements des vagues",
-	wave_desc = "Préviens quand la prochaine vague est susceptible d'arriver.",
+	waves = "Avertissements des vagues",
+	waves_desc = "Préviens quand la prochaine vague est susceptible d'arriver.",
 
 	["~%s spawn"] = "~Apparition %s",
 	["~Wave %d spawn"] = "~Apparition vague %d",
@@ -97,8 +97,8 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	wave = "Wellen Warnungen",
-	wave_desc = "Ausgeben von Warnungs Nachrichten für die nächste Welle.",
+	waves = "Wellen Warnungen",
+	waves_desc = "Ausgeben von Warnungs Nachrichten für die nächste Welle.",
 
 	["~%s spawn"] = "~%s spawnt.",
 	["~Wave %d spawn"] = "~Welle %d spawnt.",
@@ -117,8 +117,8 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	wave = "阶段警报",
-	wave_desc = "通告下一波来临警报信息",
+	waves = "阶段警报",
+	waves_desc = "通告下一波来临警报信息",
 
 	["~%s spawn"] = "~%s 出现.",
 	["~Wave %d spawn"] = "~第%d波 出现.",
@@ -137,8 +137,8 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	wave = "階段警報",
-	wave_desc = "通報下一波小怪來臨訊息",
+	waves = "階段警報",
+	waves_desc = "通報下一波小怪來臨訊息",
 
 	["~%s spawn"] = "~%s 出現",
 	["~Wave %d spawn"] = "~第 %d 波 出現",
@@ -167,7 +167,7 @@ local proudmoore = L["Lady Jaina Proudmoore"]
 local mod = BigWigs:NewModule(name)
 mod.zonename = name
 mod.enabletrigger = { thrall, proudmoore }
-mod.toggleoptions = {"wave"}
+mod.toggleoptions = {"waves"}
 mod.revision = tonumber(match("$Revision$", "%d+"))
 mod.synctoken = name
 
@@ -233,6 +233,8 @@ do
 end
 
 function mod:BigWigs_RecvSync( sync, rest )
+	if not self.db.profile.waves then return end
+
 	if sync == "SummitNext" and rest then
 		if rest == "RWC" then
 			nextBoss = winterchill
