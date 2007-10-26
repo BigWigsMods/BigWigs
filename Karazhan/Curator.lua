@@ -236,7 +236,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 
 		if self.db.profile.berserk then
 			self:Message(L2["berserk_start"]:format(boss, 10), "Attention")
-			self:Bar(L2["berserk"], 10, "Spell_Nature_Reincarnation")
+			self:Bar(L2["berserk"], 600, "Spell_Nature_Reincarnation")
 		end
 		if self.db.profile.weaktime then
 			self:Bar(L["weaktime_bar"], 109, "Spell_Nature_Purge")
