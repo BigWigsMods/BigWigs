@@ -53,7 +53,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	--engage_trigger = "Get on ya knees and bow.... to da fang and claw!",
+	engage_trigger = "À genoux, les idiots… devant la griffe et le croc !",
 
 	totem = "Totem",
 	totem_desc = "Préviens quand Halazzi incante un Totem de foudre.",
@@ -62,10 +62,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	phase = "Phase",
 	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
-	--phase_spirit = "I fight wit' untamed spirit....",
-	--phase_normal = "Spirit, come back to me!",
+	phase_spirit = "L'esprit en moi, il est indompté…",
+	phase_normal = "Esprit, reviens à moi !",
 	normal_message = "Phase normale !",
-	spirit_message = "%d PV ! - Phase esprit !",
+	spirit_message = "%d%% PV ! - Phase esprit !",
 	spirit_soon = "Phase esprit imminente !",
 	spirit_bar = "~Phase normale probable",
 } end )
