@@ -132,7 +132,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 --末日行者
-Ananhaid Updated 10/28 22:00
+-- Ananhaid Updated 10/28 22:00
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "停止前进。否则你们将被消灭。$",
 	engage_message = "末日行者激活,30秒后发动地震术!",
