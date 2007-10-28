@@ -50,7 +50,7 @@ L:RegisterTranslations("zhCN", function() return {
 	attraction_message = "致命吸引: %s",
 
 	debuff = "Debuff计时",
-	debuff_desc = "显示debuff直到下一个的计时.",
+	debuff_desc = "显示 Debuff 直到下一个的计时.",
 
 	enrage_warning = "即将狂暴!",
 	enrage_message = "10% - 狂暴",

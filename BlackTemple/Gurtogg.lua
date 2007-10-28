@@ -163,8 +163,9 @@ L:RegisterTranslations("zhTW", function() return {
 --Chinese Translate by 月色狼影@CWDG
 --CWDG site: http://Cwowaddon.com
 --古尔图格·血沸
+--Ananhaid Updated 10/28 22:00
 L:RegisterTranslations("zhCN", function() return {
-	engage_trigger = "Horde will... crush you.",
+	engage_trigger = "部落会……毁灭你们。$",
 
 	phase = "阶段计时",
 	phase_desc = "普通或邪能狂怒状态转换阶段计时",

@@ -144,8 +144,9 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 --阿克蒙德
+Ananhaid Updated 10/28 22:00
 L:RegisterTranslations("zhCN", function() return {
-	engage_trigger = "Your resistance is insignificant.",
+	engage_trigger = "你们的抵抗是毫无意义的。$",
 
 	grip = "军团之握",
 	grip_desc = "警报谁中了军团之握",

@@ -83,6 +83,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 --塔隆·血魔
+--Ananhaid Updated 10/28 22:00
 L:RegisterTranslations("zhCN", function() return {
 	start_trigger = "我要复仇！",
 
@@ -92,9 +93,9 @@ L:RegisterTranslations("zhCN", function() return {
 	shadow_other = "死亡之影: %s!",
 	shadow_you = "你 中了死亡之影!",
 
-	--ghost = "Ghost",
-	--ghost_desc = "Ghost timers.",
-	--ghost_bar = "Ghost: %s",
+	ghost = "复仇之魂",
+	ghost_desc = "复仇之魂计时器。",
+	ghost_bar = "复仇之魂: %s",
 
 	icon = "团队标记",
 	icon_desc = "给中了死亡之影的玩家打上团队标记",

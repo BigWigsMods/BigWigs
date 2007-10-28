@@ -236,6 +236,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 --瓦丝琪
+--Ananhaid Updated 10/28 22：00
 L:RegisterTranslations("zhCN", function() return {
 	["Tainted Elemental"] = "被污染的元素",
 
@@ -243,7 +244,7 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_trigger2 = "我唾弃你们，地表的渣滓！",
 	engage_trigger3 = "伊利丹大人必胜！",
 	engage_trigger4 = "I'll split you from stem to stern!",
-	engage_trigger5 = "Death to the outsiders!",
+	engage_trigger5 = "入侵者都要受死！伊利丹大人必胜！",
 	engage_message = "进入阶段 1",
 
 	phase = "阶段警报",
