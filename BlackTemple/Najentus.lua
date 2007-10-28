@@ -103,9 +103,9 @@ L:RegisterTranslations("frFR", function() return {
 --Chinese Translate by 月色狼影@CWDG
 --CWDG site: http://Cwowaddon.com
 --高阶督军纳因图斯
---Lady Vashj 瓦丝琪
+--Ananhaid Updated 10/28 22:00
 L:RegisterTranslations("zhCN", function() return {
-	start_trigger = "You will die in the name of Lady Vashj!",
+	start_trigger = "以瓦丝琪女王的名义，去死吧！$",
 
 	spine = "穿刺之脊",--Impaling Spine 穿刺之脊
 	spine_desc = "谁中了穿刺时告诉你.",

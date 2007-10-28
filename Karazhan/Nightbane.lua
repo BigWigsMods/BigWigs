@@ -147,12 +147,13 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 --夜之魇
+Ananhaid Updated 10/28 22:00
 L:RegisterTranslations("zhCN", function() return {
 	fear = "恐惧警报",
 	fear_desc = "低沉咆哮警报",
 	fear_trigger = "开始施放低沉咆哮。$",
 	fear_message = "2秒后 恐惧",
-	fear_warning = "恐惧!",
+	fear_warning = "即将恐惧!",
 	fear_bar = "恐惧!",
 	fear_nextbar = "~恐惧 CD",
 
