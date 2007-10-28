@@ -147,7 +147,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 --夜之魇
-Ananhaid Updated 10/28 22:00
+--Ananhaid Updated 10/28 22:00
 L:RegisterTranslations("zhCN", function() return {
 	fear = "恐惧警报",
 	fear_desc = "低沉咆哮警报",

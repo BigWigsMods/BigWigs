@@ -144,7 +144,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 --阿克蒙德
-Ananhaid Updated 10/28 22:00
+--Ananhaid Updated 10/28 22:00
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "你们的抵抗是毫无意义的。$",
 
