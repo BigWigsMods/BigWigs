@@ -229,7 +229,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	spite = "敌意",
 	spite_desc = "当谁中了敌意发出警报",
-	spite_message = "敌意: [%s]",
+	spite_message = "敌意: >%s<",
 
 	scream = "灵魂尖啸",
 	scream_desc = "显示灵魂尖啸冷却记时条",
