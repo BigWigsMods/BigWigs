@@ -156,7 +156,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	orbother = "奥术宝珠(其他)",
 	orbother_desc = "其他队友中了奥术宝珠发出警报",
-	orb_other = "宝珠(%s)",
+	orb_other = "宝珠 --> (%s)",
 
 	icon = "团队标记",
 	icon_desc = "为中了奥术宝珠打上团队标记(需要助理或更高的权限).",

@@ -76,6 +76,9 @@ L:RegisterTranslations("zhCN", function() return {
 	["Messages"] = "信息提示",
 	["Options for message display."] = "信息显示模式及相关设置。",
 
+	  ["BigWigs Anchor"] = "BigWigs锚点",
+	["Output Settings"] = "输出设置",
+
 	["Show anchor"] = "显示信息框体",
 	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "显示信息框，可以移动设置信息显示位置（仅针对使用BW窗口模式）。",
 

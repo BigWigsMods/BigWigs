@@ -77,17 +77,17 @@ commonWords:RegisterTranslations("zhCN", function() return {
 	you = "你",
 	are = "到",
 
-	enrage_start = "%s 狂暴 - %d分后狂暴",
+	enrage_start = "%s 激活 - %d分后狂暴",
 	enrage_end = "%s 已狂暴",
 	enrage_min = "%d分后狂暴！",
 	enrage_sec = "%d秒后狂暴！",
 	enrage = "狂暴",
 
-	--berserk_start = "%s Engaged - Berserk in %d min",
-	--berserk_end = "%s goes Berserk",
-	--berserk_min = "Berserk in %d min",
-	--berserk_sec = "Berserk in %d sec",
-	--berserk = "Berserk",
+	berserk_start = "%s 激活 - 将在 %d 分后无敌",
+	berserk_end = "%s 进入 无敌",
+	berserk_min = "%d分后无敌！",
+	berserk_sec = "%d秒后无敌！",
+	berserk = "无敌",
 
 	RF = "正义之怒",
 } end )

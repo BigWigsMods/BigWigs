@@ -394,12 +394,8 @@ L:RegisterTranslations("zhCN", function() return {
 	pyro_message = "正在施放 炎爆术!",
 
 	toyall = "遥控玩具",
-	--toyall_desc = "当坦克受到遥控玩具发出警报",
-	--toyall_message = "遥控坦克: %s",
-
-	hunter = "遥控玩具(猎人)",
-	hunter_desc = "当猎人受到遥控玩具发出警报",
-	hunter_message = "遥控猎人: %s",
+	toyall_desc = "当一玩家遥控玩具发出警报",
+	toyall_message = "遥控玩具: %s",
 
 	phase = "阶段警报",
 	phase_desc = "每阶段首领来领发出警报",

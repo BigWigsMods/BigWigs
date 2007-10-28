@@ -182,8 +182,8 @@ L:RegisterTranslations("zhCN", function() return {
 	bosskill_desc = "首领被击杀时显示提示信息",
 	enrage = "狂暴",
 	enrage_desc = "首领进入狂暴状态时发出警报.",
-	--berserk = "Berserk",
-	--berserk_desc = "Warn when the boss goes Berserk.",
+	berserk = "无敌",
+	berserk_desc = "当首领进入无敌状态时发出警报.",
 
 	["Load"] = "加载",
 	["Load All"] = "加载所有",

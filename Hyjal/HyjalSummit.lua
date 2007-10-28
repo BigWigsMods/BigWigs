@@ -134,6 +134,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "We are ready for whatever Archimonde might send our way, Lady Proudmoore.", -- Anatheron
 	["I am with you, Thrall."] = "I am with you, Thrall.", -- Kaz'Rogal
 	["We have nothing to fear."] = "We have nothing to fear.", -- Az'Galor
+
+	["Please remove BigWigs_WaveTimers, it is deprecated."] = "请移除BigWigs_WaveTimers, 此插件已经失效了.",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
