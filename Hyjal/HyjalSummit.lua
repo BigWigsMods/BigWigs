@@ -59,10 +59,10 @@ L:RegisterTranslations("koKR", function() return {
 	waves_desc = "다음 공격에 대한 접근 경고 메세지를 알립니다.",
 
 	["~%s spawn"] = "~%s 등장",
-	["~Wave %d spawn"] = "%d 번째 공격 등장",
-	["Wave %d incoming!"] = "%d 번째 공격 시작!",
-	["%s in ~%d sec!"] = "~%d 초 이내 %s",
-	["Wave %d in ~%d sec!"] = "약 %2$d 초후 %1$d 번째 공격!",
+	["~Wave %d spawn"] = "%d번째 공격 등장",
+	["Wave %d incoming!"] = "%d번째 공격 시작!",
+	["%s in ~%d sec!"] = "약 %2$d초 이내 %1$s!",
+	["Wave %d in ~%d sec!"] = "약 %2$d초 후 %1$d번째 공격!",
 
 	["Boss"] = "보스",
 	["Thrall"] = "스랄",
