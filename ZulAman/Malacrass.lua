@@ -67,11 +67,11 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	--engage_trigger = "Da shadow gonna fall on you....",
+	engage_trigger = "L'ombre, elle va vous tomber dessus.",
 
 	bolts = "Eclairs spirituels",
 	bolts_desc = "Préviens quand Malacrass commence à canaliser ses Eclairs spirituels.",
-	--bolts_trigger = "Your soul gonna bleed!",
+	bolts_trigger = "Ton âme, elle va saigner !",
 	bolts_message = "Arrivée des Eclairs spirituels !",
 
 	soul = "Siphonner l'âme",
