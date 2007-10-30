@@ -186,11 +186,9 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "AlArArmor", 5)
 
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
-	started = nil
 	pName = UnitName("player")
 end
 
@@ -200,6 +198,11 @@ end
 
 local function nilOccured()
 	occured = nil
+end
+
+local function nilStarted()
+	started = nil
+	mod:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
@@ -249,7 +252,13 @@ function mod:AlarCheck()
 			self:Bar(L["meteor_nextbar"], 52, "Spell_Fire_Burnout")
 		end
 		fireball = true
+
+		--re-start target scanning after 25 seconds, this should be enough time for the meteor to land
 		self:ScheduleEvent("BWAlarNilOccured", nilOccured, 25)
+
+		--If 120 seconds pass with no meteor, we must have wiped, allow CheckForEngage
+		--This timer should overwrite itself every meteor, starting from the start
+		self:ScheduleEvent("BWAlarNilStarted", nilStarted, 120)
 	end
 end
 
@@ -263,6 +272,6 @@ function mod:DebuffEvent(msg)
 		if aplayer == L2["you"] and atype == L2["are"] then
 			aplayer = pName
 		end
-		self:Sync("AlArArmor "..aplayer)
+		self:Sync("AlArArmor", aplayer)
 	end
 end
