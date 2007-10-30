@@ -8,6 +8,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local UnitName = UnitName
 local fmt = string.format
 local pName = nil
+local count = 1
 
 ----------------------------
 --      Localization      --
@@ -26,6 +27,11 @@ L:RegisterTranslations("enUS", function() return {
 	phase_normal_trigger = "Fel Rage fades from Gurtogg Bloodboil.",
 	phase_normal_bar = "~Approximate Rage Phase",
 	phase_rage_bar = "Next Normal Phase",
+
+	bloodboil = "Bloodboil",
+	bloodboil_desc = "Warnings and counter for Bloodboil.",
+	bloodboil_trigger = "afflicted by Bloodboil",
+	bloodboil_message = "Bloodboil(%d)",
 
 	rage = "Fel Rage",
 	rage_desc = "Warn who gets Fel Rage.",
@@ -56,6 +62,11 @@ L:RegisterTranslations("koKR", function() return {
 	phase_normal_bar = "다음 분노 형상",
 	phase_rage_bar = "다음 보통 형상",
 
+	--bloodboil = "Bloodboil",
+	--bloodboil_desc = "Warnings and counter for Bloodboil.",
+	--bloodboil_trigger = "afflicted by Bloodboil",
+	--bloodboil_message = "Bloodboil(%d)",
+
 	rage = "마의 분노",
 	rage_desc = "마의 분노에 걸린 사람을 알립니다.",
 	rage_trigger = "^([^|;%s]*)(.*)마의 분노에 걸렸습니다%.$", -- check
@@ -84,6 +95,11 @@ L:RegisterTranslations("deDE", function() return {
 	phase_normal_trigger = "Teufelswut schwindet von Gurtogg Siedeblut.",
 	phase_normal_bar = "N\195\164chste Teufelswut Phase",
 	phase_rage_bar = "N\195\164chste Normale Phase",
+
+	--bloodboil = "Bloodboil",
+	--bloodboil_desc = "Warnings and counter for Bloodboil.",
+	--bloodboil_trigger = "afflicted by Bloodboil",
+	--bloodboil_message = "Bloodboil(%d)",
 
 	rage = "Teufelswut",
 	rage_desc = "Warnt, wer Teufelswut bekommt.",
@@ -114,6 +130,11 @@ L:RegisterTranslations("frFR", function() return {
 	phase_normal_bar = "~Prochaine phase de rage",
 	phase_rage_bar = "Prochaine phase normale",
 
+	--bloodboil = "Bloodboil",
+	--bloodboil_desc = "Warnings and counter for Bloodboil.",
+	--bloodboil_trigger = "afflicted by Bloodboil",
+	--bloodboil_message = "Bloodboil(%d)",
+
 	rage = "Gangrerage",
 	rage_desc = "Préviens quand un joueur subit les effets de la Gangrerage.",
 	rage_trigger = "^(%S+) (%S+) les effets .* Gangrerage%.$",
@@ -142,6 +163,11 @@ L:RegisterTranslations("zhTW", function() return {
 	phase_normal_trigger = "惡魔之怒效果從葛塔格·血沸身上消失。",
 	phase_normal_bar = "~即將惡魔之怒階段",
 	phase_rage_bar = "下一個普通階段",
+
+	--bloodboil = "Bloodboil",
+	--bloodboil_desc = "Warnings and counter for Bloodboil.",
+	--bloodboil_trigger = "afflicted by Bloodboil",
+	--bloodboil_message = "Bloodboil(%d)",
 
 	rage = "惡魔之怒",
 	rage_desc = "提示誰受到惡魔之怒",
@@ -176,6 +202,11 @@ L:RegisterTranslations("zhCN", function() return {
 	phase_normal_bar = "下一 邪能狂怒",
 	phase_rage_bar = "下一 普通阶段",
 
+	--bloodboil = "Bloodboil",
+	--bloodboil_desc = "Warnings and counter for Bloodboil.",
+	--bloodboil_trigger = "afflicted by Bloodboil",
+	--bloodboil_message = "Bloodboil(%d)",
+
 	rage = "邪能狂怒",
 	rage_desc = "当获得邪能狂怒时发出警报",
 	rage_trigger = "^([^%s]+)受([^%s]+)了邪能狂怒效果的影响。$",
@@ -200,7 +231,7 @@ L:RegisterTranslations("zhCN", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", -1, "rage", "whisper", -1, "acid", "icon", "enrage", "bosskill"}
+mod.toggleoptions = {"phase", "bloodboil", -1, "rage", "whisper", -1, "acid", "icon", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -208,9 +239,9 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "RageEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "RageEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "RageEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "DebuffEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "DebuffEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "DebuffEvent")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -222,7 +253,9 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "GurRage", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "GurAcid", 5)
+	self:TriggerEvent("BigWigs_ThrottleSync", "GBBlood", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "GurNormal", 10)
+
 	pName = UnitName("player")
 end
 
@@ -231,34 +264,50 @@ end
 ------------------------------
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "GurRage" and rest and self.db.profile.rage then
-		self:CancelScheduledEvent("rage1")
-		self:TriggerEvent("BigWigs_StopBar", self, L["phase_normal_bar"])
-		if rest == pName then
-			self:Message(L["rage_you"], "Personal", true, "Long")
-			self:Message(fmt(L["rage_other"], rest), "Attention", nil, nil, true)
-		else
-			self:Message(fmt(L["rage_other"], rest), "Attention")
-		end
-		if self.db.profile.whisper then
-			self:Whisper(rest, L["rage_you"])
-		end
-		if self.db.profile.phase then
-			self:Bar(L["phase_rage_bar"], 28, "Spell_Fire_ElementalDevastation")
-			self:DelayedMessage(23, L["phase_normal_warning"], "Important")
+	if sync == "GurRage" and rest then
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["bloodboil_message"], count))
+		if self.db.profile.rage then
+			self:CancelScheduledEvent("rage1")
+			self:TriggerEvent("BigWigs_StopBar", self, L["phase_normal_bar"])
+
+			if rest == pName then
+				self:Message(L["rage_you"], "Personal", true, "Long")
+				self:Message(fmt(L["rage_other"], rest), "Attention", nil, nil, true)
+			else
+				self:Message(fmt(L["rage_other"], rest), "Attention")
+			end
+			if self.db.profile.whisper then
+				self:Whisper(rest, L["rage_you"])
+			end
+			if self.db.profile.phase then
+				self:Bar(L["phase_rage_bar"], 28, "Spell_Fire_ElementalDevastation")
+				self:DelayedMessage(23, L["phase_normal_warning"], "Important")
+			end
 		end
 	elseif sync == "GurAcid" and self.db.profile.acid then
 		self:Bar(L["acid"], 2, "Spell_Nature_Acid_01")
 		self:ScheduleEvent("BWAcidToTScan", self.AcidCheck, 0.2, self)
-	elseif sync == "GurNormal" and self.db.profile.phase then
-		self:Bar(L["phase_normal_bar"], 60, "Spell_Fire_ElementalDevastation")
-		self:ScheduleEvent("rage1", "BigWigs_Message", 55, L["phase_rage_warning"], "Important")
-		self:Message(L["phase_normal"], "Attention")
+	elseif sync == "GBBlood" and self.db.profile.bloodboil then
+		local warn = fmt(L["bloodboil_message"], count)
+		self:Message(warn, "Attention")
+		if count == 3 then count = 0 end
+		count = count + 1
+		self:Bar(warn, 10, "Spell_Shadow_BloodBoil")
+	elseif sync == "GurNormal" then
+		if self.db.profile.phase then
+			self:Bar(L["phase_normal_bar"], 60, "Spell_Fire_ElementalDevastation")
+			self:ScheduleEvent("rage1", "BigWigs_Message", 55, L["phase_rage_warning"], "Important")
+			self:Message(L["phase_normal"], "Attention")
+		end
+		if self.db.profile.bloodboil then
+			self:Bar(fmt(L["bloodboil_message"], count), 10, "Spell_Shadow_BloodBoil")
+		end
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
+		count = 1
 		if self.db.profile.phase then
 			self:Bar(L["phase_normal_bar"], 49, "Spell_Fire_ElementalDevastation")
 			self:ScheduleEvent("rage1", "BigWigs_Message", 44, L["phase_rage_warning"], "Important")
@@ -274,16 +323,25 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:DelayedMessage(600, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
+		if self.db.profile.bloodboil then
+			self:Bar(fmt(L["bloodboil_message"], count), 11, "Spell_Shadow_BloodBoil")
+		end
 	end
 end
 
-function mod:RageEvent(msg)
+function mod:DebuffEvent(msg)
+	if msg:find(L["bloodboil_trigger"]) then
+		self:Sync("GBBlood")
+		return
+	end
+
 	local rplayer, rtype = select(3, msg:find(L["rage_trigger"]))
 	if rplayer and rtype then
 		if rplayer == L2["you"] and rtype == L2["are"] then
 			rplayer = pName
 		end
-		self:Sync("GurRage "..rplayer)
+		self:Sync("GurRage", rplayer)
+		return
 	end
 end
 
