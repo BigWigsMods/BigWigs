@@ -17,6 +17,7 @@
 <Script file="Extras\Proximity.lua"/>
 <Script file="Extras\Version.lua"/>
 <Script file="Extras\Test.lua"/>
+<Script file="Extras\Flash.lua"/>
 
 <Script file="Outland\Doomwalker.lua"/>
 <Script file="Outland\Kazzak.lua"/>

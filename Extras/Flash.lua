@@ -8,13 +8,16 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsFlash")
 
 L:RegisterTranslations("enUS", function() return {
 	["Flash"] = true,
-	["Flash the screen when something important happens that affects you."] = true,
+	["Flash the screen blue when something important happens that directly affects you."] = true,
 	["Toggle Flash on or off."] = true,
+
+	["Test"] = true,
+	["Perform a Flash test."] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
 	["Flash"] = "번쩍임",
-	["Flash the screen when something important happens that affects you."] = "중요한 일이 발생하여 당신에게 영향을 미치면 화면을 번쩍입니다.",
+	--["Flash the screen blue when something important happens that directly affects you."] = true,
 	["Toggle Flash on or off."] = "번쩍임을 켜거나 끕니다.",
 } end)
 
@@ -32,7 +35,7 @@ mod.consoleCmd = L["Flash"]
 mod.consoleOptions = {
 	type = "group",
 	name = L["Flash"],
-	desc = L["Flash the screen when something important happens that affects you."],
+	desc = L["Flash the screen blue when something important happens that directly affects you."],
 	args = {
 		[L["Flash"]] = {
 			type = "toggle",
@@ -42,6 +45,13 @@ mod.consoleOptions = {
 			set = function(v)
 				mod.db.profile.flash = v
 			end,
+		},
+		[L["Test"]] = {
+			type = "execute",
+			name = L["Test"],
+			desc = L["Perform a Flash test."],
+			handler = mod,
+			func = "BigWigs_Personal",
 		},
 	}
 }
@@ -106,12 +116,12 @@ end
 function mod:BigWigs_Personal()
 	if self.db.profile.flash then
 		self:ScheduleEvent("BWFlash1", drawInOne, 0.1)
-		self:ScheduleEvent("BWFlash2", drawInTwo, 0.15)
-		self:ScheduleEvent("BWFlash3", drawInThree, 0.2)
-		self:ScheduleEvent("BWFlash4", drawInFour, 0.25)
-		self:ScheduleEvent("BWFlash5", drawOutOne, 0.3)
-		self:ScheduleEvent("BWFlash6", drawOutTwo, 0.35)
-		self:ScheduleEvent("BWFlash7", drawOutThree, 0.4)
-		self:ScheduleEvent("BWFlash8", drawOutFour, 0.45)
+		self:ScheduleEvent("BWFlash2", drawInTwo, 0.17)
+		self:ScheduleEvent("BWFlash3", drawInThree, 0.24)
+		self:ScheduleEvent("BWFlash4", drawInFour, 0.31)
+		self:ScheduleEvent("BWFlash5", drawOutOne, 0.38)
+		self:ScheduleEvent("BWFlash6", drawOutTwo, 0.45)
+		self:ScheduleEvent("BWFlash7", drawOutThree, 0.52)
+		self:ScheduleEvent("BWFlash8", drawOutFour, 0.57)
 	end
 end
