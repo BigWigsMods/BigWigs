@@ -62,14 +62,14 @@ L:RegisterTranslations("koKR", function() return {
 	phase_normal_bar = "다음 분노 형상",
 	phase_rage_bar = "다음 보통 형상",
 
-	--bloodboil = "Bloodboil",
-	--bloodboil_desc = "Warnings and counter for Bloodboil.",
-	--bloodboil_trigger = "afflicted by Bloodboil",
-	--bloodboil_message = "Bloodboil(%d)",
+	bloodboil = "끓어오르는 피",
+	bloodboil_desc = "끓어오르는 피에 대한 경고와 카운터입니다.",
+	bloodboil_trigger = "끓어오르는 피에 걸렸습니다.",
+	bloodboil_message = "끓어오르는 피(%d)",
 
 	rage = "마의 분노",
 	rage_desc = "마의 분노에 걸린 사람을 알립니다.",
-	rage_trigger = "^([^|;%s]*)(.*)마의 분노에 걸렸습니다%.$", -- check
+	rage_trigger = "^([^|;%s]*)(.*)마의 분노에 걸렸습니다%.$",
 	rage_you = "당신은 마의 분노!!",
 	rage_other = "%s 마의 분노!",
 
