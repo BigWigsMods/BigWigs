@@ -5,6 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Archimonde"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+local db = nil
 
 local UnitName = UnitName
 local pName = nil
@@ -240,6 +241,7 @@ function mod:OnEnable()
 
 	pName = UnitName("player")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	db = self.db.profile
 end
 
 ------------------------------
@@ -247,7 +249,7 @@ end
 ------------------------------
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "ArchGrip" and rest and self.db.profile.grip then
+	if sync == "ArchGrip" and rest and db.grip then
 		local other = fmt(L["grip_other"], rest)
 		if rest == pName then
 			self:Message(L["grip_you"], "Personal", true, "Long")
@@ -257,21 +259,21 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Message(other, "Attention")
 			self:Bar(other, 10, "Spell_Shadow_SoulLeech_3")
 		end
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(rest)
 		end
-	elseif sync == "ArchFear" and self.db.profile.fear then
+	elseif sync == "ArchFear" and db.fear then
 		self:Bar(L["fear_bar"], 41.5, "Spell_Shadow_DeathScream")
 		self:Message(L["fear_message"], "Important")
 		self:DelayedMessage(41.5, L["fear_warning"], "Urgent")
-	elseif sync == "ArchBurst" and self.db.profile.burst then
+	elseif sync == "ArchBurst" and db.burst then
 		self:ScheduleEvent("BWBurstToTScan", self.TargetCheck, 0.3, self)
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
-		if self.db.profile.enrage then
+		if db.enrage then
 			self:Message(fmt(L2["enrage_start"], boss, 10), "Attention")
 			self:DelayedMessage(300, fmt(L2["enrage_min"], 5), "Positive")
 			self:DelayedMessage(420, fmt(L2["enrage_min"], 3), "Positive")
@@ -282,7 +284,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:DelayedMessage(600, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
-		if self.db.profile.fear then
+		if db.fear then
 			self:Bar(L["fear_bar"], 40, "Spell_Shadow_DeathScream")
 			self:DelayedMessage(40, L["fear_warning"], "Urgent")
 		end
@@ -296,7 +298,7 @@ function mod:GripEvent(msg)
 		if gplayer == L2["you"] and gtype == L2["are"] then
 			gplayer = pName
 		end
-		self:Sync("ArchGrip "..gplayer)
+		self:Sync("ArchGrip", gplayer)
 	end
 end
 
@@ -327,7 +329,7 @@ function mod:TargetCheck()
 		if target == pName then
 			self:Message(L["burst_you"], "Personal", true, "Long")
 			self:Message(fmt(L["burst_other"], target), "Attention", nil, nil, true)
-			if self.db.profile.burstsay then
+			if db.burstsay then
 				SendChatMessage(L["burstsay_message"], "SAY")
 			end
 		else

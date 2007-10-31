@@ -5,6 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["High Warlord Naj'entus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+local db = nil
 
 ----------------------------
 --      Localization     --
@@ -178,6 +179,8 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "NajShieldOn", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "NajSpine", 2)
+
+	db = self.db.profile
 end
 
 ------------------------------
@@ -186,11 +189,11 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["start_trigger"] then
-		if self.db.profile.shield then
+		if db.shield then
 			self:DelayedMessage(50, L["shield_soon_warn"], "Positive")
 			self:Bar(L["shield_nextbar"], 60, "Spell_Frost_FrostBolt02")
 		end
-		if self.db.profile.enrage then
+		if db.enrage then
 			self:Message(L2["enrage_start"]:format(boss, 8), "Attention")
 			self:DelayedMessage(180, L2["enrage_min"]:format(5), "Positive")
 			self:DelayedMessage(300, L2["enrage_min"]:format(3), "Positive")
@@ -215,7 +218,7 @@ function mod:Spine(msg)
 	if splayer and stype then
 		if splayer == L2["you"] and stype == L2["are"] then
 			splayer = UnitName("player")
-			if self.db.profile.spinesay then
+			if db.spinesay then
 				SendChatMessage(L["spinesay_message"], "SAY")
 			end
 		end
@@ -224,12 +227,12 @@ function mod:Spine(msg)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "NajSpine" and rest and self.db.profile.spine then
+	if sync == "NajSpine" and rest and db.spine then
 		self:Message(L["spine_message"]:format(rest), "Important", nil, "Alert")
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(rest)
 		end
-	elseif sync == "NajShieldOn" and self.db.profile.shield then
+	elseif sync == "NajShieldOn" and db.shield then
 		self:Message(L["shield_warn"], "Important", nil, "Alert")
 		self:DelayedMessage(46, L["shield_soon_warn"], "Positive")
 		self:Bar(L["shield_nextbar"], 56, "Spell_Frost_FrostBolt02")

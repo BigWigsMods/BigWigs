@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Anetheron"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local db = nil
 
 local UnitName = UnitName
 local fmt = string.format
@@ -154,6 +155,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "AnethInf", 10)
+	db = self.db.profile
 end
 
 ------------------------------
@@ -161,7 +163,7 @@ end
 ------------------------------
 
 function mod:BigWigs_RecvSync(sync)
-	if sync == "AnethInf" and self.db.profile.inferno then
+	if sync == "AnethInf" and db.inferno then
 		self:DelayedMessage(45, L["inferno_warning"], "Positive")
 		self:Bar(L["inferno_bar"], 50, "Spell_Fire_Incinerate")
 		self:ScheduleEvent("BWInfernoToTScan", self.InfernoCheck, 0.5, self)
@@ -169,7 +171,7 @@ function mod:BigWigs_RecvSync(sync)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.swarm and (msg == L["swarm_trigger1"] or msg == L["swarm_trigger2"]) then
+	if db.swarm and (msg == L["swarm_trigger1"] or msg == L["swarm_trigger2"]) then
 		self:Message(L["swarm_message"], "Attention")
 		self:Bar(L["swarm_bar"], 11, "Spell_Shadow_CarrionSwarm")
 	end
@@ -198,7 +200,7 @@ function mod:InfernoCheck()
 	end
 	if target then
 		self:Message(fmt(L["inferno_message"], target), "Important", nil, "Alert")
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(target)
 			self:ScheduleEvent("ClearIcon", "BigWigs_RemoveRaidIcon", 5, self)
 		end

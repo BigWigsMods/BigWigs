@@ -11,6 +11,7 @@ local veras = BB["Veras Darkshadow"]
 BB = nil
 
 local fmt = string.format
+local db = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local death = fmt(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], boss)
@@ -358,6 +359,8 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalCHeal", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "ICKick", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "CouncilPoison", 2)
+
+	db = self.db.profile
 end
 
 ------------------------------
@@ -378,34 +381,34 @@ function mod:Engage()
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "MalSpell" and self.db.profile.immune then
+	if sync == "MalSpell" and db.immune then
 		self:Message(fmt(L["immune_message"], L["spell"]), "Positive", nil, "Alarm")
 		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["immune_message"], L["melee"]))
 		self:Bar(fmt(L["immune_bar"], L["spell"]), 15, "Spell_Holy_SealOfRighteousness")
-	elseif sync == "MalMelee" and self.db.profile.immune then
+	elseif sync == "MalMelee" and db.immune then
 		self:Message(fmt(L["immune_message"], L["melee"]), "Positive", nil, "Alert")
 		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["immune_message"], L["spell"]))
 		self:Bar(fmt(L["immune_bar"], L["melee"]), 15, "Spell_Holy_SealOfProtection")
-	elseif sync == "MalShield" and self.db.profile.shield then
+	elseif sync == "MalShield" and db.shield then
 		self:Message(L["shield_message"], "Important", nil, "Long")
 		self:Bar(L["shield_message"], 20, "Spell_Holy_PowerWordShield")
-	elseif sync == "MalCCast" and self.db.profile.circle then
+	elseif sync == "MalCCast" and db.circle then
 		self:Message(L["circle_message"], "Attention", nil, "Info")
 		self:Bar(L["circle"], 2.5, "Spell_Holy_CircleOfRenewal")
-	elseif sync == "MalCHeal" and self.db.profile.circle then
+	elseif sync == "MalCHeal" and db.circle then
 		self:Message(L["circle_heal_message"], "Urgent")
 		self:Bar(L["circle_bar"], 20, "Spell_Holy_CircleOfRenewal")
-	elseif sync == "ICKick" and rest and self.db.profile.circle then
+	elseif sync == "ICKick" and rest and db.circle then
 		self:Message(fmt(L["circle_fail_message"], rest), "Urgent")
 		self:Bar(L["circle_bar"], 12, "Spell_Holy_CircleOfRenewal")
-	elseif sync == "VerVanish" and self.db.profile.vanish then
+	elseif sync == "VerVanish" and db.vanish then
 		self:Message(L["vanish_message"], "Urgent", nil, "Alert")
 		self:Bar(L["vanish_bar"], 30, "Ability_Vanish")
 		self:DelayedMessage(30, fmt(L["vanish_warning"], veras), "Attention")
-	elseif sync == "TICWin" and self.db.profile.bosskill then
+	elseif sync == "TICWin" and db.bosskill then
 		self:Message(death, "Bosskill", nil, "Victory")
 		BigWigs:ToggleModuleActive(self, false)
-	elseif sync == "CouncilPoison" and rest and self.db.profile.poison then
+	elseif sync == "CouncilPoison" and rest and db.poison then
 		local other = fmt(L["poison_other"], rest)
 		if rest == pName then
 			self:Message(L["poison_you"], "Personal", true, "Long")
@@ -413,21 +416,21 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		else
 			self:Message(other, "Attention")
 		end
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(rest)
 		end
 	elseif self:ValidateEngageSync(sync, rest) and not started then
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		if self.db.profile.enrage then
+		if db.enrage then
 			self:Engage()
 		end
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.enrage and (
+	if db.enrage and (
 		msg:find(L["engage_trigger1"]) or
 		msg:find(L["engage_trigger2"]) or
 		msg:find(L["engage_trigger3"]) or
@@ -471,7 +474,7 @@ function mod:Poison(msg)
 		if pplayer == L2["you"] and ptype == L2["are"] then
 			pplayer = pName
 		end
-		self:Sync("CouncilPoison "..pplayer)
+		self:Sync("CouncilPoison", pplayer)
 	end
 end
 
@@ -481,7 +484,7 @@ function mod:Interrupt(msg)
 		if player == L2["you"] then --prob need something better than this
 			player = pName
 		end
-		self:Sync("ICKick "..player)
+		self:Sync("ICKick", player)
 	end
 end
 

@@ -7,6 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local pName = nil
+local db = nil
 local attracted = {}
 local UnitDebuff = UnitDebuff
 local sub = string.sub
@@ -153,6 +154,7 @@ function mod:OnEnable()
 	pName = UnitName("player")
 	stop = nil
 	started = nil
+	db = self.db.profile
 
 	--setup debuffs
 	shadow = "Interface\\Icons\\INV_Misc_Gem_Amethyst_01"
@@ -189,7 +191,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		if self.db.profile.berserk then
+		if db.berserk then
 			self:Berserk()
 		end
 	end
@@ -200,10 +202,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		for k in pairs(attracted) do attracted[k] = nil end
 		restype = nil
 		stop = nil
-		if self.db.profile.berserk then
+		if db.berserk then
 			self:Berserk()
 		end
-	elseif self.db.profile.enrage and msg == L["enrage_trigger"] then
+	elseif db.enrage and msg == L["enrage_trigger"] then
 		self:Message(L["enrage_message"], "Important")
 	end
 end
@@ -220,7 +222,7 @@ end
 
 function mod:PLAYER_AURAS_CHANGED(msg)
 	--don't even scan anything if we don't want it on
-	if not self.db.profile.debuff then return end
+	if not db.debuff then return end
 
 	local i = 1 --setup counter
 	local rpt = nil
@@ -286,7 +288,7 @@ end
 
 function mod:AttractionWarn()
 	if stop then return end
-	if self.db.profile.attraction then
+	if db.attraction then
 		local msg = nil
 		for k in pairs(attracted) do
 			if not msg then
@@ -304,7 +306,7 @@ function mod:AttractionWarn()
 end
 
 function mod:UNIT_HEALTH(msg)
-	if not self.db.profile.enrage then return end
+	if not db.enrage then return end
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 12 and health <= 14 and not enrageWarn then

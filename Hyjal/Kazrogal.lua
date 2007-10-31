@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Kaz'rogal"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local db = nil
 
 local UnitMana = UnitMana
 local IsItemInRange = IsItemInRange
@@ -108,6 +109,7 @@ function mod:OnEnable()
 	end
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	db = self.db.profile
 end
 
 ------------------------------
@@ -120,7 +122,7 @@ local function HideProx()
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
-	if self.db.profile.range and msg == L["range_gain"] and UnitMana("player") < 4000 then
+	if db.range and msg == L["range_gain"] and UnitMana("player") < 4000 then
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 		self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 		self:ScheduleEvent("BWHideProx", HideProx, 5)
@@ -128,7 +130,7 @@ function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 end
 
 function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
-	if self.db.profile.range and msg == L["range_fade"] then
+	if db.range and msg == L["range_fade"] then
 		self:CancelScheduledEvent("BWHideProx")
 		self:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 		self:TriggerEvent("BigWigs_HideProximity", self)

@@ -7,6 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local pName = nil
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -141,7 +142,9 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "TeronShadow", 3)
+
 	pName = UnitName("player")
+	db = self.db.profile
 end
 
 ------------------------------
@@ -159,18 +162,19 @@ function mod:SoD(msg)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "TeronShadow" and rest and self.db.profile.shadow then
+	if sync == "TeronShadow" and rest and db.shadow then
 		local other = L["shadow_other"]:format(rest)
 		if rest == pName then
 			self:Message(L["shadow_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
 			self:Bar(other, 55, "Spell_Arcane_PrismaticCloak")
+			self:TriggerEvent("BigWigs_Personal")
 		else
 			self:Message(other, "Attention")
 			self:Bar(other, 55, "Spell_Arcane_PrismaticCloak")
 		end
 		self:ScheduleEvent("BWTeronGhost"..rest, self.Ghost, 55, self, rest)
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(rest)
 		end
 	end

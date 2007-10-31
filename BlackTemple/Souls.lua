@@ -10,6 +10,7 @@ local boss = BB["Reliquary of Souls"]
 BB = nil
 
 local spiteIt = {}
+local db = nil
 local pName = nil
 local stop = nil
 
@@ -315,7 +316,9 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "RoSWin", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RoSDeaden", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "RoSScream", 4)
+
 	pName = UnitName("player")
+	db = self.db.profile
 end
 
 ------------------------------
@@ -326,18 +329,18 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		for k in pairs(spiteIt) do spiteIt[k] = nil end
 		stop = nil
-		if self.db.profile.enrage then
+		if db.enrage then
 			self:Message(L["enrage_start"], "Positive")
 			self:Bar(L["enrage_nextbar"], 47, "Spell_Shadow_UnholyFrenzy")
 			self:DelayedMessage(42, L["enrage_warning"], "Urgent")
 		end
 	elseif msg == L["desire_trigger"] or msg == L["desire_cot"] then
-		if self.db.profile.enrage then
+		if db.enrage then
 			self:Message(L["desire_start"], "Positive")
 			self:Bar(L["desire_bar"], 160, "Spell_Shadow_UnholyFrenzy")
 			self:DelayedMessage(130, L["desire_warn"], "Urgent")
 		end
-		if self.db.profile.deaden then
+		if db.deaden then
 			self:Bar(L["deaden_nextbar"], 28, "Spell_Shadow_SoulLeech_1")
 			self:DelayedMessage(23, L["deaden_warn"], "Urgent")
 		end
@@ -345,7 +348,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if msg == L["enrage_trigger"] and self.db.profile.enrage then
+	if msg == L["enrage_trigger"] and db.enrage then
 		self:Message(L["enrage_message"], "Attention", nil, "Alert")
 		self:Bar(L["enrage_bar"], 15, "Spell_Shadow_UnholyFrenzy")
 		self:DelayedMessage(15, L["enrage_next"], "Attention")
@@ -381,7 +384,7 @@ function mod:AfflictEvent(msg)
 			aPlayer = pName
 		end
 		if aSpell == L["spite"] then
-			self:Sync("RoSSpite "..aPlayer)
+			self:Sync("RoSSpite", aPlayer)
 		end
 	end
 end
@@ -393,7 +396,7 @@ end
 
 function mod:SpiteWarn()
 	if stop then return end
-	if self.db.profile.spite then
+	if db.spite then
 		local msg = nil
 		for k in pairs(spiteIt) do
 			if not msg then
@@ -412,18 +415,18 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "RoSSpite" and not stop and rest then
 		spiteIt[rest] = true
 		self:ScheduleEvent("BWSpiteWarn", self.SpiteWarn, 0.3, self)
-	elseif sync == "RoSShield" and self.db.profile.runeshield then
+	elseif sync == "RoSShield" and db.runeshield then
 		self:Message(L["runeshield_message"], "Attention")
 		self:Bar(L["runeshield_nextbar"], 15, "Spell_Arcane_Blast")
 		self:DelayedMessage(12, L["runeshield_warn"], "Urgent")
-	elseif sync == "RoSWin" and self.db.profile.bosskill then
+	elseif sync == "RoSWin" and db.bosskill then
 		self:Message(death, "Bosskill", nil, "Victory")
 		BigWigs:ToggleModuleActive(self, false)
-	elseif sync == "RoSDeaden" and self.db.profile.deaden then
+	elseif sync == "RoSDeaden" and db.deaden then
 		self:Message(L["deaden_message"], "Attention")
 		self:Bar(L["deaden_nextbar"], 30, "Spell_Shadow_SoulLeech_1")
 		self:DelayedMessage(25, L["deaden_warn"], "Urgent")
-	elseif sync == "RoSScream" and self.db.profile.scream then
+	elseif sync == "RoSScream" and db.scream then
 		self:Bar(L["scream_bar"], 10, "Spell_Shadow_ConeOfSilence")
 	end
 end

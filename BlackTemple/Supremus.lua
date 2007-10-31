@@ -5,7 +5,9 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Supremus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+
 local started = nil
+local db = nil
 local previous = nil
 local UnitName = UnitName
 local fmt = string.format
@@ -196,6 +198,8 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "SupPunch", 5)
+
+	db = self.db.profile
 end
 
 ------------------------------
@@ -226,7 +230,7 @@ function mod:TargetCheck()
 	if target ~= previous then
 		if target then
 			self:Message(fmt(L["target_message"], target), "Attention")
-			if self.db.profile.icon then
+			if db.icon then
 				self:Icon(target)
 			end
 			previous = target
@@ -238,22 +242,22 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["normal_phase_trigger"] then
-		if self.db.profile.phase then
+		if db.phase then
 			self:Message(L["normal_phase_message"], "Positive")
 			self:Bar(L["next_phase_bar"], 60, "INV_Helmet_08")
 			self:DelayedMessage(50, L["next_phase_message"], "Attention")
 		end
-		if self.db.profile.target then
+		if db.target then
 			self:CancelScheduledEvent("BWSupremusToTScan")
 			self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		end
 	elseif msg == L["kite_phase_trigger"] then
-		if self.db.profile.phase then
+		if db.phase then
 			self:Message(fmt(L["kite_phase_message"], boss), "Positive")
 			self:Bar(L["next_phase_bar"], 60, "Spell_Fire_MoltenBlood")
 			self:DelayedMessage(50, L["next_phase_message"], "Attention")
 		end
-		if self.db.profile.target then
+		if db.target then
 			self:ScheduleRepeatingEvent("BWSupremusToTScan", self.TargetCheck, 1, self)
 		end
 	end
@@ -261,7 +265,7 @@ end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "SupPunch" then
-		if not self.db.profile.punch then return end
+		if not db.punch then return end
 		self:Message(L["punch_message"], "Attention")
 		self:Bar(L["punch_bar"], 10, "Spell_Frost_FreezingBreath")
 	elseif self:ValidateEngageSync(sync, rest) and not started then
@@ -269,11 +273,11 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		if self.db.profile.phase then
+		if db.phase then
 			self:Bar(L["next_phase_bar"], 60, "Spell_Fire_MoltenBlood")
 			self:DelayedMessage(50, L["next_phase_message"], "Attention")
 		end
-		if self.db.profile.enrage then
+		if db.enrage then
 			self:Message(fmt(L2["enrage_start"], boss, 15), "Attention")
 			self:DelayedMessage(300, fmt(L2["enrage_min"], 10), "Positive")
 			self:DelayedMessage(600, fmt(L2["enrage_min"], 5), "Positive")

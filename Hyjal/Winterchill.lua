@@ -5,6 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Rage Winterchill"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -137,6 +138,7 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	db = self.db.profile
 end
 
 ------------------------------
@@ -144,9 +146,9 @@ end
 ------------------------------
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "WCBolt" and rest and self.db.profile.icebolt then
+	if sync == "WCBolt" and rest and db.icebolt then
 		self:Message(L["icebolt_message"]:format(rest), "Important", nil, "Alert")
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(rest)
 		end
 	elseif self:ValidateEngageSync(sync, rest) and not started then
@@ -154,7 +156,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		if self.db.profile.enrage then
+		if db.enrage then
 			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
 			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
 			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
@@ -169,8 +171,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 end
 
 function mod:AfflictEvent(msg)
-	if self.db.profile.decay and msg == L["decay_trigger"] then
+	if db.decay and msg == L["decay_trigger"] then
 		self:Message(L["decay_message"], "Personal", true, "Alarm")
+		self:TriggerEvent("BigWigs_Personal")
 	end
 
 	local iplayer, itype = select(3, msg:find(L["icebolt_trigger"]))
@@ -178,6 +181,6 @@ function mod:AfflictEvent(msg)
 		if iplayer == L2["you"] and itype == L2["are"] then
 			iplayer = UnitName("player")
 		end
-		self:Sync("WCBolt "..iplayer)
+		self:Sync("WCBolt", iplayer)
 	end
 end

@@ -5,7 +5,9 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Gurtogg Bloodboil"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+
 local UnitName = UnitName
+local db = nil
 local fmt = string.format
 local pName = nil
 local count = 1
@@ -257,6 +259,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "GurNormal", 10)
 
 	pName = UnitName("player")
+	db = self.db.profile
 end
 
 ------------------------------
@@ -266,40 +269,41 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "GurRage" and rest then
 		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["bloodboil_message"], count))
-		if self.db.profile.rage then
+		if db.rage then
 			self:CancelScheduledEvent("rage1")
 			self:TriggerEvent("BigWigs_StopBar", self, L["phase_normal_bar"])
 
 			if rest == pName then
 				self:Message(L["rage_you"], "Personal", true, "Long")
 				self:Message(fmt(L["rage_other"], rest), "Attention", nil, nil, true)
+				self:TriggerEvent("BigWigs_Personal")
 			else
 				self:Message(fmt(L["rage_other"], rest), "Attention")
 			end
-			if self.db.profile.whisper then
+			if db.whisper then
 				self:Whisper(rest, L["rage_you"])
 			end
-			if self.db.profile.phase then
+			if db.phase then
 				self:Bar(L["phase_rage_bar"], 28, "Spell_Fire_ElementalDevastation")
 				self:DelayedMessage(23, L["phase_normal_warning"], "Important")
 			end
 		end
-	elseif sync == "GurAcid" and self.db.profile.acid then
+	elseif sync == "GurAcid" and db.acid then
 		self:Bar(L["acid"], 2, "Spell_Nature_Acid_01")
 		self:ScheduleEvent("BWAcidToTScan", self.AcidCheck, 0.2, self)
-	elseif sync == "GBBlood" and self.db.profile.bloodboil then
+	elseif sync == "GBBlood" and db.bloodboil then
 		local warn = fmt(L["bloodboil_message"], count)
 		self:Message(warn, "Attention")
 		if count == 3 then count = 0 end
 		count = count + 1
 		self:Bar(warn, 10, "Spell_Shadow_BloodBoil")
 	elseif sync == "GurNormal" then
-		if self.db.profile.phase then
+		if db.phase then
 			self:Bar(L["phase_normal_bar"], 60, "Spell_Fire_ElementalDevastation")
 			self:ScheduleEvent("rage1", "BigWigs_Message", 55, L["phase_rage_warning"], "Important")
 			self:Message(L["phase_normal"], "Attention")
 		end
-		if self.db.profile.bloodboil then
+		if db.bloodboil then
 			self:Bar(fmt(L["bloodboil_message"], count), 10, "Spell_Shadow_BloodBoil")
 		end
 	end
@@ -308,11 +312,11 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		count = 1
-		if self.db.profile.phase then
+		if db.phase then
 			self:Bar(L["phase_normal_bar"], 49, "Spell_Fire_ElementalDevastation")
 			self:ScheduleEvent("rage1", "BigWigs_Message", 44, L["phase_rage_warning"], "Important")
 		end
-		if self.db.profile.enrage then
+		if db.enrage then
 			self:Message(fmt(L2["enrage_start"], boss, 10), "Attention")
 			self:DelayedMessage(300, fmt(L2["enrage_min"], 5), "Positive")
 			self:DelayedMessage(420, fmt(L2["enrage_min"], 3), "Positive")
@@ -323,7 +327,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:DelayedMessage(600, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
 		end
-		if self.db.profile.bloodboil then
+		if db.bloodboil then
 			self:Bar(fmt(L["bloodboil_message"], count), 11, "Spell_Shadow_BloodBoil")
 		end
 	end
@@ -368,7 +372,7 @@ function mod:AcidCheck()
 	end
 	if target then
 		self:Message(fmt(L["acid_message"], target), "Attention")
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(target)
 			self:ScheduleEvent("ClearIcon", "BigWigs_RemoveRaidIcon", 5, self)
 		end

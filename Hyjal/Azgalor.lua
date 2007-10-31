@@ -6,6 +6,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["Azgalor"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local pName = nil
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -175,6 +176,7 @@ function mod:OnEnable()
 
 	pName = UnitName("player")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	db = self.db.profile
 end
 
 ------------------------------
@@ -186,33 +188,34 @@ function mod:Event(msg)
 	if aPlayer and aType then
 		if aPlayer == L2["you"] and aType == L2["are"] then
 			aPlayer = pName
-			if aSpell == L["rof"] and self.db.profile.rof then
+			if aSpell == L["rof"] and db.rof then
 				self:Message(L["rof_you"], "Urgent", true, "Alarm")
 			end
 		end
 		if aSpell == L["doom"] then
-			self:Sync("AzDoom ".. aPlayer)
+			self:Sync("AzDoom", aPlayer)
 		elseif aSpell == L["hoa"] then
-			self:Sync("AzHOA ".. aPlayer)
+			self:Sync("AzHOA", aPlayer)
 		end
 	end
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "AzDoom" and rest and self.db.profile.doom then
+	if sync == "AzDoom" and rest and db.doom then
 		local other = L["doom_other"]:format(rest)
 		if rest == pName then
 			self:Message(L["doom_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
 			self:Bar(other, 19, "Ability_Creature_Cursed_02")
+			self:TriggerEvent("BigWigs_Personal")
 		else
 			self:Message(other, "Attention")
 			self:Bar(other, 19, "Ability_Creature_Cursed_02")
 		end
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(rest)
 		end
-	elseif sync == "AzHOA" and rest and self.db.profile.hoa then
+	elseif sync == "AzHOA" and rest and db.hoa then
 		self:Message(L["hoa_message"], "Important")
 		self:Bar(L["hoa_bar"], 16, "Spell_Shadow_ImpPhaseShift")
 		self:DelayedMessage(15, L["hoa_warning"], "Important")
@@ -221,7 +224,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		if self.db.profile.enrage then
+		if db.enrage then
 			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
 			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
 			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")

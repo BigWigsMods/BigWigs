@@ -5,7 +5,9 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Illidan Stormrage"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+
 local pName = nil
+local db = nil
 local bCount = 0
 local p2Announced = nil
 local p4Announced = nil
@@ -455,6 +457,7 @@ function mod:OnEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_START")
 
 	pName = UnitName("player")
+	db = self.db.profile
 end
 
 ------------------------------
@@ -462,32 +465,33 @@ end
 ------------------------------
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "IliPara" and rest and self.db.profile.parasite then
+	if sync == "IliPara" and rest and db.parasite then
 		local other = fmt(L["parasite_other"], rest)
 		if rest == pName then
 			self:Message(L["parasite_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
 			self:Bar(other, 10, "Spell_Shadow_SoulLeech_3")
+			self:TriggerEvent("BigWigs_Personal")
 		else
 			self:Message(other, "Attention")
 			self:Bar(other, 10, "Spell_Shadow_SoulLeech_3")
 		end
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(rest)
 		end
-	elseif sync == "IliBara" and rest and self.db.profile.barrage then
+	elseif sync == "IliBara" and rest and db.barrage then
 		self:Message(fmt(L["barrage_message"], rest), "Important", nil, "Alert")
 		self:Bar(fmt(L["barrage_bar"], rest), 10, "Spell_Shadow_PainSpike")
 
 		self:Bar(L["barrage_warn_bar"], 50, "Spell_Shadow_PainSpike")
 		self:ScheduleEvent("BarrageWarn", "BigWigs_Message", 47, L["barrage_warn"], "Important")
 
-	elseif sync == "IliFlame" and rest and self.db.profile.flame then
+	elseif sync == "IliFlame" and rest and db.flame then
 		flamed[rest] = true
 		self:ScheduleEvent("FlameCheck", self.FlameWarn, 1, self)
-	elseif sync == "IliDemons" and self.db.profile.demons then
+	elseif sync == "IliDemons" and db.demons then
 		self:Message(L["demons_message"], "Important", nil, "Alert")
-	elseif sync == "IliBurst" and self.db.profile.flameburst then
+	elseif sync == "IliBurst" and db.flameburst then
 		bCount = bCount + 1
 		self:Message(L["flameburst_message"], "Important", nil, "Alert")
 		if bCount < 3 then -- He'll only do three times before transforming again
@@ -497,23 +501,23 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "IliPhase2" then
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 		flamesDead = 0
-		if self.db.profile.barrage then
+		if db.barrage then
 			self:Bar(L["barrage_warn_bar"], 80, "Spell_Shadow_PainSpike")
 			self:DelayedMessage(77, L["barrage_warn"], "Important")
 		end
-		if self.db.profile.phase then
+		if db.phase then
 			self:Message(L["phase2_message"], "Important", nil, "Alarm")
 		end
 	elseif sync == "IliFlameDied" then
 		flamesDead = flamesDead + 1
 		if flamesDead == 2 then
-			if self.db.profile.phase then
+			if db.phase then
 				self:Message(L["phase3_message"], "Important", nil, "Alarm")
 				self:TriggerEvent("BigWigs_ShowProximity", self) -- Proximity Warning
 			end
 			self:CancelScheduledEvent("BarrageWarn")
 		end
-	elseif sync == "IliShear" and self.db.profile.shear and rest then
+	elseif sync == "IliShear" and db.shear and rest then
 		self:Message(fmt(L["shear_message"], rest), "Important", nil, "Alert")
 		self:Bar(fmt(L["shear_bar"], rest), 7, "Spell_Shadow_FocusedPower")
 	end
@@ -538,29 +542,29 @@ function mod:AfflictEvent(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["eyeblast_trigger"] and self.db.profile.eyeblast then
+	if msg == L["eyeblast_trigger"] and db.eyeblast then
 		self:Message(L["eyeblast_message"], "Important", nil, "Alert")
 	elseif msg == L["demon_phase_trigger"] then
 		bCount = 0
-		if self.db.profile.demons then
+		if db.demons then
 			self:Bar(L["demons"], 30, "Spell_Shadow_SoulLeech_3")
 			self:DelayedMessage(25, L["demons_warn"], "Positive")
 		end
-		if self.db.profile.phase then
+		if db.phase then
 			self:Message(L["demon_phase_message"], "Important", nil, "Alarm")
 			self:Bar(L["demon_bar"], 65, "Spell_Shadow_Metamorphosis")
 		end
-		if self.db.profile.flameburst then
+		if db.flameburst then
 			self:DelayedMessage(15, L["flameburst_cooldown_warn"], "Positive")
 			self:Bar(L["flameburst_cooldown_bar"], 20, "Spell_Fire_BlueRainOfFire")
 		end
 	elseif msg == L["phase4_trigger"] then
-		if self.db.profile.phase then
+		if db.phase then
 			self:Message(L["phase4_message"], "Important", nil, "Alarm")
 		end
-	elseif self.db.profile.enrage and msg == L["enrage_trigger"] then
+	elseif db.enrage and msg == L["enrage_trigger"] then
 		self:Message(L["enrage_message"], "Important", nil, "Alert")
-	elseif self.db.profile.berserk and msg == L["berserk_trigger"] then
+	elseif db.berserk and msg == L["berserk_trigger"] then
 		self:Message(fmt(L2["berserk_start"], boss, 25), "Attention")
 		self:DelayedMessage(600, fmt(L2["berserk_min"], 15), "Positive")
 		self:DelayedMessage(900, fmt(L2["berserk_min"], 10), "Positive")
@@ -594,7 +598,7 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 end
 
 function mod:UNIT_HEALTH(msg)
-	if UnitName(msg) == boss and self.db.profile.phase then
+	if UnitName(msg) == boss and db.phase then
 		local hp = UnitHealth(msg)
 		if hp > 65 and hp < 70 and not p2Announced then
 			self:Message(L["phase2_soon_message"], "Attention")
@@ -623,7 +627,7 @@ do
 end
 
 function mod:FlameWarn()
-	if self.db.profile.flame then
+	if db.flame then
 		local msg = nil
 		for k in pairs(flamed) do
 			if not msg then
