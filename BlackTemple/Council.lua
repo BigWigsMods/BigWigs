@@ -171,7 +171,7 @@ L:RegisterTranslations("koKR", function() return {
 --Chinese Translate by 月色狼影@CWDG
 --CWDG site: http://Cwowaddon.com
 --伊利达雷议会
-Ananhaid Updated 10/31 23:00
+--Ananhaid Updated 10/31 23:00
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger1 = "你们要考验我吗？",
 	engage_trigger2 = "通用语……多么粗俗的语言。Bandal！",
@@ -187,7 +187,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	immune = "免疫警报",
 	immune_desc = "当玛兰德免疫法术活近战攻击时发出警报",
-	immune_spell_trigger = "女公爵玛兰德获得了法术结界祝福的效果。$,
+	immune_spell_trigger = "女公爵玛兰德获得了法术结界祝福的效果。$",
 	immune_melee_trigger = "女公爵玛兰德获得了保护祝福的效果。$",
 	immune_message = "玛兰德: %s 免疫——15秒!",
 	immune_bar = "%s 免疫!",
@@ -213,7 +213,7 @@ L:RegisterTranslations("zhCN", function() return {
 	circle_desc = "当玛兰德开始施放治疗之环时发出警报",
 	circle_trigger = "女公爵玛兰德开始施放治疗之环。$",
 	circle_message = "正在施放 治疗之环!",
-	circle_heal_trigger = "^女公爵玛兰德的治疗之环为"--Update 10/31 edited,check,
+	circle_heal_trigger = "^女公爵玛兰德的治疗之环为",--Update 10/31 edited,check,
 	circle_fail_trigger = "^([^%s]+)打断了公爵玛兰德的治疗之环。",
 	circle_heal_message = "治疗 成功! - ~20秒后再次发动",
 	circle_fail_message = "%s 打断! - ~12s秒后再次发动 治疗之环",
