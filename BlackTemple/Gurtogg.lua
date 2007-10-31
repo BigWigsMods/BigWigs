@@ -195,16 +195,16 @@ L:RegisterTranslations("zhCN", function() return {
 
 	phase = "阶段计时",
 	phase_desc = "普通或邪能狂怒状态转换阶段计时",
-	phase_rage_warning = "邪能狂怒 发动 ~5秒 后",--Fel Rage 邪能狂怒
+	phase_rage_warning = "邪能狂怒 发动 ~5秒 后",
 	phase_normal_warning = "邪能狂怒 结束 ~5秒 后",
 	phase_normal = "邪能狂怒 阶段结束",
-	phase_normal_trigger = "邪能狂怒的效果从古尔图格·血沸身上消失。",--%s效果从%s身上消失。 check
+	phase_normal_trigger = "邪能狂怒效果从古尔图格·血沸身上消失。$",--%s效果从%s身上消失。 Update at 10/31 and check
 	phase_normal_bar = "下一 邪能狂怒",
 	phase_rage_bar = "下一 普通阶段",
 
 	bloodboil = "血沸",
 	bloodboil_desc = "血沸计数及警报",
-	bloodboil_trigger = "血沸效果的影响。$",
+	bloodboil_trigger = "^([^%s]+)受([^%s]+)了邪酸吐息效果的影响。$",--Update at 10/31 and check
 	bloodboil_message = "血沸(%d)",
 
 	rage = "邪能狂怒",
@@ -216,7 +216,7 @@ L:RegisterTranslations("zhCN", function() return {
 	whisper = "密语",
 	whisper_desc = "当完家中了邪能狂怒进行密语提醒(需要助理或更高权限).",
 
-	acid = "邪酸吐息",--Fel-Acid Breath 邪酸吐息
+	acid = "邪酸吐息",
 	acid_desc = "当谁受到邪酸吐息攻击时发出警报.",
 	acid_message = "邪酸吐息施放在: %s",
 

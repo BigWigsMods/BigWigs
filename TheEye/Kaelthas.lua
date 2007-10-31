@@ -352,9 +352,10 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 --凯尔萨斯·逐日者
+--Ananhaid Updated 10/31 22:00
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "^魔法，能量，我的人民陷入其中不能自拔……自从太阳之井被摧毁之后就是如此。欢迎来到未来。真遗憾，你们无法阻止什么。没有人可以阻止我了！Selama ashal’anore！",
-	engage_message = "第一阶段",
+	engage_message = "第一阶段 - 四顾问",
 
 	conflag = "燃烧",
 	conflag_desc = "当一队友中了燃烧发出警报",
@@ -412,11 +413,11 @@ L:RegisterTranslations("zhCN", function() return {
 	gravity_trigger2 = "站不住脚了吗？",
 	gravity_bar = "下个 引力失效",
 	gravity_message = "引力失效!",
-	flying_message = "阶段 5 - 1分钟后引力失效",
+	flying_message = "第五阶段 - 1分钟后引力失效",
 
-	weapons_inc_message = "阶段 2 - 准备与神器作战!",
-	phase3_message = "阶段 3 - 顾问复生!",
-	phase4_message = "阶段 4 - 凯尔萨斯!",
+	weapons_inc_message = "第二阶段 - 准备与神器作战!",
+	phase3_message = "第三阶段 - 四顾问复生!",
+	phase4_message = "第四阶段 - 凯尔萨斯!",
 	phase4_bar = "凯尔萨斯 来临",
 
 	mc = "精神控制",

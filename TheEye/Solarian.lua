@@ -161,6 +161,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 --大星术师索兰莉安
+--Ananhaid Updated 10/31 21:00
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "Tal anu'men no sin'dorei!",
 
@@ -191,10 +192,10 @@ L:RegisterTranslations("zhCN", function() return {
 	split_bar = "~下次 分裂",
 	split_warning = "~7秒后 分裂",
 
-	agent_warning = "分裂! - 6秒后 密探",
-	agent_bar = "密探",
-	priest_warning = "3秒后增加 牧师/星术师",
-	priest_bar = "牧师/星术师",
+	agent_warning = "分裂! - 6秒后 日晷密探",
+	agent_bar = "日晷密探",
+	priest_warning = "3秒后增加 日晷祭司/索兰莉安",
+	priest_bar = "日晷祭司/索兰莉安",
 } end )
 
 --zhTW語系：Peroth＠暴風祭壇

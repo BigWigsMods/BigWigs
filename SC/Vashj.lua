@@ -236,7 +236,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 --瓦丝琪
---Ananhaid Updated 10/28 22：00
+--Ananhaid Updated 10/31 23：00
 L:RegisterTranslations("zhCN", function() return {
 	["Tainted Elemental"] = "被污染的元素",
 
@@ -282,7 +282,7 @@ L:RegisterTranslations("zhCN", function() return {
 	barrier = "护盾击碎",
 	barrier_desc = "当护盾击碎发出警报",
 	barrier_down_message = "护盾 - %d/4 击碎!",
-	barrier_fades_trigger = "魔法屏障效果从瓦丝琪的身上消失。",
+	barrier_fades_trigger = "魔法屏障效果从瓦丝琪身上消失。$",--Update 10/31,check
 
 	loot = "污染之核",
 	loot_desc = "对拾取了污染之核的队友发出警报",

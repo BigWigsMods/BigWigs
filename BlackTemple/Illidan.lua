@@ -217,10 +217,11 @@ L:RegisterTranslations("koKR", function() return {
 --Chinese Translate by 月色狼影@CWDG
 --CWDG site: http://Cwowaddon.com
 --伊利丹·怒风
+--Ananhaid Updated 10/31 23:00
 L:RegisterTranslations("zhCN", function() return {
-	berserk_trigger = "You are not prepared!",
+	berserk_trigger = "你们这是自寻死路！$",
 
-	parasite = "寄生暗影魔",--Parasitic Shadowfiend 寄生暗影魔
+	parasite = "寄生暗影魔",
 	parasite_desc = "当队员中寄生暗影魔时发出警告.",
 	parasite_you = "你中了>寄生暗影魔<!",
 	parasite_other = "%s 中了>寄生暗影魔<!",
@@ -228,14 +229,14 @@ L:RegisterTranslations("zhCN", function() return {
 	icon = "团队标记",
 	icon_desc = "为中了寄生暗影魔的队员打上团队标记.",
 
-	barrage = "黑暗壁垒",--Dark Barrage 黑暗壁垒
+	barrage = "黑暗壁垒",
 	barrage_desc = "当玩家中了黑暗壁垒时发出警报.",
 	barrage_message = "%s 中了黑暗壁垒!",
 	barrage_warn = "即将 黑暗壁垒!",
 	barrage_warn_bar = "~下一波 黑暗壁垒",
-	barrage_bar = "壁垒: %s",
+	barrage_bar = "黑暗壁垒: %s",
 
-	eyeblast = "魔眼冲击",--Eye Blast 魔眼冲击
+	eyeblast = "魔眼冲击",
 	eyeblast_desc = "当施放魔眼冲击时发出警报.",
 	eyeblast_trigger = "直视背叛者的双眼吧！",
 	eyeblast_message = "魔眼冲击!",
@@ -258,7 +259,7 @@ L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段",
 	phase_desc = "当伊利丹进入不同阶段发出警报.",
 	phase2_soon_message = "即将阶段 2!",
-	phase2_trigger = "埃辛诺斯之刃施放了召唤埃辛诺斯之泪。",
+	phase2_trigger = "埃辛诺斯之刃施放了召唤埃辛诺斯之类。$",--Update 10/31,Not my mistake，the combatlog really it is!
 	phase2_message = "阶段 2 - 埃辛诺斯双刃!",
 	phase3_message = "阶段3!",
 	demon_phase_trigger = "感受我体内的恶魔之力吧！",

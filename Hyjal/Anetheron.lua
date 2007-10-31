@@ -112,6 +112,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 --安纳塞隆
+--Ananhaid Updated 10/31 21:00
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "你们在守护一个注定要毁灭的世界！逃跑吧，那样也许你们还能多活几天！",
 
@@ -126,8 +127,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	swarm = "腐臭虫群",
 	swarm_desc = "腐臭虫群冷却计时",
-	swarm_trigger1 = "Pestilence upon you!",
-	swarm_trigger2 = "The swarm is eager to feed.",
+	swarm_trigger1 = "瘟疫降临！$",
+	swarm_trigger2 = "虫群将吞噬你们的躯体。$",
 	swarm_message = "虫群! - 下一波 ~11秒后",
 	swarm_bar = "~虫群 冷却",
 } end )

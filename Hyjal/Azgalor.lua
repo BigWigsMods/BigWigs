@@ -124,11 +124,12 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 --阿兹加洛
+Ananhaid Updated 10/31 23:00
 L:RegisterTranslations("zhCN", function() return {
-	doom = "诅咒",
-	doom_desc = "诅咒警报.",
-	doom_other = "%s中了诅咒",
-	doom_you = "你中了诅咒!",
+	doom = "厄运",--Update 10/31,check
+	doom_desc = "厄运警报.",
+	doom_other = "%s中了厄运",
+	doom_you = "你中了厄运!",
 
 	hoa = "阿兹加洛之嚎",
 	hoa_desc = "阿兹加洛之嚎警报.",
