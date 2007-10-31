@@ -202,10 +202,10 @@ L:RegisterTranslations("zhCN", function() return {
 	phase_normal_bar = "下一 邪能狂怒",
 	phase_rage_bar = "下一 普通阶段",
 
-	--bloodboil = "Bloodboil",
-	--bloodboil_desc = "Warnings and counter for Bloodboil.",
-	--bloodboil_trigger = "afflicted by Bloodboil",
-	--bloodboil_message = "Bloodboil(%d)",
+	bloodboil = "血沸",
+	bloodboil_desc = "血沸计数及警报",
+	bloodboil_trigger = "血沸效果的影响。$",
+	bloodboil_message = "血沸(%d)",
 
 	rage = "邪能狂怒",
 	rage_desc = "当获得邪能狂怒时发出警报",

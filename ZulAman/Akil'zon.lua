@@ -90,6 +90,25 @@ L:RegisterTranslations("deDE", function() return {
 	icon_desc = "Platziere ein Schlachtzugsymbol auf dem Spieler, der von Elektrischer Sturm betroffen ist (benötigt Assistent oder höher).",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "I be da predator! You da prey...",
+	engage_message = "%s 激活 - ~55秒后 风暴!",
+
+	elec = "电场风暴",
+	elec_desc = "当谁中了电场风暴发出警报.",
+	elec_trigger = "^(%S+)受(%S+)了Electrical Storm效果的影响。$",
+	elec_bar = "~风暴冷却",
+	elec_message = "风暴 于 >%s<!",
+	elec_warning = "即将风暴!",
+
+	ping = "Ping",
+	ping_desc = "Ping your current location if you are afflicted by Electrical Storm.",
+	ping_message = "风暴 - Pinging your location!",
+
+	icon = "团队标记",
+	icon_desc = "给中了电场风暴的玩家打上标记. (需要权限)",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

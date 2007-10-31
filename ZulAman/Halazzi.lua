@@ -70,6 +70,24 @@ L:RegisterTranslations("frFR", function() return {
 	spirit_bar = "~Phase normale probable",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "Get on ya knees and bow.... to da fang and claw!",
+
+	totem = "图腾",
+	totem_desc = "当Halazzi施放一闪电图腾时发出警报.",
+	totem_trigger = "Halazzi开始施放闪电图腾。",
+	totem_message = "即将 闪电图腾!",
+
+	phase = "阶段",
+	phase_desc = "阶段变化警报",
+	phase_spirit = "I fight wit' untamed spirit....",
+	phase_normal = "Spirit, come back to me!",
+	normal_message = "正常阶段!",
+	spirit_message = "%d%% 生命值! - 灵魂阶段!",
+	spirit_soon = "即将灵魂阶段!",
+	spirit_bar = "~可能 正常阶段",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
