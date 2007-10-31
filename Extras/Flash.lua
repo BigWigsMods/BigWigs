@@ -12,6 +12,12 @@ L:RegisterTranslations("enUS", function() return {
 	["Toggle Flash on or off."] = true,
 } end)
 
+L:RegisterTranslations("koKR", function() return {
+	["Flash"] = "번쩍임",
+	["Flash the screen when something important happens that affects you."] = "중요한 일이 발생하여 당신에게 영향을 미치면 화면을 번쩍입니다.",
+	["Toggle Flash on or off."] = "번쩍임을 켜거나 끕니다.",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
