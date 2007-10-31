@@ -130,10 +130,10 @@ L:RegisterTranslations("frFR", function() return {
 	phase_normal_bar = "~Prochaine phase de rage",
 	phase_rage_bar = "Prochaine phase normale",
 
-	--bloodboil = "Bloodboil",
-	--bloodboil_desc = "Warnings and counter for Bloodboil.",
-	--bloodboil_trigger = "afflicted by Bloodboil",
-	--bloodboil_message = "Bloodboil(%d)",
+	bloodboil = "Fièvresang",
+	bloodboil_desc = "Avertissements et compteur des Fièvresangs.",
+	bloodboil_trigger = "les effets .* Fièvresang",
+	bloodboil_message = "Fièvresang (%d)",
 
 	rage = "Gangrerage",
 	rage_desc = "Préviens quand un joueur subit les effets de la Gangrerage.",

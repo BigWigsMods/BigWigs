@@ -85,7 +85,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	berserk_trigger = "Vous n'êtes pas prêts !", -- à vérifier
+	berserk_trigger = "Vous n'êtes pas prêts !",
 
 	parasite = "Ombrefiel parasite",
 	parasite_desc = "Préviens quand un joueur subit les effets de l'Ombrefiel parasite.",
@@ -128,7 +128,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_trigger = "Lame d'Azzinoth lance Invocation de la Larme d'Azzinoth.",
 	phase2_message = "Phase 2 - Lames d'Azzinoth !",
 	phase3_message = "Phase 3 !",
-	demon_phase_trigger = "Contemplez la puissance... du démon intérieur !", -- à vérifier
+	demon_phase_trigger = "Contemplez la puissance... du démon intérieur !",
 	demon_phase_message = "Forme de démon !",
 	demon_bar = "Prochaine phase normale",
 	phase4_trigger = "C'est tout, mortels ? Est-ce là toute la fureur que vous pouvez évoquer ?",
@@ -142,7 +142,7 @@ L:RegisterTranslations("frFR", function() return {
 	flameburst_cooldown_warn = "Explosion de flammes imminente !",
 	flameburst_warn = "Explosion de flammes dans 5 sec. !",
 
-	enrage_trigger = "Goûtez à dix mille ans de haine !", -- à vérifier
+	enrage_trigger = "Goûtez à dix mille ans de haine !",
 	enrage_message = "Enragé !",
 
 	afflict_trigger = "^(%S+) (%S+) les effets [de|2]+ (.*).$",
