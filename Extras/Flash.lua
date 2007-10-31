@@ -21,6 +21,15 @@ L:RegisterTranslations("koKR", function() return {
 	["Toggle Flash on or off."] = "번쩍임을 켜거나 끕니다.",
 } end)
 
+L:RegisterTranslations("frFR", function() return {
+	["Flash"] = "Flash",
+	["Flash the screen blue when something important happens that directly affects you."] = "Fais flasher l'écran en bleu quand quelque chose d'important vous affecte directement.",
+	["Toggle Flash on or off."] = "Fais flasher ou non l'écran.",
+
+	["Test"] = "Test",
+	["Perform a Flash test."] = "Effectue un test du flash.",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
