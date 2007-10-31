@@ -124,7 +124,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 --阿兹加洛
-Ananhaid Updated 10/31 23:00
+--Ananhaid Updated 10/31 23:00
 L:RegisterTranslations("zhCN", function() return {
 	doom = "厄运",--Update 10/31,check
 	doom_desc = "厄运警报.",
