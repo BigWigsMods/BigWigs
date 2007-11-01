@@ -161,7 +161,6 @@ L:RegisterTranslations("frFR", function() return {
 	afflict_trigger = "^(%S+) (%S+) les effets [de|2]+ (.*).$",
 } end)
 
---不稳定的海度斯
 L:RegisterTranslations("zhCN", function() return {
 	start_trigger = "我不能允许你们介入！",
 

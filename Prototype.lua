@@ -71,8 +71,6 @@ commonWords:RegisterTranslations("koKR", function() return {
 	RF = "정의의 격노",
 } end )
 
---Chinese Transalte by 月色狼影@CWDG
---CWDG site: http://Cwowaddon.com
 commonWords:RegisterTranslations("zhCN", function() return {
 	you = "你",
 	are = "到",

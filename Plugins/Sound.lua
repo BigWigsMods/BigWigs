@@ -49,8 +49,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Use only the default sound."] = "기본음만을 사용합니다.",
 } end)
 
---Chinese Translate by 月色狼影@CWDG
---CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["Sounds"] = "声音",
 	["Options for sounds."] = "声音设置。",

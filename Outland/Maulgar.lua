@@ -202,7 +202,6 @@ L:RegisterTranslations("koKR", function() return {
 	smash_bar = "~회전베기",
 } end)
 
---莫加尔大王
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "戈隆才是外域的主宰！",
 

@@ -146,8 +146,6 @@ L:RegisterTranslations("koKR", function() return {
 	bones_message = "광역 뼈의 비!",
 } end )
 
---夜之魇
---Ananhaid Updated 10/28 22:00
 L:RegisterTranslations("zhCN", function() return {
 	fear = "恐惧警报",
 	fear_desc = "低沉咆哮警报",

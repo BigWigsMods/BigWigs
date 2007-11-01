@@ -66,8 +66,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Shown"] = "표시함",
 } end)
 
---Chinese Translate by 月色狼影
---CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["BossBlock"] = "信息阻止",
 	desc = "自动阻止其他玩家或其他来源的 BOSS 预警信息和表情。",

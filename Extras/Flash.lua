@@ -34,7 +34,6 @@ L:RegisterTranslations("frFR", function() return {
 	["Perform a Flash test."] = "Effectue un test du flash.",
 } end)
 
---Ananhaid Updated 11/1 21:00
 L:RegisterTranslations("zhCN", function() return {
 	["Flash"] = "屏幕闪烁通知",
 	["Flash the screen blue when something important happens that directly affects you."] = "如有重要事件影响到你，屏幕将会蓝色闪烁以告知玩家。",

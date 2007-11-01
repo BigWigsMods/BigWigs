@@ -235,8 +235,6 @@ L:RegisterTranslations("deDE", function() return {
 	--loot_update = "Core on > %s",
 } end )
 
---瓦丝琪
---Ananhaid Updated 10/31 23：00
 L:RegisterTranslations("zhCN", function() return {
 	["Tainted Elemental"] = "被污染的元素",
 
@@ -291,8 +289,6 @@ L:RegisterTranslations("zhCN", function() return {
 	loot_update = "污染之核 > %s",
 } end )
 
---zhTW語系：Peroth＠暴風祭壇
---site：http://blog.pixnet.net/Neriak
 L:RegisterTranslations("zhTW", function() return {
 	["Tainted Elemental"] = "污染的元素",
 

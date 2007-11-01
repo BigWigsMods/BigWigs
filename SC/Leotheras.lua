@@ -180,7 +180,6 @@ L:RegisterTranslations("deDE", function() return {
 	whisper_soon = "~D\195\164monen Cooldown",
 } end )
 
---盲眼者莱欧瑟拉斯
 L:RegisterTranslations("zhCN", function() return {
 	enrage_trigger = "我的放逐终于结束了！",
 
@@ -222,8 +221,6 @@ L:RegisterTranslations("zhCN", function() return {
 	whisper_soon = "~恶魔 冷却",
 }end )
 
---zhTW語系：Peroth＠暴風祭壇
---site：http://blog.pixnet.net/Neriak
 L:RegisterTranslations("zhTW", function() return {
 	enrage_trigger = "終於結束了我的流放生涯!",
 

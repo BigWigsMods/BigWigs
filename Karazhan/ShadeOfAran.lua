@@ -190,7 +190,6 @@ L:RegisterTranslations("koKR", function() return {
 	flame_trigger = "화염의 고리|1을;를; 시전합니다%.$",
 } end )
 
---埃兰之影
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger1 = "I'll not be tortured again!",
 	engage_trigger2 = "你们是谁？你们想要什么？离我远点！",

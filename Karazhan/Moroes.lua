@@ -115,9 +115,6 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_warning = "잠시 후 격노!",
 } end)
 
---Chinese Translation: 月色狼影@CWDG
---CWDG site: http://cwowaddon.com
---莫罗斯
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "啊，不速之客。我得准备一下……",
 	engage_message = "%s 激活 - ~35 秒后将 消失!",

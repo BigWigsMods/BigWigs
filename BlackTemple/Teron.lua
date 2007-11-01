@@ -83,8 +83,6 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Ombre de la mort (nécessite d'être promu ou mieux).",
 } end )
 
---塔隆·血魔
---Ananhaid Updated 10/28 22:00
 L:RegisterTranslations("zhCN", function() return {
 	start_trigger = "我要复仇！",
 

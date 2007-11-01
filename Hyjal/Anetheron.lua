@@ -112,8 +112,6 @@ L:RegisterTranslations("zhTW", function() return {
 	swarm_bar = "~腐肉成群冷卻",
 } end )
 
---安纳塞隆
---Ananhaid Updated 10/31 21:00
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "你们在守护一个注定要毁灭的世界！逃跑吧，那样也许你们还能多活几天！",
 

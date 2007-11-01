@@ -229,7 +229,6 @@ L:RegisterTranslations("koKR", function() return {
 	debrisinc_warning = "곧 파편!",
 } end)
 
---玛瑟里顿
 L:RegisterTranslations("zhCN", function() return {
 	escape = "释放",
 	escape_desc = "玛瑟里顿获得自由倒计时",

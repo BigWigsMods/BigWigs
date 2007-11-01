@@ -41,7 +41,6 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_trigger = "Stop toying with my emotions!",
 } end )
 
---莎赫拉丝主母
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "是办正事还是找乐子呢？",
 

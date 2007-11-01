@@ -127,7 +127,6 @@ L:RegisterTranslations("deDE", function() return {
 	["Coilfang Ambusher"] = "Wegelagerer des Echsenkessels",
 } end )
 
---鱼斯拉
 L:RegisterTranslations("zhCN", function() return {
 	engage_warning = "%s 激活 - 90秒后可能下潜",
 

@@ -71,8 +71,6 @@ L:RegisterTranslations("enUS", function() return {
 	font = "Fonts\\FRIZQT__.TTF",
 } end)
 
---Chinese Translate by 月色狼影@CWDG
---CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["Proximity"] = "近距离",
 	["Options for the Proximity Display."] = "设置近距离显示.",
@@ -88,7 +86,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	font = "Fonts\\ZYKai_T.TTF",
 } end)
-
 
 L:RegisterTranslations("koKR", function() return {
 	["Proximity"] = "접근",

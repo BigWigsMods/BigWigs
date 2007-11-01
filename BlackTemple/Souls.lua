@@ -196,7 +196,6 @@ L:RegisterTranslations("deDE", function() return {
 	afflict_trigger = "^([^%s]+) ([^%s]+) ist von (.*) betroffen.$",
 } end )
 
---Reliquary of Souls check
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "等待你们的只有痛苦与折磨！",
 

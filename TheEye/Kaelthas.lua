@@ -351,8 +351,6 @@ L:RegisterTranslations("deDE", function() return {
 	revive_warning = "Berater wiederbelebt in 5sec!",
 } end )
 
---凯尔萨斯·逐日者
---Ananhaid Updated 10/31 22:00
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "^魔法，能量，我的人民陷入其中不能自拔……自从太阳之井被摧毁之后就是如此。欢迎来到未来。真遗憾，你们无法阻止什么。没有人可以阻止我了！Selama ashal’anore！",
 	engage_message = "第一阶段 - 四顾问",
@@ -432,8 +430,6 @@ L:RegisterTranslations("zhCN", function() return {
 	dead_message = "%s死亡了。",
 } end )
 
---zhTW語系：Peroth＠暴風祭壇
---site：http://blog.pixnet.net/Neriak
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "魔法，能量，我的人民陷入其中不能自拔……自從太陽之井被摧毀之後就是如此。歡迎來到未來。真遺憾，你們無法阻止什麼。沒有人可以阻止我了﹗",
 	-- engage_trigger = "魔法，能量，我的人民陷入其中不能自拔……自從太陽之井被摧毀之後就是如此。歡迎來到未來。真遺憾，你們無法阻止什麼。沒有人可以阻止我了﹗(薩拉斯語)為了人民的正義!",

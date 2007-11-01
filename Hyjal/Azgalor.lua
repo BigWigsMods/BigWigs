@@ -124,8 +124,6 @@ L:RegisterTranslations("zhTW", function() return {
 	afflict_trigger = "^(.+)受(到[了]*)(.*)效果的影響。",
 } end )
 
---阿兹加洛
---Ananhaid Updated 10/31 23:00
 L:RegisterTranslations("zhCN", function() return {
 	doom = "厄运",--Update 10/31,check
 	doom_desc = "厄运警报.",

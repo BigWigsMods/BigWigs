@@ -101,10 +101,6 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Epine de perforation (nécessite d'être promu ou mieux).",
 } end )
 
---Chinese Translate by 月色狼影@CWDG
---CWDG site: http://Cwowaddon.com
---高阶督军纳因图斯
---Ananhaid Updated 10/31 23:00
 L:RegisterTranslations("zhCN", function() return {
 	start_trigger = "以瓦丝琪女王的名义，去死吧！$",
 

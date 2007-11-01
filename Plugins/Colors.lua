@@ -90,8 +90,6 @@ L:RegisterTranslations("koKR", function() return {
 	["4th"] = "넷째",
 } end)
 
---Chinese Translate by 月色狼影@CWDG
---CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["Colors"] = "颜色",
 

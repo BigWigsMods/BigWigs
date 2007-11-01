@@ -216,10 +216,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Flame of Azzinoth"] = "아지노스의 불꽃",
 } end )
 
---Chinese Translate by 月色狼影@CWDG
---CWDG site: http://Cwowaddon.com
---伊利丹·怒风
---Ananhaid Updated 10/31 23:00
 L:RegisterTranslations("zhCN", function() return {
 	berserk_trigger = "你们这是自寻死路！$",
 

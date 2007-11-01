@@ -96,7 +96,6 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "在受到寒冰箭的隊友頭上標記 (需要權限)",
 } end )
 
---雷基·冬寒
 L:RegisterTranslations("zhCN", function() return {
 	decay = "死亡凋零",
 	decay_desc = "你中了死亡凋零发出警报",

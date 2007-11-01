@@ -188,10 +188,6 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "放置團隊標記在受到魔化酸液噴吐的隊友頭上 (需要權限)",
 } end )
 
---Chinese Translate by 月色狼影@CWDG
---CWDG site: http://Cwowaddon.com
---古尔图格·血沸
---Ananhaid Updated 10/28 22:00
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "部落会……毁灭你们。$",
 

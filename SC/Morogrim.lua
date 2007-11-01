@@ -148,7 +148,6 @@ L:RegisterTranslations("frFR", function() return {
 	globules_bar = "Disparation des globules",
 } end )
 
---莫洛格里·踏潮者
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "深渊中的洪水会淹没你们！",
 
@@ -182,8 +181,6 @@ L:RegisterTranslations("zhCN", function() return {
 	globules_bar = "水泡 消失",
 } end )
 
---zhTW語系：Peroth＠暴風祭壇
---site：http://blog.pixnet.net/Neriak
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "深海的洪水，淹沒吧!",
 

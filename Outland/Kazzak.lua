@@ -105,7 +105,6 @@ L:RegisterTranslations("zhTW", function() return {
 	twist_message = "扭曲反射：[%s]",
 } end)
 
---卡扎克
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger1 = "军团将会征服一切！",
 	engage_trigger2 = "所有的凡人都将灭亡！",

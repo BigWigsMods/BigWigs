@@ -145,8 +145,6 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "在被盯上的隊友頭上標記 (需要權限)",
 } end )
 
---苏普雷姆斯
---Ananhaid Updated 10/28 22:00
 L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段",
 	phase_desc = "不同阶段警报",

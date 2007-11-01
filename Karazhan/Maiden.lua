@@ -102,9 +102,6 @@ L:RegisterTranslations("koKR", function() return {
 	icon_desc = "신성한 불꽃에 걸린 사람에게 전술 표시를 지정합니다 (승급자 이상의 권한 필요).",
 } end)
 
---Chinese Translation: 月色狼影@CWDG
---CWDG site: http://cwowaddon.com
---贞节圣女
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "你们的行为是不可饶恕的。",
 	engage_message = "战斗开始！ ~33秒释放 悔改！",
@@ -126,7 +123,6 @@ L:RegisterTranslations("zhCN", function() return {
 	icon = "团队标记",
 	icon_desc = "标记受到神圣之火的队员(需要团长或助理权限).",
 } end)
-
 
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "你的行為不能被容忍。",

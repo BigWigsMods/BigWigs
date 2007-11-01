@@ -39,8 +39,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Testing Sync"] = "동기화 테스트 중",
 } end)
 
---Chinese Translate by 月色狼影@CWDG
---CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["Test"] = "测试",
 	["Test Bar "] = "测试记时条",

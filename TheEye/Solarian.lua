@@ -160,8 +160,6 @@ L:RegisterTranslations("frFR", function() return {
 	priest_bar = "Prêtres/Solarian",
 } end )
 
---大星术师索兰莉安
---Ananhaid Updated 10/31 21:00
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "Tal anu'men no sin'dorei!",
 
@@ -198,8 +196,6 @@ L:RegisterTranslations("zhCN", function() return {
 	priest_bar = "日晷祭司/索兰莉安",
 } end )
 
---zhTW語系：Peroth＠暴風祭壇
---site：http://blog.pixnet.net/Neriak
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "與血精靈為敵者死!",
 

@@ -46,9 +46,6 @@ L:RegisterTranslations("koKR", function() return {
 	web_bar = "거미줄: %s",
 } end )
 
---Chinese Translation: 月色狼影@CWDG
---CWDG site: http://cwowaddon.com
---希亚其斯
 L:RegisterTranslations("zhCN", function() return {
 	web = "希亚其斯之网",
 	web_desc = "当队员受到希亚其斯之网时发出警告",

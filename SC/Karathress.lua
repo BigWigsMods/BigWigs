@@ -94,8 +94,6 @@ L:RegisterTranslations("frFR", function() return {
 	["Fathom-Guard Caribdis"] = "Garde-fonds Caribdis", --priest
 } end )
 
---zhTW語系：Peroth＠暴風祭壇
---site：http://blog.pixnet.net/Neriak
 L:RegisterTranslations("zhTW", function() return {
 	enrage_trigger = "守衛，注意!我們有訪客了……",
 
@@ -116,7 +114,6 @@ L:RegisterTranslations("zhTW", function() return {
 	["Fathom-Guard Caribdis"] = "深淵守衛卡利迪斯",
 } end )
 
---深水领主卡拉瑟雷斯
 L:RegisterTranslations("zhCN", function() return {
 	enrage_trigger = "卫兵！提高警惕！我们有客人来了……",
 

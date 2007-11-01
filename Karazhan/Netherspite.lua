@@ -102,9 +102,6 @@ L:RegisterTranslations("frFR", function() return {
 	netherbreath_warn = "Souffle du Néant imminent !",
 } end )
 
---Chinese Translation: 月色狼影@CWDG
---CWDG site: http://cwowaddon.com
---虚空幽龙
 L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段警报",
 	phase_desc = "当虚空幽龙进入下一阶段时发出警报.",

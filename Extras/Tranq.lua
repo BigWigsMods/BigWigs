@@ -33,8 +33,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Bars"] = "바",
 } end)
 
---Chinese Translate by 月色狼影@CWDG
---CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	CHAT_MSG_SPELL_SELF_BUFF = "未能驱散(.+)的狂暴。$",
 	CHAT_MSG_SPELL_SELF_DAMAGE = "对(.+)施放了宁神射击。$",

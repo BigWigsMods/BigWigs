@@ -136,7 +136,6 @@ L:RegisterTranslations("koKR", function() return {
 	buff2_message = "%s 헌신 효과 얻음!",
 } end)
 
---罗密欧&朱丽叶
 L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段警报",
 	phase_desc = "当进入下阶段发出警报",

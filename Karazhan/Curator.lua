@@ -105,9 +105,6 @@ L:RegisterTranslations("koKR", function() return {
 	weaktime_bar = "~환기 대기시간",
 } end )
 
---Chinese Translation: 月色狼影@CWDG
---CWDG site: http://cwowaddon.com
---馆长
 L:RegisterTranslations("zhCN", function() return {
 	berserk_trigger = "展览厅只对访客开放。",
 
@@ -130,7 +127,6 @@ L:RegisterTranslations("zhCN", function() return {
 	weaktime_message3 = "唤醒  大约70秒后",
 	weaktime_bar = "~虚弱",
 } end )
-
 
 L:RegisterTranslations("zhTW", function() return {
 	berserk_trigger = "展示廳是賓客專屬的。",

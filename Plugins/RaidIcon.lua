@@ -66,8 +66,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Skull"] = "해골",
 } end )
 
---Chinese Translate by 月色狼影@CWDG
---CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["Raid Icons"] = "团队标记",
 	["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "为 BigWigs 配置一个团队标记，以便为中了'炸弹'级别的玩家打上标记，以示提醒。",

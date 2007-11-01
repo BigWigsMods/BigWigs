@@ -169,10 +169,6 @@ L:RegisterTranslations("koKR", function() return {
 	circle_bar = "~치유의 마법진 대기 시간",
 } end )
 
---Chinese Translate by 月色狼影@CWDG
---CWDG site: http://Cwowaddon.com
---伊利达雷议会
---Ananhaid Updated 10/31 23:00
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger1 = "你们要考验我吗？",
 	engage_trigger2 = "通用语……多么粗俗的语言。Bandal！",

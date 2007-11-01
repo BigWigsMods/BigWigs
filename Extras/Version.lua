@@ -125,9 +125,6 @@ L:RegisterTranslations("deDE", function() return {
 	["Notify people with older versions that there is a new version available."] = "Personen mit einer älteren BigWigs Version benachrichtigen, dass eine neue Version bereit steht.",
 } end )
 
---Chinese Translate by 月色狼影@CWDG
---CWDG site: http://cwowaddon.com
-
 L:RegisterTranslations("zhCN", function() return {
 	["Version Query"] = "版本检测",
 	["Commands for querying the raid for Big Wigs versions."] = "BigWigs 版本检测参数。",

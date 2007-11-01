@@ -114,7 +114,6 @@ L:RegisterTranslations("koKR", function() return {
 	weak_fade = "깨진 서약 효과가 사라졌습니다.", -- check
 } end )
 
---特雷斯坦·邪蹄
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "^啊，你们来的正是时候。仪式就要开始了！",
 

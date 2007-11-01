@@ -134,8 +134,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Toggles if bars are reversed (fill up instead of emptying)."] = "바의 반전을 전환합니다(채우기 혹은 비움).",
 } end)
 
---Chinese Translate by 月色狼影@CWDG
---CWDG site: http://cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["Bars"] = "计时条",
 	["Emphasized Bars"] = "醒目记时条",

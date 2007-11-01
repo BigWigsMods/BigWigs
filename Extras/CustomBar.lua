@@ -33,8 +33,6 @@ L:RegisterTranslations("koKR", function() return {
 	["%s: Timer [%s] finished."] = "%s: [%s] 타이머가 종료되었습니다.",
 } end)
 
---Chinese Translate by 月色狼影@CWDG
---CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["bwcb"] = "bwcb",
 	["bwlcb"] = "bwcb",

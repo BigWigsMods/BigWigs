@@ -153,7 +153,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Load all %s modules."] = "모든 %s 모듈들을 불러옵니다.",
 } end)
 
---Chinese Translate by: 月色狼影@CWDG
 L:RegisterTranslations("zhCN", function() return {
 	["%s mod enabled"] = "%s 模块已启用",
 	["%s has been defeated"] = "%s 被击败了!",     -- "<boss> has been defeated"

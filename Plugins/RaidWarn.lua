@@ -57,8 +57,6 @@ L:RegisterTranslations("koKR", function() return {
 	desc = "BigWigs가 보스 메세지를 출력할 곳을 설정하세요.",
 } end )
 
---Chinese Translate by 月色狼影@CWDG
---CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["RaidWarning"] = "团队通知",
 

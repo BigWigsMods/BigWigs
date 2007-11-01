@@ -198,7 +198,6 @@ L:RegisterTranslations("zhTW", function() return {
 	shatter_message = "破碎",
 } end)
 
---屠龙者格鲁尔
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "来了……就得死。",
 	engage_message = "%s 激活!",
