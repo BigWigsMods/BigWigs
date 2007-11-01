@@ -53,7 +53,7 @@ L:RegisterTranslations("koKR", function() return {
 --CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["Sounds"] = "声音",
-	["Options for sounds."] = "声音设置",
+	["Options for sounds."] = "声音设置。",
 
 	["Alarm"] = "警报",
 	["Info"] = "信息",
@@ -61,11 +61,11 @@ L:RegisterTranslations("zhCN", function() return {
 	["Long"] = "长计时",
 	["Victory"] = "胜利",
 
-	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = "设置使用%q声音（Ctrl-点击可以预览效果）",
+	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = "设置使用%q声音（Ctrl-点击可以预览效果）。",
 	["Use sounds"] = "使用声音",
 	["Toggle all sounds on or off."] = "选择声音的开或关。",
 	["Default only"] = "预设",
-	["Use only the default sound."] = "只选用预设声音",
+	["Use only the default sound."] = "只选用预设声音。",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

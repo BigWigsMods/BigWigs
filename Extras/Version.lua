@@ -130,13 +130,13 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["Version Query"] = "版本检测",
-	["Commands for querying the raid for Big Wigs versions."] = "bigwigs版本检测参数",
-	["Query already running, please wait 5 seconds before trying again."] = "正在查询中,请等待5秒后再次尝试.",
+	["Commands for querying the raid for Big Wigs versions."] = "BigWigs 版本检测参数。",
+	["Query already running, please wait 5 seconds before trying again."] = "正在查询中，请等待5秒后再次尝试。",
 	["Querying versions for "] = "正在检测版本 ",
-	["Big Wigs Version Query"] = "BigWigs版本检测",
+	["Big Wigs Version Query"] = "BigWigs 版本检测",
 	["Close window"] = "关闭窗口", -- I know, it's really a Tablet.
 	["Showing version for "] = "显示版本: ",
-	["Green versions are newer than yours, red are older, and white are the same."] = "绿色版本比您的新,红色比您的低,白色与您的版本相同.",
+	["Green versions are newer than yours, red are older, and white are the same."] = "绿色版本比您的新，红色比您的低，白色与您的版本相同。",
 	["Player"] = "玩家",
 	["Version"] = "版本",
 	["Current zone"] = "当前区域",
@@ -153,7 +153,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Runs a version query on the BigWigs core."] = "在BigWigs核心部分运行版本查询",
 	["Replies"] = "回应人数",
 	["Ancient"] = "旧版本",
-	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "发现Big Wigs新版本，请升级！",
+	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "发现 BigWigs 新版本，请升级！",
 	["Notify people with older versions that there is a new version available."] = "通知使用旧版本的用户请升级到最新。",
 } end )
 

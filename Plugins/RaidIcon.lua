@@ -70,19 +70,19 @@ L:RegisterTranslations("koKR", function() return {
 --CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	["Raid Icons"] = "团队标记",
-	["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "为Bigwigs配置一个团队标记,以便为中了'炸弹'级别的玩家打上标记.以示提醒",
+	["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "为 BigWigs 配置一个团队标记，以便为中了'炸弹'级别的玩家打上标记，以示提醒。",
 
 	["RaidIcon"] = "团队标记",
 
 	["Place"] = "设置",
 	["Place Raid Icons"] = "允许团队标记",
-	["Toggle placing of Raid Icons on players."] = "选择是否在玩家身上显示团队图标标记 .",
+	["Toggle placing of Raid Icons on players."] = "选择是否在玩家身上显示团队图标标记。",
 
 	["Icon"] = "图标",
 	["Set Icon"] = "设置标记",
-	["Set which icon to place on players."] = "设置玩家身上团队标记.",
+	["Set which icon to place on players."] = "设置玩家身上团队标记。",
 
-	["Use the %q icon when automatically placing raid icons for boss abilities."] = "当称为首领目标,使用%q标记自动为队员标上.",
+	["Use the %q icon when automatically placing raid icons for boss abilities."] = "当称为首领目标，使用%q标记自动为队员标上。",
 	["Star"] = "星形",
 	["Circle"] = "圆圈",
 	["Diamond"] = "棱形",

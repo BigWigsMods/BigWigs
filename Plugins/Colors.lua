@@ -115,7 +115,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Number of colors the bar has."] = "计时条的颜色数量。",
 	["Change the bar background color."] = "改变计时条背景颜色。",
 	["Change the bar text color."] = "改变计时条文本显示颜色",
-	["Resets all colors to defaults."] = "重置所有颜色为默认",
+	["Resets all colors to defaults."] = "重置所有颜色为默认。",
 
 	["Important"] = "重要",
 	["Personal"] = "个人",
