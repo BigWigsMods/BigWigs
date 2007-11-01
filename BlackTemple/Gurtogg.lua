@@ -268,6 +268,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if db.rage then
 			self:CancelScheduledEvent("rage1")
 			self:TriggerEvent("BigWigs_StopBar", self, L["phase_normal_bar"])
+			self:TriggerEvent("BigWigs_StopBar", self, fmt(L["bloodboil_message"], count))
 
 			if rest == pName then
 				self:Message(L["rage_you"], "Personal", true, "Long")
@@ -287,11 +288,10 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Bar(L["acid"], 2, "Spell_Nature_Acid_01")
 		self:ScheduleEvent("BWAcidToTScan", self.AcidCheck, 0.2, self)
 	elseif sync == "GBBlood" and db.bloodboil then
-		local warn = fmt(L["bloodboil_message"], count)
-		self:Message(warn, "Attention")
+		self:Message(fmt(L["bloodboil_message"], count), "Attention")
 		if count == 3 then count = 0 end
 		count = count + 1
-		self:Bar(warn, 10, "Spell_Shadow_BloodBoil")
+		self:Bar(fmt(L["bloodboil_message"], count), 10, "Spell_Shadow_BloodBoil")
 	elseif sync == "GurNormal" then
 		if db.phase then
 			self:Bar(L["phase_normal_bar"], 60, "Spell_Fire_ElementalDevastation")
