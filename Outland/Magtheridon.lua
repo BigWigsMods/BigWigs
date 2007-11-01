@@ -459,7 +459,7 @@ function mod:ExhaustEvent(msg)
 		if eplayer == L2["you"] and etype == L2["are"] then
 			eplayer = UnitName("player")
 		end
-		self:Sync("Exhaustion "..eplayer)
+		self:Sync("Exhaustion", eplayer)
 	end
 end
 

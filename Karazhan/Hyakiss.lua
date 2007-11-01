@@ -92,7 +92,7 @@ function mod:Web(msg)
 		if wplayer == L2["you"] and wtype == L2["are"] then
 			wplayer = UnitName("player")
 		end
-		self:Sync("HyakissWeb "..wplayer)
+		self:Sync("HyakissWeb", wplayer)
 	end
 end
 

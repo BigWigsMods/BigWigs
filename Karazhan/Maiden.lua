@@ -226,7 +226,7 @@ function mod:HolyFireEvent(msg)
 		if bplayer == L2["you"] and btype == L2["are"] then
 			bplayer = UnitName("player")
 		end
-		self:Sync("MaidenHolyFire "..bplayer)
+		self:Sync("MaidenHolyFire", bplayer)
 	end
 end
 

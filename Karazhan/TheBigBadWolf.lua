@@ -184,5 +184,6 @@ function mod:CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS(msg)
 		if self.db.profile.icon then 
 			self:Icon(pName)
 		end
+		self:TriggerEvent("BigWigs_Personal")
 	end
 end

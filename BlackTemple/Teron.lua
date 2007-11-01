@@ -156,6 +156,7 @@ function mod:SoD(msg)
 	if splayer and stype then
 		if splayer == L2["you"] and stype == L2["are"] then
 			splayer = pName
+			self:TriggerEvent("BigWigs_Personal")
 		end
 		self:Sync("TeronShadow", splayer)
 	end
@@ -168,7 +169,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Message(L["shadow_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
 			self:Bar(other, 55, "Spell_Arcane_PrismaticCloak")
-			self:TriggerEvent("BigWigs_Personal")
 		else
 			self:Message(other, "Attention")
 			self:Bar(other, 55, "Spell_Arcane_PrismaticCloak")

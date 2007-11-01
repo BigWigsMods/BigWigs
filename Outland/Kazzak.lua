@@ -5,6 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Doom Lord Kazzak"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+local pName = nil
 
 ----------------------------
 --      Localization      --
@@ -154,6 +155,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "Twisted", 2)
+	pName = UnitName("player")
 end
 
 ------------------------------
@@ -185,9 +187,10 @@ function mod:Event(msg)
 	local tplayer, ttype = select(3, msg:find(L["twist_trigger"]))
 	if tplayer and ttype then
 		if tplayer == L2["you"] and ttype == L2["are"] then
-			tplayer = UnitName("player")
+			tplayer = pName
+			self:TriggerEvent("BigWigs_Personal")
 		end
-		self:Sync("Twisted "..tplayer)
+		self:Sync("Twisted", tplayer)
 	end
 end
 

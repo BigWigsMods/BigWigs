@@ -272,7 +272,7 @@ function mod:GarroteEvent(msg)
 		if gplayer == L2["you"] and gtype == L2["are"] then
 			gplayer = UnitName("player")
 		end
-		self:Sync("MoroesGarrote "..gplayer)
+		self:Sync("MoroesGarrote", gplayer)
 	end
 end
 

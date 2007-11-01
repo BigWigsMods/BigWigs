@@ -412,7 +412,7 @@ do
 				if not itemId then return end
 				itemId = tonumber(itemId:trim())
 				if type(itemId) ~= "number" or itemId ~= 31088 then return end -- Tainted Core
-				self:Sync("VashjLoot " .. player)
+				self:Sync("VashjLoot", player)
 			end
 		end
 	end
@@ -513,8 +513,9 @@ function mod:AfflictEvent(msg)
 			splayer = pName
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 			self:ScheduleEvent("BWHideProx", HideProx, 20)
+			self:TriggerEvent("BigWigs_Personal")
 		end
-		self:Sync("VashjStatic " .. splayer)
+		self:Sync("VashjStatic", splayer)
 		return
 	end
 
@@ -523,7 +524,7 @@ function mod:AfflictEvent(msg)
 		if pplayer == L2["you"] and ptype == L2["are"] then
 			pplayer = pName
 		end
-		self:Sync("VLootUpdate " .. pplayer)
+		self:Sync("VLootUpdate", pplayer)
 		return
 	end
 end

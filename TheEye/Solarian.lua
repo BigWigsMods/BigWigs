@@ -286,7 +286,7 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "SolaWrath" and rest and self.db.profile.wrath then
 		local other = L["wrath_other"]:format(rest)
-		if rest == UnitName("player") then
+		if rest == pName then
 			self:Message(L["wrath_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
 		else
@@ -315,8 +315,9 @@ function mod:WrathAff(msg)
 			wplayer = pName
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 			self:ScheduleEvent("BWHideProx", HideProx, 6)
+			self:TriggerEvent("BigWigs_Personal")
 		end
-		self:Sync("SolaWrath "..wplayer)
+		self:Sync("SolaWrath", wplayer)
 	end
 end
 

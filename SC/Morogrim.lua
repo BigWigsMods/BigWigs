@@ -288,7 +288,7 @@ function mod:Event(msg)
 		if gplayer == L2["you"] and gtype == L2["are"] then
 			gplayer = UnitName("player")
 		end
-		self:Sync("MoroGrave " .. gplayer)
+		self:Sync("MoroGrave", gplayer)
 	end
 end
 

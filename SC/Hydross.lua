@@ -376,9 +376,9 @@ function mod:Event(msg)
 			aPlayer = pName
 		end
 		if aSpell == L["tomb"] then
-			self:Sync("HydrossTomb " .. aPlayer)
+			self:Sync("HydrossTomb", aPlayer)
 		elseif aSpell == L["sludge"] then
-			self:Sync("HydrossSludge " .. aPlayer)
+			self:Sync("HydrossSludge", aPlayer)
 		end
 	end
 end

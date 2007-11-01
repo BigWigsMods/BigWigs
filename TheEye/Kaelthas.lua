@@ -572,6 +572,9 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 		if self.db.profile.gaze then
 			self:Message(fmt(L["gaze_message"], player), "Important")
 		end
+		if player == pName then
+			self:TriggerEvent("BigWigs_Personal")
+		end
 		if self.db.profile.icon then
 			self:Icon(player)
 		end

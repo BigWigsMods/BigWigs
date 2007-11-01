@@ -276,7 +276,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			if rest == pName then
 				self:Message(L["rage_you"], "Personal", true, "Long")
 				self:Message(fmt(L["rage_other"], rest), "Attention", nil, nil, true)
-				self:TriggerEvent("BigWigs_Personal")
 			else
 				self:Message(fmt(L["rage_other"], rest), "Attention")
 			end
@@ -343,6 +342,7 @@ function mod:DebuffEvent(msg)
 	if rplayer and rtype then
 		if rplayer == L2["you"] and rtype == L2["are"] then
 			rplayer = pName
+			self:TriggerEvent("BigWigs_Personal")
 		end
 		self:Sync("GurRage", rplayer)
 		return
