@@ -76,7 +76,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = "阻止信息发送到团队 BOSS 表情框体。\n\n只阻止 BigWigs 有的部分，而只阻止的是显示在信息框体，而非聊天窗口。",
 
 	["Raid chat"] = "团队频道",
-	["Suppress messages sent to raid chat."] = "禁止信息发送到团队频道"。,
+	["Suppress messages sent to raid chat."] = "禁止信息发送到团队频道",
 
 	["Raid warning chat messages"] = "团队警报频道信息",
 	["Suppress raid warning messages from the chat window."] = "阻止聊天窗口下的团队警报信息。",
