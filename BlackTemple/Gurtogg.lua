@@ -302,6 +302,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:ScheduleEvent("rage1", "BigWigs_Message", 55, L["phase_rage_warning"], "Important")
 			self:Message(L["phase_normal"], "Attention")
 		end
+		count = 1
 		if db.bloodboil then
 			self:Bar(fmt(L["bloodboil_message"], count), 10, "Spell_Shadow_BloodBoil")
 		end
