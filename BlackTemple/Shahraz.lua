@@ -233,37 +233,31 @@ function mod:PLAYER_AURAS_CHANGED(msg)
 			--show a countdown bar and create a message with the name of the debuff
 			if texture == shadow then
 				self:Message(name, "Attention")
-				self:TriggerEvent("BigWigs_StopBar", self, name)
 				self:Bar(name, 15, sub(shadow, 17, -1))
 				restype = texture
 				rpt = true
 			elseif texture == holy then
 				self:Message(name, "Attention")
-				self:TriggerEvent("BigWigs_StopBar", self, name)
 				self:Bar(name, 15, sub(holy, 17, -1))
 				restype = texture
 				rpt = true
 			elseif texture == arcane then
 				self:Message(name, "Attention")
-				self:TriggerEvent("BigWigs_StopBar", self, name)
 				self:Bar(name, 15, sub(arcane, 17, -1))
 				restype = texture
 				rpt = true
 			elseif texture == nature then
 				self:Message(name, "Attention")
-				self:TriggerEvent("BigWigs_StopBar", self, name)
 				self:Bar(name, 15, sub(nature, 17, -1))
 				restype = texture
 				rpt = true
 			elseif texture == fire then
 				self:Message(name, "Attention")
-				self:TriggerEvent("BigWigs_StopBar", self, name)
 				self:Bar(name, 15, sub(fire, 17, -1))
 				restype = texture
 				rpt = true
 			elseif texture == frost then
 				self:Message(name, "Attention")
-				self:TriggerEvent("BigWigs_StopBar", self, name)
 				self:Bar(name, 15, sub(frost, 17, -1))
 				restype = texture
 				rpt = true
@@ -275,9 +269,9 @@ function mod:PLAYER_AURAS_CHANGED(msg)
 	--If we don't have a recognised debuff, clear the spam filter,
 	--this should be a fix for getting the same debuff twice,
 	--assuming every time we do get 2 in a row, we loose the previous one first
-	if not rpt then
-		restype = nil
-	end
+	--if not rpt then
+	--	restype = nil
+	--end
 end
 
 local function nilStop()
