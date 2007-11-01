@@ -99,7 +99,6 @@ L:RegisterTranslations("deDE", function() return {
 	["Use only the default sound."] = "Nur den Standardton verwenden.",
 } end)
 
-
 L:RegisterTranslations("frFR", function() return {
 	["Sounds"] = "Sons",
 	["Options for sounds."] = "Options concernant les sons.",
