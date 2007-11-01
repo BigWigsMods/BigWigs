@@ -29,7 +29,7 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger1 = "You wish to test me?",
 	engage_trigger2 = "Common... such a crude language. Bandal!",
 	engage_trigger3 = "I have better things to do...",
-	engage_trigger4 = "Flee, or die!",
+	engage_trigger4 = "Flee or die!",
 
 	vanish = "Vanish",
 	vanish_desc = "Estimated timers for Vanish.",
