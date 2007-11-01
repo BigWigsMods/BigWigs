@@ -5,6 +5,7 @@
 ----------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsFlash")
+local display = nil
 
 L:RegisterTranslations("enUS", function() return {
 	["Flash"] = true,
@@ -19,6 +20,9 @@ L:RegisterTranslations("koKR", function() return {
 	["Flash"] = "번쩍임",
 	["Flash the screen blue when something important happens that directly affects you."] = "당신에게 직접적으로 중요한 무언가가 영향을 미칠때 화면을 파란색으로 번쩍입니다.",
 	["Toggle Flash on or off."] = "번쩍임을 켜거나 끕니다.",
+
+	--["Test"] = true,
+	--["Perform a Flash test."] = true,
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -35,6 +39,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Flash"] = "屏幕闪烁通知",
 	["Flash the screen blue when something important happens that directly affects you."] = "如有重要事件影响到你，屏幕将会蓝色闪烁以告知玩家。",
 	["Toggle Flash on or off."] = "启用或禁用屏幕闪烁通知。",
+
 	["Test"] = "测试",
 	["Perform a Flash test."] = "进行屏幕闪烁通知测试。",
 } end)
@@ -82,63 +87,29 @@ function mod:OnEnable()
 end
 
 ------------------------------
---      Frame Creation      --
-------------------------------
-
-local display = CreateFrame("Frame", "BWFlash", UIParent)
-display:SetFrameStrata("BACKGROUND")
-display:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
-display:SetBackdropColor(0,0,1,0.4)
-display:SetPoint("CENTER", UIPARENT, "CENTER")
-display:SetWidth(2000)
-display:SetHeight(2000)
-display:Hide()
-
-------------------------------
 --      Event Handlers      --
 ------------------------------
 
-local function drawInOne()
-	display:Show()
-end
-
-local function drawInTwo()
-	display:SetBackdropColor(0,0,1,0.5)
-end
-
-local function drawInThree()
-	display:SetBackdropColor(0,0,1,0.6)
-end
-
-local function drawInFour()
-	display:SetBackdropColor(0,0,1,0.7)
-end
-
-local function drawOutOne()
-	display:SetBackdropColor(0,0,1,0.6)
-end
-
-local function drawOutTwo()
-	display:SetBackdropColor(0,0,1,0.5)
-end
-
-local function drawOutThree()
-	display:SetBackdropColor(0,0,1,0.4)
-end
-
-local function drawOutFour()
-	display:Hide()
-end
-
 function mod:BigWigs_Personal()
 	if self.db.profile.flash then
-		self:ScheduleEvent("BWFlash1", drawInOne, 0.1)
-		self:ScheduleEvent("BWFlash2", drawInTwo, 0.17)
-		self:ScheduleEvent("BWFlash3", drawInThree, 0.24)
-		self:ScheduleEvent("BWFlash4", drawInFour, 0.31)
-		self:ScheduleEvent("BWFlash5", drawOutOne, 0.38)
-		self:ScheduleEvent("BWFlash6", drawOutTwo, 0.45)
-		self:ScheduleEvent("BWFlash7", drawOutThree, 0.52)
-		self:ScheduleEvent("BWFlash8", drawOutFour, 0.57)
+		if not display then --frame creation
+			display = CreateFrame("Frame", "BWFlash", UIParent)
+			display:SetFrameStrata("BACKGROUND")
+			display:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
+			display:SetBackdropColor(0,0,1,0.4)
+			display:SetPoint("CENTER", UIPARENT, "CENTER")
+			display:SetWidth(2000)
+			display:SetHeight(2000)
+			display:Hide()
+		 end
+
+		self:ScheduleEvent("BWFlash1", display.Show, 0.1, display)
+		self:ScheduleEvent("BWFlash2", display.SetBackdropColor, 0.17, display, 0, 0, 1, 0.5)
+		self:ScheduleEvent("BWFlash3", display.SetBackdropColor, 0.24, display, 0, 0, 1, 0.6)
+		self:ScheduleEvent("BWFlash4", display.SetBackdropColor, 0.31, display, 0, 0, 1, 0.7)
+		self:ScheduleEvent("BWFlash5", display.SetBackdropColor, 0.38, display, 0, 0, 1, 0.6)
+		self:ScheduleEvent("BWFlash6", display.SetBackdropColor, 0.45, display, 0, 0, 1, 0.5)
+		self:ScheduleEvent("BWFlash7", display.SetBackdropColor, 0.52, display, 0, 0, 1, 0.4)
+		self:ScheduleEvent("BWFlash8", display.Hide, 0.57, display)
 	end
 end
