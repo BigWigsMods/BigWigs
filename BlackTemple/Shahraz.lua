@@ -231,10 +231,10 @@ function mod:PLAYER_AURAS_CHANGED()
 	while UnitDebuff("player", i) do --loop debuff scan
 		local id = GetPlayerBuff(i,"HARMFUL")
 		local texture = GetPlayerBuffTexture(id)
-		texture = sub(texture, 17, -1)
+		texture = sub(texture, 17, -1) --remove the crap and leave the icon name
 		--If we find a known texture(debuff Prismatic Aura: Resistance) continue
-		if (texture == shadow or texture == holy or texture == arcane 
-		or texture == nature or texture == fire or texture == frost) then
+		if texture == shadow or texture == holy or texture == arcane
+		or texture == nature or texture == fire or texture == frost then
 			local name = GetPlayerBuffName(id) --get the name
 			local timeleft = GetPlayerBuffTimeLeft(id) --get the duration
 
@@ -242,7 +242,7 @@ function mod:PLAYER_AURAS_CHANGED()
 			--if the timeleft is high enough (to prevent spam)
 			if timeleft and timeleft > 14 then
 				self:Message(name, "Attention")
-				self:Bar(name, 15, texture)
+				self:Bar(name, timeleft, texture)
 			end
 		end
 		i = i + 1 --increment counter
