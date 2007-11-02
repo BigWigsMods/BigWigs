@@ -88,10 +88,10 @@ L:RegisterTranslations("koKR", function() return {
 	spinesay_desc = "꿰뚫는 돌기에 걸렸을 때, 주변 아군에게 돌기에 걸렸음을 일반 대화로 알립니다.",
 	spinesay_message = "저 돌기! 살려주세요!!",
 
-	--health = "Health Scan",
-	--health_desc = "Scan raid members health during the tidal shield phase and warn if all the raid is over 8500HP.",
-	--shield_fade_trigger = "Tidal Shield fades from High Warlord Naj'entus.",
-	--shield_blow_message = "Raid health > 8500!",
+	health = "체력 검사",
+	health_desc = "해일의 보호막 단계 중에 공대원 체력을 살펴보고 만약 모든 공대원이 8500HP 이상이라면 경고합니다.",
+	shield_fade_trigger = "대장군 나젠투스의 몸에서 해일의 보호막 효과가 사라졌습니다.",
+	shield_blow_message = "공격대 체력 > 8500!",
 
 	shield = "해일의 보호막",
 	shield_desc = "대장군 나젠투스가 해일의 보호막을 얻을 떄에 대한 타이머 입니다.",

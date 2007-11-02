@@ -61,7 +61,7 @@ L:RegisterTranslations("koKR", function() return {
 	inferno = "불지옥",
 	inferno_desc = "대략적인 불지옥 대기시간 타이머입니다.",
 	inferno_message = "%s에 불지옥 시전 중!",
-	--inferno_you = "Casting Inferno on YOU!",
+	inferno_you = "당신에 불지옥 시전 중!",
 	inferno_warning = "잠시 후 불지옥!",
 	inferno_bar = "~불지옥 대기시간",
 

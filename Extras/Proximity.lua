@@ -91,7 +91,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Proximity"] = "접근",
-	--["Close Players"] = "",
+	["Close Players"] = "가까운 플레이어",
 	["Options for the Proximity Display."] = "접근 표시에 대한 설정입니다.",
 	["|cff777777Nobody|r"] = "|cff777777아무도 없음|r",
 	["Sound"] = "효과음",
