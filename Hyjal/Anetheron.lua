@@ -21,6 +21,7 @@ L:RegisterTranslations("enUS", function() return {
 	inferno = "Inferno",
 	inferno_desc = "Approximate Inferno cooldown timers.",
 	inferno_message = "Casting Inferno on %s!",
+	inferno_you = "Casting Inferno on you!",
 	inferno_warning = "Inferno Soon!",
 	inferno_bar = "~Inferno Cooldown",
 
@@ -154,6 +155,7 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "AnethInf", 10)
 	db = self.db.profile
+	local pName = UnitName("player")
 end
 
 ------------------------------
@@ -197,7 +199,12 @@ function mod:InfernoCheck()
 		end
 	end
 	if target then
-		self:Message(fmt(L["inferno_message"], target), "Important", nil, "Alert")
+		if target == pName then
+			self:Message(L["inferno_you"], "Personal", true, "Long")
+			self:TriggerEvent("BigWigs_Personal")
+		else
+			self:Message(fmt(L["inferno_message"], target), "Important", nil, "Alert")
+		end
 		if db.icon then
 			self:Icon(target)
 			self:ScheduleEvent("ClearIcon", "BigWigs_RemoveRaidIcon", 5, self)
