@@ -233,6 +233,7 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ReavKA2", 7)
 
+	local pName = UnitName("player")
 	previous = nil
 end
 
@@ -312,9 +313,10 @@ function mod:OrbCheck()
 end
 
 function mod:Result(target)
-	if target == UnitName("player") and self.db.profile.orbyou then
+	if target == pName and self.db.profile.orbyou then
 		self:Message(L["orb_you"], "Personal", true, "Long")
 		self:Message(fmt(L["orb_other"], target), "Attention", nil, nil, true)
+		self:TriggerEvent("BigWigs_Personal")
 
 		--this is handy for player with speech bubbles enabled to see if nearby players are being hit and run away from them
 		if self.db.profile.orbsay then

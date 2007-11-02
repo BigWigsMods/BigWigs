@@ -219,9 +219,10 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:ScheduleEvent("BWAlarNilOccured", nilOccured, 25) --this is here to prevent target problems
 	elseif sync == "AlArArmor" and rest and self.db.profile.armor then
 		local other = fmt(L["armor_other"], rest)
-		if rest == UnitName("player") then
+		if rest == pName then
 			self:Message(L["armor_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
+			self:TriggerEvent("BigWigs_Personal")
 		else
 			self:Message(other, "Attention")
 		end
