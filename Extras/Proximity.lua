@@ -57,6 +57,7 @@ local coloredNames = setmetatable({}, {__index =
 
 L:RegisterTranslations("enUS", function() return {
 	["Proximity"] = true,
+	["Close Players"] = true,
 	["Options for the Proximity Display."] = true,
 	["|cff777777Nobody|r"] = true,
 	["Sound"] = true,
@@ -73,6 +74,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["Proximity"] = "近距离",
+	--["Close Players"] = "",
 	["Options for the Proximity Display."] = "设置近距离显示。",
 	["|cff777777Nobody|r"] = "|cff777777无人|r",
 	["Sound"] = "声音",
@@ -89,6 +91,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Proximity"] = "접근",
+	--["Close Players"] = "",
 	["Options for the Proximity Display."] = "접근 표시에 대한 설정입니다.",
 	["|cff777777Nobody|r"] = "|cff777777아무도 없음|r",
 	["Sound"] = "효과음",
@@ -105,6 +108,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["Proximity"] = "Proximité",
+	--["Close Players"] = "",
 	["Options for the Proximity Display."] = "Options concernant l'affichage de proximité.",
 	["|cff777777Nobody|r"] = "|cff777777Personne|r",
 	["Sound"] = "Son",
@@ -121,6 +125,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Proximity"] = "Nähe",
+	--["Close Players"] = "",
 	["Options for the Proximity Display."] = "Optionen für die Nähe Anzeige.",
 	["|cff777777Nobody|r"] = "|cff777777Niemand|r",
 	["Sound"] = "Sound",
@@ -137,6 +142,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["Proximity"] = "鄰近顯示",
+	--["Close Players"] = "",
 	["Options for the Proximity Display."] = "設定鄰近顯示選項。",
 	["|cff777777Nobody|r"] = "|cff777777無人|r",
 	["Sound"] = "音效",
@@ -153,6 +159,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("esES", function() return {
 	["Proximity"] = "Proximidad",
+	--["Close Players"] = "",
 	["Options for the Proximity Display."] = "Opciones para la ventana de proximidad",
 	["|cff777777Nobody|r"] = "|cff777777Nadie|r",
 	["Sound"] = "Sonido",
@@ -300,12 +307,7 @@ function plugin:OpenProximity()
 
 	self:SetupFrames()
 
-	local text = nil
-	if active.name then
-		text = active.name
-	else
-		text = L["Proximity"]
-	end
+	local text = L["Close Players"]
 	for k in pairs(tooClose) do tooClose[k] = nil end
 	anchor.text:SetText(L["|cff777777Nobody|r"])
 
