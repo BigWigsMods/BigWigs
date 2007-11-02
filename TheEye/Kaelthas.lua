@@ -77,7 +77,7 @@ L:RegisterTranslations("enUS", function() return {
 	pyro_message = "Casting Pyroblast!",
 
 	toyall = "Remote Toy",
-	toyall_desc = "Warn when a player has Remote Toy.",
+	toyall_desc = "Warn when a player has Remote Toy. Only counts in Phase 2 to prevent spam.",
 	toyall_message = "Toy: %s",
 
 	phase = "Phase warnings",

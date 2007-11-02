@@ -8,6 +8,7 @@ local db = nil
 
 local UnitName = UnitName
 local fmt = string.format
+local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -21,7 +22,7 @@ L:RegisterTranslations("enUS", function() return {
 	inferno = "Inferno",
 	inferno_desc = "Approximate Inferno cooldown timers.",
 	inferno_message = "Casting Inferno on %s!",
-	inferno_you = "Casting Inferno on you!",
+	inferno_you = "Casting Inferno on YOU!",
 	inferno_warning = "Inferno Soon!",
 	inferno_bar = "~Inferno Cooldown",
 
@@ -42,6 +43,7 @@ L:RegisterTranslations("frFR", function() return {
 	inferno = "Inferno",
 	inferno_desc = "Temps de recharge approximatif pour l'Inferno.",
 	inferno_message = "Incante un inferno sur %s !",
+	--inferno_you = "Casting Inferno on YOU!",
 	inferno_warning = "Inferno imminent !",
 	inferno_bar = "~Cooldown Inferno",
 
@@ -59,6 +61,7 @@ L:RegisterTranslations("koKR", function() return {
 	inferno = "불지옥",
 	inferno_desc = "대략적인 불지옥 대기시간 타이머입니다.",
 	inferno_message = "%s에 불지옥 시전 중!",
+	--inferno_you = "Casting Inferno on YOU!",
 	inferno_warning = "잠시 후 불지옥!",
 	inferno_bar = "~불지옥 대기시간",
 
@@ -79,6 +82,7 @@ L:RegisterTranslations("deDE", function() return {
 	inferno = "Inferno",
 	inferno_desc = "Geschätzter Inferno Cooldown Timer.",
 	inferno_message = "zaubert Inferno auf %s!",
+	--inferno_you = "Casting Inferno on YOU!",
 	inferno_warning = "Inferno bald!",
 	inferno_bar = "~Inferno Cooldown",
 
@@ -99,6 +103,7 @@ L:RegisterTranslations("zhTW", function() return {
 	inferno = "地獄火",
 	inferno_desc = "地獄火冷卻計時器",
 	inferno_message = "地獄火: %s!",
+	--inferno_you = "Casting Inferno on YOU!",
 	inferno_warning = "地獄火即將到來!",
 	inferno_bar = "~地獄火 Cooldown",
 
@@ -119,6 +124,7 @@ L:RegisterTranslations("zhCN", function() return {
 	inferno = "地狱火",
 	inferno_desc = "显示地狱火冷却记时条",
 	inferno_message = "正在施放 地狱火 >%s<!",
+	--inferno_you = "Casting Inferno on YOU!",
 	inferno_warning = "即将 地狱火!",
 	inferno_bar = "~地狱火 冷却",
 
@@ -155,7 +161,6 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "AnethInf", 10)
 	db = self.db.profile
-	local pName = UnitName("player")
 end
 
 ------------------------------

@@ -222,7 +222,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if rest == pName then
 			self:Message(L["armor_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
-			self:TriggerEvent("BigWigs_Personal")
 		else
 			self:Message(other, "Attention")
 		end
@@ -272,6 +271,7 @@ function mod:DebuffEvent(msg)
 	if aplayer and atype then
 		if aplayer == L2["you"] and atype == L2["are"] then
 			aplayer = pName
+			self:TriggerEvent("BigWigs_Personal")
 		end
 		self:Sync("AlArArmor", aplayer)
 	end

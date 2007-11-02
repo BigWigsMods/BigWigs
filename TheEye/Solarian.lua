@@ -285,7 +285,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if rest == pName then
 			self:Message(L["wrath_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
-			self:TriggerEvent("BigWigs_Personal")
 		else
 			self:Message(other, "Attention")
 		end

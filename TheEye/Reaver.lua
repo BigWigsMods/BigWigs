@@ -11,6 +11,7 @@ local UnitName = UnitName
 local UnitExists = UnitExists
 local UnitPowerType = UnitPowerType
 local UnitBuff = UnitBuff
+local pName = UnitName("player")
 local fmt = string.format
 
 ----------------------------
@@ -233,7 +234,6 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ReavKA2", 7)
 
-	local pName = UnitName("player")
 	previous = nil
 end
 
