@@ -10,6 +10,7 @@ local inTomb = {}
 local debuff = {0, 10, 25, 50, 100, 250, 500}
 local currentPerc = nil
 local fmt = string.format
+local CheckInteractDistance = CheckInteractDistance
 local count = 1
 local pName = nil
 local stop

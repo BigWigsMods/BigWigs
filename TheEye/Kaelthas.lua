@@ -25,6 +25,7 @@ BB = nil
 
 local MCd = {}
 local fmt = string.format
+local CheckInteractDistance = CheckInteractDistance
 local pName = nil
 local stop = nil
 local phase = nil

@@ -9,6 +9,7 @@ local p2 = nil
 
 local pName = nil
 local UnitName = UnitName
+local CheckInteractDistance = CheckInteractDistance
 
 ----------------------------
 --      Localization      --

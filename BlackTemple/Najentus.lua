@@ -11,6 +11,7 @@ local UnitExists = UnitExists
 local UnitIsDeadOrGhost = UnitIsDeadOrGhost
 local UnitHealth = UnitHealth
 local GetNumRaidMembers = GetNumRaidMembers
+local CheckInteractDistance = CheckInteractDistance
 local fmt = string.format
 
 ----------------------------
@@ -194,8 +195,10 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"enrage", "shield", "health", -1, "spine", "spinesay", "icon", "bosskill"}
+mod.toggleoptions = {"enrage", "shield", "health", -1, "spine", "spinesay", "icon", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
+mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 2 ) end
+mod.proximitySilent = true
 
 ------------------------------
 --      Initialization      --
@@ -242,6 +245,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:DelayedMessage(480, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 480, "Spell_Shadow_UnholyFrenzy")
 		end
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
 end
 

@@ -12,6 +12,7 @@ BB = nil
 
 local shieldsFaded = 0
 local pName = nil
+local CheckInteractDistance = CheckInteractDistance
 local phaseTwoAnnounced = nil
 
 ----------------------------

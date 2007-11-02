@@ -14,6 +14,7 @@ local p4Announced = nil
 local flamesDead = 0
 local flamed = { }
 local fmt = string.format
+local CheckInteractDistance = CheckInteractDistance
 
 ----------------------------
 --      Localization      --

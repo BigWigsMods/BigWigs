@@ -5,6 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Doomwalker"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local enrageAnnounced = nil
+local CheckInteractDistance = CheckInteractDistance
 
 ----------------------------
 --      Localization      --

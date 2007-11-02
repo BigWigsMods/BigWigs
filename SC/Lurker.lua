@@ -6,6 +6,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["The Lurker Below"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started
 local occured = nil
+local CheckInteractDistance = CheckInteractDistance
 local fmt = string.format
 
 ----------------------------
