@@ -166,7 +166,6 @@ function mod:OnEnable()
 	nature = "INV_Misc_Gem_Emerald_01"
 	fire = "INV_Misc_Gem_Opal_01"
 	frost = "INV_Misc_Gem_Crystal_02"
-	test = "Spell_Holy_AshesToAshes"
 end
 
 ------------------------------
