@@ -232,14 +232,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["shield_nextbar"], 60, "Spell_Frost_FrostBolt02")
 		end
 		if db.enrage then
-			self:Message(L2["enrage_start"]:format(boss, 8), "Attention")
-			self:DelayedMessage(180, L2["enrage_min"]:format(5), "Positive")
-			self:DelayedMessage(300, L2["enrage_min"]:format(3), "Positive")
-			self:DelayedMessage(420, L2["enrage_min"]:format(1), "Positive")
-			self:DelayedMessage(450, L2["enrage_sec"]:format(30), "Positive")
-			self:DelayedMessage(470, L2["enrage_sec"]:format(10), "Urgent")
-			self:DelayedMessage(475, L2["enrage_sec"]:format(5), "Urgent")
-			self:DelayedMessage(480, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Message(fmt(L2["enrage_start"], boss, 8), "Attention")
+			self:DelayedMessage(180, fmt(L2["enrage_min"], 5), "Positive")
+			self:DelayedMessage(300, fmt(L2["enrage_min"], 3), "Positive")
+			self:DelayedMessage(420, fmt(L2["enrage_min"], 1), "Positive")
+			self:DelayedMessage(450, fmt(L2["enrage_sec"], 30), "Positive")
+			self:DelayedMessage(470, fmt(L2["enrage_sec"], 10), "Urgent")
+			self:DelayedMessage(475, fmt(L2["enrage_sec"], 5), "Urgent")
+			self:DelayedMessage(480, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 480, "Spell_Shadow_UnholyFrenzy")
 		end
 	end
@@ -291,7 +291,7 @@ end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "NajSpine" and rest and db.spine then
-		self:Message(L["spine_message"]:format(rest), "Important", nil, "Alert")
+		self:Message(fmt(L["spine_message"], rest), "Important", nil, "Alert")
 		if db.icon then
 			self:Icon(rest)
 		end
