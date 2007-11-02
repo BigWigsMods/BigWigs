@@ -115,10 +115,10 @@ L:RegisterTranslations("frFR", function() return {
 	spinesay_desc = "Fais dire à votre personnage qu'il a une épine quand c'est le cas, afin d'aider les membres proches.",
 	spinesay_message = "Epine sur moi !",
 
-	--health = "Health Scan",
-	--health_desc = "Scan raid members health during the tidal shield phase and warn if all the raid is over 8500HP.",
-	--shield_fade_trigger = "Tidal Shield fades from High Warlord Naj'entus.",
-	--shield_blow_message = "Raid health > 8500!",
+	health = "Analyse de la vie",
+	health_desc = "Analyse la vie des membres du raid pendant la phase Bouclier de flots et préviens si tout le raid a plus de 8500 PV.",
+	shield_fade_trigger = "Bouclier de flots sur Grand seigneur de guerre Naj'entus vient de se dissiper.",
+	shield_blow_message = "Vie du raid > 8500 !",
 
 	shield = "Bouclier de flots",
 	shield_desc = "Délais concernant le Bouclier de flots de Naj'entus.",

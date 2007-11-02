@@ -77,7 +77,7 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger1 = "Vous voulez me tester ?", -- à vérifier
 	engage_trigger2 = "Allons donc... quelle grossièreté. Bandal !", -- à vérifier
 	engage_trigger3 = "J'ai mieux à faire...", -- à vérifier
-	engage_trigger4 = "Fuyez, ou mourrez !", -- à vérifier
+	engage_trigger4 = "Fuyez ou mourrez !", -- à vérifier
 
 	vanish = "Disparition",
 	vanish_desc = "Délais estimés concernant la Disparition de Veras.",

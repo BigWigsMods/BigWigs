@@ -235,7 +235,7 @@ L:RegisterTranslations("frFR", function() return {
 	pyro_message = "Explosion pyrotechnique en incantation !",
 
 	toyall = "Jouet à distance",
-	toyall_desc = "Préviens quand un joueur subit les effets du Jouet à distance.",
+	toyall_desc = "Préviens quand un joueur subit les effets du Jouet à distance. S'affiche uniquement en phase 2 pour éviter un spam excessif.",
 	toyall_message = "Jouet : %s",
 
 	phase = "Phases",

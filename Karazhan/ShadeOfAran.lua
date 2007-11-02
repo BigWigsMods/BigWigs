@@ -132,10 +132,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	pull = "Attraction/Sort de zone",
 	pull_desc = "Préviens de l'attraction magnétique et de l'explosion des arcanes.",
-	pull_message = "Explosion des Arcanes !",
+	pull_message = "Explosion des arcanes !",
 	pull_trigger1 = "Oui, oui, mon fils est assez puissant… mais moi aussi je possède quelques pouvoirs !",
 	pull_trigger2 = "Je ne suis pas un simple bouffon ! Je suis Nielas Aran !",
-	pull_bar = "Explosion des Arcanes",
+	pull_bar = "Explosion des arcanes",
 
 	flame = "Couronne de flammes",
 	flame_desc = "Préviens quand Couronne de flammes est incanté.",

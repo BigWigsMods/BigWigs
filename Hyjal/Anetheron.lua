@@ -43,7 +43,7 @@ L:RegisterTranslations("frFR", function() return {
 	inferno = "Inferno",
 	inferno_desc = "Temps de recharge approximatif pour l'Inferno.",
 	inferno_message = "Incante un inferno sur %s !",
-	--inferno_you = "Casting Inferno on YOU!",
+	inferno_you = "Incante un inferno sur VOUS !",
 	inferno_warning = "Inferno imminent !",
 	inferno_bar = "~Cooldown Inferno",
 
