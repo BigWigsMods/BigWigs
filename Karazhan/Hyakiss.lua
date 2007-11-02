@@ -21,8 +21,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	cmd = "亞奇斯",
-
 	web = "亞奇斯之網",
 	web_desc = "當人員受到亞奇斯之網影響時警告",
 	web_trigger = "^(.+)受(到[了]*)亞奇斯之網效果的影響。",
@@ -47,8 +45,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	cmd = "希亚其斯",
-	
 	web = "希亚其斯之网",
 	web_desc = "当队员受到希亚其斯之网时发出警告",
 	web_trigger = "^(%S+)受(%S+)了希亚其斯之网效果的影响。$",

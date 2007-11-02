@@ -5,7 +5,13 @@
 local boss = AceLibrary("Babble-Boss-2.2")["High Warlord Naj'entus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+
 local db = nil
+local UnitExists = UnitExists
+local UnitIsDeadOrGhost = UnitIsDeadOrGhost
+local UnitHealth = UnitHealth
+local GetNumRaidMembers = GetNumRaidMembers
+local fmt = string.format
 
 ----------------------------
 --      Localization     --
@@ -25,6 +31,11 @@ L:RegisterTranslations("enUS", function() return {
 	spinesay_desc = "Print in say when you have a Spine, can help nearby members with speech bubbles on.",
 	spinesay_message = "Spine on me!",
 
+	health = "Health Scan",
+	health_desc = "Scan raid members health during the tidal shield phase and warn if all the raid is over 8500HP.",
+	shield_fade_trigger = "Tidal Shield fades from High Warlord Naj'entus.",
+	shield_blow_message = "Raid health > 8500!",
+
 	shield = "Tidal Shield",
 	shield_desc = "Timers for when Naj'entus will gain tidal shield.",
 	shield_trigger = "High Warlord Naj'entus is afflicted by Tidal Shield.",
@@ -43,6 +54,15 @@ L:RegisterTranslations("deDE", function() return {
 	spine_desc = "Sagt euch, wer aufgespießt wird.",
 	spine_trigger = "^([^%s]+) ([^%s]+) von Aufspießender Stachel betroffen%.$",
 	spine_message = "Aufspießender Stachel auf %s!",
+
+	--spinesay = "Spine Say",
+	--spinesay_desc = "Print in say when you have a Spine, can help nearby members with speech bubbles on.",
+	--spinesay_message = "Spine on me!",
+
+	--health = "Health Scan",
+	--health_desc = "Scan raid members health during the tidal shield phase and warn if all the raid is over 8500HP.",
+	--shield_fade_trigger = "Tidal Shield fades from High Warlord Naj'entus.",
+	--shield_blow_message = "Raid health > 8500!",
 
 	shield = "Gezeitenschild",
 	shield_desc = "Timer f\195\188r Gezeigenschild von Naj'entus.",
@@ -67,6 +87,11 @@ L:RegisterTranslations("koKR", function() return {
 	spinesay_desc = "꿰뚫는 돌기에 걸렸을 때, 주변 아군에게 돌기에 걸렸음을 일반 대화로 알립니다.",
 	spinesay_message = "저 돌기! 살려주세요!!",
 
+	--health = "Health Scan",
+	--health_desc = "Scan raid members health during the tidal shield phase and warn if all the raid is over 8500HP.",
+	--shield_fade_trigger = "Tidal Shield fades from High Warlord Naj'entus.",
+	--shield_blow_message = "Raid health > 8500!",
+
 	shield = "해일의 보호막",
 	shield_desc = "대장군 나젠투스가 해일의 보호막을 얻을 떄에 대한 타이머 입니다.",
 	shield_trigger = "대장군 나젠투스|1이;가; 해일의 보호막에 걸렸습니다.",
@@ -89,6 +114,11 @@ L:RegisterTranslations("frFR", function() return {
 	spinesay = "Dire - Epine de perforation",
 	spinesay_desc = "Fais dire à votre personnage qu'il a une épine quand c'est le cas, afin d'aider les membres proches.",
 	spinesay_message = "Epine sur moi !",
+
+	--health = "Health Scan",
+	--health_desc = "Scan raid members health during the tidal shield phase and warn if all the raid is over 8500HP.",
+	--shield_fade_trigger = "Tidal Shield fades from High Warlord Naj'entus.",
+	--shield_blow_message = "Raid health > 8500!",
 
 	shield = "Bouclier de flots",
 	shield_desc = "Délais concernant le Bouclier de flots de Naj'entus.",
@@ -113,6 +143,11 @@ L:RegisterTranslations("zhCN", function() return {
 	spinesay_desc = "当你中了穿刺会自动喊话,能帮助周围队员避让.",
 	spinesay_message = "我中了穿刺!",
 
+	--health = "Health Scan",
+	--health_desc = "Scan raid members health during the tidal shield phase and warn if all the raid is over 8500HP.",
+	--shield_fade_trigger = "Tidal Shield fades from High Warlord Naj'entus.",
+	--shield_blow_message = "Raid health > 8500!",
+
 	shield = "海潮之盾",
 	shield_desc = "当纳因图斯获得海潮之盾后计时.",
 	shield_trigger = "高阶督军纳因图斯受到了海潮之盾效果的影响。$",
@@ -136,6 +171,11 @@ L:RegisterTranslations("zhTW", function() return {
 	spinesay_desc = "當你中了尖刺脊椎會時自動喊話，讓周圍隊友幫忙。",
 	spinesay_message = "我中刺了！麻煩拔一下！",
 
+	--health = "Health Scan",
+	--health_desc = "Scan raid members health during the tidal shield phase and warn if all the raid is over 8500HP.",
+	--shield_fade_trigger = "Tidal Shield fades from High Warlord Naj'entus.",
+	--shield_blow_message = "Raid health > 8500!",
+
 	shield = "潮汐之盾",
 	shield_desc = "潮汐之盾計時",
 	shield_trigger = "高階督軍納珍塔斯受到潮汐之盾效果的影響。",
@@ -154,7 +194,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"enrage", "shield", "spine", "spinesay", "icon", "bosskill"}
+mod.toggleoptions = {"enrage", "shield", "health", -1, "spine", "spinesay", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -167,6 +207,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Spine")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
+	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -174,6 +215,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "NajShieldOn", 10)
+	self:TriggerEvent("BigWigs_ThrottleSync", "NajShieldOff", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "NajSpine", 2)
 
 	db = self.db.profile
@@ -209,6 +251,12 @@ function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
 	end
 end
 
+function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
+	if msg == L["shield_fade_trigger"] then
+		self:Sync("NahShieldOff")
+	end
+end
+
 function mod:Spine(msg)
 	local splayer, stype = select(3, msg:find(L["spine_trigger"]))
 	if splayer and stype then
@@ -222,15 +270,43 @@ function mod:Spine(msg)
 	end
 end
 
+function mod:HealthCheck()
+		local blow = true
+		local num = GetNumRaidMembers()
+		for i = 1, num do
+			local id = fmt("%s%d", "raid", i)
+			if UnitExists(id) and not UnitIsDeadOrGhost(id) and UnitHealth(id) <= 8500 then
+				blow = false
+			break
+		end
+	end
+
+	if blow then
+		self:Message(L["shield_blow_message"], "Important", nil, "Alert")
+		if self:IsEventScheduled("BWNajHealthCheck") then
+			self:CancelScheduledEvent("BWNajHealthCheck")
+		end
+	end
+end
+
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "NajSpine" and rest and db.spine then
 		self:Message(L["spine_message"]:format(rest), "Important", nil, "Alert")
 		if db.icon then
 			self:Icon(rest)
 		end
-	elseif sync == "NajShieldOn" and db.shield then
-		self:Message(L["shield_warn"], "Important", nil, "Alert")
-		self:DelayedMessage(46, L["shield_soon_warn"], "Positive")
-		self:Bar(L["shield_nextbar"], 56, "Spell_Frost_FrostBolt02")
+	elseif sync == "NajShieldOn" then
+		if db.shield then
+			self:Message(L["shield_warn"], "Important", nil, "Alert")
+			self:DelayedMessage(46, L["shield_soon_warn"], "Positive")
+			self:Bar(L["shield_nextbar"], 56, "Spell_Frost_FrostBolt02")
+		end
+		if db.health then
+			self:ScheduleRepeatingEvent("BWNajHealthCheck", self.HealthCheck, 0.5, self)
+		end
+	elseif sync == "NahShieldOff" and db.health then
+		if self:IsEventScheduled("BWNajHealthCheck") then
+			self:CancelScheduledEvent("BWNajHealthCheck")
+		end
 	end
 end
