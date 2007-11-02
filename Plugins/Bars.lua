@@ -138,7 +138,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Bars"] = "计时条",
 	["Emphasized Bars"] = "醒目记时条",
 	
-	["Options for the timer bars."] = "计时条设置",
+	["Options for the timer bars."] = "计时条设置。",
 
 	["Show anchor"] = "显示计时条框体",
 	["Show the bar anchor frame."] = "显示计时条框体，可以对其计时条进行移动。",
