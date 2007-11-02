@@ -53,7 +53,7 @@ L:RegisterTranslations("zhCN", function() return {
 	attraction_trigger = "^(%S+)受(%S+)了致命吸引效果的影响。$",
 	attraction_message = "致命吸引: %s",
 
-	debuff = "Debuff计时",
+	debuff = "Debuff 计时",
 	debuff_desc = "显示 Debuff 直到下一个的计时.",
 
 	enrage_warning = "即将狂暴!",

@@ -130,10 +130,10 @@ L:RegisterTranslations("zhCN", function() return {
 	garrote = "锁喉",
 	garrote_desc = "当队员受到锁喉时发送警告.",
 	garrote_trigger = "^([^%s]+)受([^%s]+)了锁喉效果的影响。$",
-	garrote_message = "绞喉: %s",
+	garrote_message = "锁喉: %s",
 
 	icon = "标记",
-	icon_desc = "当队员受到绞喉时，标上团队标记(需要团长或者助理).",
+	icon_desc = "当队员受到锁喉时，标上团队标记(需要团长或者助理).",
 
 	enrage_trigger = "%s变得愤怒了！",--check
 	enrage_message = "激怒!",

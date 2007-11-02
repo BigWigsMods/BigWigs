@@ -256,16 +256,16 @@ L:RegisterTranslations("zhCN", function() return {
 
 	phase = "阶段",
 	phase_desc = "当伊利丹进入不同阶段发出警报.",
-	phase2_soon_message = "即将阶段 2!",
+	phase2_soon_message = "即将 -  第二阶段!",
 	phase2_trigger = "埃辛诺斯之刃施放了召唤埃辛诺斯之类。$",--Update 10/31,Not my mistake，the combatlog really it is!
-	phase2_message = "阶段 2 - 埃辛诺斯双刃!",
-	phase3_message = "阶段3!",
+	phase2_message = "第二阶段 - 埃辛诺斯双刃!",
+	phase3_message = "第三阶段!",
 	demon_phase_trigger = "感受我体内的恶魔之力吧！",
 	demon_phase_message = "影魔形态!",
-	demon_bar = "下一 普通阶段",
+	demon_bar = "下一次普通阶段",
 	phase4_trigger = "你们就这点本事吗？这就是你们全部的能耐？",
-	phase4_soon_message = "即将阶段4!",
-	phase4_message = "阶段 4 - 玛维·影歌来临!",
+	phase4_soon_message = "即将 - 第四阶段!",
+	phase4_message = "第四阶段 - 玛维·影歌来临!",
 
 	flameburst = "烈焰爆击",
 	flameburst_desc = "当伊利丹使用烈焰爆击发出警报",

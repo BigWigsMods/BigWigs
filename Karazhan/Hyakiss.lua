@@ -47,6 +47,8 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	cmd = "希亚其斯",
+	
 	web = "希亚其斯之网",
 	web_desc = "当队员受到希亚其斯之网时发出警告",
 	web_trigger = "^(%S+)受(%S+)了希亚其斯之网效果的影响。$",

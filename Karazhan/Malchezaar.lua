@@ -168,18 +168,15 @@ L:RegisterTranslations("koKR", function() return {
 	despawn_bar = "지옥불 (%d) 사라짐",
 } end )
 
---Chinese Translation: 月色狼影@CWDG
---CWDG site: http://cwowaddon.com
---玛克扎尔王子
 L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段提示",
 	phase_desc = "进入战斗及每阶段的提示",
 	phase1_trigger = "疯狂将你们带到我的面前，而我将以死亡终结你们！",
 	phase2_trigger = "愚蠢的家伙！时间就是吞噬你躯体的烈焰！",
 	phase3_trigger = "你如何抵挡这无坚不摧的力量？",
-	phase1_message = "阶段1 - 地狱火将在~40秒后发动!",
-	phase2_message = "60% - 阶段 2",
-	phase3_message = "30% - 阶段 3 ",
+	phase1_message = "第一阶段 - 地狱火将在~40秒后发动!",
+	phase2_message = "60% - 第二阶段",
+	phase3_message = "30% - 第三阶段",
 
 	enfeeble = "能量衰弱警报",
 	enfeeble_desc = "显示能量衰弱冷却计时条",
@@ -248,48 +245,6 @@ L:RegisterTranslations("zhTW", function() return {
 	despawn = "取消地獄火消失計時條",
 	despawn_desc = "地獄火消失計時條",
 	despawn_bar = "地獄火 (%d) 消失！",
-} end )
-
---Chinese Translation: 月色狼影@CWDG
---CWDG site: http://cwowaddon.com
---玛克扎尔王子
-L:RegisterTranslations("zhCN", function() return {
-	phase = "阶段提示",
-	phase_desc = "进入战斗及每阶段的提示",
-	phase1_trigger = "疯狂将你们带到我的面前，而我将以死亡终结你们！",
-	phase2_trigger = "愚蠢的家伙！时间就是吞噬你躯体的烈焰！",
-	phase3_trigger = "你如何抵挡这无坚不摧的力量？",
-	phase1_message = "阶段1 - 地狱火将在~40sec后发动!",
-	phase2_message = "60% - 阶段 2",
-	phase3_message = "30% - 阶段 3 ",
-
-	enfeeble = "能量衰弱警报",
-	enfeeble_desc = "显示能量衰弱冷却计时条",
-	enfeeble_trigger = "受到能量衰弱效果的影响",
-	enfeeble_message = "能量衰弱! 30后再次发动！",
-	enfeeble_warning1 = "能量衰弱！ 5秒后发动",
-	enfeeble_warning2 = "Enfeeble in 10sec!",
-	enfeeble_bar = "能量衰弱",
-	enfeeble_nextbar = "下次→能量衰弱",
-	--enfeeble_you = "You are afflicted by Enfeeble.",
-
-	infernals = "地狱火警报",
-	infernals_desc = "显示召唤地狱火冷却时间计时条",
-	infernal_trigger1 = "你面对的不仅仅是我玛克扎尔自己，还有我所号令的军团！",
-	infernal_trigger2 = "所有的世界都向我敞开大门！",
-	infernal_bar = "即将 地狱火",
-	infernal_warning = "地狱火在 20 秒后出现！",
-	infernal_message = "地狱火 出现！! 5秒后发动 地狱烈焰！",
-
-	nova = "暗影新星",
-	nova_desc = "暗影新星预计冷却计时条",
-	nova_message = "暗影新星！",
-	nova_bar = "~暗影新星 冷却",
-	nova_soon = "即将发动 暗影新星",
-
-	despawn = "禁用地狱火重生",
-	despawn_desc = "地狱火重生计时条",
-	despawn_bar = "地狱火(%d) 重生！",
 } end )
 
 ----------------------------------

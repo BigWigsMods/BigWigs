@@ -104,16 +104,16 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	start_trigger = "以瓦丝琪女王的名义，去死吧！$",
 
-	spine = "穿刺之脊",--Impaling Spine 穿刺之脊
+	spine = "穿刺之脊",
 	spine_desc = "谁中了穿刺时告诉你.",
 	spine_trigger = "^([^%s]+)受([^%s]+)了穿刺之脊效果的影响。$",
 	spine_message = "穿刺之脊 %s!",
 
 	spinesay = "穿刺警报",--Spine Say
 	spinesay_desc = "当你中了穿刺会自动喊话,能帮助周围队员避让.",
-	spinesay_message = "穿刺 我了 XO!",
+	spinesay_message = "我中了穿刺!",
 
-	shield = "海潮之盾",--Tidal Shield 海潮之盾
+	shield = "海潮之盾",
 	shield_desc = "当纳因图斯获得海潮之盾后计时.",
 	shield_trigger = "高阶督军纳因图斯受到了海潮之盾效果的影响。$",
 	shield_nextbar = "下一次 海潮之盾",

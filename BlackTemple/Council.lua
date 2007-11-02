@@ -198,7 +198,7 @@ L:RegisterTranslations("zhCN", function() return {
 	shield_message = "反射之盾! 注意!",
 
 	poison = "致命药膏",
-	poison_desc = "当玩家受到致命毒药时发出警报.",
+	poison_desc = "当玩家受到致命药膏时发出警报.",
 	poison_trigger = "^([^%s]+)受([^%s]+)了致命药膏效果的影响。$",--Update 10/31 edited,check
 	poison_other = "%s 中了 致命药膏!",
 	poison_you = ">你<——致命药膏!",

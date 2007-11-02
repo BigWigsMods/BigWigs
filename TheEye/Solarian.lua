@@ -192,7 +192,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	agent_warning = "分裂! - 6秒后 日晷密探",
 	agent_bar = "日晷密探",
-	priest_warning = "3秒后增加 日晷祭司/索兰莉安",
+	priest_warning = "3秒后 日晷祭司/索兰莉安",
 	priest_bar = "日晷祭司/索兰莉安",
 } end )
 

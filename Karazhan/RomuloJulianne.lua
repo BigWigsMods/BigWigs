@@ -156,8 +156,8 @@ L:RegisterTranslations("zhCN", function() return {
 	heal_trigger = "开始施放永恒之爱。$",
 	heal_message = "%s 施放治疗",
 
-	buff = "自身BUFF警报",
-	buff_desc = "当罗密欧与朱丽叶获得BUFF发出警报",
+	buff = "自身 Buff 警报",
+	buff_desc = "当罗密欧与朱丽叶获得 Buff 发出警报",
 	buff1_trigger = "获得了卤莽的效果。$",
 	buff1_message = "%s 获得 卤莽!",
 	buff2_trigger = "获得了虔诚光环的效果。$",
