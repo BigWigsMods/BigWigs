@@ -9,7 +9,11 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local pName = nil
 local db = nil
 local attracted = {}
+local GetPlayerBuff = GetPlayerBuff
 local UnitDebuff = UnitDebuff
+local GetPlayerBuffName = GetPlayerBuffName
+local GetPlayerBuffTimeLeft = GetPlayerBuffTimeLeft
+local GetPlayerBuffTexture = GetPlayerBuffTexture
 local sub = string.sub
 local enrageWarn = nil
 local started = nil
@@ -156,12 +160,13 @@ function mod:OnEnable()
 	db = self.db.profile
 
 	--setup debuffs
-	shadow = "Interface\\Icons\\INV_Misc_Gem_Amethyst_01"
-	holy = "Interface\\Icons\\INV_Misc_Gem_Topaz_01"
-	arcane = "Interface\\Icons\\INV_Misc_Gem_Sapphire_01"
-	nature = "Interface\\Icons\\INV_Misc_Gem_Emerald_01"
-	fire = "Interface\\Icons\\INV_Misc_Gem_Opal_01"
-	frost = "Interface\\Icons\\INV_Misc_Gem_Crystal_02"
+	shadow = "INV_Misc_Gem_Amethyst_01"
+	holy = "INV_Misc_Gem_Topaz_01"
+	arcane = "INV_Misc_Gem_Sapphire_01"
+	nature = "INV_Misc_Gem_Emerald_01"
+	fire = "INV_Misc_Gem_Opal_01"
+	frost = "INV_Misc_Gem_Crystal_02"
+	test = "Spell_Holy_AshesToAshes"
 end
 
 ------------------------------
@@ -219,59 +224,30 @@ function mod:FatalAtt(msg)
 	end
 end
 
-function mod:PLAYER_AURAS_CHANGED(msg)
+function mod:PLAYER_AURAS_CHANGED()
 	--don't even scan anything if we don't want it on
 	if not db.debuff then return end
 
 	local i = 1 --setup counter
-	local rpt = nil
 	while UnitDebuff("player", i) do --loop debuff scan
-		local name, _, texture = UnitDebuff("player", i) --save name & texture
+		local id = GetPlayerBuff(i,"HARMFUL")
+		local texture = GetPlayerBuffTexture(id)
+		texture = sub(texture, 17, -1)
+		--If we find a known texture(debuff Prismatic Aura: Resistance) continue
+		if (texture == shadow or texture == holy or texture == arcane 
+		or texture == nature or texture == fire or texture == frost) then
+			local name = GetPlayerBuffName(id) --get the name
+			local timeleft = GetPlayerBuffTimeLeft(id) --get the duration
 
-		if texture ~= restype then --spam protection
-			--If we find a known texture(debuff Prismatic Aura: Resistance)
 			--show a countdown bar and create a message with the name of the debuff
-			if texture == shadow then
+			--if the timeleft is high enough (to prevent spam)
+			if timeleft and timeleft > 14 then
 				self:Message(name, "Attention")
-				self:Bar(name, 15, sub(shadow, 17, -1))
-				restype = texture
-				rpt = true
-			elseif texture == holy then
-				self:Message(name, "Attention")
-				self:Bar(name, 15, sub(holy, 17, -1))
-				restype = texture
-				rpt = true
-			elseif texture == arcane then
-				self:Message(name, "Attention")
-				self:Bar(name, 15, sub(arcane, 17, -1))
-				restype = texture
-				rpt = true
-			elseif texture == nature then
-				self:Message(name, "Attention")
-				self:Bar(name, 15, sub(nature, 17, -1))
-				restype = texture
-				rpt = true
-			elseif texture == fire then
-				self:Message(name, "Attention")
-				self:Bar(name, 15, sub(fire, 17, -1))
-				restype = texture
-				rpt = true
-			elseif texture == frost then
-				self:Message(name, "Attention")
-				self:Bar(name, 15, sub(frost, 17, -1))
-				restype = texture
-				rpt = true
+				self:Bar(name, 15, texture)
 			end
 		end
 		i = i + 1 --increment counter
 	end
-
-	--If we don't have a recognised debuff, clear the spam filter,
-	--this should be a fix for getting the same debuff twice,
-	--assuming every time we do get 2 in a row, we loose the previous one first
-	--if not rpt then
-	--	restype = nil
-	--end
 end
 
 local function nilStop()
