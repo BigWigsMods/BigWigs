@@ -27,6 +27,7 @@ local MCd = {}
 local fmt = string.format
 local pName = nil
 local stop = nil
+local phase = nil
 
 ----------------------------
 --      Localization      --
@@ -547,6 +548,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFear", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelMC2", 0)
 	pName = UnitName("player")
+	phase = 0
 end
 
 ------------------------------
@@ -583,6 +585,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["engage_message"], "Positive")
 		for k in pairs(MCd) do MCd[k] = nil end
 		stop = nil
+		phase = 1
 	elseif msg == L["thaladred_inc_trigger"] then
 		self:Message(thaladred, "Positive")
 	elseif msg == L["sanguinar_inc_trigger"] then
@@ -600,19 +603,23 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(telonicus, 8, "Spell_Shadow_Charm")
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	elseif msg == L["weapons_inc_trigger"] then
+		phase = 2
 		self:Message(L["weapons_inc_message"], "Positive")
 		self:Bar(L["revive_bar"], 95, "Spell_Holy_ReviveChampion")
 		self:DelayedMessage(90, L["revive_warning"], "Attention")
 	elseif msg == L["phase3_trigger"] then
+		phase = 3
 		self:Message(L["phase3_message"], "Positive")
 		self:Bar(L["phase4_bar"], 180, "Spell_ChargePositive")
 	elseif msg == L["phase4_trigger"] then
+		phase = 4
 		self:Message(L["phase4_message"], "Positive")
 		if self.db.profile.pyro then
 			self:Bar(L["pyro"], 60, "Spell_Fire_Fireball02")
 			self:DelayedMessage(55, L["pyro_warning"], "Attention")
 		end
 	elseif msg == L["flying_trigger"] then
+		phase = 5
 		self:Message(L["flying_message"], "Attention")
 		self:Bar(L["gravity_bar"], 60, "Spell_Nature_UnrelentingStorm")
 	elseif msg == L["gravity_trigger1"] or msg == L["gravity_trigger2"] then
@@ -656,7 +663,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		local msg = fmt(L["conflag_message"], rest)
 		self:Message(msg, "Attention")
 		self:Bar(msg, 10, "Spell_Fire_Incinerate")
-	elseif sync == "KSToy" and rest and self.db.profile.toyall then
+	elseif sync == "KSToy" and rest and self.db.profile.toyall and phase < 3 then
 		local msg = fmt(L["toyall_message"], rest)
 		self:Message(msg, "Attention")
 		self:Bar(msg, 60, "INV_Misc_Urn_01")
