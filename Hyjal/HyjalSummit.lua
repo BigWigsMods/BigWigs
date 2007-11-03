@@ -39,6 +39,11 @@ L:RegisterTranslations("enUS", function() return {
 	["~%s spawn"] = true,
 	["~Wave %d spawn"] = true,
 	["Wave %d incoming!"] = true,
+	["Wave %d! %d %s"] = true, --1 set of mobs
+	["Wave %d! %d %s, %d %s"] = true, --2 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s"] = true, --3 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = true, --4 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = true, --5 sets of mobs
 	["%s in ~%d sec!"] = true,
 	["Wave %d in ~%d sec!"] = true,
 
@@ -52,6 +57,16 @@ L:RegisterTranslations("enUS", function() return {
 	["We have nothing to fear."] = true, -- Az'Galor
 
 	["Please remove BigWigs_WaveTimers, it is deprecated."] = true,
+
+	["Ghouls"] = true,
+	["Crypt Fiends"] = true,
+	["Abominations"] = true,
+	["Necromancers"] = true,
+	["Banshees"] = true,
+	["Gargoyles"] = true,
+	["Frost Wyrm"] = true,
+	["Fel Stalkers"] = true,
+	["Infernals"] = true,
 } end )
 
 L:RegisterTranslations("koKR", function() return {
