@@ -35,6 +35,37 @@ L:RegisterTranslations("enUS", function() return {
 	["Shown"] = true,
 } end)
 
+L:RegisterTranslations("koKR", function() return {
+	["BossBlock"] = "보스차단",
+	desc = "다른 플레이어와 외부요인으로 부터의 보스 경고와 감정표현을 자동으로 차단합니다.",
+
+	["Boss emotes"] = "보스 감정표현",
+	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = "공격대 보스의 감정표현 메세지를 차단합니다.\n\nBigWigs에 존재하는 보스의 감정 표현과 대화창이 아닌 표시중인 프레임의 메세지만을 차단합니다.",
+
+	["Raid chat"] = "공격대 대화",
+	["Suppress messages sent to raid chat."] = "공격대 대화 메세지를 차단합니다.",
+
+	["Raid warning chat messages"] = "공격대 경보 대화 메세지",
+	["Suppress raid warning messages from the chat window."] = "대화창으로 부터 공격대 경보 메세지를 차단합니다.",
+
+	["Raid warning messages"] = "공격대 경보 메세지",
+	["Suppress raid warning messages from the raid message window."] = "공격대 메제지창으로 부터 공격대 경보 메세지를 차단합니다.",
+
+	["Raid say"] = "Raid say",
+	["Suppress RaidSay popup messages."] = "RaidSay 팝업 메세지를 차단합니다.",
+
+	["Whispers"] = "귓속말",
+	["Suppress whispered messages."] = "귓속말 메세지를 차단합니다.",
+
+	["Suppressing Chatframe"] = "대화창 차단",
+	["Suppressing RaidWarningFrame"] = "공격대경보창 차단",
+	["Suppressing CT_RAMessageFrame"] = "CT_RAMessage창 차단",
+	["Suppressing RaidBossEmoteFrame"] = "RaidBossEmote창 차단",
+
+	["Suppressed"] = "차단됨",
+	["Shown"] = "표시함",
+} end)
+
 L:RegisterTranslations("zhCN", function() return {
 	["BossBlock"] = "信息阻止",
 	desc = "自动阻止其他玩家或其他来源的Boss预警信息和表情.",
