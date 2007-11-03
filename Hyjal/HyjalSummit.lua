@@ -76,6 +76,11 @@ L:RegisterTranslations("koKR", function() return {
 	["~%s spawn"] = "~%s 등장",
 	["~Wave %d spawn"] = "%d번째 공격 등장",
 	["Wave %d incoming!"] = "%d번째 공격 시작!",
+	["Wave %d! %d %s"] = "%d번째 공격! %d %s", --1 set of mobs
+	["Wave %d! %d %s, %d %s"] = "%d번째 공격! %d %s, %d %s", --2 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s"] = "%d번째 공격! %d %s, %d %s, %d %s", --3 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "%d번째 공격! %d %s, %d %s, %d %s, %d %s", --4 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "%d번째 공격! %d %s, %d %s, %d %s, %d %s, %d %s", --5 sets of mobs
 	["%s in ~%d sec!"] = "약 %2$d초 이내 %1$s!",
 	["Wave %d in ~%d sec!"] = "약 %2$d초 후 %1$d번째 공격!",
 
@@ -87,6 +92,18 @@ L:RegisterTranslations("koKR", function() return {
 	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "아키몬드가 어떤 군대를 보내던 우리는 준비가 되어 있습니다. 프라우드무어 님.", -- Anatheron
 	["I am with you, Thrall."] = "당신과 함께 하겠습니다. 대족장님.", -- Kaz'Rogal
 	["We have nothing to fear."] = "두려워할 것은 아무것도 없습니다.", -- Az'Galor
+	
+	["Please remove BigWigs_WaveTimers, it is deprecated."] = "이것을 비난한다면, BigWigs_WaveTimers를 제거하십시요.",
+
+	["Ghouls"] = "구울",
+	["Crypt Fiends"] = "지하마귀",
+	["Abominations"] = "누더기골렘",
+	["Necromancers"] = "어둠의 강령술사",
+	["Banshees"] = "벤쉬",
+	["Gargoyles"] = "가고일",
+	["Frost Wyrm"] = "서리고룡",
+	["Fel Stalkers"] = "지옥사냥개",
+	["Infernals"] = "거대한 지옥불정령",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
