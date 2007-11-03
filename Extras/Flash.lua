@@ -72,7 +72,7 @@ mod.consoleOptions = {
 			name = L["Test"],
 			desc = L["Perform a Flash test."],
 			handler = mod,
-			func = "BigWigs_Personal",
+			func = "BigWigs_Test",
 		},
 	}
 }
@@ -82,15 +82,15 @@ mod.consoleOptions = {
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("BigWigs_Personal")
+	self:RegisterEvent("BigWigs_Message")
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-function mod:BigWigs_Personal()
-	if self.db.profile.flash then
+function mod:BigWigs_Message(msg, colour)
+	if self.db.profile.flash and colour and colour == "Personal" then --and arg3 and arg3 == "Personal" then
 		if not display then --frame creation
 			display = CreateFrame("Frame", "BWFlash", UIParent)
 			display:SetFrameStrata("BACKGROUND")
@@ -111,4 +111,8 @@ function mod:BigWigs_Personal()
 		self:ScheduleEvent("BWFlash7", display.SetBackdropColor, 0.52, display, 0, 0, 1, 0.4)
 		self:ScheduleEvent("BWFlash8", display.Hide, 0.57, display)
 	end
+end
+
+function mod:BigWigs_Test()
+	self:TriggerEvent("BigWigs_Message", L["Test"], "Personal")
 end
