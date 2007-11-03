@@ -144,10 +144,10 @@ L:RegisterTranslations("zhCN", function() return {
 	spinesay_desc = "当你中了穿刺会自动喊话,能帮助周围队员避让.",
 	spinesay_message = "我中了穿刺!",
 
-	--health = "Health Scan",
-	--health_desc = "Scan raid members health during the tidal shield phase and warn if all the raid is over 8500HP.",
-	--shield_fade_trigger = "Tidal Shield fades from High Warlord Naj'entus.",
-	--shield_blow_message = "Raid health > 8500!",
+	health = "生命值监视",
+	--health_desc = "在海潮之盾阶段监视团队生命值并发出警告, 如果全部团队血量超过8500.",
+	--shield_fade_trigger = "Tidal Shield fades from High Warlord Naj'entus.",--translate wait for sometimes.
+	--shield_blow_message = "团队生命值 >大于< 8500!",
 
 	shield = "海潮之盾",
 	shield_desc = "当纳因图斯获得海潮之盾后计时.",

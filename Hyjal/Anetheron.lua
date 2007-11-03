@@ -124,7 +124,7 @@ L:RegisterTranslations("zhCN", function() return {
 	inferno = "地狱火",
 	inferno_desc = "显示地狱火冷却记时条",
 	inferno_message = "正在施放 地狱火 >%s<!",
-	--inferno_you = "Casting Inferno on YOU!",
+	inferno_you = "地狱火 >你<!",
 	inferno_warning = "即将 地狱火!",
 	inferno_bar = "~地狱火 冷却",
 

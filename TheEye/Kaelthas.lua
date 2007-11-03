@@ -395,7 +395,7 @@ L:RegisterTranslations("zhCN", function() return {
 	pyro_message = "正在施放 炎爆术!",
 
 	toyall = "遥控玩具",
-	toyall_desc = "当一玩家遥控玩具发出警报",
+	toyall_desc = "当玩家遥控玩具时发出警报. 只在第二阶段时有效以防止误报.",
 	toyall_message = "遥控玩具: %s",
 
 	phase = "阶段警报",
