@@ -9,7 +9,7 @@ local pName = nil
 
 L:RegisterTranslations("enUS", function() return {
 	CHAT_MSG_SPELL_SELF_BUFF = "^You fail to dispel (.+)'s Frenzy%.$",
-	CHAT_MSG_SPELL_SELF_DAMAGE = "^You cast Tranquilizing Shot on (.+).$",
+	CHAT_MSG_SPELL_SELF_DAMAGE = "^You cast Tranquilizing Shot on (.+)%.$",
 	["Tranquilizing Shot"] = true,
 
 	["Tranq - %s"] = true,
