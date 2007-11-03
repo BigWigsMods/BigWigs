@@ -108,11 +108,11 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	["Proximity"] = "Proximité",
-	--["Close Players"] = "",
+	["Close Players"] = "Joueurs proches",
 	["Options for the Proximity Display."] = "Options concernant l'affichage de proximité.",
 	["|cff777777Nobody|r"] = "|cff777777Personne|r",
 	["Sound"] = "Son",
-	["Play sound on proximity."] = "Joue un son quand à proximité.",
+	["Play sound on proximity."] = "Joue un son quand un autre joueur est trop proche de vous.",
 	["Disabled"] = "Désactivé",
 	["Disable the proximity display for all modules that use it."] = "Désactive l'affichage de proximité.",
 	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "L'affichage de proximité a été désactivé pour %s. Veuillez utiliser les options du module du boss pour l'activer à nouveau.",

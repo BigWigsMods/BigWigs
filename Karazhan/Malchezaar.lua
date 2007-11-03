@@ -110,8 +110,8 @@ L:RegisterTranslations("frFR", function() return {
 	enfeeble_warning2 = "Affaiblir dans 10 sec. !",
 	enfeeble_bar = "Affaiblir",
 	enfeeble_nextbar = "Prochain Affaiblir",
-	--enfeeble_you = "You are afflicted by Enfeeble.",
-	--enfeeble_warnyou = "Enfeeble on YOU!",
+	enfeeble_you = "Vous subissez les effets de Affaiblir.",
+	enfeeble_warnyou = "Affaiblir sur VOUS !",
 
 	infernals = "Infernaux",
 	infernals_desc = "Affiche le temps de recharge des invocations d'infernaux.",

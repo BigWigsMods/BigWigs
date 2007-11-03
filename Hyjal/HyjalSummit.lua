@@ -113,6 +113,11 @@ L:RegisterTranslations("frFR", function() return {
 	["~%s spawn"] = "~Apparition %s",
 	["~Wave %d spawn"] = "~Apparition vague %d",
 	["Wave %d incoming!"] = "Arrivée de la vague %d !",
+	["Wave %d! %d %s"] = "Vague %d ! %d %s", --1 set of mobs
+	["Wave %d! %d %s, %d %s"] = "Vague %d ! %d %s, %d %s", --2 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s"] = "Vague %d ! %d %s, %d %s, %d %s", --3 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "Vague %d! %d %s, %d %s, %d %s, %d %s", --4 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "Vague %d ! %d %s, %d %s, %d %s, %d %s, %d %s", --5 sets of mobs
 	["%s in ~%d sec!"] = "%s dans ~%d sec. !",
 	["Wave %d in ~%d sec!"] = "Vague %d dans ~%d sec. !",
 
@@ -126,6 +131,16 @@ L:RegisterTranslations("frFR", function() return {
 	["We have nothing to fear."] = "Nous n'avons rien à craindre.", -- Az'Galor
 
 	["Please remove BigWigs_WaveTimers, it is deprecated."] = "Veuillez enlever BigWigs_WaveTimers, qui est obsolète.",
+
+	["Ghouls"] = "Goules",
+	["Crypt Fiends"] = "Démons des cryptes",
+	["Abominations"] = "Abominations",
+	["Necromancers"] = "Nécromanciens",
+	["Banshees"] = "Banshees",
+	["Gargoyles"] = "Gargouilles",
+	["Frost Wyrm"] = "Wyrms de givre",
+	["Fel Stalkers"] = "Traqueurs gangrenés",
+	["Infernals"] = "Infernaux",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

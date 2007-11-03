@@ -210,7 +210,7 @@ L:RegisterTranslations("frFR", function() return {
 	gaze_trigger = "pose ses yeux sur (%S+) !$",
 	gaze_message = "Focalisation sur %s !",
 	gaze_bar = "Cooldown Focalisation",
-	--gaze_you = "Gaze on YOU!",
+	gaze_you = "Focalisation sur VOUS !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur la personne surveillée par Thaladred (nécessite d'être promu ou mieux).",
