@@ -90,6 +90,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Reverse"] = true,
 	["Toggles if bars are reversed (fill up instead of emptying)."] = true,
+	
+	font = "Fonts\\FRIZQT__.TTF",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -132,6 +134,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	["Reverse"] = "반전",
 	["Toggles if bars are reversed (fill up instead of emptying)."] = "바의 반전을 전환합니다(채우기 혹은 비움).",
+	
+	font = "Fonts\\2002.TTF",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -174,6 +178,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	["Reverse"] = "反转",
 	["Toggles if bars are reversed (fill up instead of emptying)."] = "切换记时条反向（记时条排列顺序反转）。",
+	
+	font = "Fonts\\ZYKai_T.TTF",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -213,6 +219,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	["Reverse"] = "反向",
 	["Toggles if bars are reversed (fill up instead of emptying)."] = "以反向的方式顯示(填滿而非變空)。",
+	
+	font = "Fonts\\FZBWJW.TTF"
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -255,6 +263,8 @@ L:RegisterTranslations("deDE", function() return {
 
 	["Reverse"] = "Umkehren",
 	["Toggles if bars are reversed (fill up instead of emptying)."] = "Legt fest, ob sich die Anzeigebalken füllen oder leeren sollen.",
+	
+	font = "Fonts\\FRIZQT__.TTF",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -297,6 +307,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	["Reverse"] = "Inverser",
 	["Toggles if bars are reversed (fill up instead of emptying)."] = "Inverse ou non les barres (les remplir au lieu de les vider).",
+	
+	font = "Fonts\\FRIZQT__.TTF",
 } end)
 
 L:RegisterTranslations("esES", function() return {
@@ -339,6 +351,8 @@ L:RegisterTranslations("esES", function() return {
 
 	["Reverse"] = "Invertir",
 	["Toggles if bars are reversed (fill up instead of emptying)."] = "Muestra las barras invirtiendolas (se llenan en vez de vaciarse).",
+	
+	font = "Fonts\\FRIZQT__.TTF",
 } end)
 
 -----------------------------------------------------------------------
@@ -930,7 +944,7 @@ function plugin:SetupFrames(emphasize)
 	cheader:SetWidth(110)
 	cheader:SetHeight(15)
 	cheader:SetPoint("TOP", frame, "TOP", 0, -14)
-	cheader:SetFont("Fonts\\FRIZQT__.TTF", 12)
+	cheader:SetFont(L["font"], 12)
 	cheader:SetJustifyH("LEFT")
 	cheader:SetText(emphasize and L["Emphasized Bars"] or L["Bars"])
 	cheader:SetShadowOffset(.8, -.8)

@@ -91,7 +91,7 @@ L:RegisterTranslations("koKR", function() return {
 	target = "대상",
 	target_desc = "솔개 형상에서 대상을 알리고 전술 표시를 지정합니다.",
 	target_message = "%s 추적 중!",
-	--target_you = "YOU are being chased!",
+	target_you = "당신은 추적 중!",
 	target_message_nounit = "새로운 대상!",
 
 	icon = "전술 표시",

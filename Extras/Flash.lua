@@ -21,8 +21,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Flash the screen blue when something important happens that directly affects you."] = "당신에게 직접적으로 중요한 무언가가 영향을 미칠때 화면을 파란색으로 번쩍입니다.",
 	["Toggle Flash on or off."] = "번쩍임을 켜거나 끕니다.",
 
-	--["Test"] = true,
-	--["Perform a Flash test."] = true,
+	["Test"] = "테스트",
+	["Perform a Flash test."] = "번쩍임 테스트를 실행합니다.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {

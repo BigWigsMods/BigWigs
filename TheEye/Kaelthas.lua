@@ -130,7 +130,7 @@ L:RegisterTranslations("koKR", function() return {
 	gaze_trigger = "([^%s]+)|1을;를; 노려봅니다!$",
 	gaze_message = "%s 주시!",
 	gaze_bar = "~주시 대기 시간",
-	--gaze_you = "Gaze on YOU!",
+	gaze_you = "당신에 주시!",
 
 	icon = "전술 표시",
 	icon_desc = "탈라드레드의 주시 대상이된 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
