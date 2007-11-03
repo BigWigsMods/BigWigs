@@ -7,6 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local started = nil
+local pName = nil
 local db = nil
 local previous = nil
 local UnitName = UnitName
@@ -37,6 +38,7 @@ L:RegisterTranslations("enUS", function() return {
 	target = "Target",
 	target_desc = "Warn who he targets during the kite phase, and put a raid icon on them.",
 	target_message = "%s being chased!",
+	target_you = "YOU are being chased!",
 	target_message_nounit = "New target!",
 
 	icon = "Raid Target Icon",
@@ -63,6 +65,7 @@ L:RegisterTranslations("deDE", function() return {
 	next_phase_message = "Phasenwechsel in 10sec!",
 
 	target_message = "%s wird verfolgt!",
+	--target_you = "YOU are being chased!",
 	target_message_nounit = "Neues Ziel!",
 
 	punch_message = "Hieb!",
@@ -88,6 +91,7 @@ L:RegisterTranslations("koKR", function() return {
 	target = "대상",
 	target_desc = "솔개 형상에서 대상을 알리고 전술 표시를 지정합니다.",
 	target_message = "%s 추적 중!",
+	--target_you = "YOU are being chased!",
 	target_message_nounit = "새로운 대상!",
 
 	icon = "전술 표시",
@@ -113,6 +117,7 @@ L:RegisterTranslations("frFR", function() return {
 	target = "Cible",
 	target_desc = "Indique la personne pourchassée pendant la phase de kitting.",
 	target_message = "%s est poursuivi(e) !",
+	--target_you = "YOU are being chased!",
 	target_message_nounit = "Nouvelle cible !",
 
 	icon = "Icône",
@@ -138,6 +143,7 @@ L:RegisterTranslations("zhTW", function() return {
 	target = "目標",
 	target_desc = "警報在風箏階段誰是主要目標，並在他頭上放團隊標記。",
 	target_message = "被盯上：[%s]",
+	--target_you = "YOU are being chased!",
 	target_message_nounit = "新目標!",
 
 	icon = "目標標記",
@@ -163,6 +169,7 @@ L:RegisterTranslations("zhCN", function() return {
 	target = "目标",
 	target_desc = "当谁能被凝视发出警报并被打上团队标记.",
 	target_message = "%s 被 凝视!",
+	--target_you = "YOU are being chased!",
 	target_message_nounit = "新目标!",
 
 	icon = "团队标记",
@@ -198,6 +205,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "SupPunch", 5)
 
 	db = self.db.profile
+	pName = UnitName("player")
 end
 
 ------------------------------
@@ -227,7 +235,13 @@ function mod:TargetCheck()
 	end
 	if target ~= previous then
 		if target then
-			self:Message(fmt(L["target_message"], target), "Attention")
+			local other = fmt(L["target_message"], target)
+			if target == pName then
+				self:Message(L["target_you"], "Personal", true, "Alarm")
+				self:Message(other, "Attention", nil, nil, true)
+			else
+				self:Message(other, "Attention")
+			end
 			if db.icon then
 				self:Icon(target)
 			end

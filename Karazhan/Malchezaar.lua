@@ -31,6 +31,8 @@ L:RegisterTranslations("enUS", function() return {
 	enfeeble_warning2 = "Enfeeble in 10sec!",
 	enfeeble_bar = "Enfeeble",
 	enfeeble_nextbar = "Next Enfeeble",
+	enfeeble_you = "You are afflicted by Enfeeble.",
+	enfeeble_warnyou = "Enfeeble on YOU!",
 
 	infernals = "Infernals",
 	infernals_desc = "Show cooldown timer for Infernal summons.",
@@ -77,6 +79,8 @@ L:RegisterTranslations("deDE", function() return {
 	enfeeble_warning2 = "Entkr\195\164ften in 10 Sek!",
 	enfeeble_bar = "Entkr\195\164ften",
 	enfeeble_nextbar = "N\195\164chste Entkr\195\164ften",
+	--enfeeble_you = "You are afflicted by Enfeeble.",
+	--enfeeble_warnyou = "Enfeeble on YOU!",
 
 	infernal_trigger1 = "Ihr steht nicht nur vor Malchezzar allein, sondern vor den Legionen, die ich befehlige!",
 	infernal_trigger2 = "Alle Realit\195\164ten, alle Dimensionen stehen mir offen!",
@@ -106,6 +110,8 @@ L:RegisterTranslations("frFR", function() return {
 	enfeeble_warning2 = "Affaiblir dans 10 sec. !",
 	enfeeble_bar = "Affaiblir",
 	enfeeble_nextbar = "Prochain Affaiblir",
+	--enfeeble_you = "You are afflicted by Enfeeble.",
+	--enfeeble_warnyou = "Enfeeble on YOU!",
 
 	infernals = "Infernaux",
 	infernals_desc = "Affiche le temps de recharge des invocations d'infernaux.",
@@ -144,6 +150,8 @@ L:RegisterTranslations("koKR", function() return {
 	enfeeble_warning2 = "10초 후 쇠약!",
 	enfeeble_bar = "쇠약",
 	enfeeble_nextbar = "다음 쇠약",
+	--enfeeble_you = "You are afflicted by Enfeeble.",
+	--enfeeble_warnyou = "Enfeeble on YOU!",
 
 	infernals = "불지옥",
 	infernals_desc = "불지옥 소환에 대한 재사용 대기시간을 표시합니다.",
@@ -182,6 +190,8 @@ L:RegisterTranslations("zhCN", function() return {
 	enfeeble_warning2 = "能量衰弱！ 10秒后发动",
 	enfeeble_bar = "能量衰弱",
 	enfeeble_nextbar = "下次→能量衰弱",
+	--enfeeble_you = "You are afflicted by Enfeeble.",
+	--enfeeble_warnyou = "Enfeeble on YOU!",
 
 	infernals = "地狱火警报",
 	infernals_desc = "显示召唤地狱火冷却时间计时条",
@@ -221,6 +231,8 @@ L:RegisterTranslations("zhTW", function() return {
 	enfeeble_warning2 = "10 秒後削弱",
 	enfeeble_bar = "削弱",
 	enfeeble_nextbar = "削弱倒數",
+	--enfeeble_you = "You are afflicted by Enfeeble.",
+	--enfeeble_warnyou = "Enfeeble on YOU!",
 
 	infernals = "地獄火警告",
 	infernals_desc = "顯示召喚地獄火計時條",
@@ -318,6 +330,9 @@ function mod:DespawnTimer()
 end
 
 function mod:EnfeebleEvent(msg)
+	if msg == L["enfeeble_you"] then
+		self:Message(L["enfeeble_warnyou"], "Personal", true)
+	end
 	if msg:find(L["enfeeble_trigger"]) then
 		self:Sync("MalchezaarEnfeeble")
 	end

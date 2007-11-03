@@ -181,7 +181,7 @@ end
 
 function mod:Event(msg)
 	if self.db.profile.mark and msg == L["mark_trigger"] then
-		self:Message(L["mark_message"], "Positive", true, "Alarm")
+		self:Message(L["mark_message"], "Personal", true, "Alarm")
 	end
 	local tplayer, ttype = select(3, msg:find(L["twist_trigger"]))
 	if tplayer and ttype then

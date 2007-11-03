@@ -407,7 +407,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "CouncilPoison" and rest and db.poison then
 		local other = fmt(L["poison_other"], rest)
 		if rest == pName then
-			self:Message(L["poison_you"], "Personal", true, "Long")
+			self:Message(L["poison_you"], "Important", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
 		else
 			self:Message(other, "Attention")

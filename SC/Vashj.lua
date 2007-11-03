@@ -536,8 +536,13 @@ end
 function mod:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "VashjStatic" and rest and self.db.profile.static then
 		local msg = L["static_charge_message"]:format(rest)
-		self:Message(msg, "Important", nil, "Alert")
-		self:Bar(msg, 20, "Spell_Nature_LightningOverload")
+		if rest == pName then
+			self:Message(L["enfeeble_warnyou"], "Personal", true, "Alert")
+			self:Message(msg, "Important", nil, nil, true)
+		else
+			self:Message(msg, "Important")
+			self:Bar(msg, 20, "Spell_Nature_LightningOverload")
+		end
 		if self.db.profile.icon then
 			self:Icon(rest)
 		end

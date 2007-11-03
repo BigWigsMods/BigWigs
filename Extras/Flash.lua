@@ -90,7 +90,7 @@ end
 ------------------------------
 
 function mod:BigWigs_Message(msg, colour)
-	if self.db.profile.flash and colour and colour == "Personal" then --and arg3 and arg3 == "Personal" then
+	if self.db.profile.flash and colour and colour == "Personal" then
 		if not display then --frame creation
 			display = CreateFrame("Frame", "BWFlash", UIParent)
 			display:SetFrameStrata("BACKGROUND")

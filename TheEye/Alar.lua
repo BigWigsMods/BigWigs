@@ -220,7 +220,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "AlArArmor" and rest and self.db.profile.armor then
 		local other = fmt(L["armor_other"], rest)
 		if rest == pName then
-			self:Message(L["armor_you"], "Personal", true, "Long")
+			self:Message(L["armor_you"], "Important", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
 		else
 			self:Message(other, "Attention")

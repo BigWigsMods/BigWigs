@@ -50,6 +50,7 @@ L:RegisterTranslations("enUS", function() return {
 	gaze_trigger = "sets eyes on (%S+)!$",
 	gaze_message = "Gaze on %s!",
 	gaze_bar = "~Gaze cooldown",
+	gaze_you = "Gaze on YOU!",
 
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon over the player that Thaladred sets eyes on.",
@@ -129,6 +130,7 @@ L:RegisterTranslations("koKR", function() return {
 	gaze_trigger = "([^%s]+)|1을;를; 노려봅니다!$",
 	gaze_message = "%s 주시!",
 	gaze_bar = "~주시 대기 시간",
+	--gaze_you = "Gaze on YOU!",
 
 	icon = "전술 표시",
 	icon_desc = "탈라드레드의 주시 대상이된 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
@@ -208,6 +210,7 @@ L:RegisterTranslations("frFR", function() return {
 	gaze_trigger = "pose ses yeux sur (%S+) !$",
 	gaze_message = "Focalisation sur %s !",
 	gaze_bar = "Cooldown Focalisation",
+	--gaze_you = "Gaze on YOU!",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur la personne surveillée par Thaladred (nécessite d'être promu ou mieux).",
@@ -290,6 +293,7 @@ L:RegisterTranslations("deDE", function() return {
 	gaze_trigger = "behält ([^%s]+) im Blickfeld!$",
 	gaze_message = "Blick auf %s!",
 	gaze_bar = "Blick Cooldown",
+	--gaze_you = "Gaze on YOU!",
 
 	icon = "Schlachtzug Symbol",
 	icon_desc = "Plaziert ein Schlachtzug Symbol auf dem Spieler, den Thaladred im Blick behält.",
@@ -367,6 +371,7 @@ L:RegisterTranslations("zhCN", function() return {
 	gaze_trigger = "凝视着(%S+)！$",
 	gaze_message = "凝视 %s!",
 	gaze_bar = "~凝视 CD",
+	--gaze_you = "Gaze on YOU!",
 
 	icon = "团队标记",
 	icon_desc = "给受到凝视的队友打上团队标记",
@@ -447,6 +452,7 @@ L:RegisterTranslations("zhTW", function() return {
 	gaze_trigger = "凝視著([^%s]+)!$",
 	gaze_message = "凝視：%s - 快跑！",
 	gaze_bar = "凝視冷卻",
+	--gaze_you = "Gaze on YOU!",
 
 	icon = "團隊標記",
 	icon_desc = "當目標受到凝視時設置骷髏標記",
@@ -565,11 +571,17 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
+	if not self.fb.profile.gaze then return end
+
 	local player = select(3, msg:find(L["gaze_trigger"]))
 	if player then
 		self:Bar(L["gaze_bar"], 9, "Spell_Shadow_EvilEye")
-		if self.db.profile.gaze then
-			self:Message(fmt(L["gaze_message"], player), "Important")
+		local other = fmt(L["gaze_message"], player)
+		if player == pName then
+			self:Message(L["gaze_you"], "Personal", true, "Alarm")
+			self:Message(other, "Important", nil, nil, true)
+		else
+			self:Message(other, "Important")
 		end
 		if self.db.profile.icon then
 			self:Icon(player)
@@ -721,4 +733,3 @@ function mod:MCWarn()
 	stop = true
 	self:ScheduleEvent("BWKaelthasNilStop", nilStop, 5)
 end
-

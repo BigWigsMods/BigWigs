@@ -328,7 +328,7 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["phase2_trigger"]) then
 		if self.db.profile.phase then
-			self:Message(L["phase2_message"], "Personal")
+			self:Message(L["phase2_message"], "Important")
 		end
 		self:CancelScheduledEvent("split1")
 		self:TriggerEvent("BigWigs_StopBar", self, L["split_bar"])

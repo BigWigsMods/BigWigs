@@ -250,7 +250,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "ArchGrip" and rest and db.grip then
 		local other = fmt(L["grip_other"], rest)
 		if rest == pName then
-			self:Message(L["grip_you"], "Personal", true, "Long")
+			self:Message(L["grip_you"], "Attention", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
 			self:Bar(other, 10, "Spell_Shadow_SoulLeech_3")
 		else
