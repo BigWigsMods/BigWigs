@@ -154,7 +154,6 @@ function mod:SoD(msg)
 	if splayer and stype then
 		if splayer == L2["you"] and stype == L2["are"] then
 			splayer = pName
-			self:TriggerEvent("BigWigs_Personal")
 		end
 		self:Sync("TeronShadow", splayer)
 	end

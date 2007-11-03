@@ -339,7 +339,6 @@ function mod:DebuffEvent(msg)
 	if rplayer and rtype then
 		if rplayer == L2["you"] and rtype == L2["are"] then
 			rplayer = pName
-			self:TriggerEvent("BigWigs_Personal")
 		end
 		self:Sync("GurRage", rplayer)
 		return

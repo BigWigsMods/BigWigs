@@ -271,8 +271,8 @@ function mod:DebuffEvent(msg)
 	if aplayer and atype then
 		if aplayer == L2["you"] and atype == L2["are"] then
 			aplayer = pName
-			self:TriggerEvent("BigWigs_Personal")
 		end
 		self:Sync("AlArArmor", aplayer)
 	end
 end
+

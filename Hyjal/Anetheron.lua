@@ -206,7 +206,6 @@ function mod:InfernoCheck()
 	if target then
 		if target == pName then
 			self:Message(L["inferno_you"], "Personal", true, "Long")
-			self:TriggerEvent("BigWigs_Personal")
 		else
 			self:Message(fmt(L["inferno_message"], target), "Important", nil, "Alert")
 		end

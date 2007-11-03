@@ -172,7 +172,6 @@ end
 function mod:AfflictEvent(msg)
 	if db.decay and msg == L["decay_trigger"] then
 		self:Message(L["decay_message"], "Personal", true, "Alarm")
-		self:TriggerEvent("BigWigs_Personal")
 	end
 
 	local iplayer, itype = select(3, msg:find(L["icebolt_trigger"]))

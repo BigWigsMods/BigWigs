@@ -7,7 +7,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local started = nil
-local pName = nil
 local db = nil
 local previous = nil
 local UnitName = UnitName
@@ -199,7 +198,6 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "SupPunch", 5)
 
 	db = self.db.profile
-	pName = UnitName("player")
 end
 
 ------------------------------
@@ -230,9 +228,6 @@ function mod:TargetCheck()
 	if target ~= previous then
 		if target then
 			self:Message(fmt(L["target_message"], target), "Attention")
-			if target == pName then
-				self:TriggerEvent("BigWigs_Personal")
-			end
 			if db.icon then
 				self:Icon(target)
 			end

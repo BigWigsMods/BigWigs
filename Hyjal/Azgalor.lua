@@ -205,7 +205,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Message(L["doom_you"], "Personal", true, "Long")
 			self:Message(other, "Attention", nil, nil, true)
 			self:Bar(other, 19, "Ability_Creature_Cursed_02")
-			self:TriggerEvent("BigWigs_Personal")
 		else
 			self:Message(other, "Attention")
 			self:Bar(other, 19, "Ability_Creature_Cursed_02")

@@ -187,7 +187,6 @@ function mod:Event(msg)
 	if tplayer and ttype then
 		if tplayer == L2["you"] and ttype == L2["are"] then
 			tplayer = pName
-			self:TriggerEvent("BigWigs_Personal")
 		end
 		self:Sync("Twisted", tplayer)
 	end

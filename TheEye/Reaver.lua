@@ -316,7 +316,6 @@ function mod:Result(target)
 	if target == pName and self.db.profile.orbyou then
 		self:Message(L["orb_you"], "Personal", true, "Long")
 		self:Message(fmt(L["orb_other"], target), "Attention", nil, nil, true)
-		self:TriggerEvent("BigWigs_Personal")
 
 		--this is handy for player with speech bubbles enabled to see if nearby players are being hit and run away from them
 		if self.db.profile.orbsay then
@@ -329,3 +328,4 @@ function mod:Result(target)
 		self:Icon(target)
 	end
 end
+

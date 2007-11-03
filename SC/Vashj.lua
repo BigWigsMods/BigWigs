@@ -510,7 +510,6 @@ function mod:AfflictEvent(msg)
 			splayer = pName
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 			self:ScheduleEvent("BWHideProx", HideProx, 20)
-			self:TriggerEvent("BigWigs_Personal")
 		end
 		self:Sync("VashjStatic", splayer)
 		return

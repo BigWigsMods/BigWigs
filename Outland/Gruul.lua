@@ -326,7 +326,6 @@ end
 function mod:Event(msg)
 	if self.db.profile.cavein and msg == L["cavein_trigger"] then
 		self:Message(L["cavein_message"], "Personal", true, "Alarm")
-		self:TriggerEvent("BigWigs_Personal")
 	elseif not silence and self.db.profile.silence and msg:find(L["silence_trigger"]) then
 		self:Message(L["silence_message"], "Attention")
 		self:DelayedMessage(28, L["silence_warning"], "Urgent")

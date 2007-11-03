@@ -312,7 +312,6 @@ function mod:WrathAff(msg)
 			wplayer = pName
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 			self:ScheduleEvent("BWHideProx", HideProx, 6)
-			self:TriggerEvent("BigWigs_Personal")
 		end
 		self:Sync("SolaWrath", wplayer)
 	end
@@ -355,3 +354,4 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["priest_bar"], 22, "Spell_Holy_HolyBolt")
 	end
 end
+
