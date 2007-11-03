@@ -75,7 +75,7 @@ L:RegisterTranslations("zhCN", function() return {
 	range = "范围检测",
 	range_desc = "当你低发力以及中了卡兹洛加印记,显示范围检测表.",
 	range_gain = "你受到了卡兹洛加印记效果的影响。$",
-	range_fade = "卡兹洛加印记效果从你身上消失了。$",--Updated 10/31,check
+	range_fade = "卡兹洛加印记效果从你身上消失了。$",
 
 } end )
 

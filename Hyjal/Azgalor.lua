@@ -125,7 +125,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	doom = "厄运",--Update 10/31,check
+	doom = "厄运",
 	doom_desc = "厄运警报.",
 	doom_other = "%s中了厄运",
 	doom_you = "你中了厄运!",

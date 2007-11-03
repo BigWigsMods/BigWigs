@@ -119,7 +119,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	netherbreath = "虚空吐息",
 	netherbreath_desc = "虚空吐息警报",
-	netherbreath_trigger = "施放了虚空吐息。$",--English Orginal not Translate?check it
+	netherbreath_trigger = "施放了Face Random Target。$",--TF翻译有误,请勿参照. 此处需要战斗记录证实
 	netherbreath_warn = "虚空吐息来临",
 } end )
 

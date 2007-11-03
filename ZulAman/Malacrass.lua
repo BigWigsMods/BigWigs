@@ -92,6 +92,31 @@ L:RegisterTranslations("frFR", function() return {
 	heal_message = "Incante un soin !",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "Da shadow gonna fall on you....",
+
+	bolts = "Spirit Bolts",
+	bolts_desc = "当Malacrass开始引导Spirit Bolts时发出警报.",
+	bolts_trigger = "Your soul gonna bleed!",
+	bolts_message = "即将 - Spirit Bolts!",
+
+	soul = "Siphon Soul",
+	soul_desc = "Warn who is afflicted by Siphon Soul.",
+	soul_trigger = "^(%S+)受(%S+)了Siphon Soul效果的影响。$",
+	soul_message = "Siphon: %s",
+
+	totem = "图腾",
+	totem_desc = "当火焰新星图腾被施放发出警报.",
+	totem_trigger = "Hex Lord Malacrass施放了火焰新星图腾。",
+	totem_message = "Fire Nova Totem!",
+
+	heal = "治疗",
+	heal_desc = "当Malacrass施放治疗发出警报.",
+	heal_flash = "Hex Lord Malacrass开始施放快速治疗。$",
+	heal_light = "Hex Lord Malacrass开始施放圣光术。$",
+	heal_wave = "Hex Lord Malacrass开始施放治疗波。$",
+	heal_message = "正在施放 => 治疗! 打断!",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

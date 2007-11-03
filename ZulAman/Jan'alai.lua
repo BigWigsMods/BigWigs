@@ -103,6 +103,28 @@ L:RegisterTranslations("deDE", function() return {
 	adds_message = "Brutwächter wurden gerufen!",
 } end )
 
+
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "Spirits of da wind be your doom!",
+
+	flame = "烈焰吐息",
+	flame_desc = "Warn who Jan'alai casts Flame Strike on.",
+	flame_trigger = "Jan'alai开始施放烈焰吐息。",
+	flame_message = "烈焰吐息 >%s<!",
+
+	icon = "团队标记",
+	icon_desc = "给中了烈焰吐息的玩家打上团队标记. (requires promoted or higher)",
+
+	bomb = "火焰炸弹",
+	bomb_desc = "显示火焰炸弹记时条",
+	bomb_trigger = "I burn ya now!",
+	bomb_message = "即将 - 火焰炸弹!",
+
+	adds = "援兵",
+	adds_desc = "援兵即将到来时发出警报",
+	adds_trigger = "Where ma hatcha? Get to work on dem eggs!",
+	adds_message = "即将出现 救援!",
+} end )
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

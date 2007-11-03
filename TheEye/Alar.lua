@@ -116,7 +116,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	engage_message = "%s 激活 - 阶段 1",
+	engage_message = "%s 激活 - 第一阶段",
 
 	meteor = "流星",
 	meteor_desc = "流星记时条",
@@ -126,7 +126,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	flamepatch = "烈焰之地(你)",
 	flamepatch_desc = "烈焰之地于你警报",
-	flamepatch_trigger = "你受到了烈焰击打效果的影响。",
+	flamepatch_trigger = "你受到了烈焰击打效果的影响。$",
 	flamepatch_message = "烈焰之地 >你<!",
 
 	armor = "熔化护甲",

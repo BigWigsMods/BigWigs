@@ -59,6 +59,22 @@ L:RegisterTranslations("koKR", function() return {
 	form_dragonhawk_message = "5단계 - 용매!",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "Nobody badduh dan me!",
+	engage_message = "第一阶段 - 人类阶段",
+
+	form = "形态转变",
+	form_desc = "Zul'jin变形警报",
+	form_bear_trigger = "Got me some new tricks... like me brudda bear....",
+	form_bear_message = "第二阶段 - 熊形态!",
+	form_eagle_trigger = "Dere be no hidin' from da eagle!",
+	form_eagle_message = "第三阶段 - 鹰形态!",
+	form_lynx_trigger = "Let me introduce you to me new bruddas: fang and claw!",
+	form_lynx_message = "第四阶段 - 山猫形态!",
+	form_dragonhawk_trigger = "Ya don' have to look to da sky to see da dragonhawk!",
+	form_dragonhawk_message = "第五阶段 - 龙鹰形态!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

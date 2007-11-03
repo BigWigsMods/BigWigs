@@ -142,11 +142,11 @@ L:RegisterTranslations("zhCN", function() return {
 
 	spinesay = "穿刺警报",
 	spinesay_desc = "当你中了穿刺会自动喊话,能帮助周围队员避让.",
-	spinesay_message = "我中了穿刺!",
+	spinesay_message = "穿刺 我了 XO!",
 
 	health = "生命值监视",
 	health_desc = "在海潮之盾阶段监视团队生命值并发出警告, 如果全部团队血量超过8500.",
-	shield_fade_trigger = "海潮之盾效果从高阶督军纳因图斯身上消失。$",--check
+	shield_fade_trigger = "海潮之盾效果从高阶督军纳因图斯身上消失了。$",--check
 	shield_blow_message = "团队生命值 >大于< 8500!",
 
 	shield = "海潮之盾",

@@ -74,7 +74,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["Proximity"] = "近距离",
-	--["Close Players"] = "近距离玩家",
+	["Close Players"] = "近距离玩家",
 	["Options for the Proximity Display."] = "设置近距离显示。",
 	["|cff777777Nobody|r"] = "|cff777777无人|r",
 	["Sound"] = "声音",

@@ -80,7 +80,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Output Settings"] = "输出设置",
 
 	["Show anchor"] = "显示信息框体",
-	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "显示信息框，可以移动设置信息显示位置（仅针对使用 BigWigs 窗口模式）。",
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "显示信息框，可以移动设置信息显示位置（仅针对使用BW窗口模式）。",
 
 	["Use colors"] = "发送彩色信息",
 

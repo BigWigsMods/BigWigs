@@ -48,9 +48,9 @@ L:RegisterTranslations("zhCN", function() return {
 	["Victory!"] = "胜利！",
 	["Commands for testing bars, messages and synchronization."] = "设置测试计时条、信息及同步选项。",
 	["Local test"] = "本地测试",
-	["Perform a local test of BigWigs."] = "执行 BigWigs 本地测试。",
+	["Perform a local test of BigWigs."] = "执行BigWigs本地测试。",
 	["Sync test"] = "同步测试",
-	["Perform a sync test of BigWigs."] = "执行 BigWigs 同步测试（需要助力或更高权限）。",
+	["Perform a sync test of BigWigs."] = "执行BigWigs同步测试（需要助力或更高权限）。",
 	["Testing Sync"] = "同步测试中......",
 } end)
 

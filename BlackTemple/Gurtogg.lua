@@ -202,7 +202,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	bloodboil = "血沸",
 	bloodboil_desc = "血沸计数及警报",
-	bloodboil_trigger = "^([^%s]+)受([^%s]+)了邪酸吐息效果的影响。$",--Update at 10/31 and check
+	bloodboil_trigger = "血沸效果的影响。$",
 	bloodboil_message = "血沸(%d)",
 
 	rage = "邪能狂怒",

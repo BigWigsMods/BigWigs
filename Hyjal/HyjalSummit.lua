@@ -177,11 +177,11 @@ L:RegisterTranslations("zhCN", function() return {
 	["Ghouls"] = "食尸鬼",
 	["Crypt Fiends"] = "地穴恶魔",
 	["Abominations"] = "憎恶",
-	["Necromancers"] = "阴暗通灵师",--check
+	["Necromancers"] = "亡灵巫师",
 	["Banshees"] = "女妖",
 	["Gargoyles"] = "石像鬼",
 	["Frost Wyrm"] = "冰霜巨龙",
-	["Fel Stalkers"] = "恐狼",--check
+	["Fel Stalkers"] = "恶魔猎犬",
 	["Infernals"] = "地狱火",
 } end )
 
