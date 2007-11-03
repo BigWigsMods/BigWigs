@@ -138,6 +138,11 @@ L:RegisterTranslations("zhCN", function() return {
 	["~%s spawn"] = "~%s 出现.",
 	["~Wave %d spawn"] = "~第%d波 出现.",
 	["Wave %d incoming!"] = "第%d波 来临!",
+	["Wave %d! %d %s"] = "第%d波! %d %s", --1 set of mobs
+	["Wave %d! %d %s, %d %s"] = "第%d波! %d %s, %d %s", --2 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s"] = "第%d波! %d %s, %d %s, %d %s", --3 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "第%d波! %d %s, %d %s, %d %s, %d %s", --4 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "第%d波! %d %s, %d %s, %d %s, %d %s, %d %s", --5 sets of mobs
 	["%s in ~%d sec!"] = "在~%d秒后 %s !",
 	["Wave %d in ~%d sec!"] = "在~%d秒后 第%d波!",
 
@@ -150,7 +155,17 @@ L:RegisterTranslations("zhCN", function() return {
 	["I am with you, Thrall."] = "I am with you, Thrall.", -- Kaz'Rogal
 	["We have nothing to fear."] = "We have nothing to fear.", -- Az'Galor
 
-	["Please remove BigWigs_WaveTimers, it is deprecated."] = "请移除BigWigs_WaveTimers, 此插件已经失效了.",
+	["Please remove BigWigs_WaveTimers, it is deprecated."] = "请移除 BigWigs_WaveTimers， 此插件已经失效了。",
+
+	["Ghouls"] = "食尸鬼",
+	["Crypt Fiends"] = "地穴恶魔",
+	["Abominations"] = "憎恶",
+	["Necromancers"] = "阴暗通灵师",--check
+	["Banshees"] = "女妖",
+	["Gargoyles"] = "石像鬼",
+	["Frost Wyrm"] = "冰霜巨龙",
+	["Fel Stalkers"] = "恐狼",--check
+	["Infernals"] = "地狱火",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
