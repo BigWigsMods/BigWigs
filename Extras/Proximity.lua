@@ -37,8 +37,8 @@ local coloredNames = setmetatable({}, {__index =
 			local num = GetNumRaidMembers()
 			local found
 			for i = 1, num do
-				if UnitExists("raid"..i) and UnitName("raid"..i) == key then
-					local class = select(2, UnitClass("raid"..i) )
+				if UnitExists(fmt("%s%d", "raid", i)) and UnitName(fmt("%s%d", "raid", i)) == key then
+					local class = select(2, UnitClass(fmt("%s%d", "raid", i)) )
 					self[key] = "|cff" .. paintchips:GetHex(class) .. key .."|r"
 					found = true
 				end
