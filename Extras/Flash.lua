@@ -114,5 +114,5 @@ function mod:BigWigs_Message(msg, colour)
 end
 
 function mod:BigWigs_Test()
-	self:TriggerEvent("BigWigs_Message", L["Test"], "Personal")
+	self:TriggerEvent("BigWigs_Message", L["Test"], "Personal", true)
 end

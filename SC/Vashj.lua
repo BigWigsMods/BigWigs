@@ -44,6 +44,7 @@ L:RegisterTranslations("enUS", function() return {
 	static_charge_trigger = "^(%S+) (%S+) afflicted by Static Charge%.$",
 	static_charge_message = "Static Charge on %s!",
 	static_fade = "Static Charge fades from you.",
+	static_warnyou = "Static Charge on YOU!",
 
 	icon = "Icon",
 	icon_desc = "Put an icon on players with Static Charge and those who loot cores.",
@@ -98,6 +99,7 @@ L:RegisterTranslations("koKR", function() return {
 	static_charge_trigger = "^([^|;%s]*)(.*)전하 충전에 걸렸습니다%.$",
 	static_charge_message = "%s 전하 충전!",
 	static_fade = "당신의 전하 충전 사라짐.",
+	--static_warnyou = "Static Charge on YOU!",
 
 	icon = "전술 표시",
 	icon_desc = "전하 충전에 걸린 플레이어와 핵을 획득한 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
@@ -152,6 +154,7 @@ L:RegisterTranslations("frFR", function() return {
 	static_charge_trigger = "^(%S+) (%S+) les effets .* Charge statique%.$",
 	static_charge_message = "Charge statique sur %s !",
 	static_fade = "Charge statique vient de se dissiper.",
+	--static_warnyou = "Static Charge on YOU!",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur les joueurs affectés par la Charge statique et sur ceux qui ramassent les noyaux.",
@@ -205,6 +208,7 @@ L:RegisterTranslations("deDE", function() return {
 	static_charge_trigger = "^([^%s]+) ([^%s]+) von Statische Aufladung betroffen%.$",
 	static_charge_message = "Statische Aufladung auf %s!",
 	static_fade = "'Statische Aufladung' schwindet von Euch.",
+	--static_warnyou = "Static Charge on YOU!",
 
 	icon = "Icon",
 	icon_desc = "Plaziert ein Icon auf Spielern mit Statische Aufladung und denen, die einen Besudelten Kern looten.",
@@ -259,6 +263,7 @@ L:RegisterTranslations("zhCN", function() return {
 	static_charge_trigger = "^(%S+)受(%S+)了静电充能效果的影响。$",
 	static_charge_message = "静电充能 --> %s!",
 	static_fade = "静电充能效果从你身上消失了。",
+	--static_warnyou = "Static Charge on YOU!",
 
 	icon = "标记",
 	icon_desc = "给中了静电冲能和污染之核的玩家打上标记",
@@ -313,6 +318,7 @@ L:RegisterTranslations("zhTW", function() return {
 	static_charge_trigger = "^(.+)受(到[了]*)靜電衝鋒效果的影響。",
 	static_charge_message = "靜電衝鋒：[%s]",
 	static_fade = "靜電衝鋒效果從你身上消失了。",
+	--static_warnyou = "Static Charge on YOU!",
 
 	icon = "團隊標記",
 	icon_desc = "對受到靜電衝鋒及拾取核心的玩家設置團隊標記（需要權限）",
@@ -537,7 +543,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 	if sync == "VashjStatic" and rest and self.db.profile.static then
 		local msg = L["static_charge_message"]:format(rest)
 		if rest == pName then
-			self:Message(L["enfeeble_warnyou"], "Personal", true, "Alert")
+			self:Message(L["static_warnyou"], "Personal", true, "Alert")
 			self:Message(msg, "Important", nil, nil, true)
 		else
 			self:Message(msg, "Important")
