@@ -99,7 +99,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Crypt Fiends"] = "지하마귀",
 	["Abominations"] = "누더기골렘",
 	["Necromancers"] = "어둠의 강령술사",
-	["Banshees"] = "벤쉬",
+	["Banshees"] = "밴시",
 	["Gargoyles"] = "가고일",
 	["Frost Wyrm"] = "서리고룡",
 	["Fel Stalkers"] = "지옥사냥개",
