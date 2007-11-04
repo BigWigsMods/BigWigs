@@ -571,7 +571,7 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
-	if not self.fb.profile.gaze then return end
+	if not self.db.profile.gaze then return end
 
 	local player = select(3, msg:find(L["gaze_trigger"]))
 	if player then
