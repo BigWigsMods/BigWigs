@@ -99,7 +99,7 @@ L:RegisterTranslations("koKR", function() return {
 	static_charge_trigger = "^([^|;%s]*)(.*)전하 충전에 걸렸습니다%.$",
 	static_charge_message = "%s 전하 충전!",
 	static_fade = "당신의 전하 충전 사라짐.",
-	--static_warnyou = "Static Charge on YOU!",
+	static_warnyou = "당신에 전하 충전!",
 
 	icon = "전술 표시",
 	icon_desc = "전하 충전에 걸린 플레이어와 핵을 획득한 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
