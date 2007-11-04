@@ -154,7 +154,7 @@ L:RegisterTranslations("frFR", function() return {
 	static_charge_trigger = "^(%S+) (%S+) les effets .* Charge statique%.$",
 	static_charge_message = "Charge statique sur %s !",
 	static_fade = "Charge statique vient de se dissiper.",
-	--static_warnyou = "Static Charge on YOU!",
+	static_warnyou = "Charge statique sur VOUS !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur les joueurs affectés par la Charge statique et sur ceux qui ramassent les noyaux.",
