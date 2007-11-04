@@ -190,8 +190,8 @@ L:RegisterTranslations("zhCN", function() return {
 	enfeeble_warning2 = "能量衰弱！ 10秒后发动",
 	enfeeble_bar = "能量衰弱",
 	enfeeble_nextbar = "下次→能量衰弱",
-	--enfeeble_you = "You are afflicted by Enfeeble.",
-	--enfeeble_warnyou = "Enfeeble on YOU!",
+	enfeeble_you = "你受到了能量衰弱.",
+	enfeeble_warnyou = ">你< 能量衰弱!",
 
 	infernals = "地狱火警报",
 	infernals_desc = "显示召唤地狱火冷却时间计时条",

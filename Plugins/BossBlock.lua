@@ -68,30 +68,30 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["BossBlock"] = "信息阻止",
-	desc = "自动阻止其他玩家或其他来源的Boss预警信息和表情.",
+	desc = "自动阻止其他玩家或其他来源的 Boss 预警信息和表情.",
 
-	["Boss emotes"] = "Boss表情",
-	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = "阻止信息发送到团队Boss表情框体.\n\n只阻止BigWigs有的部分,而只阻止的是显示在信息框体,而非聊天窗口.",
+	["Boss emotes"] = "Boss 表情",
+	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = "阻止信息发送到团队 Boss 表情框体。\n\n只阻止 BigWigs 有的部分，而只阻止的是显示在信息框体，而非聊天窗口。",
 
 	["Raid chat"] = "团队频道",
-	["Suppress messages sent to raid chat."] = "禁止信息发送到团队频道",
+	["Suppress messages sent to raid chat."] = "禁止信息发送到团队频道。",
 
 	["Raid warning chat messages"] = "团队警报频道信息",
-	["Suppress raid warning messages from the chat window."] = "阻止聊天窗口下的团队警报信息",
+	["Suppress raid warning messages from the chat window."] = "阻止聊天窗口下的团队警报信息。",
 
 	["Raid warning messages"] = "团队警报信息",
-	["Suppress raid warning messages from the raid message window."] = "阻止团队信息窗口下的团队警报信息.",
+	["Suppress raid warning messages from the raid message window."] = "阻止团队信息窗口下的团队警报信息。",
 
 	["Raid say"] = "RS信息",
-	["Suppress RaidSay popup messages."] = "阻止RS弹出的信息",
+	["Suppress RaidSay popup messages."] = "阻止 RS 弹出的信息。",
 
 	["Whispers"] = "密语",
-	["Suppress whispered messages."] = "阻止密语信息",
+	["Suppress whispered messages."] = "阻止密语信息。",
 
 	["Suppressing Chatframe"] = "正在阻止来自于聊天框中的信息",
 	["Suppressing RaidWarningFrame"] = "正在阻止来自于团队通告的信息",
-	["Suppressing CT_RAMessageFrame"] = "正在阻止来自于CT_RA的RS信息",
-	["Suppressing RaidBossEmoteFrame"] = "正在阻止来自于团队Boss表情的信息",
+	["Suppressing CT_RAMessageFrame"] = "正在阻止来自于 CT_RA 的 RS 信息",
+	["Suppressing RaidBossEmoteFrame"] = "正在阻止来自于团队 Boss 表情的信息",
 
 	["Suppressed"] = "阻止",
 	["Shown"] = "显示",

@@ -169,7 +169,7 @@ L:RegisterTranslations("zhCN", function() return {
 	target = "目标",
 	target_desc = "当谁能被凝视发出警报并被打上团队标记.",
 	target_message = "%s 被 凝视!",
-	--target_you = "YOU are being chased!",
+	target_you = ">你< 被凝视了!",
 	target_message_nounit = "新目标!",
 
 	icon = "团队标记",

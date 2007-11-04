@@ -371,7 +371,7 @@ L:RegisterTranslations("zhCN", function() return {
 	gaze_trigger = "凝视着(%S+)！$",
 	gaze_message = "凝视 %s!",
 	gaze_bar = "~凝视 CD",
-	--gaze_you = "Gaze on YOU!",
+	gaze_you = "凝视 >你<!",
 
 	icon = "团队标记",
 	icon_desc = "给受到凝视的队友打上团队标记",
