@@ -139,7 +139,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	spout = "喷涌",
 	spout_desc = "喷涌记时条,仅供参考.",
-	spout_trigger = "%s深深地吸了一口气！",
+	spout_trigger = "%s深深吸了一口气！",
 	spout_message = "快喷了! 啊~~......",
 	spout_warning = "~3秒后 可能喷涌!",
 	spout_bar = "可能喷涌",

@@ -145,7 +145,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	engage_trigger = "Alert! You are marked for extermination.",
+	engage_trigger = "警报！消灭入侵者。$",
 
 	orbyou = "奥术宝珠(你)",
 	orbyou_desc = "你中奥术宝珠发出警报",
