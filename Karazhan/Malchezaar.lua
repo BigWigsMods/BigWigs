@@ -184,13 +184,13 @@ L:RegisterTranslations("zhCN", function() return {
 
 	enfeeble = "能量衰弱警报",
 	enfeeble_desc = "显示能量衰弱冷却计时条",
-	enfeeble_trigger = "受到能量衰弱效果的影响。$",
+	enfeeble_trigger = "受到了能量衰弱效果的影响。$",
 	enfeeble_message = "能量衰弱! 30后再次发动！",
 	enfeeble_warning1 = "能量衰弱！ 5秒后发动",
 	enfeeble_warning2 = "能量衰弱！ 10秒后发动",
 	enfeeble_bar = "能量衰弱",
 	enfeeble_nextbar = "下次→能量衰弱",
-	enfeeble_you = "你受到了能量衰弱.",
+	enfeeble_you = "^你受到了能量衰弱效果的影响。$",
 	enfeeble_warnyou = ">你< 能量衰弱!",
 
 	infernals = "地狱火警报",
