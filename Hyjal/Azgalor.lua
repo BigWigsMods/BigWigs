@@ -7,6 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local pName = nil
 local db = nil
+local started = nil
 
 ----------------------------
 --      Localization      --
@@ -175,6 +176,7 @@ function mod:OnEnable()
 	pName = UnitName("player")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	db = self.db.profile
+	started = nil
 end
 
 ------------------------------
