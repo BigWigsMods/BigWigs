@@ -263,7 +263,7 @@ L:RegisterTranslations("zhCN", function() return {
 	static_charge_trigger = "^(%S+)受(%S+)了静电充能效果的影响。$",
 	static_charge_message = "静电充能 --> %s!",
 	static_fade = "静电充能效果从你身上消失了。",
-	--static_warnyou = "Static Charge on YOU!",
+	static_warnyou = "静电充能 >你<!",
 
 	icon = "标记",
 	icon_desc = "给中了静电冲能和污染之核的玩家打上标记",
