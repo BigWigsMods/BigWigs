@@ -6,6 +6,7 @@
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsFlash")
 local display = nil
+local UIFrameFlash = UIFrameFlash
 
 L:RegisterTranslations("enUS", function() return {
 	["Flash"] = true,
@@ -95,21 +96,14 @@ function mod:BigWigs_Message(msg, colour)
 			display = CreateFrame("Frame", "BWFlash", UIParent)
 			display:SetFrameStrata("BACKGROUND")
 			display:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
-			display:SetBackdropColor(0,0,1,0.4)
+			display:SetBackdropColor(0,0,1,0.55)
 			display:SetPoint("CENTER", UIPARENT, "CENTER")
 			display:SetWidth(2000)
 			display:SetHeight(2000)
 			display:Hide()
 		 end
 
-		self:ScheduleEvent("BWFlash1", display.Show, 0.1, display)
-		self:ScheduleEvent("BWFlash2", display.SetBackdropColor, 0.17, display, 0, 0, 1, 0.5)
-		self:ScheduleEvent("BWFlash3", display.SetBackdropColor, 0.24, display, 0, 0, 1, 0.6)
-		self:ScheduleEvent("BWFlash4", display.SetBackdropColor, 0.31, display, 0, 0, 1, 0.7)
-		self:ScheduleEvent("BWFlash5", display.SetBackdropColor, 0.38, display, 0, 0, 1, 0.6)
-		self:ScheduleEvent("BWFlash6", display.SetBackdropColor, 0.45, display, 0, 0, 1, 0.5)
-		self:ScheduleEvent("BWFlash7", display.SetBackdropColor, 0.52, display, 0, 0, 1, 0.4)
-		self:ScheduleEvent("BWFlash8", display.Hide, 0.57, display)
+		UIFrameFlash(BWFlash, 0.2, 0.2, 0.8, false)
 	end
 end
 
