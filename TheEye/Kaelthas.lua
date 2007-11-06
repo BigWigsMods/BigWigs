@@ -156,7 +156,7 @@ L:RegisterTranslations("koKR", function() return {
 	pyro_desc = "불덩이 작렬에 대한 60초 타이머를 표시합니다.",
 	pyro_trigger = "%s|1이;가; 불덩이 작렬을 시전합니다!$",
 	pyro_warning = "약 5초 이내 불덩이 작렬!",
-	pyro_message = "불덩이 작열 시전!",
+	pyro_message = "불덩이 작렬 시전!",
 
 	toyall = "원격조종 장난감",
 	toyall_desc = "원격조종 장난감에 걸릴 시 경고합니다. 많은 스팸으로 2단계만 제외하고 막습니다.",
