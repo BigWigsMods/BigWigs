@@ -6,7 +6,7 @@
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsFlash")
 local display = nil
-local UIFrameFlash = UIFrameFlash
+local flash = nil
 
 L:RegisterTranslations("enUS", function() return {
 	["Flash"] = true,
@@ -94,6 +94,7 @@ function mod:BigWigs_Message(msg, colour)
 	if self.db.profile.flash and colour and colour == "Personal" then
 		if not display then --frame creation
 			display = CreateFrame("Frame", "BWFlash", UIParent)
+			flash = UIFrameFlash
 			display:SetFrameStrata("BACKGROUND")
 			display:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
 			display:SetBackdropColor(0,0,1,0.55)
@@ -103,7 +104,7 @@ function mod:BigWigs_Message(msg, colour)
 			display:Hide()
 		 end
 
-		UIFrameFlash(BWFlash, 0.2, 0.2, 0.8, false)
+		flash(BWFlash, 0.2, 0.2, 0.8, false)
 	end
 end
 
