@@ -439,7 +439,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "魔法，能量，我的人民陷入其中不能自拔……自從太陽之井被摧毀之後就是如此。歡迎來到未來。真遺憾，你們無法阻止什麼。沒有人可以阻止我了﹗",
-	-- engage_trigger = "魔法，能量，我的人民陷入其中不能自拔……自從太陽之井被摧毀之後就是如此。歡迎來到未來。真遺憾，你們無法阻止什麼。沒有人可以阻止我了﹗(薩拉斯語)為了人民的正義!",
+--	engage_trigger = "魔法，能量，我的人民陷入其中不能自拔……自從太陽之井被摧毀之後就是如此。歡迎來到未來。真遺憾，你們無法阻止什麼。沒有人可以阻止我了﹗(薩拉斯語)為了人民的正義!",
 	engage_message = "第一階段 - 四顧問！",
 
 	conflag = "燃燒",
@@ -452,7 +452,7 @@ L:RegisterTranslations("zhTW", function() return {
 	gaze_trigger = "凝視著([^%s]+)!$",
 	gaze_message = "凝視：%s - 快跑！",
 	gaze_bar = "凝視冷卻",
-	--gaze_you = "Gaze on YOU!",
+	gaze_you = "凝視著你!",
 
 	icon = "團隊標記",
 	icon_desc = "當目標受到凝視時設置骷髏標記",
@@ -481,8 +481,8 @@ L:RegisterTranslations("zhTW", function() return {
 	pyro_message = "炎爆術！",
 
 	toyall = "遙控玩具",
-	--toyall_desc = "當坦克受到遙控玩具影響時警示",
-	--toyall_message = "遙控玩具：%s",
+	toyall_desc = "當玩家受到遙控玩具影響時警示，僅作用在第二階段，避免洗頻",
+	toyall_message = "遙控玩具：%s",
 
 	phase = "階段警示",
 	phase_desc = "開啟各階段警示",
