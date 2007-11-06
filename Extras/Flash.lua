@@ -28,7 +28,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Toggle Shake on or off."] = true,
 
 	["Test"] = true,
-	["Perform a Flash test."] = true,
+	["Perform a Flash/Shake test."] = true,
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -43,7 +43,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Toggle Shake on or off."] = "진동을 켜거나 끕니다.",
 
 	["Test"] = "테스트",
-	["Perform a Flash test."] = "번쩍임 테스트를 실행합니다.",
+	["Perform a Flash/Shake test."] = "번쩍임 테스트를 실행합니다.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -51,7 +51,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Toggle Flash on or off."] = "Fais flasher ou non l'écran.",
 
 	["Test"] = "Test",
-	["Perform a Flash test."] = "Effectue un test du flash.",
+	["Perform a Flash/Shake test."] = "Effectue un test du flash.",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -59,7 +59,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Toggle Flash on or off."] = "启用或禁用屏幕闪烁通知。",
 
 	["Test"] = "测试",
-	["Perform a Flash test."] = "进行屏幕闪烁通知测试。",
+	["Perform a Flash/Shake test."] = "进行屏幕闪烁通知测试。",
 } end)
 ----------------------------------
 --      Module Declaration      --
@@ -106,7 +106,7 @@ mod.consoleOptions = {
 		[L["Test"]] = {
 			type = "execute",
 			name = L["Test"],
-			desc = L["Perform a Flash test."],
+			desc = L["Perform a Flash/Shake test."],
 			order = 4,
 			handler = mod,
 			func = "BigWigs_Test",
