@@ -405,10 +405,11 @@ do
 	-- We can't use the AceModuleCore :OnModuleCreated, since the properties on the
 	-- module has not been set when it's triggered.
 	function BigWigs:RegisterModule(module)
-		if type(module.revision) ~= "number" then
-			error("%q does not have a valid revision field."):format(name)
-		end
 		local name = module.name
+		local rev = module.revision
+		if type(rev) ~= "number" then
+			error(("%q does not have a valid revision field."):format(name))
+		end
 
 		if module:IsBossModule() then
 			self:ToggleModuleActive(module, false)
@@ -433,7 +434,7 @@ do
 				cons = {
 					type = "group",
 					name = name,
-					desc = L["Options for %s (r%d)."]:format(name, module.revision),
+					desc = L["Options for %s (r%d)."]:format(name, rev),
 					pass = true,
 					get = function(key)
 						if key == "active" then
