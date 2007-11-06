@@ -82,6 +82,7 @@ mod.consoleOptions = {
 			type = "toggle",
 			name = L["Flash"],
 			desc = L["Toggle Flash on or off."],
+			order = 1,
 			get = function() return mod.db.profile.flash end,
 			set = function(v)
 				mod.db.profile.flash = v
@@ -91,15 +92,22 @@ mod.consoleOptions = {
 			type = "toggle",
 			name = L["Shake"],
 			desc = L["Toggle Shake on or off."],
+			order = 2,
 			get = function() return mod.db.profile.shake end,
 			set = function(v)
 				mod.db.profile.shake = v
 			end,
 		},
+		spacer = {
+			type = "header",
+			name = " ",
+			order = 3,
+		},
 		[L["Test"]] = {
 			type = "execute",
 			name = L["Test"],
 			desc = L["Perform a Flash test."],
+			order = 4,
 			handler = mod,
 			func = "BigWigs_Test",
 		},
