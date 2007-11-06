@@ -7,6 +7,7 @@
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsFlashNShake")
 local display = nil
 local flash = nil
+local rnd = nil
 local shaker = nil
 local shakeOnUpdate -- defined later on
 local shaking = nil
@@ -19,10 +20,10 @@ L:RegisterTranslations("enUS", function() return {
 	["FlashNShake"] = true,
 	["Flash'N'Shake"] = true,
 	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = true,
-	
+
 	["Flash"] = true,
 	["Toggle Flash on or off."] = true,
-	
+
 	["Shake"] = true,
 	["Toggle Shake on or off."] = true,
 
@@ -31,13 +32,13 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
-    ["FlashNShake"] = "번쩍임N진동",
+	["FlashNShake"] = "번쩍임N진동",
 	["Flash'N'Shake"] = "번쩍임과 진동",
 	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "당신에게 직접적으로 중요한 무언가가 영향을 미칠때 화면을 흔들거나 파란색으로 번쩍입니다.",
-	
+
 	["Flash"] = "번쩍임",
 	["Toggle Flash on or off."] = "번쩍임을 켜거나 끕니다.",
-	
+
 	["Shake"] = "진동",
 	["Toggle Shake on or off."] = "진동을 켜거나 끕니다.",
 
@@ -94,7 +95,7 @@ mod.consoleOptions = {
 			set = function(v)
 				mod.db.profile.shake = v
 			end,
-		},		
+		},
 		[L["Test"]] = {
 			type = "execute",
 			name = L["Test"],
@@ -131,14 +132,16 @@ function mod:BigWigs_Message(msg, color)
 				display:SetHeight(2000)
 				display:Hide()
 			end
-	
+
 			flash(BWFlash, 0.2, 0.2, 0.8, false)
 		end
+
 		if self.db.profile.shake then
 			if not shaker then
-				shaker = CreateFrame("Frame", "BWSHaker", UIParent)
+				shaker = CreateFrame("Frame", "BWShaker", UIParent)
+				rnd = math.random
 				shaker:Hide()
-				shaker:SetScript("OnUpdate", shakeOnUpdate )
+				shaker:SetScript("OnUpdate", shakeOnUpdate)
 			end
 			self:StartShake()
 		end
@@ -177,8 +180,8 @@ function shakeOnUpdate( frame, elapsed )
 		shaking = nil
 		shaker:Hide()
 	else
-		xoff = math.random(-SHAKE_X,SHAKE_X)
-		yoff = math.random(-SHAKE_Y,SHAKE_Y)
+		xoff = rnd(-SHAKE_X,SHAKE_X)
+		yoff = rnd(-SHAKE_Y,SHAKE_Y)
 	end
 	WorldFrame:ClearAllPoints()
 	for i, point in pairs( oldpoints.points ) do
