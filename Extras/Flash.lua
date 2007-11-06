@@ -31,8 +31,15 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("koKR", function() return {
+    ["FlashNShake"] = "번쩍임N진동",
+	["Flash'N'Shake"] = "번쩍임과 진동",
+	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "당신에게 직접적으로 중요한 무언가가 영향을 미칠때 화면을 흔들거나 파란색으로 번쩍입니다.",
+	
 	["Flash"] = "번쩍임",
 	["Toggle Flash on or off."] = "번쩍임을 켜거나 끕니다.",
+	
+	["Shake"] = "진동",
+	["Toggle Shake on or off."] = "진동을 켜거나 끕니다.",
 
 	["Test"] = "테스트",
 	["Perform a Flash test."] = "번쩍임 테스트를 실행합니다.",
