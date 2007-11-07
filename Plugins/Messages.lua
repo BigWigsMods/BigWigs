@@ -345,7 +345,7 @@ end
 
 local function createMsgFrame()
 	if messageFrame then return end
-	messageFrame = CreateFrame("MessageFrame")
+	messageFrame = CreateFrame("MessageFrame", "BWMessageFrame", UIParent)
 	messageFrame:SetWidth(512)
 	messageFrame:SetHeight(80)
 
