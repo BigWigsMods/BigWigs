@@ -136,8 +136,10 @@ function mod:BigWigs_Message(msg, color)
 				display:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
 				display:SetBackdropColor(0,0,1,0.55)
 				display:SetPoint("CENTER", UIPARENT, "CENTER")
-				display:SetWidth(2000)
-				display:SetHeight(2000)
+				local x = UIParent:GetWidth()
+				local y = UIParent:GetHeight()
+				display:SetWidth(x)
+				display:SetHeight(y)
 				display:Hide()
 			end
 
