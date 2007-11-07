@@ -47,11 +47,17 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("frFR", function() return {
+	["Flash'N'Shake"] = "Flash'N'Shake",
+	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "Secoue et/ou fais flasher l'écran en bleu quand quelque chose d'important vous affecte directement.",
+
 	["Flash"] = "Flash",
 	["Toggle Flash on or off."] = "Fais flasher ou non l'écran.",
 
+	["Shake"] = "Secousse",
+	["Toggle Shake on or off."] = "Fais secouer ou non l'écran.",
+
 	["Test"] = "Test",
-	["Perform a Flash/Shake test."] = "Effectue un test du flash.",
+	["Perform a Flash/Shake test."] = "Effectue un test du flash/de la secousse.",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

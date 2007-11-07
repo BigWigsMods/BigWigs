@@ -109,7 +109,7 @@ L:RegisterTranslations("frFR", function() return {
 	shield_nextbar = "Prochain Bouclier de flots",
 	shield_warn = "Bouclier de flots !",
 	shield_soon_warn = "Bouclier de flots dans ~10 sec. !",
-	--shield_fade = "Shield Faded!",
+	shield_fade = "Bouclier dissipé !",
 	shield_fade_trigger = "Bouclier de flots sur Grand seigneur de guerre Naj'entus vient de se dissiper.",
 
 	icon = "Icône",

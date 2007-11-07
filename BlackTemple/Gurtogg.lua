@@ -121,7 +121,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "La Horde va... vous écraser.", -- à vérifier
+	engage_trigger = "La Horde va... vous écraser.",
 
 	phase = "Délais entre les phases",
 	phase_desc = "Délais entre les phases normales et les phases de Gangrerage.",
