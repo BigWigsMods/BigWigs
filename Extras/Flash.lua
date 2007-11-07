@@ -12,7 +12,7 @@ local shaker = nil
 local shakeOnUpdate -- defined later on
 local shaking = nil
 local oldpoints = nil
-local SHAKE_DURATION = 0.4
+local SHAKE_DURATION = 0.8
 local SHAKE_X = 10
 local SHAKE_Y = 10
 
