@@ -43,6 +43,7 @@ L:RegisterTranslations("enUS", function() return {
 	shield_nextbar = "Next Tidal Shield",
 	shield_warn = "Tidal Shield!",
 	shield_soon_warn = "Tidal Shield in ~10sec!",
+	shield_fade = "Shield Faded!",
 
 	icon = "Icon",
 	icon_desc = "Put an icon on players with Impaling Spine.",
@@ -71,6 +72,7 @@ L:RegisterTranslations("deDE", function() return {
 	shield_nextbar = "N\195\164chstes Gezeitenschild",
 	shield_warn = "Gezeitenschild!",
 	shield_soon_warn = "Gezeitenschild in ~10sec!",
+	--shield_fade = "Shield Faded!",
 
 	icon = "Icon",
 	icon_desc = "Plaziert ein Icon auf Spielern mit Aufspießendem Stachel.",
@@ -99,6 +101,7 @@ L:RegisterTranslations("koKR", function() return {
 	shield_nextbar = "다음 해일의 보호막",
 	shield_warn = "해일의 보호막!",
 	shield_soon_warn = "약 10초 이내 해일의 보호막!",
+	--shield_fade = "Shield Faded!",
 
 	icon = "전술 표시",
 	icon_desc = "꿰뚫는 돌기에 걸린 플레이어에게 전술 표시를 지정합니다.",
@@ -127,6 +130,7 @@ L:RegisterTranslations("frFR", function() return {
 	shield_nextbar = "Prochain Bouclier de flots",
 	shield_warn = "Bouclier de flots !",
 	shield_soon_warn = "Bouclier de flots dans ~10 sec. !",
+	--shield_fade = "Shield Faded!",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Epine de perforation (nécessite d'être promu ou mieux).",
@@ -155,6 +159,7 @@ L:RegisterTranslations("zhCN", function() return {
 	shield_nextbar = "下一次 海潮之盾",
 	shield_warn = "海潮之盾!",
 	shield_soon_warn = "海潮之盾 ~10秒 后发动!",
+	--shield_fade = "Shield Faded!",
 
 	icon = "团队标记",
 	icon_desc = "给中了穿刺之脊的玩家打上团队标记.",
@@ -183,6 +188,7 @@ L:RegisterTranslations("zhTW", function() return {
 	shield_nextbar = "下一次潮汐之盾",
 	shield_warn = "潮汐之盾!",
 	shield_soon_warn = "潮汐之盾在 ~10秒內施放!",
+	--shield_fade = "Shield Faded!",
 
 	icon = "團隊標記",
 	icon_desc = "在受到尖刺脊椎的隊友頭上標記。",
@@ -308,9 +314,14 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if db.health then
 			self:ScheduleRepeatingEvent("BWNajHealthCheck", self.HealthCheck, 0.5, self)
 		end
-	elseif sync == "NahShieldOff" and db.health then
-		if self:IsEventScheduled("BWNajHealthCheck") then
-			self:CancelScheduledEvent("BWNajHealthCheck")
+	elseif sync == "NahShieldOff" then
+		if db.shield then
+			self:Message(L["shield_fade"], "Positive")
+		end
+		if db.health then
+			if self:IsEventScheduled("BWNajHealthCheck") then
+				self:CancelScheduledEvent("BWNajHealthCheck")
+			end
 		end
 	end
 end
