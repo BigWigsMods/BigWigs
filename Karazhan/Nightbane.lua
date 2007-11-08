@@ -292,7 +292,7 @@ end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
 	if self.db.profile.charr and msg == L["charr_trigger"] then
-		self:Message(L["charr_message"], "Urgent", true, "Alarm")
+		self:Message(L["charr_message"], "Personal", true, "Alarm")
 	end
 end
 
