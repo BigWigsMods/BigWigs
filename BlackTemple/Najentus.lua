@@ -84,7 +84,7 @@ L:RegisterTranslations("koKR", function() return {
 	shield_nextbar = "다음 해일의 보호막",
 	shield_warn = "해일의 보호막!",
 	shield_soon_warn = "약 10초 이내 해일의 보호막!",
-	--shield_fade = "Shield Faded!",
+	shield_fade = "보호막 사라짐!",
 	shield_fade_trigger = "대장군 나젠투스의 몸에서 해일의 보호막 효과가 사라졌습니다.",
 
 	icon = "전술 표시",
