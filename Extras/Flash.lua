@@ -43,7 +43,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Toggle Shake on or off."] = "진동을 켜거나 끕니다.",
 
 	["Test"] = "테스트",
-	["Perform a Flash/Shake test."] = "번쩍임 테스트를 실행합니다.",
+	["Perform a Flash/Shake test."] = "번쩍임/진동 테스트를 실행합니다.",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
