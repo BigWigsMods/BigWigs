@@ -143,10 +143,10 @@ L:RegisterTranslations("frFR", function() return {
 	wrath_you = "Courroux sur VOUS !",
 
 	whisper = "Chuchoter",
-	whisper_desc = "Préviens par chuchotement le dernier joueur affecté par le Courroux de l'Astromancien (nécessite d'être promu ou mieux).",
+	whisper_desc = "Préviens par chuchotement le dernier joueur affecté par le Courroux de l'astromancienne (nécessite d'être promu ou mieux).",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Courroux de l'Astromancien (nécessite d'être promu ou mieux).",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Courroux de l'astromancienne (nécessite d'être promu ou mieux).",
 
 	split = "Rupture",
 	split_desc = "Préviens de l'arrivée des ruptures & des apparitions des adds.",
