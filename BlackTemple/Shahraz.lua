@@ -18,6 +18,7 @@ local sub = string.sub
 local enrageWarn = nil
 local started = nil
 local restype = nil
+local timer = nil
 local stop
 
 --debuffs
@@ -223,9 +224,14 @@ function mod:FatalAtt(msg)
 	end
 end
 
+local function killTime()
+	timer = nil
+end
+
 function mod:PLAYER_AURAS_CHANGED()
 	--don't even scan anything if we don't want it on
 	if not db.debuff then return end
+	if timer then return end
 
 	local i = 1 --setup counter
 	while UnitDebuff("player", i) do --loop debuff scan
@@ -243,6 +249,8 @@ function mod:PLAYER_AURAS_CHANGED()
 			if timeleft and timeleft > 14 then
 				self:Message(name, "Attention")
 				self:Bar(name, timeleft, texture)
+				timer = true
+				self:ScheduleEvent("BWShahrazAllowScan", killTime, 10)
 			end
 		end
 		i = i + 1 --increment counter
