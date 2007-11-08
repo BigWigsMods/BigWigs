@@ -141,11 +141,7 @@ function mod:BigWigs_Message(msg, color)
 				display:SetFrameStrata("BACKGROUND")
 				display:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
 				display:SetBackdropColor(0,0,1,0.55)
-				display:SetPoint("CENTER", UIPARENT, "CENTER")
-				local x = UIParent:GetWidth()
-				local y = UIParent:GetHeight()
-				display:SetWidth(x)
-				display:SetHeight(y)
+				display:SetAllPoints( UIParent)
 				display:Hide()
 			end
 
