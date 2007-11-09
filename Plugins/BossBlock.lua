@@ -232,7 +232,6 @@ local raidchans = {
 	CHAT_MSG_RAID_LEADER = "chat",
 }
 local map = {[true] = "|cffff0000"..L["Suppressed"].."|r", [false] = "|cff00ff00"..L["Shown"].."|r"}
-local blockRx = "^%*%*%*%s.+%s%*%*%*$"
 
 ----------------------------------
 --      Module Declaration      --
@@ -388,7 +387,7 @@ end
 
 function plugin:IsSpam(text)
 	if type(text) ~= "string" then return end
-	if text:find(blockRx) then return true end
+	if text:find("%*%*%*") then return true end
 end
 
 function plugin:IsChannelSuppressed(chan)
