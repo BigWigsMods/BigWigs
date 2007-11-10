@@ -445,7 +445,8 @@ function mod:BigWigs_RecvSync( sync, rest )
 						self:Message(fmt(four, wave, 2, ghoul, 2, fiend, 2, fel, 8, infernal), "Important")
 					elseif wave == 8 then
 						self:Message(fmt(five, wave, 4, fiend, 2, necro, 4, abom, 2, banshee, 4, fel), "Important")
-					end
+				else
+					self:Message(fmt(L["Wave %d incoming!"], wave), "Important")
 				end
 			else
 				self:Message(fmt(L["Wave %d incoming!"], wave), "Important")
