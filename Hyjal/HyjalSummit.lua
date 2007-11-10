@@ -119,8 +119,8 @@ L:RegisterTranslations("frFR", function() return {
 	waves = "Avertissements des vagues",
 	waves_desc = "Préviens quand la prochaine vague est susceptible d'arriver.",
 
-	--detail = "Detailed Warnings",
-	--detail_desc = "Show detailed warnings of what mobs are incoming.",
+	detail = "Avertissements détaillés",
+	detail_desc = "Affiche des avertissements détaillés indiquant les monstres en approche.",
 
 	["~%s spawn"] = "~Apparition %s",
 	["~Wave %d spawn"] = "~Apparition vague %d",

@@ -113,7 +113,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	phase = "Phase démon",
 	phase_desc = "Affiche une estimation de la phase démon.",
-	phase_trigger = "Hors d'ici, elfe insignifiant. Je prends le contrôle !", -- à vérifier
+	phase_trigger = "Hors d'ici, elfe insignifiant. Je prends le contrôle !",
 	phase_demon = "Phase démon pendant 60 sec.",
 	phase_demonsoon = "Phase démon dans 5 sec. !",
 	phase_normalsoon = "Phase normal dans 5 sec.",
@@ -128,7 +128,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	image = "Image",
 	image_desc = "Préviens quand l'image est créée à 15%.",
-	image_trigger = "Non… Non ! Mais qu'avez-vous fait ? C'est moi le maître ! Vous entendez ? Moi ! Je suis… Aaargh ! Impossible… de… retenir…", -- à vérifier
+	image_trigger = "Non… Non ! Mais qu'avez-vous fait ? C'est moi le maître ! Vous entendez ? Moi ! Je suis… Aaargh ! Impossible… de… retenir…",
 	image_message = "15% - Image créée !",
 	image_warning = "Image imminente !",
 
