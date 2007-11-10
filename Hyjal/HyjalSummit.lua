@@ -79,8 +79,8 @@ L:RegisterTranslations("koKR", function() return {
 	waves = "공격 경고",
 	waves_desc = "다음 공격에 대한 접근 경고 메세지를 알립니다.",
 
-	detail = "상세한 경고",
-	detail_desc = "어떤 몹이 공격해올지 상세한 경고를 보여줍니다.",
+	--detail = "Detailed Warnings",
+	--detail_desc = "Show detailed warnings of what mobs are incoming.",
 
 	["~%s spawn"] = "~%s 등장",
 	["~Wave %d spawn"] = "%d번째 공격 등장",
@@ -317,6 +317,7 @@ do
 	end
 end
 
+local ghoul, fiend, abom, necro, banshee, garg, wyrm, fel, infernal, one, two, three, four, five
 function mod:BigWigs_RecvSync( sync, rest )
 	if not self.db.profile.waves then return end
 
@@ -355,21 +356,21 @@ function mod:BigWigs_RecvSync( sync, rest )
 
 			if self.db.profile.detail then
 				if not store then
-					local ghoul = L["Ghouls"]
-					local fiend = L["Crypt Fiends"]
-					local abom = L["Abominations"]
-					local necro = L["Necromancers"]
-					local banshee = L["Banshees"]
-					local garg = L["Gargoyles"]
-					local wyrm = L["Frost Wyrm"]
-					local fel = L["Fel Stalkers"]
-					local infernal = L["Infernals"]
+					ghoul = L["Ghouls"]
+					fiend = L["Crypt Fiends"]
+					abom = L["Abominations"]
+					necro = L["Necromancers"]
+					banshee = L["Banshees"]
+					garg = L["Gargoyles"]
+					wyrm = L["Frost Wyrm"]
+					fel = L["Fel Stalkers"]
+					infernal = L["Infernals"]
 
-					local one = L["Wave %d! %d %s"]
-					local two = L["Wave %d! %d %s, %d %s"]
-					local three = L["Wave %d! %d %s, %d %s, %d %s"]
-					local four = L["Wave %d! %d %s, %d %s, %d %s, %d %s"]
-					local five = L["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"]
+					one = L["Wave %d! %d %s"]
+					two = L["Wave %d! %d %s, %d %s"]
+					three = L["Wave %d! %d %s, %d %s, %d %s"]
+					four = L["Wave %d! %d %s, %d %s, %d %s, %d %s"]
+					five = L["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"]
 
 					store = true
 				end
@@ -487,4 +488,3 @@ function mod:BigWigs_RecvSync( sync, rest )
 		self:CancelScheduledEvent("BigWigsSummitTimersDM30")
 	end
 end
-
