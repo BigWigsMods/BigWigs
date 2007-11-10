@@ -21,10 +21,13 @@ local tonumber = tonumber
 local nextBoss = nil
 local currentWave = 0
 local waveBar = nil
+local store = nil
 local allianceWaveTimes = {127.5, 127.5, 127.5, 127.5, 127.5, 127.5, 127.5, 140}
 local RWCwaveTimes = allianceWaveTimes --need more accurate times
 local KRwaveTimes = {135, 160, 190, 165, 140, 130, 195, 225} --need more accurate times
 local hordeWaveTimes = {135, 190, 190, 195, 140, 165, 195, 225}
+
+--[[		Wave details thanks to shieldb, Arta & Thunderheart		]]-
 
 ----------------------------
 --      Localization      --
@@ -35,6 +38,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	waves = "Wave Warnings",
 	waves_desc = "Announce approximate warning messages for the next wave.",
+
+	detail = "Detailed Warnings",
+	detail_desc = "Show detailed warnings of what mobs are incoming.",
 
 	["~%s spawn"] = true,
 	["~Wave %d spawn"] = true,
@@ -73,6 +79,9 @@ L:RegisterTranslations("koKR", function() return {
 	waves = "공격 경고",
 	waves_desc = "다음 공격에 대한 접근 경고 메세지를 알립니다.",
 
+	--detail = "Detailed Warnings",
+	--detail_desc = "Show detailed warnings of what mobs are incoming.",
+
 	["~%s spawn"] = "~%s 등장",
 	["~Wave %d spawn"] = "%d번째 공격 등장",
 	["Wave %d incoming!"] = "%d번째 공격 시작!",
@@ -109,6 +118,9 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	waves = "Avertissements des vagues",
 	waves_desc = "Préviens quand la prochaine vague est susceptible d'arriver.",
+
+	--detail = "Detailed Warnings",
+	--detail_desc = "Show detailed warnings of what mobs are incoming.",
 
 	["~%s spawn"] = "~Apparition %s",
 	["~Wave %d spawn"] = "~Apparition vague %d",
@@ -147,6 +159,9 @@ L:RegisterTranslations("deDE", function() return {
 	waves = "Wellen Warnungen",
 	waves_desc = "Ausgeben von Warnungs Nachrichten für die nächste Welle.",
 
+	--detail = "Detailed Warnings",
+	--detail_desc = "Show detailed warnings of what mobs are incoming.",
+
 	["~%s spawn"] = "~%s spawnt.",
 	["~Wave %d spawn"] = "~Welle %d spawnt.",
 	["Wave %d incoming!"] = "Welle %d kommt!",
@@ -166,6 +181,9 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	waves = "阶段警报",
 	waves_desc = "通告下一波来临警报信息",
+
+	--detail = "Detailed Warnings",
+	--detail_desc = "Show detailed warnings of what mobs are incoming.",
 
 	["~%s spawn"] = "~%s 出现.",
 	["~Wave %d spawn"] = "~第%d波 出现.",
@@ -204,6 +222,9 @@ L:RegisterTranslations("zhTW", function() return {
 	waves = "階段警報",
 	waves_desc = "通報下一波小怪來臨訊息",
 
+	--detail = "Detailed Warnings",
+	--detail_desc = "Show detailed warnings of what mobs are incoming.",
+
 	["~%s spawn"] = "~%s 出現",
 	["~Wave %d spawn"] = "~第 %d 波 出現",
 	["Wave %d incoming!"] = "第 %d 波 即將來臨!",
@@ -231,7 +252,7 @@ local proudmoore = L["Lady Jaina Proudmoore"]
 local mod = BigWigs:NewModule(name)
 mod.zonename = name
 mod.enabletrigger = { thrall, proudmoore }
-mod.toggleoptions = {"waves"}
+mod.toggleoptions = {"waves", "detail"}
 mod.revision = tonumber(match("$Revision$", "%d+"))
 mod.synctoken = name
 
@@ -332,7 +353,103 @@ function mod:BigWigs_RecvSync( sync, rest )
 		if wave and wave > currentWave and waveTimes[wave] then
 			currentWave = wave
 
-			self:Message(fmt(L["Wave %d incoming!"], wave), "Important")
+			if self.db.profile.detail then
+				if not store then
+					local ghoul = L["Ghouls"]
+					local fiend = L["Crypt Fiends"]
+					local abom = L["Abominations"]
+					local necro = L["Necromancers"]
+					local banshee = L["Banshees"]
+					local garg = L["Gargoyles"]
+					local wyrm = L["Frost Wyrm"]
+					local fel = L["Fel Stalkers"]
+					local infernal = L["Infernals"]
+
+					local one = L["Wave %d! %d %s"]
+					local two = L["Wave %d! %d %s, %d %s"]
+					local three = L["Wave %d! %d %s, %d %s, %d %s"]
+					local four = L["Wave %d! %d %s, %d %s, %d %s, %d %s"]
+					local five = L["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"]
+
+					store = true
+				end
+
+				if nextBoss == winterchill then
+					if wave == 1 then
+						self:Message(fmt(one, wave, 10, ghoul), "Important")
+					elseif wave == 2 then
+						self:Message(fmt(two, wave, 10, ghoul, 2, fiend), "Important")
+					elseif wave == 3 then
+						self:Message(fmt(two, wave, 6, ghoul, 6, fiend), "Important")
+					elseif wave == 4 then
+						self:Message(fmt(three, wave, 6, ghoul, 4, fiend, 2, necro), "Important")
+					elseif wave == 5 then
+						self:Message(fmt(three, wave, 2, ghoul, 6, fiend, 4, necro), "Important")
+					elseif wave == 6 then
+						self:Message(fmt(two, wave, 6, ghoul, 6, abom), "Important")
+					elseif wave == 7 then
+						self:Message(fmt(three, wave, 4, ghoul, 4, necro, 4, abom), "Important")
+					elseif wave == 8 then
+						self:Message(fmt(four, wave, 6, ghoul, 4, fiend, 2, abom, 2, necro), "Important")
+					end
+				elseif nextBoss == anatheron then
+					if wave == 1 then
+						self:Message(fmt(one, wave, 10, ghoul), "Important")
+					elseif wave == 2 then
+						self:Message(fmt(two, wave, 4, abom, 8, ghoul), "Important")
+					elseif wave == 3 then
+						self:Message(fmt(three, wave, 4, necro, 4, fiend, 4, ghoul), "Important")
+					elseif wave == 4 then
+						self:Message(fmt(three, wave, 2, banshee, 6, fiend, 4, necro), "Important")
+					elseif wave == 5 then
+						self:Message(fmt(three, wave, 6, ghoul, 2, necro, 4, banshee), "Important")
+					elseif wave == 6 then
+						self:Message(fmt(three, wave, 2, abom, 4, necro, 6, ghoul), "Important")
+					elseif wave == 7 then
+						self:Message(fmt(three, wave, 4, abom, 4, fiend, 4, banshee), "Important")
+					elseif wave == 8 then
+						self:Message(fmt(five, wave, 4, abom, 3, fiend, 2, banshee, 2, necro, 3, ghoul), "Important")
+					end
+				elseif nextBoss == kazrogal then
+					if wave == 1 then
+						self:Message(fmt(four, wave, 4, abom, 2, banshee, 4, ghoul, 2, necro), "Important")
+					elseif wave == 2 then
+						self:Message(fmt(two, wave, 4, ghoul, 10, garg), "Important")
+					elseif wave == 3 then
+						self:Message(fmt(three, wave, 6, fiend, 2, necro, 6, ghoul), "Important")
+					elseif wave == 4 then
+						self:Message(fmt(three, wave, 6, garg, 6, fiend, 2, necro), "Important")
+					elseif wave == 5 then
+						self:Message(fmt(three, wave, 4, ghoul, 4, necro, 6, abom), "Important")
+					elseif wave == 6 then
+						self:Message(fmt(two, wave, 8, garg, 1, wyrm), "Important")
+					elseif wave == 7 then
+						self:Message(fmt(three, wave, 4, ghoul, 4, abom, 1, wyrm), "Important")
+					elseif wave == 8 then
+						self:Message(fmt(five, wave, 6, ghoul, 2, fiend, 2, necro, 4, abom, 2, banshee), "Important")
+					end
+				elseif nextBoss == azgalor then
+					if wave == 1 then
+						self:Message(fmt(two, wave, 6, abom, 6, necro), "Important")
+					elseif wave == 2 then
+						self:Message(fmt(three, wave, 5, ghoul, 8, garg, 1, wyrm), "Important")
+					elseif wave == 3 then
+						self:Message(fmt(two, wave, 4, ghoul, 8, infernal), "Important")
+					elseif wave == 4 then
+						self:Message(fmt(two, wave, 8, fel, 6, infernal), "Important")
+					elseif wave == 5 then
+						self:Message(fmt(three, wave, 4, abom, 6, fel, 4, necro), "Important")
+					elseif wave == 6 then
+						self:Message(fmt(two, wave, 6, necro, 6, banshee), "Important")
+					elseif wave == 7 then
+						self:Message(fmt(four, wave, 2, ghoul, 2, fiend, 2, fel, 8, infernal), "Important")
+					elseif wave == 8 then
+						self:Message(fmt(five, wave, 4, fiend, 2, necro, 4, abom, 2, banshee, 4, fel), "Important")
+					end
+				end
+			else
+				self:Message(fmt(L["Wave %d incoming!"], wave), "Important")
+			end
 
 			self:CancelScheduledEvent("BigWigsSummitTimersDM90")
 			self:CancelScheduledEvent("BigWigsSummitTimersDM60")
