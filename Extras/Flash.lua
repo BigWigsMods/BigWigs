@@ -68,7 +68,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Flash"] = "闪烁",
 	["Toggle Flash on or off."] = "启用或禁用屏幕闪烁通知。",
 
-	["Shake"] = "“震动”",
+	["Shake"] = "震动",
 	["Toggle Shake on or off."] = "启用或禁用屏幕震动通知。",
 
 	["Test"] = "测试",
