@@ -134,8 +134,8 @@ L:RegisterTranslations("zhCN", function() return {
 	shield_nextbar = "下一次 海潮之盾",
 	shield_warn = "海潮之盾!",
 	shield_soon_warn = "海潮之盾 ~10秒 后发动!",
-	shield_fade = "海潮之盾消失!",
-	shield_fade_trigger = "海潮之盾效果从高阶督军纳因图斯身上消失。$",--没 "了"
+	shield_fade = "海潮之盾 消失!",
+	shield_fade_trigger = "海潮之盾效果从高阶督军纳因图斯身上消失。",
 
 	icon = "团队标记",
 	icon_desc = "给中了穿刺之脊的玩家打上团队标记.",
