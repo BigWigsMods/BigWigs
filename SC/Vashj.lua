@@ -252,15 +252,15 @@ L:RegisterTranslations("zhCN", function() return {
 
 	phase = "阶段警报",
 	phase_desc = "首领进入不同阶段发出警报",
-	phase2_trigger = "机会来了！一个活口都不要留下！$",
+	phase2_trigger = "机会来了！一个活口都不要留下！",
 	phase2_soon_message = "即将 第二阶段",
 	phase2_message = "第二阶段 - 援兵 来临!",
-	phase3_trigger = "你们最好找掩护。 ",
+	phase3_trigger = "你们最好找掩护。",
 	phase3_message = "第三阶段 - 4分后 激怒!",
 
 	static = "静电冲能",
 	static_desc = "中了静电充能发出警报",
-	static_charge_trigger = "^(%S+)受(%S+)了静电充能效果的影响。$",
+	static_charge_trigger = "^(%S+)受(%S+)了静电充能效果的影响。",
 	static_charge_message = "静电充能 --> %s!",
 	static_fade = "静电充能效果从你身上消失了。",
 	static_warnyou = "静电充能 >你<!",
@@ -286,12 +286,12 @@ L:RegisterTranslations("zhCN", function() return {
 	barrier = "护盾击碎",
 	barrier_desc = "当护盾击碎发出警报",
 	barrier_down_message = "护盾 - %d/4 击碎!",
-	barrier_fades_trigger = "魔法屏障效果从瓦丝琪身上消失。$",
+	barrier_fades_trigger = "魔法屏障效果从瓦丝琪身上消失。",
 
 	loot = "污染之核",
 	loot_desc = "对拾取了污染之核的队友发出警报",
 	loot_message = "%s 拾取了 污染之核!",
-	loot_paralyze = "^(%S+)受(%S+)了麻痹效果的影响。$",
+	loot_paralyze = "^(%S+)受(%S+)了麻痹效果的影响。",
 	loot_update = "污染之核 > %s",
 } end )
 
