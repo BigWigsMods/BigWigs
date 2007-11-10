@@ -195,7 +195,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	infernals = "地狱火警报",
 	infernals_desc = "显示召唤地狱火冷却时间计时条",
-	infernal_trigger1 = "你面对的不仅仅是我玛克扎尔自己，还有我所号令的军团！",
+	infernal_trigger1 = "你面对的不仅仅是玛克扎尔，还有我所号令的军团！",
 	infernal_trigger2 = "所有的世界都向我敞开大门！",
 	infernal_bar = "即将 地狱火",
 	infernal_warning = "地狱火在 20 秒后出现！",

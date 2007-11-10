@@ -232,7 +232,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	escape = "释放",
 	escape_desc = "玛瑟里顿获得自由倒计时",
-	escape_trigger1 = "%s的禁锢开始变弱！",
+	escape_trigger1 = "%s快要从他的禁锢中挣脱了！",
 	escape_trigger2 = "我……自由了！",
 	escape_warning1 = "%s 激活- 2分钟后获得自由",
 	escape_warning2 = "1分后 自由!",
@@ -261,7 +261,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	banish = "放逐术",
 	banish_desc = "当你放逐玛瑟里顿发出警报.",
-	banish_trigger = "Not again! Not again...",
+	banish_trigger = "不！不！！",
 	banish_message = "放逐成功 - 10秒 ",
 	banish_over_trigger = "^暗影牢笼从",
 	banish_over_message = "放逐消失!",
@@ -279,7 +279,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	debrisinc = "碎片",
 	debrisinc_desc = "当首领30%血量时发出警报.",
-	debrisinc_trigger = "Let the walls of this prison tremble",
+	debrisinc_trigger = "我是不会轻易倒下的！让这座牢狱的墙壁颤抖并崩塌吧！",
 	debrisinc_message = "30% - 碎片来临!",
 	debrisinc_warning = "即将 碎片!",
 } end)

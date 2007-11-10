@@ -61,11 +61,20 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
-	["Flash"] = "屏幕闪烁通知",
+
+	["FlashNShake"] = "屏幕闪烁/震动",
+	["Flash'N'Shake"] = "屏幕闪烁/震动",
+	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "如有重要事件影响到你，屏幕将会蓝色闪烁/震动以告知玩家。",
+
+	["Flash"] = "闪烁",
 	["Toggle Flash on or off."] = "启用或禁用屏幕闪烁通知。",
 
+	["Shake"] = “震动”,
+	["Toggle Shake on or off."] = "启用或禁用屏幕震动通知。",
+
 	["Test"] = "测试",
-	["Perform a Flash/Shake test."] = "进行屏幕闪烁通知测试。",
+	["Perform a Flash/Shake test."] = "屏幕闪烁/震动测试。",
+
 } end)
 ----------------------------------
 --      Module Declaration      --

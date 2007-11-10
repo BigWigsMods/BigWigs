@@ -182,8 +182,8 @@ L:RegisterTranslations("zhCN", function() return {
 	waves = "阶段警报",
 	waves_desc = "通告下一波来临警报信息",
 
-	--detail = "Detailed Warnings",
-	--detail_desc = "Show detailed warnings of what mobs are incoming.",
+	detail = "详细警报",
+	detail_desc = "怪物到来时显示详细警报。",
 
 	["~%s spawn"] = "~%s 出现.",
 	["~Wave %d spawn"] = "~第%d波 出现.",
