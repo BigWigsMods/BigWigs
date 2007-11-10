@@ -27,7 +27,7 @@ local RWCwaveTimes = allianceWaveTimes --need more accurate times
 local KRwaveTimes = {135, 160, 190, 165, 140, 130, 195, 225} --need more accurate times
 local hordeWaveTimes = {135, 190, 190, 195, 140, 165, 195, 225}
 
---[[		Wave details thanks to shieldb, Arta & Thunderheart		]]-
+--[[		Wave details thanks to shieldb, Arta & Thunderheart		]]--
 
 ----------------------------
 --      Localization      --
