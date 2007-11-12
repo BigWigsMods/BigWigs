@@ -318,7 +318,7 @@ L:RegisterTranslations("zhTW", function() return {
 	static_charge_trigger = "^(.+)受(到[了]*)靜電衝鋒效果的影響。",
 	static_charge_message = "靜電衝鋒：[%s]",
 	static_fade = "靜電衝鋒效果從你身上消失了。",
-	--static_warnyou = "Static Charge on YOU!",
+	static_warnyou = "你受到靜電衝鋒!",
 
 	icon = "團隊標記",
 	icon_desc = "對受到靜電衝鋒及拾取核心的玩家設置團隊標記（需要權限）",
