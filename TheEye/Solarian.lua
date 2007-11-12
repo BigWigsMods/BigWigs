@@ -186,8 +186,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	split = "分裂",
 	split_desc = "当分裂和增加救援发出警报",
-	split_trigger1 = "I will crush your delusions of grandeur!",
-	split_trigger2 = "You are hopelessly outmatched!",
+	split_trigger1 = "^我要让你们自以为是的错觉荡然无存！",
+	split_trigger2 = "^你们势单力薄！",
 	split_bar = "~下次 分裂",
 	split_warning = "~7秒后 分裂",
 
