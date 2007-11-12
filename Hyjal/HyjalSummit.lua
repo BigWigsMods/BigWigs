@@ -172,10 +172,10 @@ L:RegisterTranslations("deDE", function() return {
 	["Thrall"] = "Thrall",
 	["Lady Jaina Proudmoore"] = "Lady Jaina Prachtmeer",
 
-	["My companions and I are with you, Lady Proudmoore."] = "Meine Gefhrten und ich werden Euch zur Seite stehen, Lady Prachtmeer.", -- Rage Winterchill
+	["My companions and I are with you, Lady Proudmoore."] = "Meine Gef\195\164hrten und ich werden Euch zur Seite stehen, Lady Prachtmeer.", -- Rage Winterchill
 	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "Was auch immer Archimonde gegen uns ins Feld schicken mag, wir sind bereit, Lady Prachtmeer.", -- Anatheron
 	["I am with you, Thrall."] = "Ich werde Euch zur Seite stehen, Thrall!", -- Kaz'Rogal
-	["We have nothing to fear."] = "Wir haben nichts zu befrchten.", -- Az'Galor
+	["We have nothing to fear."] = "Wir haben nichts zu bef\195\188rchten.", -- Az'Galor
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
