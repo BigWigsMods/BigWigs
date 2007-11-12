@@ -163,14 +163,14 @@ L:RegisterTranslations("frFR", function() return {
 	exhaust_bar = "[%s] épuisé",
 
 	debris = "Débris sur vous",
-	debris_desc = "Préviens quand les Débris tombent sur vous.",
+	debris_desc = "Préviens quand les débris tombent sur vous.",
 	debris_trigger = "Vous subissez les effets de Débris.",
 	debris_message = "Débris sur VOUS !",
 
 	debrisinc = "Débris",
-	debrisinc_desc = "Préviens quand les Débris tombent à 30%.",
+	debrisinc_desc = "Préviens quand les débris tombent à 30%.",
 	debrisinc_trigger = "Que les murs de cette prison tremblent",
-	debrisinc_message = "30% - Arrivée des Débris !",
+	debrisinc_message = "30% - Arrivée des débris !",
 	debrisinc_warning = "Débris imminent !",
 } end)
 

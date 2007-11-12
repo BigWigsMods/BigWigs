@@ -101,7 +101,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	spinesay = "Dire - Epine de perforation",
 	spinesay_desc = "Fais dire à votre personnage qu'il a une épine quand c'est le cas, afin d'aider les membres proches.",
-	spinesay_message = "Epine sur moi !",
+	spinesay_message = "Épine sur moi !",
 
 	shield = "Bouclier de flots",
 	shield_desc = "Délais concernant le Bouclier de flots de Naj'entus.",

@@ -47,6 +47,9 @@ L:RegisterTranslations("frFR", function() return {
 	inferno_warning = "Inferno imminent !",
 	inferno_bar = "~Cooldown Inferno",
 
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur sur qui un inferno est incanté (nécessite d'être promu ou mieux).",
+
 	swarm = "Vol de charognards",
 	swarm_desc = "Temps de recharge approximatif pour le Vol de charognards.",
 	swarm_trigger1 = "La peste soit sur vous !",
