@@ -298,12 +298,15 @@ end
 
 function mod:UPDATE_WORLD_STATES()
 	if self.zonename ~= GetRealZoneText() then return end -- bail out in case we were left running in another zone
-	local uiType, state, text = GetWorldStateUIInfo(3)
-	local num = tonumber(match(text or "", "(%d)") or nil)
-	if num == 0 then
+	local uiType, state = GetWorldStateUIInfo(3)
+	if state == 0 then
 		self:Sync("SummitClear")  --reseting wave here will clear nextBoss, clear instead
-	elseif num and num > currentWave then
-		self:Sync(fmt("%s%d %s", "SummitWave ", num, GetSubZoneText()))
+	elseif state and state > currentWave then
+		local zone = GetSubZoneText()
+		if zone == allianceBase then zone = "allianceBase"
+		elseif zone == hordeEncampment then zone = "hordeEncampment"
+		else return end
+		self:Sync(fmt("%s%d %s", "SummitWave ", state, zone))
 	end
 end
 
@@ -335,13 +338,13 @@ function mod:BigWigs_RecvSync( sync, rest )
 		local wave, zone = match(rest, "(%d+) (.*)")
 		if not wave or not zone then return end
 		local waveTimes
-		if zone == allianceBase then
+		if zone == "allianceBase" then
 			if nextBoss == winterchill then
 				waveTimes = RWCwaveTimes
 			else
 				waveTimes = allianceWaveTimes
 			end
-		elseif zone == hordeEncampment then
+		elseif zone == "hordeEncampment" then
 			if nextBoss == kazrogal then
 				waveTimes = KRwaveTimes
 			else
