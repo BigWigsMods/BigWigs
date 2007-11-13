@@ -219,8 +219,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger1 = "你們要考驗我嗎?",
-	engage_trigger2 = "Common... such a crude language. Bandal!",
-	engage_trigger3 = "I have better things to do..",
+	engage_trigger2 = "通用語...多麼粗俗的語言。",
+	engage_trigger3 = "我還有更重要的事情要做……",
 	engage_trigger4 = "Flee, or die!",
 
 	vanish = "消失",

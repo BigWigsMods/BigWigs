@@ -218,7 +218,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	tomb = "水之墳",
 	tomb_desc = "通報玩家受到水之墳",
-	tomb_message = "水之墳：: %s",
+	tomb_message = "水之墳：[%s]",
 
 	icon = "混濁污泥標記",
 	icon_desc = "對受到混濁污泥的目標設置標記（需要權限）",

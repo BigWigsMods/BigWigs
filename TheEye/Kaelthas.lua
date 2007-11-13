@@ -450,7 +450,7 @@ L:RegisterTranslations("zhTW", function() return {
 	gaze = "凝視",
 	gaze_desc = "當目標受到凝視時警示",
 	gaze_trigger = "凝視著([^%s]+)!$",
-	gaze_message = "凝視：%s - 快跑！",
+	gaze_message = "凝視：[%s] - 快跑！",
 	gaze_bar = "凝視冷卻",
 	gaze_you = "凝視著你!",
 
@@ -482,7 +482,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	toyall = "遙控玩具",
 	toyall_desc = "當玩家受到遙控玩具影響時警示，僅作用在第二階段，避免洗頻",
-	toyall_message = "遙控玩具：%s",
+	toyall_message = "遙控玩具：[%s]",
 
 	phase = "階段警示",
 	phase_desc = "開啟各階段警示",
@@ -508,7 +508,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	mc = "精神控制",
 	mc_desc = "精神控制警示",
-	mc_message = "精神控制：: %s",
+	mc_message = "精神控制：[%s]",
 
 	afflicted_trigger = "^(.+)受(到[了]*)(.*)效果的影響。$",
 

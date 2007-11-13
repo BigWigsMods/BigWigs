@@ -103,13 +103,13 @@ L:RegisterTranslations("zhTW", function() return {
 	flamepatch = "烈焰助長",
 	flamepatch_desc = "當你受到烈焰助長時警告",
 	flamepatch_trigger = "你受到了烈焰助長效果的影響。",
-	flamepatch_message = "你中了烈焰助長！",
+	flamepatch_message = "烈焰助長：[你]",
 
 	armor = "熔化護甲",
 	armor_desc = "當某人受到熔化護甲時提示",
 	armor_trigger = "^(.+)受(到[了]*)熔化護甲效果的影響。",
 	armor_other = "熔化護甲：[%s]",
-	armor_you = "你受到熔化護甲！",
+	armor_you = "熔化護甲：[你]",
 
 	icon = "團隊標記",
 	icon_desc = "對受到熔化護甲的目標設置團隊標記（需要權限）",

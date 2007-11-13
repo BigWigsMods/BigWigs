@@ -159,8 +159,8 @@ L:RegisterTranslations("zhTW", function() return {
 	shield_nextbar = "下一次潮汐之盾",
 	shield_warn = "潮汐之盾!",
 	shield_soon_warn = "潮汐之盾在 ~10秒內施放!",
-	--shield_fade = "Shield Faded!",
-	--shield_fade_trigger = "Tidal Shield fades from High Warlord Naj'entus.",
+	shield_fade = "潮汐之盾消失!",
+	shield_fade_trigger = "潮汐之盾從高階督軍納珍塔斯身上消失。",
 
 	icon = "團隊標記",
 	icon_desc = "在受到尖刺脊椎的隊友頭上標記。",

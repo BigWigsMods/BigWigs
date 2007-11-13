@@ -143,7 +143,7 @@ L:RegisterTranslations("zhTW", function() return {
 	target = "目標",
 	target_desc = "警報在風箏階段誰是主要目標，並在他頭上放團隊標記。",
 	target_message = "被盯上：[%s]",
-	--target_you = "YOU are being chased!",
+	target_you = "被盯上：[你]",
 	target_message_nounit = "新目標!",
 
 	icon = "目標標記",

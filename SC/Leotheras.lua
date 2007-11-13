@@ -246,7 +246,7 @@ L:RegisterTranslations("zhTW", function() return {
 	mindcontrol = "心靈控制",
 	mindcontrol_desc = "當隊友受到心控時警告",
 	mindcontrol_trigger = "^(.+)受(到[了]*)吞噬瘋狂效果的影響。",
-	mindcontrol_warning = "心控：%s",
+	mindcontrol_warning = "心控：[%s]",
 
 	image = "影分身",
 	image_desc = "15% 分身警告",

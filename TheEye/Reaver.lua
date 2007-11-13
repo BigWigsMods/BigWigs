@@ -188,7 +188,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	orbother = "秘法寶珠瞄準其他人",
 	orbother_desc = "當秘法寶珠在團員身上時警示。",
-	orb_other = "寶珠目標：(%s)",
+	orb_other = "寶珠目標：[%s]",
 
 	icon = "團隊標記",
 	icon_desc = "當團員為秘法寶珠目標時，設置團隊標記（需要權限）",

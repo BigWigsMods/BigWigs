@@ -166,10 +166,10 @@ L:RegisterTranslations("zhTW", function() return {
 	phase_normal_bar = "~即將惡魔之怒階段",
 	phase_rage_bar = "下一個普通階段",
 
-	--bloodboil = "Bloodboil",
-	--bloodboil_desc = "Warnings and counter for Bloodboil.",
-	--bloodboil_trigger = "afflicted by Bloodboil",
-	--bloodboil_message = "Bloodboil(%d)",
+	bloodboil = "血液沸騰",
+	bloodboil_desc = "警告並計算血液沸騰.",
+	bloodboil_trigger = "受(到[了]*)血液沸騰效果的影響。",
+	bloodboil_message = "血液沸騰(%d)",
 
 	rage = "惡魔之怒",
 	rage_desc = "提示誰受到惡魔之怒",
