@@ -203,7 +203,6 @@ mod.proximitySilent = true
 
 function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
@@ -211,12 +210,16 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "LurkWhirl", 10)
-	started = nil
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+local function nilStarted()
+	started = nil
+	mod:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+end
 
 function mod:BigWigs_RecvSync( sync, rest, nick )
 	if self:ValidateEngageSync(sync, rest) and not started then
@@ -262,6 +265,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 			self:TriggerEvent("BigWigs_StopBar", self, L["whirl_bar"])
 		end
 		occured = nil
+		self:ScheduleEvent("BWLurkerNilStarted", nilStarted, 60)
 	end
 end
 
@@ -269,6 +273,7 @@ function mod:DiveCheck()
 	if not self:Scan() and not occured then
 		occured = true
 		self:ScheduleEvent("BWLurkerUp", self.LurkerUP, 60, self)
+		self:ScheduleEvent("BWLurkerNilStarted", nilStarted, 65)
 
 		if self.db.profile.dive then
 			local ewarn = L["emerge_warning"]
@@ -303,4 +308,5 @@ function mod:LurkerUP()
 	end
 
 	self:TriggerEvent("BigWigs_ShowProximity", self)
+	self:ScheduleEvent("BWLurkerNilStarted", nilStarted, 30)
 end
