@@ -228,6 +228,7 @@ plugin.defaultDB = {
 	posx = nil,
 	posy = -150,
 	chat = nil,
+	twothree = nil,
 }
 plugin.consoleCmd = L["Messages"]
 
@@ -336,6 +337,11 @@ function plugin:OnEnable()
 		colorModule = BigWigs:GetModule("Colors")
 	else
 		colorModule = nil
+	end
+
+	if type(RaidNotice_AddMessage) == "function" and not plugin.db.profile.twothree then
+		plugin.db.profile.sink10OutputSink = "RaidWarning"
+		plugin.db.profile.twothree = true
 	end
 end
 

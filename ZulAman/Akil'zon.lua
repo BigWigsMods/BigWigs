@@ -149,7 +149,7 @@ function mod:Storm(msg)
 		if eplayer == L2["you"] and etype == L2["are"] then
 			eplayer = pName
 			if self.db.profile.ping then
-				Minimap:PingLocation(CURSOR_OFFSET_X, CURSOR_OFFSET_Y)
+				Minimap:PingLocation()
 				BigWigs:Print(L["ping_message"])
 			end
 		end
