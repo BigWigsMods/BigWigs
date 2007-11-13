@@ -409,7 +409,7 @@ L:RegisterTranslations("zhCN", function() return {
 	sanguinar_inc_trigger = "你们击败了我最强大的顾问……但是没有人能战胜鲜血之锤。出来吧，萨古纳尔男爵！",
 	capernian_inc_trigger = "卡波妮娅会很快解决你们的。",
 	telonicus_inc_trigger = "干得不错。看来你们有能力挑战我的首席技师，塔隆尼库斯。",
-	weapons_inc_trigger = " 你们看，我的个人收藏中有许多武器……",
+	weapons_inc_trigger = "你们看，我的个人收藏中有许多武器……",
 	phase3_trigger = "也许我确实低估了你们。虽然让你们同时面对我的四位顾问显得有些不公平，但是我的人民从来都没有得到过公平的待遇。我只是在以牙还牙。",
 	phase4_trigger = "唉，有些时候，有些事情，必须得亲自解决才行。Balamore shanal！",
 
