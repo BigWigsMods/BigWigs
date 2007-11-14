@@ -55,7 +55,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	adds = "Adds",
 	adds_desc = "Préviens de l'arrivée des adds.",
-	adds_trigger = "Où sont mes perce-coque ? Au boulot ! Faut qu'ça éclose !",
+	adds_trigger = "Sont où mes perce-coque ? Au boulot ! Faut qu'ça éclose !",
 	adds_message = "Arrivée des adds !",
 } end )
 
