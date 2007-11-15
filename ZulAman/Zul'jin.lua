@@ -95,7 +95,7 @@ L:RegisterTranslations("koKR", function() return {
 	throw_trigger = "^([^|;%s]*)(.*)광기의 발톱에 걸렸습니다%.$",
 
 	icon = "전술 표시",
-	icon_desc = "전하 폭풍 대상이된 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+	icon_desc = "광기의 발톱 대상이된 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	paralyze = "마비",
 	paralyze_desc = "마비와 섬뜩한 마비 효과에 대한 경고입니다.",
