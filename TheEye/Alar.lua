@@ -70,11 +70,11 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("koKR", function() return {
 	engage_message = "%s 전투 개시 - 1 단계",
 
-	meteor = "유성",
-	meteor_desc = "대략적인 유성 타이머입니다.",
-	meteor_warning = "약 5초 이내 유성 주의",
-	meteor_message = "유성! 다음은 약 52초 이내",
-	meteor_nextbar = "다음 유성",
+	meteor = "급강하 폭격",  -- By patch, spell name is changed
+	meteor_desc = "대략적인 급강하 폭격 타이머입니다.",
+	meteor_warning = "약 5초 이내 급강하 폭격 주의",
+	meteor_message = "급강하 폭격! 다음은 약 52초 이내",
+	meteor_nextbar = "다음 급강하 폭격",
 
 	flamepatch = "당신에 화염 파편",
 	flamepatch_desc = "당신에 화염 파편에 대한 경고입니다.",
