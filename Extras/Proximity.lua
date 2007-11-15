@@ -70,6 +70,9 @@ L:RegisterTranslations("enUS", function() return {
 	proximity_desc = "Show the proximity window when appropriate for this encounter, listing players who are standing too close to you.",
 
 	font = "Fonts\\FRIZQT__.TTF",
+
+	["Test"] = true,
+	["Perform a Proximity test."] = true,
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -220,7 +223,20 @@ plugin.consoleOptions = {
 			name = L["Disabled"],
 			desc = L["Disable the proximity display for all modules that use it."],
 			order = 101,
-		}
+		},
+		spacer = {
+			type = "header",
+			name = " ",
+			order = 102,
+		},
+		[L["Test"]] = {
+			type = "execute",
+			name = L["Test"],
+			desc = L["Perform a Proximity test."],
+			order = 103,
+			handler = plugin,
+			func = "TestProximity",
+		},
 	}
 }
 
@@ -316,6 +332,15 @@ function plugin:OpenProximity()
 	if not self:IsEventScheduled("bwproximityupdate") then
 		self:ScheduleRepeatingEvent("bwproximityupdate", self.UpdateProximity, .1, self)
 	end
+end
+
+function plugin:TestProximity()
+	self:SetupFrames()
+
+	local text = L["Close Players"]
+	anchor.text:SetText(L["|cff777777Nobody|r"])
+	anchor.cheader:SetText(text)
+	anchor:Show()
 end
 
 function plugin:UpdateProximity()
