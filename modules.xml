@@ -13,7 +13,6 @@
 
 <Script file="Extras\CustomBar.lua"/>
 <Script file="Extras\Tranq.lua"/>
-<Script file="Extras\Discovery.lua"/>
 <Script file="Extras\Proximity.lua"/>
 <Script file="Extras\Version.lua"/>
 <Script file="Extras\Test.lua"/>
