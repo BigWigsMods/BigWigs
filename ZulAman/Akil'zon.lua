@@ -142,8 +142,6 @@ end
 ------------------------------
 
 function mod:Storm(msg)
-	if not self.db.profile.elec then return end
-
 	local eplayer, etype = select(3, msg:find(L["elec_trigger"]))
 	if eplayer and etype then
 		if eplayer == L2["you"] and etype == L2["are"] then
