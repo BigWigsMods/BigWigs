@@ -336,7 +336,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if self.db.profile.whirlwind then
 			self:CancelScheduledEvent("ww1")
 			self:CancelScheduledEvent("ww2")
-			self:CancelScheduledEvent("bwwhirlwind")
+			self:CancelScheduledEvent("BWLeoWhirlwind")
 			self:TriggerEvent("BigWigs_StopBar", self, L["whirlwind_bar"])
 			self:TriggerEvent("BigWigs_StopBar", self, L["whirlwind_bar2"])
 			self:ScheduleEvent("BWAfterDemon", self.WhirlwindBar, 60, self)
@@ -439,6 +439,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(L["whirlwind_gain"], "Important", nil, "Alert")
 		self:ScheduleEvent("ww1", "BigWigs_Message", 12, L["whirlwind_fade"], "Attention")
 		self:Bar(L["whirlwind_bar"], 12, "Ability_Whirlwind")
-		self:ScheduleEvent("bwwhirlwind", self.WhirlwindBar, 12, self)
+		self:ScheduleEvent("BWLeoWhirlwind", self.WhirlwindBar, 12, self)
 	end
 end
