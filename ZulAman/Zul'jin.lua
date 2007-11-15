@@ -102,7 +102,7 @@ L:RegisterTranslations("koKR", function() return {
 	paralyze_warning = "섬뜩한 마비 - 마비 5초전!",
 	paralyze_message = "마비!",
 	paralyze_bar = "잠시후 마비",
-	paralyze_trigger = "마비에 걸렸습니다%.$",
+	paralyze_trigger = "섬뜩한 마비에 걸렸습니다%.$",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
