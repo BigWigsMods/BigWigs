@@ -80,29 +80,29 @@ L:RegisterTranslations("koKR", function() return {
 
 	form = "변신 알림",
 	form_desc = "줄진이 변신할 때 알립니다.",
-	form_bear_trigger = "새로운 기술을 익혔지... 내 형제의 곰처럼...",  -- Check
+	form_bear_trigger = "새로운 기술을 익혔지... 내 형제, 곰처럼...",
 	form_bear_message = "2단계 - 곰!",
-	form_eagle_trigger = "독수리의 눈을 피할수는 없다!",  -- Check
+	form_eagle_trigger = "독수리의 눈을 피할 수는 없다!",
 	form_eagle_message = "3단계 - 독수리!",
-	form_lynx_trigger = "내 새로운 형제... 송곳니와 발톱을 보아라!",  -- Check
+	form_lynx_trigger = "내 새로운 형제, 송곳니와 발톱을 보아라!",
 	form_lynx_message = "4단계 - 스라소니!",
-	form_dragonhawk_trigger = "용매를 하늘에서만 찾을 필요는 없다!",  -- Check
+	form_dragonhawk_trigger = "용매를 하늘에서만 찾을 필요는 없다!",
 	form_dragonhawk_message = "5단계 - 용매!",
 
-	--throw = "Grievous Throw",
-	--throw_desc = "Warn who is afflicted by Grievous Throw.",
-	--throw_message = "%s has Grievous Throw",
-	--throw_trigger = "^(%S+) (%S+) afflicted by Grievous Throw%.$",
+	throw = "광기의 발톱",
+	throw_desc = "광기의 발톱에 걸린 플레이어를 알립니다.",
+	throw_message = "%s 광기의 발톱",
+	throw_trigger = "^([^|;%s]*)(.*)광기의 발톱에 걸렸습니다%.$",
 
-	--icon = "Raid Icon",
-	--icon_desc = "Place a Raid Target Icon on the player afflicted by Grievous Throw. (requires promoted or higher)",
+	icon = "전술 표시",
+	icon_desc = "전하 폭풍 대상이된 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
-	--paralyze = "Paralyze",
-	--paralyze_desc = "Warn for Creeping Paralysis and the impending Paralyze after effect.",
-	--paralyze_warning = "Creeping Paralysis - Paralyze in 5 sec!",
-	--paralyze_message = "Paralyzed!",
-	--paralyze_bar = "Inc Paralyze",
-	--paralyze_trigger = "afflicted by Creeping Paralysis%.$",
+	paralyze = "마비",
+	paralyze_desc = "마비와 섬뜩한 마비 효과에 대한 경고입니다.",
+	paralyze_warning = "섬뜩한 마비 - 마비 5초전!",
+	paralyze_message = "마비!",
+	paralyze_bar = "잠시후 마비",
+	paralyze_trigger = "마비에 걸렸습니다%.$",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

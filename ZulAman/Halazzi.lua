@@ -35,7 +35,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "무릎 꿇고 경배하라... 송곳니와 발톱에!", -- Check
+	engage_trigger = "무릎 꿇고 경배하라... 송곳니와 발톱에!",
 
 	totem = "토템",
 	totem_desc = "할라지가 번개 토템을 소환할 때 알림.",
@@ -44,8 +44,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	phase = "단계",
 	phase_desc = "단계 변경 알림.",
-	phase_spirit = "야생의 혼이 내 편이다...", -- Check
-	phase_normal = "혼이여! 이리 돌아오라!", -- Check
+	phase_spirit = "야생의 혼이 내 편이다...",
+	phase_normal = "혼이여! 이리 돌아오라!",
 	normal_message = "보통 단계!",
 	spirit_message = "%d%% HP! - 영혼 단계!",
 	spirit_soon = "곧 영혼 단계!",

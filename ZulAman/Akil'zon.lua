@@ -34,7 +34,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "나는 사냥꾼이다! 너흰 먹이감이고...",
+	engage_trigger = "나는 사냥꾼이다! 너흰 먹잇감이고...",
 	engage_message = "%s 전투 시작 - ~55초 이내 폭풍!",
 
 	elec = "전하 폭풍",
