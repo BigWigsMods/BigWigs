@@ -46,11 +46,11 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("frFR", function() return {
 	engage_message = "%s engagé - Phase 1",
 
-	meteor = "Météore",
-	meteor_desc = "Délais estimés entre les météores.",
-	meteor_warning = "Météore probable dans ~5 sec.",
-	meteor_message = "Météore ! Prochain dans ~52 sec.",
-	meteor_nextbar = "Prochain météore",
+	meteor = "Bombardement en piqué",
+	meteor_desc = "Délais estimés entre les Bombardements en piqué.",
+	meteor_warning = "Bombardement en piqué probable dans ~5 sec.",
+	meteor_message = "Bombardement en piqué ! Prochain dans ~52 sec.",
+	meteor_nextbar = "Prochain Bombardement",
 
 	flamepatch = "Gerbe de flammes sur vous",
 	flamepatch_desc = "Préviens quand une Gerbe de flammes est sur vous.",

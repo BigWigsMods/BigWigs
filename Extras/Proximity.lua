@@ -124,6 +124,9 @@ L:RegisterTranslations("frFR", function() return {
 	proximity_desc = "Affiche la fenêtre de proximité.",
 
 	font = "Fonts\\FRIZQT__.TTF",
+
+	["Test"] = "Test",
+	["Perform a Proximity test."] = "Effectue un test de proximité.",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
