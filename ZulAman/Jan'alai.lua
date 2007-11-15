@@ -125,6 +125,29 @@ L:RegisterTranslations("zhCN", function() return {
 	adds_trigger = "Where ma hatcha? Get to work on dem eggs!",
 	adds_message = "即将出现 救援!",
 } end )
+
+L:RegisterTranslations("zhTW", function() return {
+	engage_trigger = "風之聖魂將是你的夢魘!",
+
+	flame = "火息術",
+	flame_desc = "警告賈納雷施放火息術",
+	flame_trigger = "賈納雷開始施放火息術。",
+	flame_message = "火息術：[%s]",
+
+	icon = "標記圖示",
+	icon_desc = "為被火息術的玩家設置團隊標記（需要權限）",
+
+	bomb = "燃燒彈",
+	bomb_desc = "燃燒彈警報",
+	bomb_trigger = "燒死你們!",
+	bomb_message = "火焰炸彈即將出現!",
+
+	adds = "救援",
+	adds_desc = "警告救援即將出現",
+	adds_trigger = "雌鷹哪裡去啦?快去孵蛋!",
+	adds_message = "救援即將出現!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

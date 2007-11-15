@@ -136,6 +136,37 @@ L:RegisterTranslations("zhCN", function() return {
 	--paralyze_trigger = "afflicted by Creeping Paralysis%.$",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	engage_trigger = "沒有人比我更強!",
+	engage_message = "階段 1 - 人類階段",
+
+	form = "型態變換",
+	form_desc = "警告祖爾金變換型態",
+	form_bear_trigger = "賜給我一些新的力量……讓我像熊一樣……",
+	form_bear_message = "80% 階段 2 - 熊型態!",
+	form_eagle_trigger = "在雄鷹之下無所遁形!",
+	form_eagle_message = "60% 階段 3 - 鷹型態!",
+	form_lynx_trigger = "讓我來介紹我的新兄弟:尖牙和利爪!",
+	form_lynx_message = "40% 階段 4 - 山貓型態!",
+	form_dragonhawk_trigger = "你不需要仰望天空才看得到龍鷹!",
+	form_dragonhawk_message = "20% 階段 5 - 龍鷹型態!",
+
+	throw = "嚴重擲傷",
+	throw_desc = "警告誰受到了嚴重擲傷.",
+	throw_message = "嚴重擲傷：[%s]",
+	throw_trigger = "^(.+)受(到[了]*)嚴重擲傷效果的影響。$",
+
+	icon = "標記圖示",
+	icon_desc = "為被嚴重擲傷的玩家設置團隊標記（需要權限）",
+
+	paralyze = "慢性麻痹",
+	paralyze_desc = "Warn for 慢性麻痹 and the impending Paralyze after effect.",
+	paralyze_warning = "慢性麻痹 - 麻痹在 5 秒!",
+	paralyze_message = "慢性麻痹!",
+	paralyze_bar = "慢性麻痹即將來臨",
+	paralyze_trigger = "慢性麻痹效果的影響。$",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

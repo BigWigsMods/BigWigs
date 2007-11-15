@@ -88,6 +88,24 @@ L:RegisterTranslations("zhCN", function() return {
 	spirit_bar = "~可能 正常阶段",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	engage_trigger = "在利爪與尖牙面前下跪吧，祈禱吧，顫慄吧!",
+
+	totem = "圖騰",
+	totem_desc = "警告哈拉齊施放閃電圖騰",
+	totem_trigger = "哈拉齊開始施放閃電圖騰。",
+	totem_message = "閃電圖騰即將來臨!",
+
+	phase = "階段",
+	phase_desc = "警告階段變換",
+	phase_spirit = "狂野的靈魂與我同在......",
+	phase_normal = "靈魂，回到我這裡來!",
+	normal_message = "普通階段!",
+	spirit_message = "%d%% HP! - 靈魂階段!",
+	spirit_soon = "靈魂階段即將來臨!",
+	spirit_bar = "~可能普通階段",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

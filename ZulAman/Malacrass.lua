@@ -118,6 +118,32 @@ L:RegisterTranslations("zhCN", function() return {
 	heal_message = "正在施放 => 治疗! 打断!",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	engage_trigger = "陰影將會降臨在你們頭上......",
+
+	bolts = "靈魂箭",
+	bolts_desc = "警告瑪拉克雷斯施放靈魂箭",
+	bolts_trigger = "你的靈魂將會受到傷害!",
+	bolts_message = "靈魂箭即將來臨",
+
+	soul = "虹吸靈魂",
+	soul_desc = "警告誰受到虹吸靈魂",
+	soul_trigger = "^(.+)受(到[了]*)虹吸靈魂效果的影響。$",
+	soul_message = "虹吸靈魂：[%s]",
+
+	totem = "圖騰",
+	totem_desc = "警告火焰新星圖騰被施放了",
+	totem_trigger = "妖術領主瑪拉克雷斯施放了火焰新星圖騰。",
+	totem_message = "火焰新星圖騰!",
+
+	heal = "治療",
+	heal_desc = "警告瑪拉克雷斯施放治療",
+	heal_flash = "妖術領主瑪拉克雷斯開始施放快速治療。",
+	heal_light = "妖術領主瑪拉克雷斯開始施放聖光術。",
+	heal_wave = "妖術領主瑪拉克雷斯開始施放治療波。",
+	heal_message = "施放治療! - 快中斷",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
