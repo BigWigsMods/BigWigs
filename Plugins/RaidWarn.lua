@@ -182,7 +182,6 @@ plugin.consoleOptions = {
 			type = "toggle",
 			name = L["Broadcast"],
 			desc = L["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."],
-			disabled = function() return plugin.db.profile.useraidchannel end,
 		},
 		whisper = {
 			type = "toggle",
@@ -198,6 +197,7 @@ plugin.consoleOptions = {
 			type = "toggle",
 			name = L["Broadcast to chat"],
 			desc = L["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."],
+			disabled = function() return plugin.db.profile.broadcast end,
 		},
 	}
 }
