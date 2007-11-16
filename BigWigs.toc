@@ -17,7 +17,7 @@
 ## X-AceForum: 1762
 ## X-License: See license.txt
 
-## OptionalDeps: Ace2, FuBar, LibSharedMedia-2.0
+## OptionalDeps: Ace2, FuBar, SharedMedia-2.0
 ## X-Embeds: Ace2, FuBarPlugin-2.0, Babble-2.2, CandyBar, DewdropLib, PaintChipsLib, LibSharedMedia-2.0, Waterfall-1.0, SinkLib
 
 ## SavedVariables: BigWigsDB, BigWigsFubarDB
