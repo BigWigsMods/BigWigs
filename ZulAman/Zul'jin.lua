@@ -101,13 +101,13 @@ L:RegisterTranslations("koKR", function() return {
 	form_dragonhawk_trigger = "용매를 하늘에서만 찾을 필요는 없다!",
 	form_dragonhawk_message = "20% 5단계 - 용매!",
 
-	throw = "광기의 발톱",
-	throw_desc = "광기의 발톱에 걸린 플레이어를 알립니다.",
-	throw_message = "%s 광기의 발톱",
-	throw_trigger = "^([^|;%s]*)(.*)광기의 발톱에 걸렸습니다%.$",
+	throw = "치명상",
+	throw_desc = "치명상에 걸린 플레이어를 알립니다.",
+	throw_message = "%s 치명상",
+	throw_trigger = "^([^|;%s]*)(.*)치명상에 걸렸습니다%.$",
 
 	icon = "전술 표시",
-	icon_desc = "광기의 발톱 대상이된 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+	icon_desc = "치명상과 광기의 발톱 대상이된 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	paralyze = "마비",
 	paralyze_desc = "마비와 섬뜩한 마비 효과에 대한 경고입니다.",
@@ -116,10 +116,10 @@ L:RegisterTranslations("koKR", function() return {
 	paralyze_bar = "잠시후 마비",
 	paralyze_trigger = "섬뜩한 마비에 걸렸습니다%.$",
 
-	--claw = "Claw Rage",
-	--claw_desc = "Warn for who gets Claw Rage.",
-	--claw_trigger = "^(%S+) (%S+) afflicted by Claw Rage%.$",
-	--claw_message = "Claw Rage on %s",
+	claw = "광기의 발톱",
+	claw_desc = "광기의 발톱에 걸린 플레이어를 알립니다.",
+	claw_trigger = "^([^|;%s]*)(.*)광기의 발톱에 걸렸습니다%.$",
+	claw_message = "%s 광기의 발톱",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
