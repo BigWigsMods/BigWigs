@@ -190,6 +190,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	pName = UnitName("player")
+	started = nil
 end
 
 ------------------------------
@@ -200,9 +201,8 @@ local function nilOccured()
 	occured = nil
 end
 
-local function nilStarted()
-	started = nil
-	mod:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+local function resetMe()
+	mod:CheckForWipe()
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
@@ -258,7 +258,7 @@ function mod:AlarCheck()
 
 		--If 120 seconds pass with no meteor, we must have wiped, allow CheckForEngage
 		--This timer should overwrite itself every meteor, starting from the start
-		self:ScheduleEvent("BWAlarNilStarted", nilStarted, 120)
+		self:ScheduleEvent("BWAlarReset", resetMe, 120)
 	end
 end
 
