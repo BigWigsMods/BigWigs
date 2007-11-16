@@ -159,7 +159,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["phase_normal"] then
 		self:Message(L["normal_message"], "Attention")
 	elseif msg == L["engage_trigger"] then
-		count = 1; one = nil; two = nil; three = nil;
+		count = 1
+		one = nil
+		two = nil
+		three = nil
 	end
 end
 
