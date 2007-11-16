@@ -6,6 +6,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["Zul'jin"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local pName = nil
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -34,7 +35,7 @@ L:RegisterTranslations("enUS", function() return {
 	throw_trigger = "^(%S+) (%S+) afflicted by Grievous Throw%.$",
 
 	icon = "Raid Icon",
-	icon_desc = "Place a Raid Target Icon on the player afflicted by Grievous Throw. (requires promoted or higher)",
+	icon_desc = "Place a Raid Target Icon on the player afflicted by Grievous Throw or Claw Rage. (requires promoted or higher)",
 
 	paralyze = "Paralyze",
 	paralyze_desc = "Warn for Creeping Paralysis and the impending Paralyze after effect.",
@@ -42,6 +43,11 @@ L:RegisterTranslations("enUS", function() return {
 	paralyze_message = "Paralyzed!",
 	paralyze_bar = "Inc Paralyze",
 	paralyze_trigger = "afflicted by Creeping Paralysis%.$",
+
+	claw = "Claw Rage",
+	claw_desc = "Warn for who gets Claw Rage.",
+	claw_trigger = "^(%S+) (%S+) afflicted by Claw Rage%.$",
+	claw_message = "Claw Rage on %s",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -73,6 +79,11 @@ L:RegisterTranslations("frFR", function() return {
 	paralyze_message = "Paralysés !",
 	paralyze_bar = "Paralysie effective",
 	paralyze_trigger = "les effets .* Paralysie progressive%.$",
+
+	--claw = "Claw Rage",
+	--claw_desc = "Warn for who gets Claw Rage.",
+	--claw_trigger = "^(%S+) (%S+) afflicted by Claw Rage%.$",
+	--claw_message = "Claw Rage on %s",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -104,6 +115,11 @@ L:RegisterTranslations("koKR", function() return {
 	paralyze_message = "마비!",
 	paralyze_bar = "잠시후 마비",
 	paralyze_trigger = "섬뜩한 마비에 걸렸습니다%.$",
+
+	--claw = "Claw Rage",
+	--claw_desc = "Warn for who gets Claw Rage.",
+	--claw_trigger = "^(%S+) (%S+) afflicted by Claw Rage%.$",
+	--claw_message = "Claw Rage on %s",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -135,6 +151,11 @@ L:RegisterTranslations("zhCN", function() return {
 	--paralyze_message = "Paralyzed!",
 	--paralyze_bar = "Inc Paralyze",
 	--paralyze_trigger = "afflicted by Creeping Paralysis%.$",
+
+	--claw = "Claw Rage",
+	--claw_desc = "Warn for who gets Claw Rage.",
+	--claw_trigger = "^(%S+) (%S+) afflicted by Claw Rage%.$",
+	--claw_message = "Claw Rage on %s",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -166,6 +187,11 @@ L:RegisterTranslations("zhTW", function() return {
 	paralyze_message = "慢性麻痹!",
 	paralyze_bar = "慢性麻痹即將來臨",
 	paralyze_trigger = "慢性麻痹效果的影響。$",
+
+	--claw = "Claw Rage",
+	--claw_desc = "Warn for who gets Claw Rage.",
+	--claw_trigger = "^(%S+) (%S+) afflicted by Claw Rage%.$",
+	--claw_message = "Claw Rage on %s",
 } end )
 
 ----------------------------------
@@ -175,7 +201,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Aman"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"form", "paralyze", -1, "throw", "icon", "bosskill"}
+mod.toggleoptions = {"form", "paralyze", -1, "throw", "claw", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -187,6 +213,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "ZulBleed", 2)
+	self:TriggerEvent("BigWigs_ThrottleSync", "ZulClaw", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "ZulPara", 5)
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "AfflictEvent")
@@ -196,6 +223,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	pName = UnitName("player")
+	db = self.db.profile
 end
 
 ------------------------------
@@ -203,7 +231,7 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if not self.db.profile.form then return end
+	if not db.form then return end
 
 	if msg == L["form_bear_trigger"] then
 		self:Message(L["form_bear_message"], "Urgent")
@@ -232,15 +260,29 @@ function mod:AfflictEvent(msg)
 		self:Sync("ZulBleed", gplayer)
 		return
 	end
+
+	local cplayer, ctype = select(3, msg:find(L["claw_trigger"]))
+	if cplayer and ctype then
+		if cplayer == L2["you"] and ctype == L2["are"] then
+			cplayer = pName
+		end
+		self:Sync("ZulClaw", cplayer)
+		return
+	end
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "ZulBleed" and rest and self.db.profile.throw then
+	if sync == "ZulBleed" and rest and db.throw then
 		self:Message(L["throw_message"]:format(rest), "Attention")
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(rest)
 		end
-	elseif sync == "ZulPara" and self.db.profile.paralyze then
+	elseif sync == "ZulClaw" and rest and db.claw then
+		self:Message(L["claw_message"]:format(rest), "Urgent")
+		if db.icon then
+			self:Icon(rest)
+		end
+	elseif sync == "ZulPara" and db.paralyze then
 		self:Message(L["paralyze_warning"], "Urgent")
 		self:DelayedMessage(5, L["paralyze_message"], "Positive")
 		self:Bar(L["paralyze_bar"], 5, "Spell_Nature_TimeStop")

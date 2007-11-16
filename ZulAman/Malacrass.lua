@@ -7,6 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local pName = nil
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -172,6 +173,7 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalaHeal", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalaTotem", 5)
+	db = self.db.profile
 end
 
 ------------------------------
@@ -179,7 +181,7 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.bolts and msg == L["bolts_trigger"] then
+	if db.bolts and msg == L["bolts_trigger"] then
 		self:Message(L["bolts_message"], "Important")
 		self:Bar(L["bolts"], 10, "Spell_Shadow_ShadowBolt")
 	end
@@ -194,7 +196,7 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 end
 
 function mod:Siphon(msg)
-	if not self.db.profile.soul then return end
+	if not db.soul then return end
 
 	local splayer, stype = select(3, msg:find(L["soul_trigger"]))
 	if splayer and stype then
@@ -206,11 +208,11 @@ function mod:Siphon(msg)
 end
 
 function mod:BigWigs_RecvSync(sync)
-	if sync == "MalaHeal" and self.db.profile.heal then
+	if sync == "MalaHeal" and db.heal then
 		local show = L["heal_message"]
 		self:Message(show, "Positive")
 		self:Bar(show, 2, "Spell_Nature_MagicImmunity")
-	elseif sync == "MalaTotem" and self.db.profile.totem then
+	elseif sync == "MalaTotem" and db.totem then
 		self:Message(L["totem_message"], "Urgent")
 	end
 end

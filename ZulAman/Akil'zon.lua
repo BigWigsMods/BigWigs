@@ -7,6 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local pName = nil
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -135,7 +136,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Aman"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"elec", "ping", "icon", "bosskill"}
+mod.toggleoptions = {"elec", "ping", "icon", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -148,24 +149,27 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Storm")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	--self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "AkilElec", 10)
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	pName = UnitName("player")
+	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
+--[[	]]
 function mod:Storm(msg)
 	local eplayer, etype = select(3, msg:find(L["elec_trigger"]))
 	if eplayer and etype then
 		if eplayer == L2["you"] and etype == L2["are"] then
 			eplayer = pName
-			if self.db.profile.ping then
+			if db.ping then
 				Minimap:PingLocation()
 				BigWigs:Print(L["ping_message"])
 			end
@@ -175,24 +179,64 @@ function mod:Storm(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if not self.db.profile.elec then return end
-
 	if msg == L["engage_trigger"] then
-		self:Message(L["engage_message"]:format(boss), "Positive")
-		self:Bar(L["elec_bar"], 55, "Spell_Lightning_LightningBolt01")
-		self:DelayedMessage(43, L["elec_warning"], "Urgent")
+		if db.enrage then
+			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
+			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
+			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
+			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
+			self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
+			self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
+			self:DelayedMessage(595, L2["enrage_sec"]:format(5), "Urgent")
+			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
+		end
+		if db.elec then
+			self:Message(L["engage_message"]:format(boss), "Positive")
+			self:Bar(L["elec_bar"], 55, "Spell_Lightning_LightningBolt01")
+			self:DelayedMessage(43, L["elec_warning"], "Urgent")
+		end
 	end
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "AkilElec" and rest and self.db.profile.elec then
+	if sync == "AkilElec" and rest and db.elec then
 		local show = L["elec_message"]:format(rest)
 		self:Message(show, "Attention")
 		self:Bar(show, 8, "Spell_Nature_EyeOfTheStorm")
 		self:Bar(L["elec_bar"], 55, "Spell_Lightning_LightningBolt01")
 		self:DelayedMessage(48, L["elec_warning"], "Urgent")
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(rest)
 		end
 	end
 end
+
+--[[
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, a, b, c, player, d, e, f, g, h, i)
+	if not db.elec then return end
+
+	BigWigs:Print(msg)
+	BigWigs:Print(a)
+	BigWigs:Print(b)
+	BigWigs:Print(c)
+	BigWigs:Print(player)
+	BigWigs:Print(d)
+	BigWigs:Print(e)
+	BigWigs:Print(f)
+	BigWigs:Print(g)
+	BigWigs:Print(h)
+	BigWigs:Print(i)
+
+	if msg == "An electrical storm appears!" then
+		local show = L["elec_message"]:format(player)
+		self:Message(show, "Attention")
+		self:Bar(show, 8, "Spell_Nature_EyeOfTheStorm")
+		self:Bar(L["elec_bar"], 55, "Spell_Lightning_LightningBolt01")
+		self:DelayedMessage(48, L["elec_warning"], "Urgent")
+		if db.icon then
+			self:Icon(player)
+		end
+	end
+end
+]]

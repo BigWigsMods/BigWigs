@@ -5,10 +5,13 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Halazzi"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
-local hp = 100
 local UnitName = UnitName
 local UnitHealth = UnitHealth
-local first, second
+local one = nil
+local two = nil
+local three = nil
+local count = 1
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -125,10 +128,8 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("UNIT_HEALTH")
 
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "HalHP", 4.5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "HalSoon", 4.5)
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	db = self.db.profile
 end
 
 ------------------------------
@@ -136,47 +137,46 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if self.db.profile.totem and msg == L["totem_trigger"] then
+	if db.totem and msg == L["totem_trigger"] then
 		self:Message(L["totem_message"], "Attention")
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if not self.db.profile.phase then return end
-
-	if sync == "HalHP" and rest then
-		hp = rest
-	elseif sync == "HalSoon" then
-		self:Message(L["spirit_soon"], "Positive")
-	end
-end
-
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if not self.db.profile.phase then return end
+	if not db.phase then return end
 
 	if msg == L["phase_spirit"] then
-		self:Message(L["spirit_message"]:format(hp), "Urgent")
+		if count == 1 then
+			self:Message(L["spirit_message"]:format(75), "Urgent")
+			count = count + 1
+		elseif count == 2 then
+			self:Message(L["spirit_message"]:format(50), "Urgent")
+			count = count + 1
+		elseif count == 3 then
+			self:Message(L["spirit_message"]:format(25), "Urgent")
+		end
 		self:Bar(L["spirit_bar"], 50, "Spell_Nature_Regenerate")
 	elseif msg == L["phase_normal"] then
 		self:Message(L["normal_message"], "Attention")
 	elseif msg == L["engage_trigger"] then
-		hp = 100; first = nil; second = nil;
+		count = 1; one = nil; two = nil; three = nil;
 	end
 end
 
 function mod:UNIT_HEALTH(msg)
-	if not self.db.profile.phase then return end
+	if not db.phase then return end
 
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
-		if not first and (health == 75 or health == 50 or health == 25) then
-			first = true
-			second = nil
-			self:Sync(("%s %d"):format("HalHP", health))
-		elseif not second and (health == 80 or health == 55 or health == 30) then
-			second = true
-			first = nil
-			self:Sync("HalSoon")
+		if not one and health > 77 and health <= 80 then
+			one = true
+			self:Message(L["spirit_soon"], "Positive")
+		elseif not two and health > 52 and health <= 55 then
+			two = true
+			self:Message(L["spirit_soon"], "Positive")
+		elseif not three and health > 27 and health <= 30 then
+			three = true
+			self:Message(L["spirit_soon"], "Positive")
 		end
 	end
 end

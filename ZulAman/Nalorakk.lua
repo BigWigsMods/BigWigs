@@ -4,6 +4,8 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Nalorakk"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -126,7 +128,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Aman"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", "bosskill"}
+mod.toggleoptions = {"phase", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -137,6 +139,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	db = self.db.profile
 end
 
 ------------------------------
@@ -144,22 +147,32 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if not self.db.profile.phase then return end
-
-	if msg == L["phase_bear"] then
+	if db.phase and msg == L["phase_bear"] then
 		self:Message(L["bear_message"], "Attention")
 		self:DelayedMessage(25, L["normal_warning"], "Attention")
 		self:DelayedMessage(20, L["normal_soon"], "Urgent")
 		self:Bar(L["bear_bar"], 30, "Ability_Racial_BearForm")
-	elseif msg == L["phase_normal"] then
+	elseif db.phase and msg == L["phase_normal"] then
 		self:Message(L["normal_message"], "Positive")
 		self:DelayedMessage(40, L["bear_warning"], "Attention")
 		self:DelayedMessage(35, L["bear_soon"], "Urgent")
 		self:Bar(L["normal_bar"], 45, "INV_Misc_Head_Troll_01")
 	elseif msg == L["engage_trigger"] then
-		self:Message(L["engage_message"]:format(boss), "Positive")
-		self:DelayedMessage(40, L["bear_warning"], "Attention")
-		self:DelayedMessage(35, L["bear_soon"], "Urgent")
-		self:Bar(L["normal_bar"], 45, "INV_Misc_Head_Troll_01")
+		if db.enrage then
+			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
+			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
+			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
+			self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
+			self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
+			self:DelayedMessage(595, L2["enrage_sec"]:format(5), "Urgent")
+			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
+		end
+		if db.phase then
+			self:Message(L["engage_message"]:format(boss), "Positive")
+			self:DelayedMessage(40, L["bear_warning"], "Attention")
+			self:DelayedMessage(35, L["bear_soon"], "Urgent")
+			self:Bar(L["normal_bar"], 45, "INV_Misc_Head_Troll_01")
+		end
 	end
 end

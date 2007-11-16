@@ -8,6 +8,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local fmt = string.format
 local UnitName = UnitName
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -167,6 +168,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	db = self.db.profile
 end
 
 ------------------------------
@@ -197,20 +199,20 @@ local function ScanTarget()
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if self.db.profile.flame and msg == L["flame_trigger"] then
+	if db.flame and msg == L["flame_trigger"] then
 		self:ScheduleEvent("BWFlameToTScan", ScanTarget, 0.2)
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.bomb and msg == L["bomb_trigger"] then
+	if db.bomb and msg == L["bomb_trigger"] then
 		self:Message(L["bomb_message"], "Urgent")
 		self:Bar(L["bomb"], 12, "Spell_Fire_Fire")
-	elseif self.db.profile.adds and msg == L["adds_trigger"] then
+	elseif db.adds and msg == L["adds_trigger"] then
 		self:Message(L["adds_message"], "Positive")
 		self:Bar(L["adds"], 90, "INV_Misc_Head_Troll_01")
 	elseif msg == L["engage_trigger"] then
-		if self.db.profile.enrage then
+		if db.enrage then
 			self:Message(fmt(L2["enrage_start"], boss, 5), "Attention")
 			self:DelayedMessage(120, fmt(L2["enrage_min"], 3), "Positive")
 			self:DelayedMessage(240, fmt(L2["enrage_min"], 1), "Positive")
@@ -220,7 +222,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:DelayedMessage(300, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 300, "Spell_Shadow_UnholyFrenzy")
 		end
-		if self.db.profile.berserk then
+		if db.berserk then
 			self:DelayedMessage(360, fmt(L2["berserk_min"], 3), "Positive")
 			self:DelayedMessage(480, fmt(L2["berserk_min"], 1), "Positive")
 			self:DelayedMessage(510, fmt(L2["berserk_sec"], 30), "Positive")

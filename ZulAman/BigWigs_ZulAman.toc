@@ -1,8 +1,9 @@
 ﻿## Interface: 20300
 
-## Title: Big Wigs [|cffeda55fZul'Aman (BETA)|r]
-## Notes: Big Wigs Zul'Aman (BETA) Modules
-## Author: Funkydude, Rabbit
+## Title: Big Wigs [|cffeda55fZul'Aman|r]
+## Notes: Big Wigs Zul'Aman Modules
+## Author: Funkydude
+## X-Credits: Astaldo, phaze
 ## Version: 2.0
 ## LoadOnDemand: 1
 
@@ -22,4 +23,3 @@ Jan'alai.lua
 Akil'zon.lua
 Malacrass.lua
 Zul'jin.lua
-ZulAmanBeta.lua
