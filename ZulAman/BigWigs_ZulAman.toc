@@ -2,6 +2,7 @@
 
 ## Title: Big Wigs [|cffeda55fZul'Aman|r]
 ## Notes: Big Wigs Zul'Aman Modules
+## Notes-frFR: Modules Big Wigs concernant Zul'Aman.
 ## Author: Funkydude
 ## X-Credits: Astaldo, phaze
 ## Version: 2.0

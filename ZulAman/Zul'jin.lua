@@ -80,10 +80,10 @@ L:RegisterTranslations("frFR", function() return {
 	paralyze_bar = "Paralysie effective",
 	paralyze_trigger = "les effets .* Paralysie progressive%.$",
 
-	--claw = "Claw Rage",
-	--claw_desc = "Warn for who gets Claw Rage.",
-	--claw_trigger = "^(%S+) (%S+) afflicted by Claw Rage%.$",
-	--claw_message = "Claw Rage on %s",
+	claw = "Rage de griffes",
+	claw_desc = "Préviens quand un joueur subit les effets de la Rage de griffes.",
+	claw_trigger = "^(%S+) (%S+) les effets .* Rage de griffes%.$",
+	claw_message = "Rage de griffes sur %s",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
