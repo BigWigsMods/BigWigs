@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
+<Script file="Libs\LibStub\LibStub.lua"/>
 <Script file="Libs\AceLibrary\AceLibrary.lua"/>
 <Script file="Libs\AceOO-2.0\AceOO-2.0.lua"/>
 <Script file="Libs\AceAddon-2.0\AceAddon-2.0.lua"/>
@@ -18,7 +19,7 @@
 <Script file="Libs\FuBarPlugin-2.0\FuBarPlugin-2.0.lua"/>
 <Script file="Libs\PaintChips-2.0\PaintChips-2.0.lua"/>
 <Script file="Libs\CandyBar-2.0\CandyBar-2.0.lua"/>
-<Script file="Libs\SharedMedia-1.0\SharedMedia-1.0.lua"/>
+<Include file="Libs\LibSharedMedia-2.0\lib.xml"/>
 <Script file="Libs\Waterfall-1.0\Waterfall-1.0.lua"/>
 <Script file="Libs\Sink-1.0\Sink-1.0.lua"/>
 
