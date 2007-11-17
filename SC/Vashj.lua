@@ -243,10 +243,10 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	["Tainted Elemental"] = "被污染的元素",
 
-	engage_trigger1 = "我本不想屈尊与你们交战，但是你们让我别无选择……",
+	engage_trigger1 = "我不想贬低自己来获取你的宽容，但是你让我别无选择……",--check the change
 	engage_trigger2 = "我唾弃你们，地表的渣滓！",
 	engage_trigger3 = "伊利丹大人必胜！",
-	engage_trigger4 = "I'll split you from stem to stern!",
+	engage_trigger4 = "我要把你们全都杀死！",--check the change
 	engage_trigger5 = "入侵者都要受死！伊利丹大人必胜！",
 	engage_message = "进入第一阶段",
 
