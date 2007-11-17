@@ -257,7 +257,7 @@ mod.zonename = name
 mod.enabletrigger = { thrall, proudmoore }
 mod.toggleoptions = {"waves", "detail"}
 mod.revision = tonumber(match("$Revision$", "%d+"))
-mod.synctoken = name
+mod.synctoken = "Hyjal Summit"
 
 ------------------------------
 --      Initialization      --
