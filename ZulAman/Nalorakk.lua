@@ -105,7 +105,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "你很快就會死了!",
-	engage_message = "%s 開打了 - 熊型態在45秒!",
+	engage_message = "%s 開戰! - 45 秒後熊型態!",
 
 	phase = "型態",
 	phase_desc = "階段變化警報",
@@ -113,12 +113,12 @@ L:RegisterTranslations("zhTW", function() return {
 	phase_normal = "沒有人可以擋在納羅拉克的面前!",
 	normal_message = "普通型態!",
 	normal_bar = "下一次熊型態",
-	normal_soon = "普通型態在 10 秒",
-	normal_warning = "普通型態在 5 秒",
+	normal_soon = "10 秒後普通型態!",
+	normal_warning = "5 秒後普通型態!",
 	bear_message = "熊型態!",
 	bear_bar = "下一次普通型態",
-	bear_soon = "熊型態在 10 秒",
-	bear_warning = "熊型態在 5秒",
+	bear_soon = "10 秒後熊型態!",
+	bear_warning = "5 秒後熊型態!",
 } end )
 
 ----------------------------------

@@ -112,7 +112,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "我是掠食者!而你們，就是獵物!",
-	engage_message = "%s 開打了 - 電荷風暴在 ~55秒!",
+	engage_message = "%s 開打了 - 55 秒後電荷風暴!",
 
 	elec = "電荷風暴",
 	elec_desc = "警告誰受到電荷風暴",
@@ -121,9 +121,9 @@ L:RegisterTranslations("zhTW", function() return {
 	elec_message = "電荷風暴：[%s]",
 	elec_warning = "電荷風暴即將來臨!",
 
-	ping = "Ping",
-	ping_desc = "Ping your current location if you are afflicted by Electrical Storm.",
-	ping_message = "Storm - Pinging your location!",
+	ping = "點擊",
+	ping_desc = "若你中了電荷風暴, 在小地圖點擊你的位置",
+	ping_message = "電荷風暴 - 在小地圖點擊你的位置!",
 
 	icon = "標記圖示",
 	icon_desc = "為被電荷風暴的玩家設置團隊標記（需要權限）",
