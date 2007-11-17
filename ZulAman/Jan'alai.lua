@@ -54,10 +54,10 @@ L:RegisterTranslations("frFR", function() return {
 	bomb_trigger = "J'vais vous cramer !",
 	bomb_message = "Arrivée des bombes incendiaires !",
 
-	adds = "Adds",
-	adds_desc = "Préviens de l'arrivée des adds.",
+	adds = "Perce-coques",
+	adds_desc = "Préviens de l'arrivée des perce-coques.",
 	adds_trigger = "Sont où mes perce-coque ? Au boulot ! Faut qu'ça éclose !",
-	adds_message = "Arrivée des adds !",
+	adds_message = "Arrivée des perce-coques !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

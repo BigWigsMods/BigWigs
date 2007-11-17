@@ -140,7 +140,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	["My companions and I are with you, Lady Proudmoore."] = "Mes compagnons et moi sommes à vos côtés, dame Portvaillant.", -- Rage Winterchill
 	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "Nous sommes prêts à affronter tout ce qu'Archimonde pourra mettre sur notre chemin, dame Portvaillant.", -- Anatheron
-	--["I am with you, Thrall."] = true, -- Kaz'Rogal
+	["I am with you, Thrall."] = "Je suis avec vous, Thrall.", -- Kaz'Rogal
 	["We have nothing to fear."] = "Nous n'avons rien à craindre.", -- Az'Galor
 
 	["Please remove BigWigs_WaveTimers, it is deprecated."] = "Veuillez enlever BigWigs_WaveTimers, qui est obsolète.",
