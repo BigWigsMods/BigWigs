@@ -194,8 +194,10 @@ L:RegisterTranslations("zhCN", function() return {
 	["Wave %d! %d %s, %d %s, %d %s"] = "第%d波! %d %s, %d %s, %d %s", --3 sets of mobs
 	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "第%d波! %d %s, %d %s, %d %s, %d %s", --4 sets of mobs
 	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "第%d波! %d %s, %d %s, %d %s, %d %s, %d %s", --5 sets of mobs
-	["%s in ~%d sec!"] = "在~%d秒后 %s !",
-	["Wave %d in ~%d sec!"] = "在~%d秒后 第%d波!",
+	--["%s in ~%d sec!"] = "在~%d秒后 %s !",--old
+	["%s in ~%d sec!"] = "%s 在~%d秒后来临!",
+	--["Wave %d in ~%d sec!"] = "在~%d秒后 第%d波!",--old
+	["Wave %d in ~%d sec!"] = "第%d波! 在~%d秒后来临!",
 
 	["Boss"] = "首领",
 	["Thrall"] = "萨尔",
