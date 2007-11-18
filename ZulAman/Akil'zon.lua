@@ -7,6 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local pName = nil
+local CheckInteractDistance = CheckInteractDistance
 local db = nil
 
 ----------------------------
@@ -129,6 +130,27 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "為被電荷風暴的玩家設置團隊標記（需要權限）",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	cmd = "Akil'zon",
+
+	engage_trigger = "\194\161Yo soy el depredador! Vosotros la presa...",
+	engage_message = "\194\161%s Activado - Tormenta en ~55seg!",
+
+	elec = "Tormenta el\195\169ctrica",
+	elec_desc = "Avisa quien Tormenta el\195\169ctrica.",
+	elec_trigger = "^(%S+) (%S+) sufre Tormenta el\195\169ctrica%.$",
+	elec_bar = "~Regeneraci\195\179n de Tormenta",
+	elec_message = "Tormenta en %s!",
+	elec_warning = "\194\161Tormenta pronto!",
+
+	ping = "Ping",
+	ping_desc = "Se\195\177ala tu posici\195\179n actual si sufres Tormenta el\195\169ctrica.",
+	ping_message = "\194\161Tormenta - Se\195\177alando tu posici\195\179n!",
+
+	icon = "Icono de banda",
+	icon_desc = "Coloca un icono de banda en el jugador conTormenta el\195\169ctrica. (requiere asistente o superior)",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
@@ -138,6 +160,8 @@ mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Aman"]
 mod.enabletrigger = boss
 mod.toggleoptions = {"elec", "ping", "icon", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
+mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
+mod.proximitySilent = true
 
 ------------------------------
 --      Initialization      --
@@ -193,9 +217,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		if db.elec then
 			self:Message(L["engage_message"]:format(boss), "Positive")
-			self:Bar(L["elec_bar"], 55, "Spell_Lightning_LightningBolt01")
-			self:DelayedMessage(43, L["elec_warning"], "Urgent")
+			self:Bar(L["elec_bar"], 50, "Spell_Lightning_LightningBolt01")
+			self:DelayedMessage(47, L["elec_warning"], "Urgent")
 		end
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
 end
 
