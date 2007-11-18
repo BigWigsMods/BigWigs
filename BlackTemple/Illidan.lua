@@ -85,6 +85,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	afflict_trigger = "^(%S+) (%S+) afflicted by (.+)%.$",
 	["Flame of Azzinoth"] = true,
+
+	--very first yell to start engage timer
+	illi_start = "Akama. Your duplicity is hardly surprising. I should have slaughtered you and your malformed brethren long ago.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -150,6 +153,9 @@ L:RegisterTranslations("frFR", function() return {
 
 	afflict_trigger = "^(%S+) (%S+) les effets [de|2]+ (.*).$",
 	["Flame of Azzinoth"] = "Flamme d'Azzinoth",
+
+	--very first yell to start engage timer
+	--illi_start = "Akama. Your duplicity is hardly surprising. I should have slaughtered you and your malformed brethren long ago.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -215,6 +221,9 @@ L:RegisterTranslations("koKR", function() return {
 
 	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
 	["Flame of Azzinoth"] = "아지노스의 불꽃",
+
+	--very first yell to start engage timer
+	--illi_start = "Akama. Your duplicity is hardly surprising. I should have slaughtered you and your malformed brethren long ago.",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -280,6 +289,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 	afflict_trigger = "^([^%s]+)受([^%s]+)了([^%s]+)效果的影响。$",--%s受到了%s效果的影响。
 	["Flame of Azzinoth"] = "埃辛诺斯之焰",
+
+	--very first yell to start engage timer
+	--illi_start = "Akama. Your duplicity is hardly surprising. I should have slaughtered you and your malformed brethren long ago.",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -345,6 +357,9 @@ L:RegisterTranslations("deDE", function() return {
 
 	afflict_trigger = "^(%S+) (%S+) ist von (.*) betroffen.$",
 	["Flame of Azzinoth"] = "Flamme von Azzinoth",
+
+	--very first yell to start engage timer
+	--illi_start = "Akama. Your duplicity is hardly surprising. I should have slaughtered you and your malformed brethren long ago.",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -410,6 +425,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 	afflict_trigger = "^(.+)受(到[了]*)(.*)效果的影響。$",
 	["Flame of Azzinoth"] = "埃辛諾斯火焰",
+
+	--very first yell to start engage timer
+	--illi_start = "Akama. Your duplicity is hardly surprising. I should have slaughtered you and your malformed brethren long ago.",
 } end )
 
 ----------------------------------
@@ -572,6 +590,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:DelayedMessage(1495, fmt(L2["berserk_sec"], 5), "Urgent")
 		self:DelayedMessage(1500, fmt(L2["berserk_end"], boss), "Attention", nil, "Alarm")
 		self:Bar(L2["berserk"], 1500, "Spell_Nature_Reincarnation")
+	elseif msg == L["illi_start"] then
+		self:Bar(boss, 37, "Spell_Shadow_Charm")
 	end
 end
 
