@@ -160,7 +160,7 @@ L:RegisterTranslations("zhTW", function() return {
 	proximity = "鄰近顯示",
 	proximity_desc = "在適當的情形下，當有人太靠近時，現示清單。",
 
-	font = "Fonts\\FZBWJW.TTF"
+	font = "Fonts\\bHEI01B.TTF"
 } end)
 
 L:RegisterTranslations("esES", function() return {
