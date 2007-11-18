@@ -220,7 +220,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Reverse"] = "反向",
 	["Toggles if bars are reversed (fill up instead of emptying)."] = "以反向的方式顯示(填滿而非變空)。",
 	
-	font = "Fonts\\FZBWJW.TTF"
+	font = "Fonts\\bHEI01B.TTF"
 } end)
 
 L:RegisterTranslations("deDE", function() return {
