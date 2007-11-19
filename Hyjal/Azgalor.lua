@@ -122,7 +122,7 @@ L:RegisterTranslations("zhTW", function() return {
 	icon = "團對標記",
 	icon_desc = "在受到災厄降臨的隊友頭上標記 (需要權限)",
 
-	afflict_trigger = "^(.+)受(到[了]*)(.*)效果的影響。",
+	afflict_trigger = "^(.+)受(到[了]*)(.*)效果的影響。$",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

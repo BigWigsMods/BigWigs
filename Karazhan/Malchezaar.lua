@@ -231,8 +231,8 @@ L:RegisterTranslations("zhTW", function() return {
 	enfeeble_warning2 = "10 秒後削弱",
 	enfeeble_bar = "削弱",
 	enfeeble_nextbar = "削弱倒數",
-	--enfeeble_you = "You are afflicted by Enfeeble.",
-	--enfeeble_warnyou = "Enfeeble on YOU!",
+	enfeeble_you = "你受到了削弱效果的影響。",
+	enfeeble_warnyou = "削弱：[你]",
 
 	infernals = "地獄火警告",
 	infernals_desc = "顯示召喚地獄火計時條",

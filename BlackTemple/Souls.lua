@@ -261,13 +261,13 @@ L:RegisterTranslations("zhTW", function() return {
 	runeshield_trigger = "慾望精華獲得了符文護盾",
 	runeshield_message = "符文護盾!",
 	runeshield_nextbar = "下一次符文護盾",
-	runeshield_warn = "符文護盾 ~3秒內.",
+	runeshield_warn = "3 秒內符文護盾",
 
 	deaden = "麻木",
 	deaden_desc = "當麻木開始施放時警告",
 	deaden_trigger = "慾望精華開始施放麻木。",
 	deaden_message = "正在施放麻木!",
-	deaden_warn = "麻木 ~5秒內.",
+	deaden_warn = "5 秒內麻木",
 	deaden_nextbar = "下一次麻木",
 
 	spite = "惡意",

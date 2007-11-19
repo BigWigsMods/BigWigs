@@ -208,7 +208,7 @@ L:RegisterTranslations("zhTW", function() return {
 	phase2_message = "20% - 第二階段！",
 
 	wrath = "星術師之怒施放",
-	wrath_desc = "警報隊友受到星術師之怒。", --enUS changed
+	wrath_desc = "警報隊友受到星術師之怒。",
 	wrath_trigger = "^(.+)受(到[了]*)星術師之怒效果的影響。",
 	wrath_fade = "星術師之怒效果從你身上消失了。",
 	wrath_other = "星術師之怒：[%s]",

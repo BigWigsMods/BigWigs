@@ -111,7 +111,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	ghost = "鬼魂",
 	ghost_desc = "鬼魂計時器",
-	ghost_bar = "鬼魂: %s",
+	ghost_bar = "鬼魂：[%s]",
 
 	icon = "團隊標記",
 	icon_desc = "給中了死亡之影的玩家打上團隊標記",

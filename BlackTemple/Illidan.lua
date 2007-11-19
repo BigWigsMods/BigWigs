@@ -445,7 +445,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Flame of Azzinoth"] = "埃辛諾斯火焰",
 
 	--very first yell to start engage timer
-	--illi_start = "Akama. Your duplicity is hardly surprising. I should have slaughtered you and your malformed brethren long ago.",
+	illi_start = "阿卡瑪。你的謊言真是老套。我很久前就該殺了你和你那些畸形的同胞。",
 } end )
 
 ----------------------------------
