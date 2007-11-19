@@ -345,7 +345,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	--self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalSpell", 5)
@@ -415,6 +415,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if db.icon then
 			self:Icon(rest)
 		end
+		--[[
 	elseif self:ValidateEngageSync(sync, rest) and not started then
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
@@ -422,6 +423,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if db.enrage then
 			self:Engage()
 		end
+		]]
 	end
 end
 
