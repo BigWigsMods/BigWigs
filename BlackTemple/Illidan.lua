@@ -140,9 +140,9 @@ L:RegisterTranslations("frFR", function() return {
 	demon_phase_trigger = "Contemplez la puissance... du démon intérieur !",
 	demon_phase_message = "Forme de démon !",
 	demon_bar = "Prochaine phase normale",
-	--demon_warning = "Demon over in ~ 5 sec!",
-	--normal_bar = "~Possible Demon Phase",
-	--normal_warning = "Possible Demon Phase in ~5 sec!",
+	demon_warning = "Fin du démon dans ~ 5 sec. !",
+	normal_bar = "~Phase démon probable",
+	normal_warning = "Phase démon probablement dans ~5 sec. !",
 	phase4_trigger = "C'est tout, mortels ? Est-ce là toute la fureur que vous pouvez évoquer ?",
 	phase4_soon_message = "Phase 4 imminente !",
 	phase4_message = "Phase 4 - Arrivée de Maiev !",
@@ -161,7 +161,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Flame of Azzinoth"] = "Flamme d'Azzinoth",
 
 	--very first yell to start engage timer
-	--illi_start = "Akama. Your duplicity is hardly surprising. I should have slaughtered you and your malformed brethren long ago.",
+	illi_start = "Akama. Ta duplicité n'est pas très étonnante. J'aurai dû vous massacrer depuis longtemps, toi et ton frère déformé.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
