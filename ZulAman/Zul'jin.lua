@@ -160,7 +160,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "沒有人比我更強!",
-	engage_message = "階段 1 - 人類階段",
+	engage_message = "階段 1 - 食人妖!",
 
 	form = "型態變換",
 	form_desc = "警告祖爾金變換型態",
@@ -182,16 +182,16 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "為被嚴重擲傷的玩家設置團隊標記（需要權限）",
 
 	paralyze = "慢性麻痹",
-	paralyze_desc = "Warn for 慢性麻痹 and the impending Paralyze after effect.",
-	paralyze_warning = "慢性麻痹 - 麻痹在 5 秒!",
+	paralyze_desc = "警告慢性麻痹",
+	paralyze_warning = "慢性麻痹 - 5 秒後麻痺!",
 	paralyze_message = "慢性麻痹!",
 	paralyze_bar = "慢性麻痹即將來臨",
 	paralyze_trigger = "慢性麻痹效果的影響。$",
 
-	--claw = "Claw Rage",
-	--claw_desc = "Warn for who gets Claw Rage.",
-	--claw_trigger = "^(%S+) (%S+) afflicted by Claw Rage%.$",
-	--claw_message = "Claw Rage on %s",
+	claw = "利爪之怒",
+	claw_desc = "警告誰受到利爪之怒",
+	claw_trigger = "^(.+)受(到[了]*)利爪之怒效果的影響。$",
+	claw_message = "利爪之怒：[%s]",
 } end )
 
 ----------------------------------
