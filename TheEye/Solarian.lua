@@ -135,18 +135,18 @@ L:RegisterTranslations("frFR", function() return {
 	phase2_trigger = "^Je ne fais plus",
 	phase2_message = "20% - Phase 2",
 
-	wrath = "Courroux de l'astromancienne",
-	wrath_desc = "Préviens quand un joueur subit les effets du Courroux de l'astromancienne.",
-	wrath_trigger = "^(%S+) (%S+) les effets .* Courroux de l'astromancienne%.$",
-	wrath_fade = "Courroux de l'astromancienne vient de se dissiper.",
+	wrath = "Courroux de l'Astromancien",
+	wrath_desc = "Préviens quand un joueur subit les effets du Courroux de l'Astromancien.",
+	wrath_trigger = "^(%S+) (%S+) les effets .* Courroux de l'Astromancien%.$",
+	wrath_fade = "Courroux de l'Astromancien vient de se dissiper.",
 	wrath_other = "Courroux sur %s",
 	wrath_you = "Courroux sur VOUS !",
 
 	whisper = "Chuchoter",
-	whisper_desc = "Préviens par chuchotement le dernier joueur affecté par le Courroux de l'astromancienne (nécessite d'être promu ou mieux).",
+	whisper_desc = "Préviens par chuchotement le dernier joueur affecté par le Courroux de l'Astromancien (nécessite d'être promu ou mieux).",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Courroux de l'astromancienne (nécessite d'être promu ou mieux).",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Courroux de l'Astromancien (nécessite d'être promu ou mieux).",
 
 	split = "Rupture",
 	split_desc = "Préviens de l'arrivée des ruptures & des apparitions des adds.",
