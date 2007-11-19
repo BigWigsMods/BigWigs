@@ -122,9 +122,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	cmd = "Nalorakk",
-
-	engage_trigger = "\194\161Moveos guardias! \194\161Es hora de matar!!",
+	engage_trigger = "\194\161Morir\195\173is pronto!",
 	engage_message = "\194\161%s Activado - Forma de Oso en 45seg!",
 
 	phase = "Fases",

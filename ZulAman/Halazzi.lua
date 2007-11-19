@@ -109,6 +109,24 @@ L:RegisterTranslations("zhTW", function() return {
 	spirit_bar = "~可能普通階段",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "\194\161Arrodillaos... ante la garra y el colmillo!",
+
+	totem = "T\195\179tem",
+	totem_desc = "Avisa cuando Halazzi lanza un T\195\179tem de rel\195\161mpagos.",
+	totem_trigger = "Halazzi comienza a lanzar T\195\179tem de rel\195\161mpagos.",
+	totem_message = "\194\161T\195\179tem de rel\195\161mpagos!",
+
+	phase = "Fases",
+	phase_desc = "Avis los cambios de fase.",
+	phase_spirit = "Lucho con libertad de esp\195\173ritu...",
+	phase_normal = "\194\161Esp\195\173ritu, vuelve a m\195\173!",
+	normal_message = "\194\161Fase Normal!",
+	spirit_message = "\194\161%d%% PV! - Fase Espirit\195\186!",
+	spirit_soon = "\194\161Fase Espirit\195\186 pronto!",
+	spirit_bar = "~Posible Fase Normal",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
