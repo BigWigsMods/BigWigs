@@ -69,6 +69,9 @@ L:RegisterTranslations("enUS", function() return {
 	demon_phase_trigger = "Behold the power... of the demon within!",
 	demon_phase_message = "Demon Form!",
 	demon_bar = "Next Normal Phase",
+	demon_warning = "Demon over in ~ 5 sec!",
+	normal_bar = "~Possible Demon Phase",
+	normal_warning = "Possible Demon Phase in ~5 sec!",
 	phase4_trigger = "Is this it, mortals? Is this all the fury you can muster?",
 	phase4_soon_message = "Phase 4 soon!",
 	phase4_message = "Phase 4 - Maiev Incoming!",
@@ -137,6 +140,9 @@ L:RegisterTranslations("frFR", function() return {
 	demon_phase_trigger = "Contemplez la puissance... du démon intérieur !",
 	demon_phase_message = "Forme de démon !",
 	demon_bar = "Prochaine phase normale",
+	--demon_warning = "Demon over in ~ 5 sec!",
+	--normal_bar = "~Possible Demon Phase",
+	--normal_warning = "Possible Demon Phase in ~5 sec!",
 	phase4_trigger = "C'est tout, mortels ? Est-ce là toute la fureur que vous pouvez évoquer ?",
 	phase4_soon_message = "Phase 4 imminente !",
 	phase4_message = "Phase 4 - Arrivée de Maiev !",
@@ -205,6 +211,9 @@ L:RegisterTranslations("koKR", function() return {
 	demon_phase_trigger = "내 안에 깃든... 악마의 힘을 보여주마!",
 	demon_phase_message = "악마 형상!",
 	demon_bar = "다음 보통 형상",
+	--demon_warning = "Demon over in ~ 5 sec!",
+	--normal_bar = "~Possible Demon Phase",
+	--normal_warning = "Possible Demon Phase in ~5 sec!",
 	phase4_trigger = "나만큼 널 증오하는 이가 또 있을까? 일리단! 네게 받아야 할 빚이 남았다!",
 	phase4_soon_message = "잠시 후 4 단계!",
 	phase4_message = "4 단계 - 마이에브 등장!",
@@ -273,6 +282,9 @@ L:RegisterTranslations("zhCN", function() return {
 	demon_phase_trigger = "感受我体内的恶魔之力吧！",
 	demon_phase_message = "影魔形态!",
 	demon_bar = "下一次普通阶段",
+	--demon_warning = "Demon over in ~ 5 sec!",
+	--normal_bar = "~Possible Demon Phase",
+	--normal_warning = "Possible Demon Phase in ~5 sec!",
 	phase4_trigger = "你们就这点本事吗？这就是你们全部的能耐？",
 	phase4_soon_message = "即将 - 第四阶段!",
 	phase4_message = "第四阶段 - 玛维·影歌来临!",
@@ -341,6 +353,9 @@ L:RegisterTranslations("deDE", function() return {
 	demon_phase_trigger = "Erzittert vor der Macht des Dämonen!",
 	demon_phase_message = "Dämonen Form!",
 	demon_bar = "Nächste Normale Phase",
+	--demon_warning = "Demon over in ~ 5 sec!",
+	--normal_bar = "~Possible Demon Phase",
+	--normal_warning = "Possible Demon Phase in ~5 sec!",
 	phase4_trigger = "War's das schon. Sterbliche? Ist das alles was Ihr zu bieten habt??",
 	phase4_soon_message = "Phase 4 bald!",
 	phase4_message = "Phase 4 - Maiev kommt!",
@@ -409,6 +424,9 @@ L:RegisterTranslations("zhTW", function() return {
 	demon_phase_trigger = "感受我體內的惡魔之力吧!",
 	demon_phase_message = "惡魔型態!",
 	demon_bar = "下一個普通階段",
+	--demon_warning = "Demon over in ~ 5 sec!",
+	--normal_bar = "~Possible Demon Phase",
+	--normal_warning = "Possible Demon Phase in ~5 sec!",
 	phase4_trigger = "你們就這點本事嗎?這就是你們全部的能耐?",
 	phase4_soon_message = "階段 4 即將來臨!",
 	phase4_message = "階段 4 - 瑪翼夫來臨!",
@@ -528,8 +546,11 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			if db.phase then
 				self:Message(L["phase3_message"], "Important", nil, "Alarm")
 				self:TriggerEvent("BigWigs_ShowProximity", self) -- Proximity Warning
+				self:Bar(L["normal_bar"], 75, "Spell_Shadow_Metamorphosis")
+				self:ScheduleEvent("BWIlliNormalSoon", "BigWigs_Message", 70, L["normal_warning"], "Attention")
 			end
 			self:CancelScheduledEvent("BarrageWarn")
+			self:TriggerEvent("BigWigs_StopBar", self, L["barrage_warn_bar"])
 		end
 	elseif sync == "IliShear" and db.shear and rest then
 		self:Message(fmt(L["shear_message"], rest), "Important", nil, "Alert")
@@ -555,6 +576,11 @@ function mod:AfflictEvent(msg)
 	end
 end
 
+function mod:Normal()
+	self:Bar(L["normal_bar"], 60, "Spell_Shadow_Metamorphosis")
+	self:ScheduleEvent("BWIlliNormalSoon", "BigWigs_Message", 55, L["normal_warning"], "Attention")
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["eyeblast_trigger"] and db.eyeblast then
 		self:Message(L["eyeblast_message"], "Important", nil, "Alert")
@@ -567,6 +593,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.phase then
 			self:Message(L["demon_phase_message"], "Important", nil, "Alarm")
 			self:Bar(L["demon_bar"], 65, "Spell_Shadow_Metamorphosis")
+			self:ScheduleEvent("BWIlliDemonOver", "BigWigs_Message", 60, L["demon_warning"], "Attention")
+			self:ScheduleEvent("BWIlliNormal", self.Normal, 60, self)
 		end
 		if db.flameburst then
 			self:DelayedMessage(15, L["flameburst_cooldown_warn"], "Positive")
@@ -575,6 +603,15 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["phase4_trigger"] then
 		if db.phase then
 			self:Message(L["phase4_message"], "Important", nil, "Alarm")
+		end
+		self:CancelScheduledEvent("BWIlliNormal")
+		self:CancelScheduledEvent("BWIlliDemonOver")
+		self:CancelScheduledEvent("BWIlliNormalSoon")
+		self:TriggerEvent("BigWigs_StopBar", self, L["demon_bar"])
+		self:TriggerEvent("BigWigs_StopBar", self, L["normal_bar"])
+		if db.phase then
+			self:Bar(L["normal_bar"], 90, "Spell_Shadow_Metamorphosis")
+			self:ScheduleEvent("BWIlliNormalSoon", "BigWigs_Message", 85, L["normal_warning"], "Attention")
 		end
 	elseif db.enrage and msg == L["enrage_trigger"] then
 		self:Message(L["enrage_message"], "Important", nil, "Alert")
