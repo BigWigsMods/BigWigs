@@ -280,11 +280,11 @@ L:RegisterTranslations("zhCN", function() return {
 	phase2_message = "第二阶段 - 埃辛诺斯双刃!",
 	phase3_message = "第三阶段!",
 	demon_phase_trigger = "感受我体内的恶魔之力吧！",
-	demon_phase_message = "影魔形态!",
+	demon_phase_message = "恶魔形态!",
 	demon_bar = "下一次普通阶段",
-	--demon_warning = "Demon over in ~ 5 sec!",
-	--normal_bar = "~Possible Demon Phase",
-	--normal_warning = "Possible Demon Phase in ~5 sec!",
+	demon_warning = "恶魔形态 ~5秒后, 即将结束!",
+	normal_bar = "~即将 恶魔形态",
+	normal_warning = "～5秒后, 即将恶魔形态!",
 	phase4_trigger = "你们就这点本事吗？这就是你们全部的能耐？",
 	phase4_soon_message = "即将 - 第四阶段!",
 	phase4_message = "第四阶段 - 玛维·影歌来临!",
@@ -296,14 +296,14 @@ L:RegisterTranslations("zhCN", function() return {
 	flameburst_cooldown_warn = "即将 烈焰爆击!",
 	flameburst_warn = "5秒后 烈焰爆击!",
 
-	enrage_trigger = "Feel the hatred of ten thousand years!",
+	enrage_trigger = "感受一万年的愤怒吧！",--check
 	enrage_message = "狂暴!",
 
 	afflict_trigger = "^([^%s]+)受([^%s]+)了([^%s]+)效果的影响。$",--%s受到了%s效果的影响。
 	["Flame of Azzinoth"] = "埃辛诺斯之焰",
 
-	--very first yell to start engage timer
-	--illi_start = "Akama. Your duplicity is hardly surprising. I should have slaughtered you and your malformed brethren long ago.",
+	--第一次触发伊利丹时计时器 (very first yell to start engage timer)
+	illi_start = "阿卡玛。你的两面三刀并没有让我感到意外。我早就应该把你和你那些畸形的同胞全部杀掉。",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
