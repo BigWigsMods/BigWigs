@@ -118,11 +118,11 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	engage_message = "%s 激活 - 第一阶段",
 
-	meteor = "流星",
-	meteor_desc = "流星记时条",
-	meteor_warning = "5秒后 可能 流星",
-	meteor_message = "流星! ~52秒后再次发动",
-	meteor_nextbar = "下次 流星",
+	meteor = "俯冲轰炸",
+	meteor_desc = "俯冲轰炸记时条",
+	meteor_warning = "5秒后 可能 俯冲轰炸",
+	meteor_message = "俯冲轰炸! ~52秒后再次发动",
+	meteor_nextbar = "下次 俯冲轰炸",
 
 	flamepatch = "烈焰之地(你)",
 	flamepatch_desc = "烈焰之地于你警报",
