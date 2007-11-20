@@ -232,7 +232,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Flame of Azzinoth"] = "아지노스의 불꽃",
 
 	--맨처음 외침에 공격시작되는 타이머
-	illi_start = "아카마. 너의 불충은 그리 놀랍지도 않구나. 너희 흉측한 형제들을 벌써 오래전에 없애버렸어야 했는데...", --check
+	illi_start = "아카마, 너의 불충은 그리 놀랍지도 않구나. 너희 흉측한 형제들을 벌써 오래전에 없애버렸어야 했는데...",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
