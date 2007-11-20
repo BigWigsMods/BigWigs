@@ -109,12 +109,12 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "Spirits of da wind be your doom!",
 
 	flame = "烈焰吐息",
-	flame_desc = "Warn who Jan'alai casts Flame Strike on.",
-	flame_trigger = "Jan'alai开始施放烈焰吐息。",
+	flame_desc = "当加亚莱施放烈焰吐息发出警报",
+	flame_trigger = "加亚莱开始施放烈焰吐息。",
 	flame_message = "烈焰吐息 >%s<!",
 
 	icon = "团队标记",
-	icon_desc = "给中了烈焰吐息的玩家打上团队标记. (requires promoted or higher)",
+	icon_desc = "给中了烈焰吐息的玩家打上团队标记. (需要权限)",
 
 	bomb = "火焰炸弹",
 	bomb_desc = "显示火焰炸弹记时条",

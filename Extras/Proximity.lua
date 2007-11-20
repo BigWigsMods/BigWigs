@@ -90,6 +90,9 @@ L:RegisterTranslations("zhCN", function() return {
 	proximity_desc = "显示近距离窗口,列出距离你很近的玩家。",
 
 	font = "Fonts\\ZYKai_T.TTF",
+
+	["Test"] = "测试",
+	["Perform a Proximity test."] = "距离报警测试。",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

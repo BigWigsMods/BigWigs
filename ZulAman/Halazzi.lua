@@ -77,8 +77,8 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "Get on ya knees and bow.... to da fang and claw!",
 
 	totem = "图腾",
-	totem_desc = "当Halazzi施放一闪电图腾时发出警报.",
-	totem_trigger = "Halazzi开始施放闪电图腾。",
+	totem_desc = "当哈尔拉兹施放一闪电图腾时发出警报.",
+	totem_trigger = "哈尔拉兹开始施放闪电图腾。",
 	totem_message = "即将 闪电图腾!",
 
 	phase = "阶段",

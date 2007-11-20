@@ -189,15 +189,13 @@ L:RegisterTranslations("zhCN", function() return {
 	["~%s spawn"] = "~%s 出现.",
 	["~Wave %d spawn"] = "~第%d波 出现.",
 	["Wave %d incoming!"] = "第%d波 来临!",
-	["Wave %d! %d %s"] = "第%d波! %d %s", --1 set of mobs
-	["Wave %d! %d %s, %d %s"] = "第%d波! %d %s, %d %s", --2 sets of mobs
-	["Wave %d! %d %s, %d %s, %d %s"] = "第%d波! %d %s, %d %s, %d %s", --3 sets of mobs
-	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "第%d波! %d %s, %d %s, %d %s, %d %s", --4 sets of mobs
-	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "第%d波! %d %s, %d %s, %d %s, %d %s, %d %s", --5 sets of mobs
-	--["%s in ~%d sec!"] = "在~%d秒后 %s !",--old
+	["Wave %d! %d %s"] = "第%d波! %d个%s", --1 set of mobs
+	["Wave %d! %d %s, %d %s"] = "第%d波! %d个%s, %d %s", --2 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s"] = "第%d波! %d个%s, %d个%s, %d个%s", --3 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "第%d波! %d个%s, %d个%s, %d个%s, %d个%s", --4 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "第%d波! %d个%s, %d个%s, %d个%s, %d个%s, %d个%s", --5 sets of mobs
 	["%s in ~%d sec!"] = "%s 在~%d秒后来临!",
-	--["Wave %d in ~%d sec!"] = "在~%d秒后 第%d波!",--old
-	["Wave %d in ~%d sec!"] = "第%d波! 在~%d秒后来临!",
+	["Wave %d in ~%d sec!"] = "第%d波! 将在~%d秒后来临!",
 
 	["Boss"] = "首领",
 	["Thrall"] = "萨尔",
