@@ -246,6 +246,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_PARTY")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
+	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 
 	pName = UnitName("player")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -320,14 +321,21 @@ function mod:UNIT_SPELLCAST_START(msg)
 	end
 end
 
-function mod:CHAT_MSG_SPELL_AURA_GONE_PARTY(msg)
+function mod:CHAT_MSG_SPELL_AURA_GONE_PARTY(msg) --grip clearing
 	local fplayer = select(3, msg:find(L["grip_fade"]))
 	if fplayer then
 		self:Sync("ArchFade", fplayer)
 	end
 end
 
-function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
+function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg) --grip clearing
+	local ofplayer = select(3, msg:find(L["grip_fade"]))
+	if ofplayer then
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["grip_other"], ofplayer))
+	end
+end
+
+function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg) --grip clearing
 	if msg:find(L["grip_fade"] then
 		self:Sync("ArchFade", pName)
 	end
