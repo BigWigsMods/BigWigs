@@ -22,11 +22,12 @@ L:RegisterTranslations("enUS", function() return {
 
 	engage_message = "%s engaged - Phase 1",
 
-	meteor = "Meteor",
-	meteor_desc = "Estimated Meteor Timers.",
-	meteor_warning = "Possible Meteor in ~5sec",
-	meteor_message = "Meteor! Next in ~52sec",
-	meteor_nextbar = "Next Meteor",
+	--Renamed from Meteor to Dive Bomb as of Patch 2.3.0
+	meteor = "Dive Bomb",
+	meteor_desc = "Estimated Dive Bomb timers.",
+	meteor_warning = "Possible Dive Bomb in ~5sec",
+	meteor_message = "Dive Bomb! Next in ~52sec",
+	meteor_nextbar = "~Next Dive Bomb",
 
 	flamepatch = "Flame Patch on You",
 	flamepatch_desc = "Warn for a Flame Patch on You.",
