@@ -35,6 +35,11 @@ L:RegisterTranslations("enUS", function() return {
 	spirit_message = "%d%% HP! - Spirit Phase!",
 	spirit_soon = "Spirit Phase soon!",
 	spirit_bar = "~Possible Normal Phase",
+
+	frenzy = "Frenzy",
+	frenzy_desc = "Frenzy alert.",
+	frenzy_trigger = "Halazzi gains Frenzy.",
+	frenzy_message = "Frenzy!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -53,6 +58,11 @@ L:RegisterTranslations("koKR", function() return {
 	spirit_message = "%d%% HP! - 영혼 단계!",
 	spirit_soon = "곧 영혼 단계!",
 	spirit_bar = "~보통 단계",
+
+	--frenzy = "Frenzy",
+	--frenzy_desc = "Frenzy alert.",
+	--frenzy_trigger = "Halazzi gains Frenzy.",
+	--frenzy_message = "Frenzy!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -71,6 +81,11 @@ L:RegisterTranslations("frFR", function() return {
 	spirit_message = "%d%% PV ! - Phase esprit !",
 	spirit_soon = "Phase esprit imminente !",
 	spirit_bar = "~Phase normale probable",
+
+	--frenzy = "Frenzy",
+	--frenzy_desc = "Frenzy alert.",
+	--frenzy_trigger = "Halazzi gains Frenzy.",
+	--frenzy_message = "Frenzy!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -89,6 +104,11 @@ L:RegisterTranslations("zhCN", function() return {
 	spirit_message = "%d%% 生命值! - 灵魂阶段!",
 	spirit_soon = "即将灵魂阶段!",
 	spirit_bar = "~可能 正常阶段",
+
+	--frenzy = "Frenzy",
+	--frenzy_desc = "Frenzy alert.",
+	--frenzy_trigger = "Halazzi gains Frenzy.",
+	--frenzy_message = "Frenzy!",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -107,6 +127,11 @@ L:RegisterTranslations("zhTW", function() return {
 	spirit_message = "%d%% HP! - 靈魂階段!",
 	spirit_soon = "靈魂階段即將來臨!",
 	spirit_bar = "~可能普通階段",
+
+	--frenzy = "Frenzy",
+	--frenzy_desc = "Frenzy alert.",
+	--frenzy_trigger = "Halazzi gains Frenzy.",
+	--frenzy_message = "Frenzy!",
 } end )
 
 L:RegisterTranslations("esES", function() return {
@@ -125,6 +150,11 @@ L:RegisterTranslations("esES", function() return {
 	spirit_message = "\194\161%d%% PV! - Fase Espirit\195\186!",
 	spirit_soon = "\194\161Fase Espirit\195\186 pronto!",
 	spirit_bar = "~Posible Fase Normal",
+
+	--frenzy = "Frenzy",
+	--frenzy_desc = "Frenzy alert.",
+	--frenzy_trigger = "Halazzi gains Frenzy.",
+	--frenzy_message = "Frenzy!",
 } end )
 
 ----------------------------------
@@ -134,7 +164,7 @@ L:RegisterTranslations("esES", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Aman"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"totem", "phase", "bosskill"}
+mod.toggleoptions = {"totem", "phase", "frenzy", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -143,6 +173,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("UNIT_HEALTH")
 
@@ -157,6 +188,13 @@ end
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if db.totem and msg == L["totem_trigger"] then
 		self:Message(L["totem_message"], "Attention")
+	end
+end
+
+function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+	if msg == L["frenzy_trigger"] and db.frenzy then
+		self:Message(L["frenzy_message"], "Important")
+		self:Bar(L["frenzy_message"], 6, "Ability_GhoulFrenzy")
 	end
 end
 
