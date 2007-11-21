@@ -71,6 +71,12 @@ L:RegisterTranslations("enUS", function() return {
 	circle_heal_message = "Healed! - Next in ~20sec",
 	circle_fail_message = "%s Interrupted! - Next in ~12sec",
 	circle_bar = "~Circle of Healing Cooldown",
+
+	res = "Resistance Aura",
+	res_desc = "Warn when Gathios the Shatterer gains Chromatic Resistance Aura.",
+	res_trigger = "Gathios the Shatterer gains Chromatic Resistance Aura.",
+	res_message = "Gathios: Resistance for 30 sec!",
+	res_bar = "Resistance Aura",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -119,6 +125,12 @@ L:RegisterTranslations("frFR", function() return {
 	circle_heal_message = "Soigné ! - Prochain dans ~20 sec.",
 	circle_fail_message = "Interrompu par %s ! - Prochain dans ~12 sec.",
 	circle_bar = "~Cooldown Cercle de soins",
+
+	--res = "Resistance Aura",
+	--res_desc = "Warn when Gathios the Shatterer gains Chromatic Resistance Aura.",
+	--res_trigger = "Gathios the Shatterer gains Chromatic Resistance Aura.",
+	--res_message = "Gathios: Resistance for 30 sec!",
+	--res_bar = "Resistance Aura",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -167,6 +179,12 @@ L:RegisterTranslations("koKR", function() return {
 	circle_heal_message = "치유됨! - 다음은 약 20초 이내",
 	circle_fail_message = "%s 차단됨! - 다음은 약 12초 이내",
 	circle_bar = "~치유의 마법진 대기 시간",
+
+	--res = "Resistance Aura",
+	--res_desc = "Warn when Gathios the Shatterer gains Chromatic Resistance Aura.",
+	--res_trigger = "Gathios the Shatterer gains Chromatic Resistance Aura.",
+	--res_message = "Gathios: Resistance for 30 sec!",
+	--res_bar = "Resistance Aura",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -215,6 +233,12 @@ L:RegisterTranslations("zhCN", function() return {
 	circle_heal_message = "治疗 成功! - ~20秒后再次发动",
 	circle_fail_message = "%s 打断! - ~12s秒后再次发动 治疗之环",
 	circle_bar = "~治疗之环 CD",
+
+	--res = "Resistance Aura",
+	--res_desc = "Warn when Gathios the Shatterer gains Chromatic Resistance Aura.",
+	--res_trigger = "Gathios the Shatterer gains Chromatic Resistance Aura.",
+	--res_message = "Gathios: Resistance for 30 sec!",
+	--res_bar = "Resistance Aura",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -263,6 +287,12 @@ L:RegisterTranslations("zhTW", function() return {
 	circle_heal_message = "被治療了! - 下一次 ~20秒",
 	circle_fail_message = "%s 中斷了! - 下一次 ~12秒",
 	circle_bar = "~治療之環冷卻",
+
+	--res = "Resistance Aura",
+	--res_desc = "Warn when Gathios the Shatterer gains Chromatic Resistance Aura.",
+	--res_trigger = "Gathios the Shatterer gains Chromatic Resistance Aura.",
+	--res_message = "Gathios: Resistance for 30 sec!",
+	--res_bar = "Resistance Aura",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -311,6 +341,12 @@ L:RegisterTranslations("deDE", function() return {
 	circle_heal_message = "Geheilt! - Nächster in ~20sek",
 	circle_fail_message = "%s Unterbrochen! - Nächster in ~12sek",
 	circle_bar = "~Kreis der Heilung Cooldown",
+
+	--res = "Resistance Aura",
+	--res_desc = "Warn when Gathios the Shatterer gains Chromatic Resistance Aura.",
+	--res_trigger = "Gathios the Shatterer gains Chromatic Resistance Aura.",
+	--res_message = "Gathios: Resistance for 30 sec!",
+	--res_bar = "Resistance Aura",
 } end )
 
 ----------------------------------
@@ -320,7 +356,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = {malande, gathios, zerevor, veras}
-mod.toggleoptions = {"immune", "shield", "vanish", "circle", -1, "poison", "icon", "enrage", "bosskill"}
+mod.toggleoptions = {"immune", "res", "shield", -1, "vanish", "circle", -1, "poison", "icon", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -355,6 +391,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalCHeal", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "ICKick", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "CouncilPoison", 2)
+	self:TriggerEvent("BigWigs_ThrottleSync", "ICRes", 5)
 
 	db = self.db.profile
 end
@@ -404,6 +441,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "TICWin" and db.bosskill then
 		self:Message(death, "Bosskill", nil, "Victory")
 		BigWigs:ToggleModuleActive(self, false)
+	elseif sync == "ICRes" and db.res then
+		self:Message(L["res_message"], "Positive")
+		self:Bar(L["res_bar"], 30, "Spell_Frost_WizardMark")
 	elseif sync == "CouncilPoison" and rest and db.poison then
 		local other = fmt(L["poison_other"], rest)
 		if rest == pName then
@@ -455,6 +495,8 @@ function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 		self:Sync("MalShield")
 	elseif msg == L["vanish_trigger"] then
 		self:Sync("VerVanish")
+	elseif msg == L["res_trigger"] then
+		self:Sync("ICRes")
 	end
 end
 
