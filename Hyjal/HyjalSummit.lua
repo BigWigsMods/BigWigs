@@ -335,6 +335,16 @@ function mod:BigWigs_RecvSync( sync, rest )
 		elseif rest == "AzGalor" then
 			nextBoss = azgalor
 		end
+	elseif sync == "BossDeath" and rest then
+		if rest == "Rage Winterchill" then
+			nextBoss = anatheron
+		elseif rest == "Anetheron" then
+			nextBoss = kazrogal
+		elseif rest == "Kaz'rogal" then
+			nextBoss = azgalor
+		elseif rest == "Azgalor" then
+			BigWigs:ToggleModuleActive(self, false)
+		end
 	elseif sync == "SummitWave" and rest then
 		local wave, zone = match(rest, "(%d+) (.*)")
 		if not wave or not zone then return end
