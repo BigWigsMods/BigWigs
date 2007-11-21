@@ -123,18 +123,18 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	engage_trigger = "Nobody badduh dan me!",
+	engage_trigger = "我最厉害！",
 	engage_message = "第一阶段 - 人类阶段",
 
 	form = "形态转变",
 	form_desc = "祖尔金变形警报",
-	form_bear_trigger = "Got me some new tricks... like me brudda bear....",
+	form_bear_trigger = "你看我有许多新招，变个熊……",
 	form_bear_message = "80% 第二阶段 - 熊形态!",
-	form_eagle_trigger = "Dere be no hidin' from da eagle!",
+	form_eagle_trigger = "变成猎鹰，谁也别想逃出我的眼睛！",
 	form_eagle_message = "60% 第三阶段 - 鹰形态!",
-	form_lynx_trigger = "Let me introduce you to me new bruddas: fang and claw!",
+	form_lynx_trigger = "现在来让你看看我的尖牙和利爪！",
 	form_lynx_message = "40% 第四阶段 - 山猫形态!",
-	form_dragonhawk_trigger = "Ya don' have to look to da sky to see da dragonhawk!",
+	form_dragonhawk_trigger = "龙鹰，不用抬头就能看见！",
 	form_dragonhawk_message = "20% 第五阶段 - 龙鹰形态!",
 
 	throw = "重伤投掷",
@@ -150,7 +150,7 @@ L:RegisterTranslations("zhCN", function() return {
 	paralyze_warning = "麻痹蔓延 - 麻痹 5 秒!!",
 	paralyze_message = "已麻痹!",
 	paralyze_bar = "即将 麻痹",
-	paralyze_trigger = "麻痹蔓延效果的影响%.$",
+	paralyze_trigger = "麻痹蔓延效果的影响。$",
 
 	claw = "利爪之怒",
 	claw_desc = "受到利爪之怒发出警报",

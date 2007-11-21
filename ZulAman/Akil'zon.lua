@@ -93,7 +93,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	engage_trigger = "I be da predator! You da prey...",
+	engage_trigger = "我是猎鹰，而你们，就是猎物！",
 	engage_message = "%s 激活 - ~55秒后 风暴!",
 
 	elec = "电场风暴",

@@ -94,11 +94,11 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	engage_trigger = "Da shadow gonna fall on you....",
+	engage_trigger = "阴影将会降临在你们头上……",
 
 	bolts = "灵魂之箭",
 	bolts_desc = "当玛拉卡斯开始引导灵魂之箭时发出警报.",
-	bolts_trigger = "Your soul gonna bleed!",
+	bolts_trigger = "你的灵魂在流血！",
 	bolts_message = "即将 - 灵魂之箭!",
 
 	soul = "灵魂虹吸",

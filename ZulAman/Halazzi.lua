@@ -89,7 +89,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	engage_trigger = "Get on ya knees and bow.... to da fang and claw!",
+	engage_trigger = "在利爪与尖牙面前，下跪吧，祈祷吧，颤栗吧！",
 
 	totem = "图腾",
 	totem_desc = "当哈尔拉兹施放一闪电图腾时发出警报.",
@@ -98,17 +98,17 @@ L:RegisterTranslations("zhCN", function() return {
 
 	phase = "阶段",
 	phase_desc = "阶段变化警报",
-	phase_spirit = "I fight wit' untamed spirit....",
-	phase_normal = "Spirit, come back to me!",
+	phase_spirit = "狂野的灵魂与我同在……",
+	phase_normal = "灵魂，到我这里来！",
 	normal_message = "正常阶段!",
 	spirit_message = "%d%% 生命值! - 灵魂阶段!",
 	spirit_soon = "即将灵魂阶段!",
 	spirit_bar = "~可能 正常阶段",
 
-	--frenzy = "Frenzy",
-	--frenzy_desc = "Frenzy alert.",
-	--frenzy_trigger = "Halazzi gains Frenzy.",
-	--frenzy_message = "Frenzy!",
+	frenzy = "狂乱",
+	frenzy_desc = "狂乱警报",
+	frenzy_trigger = "哈尔拉兹获得了狂乱的效果。",
+	frenzy_message = "哈尔拉紫 狂乱!",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
