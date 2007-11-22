@@ -336,7 +336,7 @@ function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg) --grip clearing
 end
 
 function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg) --grip clearing
-	if msg:find(L["grip_fade"] then
+	if msg:find(L["grip_fade"]) then
 		self:Sync("ArchFade", pName)
 	end
 end
