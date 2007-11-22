@@ -136,8 +136,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	swarm = "腐臭虫群",
 	swarm_desc = "腐臭虫群冷却计时",
-	swarm_trigger1 = "瘟疫降临！$",
-	swarm_trigger2 = "虫群将吞噬你们的躯体。$",
+	swarm_trigger1 = "瘟疫降临！",
+	swarm_trigger2 = "虫群将吞噬你们的躯体。",
 	swarm_message = "虫群! - 下一波 ~11秒后",
 	swarm_bar = "~虫群 冷却",
 } end )

@@ -127,7 +127,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	flamepatch = "烈焰之地(你)",
 	flamepatch_desc = "烈焰之地于你警报",
-	flamepatch_trigger = "你受到了烈焰击打效果的影响。$",
+	flamepatch_trigger = "你受到了烈焰击打效果的影响。",
 	flamepatch_message = "烈焰之地 >你<!",
 
 	armor = "熔化护甲",

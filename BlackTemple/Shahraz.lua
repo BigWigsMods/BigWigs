@@ -59,7 +59,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	enrage_warning = "即将狂暴!",
 	enrage_message = "10% - 狂暴",
-	enrage_trigger = "不要浪费我的感情了！",--Stop toying with my emotions!  Check
+	enrage_trigger = "不要浪费我的感情了！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

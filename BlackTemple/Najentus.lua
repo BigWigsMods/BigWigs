@@ -117,7 +117,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	start_trigger = "以瓦丝琪女王的名义，去死吧！$",
+	start_trigger = "以瓦丝琪女王的名义，去死吧！",
 
 	spine = "穿刺之脊",
 	spine_desc = "谁中了穿刺时告诉你.",
@@ -130,7 +130,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	shield = "海潮之盾",
 	shield_desc = "当纳因图斯获得海潮之盾后计时.",
-	shield_trigger = "高阶督军纳因图斯受到了海潮之盾效果的影响。$",
+	shield_trigger = "高阶督军纳因图斯受到了海潮之盾效果的影响。",
 	shield_nextbar = "下一次 海潮之盾",
 	shield_warn = "海潮之盾!",
 	shield_soon_warn = "海潮之盾 ~10秒 后发动!",

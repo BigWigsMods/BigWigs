@@ -236,7 +236,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	berserk_trigger = "你们这是自寻死路！$",
+	berserk_trigger = "你们这是自寻死路！",
 
 	parasite = "寄生暗影魔",
 	parasite_desc = "当队员中寄生暗影魔时发出警告.",

@@ -154,9 +154,9 @@ L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段",
 	phase_desc = "不同阶段警报",
 	normal_phase_message = "木桩战!",
-	normal_phase_trigger = "苏普雷姆斯愤怒地击打着地面！$",
+	normal_phase_trigger = "苏普雷姆斯愤怒地击打着地面！",
 	kite_phase_message = "%s 释放!",
-	kite_phase_trigger = "地面崩裂了！$",
+	kite_phase_trigger = "地面崩裂了！",
 	next_phase_bar = "下阶段",
 	next_phase_message = "10秒后 阶段改变!",
 

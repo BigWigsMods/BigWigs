@@ -171,7 +171,7 @@ L:RegisterTranslations("zhCN", function() return {
 	phase2_trigger = "^我受够了！现在我要让你们看看宇宙的愤怒！",
 	phase2_message = "20% - 阶段 2",
 
-	wrath = "愤怒Debuff",
+	wrath = "愤怒 Debuff",
 	wrath_desc = "当受到星术师之怒发出警报",
 	wrath_trigger = "^(%S+)受(%S+)了星术师之怒效果的影响。$",
 	wrath_fade = "星术师之怒效果从你身上消失了。",

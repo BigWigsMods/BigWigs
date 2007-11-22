@@ -222,7 +222,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	deaden = "衰减",
 	deaden_desc = "当衰减施放时发出警报",
-	deaden_trigger = "欲望精华开始施放衰减。$",
+	deaden_trigger = "欲望精华开始施放衰减。",
 	deaden_message = "正施放 衰减!",
 	deaden_warn = "~5秒后 衰减.",
 	deaden_nextbar = "下一 衰减.",

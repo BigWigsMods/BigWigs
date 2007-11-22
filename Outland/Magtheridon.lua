@@ -254,7 +254,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	nova = "冲击新星",
 	nova_desc = "冲击新星计时",
-	nova_ = "冲击新星!",
+	nova_ = "冲击新星",
 	nova_bar = "~冲击新星 CD",
 	nova_warning = "即将 冲击新星",
 	nova_cast = "开始施放冲击新星！",
@@ -269,7 +269,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	exhaust = "禁用心灵疲倦计时",
 	exhaust_desc = "心灵疲倦记时条",
-	exhaust_trigger = "^(%S+)受(%S+)了心灵疲倦效果的影响。",
+	exhaust_trigger = "^(%S+)受(%S+)了心灵疲倦效果的影响。$",
 	exhaust_bar = "[%s] 心灵疲倦",
 
 	debris = "碎片(你)",

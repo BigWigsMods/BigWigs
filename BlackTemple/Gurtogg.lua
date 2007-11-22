@@ -189,14 +189,14 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	engage_trigger = "部落会……毁灭你们。$",
+	engage_trigger = "部落会……毁灭你们。",
 
 	phase = "阶段计时",
 	phase_desc = "普通或邪能狂怒状态转换阶段计时",
-	phase_rage_warning = "邪能狂怒 发动 ~5秒 后",
-	phase_normal_warning = "邪能狂怒 结束 ~5秒 后",
+	phase_rage_warning = "邪能狂怒 ~5秒后发动",
+	phase_normal_warning = "邪能狂怒 ~5秒后结束",
 	phase_normal = "邪能狂怒 阶段结束",
-	phase_normal_trigger = "邪能狂怒效果从古尔图格·血沸身上消失。$",--%s效果从%s身上消失。 Update at 10/31 and check
+	phase_normal_trigger = "邪能狂怒效果从古尔图格·血沸身上消失。",
 	phase_normal_bar = "下一 邪能狂怒",
 	phase_rage_bar = "下一 普通阶段",
 

@@ -149,14 +149,14 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	engage_trigger = "你们的抵抗是毫无意义的。$",
+	engage_trigger = "你们的抵抗是毫无意义的。",
 
 	grip = "军团之握",
 	grip_desc = "警报谁中了军团之握",
 	grip_trigger = "^(%S+)受(%S+)了军团之握效果的影响。$",
 	grip_you = "你中了 军团之握!",
 	grip_other = "%s中了 军团之握!",
-	--grip_fade = "^Grip of the Legion fades from (%S+)%.$",
+	grip_fade = "^军团之握效果从(%S+)身上消失。$",
 
 	icon = "团队标记",
 	icon_desc = "给中了军团之握的队友打上团队标记.",

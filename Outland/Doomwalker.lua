@@ -133,7 +133,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
-	engage_trigger = "停止前进。否则你们将被消灭。$",
+	engage_trigger = "停止前进。否则你们将被消灭。",
 	engage_message = "末日行者激活,30秒后发动地震术!",
 
 	overrun = "泛滥",

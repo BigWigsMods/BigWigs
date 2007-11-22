@@ -291,7 +291,7 @@ L:RegisterTranslations("zhCN", function() return {
 	loot = "污染之核",
 	loot_desc = "对拾取了污染之核的队友发出警报",
 	loot_message = "%s 拾取了 污染之核!",
-	loot_paralyze = "^(%S+)受(%S+)了麻痹效果的影响。",
+	loot_paralyze = "^(%S+)受(%S+)了麻痹效果的影响。$",
 	loot_update = "污染之核 > %s",
 } end )
 
