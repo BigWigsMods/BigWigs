@@ -82,10 +82,10 @@ L:RegisterTranslations("frFR", function() return {
 	spirit_soon = "Phase esprit imminente !",
 	spirit_bar = "~Phase normale probable",
 
-	--frenzy = "Frenzy",
-	--frenzy_desc = "Frenzy alert.",
-	--frenzy_trigger = "Halazzi gains Frenzy.",
-	--frenzy_message = "Frenzy!",
+	frenzy = "Frénésie",
+	frenzy_desc = "Préviens quand Halazzi entre en frénésie.",
+	frenzy_trigger = "Halazzi gagne Frénésie.",
+	frenzy_message = "Frénésie !",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

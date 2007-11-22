@@ -69,7 +69,7 @@ L:RegisterTranslations("frFR", function() return {
 	grip_trigger = "^(%S+) (%S+) les effets .* Poigne de la Légion%.$",
 	grip_you = "Poigne sur VOUS !",
 	grip_other = "Poigne sur %s !",
-	--grip_fade = "^Grip of the Legion fades from (%S+)%.$",
+	grip_fade = "^Poigne de la Légion sur (%S+) vient de se dissiper%.$",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par la Poigne de la Légion.",

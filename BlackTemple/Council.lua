@@ -126,11 +126,11 @@ L:RegisterTranslations("frFR", function() return {
 	circle_fail_message = "Interrompu par %s ! - Prochain dans ~12 sec.",
 	circle_bar = "~Cooldown Cercle de soins",
 
-	--res = "Resistance Aura",
-	--res_desc = "Warn when Gathios the Shatterer gains Chromatic Resistance Aura.",
-	--res_trigger = "Gathios the Shatterer gains Chromatic Resistance Aura.",
-	--res_message = "Gathios: Resistance for 30 sec!",
-	--res_bar = "Resistance Aura",
+	res = "Aura de résistance",
+	res_desc = "Préviens quand Gathios le Briseur gagne son Aura de résistance chromatique.",
+	res_trigger = "Gathios le Briseur gagne Aura de résistance chromatique.",
+	res_message = "Gathios : Résistance pendant 30 sec. !",
+	res_bar = "Aura de résistance",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
