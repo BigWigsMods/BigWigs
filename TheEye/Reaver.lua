@@ -176,7 +176,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	engage_trigger = "警告!你已經被標記為撲殺的對象。",
+	engage_trigger = "警告!你已經被標記為消滅的對象。",
 
 	orbyou = "秘法寶珠瞄準你",
 	orbyou_desc = "當秘法寶珠目標為你時警告",
