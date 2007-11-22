@@ -263,7 +263,7 @@ L:RegisterTranslations("zhCN", function() return {
 	shear_message = "剪切 %s!",
 	shear_bar = "剪切: %s",
 
-	flame = "苦痛之焰",--Agonizing Flames 苦痛之焰
+	flame = "苦痛之焰",
 	flame_desc = "当中了苦痛之焰时发出警报",
 	flame_message = "%s 中了>苦痛之焰<!",
 
@@ -280,7 +280,7 @@ L:RegisterTranslations("zhCN", function() return {
 	phase2_message = "第二阶段 - 埃辛诺斯双刃!",
 	phase3_message = "第三阶段!",
 	demon_phase_trigger = "感受我体内的恶魔之力吧！",
-	demon_phase_message = "影魔形态!",
+	demon_phase_message = "恶魔形态!",
 	demon_bar = "下一次普通阶段",
 	demon_warning = "恶魔阶段 ~5秒后结束!",
 	normal_bar = "~可能 恶魔阶段",
