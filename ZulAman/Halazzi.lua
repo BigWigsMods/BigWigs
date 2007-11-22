@@ -128,10 +128,10 @@ L:RegisterTranslations("zhTW", function() return {
 	spirit_soon = "靈魂階段即將來臨!",
 	spirit_bar = "~可能普通階段",
 
-	--frenzy = "Frenzy",
-	--frenzy_desc = "Frenzy alert.",
-	--frenzy_trigger = "Halazzi gains Frenzy.",
-	--frenzy_message = "Frenzy!",
+	frenzy = "狂亂",
+	frenzy_desc = "狂亂警報",
+	frenzy_trigger = "哈拉齊獲得了狂亂的效果。",
+	frenzy_message = "狂亂!",
 } end )
 
 L:RegisterTranslations("esES", function() return {

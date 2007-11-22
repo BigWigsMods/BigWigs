@@ -257,7 +257,7 @@ L:RegisterTranslations("zhTW", function() return {
 	immune = "免疫警告",
 	immune_desc = "當瑪蘭黛女士免疫法術或近戰時警告",
 	immune_spell_trigger = "瑪蘭黛女士獲得了法術結界祝福",
-	immune_melee_trigger = "瑪蘭黛女士獲得了保護祝福",
+	immune_melee_trigger = "瑪蘭黛女士獲得了保護祝福的效果。",
 	immune_message = "瑪蘭黛: %s 15秒免疫!",
 	immune_bar = "%s 免疫!",
 
@@ -266,7 +266,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	shield = "反射護盾",
 	shield_desc = "當瑪蘭黛女士獲得了反射護盾時警告",
-	shield_trigger = "瑪蘭黛女士獲得了反射護盾",
+	shield_trigger = "瑪蘭黛女士獲得了反射護盾的效果。",
 	shield_message = "反射護盾在瑪蘭黛女士身上!",
 
 	poison = "致命毒藥",
@@ -288,11 +288,11 @@ L:RegisterTranslations("zhTW", function() return {
 	circle_fail_message = "%s 中斷了! - 下一次 ~12秒",
 	circle_bar = "~治療之環冷卻",
 
-	--res = "Resistance Aura",
-	--res_desc = "Warn when Gathios the Shatterer gains Chromatic Resistance Aura.",
-	--res_trigger = "Gathios the Shatterer gains Chromatic Resistance Aura.",
-	--res_message = "Gathios: Resistance for 30 sec!",
-	--res_bar = "Resistance Aura",
+	res = "多重抗性光環",
+	res_desc = "警告當粉碎者高希歐獲得了多重抗性光環的效果。",
+	res_trigger = "粉碎者高希歐獲得了多重抗性光環的效果。",
+	res_message = "粉碎者高希歐: 多重抗性光環 30 秒!",
+	res_bar = "多重抗性光環",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
