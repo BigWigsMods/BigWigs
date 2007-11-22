@@ -79,7 +79,7 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_warning = "5초 후 격노!",
 
 	desire_trigger  = "선택은 자유지만... 대가는 치러야 하는 법.",
-	desire_cot = "Kanrethad Zennshinagas Zilthuras Teamanare Revola Asj", --Curse of Tongues trigger
+	desire_cot = "[악마어] Kanrethad Zennshinagas Zilthuras Teamanare Revola Asj", --Curse of Tongues trigger
 	desire_start = "욕망의 정수 - 160초 후 마나 0",
 	desire_bar = "마나 0",
 	desire_warn = "30초 후 마나 0!",

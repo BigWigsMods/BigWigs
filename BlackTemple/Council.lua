@@ -180,11 +180,11 @@ L:RegisterTranslations("koKR", function() return {
 	circle_fail_message = "%s 차단됨! - 다음은 약 12초 이내",
 	circle_bar = "~치유의 마법진 대기 시간",
 
-	--res = "Resistance Aura",
-	--res_desc = "Warn when Gathios the Shatterer gains Chromatic Resistance Aura.",
-	--res_trigger = "Gathios the Shatterer gains Chromatic Resistance Aura.",
-	--res_message = "Gathios: Resistance for 30 sec!",
-	--res_bar = "Resistance Aura",
+	res = "저항의 오라",
+	res_desc = "파괴자 가디오스의 오색 저항의 오라를 얻었을 때 알립니다.",
+	res_trigger = "파괴자 가디오스|1이;가; 오색 저항의 오라 효과를 얻었습니다.",
+	res_message = "가디오스: 30초간 저항!",
+	res_bar = "저항의 오라",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

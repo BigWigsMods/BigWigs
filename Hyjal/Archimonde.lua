@@ -98,7 +98,7 @@ L:RegisterTranslations("koKR", function() return {
 	grip_trigger =  "^([^|;%s]*)(.*)군단의 손아귀에 걸렸습니다%.$",
 	grip_you = "당신에 손아귀!",
 	grip_other = "%s에 손아귀!",
-	--grip_fade = "^Grip of the Legion fades from (%S+)%.$",
+	grip_fade = "^([^%s]+)의 몸에서 군단의 손아귀 효과가 사라졌습니다%.$",
 
 	icon = "전술 표시",
 	icon_desc = "군단의 손아귀에 걸린 플레이어에 전술 표시를 지정합니다.",
