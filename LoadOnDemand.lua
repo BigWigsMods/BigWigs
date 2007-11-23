@@ -3,7 +3,6 @@
 ------------------------------
 
 local AceLibrary = AceLibrary
-local BigWigs = BigWigs
 local LC = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local BZ = nil
 local grouped = nil
