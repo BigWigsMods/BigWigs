@@ -8,10 +8,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsCustomBar")
 
 local times = nil
 local fmt = string.format
+local _G = _G
 
 L:RegisterTranslations("enUS", function() return {
-	["bwcb"] = true,
-	["bwlcb"] = true,
 	["CustomBars"] = true,
 	["Custom Bars"] = true,
 	["Start a custom bar, either local or global."] = true,
@@ -34,8 +33,6 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
-	["bwcb"] = "bwcb",
-	["bwlcb"] = "bwcb",
 	["CustomBars"] = "自定义计时条",
 	["Custom Bars"] = "自定义计时条",
 	["Start a custom bar, either local or global."] = "启动自定义时间条，本地或全局。",
@@ -48,8 +45,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	["bwcb"] = "bwcb",
-	["bwlcb"] = "bwlcb",
 	["CustomBars"] = "自定時間條",
 	["Custom Bars"] = "自定時間條",
 	["Start a custom bar, either local or global."] = "開始一個自定時間條，區域或者全域",
@@ -61,8 +56,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	-- ["bwcb"] = true,
-	-- ["bwlcb"] = true,
 	-- ["CustomBars"] = true,
 	["Custom Bars"] = "Individuelle Anzeigebalken",
 	["Start a custom bar, either local or global."] = "Einen individuellen Anzeigebalken starten (entweder lokal oder global).",
@@ -85,8 +78,6 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("esES", function() return {
-	["bwcb"] = "bwcb",
-	["bwlcb"] = "bwlcb",
 	["CustomBars"] = "BarrasPersonales",
 	["Custom Bars"] = "Barras Personales",
 	["Start a custom bar, either local or global."] = "Comienza una barra personal, ya sea local o global",
@@ -143,8 +134,6 @@ mod.consoleOptions = {
 function mod:OnEnable()
 	self.enabled = true
 	times = {}
-
-	self:RegisterShortHand()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "BWCustomBar", 0)
@@ -212,7 +201,7 @@ function mod:StartBar(bar, nick, localOnly)
 end
 
 -- For easy use in macros.
-function BWCB(seconds, message)
+local function BWCB(seconds, message)
 	if message then seconds = fmt("%s %s", seconds, message) end
 	local t = GetTime()
 	if not times[seconds] or (times[seconds] and (times[seconds] + 2) < t) then
@@ -221,18 +210,14 @@ function BWCB(seconds, message)
 	end
 end
 
-function BWLCB(seconds, message)
+local function BWLCB(seconds, message)
 	if message then seconds = fmt("%s %s", seconds, message) end
 	mod:StartBar(seconds, nil, true)
 end
 
 -- Shorthand slashcommand
-function mod:RegisterShortHand()
-	if SlashCmdList then
-		SlashCmdList["BWCB_SHORTHAND"] = BWCB
-		setglobal("SLASH_BWCB_SHORTHAND1", "/"..L["bwcb"])
-		SlashCmdList["BWLCB_SHORTHAND"] = BWLCB
-		setglobal("SLASH_BWLCB_SHORTHAND1", "/"..L["bwlcb"])
-	end
-end
+_G["SlashCmdList"]["BWCB_SHORTHAND"] = BWCB
+_G["SLASH_BWCB_SHORTHAND1"] = "/bwcb"
+_G["SlashCmdList"]["BWLCB_SHORTHAND"] = BWLCB
+_G["SLASH_BWLCB_SHORTHAND1"] = "/bwlcb"
 
