@@ -223,14 +223,19 @@ L:RegisterTranslations("zhTW", function() return {
 	waves = "階段警報",
 	waves_desc = "通報下一波小怪來臨訊息",
 
-	--detail = "Detailed Warnings",
-	--detail_desc = "Show detailed warnings of what mobs are incoming.",
+	detail = "詳細警報",
+	detail_desc = "通告各波次怪物詳細訊息。",
 
-	["~%s spawn"] = "~%s 出現",
-	["~Wave %d spawn"] = "~第 %d 波 出現",
-	["Wave %d incoming!"] = "第 %d 波 即將來臨!",
-	["%s in ~%d sec!"] = "%s 在 ~%d 秒!",
-	["Wave %d in ~%d sec!"] = "第 %d 波在 ~%d 秒後!",
+	["~%s spawn"] = "~%s 出現！",
+	["~Wave %d spawn"] = "第 %d 波出現！",
+	["Wave %d incoming!"] = "第 %d 波即將來臨！",
+	["Wave %d! %d %s"] = "第 %d 波：%d %s！", --1 set of mobs
+	["Wave %d! %d %s, %d %s"] = "第 %d 波：%d %s、%d %s！", --2 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s"] = "第 %d 波：%d %s、%d %s、%d %s！", --3 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "第 %d 波：%d %s、%d %s、%d %s、%d %s！", --4 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "第 %d 波：%d %s、%d %s、%d %s、%d %s、%d %s！", --5 sets of mobs
+	["%s in ~%d sec!"] = "%s 約 %d 秒後來臨！",
+	["Wave %d in ~%d sec!"] = "第 %d 波約 %d 秒後來臨！",
 
 	["Boss"] = "首領",
 	["Thrall"] = "索爾",
@@ -241,6 +246,17 @@ L:RegisterTranslations("zhTW", function() return {
 	["I am with you, Thrall."] = "我與你同在，索爾。", -- Kaz'Rogal
 	["We have nothing to fear."] = "我們無所畏懼。", -- Az'Galor
 	["Please remove BigWigs_WaveTimers, it is deprecated."] = "請移除 BigWigs_WaveTimer，他已經過期了。",
+
+	["Ghouls"] = "食屍鬼",
+	["Crypt Fiends"] = "地穴捕獵者",
+	["Abominations"] = "憎惡",
+	["Necromancers"] = "幽暗的死靈法師",--is from combatlog,is true
+	["Banshees"] = "女妖",
+	["Gargoyles"] = "石像鬼",
+	["Frost Wyrm"] = "冰龍",
+	["Fel Stalkers"] = "惡魔捕獵者",
+	["Infernals"] = "巨型地獄火",
+
 } end )
 
 ----------------------------------
