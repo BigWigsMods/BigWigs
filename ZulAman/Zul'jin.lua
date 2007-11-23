@@ -81,8 +81,8 @@ L:RegisterTranslations("frFR", function() return {
 	paralyze_message = "Paralysés !",
 	paralyze_bar = "Paralysie effective",
 	paralyze_trigger = "les effets .* Paralysie progressive%.$",
-	--paralyze_warnbar = "Next Paralyze",
-	--paralyze_warning = "Paralyze in 5 sec",
+	paralyze_warnbar = "Prochaine Paralysie",
+	paralyze_warning = "Paralysie dans 5 sec.",
 
 	claw = "Rage de griffes",
 	claw_desc = "Préviens quand un joueur subit les effets de la Rage de griffes.",
