@@ -205,7 +205,6 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		if db.enrage then
-			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
 			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
 			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
 			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
