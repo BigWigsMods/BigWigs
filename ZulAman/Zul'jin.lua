@@ -237,10 +237,12 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["form_bear_message"], "Urgent")
 	elseif msg == L["form_eagle_trigger"] then
 		self:Message(L["form_eagle_message"], "Important")
+		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	elseif msg == L["form_lynx_trigger"] then
 		self:Message(L["form_lynx_message"], "Positive")
 	elseif msg == L["form_dragonhawk_trigger"] then
 		self:Message(L["form_dragonhawk_message"], "Attention")
+		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	elseif msg == L["engage_trigger"] then
 		self:Message(L["engage_message"], "Attention")
 	end
