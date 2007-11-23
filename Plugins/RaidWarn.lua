@@ -74,7 +74,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Broadcast to chat"] = "广播到聊天频道",
 	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "通过广播 BOSS 信息到每个队伍或者团队频道代替团队警告频道\n\n同样;若你不想看到这些信息，只需禁用\"信息阻止\"。",
 
-	desc = "设置除本地输出之外的，BigWigs 发送的 BOSS 预警信息。",
+	desc = "设置除本地输出之外的，BigWigs 发送的 Boss 预警信息。",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

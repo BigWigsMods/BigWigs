@@ -211,7 +211,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Ghouls"] = "食尸鬼",
 	["Crypt Fiends"] = "地穴恶魔",
 	["Abominations"] = "憎恶",
-	["Necromancers"] = "阴暗通灵师",--is from combatlog,is true
+	["Necromancers"] = "阴暗通灵师",
 	["Banshees"] = "女妖",
 	["Gargoyles"] = "石像鬼",
 	["Frost Wyrm"] = "冰霜巨龙",

@@ -157,8 +157,8 @@ L:RegisterTranslations("zhCN", function() return {
 	paralyze_message = "已麻痹!",
 	paralyze_bar = "即将 麻痹",
 	paralyze_trigger = "麻痹蔓延效果的影响。$",
-	--paralyze_warnbar = "Next Paralyze",
-	--paralyze_warning = "Paralyze in 5 sec",
+	paralyze_warnbar = "下一次麻痹蔓延",
+	paralyze_warning = "麻痹 5 秒",
 
 	claw = "利爪之怒",
 	claw_desc = "受到利爪之怒发出警报",

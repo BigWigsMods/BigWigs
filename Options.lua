@@ -63,10 +63,10 @@ L:RegisterTranslations("zhCN", function() return {
 	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-点击|r打开设置面板。",
 	["Big Wigs is currently disabled."] = "BigWigs 当前已被禁用。",
 	["Active boss modules:"] = "激活首领模块:",
-	["All running modules have been reset."] = "所有运行中的模块都已重置",
-	["All running modules have been disabled."] = "所有运行中的模块都已禁用",
+	["All running modules have been reset."] = "所有运行中的模块都已重置。",
+	["All running modules have been disabled."] = "所有运行中的模块都已禁用。",
 	["Menu"] = "目录",
-	["Menu options."] = "目录设置",
+	["Menu options."] = "目录设置。",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

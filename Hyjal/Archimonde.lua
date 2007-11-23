@@ -156,7 +156,7 @@ L:RegisterTranslations("zhCN", function() return {
 	grip_trigger = "^(%S+)受(%S+)了军团之握效果的影响。$",
 	grip_you = "你中了 军团之握!",
 	grip_other = "%s中了 军团之握!",
-	grip_fade = "^军团之握效果从(%S+)身上消失。$",
+	grip_fade = "^军团之握效果从(%S+)身上消失",
 
 	icon = "团队标记",
 	icon_desc = "给中了军团之握的队友打上团队标记.",
