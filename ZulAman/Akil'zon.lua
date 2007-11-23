@@ -158,7 +158,7 @@ L:RegisterTranslations("esES", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Aman"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"elec", "ping", "icon", "enrage", "bosskill"}
+mod.toggleoptions = {"elec", "ping", "icon", "enrage", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 mod.proximitySilent = true
