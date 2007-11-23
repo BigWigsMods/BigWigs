@@ -43,6 +43,8 @@ L:RegisterTranslations("enUS", function() return {
 	paralyze_message = "Paralyzed!",
 	paralyze_bar = "Inc Paralyze",
 	paralyze_trigger = "afflicted by Creeping Paralysis%.$",
+	paralyze_warnbar = "Next Paralyze",
+	paralyze_warning = "Paralyze in 5 sec",
 
 	claw = "Claw Rage",
 	claw_desc = "Warn for who gets Claw Rage.",
@@ -79,6 +81,8 @@ L:RegisterTranslations("frFR", function() return {
 	paralyze_message = "Paralysés !",
 	paralyze_bar = "Paralysie effective",
 	paralyze_trigger = "les effets .* Paralysie progressive%.$",
+	--paralyze_warnbar = "Next Paralyze",
+	--paralyze_warning = "Paralyze in 5 sec",
 
 	claw = "Rage de griffes",
 	claw_desc = "Préviens quand un joueur subit les effets de la Rage de griffes.",
@@ -115,6 +119,8 @@ L:RegisterTranslations("koKR", function() return {
 	paralyze_message = "마비!",
 	paralyze_bar = "잠시후 마비",
 	paralyze_trigger = "섬뜩한 마비에 걸렸습니다%.$",
+	--paralyze_warnbar = "Next Paralyze",
+	--paralyze_warning = "Paralyze in 5 sec",
 
 	claw = "광기의 발톱",
 	claw_desc = "광기의 발톱에 걸린 플레이어를 알립니다.",
@@ -151,6 +157,8 @@ L:RegisterTranslations("zhCN", function() return {
 	paralyze_message = "已麻痹!",
 	paralyze_bar = "即将 麻痹",
 	paralyze_trigger = "麻痹蔓延效果的影响。$",
+	--paralyze_warnbar = "Next Paralyze",
+	--paralyze_warning = "Paralyze in 5 sec",
 
 	claw = "利爪之怒",
 	claw_desc = "受到利爪之怒发出警报",
@@ -187,6 +195,8 @@ L:RegisterTranslations("zhTW", function() return {
 	paralyze_message = "慢性麻痹!",
 	paralyze_bar = "慢性麻痹即將來臨",
 	paralyze_trigger = "慢性麻痹效果的影響。$",
+	--paralyze_warnbar = "Next Paralyze",
+	--paralyze_warning = "Paralyze in 5 sec",
 
 	claw = "利爪之怒",
 	claw_desc = "警告誰受到利爪之怒",
@@ -287,6 +297,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "ZulPara" and db.paralyze then
 		self:Message(L["paralyze_warning"], "Urgent")
 		self:DelayedMessage(5, L["paralyze_message"], "Positive")
+		self:DelayedMessage(22, L["paralyze_warning"], "Urgent")
 		self:Bar(L["paralyze_bar"], 5, "Spell_Nature_TimeStop")
+		self:Bar(L["paralyze_warnbar"], 27, "Spell_Nature_TimeStop")
 	end
 end
