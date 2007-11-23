@@ -2,6 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
+local AceLibrary = AceLibrary
+local BigWigs = BigWigs
 local LC = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local BZ = nil
 local grouped = nil
@@ -17,7 +19,7 @@ local BWPARTY = 1
 --    Addon Declaration     --
 ------------------------------
 
-BigWigsLoD = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0")
+local BigWigsLoD = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0")
 
 ------------------------------
 --     Utility Functions    --

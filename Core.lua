@@ -2,6 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
+local AceLibrary = AceLibrary
 local BZ = AceLibrary("Babble-Zone-2.2")
 local BB = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
@@ -264,6 +265,8 @@ BigWigs = AceLibrary("AceAddon-2.0"):new(
 	"AceConsole-2.0",
 	"AceDB-2.0"
 )
+BigWigs.revision = tonumber(("$Revision$"):sub(12, -3))
+local BigWigs = BigWigs
 
 BigWigs:SetModuleMixins("AceEvent-2.0")
 
@@ -305,7 +308,6 @@ local options = {
 	},
 }
 
-BigWigs.revision = tonumber(("$Revision$"):sub(12, -3))
 BigWigs.cmdtable = options
 
 ------------------------------

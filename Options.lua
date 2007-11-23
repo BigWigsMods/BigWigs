@@ -9,6 +9,8 @@ local BZ = AceLibrary("Babble-Zone-2.2")
 local LC = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsOptions")
 local waterfall = AceLibrary:HasInstance("Waterfall-1.0") and AceLibrary("Waterfall-1.0") or nil
+local FuBar = AceLibrary("FuBarPlugin-2.0")
+local BigWigs = BigWigs
 
 local hint = nil
 local _G = getfenv(0)
@@ -112,7 +114,7 @@ L:RegisterTranslations("esES", function() return {
 --      FuBar Plugin      --
 ----------------------------
 
-BigWigsOptions = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDB-2.0", "FuBarPlugin-2.0")
+local BigWigsOptions = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDB-2.0", "FuBarPlugin-2.0")
 
 BigWigsOptions.hasIcon = true
 
@@ -141,7 +143,7 @@ function BigWigsOptions:OnInitialize()
 	BigWigs.hideMenuTitle = true
 
 	-- XXX Total hack :(
-	local args = AceLibrary("FuBarPlugin-2.0"):GetAceOptionsDataTable(self)
+	local args = FuBar:GetAceOptionsDataTable(self)
 	if not BigWigsOptions.OnMenuRequest.args[L["Menu"]] then
 		BigWigsOptions.OnMenuRequest.args[L["Menu"]] = {
 			type = "group",
