@@ -115,12 +115,12 @@ L:RegisterTranslations("koKR", function() return {
 
 	paralyze = "마비",
 	paralyze_desc = "마비와 섬뜩한 마비 효과에 대한 경고입니다.",
-	paralyze_warning = "섬뜩한 마비 - 마비 5초전!",
+	paralyze_warning = "섬뜩한 마비 - 5초후 마비!",
 	paralyze_message = "마비!",
 	paralyze_bar = "잠시후 마비",
 	paralyze_trigger = "섬뜩한 마비에 걸렸습니다%.$",
-	--paralyze_warnbar = "Next Paralyze",
-	--paralyze_warning = "Paralyze in 5 sec",
+	paralyze_warnbar = "다음 마비",
+	paralyze_warning = "마비 5초전",
 
 	claw = "광기의 발톱",
 	claw_desc = "광기의 발톱에 걸린 플레이어를 알립니다.",

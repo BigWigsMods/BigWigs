@@ -59,12 +59,12 @@ L:RegisterTranslations("koKR", function() return {
 	phase_normal = "날로라크 나가신다!",
 	normal_message = "보통 상태!",
 	normal_bar = "다음 곰 변신",
-	normal_soon = "보통 상태 10초 전",
-	normal_warning = "보통 상태 5초 전",
+	normal_soon = "보통 상태 10초전",
+	normal_warning = "보통 상태 5초전",
 	bear_message = "곰 변신!",
 	bear_bar = "다음 보통 상태",
-	bear_soon = "곰 변신 10초 전",
-	bear_warning = "곰 변신 5초 전",
+	bear_soon = "곰 변신 10초전",
+	bear_warning = "곰 변신 5초전",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
