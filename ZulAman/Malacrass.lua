@@ -199,8 +199,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["bolts_nextbar"], 40, "Spell_Shadow_ShadowBolt")
 		self:DelayedMessage(35, L["bolts_warning"], "Attention")
 	elseif msg == L["engage_trigger"] then
-		self:Bar(L["bolts_nextbar"], 40, "Spell_Shadow_ShadowBolt")
-		self:DelayedMessage(35, L["bolts_warning"], "Attention")
+		self:Bar(L["bolts_nextbar"], 30, "Spell_Shadow_ShadowBolt")
+		self:DelayedMessage(25, L["bolts_warning"], "Attention")
 	end
 end
 

@@ -59,7 +59,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	elec = "Orage électrique",
 	elec_desc = "Préviens quand un joueur subit les effets de l'Orage électrique.",
-	--elec_trigger = "^(%S+) (%S+) les effets .* Orage électrique%.$",
+	elec_trigger = "Un orage électrique apparaît !",
 	elec_bar = "~Cooldown Orage",
 	elec_message = "Orage sur %s !",
 	elec_warning = "Orage imminent !",
