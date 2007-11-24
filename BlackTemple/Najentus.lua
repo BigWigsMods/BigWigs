@@ -49,9 +49,9 @@ L:RegisterTranslations("deDE", function() return {
 	spine_trigger = "^([^%s]+) ([^%s]+) von Aufspießender Stachel betroffen%.$",
 	spine_message = "Aufspießender Stachel auf %s!",
 
-	--spinesay = "Spine Say",
-	--spinesay_desc = "Print in say when you have a Spine, can help nearby members with speech bubbles on.",
-	--spinesay_message = "Spine on me!",
+	spinesay = "Stachel Sagen",
+	spinesay_desc = "Schreibe in /sagen wenn du das Ziel vom Aufspießender Stachel bist, dies kann angrenzenden Membern mit aktivierten Sprechblasen helfen.",
+	spinesay_message = "Stachel auf mir!",
 
 	shield = "Gezeitenschild",
 	shield_desc = "Timer f\195\188r Gezeigenschild von Naj'entus.",
@@ -59,8 +59,8 @@ L:RegisterTranslations("deDE", function() return {
 	shield_nextbar = "N\195\164chstes Gezeitenschild",
 	shield_warn = "Gezeitenschild!",
 	shield_soon_warn = "Gezeitenschild in ~10sec!",
-	--shield_fade = "Shield Faded!",
-	--shield_fade_trigger = "Tidal Shield fades from High Warlord Naj'entus.",
+	shield_fade = "Gezeitenschild schwindet!",
+	shield_fade_trigger = "Gezeitenschild schwindet von Oberster Kriegsfürst Naj'entus.",
 
 	icon = "Icon",
 	icon_desc = "Plaziert ein Icon auf Spielern mit Aufspießendem Stachel.",
