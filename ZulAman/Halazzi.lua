@@ -4,6 +4,7 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Halazzi"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local UnitName = UnitName
 local UnitHealth = UnitHealth
@@ -12,6 +13,7 @@ local two = nil
 local three = nil
 local count = 1
 local db = nil
+local pName = nil
 
 ----------------------------
 --      Localization      --
@@ -40,6 +42,15 @@ L:RegisterTranslations("enUS", function() return {
 	frenzy_desc = "Frenzy alert.",
 	frenzy_trigger = "Halazzi gains Frenzy.",
 	frenzy_message = "Frenzy!",
+
+	flame = "Flame Shock",
+	flame_desc = "Warn for players with Flame Shock.",
+	flame_trigger = "^(%S+) (%S+) afflicted by Flame Shock%.$",
+	flame_fade = "^Flame Shock fades from (%S+)%.$",
+	flame_message = "Flame Shock: %s",
+
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Target Icon on the player with Flame Shock. (requires promoted or higher)",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -63,6 +74,15 @@ L:RegisterTranslations("koKR", function() return {
 	frenzy_desc = "광폭화 경고.",
 	frenzy_trigger = "할라지|1이;가; 광폭화 효과를 얻었습니다.",
 	frenzy_message = "광폭화!",
+
+	--flame = "Flame Shock",
+	--flame_desc = "Warn for players with Flame Shock.",
+	--flame_trigger = "^(%S+) (%S+) afflicted by Flame Shock%.$",
+	--flame_fade = "^Flame Shock fades from (%S+)%.$",
+	--flame_message = "Flame Shock: %s",
+
+	--icon = "Raid Icon",
+	--icon_desc = "Place a Raid Target Icon on the player with Flame Shock. (requires promoted or higher)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -86,6 +106,15 @@ L:RegisterTranslations("frFR", function() return {
 	frenzy_desc = "Préviens quand Halazzi entre en frénésie.",
 	frenzy_trigger = "Halazzi gagne Frénésie.",
 	frenzy_message = "Frénésie !",
+
+	--flame = "Flame Shock",
+	--flame_desc = "Warn for players with Flame Shock.",
+	--flame_trigger = "^(%S+) (%S+) afflicted by Flame Shock%.$",
+	--flame_fade = "^Flame Shock fades from (%S+)%.$",
+	--flame_message = "Flame Shock: %s",
+
+	--icon = "Raid Icon",
+	--icon_desc = "Place a Raid Target Icon on the player with Flame Shock. (requires promoted or higher)",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -109,6 +138,15 @@ L:RegisterTranslations("zhCN", function() return {
 	frenzy_desc = "狂乱警报",
 	frenzy_trigger = "哈尔拉兹获得了狂乱的效果。",
 	frenzy_message = "哈尔拉紫 狂乱!",
+
+	--flame = "Flame Shock",
+	--flame_desc = "Warn for players with Flame Shock.",
+	--flame_trigger = "^(%S+) (%S+) afflicted by Flame Shock%.$",
+	--flame_fade = "^Flame Shock fades from (%S+)%.$",
+	--flame_message = "Flame Shock: %s",
+
+	--icon = "Raid Icon",
+	--icon_desc = "Place a Raid Target Icon on the player with Flame Shock. (requires promoted or higher)",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -132,6 +170,15 @@ L:RegisterTranslations("zhTW", function() return {
 	frenzy_desc = "狂亂警報",
 	frenzy_trigger = "哈拉齊獲得了狂亂的效果。",
 	frenzy_message = "狂亂!",
+
+	--flame = "Flame Shock",
+	--flame_desc = "Warn for players with Flame Shock.",
+	--flame_trigger = "^(%S+) (%S+) afflicted by Flame Shock%.$",
+	--flame_fade = "^Flame Shock fades from (%S+)%.$",
+	--flame_message = "Flame Shock: %s",
+
+	--icon = "Raid Icon",
+	--icon_desc = "Place a Raid Target Icon on the player with Flame Shock. (requires promoted or higher)",
 } end )
 
 L:RegisterTranslations("esES", function() return {
@@ -155,6 +202,15 @@ L:RegisterTranslations("esES", function() return {
 	--frenzy_desc = "Frenzy alert.",
 	--frenzy_trigger = "Halazzi gains Frenzy.",
 	--frenzy_message = "Frenzy!",
+
+	--flame = "Flame Shock",
+	--flame_desc = "Warn for players with Flame Shock.",
+	--flame_trigger = "^(%S+) (%S+) afflicted by Flame Shock%.$",
+	--flame_fade = "^Flame Shock fades from (%S+)%.$",
+	--flame_message = "Flame Shock: %s",
+
+	--icon = "Raid Icon",
+	--icon_desc = "Place a Raid Target Icon on the player with Flame Shock. (requires promoted or higher)",
 } end )
 
 ----------------------------------
@@ -164,7 +220,7 @@ L:RegisterTranslations("esES", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Aman"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"totem", "phase", "frenzy", "bosskill"}
+mod.toggleoptions = {"totem", "phase", "frenzy", -1, "flame", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -177,8 +233,17 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("UNIT_HEALTH")
 
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "FlameEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "FlameEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "FlameEvent")
+
+	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_PARTY", "FlameFade")
+	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER", "FlameFade")
+	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	db = self.db.profile
+	pName = UnitName("player")
 end
 
 ------------------------------
@@ -195,6 +260,38 @@ function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if msg == L["frenzy_trigger"] and db.frenzy then
 		self:Message(L["frenzy_message"], "Important")
 		self:Bar(L["frenzy_message"], 6, "Ability_GhoulFrenzy")
+	end
+end
+
+function mod:FlameEvent(msg)
+	if not db.flame then return end
+
+	local fplayer, ftype = select(3, msg:find(L["flame_trigger"]))
+	if fplayer and ftype then
+		if fplayer == L2["you"] and ftype == L2["are"] then
+			fplayer = pName
+		end
+		local warn = L["flame_message"]:format(fplayer)
+		self:Message(warn, "Attention")
+		self:Bar(warn, 12, "Spell_Fire_FlameShock")
+		if db.icon then
+			self:Icon(fplayer)
+		end
+	end
+end
+
+function mod:FlameFade(msg)
+	local splayer = select(3, msg:find(L["flame_fade"]))
+	if splayer then
+		self:TriggerEvent("BigWigs_StopBar", self, L["flame_message"]:format(splayer))
+		self:TriggerEvent("BigWigs_RemoveRaidIcon")
+	end
+end
+
+function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
+	if msg:find(L["flame_fade"]) then
+		self:TriggerEvent("BigWigs_StopBar", self, L["flame_message"]:format(pName))
+		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	end
 end
 
