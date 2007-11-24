@@ -6,7 +6,6 @@ local boss = AceLibrary("Babble-Boss-2.2")["Akil'zon"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
-local pName = nil
 local CheckInteractDistance = CheckInteractDistance
 local db = nil
 
@@ -22,7 +21,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	elec = "Electrical Storm",
 	elec_desc = "Warn who has Electrical Storm.",
-	elec_trigger = "^(%S+) (%S+) afflicted by Electrical Storm%.$",
+	elec_trigger = "An electrical storm appears!",
 	elec_bar = "~Storm Cooldown",
 	elec_message = "Storm on %s!",
 	elec_warning = "Storm soon!",
@@ -41,7 +40,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	elec = "전하 폭풍",
 	elec_desc = "전하 폭풍에 걸린 플레이어를 알립니다.",
-	elec_trigger = "^([^|;%s]*)(.*)전하 폭풍에 걸렸습니다%.$",
+	--elec_trigger = "^([^|;%s]*)(.*)전하 폭풍에 걸렸습니다%.$",
 	elec_bar = "~폭풍 대기 시간",
 	elec_message = "%s에 전하 폭풍!",
 	elec_warning = "잠시후 전하 폭풍!",
@@ -60,7 +59,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	elec = "Orage électrique",
 	elec_desc = "Préviens quand un joueur subit les effets de l'Orage électrique.",
-	elec_trigger = "^(%S+) (%S+) les effets .* Orage électrique%.$",
+	--elec_trigger = "^(%S+) (%S+) les effets .* Orage électrique%.$",
 	elec_bar = "~Cooldown Orage",
 	elec_message = "Orage sur %s !",
 	elec_warning = "Orage imminent !",
@@ -79,7 +78,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	elec = "Elektrischer Sturm",
 	elec_desc = "Gib Warnung mit dem Spielernamen des Ziels von Elektrischer Sturm aus.",
-	elec_trigger = "^(%S+) (%S+) von Elektrischer Sturm betroffen%.$",
+	--elec_trigger = "^(%S+) (%S+) von Elektrischer Sturm betroffen%.$",
 	elec_bar = "~Sturm Cooldown",
 	elec_message = "Sturm auf %s!",
 	elec_warning = "Sturm bald!",
@@ -98,7 +97,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	elec = "电能风暴",
 	elec_desc = "当谁中了电能风暴发出警报。",
-	elec_trigger = "^(.+)受(.+)了电能风暴效果的影响。$",
+	--elec_trigger = "^(.+)受(.+)了电能风暴效果的影响。$",
 	elec_bar = "~电能风暴冷却",
 	elec_message = "电能风暴：>%s<！",
 	elec_warning = "即将电能风暴！",
@@ -117,7 +116,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	elec = "電荷風暴",
 	elec_desc = "警告誰受到電荷風暴",
-	elec_trigger = "^(.+)受(到[了]*)電荷風暴效果的影響。$",
+	--elec_trigger = "^(.+)受(到[了]*)電荷風暴效果的影響。$",
 	elec_bar = "~電荷風暴冷卻",
 	elec_message = "電荷風暴：[%s]",
 	elec_warning = "電荷風暴即將來臨!",
@@ -138,7 +137,7 @@ L:RegisterTranslations("esES", function() return {
 
 	elec = "Tormenta el\195\169ctrica",
 	elec_desc = "Avisa quien Tormenta el\195\169ctrica.",
-	elec_trigger = "^(%S+) (%S+) sufre Tormenta el\195\169ctrica%.$",
+	--elec_trigger = "^(%S+) (%S+) sufre Tormenta el\195\169ctrica%.$",
 	elec_bar = "~Regeneraci\195\179n de Tormenta",
 	elec_message = "Tormenta en %s!",
 	elec_warning = "\194\161Tormenta pronto!",
@@ -168,40 +167,17 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Storm")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Storm")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Storm")
-
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	--self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "AkilElec", 10)
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	pName = UnitName("player")
 	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
---[[	]]
-function mod:Storm(msg)
-	local eplayer, etype = select(3, msg:find(L["elec_trigger"]))
-	if eplayer and etype then
-		if eplayer == L2["you"] and etype == L2["are"] then
-			eplayer = pName
-			if db.ping then
-				Minimap:PingLocation()
-				BigWigs:Print(L["ping_message"])
-			end
-		end
-		self:Sync("AkilElec", eplayer)
-	end
-end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
@@ -224,37 +200,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "AkilElec" and rest and db.elec then
-		local show = L["elec_message"]:format(rest)
-		self:Message(show, "Attention")
-		self:Bar(show, 8, "Spell_Nature_EyeOfTheStorm")
-		self:Bar(L["elec_bar"], 55, "Spell_Lightning_LightningBolt01")
-		self:DelayedMessage(48, L["elec_warning"], "Urgent")
-		if db.icon then
-			self:Icon(rest)
-			self:ScheduleEvent("BWRemoveAkilIcon", "BigWigs_RemoveRaidIcon", 10, self)
-		end
-	end
-end
-
---[[
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, a, b, c, player, d, e, f, g, h, i)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, a, b, c, player)
 	if not db.elec then return end
 
-	BigWigs:Print(msg)
-	BigWigs:Print(a)
-	BigWigs:Print(b)
-	BigWigs:Print(c)
-	BigWigs:Print(player)
-	BigWigs:Print(d)
-	BigWigs:Print(e)
-	BigWigs:Print(f)
-	BigWigs:Print(g)
-	BigWigs:Print(h)
-	BigWigs:Print(i)
-
-	if msg == "An electrical storm appears!" then
+	if msg == L["elec_trigger"] then
 		local show = L["elec_message"]:format(player)
 		self:Message(show, "Attention")
 		self:Bar(show, 8, "Spell_Nature_EyeOfTheStorm")
@@ -262,7 +211,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, a, b, c, player, d, e, f, g, h, i)
 		self:DelayedMessage(48, L["elec_warning"], "Urgent")
 		if db.icon then
 			self:Icon(player)
+			self:ScheduleEvent("BWRemoveAkilIcon", "BigWigs_RemoveRaidIcon", 10, self)
 		end
 	end
 end
-]]
