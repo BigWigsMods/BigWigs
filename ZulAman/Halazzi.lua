@@ -220,7 +220,7 @@ L:RegisterTranslations("esES", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Aman"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"totem", "phase", "frenzy", -1, "flame", "icon", "bosskill"}
+mod.toggleoptions = {"totem", "phase", "frenzy", -1, "flame", "icon", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -316,6 +316,17 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		one = nil
 		two = nil
 		three = nil
+		if db.enrage then
+			self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
+			self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
+			self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
+			self:DelayedMessage(540, L2["enrage_min"]:format(1), "Positive")
+			self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
+			self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
+			self:DelayedMessage(595, L2["enrage_sec"]:format(5), "Urgent")
+			self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
+		end
 	end
 end
 
