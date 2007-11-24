@@ -65,7 +65,7 @@ L:RegisterTranslations("deDE", function() return {
 	next_phase_message = "Phasenwechsel in 10sec!",
 
 	target_message = "%s wird verfolgt!",
-	--target_you = "YOU are being chased!",
+	target_you = "DU wirst verfolgt!",
 	target_message_nounit = "Neues Ziel!",
 
 	punch_message = "Hieb!",
