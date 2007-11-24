@@ -234,7 +234,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["bomb"], 12, "Spell_Fire_Fire")
 	elseif db.adds and msg == L["adds_trigger"] then
 		self:Message(L["adds_message"], "Positive")
-		self:Bar(L["adds"], 90, "INV_Misc_Head_Troll_01")
+		self:Bar(L["adds"], 92, "INV_Misc_Head_Troll_01")
 	elseif msg == L["engage_trigger"] then
 		if db.enrage then
 			self:Message(fmt(L2["enrage_start"], boss, 5), "Attention")
@@ -254,6 +254,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:DelayedMessage(595, fmt(L2["berserk_sec"], 5), "Urgent")
 			self:DelayedMessage(600, fmt(L2["berserk_end"], boss), "Attention", nil, "Alarm")
 			self:Bar(L2["berserk"], 600, "Spell_Nature_Reincarnation")
+		end
+		if db.adds then
+			self:Bar(L["adds"], 12, "INV_Misc_Head_Troll_01")
 		end
 	end
 end
