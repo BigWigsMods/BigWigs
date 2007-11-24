@@ -70,15 +70,15 @@ L:RegisterTranslations("koKR", function() return {
 	spirit_soon = "곧 영혼 단계!",
 	spirit_bar = "~보통 단계",
 
-	frenzy = "광폭화",
-	frenzy_desc = "광폭화 경고.",
-	frenzy_trigger = "할라지|1이;가; 광폭화 효과를 얻었습니다.",
-	frenzy_message = "광폭화!",
+	frenzy = "광기",
+	frenzy_desc = "광기 경고.",
+	frenzy_trigger = "할라지|1이;가; 광기 효과를 얻었습니다.",
+	frenzy_message = "광기!",
 
 	flame = "화염 충격",
 	flame_desc = "화염 충격에 걸린 플레이어를 알립니다.",
 	flame_trigger = "^([^|;%s]*)(.*)화염 충격에 걸렸습니다%.$",
-	flame_fade = "^^([^%s]+)의 몸에서 화염 충격 효과가 사라졌습니다%.$",
+	flame_fade = "^([^%s]+)의 몸에서 화염 충격 효과가 사라졌습니다%.$",
 	flame_message = "화염 충격: %s",
 
 	icon = "전술 표시",
