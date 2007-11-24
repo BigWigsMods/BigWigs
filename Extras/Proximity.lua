@@ -166,7 +166,7 @@ L:RegisterTranslations("zhTW", function() return {
 	proximity = "鄰近顯示",
 	proximity_desc = "在適當的情形下，當有人太靠近時，現示清單。",
 
-	font = "Fonts\\bHEI01B.TTF"
+	font = "Fonts\\bHEI01B.TTF",
 
 	["Test"] = "測試",
 	["Perform a Proximity test."] = "鄰近顯示測試",

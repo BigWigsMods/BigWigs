@@ -107,6 +107,9 @@ L:RegisterTranslations("zhTW", function() return {
 	["Messages"] = "訊息",
 	["Options for message display."] = "訊息框架設置。",
 
+	["BigWigs Anchor"] = "BigWigs 錨點",
+	["Output Settings"] = "輸出設定",
+
 	["Show anchor"] = "顯示錨點",
 	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "顯示訊息訊息框架錨點。",
 

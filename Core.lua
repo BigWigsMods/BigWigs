@@ -192,28 +192,34 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["%s mod enabled"] = "%s模組已開啟",
-	["%s has been defeated"] = "%s被擊敗了！",     -- "<boss> has been defeated"
-	["%s have been defeated"] = "%s被擊敗了！",    -- "<bosses> have been defeated"
+	["%s has been defeated"] = "%s被擊敗了!",     -- "<boss> has been defeated"
+	["%s have been defeated"] = "%s被擊敗了!",    -- "<bosses> have been defeated"
+
+	["Debug enabled, output routed to %s."] = "啟用除錯模式，輸出到%s。",
+	["Debug disabled."] = "關閉除錯模式。",
 
 	-- AceConsole strings
 	["Bosses"] = "首領",
 	["Options for bosses in %s."] = "%s首領模組選項。", -- "Options for bosses in <zone>"
 	["Options for %s (r%d)."] = "%s模組選項 版本(r%d).",     -- "Options for <boss> (<revision>)"
-	["Extras"] = "其他",
 	["Plugins"] = "插件",
+	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "插件是 Big Wigs 的核心功能 - 比如訊息顯示，計時條以及其他必要的功能。",
+	["Extras"] = "附加功能",
+	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "附加功能是第三方插件，增強 Big Wigs 的功能。",
 	["Active"] = "啟動",
 	["Activate or deactivate this module."] = "開啟或關閉此模組。",
 	["Reboot"] = "重啟",
 	["Reboot this module."] = "重啟此模組",
 	["Debugging"] = "除錯",
 	["Show debug messages."] = "顯示除錯訊息。",
+	["Options"] = "選項",
 
 	bosskill = "首領死亡",
 	bosskill_desc = "首領被擊敗時發出提示。",
 	enrage = "狂怒",
 	enrage_desc = "首領進入狂怒狀態時發出提示",
-	--berserk = "Berserk",
-	--berserk_desc = "Warn when the boss goes Berserk.",
+	berserk = "狂暴",
+	berserk_desc = "當 Boss 狂暴時發出警報。",
 
 	["Load"] = "載入",
 	["Load All"] = "載入全部",

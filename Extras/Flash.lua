@@ -84,7 +84,7 @@ L:RegisterTranslations("zhTW", function() return {
 	["Toggle Flash on or off."] = "啟用或關閉螢幕閃爍",
 
 	["Shake"] = "震動",
-	["Toggle Shake on or off."] = "啟用或關閉螢幕閃震動,
+	["Toggle Shake on or off."] = "啟用或關閉螢幕閃震動",
 
 	["Test"] = "測試",
 	["Perform a Flash/Shake test."] = "測試螢幕閃爍/震動",
