@@ -41,9 +41,9 @@ L:RegisterTranslations("deDE", function() return {
 	shadow_other = "Schatten des Todes: %s!",
 	shadow_you = "Schatten des Todes auf DIR!",
 
-	--ghost = "Ghost",
-	--ghost_desc = "Ghost timers.",
-	--ghost_bar = "Ghost: %s",
+	ghost = "Geist",
+	ghost_desc = "Geist Timer.",
+	ghost_bar = "Geist: %s",
 
 	icon = "Icon",
 	icon_desc = "Plaziert ein Schlachtzug Icon auf dem Spieler mit Schatten des Todes.",
