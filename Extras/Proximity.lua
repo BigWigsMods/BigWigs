@@ -134,7 +134,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	["Proximity"] = "Nähe",
-	--["Close Players"] = "",
+	["Close Players"] = "Zu nahe Spieler",
 	["Options for the Proximity Display."] = "Optionen für die Nähe Anzeige.",
 	["|cff777777Nobody|r"] = "|cff777777Niemand|r",
 	["Sound"] = "Sound",
@@ -147,6 +147,9 @@ L:RegisterTranslations("deDE", function() return {
 	proximity_desc = "Zeigt das Nähe Fenster wenn benötigt passsend zu diesem Encounter an, auflistend die Spieler die dir zu Nahe stehn.",
 
 	font = "Fonts\\FRIZQT__.TTF",
+
+	["Test"] = "Test",
+	["Perform a Proximity test."] = "Führe einen Nähe Test durch.",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

@@ -56,7 +56,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	-- ["CustomBars"] = true,
+	["CustomBars"] = "Individuelle Balken",
 	["Custom Bars"] = "Individuelle Anzeigebalken",
 	["Start a custom bar, either local or global."] = "Einen individuellen Anzeigebalken starten (entweder lokal oder global).",
 	["Local"] = "Lokal",
