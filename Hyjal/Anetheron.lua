@@ -85,7 +85,7 @@ L:RegisterTranslations("deDE", function() return {
 	inferno = "Inferno",
 	inferno_desc = "Geschätzter Inferno Cooldown Timer.",
 	inferno_message = "zaubert Inferno auf %s!",
-	--inferno_you = "Casting Inferno on YOU!",
+	inferno_you = "Zaubert Inferno auf DICH!",
 	inferno_warning = "Inferno bald!",
 	inferno_bar = "~Inferno Cooldown",
 
