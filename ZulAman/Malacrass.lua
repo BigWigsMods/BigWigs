@@ -191,9 +191,14 @@ end
 ------------------------------
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if db.bolts and msg == L["bolts_trigger"] then
+	if not db.bolts then return end
+
+	if msg == L["bolts_trigger"] then
 		self:Message(L["bolts_message"], "Important")
 		self:Bar(L["bolts"], 10, "Spell_Shadow_ShadowBolt")
+		self:Bar(L["bolts_nextbar"], 40, "Spell_Shadow_ShadowBolt")
+		self:DelayedMessage(35, L["bolts_warning"], "Attention")
+	elseif msg == L["engage_trigger"] then
 		self:Bar(L["bolts_nextbar"], 40, "Spell_Shadow_ShadowBolt")
 		self:DelayedMessage(35, L["bolts_warning"], "Attention")
 	end
