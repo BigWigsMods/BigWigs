@@ -213,6 +213,38 @@ L:RegisterTranslations("esES", function() return {
 	--icon_desc = "Place a Raid Target Icon on the player with Flame Shock. (requires promoted or higher)",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "Auf die Knie und verneigt Euch... vor den Reißzähnen und der Klaue!",
+
+	totem = "Blitzschlagtotem",
+	totem_desc = "Warnt wenn Halazzi ein Verderbtes Blitzschlagtotem herbeizaubert.",
+	totem_trigger = "Halazzi beginnt Blitzschlagtotem zu wirken.",
+	totem_message = "Blitzschlagtotem gleich!",
+
+	phase = "Phasen",
+	phase_desc = "Warnung bei Phasenänderrungen.",
+	phase_spirit = "Ich kämpfe mit wildem Geist...",
+	phase_normal = "Geist, zurück zu mir!",
+	normal_message = "Normale Phase!",
+	spirit_message = "%d%% HP! - Geist Phase!",
+	spirit_soon = "Geist Phase bald!",
+	spirit_bar = "~Mögliche Normale Phase",
+
+	frenzy = "Blutrausch",
+	frenzy_desc = "Blutrausch Alarm.",
+	frenzy_trigger = "%s gerät in einen Blutrausch!",
+	frenzy_message = "Blutrausch!",
+
+	flame = "Flammenschock",
+	flame_desc = "Warnen wenn ein Spieler von Flammenschock betroffen ist.",
+	flame_trigger = "^(%S+) (%S+) ist von Flammenschock betroffen%.$",
+	flame_fade = "^Flammenschock' schwindet von (%S+)%.$",
+	flame_message = "Flammenschock: %s",
+
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Platziere ein Schlachtzugsymbol auf dem Spieler, der von Flammenschock betroffen ist (benötigt Assistent oder höher).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
