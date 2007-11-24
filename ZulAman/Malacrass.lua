@@ -22,6 +22,8 @@ L:RegisterTranslations("enUS", function() return {
 	bolts_desc = "Warn when Malacrass starts channelling Spirit Bolts.",
 	bolts_trigger = "Your soul gonna bleed!",
 	bolts_message = "Incoming Spirit Bolts!",
+	bolts_warning = "Spirit Bolts in 5 sec!",
+	bolts_nextbar = "Next Spirit Bolts",
 
 	soul = "Siphon Soul",
 	soul_desc = "Warn who is afflicted by Siphon Soul.",
@@ -48,6 +50,8 @@ L:RegisterTranslations("koKR", function() return {
 	bolts_desc = "말라크라스의 영혼의 화살 시전을 알립니다.",
 	bolts_trigger = "네 영혼이 피를 흘리리라!",
 	bolts_message = "영혼의 화살 시전!",
+	--bolts_warning = "Spirit Bolts in 5 sec!",
+	--bolts_nextbar = "Next Spirit Bolts",
 
 	soul = "영혼 착취",
 	soul_desc = "누가 영혼 착취에 걸렸는지 알립니다.",
@@ -74,6 +78,8 @@ L:RegisterTranslations("frFR", function() return {
 	bolts_desc = "Préviens quand Malacrass commence à canaliser ses Eclairs spirituels.",
 	bolts_trigger = "Ton âme, elle va saigner !",
 	bolts_message = "Arrivée des Eclairs spirituels !",
+	--bolts_warning = "Spirit Bolts in 5 sec!",
+	--bolts_nextbar = "Next Spirit Bolts",
 
 	soul = "Siphonner l'âme",
 	soul_desc = "Préviens quand un joueur subit les effets de Siphonner l'âme.",
@@ -100,6 +106,8 @@ L:RegisterTranslations("zhCN", function() return {
 	bolts_desc = "当玛拉卡斯开始引导灵魂之箭时发出警报.",
 	bolts_trigger = "你的灵魂在流血！",
 	bolts_message = "即将 - 灵魂之箭!",
+	--bolts_warning = "Spirit Bolts in 5 sec!",
+	--bolts_nextbar = "Next Spirit Bolts",
 
 	soul = "灵魂虹吸",
 	soul_desc = "受到灵魂虹吸时发出警报.",
@@ -126,6 +134,8 @@ L:RegisterTranslations("zhTW", function() return {
 	bolts_desc = "警告瑪拉克雷斯施放靈魂箭",
 	bolts_trigger = "你的靈魂將會受到傷害!",
 	bolts_message = "靈魂箭即將來臨",
+	--bolts_warning = "Spirit Bolts in 5 sec!",
+	--bolts_nextbar = "Next Spirit Bolts",
 
 	soul = "虹吸靈魂",
 	soul_desc = "警告誰受到虹吸靈魂",
@@ -184,6 +194,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if db.bolts and msg == L["bolts_trigger"] then
 		self:Message(L["bolts_message"], "Important")
 		self:Bar(L["bolts"], 10, "Spell_Shadow_ShadowBolt")
+		self:Bar(L["bolts_nextbar"], 40, "Spell_Shadow_ShadowBolt")
+		self:DelayedMessage(35, L["bolts_warning"], "Attention")
 	end
 end
 
