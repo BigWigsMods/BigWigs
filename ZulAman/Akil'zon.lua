@@ -94,21 +94,21 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "我是猎鹰，而你们，就是猎物！",
-	engage_message = "%s 激活 - ~55秒后 风暴!",
+	engage_message = "%s 激活 - ~55秒后 电能风暴!",
 
-	elec = "电场风暴",
-	elec_desc = "当谁中了电场风暴发出警报.",
+	elec = "电能风暴",
+	elec_desc = "当谁中了电能风暴发出警报.",
 	elec_trigger = "^(%S+)受(%S+)了电能风暴效果的影响。$",
-	elec_bar = "~风暴冷却",
-	elec_message = "风暴 于 >%s<!",
-	elec_warning = "即将风暴!",
+	elec_bar = "~电能风暴冷却",
+	elec_message = "电能风暴 于 >%s<!",
+	elec_warning = "即将电能风暴!",
 
-	ping = "来自",
-	ping_desc = "若你受到电能风暴再你当前区域发出警报.",
-	ping_message = "风暴 - 本区域发动了~!",
+	ping = "点击小地图",
+	ping_desc = "若你受到电能风暴再你当前区域点击小地图发出警报。",
+	ping_message = "风暴 - 本区域发动了~快在小地图上点你位置！",
 
 	icon = "团队标记",
-	icon_desc = "给中了电场风暴的玩家打上标记. (需要权限)",
+	icon_desc = "给中了电能风暴的玩家打上标记。(需要权限)",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
