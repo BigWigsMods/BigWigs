@@ -108,21 +108,21 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_message = "战斗开始！ ~33秒释放 悔改！",
 
 	repentance = "悔改",
-	repentance_desc = "悔改冷却时间提醒",
+	repentance_desc = "悔改冷却时间提醒。",
 	repentance_trigger1 = "抛弃一切堕落的杂念。",
 	repentance_trigger2 = "你们必须得到净化。",
 	repentance_message = "悔改! ~33秒后发动",
 	repentance_warning = "悔改 冷却结束 - 即将发动！",
-	repentance_bar = "悔改",
+	repentance_bar = "<悔改>",
 	repentance_nextbar = "悔改 冷却！",
 
 	holyfire = "神圣之火",
-	holyfire_desc = "当受到神圣之火影响时发出警报",
-	holyfire_trigger = "^(%S+)受(%S+)了神圣之火效果的影响。$",
-	holyfire_message = "神圣之火: %s",
+	holyfire_desc = "当受到神圣之火影响时发出警报。",
+	holyfire_trigger = "^(.+)受(.+)了神圣之火效果的影响。$",
+	holyfire_message = "神圣之火： >%s<！",
 
 	icon = "团队标记",
-	icon_desc = "标记受到神圣之火的队员(需要团长或助理权限).",
+	icon_desc = "标记受到神圣之火的队员。(需要权限)",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

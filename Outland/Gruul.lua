@@ -201,36 +201,36 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "来了……就得死。",
-	engage_message = "%s 激活!",
+	engage_message = "%s 激活！",
 
 	grow = "成长",
-	grow_desc = "计算并当屠龙者格鲁尔成长时发出警告.",
+	grow_desc = "计算并当屠龙者格鲁尔成长时发出警告。",
 	grow_trigger = "%s的体形变大了！",
-	grow_message = "成长: (%d)",
-	grow_bar = "成长 (%d)",
+	grow_message = "成长： >%d<！",
+	grow_bar = "<成长 (%d)》",
 
 	grasp = "碎裂",
-	grasp_desc = "碎裂警报计时",
+	grasp_desc = "碎裂警报计时条。",
 	grasp_trigger1 = "跑啊。",
 	grasp_trigger2 = "站住。",
-	grasp_message = "大地冲击 - 10秒后破碎!",
+	grasp_message = "大地冲击 - 10秒后破碎！",
 	grasp_warning = "大地冲击 即将发动",
-	grasp_bar = "~大地冲击 冷却",
+	grasp_bar = "<大地冲击 冷却>",
 
 	cavein = "洞穴震颤",
-	cavein_desc = "当你中了洞穴震颤发出警报",
+	cavein_desc = "当你中了洞穴震颤发出警报。",
 	cavein_trigger = "你受到了洞穴震颤效果的影响。",
-	cavein_message = "洞穴震颤 > 你 <",
+	cavein_message = ">你< 洞穴震颤！",
 
 	silence = "沉默",
-	silence_desc = "当格鲁尔群体沉默发出警报(回响).",
+	silence_desc = "当格鲁尔群体沉默发出警报。",
 	silence_trigger = "受到了回响效果的影响。$",
 	silence_message = "群体沉默",
-	silence_warning = "即将 群体沉默!",
-	silence_bar = "~沉默",
+	silence_warning = "即将 群体沉默！",
+	silence_bar = "<沉默>",
 
 	shatter_trigger = "%s咆哮着。",
-	shatter_message = "碎裂!",
+	shatter_message = "碎裂！",
 } end)
 
 ----------------------------------

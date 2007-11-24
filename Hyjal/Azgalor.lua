@@ -127,22 +127,22 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	doom = "厄运",
-	doom_desc = "厄运警报.",
-	doom_other = "%s中了厄运",
-	doom_you = "你中了厄运!",
+	doom_desc = "厄运警报。",
+	doom_other = "厄运：>%s<！",
+	doom_you = ">你< 厄运！",
 
 	hoa = "阿兹加洛之嚎",
-	hoa_desc = "阿兹加洛之嚎警报.",
-	hoa_bar = "~阿兹加洛之嚎 冷却",
+	hoa_desc = "阿兹加洛之嚎警报。",
+	hoa_bar = "<阿兹加洛之嚎 冷却>",
 	hoa_message = "群体沉默",
-	hoa_warning = "即将 群体沉默!",
+	hoa_warning = "即将 群体沉默！",
 
 	rof = "火焰之雨",
-	rof_desc = "当你受到火焰之雨发出警报.",
-	rof_you = ">你< 火焰之雨!",
+	rof_desc = "当你受到火焰之雨发出警报。",
+	rof_you = ">你< 火焰之雨！",
 
 	icon = "团队标记",
-	icon_desc = "给受到诅咒的队员打上标记(需要权限).",
+	icon_desc = "给受到诅咒的队员打上标记。(需要权限)",
 
 	afflict_trigger = "^(%S+)受(%S+)了(.*)效果的影响。$",
 } end )

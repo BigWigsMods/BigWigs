@@ -148,31 +148,31 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "警报！消灭入侵者。",
 
 	orbyou = "奥术宝珠(你)",
-	orbyou_desc = "你中奥术宝珠发出警报",
-	orb_you = "奥术宝珠 >你<!",
+	orbyou_desc = "你中奥术宝珠发出警报。",
+	orb_you = ">你< 奥术宝珠！",
 
 	orbsay = "奥术宝珠(说)",
-	orbsay_desc = "当你目标是奥术宝珠输出到普通聊天中,能计时帮助临近队友",
-	orb_say = "奥术宝珠瞄准我! 请躲开",
+	orbsay_desc = "当你目标是奥术宝珠输出到普通聊天中，能及时帮助临近队友。",
+	orb_say = "奥术宝珠瞄准我！请躲开！",
 
 	orbother = "奥术宝珠(其他)",
-	orbother_desc = "其他队友中了奥术宝珠发出警报",
-	orb_other = "宝珠 --> (%s)",
+	orbother_desc = "其他队友中了奥术宝珠发出警报。",
+	orb_other = "奥术宝珠：>%s<！",
 
 	icon = "团队标记",
-	icon_desc = "为中了奥术宝珠打上团队标记(需要助理或更高的权限).",
+	icon_desc = "为中了奥术宝珠打上团队标记。(需要权限)",
 
 	pounding = "重击",
-	pounding_desc = "显示重击记时条",
+	pounding_desc = "显示重击记时条。",
 	pounding_trigger1 = "备用方案启动……",
 	pounding_trigger2 = "计算力量参数……",
-	pounding_nextbar = "~重击 CD",
+	pounding_nextbar = "~重击 冷却",
 	pounding_bar = "<重击>",
 
 	knock = "击退",
-	knock_desc = "击退冷却跳",
+	knock_desc = "击退冷却计时条。",
 	knock_trigger = "^空灵机甲的击退",
-	knock_bar = "~击退 CD",
+	knock_bar = "<击退 冷却>",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

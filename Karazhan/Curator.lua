@@ -110,23 +110,23 @@ L:RegisterTranslations("zhCN", function() return {
 	berserk_trigger = "展览厅只对访客开放。",
 
 	enrage_trigger = "不合作将导致攻击行动。",
-	enrage_message = "狂暴!",
+	enrage_message = "狂暴！",
 	enrage_warning = "监护者将进入狂暴！",
 
 	weaken = "唤醒",
-	weaken_desc = "当监护者进入唤醒时发送警告",
+	weaken_desc = "当监护者进入唤醒时发送警告。",
 	weaken_trigger = "你的请求未能得到批准。",
 	weaken_message = "唤醒 - 20秒虚弱计时开始",
-	weaken_bar = "唤醒",
+	weaken_bar = "<唤醒>",
 	weaken_fade_message = "唤醒结束 - 准备击杀小电球！",
 	weaken_fade_warning = "5秒后 唤醒 结束！",
 
 	weaktime = "虚弱提示",
-	weaktime_desc = "显示计时条预计下一次虚弱的时间",
+	weaktime_desc = "显示计时条预计下一次虚弱的时间。",
 	weaktime_message1 = "唤醒  大约10秒后",
 	weaktime_message2 = "唤醒  大约30秒后",
 	weaktime_message3 = "唤醒  大约70秒后",
-	weaktime_bar = "~虚弱",
+	weaktime_bar = "<虚弱>",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

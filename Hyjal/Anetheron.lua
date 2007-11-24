@@ -125,21 +125,21 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "你们在守护一个注定要毁灭的世界！逃跑吧，那样也许你们还能多活几天！",
 
 	inferno = "地狱火",
-	inferno_desc = "显示地狱火冷却记时条",
-	inferno_message = "正在施放 地狱火 >%s<!",
-	inferno_you = "地狱火 >你<!",
-	inferno_warning = "即将 地狱火!",
-	inferno_bar = "~地狱火 冷却",
+	inferno_desc = "显示地狱火冷却记时条。",
+	inferno_message = "地狱火：>%s<！",
+	inferno_you = ">你< 地狱火！",
+	inferno_warning = "即将 地狱火！",
+	inferno_bar = "<地狱火 冷却>",
 
 	icon = "团队标记",
-	icon_desc = "为在玩家上施放地狱火的玩家打上团队标记(需要权限).",
+	icon_desc = "为在玩家上施放地狱火的玩家打上团队标记。(需要权限)",
 
 	swarm = "腐臭虫群",
-	swarm_desc = "腐臭虫群冷却计时",
+	swarm_desc = "腐臭虫群冷却计时。",
 	swarm_trigger1 = "瘟疫降临！",
 	swarm_trigger2 = "虫群将吞噬你们的躯体。",
-	swarm_message = "虫群! - 下一波 ~11秒后",
-	swarm_bar = "~虫群 冷却",
+	swarm_message = "虫群！ ~11秒后下一波",
+	swarm_bar = "<虫群 冷却>",
 } end )
 
 ----------------------------------

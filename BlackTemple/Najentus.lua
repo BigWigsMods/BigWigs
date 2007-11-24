@@ -120,25 +120,25 @@ L:RegisterTranslations("zhCN", function() return {
 	start_trigger = "以瓦丝琪女王的名义，去死吧！",
 
 	spine = "穿刺之脊",
-	spine_desc = "谁中了穿刺时告诉你.",
-	spine_trigger = "^([^%s]+)受([^%s]+)了穿刺之脊效果的影响。$",
-	spine_message = "穿刺之脊 %s!",
+	spine_desc = "当谁中了穿刺时告诉你。",
+	spine_trigger = "^(.+)受(.+)了穿刺之脊效果的影响。$",
+	spine_message = "穿刺之脊：>%s<！",
 
 	spinesay = "穿刺警报",
-	spinesay_desc = "当你中了穿刺会自动喊话,能帮助周围队员避让.",
-	spinesay_message = "我中了穿刺!",
+	spinesay_desc = "当你中了穿刺会自动喊话，能帮助周围队员避让。",
+	spinesay_message = "我中了穿刺！",
 
 	shield = "海潮之盾",
-	shield_desc = "当纳因图斯获得海潮之盾后计时.",
+	shield_desc = "当纳因图斯获得海潮之盾后计时。",
 	shield_trigger = "高阶督军纳因图斯受到了海潮之盾效果的影响。",
-	shield_nextbar = "下一次 海潮之盾",
-	shield_warn = "海潮之盾!",
-	shield_soon_warn = "海潮之盾 ~10秒 后发动!",
-	shield_fade = "海潮之盾 消失!",
+	shield_nextbar = "<下一海潮之盾>",
+	shield_warn = "海潮之盾！",
+	shield_soon_warn = "海潮之盾 ~10秒 后发动！",
+	shield_fade = "海潮之盾 消失！",
 	shield_fade_trigger = "海潮之盾效果从高阶督军纳因图斯身上消失。",
 
 	icon = "团队标记",
-	icon_desc = "给中了穿刺之脊的玩家打上团队标记.",
+	icon_desc = "给中了穿刺之脊的玩家打上团队标记。(需要权限)",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

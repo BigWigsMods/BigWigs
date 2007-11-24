@@ -239,70 +239,70 @@ L:RegisterTranslations("zhCN", function() return {
 	berserk_trigger = "你们这是自寻死路！",
 
 	parasite = "寄生暗影魔",
-	parasite_desc = "当队员中寄生暗影魔时发出警告.",
-	parasite_you = "你中了>寄生暗影魔<!",
-	parasite_other = "%s 中了>寄生暗影魔<!",
+	parasite_desc = "当队员中寄生暗影魔时发出警告。",
+	parasite_you = ">你< 寄生暗影魔！",
+	parasite_other = "寄生暗影魔：>%s<！",
 
 	icon = "团队标记",
-	icon_desc = "为中了寄生暗影魔的队员打上团队标记.",
+	icon_desc = "为中了寄生暗影魔的队员打上团队标记。(需要权限)",
 
 	barrage = "黑暗壁垒",
-	barrage_desc = "当玩家中了黑暗壁垒时发出警报.",
-	barrage_message = "%s 中了黑暗壁垒!",
-	barrage_warn = "即将 黑暗壁垒!",
-	barrage_warn_bar = "~下一波 黑暗壁垒",
-	barrage_bar = "黑暗壁垒: %s",
+	barrage_desc = "当玩家中了黑暗壁垒时发出警报。",
+	barrage_message = "黑暗壁垒：>%s<！",
+	barrage_warn = "即将 黑暗壁垒！",
+	barrage_warn_bar = "<下一黑暗壁垒>",
+	barrage_bar = "<黑暗壁垒：%s>",
 
 	eyeblast = "魔眼冲击",
-	eyeblast_desc = "当施放魔眼冲击时发出警报.",
+	eyeblast_desc = "当施放魔眼冲击时发出警报。",
 	eyeblast_trigger = "直视背叛者的双眼吧！",
-	eyeblast_message = "魔眼冲击!",
+	eyeblast_message = "魔眼冲击！",
 
 	shear = "剪切",
-	shear_desc = "剪切玩家警报",
-	shear_message = "剪切 %s!",
-	shear_bar = "剪切: %s",
+	shear_desc = "剪切玩家警报。",
+	shear_message = "剪切：>%s<！",
+	shear_bar = "<剪切：%s>",
 
 	flame = "苦痛之焰",
-	flame_desc = "当中了苦痛之焰时发出警报",
-	flame_message = "%s 中了>苦痛之焰<!",
+	flame_desc = "当中了苦痛之焰时发出警报。",
+	flame_message = "苦痛之焰：>%s<！",
 
 	demons = "影魔",
-	demons_desc = "当伊利丹召唤影魔时发出警报.",
+	demons_desc = "当伊利丹召唤影魔时发出警报。",
 	demons_trigger = "召唤影魔",
-	demons_message = "影魔!",
-	demons_warn = "即将 影魔!",
+	demons_message = "影魔！",
+	demons_warn = "即将 影魔！",
 
 	phase = "阶段",
-	phase_desc = "当伊利丹进入不同阶段发出警报.",
-	phase2_soon_message = "即将 -  第二阶段!",
-	phase2_trigger = "埃辛诺斯之刃施放了召唤埃辛诺斯之类。$",--Update 10/31,Not my mistake，the combatlog really it is!
-	phase2_message = "第二阶段 - 埃辛诺斯双刃!",
-	phase3_message = "第三阶段!",
+	phase_desc = "当伊利丹进入不同阶段发出警报。",
+	phase2_soon_message = "即将 -  第二阶段！",
+	phase2_trigger = "埃辛诺斯之刃施放了召唤埃辛诺斯之类。$",--Update 10/31
+	phase2_message = "第二阶段 - 埃辛诺斯双刃！",
+	phase3_message = "第三阶段！",
 	demon_phase_trigger = "感受我体内的恶魔之力吧！",
-	demon_phase_message = "恶魔形态!",
-	demon_bar = "下一次普通阶段",
-	demon_warning = "恶魔阶段 ~5秒后结束!",
-	normal_bar = "~可能 恶魔阶段",
-	normal_warning = "~5秒后, 可能恶魔阶段!",
+	demon_phase_message = "恶魔形态！",
+	demon_bar = "<下一普通阶段>",
+	demon_warning = "恶魔阶段 ~5秒后结束！",
+	normal_bar = "<可能 恶魔阶段>",
+	normal_warning = "~5秒后, 可能恶魔阶段！",
 	phase4_trigger = "你们就这点本事吗？这就是你们全部的能耐？",
-	phase4_soon_message = "即将 - 第四阶段!",
-	phase4_message = "第四阶段 - 玛维·影歌来临!",
+	phase4_soon_message = "即将 - 第四阶段！",
+	phase4_message = "第四阶段 - 玛维·影歌来临！",
 
 	flameburst = "烈焰爆击",
-	flameburst_desc = "当伊利丹使用烈焰爆击发出警报",
-	flameburst_message = "烈焰爆击!",
+	flameburst_desc = "当伊利丹使用烈焰爆击发出警报。",
+	flameburst_message = "烈焰爆击！",
 	flameburst_cooldown_bar = "烈焰爆击 冷却",
-	flameburst_cooldown_warn = "即将 烈焰爆击!",
-	flameburst_warn = "5秒后 烈焰爆击!",
+	flameburst_cooldown_warn = "即将 烈焰爆击！",
+	flameburst_warn = "5秒后 烈焰爆击！",
 
 	enrage_trigger = "感受一万年的愤怒吧！",--check
-	enrage_message = "狂暴!",
+	enrage_message = "狂暴！",
 
-	afflict_trigger = "^([^%s]+)受([^%s]+)了([^%s]+)效果的影响。$",--%s受到了%s效果的影响。
+	afflict_trigger = "^([^%s]+)受([^%s]+)了([^%s]+)效果的影响。$",
 	["Flame of Azzinoth"] = "埃辛诺斯之焰",
 
-	--第一次触发伊利丹时计时器 (very first yell to start engage timer)
+	--第一次触发伊利丹时计时器
 	illi_start = "阿卡玛。你的两面三刀并没有让我感到意外。我早就应该把你和你那些畸形的同胞全部杀掉。",
 } end )
 

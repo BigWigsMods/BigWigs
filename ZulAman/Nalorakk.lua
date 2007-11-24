@@ -94,11 +94,11 @@ L:RegisterTranslations("zhCN", function() return {
 	phase_bear = "你们召唤野兽？你马上就要大大的后悔了！",
 	phase_normal = "纳洛拉克，变形，出发！",
 	normal_message = "普通形态！",
-	normal_bar = "下一熊形态",
+	normal_bar = "<下一熊形态>",
 	normal_soon = "10秒 恢复普通阶段",
 	normal_warning = "5秒 恢复普通阶段",
 	bear_message = "熊形态！",
-	bear_bar = "下一普通形态",
+	bear_bar = "<下一普通形态>",
 	bear_soon = "10秒 恢复正常形态",
 	bear_warning = "5秒 恢复正常形态",
 } end )

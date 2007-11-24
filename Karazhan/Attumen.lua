@@ -86,7 +86,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段警报",
-	phase_desc = "当进入下一阶段时发出警告",
+	phase_desc = "当进入下一阶段时发出警告。",
 	phase1_message = "第一阶段 - %s",
 	phase2_trigger = "%s呼叫她的主人！",--check
 	phase2_message = "第二阶段 - %s & 阿图门",
@@ -94,9 +94,9 @@ L:RegisterTranslations("zhCN", function() return {
 	phase3_message = "第三阶段 - %s",
 
 	curse = "诅咒警报",
-	curse_desc = "当近战受到无形的诅咒时发出警告",
-	curse_trigger = "^(%S+)受(%S+)了无形效果的影响。$",
-	curse_message = "%s中无形 - 速度解！",
+	curse_desc = "当近战受到无形的诅咒时发出警告。",
+	curse_trigger = "^(.+)受(.+)了无形效果的影响。$",
+	curse_message = ">%s< 中了无形 - 速度解！",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

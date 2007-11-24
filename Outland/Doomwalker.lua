@@ -134,26 +134,26 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "停止前进。否则你们将被消灭。",
-	engage_message = "末日行者激活,30秒后发动地震术!",
+	engage_message = "末日行者激活 30秒后发动地震术！",
 
 	overrun = "泛滥",
-	overrun_desc = "当末日行者使用泛滥技能时发出警报.",
+	overrun_desc = "当末日行者使用泛滥技能时发出警报。",
 	overrun_trigger1 = "提升至最高速度。",
 	overrun_trigger2 = "轨道锁定。",
-	overrun_message = "泛滥!",
-	overrun_soon_message = "即将发动 泛滥!",
-	overrun_bar = "~泛滥 冷却",
+	overrun_message = "泛滥！",
+	overrun_soon_message = "即将发动 泛滥！",
+	overrun_bar = "<泛滥 冷却>",
 
 	earthquake = "地震术",
-	earthquake_desc = "当末日行者施放地震术时发出警告.",
-	earthquake_message = "地震术! ~70秒后再次发动!",
-	earthquake_bar = "~地震术 冷却",
+	earthquake_desc = "当末日行者施放地震术时发出警告。",
+	earthquake_message = "地震术！~70秒后再次发动！",
+	earthquake_bar = "<地震术 冷却>",
 	earthquake_trigger1 = "地面破坏程序启动。",
 	earthquake_trigger2 = "范围确认。释放。",
 
-	enrage_soon_message = "即将狂怒!",
+	enrage_soon_message = "即将狂怒！",
 	enrage_trigger = "%s变得愤怒了！",
-	enrage_message = "狂怒!",
+	enrage_message = "狂怒！",
 } end)
 
 ----------------------------------

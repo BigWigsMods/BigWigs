@@ -243,7 +243,7 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	["Tainted Elemental"] = "被污染的元素",
 
-	engage_trigger1 = "我不想贬低自己来获取你的宽容，但是你让我别无选择……",--check the change
+	engage_trigger1 = "我不想贬低自己来获取你的宽容，但是你让我别无选择……",
 	engage_trigger2 = "我唾弃你们，地表的渣滓！",
 	engage_trigger3 = "伊利丹大人必胜！",
 	engage_trigger4 = "我要把你们全都杀死！",--check the change
@@ -251,48 +251,48 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_message = "进入第一阶段",
 
 	phase = "阶段警报",
-	phase_desc = "首领进入不同阶段发出警报",
+	phase_desc = "首领进入不同阶段发出警报。",
 	phase2_trigger = "机会来了！一个活口都不要留下！",
 	phase2_soon_message = "即将 第二阶段",
-	phase2_message = "第二阶段 - 援兵 来临!",
+	phase2_message = "第二阶段 - 援兵 来临！",
 	phase3_trigger = "你们最好找掩护。",
-	phase3_message = "第三阶段 - 4分后 激怒!",
+	phase3_message = "第三阶段 - 4分钟后激怒！",
 
 	static = "静电冲能",
-	static_desc = "中了静电充能发出警报",
-	static_charge_trigger = "^(%S+)受(%S+)了静电充能效果的影响。",
-	static_charge_message = "静电充能 --> %s!",
+	static_desc = "中了静电充能发出警报。",
+	static_charge_trigger = "^(.+)受(.+)了静电充能效果的影响。",
+	static_charge_message = "静电充能：>%s<！",
 	static_fade = "静电充能效果从你身上消失了。",
-	static_warnyou = "静电充能 >你<!",
+	static_warnyou = ">你 <静电充能！",
 
 	icon = "标记",
-	icon_desc = "给中了静电冲能和污染之核的玩家打上标记",
+	icon_desc = "给中了静电冲能和污染之核的玩家打上标记。(需要权限)",
 
 	elemental = "被污染的元素",
-	elemental_desc = "在阶段2,被污染的元素计时",
-	elemental_bar = "被污染的元素 来临",
-	elemental_soon_message = "被污染的元素 即将出现!",
+	elemental_desc = "在第二阶段，被污染的元素计时条。",
+	elemental_bar = "<被污染的元素 来临>",
+	elemental_soon_message = "被污染的元素 即将出现！",
 
 	strider = "盘牙巡逻者",
-	strider_desc = "在第二阶段,盘牙巡逻者计时",
-	strider_bar = "巡逻者 来临",
-	strider_soon_message = "盘牙巡逻者 即将出现!",
+	strider_desc = "在第二阶段，盘牙巡逻者计时条。",
+	strider_bar = "<巡逻者 来临>",
+	strider_soon_message = "盘牙巡逻者 即将出现！",
 
 	naga = "盘牙精英",
-	naga_desc = "在第二阶段,盘牙精英计时",
-	naga_bar = "精英 来临",
-	naga_soon_message = "盘牙精英 即将出现!",
+	naga_desc = "在第二阶段，盘牙精英计时条。",
+	naga_bar = "<精英 来临>",
+	naga_soon_message = "盘牙精英 即将出现！",
 
 	barrier = "护盾击碎",
-	barrier_desc = "当护盾击碎发出警报",
-	barrier_down_message = "护盾 - %d/4 击碎!",
+	barrier_desc = "当护盾击碎发出警报。",
+	barrier_down_message = "护盾 - %d/4 击碎！",
 	barrier_fades_trigger = "魔法屏障效果从瓦丝琪身上消失。",
 
 	loot = "污染之核",
-	loot_desc = "对拾取了污染之核的队友发出警报",
-	loot_message = "%s 拾取了 污染之核!",
-	loot_paralyze = "^(%S+)受(%S+)了麻痹效果的影响。$",
-	loot_update = "污染之核 > %s",
+	loot_desc = "对拾取了污染之核的队友发出警报。",
+	loot_message = ">%s< 拾取了 污染之核！",
+	loot_paralyze = "^(.+)受(.+)了麻痹效果的影响。$",
+	loot_update = "污染之核：>%s<！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

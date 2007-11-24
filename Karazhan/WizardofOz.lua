@@ -83,14 +83,14 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "^啊，托托，我们必须找到回家的路！",
 
 	spawns = "启动时间",
-	spawns_desc = "每个角色激活时间计时",
-	spawns_bar = "%s 开始攻击!",
+	spawns_desc = "每个角色激活时间计时。",
+	spawns_bar = "%s 开始攻击！",
 	spawns_warning = "%s 将在 5秒后 开始攻击",
 
 	light = "闪电链",
-	light_desc = "老巫婆施放闪电链时发出警报",
+	light_desc = "老巫婆施放闪电链时发出警报。",
 	light_trigger = "巫婆开始施放闪电链。",
-	light_message = "闪电链!",
+	light_message = "闪电链！",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

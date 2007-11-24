@@ -165,36 +165,36 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "Tal anu'men no sin'dorei!",
 
 	phase = "阶段",
-	phase_desc = "阶段改变警报",
-	phase1_message = "阶段 1 - ~50秒后分裂",
-	phase2_warning = "即将 阶段 2!",
+	phase_desc = "阶段改变警报。",
+	phase1_message = "第一阶段 - ~50秒后分裂",
+	phase2_warning = "即将 第二阶段！",
 	phase2_trigger = "^我受够了！现在我要让你们看看宇宙的愤怒！",
-	phase2_message = "20% - 阶段 2",
+	phase2_message = "20% - 第二阶段",
 
 	wrath = "愤怒 Debuff",
-	wrath_desc = "当受到星术师之怒发出警报",
-	wrath_trigger = "^(%S+)受(%S+)了星术师之怒效果的影响。$",
+	wrath_desc = "当受到星术师之怒发出警报。",
+	wrath_trigger = "^(.+)受(.+)了星术师之怒效果的影响。$",
 	wrath_fade = "星术师之怒效果从你身上消失了。",
-	wrath_other = "愤怒 --> %s",
-	wrath_you = "愤怒 >你<!",
+	wrath_other = "愤怒：>%s<！",
+	wrath_you = ">你< 愤怒！",
 	
 	whisper = "密语",
-	whisper_desc = "发送密语给中了愤怒的玩家 (需要权限).",
+	whisper_desc = "发送密语给中了愤怒的玩家。(需要权限)",
 
 	icon = "团队标记",
-	icon_desc = "给受到星术师之怒的队友打上团队标记",
+	icon_desc = "给受到星术师之怒的队友打上团队标记。(需要权限)",
 
 	split = "分裂",
-	split_desc = "当分裂和增加救援发出警报",
+	split_desc = "当分裂和增加救援发出警报。",
 	split_trigger1 = "我要让你们自以为是的错觉荡然无存！",
 	split_trigger2 = "你们势单力薄！",
-	split_bar = "~下次 分裂",
+	split_bar = "<下一分裂>",
 	split_warning = "~7秒后 分裂",
 
-	agent_warning = "分裂! - 6秒后 日晷密探",
-	agent_bar = "日晷密探",
+	agent_warning = "分裂！ - 6秒后 日晷密探",
+	agent_bar = "<日晷密探>",
 	priest_warning = "3秒后 日晷祭司/索兰莉安",
-	priest_bar = "日晷祭司/索兰莉安",
+	priest_bar = "<日晷祭司/索兰莉安>",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

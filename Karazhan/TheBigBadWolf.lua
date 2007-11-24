@@ -85,17 +85,17 @@ L:RegisterTranslations("zhCN", function() return {
 	riding_trigger = "^(%S+)获得了小红帽的效果。$",
 
 	youriding = "小红帽(你)",
-	youriding_desc = "当你变成小红帽 发出警报",
-	riding_youwarn = "你变成小红帽!",
+	youriding_desc = "当你变成小红帽发出警报。",
+	riding_youwarn = "你变成小红帽！",
 
 	elseriding = "小红帽(队友)",
-	elseriding_desc = "当其他人变成小红帽发出警报!",
-	riding_otherwarn = "%s 变成小红帽了!",
+	elseriding_desc = "当其他人变成小红帽发出警报。",
+	riding_otherwarn = "小红帽：>%s<！快跑！",
 
-	riding_bar = "%s 快跑",
+	riding_bar = "<快跑：%s>",
 
 	icon = "团队标记",
-	icon_desc = "给中了小红帽的打上团队标记(需要团队助理或更高的权利).",
+	icon_desc = "给中了小红帽的打上团队标记。(需要权限)",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

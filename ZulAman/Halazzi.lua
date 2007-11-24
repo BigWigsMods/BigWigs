@@ -132,7 +132,7 @@ L:RegisterTranslations("zhCN", function() return {
 	normal_message = "正常阶段！",
 	spirit_message = "%d%% 生命值！ - 灵魂阶段！",
 	spirit_soon = "即将灵魂阶段！",
-	spirit_bar = "~可能 正常阶段",
+	spirit_bar = "<可能 正常阶段>",
 
 	frenzy = "狂乱",
 	frenzy_desc = "狂乱警报。",

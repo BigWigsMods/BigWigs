@@ -181,21 +181,21 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	waves = "阶段警报",
-	waves_desc = "通告下一波来临警报信息",
+	waves_desc = "通告下一波来临警报信息。",
 
 	detail = "详细警报",
 	detail_desc = "怪物到来时显示详细警报。",
 
-	["~%s spawn"] = "~%s 出现.",
-	["~Wave %d spawn"] = "~第%d波 出现.",
+	["~%s spawn"] = "~%s 出现。",
+	["~Wave %d spawn"] = "~第%d波 出现。",
 	["Wave %d incoming!"] = "第%d波 来临!",
 	["Wave %d! %d %s"] = "第%d波! %d个%s", --1 set of mobs
 	["Wave %d! %d %s, %d %s"] = "第%d波! %d个%s, %d %s", --2 sets of mobs
 	["Wave %d! %d %s, %d %s, %d %s"] = "第%d波! %d个%s, %d个%s, %d个%s", --3 sets of mobs
 	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "第%d波! %d个%s, %d个%s, %d个%s, %d个%s", --4 sets of mobs
 	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "第%d波! %d个%s, %d个%s, %d个%s, %d个%s, %d个%s", --5 sets of mobs
-	["%s in ~%d sec!"] = "%s 在~%d秒后来临!",
-	["Wave %d in ~%d sec!"] = "第%d波! 将在~%d秒后来临!",
+	["%s in ~%d sec!"] = "%s 在~%d秒后来临！",
+	["Wave %d in ~%d sec!"] = "第%d波！ 将在~%d秒后来临！",
 
 	["Boss"] = "首领",
 	["Thrall"] = "萨尔",

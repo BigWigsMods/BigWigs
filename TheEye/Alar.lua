@@ -120,24 +120,24 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_message = "%s 激活 - 第一阶段",
 
 	meteor = "俯冲轰炸",
-	meteor_desc = "俯冲轰炸记时条",
+	meteor_desc = "俯冲轰炸记时条。",
 	meteor_warning = "5秒后 可能 俯冲轰炸",
-	meteor_message = "俯冲轰炸! ~52秒后再次发动",
-	meteor_nextbar = "下次 俯冲轰炸",
+	meteor_message = "俯冲轰炸！ ~52秒后再次发动",
+	meteor_nextbar = "<下一俯冲轰炸>",
 
 	flamepatch = "烈焰之地(你)",
-	flamepatch_desc = "烈焰之地于你警报",
+	flamepatch_desc = "烈焰之地于你警报。",
 	flamepatch_trigger = "你受到了烈焰击打效果的影响。",
-	flamepatch_message = "烈焰之地 >你<!",
+	flamepatch_message = ">你< 烈焰之地！",
 
 	armor = "熔化护甲",
-	armor_desc = "当队友获得熔化护甲发出警报",
-	armor_trigger = "^(%S+)受(%S+)了熔化护甲效果的影响。$",
-	armor_other = "熔化护甲: %s",
-	armor_you = "熔化护甲 >你<!",
+	armor_desc = "当队友获得熔化护甲发出警报。",
+	armor_trigger = "^(.+)受(.+)了熔化护甲效果的影响。$",
+	armor_other = "熔化护甲：>%s<！",
+	armor_you = ">你< 熔化护甲！",
 
 	icon = "团队标记",
-	icon_desc = "给中了熔化护甲的队员打上团队标记(需要助理或更高权限).",
+	icon_desc = "给中了熔化护甲的队员打上团队标记。(需要权限)",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

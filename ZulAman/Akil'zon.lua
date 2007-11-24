@@ -98,7 +98,7 @@ L:RegisterTranslations("zhCN", function() return {
 	elec = "电能风暴",
 	elec_desc = "当谁中了电能风暴发出警报。",
 	--elec_trigger = "^(.+)受(.+)了电能风暴效果的影响。$",
-	elec_bar = "~电能风暴冷却",
+	elec_bar = "<电能风暴 冷却>",
 	elec_message = "电能风暴：>%s<！",
 	elec_warning = "即将电能风暴！",
 

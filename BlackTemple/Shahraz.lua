@@ -50,14 +50,14 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "是办正事还是找乐子呢？",
 
 	attraction = "致命吸引",
-	attraction_desc = "中了致命吸引发出警报",
-	attraction_trigger = "^(%S+)受(%S+)了致命吸引效果的影响。$",
-	attraction_message = "致命吸引: %s",
+	attraction_desc = "当谁中了致命吸引发出警报。",
+	attraction_trigger = "^(.+)受(.+)了致命吸引效果的影响。$",
+	attraction_message = "致命吸引：>%s<！",
 
 	debuff = "Debuff 计时",
-	debuff_desc = "显示 Debuff 直到下一个的计时.",
+	debuff_desc = "显示 Debuff 直到下一个的计时。",
 
-	enrage_warning = "即将狂暴!",
+	enrage_warning = "即将狂暴！",
 	enrage_message = "10% - 狂暴",
 	enrage_trigger = "不要浪费我的感情了！",
 } end )
