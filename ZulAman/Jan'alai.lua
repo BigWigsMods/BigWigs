@@ -149,6 +149,28 @@ L:RegisterTranslations("zhTW", function() return {
 	adds_message = "救援即將出現!",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "\194\161Los esp\195\173ritus del viento ser\195\161n vuestra maldici\195\179n!",
+
+	flame = "Aliento de llamas",
+	flame_desc = "Avisa sobre quien lanza Jan'alai Aliento de llamas.",
+	flame_trigger = "Jan'alai comienza a lanzar Aliento de llamas.",
+	flame_message = "\194\161Aliento de llamas en %s!",
+
+	icon = "Icono de Banda",
+	icon_desc = "Coloca un Icono de Banda sobre el jugador objetivo de Aliento de llamas. (requiere asistente o superior)",
+
+	bomb = "Bomba de Fuego",
+	bomb_desc = "Muestra temporizadores para Bomba de Fuego.",
+	bomb_trigger = "\194\161Ahora os quemar\195\169!",
+	bomb_message = "\194\161Bomba de Fuego!",
+
+	adds = "A\195\177adidos",
+	adds_desc = "Avisa la llegada de a\195\177adidos.",
+	adds_trigger = "\194\191D\195\179nde est\195\161 mi criador? \194\161A por los huevos!",
+	adds_message = "\194\161A\195\177adidos!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
