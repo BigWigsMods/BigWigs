@@ -50,8 +50,8 @@ L:RegisterTranslations("koKR", function() return {
 	bolts_desc = "말라크라스의 영혼의 화살 시전을 알립니다.",
 	bolts_trigger = "네 영혼이 피를 흘리리라!",
 	bolts_message = "영혼의 화살 시전!",
-	--bolts_warning = "Spirit Bolts in 5 sec!",
-	--bolts_nextbar = "Next Spirit Bolts",
+	bolts_warning = "5초후 영혼의 화살!",
+	bolts_nextbar = "다음 영혼의 화살",
 
 	soul = "영혼 착취",
 	soul_desc = "누가 영혼 착취에 걸렸는지 알립니다.",

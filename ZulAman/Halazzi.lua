@@ -75,14 +75,14 @@ L:RegisterTranslations("koKR", function() return {
 	frenzy_trigger = "할라지|1이;가; 광폭화 효과를 얻었습니다.",
 	frenzy_message = "광폭화!",
 
-	--flame = "Flame Shock",
-	--flame_desc = "Warn for players with Flame Shock.",
-	--flame_trigger = "^(%S+) (%S+) afflicted by Flame Shock%.$",
-	--flame_fade = "^Flame Shock fades from (%S+)%.$",
-	--flame_message = "Flame Shock: %s",
+	flame = "화염 충격",
+	flame_desc = "화염 충격에 걸린 플레이어를 알립니다.",
+	flame_trigger = "^([^|;%s]*)(.*)화염 충격에 걸렸습니다%.$",
+	flame_fade = "^^([^%s]+)의 몸에서 화염 충격 효과가 사라졌습니다%.$",
+	flame_message = "화염 충격: %s",
 
-	--icon = "Raid Icon",
-	--icon_desc = "Place a Raid Target Icon on the player with Flame Shock. (requires promoted or higher)",
+	icon = "전술 표시",
+	icon_desc = "화염 충격의 대상이된 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
