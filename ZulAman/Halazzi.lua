@@ -40,7 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	frenzy = "Frenzy",
 	frenzy_desc = "Frenzy alert.",
-	frenzy_trigger = "Halazzi gains Frenzy.",
+	frenzy_trigger = "%s goes into a killing frenzy!",
 	frenzy_message = "Frenzy!",
 
 	flame = "Flame Shock",
@@ -72,7 +72,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	frenzy = "광기",
 	frenzy_desc = "광기 경고.",
-	frenzy_trigger = "할라지|1이;가; 광기 효과를 얻었습니다.",
+	--frenzy_trigger = "할라지|1이;가; 광기 효과를 얻었습니다.",
 	frenzy_message = "광기!",
 
 	flame = "화염 충격",
@@ -104,7 +104,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	frenzy = "Frénésie",
 	frenzy_desc = "Préviens quand Halazzi entre en frénésie.",
-	frenzy_trigger = "Halazzi gagne Frénésie.",
+	--frenzy_trigger = "Halazzi gagne Frénésie.",
 	frenzy_message = "Frénésie !",
 
 	flame = "Horion de flammes",
@@ -136,7 +136,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	frenzy = "狂乱",
 	frenzy_desc = "狂乱警报。",
-	frenzy_trigger = "哈尔拉兹获得了狂乱的效果。",
+	--frenzy_trigger = "哈尔拉兹获得了狂乱的效果。",
 	frenzy_message = "哈尔拉玆 狂乱！",
 
 	flame = "烈焰震击",
@@ -168,7 +168,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	frenzy = "狂亂",
 	frenzy_desc = "狂亂警報",
-	frenzy_trigger = "哈拉齊獲得了狂亂的效果。",
+	--frenzy_trigger = "哈拉齊獲得了狂亂的效果。",
 	frenzy_message = "狂亂!",
 
 	--flame = "Flame Shock",
@@ -229,7 +229,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("UNIT_HEALTH")
 
@@ -257,7 +257,7 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	end
 end
 
-function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["frenzy_trigger"] and db.frenzy then
 		self:Message(L["frenzy_message"], "Important")
 		self:Bar(L["frenzy_message"], 6, "Ability_GhoulFrenzy")
