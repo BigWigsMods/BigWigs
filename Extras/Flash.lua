@@ -74,6 +74,22 @@ L:RegisterTranslations("zhCN", function() return {
 	["Test"] = "测试",
 	["Perform a Flash/Shake test."] = "屏幕闪烁/震动测试。",
 } end)
+
+L:RegisterTranslations("deDE", function() return {
+	["FlashNShake"] = "Aufblitzen|Beben",
+	["Flash'N'Shake"] = "Aufblitzen'|'Beben",
+	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "Läst den Bildschirm Beben und/oder Blau aufblitzen wenn etwas wichtiges passiert das dich direkt betrifft.",
+
+	["Flash"] = "Aufblitzen",
+	["Toggle Flash on or off."] = "Schaltet Aufblitzen an oder aus.",
+
+	["Shake"] = "Beben",
+	["Toggle Shake on or off."] = "Schaltet Beben an oder aus.",
+
+	["Test"] = "Test",
+	["Perform a Flash/Shake test."] = "Führe einen Aufblitzen/Beben Test durch.",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
