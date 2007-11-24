@@ -127,7 +127,7 @@ L:RegisterTranslations("deDE", function() return {
 	grip_trigger = "^([^%s]+) ([^%s]+) ist von Würgegriff der Legion betroffen%.$",
 	grip_you = "Würgegriff auf DIR!",
 	grip_other = "Würgegriff auf %s!",
-	--grip_fade = "^Grip of the Legion fades from (%S+)%.$",
+	grip_fade = "^Würgegriff der Legion schwindet von (%S+)%.$",
 
 	icon = "Schlachtzug Symbol",
 	icon_desc = "Plaziert ein Schlachtzug Symbol auf Spielern mit Würgegriff der Legion Debuff.",
