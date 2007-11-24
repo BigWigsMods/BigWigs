@@ -232,6 +232,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:DelayedMessage(48, L["elec_warning"], "Urgent")
 		if db.icon then
 			self:Icon(rest)
+			self:ScheduleEvent("BWRemoveAkilIcon", "BigWigs_RemoveRaidIcon", 10, self)
 		end
 	end
 end

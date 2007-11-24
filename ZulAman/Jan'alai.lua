@@ -201,6 +201,7 @@ end
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if db.flame and msg == L["flame_trigger"] then
 		self:ScheduleEvent("BWFlameToTScan", ScanTarget, 0.2)
+		self:ScheduleEvent("BWRemoveJanIcon", "BigWigs_RemoveRaidIcon", 4, self)
 	end
 end
 
