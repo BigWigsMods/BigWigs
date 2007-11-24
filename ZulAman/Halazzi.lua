@@ -139,14 +139,14 @@ L:RegisterTranslations("zhCN", function() return {
 	frenzy_trigger = "哈尔拉兹获得了狂乱的效果。",
 	frenzy_message = "哈尔拉紫 狂乱!",
 
-	flame = "火焰震击",
-	flame_desc = "当玩家受到火焰震击时发出警报。",
-	flame_trigger = "^(%S+)受(%S+)了火焰震击效果的影响。$",
-	flame_fade = "^火焰震击效果从(%S+)身上消失。$",
-	flame_message = "%s 中了 火焰震击!",
+	flame = "烈焰震击",
+	flame_desc = "当玩家受到烈焰震击发出警报",
+	flame_trigger = "^(.+)受(.+)了烈焰震击效果的影响。$",
+	flame_fade = "^烈焰震击效果从(.+)身上消失。$",
+	flame_message = "烈焰震击: %s",
 
 	icon = "团队标记",
-	icon_desc = "给中了火焰震击的玩家打上标记。(需要权限)",
+	icon_desc = "使用团队标记标出受烈焰震击的玩家. (需要权限)",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
