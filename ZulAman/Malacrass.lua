@@ -134,8 +134,8 @@ L:RegisterTranslations("zhTW", function() return {
 	bolts_desc = "警告瑪拉克雷斯施放靈魂箭",
 	bolts_trigger = "你的靈魂將會受到傷害!",
 	bolts_message = "靈魂箭即將來臨",
-	--bolts_warning = "Spirit Bolts in 5 sec!",
-	--bolts_nextbar = "Next Spirit Bolts",
+	bolts_warning = "5 秒後靈魂箭!",
+	bolts_nextbar = "下次靈魂箭",
 
 	soul = "虹吸靈魂",
 	soul_desc = "警告誰受到虹吸靈魂",
