@@ -78,8 +78,8 @@ L:RegisterTranslations("frFR", function() return {
 	bolts_desc = "Préviens quand Malacrass commence à canaliser ses Eclairs spirituels.",
 	bolts_trigger = "Ton âme, elle va saigner !",
 	bolts_message = "Arrivée des Eclairs spirituels !",
-	--bolts_warning = "Spirit Bolts in 5 sec!",
-	--bolts_nextbar = "Next Spirit Bolts",
+	bolts_warning = "Eclairs spirituels dans 5 sec. !",
+	bolts_nextbar = "Prochains Eclairs spirituels",
 
 	soul = "Siphonner l'âme",
 	soul_desc = "Préviens quand un joueur subit les effets de Siphonner l'âme.",

@@ -107,14 +107,14 @@ L:RegisterTranslations("frFR", function() return {
 	frenzy_trigger = "Halazzi gagne Frénésie.",
 	frenzy_message = "Frénésie !",
 
-	--flame = "Flame Shock",
-	--flame_desc = "Warn for players with Flame Shock.",
-	--flame_trigger = "^(%S+) (%S+) afflicted by Flame Shock%.$",
-	--flame_fade = "^Flame Shock fades from (%S+)%.$",
-	--flame_message = "Flame Shock: %s",
+	flame = "Horion de flammes",
+	flame_desc = "Préviens quand un joueur subit les effets de l'Horion de flammes.",
+	flame_trigger = "^(%S+) (%S+) les effets .* Horion de flammes%.$",
+	flame_fade = "^Horion de flammes sur (%S+) vient de se dissiper%.$",
+	flame_message = "Horion de flammes : %s",
 
-	--icon = "Raid Icon",
-	--icon_desc = "Place a Raid Target Icon on the player with Flame Shock. (requires promoted or higher)",
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Horion de flammes (nécessite d'être promu ou mieux).",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
