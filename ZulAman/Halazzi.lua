@@ -139,14 +139,14 @@ L:RegisterTranslations("zhCN", function() return {
 	frenzy_trigger = "哈尔拉兹获得了狂乱的效果。",
 	frenzy_message = "哈尔拉紫 狂乱!",
 
-	--flame = "Flame Shock",
-	--flame_desc = "Warn for players with Flame Shock.",
-	--flame_trigger = "^(%S+) (%S+) afflicted by Flame Shock%.$",
-	--flame_fade = "^Flame Shock fades from (%S+)%.$",
-	--flame_message = "Flame Shock: %s",
+	flame = "火焰震击",
+	flame_desc = "当玩家受到火焰震击时发出警报。",
+	flame_trigger = "^(%S+)受(%S+)了火焰震击效果的影响。$",
+	flame_fade = "^火焰震击效果从(%S+)身上消失。$",
+	flame_message = "%s 中了 火焰震击!",
 
-	--icon = "Raid Icon",
-	--icon_desc = "Place a Raid Target Icon on the player with Flame Shock. (requires promoted or higher)",
+	icon = "团队标记",
+	icon_desc = "给中了火焰震击的玩家打上标记。(需要权限)",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

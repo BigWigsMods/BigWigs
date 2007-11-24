@@ -106,8 +106,8 @@ L:RegisterTranslations("zhCN", function() return {
 	bolts_desc = "当玛拉卡斯开始引导灵魂之箭时发出警报.",
 	bolts_trigger = "你的灵魂在流血！",
 	bolts_message = "即将 - 灵魂之箭!",
-	--bolts_warning = "Spirit Bolts in 5 sec!",
-	--bolts_nextbar = "Next Spirit Bolts",
+	bolts_warning = "5秒后 灵魂之箭 !",
+	bolts_nextbar = "下一次灵魂之箭",
 
 	soul = "灵魂虹吸",
 	soul_desc = "受到灵魂虹吸时发出警报.",
