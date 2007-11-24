@@ -179,6 +179,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "AkilElec", 10)
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	pName = UnitName("player")
 	db = self.db.profile
 end

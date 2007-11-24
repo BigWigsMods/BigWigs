@@ -242,6 +242,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	db = self.db.profile
 	pName = UnitName("player")
 end

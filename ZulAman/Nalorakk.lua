@@ -157,6 +157,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	db = self.db.profile
 end
 
