@@ -75,6 +75,21 @@ L:RegisterTranslations("zhCN", function() return {
 	["Perform a Flash/Shake test."] = "屏幕闪烁/震动测试。",
 } end)
 
+L:RegisterTranslations("zhTW", function() return {
+	["FlashNShake"] = "螢幕閃爍/震動",
+	["Flash'N'Shake"] = "螢幕閃爍/震動",
+	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "如有重要事件發生，螢幕將會閃爍藍光/震動告知玩家。",
+
+	["Flash"] = "閃爍",
+	["Toggle Flash on or off."] = "啟用或關閉螢幕閃爍",
+
+	["Shake"] = "震動",
+	["Toggle Shake on or off."] = "啟用或關閉螢幕閃震動,
+
+	["Test"] = "測試",
+	["Perform a Flash/Shake test."] = "測試螢幕閃爍/震動",
+} end)
+
 L:RegisterTranslations("deDE", function() return {
 	["FlashNShake"] = "Aufblitzen|Beben",
 	["Flash'N'Shake"] = "Aufblitzen'|'Beben",

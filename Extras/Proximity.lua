@@ -154,7 +154,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["Proximity"] = "鄰近顯示",
-	--["Close Players"] = "",
+	["Close Players"] = "鄰近玩家",
 	["Options for the Proximity Display."] = "設定鄰近顯示選項。",
 	["|cff777777Nobody|r"] = "|cff777777無人|r",
 	["Sound"] = "音效",
@@ -167,6 +167,9 @@ L:RegisterTranslations("zhTW", function() return {
 	proximity_desc = "在適當的情形下，當有人太靠近時，現示清單。",
 
 	font = "Fonts\\bHEI01B.TTF"
+
+	["Test"] = "測試",
+	["Perform a Proximity test."] = "鄰近顯示測試",
 } end)
 
 L:RegisterTranslations("esES", function() return {
