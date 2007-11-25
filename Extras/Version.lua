@@ -536,7 +536,7 @@ function plugin:CHAT_MSG_ADDON(prefix, message, distribution, sender)
 	if prefix == "BWVQ" and sender ~= UnitName("player") then
 		SendAddonMessage("BWVR", self:GetVersion(message), "WHISPER", sender)
 	elseif prefix == "BWVR" and queryRunning then
-		table.insert(responseTable, new(sender, tonumber(message:match("%d+"))))
+		table.insert(responseTable, new(sender, tonumber(message:match("%-?%d+"))))
 		self:UpdateDisplay()
 	end
 end
