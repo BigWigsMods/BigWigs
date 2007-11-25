@@ -168,17 +168,17 @@ L:RegisterTranslations("zhTW", function() return {
 
 	frenzy = "狂亂",
 	frenzy_desc = "狂亂警報",
-	--frenzy_trigger = "哈拉齊獲得了狂亂的效果。",
+	frenzy_trigger = "%s變得極為狂暴!",
 	frenzy_message = "狂亂!",
 
-	--flame = "Flame Shock",
-	--flame_desc = "Warn for players with Flame Shock.",
-	--flame_trigger = "^(%S+) (%S+) afflicted by Flame Shock%.$",
-	--flame_fade = "^Flame Shock fades from (%S+)%.$",
-	--flame_message = "Flame Shock: %s",
+	flame = "烈焰震擊",
+	flame_desc = "警報玩家受到烈焰震擊",
+	flame_trigger = "^(.+)受(到[了]*)烈焰震擊效果的影響。$",
+	flame_fade = "^烈焰震擊效果從(%S+)%身上消失。$",
+	flame_message = "烈焰震擊: [%s]",
 
-	--icon = "Raid Icon",
-	--icon_desc = "Place a Raid Target Icon on the player with Flame Shock. (requires promoted or higher)",
+	icon = "團隊標記",
+	icon_desc = "為被烈焰震擊的玩家設置團隊標記（需要權限）",
 } end )
 
 L:RegisterTranslations("esES", function() return {

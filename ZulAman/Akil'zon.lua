@@ -116,13 +116,13 @@ L:RegisterTranslations("zhTW", function() return {
 
 	elec = "電荷風暴",
 	elec_desc = "警告誰受到電荷風暴",
-	--elec_trigger = "^(.+)受(到[了]*)電荷風暴效果的影響。$",
+	elec_trigger = "出現一股電氣暴風!",
 	elec_bar = "~電荷風暴冷卻",
 	elec_message = "電荷風暴：[%s]",
 	elec_warning = "電荷風暴即將來臨!",
 
 	ping = "點擊",
-	ping_desc = "若你中了電荷風暴, 在小地圖點擊你的位置",
+	ping_desc = "若你中了電荷風暴，在小地圖點擊你的位置",
 	ping_message = "電荷風暴 - 在小地圖點擊你的位置!",
 
 	icon = "標記圖示",
