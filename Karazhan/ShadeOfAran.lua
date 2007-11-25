@@ -191,7 +191,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	engage_trigger1 = "I'll not be tortured again!",
+	engage_trigger1 = "我不会再次受到折磨的！",
 	engage_trigger2 = "你们是谁？你们想要什么？离我远点！",
 	engage_trigger3 = "求求你们，不要这样！我的儿子……已经疯了！",
 	engage_message = "%s 战斗开始",

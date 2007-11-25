@@ -174,8 +174,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	globules = "水泡",
 	globules_desc = "水泡来临报警。",
-	globules_trigger1 = "Soon it will be finished!",
-	globules_trigger2 = "There is nowhere to hide!",
+	globules_trigger1 = "很快就都结束了。",
+	globules_trigger2 = "你们无处可逃！",
 	globules_message = "水泡 来临！",
 	globules_warning = "即将水泡！",
 	globules_bar = "<水泡 消失>",

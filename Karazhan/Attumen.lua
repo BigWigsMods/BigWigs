@@ -96,7 +96,7 @@ L:RegisterTranslations("zhCN", function() return {
 	curse = "诅咒警报",
 	curse_desc = "当近战受到无形的诅咒时发出警告。",
 	curse_trigger = "^(.+)受(.+)了无形效果的影响。$",
-	curse_message = ">%s< 中了无形 - 速度解！",
+	curse_message = ">%s< 中了无形 - 速度解除！",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

@@ -267,10 +267,10 @@ L:RegisterTranslations("zhCN", function() return {
 	banish_over_message = "放逐消失！",
 	banish_bar = "<放逐中>",
 
-	exhaust = "禁用心灵疲倦计时",
-	exhaust_desc = "心灵疲倦记时条。",
-	exhaust_trigger = "^(.+)受(.+)了心灵疲倦效果的影响。$",
-	exhaust_bar = "<心灵疲倦：%s>",
+	exhaust = "禁用心灵疲惫计时条",
+	exhaust_desc = "心灵疲惫记时条。",
+	exhaust_trigger = "^(.+)受(.+)了心灵疲惫效果的影响。$",
+	exhaust_bar = "<心灵疲惫：%s>",
 
 	debris = "碎片(你)",
 	debris_desc = "当你中了碎片发出警报。",
