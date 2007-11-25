@@ -120,7 +120,7 @@ L:RegisterTranslations("koKR", function() return {
 	paralyze_bar = "잠시후 마비",
 	paralyze_trigger = "섬뜩한 마비에 걸렸습니다%.$",
 	paralyze_warnbar = "다음 마비",
-	paralyze_soon = "마비 5초전",
+	paralyze_soon = "섬뜩한 마비 5초전",
 
 	claw = "광기의 발톱",
 	claw_desc = "광기의 발톱에 걸린 플레이어를 알립니다.",

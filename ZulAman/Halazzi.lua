@@ -72,7 +72,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	frenzy = "광기",
 	frenzy_desc = "광기 경고.",
-	--frenzy_trigger = "할라지|1이;가; 광기 효과를 얻었습니다.",
+	frenzy_trigger = "%s가 죽일 듯한 기세로 격분합니다!",
 	frenzy_message = "광기!",
 
 	flame = "화염 충격",
