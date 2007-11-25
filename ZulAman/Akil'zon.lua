@@ -130,8 +130,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	cmd = "Akil'zon",
-
 	engage_trigger = "\194\161Yo soy el depredador! Vosotros la presa...",
 	engage_message = "\194\161%s Activado - Tormenta en ~55seg!",
 
