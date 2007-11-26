@@ -104,7 +104,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	frenzy = "Frénésie",
 	frenzy_desc = "Préviens quand Halazzi entre en frénésie.",
-	--frenzy_trigger = "Halazzi gagne Frénésie.",
+	frenzy_trigger = "%s entre dans une frénésie sanglante !", -- à vérifier
 	frenzy_message = "Frénésie !",
 
 	flame = "Horion de flammes",
