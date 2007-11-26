@@ -155,10 +155,10 @@ L:RegisterTranslations("zhCN", function() return {
 	paralyze_desc = "受到麻痹蔓延或中了麻痹发出警报。",
 	paralyze_warning = "麻痹蔓延 - 麻痹 5秒！",
 	paralyze_message = "已麻痹！",
-	paralyze_bar = "<即将麻痹>",
+	paralyze_bar = "<即将 麻痹>",
 	paralyze_trigger = "麻痹蔓延效果的影响。$",
 	paralyze_warnbar = "<下一麻痹蔓延>",
-	paralyze_soon = "麻痹 5秒",
+	paralyze_soon = "5秒后 麻痹",
 
 	claw = "利爪之怒",
 	claw_desc = "受到利爪之怒发出警报。",

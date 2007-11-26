@@ -179,11 +179,11 @@ L:RegisterTranslations("zhCN", function() return {
 	["Options"] = "设置",
 
 	bosskill = "首领死亡",
-	bosskill_desc = "首领被击杀时显示提示信息",
+	bosskill_desc = "首领被击杀时显示提示信息。",
 	enrage = "狂暴",
-	enrage_desc = "首领进入狂暴状态时发出警报",
+	enrage_desc = "首领进入狂暴状态时发出警报。",
 	berserk = "无敌",
-	berserk_desc = "当首领进入无敌状态时发出警报",
+	berserk_desc = "当首领进入无敌状态时发出警报。",
 
 	["Load"] = "加载",
 	["Load All"] = "加载所有",
