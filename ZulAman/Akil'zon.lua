@@ -8,6 +8,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local CheckInteractDistance = CheckInteractDistance
 local db = nil
+local pName = nil
 
 ----------------------------
 --      Localization      --
@@ -171,6 +172,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	db = self.db.profile
+	pName = UnitName("player")
 end
 
 ------------------------------
@@ -207,6 +209,10 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, a, b, c, player)
 		self:Bar(show, 8, "Spell_Nature_EyeOfTheStorm")
 		self:Bar(L["elec_bar"], 55, "Spell_Lightning_LightningBolt01")
 		self:DelayedMessage(48, L["elec_warning"], "Urgent")
+		if player == pName and db.ping then
+			Minimap:PingLocation()
+			BigWigs:Print(L["ping_message"])
+		end
 		if db.icon then
 			self:Icon(player)
 			self:ScheduleEvent("BWRemoveAkilIcon", "BigWigs_RemoveRaidIcon", 10, self)
