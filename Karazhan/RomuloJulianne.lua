@@ -139,9 +139,9 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段警报",
 	phase_desc = "当进入下阶段发出警报。",
-	phase1_trigger = "What devil art thou, that dost torment me thus?",
+	phase1_trigger = "你是个什么魔鬼，这样煎熬着我？",
 	phase1_message = "第 I 幕 - %s",
-	phase2_trigger = "Wilt thou provoke me? Then have at thee, boy!",
+	phase2_trigger = "你要激怒我吗？那就来吧!",
 	phase2_message = "第 II 幕 - %s",
 	phase3_trigger = "来吧，可爱的黑颜的夜，把我的罗密欧给我！",
 	phase3_message = "第 III 幕 - 同时出场",

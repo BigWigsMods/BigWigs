@@ -206,7 +206,7 @@ L:RegisterTranslations("zhCN", function() return {
 	drink = "群体变形",
 	drink_desc = "当埃兰回魔时发出警报。",
 	drink_trigger = "你们应该不会不让一个可怜的老人喝点东西吧？不，不，当然不会。",
-	drink_warning = "低发力 - 即将回魔！",
+	drink_warning = "低法力 - 即将回魔!",
 	drink_message = "回魔 - 群体变形！",
 	drink_bar = "<群体变形术>",
 
