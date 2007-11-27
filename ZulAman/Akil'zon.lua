@@ -79,7 +79,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	elec = "Elektrischer Sturm",
 	elec_desc = "Gib Warnung mit dem Spielernamen des Ziels von Elektrischer Sturm aus.",
-	--elec_trigger = "^(%S+) (%S+) von Elektrischer Sturm betroffen%.$",
+	elec_trigger = "Ein Gewitter zieht auf!",
 	elec_bar = "~Sturm Cooldown",
 	elec_message = "Sturm auf %s!",
 	elec_warning = "Sturm bald!",
