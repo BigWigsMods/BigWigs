@@ -160,12 +160,17 @@ L:RegisterTranslations("deDE", function() return {
 	waves = "Wellen Warnungen",
 	waves_desc = "Ausgeben von Warnungs Nachrichten für die nächste Welle.",
 
-	--detail = "Detailed Warnings",
-	--detail_desc = "Show detailed warnings of what mobs are incoming.",
+	detail = "Detalierte Warnungen",
+	detail_desc = "Zeige detalierte Warnungen, welche Monster als nächstes kommen werden.",
 
 	["~%s spawn"] = "~%s spawnt.",
 	["~Wave %d spawn"] = "~Welle %d spawnt.",
 	["Wave %d incoming!"] = "Welle %d kommt!",
+	["Wave %d! %d %s"] = "Welle %d! %d %s", --1 set of mobs
+	["Wave %d! %d %s, %d %s"] = "Welle %d! %d %s, %d %s", --2 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s"] = "Welle %d! %d %s, %d %s, %d %s", --3 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "Welle %d! %d %s, %d %s, %d %s, %d %s", --4 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "Welle %d! %d %s, %d %s, %d %s, %d %s, %d %s", --5 sets of mobs
 	["%s in ~%d sec!"] = "%s in ~%d sek!",
 	["Wave %d in ~%d sec!"] = "Welle %d in ~%d sek!",
 
@@ -173,10 +178,22 @@ L:RegisterTranslations("deDE", function() return {
 	["Thrall"] = "Thrall",
 	["Lady Jaina Proudmoore"] = "Lady Jaina Prachtmeer",
 
-	["My companions and I are with you, Lady Proudmoore."] = "Meine Gef\195\164hrten und ich werden Euch zur Seite stehen, Lady Prachtmeer.", -- Rage Winterchill
+	["My companions and I are with you, Lady Proudmoore."] = "Meine Gefährten und ich werden Euch zur Seite stehen, Lady Prachtmeer.", -- Rage Winterchill
 	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "Was auch immer Archimonde gegen uns ins Feld schicken mag, wir sind bereit, Lady Prachtmeer.", -- Anatheron
 	["I am with you, Thrall."] = "Ich werde Euch zur Seite stehen, Thrall!", -- Kaz'Rogal
-	["We have nothing to fear."] = "Wir haben nichts zu bef\195\188rchten.", -- Az'Galor
+	["We have nothing to fear."] = "Wir haben nichts zu befürchten.", -- Az'Galor
+
+	["Please remove BigWigs_WaveTimers, it is deprecated."] = "Bitte entferne BigWigs_WaveTimers, es ist veraltet.",
+
+	["Ghouls"] = "Ghule",
+	["Crypt Fiends"] = "Gruftschrecken",
+	["Abominations"] = "Monstrositäten",
+	["Necromancers"] = "Beschwörer",
+	["Banshees"] = "Benshees",
+	["Gargoyles"] = "Gargoyles",
+	["Frost Wyrm"] = "Frostwyrm",
+	["Fel Stalkers"] = "Teufelshunde",
+	["Infernals"] = "Höllenbestien",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
