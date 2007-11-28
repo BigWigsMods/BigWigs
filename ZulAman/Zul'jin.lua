@@ -245,9 +245,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 
 	if msg == L["form_bear_trigger"] then
 		self:Message(L["form_bear_message"], "Urgent")
+		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	elseif msg == L["form_eagle_trigger"] then
 		self:Message(L["form_eagle_message"], "Important")
-		self:TriggerEvent("BigWigs_RemoveRaidIcon")
+		self:CancelScheduledEvent("BWZulParaInc")
+		self:TriggerEvent("BigWigs_StopBar", self, L["paralyze_warnbar"])
 	elseif msg == L["form_lynx_trigger"] then
 		self:Message(L["form_lynx_message"], "Positive")
 	elseif msg == L["form_dragonhawk_trigger"] then
@@ -297,7 +299,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	elseif sync == "ZulPara" and db.paralyze then
 		self:Message(L["paralyze_warning"], "Urgent")
 		self:DelayedMessage(5, L["paralyze_message"], "Positive")
-		self:DelayedMessage(22, L["paralyze_soon"], "Urgent")
+		self:ScheduleEvent("BWZulParaInc", "BigWigs_Message", 22, L["paralyze_soon"], "Urgent")
 		self:Bar(L["paralyze_bar"], 5, "Spell_Nature_TimeStop")
 		self:Bar(L["paralyze_warnbar"], 27, "Spell_Nature_TimeStop")
 	end
