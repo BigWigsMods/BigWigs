@@ -101,7 +101,7 @@ L:RegisterTranslations("deDE", function() return {
 	bloodboil = "Siedeblut",
 	bloodboil_desc = "Warnungen und Timer für Siedeblut.",
 	bloodboil_trigger = "betroffen von Siedeblut",
-	bloodboil_message = "Sideblut: (%d)",
+	bloodboil_message = "Siedeblut: (%d)",
 
 	rage = "Teufelswut",
 	rage_desc = "Warnt, wer Teufelswut bekommt.",
