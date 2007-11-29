@@ -321,7 +321,7 @@ function mod:GOSSIP_SHOW()
 		if gossip == L["My companions and I are with you, Lady Proudmoore."] then
 			self:Sync("SummitNext RWC") -- Rage Winterchill is next
 		elseif gossip == L["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] then
-			self:Sync("SummitNext Anetheron") -- Anatheron is next
+			self:Sync("SummitNext Anatheron") -- Anetheron is next
 		elseif gossip == L["I am with you, Thrall."] then
 			self:Sync("SummitNext KazRogal") -- Kaz'Rogal is next
 		elseif gossip == L["We have nothing to fear."] then
@@ -346,7 +346,7 @@ function mod:UPDATE_WORLD_STATES()
 			if nextBoss == winterchill then
 				self:Sync("SummitNext RWC")
 			elseif nextBoss == anetheron then
-				self:Sync("SummitNext Anetheron")
+				self:Sync("SummitNext Anatheron")
 			elseif nextBoss == kazrogal then
 				self:Sync("SummitNext KazRogal")
 			elseif nextBoss == azgalor then
@@ -373,7 +373,7 @@ function mod:BigWigs_RecvSync( sync, rest )
 	if sync == "SummitNext" and rest then
 		if rest == "RWC" then
 			nextBoss = winterchill
-		elseif rest == "Anetheron" then
+		elseif rest == "Anatheron" then
 			nextBoss = anetheron
 		elseif rest == "KazRogal" then
 			nextBoss = kazrogal
