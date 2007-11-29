@@ -186,10 +186,10 @@ L:RegisterTranslations("deDE", function() return {
 	["Please remove BigWigs_WaveTimers, it is deprecated."] = "Bitte entferne BigWigs_WaveTimers, es ist veraltet.",
 
 	["Ghouls"] = "Ghule",
-	["Crypt Fiends"] = "Gruftschrecken",
+	["Crypt Fiends"] = "Gruftscheusale",
 	["Abominations"] = "Monstrositäten",
-	["Necromancers"] = "Beschwörer",
-	["Banshees"] = "Benshees",
+	["Necromancers"] = "Nekromanten",
+	["Banshees"] = "Banshees",
 	["Gargoyles"] = "Gargoyles",
 	["Frost Wyrm"] = "Frostwyrm",
 	["Fel Stalkers"] = "Teufelshunde",

@@ -79,8 +79,8 @@ L:RegisterTranslations("deDE", function() return {
 	enfeeble_warning2 = "Entkr\195\164ften in 10 Sek!",
 	enfeeble_bar = "Entkr\195\164ften",
 	enfeeble_nextbar = "N\195\164chste Entkr\195\164ften",
-	--enfeeble_you = "You are afflicted by Enfeeble.",
-	--enfeeble_warnyou = "Enfeeble on YOU!",
+	enfeeble_you = "Ihr seid von Entkr\195\164ften betroffen.",
+	enfeeble_warnyou = "Entkr\195\164ften auf DIR!",
 
 	infernal_trigger1 = "Ihr steht nicht nur vor Malchezzar allein, sondern vor den Legionen, die ich befehlige!",
 	infernal_trigger2 = "Alle Realit\195\164ten, alle Dimensionen stehen mir offen!",
