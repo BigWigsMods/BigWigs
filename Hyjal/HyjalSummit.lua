@@ -8,7 +8,7 @@ local hordeEncampment = AceLibrary("Babble-Zone-2.2")["Horde Encampment"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..name)
 
 local winterchill = AceLibrary("Babble-Boss-2.2")["Rage Winterchill"]
-local anatheron = AceLibrary("Babble-Boss-2.2")["Anetheron"]
+local anetheron = AceLibrary("Babble-Boss-2.2")["Anetheron"]
 local kazrogal = AceLibrary("Babble-Boss-2.2")["Kaz'rogal"]
 local azgalor = AceLibrary("Babble-Boss-2.2")["Azgalor"]
 
@@ -16,8 +16,8 @@ local fmt = string.format
 local match = string.match
 local GetRealZoneText = GetRealZoneText
 local GetSubZoneText = GetSubZoneText
-local tonumber = tonumber
 local select = select
+local tonumber = tonumber
 
 local nextBoss = nil
 local currentWave = 0
@@ -304,7 +304,7 @@ function mod:OnEnable()
 	self:RegisterEvent("QUEST_PROGRESS", "GOSSIP_SHOW")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "SummitWave", 2)
+	self:TriggerEvent("BigWigs_ThrottleSync", "HSWave", 2)
 	self:TriggerEvent("BigWigs_ThrottleSync", "SummitNext", 2)
 --~ 	throttling these 2 will cause an errant 'wave 1' message when thrall/jaina die
 --~ 	self:TriggerEvent("BigWigs_ThrottleSync", "SummitReset", 2)
@@ -321,7 +321,7 @@ function mod:GOSSIP_SHOW()
 		if gossip == L["My companions and I are with you, Lady Proudmoore."] then
 			self:Sync("SummitNext RWC") -- Rage Winterchill is next
 		elseif gossip == L["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] then
-			self:Sync("SummitNext Anatheron") -- Anatheron is next
+			self:Sync("SummitNext Anetheron") -- Anatheron is next
 		elseif gossip == L["I am with you, Thrall."] then
 			self:Sync("SummitNext KazRogal") -- Kaz'Rogal is next
 		elseif gossip == L["We have nothing to fear."] then
@@ -332,15 +332,27 @@ end
 
 function mod:UPDATE_WORLD_STATES()
 	if self.zonename ~= GetRealZoneText() then return end -- bail out in case we were left running in another zone
-	local state = select(2, GetWorldStateUIInfo(3))
-	if state == 0 then
+	local text = select(3, GetWorldStateUIInfo(3))
+	local num = tonumber(match(text or "", "(%d)") or nil)
+	if num == 0 then 
 		self:Sync("SummitClear") --reseting wave here will clear nextBoss, clear instead
-	elseif state and state > currentWave then
+	elseif num and num > currentWave then 
 		local zone = GetSubZoneText()
-		if zone == allianceBase then zone = "allianceBase"
-		elseif zone == hordeEncampment then zone = "hordeEncampment"
+		if zone == allianceBase then zone = "alliance"
+		elseif zone == hordeEncampment then zone = "horde"
 		else return end
-		self:Sync(fmt("%s%d %s", "SummitWave ", state, zone))
+		self:Sync(fmt("%s%d %s", "HSWave ", num, zone))
+		if nextBoss then
+			if nextBoss == winterchill then
+				self:Sync("SummitNext RWC")
+			elseif nextBoss == anetheron then
+				self:Sync("SummitNext Anetheron")
+			elseif nextBoss == kazrogal then
+				self:Sync("SummitNext KazRogal")
+			elseif nextBoss == azgalor then
+				self:Sync("SummitNext AzGalor")
+			end
+		end
 	end
 end
 
@@ -361,8 +373,8 @@ function mod:BigWigs_RecvSync( sync, rest )
 	if sync == "SummitNext" and rest then
 		if rest == "RWC" then
 			nextBoss = winterchill
-		elseif rest == "Anatheron" then
-			nextBoss = anatheron
+		elseif rest == "Anetheron" then
+			nextBoss = anetheron
 		elseif rest == "KazRogal" then
 			nextBoss = kazrogal
 		elseif rest == "AzGalor" then
@@ -370,25 +382,25 @@ function mod:BigWigs_RecvSync( sync, rest )
 		end
 	elseif sync == "BossDeath" and rest then
 		if rest == "Rage Winterchill" then
-			nextBoss = anatheron
+			nextBoss = anetheron
 		elseif rest == "Anetheron" then
 			nextBoss = kazrogal
 		elseif rest == "Kaz'rogal" then
 			nextBoss = azgalor
-		elseif rest == "Azgalor" then
+		elseif rest == "Archimonde" then
 			BigWigs:ToggleModuleActive(self, false)
 		end
-	elseif sync == "SummitWave" and rest then
+	elseif sync == "HSWave" and rest then
 		local wave, zone = match(rest, "(%d+) (.*)")
 		if not wave or not zone then return end
 		local waveTimes
-		if zone == "allianceBase" then
+		if zone == "alliance" then
 			if nextBoss == winterchill then
 				waveTimes = RWCwaveTimes
 			else
 				waveTimes = allianceWaveTimes
 			end
-		elseif zone == "hordeEncampment" then
+		elseif zone == "horde" then
 			if nextBoss == kazrogal then
 				waveTimes = KRwaveTimes
 			else
@@ -440,7 +452,7 @@ function mod:BigWigs_RecvSync( sync, rest )
 					elseif wave == 8 then
 						self:Message(fmt(four, wave, 6, ghoul, 4, fiend, 2, abom, 2, necro), "Important")
 					end
-				elseif nextBoss == anatheron then
+				elseif nextBoss == anetheron then
 					if wave == 1 then
 						self:Message(fmt(one, wave, 10, ghoul), "Important")
 					elseif wave == 2 then
