@@ -230,8 +230,8 @@ end
 
 function mod:PLAYER_AURAS_CHANGED()
 	--don't even scan anything if we don't want it on
-	if not db.debuff then return end
 	if timer then return end
+	if not db.debuff then return end
 
 	local i = 1 --setup counter
 	while UnitDebuff("player", i) do --loop debuff scan
