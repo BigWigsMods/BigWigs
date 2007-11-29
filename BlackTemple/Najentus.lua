@@ -54,16 +54,16 @@ L:RegisterTranslations("deDE", function() return {
 	spinesay_message = "Stachel auf mir!",
 
 	shield = "Gezeitenschild",
-	shield_desc = "Timer f\195\188r Gezeigenschild von Naj'entus.",
-	shield_trigger = "Oberster Kriegsf\195\188rst Naj'entus ist von Gezeitenschild betroffen.",
-	shield_nextbar = "N\195\164chstes Gezeitenschild",
+	shield_desc = "Timer für Gezeigenschild von Naj'entus.",
+	shield_trigger = "Oberster Kriegsfürst Naj'entus ist von Gezeitenschild betroffen.",
+	shield_nextbar = "Nächstes Gezeitenschild",
 	shield_warn = "Gezeitenschild!",
-	shield_soon_warn = "Gezeitenschild in ~10sec!",
+	shield_soon_warn = "Gezeitenschild in ~10sek!",
 	shield_fade = "Gezeitenschild schwindet!",
 	shield_fade_trigger = "Gezeitenschild schwindet von Oberster Kriegsfürst Naj'entus.",
 
-	icon = "Icon",
-	icon_desc = "Plaziert ein Icon auf Spielern mit Aufspießendem Stachel.",
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Plaziert ein Icon auf Spielern mit Aufspießendem Stachel (benötigt Assistent oder höher).",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

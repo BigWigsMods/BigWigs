@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -301,12 +301,12 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger3 = "Ich habe besseres zu tun..",
 	engage_trigger4 = "Flieht, oder sterbt!",
 
-	--vanish = "Vanish",
-	--vanish_desc = "Estimated timers for Vanish.",
-	--vanish_trigger = "Veras Darkshadow gains Vanish.",
-	--vanish_message = "Veras: Vanished! Back in ~30sec",
-	--vanish_warning = "Vanish Over - %s back!",
-	--vanish_bar = "Veras Stealthed",
+	vanish = "Verschwinden",
+	vanish_desc = "Geschäzte Timer für das Verschwinden von Veras Schwarzschatten.",
+	vanish_trigger = "Veras Schwarzschatten bekommt Verschwinden.",
+	vanish_message = "Veras: Verschwunden! Zurrück in ~30sek",
+	vanish_warning = "Verschwinden vorbei - %s zurrück!",
+	vanish_bar = "Veras getarnt",
 
 	immune = "Immunitäts Warnung",
 	immune_desc = "Warnen wenn Malande immun gegen Zauber oder Nahkampfangriffe wird.",
@@ -329,8 +329,8 @@ L:RegisterTranslations("deDE", function() return {
 	poison_other = "%s hat Tödliches Gift!",
 	poison_you = "Tödliches Gift on DIR!",
 
-	icon = "Schlachtgruppen Symbol",
-	icon_desc = "Plaziert ein Schlachtgruppen Symbol auf Spielern mit Tödliches Gift.",
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Plaziert ein Schlachtgruppen Symbol auf Spielern mit Tödliches Gift (benötigt Assistent oder höher).",
 
 	circle = "Kreis der Heilung",
 	circle_desc = "Warnt wenn Malande anfängt Kreis der Heilung zu zaubern.",
@@ -342,11 +342,11 @@ L:RegisterTranslations("deDE", function() return {
 	circle_fail_message = "%s Unterbrochen! - Nächster in ~12sek",
 	circle_bar = "~Kreis der Heilung Cooldown",
 
-	--res = "Resistance Aura",
-	--res_desc = "Warn when Gathios the Shatterer gains Chromatic Resistance Aura.",
-	--res_trigger = "Gathios the Shatterer gains Chromatic Resistance Aura.",
-	--res_message = "Gathios: Resistance for 30 sec!",
-	--res_bar = "Resistance Aura",
+	res = "Resistenz Aura",
+	res_desc = "Warnt wenn Gathios der Zerschmetterer die Aura des chromatischen Widerstands bekommt.",
+	res_trigger = "Gathios der Zerschmetterer bekommt Aura des chromatischen Widerstands.",
+	res_message = "Gathios: Resistenz für 30 sek!",
+	res_bar = "Resistenz Aura",
 } end )
 
 ----------------------------------

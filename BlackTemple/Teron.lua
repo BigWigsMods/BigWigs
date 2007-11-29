@@ -45,8 +45,8 @@ L:RegisterTranslations("deDE", function() return {
 	ghost_desc = "Geist Timer.",
 	ghost_bar = "Geist: %s",
 
-	icon = "Icon",
-	icon_desc = "Plaziert ein Schlachtzug Icon auf dem Spieler mit Schatten des Todes.",
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Plaziert ein Schlachtzug Icon auf dem Spieler mit Schatten des Todes (benötigt Assistent oder höher).",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

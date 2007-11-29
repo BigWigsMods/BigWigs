@@ -90,18 +90,18 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Horde... wird Euch zerschmettern.",
 
 	phase = "Phasen Timer",
-	phase_desc = "Timer f\195\164r den Wechsel zwischen normaler und Teufelswut Phase.",
+	phase_desc = "Timer für den Wechsel zwischen normaler und Teufelswut Phase.",
 	phase_rage_warning = "Teufelswut Phase in ~5 sec",
 	phase_normal_warning = "Teufelswut vorbei in ~5 sec",
 	phase_normal = "Teufelswut Phase vorbei",
 	phase_normal_trigger = "Teufelswut schwindet von Gurtogg Siedeblut.",
-	phase_normal_bar = "N\195\164chste Teufelswut Phase",
-	phase_rage_bar = "N\195\164chste Normale Phase",
+	phase_normal_bar = "Nächste Teufelswut Phase",
+	phase_rage_bar = "Nächste Normale Phase",
 
-	--bloodboil = "Bloodboil",
-	--bloodboil_desc = "Warnings and counter for Bloodboil.",
-	--bloodboil_trigger = "afflicted by Bloodboil",
-	--bloodboil_message = "Bloodboil(%d)",
+	bloodboil = "Siedeblut",
+	bloodboil_desc = "Warnungen und Timer für Siedeblut.",
+	bloodboil_trigger = "betroffen von Siedeblut",
+	bloodboil_message = "Sideblut: (%d)",
 
 	rage = "Teufelswut",
 	rage_desc = "Warnt, wer Teufelswut bekommt.",
@@ -109,15 +109,15 @@ L:RegisterTranslations("deDE", function() return {
 	rage_you = "Du hast Teufelswut!!",
 	rage_other = "%s hat Teufelswut!",
 
-	whisper = "Fl\195\164stern",
-	whisper_desc = "Fl\195\164stert dem Spieler mit Teufelswut (ben\195\182tigt Assistent oder h\195\182her).",
+	whisper = "Flüstern",
+	whisper_desc = "Flüstert dem Spieler mit Teufelswut (benötigt Assistent oder höher).",
 
-	acid = "Teufelss\195\164ureatem",
-	acid_desc = "Warnt auf wen Teufelss\195\164ureatem gezaubert wird.",
-	acid_message = "Teufelss\195\164ureatem auf: %s",
+	acid = "Teufelssäureatem",
+	acid_desc = "Warnt auf wen Teufelssäureatem gezaubert wird.",
+	acid_message = "Teufelssäureatem auf: %s",
 
-	icon = "Raid Icon",
-	icon_desc = "Plaziert ein Raid Icon auf dem Spieler, der Teufelss\195\164ureatem abbekommt (ben\195\182tigt Assistent oder h\195\182her).",
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Plaziert ein Schlachtzug Symbol auf dem Spieler, der Teufelssäureatem abbekommt (benötigt Assistent oder höher).",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

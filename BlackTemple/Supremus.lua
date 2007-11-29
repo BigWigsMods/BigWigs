@@ -47,29 +47,28 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	phase = "Phasen",
-	phase_desc = "Warnt vor den verschiedenen Phasen.",
-
-	punch = "Glühender Hieb",
-	punch_desc = "Warnt, wenn Supremus Glühender Hieb benutzt und zeigt einen Countdown an.",
-
-	target = "Verfolgtes Ziel",
-	target_desc = "Warnt wer wärend der Kitephase verfolgt wird und markiert ihn mit einem Icon.",
-
+	phase_desc = "Warnung wenn Supremus zwischen Tank und Kitephase wechselt.",
 	normal_phase_message = "Tank'n'spank!",
 	normal_phase_trigger = "Supremus schlägt wütend auf den Boden!",
-
 	kite_phase_message = "%s Kitephase!",
 	kite_phase_trigger = "Der Boden beginnt aufzubrechen!",
-
 	next_phase_bar = "Nächste Phase",
 	next_phase_message = "Phasenwechsel in 10sec!",
 
+	punch = "Glühender Hieb",
+	punch_desc = "Warnt, wenn Supremus Glühender Hieb benutzt und zeigt einen Countdown an.",
+	punch_message = "Glühender Hieb!",
+	punch_bar = "~Möglicher Hieb!",
+	punch_trigger = "Supremus wirkt Glühender Hieb.",
+
+	target = "Verfolgtes Ziel",
+	target_desc = "Warnt wer wärend der Kitephase verfolgt wird.",
 	target_message = "%s wird verfolgt!",
 	target_you = "DU wirst verfolgt!",
 	target_message_nounit = "Neues Ziel!",
 
-	punch_message = "Hieb!",
-	punch_trigger = "Supremus wirkt Glühender Hieb.",
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Plaziert ein Schlachtzug Symbol auf dem Spieler der verfolgt wird (benötigt Assistent oder höher).",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
