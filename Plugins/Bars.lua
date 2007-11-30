@@ -13,6 +13,7 @@ local dew = AceLibrary("Dewdrop-2.0")
 local count = 1
 
 local colorModule = nil
+local testModule = nil
 local anchor = nil
 local emphasizeAnchor = nil
 
@@ -591,6 +592,12 @@ function plugin:OnEnable()
 		colorModule = nil
 	end
 
+	if BigWigs:HasModule("Test") then
+		testModule = BigWigs:GetModule("Test")
+	else
+		testModule = nil
+	end
+
 	flashTimers = new()
 	emphasizeTimers = new()
 	moduleBars = new()
@@ -974,6 +981,8 @@ function plugin:SetupFrames(emphasize)
 	testbutton:SetText(L["Test"])
 	testbutton:SetPoint("CENTER", frame, "CENTER", 0, -16)
 	testbutton:SetScript( "OnClick", function()  self:TriggerEvent("BigWigs_Test") end )
+
+	if not testModule then testbutton:Hide() end
 
 	if emphasize then
 		emphasizeAnchor = frame

@@ -8,6 +8,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsMessages")
 local paint = AceLibrary:HasInstance("PaintChips-2.0") and AceLibrary("PaintChips-2.0") or nil
 
 local colorModule = nil
+local testModule = nil
 local messageFrame = nil
 local anchor = nil
 
@@ -342,6 +343,12 @@ function plugin:OnEnable()
 		colorModule = nil
 	end
 
+	if BigWigs:HasModule("Test") then
+		testModule = BigWigs:GetModule("test")
+	else
+		testModule = nil
+	end
+
 	if type(RaidNotice_AddMessage) == "function" and not plugin.db.profile.twothree then
 		plugin.db.profile.sink10OutputSink = "RaidWarning"
 		plugin.db.profile.twothree = true
@@ -472,6 +479,8 @@ function plugin:SetupFrames()
 	testbutton:SetText(L["Test"])
 	testbutton:SetPoint("CENTER", anchor, "CENTER", 0, -16)
 	testbutton:SetScript( "OnClick", function()  self:TriggerEvent("BigWigs_Test") end )
+
+	if not testModule then testbutton:Hide() end
 
 	self:RestorePosition()
 end
