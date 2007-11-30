@@ -344,7 +344,7 @@ function plugin:OnEnable()
 	end
 
 	if BigWigs:HasModule("Test") then
-		testModule = BigWigs:GetModule("test")
+		testModule = BigWigs:GetModule("Test")
 	else
 		testModule = nil
 	end
