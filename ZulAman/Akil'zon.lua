@@ -94,11 +94,11 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "我是猎鹰，而你们，就是猎物！",
-	engage_message = "%s 激活 - ~55秒 后电能风暴！",
+	engage_message = "%s 激活 - ～大约55秒后 电能风暴！",
 
 	elec = "电能风暴",
 	elec_desc = "当谁中了电能风暴发出警报。",
-	--elec_trigger = "^(.+)受(.+)了电能风暴效果的影响。$",
+	elec_trigger = "一道雷电风暴出现了！",
 	elec_bar = "<电能风暴 冷却>",
 	elec_message = "电能风暴：>%s<！",
 	elec_warning = "即将电能风暴！",

@@ -289,14 +289,14 @@ L:RegisterTranslations("zhCN", function() return {
 	phase4_soon_message = "即将 - 第四阶段！",
 	phase4_message = "第四阶段 - 玛维·影歌来临！",
 
-	flameburst = "烈焰爆击",
-	flameburst_desc = "当伊利丹使用烈焰爆击发出警报。",
-	flameburst_message = "烈焰爆击！",
-	flameburst_cooldown_bar = "烈焰爆击 冷却",
-	flameburst_cooldown_warn = "即将 烈焰爆击！",
-	flameburst_warn = "5秒后 烈焰爆击！",
+	flameburst = "火焰爆裂",
+	flameburst_desc = "当伊利丹使用火焰爆裂发出警报。",
+	flameburst_message = "火焰爆裂！",
+	flameburst_cooldown_bar = "<火焰爆裂 冷却>",
+	flameburst_cooldown_warn = "即将 火焰爆裂！",
+	flameburst_warn = "5秒后 火焰爆裂！",
 
-	enrage_trigger = "感受一万年的愤怒吧！",--check
+	enrage_trigger = "感受一万年的仇恨吧！",
 	enrage_message = "狂暴！",
 
 	afflict_trigger = "^([^%s]+)受([^%s]+)了([^%s]+)效果的影响。$",

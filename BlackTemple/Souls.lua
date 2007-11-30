@@ -208,7 +208,7 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage_warning = "5秒后 愤怒！",
 
 	desire_trigger  = "你可以获得任何你想要的东西……只要付得起代价。",
-	desire_cot = "Shi shi rikk rukadare shi tichar kar x gular ", --Curse of Tongues trigger
+	desire_cot = "Shi shi rikk rukadare shi tichar kar x gular", --Curse of Tongues trigger
 	desire_start = "欲望精华 - 160秒后 零法力",
 	desire_bar = "<零法力>",
 	desire_warn = "30秒后 零法力！",
@@ -236,7 +236,7 @@ L:RegisterTranslations("zhCN", function() return {
 	scream_trigger = "^愤怒精华的灵魂尖啸",
 	scream_bar = "<灵魂尖啸 冷却>",
 
-	afflict_trigger = "^(%S+)受(%S+)了(.*)效果的影响。$",
+	afflict_trigger = "^(.+)受(.+)了(.*)效果的影响。$",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

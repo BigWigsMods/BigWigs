@@ -368,7 +368,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	gaze = "凝视",
 	gaze_desc = "当亵渎者萨拉德雷凝视队友发出警报。",
-	gaze_trigger = "凝视着(%S+)！$",
+	gaze_trigger = "凝视着(.+)！$",
 	gaze_message = "凝视：>%s<！",
 	gaze_bar = "<凝视 冷却>",
 	gaze_you = ">你< 凝视！",
@@ -429,7 +429,7 @@ L:RegisterTranslations("zhCN", function() return {
 	mc_desc = "当队友被精神控制发出警报。",
 	mc_message = "精神控制：>%s<！",
 
-	afflicted_trigger = "^(%S+)受(%S+)了(.*)效果的影响。$",
+	afflicted_trigger = "^(.+)受(.+)了(.*)效果的影响。$",
 
 	revive_bar = "<凤凰复活>",
 	revive_warning = "5秒后 凤凰复活",

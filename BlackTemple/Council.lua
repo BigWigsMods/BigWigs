@@ -195,8 +195,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	vanish = "消失",
 	vanish_desc = "消失记时条。",
-	vanish_trigger = "薇尔莱丝·深影获得了消失的效果。",
-	vanish_message = "薇尔莱丝：消失！ 30秒后重新出现",
+	vanish_trigger = "维尔莱斯·深影获得了消失的效果。",
+	vanish_message = "维尔莱斯：消失！ 30秒后重新出现",
 	vanish_warning = "消失结束 - %s 出现！",
 	vanish_bar = "<消失>",
 
@@ -229,9 +229,9 @@ L:RegisterTranslations("zhCN", function() return {
 	circle_trigger = "女公爵玛兰德开始施放治疗之环。$",
 	circle_message = "正在施放 治疗之环！",
 	circle_heal_trigger = "^女公爵玛兰德的治疗之环为",
-	circle_fail_trigger = "^([^%s]+)打断了公爵玛兰德的治疗之环。",
+	circle_fail_trigger = "^(.+)打断了公爵玛兰德的治疗之环。",
 	circle_heal_message = "治疗 成功！ ~20秒后再次发动",
-	circle_fail_message = "%s 打断！~12s秒后再次发动治疗之环",
+	circle_fail_message = "%s 打断！~12秒后再次发动 治疗之环",
 	circle_bar = "<治疗之环 冷却>",
 
 	res = "多彩抗性光环",

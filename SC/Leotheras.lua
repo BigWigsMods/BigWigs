@@ -184,7 +184,7 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage_trigger = "我的放逐终于结束了！",
 
 	whirlwind = "旋风斩",
-	whirlwind_desc = "旋风斩计时。",
+	whirlwind_desc = "旋风斩计时条。",
 	whirlwind_trigger = "盲眼者莱欧瑟拉斯获得了旋风斩的效果。",
 	whirlwind_gain = "旋风斩 - 12秒",
 	whirlwind_fade = "旋风斩 结束",

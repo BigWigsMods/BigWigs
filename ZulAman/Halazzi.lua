@@ -136,7 +136,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	frenzy = "狂乱",
 	frenzy_desc = "狂乱警报。",
-	frenzy_trigger = "哈尔拉兹获得了狂乱的效果。",--error combatlog?
+	frenzy_trigger = "%s获得了狂乱的效果。",
 	frenzy_message = "哈尔拉玆 狂乱！",
 
 	flame = "烈焰震击",
