@@ -92,7 +92,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "%d번째 공격! %d! %d %s, %d %s, %d %s, %d %s", --4 sets of mobs
 	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "%d번째 공격! %d %s, %d %s, %d %s, %d %s, %d %s", --5 sets of mobs
 	["%s in ~%d sec!"] = "%s 약 %d초 이내!",
-	["Wave %d in ~%d sec!"] = "%d번째 공격 약 %d초 이내!",
+	["Wave %d in ~%d sec!"] = "%d번째 공격! 약 %d초 이내",
 
 	["Boss"] = "보스",
 	["Thrall"] = "스랄",
@@ -103,7 +103,7 @@ L:RegisterTranslations("koKR", function() return {
 	["I am with you, Thrall."] = "당신과 함께 하겠습니다. 대족장님.", -- Kaz'Rogal
 	["We have nothing to fear."] = "두려워할 것은 아무것도 없습니다.", -- Az'Galor
 	
-	["Please remove BigWigs_WaveTimers, it is deprecated."] = "이것을 비난한다면, BigWigs_WaveTimers를 제거하십시요.",
+	["Please remove BigWigs_WaveTimers, it is deprecated."] = "BigWigs_WaveTimers를 반대하므로, 이것을 제거하십시요.",
 
 	["Ghouls"] = "구울",
 	["Crypt Fiends"] = "지하마귀",
