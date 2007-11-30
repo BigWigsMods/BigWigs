@@ -86,13 +86,13 @@ L:RegisterTranslations("koKR", function() return {
 	["~%s spawn"] = "~%s 등장",
 	["~Wave %d spawn"] = "%d번째 공격 등장",
 	["Wave %d incoming!"] = "%d번째 공격 시작!",
-	["Wave %d! %d %s"] = "%1$d번째 공격! %3$s %2$d마리", --1 set of mobs
-	["Wave %d! %d %s, %d %s"] = "%1$d번째 공격! %3$s %2$d마리, %5$s %4$d마리", --2 sets of mobs
-	["Wave %d! %d %s, %d %s, %d %s"] = "%1$d번째 공격! %3$s %2$d마리, %5$s %4$d마리, %7$s %6$d마리", --3 sets of mobs
-	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "%1$d번째 공격! %3$s %2$d마리, %5$s %4$d마리, %7$s %6$d마리, %9$s %8$d마리", --4 sets of mobs
-	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "%1$d번째 공격! %3$s %2$d마리, %5$s %4$d마리, %7$s %6$d마리, %9$s %8$d마리, %11$s %10$d마리", --5 sets of mobs
-	["%s in ~%d sec!"] = "약 %2$d초 이내 %1$s!",
-	["Wave %d in ~%d sec!"] = "약 %2$d초 후 %1$d번째 공격!",
+	["Wave %d! %d %s"] = "%d번째 공격! %d %s", --1 set of mobs
+	["Wave %d! %d %s, %d %s"] = "%d번째 공격! %d %s, %d %s", --2 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s"] = "%d번째 공격! %d %s, %d %s, %d %s", --3 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "%d번째 공격! %d! %d %s, %d %s, %d %s, %d %s", --4 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "%d번째 공격! %d %s, %d %s, %d %s, %d %s, %d %s", --5 sets of mobs
+	["%s in ~%d sec!"] = "%s 약 %d초 이내!",
+	["Wave %d in ~%d sec!"] = "%d번째 공격 약 %d초 이내!",
 
 	["Boss"] = "보스",
 	["Thrall"] = "스랄",
