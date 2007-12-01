@@ -123,7 +123,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	enrage_warning = "Wütend bald!",
 	enrage_message = "10% - Wütend",
-	--enrage_trigger = "Stop toying with my emotions!",
+	enrage_trigger = "Spielt nicht mit meinen Gefühlen!",
 } end )
 
 ----------------------------------
