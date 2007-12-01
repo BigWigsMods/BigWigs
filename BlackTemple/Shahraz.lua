@@ -131,7 +131,7 @@ L:RegisterTranslations("deDE", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
+mod.zonename = GetAddOnMetadata("BigWigs_BlackTemple", "X-BigWigs-LoadInZone") or AceLibrary("AceLocale-2.2"):new("BigWigs_BlackTemple")["Black Temple"]
 mod.enabletrigger = boss
 mod.toggleoptions = {"attraction", "debuff", "berserk", "enrage", "bosskill"}
 mod.revision = tonumber(sub("$Revision$", 12, -3))

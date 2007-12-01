@@ -17,7 +17,13 @@
 ## X-RelSite-Curse: 3299
 ## X-AceForum: 6580
 
-## X-BigWigs-LoadInZone: Hyjal Summit
+## X-BigWigs-LoadInZone-enUS: Hyjal Summit
+## X-BigWigs-LoadInZone-frFR: Sommet d'Hyjal
+## X-BigWigs-LoadInZone-deDE: Hyjalgipfel
+## X-BigWigs-LoadInZone-koKR: 하이잘 정상
+## X-BigWigs-LoadInZone-zhTW: 海加爾山
+## X-BigWigs-LoadInZone-zhCN: 海加尔峰
+## X-BigWigs-LoadInZone-esES: Hyjal Summit
 
 ## Dependencies: BigWigs
 

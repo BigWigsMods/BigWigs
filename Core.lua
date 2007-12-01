@@ -3,7 +3,6 @@
 ------------------------------
 
 local AceLibrary = AceLibrary
-local BZ = AceLibrary("Babble-Zone-2.2")
 local BB = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 
@@ -521,7 +520,7 @@ do
 				else
 					local zone = nil
 					if module.otherMenu then
-						zone = BZ[module.otherMenu]
+						zone = module.otherMenu
 					else
 						zone = type(module.zonename) == "table" and module.zonename[1] or module.zonename
 					end

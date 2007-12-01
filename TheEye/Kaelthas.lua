@@ -521,8 +521,8 @@ L:RegisterTranslations("zhTW", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
-mod.otherMenu = "The Eye"
+mod.zonename = GetAddOnMetadata("BigWigs_TheEye", "X-BigWigs-LoadInZone") or AceLibrary("AceLocale-2.2"):new("BigWigs_TheEye")["Tempest Keep"]
+mod.otherMenu = GetAddOnMetadata("BigWigs_TheEye", "X-BigWigs-Menu") or AceLibrary("AceLocale-2.2"):new("BigWigs_TheEye")["The Eye"]
 mod.enabletrigger = { boss, capernian, sanguinar, telonicus, thaladred }
 mod.wipemobs = { axe, mace, dagger, staff, sword, bow, shield }
 mod.toggleoptions = { "phase", -1, "conflag", "mc", "toyall", "gaze", "icon", "fear", "pyro", "rebirth", "proximity", "bosskill" }

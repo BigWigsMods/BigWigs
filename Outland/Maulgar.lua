@@ -297,8 +297,8 @@ L:RegisterTranslations("zhTW", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
-mod.otherMenu = "Outland"
+mod.zonename = {GetAddOnMetadata("BigWigs_Outland", "X-BigWigs-LoadInZone")} or AceLibrary("AceLocale-2.2"):new("BigWigs_Outland")["Gruul's Lair"]
+mod.otherMenu = GetAddOnMetadata("BigWigs_Outland", "X-BigWigs-Menu") or AceLibrary("AceLocale-2.2"):new("BigWigs_Outland")["Outland"]
 mod.enabletrigger = {boss, mage, lock, priest, shaman}
 mod.toggleoptions = {"shield", "spellshield", "heal", -1, "summon", -1, "whirlwind", "flurry", "smash", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

@@ -453,7 +453,7 @@ L:RegisterTranslations("zhTW", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
+mod.zonename = GetAddOnMetadata("BigWigs_BlackTemple", "X-BigWigs-LoadInZone") or AceLibrary("AceLocale-2.2"):new("BigWigs_BlackTemple")["Black Temple"]
 mod.enabletrigger = boss
 mod.toggleoptions = {"berserk", "phase", "parasite", "shear", "eyeblast", "barrage", "flame", "demons", "flameburst", "enrage", "proximity", "bosskill"}
 mod.wipemobs = {L["Flame of Azzinoth"]}

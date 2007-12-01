@@ -233,7 +233,7 @@ L:RegisterTranslations("zhTW", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Serpentshrine Cavern"]
+mod.zonename = GetAddOnMetadata("BigWigs_SC", "X-BigWigs-LoadInZone") or AceLibrary("AceLocale-2.2"):new("BigWigs_SC")["Serpentshrine Cavern"]
 mod.enabletrigger = boss
 mod.toggleoptions = {"stance", "mark", "enrage", -1, "sludge", "icon", "tomb", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

@@ -196,7 +196,7 @@ L:RegisterTranslations("esES", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.zonename = GetAddOnMetadata("BigWigs_Karazhan", "X-BigWigs-LoadInZone") or AceLibrary("AceLocale-2.2"):new("BigWigs_Karazhan")["Karazhan"]
 mod.enabletrigger = boss
 mod.toggleoptions = {"vanish", "enrage", -1, "garrote", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

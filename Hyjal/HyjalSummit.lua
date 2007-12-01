@@ -2,7 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
-local name = AceLibrary("Babble-Zone-2.2")["Hyjal Summit"]
+local name = GetAddOnMetadata("BigWigs_Hyjal", "X-BigWigs-LoadInZone") or AceLibrary("AceLocale-2.2"):new("BigWigs_Hyjal")["Hyjal Summit"]
 local allianceBase = AceLibrary("Babble-Zone-2.2")["Alliance Base"]
 local hordeEncampment = AceLibrary("Babble-Zone-2.2")["Horde Encampment"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..name)

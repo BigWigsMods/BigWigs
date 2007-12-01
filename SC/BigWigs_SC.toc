@@ -18,8 +18,13 @@
 ## X-RelSite-Curse: 3299
 ## X-AceForum: 4870
 
-
-## X-BigWigs-LoadInZone: Serpentshrine Cavern
+## X-BigWigs-LoadInZone-enUS: Serpentshrine Cavern
+## X-BigWigs-LoadInZone-frFR: Caverne du sanctuaire du Serpent
+## X-BigWigs-LoadInZone-deDE: Höhle des Schlangenschreins
+## X-BigWigs-LoadInZone-koKR: 불뱀 제단
+## X-BigWigs-LoadInZone-zhTW: 毒蛇神殿洞穴
+## X-BigWigs-LoadInZone-zhCN: 毒蛇神殿
+## X-BigWigs-LoadInZone-esES: Caverna Santuario Serpiente
 
 ## Dependencies: BigWigs
 
