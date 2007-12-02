@@ -16,13 +16,7 @@
 ## X-RelSite-Curse: 3299
 ## X-AceForum: 9278
 
-## X-BigWigs-LoadInZone-enUS: Zul'Aman
-## X-BigWigs-LoadInZone-frFR: Zul'Aman
-## X-BigWigs-LoadInZone-deDE: Zul'Aman
-## X-BigWigs-LoadInZone-koKR: 줄아만
-## X-BigWigs-LoadInZone-zhTW: 祖阿曼
-## X-BigWigs-LoadInZone-zhCN: 祖阿曼
-## X-BigWigs-LoadInZone-esES: Zul'Aman
+## X-BigWigs-LoadInZone: Zul'Aman
 
 ## Dependencies: BigWigs
 

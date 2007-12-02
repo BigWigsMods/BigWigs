@@ -4,6 +4,7 @@
 
 local AceLibrary = AceLibrary
 local LC = AceLibrary("AceLocale-2.2"):new("BigWigs")
+local BZ = nil
 local grouped = nil
 
 local loadWithCore = nil
@@ -110,17 +111,19 @@ end
 local function iterateZones(addon, override, partyContent, ...)
 	for i = 1, select("#", ...) do
 		local z = (select(i, ...)):trim()
+		local zone = BZ:HasTranslation(z) and BZ[z] or nil
+		assert(zone, ("The zone %s, specified by the %s addon, does not exist in Babble-Zone."):format(z, addon))
 
 		-- register the zone for enabling.
-		registerEnableZone( z, partyContent and BWPARTY or BWRAID )
-
-		if not loadInZone[z] then loadInZone[z] = {} end
-		table.insert( loadInZone[z], addon)
+		registerEnableZone( zone, partyContent and BWPARTY or BWRAID )
+		
+		if not loadInZone[zone] then loadInZone[zone] = {} end
+		table.insert( loadInZone[zone], addon)
 
 		if override then
 			table.insert( loadInZone[override], addon)
 		else
-			addCoreMenu(z)
+			addCoreMenu(zone)
 		end
 	end
 end
@@ -132,16 +135,19 @@ local function initialize()
 		if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadInZone")
 			if meta then
+				if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
 				local partyContent = GetAddOnMetadata(i, "X-BigWigs-LoadInParty")
 				-- X-BW-Menu can override showing the modules in the
 				-- modules own specified zone submenu
 				local menu = GetAddOnMetadata(i, "X-BigWigs-Menu")
 				if menu then
+					assert(BZ:HasTranslation(menu), ("The menu key %s, specified by %s, does not exist in Babble-Zone."):format(menu, name))
+					menu = BZ[menu]
 					if not loadInZone[menu] then loadInZone[menu] = {} end
 
 					-- Okay, so the addon wants to be put in a menu of
 					-- its own, and not one directed by the module
-					-- zones. This means we need a translation
+					-- zones. This means we need a translation from BZ
 					-- for the actual module name as well.
 
 					addCoreMenu(menu)
@@ -223,6 +229,7 @@ function BigWigsLoD:BigWigs_CoreEnabled()
 	end
 
 	loadZone(GetRealZoneText())
+	loadZone(GetZoneText())
 end
 
 function BigWigsLoD:BigWigs_ModuleRegistered(name)
@@ -235,11 +242,12 @@ end
 function BigWigsLoD:ZoneChanged()
 	if not grouped then return end
 
-	local z = GetRealZoneText()
+	local z1, z2 = GetRealZoneText(), GetZoneText()
 	-- load party content in raid, but don't load raid content in a party...
-	if enableZones[z] and enableZones[z] <= grouped then
-		if BigWigs:IsActive() and loadInZone[z] then
-			loadZone(z)
+	if ( enableZones[z1] and enableZones[z1] <= grouped ) or ( enableZones[z2] and enableZones[z2] <= grouped ) then
+		if BigWigs:IsActive() and ( loadInZone[z1] or loadInZone[z2] ) then
+			loadZone(z1)
+			loadZone(z2)
 		else
 			-- BigWigs_CoreEnabled will check and load the zones.
 			BigWigs:ToggleActive( true )

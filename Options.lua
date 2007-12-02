@@ -5,6 +5,7 @@ assert(BigWigs, "BigWigs not found!")
 --      Are you local?      --
 ------------------------------
 
+local BZ = AceLibrary("Babble-Zone-2.2")
 local LC = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsOptions")
 local waterfall = AceLibrary:HasInstance("Waterfall-1.0") and AceLibrary("Waterfall-1.0") or nil

@@ -18,13 +18,7 @@
 ## X-RelSite-Curse: 3299
 ## X-AceForum: 6579
 
-## X-BigWigs-LoadInZone-enUS: Black Temple
-## X-BigWigs-LoadInZone-frFR: Temple noir
-## X-BigWigs-LoadInZone-deDE: Der Schwarze Tempel
-## X-BigWigs-LoadInZone-koKR: 검은 사원
-## X-BigWigs-LoadInZone-zhTW: 黑暗神廟
-## X-BigWigs-LoadInZone-zhCN: 黑暗神殿
-## X-BigWigs-LoadInZone-esES: El Templo Oscuro
+## X-BigWigs-LoadInZone: Black Temple
 
 ## Dependencies: BigWigs
 

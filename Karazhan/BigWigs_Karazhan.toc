@@ -18,13 +18,7 @@
 ## X-RelSite-Curse: 3299
 ## X-AceForum: 3248
 
-## X-BigWigs-LoadInZone-enUS: Karazhan
-## X-BigWigs-LoadInZone-frFR: Karazhan
-## X-BigWigs-LoadInZone-deDE: Karazhan
-## X-BigWigs-LoadInZone-koKR: 카라잔
-## X-BigWigs-LoadInZone-zhTW: 卡拉贊
-## X-BigWigs-LoadInZone-zhCN: 卡拉赞
-## X-BigWigs-LoadInZone-esES: Karazhan
+## X-BigWigs-LoadInZone: Karazhan
 
 ## Dependencies: BigWigs
 

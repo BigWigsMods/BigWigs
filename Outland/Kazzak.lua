@@ -133,8 +133,8 @@ L:RegisterTranslations("zhCN", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = {GetAddOnMetadata("BigWigs_Outland", "X-BigWigs-LoadInZone")} or AceLibrary("AceLocale-2.2"):new("BigWigs_Outland")["Hellfire Peninsula"]
-mod.otherMenu = GetAddOnMetadata("BigWigs_Outland", "X-BigWigs-Menu") or AceLibrary("AceLocale-2.2"):new("BigWigs_Outland")["Outland"]
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Hellfire Peninsula"]
+mod.otherMenu = "Outland"
 mod.enabletrigger = boss
 mod.toggleoptions = {"enrage", "mark", "twist", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

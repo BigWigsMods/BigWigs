@@ -169,8 +169,8 @@ L:RegisterTranslations("deDE", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = GetAddOnMetadata("BigWigs_TheEye", "X-BigWigs-LoadInZone") or AceLibrary("AceLocale-2.2"):new("BigWigs_TheEye")["Tempest Keep"]
-mod.otherMenu = GetAddOnMetadata("BigWigs_TheEye", "X-BigWigs-Menu") or AceLibrary("AceLocale-2.2"):new("BigWigs_TheEye")["The Eye"]
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
+mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
 mod.toggleoptions = {"meteor", "flamepatch", -1, "armor", "icon", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

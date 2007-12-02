@@ -344,8 +344,8 @@ L:RegisterTranslations("zhTW", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = {GetAddOnMetadata("BigWigs_Outland", "X-BigWigs-LoadInZone")} or AceLibrary("AceLocale-2.2"):new("BigWigs_Outland")["Magtheridon's Lair"]
-mod.otherMenu = GetAddOnMetadata("BigWigs_Outland", "X-BigWigs-Menu") or AceLibrary("AceLocale-2.2"):new("BigWigs_Outland")["Outland"]
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Magtheridon's Lair"]
+mod.otherMenu = "Outland"
 mod.enabletrigger = {channeler, boss}
 mod.toggleoptions = {"escape", "abyssal", "heal", -1, "nova", "banish", -1, "debris", "debrisinc", -1, "exhaust", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

@@ -18,21 +18,8 @@
 ## X-RelSite-Curse: 3299
 ## X-AceForum: 4688
 
-## X-BigWigs-Menu-enUS: Outland
-## X-BigWigs-Menu-frFR: Outreterre
-## X-BigWigs-Menu-deDE: Scherbenwelt
-## X-BigWigs-Menu-koKR: 아웃랜드
-## X-BigWigs-Menu-zhTW: 外域
-## X-BigWigs-Menu-zhCN: 外域
-## X-BigWigs-Menu-esES: Terrallende
-
-## X-BigWigs-LoadInZone-enUS: Hellfire Peninsula, Gruul's Lair, Magtheridon's Lair, Shadowmoon Valley
-## X-BigWigs-LoadInZone-frFR: Péninsule des Flammes infernales, Repaire de Gruul, Le repaire de Magtheridon, Vallée d'Ombrelune
-## X-BigWigs-LoadInZone-deDE: H\195\182llenfeuerhalbinsel, Gruuls Unterschlupf, Magtheridons Kammer, Schattenmondtal
-## X-BigWigs-LoadInZone-koKR: 지옥불 반도, 그룰의 둥지, 마그테리돈의 둥지, 어둠달 골짜기
-## X-BigWigs-LoadInZone-zhTW: 地獄火半島, 戈魯爾之巢, 瑪瑟里頓的巢穴, 影月谷
-## X-BigWigs-LoadInZone-zhCN: 地狱火半岛, 格鲁尔的巢穴, 玛瑟里顿的巢穴, 影月谷
-## X-BigWigs-LoadInZone-esES: Pen\195\173nsula del Fuego Infernal, Guarida de Gruul, Guarida de Magtheridon, Valle Sombraluna
+## X-BigWigs-Menu: Outland
+## X-BigWigs-LoadInZone: Hellfire Peninsula, Gruul's Lair, Magtheridon's Lair, Shadowmoon Valley
 
 ## Dependencies: BigWigs
 

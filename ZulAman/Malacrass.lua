@@ -160,7 +160,7 @@ L:RegisterTranslations("zhTW", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = GetAddOnMetadata("BigWigs_ZulAman", "X-BigWigs-LoadInZone") or AceLibrary("AceLocale-2.2"):new("BigWigs_Zul'Aman")["Zul'Aman"]
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Zul'Aman"]
 mod.enabletrigger = boss
 mod.toggleoptions = {"bolts", "soul", "totem", "heal", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

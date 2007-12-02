@@ -18,21 +18,8 @@
 ## X-RelSite-Curse: 3299
 ## X-AceForum: 5400
 
-## X-BigWigs-Menu-enUS: The Eye
-## X-BigWigs-Menu-frFR: L'Œil
-## X-BigWigs-Menu-deDE: Das Auge
-## X-BigWigs-Menu-koKR: 눈
-## X-BigWigs-Menu-zhTW: 風暴要塞
-## X-BigWigs-Menu-zhCN: 风暴要塞
-## X-BigWigs-Menu-esES: El Ojo
-
-## X-BigWigs-LoadInZone-enUS: Tempest Keep
-## X-BigWigs-LoadInZone-frFR: Donjon de la Tempête
-## X-BigWigs-LoadInZone-deDE: Festung der St\195\188rme
-## X-BigWigs-LoadInZone-koKR: 폭풍우 요새
-## X-BigWigs-LoadInZone-zhTW: 風暴要塞
-## X-BigWigs-LoadInZone-zhCN: 风暴要塞
-## X-BigWigs-LoadInZone-esES: El Castillo de la Tempestad
+## X-BigWigs-Menu: The Eye
+## X-BigWigs-LoadInZone: Tempest Keep
 
 ## Dependencies: BigWigs
 

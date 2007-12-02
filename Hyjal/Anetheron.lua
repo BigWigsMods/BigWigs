@@ -147,7 +147,7 @@ L:RegisterTranslations("zhCN", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = GetAddOnMetadata("BigWigs_Hyjal", "X-BigWigs-LoadInZone") or AceLibrary("AceLocale-2.2"):new("BigWigs_Hyjal")["Hyjal Summit"]
+mod.zonename = AceLibrary("Babble-Zone-2.2")["Hyjal Summit"]
 mod.enabletrigger = boss
 mod.toggleoptions = {"inferno", "icon", "swarm", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
