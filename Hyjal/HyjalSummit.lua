@@ -3,8 +3,6 @@
 ------------------------------
 
 local name = GetAddOnMetadata("BigWigs_Hyjal", "X-BigWigs-LoadInZone") or AceLibrary("AceLocale-2.2"):new("BigWigs_Hyjal")["Hyjal Summit"]
-local allianceBase = AceLibrary("Babble-Zone-2.2")["Alliance Base"]
-local hordeEncampment = AceLibrary("Babble-Zone-2.2")["Horde Encampment"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..name)
 
 local winterchill = AceLibrary("Babble-Boss-2.2")["Rage Winterchill"]
@@ -74,6 +72,9 @@ L:RegisterTranslations("enUS", function() return {
 	["Frost Wyrm"] = true,
 	["Fel Stalkers"] = true,
 	["Infernals"] = true,
+
+	["Alliance Base"] = true,
+	["Horde Encampment"] = true,
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -114,6 +115,9 @@ L:RegisterTranslations("koKR", function() return {
 	["Frost Wyrm"] = "서리고룡",
 	["Fel Stalkers"] = "지옥사냥개",
 	["Infernals"] = "거대한 지옥불정령",
+
+	["Alliance Base"] = "얼라이언스 주둔지",
+	["Horde Encampment"] = "호드 야영지",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -154,6 +158,9 @@ L:RegisterTranslations("frFR", function() return {
 	["Frost Wyrm"] = "Wyrms de givre",
 	["Fel Stalkers"] = "Traqueurs gangrenés",
 	["Infernals"] = "Infernaux",
+
+	["Alliance Base"] = "Base de l'Alliance",
+	["Horde Encampment"] = "Campement de la Horde",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -194,6 +201,9 @@ L:RegisterTranslations("deDE", function() return {
 	["Frost Wyrm"] = "Frostwyrm",
 	["Fel Stalkers"] = "Teufelshunde",
 	["Infernals"] = "Höllenbestien",
+
+	["Alliance Base"] = "Basis der Allianz",
+	["Horde Encampment"] = "Lager der Horde",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -234,6 +244,9 @@ L:RegisterTranslations("zhCN", function() return {
 	["Frost Wyrm"] = "冰霜巨龙",
 	["Fel Stalkers"] = "恶魔猎犬",
 	["Infernals"] = "地狱火",
+
+	["Alliance Base"] = "联盟基地",
+	["Horde Encampment"] = "部落营地",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -274,6 +287,8 @@ L:RegisterTranslations("zhTW", function() return {
 	["Fel Stalkers"] = "惡魔捕獵者",
 	["Infernals"] = "巨型地獄火",
 
+	["Alliance Base"] = "聯盟營地",
+	["Horde Encampment"] = "部落營地",
 } end )
 
 ----------------------------------
@@ -282,6 +297,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 local thrall = L["Thrall"]
 local proudmoore = L["Lady Jaina Proudmoore"]
+
+local allianceBase = L["Alliance Base"]
+local hordeEncampment = L["Horde Encampment"]
 
 local mod = BigWigs:NewModule(name)
 mod.zonename = name
