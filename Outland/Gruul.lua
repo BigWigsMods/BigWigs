@@ -233,6 +233,40 @@ L:RegisterTranslations("zhCN", function() return {
 	shatter_message = "碎裂！",
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "Venid… y morid.",
+	engage_message = "%s Activado!",
+
+	grow = "Crecimiento",
+	grow_desc = "Cuenta y avisa de los crecimientos de Gruul",
+	grow_trigger = "%s crece!",
+	grow_message = "Crece: (%d)",
+	grow_bar = "Crecimiento (%d)",
+
+	grasp = "Rujido",
+	grasp_desc = "Rujidos avisos y timers.",
+	grasp_trigger1 = "Corred.",
+	grasp_trigger2 = "No hay escapatoria.",
+	grasp_message = "Patadon al suelo - Congelacion  en ~10sec!",
+	grasp_warning = "Patadon al suelo pronto",
+	grasp_bar = "~Cooldown de Patadon al suelo",
+
+	cavein = "Cueva en ti",
+	cavein_desc = "Avisa de la caida de la cueva en ti.",
+	cavein_trigger = "Sufres de Sepultar.",
+	cavein_message = "Sepultado!",
+
+	silence = "Silencio",
+	silence_desc = "Avisa cuando Gruul castea silencio (Reverberacion).",
+	silence_trigger = "sufre Reverberación.$",
+	silence_message = "AOE Silencio",
+	silence_warning = "AOE Silencio pronto!",
+	silence_bar = "~Silence Cooldown",
+
+	shatter_trigger = "%s ruge!",
+	shatter_message = "Petrificacion!",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

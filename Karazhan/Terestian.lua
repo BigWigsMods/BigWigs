@@ -169,12 +169,12 @@ L:RegisterTranslations("esES", function() return {
 
 	sacrifice = "Sacrificio",
 	sacrifice_desc = "Avisa del Sacrificio de los jugadores.",
-	sacrifice_trigger = "^([^%s]+) ([^%s]+) sufre Sacrificio%.$",
-	--sacrifice_fade = "^Sacrifice fades from ([^%s]+)%.$",
+	sacrifice_trigger = "^(%S+) (%S+) sufre Sacrificio%.$",
+	sacrifice_fade = "^Sacrificio desparece de ([^%s]+)%.$",
 	sacrifice_message = "%s esta siendo sacrificado!",
 	sacrifice_bar = "Sacrificio: %s",
-	--sacrifice_soon = "Sacrifice soon!",
-	--sacrifice_soonbar = "~Possible Sacrifice",
+	sacrifice_soon = "Sacrificio Pronto!",
+	sacrifice_soonbar = "~Posible Sacrificio",
 
 	icon = "Icono de Raid",
 	icon_desc = "Pone un icono de raid en el jugador sacrificado (requiere promoted o mayor).",
