@@ -89,7 +89,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Wave %d! %d %s"] = "%d번째 공격! %d %s", --1 set of mobs
 	["Wave %d! %d %s, %d %s"] = "%d번째 공격! %d %s, %d %s", --2 sets of mobs
 	["Wave %d! %d %s, %d %s, %d %s"] = "%d번째 공격! %d %s, %d %s, %d %s", --3 sets of mobs
-	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "%d번째 공격! %d! %d %s, %d %s, %d %s, %d %s", --4 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "%d번째 공격! %d %s, %d %s, %d %s, %d %s", --4 sets of mobs
 	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "%d번째 공격! %d %s, %d %s, %d %s, %d %s, %d %s", --5 sets of mobs
 	["%s in ~%d sec!"] = "%s 약 %d초 이내!",
 	["Wave %d in ~%d sec!"] = "%d번째 공격! 약 %d초 이내",
