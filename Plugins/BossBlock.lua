@@ -3,6 +3,8 @@
 ----------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsBossBlock")
+local db = nil
+local fnd = string.find
 
 L:RegisterTranslations("enUS", function() return {
 	["BossBlock"] = true,
@@ -313,6 +315,8 @@ function plugin:OnEnable()
 
 	self:RegisterEvent("Ace2_AddonEnabled", "BossModEnableDisable")
 	self:RegisterEvent("Ace2_AddonDisabled", "BossModEnableDisable")
+
+	db = self.db.profile
 end
 
 
@@ -343,10 +347,10 @@ do
 		local rwf = _G.RaidWarningFrame
 		local rbe = _G.RaidBossEmoteFrame
 		function plugin:RWAddMessage(frame, message, colorInfo)
-			if frame == rwf and self.db.profile.rw and self:IsSpam(message) then
+			if frame == rwf and db.rw and self:IsSpam(message) then
 				BigWigs:Debug(L["Suppressing RaidWarningFrame"], message)
 				return
-			elseif frame == rbe and self.db.profile.boss and type(arg2) == "string" and bossmobs[arg2] then
+			elseif frame == rbe and db.boss and type(arg2) == "string" and bossmobs[arg2] then
 				BigWigs:Debug(L["Suppressing RaidBossEmoteFrame"], message)
 				return
 			end
@@ -355,7 +359,7 @@ do
 	end
 
 	function plugin:RBEAddMessage(frame, message, r, g, b, a, t)
-		if self.db.profile.boss and type(arg2) == "string" and bossmobs[arg2] then
+		if type(arg2) == "string" and bossmobs[arg2] and db.boss then
 			BigWigs:Debug(L["Suppressing RaidBossEmoteFrame"], message)
 			return
 		end
@@ -364,7 +368,7 @@ do
 end
 
 function plugin:CTRA_AddMessage(obj, text, r, g, b, a, t)
-	if self.db.profile.rs and self:IsSpam(text) then
+	if self:IsSpam(text) and db.rs then
 		BigWigs:Debug(L["Suppressing CT_RAMessageFrame"], text)
 		return
 	end
@@ -373,11 +377,11 @@ end
 
 function plugin:IsSpam(text)
 	if type(text) ~= "string" then return end
-	if text:find("%*%*%*") then return true end
+	if fnd(text, "%*%*%*") then return true end
 end
 
 function plugin:IsChannelSuppressed(chan)
 	if not raidchans[chan] then return end
-	return self.db.profile[raidchans[chan]]
+	return db[raidchans[chan]]
 end
 
