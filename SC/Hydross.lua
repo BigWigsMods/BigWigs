@@ -30,8 +30,8 @@ L:RegisterTranslations("enUS", function() return {
 	mark_desc = "Show warnings and counters for marks.",
 	hydross_trigger = "Mark of Hydross",
 	corruption_trigger = "Mark of Corruption",
-	hydross_bar = "Mark of Hydross - %s%%",
-	corruption_bar = "Mark of Corruption - %s%%",
+	hydross_bar = "%s%% - Mark of Hydross",
+	corruption_bar = "%s%% - Mark of Corruption",
 
 	stance = "Stance changes",
 	stance_desc = "Warn when Hydross changes stances.",
