@@ -174,7 +174,7 @@ L:RegisterTranslations("zhTW", function() return {
 	flame = "烈焰震擊",
 	flame_desc = "警報玩家受到烈焰震擊",
 	flame_trigger = "^(.+)受(到[了]*)烈焰震擊效果的影響。$",
-	flame_fade = "^烈焰震擊效果從(%S+)%身上消失。$",
+	flame_fade = "^烈焰震擊效果從(.+)身上消失。$",
 	flame_message = "烈焰震擊: [%s]",
 
 	icon = "團隊標記",

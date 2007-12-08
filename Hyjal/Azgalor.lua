@@ -106,7 +106,7 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	doom = "災厄降臨",
 	doom_desc = "災厄降臨警報",
-	doom_other = "災厄降臨: %s",
+	doom_other = "災厄降臨: [%s]",
 	doom_you = "你受到災厄降臨!",
 
 	hoa = "亞茲加洛之吼",

@@ -105,8 +105,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	inferno = "地獄火",
 	inferno_desc = "地獄火冷卻計時器",
-	inferno_message = "地獄火: %s!",
-	--inferno_you = "Casting Inferno on YOU!",
+	inferno_message = "地獄火: [%s]",
+	inferno_you = "你中了地獄火!",
 	inferno_warning = "地獄火即將到來!",
 	inferno_bar = "~地獄火 Cooldown",
 
