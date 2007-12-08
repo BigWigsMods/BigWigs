@@ -136,8 +136,8 @@ L:RegisterTranslations("frFR", function() return {
 	mark_desc = "Affiche les alertes et les compteurs des marques.",
 	hydross_trigger = "Marque d'Hydross",
 	corruption_trigger = "Marque de corruption",
-	hydross_bar = "Marque d'Hydross - %s%%",
-	corruption_bar = "Marque de corruption - %s%%",
+	hydross_bar = "%s%% - Marque d'Hydross",
+	corruption_bar = "%s%% - Marque de corruption",
 
 	stance = "Changements d'état",
 	stance_desc = "Préviens quand Hydross l'Instable change d'état.",

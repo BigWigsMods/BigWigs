@@ -140,7 +140,7 @@ L:RegisterTranslations("frFR", function() return {
 	demon_phase_trigger = "Contemplez la puissance... du démon intérieur !",
 	demon_phase_message = "Forme de démon !",
 	demon_bar = "Prochaine phase normale",
-	demon_warning = "Fin du démon dans ~ 5 sec. !",
+	demon_warning = "Fin du démon dans ~5 sec. !",
 	normal_bar = "~Phase démon probable",
 	normal_warning = "Phase démon probablement dans ~5 sec. !",
 	phase4_trigger = "C'est tout, mortels ? Est-ce là toute la fureur que vous pouvez évoquer ?",
