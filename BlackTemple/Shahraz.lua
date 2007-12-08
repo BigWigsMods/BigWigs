@@ -190,7 +190,7 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "ShaAttra" and rest then
 		attracted[rest] = true
-		self:ScheduleEvent("BWAttractionWarn", self.AttractionWarn, 0.3, self)
+		self:ScheduleEvent("BWAttractionWarn", self.AttractionWarn, 0.5, self)
 	elseif self:ValidateEngageSync(sync, rest) and not started then
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
