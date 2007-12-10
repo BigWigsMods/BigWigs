@@ -5,13 +5,13 @@
 ----------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsFlashNShake")
-local display = nil
-local flash = nil
-local rnd = nil
+
+-- Frames
+local flasher = nil
 local shaker = nil
-local shakeOnUpdate -- defined later on
+
+-- Shake properties
 local shaking = nil
-local oldpoints = nil
 local SHAKE_DURATION = 0.8
 local SHAKE_X = 10
 local SHAKE_Y = 10
@@ -167,33 +167,65 @@ function mod:OnEnable()
 end
 
 ------------------------------
+--      Shaking             --
+------------------------------
+
+local originalPoints = nil
+local function startShake()
+	if not shaking then
+		-- store old worldframe positions, we need them all, people have frame modifiers for it etc.
+		if not originalPoints then
+			originalPoints = {}
+			for i = 1, WorldFrame:GetNumPoints() do
+				table.insert(originalPoints, {WorldFrame:GetPoint(i)})
+			end
+		end
+		shaking = SHAKE_DURATION -- don't think we want to make this a setting.
+		shaker:Show()
+	end
+end
+
+local function shakeOnUpdate(frame, elapsed)
+	shaking = shaking - elapsed
+	local x, y = 0, 0 -- Resets to original position if we're supposed to stop.
+	if shaking <= 0 then -- stop shaking
+		shaking = nil
+		shaker:Hide()
+	else
+		x = math.random(-SHAKE_X,SHAKE_X)
+		y = math.random(-SHAKE_Y,SHAKE_Y)
+	end
+	WorldFrame:ClearAllPoints()
+	for i, v in ipairs(originalPoints) do
+		WorldFrame:SetPoint(v[1], v[2], v[3], v[4] + x, v[5] + y)
+	end
+end
+
+------------------------------
 --      Event Handlers      --
 ------------------------------
 
 function mod:BigWigs_Message(msg, color)
 	if color and color == "Personal" then
 		if self.db.profile.flash then
-			if not display then --frame creation
-				display = CreateFrame("Frame", "BWFlash", UIParent)
-				flash = UIFrameFlash
-				display:SetFrameStrata("BACKGROUND")
-				display:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
-				display:SetBackdropColor(0,0,1,0.55)
-				display:SetAllPoints( UIParent)
-				display:Hide()
+			if not flasher then --frame creation
+				flasher = CreateFrame("Frame", "BWFlash", UIParent)
+				flasher:SetFrameStrata("BACKGROUND")
+				flasher:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
+				flasher:SetBackdropColor(0,0,1,0.55)
+				flasher:SetAllPoints( UIParent)
+				flasher:Hide()
 			end
-
-			flash(BWFlash, 0.2, 0.2, 0.8, false)
+			UIFrameFlash(BWFlash, 0.2, 0.2, 0.8, false)
 		end
 
 		if self.db.profile.shake then
 			if not shaker then
 				shaker = CreateFrame("Frame", "BWShaker", UIParent)
-				rnd = math.random
 				shaker:Hide()
 				shaker:SetScript("OnUpdate", shakeOnUpdate)
 			end
-			self:StartShake()
+			startShake()
 		end
 	end
 end
@@ -202,39 +234,3 @@ function mod:BigWigs_Test()
 	self:TriggerEvent("BigWigs_Message", L["Test"], "Personal", true)
 end
 
------------------
--- shaking innards
------------------
-
-function mod:StartShake()
-	if not shaking then
-		-- store old worldframe positions, we need them all, people have frame modifiers for it etc.
-		local nrpoints = WorldFrame:GetNumPoints()
-		if not oldpoints then oldpoints = { points = {} } end -- initialize if we don't have it yet
-		oldpoints.nrpoints = nrpoints
-		for i=1,nrpoints do
-			oldpoints.points[i] = oldpoints.points[i] or {}  -- recycle or initialize
-			local point = oldpoints.points[i]
-			point.point, point.rframe, point.rpoint, point.xoff, point.yoff = WorldFrame:GetPoint(i)
-		end
-		shaking = SHAKE_DURATION -- don't think we want to make this a setting.
-		shaker:Show()
-	end
-end
-
-function shakeOnUpdate( frame, elapsed )
-
-	shaking = shaking - elapsed
-	local xoff,yoff = 0,0
-	if shaking <= 0 then -- stop shaking
-		shaking = nil
-		shaker:Hide()
-	else
-		xoff = rnd(-SHAKE_X,SHAKE_X)
-		yoff = rnd(-SHAKE_Y,SHAKE_Y)
-	end
-	WorldFrame:ClearAllPoints()
-	for i, point in pairs( oldpoints.points ) do
-		WorldFrame:SetPoint( point.point, point.rframe, point.rpoint, point.xoff + xoff, point.yoff + yoff )
-	end
-end
