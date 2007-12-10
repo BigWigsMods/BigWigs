@@ -185,6 +185,10 @@ function mod:Berserk()
 	self:ScheduleEvent("en6", "BigWigs_Message", 595, L2["berserk_sec"]:format(5), "Urgent")
 	self:ScheduleEvent("en7", "BigWigs_Message", 600, L2["berserk_end"]:format(boss), "Attention", nil, "Alarm")
 	self:Bar(L2["berserk"], 600, "Spell_Nature_Reincarnation")
+
+	if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+	end
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
@@ -192,9 +196,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		attracted[rest] = true
 		self:ScheduleEvent("BWAttractionWarn", self.AttractionWarn, 0.5, self)
 	elseif self:ValidateEngageSync(sync, rest) and not started then
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
 		if db.berserk then
 			self:Berserk()
 		end
@@ -246,7 +247,7 @@ function mod:PLAYER_AURAS_CHANGED()
 
 			--show a countdown bar and create a message with the name of the debuff
 			--if the timeleft is high enough (to prevent spam)
-			if timeleft and timeleft > 14 then
+			if timeleft and timeleft > 13 then
 				self:Message(name, "Attention")
 				self:Bar(name, timeleft, texture)
 				timer = true
