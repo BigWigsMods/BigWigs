@@ -175,16 +175,19 @@ end
 
 function mod:Berserk()
 	started = true
-	self:Message(L2["berserk_start"]:format(boss, 10), "Attention")
-	--Don't use :DelayedMessage as we get mutiple messages on rare occasions :CheckForWipe doesn't kick in due to the enounter style
-	self:ScheduleEvent("en1", "BigWigs_Message", 300, L2["berserk_min"]:format(5), "Positive")
-	self:ScheduleEvent("en2", "BigWigs_Message", 420, L2["berserk_min"]:format(3), "Positive")
-	self:ScheduleEvent("en3", "BigWigs_Message", 540, L2["berserk_min"]:format(1), "Positive")
-	self:ScheduleEvent("en4", "BigWigs_Message", 570, L2["berserk_sec"]:format(30), "Positive")
-	self:ScheduleEvent("en5", "BigWigs_Message", 590, L2["berserk_sec"]:format(10), "Urgent")
-	self:ScheduleEvent("en6", "BigWigs_Message", 595, L2["berserk_sec"]:format(5), "Urgent")
-	self:ScheduleEvent("en7", "BigWigs_Message", 600, L2["berserk_end"]:format(boss), "Attention", nil, "Alarm")
-	self:Bar(L2["berserk"], 600, "Spell_Nature_Reincarnation")
+
+	if db.berserk then
+		self:Message(L2["berserk_start"]:format(boss, 10), "Attention")
+		--Don't use :DelayedMessage as we get mutiple messages on rare occasions :CheckForWipe doesn't kick in due to the enounter style
+		self:ScheduleEvent("en1", "BigWigs_Message", 300, L2["berserk_min"]:format(5), "Positive")
+		self:ScheduleEvent("en2", "BigWigs_Message", 420, L2["berserk_min"]:format(3), "Positive")
+		self:ScheduleEvent("en3", "BigWigs_Message", 540, L2["berserk_min"]:format(1), "Positive")
+		self:ScheduleEvent("en4", "BigWigs_Message", 570, L2["berserk_sec"]:format(30), "Positive")
+		self:ScheduleEvent("en5", "BigWigs_Message", 590, L2["berserk_sec"]:format(10), "Urgent")
+		self:ScheduleEvent("en6", "BigWigs_Message", 595, L2["berserk_sec"]:format(5), "Urgent")
+		self:ScheduleEvent("en7", "BigWigs_Message", 600, L2["berserk_end"]:format(boss), "Attention", nil, "Alarm")
+		self:Bar(L2["berserk"], 600, "Spell_Nature_Reincarnation")
+	end
 
 	if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 		self:UnregisterEvent("PLAYER_REGEN_DISABLED")
@@ -196,9 +199,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		attracted[rest] = true
 		self:ScheduleEvent("BWAttractionWarn", self.AttractionWarn, 0.5, self)
 	elseif self:ValidateEngageSync(sync, rest) and not started then
-		if db.berserk then
-			self:Berserk()
-		end
+		self:Berserk()
 	end
 end
 
@@ -207,9 +208,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		for k in pairs(attracted) do attracted[k] = nil end
 		restype = nil
 		stop = nil
-		if db.berserk then
-			self:Berserk()
-		end
+		self:Berserk()
 	elseif db.enrage and msg == L["enrage_trigger"] then
 		self:Message(L["enrage_message"], "Important")
 	end
