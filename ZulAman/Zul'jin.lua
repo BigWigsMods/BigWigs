@@ -57,35 +57,35 @@ L:RegisterTranslations("frFR", function() return {
 	engage_message = "Phase 1 - Forme trolle",
 
 	form = "Changement de forme",
-	form_desc = "Préviens quand Zul'jin change de forme.",
+	form_desc = "Pr\195\169viens quand Zul'jin change de forme.",
 	form_bear_trigger = "J'ai des nouveaux tours… comme mon frère ours…",
 	form_bear_message = "80% Phase 2 - Forme d'ours !",
 	form_eagle_trigger = "L'aigle, il vous trouvera partout !",
 	form_eagle_message = "60% Phase 3 - Forme d'aigle !",
-	form_lynx_trigger = "J'vous présente mes nouveaux frères : griffe et croc !",
+	form_lynx_trigger = "J'vous pr\195\169sente mes nouveaux frères : griffe et croc !",
 	form_lynx_message = "40% Phase 4 - Forme de lynx !",
 	form_dragonhawk_trigger = "Pas besoin d'lever les yeux au ciel pour voir l'faucon-dragon !",
 	form_dragonhawk_message = "20% Phase 5 - Forme de faucon-dragon !",
 
 	throw = "Lancer effroyable",
-	throw_desc = "Préviens quand un joueur subit les effets du Lancer effroyable.",
+	throw_desc = "Pr\195\169viens quand un joueur subit les effets du Lancer effroyable.",
 	throw_message = "%s a le Lancer effroyable",
 	throw_trigger = "^(%S+) (%S+) les effets .* Lancer effroyable%.$",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Lancer effroyable ou la Rage de griffes (nécessite d'être promu ou mieux).",
+	icon_desc = "Place une icône de raid sur le dernier joueur affect\195\169 par le Lancer effroyable ou la Rage de griffes (n\195\169cessite d'être promu ou mieux).",
 
 	paralyze = "Paralysie",
-	paralyze_desc = "Préviens de l'arrivée de la Paralysie progressive et de la Paralysie qui s'en suit.",
+	paralyze_desc = "Pr\195\169viens de l'arriv\195\169e de la Paralysie progressive et de la Paralysie qui s'en suit.",
 	paralyze_warning = "Paralysie progressive - Paralysie totale dans 5 sec. !",
-	paralyze_message = "Paralysés !",
+	paralyze_message = "Paralys\195\169s !",
 	paralyze_bar = "Paralysie effective",
 	paralyze_trigger = "les effets .* Paralysie progressive%.$",
 	paralyze_warnbar = "Prochaine Paralysie",
 	paralyze_soon = "Paralysie progressive dans 5 sec.",
 
 	claw = "Rage de griffes",
-	claw_desc = "Préviens quand un joueur subit les effets de la Rage de griffes.",
+	claw_desc = "Pr\195\169viens quand un joueur subit les effets de la Rage de griffes.",
 	claw_trigger = "^(%S+) (%S+) les effets .* Rage de griffes%.$",
 	claw_message = "Rage de griffes sur %s",
 } end )
@@ -203,6 +203,45 @@ L:RegisterTranslations("zhTW", function() return {
 	claw_trigger = "^(.+)受(到[了]*)利爪之怒效果的影響。$",
 	claw_message = "利爪之怒：[%s]",
 } end )
+
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "\194\161No hay nadie m\195\161s bruto que yo!",
+	engage_message = "Fase 1 - Fase de humano",
+
+	form = "Cambio de forma",
+	form_desc = "Avisa cuando Zul'jin cambia de forma.",
+	form_bear_trigger = "Tengo algunos trucos nuevos... como mi hermano el oso...",
+	form_bear_message = "\194\16180% Fase 2 - Forma de Oso!",
+	form_eagle_trigger = "\194\161No pod\195\169is esconderos del \195\161guila!!",
+	form_eagle_message = "\194\16160% Fase 3 - Forma de Aguila!",
+	form_lynx_trigger = "\194\161Dejad que os presente a mis nuevos hermanos: colmillo y garra!",
+	form_lynx_message = "\194\16140% Fase 4 - Forma de Lince!",
+	form_dragonhawk_trigger = "\194\161No ten\195\169is que mirar al cielo para ver al dracohalc\195\179n!",
+	form_dragonhawk_message = "\194\16120% Fase 5 - Forma de Dracohalc\195\179n!",
+
+	throw = "Lanzamiento doloroso",
+	throw_desc = "Avisa quien sufre Lanzamiento doloroso.",
+	throw_message = "%s sufre Lanzamiento doloroso",
+	throw_trigger = "^(%S+) (%S+) sufre Lanzamiento doloroso%.$",
+
+	icon = "Icono de Banda",
+	icon_desc = "Coloca un Icono de Banda en el jugador afectado por Lanzamiento doloroso o Ira de zarpa. (requiere asistente o superior)",
+
+	paralyze = "Paralizado",
+	paralyze_desc = "Avisa de Par\195\161lisis progresiva y el efecto de Paralizado posterior.",
+	paralyze_warning = "\194\161Par\195\161lisis progresiva - Paralizado en 5 seg!",
+	paralyze_message = "\194\161Paralizado!",
+	paralyze_bar = "Inc Paralizado",
+	paralyze_trigger = "sufre Par\195\161lisis progresiva%.$",
+	paralyze_warnbar = "Siguiente Par\195\161lisis",
+	paralyze_soon = "Par\195\161lisis progresiva en 5 seg",
+
+	claw = "Ira de zarpa",
+	claw_desc = "Avisa quien tiene Ira de zarpae.",
+	claw_trigger = "^(%S+) (%S+) sufre Ira de zarpae%.$",
+	claw_message = "Ira de zarpa en %s",
+} end )
+
 
 ----------------------------------
 --      Module Declaration      --
