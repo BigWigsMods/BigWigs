@@ -47,6 +47,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	["Test"] = "테스트",
 	["Perform a Flash/Shake test."] = "번쩍임/진동 테스트를 실행합니다.",
+	
+	flash_warning = "화면 번쩍임은 실패했습니다. 이것은 보통 nameplates(이름표 표시)가 켜져 있을 때 일어납니다.\n nameplates(이름표 표시)를 끄고 UI를 다시 로딩을 하거나 BigWigs의 '진동'을 끄세요. (번쩍임은 영향 받지 않습니다)",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
