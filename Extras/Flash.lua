@@ -63,6 +63,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	["Test"] = "Test",
 	["Perform a Flash/Shake test."] = "Effectue un test du flash/de la secousse.",
+
+	flash_warning = "Échec de la secousse de l'écran. Ceci arrive habituellement quand les \"nameplates\" (l'affichage des noms et des barres de vie au dessus des personnages dans le champ de jeu) sont activés.\nDésactivez-les et rechargez l'IU, ou désactivez la 'Secousse' de BigWigs (le flash n'est PAS affecté).",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

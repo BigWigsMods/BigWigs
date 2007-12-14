@@ -75,27 +75,27 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "L'ombre, elle va vous tomber dessus.",
 
 	bolts = "Eclairs spirituels",
-	bolts_desc = "Pr\195\169viens quand Malacrass commence à canaliser ses Eclairs spirituels.",
+	bolts_desc = "Préviens quand Malacrass commence à canaliser ses Eclairs spirituels.",
 	bolts_trigger = "Ton âme, elle va saigner !",
-	bolts_message = "Arriv\195\169e des Eclairs spirituels !",
+	bolts_message = "Arrivée des Eclairs spirituels !",
 	bolts_warning = "Eclairs spirituels dans 5 sec. !",
 	bolts_nextbar = "Prochains Eclairs spirituels",
 
 	soul = "Siphonner l'âme",
-	soul_desc = "Pr\195\169viens quand un joueur subit les effets de Siphonner l'âme.",
+	soul_desc = "Préviens quand un joueur subit les effets de Siphonner l'âme.",
 	soul_trigger = "^(%S+) (%S+) les effets .* Siphonner l'âme%.$",
 	soul_message = "Siphon : %s",
 
 	totem = "Totem",
-	totem_desc = "Pr\195\169viens quand un Totem Nova de feu est incant\195\169.",
-	totem_trigger = "Seigneur des mal\195\169fices Malacrass lance Totem Nova de feu.",
+	totem_desc = "Préviens quand un Totem Nova de feu est incanté.",
+	totem_trigger = "Seigneur des maléfices Malacrass lance Totem Nova de feu.",
 	totem_message = "Totem Nova de feu !",
 
 	heal = "Soin",
-	heal_desc = "Pr\195\169viens quand Malacrass incante un soin.",
-	heal_flash = "Seigneur des mal\195\169fices Malacrass commence à lancer Soins rapides.",
-	heal_light = "Seigneur des mal\195\169fices Malacrass commence à lancer Lumière sacr\195\169e.",
-	heal_wave = "Seigneur des mal\195\169fices Malacrass commence à lancer Vague de soins.",
+	heal_desc = "Préviens quand Malacrass incante un soin.",
+	heal_flash = "Seigneur des maléfices Malacrass commence à lancer Soins rapides.",
+	heal_light = "Seigneur des maléfices Malacrass commence à lancer Lumière sacrée.",
+	heal_wave = "Seigneur des maléfices Malacrass commence à lancer Vague de soins.",
 	heal_message = "Incante un soin !",
 } end )
 
