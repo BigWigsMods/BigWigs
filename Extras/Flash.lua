@@ -15,6 +15,7 @@ local shaking = nil
 local SHAKE_DURATION = 0.8
 local SHAKE_X = 10
 local SHAKE_Y = 10
+local fail = nil
 
 L:RegisterTranslations("enUS", function() return {
 	["FlashNShake"] = true,
@@ -29,6 +30,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Test"] = true,
 	["Perform a Flash/Shake test."] = true,
+
+	flash_warning = "Screen Shake failed. This is usually caused when nameplates are on.\nTurn off nameplates and reload UI or turn off BigWigs 'Shake'. (Flash is NOT affected)",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -225,7 +228,13 @@ function mod:BigWigs_Message(msg, color)
 				shaker:Hide()
 				shaker:SetScript("OnUpdate", shakeOnUpdate)
 			end
-			startShake()
+			local check = WorldFrame:IsProtected()
+			if not check then
+				startShake()
+			elseif check and not fail then
+				BigWigs:Print(L["flash_warning"])
+				fail = true
+			end
 		end
 	end
 end
