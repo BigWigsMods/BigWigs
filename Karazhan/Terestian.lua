@@ -40,12 +40,12 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	--engage_trigger = "^Ah, you're just in time.",
+	engage_trigger = "^Ah, Ihr kommt genau richtig. Die Rituale fangen gleich an!",
 
 	sacrifice = "Opferung",
 	sacrifice_desc = "Warnt welcher Spieler geopfert wird",
 	sacrifice_trigger = "^([^%s]+) ([^%s]+) von Opferung betroffen%.$",
-	--sacrifice_fade = "^Sacrifice fades from ([^%s]+)%.$",
+	sacrifice_fade = "^Opferung schwindet von ([^%s]+)%.$",
 	sacrifice_message = "%s wird geopfert!",
 	sacrifice_bar = "Opferung: %s",
 	--sacrifice_soon = "Sacrifice soon!",
