@@ -147,15 +147,15 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("esES", function() return {
-	engage_trigger = "Tu comportamiento no será tolerado.",
+	engage_trigger = "No se tolerar\195\161 tu comportamiento.",
 	engage_message = "Doncella Activa! Arrepentimiento en ~33sec",
 
 	repentance = "Arrepentimiento",
 	repentance_desc = "Tiempo estimado al Arrepentimiento.",
-	repentance_trigger1 = "Expulsa tus pensamientos corruptos.",
-	repentance_trigger2 = "Tu impureza debe purificarse.",
-	repentance_message = "Proximo Arrepentimiento! en ~33sec",
-	repentance_warning = "Fin del Enfriamiento de Arrepentimiento - Lanzamiento proximo!",
+	repentance_trigger1 = "Expulsad vuestros pensamientos impuros.",
+	repentance_trigger2 = "Vuestra falta de pudor deber purificarse.",
+	repentance_message = "Pr\195\179ximo Arrepentimiento! en ~33sec",
+	repentance_warning = "Fin del Enfriamiento de Arrepentimiento - Lanzamiento pr\195\179ximo!",
 	repentance_bar = "Arrepentimiento",
 	repentance_nextbar = "Enfriamiento de Arrepentimiento",
 
