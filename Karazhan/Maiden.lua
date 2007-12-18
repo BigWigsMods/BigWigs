@@ -165,7 +165,7 @@ L:RegisterTranslations("esES", function() return {
 	holyfire_message = "Fuego Sagrado: %s",
 
 	icon = "Icono de Raid",
-	icon_desc = "Pone un icono de raid en el juegador afectado por Fuego Sagrado(requiere promoted o mayor).",
+	icon_desc = "Pone un icono de raid en el jugador afectado por Fuego Sagrado(requiere promoted o mayor).",
 } end)
 
 ----------------------------------
