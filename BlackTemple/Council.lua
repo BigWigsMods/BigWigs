@@ -177,7 +177,7 @@ L:RegisterTranslations("koKR", function() return {
 	circle_heal_trigger = "^여군주 말란데의 치유의 마법진|1으로;로;",
 	circle_fail_trigger = "^([^%s]+)|1이;가; 여군주 말란데의 치유의 마법진|1을;를; 차단했습니다%.$",
 	circle_heal_message = "치유됨! - 다음은 약 20초 이내",
-	circle_fail_message = "%s 차단됨! - 다음은 약 12초 이내",
+	circle_fail_message = "%s 차단함! - 다음은 약 12초 이내",
 	circle_bar = "~치유의 마법진 대기 시간",
 
 	res = "저항의 오라",
