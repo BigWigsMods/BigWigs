@@ -43,6 +43,34 @@ L:RegisterTranslations("enUS", function() return {
 	heal_message = "Casting Heal!",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "Der Schatten wird Euch verschlingen...",
+
+	bolts = "Geistesblitze",
+	bolts_desc = "Warnung, wenn Hexlord Malacrass beginnt Geistesblitze zu wirken.",
+	bolts_trigger = "Eure Seele wird bluten!",
+	bolts_message = "Geistesblitze!",
+	bolts_warning = "Geistesblitze in 5 sec!",
+	bolts_nextbar = "Nächste Geistesblitze",
+
+	soul = "Seele entziehen",
+	soul_desc = "Warnung, wer von Seele entziehen betroffen ist.",
+	soul_trigger = "^([^%s]+) ([^%s]+) ist von Seele entziehen betroffen.$",
+	soul_message = "Seele entziehen: %s",
+
+	totem = "Totem",
+	totem_desc = "Warnung, wenn ein Feuer Nova Totem gewirkt wird.",
+	totem_trigger = "Hexlord Malacrass wirkt Feuer Nova Totem.",
+	totem_message = "Feuer Nova Totem!",
+
+	heal = "Heilung",
+	heal_desc = "Warnung, wenn Malacrass einen Heilzauber wirkt.",
+	heal_flash = "Hexlord Malacrass beginnt Blitzheilung zu wirken.",
+	heal_light = "Hexlord Malacrass beginnt Heiliges Licht zu wirken.",
+	heal_wave = "Hexlord Malacrass beginnt Welle der Heilung zu wirken.",
+	heal_message = "Wirkt Heilung!",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "너희에게 그림자가 드리우리라...",
 
