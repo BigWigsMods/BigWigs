@@ -374,7 +374,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Flame of Azzinoth"] = "Flamme von Azzinoth",
 
 	--very first yell to start engage timer
-	--illi_start = "Akama. Your duplicity is hardly surprising. I should have slaughtered you and your malformed brethren long ago.",
+	illi_start = "Akama. Euer falsches Spiel überrascht mich nicht. Ich hätte Euch und Eure missgestalteten Brüder schon vor langer Zeit abschlachten sollen.",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
