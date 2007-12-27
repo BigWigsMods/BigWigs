@@ -76,7 +76,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Version Query"] = "버전 요청",
-	["Commands for querying the raid for Big Wigs versions."] = "BigQigs 버전에 대한 공격대 요청 관련 명령어입니다.",
+	["Commands for querying the raid for Big Wigs versions."] = "BigWigs 버전에 대한 공격대 요청 관련 명령어입니다.",
 	["Query already running, please wait 5 seconds before trying again."] = "이미 요청 중, 5초후 다시 시도하세요.",
 	["Querying versions for "] = "버전 요청 중 : ",
 	["Big Wigs Version Query"] = "BigWigs 버전 요청",
