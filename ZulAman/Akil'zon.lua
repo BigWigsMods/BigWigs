@@ -136,7 +136,7 @@ L:RegisterTranslations("esES", function() return {
 
 	elec = "Tormenta el\195\169ctrica",
 	elec_desc = "Avisa quien Tormenta el\195\169ctrica.",
-	--elec_trigger = "^(%S+) (%S+) sufre Tormenta el\195\169ctrica%.$",
+	elec_trigger = "\194\161Aparece una tormenta el\195\169ctrica!",
 	elec_bar = "~Regeneraci\195\179n de Tormenta",
 	elec_message = "Tormenta en %s!",
 	elec_warning = "\194\161Tormenta pronto!",

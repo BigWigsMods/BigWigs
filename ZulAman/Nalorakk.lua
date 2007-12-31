@@ -122,7 +122,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	engage_trigger = "\194\161Morir\195\173is pronto!",
+	engage_trigger = "\194\161Morir\195\169is pronto!",
 	engage_message = "\194\161%s Activado - Forma de Oso en 45seg!",
 
 	phase = "Fases",
