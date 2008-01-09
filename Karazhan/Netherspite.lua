@@ -51,7 +51,7 @@ L:RegisterTranslations("deDE", function() return {
 	phase1_trigger = "%s schreit auf und \195\182ffnet Tore zum Nether.",
 	phase2_message = "Rage - Incoming Netheratem!",
 	phase2_bar = "N\195\164chste Rage",
-	phase2_trigger = "Netherenergien versetzen %s in rasende Wut",
+	phase2_trigger = "Netherenergien versetzen %s in rasende Wut!",
 
 	voidzone_trigger = "wirkt Zone der Leere.",
 	voidzone_warn = "Zone der Leere (%d)!",
