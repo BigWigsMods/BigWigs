@@ -63,10 +63,10 @@ L:RegisterTranslations("deDE", function() return {
 	phase2_trigger = "^Ich werde",
 	phase2_message = "20% - Phase 2",
 
-	wrath = "Zorn des Astronomen",
-	wrath_desc = "Warnt wer von Zorn des Astronomen betroffen ist.",
-	wrath_trigger = "^([^%s]+) ([^%s]+) von Zorn des Astronomen betroffen%.$",
-	wrath_fade = "Zorn des Astronomen schwindet von Euch.",
+	wrath = "Zorn des Astromanten",
+	wrath_desc = "Warnt wer von Zorn des Astromanten betroffen ist.",
+	wrath_trigger = "^([^%s]+) ([^%s]+) von Zorn des Astromanten betroffen%.$",
+	wrath_fade = "Zorn des Astromanten schwindet von Euch.",
 	wrath_other = "Zorn auf %s",
 	wrath_you = "Zorn auf DIR!",
 
@@ -74,7 +74,7 @@ L:RegisterTranslations("deDE", function() return {
 	whisper_desc = "Warnung an Spieler mit Zorn Debuff flüstern(benötigt Asssitent oder höher).",
 
 	icon = "Schlachtzug Symbol",
-	icon_desc = "Plaziere ein Schlachtzug Symbol auf dem Spieler, der von Zorn des Astronomen betroffen ist.",
+	icon_desc = "Plaziere ein Schlachtzug Symbol auf dem Spieler, der von Zorn des Astromanten betroffen ist.",
 
 	split = "Spaltung",
 	split_desc = "Warnt vor Spaltung & Add Spawn.",
