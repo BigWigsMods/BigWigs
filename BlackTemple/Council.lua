@@ -201,7 +201,7 @@ L:RegisterTranslations("zhCN", function() return {
 	vanish_bar = "<消失>",
 
 	immune = "免疫警报",
-	immune_desc = "当玛兰德免疫法术活近战攻击时发出警报。",
+	immune_desc = "当玛兰德免疫法术或近战攻击时发出警报。",
 	immune_spell_trigger = "女公爵玛兰德获得了法术结界祝福的效果。",
 	immune_melee_trigger = "女公爵玛兰德获得了保护祝福的效果。",
 	immune_message = "女公爵玛兰德： 15秒 %s免疫！",
