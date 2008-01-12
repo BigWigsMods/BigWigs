@@ -52,6 +52,22 @@ L:RegisterTranslations("enUS", function() return {
 	claw_message = "Claw Rage on %s",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "Keiner kann es mit mir aufnehmen!",
+	engage_message = "Phase 1 - Menschen-Phase",
+
+	form = "Formwechsel",
+	form_desc = "Warnen wenn Zul'jin seine Form wechselt.",
+	form_bear_trigger = "Sagt 'Hallo' zu Bruder B?r...",
+	form_bear_message = "80% Phase 2 - B?r-Form!",
+	form_eagle_trigger = "Niemand versteckt sich vor dem Adler!",
+	form_eagle_message = "60% Phase 3 - Adler-Form!",
+	form_lynx_trigger = "Lernt meine Br?der kennen: Rei?zahn und Klaue!",
+	form_lynx_message = "40% Phase 4 - Luchs-Form!",
+	form_dragonhawk_trigger = "Was starrt Ihr in die Luft? Der Drachenfalke steht schon vor Euch!",
+	form_dragonhawk_message = "20% Phase 5 - Drachenfalken-Form!",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Y'a personne plus balèze que moi !",
 	engage_message = "Phase 1 - Forme trolle",

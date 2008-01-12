@@ -46,29 +46,29 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Der Schatten wird Euch verschlingen...",
 
-	bolts = "Geistesblitze",
-	bolts_desc = "Warnung, wenn Hexlord Malacrass beginnt Geistesblitze zu wirken.",
+	bolts = "Geistblitze",
+	bolts_desc = "Warnt wenn Geistblitze gecastet werden.",
 	bolts_trigger = "Eure Seele wird bluten!",
-	bolts_message = "Geistesblitze!",
-	bolts_warning = "Geistesblitze in 5 sec!",
-	bolts_nextbar = "Nächste Geistesblitze",
+	bolts_message = "Geistblitze!",
+	bolts_warning = "Geistblitze in 5 Sek!",
+	bolts_nextbar = "N\195\164chsten Geistblitze",
 
 	soul = "Seele entziehen",
-	soul_desc = "Warnung, wer von Seele entziehen betroffen ist.",
-	soul_trigger = "^([^%s]+) ([^%s]+) ist von Seele entziehen betroffen.$",
+	soul_desc = "Warnt wer von Seele entziehen betroffen ist.",
+	soul_trigger = "^(%S+) (%S+) ist von Seele entziehen betroffen%.$",
 	soul_message = "Seele entziehen: %s",
 
 	totem = "Totem",
-	totem_desc = "Warnung, wenn ein Feuer Nova Totem gewirkt wird.",
-	totem_trigger = "Hexlord Malacrass wirkt Feuer Nova Totem.",
-	totem_message = "Feuer Nova Totem!",
+	totem_desc = "Warnt wenn Feuernova Totem gestellt wird.",
+	totem_trigger = "Hexlord Malacrass wirkt Feuernovatotem.",
+	totem_message = "Feuernova Totem!",
 
 	heal = "Heilung",
-	heal_desc = "Warnung, wenn Malacrass einen Heilzauber wirkt.",
+	heal_desc = "Warnt wenn eine Heilung gecastet wird.",
 	heal_flash = "Hexlord Malacrass beginnt Blitzheilung zu wirken.",
 	heal_light = "Hexlord Malacrass beginnt Heiliges Licht zu wirken.",
 	heal_wave = "Hexlord Malacrass beginnt Welle der Heilung zu wirken.",
-	heal_message = "Wirkt Heilung!",
+	heal_message = "Heilung!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
