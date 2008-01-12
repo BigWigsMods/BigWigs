@@ -218,10 +218,10 @@ L:RegisterTranslations("zhCN", function() return {
 	["Thrall"] = "萨尔",
 	["Lady Jaina Proudmoore"] = "吉安娜·普罗德摩尔",
 
-	["My companions and I are with you, Lady Proudmoore."] = "My companions and I are with you, Lady Proudmoore.", -- Rage Winterchill
-	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "We are ready for whatever Archimonde might send our way, Lady Proudmoore.", -- Anatheron
-	["I am with you, Thrall."] = "I am with you, Thrall.", -- Kaz'Rogal
-	["We have nothing to fear."] = "We have nothing to fear.", -- Az'Galor
+	["My companions and I are with you, Lady Proudmoore."] = "我和我的伙伴们将与您并肩作战，普罗德摩尔女士。", -- Rage Winterchill
+	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "我们已经准备好对付阿克蒙德的任何爪牙了，普罗德摩尔女士。", -- Anatheron
+	["I am with you, Thrall."] = "我与你并肩作战，萨尔。", -- Kaz'Rogal
+	["We have nothing to fear."] = "我们无所畏惧。", -- Az'Galor
 
 	["Please remove BigWigs_WaveTimers, it is deprecated."] = "请移除 BigWigs_WaveTimers， 此插件已经失效了。",
 
