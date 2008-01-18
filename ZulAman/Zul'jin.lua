@@ -58,14 +58,36 @@ L:RegisterTranslations("deDE", function() return {
 
 	form = "Formwechsel",
 	form_desc = "Warnen wenn Zul'jin seine Form wechselt.",
-	form_bear_trigger = "Sagt 'Hallo' zu Bruder B?r...",
-	form_bear_message = "80% Phase 2 - B?r-Form!",
+	form_bear_trigger = "Sagt 'Hallo' zu Bruder Bär...",
+	form_bear_message = "80% Phase 2 - Bär-Form!",
 	form_eagle_trigger = "Niemand versteckt sich vor dem Adler!",
 	form_eagle_message = "60% Phase 3 - Adler-Form!",
-	form_lynx_trigger = "Lernt meine Br?der kennen: Rei?zahn und Klaue!",
+	form_lynx_trigger = "Lernt meine Brüder kennen: Reißzahn und Klaue!",
 	form_lynx_message = "40% Phase 4 - Luchs-Form!",
 	form_dragonhawk_trigger = "Was starrt Ihr in die Luft? Der Drachenfalke steht schon vor Euch!",
 	form_dragonhawk_message = "20% Phase 5 - Drachenfalken-Form!",
+
+	throw = "Schrecklicher Wurf",
+	throw_desc = "Warnen wer von Schrecklicher Wurf betroffen ist.",
+	throw_message = "%s hat Schrecklicher Wurf",
+	throw_trigger = "^(%S+) (%S+) ist von Schrecklicher Wurf betroffen%.$",
+
+	icon = "Schlachtzugsymbol",
+	icon_desc = "Platziere ein Schlachtzugsymbol auf dem Spieler, der von Schrecklicher Wurf oder Klauenwut betroffen ist (benötigt Assistent oder höher).",
+
+	paralyze = "Schleichende Paralyse",
+	paralyze_desc = "Warnen wer von der Schleichende Paralyse und der daraus folgenden direkten Paralyse betroffen ist.",
+	paralyze_warning = "Schleichende Paralyse - Paralyse in 5 sek!",
+	paralyze_message = "Paralysiert!",
+	paralyze_bar = "Inc Paralyse",
+	paralyze_trigger = "ist von Schleichende Paralyse betroffen%.$",
+	paralyze_warnbar = "Nächste Paralyse",
+	paralyze_soon = "Schleichende Paralyse in 5 sek",
+
+	claw = "Klauenwut",
+	claw_desc = "Warnen wer von Klauenwut betroffen ist.",
+	claw_trigger = "^(%S+) (%S+) ist von Klauenwut betroffen%.$",
+	claw_message = "Klauenwut auf %s",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
