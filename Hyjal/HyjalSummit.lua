@@ -494,7 +494,7 @@ function mod:BigWigs_RecvSync( sync, rest )
 					elseif wave == 2 then
 						self:Message(fmt(three, wave, 5, ghoul, 8, garg, 1, wyrm), "Important")
 					elseif wave == 3 then
-						self:Message(fmt(two, wave, 4, ghoul, 8, infernal), "Important")
+						self:Message(fmt(two, wave, 6, ghoul, 8, infernal), "Important")
 					elseif wave == 4 then
 						self:Message(fmt(two, wave, 6, fel, 8, infernal), "Important")
 					elseif wave == 5 then
