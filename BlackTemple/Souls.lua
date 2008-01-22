@@ -143,7 +143,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	spite = "Dépit",
 	spite_desc = "Préviens quand un joueur subit les effets du Dépit.",
-	spite_message = "Dépit : [%s]",
+	spite_message = "Dépit sur %s",
 
 	scream = "Cri de l'âme",
 	scream_desc = "Affiche une barre de cooldown pour le Cri de l'âme.",

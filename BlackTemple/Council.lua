@@ -88,7 +88,7 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger1 = "Vous voulez me tester ?", -- à vérifier
 	engage_trigger2 = "Allons donc... quelle grossièreté. Bandal !", -- à vérifier
 	engage_trigger3 = "J'ai mieux à faire...", -- à vérifier
-	engage_trigger4 = "Fuyez ou mourrez !", -- à vérifier
+	engage_trigger4 = "Fuyez ou mourez !", -- à vérifier
 
 	vanish = "Disparition",
 	vanish_desc = "Délais estimés concernant la Disparition de Veras.",
@@ -137,10 +137,10 @@ L:RegisterTranslations("frFR", function() return {
 	res_message = "Gathios : Résistance pendant 30 sec. !",
 	res_bar = "Aura de résistance",
 
-	--blizzard = "Blizzard on You",
-	--blizzard_desc = "Warn when you are in a Blizzard.",
-	--blizzard_trigger = "You are afflicted by Blizzard.",
-	--blizzard_message = "Blizzard on YOU!",
+	blizzard = "Blizzard sur vous",
+	blizzard_desc = "Préviens quand vous êtes dans un Blizzard.",
+	blizzard_trigger = "Vous subissez les effets de Blizzard.",
+	blizzard_message = "Blizzard sur VOUS !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
