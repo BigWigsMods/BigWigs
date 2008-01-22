@@ -577,8 +577,8 @@ function mod:AfflictEvent(msg)
 end
 
 function mod:Normal()
-	self:Bar(L["normal_bar"], 60, "Spell_Shadow_Metamorphosis")
-	self:ScheduleEvent("BWIlliNormalSoon", "BigWigs_Message", 55, L["normal_warning"], "Attention")
+	self:Bar(L["normal_bar"], 70, "Spell_Shadow_Metamorphosis")
+	self:ScheduleEvent("BWIlliNormalSoon", "BigWigs_Message", 65, L["normal_warning"], "Attention")
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
