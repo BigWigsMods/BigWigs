@@ -283,6 +283,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 				self:Bar(L["phase_rage_bar"], 28, "Spell_Fire_ElementalDevastation")
 				self:DelayedMessage(23, L["phase_normal_warning"], "Important")
 			end
+			self:Icon(rest)
 		end
 	elseif sync == "GurAcid" and db.acid then
 		self:Bar(L["acid"], 2, "Spell_Nature_Acid_01")
