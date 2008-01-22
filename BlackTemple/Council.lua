@@ -77,6 +77,11 @@ L:RegisterTranslations("enUS", function() return {
 	res_trigger = "Gathios the Shatterer gains Chromatic Resistance Aura.",
 	res_message = "Gathios: Resistance for 30 sec!",
 	res_bar = "Resistance Aura",
+
+	blizzard = "Blizzard on You",
+	blizzard_desc = "Warn when you are in a Blizzard.",
+	blizzard_trigger = "You are afflicted by Blizzard.",
+	blizzard_message = "Blizzard on YOU!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -131,6 +136,11 @@ L:RegisterTranslations("frFR", function() return {
 	res_trigger = "Gathios le Briseur gagne Aura de résistance chromatique.",
 	res_message = "Gathios : Résistance pendant 30 sec. !",
 	res_bar = "Aura de résistance",
+
+	--blizzard = "Blizzard on You",
+	--blizzard_desc = "Warn when you are in a Blizzard.",
+	--blizzard_trigger = "You are afflicted by Blizzard.",
+	--blizzard_message = "Blizzard on YOU!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -185,6 +195,11 @@ L:RegisterTranslations("koKR", function() return {
 	res_trigger = "파괴자 가디오스|1이;가; 오색 저항의 오라 효과를 얻었습니다.",
 	res_message = "가디오스: 30초간 저항!",
 	res_bar = "저항의 오라",
+
+	--blizzard = "Blizzard on You",
+	--blizzard_desc = "Warn when you are in a Blizzard.",
+	--blizzard_trigger = "You are afflicted by Blizzard.",
+	--blizzard_message = "Blizzard on YOU!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -239,6 +254,11 @@ L:RegisterTranslations("zhCN", function() return {
 	res_trigger = "击碎者加西奥斯获得了多彩抗性光环的效果。",
 	res_message = "击碎者加西奥斯： 多彩抗性光环 30秒！",
 	res_bar = "<多彩抗性光环>",
+
+	--blizzard = "Blizzard on You",
+	--blizzard_desc = "Warn when you are in a Blizzard.",
+	--blizzard_trigger = "You are afflicted by Blizzard.",
+	--blizzard_message = "Blizzard on YOU!",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -293,6 +313,11 @@ L:RegisterTranslations("zhTW", function() return {
 	res_trigger = "粉碎者高希歐獲得了多重抗性光環的效果。",
 	res_message = "粉碎者高希歐: 多重抗性光環 30 秒!",
 	res_bar = "多重抗性光環",
+
+	--blizzard = "Blizzard on You",
+	--blizzard_desc = "Warn when you are in a Blizzard.",
+	--blizzard_trigger = "You are afflicted by Blizzard.",
+	--blizzard_message = "Blizzard on YOU!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -347,6 +372,11 @@ L:RegisterTranslations("deDE", function() return {
 	res_trigger = "Gathios der Zerschmetterer bekommt Aura des chromatischen Widerstands.",
 	res_message = "Gathios: Resistenz für 30 sek!",
 	res_bar = "Resistenz Aura",
+
+	--blizzard = "Blizzard on You",
+	--blizzard_desc = "Warn when you are in a Blizzard.",
+	--blizzard_trigger = "You are afflicted by Blizzard.",
+	--blizzard_message = "Blizzard on YOU!",
 } end )
 
 ----------------------------------
@@ -356,7 +386,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
 mod.enabletrigger = {malande, gathios, zerevor, veras}
-mod.toggleoptions = {"immune", "res", "shield", -1, "vanish", "circle", -1, "poison", "icon", "enrage", "bosskill"}
+mod.toggleoptions = {"immune", "res", "shield", -1, "vanish", "circle", -1, "poison", "icon", -1, "blizzard", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -370,9 +400,9 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Poison")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Poison")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Poison")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "DebuffEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "DebuffEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "DebuffEvent")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE", "Interrupt")
 	self:RegisterEvent("CHAT_MSG_SPELL_PARTY_DAMAGE", "Interrupt")
@@ -381,7 +411,6 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	--self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalSpell", 5)
@@ -415,11 +444,11 @@ end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "MalSpell" and db.immune then
-		self:Message(fmt(L["immune_message"], L["spell"]), "Positive", nil, "Alarm")
+		self:Message(fmt(L["immune_message"], L["spell"]), "Positive")
 		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["immune_message"], L["melee"]))
 		self:Bar(fmt(L["immune_bar"], L["spell"]), 15, "Spell_Holy_SealOfRighteousness")
 	elseif sync == "MalMelee" and db.immune then
-		self:Message(fmt(L["immune_message"], L["melee"]), "Positive", nil, "Alert")
+		self:Message(fmt(L["immune_message"], L["melee"]), "Positive")
 		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["immune_message"], L["spell"]))
 		self:Bar(fmt(L["immune_bar"], L["melee"]), 15, "Spell_Holy_SealOfProtection")
 	elseif sync == "MalShield" and db.shield then
@@ -455,15 +484,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if db.icon then
 			self:Icon(rest)
 		end
-		--[[
-	elseif self:ValidateEngageSync(sync, rest) and not started then
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
-		if db.enrage then
-			self:Engage()
-		end
-		]]
 	end
 end
 
@@ -508,7 +528,12 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	end
 end
 
-function mod:Poison(msg)
+function mod:DebuffEvent(msg)
+	if msg == L["blizzard_trigger"] and db.blizzard then
+		self:Message(L["blizzard_message"], "Personal", true, "Alarm")
+		return
+	end
+
 	local pplayer, ptype = select(3, msg:find(L["poison_trigger"]))
 	if pplayer and ptype then
 		if pplayer == L2["you"] and ptype == L2["are"] then
