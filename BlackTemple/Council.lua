@@ -196,10 +196,10 @@ L:RegisterTranslations("koKR", function() return {
 	res_message = "가디오스: 30초간 저항!",
 	res_bar = "저항의 오라",
 
-	--blizzard = "Blizzard on You",
-	--blizzard_desc = "Warn when you are in a Blizzard.",
-	--blizzard_trigger = "You are afflicted by Blizzard.",
-	--blizzard_message = "Blizzard on YOU!",
+	blizzard = "당신에 눈보라",
+	blizzard_desc = "당신이 눈보라에 걸렸을 때 알립니다.",
+	blizzard_trigger = "당신은 눈보라에 걸렸습니다.",
+	blizzard_message = "당신에 눈보라!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
