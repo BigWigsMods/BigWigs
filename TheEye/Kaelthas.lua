@@ -293,7 +293,7 @@ L:RegisterTranslations("deDE", function() return {
 	gaze_trigger = "behält ([^%s]+) im Blickfeld!$",
 	gaze_message = "Blick auf %s!",
 	gaze_bar = "Blick Cooldown",
-	--gaze_you = "Gaze on YOU!",
+	gaze_you = "Blick auf DIR!",
 
 	icon = "Schlachtzug Symbol",
 	icon_desc = "Plaziert ein Schlachtzug Symbol auf dem Spieler, den Thaladred im Blick behält.",
@@ -322,8 +322,8 @@ L:RegisterTranslations("deDE", function() return {
 	pyro_message = "Pyroschlag!",
 
 	toyall = "Ferngesteuertes Spielzeug",
-	--toyall_desc = "Warnt wenn ein Tank ein Ferngesteuertes Spielzeug ist.",
-	--toyall_message = "Spielzeug auf Tank: %s",
+	toyall_desc = "Warnt,wenn ein Spieler ein Ferngesteuertes Spielzeug ist.",
+	toyall_message = "Spielzeug: %s",
 
 	phase = "Phasen Warnungen",
 	phase_desc = "Warnt vor den verschiedenen Phasen des Encounters.",
