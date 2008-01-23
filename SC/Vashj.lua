@@ -189,18 +189,19 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	["Tainted Elemental"] = "Besudelter Elementar",
 
-	engage_trigger1 = "Normalerweise w\195\188rde ich mich nicht herablassen, Euresgleichen pers\195\182nlich gegen\195\188berzutreten, aber ihr lasst mir keine Wahl...",
-	engage_trigger2 = "Ich spucke auf Euch, Oberflchenbewohner", -- to verify
+	engage_trigger1 = "Normalerweise würde ich mich nicht herablassen, Euresgleichen persönlich gegenüberzutreten, aber ihr lasst mir keine Wahl...",
+	engage_trigger2 = "Ich spucke auf Euch, Oberweltler!", -- up to date as of 2.3.2
 	engage_trigger3 = "Victory to Lord Illidan! ", -- to translate
 	engage_trigger4 = "I'll split you from stem to stern!", -- to translate
 	engage_trigger5 = "Tod den Eindringlingen!",
 	engage_message = "Phase 1",
 
-	phase = "Phasen Warnung",
+	phase = "Phasenwarnung",
 	phase_desc = "Warnt, wenn Vashj ihre Phase wechselt.",
 	phase2_trigger = "Die Zeit ist gekommen! Lasst keinen am Leben!",
 	phase2_soon_message = "Phase 2 bald!",
 	phase2_message = "Phase 2, Adds kommen!",
+	phase3_trigger = "Geht besser in Deckung!",
 	phase3_message = "Phase 3 - Wutanfall in 4min!",
 
 	static = "Statische Aufladung",
@@ -208,36 +209,36 @@ L:RegisterTranslations("deDE", function() return {
 	static_charge_trigger = "^([^%s]+) ([^%s]+) von Statische Aufladung betroffen%.$",
 	static_charge_message = "Statische Aufladung auf %s!",
 	static_fade = "'Statische Aufladung' schwindet von Euch.",
-	--static_warnyou = "Static Charge on YOU!",
+	static_warnyou = "Statische Aufladung auf DIR!",
 
 	icon = "Icon",
-	icon_desc = "Plaziert ein Icon auf Spielern mit Statische Aufladung und denen, die einen Besudelten Kern looten.",
+	icon_desc = "Platziert ein Icon auf Spielern mit Statischer Aufladung und denen, die einen Besudelten Kern looten.",
 
-	elemental = "Besudelter Elementar spawn",
-	elemental_desc = "Warnt, wenn ein Besudelter Elementar w\195\164rend Phase 2 spawnt.",
+	elemental = "Besudelter Elementar Spawn",
+	elemental_desc = "Warnt, wenn ein Besudelter Elementar während Phase 2 spawnt.",
 	elemental_bar = "Besudelter Elementar kommt",
 	elemental_soon_message = "Besudelter Elementar bald!",
 
-	strider = "Schreiter des Echsenkessels spawn",
-	strider_desc = "Warnt, wenn ein Schreiter des Echsenkessels w\195\164rend Phase 2 spawnt.",
+	strider = "Schreiter des Echsenkessels Spawn",
+	strider_desc = "Warnt, wenn ein Schreiter des Echsenkessels während Phase 2 spawnt.",
 	strider_bar = "Schreiter kommt",
 	strider_soon_message = "Schreiter bald!",
 
 	naga = "Naga Elite spawn",
-	naga_desc = "Warnt, wenn ein Naga Elite w\195\164rend Phase 2 spawnt.",
+	naga_desc = "Warnt, wenn ein Naga Elite während Phase 2 spawnt.",
 	naga_bar = "Naga Elite kommt",
 	naga_soon_message = "Naga Elite bald!",
 
-	barrier = "Barriere zerst\195\182rt",
-	barrier_desc = "Alarmiert, wenn die Barrieren in Phase 2 zerst\195\182rt werden.",
-	barrier_down_message = "Barriere %d/4 zerst\195\182rt!",
+	barrier = "Barriere zerstört",
+	barrier_desc = "Alarmiert, wenn die Barrieren in Phase 2 zerstört werden.",
+	barrier_down_message = "Barriere %d/4 zerstört!",
 	barrier_fades_trigger = "Magiebarriere schwindet von Lady Vashj.",
 
 	loot = "Besudelter Kern",
-	loot_desc = "Warnt wer einen Besudelten Kern lootet.",
+	loot_desc = "Warnt, wer einen Besudelten Kern lootet.",
 	loot_message = "%s hat einen Kern gelootet!",
-	--loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$",
-	--loot_update = "Core on > %s",
+	loot_paralyze = "^([^%s]+) ([^%s]+) von Paralysieren betroffen%.$",
+	loot_update = "Kern > %s",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
