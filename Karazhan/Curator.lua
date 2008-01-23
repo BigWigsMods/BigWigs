@@ -111,10 +111,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	enrage_trigger = "不合作将导致攻击行动。",
 	enrage_message = "狂暴！",
-	enrage_warning = "监护者将进入狂暴！",
+	enrage_warning = "馆长将进入狂暴！",
 
 	weaken = "唤醒",
-	weaken_desc = "当监护者进入唤醒时发送警告。",
+	weaken_desc = "当馆长进入唤醒时发送警告。",
 	weaken_trigger = "你的请求未能得到批准。",
 	weaken_message = "唤醒 - 20秒虚弱计时开始",
 	weaken_bar = "<唤醒>",
