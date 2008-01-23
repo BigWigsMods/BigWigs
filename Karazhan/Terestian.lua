@@ -48,11 +48,11 @@ L:RegisterTranslations("deDE", function() return {
 	sacrifice_fade = "^Opferung schwindet von ([^%s]+)%.$",
 	sacrifice_message = "%s wird geopfert!",
 	sacrifice_bar = "Opferung: %s",
-	--sacrifice_soon = "Sacrifice soon!",
-	--sacrifice_soonbar = "~Possible Sacrifice",
+	sacrifice_soon = "Opferung bald!",
+	sacrifice_soonbar = "~Mögliche Opferung",
 
-	--icon = "Raid Icon",
-	--icon_desc = "Place a raid icon on the sacrificed player(requires promoted or higher).",
+	icon = "Schlachtzugsymbol",
+	icon_desc = "Platziert ein Schlachtzugssymbol auf dem Geopferten (benötigt Assistent oder höher).",
 
 	weak = "Geschw\195\164cht",
 	weak_desc = "Warnt wenn Terestian geschw\195\164cht ist",
@@ -61,7 +61,7 @@ L:RegisterTranslations("deDE", function() return {
 	weak_warning1 = "Geschw\195\164cht vorbei in 5 Sek!",
 	weak_warning2 = "Geschw\195\164cht vorbei!",
 	weak_bar = "Geschw\195\164cht",
-	--weak_fade = "^Broken Pact fades",
+	weak_fade = "^Gebrochener Pakt schwindet",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

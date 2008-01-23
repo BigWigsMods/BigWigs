@@ -76,22 +76,6 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("deDE", function() return {
 	escape = "Ausbruch",
 	escape_desc = "Countdown bis Magtheridon ausbricht",
-
-	abyssal = "Brennender Schlund",
-	abyssal_desc = "Warnt, wenn ein Brennender Schlund gespawned wird",
-
-	heal = "Heilung",
-	heal_desc = "Warnt, wenn ein Kanalisierer anf\195\164ngt zu heilen",
-
-	nova = "Drucknova",
-	nova_desc = "Gesch\195\164tzte Drucknova Timer",
-
-	banish = "Verbannung",
-	banish_desc = "Warnt, wenn ihr Magtheridon verbannt",
-
-	exhaust = "Ersch\195\182pfung",
-	exhaust_desc = "Timer f\195\188r Gedankenersch\195\182pfung",
-
 	escape_trigger1 = "Die Fesseln von %%s werden schw\195\164cher!",
 	escape_trigger2 = " Ich... bin... frei!",
 	escape_warning1 = "%s angegriffen - Ausbruch in 2min!",
@@ -102,21 +86,46 @@ L:RegisterTranslations("deDE", function() return {
 	escape_bar = "Frei...",
 	escape_message = "%s frei!",
 
+	abyssal = "Brennender Schlund",
+	abyssal_desc = "Warnt, wenn ein Brennender Schlund gespawned wird",
 	abyssal_trigger = "Kanalisierer des H\195\182llenfeuers wirkt Brennender Schlund",
 	abyssal_message = "Brennender Schlund gespawned (%d)",
 
+	heal = "Heilung",
+	heal_desc = "Warnt, wenn ein Kanalisierer anf\195\164ngt zu heilen",
 	heal_trigger = "beginnt Dunkle Besserung zu wirken",
 	heal_message = "Heilung!",
 
+	nova = "Drucknova",
+	nova_desc = "Gesch\195\164tzte Drucknova Timer",
 	nova_ = "Drucknova",
+	--nova_bar = "~Blast Nova Cooldown",
 	nova_warning = "Drucknova bald",
+	--nova_cast = "Casting Blast Nova!",
 
+	banish = "Verbannung",
+	banish_desc = "Warnt, wenn ihr Magtheridon verbannt",
 	banish_trigger = "Nicht schon wieder! Nicht schon wieder...",
 	banish_message = "Verbannt f\195\188r ~10sec",
+	--banish_over_trigger = "^Shadow Cage fades",
+	--banish_over_message = "Banish Fades!",
 	banish_bar = "Verbannt",
 
+	exhaust = "Ersch\195\182pfung",
+	exhaust_desc = "Timer f\195\188r Gedankenersch\195\182pfung",
 	exhaust_trigger = "^([^%s]+) ([^%s]+) von Gedankenersch\195\182pfung betroffen%.$",
 	exhaust_bar = "[%s] ersch\195\182pft",
+
+	debris = "Trümmer auf DIR"
+	debris_desc = "Warnt vor Trümmern auf dir.",
+	debris_trigger = "Ihr seid von Trümmer betroffen.",
+	debris_message = "Trümmer auf DIR!",
+
+	debrisinc = "Trümmer",
+	debrisinc_desc = "Warnt vor bevorstehenden Trümmern bei 30%.",
+	--debrisinc_trigger = "Let the walls of this prison tremble", TRANSLATION MISSING
+	debrisinc_message = "30% - Trümmer steht bevor!",
+	debrisinc_warning = "Trümmer BALD!",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
