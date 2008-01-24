@@ -116,7 +116,7 @@ L:RegisterTranslations("deDE", function() return {
 	exhaust_trigger = "^([^%s]+) ([^%s]+) von Gedankenersch\195\182pfung betroffen%.$",
 	exhaust_bar = "[%s] ersch\195\182pft",
 
-	debris = "Trümmer auf DIR"
+	debris = "Trümmer auf DIR",
 	debris_desc = "Warnt vor Trümmern auf dir.",
 	debris_trigger = "Ihr seid von Trümmer betroffen.",
 	debris_message = "Trümmer auf DIR!",
