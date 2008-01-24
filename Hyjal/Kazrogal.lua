@@ -35,8 +35,6 @@ L:RegisterTranslations("enUS", function() return {
 	range_desc = "Show the proximity box when you are low on mana and have the Mark of Kaz'rogal.",
 	range_gain = "You are afflicted by Mark of Kaz'rogal.",
 	range_fade = "Mark of Kaz'rogal fades from you.",
-
-	--marks, enrage?
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -44,8 +42,6 @@ L:RegisterTranslations("deDE", function() return {
 	range_desc = "Aktiviert die Nähe Anzeige wenn du wenig Mana und das Mal von Kaz'rogal hast.",
 	range_gain = "Ihr seid von Mal von Kaz'rogal betroffen.",
 	range_fade = "Mal von Kaz'rogal schwindet von Euch.",
-
-	--marks, enrage?
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -60,8 +56,6 @@ L:RegisterTranslations("koKR", function() return {
 	range_desc = "카즈로갈의 징표가 걸렸을 때 마나가 낮은 상태가 되면 접근 경고창을 띄웁니다.",
 	range_gain = "당신은 카즈로갈의 징표에 걸렸습니다.", -- check
 	range_fade = "당신의 몸에서 카즈로갈의 징표 효과가 사라졌습니다.", --check
-
-	--marks, enrage?
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -76,7 +70,6 @@ L:RegisterTranslations("zhCN", function() return {
 	range_desc = "当你低法力以及中了卡兹洛加印记，显示范围检测列表。",
 	range_gain = "你受到了卡兹洛加印记效果的影响。",
 	range_fade = "卡兹洛加印记效果从你身上消失了。",
-
 } end )
 
 ----------------------------------

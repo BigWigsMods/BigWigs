@@ -19,14 +19,6 @@ L:RegisterTranslations("enUS", function() return {
 	decay_trigger = "You are afflicted by Death & Decay.",
 	decay_message = "Death & Decay on YOU!",
 
---[[
-	decaycast = "Death & Decay Cast",
-	decaycast_desc = "Warn when Death % Decay is being cast.",
-	decaycast_trigger = "",
-	decaycast_bar = "~Possible Death & Decay /// Next Death & Decay",
-	decasycast_message = "Casting Death & Decay!",
-]]
-
 	icebolt = "Icebolt",
 	icebolt_desc = "Icebolt warnings.",
 	icebolt_trigger = "^(%S+) (%S+) afflicted by Icebolt%.$",

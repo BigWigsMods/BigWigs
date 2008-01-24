@@ -191,8 +191,8 @@ L:RegisterTranslations("deDE", function() return {
 
 	engage_trigger1 = "Normalerweise würde ich mich nicht herablassen, Euresgleichen persönlich gegenüberzutreten, aber ihr lasst mir keine Wahl...",
 	engage_trigger2 = "Ich spucke auf Euch, Oberweltler!", -- up to date as of 2.3.2
-	engage_trigger3 = "Victory to Lord Illidan! ", -- to translate
-	engage_trigger4 = "I'll split you from stem to stern!", -- to translate
+	engage_trigger3 = "Sieg für Fürst Illidan! ", -- to be checked
+	engage_trigger4 = "Ich werde Euch der Länge nach spalten!", -- to be checked
 	engage_trigger5 = "Tod den Eindringlingen!",
 	engage_message = "Phase 1",
 
