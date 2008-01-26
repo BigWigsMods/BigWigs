@@ -255,10 +255,10 @@ L:RegisterTranslations("zhCN", function() return {
 	res_message = "击碎者加西奥斯： 多彩抗性光环 30秒！",
 	res_bar = "<多彩抗性光环>",
 
-	--blizzard = "Blizzard on You",
-	--blizzard_desc = "Warn when you are in a Blizzard.",
-	--blizzard_trigger = "You are afflicted by Blizzard.",
-	--blizzard_message = "Blizzard on YOU!",
+	blizzard = "暴风雪",
+	blizzard_desc = "你中了暴风雪发出警报。",
+	blizzard_trigger = "你受到了暴风雪效果的影响。",
+	blizzard_message = "暴风雪：>你<！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
