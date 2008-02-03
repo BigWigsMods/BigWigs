@@ -14,6 +14,7 @@ local azgalor = AceLibrary("Babble-Boss-2.2")["Azgalor"]
 
 local fmt = string.format
 local match = string.match
+local find = string.find
 local GetRealZoneText = GetRealZoneText
 local GetSubZoneText = GetSubZoneText
 local select = select
@@ -100,8 +101,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	["My companions and I are with you, Lady Proudmoore."] = "제 동료와 저는 프라우드무어님, 당신과 함께 하겠습니다.", -- Rage Winterchill
 	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "아키몬드가 어떤 군대를 보내던 우리는 준비가 되어 있습니다, 프라우드무어 님.", -- Anatheron
-	["I am with you, Thrall."] = "당신과 함께 하겠습니다, 대족장님.", -- Kaz'Rogal
-	["We have nothing to fear."] = "두려워할 것은 아무것도 없습니다.", -- Az'Galor
+	["I am with you, Thrall."] = "^당신과 함께 하겠", -- Kaz'Rogal
+	["We have nothing to fear."] = "^두려워할 것은 아무것도 없", -- Az'Galor
 	
 	["Please remove BigWigs_WaveTimers, it is deprecated."] = "BigWigs_WaveTimers를 반대하므로, 이것을 제거하십시요.",
 
@@ -317,14 +318,14 @@ end
 function mod:GOSSIP_SHOW()
 	local target = UnitName("target")
 	local gossip = GetGossipOptions()
-	if gossip and target == thrall or target == proudmoore then
+	if gossip and (target == thrall or target == proudmoore) then
 		if gossip == L["My companions and I are with you, Lady Proudmoore."] then
 			self:Sync("SummitNext RWC") -- Rage Winterchill is next
 		elseif gossip == L["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] then
 			self:Sync("SummitNext Anatheron") -- Anetheron is next
-		elseif gossip == L["I am with you, Thrall."] then
+		elseif find(gossip, L["I am with you, Thrall."]) then
 			self:Sync("SummitNext KazRogal") -- Kaz'Rogal is next
-		elseif gossip == L["We have nothing to fear."] then
+		elseif find(gossip, L["We have nothing to fear."]) then
 			self:Sync("SummitNext AzGalor") -- Az'Galor is next
 		end
 	end
