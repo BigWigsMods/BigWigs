@@ -100,12 +100,12 @@ L:RegisterTranslations("frFR", function() return {
 	spine_message = "Epine de perforation sur %s !",
 
 	spinesay = "Dire - Epine de perforation",
-	spinesay_desc = "Fais dire à votre personnage qu'il a une épine quand c'est le cas, afin d'aider les membres proches.",
+	spinesay_desc = "Fais dire à votre personnage qu'il a une épine quand c'est le cas afin d'aider les membres proches.",
 	spinesay_message = "Épine sur moi !",
 
 	shield = "Bouclier de flots",
 	shield_desc = "Délais concernant le Bouclier de flots de Naj'entus.",
-	shield_trigger = "Grand seigneur de guerre Naj'entus subit les effets .* Bouclier de flots.",
+	shield_trigger = "Grand seigneur de guerre Naj'entus subit les effets |2 Bouclier de flots.",
 	shield_nextbar = "Prochain Bouclier de flots",
 	shield_warn = "Bouclier de flots !",
 	shield_soon_warn = "Bouclier de flots dans ~10 sec. !",
