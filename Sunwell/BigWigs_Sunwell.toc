@@ -1,0 +1,24 @@
+﻿## Interface: 20400
+
+## Title: Big Wigs (BETA) [|cffeda55fSunwell|r]
+## Notes: Big Wigs Sunwell Modules
+## Author: Funkydude
+## X-Credits: 
+## Version: 2.0
+## LoadOnDemand: 1
+
+## X-Website: http://www.wowace.com/index.php/BigWigs
+## X-Category: Raid
+## X-RelSite-WoWI: 5086
+## X-RelSite-Curse: 3299
+# X-AceForum: 
+
+## X-BigWigs-LoadInZone: Sunwell Plateau
+
+## Dependencies: BigWigs
+
+#
+#
+#
+#
+#

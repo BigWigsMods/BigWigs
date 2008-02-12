@@ -10,6 +10,7 @@ rm -rf BigWigs_TheEye
 rm -rf BigWigs_BlackTemple
 rm -rf BigWigs_Hyjal
 rm -rf BigWigs_ZulAman
+rm -rf BigWigs_Sunwell
 
 cd BigWigs
 
@@ -22,5 +23,6 @@ mv TheEye ../BigWigs_TheEye
 mv BlackTemple ../BigWigs_BlackTemple
 mv Hyjal ../BigWigs_Hyjal
 mv ZulAman ../BigWigs_ZulAman
+mv Sunwell ../BigWigs_Sunwell
 
 rm -rf modules.xml
