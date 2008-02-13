@@ -37,7 +37,6 @@ L:RegisterTranslations("enUS", function() return {
 	portal_desc = "Warn when the Spectral Blast cooldown is up.",
 	portal_bar = "Next portal",
 	portal_message = "Possible portal (#%d) in 5 seconds!",
-	portal_message = "Possible portal in 5 seconds!",
 
 	realm = "Spectral Realm",
 	realm_desc = "Tells you who is in the Spectral Realm.",
@@ -140,9 +139,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 		if db.portal then
 			self:Bar(L["portal_bar"], 20, "Spell_Shadow_Twilight")
-			self:DelayedMessage(15, string.format(L["portal_message"], portalNum), "Attention")
+			self:DelayedMessage(15, L["portal_message"]:format(portalNum), "Attention")
 			portalNum = portalNum + 1
-			self:DelayedMessage(15, L["portal_message"], "Attention")
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
@@ -198,10 +196,9 @@ function mod:NextPortalWarn()
 			end
 		end
 		if hasValidTarget ~= nil then
-			self:Message(string.format(L["portal_message"], portalNum), "Important", nil, "Alert")
 			portalNum = portalNum + 1
 			if portalNum == 5 then portalNum = 1 end
-			self:Message(L["portal_message"], "Important", nil, "Alert")
+			self:Message(L["portal_message"]:format(portalNum), "Important", nil, "Alert")
 		end
 	end
 end
