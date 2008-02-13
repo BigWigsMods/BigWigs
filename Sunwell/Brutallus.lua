@@ -102,7 +102,6 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "BrutallusBurn", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "BrutallusBurnJump", 0)
-	self:TriggerEvent("BigWigs_ThrottleSync", "DeathBrutallus", 0)
 
 	pName = UnitName("player")
 	db = self.db.profile
