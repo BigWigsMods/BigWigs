@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -85,6 +85,36 @@ L:RegisterTranslations("koKR", function() return {
 
 	enrage_warning = "�� �ݳ�!",
 	enrage_message = "10% - �ݳ�!",
+	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",
+} end )
+
+L:RegisterTranslations("frFR", function() return {
+	blast = "Déflagration spectrale",
+	blast_desc = "Préviens quand un joueur a été touché par la Déflagration spectrale.",
+	blast_message = "Déflagration spectrale sur %s !",
+
+	portal = "Portail",
+	portal_desc = "Préviens quand le temps de recharge de la Déflagration spectrale est terminé.",
+	portal_bar = "Prochain portail",
+	portal_message = "Portail probable dans 5 sec. !",
+
+	realm = "Royaume spectral",
+	realm_desc = "Préviens quand un joueur est dans le Royaume spectral.",
+	realm_message = "Dans le royaume : %s",
+
+	curse = "Malédiction d'agonie infinie",
+	curse_desc = "Préviens quand un joueur subit les effets de la Malédiction d'agonie infinie.",
+
+	magic = "Magie sauvage",
+	magic_desc = "Préviens quand vous subissez les effets de Magie sauvage.",
+	magic_you = "Magie sauvage sur VOUS !",
+
+	spectral_realm = "Royaume spectral",
+	spectral_exhaustion = "Epuisement spectral",
+	wild_magic = "Magie sauvage",
+
+	enrage_warning = "Enrager imminent !",
+	enrage_message = "10% - Enragé !",
 	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",
 } end )
 

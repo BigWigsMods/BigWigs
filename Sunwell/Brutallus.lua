@@ -52,6 +52,23 @@ L:RegisterTranslations("koKR", function() return {
 	burnjump_other = "%s에게 불사르기 이동!",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	burn = "Brûler",
+	burn_desc = "Préviens quand un joueur subit les effets de Brûler et quand arrivera le prochain.",
+	burn_you = "Brûler sur VOUS !",
+	burn_other = "Brûler sur %s !",
+	burn_bar = "Prochain Brûler",
+	burn_message = "Prochain Brûler dans 5 sec. !",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur affecté par Brûler (nécessite d'être promu ou mieux).",
+
+	burnjump = "Saut de Brûler",
+	burnjump_desc = "Préviens quand un joueur non affecté par Brûler subit les effets du DoT.",
+	burnjump_you = "Brûler a sauté sur YOU !",
+	burnjump_other = "Brûler a sauté sur %s !",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

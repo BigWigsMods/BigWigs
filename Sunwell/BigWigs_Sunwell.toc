@@ -1,7 +1,9 @@
 ﻿## Interface: 20400
 
 ## Title: Big Wigs (BETA) [|cffeda55fSunwell|r]
+## Title-frFR: Big Wigs (BETA) [|cffeda55fPuits de soleil|r]
 ## Notes: Big Wigs Sunwell Modules
+## Notes-frFR: Modules Big Wigs concernant le Puits de soleil.
 ## Author: Funkydude
 ## X-Credits: Timewasted
 ## Version: 2.0
