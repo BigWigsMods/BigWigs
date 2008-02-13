@@ -3,7 +3,7 @@
 ## Title: Big Wigs (BETA) [|cffeda55fSunwell|r]
 ## Notes: Big Wigs Sunwell Modules
 ## Author: Funkydude
-## X-Credits: 
+## X-Credits: Timewasted
 ## Version: 2.0
 ## LoadOnDemand: 1
 
@@ -18,6 +18,8 @@
 ## Dependencies: BigWigs
 
 SunwellBeta.lua
+Kalecgos.lua
+Brutallus.lua
 #
 #
 #
