@@ -74,7 +74,7 @@
 <Script file="ZulAman\Zul'jin.lua"/>
 
 <Script file="Sunwell\SunwellBeta.lua"/>
-<Script file="Sunwell\Kalecgos.lua.lua"/>
-<Script file="Sunwell\Brutallus.lua.lua"/>
+<Script file="Sunwell\Kalecgos.lua"/>
+<Script file="Sunwell\Brutallus.lua"/>
 
 </Ui>
