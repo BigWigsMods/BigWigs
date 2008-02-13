@@ -71,16 +71,16 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:ProcessCombatLog()
+function mod:ProcessCombatLog(...)
 	if arg2 == "SPELL_DAMAGE" then
-		local _, _, _, _, _, _, player, _, spellID, spellName = arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10
-		if spellID == 45141 then		-- Burn
+		local player, _, spellID = select(7, ...)
+		if spellID == 45141 then -- Burn
 			prevBurnTarget = player
 			self:Sync("BrutallusBurn", player)
 		end
 	elseif arg2 == "SPELL_AURA_APPLIED" then
-		local _, _, _, _, _, _, player, _, spellID, spellName = arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10
-		if spellID == 46394 then		-- Burn
+		local player, _, spellID = select(7, ...)
+		if spellID == 46394 then -- Burn
 			self:Sync("BrutallusBurnJump", player)
 		end
 	end
@@ -148,3 +148,4 @@ function mod:BurnJumpWarn()
 	for k in pairs(burning) do burning[k] = nil end
 	prevBurnTarget = nil
 end
+

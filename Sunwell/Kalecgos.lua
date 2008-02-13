@@ -99,17 +99,17 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:ProcessCombatLog()
+function mod:ProcessCombatLog(...)
 	if arg2 == "SPELL_DAMAGE" then
-		local _, _, _, _, _, _, player, _, spellID, spellName = arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10
-		if spellID == 44866 then					-- Spectral Blast
+		local player, _, spellID, spellName = select(7, ...)
+		if spellID == 44866 then -- Spectral Blast
 			self:Sync("KalecgosBlast", player)
 		end
 	elseif arg2 == "SPELL_AURA_APPLIED" then
-		local _, _, _, _, _, _, player, _, spellID, spellName = arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10
-		if spellID == 46021 then					-- Spectral Realm
+		local player, _, spellID, spellName = select(7, ...)
+		if spellID == 46021 then -- Spectral Realm
 			self:Sync("KalecgosRealm", player)
-		elseif (spellID == 45032 or spellID == 45034) then	-- Curse of Boundless Agony
+		elseif (spellID == 45032 or spellID == 45034) then -- Curse of Boundless Agony
 --			self:Sync("KalecgosCurse", player)
 		elseif spellName == L["wild_magic"] and db.magic then
 			if player == pName then
@@ -181,22 +181,20 @@ end
 function mod:NextPortalWarn()
 	if db.portal then
 		local hasValidTarget = nil
-		for i = 1, 40 do
-			if UnitInRaid("raid" .. i) ~= nil then
-				local hasDebuff = nil
-				local curDebuff = 1
-				while UnitDebuff("raid" .. i, curDebuff) do
-					local name = UnitDebuff("raid" .. i, curDebuff)
-					if name == L["spectral_realm"] or name == L["spectral_exhaustion"] then
-						hasDebuff = true
-						break
-					end
-					curDebuff = curDebuff + 1
-				end
-				if hasDebuff ~= nil then
-					hasValidTarget = true
+		for i = 1, GetNumRaidMembers() do
+			local hasDebuff = nil
+			local curDebuff = 1
+			while UnitDebuff("raid" .. i, curDebuff) do
+				local name = UnitDebuff("raid" .. i, curDebuff)
+				if name == L["spectral_realm"] or name == L["spectral_exhaustion"] then
+					hasDebuff = true
 					break
 				end
+				curDebuff = curDebuff + 1
+			end
+			if hasDebuff ~= nil then
+				hasValidTarget = true
+				break
 			end
 		end
 		if hasValidTarget ~= nil then
@@ -227,3 +225,4 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 		self:Message(L["enrage_message"], "Important")
 	end
 end
+
