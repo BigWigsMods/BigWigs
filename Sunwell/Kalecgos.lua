@@ -13,7 +13,6 @@ local boss = AceLibrary("Babble-Boss-2.2")["Kalecgos"]
 local sath = "Sathrovarr the Corruptor"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-local death = AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"]:format(boss)
 
 local started = nil
 local pName = nil
@@ -155,7 +154,6 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "KalecgosBlast", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KalecgosRealm", 0)
-	self:TriggerEvent("BigWigs_ThrottleSync", "DeathKalecgos", 20)
 --	self:TriggerEvent("BigWigs_ThrottleSync", "KalecgosCurse", 3)
 
 	pName = UnitName("player")
@@ -180,8 +178,7 @@ function mod:ProcessCombatLog(_, event, _, _, _, _, player, _, spellID, spellNam
 			end
 		end
 	elseif event == "UNIT_DIED" and player == boss then
-		self:Message(death, "Bosskill", nil, "Victory")
-		BigWigs:ToggleModuleActive(self, false)
+		self:Sync("BossDeath", boss)
 	end
 end
 

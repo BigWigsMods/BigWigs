@@ -5,7 +5,6 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Brutallus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-local death = AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"]:format(boss)
 
 local started = nil
 local pName = nil
@@ -103,6 +102,7 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "BrutallusBurn", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "BrutallusBurnJump", 0)
+	self:TriggerEvent("BigWigs_ThrottleSync", "DeathBrutallus", 0)
 
 	pName = UnitName("player")
 	db = self.db.profile
@@ -119,8 +119,7 @@ function mod:ProcessCombatLog(_, event, _, _, _, _, player, _, spellID)
 	elseif event == "SPELL_AURA_APPLIED" and spellID == 46394 then -- Burn
 		self:Sync("BrutallusBurnJump", player)
 	elseif event == "UNIT_DIED" and player == boss then
-		self:Message(death, "Bosskill", nil, "Victory")
-		BigWigs:ToggleModuleActive(self, false)
+		self:Sync("BossDeath", boss)
 	end
 end
 
