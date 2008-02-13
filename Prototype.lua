@@ -158,9 +158,12 @@ function BigWigs.modulePrototype:IsBossModule()
 end
 
 function BigWigs.modulePrototype:GenericBossDeath(msg)
+	--remove after 2.4
 	if msg == fmt(UNITDIESOTHER, self:ToString()) then
 		self:Sync("BossDeath " .. self:ToString())
 	end
+	--uncomment after 2.4
+	--self:Sync("BossDeath " .. msg)
 end
 
 local function populateScanTable(mod)
