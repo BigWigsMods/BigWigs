@@ -58,6 +58,36 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	blast = "Spectral Blast",
+	blast_desc = "Spectral Blast에 적중된 플레이어를 알립니다.",
+	blast_message = "%s에게 Spectral Blast!",
+
+	portal = "차원문",
+	portal_desc = "Spectral Blast 재사용 대기시간에 대해 알립니다.",
+	portal_bar = "다음 차원문",
+	portal_message = "약 5초이내 (#%d) 차원문!",
+	
+	realm = "Spectral Realm",
+	realm_desc = "Spectral Realm에 있는 플레이어를 알립니다.",
+	realm_message = "영역 내부: %s",
+
+	curse = "Curse of Boundless Agony",
+	curse_desc = "Curse of Boundless Agony에 걸린 플레이어를 알립니다.",
+
+	magic = "마법 폭주",
+	magic_desc = "마법 폭주에 걸린 플레이어를 알립니다.",
+	magic_you = "당신은 마법 폭주!",
+
+	spectral_realm = "Spectral Realm",
+	spectral_exhaustion = "Spectral Exhaustion",
+	wild_magic = "마법 폭주",
+
+	enrage_warning = "곧 격노!",
+	enrage_message = "10% - 격노!",
+	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

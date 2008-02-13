@@ -35,6 +35,23 @@ L:RegisterTranslations("enUS", function() return {
 	burnjump_other = "Burn jumped to %s!",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	burn = "불사르기",
+	burn_desc = "불사르기에 적중된 플레이어와 다음 불사르기가 올때를 알립니다.",
+	burn_you = "당신에 불사르기!",
+	burn_other = "%s에게 불사르기!",
+	burn_bar = "다음 불사르기",
+	burn_message = "다음 불사르기 5초전!",
+
+	icon = "전술 표시",
+	icon_desc = "추적 중인 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
+
+	burnjump = "불사르기 이동",
+	burnjump_desc = "불사르기에 적중된것이 아닌 도트 디버프가 걸린 플레이어를 알립니다.",
+	burnjump_you = "당신에 불사르기 이동!",
+	burnjump_other = "%s에게 불사르기 이동!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
