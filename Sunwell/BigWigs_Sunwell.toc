@@ -11,12 +11,13 @@
 ## X-Category: Raid
 ## X-RelSite-WoWI: 5086
 ## X-RelSite-Curse: 3299
-# X-AceForum: 
+## X-AceForum: 11354
 
 ## X-BigWigs-LoadInZone: Sunwell Plateau
 
 ## Dependencies: BigWigs
 
+SunwellBeta.lua
 #
 #
 #

@@ -73,4 +73,6 @@
 <Script file="ZulAman\Malacrass.lua"/>
 <Script file="ZulAman\Zul'jin.lua"/>
 
+<Script file="Sunwell\SunwellBeta.lua"/>
+
 </Ui>
