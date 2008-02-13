@@ -178,7 +178,7 @@ function mod:ProcessCombatLog(_, event, _, _, _, _, player, _, spellID, spellNam
 			end
 		end
 	elseif event == "UNIT_DIED" and player == boss then
-		self:Sync("BossDeath", boss)
+		self:Sync("BossDeath", "Kalecgos")
 	end
 end
 

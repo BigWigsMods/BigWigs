@@ -118,7 +118,7 @@ function mod:ProcessCombatLog(_, event, _, _, _, _, player, _, spellID)
 	elseif event == "SPELL_AURA_APPLIED" and spellID == 46394 then -- Burn
 		self:Sync("BrutallusBurnJump", player)
 	elseif event == "UNIT_DIED" and player == boss then
-		self:Sync("BossDeath", boss)
+		self:Sync("BossDeath", "Brutallus")
 	end
 end
 
