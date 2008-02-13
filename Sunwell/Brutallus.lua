@@ -5,6 +5,7 @@
 local boss = AceLibrary("Babble-Boss-2.2")["Brutallus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+local death = AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"]:format(boss)
 
 local started = nil
 local pName = nil
@@ -34,6 +35,13 @@ L:RegisterTranslations("enUS", function() return {
 	burnjump_you = "Burn jumped to YOU!",
 	burnjump_other = "Burn jumped to %s!",
 } end )
+
+--[[
+	Sunwell modules are PTR beta, as so localization is not supportd in any way
+	This gives the authors the freedom to change the modules in way that
+	can potentially break localization.
+	Feel free to localize, just be aware that you may need to change it frequently.
+]]--
 
 L:RegisterTranslations("koKR", function() return {
 	burn = "불사르기",
@@ -89,7 +97,6 @@ function mod:OnEnable()
 
 	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", "ProcessCombatLog")
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
@@ -105,18 +112,15 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:ProcessCombatLog(...)
-	if arg2 == "SPELL_DAMAGE" then
-		local player, _, spellID = select(7, ...)
-		if spellID == 45141 then -- Burn
-			prevBurnTarget = player
-			self:Sync("BrutallusBurn", player)
-		end
-	elseif arg2 == "SPELL_AURA_APPLIED" then
-		local player, _, spellID = select(7, ...)
-		if spellID == 46394 then -- Burn
-			self:Sync("BrutallusBurnJump", player)
-		end
+function mod:ProcessCombatLog(_, event, _, _, _, _, player, _, spellID)
+	if event == "SPELL_DAMAGE" and spellID == 45141 then -- Burn
+		prevBurnTarget = player
+		self:Sync("BrutallusBurn", player)
+	elseif event == "SPELL_AURA_APPLIED" and spellID == 46394 then -- Burn
+		self:Sync("BrutallusBurnJump", player)
+	elseif event == "UNIT_DIED" and player == boss then
+		self:Message(death, "Bosskill", nil, "Victory")
+		BigWigs:ToggleModuleActive(self, false)
 	end
 end
 

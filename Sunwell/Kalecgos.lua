@@ -13,6 +13,7 @@ local boss = AceLibrary("Babble-Boss-2.2")["Kalecgos"]
 local sath = "Sathrovarr the Corruptor"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+local death = AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"]:format(boss)
 
 local started = nil
 local pName = nil
@@ -58,6 +59,13 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",
 } end )
 
+--[[
+	Sunwell modules are PTR beta, as so localization is not supportd in any way
+	This gives the authors the freedom to change the modules in way that
+	can potentially break localization.
+	Feel free to localize, just be aware that you may need to change it frequently.
+]]--
+
 L:RegisterTranslations("koKR", function() return {
 	blast = "Spectral Blast",
 	blast_desc = "Spectral Blast에 적중된 플레이어를 알립니다.",
@@ -67,7 +75,7 @@ L:RegisterTranslations("koKR", function() return {
 	portal_desc = "Spectral Blast 재사용 대기시간에 대해 알립니다.",
 	portal_bar = "다음 차원문",
 	portal_message = "약 5초이내 (#%d) 차원문!",
-	
+
 	realm = "Spectral Realm",
 	realm_desc = "Spectral Realm에 있는 플레이어를 알립니다.",
 	realm_message = "영역 내부: %s",
@@ -141,13 +149,13 @@ function mod:OnEnable()
 	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", "ProcessCombatLog")
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "KalecgosBlast", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KalecgosRealm", 0)
+	self:TriggerEvent("BigWigs_ThrottleSync", "DeathKalecgos", 20)
 --	self:TriggerEvent("BigWigs_ThrottleSync", "KalecgosCurse", 3)
 
 	pName = UnitName("player")
@@ -158,23 +166,22 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:ProcessCombatLog(...)
-	if arg2 == "SPELL_DAMAGE" then
-		local player, _, spellID, spellName = select(7, ...)
-		if spellID == 44866 then -- Spectral Blast
-			self:Sync("KalecgosBlast", player)
-		end
-	elseif arg2 == "SPELL_AURA_APPLIED" then
-		local player, _, spellID, spellName = select(7, ...)
+function mod:ProcessCombatLog(_, event, _, _, _, _, player, _, spellID, spellName)
+	if event == "SPELL_DAMAGE" and spellID == 44866 then -- Spectral Blast
+		self:Sync("KalecgosBlast", player)
+	elseif event == "SPELL_AURA_APPLIED" then
 		if spellID == 46021 then -- Spectral Realm
 			self:Sync("KalecgosRealm", player)
-		elseif (spellID == 45032 or spellID == 45034) then -- Curse of Boundless Agony
+		elseif spellID == 45032 or spellID == 45034 then -- Curse of Boundless Agony
 --			self:Sync("KalecgosCurse", player)
 		elseif spellName == L["wild_magic"] and db.magic then
 			if player == pName then
 				self:Message(L["magic_you"], "Personal", true, "Long")
 			end
 		end
+	elseif event == "UNIT_DIED" and player == boss then
+		self:Message(death, "Bosskill", nil, "Victory")
+		BigWigs:ToggleModuleActive(self, false)
 	end
 end
 
