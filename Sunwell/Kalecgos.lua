@@ -67,32 +67,32 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	blast = "Spectral Blast",
-	blast_desc = "Spectral Blast¿¡ ÀûÁßµÈ ÇÃ·¹ÀÌ¾î¸¦ ¾Ë¸³´Ï´Ù.",
-	blast_message = "%s¿¡°Ô Spectral Blast!",
+	blast_desc = "Spectral Blastì— ì ì¤‘ëœ í”Œë ˆì´ì–´ë¥¼ ì•Œë¦½ë‹ˆë‹¤.",
+	blast_message = "%sì—ê²Œ Spectral Blast!",
 
-	portal = "Â÷¿ø¹®",
-	portal_desc = "Spectral Blast Àç»ç¿ë ´ë±â½Ã°£¿¡ ´ëÇØ ¾Ë¸³´Ï´Ù.",
-	portal_bar = "´ÙÀ½ Â÷¿ø¹®",
-	portal_message = "¾à 5ÃÊÀÌ³» (#%d) Â÷¿ø¹®!",
-
+	portal = "ì°¨ì›ë¬¸",
+	portal_desc = "Spectral Blast ì¬ì‚¬ìš© ëŒ€ê¸°ì‹œê°„ì— ëŒ€í•´ ì•Œë¦½ë‹ˆë‹¤.",
+	portal_bar = "ë‹¤ìŒ ì°¨ì›ë¬¸",
+	portal_message = "ì•½ 5ì´ˆì´ë‚´ (#%d) ì°¨ì›ë¬¸!",
+	
 	realm = "Spectral Realm",
-	realm_desc = "Spectral Realm¿¡ ÀÖ´Â ÇÃ·¹ÀÌ¾î¸¦ ¾Ë¸³´Ï´Ù.",
-	realm_message = "¿µ¿ª ³»ºÎ: %s",
+	realm_desc = "Spectral Realmì— ìˆëŠ” í”Œë ˆì´ì–´ë¥¼ ì•Œë¦½ë‹ˆë‹¤.",
+	realm_message = "ì˜ì—­ ë‚´ë¶€: %s",
 
 	curse = "Curse of Boundless Agony",
-	curse_desc = "Curse of Boundless Agony¿¡ °É¸° ÇÃ·¹ÀÌ¾î¸¦ ¾Ë¸³´Ï´Ù.",
+	curse_desc = "Curse of Boundless Agonyì— ê±¸ë¦° í”Œë ˆì´ì–´ë¥¼ ì•Œë¦½ë‹ˆë‹¤.",
 
-	magic = "¸¶¹ı ÆøÁÖ",
-	magic_desc = "¸¶¹ı ÆøÁÖ¿¡ °É¸° ÇÃ·¹ÀÌ¾î¸¦ ¾Ë¸³´Ï´Ù.",
-	magic_you = "´ç½ÅÀº ¸¶¹ı ÆøÁÖ!",
+	magic = "ë§ˆë²• í­ì£¼",
+	magic_desc = "ë§ˆë²• í­ì£¼ì— ê±¸ë¦° í”Œë ˆì´ì–´ë¥¼ ì•Œë¦½ë‹ˆë‹¤.",
+	magic_you = "ë‹¹ì‹ ì€ ë§ˆë²• í­ì£¼!",
 
 	spectral_realm = "Spectral Realm",
 	spectral_exhaustion = "Spectral Exhaustion",
-	wild_magic = "¸¶¹ı ÆøÁÖ",
+	wild_magic = "ë§ˆë²• í­ì£¼",
 
-	enrage_warning = "°ğ °İ³ë!",
-	enrage_message = "10% - °İ³ë!",
-	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",
+	enrage_warning = "ê³§ ê²©ë…¸!",
+	enrage_message = "10% - ê²©ë…¸!",
+	enrage_trigger = "ì‚¬ìŠ¤ë¡œë°”ë¥´ê°€ ì¹¼ë ‰ê³ ìŠ¤ë¥¼ ì–µì œí•  ìˆ˜ ì—†ëŠ” ë¶„ë…¸ì˜ ì†Œìš©ëŒì´ì— ë¹ ëœ¨ë¦½ë‹ˆë‹¤!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
