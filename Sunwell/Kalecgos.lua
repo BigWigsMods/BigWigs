@@ -371,23 +371,23 @@ end
 --	Paladins and Shaman are always counted as healers
 --	Druids are counted as healers if they have a mana bar
 --	Priests are counted as healers if they aren't in Shadowform
+local sfID = GetSpellInfo(15473) --Shadowform
 function mod:IsPlayerHealer(player)
-	for i = 1, GetNumRaidMembers() do
-		local unit = fmt("%s%d", "raid" i)
-		if UnitIsUnit(unit, player) then
-			local _, class = UnitClass(unit)
-			--is druid and has mana, is paladin, is shaman, is priest without shadowform
-			if (class == "DRUID" and UnitPowerType(unit) == 0) or class == "PALADIN" or class == "SHAMAN" then return true end
-			if class == "PRIEST" then
-				local curBuff = 1
-				while UnitBuff(curBuff, unit) do
-					local name = UnitBuff(unit, curBuff)
-					local nameID = GetSpellInfo(15473) --Shadowform
-					if name == nameID then return false end
-				end
-				return true
+	local _, class = UnitClass(player)
+	--is druid and has mana, is paladin, is shaman, is priest without shadowform
+	if (class == "DRUID" and UnitPowerType(player) == 0) or class == "PALADIN" or class == "SHAMAN" then
+		return true
+	end
+
+	if class == "PRIEST" then
+		local i = 1
+		while UnitBuff(player, i) do
+			local name = UnitBuff(player, i)
+			if name == sfID then
+				return false
 			end
 		end
+		return true
 	end
 	return false
 end
@@ -395,18 +395,17 @@ end
 -- Assumptions made:
 --	Anyone with a rage bar is counted as a tank
 --	Paladins with Righteous Fury are counted as tanks
+local rfID = GetSpellInfo(25780) --Righteous Fury
 function mod:IsPlayerTank(player)
-	for i = 1, GetNumRaidMembers() do
-		local unit = fmt("%s%d", "raid" i)
-		if UnitIsUnit(unit, player) then --player in raid is player passed to function
-			if UnitPowerType(unit) == 1 then return true end --has rage
-			local curBuff = 1
-			while UnitBuff(curBuff, unit) do
-				local name = UnitBuff(unit, curBuff)
-				local nameID = GetSpellInfo(25780) --Righteous Fury
-				if name == nameID then return true end
-			end
-			return false
+	if UnitPowerType(player) == 1 then --has rage
+		return true
+	end
+
+	local i = 1
+	while UnitBuff(player, i) do
+		local name = UnitBuff(player, i)
+		if name == rfID then
+			return true
 		end
 	end
 	return false
