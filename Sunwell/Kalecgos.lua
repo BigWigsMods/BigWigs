@@ -372,13 +372,29 @@ end
 --	Druids are counted as healers if they have a mana bar
 --	Priests are counted as healers if they aren't in Shadowform
 local sfID = GetSpellInfo(15473) --Shadowform
+local mkID = GetSpellInfo(24905) --Moonkin
 function mod:IsPlayerHealer(player)
 	local _, class = UnitClass(player)
-	--is druid and has mana, is paladin, is shaman, is priest without shadowform
-	if (class == "DRUID" and UnitPowerType(player) == 0) or class == "PALADIN" or class == "SHAMAN" then
+
+	-- is paladin, is shaman
+	if class == "PALADIN" or class == "SHAMAN" then
 		return true
 	end
 
+	--is druid and has mana, isn't Moonkin
+	if class == "DRUID" and UnitPowerType(player) == 0
+		local i = 1
+		while UnitBuff(player, i) do
+			local name = UnitBuff(player, i)
+			if name == mkID then
+				return false
+			end
+			i = i + 1 --increment counter
+		end
+		return true
+	end
+
+	--is priest without shadowform
 	if class == "PRIEST" then
 		local i = 1
 		while UnitBuff(player, i) do
