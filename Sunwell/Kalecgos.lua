@@ -5,22 +5,29 @@
 -- TODO:
 --	Clean up some localization issues
 --	Figure out a clean way to handle curse jumps without spamming
---	Expand Wild Magic handling.  Perhaps warn about spellID 45001 on priests/paladins, 45006 on anyone, etc.
 --	Maybe a timer bar showing how long until people in the realm leave?
 --	Verify enrage: 19:08:34 Sathrovarr drives Kalecgos into a crazed rage! (also: 2/12 19:08:39.843  SPELL_AURA_APPLIED,0x0000000000000000,nil,0x80000000,0xF13000613C00F8E6,Sathrovarr the Corruptor,0x10a48,44806,Crazed Rage,0x1,BUFF)
+--	Warn for next enrage 10 seconds after the first
 
 local boss = AceLibrary("Babble-Boss-2.2")["Kalecgos"]
 local sath = "Sathrovarr the Corruptor"
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local started = nil
-local pName = nil
 local db = nil
 local blasted = { }
 local inRealm = { }
 local enrageWarn = nil
 local portalNum = nil
+
+local fmt = string.format
+local GetNumRaidMembers = GetNumRaidMembers
+local pName = UnitName("player")
+local UnitDebuff = UnitDebuff
+local UnitBuff = UnitBuff
+local GetSpellInfo = GetSpellInfo
+local UnitPowerType = UnitPowerType
+local UnitClass = UnitClass
 
 ----------------------------
 --      Localization      --
@@ -44,14 +51,27 @@ L:RegisterTranslations("enUS", function() return {
 
 	curse = "Curse of Boundless Agony",
 	curse_desc = "Tells you who is afflicted by Curse of Boundless Agony.",
+	curse_bar = "Curse: %s",
 
-	magic = "Wild Magic",
-	magic_desc = "Tells you when you are afflicted by Wild Magic.",
-	magic_you = "Wild Magic on YOU!",
+	magichealing = "Wild Magic (Increased healing)",
+	magichealing_desc = "Tells you when you get increased healing from Wild Magic.",
+	magichealing_you = "Wild Magic - Healing effects increased!",
+
+	magiccast = "Wild Magic (Increased cast time)",
+	magiccast_desc = "Tells you when a healer gets incrased cast time from Wild Magic.",
+	magiccast_you = "Wild Magic - Increased casting time on YOU!",
+	magiccast_other = "Wild Magic - Increased casting time on %s!",
+
+	magichit = "Wild Magic (Decreased chance to hit)",
+	magichit_desc = "Tells you when a tank's chance to hit is reduced by Wild Magic.",
+	magichit_you = "Wild Magic - Decreased chance to hit on YOU!",
+	magichit_other = "Wild Magic - Decreased chance to hit on %s!",
+
+	magicthreat = "Wild Magic (Increased threat)",
+	magicthreat_desc = "Tells you when you get increased threat from Wild Magic.",
+	magicthreat_you = "Wild Magic - Threat generation increased!",
 
 	spectral_realm = "Spectral Realm",
-	spectral_exhaustion = "Spectral Exhaustion",
-	wild_magic = "Wild Magic",
 
 	enrage_warning = "Enrage soon!",
 	enrage_message = "10% - Enraged!",
@@ -74,21 +94,34 @@ L:RegisterTranslations("koKR", function() return {
 	portal_desc = "Spectral Blast 재사용 대기시간에 대해 알립니다.",
 	portal_bar = "다음 차원문",
 	portal_message = "약 5초이내 (#%d) 차원문!",
-	
+
 	realm = "Spectral Realm",
 	realm_desc = "Spectral Realm에 있는 플레이어를 알립니다.",
 	realm_message = "영역 내부: %s",
 
 	curse = "Curse of Boundless Agony",
 	curse_desc = "Curse of Boundless Agony에 걸린 플레이어를 알립니다.",
+	curse_bar = "Curse: %s",
 
-	magic = "마법 폭주",
-	magic_desc = "마법 폭주에 걸린 플레이어를 알립니다.",
-	magic_you = "당신은 마법 폭주!",
+	magichealing = "Wild Magic (Increased healing)",
+	magichealing_desc = "Tells you when you get increased healing from Wild Magic.",
+	magichealing_you = "Wild Magic - Healing effects increased!",
+
+	magiccast = "Wild Magic (Increased cast time)",
+	magiccast_desc = "Tells you when a healer gets incrased cast time from Wild Magic.",
+	magiccast_you = "Wild Magic - Increased casting time on YOU!",
+	magiccast_other = "Wild Magic - Increased casting time on %s!",
+
+	magichit = "Wild Magic (Decreased chance to hit)",
+	magichit_desc = "Tells you when a tank's chance to hit is reduced by Wild Magic.",
+	magichit_you = "Wild Magic - Decreased chance to hit on YOU!",
+	magichit_other = "Wild Magic - Decreased chance to hit on %s!",
+
+	magicthreat = "Wild Magic (Increased threat)",
+	magicthreat_desc = "Tells you when you get increased threat from Wild Magic.",
+	magicthreat_you = "Wild Magic - Threat generation increased!",
 
 	spectral_realm = "Spectral Realm",
-	spectral_exhaustion = "Spectral Exhaustion",
-	wild_magic = "마법 폭주",
 
 	enrage_warning = "곧 격노!",
 	enrage_message = "10% - 격노!",
@@ -111,14 +144,27 @@ L:RegisterTranslations("frFR", function() return {
 
 	curse = "Malédiction d'agonie infinie",
 	curse_desc = "Préviens quand un joueur subit les effets de la Malédiction d'agonie infinie.",
+	curse_bar = "Curse: %s",
 
-	magic = "Magie sauvage",
-	magic_desc = "Préviens quand vous subissez les effets de Magie sauvage.",
-	magic_you = "Magie sauvage sur VOUS !",
+	magichealing = "Wild Magic (Increased healing)",
+	magichealing_desc = "Tells you when you get increased healing from Wild Magic.",
+	magichealing_you = "Wild Magic - Healing effects increased!",
 
-	spectral_realm = "Royaume spectral",
-	spectral_exhaustion = "Epuisement spectral",
-	wild_magic = "Magie sauvage",
+	magiccast = "Wild Magic (Increased cast time)",
+	magiccast_desc = "Tells you when a healer gets incrased cast time from Wild Magic.",
+	magiccast_you = "Wild Magic - Increased casting time on YOU!",
+	magiccast_other = "Wild Magic - Increased casting time on %s!",
+
+	magichit = "Wild Magic (Decreased chance to hit)",
+	magichit_desc = "Tells you when a tank's chance to hit is reduced by Wild Magic.",
+	magichit_you = "Wild Magic - Decreased chance to hit on YOU!",
+	magichit_other = "Wild Magic - Decreased chance to hit on %s!",
+
+	magicthreat = "Wild Magic (Increased threat)",
+	magicthreat_desc = "Tells you when you get increased threat from Wild Magic.",
+	magicthreat_you = "Wild Magic - Threat generation increased!",
+
+	spectral_realm = "Spectral Realm",
 
 	enrage_warning = "Enrager imminent !",
 	enrage_message = "10% - Enragé !",
@@ -132,7 +178,7 @@ L:RegisterTranslations("frFR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Sunwell Plateau"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"blast", "portal", -1, "realm", "magic", "enrage", "proximity", "bosskill"}
+mod.toggleoptions = {"blast", "portal", "realm", -1, "magichealing", "magiccast", "magichit", "magicthreat", "enrage", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 mod.proximitySilent = true
@@ -154,9 +200,11 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "KalecgosBlast", 3)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KalecgosRealm", 0)
---	self:TriggerEvent("BigWigs_ThrottleSync", "KalecgosCurse", 3)
+	self:TriggerEvent("BigWigs_ThrottleSync", "KalecgosCurse", 0)
+	self:TriggerEvent("BigWigs_ThrottleSync", "KaleCurseRemv", 0)
+	self:TriggerEvent("BigWigs_ThrottleSync", "KalecgosMagicCast", 3)
+	self:TriggerEvent("BigWigs_ThrottleSync", "KalecgosMagicHit", 3)
 
-	pName = UnitName("player")
 	db = self.db.profile
 end
 
@@ -171,14 +219,24 @@ function mod:ProcessCombatLog(_, event, _, _, _, _, player, _, spellID, spellNam
 		if spellID == 46021 then -- Spectral Realm
 			self:Sync("KalecgosRealm", player)
 		elseif spellID == 45032 or spellID == 45034 then -- Curse of Boundless Agony
---			self:Sync("KalecgosCurse", player)
-		elseif spellName == L["wild_magic"] and db.magic then
-			if player == pName then
-				self:Message(L["magic_you"], "Personal", true, "Long")
+			self:Sync("KalecgosCurse", player)
+		elseif spellID == 44978 and player == pName and db.magichealing then -- Wild Magic
+			self:Message(L["magichealing_you"], "Attention", true, "Long")
+		elseif spellID == 45001 then -- Wild Magic
+			if self:IsPlayerHealer(player) then
+				self:Sync("KalecgosMagicCast", player)
 			end
+		elseif spellID == 45002 then -- Wild Magic
+			if self:IsPlayerTank(player) then
+				self:Sync("KalecgosMagicHit", player)
+			end
+		elseif spellID == 45006 and player == pName and db.magicthreat then -- Wild Magic
+			self:Message(L["magicthreat_you"], "Personal", true, "Long")
 		end
 	elseif event == "UNIT_DIED" and player == boss then
 		self:Sync("BossDeath", "Kalecgos")
+	elseif event == "SPELL_AURA_REMOVED" and (spellID == 45032 or spellID == 45034) then
+		self:Sync("KaleCurseRemv", player)
 	end
 end
 
@@ -196,6 +254,25 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		inRealm[rest] = true
 		self:ScheduleEvent("RealmCheck", self.RealmWarn, 2, self)
 	elseif sync == "KalecgosCurse" and rest and db.curse then
+		self:Bar(fmt(L["curse_bar"], rest), 30, "Spell_Shadow_CurseOfSargeras")
+	elseif sync == "KaleCurseRemv" and rest and db.curse then
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["curse_bar"], rest))
+	elseif sync == "KalecgosMagicCast" and rest and db.magiccast then
+		local other = fmt(L["magiccast_other"], rest)
+		if rest == pName then
+			self:Message(L["magiccast_you"], "Positive", true, "Long")
+			self:Message(other, "Attention", nil, nil, true)
+		else
+			self:Message(other, "Attention")
+		end
+	elseif sync == "KalecgosMagicHit" and rest and db.magichit then
+		local other = fmt(L["magichit_other"], rest)
+		if rest == pName then
+			self:Message(L["magichit_you"], "Personal", true, "Long")
+			self:Message(other, "Attention", nil, nil, true)
+		else
+			self:Message(other, "Attention")
+		end
 	elseif self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
@@ -203,7 +280,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 		if db.portal then
 			self:Bar(L["portal_bar"], 20, "Spell_Shadow_Twilight")
-			self:DelayedMessage(15, L["portal_message"]:format(portalNum), "Attention")
+			self:DelayedMessage(15, fmt(L["portal_message"], portalNum), "Attention")
 			portalNum = portalNum + 1
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
@@ -220,7 +297,7 @@ function mod:BlastWarn()
 				msg = msg .. ", " .. k
 			end
 		end
-		self:Message(string.format(L["blast_message"], msg), "Important", nil, "Alert")
+		self:Message(fmt(L["blast_message"], msg), "Urgent", nil, "Alert")
 	end
 	for k in pairs(blasted) do blasted[k] = nil end
 end
@@ -235,7 +312,7 @@ function mod:RealmWarn()
 				msg = msg .. ", " .. k
 			end
 		end
-		self:Message(string.format(L["realm_message"], msg), "Important", nil, "Alert")
+		self:Message(fmt(L["realm_message"], msg), "Important", nil, "Alert")
 	end
 	for k in pairs(inRealm) do inRealm[k] = nil end
 end
@@ -246,9 +323,12 @@ function mod:NextPortalWarn()
 		for i = 1, GetNumRaidMembers() do
 			local hasDebuff = nil
 			local curDebuff = 1
-			while UnitDebuff("raid" .. i, curDebuff) do
-				local name = UnitDebuff("raid" .. i, curDebuff)
-				if name == L["spectral_realm"] or name == L["spectral_exhaustion"] then
+			local unit = fmt("%s%d", "raid" i)
+			while UnitDebuff(unit, curDebuff) do
+				local name = UnitDebuff(unit, curDebuff)
+				local realmID = GetSpellInfo(46021)
+				local exhID = GetSpellInfo(44867)
+				if name == realmID or name == exhID then --ID's not confirmed!! give feedback
 					hasDebuff = true
 					break
 				end
@@ -262,7 +342,7 @@ function mod:NextPortalWarn()
 		if hasValidTarget ~= nil then
 			portalNum = portalNum + 1
 			if portalNum == 5 then portalNum = 1 end
-			self:Message(L["portal_message"]:format(portalNum), "Important", nil, "Alert")
+			self:Message(fmt(L["portal_message"], portalNum), "Urgent", nil, "Alert")
 		end
 	end
 end
@@ -287,3 +367,46 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	end
 end
 
+-- Assumptions made:
+--	Paladins and Shaman are always counted as healers
+--	Druids are counted as healers if they have a mana bar
+--	Priests are counted as healers if they aren't in Shadowform
+function mod:IsPlayerHealer(player)
+	for i = 1, GetNumRaidMembers() do
+		local unit = fmt("%s%d", "raid" i)
+		if UnitIsUnit(unit, player) then
+			local _, class = UnitClass(unit)
+			if (class == "DRUID" and UnitPowerType(unit) == 0) or class == "PALADIN" or class == "SHAMAN" then return true end
+			if class == "PRIEST" then
+				local curBuff = 1
+				while UnitBuff(curBuff, unit) do
+					local name = UnitBuff(unit, curBuff)
+					local nameID = GetSpellInfo(15473)
+					if name == nameID then return false end
+				end
+				return true
+			end
+		end
+	end
+	return false
+end
+
+-- Assumptions made:
+--	Anyone with a rage bar is counted as a tank
+--	Paladins with Righteous Fury are counted as tanks
+function mod:IsPlayerTank(player)
+	for i = 1, GetNumRaidMembers() do
+		local unit = fmt("%s%d", "raid" i)
+		if UnitIsUnit(unit, player) then
+			if UnitPowerType(unit) == 1 then return true end
+			local curBuff = 1
+			while UnitBuff(curBuff, unit) do
+				local name = UnitBuff(unit, curBuff)
+				local nameID = GetSpellInfo(25780)
+				if name == nameID then return true end
+			end
+			return false
+		end
+	end
+	return false
+end
