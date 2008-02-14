@@ -51,7 +51,7 @@ L:RegisterTranslations("koKR", function() return {
 	burn_message = "다음 불사르기 5초전!",
 
 	icon = "전술 표시",
-	icon_desc = "추적 중인 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
+	icon_desc = "불사르기에 적중된 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
 
 	burnjump = "불사르기 이동",
 	burnjump_desc = "불사르기에 적중된것이 아닌 도트 디버프가 걸린 플레이어를 알립니다.",
