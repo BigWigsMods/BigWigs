@@ -323,7 +323,7 @@ function mod:NextPortalWarn()
 		for i = 1, GetNumRaidMembers() do
 			local hasDebuff = nil
 			local curDebuff = 1
-			local unit = fmt("%s%d", "raid" i)
+			local unit = fmt("%s%d", "raid", i)
 			while UnitDebuff(unit, curDebuff) do
 				local name = UnitDebuff(unit, curDebuff)
 				local realmID = GetSpellInfo(46021) --Spectral Realm
