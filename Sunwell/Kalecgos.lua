@@ -386,6 +386,7 @@ function mod:IsPlayerHealer(player)
 			if name == sfID then
 				return false
 			end
+			i = i + 1 --increment counter
 		end
 		return true
 	end
@@ -407,6 +408,7 @@ function mod:IsPlayerTank(player)
 		if name == rfID then
 			return true
 		end
+		i = i + 1 --increment counter
 	end
 	return false
 end
