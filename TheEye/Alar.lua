@@ -10,7 +10,7 @@ local started = nil
 local prior = nil
 local fireball = nil
 local occured = true
-local pName = nil
+local pName = UnitName("player")
 local fmt = string.format
 
 ----------------------------
@@ -168,6 +168,9 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
+	self:RegisterCombatLogEvent("SPELL_AURA_APPLIED", "MeltArmor", 35410)
+	self:RegisterCombatLogEvent("SPELL_AURA_APPLIED", "FlamePatch", 35383)
+
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "DebuffEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "DebuffEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "DebuffEvent")
@@ -178,7 +181,6 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
-	pName = UnitName("player")
 	started = nil
 end
 
@@ -243,9 +245,21 @@ function mod:AlarCheck()
 	end
 end
 
-function mod:DebuffEvent(msg)
-	if self.db.profile.flamepatch and msg == L["flamepatch_trigger"] then
+-- XXX we should remove this sync
+function mod:MeltArmor(player)
+	self:Sync("AlArArmor", player)
+end
+
+function mod:FlamePatch(player)
+	if not self.db.profile.flamepatch then return end
+	if player == pName then
 		self:Message(L["flamepatch_message"], "Personal", true, "Alarm")
+	end
+end
+
+function mod:DebuffEvent(msg)
+	if msg == L["flamepatch_trigger"] then
+		self:FlamePatch(pName)
 	end
 
 	local aplayer, atype = select(3, msg:find(L["armor_trigger"]))
@@ -253,7 +267,7 @@ function mod:DebuffEvent(msg)
 		if aplayer == L2["you"] and atype == L2["are"] then
 			aplayer = pName
 		end
-		self:Sync("AlArArmor", aplayer)
+		self:MeltArmor(aplayer)
 	end
 end
 
