@@ -382,7 +382,7 @@ do
 		self:DelayedMessage(seconds - 30, w.sec:format(30), "Positive")
 		self:DelayedMessage(seconds - 10, w.sec:format(10), "Urgent")
 		self:DelayedMessage(seconds - 5, w.sec:format(5), "Urgent")
-		self:DelayedMessage(seconds, w.end:format(boss), "Attention", nil, "Alarm")
+		self:DelayedMessage(seconds, w["end"]:format(boss), "Attention", nil, "Alarm")
 		self:Bar(w.bar, seconds, w.icon)
 	end
 end
