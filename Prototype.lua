@@ -364,20 +364,20 @@ do
 
 		if not noEngageMessage then
 			-- Engage warning with minutes to enrage
-			self:Message(w.start:format(boss, seconds / 60), "Attention")
+			self:Message(fmt(w.start, boss, seconds / 60), "Attention")
 		end
 
 		-- Half-way to enrage warning.
 		local half = seconds / 2
 		local m = half % 60
 		local halfMin = (half - m) / 60
-		self:DelayedMessage(half + m, w.min:format(halfMin), "Positive")
+		self:DelayedMessage(half + m, fmt(w.min, halfMin), "Positive")
 
-		self:DelayedMessage(seconds - 60, w.min:format(1), "Positive")
-		self:DelayedMessage(seconds - 30, w.sec:format(30), "Positive")
-		self:DelayedMessage(seconds - 10, w.sec:format(10), "Urgent")
-		self:DelayedMessage(seconds - 5, w.sec:format(5), "Urgent")
-		self:DelayedMessage(seconds, w.stop:format(boss), "Attention", nil, "Alarm")
+		self:DelayedMessage(seconds - 60, fmt(w.min, 1), "Positive")
+		self:DelayedMessage(seconds - 30, fmt(w.sec, 30), "Positive")
+		self:DelayedMessage(seconds - 10, fmt(w.sec, 10), "Urgent")
+		self:DelayedMessage(seconds - 5, fmt(w.sec, 5), "Urgent")
+		self:DelayedMessage(seconds, fmt(w.stop, boss), "Attention", nil, "Alarm")
 		self:Bar(w.bar, seconds, w.icon)
 	end
 end
