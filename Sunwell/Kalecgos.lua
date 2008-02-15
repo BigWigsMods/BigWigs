@@ -103,25 +103,25 @@ L:RegisterTranslations("koKR", function() return {
 
 	curse = "Curse of Boundless Agony",
 	curse_desc = "Curse of Boundless Agony에 걸린 플레이어를 알립니다.",
-	curse_bar = "Curse: %s",
+	curse_bar = "저주: %s",
 
-	magichealing = "Wild Magic (Increased healing)",
-	magichealing_desc = "Tells you when you get increased healing from Wild Magic.",
-	magichealing_you = "Wild Magic - Healing effects increased!",
+	magichealing = "마법 폭주 (힐량 증가)",
+	magichealing_desc = "당신이 마법 폭주에 의해 힐량이 증가할때 알려줍니다.",
+	magichealing_you = "마법 폭주 - 힐량 증가!",
 
-	magiccast = "Wild Magic (Increased cast time)",
-	magiccast_desc = "Tells you when a healer gets incrased cast time from Wild Magic.",
-	magiccast_you = "Wild Magic - Increased casting time on YOU!",
-	magiccast_other = "Wild Magic - Increased casting time on %s!",
+	magiccast = "마법 폭주 (시전시간 증가)",
+	magiccast_desc = "힐러가 마법 폭주에 의해 시전시간이 증가할때 알려줍니다.",
+	magiccast_you = "마법 폭주 - 당신에게 시전시간 증가!",
+	magiccast_other = "마법 폭주 - %s 시전시간 증가!",
 
-	magichit = "Wild Magic (Decreased chance to hit)",
-	magichit_desc = "Tells you when a tank's chance to hit is reduced by Wild Magic.",
-	magichit_you = "Wild Magic - Decreased chance to hit on YOU!",
-	magichit_other = "Wild Magic - Decreased chance to hit on %s!",
+	magichit = "마법 폭주 (적중률 감소)",
+	magichit_desc = "탱커가 마법 폭주에 의해 적중률이 감소할때 알려줍니다.",
+	magichit_you = "마법 폭주 - 당신은 적중률 감소!",
+	magichit_other = "마법 폭주 - %s 적중률 감소!",
 
-	magicthreat = "Wild Magic (Increased threat)",
-	magicthreat_desc = "Tells you when you get increased threat from Wild Magic.",
-	magicthreat_you = "Wild Magic - Threat generation increased!",
+	magicthreat = "마법 폭주 (위협수준 증가)",
+	magicthreat_desc = "당신이 마법 폭주에 의해 위협수준이 증가할때 알려줍니다.",
+	magicthreat_you = "마법 폭주 - 위협 생성 증가!",
 
 	spectral_realm = "Spectral Realm",
 
