@@ -203,8 +203,8 @@ L:RegisterTranslations("frFR", function() return {
 	["Scale"] = "Échelle",
 	["Set the message frame scale."] = "Détermine l'échelle du cadre des messages.",
 
-	--["Use icons"] = "",
-	--["Show icons next to messages, only works for Raid Warning."] = "",
+	["Use icons"] = "Utiliser les icônes",
+	["Show icons next to messages, only works for Raid Warning."] = "Affiche les icônes à côté des messages. Ne fonctionne que sur l'Avertissement raid.",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Co|cffff00ffule|cff00ff00ur|r",
 	["White"] = "Blanc",
