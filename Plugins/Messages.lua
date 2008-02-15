@@ -11,7 +11,6 @@ local colorModule = nil
 local testModule = nil
 local messageFrame = nil
 local anchor = nil
-local GetSpellInfo = GetSpellInfo
 
 ----------------------------
 --      Localization      --
@@ -48,6 +47,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Reset position"] = true,
 	["Reset the anchor position, moving it to the center of your screen."] = true,
+	
+	Font = "Fonts\\FRIZQT__.TTF",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
@@ -63,8 +64,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Scale"] = "크기",
 	["Set the message frame scale."] = "메세지창의 크기를 설정합니다.",
 
-	--["Use icons"] = "",
-	--["Show icons next to messages, only works for Raid Warning."] = "",
+	["Use icons"] = "아이콘 사용",
+	["Show icons next to messages, only works for Raid Warning."] = "레이드 경고를 위한, 메세지 옆에 아이콘 표시합니다.",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000색|cffff00ff상|r",
 	["White"] = "흰색",
@@ -78,6 +79,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	["Reset position"] = "위치 초기화",
 	["Reset the anchor position, moving it to the center of your screen."] = "화면의 중앙으로 고정 위치를 초기화합니다.",
+	
+	Font = "Fonts\\2002.TTF",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -112,6 +115,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	["Reset position"] = "重置位置",
 	["Reset the anchor position, moving it to the center of your screen."] = "重置信息显示位置，移动到默认屏幕的中间位置。",
+	
+	Font = "Fonts\\ZYKai_T.TTF",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -145,6 +150,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	["Reset position"] = "重置位置",
 	["Reset the anchor position, moving it to the center of your screen."] = "重置定位點，將它移至螢幕中央",
+	
+	Font = "Fonts\\bHEI01B.TTF"
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -175,6 +182,8 @@ L:RegisterTranslations("deDE", function() return {
 
 	["Reset position"] = "Position zurücksetzen",
 	["Reset the anchor position, moving it to the center of your screen."] = "Die Verankerungsposition zurücksetzen (bewegt alles zur Mitte deines Interfaces).",
+	
+	Font = "Fonts\\FRIZQT__.TTF",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -208,6 +217,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	["Reset position"] = "RÀZ position",
 	["Reset the anchor position, moving it to the center of your screen."] = "Réinitialise la position de l'ancre, la replaçant au centre de l'écran.",
+	
+	Font = "Fonts\\FRIZQT__.TTF",
 } end)
 
 L:RegisterTranslations("esES", function() return {
@@ -238,6 +249,8 @@ L:RegisterTranslations("esES", function() return {
 
 	["Reset position"] = "Resetear posici\195\179n",
 	["Reset the anchor position, moving it to the center of your screen."] = "Resetea la posici\195\179n del ancla, moviendola al centro de la pantalla",
+	
+	Font = "Fonts\\FRIZQT__.TTF",
 } end)
 
 ----------------------------------
@@ -424,7 +437,7 @@ function plugin:Print(addon, text, r, g, b)
 	messageFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
 end
 
-function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, iconNo)
+function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, icon)
 	if broadcastonly or not text then return end
 
 	local db = self.db.profile
@@ -439,9 +452,7 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, ic
 		end
 	end
 
-	if iconNo and db.useicons then
-		local _, _, icon = GetSpellInfo(iconNo)
-	else
+	if not db.useicons then
 		icon = nil
 	end
 
@@ -487,7 +498,7 @@ function plugin:SetupFrames()
 	cheader:SetWidth(110)
 	cheader:SetHeight(15)
 	cheader:SetPoint("TOP", anchor, "TOP", 0, -14)
-	cheader:SetFont("Fonts\\FRIZQT__.TTF", 12)
+	cheader:SetFont(L["Font"], 12)
 	cheader:SetJustifyH("LEFT")
 	cheader:SetText(L["Messages"])
 	cheader:SetShadowOffset(.8, -.8)
