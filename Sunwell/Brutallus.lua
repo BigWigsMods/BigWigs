@@ -134,7 +134,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Message(other, "Attention")
 		end
 		self:Bar(L["burn_bar"], 20, "Spell_Fire_Burnout")
-		self:DelayedMessage(15, L["bar_message"], "Attention")
+		--self:DelayedMessage(15, L["bar_message"], "Attention")
 		if db.icon then
 			self:Icon(rest)
 		end
@@ -150,7 +150,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 		if db.burn then
 			self:Bar(L["burn_bar"], 20, "Spell_Fire_Burnout")
-			self:DelayedMessage(15, L["bar_message"], "Attention")
+			--self:DelayedMessage(15, L["bar_message"], "Attention")
 		end
 		if db.enrage then
 			self:Message(string.format(L2["enrage_start"], boss, 6), "Attention")
