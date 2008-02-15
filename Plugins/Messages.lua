@@ -32,6 +32,9 @@ L:RegisterTranslations("enUS", function() return {
 	["Scale"] = true,
 	["Set the message frame scale."] = true,
 
+	["Use icons"] = true,
+	["Show icons next to messages, only works for Raid Warning."] = true,
+
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = true,
 	["White"] = true,
 
@@ -58,6 +61,9 @@ L:RegisterTranslations("koKR", function() return {
 
 	["Scale"] = "크기",
 	["Set the message frame scale."] = "메세지창의 크기를 설정합니다.",
+
+	--["Use icons"] = "",
+	--["Show icons next to messages, only works for Raid Warning."] = "",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000색|cffff00ff상|r",
 	["White"] = "흰색",
@@ -90,6 +96,9 @@ L:RegisterTranslations("zhCN", function() return {
 	["Scale"] = "缩放",
 	["Set the message frame scale."] = "调整信息文字大小。",
 
+	--["Use icons"] = "",
+	--["Show icons next to messages, only works for Raid Warning."] = "",
+
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000颜|cffff00ff色|r",
 	["White"] = "白色",
 
@@ -120,6 +129,9 @@ L:RegisterTranslations("zhTW", function() return {
 	["Scale"] = "縮放",
 	["Set the message frame scale."] = "設置訊息框架縮放比例",
 
+	--["Use icons"] = "",
+	--["Show icons next to messages, only works for Raid Warning."] = "",
+
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000顏|cffff00ff色|r",
 	["White"] = "白色",
 
@@ -146,6 +158,9 @@ L:RegisterTranslations("deDE", function() return {
 
 	["Scale"] = "Skalierung",
 	["Set the message frame scale."] = "Die Skalierung des Nachrichtenfensters festlegen.",
+
+	--["Use icons"] = "",
+	--["Show icons next to messages, only works for Raid Warning."] = "",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Fa|cffff00ffr|cff00ff00be|r",
 	["White"] = "Weiß",
@@ -177,6 +192,9 @@ L:RegisterTranslations("frFR", function() return {
 	["Scale"] = "Échelle",
 	["Set the message frame scale."] = "Détermine l'échelle du cadre des messages.",
 
+	--["Use icons"] = "",
+	--["Show icons next to messages, only works for Raid Warning."] = "",
+
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Co|cffff00ffule|cff00ff00ur|r",
 	["White"] = "Blanc",
 
@@ -203,6 +221,9 @@ L:RegisterTranslations("esES", function() return {
 
 	["Scale"] = "Escala",
 	["Set the message frame scale."] = "Establece la escala del mensaje",
+
+	--["Use icons"] = "",
+	--["Show icons next to messages, only works for Raid Warning."] = "",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Co|cffff00fflo|cff00ff00r|r",
 	["White"] = "Blanco",
@@ -233,6 +254,7 @@ plugin.defaultDB = {
 	posy = -150,
 	chat = nil,
 	twothree = nil,
+	useicons = true,
 }
 plugin.consoleCmd = L["Messages"]
 
@@ -283,6 +305,12 @@ plugin.consoleOptions = {
 			map = {[true] = L["|cffff0000Co|cffff00fflo|cff00ff00r|r"], [false] = L["White"]},
 			order = 102,
 			disabled = function() return not colorModule end,
+		},
+		useicons = {
+			type = "toggle",
+			name = L["Use icons"],
+			desc = L["Show icons next to messages, only works for Raid Warning."],
+			order = 103,
 		},
 		spacer = {
 			type = "header",
@@ -395,7 +423,7 @@ function plugin:Print(addon, text, r, g, b)
 	messageFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
 end
 
-function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
+function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, icon)
 	if broadcastonly or not text then return end
 
 	local db = self.db.profile
@@ -410,7 +438,11 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 		end
 	end
 
-	self:Pour(text, r, g, b)
+	if not db.useicons then
+		icon = nil
+	end
+
+	self:Pour(text, r, g, b, icon)
 	if db.chat then
 		BigWigs:CustomPrint(r, g, b, nil, nil, nil, text)
 	end
