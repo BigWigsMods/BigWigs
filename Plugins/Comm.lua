@@ -69,9 +69,14 @@ function plugin:BigWigs_SendSync(msg)
 	end
 end
 
-function plugin:BigWigs_ThrottleSync(msg, time)
-	assert(msg, "No message passed")
-	throt[msg] = time
+function plugin:BigWigs_ThrottleSync(msg, ...)
+	if type(msg) == "number" then
+		for i = 1, select("#", ...) do
+			throt[(select(i, ...))] = msg
+		end
+	else
+		throt[msg] = select(1, ...)
+	end
 end
 
 function plugin:GetThrottleTable() return throt end

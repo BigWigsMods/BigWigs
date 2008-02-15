@@ -153,7 +153,7 @@ function BigWigs.modulePrototype:OnInitialize()
 	BigWigs:RegisterModule(self)
 end
 
-do
+if GetSpellInfo then
 	function BigWigs.modulePrototype:COMBAT_LOG_EVENT_UNFILTERED(_, event, _, _, _, _, player, _, spellId, spellName)
 		local m = self.combatLogEventMap[event]
 		if m and (m[spellId] or m["*"]) then
@@ -174,6 +174,10 @@ do
 		if not self:IsEventRegistered("COMBAT_LOG_EVENT_UNFILTERED") then
 			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		end
+	end
+else
+	function BigWigs.modulePrototype:RegisterCombatLogEvent(...)
+		-- No-op in <2.4.
 	end
 end
 
@@ -311,7 +315,8 @@ do
 	local icons = setmetatable({}, {__index =
 		function(self, key)
 			if not key then return end
-			self[key] = "Interface\\Icons\\" .. key
+			if key:find("\\") then self[key] = key
+			else self[key] = "Interface\\Icons\\" .. key end
 			return self[key]
 		end
 	})
@@ -320,16 +325,8 @@ do
 	end
 end
 
-function BigWigs.modulePrototype:Sync(sync, b, ...)
-	if b then
-		local full = fmt("%s %s", sync, tostring(b))
-		for i = 1, select("#", ...) do
-			full = fmt("%s %s", full, tostring(select(i, ...)))
-		end
-		self:TriggerEvent("BigWigs_SendSync", full)
-	else
-		self:TriggerEvent("BigWigs_SendSync", sync)
-	end
+function BigWigs.modulePrototype:Sync(sync, ...)
+	self:TriggerEvent("BigWigs_SendSync", strjoin(" ", ...))
 end
 
 function BigWigs.modulePrototype:Whisper(player, text)
@@ -341,9 +338,7 @@ function BigWigs.modulePrototype:Icon(player)
 end
 
 function BigWigs.modulePrototype:Throttle(seconds, ...)
-	for i = 1, select("#", ...) do
-		self:TriggerEvent("BigWigs_ThrottleSync", (select(i, ...)), seconds)
-	end
+	self:TriggerEvent("BigWigs_ThrottleSync", seconds, ...)
 end
 
 do
@@ -351,7 +346,7 @@ do
 		start = commonWords["berserk_start"],
 		min = commonWords["berserk_min"],
 		sec = commonWords["berserk_sec"],
-		["end"] = commonWords["berserk_end"],
+		stop = commonWords["berserk_end"],
 		bar = commonWords["berserk"],
 		icon = "Spell_Nature_Reincarnation",
 	}
@@ -359,7 +354,7 @@ do
 		start = commonWords["enrage_start"],
 		min = commonWords["enrage_min"],
 		sec = commonWords["enrage_sec"],
-		["end"] = commonWords["enrage_end"],
+		stop = commonWords["enrage_end"],
 		bar = commonWords["enrage"],
 		icon = "Spell_Shadow_UnholyFrenzy",
 	}
@@ -382,7 +377,7 @@ do
 		self:DelayedMessage(seconds - 30, w.sec:format(30), "Positive")
 		self:DelayedMessage(seconds - 10, w.sec:format(10), "Urgent")
 		self:DelayedMessage(seconds - 5, w.sec:format(5), "Urgent")
-		self:DelayedMessage(seconds, w["end"]:format(boss), "Attention", nil, "Alarm")
+		self:DelayedMessage(seconds, w.stop:format(boss), "Attention", nil, "Alarm")
 		self:Bar(w.bar, seconds, w.icon)
 	end
 end
