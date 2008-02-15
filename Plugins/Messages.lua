@@ -11,6 +11,7 @@ local colorModule = nil
 local testModule = nil
 local messageFrame = nil
 local anchor = nil
+local GetSpellInfo = GetSpellInfo 
 
 ----------------------------
 --      Localization      --
@@ -437,7 +438,7 @@ function plugin:Print(addon, text, r, g, b)
 	messageFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
 end
 
-function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, icon)
+function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, iconNo)
 	if broadcastonly or not text then return end
 
 	local db = self.db.profile
@@ -452,7 +453,9 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, ic
 		end
 	end
 
-	if not db.useicons then
+	if iconNo and db.useicons then
+		local _, _, icon = GetSpellInfo(iconNo)
+	else
 		icon = nil
 	end
 
