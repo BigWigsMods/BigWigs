@@ -160,7 +160,7 @@ if GetSpellInfo then
 			self[m[spellId] or m["*"]](self, player, spellId, spellName, event)
 		end
 	end
-	function BigWigs.modulePrototype:RegisterCombatLogEvent(event, func, ...)
+	function BigWigs.modulePrototype:AddCombatListener(event, func, ...)
 		if not self.combatLogEventMap then self.combatLogEventMap = {} end
 		if not self.combatLogEventMap[event] then self.combatLogEventMap[event] = {} end
 		local c = select("#", ...)
@@ -176,7 +176,7 @@ if GetSpellInfo then
 		end
 	end
 else
-	function BigWigs.modulePrototype:RegisterCombatLogEvent(...)
+	function BigWigs.modulePrototype:AddCombatListener(...)
 		-- No-op in <2.4.
 	end
 end

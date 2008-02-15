@@ -224,7 +224,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	-- Don't know which spell ID it is before we get a log.
 	-- Not even sure if SPELL_DAMAGE is the right event, but I think so.
-	self:RegisterCombatLogEvent("SPELL_DAMAGE", "Knockback", 21737, 40434, 37102, 32959, 31389, 25778, 23382, 19633, 18945, 18813, 18670, 10101)
+	self:AddCombatListener("SPELL_DAMAGE", "Knockback", 21737, 40434, 37102, 32959, 31389, 25778, 23382, 19633, 18945, 18813, 18670, 10101)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 

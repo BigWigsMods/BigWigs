@@ -168,8 +168,8 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterCombatLogEvent("SPELL_AURA_APPLIED", "MeltArmor", 35410)
-	self:RegisterCombatLogEvent("SPELL_AURA_APPLIED", "FlamePatch", 35383)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "MeltArmor", 35410)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "FlamePatch", 35383)
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "DebuffEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "DebuffEvent")

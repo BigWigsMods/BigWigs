@@ -95,9 +95,9 @@ function mod:OnEnable()
 	started = nil
 	prevBurnTarget = nil
 
-	self:RegisterCombatLogEvent("SPELL_DAMAGE", "Burn", 45141)
-	self:RegisterCombatLogEvent("SPELL_AURA_APPLIED", "BurnSpread", 46394)
-	self:RegisterCombatLogEvent("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("SPELL_DAMAGE", "Burn", 45141)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "BurnSpread", 46394)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
