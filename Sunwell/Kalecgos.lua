@@ -12,7 +12,7 @@ if not GetSpellInfo then return end
 --	Warn for next enrage 10 seconds after the first
 
 local boss = AceLibrary("Babble-Boss-2.2")["Kalecgos"]
---local sath = AceLibrary("Babble-Boss-2.2")["Sathrovarr the Corruptor"]
+local sath = AceLibrary("Babble-Boss-2.2")["Sathrovarr the Corruptor"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local started = nil
