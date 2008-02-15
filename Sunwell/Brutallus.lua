@@ -9,7 +9,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local started = nil
-local pName = nil
+local pName = UnitName("player")
 local db = nil
 local prevBurnTarget = nil
 local burning = { }
@@ -96,16 +96,17 @@ function mod:OnEnable()
 	started = nil
 	prevBurnTarget = nil
 
-	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", "ProcessCombatLog")
+	self:RegisterCombatLogEvent("SPELL_DAMAGE", "Burn", 45141)
+	self:RegisterCombatLogEvent("SPELL_AURA_APPLIED", "BurnSpread", 46394)
+	self:RegisterCombatLogEvent("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "BrutallusBurn", 3)
-	self:TriggerEvent("BigWigs_ThrottleSync", "BrutallusBurnJump", 0)
+	self:Throttle(3, "BrutallusBurn")
+	self:Throttle(0, "BrutallusBurnJump")
 
-	pName = UnitName("player")
 	db = self.db.profile
 end
 
@@ -113,15 +114,13 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:ProcessCombatLog(_, event, _, _, _, _, player, _, spellID)
-	if event == "SPELL_DAMAGE" and spellID == 45141 then -- Burn
-		prevBurnTarget = player
-		self:Sync("BrutallusBurn", player)
-	elseif event == "SPELL_AURA_APPLIED" and spellID == 46394 then -- Burn
-		self:Sync("BrutallusBurnJump", player)
-	elseif event == "UNIT_DIED" and player == boss then
-		self:Sync("BossDeath", "Brutallus")
-	end
+function mod:Burn(player)
+	prevBurnTarget = player
+	self:Sync("BrutallusBurn", player)
+end
+
+function mod:BurnSpread(player)
+	self:Sync("BrutallusBurnJump", player)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
@@ -153,14 +152,14 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			--self:DelayedMessage(15, L["bar_message"], "Attention")
 		end
 		if db.enrage then
-			self:Message(string.format(L2["enrage_start"], boss, 6), "Attention")
-			self:DelayedMessage(180, string.format(L2["enrage_min"], 3), "Positive")
-			self:DelayedMessage(240, string.format(L2["enrage_min"], 2), "Positive")
-			self:DelayedMessage(300, string.format(L2["enrage_min"], 1), "Positive")
-			self:DelayedMessage(330, string.format(L2["enrage_sec"], 30), "Positive")
-			self:DelayedMessage(350, string.format(L2["enrage_sec"], 10), "Urgent")
-			self:DelayedMessage(355, string.format(L2["enrage_sec"], 5), "Urgent")
-			self:DelayedMessage(360, string.format(L2["enrage_end"], boss), "Attention", nil, "Alarm")
+			self:Message(L2["enrage_start"]:format(boss, 6), "Attention")
+			self:DelayedMessage(180, L2["enrage_min"]:format(3), "Positive")
+			self:DelayedMessage(240, L2["enrage_min"]:format(2), "Positive")
+			self:DelayedMessage(300, L2["enrage_min"]:format(1), "Positive")
+			self:DelayedMessage(330, L2["enrage_sec"]:format(30), "Positive")
+			self:DelayedMessage(350, L2["enrage_sec"]:format(10), "Urgent")
+			self:DelayedMessage(355, L2["enrage_sec"]:format(5), "Urgent")
+			self:DelayedMessage(360, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
 			self:Bar(L2["enrage"], 360, "Spell_Shadow_UnholyFrenzy")
 		end
 	end
@@ -180,7 +179,7 @@ function mod:BurnJumpWarn()
 			end
 		end
 		if msg ~= nil then
-			self:Message(string.format(L["burnjump_other"], msg), "Important", nil, "Alert")
+			self:Message(L["burnjump_other"]:format(msg), "Important", nil, "Alert")
 		end
 	end
 	for k in pairs(burning) do burning[k] = nil end
