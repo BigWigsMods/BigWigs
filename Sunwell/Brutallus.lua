@@ -122,16 +122,17 @@ function mod:BurnSpread(player)
 	self:Sync("BrutallusBurnJump", player)
 end
 
+local _, _, burnIcon = GetSpellInfo(45141) --need to think about this API wise (bars)
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "BrutallusBurn" and rest and db.burn then
 		local other = L["burn_other"]:format(rest)
 		if rest == pName then
-			self:Message(L["burn_you"], "Personal", true, "Long")
+			self:Message(L["burn_you"], "Personal", true, "Long", nil, 45141)
 			self:Message(other, "Attention", nil, nil, true)
 		else
-			self:Message(other, "Attention")
+			self:Message(other, "Attention", nil, nil, nil, 45141)
 		end
-		self:Bar(L["burn_bar"], 20, "Spell_Fire_Burnout")
+		self:Bar(L["burn_bar"], 20, burnIcon)
 		--self:DelayedMessage(15, L["bar_message"], "Attention")
 		if db.icon then
 			self:Icon(rest)
@@ -147,7 +148,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if db.burn then
-			self:Bar(L["burn_bar"], 20, "Spell_Fire_Burnout")
+			self:Bar(L["burn_bar"], 20, burnIcon)
 			--self:DelayedMessage(15, L["bar_message"], "Attention")
 		end
 		if db.enrage then
@@ -166,11 +167,11 @@ function mod:BurnJumpWarn()
 				msg = msg .. ", " .. k
 			end
 			if k == pName then
-				self:Message(L["burnjump_you"], "Personal", true, "Long")
+				self:Message(L["burnjump_you"], "Personal", true, "Long", nil, 46394)
 			end
 		end
 		if msg ~= nil then
-			self:Message(L["burnjump_other"]:format(msg), "Important", nil, "Alert")
+			self:Message(L["burnjump_other"]:format(msg), "Important", nil, "Alert", nil, 46394)
 		end
 	end
 	for k in pairs(burning) do burning[k] = nil end
