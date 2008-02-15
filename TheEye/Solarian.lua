@@ -250,6 +250,9 @@ mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) en
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Wrath", 42783)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
@@ -260,6 +263,7 @@ function mod:OnEnable()
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWrath", 3)
+
 	pName = UnitName("player")
 end
 
@@ -300,28 +304,24 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 end
 
 local function HideProx()
-	mod:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 	mod:TriggerEvent("BigWigs_HideProximity", self)
+end
+
+function mod:Wrath(player)
+	if player == pName then
+		self:TriggerEvent("BigWigs_ShowProximity", self)
+		self:ScheduleEvent("BWHideProx", HideProx, 6)
+	end
+	self:Sync("SolaWrath", player)
 end
 
 function mod:WrathAff(msg)
 	local wplayer, wtype = select(3, msg:find(L["wrath_trigger"]))
 	if wplayer and wtype then
 		if wplayer == L2["you"] and wtype == L2["are"] then
-			self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 			wplayer = pName
-			self:TriggerEvent("BigWigs_ShowProximity", self)
-			self:ScheduleEvent("BWHideProx", HideProx, 6)
 		end
-		self:Sync("SolaWrath", wplayer)
-	end
-end
-
-function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
-	if msg == L["wrath_fade"] then
-		self:TriggerEvent("BigWigs_HideProximity", self)
-		self:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
-		self:CancelScheduledEvent("BWHideProx")
+		self:Wrath(wplayer)
 	end
 end
 
