@@ -438,7 +438,7 @@ function plugin:Print(addon, text, r, g, b)
 	messageFrame:AddMessage(text, r, g, b, 1, UIERRORS_HOLD_TIME)
 end
 
-function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, iconNo)
+function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, icon)
 	if broadcastonly or not text then return end
 
 	local db = self.db.profile
@@ -453,8 +453,9 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, ic
 		end
 	end
 
-	if iconNo and db.useicons then
-		local _, _, icon = GetSpellInfo(iconNo)
+	if icon and db.useicons then
+		local _
+		_, _, icon = GetSpellInfo(icon)
 	else
 		icon = nil
 	end
