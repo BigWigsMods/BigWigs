@@ -325,7 +325,7 @@ do
 	end
 end
 
-function BigWigs.modulePrototype:Sync(sync, ...)
+function BigWigs.modulePrototype:Sync(...)
 	self:TriggerEvent("BigWigs_SendSync", strjoin(" ", ...))
 end
 
