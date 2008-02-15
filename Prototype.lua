@@ -340,3 +340,9 @@ function BigWigs.modulePrototype:Icon(player)
 	self:TriggerEvent("BigWigs_SetRaidIcon", player)
 end
 
+function BigWigs.modulePrototype:Throttle(seconds, ...)
+	for i = 1, select("#", ...) do
+		self:TriggerEvent("BigWigs_ThrottleSync", (select(i, ...)), seconds)
+	end
+end
+

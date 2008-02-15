@@ -206,12 +206,8 @@ function mod:OnEnable()
 	self:RegisterCombatLogEvent("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "KalecgosBlast", 3)
-	self:TriggerEvent("BigWigs_ThrottleSync", "KalecgosRealm", 0)
-	self:TriggerEvent("BigWigs_ThrottleSync", "KalecgosCurse", 0)
-	self:TriggerEvent("BigWigs_ThrottleSync", "KaleCurseRemv", 0)
-	self:TriggerEvent("BigWigs_ThrottleSync", "KalecgosMagicCast", 3)
-	self:TriggerEvent("BigWigs_ThrottleSync", "KalecgosMagicHit", 3)
+	self:Throttle(3, "KalecgosBlast", "KalecgosMagicCast", "KalecgosMagicHit")
+	self:Throttle(0, "KalecgosRealm", "KalecgosCurse", "KaleCurseRemv")
 
 	db = self.db.profile
 end
