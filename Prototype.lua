@@ -153,17 +153,39 @@ function BigWigs.modulePrototype:OnInitialize()
 	BigWigs:RegisterModule(self)
 end
 
+do
+	function BigWigs.modulePrototype:COMBAT_LOG_EVENT_UNFILTERED(_, event, _, _, _, _, player, _, spellId, spellName)
+		local m = self.combatLogEventMap[event]
+		if m and (m[spellId] or m["*"]) then
+			self[m[spellId] or m["*"]](self, player, spellId, spellName, event)
+		end
+	end
+	function BigWigs.modulePrototype:RegisterCombatLogEvent(event, func, ...)
+		if not self.combatLogEventMap then self.combatLogEventMap = {} end
+		if not self.combatLogEventMap[event] then self.combatLogEventMap[event] = {} end
+		local c = select("#", ...)
+		if c > 0 then
+			for i = 1, select("#", ...) do
+				self.combatLogEventMap[event][(select(i, ...))] = func
+			end
+		else
+			self.combatLogEventMap[event]["*"] = func
+		end
+		if not self:IsEventRegistered("COMBAT_LOG_EVENT_UNFILTERED") then
+			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		end
+	end
+end
+
 function BigWigs.modulePrototype:IsBossModule()
 	return self.zonename and self.enabletrigger and true
 end
 
 function BigWigs.modulePrototype:GenericBossDeath(msg)
-	--remove after 2.4
-	if msg == fmt(UNITDIESOTHER, self:ToString()) then
-		self:Sync("BossDeath " .. self:ToString())
+	local b = self:ToString()
+	if msg == b or msg == fmt(UNITDIESOTHER, b) then
+		self:Sync("BossDeath " .. b)
 	end
-	--uncomment after 2.4
-	--self:Sync("BossDeath " .. msg)
 end
 
 local function populateScanTable(mod)
