@@ -381,3 +381,4 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Bar(L["paralyze_warnbar"], 27, "Spell_Nature_TimeStop")
 	end
 end
+

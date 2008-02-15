@@ -152,15 +152,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			--self:DelayedMessage(15, L["bar_message"], "Attention")
 		end
 		if db.enrage then
-			self:Message(L2["enrage_start"]:format(boss, 6), "Attention")
-			self:DelayedMessage(180, L2["enrage_min"]:format(3), "Positive")
-			self:DelayedMessage(240, L2["enrage_min"]:format(2), "Positive")
-			self:DelayedMessage(300, L2["enrage_min"]:format(1), "Positive")
-			self:DelayedMessage(330, L2["enrage_sec"]:format(30), "Positive")
-			self:DelayedMessage(350, L2["enrage_sec"]:format(10), "Urgent")
-			self:DelayedMessage(355, L2["enrage_sec"]:format(5), "Urgent")
-			self:DelayedMessage(360, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
-			self:Bar(L2["enrage"], 360, "Spell_Shadow_UnholyFrenzy")
+			self:Enrage(360)
 		end
 	end
 end

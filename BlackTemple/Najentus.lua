@@ -213,15 +213,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["shield_nextbar"], 60, "Spell_Frost_FrostBolt02")
 		end
 		if db.enrage then
-			self:Message(fmt(L2["enrage_start"], boss, 8), "Attention")
-			self:DelayedMessage(180, fmt(L2["enrage_min"], 5), "Positive")
-			self:DelayedMessage(300, fmt(L2["enrage_min"], 3), "Positive")
-			self:DelayedMessage(420, fmt(L2["enrage_min"], 1), "Positive")
-			self:DelayedMessage(450, fmt(L2["enrage_sec"], 30), "Positive")
-			self:DelayedMessage(470, fmt(L2["enrage_sec"], 10), "Urgent")
-			self:DelayedMessage(475, fmt(L2["enrage_sec"], 5), "Urgent")
-			self:DelayedMessage(480, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
-			self:Bar(L2["enrage"], 480, "Spell_Shadow_UnholyFrenzy")
+			self:Enrage(480)
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end

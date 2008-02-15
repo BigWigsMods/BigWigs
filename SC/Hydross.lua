@@ -281,14 +281,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(fmt(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrozenCore")
 		end
 		if self.db.profile.enrage then
-			self:Message(fmt(L2["enrage_start"], boss, 10), "Attention")
-			self:DelayedMessage(300, fmt(L2["enrage_min"], 5), "Positive")
-			self:DelayedMessage(420, fmt(L2["enrage_min"], 3), "Positive")
-			self:DelayedMessage(540, fmt(L2["enrage_min"], 1), "Positive")
-			self:DelayedMessage(570, fmt(L2["enrage_sec"], 30), "Positive")
-			self:DelayedMessage(590, fmt(L2["enrage_sec"], 10), "Urgent")
-			self:DelayedMessage(600, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
-			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
+			self:Enrage(600)
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	elseif msg == L["poison_stance_trigger"] then
@@ -417,3 +410,4 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:ScheduleEvent("BWTombWarn", self.TombWarn, 0.3, self)
 	end
 end
+

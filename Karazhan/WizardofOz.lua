@@ -169,3 +169,4 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 		self:Bar(L["light_message"], 2, "Spell_Nature_ChainLightning")
 	end
 end
+

@@ -197,3 +197,4 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(L["twist_message"]:format(rest), "Attention")
 	end
 end
+

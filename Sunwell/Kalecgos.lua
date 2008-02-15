@@ -328,26 +328,28 @@ end
 function mod:NextPortalWarn()
 	if db.portal then
 		local hasValidTarget = nil
+
+		-- XXX ID's not confirmed!! give feedback
+		local realmID = GetSpellInfo(46021) --Spectral Realm
+		local exhID = GetSpellInfo(44867) --Spectral Exhaustion
 		for i = 1, GetNumRaidMembers() do
 			local hasDebuff = nil
 			local curDebuff = 1
 			local unit = fmt("%s%d", "raid", i)
 			while UnitDebuff(unit, curDebuff) do
 				local name = UnitDebuff(unit, curDebuff)
-				local realmID = GetSpellInfo(46021) --Spectral Realm
-				local exhID = GetSpellInfo(44867) --Spectral Exhaustion
-				if name == realmID or name == exhID then --ID's not confirmed!! give feedback
+				if name == realmID or name == exhID then
 					hasDebuff = true
 					break
 				end
 				curDebuff = curDebuff + 1
 			end
-			if hasDebuff ~= nil then
+			if hasDebuff then
 				hasValidTarget = true
 				break
 			end
 		end
-		if hasValidTarget ~= nil then
+		if hasValidTarget then
 			portalNum = portalNum + 1
 			if portalNum == 5 then portalNum = 1 end
 			self:Message(fmt(L["portal_message"], portalNum), "Urgent", nil, "Alert")

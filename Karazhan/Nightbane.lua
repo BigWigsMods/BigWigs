@@ -301,3 +301,4 @@ function mod:UNIT_SPELLCAST_CHANNEL_START(msg)
 		self:Sync("NBBones")
 	end
 end
+

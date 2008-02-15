@@ -366,3 +366,4 @@ function mod:BigWigs_RecvSync(sync)
 		end
 	end
 end
+

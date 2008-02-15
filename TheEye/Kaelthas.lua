@@ -733,3 +733,4 @@ function mod:MCWarn()
 	stop = true
 	self:ScheduleEvent("BWKaelthasNilStop", nilStop, 5)
 end
+

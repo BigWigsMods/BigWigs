@@ -227,14 +227,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.enrage and msg:find(L["engage_trigger"]) then
-		self:Message(fmt(L2["enrage_start"], boss, 10), "Attention")
-		self:DelayedMessage(300, fmt(L2["enrage_min"], 5), "Positive")
-		self:DelayedMessage(420, fmt(L2["enrage_min"], 3), "Positive")
-		self:DelayedMessage(540, fmt(L2["enrage_min"], 1), "Positive")
-		self:DelayedMessage(570, fmt(L2["enrage_sec"], 30), "Positive")
-		self:DelayedMessage(590, fmt(L2["enrage_sec"], 10), "Urgent")
-		self:DelayedMessage(600, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
-		self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
+		self:Enrage(600)
 	end
 end
 
@@ -285,3 +278,4 @@ function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	end
 end
+

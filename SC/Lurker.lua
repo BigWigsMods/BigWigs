@@ -310,3 +310,4 @@ function mod:LurkerUP()
 	self:TriggerEvent("BigWigs_ShowProximity", self)
 	self:ScheduleEvent("BWLurkerReset", resetMe, 30)
 end
+

@@ -368,3 +368,4 @@ function mod:Event(msg)
 		self:ScheduleEvent("BWGrullNilSilence", nilSilence, 10)
 	end
 end
+

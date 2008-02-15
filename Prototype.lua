@@ -346,3 +346,44 @@ function BigWigs.modulePrototype:Throttle(seconds, ...)
 	end
 end
 
+do
+	local berserk = {
+		start = commonWords["berserk_start"],
+		min = commonWords["berserk_min"],
+		sec = commonWords["berserk_sec"],
+		["end"] = commonWords["berserk_end"],
+		bar = commonWords["berserk"],
+		icon = "Spell_Nature_Reincarnation",
+	}
+	local enrage = {
+		start = commonWords["enrage_start"],
+		min = commonWords["enrage_min"],
+		sec = commonWords["enrage_sec"],
+		["end"] = commonWords["enrage_end"],
+		bar = commonWords["enrage"],
+		icon = "Spell_Shadow_UnholyFrenzy",
+	}
+	function BigWigs.modulePrototype:Enrage(seconds, isBerserk, noEngageMessage)
+		local w = isBerserk and berserk or enrage
+		local boss = self:ToString()
+
+		if not noEngageMessage then
+			-- Engage warning with minutes to enrage
+			self:Message(w.start:format(boss, seconds / 60), "Attention")
+		end
+
+		-- Half-way to enrage warning.
+		local half = seconds / 2
+		local m = half % 60
+		local halfMin = (half - m) / 60
+		self:DelayedMessage(half + m, w.min:format(halfMin), "Positive")
+
+		self:DelayedMessage(seconds - 60, w.min:format(1), "Positive")
+		self:DelayedMessage(seconds - 30, w.sec:format(30), "Positive")
+		self:DelayedMessage(seconds - 10, w.sec:format(10), "Urgent")
+		self:DelayedMessage(seconds - 5, w.sec:format(5), "Urgent")
+		self:DelayedMessage(seconds, w.end:format(boss), "Attention", nil, "Alarm")
+		self:Bar(w.bar, seconds, w.icon)
+	end
+end
+

@@ -547,3 +547,4 @@ function mod:BigWigs_RecvSync( sync, rest )
 		self:CancelScheduledEvent("BigWigsSummitTimersDM30")
 	end
 end
+

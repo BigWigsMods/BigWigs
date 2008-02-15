@@ -20,8 +20,6 @@ local fmt = string.format
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Alar",
 
-	engage_message = "%s engaged - Phase 1",
-
 	--Renamed from Meteor to Dive Bomb as of Patch 2.3.0
 	meteor = "Dive Bomb",
 	meteor_desc = "Estimated Dive Bomb timers.",
@@ -45,8 +43,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_message = "%s engagé - Phase 1",
-
 	meteor = "Bombardement en piqué",
 	meteor_desc = "Délais estimés entre les Bombardements en piqué.",
 	meteor_warning = "Bombardement en piqué probable dans ~5 sec.",
@@ -69,8 +65,6 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_message = "%s 전투 개시 - 1 단계",
-
 	meteor = "급강하 폭격",  -- By patch, spell name is changed
 	meteor_desc = "대략적인 급강하 폭격 타이머입니다.",
 	meteor_warning = "약 5초 이내 급강하 폭격 주의",
@@ -93,8 +87,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	engage_message = "%s 開戰 - 第一階段！",
-
 	meteor = "隕石術",
 	meteor_desc = "隕石計時",
 	meteor_warning = "隕石術可能在 5 秒內施放。",
@@ -117,8 +109,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	engage_message = "%s 激活 - 第一阶段",
-
 	meteor = "俯冲轰炸",
 	meteor_desc = "俯冲轰炸记时条。",
 	meteor_warning = "5秒后 可能 俯冲轰炸",
@@ -141,8 +131,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	engage_message = "%s angegriffen - Phase 1",
-
 	meteor = "Meteor",
 	meteor_desc = "Geschätzte Meteor Timer.",
 	meteor_warning = "Möglicher Meteor in ~5sek",
@@ -215,7 +203,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		self:Message(fmt(L["engage_message"], boss), "Attention")
 		self:ScheduleRepeatingEvent("BWAlarTargetSeek", self.AlarCheck, 1, self)
 		self:ScheduleEvent("BWAlarNilOccured", nilOccured, 25) --this is here to prevent target problems
 	elseif sync == "AlArArmor" and rest and self.db.profile.armor then
@@ -237,14 +224,7 @@ function mod:AlarCheck()
 	if not self:Scan() and not occured then
 		occured = true
 		if not prior and self.db.profile.enrage then
-			self:DelayedMessage(320, fmt(L2["enrage_min"], 5), "Positive")
-			self:DelayedMessage(440, fmt(L2["enrage_min"], 3), "Positive")
-			self:DelayedMessage(560, fmt(L2["enrage_min"], 1), "Positive")
-			self:DelayedMessage(590, fmt(L2["enrage_sec"], 30), "Positive")
-			self:DelayedMessage(610, fmt(L2["enrage_sec"], 10), "Urgent")
-			self:DelayedMessage(615, fmt(L2["enrage_sec"], 5), "Urgent")
-			self:DelayedMessage(620, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
-			self:Bar(L2["enrage"], 620, "Spell_Shadow_UnholyFrenzy")
+			self:Enrage(620)
 			prior = true
 		end
 		if fireball and self.db.profile.meteor then

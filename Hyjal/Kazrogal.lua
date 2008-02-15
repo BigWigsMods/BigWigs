@@ -127,3 +127,4 @@ function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
 end
+

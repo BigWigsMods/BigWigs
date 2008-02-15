@@ -167,14 +167,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.enrage and msg == L["enrage_trigger"] then
-		self:Message(L2["enrage_start"]:format(boss, 10), "Attention")
-		self:DelayedMessage(300, L2["enrage_min"]:format(5), "Positive")
-		self:DelayedMessage(420, L2["enrage_min"]:format(3), "Positive")
-		self:DelayedMessage(540, L2["enrage_sec"]:format(60), "Positive")
-		self:DelayedMessage(570, L2["enrage_sec"]:format(30), "Positive")
-		self:DelayedMessage(590, L2["enrage_sec"]:format(10), "Urgent")
-		self:DelayedMessage(600, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
-		self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
+		self:Enrage(600)
 	end
 end
 
@@ -197,3 +190,4 @@ function mod:BigWigs_RecvSync(sync)
 		self:Message(L["heal_message"], "Important", nil, "Long")
 	end
 end
+

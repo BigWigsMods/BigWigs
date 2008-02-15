@@ -218,3 +218,4 @@ function mod:InfernoCheck()
 		end
 	end
 end
+

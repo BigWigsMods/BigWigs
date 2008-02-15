@@ -314,15 +314,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:ScheduleEvent("rage1", "BigWigs_Message", 44, L["phase_rage_warning"], "Important")
 		end
 		if db.enrage then
-			self:Message(fmt(L2["enrage_start"], boss, 10), "Attention")
-			self:DelayedMessage(300, fmt(L2["enrage_min"], 5), "Positive")
-			self:DelayedMessage(420, fmt(L2["enrage_min"], 3), "Positive")
-			self:DelayedMessage(540, fmt(L2["enrage_min"], 1), "Positive")
-			self:DelayedMessage(570, fmt(L2["enrage_sec"], 30), "Positive")
-			self:DelayedMessage(590, fmt(L2["enrage_sec"], 10), "Urgent")
-			self:DelayedMessage(595, fmt(L2["enrage_sec"], 5), "Urgent")
-			self:DelayedMessage(600, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
-			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
+			self:Enrage(600)
 		end
 		if db.bloodboil then
 			self:Bar(fmt(L["bloodboil_message"], count), 11, "Spell_Shadow_BloodBoil")

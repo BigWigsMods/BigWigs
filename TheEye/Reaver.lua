@@ -247,14 +247,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:ScheduleRepeatingEvent("BWReaverToTScan", self.OrbCheck, 0.2, self) --how often to scan the target, 0.2 seconds
 		end
 		if self.db.profile.enrage then
-			self:Message(fmt(L2["enrage_start"], boss, 10), "Important")
-			self:DelayedMessage(300, fmt(L2["enrage_min"], 5), "Positive")
-			self:DelayedMessage(420, fmt(L2["enrage_min"], 3), "Positive")
-			self:DelayedMessage(540, fmt(L2["enrage_min"], 1), "Positive")
-			self:DelayedMessage(570, fmt(L2["enrage_sec"], 30), "Positive")
-			self:DelayedMessage(590, fmt(L2["enrage_sec"], 10), "Urgent")
-			self:DelayedMessage(600, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
-			self:Bar(L2["enrage"], 600, "Spell_Shadow_UnholyFrenzy")
+			self:Enrage(600)
 		end
 	elseif self.db.profile.pounding and (msg == L["pounding_trigger1"] or msg == L["pounding_trigger2"]) then
 		self:Bar(L["pounding_nextbar"], 13, "Ability_ThunderClap")

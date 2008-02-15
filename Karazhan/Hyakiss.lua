@@ -97,3 +97,4 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Bar(L["web_bar"]:format(rest), 8, "Spell_Nature_Web")
 	end
 end
+

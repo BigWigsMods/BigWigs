@@ -616,17 +616,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif db.enrage and msg == L["enrage_trigger"] then
 		self:Message(L["enrage_message"], "Important", nil, "Alert")
 	elseif db.berserk and msg == L["berserk_trigger"] then
-		self:Message(fmt(L2["berserk_start"], boss, 25), "Attention")
-		self:DelayedMessage(600, fmt(L2["berserk_min"], 15), "Positive")
-		self:DelayedMessage(900, fmt(L2["berserk_min"], 10), "Positive")
-		self:DelayedMessage(1200, fmt(L2["berserk_min"], 5), "Positive")
-		self:DelayedMessage(1320, fmt(L2["berserk_min"], 3), "Positive")
-		self:DelayedMessage(1440, fmt(L2["berserk_min"], 1), "Positive")
-		self:DelayedMessage(1470, fmt(L2["berserk_sec"], 30), "Positive")
-		self:DelayedMessage(1490, fmt(L2["berserk_sec"], 10), "Urgent")
-		self:DelayedMessage(1495, fmt(L2["berserk_sec"], 5), "Urgent")
-		self:DelayedMessage(1500, fmt(L2["berserk_end"], boss), "Attention", nil, "Alarm")
-		self:Bar(L2["berserk"], 1500, "Spell_Nature_Reincarnation")
+		self:Enrage(1500, true)
 	elseif msg == L["illi_start"] then
 		self:Bar(boss, 37, "Spell_Shadow_Charm")
 	end

@@ -190,14 +190,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Bar(L["phase2_bar"], 60, "Spell_ChargePositive")
 		end
 		if self.db.profile.enrage then
-			self:Message(fmt(L2["enrage_start"], boss, 9), "Attention")
-			self:DelayedMessage(240, fmt(L2["enrage_min"], 5), "Positive")
-			self:DelayedMessage(360, fmt(L2["enrage_min"], 3), "Positive")
-			self:DelayedMessage(480, fmt(L2["enrage_min"], 1), "Positive")
-			self:DelayedMessage(510, fmt(L2["enrage_sec"], 30), "Positive")
-			self:DelayedMessage(530, fmt(L2["enrage_sec"], 10), "Urgent")
-			self:DelayedMessage(540, fmt(L2["enrage_end"], boss), "Attention", nil, "Alarm")
-			self:Bar(L2["enrage"], 540, "Spell_Shadow_UnholyFrenzy")
+			self:Enrage(540)
 		end
 	elseif sync == "Netherbreath" and self.db.profile.netherbreath then
 		self:Message( L["netherbreath_warn"], "Urgent")

@@ -289,3 +289,4 @@ function mod:BigWigs_RecvSync(sync)
 		self:Message(L["totem_message"], "Urgent")
 	end
 end
+

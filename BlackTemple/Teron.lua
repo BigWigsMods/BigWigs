@@ -181,3 +181,4 @@ end
 function mod:Ghost(rest)
 	self:Bar(L["ghost_bar"]:format(rest), 60, "Ability_Druid_Dreamstate")
 end
+
