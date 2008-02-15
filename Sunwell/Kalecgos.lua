@@ -382,7 +382,7 @@ function mod:IsPlayerHealer(player)
 	end
 
 	--is druid and has mana, isn't Moonkin
-	if class == "DRUID" and UnitPowerType(player) == 0
+	if class == "DRUID" and UnitPowerType(player) == 0 then
 		local i = 1
 		while UnitBuff(player, i) do
 			local name = UnitBuff(player, i)
