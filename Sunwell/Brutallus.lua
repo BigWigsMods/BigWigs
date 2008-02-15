@@ -6,7 +6,6 @@ if not GetSpellInfo then return end
 
 local boss = AceLibrary("Babble-Boss-2.2")["Brutallus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local started = nil
 local pName = UnitName("player")
