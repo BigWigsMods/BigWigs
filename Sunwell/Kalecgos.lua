@@ -12,7 +12,7 @@ if not GetSpellInfo then return end
 --	Warn for next enrage 10 seconds after the first
 
 local boss = AceLibrary("Babble-Boss-2.2")["Kalecgos"]
-local sath = "Sathrovarr the Corruptor"
+local sath = AceLibrary("Babble-Boss-2.2")["Sathrovarr the Corruptor"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local started = nil
@@ -179,7 +179,7 @@ L:RegisterTranslations("frFR", function() return {
 
 local mod = BigWigs:NewModule(boss)
 mod.zonename = AceLibrary("Babble-Zone-2.2")["Sunwell Plateau"]
-mod.enabletrigger = boss
+mod.enabletrigger = { boss, sath }
 mod.toggleoptions = {"blast", "portal", "realm", -1, "magichealing", "magiccast", "magichit", "magicthreat", "enrage", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
