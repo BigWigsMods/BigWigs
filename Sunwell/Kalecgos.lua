@@ -88,21 +88,21 @@ L:RegisterTranslations("enUS", function() return {
 ]]--
 
 L:RegisterTranslations("koKR", function() return {
-	blast = "Spectral Blast",
-	blast_desc = "Spectral Blast에 적중된 플레이어를 알립니다.",
-	blast_message = "%s에게 Spectral Blast!",
+	blast = "공허 폭발",
+	blast_desc = "공허 폭발에 적중된 플레이어를 알립니다.",
+	blast_message = "%s에게 공허 폭발!",
 
 	portal = "차원문",
-	portal_desc = "Spectral Blast 재사용 대기시간에 대해 알립니다.",
+	portal_desc = "공허 폭발의 재사용 대기시간에 대해 알립니다.",
 	portal_bar = "다음 차원문",
 	portal_message = "약 5초이내 (#%d) 차원문!",
 
-	realm = "Spectral Realm",
-	realm_desc = "Spectral Realm에 있는 플레이어를 알립니다.",
+	realm = "공허 영역",
+	realm_desc = "공허 영역 내부에 들어간 플레이어를 알립니다.",
 	realm_message = "영역 내부: %s",
 
-	curse = "Curse of Boundless Agony",
-	curse_desc = "Curse of Boundless Agony에 걸린 플레이어를 알립니다.",
+	curse = "무한한 고통의 저주",
+	curse_desc = "무한한 고통의 저주에 걸린 플레이어를 알립니다.",
 	curse_bar = "저주: %s",
 
 	magichealing = "마법 폭주 (힐량 증가)",
@@ -111,7 +111,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	magiccast = "마법 폭주 (시전시간 증가)",
 	magiccast_desc = "힐러가 마법 폭주에 의해 시전시간이 증가할때 알려줍니다.",
-	magiccast_you = "마법 폭주 - 당신에게 시전시간 증가!",
+	magiccast_you = "마법 폭주 - 당신은 시전시간 증가!",
 	magiccast_other = "마법 폭주 - %s 시전시간 증가!",
 
 	magichit = "마법 폭주 (적중률 감소)",
@@ -123,7 +123,7 @@ L:RegisterTranslations("koKR", function() return {
 	magicthreat_desc = "당신이 마법 폭주에 의해 위협수준이 증가할때 알려줍니다.",
 	magicthreat_you = "마법 폭주 - 위협 생성 증가!",
 
-	spectral_realm = "Spectral Realm",
+	spectral_realm = "공허 영역",
 
 	enrage_warning = "곧 격노!",
 	enrage_message = "10% - 격노!",
