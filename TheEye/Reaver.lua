@@ -4,8 +4,10 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Void Reaver"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords") -- XXX 2.4 removal
+
 local previous
+local db = nil
 
 local UnitName = UnitName
 local UnitExists = UnitExists
@@ -221,7 +223,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 --      Initialization      --
 ------------------------------
 
-local temp
+local temp -- XXX remove after 2.4 when we have Knock Away ID
 function mod:OnEnable()
 	-- Don't know which spell ID it is before we get a log.
 	-- Not even sure if SPELL_DAMAGE is the right event, but I think so.
@@ -241,6 +243,7 @@ function mod:OnEnable()
 
 	previous = nil
 	temp = nil
+	db = self.db.profile
 end
 
 ------------------------------
@@ -250,13 +253,13 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		temp = true
-		if self.db.profile.orbyou or self.db.profile.orbother then
+		if db.orbyou or db.orbother then
 			self:ScheduleRepeatingEvent("BWReaverToTScan", self.OrbCheck, 0.2, self) --how often to scan the target, 0.2 seconds
 		end
-		if self.db.profile.enrage then
+		if db.enrage then
 			self:Enrage(600)
 		end
-	elseif self.db.profile.pounding and (msg == L["pounding_trigger1"] or msg == L["pounding_trigger2"]) then
+	elseif db.pounding and (msg == L["pounding_trigger1"] or msg == L["pounding_trigger2"]) then
 		self:Bar(L["pounding_nextbar"], 13, "Ability_ThunderClap")
 	end
 end
@@ -276,7 +279,7 @@ function mod:KnockAway(msg)
 end
 
 function mod:BigWigs_RecvSync(sync)
-	if sync == "ReavKA2" and self.db.profile.knock then
+	if sync == "ReavKA2" and db.knock then
 		self:Bar(L["knock_bar"], 20, "INV_Gauntlets_05")
 	end
 end
@@ -304,7 +307,7 @@ function mod:OrbCheck()
 		local Index = 1
 		while UnitBuff(id, Index) do
 			local name = UnitBuff(id, Index)
-			if name == L2["RF"] then
+			if name == L2["RF"] then --- XXX change after 2.4
 				paladin = true
 			end
 			Index = Index + 1
@@ -321,18 +324,18 @@ function mod:OrbCheck()
 end
 
 function mod:Result(target)
-	if target == pName and self.db.profile.orbyou then
+	if target == pName and db.orbyou then
 		self:Message(L["orb_you"], "Personal", true, "Long")
-		self:Message(fmt(L["orb_other"], target), "Attention", nil, nil, true)
+		self:Message(fmt(L["orb_other"], target), "Attention", nil, nil, true, 34172)
 
 		--this is handy for player with speech bubbles enabled to see if nearby players are being hit and run away from them
-		if self.db.profile.orbsay then
+		if db.orbsay then
 			SendChatMessage(L["orb_say"], "SAY")
 		end
-	elseif self.db.profile.orbother then
-		self:Message(fmt(L["orb_other"], target), "Attention")
+	elseif db.orbother then
+		self:Message(fmt(L["orb_other"], target), "Attention", nil, nil, nil, 34172)
 	end
-	if self.db.profile.icon then
+	if db.icon then
 		self:Icon(target)
 	end
 end
