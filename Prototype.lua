@@ -315,7 +315,9 @@ do
 	local icons = setmetatable({}, {__index =
 		function(self, key)
 			if not key then return end
-			if key:find("\\") then self[key] = key
+			if type(key) == "number" then
+				local _, _, idIcon = GetSpellInfo(key)
+				self[key] = idIcon
 			else self[key] = "Interface\\Icons\\" .. key end
 			return self[key]
 		end
