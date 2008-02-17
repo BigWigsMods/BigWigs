@@ -122,7 +122,6 @@ function mod:BurnSpread(player)
 	self:Sync("BrutallusBurnJump", player)
 end
 
-local _, _, burnIcon = GetSpellInfo(45141) --need to think about this API wise (bars)
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "BrutallusBurn" and rest and db.burn then
 		local other = L["burn_other"]:format(rest)
@@ -132,7 +131,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		else
 			self:Message(other, "Attention", nil, nil, nil, 45141)
 		end
-		self:Bar(L["burn_bar"], 20, burnIcon)
+		self:Bar(L["burn_bar"], 20, 45141)
 		--self:DelayedMessage(15, L["bar_message"], "Attention")
 		if db.icon then
 			self:Icon(rest)
@@ -148,7 +147,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if db.burn then
-			self:Bar(L["burn_bar"], 20, burnIcon)
+			self:Bar(L["burn_bar"], 20, 45141)
 			--self:DelayedMessage(15, L["bar_message"], "Attention")
 		end
 		if db.enrage then

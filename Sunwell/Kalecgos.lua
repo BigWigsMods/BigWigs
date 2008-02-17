@@ -248,7 +248,6 @@ function mod:WildMagic(player, spellId, spellName, event)
 	end
 end
 
-local _, _, curseIcon = GetSpellInfo(45032) --need to think about this API wise (bars)
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "KalecgosBlast" and rest then
 		if db.blast then
@@ -263,7 +262,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		inRealm[rest] = true
 		self:ScheduleEvent("RealmCheck", self.RealmWarn, 2, self)
 	elseif sync == "KalecgosCurse" and rest and db.curse then
-		self:Bar(fmt(L["curse_bar"], rest), 30, curseIcon)
+		self:Bar(fmt(L["curse_bar"], rest), 30, 45032)
 	elseif sync == "KaleCurseRemv" and rest and db.curse then
 		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["curse_bar"], rest))
 	elseif sync == "KalecgosMagicCast" and rest and db.magiccast then
