@@ -138,7 +138,7 @@ L:RegisterTranslations("frFR", function() return {
 	portal = "Portail",
 	portal_desc = "Préviens quand le temps de recharge de la Déflagration spectrale est terminé.",
 	portal_bar = "Prochain portail",
-	portal_message = "Portail probable dans 5 sec. !",
+	portal_message = "Portail probable (#%d) dans 5 sec. !",
 
 	realm = "Royaume spectral",
 	realm_desc = "Préviens quand un joueur est dans le Royaume spectral.",
@@ -146,7 +146,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	curse = "Malédiction d'agonie infinie",
 	curse_desc = "Préviens quand un joueur subit les effets de la Malédiction d'agonie infinie.",
-	curse_bar = "Curse: %s",
+	curse_bar = "Malédiction : %s",
 
 	magichealing = "Magie sauvage (Soins prodigués augmentés)",
 	magichealing_desc = "Préviens quand les effets de vos soins sont augmentés par la Magie sauvage.",
