@@ -7,7 +7,8 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local p2 = nil
 
-local pName = nil
+local pName = UnitName("player")
+local db = nil
 local UnitName = UnitName
 local CheckInteractDistance = CheckInteractDistance
 
@@ -177,7 +178,7 @@ L:RegisterTranslations("zhCN", function() return {
 	wrath_fade = "星术师之怒效果从你身上消失了。",
 	wrath_other = "愤怒：>%s<！",
 	wrath_you = ">你< 愤怒！",
-	
+
 	whisper = "密语",
 	whisper_desc = "发送密语给中了愤怒的玩家。(需要权限)",
 
@@ -262,9 +263,9 @@ function mod:OnEnable()
 
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "SolaWrath", 3)
+	self:Throttle(3, "SolaWrath")
 
-	pName = UnitName("player")
+	db = self.db.profile
 end
 
 ------------------------------
@@ -272,7 +273,7 @@ end
 ------------------------------
 
 function mod:UNIT_HEALTH(msg)
-	if not self.db.profile.phase then return end
+	if not db.phase then return end
 	if UnitName(msg) == boss then
 		local hp = UnitHealth(msg)
 		if hp > 21 and hp <= 24 and not p2 then
@@ -285,19 +286,19 @@ function mod:UNIT_HEALTH(msg)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "SolaWrath" and rest and self.db.profile.wrath then
+	if sync == "SolaWrath" and rest and db.wrath then
 		local other = L["wrath_other"]:format(rest)
 		if rest == pName then
-			self:Message(L["wrath_you"], "Personal", true, "Long")
+			self:Message(L["wrath_you"], "Personal", true, "Long", nil, 42783)
 			self:Message(other, "Attention", nil, nil, true)
 		else
-			self:Message(other, "Attention")
+			self:Message(other, "Attention", nil, nil, nil, 42783)
 		end
-		if self.db.profile.whisper then
+		if db.whisper then
 			self:Whisper(rest, L["wrath_you"])
 		end
 		self:Bar(other, 6, "Spell_Arcane_Arcane02")
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(rest)
 		end
 	end
@@ -327,7 +328,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["phase2_trigger"]) then
-		if self.db.profile.phase then
+		if db.phase then
 			self:Message(L["phase2_message"], "Important")
 		end
 		self:CancelScheduledEvent("split1")
@@ -335,12 +336,12 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["engage_trigger"] then
 		p2 = nil
 
-		if self.db.profile.phase then
+		if db.phase then
 			self:Message(L["phase1_message"], "Positive")
 			self:Bar(L["split_bar"], 50, "Spell_Shadow_SealOfKings")
 			self:DelayedMessage(43, L["split_warning"], "Important")
 		end
-	elseif self.db.profile.split and (msg == L["split_trigger1"] or msg == L["split_trigger2"]) then
+	elseif db.split and (msg == L["split_trigger1"] or msg == L["split_trigger2"]) then
 		--split is around 90 seconds after the previous
 		self:Bar(L["split_bar"], 90, "Spell_Shadow_SealOfKings")
 		self:ScheduleEvent("split1", "BigWigs_Message", 83, L["split_warning"], "Important")
