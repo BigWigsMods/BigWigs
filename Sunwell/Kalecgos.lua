@@ -130,8 +130,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	spectral_realm = "공허 영역",
 
-	--buffet = "Arcane Buffet",
-	--buffet_desc = "Show the Arcane Buffet timer bar.",
+	buffet = "비전 강타",
+	buffet_desc = "비전 강타의 타이머 바를 표시합니다.",
 
 	enrage_warning = "곧 격노!",
 	enrage_message = "10% - 격노!",
