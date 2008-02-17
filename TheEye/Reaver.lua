@@ -221,6 +221,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 --      Initialization      --
 ------------------------------
 
+local temp
 function mod:OnEnable()
 	-- Don't know which spell ID it is before we get a log.
 	-- Not even sure if SPELL_DAMAGE is the right event, but I think so.
@@ -239,6 +240,7 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "ReavKA2", 7)
 
 	previous = nil
+	temp = nil
 end
 
 ------------------------------
@@ -247,6 +249,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
+		temp = true
 		if self.db.profile.orbyou or self.db.profile.orbother then
 			self:ScheduleRepeatingEvent("BWReaverToTScan", self.OrbCheck, 0.2, self) --how often to scan the target, 0.2 seconds
 		end
@@ -259,7 +262,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:Knockback(player, spellId)
-	BigWigs:Print("Spell ID for Void Reaver's Knock Away effect was " .. tostring(spellId) .. ". Please report this to the BigWigs developers.")
+	if temp then
+		BigWigs:Print("Spell ID for Void Reaver's Knock Away effect was " .. tostring(spellId) .. ". Please report this to the BigWigs developers.")
+		temp = nil
+	end
 	self:Sync("ReavKA2")
 end
 
