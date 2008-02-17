@@ -38,6 +38,8 @@ local UnitClass = UnitClass
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Kalecgos",
 
+	engage_trigger = "Aggh!! No longer will I be a slave to Malygos! Challenge me and you will be destroyed!",
+
 	blast = "Spectral Blast",
 	blast_desc = "Tells you who has been hit by Spectral Blast.",
 	blast_message = "Spectral Blast on %s!",
