@@ -13,8 +13,8 @@
 <Script file="Libs\AceLocale-2.2\AceLocale-2.2.lua"/>
 <Script file="Libs\AceModuleCore-2.0\AceModuleCore-2.0.lua"/>
 
-<Script file="Libs\Babble-Boss-2.2\Babble-Boss-2.2.lua"/>
-<Script file="Libs\Babble-Zone-2.2\Babble-Zone-2.2.lua"/>
+<Include file="Libs\LibBabble-Boss-3.0\lib.xml"/>
+<Include file="Libs\LibBabble-Zone-3.0\lib.xml"/>
 <Script file="Libs\Dewdrop-2.0\Dewdrop-2.0.lua"/>
 <Script file="Libs\FuBarPlugin-2.0\FuBarPlugin-2.0.lua"/>
 <Script file="Libs\PaintChips-2.0\PaintChips-2.0.lua"/>

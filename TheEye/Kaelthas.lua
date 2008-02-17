@@ -2,8 +2,6 @@
 --      Are you local?      --
 ------------------------------
 
-local BB = AceLibrary("Babble-Boss-2.2")
-
 local boss = BB["Kael'thas Sunstrider"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
@@ -20,8 +18,6 @@ local staff = BB["Staff of Disintegration"]
 local sword = BB["Warp Slicer"]
 local bow = BB["Netherstrand Longbow"]
 local shield = BB["Phaseshift Bulwark"]
-
-BB = nil
 
 local MCd = {}
 local fmt = string.format
@@ -521,7 +517,7 @@ L:RegisterTranslations("zhTW", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
+mod.zonename = BZ["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = { boss, capernian, sanguinar, telonicus, thaladred }
 mod.wipemobs = { axe, mace, dagger, staff, sword, bow, shield }

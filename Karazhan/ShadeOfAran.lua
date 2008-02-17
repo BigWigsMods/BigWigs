@@ -2,7 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.2")["Shade of Aran"]
+local boss = BB["Shade of Aran"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local drinkannounced = nil
 local addsannounced = nil
@@ -281,7 +281,7 @@ L:RegisterTranslations("zhTW", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.zonename = BZ["Karazhan"]
 mod.enabletrigger = boss
 mod.toggleoptions = {"adds", "drink", -1, "blizzard", "pull", "flame", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

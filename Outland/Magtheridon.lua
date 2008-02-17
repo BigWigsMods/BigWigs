@@ -2,7 +2,6 @@
 --      Are you local?      --
 ------------------------------
 
-local BB = AceLibrary("Babble-Boss-2.2")
 local boss = BB["Magtheridon"]
 local channeler = BB["Hellfire Channeler"]
 
@@ -10,7 +9,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local abycount
 local debwarn
-BB = nil
 
 ----------------------------
 --      Localization      --
@@ -353,7 +351,7 @@ L:RegisterTranslations("zhTW", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Magtheridon's Lair"]
+mod.zonename = BZ["Magtheridon's Lair"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = {channeler, boss}
 mod.toggleoptions = {"escape", "abyssal", "heal", -1, "nova", "banish", -1, "debris", "debrisinc", -1, "exhaust", "bosskill"}

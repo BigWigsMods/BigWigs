@@ -2,8 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
-local lady = AceLibrary("Babble-Boss-2.2")["Grandmother"]
-local boss = AceLibrary("Babble-Boss-2.2")["The Big Bad Wolf"]
+local lady = BB["Grandmother"]
+local boss = BB["The Big Bad Wolf"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local pName = nil
 
@@ -137,7 +137,7 @@ L:RegisterTranslations("esES", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.zonename = BZ["Karazhan"]
 mod.enabletrigger = {lady, boss}
 mod.toggleoptions = {"youriding", "elseriding", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

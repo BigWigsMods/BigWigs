@@ -2,7 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.2")["Anetheron"]
+local boss = BB["Anetheron"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local db = nil
 
@@ -147,7 +147,7 @@ L:RegisterTranslations("zhCN", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Hyjal Summit"]
+mod.zonename = BZ["Hyjal Summit"]
 mod.enabletrigger = boss
 mod.toggleoptions = {"inferno", "icon", "swarm", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

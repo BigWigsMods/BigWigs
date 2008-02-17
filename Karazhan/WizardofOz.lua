@@ -2,8 +2,6 @@
 --      Are you local?      --
 ------------------------------
 
-local BB = AceLibrary("Babble-Boss-2.2")
-
 local boss = BB["The Crone"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
@@ -13,7 +11,6 @@ local strawman = BB["Strawman"]
 local dorothee = BB["Dorothee"]
 local tito = BB["Tito"]
 local fmt = string.format
-BB = nil
 
 ----------------------------
 --      Localization      --
@@ -126,7 +123,7 @@ L:RegisterTranslations("esES", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.zonename = BZ["Karazhan"]
 mod.enabletrigger = {roar, tinhead, strawman, dorothee}
 mod.toggleoptions = {"spawns", "light", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

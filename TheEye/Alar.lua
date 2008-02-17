@@ -2,7 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.2")["Al'ar"]
+local boss = BB["Al'ar"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords") -- XXX remove after 2.4
@@ -159,7 +159,7 @@ L:RegisterTranslations("deDE", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Tempest Keep"]
+mod.zonename = BZ["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
 mod.toggleoptions = {"meteor", "flamepatch", -1, "armor", "icon", "enrage", "bosskill"}

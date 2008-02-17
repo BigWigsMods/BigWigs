@@ -2,8 +2,6 @@
 --      Are you local?      --
 ------------------------------
 
-local BB = AceLibrary("Babble-Boss-2.2")
-
 local boss = BB["High King Maulgar"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
@@ -12,7 +10,6 @@ local lock = BB["Olm the Summoner"]
 local priest = BB["Blindeye the Seer"]
 local shaman = BB["Kiggler the Crazed"]
 
-BB = nil
 local flurryannounced = nil
 
 ----------------------------
@@ -297,7 +294,7 @@ L:RegisterTranslations("zhTW", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Gruul's Lair"]
+mod.zonename = BZ["Gruul's Lair"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = {boss, mage, lock, priest, shaman}
 mod.toggleoptions = {"shield", "spellshield", "heal", -1, "summon", -1, "whirlwind", "flurry", "smash", "bosskill"}

@@ -2,13 +2,11 @@
 --      Are you local?      --
 ------------------------------
 
-local BB = AceLibrary("Babble-Boss-2.2")
 local boss = BB["Lady Vashj"]
 local elite = BB["Coilfang Elite"]
 local strider = BB["Coilfang Strider"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-BB = nil
 
 local shieldsFaded = 0
 local pName = nil
@@ -356,7 +354,7 @@ L:RegisterTranslations("zhTW", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Serpentshrine Cavern"]
+mod.zonename = BZ["Serpentshrine Cavern"]
 mod.enabletrigger = boss
 mod.wipemobs = {elite, strider, L["Tainted Elemental"]}
 mod.toggleoptions = {"phase", -1, "static", "icon", -1, "elemental", "strider","naga", "loot", "barrier", "proximity", "bosskill"}

@@ -2,15 +2,15 @@
 --      Are you local?      --
 ------------------------------
 
-local name = AceLibrary("Babble-Zone-2.2")["Hyjal Summit"]
-local allianceBase = AceLibrary("Babble-Zone-2.2")["Alliance Base"]
-local hordeEncampment = AceLibrary("Babble-Zone-2.2")["Horde Encampment"]
+local name = BZ["Hyjal Summit"]
+local allianceBase = BZ["Alliance Base"]
+local hordeEncampment = BZ["Horde Encampment"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..name)
 
-local winterchill = AceLibrary("Babble-Boss-2.2")["Rage Winterchill"]
-local anetheron = AceLibrary("Babble-Boss-2.2")["Anetheron"]
-local kazrogal = AceLibrary("Babble-Boss-2.2")["Kaz'rogal"]
-local azgalor = AceLibrary("Babble-Boss-2.2")["Azgalor"]
+local winterchill = BB["Rage Winterchill"]
+local anetheron = BB["Anetheron"]
+local kazrogal = BB["Kaz'rogal"]
+local azgalor = BB["Azgalor"]
 
 local fmt = string.format
 local match = string.match

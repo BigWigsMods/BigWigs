@@ -2,9 +2,17 @@
 --      Are you local?      --
 ------------------------------
 
-local AceLibrary = AceLibrary
-local BZ = AceLibrary("Babble-Zone-2.2")
-local BB = nil
+local bboss = LibStub("LibBabble-Boss-3.0")
+local bzone = LibStub("LibBabble-Zone-3.0")
+
+local BZ = bzone:GetUnstrictLookupTable()
+local BB = bboss:GetUnstrictLookupTable()
+local BBR = bboss:GetReverseLookupTable()
+
+-- Set two globals to make it easier on the boss modules.
+_G.BZ = bzone:GetLookupTable()
+_G.BB = bboss:GetLookupTable()
+
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 
 local customBossOptions = {}
@@ -285,7 +293,7 @@ local options = {
 			name = L["Bosses"],
 			order = 1,
 		},
-		["spacer"] = {
+		spacer = {
 			type = "header",
 			name = " ",
 			order = 200,
@@ -559,8 +567,7 @@ function BigWigs:EnableModule(moduleName, noSync)
 		self:ToggleModuleActive(m, true)
 		m:Message(L["%s mod enabled"]:format(moduleName or "??"), "Core", true)
 		if not noSync then
-			if not BB then BB = AceLibrary("Babble-Boss-2.2") end
-			m:Sync((m.external and "EnableExternal " or "EnableModule ") .. (m.synctoken or BB:GetReverseTranslation(moduleName)))
+			m:Sync((m.external and "EnableExternal " or "EnableModule ") .. (m.synctoken or BBR[moduleName]))
 		end
 	end
 end
@@ -573,8 +580,7 @@ end
 function BigWigs:BigWigs_RecvSync(sync, module)
 	if not module then return end
 	if sync == "EnableModule" or sync == "EnableExternal" then
-		if not BB then BB = AceLibrary("Babble-Boss-2.2") end
-		local name = BB:HasTranslation(module) and BB[module] or module
+		local name = BB[module] or module
 		if self:HasModule(name) then
 			self:EnableModule(name, true)
 		end

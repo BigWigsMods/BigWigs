@@ -1,6 +1,6 @@
 ﻿assert(BigWigs, "BigWigs not found!")
 
-local BZ = nil
+local BZR = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsVersionQuery")
 local tablet = nil
 local dewdrop = AceLibrary("Dewdrop-2.0")
@@ -299,9 +299,14 @@ plugin.consoleOptions = {
 --      Initialization      --
 ------------------------------
 
+local function loadBabble()
+	if BZR then return end
+	BZR = LibStub("LibBabble-Zone-3.0"):GetReverseLookupTable()
+end
+
 local function addZone(zone, rev)
 -- Make sure to get the enUS zone name.
-	local z = BZ:HasReverseTranslation(zone) and BZ:GetReverseTranslation(zone) or zone
+	local z = BZR[zone] or zone
 	if not zoneRevisions[z] or rev > zoneRevisions[z] then
 		zoneRevisions[z] = rev
 	end
@@ -310,7 +315,7 @@ end
 local function populateRevisions()
 	if not zoneRevisions then zoneRevisions = {} end
 
-	if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
+	loadBabble()
 	for name, module in BigWigs:IterateModules() do
 		if module:IsBossModule() then
 			if type(module.zonename) == "table" then
@@ -500,8 +505,8 @@ function plugin:QueryVersion(zone)
 	BigWigs:Print(L["Querying versions for "].."|cff"..COLOR_GREEN..zone.."|r.")
 
 	-- If this is a non-enUS zone, convert it to enUS.
-	if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
-	if BZ:HasReverseTranslation(zone) then zone = BZ:GetReverseTranslation(zone) end
+	loadBabble()
+	if BZR[zone] then zone = BZR[zone] end
 
 	currentZone = zone
 

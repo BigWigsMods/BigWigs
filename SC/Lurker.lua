@@ -2,7 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.2")["The Lurker Below"]
+local boss = BB["The Lurker Below"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started
 local occured = nil
@@ -189,7 +189,7 @@ L:RegisterTranslations("zhTW", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Serpentshrine Cavern"]
+mod.zonename = BZ["Serpentshrine Cavern"]
 mod.enabletrigger = boss
 mod.wipemobs = {L["Coilfang Guardian"], L["Coilfang Ambusher"]}
 mod.toggleoptions = {"dive", "spout", "whirl", "proximity", "bosskill"}

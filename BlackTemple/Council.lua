@@ -2,13 +2,11 @@
 --      Are you local?      --
 ------------------------------
 
-local BB = AceLibrary("Babble-Boss-2.2")
 local boss = BB["The Illidari Council"]
 local malande = BB["Lady Malande"]
 local gathios = BB["Gathios the Shatterer"]
 local zerevor = BB["High Nethermancer Zerevor"]
 local veras = BB["Veras Darkshadow"]
-BB = nil
 
 local fmt = string.format
 local db = nil
@@ -384,7 +382,7 @@ L:RegisterTranslations("deDE", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Black Temple"]
+mod.zonename = BZ["Black Temple"]
 mod.enabletrigger = {malande, gathios, zerevor, veras}
 mod.toggleoptions = {"immune", "res", "shield", -1, "vanish", "circle", -1, "poison", "icon", -1, "blizzard", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

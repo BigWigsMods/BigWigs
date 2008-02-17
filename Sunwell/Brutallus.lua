@@ -4,7 +4,7 @@
 
 if not GetSpellInfo then return end
 
-local boss = AceLibrary("Babble-Boss-2.2")["Brutallus"]
+local boss = BB["Brutallus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local started = nil
@@ -82,7 +82,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Sunwell Plateau"]
+mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = boss
 mod.toggleoptions = {"burn", "icon", "burnjump", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

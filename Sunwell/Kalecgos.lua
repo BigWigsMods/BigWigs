@@ -11,8 +11,8 @@ if not GetSpellInfo then return end
 --	Verify enrage: 19:08:34 Sathrovarr drives Kalecgos into a crazed rage! (also: 2/12 19:08:39.843  SPELL_AURA_APPLIED,0x0000000000000000,nil,0x80000000,0xF13000613C00F8E6,Sathrovarr the Corruptor,0x10a48,44806,Crazed Rage,0x1,BUFF)
 --	Warn for next enrage 10 seconds after the first
 
-local boss = AceLibrary("Babble-Boss-2.2")["Kalecgos"]
-local sath = AceLibrary("Babble-Boss-2.2")["Sathrovarr the Corruptor"]
+local boss = BB["Kalecgos"]
+local sath = BB["Sathrovarr the Corruptor"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local started = nil
@@ -178,7 +178,7 @@ L:RegisterTranslations("frFR", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Sunwell Plateau"]
+mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = { boss, sath }
 mod.toggleoptions = {"blast", "portal", "realm", "curse", -1, "magichealing", "magiccast", "magichit", "magicthreat", "enrage", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

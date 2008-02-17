@@ -2,7 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.2")["Prince Malchezaar"]
+local boss = BB["Prince Malchezaar"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local nova = true
 local count = 1
@@ -258,7 +258,7 @@ L:RegisterTranslations("zhTW", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.zonename = BZ["Karazhan"]
 mod.enabletrigger = boss
 mod.toggleoptions = {"phase", "enfeeble", "nova", -1, "infernals", "despawn", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

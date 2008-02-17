@@ -2,8 +2,6 @@
 --      Are you local?      --
 ------------------------------
 
-local BB = AceLibrary("Babble-Boss-2.2")
-
 local boss = BB["Romulo & Julianne"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
@@ -11,8 +9,6 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local boy = BB["Romulo"]
 local girl = BB["Julianne"]
 local fmt = string.format
-
-BB = nil
 
 ----------------------------
 --      Localization      --
@@ -225,7 +221,7 @@ L:RegisterTranslations("esES", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.zonename = BZ["Karazhan"]
 mod.enabletrigger = {boy, girl}
 mod.toggleoptions = {"phase", "heal", "buff", "poison"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))

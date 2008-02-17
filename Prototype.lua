@@ -3,7 +3,7 @@
 --------------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
-local BB = AceLibrary("Babble-Boss-2.2")
+local BBR = LibStub("LibBabble-Boss-3.0"):GetReverseLookupTable()
 
 local UnitExists = UnitExists
 local UnitAffectingCombat = UnitAffectingCombat
@@ -258,11 +258,11 @@ function BigWigs.modulePrototype:ValidateEngageSync(sync, rest)
 	if sync ~= self:GetEngageSync() then return false end
 	if not self.scanTable then populateScanTable(self) end
 	for mob in pairs(self.scanTable) do
-		local translated = BB:HasReverseTranslation(mob) and BB:GetReverseTranslation(mob) or mob
+		local translated = BBR[mob] or mob
 		if translated == rest or mob == rest then return true end
 	end
 
-	local boss = BB:HasReverseTranslation(rest) and BB:GetReverseTranslation(rest) or rest
+	local boss = BBR[rest] or rest
 	return boss == self:ToString() or rest == self:ToString()
 end
 
@@ -273,7 +273,7 @@ function BigWigs.modulePrototype:CheckForEngage()
 			BigWigs:Debug(self, "Scan returned true, engaging.")
 		end
 		local mod = self:ToString()
-		local moduleName = BB:HasReverseTranslation(mod) and BB:GetReverseTranslation(mod) or mod
+		local moduleName = BBR[mod] or mod
 		self:Sync(self:GetEngageSync().." "..moduleName)
 	elseif UnitAffectingCombat("player") then
 		self:ScheduleEvent(self.CheckForEngage, .5, self)

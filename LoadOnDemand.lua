@@ -25,6 +25,9 @@ local BigWigsLoD = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0")
 
 local function loadZone(zone)
 	if loadInZone[zone] then
+		-- Set two globals to make it easier on the boss modules.
+		if not _G.BZ then _G.BZ = LibStub("LibBabble-Zone-3.0"):GetLookupTable() end
+		if not _G.BB then _G.BB = LibStub("LibBabble-Boss-3.0"):GetLookupTable() end
 		local addonsLoaded = {}
 		for i, v in ipairs(loadInZone[zone]) do
 			if not IsAddOnLoaded(v) then
@@ -110,7 +113,7 @@ end
 local function iterateZones(addon, override, partyContent, ...)
 	for i = 1, select("#", ...) do
 		local z = (select(i, ...)):trim()
-		local zone = BZ:HasTranslation(z) and BZ[z] or nil
+		local zone = BZ[z]
 		assert(zone, ("The zone %s, specified by the %s addon, does not exist in Babble-Zone."):format(z, addon))
 
 		-- register the zone for enabling.
@@ -138,12 +141,12 @@ function BigWigsLoD:OnInitialize()
 		if enabled and not IsAddOnLoaded(i) and IsAddOnLoadOnDemand(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadInZone")
 			if meta then
-				if not BZ then BZ = AceLibrary("Babble-Zone-2.2") end
+				if not BZ then BZ = LibStub("LibBabble-Zone-3.0"):GetUnstrictLookupTable() end
 				-- X-BW-Menu can override showing the modules in the
 				-- modules own specified zone submenu
 				local menu = GetAddOnMetadata(i, "X-BigWigs-Menu")
 				if menu then
-					assert(BZ:HasTranslation(menu), ("The menu key %s, specified by %s, does not exist in Babble-Zone."):format(menu, name))
+					assert(BZ[menu], ("The menu key %s, specified by %s, does not exist in Babble-Zone."):format(menu, name))
 					menu = BZ[menu]
 					if not loadInZone[menu] then loadInZone[menu] = {} end
 					-- Okay, so the addon wants to be put in a menu of
@@ -200,6 +203,9 @@ end
 
 function BigWigsLoD:BigWigs_CoreEnabled()
 	if type(loadWithCore) == "table" then
+		-- Set two globals to make it easier on the boss modules.
+		if not _G.BZ then _G.BZ = LibStub("LibBabble-Zone-3.0"):GetLookupTable() end
+		if not _G.BB then _G.BB = LibStub("LibBabble-Boss-3.0"):GetLookupTable() end
 		for k, v in pairs(loadWithCore) do
 			if not IsAddOnLoaded(v) then
 				if LoadAddOn(v) then

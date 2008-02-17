@@ -2,7 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
-local boss = AceLibrary("Babble-Boss-2.2")["Doomwalker"]
+local boss = BB["Doomwalker"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local enrageAnnounced = nil
 local CheckInteractDistance = CheckInteractDistance
@@ -161,7 +161,7 @@ L:RegisterTranslations("zhCN", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Shadowmoon Valley"]
+mod.zonename = BZ["Shadowmoon Valley"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = boss
 mod.toggleoptions = {"overrun", "earthquake", "enrage", "proximity", "bosskill"}

@@ -3,10 +3,10 @@
 ------------------------------
 
 
-local boss = AceLibrary("Babble-Boss-2.2")["Attumen the Huntsman"]
+local boss = BB["Attumen the Huntsman"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-local horse = AceLibrary("Babble-Boss-2.2")["Midnight"]
+local horse = BB["Midnight"]
 local started
 
 local UnitBuff = UnitBuff
@@ -135,7 +135,7 @@ L:RegisterTranslations("esES", function() return {
 ----------------------------------
 
 local mod = BigWigs:NewModule(boss)
-mod.zonename = AceLibrary("Babble-Zone-2.2")["Karazhan"]
+mod.zonename = BZ["Karazhan"]
 mod.enabletrigger = {horse, boss}
 mod.toggleoptions = {"phase", "curse", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
