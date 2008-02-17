@@ -239,7 +239,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "KnockAway")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "ReavKA2", 7)
+	self:Throttle(7, "ReavKA2")
 
 	previous = nil
 	temp = nil

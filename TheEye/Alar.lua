@@ -4,9 +4,11 @@
 
 local boss = AceLibrary("Babble-Boss-2.2")["Al'ar"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+
+local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords") -- XXX remove after 2.4
 
 local started = nil
+local db = nil
 local prior = nil
 local fireball = nil
 local occured = true
@@ -176,12 +178,13 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "DebuffEvent")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "AlArArmor", 5)
+	self:Throttle(5, "AlArArmor")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	started = nil
+	db = self.db.profile
 end
 
 ------------------------------
@@ -207,16 +210,16 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 		self:ScheduleRepeatingEvent("BWAlarTargetSeek", self.AlarCheck, 1, self)
 		self:ScheduleEvent("BWAlarNilOccured", nilOccured, 25) --this is here to prevent target problems
-	elseif sync == "AlArArmor" and rest and self.db.profile.armor then
+	elseif sync == "AlArArmor" and rest and db.armor then
 		local other = fmt(L["armor_other"], rest)
 		if rest == pName then
-			self:Message(L["armor_you"], "Important", true, "Long")
+			self:Message(L["armor_you"], "Important", true, "Long", nil, 35410)
 			self:Message(other, "Attention", nil, nil, true)
 		else
-			self:Message(other, "Attention")
+			self:Message(other, "Attention", nil, nil, nil, 35410)
 		end
 		self:Bar(other, 60, "Spell_Fire_Immolation")
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(rest)
 		end
 	end
@@ -225,12 +228,12 @@ end
 function mod:AlarCheck()
 	if not self:Scan() and not occured then
 		occured = true
-		if not prior and self.db.profile.enrage then
+		if not prior and db.enrage then
 			self:Enrage(620)
 			prior = true
 		end
-		if fireball and self.db.profile.meteor then
-			self:Message(L["meteor_message"], "Urgent", nil, "Alarm")
+		if fireball and db.meteor then
+			self:Message(L["meteor_message"], "Urgent", nil, "Alarm", nil, 35181)
 			self:DelayedMessage(47, L["meteor_warning"], "Important")
 			self:Bar(L["meteor_nextbar"], 52, "Spell_Fire_Burnout")
 		end
@@ -251,9 +254,9 @@ function mod:MeltArmor(player)
 end
 
 function mod:FlamePatch(player)
-	if not self.db.profile.flamepatch then return end
+	if not db.flamepatch then return end
 	if player == pName then
-		self:Message(L["flamepatch_message"], "Personal", true, "Alarm")
+		self:Message(L["flamepatch_message"], "Personal", true, "Alarm", nil, 35383)
 	end
 end
 
@@ -264,7 +267,7 @@ function mod:DebuffEvent(msg)
 
 	local aplayer, atype = select(3, msg:find(L["armor_trigger"]))
 	if aplayer and atype then
-		if aplayer == L2["you"] and atype == L2["are"] then
+		if aplayer == L2["you"] and atype == L2["are"] then -- XXX 2.4 removal
 			aplayer = pName
 		end
 		self:MeltArmor(aplayer)
