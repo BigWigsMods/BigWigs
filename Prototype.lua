@@ -9,6 +9,7 @@ local UnitExists = UnitExists
 local UnitAffectingCombat = UnitAffectingCombat
 local UnitName = UnitName
 local count = 1
+local GetSpellInfo = GetSpellInfo
 local fmt = string.format
 
 -- Provide some common translations here, so we don't have to replicate it in
