@@ -75,6 +75,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	spectral_realm = "Spectral Realm",
 
+	buffet = "Arcane Buffet",
+	buffet_desc = "Show the Arcane Buffet timer bar.",
+
 	enrage_warning = "Enrage soon!",
 	enrage_message = "10% - Enraged!",
 	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",
@@ -125,6 +128,9 @@ L:RegisterTranslations("koKR", function() return {
 
 	spectral_realm = "공허 영역",
 
+	--buffet = "Arcane Buffet",
+	--buffet_desc = "Show the Arcane Buffet timer bar.",
+
 	enrage_warning = "곧 격노!",
 	enrage_message = "10% - 격노!",
 	enrage_trigger = "사스로바르가 칼렉고스를 억제할 수 없는 분노의 소용돌이에 빠뜨립니다!",
@@ -168,6 +174,9 @@ L:RegisterTranslations("frFR", function() return {
 
 	spectral_realm = "Royaume spectral",
 
+	--buffet = "Arcane Buffet",
+	--buffet_desc = "Show the Arcane Buffet timer bar.",
+
 	enrage_warning = "Enrager imminent !",
 	enrage_message = "10% - Enragé !",
 	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",
@@ -180,7 +189,7 @@ L:RegisterTranslations("frFR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = { boss, sath }
-mod.toggleoptions = {"blast", "portal", "realm", "curse", -1, "magichealing", "magiccast", "magichit", "magicthreat", "enrage", "proximity", "bosskill"}
+mod.toggleoptions = {"blast", "portal", "buffet", "realm", "curse", -1, "magichealing", "magiccast", "magichit", "magicthreat", "enrage", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 mod.proximitySilent = true
@@ -202,11 +211,13 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Realm", 46021)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Curse", 45032, 45034)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "WildMagic", 44978, 45001, 45002, 45006)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Buffet", 45018)
+	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Buffet", 45018)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "CurseRemoved", 45032, 45034)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:Throttle(3, "KalecgosBlast", "KalecgosMagicCast", "KalecgosMagicHit")
+	self:Throttle(3, "KalecgosBlast", "KalecgosMagicCast", "KalecgosMagicHit", "KaleBuffet")
 	self:Throttle(0, "KalecgosRealm", "KalecgosCurse", "KaleCurseRemv")
 
 	db = self.db.profile
@@ -230,6 +241,10 @@ end
 
 function mod:CurseRemoved(player)
 	self:Sync("KaleCurseRemv", player)
+end
+
+function mod:Buffet(player)
+	self:Sync("KaleBuffet", player)
 end
 
 function mod:WildMagic(player, spellId, spellName, event)
@@ -263,6 +278,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:ScheduleEvent("RealmCheck", self.RealmWarn, 2, self)
 	elseif sync == "KalecgosCurse" and rest and db.curse then
 		self:Bar(fmt(L["curse_bar"], rest), 30, 45032)
+	elseif sync == "KaleBuffet" and db.buffet then
+		self:Bar(L["buffet"], 8, 45018)
 	elseif sync == "KaleCurseRemv" and rest and db.curse then
 		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["curse_bar"], rest))
 	elseif sync == "KalecgosMagicCast" and rest and db.magiccast then
