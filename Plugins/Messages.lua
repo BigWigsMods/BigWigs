@@ -453,7 +453,7 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, ic
 		end
 	end
 
-	if icon and db.useicons then
+	if icon and GetSpellInfo and db.useicons then
 		local _
 		_, _, icon = GetSpellInfo(icon)
 	else
