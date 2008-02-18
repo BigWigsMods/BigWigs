@@ -40,6 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Kalecgos",
 
 	engage_trigger = "Aggh!! No longer will I be a slave to Malygos! Challenge me and you will be destroyed!",
+	wipe_trigger = "CHAT_MSG_MONSTER_SAY?", -- transcript or /chatlog at a wipe
 
 	wipe_bar = "Respawn",
 
@@ -226,7 +227,7 @@ function mod:OnEnable()
 	self:Throttle(0, "KalecgosRealm", "KalecgosCurse", "KaleCurseRemv")
 
 	db = self.db.profile
-	if wipe then
+	if wipe and BigWigs:IsModuleActive(boss) then
 		self:Bar(L["wipe_bar"], 90, 44670)
 		wipe = nil
 	end
