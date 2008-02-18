@@ -21,6 +21,7 @@ local blasted = { }
 local inRealm = { }
 local enrageWarn = nil
 local portalNum = nil
+local wipe = nil
 
 local fmt = string.format
 local GetNumRaidMembers = GetNumRaidMembers
@@ -39,6 +40,8 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Kalecgos",
 
 	engage_trigger = "Aggh!! No longer will I be a slave to Malygos! Challenge me and you will be destroyed!",
+
+	wipe_bar = "Respawn",
 
 	blast = "Spectral Blast",
 	blast_desc = "Tells you who has been hit by Spectral Blast.",
@@ -206,7 +209,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:AddCombatListener("SPELL_DAMAGE", "SpectralBlast", 44866)
@@ -223,6 +226,10 @@ function mod:OnEnable()
 	self:Throttle(0, "KalecgosRealm", "KalecgosCurse", "KaleCurseRemv")
 
 	db = self.db.profile
+	if wipe then
+		self:Bar(L["wipe_bar"], 90, 44670)
+		wipe = nil
+	end
 end
 
 ------------------------------
@@ -247,6 +254,18 @@ end
 
 function mod:Buffet(player)
 	self:Sync("KaleBuffet", player)
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["engage_trigger"] then
+		wipe = true
+		if db.portal then
+			self:Bar(L["portal_bar"], 20, "Spell_Shadow_Twilight")
+			self:DelayedMessage(15, fmt(L["portal_message"], portalNum), "Attention")
+			portalNum = portalNum + 1
+		end
+		self:TriggerEvent("BigWigs_ShowProximity", self)
+	end
 end
 
 function mod:WildMagic(player, spellId, spellName, event)
@@ -300,17 +319,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		else
 			self:Message(other, "Attention", nil, nil, nil, 45002)
 		end
-	elseif self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
-		if db.portal then
-			self:Bar(L["portal_bar"], 20, "Spell_Shadow_Twilight")
-			self:DelayedMessage(15, fmt(L["portal_message"], portalNum), "Attention")
-			portalNum = portalNum + 1
-		end
-		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
 end
 
