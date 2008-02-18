@@ -136,6 +136,8 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 
+	self:AddCombatListener("SPELL_CAST_START", "ChainLightning", 32337)
+	
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
@@ -157,6 +159,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:DelayedMessage(30, fmt(swarn, tinhead), "Attention")
 		self:Bar(fmt(sbar, tito), 48, "Ability_Hunter_Pet_Wolf")
 		self:DelayedMessage(43, fmt(swarn, tito), "Attention")
+	end
+end
+
+function mod:ChainLightning(player)
+	if self.db.profile.light then
+		self:Message(L["light_message"], "Urgent")
+		self:Bar(L["light_message"], 2, "Spell_Nature_ChainLightning")	
 	end
 end
 

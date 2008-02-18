@@ -153,6 +153,8 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_BUFFS", "OtherRiding")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS")
 
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Riding", 30756)	
+	
 	pName = UnitName("player")
 end
 
@@ -160,30 +162,35 @@ end
 --      Event Handlers      --
 ------------------------------
 
+function mod:Riding(player)
+	if not player then return end
+	if player == pName then
+		if self.db.profile.youriding then
+			self:Message(L["riding_youwarn"], "Personal", true, "Long")
+			self:Message(L["riding_otherwarn"]:format(pName), "Attention", nil, nil, true)
+			self:Bar(L["riding_bar"]:format(pName), 20,"INV_Chest_Cloth_18")		
+		end
+	elseif self.db.profile.elseriding then
+		self:Message(L["riding_otherwarn"]:format(player), "Attention")
+		self:Whisper(rplayer, L["riding_youwarn"])
+		self:Bar(L["riding_bar"]:format(player), 20,"INV_Chest_Cloth_18")		
+	end
+	if self.db.profile.icon then
+		self:Icon(player)
+	end
+	
+end
+
 function mod:OtherRiding(msg)
 	local rplayer = select(3, msg:find(L["riding_trigger"]))
 	if rplayer then
-		if self.db.profile.elseriding then
-			self:Message(L["riding_otherwarn"]:format(rplayer), "Attention")
-			self:Whisper(rplayer, L["riding_youwarn"])
-			self:Bar(L["riding_bar"]:format(rplayer), 20,"INV_Chest_Cloth_18")
-		end
-		if self.db.profile.icon then 
-			self:Icon(rplayer)
-		end
+		self:Riding(rplayer)
 	end
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS(msg)
 	if msg:find(L["riding_trigger"]) then
-		if self.db.profile.youriding then
-			self:Message(L["riding_youwarn"], "Personal", true, "Long")
-			self:Message(L["riding_otherwarn"]:format(pName), "Attention", nil, nil, true)
-			self:Bar(L["riding_bar"]:format(pName), 20,"INV_Chest_Cloth_18")
-		end
-		if self.db.profile.icon then 
-			self:Icon(pName)
-		end
+		self:Riding(pName)
 	end
 end
 
