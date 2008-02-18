@@ -238,6 +238,13 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "PoisonEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "PoisonEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "PoisonEvent")
+	
+	-- test id's versus live environment
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Poison", 30822, 30830) -- check which one and remove comment if exact found
+	self:AddCombatListener("SPELL_CAST_START", "Heal", 30878)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Devotion", 30887)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Daring", 30841)
+	
 end
 
 ------------------------------
@@ -255,22 +262,38 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
+function mod:Poison(player)
+	if player and self.db.profile.poison then
+		self:Message(fmt(L["poison_message"], pplayer), "Important")
+	end
+end
+
 function mod:PoisonEvent(msg)
 	local pplayer, ptype = select(3, msg:find(L["poison_trigger"]))
 	if pplayer and ptype then
 		if pplayer == L2["you"] and ptype == L2["are"] then
 			pplayer = UnitName("player")
 		end
-		if self.db.profile.poison then
-			self:Message(fmt(L["poison_message"], pplayer), "Important")
-		end
+		self:Poison(pplayer)
 	end
+end
+
+function mod:Heal(player)
+	if self.db.profile.heal then self:Message(fmt(L["heal_message"], girl), "Urgent") end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if self.db.profile.heal and msg:find(L["heal_trigger"]) then
 		self:Message(fmt(L["heal_message"], girl), "Urgent")
 	end
+end
+
+function mod:Devotion(player)
+	if self.db.profile.buff then self:Message(fmt(L["buff2_message"], girl), "Attention") end
+end
+
+function mod:Daring(player)
+	if self.db.profile.buff then self:Message(fmt(L["buff1_message"], boy), "Attention") end
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)

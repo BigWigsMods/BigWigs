@@ -67,10 +67,12 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Web")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Web")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Web")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "WebEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "WebEvent")
+	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "WebEvent")
 
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Web", 29896)
+	
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -81,7 +83,11 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Web(msg)
+function mod:Web(player)
+	if player then self:Sync("HyakissWeb", player) end
+end
+
+function mod:WebEvent(msg)
 	local wplayer, wtype = select(3, msg:find(L["web_trigger"]))
 	if wplayer and wtype then
 		if wplayer == L2["you"] and wtype == L2["are"] then
