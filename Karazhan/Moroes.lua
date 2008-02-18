@@ -210,6 +210,8 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "GarroteEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "GarroteEvent")
 
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Garotte", 37066) -- from wowhead check and remove this comment if correct
+	
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -261,6 +263,10 @@ function mod:UNIT_HEALTH(msg)
 			enrageWarn = nil
 		end
 	end
+end
+
+function mod:Garotte(player)
+	if player then self:Sync("MoroesGarrote", player) end
 end
 
 function mod:GarroteEvent(msg)
