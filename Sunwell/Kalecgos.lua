@@ -143,6 +143,11 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	engage_trigger = "Aggh!! No longer will I be a slave to Malygos! Challenge me and you will be destroyed!", -- not yet translated on french client.
+	wipe_trigger = "CHAT_MSG_MONSTER_SAY?", -- transcript or /chatlog at a wipe
+
+	wipe_bar = "Réapparition",
+
 	blast = "Déflagration spectrale",
 	blast_desc = "Préviens quand un joueur a été touché par la Déflagration spectrale.",
 	blast_message = "Déflagration spectrale sur %s !",
@@ -180,8 +185,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	spectral_realm = "Royaume spectral",
 
-	--buffet = "Arcane Buffet",
-	--buffet_desc = "Show the Arcane Buffet timer bar.",
+	buffet = "Rafale des arcanes",
+	buffet_desc = "Affiche une barre temporelle pour la Rafale des arcanes.",
 
 	enrage_warning = "Enrager imminent !",
 	enrage_message = "10% - Enragé !",

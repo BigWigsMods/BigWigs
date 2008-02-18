@@ -151,7 +151,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Necromancers"] = "nécromanciens",
 	["Banshees"] = "banshees",
 	["Gargoyles"] = "gargouilles",
-	["Frost Wyrm"] = "wyrms de givre",
+	["Frost Wyrm"] = "wyrm de givre",
 	["Fel Stalkers"] = "traqueurs gangrenés",
 	["Infernals"] = "infernaux",
 } end )
