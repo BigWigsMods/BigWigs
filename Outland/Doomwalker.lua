@@ -208,8 +208,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_EMOTE(msg)
-	if self.db.profile.enrage and msg == L["enrage_trigger"] then
+function mod:CHAT_MSG_MONSTER_EMOTE(msg, unit)
+	if unit == boss and self.db.profile.enrage and msg == L["enrage_trigger"] then
 		self:Message(L["enrage_message"], "Important", nil, "Alarm")
 	end
 end
