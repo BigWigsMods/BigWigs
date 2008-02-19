@@ -264,7 +264,7 @@ end
 
 function mod:Poison(player)
 	if player and self.db.profile.poison then
-		self:Message(fmt(L["poison_message"], pplayer), "Important")
+		self:Message(fmt(L["poison_message"], player), "Important")
 	end
 end
 
