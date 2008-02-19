@@ -15,12 +15,8 @@ local boss = BB["Kalecgos"]
 local sath = BB["Sathrovarr the Corruptor"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
-local started = nil
 local db = nil
-local blasted = { }
-local inRealm = { }
 local enrageWarn = nil
-local portalNum = nil
 local wipe = nil
 
 local fmt = string.format
@@ -44,18 +40,14 @@ L:RegisterTranslations("enUS", function() return {
 
 	wipe_bar = "Respawn",
 
-	blast = "Spectral Blast",
-	blast_desc = "Tells you who has been hit by Spectral Blast.",
-	blast_message = "Spectral Blast on %s!",
-
 	portal = "Portal",
 	portal_desc = "Warn when the Spectral Blast cooldown is up.",
 	portal_bar = "Next portal",
-	portal_message = "Possible portal (#%d) in 5 seconds!",
+	portal_message = "Possible portal in 5 seconds!",
 
 	realm = "Spectral Realm",
 	realm_desc = "Tells you who is in the Spectral Realm.",
-	realm_message = "In the realm: %s",
+	realm_message = "Spectral Realm: %s (Group %d)",
 
 	curse = "Curse of Boundless Agony",
 	curse_desc = "Tells you who is afflicted by Curse of Boundless Agony.",
@@ -97,18 +89,19 @@ L:RegisterTranslations("enUS", function() return {
 ]]--
 
 L:RegisterTranslations("koKR", function() return {
-	blast = "공허 폭발",
-	blast_desc = "공허 폭발에 적중된 플레이어를 알립니다.",
-	blast_message = "%s에게 공허 폭발!",
+	engage_trigger = "Aggh!! No longer will I be a slave to Malygos! Challenge me and you will be destroyed!",
+	wipe_trigger = "CHAT_MSG_MONSTER_SAY?", -- transcript or /chatlog at a wipe
+
+	wipe_bar = "Respawn",
 
 	portal = "차원문",
 	portal_desc = "공허 폭발의 재사용 대기시간에 대해 알립니다.",
 	portal_bar = "다음 차원문",
-	portal_message = "약 5초이내 (#%d) 차원문!",
+	portal_message = "약 5초이내 차원문!",
 
 	realm = "공허 영역",
 	realm_desc = "공허 영역 내부에 들어간 플레이어를 알립니다.",
-	realm_message = "영역 내부: %s",
+	realm_message = "영역 내부: %s (%d)",
 
 	curse = "무한한 고통의 저주",
 	curse_desc = "무한한 고통의 저주에 걸린 플레이어를 알립니다.",
@@ -148,18 +141,14 @@ L:RegisterTranslations("frFR", function() return {
 
 	wipe_bar = "Réapparition",
 
-	blast = "Déflagration spectrale",
-	blast_desc = "Préviens quand un joueur a été touché par la Déflagration spectrale.",
-	blast_message = "Déflagration spectrale sur %s !",
-
 	portal = "Portail",
 	portal_desc = "Préviens quand le temps de recharge de la Déflagration spectrale est terminé.",
 	portal_bar = "Prochain portail",
-	portal_message = "Portail probable (#%d) dans 5 sec. !",
+	portal_message = "Portail probable dans 5 sec. !",
 
 	realm = "Royaume spectral",
 	realm_desc = "Préviens quand un joueur est dans le Royaume spectral.",
-	realm_message = "Dans le royaume : %s",
+	realm_message = "Dans le royaume : %s (%d)",
 
 	curse = "Malédiction d'agonie infinie",
 	curse_desc = "Préviens quand un joueur subit les effets de la Malédiction d'agonie infinie.",
@@ -200,7 +189,7 @@ L:RegisterTranslations("frFR", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = { boss, sath }
-mod.toggleoptions = {"blast", "portal", "buffet", "realm", "curse", -1, "magichealing", "magiccast", "magichit", "magicthreat", "enrage", "proximity", "bosskill"}
+mod.toggleoptions = {"portal", "buffet", "realm", "curse", -1, "magichealing", "magiccast", "magichit", "magicthreat", "enrage", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 mod.proximitySilent = true
@@ -210,15 +199,11 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
-	started = nil
-	portalNum = 1
-
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
-	self:AddCombatListener("SPELL_DAMAGE", "SpectralBlast", 44866)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Realm", 46021)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Curse", 45032, 45034)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "WildMagic", 44978, 45001, 45002, 45006)
@@ -228,8 +213,9 @@ function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:Throttle(3, "KalecgosBlast", "KalecgosMagicCast", "KalecgosMagicHit", "KaleBuffet")
-	self:Throttle(0, "KalecgosRealm", "KalecgosCurse", "KaleCurseRemv")
+	self:Throttle(3, "KalecgosMagicCast", "KalecgosMagicHit", "KaleBuffet")
+	self:Throttle(0, "KalecgosCurse", "KaleCurseRemv")
+	self:Throttle(15, "KalecgosRealm")
 
 	db = self.db.profile
 	if wipe and BigWigs:IsModuleActive(boss) then
@@ -241,10 +227,6 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
-function mod:SpectralBlast(player)
-	self:Sync("KalecgosBlast", player)
-end
 
 function mod:Realm(player)
 	self:Sync("KalecgosRealm", player)
@@ -266,9 +248,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		wipe = true
 		if db.portal then
-			self:Bar(L["portal_bar"], 20, "Spell_Shadow_Twilight")
-			self:DelayedMessage(15, fmt(L["portal_message"], portalNum), "Attention")
-			portalNum = portalNum + 1
+			self:Bar(L["portal_bar"], 20, 46021)
+			self:DelayedMessage(15, L["portal_message"], "Urgent", nil, "Alert")
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
@@ -291,18 +272,15 @@ function mod:WildMagic(player, spellId, spellName, event)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "KalecgosBlast" and rest then
-		if db.blast then
-			blasted[rest] = true
-			self:ScheduleEvent("BlastCheck", self.BlastWarn, 1, self)
-		end
+	if sync == "KalecgosRealm" and rest then
 		if db.portal then
-			self:Bar(L["portal_bar"], 20, "Spell_Shadow_Twilight")
-			self:ScheduleEvent("PortalTargetCheck", self.NextPortalWarn, 15, self)
+			self:Bar(L["portal_bar"], 20, 46021)
+			self:DelayedMessage(15, L["portal_message"], "Urgent", nil, "Alert")
 		end
-	elseif sync == "KalecgosRealm" and rest and db.realm then
-		inRealm[rest] = true
-		self:ScheduleEvent("RealmCheck", self.RealmWarn, 2, self)
+		if db.realm then
+			local groupNo = self:GetGroupNumber(rest)
+			self:Message(fmt(L["realm_message"], rest, groupNo), "Urgent", nil, "Alert", nil, 44866)
+		end
 	elseif sync == "KalecgosCurse" and rest and db.curse then
 		self:Bar(fmt(L["curse_bar"], rest), 30, 45032)
 	elseif sync == "KaleBuffet" and db.buffet then
@@ -324,68 +302,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Message(other, "Attention", nil, nil, true)
 		else
 			self:Message(other, "Attention", nil, nil, nil, 45002)
-		end
-	end
-end
-
-function mod:BlastWarn()
-	if db.blast then
-		local msg = nil
-		for k in pairs(blasted) do
-			if not msg then
-				msg = k
-			else
-				msg = msg .. ", " .. k
-			end
-		end
-		self:Message(fmt(L["blast_message"], msg), "Urgent", nil, "Alert", nil, 44866)
-	end
-	for k in pairs(blasted) do blasted[k] = nil end
-end
-
-function mod:RealmWarn()
-	if db.realm then
-		local msg = nil
-		for k in pairs(inRealm) do
-			if not msg then
-				msg = k
-			else
-				msg = msg .. ", " .. k
-			end
-		end
-		self:Message(fmt(L["realm_message"], msg), "Important", nil, "Alert", nil, 46021)
-	end
-	for k in pairs(inRealm) do inRealm[k] = nil end
-end
-
-function mod:NextPortalWarn()
-	if db.portal then
-		local hasValidTarget = nil
-
-		-- XXX ID's not confirmed!! give feedback
-		local realmID = GetSpellInfo(46021) --Spectral Realm
-		local exhID = GetSpellInfo(44867) --Spectral Exhaustion
-		for i = 1, GetNumRaidMembers() do
-			local hasDebuff = nil
-			local curDebuff = 1
-			local unit = fmt("%s%d", "raid", i)
-			while UnitDebuff(unit, curDebuff) do
-				local name = UnitDebuff(unit, curDebuff)
-				if name == realmID or name == exhID then
-					hasDebuff = true
-					break
-				end
-				curDebuff = curDebuff + 1
-			end
-			if hasDebuff then
-				hasValidTarget = true
-				break
-			end
-		end
-		if hasValidTarget then
-			portalNum = portalNum + 1
-			if portalNum == 5 then portalNum = 1 end
-			self:Message(fmt(L["portal_message"], portalNum), "Urgent", nil, "Alert")
 		end
 	end
 end
@@ -472,3 +388,9 @@ function mod:IsPlayerTank(player)
 	return false
 end
 
+function mod:GetGroupNumber(player)
+	for i=1, GetNumRaidMembers() do
+		local name, rank, subGroup = GetRaidRosterInfo(i)
+		if name == player then return subGroup end
+	end
+end
