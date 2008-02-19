@@ -198,6 +198,7 @@ mod.proximitySilent = true
 --      Initialization      --
 ------------------------------
 
+local temp = true --remove sometime
 function mod:OnEnable()
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
@@ -221,6 +222,10 @@ function mod:OnEnable()
 	if wipe and BigWigs:IsModuleActive(boss) then
 		self:Bar(L["wipe_bar"], 90, 44670)
 		wipe = nil
+	end
+	if temp then
+		BigWigs:Print("Portal warnings were recently moved to a new addon, BigWigs_KalecgosPortals (files.wowace.com), it will show a box with people in the portal, please test it. :)")
+		temp = nil
 	end
 end
 
