@@ -72,6 +72,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "WebEvent")
 
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Web", 29896)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 	
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 

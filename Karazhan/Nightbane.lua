@@ -236,6 +236,7 @@ function mod:OnEnable()
 
 	self:AddCombatListener("SPELL_CAST_START", "Fear", 36922)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "CharredEarth", 30129)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 	
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "NBFear", 10)

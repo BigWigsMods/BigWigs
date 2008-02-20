@@ -294,6 +294,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 
 	self:AddCombatListener("SPELL_CAST_START", "FlameWreath", 30004)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 	
 	self:RegisterEvent("UNIT_MANA")
 	self:RegisterEvent("UNIT_HEALTH")

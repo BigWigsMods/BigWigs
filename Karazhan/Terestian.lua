@@ -224,6 +224,8 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_REMOVED", "SacrificeRemoved", 30115)
 	self:AddCombatListener("SPELL_AURA_DISPELLED", "SacrificeRemoved", 30115)
 	
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	pName = UnitName("player")
 end

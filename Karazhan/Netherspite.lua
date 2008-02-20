@@ -170,6 +170,7 @@ function mod:OnEnable()
 	-- these need testing, are they instant or does he indeed cast voidzone for 2 seconds
 	self:AddCombatListener("SPELL_CAST_START", "VoidZone", 30533)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Netherbreath", 38546) -- face random target, instantcast
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "Netherbreath", 3)

@@ -153,7 +153,8 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_BUFFS", "OtherRiding")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS")
 
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Riding", 30756)	
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Riding", 30756)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 	
 	pName = UnitName("player")
 end
