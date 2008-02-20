@@ -302,6 +302,7 @@ function mod:OnEnable()
 	
 	self:AddCombatListener("SPELL_AURA_APPLIED", "CaveIn", 36240)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Silence", 36297)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
