@@ -166,6 +166,10 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 
+	self:AddCombatListener("SPELL_AURA_APPLIED", "RainOfFire", 31340)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Silence", 31344)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Doom", 31347)
+	
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
@@ -182,6 +186,20 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:RainOfFire(player)
+	if player and db.rof and player == pName then
+		self:Message(L["rof_you"], "Urgent", true, "Alarm")
+	end
+end
+
+function mod:Silence(player)
+	if player then self:Sync("AzHOA", player) end
+end
+
+function mod:Doom(player)
+	if player then self:Sync("AzDoom", player) end
+end
 
 function mod:Event(msg)
 	local aPlayer, aType, aSpell = select(3, msg:find(L["afflict_trigger"]))

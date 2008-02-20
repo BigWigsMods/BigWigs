@@ -97,6 +97,8 @@ end
 function mod:OnEnable()
 	if class ~= "WARRIOR" and class ~= "ROGUE" then
 		self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
+		self:AddCombatListener("SPELL_AURA_APPLIED", "Mark", 31447)
+		self:AddCombatListener("SPELL_AURA_REMOVED", "MarkRemoved", 31447)
 	end
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -110,6 +112,20 @@ end
 local function HideProx()
 	mod:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
 	mod:TriggerEvent("BigWigs_HideProximity", self)
+end
+
+function mod:Mark(player)
+	if player and db.range and player == UnitName("player") and UnitMana("player") < 4000 then
+		self:TriggerEvent("BigWigs_ShowProximity", self)
+		self:ScheduleEvent("BWHideProx", HideProx, 5)
+	end
+end
+
+function mod:MarkRemoved(player)
+	if player and db.range and player == UnitName("player") then
+		self:CancelScheduledEvent("BWHideProx")
+		self:TriggerEvent("BigWigs_HideProximity", self)		
+	end
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
