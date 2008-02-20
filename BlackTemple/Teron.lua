@@ -136,6 +136,9 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "SoD")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "SoD")
 
+	self:AddCombatListener("SPELL_AURA_APPLIED", "ShadowOfDeath", 40251)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
@@ -149,6 +152,10 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:ShadowOfDeath(player)
+	if player then self:Sync("TeronShadow", player) end
+end
 
 function mod:SoD(msg)
 	local splayer, stype = select(3, msg:find(L["shadow_trigger"]))

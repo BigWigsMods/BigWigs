@@ -149,6 +149,9 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "FatalAtt")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "FatalAtt")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "FatalAtt")
+	
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("SPELL_AURA_APPLIED", "FatalAttraction", 41001)
 
 	self:RegisterEvent("PLAYER_AURAS_CHANGED")
 	self:RegisterEvent("UNIT_HEALTH")
@@ -222,6 +225,10 @@ function mod:FatalAtt(msg)
 		end
 		self:Sync("ShaAttra", aplayer)
 	end
+end
+
+function mod:FatalAttraction(player)
+	if player then self:Sync("ShaAttra", player) end
 end
 
 local function killTime()

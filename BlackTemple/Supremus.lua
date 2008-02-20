@@ -196,6 +196,8 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "MoltenPunch", 40126)
+	
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -210,6 +212,10 @@ end
 ------------------------------
 --    Event Handlers     --
 ------------------------------
+
+function mod:MoltenPunch()
+	self:Sync("SupPunch")
+end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg == L["punch_trigger"] then
