@@ -299,6 +299,9 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
+	
+	self:AddCombatListener("SPELL_AURA_APPLIED", "CaveIn", 36240)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Silence", 36297)
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
@@ -369,3 +372,18 @@ function mod:Event(msg)
 	end
 end
 
+function mod:CaveIn(player)
+	if player and player == UnitName("player") then
+		self:Message(L["cavein_message"], "Personal", true, "Alarm")
+	end
+end
+
+function mod:Silence()
+	if not silence and self.db.profile.silence then
+		self:Message(L["silence_message"], "Attention")
+		self:DelayedMessage(28, L["silence_warning"], "Urgent")
+		self:Bar(L["silence_bar"], 31, "Spell_Holy_ImprovedResistanceAuras")
+		silence = true
+		self:ScheduleEvent("BWGrullNilSilence", nilSilence, 10)
+	end
+end
