@@ -538,6 +538,7 @@ end
 
 function mod:HealingFailed(mob)
 	if mob == malande then self:Sync("ICKick", "Someone") -- FIXME
+	end
 end
 
 function mod:ChromaticResistance()
