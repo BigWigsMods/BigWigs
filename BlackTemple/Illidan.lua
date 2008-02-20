@@ -483,6 +483,12 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "AfflictEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "AfflictEvent")
 
+	
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Parasite", 41914)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Barrage", 40585)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Shear", 41032)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 40932)
+	
 	self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -556,6 +562,22 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(fmt(L["shear_message"], rest), "Important", nil, "Alert")
 		self:Bar(fmt(L["shear_bar"], rest), 7, "Spell_Shadow_FocusedPower")
 	end
+end
+
+function mod:Parasite(player)
+	if player then self:Sync("IliPara", player) end
+end
+
+function mod:Barrage(player)
+	if player then self:Sync("IliBara", player) end
+end
+
+function mod:Flame(player)
+	if player then self:Sync("IliFlame", player) end
+end
+
+function mod:Shear(player)
+	if player then self:Sync("IliShear", player) end
 end
 
 function mod:AfflictEvent(msg)
