@@ -410,6 +410,18 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Vanish", 41476)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "ReflectiveShield", 41475)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "SpellWarding", 41451)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Protection", 41450)
+	self:AddCombatListener("SPELL_CAST_START", "HealingStart", 41455)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Healing", 41455)
+	self:AddCombatListener("SPELL_CAST_FAILED", "HealingFailed", 41455)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Blizzard", 41482)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Poison", 41485)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "ChromaticResistance", 41453)
+	self:AddCombatListener("UNIT_DIED", "UNIT_DIED")
+	
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalSpell", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalMelee", 5)
@@ -496,6 +508,42 @@ do
 	end
 end
 
+function mod:UNIT_DIED(mob)
+	if mob and mob == malande then self:Sync("TICWin") end
+end
+
+function mod:Vanish()
+	self:Sync("VerVanish")
+end
+
+function mod:ReflectiveShield()
+	self:Sync("MalShield")
+end
+
+function mod:SpellWarding(mob)
+	if mob == malande then self:Sync("MalSpell") end
+end
+
+function mod:Protection(mob)
+	if mob == malande then self:Sync("MalMelee") end
+end
+
+function mod:HealingStart(mob)
+	if mob == malande then self:Sync("MalCCast") end
+end
+
+function mod:Healing(mob)
+	if mob == malande then self:Sync("MalCHeal") end
+end
+
+function mod:HealingFailed(mob)
+	if mob == malande then self:Sync("ICKick", "Someone") -- FIXME
+end
+
+function mod:ChromaticResistance()
+	self:Sync("ICRes")
+end
+
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	if msg == L["immune_spell_trigger"] then
 		self:Sync("MalSpell")
@@ -516,6 +564,16 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	elseif msg == L["circle_heal_trigger"] then
 		self:Sync("MalCHeal")
 	end
+end
+
+function mod:Blizzard(player)
+	if player and player == pName then
+		self:Message(L["blizzard_message"], "Personal", true, "Alarm")
+	end
+end
+
+function mod:Poison(player)
+	if player then self:Sync("CouncilPoison", player) end
 end
 
 function mod:DebuffEvent(msg)
