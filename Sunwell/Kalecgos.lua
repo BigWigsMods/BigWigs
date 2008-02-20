@@ -2,8 +2,6 @@
 --      Are you local?      --
 ------------------------------
 
-if not GetSpellInfo then return end
-
 -- TODO:
 --	Clean up some localization issues
 --	Figure out a clean way to handle curse jumps without spamming
@@ -22,9 +20,7 @@ local wipe = nil
 local fmt = string.format
 local GetNumRaidMembers = GetNumRaidMembers
 local pName = UnitName("player")
-local UnitDebuff = UnitDebuff
 local UnitBuff = UnitBuff
-local GetSpellInfo = GetSpellInfo
 local UnitPowerType = UnitPowerType
 local UnitClass = UnitClass
 
@@ -335,8 +331,8 @@ end
 --	Paladins and Shaman are always counted as healers
 --	Druids are counted as healers if they have a mana bar
 --	Priests are counted as healers if they aren't in Shadowform
-local sfID = GetSpellInfo(15473) --Shadowform
-local mkID = GetSpellInfo(24905) --Moonkin
+local sfID = GetSpellInfo and GetSpellInfo(15473) --Shadowform
+local mkID = GetSpellInfo and GetSpellInfo(24905) --Moonkin
 function mod:IsPlayerHealer(player)
 	local _, class = UnitClass(player)
 
@@ -376,7 +372,7 @@ end
 -- Assumptions made:
 --	Anyone with a rage bar is counted as a tank
 --	Paladins with Righteous Fury are counted as tanks
-local rfID = GetSpellInfo(25780) --Righteous Fury
+local rfID = GetSpellInfo and GetSpellInfo(25780) --Righteous Fury
 function mod:IsPlayerTank(player)
 	if UnitPowerType(player) == 1 then --has rage
 		return true

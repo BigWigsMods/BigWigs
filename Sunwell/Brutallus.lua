@@ -2,8 +2,6 @@
 --      Are you local?      --
 ------------------------------
 
-if not GetSpellInfo then return end
-
 local boss = BB["Brutallus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
