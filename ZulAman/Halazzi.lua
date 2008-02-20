@@ -273,6 +273,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_REMOVED", "FlameShockRemoved", 43303)
 	self:AddCombatListener("SPELL_AURA_DISPELLED", "FlameShockRemoved", 43303)
 	self:AddCombatListener("SPELL_CAST_START", "Totem", 43302)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_PARTY", "FlameFade")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER", "FlameFade")

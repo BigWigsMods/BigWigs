@@ -233,6 +233,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SoulSiphon", 43501)
 	self:AddCombatListener("SPELL_CAST_START", "Heal", 41372, 43548, 43451, 43575, 43431, 43420) -- he probably doesn't cast all of these heals please check
 	self:AddCombatListener("SPELL_CAST_START", "Totem", 43436)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 	
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
