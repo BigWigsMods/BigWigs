@@ -101,8 +101,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["Scale"] = "缩放",
 	["Set the message frame scale."] = "调整信息文字大小。",
 
-	--["Use icons"] = "",
-	--["Show icons next to messages, only works for Raid Warning."] = "",
+	["Use icons"] = "使用技能图标",
+	["Show icons next to messages, only works for Raid Warning."] = "显示图标,目前只能使用在团队警告频道",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000颜|cffff00ff色|r",
 	["White"] = "白色",
