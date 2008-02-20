@@ -293,6 +293,8 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 
+	self:AddCombatListener("SPELL_CAST_START", "FlameWreath", 30004)
+	
 	self:RegisterEvent("UNIT_MANA")
 	self:RegisterEvent("UNIT_HEALTH")
 
@@ -337,6 +339,13 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if self.db.profile.flame and msg:find(L["flame_trigger"]) then
 		self:Message(L["flame_message"], "Important")
 		self:Bar(L["flame_bar"], 21, "Spell_Fire_Fire")
+	end
+end
+
+function mod:FlameWreath()
+	if self.db.profile.flame then
+		self:Message(L["flame_message"], "Important")
+		self:Bar(L["flame_bar"], 21, "Spell_Fire_Fire")		
 	end
 end
 
