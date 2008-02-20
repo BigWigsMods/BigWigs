@@ -217,6 +217,13 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "CheckSacrifice")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CheckSacrifice")
 
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Sacrifice", 30115)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Weakened", 30065)
+	
+	self:AddCombatListener("SPELL_AURA_REMOVED", "WeakenedRemoved", 30065)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "SacrificeRemoved", 30115)
+	self:AddCombatListener("SPELL_AURA_DISPELLED", "SacrificeRemoved", 30115)
+	
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	pName = UnitName("player")
 end
@@ -232,19 +239,49 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:CheckSacrifice(msg)
-	if not self.db.profile.sacrifice then return end
 	local splayer, stype = select(3, msg:find(L["sacrifice_trigger"]))
 	if splayer and stype then
 		if splayer == L2["you"] and stype == L2["are"] then
 			splayer = pName
 		end
-		self:Message(fmt(L["sacrifice_message"], splayer), "Attention")
-		self:Bar(fmt(L["sacrifice_bar"], splayer), 30, "Spell_Shadow_AntiMagicShell")
-		if self.db.profile.icon then
-			self:Icon(splayer)
+		self:Sacrifice(splayer)
+	end
+end
+
+function mod:Sacrifice(player)
+	if player then
+		if self.db.profile.sacrifice then
+			self:Message(fmt(L["sacrifice_message"], player), "Attention")
+			self:Bar(fmt(L["sacrifice_bar"], player), 30, "Spell_Shadow_AntiMagicShell")
+			self:ScheduleEvent("sac1", "BigWigs_Message", 40, L["sacrifice_soon"], "Positive")
+			self:Bar(L["sacrifice_soonbar"], 42, "Spell_Shadow_Cripple")			
 		end
-		self:ScheduleEvent("sac1", "BigWigs_Message", 40, L["sacrifice_soon"], "Positive")
-		self:Bar(L["sacrifice_soonbar"], 42, "Spell_Shadow_Cripple")
+		if self.db.profile.icon then
+			self:Icon(player)
+		end
+	end		
+end
+
+function mod:Weakened()
+	if self.db.profile.weak then
+		self:Message(L["weak_message"], "Important", nil, "Alarm")
+		self:ScheduleEvent("weak1", "BigWigs_Message", 40, L["weak_warning1"], "Attention")
+		self:Bar(L["weak_bar"], 45, "Spell_Shadow_Cripple")		
+	end
+end
+
+function mod:WeakenedRemoved()
+	if self.db.profile.weak then
+		self:Message(L["weak_warning2"], "Attention", nil, "Info")
+		self:CancelScheduledEvent("weak1")
+		self:TriggerEvent("BigWigs_StopBar", self, L["weak_bar"])	
+	end
+end
+
+function mod:SacrificeRemoved(player)
+	if self.db.profile.sacrifice then
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["sacrifice_bar"], player))
+		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	end
 end
 
