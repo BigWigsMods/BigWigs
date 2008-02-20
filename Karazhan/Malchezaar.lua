@@ -276,6 +276,8 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "EnfeebleEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "EnfeebleEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "EnfeebleEvent")
+	
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Enfeeble", 30843)
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalchezaarEnfeeble", 10)
@@ -327,6 +329,13 @@ end
 function mod:DespawnTimer()
 	self:Bar(L["despawn_bar"]:format(count), 180, "INV_SummerFest_Symbol_Medium")
 	count = count + 1
+end
+
+function mod:Enfeeble(player)
+	if player == UnitName("player") then
+		self:Message(L["enfeeble_warnyou"], "Personal", true)
+	end
+	self:Sync("MalchezaarEnfeeble")
 end
 
 function mod:EnfeebleEvent(msg)
