@@ -244,7 +244,7 @@ function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Bloodboil", 42005)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "FelRage", 40604, 40616)
-	self:AddcombatListener("SPELL_AURA_REMOVED", "FelRageRemoved", 40594) -- I think this is the one Bloodboil gets on himself, verify
+	self:AddCombatListener("SPELL_AURA_REMOVED", "FelRageRemoved", 40594) -- I think this is the one Bloodboil gets on himself, verify
 	
 	
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
