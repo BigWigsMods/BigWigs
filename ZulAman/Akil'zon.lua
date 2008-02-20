@@ -195,7 +195,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, a, b, c, player)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, player)
 	if not db.elec then return end
 
 	if msg == L["elec_trigger"] then
