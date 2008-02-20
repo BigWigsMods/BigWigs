@@ -191,7 +191,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "TidalShield", 39872)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "TidalShieldRemoved", 39872)
 	self:AddCombatListener("SPELL_AURA_DISPELLED", "TidalShieldRemoved", 39872)
-	self:AddcombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 	
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
