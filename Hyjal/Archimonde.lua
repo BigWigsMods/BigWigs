@@ -247,6 +247,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Grip", 31972)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "GripRemoved", 31972)
 	self:AddCombatListener("SPELL_AURA_DISPELLED", "GripRemoved", 31972)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_PARTY")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")

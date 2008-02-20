@@ -124,6 +124,7 @@ function mod:OnEnable()
 
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Icebolt", 31249)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "DeathAndDecay", 39658)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 	
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "WCBolt", 5)

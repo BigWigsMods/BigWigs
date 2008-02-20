@@ -169,6 +169,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "RainOfFire", 31340)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Silence", 31344)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Doom", 31347)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 	
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
