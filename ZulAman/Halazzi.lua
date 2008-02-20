@@ -268,6 +268,11 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "FlameEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "FlameEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "FlameEvent")
+	
+	self:AddCombatListener("SPELL_AURA_APPLIED", "FlameShock", 43303)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "FlameShockRemoved", 43303)
+	self:AddCombatListener("SPELL_AURA_DISPELLED", "FlameShockRemoved", 43303)
+	self:AddCombatListener("SPELL_CAST_START", "Totem", 43302)
 
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_PARTY", "FlameFade")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER", "FlameFade")
@@ -283,6 +288,12 @@ end
 --      Event Handlers      --
 ------------------------------
 
+function mod:Totem()
+	if db.totem then
+		self:Message(L["totem_message"], "Attention")
+	end
+end
+
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if db.totem and msg == L["totem_trigger"] then
 		self:Message(L["totem_message"], "Attention")
@@ -296,6 +307,19 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	end
 end
 
+function mod:FlameShock(player)
+	if player then
+		if db.flame then
+			local warn = L["flame_message"]:format(fplayer)
+			self:Message(warn, "Attention")
+			self:Bar(warn, 12, "Spell_Fire_FlameShock")
+		end
+		if db.icon then
+			self:Icon(fplayer)
+		end	
+	end
+end
+
 function mod:FlameEvent(msg)
 	if not db.flame then return end
 
@@ -304,12 +328,14 @@ function mod:FlameEvent(msg)
 		if fplayer == L2["you"] and ftype == L2["are"] then
 			fplayer = pName
 		end
-		local warn = L["flame_message"]:format(fplayer)
-		self:Message(warn, "Attention")
-		self:Bar(warn, 12, "Spell_Fire_FlameShock")
-		if db.icon then
-			self:Icon(fplayer)
-		end
+		self:FlameShock(fplayer)
+	end
+end
+
+function mod:FlameShockRemoved(player)
+	if player then
+		self:TriggerEvent("BigWigs_StopBar", self, L["flame_message"]:format(player))
+		self:TriggerEvent("BigWigs_RemoveRaidIcon")		
 	end
 end
 
