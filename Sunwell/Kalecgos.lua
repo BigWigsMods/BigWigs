@@ -144,7 +144,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	realm = "Royaume spectral",
 	realm_desc = "Préviens quand un joueur est dans le Royaume spectral.",
-	realm_message = "Dans le royaume : %s (%d)",
+	realm_message = "Royaume spectral : %s (Groupe %d)",
 
 	curse = "Malédiction d'agonie infinie",
 	curse_desc = "Préviens quand un joueur subit les effets de la Malédiction d'agonie infinie.",
@@ -175,7 +175,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	enrage_warning = "Enrager imminent !",
 	enrage_message = "10% - Enragé !",
-	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",
+	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!", -- à traduire
 } end )
 
 ----------------------------------

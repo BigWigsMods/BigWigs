@@ -105,9 +105,9 @@ L:RegisterTranslations("frFR", function() return {
 	flurry_message = "50% - Rafale !",
 	flurry_warning = "Rafale imminente !",
 
-	smash = "Frappe en arc",
-	smash_desc = "Affiche une barre pour Frappe en arc.",
-	smash_bar = "~Frappe en arc",
+	smash = "Frappe en arc de cercle",
+	smash_desc = "Affiche une barre pour Frappe en arc de cercle.",
+	smash_bar = "~Frappe en arc de cercle",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
