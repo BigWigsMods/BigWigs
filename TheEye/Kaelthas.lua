@@ -550,6 +550,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Fear", 39427, 18431, 22686, 36922, 40636, 44863) -- Really need to figure out which one.
 	self:AddCombatListener("SPELL_AURA_APPLIED" ,"RemoteToy", 37027)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "MindControl", 36798) -- educated guess to the correct one
+	self:AddCombatListener("UNIT_DIED", "UNIT_DIED")
 	
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelConflag", 0.8)
@@ -731,6 +732,13 @@ do
 			self:Message(fmt(dead, shield), "Attention")
 		else
 			self:GenericBossDeath(msg)
+		end
+	end
+	function mod:UNIT_DIED(player)
+		if player == axe or player == mace or player == dagger or player == staff or player == sword or player == bow or player == shield then
+			self:Message(fmt(dead, player), "Attention")
+		else
+			self:GenericBossDeath(player)
 		end
 	end
 end
