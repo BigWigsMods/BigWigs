@@ -195,20 +195,38 @@ if GetSpellInfo then
 			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		end
 	end
+	local spellIds = {}
+	local function delTable(t)
+		for k, v in pairs(t) do
+			t[k] = nil
+		end
+	end
 	function BigWigs.modulePrototype:AddSyncListener(event, ...)
 		if not self.syncEventMap then self.syncEventMap = {} end
 		if not self.syncEventMap[event] then self.syncEventMap[event] = {} end
 		local token = nil
-		local spellIds = {}
+		-- clean out old ids
+		delTable(spellids)
 		local c = select("#", ...)
 		for i = 1, c do
 			local arg = select(i, ...)
 			if type(arg) == "string" then
 				token = arg
-				self.syncEventMap[event][token] = {}
-				self.syncEventMap[event][token].spellIds = spellIds
+				if not self.syncEventMap[event][token] then self.syncEventMap[event][token] = {} end
+				if self.syncEventMap[event][token].spellIds then
+					delTable(self.syncEventMap[event][token].spellIds)
+				else
+					self.syncEventMap[event][token].spellIds = {}
+				end
+				for k, v in pairs(spellIds) do
+					self.syncEventMap[event][token].spellIds[k] = spellIds[k]
+				end
 				if c > i then
-					self.syncEventMap[event][token].argumentList = {}
+					if self.syncEventMap[event][token].argumentList then
+						delTable(self.syncEventMap[event][token].argumentList)
+					else
+						self.syncEventMap[event][token].argumentList = {}
+					end
 				end
 			else
 				if not token then
