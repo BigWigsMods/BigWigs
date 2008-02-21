@@ -155,10 +155,29 @@ function BigWigs.modulePrototype:OnInitialize()
 end
 
 if GetSpellInfo then
+	local function transmitSync(self, token, arguments, ...)
+		if not arguments then
+			self:Sync(token)
+		else
+			local argString = ""
+			for i = 1, #arguments do
+				argString = " " .. tostring(arguments[i])
+			end
+			self:Sync(token .. argString)
+		end
+	end
 	function BigWigs.modulePrototype:COMBAT_LOG_EVENT_UNFILTERED(_, event, _, _, _, _, player, _, spellId, spellName)
-		local m = self.combatLogEventMap[event]
+		local m = self.combatLogEventMap and self.combatLogEventMap[event]
 		if m and (m[spellId] or m["*"]) then
 			self[m[spellId] or m["*"]](self, player, spellId, spellName, event)
+		end
+		local s = self.syncEventMap and self.syncEventMap[event]
+		if s then
+			for token, data in pairs(s) do
+				if data.spellIds[spellId] then
+					transmitSync(self, token, data.argumentList, player, spellId, spellName, event)
+				end
+			end
 		end
 	end
 	function BigWigs.modulePrototype:AddCombatListener(event, func, ...)
@@ -166,7 +185,7 @@ if GetSpellInfo then
 		if not self.combatLogEventMap[event] then self.combatLogEventMap[event] = {} end
 		local c = select("#", ...)
 		if c > 0 then
-			for i = 1, select("#", ...) do
+			for i = 1, c do
 				self.combatLogEventMap[event][(select(i, ...))] = func
 			end
 		else
@@ -176,9 +195,38 @@ if GetSpellInfo then
 			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		end
 	end
+	function BigWigs.modulePrototype:AddSyncListener(event, ...)
+		if not self.syncEventMap then self.syncEventMap = {} end
+		if not self.syncEventMap[event] then self.syncEventMap[event] = {} end
+		local token = nil
+		local spellIds = {}
+		for i = 1, select("#", ...) do
+			local arg = select(i, ...)
+			if type(arg) == "string" then
+				token = arg
+				self.syncEventMap[event][token] = {}
+				self.syncEventMap[event][token].spellIds = spellIds
+				if c > i then
+					self.syncEventMap[event][token].argumentList = {}
+				end
+			else
+				if not token then
+					spellIds[arg] = true
+				else
+					table.insert(self.syncEventMap[event][token].argumentList, arg)
+				end
+			end
+		end
+		if not self:IsEventRegistered("COMBAT_LOG_EVENT_UNFILTERED") then
+			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		end
+	end
 else
 	function BigWigs.modulePrototype:AddCombatListener(...)
 		-- No-op in <2.4.
+	end
+	function BigWigs.modulePrototype:AddSyncListener(...)
+		-- No-op in <2.4
 	end
 end
 
