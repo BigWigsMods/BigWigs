@@ -200,7 +200,8 @@ if GetSpellInfo then
 		if not self.syncEventMap[event] then self.syncEventMap[event] = {} end
 		local token = nil
 		local spellIds = {}
-		for i = 1, select("#", ...) do
+		local c = select("#", ...)
+		for i = 1, c do
 			local arg = select(i, ...)
 			if type(arg) == "string" then
 				token = arg
