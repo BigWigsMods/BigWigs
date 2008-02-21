@@ -29,7 +29,7 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a Raid Icon on players hit by Burn.",
 
 	burnjump = "Burn Jump",
-	burnjump_desc = "Warns when people not hit by Burn are afflicted by the DoT.",
+	burnjump_desc = "Warns when people hit by Burn are afflicted by the Meteor Slash too.",
 	burnjump_you = "Burn jumped to YOU!",
 	burnjump_other = "Burn jumped to %s!",
 } end )
@@ -73,6 +73,23 @@ L:RegisterTranslations("frFR", function() return {
 	burnjump_desc = "Préviens quand un joueur non affecté par Brûler subit les effets du DoT.",
 	burnjump_you = "Brûler a sauté sur YOU !",
 	burnjump_other = "Brûler a sauté sur %s !",
+} end )
+
+L:RegisterTranslations("deDE", function() return {
+	burn = "Brand",
+	burn_desc = "Sagt dir wer von Brand betroffen ist und wann der nächste Brand zu erwarten ist.",
+	burn_you = "Brand auf DIR!",
+	burn_other = "Brand auf %s!",
+	burn_bar = "Nächster Brand",
+	burn_message = "Nächster Brand in 5 Sekunden!",
+
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Plaziert ein Schlachtzug Symbol auf dem Spieler der Brand betroffen ist (benötigt Assistent oder höher).",
+
+	burnjump = "Brand Übersprung",
+	burnjump_desc = "Warnt wenn Spieler die von Brand betroffen sind auch von Meteor Slash betroffen sind.",
+	burnjump_you = "Brand sprang zu DIR!",
+	burnjump_other = "Brand sprang zu %s!",
 } end )
 
 ----------------------------------
