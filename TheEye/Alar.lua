@@ -170,7 +170,6 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "MeltArmor", 35410)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "FlamePatch", 35383)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
@@ -180,6 +179,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:Throttle(5, "AlArArmor")
+	self:AddSyncListener("SPELL_AURA_APPLIED", 35410, "AlArArmor", 1)
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -249,11 +249,6 @@ function mod:AlarCheck()
 	end
 end
 
--- XXX we should remove this sync
-function mod:MeltArmor(player)
-	self:Sync("AlArArmor", player)
-end
-
 function mod:FlamePatch(player)
 	if not db.flamepatch then return end
 	if player == pName then
@@ -271,7 +266,7 @@ function mod:DebuffEvent(msg)
 		if aplayer == L2["you"] and atype == L2["are"] then -- XXX 2.4 removal
 			aplayer = pName
 		end
-		self:MeltArmor(aplayer)
+		self:Sync("AlArArmor", aplayer)
 	end
 end
 
