@@ -161,7 +161,7 @@ if GetSpellInfo then
 		else
 			local argString = ""
 			for i = 1, #arguments do
-				argString = " " .. tostring(arguments[i])
+				argString = " " .. tostring((select(arguments[i], ...)))
 			end
 			self:Sync(token .. argString)
 		end
