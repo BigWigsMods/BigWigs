@@ -483,11 +483,13 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "AfflictEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "AfflictEvent")
 
-	
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Parasite", 41914)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Barrage", 40585)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Shear", 41032)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 40932)
+	self:AddCombatListener("SPELL_DAMAGE", "FlameBurst", 41131) -- spell cast by the player at 5 yards radius
+	self:AddCombatListener("SPELL_SUCCESS", "Phase2", 39855)
+	self:AddCombatListener("UNIT_DIED", "UNIT_DIED")
 	
 	self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
@@ -644,6 +646,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
+function mod:FlameBurst(player)
+	if player == pName then self:Sync("IliBurst") end	
+end
+
 function mod:CHAT_MSG_SPELL_SELF_DAMAGE(msg)
 	if msg:find(L["flameburst"]) then
 		self:Sync("IliBurst")
@@ -654,6 +660,10 @@ function mod:UNIT_SPELLCAST_START(msg)
 	if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["demons_trigger"] then
 		self:Sync("IliDemons")
 	end
+end
+
+function mod:Phase2(player)
+	if player then self:Sync("IliPhase2") end
 end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
@@ -688,6 +698,14 @@ do
 		else
 			self:GenericBossDeath(msg)
 		end
+	end
+end
+
+function mod:UNIT_DIED(mob)
+	if mob == L["Flame of Azzinoth"] then
+		self:Sync("IliFlameDied")
+	else
+		self:GenericBossDeath(mob)
 	end
 end
 
