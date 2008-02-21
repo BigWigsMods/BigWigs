@@ -311,12 +311,12 @@ end
 function mod:FlameShock(player)
 	if player then
 		if db.flame then
-			local warn = L["flame_message"]:format(fplayer)
+			local warn = L["flame_message"]:format(player)
 			self:Message(warn, "Attention")
 			self:Bar(warn, 12, "Spell_Fire_FlameShock")
 		end
 		if db.icon then
-			self:Icon(fplayer)
+			self:Icon(player)
 		end	
 	end
 end
