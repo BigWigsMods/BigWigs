@@ -377,6 +377,15 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("SPELL_DAMAGE", "Abyssal", 30511)
+	self:AddCombatListener("SPELL_CAST_START", "Mending", 30528)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "ShadowCageRemoved", 30205, 30168) -- figure out the correct one
+	self:AddCombatListener("SPELL_AURA_DISPELLED", "ShadowCageRemoved", 30205, 30168)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "MindExhaustion", 44032)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Debris", 30632)
+	
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "Exhaustion", 0)
@@ -436,10 +445,18 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	end
 end
 
+function mod:Abyssal()
+	self:Sync("MagHFAbyssal")
+end
+
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg:find(L["abyssal_trigger"]) then
 		self:Sync("MagHFAbyssal")
 	end
+end
+
+function mod:BanishRemoved()
+	self:Sync("MagUnbanish")
 end
 
 function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
@@ -448,10 +465,24 @@ function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 	end
 end
 
+function mod:Mending()
+	self:Sync("MagHFHeal")
+end
+
 --hellfire channelers sometimes heal
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg:find(L["heal_trigger"]) then
 		self:Sync("MagHFHeal")
+	end
+end
+
+function mod:MindExhaustion(player)
+	if player then self:Sync("Exhaustion", player) end
+end
+
+function mod:Debris(player)
+	if player == UnitName("player") and self.db.profile.debris then
+		self:Message(L["debris_message"], "Important", nil, "Alert")
 	end
 end
 
