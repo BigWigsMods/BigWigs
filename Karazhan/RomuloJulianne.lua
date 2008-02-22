@@ -238,13 +238,12 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "PoisonEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "PoisonEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "PoisonEvent")
-	
+
 	-- test id's versus live environment
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Poison", 30822, 30830) -- check which one and remove comment if exact found
 	self:AddCombatListener("SPELL_CAST_START", "Heal", 30878)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Devotion", 30887)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Daring", 30841)
-	
 end
 
 ------------------------------

@@ -155,7 +155,7 @@ function mod:OnEnable()
 
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Riding", 30756)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	
+
 	pName = UnitName("player")
 end
 
@@ -169,12 +169,12 @@ function mod:Riding(player)
 		if self.db.profile.youriding then
 			self:Message(L["riding_youwarn"], "Personal", true, "Long")
 			self:Message(L["riding_otherwarn"]:format(pName), "Attention", nil, nil, true)
-			self:Bar(L["riding_bar"]:format(pName), 20,"INV_Chest_Cloth_18")		
+			self:Bar(L["riding_bar"]:format(pName), 20, "INV_Chest_Cloth_18")
 		end
 	elseif self.db.profile.elseriding then
 		self:Message(L["riding_otherwarn"]:format(player), "Attention")
 		self:Whisper(rplayer, L["riding_youwarn"])
-		self:Bar(L["riding_bar"]:format(player), 20,"INV_Chest_Cloth_18")		
+		self:Bar(L["riding_bar"]:format(player), 20, "INV_Chest_Cloth_18")
 	end
 	if self.db.profile.icon then
 		self:Icon(player)

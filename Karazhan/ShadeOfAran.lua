@@ -295,7 +295,7 @@ function mod:OnEnable()
 
 	self:AddCombatListener("SPELL_CAST_START", "FlameWreath", 30004)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	
+
 	self:RegisterEvent("UNIT_MANA")
 	self:RegisterEvent("UNIT_HEALTH")
 
@@ -346,7 +346,7 @@ end
 function mod:FlameWreath()
 	if self.db.profile.flame then
 		self:Message(L["flame_message"], "Important")
-		self:Bar(L["flame_bar"], 21, "Spell_Fire_Fire")		
+		self:Bar(L["flame_bar"], 21, "Spell_Fire_Fire")
 	end
 end
 

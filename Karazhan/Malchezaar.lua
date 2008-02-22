@@ -276,7 +276,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "EnfeebleEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "EnfeebleEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "EnfeebleEvent")
-	
+
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Enfeeble", 30843)
 

@@ -166,10 +166,10 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-	
+
 	-- these need testing, are they instant or does he indeed cast voidzone for 2 seconds
 	self:AddCombatListener("SPELL_CAST_START", "VoidZone", 30533)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Netherbreath", 38546) -- face random target, instantcast
+	self:AddSyncListener("SPELL_CAST_SUCCESS", 38546, "Netherbreath") -- face random target, instantcast
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -182,7 +182,6 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
@@ -227,10 +226,7 @@ end
 function mod:VoidZone()
 	if self.db.profile.voidzone then
 		self:Message(fmt(L["voidzone_warn"], voidcount), "Attention")
-		voidcount = voidcount + 1		
+		voidcount = voidcount + 1
 	end
 end
 
-function mod:Netherbreath()
-	self:Sync("Netherbreath")
-end

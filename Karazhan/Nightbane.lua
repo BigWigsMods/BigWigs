@@ -234,10 +234,10 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
 	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
 
-	self:AddCombatListener("SPELL_CAST_START", "Fear", 36922)
+	self:AddSyncListener("SPELL_CAST_START", 36922, "NBFear")
 	self:AddCombatListener("SPELL_AURA_APPLIED", "CharredEarth", 30129)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "NBFear", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "NBBones", 15)
@@ -306,12 +306,9 @@ function mod:UNIT_SPELLCAST_CHANNEL_START(msg)
 	end
 end
 
-function mod:Fear()
-	self:Sync("NBFear")
-end
-
 function mod:CharredEarth(player)
 	if self.db.profile.charr and player == UnitName("player") then
 		self:Message(L["charr_message"], "Personal", true, "Alarm")
 	end
 end
+

@@ -193,7 +193,7 @@ mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) en
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("UNIT_HEALTH")
-	
+
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -257,3 +257,4 @@ function mod:UNIT_HEALTH(msg)
 		end
 	end
 end
+

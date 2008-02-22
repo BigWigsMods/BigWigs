@@ -191,8 +191,8 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "HolyFireEvent")
 
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	self:AddCombatListener("SPELL_AURA_APPLIED", "HolyFire", 29522) -- from wowhead, check and remove this comment if it is correct.
-	
+	self:AddSyncListener("SPELL_AURA_APPLIED", 29522, "MaidenHolyFire", 1) -- from wowhead, check and remove this comment if it is correct.
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -218,10 +218,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["repentance_bar"], 12, "Spell_Holy_PrayerOfHealing")
 		self:NextRepentance()
 	end
-end
-
-function mod:HolyFire(player)
-	if player then self:Sync("MaidenHolyFire", player) end
 end
 
 function mod:HolyFireEvent(msg)

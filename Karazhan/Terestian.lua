@@ -219,13 +219,13 @@ function mod:OnEnable()
 
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Sacrifice", 30115)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Weakened", 30065)
-	
+
 	self:AddCombatListener("SPELL_AURA_REMOVED", "WeakenedRemoved", 30065)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "SacrificeRemoved", 30115)
 	self:AddCombatListener("SPELL_AURA_DISPELLED", "SacrificeRemoved", 30115)
-	
+
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	pName = UnitName("player")
 end
@@ -261,7 +261,7 @@ function mod:Sacrifice(player)
 		if self.db.profile.icon then
 			self:Icon(player)
 		end
-	end		
+	end
 end
 
 function mod:Weakened()

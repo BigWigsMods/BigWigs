@@ -157,7 +157,7 @@ function mod:OnEnable()
 
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Curse", 29833, 36513, 43127) -- checked from wowhead, 29833 probably the correct one	
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
