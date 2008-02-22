@@ -100,21 +100,20 @@ L:RegisterTranslations("deDE", function() return {
 	burn_other = "Brand auf %s!",
 	burn_bar = "Nächster Brand",
 	burn_message = "Nächster Brand in 5 Sekunden!",
-	--burn_resist = "%s resisted burn",
 
-	--burnresist = "Burn Resist",
-	--burnresist_desc = "Warn who resists burn.",
-	--burn_resist = "%s resisted burn",
+	burnresist = "Brand wiederstanden",
+	burnresist_desc = "Warnt wer Brand weiderstanden hat.",
+	burn_resist = "%s hat Brand wiederstanden",
 
-	--meteor = "Meteor Slash",
-	--meteor_desc = "Show a Meteor Slash timer bar.",
-	--meteor_bar = "Next Meteor Slash",
+	meteor = "Meteor Slash",
+	meteor_desc = "Zeigt einen Meteor Slash Zeitbalken an.",
+	meteor_bar = "Nächster Meteor Slash",
 
-	--stomp = "Stomp",
-	--stomp_desc = "Warn for Stomp and show a bar.",
-	--stomp_warning = "Stomp in 5 sec",
-	--stomp_message = "Stomp: %s",
-	--stomp_bar = "Next Stomp",
+	stomp = "Stampfen",
+	stomp_desc = "Warnt vor Stampfen und zeigt einen Balken an.",
+	stomp_warning = "Stampfen in 5 sek",
+	stomp_message = "Stampfen: %s",
+	stomp_bar = "Nächstes Stampfen",
 } end )
 
 ----------------------------------
