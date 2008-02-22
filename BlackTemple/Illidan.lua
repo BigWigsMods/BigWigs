@@ -483,10 +483,11 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "AfflictEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "AfflictEvent")
 
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Parasite", 41914)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Barrage", 40585)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Shear", 41032)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 40932)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 41914, "IliPara", 1)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 40585, "IliBara", 1)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 41032, "IliShear", 1)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 40932, "IliFlame", 1)
+
 	self:AddCombatListener("SPELL_DAMAGE", "FlameBurst", 41131) -- spell cast by the player at 5 yards radius
 	self:AddCombatListener("SPELL_SUCCESS", "Phase2", 39855)
 	self:AddCombatListener("UNIT_DIED", "UNIT_DIED")
@@ -566,22 +567,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function mod:Parasite(player)
-	if player then self:Sync("IliPara", player) end
-end
-
-function mod:Barrage(player)
-	if player then self:Sync("IliBara", player) end
-end
-
-function mod:Flame(player)
-	if player then self:Sync("IliFlame", player) end
-end
-
-function mod:Shear(player)
-	if player then self:Sync("IliShear", player) end
-end
-
 function mod:AfflictEvent(msg)
 	local player, type, spell = select(3, msg:find(L["afflict_trigger"]))
 	if player and type then
@@ -647,7 +632,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:FlameBurst(player)
-	if player == pName then self:Sync("IliBurst") end	
+	if player == pName then self:Sync("IliBurst") end
 end
 
 function mod:CHAT_MSG_SPELL_SELF_DAMAGE(msg)

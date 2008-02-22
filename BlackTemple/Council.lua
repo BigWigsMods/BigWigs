@@ -410,16 +410,17 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Vanish", 41476)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "ReflectiveShield", 41475)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 41476, "VerVanish")
+	self:AddSyncListener("SPELL_AURA_APPLIED", 41475, "MalShield")
+	self:AddSyncListener("SPELL_AURA_APPLIED", 41453, "ICRes")
+	self:AddSyncListener("SPELL_AURA_APPLIED", 41485, "CouncilPoison", 1)
+
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SpellWarding", 41451)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Protection", 41450)
 	self:AddCombatListener("SPELL_CAST_START", "HealingStart", 41455)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Healing", 41455)
 	self:AddCombatListener("SPELL_CAST_FAILED", "HealingFailed", 41455)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Blizzard", 41482)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Poison", 41485)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "ChromaticResistance", 41453)
 	self:AddCombatListener("UNIT_DIED", "UNIT_DIED")
 	
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -512,14 +513,6 @@ function mod:UNIT_DIED(mob)
 	if mob and mob == malande then self:Sync("TICWin") end
 end
 
-function mod:Vanish()
-	self:Sync("VerVanish")
-end
-
-function mod:ReflectiveShield()
-	self:Sync("MalShield")
-end
-
 function mod:SpellWarding(mob)
 	if mob == malande then self:Sync("MalSpell") end
 end
@@ -537,12 +530,7 @@ function mod:Healing(mob)
 end
 
 function mod:HealingFailed(mob)
-	if mob == malande then self:Sync("ICKick", "Someone") -- FIXME
-	end
-end
-
-function mod:ChromaticResistance()
-	self:Sync("ICRes")
+	if mob == malande then self:Sync("ICKick", "Someone") end -- FIXME
 end
 
 function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
@@ -571,10 +559,6 @@ function mod:Blizzard(player)
 	if player and player == pName then
 		self:Message(L["blizzard_message"], "Personal", true, "Alarm")
 	end
-end
-
-function mod:Poison(player)
-	if player then self:Sync("CouncilPoison", player) end
 end
 
 function mod:DebuffEvent(msg)

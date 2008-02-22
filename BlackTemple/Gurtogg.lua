@@ -241,12 +241,12 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "DebuffEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "DebuffEvent")
 
+	self:AddSyncListener("SPELL_AURA_APPLIED", 42005, "GBBlood")
+	self:AddSyncListener("SPELL_AURA_APPLIED", 40604, 40616, "GurRage", 1)
+
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Bloodboil", 42005)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "FelRage", 40604, 40616)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "FelRageRemoved", 40594) -- I think this is the one Bloodboil gets on himself, verify
-	
-	
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
@@ -328,14 +328,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:Bloodboil(player)
-	if player then self:Sync("GBBlood") end
-end
-
-function mod:FelRage(player)
-	if player then self:Sync("GurRage", player) end
-end
-
 function mod:FelRageRemoved(player)
 	if player == boss then self:Sync("GurNormal") end
 end
@@ -352,7 +344,6 @@ function mod:DebuffEvent(msg)
 			rplayer = pName
 		end
 		self:Sync("GurRage", rplayer)
-		return
 	end
 end
 
@@ -391,3 +382,4 @@ function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 		self:Sync("GurNormal")
 	end
 end
+

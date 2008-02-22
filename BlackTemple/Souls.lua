@@ -302,12 +302,12 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Spite", 41377)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "RuneShield", 41431)
-	self:AddCombatListener("SPELL_CAST_START", "Deaden", 41410)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Scream", 41545) -- verify this is the correct combat event
+	self:AddSyncListener("SPELL_AURA_APPLIED", 41377, "RoSSpite", 1)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 41431, "RoSShield")
+	self:AddSyncListener("SPELL_CAST_START", 41410, "RoSDeaden")
+	self:AddSyncListener("SPELL_CAST_SUCCESS", 41545, "RoSScream") -- verify this is the correct combat event
 	self:AddCombatListener("UNIT_DIED", "UNIT_DIED")
-	
+
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "AfflictEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "AfflictEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "AfflictEvent")
@@ -376,29 +376,12 @@ function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
 	end
 end
 
-function mod:RuneShield()
-	self:Sync("RoSShield")
-end
-
-function mod:Deaden()
-	self:Sync("RoSDeaden")
-end
-
-function mod:Scream()
-	self:Sync("RoSScream")
-end
-
-
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg == L["deaden_trigger"] then
 		self:Sync("RoSDeaden")
 	elseif msg:find(L["scream_trigger"]) then
 		self:Sync("RoSScream")
 	end
-end
-
-function mod:Spite(player)
-	if player then self:Sync("RoSSpite", player) end
 end
 
 function mod:AfflictEvent(msg)
@@ -454,3 +437,4 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Bar(L["scream_bar"], 10, "Spell_Shadow_ConeOfSilence")
 	end
 end
+

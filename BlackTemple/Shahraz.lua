@@ -22,7 +22,12 @@ local timer = nil
 local stop
 
 --debuffs
-local shadow, holy, arcane, nature, fire, frost
+local shadow = "INV_Misc_Gem_Amethyst_01"
+local holy = "INV_Misc_Gem_Topaz_01"
+local arcane = "INV_Misc_Gem_Sapphire_01"
+local nature = "INV_Misc_Gem_Emerald_01"
+local fire = "INV_Misc_Gem_Opal_01"
+local frost = "INV_Misc_Gem_Crystal_02"
 
 ----------------------------
 --      Localization      --
@@ -149,9 +154,9 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "FatalAtt")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "FatalAtt")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "FatalAtt")
-	
+
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	self:AddCombatListener("SPELL_AURA_APPLIED", "FatalAttraction", 41001)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 41001, "ShaAttra", 1)
 
 	self:RegisterEvent("PLAYER_AURAS_CHANGED")
 	self:RegisterEvent("UNIT_HEALTH")
@@ -162,14 +167,6 @@ function mod:OnEnable()
 	stop = nil
 	started = nil
 	db = self.db.profile
-
-	--setup debuffs
-	shadow = "INV_Misc_Gem_Amethyst_01"
-	holy = "INV_Misc_Gem_Topaz_01"
-	arcane = "INV_Misc_Gem_Sapphire_01"
-	nature = "INV_Misc_Gem_Emerald_01"
-	fire = "INV_Misc_Gem_Opal_01"
-	frost = "INV_Misc_Gem_Crystal_02"
 end
 
 ------------------------------
@@ -225,10 +222,6 @@ function mod:FatalAtt(msg)
 		end
 		self:Sync("ShaAttra", aplayer)
 	end
-end
-
-function mod:FatalAttraction(player)
-	if player then self:Sync("ShaAttra", player) end
 end
 
 local function killTime()

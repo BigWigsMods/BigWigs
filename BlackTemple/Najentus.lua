@@ -187,12 +187,13 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Spine")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Spine")
 
+	self:AddSyncListener("SPELL_AURA_APPLIED", 39872, "NajShieldOn")
+	self:AddSyncListener("SPELL_AURA_REMOVED", 39872, "NajShieldOff")
+	self:AddSyncListener("SPELL_AURA_DISPELLED", 39872, "NajShieldOff")
+
 	self:AddCombatListener("SPELL_AURA_APPLIED", "ImpalingSpine", 39837)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "TidalShield", 39872)
-	self:AddCombatListener("SPELL_AURA_REMOVED", "TidalShieldRemoved", 39872)
-	self:AddCombatListener("SPELL_AURA_DISPELLED", "TidalShieldRemoved", 39872)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	
+
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -237,14 +238,6 @@ function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
 	end
 end
 
-function mod:TidalShield()
-	self:Sync("NajShieldOn")
-end
-
-function mod:TidalShieldRemoved()
-	self:Sync("NajShieldOff") -- in 2.4 corrected spelling for NajShieldOff
-end
-
 function mod:ImpalingSpine(player)
 	if player then
 		if db.spinesay and player == UnitName("player") then
@@ -283,3 +276,4 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:Message(L["shield_fade"], "Positive")
 	end
 end
+
