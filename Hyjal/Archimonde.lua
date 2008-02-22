@@ -243,8 +243,8 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "GripEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "GripEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "GripEvent")
-	
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Grip", 31972)
+
+	self:AddSyncListener("SPELL_AURA_APPLIED", 31972, "ArchGrip", 1)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "GripRemoved", 31972)
 	self:AddCombatListener("SPELL_AURA_DISPELLED", "GripRemoved", 31972)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
@@ -298,10 +298,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
-end
-
-function mod:Grip(player)
-	if player then self:Sync("ArchGrip", player) end
 end
 
 function mod:GripEvent(msg)

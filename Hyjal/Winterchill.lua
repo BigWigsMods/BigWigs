@@ -122,10 +122,10 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "AfflictEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "AfflictEvent")
 
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Icebolt", 31249)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 31249, "WCBolt", 1)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "DeathAndDecay", 39658)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "WCBolt", 5)
 
@@ -161,10 +161,6 @@ function mod:DeathAndDecay(player)
 	if db.decay and player == UnitName("player") then
 		self:Message(L["decay_message"], "Personal", true, "Alarm")
 	end
-end
-
-function mod:Icebolt(player)
-	if player then self:Sync("WCBolt", player) end
 end
 
 function mod:AfflictEvent(msg)

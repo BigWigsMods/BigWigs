@@ -167,10 +167,10 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 
 	self:AddCombatListener("SPELL_AURA_APPLIED", "RainOfFire", 31340)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Silence", 31344)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Doom", 31347)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 31344, "AzHOA", 1)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 31347, "AzDoom", 1)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	
+
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
@@ -192,14 +192,6 @@ function mod:RainOfFire(player)
 	if player and db.rof and player == pName then
 		self:Message(L["rof_you"], "Urgent", true, "Alarm")
 	end
-end
-
-function mod:Silence(player)
-	if player then self:Sync("AzHOA", player) end
-end
-
-function mod:Doom(player)
-	if player then self:Sync("AzDoom", player) end
 end
 
 function mod:Event(msg)

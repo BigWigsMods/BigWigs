@@ -125,7 +125,7 @@ end
 function mod:MarkRemoved(player)
 	if player and db.range and player == UnitName("player") then
 		self:CancelScheduledEvent("BWHideProx")
-		self:TriggerEvent("BigWigs_HideProximity", self)		
+		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
 end
 
