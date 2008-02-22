@@ -145,8 +145,7 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:Throttle(300, "BrutallusBurn")
-	self:Throttle(300, "BrutallusBurnJump")
+	self:Throttle(300, "BrutallusBurn", "BrutallusBurnJump") --remove after brut is disabled on ptr
 
 	db = self.db.profile
 end
