@@ -273,7 +273,7 @@ function mod:PoisonEvent(msg)
 		if pplayer == L2["you"] and ptype == L2["are"] then
 			pplayer = UnitName("player")
 		end
-		self:Poison(pplayer)
+		self:Poison(player)
 	end
 end
 
