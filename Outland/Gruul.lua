@@ -299,7 +299,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
-	
+
 	self:AddCombatListener("SPELL_AURA_APPLIED", "CaveIn", 36240)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Silence", 36297)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
@@ -388,3 +388,4 @@ function mod:Silence()
 		self:ScheduleEvent("BWGrullNilSilence", nilSilence, 10)
 	end
 end
+

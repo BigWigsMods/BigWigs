@@ -311,12 +311,12 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Shield", 33147)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "SpellShield", 33054)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Whirlwind", 33238, 33239, 36981, 39232, 37641 ) -- guessed these might be it, might also not be it
-	self:AddCombatListener("SPELL_CAST_START", "Summon", 33131)
-	self:AddCombatListener("SPELL_DAMAGE", "Smash", 38761)
+
+	self:AddSyncListener("SPELL_AURA_APPLIED", 33147, "BlindeyeShield")
+	self:AddSyncListener("SPELL_AURA_APPLIED", 33054, "KroshSpellShield")
+	self:AddSyncListener("SPELL_AURA_APPLIED", 33238, 33239, 36981, 39232, 37641, "MaulgarWhirlwind") -- guessed these might be it, might also not be it
+	self:AddSyncListener("SPELL_CAST_START", 33131, "OlmSummon")
+	self:AddSyncListener("SPELL_DAMAGE", 38761, "MaulgarSmash")
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Event")
@@ -335,26 +335,6 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
-function mod:Summon()
-	self:Sync("OlmSummon")
-end
-
-function mod:Whirlwind()
-	self:Sync("MaulgarWhirlwind")
-end
-
-function mod:Shield()
-	self:Sync("BlindeyeShield")
-end
-
-function mod:SpellShield()
-	self:Sync("KroshSpellShield")
-end
-
-function mod:Smash()
-	self:Sync("MaulgarSmash")
-end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg == L["heal_trigger"] then

@@ -150,8 +150,8 @@ function mod:OnEnable()
 
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Mark", 32960)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Twisted", 21064, 21063) --figure out which one
-	
+	self:AddSyncListener("SPELL_AURA_APPLIED", 21064, 21063, "Twisted", 1) --figure out which one
+
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
@@ -187,10 +187,6 @@ function mod:Mark(player)
 	if player and player == pName and self.db.profile.mark then
 		self:Message(L["mark_message"], "Personal", true, "Alarm")
 	end
-end
-
-function mod:Twisted(player)
-	if player then self:Sync("Twisted", player) end
 end
 
 function mod:Event(msg)
