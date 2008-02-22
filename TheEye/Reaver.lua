@@ -223,13 +223,12 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 --      Initialization      --
 ------------------------------
 
-local temp -- XXX remove after 2.4 when we have Knock Away ID
 function mod:OnEnable()
 	-- Don't know which spell ID it is before we get a log.
 	-- Not even sure if SPELL_DAMAGE is the right event, but I think so.
-	self:AddCombatListener("SPELL_DAMAGE", "Knockback", 21737, 40434, 37102, 32959, 31389, 25778, 23382, 19633, 18945, 18813, 18670, 10101)
+	self:AddSyncListener("SPELL_DAMAGE", 21737, 40434, 37102, 32959, 31389, 25778, 23382, 19633, 18945, 18813, 18670, 10101, "ReavKA2")
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	
+
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -243,7 +242,6 @@ function mod:OnEnable()
 	self:Throttle(7, "ReavKA2")
 
 	previous = nil
-	temp = nil
 	db = self.db.profile
 end
 
@@ -253,7 +251,6 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
-		temp = true
 		if db.orbyou or db.orbother then
 			self:ScheduleRepeatingEvent("BWReaverToTScan", self.OrbCheck, 0.2, self) --how often to scan the target, 0.2 seconds
 		end
@@ -263,14 +260,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif db.pounding and (msg == L["pounding_trigger1"] or msg == L["pounding_trigger2"]) then
 		self:Bar(L["pounding_nextbar"], 13, "Ability_ThunderClap")
 	end
-end
-
-function mod:Knockback(player, spellId)
-	if temp then
-		BigWigs:Print("Spell ID for Void Reaver's Knock Away effect was " .. tostring(spellId) .. ". Please report this to the BigWigs developers.")
-		temp = nil
-	end
-	self:Sync("ReavKA2")
 end
 
 function mod:KnockAway(msg)

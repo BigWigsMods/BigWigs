@@ -544,14 +544,16 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Conflagration", 37018)
-	self:AddCombatListener("SPELL_CAST_START", "FearSoon", 39427, 18431, 22686, 36922, 40636, 44863) -- Really need to figure out which one.
-	self:AddCombatListener("SPELL_MISSED", "Fear", 39427, 18431, 22686, 36922, 40636, 44863) -- Really need to figure out which one.
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Fear", 39427, 18431, 22686, 36922, 40636, 44863) -- Really need to figure out which one.
-	self:AddCombatListener("SPELL_AURA_APPLIED" ,"RemoteToy", 37027)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "MindControl", 36798) -- educated guess to the correct one
+	self:AddSyncListener("SPELL_AURA_APPLIED", 37018, "KaelConflag", 1)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 37027, "KSToy", 1)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 36798, "KaelMC2", 1) -- educated guess to the correct one
+
+	self:AddSyncListener("SPELL_CAST_START", 39427, 18431, 22686, 36922, 40636, 44863, "KaelFearSoon") -- Really need to figure out which one.
+	self:AddSyncListener("SPELL_MISSED", 39427, 18431, 22686, 36922, 40636, 44863, "KaelFear") -- Really need to figure out which one.
+	self:AddSyncListener("SPELL_AURA_APPLIED", 39427, 18431, 22686, 36922, 40636, 44863, "KaelFear") -- Really need to figure out which one.
+
 	self:AddCombatListener("UNIT_DIED", "UNIT_DIED")
-	
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelConflag", 0.8)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KSToy", 3)
@@ -572,14 +574,6 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	elseif msg:find(L["fear_trigger2"]) or msg:find(L["fear_trigger1"]) then
 		self:Sync("KaelFear")
 	end
-end
-
-function mod:FearSoon()
-	self:Sync("KaelFearSoon")
-end
-
-function mod:Fear(player)
-	self:Sync("KaelFear")
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
@@ -678,18 +672,6 @@ function mod:Afflicted(msg)
 			self:Sync("KSToy", tPlayer)
 		end
 	end
-end
-
-function mod:Conflagration(player)
-	if player then self:Sync("KaelConflag", player) end
-end
-
-function mod:RemoteToy(player)
-	if player then self:Sync("KSToy", player) end
-end
-
-function mod:MindControl(player)
-	if player then self:Sync("KaelMC2", player) end
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
