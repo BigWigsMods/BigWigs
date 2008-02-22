@@ -8,8 +8,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started = nil
 local pName = UnitName("player")
 local db = nil
-local prevBurnTarget = nil
-local burning = { }
 
 ----------------------------
 --      Localization      --
@@ -25,13 +23,19 @@ L:RegisterTranslations("enUS", function() return {
 	burn_bar = "Next Burn",
 	burn_message = "Next Burn in 5 seconds!",
 
-	icon = "Raid Icon",
-	icon_desc = "Place a Raid Icon on players hit by Burn.",
+	burnresist = "Burn Resist",
+	burnresist_desc = "Warn who resists burn.",
+	burn_resist = "%s resisted burn",
 
-	burnjump = "Burn Jump",
-	burnjump_desc = "Warns when people hit by Burn are afflicted by the Meteor Slash too.",
-	burnjump_you = "Burn jumped to YOU!",
-	burnjump_other = "Burn jumped to %s!",
+	meteor = "Meteor Slash",
+	meteor_desc = "Show a Meteor Slash timer bar.",
+	meteor_bar = "Next Meteor Slash",
+
+	stomp = "Stomp",
+	stomp_desc = "Warn for Stomp and show a bar.",
+	stomp_warning = "Stomp in 5 sec",
+	stomp_message = "Stomp: %s",
+	stomp_bar = "Next Stomp",
 } end )
 
 --[[
@@ -48,14 +52,21 @@ L:RegisterTranslations("koKR", function() return {
 	burn_other = "%s에게 불사르기!",
 	burn_bar = "다음 불사르기",
 	burn_message = "다음 불사르기 5초전!",
+	--burn_resist = "%s resisted burn",
 
-	icon = "전술 표시",
-	icon_desc = "불사르기에 적중된 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
+	--burnresist = "Burn Resist",
+	--burnresist_desc = "Warn who resists burn.",
+	--burn_resist = "%s resisted burn",
 
-	burnjump = "불사르기 이동",
-	burnjump_desc = "불사르기에 적중된것이 아닌 도트 디버프가 걸린 플레이어를 알립니다.",
-	burnjump_you = "당신에 불사르기 이동!",
-	burnjump_other = "%s에게 불사르기 이동!",
+	--meteor = "Meteor Slash",
+	--meteor_desc = "Show a Meteor Slash timer bar.",
+	--meteor_bar = "Next Meteor Slash",
+
+	--stomp = "Stomp",
+	--stomp_desc = "Warn for Stomp and show a bar.",
+	--stomp_warning = "Stomp in 5 sec",
+	--stomp_message = "Stomp: %s",
+	--stomp_bar = "Next Stomp",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -65,14 +76,21 @@ L:RegisterTranslations("frFR", function() return {
 	burn_other = "Brûler sur %s !",
 	burn_bar = "Prochain Brûler",
 	burn_message = "Prochain Brûler dans 5 sec. !",
+	--burn_resist = "%s resisted burn",
 
-	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur affecté par Brûler (nécessite d'être promu ou mieux).",
+	--burnresist = "Burn Resist",
+	--burnresist_desc = "Warn who resists burn.",
+	--burn_resist = "%s resisted burn",
 
-	burnjump = "Saut de Brûler",
-	burnjump_desc = "Préviens quand un joueur non affecté par Brûler subit les effets du DoT.",
-	burnjump_you = "Brûler a sauté sur YOU !",
-	burnjump_other = "Brûler a sauté sur %s !",
+	--meteor = "Meteor Slash",
+	--meteor_desc = "Show a Meteor Slash timer bar.",
+	--meteor_bar = "Next Meteor Slash",
+
+	--stomp = "Stomp",
+	--stomp_desc = "Warn for Stomp and show a bar.",
+	--stomp_warning = "Stomp in 5 sec",
+	--stomp_message = "Stomp: %s",
+	--stomp_bar = "Next Stomp",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -82,14 +100,21 @@ L:RegisterTranslations("deDE", function() return {
 	burn_other = "Brand auf %s!",
 	burn_bar = "Nächster Brand",
 	burn_message = "Nächster Brand in 5 Sekunden!",
+	--burn_resist = "%s resisted burn",
 
-	icon = "Schlachtzug Symbol",
-	icon_desc = "Plaziert ein Schlachtzug Symbol auf dem Spieler der Brand betroffen ist (benötigt Assistent oder höher).",
+	--burnresist = "Burn Resist",
+	--burnresist_desc = "Warn who resists burn.",
+	--burn_resist = "%s resisted burn",
 
-	burnjump = "Brand Übersprung",
-	burnjump_desc = "Warnt wenn Spieler die von Brand betroffen sind auch von Meteor Slash betroffen sind.",
-	burnjump_you = "Brand sprang zu DIR!",
-	burnjump_other = "Brand sprang zu %s!",
+	--meteor = "Meteor Slash",
+	--meteor_desc = "Show a Meteor Slash timer bar.",
+	--meteor_bar = "Next Meteor Slash",
+
+	--stomp = "Stomp",
+	--stomp_desc = "Warn for Stomp and show a bar.",
+	--stomp_warning = "Stomp in 5 sec",
+	--stomp_message = "Stomp: %s",
+	--stomp_bar = "Next Stomp",
 } end )
 
 ----------------------------------
@@ -99,7 +124,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"burn", "icon", "burnjump", "enrage", "bosskill"}
+mod.toggleoptions = {"burn", "burnresist", "meteor", "stomp", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -108,18 +133,20 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	started = nil
-	prevBurnTarget = nil
 
-	self:AddCombatListener("SPELL_DAMAGE", "Burn", 45141)
-	self:AddSyncListener("SPELL_AURA_APPLIED", 46394, "BrutallusBurnJump", 1)
+	self:AddCombatListener("SPELL_MISSED", "BurnResist", 45141)
+	self:AddCombatListener("SPELL_CAST_START", "Meteor", 45150)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Burn", 46394)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "BurnRemove", 46394)
+	self:AddCombatListener("SPELL_DAMAGE", "Stomp", 45185)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:Throttle(3, "BrutallusBurn")
-	self:Throttle(0, "BrutallusBurnJump")
+	self:Throttle(300, "BrutallusBurn")
+	self:Throttle(300, "BrutallusBurnJump")
 
 	db = self.db.profile
 end
@@ -128,63 +155,57 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Burn(player)
-	prevBurnTarget = player
-	self:Sync("BrutallusBurn", player)
+function mod:Burn(player, spellID)
+	if db.burn then
+		local other = L["burn_other"]:format(player)
+		if rest == pName then
+			self:Message(L["burn_you"], "Personal", true, "Alert", nil, spellID)
+			self:Message(other, "Attention", nil, nil, true)
+		else
+			self:Message(other, "Attention", nil, nil, nil, spellID)
+		end
+		self:Bar(other, 60, spellID)
+	end
+end
+
+function mod:Meteor()
+	if db.meteor then
+		self:Bar(L["meteor_bar"], 12, 45150)
+	end
+end
+
+function mod:BurnRemove(player)
+	if db.burn then
+		self:TriggerEvent("BigWigs_StopBar", self, L["burn_other"]:format(player))
+	end
+end
+
+function mod:BurnResist(player)
+	if db.burnresist then
+		self:Message(L["burn_resist"]:format(player), "Positive", nil, nil, nil, 45141)
+	end
+end
+
+function mod:Stomp(player, spellID)
+	if db.stomp then
+		self:Message(L["stomp_message"]:format(player), "Urgent", nil, nil, nil, spellID)
+		self:DelayedMessage(25, L["stomp_warning"], "Attention")
+		self:Bar(L["stomp_bar"], 30, spellID)
+	end
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "BrutallusBurn" and rest and db.burn then
-		local other = L["burn_other"]:format(rest)
-		if rest == pName then
-			self:Message(L["burn_you"], "Personal", true, "Long", nil, 45141)
-			self:Message(other, "Attention", nil, nil, true)
-		else
-			self:Message(other, "Attention", nil, nil, nil, 45141)
-		end
-		self:Bar(L["burn_bar"], 20, 45141)
-		--self:DelayedMessage(15, L["bar_message"], "Attention")
-		if db.icon then
-			self:Icon(rest)
-		end
-	elseif sync == "BrutallusBurnJump" and rest and db.burnjump then
-		if rest ~= prevBurnTarget then
-			burning[rest] = true
-		end
-		self:ScheduleEvent("BurnJumpCheck", self.BurnJumpWarn, 1, self)
-	elseif self:ValidateEngageSync(sync, rest) and not started then
+	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if db.burn then
 			self:Bar(L["burn_bar"], 20, 45141)
-			--self:DelayedMessage(15, L["bar_message"], "Attention")
+			self:DelayedMessage(15, L["burn_message"], "Attention")
 		end
 		if db.enrage then
 			self:Enrage(360)
 		end
 	end
 end
-
-function mod:BurnJumpWarn()
-	if db.burnjump then
-		local msg = nil
-		for k in pairs(burning) do
-			if not msg then
-				msg = k
-			else
-				msg = msg .. ", " .. k
-			end
-			if k == pName then
-				self:Message(L["burnjump_you"], "Personal", true, "Long", nil, 46394)
-			end
-		end
-		if msg ~= nil then
-			self:Message(L["burnjump_other"]:format(msg), "Important", nil, "Alert", nil, 46394)
-		end
-	end
-	for k in pairs(burning) do burning[k] = nil end
-	prevBurnTarget = nil
-end
-
