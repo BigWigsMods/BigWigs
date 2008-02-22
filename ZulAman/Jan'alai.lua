@@ -188,7 +188,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	
+
 	self:AddCombatListener("SPELL_CAST_START", "FlameBreath", 23461)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
@@ -227,7 +227,7 @@ end
 function mod:FlameBreath()
 	if db.flame then
 		self:ScheduleEvent("BWFlameToTScan", ScanTarget, 0.2)
-		self:ScheduleEvent("BWRemoveJanIcon", "BigWigs_RemoveRaidIcon", 4, self)		
+		self:ScheduleEvent("BWRemoveJanIcon", "BigWigs_RemoveRaidIcon", 4, self)
 	end
 end
 

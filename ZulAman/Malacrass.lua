@@ -229,12 +229,12 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Siphon")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Siphon")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Siphon")
-	
+
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SoulSiphon", 43501)
-	self:AddCombatListener("SPELL_CAST_START", "Heal", 41372, 43548, 43451, 43575, 43431, 43420) -- he probably doesn't cast all of these heals please check
-	self:AddCombatListener("SPELL_CAST_START", "Totem", 43436)
+	self:AddSyncListener("SPELL_CAST_START", 41372, 43548, 43451, 43575, 43431, 43420, "MalaHeal") -- he probably doesn't cast all of these heals please check
+	self:AddSyncListener("SPELL_CAST_START", 43436, "MalaTotem")
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	
+
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
@@ -271,14 +271,6 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	elseif msg == L["heal_flash"] or msg == L["heal_wave"] or msg == L["heal_light"] then
 		self:Sync("MalaHeal")
 	end
-end
-
-function mod:Heal()
-	self:Sync("MalaHeal")
-end
-
-function mod:Totem()
-	self:Sync("MalaTotem")
 end
 
 function mod:SoulSiphon(player)

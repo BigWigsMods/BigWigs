@@ -307,11 +307,11 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "AfflictEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "AfflictEvent")
 
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Throw", 43093)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Paralysis", 43095)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Claw", 43150)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 43093, "ZulBleed", 1)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 43095, "ZulPara")
+	self:AddSyncListener("SPELL_AURA_APPLIED", 43150, "ZulClaw", 1)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
 	pName = UnitName("player")
@@ -340,18 +340,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["engage_trigger"] then
 		self:Message(L["engage_message"], "Attention")
 	end
-end
-
-function mod:Throw(player)
-	if player then self:Sync("ZulBleed", player) end
-end
-
-function mod:Paralysis(player)
-	if player then self:Sync("ZulPara") end
-end
-
-function mod:Claw(player)
-	if player then self:Sync("ZulClaw", player) end
 end
 
 function mod:AfflictEvent(msg)
