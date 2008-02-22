@@ -111,7 +111,7 @@ function mod:OnEnable()
 	prevBurnTarget = nil
 
 	self:AddCombatListener("SPELL_DAMAGE", "Burn", 45141)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "BurnSpread", 46394)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 46394, "BrutallusBurnJump", 1)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -131,10 +131,6 @@ end
 function mod:Burn(player)
 	prevBurnTarget = player
 	self:Sync("BrutallusBurn", player)
-end
-
-function mod:BurnSpread(player)
-	self:Sync("BrutallusBurnJump", player)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)

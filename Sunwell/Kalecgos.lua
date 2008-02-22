@@ -201,12 +201,13 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Realm", 46021)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Curse", 45032, 45034)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 46021, "KalecgosRealm", 1)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 45032, 45034, "KalecgosCurse", 1)
+	self:AddSyncListener("SPELL_AURA_APPLIED", 45018, "KaleBuffet", 1)
+	self:AddSyncListener("SPELL_AURA_APPLIED_DOSE", 45018, "KaleBuffet", 1)
+	self:AddSyncListener("SPELL_AURA_REMOVED", 45032, 45034, "KaleCurseRemv", 1)
+
 	self:AddCombatListener("SPELL_AURA_APPLIED", "WildMagic", 44978, 45001, 45002, 45006)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Buffet", 45018)
-	self:AddCombatListener("SPELL_AURA_APPLIED_DOSE", "Buffet", 45018)
-	self:AddCombatListener("SPELL_AURA_REMOVED", "CurseRemoved", 45032, 45034)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -228,22 +229,6 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
-function mod:Realm(player)
-	self:Sync("KalecgosRealm", player)
-end
-
-function mod:Curse(player)
-	self:Sync("KalecgosCurse", player)
-end
-
-function mod:CurseRemoved(player)
-	self:Sync("KaleCurseRemv", player)
-end
-
-function mod:Buffet(player)
-	self:Sync("KaleBuffet", player)
-end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
@@ -390,8 +375,9 @@ function mod:IsPlayerTank(player)
 end
 
 function mod:GetGroupNumber(player)
-	for i=1, GetNumRaidMembers() do
+	for i = 1, GetNumRaidMembers() do
 		local name, rank, subGroup = GetRaidRosterInfo(i)
 		if name == player then return subGroup end
 	end
 end
+
