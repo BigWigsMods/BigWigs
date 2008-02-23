@@ -76,5 +76,6 @@
 <Script file="Sunwell\SunwellBeta.lua"/>
 <Script file="Sunwell\Kalecgos.lua"/>
 <Script file="Sunwell\Brutallus.lua"/>
+<Script file="Sunwell\Felmyst.lua"/>
 
 </Ui>
