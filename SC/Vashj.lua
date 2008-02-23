@@ -420,7 +420,7 @@ end
 
 function mod:ChargeRemove(player)
 	if db.static then
-		if player == pName
+		if player == pName then
 			self:TriggerEvent("BigWigs_HideProximity", self)
 		end
 		self:TriggerEvent("BigWigs_StopBar", self, L["static_charge_message"]:format(player))
