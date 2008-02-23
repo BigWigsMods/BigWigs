@@ -318,7 +318,7 @@ end
 
 function mod:Whisper(player)
 	if db.whisper then
-		beDemon[rest] = true
+		beDemon[player] = true
 		self:ScheduleEvent("ScanDemons", self.DemonWarn, 0.3, self)
 		self:Bar(L["whisper_bar"], 30, 37676)
 	end
