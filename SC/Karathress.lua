@@ -5,6 +5,7 @@
 local boss = BB["Fathom-Lord Karathress"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -149,6 +150,10 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_CAST_START", "Heal", 43548, 38330)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Totem", 38236)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 
@@ -159,14 +164,31 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaraTotem", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "TidaTotem", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "CariHeal", 5)
+	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
+function mod:Heal()
+	if db.heal then
+		self:Message(L["heal_message"], "Important", nil, "Long", nil, 38330)
+	end
+end
+
+function mod:Totem(unit, spellID)
+	if not db.totem then return end
+
+	if unit == boss and then
+		self:Message(L["totem_message2"], "Urgent", nil, "Alarm", nil, spellID)
+	else
+		self:Message(L["totem_message1"], "Attention", nil, nil, nil, spellID)
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.enrage and msg == L["enrage_trigger"] then
+	if db.enrage and msg == L["enrage_trigger"] then
 		self:Enrage(600)
 	end
 end
@@ -182,11 +204,11 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 end
 
 function mod:BigWigs_RecvSync(sync)
-	if sync == "KaraTotem" and self.db.profile.totem then
+	if sync == "KaraTotem" and db.totem then
 		self:Message(L["totem_message2"], "Urgent", nil, "Alarm")
-	elseif sync == "TidaTotem" and self.db.profile.totem then
+	elseif sync == "TidaTotem" and db.totem then
 		self:Message(L["totem_message1"], "Attention")
-	elseif sync == "CariHeal" and self.db.profile.heal then
+	elseif sync == "CariHeal" and db.heal then
 		self:Message(L["heal_message"], "Important", nil, "Long")
 	end
 end

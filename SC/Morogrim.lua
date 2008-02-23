@@ -9,6 +9,7 @@ local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local inGrave = {}
 local grobulealert = nil
 local stop
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -229,6 +230,10 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Grave", 38049)
+	self:AddCombatListener("SPELL_CAST_START", "Tidal", 37730)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+
 	self:RegisterEvent("UNIT_HEALTH")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
@@ -243,11 +248,25 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "MoroGrave", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MoroTidal", 5)
+	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Grave(player)
+	if db.grave then
+		inGrave[player] = true
+		self:ScheduleEvent("BWMoroGrave", self.GraveWarn, 0.4, self)
+	end
+end
+
+function mod:Tidal()
+	if db.tidal then
+		self:Message(L["tidal_message"], "Urgent", nil, "Alarm", nil, 37730)
+	end
+end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
@@ -255,19 +274,19 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		grobulealert = nil
 		stop = nil
 
-		if self.db.profile.murloc then
+		if db.murloc then
 			self:Message(L["murloc_engaged"]:format(boss), "Positive")
 			self:Bar(L["murloc_bar"], 40, "INV_Misc_Head_Murloc_01")
 		end
-		if self.db.profile.grave then
+		if db.grave then
 			self:Bar(L["grave_nextbar"], 20, "Spell_Frost_ArcticWinds")
 		end
-	elseif self.db.profile.murloc and (msg == L["murloc_trigger1"] or msg == L["murloc_trigger2"]) then
+	elseif db.murloc and (msg == L["murloc_trigger1"] or msg == L["murloc_trigger2"]) then
 		self:CancelScheduledEvent("murloc1")
-		self:Message(L["murloc_message"], "Positive")
+		self:Message(L["murloc_message"], "Positive", nil, nil, nil, 42365)
 		self:Bar(L["murloc_bar"], 45, "INV_Misc_Head_Murloc_01")
 		self:ScheduleEvent("murloc1", "BigWigs_Message", 41, L["murloc_soon_message"], "Attention")
-	elseif self.db.profile.globules and (msg == L["globules_trigger1"] or msg == L["globules_trigger2"]) then
+	elseif db.globules and (msg == L["globules_trigger1"] or msg == L["globules_trigger2"]) then
 		self:Message(L["globules_message"], "Important", nil, "Alert")
 		self:Bar(L["globules_bar"], 36, "INV_Elemental_Primal_Water")
 	end
@@ -296,7 +315,7 @@ end
 
 function mod:GraveWarn()
 	if stop then return end
-	if self.db.profile.grave then
+	if db.grave then
 		local msg = nil
 		for k in pairs(inGrave) do
 			if not msg then
@@ -305,7 +324,7 @@ function mod:GraveWarn()
 				msg = msg .. ", " .. k
 			end
 		end
-		self:Message(L["grave_message"]:format(msg), "Important", nil, "Alert")
+		self:Message(L["grave_message"]:format(msg), "Important", nil, "Alert", nil, 38049)
 		self:Bar(L["grave_nextbar"], 28.5, "Spell_Frost_ArcticWinds")
 		self:Bar(L["grave_bar"], 4.5, "Spell_Frost_ArcticWinds")
 	end
@@ -317,13 +336,13 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "MoroGrave" and not stop and rest then
 		inGrave[rest] = true
 		self:ScheduleEvent("Grave", self.GraveWarn, 0.4, self)
-	elseif sync == "MoroTidal" and self.db.profile.tidal then
+	elseif sync == "MoroTidal" and db.tidal then
 		self:Message(L["tidal_message"], "Urgent", nil, "Alarm")
 	end
 end
 
 function mod:UNIT_HEALTH(msg)
-	if not self.db.profile.globules then return end
+	if not db.globules then return end
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 26 and health <= 30 and not grobulealert then

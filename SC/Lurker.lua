@@ -8,6 +8,7 @@ local started
 local occured = nil
 local CheckInteractDistance = CheckInteractDistance
 local fmt = string.format
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -202,6 +203,10 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SWING_DAMAGE", "Whirl", 37363, 37660)
+	self:AddCombatListener("SWING_MISSED", "Whirl", 37363, 37660)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
@@ -211,11 +216,23 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "LurkWhirl", 10)
 	started = nil
+	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+local last = 0
+function mod:Whirl()
+	local time = GetTime()
+	if (time - last) > 10 then
+		last = time
+		if db.whirl then
+			self:Bar(L["whirl_bar"], 17, 37660)
+		end
+	end
+end
 
 local function resetMe()
 	mod:CheckForWipe()
@@ -227,7 +244,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		if self.db.profile.dive then
+		if db.dive then
 			self:Message(fmt(L["engage_warning"], boss), "Attention")
 			self:DelayedMessage(30, fmt(L["dive_warning"], 60), "Positive")
 			self:DelayedMessage(60, fmt(L["dive_warning"], 30), "Positive")
@@ -235,16 +252,16 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:DelayedMessage(85, fmt(L["dive_warning"], 5), "Urgent", nil, "Alarm")
 			self:Bar(L["dive_bar"], 90, "Spell_Frost_ArcticWinds")
 		end
-		if self.db.profile.whirl then
+		if db.whirl then
 			self:Bar(L["whirl_bar"], 17, "Ability_Whirlwind")
 		end
-		if self.db.profile.spout then
+		if db.spout then
 			self:DelayedMessage(34, L["spout_warning"], "Attention")
 			self:Bar(L["spout_bar"], 37, "INV_Weapon_Rifle_02")
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 		self:ScheduleRepeatingEvent("BWLurkerTargetSeek", self.DiveCheck, 1, self)
-	elseif sync == "LurkWhirl" and self.db.profile.whirl then
+	elseif sync == "LurkWhirl" and db.whirl then
 		self:Bar(L["whirl_bar"], 17, "Ability_Whirlwind")
 	end
 end
@@ -257,10 +274,10 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if msg == L["spout_trigger"] then
-		if self.db.profile.spout then
+		if db.spout then
 			self:Bar(L["spout_message"], 20, "Spell_Frost_ChillingBlast")
 			self:Bar(L["spout_bar"], 50, "Spell_Frost_ChillingBlast")
-			self:Message(L["spout_message"], "Important", nil, "Alert")
+			self:Message(L["spout_message"], "Important", nil, "Alert", nil, 37433)
 			self:ScheduleEvent("spout1", "BigWigs_Message", 47, L["spout_warning"], "Attention")
 			self:TriggerEvent("BigWigs_StopBar", self, L["whirl_bar"])
 		end
@@ -275,7 +292,7 @@ function mod:DiveCheck()
 		self:ScheduleEvent("BWLurkerUp", self.LurkerUP, 60, self)
 		self:ScheduleEvent("BWLurkerReset", resetMe, 65)
 
-		if self.db.profile.dive then
+		if db.dive then
 			local ewarn = L["emerge_warning"]
 			self:Message(L["dive_message"], "Attention")
 			self:DelayedMessage(30, fmt(ewarn, 30), "Positive")
@@ -290,7 +307,7 @@ function mod:DiveCheck()
 		self:TriggerEvent("BigWigs_StopBar", self, L["spout_bar"])
 		self:TriggerEvent("BigWigs_StopBar", self, L["whirl_bar"])
 
-		if self.db.profile.spout then
+		if db.spout then
 			self:Bar(L["spout_bar"], 63, "Spell_Frost_ChillingBlast")
 			self:DelayedMessage(60, L["spout_warning"], "Attention")
 		end
@@ -298,7 +315,7 @@ function mod:DiveCheck()
 end
 
 function mod:LurkerUP()
-	if self.db.profile.dive then
+	if db.dive then
 		local dwarn = L["dive_warning"]
 		self:DelayedMessage(30, fmt(dwarn, 60), "Positive")
 		self:DelayedMessage(60, fmt(dwarn, 30), "Positive")

@@ -11,8 +11,9 @@ local debuff = {0, 10, 25, 50, 100, 250, 500}
 local currentPerc = nil
 local fmt = string.format
 local CheckInteractDistance = CheckInteractDistance
+local db = nil
 local count = 1
-local pName = nil
+local pName = UnitName("player")
 local stop
 
 local tooltip
@@ -245,6 +246,10 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Tomb", 38235, 45574)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Sludge", 38246, 45573)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+
 	for k in pairs(inTomb) do inTomb[k] = nil end
 
 	if not tooltip then
@@ -264,7 +269,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "HydrossTomb", 0)
-	pName = UnitName("player")
+	db = self.db.profile
 	stop = nil
 end
 
@@ -272,15 +277,32 @@ end
 --      Event Handlers      --
 ------------------------------
 
+function mod:Tomb(player)
+	if db.tomb then
+		inTomb[player] = true
+		self:ScheduleEvent("BWTombWarn", self.TombWarn, 0.3, self)
+	end
+end
+
+function mod:Sludge(player, spellID)
+	if db.sludge then
+		self:Message(fmt(L["sludge_message"], player), "Attention", nil, nil, nil, spellID)
+		self:Bar(fmt(L["sludge_message"], player), 24, spellID)
+		if db.icon then
+			self:Icon(player)
+		end
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["start_trigger"] then
 		count = 1
 		currentPerc = nil
 		stop = nil
-		if self.db.profile.mark then
+		if db.mark then
 			self:Bar(fmt(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrozenCore")
 		end
-		if self.db.profile.enrage then
+		if db.enrage then
 			self:Enrage(600)
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
@@ -288,10 +310,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["hydross_bar"], debuff[count+1] and debuff[count+1] or 500))
 		count = 1
 		currentPerc = nil
-		if self.db.profile.stance then
+		if db.stance then
 			self:Message(L["poison_stance"], "Important")
 		end
-		if self.db.profile.mark then
+		if db.mark then
 			self:Bar(fmt(L["corruption_bar"], debuff[count+1]), 15, "Spell_Nature_ElementalShields")
 		end
 		self:TriggerEvent("BigWigs_HideProximity", self)
@@ -300,10 +322,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		count = 1
 		currentPerc = nil
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
-		if self.db.profile.stance then
+		if db.stance then
 			self:Message(L["water_stance"], "Important")
 		end
-		if self.db.profile.mark then
+		if db.mark then
 			self:Bar(fmt(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrozenCore")
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
@@ -323,7 +345,7 @@ end
 function mod:IncrementHydross(match)
 	count = getMark(match)
 	self:TriggerEvent("BigWigs_StopBar", self, fmt(L["hydross_bar"], debuff[count] and debuff[count] or 500))
-	if self.db.profile.mark then
+	if db.mark then
 		self:Message(fmt(L["debuff_warn"], match), "Important", nil, "Alert")
 		self:Bar(fmt(L["hydross_bar"], debuff[count+1] and debuff[count+1] or 500), 15, "Spell_Frost_FrozenCore")
 	end
@@ -332,7 +354,7 @@ end
 function mod:IncrementCorruption(match)
 	count = getMark(match)
 	self:TriggerEvent("BigWigs_StopBar", self, fmt(L["corruption_bar"], debuff[count] and debuff[count] or 500))
-	if self.db.profile.mark then
+	if db.mark then
 		self:Message(fmt(L["debuff_warn"], match), "Important", nil, "Alert")
 		self:Bar(fmt(L["corruption_bar"], debuff[count+1] and debuff[count+1] or 500), 15, "Spell_Nature_ElementalShields")
 	end
@@ -383,7 +405,7 @@ end
 
 function mod:TombWarn()
 	if stop then return end
-	if self.db.profile.tomb then
+	if db.tomb then
 		local msg = nil
 		for k in pairs(inTomb) do
 			if not msg then
@@ -392,17 +414,17 @@ function mod:TombWarn()
 				msg = msg .. ", " .. k
 			end
 		end
-		self:Message(fmt(L["tomb_message"], msg), "Attention")
+		self:Message(fmt(L["tomb_message"], msg), "Attention", nil, nil, nil, 45574)
 	end
 	stop = true
 	self:ScheduleEvent("BWHydrossNilStop", nilStop, 3.5)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "HydrossSludge" and rest and self.db.profile.sludge then
-		self:Message(fmt(L["sludge_message"], rest), "Attention")
+	if sync == "HydrossSludge" and rest and db.sludge then
+		self:Message(fmt(L["sludge_message"], rest), "Attention", nil, nil, nil, 45573)
 		self:Bar(fmt(L["sludge_message"], rest), 24, "Spell_Nature_AbolishMagic")
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(rest)
 		end
 	elseif sync == "HydrossTomb" and not stop and rest then

@@ -9,9 +9,10 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local shieldsFaded = 0
-local pName = nil
+local pName = UnitName("player")
 local CheckInteractDistance = CheckInteractDistance
 local phaseTwoAnnounced = nil
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -366,7 +367,10 @@ mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) en
 ------------------------------
 
 function mod:OnEnable()
-	pName = UnitName("player")
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Charge", 38280)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "ChargeRemove", 38280)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "BarrierRemove", 38112)
+	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("CHAT_MSG_LOOT")
 
@@ -389,11 +393,55 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "VashjDeformat", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VashjBarrier", 4)
 	self:TriggerEvent("BigWigs_ThrottleSync", "VashjElemDied", 5)
+
+	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Charge(player, spellID)
+	if db.static then
+		local msg = L["static_charge_message"]:format(player)
+		if rest == pName then
+			self:Message(L["static_warnyou"], "Personal", true, "Alert", nil, spellID)
+			self:Message(msg, "Important", nil, nil, true)
+			self:TriggerEvent("BigWigs_ShowProximity", self)
+		else
+			self:Message(msg, "Important", nil, nil, nil, spellID)
+			self:Bar(msg, 20, spellID)
+		end
+		if db.icon then
+			self:Icon(player)
+		end
+	end
+end
+
+function mod:ChargeRemove(player)
+	if db.static then
+		self:TriggerEvent("BigWigs_HideProximity", self)
+		self:TriggerEvent("BigWigs_StopBar", self, L["static_charge_message"]:format(player))
+	end
+end
+
+function mod;BarrierRemove()
+	shieldsFaded = shieldsFaded + 1
+	if shieldsFaded < 4 and db.barrier then
+		self:Message(L["barrier_down_message"]:format(shieldsFaded), "Attention", nil, nil, nil, 38112)
+	end
+end
+
+function mod:Deaths(unit)
+	if unit == boss then
+		self:GenericBossDeath(unit)
+	elseif unit == L["Tainted Elemental"] and db.elemental then
+		self:Bar(L["elemental_bar"], 53, "Spell_Nature_ElementalShields")
+		self:ScheduleEvent("ElemWarn", "BigWigs_Message", 48, L["elemental_soon_message"], "Important")
+	elseif unit == pName then
+		self:TriggerEvent("BigWigs_HideProximity", self) --safety, someone might die with charge
+	end
+end
 
 do
 	local lootItem = '^' .. LOOT_ITEM:gsub("%%s", "(.-)") .. '$'
@@ -438,7 +486,7 @@ do
 end
 
 function mod:RepeatStrider()
-	if self.db.profile.strider then
+	if db.strider then
 		self:Bar(L["strider_bar"], 63, "Spell_Nature_AstralRecal")
 		self:ScheduleEvent("StriderWarn", "BigWigs_Message", 58, L["strider_soon_message"], "Attention")
 	end
@@ -446,7 +494,7 @@ function mod:RepeatStrider()
 end
 
 function mod:RepeatNaga()
-	if self.db.profile.naga then
+	if db.naga then
 		self:Bar(L["naga_bar"], 47.5, "INV_Misc_MonsterHead_02")
 		self:ScheduleEvent("NagaWarn", "BigWigs_Message", 42.5, L["naga_soon_message"], "Attention")
 	end
@@ -456,11 +504,11 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["phase2_trigger"] then
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
-		if self.db.profile.phase then
+		if db.phase then
 			self:Message(L["phase2_message"], "Important", nil, "Alarm")
 		end
 		shieldsFaded = 0
-		if self.db.profile.elemental then
+		if db.elemental then
 			self:Bar(L["elemental_bar"], 53, "Spell_Nature_ElementalShields")
 			delayedElementalMessage = self:DelayedMessage(48, L["elemental_soon_message"], "Important")
 		end
@@ -472,7 +520,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		phaseTwoAnnounced = nil
 		shieldsFaded = 0
 		self:Message(L["engage_message"], "Attention")
-	elseif self.db.profile.phase and msg == L["phase3_trigger"] then
+	elseif db.phase and msg == L["phase3_trigger"] then
 		self:Message(L["phase3_message"], "Important", nil, "Alarm")
 		self:Bar(L2["enrage"], 240, "Spell_Shadow_UnholyFrenzy")
 		self:DelayedMessage(180, L2["enrage_min"]:format(1), "Positive")
@@ -490,7 +538,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:UNIT_HEALTH(msg)
-	if not self.db.profile.phase then return end
+	if not db.phase then return end
 	if UnitName(msg) == boss then
 		local hp = UnitHealth(msg)
 		if hp > 70 and hp < 75 and not phaseTwoAnnounced then
@@ -539,7 +587,7 @@ function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
 end
 
 function mod:BigWigs_RecvSync( sync, rest, nick )
-	if sync == "VashjStatic" and rest and self.db.profile.static then
+	if sync == "VashjStatic" and rest and db.static then
 		local msg = L["static_charge_message"]:format(rest)
 		if rest == pName then
 			self:Message(L["static_warnyou"], "Personal", true, "Alert")
@@ -548,27 +596,27 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:Message(msg, "Important")
 			self:Bar(msg, 20, "Spell_Nature_LightningOverload")
 		end
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(rest)
 		end
-	elseif sync == "VLootUpdate" and rest and self.db.profile.loot then
+	elseif sync == "VLootUpdate" and rest and db.loot then
 		self:Message(L["loot_update"]:format(rest), "Attention")
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(rest)
 		end
-	elseif sync == "VashjElemDied" and self.db.profile.elemental then
+	elseif sync == "VashjElemDied" and db.elemental then
 		self:Bar(L["elemental_bar"], 53, "Spell_Nature_ElementalShields")
 		self:ScheduleEvent("ElemWarn", "BigWigs_Message", 48, L["elemental_soon_message"], "Important")
-	elseif sync == "VashjLoot" and rest and self.db.profile.loot then
+	elseif sync == "VashjLoot" and rest and db.loot then
 		self:Message(L["loot_message"]:format(rest), "Positive", nil, "Info")
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(rest)
 		end
 	elseif sync == "VashjDeformatCheck" then
 		self:Sync("VashjDeformat")
 	elseif sync == "VashjBarrier" then
 		shieldsFaded = shieldsFaded + 1
-		if shieldsFaded < 4 and self.db.profile.barrier then
+		if shieldsFaded < 4 and db.barrier then
 			self:Message(L["barrier_down_message"]:format(shieldsFaded), "Attention")
 		end
 	end
