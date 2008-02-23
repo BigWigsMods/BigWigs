@@ -404,7 +404,7 @@ end
 function mod:Charge(player, spellID)
 	if db.static then
 		local msg = L["static_charge_message"]:format(player)
-		if rest == pName then
+		if player == pName then
 			self:Message(L["static_warnyou"], "Personal", true, "Alert", nil, spellID)
 			self:Message(msg, "Important", nil, nil, true)
 			self:TriggerEvent("BigWigs_ShowProximity", self)
@@ -420,7 +420,9 @@ end
 
 function mod:ChargeRemove(player)
 	if db.static then
-		self:TriggerEvent("BigWigs_HideProximity", self)
+		if player == pName
+			self:TriggerEvent("BigWigs_HideProximity", self)
+		end
 		self:TriggerEvent("BigWigs_StopBar", self, L["static_charge_message"]:format(player))
 	end
 end
