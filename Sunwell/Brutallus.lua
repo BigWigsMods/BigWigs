@@ -75,21 +75,20 @@ L:RegisterTranslations("frFR", function() return {
 	burn_other = "Brûler sur %s !",
 	burn_bar = "Prochain Brûler",
 	burn_message = "Prochain Brûler dans 5 sec. !",
-	--burn_resist = "%s resisted burn",
 
-	--burnresist = "Burn Resist",
-	--burnresist_desc = "Warn who resists burn.",
-	--burn_resist = "%s resisted burn",
+	burnresist = "Résistances à Brûler",
+	burnresist_desc = "Préviens quand un joueur a résisté à Brûler.",
+	burn_resist = "%s a résisté à Brûler",
 
-	--meteor = "Meteor Slash",
-	--meteor_desc = "Show a Meteor Slash timer bar.",
-	--meteor_bar = "Next Meteor Slash",
+	meteor = "Meteor Slash",
+	meteor_desc = "Affiche une barre temporelle pour le Meteor Slash.",
+	meteor_bar = "Prochain Meteor Slash",
 
-	--stomp = "Stomp",
-	--stomp_desc = "Warn for Stomp and show a bar.",
-	--stomp_warning = "Stomp in 5 sec",
-	--stomp_message = "Stomp: %s",
-	--stomp_bar = "Next Stomp",
+	stomp = "Piétinement",
+	stomp_desc = "Préviens l'arrivée des Piétinements et affiche une barre.",
+	stomp_warning = "Piétinement dans 5 sec.",
+	stomp_message = "Piétinement : %s",
+	stomp_bar = "Prochain Piétinement",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
