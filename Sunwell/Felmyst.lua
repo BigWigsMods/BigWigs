@@ -41,6 +41,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	started = nil
 
+	self:AddCombatListener("SPELL_CAST_START", "Gas", 45855)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -54,6 +55,10 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Gas()
+	self:Message("Casting Gas Nova!", "Attention", true, "Alert", nil, 45855)
+end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
