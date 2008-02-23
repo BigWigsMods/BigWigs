@@ -155,7 +155,7 @@ end
 function mod:Burn(player, spellID)
 	if db.burn then
 		local other = L["burn_other"]:format(player)
-		if rest == pName then
+		if player == pName then
 			self:Message(L["burn_you"], "Personal", true, "Alert", nil, spellID)
 			self:Message(other, "Attention", nil, nil, true)
 		else
