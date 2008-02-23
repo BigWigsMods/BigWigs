@@ -56,8 +56,9 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Gas()
-	self:Message("Casting Gas Nova!", "Attention", true, "Alert", nil, 45855)
+function mod:Gas(_, spellID)
+	self:Message("Casting Gas Nova!", "Attention", true, "Alert", nil, spellID)
+	self:Bar("~Gas Nova Cooldown", 20, spellID)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
