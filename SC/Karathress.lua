@@ -180,7 +180,7 @@ end
 function mod:Totem(unit, spellID)
 	if not db.totem then return end
 
-	if unit == boss and then
+	if unit == boss and db.totem then
 		self:Message(L["totem_message2"], "Urgent", nil, "Alarm", nil, spellID)
 	else
 		self:Message(L["totem_message1"], "Attention", nil, nil, nil, spellID)

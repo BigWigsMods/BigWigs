@@ -425,7 +425,7 @@ function mod:ChargeRemove(player)
 	end
 end
 
-function mod;BarrierRemove()
+function mod:BarrierRemove()
 	shieldsFaded = shieldsFaded + 1
 	if shieldsFaded < 4 and db.barrier then
 		self:Message(L["barrier_down_message"]:format(shieldsFaded), "Attention", nil, nil, nil, 38112)

@@ -52,21 +52,20 @@ L:RegisterTranslations("koKR", function() return {
 	burn_other = "%s에게 불사르기!",
 	burn_bar = "다음 불사르기",
 	burn_message = "다음 불사르기 5초전!",
-	--burn_resist = "%s resisted burn",
+	
+	burnresist = "불사르기 저항",
+	burnresist_desc = "불사르기에 저항한 플레이어를 알립니다.",
+	burn_resist = "%s 불사르기 저항",
 
-	--burnresist = "Burn Resist",
-	--burnresist_desc = "Warn who resists burn.",
-	--burn_resist = "%s resisted burn",
+	meteor = "유성 베기",
+	meteor_desc = "유성 베기 타이머 바를 표시합니다.",
+	meteor_bar = "다음 유성 베기",
 
-	--meteor = "Meteor Slash",
-	--meteor_desc = "Show a Meteor Slash timer bar.",
-	--meteor_bar = "Next Meteor Slash",
-
-	--stomp = "Stomp",
-	--stomp_desc = "Warn for Stomp and show a bar.",
-	--stomp_warning = "Stomp in 5 sec",
-	--stomp_message = "Stomp: %s",
-	--stomp_bar = "Next Stomp",
+	stomp = "발구르기",
+	stomp_desc = "발구르기에 대한 알림과 바를 표시합니다.",
+	stomp_warning = "발구르기 5초전",
+	stomp_message = "발구르기: %s",
+	stomp_bar = "다음 발구르기",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
