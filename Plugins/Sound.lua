@@ -31,7 +31,7 @@ L:RegisterTranslations("enUS", function() return {
 	["Long"] = true,
 	["Victory"] = true,
 
-	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = true,
+	["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = true,
 	["Use sounds"] = true,
 	["Toggle all sounds on or off."] = true,
 	["Default only"] = true,
@@ -42,7 +42,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Sounds"] = "효과음",
 	["Options for sounds."] = "효과음에 대한 설정입니다.",
 
-	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = "%q에 사용할 효과음을 설정합니다(미리듣기는 CTRL-클릭).",
+	["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "%q에 사용할 효과음을 설정합니다(미리듣기는 CTRL-클릭).",
 	["Use sounds"] = "효과음 사용",
 	["Toggle all sounds on or off."] = "모든 효과음을 켜거나 끕니다.",
 	["Default only"] = "기본음",
@@ -59,7 +59,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Long"] = "长计时",
 	["Victory"] = "胜利",
 
-	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = "设置使用%q声音（Ctrl-点击可以预览效果）。",
+	["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "设置使用%q声音（Ctrl-点击可以预览效果）。",
 	["Use sounds"] = "使用声音",
 	["Toggle all sounds on or off."] = "选择声音的开或关。",
 	["Default only"] = "预设",
@@ -92,7 +92,7 @@ L:RegisterTranslations("deDE", function() return {
 	["Long"] = "Lang",
 	["Victory"] = "Sieg",
 
-	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = "Lege den Ton fest, welcher für %q verwendet werden soll (Strg-Klicken um eine Vorschau den Tons zu hören).",
+	["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Lege den Ton fest, welcher für %q verwendet werden soll (Strg-Klicken um eine Vorschau den Tons zu hören).",
 	["Use sounds"] = "Töne verwenden",
 	["Toggle all sounds on or off."] = "Schalte alle Töne ein oder aus.",
 	["Default only"] = "Nur Standard",
@@ -109,7 +109,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Long"] = "Long",
 	["Victory"] = "Victoire",
 
-	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = "Détermine le son à utiliser pour %q (Ctrl-clic sur un son pour avoir un aperçu).",
+	["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Détermine le son à utiliser pour %q (Ctrl-clic sur un son pour avoir un aperçu).",
 	["Use sounds"] = "Utiliser les sons",
 	["Toggle all sounds on or off."] = "Joue ou non les sons.",
 	["Default only"] = "Son par défaut uniquement",
@@ -126,7 +126,7 @@ L:RegisterTranslations("esES", function() return {
 	["Long"] = "Largo",
 	["Victory"] = "Victoria",
 
-	["Set the sound to use for %q (Ctrl-Click a sound to preview.)"] = "Establece el sonido a usar para %q (Ctrl-Click en un sonido para escucharlo)",
+	["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Establece el sonido a usar para %q (Ctrl-Click en un sonido para escucharlo)",
 	["Toggle all sounds on or off."] = "Activa o desactiva todos los sonidos",
 	["Default only"] = "Solo por defecto",
 	["Use only the default sound."] = "Usar solo el sonido por defecto",
@@ -200,6 +200,7 @@ function plugin:OnRegister()
 	media:Register(mType, "BigWigs: Alert", "Interface\\AddOns\\BigWigs\\Sounds\\Alert.mp3")
 	media:Register(mType, "BigWigs: Alarm", "Interface\\AddOns\\BigWigs\\Sounds\\Alarm.mp3")
 	media:Register(mType, "BigWigs: Victory", "Interface\\AddOns\\BigWigs\\Sounds\\Victory.mp3")
+	media:Register(mType, "BigWigs: Victory Long", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryLong.mp3")
 
 	local function get(sound)
 		return db.media[sound]
@@ -218,7 +219,7 @@ function plugin:OnRegister()
 		self.consoleOptions.args[k] = {
 			type = "text",
 			name = n,
-			desc = L["Set the sound to use for %q (Ctrl-Click a sound to preview.)"]:format(n),
+			desc = L["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."]:format(n),
 			passValue = k,
 			get = get,
 			set = set,
@@ -254,7 +255,7 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly)
 	play(sound)
 end
 
-function plugin:BigWigs_Sound( sound )
+function plugin:BigWigs_Sound(sound)
 	if not db.sound or sound == false then return end
 	play(sound)
 end
