@@ -222,11 +222,12 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 --      Initialization      --
 ------------------------------
-
+local temp
 function mod:OnEnable()
 	-- Don't know which spell ID it is before we get a log.
 	-- Not even sure if SPELL_DAMAGE is the right event, but I think so.
-	self:AddSyncListener("SPELL_DAMAGE", 21737, 40434, 37102, 32959, 31389, 25778, 23382, 19633, 18945, 18813, 18670, 10101, "ReavKA2")
+	self:AddCombatListener("SPELL_DAMAGE", "NewKnockAway", 40434, 37102, 32959, 31389)
+	self:AddCombatListener("SPELL_CAST_START", "Pounding", 34162)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -243,14 +244,30 @@ function mod:OnEnable()
 
 	previous = nil
 	db = self.db.profile
+	temp = nil
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
+-- XXX clean this shit up after 2.4 dude!
+function mod:NewKnockAway(player, spellID)
+	if db.knock and temp then --mobs have Knock Away, keep this until we know exact ID
+		BigWigs:Print("Debug: Knock Away > "..player.." ID > "..spellID) --mainly to test if it's possible to warn which player, and to acquire the Id at the same time, report to devs
+		self:Bar(L["knock_bar"], 20, spellID)
+	end
+end
+
+function mod:Pounding()
+	if db.pounding then
+		self:Bar(L["pounding_nextbar"], 13, 34162)
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
+		temp = true
 		if db.orbyou or db.orbother then
 			self:ScheduleRepeatingEvent("BWReaverToTScan", self.OrbCheck, 0.2, self) --how often to scan the target, 0.2 seconds
 		end

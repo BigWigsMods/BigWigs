@@ -171,6 +171,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "FlamePatch", 35383)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Armor", 35410)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "DebuffEvent")
@@ -179,7 +180,6 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:Throttle(5, "AlArArmor")
-	self:AddSyncListener("SPELL_AURA_APPLIED", 35410, "AlArArmor", 1)
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
@@ -191,6 +191,29 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:FlamePatch(player)
+	if not db.flamepatch then return end
+	if player == pName then
+		self:Message(L["flamepatch_message"], "Personal", true, "Alarm", nil, 35383)
+	end
+end
+
+function mod:Armor(player, spellID)
+	if db.armor then
+		local other = fmt(L["armor_other"], player)
+		if player == pName then
+			self:Message(L["armor_you"], "Important", true, "Long", nil, spellID)
+			self:Message(other, "Attention", nil, nil, true)
+		else
+			self:Message(other, "Attention", nil, nil, nil, spellID)
+		end
+		self:Bar(other, 60, spellID)
+		if db.icon then
+			self:Icon(player)
+		end
+	end
+end
 
 local function nilOccured()
 	occured = nil
@@ -246,13 +269,6 @@ function mod:AlarCheck()
 		--If 120 seconds pass with no meteor, we must have wiped, allow CheckForEngage
 		--This timer should overwrite itself every meteor, starting from the start
 		self:ScheduleEvent("BWAlarReset", resetMe, 120)
-	end
-end
-
-function mod:FlamePatch(player)
-	if not db.flamepatch then return end
-	if player == pName then
-		self:Message(L["flamepatch_message"], "Personal", true, "Alarm", nil, 35383)
 	end
 end
 

@@ -21,8 +21,9 @@ local shield = BB["Phaseshift Bulwark"]
 
 local MCd = {}
 local fmt = string.format
+local db = nil
 local CheckInteractDistance = CheckInteractDistance
-local pName = nil
+local pName = UnitName("player")
 local stop = nil
 local phase = nil
 
@@ -530,6 +531,10 @@ mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) en
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Conflag", 37018)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Toy", 37027)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "MC", 36798)
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
@@ -544,10 +549,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
-	self:AddSyncListener("SPELL_AURA_APPLIED", 37018, "KaelConflag", 1)
-	self:AddSyncListener("SPELL_AURA_APPLIED", 37027, "KSToy", 1)
-	self:AddSyncListener("SPELL_AURA_APPLIED", 36798, "KaelMC2", 1) -- educated guess to the correct one
-
 	self:AddSyncListener("SPELL_CAST_START", 39427, 18431, 22686, 36922, 40636, 44863, "KaelFearSoon") -- Really need to figure out which one.
 	self:AddSyncListener("SPELL_MISSED", 39427, 18431, 22686, 36922, 40636, 44863, "KaelFear") -- Really need to figure out which one.
 	self:AddSyncListener("SPELL_AURA_APPLIED", 39427, 18431, 22686, 36922, 40636, 44863, "KaelFear") -- Really need to figure out which one.
@@ -560,13 +561,36 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFearSoon", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFear", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelMC2", 0)
-	pName = UnitName("player")
+	db = self.db.profile
 	phase = 0
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Conflag(player, spellID)
+	if db.conflag then
+		local msg = fmt(L["conflag_message"], player)
+		self:Message(msg, "Attention", nil, nil, nil, spellID)
+		self:Bar(msg, 10, spellID)
+	end
+end
+
+function mod:Toy(player, spellID)
+	if db.toyall and phase < 3 then
+		local msg = fmt(L["toyall_message"], player)
+		self:Message(msg, "Attention", nil, nil, nil, spellID)
+		self:Bar(msg, 60, spellID)
+	end
+end
+
+function mod:MC(player)
+	if db.conflag then
+		MCd[player] = true
+		self:ScheduleEvent("BWMindControlWarn", self.MCWarn, 0.3, self)
+	end
+end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 	if msg == L["fear_soon_trigger"] then
@@ -577,7 +601,7 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
-	if not self.db.profile.gaze then return end
+	if not db.gaze then return end
 
 	local player = select(3, msg:find(L["gaze_trigger"]))
 	if player then
@@ -589,7 +613,7 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 		else
 			self:Message(other, "Important")
 		end
-		if self.db.profile.icon then
+		if db.icon then
 			self:Icon(player)
 		end
 	end
@@ -630,7 +654,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["phase4_trigger"] then
 		phase = 4
 		self:Message(L["phase4_message"], "Positive")
-		if self.db.profile.pyro then
+		if db.pyro then
 			self:Bar(L["pyro"], 60, "Spell_Fire_Fireball02")
 			self:DelayedMessage(55, L["pyro_warning"], "Attention")
 		end
@@ -641,7 +665,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["gravity_trigger1"] or msg == L["gravity_trigger2"] then
 		self:Message(L["gravity_message"], "Important")
 		self:Bar(L["gravity_bar"], 90, "Spell_Nature_UnrelentingStorm")
-	elseif self.db.profile.rebirth and (msg == L["rebirth_trigger1"] or msg == L["rebirth_trigger2"]) then
+	elseif db.rebirth and (msg == L["rebirth_trigger1"] or msg == L["rebirth_trigger2"]) then
 		self:Message(L["rebirth"], "Urgent")
 		self:Bar(L["rebirth_bar"], 45, "Spell_Fire_Burnout")
 		self:DelayedMessage(40, L["rebirth_warning"], "Attention")
@@ -649,7 +673,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if self.db.profile.pyro and msg == L["pyro_trigger"] then
+	if db.pyro and msg == L["pyro_trigger"] then
 		self:Bar(L["pyro"], 60, "Spell_Fire_Fireball02")
 		self:Message(L["pyro_message"], "Positive")
 		self:DelayedMessage(55, L["pyro_warning"], "Attention")
@@ -675,17 +699,17 @@ function mod:Afflicted(msg)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "KaelConflag" and rest and self.db.profile.conflag then
+	if sync == "KaelConflag" and rest and db.conflag then
 		local msg = fmt(L["conflag_message"], rest)
 		self:Message(msg, "Attention")
 		self:Bar(msg, 10, "Spell_Fire_Incinerate")
-	elseif sync == "KSToy" and rest and self.db.profile.toyall and phase < 3 then
+	elseif sync == "KSToy" and rest and db.toyall and phase < 3 then
 		local msg = fmt(L["toyall_message"], rest)
 		self:Message(msg, "Attention")
 		self:Bar(msg, 60, "INV_Misc_Urn_01")
-	elseif sync == "KaelFearSoon" and self.db.profile.fear then
+	elseif sync == "KaelFearSoon" and db.fear then
 		self:Message(L["fear_soon_message"], "Urgent")
-	elseif sync == "KaelFear" and self.db.profile.fear then
+	elseif sync == "KaelFear" and db.fear then
 		self:Message(L["fear_message"], "Attention")
 		self:Bar(L["fear_bar"], 30, "Spell_Shadow_PsychicScream")
 	elseif sync == "KaelMC2" and rest and not stop then
@@ -732,7 +756,7 @@ end
 
 function mod:MCWarn()
 	if stop then return end
-	if self.db.profile.mc then
+	if db.mc then
 		local msg = nil
 		for k in pairs(MCd) do
 			if not msg then

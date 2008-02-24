@@ -252,7 +252,8 @@ mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) en
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Wrath", 42783)
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("SPELL_AURA_REMOVED", "WrathRemove", 42783)
+	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -271,6 +272,40 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Wrath(player, spellID)
+	if db.wrath then
+		local other = L["wrath_other"]:format(player)
+		if player == pName then
+			self:Message(L["wrath_you"], "Personal", true, "Long", nil, spellID)
+			self:Message(other, "Attention", nil, nil, true)
+		else
+			self:Message(other, "Attention", nil, nil, nil, spellID)
+			if db.whisper then
+				self:Whisper(player, L["wrath_you"])
+			end
+		end
+		self:Bar(other, 6, spellID)
+		if db.icon then
+			self:Icon(player)
+		end
+		self:TriggerEvent("BigWigs_ShowProximity", self)
+	end
+end
+
+function mod:WrathRemove(player)
+	if player == pName then
+		self:TriggerEvent("BigWigs_HideProximity", self)
+	end
+end
+
+function mod:Deaths(unit)
+	if unit == boss then
+		self:GenericBossDeath(unit)
+	elseif unit == pName then
+		self:TriggerEvent("BigWigs_HideProximity", self) --safety, someone might die with wrath
+	end
+end
 
 function mod:UNIT_HEALTH(msg)
 	if not db.phase then return end
@@ -306,14 +341,6 @@ end
 
 local function HideProx()
 	mod:TriggerEvent("BigWigs_HideProximity", self)
-end
-
-function mod:Wrath(player)
-	if player == pName then
-		self:TriggerEvent("BigWigs_ShowProximity", self)
-		self:ScheduleEvent("BWHideProx", HideProx, 6)
-	end
-	self:Sync("SolaWrath", player)
 end
 
 function mod:WrathAff(msg)
