@@ -31,7 +31,7 @@ L:RegisterTranslations("enUS", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"bosskill"}
+mod.toggleoptions = {"enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -56,6 +56,10 @@ end
 --      Event Handlers      --
 ------------------------------
 
+--[[
+	most likely an impending re-write of Felmyst inc by blizz
+]]--
+
 function mod:Gas(_, spellID)
 	self:Message("Casting Gas Nova!", "Attention", true, "Alert", nil, spellID)
 	self:Bar("~Gas Nova Cooldown", 20, spellID)
@@ -68,5 +72,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		self:Bar("~Possible takeoff", 20, 31550)
+		if db.enrage then
+			self:Enrage(600)
+		end
 	end
 end
