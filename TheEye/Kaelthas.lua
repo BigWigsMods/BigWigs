@@ -534,6 +534,10 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Conflag", 37018)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Toy", 37027)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "MC", 36798)
+	self:AddCombatListener("SPELL_CAST_START", "FearCast", 39427, 36922, 40636, 44863) -- Really need to figure out which one.
+	self:AddCombatListener("SPELL_MISSED", "Fear", 39427, 36922, 40636, 44863) -- Really need to figure out which one.
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Fear", 39427, 36922, 40636, 44863) -- Really need to figure out which one.
+	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -548,12 +552,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-
-	self:AddSyncListener("SPELL_CAST_START", 39427, 18431, 22686, 36922, 40636, 44863, "KaelFearSoon") -- Really need to figure out which one.
-	self:AddSyncListener("SPELL_MISSED", 39427, 18431, 22686, 36922, 40636, 44863, "KaelFear") -- Really need to figure out which one.
-	self:AddSyncListener("SPELL_AURA_APPLIED", 39427, 18431, 22686, 36922, 40636, 44863, "KaelFear") -- Really need to figure out which one.
-
-	self:AddCombatListener("UNIT_DIED", "UNIT_DIED")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "KaelConflag", 0.8)
@@ -588,7 +586,28 @@ end
 function mod:MC(player)
 	if db.conflag then
 		MCd[player] = true
-		self:ScheduleEvent("BWMindControlWarn", self.MCWarn, 0.3, self)
+		self:ScheduleEvent("BWMCWarn", self.MCWarn, 0.3, self)
+	end
+end
+
+function mod:FearCast()
+	if db.fear then
+		self:Message(L["fear_soon_message"], "Urgent", nil, nil, nil, 36922)
+	end
+end
+
+function mod:Fear(_, spellID)
+	if db.fear then
+		self:Message(L["fear_message"], "Attention", nil, nil, nil, spellID)
+		self:Bar(L["fear_bar"], 30, spellID)
+	end
+end
+
+function mod:Deaths(unit)
+	if unit == axe or unit == mace or unit == dagger or unit == staff or unit == sword or unit == bow or unit == shield then
+		self:Message(fmt(dead, unit), "Attention")
+	elseif unit == boss then
+		self:GenericBossDeath(unit)
 	end
 end
 
@@ -740,13 +759,6 @@ do
 			self:GenericBossDeath(msg)
 		end
 	end
-	function mod:UNIT_DIED(player)
-		if player == axe or player == mace or player == dagger or player == staff or player == sword or player == bow or player == shield then
-			self:Message(fmt(dead, player), "Attention")
-		else
-			self:GenericBossDeath(player)
-		end
-	end
 end
 
 local function nilStop()
@@ -765,7 +777,7 @@ function mod:MCWarn()
 				msg = msg .. ", " .. k
 			end
 		end
-		self:Message(fmt(L["mc_message"], msg), "Important", nil, "Alert")
+		self:Message(fmt(L["mc_message"], msg), "Important", nil, "Alert", nil, 36798)
 	end
 	stop = true
 	self:ScheduleEvent("BWKaelthasNilStop", nilStop, 5)
