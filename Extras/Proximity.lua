@@ -9,21 +9,20 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigsProximity")
 local active = nil -- The module we're currently tracking proximity for.
 local anchor = nil
 local lastplayed = 0 -- When we last played an alarm sound for proximity.
-local playername = UnitName("player")
 local tooClose = {} -- List of players who are too close.
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
 local hexColors = {}
 for k, v in pairs(RAID_CLASS_COLORS) do
-	hexColors[k] = "|cff" .. string.format("%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
+	hexColors[k] = ("|cff%02x%02x%02x"):format(v.r * 255, v.g * 255, v.b * 255)
 end
 
 -- Helper table to cache colored player names.
 local coloredNames = setmetatable({}, {__index =
 	function(self, key)
 		if type(key) == "nil" then return nil end
-		local class = select(2, UnitClass(key))
+		local _, class = UnitClass(key)
 		if class then
 			self[key] = hexColors[class] .. key .. "|r"
 			return self[key]
@@ -310,11 +309,10 @@ function plugin:OpenProximity()
 
 	self:SetupFrames()
 
-	local text = L["Close Players"]
 	for k in pairs(tooClose) do tooClose[k] = nil end
 	anchor.text:SetText(L["|cff777777Nobody|r"])
 
-	anchor.cheader:SetText(text)
+	anchor.cheader:SetText(L["Close Players"])
 	anchor:Show()
 	if not self:IsEventScheduled("bwproximityupdate") then
 		self:ScheduleRepeatingEvent("bwproximityupdate", self.UpdateProximity, .1, self)
@@ -324,9 +322,8 @@ end
 function plugin:TestProximity()
 	self:SetupFrames()
 
-	local text = L["Close Players"]
 	anchor.text:SetText(L["|cff777777Nobody|r"])
-	anchor.cheader:SetText(text)
+	anchor.cheader:SetText(L["Close Players"])
 	anchor:Show()
 end
 
@@ -336,7 +333,7 @@ function plugin:UpdateProximity()
 	local num = GetNumRaidMembers()
 	for i = 1, num do
 		local n = GetRaidRosterInfo(i)
-		if UnitExists(n) and not UnitIsDeadOrGhost(n) and n ~= playername then
+		if UnitExists(n) and not UnitIsDeadOrGhost(n) and not UnitIsUnit(n, "player") then
 			if active.proximityCheck(n) then
 				table.insert(tooClose, coloredNames[n])
 			end
