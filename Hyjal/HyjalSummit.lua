@@ -303,6 +303,8 @@ function mod:OnEnable()
 	self:RegisterEvent("GOSSIP_SHOW")
 	self:RegisterEvent("QUEST_PROGRESS", "GOSSIP_SHOW")
 
+	self:AddCombatListener("UNIT_DIED", "Deaths")
+
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "HSWave", 2)
 	self:TriggerEvent("BigWigs_ThrottleSync", "SummitNext", 2)
@@ -353,6 +355,12 @@ function mod:UPDATE_WORLD_STATES()
 				self:Sync("SummitNext AzGalor")
 			end
 		end
+	end
+end
+
+function mod:Deaths(unit)
+	if unit == L["Thrall"] or unit == L["Lady Jaina Proudmoore"] then
+		self:Sync("SummitReset")
 	end
 end
 
