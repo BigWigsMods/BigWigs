@@ -6,48 +6,30 @@
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsProximity")
 
-local RL
-local paintchips = AceLibrary("PaintChips-2.0")
 local active = nil -- The module we're currently tracking proximity for.
 local anchor = nil
 local lastplayed = 0 -- When we last played an alarm sound for proximity.
-local playername
+local playername = UnitName("player")
 local tooClose = {} -- List of players who are too close.
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
-local table_insert = table.insert
-local table_concat = table.concat
-local fmt = string.format
-local UnitName = UnitName
-local UnitExists = UnitExists
-local UnitIsDeadOrGhost = UnitIsDeadOrGhost
-local UnitAffectingCombat = UnitAffectingCombat
-local pairs = pairs
-local type = type
+local hexColors = {}
+for k, v in pairs(RAID_CLASS_COLORS) do
+	hexColors[k] = "|cff" .. string.format("%02x%02x%02x", v.r * 255, v.g * 255, v.b * 255)
+end
 
-
+-- Helper table to cache colored player names.
 local coloredNames = setmetatable({}, {__index =
 	function(self, key)
-		if RL then
-			local obj = RL:GetUnitObjectFromName(key)
-			if not obj then return key end
-			self[key] = "|cff" .. paintchips:GetHex(obj.class) .. key .. "|r"
+		if type(key) == "nil" then return nil end
+		local class = select(2, UnitClass(key))
+		if class then
+			self[key] = hexColors[class] .. key .. "|r"
+			return self[key]
 		else
-			local num = GetNumRaidMembers()
-			local found
-			for i = 1, num do
-				if UnitExists(fmt("%s%d", "raid", i)) and UnitName(fmt("%s%d", "raid", i)) == key then
-					local class = select(2, UnitClass(fmt("%s%d", "raid", i)) )
-					self[key] = "|cff" .. paintchips:GetHex(class) .. key .."|r"
-					found = true
-				end
-			end
-			if not found then
-				return key
-			end
+			return key
 		end
-		return self[key]
 	end
 })
 
@@ -210,10 +192,10 @@ plugin.consoleOptions = {
 	desc = L["Options for the Proximity Display."],
 	handler = plugin,
 	pass = true,
-	get = function( key )
+	get = function(key)
 		return plugin.db.profile[key]
 	end,
-	set = function( key, value )
+	set = function(key, value)
 		plugin.db.profile[key] = value
 		if key == "disabled" then
 			if value then
@@ -258,19 +240,12 @@ plugin.consoleOptions = {
 
 function plugin:OnRegister()
 	BigWigs:RegisterBossOption("proximity", L["proximity"], L["proximity_desc"], OnOptionToggled)
-
-	playername = UnitName("player")
 end
 
 function plugin:OnEnable()
 	self:RegisterEvent("Ace2_AddonDisabled")
-
 	self:RegisterEvent("BigWigs_ShowProximity")
 	self:RegisterEvent("BigWigs_HideProximity")
-
-	if AceLibrary:HasInstance("Roster-2.1") then
-		RL = AceLibrary("Roster-2.1")
-	end
 end
 
 function plugin:OnDisable()
@@ -321,7 +296,7 @@ function plugin:CloseAndDisableProximity()
 
 	if active then
 		active.db.profile.proximity = nil
-		BigWigs:Print(fmt(L["The proximity display has been disabled for %s, please use the boss modules options to enable it again."], active:ToString()))
+		BigWigs:Print(L["The proximity display has been disabled for %s, please use the boss modules options to enable it again."]:format(active:ToString()))
 	end
 end
 
@@ -358,31 +333,21 @@ end
 function plugin:UpdateProximity()
 	if not active or type(active.proximityCheck) ~= "function" then return end
 
-	if RL then
-		for n, u in pairs(RL.roster) do
-			if u and u.name and u.class ~= "PET" and not UnitIsDeadOrGhost(u.unitid) and u.name ~= playername then
-				if active.proximityCheck(u.unitid) then
-					table_insert(tooClose, coloredNames[u.name])
-				end
+	local num = GetNumRaidMembers()
+	for i = 1, num do
+		local n = GetRaidRosterInfo(i)
+		if UnitExists(n) and not UnitIsDeadOrGhost(n) and n ~= playername then
+			if active.proximityCheck(n) then
+				table.insert(tooClose, coloredNames[n])
 			end
-			if #tooClose > 4 then break end
 		end
-	else
-		local num = GetNumRaidMembers()
-		for i = 1, num do
-			local unit = fmt("%s%d", "raid", i)
-			if UnitExists(unit) and not UnitIsDeadOrGhost(unit) and UnitName(unit) ~= playername then
-				if active.proximityCheck(unit) then
-					table_insert(tooClose, coloredNames[UnitName(unit)])
-				end
-			end
-			if #tooClose > 4 then break end
-		end
+		if #tooClose > 4 then break end
 	end
+
 	if #tooClose == 0 then
 		anchor.text:SetText(L["|cff777777Nobody|r"])
 	else
-		anchor.text:SetText(table_concat(tooClose, "\n"))
+		anchor.text:SetText(table.concat(tooClose, "\n"))
 		for k in pairs(tooClose) do tooClose[k] = nil end
 		local t = time()
 		if t > lastplayed + 1 then

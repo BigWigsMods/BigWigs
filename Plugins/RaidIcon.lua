@@ -7,10 +7,8 @@
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsRaidIcon")
 local lastplayer = nil
 
-local RL = nil
-local UnitName = UnitName
 local fmt = string.format
-local SetIcon = SetRaidTargetIcon
+local SetIcon = SetRaidTarget
 
 ----------------------------
 --      Localization      --
@@ -331,53 +329,19 @@ function plugin:OnEnable()
 	if type(self.db.profile.icon) ~= "number" then
 		self.db.profile.icon = 8
 	end
-
-	if AceLibrary:HasInstance("Roster-2.1") then
-		RL = AceLibrary("Roster-2.1")
-	end
 end
 
 function plugin:BigWigs_SetRaidIcon(player)
 	if not player or not self.db.profile.place then return end
-	local icon = self.db.profile.icon or 8
-	local GetIndex = GetRaidTargetIndex
-	if RL then
-		local id = RL:GetUnitIDFromName(player)
-		if id and not GetIndex(id) then
-			SetIcon(id, icon)
-			lastplayer = player
-		end
-	else
-		local num = GetNumRaidMembers()
-		for i = 1, num do
-			local raid = fmt("%s%d", "raid", i)
-			if UnitName(raid) == player then
-				if not GetIndex(raid) then
-					SetIcon(raid, icon)
-					lastplayer = player
-				end
-			end
-		end
+	if not GetRaidTargetIndex(player) then
+		SetIcon(player, self.db.profile.icon or 8)
+		lastplayer = player
 	end
 end
 
 function plugin:BigWigs_RemoveRaidIcon()
 	if not lastplayer or not self.db.profile.place then return end
-	if RL then
-		local id = RL:GetUnitIDFromName(lastplayer)
-		if id then
-			SetIcon(id, 0)
-		end
-	else
-		local num = GetNumRaidMembers()
-		for i = 1, num do
-			local raid = fmt("%s%d", "raid", i)
-			if UnitName(raid) == lastplayer then
-				SetIcon(raid, 0)
-			end
-		end
-	end
+	SetIcon(lastplayer, 0)
 	lastplayer = nil
 end
-
 
