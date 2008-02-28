@@ -115,7 +115,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	infernals = "Infernaux",
 	infernals_desc = "Affiche le temps de recharge des invocations d'infernaux.",
-	infernal_trigger1 = "Vous n'affrontez pas seulement Malchezzar, mais aussi les légions que je commande !",
+	infernal_trigger1 = "Vous n'affrontez pas seulement Malchezaar, mais aussi les légions que je commande !",
 	infernal_trigger2 = "Toutes les réalités, toutes les dimensions me sont ouvertes !",
 	infernal_bar = "Arrivée d'un infernal",
 	infernal_warning = "Arrivée d'un infernal dans 20 sec. !",
