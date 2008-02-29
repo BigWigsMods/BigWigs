@@ -7,6 +7,8 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local growcount = 1
 local silence = nil
 local IsItemInRange = IsItemInRange
+local pName = UnitName("player")
+local db = nil
 
 local bandages = {
 	[21991] = true, -- Heavy Netherweave Bandage
@@ -277,9 +279,9 @@ mod.otherMenu = "Outland"
 mod.enabletrigger = boss
 mod.toggleoptions = {"grasp", "grow", -1, "cavein", "silence", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
-mod.proximityCheck = function( unit )
-	for k, v in pairs( bandages ) do
-		if IsItemInRange( k, unit) == 1 then
+mod.proximityCheck = function(unit)
+	for k, v in pairs(bandages) do
+		if IsItemInRange(k, unit) == 1 then
 			return true
 		end
 	end
@@ -292,6 +294,10 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_AURA_APPLIED", "CaveIn", 36240)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Silence", 36297)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -300,16 +306,32 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
 
-	self:AddCombatListener("SPELL_AURA_APPLIED", "CaveIn", 36240)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Silence", 36297)
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:CaveIn(player)
+	if player == pName and db.cavein then
+		self:Message(L["cavein_message"], "Personal", true, "Alarm", nil, 36240)
+	end
+end
+
+local last = 0
+function mod:Silence()
+	local time = GetTime()
+	if (time - last) > 20 then
+		last = time
+		if db.silence then
+			self:Message(L["silence_message"], "Attention", nil, nil, nil, 36297)
+			self:DelayedMessage(28, L["silence_warning"], "Urgent")
+			self:Bar(L["silence_bar"], 31, 36297)
+		end
+	end
+end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
@@ -320,21 +342,21 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 
 		self:Message(L["engage_message"]:format(boss), "Attention")
 
-		if self.db.profile.grasp then
+		if db.grasp then
 			self:DelayedMessage(30, L["grasp_warning"], "Urgent")
 			self:Bar(L["grasp_bar"], 33, "Ability_ThunderClap")
 		end
-		if self.db.profile.silence then
+		if db.silence then
 			self:DelayedMessage(97, L["silence_warning"], "Urgent")
 			self:Bar(L["silence_bar"], 102, "Spell_Holy_ImprovedResistanceAuras")
 		end
-		if self.db.profile.grow then
+		if db.grow then
 			self:Bar(L["grow_bar"]:format(growcount), 30, "Spell_Shadow_Charm")
 		end
 	elseif msg == L["grasp_trigger1"] or msg == L["grasp_trigger2"] then
 		self.proximitySilent = nil
 
-		if self.db.profile.grasp then
+		if db.grasp then
 			self:Message(L["grasp_message"], "Attention")
 			self:Bar(L["shatter_message"], 10, "Ability_ThunderClap")
 		end
@@ -342,14 +364,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
-	if self.db.profile.grow and msg == L["grow_trigger"] then
+	if db.grow and msg == L["grow_trigger"] then
 		self:Message(L["grow_message"]:format(growcount), "Important")
 		growcount = growcount + 1
 		self:Bar(L["grow_bar"]:format(growcount), 30, "Spell_Shadow_Charm")
 	elseif msg == L["shatter_trigger"] then
 		self.proximitySilent = true
 
-		if self.db.profile.grasp then
+		if db.grasp then
 			self:Message(L["shatter_message"], "Positive")
 			self:DelayedMessage(56, L["grasp_warning"], "Urgent")
 			self:Bar(L["grasp_bar"], 62, "Ability_ThunderClap")
@@ -362,25 +384,9 @@ local function nilSilence()
 end
 
 function mod:Event(msg)
-	if self.db.profile.cavein and msg == L["cavein_trigger"] then
+	if db.cavein and msg == L["cavein_trigger"] then
 		self:Message(L["cavein_message"], "Personal", true, "Alarm")
-	elseif not silence and self.db.profile.silence and msg:find(L["silence_trigger"]) then
-		self:Message(L["silence_message"], "Attention")
-		self:DelayedMessage(28, L["silence_warning"], "Urgent")
-		self:Bar(L["silence_bar"], 31, "Spell_Holy_ImprovedResistanceAuras")
-		silence = true
-		self:ScheduleEvent("BWGrullNilSilence", nilSilence, 10)
-	end
-end
-
-function mod:CaveIn(player)
-	if player and player == UnitName("player") then
-		self:Message(L["cavein_message"], "Personal", true, "Alarm")
-	end
-end
-
-function mod:Silence()
-	if not silence and self.db.profile.silence then
+	elseif not silence and db.silence and msg:find(L["silence_trigger"]) then
 		self:Message(L["silence_message"], "Attention")
 		self:DelayedMessage(28, L["silence_warning"], "Urgent")
 		self:Bar(L["silence_bar"], 31, "Spell_Holy_ImprovedResistanceAuras")

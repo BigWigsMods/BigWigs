@@ -6,6 +6,7 @@ local boss = BB["Doomwalker"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local enrageAnnounced = nil
 local CheckInteractDistance = CheckInteractDistance
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -174,14 +175,15 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	db = self.db.profile
 end
 
 ------------------------------
@@ -192,32 +194,32 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		enrageAnnounced = nil
 		self:TriggerEvent("BigWigs_ShowProximity", self)
-		if self.db.profile.earthquake then
+		if db.earthquake then
 			self:Message(L["engage_message"], "Attention")
 			self:Bar(L["earthquake_bar"], 30, "Spell_Nature_Earthquake")
 		end
-		if self.db.profile.overrun then
+		if db.overrun then
 			self:Bar(L["overrun_bar"], 26, "Ability_BullRush")
 			self:DelayedMessage(24, L["overrun_soon_message"], "Attention")
 		end
-	elseif self.db.profile.overrun and (msg == L["overrun_trigger1"] or msg == L["overrun_trigger2"]) then
+	elseif db.overrun and (msg == L["overrun_trigger1"] or msg == L["overrun_trigger2"]) then
 		self:Message(L["overrun_message"], "Important")
 		self:Bar(L["overrun_bar"], 30, "Ability_BullRush")
 		self:DelayedMessage(28, L["overrun_soon_message"], "Attention")
-	elseif self.db.profile.earthquake and (msg == L["earthquake_trigger1"] or msg == L["earthquake_trigger2"]) then
+	elseif db.earthquake and (msg == L["earthquake_trigger1"] or msg == L["earthquake_trigger2"]) then
 		self:Message(L["earthquake_message"], "Important")
 		self:Bar(L["earthquake_bar"], 70, "Spell_Nature_Earthquake")
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg, unit)
-	if unit == boss and self.db.profile.enrage and msg == L["enrage_trigger"] then
+	if unit == boss and db.enrage and msg == L["enrage_trigger"] then
 		self:Message(L["enrage_message"], "Important", nil, "Alarm")
 	end
 end
 
 function mod:UNIT_HEALTH(msg)
-	if not self.db.profile.enrage then return end
+	if not db.enrage then return end
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 20 and health <= 25 and not enrageAnnounced then

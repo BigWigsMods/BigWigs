@@ -9,6 +9,8 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local abycount
 local debwarn
+local pName = UnitName("player")
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -362,6 +364,14 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Exhaustion", 44032)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Debris", 30632)
+	self:AddCombatListener("SPELL_DAMAGE", "Abyssal", 30511)
+	self:AddCombatListener("SPELL_CAST_START", "Heal", 30528)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "BanishRemoved", 30168) -- figure out the correct one
+	self:AddCombatListener("SPELL_AURA_DISPELLED", "BanishRemoved", 30168)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
@@ -378,15 +388,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-
-	self:AddSyncListener("SPELL_AURA_APPLIED", 44032, "Exhaustion", 1)
-	self:AddSyncListener("SPELL_DAMAGE", 30511, "MagHFAbyssal")
-	self:AddSyncListener("SPELL_CAST_START", 30528, "MagHFHeal")
-	self:AddCombatListener("SPELL_AURA_REMOVED", "ShadowCageRemoved", 30205, 30168) -- figure out the correct one
-	self:AddCombatListener("SPELL_AURA_DISPELLED", "ShadowCageRemoved", 30205, 30168)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Debris", 30632)
-
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "Exhaustion", 0)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFHeal", 0.5)
@@ -394,18 +395,57 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "MagUnbanish", 5)
 	abycount = 1
 	debwarn = nil
+	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
+function mod:Exhaustion(player)
+	if not db.exhaust then
+		self:Bar(L["exhaust_bar"]:format(player), 75, 44032)
+	end
+end
+
+function mod:Debris(player)
+	if player == pName and db.debris then
+		self:Message(L["debris_message"], "Important", nil, "Alert", nil, 30632)
+	end
+end
+
+local last = 0
+function mod:Abyssal()
+	local time = GetTime()
+	if (time - last) > 0.2 then
+		last = time
+		if db.abyssal then
+			self:Message(L["abyssal_message"]:format(abycount), "Attention", nil, nil, nil, 30511)
+			abycount = abycount + 1
+		end
+	end
+end
+
+function mod:Heal(_, spelID)
+	if db.heal then
+		self:Message(L["heal_message"], "Urgent", nil, "Alarm", nil, spellID)
+		self:Bar(L["heal_message"], 2, spellID)
+	end
+end
+
+function mod:BanishRemoved()
+	if db.banish then
+		self:Message(L["banish_over_message"], "Attention", nil, nil, nil, 30168)
+		self:TriggerEvent("BigWigs_StopBar", self, L["banish_bar"])
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg:find(L["escape_trigger1"]) then
 		abycount = 1
 		debwarn = nil
 
-		if self.db.profile.escape then
+		if db.escape then
 			self:Message(L["escape_warning1"]:format(boss), "Attention")
 			self:Bar(L["escape_bar"], 120, "Ability_Rogue_Trip")
 			self:DelayedMessage(60, L["escape_warning2"], "Positive")
@@ -418,26 +458,26 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["escape_trigger2"] then
-		if self.db.profile.escape then
+		if db.escape then
 			self:Message(L["escape_message"]:format(boss), "Important", nil, "Alert")
 		end
-		if self.db.profile.nova then
+		if db.nova then
 			self:Bar(L["nova_bar"], 58, "Spell_Fire_SealOfFire")
 			self:DelayedMessage(56, L["nova_warning"], "Urgent")
 		end
 	elseif msg == L["banish_trigger"] then
-		if self.db.profile.banish then
-			self:Message(L["banish_message"], "Important", nil, "Info")
+		if db.banish then
+			self:Message(L["banish_message"], "Important", nil, "Info", nil, 30168)
 			self:Bar(L["banish_bar"], 10, "Spell_Shadow_Cripple")
 		end
 		self:TriggerEvent("BigWigs_StopBar", self, L["nova_cast"])
-	elseif self.db.profile.debrisinc and msg:find(L["debrisinc_trigger"]) then
+	elseif db.debrisinc and msg:find(L["debrisinc_trigger"]) then
 		self:Message(L["debrisinc_message"], "Positive")
 	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if self.db.profile.nova and msg:find(L["nova_"]) then
+	if db.nova and msg:find(L["nova_"]) then
 		self:Message(L["nova_"], "Positive")
 		self:Bar(L["nova_bar"], 51, "Spell_Fire_SealOfFire")
 		self:Bar(L["nova_cast"], 12, "Spell_Fire_SealOfFire")
@@ -463,15 +503,9 @@ function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	end
 end
 
-function mod:Debris(player)
-	if player == UnitName("player") and self.db.profile.debris then
-		self:Message(L["debris_message"], "Important", nil, "Alert")
-	end
-end
-
 --mind exhastion bars can get spammy, so off by default
 function mod:ExhaustEvent(msg)
-	if self.db.profile.debris and msg == L["debris_trigger"] then
+	if db.debris and msg == L["debris_trigger"] then
 		self:Message(L["debris_message"], "Important", nil, "Alert")
 	end
 	local eplayer, etype = select(3, msg:find(L["exhaust_trigger"]))
@@ -484,22 +518,22 @@ function mod:ExhaustEvent(msg)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "Exhaustion" and rest and not self.db.profile.exhaust then
+	if sync == "Exhaustion" and rest and not db.exhaust then
 		self:Bar(L["exhaust_bar"]:format(rest), 75, "Spell_Shadow_Teleport")
-	elseif sync == "MagHFHeal" and self.db.profile.heal then
+	elseif sync == "MagHFHeal" and db.heal then
 		self:Message(L["heal_message"], "Urgent", nil, "Alarm")
 		self:Bar(L["heal_message"], 2, "Spell_Shadow_ChillTouch")
-	elseif sync == "MagHFAbyssal" and self.db.profile.abyssal then
+	elseif sync == "MagHFAbyssal" and db.abyssal then
 		self:Message(L["abyssal_message"]:format(abycount), "Attention")
 		abycount = abycount + 1
-	elseif sync == "MagUnbanish" and self.db.profile.banish then
+	elseif sync == "MagUnbanish" and db.banish then
 		self:Message(L["banish_over_message"], "Attention")
 		self:TriggerEvent("BigWigs_StopBar", self, L["banish_bar"])
 	end
 end
 
 function mod:UNIT_HEALTH(msg)
-	if not self.db.profile.debrisinc then return end
+	if not db.debrisinc then return end
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 31 and health <= 35 and not debwarn then

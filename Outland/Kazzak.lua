@@ -5,7 +5,8 @@
 local boss = BB["Doom Lord Kazzak"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-local pName = nil
+local pName = UnitName("player")
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -144,13 +145,13 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Mark", 32960)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Twisted", 21063)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Mark", 32960)
-	self:AddSyncListener("SPELL_AURA_APPLIED", 21064, 21063, "Twisted", 1) --figure out which one
 
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
@@ -158,15 +159,27 @@ function mod:OnEnable()
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:TriggerEvent("BigWigs_ThrottleSync", "Twisted", 2)
-	pName = UnitName("player")
+	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
+function mod:Mark(player)
+	if player == pName and db.mark then
+		self:Message(L["mark_message"], "Personal", true, "Alarm", nil, 32960)
+	end
+end
+
+function mod:Twisted(player)
+	if db.twist then
+		self:Message(L["twist_message"]:format(player), "Attention", nil, nil, nil, 21063)
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.enrage and (msg == L["engage_trigger1"] or msg == L["engage_trigger2"]) then
+	if db.enrage and (msg == L["engage_trigger1"] or msg == L["engage_trigger2"]) then
 		self:Message(L["enrage_warning1"]:format(boss), "Attention")
 		self:DelayedMessage(49, L["enrage_warning2"], "Urgent")
 		self:Bar(L["enrage_bar"], 60, "Spell_Shadow_UnholyFrenzy")
@@ -174,7 +187,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
-	if self.db.profile.enrage and msg == L["enrage_trigger"] then
+	if db.enrage and msg == L["enrage_trigger"] then
 		self:Message(L["enrage_message"], "Important", nil, "Alert")
 		self:DelayedMessage(10, L["enrage_finished"], "Positive")
 		self:Bar(L["enraged_bar"], 10, "Spell_Shadow_UnholyFrenzy")
@@ -183,14 +196,8 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	end
 end
 
-function mod:Mark(player)
-	if player and player == pName and self.db.profile.mark then
-		self:Message(L["mark_message"], "Personal", true, "Alarm")
-	end
-end
-
 function mod:Event(msg)
-	if self.db.profile.mark and msg == L["mark_trigger"] then
+	if db.mark and msg == L["mark_trigger"] then
 		self:Message(L["mark_message"], "Personal", true, "Alarm")
 	end
 	local tplayer, ttype = select(3, msg:find(L["twist_trigger"]))
@@ -203,7 +210,7 @@ function mod:Event(msg)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "Twisted" and rest and self.db.profile.twist then
+	if sync == "Twisted" and rest and db.twist then
 		self:Message(L["twist_message"]:format(rest), "Attention")
 	end
 end

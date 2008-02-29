@@ -11,6 +11,7 @@ local priest = BB["Blindeye the Seer"]
 local shaman = BB["Kiggler the Crazed"]
 
 local flurryannounced = nil
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -305,19 +306,20 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Shield", 33147)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "SpellShield", 33054)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Whirlwind", 33238, 33239, 36981, 39232, 37641) -- guessed these might be it, might also not be it
+	self:AddCombatListener("SPELL_CAST_START", "Summon", 33131)
+	self:AddCombatListener("SPELL_CAST_START", "Prayer", 33152)
+	self:AddCombatListener("SPELL_DAMAGE", "Smash", 38761)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+
 	self:RegisterEvent("UNIT_HEALTH")
 
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-
-	self:AddSyncListener("SPELL_AURA_APPLIED", 33147, "BlindeyeShield")
-	self:AddSyncListener("SPELL_AURA_APPLIED", 33054, "KroshSpellShield")
-	self:AddSyncListener("SPELL_AURA_APPLIED", 33238, 33239, 36981, 39232, 37641, "MaulgarWhirlwind") -- guessed these might be it, might also not be it
-	self:AddSyncListener("SPELL_CAST_START", 33131, "OlmSummon")
-	self:AddSyncListener("SPELL_DAMAGE", 38761, "MaulgarSmash")
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Event")
 	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Event")
@@ -330,11 +332,53 @@ function mod:OnEnable()
 	self:TriggerEvent("BigWigs_ThrottleSync", "MaulgarWhirldwind", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "OlmSummon", 5)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MaulgarSmash", 3)
+	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Shield()
+	if db.shield then
+		self:Message(L["shield_message"], "Important", nil, nil, nil, 33147)
+	end
+end
+
+function mod:SpellShield(_, spellID)
+	if db.spellshield then
+		self:Message(L["spellshield_message"], "Attention", nil, "Info", nil, spellID)
+		self:Bar(L["spellshield_bar"], 30, spellID)
+	end
+end
+
+function mod:Whirlwind(_, spellID)
+	if db.whirlwind then
+		self:Message(L["whirlwind_message"], "Important", nil, nil, nil, spellID)
+		self:Bar(L["whirlwind_bar"], 15, spellID)
+		self:DelayedMessage(45, L["whirlwind_warning2"], "Urgent")
+		self:Bar(L["whirlwind_nextbar"], 50, spellID)
+	end
+end
+
+function mod:Summon(_, spellID)
+	if db.summon then
+		self:Message(L["summon_message"], "Attention", nil, "Long", nil, spellID)
+		self:Bar(L["summon_bar"], 50, spellID)
+	end
+end
+
+function mod:Prayer()
+	if db.heal then
+		self:Message(L["heal_message"], "Important", nil, "Alarm", nil, 33152)
+	end
+end
+
+function mod:Smash()
+	if db.smash then
+		self:Bar(L["smash_bar"], 10, 38761)
+	end
+end
 
 function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
 	if msg == L["heal_trigger"] then
@@ -361,21 +405,21 @@ function mod:Event(msg)
 end
 
 function mod:BigWigs_RecvSync(sync)
-	if sync == "BlindeyePrayer" and self.db.profile.heal then
+	if sync == "BlindeyePrayer" and db.heal then
 		self:Message(L["heal_message"], "Important", nil, "Alarm")
-	elseif sync == "BlindeyeShield" and self.db.profile.shield then
+	elseif sync == "BlindeyeShield" and db.shield then
 		self:Message(L["shield_message"], "Important")
-	elseif sync == "KroshSpellShield" and self.db.profile.spellshield then
+	elseif sync == "KroshSpellShield" and db.spellshield then
 		self:Message(L["spellshield_message"], "Attention", nil, "Info")
 		self:Bar(L["spellshield_bar"], 30, "Spell_MageArmor")
-	elseif sync == "OlmSummon" and self.db.profile.summon then
+	elseif sync == "OlmSummon" and db.summon then
 		self:Message(L["summon_message"], "Attention", nil, "Long")
 		self:Bar(L["summon_bar"], 50, "Spell_Shadow_SummonFelGuard")
-	elseif sync == "MaulgarWhirldwind" and self.db.profile.whirlwind then
+	elseif sync == "MaulgarWhirldwind" and db.whirlwind then
 		self:Message(L["whirlwind_message"], "Important")
 		self:Bar(L["whirlwind_bar"], 15, "Ability_Whirlwind")
 		self:Nextwhirldwind()
-	elseif sync == "MaulgarSmash" and self.db.profile.smash then
+	elseif sync == "MaulgarSmash" and db.smash then
 		self:Bar(L["smash_bar"], 10, "Ability_Warrior_Cleave")
 	end
 end
@@ -386,23 +430,23 @@ function mod:Nextwhirldwind()
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.flurry and msg == L["flurry_trigger"] then
+	if db.flurry and msg == L["flurry_trigger"] then
 		self:Message(L["flurry_message"], "Important")
 	elseif msg == L["engage_trigger"] then
 		flurryannounced = nil
 
-		if self.db.profile.whirlwind then
+		if db.whirlwind then
 			self:Message(L["whirlwind_warning1"], "Attention")
 			self:Nextwhirldwind()
 		end
-		if self.db.profile.spellshield then
+		if db.spellshield then
 			self:Bar(L["spellshield_bar"], 30, "Spell_MageArmor")
 		end
 	end
 end
 
 function mod:UNIT_HEALTH(msg)
-	if not self.db.profile.flurry then return end
+	if not db.flurry then return end
 	if UnitName(msg) == boss then
 		local health = UnitHealth(msg)
 		if health > 52 and health <= 56 and not flurryannounced then
