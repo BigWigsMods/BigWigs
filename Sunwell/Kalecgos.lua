@@ -2,13 +2,6 @@
 --      Are you local?      --
 ------------------------------
 
--- TODO:
---	Clean up some localization issues
---	Figure out a clean way to handle curse jumps without spamming
---	Maybe a timer bar showing how long until people in the realm leave?
---	Verify enrage: 19:08:34 Sathrovarr drives Kalecgos into a crazed rage! (also: 2/12 19:08:39.843  SPELL_AURA_APPLIED,0x0000000000000000,nil,0x80000000,0xF13000613C00F8E6,Sathrovarr the Corruptor,0x10a48,44806,Crazed Rage,0x1,BUFF)
---	Warn for next enrage 10 seconds after the first
-
 local boss = BB["Kalecgos"]
 local sath = BB["Sathrovarr the Corruptor"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
@@ -32,8 +25,6 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Kalecgos",
 
 	engage_trigger = "Aggh!! No longer will I be a slave to Malygos! Challenge me and you will be destroyed!",
-	wipe_trigger = "CHAT_MSG_MONSTER_SAY?", -- transcript or /chatlog at a wipe
-
 	wipe_bar = "Respawn",
 
 	portal = "Portal",
@@ -77,17 +68,8 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",
 } end )
 
---[[
-	Sunwell modules are PTR beta, as so localization is not supportd in any way
-	This gives the authors the freedom to change the modules in way that
-	can potentially break localization.
-	Feel free to localize, just be aware that you may need to change it frequently.
-]]--
-
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "Aggh!! No longer will I be a slave to Malygos! Challenge me and you will be destroyed!",
-	wipe_trigger = "CHAT_MSG_MONSTER_SAY?", -- transcript or /chatlog at a wipe
-
 	wipe_bar = "Respawn",
 
 	portal = "차원문",
@@ -133,8 +115,6 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Aggh!! No longer will I be a slave to Malygos! Challenge me and you will be destroyed!", -- not yet translated on french client.
-	wipe_trigger = "CHAT_MSG_MONSTER_SAY?", -- transcript or /chatlog at a wipe
-
 	wipe_bar = "Réapparition",
 
 	portal = "Portail",
@@ -241,7 +221,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:WildMagic(player, spellId, spellName, event)
+function mod:WildMagic(player, spellId)
 	if spellId == 44978 and player == pName and db.magichealing then -- Wild Magic - Healing done by spells and effects increased by 100%.
 		self:Message(L["magichealing_you"], "Attention", true, "Long", nil, spellId)
 	elseif spellId == 45001 then -- Wild Magic - Casting time increased by 100%.
@@ -313,16 +293,18 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 end
 
 -- Assumptions made:
---	Paladins and Shaman are always counted as healers
---	Druids are counted as healers if they have a mana bar
+--	Shaman are always counted as healers
+--	Paladins without Righteous Fury are healers
+--	Druids are counted as healers if they have a mana bar and are not Moonkin
 --	Priests are counted as healers if they aren't in Shadowform
 local sfID = GetSpellInfo and GetSpellInfo(15473) --Shadowform
 local mkID = GetSpellInfo and GetSpellInfo(24905) --Moonkin
+local rfID = GetSpellInfo and GetSpellInfo(25780) --Righteous Fury
 function mod:IsPlayerHealer(player)
 	local _, class = UnitClass(player)
 
-	-- is paladin, is shaman
-	if class == "PALADIN" or class == "SHAMAN" then
+	-- is shaman
+	if class == "SHAMAN" then
 		return true
 	end
 
@@ -339,6 +321,19 @@ function mod:IsPlayerHealer(player)
 		return true
 	end
 
+	--is paladin without Righteous Fury
+	if class == "PALADIN" then
+		local i = 1
+		while UnitBuff(player, i) do
+			local name = UnitBuff(player, i)
+			if name == rfID then --paladin with Righteous Fury
+				return false --not a healer
+			end
+			i = i + 1
+		end
+		return true
+	end
+
 	--is priest without shadowform
 	if class == "PRIEST" then
 		local i = 1
@@ -351,32 +346,37 @@ function mod:IsPlayerHealer(player)
 		end
 		return true
 	end
+
 	return false
 end
 
 -- Assumptions made:
 --	Anyone with a rage bar is counted as a tank
 --	Paladins with Righteous Fury are counted as tanks
-local rfID = GetSpellInfo and GetSpellInfo(25780) --Righteous Fury
 function mod:IsPlayerTank(player)
+	local _, class = UnitClass(player)
+
 	if UnitPowerType(player) == 1 then --has rage
 		return true
 	end
 
-	local i = 1
-	while UnitBuff(player, i) do
-		local name = UnitBuff(player, i)
-		if name == rfID then
-			return true
+	if class == "PALADIN" then
+		local i = 1
+		while UnitBuff(player, i) do
+			local name = UnitBuff(player, i)
+			if name == rfID then --paladin with Righteous Fury
+				return true
+			end
+			i = i + 1
 		end
-		i = i + 1 --increment counter
 	end
+
 	return false
 end
 
 function mod:GetGroupNumber(player)
 	for i = 1, GetNumRaidMembers() do
-		local name, rank, subGroup = GetRaidRosterInfo(i)
+		local name, _, subGroup = GetRaidRosterInfo(i)
 		if name == player then return subGroup end
 	end
 end
