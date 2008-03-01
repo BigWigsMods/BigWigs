@@ -166,16 +166,16 @@ if GetSpellInfo then
 			self:Sync(token .. argString)
 		end
 	end
-	function BigWigs.modulePrototype:COMBAT_LOG_EVENT_UNFILTERED(_, event, _, _, _, _, player, _, spellId, spellName)
+	function BigWigs.modulePrototype:COMBAT_LOG_EVENT_UNFILTERED(_, event, _, source, _, _, player, _, spellId, spellName)
 		local m = self.combatLogEventMap and self.combatLogEventMap[event]
 		if m and (m[spellId] or m["*"]) then
-			self[m[spellId] or m["*"]](self, player, spellId, spellName, event)
+			self[m[spellId] or m["*"]](self, player, spellId, source, spellName, event)
 		end
 		local s = self.syncEventMap and self.syncEventMap[event]
 		if s then
 			for token, data in pairs(s) do
 				if data.spellIds[spellId] then
-					transmitSync(self, token, data.argumentList, player, spellId, spellName, event)
+					transmitSync(self, token, data.argumentList, player, spellId, source, spellName, event)
 				end
 			end
 		end
