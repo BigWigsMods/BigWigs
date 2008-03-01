@@ -7,12 +7,7 @@ local boss = BB["Attumen the Huntsman"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local horse = BB["Midnight"]
-local started
-
-local UnitBuff = UnitBuff
-local UnitName = UnitName
-local UnitPowerType = UnitPowerType
-local fmt = string.format
+local db = nil
 
 ----------------------------
 --      Localization      --
@@ -23,7 +18,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	phase = "Phase",
 	phase_desc = "Warn when entering a new Phase.",
-	phase1_message = "Phase 1 - %s",
 	phase2_trigger = "%s calls for her master!",
 	phase2_message = "Phase 2 - %s & Attumen",
 	phase3_trigger = "Come Midnight, let's disperse this petty rabble!",
@@ -38,25 +32,21 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("deDE", function() return {
 	phase = "Phase",
 	phase_desc = "Warnt wenn eine neue Phase beginnt",
-
-	curse = "Verfluchter Tank",
-	curse_desc = "Warnt wenn ein Tank verflucht ist",
-
-	curse_trigger = "^([^%s]+) ([^%s]+) von K\195\182rperlose Pr\195\164senz betroffen%.$",
-	curse_message = "Tank verflucht - %s",
-
-	phase1_message = "Phase 1 - %s",
 	phase2_trigger = "%s ruft nach ihrem Meister!",
 	phase2_message = "Phase 2 - %s & Attumen",
 	phase3_trigger = "Komm Mittnacht, lass' uns dieses Gesindel auseinander treiben!",
 	phase3_message = "Phase 3 - %s",
+
+	curse = "Verfluchter Tank",
+	curse_desc = "Warnt wenn ein Tank verflucht ist",
+	curse_trigger = "^([^%s]+) ([^%s]+) von K\195\182rperlose Pr\195\164senz betroffen%.$",
+	curse_message = "Tank verflucht - %s",
 } end)
 
 
 L:RegisterTranslations("frFR", function() return {
 	phase = "Phase",
 	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
-	phase1_message = "Phase 1 - %s",
 	phase2_trigger = "%s appelle son maître !",
 	phase2_message = "Phase 2 - %s & Attumen",
 	phase3_trigger = "Viens, Minuit, allons disperser cette insignifiante racaille !",
@@ -72,7 +62,6 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("koKR", function() return {
 	phase = "단계",
 	phase_desc = "새로운 단계 진입 시 알립니다.",
-	phase1_message = "1 단계 - %s",
 	phase2_trigger = "%s|1이;가; 주인을 부릅니다!",
 	phase2_message = "2 단계 - %s & 어튜멘",
 	phase3_trigger = "이랴! 이 오합지졸을 데리고 실컷 놀아보자!",
@@ -87,7 +76,6 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段警报",
 	phase_desc = "当进入下一阶段时发出警告。",
-	phase1_message = "第一阶段 - %s",
 	phase2_trigger = "%s呼喊着她的主人！",
 	phase2_message = "第二阶段 - %s & 阿图门",
 	phase3_trigger = "来吧，午夜，让我们解决这群乌合之众！",
@@ -102,7 +90,6 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	phase = "階段警告",
 	phase_desc = "當進入下一個階段時發送警告",
-	phase1_message = "第一階段 - %s",
 	phase2_trigger = "%s呼叫她的主人!",
 	phase2_message = "第二階段 - %s & 阿圖曼",
 	phase3_trigger = "來吧午夜，讓我們驅散這群小規模的烏合之眾!",
@@ -117,7 +104,6 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("esES", function() return {
 	phase = "Fase",
 	phase_desc = "Aviso cuando entra en una nueva Fase.",
-	phase1_message = "Fase 1 - %s",
 	phase2_trigger = "%s llama a su maestro!",
 	phase2_message = "Fase 2 - %s & Attumen",
 	phase3_trigger = "Vamos, Medianoche, dispersemos esta muchedumbre insignificante!",
@@ -145,7 +131,8 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	started = nil
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Curse", 29833)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -155,78 +142,72 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "CurseEvent")
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CurseEvent")
 
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Curse", 29833, 36513, 43127) -- checked from wowhead, 29833 probably the correct one	
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-
 	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
+	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
+function mod:Curse(player)
+	if db.curse and self:IsPlayerTank(player) then
+		self:Message(L["curse_message"]:format(player), "Attention", nil, nil, nil, 29833)
+	end
+end
+
+local rfID = GetSpellInfo and GetSpellInfo(25780) --Righteous Fury
+function mod:IsPlayerTank(player)
+	local _, class = UnitClass(player)
+
+	if UnitPowerType(player) == 1 then
+		return true
+	end
+
+	if class == "PALADIN" then
+		local i = 1
+		while UnitBuff(player, i) do
+			local name = UnitBuff(player, i)
+			if GetSpellInfo then
+				if name == rfID then
+					return true
+				end
+			else
+				if name == L2["RF"] then
+					return true
+				end
+			end
+			i = i + 1
+		end
+	end
+
+	return false
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.phase and msg == L["phase3_trigger"] then
-		self:Message(fmt(L["phase3_message"], boss), "Important")
+	if msg == L["phase3_trigger"] and db.phase then
+		self:Message(L["phase3_message"]:format(boss), "Important")
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
-	if self.db.profile.phase and msg == L["phase2_trigger"] then
-		self:Message(fmt(L["phase2_message"], horse), "Urgent")
-	end
-end
-
-function mod:BigWigs_RecvSync( sync, rest, nick )
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
-		if self.db.profile.phase then
-			self:Message(fmt(L["phase1_message"], horse), "Attention")
-		end
-	end
-end
-
-function mod:Curse(player)
-	if player and self.db.profile.curse then
-		local id = nil
-		if player == UnitName("player") then
-			id = "player"
-		else
-			local num = GetNumRaidMembers()
-			for i = 1, num do
-				local raid = fmt("%s%d", "raid", i)
-				if UnitName(raid) == player then
-					id = raid
-					break
-				end
-			end
-		end
-		if not id then return end
-		
-		local paladin = nil
-		local Index = 1
-		while UnitBuff(id, Index) do
-			local name = UnitBuff(id, Index)
-			if name == L2["RF"] then
-				paladin = true
-			end
-			Index = Index + 1
-		end
-		if UnitPowerType(id) == 1 or paladin then
-			self:Message(fmt(L["curse_message"], player), "Attention")
-		end
+	if msg == L["phase2_trigger"] and db.phase then
+		self:Message(L["phase2_message"]:format(horse), "Urgent")
 	end
 end
 
 function mod:CurseEvent(msg)
-	local cplayer, ctype = select(3, msg:find(L["curse_trigger"]))
-	if cplayer and ctype then
-		self:Curse(cplayer)
+	if db.curse then
+		local cplayer, ctype = select(3, msg:find(L["curse_trigger"]))
+		if cplayer and ctype then
+			if cplayer == L2["you"] and ctype == L2["are"] then
+				cplayer = UnitName("player")
+			end
+			if self:IsPlayerTank(cplayer) then
+				self:Message(L["curse_message"]:format(player), "Attention", nil, nil, nil, 29833)
+			end
+		end
 	end
 end
 
