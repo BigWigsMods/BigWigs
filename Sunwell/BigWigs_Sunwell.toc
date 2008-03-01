@@ -23,7 +23,4 @@ SunwellBeta.lua
 Kalecgos.lua
 Brutallus.lua
 Felmyst.lua
-#
-#
-#
-#
+Twins.lua
