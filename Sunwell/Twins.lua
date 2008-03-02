@@ -31,6 +31,9 @@ L:RegisterTranslations("enUS", function() return {
 	conflag_desc = "Warn for Conflagration being cast.",
 	conflag_message = "Conflag on %s",
 
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Target Icon on the player that Shadow Nova and Conflagration is being cast on.",
+
 	pyro = "Pyrogenics",
 	pyro_desc = "Warn who gains and removes Pyrogenics.",
 	pyro_gain = "%s gained Pyrogenics",
@@ -44,7 +47,7 @@ L:RegisterTranslations("enUS", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = {lady, lock}
-mod.toggleoptions = {"nova", "conflag", -1, "pyro", "bosskill"}
+mod.toggleoptions = {"nova", "conflag", "icon", -1, "pyro", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -78,8 +81,14 @@ end
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)
 	if unit == lady and player and db.nova then
 		self:Message(L["nova_message"]:format(player), "Urgent", nil, nil, nil, 45329)
+		if db.icon then
+			self:Icon(player)
+		end
 	elseif unit == lock and player and db.conflag then
 		self:Message(L["conflag_message"]:format(player), "Attention", nil, nil, nil, 45333)
+		if db.icon then
+			self:Icon(player)
+		end
 	end
 end
 
