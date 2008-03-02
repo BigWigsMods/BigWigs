@@ -52,10 +52,12 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "PyroGain", 45230)
-	self:AddCombatListener("SPELL_AURA_STOLEN", "PyroRemove", 45230)
-	self:AddCombatListener("SPELL_AURA_REMOVED", "PyroRemove", 45230)
+	self:AddCombatListener("SPELL_AURA_STOLEN", "PyroRemove")
+	self:AddCombatListener("SPELL_AURA_REMOVED", "PyroRemove")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("BigWigs_RecvSync")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	--self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
@@ -80,16 +82,28 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)
 end
 
 function mod:PyroGain(unit, spellID)
-	if unit == boss and db.pyro then
+	if unit == lock and db.pyro then
 		self:Message(L["pyro_gain"]:format(unit), "Positive", nil, nil, nil, spellID)
 		self:Bar(L["pyro"], 15, spellID)
 	end
 end
 
-function mod:PyroRemove(_, _, source)
-	if db.pyro then
-		self:Message(L["pyro_remove"]:format(source), "Positive")
-		self:TriggerEvent("BigWigs_StopBar", self, L["pyro"])
+function mod:PyroRemove(_, _, source, spellID)
+	if spellID and spellID == 45230 then
+		if db.pyro then
+			self:Message(L["pyro_remove"]:format(source), "Positive")
+			self:TriggerEvent("BigWigs_StopBar", self, L["pyro"])
+		end
+	end
+end
+
+function mod:BigWigs_RecvSync(sync, rest, nick)
+	if self:ValidateEngageSync(sync, rest) and not started then
+		started = true
+		wipe = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
 	end
 end
 
