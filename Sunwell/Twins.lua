@@ -54,7 +54,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "PyroGain", 45230)
 	self:AddCombatListener("SPELL_AURA_STOLEN", "PyroRemove")
-	self:AddCombatListener("SPELL_AURA_REMOVED", "PyroRemove")
+	self:AddCombatListener("SPELL_AURA_DISPELLED", "PyroRemove")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
