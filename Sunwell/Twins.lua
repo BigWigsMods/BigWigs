@@ -9,6 +9,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local db = nil
 local wipe = nil
+local started = nil
 
 local pName = UnitName("player")
 
@@ -67,6 +68,7 @@ function mod:OnEnable()
 		self:Bar(L["wipe_bar"], 90, 44670)
 		wipe = nil
 	end
+	started = nil
 end
 
 ------------------------------
