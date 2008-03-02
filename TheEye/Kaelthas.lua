@@ -677,6 +677,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["pyro"], 60, "Spell_Fire_Fireball02")
 			self:DelayedMessage(55, L["pyro_warning"], "Attention")
 		end
+		self:TriggerEvent("BigWigs_StopBar", self, L["phase4_bar"])
 	elseif msg == L["flying_trigger"] then
 		phase = 5
 		self:Message(L["flying_message"], "Attention")
