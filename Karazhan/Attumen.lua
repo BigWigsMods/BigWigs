@@ -204,7 +204,7 @@ function mod:CurseEvent(msg)
 				cplayer = UnitName("player")
 			end
 			if self:IsPlayerTank(cplayer) then
-				self:Message(L["curse_message"]:format(player), "Attention", nil, nil, nil, 29833)
+				self:Message(L["curse_message"]:format(cplayer), "Attention", nil, nil, nil, 29833)
 			end
 		end
 	end
