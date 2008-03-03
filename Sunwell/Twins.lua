@@ -26,10 +26,12 @@ L:RegisterTranslations("enUS", function() return {
 	nova = "Shadow Nova",
 	nova_desc = "Warn for Shadow Nova being cast.",
 	nova_message = "Shadow Nova on %s",
+	nova_bar = "~Nova Cooldown",
 
 	conflag = "Conflagration",
 	conflag_desc = "Warn for Conflagration being cast.",
 	conflag_message = "Conflag on %s",
+	conflag_bar = "Next Conflag",
 
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Target Icon on the player that Shadow Nova and Conflagration is being cast on.",
@@ -38,6 +40,14 @@ L:RegisterTranslations("enUS", function() return {
 	pyro_desc = "Warn who gains and removes Pyrogenics.",
 	pyro_gain = "%s gained Pyrogenics",
 	pyro_remove = "%s removed Pyrogenics",
+
+	blow = "Confounding Blow",
+	blow_desc = "Show a timer bar for Confounding Blow.",
+	blow_bar = "Next Blow",
+
+	blades = "Shadow Blades",
+	blades_desc = "Show a timer bar for Shadow Blades.",
+	blades_bar = "Next Blades",
 } end )
 
 ----------------------------------
@@ -47,7 +57,7 @@ L:RegisterTranslations("enUS", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = {lady, lock}
-mod.toggleoptions = {"nova", "conflag", "icon", -1, "pyro", "bosskill"}
+mod.toggleoptions = {"nova", "conflag", "icon", -1, "pyro", -1, "blow", "blades", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -58,11 +68,13 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "PyroGain", 45230)
 	self:AddCombatListener("SPELL_AURA_STOLEN", "PyroRemove")
 	self:AddCombatListener("SPELL_AURA_DISPELLED", "PyroRemove")
+	self:AddCombatListener("SPELL_DAMAGE", "Blow", 45256)
+	self:AddCombatListener("SPELL_CAST_START", "Blades", 45248)
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("BigWigs_RecvSync")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:RegisterEvent("BigWigs_RecvSync")
 
 	--self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
@@ -78,20 +90,6 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)
-	if unit == lady and player and db.nova then
-		self:Message(L["nova_message"]:format(player), "Urgent", nil, nil, nil, 45329)
-		if db.icon then
-			self:Icon(player)
-		end
-	elseif unit == lock and player and db.conflag then
-		self:Message(L["conflag_message"]:format(player), "Attention", nil, nil, nil, 45333)
-		if db.icon then
-			self:Icon(player)
-		end
-	end
-end
-
 function mod:PyroGain(unit, spellID)
 	if unit == lock and db.pyro then
 		self:Message(L["pyro_gain"]:format(unit), "Positive", nil, nil, nil, spellID)
@@ -104,6 +102,34 @@ function mod:PyroRemove(_, _, source, spellID)
 		if db.pyro then
 			self:Message(L["pyro_remove"]:format(source), "Positive")
 			self:TriggerEvent("BigWigs_StopBar", self, L["pyro"])
+		end
+	end
+end
+
+function mod:Blow()
+	if db.blow then
+		self:Bar(L["blow_bar"], 20, 45256)
+	end
+end
+
+function mod:Blades()
+	if db.blades then
+		self:Bar(L["blades_bar"], 10, 45248)
+	end
+end
+
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)
+	if unit == lady and player and db.nova then
+		self:Message(L["nova_message"]:format(player), "Urgent", nil, nil, nil, 45329)
+		self:Bar(L["nova_bar"], 30.5, 45329)
+		if db.icon then
+			self:Icon(player)
+		end
+	elseif unit == lock and player and db.conflag then
+		self:Message(L["conflag_message"]:format(player), "Attention", nil, nil, nil, 45333)
+		self:Bar(L["conflag_bar"], 32, 45333)
+		if db.icon then
+			self:Icon(player)
 		end
 	end
 end
