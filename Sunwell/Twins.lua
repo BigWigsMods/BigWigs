@@ -122,15 +122,11 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)
 	if unit == lady and player and db.nova then
 		self:Message(L["nova_message"]:format(player), "Urgent", nil, nil, nil, 45329)
 		self:Bar(L["nova_bar"], 30.5, 45329)
-		if db.icon then
-			self:Icon(player)
-		end
+		self:Icon(player, icon)
 	elseif unit == lock and player and db.conflag then
 		self:Message(L["conflag_message"]:format(player), "Attention", nil, nil, nil, 45333)
 		self:Bar(L["conflag_bar"], 32, 45333)
-		if db.icon then
-			self:Icon(player)
-		end
+		self:Icon(player, icon)
 	end
 end
 
