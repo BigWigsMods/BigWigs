@@ -288,6 +288,9 @@ function mod:Wrath(player, spellID)
 			self:Icon(player)
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
+		if not GetSpellInfo then --XXX remove 2.4
+			self:ScheduleEvent("BWSolaProx", self.WrathRemove, 6, self, pName)
+		end
 	end
 end
 
