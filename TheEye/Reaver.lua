@@ -312,8 +312,8 @@ function mod:OrbCheck()
 	end
 	if target ~= previous and UnitExists(id) then --spam protection & wierdness protection
 		local _, class = UnitClass(id)
+		local paladin = nil
 		if class == "PALADIN" then
-			local paladin = nil
 			local Index = 1
 			while UnitBuff(id, Index) do
 				local name = UnitBuff(id, Index)
