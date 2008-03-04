@@ -366,8 +366,31 @@ function BigWigs.modulePrototype:CheckForWipe()
 		self:ScheduleEvent(self.CheckForWipe, 2, self)
 	end
 end
-
 -- Shortcuts for common actions.
+
+-- XXX Proposed API, subject to change/remove.
+-- Outputs a normal message including a raid warning if possible.
+function BigWigs.modulePrototype:IfMessage(key, color, sound, icon, locale, ...)
+	if not self.db.profile[key] then return end
+	local text = locale[key .. "_message"]:format(...)
+	self:TriggerEvent("BigWigs_Message", text, color, nil, sound, nil, icon)
+end
+
+-- XXX Proposed API, subject to change.
+-- Outputs a local message only, no raid warning.
+function BigWigs.modulePrototype:LocalMessage(key, color, sound, icon, locale, ...)
+	if not self.db.profile[key] then return end
+	local text = locale[key .. "_message"]:format(...)
+	self:TriggerEvent("BigWigs_Message", text, color, true, sound, nil, icon)
+end
+
+-- XXX Proposed API, subject to change.
+-- Outputs a raid warning message only, no local message.
+function BigWigs.modulePrototype:WideMessage(key, locale, ...)
+	if not self.db.profile[key] then return end
+	local text = locale[key .. "_message"]:format(...)
+	self:TriggerEvent("BigWigs_Message", text, nil, nil, nil, true)
+end
 
 function BigWigs.modulePrototype:Message(...)
 	self:TriggerEvent("BigWigs_Message", ...)
@@ -398,7 +421,7 @@ do
 	end
 
 	-- XXX Proposed API, subject to change.
-	function BigWigs.modulePrototype:OptionBar(key, length, icon, color, locale, ...)
+	function BigWigs.modulePrototype:IfBar(key, length, icon, color, locale, ...)
 		if not self.db.profile[key] then return end
 		local text = locale[key .. "_bar"]:format(...)
 		self:TriggerEvent("BigWigs_StartBar", self, text, length, icons[icon], color)
@@ -409,11 +432,15 @@ function BigWigs.modulePrototype:Sync(...)
 	self:TriggerEvent("BigWigs_SendSync", strjoin(" ", ...))
 end
 
-function BigWigs.modulePrototype:Whisper(player, text)
+-- XXX 3rd argument is a proposed API change, and is subject to change/removal.
+function BigWigs.modulePrototype:Whisper(player, text, key)
+	if key and not self.db.profile[key] then return end
 	self:TriggerEvent("BigWigs_SendTell", player, text)
 end
 
-function BigWigs.modulePrototype:Icon(player)
+-- XXX 2nd argument is a proposed API change, and is subject to change/removal.
+function BigWigs.modulePrototype:Icon(player, key)
+	if key and not self.db.profile[key] then return end
 	self:TriggerEvent("BigWigs_SetRaidIcon", player)
 end
 
