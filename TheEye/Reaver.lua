@@ -6,7 +6,6 @@ local boss = BB["Void Reaver"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords") -- XXX 2.4 removal
 
-local previous
 local db = nil
 
 local UnitName = UnitName
@@ -46,7 +45,6 @@ L:RegisterTranslations("enUS", function() return {
 	pounding_trigger1 = "Alternative measure commencing...",
 	pounding_trigger2 = "Calculating force parameters...",
 	pounding_nextbar = "~Pounding Cooldown",
-	pounding_bar = "<Pounding>",
 
 	knock = "Knock Away",
 	knock_desc = "Knock Away cooldown bar.",
@@ -77,7 +75,6 @@ L:RegisterTranslations("deDE", function() return {
 	pounding_trigger1 = "Alternative Maßnahmen werden eingeleitet...",
 	pounding_trigger2 = "Angriffsvektor wird berechnet...",
 	pounding_nextbar = "~Hämmern Cooldown",
-	pounding_bar = "<Hämmern>",
 
 	knock = "Wegschlagen",
 	knock_desc = "Warnt vor Wegschlagen.",
@@ -108,7 +105,6 @@ L:RegisterTranslations("frFR", function() return {
 	pounding_trigger1 = "Lancement des mesures alternatives...",
 	pounding_trigger2 = "Calcul des paramètres de puissance...",
 	pounding_nextbar = "~Cooldown Martèlement",
-	pounding_bar = "<Martèlement>",
 
 	knock = "Repousser au loin",
 	knock_desc = "Affiche une barre temporelle indiquant quand le Saccageur du Vide est suceptible d'utiliser son Repousser au loin.",
@@ -139,7 +135,6 @@ L:RegisterTranslations("koKR", function() return {
 	pounding_trigger1 = "대체 공격 실행 중...",
 	pounding_trigger2 = "파괴력 변수 계산 중...",
 	pounding_nextbar = "~울림 대기 시간",
-	pounding_bar = "<울림>",
 
 	knock = "날려버리기",
 	knock_desc = "날려버리기 대기시간 바를 표시합니다.",
@@ -170,7 +165,6 @@ L:RegisterTranslations("zhCN", function() return {
 	pounding_trigger1 = "备用方案启动……",
 	pounding_trigger2 = "计算力量参数……",
 	pounding_nextbar = "~重击 冷却",
-	pounding_bar = "<重击>",
 
 	knock = "击退",
 	knock_desc = "击退冷却计时条。",
@@ -201,7 +195,6 @@ L:RegisterTranslations("zhTW", function() return {
 	pounding_trigger1 = "選擇性測量開始....",
 	pounding_trigger2 = "計算力量參數...",
 	pounding_nextbar = "猛擊冷卻",
-	pounding_bar = "<猛擊>",
 
 	knock = "擊退",
 	knock_desc = "擊退冷卻計時條。",
@@ -243,7 +236,6 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:Throttle(7, "ReavKA2")
 
-	previous = nil
 	db = self.db.profile
 	temp = nil
 end
@@ -292,49 +284,34 @@ function mod:BigWigs_RecvSync(sync)
 	end
 end
 
-local rfID = GetSpellInfo and GetSpellInfo(25780) --Righteous Fury
-function mod:OrbCheck()
-	local id, target
-	--if Void reaver is your target, scan hes target
-	if UnitName("target") == boss then
-		target = UnitName("targettarget")
-		id = "targettarget"
-	else
-		--if Void Reaver isn't your target, scan raid members targets, hopefully one of them has him targeted and we can get hes target from there
-		local num = GetNumRaidMembers()
-		for i = 1, num do
-			local tt = fmt("%s%d%s", "raid", i, "targettarget")
-			if UnitName(fmt("%s%d%s", "raid", i, "target")) == boss then
-				target = UnitName(tt)
-				id = tt
-				break
-			end
+do
+	local rfID = GetSpellInfo and GetSpellInfo(25780) --Righteous Fury
+	local cachedId = nil
+	local lastTarget = nil
+	function mod:OrbCheck()
+		local found = nil
+		if cachedId and UnitExists(cachedId) and UnitName(cachedId) == boss then found = true end
+		if not found then
+			cachedId = self:Scan()
+			if cachedId then found = true end
 		end
-	end
-	if target ~= previous and UnitExists(id) and UnitPowerType(id) == 0 then --spam protection & wierdness protection | Only check units with mana (ranged)
-		local _, class = UnitClass(id)
-		if class == "PALADIN" then
-			local index = 1
-			while UnitBuff(id, index) do
-				local name = UnitBuff(id, index)
-				if GetSpellInfo then
-					if name == rfID then
+		if not found then return end
+		local target = UnitName(cachedId .. "target")
+		if target and target ~= lastTarget and UnitExists(target) and UnitPowerType(target) == 0 then
+			local _, class = UnitClass(id)
+			if class == "PALADIN" then
+				local i = 1
+				local name = UnitBuff(target, i)
+				while name do
+					if name == (GetSpellInfo and rfID or L2["RF"]) then
 						return --kill if a paladin
 					end
-				else
-					if name == L2["RF"] then
-						return --kill if a paladin
-					end
+					i = i + 1
+					name = UnitBuff(target, i)
 				end
 			end
-				index = index + 1
-			end
-		end
-		if target and id then
-			self:Result(target) --pass the unit with mana through
-			previous = target --create spam protection filter
-		else
-			previous = nil
+			self:Result(target)
+			lastTarget = target
 		end
 	end
 end
