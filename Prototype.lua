@@ -180,6 +180,7 @@ if GetSpellInfo then
 			end
 		end
 	end
+	-- XXX Proposed API, subject to change.
 	function BigWigs.modulePrototype:AddCombatListener(event, func, ...)
 		if not self.combatLogEventMap then self.combatLogEventMap = {} end
 		if not self.combatLogEventMap[event] then self.combatLogEventMap[event] = {} end
@@ -201,6 +202,7 @@ if GetSpellInfo then
 			t[k] = nil
 		end
 	end
+	-- XXX Proposed API, subject to change.
 	function BigWigs.modulePrototype:AddSyncListener(event, ...)
 		if not self.syncEventMap then self.syncEventMap = {} end
 		if not self.syncEventMap[event] then self.syncEventMap[event] = {} end
@@ -390,8 +392,16 @@ do
 			return self[key]
 		end
 	})
+
 	function BigWigs.modulePrototype:Bar(text, length, icon, ...)
 		self:TriggerEvent("BigWigs_StartBar", self, text, length, icons[icon], ...)
+	end
+
+	-- XXX Proposed API, subject to change.
+	function BigWigs.modulePrototype:OptionBar(key, length, icon, color, locale, ...)
+		if not self.db.profile[key] then return end
+		local text = locale[key .. "_bar"]:format(...)
+		self:TriggerEvent("BigWigs_StartBar", self, text, length, icons[icon], color)
 	end
 end
 
