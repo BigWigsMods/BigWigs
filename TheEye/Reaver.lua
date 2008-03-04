@@ -292,6 +292,7 @@ function mod:BigWigs_RecvSync(sync)
 	end
 end
 
+local rfID = GetSpellInfo and GetSpellInfo(25780) --Righteous Fury
 function mod:OrbCheck()
 	local id, target
 	--if Void reaver is your target, scan hes target
@@ -310,23 +311,27 @@ function mod:OrbCheck()
 			end
 		end
 	end
-	if target ~= previous and UnitExists(id) then --spam protection & wierdness protection
+	if target ~= previous and UnitExists(id) and UnitPowerType(id) == 0 then --spam protection & wierdness protection | Only check units with mana (ranged)
 		local _, class = UnitClass(id)
-		local paladin = nil
 		if class == "PALADIN" then
-			local Index = 1
-			while UnitBuff(id, Index) do
-				local name = UnitBuff(id, Index)
-				if name == L2["RF"] then --- XXX change after 2.4
-					paladin = true
+			local index = 1
+			while UnitBuff(id, index) do
+				local name = UnitBuff(id, index)
+				if GetSpellInfo then
+					if name == rfID then
+						return --kill if a paladin
+					end
+				else
+					if name == L2["RF"] then
+						return --kill if a paladin
+					end
 				end
-				Index = Index + 1
+			end
+				index = index + 1
 			end
 		end
 		if target and id then
-			if UnitPowerType(id) == 0 and not paladin then --if the player has mana it is most likely ranged, we don't want other units(energy/rage would be melee)
-				self:Result(target) --pass the unit with mana through
-			end
+			self:Result(target) --pass the unit with mana through
 			previous = target --create spam protection filter
 		else
 			previous = nil
