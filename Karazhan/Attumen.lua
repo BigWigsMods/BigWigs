@@ -150,38 +150,24 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Curse(player)
-	if db.curse and self:IsPlayerTank(player) then
-		self:Message(L["curse_message"]:format(player), "Attention", nil, nil, nil, 29833)
+local rfID = GetSpellInfo and GetSpellInfo(25780) --Righteous Fury
+local function isPlayerTank(player)
+	if UnitPowerType(player) == 1 then return true end
+	local _, class = UnitClass(player)
+	if class ~= "PALADIN" then return end
+	local i = 1
+	local name = UnitBuff(player, i)
+	while name do
+		if name == (GetSpellInfo and rfID or L2["RF"]) then return true end
+		i = i + 1
+		name = UnitBuff(player, i)
 	end
 end
 
-local rfID = GetSpellInfo and GetSpellInfo(25780) --Righteous Fury
-function mod:IsPlayerTank(player)
-	local _, class = UnitClass(player)
-
-	if UnitPowerType(player) == 1 then
-		return true
+function mod:Curse(player)
+	if db.curse and isPlayerTank(player) then
+		self:Message(L["curse_message"]:format(player), "Attention", nil, nil, nil, 29833)
 	end
-
-	if class == "PALADIN" then
-		local i = 1
-		while UnitBuff(player, i) do
-			local name = UnitBuff(player, i)
-			if GetSpellInfo then
-				if name == rfID then
-					return true
-				end
-			else
-				if name == L2["RF"] then
-					return true
-				end
-			end
-			i = i + 1
-		end
-	end
-
-	return false
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
@@ -203,7 +189,7 @@ function mod:CurseEvent(msg)
 			if cplayer == L2["you"] and ctype == L2["are"] then
 				cplayer = UnitName("player")
 			end
-			if self:IsPlayerTank(cplayer) then
+			if isPlayerTank(cplayer) then
 				self:Message(L["curse_message"]:format(cplayer), "Attention", nil, nil, nil, 29833)
 			end
 		end
