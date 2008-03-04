@@ -300,53 +300,32 @@ end
 local sfID = GetSpellInfo and GetSpellInfo(15473) --Shadowform
 local mkID = GetSpellInfo and GetSpellInfo(24905) --Moonkin
 local rfID = GetSpellInfo and GetSpellInfo(25780) --Righteous Fury
+
+local function hasBuff(player, buff)
+	local i = 1
+	local name = UnitBuff(player, i)
+	while name do
+		if name == buff then return true end
+		i = i + 1
+		name = UnitBuff(player, i)
+	end
+	return false
+end
+
 function mod:IsPlayerHealer(player)
 	local _, class = UnitClass(player)
-
-	-- is shaman
 	if class == "SHAMAN" then
 		return true
 	end
-
-	--is druid and has mana, isn't Moonkin
 	if class == "DRUID" and UnitPowerType(player) == 0 then
-		local i = 1
-		while UnitBuff(player, i) do
-			local name = UnitBuff(player, i)
-			if name == mkID then
-				return false
-			end
-			i = i + 1 --increment counter
-		end
-		return true
+		return not hasBuff(player, mkID)
 	end
-
-	--is paladin without Righteous Fury
 	if class == "PALADIN" then
-		local i = 1
-		while UnitBuff(player, i) do
-			local name = UnitBuff(player, i)
-			if name == rfID then --paladin with Righteous Fury
-				return false --not a healer
-			end
-			i = i + 1
-		end
-		return true
+		return not hasBuff(player, rfID)
 	end
-
-	--is priest without shadowform
 	if class == "PRIEST" then
-		local i = 1
-		while UnitBuff(player, i) do
-			local name = UnitBuff(player, i)
-			if name == sfID then
-				return false
-			end
-			i = i + 1 --increment counter
-		end
-		return true
+		return not hasBuff(player, sfID)
 	end
-
 	return false
 end
 
@@ -355,22 +334,12 @@ end
 --	Paladins with Righteous Fury are counted as tanks
 function mod:IsPlayerTank(player)
 	local _, class = UnitClass(player)
-
 	if UnitPowerType(player) == 1 then --has rage
 		return true
 	end
-
-	if class == "PALADIN" then
-		local i = 1
-		while UnitBuff(player, i) do
-			local name = UnitBuff(player, i)
-			if name == rfID then --paladin with Righteous Fury
-				return true
-			end
-			i = i + 1
-		end
+	if class == "PALADIN" and hasBuff(player, rfID) then
+		return true
 	end
-
 	return false
 end
 
