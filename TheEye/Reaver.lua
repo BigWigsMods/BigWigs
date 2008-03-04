@@ -298,7 +298,7 @@ do
 		if not found then return end
 		local target = UnitName(cachedId .. "target")
 		if target and target ~= lastTarget and UnitExists(target) and UnitPowerType(target) == 0 then
-			local _, class = UnitClass(id)
+			local _, class = UnitClass(target)
 			if class == "PALADIN" then
 				local i = 1
 				local name = UnitBuff(target, i)
