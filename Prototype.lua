@@ -378,24 +378,24 @@ do
 	-- XXX Proposed API, subject to change/remove.
 	-- Outputs a normal message including a raid warning if possible.
 	function BigWigs.modulePrototype:IfMessage(key, color, sound, icon, locale, ...)
-		if not self.db.profile[key] then return end
-		local text = locale[keys[key]]:format(...) 
+		if locale and not self.db.profile[key] then return end
+		local text = not locale and key or locale[keys[key]]:format(...)
 		self:TriggerEvent("BigWigs_Message", text, color, nil, sound, nil, icon)
 	end
 
 	-- XXX Proposed API, subject to change.
 	-- Outputs a local message only, no raid warning.
 	function BigWigs.modulePrototype:LocalMessage(key, color, sound, icon, locale, ...)
-		if not self.db.profile[key] then return end
-		local text = locale[keys[key]]:format(...) 
+		if locale and not self.db.profile[key] then return end
+		local text = not locale and key or locale[keys[key]]:format(...)
 		self:TriggerEvent("BigWigs_Message", text, color, true, sound, nil, icon)
 	end
 
 	-- XXX Proposed API, subject to change.
 	-- Outputs a raid warning message only, no local message.
 	function BigWigs.modulePrototype:WideMessage(key, locale, ...)
-		if not self.db.profile[key] then return end
-		local text = locale[keys[key]]:format(...) 
+		if locale and not self.db.profile[key] then return end
+		local text = not locale and key or locale[keys[key]]:format(...)
 		self:TriggerEvent("BigWigs_Message", text, nil, nil, nil, true)
 	end
 end
