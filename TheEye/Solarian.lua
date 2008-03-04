@@ -263,8 +263,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "WrathAff")
 
 	self:RegisterEvent("UNIT_HEALTH")
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:Throttle(3, "SolaWrath")
 
 	db = self.db.profile
 end
@@ -316,25 +314,6 @@ function mod:UNIT_HEALTH(msg)
 			p2 = true
 		elseif hp > 40 and p2 then
 			p2 = false
-		end
-	end
-end
-
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "SolaWrath" and rest and db.wrath then
-		local other = L["wrath_other"]:format(rest)
-		if rest == pName then
-			self:Message(L["wrath_you"], "Personal", true, "Long", nil, 42783)
-			self:Message(other, "Attention", nil, nil, true)
-		else
-			self:Message(other, "Attention", nil, nil, nil, 42783)
-		end
-		if db.whisper then
-			self:Whisper(rest, L["wrath_you"])
-		end
-		self:Bar(other, 6, "Spell_Arcane_Arcane02")
-		if db.icon then
-			self:Icon(rest)
 		end
 	end
 end
