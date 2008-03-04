@@ -289,11 +289,11 @@ function BigWigs.modulePrototype:Scan()
 	if not self.scanTable then populateScanTable(self) end
 
 	if UnitExists("target") and UnitAffectingCombat("target") and self.scanTable[UnitName("target")] then
-		return true
+		return "target"
 	end
 
 	if UnitExists("focus") and UnitAffectingCombat("focus") and self.scanTable[UnitName("focus")] then
-		return true
+		return "focus"
 	end
 
 	local num = GetNumRaidMembers()
@@ -302,18 +302,17 @@ function BigWigs.modulePrototype:Scan()
 		for i = 1, num do
 			local partyUnit = fmt("%s%d%s", "party", i, "target")
 			if UnitExists(partyUnit) and UnitAffectingCombat(partyUnit) and self.scanTable[UnitName(partyUnit)] then
-				return true
+				return partyUnit
 			end
 		end
 	else
 		for i = 1, num do
 			local raidUnit = fmt("%s%d%s", "raid", i, "target")
 			if UnitExists(raidUnit) and UnitAffectingCombat(raidUnit) and self.scanTable[UnitName(raidUnit)] then
-				return true
+				return raidUnit
 			end
 		end
 	end
-	return false
 end
 
 function BigWigs.modulePrototype:GetEngageSync()
