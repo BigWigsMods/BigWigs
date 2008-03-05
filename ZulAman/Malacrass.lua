@@ -55,7 +55,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	soul = "Seele entziehen",
 	soul_desc = "Warnt wer von Seele entziehen betroffen ist.",
-	soul_trigger = "^(%S+) (%S+) ist von Seele entziehen betroffen%.$",
+	soul_trigger = "^(%S+) (%S+) von Seele entziehen betroffen%.$",
 	soul_message = "Seele entziehen: %s",
 
 	totem = "Totem",
