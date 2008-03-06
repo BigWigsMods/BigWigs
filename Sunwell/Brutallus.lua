@@ -80,9 +80,9 @@ L:RegisterTranslations("frFR", function() return {
 	burnresist_desc = "Préviens quand un joueur a résisté à Brûler.",
 	burn_resist = "%s a résisté à Brûler",
 
-	meteor = "Meteor Slash",
-	meteor_desc = "Affiche une barre temporelle pour le Meteor Slash.",
-	meteor_bar = "Prochain Meteor Slash",
+	meteor = "Attaque météorique",
+	meteor_desc = "Affiche une barre temporelle pour l'Attaque météorique.",
+	meteor_bar = "Prochaine Attaque météorique",
 
 	stomp = "Piétinement",
 	stomp_desc = "Préviens l'arrivée des Piétinements et affiche une barre.",
