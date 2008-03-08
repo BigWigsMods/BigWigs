@@ -120,7 +120,7 @@ L:RegisterTranslations("frFR", function() return {
 	drink = "Boisson",
 	drink_desc = "Préviens quand l'Ombre d'Aran commence à boire.",
 	drink_trigger = "Vous ne refuseriez pas à un vieil homme une boisson revigorante ? Non, c’est bien ce que je pensais.",
-	drink_warning = "Mana Faible - Boisson imminente !",
+	drink_warning = "Mana faible - Boisson imminente !",
 	drink_message = "Boisson - Polymorphisme de zone !",
 	drink_bar = "Super Explosion pyro.",
 

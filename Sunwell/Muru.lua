@@ -34,6 +34,24 @@ L:RegisterTranslations("enUS", function() return {
 	humanoid_soon = "Humanoids in 5sec!",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	darkness = "Ténèbres",
+	darkness_desc = "Préviens quand un joueur subit les effets des Ténèbres.",
+	darkness_message = "Ténèbres : %s",
+	darkness_next = "Prochaines Ténèbres",
+	darkness_soon = "Ténèbres dans 5 sec. !",
+
+	void = "Sentinelles du Vide",
+	void_desc = "Préviens quand les Sentinelles du Vide apparaissent.",
+	void_next = "Prochaine Sentinelle",
+	void_soon = "Sentinelle dans 5 sec. !",
+
+	humanoid = "Renforts humanoïdes",
+	humanoid_desc = "Préviens quand les renforts humanoïdes apparaissent.",
+	humanoid_next = "Prochains humanoïdes",
+	humanoid_soon = "Humanoïdes dans 5 sec. !",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
