@@ -78,5 +78,6 @@
 <Script file="Sunwell\Brutallus.lua"/>
 <Script file="Sunwell\Felmyst.lua"/>
 <Script file="Sunwell\Twins.lua"/>
+<Script file="Sunwell\Muru.lua"/>
 
 </Ui>
