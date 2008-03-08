@@ -135,10 +135,10 @@ L:RegisterTranslations("zhCN", function() return {
 	["Version Query"] = "版本检测",
 	["Commands for querying the raid for Big Wigs versions."] = "BigWigs 版本检测参数。",
 	["Query already running, please wait 5 seconds before trying again."] = "正在查询中，请等待5秒后再次尝试。",
-	["Querying versions for "] = "正在检测版本 ",
+	["Querying versions for "] = "正在检测版本",
 	["Big Wigs Version Query"] = "BigWigs 版本检测",
 	["Close window"] = "关闭窗口", -- I know, it's really a Tablet.
-	["Showing version for "] = "显示版本: ",
+	["Showing version for "] = "显示版本：",
 	["Green versions are newer than yours, red are older, and white are the same."] = "绿色版本比您的新，红色比您的低，白色与您的版本相同。",
 	["Player"] = "玩家",
 	["Version"] = "版本",

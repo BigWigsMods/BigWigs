@@ -70,7 +70,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["BossBlock"] = "信息阻止",
-	desc = "自动阻止其他玩家或其他来源的 Boss 预警信息和表情.",
+	desc = "自动阻止其他玩家或其他来源的 Boss 预警信息和表情。",
 
 	["Boss emotes"] = "Boss 表情",
 	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = "阻止信息发送到团队 Boss 表情框体。\n\n只阻止 BigWigs 有的部分，而只阻止的是显示在信息框体，而非聊天窗口。",

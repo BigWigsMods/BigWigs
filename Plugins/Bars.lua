@@ -148,7 +148,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Show the bar anchor frame."] = "显示计时条框体，可以对其计时条进行移动。",
 
 	["Enable menu"] = "菜单启用",
-	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "Alt+右击显示计时条设置菜单。\n\n备注:当设置被启用后，在计时条下方你不需要一直Alt+点击游戏世界物品。",
+	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "Alt+右击显示计时条设置菜单。\n\n备注：当设置被启用后，在计时条下方你不需要一直Alt+点击游戏世界物品。",
 
 	["Scale"] = "缩放",
 	["Set the bar scale."] = "调整计时条缩放比例。",

@@ -64,11 +64,11 @@ L:RegisterTranslations("zhCN", function() return {
 	["Sound"] = "声音",
 	["Play sound on proximity."] = "近距离时声音提示。",
 	["Disabled"] = "禁用",
-	["Disable the proximity display for all modules that use it."] = "禁用所有 BOSS 模块使用此功能。",
-	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "为%s禁用近距离显示功能，若要再次使用请设置 BOSS 模块选项。",
+	["Disable the proximity display for all modules that use it."] = "禁用所有 Boss 模块使用此功能。",
+	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "为%s禁用近距离显示功能，若要再次使用请设置 Boss 模块选项。",
 
 	proximity = "近距离显示",
-	proximity_desc = "显示近距离窗口,列出距离你很近的玩家。",
+	proximity_desc = "显示近距离窗口，列出距离你很近的玩家。",
 
 	font = "Fonts\\ZYKai_T.TTF",
 

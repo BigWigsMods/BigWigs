@@ -87,22 +87,21 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	["Messages"] = "信息提示",
 	["Options for message display."] = "信息显示模式及相关设置。",
-
-	  ["BigWigs Anchor"] = "BigWigs 锚点",
+	
+	["BigWigs Anchor"] = "BigWigs 锚点",
 	["Output Settings"] = "输出设置",
 
 	["Show anchor"] = "显示信息框体",
-	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "显示信息框，可以移动设置信息显示位置（仅针对使用 BW 窗口模式）。",
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "显示信息框，可以移动设置信息显示位置（仅针对使用 BigWigs 窗口模式）。",
 
 	["Use colors"] = "发送彩色信息",
-
 	["Toggles white only messages ignoring coloring."] = "选择是否只发送单色信息。",
 
 	["Scale"] = "缩放",
 	["Set the message frame scale."] = "调整信息文字大小。",
 
 	["Use icons"] = "使用技能图标",
-	["Show icons next to messages, only works for Raid Warning."] = "显示图标,目前只能使用在团队警告频道",
+	["Show icons next to messages, only works for Raid Warning."] = "显示图标，目前只能使用在团队警告频道。",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000颜|cffff00ff色|r",
 	["White"] = "白色",
