@@ -26,7 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	totem = "Totem",
 	totem_desc = "Warn when Halazzi casts a Lightning Totem.",
-	totem_trigger = "Halazzi  begins to cast Lightning Totem.",
+	totem_trigger = "Halazzi begins to cast Lightning Totem.",
 	totem_message = "Incoming Lightning Totem!",
 
 	phase = "Phases",
