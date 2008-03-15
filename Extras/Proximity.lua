@@ -91,6 +91,9 @@ L:RegisterTranslations("koKR", function() return {
 	proximity_desc = "해당 보스전에서 필요 시 자신과 근접해 있는 플레이어 목록을 표시하는 접근 표시창을 표시합니다.",
 
 	font = "Fonts\\2002.TTF",
+	
+	["Test"] = "테스트",
+	["Perform a Proximity test."] = "접근 테스트를 실행합니다.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

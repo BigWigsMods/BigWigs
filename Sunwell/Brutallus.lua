@@ -61,11 +61,11 @@ L:RegisterTranslations("koKR", function() return {
 	meteor_desc = "유성 베기 타이머 바를 표시합니다.",
 	meteor_bar = "다음 유성 베기",
 
-	stomp = "발구르기",
-	stomp_desc = "발구르기에 대한 알림과 바를 표시합니다.",
-	stomp_warning = "발구르기 5초전",
-	stomp_message = "발구르기: %s",
-	stomp_bar = "다음 발구르기",
+	stomp = "발 구르기",
+	stomp_desc = "발 구르기에 대한 알림과 바를 표시합니다.",
+	stomp_warning = "5초 이내 발 구르기",
+	stomp_message = "발 구르기: %s",
+	stomp_bar = "다음 발 구르기",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

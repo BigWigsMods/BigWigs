@@ -70,16 +70,16 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "Aggh!! No longer will I be a slave to Malygos! Challenge me and you will be destroyed!",
-	wipe_bar = "Respawn",
+	wipe_bar = "재생성 시간",
 
 	portal = "차원문",
 	portal_desc = "공허 폭발의 재사용 대기시간에 대해 알립니다.",
 	portal_bar = "다음 차원문",
 	portal_message = "약 5초이내 차원문!",
 
-	realm = "공허 영역",
-	realm_desc = "공허 영역 내부에 들어간 플레이어를 알립니다.",
-	realm_message = "영역 내부: %s (%d)",
+	realm = "정신 세계",
+	realm_desc = "정신 세계에 들어간 플레이어를 알립니다.",
+	realm_message = "정신 세계: %s (%d)",
 
 	curse = "무한한 고통의 저주",
 	curse_desc = "무한한 고통의 저주에 걸린 플레이어를 알립니다.",
@@ -103,7 +103,7 @@ L:RegisterTranslations("koKR", function() return {
 	magicthreat_desc = "당신이 마법 폭주에 의해 위협수준이 증가할때 알려줍니다.",
 	magicthreat_you = "마법 폭주 - 위협 생성 증가!",
 
-	spectral_realm = "공허 영역",
+	spectral_realm = "정신 세계",
 
 	buffet = "비전 강타",
 	buffet_desc = "비전 강타의 타이머 바를 표시합니다.",
