@@ -99,7 +99,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Testing Sync"] = "Test de synchro",
 } end)
 
-L:RegisterTranslations("eSES", function() return {
+L:RegisterTranslations("esES", function() return {
 	["Test"] = "Probar",
 	["Test Bar "] = "Barra de prueba",
 	["Testing"] = "Probando",
