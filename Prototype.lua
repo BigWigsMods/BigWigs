@@ -208,7 +208,7 @@ if GetSpellInfo then
 		if not self.syncEventMap[event] then self.syncEventMap[event] = {} end
 		local token = nil
 		-- clean out old ids
-		delTable(spellids)
+		delTable(spellIds)
 		local c = select("#", ...)
 		for i = 1, c do
 			local arg = select(i, ...)
