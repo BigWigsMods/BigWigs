@@ -208,13 +208,8 @@ function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "LurkWhirl", 10)
 	started = nil
 	db = self.db.profile
 end
@@ -253,7 +248,7 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 			self:Bar(L["dive_bar"], 90, "Spell_Frost_ArcticWinds")
 		end
 		if db.whirl then
-			self:Bar(L["whirl_bar"], 17, "Ability_Whirlwind")
+			self:Bar(L["whirl_bar"], 17, 37660)
 		end
 		if db.spout then
 			self:DelayedMessage(34, L["spout_warning"], "Attention")
@@ -261,14 +256,6 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 		self:ScheduleRepeatingEvent("BWLurkerTargetSeek", self.DiveCheck, 1, self)
-	elseif sync == "LurkWhirl" and db.whirl then
-		self:Bar(L["whirl_bar"], 17, "Ability_Whirlwind")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg:find(L["whirl"]) then
-		self:Sync("LurkWhirl")
 	end
 end
 

@@ -4,7 +4,6 @@
 
 local boss = BB["Hydross the Unstable"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local inTomb = {}
 local debuff = {0, 10, 25, 50, 100, 250, 500}
@@ -14,7 +13,6 @@ local CheckInteractDistance = CheckInteractDistance
 local db = nil
 local count = 1
 local pName = UnitName("player")
-local stop
 
 local tooltip
 
@@ -53,8 +51,6 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a Raid Icon on the player afflicted by Vile Sludge(requires promoted or higher).",
 
 	debuff_warn = "Mark at %s%%!",
-
-	afflict_trigger = "^(%S+) (%S+) afflicted by (.*).$",
 } end)
 
 L:RegisterTranslations("deDE", function() return {
@@ -89,8 +85,6 @@ L:RegisterTranslations("deDE", function() return {
 	poison_stance = "Hydross ist nun vergiftet!",
 	water_stance = "Hydross ist wieder gereinigt!",
 
-	afflict_trigger = "^([^%s]+) ([^%s]+) von (.*) betroffen",
-
 	sludge_message = "\195\156bler Schlamm: %s",
 	tomb_message = "Wassergrab: %s",
 } end)
@@ -124,8 +118,6 @@ L:RegisterTranslations("koKR", function() return {
 	icon_desc = "타락의 진흙에 걸린 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
 
 	debuff_warn = "징표 - %s%%!",
-
-	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
 } end)
 
 L:RegisterTranslations("frFR", function() return {
@@ -157,8 +149,6 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le joueur affecté par la Vase abominable (nécessite d'être promu ou mieux).",
 
 	debuff_warn = "Marque à %s%% !",
-
-	afflict_trigger = "^(%S+) (%S+) les effets [de|2]+ (.*).$",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
@@ -190,8 +180,6 @@ L:RegisterTranslations("zhCN", function() return {
 	icon_desc = "为受到肮脏的淤泥怪的队友打上标记。(需要权限)",
 
 	debuff_warn = "印记施放于 %s%%!",
-
-	afflict_trigger = "^(%S+)受(%S+)了(.*)效果的影响。$",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
@@ -223,8 +211,6 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "對受到混濁污泥的目標設置標記（需要權限）",
 
 	debuff_warn = "印記施放於 %s%%",
-
-	afflict_trigger = "^(.+)受(到[了]*)(.*)效果的影響。$",
 } end)
 
 ----------------------------------
@@ -255,20 +241,12 @@ function mod:OnEnable()
 		tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 	end
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("PLAYER_AURAS_CHANGED", "DebuffCheck")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "HydrossTomb", 0)
 	db = self.db.profile
-	stop = nil
 end
 
 ------------------------------
@@ -284,11 +262,9 @@ end
 
 function mod:Sludge(player, spellID)
 	if db.sludge then
-		self:Message(fmt(L["sludge_message"], player), "Attention", nil, nil, nil, spellID)
+		self:IfMessage(fmt(L["sludge_message"], player), "Attention", spellID)
 		self:Bar(fmt(L["sludge_message"], player), 24, spellID)
-		if db.icon then
-			self:Icon(player)
-		end
+		self:Icon(player, "icon")
 	end
 end
 
@@ -296,7 +272,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["start_trigger"] then
 		count = 1
 		currentPerc = nil
-		stop = nil
 		if db.mark then
 			self:Bar(fmt(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrozenCore")
 		end
@@ -382,27 +357,7 @@ function mod:DebuffCheck()
 	end
 end
 
-function mod:Event(msg)
-	local aPlayer, aType, aSpell = select(3, msg:find(L["afflict_trigger"]))
-	if aPlayer and aType then
-		if aPlayer == L2["you"] and aType == L2["are"] then
-			aPlayer = pName
-		end
-		if aSpell == L["tomb"] then
-			self:Sync("HydrossTomb", aPlayer)
-		elseif aSpell == L["sludge"] then
-			self:Sync("HydrossSludge", aPlayer)
-		end
-	end
-end
-
-local function nilStop()
-	stop = nil
-	for k in pairs(inTomb) do inTomb[k] = nil end
-end
-
 function mod:TombWarn()
-	if stop then return end
 	if db.tomb then
 		local msg = nil
 		for k in pairs(inTomb) do
@@ -412,22 +367,8 @@ function mod:TombWarn()
 				msg = msg .. ", " .. k
 			end
 		end
-		self:Message(fmt(L["tomb_message"], msg), "Attention", nil, nil, nil, 45574)
+		self:IfMessage(fmt(L["tomb_message"], msg), "Attention", 45574)
 	end
-	stop = true
-	self:ScheduleEvent("BWHydrossNilStop", nilStop, 3.5)
-end
-
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "HydrossSludge" and rest and db.sludge then
-		self:Message(fmt(L["sludge_message"], rest), "Attention", nil, nil, nil, 45573)
-		self:Bar(fmt(L["sludge_message"], rest), 24, "Spell_Nature_AbolishMagic")
-		if db.icon then
-			self:Icon(rest)
-		end
-	elseif sync == "HydrossTomb" and not stop and rest then
-		inTomb[rest] = true
-		self:ScheduleEvent("BWTombWarn", self.TombWarn, 0.3, self)
-	end
+	for k in pairs(inTomb) do inTomb[k] = nil end
 end
 

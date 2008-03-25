@@ -4,11 +4,9 @@
 
 local boss = BB["Morogrim Tidewalker"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local inGrave = {}
 local grobulealert = nil
-local stop
 local db = nil
 
 ----------------------------
@@ -22,12 +20,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	tidal = "Tidal Wave",
 	tidal_desc = "Warn when Morogrim casts Tidal Wave.",
-	tidal_trigger = "Morogrim Tidewalker begins to cast Tidal Wave.",
 	tidal_message = "Tidal Wave!",
 
 	grave = "Watery Grave",
 	grave_desc = "Alert who has watery grave and durations.",
-	grave_trigger = "^(%S+) (%S+) afflicted by Watery Grave%.$",
 	grave_message = "Watery Grave: %s",
 	grave_bar = "Watery Graves",
 	grave_nextbar = "~Graves Cooldown",
@@ -55,12 +51,10 @@ L:RegisterTranslations("deDE", function() return {
 
 	tidal = "Gezeitenwelle",
 	tidal_desc = "Warnt, wenn Morogrim Gezeitenwelle benutzt.",
-	tidal_trigger = "Morogrim Gezeitenwandler beginnt Gezeitenwelle zu wirken.",
 	tidal_message = "Gezeitenwelle!",
 
 	grave = "Nasses Grab",
 	grave_desc = "Zeigt an, wer im Nassen Grab ist und wie lange.",
-	grave_trigger = "^(%S+) (%S+) von Nasses Grab betroffen%.$",
 	grave_message = "Nasses Grab: %s",
 	grave_bar = "Nasses Grab",
 	grave_nextbar = "n\195\164chstes Nasses Grab",
@@ -88,12 +82,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	tidal = "해일",
 	tidal_desc = "모로그림의 해일 시전 시 경고합니다.",
-	tidal_trigger = "겅둥파도 모로그림|1이;가; 해일 시전을 시작합니다.",
 	tidal_message = "해일!",
 
 	grave = "수중 무덤",
 	grave_desc = "수중 무덤에 걸린 사람과 지속시간을 알림니다.",
-	grave_trigger = "^([^|;%s]*)(.*)수중 무덤에 걸렸습니다%.$",
 	grave_message = "수중 무덤: %s",
 	grave_bar = "수중 무덤",
 	grave_nextbar = "~무덤 대기시간",
@@ -121,12 +113,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	tidal = "Raz-de-marée",
 	tidal_desc = "Préviens quand Morogrim lance un Raz-de-marée.",
-	tidal_trigger = "Morogrim Marcheur-des-flots commence à lancer Raz-de-marée.",
 	tidal_message = "Raz-de-marée !",
 
 	grave = "Tombeau aquatique",
 	grave_desc = "Préviens quand quelqu'un subit le Tombeau aquatique et indique sa durée.",
-	grave_trigger = "^([^%s]+) ([^%s]+) les effets .* Tombeau aquatique%.$",
 	grave_message = "Tombeau aquatique : %s",
 	grave_bar = "Tombeaux aquatique",
 	grave_nextbar = "~Cooldown Tombeaux",
@@ -154,12 +144,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	tidal = "海潮之波",
 	tidal_desc = "当首领施放海潮之波发出警报。",
-	tidal_trigger = "莫洛格里·踏潮者开始施放海潮之波。",
 	tidal_message = "海潮之波！",
 
 	grave = "水之墓穴",
 	grave_desc = "当受到水之墓穴发出警报。",
-	grave_trigger = "^(.+)受(.+)了水之墓穴效果的影响。$",
 	grave_message = "水之墓穴：>%s<！",
 	grave_bar = "<水之墓穴>",
 	grave_nextbar = "<水之墓穴 冷却>",
@@ -187,12 +175,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	tidal = "海嘯",
 	tidal_desc = "警示海嘯施放",
-	tidal_trigger = "莫洛葛利姆·潮行者開始施放海嘯。",
 	tidal_message = "海嘯 - 留意 MT 血量",
 
 	grave = "水之墓",
 	grave_desc = "當玩家受到水之墓時通知團隊",
-	grave_trigger = "^(.+)受(到[了]*)水之墓效果的影響。",
 	grave_message = "水之墓：[%s]",
 	grave_bar = "水之墓計時",
 	grave_nextbar = "水之墓冷卻",
@@ -235,19 +221,8 @@ function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("UNIT_HEALTH")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "MoroGrave", 0)
-	self:TriggerEvent("BigWigs_ThrottleSync", "MoroTidal", 5)
 	db = self.db.profile
 end
 
@@ -264,7 +239,7 @@ end
 
 function mod:Tidal()
 	if db.tidal then
-		self:Message(L["tidal_message"], "Urgent", nil, "Alarm", nil, 37730)
+		self:IfMessage(L["tidal_message"], "Urgent", 37730, "Alarm")
 	end
 end
 
@@ -272,7 +247,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		for k in pairs(inGrave) do inGrave[k] = nil end
 		grobulealert = nil
-		stop = nil
 
 		if db.murloc then
 			self:Message(L["murloc_engaged"]:format(boss), "Positive")
@@ -283,7 +257,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	elseif db.murloc and (msg == L["murloc_trigger1"] or msg == L["murloc_trigger2"]) then
 		self:CancelScheduledEvent("murloc1")
-		self:Message(L["murloc_message"], "Positive", nil, nil, nil, 42365)
+		self:IfMessage(L["murloc_message"], "Positive", 42365)
 		self:Bar(L["murloc_bar"], 45, "INV_Misc_Head_Murloc_01")
 		self:ScheduleEvent("murloc1", "BigWigs_Message", 41, L["murloc_soon_message"], "Attention")
 	elseif db.globules and (msg == L["globules_trigger1"] or msg == L["globules_trigger2"]) then
@@ -292,29 +266,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg == L["tidal_trigger"] then
-		self:Sync("MoroTidal")
-	end
-end
-
-function mod:Event(msg)
-	local gplayer, gtype = select(3, msg:find(L["grave_trigger"]))
-	if gplayer and gtype then
-		if gplayer == L2["you"] and gtype == L2["are"] then
-			gplayer = UnitName("player")
-		end
-		self:Sync("MoroGrave", gplayer)
-	end
-end
-
-local function nilStop()
-	stop = nil
-	for k in pairs(inGrave) do inGrave[k] = nil end
-end
-
 function mod:GraveWarn()
-	if stop then return end
 	if db.grave then
 		local msg = nil
 		for k in pairs(inGrave) do
@@ -324,21 +276,11 @@ function mod:GraveWarn()
 				msg = msg .. ", " .. k
 			end
 		end
-		self:Message(L["grave_message"]:format(msg), "Important", nil, "Alert", nil, 38049)
-		self:Bar(L["grave_nextbar"], 28.5, "Spell_Frost_ArcticWinds")
-		self:Bar(L["grave_bar"], 4.5, "Spell_Frost_ArcticWinds")
+		self:IfMessage(L["grave_message"]:format(msg), "Important", 38049, "Alert")
+		self:Bar(L["grave_nextbar"], 28.5, 38049)
+		self:Bar(L["grave_bar"], 4.5, 38049)
 	end
-	stop = true
-	self:ScheduleEvent("BWMoroNilStop", nilStop, 5)
-end
-
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "MoroGrave" and not stop and rest then
-		inGrave[rest] = true
-		self:ScheduleEvent("Grave", self.GraveWarn, 0.4, self)
-	elseif sync == "MoroTidal" and db.tidal then
-		self:Message(L["tidal_message"], "Urgent", nil, "Alarm")
-	end
+	for k in pairs(inGrave) do inGrave[k] = nil end
 end
 
 function mod:UNIT_HEALTH(msg)

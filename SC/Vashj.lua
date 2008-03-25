@@ -6,7 +6,6 @@ local boss = BB["Lady Vashj"]
 local elite = BB["Coilfang Elite"]
 local strider = BB["Coilfang Strider"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local shieldsFaded = 0
 local pName = UnitName("player")
@@ -40,7 +39,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	static = "Static Charge",
 	static_desc = "Warn about Static Charge on players.",
-	static_charge_trigger = "^(%S+) (%S+) afflicted by Static Charge%.$",
 	static_charge_message = "Static Charge on %s!",
 	static_fade = "Static Charge fades from you.",
 	static_warnyou = "Static Charge on YOU!",
@@ -71,7 +69,6 @@ L:RegisterTranslations("enUS", function() return {
 	loot = "Tainted Core",
 	loot_desc = "Warn who loots the Tainted Cores.",
 	loot_message = "%s looted a core!",
-	loot_paralyze = "^(%S+) (%S+) afflicted by Paralyze%.$",
 	loot_update = "Core on > %s",
 } end )
 
@@ -95,7 +92,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	static = "전하 충전",
 	static_desc = "전하 충전에 걸린 플레이어를 알립니다.",
-	static_charge_trigger = "^([^|;%s]*)(.*)전하 충전에 걸렸습니다%.$",
 	static_charge_message = "%s 전하 충전!",
 	static_fade = "당신의 전하 충전 사라짐.",
 	static_warnyou = "당신에 전하 충전!",
@@ -126,7 +122,6 @@ L:RegisterTranslations("koKR", function() return {
 	loot = "오염된 핵",
 	loot_desc = "오염된 핵을 획득한 플레이어를 알립니다.",
 	loot_message = "%s 핵 획득!",
-	loot_paralyze = "^([^|;%s]*)(.*)마비에 걸렸습니다%.$",
 	loot_update = "핵 > %s",
 } end )
 
@@ -150,7 +145,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	static = "Charge statique",
 	static_desc = "Préviens quand la Charge statique affecte un joueur.",
-	static_charge_trigger = "^(%S+) (%S+) les effets .* Charge statique%.$",
 	static_charge_message = "Charge statique sur %s !",
 	static_fade = "Charge statique vient de se dissiper.",
 	static_warnyou = "Charge statique sur VOUS !",
@@ -181,7 +175,6 @@ L:RegisterTranslations("frFR", function() return {
 	loot = "Noyau contaminé",
 	loot_desc = "Préviens quand un joueur ramasse un Noyau contaminé.",
 	loot_message = "%s a ramassé un noyau !",
-	loot_paralyze = "^(%S+) (%S+) les effets .* Paralysie%.$",
 	loot_update = "Noyau sur > %s",
 } end )
 
@@ -205,7 +198,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	static = "Statische Aufladung",
 	static_desc = "Warnt vor Statischer Aufladung auf Spielern.",
-	static_charge_trigger = "^([^%s]+) ([^%s]+) von Statische Aufladung betroffen%.$",
 	static_charge_message = "Statische Aufladung auf %s!",
 	static_fade = "'Statische Aufladung' schwindet von Euch.",
 	static_warnyou = "Statische Aufladung auf DIR!",
@@ -236,7 +228,6 @@ L:RegisterTranslations("deDE", function() return {
 	loot = "Besudelter Kern",
 	loot_desc = "Warnt, wer einen Besudelten Kern lootet.",
 	loot_message = "%s hat einen Kern gelootet!",
-	loot_paralyze = "^([^%s]+) ([^%s]+) von Paralysieren betroffen%.$",
 	loot_update = "Kern > %s",
 } end )
 
@@ -260,7 +251,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	static = "静电冲能",
 	static_desc = "中了静电充能发出警报。",
-	static_charge_trigger = "^(.+)受(.+)了静电充能效果的影响。",
 	static_charge_message = "静电充能：>%s<！",
 	static_fade = "静电充能效果从你身上消失了。",
 	static_warnyou = ">你< 静电充能！",
@@ -291,7 +281,6 @@ L:RegisterTranslations("zhCN", function() return {
 	loot = "污染之核",
 	loot_desc = "对拾取了污染之核的队友发出警报。",
 	loot_message = ">%s< 拾取了 污染之核！",
-	loot_paralyze = "^(.+)受(.+)了麻痹效果的影响。$",
 	loot_update = "污染之核：>%s<！",
 } end )
 
@@ -315,7 +304,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	static = "靜電衝鋒",
 	static_desc = "當玩家受到靜電衝鋒時警示",
-	static_charge_trigger = "^(.+)受(到[了]*)靜電衝鋒效果的影響。",
 	static_charge_message = "靜電衝鋒：[%s]",
 	static_fade = "靜電衝鋒效果從你身上消失了。",
 	static_warnyou = "靜電衝鋒：[你]",
@@ -346,7 +334,6 @@ L:RegisterTranslations("zhTW", function() return {
 	loot = "受污染的核心警示",
 	loot_desc = "提示誰拾取了受污染的核心",
 	loot_message = "%s 撿到核心！快使用妙傳！",
-	loot_paralyze = "^(.+)受(到[了]*)麻痹效果的影響。$",
 	loot_update = "拿到受污染的核心：[%s]",
 } end )
 
@@ -358,7 +345,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Serpentshrine Cavern"]
 mod.enabletrigger = boss
 mod.wipemobs = {elite, strider, L["Tainted Elemental"]}
-mod.toggleoptions = {"phase", -1, "static", "icon", -1, "elemental", "strider","naga", "loot", "barrier", "proximity", "bosskill"}
+mod.toggleoptions = {"phase", -1, "static", "icon", -1, "elemental", "strider", "naga", "loot", "barrier", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 
@@ -368,6 +355,7 @@ mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) en
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Charge", 38280)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "LootUpdate", 38132)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "ChargeRemove", 38280)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "BarrierRemove", 38112)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
@@ -376,23 +364,11 @@ function mod:OnEnable()
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("UNIT_HEALTH")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "AfflictEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "AfflictEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "AfflictEvent")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "VashjStatic", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "VLootUpdate", 1.1)
-	self:TriggerEvent("BigWigs_ThrottleSync", "VashjLoot", 2)
-	self:TriggerEvent("BigWigs_ThrottleSync", "VashjDeformatCheck", 0)
-	self:TriggerEvent("BigWigs_ThrottleSync", "VashjDeformat", 0)
-	self:TriggerEvent("BigWigs_ThrottleSync", "VashjBarrier", 4)
-	self:TriggerEvent("BigWigs_ThrottleSync", "VashjElemDied", 5)
+	self:Throttle(2, "VashjLoot")
 
 	db = self.db.profile
 end
@@ -405,17 +381,20 @@ function mod:Charge(player, spellID)
 	if db.static then
 		local msg = L["static_charge_message"]:format(player)
 		if player == pName then
-			self:Message(L["static_warnyou"], "Personal", true, "Alert", nil, spellID)
-			self:Message(msg, "Important", nil, nil, true)
+			self:LocalMessage(L["static_warnyou"], "Personal", spellID, "Alert")
+			self:WideMessage(msg)
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 		else
-			self:Message(msg, "Important", nil, nil, nil, spellID)
+			self:IfMessage(msg, "Important", spellID)
 			self:Bar(msg, 20, spellID)
 		end
-		if db.icon then
-			self:Icon(player)
-		end
+		self:Icon(player, "icon")
 	end
+end
+
+function mod:LootUpdate(player, spellID)
+	self:IfMessage(L["loot_update"]:format(player), "Attention", spellID)
+	self:Icon(rest, "icon")
 end
 
 function mod:ChargeRemove(player)
@@ -430,7 +409,7 @@ end
 function mod:BarrierRemove()
 	shieldsFaded = shieldsFaded + 1
 	if shieldsFaded < 4 and db.barrier then
-		self:Message(L["barrier_down_message"]:format(shieldsFaded), "Attention", nil, nil, nil, 38112)
+		self:IfMessage(L["barrier_down_message"]:format(shieldsFaded), "Attention", 38112)
 	end
 end
 
@@ -466,23 +445,6 @@ do
 				if type(itemId) ~= "number" or itemId ~= 31088 then return end -- Tainted Core
 				self:Sync("VashjLoot", player)
 			end
-		end
-	end
-end
-
-function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
-	if msg == L["barrier_fades_trigger"] then
-		self:Sync("VashjBarrier")
-	end
-end
-
-do
-	local elemDies = UNITDIESOTHER:format(L["Tainted Elemental"])
-	function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
-		if msg == elemDies then
-			self:Sync("VashjElemDied")
-		else
-			self:GenericBossDeath(msg)
 		end
 	end
 end
@@ -552,75 +514,10 @@ function mod:UNIT_HEALTH(msg)
 	end
 end
 
-local function HideProx()
-	mod:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
-	mod:TriggerEvent("BigWigs_HideProximity", self)
-end
-
-function mod:AfflictEvent(msg)
-	local splayer, stype = select(3, msg:find(L["static_charge_trigger"]))
-	if splayer and stype then
-		if splayer == L2["you"] and stype == L2["are"] then
-			self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
-			splayer = pName
-			self:TriggerEvent("BigWigs_ShowProximity", self)
-			self:ScheduleEvent("BWHideProx", HideProx, 20)
-		end
-		self:Sync("VashjStatic", splayer)
-		return
-	end
-
-	local pplayer, ptype = select(3, msg:find(L["loot_paralyze"]))
-	if pplayer and ptype then
-		if pplayer == L2["you"] and ptype == L2["are"] then
-			pplayer = pName
-		end
-		self:Sync("VLootUpdate", pplayer)
-		return
-	end
-end
-
-function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
-	if msg == L["static_fade"] then
-		self:CancelScheduledEvent("BWHideProx")
-		self:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
-		self:TriggerEvent("BigWigs_HideProximity", self)
-	end
-end
-
-function mod:BigWigs_RecvSync( sync, rest, nick )
-	if sync == "VashjStatic" and rest and db.static then
-		local msg = L["static_charge_message"]:format(rest)
-		if rest == pName then
-			self:Message(L["static_warnyou"], "Personal", true, "Alert")
-			self:Message(msg, "Important", nil, nil, true)
-		else
-			self:Message(msg, "Important")
-			self:Bar(msg, 20, "Spell_Nature_LightningOverload")
-		end
-		if db.icon then
-			self:Icon(rest)
-		end
-	elseif sync == "VLootUpdate" and rest and db.loot then
-		self:Message(L["loot_update"]:format(rest), "Attention")
-		if db.icon then
-			self:Icon(rest)
-		end
-	elseif sync == "VashjElemDied" and db.elemental then
-		self:Bar(L["elemental_bar"], 53, "Spell_Nature_ElementalShields")
-		self:ScheduleEvent("ElemWarn", "BigWigs_Message", 48, L["elemental_soon_message"], "Important")
-	elseif sync == "VashjLoot" and rest and db.loot then
+function mod:BigWigs_RecvSync(sync, rest, nick)
+	if sync == "VashjLoot" and rest and db.loot then
 		self:Message(L["loot_message"]:format(rest), "Positive", nil, "Info")
-		if db.icon then
-			self:Icon(rest)
-		end
-	elseif sync == "VashjDeformatCheck" then
-		self:Sync("VashjDeformat")
-	elseif sync == "VashjBarrier" then
-		shieldsFaded = shieldsFaded + 1
-		if shieldsFaded < 4 and db.barrier then
-			self:Message(L["barrier_down_message"]:format(shieldsFaded), "Attention")
-		end
+		self:Icon(rest, "icon")
 	end
 end
 

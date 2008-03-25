@@ -4,13 +4,11 @@
 
 local boss = BB["Leotheras the Blind"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local imagewarn = nil
 local beDemon = {}
 local pName = UnitName("player")
 local db = nil
 local fmt = string.format
-local stop
 
 ----------------------------
 --      Localization      --
@@ -23,7 +21,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	whirlwind = "Whirlwind",
 	whirlwind_desc = "Whirlwind Timers.",
-	whirlwind_trigger = "Leotheras the Blind gains Whirlwind.",
 	whirlwind_gain = "Whirlwind for 12 sec",
 	whirlwind_fade = "Whirlwind Over",
 	whirlwind_bar = "Whirlwind",
@@ -42,7 +39,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	mindcontrol = "Mind Control",
 	mindcontrol_desc = "Warn which players are Mind Controlled.",
-	mindcontrol_trigger = "^(%S+) (%S+) afflicted by Consuming Madness%.$",
 	mindcontrol_warning = "Mind Controlled: %s",
 
 	image = "Image",
@@ -53,7 +49,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	whisper = "Insidious Whisper",
 	whisper_desc = "Alert what players have Insidious Whisper.",
-	whisper_trigger = "^(%S+) (%S+) afflicted by Insidious Whisper%.$",
 	whisper_message = "Demon: %s",
 	whisper_bar = "Demons Despawn",
 	whisper_soon = "~Demons Cooldown",
@@ -64,7 +59,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	whirlwind = "소용돌이",
 	whirlwind_desc = "소용돌이에 대한 타이머입니다.",
-	whirlwind_trigger = "눈먼 레오테라스|1이;가; 소용돌이 효과를 얻었습니다.",
 	whirlwind_gain = "12초간 소용돌이",
 	whirlwind_fade = "소용돌이 종료",
 	whirlwind_bar = "소용돌이",
@@ -83,7 +77,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	mindcontrol = "정신 지배",
 	mindcontrol_desc = "정신 지배에 걸린 플레이어를 알립니다.",
-	mindcontrol_trigger = "^([^|;%s]*)(.*)잠식하는 광기에 걸렸습니다%.$",
 	mindcontrol_warning = "정신 지배: %s",
 
 	image = "이미지",
@@ -94,7 +87,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	whisper = "음흉한 속삭임",
 	whisper_desc = "음흉한 속삭임에 걸린 플레이어를 알립니다.",
-	whisper_trigger = "^([^|;%s]*)(.*)음흉한 속삭임에 걸렸습니다%.$",
 	whisper_message = "악마: %s",
 	whisper_bar = "악마 사라짐",
 	whisper_soon = "~악마 대기시간",
@@ -105,7 +97,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	whirlwind = "Tourbillon",
 	whirlwind_desc = "Affiche les différentes durées concernant le Tourbillon.",
-	whirlwind_trigger = "Leotheras l'Aveugle gagne Tourbillon.",
 	whirlwind_gain = "Tourbillon pendant 12 sec.",
 	whirlwind_fade = "Fin du Tourbillon",
 	whirlwind_bar = "Tourbillon",
@@ -124,7 +115,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	mindcontrol = "Contrôle mental",
 	mindcontrol_desc = "Préviens quand un joueur subit les effets du Contrôle mental.",
-	mindcontrol_trigger = "^(%S+) (%S+) les effets .* Folie dévorante%.$",
 	mindcontrol_warning = "Contrôle mental : %s",
 
 	image = "Image",
@@ -135,7 +125,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	whisper = "Murmure insidieux",
 	whisper_desc = "Préviens quand des joueurs subissent le Murmure insidieux.",
-	whisper_trigger = "^(%S+) (%S+) les effets .* Murmure insidieux.$",
 	whisper_message = "Démon : %s",
 	whisper_bar = "Disparition des démons",
 	whisper_soon = "~Cooldown Démons",
@@ -156,7 +145,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	enrage_trigger = "Endlich hat meine Verbannung ein Ende!",
 
-	whirlwind_trigger = "Leotheras der Blinde bekommt 'Wirbelwind'.",
 	whirlwind_gain = "Wirbelwind f\195\188r 12sec",
 	whirlwind_fade = "Wirbelwind vorbei",
 	whirlwind_bar = "Wirbelwind",
@@ -175,7 +163,6 @@ L:RegisterTranslations("deDE", function() return {
 	image_message = "15% - Schatten von Leotheras!",
 	image_warning = "Schatten von Leotheras bald!",
 
-	whisper_trigger = "^([^%s]+) ([^%s]+) von Heimt\195\188ckisches Gefl\195\188ster betroffen",
 	whisper_message = "D\195\164mon: %s",
 	whisper_bar = "D\195\164monen Despawn",
 	whisper_soon = "~D\195\164monen Cooldown",
@@ -186,7 +173,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	whirlwind = "旋风斩",
 	whirlwind_desc = "旋风斩计时条。",
-	whirlwind_trigger = "盲眼者莱欧瑟拉斯获得了旋风斩的效果。",
 	whirlwind_gain = "旋风斩 - 12秒",
 	whirlwind_fade = "旋风斩 结束",
 	whirlwind_bar = "<旋风斩>",
@@ -205,7 +191,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	mindcontrol = "精神控制",
 	mindcontrol_desc = "当玩家受到精神控制发出警报。",
-	mindcontrol_trigger = "^(.+)受(.+)了噬体疯狂效果的影响。$",
 	mindcontrol_warning = "精神控制：>%s<！",
 
 	image = "镜像",
@@ -216,7 +201,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	whisper = "因斯迪安低语",
 	whisper_desc = "当玩家受到因斯迪安低语发出警报。",
-	whisper_trigger = "^(.+)受(.+)了因斯迪安低语效果的影响。$",
 	whisper_message = "恶魔：>%s<！",
 	whisper_bar = "<恶魔消失>",
 	whisper_soon = "~恶魔 冷却",
@@ -227,7 +211,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	whirlwind = "旋風斬",
 	whirlwind_desc = "旋風斬計時",
-	whirlwind_trigger = "『盲目者』李奧薩拉斯獲得了旋風斬的效果。",
 	whirlwind_gain = "旋風斬 - 持續 12 秒。",
 	whirlwind_fade = "旋風斬終止！",
 	whirlwind_bar = "旋風斬",
@@ -246,7 +229,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	mindcontrol = "心靈控制",
 	mindcontrol_desc = "當隊友受到心控時警告",
-	mindcontrol_trigger = "^(.+)受(到[了]*)吞噬瘋狂效果的影響。",
 	mindcontrol_warning = "心控：[%s]",
 
 	image = "影分身",
@@ -257,7 +239,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	whisper = "陰險之語",
 	whisper_desc = "當隊友受到陰險之語時警告",
-	whisper_trigger = "^(.+)受(到[了]*)陰險之語效果的影響。",
 	whisper_message = "內心的惡靈：[%s]",
 	whisper_bar = "惡靈消失計時",
 	whisper_soon = "惡靈冷卻",
@@ -284,23 +265,10 @@ function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "WMEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "WMEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "WMEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE", "WMEvent")
-
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "LeoWhisp", 0)
-	self:TriggerEvent("BigWigs_ThrottleSync", "LeoWW", 10)
-
 	self:RegisterEvent("UNIT_HEALTH")
+
 	db = self.db.profile
-	stop = nil
 end
 
 ------------------------------
@@ -309,7 +277,7 @@ end
 
 function mod:Whirlwind(_, spellID)
 	if db.whirlwind then
-		self:Message(L["whirlwind_gain"], "Important", nil, "Alert", nil, spellID)
+		self:IfMessage(L["whirlwind_gain"], "Important", spellID, "Alert")
 		self:ScheduleEvent("ww1", "BigWigs_Message", 12, L["whirlwind_fade"], "Attention", nil, nil, nil, spellID)
 		self:Bar(L["whirlwind_bar"], 12, spellID)
 		self:ScheduleEvent("BWLeoWhirlwind", self.WhirlwindBar, 12, self)
@@ -326,7 +294,7 @@ end
 
 function mod:Madness(player)
 	if db.mindcontrol then
-		self:Message(fmt(L["mindcontrol_warning"], player), "Urgent", nil, "Alert", nil, 37749)
+		self:IfMessage(fmt(L["mindcontrol_warning"], player), "Urgent", 37749, "Alert")
 	end
 end
 
@@ -334,7 +302,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["enrage_trigger"] then
 		imagewarn = nil
 		for k in pairs(beDemon) do beDemon[k] = nil end
-		stop = nil
 
 		if db.phase then
 			self:DelayedMessage(55, L["phase_demonsoon"], "Urgent")
@@ -384,12 +351,6 @@ function mod:DemonSoon()
 	self:Bar(L["demon_nextbar"], 45, "Spell_Shadow_Metamorphosis")
 end
 
-function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if msg == L["whirlwind_trigger"] then
-		self:Sync("LeoWW")
-	end
-end
-
 function mod:WhirlwindBar()
 	self:Bar(L["whirlwind_bar2"], 15, "Ability_Whirlwind")
 	self:ScheduleEvent("ww2", "BigWigs_Message", 15, L["whirlwind_warn"], "Attention")
@@ -408,35 +369,7 @@ function mod:UNIT_HEALTH(msg)
 	end
 end
 
-function mod:WMEvent(msg)
-	local wplayer, wtype = select(3, msg:find(L["whisper_trigger"]))
-	if wplayer and wtype then
-		if wplayer == L2["you"] and wtype == L2["are"] then
-			wplayer = pName
-		end
-		self:Sync("LeoWhisp "..wplayer)
-		return
-	end
-
-	if db.mindcontrol then
-		local mcplayer, mctype = select(3, msg:find(L["mindcontrol_trigger"]))
-		if mcplayer and mctype then
-			if mcplayer == L2["you"] and mctype == L2["are"] then
-				mcplayer = pName
-			end
-			self:Message(fmt(L["mindcontrol_warning"], mcplayer), "Urgent", nil, "Alert")
-			return
-		end
-	end
-end
-
-local function nilStop()
-	stop = nil
-	for k in pairs(beDemon) do beDemon[k] = nil end
-end
-
 function mod:DemonWarn()
-	if stop then return end
 	if db.whisper then
 		local msg = nil
 		for k in pairs(beDemon) do
@@ -446,22 +379,8 @@ function mod:DemonWarn()
 				msg = msg .. ", " .. k
 			end
 		end
-		self:Message(fmt(L["whisper_message"], msg), "Attention", nil, nil, nil, 37676)
+		self:IfMessage(fmt(L["whisper_message"], msg), "Attention", 37676)
 	end
-	stop = true
-	self:ScheduleEvent("BWLeoNilStop", nilStop, 6)
-end
-
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "LeoWhisp" and not stop and rest then
-		beDemon[rest] = true
-		self:ScheduleEvent("ScanDemons", self.DemonWarn, 0.3, self)
-		self:Bar(L["whisper_bar"], 30, "Spell_Shadow_ManaFeed")
-	elseif sync == "LeoWW" and db.whirlwind then
-		self:Message(L["whirlwind_gain"], "Important", nil, "Alert")
-		self:ScheduleEvent("ww1", "BigWigs_Message", 12, L["whirlwind_fade"], "Attention")
-		self:Bar(L["whirlwind_bar"], 12, "Ability_Whirlwind")
-		self:ScheduleEvent("BWLeoWhirlwind", self.WhirlwindBar, 12, self)
-	end
+	for k in pairs(beDemon) do beDemon[k] = nil end
 end
 
