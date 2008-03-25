@@ -208,6 +208,7 @@ function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("BigWigs_RecvSync")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	started = nil
