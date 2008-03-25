@@ -4,8 +4,7 @@
 
 local boss = BB["Zul'jin"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-local pName = nil
+local pName = UnitName("player")
 local db = nil
 
 ----------------------------
@@ -32,7 +31,6 @@ L:RegisterTranslations("enUS", function() return {
 	throw = "Grievous Throw",
 	throw_desc = "Warn who is afflicted by Grievous Throw.",
 	throw_message = "%s has Grievous Throw",
-	throw_trigger = "^(%S+) (%S+) afflicted by Grievous Throw%.$",
 
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Target Icon on the player afflicted by Grievous Throw or Claw Rage. (requires promoted or higher)",
@@ -42,13 +40,11 @@ L:RegisterTranslations("enUS", function() return {
 	paralyze_warning = "Creeping Paralysis - Paralyze in 5 sec!",
 	paralyze_message = "Paralyzed!",
 	paralyze_bar = "Inc Paralyze",
-	paralyze_trigger = "afflicted by Creeping Paralysis%.$",
 	paralyze_warnbar = "Next Paralyze",
 	paralyze_soon = "Creeping Paralysis in 5 sec",
 
 	claw = "Claw Rage",
 	claw_desc = "Warn for who gets Claw Rage.",
-	claw_trigger = "^(%S+) (%S+) afflicted by Claw Rage%.$",
 	claw_message = "Claw Rage on %s",
 } end )
 
@@ -70,7 +66,6 @@ L:RegisterTranslations("deDE", function() return {
 	throw = "Schrecklicher Wurf",
 	throw_desc = "Warnen wer von Schrecklicher Wurf betroffen ist.",
 	throw_message = "%s hat Schrecklicher Wurf",
-	throw_trigger = "^(%S+) (%S+) ist von Schrecklicher Wurf betroffen%.$",
 
 	icon = "Schlachtzugsymbol",
 	icon_desc = "Platziere ein Schlachtzugsymbol auf dem Spieler, der von Schrecklicher Wurf oder Klauenwut betroffen ist (benötigt Assistent oder höher).",
@@ -80,13 +75,11 @@ L:RegisterTranslations("deDE", function() return {
 	paralyze_warning = "Schleichende Paralyse - Paralyse in 5 sek!",
 	paralyze_message = "Paralysiert!",
 	paralyze_bar = "Inc Paralyse",
-	paralyze_trigger = "ist von Schleichende Paralyse betroffen%.$",
 	paralyze_warnbar = "Nächste Paralyse",
 	paralyze_soon = "Schleichende Paralyse in 5 sek",
 
 	claw = "Klauenwut",
 	claw_desc = "Warnen wer von Klauenwut betroffen ist.",
-	claw_trigger = "^(%S+) (%S+) ist von Klauenwut betroffen%.$",
 	claw_message = "Klauenwut auf %s",
 } end )
 
@@ -108,7 +101,6 @@ L:RegisterTranslations("frFR", function() return {
 	throw = "Lancer effroyable",
 	throw_desc = "Préviens quand un joueur subit les effets du Lancer effroyable.",
 	throw_message = "%s a le Lancer effroyable",
-	throw_trigger = "^(%S+) (%S+) les effets .* Lancer effroyable%.$",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Lancer effroyable ou la Rage de griffes (nécessite d'être promu ou mieux).",
@@ -118,13 +110,11 @@ L:RegisterTranslations("frFR", function() return {
 	paralyze_warning = "Paralysie progressive - Paralysie totale dans 5 sec. !",
 	paralyze_message = "Paralysés !",
 	paralyze_bar = "Paralysie effective",
-	paralyze_trigger = "les effets .* Paralysie progressive%.$",
 	paralyze_warnbar = "Prochaine Paralysie",
 	paralyze_soon = "Paralysie progressive dans 5 sec.",
 
 	claw = "Rage de griffes",
 	claw_desc = "Préviens quand un joueur subit les effets de la Rage de griffes.",
-	claw_trigger = "^(%S+) (%S+) les effets .* Rage de griffes%.$",
 	claw_message = "Rage de griffes sur %s",
 } end )
 
@@ -146,7 +136,6 @@ L:RegisterTranslations("koKR", function() return {
 	throw = "치명상",
 	throw_desc = "치명상에 걸린 플레이어를 알립니다.",
 	throw_message = "%s 치명상",
-	throw_trigger = "^([^|;%s]*)(.*)치명상에 걸렸습니다%.$",
 
 	icon = "전술 표시",
 	icon_desc = "치명상과 광기의 발톱 대상이된 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
@@ -156,13 +145,11 @@ L:RegisterTranslations("koKR", function() return {
 	paralyze_warning = "섬뜩한 마비 - 5초후 마비!",
 	paralyze_message = "마비!",
 	paralyze_bar = "잠시후 마비",
-	paralyze_trigger = "섬뜩한 마비에 걸렸습니다%.$",
 	paralyze_warnbar = "다음 마비",
 	paralyze_soon = "섬뜩한 마비 5초전",
 
 	claw = "광기의 발톱",
 	claw_desc = "광기의 발톱에 걸린 플레이어를 알립니다.",
-	claw_trigger = "^([^|;%s]*)(.*)광기의 발톱에 걸렸습니다%.$",
 	claw_message = "%s 광기의 발톱",
 } end )
 
@@ -184,7 +171,6 @@ L:RegisterTranslations("zhCN", function() return {
 	throw = "重伤投掷",
 	throw_desc = "当受到重伤投掷发出警报。",
 	throw_message = "重伤投掷：>%s<！",
-	throw_trigger = "^(.+)受(.+)了重伤投掷效果的影响。$",
 
 	icon = "团队标记",
 	icon_desc = "为受到重伤投掷或利爪之怒打上团队标记。(需要权限)",
@@ -194,13 +180,11 @@ L:RegisterTranslations("zhCN", function() return {
 	paralyze_warning = "麻痹蔓延 - 麻痹 5秒！",
 	paralyze_message = "已麻痹！",
 	paralyze_bar = "<即将 麻痹>",
-	paralyze_trigger = "麻痹蔓延效果的影响。$",
 	paralyze_warnbar = "<下一麻痹蔓延>",
 	paralyze_soon = "5秒后 麻痹",
 
 	claw = "利爪之怒",
 	claw_desc = "受到利爪之怒发出警报。",
-	claw_trigger = "^(.+)受(.+)了利爪之怒效果的影响。$",
 	claw_message = "利爪之怒：>%s<！",
 } end )
 
@@ -222,7 +206,6 @@ L:RegisterTranslations("zhTW", function() return {
 	throw = "嚴重擲傷",
 	throw_desc = "警告誰受到了嚴重擲傷.",
 	throw_message = "嚴重擲傷：[%s]",
-	throw_trigger = "^(.+)受(到[了]*)嚴重擲傷效果的影響。$",
 
 	icon = "標記圖示",
 	icon_desc = "為被嚴重擲傷的玩家設置團隊標記（需要權限）",
@@ -232,13 +215,11 @@ L:RegisterTranslations("zhTW", function() return {
 	paralyze_warning = "慢性麻痺 - 5 秒內癱瘓！",
 	paralyze_message = "癱瘓！",
 	paralyze_bar = "慢性麻痺計時",
-	paralyze_trigger = "慢性麻痺效果的影響。$",
 	paralyze_warnbar = "下一次慢性麻痺",
 	paralyze_soon = "5 秒內慢性麻痺！",
 
 	claw = "利爪之怒",
 	claw_desc = "警告誰受到利爪之怒",
-	claw_trigger = "^(.+)受(到[了]*)利爪之怒效果的影響。$",
 	claw_message = "利爪之怒：[%s]",
 } end )
 
@@ -260,7 +241,6 @@ L:RegisterTranslations("esES", function() return {
 	throw = "Lanzamiento doloroso",
 	throw_desc = "Avisa quien sufre Lanzamiento doloroso.",
 	throw_message = "%s sufre Lanzamiento doloroso",
-	throw_trigger = "^(%S+) (%S+) sufre Lanzamiento doloroso%.$",
 
 	icon = "Icono de Banda",
 	icon_desc = "Coloca un Icono de Banda en el jugador afectado por Lanzamiento doloroso o Ira de zarpa. (requiere asistente o superior)",
@@ -270,13 +250,11 @@ L:RegisterTranslations("esES", function() return {
 	paralyze_warning = "\194\161Par\195\161lisis progresiva - Paralizado en 5 seg!",
 	paralyze_message = "\194\161Paralizado!",
 	paralyze_bar = "Inc Paralizado",
-	paralyze_trigger = "sufre Par\195\161lisis progresiva%.$",
 	paralyze_warnbar = "Siguiente Par\195\161lisis",
 	paralyze_soon = "Par\195\161lisis progresiva en 5 seg",
 
 	claw = "Ira de zarpa",
 	claw_desc = "Avisa quien tiene Ira de zarpae.",
-	claw_trigger = "^(%S+) (%S+) sufre Ira de zarpae%.$",
 	claw_message = "Ira de zarpa en %s",
 } end )
 
@@ -296,31 +274,43 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "ZulBleed", 2)
-	self:TriggerEvent("BigWigs_ThrottleSync", "ZulClaw", 3)
-	self:TriggerEvent("BigWigs_ThrottleSync", "ZulPara", 5)
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "AfflictEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "AfflictEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "AfflictEvent")
-
-	self:AddSyncListener("SPELL_AURA_APPLIED", 43093, "ZulBleed", 1)
-	self:AddSyncListener("SPELL_AURA_APPLIED", 43095, "ZulPara")
-	self:AddSyncListener("SPELL_AURA_APPLIED", 43150, "ZulClaw", 1)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Throw", 43093)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Paralyze", 43095)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "ClawRage", 43150)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
-	pName = UnitName("player")
 	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Throw(player, spellID)
+	if db.throw
+		self:IfMessage(L["throw_message"]:format(player), "Attention", spellID)
+		self:Icon(player, "icon")
+	end
+end
+
+function mod:Paralyze(_, spellID)
+	if db.paralyze then
+		self:IfMessage(L["paralyze_warning"], "Urgent", spellID)
+		self:DelayedMessage(5, L["paralyze_message"], "Positive")
+		self:ScheduleEvent("BWZulParaInc", "BigWigs_Message", 22, L["paralyze_soon"], "Urgent")
+		self:Bar(L["paralyze_bar"], 5, spellID)
+		self:Bar(L["paralyze_warnbar"], 27, spellID)
+	end
+end
+
+function mod:ClawRage(player, spellID)
+	if db.claw then
+		self:IfMessage(L["claw_message"]:format(player), "Urgent", spellID)
+		self:Icon(player, "icon")
+	end
+end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if not db.form then return end
@@ -339,51 +329,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	elseif msg == L["engage_trigger"] then
 		self:Message(L["engage_message"], "Attention")
-	end
-end
-
-function mod:AfflictEvent(msg)
-	if msg:find(L["paralyze_trigger"]) then
-		self:Sync("ZulPara")
-		return
-	end
-
-	local gplayer, gtype = select(3, msg:find(L["throw_trigger"]))
-	if gplayer and gtype then
-		if gplayer == L2["you"] and gtype == L2["are"] then
-			gplayer = pName
-		end
-		self:Sync("ZulBleed", gplayer)
-		return
-	end
-
-	local cplayer, ctype = select(3, msg:find(L["claw_trigger"]))
-	if cplayer and ctype then
-		if cplayer == L2["you"] and ctype == L2["are"] then
-			cplayer = pName
-		end
-		self:Sync("ZulClaw", cplayer)
-		return
-	end
-end
-
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "ZulBleed" and rest and db.throw then
-		self:Message(L["throw_message"]:format(rest), "Attention")
-		if db.icon then
-			self:Icon(rest)
-		end
-	elseif sync == "ZulClaw" and rest and db.claw then
-		self:Message(L["claw_message"]:format(rest), "Urgent")
-		if db.icon then
-			self:Icon(rest)
-		end
-	elseif sync == "ZulPara" and db.paralyze then
-		self:Message(L["paralyze_warning"], "Urgent")
-		self:DelayedMessage(5, L["paralyze_message"], "Positive")
-		self:ScheduleEvent("BWZulParaInc", "BigWigs_Message", 22, L["paralyze_soon"], "Urgent")
-		self:Bar(L["paralyze_bar"], 5, "Spell_Nature_TimeStop")
-		self:Bar(L["paralyze_warnbar"], 27, "Spell_Nature_TimeStop")
 	end
 end
 

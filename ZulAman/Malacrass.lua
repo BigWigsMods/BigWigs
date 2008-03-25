@@ -4,9 +4,8 @@
 
 local boss = BB["Hex Lord Malacrass"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
-local pName = nil
+local pName = UnitName("player")
 local db = nil
 
 ----------------------------
@@ -27,19 +26,14 @@ L:RegisterTranslations("enUS", function() return {
 
 	soul = "Siphon Soul",
 	soul_desc = "Warn who is afflicted by Siphon Soul.",
-	soul_trigger = "^(%S+) (%S+) afflicted by Siphon Soul%.$",
 	soul_message = "Siphon: %s",
 
 	totem = "Totem",
 	totem_desc = "Warn when a Fire Nova Totem is casted.",
-	totem_trigger = "Hex Lord Malacrass casts Fire Nova Totem.",
 	totem_message = "Fire Nova Totem!",
 
 	heal = "Heal",
 	heal_desc = "Warn when Malacrass casts a heal.",
-	heal_flash = "Hex Lord Malacrass begins to cast Flash Heal.",
-	heal_light = "Hex Lord Malacrass begins to cast Holy Light.",
-	heal_wave = "Hex Lord Malacrass begins to cast Healing Wave.",
 	heal_message = "Casting Heal!",
 } end )
 
@@ -55,19 +49,14 @@ L:RegisterTranslations("deDE", function() return {
 
 	soul = "Seele entziehen",
 	soul_desc = "Warnt wer von Seele entziehen betroffen ist.",
-	soul_trigger = "^(%S+) (%S+) von Seele entziehen betroffen%.$",
 	soul_message = "Seele entziehen: %s",
 
 	totem = "Totem",
 	totem_desc = "Warnt wenn Feuernova Totem gestellt wird.",
-	totem_trigger = "Hexlord Malacrass wirkt Feuernovatotem.",
 	totem_message = "Feuernova Totem!",
 
 	heal = "Heilung",
 	heal_desc = "Warnt wenn eine Heilung gecastet wird.",
-	heal_flash = "Hexlord Malacrass beginnt Blitzheilung zu wirken.",
-	heal_light = "Hexlord Malacrass beginnt Heiliges Licht zu wirken.",
-	heal_wave = "Hexlord Malacrass beginnt Welle der Heilung zu wirken.",
 	heal_message = "Heilung!",
 } end )
 
@@ -83,19 +72,14 @@ L:RegisterTranslations("koKR", function() return {
 
 	soul = "영혼 착취",
 	soul_desc = "누가 영혼 착취에 걸렸는지 알립니다.",
-	soul_trigger = "^([^|;%s]*)(.*)영혼 착취에 걸렸습니다%.$",
 	soul_message = "착취: %s",
 
 	totem = "토템",
 	totem_desc = "불꽃 회오리 토템 시전시 알립니다.",
-	totem_trigger = "주술 군주 말라크라스|1이;가; 불꽃 회오리 토템|1을;를; 시전합니다.",
 	totem_message = "불꽃 회오리 토템!",
 
 	heal = "치유",
 	heal_desc = "말라크라스의 치유 마법 시전을 알립니다.",
-	heal_flash = "주술 군주 말라크라스|1이;가; 순간 치유 시전을 시작합니다.",
-	heal_light = "주술 군주 말라크라스|1이;가; 성스러운 빛 시전을 시작합니다.",
-	heal_wave = "주술 군주 말라크라스|1이;가; 치유의 물결 시전을 시작합니다.",
 	heal_message = "치유 마법 시전!",
 } end )
 
@@ -111,19 +95,14 @@ L:RegisterTranslations("frFR", function() return {
 
 	soul = "Siphonner l'âme",
 	soul_desc = "Préviens quand un joueur subit les effets de Siphonner l'âme.",
-	soul_trigger = "^(%S+) (%S+) les effets .* Siphonner l'âme%.$",
 	soul_message = "Siphon : %s",
 
 	totem = "Totem",
 	totem_desc = "Préviens quand un Totem Nova de feu est incanté.",
-	totem_trigger = "Seigneur des maléfices Malacrass lance Totem Nova de feu.",
 	totem_message = "Totem Nova de feu !",
 
 	heal = "Soin",
 	heal_desc = "Préviens quand Malacrass incante un soin.",
-	heal_flash = "Seigneur des maléfices Malacrass commence à lancer Soins rapides.",
-	heal_light = "Seigneur des maléfices Malacrass commence à lancer Lumière sacrée.",
-	heal_wave = "Seigneur des maléfices Malacrass commence à lancer Vague de soins.",
 	heal_message = "Incante un soin !",
 } end )
 
@@ -139,19 +118,14 @@ L:RegisterTranslations("zhCN", function() return {
 
 	soul = "灵魂虹吸",
 	soul_desc = "受到灵魂虹吸时发出警报。",
-	soul_trigger = "^(.+)受(.+)了灵魂虹吸效果的影响。$",
 	soul_message = "灵魂虹吸：>%s<！",
 
 	totem = "图腾",
 	totem_desc = "当火焰新星图腾被施放发出警报。",
-	totem_trigger = "妖术领主玛拉卡斯施放了火焰新星图腾。",
 	totem_message = "火焰新星图腾！",
 
 	heal = "治疗",
 	heal_desc = "当妖术领主玛拉卡斯施放治疗发出警报。",
-	heal_flash = "妖术领主玛拉卡斯开始施放快速治疗。$",
-	heal_light = "妖术领主玛拉卡斯开始施放圣光术。$",
-	heal_wave = "妖术领主玛拉卡斯开始施放治疗波。$",
 	heal_message = "正在施放治疗！打断！",
 } end )
 
@@ -167,19 +141,14 @@ L:RegisterTranslations("zhTW", function() return {
 
 	soul = "虹吸靈魂",
 	soul_desc = "警告誰受到虹吸靈魂",
-	soul_trigger = "^(.+)受(到[了]*)虹吸靈魂效果的影響。$",
 	soul_message = "虹吸靈魂：[%s]",
 
 	totem = "圖騰",
 	totem_desc = "警告火焰新星圖騰被施放了",
-	totem_trigger = "妖術領主瑪拉克雷斯施放了火焰新星圖騰。",
 	totem_message = "火焰新星圖騰!",
 
 	heal = "治療",
 	heal_desc = "警告瑪拉克雷斯施放治療",
-	heal_flash = "妖術領主瑪拉克雷斯開始施放快速治療。",
-	heal_light = "妖術領主瑪拉克雷斯開始施放聖光術。",
-	heal_wave = "妖術領主瑪拉克雷斯開始施放治療波。",
 	heal_message = "施放治療! - 快中斷",
 } end )
 
@@ -195,19 +164,14 @@ L:RegisterTranslations("esES", function() return {
 
 	soul = "Succionar alma",
 	soul_desc = "Avisa quien est\195\161 afectado por Succionar alma.",
-	soul_trigger = "^(%S+) (%S+) sufre Succionar alma%.$",
 	soul_message = "Succionar: %s",
 
 	totem = "T\195\179tem",
 	totem_desc = "Avisa cuando un T\195\179tem de Nova de Fuego es lanzado.",
-	totem_trigger = "Se\195\177or aojador Malacrass lanza T\195\179tem de Nova de Fuego.",
 	totem_message = "\194\161T\195\179tem de Nova de Fuego!",
 
 	heal = "Curaci\195\179n",
 	heal_desc = "Avisa cuando Malacrass lanza una curaci\195\179n.",
-	heal_flash = "Se\195\177or aojador Malacrass comienza a lanzar Sanaci\195\179n rel\195\161mpago.",
-	heal_light = "Se\195\177or aojador Malacrass comienza a lanzar Luz Sagrada.",
-	heal_wave = "Se\195\177or aojador Malacrass comienza a lanzar Ola de sanaci\195\179n.",
 	heal_message = "\194\161Lanzando cura!",
 } end )
 
@@ -226,30 +190,39 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Siphon")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Siphon")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Siphon")
-
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SoulSiphon", 43501)
-	self:AddSyncListener("SPELL_CAST_START", 41372, 43548, 43451, 43575, 43431, 43420, "MalaHeal") -- he probably doesn't cast all of these heals please check
-	self:AddSyncListener("SPELL_CAST_START", 43436, "MalaTotem")
+	self:AddCombatListener("SPELL_CAST_START", "Heal", 41372, 43548, 43451, 43575, 43431, 43420) -- he probably doesn't cast all of these heals please check
+	self:AddCombatListener("SPELL_CAST_START", "Totem", 43436)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	pName = UnitName("player")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "MalaHeal", 3)
-	self:TriggerEvent("BigWigs_ThrottleSync", "MalaTotem", 5)
 	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:SoulSiphon(player, spellID)
+	if db.soul then
+		self:IfMessage(L["soul_message"]:format(player), "Urgent", spellID)
+	end
+end
+
+function mod:Heal(_, spellID)
+	if db.heal then
+		local show = L["heal_message"]
+		self:IfMessage(show, "Positive", spellID)
+		self:Bar(show, 2, spellID)
+	end
+end
+
+function mod:Totem()
+	if db.totem then
+		self:IfMessage(L["totem_message"], "Urgent", 43436)
+	end
+end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if not db.bolts then return end
@@ -262,42 +235,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["engage_trigger"] then
 		self:Bar(L["bolts_nextbar"], 30, "Spell_Shadow_ShadowBolt")
 		self:DelayedMessage(25, L["bolts_warning"], "Attention")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if msg == L["totem_trigger"] then
-		self:Sync("MalaTotem")
-	elseif msg == L["heal_flash"] or msg == L["heal_wave"] or msg == L["heal_light"] then
-		self:Sync("MalaHeal")
-	end
-end
-
-function mod:SoulSiphon(player)
-	if player and db.soul then
-		self:Message(L["soul_message"]:format(player), "Urgent")
-	end
-end
-
-function mod:Siphon(msg)
-	if not db.soul then return end
-
-	local splayer, stype = select(3, msg:find(L["soul_trigger"]))
-	if splayer and stype then
-		if splayer == L2["you"] and stype == L2["are"] then
-			splayer = pName
-		end
-		self:Message(L["soul_message"]:format(splayer), "Urgent")
-	end
-end
-
-function mod:BigWigs_RecvSync(sync)
-	if sync == "MalaHeal" and db.heal then
-		local show = L["heal_message"]
-		self:Message(show, "Positive")
-		self:Bar(show, 2, "Spell_Nature_MagicImmunity")
-	elseif sync == "MalaTotem" and db.totem then
-		self:Message(L["totem_message"], "Urgent")
 	end
 end
 

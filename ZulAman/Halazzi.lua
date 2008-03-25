@@ -4,7 +4,6 @@
 
 local boss = BB["Halazzi"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local UnitName = UnitName
 local UnitHealth = UnitHealth
@@ -13,7 +12,7 @@ local two = nil
 local three = nil
 local count = 1
 local db = nil
-local pName = nil
+local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -26,7 +25,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	totem = "Totem",
 	totem_desc = "Warn when Halazzi casts a Lightning Totem.",
-	totem_trigger = "Halazzi begins to cast Lightning Totem.",
 	totem_message = "Incoming Lightning Totem!",
 
 	phase = "Phases",
@@ -45,8 +43,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	flame = "Flame Shock",
 	flame_desc = "Warn for players with Flame Shock.",
-	flame_trigger = "^(%S+) (%S+) afflicted by Flame Shock%.$",
-	flame_fade = "^Flame Shock fades from (%S+)%.$",
 	flame_message = "Flame Shock: %s",
 
 	icon = "Raid Icon",
@@ -58,7 +54,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	totem = "토템",
 	totem_desc = "할라지가 번개 토템을 소환시 알립니다.",
-	totem_trigger = "할라지|1이;가; 번개 토템 시전을 시작합니다.",
 	totem_message = "토템 소환!",
 
 	phase = "단계",
@@ -77,8 +72,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	flame = "화염 충격",
 	flame_desc = "화염 충격에 걸린 플레이어를 알립니다.",
-	flame_trigger = "^([^|;%s]*)(.*)화염 충격에 걸렸습니다%.$",
-	flame_fade = "^([^%s]+)의 몸에서 화염 충격 효과가 사라졌습니다%.$",
 	flame_message = "화염 충격: %s",
 
 	icon = "전술 표시",
@@ -90,7 +83,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	totem = "Totem",
 	totem_desc = "Préviens quand Halazzi incante un Totem de foudre.",
-	totem_trigger = "Halazzi commence à lancer Totem de foudre.",
 	totem_message = "Arrivée d'un Totem de foudre !",
 
 	phase = "Phase",
@@ -109,8 +101,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	flame = "Horion de flammes",
 	flame_desc = "Préviens quand un joueur subit les effets de l'Horion de flammes.",
-	flame_trigger = "^(%S+) (%S+) les effets .* Horion de flammes%.$",
-	flame_fade = "^Horion de flammes sur (%S+) vient de se dissiper%.$",
 	flame_message = "Horion de flammes : %s",
 
 	icon = "Icône",
@@ -122,7 +112,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	totem = "图腾",
 	totem_desc = "当哈尔拉兹施放一闪电图腾时发出警报。",
-	totem_trigger = "哈尔拉兹开始施放闪电图腾。",
 	totem_message = "即将 闪电图腾！",
 
 	phase = "阶段",
@@ -141,8 +130,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	flame = "烈焰震击",
 	flame_desc = "当玩家受到烈焰震击发出警报。",
-	flame_trigger = "^(.+)受(.+)了烈焰震击效果的影响。$",
-	flame_fade = "^烈焰震击效果从(.+)身上消失。$",
 	flame_message = "烈焰震击：>%s<！",
 
 	icon = "团队标记",
@@ -154,7 +141,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	totem = "圖騰",
 	totem_desc = "警告哈拉齊施放閃電圖騰",
-	totem_trigger = "哈拉齊開始施放閃電圖騰。",
 	totem_message = "閃電圖騰即將來臨!",
 
 	phase = "階段",
@@ -173,8 +159,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	flame = "烈焰震擊",
 	flame_desc = "警報玩家受到烈焰震擊",
-	flame_trigger = "^(.+)受(到[了]*)烈焰震擊效果的影響。$",
-	flame_fade = "^烈焰震擊效果從(.+)身上消失。$",
 	flame_message = "烈焰震擊: [%s]",
 
 	icon = "團隊標記",
@@ -186,7 +170,6 @@ L:RegisterTranslations("esES", function() return {
 
 	totem = "T\195\179tem",
 	totem_desc = "Avisa cuando Halazzi lanza un T\195\179tem de rel\195\161mpagos.",
-	totem_trigger = "Halazzi comienza a lanzar T\195\179tem de rel\195\161mpagos.",
 	totem_message = "\194\161T\195\179tem de rel\195\161mpagos!",
 
 	phase = "Fases",
@@ -205,8 +188,6 @@ L:RegisterTranslations("esES", function() return {
 
 	--flame = "Flame Shock",
 	--flame_desc = "Warn for players with Flame Shock.",
-	--flame_trigger = "^(%S+) (%S+) afflicted by Flame Shock%.$",
-	--flame_fade = "^Flame Shock fades from (%S+)%.$",
 	--flame_message = "Flame Shock: %s",
 
 	--icon = "Raid Icon",
@@ -218,7 +199,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	totem = "Blitzschlagtotem",
 	totem_desc = "Warnt wenn Halazzi ein Verderbtes Blitzschlagtotem herbeizaubert.",
-	totem_trigger = "Halazzi beginnt Blitzschlagtotem zu wirken.",
 	totem_message = "Blitzschlagtotem gleich!",
 
 	phase = "Phasen",
@@ -237,8 +217,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	flame = "Flammenschock",
 	flame_desc = "Warnen wenn ein Spieler von Flammenschock betroffen ist.",
-	flame_trigger = "^(%S+) (%S+) ist von Flammenschock betroffen%.$",
-	flame_fade = "^Flammenschock' schwindet von (%S+)%.$",
 	flame_message = "Flammenschock: %s",
 
 	icon = "Schlachtzug Symbol",
@@ -260,29 +238,18 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("UNIT_HEALTH")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "FlameEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "FlameEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "FlameEvent")
-	
+	self:AddCombatListener("SPELL_CAST_START", "Totem", 43302)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "FlameShock", 43303)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "FlameShockRemoved", 43303)
 	self:AddCombatListener("SPELL_AURA_DISPELLED", "FlameShockRemoved", 43303)
-	self:AddCombatListener("SPELL_CAST_START", "Totem", 43302)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_PARTY", "FlameFade")
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER", "FlameFade")
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
-
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
 	db = self.db.profile
-	pName = UnitName("player")
 end
 
 ------------------------------
@@ -291,67 +258,28 @@ end
 
 function mod:Totem()
 	if db.totem then
-		self:Message(L["totem_message"], "Attention")
+		self:Message(L["totem_message"], "Attention", 43302)
 	end
 end
 
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if db.totem and msg == L["totem_trigger"] then
-		self:Message(L["totem_message"], "Attention")
+function mod:FlameShock(player, spellID)
+	if db.flame then
+		local warn = L["flame_message"]:format(player)
+		self:IfMessage(warn, "Attention", spellID)
+		self:Bar(warn, 12, spellID)
 	end
+	self:Icon(player, "icon")
+end
+
+function mod:FlameShockRemoved(player)
+	self:TriggerEvent("BigWigs_StopBar", self, L["flame_message"]:format(player))
+	self:TriggerEvent("BigWigs_RemoveRaidIcon")
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["frenzy_trigger"] and db.frenzy then
 		self:Message(L["frenzy_message"], "Important")
 		self:Bar(L["frenzy_message"], 6, "Ability_GhoulFrenzy")
-	end
-end
-
-function mod:FlameShock(player)
-	if player then
-		if db.flame then
-			local warn = L["flame_message"]:format(player)
-			self:Message(warn, "Attention")
-			self:Bar(warn, 12, "Spell_Fire_FlameShock")
-		end
-		if db.icon then
-			self:Icon(player)
-		end	
-	end
-end
-
-function mod:FlameEvent(msg)
-	if not db.flame then return end
-
-	local fplayer, ftype = select(3, msg:find(L["flame_trigger"]))
-	if fplayer and ftype then
-		if fplayer == L2["you"] and ftype == L2["are"] then
-			fplayer = pName
-		end
-		self:FlameShock(fplayer)
-	end
-end
-
-function mod:FlameShockRemoved(player)
-	if player then
-		self:TriggerEvent("BigWigs_StopBar", self, L["flame_message"]:format(player))
-		self:TriggerEvent("BigWigs_RemoveRaidIcon")		
-	end
-end
-
-function mod:FlameFade(msg)
-	local splayer = select(3, msg:find(L["flame_fade"]))
-	if splayer then
-		self:TriggerEvent("BigWigs_StopBar", self, L["flame_message"]:format(splayer))
-		self:TriggerEvent("BigWigs_RemoveRaidIcon")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
-	if msg:find(L["flame_fade"]) then
-		self:TriggerEvent("BigWigs_StopBar", self, L["flame_message"]:format(pName))
-		self:TriggerEvent("BigWigs_RemoveRaidIcon")
 	end
 end
 

@@ -4,11 +4,10 @@
 
 local boss = BB["Akil'zon"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local CheckInteractDistance = CheckInteractDistance
 local db = nil
-local pName = nil
+local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -22,7 +21,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	elec = "Electrical Storm",
 	elec_desc = "Warn who has Electrical Storm.",
-	elec_trigger = "An electrical storm appears!",
 	elec_bar = "~Storm Cooldown",
 	elec_message = "Storm on %s!",
 	elec_warning = "Storm soon!",
@@ -41,7 +39,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	elec = "전하 폭풍",
 	elec_desc = "전하 폭풍에 걸린 플레이어를 알립니다.",
-	elec_trigger = "받아라, 전하 폭풍!",
 	elec_bar = "~폭풍 대기 시간",
 	elec_message = "%s에 전하 폭풍!",
 	elec_warning = "잠시후 전하 폭풍!",
@@ -60,7 +57,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	elec = "Orage électrique",
 	elec_desc = "Préviens quand un joueur subit les effets de l'Orage électrique.",
-	elec_trigger = "Un orage électrique apparaît !",
 	elec_bar = "~Cooldown Orage",
 	elec_message = "Orage sur %s !",
 	elec_warning = "Orage imminent !",
@@ -79,7 +75,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	elec = "Elektrischer Sturm",
 	elec_desc = "Gib Warnung mit dem Spielernamen des Ziels von Elektrischer Sturm aus.",
-	elec_trigger = "Ein Gewitter zieht auf!",
 	elec_bar = "~Sturm Cooldown",
 	elec_message = "Sturm auf %s!",
 	elec_warning = "Sturm bald!",
@@ -98,7 +93,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	elec = "电能风暴",
 	elec_desc = "当谁中了电能风暴发出警报。",
-	elec_trigger = "一道雷电风暴出现了！",
 	elec_bar = "<电能风暴 冷却>",
 	elec_message = "电能风暴：>%s<！",
 	elec_warning = "即将电能风暴！",
@@ -117,7 +111,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	elec = "電荷風暴",
 	elec_desc = "警告誰受到電荷風暴",
-	elec_trigger = "出現一股電氣暴風!",
 	elec_bar = "~電荷風暴冷卻",
 	elec_message = "電荷風暴：[%s]",
 	elec_warning = "電荷風暴即將來臨!",
@@ -136,7 +129,6 @@ L:RegisterTranslations("esES", function() return {
 
 	elec = "Tormenta el\195\169ctrica",
 	elec_desc = "Avisa quien Tormenta el\195\169ctrica.",
-	elec_trigger = "\194\161Aparece una tormenta el\195\169ctrica!",
 	elec_bar = "~Regeneraci\195\179n de Tormenta",
 	elec_message = "Tormenta en %s!",
 	elec_warning = "\194\161Tormenta pronto!",
@@ -171,10 +163,9 @@ function mod:OnEnable()
 
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
 	db = self.db.profile
-	pName = UnitName("player")
 end
 
 ------------------------------
@@ -195,10 +186,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, _, _, _, player)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, boss, _, _, player)
 	if not db.elec then return end
 
-	if msg == L["elec_trigger"] then
+	if unit == boss then
 		local show = L["elec_message"]:format(player)
 		self:Message(show, "Attention")
 		self:Bar(show, 8, "Spell_Nature_EyeOfTheStorm")

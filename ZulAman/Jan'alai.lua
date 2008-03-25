@@ -4,7 +4,6 @@
 
 local boss = BB["Jan'alai"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local fmt = string.format
 local UnitName = UnitName
@@ -21,7 +20,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	flame = "Flame Breath",
 	flame_desc = "Warn who Jan'alai casts Flame Strike on.",
-	flame_trigger = "Jan'alai begins to cast Flame Breath.",
 	flame_message = "Flame Breath on %s!",
 
 	icon = "Raid Icon",
@@ -43,7 +41,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	flame = "Souffle de flammes",
 	flame_desc = "Préviens sur qui Jan'alai incante son Souffle de flammes.",
-	flame_trigger = "Jan'alai commence à lancer Souffle de flammes.",
 	flame_message = "Souffle de flammes sur %s !",
 
 	icon = "Icône",
@@ -65,7 +62,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	flame = "화염 숨결",
 	flame_desc = "잔알라이가 대상자방향으로 화염 숨결을 시전하는지 알립니다.",
-	flame_trigger = "잔알라이|1이;가; 화염 숨결 시전을 시작합니다.",
 	flame_message = "%s에 화염 숨결!",
 
 	icon = "전술 표시",
@@ -87,7 +83,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	flame = "Flammenatem",
 	flame_desc = "Warnt auf wen Flammenatem von Jan'alai gewirkt wird.",
-	flame_trigger = "Jan'alai beginnt Flammenatem zu wirken.",
 	flame_message = "Flammenatem auf %s!",
 
 	icon = "Schlachtzug Symbol",
@@ -110,7 +105,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	flame = "烈焰吐息",
 	flame_desc = "当加亚莱施放烈焰吐息发出警报。",
-	flame_trigger = "加亚莱开始施放烈焰吐息。",
 	flame_message = "烈焰吐息：>%s<！",
 
 	icon = "团队标记",
@@ -132,7 +126,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	flame = "火息術",
 	flame_desc = "警告賈納雷施放火息術",
-	flame_trigger = "賈納雷開始施放火息術。",
 	flame_message = "火息術：[%s] - 散開",
 
 	icon = "標記圖示",
@@ -154,7 +147,6 @@ L:RegisterTranslations("esES", function() return {
 
 	flame = "Aliento de llamas",
 	flame_desc = "Avisa sobre quien lanza Jan'alai Aliento de llamas.",
-	flame_trigger = "Jan'alai comienza a lanzar Aliento de llamas.",
 	flame_message = "\194\161Aliento de llamas en %s!",
 
 	icon = "Icono de Banda",
@@ -186,14 +178,12 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-
 	self:AddCombatListener("SPELL_CAST_START", "FlameBreath", 23461)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
 	db = self.db.profile
 end
 
@@ -217,7 +207,7 @@ local function ScanTarget()
 		end
 	end
 	if target then
-		mod:Message(fmt(L["flame_message"], target), "Important")
+		mod:IfMessage(fmt(L["flame_message"], target), "Important", 23461)
 		if mod.db.profile.icon then
 			mod:Icon(target)
 		end
@@ -226,13 +216,6 @@ end
 
 function mod:FlameBreath()
 	if db.flame then
-		self:ScheduleEvent("BWFlameToTScan", ScanTarget, 0.2)
-		self:ScheduleEvent("BWRemoveJanIcon", "BigWigs_RemoveRaidIcon", 4, self)
-	end
-end
-
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if db.flame and msg == L["flame_trigger"] then
 		self:ScheduleEvent("BWFlameToTScan", ScanTarget, 0.2)
 		self:ScheduleEvent("BWRemoveJanIcon", "BigWigs_RemoveRaidIcon", 4, self)
 	end
