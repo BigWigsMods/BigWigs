@@ -58,7 +58,7 @@ L:RegisterTranslations("enUS", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	start_trigger = "Ich kann nicht zulassen, dass ihr Euch einmischt!",
+	start_trigger = "Ich kann nicht zulassen, dass Ihr Euch einmischt!",
 
 	mark = "Mal",
 	mark_desc = "Zeigt Warnungen und Anzahl des Mals.",
@@ -74,8 +74,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	tomb = "Wassergrab",
 	tomb_desc = "Warnt welche Spieler von Wassergrab betroffen sind.",
-
-	start_trigger = "Ich kann nicht zulassen, dass Ihr Euch einmischt!",
 
 	hydross_trigger = "Mal von Hydross",
 	corruption_trigger = "Mal der der Verderbnis",
