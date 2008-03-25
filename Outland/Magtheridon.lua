@@ -6,7 +6,6 @@ local boss = BB["Magtheridon"]
 local channeler = BB["Hellfire Channeler"]
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local abycount
 local debwarn
 local pName = UnitName("player")
@@ -33,12 +32,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	abyssal = "Burning Abyssal",
 	abyssal_desc = "Warn when a Burning Abyssal is created.",
-	abyssal_trigger = "^Hellfire Channeler's Burning Abyssal hits",
 	abyssal_message = "Burning Abyssal Created (%d)",
 
 	heal = "Heal",
 	heal_desc = "Warn when a Hellfire Channeler starts to heal.",
-	heal_trigger = "begins to cast Dark Mending%.$",
 	heal_message = "Healing!",
 
 	nova = "Blast Nova",
@@ -52,18 +49,15 @@ L:RegisterTranslations("enUS", function() return {
 	banish_desc = "Warn when you Banish Magtheridon.",
 	banish_trigger = "Not again! Not again...",
 	banish_message = "Banished for ~10sec",
-	banish_over_trigger = "^Shadow Cage fades",
 	banish_over_message = "Banish Fades!",
 	banish_bar = "Banished",
 
 	exhaust = "Disable Exhaustion Bars",
 	exhaust_desc = "Timer bars for Mind Exhaustion on players.",
-	exhaust_trigger = "^(%S+) (%S+) afflicted by Mind Exhaustion%.$",
 	exhaust_bar = "[%s] Exhausted",
 
 	debris = "Debris on You",
 	debris_desc = "Warn for Debris on You.",
-	debris_trigger = "You are afflicted by Debris.",
 	debris_message = "Debris on YOU!",
 
 	debrisinc = "Debris",
@@ -88,12 +82,10 @@ L:RegisterTranslations("deDE", function() return {
 
 	abyssal = "Brennender Schlund",
 	abyssal_desc = "Warnt, wenn ein Brennender Schlund gespawned wird",
-	abyssal_trigger = "Kanalisierer des H\195\182llenfeuers wirkt Brennender Schlund",
 	abyssal_message = "Brennender Schlund gespawned (%d)",
 
 	heal = "Heilung",
 	heal_desc = "Warnt, wenn ein Kanalisierer anf\195\164ngt zu heilen",
-	heal_trigger = "beginnt Dunkle Besserung zu wirken",
 	heal_message = "Heilung!",
 
 	nova = "Drucknova",
@@ -107,18 +99,15 @@ L:RegisterTranslations("deDE", function() return {
 	banish_desc = "Warnt, wenn ihr Magtheridon verbannt",
 	banish_trigger = "Nicht schon wieder! Nicht schon wieder...",
 	banish_message = "Verbannt f\195\188r ~10sec",
-	--banish_over_trigger = "^Shadow Cage fades",
 	--banish_over_message = "Banish Fades!",
 	banish_bar = "Verbannt",
 
 	exhaust = "Ersch\195\182pfung",
 	exhaust_desc = "Timer f\195\188r Gedankenersch\195\182pfung",
-	exhaust_trigger = "^([^%s]+) ([^%s]+) von Gedankenersch\195\182pfung betroffen%.$",
 	exhaust_bar = "[%s] ersch\195\182pft",
 
 	debris = "Trümmer auf DIR",
 	debris_desc = "Warnt vor Trümmern auf dir.",
-	debris_trigger = "Ihr seid von Trümmer betroffen.",
 	debris_message = "Trümmer auf DIR!",
 
 	debrisinc = "Trümmer",
@@ -143,12 +132,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	abyssal = "Abyssal ardent",
 	abyssal_desc = "Préviens quand un Abyssal ardent est créé.",
-	abyssal_trigger = "Canaliste des Flammes infernales lance Abyssal ardent",
 	abyssal_message = "Abyssal ardent créé (%d)",
 
 	heal = "Soin",
 	heal_desc = "Préviens quand un Canaliste des Flammes infernales commence à soigner.",
-	heal_trigger = "commence à lancer Guérison ténébreuse%.$",
 	heal_message = "Se soigne !",
 
 	nova = "Nova explosive",
@@ -162,18 +149,15 @@ L:RegisterTranslations("frFR", function() return {
 	banish_desc = "Préviens quand vous bannissez Magtheridon.",
 	banish_trigger = "Pas encore ! Pas encore...",
 	banish_message = "Banni pendant ~10 sec.",
-	banish_over_trigger = "Cage d'ombre sur Magtheridon vient de se dissiper.",
 	banish_over_message = "Fin du ban !",
 	banish_bar = "Banni",
 
 	exhaust = "Désactiver les barres d'Epuisement",
 	exhaust_desc = "Barre temporelles pour l'Epuisement d'esprit des joueurs",
-	exhaust_trigger = "^(%S+) (%S+) les effets .* Epuisement de l'esprit%.$",
 	exhaust_bar = "[%s] épuisé",
 
 	debris = "Débris sur vous",
 	debris_desc = "Préviens quand les débris tombent sur vous.",
-	debris_trigger = "Vous subissez les effets de Débris.",
 	debris_message = "Débris sur VOUS !",
 
 	debrisinc = "Débris",
@@ -198,12 +182,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	abyssal = "불타는 심연",
 	abyssal_desc = "불타는 심연 생성 시 경고합니다.",
-	abyssal_trigger = "지옥불 역술사|1이;가; 불타는 심연|1으로;로;",
 	abyssal_message = "불타는 심연 생성 (%d)",
 
 	heal = "치유",
 	heal_desc = "지옥불 역술사 치유 시전 시 경고합니다.",
-	heal_trigger = "암흑의 치유 시전을 시작합니다%.$",
 	heal_message = "치유 시전!",
 
 	nova = "파열의 회오리",
@@ -217,18 +199,15 @@ L:RegisterTranslations("koKR", function() return {
 	banish_desc = "마그테리돈 추방 시 알립니다.",
 	banish_trigger = "안 돼, 다시 그럴 수는 없다!",
 	banish_message = "약 10초 동안 추방됨",
-	banish_over_trigger = "^어둠의 우리 효과가 사라졌습니다.",
 	banish_over_message = "추방 종료!",
 	banish_bar = "추방됨",
 
 	exhaust = "방출 바 비활성화",
 	exhaust_desc = "정신 방출에 걸린 플레이어에 대한 타이머 바입니다.",
-	exhaust_trigger = "^([^|;%s]*)(.*)정신 방출에 걸렸습니다%.$",
 	exhaust_bar = "[%s] 정신 방출",
 
 	debris = "당신에 파편",
 	debris_desc = "당신이 파편에 걸렸을때 알립니다.",
-	debris_trigger = "당신은 파편에 걸렸습니다.",
 	debris_message = "당신에 파편!",
 
 	debrisinc = "파편",
@@ -253,12 +232,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	abyssal = "深渊燃魔",
 	abyssal_desc = "当创建一个深渊燃魔时发出警报。",
-	abyssal_trigger = "^地狱火导魔者的深渊燃魔击中",
 	abyssal_message = "深渊燃魔创建 (%d)",
 
 	heal = "治疗",
 	heal_desc = "当地狱火导魔者施放治疗发出警报。",
-	heal_trigger = "开始施放黑暗治愈。$",
 	heal_message = "治疗！",
 
 	nova = "冲击新星",
@@ -272,18 +249,15 @@ L:RegisterTranslations("zhCN", function() return {
 	banish_desc = "当你放逐玛瑟里顿发出警报。",
 	banish_trigger = "不！不！！",
 	banish_message = "放逐成功 - 10秒 ",
-	banish_over_trigger = "^暗影牢笼从",
 	banish_over_message = "放逐消失！",
 	banish_bar = "<放逐中>",
 
 	exhaust = "禁用心灵疲惫计时条",
 	exhaust_desc = "心灵疲惫记时条。",
-	exhaust_trigger = "^(.+)受(.+)了心灵疲惫效果的影响。$",
 	exhaust_bar = "<心灵疲惫：%s>",
 
 	debris = "碎片(你)",
 	debris_desc = "当你中了碎片发出警报。",
-	debris_trigger = "你受到了碎片效果的影响。",
 	debris_message = ">你< 碎片！",
 
 	debrisinc = "碎片",
@@ -308,12 +282,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	abyssal = "燃燒的冥淵火", --智缺迪偷改了名字
 	abyssal_desc = "當地獄火導魔師創造燃燒的冥淵火時發出警報",
-	abyssal_trigger = "地獄火導魔師施放了燃燒的冥淵火。",
 	abyssal_message = "燃燒的冥淵火已創造 (%d)",
 
 	heal = "黑暗治療",
 	heal_desc = "當地獄火導魔師開始治療時發出警報",
-	heal_trigger = "開始施放黑暗治療。",
 	heal_message = "黑暗治療 - 快中斷!",
 
 	nova = "衝擊新星",
@@ -327,18 +299,15 @@ L:RegisterTranslations("zhTW", function() return {
 	banish_desc = "當你驅逐 瑪瑟里頓.",
 	banish_trigger = "別再來了!別再來了……",
 	banish_message = "驅逐成功 - 衝擊新星巳中斷",
-	banish_over_trigger = "暗影之握效果從瑪瑟里頓身上消失",
 	banish_over_message = "驅逐效果消失!",
 	banish_bar = "驅逐中",
 
 	exhaust = "關閉心靈耗損計時條",
 	exhaust_desc = "玩家中心靈耗損時計時器",
-	exhaust_trigger = "^(.+)受(到[了]*)心靈耗損效果的影響。",
 	exhaust_bar = "心靈耗損：[%s]",
 
 	debris = "你中了殘骸",
 	debris_desc = "當你中了殘骸時發出警報",
-	debris_trigger = "你受到了殘骸效果的影響。",
 	debris_message = "你中了殘骸!",
 
 	debrisinc = "殘骸",
@@ -375,24 +344,9 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "ExhaustEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "ExhaustEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "ExhaustEvent")
 	self:RegisterEvent("UNIT_HEALTH")
-
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "Exhaustion", 0)
-	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFHeal", 0.5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "MagHFAbyssal", 0.8)
-	self:TriggerEvent("BigWigs_ThrottleSync", "MagUnbanish", 5)
 	abycount = 1
 	debwarn = nil
 	db = self.db.profile
@@ -410,7 +364,7 @@ end
 
 function mod:Debris(player)
 	if player == pName and db.debris then
-		self:Message(L["debris_message"], "Important", nil, "Alert", nil, 30632)
+		self:IfMessage(L["debris_message"], "Important", 30632, "Alert")
 	end
 end
 
@@ -420,7 +374,7 @@ function mod:Abyssal()
 	if (time - last) > 0.2 then
 		last = time
 		if db.abyssal then
-			self:Message(L["abyssal_message"]:format(abycount), "Attention", nil, nil, nil, 30511)
+			self:IfMessage(L["abyssal_message"]:format(abycount), "Attention", 30511)
 			abycount = abycount + 1
 		end
 	end
@@ -428,14 +382,14 @@ end
 
 function mod:Heal(_, spelID)
 	if db.heal then
-		self:Message(L["heal_message"], "Urgent", nil, "Alarm", nil, spellID)
+		self:IfMessage(L["heal_message"], "Urgent", spellID, "Alarm")
 		self:Bar(L["heal_message"], 2, spellID)
 	end
 end
 
 function mod:BanishRemoved()
 	if db.banish then
-		self:Message(L["banish_over_message"], "Attention", nil, nil, nil, 30168)
+		self:IfMessage(L["banish_over_message"], "Attention", 30168)
 		self:TriggerEvent("BigWigs_StopBar", self, L["banish_bar"])
 	end
 end
@@ -482,53 +436,6 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 		self:Bar(L["nova_bar"], 51, "Spell_Fire_SealOfFire")
 		self:Bar(L["nova_cast"], 12, "Spell_Fire_SealOfFire")
 		self:DelayedMessage(48, L["nova_warning"], "Urgent")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg:find(L["abyssal_trigger"]) then
-		self:Sync("MagHFAbyssal")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
-	if msg:find(L["banish_over_trigger"]) then
-		self:Sync("MagUnbanish")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if msg:find(L["heal_trigger"]) then
-		self:Sync("MagHFHeal")
-	end
-end
-
---mind exhastion bars can get spammy, so off by default
-function mod:ExhaustEvent(msg)
-	if db.debris and msg == L["debris_trigger"] then
-		self:Message(L["debris_message"], "Important", nil, "Alert")
-	end
-	local eplayer, etype = select(3, msg:find(L["exhaust_trigger"]))
-	if eplayer and etype then
-		if eplayer == L2["you"] and etype == L2["are"] then
-			eplayer = UnitName("player")
-		end
-		self:Sync("Exhaustion", eplayer)
-	end
-end
-
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "Exhaustion" and rest and not db.exhaust then
-		self:Bar(L["exhaust_bar"]:format(rest), 75, "Spell_Shadow_Teleport")
-	elseif sync == "MagHFHeal" and db.heal then
-		self:Message(L["heal_message"], "Urgent", nil, "Alarm")
-		self:Bar(L["heal_message"], 2, "Spell_Shadow_ChillTouch")
-	elseif sync == "MagHFAbyssal" and db.abyssal then
-		self:Message(L["abyssal_message"]:format(abycount), "Attention")
-		abycount = abycount + 1
-	elseif sync == "MagUnbanish" and db.banish then
-		self:Message(L["banish_over_message"], "Attention")
-		self:TriggerEvent("BigWigs_StopBar", self, L["banish_bar"])
 	end
 end
 

@@ -4,7 +4,6 @@
 
 local boss = BB["Doom Lord Kazzak"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local pName = UnitName("player")
 local db = nil
 
@@ -28,12 +27,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	mark = "Mark",
 	mark_desc = "Warn for Mark of Kazzak on You.",
-	mark_trigger = "You are afflicted by Mark of Kazzak.",
 	mark_message = "Mark of Kazzak on You",
 
 	twist = "Twist",
 	twist_desc = "Warn who has Twisted Reflection.",
-	twist_trigger = "^(%S+) (%S+) afflicted by Twisted Reflection%.$",
 	twist_message = "Twisted Reflection: %s",
 } end)
 
@@ -51,12 +48,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	mark = "Marque",
 	mark_desc = "Préviens quand vous avez la Marque de Kazzak.",
-	mark_trigger = "Vous subissez les effets de Marque de Kazzak.",
 	mark_message = "Marque de Kazzak sur VOUS",
 
 	twist = "Reflet tordu",
 	twist_desc = "Préviens quand quelqu'un subit les effets de Reflet tordu.",
-	twist_trigger = "^(%S+) (%S+) les effets .* Reflet tordu%.$",
 	twist_message = "Reflet tordu : %s",
 } end)
 
@@ -74,12 +69,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	mark = "징표",
 	mark_desc = "당신에 카자크의 징표 시 알립니다.",
-	mark_trigger = "당신은 카자크의 징표에 걸렸습니다.",
 	mark_message = "당신에 카자크의 징표",
 
 	twist = "어긋난 반사",
 	twist_desc = "어긋난 반사에 걸린 사람에 대한 경고입니다.",
-	twist_trigger = "^([^|;%s]*)(.*)어긋난 반사에 걸렸습니다%.$",
 	twist_message = "어긋난 반사: %s",
 } end)
 
@@ -97,12 +90,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	mark = "印記",
 	mark_desc = "當你受到卡札克的印記時發出警報",
-	mark_trigger = "你受到卡札克的印記",
 	mark_message = "你受到卡札克的印記！",
 
 	twist = "扭曲反射",
 	twist_desc = "當隊友受到扭曲反射時發出警報",
-	twist_trigger = "(.+)受(到[了]*)扭曲反射效果的影響。",
 	twist_message = "扭曲反射：[%s]",
 } end)
 
@@ -120,12 +111,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	mark = "印记",
 	mark_desc = "当你受到卡扎克的印记发出警报。",
-	mark_trigger = "你受到了卡扎克的印记效果的影响。",
 	mark_message = ">你< 卡扎克的印记！",
 
 	twist = "扭曲反射",
 	twist_desc = "当队友受到扭曲反射发出警报。",
-	twist_trigger = "^(.+)受(.+)了扭曲反射效果的影响。$",
 	twist_message = "扭曲反射：>%s<！",
 } end)
 
@@ -149,16 +138,9 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Twisted", 21063)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "Twisted", 2)
 	db = self.db.profile
 end
 
@@ -168,13 +150,13 @@ end
 
 function mod:Mark(player)
 	if player == pName and db.mark then
-		self:Message(L["mark_message"], "Personal", true, "Alarm", nil, 32960)
+		self:Message(L["mark_message"], "Personal", 32960, "Alarm")
 	end
 end
 
 function mod:Twisted(player)
 	if db.twist then
-		self:Message(L["twist_message"]:format(player), "Attention", nil, nil, nil, 21063)
+		self:IfMessage(L["twist_message"]:format(player), "Attention", 21063)
 	end
 end
 
@@ -193,25 +175,6 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 		self:Bar(L["enraged_bar"], 10, "Spell_Shadow_UnholyFrenzy")
 		self:DelayedMessage(49, L["enrage_warning2"], "Urgent")
 		self:Bar(L["enrage_bar"], 60, "Spell_Shadow_UnholyFrenzy")
-	end
-end
-
-function mod:Event(msg)
-	if db.mark and msg == L["mark_trigger"] then
-		self:Message(L["mark_message"], "Personal", true, "Alarm")
-	end
-	local tplayer, ttype = select(3, msg:find(L["twist_trigger"]))
-	if tplayer and ttype then
-		if tplayer == L2["you"] and ttype == L2["are"] then
-			tplayer = pName
-		end
-		self:Sync("Twisted", tplayer)
-	end
-end
-
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "Twisted" and rest and db.twist then
-		self:Message(L["twist_message"]:format(rest), "Attention")
 	end
 end
 

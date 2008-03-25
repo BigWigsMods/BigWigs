@@ -24,30 +24,25 @@ L:RegisterTranslations("enUS", function() return {
 
 	heal = "Heal",
 	heal_desc = "Warn when Blindeye the Seer begins to cast a Heal.",
-	heal_trigger = "Blindeye the Seer begins to cast Prayer of Healing.",
 	heal_message = "Blindeye casting Prayer of Healing!",
 	heal_bar = "Healing",
 
 	shield = "Shield",
 	shield_desc = "Warn when Blindeye the Seer gains Greater Power Word: Shield.",
-	shield_trigger = "gains Greater Power Word: Shield%.$",
 	shield_message = "Shield on Blindeye!",
 
 	spellshield = "Spell Shield",
 	spellshield_desc = "Warn when Krosh Firehand gains Spell Shield.",
-	spellshield_trigger = "gains Spell Shield%.$",
 	spellshield_message = "Spell Shield on Krosh!",
 	spellshield_bar = "Next Spell Shield",
 
 	summon = "Summon Wild Felhunter",
 	summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter.",
-	summon_trigger = "begins to cast Summon Wild Felhunter%.$",
 	summon_message = "Felhunter being summoned!",
 	summon_bar = "~Felhunter Cooldown",
 
 	whirlwind = "Whirlwind",
 	whirlwind_desc = "Warn when Maulgar gains Whirlwind.",
-	whirlwind_trigger = "gains Whirlwind%.$",
 	whirlwind_message = "Maulgar - Whirlwind for 15sec!",
 	whirlwind_bar = "Whirlwind",
 	whirlwind_nextbar = "~Whirlwind Cooldown",
@@ -70,30 +65,25 @@ L:RegisterTranslations("frFR", function() return {
 
 	heal = "Soin",
 	heal_desc = "Préviens quand Oeillaveugle le Voyant commence à lancer un soin.",
-	heal_trigger = "Oeillaveugle le Voyant commence à lancer Prière de soins.",
 	heal_message = "Oeillaveugle incante une Prière de soins !",
 	heal_bar = "Soin en cours",
 
 	shield = "Bouclier",
 	shield_desc = "Préviens quand Oeillaveugle le Voyant gagne Mot de pouvoir : Bouclier.",
-	shield_trigger = "gagne Mot de pouvoir supérieur : Bouclier%.$",
 	shield_message = "Bouclier sur Oeillaveugle !",
 
 	spellshield = "Bouclier anti-sort",
 	spellshield_desc = "Préviens quand Krosh Brasemain gagne Bouclier anti-sort.",
-	spellshield_trigger = "gagne Bouclier anti%-sort%.$",
 	spellshield_message = "Bouclier anti-sort sur Krosh !",
 	spellshield_bar = "Prochain Bouclier",
 
 	summon = "Chasseur corrompu sauvage",
 	summon_desc = "Préviens quand Olm l'Invocateur commence à lancer Invocation d'un chasseur corrompu sauvage.",
-	summon_trigger = "commence à lancer Invocation d'un chasseur corrompu sauvage%.$",
 	summon_message = "Chasseur corrompu en cours d'invocation !",
 	summon_bar = "~Cooldown Chasseur corrompu",
 
 	whirlwind = "Tourbillon",
 	whirlwind_desc = "Préviens quand Maulgar gagne Tourbillon.",
-	whirlwind_trigger = "gagne Tourbillon%.$",
 	whirlwind_message = "Maulgar - Toubillon pendant 15 sec. !",
 	whirlwind_bar = "Tourbillon",
 	whirlwind_nextbar = "~Cooldown Tourbillon",
@@ -114,29 +104,24 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	heal = "Heilung",
 	heal_desc = "Warnt wenn Blindauge der Seher beginnt Heilung zu wirken",
-	heal_trigger = "Blindauge der Seher beginnt Gebet der Heilung.",
 	heal_message = "Blindauge der Seher wirkt Gebet der Heilung!",
 	heal_bar = "Heilung",
 
 	shield = "Schild",
 	shield_desc = "Warnung wenn Blindauge der Seher Machtwort: Schild bekommt",
-	shield_trigger = "bekommt 'Gro\195\159es Machtwort: Schild'.",
 	shield_message = "Schild auf Blindauge!",
 
 	spellshield = "Zauberschild",
 	spellshield_desc = "Warnung wenn Krosh Feuerhand sein Zauberschild bekommt",
-	spellshield_trigger = "bekommt 'Zauberschild'.",
 	spellshield_message = "Zauberschild auf Krosh!",
 	--spellshield_bar = "Next Spell Shield",
 
 	summon = "Wilder Teufelsj\195\164ger",
 	summon_desc = "Warnt wenn Olm der Beschw\195\182rer beginnt Wilden Teufelsj\195\164ger beschw\195\182ren zu wirken",
-	summon_trigger = "beginnt Wilden Teufelsj\195\164ger beschw\195\182ren zu wirken",
 	summon_message = "Teufelsj\195\164ger wurde beschworen!",
 
 	whirlwind = "Wirbelwind",
 	whirlwind_desc = "Warnung wenn Maulgar Wirbelwind bekommt",
-	whirlwind_trigger = "bekommt Wirbelwind",
 	whirlwind_message = "Maulgar - Wirbelwind f\195\188r 15sek!",
 	whirlwind_bar = "Wirbelwind",
 	whirlwind_nextbar = "~N\195\164chster Wirbelwind",
@@ -159,30 +144,25 @@ L:RegisterTranslations("koKR", function() return {
 
 	heal = "치유",
 	heal_desc = "블라인드아이가 치유 시전 시 경고합니다.",
-	heal_trigger = "현자 블라인드아이|1이;가; 치유 시전을 시작합니다.",
 	heal_message = "블라인드아이 치유 시전!",
 	heal_bar = "치유",
 
 	shield = "보호막",
 	shield_desc = "블라인드아이가 상급 신의 권능: 보호막 효과를 얻었을 때 알립니다.",
-	shield_trigger = "상급 신의 권능: 보호막 효과를 얻었습니다%.$", -- check
 	shield_message = "블라인드아이 보호막!",
 
 	spellshield = "주문 보호막",
 	spellshield_desc = "크로쉬가 주문 보호막 효과를 얻었을 때 알립니다.",
-	spellshield_trigger = "크로쉬 파이어핸드|1이;가; 주문 보호막 효과를 얻었습니다%.$",
 	spellshield_message = "크로쉬 주문 보호막!",
 	spellshield_bar = "다음 주문 보호막",
 
 	summon = "사나운 지옥사냥개 소환",
 	summon_desc = "울름이 지옥사냥개 소환 시전 시 경고합니다.",
-	summon_trigger = "소환사 올름|1이;가; 사나운 지옥사냥개 소환 시전을 시작합니다%.$",
 	summon_message = "지옥사냥개 소환!",
 	summon_bar = "~지옥사냥개 대기시간",
 
 	whirlwind = "소용돌이",
 	whirlwind_desc = "마울가르가 소용돌이 효과를 얻었을 때 알립니다.",
-	whirlwind_trigger = "왕중왕 마울가르|1이;가; 소용돌이 효과를 얻었습니다%.$",
 	whirlwind_message = "마울가르 - 15초간 소용돌이!",
 	whirlwind_bar = "소용돌이",
 	whirlwind_nextbar = "~소용돌이 대기시간",
@@ -205,30 +185,25 @@ L:RegisterTranslations("zhCN", function() return {
 
 	heal = "治疗",
 	heal_desc = "当盲眼先知开始施放治疗发出警报。",
-	heal_trigger = "盲眼先知开始施放治疗治疗祷言。",
 	heal_message = "盲眼先知 治疗祷言！",
 	heal_bar = "<治疗>",
 
 	shield = "盾",
 	shield_desc = "当盲眼获得强效真言术：盾发出警报。",
-	shield_trigger = "获得了强效真言术：盾的效果。$",
 	shield_message = "盲眼先知 盾！",
 
 	spellshield = "法术护盾",
 	spellshield_desc = "当克洛什·火拳获得法术护盾发出警报。",
-	spellshield_trigger = "获得了法术护盾的效果。$",
 	spellshield_message = "克洛什 法术护盾",
 	spellshield_bar = "<下一法术护盾>",
 
 	summon = "召唤地狱犬",
 	summon_desc = "当召唤者沃尔姆施放召唤地狱犬发出警报。",
-	summon_trigger = "开始施放召唤地狱犬。$",
 	summon_message = "地狱犬 开始召唤",
 	summon_bar = "<地狱犬 计时>",
 
 	whirlwind = "旋风斩",
 	whirlwind_desc = "当莫加尔获得旋风斩发出警报。",
-	whirlwind_trigger = "获得了旋风斩的效果。$",
 	whirlwind_message = "莫加尔 - 旋风斩 - 15秒",
 	whirlwind_bar = "<旋风斩>",
 	whirlwind_nextbar = "<旋风斩 冷却>",
@@ -249,30 +224,25 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	heal = "治療警告",
 	heal_desc = "當先知盲眼開始施放治療時發送警告",
-	heal_trigger = "先知盲眼開始施放治療禱言。",
 	heal_message = "先知盲眼施放群體治療 - 請中斷",
 	heal_bar = "治療",
 
 	shield = "真言術:盾警告",
 	shield_desc = "當先知盲眼開始施放強效真言術:盾時發送警告",
-	shield_trigger = "先知盲眼獲得了強效真言術:盾的效果。",
 	shield_message = "先知盲眼施放強效真言術:盾 - 請快速擊破",
 
 	spellshield = "法術護盾警告",
 	spellshield_desc = "當克羅斯·火手施放法術護盾時發送警告",
-	spellshield_trigger = "克羅斯·火手獲得了法術護盾的效果。",
 	spellshield_message = "火手施放法術護盾 - 法師偷取！",
 	spellshield_bar = "法術護盾",
 
 	summon = "召喚警告",
 	summon_desc = "當召喚者歐莫開始施放召喚野生地獄獵犬時發送警告",
-	summon_trigger = "開始施放召喚野生地獄獵犬",
 	summon_message = "野生地獄獵犬要出來咬人嚕",
 	summon_bar = "召喚倒數",
 
 	whirlwind = "旋風斬警告",
 	whirlwind_desc = "當大君王莫卡爾獲得旋風斬時發送警告",
-	whirlwind_trigger = "獲得了旋風斬",
 	whirlwind_message = "大君王莫卡爾 - 旋風斬 15 秒",
 	whirlwind_bar = "旋風斬",
 	whirlwind_nextbar = "旋風斬倒數",
@@ -315,23 +285,8 @@ function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("UNIT_HEALTH")
-
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "Event")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "BlindeyePrayer", 4)
-	self:TriggerEvent("BigWigs_ThrottleSync", "BlindeyeShield", 4)
-	self:TriggerEvent("BigWigs_ThrottleSync", "KroshSpellShield", 4)
-	self:TriggerEvent("BigWigs_ThrottleSync", "MaulgarWhirldwind", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "OlmSummon", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "MaulgarSmash", 3)
 	db = self.db.profile
 end
 
@@ -341,20 +296,20 @@ end
 
 function mod:Shield()
 	if db.shield then
-		self:Message(L["shield_message"], "Important", nil, nil, nil, 33147)
+		self:IfMessage(L["shield_message"], "Important", 33147)
 	end
 end
 
 function mod:SpellShield(_, spellID)
 	if db.spellshield then
-		self:Message(L["spellshield_message"], "Attention", nil, "Info", nil, spellID)
+		self:IfMessage(L["spellshield_message"], "Attention", spellID, "Info")
 		self:Bar(L["spellshield_bar"], 30, spellID)
 	end
 end
 
 function mod:Whirlwind(_, spellID)
 	if db.whirlwind then
-		self:Message(L["whirlwind_message"], "Important", nil, nil, nil, spellID)
+		self:IfMessage(L["whirlwind_message"], "Important", spellID)
 		self:Bar(L["whirlwind_bar"], 15, spellID)
 		self:DelayedMessage(45, L["whirlwind_warning2"], "Urgent")
 		self:Bar(L["whirlwind_nextbar"], 50, spellID)
@@ -363,14 +318,14 @@ end
 
 function mod:Summon(_, spellID)
 	if db.summon then
-		self:Message(L["summon_message"], "Attention", nil, "Long", nil, spellID)
+		self:IfMessage(L["summon_message"], "Attention", spellID, "Long")
 		self:Bar(L["summon_bar"], 50, spellID)
 	end
 end
 
 function mod:Prayer()
 	if db.heal then
-		self:Message(L["heal_message"], "Important", nil, "Alarm", nil, 33152)
+		self:IfMessage(L["heal_message"], "Important", 33152, "Alarm")
 	end
 end
 
@@ -378,55 +333,6 @@ function mod:Smash()
 	if db.smash then
 		self:Bar(L["smash_bar"], 10, 38761)
 	end
-end
-
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if msg == L["heal_trigger"] then
-		self:Sync("BlindeyePrayer")
-	elseif msg:find(L["summon_trigger"]) then
-		self:Sync("OlmSummon")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if msg:find(L["shield_trigger"]) then
-		self:Sync("BlindeyeShield")
-	elseif msg:find(L["spellshield_trigger"]) then
-		self:Sync("KroshSpellShield")
-	elseif msg:find(L["whirlwind_trigger"]) then
-		self:Sync("MaulgarWhirldwind")
-	end
-end
-
-function mod:Event(msg)
-	if msg:find(L["smash"]) then
-		self:Sync("MaulgarSmash")
-	end
-end
-
-function mod:BigWigs_RecvSync(sync)
-	if sync == "BlindeyePrayer" and db.heal then
-		self:Message(L["heal_message"], "Important", nil, "Alarm")
-	elseif sync == "BlindeyeShield" and db.shield then
-		self:Message(L["shield_message"], "Important")
-	elseif sync == "KroshSpellShield" and db.spellshield then
-		self:Message(L["spellshield_message"], "Attention", nil, "Info")
-		self:Bar(L["spellshield_bar"], 30, "Spell_MageArmor")
-	elseif sync == "OlmSummon" and db.summon then
-		self:Message(L["summon_message"], "Attention", nil, "Long")
-		self:Bar(L["summon_bar"], 50, "Spell_Shadow_SummonFelGuard")
-	elseif sync == "MaulgarWhirldwind" and db.whirlwind then
-		self:Message(L["whirlwind_message"], "Important")
-		self:Bar(L["whirlwind_bar"], 15, "Ability_Whirlwind")
-		self:Nextwhirldwind()
-	elseif sync == "MaulgarSmash" and db.smash then
-		self:Bar(L["smash_bar"], 10, "Ability_Warrior_Cleave")
-	end
-end
-
-function mod:Nextwhirldwind()
-	self:DelayedMessage(45, L["whirlwind_warning2"], "Urgent")
-	self:Bar(L["whirlwind_nextbar"], 50, "Ability_Whirlwind")
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
@@ -437,7 +343,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 
 		if db.whirlwind then
 			self:Message(L["whirlwind_warning1"], "Attention")
-			self:Nextwhirldwind()
+			self:DelayedMessage(45, L["whirlwind_warning2"], "Urgent")
+			self:Bar(L["whirlwind_nextbar"], 50, "Ability_Whirlwind")
 		end
 		if db.spellshield then
 			self:Bar(L["spellshield_bar"], 30, "Spell_MageArmor")

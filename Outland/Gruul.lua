@@ -51,12 +51,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	cavein = "Cave In on You",
 	cavein_desc = "Warn for a Cave In on You.",
-	cavein_trigger = "You are afflicted by Cave In.",
 	cavein_message = "Cave In on YOU!",
 
 	silence = "Silence",
 	silence_desc = "Warn when Gruul casts AOE Silence (Reverberation).",
-	silence_trigger = "afflicted by Reverberation%.$",
 	silence_message = "AOE Silence",
 	silence_warning = "AOE Silence soon!",
 	silence_bar = "~Silence Cooldown",
@@ -85,12 +83,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	cavein = "Eboulement sur vous",
 	cavein_desc = "Préviens quand vous êtes sous un éboulement.",
-	cavein_trigger = "Vous subissez les effets de Eboulement.",
 	cavein_message = "Eboulement sur VOUS !",
 
 	silence = "Silence",
 	silence_desc = "Préviens quand Gruul lance son Silence de zone (Réverbération).",
-	silence_trigger = "les effets .* Réverbération%.$",
 	silence_message = "Silence de zone",
 	silence_warning = "Silence de zone imminent !",
 	silence_bar = "~Cooldown Silence",
@@ -119,12 +115,10 @@ L:RegisterTranslations("deDE", function() return {
 
 	cavein = "H\195\182hleneinst\195\188rz",
 	cavein_desc = "Warnt beim H\195\182hleneinst\195\188rz auf dir",
-	cavein_trigger = "Ihr seid von H\195\182hleneinst\195\188rz betroffen.",
 	cavein_message = "H\195\182hleneinst\195\188rz auf dir!",
 
 	silence = "Stille",
 	silence_desc = "Warnt wenn Gruul stille (Nachwirken) wirkt",
-	silence_trigger = "von Nachklingen betroffen",
 	silence_message = "AOE Stille",
 	silence_warning = "AOE Stille bald!",
 	silence_bar = "~Stille Cooldown",
@@ -153,12 +147,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	cavein = "당신의 함몰",
 	cavein_desc = "당신의 함몰에 대한 경고입니다.",
-	cavein_trigger = "당신은 함몰에 걸렸습니다.",
 	cavein_message = "당신은 함몰!",
 
 	silence = "침묵 경고",
 	silence_desc = "그룰이 광역 침묵(산울림) 시전 시 경고합니다.",
-	silence_trigger = "산울림에 걸렸습니다%.$",
 	silence_message = "광역 침묵",
 	silence_warning = "잠시 후 광역 침묵!",
 	silence_bar = "~침묵 대기시간",
@@ -187,12 +179,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	cavein = "塌下警告",
 	cavein_desc = "當你在塌下的範圍時發送警告",
-	cavein_trigger = "你受到了塌下效果的影響。",
 	cavein_message = "你在塌下的範圍",
 
 	silence = "沉默警告",
 	silence_desc = "當戈魯爾施放範圍沉默時發送警告 (迴響)",
-	silence_trigger = "受(到[了]*)迴響效果的影響。",
 	silence_message = "迴響 - 範圍沉默",
 	silence_warning = "戈魯爾即將施放迴響",
 	silence_bar = "迴響",
@@ -221,12 +211,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	cavein = "洞穴震颤",
 	cavein_desc = "当你中了洞穴震颤发出警报。",
-	cavein_trigger = "你受到了洞穴震颤效果的影响。",
 	cavein_message = ">你< 洞穴震颤！",
 
 	silence = "沉默",
 	silence_desc = "当格鲁尔群体沉默发出警报。",
-	silence_trigger = "受到了回响效果的影响。$",
 	silence_message = "群体沉默",
 	silence_warning = "即将 群体沉默！",
 	silence_bar = "<沉默>",
@@ -255,12 +243,10 @@ L:RegisterTranslations("esES", function() return {
 
 	cavein = "Cueva en ti",
 	cavein_desc = "Avisa de la caida de la cueva en ti.",
-	cavein_trigger = "Sufres de Sepultar.",
 	cavein_message = "Sepultado!",
 
 	silence = "Silencio",
 	silence_desc = "Avisa cuando Gruul castea silencio (Reverberacion).",
-	silence_trigger = "sufre Reverberación.$",
 	silence_message = "AOE Silencio",
 	silence_warning = "AOE Silencio pronto!",
 	silence_bar = "~Silence Cooldown",
@@ -302,11 +288,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
-
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	db = self.db.profile
 end
 
@@ -316,7 +297,7 @@ end
 
 function mod:CaveIn(player)
 	if player == pName and db.cavein then
-		self:Message(L["cavein_message"], "Personal", true, "Alarm", nil, 36240)
+		self:IfMessage(L["cavein_message"], "Personal", 36240, "Alarm")
 	end
 end
 
@@ -326,7 +307,7 @@ function mod:Silence()
 	if (time - last) > 20 then
 		last = time
 		if db.silence then
-			self:Message(L["silence_message"], "Attention", nil, nil, nil, 36297)
+			self:IfMessage(L["silence_message"], "Attention", 36297)
 			self:DelayedMessage(28, L["silence_warning"], "Urgent")
 			self:Bar(L["silence_bar"], 31, 36297)
 		end
@@ -376,22 +357,6 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 			self:DelayedMessage(56, L["grasp_warning"], "Urgent")
 			self:Bar(L["grasp_bar"], 62, "Ability_ThunderClap")
 		end
-	end
-end
-
-local function nilSilence()
-	silence = nil
-end
-
-function mod:Event(msg)
-	if db.cavein and msg == L["cavein_trigger"] then
-		self:Message(L["cavein_message"], "Personal", true, "Alarm")
-	elseif not silence and db.silence and msg:find(L["silence_trigger"]) then
-		self:Message(L["silence_message"], "Attention")
-		self:DelayedMessage(28, L["silence_warning"], "Urgent")
-		self:Bar(L["silence_bar"], 31, "Spell_Holy_ImprovedResistanceAuras")
-		silence = true
-		self:ScheduleEvent("BWGrullNilSilence", nilSilence, 10)
 	end
 end
 
