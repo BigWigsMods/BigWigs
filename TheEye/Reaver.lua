@@ -4,7 +4,6 @@
 
 local boss = BB["Void Reaver"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords") -- XXX 2.4 removal
 
 local db = nil
 
@@ -42,13 +41,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	pounding = "Pounding",
 	pounding_desc = "Show Pounding timer bars.",
-	pounding_trigger1 = "Alternative measure commencing...",
-	pounding_trigger2 = "Calculating force parameters...",
 	pounding_nextbar = "~Pounding Cooldown",
 
 	knock = "Knock Away",
 	knock_desc = "Knock Away cooldown bar.",
-	knock_trigger = "^Void Reaver 's Knock Away",
 	knock_bar = "~Knock Away Cooldown",
 } end )
 
@@ -72,13 +68,10 @@ L:RegisterTranslations("deDE", function() return {
 
 	pounding = "Hämmern",
 	pounding_desc = "Timer Balken für Hämmern",
-	pounding_trigger1 = "Alternative Maßnahmen werden eingeleitet...",
-	pounding_trigger2 = "Angriffsvektor wird berechnet...",
 	pounding_nextbar = "~Hämmern Cooldown",
 
 	knock = "Wegschlagen",
 	knock_desc = "Warnt vor Wegschlagen.",
-	knock_trigger = "^Leerhäschers Wegschlagen",
 	knock_bar = "~Wegschlagen Cooldown",
 } end )
 
@@ -102,13 +95,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	pounding = "Martèlement",
 	pounding_desc = "Affiche des barres temporelles pour les Martèlements.",
-	pounding_trigger1 = "Lancement des mesures alternatives...",
-	pounding_trigger2 = "Calcul des paramètres de puissance...",
 	pounding_nextbar = "~Cooldown Martèlement",
 
 	knock = "Repousser au loin",
 	knock_desc = "Affiche une barre temporelle indiquant quand le Saccageur du Vide est suceptible d'utiliser son Repousser au loin.",
-	knock_trigger = "Repousser au loin de Saccageur du Vide",
 	knock_bar = "~Cooldown Repousser au loin",
 } end )
 
@@ -132,13 +122,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	pounding = "울림",
 	pounding_desc = "울림에 대한 타이머 바를 표시합니다.",
-	pounding_trigger1 = "대체 공격 실행 중...",
-	pounding_trigger2 = "파괴력 변수 계산 중...",
 	pounding_nextbar = "~울림 대기 시간",
 
 	knock = "날려버리기",
 	knock_desc = "날려버리기 대기시간 바를 표시합니다.",
-	knock_trigger = "^공허의 절단기|1이;가; 날려버리기|1으로;로;",
 	knock_bar = "~날려버리기 대기시간",
 } end )
 
@@ -162,13 +149,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	pounding = "重击",
 	pounding_desc = "显示重击记时条。",
-	pounding_trigger1 = "备用方案启动……",
-	pounding_trigger2 = "计算力量参数……",
 	pounding_nextbar = "~重击 冷却",
 
 	knock = "击退",
 	knock_desc = "击退冷却计时条。",
-	knock_trigger = "^空灵机甲的击退",
 	knock_bar = "<击退 冷却>",
 } end )
 
@@ -192,13 +176,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	pounding = "猛擊",
 	pounding_desc = "顯示猛擊計時條。",
-	pounding_trigger1 = "選擇性測量開始....",
-	pounding_trigger2 = "計算力量參數...",
 	pounding_nextbar = "猛擊冷卻",
 
 	knock = "擊退",
 	knock_desc = "擊退冷卻計時條。",
-	knock_trigger = "虛無搶奪者的擊退",
 	knock_bar = "~擊退冷卻計時",
 } end )
 
@@ -225,16 +206,7 @@ function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE", "KnockAway")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_SELF_DAMAGE", "KnockAway")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_PARTY_DAMAGE", "KnockAway")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:Throttle(7, "ReavKA2")
 
 	db = self.db.profile
 	temp = nil
@@ -267,25 +239,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.enrage then
 			self:Enrage(600)
 		end
-	elseif db.pounding and (msg == L["pounding_trigger1"] or msg == L["pounding_trigger2"]) then
-		self:Bar(L["pounding_nextbar"], 13, "Ability_ThunderClap")
-	end
-end
-
-function mod:KnockAway(msg)
-	if msg:find(L["knock_trigger"]) then
-		self:Sync("ReavKA2")
-	end
-end
-
-function mod:BigWigs_RecvSync(sync)
-	if sync == "ReavKA2" and db.knock then
-		self:Bar(L["knock_bar"], 20, "INV_Gauntlets_05")
 	end
 end
 
 do
-	local rfID = GetSpellInfo and GetSpellInfo(25780) --Righteous Fury
+	local rfID = GetSpellInfo(25780)
 	local cachedId = nil
 	local lastTarget = nil
 	function mod:OrbCheck()
@@ -303,7 +261,7 @@ do
 				local i = 1
 				local name = UnitBuff(target, i)
 				while name do
-					if name == (GetSpellInfo and rfID or L2["RF"]) then
+					if name == rfID then
 						return --kill if a paladin
 					end
 					i = i + 1
@@ -318,18 +276,16 @@ end
 
 function mod:Result(target)
 	if target == pName and db.orbyou then
-		self:Message(L["orb_you"], "Personal", true, "Long")
-		self:Message(fmt(L["orb_other"], target), "Attention", nil, nil, true, 34172)
+		self:LocalMessage(L["orb_you"], "Personal", 34172, "Long")
+		self:WideMessage(fmt(L["orb_other"], target))
 
 		--this is handy for player with speech bubbles enabled to see if nearby players are being hit and run away from them
 		if db.orbsay then
 			SendChatMessage(L["orb_say"], "SAY")
 		end
 	elseif db.orbother then
-		self:Message(fmt(L["orb_other"], target), "Attention", nil, nil, nil, 34172)
+		self:IfMessage(fmt(L["orb_other"], target), "Attention", 34172)
 	end
-	if db.icon then
-		self:Icon(target)
-	end
+	self:Icon(target, "icon")
 end
 

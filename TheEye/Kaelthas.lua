@@ -4,7 +4,6 @@
 
 local boss = BB["Kael'thas Sunstrider"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local capernian = BB["Grand Astromancer Capernian"]
 local sanguinar = BB["Lord Sanguinar"]
@@ -24,7 +23,6 @@ local fmt = string.format
 local db = nil
 local CheckInteractDistance = CheckInteractDistance
 local pName = UnitName("player")
-local stop = nil
 local phase = nil
 
 ----------------------------
@@ -57,9 +55,6 @@ L:RegisterTranslations("enUS", function() return {
 	fear_soon_message = "Fear soon!",
 	fear_message = "Fear!",
 	fear_bar = "~Fear Cooldown",
-	fear_soon_trigger = "Lord Sanguinar begins to cast Bellowing Roar.",
-	fear_trigger1 = "^Lord Sanguinar's Bellowing Roar was resisted by %S+.$",
-	fear_trigger2 = "^Lord Sanguinar's Bellowing Roar fails. %S+ is immune.$",
 	fear_spell = "Bellowing Roar",
 
 	rebirth = "Phoenix Rebirth",
@@ -105,8 +100,6 @@ L:RegisterTranslations("enUS", function() return {
 	mc_desc = "Warn who has Mind Control.",
 	mc_message = "Mind Control: %s",
 
-	afflicted_trigger = "^(%S+) (%S+) afflicted by (.*).$",
-
 	revive_bar = "Adds Revived",
 	revive_warning = "Adds Revived in 5sec!",
 
@@ -137,9 +130,6 @@ L:RegisterTranslations("koKR", function() return {
 	fear_soon_message = "잠시 후 공포!",
 	fear_message = "공포!",
 	fear_bar = "~공포 대기 시간",
-	fear_soon_trigger = "군주 생귀나르|1이;가; 우레와 같은 울부짖음 시전을 시작합니다.",
-	fear_trigger1 = "^군주 생귀나르|1이;가; 우레와 같은 울부짖음|1으로;로; %S|1을;를; 공격했지만 저항했습니다.$",
-	fear_trigger2 = "^군주 생귀나르|1이;가; 우레와 같은 울부짖음 사용에 실패했습니다. %S|1은;는; 면역입니다.$",
 	fear_spell = "우레와 같은 울부짖음",
 
 	rebirth = "불사조 환생",
@@ -185,8 +175,6 @@ L:RegisterTranslations("koKR", function() return {
 	mc_desc = "정신 지배에 걸린 사람을 알립니다.",
 	mc_message = "정신 지배: %s",
 
-	afflicted_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
-
 	revive_bar = "조언가 부활",
 	revive_warning = "5초 이내 조언가 부활!",
 
@@ -217,9 +205,6 @@ L:RegisterTranslations("frFR", function() return {
 	fear_soon_message = "Rugissement imminent !",
 	fear_message = "Rugissement !",
 	fear_bar = "Cooldown Rugissement",
-	fear_soon_trigger = "Seigneur Sanguinar commence à lancer Rugissement puissant.",
-	fear_trigger1 = "^Seigneur Sanguinar utilise Rugissement puissant, mais %S+ résiste.$",
-	fear_trigger2 = "^Seigneur Sanguinar utilise Rugissement puissant, mais %S+ est insensible.$",
 	fear_spell = "Rugissement puissant",
 
 	rebirth = "Renaissance du phénix",
@@ -265,8 +250,6 @@ L:RegisterTranslations("frFR", function() return {
 	mc_desc = "Préviens quand des joueurs subissent les effets du Contrôle mental.",
 	mc_message = "Contrôle mental : %s",
 
-	afflicted_trigger = "^(%S+) (%S+) les effets [de|2]+ (.*).$",
-
 	revive_bar = "Retour des conseillers",
 	revive_warning = "Retour des conseillers dans 5 sec. !",
 
@@ -300,9 +283,6 @@ L:RegisterTranslations("deDE", function() return {
 	fear_soon_message = "Furcht bald!",
 	fear_message = "Furcht!",
 	fear_bar = "Furcht Cooldown",
-	fear_soon_trigger = "Fürst Blutdurst beginnt Dröhnendes Gebrüll zu wirken.",
-	fear_trigger1 = "^Fürst Blutdurst's Dröhnendes Gebrüll wurde von %S+ widerstanden.$",
-	fear_trigger2 = "^Fürst Blutdurst versucht es mit Dröhnendes Gebrüll. Ein Fehlschlag, denn %S+ ist immun.$",
 	fear_spell = "Dröhnendes Gebrüll",
 
 	rebirth = "Phönix Wiedergeburt",
@@ -348,8 +328,6 @@ L:RegisterTranslations("deDE", function() return {
 	mc_desc = "Warnt wer von Gedankenkontrolle betroffen ist.",
 	mc_message = "Gedankenkontrolle: %s",
 
-	afflicted_trigger = "^(%S+) (%S+) ist von (.*) betroffen.$",
-
 	revive_bar = "Berater Wiederbelebung",
 	revive_warning = "Berater wiederbelebt in 5sec!",
 } end )
@@ -378,9 +356,6 @@ L:RegisterTranslations("zhCN", function() return {
 	fear_soon_message = "即将恐惧！",
 	fear_message = "恐惧！",
 	fear_bar = "<恐惧 冷却>",
-	fear_soon_trigger = "萨古纳尔男爵开始施放低沉咆哮。",
-	fear_trigger1 = "^萨古纳尔男爵的低沉咆哮被(.+)抵抗了。$",
-	fear_trigger2 = "^萨古纳尔男爵的低沉咆哮施放失败。(.+)对此免疫。$",
 	fear_spell = "低沉咆哮",
 
 	rebirth = "凤凰复生",
@@ -426,8 +401,6 @@ L:RegisterTranslations("zhCN", function() return {
 	mc_desc = "当队友被精神控制发出警报。",
 	mc_message = "精神控制：>%s<！",
 
-	afflicted_trigger = "^(.+)受(.+)了(.*)效果的影响。$",
-
 	revive_bar = "<凤凰复活>",
 	revive_warning = "5秒后 凤凰复活",
 
@@ -436,7 +409,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "魔法，能量，我的人民陷入其中不能自拔……自從太陽之井被摧毀之後就是如此。歡迎來到未來。真遺憾，你們無法阻止什麼。沒有人可以阻止我了﹗",
---	engage_trigger = "魔法，能量，我的人民陷入其中不能自拔……自從太陽之井被摧毀之後就是如此。歡迎來到未來。真遺憾，你們無法阻止什麼。沒有人可以阻止我了﹗(薩拉斯語)為了人民的正義!",
 	engage_message = "第一階段 - 四顧問！",
 
 	conflag = "燃燒",
@@ -459,9 +431,6 @@ L:RegisterTranslations("zhTW", function() return {
 	fear_soon_message = "即將恐懼！",
 	fear_message = "恐懼！",
 	fear_bar = "恐懼冷卻",
-	fear_soon_trigger = "桑古納爾開始施放低沉咆哮",
-	fear_trigger1 = "桑古納爾的低沉咆哮被",
-	fear_trigger2 = "桑古納爾的低沉咆哮施放失敗。",
 	fear_spell = "低沉咆哮",
 
 	rebirth = "鳳凰復生",
@@ -507,8 +476,6 @@ L:RegisterTranslations("zhTW", function() return {
 	mc_desc = "精神控制警示",
 	mc_message = "精神控制：[%s]",
 
-	afflicted_trigger = "^(.+)受(到[了]*)(.*)效果的影響。$",
-
 	revive_bar = "顧問重生",
 	revive_warning = "顧問在五秒內活動！Tank、Healer 準備就位！",
 } end )
@@ -539,26 +506,12 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Fear", 39427, 36922, 40636, 44863) -- Really need to figure out which one.
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Afflicted")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Afflicted")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Afflicted")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_HOSTILEPLAYER_DAMAGE", "Afflicted")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "KaelConflag", 0.8)
-	self:TriggerEvent("BigWigs_ThrottleSync", "KSToy", 3)
-	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFearSoon", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "KaelFear", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "KaelMC2", 0)
 	db = self.db.profile
 	phase = 0
 end
@@ -570,7 +523,7 @@ end
 function mod:Conflag(player, spellID)
 	if db.conflag then
 		local msg = fmt(L["conflag_message"], player)
-		self:Message(msg, "Attention", nil, nil, nil, spellID)
+		self:IfMessage(msg, "Attention", spellID)
 		self:Bar(msg, 10, spellID)
 	end
 end
@@ -578,7 +531,7 @@ end
 function mod:Toy(player, spellID)
 	if db.toyall and phase < 3 then
 		local msg = fmt(L["toyall_message"], player)
-		self:Message(msg, "Attention", nil, nil, nil, spellID)
+		self:IfMessage(msg, "Attention", spellID)
 		self:Bar(msg, 60, spellID)
 	end
 end
@@ -592,13 +545,13 @@ end
 
 function mod:FearCast()
 	if db.fear then
-		self:Message(L["fear_soon_message"], "Urgent", nil, nil, nil, 36922)
+		self:IfMessage(L["fear_soon_message"], "Urgent", 36922)
 	end
 end
 
 function mod:Fear(_, spellID)
 	if db.fear then
-		self:Message(L["fear_message"], "Attention", nil, nil, nil, spellID)
+		self:IfMessage(L["fear_message"], "Attention", spellID)
 		self:Bar(L["fear_bar"], 30, spellID)
 	end
 end
@@ -611,14 +564,6 @@ function mod:Deaths(unit)
 	end
 end
 
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg == L["fear_soon_trigger"] then
-		self:Sync("KaelFearSoon")
-	elseif msg:find(L["fear_trigger2"]) or msg:find(L["fear_trigger1"]) then
-		self:Sync("KaelFear")
-	end
-end
-
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if not db.gaze then return end
 
@@ -627,14 +572,12 @@ function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 		self:Bar(L["gaze_bar"], 9, "Spell_Shadow_EvilEye")
 		local other = fmt(L["gaze_message"], player)
 		if player == pName then
-			self:Message(L["gaze_you"], "Personal", true, "Alarm")
-			self:Message(other, "Important", nil, nil, true)
+			self:LocalMessage(L["gaze_you"], "Personal", nil, "Alarm")
+			self:WideMessage(other)
 		else
 			self:Message(other, "Important")
 		end
-		if db.icon then
-			self:Icon(player)
-		end
+		self:Icon(player, "whisper")
 	end
 end
 
@@ -643,7 +586,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(thaladred, 32, "Spell_Shadow_Charm")
 		self:Message(L["engage_message"], "Positive")
 		for k in pairs(MCd) do MCd[k] = nil end
-		stop = nil
 		phase = 1
 	elseif msg == L["thaladred_inc_trigger"] then
 		self:Message(thaladred, "Positive")
@@ -700,75 +642,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	end
 end
 
-function mod:Afflicted(msg)
-	local tPlayer, tType, tSpell = select(3, msg:find(L["afflicted_trigger"]))
-	if tPlayer and tType then
-		if tPlayer == L2["you"] and tType == L2["are"] then
-			tPlayer = pName
-		end
-		if tSpell == L["conflag_spell"] then
-			self:Sync("KaelConflag", tPlayer)
-		elseif tSpell == L["fear_spell"] then
-			self:Sync("KaelFear")
-		elseif tSpell == L["mc"] then
-			self:Sync("KaelMC2", tPlayer)
-		elseif tSpell == L["toyall"] then
-			self:Sync("KSToy", tPlayer)
-		end
-	end
-end
-
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "KaelConflag" and rest and db.conflag then
-		local msg = fmt(L["conflag_message"], rest)
-		self:Message(msg, "Attention")
-		self:Bar(msg, 10, "Spell_Fire_Incinerate")
-	elseif sync == "KSToy" and rest and db.toyall and phase < 3 then
-		local msg = fmt(L["toyall_message"], rest)
-		self:Message(msg, "Attention")
-		self:Bar(msg, 60, "INV_Misc_Urn_01")
-	elseif sync == "KaelFearSoon" and db.fear then
-		self:Message(L["fear_soon_message"], "Urgent")
-	elseif sync == "KaelFear" and db.fear then
-		self:Message(L["fear_message"], "Attention")
-		self:Bar(L["fear_bar"], 30, "Spell_Shadow_PsychicScream")
-	elseif sync == "KaelMC2" and rest and not stop then
-		MCd[rest] = true
-		self:ScheduleEvent("BWMindControlWarn", self.MCWarn, 0.3, self)
-	end
-end
-
-do
-	local die = UNITDIESOTHER
-	local dead = L["dead_message"]
-	function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
-		if msg == fmt(die, axe) then
-			self:Message(fmt(dead, axe), "Attention")
-		elseif msg == fmt(die, mace) then
-			self:Message(fmt(dead, mace), "Attention")
-		elseif msg == fmt(die, dagger) then
-			self:Message(fmt(dead, dagger), "Attention")
-		elseif msg == fmt(die, staff) then
-			self:Message(fmt(dead, staff), "Attention")
-		elseif msg == fmt(die, sword) then
-			self:Message(fmt(dead, sword), "Attention")
-		elseif msg == fmt(die, bow) then
-			self:Message(fmt(dead, bow), "Attention")
-		elseif msg == fmt(die, shield) then
-			self:Message(fmt(dead, shield), "Attention")
-		else
-			self:GenericBossDeath(msg)
-		end
-	end
-end
-
-local function nilStop()
-	stop = nil
-	for k in pairs(MCd) do MCd[k] = nil end
-end
-
 function mod:MCWarn()
-	if stop then return end
 	if db.mc then
 		local msg = nil
 		for k in pairs(MCd) do
@@ -778,9 +652,8 @@ function mod:MCWarn()
 				msg = msg .. ", " .. k
 			end
 		end
-		self:Message(fmt(L["mc_message"], msg), "Important", nil, "Alert", nil, 36798)
+		self:IfMessage(fmt(L["mc_message"], msg), "Important", 36798, "Alert")
 	end
-	stop = true
-	self:ScheduleEvent("BWKaelthasNilStop", nilStop, 5)
+	for k in pairs(MCd) do MCd[k] = nil end
 end
 

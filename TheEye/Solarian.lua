@@ -4,7 +4,6 @@
 
 local boss = BB["High Astromancer Solarian"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local p2 = nil
 
 local pName = UnitName("player")
@@ -30,7 +29,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	wrath = "Wrath Debuff",
 	wrath_desc = "Warn who is afflicted by Wrath of the Astromancer.",
-	wrath_trigger = "^(%S+) (%S+) afflicted by Wrath of the Astromancer%.$",
 	wrath_fade = "Wrath of the Astromancer fades from you.",
 	wrath_other = "Wrath on %s",
 	wrath_you = "Wrath on YOU!",
@@ -66,7 +64,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	wrath = "Zorn des Astromanten",
 	wrath_desc = "Warnt wer von Zorn des Astromanten betroffen ist.",
-	wrath_trigger = "^([^%s]+) ([^%s]+) von Zorn des Astromanten betroffen%.$",
 	wrath_fade = "Zorn des Astromanten schwindet von Euch.",
 	wrath_other = "Zorn auf %s",
 	wrath_you = "Zorn auf DIR!",
@@ -102,7 +99,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	wrath = "분노 디버프",
 	wrath_desc = "분노 디버프에 걸린 대상을 알립니다.",
-	wrath_trigger = "^([^|;%s]*)(.*)점성술사의 분노에 걸렸습니다%.$",
 	wrath_fade = "당신의 몸에서 점성술사의 분노 효과가 사라졌습니다.",
 	wrath_other = "%s에 분노",
 	wrath_you = "당신에 분노!",
@@ -138,7 +134,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	wrath = "Courroux de l'Astromancien",
 	wrath_desc = "Préviens quand un joueur subit les effets du Courroux de l'Astromancien.",
-	wrath_trigger = "^(%S+) (%S+) les effets .* Courroux de l'Astromancien%.$",
 	wrath_fade = "Courroux de l'Astromancien vient de se dissiper.",
 	wrath_other = "Courroux sur %s",
 	wrath_you = "Courroux sur VOUS !",
@@ -174,7 +169,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	wrath = "愤怒 Debuff",
 	wrath_desc = "当受到星术师之怒发出警报。",
-	wrath_trigger = "^(.+)受(.+)了星术师之怒效果的影响。$",
 	wrath_fade = "星术师之怒效果从你身上消失了。",
 	wrath_other = "愤怒：>%s<！",
 	wrath_you = ">你< 愤怒！",
@@ -210,7 +204,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	wrath = "星術師之怒施放",
 	wrath_desc = "警報隊友受到星術師之怒。",
-	wrath_trigger = "^(.+)受(到[了]*)星術師之怒效果的影響。",
 	wrath_fade = "星術師之怒效果從你身上消失了。",
 	wrath_other = "星術師之怒：[%s]",
 	wrath_you = "你中了星術師之怒！快跑！",
@@ -255,13 +248,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_REMOVED", "WrathRemove", 42783)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "WrathAff")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "WrathAff")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "WrathAff")
-
 	self:RegisterEvent("UNIT_HEALTH")
 
 	db = self.db.profile
@@ -275,22 +262,15 @@ function mod:Wrath(player, spellID)
 	if db.wrath then
 		local other = L["wrath_other"]:format(player)
 		if player == pName then
-			self:Message(L["wrath_you"], "Personal", true, "Long", nil, spellID)
-			self:Message(other, "Attention", nil, nil, true)
+			self:LocalMessage(L["wrath_you"], "Personal", spellID, "Long")
+			self:WideMessage(other)
 		else
-			self:Message(other, "Attention", nil, nil, nil, spellID)
-			if db.whisper then
-				self:Whisper(player, L["wrath_you"])
-			end
+			self:IfMessage(other, "Attention", spellID)
+			self:Whisper(player, L["wrath_you"], "whisper")
 		end
 		self:Bar(other, 6, spellID)
-		if db.icon then
-			self:Icon(player)
-		end
+		self:Icon(player, "icon")
 		self:TriggerEvent("BigWigs_ShowProximity", self)
-		if not GetSpellInfo then --XXX remove 2.4
-			self:ScheduleEvent("BWSolaProx", self.WrathRemove, 6, self, pName)
-		end
 	end
 end
 
@@ -318,20 +298,6 @@ function mod:UNIT_HEALTH(msg)
 		elseif hp > 40 and p2 then
 			p2 = false
 		end
-	end
-end
-
-local function HideProx()
-	mod:TriggerEvent("BigWigs_HideProximity", self)
-end
-
-function mod:WrathAff(msg)
-	local wplayer, wtype = select(3, msg:find(L["wrath_trigger"]))
-	if wplayer and wtype then
-		if wplayer == L2["you"] and wtype == L2["are"] then
-			wplayer = pName
-		end
-		self:Wrath(wplayer)
 	end
 end
 

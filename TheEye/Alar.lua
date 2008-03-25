@@ -5,8 +5,6 @@
 local boss = BB["Al'ar"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords") -- XXX remove after 2.4
-
 local started = nil
 local db = nil
 local prior = nil
@@ -31,12 +29,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	flamepatch = "Flame Patch on You",
 	flamepatch_desc = "Warn for a Flame Patch on You.",
-	flamepatch_trigger = "You are afflicted by Flame Patch.",
 	flamepatch_message = "Flame Patch on YOU!",
 
 	armor = "Melt Armor",
 	armor_desc = "Warn who gets Melt Armor.",
-	armor_trigger = "^(%S+) (%S+) afflicted by Melt Armor%.$",
 	armor_other = "Melt Armor: %s",
 	armor_you = "Melt Armor on YOU!",
 
@@ -53,12 +49,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	flamepatch = "Gerbe de flammes sur vous",
 	flamepatch_desc = "Préviens quand une Gerbe de flammes est sur vous.",
-	flamepatch_trigger = "Vous subissez les effets de Gerbe de flammes.",
 	flamepatch_message = "Gerbe de flammes sur VOUS !",
 
 	armor = "Fondre armure",
 	armor_desc = "Préviens quand un joueur est affecté par Fondre armure.",
-	armor_trigger = "^([^%s]+) ([^%s]+) les effets .* Fondre armure%.$",
 	armor_other = "Fondre armure : %s",
 	armor_you = "Fondre armure sur VOUS !",
 
@@ -75,12 +69,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	flamepatch = "당신에 화염 파편",
 	flamepatch_desc = "당신에 화염 파편에 대한 경고입니다.",
-	flamepatch_trigger = "당신은 화염 파편에 걸렸습니다.",
 	flamepatch_message = "당신에 화염 파편!",
 
 	armor = "방어구 녹이기",
 	armor_desc = "방어구 녹이기에 걸린 사람에 대한 경고입니다.",
-	armor_trigger =  "^([^|;%s]*)(.*)방어구 녹이기에 걸렸습니다%.$",
 	armor_other = "방어구 녹이기: %s",
 	armor_you = "당신에 방어구 녹이기!",
 
@@ -97,12 +89,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	flamepatch = "烈焰助長",
 	flamepatch_desc = "當你受到烈焰助長時警告",
-	flamepatch_trigger = "你受到了烈焰助長效果的影響。",
 	flamepatch_message = "烈焰助長：[你]",
 
 	armor = "熔化護甲",
 	armor_desc = "當某人受到熔化護甲時提示",
-	armor_trigger = "^(.+)受(到[了]*)熔化護甲效果的影響。",
 	armor_other = "熔化護甲：[%s]",
 	armor_you = "熔化護甲：[你]",
 
@@ -119,12 +109,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	flamepatch = "烈焰之地(你)",
 	flamepatch_desc = "烈焰之地于你警报。",
-	flamepatch_trigger = "你受到了烈焰击打效果的影响。",
 	flamepatch_message = ">你< 烈焰之地！",
 
 	armor = "熔化护甲",
 	armor_desc = "当队友获得熔化护甲发出警报。",
-	armor_trigger = "^(.+)受(.+)了熔化护甲效果的影响。$",
 	armor_other = "熔化护甲：>%s<！",
 	armor_you = ">你< 熔化护甲！",
 
@@ -141,12 +129,10 @@ L:RegisterTranslations("deDE", function() return {
 
 	flamepatch = "Flammenfeld auf Dir",
 	flamepatch_desc = "Warnt vor Flammenfeld auf Dir.",
-	flamepatch_trigger = "Ihr seid von Flammenfeld betroffen.",
 	flamepatch_message = "Flammenfeld auf DIR!",
 
 	armor = "Rüstungsschmelze",
 	armor_desc = "Warnt wer von Rüstungsschmelze betroffen ist.",
-	armor_trigger = "^(%S+) (%S+) ist von Rüstungsschmelze betroffen%.$",
 	armor_other = "Rüstungsschmelze: %s",
 	armor_you = "Rüstungsschmelze auf DIR!",
 
@@ -174,15 +160,8 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Armor", 35410)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "DebuffEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "DebuffEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "DebuffEvent")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:Throttle(5, "AlArArmor")
-
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("BigWigs_RecvSync")
 
 	started = nil
 	db = self.db.profile
@@ -193,9 +172,8 @@ end
 ------------------------------
 
 function mod:FlamePatch(player)
-	if not db.flamepatch then return end
-	if player == pName then
-		self:Message(L["flamepatch_message"], "Personal", true, "Alarm", nil, 35383)
+	if player == pName and db.flamepatch then
+		self:IfMessage(L["flamepatch_message"], "Personal", 35383, "Alarm")
 	end
 end
 
@@ -203,15 +181,13 @@ function mod:Armor(player, spellID)
 	if db.armor then
 		local other = fmt(L["armor_other"], player)
 		if player == pName then
-			self:Message(L["armor_you"], "Important", true, "Long", nil, spellID)
-			self:Message(other, "Attention", nil, nil, true)
+			self:LocalMessage(L["armor_you"], "Important", spellID, "Long")
+			self:WideMessage(other)
 		else
-			self:Message(other, "Attention", nil, nil, nil, spellID)
+			self:IfMessage(other, "Attention", spellID)
 		end
 		self:Bar(other, 60, spellID)
-		if db.icon then
-			self:Icon(player)
-		end
+		self:Icon(player, "icon")
 	end
 end
 
@@ -234,18 +210,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 		self:ScheduleRepeatingEvent("BWAlarTargetSeek", self.AlarCheck, 1, self)
 		self:ScheduleEvent("BWAlarNilOccured", nilOccured, 25) --this is here to prevent target problems
-	elseif sync == "AlArArmor" and rest and db.armor then
-		local other = fmt(L["armor_other"], rest)
-		if rest == pName then
-			self:Message(L["armor_you"], "Important", true, "Long", nil, 35410)
-			self:Message(other, "Attention", nil, nil, true)
-		else
-			self:Message(other, "Attention", nil, nil, nil, 35410)
-		end
-		self:Bar(other, 60, "Spell_Fire_Immolation")
-		if db.icon then
-			self:Icon(rest)
-		end
 	end
 end
 
@@ -257,9 +221,9 @@ function mod:AlarCheck()
 			prior = true
 		end
 		if fireball and db.meteor then
-			self:Message(L["meteor_message"], "Urgent", nil, "Alarm", nil, 35181)
+			self:IfMessage(L["meteor_message"], "Urgent", 35181, "Alarm")
 			self:DelayedMessage(47, L["meteor_warning"], "Important")
-			self:Bar(L["meteor_nextbar"], 52, "Spell_Fire_Burnout")
+			self:Bar(L["meteor_nextbar"], 52, 35181)
 		end
 		fireball = true
 
@@ -269,20 +233,6 @@ function mod:AlarCheck()
 		--If 120 seconds pass with no meteor, we must have wiped, allow CheckForEngage
 		--This timer should overwrite itself every meteor, starting from the start
 		self:ScheduleEvent("BWAlarReset", resetMe, 120)
-	end
-end
-
-function mod:DebuffEvent(msg)
-	if msg == L["flamepatch_trigger"] then
-		self:FlamePatch(pName)
-	end
-
-	local aplayer, atype = select(3, msg:find(L["armor_trigger"]))
-	if aplayer and atype then
-		if aplayer == L2["you"] and atype == L2["are"] then -- XXX 2.4 removal
-			aplayer = pName
-		end
-		self:Sync("AlArArmor", aplayer)
 	end
 end
 
