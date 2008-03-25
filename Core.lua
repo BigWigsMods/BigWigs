@@ -360,6 +360,7 @@ function BigWigs:OnEnable(first)
 		self:RegisterEvent("BigWigs_TargetSeen")
 		self:RegisterEvent("BigWigs_RebootModule")
 		self:RegisterEvent("BigWigs_RecvSync")
+		BigWigs:Print("We need your help, type /bwhelp for more info.")
 	else
 		self:ToggleActive(false)
 	end

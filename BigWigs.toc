@@ -29,6 +29,7 @@ LoadOnDemand.lua
 Core.lua
 Prototype.lua
 Options.lua
+Help.lua
 
 modules.xml
 
