@@ -74,6 +74,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Frost Wyrm"] = true,
 	["Fel Stalkers"] = true,
 	["Infernals"] = true,
+
+	["Ghoul"] = true,
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -285,7 +287,7 @@ local proudmoore = L["Lady Jaina Proudmoore"]
 
 local mod = BigWigs:NewModule(name)
 mod.zonename = name
-mod.enabletrigger = { thrall, proudmoore }
+mod.enabletrigger = { thrall, proudmoore, L["Ghoul"] }
 mod.toggleoptions = {"waves", "detail"}
 mod.revision = tonumber(match("$Revision$", "%d+"))
 mod.synctoken = "Hyjal Summit"
