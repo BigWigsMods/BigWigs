@@ -153,26 +153,26 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	berserk_trigger = "La Sala de los Animales es solo para invitados.",
+	berserk_trigger = "La colecci\195\179n es solo para los invitados.",
 
-	enrage_trigger = "Su no cumplimiento resultará en una acción ofensiva.",
-	enrage_message = "Enfurecido!",
-	enrage_warning = "Efurecimiento pronto!",
+	enrage_trigger = "Su no cumplimiento resultar\195\161 en una acci\195\179n ofensiva.",
+	enrage_message = "\194\161Enfurecido!",
+	enrage_warning = "\194\161Enfurecimiento pronto!",
 
 	weaken = "Debilidad",
 	weaken_desc = "Aviso del estado de debilidad.",
-	weaken_trigger = "Su solicitud no puede ser procesada.",
-	weaken_message = "Evocacion - Debilidad durante 20sec!",
-	weaken_bar = "Evocacion",
-	weaken_fade_message = "Evocacion Finalizada - Debilidad desaparecida!",
-	weaken_fade_warning = "Evocacion en unos 5sec!",
+	weaken_trigger = "No se puede procesar tu petici\195\179n.",
+	weaken_message = "\194\161Evocaci\195\179n - Debilidad durante 20sec!",
+	weaken_bar = "Evocaci\195\179n",
+	weaken_fade_message = "\194\161Evocaci\195\179n Finalizada - Debilidad desaparecida!",
+	weaken_fade_warning = "\194\161Evocaci\195\179n en unos 5sec!",
 
 	weaktime = "Cuenta atras de Debilidad",
 	weaktime_desc = "Barra de cuenta atras hasta la proxima debilidad.",
-	weaktime_message1 = "Evocacion en ~10 segundos",
-	weaktime_message2 = "Evocacion en ~30 segundos",
-	weaktime_message3 = "Evocacion en ~70 segundos",
-	weaktime_bar = "~Enfriamiento de Evocacion",
+	weaktime_message1 = "Evocaci\195\179n en ~10 segundos",
+	weaktime_message2 = "Evocaci\195\179n en ~30 segundos",
+	weaktime_message3 = "Evocaci\195\179n en ~70 segundos",
+	weaktime_bar = "~Enfriamiento de Evocaci\195\179n",
 } end )
 
 ----------------------------------

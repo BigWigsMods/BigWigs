@@ -190,7 +190,6 @@ L:RegisterTranslations("esES", function() return {
 	enrage_warning = "Enfurecimiento Pronto!",
 } end)
 
-
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

@@ -2,7 +2,6 @@
 --      Are you local?      --
 ------------------------------
 
-
 local boss = BB["Attumen the Huntsman"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
@@ -42,7 +41,6 @@ L:RegisterTranslations("deDE", function() return {
 	curse_trigger = "^([^%s]+) ([^%s]+) von K\195\182rperlose Pr\195\164senz betroffen%.$",
 	curse_message = "Tank verflucht - %s",
 } end)
-
 
 L:RegisterTranslations("frFR", function() return {
 	phase = "Phase",
@@ -114,7 +112,6 @@ L:RegisterTranslations("esES", function() return {
 	curse_trigger = "^([^%s]+) ([^%s]+) sufre Presencia intangible%.$",
 	curse_message = "Tanque Maldito - %s",
 } end)
-
 
 ----------------------------------
 --      Module Declaration      --

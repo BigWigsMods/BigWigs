@@ -276,6 +276,49 @@ L:RegisterTranslations("zhTW", function() return {
 	flame_trigger = "施放烈焰火圈",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger1 = "I'll not be tortured again!",
+	engage_trigger2 = "\194\191Qui\195\169nes sois? \194\191Qu\195\169 quer\195\169is? \194\161Alejaos de m\195\173!",
+	engage_trigger3 = "\194\161Por favor, basta! \194\161Mi hijo... se ha vuelto loco!",
+	engage_message = "%s Activado",
+
+	adds = "Elementales",
+	adds_desc = "Avisa de la aparaci\195\179n de los elementales de agua.",
+	adds_message = "\194\161Llegada de Elementales!",
+	adds_warning = "Elementales Pronto",
+	adds_trigger = "\194\161No he acabado a\195\186n! No, me guardo un par de ases en la manga...",
+	adds_bar = "Duraci\195\179n Elementales",
+
+	drink = "Beber",
+	drink_desc = "Avisa de cuando comienza a beber Aran.",
+	drink_trigger = "\194\191Seguro que no le negar\195\169is a un viejo una bebida reconstituyente? No, no, ya lo sab\195\173a.",
+	drink_warning = "Man\195\161 bajo - Beber pronto!",
+	drink_message = "Bebiendo - Polimorfia de \195\161rea!",
+	drink_bar = "Super Pyroblast Incoming",
+
+	blizzard = "Ventisca",
+	blizzard_desc = "Avisa de cuando ventisca est\195\161 siendo lanzada.",
+	blizzard_trigger1 = "\194\161A la fr\195\173a oscuridad con vosotros!",
+	blizzard_trigger2 = "\194\161Os congelar\195\169 a todos!",
+	blizzard_message = "\194\161Ventisca!",
+
+	pull = "Pull/Super AE",
+	pull_desc = "Warn for the magnetic pull and Super Arcane Explosion.",
+	pull_message = "Arcane Explosion!",
+	pull_trigger1 = "S\195\173, s\195\173, mi primog\195\169nito es bastante poderoso... \194\161pero yo tengo mis propios poderes!",
+	pull_trigger2 = "\194\161No soy un simple juglar! \194\161Soy Nielas Aran!",
+	pull_bar = "Deflagraci\195\179n Arcana",
+
+	flame = "Corona de llamas",
+	flame_desc = "Avisa de cuando Coronna de llamas est\195\161 siendo lanzada.",
+	flame_warning = "\194\161Lanzando: Corona de llamas!",
+	flame_trigger1 = "\194\161Mirad: este perro apaleado a\195\186n tiene dientes!",
+	flame_trigger2 = "\194\161Arded, demonios infernales!",
+	flame_message = "\194\161Corona de Llamas!",
+	flame_bar = "Corona de Llamas",
+	flame_trigger = "lanzar Corona de llamas%.$",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

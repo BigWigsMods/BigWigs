@@ -165,15 +165,15 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	engage_trigger = "Ah, justo a tiempo. Los rituales están a punto de empezar.",
+	engage_trigger = "Ah, justo a tiempo. \194\161Los rituales van a empezar!",
 
 	sacrifice = "Sacrificio",
 	sacrifice_desc = "Avisa del Sacrificio de los jugadores.",
 	sacrifice_trigger = "^(%S+) (%S+) sufre Sacrificio%.$",
-	sacrifice_fade = "^Sacrificio desparece de ([^%s]+)%.$",
-	sacrifice_message = "%s esta siendo sacrificado!",
+	sacrifice_fade = "^Sacrificio desaparece de ([^%s]+)%.$",
+	sacrifice_message = "\164\161%s esta siendo sacrificado!",
 	sacrifice_bar = "Sacrificio: %s",
-	sacrifice_soon = "Sacrificio Pronto!",
+	sacrifice_soon = "\194\161Sacrificio Pronto!",
 	sacrifice_soonbar = "~Posible Sacrificio",
 
 	icon = "Icono de Raid",
@@ -182,9 +182,9 @@ L:RegisterTranslations("esES", function() return {
 	weak = "Debilitado",
 	weak_desc = "Avisa de estado de debilidad.",
 	weak_trigger = "sufre Pacto roto.",
-	weak_message = "Debilitado por ~45sec!",
-	weak_warning1 = "Debilitado finaliza en ~5sec!",
-	weak_warning2 = "Debilidad finalizado!",
+	weak_message = "\194\161Debilitado por ~45seg!",
+	weak_warning1 = "Debilitado finaliza en ~5seg!",
+	weak_warning2 = "\194\161Debilidad finalizado!",
 	weak_bar = "~Debilidad desaparece",
 	weak_fade = "^Pacto roto desaparece",
 } end )

@@ -212,6 +212,39 @@ L:RegisterTranslations("zhTW", function() return {
 	bones_message = "碎骨之雨",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	fear = "Alerta de miedo",
+	fear_desc = "Avisa de Rugido bramante.",
+	fear_trigger = "comienza a lanzar Rugido bramante%.$",
+	fear_message = "\194\161Miedo en 2 seg!",
+	fear_warning = "Miedo Pronto",
+	fear_bar = "\194\161Miedo!",
+	fear_nextbar = "~Miedo Cooldown",
+
+	charr = "Tierra carbonizada en t\195\173",
+	charr_desc = "Avisa cuando est\195\161s en Tierra carbonizada.",
+	charr_trigger = "Sufres de Tierra carbonizada.",
+	charr_message = "\194\161Tierra carbonizada en t\195\173!",
+
+	phase = "Fases",
+	phase_desc = "Avisa cuando Nocturno cambia de fase.",
+	airphase_trigger = "Miserable alimaña. \194\161Te exterminar\195\169 del aire!",
+	landphase_trigger1 = "\194\161Ya basta! Voy a aterrizar y a aplastarte yo mismo.",
+	landphase_trigger2 = "\194\161Insectos! \194\161Os enseñar\195\169 mi fuerza de cerca!",
+	airphase_message = "\194\161Volando!",
+	landphase_message = "\194\161Aterrizando!",
+	summon_trigger = "Un ser antiguo se despierta en la distancia...",
+
+	engage = "Activado",
+	engage_desc = "Alerta activada.",
+	engage_trigger = "\194\161Necios! \194\161Voy a acabar r\195\161pidamente con tu sufrimiento!",
+	engage_message = "%s Activado",
+
+	bones = "Lluvia de huesos",
+	bones_desc = "Avisa de cuando Lluvia de huesos es canalizada.",
+	bones_message = "\194\161AoE Lluvia de huesos!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

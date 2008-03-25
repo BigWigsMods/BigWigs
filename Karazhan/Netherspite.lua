@@ -144,6 +144,26 @@ L:RegisterTranslations("zhTW", function() return {
 	netherbreath_warn = "地獄吐息",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	phase = "Fases",
+	phase_desc = "Avisa cuando Rencor abisal cambia de fase.",
+	phase1_message = "Retirada - Aliento abisal terminado",
+	phase1_bar = "~Posible Retirada",
+	phase1_trigger = "%s grita en retirada, abriendo las puertas al vac\195\173o..",
+	phase2_message = "C\195\179lera - Aliento abisal en breve!",
+	phase2_bar = "~Posible c\195\179lera",
+	phase2_trigger = "%s \194\161Rencor abisal monta en c\195\179lera alimentada por el vac\195\173o!",
+
+	voidzone = "Zonas de vac\195\173o",
+	voidzone_desc = "Avisa de Zonas de vac\195\173o.",
+	voidzone_trigger = "lanza Zona de vac\195\173o%.$",
+	voidzone_warn = "\194\161Zona de vac\195\173o (%d)!",
+
+	netherbreath = "Aliento abisal",
+	netherbreath_desc = "Avisa de Aliento abisal.",
+	netherbreath_trigger = "comienza a lanzar Aliento abisal.%.$",
+	netherbreath_warn = "\194\161Llegada de Aliento abisal!",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

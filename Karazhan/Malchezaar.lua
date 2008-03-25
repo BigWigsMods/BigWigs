@@ -253,6 +253,46 @@ L:RegisterTranslations("zhTW", function() return {
 	despawn_bar = "地獄火 (%d) 消失！",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	phase = "Activado",
+	phase_desc = "Alerta cuando cambia de fase.",
+	phase1_trigger = "La locura os ha tra\195\173do ante mi. \194\161Ser\195\169 vuestro fin!",
+	phase2_trigger = "\194\161Est\195\186pidos! El tiempo es el fuego en el que arder\195\169is!",
+	phase3_trigger = "\194\191C\195\179mo pod\195\169is esperar rebelaros ante un poder tan aplastante?",
+	phase1_message = "\194\161Fase 1 - Infernal en ~40seg!",
+	phase2_message = "60% - Fase 2",
+	phase3_message = "30% - Fase 3 ",
+
+	enfeeble = "Socavar",
+	enfeeble_desc = "Muestra un temporizador para Socavar.",
+	enfeeble_trigger = "sufre Socavar%.$",
+	enfeeble_message = "\194\161Socavar! Siguiente en 30seg",
+	enfeeble_warning1 = "\194\161Socavar en 5seg!",
+	enfeeble_warning2 = "\194\161Socavar en 10seg!",
+	enfeeble_bar = "Socavar",
+	enfeeble_nextbar = "Siguiente Socavar",
+	enfeeble_you = "Sufres de Socavar.",
+	enfeeble_warnyou = "\194\161Socavar en t\195\173!",
+
+	infernals = "Infernales",
+	infernals_desc = "Muestra temporizadores para la invocaci\195\179n de Infernales.",
+	infernal_trigger1 = "\194\161No solo os enfrent\195\161is a Malchezaar, sino a todas las legiones bajo mi mando!",
+	infernal_trigger2 = "\194\161Todas las realidades, todas las dimensiones est\195\161n abiertas a m\195\173!",
+	infernal_bar = "Llega Infernal",
+	infernal_warning = "\194\161Infernal llega en 20seg!",
+	infernal_message = "\194\161Aterriz\195\179 Infernal! \194\161Hellfire in 5seg!",
+
+	nova = "Nova de las sombras",
+	nova_desc = "Temporizador estimado de Nova de las sombras.",
+	nova_message = "Nova de las sombras!",
+	nova_bar = "~Nova Cooldown",
+	nova_soon = "Nova de las sombras pronto",
+
+	despawn = "Desactiva temporizadores de desaparici\195\179n de Infernales",
+	despawn_desc = "Temporizadores de desaparici\195\179n de Infernales.",
+	despawn_bar = "Infernal (%d) desaparece",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
