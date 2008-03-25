@@ -289,7 +289,7 @@ end
 ------------------------------
 
 function mod:Throw(player, spellID)
-	if db.throw
+	if db.throw then
 		self:IfMessage(L["throw_message"]:format(player), "Attention", spellID)
 		self:Icon(player, "icon")
 	end
