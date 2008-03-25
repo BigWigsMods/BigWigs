@@ -6,9 +6,7 @@ local boss = BB["Kaz'rogal"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local db = nil
 
-local UnitMana = UnitMana
-local IsItemInRange = IsItemInRange
-local class = select(2, UnitClass("player"))
+local pName = UnitName("player")
 local bandages = {
 	[21991] = true, -- Heavy Netherweave Bandage
 	[21990] = true, -- Netherweave Bandage
@@ -33,43 +31,31 @@ L:RegisterTranslations("enUS", function() return {
 
 	range = "Range Check",
 	range_desc = "Show the proximity box when you are low on mana and have the Mark of Kaz'rogal.",
-	range_gain = "You are afflicted by Mark of Kaz'rogal.",
-	range_fade = "Mark of Kaz'rogal fades from you.",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
 	range = "Reichweite Überprüfen",
 	range_desc = "Aktiviert die Nähe Anzeige wenn du wenig Mana und das Mal von Kaz'rogal hast.",
-	range_gain = "Ihr seid von Mal von Kaz'rogal betroffen.",
-	range_fade = "Mal von Kaz'rogal schwindet von Euch.",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
 	range = "Vérification de portée",
 	range_desc = "Affiche la fenêtre de proximité quand votre mana est faible et que vous avez la Marque de Kaz'rogal.",
-	range_gain = "Vous subissez les effets de Marque de Kaz'rogal.",
-	range_fade = "Marque de Kaz'rogal vient de se dissiper.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
 	range = "거리 확인",
 	range_desc = "카즈로갈의 징표가 걸렸을 때 마나가 낮은 상태가 되면 접근 경고창을 띄웁니다.",
-	range_gain = "당신은 카즈로갈의 징표에 걸렸습니다.", -- check
-	range_fade = "당신의 몸에서 카즈로갈의 징표 효과가 사라졌습니다.", --check
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
 	range = "距離檢查",
 	range_desc = "當你低量法力且受到卡茲洛加的印記時顯示距離框",
-	range_gain = "你受到了卡茲洛加的印記效果的影響。",
-	range_fade = "卡茲洛加的印記效果從你身上消失了。",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
 	range = "范围检测",
 	range_desc = "当你低法力以及中了卡兹洛加印记，显示范围检测列表。",
-	range_gain = "你受到了卡兹洛加印记效果的影响。",
-	range_fade = "卡兹洛加印记效果从你身上消失了。",
 } end )
 
 ----------------------------------
@@ -95,14 +81,14 @@ end
 ------------------------------
 
 function mod:OnEnable()
+	local class = select(2, UnitClass("player"))
 	if class ~= "WARRIOR" and class ~= "ROGUE" then
-		self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
 		self:AddCombatListener("SPELL_AURA_APPLIED", "Mark", 31447)
 		self:AddCombatListener("SPELL_AURA_REMOVED", "MarkRemoved", 31447)
 	end
 
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+
 	db = self.db.profile
 end
 
@@ -110,37 +96,14 @@ end
 --      Event Handlers      --
 ------------------------------
 
-local function HideProx()
-	mod:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
-	mod:TriggerEvent("BigWigs_HideProximity", self)
-end
-
 function mod:Mark(player)
-	if player and db.range and player == UnitName("player") and UnitMana("player") < 4000 then
+	if player == pName and db.range and UnitMana("player") < 4000 then
 		self:TriggerEvent("BigWigs_ShowProximity", self)
-		self:ScheduleEvent("BWHideProx", HideProx, 5)
 	end
 end
 
 function mod:MarkRemoved(player)
-	if player and db.range and player == UnitName("player") then
-		self:CancelScheduledEvent("BWHideProx")
-		self:TriggerEvent("BigWigs_HideProximity", self)
-	end
-end
-
-function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
-	if db.range and msg == L["range_gain"] and UnitMana("player") < 4000 then
-		self:TriggerEvent("BigWigs_ShowProximity", self)
-		self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
-		self:ScheduleEvent("BWHideProx", HideProx, 5)
-	end
-end
-
-function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
-	if db.range and msg == L["range_fade"] then
-		self:CancelScheduledEvent("BWHideProx")
-		self:UnregisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
+	if player == pName and db.range then
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
 end

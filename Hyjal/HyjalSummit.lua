@@ -301,7 +301,6 @@ function mod:OnEnable()
 	nextBoss = L["Boss"]
 	waveBar = ""
 	self:RegisterEvent("UPDATE_WORLD_STATES")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
 	self:RegisterEvent("GOSSIP_SHOW")
 	self:RegisterEvent("QUEST_PROGRESS", "GOSSIP_SHOW")
 
@@ -363,16 +362,6 @@ end
 function mod:Deaths(unit)
 	if unit == L["Thrall"] or unit == L["Lady Jaina Proudmoore"] then
 		self:Sync("SummitReset")
-	end
-end
-
-do
-	local proudmooreDies = fmt(UNITDIESOTHER, proudmoore)
-	local thrallDies = fmt(UNITDIESOTHER, thrall)
-	function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
-		if msg == proudmooreDies or msg == thrallDies then
-			self:Sync("SummitReset")
-		end
 	end
 end
 

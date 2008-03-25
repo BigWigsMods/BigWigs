@@ -4,8 +4,7 @@
 
 local boss = BB["Azgalor"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-local pName = nil
+local pName = UnitName("player")
 local db = nil
 local started = nil
 
@@ -21,20 +20,18 @@ L:RegisterTranslations("enUS", function() return {
 	doom_other = "Doom on %s",
 	doom_you = "Doom on YOU!",
 
-	hoa = "Howl of Azgalor",
-	hoa_desc = "Warn for Howl of Azgalor.",
-	hoa_bar = "~Howl Cooldown",
-	hoa_message = "AOE Silence",
-	hoa_warning = "AOE Silence Soon!",
+	howl = "Howl of Azgalor",
+	howl_desc = "Warn for Howl of Azgalor.",
+	howl_bar = "~Howl Cooldown",
+	howl_message = "AOE Silence",
+	howl_warning = "AOE Silence Soon!",
 
-	rof = "Rain of Fire",
-	rof_desc = "Warn when Rain of Fire is on you.",
-	rof_you = "Rain of Fire on YOU!",
+	fire = "Rain of Fire",
+	fire_desc = "Warn when Rain of Fire is on you.",
+	fire_you = "Rain of Fire on YOU!",
 
 	icon = "Icon",
 	icon_desc = "Place a Raid Icon on the player afflicted by Doom (requires promoted or higher).",
-
-	afflict_trigger = "^(%S+) (%S+) afflicted by (.*).$",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -43,20 +40,18 @@ L:RegisterTranslations("frFR", function() return {
 	doom_other = "Destin funeste sur %s",
 	doom_you = "Destin funeste sur VOUS !",
 
-	hoa = "Hurlement d'Azgalor",
-	hoa_desc = "Préviens de l'arrivée des Hurlements d'Azgalor.",
-	hoa_bar = "~Cooldown Hurlement",
-	hoa_message = "Silence de zone",
-	hoa_warning = "Silence de zone imminent !",
+	howl = "Hurlement d'Azgalor",
+	howl_desc = "Préviens de l'arrivée des Hurlements d'Azgalor.",
+	howl_bar = "~Cooldown Hurlement",
+	howl_message = "Silence de zone",
+	howl_warning = "Silence de zone imminent !",
 
-	rof = "Pluie de feu",
-	rof_desc = "Préviens quand la Pluie de feu est sur vous.",
-	rof_you = "Pluie de feu sur VOUS !",
+	fire = "Pluie de feu",
+	fire_desc = "Préviens quand la Pluie de feu est sur vous.",
+	fire_you = "Pluie de feu sur VOUS !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Destin funeste (nécessite d'être promu ou mieux).",
-
-	afflict_trigger = "^(%S+) (%S+) les effets [de|2]+ (.*).$",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -65,20 +60,18 @@ L:RegisterTranslations("koKR", function() return {
 	doom_other = "%s에 파멸",
 	doom_you = "당신에 파멸!",
 
-	 hoa = "아즈갈로의 울부짖음",
-	 hoa_desc = "아즈갈로의 울부짖음을 경보합니다.",
-	 hoa_bar = "~침묵 대기시간",
-	 hoa_message = "광역 침묵",
-	 hoa_warning = "곧 광역 침묵!",
+	 howl = "아즈갈로의 울부짖음",
+	 howl_desc = "아즈갈로의 울부짖음을 경보합니다.",
+	 howl_bar = "~침묵 대기시간",
+	 howl_message = "광역 침묵",
+	 howl_warning = "곧 광역 침묵!",
 
-	 rof = "불의 비",
-	 rof_desc = "자신에게 불의 비가 내릴때를 알림니다.",
-	 rof_you = "당신에 불의 비!",
+	 fire = "불의 비",
+	 fire_desc = "자신에게 불의 비가 내릴때를 알림니다.",
+	 fire_you = "당신에 불의 비!",
 
 	icon = "전술 표시",
 	icon_desc = "파멸에 걸린 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 요구).",
-
-	afflict_trigger =  "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -87,20 +80,18 @@ L:RegisterTranslations("deDE", function() return {
 	doom_other = "Verdammnis auf %s",
 	doom_you = "Verdammnis auf DIR!",
 
-	hoa = "Geheul des Azgalor",
-	hoa_desc = "Warnt vor Geheul des Azgalor.",
-	hoa_bar = "~Geheul Cooldown",
-	hoa_message = "AOE Stille",
-	hoa_warning = "AOE Stille Bald!",
+	howl = "Geheul des Azgalor",
+	howl_desc = "Warnt vor Geheul des Azgalor.",
+	howl_bar = "~Geheul Cooldown",
+	howl_message = "AOE Stille",
+	howl_warning = "AOE Stille Bald!",
 
-	rof = "Feuerregen",
-	rof_desc = "Warnt wenn Feuerregen auf dir ist.",
-	rof_you = "Feuerregen auf DIR!",
+	fire = "Feuerregen",
+	fire_desc = "Warnt wenn Feuerregen auf dir ist.",
+	fire_you = "Feuerregen auf DIR!",
 
 	icon = "Schlachtzug Symbol",
 	icon_desc = "Plaziere ein Schlachtzug Symbol auf Spielern die von Verdammnis betroffen sind (benötigt Assistent oder höher).",
-
-	afflict_trigger = "^(%S+) (%S+) ist von (.*) betroffen.$",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -109,20 +100,18 @@ L:RegisterTranslations("zhTW", function() return {
 	doom_other = "災厄降臨: [%s]",
 	doom_you = "你受到災厄降臨!",
 
-	hoa = "亞茲加洛之吼",
-	hoa_desc = "亞茲加洛之吼警報",
-	hoa_bar = "~亞茲加洛之吼冷卻",
-	hoa_message = "群體沉默",
-	hoa_warning = "即將發動群體沉默!",
+	howl = "亞茲加洛之吼",
+	howl_desc = "亞茲加洛之吼警報",
+	howl_bar = "~亞茲加洛之吼冷卻",
+	howl_message = "群體沉默",
+	howl_warning = "即將發動群體沉默!",
 
-	rof = "火焰之雨",
-	rof_desc = "當你在火焰之雨範圍時發出警報",
-	rof_you = "你受到火焰之雨!",
+	fire = "火焰之雨",
+	fire_desc = "當你在火焰之雨範圍時發出警報",
+	fire_you = "你受到火焰之雨!",
 
 	icon = "團對標記",
 	icon_desc = "在受到災厄降臨的隊友頭上標記 (需要權限)",
-
-	afflict_trigger = "^(.+)受(到[了]*)(.*)效果的影響。$",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -131,20 +120,18 @@ L:RegisterTranslations("zhCN", function() return {
 	doom_other = "厄运：>%s<！",
 	doom_you = ">你< 厄运！",
 
-	hoa = "阿兹加洛之嚎",
-	hoa_desc = "阿兹加洛之嚎警报。",
-	hoa_bar = "<阿兹加洛之嚎 冷却>",
-	hoa_message = "群体沉默",
-	hoa_warning = "即将 群体沉默！",
+	howl = "阿兹加洛之嚎",
+	howl_desc = "阿兹加洛之嚎警报。",
+	howl_bar = "<阿兹加洛之嚎 冷却>",
+	howl_message = "群体沉默",
+	howl_warning = "即将 群体沉默！",
 
-	rof = "火焰之雨",
-	rof_desc = "当你受到火焰之雨发出警报。",
-	rof_you = ">你< 火焰之雨！",
+	fire = "火焰之雨",
+	fire_desc = "当你受到火焰之雨发出警报。",
+	fire_you = ">你< 火焰之雨！",
 
 	icon = "团队标记",
 	icon_desc = "给受到诅咒的队员打上标记。(需要权限)",
-
-	afflict_trigger = "^(%S+)受(%S+)了(.*)效果的影响。$",
 } end )
 
 ----------------------------------
@@ -154,7 +141,7 @@ L:RegisterTranslations("zhCN", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Hyjal Summit"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"doom", "hoa", "rof", "icon", "enrage", "bosskill"}
+mod.toggleoptions = {"doom", "howl", "fire", "icon", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -162,24 +149,15 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Event")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Event")
-
 	self:AddCombatListener("SPELL_AURA_APPLIED", "RainOfFire", 31340)
-	self:AddSyncListener("SPELL_AURA_APPLIED", 31344, "AzHOA", 1)
-	self:AddSyncListener("SPELL_AURA_APPLIED", 31347, "AzDoom", 1)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Howl", 31344)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Doom", 31347)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "AzDoom", 2)
-	self:TriggerEvent("BigWigs_ThrottleSync", "AzHOA", 2)
 
-	pName = UnitName("player")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	db = self.db.profile
 	started = nil
 end
@@ -189,47 +167,35 @@ end
 ------------------------------
 
 function mod:RainOfFire(player)
-	if player and db.rof and player == pName then
-		self:Message(L["rof_you"], "Urgent", true, "Alarm")
+	if db.fire and player == pName then
+		self:IfMessage(L["fire_you"], "Urgent", 31340, "Alarm")
 	end
 end
 
-function mod:Event(msg)
-	local aPlayer, aType, aSpell = select(3, msg:find(L["afflict_trigger"]))
-	if aPlayer and aType then
-		if aPlayer == L2["you"] and aType == L2["are"] then
-			aPlayer = pName
-			if aSpell == L["rof"] and db.rof then
-				self:Message(L["rof_you"], "Urgent", true, "Alarm")
-			end
+function mod:Howl(_, spellID)
+	if db.howl then
+		self:IfMessage(L["howl_message"], "Important", spellID)
+		self:Bar(L["howl_bar"], 16, spellID)
+		self:DelayedMessage(15, L["howl_warning"], "Important")
+	end
+end
+
+function mod:Doom(player, spellID)
+	if db.doom then
+		local other = L["doom_other"]:format(player)
+		if player == pName then
+			self:LocalMessage(L["doom_you"], "Personal", spellID, "Long")
+			self:WideMessage(other)
+		else
+			self:IfMessage(other, "Attention", spellID)
 		end
-		if aSpell == L["doom"] then
-			self:Sync("AzDoom", aPlayer)
-		elseif aSpell == L["hoa"] then
-			self:Sync("AzHOA", aPlayer)
-		end
+		self:Bar(other, 19, spellID)
+		self:Icon(player, "icon")
 	end
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "AzDoom" and rest and db.doom then
-		local other = L["doom_other"]:format(rest)
-		if rest == pName then
-			self:Message(L["doom_you"], "Personal", true, "Long")
-			self:Message(other, "Attention", nil, nil, true)
-			self:Bar(other, 19, "Ability_Creature_Cursed_02")
-		else
-			self:Message(other, "Attention")
-			self:Bar(other, 19, "Ability_Creature_Cursed_02")
-		end
-		if db.icon then
-			self:Icon(rest)
-		end
-	elseif sync == "AzHOA" and rest and db.hoa then
-		self:Message(L["hoa_message"], "Important")
-		self:Bar(L["hoa_bar"], 16, "Spell_Shadow_ImpPhaseShift")
-		self:DelayedMessage(15, L["hoa_warning"], "Important")
-	elseif self:ValidateEngageSync(sync, rest) and not started then
+	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")

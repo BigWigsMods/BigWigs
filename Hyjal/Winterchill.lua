@@ -4,8 +4,8 @@
 
 local boss = BB["Rage Winterchill"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local db = nil
+local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -16,12 +16,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	decay = "Death & Decay on You",
 	decay_desc = "Warn for Death & Decay on You.",
-	decay_trigger = "You are afflicted by Death & Decay.",
 	decay_message = "Death & Decay on YOU!",
 
 	icebolt = "Icebolt",
 	icebolt_desc = "Icebolt warnings.",
-	icebolt_trigger = "^(%S+) (%S+) afflicted by Icebolt%.$",
 	icebolt_message = "Icebolt on %s!",
 
 	icon = "Raid Target Icon",
@@ -31,12 +29,10 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("frFR", function() return {
 	decay = "Mort & décomposition sur vous",
 	decay_desc = "Préviens quand la Mort & décomposition est sur vous.",
-	decay_trigger = "Vous subissez les effets de Mort & décomposition.",
 	decay_message = "Mort & décomposition sur VOUS !",
 
 	icebolt = "Eclair de glace",
 	icebolt_desc = "Avertissements concernant l'Eclair de glace.",
-	icebolt_trigger = "^(%S+) (%S+) les effets .* Eclair de glace%.$",
 	icebolt_message = "Eclair de glace sur %s !",
 
 	icon = "Icône",
@@ -46,12 +42,10 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("koKR", function() return {
 	decay = "당신에 죽음과 부패",
 	decay_desc = "당신에 걸린 죽음과 부패를 알립니다.",
-	decay_trigger = "당신은 죽음과 부패에 걸렸습니다.",
 	decay_message = "당신에 죽음과 부패!",
 
 	icebolt = "얼음 화살",
 	icebolt_desc = "얼음 화살 경고.",
-	icebolt_trigger = "^([^|;%s]*)(.*)얼음 화살에 걸렸습니다%.$", -- check
 	icebolt_message = "%s에 얼음 화살!",
 
 	icon = "전술 표시",
@@ -61,12 +55,10 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	decay = "Tod & Verfall auf dir",
 	decay_desc = "Warnt vor Tod & Verfall auf dir.",
-	decay_trigger = "Ihr seid von Tod & Verfall betroffen.",
 	decay_message = "Tod & Verfall auf DIR!",
 
 	icebolt = "Eisblitz",
 	icebolt_desc = "Eisblitz Warnung.",
-	icebolt_trigger = "^(%S+) (%S+) ist von Eisblitz betroffen%.$",
 	icebolt_message = "Eisblitz auf %s!",
 
 	icon = "Schlachtzug Symbol",
@@ -76,12 +68,10 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	decay = "死亡凋零",
 	decay_desc = "通報你受到死亡凋零",
-	decay_trigger = "你受到了死亡凋零效果的影響。",
 	decay_message = "你受到死亡凋零!",
 
 	icebolt = "寒冰箭",
 	icebolt_desc = "寒冰箭警告",
-	icebolt_trigger = "^(.+)受(到[了]*)寒冰箭效果的影響。$",
 	icebolt_message = "寒冰箭：[%s]",
 
 	icon = "團隊標記",
@@ -91,12 +81,10 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	decay = "死亡凋零",
 	decay_desc = "你中了死亡凋零发出警报。",
-	decay_trigger = "你受到了死亡凋零效果的影响。",
 	decay_message = "你中了 死亡凋零！ 逃离！",
 
 	icebolt = "寒冰箭",
 	icebolt_desc = "寒冰箭警报。",
-	icebolt_trigger = "^(.+)受(.+)了寒冰箭效果的影响。$",
 	icebolt_message = "寒冰箭：>%s<！",
 
 	icon = "团队标记",
@@ -118,21 +106,14 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "AfflictEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "AfflictEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "AfflictEvent")
-
-	self:AddSyncListener("SPELL_AURA_APPLIED", 31249, "WCBolt", 1)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Icebolt", 31249)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "DeathAndDecay", 39658)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "WCBolt", 5)
-
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("BigWigs_RecvSync")
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	db = self.db.profile
 end
 
@@ -140,13 +121,21 @@ end
 --      Event Handlers      --
 ------------------------------
 
+function mod:Icebolt(player)
+	if db.icebolt then
+		self:IfMessage(L["icebolt_message"]:format(player), "Important", 31249, "Alert")
+		self:Icon(player, "icon")
+	end
+end
+
+function mod:DeathAndDecay(player)
+	if db.decay and player == pName then
+		self:LocalMessage(L["decay_message"], "Personal", 39658, "Alarm")
+	end
+end
+
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "WCBolt" and rest and db.icebolt then
-		self:Message(L["icebolt_message"]:format(rest), "Important", nil, "Alert")
-		if db.icon then
-			self:Icon(rest)
-		end
-	elseif self:ValidateEngageSync(sync, rest) and not started then
+	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
@@ -154,26 +143,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if db.enrage then
 			self:Enrage(600)
 		end
-	end
-end
-
-function mod:DeathAndDecay(player)
-	if db.decay and player == UnitName("player") then
-		self:Message(L["decay_message"], "Personal", true, "Alarm")
-	end
-end
-
-function mod:AfflictEvent(msg)
-	if db.decay and msg == L["decay_trigger"] then
-		self:Message(L["decay_message"], "Personal", true, "Alarm")
-	end
-
-	local iplayer, itype = select(3, msg:find(L["icebolt_trigger"]))
-	if iplayer and itype then
-		if iplayer == L2["you"] and itype == L2["are"] then
-			iplayer = UnitName("player")
-		end
-		self:Sync("WCBolt", iplayer)
 	end
 end
 

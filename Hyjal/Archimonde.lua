@@ -4,11 +4,10 @@
 
 local boss = BB["Archimonde"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local db = nil
 
 local UnitName = UnitName
-local pName = nil
+local pName = UnitName("player")
 local IsItemInRange = IsItemInRange
 local fmt = string.format
 local bandages = {
@@ -37,10 +36,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	grip = "Grip of the Legion",
 	grip_desc = "Warn who has Grip of the Legion.",
-	grip_trigger = "^(%S+) (%S+) afflicted by Grip of the Legion%.$",
 	grip_you = "Grip on you!",
 	grip_other = "Grip on %s!",
-	grip_fade = "^Grip of the Legion fades from (%S+)%.$",
 
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon on the player with Grip of the Legion.",
@@ -66,10 +63,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	grip = "Poigne de la Légion",
 	grip_desc = "Préviens quand un joueur subit les effets de la Poigne de la Légion.",
-	grip_trigger = "^(%S+) (%S+) les effets .* Poigne de la Légion%.$",
 	grip_you = "Poigne sur VOUS !",
 	grip_other = "Poigne sur %s !",
-	grip_fade = "^Poigne de la Légion sur (%S+) vient de se dissiper%.$",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par la Poigne de la Légion.",
@@ -95,10 +90,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	grip = "군단의 손아귀",
 	grip_desc = "군단의 손아귀에 걸린 사람을 알립니다.",
-	grip_trigger =  "^([^|;%s]*)(.*)군단의 손아귀에 걸렸습니다%.$",
 	grip_you = "당신에 손아귀!",
 	grip_other = "%s에 손아귀!",
-	grip_fade = "^([^%s]+)의 몸에서 군단의 손아귀 효과가 사라졌습니다%.$",
 
 	icon = "전술 표시",
 	icon_desc = "군단의 손아귀에 걸린 플레이어에 전술 표시를 지정합니다.",
@@ -124,10 +117,8 @@ L:RegisterTranslations("deDE", function() return {
 
 	grip = "Würgegriff der Legion",
 	grip_desc = "Warnt wer den Würgegriff der Legion hat.",
-	grip_trigger = "^([^%s]+) ([^%s]+) ist von Würgegriff der Legion betroffen%.$",
 	grip_you = "Würgegriff auf DIR!",
 	grip_other = "Würgegriff auf %s!",
-	grip_fade = "^Würgegriff der Legion schwindet von (%S+)%.$",
 
 	icon = "Schlachtzug Symbol",
 	icon_desc = "Plaziert ein Schlachtzug Symbol auf Spielern mit Würgegriff der Legion Debuff.",
@@ -153,10 +144,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	grip = "军团之握",
 	grip_desc = "警报谁中了军团之握。",
-	grip_trigger = "^(.+)受(.+)了军团之握效果的影响。$",
 	grip_you = ">你< 军团之握！",
 	grip_other = "军团之握：>%s<！",
-	grip_fade = "^军团之握效果从(.+)身上消失",
 
 	icon = "团队标记",
 	icon_desc = "给中了军团之握的队友打上团队标记。(需要权限)",
@@ -182,10 +171,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	grip = "軍團之握",
 	grip_desc = "受到軍團之握時發送警告",
-	grip_trigger = "^(.+)受(到[了]*)軍團之握效果的影響。",
 	grip_you = "軍團之握在你身上!",
 	grip_other = "軍團之握：[%s]",
-	grip_fade = "^軍團之握效果從(.+)身上消失。$",
 
 	icon = "團隊標記",
 	icon_desc = "在受到軍團之握的隊友頭上標記 (需要權限)",
@@ -230,30 +217,17 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "ArchGrip", 2)
-	self:TriggerEvent("BigWigs_ThrottleSync", "ArchFear", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "ArchBurst", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "ArchFade", 0.1)
-
-	self:RegisterEvent("UNIT_SPELLCAST_START")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "GripEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "GripEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "GripEvent")
-
-	self:AddSyncListener("SPELL_AURA_APPLIED", 31972, "ArchGrip", 1)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Grip", 31972)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "GripRemoved", 31972)
 	self:AddCombatListener("SPELL_AURA_DISPELLED", "GripRemoved", 31972)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_PARTY")
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:Throttle(5, "ArchFear", "ArchBurst")
 
-	pName = UnitName("player")
+	self:RegisterEvent("UNIT_SPELLCAST_START")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	db = self.db.profile
 end
@@ -262,28 +236,33 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "ArchGrip" and rest and db.grip then
-		local other = fmt(L["grip_other"], rest)
-		if rest == pName then
-			self:Message(L["grip_you"], "Attention", true, "Long")
-			self:Message(other, "Attention", nil, nil, true)
-			self:Bar(other, 10, "Spell_Shadow_SoulLeech_3")
+function mod:Grip(player, spellID)
+	if db.grip then
+		local other = fmt(L["grip_other"], player)
+		if player == pName then
+			self:LocalMessage(L["grip_you"], "Attention", spellID, "Long")
+			self:WideMessage(other)
 		else
-			self:Message(other, "Attention")
-			self:Bar(other, 10, "Spell_Shadow_SoulLeech_3")
+			self:IfMessage(other, "Attention", spellID)
 		end
-		if db.icon then
-			self:Icon(rest)
-		end
-	elseif sync == "ArchFear" and db.fear then
+		self:Bar(other, 10, spellID)
+		self:Icon(player, "icon")
+	end
+end
+
+function mod:GripRemoved(player)
+	if db.grip then
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["grip_other"], player))
+	end
+end
+
+function mod:BigWigs_RecvSync(sync, rest, nick)
+	if sync == "ArchFear" and db.fear then
 		self:Bar(L["fear_bar"], 41.5, "Spell_Shadow_DeathScream")
 		self:Message(L["fear_message"], "Important")
 		self:DelayedMessage(41.5, L["fear_warning"], "Urgent")
 	elseif sync == "ArchBurst" and db.burst then
 		self:ScheduleEvent("BWBurstToTScan", self.TargetCheck, 0.3, self)
-	elseif sync == "ArchFade" and rest and db.grip then
-		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["grip_other"], rest))
 	end
 end
 
@@ -300,41 +279,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:GripEvent(msg)
-	local gplayer, gtype = select(3, msg:find(L["grip_trigger"]))
-	if gplayer and gtype then
-		if gplayer == L2["you"] and gtype == L2["are"] then
-			gplayer = pName
-		end
-		self:Sync("ArchGrip", gplayer)
-	end
-end
-
 function mod:UNIT_SPELLCAST_START(msg)
 	if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["fear"] then
 		self:Sync("ArchFear")
 	elseif UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["burst"] then
 		self:Sync("ArchBurst")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_AURA_GONE_PARTY(msg) --grip clearing
-	local fplayer = select(3, msg:find(L["grip_fade"]))
-	if fplayer then
-		self:Sync("ArchFade", fplayer)
-	end
-end
-
-function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg) --grip clearing
-	local ofplayer = select(3, msg:find(L["grip_fade"]))
-	if ofplayer then
-		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["grip_other"], ofplayer))
-	end
-end
-
-function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg) --grip clearing
-	if msg:find(L["grip_fade"]) then
-		self:Sync("ArchFade", pName)
 	end
 end
 
@@ -355,13 +304,13 @@ function mod:TargetCheck()
 	end
 	if target then
 		if target == pName then
-			self:Message(L["burst_you"], "Personal", true, "Long")
-			self:Message(fmt(L["burst_other"], target), "Attention", nil, nil, true)
+			self:LocalMessage(L["burst_you"], "Personal", 32014, "Long")
+			self:WideMessage(fmt(L["burst_other"], target))
 			if db.burstsay then
 				SendChatMessage(L["burstsay_message"], "SAY")
 			end
 		else
-			self:Message(fmt(L["burst_other"], target), "Attention")
+			self:IfMessage(fmt(L["burst_other"], target), "Attention", 32014)
 		end
 	end
 end
