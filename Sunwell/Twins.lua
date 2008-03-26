@@ -65,7 +65,7 @@ L:RegisterTranslations("frFR", function() return {
 	conflag_bar = "Prochaine Déflagration",
 
 	icon = "Icône",
-	icon_desc = "Place une icône de raid sur le dernier joueur sur lequel Nova de l'ombre ou Déflagration est incanté.",
+	icon_desc = "Place une icône de raid sur le dernier joueur sur lequel Nova de l'ombre ou Déflagration est incantée.",
 
 	pyro = "Pyrogénie",
 	pyro_desc = "Préviens qui gagne et qui enlève Pyrogénie.",

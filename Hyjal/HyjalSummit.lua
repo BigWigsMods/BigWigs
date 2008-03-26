@@ -156,6 +156,8 @@ L:RegisterTranslations("frFR", function() return {
 	["Frost Wyrm"] = "wyrm de givre",
 	["Fel Stalkers"] = "traqueurs gangrenés",
 	["Infernals"] = "infernaux",
+
+	["Ghoul"] = "Goule",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

@@ -102,7 +102,7 @@ L:RegisterTranslations("frFR", function() return {
 	knock = "Repousser au loin",
 	knock_desc = "Affiche une barre temporelle indiquant quand le Saccageur du Vide est suceptible d'utiliser son Repousser au loin.",
 	knock_bar = "~Cooldown Repousser au loin",
-	--knock_message = "Knock Away: %s",
+	knock_message = "Repousser au loin : %s",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
