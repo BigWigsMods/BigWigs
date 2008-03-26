@@ -116,6 +116,8 @@ L:RegisterTranslations("koKR", function() return {
 	["Frost Wyrm"] = "서리고룡",
 	["Fel Stalkers"] = "지옥사냥개",
 	["Infernals"] = "거대한 지옥불정령",
+	
+	["Ghoul"] = "구울",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -322,7 +324,7 @@ end
 function mod:GOSSIP_SHOW()
 	local target = UnitName("target")
 	local gossip = GetGossipOptions()
-	if gossip and target == thrall or target == proudmoore then
+	if gossip and (target == thrall or target == proudmoore) then
 		if gossip == L["My companions and I are with you, Lady Proudmoore."] then
 			self:Sync("SummitNext RWC") -- Rage Winterchill is next
 		elseif gossip == L["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] then
