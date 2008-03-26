@@ -18,8 +18,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	vanish = "Vanish",
 	vanish_desc = "Estimated timers for when Moroes next vanishes.",
-	vanish_trigger1 = "You rang?",
-	vanish_trigger2 = "Now, where was I? Oh, yes...",
 	vanish_message = "Vanished! Next in ~35sec!",
 	vanish_warning = "Vanish Soon!",
 	vanish_bar = "~Vanish Cooldown",
@@ -31,7 +29,6 @@ L:RegisterTranslations("enUS", function() return {
 	icon = "Icon",
 	icon_desc = "Place a Raid Icon on the player afflicted by Garrote(requires promoted or higher).",
 
-	enrage_trigger = "%s becomes enraged!",
 	enrage_message = "Enrage!",
 	enrage_warning = "Enrage Soon!",
 } end)
@@ -42,8 +39,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	vanish = "Disparition",
 	vanish_desc = "Préviens quand Moroes est susceptible de disparaître.",
-	vanish_trigger1 = "Vous avez sonné ?",
-	vanish_trigger2 = "Bon, où en étais-je ? Ah, oui…",
 	vanish_message = "Disparu ! Prochain dans ~35 sec. !",
 	vanish_warning = "Disparition imminente !",
 	vanish_bar = "~Cooldown Disparition",
@@ -55,7 +50,6 @@ L:RegisterTranslations("frFR", function() return {
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Garrot (nécessite d'être promu ou mieux).",
 
-	enrage_trigger = "%s devient fou furieux !",
 	enrage_message = "Enragé !",
 	enrage_warning = "Bientôt enragé !",
 } end)
@@ -70,8 +64,6 @@ L:RegisterTranslations("deDE", function() return {
 	icon = "Icon",
 	icon_desc = "Platziert ein Schlachtzugssymbol bei dem Spieler, welcher von Erdrosseln betroffen ist (ben\195\182tigt 'bef\195\182rdert' oder h\195\182her)",
 
-	vanish_trigger1 = "Ihr habt gel\195\164utet?",
-	vanish_trigger2 = "Nun, wo war ich? Ah, ja...",
 	vanish_message = "Verschwunden! N\195\164chste in ~35 Sek!",
 	vanish_warning = "Verschwinden bald!",
 	vanish_bar = "N\195\164chste Verschwinden",
@@ -81,7 +73,6 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Hm, unangek\195\188ndigte Besucher. Es m\195\188ssen Vorbereitungen getroffen werden...",
 	engage_message = "%s Engaged - Verschwinden in ~35 Sek!",
 
-	enrage_trigger = "%s wird w\195\188tend!",
 	enrage_message = "Enrage!",
 	enrage_warning = "Enrage bald!",
 } end )
@@ -92,8 +83,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	vanish = "소멸",
 	vanish_desc = "모로스의 다음 소멸에 대한 예상 타이머입니다.",
-	vanish_trigger1 = "절 부르셨습니까?",
-	vanish_trigger2 = "어디까지 했죠? 아, 맞아...",
 	vanish_message = "소멸! 다음은 약 35초 후!",
 	vanish_warning = "잠시 후 소멸!", 
 	vanish_bar = "~소멸 대기시간",
@@ -105,7 +94,6 @@ L:RegisterTranslations("koKR", function() return {
 	icon = "전술 표시",
 	icon_desc = "목조르기에 걸린 사람에게 전술 표시를 지정합니다 (승급자 이상의 권한 필요).",
 
-	enrage_trigger = "%s|1이;가; 분노에 휩싸입니다!",
 	enrage_message = "격노!",
 	enrage_warning = "잠시 후 격노!",
 } end)
@@ -116,8 +104,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	vanish = "消失",
 	vanish_desc = "消失 预计冷却计时条。",
-	vanish_trigger1 = "你叫我吗？",
-	vanish_trigger2 = "我说到哪里了？哦，对了……",
 	vanish_message = "消失！ 35 秒后再次消失！",
 	vanish_warning = "即将 消失！",
 	vanish_bar = "<消失 冷却>",
@@ -129,7 +115,6 @@ L:RegisterTranslations("zhCN", function() return {
 	icon = "标记",
 	icon_desc = "当队员受到锁喉时标上团队标记。(需要权限)",
 
-	enrage_trigger = "%s变得愤怒了！",--check
 	enrage_message = "激怒！",
 	enrage_warning = "即将 激怒！",
 } end)
@@ -140,8 +125,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	vanish = "消失預警",
 	vanish_desc = "顯示摩洛消失提示",
-	vanish_trigger1 = "你找我嗎?",
-	vanish_trigger2 = "呃，我說到哪了?喔，對了……",
 	vanish_message = "消失 - 35 秒再次消失",
 	vanish_warning = "摩洛即將消失",
 	vanish_bar = "消失倒數",
@@ -153,7 +136,6 @@ L:RegisterTranslations("zhTW", function() return {
 	icon = "標記圖示",
 	icon_desc = "為被絞喉的玩家設置團隊標記（需要權限）",
 
-	enrage_trigger = "%s變得憤怒了!",--要抓 combatlog
 	enrage_message = "憤怒",
 	enrage_warning = "摩洛即將進入憤怒狀態",
 } end)
@@ -164,8 +146,6 @@ L:RegisterTranslations("esES", function() return {
 
 	vanish = "Vanish",
 	vanish_desc = "Timers estimados para el Vanish.",
-	vanish_trigger1 = "Has llamado?",
-	vanish_trigger2 = "Bueno, por dónde iba? Ah, sí...",
 	vanish_message = "Vanished! Siguiente en ~35sec!",
 	vanish_warning = "Vanish Pronto!",
 	vanish_bar = "~Enfriamiento de Vanish",
@@ -177,7 +157,6 @@ L:RegisterTranslations("esES", function() return {
 	icon = "Icono",
 	icon_desc = "Pone un icono de Raid en el jugador afectado por Garrote(requiere promoted o mas alto).",
 
-	enrage_trigger = "%s gana Enfurecer.",
 	enrage_message = "Enfurecido!",
 	enrage_warning = "Enfurecimiento Pronto!",
 } end)
@@ -198,11 +177,12 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Garrote", 37066)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Enrage", 37023)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Vanish", 29448)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 end
 
 ------------------------------
@@ -216,28 +196,29 @@ function mod:Garrote(player, spellID)
 	end
 end
 
+function mod:Enrage()
+	if self.db.profile.enrage then
+		self:IfMessage(L["enrage_message"], "Important", 37023, "Alarm")
+	end
+end
+
+function mod:Vanish(_, spellID)
+	if self.db.profile.vanish then
+		self:IfMessage(L["vanish_message"], "Urgent", spellID, "Alert")
+		self:Bar(L["vanish_bar"], 35, spellID)
+		self:DelayedMessage(30, L["vanish_warning"], "Attention")
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.vanish and (msg == L["vanish_trigger1"] or msg == L["vanish_trigger2"]) then
-		self:Message(L["vanish_message"], "Urgent", nil, "Alert")
-		self:NextVanish()
-	elseif msg == L["engage_trigger"] then
+	if msg == L["engage_trigger"] then
 		enrageWarn = nil
 		self:Message(L["engage_message"]:format(boss), "Attention")
 
 		if self.db.profile.vanish then
-			self:NextVanish()
+			self:Bar(L["vanish_bar"], 35, 29448)
+			self:DelayedMessage(30, L["vanish_warning"], "Attention")
 		end
-	end
-end
-
-function mod:NextVanish()
-	self:Bar(L["vanish_bar"], 35, "Ability_Vanish")
-	self:DelayedMessage(30, L["vanish_warning"], "Attention")
-end
-
-function mod:CHAT_MSG_MONSTER_EMOTE(msg)
-	if self.db.profile.enrage and msg == L["enrage_trigger"] then
-		self:Message(L["enrage_message"], "Important", nil, "Alarm")
 	end
 end
 
