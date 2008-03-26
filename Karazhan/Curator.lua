@@ -4,7 +4,6 @@
 
 local boss = BB["The Curator"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local enrageWarn = nil
 local CheckInteractDistance = CheckInteractDistance
 
@@ -196,7 +195,6 @@ function mod:OnEnable()
 
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 

@@ -4,7 +4,6 @@
 
 local boss = BB["Attumen the Huntsman"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local horse = BB["Midnight"]
 local db = nil
 
@@ -24,7 +23,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	curse = "Cursed Tanks",
 	curse_desc = "Warn when a tank is cursed by Intangible Presence.",
-	curse_trigger = "^(%S+) (%S+) afflicted by Intangible Presence%.$",
 	curse_message = "Tank Cursed - %s",
 } end)
 
@@ -38,7 +36,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	curse = "Verfluchter Tank",
 	curse_desc = "Warnt wenn ein Tank verflucht ist",
-	curse_trigger = "^([^%s]+) ([^%s]+) von K\195\182rperlose Pr\195\164senz betroffen%.$",
 	curse_message = "Tank verflucht - %s",
 } end)
 
@@ -52,7 +49,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	curse = "Tanks maudits",
 	curse_desc = "Préviens quand un tank est maudit par la Présence immatérielle.",
-	curse_trigger = "^(%S+) (%S+) les effets .* Présence immatérielle%.$",
 	curse_message = "Tank maudit - %s",
 } end)
 
@@ -67,7 +63,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	curse = "저주 걸린 전사",
 	curse_desc = "탱커가 무형의 저주에 걸렸을 때 경고합니다.",
-	curse_trigger = "^([^|;%s]*)(.*)무형의 존재에 걸렸습니다%.$",
 	curse_message = "저주 걸린 전사 - %s",
 } end)
 
@@ -81,7 +76,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	curse = "诅咒警报",
 	curse_desc = "当近战受到无形的诅咒时发出警告。",
-	curse_trigger = "^(.+)受(.+)了无形效果的影响。$",
 	curse_message = ">%s< 中了无形 - 速度解除！",
 } end)
 
@@ -95,7 +89,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	curse = "詛咒警告",
 	curse_desc = "近戰受到無形守護的詛咒時發送警告",
-	curse_trigger = "^(.+)受(到[了]*)無形守護效果的影響。",
 	curse_message = "無形守護詛咒：[%s] - 解詛咒",
 } end)
 
@@ -109,7 +102,6 @@ L:RegisterTranslations("esES", function() return {
 
 	curse = "Tanques Malditos",
 	curse_desc = "Avisa cuando un guerrero o un druida es afectado por Presencia intangible.",
-	curse_trigger = "^([^%s]+) ([^%s]+) sufre Presencia intangible%.$",
 	curse_message = "Tanque Maldito - %s",
 } end)
 
@@ -134,12 +126,6 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "CurseEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "CurseEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CurseEvent")
-
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-
 	db = self.db.profile
 end
 
@@ -147,7 +133,7 @@ end
 --      Event Handlers      --
 ------------------------------
 
-local rfID = GetSpellInfo and GetSpellInfo(25780) --Righteous Fury
+local rfID = GetSpellInfo(25780) --Righteous Fury
 local function isPlayerTank(player)
 	if UnitPowerType(player) == 1 then return true end
 	local _, class = UnitClass(player)
@@ -155,7 +141,7 @@ local function isPlayerTank(player)
 	local i = 1
 	local name = UnitBuff(player, i)
 	while name do
-		if name == (GetSpellInfo and rfID or L2["RF"]) then return true end
+		if name == rfID then return true end
 		i = i + 1
 		name = UnitBuff(player, i)
 	end
@@ -163,7 +149,7 @@ end
 
 function mod:Curse(player)
 	if db.curse and isPlayerTank(player) then
-		self:Message(L["curse_message"]:format(player), "Attention", nil, nil, nil, 29833)
+		self:IfMessage(L["curse_message"]:format(player), "Attention", 29833)
 	end
 end
 
@@ -176,20 +162,6 @@ end
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg == L["phase2_trigger"] and db.phase then
 		self:Message(L["phase2_message"]:format(horse), "Urgent")
-	end
-end
-
-function mod:CurseEvent(msg)
-	if db.curse then
-		local cplayer, ctype = select(3, msg:find(L["curse_trigger"]))
-		if cplayer and ctype then
-			if cplayer == L2["you"] and ctype == L2["are"] then
-				cplayer = UnitName("player")
-			end
-			if isPlayerTank(cplayer) then
-				self:Message(L["curse_message"]:format(cplayer), "Attention", nil, nil, nil, 29833)
-			end
-		end
 	end
 end
 

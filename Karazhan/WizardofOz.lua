@@ -28,7 +28,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	light = "Chain Lightning",
 	light_desc = "Warn for Chain Lightning being cast.",
-	light_trigger = "The Crone begins to cast Chain Lightning.",
 	light_message = "Chain Lightning!",
 } end)
 
@@ -42,7 +41,6 @@ L:RegisterTranslations("deDE", function() return {
 	spawns_bar = "%s greift an!",
 	spawns_warning = "%s in 5 sek",
 
-	light_trigger = "Die b\195\182se Hexe beginnt Kettenblitzschlag zu wirken.",
 	light_message = "Kettenblitzschlag!",
 
 	engage_trigger = "^Oh Tito, wir m\195\188ssen einfach einen Weg nach Hause finden!",
@@ -58,7 +56,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	light = "Chaîne d'éclairs",
 	light_desc = "Préviens quand la Chaîne d'éclairs est incantée.",
-	light_trigger = "La Mégère commence à lancer Chaîne d'éclairs.",
 	light_message = "Chaîne d'éclairs !",
 } end)
 
@@ -72,7 +69,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	light = "연쇄 번개",
 	light_desc = "연쇄 번개 시전 시 경고합니다.",
-	light_trigger = "연쇄 번개 시전을 시작합니다.", -- check
 	light_message = "연쇄 번개!",
 } end)
 
@@ -86,7 +82,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	light = "闪电链",
 	light_desc = "老巫婆施放闪电链时发出警报。",
-	light_trigger = "巫婆开始施放闪电链。",
 	light_message = "闪电链！",
 } end)
 
@@ -100,7 +95,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	light = "閃電鏈警告",
 	light_desc = "當施放悶電鏈時發送警告",
-	light_trigger = "老巫婆開始施放閃電鏈。",
 	light_message = "即將施放閃電鏈",
 } end)
 
@@ -114,7 +108,6 @@ L:RegisterTranslations("esES", function() return {
 
 	light = "Cadena de Relampagos",
 	light_desc = "Avisa del casteo de Cadena de Relampagos.",
-	light_trigger = "La Vieja Bruja comienza a lanzar Cadena de relámpagos.",
 	light_message = "Cadena de Relampagos!",
 } end)
 
@@ -133,21 +126,16 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-
 	self:AddCombatListener("SPELL_CAST_START", "ChainLightning", 32337)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
---Need to make some hack to enable for this addon someday, latency sometimes means they yell before the f* curtains are up >.<
---Probably use GetSubZoneText()
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["engage_trigger"]) and self.db.profile.spawns then
 		local swarn = L["spawns_warning"]
@@ -163,17 +151,10 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:ChainLightning(player)
+function mod:ChainLightning(_, spellID)
 	if self.db.profile.light then
-		self:Message(L["light_message"], "Urgent")
-		self:Bar(L["light_message"], 2, "Spell_Nature_ChainLightning")	
-	end
-end
-
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg == L["light_trigger"] and self.db.profile.light then
-		self:Message(L["light_message"], "Urgent")
-		self:Bar(L["light_message"], 2, "Spell_Nature_ChainLightning")
+		self:IfMessage(L["light_message"], "Urgent", spellID)
+		self:Bar(L["light_message"], 2, spellID)
 	end
 end
 

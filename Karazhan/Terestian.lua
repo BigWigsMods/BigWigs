@@ -4,8 +4,7 @@
 
 local boss = BB["Terestian Illhoof"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-local pName = nil
+local pName = UnitName("player")
 local fmt = string.format
 
 ----------------------------
@@ -19,8 +18,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	sacrifice = "Sacrifice",
 	sacrifice_desc = "Warn for Sacrifice of players.",
-	sacrifice_trigger = "^(%S+) (%S+) afflicted by Sacrifice%.$",
-	sacrifice_fade = "^Sacrifice fades from ([^%s]+)%.$",
 	sacrifice_message = "%s is being Sacrificed!",
 	sacrifice_bar = "Sacrifice: %s",
 	sacrifice_soon = "Sacrifice soon!",
@@ -31,12 +28,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	weak = "Weakened",
 	weak_desc = "Warn for weakened state.",
-	weak_trigger = "afflicted by Broken Pact%.$",
 	weak_message = "Weakened for ~45sec!",
 	weak_warning1 = "Weakened over in ~5sec!",
 	weak_warning2 = "Weakened over!",
 	weak_bar = "~Weakened Fades",
-	weak_fade = "^Broken Pact fades",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -44,8 +39,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	sacrifice = "Opferung",
 	sacrifice_desc = "Warnt welcher Spieler geopfert wird",
-	sacrifice_trigger = "^([^%s]+) ([^%s]+) von Opferung betroffen%.$",
-	sacrifice_fade = "^Opferung schwindet von ([^%s]+)%.$",
 	sacrifice_message = "%s wird geopfert!",
 	sacrifice_bar = "Opferung: %s",
 	sacrifice_soon = "Opferung bald!",
@@ -56,12 +49,10 @@ L:RegisterTranslations("deDE", function() return {
 
 	weak = "Geschw\195\164cht",
 	weak_desc = "Warnt wenn Terestian geschw\195\164cht ist",
-	weak_trigger = "von Mal der Flamme betroffen",
 	weak_message = "Geschw\195\164cht f\195\188r 45 Sek!",
 	weak_warning1 = "Geschw\195\164cht vorbei in 5 Sek!",
 	weak_warning2 = "Geschw\195\164cht vorbei!",
 	weak_bar = "Geschw\195\164cht",
-	weak_fade = "^Gebrochener Pakt schwindet",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -69,8 +60,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	sacrifice = "Sacrifice",
 	sacrifice_desc = "Préviens quand un joueur est sacrifié.",
-	sacrifice_trigger = "^(%S+) (%S+) les effets .* Sacrifice%.$",
-	sacrifice_fade = "^Sacrifice sur ([^%s]+) vient de se dissiper%.$",
 	sacrifice_message = "%s est sacrifié !",
 	sacrifice_bar = "Sacrifice : %s",
 	sacrifice_soon = "Sacrifice imminent !",
@@ -81,12 +70,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	weak = "Affaibli",
 	weak_desc = "Préviens quand Terestian est affaibli.",
-	weak_trigger = "les effets .* Pacte rompu%.$",
 	weak_message = "Affaibli pendant ~45 sec. !",
 	weak_warning1 = "Fin de l'Affaiblissement dans ~5 sec. !",
 	weak_warning2 = "Affaiblissement terminé !",
 	weak_bar = "~Fin Affaiblissement",
-	weak_fade = "^Pacte rompu sur Terestian Malsabot vient de se dissiper%.$",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -94,8 +81,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	sacrifice = "희생",
 	sacrifice_desc = "플레이어의 희생에 대한 경고입니다.",
-	sacrifice_trigger = "^([^|;%s]*)(.*)희생에 걸렸습니다%.$",
-	sacrifice_fade = "^([^%s]+)의 몸에서 희생 효과가 사라졌습니다%.$",
 	sacrifice_message = "%s님이 희생되었습니다!",
 	sacrifice_bar = "희생: %s",
 	sacrifice_soon = "잠시후 희생!",
@@ -106,12 +91,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	weak = "약화",
 	weak_desc = "약화 상태에 대한 경고입니다.",
-	weak_trigger = "깨진 서약에 걸렸습니다%.$",
 	weak_message = "약 45초간 약화!",
 	weak_warning1 = "약 5초 후 약화 종료!",
 	weak_warning2 = "약화 종료!",
 	weak_bar = "~약화 사라짐",
-	weak_fade = "깨진 서약 효과가 사라졌습니다.", -- check
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -119,8 +102,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	sacrifice = "牺牲",
 	sacrifice_desc = "当玩家受到牺牲时发出警报。",
-	sacrifice_trigger = "^(.+)受(.+)了牺牲效果的影响。$",
-	sacrifice_fade = "^牺牲效果从(.+)身上消失。",
 	sacrifice_message = ">%s< 牺牲！ - 注意停手！",
 	sacrifice_bar = "<牺牲：%s>",
 	sacrifice_soon = "即将 牺牲！",
@@ -131,12 +112,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	weak = "虚弱",
 	weak_desc = "虚弱阶段发出警报。",
-	weak_trigger = "受到了破碎契约效果的影响。$",
 	weak_message = "进入虚弱状态！ ~45秒",
 	weak_warning1 = "~5秒后 虚弱状态结束！",
 	weak_warning2 = "虚弱结束！",
 	weak_bar = "<虚弱>",
-	weak_fade = "^破碎契约效果从",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -144,8 +123,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	sacrifice = "犧牲警告",
 	sacrifice_desc = "當有玩家被犧牲時發送警告",
-	sacrifice_trigger = "^(.+)受(到[了]*)犧牲效果的影響。$",
-	sacrifice_fade = "^犧牲效果從%s身上消失。$",
 	sacrifice_message = "%s 犧牲了 - 注意停手及治療",
 	sacrifice_bar = "犧牲：[%s]",
 	sacrifice_soon = "即將施放犧牲!",
@@ -156,12 +133,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	weak = "虛弱提示",
 	weak_desc = "當泰瑞斯提安進入虛弱狀態時發送警告",
-	weak_trigger = "受到破碎契印效果的影響。",
 	weak_message = "進入虛弱狀態 45 秒！",
 	weak_warning1 = "虛弱狀態 5 秒後結束！",
 	weak_warning2 = "虛弱狀態結束！",
 	weak_bar = "虛弱",
-	weak_fade = "破碎契印效果從",
 } end )
 
 L:RegisterTranslations("esES", function() return {
@@ -169,8 +144,6 @@ L:RegisterTranslations("esES", function() return {
 
 	sacrifice = "Sacrificio",
 	sacrifice_desc = "Avisa del Sacrificio de los jugadores.",
-	sacrifice_trigger = "^(%S+) (%S+) sufre Sacrificio%.$",
-	sacrifice_fade = "^Sacrificio desaparece de ([^%s]+)%.$",
 	sacrifice_message = "\164\161%s esta siendo sacrificado!",
 	sacrifice_bar = "Sacrificio: %s",
 	sacrifice_soon = "\194\161Sacrificio Pronto!",
@@ -181,12 +154,10 @@ L:RegisterTranslations("esES", function() return {
 
 	weak = "Debilitado",
 	weak_desc = "Avisa de estado de debilidad.",
-	weak_trigger = "sufre Pacto roto.",
 	weak_message = "\194\161Debilitado por ~45seg!",
 	weak_warning1 = "Debilitado finaliza en ~5seg!",
 	weak_warning2 = "\194\161Debilidad finalizado!",
 	weak_bar = "~Debilidad desaparece",
-	weak_fade = "^Pacto roto desaparece",
 } end )
 
 ----------------------------------
@@ -204,71 +175,36 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER", "AuraGone")
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_PARTY", "AuraGone")
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_SELF")
-
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "CheckSacrifice")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "CheckSacrifice")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "CheckSacrifice")
-
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Sacrifice", 30115)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Weakened", 30065)
-
 	self:AddCombatListener("SPELL_AURA_REMOVED", "WeakenedRemoved", 30065)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "SacrificeRemoved", 30115)
 	self:AddCombatListener("SPELL_AURA_DISPELLED", "SacrificeRemoved", 30115)
-
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	pName = UnitName("player")
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if self.db.profile.enrage and msg:find(L["engage_trigger"]) then
-		self:Enrage(600)
+function mod:Sacrifice(player, spellID)
+	if self.db.profile.sacrifice then
+		self:IfMessage(fmt(L["sacrifice_message"], player), "Attention", spellID)
+		self:Bar(fmt(L["sacrifice_bar"], player), 30, spellID)
+		self:ScheduleEvent("sac1", "BigWigs_Message", 40, L["sacrifice_soon"], "Positive")
+		self:Bar(L["sacrifice_soonbar"], 42, spellID)
 	end
+	self:Icon(player, "icon")
 end
 
-function mod:CheckSacrifice(msg)
-	local splayer, stype = select(3, msg:find(L["sacrifice_trigger"]))
-	if splayer and stype then
-		if splayer == L2["you"] and stype == L2["are"] then
-			splayer = pName
-		end
-		self:Sacrifice(splayer)
-	end
-end
-
-function mod:Sacrifice(player)
-	if player then
-		if self.db.profile.sacrifice then
-			self:Message(fmt(L["sacrifice_message"], player), "Attention")
-			self:Bar(fmt(L["sacrifice_bar"], player), 30, "Spell_Shadow_AntiMagicShell")
-			self:ScheduleEvent("sac1", "BigWigs_Message", 40, L["sacrifice_soon"], "Positive")
-			self:Bar(L["sacrifice_soonbar"], 42, "Spell_Shadow_Cripple")			
-		end
-		if self.db.profile.icon then
-			self:Icon(player)
-		end
-	end
-end
-
-function mod:Weakened()
+function mod:Weakened(_, spellID)
 	if self.db.profile.weak then
-		self:Message(L["weak_message"], "Important", nil, "Alarm")
+		self:IfMessage(L["weak_message"], "Important", spellID, "Alarm")
 		self:ScheduleEvent("weak1", "BigWigs_Message", 40, L["weak_warning1"], "Attention")
-		self:Bar(L["weak_bar"], 45, "Spell_Shadow_Cripple")		
+		self:Bar(L["weak_bar"], 45, spellID)
 	end
 end
 
@@ -276,7 +212,7 @@ function mod:WeakenedRemoved()
 	if self.db.profile.weak then
 		self:Message(L["weak_warning2"], "Attention", nil, "Info")
 		self:CancelScheduledEvent("weak1")
-		self:TriggerEvent("BigWigs_StopBar", self, L["weak_bar"])	
+		self:TriggerEvent("BigWigs_StopBar", self, L["weak_bar"])
 	end
 end
 
@@ -287,34 +223,9 @@ function mod:SacrificeRemoved(player)
 	end
 end
 
-function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
-	if self.db.profile.weak and msg:find(L["weak_trigger"]) then
-		self:Message(L["weak_message"], "Important", nil, "Alarm")
-		self:ScheduleEvent("weak1", "BigWigs_Message", 40, L["weak_warning1"], "Attention")
-		self:Bar(L["weak_bar"], 45, "Spell_Shadow_Cripple")
-	end
-end
-
-function mod:AuraGone(msg)
-	if self.db.profile.weak and msg:find(L["weak_fade"]) then
-		self:Message(L["weak_warning2"], "Attention", nil, "Info")
-		self:CancelScheduledEvent("weak1")
-		self:TriggerEvent("BigWigs_StopBar", self, L["weak_bar"])
-	end
-
-	if self.db.profile.sacrifice then
-		local sfade = select(3, msg:find(L["sacrifice_fade"]))
-		if sfade then
-			self:TriggerEvent("BigWigs_StopBar", self, fmt(L["sacrifice_bar"], sfade))
-			self:TriggerEvent("BigWigs_RemoveRaidIcon")
-		end
-	end
-end
-
-function mod:CHAT_MSG_SPELL_AURA_GONE_SELF(msg)
-	if self.db.profile.sacrifice and msg:find(L["sacrifice_fade"]) then
-		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["sacrifice_bar"], pName))
-		self:TriggerEvent("BigWigs_RemoveRaidIcon")
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if self.db.profile.enrage and msg:find(L["engage_trigger"]) then
+		self:Enrage(600)
 	end
 end
 

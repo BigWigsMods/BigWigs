@@ -4,7 +4,6 @@
 
 local boss = BB["Moroes"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local enrageWarn = nil
 
 ----------------------------
@@ -27,7 +26,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	garrote = "Garrote",
 	garrote_desc = "Notify of players afflicted by Garrote.",
-	garrote_trigger = "^(%S+) (%S+) afflicted by Garrote%.$",
 	garrote_message = "Garrote: %s",
 
 	icon = "Icon",
@@ -52,7 +50,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	garrote = "Garrot",
 	garrote_desc = "Préviens quand un joueur subit les effets du Garrot.",
-	garrote_trigger = "^(%S+) (%S+) les effets .* Garrot%.$",
 	garrote_message = "Garrot : %s",
 
 	icon = "Icône",
@@ -79,7 +76,6 @@ L:RegisterTranslations("deDE", function() return {
 	vanish_warning = "Verschwinden bald!",
 	vanish_bar = "N\195\164chste Verschwinden",
 
-	garrote_trigger = "^([^%s]+) ([^%s]+) von Erdrosseln betroffen%.$",
 	garrote_message = "Erdrosseln: %s",
 
 	engage_trigger = "Hm, unangek\195\188ndigte Besucher. Es m\195\188ssen Vorbereitungen getroffen werden...",
@@ -104,7 +100,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	garrote = "목조르기",
 	garrote_desc = "목조르기에 걸린 사람을 알립니다.",
-	garrote_trigger = "^([^|;%s]*)(.*)목조르기에 걸렸습니다%.$",
 	garrote_message = "목조르기: %s",
 
 	icon = "전술 표시",
@@ -129,7 +124,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	garrote = "锁喉",
 	garrote_desc = "当队员受到锁喉时发送警告。",
-	garrote_trigger = "^(.+)受(.+)了锁喉效果的影响。$",
 	garrote_message = "锁喉：>%s<！",
 
 	icon = "标记",
@@ -154,7 +148,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	garrote = "絞喉警告",
 	garrote_desc = "當有玩家被絞喉時發送警告",
-	garrote_trigger = "^(.+)受(到[了]*)絞喉效果的影響。",
 	garrote_message = "被絞喉：[%s]",
 
 	icon = "標記圖示",
@@ -179,7 +172,6 @@ L:RegisterTranslations("esES", function() return {
 
 	garrote = "Garrote",
 	garrote_desc = "Notifica que jugador ha sido afectado por Garrote.",
-	garrote_trigger = "^([^%s]+) ([^%s]+) sufre Garrote%.$",
 	garrote_message = "Garrote: %s",
 
 	icon = "Icono",
@@ -205,26 +197,24 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "GarroteEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "GarroteEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "GarroteEvent")
-
-	self:AddSyncListener("SPELL_AURA_APPLIED", 37066, "MoroesGarrote", 1) -- from wowhead check and remove this comment if correct
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Garrote", 37066)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "MoroesGarrote", 5)
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Garrote(player, spellID)
+	if self.db.profile.garrote then
+		self:IfMessage(L["garrote_message"]:format(player), "Attention", spellID)
+		self:Icon(player, "icon")
+	end
+end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.vanish and (msg == L["vanish_trigger1"] or msg == L["vanish_trigger2"]) then
@@ -261,25 +251,6 @@ function mod:UNIT_HEALTH(msg)
 			enrageWarn = true
 		elseif health > 40 and enrageWarn then
 			enrageWarn = nil
-		end
-	end
-end
-
-function mod:GarroteEvent(msg)
-	local gplayer, gtype = select(3, msg:find(L["garrote_trigger"]))
-	if gplayer and gtype then
-		if gplayer == L2["you"] and gtype == L2["are"] then
-			gplayer = UnitName("player")
-		end
-		self:Sync("MoroesGarrote", gplayer)
-	end
-end
-
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "MoroesGarrote" and rest and self.db.profile.garrote then
-		self:Message(L["garrote_message"]:format(rest), "Attention")
-		if self.db.profile.icon then
-			self:Icon(rest)
 		end
 	end
 end

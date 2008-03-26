@@ -25,7 +25,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	enfeeble = "Enfeeble",
 	enfeeble_desc = "Show cooldown timer for enfeeble.",
-	enfeeble_trigger = "afflicted by Enfeeble%.$",
 	enfeeble_message = "Enfeeble! next in 30sec",
 	enfeeble_warning1 = "Enfeeble in 5sec!",
 	enfeeble_warning2 = "Enfeeble in 10sec!",
@@ -73,7 +72,6 @@ L:RegisterTranslations("deDE", function() return {
 	phase2_message = "60% - Phase 2",
 	phase3_message = "30% - Phase 3 ",
 
-	enfeeble_trigger = "von Entkr\195\164ften betroffen",
 	enfeeble_message = "Entkr\195\164ften! N\195\164chste in 30 Sek",
 	enfeeble_warning1 = "Entkr\195\164ften in 5 Sek!",
 	enfeeble_warning2 = "Entkr\195\164ften in 10 Sek!",
@@ -104,7 +102,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	enfeeble = "Affaiblir",
 	enfeeble_desc = "Affiche le temps de recharge de Affaiblir.",
-	enfeeble_trigger = "subit les effets .* Affaiblir.$",
 	enfeeble_message = "Affaiblir ! Prochain dans 30 sec.",
 	enfeeble_warning1 = "Affaiblir dans 5 sec. !",
 	enfeeble_warning2 = "Affaiblir dans 10 sec. !",
@@ -144,7 +141,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	enfeeble = "쇠약",
 	enfeeble_desc = "쇠약에 대한 재사용 대기시간을 표시합니다.",
-	enfeeble_trigger = "쇠약에 걸렸습니다%.$",
 	enfeeble_message = "쇠약! 다음은 30초 후",
 	enfeeble_warning1 = "5초 후 쇠약!",
 	enfeeble_warning2 = "10초 후 쇠약!",
@@ -184,7 +180,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	enfeeble = "能量衰弱警报",
 	enfeeble_desc = "显示能量衰弱冷却计时条。",
-	enfeeble_trigger = "受到了能量衰弱效果的影响。$",
 	enfeeble_message = "能量衰弱！ 30后再次发动！",
 	enfeeble_warning1 = "能量衰弱！ 5秒后发动",
 	enfeeble_warning2 = "能量衰弱！ 10秒后发动",
@@ -225,7 +220,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	enfeeble = "削弱警告",
 	enfeeble_desc = "顯示削弱計時條",
-	enfeeble_trigger = "^(.+)受(到[了]*)削弱效果的影響。",
 	enfeeble_message = "30 秒後下一次削弱",
 	enfeeble_warning1 = "5 秒後削弱",
 	enfeeble_warning2 = "10 秒後削弱",
@@ -265,7 +259,6 @@ L:RegisterTranslations("esES", function() return {
 
 	enfeeble = "Socavar",
 	enfeeble_desc = "Muestra un temporizador para Socavar.",
-	enfeeble_trigger = "sufre Socavar%.$",
 	enfeeble_message = "\194\161Socavar! Siguiente en 30seg",
 	enfeeble_warning1 = "\194\161Socavar en 5seg!",
 	enfeeble_warning2 = "\194\161Socavar en 10seg!",
@@ -308,26 +301,40 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Enfeeble", 30843)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("UNIT_SPELLCAST_START")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "EnfeebleEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "EnfeebleEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "EnfeebleEvent")
-
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Enfeeble", 30843)
-
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "MalchezaarEnfeeble", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "MalchezaarNova", 10)
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+local last = 0
+function mod:Enfeeble(player, spellID)
+	local time = GetTime()
+	if (time - last) > 20 then
+		last = time
+		if self.db.profile.enfeeble then
+			if player == UnitName("player") then
+				self:IfMessage(L["enfeeble_warnyou"], "Personal", spellID, "Alarm")
+			end
+			self:IfMessage(L["enfeeble_message"], "Important", spellID)
+			self:ScheduleEvent("enf1", "BigWigs_Message", 25, L["enfeeble_warning1"], "Attention")
+			self:ScheduleEvent("enf2", "BigWigs_Message", 20, L["enfeeble_warning2"], "Attention")
+			self:Bar(L["enfeeble_bar"], 7, spellID)
+			self:Bar(L["enfeeble_nextbar"], 30, spellID)
+		end
+		if self.db.profile.nova then
+			self:Bar(L["nova_bar"], 5, "Spell_Shadow_Shadowfury")
+		end
+	end
+end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["infernal_trigger1"] or msg == L["infernal_trigger2"] then
@@ -372,22 +379,6 @@ function mod:DespawnTimer()
 	count = count + 1
 end
 
-function mod:Enfeeble(player)
-	if player == UnitName("player") then
-		self:Message(L["enfeeble_warnyou"], "Personal", true)
-	end
-	self:Sync("MalchezaarEnfeeble")
-end
-
-function mod:EnfeebleEvent(msg)
-	if msg == L["enfeeble_you"] then
-		self:Message(L["enfeeble_warnyou"], "Personal", true)
-	end
-	if msg:find(L["enfeeble_trigger"]) then
-		self:Sync("MalchezaarEnfeeble")
-	end
-end
-
 function mod:UNIT_SPELLCAST_START(msg)
 	if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["nova"] then
 		self:Sync("MalchezaarNova")
@@ -395,18 +386,7 @@ function mod:UNIT_SPELLCAST_START(msg)
 end
 
 function mod:BigWigs_RecvSync(sync)
-	if sync == "MalchezaarEnfeeble" then
-		if self.db.profile.enfeeble then
-			self:Message(L["enfeeble_message"], "Important", nil, "Alarm")
-			self:ScheduleEvent("enf1", "BigWigs_Message", 25, L["enfeeble_warning1"], "Attention")
-			self:ScheduleEvent("enf2", "BigWigs_Message", 20, L["enfeeble_warning2"], "Attention")
-			self:Bar(L["enfeeble_bar"], 7, "Spell_Shadow_LifeDrain02")
-			self:Bar(L["enfeeble_nextbar"], 30, "Spell_Shadow_LifeDrain02")
-		end
-		if self.db.profile.nova then
-			self:Bar(L["nova_bar"], 5, "Spell_Shadow_Shadowfury")
-		end
-	elseif sync == "MalchezaarNova" and self.db.profile.nova then
+	if sync == "MalchezaarNova" and self.db.profile.nova then
 		self:Message(L["nova_message"], "Attention", nil, "Info")
 		self:Bar(L["nova_message"], 2, "Spell_Shadow_Shadowfury")
 		if not nova then

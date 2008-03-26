@@ -4,7 +4,6 @@
 
 local boss = BB["Netherspite"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local fmt = string.format
 local started
 local voidcount
@@ -27,12 +26,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	voidzone = "Voidzones",
 	voidzone_desc = "Warn for Voidzones.",
-	voidzone_trigger = "casts Void Zone%.$",
 	voidzone_warn = "Void Zone (%d)!",
 
 	netherbreath = "Netherbreath",
 	netherbreath_desc = "Warn for Netherbreath.",
-	netherbreath_trigger = "casts Face Random Target%.$",
 	netherbreath_warn = "Incoming Netherbreath!",
 } end )
 
@@ -53,10 +50,8 @@ L:RegisterTranslations("deDE", function() return {
 	phase2_bar = "N\195\164chste Rage",
 	phase2_trigger = "Netherenergien versetzen %s in rasende Wut!",
 
-	voidzone_trigger = "wirkt Zone der Leere.",
 	voidzone_warn = "Zone der Leere (%d)!",
 
-	netherbreath_trigger = "wirkt Zuf\195\164lligem Ziel zuwenden.",
 	netherbreath_warn = "Netheratem kommt!",
 } end )
 
@@ -72,12 +67,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	voidzone = "공허의 지대",
 	voidzone_desc = "공허의 지대에 대한 경고입니다.",
-	voidzone_trigger = "공허의 지대|1을;를; 시전합니다%.$",
 	voidzone_warn = "공허의 지대 (%d)!",
 
 	netherbreath = "황천의 숨결",
 	netherbreath_desc = "황천의 숨결에 대한 경고입니다.",
-	netherbreath_trigger = "무작위 대상 바라보기|1을;를; 시전합니다%.$",
 	netherbreath_warn = "황천의 숨결 시전!",
 } end )
 
@@ -93,12 +86,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	voidzone = "Zones du vide",
 	voidzone_desc = "Préviens quand les Zones du vide apparaissent.",
-	voidzone_trigger = "lance Zone de vide.",
 	voidzone_warn = "Zone du vide (%d) !",
 
 	netherbreath = "Souffle de Néant",
 	netherbreath_desc = "Préviens de l'arrivée des Souffles du Néant.",
-	netherbreath_trigger = "lance Affronter une cible aléatoire.",
 	netherbreath_warn = "Souffle du Néant imminent !",
 } end )
 
@@ -114,12 +105,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	voidzone = "虚空领域",
 	voidzone_desc = "虚空领域警报。",
-	voidzone_trigger = "施放了虚空领域。$",
 	voidzone_warn = "虚空领域 (%d)！",
 
 	netherbreath = "虚空吐息",
 	netherbreath_desc = "虚空吐息警报。",
-	netherbreath_trigger = "施放虚空吐息。$",
 	netherbreath_warn = "虚空吐息来临",
 } end )
 
@@ -135,12 +124,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	voidzone = "虛空地區警告",
 	voidzone_desc = "當尼德斯施放虛空地區時發送警告",
-	voidzone_trigger = "施放了虛空地區。",
 	voidzone_warn = "虛空地區 (%d)",
 
 	netherbreath = "地獄吐息警告",
 	netherbreath_desc = "當尼德斯施放地獄吐息時發送警告",
-	netherbreath_trigger = "施放地獄吐息。",
 	netherbreath_warn = "地獄吐息",
 } end )
 
@@ -156,12 +143,10 @@ L:RegisterTranslations("esES", function() return {
 
 	voidzone = "Zonas de vac\195\173o",
 	voidzone_desc = "Avisa de Zonas de vac\195\173o.",
-	voidzone_trigger = "lanza Zona de vac\195\173o%.$",
 	voidzone_warn = "\194\161Zona de vac\195\173o (%d)!",
 
 	netherbreath = "Aliento abisal",
 	netherbreath_desc = "Avisa de Aliento abisal.",
-	netherbreath_trigger = "comienza a lanzar Aliento abisal.%.$",
 	netherbreath_warn = "\194\161Llegada de Aliento abisal!",
 } end )
 
@@ -180,20 +165,16 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-
 	-- these need testing, are they instant or does he indeed cast voidzone for 2 seconds
 	self:AddCombatListener("SPELL_CAST_START", "VoidZone", 30533)
-	self:AddSyncListener("SPELL_CAST_SUCCESS", 38546, "Netherbreath") -- face random target, instantcast
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Netherbreath", 38546) -- face random target, instantcast
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "Netherbreath", 3)
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	started = nil
 	voidcount = 1
@@ -202,6 +183,20 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:VoidZone()
+	if self.db.profile.voidzone then
+		self:IfMessage(fmt(L["voidzone_warn"], voidcount), "Attention", 30533)
+		voidcount = voidcount + 1
+	end
+end
+
+function mod:Netherbreath(_, spellID)
+	if self.db.profile.netherbreath then
+		self:Message(L["netherbreath_warn"], "Urgent", spellID)
+		self:Bar(L["netherbreath_warn"], 2.5, spellID)
+	end
+end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
@@ -216,9 +211,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self.db.profile.enrage then
 			self:Enrage(540)
 		end
-	elseif sync == "Netherbreath" and self.db.profile.netherbreath then
-		self:Message( L["netherbreath_warn"], "Urgent")
-		self:Bar(L["netherbreath_warn"], 2.5, "Spell_Arcane_MassDispel")
 	end
 end
 
@@ -231,22 +223,6 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	elseif msg == L["phase2_trigger"] then
 		self:Message(L["phase2_message"], "Important")
 		self:Bar(L["phase1_bar"], 30, "Spell_ChargeNegative")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if self.db.profile.voidzone and msg:find( L["voidzone_trigger"] ) then
-		self:Message(fmt(L["voidzone_warn"], voidcount), "Attention")
-		voidcount = voidcount + 1
-	elseif msg:find(L["netherbreath_trigger"]) then
-		self:Sync("Netherbreath")
-	end
-end
-
-function mod:VoidZone()
-	if self.db.profile.voidzone then
-		self:Message(fmt(L["voidzone_warn"], voidcount), "Attention")
-		voidcount = voidcount + 1
 	end
 end
 

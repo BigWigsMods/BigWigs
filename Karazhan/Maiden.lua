@@ -4,7 +4,6 @@
 
 local boss = BB["Maiden of Virtue"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 local CheckInteractDistance = CheckInteractDistance
 
 ----------------------------
@@ -28,7 +27,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	holyfire = "Holy Fire",
 	holyfire_desc = "Alert when people are afflicted by Holy Fire.",
-	holyfire_trigger = "^(%S+) (%S+) afflicted by Holy Fire%.$",
 	holyfire_message = "Holy Fire: %s",
 
 	icon = "Raid Icon",
@@ -55,7 +53,6 @@ L:RegisterTranslations("deDE", function() return {
 	repentance_bar = "Bu\195\159e",
 	repentance_nextbar = "N\195\164chste Bu\195\159e",
 
-	holyfire_trigger = "^([^%s]+) ([^%s]+) von Heiliges Feuer betroffen%.$",
 	holyfire_message = "Heiliges Feuer: %s",
 } end)
 
@@ -74,7 +71,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	holyfire = "Flammes sacrées",
 	holyfire_desc = "Préviens quand un joueur subit les effets des Flammes sacrées.",
-	holyfire_trigger = "^(%S+) (%S+) les effets .* Flammes sacrées%.$",
 	holyfire_message = "Flammes sacrées : %s",
 
 	icon = "Icône",
@@ -96,7 +92,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	holyfire = "신성한 불꽃",
 	holyfire_desc = "신성한 불꽃에 걸린 사람에 대한 경고입니다.",
-	holyfire_trigger = "^([^|;%s]*)(.*)신성한 불꽃에 걸렸습니다%.$",
 	holyfire_message = "신성한 불꽃: %s",
 
 	icon = "전술 표시",
@@ -118,7 +113,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	holyfire = "神圣之火",
 	holyfire_desc = "当受到神圣之火影响时发出警报。",
-	holyfire_trigger = "^(.+)受(.+)了神圣之火效果的影响。$",
 	holyfire_message = "神圣之火： >%s<！",
 
 	icon = "团队标记",
@@ -139,7 +133,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	holyfire = "神聖之火",
 	holyfire_desc = "當隊友受到神聖之火時發出警報",
-	holyfire_trigger = "^(.+)受(到[了]*)神聖之火效果的影響。",
 	holyfire_message = "神聖之火：[%s]",
 
 	icon = "團隊標記",
@@ -161,7 +154,6 @@ L:RegisterTranslations("esES", function() return {
 
 	holyfire = "Fuego Sagrado",
 	holyfire_desc = "Avisa cuando alguien sufre Fuego Sagrado.",
-	holyfire_trigger = "^([^%s]+) ([^%s]+) sufre Fuego Sagrado%.$",
 	holyfire_message = "Fuego Sagrado: %s",
 
 	icon = "Icono de Raid",
@@ -184,24 +176,22 @@ mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) en
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "HolyFireEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "HolyFireEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "HolyFireEvent")
-
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	self:AddSyncListener("SPELL_AURA_APPLIED", 29522, "MaidenHolyFire", 1) -- from wowhead, check and remove this comment if it is correct.
+	self:AddCombatListener("SPELL_AURA_APPLIED", "HolyFire", 29522)
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "MaidenHolyFire", 3)
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:HolyFire(player, spellID)
+	if self.db.profile.holyfire then
+		self:IfMessage(L["holyfire_message"]:format(player), "Important", spellID)
+		self:Icon(player, "icon")
+	end
+end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
@@ -220,27 +210,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:HolyFireEvent(msg)
-	local bplayer, btype = select(3, msg:find(L["holyfire_trigger"]))
-	if bplayer and btype then
-		if bplayer == L2["you"] and btype == L2["are"] then
-			bplayer = UnitName("player")
-		end
-		self:Sync("MaidenHolyFire", bplayer)
-	end
-end
-
 function mod:NextRepentance()
 	self:ScheduleEvent("rep1", "BigWigs_Message", 33, L["repentance_warning"], "Urgent", nil, "Alarm")
 	self:Bar(L["repentance_nextbar"], 33, "Spell_Holy_PrayerOfHealing")
-end
-
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "MaidenHolyFire" and rest and self.db.profile.holyfire then
-		self:Message(L["holyfire_message"]:format(rest), "Important")
-		if self.db.profile.icon then
-			self:Icon(rest)
-		end
-	end
 end
 

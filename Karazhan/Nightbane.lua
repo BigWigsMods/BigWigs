@@ -260,44 +260,42 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE")
-	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
-
-	self:AddSyncListener("SPELL_CAST_START", 36922, "NBFear")
+	self:AddCombatListener("SPELL_CAST_START", "Fear", 36922)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "CharredEarth", 30129)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "NBFear", 10)
-	self:TriggerEvent("BigWigs_ThrottleSync", "NBBones", 15)
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
+	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
+	self:RegisterEvent("BigWigs_RecvSync")
+	self:TriggerEvent("BigWigs_ThrottleSync", "NBBones", 15)
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "NBFear" and self.db.profile.fear then
+function mod:Fear(_, spellID)
+	if self.db.profile.fear then
 		self:CancelScheduledEvent("fear")
-		self:Bar(L["fear_bar"], 2.5, "Spell_Shadow_PsychicScream")
-		self:Message(L["fear_message"], "Positive")
-		self:Bar(L["fear_nextbar"], 37, "Spell_Shadow_PsychicScream")
+		self:Bar(L["fear_bar"], 2.5, spellID)
+		self:IfMessage(L["fear_message"], "Positive", spellID)
+		self:Bar(L["fear_nextbar"], 37, spellID)
 		self:ScheduleEvent("fear", "BigWigs_Message", 35, L["fear_warning"], "Positive")
-	elseif sync == "NBBones" and self.db.profile.bones then
-		self:Message(L["bones_message"], "Urgent")
-		self:Bar(L["bones"], 11, "INV_Misc_Bone_10")
 	end
 end
 
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg:find(L["fear_trigger"]) then
-		self:Sync("NBFear")
+function mod:CharredEarth(player)
+	if UnitIsUnit(player, "player") and self.db.profile.charr then
+		self:IfMessage(L["charr_message"], "Personal", 30129, "Alarm")
+	end
+end
+
+function mod:BigWigs_RecvSync(sync, rest, nick)
+	if sync == "NBBones" and self.db.profile.bones then
+		self:Message(L["bones_message"], "Urgent")
+		self:Bar(L["bones"], 11, "INV_Misc_Bone_10")
 	end
 end
 
@@ -327,21 +325,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE(msg)
-	if self.db.profile.charr and msg == L["charr_trigger"] then
-		self:Message(L["charr_message"], "Personal", true, "Alarm")
-	end
-end
-
 function mod:UNIT_SPELLCAST_CHANNEL_START(msg)
 	if UnitName(msg) == boss and (UnitChannelInfo(msg)) == L["bones"] then
 		self:Sync("NBBones")
-	end
-end
-
-function mod:CharredEarth(player)
-	if self.db.profile.charr and player == UnitName("player") then
-		self:Message(L["charr_message"], "Personal", true, "Alarm")
 	end
 end
 

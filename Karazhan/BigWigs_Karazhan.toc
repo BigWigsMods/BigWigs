@@ -1,4 +1,4 @@
-﻿## Interface: 20300
+﻿## Interface: 20400
 
 ## Title: Big Wigs [|cffeda55fKarazhan|r]
 ## Notes: Big Wigs Karazhan Modules
@@ -35,3 +35,4 @@ Maiden.lua
 WizardofOz.lua
 Netherspite.lua
 Nightbane.lua
+

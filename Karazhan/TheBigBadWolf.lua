@@ -5,7 +5,7 @@
 local lady = BB["Grandmother"]
 local boss = BB["The Big Bad Wolf"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local pName = nil
+local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -13,8 +13,6 @@ local pName = nil
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "TheBigBadWolf",
-
-	riding_trigger = "^(%S+) (%S+) Red Riding Hood%.$",
 
 	youriding = "Red Riding Hood(You)",
 	youriding_desc = "Warn when you are Red Riding Hood.",
@@ -31,8 +29,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	riding_trigger = "^([^%s]+) ([^%s]+) 'Rotk\195\164ppchen'%.$",
-
 	youriding = "Du bist Rotk\195\164ppchen Warnung",
 	youriding_desc = "Warnung wenn du Rotk\195\164ppchen bist",
 	riding_youwarn = "Du bist Rotk\195\164ppchen!",
@@ -48,8 +44,6 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	riding_trigger = "^(%S+) (%S+) Chaperon Rouge%.$",
-
 	youriding = "Chaperon Rouge (vous)",
 	youriding_desc = "Préviens quand vous êtes le Chaperon Rouge.",
 	riding_youwarn = "Vous êtes le Chaperon Rouge !",
@@ -65,8 +59,6 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	riding_trigger = "^([^|;%s]*)(.*)빨간 두건 효과를 얻었습니다%.$",
-
 	youriding = "자신의 빨간 두건을 알립니다.",
 	youriding_desc = "자신이 빨간 두건에 걸리면 알림",
 	riding_youwarn = "당신은 빨간 두건입니다!",
@@ -82,8 +74,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	riding_trigger = "^(%S+)获得了小红帽的效果。$",
-
 	youriding = "小红帽(你)",
 	youriding_desc = "当你变成小红帽发出警报。",
 	riding_youwarn = "你变成小红帽！",
@@ -99,8 +89,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	riding_trigger = "^(.+)獲得了小紅帽的效果",
-
 	riding_youwarn = "你變成小紅帽了！",
 	riding_otherwarn ="小紅帽：[%s] ",
 	riding_bar = "%s 快跑！",
@@ -116,8 +104,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	riding_trigger = "^([^%s]+) ([^%s]+) Caperucita Roja%.$",
-
 	youriding = "Caperucita Roja (Tu)",
 	youriding_desc = "Avisa cuando eres Caperucita Roja.",
 	riding_youwarn = "Eres Caperucita Roja!",
@@ -147,51 +133,25 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_BUFFS", "OtherRiding")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_BUFFS", "OtherRiding")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS")
-
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Riding", 30756)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-
-	pName = UnitName("player")
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-function mod:Riding(player)
-	if not player then return end
+function mod:Riding(player, spellID)
 	if player == pName then
 		if self.db.profile.youriding then
-			self:Message(L["riding_youwarn"], "Personal", true, "Long")
-			self:Message(L["riding_otherwarn"]:format(pName), "Attention", nil, nil, true)
-			self:Bar(L["riding_bar"]:format(pName), 20, "INV_Chest_Cloth_18")
+			self:LocalMessage(L["riding_youwarn"], "Personal", spellID, "Long")
+			self:WideMessage(L["riding_otherwarn"]:format(player))
 		end
 	elseif self.db.profile.elseriding then
-		self:Message(L["riding_otherwarn"]:format(player), "Attention")
-		self:Whisper(rplayer, L["riding_youwarn"])
-		self:Bar(L["riding_bar"]:format(player), 20, "INV_Chest_Cloth_18")
+		self:IfMessage(L["riding_otherwarn"]:format(player), "Attention", spellID)
+		self:Whisper(player, L["riding_youwarn"])
 	end
-	if self.db.profile.icon then
-		self:Icon(player)
-	end
-	
-end
-
-function mod:OtherRiding(msg)
-	local rplayer = select(3, msg:find(L["riding_trigger"]))
-	if rplayer then
-		self:Riding(rplayer)
-	end
-end
-
-function mod:CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS(msg)
-	if msg:find(L["riding_trigger"]) then
-		self:Riding(pName)
-	end
+	self:Icon(player, "icon")
+	self:Bar(L["riding_bar"]:format(player), 20, spellID)
 end
 

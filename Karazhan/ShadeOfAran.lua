@@ -53,7 +53,6 @@ L:RegisterTranslations("enUS", function() return {
 	flame_trigger2 = "Burn, you hellish fiends!",
 	flame_message = "Flame Wreath!",
 	flame_bar = "Flame Wreath",
-	flame_trigger = "casts Flame Wreath%.$",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -101,7 +100,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	flame_message = "Flammenkranz!",
 	flame_bar = "Flammenkranz",
-	flame_trigger = "wirkt Flammenkranz",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -144,7 +142,6 @@ L:RegisterTranslations("frFR", function() return {
 	flame_trigger2 = "Brûlez, démons de l’enfer !",
 	flame_message = "Couronne de flammes !",
 	flame_bar = "Couronne de flammes",
-	flame_trigger = "lance Couronne de flammes%.$",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -187,7 +184,6 @@ L:RegisterTranslations("koKR", function() return {
 	flame_trigger2 = "불타라, 지옥의 악마들아!",
 	flame_message = "화염의 고리!",
 	flame_bar = "화염의 고리",
-	flame_trigger = "화염의 고리|1을;를; 시전합니다%.$",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -230,7 +226,6 @@ L:RegisterTranslations("zhCN", function() return {
 	flame_trigger2 = "燃烧吧，地狱的恶魔！",
 	flame_message = "烈焰花环！",
 	flame_bar = "<烈焰花环>",
-	flame_trigger = "施放烈焰花环。$",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -273,7 +268,6 @@ L:RegisterTranslations("zhTW", function() return {
 	flame_trigger2 = "燃燒吧，你這地獄的惡魔!",
 	flame_message = "埃蘭之影施放烈焰火圈",
 	flame_bar = "烈焰火圈",
-	flame_trigger = "施放烈焰火圈",
 } end )
 
 L:RegisterTranslations("esES", function() return {
@@ -316,7 +310,6 @@ L:RegisterTranslations("esES", function() return {
 	flame_trigger2 = "\194\161Arded, demonios infernales!",
 	flame_message = "\194\161Corona de Llamas!",
 	flame_bar = "Corona de Llamas",
-	flame_trigger = "lanzar Corona de llamas%.$",
 } end )
 
 ----------------------------------
@@ -334,9 +327,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-
-	self:AddCombatListener("SPELL_CAST_START", "FlameWreath", 30004)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "FlameWreath", 30004)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("UNIT_MANA")
@@ -344,13 +335,18 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_SAY")
-
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:FlameWreath(_, spellID)
+	if self.db.profile.flame then
+		self:IfMessage(L["flame_message"], "Important", spellID)
+		self:Bar(L["flame_bar"], 21, spellID)
+	end
+end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.drink and msg == L["drink_trigger"] then
@@ -376,20 +372,6 @@ function mod:CHAT_MSG_MONSTER_SAY(msg)
 	if self.db.profile.adds and msg == L["adds_trigger"] then
 		self:Message(L["adds_message"], "Important")
 		self:Bar(L["adds_bar"], 90, "Spell_Frost_SummonWaterElemental_2")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if self.db.profile.flame and msg:find(L["flame_trigger"]) then
-		self:Message(L["flame_message"], "Important")
-		self:Bar(L["flame_bar"], 21, "Spell_Fire_Fire")
-	end
-end
-
-function mod:FlameWreath()
-	if self.db.profile.flame then
-		self:Message(L["flame_message"], "Important")
-		self:Bar(L["flame_bar"], 21, "Spell_Fire_Fire")
 	end
 end
 
