@@ -334,11 +334,10 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Exhaustion", 44032)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Debris", 30632)
-	self:AddCombatListener("SPELL_DAMAGE", "Abyssal", 30511)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Debris", 36449)
+	self:AddCombatListener("SPELL_SUMMON", "Abyssal", 30511)
 	self:AddCombatListener("SPELL_CAST_START", "Heal", 30528)
-	self:AddCombatListener("SPELL_AURA_REMOVED", "BanishRemoved", 30168) -- figure out the correct one
-	self:AddCombatListener("SPELL_AURA_DISPELLED", "BanishRemoved", 30168)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "BanishRemoved", 30168)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -368,15 +367,10 @@ function mod:Debris(player)
 	end
 end
 
-local last = 0
 function mod:Abyssal()
-	local time = GetTime()
-	if (time - last) > 0.2 then
-		last = time
-		if db.abyssal then
-			self:IfMessage(L["abyssal_message"]:format(abycount), "Attention", 30511)
-			abycount = abycount + 1
-		end
+	if db.abyssal then
+		self:IfMessage(L["abyssal_message"]:format(abycount), "Attention", 30511)
+		abycount = abycount + 1
 	end
 end
 
