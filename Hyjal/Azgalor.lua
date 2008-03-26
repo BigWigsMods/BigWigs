@@ -172,11 +172,16 @@ function mod:RainOfFire(player)
 	end
 end
 
+local last = 0
 function mod:Howl(_, spellID)
-	if db.howl then
-		self:IfMessage(L["howl_message"], "Important", spellID)
-		self:Bar(L["howl_bar"], 16, spellID)
-		self:DelayedMessage(15, L["howl_warning"], "Important")
+	local time = GetTime()
+	if (time - last) > 10 then
+		last = time
+		if db.howl then
+			self:IfMessage(L["howl_message"], "Important", spellID)
+			self:Bar(L["howl_bar"], 16, spellID)
+			self:DelayedMessage(15, L["howl_warning"], "Important")
+		end
 	end
 end
 
