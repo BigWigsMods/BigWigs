@@ -18,8 +18,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	repentance = "Repentance",
 	repentance_desc = "Estimated timer of Repentance.",
-	repentance_trigger1 = "Cast out your corrupt thoughts.",
-	repentance_trigger2 = "Your impurity must be cleansed.",
 	repentance_message = "Repentance! Next in ~33sec",
 	repentance_warning = "Repentance Cooldown Over - Inc Soon!",
 	repentance_bar = "Repentance",
@@ -46,8 +44,6 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Euer Verhalten wird nicht toleriert.",
 	engage_message = "Maid Engaged! Bu\195\159e in ~33 Sek!",
 
-	repentance_trigger1 = "L\195\182st Euch von Euren verdorbenen Gedanken!",
-	repentance_trigger2 = "Eure Unreinheit muss gel\195\164utert werden.",
 	repentance_message = "Bu\195\159e! N\195\164chste in ~33 Sek!",
 	repentance_warning = "Bu\195\159e bald!",
 	repentance_bar = "Bu\195\159e",
@@ -62,8 +58,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	repentance = "Repentir",
 	repentance_desc = "Préviens quand la Damoiselle de vertu est susceptible d'utiliser son Repentir.",
-	repentance_trigger1 = "Chassez vos pensées corrompues.",
-	repentance_trigger2 = "Il faut se débarrasser de votre impureté.",
 	repentance_message = "Repentir ! Prochain pas avant ~33 sec.",
 	repentance_warning = "Fin du cooldown Repentir - Imminent !",
 	repentance_bar = "Repentir",
@@ -83,8 +77,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	repentance = "참회",
 	repentance_desc = "참회 예상 시간입니다.",
-	repentance_trigger1 = "그 부정한 생각을 떨쳐버려라.",
-	repentance_trigger2 = "너희의 불순함을 반드시 정화하겠다.",
 	repentance_message = "참회! 다음은 약 33초 후!",
 	repentance_warning = "참회 쿨다운 종료 - 잠시후 시전!",
 	repentance_bar = "참회",
@@ -104,8 +96,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	repentance = "悔改",
 	repentance_desc = "悔改冷却时间提醒。",
-	repentance_trigger1 = "抛弃一切堕落的杂念。",
-	repentance_trigger2 = "你们必须得到净化。",
 	repentance_message = "悔改! ~33秒后发动",
 	repentance_warning = "悔改 冷却结束 - 即将发动！",
 	repentance_bar = "<悔改>",
@@ -124,8 +114,6 @@ L:RegisterTranslations("zhTW", function() return {
 	engage_message = "戰鬥開始！33 秒後懺悔！",
 
 	repentance = "懺悔",
-	repentance_trigger1 = "逐出你的腐敗思想。",
-	repentance_trigger2 = "你的不潔必須被淨化。",
 	repentance_message = "懺悔！33 秒後下一次懺悔！",
 	repentance_warning = "懺悔即將來臨！",
 	repentance_bar = "懺悔計時",
@@ -145,8 +133,6 @@ L:RegisterTranslations("esES", function() return {
 
 	repentance = "Arrepentimiento",
 	repentance_desc = "Tiempo estimado al Arrepentimiento.",
-	repentance_trigger1 = "Expulsad vuestros pensamientos impuros.",
-	repentance_trigger2 = "Vuestra falta de pudor deber purificarse.",
 	repentance_message = "Pr\195\179ximo Arrepentimiento! en ~33sec",
 	repentance_warning = "Fin del Enfriamiento de Arrepentimiento - Lanzamiento pr\195\179ximo!",
 	repentance_bar = "Arrepentimiento",
@@ -178,6 +164,7 @@ mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) en
 function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 	self:AddCombatListener("SPELL_AURA_APPLIED", "HolyFire", 29522)
+	self:AddCombatListener("SPELL_CAST_START", "Repentance", 29511)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
@@ -193,25 +180,26 @@ function mod:HolyFire(player, spellID)
 	end
 end
 
+function mod:Repentance(_, spellID)
+	if self.db.profile.repentance then
+		self:CancelScheduledEvent("rep1")
+		self:TriggerEvent("BigWigs_StopBar", self, L["repentance_nextbar"])
+		self:IfMessage(L["repentance_message"], "Important", spellID)
+		self:Bar(L["repentance_bar"], 12, spellID)
+		self:ScheduleEvent("rep1", "BigWigs_Message", 33, L["repentance_warning"], "Urgent", nil, "Alarm")
+		self:Bar(L["repentance_nextbar"], 33, spellID)
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		if self.db.profile.repentance then
 			self:Message(L["engage_message"], "Attention")
-			self:NextRepentance()
+			self:ScheduleEvent("rep1", "BigWigs_Message", 33, L["repentance_warning"], "Urgent", nil, "Alarm")
+			self:Bar(L["repentance_nextbar"], 33, 29511)
 		end
 
 		self:TriggerEvent("BigWigs_ShowProximity", self)
-	elseif self.db.profile.repentance and (msg == L["repentance_trigger1"] or msg == L["repentance_trigger2"]) then
-		self:CancelScheduledEvent("rep1")
-		self:TriggerEvent("BigWigs_StopBar", self, L["repentance_nextbar"])
-		self:Message(L["repentance_message"], "Important")
-		self:Bar(L["repentance_bar"], 12, "Spell_Holy_PrayerOfHealing")
-		self:NextRepentance()
 	end
-end
-
-function mod:NextRepentance()
-	self:ScheduleEvent("rep1", "BigWigs_Message", 33, L["repentance_warning"], "Urgent", nil, "Alarm")
-	self:Bar(L["repentance_nextbar"], 33, "Spell_Holy_PrayerOfHealing")
 end
 
