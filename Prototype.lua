@@ -154,100 +154,95 @@ function BigWigs.modulePrototype:OnInitialize()
 	BigWigs:RegisterModule(self)
 end
 
-if GetSpellInfo then
-	local function transmitSync(self, token, arguments, ...)
-		if not arguments then
-			self:Sync(token)
-		else
-			local argString = ""
-			for i = 1, #arguments do
-				argString = " " .. tostring((select(arguments[i], ...)))
+
+local function transmitSync(self, token, arguments, ...)
+	if not arguments then
+		self:Sync(token)
+	else
+		local argString = ""
+		for i = 1, #arguments do
+			argString = " " .. tostring((select(arguments[i], ...)))
+		end
+		self:Sync(token .. argString)
+	end
+end
+
+function BigWigs.modulePrototype:COMBAT_LOG_EVENT_UNFILTERED(_, event, _, source, _, _, player, _, spellId, spellName, _, secSpellId)
+	local m = self.combatLogEventMap and self.combatLogEventMap[event]
+	if m and (m[spellId] or m["*"]) then
+		self[m[spellId] or m["*"]](self, player, spellId, source, secSpellId, spellName, event)
+	end
+	local s = self.syncEventMap and self.syncEventMap[event]
+	if s then
+		for token, data in pairs(s) do
+			if data.spellIds[spellId] then
+				transmitSync(self, token, data.argumentList, player, spellId, source, secSpellId, spellName, event)
 			end
-			self:Sync(token .. argString)
 		end
 	end
-	function BigWigs.modulePrototype:COMBAT_LOG_EVENT_UNFILTERED(_, event, _, source, _, _, player, _, spellId, spellName, _, secSpellId)
-		local m = self.combatLogEventMap and self.combatLogEventMap[event]
-		if m and (m[spellId] or m["*"]) then
-			self[m[spellId] or m["*"]](self, player, spellId, source, secSpellId, spellName, event)
-		end
-		local s = self.syncEventMap and self.syncEventMap[event]
-		if s then
-			for token, data in pairs(s) do
-				if data.spellIds[spellId] then
-					transmitSync(self, token, data.argumentList, player, spellId, source, secSpellId, spellName, event)
-				end
-			end
-		end
-	end
-	-- XXX Proposed API, subject to change.
-	function BigWigs.modulePrototype:AddCombatListener(event, func, ...)
-		if not self.combatLogEventMap then self.combatLogEventMap = {} end
-		if not self.combatLogEventMap[event] then self.combatLogEventMap[event] = {} end
-		local c = select("#", ...)
-		if c > 0 then
-			for i = 1, c do
-				self.combatLogEventMap[event][(select(i, ...))] = func
-			end
-		else
-			self.combatLogEventMap[event]["*"] = func
-		end
-		if not self:IsEventRegistered("COMBAT_LOG_EVENT_UNFILTERED") then
-			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-		end
-	end
-	local spellIds = {}
-	local function delTable(t)
-		for k, v in pairs(t) do
-			t[k] = nil
-		end
-	end
-	-- XXX Proposed API, subject to change.
-	function BigWigs.modulePrototype:AddSyncListener(event, ...)
-		if not self.syncEventMap then self.syncEventMap = {} end
-		if not self.syncEventMap[event] then self.syncEventMap[event] = {} end
-		local token = nil
-		-- clean out old ids
-		delTable(spellIds)
-		local c = select("#", ...)
+end
+
+-- XXX Proposed API, subject to change.
+function BigWigs.modulePrototype:AddCombatListener(event, func, ...)
+	if not self.combatLogEventMap then self.combatLogEventMap = {} end
+	if not self.combatLogEventMap[event] then self.combatLogEventMap[event] = {} end
+	local c = select("#", ...)
+	if c > 0 then
 		for i = 1, c do
-			local arg = select(i, ...)
-			if type(arg) == "string" then
-				token = arg
-				if not self.syncEventMap[event][token] then self.syncEventMap[event][token] = {} end
-				if self.syncEventMap[event][token].spellIds then
-					delTable(self.syncEventMap[event][token].spellIds)
-				else
-					self.syncEventMap[event][token].spellIds = {}
-				end
-				for k, v in pairs(spellIds) do
-					self.syncEventMap[event][token].spellIds[k] = spellIds[k]
-				end
-				if c > i then
-					if self.syncEventMap[event][token].argumentList then
-						delTable(self.syncEventMap[event][token].argumentList)
-					else
-						self.syncEventMap[event][token].argumentList = {}
-					end
-				end
+			self.combatLogEventMap[event][(select(i, ...))] = func
+		end
+	else
+		self.combatLogEventMap[event]["*"] = func
+	end
+	if not self:IsEventRegistered("COMBAT_LOG_EVENT_UNFILTERED") then
+		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	end
+end
+
+local spellIds = {}
+local function delTable(t)
+	for k, v in pairs(t) do
+		t[k] = nil
+	end
+end
+-- XXX Proposed API, subject to change.
+function BigWigs.modulePrototype:AddSyncListener(event, ...)
+	if not self.syncEventMap then self.syncEventMap = {} end
+	if not self.syncEventMap[event] then self.syncEventMap[event] = {} end
+	local token = nil
+	-- clean out old ids
+	delTable(spellIds)
+	local c = select("#", ...)
+	for i = 1, c do
+		local arg = select(i, ...)
+		if type(arg) == "string" then
+			token = arg
+			if not self.syncEventMap[event][token] then self.syncEventMap[event][token] = {} end
+			if self.syncEventMap[event][token].spellIds then
+				delTable(self.syncEventMap[event][token].spellIds)
 			else
-				if not token then
-					spellIds[arg] = true
+				self.syncEventMap[event][token].spellIds = {}
+			end
+			for k, v in pairs(spellIds) do
+				self.syncEventMap[event][token].spellIds[k] = spellIds[k]
+			end
+			if c > i then
+				if self.syncEventMap[event][token].argumentList then
+					delTable(self.syncEventMap[event][token].argumentList)
 				else
-					table.insert(self.syncEventMap[event][token].argumentList, arg)
+					self.syncEventMap[event][token].argumentList = {}
 				end
 			end
-		end
-		if not self:IsEventRegistered("COMBAT_LOG_EVENT_UNFILTERED") then
-			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		else
+			if not token then
+				spellIds[arg] = true
+			else
+				table.insert(self.syncEventMap[event][token].argumentList, arg)
+			end
 		end
 	end
-else
-	function BigWigs.modulePrototype:AddCombatListener(...)
-		-- No-op in <2.4.
-	end
-	function BigWigs.modulePrototype:AddSyncListener(...)
-		-- No-op in <2.4
+	if not self:IsEventRegistered("COMBAT_LOG_EVENT_UNFILTERED") then
+		self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 end
 
@@ -257,7 +252,7 @@ end
 
 function BigWigs.modulePrototype:GenericBossDeath(msg)
 	local b = self:ToString()
-	if msg == b or msg == fmt(UNITDIESOTHER, b) then
+	if msg == b then
 		self:Sync("BossDeath " .. b)
 	end
 end

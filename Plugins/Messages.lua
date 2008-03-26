@@ -452,14 +452,11 @@ function plugin:BigWigs_Message(text, color, noraidsay, sound, broadcastonly, ic
 		end
 	end
 
-	if icon and GetSpellInfo and db.useicons then
-		local _
-		_, _, icon = GetSpellInfo(icon)
-	else
-		icon = nil
+	if icon and db.useicons then
+		local _, _, tex = GetSpellInfo(icon)
 	end
 
-	self:Pour(text, r, g, b, nil, nil, nil, nil, nil, icon)
+	self:Pour(text, r, g, b, nil, nil, nil, nil, nil, tex)
 	if db.chat then
 		BigWigs:CustomPrint(r, g, b, nil, nil, nil, text)
 	end

@@ -344,6 +344,7 @@ function BigWigs:OnInitialize()
 	self:RegisterBossOption("berserk", L["berserk"], L["berserk_desc"])
 end
 
+local temp = nil --XXX
 function BigWigs:OnEnable(first)
 	-- We only really enable ourselves if we are told to do so by BigWigsLoD.
 	if not first then
@@ -360,7 +361,10 @@ function BigWigs:OnEnable(first)
 		self:RegisterEvent("BigWigs_TargetSeen")
 		self:RegisterEvent("BigWigs_RebootModule")
 		self:RegisterEvent("BigWigs_RecvSync")
-		BigWigs:Print("We need your help, type /bwhelp for more info.")
+		if not temp then
+			BigWigs:Print("We need your help, type /bwhelp for more info.")
+			temp = true
+		end
 	else
 		self:ToggleActive(false)
 	end
