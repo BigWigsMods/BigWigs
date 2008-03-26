@@ -4,12 +4,11 @@
 
 local boss = BB["Gurtogg Bloodboil"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local UnitName = UnitName
 local db = nil
 local fmt = string.format
-local pName = nil
+local pName = UnitName("player")
 local count = 1
 
 ----------------------------
@@ -26,18 +25,15 @@ L:RegisterTranslations("enUS", function() return {
 	phase_rage_warning = "Fel Rage Phase in ~5 sec",
 	phase_normal_warning = "Fel Rage over in ~5 sec",
 	phase_normal = "Fel Rage Phase Over",
-	phase_normal_trigger = "Fel Rage fades from Gurtogg Bloodboil.",
 	phase_normal_bar = "~Approximate Rage Phase",
 	phase_rage_bar = "Next Normal Phase",
 
 	bloodboil = "Bloodboil",
 	bloodboil_desc = "Warnings and counter for Bloodboil.",
-	bloodboil_trigger = "afflicted by Bloodboil",
 	bloodboil_message = "Bloodboil(%d)",
 
 	rage = "Fel Rage",
 	rage_desc = "Warn who gets Fel Rage.",
-	rage_trigger = "^(%S+) (%S+) afflicted by Fel Rage%.$",
 	rage_you = "You have Fel Rage!!",
 	rage_other = "%s has Fel Rage!",
 
@@ -49,7 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 	acid_message = "Fel-Acid Casting on: %s",
 
 	icon = "Raid Icon",
-	icon_desc = "Place a Raid Icon on who Fel-Acid Breath is being cast on (requires promoted or higher).",
+	icon_desc = "Place a Raid Icon on who Fel-Acid Breath and Fel Rage is being cast on (requires promoted or higher).",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -60,18 +56,15 @@ L:RegisterTranslations("koKR", function() return {
 	phase_rage_warning = "약 5초 이내 마의 분노 단계",
 	phase_normal_warning = "약 5초 이내 마의 분노 종료",
 	phase_normal = "마의 분노 단계 종료",
-	phase_normal_trigger =  "구르토그 블러드보일의 몸에서 마의 분노 효과가 사라졌습니다.",
 	phase_normal_bar = "다음 분노 형상",
 	phase_rage_bar = "다음 보통 형상",
 
 	bloodboil = "끓어오르는 피",
 	bloodboil_desc = "끓어오르는 피에 대한 경고와 카운터입니다.",
-	bloodboil_trigger = "끓어오르는 피에 걸렸습니다.",
 	bloodboil_message = "끓어오르는 피(%d)",
 
 	rage = "마의 분노",
 	rage_desc = "마의 분노에 걸린 사람을 알립니다.",
-	rage_trigger = "^([^|;%s]*)(.*)마의 분노에 걸렸습니다%.$",
 	rage_you = "당신은 마의 분노!!",
 	rage_other = "%s 마의 분노!",
 
@@ -94,18 +87,15 @@ L:RegisterTranslations("deDE", function() return {
 	phase_rage_warning = "Teufelswut Phase in ~5 sec",
 	phase_normal_warning = "Teufelswut vorbei in ~5 sec",
 	phase_normal = "Teufelswut Phase vorbei",
-	phase_normal_trigger = "Teufelswut schwindet von Gurtogg Siedeblut.",
 	phase_normal_bar = "Nächste Teufelswut Phase",
 	phase_rage_bar = "Nächste Normale Phase",
 
 	bloodboil = "Siedeblut",
 	bloodboil_desc = "Warnungen und Timer für Siedeblut.",
-	bloodboil_trigger = "betroffen von Siedeblut",
 	bloodboil_message = "Siedeblut: (%d)",
 
 	rage = "Teufelswut",
 	rage_desc = "Warnt, wer Teufelswut bekommt.",
-	rage_trigger = "^([^%s]+) ([^%s]+) von Teufelswut betroffen%.$",
 	rage_you = "Du hast Teufelswut!!",
 	rage_other = "%s hat Teufelswut!",
 
@@ -128,18 +118,15 @@ L:RegisterTranslations("frFR", function() return {
 	phase_rage_warning = "Phase de Gangrerage dans ~5 sec.",
 	phase_normal_warning = "Gangrerage terminée dans ~5 sec.",
 	phase_normal = "Fin de la phase de Gangrerage",
-	phase_normal_trigger = "Gangrerage sur Gurtogg Fièvresang vient de se dissiper.",
 	phase_normal_bar = "~Prochaine phase de rage",
 	phase_rage_bar = "Prochaine phase normale",
 
 	bloodboil = "Fièvresang",
 	bloodboil_desc = "Avertissements et compteur des Fièvresangs.",
-	bloodboil_trigger = "les effets .* Fièvresang",
 	bloodboil_message = "Fièvresang (%d)",
 
 	rage = "Gangrerage",
 	rage_desc = "Préviens quand un joueur subit les effets de la Gangrerage.",
-	rage_trigger = "^(%S+) (%S+) les effets .* Gangrerage%.$",
 	rage_you = "Vous avez la Gangrerage !",
 	rage_other = "%s a la Gangrerage !",
 
@@ -162,18 +149,15 @@ L:RegisterTranslations("zhTW", function() return {
 	phase_rage_warning = "5 秒後惡魔之怒階段",
 	phase_normal_warning = "5 秒後結束惡魔之怒",
 	phase_normal = "惡魔之怒階段結束",
-	phase_normal_trigger = "惡魔之怒效果從葛塔格·血沸身上消失。",
 	phase_normal_bar = "~即將惡魔之怒階段",
 	phase_rage_bar = "下一個普通階段",
 
 	bloodboil = "血液沸騰",
 	bloodboil_desc = "警告並計算血液沸騰.",
-	bloodboil_trigger = "受(到[了]*)血液沸騰效果的影響。",
 	bloodboil_message = "血液沸騰(%d)",
 
 	rage = "惡魔之怒",
 	rage_desc = "提示誰受到惡魔之怒",
-	rage_trigger = "^(.+)受(到[了]*)惡魔之怒效果的影響。$",
 	rage_you = "你受到惡魔之怒!!",
 	rage_other = "惡魔之怒：[%s]",
 
@@ -196,18 +180,15 @@ L:RegisterTranslations("zhCN", function() return {
 	phase_rage_warning = "邪能狂怒 ~5秒后发动",
 	phase_normal_warning = "邪能狂怒 ~5秒后结束",
 	phase_normal = "邪能狂怒 阶段结束",
-	phase_normal_trigger = "邪能狂怒效果从古尔图格·血沸身上消失。",
 	phase_normal_bar = "<下一邪能狂怒>",
 	phase_rage_bar = "<下一普通阶段>",
 
 	bloodboil = "血沸",
 	bloodboil_desc = "血沸计数及警报。",
-	bloodboil_trigger = "血沸效果的影响。$",
 	bloodboil_message = "血沸：>%d<！",
 
 	rage = "邪能狂怒",
 	rage_desc = "当获得邪能狂怒时发出警报",
-	rage_trigger = "^(.+)受(.+)了邪能狂怒效果的影响。$",
 	rage_you = ">你< 邪能狂怒！",
 	rage_other = "邪能狂怒：>%s<！",
 
@@ -237,30 +218,19 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "DebuffEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "DebuffEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "DebuffEvent")
-
-	self:AddSyncListener("SPELL_AURA_APPLIED", 42005, "GBBlood")
-	self:AddSyncListener("SPELL_AURA_APPLIED", 40604, 40616, "GurRage", 1)
-
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Blood", 42005)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Rage", 40604, 40616)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "FelRageRemoved", 40594) -- I think this is the one Bloodboil gets on himself, verify
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:RegisterEvent("UNIT_SPELLCAST_START")
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "GurRage", 10)
 	self:TriggerEvent("BigWigs_ThrottleSync", "GurAcid", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "GBBlood", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "GurNormal", 10)
 
-	pName = UnitName("player")
 	db = self.db.profile
 end
 
@@ -268,38 +238,39 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "GurRage" and rest then
-		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["bloodboil_message"], count))
-		if db.rage then
-			self:CancelScheduledEvent("rage1")
-			self:TriggerEvent("BigWigs_StopBar", self, L["phase_normal_bar"])
-			self:TriggerEvent("BigWigs_StopBar", self, fmt(L["bloodboil_message"], count))
-
-			if rest == pName then
-				self:Message(L["rage_you"], "Personal", true, "Long")
-				self:Message(fmt(L["rage_other"], rest), "Attention", nil, nil, true)
-			else
-				self:Message(fmt(L["rage_other"], rest), "Attention")
-			end
-			if db.whisper then
-				self:Whisper(rest, L["rage_you"])
-			end
-			if db.phase then
-				self:Bar(L["phase_rage_bar"], 28, "Spell_Fire_ElementalDevastation")
-				self:DelayedMessage(23, L["phase_normal_warning"], "Important")
-			end
-			self:Icon(rest)
-		end
-	elseif sync == "GurAcid" and db.acid then
-		self:Bar(L["acid"], 2, "Spell_Nature_Acid_01")
-		self:ScheduleEvent("BWAcidToTScan", self.AcidCheck, 0.2, self)
-	elseif sync == "GBBlood" and db.bloodboil then
-		self:Message(fmt(L["bloodboil_message"], count), "Attention")
+function mod:Blood(_, spellID)
+	if db.bloodboil then
+		self:IfMessage(fmt(L["bloodboil_message"], count), "Attention", spellID)
 		if count == 3 then count = 0 end
 		count = count + 1
-		self:Bar(fmt(L["bloodboil_message"], count), 10, "Spell_Shadow_BloodBoil")
-	elseif sync == "GurNormal" then
+		self:Bar(fmt(L["bloodboil_message"], count), 10, spellID)
+	end
+end
+
+function mod:Rage(player, spellID)
+	self:TriggerEvent("BigWigs_StopBar", self, fmt(L["bloodboil_message"], count))
+	if db.rage then
+		self:CancelScheduledEvent("rage1")
+		self:TriggerEvent("BigWigs_StopBar", self, L["phase_normal_bar"])
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["bloodboil_message"], count))
+
+		if player == pName then
+			self:LocalMessage(L["rage_you"], "Personal", spellID, "Long")
+			self:WideMessage(fmt(L["rage_other"], player))
+		else
+			self:IfMessage(fmt(L["rage_other"], player), "Attention", spellID)
+		end
+		self:Whisper(player, L["rage_you"], "whisper")
+		if db.phase then
+			self:Bar(L["phase_rage_bar"], 28, spellID)
+			self:DelayedMessage(23, L["phase_normal_warning"], "Important")
+		end
+		self:Icon(player, "icon")
+	end
+end
+
+function mod:FelRageRemoved(unit)
+	if unit == boss then
 		if db.phase then
 			self:Bar(L["phase_normal_bar"], 60, "Spell_Fire_ElementalDevastation")
 			self:ScheduleEvent("rage1", "BigWigs_Message", 55, L["phase_rage_warning"], "Important")
@@ -310,6 +281,12 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Bar(fmt(L["bloodboil_message"], count), 10, "Spell_Shadow_BloodBoil")
 		end
 	end
+end
+
+function mod:BigWigs_RecvSync(sync, rest, nick)
+	if sync == "GurAcid" and db.acid then
+		self:Bar(L["acid"], 2, "Spell_Nature_Acid_01")
+		self:ScheduleEvent("BWAcidToTScan", self.AcidCheck, 0.2, self)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
@@ -325,25 +302,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.bloodboil then
 			self:Bar(fmt(L["bloodboil_message"], count), 11, "Spell_Shadow_BloodBoil")
 		end
-	end
-end
-
-function mod:FelRageRemoved(player)
-	if player == boss then self:Sync("GurNormal") end
-end
-
-function mod:DebuffEvent(msg)
-	if msg:find(L["bloodboil_trigger"]) then
-		self:Sync("GBBlood")
-		return
-	end
-
-	local rplayer, rtype = select(3, msg:find(L["rage_trigger"]))
-	if rplayer and rtype then
-		if rplayer == L2["you"] and rtype == L2["are"] then
-			rplayer = pName
-		end
-		self:Sync("GurRage", rplayer)
 	end
 end
 
@@ -369,17 +327,11 @@ function mod:AcidCheck()
 		end
 	end
 	if target then
-		self:Message(fmt(L["acid_message"], target), "Attention")
+		self:IfMessage(fmt(L["acid_message"], target), "Attention", 40508)
 		if db.icon then
 			self:Icon(target)
 			self:ScheduleEvent("ClearIcon", "BigWigs_RemoveRaidIcon", 5, self)
 		end
-	end
-end
-
-function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
-	if msg == L["phase_normal_trigger"] then
-		self:Sync("GurNormal")
 	end
 end
 

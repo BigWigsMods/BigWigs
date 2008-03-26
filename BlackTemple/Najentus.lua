@@ -4,7 +4,6 @@
 
 local boss = BB["High Warlord Naj'entus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local db = nil
 local CheckInteractDistance = CheckInteractDistance
@@ -21,7 +20,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	spine = "Impaling Spine",
 	spine_desc = "Tells you who gets impaled.",
-	spine_trigger = "^(%S+) (%S+) afflicted by Impaling Spine%.$",
 	spine_message = "Impaling Spine on %s!",
 
 	spinesay = "Spine Say",
@@ -30,12 +28,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	shield = "Tidal Shield",
 	shield_desc = "Timers for when Naj'entus will gain tidal shield.",
-	shield_trigger = "High Warlord Naj'entus is afflicted by Tidal Shield.",
 	shield_nextbar = "Next Tidal Shield",
 	shield_warn = "Tidal Shield!",
 	shield_soon_warn = "Tidal Shield in ~10sec!",
 	shield_fade = "Shield Faded!",
-	shield_fade_trigger = "Tidal Shield fades from High Warlord Naj'entus.",
 
 	icon = "Icon",
 	icon_desc = "Put an icon on players with Impaling Spine.",
@@ -46,7 +42,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	spine = "Aufspießender Stachel",
 	spine_desc = "Sagt euch, wer aufgespießt wird.",
-	spine_trigger = "^([^%s]+) ([^%s]+) von Aufspießender Stachel betroffen%.$",
 	spine_message = "Aufspießender Stachel auf %s!",
 
 	spinesay = "Stachel Sagen",
@@ -55,12 +50,10 @@ L:RegisterTranslations("deDE", function() return {
 
 	shield = "Gezeitenschild",
 	shield_desc = "Timer für Gezeigenschild von Naj'entus.",
-	shield_trigger = "Oberster Kriegsfürst Naj'entus ist von Gezeitenschild betroffen.",
 	shield_nextbar = "Nächstes Gezeitenschild",
 	shield_warn = "Gezeitenschild!",
 	shield_soon_warn = "Gezeitenschild in ~10sek!",
 	shield_fade = "Gezeitenschild schwindet!",
-	shield_fade_trigger = "Gezeitenschild schwindet von Oberster Kriegsfürst Naj'entus.",
 
 	icon = "Schlachtzug Symbol",
 	icon_desc = "Plaziert ein Icon auf Spielern mit Aufspießendem Stachel (benötigt Assistent oder höher).",
@@ -71,7 +64,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	spine = "꿰뚫는 돌기",
 	spine_desc = "꿰뚫는 돌기에 걸린 사람을 알립니다.",
-	spine_trigger = "^([^|;%s]*)(.*)꿰뚫는 돌기에 걸렸습니다%.$",
 	spine_message = "%s에게 꿰뚫는 돌기!",
 
 	spinesay = "돌기 알림",
@@ -80,12 +72,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	shield = "해일의 보호막",
 	shield_desc = "대장군 나젠투스가 해일의 보호막을 얻을 떄에 대한 타이머 입니다.",
-	shield_trigger = "대장군 나젠투스|1이;가; 해일의 보호막에 걸렸습니다.",
 	shield_nextbar = "다음 해일의 보호막",
 	shield_warn = "해일의 보호막!",
 	shield_soon_warn = "약 10초 이내 해일의 보호막!",
 	shield_fade = "보호막 사라짐!",
-	shield_fade_trigger = "대장군 나젠투스의 몸에서 해일의 보호막 효과가 사라졌습니다.",
 
 	icon = "전술 표시",
 	icon_desc = "꿰뚫는 돌기에 걸린 플레이어에게 전술 표시를 지정합니다.",
@@ -96,7 +86,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	spine = "Epine de perforation",
 	spine_desc = "Préviens quand un joueur subit les effets de l'Epine de perforation.",
-	spine_trigger = "^(%S+) (%S+) les effets .* Epine de perforation%.$",
 	spine_message = "Epine de perforation sur %s !",
 
 	spinesay = "Dire - Epine de perforation",
@@ -105,12 +94,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	shield = "Bouclier de flots",
 	shield_desc = "Délais concernant le Bouclier de flots de Naj'entus.",
-	shield_trigger = "Grand seigneur de guerre Naj'entus subit les effets |2 Bouclier de flots.",
 	shield_nextbar = "Prochain Bouclier de flots",
 	shield_warn = "Bouclier de flots !",
 	shield_soon_warn = "Bouclier de flots dans ~10 sec. !",
 	shield_fade = "Bouclier dissipé !",
-	shield_fade_trigger = "Bouclier de flots sur Grand seigneur de guerre Naj'entus vient de se dissiper.",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Epine de perforation (nécessite d'être promu ou mieux).",
@@ -121,7 +108,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	spine = "穿刺之脊",
 	spine_desc = "当谁中了穿刺时告诉你。",
-	spine_trigger = "^(.+)受(.+)了穿刺之脊效果的影响。$",
 	spine_message = "穿刺之脊：>%s<！",
 
 	spinesay = "穿刺警报",
@@ -130,12 +116,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	shield = "海潮之盾",
 	shield_desc = "当纳因图斯获得海潮之盾后计时。",
-	shield_trigger = "高阶督军纳因图斯受到了海潮之盾效果的影响。",
 	shield_nextbar = "<下一海潮之盾>",
 	shield_warn = "海潮之盾！",
 	shield_soon_warn = "海潮之盾 ~10秒 后发动！",
 	shield_fade = "海潮之盾 消失！",
-	shield_fade_trigger = "海潮之盾效果从高阶督军纳因图斯身上消失。",
 
 	icon = "团队标记",
 	icon_desc = "给中了穿刺之脊的玩家打上团队标记。(需要权限)",
@@ -146,7 +130,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	spine = "尖刺脊椎",
 	spine_desc = "通知你誰受到尖刺脊椎",
-	spine_trigger = "^(.+)受(到[了]*)尖刺脊椎效果的影響。$",
 	spine_message = "尖刺脊椎：[%s]",
 
 	spinesay = "尖刺脊椎通報",
@@ -155,12 +138,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	shield = "潮汐之盾",
 	shield_desc = "潮汐之盾計時",
-	shield_trigger = "高階督軍納珍塔斯受到潮汐之盾效果的影響。",
 	shield_nextbar = "下一次潮汐之盾",
 	shield_warn = "潮汐之盾!",
 	shield_soon_warn = "潮汐之盾在 ~10秒內施放!",
 	shield_fade = "潮汐之盾消失!",
-	shield_fade_trigger = "潮汐之盾從高階督軍納珍塔斯身上消失。",
 
 	icon = "團隊標記",
 	icon_desc = "在受到尖刺脊椎的隊友頭上標記。",
@@ -183,28 +164,15 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "Spine")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "Spine")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "Spine")
-
-	self:AddSyncListener("SPELL_AURA_APPLIED", 39872, "NajShieldOn")
-	self:AddSyncListener("SPELL_AURA_REMOVED", 39872, "NajShieldOff")
-	self:AddSyncListener("SPELL_AURA_DISPELLED", 39872, "NajShieldOff")
-
+	self:AddCombatListener("SPELL_AURA_APPLIED", "ShieldOn", 39872)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "ShieldOff", 39872)
+	self:AddCombatListener("SPELL_AURA_DISPELLED", "ShieldOff", 39872)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "ImpalingSpine", 39837)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_SPELL_AURA_GONE_OTHER")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "NajShieldOn", 10)
-	self:TriggerEvent("BigWigs_ThrottleSync", "NajShieldOff", 10)
-	self:TriggerEvent("BigWigs_ThrottleSync", "NajSpine", 2)
 
 	db = self.db.profile
 end
@@ -212,6 +180,30 @@ end
 ------------------------------
 --    Event Handlers     --
 ------------------------------
+
+function mod:ShieldOn(_, spellID)
+	if db.shield then
+		self:IfMessage(L["shield_warn"], "Important", spellID, "Alert")
+		self:DelayedMessage(46, L["shield_soon_warn"], "Positive")
+		self:Bar(L["shield_nextbar"], 56, spellID)
+	end
+end
+
+function mod:ShieldOff()
+	if db.shield then
+		self:IfMessage(L["shield_fade"], "Positive", 39872)
+	end
+end
+
+function mod:ImpalingSpine(player, spellID)
+	if db.spine then
+		if db.spinesay and player == UnitName("player") then
+			SendChatMessage(L["spinesay_message"], "SAY")
+		end
+		self:IfMessage(fmt(L["spine_message"], player), "Important", spellID, "Alert")
+		self:Icon(player, "icon")
+	end
+end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["start_trigger"] then
@@ -223,57 +215,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Enrage(480)
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
-	end
-end
-
-function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_DAMAGE(msg)
-	if msg == L["shield_trigger"] then
-		self:Sync("NajShieldOn")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_AURA_GONE_OTHER(msg)
-	if msg == L["shield_fade_trigger"] then
-		self:Sync("NahShieldOff")
-	end
-end
-
-function mod:ImpalingSpine(player)
-	if player then
-		if db.spinesay and player == UnitName("player") then
-			SendChatMessage(L["spinesay_message"], "SAY")
-		end
-		self:Sync("NajSpine", player)
-	end
-end
-
-function mod:Spine(msg)
-	local splayer, stype = select(3, msg:find(L["spine_trigger"]))
-	if splayer and stype then
-		if splayer == L2["you"] and stype == L2["are"] then
-			splayer = UnitName("player")
-			if db.spinesay then
-				SendChatMessage(L["spinesay_message"], "SAY")
-			end
-		end
-		self:Sync("NajSpine", splayer)
-	end
-end
-
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "NajSpine" and rest and db.spine then
-		self:Message(fmt(L["spine_message"], rest), "Important", nil, "Alert")
-		if db.icon then
-			self:Icon(rest)
-		end
-	elseif sync == "NajShieldOn" then
-		if db.shield then
-			self:Message(L["shield_warn"], "Important", nil, "Alert")
-			self:DelayedMessage(46, L["shield_soon_warn"], "Positive")
-			self:Bar(L["shield_nextbar"], 56, "Spell_Frost_FrostBolt02")
-		end
-	elseif ( sync == "NahShieldOff" or sync == "NajShieldOff" ) and db.shield then -- Remove NahShieldOff in 2.4
-		self:Message(L["shield_fade"], "Positive")
 	end
 end
 

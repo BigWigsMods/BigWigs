@@ -9,12 +9,10 @@ local boss = BB["Reliquary of Souls"]
 
 local spiteIt = {}
 local db = nil
-local pName = nil
+local pName = UnitName("player")
 local stop = nil
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-local death = AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"]:format(boss)
 
 ----------------------------
 --      Localization      --
@@ -41,14 +39,12 @@ L:RegisterTranslations("enUS", function() return {
 
 	runeshield = "Rune Shield",
 	runeshield_desc = "Timers for when Essence of Desire will gain rune shield.",
-	runeshield_trigger = "Essence of Desire gains Rune Shield.",
 	runeshield_message = "Rune Shield!",
 	runeshield_nextbar = "Next Rune Shield",
 	runeshield_warn = "Rune Shield in ~3sec.",
 
 	deaden = "Deaden",
 	deaden_desc = "Warns you when Deaden is being cast.",
-	deaden_trigger = "Essence of Desire begins to cast Deaden.",
 	deaden_message = "Casting Deaden!",
 	deaden_warn = "Deaden in ~5sec.",
 	deaden_nextbar = "Next Deaden.",
@@ -59,10 +55,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	scream = "Soul Scream",
 	scream_desc = "Show a cooldown bar for Soul Scream.",
-	scream_trigger = "^Essence of Anger 's Soul Scream ",
 	scream_bar = "~Soul Scream Cooldown",
-
-	afflict_trigger = "^(%S+) (%S+) afflicted by (.*).$",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -84,14 +77,12 @@ L:RegisterTranslations("koKR", function() return {
 
 	runeshield = "룬 보호막",
 	runeshield_desc = "욕망의 정수가 룬 보호막을 얻을 떄에 대한 타이머 입니다.",
-	runeshield_trigger = "욕망의 정수|1이;가; 룬 보호막 효과를 얻었습니다.",
 	runeshield_message = "룬 보호막!",
 	runeshield_nextbar = "다음 룬 보호막",
 	runeshield_warn = "약 3초 후 룬 보호막",
 
 	deaden = "쇠약",
 	deaden_desc = "쇠약 시전 시 알립니다.",
-	deaden_trigger = "욕망의 정수|1이;가; 쇠약 시전을 시작합니다.",
 	deaden_message = "쇠약 시전!",
 	deaden_warn = "약 5초 후 쇠약!",
 	deaden_nextbar = "다음 쇠약",
@@ -102,10 +93,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	scream = "영혼의 절규",
 	scream_desc = "영혼의 절규 재사용 시간을 표시합니다.",
-	scream_trigger = "^격노의 정수|1이;가; 영혼의 절규|1으로;로;", -- check
 	scream_bar = "~영혼의 절규 재사용 시간",
-
-	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$", -- Check
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -127,14 +115,12 @@ L:RegisterTranslations("frFR", function() return {
 
 	runeshield = "Bouclier runique",
 	runeshield_desc = "Délais concernant le Bouclier runique de l'Essence du désir.",
-	runeshield_trigger = "Essence du désir gagne Bouclier runique.",
 	runeshield_message = "Bouclier runique !",
 	runeshield_nextbar = "Prochain Bouclier runique",
 	runeshield_warn = "Bouclier runique dans ~3 sec.",
 
 	deaden = "Emousser",
 	deaden_desc = "Préviens quand Emousser est incanté.",
-	deaden_trigger = "Essence du désir commence à lancer Emousser.",
 	deaden_message = "Emousser en incantation !",
 	deaden_warn = "Emousser dans ~5 sec.",
 	deaden_nextbar = "Prochain Emousser",
@@ -145,10 +131,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	scream = "Cri de l'âme",
 	scream_desc = "Affiche une barre de cooldown pour le Cri de l'âme.",
-	scream_trigger = "^Cri de l'âme .* Essence de la colère ",
 	scream_bar = "~Cooldown Cri de l'âme",
-
-	afflict_trigger = "^(%S+) (%S+) les effets [de|2]+ (.*).$",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -170,14 +153,12 @@ L:RegisterTranslations("deDE", function() return {
 
 	runeshield = "Runenschild",
 	runeshield_desc = "Timer wann Essenz der Begierde das Runenschild bekommen wird.",
-	runeshield_trigger = "Essenz der Begierde bekommt Runenschild.",
 	runeshield_message = "Runenschild!",
 	runeshield_nextbar = "Nächstes Runenschild",
 	runeshield_warn = "Runenschild in ~3sek.",
 
 	deaden = "Abstumpfen",
 	deaden_desc = "Warnt dich wenn Abstumpfen gezaubert wird.",
-	deaden_trigger = "Essenz der Begierde beginnt Abstumpfen zu wirken.",
 	deaden_message = "Zaubert Abstumpfen!",
 	deaden_warn = "Abstumpfen in ~5sek.",
 	deaden_nextbar = "Nächstes Abstumpfen.",
@@ -188,10 +169,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	scream = "Seelenschrei",
 	scream_desc = "Zeige eine Cooldownleiste für Seelenschrei.",
-	scream_trigger = "^Essenz des Zorns 's Seelenschrei ",
 	scream_bar = "~Seelenschrei Cooldown",
-
-	afflict_trigger = "^([^%s]+) ([^%s]+) ist von (.*) betroffen.$",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -213,14 +191,12 @@ L:RegisterTranslations("zhCN", function() return {
 
 	runeshield = "符文护盾",
 	runeshield_desc = "欲望精华获得了符文护盾计时。",
-	runeshield_trigger = "欲望精华获得了符文护盾的效果。",
 	runeshield_message = "符文护盾！",
 	runeshield_nextbar = "<下一符文护盾>",
 	runeshield_warn = "3秒后 符文护盾.",
 
 	deaden = "衰减",
 	deaden_desc = "当衰减施放时发出警报。",
-	deaden_trigger = "欲望精华开始施放衰减。",
 	deaden_message = "正施放 衰减！",
 	deaden_warn = "~5秒后 衰减！",
 	deaden_nextbar = "<下一衰减>",
@@ -231,10 +207,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	scream = "灵魂尖啸",
 	scream_desc = "显示灵魂尖啸冷却记时条。",
-	scream_trigger = "^愤怒精华的灵魂尖啸",
 	scream_bar = "<灵魂尖啸 冷却>",
-
-	afflict_trigger = "^(.+)受(.+)了(.*)效果的影响。$",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -256,14 +229,12 @@ L:RegisterTranslations("zhTW", function() return {
 
 	runeshield = "符文護盾",
 	runeshield_desc = "慾望精華將獲得符文護盾計時條",
-	runeshield_trigger = "慾望精華獲得了符文護盾",
 	runeshield_message = "符文護盾!",
 	runeshield_nextbar = "下一次符文護盾",
 	runeshield_warn = "3 秒內符文護盾",
 
 	deaden = "麻木",
 	deaden_desc = "當麻木開始施放時警告",
-	deaden_trigger = "慾望精華開始施放麻木。",
 	deaden_message = "正在施放麻木!",
 	deaden_warn = "5 秒內麻木",
 	deaden_nextbar = "下一次麻木",
@@ -274,10 +245,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	scream = "靈魂尖嘯",
 	scream_desc = "顯示靈魂尖嘯冷卻條",
-	scream_trigger = "^憤怒精華的靈魂尖嘯",
 	scream_bar = "~靈魂尖嘯冷卻",
-
-	afflict_trigger = "^(.+)受(到[了]*)(.*)效果的影響。$",
 } end )
 
 ----------------------------------
@@ -295,38 +263,50 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Spite", 41377)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Shield", 41431)
+	self:AddCombatListener("SPELL_CAST_START", "Deaden", 41410)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Scream", 41545) -- verify this is the correct combat event
+	self:AddCombatListener("UNIT_DIED", "Deaths")
 
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
-	self:AddSyncListener("SPELL_AURA_APPLIED", 41377, "RoSSpite", 1)
-	self:AddSyncListener("SPELL_AURA_APPLIED", 41431, "RoSShield")
-	self:AddSyncListener("SPELL_CAST_START", 41410, "RoSDeaden")
-	self:AddSyncListener("SPELL_CAST_SUCCESS", 41545, "RoSScream") -- verify this is the correct combat event
-	self:AddCombatListener("UNIT_DIED", "UNIT_DIED")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "AfflictEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "AfflictEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "AfflictEvent")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "RoSDrain", 300)
-	self:TriggerEvent("BigWigs_ThrottleSync", "RoSSpite", 0)
-	self:TriggerEvent("BigWigs_ThrottleSync", "RoSShield", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "RoSWin", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "RoSDeaden", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "RoSScream", 4)
-
-	pName = UnitName("player")
 	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Spite(player)
+	if db.spite then
+		spiteIt[player] = true
+		self:ScheduleEvent("BWSpiteWarn", self.SpiteWarn, 0.3, self)
+	end
+end
+
+function mod:Shield(_, spellID)
+	if db.runeshield then
+		self:IfMessage(L["runeshield_message"], "Attention", spellID)
+		self:Bar(L["runeshield_nextbar"], 15, spellID)
+		self:DelayedMessage(12, L["runeshield_warn"], "Urgent")
+	end
+end
+
+function mod:Deaden(_, spellID)
+	if db.deaden then
+		self:Message(L["deaden_message"], "Attention", spellID)
+		self:Bar(L["deaden_nextbar"], 30, spellID)
+		self:DelayedMessage(25, L["deaden_warn"], "Urgent")
+	end
+end
+
+function mod:Scream()
+	if db.scream then
+		self:Bar(L["scream_bar"], 10, 41545)
+	end
+end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
@@ -360,81 +340,22 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	end
 end
 
-function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
-	if msg == UNITDIESOTHER:format(anger) then
-		self:Sync("RoSWin")
+function mod:Deaths(unit)
+	if unit == anger then
+		self:GenericBossDeath(boss)
 	end
-end
-
-function mod:UNIT_DIED(player)
-	if player == anger then self:Sync("RoSWin") end
-end
-
-function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if msg == L["runeshield_trigger"] then
-		self:Sync("RoSShield")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_DAMAGE(msg)
-	if msg == L["deaden_trigger"] then
-		self:Sync("RoSDeaden")
-	elseif msg:find(L["scream_trigger"]) then
-		self:Sync("RoSScream")
-	end
-end
-
-function mod:AfflictEvent(msg)
-	local aPlayer, aType, aSpell = select(3, msg:find(L["afflict_trigger"]))
-	if aPlayer and aType then
-		if aPlayer == L2["you"] and aType == L2["are"] then
-			aPlayer = pName
-		end
-		if aSpell == L["spite"] then
-			self:Sync("RoSSpite", aPlayer)
-		end
-	end
-end
-
-local function nilStop()
-	stop = nil
-	for k in pairs(spiteIt) do spiteIt[k] = nil end
 end
 
 function mod:SpiteWarn()
-	if stop then return end
-	if db.spite then
-		local msg = nil
-		for k in pairs(spiteIt) do
-			if not msg then
-				msg = k
-			else
-				msg = msg .. ", " .. k
-			end
+	local msg = nil
+	for k in pairs(spiteIt) do
+		if not msg then
+			msg = k
+		else
+			msg = msg .. ", " .. k
 		end
-		self:Message(L["spite_message"]:format(msg), "Important", nil, "Alert")
 	end
-	stop = true
-	self:ScheduleEvent("BWRoSNilStop", nilStop, 4)
-end
-
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "RoSSpite" and not stop and rest then
-		spiteIt[rest] = true
-		self:ScheduleEvent("BWSpiteWarn", self.SpiteWarn, 0.3, self)
-	elseif sync == "RoSShield" and db.runeshield then
-		self:Message(L["runeshield_message"], "Attention")
-		self:Bar(L["runeshield_nextbar"], 15, "Spell_Arcane_Blast")
-		self:DelayedMessage(12, L["runeshield_warn"], "Urgent")
-	elseif sync == "RoSWin" and db.bosskill then
-		self:Message(death, "Bosskill", nil, "Victory")
-		BigWigs:ToggleModuleActive(self, false)
-	elseif sync == "RoSDeaden" and db.deaden then
-		self:Message(L["deaden_message"], "Attention")
-		self:Bar(L["deaden_nextbar"], 30, "Spell_Shadow_SoulLeech_1")
-		self:DelayedMessage(25, L["deaden_warn"], "Urgent")
-	elseif sync == "RoSScream" and db.scream then
-		self:Bar(L["scream_bar"], 10, "Spell_Shadow_ConeOfSilence")
-	end
+	self:IfMessage(L["spite_message"]:format(msg), "Important", 41377, "Alert")
+	for k in pairs(spiteIt) do spiteIt[k] = nil end
 end
 

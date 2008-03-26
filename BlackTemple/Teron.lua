@@ -4,9 +4,8 @@
 
 local boss = BB["Teron Gorefiend"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
-local pName = nil
+local pName = UnitName("player")
 local db = nil
 
 ----------------------------
@@ -20,7 +19,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	shadow = "Shadow of Death",
 	shadow_desc = "Tells you who has Shadow of Death.",
-	shadow_trigger = "^(%S+) (%S+) afflicted by Shadow of Death%.$",
 	shadow_other = "Shadow: %s!",
 	shadow_you = "Shadow of Death on YOU!",
 
@@ -37,7 +35,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	shadow = "Schatten des Todes",
 	shadow_desc = "Informiert Euch, wer Schatten des Todes bekommt.",
-	shadow_trigger = "^([^%s]+) ([^%s]+) von Schatten des Todes betroffen%.$",
 	shadow_other = "Schatten des Todes: %s!",
 	shadow_you = "Schatten des Todes auf DIR!",
 
@@ -54,7 +51,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	shadow = "죽음의 어둠",
 	shadow_desc = "죽음의 어둠에 걸린 사람을 알립니다.",
-	shadow_trigger = "^([^|;%s]*)(.*)죽음의 어둠에 걸렸습니다%.$",
 	shadow_other = "죽음의 어둠: %s!",
 	shadow_you = "당신에 죽음의 어둠!",
 
@@ -71,7 +67,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	shadow = "Ombre de la mort",
 	shadow_desc = "Préviens quand un joueur subit les effets de l'Ombre de la mort.",
-	shadow_trigger = "^(%S+) (%S+) les effets .* Ombre de la mort%.$",
 	shadow_other = "Ombre : %s !",
 	shadow_you = "Ombre de la mort sur VOUS !",
 
@@ -88,7 +83,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	shadow = "死亡之影",
 	shadow_desc = "当谁中了死亡之影将告诉你。",
-	shadow_trigger = "^(.+)受(.+)了死亡之影效果的影响。$",
 	shadow_other = "死亡之影：>%s<！",
 	shadow_you = ">你< 死亡之影！",
 
@@ -101,11 +95,10 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	start_trigger = "我要復仇﹗", -- Vengeance is mine!
+	start_trigger = "我要復仇﹗",
 
 	shadow = "死亡之影",
 	shadow_desc = "當誰中了死亡之影將告訴你",
-	shadow_trigger = "^(.+)受(到[了]*)死亡之影效果的影響。$",
 	shadow_other = "死亡之影：[%s]",
 	shadow_you = "你 中了死亡之影!",
 
@@ -132,20 +125,11 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "SoD")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "SoD")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "SoD")
-
-	self:AddSyncListener("SPELL_AURA_APPLIED", 40251, "ShadowOfDeath", 1)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Shadow", 40251)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "TeronShadow", 3)
-
-	pName = UnitName("player")
 	db = self.db.profile
 end
 
@@ -153,35 +137,22 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:SoD(msg)
-	local splayer, stype = select(3, msg:find(L["shadow_trigger"]))
-	if splayer and stype then
-		if splayer == L2["you"] and stype == L2["are"] then
-			splayer = pName
-		end
-		self:Sync("TeronShadow", splayer)
-	end
-end
-
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "TeronShadow" and rest and db.shadow then
-		local other = L["shadow_other"]:format(rest)
-		if rest == pName then
-			self:Message(L["shadow_you"], "Personal", true, "Long")
-			self:Message(other, "Attention", nil, nil, true)
-			self:Bar(other, 55, "Spell_Arcane_PrismaticCloak")
+function mod:Shadow(player, spellID)
+	if db.shadow then
+		local other = L["shadow_other"]:format(player)
+		if player == pName then
+			self:LocalMessage(L["shadow_you"], "Personal", spellID, "Long")
+			self:WideMessage(other)
 		else
-			self:Message(other, "Attention")
-			self:Bar(other, 55, "Spell_Arcane_PrismaticCloak")
+			self:IfMessage(other, "Attention", spellID)
 		end
-		self:ScheduleEvent("BWTeronGhost"..rest, self.Ghost, 55, self, rest)
-		if db.icon then
-			self:Icon(rest)
-		end
+		self:ScheduleEvent("BWTeronGhost_"..player, self.Ghost, 55, self, player)
+		self:Bar(other, 55, spellID)
+		self:Icon(player, "icon")
 	end
 end
 
-function mod:Ghost(rest)
-	self:Bar(L["ghost_bar"]:format(rest), 60, "Ability_Druid_Dreamstate")
+function mod:Ghost(player)
+	self:Bar(L["ghost_bar"]:format(player), 60, "Ability_Druid_Dreamstate")
 end
 

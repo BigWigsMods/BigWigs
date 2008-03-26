@@ -4,10 +4,9 @@
 
 local boss = BB["Supremus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
 local started = nil
-local pName = nil
+local pName = UnitName("player")
 local db = nil
 local previous = nil
 local UnitName = UnitName
@@ -33,7 +32,6 @@ L:RegisterTranslations("enUS", function() return {
 	punch_desc = "Alert when he does Molten Punch, and display a countdown bar.",
 	punch_message = "Molten Punch!",
 	punch_bar = "~Possible Punch!",
-	punch_trigger = "Supremus casts Molten Punch.",
 
 	target = "Target",
 	target_desc = "Warn who he targets during the kite phase, and put a raid icon on them.",
@@ -59,7 +57,6 @@ L:RegisterTranslations("deDE", function() return {
 	punch_desc = "Warnt, wenn Supremus Glühender Hieb benutzt und zeigt einen Countdown an.",
 	punch_message = "Glühender Hieb!",
 	punch_bar = "~Möglicher Hieb!",
-	punch_trigger = "Supremus wirkt Glühender Hieb.",
 
 	target = "Verfolgtes Ziel",
 	target_desc = "Warnt wer wärend der Kitephase verfolgt wird.",
@@ -85,7 +82,6 @@ L:RegisterTranslations("koKR", function() return {
 	punch_desc = "화산 폭발 시 경고와 쿨다운 타이머바를 표시합니다.",
 	punch_message = "화산 폭발!",
 	punch_bar = "~폭발 가능!",
-	punch_trigger = "궁극의 심연|1이;가; 화산 폭발|1을;를; 시전합니다.",
 
 	target = "대상",
 	target_desc = "솔개 형상에서 대상을 알리고 전술 표시를 지정합니다.",
@@ -111,7 +107,6 @@ L:RegisterTranslations("frFR", function() return {
 	punch_desc = "Préviens quand Supremus utilise son Punch de la fournaise, et affiche une barre de cooldown.",
 	punch_message = "Punch de la fournaise !",
 	punch_bar = "~Punch probable",
-	punch_trigger = "Supremus lance Punch de la fournaise.",
 
 	target = "Cible",
 	target_desc = "Indique la personne pourchassée pendant la phase de kitting.",
@@ -137,7 +132,6 @@ L:RegisterTranslations("zhTW", function() return {
 	punch_desc = "警報在施放熔火之擊，顯示冷卻條",
 	punch_message = "熔火之擊!",
 	punch_bar = "~可能施放熔火之擊!",
-	punch_trigger = "瑟普莫斯施放了熔火之擊。",
 
 	target = "目標",
 	target_desc = "警報在風箏階段誰是主要目標，並在他頭上放團隊標記。",
@@ -163,7 +157,6 @@ L:RegisterTranslations("zhCN", function() return {
 	punch_desc = "当施放熔岩打击时发出警报并显示冷却记时条。",
 	punch_message = "熔岩打击！",
 	punch_bar = "<可能 熔岩打击>",
-	punch_trigger = "苏普雷姆斯施放了熔岩打击。",
 
 	target = "目标",
 	target_desc = "当谁能被凝视发出警报并被打上团队标记。",
@@ -182,7 +175,7 @@ L:RegisterTranslations("zhCN", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Black Temple"]
 mod.enabletrigger = boss
-mod.toggleoptions = { "punch", "target", "icon", "phase", "enrage", "bosskill" }
+mod.toggleoptions = {"punch", "target", "icon", "phase", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -190,32 +183,29 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Punch", 40126)
+	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+
 	started = nil
 	previous = nil
 
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-
-	self:AddSyncListener("SPELL_CAST_SUCCESS", 40126, "SupPunch")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "SupPunch", 5)
 
 	db = self.db.profile
-	pName = UnitName("player")
 end
 
 ------------------------------
 --    Event Handlers     --
 ------------------------------
 
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if msg == L["punch_trigger"] then
-		self:Sync("SupPunch")
+function mod:Punch(_, spellID)
+	if db.punch then
+		self:IfMessage(L["punch_message"], "Attention", spellID)
+		self:Bar(L["punch_bar"], 10, spellID)
 	end
 end
 
@@ -277,11 +267,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "SupPunch" then
-		if not db.punch then return end
-		self:Message(L["punch_message"], "Attention")
-		self:Bar(L["punch_bar"], 10, "Spell_Frost_FreezingBreath")
-	elseif self:ValidateEngageSync(sync, rest) and not started then
+	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")

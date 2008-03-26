@@ -4,9 +4,8 @@
 
 local boss = BB["Mother Shahraz"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
-local pName = nil
+local pName = UnitName("player")
 local db = nil
 local attracted = {}
 local GetPlayerBuff = GetPlayerBuff
@@ -19,7 +18,6 @@ local enrageWarn = nil
 local started = nil
 local restype = nil
 local timer = nil
-local stop
 
 --debuffs
 local shadow = "INV_Misc_Gem_Amethyst_01"
@@ -146,32 +144,31 @@ mod.revision = tonumber(sub("$Revision$", 12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH", "GenericBossDeath")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "FatalAtt")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "FatalAtt")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "FatalAtt")
-
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	self:AddSyncListener("SPELL_AURA_APPLIED", 41001, "ShaAttra", 1)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Attraction", 41001)
 
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_AURAS_CHANGED")
 	self:RegisterEvent("UNIT_HEALTH")
 
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "ShaAttra", 0)
-	pName = UnitName("player")
-	stop = nil
 	started = nil
+
 	db = self.db.profile
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Attraction(player)
+	if db.attraction then
+		attracted[player] = true
+		self:ScheduleEvent("BWAttractionWarn", self.AttractionWarn, 0.3, self)
+	end
+end
 
 function mod:Berserk()
 	started = true
@@ -195,10 +192,7 @@ function mod:Berserk()
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "ShaAttra" and rest then
-		attracted[rest] = true
-		self:ScheduleEvent("BWAttractionWarn", self.AttractionWarn, 0.5, self)
-	elseif self:ValidateEngageSync(sync, rest) and not started then
+	if self:ValidateEngageSync(sync, rest) and not started then
 		self:Berserk()
 	end
 end
@@ -207,20 +201,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		for k in pairs(attracted) do attracted[k] = nil end
 		restype = nil
-		stop = nil
 		self:Berserk()
 	elseif db.enrage and msg == L["enrage_trigger"] then
 		self:Message(L["enrage_message"], "Important")
-	end
-end
-
-function mod:FatalAtt(msg)
-	local aplayer, atype = select(3, msg:find(L["attraction_trigger"]))
-	if aplayer and atype then
-		if aplayer == L2["you"] and atype == L2["are"] then
-			aplayer = pName
-		end
-		self:Sync("ShaAttra", aplayer)
 	end
 end
 
@@ -257,28 +240,17 @@ function mod:PLAYER_AURAS_CHANGED()
 	end
 end
 
-local function nilStop()
-	stop = nil --allow syncs
-	for k in pairs(attracted) do attracted[k] = nil end
-end
-
 function mod:AttractionWarn()
-	if stop then return end
-	if db.attraction then
-		local msg = nil
-		for k in pairs(attracted) do
-			if not msg then
-				msg = k
-			else
-				msg = msg .. ", " .. k
-			end
+	local msg = nil
+	for k in pairs(attracted) do
+		if not msg then
+			msg = k
+		else
+			msg = msg .. ", " .. k
 		end
-		self:Message(L["attraction_message"]:format(msg), "Important", nil, "Alert")
 	end
-	stop = true
-	--start accepting syncs again after 6 seconds, by blocking syncs we can
-	--warn earlier without caring about latency displaying messages twice
-	self:ScheduleEvent("BWShahrazNilStop", nilStop, 6)
+	self:IfMessage(L["attraction_message"]:format(msg), "Important", 41001, "Alert")
+	for k in pairs(attracted) do attracted[k] = nil end
 end
 
 function mod:UNIT_HEALTH(msg)
@@ -293,3 +265,4 @@ function mod:UNIT_HEALTH(msg)
 		end
 	end
 end
+

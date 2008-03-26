@@ -11,10 +11,6 @@ local veras = BB["Veras Darkshadow"]
 local fmt = string.format
 local db = nil
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
-local death = fmt(AceLibrary("AceLocale-2.2"):new("BigWigs")["%s has been defeated"], boss)
-
-local started = nil
 local pName = UnitName("player")
 
 ----------------------------
@@ -31,15 +27,12 @@ L:RegisterTranslations("enUS", function() return {
 
 	vanish = "Vanish",
 	vanish_desc = "Estimated timers for Vanish.",
-	vanish_trigger = "Veras Darkshadow gains Vanish.",
 	vanish_message = "Veras: Vanished! Back in ~30sec",
 	vanish_warning = "Vanish Over - %s back!",
 	vanish_bar = "Veras Stealthed",
 
 	immune = "Immunity Warning",
 	immune_desc = "Warn when Malande becomes immune to spells or melee attacks.",
-	immune_spell_trigger = "Lady Malande gains Blessing of Spell Warding.",
-	immune_melee_trigger = "Lady Malande gains Blessing of Protection.",
 	immune_message = "Malande: %s Immune for 15sec!",
 	immune_bar = "%s Immune!",
 
@@ -48,12 +41,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	shield = "Reflective Shield",
 	shield_desc = "Warn when Malande Gains Reflective Shield.",
-	shield_trigger = "Lady Malande gains Reflective Shield.",
 	shield_message = "Reflective Shield on Malande!",
 
 	poison = "Deadly Poison",
 	poison_desc = "Warn for Deadly Poison on players.",
-	poison_trigger = "^(%S+) (%S+) afflicted by Deadly Poison%.$",
 	poison_other = "%s has Deadly Poison!",
 	poison_you = "Deadly Poison on YOU!",
 
@@ -64,21 +55,17 @@ L:RegisterTranslations("enUS", function() return {
 	circle_desc = "Warn when Malande begins to cast Circle of Healing.",
 	circle_trigger = "Lady Malande begins to cast Circle of Healing.",
 	circle_message = "Casting Circle of Healing!",
-	circle_heal_trigger = "^Lady Malande 's Circle of Healing heals",
-	circle_fail_trigger = "^(%S+) interrupts Lady Malande's Circle of Healing%.$",
 	circle_heal_message = "Healed! - Next in ~20sec",
 	circle_fail_message = "%s Interrupted! - Next in ~12sec",
 	circle_bar = "~Circle of Healing Cooldown",
 
 	res = "Resistance Aura",
 	res_desc = "Warn when Gathios the Shatterer gains Chromatic Resistance Aura.",
-	res_trigger = "Gathios the Shatterer gains Chromatic Resistance Aura.",
 	res_message = "Gathios: Resistance for 30 sec!",
 	res_bar = "Resistance Aura",
 
 	blizzard = "Blizzard on You",
 	blizzard_desc = "Warn when you are in a Blizzard.",
-	blizzard_trigger = "You are afflicted by Blizzard.",
 	blizzard_message = "Blizzard on YOU!",
 } end )
 
@@ -90,15 +77,12 @@ L:RegisterTranslations("frFR", function() return {
 
 	vanish = "Disparition",
 	vanish_desc = "Délais estimés concernant la Disparition de Veras.",
-	vanish_trigger = "Veras Ombrenoir gagne Disparition.",
 	vanish_message = "Veras : Disparu ! De retour dans ~30 sec.",
 	vanish_warning = "Fin de la Disparition - %s est de retour !",
 	vanish_bar = "Veras camouflé",
 
 	immune = "Immunité",
 	immune_desc = "Préviens quand Malande devient insensible aux sorts ou aux attaques de mêlée.",
-	immune_spell_trigger = "Dame Malande gagne Bénédiction de protection contre les sorts.",
-	immune_melee_trigger = "Dame Malande gagne Bénédiction de protection.",
 	immune_message = "Malande : insensible %s pendant 15 sec. !",
 	immune_bar = "Insensible %s !",
 
@@ -107,12 +91,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	shield = "Bouclier réflecteur",
 	shield_desc = "Préviens quand Malande gagne son Bouclier réflecteur.",
-	shield_trigger = "Dame Malande gagne Bouclier réflecteur.",
 	shield_message = "Bouclier réflecteur sur Malande !",
 
 	poison = "Poison mortel",
 	poison_desc = "Préviens quand un joueur subit les effets du Poison mortel.",
-	poison_trigger = "^(%S+) (%S+) les effets .* Poison mortel%.$",
 	poison_other = "%s a le Poison mortel !",
 	poison_you = "Poison mortel sur VOUS !",
 
@@ -123,21 +105,17 @@ L:RegisterTranslations("frFR", function() return {
 	circle_desc = "Préviens quand Malande commence à lancer son Cercle de soins.",
 	circle_trigger = "Dame Malande commence à lancer Cercle de soins.",
 	circle_message = "Cercle de soins en incantation !",
-	circle_heal_trigger = "^Cercle de soins .* Dame Malande guérit",
-	circle_fail_trigger = "^(%S+) interrompt Dame Malande qui lance Cercle de soins%.$",
 	circle_heal_message = "Soigné ! - Prochain dans ~20 sec.",
 	circle_fail_message = "Interrompu par %s ! - Prochain dans ~12 sec.",
 	circle_bar = "~Cooldown Cercle de soins",
 
 	res = "Aura de résistance",
 	res_desc = "Préviens quand Gathios le Briseur gagne son Aura de résistance chromatique.",
-	res_trigger = "Gathios le Briseur gagne Aura de résistance chromatique.",
 	res_message = "Gathios : Résistance pendant 30 sec. !",
 	res_bar = "Aura de résistance",
 
 	blizzard = "Blizzard sur vous",
 	blizzard_desc = "Préviens quand vous êtes dans un Blizzard.",
-	blizzard_trigger = "Vous subissez les effets de Blizzard.",
 	blizzard_message = "Blizzard sur VOUS !",
 } end )
 
@@ -149,15 +127,12 @@ L:RegisterTranslations("koKR", function() return {
 
 	vanish = "소멸",
 	vanish_desc = "베라스의 소멸에 대한 예상 타이머입니다.",
-	vanish_trigger = "베라스 다크섀도우|1이;가; 은신 효과를 얻었습니다.",
 	vanish_message = "베라스: 소멸! 30초이내 출현",
 	vanish_warning = "소멸 종료 - %s 출현!",
 	vanish_bar = "베라스 은신",
 
 	immune = "면역 경고",
 	immune_desc = "말란데가 주문 혹은 근접 공격에 면역 시 알립니다.",
-	immune_spell_trigger = "여군주 말란데|1이;가; 주문 수호의 축복 효과를 얻었습니다.",
-	immune_melee_trigger = "여군주 말란데|1이;가; 보호의 축복 효과를 얻었습니다.",
 	immune_message = "말란데: 15초간 %s 면역!",
 	immune_bar = "%s 면역!",
 
@@ -166,12 +141,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	shield = "반사의 보호막",
 	shield_desc = "말란데가 반사의 보호막을 얻었을 때 알립니다.",
-	shield_trigger = "여군주 말란데|1이;가; 반사의 보호막 효과를 얻었습니다.",
 	shield_message = "말란데에 반사의 보호막!",
 
 	poison = "맹독",
 	poison_desc = "맹독에 걸린 플레이어를 알립니다.",
-	poison_trigger = "^([^|;%s]*)(.*)맹독에 걸렸습니다%.$",
 	poison_other = "%s에 맹독!",
 	poison_you = "당신에 맹독!",
 
@@ -182,21 +155,17 @@ L:RegisterTranslations("koKR", function() return {
 	circle_desc = "말란데가 치유의 마법진 시전 시 알립니다.",
 	circle_trigger = "여군주 말란데|1이;가; 치유의 마법진 시전을 시작합니다.",
 	circle_message = "치유의 마법진 시전!",
-	circle_heal_trigger = "^여군주 말란데의 치유의 마법진|1으로;로;",
-	circle_fail_trigger = "^([^%s]+)|1이;가; 여군주 말란데의 치유의 마법진|1을;를; 차단했습니다%.$",
 	circle_heal_message = "치유됨! - 다음은 약 20초 이내",
 	circle_fail_message = "%s 차단함! - 다음은 약 12초 이내",
 	circle_bar = "~치유의 마법진 대기 시간",
 
 	res = "저항의 오라",
 	res_desc = "파괴자 가디오스의 오색 저항의 오라를 얻었을 때 알립니다.",
-	res_trigger = "파괴자 가디오스|1이;가; 오색 저항의 오라 효과를 얻었습니다.",
 	res_message = "가디오스: 30초간 저항!",
 	res_bar = "저항의 오라",
 
 	blizzard = "당신에 눈보라",
 	blizzard_desc = "당신이 눈보라에 걸렸을 때 알립니다.",
-	blizzard_trigger = "당신은 눈보라에 걸렸습니다.",
 	blizzard_message = "당신에 눈보라!",
 } end )
 
@@ -208,15 +177,12 @@ L:RegisterTranslations("zhCN", function() return {
 
 	vanish = "消失",
 	vanish_desc = "消失记时条。",
-	vanish_trigger = "维尔莱斯·深影获得了消失的效果。",
 	vanish_message = "维尔莱斯：消失！ 30秒后重新出现",
 	vanish_warning = "消失结束 - %s 出现！",
 	vanish_bar = "<消失>",
 
 	immune = "免疫警报",
 	immune_desc = "当玛兰德免疫法术或近战攻击时发出警报。",
-	immune_spell_trigger = "女公爵玛兰德获得了法术结界祝福的效果。",
-	immune_melee_trigger = "女公爵玛兰德获得了保护祝福的效果。",
 	immune_message = "女公爵玛兰德： 15秒 %s免疫！",
 	immune_bar = "<%s免疫>",
 
@@ -225,12 +191,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	shield = "反射之盾",
 	shield_desc = "当玛兰德获得反射之盾时发出警报。",
-	shield_trigger = "女公爵玛兰德获得了反射之盾的效果。",
 	shield_message = "反射之盾！注意！",
 
 	poison = "致命药膏",
 	poison_desc = "当玩家受到致命药膏时发出警报。",
-	poison_trigger = "^(.+)受(.+)了致命药膏效果的影响。$",
 	poison_other = "致命药膏：>%s<！",
 	poison_you = ">你< 致命药膏！",
 
@@ -241,21 +205,17 @@ L:RegisterTranslations("zhCN", function() return {
 	circle_desc = "当玛兰德开始施放治疗之环时发出警报。",
 	circle_trigger = "女公爵玛兰德开始施放治疗之环。$",
 	circle_message = "正在施放 治疗之环！",
-	circle_heal_trigger = "^女公爵玛兰德的治疗之环为",
-	circle_fail_trigger = "^(.+)打断了公爵玛兰德的治疗之环。",
 	circle_heal_message = "治疗 成功！ ~20秒后再次发动",
 	circle_fail_message = "%s 打断！~12秒后再次发动 治疗之环",
 	circle_bar = "<治疗之环 冷却>",
 
 	res = "多彩抗性光环",
 	res_desc = "当击碎者加西奥斯获得多彩抗性光环时发出警报。",
-	res_trigger = "击碎者加西奥斯获得了多彩抗性光环的效果。",
 	res_message = "击碎者加西奥斯： 多彩抗性光环 30秒！",
 	res_bar = "<多彩抗性光环>",
 
 	blizzard = "暴风雪",
 	blizzard_desc = "你中了暴风雪发出警报。",
-	blizzard_trigger = "你受到了暴风雪效果的影响。",
 	blizzard_message = "暴风雪：>你<！",
 } end )
 
@@ -267,15 +227,12 @@ L:RegisterTranslations("zhTW", function() return {
 
 	vanish = "消失",
 	vanish_desc = "消失計時條.",
-	vanish_trigger = "維拉斯·深影獲得了消失",
 	vanish_message = "維拉斯: 消失! ~30秒回來",
 	vanish_warning = "消失結束 - %s 回來了!",
 	vanish_bar = "維拉斯潛行",
 
 	immune = "免疫警告",
 	immune_desc = "當瑪蘭黛女士免疫法術或近戰時警告",
-	immune_spell_trigger = "瑪蘭黛女士獲得了法術結界祝福",
-	immune_melee_trigger = "瑪蘭黛女士獲得了保護祝福的效果。",
 	immune_message = "瑪蘭黛: %s 15秒免疫!",
 	immune_bar = "%s 免疫!",
 
@@ -284,12 +241,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	shield = "反射護盾",
 	shield_desc = "當瑪蘭黛女士獲得了反射護盾時警告",
-	shield_trigger = "瑪蘭黛女士獲得了反射護盾的效果。",
 	shield_message = "反射護盾在瑪蘭黛女士身上!",
 
 	poison = "致命毒藥",
 	poison_desc = "當玩家受到致命毒藥時警告",
-	poison_trigger = "^(.+)受(到[了]*)致命毒藥效果的影響。$",
 	poison_other = "致命毒藥：[%s]",
 	poison_you = "致命毒藥在你身上!",
 
@@ -300,21 +255,17 @@ L:RegisterTranslations("zhTW", function() return {
 	circle_desc = "當瑪蘭黛女士開始施放治療之環時警告",
 	circle_trigger = "瑪蘭黛女士開始施放治療之環。",
 	circle_message = "正在施放治療之環!",
-	circle_heal_trigger = "^瑪蘭黛女士的治療之環治療了",
-	circle_fail_trigger = "^(.+)打斷了瑪蘭黛女士的治療之環。$",
 	circle_heal_message = "被治療了! - 下一次 ~20秒",
 	circle_fail_message = "%s 中斷了! - 下一次 ~12秒",
 	circle_bar = "~治療之環冷卻",
 
 	res = "多重抗性光環",
 	res_desc = "警告當粉碎者高希歐獲得了多重抗性光環的效果。",
-	res_trigger = "粉碎者高希歐獲得了多重抗性光環的效果。",
 	res_message = "粉碎者高希歐: 多重抗性光環 30 秒!",
 	res_bar = "多重抗性光環",
 
 	--blizzard = "Blizzard on You",
 	--blizzard_desc = "Warn when you are in a Blizzard.",
-	--blizzard_trigger = "You are afflicted by Blizzard.",
 	--blizzard_message = "Blizzard on YOU!",
 } end )
 
@@ -326,15 +277,12 @@ L:RegisterTranslations("deDE", function() return {
 
 	vanish = "Verschwinden",
 	vanish_desc = "Geschäzte Timer für das Verschwinden von Veras Schwarzschatten.",
-	vanish_trigger = "Veras Schwarzschatten bekommt Verschwinden.",
 	vanish_message = "Veras: Verschwunden! Zurrück in ~30sek",
 	vanish_warning = "Verschwinden vorbei - %s zurrück!",
 	vanish_bar = "Veras getarnt",
 
 	immune = "Immunitäts Warnung",
 	immune_desc = "Warnen wenn Malande immun gegen Zauber oder Nahkampfangriffe wird.",
-	immune_spell_trigger = "Lady Malande bekommt Segen des Zauberschutzes.",
-	immune_melee_trigger = "Lady Malande bekommt Segen des Schutzes.",
 	immune_message = "Malande: %s Immun für 15sec!",
 	immune_bar = "%s Immun!",
 
@@ -343,12 +291,10 @@ L:RegisterTranslations("deDE", function() return {
 
 	shield = "Reflektierender Schild",
 	shield_desc = "Warnt wenn Malande Reflektierender Schild bekommt.",
-	shield_trigger = "Lady Malande bekommt Reflektierender Schild.",
 	shield_message = "Reflektierender Schild auf Malande!",
 
 	poison = "Tödliches Gift",
 	poison_desc = "Warnt wenn Tödliches Gift auf Spielern ist .",
-	poison_trigger = "^([^%s]+) ([^%s]+) ist von Tödliches Gift betroffen%.$",
 	poison_other = "%s hat Tödliches Gift!",
 	poison_you = "Tödliches Gift on DIR!",
 
@@ -359,21 +305,17 @@ L:RegisterTranslations("deDE", function() return {
 	circle_desc = "Warnt wenn Malande anfängt Kreis der Heilung zu zaubern.",
 	circle_trigger = "Lady Malande beginnt Kreis der Heilung zu wirken.",
 	circle_message = "Zaubert Kreis der Heilung!",
-	circle_heal_trigger = "^Lady Malande 's Kreis der Heilung heilt",
-	circle_fail_trigger = "^([^%s]+) unterbricht Lady Malande's Kreis der Heilung%.$",
 	circle_heal_message = "Geheilt! - Nächster in ~20sek",
 	circle_fail_message = "%s Unterbrochen! - Nächster in ~12sek",
 	circle_bar = "~Kreis der Heilung Cooldown",
 
 	res = "Resistenz Aura",
 	res_desc = "Warnt wenn Gathios der Zerschmetterer die Aura des chromatischen Widerstands bekommt.",
-	res_trigger = "Gathios der Zerschmetterer bekommt Aura des chromatischen Widerstands.",
 	res_message = "Gathios: Resistenz für 30 sek!",
 	res_bar = "Resistenz Aura",
 
 	--blizzard = "Blizzard on You",
 	--blizzard_desc = "Warn when you are in a Blizzard.",
-	--blizzard_trigger = "You are afflicted by Blizzard.",
 	--blizzard_message = "Blizzard on YOU!",
 } end )
 
@@ -392,46 +334,21 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	started = nil
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "DebuffEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "DebuffEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "DebuffEvent")
-
-	self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE", "Interrupt")
-	self:RegisterEvent("CHAT_MSG_SPELL_PARTY_DAMAGE", "Interrupt")
-	self:RegisterEvent("CHAT_MSG_SPELL_FRIENDLYPLAYER_DAMAGE", "Interrupt") -- might not be needed?
-	self:RegisterEvent("CHAT_MSG_SPELL_HOSTILEPLAYER_DAMAGE", "Interrupt")
-
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
-	self:AddSyncListener("SPELL_AURA_APPLIED", 41476, "VerVanish")
-	self:AddSyncListener("SPELL_AURA_APPLIED", 41475, "MalShield")
-	self:AddSyncListener("SPELL_AURA_APPLIED", 41453, "ICRes")
-	self:AddSyncListener("SPELL_AURA_APPLIED", 41485, "CouncilPoison", 1)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Vanish", 41476)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Shield", 41475)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "ResAura", 41453)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Poison", 41485)
 
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SpellWarding", 41451)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Protection", 41450)
 	self:AddCombatListener("SPELL_CAST_START", "HealingStart", 41455)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Healing", 41455)
-	self:AddCombatListener("SPELL_CAST_FAILED", "HealingFailed", 41455)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Healed", 41455)
+	self:AddCombatListener("SPELL_INTERRUPT", "HealingFailed")
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Blizzard", 41482)
-	self:AddCombatListener("UNIT_DIED", "UNIT_DIED")
-	
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "MalSpell", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "MalMelee", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "MalShield", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "MalCCast", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "MalCHeal", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "ICKick", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "CouncilPoison", 2)
-	self:TriggerEvent("BigWigs_ThrottleSync", "ICRes", 5)
+	self:AddCombatListener("UNIT_DIED", "Deaths")
+
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	db = self.db.profile
 end
@@ -440,53 +357,87 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Engage()
-	started = true
-	self:Enrage(900)
+function mod:Vanish(_, spellID)
+	if db.vanish then
+		self:IfMessage(L["vanish_message"], "Urgent", spellID, "Alert")
+		self:Bar(L["vanish_bar"], 30, spellID)
+		self:DelayedMessage(30, fmt(L["vanish_warning"], veras), "Attention")
+	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "MalSpell" and db.immune then
-		self:Message(fmt(L["immune_message"], L["spell"]), "Positive")
-		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["immune_message"], L["melee"]))
-		self:Bar(fmt(L["immune_bar"], L["spell"]), 15, "Spell_Holy_SealOfRighteousness")
-	elseif sync == "MalMelee" and db.immune then
-		self:Message(fmt(L["immune_message"], L["melee"]), "Positive")
-		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["immune_message"], L["spell"]))
-		self:Bar(fmt(L["immune_bar"], L["melee"]), 15, "Spell_Holy_SealOfProtection")
-	elseif sync == "MalShield" and db.shield then
-		self:Message(L["shield_message"], "Important", nil, "Long")
-		self:Bar(L["shield_message"], 20, "Spell_Holy_PowerWordShield")
-	elseif sync == "MalCCast" and db.circle then
-		self:Message(L["circle_message"], "Attention", nil, "Info")
-		self:Bar(L["circle"], 2.5, "Spell_Holy_CircleOfRenewal")
-	elseif sync == "MalCHeal" and db.circle then
-		self:Message(L["circle_heal_message"], "Urgent")
-		self:Bar(L["circle_bar"], 20, "Spell_Holy_CircleOfRenewal")
-	elseif sync == "ICKick" and rest and db.circle then
-		self:Message(fmt(L["circle_fail_message"], rest), "Urgent")
-		self:Bar(L["circle_bar"], 12, "Spell_Holy_CircleOfRenewal")
-	elseif sync == "VerVanish" and db.vanish then
-		self:Message(L["vanish_message"], "Urgent", nil, "Alert")
-		self:Bar(L["vanish_bar"], 30, "Ability_Vanish")
-		self:DelayedMessage(30, fmt(L["vanish_warning"], veras), "Attention")
-	elseif sync == "TICWin" and db.bosskill then
-		self:Message(death, "Bosskill", nil, "Victory")
-		BigWigs:ToggleModuleActive(self, false)
-	elseif sync == "ICRes" and db.res then
-		self:Message(L["res_message"], "Positive")
-		self:Bar(L["res_bar"], 30, "Spell_Frost_WizardMark")
-	elseif sync == "CouncilPoison" and rest and db.poison then
-		local other = fmt(L["poison_other"], rest)
-		if rest == pName then
-			self:Message(L["poison_you"], "Important", true, "Long")
-			self:Message(other, "Attention", nil, nil, true)
+function mod:Shield(_, spellID)
+	if db.shield then
+		self:IfMessage(L["shield_message"], "Important", spellID, "Long")
+		self:Bar(L["shield_message"], 20, spellID)
+	end
+end
+
+function mod:ResAura(_, spellID)
+	if db.res then
+		self:IfMessage(L["res_message"], "Positive", spellID)
+		self:Bar(L["res_bar"], 30, spellID)
+	end
+end
+
+function mod:Poison(player, spellID)
+	if db.poison then
+		local other = fmt(L["poison_other"], player)
+		if player == pName then
+			self:LocalMessage(L["poison_you"], "Important", spellID, "Long")
+			self:WideMessage(other)
 		else
-			self:Message(other, "Attention")
+			self:IfMessage(other, "Attention", spellID)
 		end
-		if db.icon then
-			self:Icon(rest)
-		end
+		self:Icon(player, "icon")
+	end
+end
+
+function mod:Deaths(unit)
+	if unit == malande then
+		self:GenericBossDeath(boss)
+	end
+end
+
+function mod:SpellWarding(unit, spellID)
+	if unit == malande and db.immune then
+		self:IfMessage(fmt(L["immune_message"], L["spell"]), "Positive", spellID)
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["immune_message"], L["melee"]))
+		self:Bar(fmt(L["immune_bar"], L["spell"]), 15, spellID)
+	end
+end
+
+function mod:Protection(unit, spellID)
+	if unit == malande and db.immune then
+		self:IfMessage(fmt(L["immune_message"], L["melee"]), "Positive", spellID)
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["immune_message"], L["spell"]))
+		self:Bar(fmt(L["immune_bar"], L["melee"]), 15, spellID)
+	end
+end
+
+function mod:HealingStart(unit, spellID)
+	if unit == malande and db.circle then
+		self:IfMessage(L["circle_message"], "Attention", spellID, "Info")
+		self:Bar(L["circle"], 2.5, spellID)
+	end
+end
+
+function mod:Healed(unit, spellID)
+	if unit == malande then
+		self:IfMessage(L["circle_heal_message"], "Urgent", spellID)
+		self:Bar(L["circle_bar"], 20, spellID)
+	end
+end
+
+function mod:HealingFailed(_, _, source, spellID)
+	if spellID and spellID == 41455 then
+		self:Message(fmt(L["circle_fail_message"], source), "Urgent")
+		self:Bar(L["circle_bar"], 12, spellID)
+	end
+end
+
+function mod:Blizzard(player)
+	if player == pName then
+		self:IfMessage(L["blizzard_message"], "Personal", 41482, "Alarm")
 	end
 end
 
@@ -496,93 +447,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		msg:find(L["engage_trigger2"]) or
 		msg:find(L["engage_trigger3"]) or
 		msg:find(L["engage_trigger4"])) then
-		self:Engage()
-	end
-end
-
-do
-	local malDies = fmt(UNITDIESOTHER, malande)
-	function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
-		if msg == malDies then
-			self:Sync("TICWin")
-		end
-	end
-end
-
-function mod:UNIT_DIED(mob)
-	if mob and mob == malande then self:Sync("TICWin") end
-end
-
-function mod:SpellWarding(mob)
-	if mob == malande then self:Sync("MalSpell") end
-end
-
-function mod:Protection(mob)
-	if mob == malande then self:Sync("MalMelee") end
-end
-
-function mod:HealingStart(mob)
-	if mob == malande then self:Sync("MalCCast") end
-end
-
-function mod:Healing(mob)
-	if mob == malande then self:Sync("MalCHeal") end
-end
-
-function mod:HealingFailed(mob)
-	if mob == malande then self:Sync("ICKick", "Someone") end -- FIXME
-end
-
-function mod:CHAT_MSG_SPELL_PERIODIC_CREATURE_BUFFS(msg)
-	if msg == L["immune_spell_trigger"] then
-		self:Sync("MalSpell")
-	elseif msg == L["immune_melee_trigger"] then
-		self:Sync("MalMelee")
-	elseif msg == L["shield_trigger"] then
-		self:Sync("MalShield")
-	elseif msg == L["vanish_trigger"] then
-		self:Sync("VerVanish")
-	elseif msg == L["res_trigger"] then
-		self:Sync("ICRes")
-	end
-end
-
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if msg == L["circle_trigger"] then
-		self:Sync("MalCCast")
-	elseif msg == L["circle_heal_trigger"] then
-		self:Sync("MalCHeal")
-	end
-end
-
-function mod:Blizzard(player)
-	if player and player == pName then
-		self:Message(L["blizzard_message"], "Personal", true, "Alarm")
-	end
-end
-
-function mod:DebuffEvent(msg)
-	if msg == L["blizzard_trigger"] and db.blizzard then
-		self:Message(L["blizzard_message"], "Personal", true, "Alarm")
-		return
-	end
-
-	local pplayer, ptype = select(3, msg:find(L["poison_trigger"]))
-	if pplayer and ptype then
-		if pplayer == L2["you"] and ptype == L2["are"] then
-			pplayer = pName
-		end
-		self:Sync("CouncilPoison", pplayer)
-	end
-end
-
-function mod:Interrupt(msg)
-	local player = select(3, msg:find(L["circle_fail_trigger"]))
-	if player then
-		if player == L2["you"] then --prob need something better than this
-			player = pName
-		end
-		self:Sync("ICKick", player)
+		self:Enrage(900)
 	end
 end
 

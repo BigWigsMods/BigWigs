@@ -4,12 +4,12 @@
 
 local boss = BB["Illidan Stormrage"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local L2 = AceLibrary("AceLocale-2.2"):new("BigWigsCommonWords")
 
-local pName = nil
+local pName = UnitName("player")
 local db = nil
 local bCount = 0
 local p2Announced = nil
+local p2 = nil
 local p4Announced = nil
 local flamesDead = 0
 local flamed = { }
@@ -56,14 +56,12 @@ L:RegisterTranslations("enUS", function() return {
 
 	demons = "Shadow Demons",
 	demons_desc = "Warn when Illidan is summoning Shadow Demons.",
-	demons_trigger = "Summon Shadow Demons",
 	demons_message = "Shadow Demons!",
 	demons_warn = "Demons Soon!",
 
 	phase = "Phases",
 	phase_desc = "Warns when Illidan goes into different stages.",
 	phase2_soon_message = "Phase 2 soon!",
-	phase2_trigger = "Blade of Azzinoth casts Summon Tear of Azzinoth.",
 	phase2_message = "Phase 2 - Blades of Azzinoth!",
 	phase3_message = "Phase 3!",
 	demon_phase_trigger = "Behold the power... of the demon within!",
@@ -86,7 +84,6 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_trigger = "Feel the hatred of ten thousand years!",
 	enrage_message = "Enraged!",
 
-	afflict_trigger = "^(%S+) (%S+) afflicted by (.+)%.$",
 	["Flame of Azzinoth"] = true,
 
 	--very first yell to start engage timer
@@ -127,14 +124,12 @@ L:RegisterTranslations("frFR", function() return {
 
 	demons = "Démons des ombres",
 	demons_desc = "Préviens quand Illidan invoque des démons des ombres.",
-	demons_trigger = "Invocation de démons des ombres",
 	demons_message = "Démons des ombres !",
 	demons_warn = "Démons imminent !",
 
 	phase = "Phases",
 	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
 	phase2_soon_message = "Phase 2 imminente !",
-	phase2_trigger = "Lame d'Azzinoth lance Invocation de la Larme d'Azzinoth.",
 	phase2_message = "Phase 2 - Lames d'Azzinoth !",
 	phase3_message = "Phase 3 !",
 	demon_phase_trigger = "Contemplez la puissance... du démon intérieur !",
@@ -157,7 +152,6 @@ L:RegisterTranslations("frFR", function() return {
 	enrage_trigger = "Goûtez à dix mille ans de haine !",
 	enrage_message = "Enragé !",
 
-	afflict_trigger = "^(%S+) (%S+) les effets [de|2]+ (.*).$",
 	["Flame of Azzinoth"] = "Flamme d'Azzinoth",
 
 	--very first yell to start engage timer
@@ -198,14 +192,12 @@ L:RegisterTranslations("koKR", function() return {
 
 	demons = "어둠의 악마",
 	demons_desc = "어둠의 악마 소환 시 알립니다.",
-	demons_trigger = "어둠의 악마 소환",
 	demons_message = "어둠의 악마!",
 	demons_warn = "잠시 후 어둠의 악마 소환!",
 
 	phase = "단계",
 	phase_desc = "일리단이 다른 형상으로 변경 시 알립니다.",
 	phase2_soon_message = "잠시 후 2 단계!",
-	phase2_trigger = "아지노스의 칼날|1이;가; 아지노스의 눈물 소환|1을;를; 시전합니다.",
 	phase2_message = "2 단계 - 아지노스의 칼날!",
 	phase3_message = "3 단계!",
 	demon_phase_trigger = "내 안에 깃든... 악마의 힘을 보여주마!",
@@ -228,7 +220,6 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_trigger = "만년 동안 응어리진 증오를 보여주마!",
 	enrage_message = "격노!",
 
-	afflict_trigger = "^([^|;%s]*)(%s+)(.*)에 걸렸습니다%.$",
 	["Flame of Azzinoth"] = "아지노스의 불꽃",
 
 	--맨처음 외침에 공격시작되는 타이머
@@ -269,14 +260,12 @@ L:RegisterTranslations("zhCN", function() return {
 
 	demons = "影魔",
 	demons_desc = "当伊利丹召唤影魔时发出警报。",
-	demons_trigger = "召唤影魔",
 	demons_message = "影魔！",
 	demons_warn = "即将 影魔！",
 
 	phase = "阶段",
 	phase_desc = "当伊利丹进入不同阶段发出警报。",
 	phase2_soon_message = "即将 -  第二阶段！",
-	phase2_trigger = "埃辛诺斯之刃施放了召唤埃辛诺斯之类。$",--Update 10/31
 	phase2_message = "第二阶段 - 埃辛诺斯双刃！",
 	phase3_message = "第三阶段！",
 	demon_phase_trigger = "感受我体内的恶魔之力吧！",
@@ -299,7 +288,6 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage_trigger = "感受一万年的仇恨吧！",
 	enrage_message = "狂暴！",
 
-	afflict_trigger = "^([^%s]+)受([^%s]+)了([^%s]+)效果的影响。$",
 	["Flame of Azzinoth"] = "埃辛诺斯之焰",
 
 	--第一次触发伊利丹时计时器
@@ -340,14 +328,12 @@ L:RegisterTranslations("deDE", function() return {
 
 	demons = "Schattendämonen",
 	demons_desc = "Warnt wenn Illidan Schattendämonen beschwört.",
-	demons_trigger = "zaubert Schattendämonen",
 	demons_message = "Schattendämonen!",
 	demons_warn = "Dämonen Bald!",
 
 	phase = "Phasen",
 	phase_desc = "Warnt wenn Illidan in die verschiedenen Phasen geht.",
 	phase2_soon_message = "Phase 2 Bald!",
-	phase2_trigger = "Klinge von Azzinoth wirkt Träne von Azzinoth beschwören.",
 	phase2_message = "Phase 2 - Klingen von Azzinoth!",
 	phase3_message = "Phase 3!",
 	demon_phase_trigger = "Erzittert vor der Macht des Dämonen!",
@@ -370,7 +356,6 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_trigger = "Fühlt dem Haß von 10 tausend Jahren!",
 	enrage_message = "Wütend!",
 
-	afflict_trigger = "^(%S+) (%S+) ist von (.*) betroffen.$",
 	["Flame of Azzinoth"] = "Flamme von Azzinoth",
 
 	--very first yell to start engage timer
@@ -411,14 +396,12 @@ L:RegisterTranslations("zhTW", function() return {
 
 	demons = "暗影惡魔",
 	demons_desc = "當召喚暗影惡魔時發出警報",
-	demons_trigger = "召喚暗影惡魔",
 	demons_message = "暗影惡魔!",
 	demons_warn = "暗影惡魔即將來臨!",
 
 	phase = "階段",
 	phase_desc = "當變換不同階段時發出警報",
 	phase2_soon_message = "階段 2 即將來臨!",
-	phase2_trigger = "埃辛諾斯之刃施放了召喚埃辛諾斯之淚。",
 	phase2_message = "階段 2 - 埃辛諾斯之刃!",
 	phase3_message = "階段 3!",
 	demon_phase_trigger = "感受我體內的惡魔之力吧!",
@@ -441,7 +424,6 @@ L:RegisterTranslations("zhTW", function() return {
 	enrage_trigger = "感受一萬年的仇恨吧!",
 	enrage_message = "狂怒!",
 
-	afflict_trigger = "^(.+)受(到[了]*)(.*)效果的影響。$",
 	["Flame of Azzinoth"] = "埃辛諾斯火焰",
 
 	--very first yell to start engage timer
@@ -466,39 +448,21 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH")
+	self:AddCombatListener("SPELL_DAMAGE", "FlameBurst", 41131) -- spell cast by the player at 5 yards radius
+	self:AddCombatListener("SPELL_CAST_SUCCESS ", "Phase2", 39855)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Parasite", 41914)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Barrage", 40585)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Shear", 41032)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 40932)
+	self:AddCombatListener("SPELL_CAST_START", "Demons", 41117)
+	self:AddCombatListener("UNIT_DIED", "Deaths")
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "IliPara", 1.7)
-	self:TriggerEvent("BigWigs_ThrottleSync", "IliBara", 4)
-	self:TriggerEvent("BigWigs_ThrottleSync", "IliFlame", 0)
-	self:TriggerEvent("BigWigs_ThrottleSync", "IliDemons", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "IliBurst", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "IliPhase2", 5)
-	self:TriggerEvent("BigWigs_ThrottleSync", "IliFlameDied", 3)
-	self:TriggerEvent("BigWigs_ThrottleSync", "IliShear", 3)
-
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_SELF_DAMAGE", "AfflictEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_FRIENDLYPLAYER_DAMAGE", "AfflictEvent")
-	self:RegisterEvent("CHAT_MSG_SPELL_PERIODIC_PARTY_DAMAGE", "AfflictEvent")
-
-	self:AddSyncListener("SPELL_AURA_APPLIED", 41914, "IliPara", 1)
-	self:AddSyncListener("SPELL_AURA_APPLIED", 40585, "IliBara", 1)
-	self:AddSyncListener("SPELL_AURA_APPLIED", 41032, "IliShear", 1)
-	self:AddSyncListener("SPELL_AURA_APPLIED", 40932, "IliFlame", 1)
-
-	self:AddCombatListener("SPELL_DAMAGE", "FlameBurst", 41131) -- spell cast by the player at 5 yards radius
-	self:AddCombatListener("SPELL_SUCCESS", "Phase2", 39855)
-	self:AddCombatListener("UNIT_DIED", "UNIT_DIED")
-	
-	self:RegisterEvent("CHAT_MSG_SPELL_SELF_DAMAGE")
-	self:RegisterEvent("CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("UNIT_SPELLCAST_START")
 
-	pName = UnitName("player")
 	db = self.db.profile
 end
 
@@ -506,82 +470,73 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "IliPara" and rest and db.parasite then
-		local other = fmt(L["parasite_other"], rest)
-		if rest == pName then
-			self:Message(L["parasite_you"], "Personal", true, "Long")
-			self:Message(other, "Attention", nil, nil, true)
-			self:Bar(other, 10, "Spell_Shadow_SoulLeech_3")
-		else
-			self:Message(other, "Attention")
-			self:Bar(other, 10, "Spell_Shadow_SoulLeech_3")
-		end
-		if db.icon then
-			self:Icon(rest)
-		end
-	elseif sync == "IliBara" and rest and db.barrage then
-		self:Message(fmt(L["barrage_message"], rest), "Important", nil, "Alert")
-		self:Bar(fmt(L["barrage_bar"], rest), 10, "Spell_Shadow_PainSpike")
-
-		self:Bar(L["barrage_warn_bar"], 50, "Spell_Shadow_PainSpike")
-		self:ScheduleEvent("BarrageWarn", "BigWigs_Message", 47, L["barrage_warn"], "Important")
-
-	elseif sync == "IliFlame" and rest and db.flame then
-		flamed[rest] = true
-		self:ScheduleEvent("FlameCheck", self.FlameWarn, 1, self)
-	elseif sync == "IliDemons" and db.demons then
-		self:Message(L["demons_message"], "Important", nil, "Alert")
-	elseif sync == "IliBurst" and db.flameburst then
+function mod:FlameBurst(_, spellID)
+	if db.flameburst then
 		bCount = bCount + 1
-		self:Message(L["flameburst_message"], "Important", nil, "Alert")
+		self:IfMessage(L["flameburst_message"], "Important", spellID, "Alert")
 		if bCount < 3 then -- He'll only do three times before transforming again
-			self:Bar(L["flameburst"], 20, "Spell_Fire_BlueRainOfFire")
+			self:Bar(L["flameburst"], 20, spellID)
 			self:DelayedMessage(15, L["flameburst_warn"], "Positive")
 		end
-	elseif sync == "IliPhase2" then
-		self:TriggerEvent("BigWigs_RemoveRaidIcon")
-		flamesDead = 0
-		if db.barrage then
-			self:Bar(L["barrage_warn_bar"], 80, "Spell_Shadow_PainSpike")
-			self:DelayedMessage(77, L["barrage_warn"], "Important")
-		end
-		if db.phase then
-			self:Message(L["phase2_message"], "Important", nil, "Alarm")
-		end
-	elseif sync == "IliFlameDied" then
-		flamesDead = flamesDead + 1
-		if flamesDead == 2 then
-			if db.phase then
-				self:Message(L["phase3_message"], "Important", nil, "Alarm")
-				self:TriggerEvent("BigWigs_ShowProximity", self) -- Proximity Warning
-				self:Bar(L["normal_bar"], 75, "Spell_Shadow_Metamorphosis")
-				self:ScheduleEvent("BWIlliNormalSoon", "BigWigs_Message", 70, L["normal_warning"], "Attention")
-			end
-			self:CancelScheduledEvent("BarrageWarn")
-			self:TriggerEvent("BigWigs_StopBar", self, L["barrage_warn_bar"])
-		end
-	elseif sync == "IliShear" and db.shear and rest then
-		self:Message(fmt(L["shear_message"], rest), "Important", nil, "Alert")
-		self:Bar(fmt(L["shear_bar"], rest), 7, "Spell_Shadow_FocusedPower")
 	end
 end
 
-function mod:AfflictEvent(msg)
-	local player, type, spell = select(3, msg:find(L["afflict_trigger"]))
-	if player and type then
-		if player == L2["you"] and type == L2["are"] then
-			player = pName
+function mod:Phase2()
+	if p2 then return end
+	p2 = true
+
+	self:TriggerEvent("BigWigs_RemoveRaidIcon")
+	flamesDead = 0
+	if db.barrage then
+		self:Bar(L["barrage_warn_bar"], 80, "Spell_Shadow_PainSpike")
+		self:DelayedMessage(77, L["barrage_warn"], "Important")
+	end
+	if db.phase then
+		self:Message(L["phase2_message"], "Important", nil, "Alarm")
+	end
+end
+
+function mod:Parasite(player, spellID)
+	if db.parasite then
+		local other = fmt(L["parasite_other"], player)
+		if player == pName then
+			self:LocalMessage(L["parasite_you"], "Personal", spellID, "Long")
+			self:WideMessage(other)
+		else
+			self:IfMessage(other, "Attention", spellID)
 		end
-		if spell == L["parasite"] then
-			self:Sync("IliPara", player)
-		elseif spell == L["barrage"] then
-			self:Sync("IliBara", player)
-		elseif spell == L["flame"] then
-			self:Sync("IliFlame", player)
-		elseif spell == L["shear"] then
-			self:Sync("IliShear", player)
-		end
+		self:Icon(player, "icon")
+		self:Bar(other, 10, spellID)
+	end
+end
+
+function mod:Barrage(player, spellID)
+	if db.barrage then
+		self:IfMessage(fmt(L["barrage_message"], player), "Important", spellID, "Alert")
+		self:Bar(fmt(L["barrage_bar"], player), 10, spellID)
+
+		self:Bar(L["barrage_warn_bar"], 50, spellID)
+		self:ScheduleEvent("BarrageWarn", "BigWigs_Message", 47, L["barrage_warn"], "Important")
+	end
+end
+
+function mod:Shear(player, spellID)
+	if db.shear then
+		self:IfMessage(fmt(L["shear_message"], player), "Important", spellID, "Alert")
+		self:Bar(fmt(L["shear_bar"], player), 7, spellID)
+	end
+end
+
+function mod:Flame(player)
+	if db.flame then
+		flamed[player] = true
+		self:ScheduleEvent("FlameCheck", self.FlameWarn, 0.5, self)
+	end
+end
+
+function mod:Demons()
+	if db.demons then
+		self:IfMessage(L["demons_message"], "Important", 41117, "Alert")
 	end
 end
 
@@ -628,32 +583,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Enrage(1500, true)
 	elseif msg == L["illi_start"] then
 		self:Bar(boss, 37, "Spell_Shadow_Charm")
-	end
-end
-
-function mod:FlameBurst(player)
-	if player == pName then self:Sync("IliBurst") end
-end
-
-function mod:CHAT_MSG_SPELL_SELF_DAMAGE(msg)
-	if msg:find(L["flameburst"]) then
-		self:Sync("IliBurst")
+		p2 = nil
 	end
 end
 
 function mod:UNIT_SPELLCAST_START(msg)
 	if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["demons_trigger"] then
 		self:Sync("IliDemons")
-	end
-end
-
-function mod:Phase2(player)
-	if player then self:Sync("IliPhase2") end
-end
-
-function mod:CHAT_MSG_SPELL_CREATURE_VS_CREATURE_BUFF(msg)
-	if msg == L["phase2_trigger"] then
-		self:Sync("IliPhase2")
 	end
 end
 
@@ -666,45 +602,45 @@ function mod:UNIT_HEALTH(msg)
 			for k in pairs(flamed) do flamed[k] = nil end
 		elseif hp > 70 and p2Announced then
 			p2Announced = nil
+			p2 = nil
 		elseif hp > 30 and hp < 35 and not p4Announced then
 			self:Message(L["phase4_soon_message"], "Attention")
 			p4Announced = true
+			p2 = nil
 		elseif hp > 35 and p4Announced then
 			p4Announced = nil
 		end
 	end
 end
 
-do
-	local flameDies = fmt(UNITDIESOTHER, L["Flame of Azzinoth"])
-	function mod:CHAT_MSG_COMBAT_HOSTILE_DEATH(msg)
-		if msg == flameDies then
-			self:Sync("IliFlameDied")
-		else
-			self:GenericBossDeath(msg)
+function mod:Deaths(unit)
+	if unit == L["Flame of Azzinoth"] then
+		flamesDead = flamesDead + 1
+		if flamesDead == 2 then
+			if db.phase then
+				self:Message(L["phase3_message"], "Important", nil, "Alarm")
+				self:TriggerEvent("BigWigs_ShowProximity", self) -- Proximity Warning
+				self:Bar(L["normal_bar"], 75, "Spell_Shadow_Metamorphosis")
+				self:ScheduleEvent("BWIlliNormalSoon", "BigWigs_Message", 70, L["normal_warning"], "Attention")
+			end
+			self:CancelScheduledEvent("BarrageWarn")
+			self:TriggerEvent("BigWigs_StopBar", self, L["barrage_warn_bar"])
 		end
-	end
-end
-
-function mod:UNIT_DIED(mob)
-	if mob == L["Flame of Azzinoth"] then
-		self:Sync("IliFlameDied")
-	else
-		self:GenericBossDeath(mob)
+	elseif unit == boss then
+		self:GenericBossDeath(unit)
 	end
 end
 
 function mod:FlameWarn()
-	if db.flame then
-		local msg = nil
-		for k in pairs(flamed) do
-			if not msg then
-				msg = k
-			else
-				msg = msg .. ", " .. k
-			end
+	local msg = nil
+	for k in pairs(flamed) do
+		if not msg then
+			msg = k
+		else
+			msg = msg .. ", " .. k
 		end
-		self:Message(fmt(L["flame_message"], msg), "Important", nil, "Alert")
 	end
+	self:IfMessage(fmt(L["flame_message"], msg), "Important", 40932, "Alert")
 	for k in pairs(flamed) do flamed[k] = nil end
 end
+
