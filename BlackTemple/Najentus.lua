@@ -166,7 +166,6 @@ mod.proximitySilent = true
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "ShieldOn", 39872)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "ShieldOff", 39872)
-	self:AddCombatListener("SPELL_AURA_DISPELLED", "ShieldOff", 39872)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "ImpalingSpine", 39837)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
