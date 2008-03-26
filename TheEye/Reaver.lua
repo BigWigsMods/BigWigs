@@ -46,6 +46,7 @@ L:RegisterTranslations("enUS", function() return {
 	knock = "Knock Away",
 	knock_desc = "Knock Away cooldown bar.",
 	knock_bar = "~Knock Away Cooldown",
+	knock_message = "Knock Away: %s",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -73,6 +74,7 @@ L:RegisterTranslations("deDE", function() return {
 	knock = "Wegschlagen",
 	knock_desc = "Warnt vor Wegschlagen.",
 	knock_bar = "~Wegschlagen Cooldown",
+	--knock_message = "Knock Away: %s",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -100,6 +102,7 @@ L:RegisterTranslations("frFR", function() return {
 	knock = "Repousser au loin",
 	knock_desc = "Affiche une barre temporelle indiquant quand le Saccageur du Vide est suceptible d'utiliser son Repousser au loin.",
 	knock_bar = "~Cooldown Repousser au loin",
+	--knock_message = "Knock Away: %s",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -127,6 +130,7 @@ L:RegisterTranslations("koKR", function() return {
 	knock = "날려버리기",
 	knock_desc = "날려버리기 대기시간 바를 표시합니다.",
 	knock_bar = "~날려버리기 대기시간",
+	--knock_message = "Knock Away: %s",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -154,6 +158,7 @@ L:RegisterTranslations("zhCN", function() return {
 	knock = "击退",
 	knock_desc = "击退冷却计时条。",
 	knock_bar = "<击退 冷却>",
+	--knock_message = "Knock Away: %s",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -181,6 +186,7 @@ L:RegisterTranslations("zhTW", function() return {
 	knock = "擊退",
 	knock_desc = "擊退冷卻計時條。",
 	knock_bar = "~擊退冷卻計時",
+	--knock_message = "Knock Away: %s",
 } end )
 
 ----------------------------------
@@ -197,29 +203,25 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 --      Initialization      --
 ------------------------------
-local temp
+
 function mod:OnEnable()
-	-- Don't know which spell ID it is before we get a log.
-	-- Not even sure if SPELL_DAMAGE is the right event, but I think so.
-	self:AddCombatListener("SPELL_DAMAGE", "NewKnockAway", 40434, 37102, 32959, 31389)
-	self:AddCombatListener("SPELL_CAST_START", "Pounding", 34162)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "KnockAway", 25778)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Pounding", 34162)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	db = self.db.profile
-	temp = nil
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
--- XXX clean this shit up after 2.4 dude!
-function mod:NewKnockAway(player, spellID)
-	if db.knock and temp then --mobs have Knock Away, keep this until we know exact ID
-		BigWigs:Print("Debug: Knock Away > "..player.." ID > "..spellID) --mainly to test if it's possible to warn which player, and to acquire the Id at the same time, report to devs
+function mod:KnockAway(player, spellID)
+	if db.knock then
+		self:IfMessage(fmt(L["knock_message"], player), "Attention", spellID)
 		self:Bar(L["knock_bar"], 20, spellID)
 	end
 end
