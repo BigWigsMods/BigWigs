@@ -37,14 +37,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	grow = "Grow",
 	grow_desc = "Count and warn for Grull's grow.",
-	grow_trigger = "%s grows in size!",
 	grow_message = "Grows: (%d)",
 	grow_bar = "Grow (%d)",
 
 	grasp = "Grasp",
 	grasp_desc = "Grasp warnings and timers.",
-	grasp_trigger1 = "Scurry.",
-	grasp_trigger2 = "No escape.",
 	grasp_message = "Ground Slam - Shatter in ~10sec!",
 	grasp_warning = "Ground Slam Soon",
 	grasp_bar = "~Ground Slam Cooldown",
@@ -59,7 +56,6 @@ L:RegisterTranslations("enUS", function() return {
 	silence_warning = "AOE Silence soon!",
 	silence_bar = "~Silence Cooldown",
 
-	shatter_trigger = "%s roars!",
 	shatter_message = "Shatter!",
 } end)
 
@@ -69,14 +65,11 @@ L:RegisterTranslations("frFR", function() return {
 
 	grow = "Croissance",
 	grow_desc = "Compte les croissances de Grull et préviens de ses arrivées.",
-	grow_trigger = "%s grandit !",
 	grow_message = "Croissance : (%d)",
 	grow_bar = "Croissance (%d)",
 
 	grasp = "Emprise",
 	grasp_desc = "Avertissements et délais pour Emprise du seigneur gronn.",
-	grasp_trigger1 = "Cavalez.",
-	grasp_trigger2 = "On ne s'échappe pas.",
 	grasp_message = "Heurt terrestre - Emprise dans ~10 sec !",
 	grasp_warning = "Heurt terrestre imminent",
 	grasp_bar = "~Cooldown Heurt terrestre",
@@ -91,7 +84,6 @@ L:RegisterTranslations("frFR", function() return {
 	silence_warning = "Silence de zone imminent !",
 	silence_bar = "~Cooldown Silence",
 
-	shatter_trigger = "%s rugit !",
 	shatter_message = "Fracasser !",
 } end)
 
@@ -101,14 +93,11 @@ L:RegisterTranslations("deDE", function() return {
 
 	grow = "Wachstum", 
 	grow_desc = "Warnt wenn Gruul Wachstum bekommt", 
-	grow_trigger = "%s wird gr\195\182\195\159er!",
 	grow_message = "Wachstum: (%d)",
 	grow_bar = "Wachstum (%d)",
 
 	grasp = "Griff des Gronnlords",
 	grasp_desc = "Griff des Gronnlords warnung und Zeitanzeige", 
-	grasp_trigger1 = "Husch.",
-	grasp_trigger2 = "Kein Entkommen.",
 	grasp_message = "Erde ersch\195\188tert - Griff kommt", 
 	grasp_warning = "Erde ersch\195\188tern bald!",
 	grasp_bar = "~Erde ersch\195\188tern Cooldown",
@@ -123,7 +112,6 @@ L:RegisterTranslations("deDE", function() return {
 	silence_warning = "AOE Stille bald!",
 	silence_bar = "~Stille Cooldown",
 
-	shatter_trigger = "%s br\195\188llt!",
 	shatter_message = "Zertr\195\188mmern!",
 } end)
 
@@ -133,14 +121,11 @@ L:RegisterTranslations("koKR", function() return {
 
 	grow = "성장",
 	grow_desc = "그룰의 성장에 대한 카운트와 경고입니다.",
-	grow_trigger = "%s|1이;가; 점점 커집니다!",
 	grow_message = "성장: (%d)",
 	grow_bar = "(%d) 성장",
 
 	grasp = "손아귀",
 	grasp_desc = "손아귀 경고와 타이머입니다.",
-	grasp_trigger1 = "꺼져라.",
-	grasp_trigger2 = "숨을 곳은 없다.",
 	grasp_message = "땅 울리기 - 약 10초 이내 산산조각!",
 	grasp_warning = "잠시 후 땅 울리기",
 	grasp_bar = "~땅 울리기 대기시간",
@@ -155,7 +140,6 @@ L:RegisterTranslations("koKR", function() return {
 	silence_warning = "잠시 후 광역 침묵!",
 	silence_bar = "~침묵 대기시간",
 
-	shatter_trigger = "%s|1이;가; 포효합니다!",
 	shatter_message = "산산조각!",
 } end)
 
@@ -165,14 +149,11 @@ L:RegisterTranslations("zhTW", function() return {
 
 	grow = "成長警告",
 	grow_desc = "計算並當戈魯爾成長時發送警告",
-	grow_trigger = "%s變大了!",
 	grow_message = "成長 : (%d)",
 	grow_bar = "成長 (%d)",
 
 	grasp = "破碎警告",
 	grasp_desc = "當戈魯爾施放大地猛擊跟破碎時發送警告並顯示計時條",
-	grasp_trigger1 = "快跑。",
-	grasp_trigger2 = "待在這裡。",
 	grasp_message = "大地猛擊 - 10 秒內破碎",
 	grasp_warning = "大地猛擊即將來臨！",
 	grasp_bar = "大地猛擊",
@@ -187,7 +168,6 @@ L:RegisterTranslations("zhTW", function() return {
 	silence_warning = "戈魯爾即將施放迴響",
 	silence_bar = "迴響",
 
-	shatter_trigger = "%s吼叫!",
 	shatter_message = "破碎",
 } end)
 
@@ -197,14 +177,11 @@ L:RegisterTranslations("zhCN", function() return {
 
 	grow = "成长",
 	grow_desc = "计算并当屠龙者格鲁尔成长时发出警告。",
-	grow_trigger = "%s的体形变大了！",
 	grow_message = "成长： >%d<！",
 	grow_bar = "<成长 (%d)》",
 
 	grasp = "碎裂",
 	grasp_desc = "碎裂警报计时条。",
-	grasp_trigger1 = "跑啊。",
-	grasp_trigger2 = "站住。",
 	grasp_message = "大地冲击 - 10秒后破碎！",
 	grasp_warning = "大地冲击 即将发动",
 	grasp_bar = "<大地冲击 冷却>",
@@ -219,7 +196,6 @@ L:RegisterTranslations("zhCN", function() return {
 	silence_warning = "即将 群体沉默！",
 	silence_bar = "<沉默>",
 
-	shatter_trigger = "%s咆哮着。",
 	shatter_message = "碎裂！",
 } end)
 
@@ -229,14 +205,11 @@ L:RegisterTranslations("esES", function() return {
 
 	grow = "Crecimiento",
 	grow_desc = "Cuenta y avisa de los crecimientos de Gruul",
-	grow_trigger = "%s crece!",
 	grow_message = "Crece: (%d)",
 	grow_bar = "Crecimiento (%d)",
 
 	grasp = "Rujido",
 	grasp_desc = "Rujidos avisos y timers.",
-	grasp_trigger1 = "Corred.",
-	grasp_trigger2 = "No hay escapatoria.",
 	grasp_message = "Patadon al suelo - Congelacion  en ~10sec!",
 	grasp_warning = "Patadon al suelo pronto",
 	grasp_bar = "~Cooldown de Patadon al suelo",
@@ -251,7 +224,6 @@ L:RegisterTranslations("esES", function() return {
 	silence_warning = "AOE Silencio pronto!",
 	silence_bar = "~Silence Cooldown",
 
-	shatter_trigger = "%s ruge!",
 	shatter_message = "Petrificacion!",
 } end)
 
@@ -281,11 +253,13 @@ mod.proximitySilent = true
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "CaveIn", 36240)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Silence", 36297)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Grow", 36300)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Silence", 36297)
+	self:AddCombatListener("SPELL_CAST_START", "Shatter", 33654)
+	self:AddCombatListener("SPELL_CAST_START", "Slam", 33525)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	db = self.db.profile
@@ -301,16 +275,38 @@ function mod:CaveIn(player)
 	end
 end
 
-local last = 0
-function mod:Silence()
-	local time = GetTime()
-	if (time - last) > 20 then
-		last = time
-		if db.silence then
-			self:IfMessage(L["silence_message"], "Attention", 36297)
-			self:DelayedMessage(28, L["silence_warning"], "Urgent")
-			self:Bar(L["silence_bar"], 31, 36297)
-		end
+function mod:Grow(_, spellID)
+	if db.grow then
+		self:IfMessage(L["grow_message"]:format(growcount), "Important", spellID)
+		growcount = growcount + 1
+		self:Bar(L["grow_bar"]:format(growcount), 30, spellID)
+	end
+end
+
+function mod:Silence(_, spellID)
+	if db.silence then
+		self:IfMessage(L["silence_message"], "Attention", spellID)
+		self:DelayedMessage(28, L["silence_warning"], "Urgent")
+		self:Bar(L["silence_bar"], 31, spellID)
+	end
+end
+
+function mod:Shatter()
+	self.proximitySilent = true
+
+	if db.grasp then
+		self:IfMessage(L["shatter_message"], "Positive", 33654)
+		self:DelayedMessage(56, L["grasp_warning"], "Urgent")
+		self:Bar(L["grasp_bar"], 62, 33525)
+	end
+end
+
+function mod:Slam(_, spellID)
+	self.proximitySilent = nil
+
+	if db.grasp then
+		self:IfMessage(L["grasp_message"], "Attention", spellID)
+		self:Bar(L["shatter_message"], 10, 33654)
 	end
 end
 
@@ -325,37 +321,14 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 
 		if db.grasp then
 			self:DelayedMessage(30, L["grasp_warning"], "Urgent")
-			self:Bar(L["grasp_bar"], 33, "Ability_ThunderClap")
+			self:Bar(L["grasp_bar"], 33, 33525)
 		end
 		if db.silence then
 			self:DelayedMessage(97, L["silence_warning"], "Urgent")
-			self:Bar(L["silence_bar"], 102, "Spell_Holy_ImprovedResistanceAuras")
+			self:Bar(L["silence_bar"], 102, 36297)
 		end
 		if db.grow then
-			self:Bar(L["grow_bar"]:format(growcount), 30, "Spell_Shadow_Charm")
-		end
-	elseif msg == L["grasp_trigger1"] or msg == L["grasp_trigger2"] then
-		self.proximitySilent = nil
-
-		if db.grasp then
-			self:Message(L["grasp_message"], "Attention")
-			self:Bar(L["shatter_message"], 10, "Ability_ThunderClap")
-		end
-	end
-end
-
-function mod:CHAT_MSG_MONSTER_EMOTE(msg)
-	if db.grow and msg == L["grow_trigger"] then
-		self:Message(L["grow_message"]:format(growcount), "Important")
-		growcount = growcount + 1
-		self:Bar(L["grow_bar"]:format(growcount), 30, "Spell_Shadow_Charm")
-	elseif msg == L["shatter_trigger"] then
-		self.proximitySilent = true
-
-		if db.grasp then
-			self:Message(L["shatter_message"], "Positive")
-			self:DelayedMessage(56, L["grasp_warning"], "Urgent")
-			self:Bar(L["grasp_bar"], 62, "Ability_ThunderClap")
+			self:Bar(L["grow_bar"]:format(growcount), 30, 36300)
 		end
 	end
 end
