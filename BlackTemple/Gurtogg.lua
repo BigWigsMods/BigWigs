@@ -287,6 +287,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "GurAcid" and db.acid then
 		self:Bar(L["acid"], 2, "Spell_Nature_Acid_01")
 		self:ScheduleEvent("BWAcidToTScan", self.AcidCheck, 0.2, self)
+	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
