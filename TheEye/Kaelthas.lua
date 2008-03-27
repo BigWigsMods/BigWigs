@@ -558,7 +558,7 @@ end
 
 function mod:Deaths(unit)
 	if unit == axe or unit == mace or unit == dagger or unit == staff or unit == sword or unit == bow or unit == shield then
-		self:Message(fmt(dead, unit), "Attention")
+		self:Message(fmt(L["dead_message"], unit), "Attention")
 	elseif unit == boss then
 		self:GenericBossDeath(unit)
 	end
