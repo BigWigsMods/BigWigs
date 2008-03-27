@@ -470,13 +470,18 @@ end
 --      Event Handlers      --
 ------------------------------
 
+local last = 0
 function mod:FlameBurst(_, spellID)
-	if db.flameburst then
-		bCount = bCount + 1
-		self:IfMessage(L["flameburst_message"], "Important", spellID, "Alert")
-		if bCount < 3 then -- He'll only do three times before transforming again
-			self:Bar(L["flameburst"], 20, spellID)
-			self:DelayedMessage(15, L["flameburst_warn"], "Positive")
+	local time = GetTime()
+	if (time - last) > 5 then
+		last = time
+		if db.flameburst then
+			bCount = bCount + 1
+			self:IfMessage(L["flameburst_message"], "Important", spellID, "Alert")
+			if bCount < 3 then -- He'll only do three times before transforming again
+				self:Bar(L["flameburst"], 20, spellID)
+				self:DelayedMessage(15, L["flameburst_warn"], "Positive")
+			end
 		end
 	end
 end
