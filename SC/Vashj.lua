@@ -486,11 +486,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Message(L["engage_message"], "Attention")
 	elseif db.phase and msg == L["phase3_trigger"] then
 		self:Message(L["phase3_message"], "Important", nil, "Alarm")
-		self:Bar(L2["enrage"], 240, "Spell_Shadow_UnholyFrenzy")
-		self:DelayedMessage(180, L2["enrage_min"]:format(1), "Positive")
-		self:DelayedMessage(210, L2["enrage_sec"]:format(30), "Positive")
-		self:DelayedMessage(230, L2["enrage_sec"]:format(10), "Urgent")
-		self:DelayedMessage(240, L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
+		self:Enrage(240, nil, true)
 
 		self:CancelScheduledEvent("ElemWarn")
 		self:CancelScheduledEvent("StriderWarn")
