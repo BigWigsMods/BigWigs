@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -87,6 +87,25 @@ L:RegisterTranslations("zhCN", function() return {
 	humanoid_next = "下一波 人型生物",
 	humanoid_soon = "5秒 人型生物刷新!",
 } end )
+
+L:RegisterTranslations("zhTW", function() return {
+	darkness = "黑暗",
+	darkness_desc = "警示誰受到黑暗效果。",
+	darkness_message = "黑暗：[%s]",
+	darkness_next = "下一次黑暗",
+	darkness_soon = "5 秒內黑暗！",
+
+	void = "虛無哨兵",
+	void_desc = "當虛無哨兵出現時警示。",
+	void_next = "下一波虛無哨兵",
+	void_soon = "5 秒內虛無哨兵出現！",
+
+	humanoid = "虛無哨兵召喚者",
+	humanoid_desc = "當虛無哨兵召喚者出現時警示。",
+	humanoid_next = "下一波召喚者",
+	humanoid_soon = "5 秒內召喚者出現！",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
