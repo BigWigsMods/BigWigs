@@ -70,6 +70,23 @@ L:RegisterTranslations("koKR", function() return {
 	humanoid_soon = "5초 이내 타락한 엘프!",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	darkness = "黑暗",
+	darkness_desc = "警报黑暗目标",
+	darkness_message = "黑暗 -> %s ",
+	darkness_next = "下一个黑暗",
+	darkness_soon = "5秒后黑暗!",
+
+	void = "虚空戒卫",
+	void_desc = "当虚空戒卫刷新时发出警报",
+	void_next = "下一个 虚空戒卫",
+	void_soon = "5秒后 戒卫刷新!",
+
+	humanoid = "人型生物",
+	humanoid_desc = "人型生物刷新时发出警报",
+	humanoid_next = "下一波 人型生物",
+	humanoid_soon = "5秒 人型生物刷新!",
+} end )
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

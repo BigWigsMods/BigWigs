@@ -158,6 +158,51 @@ L:RegisterTranslations("frFR", function() return {
 	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!", -- à traduire
 } end )
 
+--卡雷苟斯
+L:RegisterTranslations("zhCN", function() return {
+	engage_trigger = "Aggh!! No longer will I be a slave to Malygos! Challenge me and you will be destroyed!",
+	wipe_bar = "Respawn",
+
+	portal = "传送",
+	portal_desc = "当Spectral Blast冷却发出警报",
+	portal_bar = "下一次传送",
+	portal_message = "5秒后可能发动传送!",
+
+	realm = "Spectral Realm",
+	realm_desc = "当队友在Spectral Realm中发出警报.",
+	realm_message = "Spectral Realm: %s (小队 %d)",
+
+	curse = "Curse of Boundless Agony",
+	curse_desc = "当队友受到Curse of Boundless Agony时发出警报.",
+	curse_bar = "Curse: %s",
+
+	magichealing = "野性魔法 (治疗加成)",--Wild Magic  NEED CHECK
+	magichealing_desc = "当你从野性魔法中获得治疗加成发出警报.",
+	magichealing_you = "野性魔法 - 治疗效果加成!",
+
+	magiccast = "野性魔法 (施法时间延长)",
+	magiccast_desc = "当治疗从野性魔法延长施法时间发出警报",
+	magiccast_you = "野性魔法 - 施法时间延长 > 你 <",
+	magiccast_other = "野性魔法 - 施法时间延长 > %s <!",
+
+	magichit = "野性魔法 (降低命中率)",
+	magichit_desc = "当MT的由于受到野性魔法降低命中率时发出警报.",
+	magichit_you = "野性魔法 - > YOU < 命中率降低!",
+	magichit_other = "野性魔法 - > %s < 命中率降低!",
+
+	magicthreat = "野性魔法 (增加仇恨)",
+	magicthreat_desc = "当你受到野性魔法 (增加仇恨)发出警报",
+	magicthreat_you = "野性魔法 - 仇恨增加!",
+
+	spectral_realm = "Spectral Realm",
+
+	buffet = "奥术打击",
+	buffet_desc = "显示一奥术爆击记时条",
+
+	enrage_warning = "即将狂暴!",
+	enrage_message = "10% - 狂暴!",
+	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",
+} end )
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

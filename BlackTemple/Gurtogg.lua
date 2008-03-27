@@ -193,7 +193,7 @@ L:RegisterTranslations("zhCN", function() return {
 	rage_other = "邪能狂怒：>%s<！",
 
 	whisper = "密语",
-	whisper_desc = "当完家中了邪能狂怒进行密语提醒。(需要权限)",
+	whisper_desc = "当完家中了邪能狂怒进行密语提醒(需要助理或更高权限).",
 
 	acid = "邪酸吐息",
 	acid_desc = "当谁受到邪酸吐息攻击时发出警报。",

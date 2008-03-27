@@ -114,6 +114,30 @@ L:RegisterTranslations("deDE", function() return {
 	stomp_bar = "Nächstes Stampfen",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	burn = "燃烧",
+	burn_desc = "当队员(或者你)中了燃烧发出警报,和下一个燃烧记时条",
+	burn_you = "燃烧 > 你 <!",
+	burn_other = "燃烧 > %s <!",
+	burn_bar = "下一个 燃烧",
+	burn_message = "Next Burn in 5 seconds!",
+
+	burnresist = "燃烧抵抗",
+	burnresist_desc = "当队员抵抗了燃烧攻击发出警报",
+	burn_resist = "%s 抵抗了> 燃烧 <",
+
+	meteor = "流行命令",--Meteor Slash check
+	meteor_desc = "显示Meteor Slash记时条.",
+	meteor_bar = "下一个Meteor Slash",
+
+	stomp = "践踏",
+	stomp_desc = "践踏警报和记时条",
+	stomp_warning = "5秒后 践踏",
+	stomp_message = "践踏: %s",
+	stomp_bar = "下一个践踏",
+} end )
+
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

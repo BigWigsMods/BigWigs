@@ -1,8 +1,10 @@
 ﻿## Interface: 20400
 
 ## Title: Big Wigs (BETA) [|cffeda55fSunwell|r]
+## Title-zhCN: Big Wigs (BETA) [|cffeda55f太阳井|r]
 ## Title-frFR: Big Wigs (BETA) [|cffeda55fPuits de soleil|r]
 ## Notes: Big Wigs Sunwell Modules
+## Notes-zhCN: Big Wigs 太阳井首领模块
 ## Notes-frFR: Modules Big Wigs concernant le Puits de soleil.
 ## Author: Funkydude
 ## X-Credits: Timewasted, Nevcairiel

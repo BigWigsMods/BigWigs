@@ -196,7 +196,7 @@ L:RegisterTranslations("zhCN", function() return {
 	adds_desc = "当召唤水元素时发出警报。",
 	adds_message = "水元素 来临",
 	adds_warning = "水元素即将召唤",
-	adds_trigger = "还没完呢！我还有几招没有用呢……",
+	adds_trigger = "还没完！我还有几招没有用呢……",
 	adds_bar = "<召唤水元素>",
 
 	drink = "群体变形",

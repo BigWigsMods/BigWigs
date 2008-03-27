@@ -112,6 +112,39 @@ L:RegisterTranslations("koKR", function() return {
 	blades_bar = "다음 칼날",
 } end )
 
+--艾瑞达双子
+L:RegisterTranslations("zhCN", function() return {
+
+	engage_trigger = "",
+	wipe_bar = "Respawn",
+
+	nova = "暗影新星",
+	nova_desc = "当暗影新星施放时发出警报.",
+	nova_message = "暗影新星 >> %s <<",
+	nova_bar = "~暗影新星 冷却",
+
+	conflag = "燃烧",
+	conflag_desc = "当施放燃烧时发出警报.",
+	conflag_message = "燃烧 >> %s <<",
+	conflag_bar = "下一个 燃烧",
+
+	icon = "团队标记",
+	icon_desc = "给暗影新星和燃烧目标玩家团队标记.",
+
+	pyro = "Pyrogenics",
+	pyro_desc = "Warn who gains and removes Pyrogenics.",
+	pyro_gain = "%s gained Pyrogenics",
+	pyro_remove = "%s removed Pyrogenics",
+
+	blow = "混乱重击",
+	blow_desc = "显示混乱重击记时条.",
+	blow_bar = "下一次 重击",
+
+	blades = "暗影之刃",
+	blades_desc = "显示暗影之刃记时条",
+	blades_bar = "下一次 暗影之刃",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
