@@ -461,7 +461,6 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("UNIT_HEALTH")
-	self:RegisterEvent("UNIT_SPELLCAST_START")
 
 	db = self.db.profile
 end
@@ -589,12 +588,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif msg == L["illi_start"] then
 		self:Bar(boss, 37, "Spell_Shadow_Charm")
 		p2 = nil
-	end
-end
-
-function mod:UNIT_SPELLCAST_START(msg)
-	if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["demons_trigger"] then
-		self:Sync("IliDemons")
 	end
 end
 
