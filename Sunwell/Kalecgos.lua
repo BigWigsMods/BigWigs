@@ -159,17 +159,17 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	engage_trigger = "Aggh!! No longer will I be a slave to Malygos! Challenge me and you will be destroyed!",
+	engage_trigger = "啊！我不再是马里苟斯的奴隶了！来吧，你将会被彻底毁灭！",-- not confirmed on Simp-Chinese client.
 	wipe_bar = "重置计时器",
 
 	portal = "传送",
-	portal_desc = "当灵魂冲击冷却发出警报。",--Spectral Blast
+	portal_desc = "当鬼魂冲击冷却发出警报。",--Spectral Blast
 	portal_bar = "<下一传送>",
 	portal_message = "5秒后，可能发动传送！",
 
-	realm = "灵魂世界",--Spectral Realm
-	realm_desc = "当队友在灵魂世界中发出警报.",
-	realm_message = "灵魂世界：>%s<！（%d 小队）",
+	realm = "鬼魂领域",--Spectral Realm
+	realm_desc = "当队友在鬼魂领域中发出警报.",
+	realm_message = "鬼魂领域：>%s<！（%d 小队）",
 
 	curse = "无边苦痛诅咒",--Curse of Boundless Agony
 	curse_desc = "当队友受到无边苦痛诅咒时发出警报。",
@@ -193,14 +193,14 @@ L:RegisterTranslations("zhCN", function() return {
 	magicthreat_desc = "当你受到狂野魔法增加仇恨时发出警报。",
 	magicthreat_you = "狂野魔法 - 增加仇恨！",
 
-	spectral_realm = "灵魂世界",
+	spectral_realm = "鬼魂领域",
 
 	buffet = "奥术打击",
 	buffet_desc = "显示奥术打击记时条。",
 
 	enrage_warning = "即将狂暴！",
 	enrage_message = "10% - 狂暴！",
-	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",
+	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",-- not confirmed on Simp-Chinese client.
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
