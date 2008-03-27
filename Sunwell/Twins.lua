@@ -122,7 +122,7 @@ L:RegisterTranslations("zhCN", function() return {
 	nova_message = "暗影新星：>%s<！",
 	nova_bar = "<暗影新星冷却>",
 
-	conflag = "燃烧",
+	conflag = "燃烧",--Conflagration
 	conflag_desc = "当施放燃烧时发出警报。",
 	conflag_message = "燃烧：>%s<！",
 	conflag_bar = "<下一燃烧>",

@@ -169,13 +169,13 @@ L:RegisterTranslations("zhCN", function() return {
 
 	realm = "灵魂世界",--Spectral Realm
 	realm_desc = "当队友在灵魂世界中发出警报.",
-	realm_message = "灵魂世界：%s （小队 %d）",
+	realm_message = "灵魂世界：>%s<！（%d 小队）",
 
 	curse = "无边苦痛诅咒",--Curse of Boundless Agony
 	curse_desc = "当队友受到无边苦痛诅咒时发出警报。",
 	curse_bar = "<诅咒：%s>",
 
-	magichealing = "狂野魔法（治疗加成）",--Wild Magic  NEED CHECK
+	magichealing = "狂野魔法（治疗加成）",--Wild Magic
 	magichealing_desc = "当你从狂野魔法中获得治疗加成发出警报。",
 	magichealing_you = "狂野魔法 - 治疗效果加成！",
 

@@ -120,7 +120,7 @@ L:RegisterTranslations("zhCN", function() return {
 	burn_you = "燃烧：>你<！",
 	burn_other = "燃烧：>%s<！",
 	burn_bar = "<下一燃烧>",
-	burn_message = "5秒后 燃烧！",
+	burn_message = "5秒后，燃烧！",
 
 	burnresist = "燃烧抵抗",
 	burnresist_desc = "当队员抵抗燃烧攻击发出警报。",
@@ -132,7 +132,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	stomp = "践踏",
 	stomp_desc = "践踏警报和记时条。",
-	stomp_warning = "5秒后 践踏！",
+	stomp_warning = "5秒后，践踏！",
 	stomp_message = "践踏：>%s<！",
 	stomp_bar = "<下一践踏>",
 } end )
