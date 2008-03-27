@@ -230,8 +230,8 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Tomb", 38235, 45574)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Sludge", 38246, 45573)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Tomb", 38235)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Sludge", 38246)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	for k in pairs(inTomb) do inTomb[k] = nil end
