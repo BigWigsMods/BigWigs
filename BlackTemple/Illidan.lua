@@ -385,10 +385,10 @@ L:RegisterTranslations("zhTW", function() return {
 	eyeblast_trigger = "直視背叛者的雙眼吧!",
 	eyeblast_message = "暗眼衝擊波!",
 
-	shear = "Shear",
-	shear_desc = "Warn about Shear on players.",
-	shear_message = "Shear on %s!",
-	shear_bar = "Shear: %s",
+	shear = "銳減",
+	shear_desc = "當玩家受到銳減時警報",
+	shear_message = "銳減：[%s]",
+	shear_bar = "銳減：[%s]"
 
 	flame = "苦惱之焰",
 	flame_desc = "當玩家中了苦惱之焰時發出警報",
