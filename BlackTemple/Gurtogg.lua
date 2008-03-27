@@ -238,12 +238,17 @@ end
 --      Event Handlers      --
 ------------------------------
 
+local last = 0
 function mod:Blood(_, spellID)
-	if db.bloodboil then
-		self:IfMessage(fmt(L["bloodboil_message"], count), "Attention", spellID)
-		if count == 3 then count = 0 end
-		count = count + 1
-		self:Bar(fmt(L["bloodboil_message"], count), 10, spellID)
+	local time = GetTime()
+	if (time - last) > 5 then
+		last = time
+		if db.bloodboil then
+			self:IfMessage(fmt(L["bloodboil_message"], count), "Attention", spellID)
+			if count == 3 then count = 0 end
+			count = count + 1
+			self:Bar(fmt(L["bloodboil_message"], count), 10, spellID)
+		end
 	end
 end
 
