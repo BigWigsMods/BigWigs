@@ -414,15 +414,15 @@ function mod:Protection(unit, spellID)
 	end
 end
 
-function mod:HealingStart(unit, spellID)
-	if unit == malande and db.circle then
+function mod:HealingStart(_, spellID, source)
+	if source == malande and db.circle then
 		self:IfMessage(L["circle_message"], "Attention", spellID, "Info")
 		self:Bar(L["circle"], 2.5, spellID)
 	end
 end
 
-function mod:Healed(unit, spellID)
-	if unit == malande then
+function mod:Healed(_, spellID, source)
+	if source == malande then
 		self:IfMessage(L["circle_heal_message"], "Urgent", spellID)
 		self:Bar(L["circle_bar"], 20, spellID)
 	end
