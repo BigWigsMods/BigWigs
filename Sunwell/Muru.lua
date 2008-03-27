@@ -71,21 +71,21 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	darkness = "黑暗",
-	darkness_desc = "警报黑暗目标",
-	darkness_message = "黑暗 -> %s ",
-	darkness_next = "下一个黑暗",
-	darkness_soon = "5秒后黑暗!",
+	darkness = "黑暗",--Darkness
+	darkness_desc = ""当中了黑暗时发出警报。",
+	darkness_message = "黑暗：>%s<！ ",
+	darkness_next = "<下一黑暗>",
+	darkness_soon = "5秒后 黑暗！",
 
-	void = "虚空戒卫",
-	void_desc = "当虚空戒卫刷新时发出警报",
-	void_next = "下一个 虚空戒卫",
-	void_soon = "5秒后 戒卫刷新!",
+	void = "虚空戒卫",--Void Sentinel
+	void_desc = "当虚空戒卫刷新时发出警报。",
+	void_next = "<下一波虚空戒卫>",
+	void_soon = "5秒后 虚空戒卫刷新！",
 
-	humanoid = "人型生物",
-	humanoid_desc = "人型生物刷新时发出警报",
-	humanoid_next = "下一波 人型生物",
-	humanoid_soon = "5秒 人型生物刷新!",
+	humanoid = "人型生物",--Humanoids
+	humanoid_desc = "人型生物刷新时发出警报。",
+	humanoid_next = "<下一波人型生物>",
+	humanoid_soon = "5秒后 人型生物刷新！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
