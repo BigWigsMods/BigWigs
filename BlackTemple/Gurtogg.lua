@@ -218,18 +218,14 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Blood", 42005)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Rage", 40604, 40616)
-	self:AddCombatListener("SPELL_AURA_REMOVED", "FelRageRemoved", 40594) -- I think this is the one Bloodboil gets on himself, verify
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Blood", 42005)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Rage", 40604)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "FelRageRemoved", 40594)
+	self:AddCombatListener("SPELL_CAST_START", "Acid", 40508)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
-	self:RegisterEvent("UNIT_SPELLCAST_START")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "GurAcid", 5)
 
 	db = self.db.profile
 end
@@ -238,17 +234,12 @@ end
 --      Event Handlers      --
 ------------------------------
 
-local last = 0
 function mod:Blood(_, spellID)
-	local time = GetTime()
-	if (time - last) > 5 then
-		last = time
-		if db.bloodboil then
-			self:IfMessage(fmt(L["bloodboil_message"], count), "Attention", spellID)
-			if count == 3 then count = 0 end
-			count = count + 1
-			self:Bar(fmt(L["bloodboil_message"], count), 10, spellID)
-		end
+	if db.bloodboil then
+		self:IfMessage(fmt(L["bloodboil_message"], count), "Attention", spellID)
+		if count == 3 then count = 0 end
+		count = count + 1
+		self:Bar(fmt(L["bloodboil_message"], count), 10, spellID)
 	end
 end
 
@@ -288,9 +279,9 @@ function mod:FelRageRemoved(unit)
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "GurAcid" and db.acid then
-		self:Bar(L["acid"], 2, "Spell_Nature_Acid_01")
+function mod:Acid()
+	if db.acid then
+		self:Bar(L["acid"], 2, 40508)
 		self:ScheduleEvent("BWAcidToTScan", self.AcidCheck, 0.2, self)
 	end
 end
@@ -308,12 +299,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.bloodboil then
 			self:Bar(fmt(L["bloodboil_message"], count), 11, "Spell_Shadow_BloodBoil")
 		end
-	end
-end
-
-function mod:UNIT_SPELLCAST_START(msg)
-	if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["acid"] then
-		self:Sync("GurAcid")
 	end
 end
 
