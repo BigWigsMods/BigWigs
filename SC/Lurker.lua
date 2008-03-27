@@ -203,8 +203,8 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SWING_DAMAGE", "Whirl", 37363, 37660)
-	self:AddCombatListener("SWING_MISSED", "Whirl", 37363, 37660)
+	self:AddCombatListener("SPELL_DAMAGE", "Whirl", 37363)
+	self:AddCombatListener("SPELL_MISSED", "Whirl", 37363)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
