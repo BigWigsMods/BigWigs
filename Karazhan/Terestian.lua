@@ -179,7 +179,6 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Weakened", 30065)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "WeakenedRemoved", 30065)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "SacrificeRemoved", 30115)
-	self:AddCombatListener("SPELL_AURA_DISPELLED", "SacrificeRemoved", 30115)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
