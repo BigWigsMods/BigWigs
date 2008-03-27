@@ -284,7 +284,7 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:Throttle(3, "KalecgosMagicCast", "KalecgosMagicHit", "KaleBuffet")
 	self:Throttle(0, "KalecgosCurse", "KaleCurseRemv")
-	self:Throttle(15, "KalecgosRealm")
+	self:Throttle(19, "KalecgosRealm")
 
 	db = self.db.profile
 	if wipe and BigWigs:IsModuleActive(boss) then
