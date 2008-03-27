@@ -388,7 +388,7 @@ L:RegisterTranslations("zhTW", function() return {
 	shear = "銳減",
 	shear_desc = "當玩家受到銳減時警報",
 	shear_message = "銳減：[%s]",
-	shear_bar = "銳減：[%s]"
+	shear_bar = "銳減：[%s]",
 
 	flame = "苦惱之焰",
 	flame_desc = "當玩家中了苦惱之焰時發出警報",
