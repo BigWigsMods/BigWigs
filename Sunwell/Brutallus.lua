@@ -227,5 +227,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if db.enrage then
 			self:Enrage(360)
 		end
+		if db.stomp then
+			self:Bar(L["stomp_bar"], 20, 45185)
+		end
 	end
 end
