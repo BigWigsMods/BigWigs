@@ -31,8 +31,6 @@ L:RegisterTranslations("enUS", function() return {
 	murloc = "Murlocs",
 	murloc_desc = "Warn for incoming murlocs.",
 	murloc_bar = "~Murlocs Cooldown",
-	murloc_trigger1 = "By the tides!",
-	murloc_trigger2 = "Destroy them, my subjects!",
 	murloc_message = "Incoming Murlocs!",
 	murloc_soon_message = "Murlocs soon!",
 	murloc_engaged = "%s Engaged, Murlocs in ~40sec",
@@ -62,8 +60,6 @@ L:RegisterTranslations("deDE", function() return {
 	murloc = "Murlocs",
 	murloc_desc = "Warnt vor ankommenden Murlocs.",
 	murloc_bar = "n\195\164chste Murlocs",
-	murloc_trigger1 = "Bei den Gezeiten!",
-	murloc_trigger2 = "Vernichtet sie, meine Diener!",
 	murloc_message = "Murlocs kommen!",
 	murloc_soon_message = "Murlocs bald!",
 	murloc_engaged = "%s angegriffen, Murlocs in ~40sec",
@@ -93,8 +89,6 @@ L:RegisterTranslations("koKR", function() return {
 	murloc = "멀록",
 	murloc_desc = "멀록 등장에 대한 경고입니다.",
 	murloc_bar = "~멀록 등장 대기시간",
-	murloc_trigger1 = "바다의 힘으로!",
-	murloc_trigger2 = "나의 피조물들아, 놈들을 파괴하라!",
 	murloc_message = "멀록 등장!",
 	murloc_soon_message = "잠시 후 멀록 등장!",
 	murloc_engaged = "%s 전투 시작, 약 40초 후 멀록",
@@ -124,8 +118,6 @@ L:RegisterTranslations("frFR", function() return {
 	murloc = "Murlocs",
 	murloc_desc = "Préviens de l'arrivée des murlocs.",
 	murloc_bar = "~Cooldown Murlocs",
-	murloc_trigger1 = "Par les marées !",
-	murloc_trigger2 = "Détruisez-les, mes sujets !",
 	murloc_message = "Arrivée des murlocs !",
 	murloc_soon_message = "Murlocs imminent !",
 	murloc_engaged = "%s engagé, murlocs dans ~40 sec.",
@@ -155,8 +147,6 @@ L:RegisterTranslations("zhCN", function() return {
 	murloc = "鱼群",
 	murloc_desc = "鱼群来临发出警报。",
 	murloc_bar = "<鱼群 冷却>",
-	murloc_trigger1 = "以潮汐的名义！",
-	murloc_trigger2 = "我的仆从，干掉他们！",
 	murloc_message = "鱼群 来临！",
 	murloc_soon_message = "即将出现 鱼群！",
 	murloc_engaged = "%s 激活, ~40秒后 鱼群 出现",
@@ -186,8 +176,6 @@ L:RegisterTranslations("zhTW", function() return {
 	murloc = "魚人警示",
 	murloc_desc = "魚人來臨時警示",
 	murloc_bar = "魚人冷卻",
-	murloc_trigger1 = "以浪潮之名!",
-	murloc_trigger2 = "毀滅他們，我的服從者!",
 	murloc_message = "魚人出現！",
 	murloc_soon_message = "魚人即將出現，準備 AE！",
 	murloc_engaged = "%s 開戰 - 魚人在 40 秒內出現！",
@@ -216,8 +204,9 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Grave", 38049)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Grave", 37850, 38023, 38024, 38025)
 	self:AddCombatListener("SPELL_CAST_START", "Tidal", 37730)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Murlocs", 37764)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("UNIT_HEALTH")
@@ -243,6 +232,15 @@ function mod:Tidal()
 	end
 end
 
+function mod:Murlocs()
+	if db.murloc then
+		self:CancelScheduledEvent("murloc1")
+		self:IfMessage(L["murloc_message"], "Positive", 42365)
+		self:Bar(L["murloc_bar"], 51, 42365)
+		self:ScheduleEvent("murloc1", "BigWigs_Message", 51, L["murloc_soon_message"], "Attention")
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		for k in pairs(inGrave) do inGrave[k] = nil end
@@ -255,11 +253,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.grave then
 			self:Bar(L["grave_nextbar"], 20, "Spell_Frost_ArcticWinds")
 		end
-	elseif db.murloc and (msg == L["murloc_trigger1"] or msg == L["murloc_trigger2"]) then
-		self:CancelScheduledEvent("murloc1")
-		self:IfMessage(L["murloc_message"], "Positive", 42365)
-		self:Bar(L["murloc_bar"], 45, "INV_Misc_Head_Murloc_01")
-		self:ScheduleEvent("murloc1", "BigWigs_Message", 41, L["murloc_soon_message"], "Attention")
 	elseif db.globules and (msg == L["globules_trigger1"] or msg == L["globules_trigger2"]) then
 		self:Message(L["globules_message"], "Important", nil, "Alert")
 		self:Bar(L["globules_bar"], 36, "INV_Elemental_Primal_Water")
@@ -267,19 +260,17 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:GraveWarn()
-	if db.grave then
-		local msg = nil
-		for k in pairs(inGrave) do
-			if not msg then
-				msg = k
-			else
-				msg = msg .. ", " .. k
-			end
+	local msg = nil
+	for k in pairs(inGrave) do
+		if not msg then
+			msg = k
+		else
+			msg = msg .. ", " .. k
 		end
-		self:IfMessage(L["grave_message"]:format(msg), "Important", 38049, "Alert")
-		self:Bar(L["grave_nextbar"], 28.5, 38049)
-		self:Bar(L["grave_bar"], 4.5, 38049)
 	end
+	self:IfMessage(L["grave_message"]:format(msg), "Important", 37850, "Alert")
+	self:Bar(L["grave_nextbar"], 28.5, 37850)
+	self:Bar(L["grave_bar"], 4.5, 37850)
 	for k in pairs(inGrave) do inGrave[k] = nil end
 end
 
