@@ -14,7 +14,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	fear = "Fear Alert",
 	fear_desc = "Warn for Bellowing Roar.",
-	fear_trigger = "cast Bellowing Roar%.$",
 	fear_message = "Fear in 2 sec!",
 	fear_warning = "Fear Soon",
 	fear_bar = "Fear!",
@@ -22,7 +21,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	charr = "Charred Earth on You",
 	charr_desc = "Warn when you are on Charred Earth.",
-	charr_trigger = "You are afflicted by Charred Earth.",
 	charr_message = "Charred Earth on YOU!",
 
 	phase = "Phases",
@@ -61,12 +59,10 @@ L:RegisterTranslations("deDE", function() return {
 	bones_desc = "Warnt wenn Knochenregen gewirkt wird.",
 	bones_message = "AoE Knochenregen!",
 
-	fear_trigger = "Schrecken der Nacht beginnt Dr\195\182hnendes Gebr\195\188ll zu wirken.",
 	fear_message = "Furcht in 2sek!",
 	fear_warning = "Furcht bald",
 	fear_bar = "Furcht",
 
-	charr_trigger = "Ihr seid von Verbrannte Erde betroffen.",
 	charr_message = "Verbrannte Erde auf DIR!",
 
 	airphase_trigger = "Abscheuliches Gew\195\188rm! Ich werde euch aus der Luft vernichten!",
@@ -83,7 +79,6 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("frFR", function() return {
 	fear = "Rugissement",
 	fear_desc = "Préviens quand Plaie-de-nuit lance son Rugissement puissant.",
-	fear_trigger = "lancer Rugissement puissant",
 	fear_message = "Rugissement dans 2 sec. !",
 	fear_warning = "Rugissement imminent",
 	fear_bar = "Rugissement !",
@@ -91,7 +86,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	charr = "Terre calcinée sur vous",
 	charr_desc = "Préviens quand vous êtes dans la Terre calcinée.",
-	charr_trigger = "Vous subissez les effets de Terre calcinée.",
 	charr_message = "Terre calcinée sur VOUS !",
 
 	phase = "Phases",
@@ -116,7 +110,6 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("koKR", function() return {
 	fear = "공포 경고",
 	fear_desc = "우레와 같은 울부짖음에 대한 경고입니다.",
-	fear_trigger = "우레와 같은 울부짖음 시전을 시작합니다%.$",
 	fear_message = "2초 후 공포!",
 	fear_warning = "잠시 후 공포",
 	fear_bar = "공포!",
@@ -124,7 +117,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	charr = "당신에 불타버린 대지",
 	charr_desc = "당신이 불타버린 대지에 걸렸을 때 알립니다.",
-	charr_trigger = "당신은 불타버린 대지에 걸렸습니다.",
 	charr_message = "당신에 불타버린 대지!",
 
 	phase = "단계",
@@ -149,7 +141,6 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	fear = "恐惧警报",
 	fear_desc = "低沉咆哮警报。",
-	fear_trigger = "开始施放低沉咆哮。$",
 	fear_message = "2秒后 恐惧",
 	fear_warning = "即将恐惧！",
 	fear_bar = "<恐惧>",
@@ -157,7 +148,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	charr = "灼烧土地警报",
 	charr_desc = "当你中了灼烧土地发出警报。",
-	charr_trigger = "你受到了灼烧土地效果的影响。$",
 	charr_message = ">你< 灼烧土地！",
 
 	phase = "阶段警报",
@@ -182,7 +172,6 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	fear = "低沉咆哮警告",
 	fear_desc = "當夜禍施放低沉咆哮時發送警告",
-	fear_trigger = "夜禍開始施放低沉咆哮。",
 	fear_message = "2 秒後施放低沉咆哮",
 	fear_warning = "即將施放低沉咆哮",
 	fear_bar = "恐懼",
@@ -190,7 +179,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	charr = "灼燒大地警告",
 	charr_desc = "當夜禍對你施放灼燒大地時發送警告",
-	charr_trigger = "你受到了灼燒大地效果的影響。", 
 	charr_message = "你中了灼燒大地",
 
 	phase = "階段警告",
@@ -215,7 +203,6 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("esES", function() return {
 	fear = "Alerta de miedo",
 	fear_desc = "Avisa de Rugido bramante.",
-	fear_trigger = "comienza a lanzar Rugido bramante%.$",
 	fear_message = "\194\161Miedo en 2 seg!",
 	fear_warning = "Miedo Pronto",
 	fear_bar = "\194\161Miedo!",
@@ -223,7 +210,6 @@ L:RegisterTranslations("esES", function() return {
 
 	charr = "Tierra carbonizada en t\195\173",
 	charr_desc = "Avisa cuando est\195\161s en Tierra carbonizada.",
-	charr_trigger = "Sufres de Tierra carbonizada.",
 	charr_message = "\194\161Tierra carbonizada en t\195\173!",
 
 	phase = "Fases",
@@ -262,14 +248,11 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Fear", 36922)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "CharredEarth", 30129)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Bones", 37098)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-	self:RegisterEvent("UNIT_SPELLCAST_CHANNEL_START")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "NBBones", 15)
 end
 
 ------------------------------
@@ -292,10 +275,10 @@ function mod:CharredEarth(player)
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "NBBones" and self.db.profile.bones then
-		self:Message(L["bones_message"], "Urgent")
-		self:Bar(L["bones"], 11, "INV_Misc_Bone_10")
+function mod:Bones(_, spellID)
+	if self.db.profile.bones then
+		self:IfMessage(L["bones_message"], "Urgent", spellID)
+		self:Bar(L["bones"], 11, spellID)
 	end
 end
 
@@ -322,12 +305,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	elseif self.db.profile.phase and (msg == L["landphase_trigger1"] or msg == L["landphase_trigger2"]) then
 		self:Message(L["landphase_message"], "Important", nil, "Long")
 		self:Bar(L["landphase_message"], 17, "INV_Misc_Head_Dragon_01")
-	end
-end
-
-function mod:UNIT_SPELLCAST_CHANNEL_START(msg)
-	if UnitName(msg) == boss and (UnitChannelInfo(msg)) == L["bones"] then
-		self:Sync("NBBones")
 	end
 end
 
