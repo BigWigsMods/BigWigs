@@ -22,7 +22,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	weaken = "Weaken",
 	weaken_desc = "Warn for weakened state.",
-	weaken_trigger = "Your request cannot be processed.",
 	weaken_message = "Evocation - Weakened for 20sec!",
 	weaken_bar = "Evocation",
 	weaken_fade_message = "Evocation Finished - Weakened Gone!",
@@ -45,7 +44,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	weaken = "Affaiblissement",
 	weaken_desc = "Préviens quand le Conservateur est affaibli.",
-	weaken_trigger = "Impossible de traiter votre requête.",
 	weaken_message = "Evocation - Affaibli pendant 20 sec. !",
 	weaken_bar = "Evocation",
 	weaken_fade_message = "Evocation terminée - Fin de l'Affaiblissement !",
@@ -68,7 +66,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	weaken = "Schw\195\164chung",
 	weaken_desc = "Warnung f\195\188r den geschw\195\164chten Zustand",
-	weaken_trigger = "Ihre Anfrage kann nicht bearbeitet werden.",
 	weaken_message = "Hervorrufung f\195\188r 20 sekunden!",
 	weaken_bar = "Hervorrufung",
 	weaken_fade_message = "Hervorrufung beendet - Kurator nicht mehr geschw\195\164cht!",
@@ -91,7 +88,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	weaken = "약화",
 	weaken_desc = "약화된 상태인 동안 알립니다.",
-	weaken_trigger = "현재 요청하신 내용은 처리가 불가능합니다.",
 	weaken_message = "환기 - 20초간 약화!",
 	weaken_bar = "환기",
 	weaken_fade_message = "환기 종료 - 약화 종료!",
@@ -114,7 +110,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	weaken = "唤醒",
 	weaken_desc = "当馆长进入唤醒时发送警告。",
-	weaken_trigger = "你的请求未能得到批准。",
 	weaken_message = "唤醒 - 20秒虚弱计时开始",
 	weaken_bar = "<唤醒>",
 	weaken_fade_message = "唤醒结束 - 准备击杀小电球！",
@@ -137,7 +132,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	weaken = "喚醒提示",
 	weaken_desc = "當館長進入喚醒時發送警告",
-	weaken_trigger = "無法處理你的要求。",
 	weaken_message = "喚醒 - 20 秒虛弱時間開始",
 	weaken_bar = "喚醒",
 	weaken_fade_message = "喚醒結束 - 準備擊殺小電球",
@@ -160,7 +154,6 @@ L:RegisterTranslations("esES", function() return {
 
 	weaken = "Debilidad",
 	weaken_desc = "Aviso del estado de debilidad.",
-	weaken_trigger = "No se puede procesar tu petici\195\179n.",
 	weaken_message = "\194\161Evocaci\195\179n - Debilidad durante 20sec!",
 	weaken_bar = "Evocaci\195\179n",
 	weaken_fade_message = "\194\161Evocaci\195\179n Finalizada - Debilidad desaparecida!",
@@ -190,11 +183,11 @@ mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) en
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("UNIT_HEALTH")
-
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Evocate", 30254)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
@@ -202,21 +195,23 @@ end
 --      Event Handlers      --
 ------------------------------
 
+function mod:Evocate(_, spellID)
+	if self.db.profile.weaken then
+		self:IfMessage(L["weaken_message"], "Important", spellID, "Alarm")
+		self:Bar(L["weaken_bar"], 20, spellID)
+		self:ScheduleEvent("weak1", "BigWigs_Message", 15, L["weaken_fade_warning"], "Urgent")
+		self:ScheduleEvent("weak2", "BigWigs_Message", 20, L["weaken_fade_message"], "Important", nil, "Alarm")
+	end
+	if self.db.profile.weaktime then
+		self:Bar(L["weaktime_bar"], 115, spellID)
+		self:ScheduleEvent("evoc1", "BigWigs_Message", 45, L["weaktime_message3"], "Positive")
+		self:ScheduleEvent("evoc2", "BigWigs_Message", 85, L["weaktime_message2"], "Attention")
+		self:ScheduleEvent("evoc3", "BigWigs_Message", 105, L["weaktime_message1"], "Urgent")
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["weaken_trigger"] then -- This Happens everytime an evocate happens
-		if self.db.profile.weaken then
-			self:Message(L["weaken_message"], "Important", nil, "Alarm")
-			self:Bar(L["weaken_bar"], 20, "Spell_Nature_Purge")
-			self:ScheduleEvent("weak1", "BigWigs_Message", 15, L["weaken_fade_warning"], "Urgent")
-			self:ScheduleEvent("weak2", "BigWigs_Message", 20, L["weaken_fade_message"], "Important", nil, "Alarm")
-		end
-		if self.db.profile.weaktime then
-			self:Bar(L["weaktime_bar"], 115, "Spell_Nature_Purge")
-			self:ScheduleEvent("evoc1", "BigWigs_Message", 45, L["weaktime_message3"], "Positive")
-			self:ScheduleEvent("evoc2", "BigWigs_Message", 85, L["weaktime_message2"], "Attention")
-			self:ScheduleEvent("evoc3", "BigWigs_Message", 105, L["weaktime_message1"], "Urgent")
-		end
-	elseif msg == L["enrage_trigger"] then -- This only happens towards the end of the fight
+	if msg == L["enrage_trigger"] then -- This only happens towards the end of the fight
 		if self.db.profile.enrage then
 			self:Message(L["enrage_message"], "Important")
 		end
@@ -235,7 +230,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Enrage(600, true)
 		end
 		if self.db.profile.weaktime then
-			self:Bar(L["weaktime_bar"], 109, "Spell_Nature_Purge")
+			self:Bar(L["weaktime_bar"], 109, 30254)
 			self:ScheduleEvent("evoc1", "BigWigs_Message", 39, L["weaktime_message3"], "Positive")
 			self:ScheduleEvent("evoc2", "BigWigs_Message", 79, L["weaktime_message2"], "Attention")
 			self:ScheduleEvent("evoc3", "BigWigs_Message", 99, L["weaktime_message1"], "Urgent")
