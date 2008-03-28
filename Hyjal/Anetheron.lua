@@ -5,10 +5,7 @@
 local boss = BB["Anetheron"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local db = nil
-
-local UnitName = UnitName
 local fmt = string.format
-local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -31,8 +28,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	swarm = "Carrion Swarm",
 	swarm_desc = "Approximate Carrion Swarm cooldown timers.",
-	swarm_trigger1 = "Pestilence upon you!",
-	swarm_trigger2 = "The swarm is eager to feed.",
 	swarm_message = "Swarm! - Next in ~11sec",
 	swarm_bar = "~Swarm Cooldown",
 } end )
@@ -52,8 +47,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	swarm = "Vol de charognards",
 	swarm_desc = "Temps de recharge approximatif pour le Vol de charognards.",
-	swarm_trigger1 = "La peste soit sur vous !",
-	swarm_trigger2 = "L'essaim est affamé.",
 	swarm_message = "Essaim ! - Prochain dans ~11 sec.",
 	swarm_bar = "~Cooldown Essaim",
 } end )
@@ -73,8 +66,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	swarm = "흡혈박쥐 떼",
 	swarm_desc = "대략적인 흡혈박쥐 떼 대기시간 타이머입니다.",
-	swarm_trigger1 = "역병에 뒤덮이리라!",
-	swarm_trigger2 = "박쥐들이 많이 굶주렸구나.",
 	swarm_message = "박쥐 떼! - 다음은 약 11초 이내",
 	swarm_bar = "~박쥐 떼 대기시간",
 } end )
@@ -94,8 +85,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	swarm = "Aasschwarm",
 	swarm_desc = "Geschätzter Aasschwarm Cooldown Timer.",
-	swarm_trigger1 = "Möge die Pest über Euch kommen!",
-	swarm_trigger2 = "Der Schwarm ist hungrig!",
 	swarm_message = "Aasschwarm! - Nächster in ~11sec",
 	swarm_bar = "~Aasschwarm Cooldown",
 } end )
@@ -115,8 +104,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	swarm = "腐肉成群",
 	swarm_desc = "腐肉成群冷卻計時器",
-	swarm_trigger1 = "願瘟疫降臨在你身上!",
-	swarm_trigger2 = "蟲群們渴望進食",
 	swarm_message = "腐肉成群! - 11 秒後下一次",
 	swarm_bar = "~腐肉成群冷卻",
 } end )
@@ -136,8 +123,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	swarm = "腐臭虫群",
 	swarm_desc = "腐臭虫群冷却计时。",
-	swarm_trigger1 = "瘟疫降临！",
-	swarm_trigger2 = "虫群将吞噬你们的躯体。",
 	swarm_message = "虫群！ ~11秒后下一波",
 	swarm_bar = "<虫群 冷却>",
 } end )
@@ -157,13 +142,10 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("UNIT_SPELLCAST_START")
-
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Swarm", 31306)
+	self:AddCombatListener("SPELL_CAST_START", "Inferno", 31299)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "AnethInf", 10)
 	db = self.db.profile
 end
 
@@ -171,24 +153,18 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:BigWigs_RecvSync(sync)
-	if sync == "AnethInf" and db.inferno then
+function mod:Swarm(_, spellID)
+	if db.swarm then
+		self:IfMessage(L["swarm_message"], "Attention", spellID)
+		self:Bar(L["swarm_bar"], 11, spellID)
+	end
+end
+
+function mod:Inferno()
+	if db.inferno then
 		self:DelayedMessage(45, L["inferno_warning"], "Positive")
-		self:Bar(L["inferno_bar"], 50, "Spell_Fire_Incinerate")
+		self:Bar(L["inferno_bar"], 50, 31299)
 		self:ScheduleEvent("BWInfernoToTScan", self.InfernoCheck, 0.5, self)
-	end
-end
-
-function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if db.swarm and (msg == L["swarm_trigger1"] or msg == L["swarm_trigger2"]) then
-		self:Message(L["swarm_message"], "Attention")
-		self:Bar(L["swarm_bar"], 11, "Spell_Shadow_CarrionSwarm")
-	end
-end
-
-function mod:UNIT_SPELLCAST_START(msg)
-	if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["inferno"] then
-		self:Sync("AnethInf")
 	end
 end
 
@@ -208,10 +184,10 @@ function mod:InfernoCheck()
 		end
 	end
 	if target then
-		if target == pName then
-			self:Message(L["inferno_you"], "Personal", true, "Long")
+		if UnitIsUnit(target, "player") then
+			self:LocalMessage(L["inferno_you"], "Personal", 31299, "Long")
 		else
-			self:Message(fmt(L["inferno_message"], target), "Important", nil, "Alert")
+			self:IfMessage(fmt(L["inferno_message"], target), "Important", 31299, "Alert")
 		end
 		if db.icon then
 			self:Icon(target)
