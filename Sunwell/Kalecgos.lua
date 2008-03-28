@@ -89,10 +89,10 @@ L:RegisterTranslations("koKR", function() return {
 	magichealing_desc = "당신이 마법 폭주에 의해 힐량이 증가할때 알려줍니다.",
 	magichealing_you = "마법 폭주 - 힐량 증가!",
 
-	magiccast = "마법 폭주 (시전시간 증가)",
-	magiccast_desc = "힐러가 마법 폭주에 의해 시전시간이 증가할때 알려줍니다.",
-	magiccast_you = "마법 폭주 - 당신은 시전시간 증가!",
-	magiccast_other = "마법 폭주 - %s 시전시간 증가!",
+	magiccast = "마법 폭주 (시전시간 지연)",
+	magiccast_desc = "힐러가 마법 폭주에 의해 시전시간이 지연될때 알려줍니다.",
+	magiccast_you = "마법 폭주 - 당신은 시전시간 지연!",
+	magiccast_other = "마법 폭주 - %s 시전시간 지연!",
 
 	magichit = "마법 폭주 (적중률 감소)",
 	magichit_desc = "탱커가 마법 폭주에 의해 적중률이 감소할때 알려줍니다.",
