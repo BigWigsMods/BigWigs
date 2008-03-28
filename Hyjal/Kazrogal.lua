@@ -6,7 +6,6 @@ local boss = BB["Kaz'rogal"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local db = nil
 
-local pName = UnitName("player")
 local bandages = {
 	[21991] = true, -- Heavy Netherweave Bandage
 	[21990] = true, -- Netherweave Bandage
@@ -97,13 +96,13 @@ end
 ------------------------------
 
 function mod:Mark(player)
-	if player == pName and db.range and UnitMana("player") < 4000 then
+	if UnitIsUnit(player, "player") and db.range and UnitMana("player") < 4000 then
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 	end
 end
 
 function mod:MarkRemoved(player)
-	if player == pName and db.range then
+	if UnitIsUnit(player, "player") and db.range then
 		self:TriggerEvent("BigWigs_HideProximity", self)
 	end
 end
