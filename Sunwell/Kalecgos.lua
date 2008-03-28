@@ -1,4 +1,4 @@
-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -246,6 +246,51 @@ L:RegisterTranslations("zhTW", function() return {
 	enrage_warning = "即將狂怒！",
 	enrage_message = "10% - 狂怒狀態！",
 	enrage_trigger = "塞斯諾瓦將卡雷苟斯逼入了瘋狂的暴怒中!",
+} end )
+
+L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "Ah ha haa!! Nicht länger werde ich Malygos' Sklave sein! Fordert mich heraus und Ihr werdet vernichtet!",
+	wipe_bar = "Wiederbeleben",
+
+	portal = "Portal",
+	portal_desc = "Warnt wann der Spektralschlag cooldown endet.",
+	portal_bar = "Nächstes Portal",
+	portal_message = "Mögliches Portal in 5 Sekunden!",
+
+	realm = "Spektralreich",
+	realm_desc = "Sagt dir wer im Spektralreich ist.",
+	realm_message = "Spektralreich: %s (Gruppe %d)",
+
+	curse = "Fluch der unermesslichen Pein",
+	curse_desc = "Sagt dir wer von Fluch der unermesslichen Pein betroffen ist.",
+	curse_bar = "Fluch: %s",
+
+	magichealing = "Wilde Magie (Verbesserte Heilung)",
+	magichealing_desc = "Sagt dir wann du erhöte Heilung von Wilder Magie bekommst.",
+	magichealing_you = "Wilde Magie - Heilungs Effekte erhöht!",
+
+	magiccast = "Wilde Magie (Schnellere Zauber)",
+	magiccast_desc = "Sagt dir wann ein Heiler schnellere Zauber von Wilder Magie bekommt.",
+	magiccast_you = "Wilde Magie - Schnellere Zauber auf DIR!",
+	magiccast_other = "Wilde Magie - Schnellere Zauber auf %s!",
+
+	magichit = "Wilde Magie (Verringerte Chance zu treffen)",
+	magichit_desc = "sagt dir wenn bei einem Tank die Trefferchance verringert ist durch Wilde Magie.",
+	magichit_you = "Wilde Magie - Verringerte Trefferchance auf DIR!",
+	magichit_other = "Wilde Magie - Verringerte Trefferchance auf %s!",
+
+	magicthreat = "Wilde Magie (Erhöhte Agro)",
+	magicthreat_desc = "Sagt dir wenn du erhöhte Agro durch Wilde Magie bekommst.",
+	magicthreat_you = "Wilde Magie - Agro Generierung erhöht!",
+
+	spectral_realm = "Spektralreich",
+
+	buffet = "Arkanpuffer",
+	buffet_desc = "Zeigt den Arkanpuffer Zeitbalken.",
+
+	enrage_warning = "Wütend bald!",
+	enrage_message = "10% - Wütend!",
+	enrage_trigger = "Sathrovarr treibt Kalecgos in eine wahnsinnige Wut!",
 } end )
 
 ----------------------------------
