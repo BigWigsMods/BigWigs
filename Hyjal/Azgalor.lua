@@ -150,7 +150,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "RainOfFire", 31340)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Howl", 31344)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Howl", 31344)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Doom", 31347)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
@@ -172,16 +172,11 @@ function mod:RainOfFire(player)
 	end
 end
 
-local last = 0
 function mod:Howl(_, spellID)
-	local time = GetTime()
-	if (time - last) > 10 then
-		last = time
-		if db.howl then
-			self:IfMessage(L["howl_message"], "Important", spellID)
-			self:Bar(L["howl_bar"], 16, spellID)
-			self:DelayedMessage(15, L["howl_warning"], "Important")
-		end
+	if db.howl then
+		self:IfMessage(L["howl_message"], "Important", spellID)
+		self:Bar(L["howl_bar"], 16, spellID)
+		self:DelayedMessage(15, L["howl_warning"], "Important")
 	end
 end
 
