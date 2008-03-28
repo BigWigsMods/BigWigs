@@ -5,7 +5,6 @@
 local boss = BB["Rage Winterchill"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local db = nil
-local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -107,7 +106,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Icebolt", 31249)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "DeathAndDecay", 39658)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "DeathAndDecay", 31258)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -121,16 +120,16 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Icebolt(player)
+function mod:Icebolt(player, spellID)
 	if db.icebolt then
-		self:IfMessage(L["icebolt_message"]:format(player), "Important", 31249, "Alert")
+		self:IfMessage(L["icebolt_message"]:format(player), "Important", spellID, "Alert")
 		self:Icon(player, "icon")
 	end
 end
 
-function mod:DeathAndDecay(player)
-	if db.decay and player == pName then
-		self:LocalMessage(L["decay_message"], "Personal", 39658, "Alarm")
+function mod:DeathAndDecay(player, spellID)
+	if UnitIsUnit(player, "player") and db.decay then
+		self:LocalMessage(L["decay_message"], "Personal", spellID, "Alarm")
 	end
 end
 
