@@ -450,7 +450,7 @@ mod.proximitySilent = true
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_DAMAGE", "FlameBurst", 41131) -- spell cast by the player at 5 yards radius
 	self:AddCombatListener("SPELL_CAST_SUCCESS ", "Phase2", 39855)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Parasite", 41914)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Parasite", 41914, 41917)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Barrage", 40585)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Shear", 41032)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Flame", 40932)
