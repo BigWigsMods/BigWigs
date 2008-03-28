@@ -114,7 +114,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "Aggh!! No longer will I be a slave to Malygos! Challenge me and you will be destroyed!", -- not yet translated on french client.
+	engage_trigger = "Aarghh !! Je ne serai plus jamais l'esclave de Malygos ! Osez me défier et vous serez détruits !",
 	wipe_bar = "Réapparition",
 
 	portal = "Portail",
