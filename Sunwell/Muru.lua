@@ -64,7 +64,7 @@ L:RegisterTranslations("koKR", function() return {
 	void_next = "다음 공허의 파수병",
 	void_soon = "5초 이내 파수병!",
 
-	humanoid = "타락한 엘프 소환",
+	humanoid = "타락한 엘프",
 	humanoid_desc = "타락한 엘프 소환을 알립니다.",
 	humanoid_next = "다음 타락한 엘프",
 	humanoid_soon = "5초 이내 타락한 엘프!",

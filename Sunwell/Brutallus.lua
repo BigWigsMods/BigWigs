@@ -40,10 +40,10 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	--engage_trigger = "Ah, more lambs to the slaughter!",
+	engage_trigger = "하, 새끼 양이 잔뜩 몰려오는구나!",
 
 	burn = "불사르기",
-	burn_desc = "불사르기에 적중된 플레이어와 다음 불사르기가 올때를 알립니다.",
+	burn_desc = "불사르기에 적중된 플레이어와 다음 불사르기에 대해 알립니다.",
 	burn_you = "당신에 불사르기!",
 	burn_other = "%s에게 불사르기!",
 	burn_bar = "다음 불사르기",

@@ -130,7 +130,7 @@ L:RegisterTranslations("koKR", function() return {
 	knock = "날려버리기",
 	knock_desc = "날려버리기 대기시간 바를 표시합니다.",
 	knock_bar = "~날려버리기 대기시간",
-	--knock_message = "Knock Away: %s",
+	knock_message = "날려버리기: %s",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
