@@ -218,17 +218,14 @@ mod.proximitySilent = true
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Grip", 31972)
-	self:AddCombatListener("SPELL_AURA_REMOVED", "GripRemoved", 31972)
 	self:AddCombatListener("SPELL_AURA_DISPELLED", "GripRemoved", 31972)
+	self:AddCombatListener("SPELL_CAST_START", "Burst", 32014)
+	self:AddCombatListener("SPELL_CAST_START", "Fear", 31970)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:Throttle(5, "ArchFear", "ArchBurst")
-
-	self:RegisterEvent("UNIT_SPELLCAST_START")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
 	db = self.db.profile
 end
 
@@ -256,13 +253,17 @@ function mod:GripRemoved(player)
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if sync == "ArchFear" and db.fear then
-		self:Bar(L["fear_bar"], 41.5, "Spell_Shadow_DeathScream")
-		self:Message(L["fear_message"], "Important")
+function mod:Burst()
+	if db.burst then
+		self:ScheduleEvent("BWBurstToTScan", self.TargetCheck, 0.2, self)
+	end
+end
+
+function mod:Fear(_, spellID)
+	if db.fear then
+		self:Bar(L["fear_bar"], 41.5, spellID)
+		self:IfMessage(L["fear_message"], "Important", spellID)
 		self:DelayedMessage(41.5, L["fear_warning"], "Urgent")
-	elseif sync == "ArchBurst" and db.burst then
-		self:ScheduleEvent("BWBurstToTScan", self.TargetCheck, 0.3, self)
 	end
 end
 
@@ -276,14 +277,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:DelayedMessage(40, L["fear_warning"], "Urgent")
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
-	end
-end
-
-function mod:UNIT_SPELLCAST_START(msg)
-	if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["fear"] then
-		self:Sync("ArchFear")
-	elseif UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["burst"] then
-		self:Sync("ArchBurst")
 	end
 end
 
