@@ -5,7 +5,6 @@
 local boss = BB["Brutallus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
-local started = nil
 local pName = UnitName("player")
 local db = nil
 
@@ -15,6 +14,8 @@ local db = nil
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Brutallus",
+
+	engage_trigger = "Ah, more lambs to the slaughter!",
 
 	burn = "Burn",
 	burn_desc = "Tells you who has been hit by Burn and when the next Burn is coming.",
@@ -38,14 +39,9 @@ L:RegisterTranslations("enUS", function() return {
 	stomp_bar = "Next Stomp",
 } end )
 
---[[
-	Sunwell modules are PTR beta, as so localization is not supportd in any way
-	This gives the authors the freedom to change the modules in way that
-	can potentially break localization.
-	Feel free to localize, just be aware that you may need to change it frequently.
-]]--
-
 L:RegisterTranslations("koKR", function() return {
+	--engage_trigger = "Ah, more lambs to the slaughter!",
+
 	burn = "불사르기",
 	burn_desc = "불사르기에 적중된 플레이어와 다음 불사르기가 올때를 알립니다.",
 	burn_you = "당신에 불사르기!",
@@ -69,6 +65,8 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	--engage_trigger = "Ah, more lambs to the slaughter!",
+
 	burn = "Brûler",
 	burn_desc = "Préviens quand un joueur subit les effets de Brûler et quand arrivera le prochain.",
 	burn_you = "Brûler sur VOUS !",
@@ -92,6 +90,8 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	--engage_trigger = "Ah, more lambs to the slaughter!",
+
 	burn = "Brand",
 	burn_desc = "Sagt dir wer von Brand betroffen ist und wann der nächste Brand zu erwarten ist.",
 	burn_you = "Brand auf DIR!",
@@ -115,6 +115,8 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	--engage_trigger = "Ah, more lambs to the slaughter!",
+
 	burn = "燃烧",
 	burn_desc = "当你或队员中了燃烧发出警报，和下一次燃烧通知。",
 	burn_you = "燃烧：>你<！",
@@ -138,6 +140,8 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
+	--engage_trigger = "Ah, more lambs to the slaughter!",
+
 	burn = "燃燒",
 	burn_desc = "警示誰中了燃燒及下一次燃燒來臨通知。",
 	burn_you = "你中了燃燒！",
@@ -175,20 +179,14 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	started = nil
-
 	self:AddCombatListener("SPELL_MISSED", "BurnResist", 45141)
 	self:AddCombatListener("SPELL_CAST_START", "Meteor", 45150)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Burn", 46394)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "BurnRemove", 46394)
-	self:AddCombatListener("SPELL_DAMAGE", "Stomp", 45185)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Stomp", 45185)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:Throttle(300, "BrutallusBurn", "BrutallusBurnJump") --remove after brut is disabled on ptr
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	db = self.db.profile
 end
@@ -236,12 +234,8 @@ function mod:Stomp(player, spellID)
 	end
 end
 
-function mod:BigWigs_RecvSync(sync, rest, nick)
-	if self:ValidateEngageSync(sync, rest) and not started then
-		started = true
-		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
-			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		end
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["engage_trigger"] then
 		if db.burn then
 			self:Bar(L["burn_bar"], 20, 45141)
 			self:DelayedMessage(15, L["burn_message"], "Attention")
@@ -250,7 +244,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Enrage(360)
 		end
 		if db.stomp then
-			self:Bar(L["stomp_bar"], 20, 45185)
+			self:Bar(L["stomp_bar"], 30, 45185)
 		end
 	end
 end
+
