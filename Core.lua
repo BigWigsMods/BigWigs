@@ -575,7 +575,9 @@ function BigWigs:EnableModule(moduleName, noSync)
 		self:ToggleModuleActive(m, true)
 		m:Message(L["%s mod enabled"]:format(moduleName or "??"), "Core", true)
 		if not noSync then
-			m:Sync((m.external and "EnableExternal " or "EnableModule ") .. (m.synctoken or BBR[moduleName]))
+			local token = m.synctoken or BBR[moduleName] or nil
+			if not token then return end
+			m:Sync(m.external and "EnableExternal" or "EnableModule", token)
 		end
 	end
 end
