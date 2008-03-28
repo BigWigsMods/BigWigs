@@ -27,7 +27,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	spout = "Spout",
 	spout_desc = "Timers for Spout, may not always be accurate.",
-	spout_trigger = "%s takes a deep breath!",
 	spout_message = "Casting Spout!",
 	spout_warning = "Possible Spout in ~3sec!",
 	spout_bar = "Possible Spout",
@@ -56,7 +55,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	spout = "분출",
 	spout_desc = "분출에 대한 타이머입니다. 항상 정확하지 않을 수 있습니다.",
-	spout_trigger = "%s|1이;가; 깊은 숨을 쉽니다!",
 	spout_message = "분출 시전 중!",
 	spout_warning = "약 3초 이내 분출!",
 	spout_bar = "분출 가능",
@@ -84,7 +82,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	spout = "Jet",
 	spout_desc = "Délais concernant les Jets. Pas toujours précis.",
-	spout_trigger = "%s inspire profondément !",
 	spout_message = "Incante un Jet !",
 	spout_warning = "Jet probable dans ~3 sec. !",
 	spout_bar = "Jet probable",
@@ -112,7 +109,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	spout = "Schwall",
 	spout_desc = "Zeitanzeige f\195\188r Schwall, m\195\182glicherweise nicht sehr akkurat.",
-	spout_trigger = "%s atmet tief ein!",
 	spout_message = "Wirkt Schwall!",
 	spout_warning = "M\195\182glicher Schwall in ~3sek!",
 	spout_bar = "M\195\182glicher Schwall",
@@ -140,7 +136,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	spout = "喷涌",
 	spout_desc = "喷涌计时条。",
-	spout_trigger = "%s深深吸了一口气！",
 	spout_message = "快喷了! 啊~~......",
 	spout_warning = "~3秒后 可能喷涌！",
 	spout_bar = "<可能喷涌>",
@@ -168,7 +163,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	spout = "噴射",
 	spout_desc = "噴射計時器, 僅供參考, 不一定準確。",
-	spout_trigger = "%s深深的吸了一口氣!",
 	spout_message = "噴射開始！注意閃避！",
 	spout_warning = "約3秒後噴射！",
 	spout_bar = "噴射",
@@ -260,8 +254,8 @@ function mod:BigWigs_RecvSync( sync, rest, nick )
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if msg == L["spout_trigger"] then
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit)
+	if unit == boss then
 		if db.spout then
 			self:Bar(L["spout_message"], 20, "Spell_Frost_ChillingBlast")
 			self:Bar(L["spout_bar"], 50, "Spell_Frost_ChillingBlast")
