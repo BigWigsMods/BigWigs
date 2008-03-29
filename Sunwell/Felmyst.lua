@@ -83,10 +83,26 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		self:Bar("~Possible takeoff", 20, 31550)
+		self:PhaseOne()
 		if db.enrage then
 			self:Enrage(600)
 		end
 	end
+end
+
+function mod:PhaseOne()
+	self:Bar("Takeoff", 60, 31550)
+	self:DelayedMessage(55, "Taking off in 5 Seconds!", "Attention")
+
+	self:Bar(L["encaps"], 30, 45661)
+	self:DelayedMessage(25, "Encapsulate in ~5 Seconds!", Attention)
+
+	self:ScheduleEvent("BWFelmystStage", self.PhaseTwo, 60, self)
+end
+
+function mod:PhaseTwo()
+	self:Bar("Landing", 100, 31550)
+	self:DelayedMessage(90, "Landing in 10 Seconds!", Attention)
+	self:ScheduleEvent("BWFelmystStage", self.PhaseOne, 100, self)
 end
 
