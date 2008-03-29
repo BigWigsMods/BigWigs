@@ -26,6 +26,18 @@ L:RegisterTranslations("enUS", function() return {
 	gas_bar = "~Gas Nova Cooldown",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+
+	encaps = "压缩",--Encapsulate
+	encaps_desc = "当受到压缩时发出警报。",
+	encaps_message = "压缩：>%s<！",
+
+	gas = "毒气新星",--Gas Nova
+	gas_desc = "当施放毒气新星时发出警报。",
+	gas_message = "正在施放毒气新星！",
+	gas_bar = "<毒气新星冷却>",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
