@@ -74,12 +74,12 @@ L:RegisterTranslations("enUS", function() return {
 	phase4_soon_message = "Phase 4 soon!",
 	phase4_message = "Phase 4 - Maiev Incoming!",
 
-	flameburst = "Flame Burst",
-	flameburst_desc = "Warns when Illidan will use Flame Burst",
-	flameburst_message = "Flame Burst!",
-	flameburst_cooldown_bar = "Flame Burst cooldown",
-	flameburst_cooldown_warn = "Flame Burst soon!",
-	flameburst_warn = "Flame Burst in 5sec!",
+	burst = "Flame Burst",
+	burst_desc = "Warns when Illidan will use Flame Burst",
+	burst_message = "Flame Burst!",
+	burst_cooldown_bar = "Flame Burst cooldown",
+	burst_cooldown_warn = "Flame Burst soon!",
+	burst_warn = "Flame Burst in 5sec!",
 
 	enrage_trigger = "Feel the hatred of ten thousand years!",
 	enrage_message = "Enraged!",
@@ -142,12 +142,12 @@ L:RegisterTranslations("frFR", function() return {
 	phase4_soon_message = "Phase 4 imminente !",
 	phase4_message = "Phase 4 - Arrivée de Maiev !",
 
-	flameburst = "Explosion de flammes",
-	flameburst_desc = "Préviens quand Illidan utilise son Explosion de flammes.",
-	flameburst_message = "Explosion de flammes !",
-	flameburst_cooldown_bar = "~Cooldown Explosion",
-	flameburst_cooldown_warn = "Explosion de flammes imminente !",
-	flameburst_warn = "Explosion de flammes dans 5 sec. !",
+	burst = "Explosion de flammes",
+	burst_desc = "Préviens quand Illidan utilise son Explosion de flammes.",
+	burst_message = "Explosion de flammes !",
+	burst_cooldown_bar = "~Cooldown Explosion",
+	burst_cooldown_warn = "Explosion de flammes imminente !",
+	burst_warn = "Explosion de flammes dans 5 sec. !",
 
 	enrage_trigger = "Goûtez à dix mille ans de haine !",
 	enrage_message = "Enragé !",
@@ -210,12 +210,12 @@ L:RegisterTranslations("koKR", function() return {
 	phase4_soon_message = "잠시 후 4 단계!",
 	phase4_message = "4 단계 - 마이에브 등장!",
 
-	flameburst = "화염 폭발",
-	flameburst_desc = "일리단이 화염 폭발 사용 시 알립니다.",
-	flameburst_message = "화염 폭발!",
-	flameburst_cooldown_bar = "화염 폭발 대기시간",
-	flameburst_cooldown_warn = "잠시 후 화염 폭발!",
-	flameburst_warn = "약 5초 이내 화염 폭발!",
+	burst = "화염 폭발",
+	burst_desc = "일리단이 화염 폭발 사용 시 알립니다.",
+	burst_message = "화염 폭발!",
+	burst_cooldown_bar = "화염 폭발 대기시간",
+	burst_cooldown_warn = "잠시 후 화염 폭발!",
+	burst_warn = "약 5초 이내 화염 폭발!",
 
 	enrage_trigger = "만년 동안 응어리진 증오를 보여주마!",
 	enrage_message = "격노!",
@@ -278,12 +278,12 @@ L:RegisterTranslations("zhCN", function() return {
 	phase4_soon_message = "即将 - 第四阶段！",
 	phase4_message = "第四阶段 - 玛维·影歌来临！",
 
-	flameburst = "烈焰爆击",
-	flameburst_desc = "当伊利丹使用烈焰爆击发出警报",
-	flameburst_message = "烈焰爆击!",
-	flameburst_cooldown_bar = "烈焰爆击 冷却",
-	flameburst_cooldown_warn = "即将 烈焰爆击!",
-	flameburst_warn = "5秒后 烈焰爆击!",
+	burst = "烈焰爆击",
+	burst_desc = "当伊利丹使用烈焰爆击发出警报",
+	burst_message = "烈焰爆击!",
+	burst_cooldown_bar = "烈焰爆击 冷却",
+	burst_cooldown_warn = "即将 烈焰爆击!",
+	burst_warn = "5秒后 烈焰爆击!",
 
 	enrage_trigger = "感受一万年的仇恨吧！",
 	enrage_message = "狂暴！",
@@ -346,12 +346,12 @@ L:RegisterTranslations("deDE", function() return {
 	phase4_soon_message = "Phase 4 bald!",
 	phase4_message = "Phase 4 - Maiev kommt!",
 
-	flameburst = "Flammenschlag",
-	flameburst_desc = "Warnt wenn Illidan Flammenschlag benutzen wird.",
-	flameburst_message = "Flammenschlag!",
-	flameburst_cooldown_bar = "Flammenschlag cooldown",
-	flameburst_cooldown_warn = "Flammenschlag bald!",
-	flameburst_warn = "Flammenschlag in 5sek!",
+	burst = "Flammenschlag",
+	burst_desc = "Warnt wenn Illidan Flammenschlag benutzen wird.",
+	burst_message = "Flammenschlag!",
+	burst_cooldown_bar = "Flammenschlag cooldown",
+	burst_cooldown_warn = "Flammenschlag bald!",
+	burst_warn = "Flammenschlag in 5sek!",
 
 	enrage_trigger = "Fühlt dem Haß von 10 tausend Jahren!",
 	enrage_message = "Wütend!",
@@ -414,12 +414,12 @@ L:RegisterTranslations("zhTW", function() return {
 	phase4_soon_message = "階段 4 即將來臨!",
 	phase4_message = "階段 4 - 瑪翼夫來臨!",
 
-	flameburst = "烈焰爆擊",
-	flameburst_desc = "當即將施放烈焰爆擊時發出警報",
-	flameburst_message = "烈焰爆擊!",
-	flameburst_cooldown_bar = "烈焰爆擊冷卻",
-	flameburst_cooldown_warn = "烈焰爆擊即將來臨!",
-	flameburst_warn = "烈焰爆擊 5 秒內來臨!",
+	burst = "烈焰爆擊",
+	burst_desc = "當即將施放烈焰爆擊時發出警報",
+	burst_message = "烈焰爆擊!",
+	burst_cooldown_bar = "烈焰爆擊冷卻",
+	burst_cooldown_warn = "烈焰爆擊即將來臨!",
+	burst_warn = "烈焰爆擊 5 秒內來臨!",
 
 	enrage_trigger = "感受一萬年的仇恨吧!",
 	enrage_message = "狂怒!",
@@ -437,7 +437,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Black Temple"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"berserk", "phase", "parasite", "shear", "eyeblast", "barrage", "flame", "demons", "flameburst", "enrage", "proximity", "bosskill"}
+mod.toggleoptions = {"berserk", "phase", "parasite", "shear", "eyeblast", "barrage", "flame", "demons", "burst", "enrage", "proximity", "bosskill"}
 mod.wipemobs = {L["Flame of Azzinoth"]}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
@@ -448,8 +448,8 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_DAMAGE", "FlameBurst", 41131) -- spell cast by the player at 5 yards radius
-	self:AddCombatListener("SPELL_CAST_SUCCESS ", "Phase2", 39855)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "FlameBurst", 41126)
+	self:AddCombatListener("SPELL_SUMMON", "Phase2", 39855)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Parasite", 41914, 41917)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Barrage", 40585)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Shear", 41032)
@@ -469,18 +469,13 @@ end
 --      Event Handlers      --
 ------------------------------
 
-local last = 0
 function mod:FlameBurst(_, spellID)
-	local time = GetTime()
-	if (time - last) > 5 then
-		last = time
-		if db.flameburst then
-			bCount = bCount + 1
-			self:IfMessage(L["flameburst_message"], "Important", spellID, "Alert")
-			if bCount < 3 then -- He'll only do three times before transforming again
-				self:Bar(L["flameburst"], 20, spellID)
-				self:DelayedMessage(15, L["flameburst_warn"], "Positive")
-			end
+	if db.burst then
+		bCount = bCount + 1
+		self:IfMessage(L["burst_message"], "Important", spellID, "Alert")
+		if bCount < 3 then -- He'll only do three times before transforming again
+			self:Bar(L["burst"], 20, spellID)
+			self:DelayedMessage(15, L["burst_warn"], "Positive")
 		end
 	end
 end
@@ -564,9 +559,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:ScheduleEvent("BWIlliDemonOver", "BigWigs_Message", 60, L["demon_warning"], "Attention")
 			self:ScheduleEvent("BWIlliNormal", self.Normal, 60, self)
 		end
-		if db.flameburst then
-			self:DelayedMessage(15, L["flameburst_cooldown_warn"], "Positive")
-			self:Bar(L["flameburst_cooldown_bar"], 20, "Spell_Fire_BlueRainOfFire")
+		if db.burst then
+			self:DelayedMessage(15, L["burst_cooldown_warn"], "Positive")
+			self:Bar(L["burst_cooldown_bar"], 20, "Spell_Fire_BlueRainOfFire")
 		end
 	elseif msg == L["phase4_trigger"] then
 		if db.phase then
@@ -617,12 +612,12 @@ function mod:Deaths(unit)
 		if flamesDead == 2 then
 			if db.phase then
 				self:Message(L["phase3_message"], "Important", nil, "Alarm")
-				self:TriggerEvent("BigWigs_ShowProximity", self) -- Proximity Warning
 				self:Bar(L["normal_bar"], 75, "Spell_Shadow_Metamorphosis")
 				self:ScheduleEvent("BWIlliNormalSoon", "BigWigs_Message", 70, L["normal_warning"], "Attention")
 			end
 			self:CancelScheduledEvent("BarrageWarn")
 			self:TriggerEvent("BigWigs_StopBar", self, L["barrage_warn_bar"])
+			self:TriggerEvent("BigWigs_ShowProximity", self) -- Proximity Warning
 		end
 	elseif unit == boss then
 		self:GenericBossDeath(unit)
