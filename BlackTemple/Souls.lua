@@ -24,7 +24,6 @@ L:RegisterTranslations("enUS", function() return {
 	engage_trigger = "Pain and suffering are all that await you!",
 
 	enrage_start = "Enrage in ~47sec",
-	enrage_trigger = "%s becomes enraged!",
 	enrage_message = "Enraged for 15sec!",
 	enrage_bar = "<Enraged>",
 	enrage_next = "Enrage Over - Next in ~32sec",
@@ -62,7 +61,6 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "너희를 기다리는 건 고통과 슬픔뿐이야!",
 
 	enrage_start = "약 47초 후 격노",
-	enrage_trigger = "%s|1이;가; 분노에 휩싸입니다!",
 	enrage_message = "15초 동안 격노!",
 	enrage_bar = "<격노>",
 	enrage_next = "격노 종료 - 다음은 약 32초 후",
@@ -100,7 +98,6 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Douleur et souffrance, voilà tout ce qui vous attend !",
 
 	enrage_start = "Enrager dans ~47 sec.",
-	enrage_trigger = "%s devient fou furieux !",
 	enrage_message = "Enragé pendant 15 sec. !",
 	enrage_bar = "<Enragé>",
 	enrage_next = "Fin de l'Enrager - Prochain dans ~32 sec.",
@@ -138,7 +135,6 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Auf Euch warten nur Schmerz und Leid!",
 
 	enrage_start = "Wutanfall in ~47sec",
-	enrage_trigger = "%s wird wütend!",
 	enrage_message = "Wutanfall für 15sek!",
 	enrage_bar = "<Wutanfall>",
 	enrage_next = "Wutanfall Vorbei - Nächster in ~32sec",
@@ -176,7 +172,6 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "等待你们的只有痛苦与折磨！",
 
 	enrage_start = "~47秒后 激怒",
-	enrage_trigger = "%s变得愤怒了！",
 	enrage_message = "愤怒 15秒！",
 	enrage_bar = "<愤怒>",
 	enrage_next = "愤怒结束 ~32秒后再次发动",
@@ -214,7 +209,6 @@ L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "等待你們的只有痛苦與折磨﹗",
 
 	enrage_start = "憤怒在 ~47sec",
-	enrage_trigger = "受難精華變得憤怒了!",
 	enrage_message = "憤怒 15 秒!",
 	enrage_bar = "<憤怒>",
 	enrage_next = "憤怒結束 - 下一次 ~32秒",
@@ -263,13 +257,13 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Spite", 41377)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Shield", 41431)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Spite", 41376, 41377)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Enrage", 41305)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Shield", 41431)
 	self:AddCombatListener("SPELL_CAST_START", "Deaden", 41410)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Scream", 41545) -- verify this is the correct combat event
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Scream", 41545)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	db = self.db.profile
@@ -283,6 +277,16 @@ function mod:Spite(player)
 	if db.spite then
 		spiteIt[player] = true
 		self:ScheduleEvent("BWSpiteWarn", self.SpiteWarn, 0.3, self)
+	end
+end
+
+function mod:Enrage(_, spellID)
+	if db.enrage then
+		self:IfMessage(L["enrage_message"], "Attention", spellID, "Alert")
+		self:Bar(L["enrage_bar"], 15, spellID)
+		self:DelayedMessage(15, L["enrage_next"], "Attention")
+		self:DelayedMessage(42, L["enrage_warning"], "Urgent")
+		self:Bar(L["enrage_nextbar"], 47, spellID)
 	end
 end
 
@@ -327,16 +331,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["deaden_nextbar"], 28, "Spell_Shadow_SoulLeech_1")
 			self:DelayedMessage(23, L["deaden_warn"], "Urgent")
 		end
-	end
-end
-
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if msg == L["enrage_trigger"] and db.enrage then
-		self:Message(L["enrage_message"], "Attention", nil, "Alert")
-		self:Bar(L["enrage_bar"], 15, "Spell_Shadow_UnholyFrenzy")
-		self:DelayedMessage(15, L["enrage_next"], "Attention")
-		self:DelayedMessage(42, L["enrage_warning"], "Urgent")
-		self:Bar(L["enrage_nextbar"], 47, "Spell_Shadow_UnholyFrenzy")
 	end
 end
 
