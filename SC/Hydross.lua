@@ -6,15 +6,12 @@ local boss = BB["Hydross the Unstable"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local inTomb = {}
-local debuff = {0, 10, 25, 50, 100, 250, 500}
-local currentPerc = nil
+local curPerc = 10
+local stance = 1
 local fmt = string.format
 local CheckInteractDistance = CheckInteractDistance
 local db = nil
-local count = 1
 local pName = UnitName("player")
-
-local tooltip
 
 ----------------------------
 --      Localization      --
@@ -27,15 +24,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	mark = "Mark",
 	mark_desc = "Show warnings and counters for marks.",
-	hydross_trigger = "Mark of Hydross",
-	corruption_trigger = "Mark of Corruption",
-	hydross_bar = "%s%% - Mark of Hydross",
-	corruption_bar = "%s%% - Mark of Corruption",
 
 	stance = "Stance changes",
 	stance_desc = "Warn when Hydross changes stances.",
-	poison_stance_trigger = "Aaghh, the poison...",
-	water_stance_trigger = "Better, much better.",
 	poison_stance = "Hydross is now poisoned!",
 	water_stance = "Hydross is now cleaned again!",
 
@@ -71,16 +62,7 @@ L:RegisterTranslations("deDE", function() return {
 	tomb = "Wassergrab",
 	tomb_desc = "Warnt welche Spieler von Wassergrab betroffen sind.",
 
-	hydross_trigger = "Mal von Hydross",
-	corruption_trigger = "Mal der der Verderbnis",
-
-	hydross_bar = "Mal von Hydross - %s%%",
-	corruption_bar = "Mal der Verderbnis - %s%%",
-
 	debuff_warn = "Mal bei %s%%!",
-
-	poison_stance_trigger = "Aahh, das Gift...",
-	water_stance_trigger = "Besser, viel besser.",
 
 	poison_stance = "Hydross ist nun vergiftet!",
 	water_stance = "Hydross ist wieder gereinigt!",
@@ -94,15 +76,9 @@ L:RegisterTranslations("koKR", function() return {
 
 	mark = "징표",
 	mark_desc = "징표에 대한 경고와 카운터를 표시합니다.",
-	hydross_trigger = "히드로스의 징표",
-	corruption_trigger = "타락의 징표",
-	hydross_bar = "히드로스의 징표 - %s%%",
-	corruption_bar = "타락의 징표 - %s%%",
 
 	stance = "태세 변경",
 	stance_desc = "불안정한 히드로스의 태세 변경 시 경고합니다.",
-	poison_stance_trigger = "으아아, 독이...",
-	water_stance_trigger = "아... 기분이 훨씬 좋군.",
 	poison_stance = "히드로스 오염!",
 	water_stance = "히드로스 정화!",
 
@@ -125,15 +101,9 @@ L:RegisterTranslations("frFR", function() return {
 
 	mark = "Marque",
 	mark_desc = "Affiche les alertes et les compteurs des marques.",
-	hydross_trigger = "Marque d'Hydross",
-	corruption_trigger = "Marque de corruption",
-	hydross_bar = "%s%% - Marque d'Hydross",
-	corruption_bar = "%s%% - Marque de corruption",
 
 	stance = "Changements d'état",
 	stance_desc = "Préviens quand Hydross l'Instable change d'état.",
-	poison_stance_trigger = "Aaarrgh, le poison…",
-	water_stance_trigger = "Ça va mieux. Beaucoup mieux.",
 	poison_stance = "Hydross est maintenant empoisonné !",
 	water_stance = "Hydross est de nouveau sain !",
 
@@ -156,15 +126,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 	mark = "印记",
 	mark_desc = "显示印记警报及计数。",
-	hydross_trigger = "海度斯印记",
-	corruption_trigger = "腐蚀印记",
-	hydross_bar = "<海度斯印记 - %s%%>",
-	corruption_bar = "<腐蚀印记 - %s%%>",
 
 	stance = "形态改变",
 	stance_desc = "海度斯毒性改变。",
-	poison_stance_trigger = "啊……毒性侵袭了我……",
-	water_stance_trigger = "感觉好多了。",
 	poison_stance = "毒形态!",
 	water_stance = "水形态!",
 
@@ -187,15 +151,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 	mark = "印記",
 	mark_desc = "印記警報及計數",
-	hydross_trigger = "海卓司印記",
-	corruption_trigger = "墮落印記",
-	hydross_bar = "海卓司印記(冰霜) - %s%%",
-	corruption_bar = "墮落印記(自然) - %s%%",
 
 	stance = "形態改變",
 	stance_desc = "當 不穩定者海卓司 改變型態時發出警報",
-	poison_stance_trigger = "啊，毒……",
-	water_stance_trigger = "很好，舒服多了。",
 	poison_stance = "海卓司轉為毒型態！",
 	water_stance = "海卓司轉為水狀態！",
 
@@ -232,18 +190,18 @@ mod.proximitySilent = true
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Tomb", 38235)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Sludge", 38246)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark",
+		38215, 38216, 38217, 38218, 38231, 40584, --Mark of Hydross - 10, 25, 50, 100, 250, 500
+		38219, 38220, 38221, 38222, 38230, 40583 --Mark of Corruption - 10, 25, 50, 100, 250, 500
+	)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Stance", 25035)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	for k in pairs(inTomb) do inTomb[k] = nil end
-
-	if not tooltip then
-		tooltip = CreateFrame("GameTooltip", "HydrossTooltip", nil, "GameTooltipTemplate")
-		tooltip:SetOwner(UIParent, "ANCHOR_NONE")
-	end
+	curPerc = 10
+	stance = 1
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
-	self:RegisterEvent("PLAYER_AURAS_CHANGED", "DebuffCheck")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	db = self.db.profile
@@ -268,107 +226,86 @@ function mod:Sludge(player, spellID)
 	end
 end
 
+local debuffBar = "%d%% - %s"
+local poisonName = GetSpellInfo(38219)
+local cleanName = GetSpellInfo(38215)
+function mod:Mark(_, spellID, _, _, spellName)
+	self:TriggerEvent("BigWigs_StopBar", self, fmt(debuffBar, curPerc, poisonName))
+	self:TriggerEvent("BigWigs_StopBar", self, fmt(debuffBar, curPerc, cleanName))
+	if db.mark then
+		self:IfMessage(fmt(L["debuff_warn"], curPerc), "Important", spellID, "Alert")
+		if spellID == 38215 or spellID == 38219 then
+			curPerc = 25
+		elseif spellID == 38216 or spellID == 38220 then
+			curPerc = 50
+		elseif spellID == 38217 or spellID == 38221 then
+			curPerc = 100
+		elseif spellID == 38218 or spellID == 38222 then
+			curPerc = 250
+		elseif spellID == 38231 or spellID == 38230 then
+			curPerc == 500
+		end
+		self:Bar(fmt(debuffBar, curPerc, spellName), 15, spellID)
+	end
+end
+
+local last = 0
+--stance: 1=clean 2=poison
+function mod:Stance()
+	local time = GetTime()
+	if (time - last) > 10 then
+		last = time
+		if stance == 1 then
+			stance = 2
+			self:TriggerEvent("BigWigs_StopBar", self, fmt(debuffBar, curPerc, cleanName))
+			curPerc = 10
+			if db.stance then
+				self:IfMessage(L["poison_stance"], "Important", 38219)
+			end
+			if db.mark then
+				self:Bar(fmt(debuffBar, curPerc, poisonName), 15, 38219)
+			end
+			self:TriggerEvent("BigWigs_HideProximity", self)
+		else
+			stance = 1
+			self:TriggerEvent("BigWigs_StopBar", self, fmt(debuffBar, curPerc, poisonName))
+			curPerc = 10
+			self:TriggerEvent("BigWigs_RemoveRaidIcon")
+			if db.stance then
+				self:IfMessage(L["water_stance"], "Important", 38215)
+			end
+			if db.mark then
+				self:Bar(fmt(debuffBar, curPerc, cleanName), 15, 38215)
+			end
+			self:TriggerEvent("BigWigs_ShowProximity", self)
+		end
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["start_trigger"] then
-		count = 1
-		currentPerc = nil
+		curPerc = 10
+		stance = 1
 		if db.mark then
-			self:Bar(fmt(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrozenCore")
+			self:Bar(fmt(debuffBar, curPerc, cleanName), 15, 38215)
 		end
 		if db.enrage then
 			self:Enrage(600)
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
-	elseif msg == L["poison_stance_trigger"] then
-		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["hydross_bar"], debuff[count+1] and debuff[count+1] or 500))
-		count = 1
-		currentPerc = nil
-		if db.stance then
-			self:Message(L["poison_stance"], "Important")
-		end
-		if db.mark then
-			self:Bar(fmt(L["corruption_bar"], debuff[count+1]), 15, "Spell_Nature_ElementalShields")
-		end
-		self:TriggerEvent("BigWigs_HideProximity", self)
-	elseif msg == L["water_stance_trigger"] then
-		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["corruption_bar"], debuff[count+1] and debuff[count+1] or 500))
-		count = 1
-		currentPerc = nil
-		self:TriggerEvent("BigWigs_RemoveRaidIcon")
-		if db.stance then
-			self:Message(L["water_stance"], "Important")
-		end
-		if db.mark then
-			self:Bar(fmt(L["hydross_bar"], debuff[count+1]), 15, "Spell_Frost_FrozenCore")
-		end
-		self:TriggerEvent("BigWigs_ShowProximity", self)
-	end
-end
-
--- returns the index of the mark in the debuff table, or the index of the last mark ( should not happen )
-local function getMark(match)
-	for i,v in ipairs(debuff) do
-		if v == tonumber(match) then
-			return i
-		end
-	end
-	return #debuff
-end
-
-function mod:IncrementHydross(match)
-	count = getMark(match)
-	self:TriggerEvent("BigWigs_StopBar", self, fmt(L["hydross_bar"], debuff[count] and debuff[count] or 500))
-	if db.mark then
-		self:Message(fmt(L["debuff_warn"], match), "Important", nil, "Alert")
-		self:Bar(fmt(L["hydross_bar"], debuff[count+1] and debuff[count+1] or 500), 15, "Spell_Frost_FrozenCore")
-	end
-end
-
-function mod:IncrementCorruption(match)
-	count = getMark(match)
-	self:TriggerEvent("BigWigs_StopBar", self, fmt(L["corruption_bar"], debuff[count] and debuff[count] or 500))
-	if db.mark then
-		self:Message(fmt(L["debuff_warn"], match), "Important", nil, "Alert")
-		self:Bar(fmt(L["corruption_bar"], debuff[count+1] and debuff[count+1] or 500), 15, "Spell_Nature_ElementalShields")
-	end
-end
-
-function mod:DebuffCheck()
-	local i = 1
-	while true do
-		buffIndex = GetPlayerBuff(i, "HARMFUL")
-		if buffIndex == 0 then break end
-		tooltip:SetPlayerBuff(buffIndex)
-		local bName = HydrossTooltipTextLeft1:GetText()
-		if bName == L["hydross_trigger"] then
-			local match = select(3, HydrossTooltipTextLeft2:GetText():find("(%d+)"))
-			if match ~= currentPerc then
-				currentPerc = match
-				self:IncrementHydross(match)
-			end
-		elseif bName == L["corruption_trigger"] then
-			local match = select(3, HydrossTooltipTextLeft2:GetText():find("(%d+)"))
-			if match ~= currentPerc then
-				currentPerc = match
-				self:IncrementCorruption(match)
-			end
-		end
-		i = i + 1
 	end
 end
 
 function mod:TombWarn()
-	if db.tomb then
-		local msg = nil
-		for k in pairs(inTomb) do
-			if not msg then
-				msg = k
-			else
-				msg = msg .. ", " .. k
-			end
+	local msg = nil
+	for k in pairs(inTomb) do
+		if not msg then
+			msg = k
+		else
+			msg = msg .. ", " .. k
 		end
-		self:IfMessage(fmt(L["tomb_message"], msg), "Attention", 45574)
 	end
+	self:IfMessage(fmt(L["tomb_message"], msg), "Attention", 45574)
 	for k in pairs(inTomb) do inTomb[k] = nil end
 end
 
