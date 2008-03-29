@@ -243,7 +243,7 @@ function mod:Mark(_, spellID, _, _, spellName)
 		elseif spellID == 38218 or spellID == 38222 then
 			curPerc = 250
 		elseif spellID == 38231 or spellID == 38230 then
-			curPerc == 500
+			curPerc = 500
 		end
 		self:Bar(fmt(debuffBar, curPerc, spellName), 15, spellID)
 	end
