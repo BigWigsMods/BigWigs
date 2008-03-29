@@ -12,6 +12,7 @@ local fmt = string.format
 local CheckInteractDistance = CheckInteractDistance
 local db = nil
 local pName = UnitName("player")
+local allowed = nil
 
 ----------------------------
 --      Localization      --
@@ -200,6 +201,7 @@ function mod:OnEnable()
 	for k in pairs(inTomb) do inTomb[k] = nil end
 	curPerc = 10
 	stance = 1
+	allowed = nil
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -253,7 +255,7 @@ local last = 0
 --stance: 1=clean 2=poison
 function mod:Stance()
 	local time = GetTime()
-	if (time - last) > 10 then
+	if (time - last) > 10 and allowed then
 		last = time
 		if stance == 1 then
 			stance = 2
@@ -286,6 +288,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["start_trigger"] then
 		curPerc = 10
 		stance = 1
+		allowed = true
 		if db.mark then
 			self:Bar(fmt(debuffBar, curPerc, cleanName), 15, 38215)
 		end
