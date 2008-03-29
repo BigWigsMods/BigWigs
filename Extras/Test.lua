@@ -164,15 +164,15 @@ function plugin:BigWigs_RecvSync(sync)
 end
 
 function plugin:BigWigs_Test()
-	self:Bar(fmt("%s%d", L["Test Bar "], 4), 30, "Spell_Nature_ResistNature")
+	self:Bar(fmt("%s%d", L["Test Bar "], 4), 30, 34976)
 
 	self:Message(L["Testing"], "Attention", true, "Long", nil, 25596)
 	self:DelayedMessage(10, L["OMG Bear!"], "Important", true, "Alert", nil, 7903)
 	self:DelayedMessage(20, L["*RAWR*"], "Urgent", true, "Alarm", nil, 27006)
 	self:DelayedMessage(30, L["Victory!"], "Bosskill", true, "Victory", nil, 34976)
 
-	self:Bar(fmt("%s%d", L["Test Bar "], 3), 20, "Spell_Nature_ResistNature")
-	self:Bar(fmt("%s%d", L["Test Bar "], 2), 10, "Spell_Nature_ResistNature")
-	self:Bar(fmt("%s%d", L["Test Bar "], 1), 5, "Spell_Nature_ResistNature", true, "red")
+	self:Bar(fmt("%s%d", L["Test Bar "], 3), 20, 27006)
+	self:Bar(fmt("%s%d", L["Test Bar "], 2), 10, 7903)
+	self:Bar(fmt("%s%d", L["Test Bar "], 1), 5, 25596, true, "red")
 end
 
