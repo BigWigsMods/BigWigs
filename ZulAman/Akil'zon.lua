@@ -7,7 +7,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local CheckInteractDistance = CheckInteractDistance
 local db = nil
-local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -158,11 +157,11 @@ mod.proximitySilent = true
 ------------------------------
 
 function mod:OnEnable()
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Storm", 43648)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveIcon", 43648)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	db = self.db.profile
@@ -172,37 +171,36 @@ end
 --      Event Handlers      --
 ------------------------------
 
+function mod:Storm(player, spellID)
+	if not db.elec then return end
+
+	local show = L["elec_message"]:format(player)
+	self:IfMessage(show, "Attention", spellID)
+	self:Bar(show, 8, spellID)
+	self:Bar(L["elec_bar"], 55, spellID)
+	self:DelayedMessage(48, L["elec_warning"], "Urgent")
+	if UnitIsUnit(player, "player") and db.ping then
+		Minimap:PingLocation()
+		BigWigs:Print(L["ping_message"])
+	end
+	self:Icon(player, "icon")
+end
+
+function mod:RemoveIcon()
+	self:TriggerEvent("BigWigs_RemoveRaidIcon")
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		if db.enrage then
-			self:Enrage(600, true)
+			self:Enrage(600, true, true)
 		end
 		if db.elec then
 			self:Message(L["engage_message"]:format(boss), "Positive")
-			self:Bar(L["elec_bar"], 50, "Spell_Lightning_LightningBolt01")
+			self:Bar(L["elec_bar"], 50, 43648)
 			self:DelayedMessage(47, L["elec_warning"], "Urgent")
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
-	end
-end
-
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)
-	if not db.elec then return end
-
-	if unit == boss then
-		local show = L["elec_message"]:format(player)
-		self:Message(show, "Attention")
-		self:Bar(show, 8, "Spell_Nature_EyeOfTheStorm")
-		self:Bar(L["elec_bar"], 55, "Spell_Lightning_LightningBolt01")
-		self:DelayedMessage(48, L["elec_warning"], "Urgent")
-		if player == pName and db.ping then
-			Minimap:PingLocation()
-			BigWigs:Print(L["ping_message"])
-		end
-		if db.icon then
-			self:Icon(player)
-			self:ScheduleEvent("BWRemoveAkilIcon", "BigWigs_RemoveRaidIcon", 10, self)
-		end
 	end
 end
 
