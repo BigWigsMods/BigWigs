@@ -49,6 +49,17 @@ L:RegisterTranslations("koKR", function() return {
 	gas_bar = "~가스 회오리 대기시간",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	encaps = "Enfermer",
+	encaps_desc = "Préviens quand un joueur subit les effets d'Enfermer.",
+	encaps_message = "Enfermer : %s",
+
+	gas = "Nova de gaz",
+	gas_desc = "Préviens quand la Nova de gaz est incanté.",
+	gas_message = "Nova de gaz en incantation !",
+	gas_bar = "~Cooldown Nova de gaz",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
