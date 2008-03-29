@@ -39,7 +39,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	attraction = "Fatal Attraction",
 	attraction_desc = "Warn who has Fatal Attraction.",
-	attraction_trigger = "^(%S+) (%S+) afflicted by Fatal Attraction%.$",
 	attraction_message = "Attraction: %s",
 
 	debuff = "Debuff Timers",
@@ -47,7 +46,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	enrage_warning = "Enrage soon!",
 	enrage_message = "10% - Enraged",
-	enrage_trigger = "Stop toying with my emotions!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -55,7 +53,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	attraction = "致命吸引",
 	attraction_desc = "当谁中了致命吸引发出警报。",
-	attraction_trigger = "^(.+)受(.+)了致命吸引效果的影响。$",
 	attraction_message = "致命吸引：>%s<！",
 
 	debuff = "Debuff 计时",
@@ -63,7 +60,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	enrage_warning = "即将狂暴！",
 	enrage_message = "10% - 狂暴",
-	enrage_trigger = "不要浪费我的感情了！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -71,7 +67,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	attraction = "致命的吸引力",
 	attraction_desc = "當玩家中致命的吸引力發出警報",
-	attraction_trigger = "^(.+)受(到[了]*)致命的吸引力效果的影響。",
 	attraction_message = "致命的吸引力：%s",
 
 	debuff = "Debuff 計時",
@@ -79,7 +74,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	enrage_warning = "即將狂怒!",
 	enrage_message = "10% - 狂怒",
-	enrage_trigger = "不要浪費我的感情了！",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -87,7 +81,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	attraction = "치명적인 매력",
 	attraction_desc = "치명적인 매력에 걸린 사람을 알립니다.",
-	attraction_trigger = "^([^|;%s]*)(.*)치명적인 매력에 걸렸습니다%.$",
 	attraction_message = "매력: %s",
 
 	debuff = "디버프 타이머",
@@ -95,7 +88,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	enrage_warning = "곧 격노!",
 	enrage_message = "10% - 격노",
-	enrage_trigger = "날 화나게 하지 마라!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -103,7 +95,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	attraction = "Liaison fatale",
 	attraction_desc = "Préviens quand un joueur subit les effets de la Liaison fatale.",
-	attraction_trigger = "^(%S+) (%S+) les effets .* Liaison fatale%.$",
 	attraction_message = "Liaison : %s",
 
 	debuff = "Affaiblissements",
@@ -111,7 +102,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	enrage_warning = "Enrager imminent !",
 	enrage_message = "10% - Enragée",
-	enrage_trigger = "Arrêtez de jouer avec mes sentiments !",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -119,7 +109,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	attraction = "Verhängnisvolle Affäre",
 	attraction_desc = "Warnt wer die Verhängnisvolle Affäre hat.",
-	attraction_trigger = "^([^%s]+) ([^%s]+) ist von Verhängnisvolle Affäre betroffen%.$",
 	attraction_message = "Affäre: %s",
 
 	debuff = "Debuff Timer",
@@ -127,7 +116,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	enrage_warning = "Wütend bald!",
 	enrage_message = "10% - Wütend",
-	enrage_trigger = "Spielt nicht mit meinen Gefühlen!",
 } end )
 
 ----------------------------------
@@ -149,6 +137,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Attraction", 41001)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("PLAYER_AURAS_CHANGED")
 	self:RegisterEvent("UNIT_HEALTH")
 
@@ -203,7 +192,11 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		for k in pairs(attracted) do attracted[k] = nil end
 		restype = nil
 		self:Berserk()
-	elseif db.enrage and msg == L["enrage_trigger"] then
+	end
+end
+
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit)
+	if unit == boss and db.enrage then
 		self:Message(L["enrage_message"], "Important")
 	end
 end
