@@ -15,14 +15,16 @@ local db = nil
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Felmyst",
-} end )
 
---[[
-	Sunwell modules are PTR beta, as so localization is not supportd in any way
-	This gives the authors the freedom to change the modules in way that
-	can potentially break localization.
-	Feel free to localize, just be aware that you may need to change it frequently.
-]]--
+	encaps = "Encapsulate",
+	encaps_desc = "Warn who has Encapsulate.",
+	encaps_message = "Encapsulate: %s",
+
+	gas = "Gas Nova",
+	gas_desc = "Warn for Gas Nova being cast.",
+	gas_message = "Casting Gas Nova!",
+	gas_bar = "~Gas Nova Cooldown",
+} end )
 
 ----------------------------------
 --      Module Declaration      --
@@ -31,7 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"enrage", "bosskill"}
+mod.toggleoptions = {"encaps", "gas", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -42,6 +44,7 @@ function mod:OnEnable()
 	started = nil
 
 	self:AddCombatListener("SPELL_CAST_START", "Gas", 45855)
+	self:AddCombatListener("SPELL_DAMAGE", "Encapsulate", 45662)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -56,13 +59,19 @@ end
 --      Event Handlers      --
 ------------------------------
 
---[[
-	most likely an impending re-write of Felmyst inc by blizz
-]]--
-
 function mod:Gas(_, spellID)
-	self:Message("Casting Gas Nova!", "Attention", true, "Alert", nil, spellID)
-	self:Bar("~Gas Nova Cooldown", 20, spellID)
+	self:IfMessage(L["gas_message"], "Attention", spellID, "Alert")
+	self:Bar(L["gas_bar"], 20, spellID)
+end
+
+local seenEncaps = 0
+function mod:Encapsulate(player, spellID)
+	if GetTime() - seenEncaps >= 10 and self:HasEncaps(player) then
+		self:IfMessage(L["encaps_message"]:format(player), "Important", spellID)
+		self:Icon(player)
+
+		seenEncaps = GetTime()
+	end
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
@@ -77,3 +86,4 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	end
 end
+
