@@ -202,7 +202,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Poison", 30822, 30830)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Poison", 30822)
 	self:AddCombatListener("SPELL_CAST_START", "Heal", 30878)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Devotion", 30887)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Daring", 30841)
