@@ -60,17 +60,20 @@ end
 ------------------------------
 
 function mod:Gas(_, spellID)
-	self:IfMessage(L["gas_message"], "Attention", spellID, "Alert")
-	self:Bar(L["gas_bar"], 20, spellID)
+	if db.gas then
+		self:IfMessage(L["gas_message"], "Attention", spellID, "Alert")
+		self:Bar(L["gas_bar"], 20, spellID)
+	end
 end
 
 local seenEncaps = 0
 function mod:Encapsulate(player, spellID)
-	if GetTime() - seenEncaps >= 10 and self:HasEncaps(player) then
-		self:IfMessage(L["encaps_message"]:format(player), "Important", spellID)
-		self:Icon(player)
-
-		seenEncaps = GetTime()
+	if db.encaps then
+		if GetTime() - seenEncaps >= 10 and self:HasEncaps(player) then
+			self:IfMessage(L["encaps_message"]:format(player), "Important", spellID)
+			self:Icon(player)
+			seenEncaps = GetTime()
+		end
 	end
 end
 
