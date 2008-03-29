@@ -19,7 +19,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	bolts = "Spirit Bolts",
 	bolts_desc = "Warn when Malacrass starts channelling Spirit Bolts.",
-	bolts_trigger = "Your soul gonna bleed!",
 	bolts_message = "Incoming Spirit Bolts!",
 	bolts_warning = "Spirit Bolts in 5 sec!",
 	bolts_nextbar = "Next Spirit Bolts",
@@ -42,7 +41,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	bolts = "Geistblitze",
 	bolts_desc = "Warnt wenn Geistblitze gecastet werden.",
-	bolts_trigger = "Eure Seele wird bluten!",
 	bolts_message = "Geistblitze!",
 	bolts_warning = "Geistblitze in 5 Sek!",
 	bolts_nextbar = "N\195\164chsten Geistblitze",
@@ -65,7 +63,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	bolts = "영혼의 화살",
 	bolts_desc = "말라크라스의 영혼의 화살 시전을 알립니다.",
-	bolts_trigger = "네 영혼이 피를 흘리리라!",
 	bolts_message = "영혼의 화살 시전!",
 	bolts_warning = "5초후 영혼의 화살!",
 	bolts_nextbar = "다음 영혼의 화살",
@@ -88,7 +85,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	bolts = "Eclairs spirituels",
 	bolts_desc = "Préviens quand Malacrass commence à canaliser ses Eclairs spirituels.",
-	bolts_trigger = "Ton âme, elle va saigner !",
 	bolts_message = "Arrivée des Eclairs spirituels !",
 	bolts_warning = "Eclairs spirituels dans 5 sec. !",
 	bolts_nextbar = "Prochains Eclairs spirituels",
@@ -111,7 +107,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	bolts = "灵魂之箭",
 	bolts_desc = "当玛拉卡斯开始引导灵魂之箭时发出警报。",
-	bolts_trigger = "你的灵魂在流血！",
 	bolts_message = "即将 - 灵魂之箭！",
 	bolts_warning = "5秒后 灵魂之箭！",
 	bolts_nextbar = "<下一灵魂之箭>",
@@ -134,7 +129,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	bolts = "靈魂箭",
 	bolts_desc = "警告瑪拉克雷斯施放靈魂箭",
-	bolts_trigger = "你的靈魂將會受到傷害!",
 	bolts_message = "靈魂箭即將來臨",
 	bolts_warning = "5 秒後靈魂箭!",
 	bolts_nextbar = "下次靈魂箭",
@@ -157,7 +151,6 @@ L:RegisterTranslations("esES", function() return {
 
 	bolts = "Descargas de esp\195\173ritu",
 	bolts_desc = "Avisa cuando Malacrass comienza a canalizar Descargas de esp\195\173ritu.",
-	bolts_trigger = "¡Vuestra alma sangrar\195\161!",
 	bolts_message = "\194\161Descargas de esp\195\173ritu!",
 	bolts_warning = "Descargas de esp\195\173ritu en 5 seg!",
 	bolts_nextbar = "Descargas de esp\195\173ritu siguientes",
@@ -191,8 +184,9 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SoulSiphon", 43501)
-	self:AddCombatListener("SPELL_CAST_START", "Heal", 41372, 43548, 43451, 43575, 43431, 43420) -- he probably doesn't cast all of these heals please check
-	self:AddCombatListener("SPELL_CAST_START", "Totem", 43436)
+	self:AddCombatListener("SPELL_CAST_START", "Heal", 43548, 43451, 43431) --Healing Wave, Holy Light, Flash Heal
+	self:AddCombatListener("SPELL_SUMMON", "Totem", 43436)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Bolts", 43383)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -224,16 +218,18 @@ function mod:Totem()
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if not db.bolts then return end
-
-	if msg == L["bolts_trigger"] then
-		self:Message(L["bolts_message"], "Important")
-		self:Bar(L["bolts"], 10, "Spell_Shadow_ShadowBolt")
-		self:Bar(L["bolts_nextbar"], 40, "Spell_Shadow_ShadowBolt")
+function mod:Bolts(_, spellID)
+	if db.bolts then
+		self:IfMessage(L["bolts_message"], "Important", spellID)
+		self:Bar(L["bolts"], 10, spellID)
+		self:Bar(L["bolts_nextbar"], 40, spellID)
 		self:DelayedMessage(35, L["bolts_warning"], "Attention")
-	elseif msg == L["engage_trigger"] then
-		self:Bar(L["bolts_nextbar"], 30, "Spell_Shadow_ShadowBolt")
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["engage_trigger"] and db.bolts then
+		self:Bar(L["bolts_nextbar"], 30, 43383)
 		self:DelayedMessage(25, L["bolts_warning"], "Attention")
 	end
 end
