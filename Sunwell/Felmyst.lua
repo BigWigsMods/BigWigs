@@ -103,7 +103,7 @@ end
 local seenEncaps = 0
 function mod:Encapsulate(player, spellID)
 	if db.encaps then
-		if GetTime() - seenEncaps >= 10 and self:HasEncaps(player) then
+		if GetTime() - seenEncaps >= 10 then --self:HasEncaps(player)
 			self:IfMessage(L["encaps_message"]:format(player), "Important", spellID)
 			self:Icon(player)
 			seenEncaps = GetTime()
