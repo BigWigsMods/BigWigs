@@ -168,7 +168,7 @@ end
 
 function mod:RainOfFire(player)
 	if db.fire and player == pName then
-		self:IfMessage(L["fire_you"], "Urgent", 31340, "Alarm")
+		self:LocalMessage(L["fire_you"], "Urgent", 31340, "Alarm")
 	end
 end
 

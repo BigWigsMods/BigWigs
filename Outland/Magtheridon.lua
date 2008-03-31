@@ -363,7 +363,7 @@ end
 
 function mod:Debris(player)
 	if player == pName and db.debris then
-		self:IfMessage(L["debris_message"], "Important", 30632, "Alert")
+		self:LocalMessage(L["debris_message"], "Important", 30632, "Alert")
 	end
 end
 

@@ -437,7 +437,7 @@ end
 
 function mod:Blizzard(player)
 	if player == pName then
-		self:IfMessage(L["blizzard_message"], "Personal", 41482, "Alarm")
+		self:LocalMessage(L["blizzard_message"], "Personal", 41482, "Alarm")
 	end
 end
 

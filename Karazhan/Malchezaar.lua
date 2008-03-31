@@ -321,8 +321,8 @@ function mod:Enfeeble(player, spellID)
 	if (time - last) > 20 then
 		last = time
 		if self.db.profile.enfeeble then
-			if player == UnitName("player") then
-				self:IfMessage(L["enfeeble_warnyou"], "Personal", spellID, "Alarm")
+			if UnitIsUnit(player, "player") then
+				self:LocalMessage(L["enfeeble_warnyou"], "Personal", spellID, "Alarm")
 			end
 			self:IfMessage(L["enfeeble_message"], "Important", spellID)
 			self:ScheduleEvent("enf1", "BigWigs_Message", 25, L["enfeeble_warning1"], "Attention")

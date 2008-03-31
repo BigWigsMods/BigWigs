@@ -228,14 +228,12 @@ function mod:TargetCheck()
 		if target then
 			local other = fmt(L["target_message"], target)
 			if target == pName then
-				self:Message(L["target_you"], "Personal", true, "Alarm")
-				self:Message(other, "Attention", nil, nil, true)
+				self:LocalMessage(L["target_you"], "Personal", nil, "Alarm")
+				self:WideMessage(other)
 			else
 				self:Message(other, "Attention")
 			end
-			if db.icon then
-				self:Icon(target)
-			end
+			self:Icon(target, "icon")
 			previous = target
 		else
 			previous = nil

@@ -271,7 +271,7 @@ end
 
 function mod:CaveIn(player)
 	if player == pName and db.cavein then
-		self:IfMessage(L["cavein_message"], "Personal", 36240, "Alarm")
+		self:LocalMessage(L["cavein_message"], "Personal", 36240, "Alarm")
 	end
 end
 

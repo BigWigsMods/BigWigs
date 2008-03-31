@@ -150,7 +150,7 @@ end
 
 function mod:Mark(player)
 	if player == pName and db.mark then
-		self:Message(L["mark_message"], "Personal", 32960, "Alarm")
+		self:LocalMessage(L["mark_message"], "Personal", 32960, "Alarm")
 	end
 end
 
