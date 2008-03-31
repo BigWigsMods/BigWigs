@@ -422,21 +422,21 @@ function mod:HealingStart(_, spellID, source)
 end
 
 function mod:Healed(_, spellID, source)
-	if source == malande then
+	if source == malande  and db.circle then
 		self:IfMessage(L["circle_heal_message"], "Urgent", spellID)
 		self:Bar(L["circle_bar"], 20, spellID)
 	end
 end
 
 function mod:HealingFailed(_, _, source, spellID)
-	if spellID and spellID == 41455 then
+	if spellID == 41455 and db.circle then
 		self:Message(fmt(L["circle_fail_message"], source), "Urgent")
 		self:Bar(L["circle_bar"], 12, spellID)
 	end
 end
 
 function mod:Blizzard(player)
-	if player == pName then
+	if player == pName and db.blizzard then
 		self:LocalMessage(L["blizzard_message"], "Personal", 41482, "Alarm")
 	end
 end
