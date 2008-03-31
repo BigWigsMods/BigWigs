@@ -207,6 +207,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "KnockAway", 25778)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Pounding", 34162)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Orb", 34172, 34190)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -230,6 +231,11 @@ function mod:Pounding()
 	if db.pounding then
 		self:Bar(L["pounding_nextbar"], 13, 34162)
 	end
+end
+
+function mod:Orb(player, spellID)
+	if not player then return end
+	self:Result(player)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
