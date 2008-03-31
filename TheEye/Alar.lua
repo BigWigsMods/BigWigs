@@ -173,7 +173,7 @@ end
 
 function mod:FlamePatch(player)
 	if player == pName and db.flamepatch then
-		self:IfMessage(L["flamepatch_message"], "Personal", 35383, "Alarm")
+		self:LocalMessage(L["flamepatch_message"], "Personal", 35383, "Alarm")
 	end
 end
 
