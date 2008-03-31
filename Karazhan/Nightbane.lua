@@ -271,7 +271,7 @@ end
 
 function mod:CharredEarth(player)
 	if UnitIsUnit(player, "player") and self.db.profile.charr then
-		self:IfMessage(L["charr_message"], "Personal", 30129, "Alarm")
+		self:LocalMessage(L["charr_message"], "Personal", 30129, "Alarm")
 	end
 end
 
