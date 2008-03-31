@@ -140,7 +140,7 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	--engage_trigger = "Ah, more lambs to the slaughter!",
+	engage_trigger = "啊，更多待宰的小羊們!",
 
 	burn = "燃燒",
 	burn_desc = "警示誰中了燃燒及下一次燃燒來臨通知。",
