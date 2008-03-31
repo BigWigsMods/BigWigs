@@ -126,8 +126,8 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger4 = "꺼져! 안그러면 죽는다!",
 
 	vanish = "소멸",
-	vanish_desc = "베라스의 소멸에 대한 예상 타이머입니다.",
-	vanish_message = "베라스: 소멸! 30초이내 출현",
+	vanish_desc = "소멸에 대한 예측 타이머입니다.",
+	vanish_message = "베라스: 소멸! 약 30초 이내 출현",
 	vanish_warning = "소멸 종료 - %s 출현!",
 	vanish_bar = "베라스 은신",
 

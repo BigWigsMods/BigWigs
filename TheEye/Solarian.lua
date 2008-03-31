@@ -98,7 +98,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase2_message = "20% - 2 단계",
 
 	wrath = "분노 디버프",
-	wrath_desc = "분노 디버프에 걸린 대상을 알립니다.",
+	wrath_desc = "점성술사의 분노에 걸린 사람을 알립니다.",
 	wrath_fade = "당신의 몸에서 점성술사의 분노 효과가 사라졌습니다.",
 	wrath_other = "%s에 분노",
 	wrath_you = "당신에 분노!",

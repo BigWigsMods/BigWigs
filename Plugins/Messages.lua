@@ -56,8 +56,11 @@ L:RegisterTranslations("koKR", function() return {
 	["Messages"] = "메세지",
 	["Options for message display."] = "메세지 표시에 대한 설정입니다.",
 
+	["BigWigs Anchor"] = "BigWigs 메세지 위치",
+	["Output Settings"] = "출력 설정",
+
 	["Show anchor"] = "고정 위치 표시",
-	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "메세지의 고정 위치를 표시합니다.",
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "메세지의 고정 위치를 표시합니다.\n\n'BigWigs'로 출력이 선택되어 있을 때에만 표시합니다.",
 
 	["Use colors"] = "색상 사용",
 	["Toggles white only messages ignoring coloring."] = "메세지에 색상 사용을 설정합니다.",

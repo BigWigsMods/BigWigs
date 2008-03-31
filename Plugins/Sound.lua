@@ -42,7 +42,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Sounds"] = "효과음",
 	["Options for sounds."] = "효과음에 대한 설정입니다.",
 
-	["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "%q에 사용할 효과음을 설정합니다(미리듣기는 CTRL-클릭).",
+	["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "%q에 사용할 효과음을 설정합니다.\n\n미리듣기는 CTRL-클릭하세요.",
 	["Use sounds"] = "효과음 사용",
 	["Toggle all sounds on or off."] = "모든 효과음을 켜거나 끕니다.",
 	["Default only"] = "기본음",

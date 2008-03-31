@@ -51,11 +51,11 @@ L:RegisterTranslations("koKR", function() return {
 
 	shadow = "죽음의 어둠",
 	shadow_desc = "죽음의 어둠에 걸린 사람을 알립니다.",
-	shadow_other = "죽음의 어둠: %s!",
+	shadow_other = "어둠: %s!",
 	shadow_you = "당신에 죽음의 어둠!",
 
 	ghost = "영혼",
-	ghost_desc = "영혼 타이머.",
+	ghost_desc = "영혼 타이머입니다.",
 	ghost_bar = "영혼: %s",
 
 	icon = "전술 표시",
