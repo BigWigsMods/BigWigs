@@ -201,9 +201,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 	whisper = "因斯迪安低语",
 	whisper_desc = "当玩家受到因斯迪安低语发出警报。",
-	whisper_message = "恶魔：>%s<！",
-	whisper_bar = "<恶魔消失>",
-	whisper_soon = "~恶魔 冷却",
+	whisper_message = "心魔：>%s<！",
+	whisper_bar = "<心魔消失>",
+	whisper_soon = "~心魔 冷却",
 }end )
 
 L:RegisterTranslations("zhTW", function() return {

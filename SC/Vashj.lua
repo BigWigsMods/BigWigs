@@ -237,8 +237,8 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_trigger1 = "我不想贬低自己来获取你的宽容，但是你让我别无选择……",
 	engage_trigger2 = "我唾弃你们，地表的渣滓！",
 	engage_trigger3 = "伊利丹大人必胜！",
-	engage_trigger4 = "我要把你们全都杀死！",--check the change
-	engage_trigger5 = "入侵者都要受死！伊利丹大人必胜！",
+	engage_trigger4 = "逃吧，否则就来受死！",--fix
+	engage_trigger5 = "入侵者都要受死！",--fix
 	engage_message = "进入第一阶段",
 
 	phase = "阶段警报",
