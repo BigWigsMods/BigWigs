@@ -357,7 +357,7 @@ end
 
 function mod:Exhaustion(player)
 	if not db.exhaust then
-		self:Bar(L["exhaust_bar"]:format(player), 75, 44032)
+		self:Bar(L["exhaust_bar"]:format(player), 30, 44032)
 	end
 end
 
