@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -58,6 +58,17 @@ L:RegisterTranslations("frFR", function() return {
 	gas_desc = "Préviens quand la Nova de gaz est incanté.",
 	gas_message = "Nova de gaz en incantation !",
 	gas_bar = "~Cooldown Nova de gaz",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	encaps = "封印",
+	encaps_desc = "警示誰受到封印效果。",
+	encaps_message = "封印：[%s]",
+
+	gas = "毒氣新星",
+	gas_desc = "當毒氣新星準備施放時警示。",
+	gas_message = "毒氣新星施放中！",
+	gas_bar = "毒氣新星冷卻計時",
 } end )
 
 ----------------------------------
