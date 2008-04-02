@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -142,6 +142,37 @@ L:RegisterTranslations("zhCN", function() return {
 	blades = "暗影之刃",
 	blades_desc = "显示暗影之刃记时条。",
 	blades_bar = "<下一暗影之刃>",
+} end )
+
+L:RegisterTranslations("enUS", function() return {
+	engage_trigger = "",
+	wipe_bar = "重生計時",
+
+	nova = "暗影新星",
+	nova_desc = "當暗影新星施放時警示。",
+	nova_message = "暗影新星目標：[%s]",
+	nova_bar = "暗影新星冷卻計時",
+
+	conflag = "燃燒衝擊",
+	conflag_desc = "當燃燒衝擊施放時警示。",
+	conflag_message = "燃燒衝擊目標：[%s]",
+	conflag_bar = "下一次燃燒衝擊",
+
+	icon = "團隊標記",
+	icon_desc = "對暗影新星及燃燒衝擊的隊友設置團隊標記（需要權限或更高）",
+
+	pyro = "焦化",
+	pyro_desc = "警示誰受到及解除焦化效果。",
+	pyro_gain = "受到焦化：[%s]",
+	pyro_remove = "解除焦化：[%s]",
+
+	blow = "混亂痛擊",
+	blow_desc = "顯示混亂痛擊計時條。",
+	blow_bar = "下一次混亂痛擊",
+
+	blades = "暗影之刃",
+	blades_desc = "顯示暗影之刃計時條",
+	blades_bar = "下一次暗影之刃",
 } end )
 
 ----------------------------------
