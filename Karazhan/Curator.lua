@@ -16,7 +16,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	berserk_trigger = "The Menagerie is for guests only.",
 
-	enrage_trigger = "Failure to comply will result in offensive action.",
 	enrage_message = "Enrage!",
 	enrage_warning = "Enrage soon!",
 
@@ -38,7 +37,6 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("frFR", function() return {
 	berserk_trigger = "L'accès à la Ménagerie est réservé aux invités.",
 
-	enrage_trigger = "Toute désobéissance entraînera une action offensive.",
 	enrage_message = "Enragé !",
 	enrage_warning = "Bientôt enragé !",
 
@@ -60,7 +58,6 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	berserk_trigger = "Die Menagerie ist nur f\195\188r G\195\164ste.",
 
-	enrage_trigger = "Die Nichteinhaltung wird zur Angriffshandlungen f\195\188hren.",
 	enrage_message = "Kurator in Rage!",
 	enrage_warning = "Kurator bald in Rage!",
 
@@ -82,7 +79,6 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("koKR", function() return {
 	berserk_trigger = "박물관에는 초대받은 손님만 입장하실 수 있습니다.",
 
-	enrage_trigger = "규칙 위반으로 경보가 발동됐습니다.",
 	enrage_message = "격노!",
 	enrage_warning = "잠시 후 격노!",
 
@@ -104,7 +100,6 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	berserk_trigger = "展览厅只对访客开放。",
 
-	enrage_trigger = "不合作将导致攻击行动。",
 	enrage_message = "狂暴！",
 	enrage_warning = "馆长将进入狂暴！",
 
@@ -126,7 +121,6 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	berserk_trigger = "展示廳是賓客專屬的。",
 
-	enrage_trigger = "不順從就會招致攻擊性的行動。",
 	enrage_message = "狂暴",
 	enrage_warning = "館長即將進入狂暴狀態",
 
@@ -148,7 +142,6 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("esES", function() return {
 	berserk_trigger = "La colecci\195\179n es solo para los invitados.",
 
-	enrage_trigger = "Su no cumplimiento resultar\195\161 en una acci\195\179n ofensiva.",
 	enrage_message = "\194\161Enfurecido!",
 	enrage_warning = "\194\161Enfurecimiento pronto!",
 
@@ -184,6 +177,7 @@ mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) en
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Evocate", 30254)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Infusion", 30403)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -210,19 +204,23 @@ function mod:Evocate(_, spellID)
 	end
 end
 
+function mod:Infusion()
+	--somewhat of an enrage :P
+	if self.db.profile.enrage then
+		self:IfMessage(L["enrage_message"], "Important", 30403)
+	end
+
+	self:CancelScheduledEvent("weak1")
+	self:CancelScheduledEvent("weak2")
+	self:CancelScheduledEvent("evoc1")
+	self:CancelScheduledEvent("evoc2")
+	self:CancelScheduledEvent("evoc3")
+	self:TriggerEvent("BigWigs_StopBar", self, L["weaken_bar"])
+	self:TriggerEvent("BigWigs_StopBar", self, L["weaktime_bar"])
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["enrage_trigger"] then -- This only happens towards the end of the fight
-		if self.db.profile.enrage then
-			self:Message(L["enrage_message"], "Important")
-		end
-		self:CancelScheduledEvent("weak1")
-		self:CancelScheduledEvent("weak2")
-		self:CancelScheduledEvent("evoc1")
-		self:CancelScheduledEvent("evoc2")
-		self:CancelScheduledEvent("evoc3")
-		self:TriggerEvent("BigWigs_StopBar", self, L["weaken_bar"])
-		self:TriggerEvent("BigWigs_StopBar", self, L["weaktime_bar"])
-	elseif msg == L["berserk_trigger"] then -- This only happens at the start of the fight
+	if msg == L["berserk_trigger"] then -- This only happens at the start of the fight
 		enrageWarn = nil
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 
