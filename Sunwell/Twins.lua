@@ -144,7 +144,7 @@ L:RegisterTranslations("zhCN", function() return {
 	blades_bar = "<下一暗影之刃>",
 } end )
 
-L:RegisterTranslations("enUS", function() return {
+L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "",
 	wipe_bar = "重生計時",
 
