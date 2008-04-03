@@ -175,6 +175,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 		self:PhaseOne()
 		self:ScheduleRepeatingEvent("BWEncapsScan", self.Encapsulate, 1, self)
+		self:TriggerEvent("BigWigs_ShowProximity", self)
 		if db.enrage then
 			self:Enrage(600)
 		end
