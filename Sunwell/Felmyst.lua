@@ -130,7 +130,9 @@ function mod:Encapsulate()
 			while UnitDebuff(id, c) do
 				if UnitDebuff(id, c) == encaps then
 					local player = UnitName(id)
-					self:IfMessage(fmt(L["encaps_message"], player), "Important", spellID)
+					local msg = fmt(L["encaps_message"], player)
+					self:IfMessage(msg, "Important", spellID)
+					self:Bar(msg, 6, 45665)
 					self:Icon(player)
 					active = true
 					self:ScheduleEvent("BWFelmystAllowScan", killTime, 8)
