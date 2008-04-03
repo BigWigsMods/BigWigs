@@ -7,6 +7,9 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local started = nil
 local pName = UnitName("player")
+local GetNumRaidMembers = GetNumRaidMembers
+local UnitName = UnitName
+local fmt = string.format
 local db = nil
 
 ----------------------------
@@ -89,7 +92,7 @@ function mod:OnEnable()
 	started = nil
 
 	self:AddCombatListener("SPELL_CAST_START", "Gas", 45855)
-	self:AddCombatListener("SPELL_DAMAGE", "Encapsulate", 45662)
+	--self:AddCombatListener("SPELL_DAMAGE", "Encapsulate", 45662)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -111,13 +114,29 @@ function mod:Gas(_, spellID)
 	end
 end
 
-local seenEncaps = 0
-function mod:Encapsulate(player, spellID)
+local active = nil
+local function killTime()
+	active = nil
+end
+
+local encaps = GetSpellInfo(45665)
+function mod:Encapsulate()
+	if active then return end
+
 	if db.encaps then
-		if GetTime() - seenEncaps >= 10 then --self:HasEncaps(player)
-			self:IfMessage(L["encaps_message"]:format(player), "Important", spellID)
-			self:Icon(player)
-			seenEncaps = GetTime()
+		for i = 1, GetNumRaidMembers() do
+			local id = fmt("%s%d", "raid", i)
+			local c = 1
+			while UnitDebuff(id, c) do
+				if UnitDebuff(id, c) == encaps then
+					local player = UnitName(id)
+					self:IfMessage(fmt(L["encaps_message"], player), "Important", spellID)
+					self:Icon(player)
+					active = true
+					self:ScheduleEvent("BWFelmystAllowScan", killTime, 8)
+				end
+				c = c + 1
+			end
 		end
 	end
 end
@@ -129,6 +148,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		self:PhaseOne()
+		self:ScheduleRepeatingEvent("BWEncapsScan", self.Encapsulate, 1, self)
 		if db.enrage then
 			self:Enrage(600)
 		end
