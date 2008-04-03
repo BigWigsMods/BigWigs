@@ -435,7 +435,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	elseif sync == "KalecgosStrike" and rest and db.strike then
 		local msg = fmt(L["strike_message"], rest)
-		if rest = boss then
+		if rest == boss then
 			self:IfMessage(msg, "Urgent", 45029)
 		else
 			self:IfMessage(msg, "Urgent", 45029)
