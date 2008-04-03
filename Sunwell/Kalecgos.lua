@@ -118,9 +118,9 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_message = "10% - 격노!",
 	enrage_trigger = "사스로바르가 칼렉고스를 억제할 수 없는 분노의 소용돌이에 빠뜨립니다!",
 
-	--strike = "Corrupting Strike",
-	--strike_desc = "Warn who gets Corrupting Strike.",
-	--strike_message = "%s: Corrupting Strike",
+	strike = "타락의 일격",
+	strike_desc = "타락의 일격에 걸린 플레이어를 알립니다.",
+	strike_message = "%s: 타락의 일격",
 
 	["Portal warnings were recently moved to a new addon, BigWigs_KalecgosPortals (files.wowace.com), it will show a box with people in the portal, please test it. :)"] = "차원문 경고는 최근 새로운 애드온인 BigWigs_KalecgosPortals (files.wowace.com)로 이동하였으며, 이 것은 차원문 내부에 있는 플레이어가 상자에 표시됩니다. 테스트를 부탁드립니다. :)",
 } end )
