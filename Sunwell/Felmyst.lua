@@ -8,9 +8,24 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started = nil
 local pName = UnitName("player")
 local GetNumRaidMembers = GetNumRaidMembers
+local IsItemInRange = IsItemInRange
 local UnitName = UnitName
 local fmt = string.format
 local db = nil
+local bandages = {
+	[21991] = true, -- Heavy Netherweave Bandage
+	[21990] = true, -- Netherweave Bandage
+	[14530] = true, -- Heavy Runecloth Bandage
+	[14529] = true, -- Runecloth Bandage
+	[8545] = true, -- Heavy Mageweave Bandage
+	[8544] = true, -- Mageweave Bandage
+	[6451] = true, -- Heavy Silk Bandage
+	[6450] = true, -- Silk Bandage
+	[3531] = true, -- Heavy Wool Bandage
+	[3530] = true, -- Wool Bandage
+	[2581] = true, -- Heavy Linen Bandage
+	[1251] = true, -- Linen Bandage
+}
 
 ----------------------------
 --      Localization      --
@@ -81,8 +96,17 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"encaps", "gas", "enrage", "bosskill"}
+mod.toggleoptions = {"encaps", "gas", "enrage", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
+mod.proximityCheck = function( unit ) 
+	for k, v in pairs( bandages ) do
+		if IsItemInRange( k, unit) == 1 then
+			return true
+		end
+	end
+	return false
+end
+mod.proximitySilent = true
 
 ------------------------------
 --      Initialization      --
