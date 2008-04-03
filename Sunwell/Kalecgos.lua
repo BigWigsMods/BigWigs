@@ -66,7 +66,11 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_warning = "Enrage soon!",
 	enrage_message = "10% - Enraged!",
 	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",
-	
+
+	strike = "Corrupting Strike",
+	strike_desc = "Warn who gets Corrupting Strike.",
+	strike_message = "%s: Corrupting Strike",
+
 	["Portal warnings were recently moved to a new addon, BigWigs_KalecgosPortals (files.wowace.com), it will show a box with people in the portal, please test it. :)"] = true,
 } end )
 
@@ -113,7 +117,11 @@ L:RegisterTranslations("koKR", function() return {
 	enrage_warning = "곧 격노!",
 	enrage_message = "10% - 격노!",
 	enrage_trigger = "사스로바르가 칼렉고스를 억제할 수 없는 분노의 소용돌이에 빠뜨립니다!",
-	
+
+	--strike = "Corrupting Strike",
+	--strike_desc = "Warn who gets Corrupting Strike.",
+	--strike_message = "%s: Corrupting Strike",
+
 	["Portal warnings were recently moved to a new addon, BigWigs_KalecgosPortals (files.wowace.com), it will show a box with people in the portal, please test it. :)"] = "차원문 경고는 최근 새로운 애드온인 BigWigs_KalecgosPortals (files.wowace.com)로 이동하였으며, 이 것은 차원문 내부에 있는 플레이어가 상자에 표시됩니다. 테스트를 부탁드립니다. :)",
 } end )
 
@@ -160,6 +168,10 @@ L:RegisterTranslations("frFR", function() return {
 	enrage_warning = "Enrager imminent !",
 	enrage_message = "10% - Enragé !",
 	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!", -- à traduire
+
+	--strike = "Corrupting Strike",
+	--strike_desc = "Warn who gets Corrupting Strike.",
+	--strike_message = "%s: Corrupting Strike",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -205,6 +217,10 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage_warning = "即将狂暴！",
 	enrage_message = "10% - 狂暴！",
 	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",-- not confirmed on Simp-Chinese client.
+
+	--strike = "Corrupting Strike",
+	--strike_desc = "Warn who gets Corrupting Strike.",
+	--strike_message = "%s: Corrupting Strike",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -250,6 +266,10 @@ L:RegisterTranslations("zhTW", function() return {
 	enrage_warning = "即將狂怒！",
 	enrage_message = "10% - 狂怒狀態！",
 	enrage_trigger = "塞斯諾瓦將卡雷苟斯逼入了瘋狂的暴怒中!",
+
+	--strike = "Corrupting Strike",
+	--strike_desc = "Warn who gets Corrupting Strike.",
+	--strike_message = "%s: Corrupting Strike",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -295,6 +315,10 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_warning = "Wütend bald!",
 	enrage_message = "10% - Wütend!",
 	enrage_trigger = "Sathrovarr treibt Kalecgos in eine wahnsinnige Wut!",
+
+	--strike = "Corrupting Strike",
+	--strike_desc = "Warn who gets Corrupting Strike.",
+	--strike_message = "%s: Corrupting Strike",
 } end )
 
 ----------------------------------
@@ -304,7 +328,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = { boss, sath }
-mod.toggleoptions = {"portal", "buffet", "realm", "curse", -1, "magichealing", "magiccast", "magichit", "magicthreat", "enrage", "proximity", "bosskill"}
+mod.toggleoptions = {"portal", "buffet", "realm", "curse", "strike", -1, "magichealing", "magiccast", "magichit", "magicthreat", "enrage", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 mod.proximitySilent = true
@@ -321,6 +345,7 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:AddSyncListener("SPELL_AURA_APPLIED", 46021, "KalecgosRealm", 1)
+	self:AddSyncListener("SPELL_CAST_SUCCESS", 45029, "KalecgosStrike", 1)
 	self:AddSyncListener("SPELL_AURA_APPLIED", 45032, 45034, "KalecgosCurse", 1)
 	self:AddSyncListener("SPELL_AURA_APPLIED", 45018, "KaleBuffet", 1)
 	self:AddSyncListener("SPELL_AURA_APPLIED_DOSE", 45018, "KaleBuffet", 1)
@@ -330,7 +355,7 @@ function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:Throttle(3, "KalecgosMagicCast", "KalecgosMagicHit", "KaleBuffet")
+	self:Throttle(3, "KalecgosMagicCast", "KalecgosMagicHit", "KaleBuffet", "KalecgosStrike")
 	self:Throttle(0, "KalecgosCurse", "KaleCurseRemv")
 	self:Throttle(19, "KalecgosRealm")
 
@@ -407,6 +432,14 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:WideMessage(other)
 		else
 			self:IfMessage(other, "Attention", 45002)
+		end
+	elseif sync == "KalecgosStrike" and rest and db.strike then
+		local msg = fmt(L["strike_message"], rest)
+		if rest = boss then
+			self:IfMessage(msg, "Urgent", 45029)
+		else
+			self:IfMessage(msg, "Urgent", 45029)
+			self:Bar(msg, 3, 45029)
 		end
 	end
 end
