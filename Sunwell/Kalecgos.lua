@@ -183,9 +183,9 @@ L:RegisterTranslations("zhCN", function() return {
 	portal_bar = "<下一传送>",
 	portal_message = "5秒后，可能发动传送！",
 
-	realm = "鬼魂领域",--Spectral Realm
-	realm_desc = "当队友在鬼魂领域中发出警报.",
-	realm_message = "鬼魂领域：>%s<！（%d 小队）",
+	realm = "灵魂世界",--Spectral Realm
+	realm_desc = "当队友在灵魂世界中发出警报.",
+	realm_message = "灵魂世界：>%s<！（%d 小队）",
 
 	curse = "无边苦痛诅咒",--Curse of Boundless Agony
 	curse_desc = "当队友受到无边苦痛诅咒时发出警报。",
@@ -209,7 +209,7 @@ L:RegisterTranslations("zhCN", function() return {
 	magicthreat_desc = "当你受到狂野魔法增加仇恨时发出警报。",
 	magicthreat_you = "狂野魔法 - 增加仇恨！",
 
-	spectral_realm = "鬼魂领域",
+	spectral_realm = "灵魂世界",
 
 	buffet = "奥术打击",
 	buffet_desc = "显示奥术打击记时条。",
@@ -218,9 +218,9 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage_message = "10% - 狂暴！",
 	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",-- not confirmed on Simp-Chinese client.
 
-	--strike = "Corrupting Strike",
-	--strike_desc = "Warn who gets Corrupting Strike.",
-	--strike_message = "%s: Corrupting Strike",
+	strike = "堕落打击",--Corrupting Strike
+	strike_desc = "当中了堕落打击发出警报。",
+	strike_message = "堕落打击：>%s<！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
