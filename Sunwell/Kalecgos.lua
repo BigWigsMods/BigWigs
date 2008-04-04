@@ -267,9 +267,9 @@ L:RegisterTranslations("zhTW", function() return {
 	enrage_message = "10% - 狂怒狀態！",
 	enrage_trigger = "塞斯諾瓦將卡雷苟斯逼入了瘋狂的暴怒中!",
 
-	--strike = "Corrupting Strike",
-	--strike_desc = "Warn who gets Corrupting Strike.",
-	--strike_message = "%s: Corrupting Strike",
+	strike = "腐蝕之擊",
+	strike_desc = "警示誰受到腐蝕之擊。",
+	strike_message = "腐蝕之擊：[%s]",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
