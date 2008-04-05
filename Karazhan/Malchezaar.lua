@@ -302,36 +302,44 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Enfeeble", 30843)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Enfeeble", 30843)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "SelfEnfeeble", 30843)
+	self:AddCombatListener("SPELL_CAST_START", "Nova", 30852)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("UNIT_SPELLCAST_START")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:TriggerEvent("BigWigs_ThrottleSync", "MalchezaarNova", 10)
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-local last = 0
 function mod:Enfeeble(player, spellID)
-	local time = GetTime()
-	if (time - last) > 20 then
-		last = time
-		if self.db.profile.enfeeble then
-			if UnitIsUnit(player, "player") then
-				self:LocalMessage(L["enfeeble_warnyou"], "Personal", spellID, "Alarm")
-			end
-			self:IfMessage(L["enfeeble_message"], "Important", spellID)
-			self:ScheduleEvent("enf1", "BigWigs_Message", 25, L["enfeeble_warning1"], "Attention")
-			self:ScheduleEvent("enf2", "BigWigs_Message", 20, L["enfeeble_warning2"], "Attention")
-			self:Bar(L["enfeeble_bar"], 7, spellID)
-			self:Bar(L["enfeeble_nextbar"], 30, spellID)
-		end
-		if self.db.profile.nova then
-			self:Bar(L["nova_bar"], 5, "Spell_Shadow_Shadowfury")
+	if self.db.profile.enfeeble then
+		self:IfMessage(L["enfeeble_message"], "Important", spellID)
+		self:ScheduleEvent("enf1", "BigWigs_Message", 25, L["enfeeble_warning1"], "Attention")
+		self:ScheduleEvent("enf2", "BigWigs_Message", 20, L["enfeeble_warning2"], "Attention")
+		self:Bar(L["enfeeble_bar"], 7, spellID)
+		self:Bar(L["enfeeble_nextbar"], 30, spellID)
+	end
+	if self.db.profile.nova then
+		self:Bar(L["nova_bar"], 5, "Spell_Shadow_Shadowfury")
+	end
+end
+
+function mod:SelfEnfeeble(player, spellID)
+	if UnitIsUnit(player, "player") and self.db.profile.enfeeble then
+		self:LocalMessage(L["enfeeble_warnyou"], "Personal", spellID, "Alarm")
+	end
+end
+
+function mod:Nova(_, spellID)
+	if self.db.profile.nova then
+		self:IfMessage(L["nova_message"], "Attention", spellID, "Info")
+		self:Bar(L["nova_message"], 2, spellID)
+		if not nova then
+			self:CancelScheduledEvent("nova1")
+			self:Bar(L["nova_bar"], 20, spellID)
+			self:ScheduleEvent("nova1", "BigWigs_Message", 15, L["nova_soon"], "Positive")
 		end
 	end
 end
@@ -377,23 +385,5 @@ end
 function mod:DespawnTimer()
 	self:Bar(L["despawn_bar"]:format(count), 180, "INV_SummerFest_Symbol_Medium")
 	count = count + 1
-end
-
-function mod:UNIT_SPELLCAST_START(msg)
-	if UnitName(msg) == boss and (UnitCastingInfo(msg)) == L["nova"] then
-		self:Sync("MalchezaarNova")
-	end
-end
-
-function mod:BigWigs_RecvSync(sync)
-	if sync == "MalchezaarNova" and self.db.profile.nova then
-		self:Message(L["nova_message"], "Attention", nil, "Info")
-		self:Bar(L["nova_message"], 2, "Spell_Shadow_Shadowfury")
-		if not nova then
-			self:CancelScheduledEvent("nova1")
-			self:Bar(L["nova_bar"], 20, "Spell_Shadow_Shadowfury")
-			self:ScheduleEvent("nova1", "BigWigs_Message", 15, L["nova_soon"], "Positive")
-		end
-	end
 end
 
