@@ -4,9 +4,8 @@
 
 local boss = BB["Netherspite"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local fmt = string.format
-local started
-local voidcount
+local started = nil
+local voidcount = 1
 
 ----------------------------
 --      Localization      --
@@ -165,9 +164,8 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	-- these need testing, are they instant or does he indeed cast voidzone for 2 seconds
-	self:AddCombatListener("SPELL_CAST_START", "VoidZone", 30533)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Netherbreath", 38546) -- face random target, instantcast
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "VoidZone", 37063)
+	self:AddCombatListener("SPELL_CAST_START", "Netherbreath", 38523)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
@@ -186,7 +184,7 @@ end
 
 function mod:VoidZone()
 	if self.db.profile.voidzone then
-		self:IfMessage(fmt(L["voidzone_warn"], voidcount), "Attention", 30533)
+		self:IfMessage(L["voidzone_warn"]:format(voidcount), "Attention", 30533)
 		voidcount = voidcount + 1
 	end
 end
