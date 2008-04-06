@@ -500,10 +500,10 @@ mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) en
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Conflag", 37018)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Toy", 37027)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "MC", 36798)
-	self:AddCombatListener("SPELL_CAST_START", "FearCast", 39427, 36922, 40636, 44863) -- Really need to figure out which one.
-	self:AddCombatListener("SPELL_MISSED", "Fear", 39427, 36922, 40636, 44863) -- Really need to figure out which one.
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Fear", 39427, 36922, 40636, 44863) -- Really need to figure out which one.
+	self:AddCombatListener("SPELL_AURA_APPLIED", "MC", 36797)
+	self:AddCombatListener("SPELL_CAST_START", "FearCast", 44863)
+	self:AddCombatListener("SPELL_MISSED", "Fear", 44863)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Fear", 44863)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 
