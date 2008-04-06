@@ -167,11 +167,11 @@ L:RegisterTranslations("frFR", function() return {
 
 	enrage_warning = "Enrager imminent !",
 	enrage_message = "10% - Enragé !",
-	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!", -- à traduire
+	enrage_trigger = "Sathrovarr déchaîne la rage de Kalecgos !",
 
-	--strike = "Corrupting Strike",
-	--strike_desc = "Warn who gets Corrupting Strike.",
-	--strike_message = "%s: Corrupting Strike",
+	strike = "Frappe corruptrice",
+	strike_desc = "Préviens quand un joueur subit les effets de la Frappe corruptrice.",
+	strike_message = "%s : Frappe corruptrice",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

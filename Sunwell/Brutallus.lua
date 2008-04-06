@@ -65,7 +65,7 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	--engage_trigger = "Ah, more lambs to the slaughter!",
+	engage_trigger = "Ah, encore des agneaux pour l'abattoir !",
 
 	burn = "Brûler",
 	burn_desc = "Préviens quand un joueur subit les effets de Brûler et quand arrivera le prochain.",
