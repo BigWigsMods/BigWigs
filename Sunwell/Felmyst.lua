@@ -36,57 +36,92 @@ L:RegisterTranslations("enUS", function() return {
 
 	encaps = "Encapsulate",
 	encaps_desc = "Warn who has Encapsulate.",
+	encaps_warning = "Encapsulate in ~5 Seconds!",
 	encaps_message = "Encapsulate: %s",
 
 	gas = "Gas Nova",
 	gas_desc = "Warn for Gas Nova being cast.",
 	gas_message = "Casting Gas Nova!",
 	gas_bar = "~Gas Nova Cooldown",
+	
+	takeoff = "Takeoff",
+	takeoff_message = "Taking off in 5 Seconds!",
+	
+	landing = "Landing",
+	landing_message = "Landing in 10 Seconds!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
 
 	encaps = "压缩",--Encapsulate
 	encaps_desc = "当受到压缩时发出警报。",
+	--encaps_warning = "Encapsulate in ~5 Seconds!",
 	encaps_message = "压缩：>%s<！",
 
 	gas = "毒气新星",--Gas Nova
 	gas_desc = "当施放毒气新星时发出警报。",
 	gas_message = "正在施放毒气新星！",
 	gas_bar = "<毒气新星冷却>",
+	
+	--takeoff = "Takeoff",
+	--takeoff_message = "Taking off in 5 Seconds!",
+	
+	--landing = "Landing",
+	--landing_message = "Landing in 10 Seconds!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
 	encaps = "가두기",
 	encaps_desc = "가두기에 걸린 플레이어를 알립니다.",
+	encaps_warning = "약 5초 이내 가두기!",
 	encaps_message = "가두기: %s",
 
 	gas = "가스 회오리",
 	gas_desc = "가스 회오리의 시전에 대해 알립니다..",
 	gas_message = "가스 회오리 시전!",
 	gas_bar = "~가스 회오리 대기시간",
+	
+	takeoff = "이륙",
+	takeoff_message = "5초 이내 이륙!",
+	
+	landing = "착지",
+	landing_message = "10초 이내 착지!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
 	encaps = "Enfermer",
 	encaps_desc = "Préviens quand un joueur subit les effets d'Enfermer.",
+	--encaps_warning = "Encapsulate in ~5 Seconds!",
 	encaps_message = "Enfermer : %s",
 
 	gas = "Nova de gaz",
 	gas_desc = "Préviens quand la Nova de gaz est incanté.",
 	gas_message = "Nova de gaz en incantation !",
 	gas_bar = "~Cooldown Nova de gaz",
+	
+	--takeoff = "Takeoff",
+	--takeoff_message = "Taking off in 5 Seconds!",
+	
+	--landing = "Landing",
+	--landing_message = "Landing in 10 Seconds!",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
 	encaps = "封印",
 	encaps_desc = "警示誰受到封印效果。",
+	--encaps_warning = "Encapsulate in ~5 Seconds!",
 	encaps_message = "封印：[%s]",
 
 	gas = "毒氣新星",
 	gas_desc = "當毒氣新星準備施放時警示。",
 	gas_message = "毒氣新星施放中！",
 	gas_bar = "毒氣新星冷卻計時",
+	
+	--takeoff = "Takeoff",
+	--takeoff_message = "Taking off in 5 Seconds!",
+	
+	--landing = "Landing",
+	--landing_message = "Landing in 10 Seconds!",
 } end )
 
 ----------------------------------
@@ -183,18 +218,18 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 end
 
 function mod:PhaseOne()
-	self:Bar("Takeoff", 60, 31550)
-	self:DelayedMessage(55, "Taking off in 5 Seconds!", "Attention")
+	self:Bar(L["takeoff"], 60, 31550)
+	self:DelayedMessage(55, L["takeoff_message"], "Attention")
 
 	self:Bar(L["encaps"], 30, 45661)
-	self:DelayedMessage(25, "Encapsulate in ~5 Seconds!", Attention)
+	self:DelayedMessage(25, L["encaps_warning"], Attention)
 
 	self:ScheduleEvent("BWFelmystStage", self.PhaseTwo, 60, self)
 end
 
 function mod:PhaseTwo()
-	self:Bar("Landing", 100, 31550)
-	self:DelayedMessage(90, "Landing in 10 Seconds!", Attention)
+	self:Bar(L["landing"], 100, 31550)
+	self:DelayedMessage(90, L["landing_message"], Attention)
 	self:ScheduleEvent("BWFelmystStage", self.PhaseOne, 100, self)
 end
 
