@@ -90,9 +90,9 @@ L:RegisterTranslations("frFR", function() return {
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Ombre de la mort (nécessite d'être promu ou mieux).",
 
-	--crush = "Crushing Shadows",
-	--crush_desc = "Warn who gets crushing shadows.",
-	--crush_warn = "Crushed: %s",
+	crush = "Ombres écrasantes",
+	crush_desc = "Préviens quand un joueur subit les effets des Ombres écrasantes.",
+	crush_warn = "Écrasé : %s",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

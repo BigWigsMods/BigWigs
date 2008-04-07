@@ -80,7 +80,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	meteor = "Attaque météorique",
 	meteor_desc = "Affiche une barre temporelle pour l'Attaque météorique.",
-	meteor_bar = "Prochaine Attaque météorique",
+	meteor_bar = "Proch. Attaque météorique",
 
 	stomp = "Piétinement",
 	stomp_desc = "Préviens l'arrivée des Piétinements et affiche une barre.",
