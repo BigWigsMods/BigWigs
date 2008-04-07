@@ -197,7 +197,7 @@ L:RegisterTranslations("zhCN", function() return {
 	deaden_nextbar = "<下一衰减>",
 
 	spite = "敌意",
-	spite_desc = "当玩家中了敌意时发出警报。",
+	spite_desc = "当玩家受到敌意时发出警报。",
 	spite_message = "敌意：>%s<！",
 
 	scream = "灵魂尖啸",

@@ -273,7 +273,7 @@ L:RegisterTranslations("zhCN", function() return {
 	demon_bar = "<下一普通阶段>",
 	demon_warning = "恶魔阶段 约5秒后结束！",
 	normal_bar = "<可能 恶魔阶段>",
-	normal_warning = "约5秒后, 可能恶魔阶段！",
+	normal_warning = "约5秒后，可能恶魔阶段！",
 	phase4_trigger = "你们就这点本事吗？这就是你们全部的能耐？",
 	phase4_soon_message = "即将 - 第四阶段！",
 	phase4_message = "第四阶段 - 玛维·影歌来临！",

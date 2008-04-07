@@ -143,7 +143,7 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "你们的抵抗是毫无意义的。",
 
 	grip = "军团之握",
-	grip_desc = "当玩家中了军团之握时发出警报。",
+	grip_desc = "当玩家受到军团之握时发出警报。",
 	grip_you = ">你< 军团之握！",
 	grip_other = "军团之握：>%s<！",
 

@@ -79,7 +79,7 @@ L:RegisterTranslations("zhCN", function() return {
 	riding_youwarn = "你变成小红帽！",
 
 	elseriding = "小红帽（队友）",
-	elseriding_desc = "当其他玩家变成小红帽发出警报。",
+	elseriding_desc = "当其他玩家变成小红帽时发出警报。",
 	riding_otherwarn = "小红帽：>%s<！快跑！",
 
 	riding_bar = "<快跑：%s>",

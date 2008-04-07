@@ -72,7 +72,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	darkness = "黑暗",--Darkness
-	darkness_desc = "当玩家中了黑暗时发出警报。",
+	darkness_desc = "当玩家受到黑暗时发出警报。",
 	darkness_message = "黑暗：>%s<！ ",
 	darkness_next = "<下一黑暗>",
 	darkness_soon = "5秒后，黑暗！",

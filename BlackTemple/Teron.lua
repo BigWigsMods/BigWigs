@@ -82,7 +82,7 @@ L:RegisterTranslations("zhCN", function() return {
 	start_trigger = "我要复仇！",
 
 	shadow = "死亡之影",
-	shadow_desc = "当玩家中了死亡之影将告诉你。",
+	shadow_desc = "当玩家受到死亡之影时将告诉你。",
 	shadow_other = "死亡之影：>%s<！",
 	shadow_you = ">你< 死亡之影！",
 

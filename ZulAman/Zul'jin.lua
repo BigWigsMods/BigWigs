@@ -176,7 +176,7 @@ L:RegisterTranslations("zhCN", function() return {
 	icon_desc = "为受到重伤投掷或利爪之怒打上团队标记。（需要权限）",
 
 	paralyze = "麻痹蔓延",
-	paralyze_desc = "受玩家到麻痹蔓延或中了麻痹时发出警报。",
+	paralyze_desc = "当玩家受到麻痹蔓延或中了麻痹时发出警报。",
 	paralyze_warning = "麻痹蔓延 - 麻痹5秒！",
 	paralyze_message = "已麻痹！",
 	paralyze_bar = "<即将 麻痹>",

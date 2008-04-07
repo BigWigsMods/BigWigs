@@ -219,7 +219,7 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",-- not confirmed on Simp-Chinese client.
 
 	strike = "堕落打击",--Corrupting Strike
-	strike_desc = "当玩家中了堕落打击时发出警报。",
+	strike_desc = "当玩家受到堕落打击时发出警报。",
 	strike_message = "堕落打击：>%s<！",
 } end )
 

@@ -116,7 +116,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	doom = "厄运",
-	doom_desc = "当玩家中了厄运时发出警报。",
+	doom_desc = "当玩家受到厄运时发出警报。",
 	doom_other = "厄运：>%s<！",
 	doom_you = ">你< 厄运！",
 

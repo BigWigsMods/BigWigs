@@ -52,7 +52,7 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "是办正事还是找乐子呢？",
 
 	attraction = "致命吸引",
-	attraction_desc = "当玩家中了致命吸引时发出警报。",
+	attraction_desc = "当玩家受到致命吸引时发出警报。",
 	attraction_message = "致命吸引：>%s<！",
 
 	debuff = "负面效果计时",

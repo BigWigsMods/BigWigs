@@ -183,7 +183,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	immune = "免疫警报",
 	immune_desc = "当玛兰德免疫法术或近战攻击时发出警报。",
-	immune_message = "女公爵玛兰德 - %s免疫，15秒！",
+	immune_message = "女公爵玛兰德 - %s免疫！15秒。",
 	immune_bar = "<%s免疫>",
 
 	spell = "法术",
