@@ -9,6 +9,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local db = nil
 local enrageWarn = nil
 local wipe = nil
+local counter = 1
 
 local fmt = string.format
 local GetNumRaidMembers = GetNumRaidMembers
@@ -29,7 +30,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	portal = "Portal",
 	portal_desc = "Warn when the Spectral Blast cooldown is up.",
-	portal_bar = "Next portal",
+	portal_bar = "Next portal (%d)",
 	portal_message = "Possible portal in 5 seconds!",
 
 	realm = "Spectral Realm",
@@ -58,8 +59,6 @@ L:RegisterTranslations("enUS", function() return {
 	magicthreat_desc = "Tells you when you get increased threat from Wild Magic.",
 	magicthreat_you = "Wild Magic - Threat generation increased!",
 
-	spectral_realm = "Spectral Realm",
-
 	buffet = "Arcane Buffet",
 	buffet_desc = "Show the Arcane Buffet timer bar.",
 
@@ -80,7 +79,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	portal = "차원문",
 	portal_desc = "공허 폭발의 재사용 대기시간에 대해 알립니다.",
-	portal_bar = "다음 차원문",
+	portal_bar = "다음 차원문 (%d)",
 	portal_message = "약 5초이내 차원문!",
 
 	realm = "정신 세계",
@@ -109,8 +108,6 @@ L:RegisterTranslations("koKR", function() return {
 	magicthreat_desc = "당신이 마법 폭주에 의해 위협수준이 증가할때 알려줍니다.",
 	magicthreat_you = "마법 폭주 - 위협 생성 증가!",
 
-	spectral_realm = "정신 세계",
-
 	buffet = "비전 강타",
 	buffet_desc = "비전 강타의 타이머 바를 표시합니다.",
 
@@ -131,7 +128,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	portal = "Portail",
 	portal_desc = "Préviens quand le temps de recharge de la Déflagration spectrale est terminé.",
-	portal_bar = "Prochain portail",
+	portal_bar = "Prochain portail (%d)",
 	portal_message = "Portail probable dans 5 sec. !",
 
 	realm = "Royaume spectral",
@@ -160,8 +157,6 @@ L:RegisterTranslations("frFR", function() return {
 	magicthreat_desc = "Préviens quand la menace que vous générez est augmentée par la Magie sauvage.",
 	magicthreat_you = "Magie sauvage - Menace générée augmentée !",
 
-	spectral_realm = "Royaume spectral",
-
 	buffet = "Rafale des arcanes",
 	buffet_desc = "Affiche une barre temporelle pour la Rafale des arcanes.",
 
@@ -180,7 +175,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	portal = "传送",
 	portal_desc = "当灵魂冲击冷却时发出警报。",
-	portal_bar = "<下一传送>",
+	portal_bar = "<下一传送> (%d)",
 	portal_message = "5秒后，可能发动传送！",
 
 	realm = "灵魂世界",--Spectral Realm
@@ -209,8 +204,6 @@ L:RegisterTranslations("zhCN", function() return {
 	magicthreat_desc = "当你受到狂野魔法增加仇恨时发出警报。",
 	magicthreat_you = "狂野魔法 - 增加仇恨！",
 
-	spectral_realm = "灵魂世界",
-
 	buffet = "奥术打击",
 	buffet_desc = "显示奥术打击记时条。",
 
@@ -229,7 +222,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	portal = "傳送門",
 	portal_desc = "當鬼靈衝擊冷卻結束時警示。",
-	portal_bar = "下一次傳送門",
+	portal_bar = "下一次傳送門 (%d)",
 	portal_message = "傳送門於 5 秒內可能出現！",
 
 	realm = "鬼靈國度",
@@ -258,8 +251,6 @@ L:RegisterTranslations("zhTW", function() return {
 	magicthreat_desc = "當你獲得野性魔法(仇恨增加)時警示。",
 	magicthreat_you = "野性魔法 - 你的仇恨值增加！",
 
-	spectral_realm = "鬼靈國度",
-
 	buffet = "秘法之擊",
 	buffet_desc = "顯示秘法之擊計時條",
 
@@ -278,7 +269,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	portal = "Portal",
 	portal_desc = "Warnt wann der Spektralschlag cooldown endet.",
-	portal_bar = "Nächstes Portal",
+	portal_bar = "Nächstes Portal (%d)",
 	portal_message = "Mögliches Portal in 5 Sekunden!",
 
 	realm = "Spektralreich",
@@ -306,8 +297,6 @@ L:RegisterTranslations("deDE", function() return {
 	magicthreat = "Wilde Magie (Erhöhte Agro)",
 	magicthreat_desc = "Sagt dir wenn du erhöhte Agro durch Wilde Magie bekommst.",
 	magicthreat_you = "Wilde Magie - Agro Generierung erhöht!",
-
-	spectral_realm = "Spektralreich",
 
 	buffet = "Arkanpuffer",
 	buffet_desc = "Zeigt den Arkanpuffer Zeitbalken.",
@@ -368,17 +357,20 @@ function mod:OnEnable()
 		BigWigs:Print(L["Portal warnings were recently moved to a new addon, BigWigs_KalecgosPortals (files.wowace.com), it will show a box with people in the portal, please test it. :)"])
 		temp = nil
 	end
+	counter = 1
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["engage_trigger"] then
 		wipe = true
+		counter = 1
 		if db.portal then
-			self:Bar(L["portal_bar"], 20, 46021)
+			self:Bar(L["portal_bar"]:format(counter), 20, 46021)
 			self:DelayedMessage(15, L["portal_message"], "Urgent", nil, "Alert")
 		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
@@ -410,7 +402,8 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if sync == "KalecgosRealm" and rest then
 		if db.portal then
-			self:Bar(L["portal_bar"], 20, 46021)
+			counter = counter + 1
+			self:Bar(L["portal_bar"]:format(counter), 20, 46021)
 			self:DelayedMessage(15, L["portal_message"], "Urgent", nil, "Alert")
 		end
 		if db.realm then
