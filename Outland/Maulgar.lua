@@ -51,7 +51,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	flurry = "Flurry",
 	flurry_desc = "Warn when Maulgar is close to Flurry and gains Flurry.",
-	flurry_trigger = "You will not defeat the hand of Gruul!",
 	flurry_message = "50% - Flurry!",
 	flurry_warning = "Flurry Soon!",
 
@@ -92,7 +91,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	flurry = "Rafale",
 	flurry_desc = "Préviens quand Maulgar est proche de Rafale et quand il gagne Rafale.",
-	flurry_trigger = "Vous ne terrasserez pas la main de Gruul !",
 	flurry_message = "50% - Rafale !",
 	flurry_warning = "Rafale imminente !",
 
@@ -130,7 +128,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	flurry = "Schlaghagel",
 	flurry_desc = "Warnt wenn Maulgar kurz vor dem Schlaghagel steht und wenn er es bekommt",
-	flurry_trigger = "Ihr werdet die Hand von Gruul nicht besiegen!",
 	flurry_message = "50% - Schlaghagel!",
 	flurry_warning = "Schlaghagel bald!",
 
@@ -171,7 +168,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	flurry = "질풍",
 	flurry_desc = "마울가르의 질풍 효과 근접 및 획득 시 경고합니다.",
-	flurry_trigger = "그룰님의 손아귀에서 벗어나지 못할 것이다!",
 	flurry_message = "50% - 질풍!",
 	flurry_warning = "잠시 후 질풍!",
 
@@ -212,7 +208,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	flurry = "乱舞",
 	flurry_desc = "当莫加尔乱舞消失及获得乱舞发出警报。",
-	flurry_trigger = "休想打败格鲁尔之手！",
 	flurry_message = "50% - 乱舞！",
 	flurry_warning = "即将乱舞！",
 
@@ -251,7 +246,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	flurry = "亂舞警告",
 	flurry_desc = "當大君王莫卡爾即將亂舞及獲得亂舞時發送警告",
-	flurry_trigger = "你擊敗不了戈魯爾之手!",
 	flurry_message = "50% - 亂舞",
 	flurry_warning = "大君王莫卡爾即將施放亂舞",
 
@@ -278,10 +272,11 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Shield", 33147)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SpellShield", 33054)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Whirlwind", 33238, 33239, 36981, 39232, 37641) -- guessed these might be it, might also not be it
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Whirlwind", 33238)
 	self:AddCombatListener("SPELL_CAST_START", "Summon", 33131)
 	self:AddCombatListener("SPELL_CAST_START", "Prayer", 33152)
-	self:AddCombatListener("SPELL_DAMAGE", "Smash", 38761)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Smash", 39144)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Flurry", 33232)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("UNIT_HEALTH")
@@ -294,9 +289,9 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Shield()
+function mod:Shield(_, spellID)
 	if db.shield then
-		self:IfMessage(L["shield_message"], "Important", 33147)
+		self:IfMessage(L["shield_message"], "Important", spellID)
 	end
 end
 
@@ -323,31 +318,35 @@ function mod:Summon(_, spellID)
 	end
 end
 
-function mod:Prayer()
+function mod:Prayer(_, spellID)
 	if db.heal then
-		self:IfMessage(L["heal_message"], "Important", 33152, "Alarm")
+		self:IfMessage(L["heal_message"], "Important", spellID, "Alarm")
 	end
 end
 
-function mod:Smash()
+function mod:Smash(_, spellID)
 	if db.smash then
-		self:Bar(L["smash_bar"], 10, 38761)
+		self:Bar(L["smash_bar"], 10, spellID)
+	end
+end
+
+function mod:Flurry(_, spellID)
+	if db.flurry then
+		self:IfMessage(L["flurry_message"], "Important", spellID)
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if db.flurry and msg == L["flurry_trigger"] then
-		self:Message(L["flurry_message"], "Important")
-	elseif msg == L["engage_trigger"] then
+	if msg == L["engage_trigger"] then
 		flurryannounced = nil
 
 		if db.whirlwind then
 			self:Message(L["whirlwind_warning1"], "Attention")
 			self:DelayedMessage(45, L["whirlwind_warning2"], "Urgent")
-			self:Bar(L["whirlwind_nextbar"], 50, "Ability_Whirlwind")
+			self:Bar(L["whirlwind_nextbar"], 50, 33238)
 		end
 		if db.spellshield then
-			self:Bar(L["spellshield_bar"], 30, "Spell_MageArmor")
+			self:Bar(L["spellshield_bar"], 30, 33054)
 		end
 	end
 end
