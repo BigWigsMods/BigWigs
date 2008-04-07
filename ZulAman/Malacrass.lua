@@ -34,6 +34,11 @@ L:RegisterTranslations("enUS", function() return {
 	heal = "Heal",
 	heal_desc = "Warn when Malacrass casts a heal.",
 	heal_message = "Casting Heal!",
+
+	consecration = "Consecration",
+	consecration_desc = "Warn when Consecration is cast.",
+	consecration_bar = "Consecration (%d)",
+	consecration_warn = "Casted Consecration!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -56,6 +61,11 @@ L:RegisterTranslations("deDE", function() return {
 	heal = "Heilung",
 	heal_desc = "Warnt wenn eine Heilung gecastet wird.",
 	heal_message = "Heilung!",
+
+	--consecration = "Consecration",
+	--consecration_desc = "Warn when Consecration is cast.",
+	--consecration_bar = "Consecration (%d)",
+	--consecration_warn = "Casted Consecration!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -78,6 +88,11 @@ L:RegisterTranslations("koKR", function() return {
 	heal = "치유",
 	heal_desc = "말라크라스의 치유 마법 시전을 알립니다.",
 	heal_message = "치유 마법 시전!",
+
+	--consecration = "Consecration",
+	--consecration_desc = "Warn when Consecration is cast.",
+	--consecration_bar = "Consecration (%d)",
+	--consecration_warn = "Casted Consecration!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -100,6 +115,11 @@ L:RegisterTranslations("frFR", function() return {
 	heal = "Soin",
 	heal_desc = "Préviens quand Malacrass incante un soin.",
 	heal_message = "Incante un soin !",
+
+	--consecration = "Consecration",
+	--consecration_desc = "Warn when Consecration is cast.",
+	--consecration_bar = "Consecration (%d)",
+	--consecration_warn = "Casted Consecration!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -122,6 +142,11 @@ L:RegisterTranslations("zhCN", function() return {
 	heal = "治疗",
 	heal_desc = "当妖术领主玛拉卡斯施放治疗发出警报。",
 	heal_message = "正在施放治疗！打断！",
+
+	--consecration = "Consecration",
+	--consecration_desc = "Warn when Consecration is cast.",
+	--consecration_bar = "Consecration (%d)",
+	--consecration_warn = "Casted Consecration!",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -144,6 +169,11 @@ L:RegisterTranslations("zhTW", function() return {
 	heal = "治療",
 	heal_desc = "警告瑪拉克雷斯施放治療",
 	heal_message = "施放治療! - 快中斷",
+
+	--consecration = "Consecration",
+	--consecration_desc = "Warn when Consecration is cast.",
+	--consecration_bar = "Consecration (%d)",
+	--consecration_warn = "Casted Consecration!",
 } end )
 
 L:RegisterTranslations("esES", function() return {
@@ -166,6 +196,11 @@ L:RegisterTranslations("esES", function() return {
 	heal = "Curaci\195\179n",
 	heal_desc = "Avisa cuando Malacrass lanza una curaci\195\179n.",
 	heal_message = "\194\161Lanzando cura!",
+
+	--consecration = "Consecration",
+	--consecration_desc = "Warn when Consecration is cast.",
+	--consecration_bar = "Consecration (%d)",
+	--consecration_warn = "Casted Consecration!",
 } end )
 
 ----------------------------------
@@ -175,7 +210,7 @@ L:RegisterTranslations("esES", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Zul'Aman"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"bolts", "soul", "totem", "heal", "bosskill"}
+mod.toggleoptions = {"bolts", "soul", "totem", "heal", "consecration", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -187,6 +222,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Heal", 43548, 43451, 43431) --Healing Wave, Holy Light, Flash Heal
 	self:AddCombatListener("SPELL_SUMMON", "Totem", 43436)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Bolts", 43383)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Consecration", 43429)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -224,6 +260,15 @@ function mod:Bolts(_, spellID)
 		self:Bar(L["bolts"], 10, spellID)
 		self:Bar(L["bolts_nextbar"], 40, spellID)
 		self:DelayedMessage(35, L["bolts_warning"], "Attention")
+	end
+end
+
+local count = 0
+function mod:Consecration(_, spellID)
+	if self.db.profile.consecration then
+		self:IfMessage(L["consecration_warn"], "Positive", spellID)
+		count = count + 1
+		self:Bar(L["consecration_bar"]:format(count), 20, spellID)
 	end
 end
 
