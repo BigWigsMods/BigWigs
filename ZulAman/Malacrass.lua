@@ -116,10 +116,10 @@ L:RegisterTranslations("frFR", function() return {
 	heal_desc = "Préviens quand Malacrass incante un soin.",
 	heal_message = "Incante un soin !",
 
-	--consecration = "Consecration",
-	--consecration_desc = "Warn when Consecration is cast.",
-	--consecration_bar = "Consecration (%d)",
-	--consecration_warn = "Casted Consecration!",
+	consecration = "Consécration",
+	consecration_desc = "Préviens quand la Consécration est incantée.",
+	consecration_bar = "Consécration (%d)",
+	consecration_warn = "Consécration incantée !",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

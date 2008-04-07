@@ -91,19 +91,19 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	encaps = "Enfermer",
 	encaps_desc = "Préviens quand un joueur subit les effets d'Enfermer.",
-	--encaps_warning = "Encapsulate in ~5 Seconds!",
+	encaps_warning = "Enfermer dans ~5 sec. !",
 	encaps_message = "Enfermer : %s",
 
 	gas = "Nova de gaz",
 	gas_desc = "Préviens quand la Nova de gaz est incanté.",
 	gas_message = "Nova de gaz en incantation !",
 	gas_bar = "~Cooldown Nova de gaz",
-	
-	--takeoff = "Takeoff",
-	--takeoff_message = "Taking off in 5 Seconds!",
-	
-	--landing = "Landing",
-	--landing_message = "Landing in 10 Seconds!",
+
+	takeoff = "Décollage",
+	takeoff_message = "Décollage dans 5 sec. !",
+
+	landing = "Atterrissage",
+	landing_message = "Atterrissage dans 10 sec. !",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
