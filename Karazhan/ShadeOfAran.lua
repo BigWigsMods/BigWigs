@@ -133,29 +133,29 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	adds = "水元素",
 	adds_desc = "当召唤水元素时发出警报。",
-	adds_message = "水元素 来临",
-	adds_warning = "水元素即将召唤",
+	adds_message = "水元素 来临！",
+	adds_warning = "即将召唤 水元素！",
 	adds_bar = "<召唤水元素>",
 
 	drink = "群体变形",
-	drink_desc = "当埃兰回魔时发出警报。",
+	drink_desc = "当即将施放回魔时发出警报。",
 	drink_warning = "低法力 - 即将回魔！",
 	drink_message = "回魔 - 群体变形！",
 	drink_bar = "<群体变形术>",
 
 	blizzard = "暴风雪",
 	blizzard_desc = "当暴风雪开始施放发出警报。",
-	blizzard_message = "暴风雪",
+	blizzard_message = "暴风雪！",
 
 	pull = "磁力/魔爆术",
-	pull_desc = "磁力/魔爆术时发出警报。",
+	pull_desc = "当释放磁力/魔爆术时发出警报。",
 	pull_message = "魔爆术！",
 	pull_bar = "<魔爆术>",
 
 	flame = "烈焰花环",
-	flame_desc = "当烈焰花环开始施放时发出警报。",
+	flame_desc = "当开始施放烈焰花环时发出警报。",
 	flame_warning = "施放 烈焰花环！",
-	flame_message = "烈焰花环！ %s",
+	flame_message = "烈焰花环：>%s<！",
 	flame_bar = "<烈焰花环>",
 } end )
 

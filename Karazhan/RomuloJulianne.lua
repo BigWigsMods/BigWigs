@@ -126,15 +126,15 @@ L:RegisterTranslations("zhCN", function() return {
 	phase3_message = "第 III 幕 - 同时出场",
 
 	poison = "中毒",
-	poison_desc = "当有玩家中毒时发出警报。",
+	poison_desc = "当玩家中毒时发出警报。",
 	poison_message = "浸毒之刺：>%s<！",
 
 	heal = "治疗",
 	heal_desc = "当朱丽叶施放治疗时警报。",
 	heal_message = "%s 施放治疗！",
 
-	buff = "自身增益警报",
-	buff_desc = "当罗密欧与朱丽叶获得增益发出警报",
+	buff = "自身增益效果警报",
+	buff_desc = "当罗密欧与朱丽叶获得增益效果时发出警报。",
 	buff1_message = "%s 获得 卤莽！",
 	buff2_message = "%s 获得 虔诚光环！",
 } end)

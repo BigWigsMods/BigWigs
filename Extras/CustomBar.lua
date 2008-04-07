@@ -40,8 +40,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["Global"] = "全局",
 	["<time> <bar text>"] = "<时间> <计时条名字>",
 	["Starts a custom bar with the given parameters."] = "启动自定义时间条。",
-	["%s: Timer [%s] finished."] = "%s: 计时条 [%s] 到时间。",
-	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "无效记时条 (|cffff0000%q|r) 或 |cffd9d919%s|r 上的记时条文字错误，<time> 输入一个数字单位默认为秒，可以为 M:S 或者 Mm. 例如 5, 1:20 or 2m.",
+	["%s: Timer [%s] finished."] = "%s：计时条[%s]到时间。",
+	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "无效记时条（|cffff0000%q|r）或 |cffd9d919%s|r 上的记时条文字错误，<time> 输入一个数字单位默认为秒，可以为 M:S 或者 Mm. 例如 5, 1:20 or 2m.",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

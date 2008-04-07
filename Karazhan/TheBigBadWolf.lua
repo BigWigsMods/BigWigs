@@ -74,18 +74,18 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	youriding = "小红帽(你)",
-	youriding_desc = "当你变成小红帽发出警报。",
+	youriding = "小红帽（你）",
+	youriding_desc = "当你变成小红帽时发出警报。",
 	riding_youwarn = "你变成小红帽！",
 
-	elseriding = "小红帽(队友)",
-	elseriding_desc = "当其他人变成小红帽发出警报。",
+	elseriding = "小红帽（队友）",
+	elseriding_desc = "当其他玩家变成小红帽发出警报。",
 	riding_otherwarn = "小红帽：>%s<！快跑！",
 
 	riding_bar = "<快跑：%s>",
 
 	icon = "团队标记",
-	icon_desc = "给中了小红帽的打上团队标记。(需要权限)",
+	icon_desc = "给中了小红帽的打上团队标记。（需要权限）",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

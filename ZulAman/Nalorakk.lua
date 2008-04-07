@@ -86,7 +86,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "你马上就要死了！",
-	engage_message = "%s 激活 - 45秒后，熊形态！",
+	engage_message = "%s 激活！45秒后，熊形态！",
 
 	phase = "阶段提示",
 	phase_desc = "阶段变化警报。",
@@ -94,12 +94,12 @@ L:RegisterTranslations("zhCN", function() return {
 	phase_normal = "纳洛拉克，变形，出发！",
 	normal_message = "普通形态！",
 	normal_bar = "<下一熊形态>",
-	normal_soon = "10秒后，恢复普通形态",
-	normal_warning = "5秒后，恢复普通形态",
+	normal_soon = "10秒后，恢复普通形态！",
+	normal_warning = "5秒后，恢复普通形态！",
 	bear_message = "熊形态！",
 	bear_bar = "<下一普通形态>",
-	bear_soon = "10秒后，熊形态",
-	bear_warning = "5秒后，熊形态",
+	bear_soon = "10秒后，熊形态！",
+	bear_warning = "5秒后，熊形态！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

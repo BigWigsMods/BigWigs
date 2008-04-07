@@ -116,7 +116,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	doom = "厄运",
-	doom_desc = "厄运警报。",
+	doom_desc = "当玩家中了厄运时发出警报。",
 	doom_other = "厄运：>%s<！",
 	doom_you = ">你< 厄运！",
 
@@ -127,11 +127,11 @@ L:RegisterTranslations("zhCN", function() return {
 	howl_warning = "即将 群体沉默！",
 
 	fire = "火焰之雨",
-	fire_desc = "当你受到火焰之雨发出警报。",
+	fire_desc = "当你受到火焰之雨时发出警报。",
 	fire_you = ">你< 火焰之雨！",
 
 	icon = "团队标记",
-	icon_desc = "给受到诅咒的队员打上标记。(需要权限)",
+	icon_desc = "给受到诅咒的队员打上标记。（需要权限）",
 } end )
 
 ----------------------------------

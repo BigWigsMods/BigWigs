@@ -104,11 +104,11 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "风之圣魂将是你的梦魇！",
 
 	flame = "烈焰吐息",
-	flame_desc = "当加亚莱施放烈焰吐息发出警报。",
+	flame_desc = "当施放烈焰吐息时发出警报。",
 	flame_message = "烈焰吐息：>%s<！",
 
 	icon = "团队标记",
-	icon_desc = "给中了烈焰吐息的玩家打上团队标记。(需要权限)",
+	icon_desc = "给中了烈焰吐息的玩家打上团队标记。（需要权限）",
 
 	bomb = "火焰炸弹",
 	bomb_desc = "显示火焰炸弹记时条。",
@@ -116,9 +116,9 @@ L:RegisterTranslations("zhCN", function() return {
 	bomb_message = "即将 火焰炸弹！",
 
 	adds = "援兵",
-	adds_desc = "援兵即将到来时发出警报。",
+	adds_desc = "当援兵即将到来时发出警报。",
 	adds_trigger = "雌鹰哪里去了？快去孵蛋！",
-	adds_message = "即将出现 救援！",
+	adds_message = "即将 出现救援！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

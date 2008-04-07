@@ -155,7 +155,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "我最厉害！",
-	engage_message = "第一阶段 - 人类阶段",
+	engage_message = "第一阶段 - 人类阶段！",
 
 	form = "形态转变",
 	form_desc = "祖尔金变形警报。",
@@ -169,19 +169,19 @@ L:RegisterTranslations("zhCN", function() return {
 	form_dragonhawk_message = "20% 第五阶段 - 龙鹰形态！",
 
 	throw = "重伤投掷",
-	throw_desc = "当受到重伤投掷发出警报。",
+	throw_desc = "当玩家受到重伤投掷时发出警报。",
 	throw_message = "重伤投掷：>%s<！",
 
 	icon = "团队标记",
-	icon_desc = "为受到重伤投掷或利爪之怒打上团队标记。(需要权限)",
+	icon_desc = "为受到重伤投掷或利爪之怒打上团队标记。（需要权限）",
 
 	paralyze = "麻痹蔓延",
-	paralyze_desc = "受到麻痹蔓延或中了麻痹发出警报。",
+	paralyze_desc = "受玩家到麻痹蔓延或中了麻痹时发出警报。",
 	paralyze_warning = "麻痹蔓延 - 麻痹5秒！",
 	paralyze_message = "已麻痹！",
 	paralyze_bar = "<即将 麻痹>",
 	paralyze_warnbar = "<下一麻痹蔓延>",
-	paralyze_soon = "5秒后，麻痹",
+	paralyze_soon = "5秒后，麻痹！",
 
 	claw = "利爪之怒",
 	claw_desc = "受到利爪之怒发出警报。",

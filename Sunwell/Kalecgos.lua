@@ -179,24 +179,24 @@ L:RegisterTranslations("zhCN", function() return {
 	wipe_bar = "重置计时器",
 
 	portal = "传送",
-	portal_desc = "当鬼魂冲击冷却发出警报。",--Spectral Blast
+	portal_desc = "当鬼魂冲击冷却时发出警报。",--Spectral Blast
 	portal_bar = "<下一传送>",
 	portal_message = "5秒后，可能发动传送！",
 
 	realm = "灵魂世界",--Spectral Realm
-	realm_desc = "当队友在灵魂世界中发出警报.",
+	realm_desc = "当玩家在灵魂世界中发出警报.",
 	realm_message = "灵魂世界：>%s<！（%d 小队）",
 
 	curse = "无边苦痛诅咒",--Curse of Boundless Agony
-	curse_desc = "当队友受到无边苦痛诅咒时发出警报。",
+	curse_desc = "当玩家受到无边苦痛诅咒时发出警报。",
 	curse_bar = "<诅咒：%s>",
 
 	magichealing = "狂野魔法（治疗加成）",--Wild Magic
-	magichealing_desc = "当你从狂野魔法中获得治疗加成发出警报。",
+	magichealing_desc = "当你从狂野魔法中获得治疗加成时发出警报。",
 	magichealing_you = "狂野魔法 - 治疗效果加成！",
 
 	magiccast = "狂野魔法（施法时间延长）",
-	magiccast_desc = "当治疗从狂野魔法延长施法时间发出警报。",
+	magiccast_desc = "当治疗从狂野魔法延长施法时间时发出警报。",
 	magiccast_you = "狂野魔法 - 施法时间延长：>你<！",
 	magiccast_other = "狂野魔法 - 施法时间延长：>%s<！",
 
@@ -219,7 +219,7 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",-- not confirmed on Simp-Chinese client.
 
 	strike = "堕落打击",--Corrupting Strike
-	strike_desc = "当中了堕落打击发出警报。",
+	strike_desc = "当玩家中了堕落打击时发出警报。",
 	strike_message = "堕落打击：>%s<！",
 } end )
 

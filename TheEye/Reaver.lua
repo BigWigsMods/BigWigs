@@ -136,24 +136,24 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "警报！消灭入侵者。",
 
-	orbyou = "奥术宝珠(你)",
-	orbyou_desc = "你中奥术宝珠发出警报。",
+	orbyou = "奥术宝珠（你）",
+	orbyou_desc = "当你受到奥术宝珠时发出警报。",
 	orb_you = ">你< 奥术宝珠！",
 
-	orbsay = "奥术宝珠(说)",
+	orbsay = "奥术宝珠（说）",
 	orbsay_desc = "当你目标是奥术宝珠输出到普通聊天中，能及时帮助临近队友。",
 	orb_say = "奥术宝珠瞄准我！请躲开！",
 
-	orbother = "奥术宝珠(其他)",
-	orbother_desc = "其他队友中了奥术宝珠发出警报。",
+	orbother = "奥术宝珠（其他玩家）",
+	orbother_desc = "其他玩家受到奥术宝珠时发出警报。",
 	orb_other = "奥术宝珠：>%s<！",
 
 	icon = "团队标记",
-	icon_desc = "为中了奥术宝珠打上团队标记。(需要权限)",
+	icon_desc = "为中了奥术宝珠打上团队标记。（需要权限）",
 
 	pounding = "重击",
 	pounding_desc = "显示重击记时条。",
-	pounding_nextbar = "~重击 冷却",
+	pounding_nextbar = "<重击 冷却>",
 
 	knock = "击退",
 	knock_desc = "击退冷却计时条。",

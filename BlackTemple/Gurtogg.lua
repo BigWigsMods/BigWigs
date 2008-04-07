@@ -175,10 +175,10 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "部落会……毁灭你们。",
 
-	phase = "阶段计时",
+	phase = "阶段计时器",
 	phase_desc = "普通或邪能狂怒状态转换阶段计时。",
-	phase_rage_warning = "邪能狂怒 约5秒后发动",
-	phase_normal_warning = "邪能狂怒 约5秒后结束",
+	phase_rage_warning = "邪能狂怒！约5秒后发动。",
+	phase_normal_warning = "约5秒后，结束邪能狂怒！",
 	phase_normal = "邪能狂怒 阶段结束",
 	phase_normal_bar = "<下一邪能狂怒>",
 	phase_rage_bar = "<下一普通阶段>",
@@ -193,14 +193,14 @@ L:RegisterTranslations("zhCN", function() return {
 	rage_other = "邪能狂怒：>%s<！",
 
 	whisper = "密语",
-	whisper_desc = "当完家中了邪能狂怒进行密语提醒(需要助理或更高权限).",
+	whisper_desc = "当完家中了邪能狂怒进行密语提醒。（需要权限）",
 
 	acid = "邪酸吐息",
-	acid_desc = "当谁受到邪酸吐息攻击时发出警报。",
+	acid_desc = "当玩家受到邪酸吐息攻击时发出警报。",
 	acid_message = "邪酸吐息：>%s<！",
 
 	icon = "团队标记",
-	icon_desc = "给中了邪酸吐息的队员打上团队标记。(需要权限)",
+	icon_desc = "给中了邪酸吐息的队员打上团队标记。（需要权限）",
 } end )
 
 ----------------------------------

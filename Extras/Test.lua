@@ -50,8 +50,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["Local test"] = "本地测试",
 	["Perform a local test of BigWigs."] = "执行 BigWigs 本地测试。",
 	["Sync test"] = "同步测试",
-	["Perform a sync test of BigWigs."] = "执行 BigWigs 同步测试（需要助理或更高权限）。",
-	["Testing Sync"] = "同步测试中......",
+	["Perform a sync test of BigWigs."] = "执行 BigWigs 同步测试（需要权限）。",
+	["Testing Sync"] = "同步测试中...",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

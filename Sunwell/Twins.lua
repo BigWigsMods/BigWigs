@@ -118,9 +118,9 @@ L:RegisterTranslations("zhCN", function() return {
 	wipe_bar = "重置计时器",
 
 	nova = "暗影新星",--Shadow Nova
-	nova_desc = "当暗影新星施放时发出警报。",
+	nova_desc = "当施放暗影新星时发出警报。",
 	nova_message = "暗影新星：>%s<！",
-	nova_bar = "<暗影新星冷却>",
+	nova_bar = "<暗影新星 冷却>",
 
 	conflag = "燃烧",--Conflagration
 	conflag_desc = "当施放燃烧时发出警报。",

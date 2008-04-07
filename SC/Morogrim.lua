@@ -135,28 +135,28 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "深渊中的洪水会淹没你们！",
 
 	tidal = "海潮之波",
-	tidal_desc = "当首领施放海潮之波发出警报。",
+	tidal_desc = "当施放海潮之波时发出警报。",
 	tidal_message = "海潮之波！",
 
 	grave = "水之墓穴",
-	grave_desc = "当受到水之墓穴发出警报。",
+	grave_desc = "当玩家受到水之墓穴发出警报。",
 	grave_message = "水之墓穴：>%s<！",
 	grave_bar = "<水之墓穴>",
 	grave_nextbar = "<水之墓穴 冷却>",
 
 	murloc = "鱼群",
-	murloc_desc = "鱼群来临发出警报。",
+	murloc_desc = "当鱼群来临时发出警报。",
 	murloc_bar = "<鱼群 冷却>",
 	murloc_message = "鱼群 来临！",
-	murloc_soon_message = "即将出现 鱼群！",
+	murloc_soon_message = "即将 鱼群！",
 	murloc_engaged = "%s激活！约40秒后，鱼群出现！",
 
 	globules = "水泡",
-	globules_desc = "水泡来临报警。",
+	globules_desc = "当水泡来临时发出警报。",
 	globules_trigger1 = "很快就都结束了。",
 	globules_trigger2 = "你们无处可逃！",
 	globules_message = "水泡 来临！",
-	globules_warning = "即将水泡！",
+	globules_warning = "即将 水泡！",
 	globules_bar = "<水泡 消失>",
 } end )
 

@@ -54,17 +54,17 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("zhCN", function() return {
 
 	encaps = "压缩",--Encapsulate
-	encaps_desc = "当受到压缩时发出警报。",
+	encaps_desc = "当玩家受到压缩时发出警报。",
 	encaps_warning = "约5秒后，压缩！",
 	encaps_message = "压缩：>%s<！",
 
 	gas = "毒气新星",--Gas Nova
 	gas_desc = "当施放毒气新星时发出警报。",
 	gas_message = "正在施放毒气新星！",
-	gas_bar = "<毒气新星冷却>",
+	gas_bar = "<毒气新星 冷却>",
 	
-	takeoff = "起飞",
-	takeoff_message = "5秒后，起飞！",
+	takeoff = "升空",
+	takeoff_message = "5秒后，升空！",
 	
 	landing = "降落",
 	landing_message = "10秒后，降落！",

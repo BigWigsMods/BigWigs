@@ -334,26 +334,26 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "魔法，能量，我的人民陷入其中不能自拔……自从太阳之井被摧毁之后就是如此。欢迎来到未来。真遗憾，你们无法阻止什么。没有人可以阻止我了！Selama ashal’anore！",
-	engage_message = "第一阶段 - 四顾问",
+	engage_message = "第一阶段 - 四顾问！",
 
 	conflag = "燃烧",
-	conflag_desc = "当一队友中了燃烧发出警报。",
+	conflag_desc = "当玩家受到燃烧时发出警报。",
 	conflag_spell = "燃烧",
 	conflag_message = "燃烧：>%s <！",
 
 	gaze = "凝视",
-	gaze_desc = "当亵渎者萨拉德雷凝视队友发出警报。",
+	gaze_desc = "当亵渎者萨拉德雷凝视玩家时发出警报。",
 	gaze_trigger = "凝视着(.+)！$",
 	gaze_message = "凝视：>%s<！",
 	gaze_bar = "<凝视 冷却>",
 	gaze_you = ">你< 凝视！",
 
 	icon = "团队标记",
-	icon_desc = "给受到凝视的队友打上团队标记。(需要权限)",
+	icon_desc = "给受到凝视的队友打上团队标记。（需要权限）",
 
 	fear = "恐惧",
-	fear_desc = "当施放低沉咆哮发出警报。",
-	fear_soon_message = "即将恐惧！",
+	fear_desc = "当施放低沉咆哮时发出警报。",
+	fear_soon_message = "即将 恐惧！",
 	fear_message = "恐惧！",
 	fear_bar = "<恐惧 冷却>",
 	fear_spell = "低沉咆哮",
@@ -390,7 +390,7 @@ L:RegisterTranslations("zhCN", function() return {
 	gravity_trigger2 = "站不住脚了吗？",
 	gravity_bar = "<下一引力失效>",
 	gravity_message = "引力失效！",
-	flying_message = "第五阶段 - 1分钟后引力失效",
+	flying_message = "第五阶段 - 1分钟后引力失效！",
 
 	weapons_inc_message = "第二阶段 - 准备与神器作战！",
 	phase3_message = "第三阶段 - 四顾问复生！",
@@ -398,11 +398,11 @@ L:RegisterTranslations("zhCN", function() return {
 	phase4_bar = "<凯尔萨斯 来临>",
 
 	mc = "精神控制",
-	mc_desc = "当队友被精神控制发出警报。",
+	mc_desc = "当玩家受到精神控制时发出警报。",
 	mc_message = "精神控制：>%s<！",
 
 	revive_bar = "<凤凰复活>",
-	revive_warning = "5秒后 凤凰复活",
+	revive_warning = "5秒后，凤凰复活！",
 
 	dead_message = "%s死亡了。",
 } end )

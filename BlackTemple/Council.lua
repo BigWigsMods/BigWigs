@@ -177,13 +177,13 @@ L:RegisterTranslations("zhCN", function() return {
 
 	vanish = "消失",
 	vanish_desc = "消失记时条。",
-	vanish_message = "维尔莱斯：消失！ 30秒后重新出现",
-	vanish_warning = "消失结束 - %s 出现！",
+	vanish_message = "维尔莱斯 - 消失！30秒后重新出现。",
+	vanish_warning = "消失结束 - %s出现！",
 	vanish_bar = "<消失>",
 
 	immune = "免疫警报",
 	immune_desc = "当玛兰德免疫法术或近战攻击时发出警报。",
-	immune_message = "女公爵玛兰德： 15秒 %s免疫！",
+	immune_message = "女公爵玛兰德 - %s免疫，15秒！",
 	immune_bar = "<%s免疫>",
 
 	spell = "法术",
@@ -199,23 +199,23 @@ L:RegisterTranslations("zhCN", function() return {
 	poison_you = ">你< 致命药膏！",
 
 	icon = "团队标记",
-	icon_desc = "为中致命药膏的玩家打上团队标记。(需要权限)",
+	icon_desc = "为中致命药膏的玩家打上团队标记。（需要权限）",
 
 	circle = "治疗之环",
 	circle_desc = "当玛兰德开始施放治疗之环时发出警报。",
 	circle_trigger = "女公爵玛兰德开始施放治疗之环。$",
 	circle_message = "正在施放 治疗之环！",
-	circle_heal_message = "治疗 成功！ ~20秒后再次发动",
-	circle_fail_message = "%s 打断！~12秒后再次发动 治疗之环",
+	circle_heal_message = "治疗成功！约20秒后，再次发动。",
+	circle_fail_message = "%s 打断！约12秒后，再次发动治疗之环。",
 	circle_bar = "<治疗之环 冷却>",
 
 	res = "多彩抗性光环",
 	res_desc = "当击碎者加西奥斯获得多彩抗性光环时发出警报。",
-	res_message = "击碎者加西奥斯： 多彩抗性光环 30秒！",
+	res_message = "击碎者加西奥斯 - 多彩抗性光环，30秒！",
 	res_bar = "<多彩抗性光环>",
 
 	blizzard = "暴风雪",
-	blizzard_desc = "你中了暴风雪发出警报。",
+	blizzard_desc = "当你中了暴风雪发出警报。",
 	blizzard_message = "暴风雪：>你<！",
 } end )
 

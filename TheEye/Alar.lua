@@ -104,20 +104,20 @@ L:RegisterTranslations("zhCN", function() return {
 	meteor = "俯冲轰炸",
 	meteor_desc = "俯冲轰炸记时条。",
 	meteor_warning = "约5秒后，俯冲轰炸！",
-	meteor_message = "俯冲轰炸！约52秒后再次发动",
+	meteor_message = "俯冲轰炸！约52秒后，再次发动！",
 	meteor_nextbar = "<下一俯冲轰炸>",
 
-	flamepatch = "烈焰之地(你)",
-	flamepatch_desc = "烈焰之地于你警报。",
+	flamepatch = "烈焰之地（你）",
+	flamepatch_desc = "当你受到烈焰之地时发出警报。",
 	flamepatch_message = ">你< 烈焰之地！",
 
 	armor = "熔化护甲",
-	armor_desc = "当队友获得熔化护甲发出警报。",
+	armor_desc = "当玩家受到熔化护甲时发出警报。",
 	armor_other = "熔化护甲：>%s<！",
 	armor_you = ">你< 熔化护甲！",
 
 	icon = "团队标记",
-	icon_desc = "给中了熔化护甲的队员打上团队标记。(需要权限)",
+	icon_desc = "给中了熔化护甲的队员打上团队标记。（需要权限）",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

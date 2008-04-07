@@ -79,15 +79,15 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	decay = "死亡凋零",
-	decay_desc = "你中了死亡凋零发出警报。",
-	decay_message = "你中了 死亡凋零！ 逃离！",
+	decay_desc = "当你受到死亡凋零发出警报。",
+	decay_message = ">你< 死亡凋零！逃离！",
 
 	icebolt = "寒冰箭",
-	icebolt_desc = "寒冰箭警报。",
+	icebolt_desc = "当玩家受到寒冰箭时发出警报。",
 	icebolt_message = "寒冰箭：>%s<！",
 
 	icon = "团队标记",
-	icon_desc = "给中了寒冰箭的玩家打上标记。(需要权限)",
+	icon_desc = "给中了寒冰箭的玩家打上标记。（需要权限）",
 } end )
 
 ----------------------------------

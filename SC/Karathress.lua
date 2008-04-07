@@ -103,13 +103,13 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage_trigger = "卫兵！提高警惕！我们有客人来了……",
 
 	totem = "溅火图腾",
-	totem_desc = "当溅火图腾被施放发出警报。",
+	totem_desc = "当施放溅火图腾时发出警报。",
 	totem_message1 = "泰达维斯：>溅火图腾<！",
 	totem_message2 = "卡拉瑟雷斯：>溅火图腾<！",
 
 	heal = "治疗",
-	heal_desc = "当卡莉蒂丝施放治疗术发出警报。",
-	heal_message = "卡莉蒂丝正在施放治疗！",
+	heal_desc = "当卡莉蒂丝施放治疗术时发出警报。",
+	heal_message = "卡莉蒂丝 - 施放治疗！",
 
 	["Fathom-Guard Sharkkis"] = "深水卫士沙克基斯", --hunter
 	["Fathom-Guard Tidalvess"] = "深水卫士泰达维斯", --shaman

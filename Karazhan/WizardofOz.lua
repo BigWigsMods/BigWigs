@@ -78,7 +78,7 @@ L:RegisterTranslations("zhCN", function() return {
 	spawns = "启动时间",
 	spawns_desc = "每个角色激活时间计时。",
 	spawns_bar = "%s 开始攻击！",
-	spawns_warning = "%s 5秒后开始攻击",
+	spawns_warning = "%s 5秒后，开始攻击！",
 
 	light = "闪电链",
 	light_desc = "老巫婆施放闪电链时发出警报。",

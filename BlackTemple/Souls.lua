@@ -171,16 +171,16 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "等待你们的只有痛苦与折磨！",
 
-	enrage_start = "约47秒后 激怒",
+	enrage_start = "约47秒后，激怒！",
 	enrage_message = "愤怒 15秒！",
 	enrage_bar = "<愤怒>",
-	enrage_next = "愤怒结束 约32秒后再次发动",
+	enrage_next = "愤怒结束，约32秒后再次发动。",
 	enrage_nextbar = "<下一愤怒>",
 	enrage_warning = "5秒后，愤怒！",
 
 	desire_trigger  = "你可以获得任何你想要的东西……只要付得起代价。",
 	desire_cot = "Shi shi rikk rukadare shi tichar kar x gular", --Curse of Tongues trigger
-	desire_start = "欲望精华 - 160秒后零法力",
+	desire_start = "欲望精华！160秒后零法力。",
 	desire_bar = "<零法力>",
 	desire_warn = "30秒后，零法力！",
 
@@ -191,13 +191,13 @@ L:RegisterTranslations("zhCN", function() return {
 	runeshield_warn = "3秒后，符文护盾！",
 
 	deaden = "衰减",
-	deaden_desc = "当衰减施放时发出警报。",
+	deaden_desc = "当施放衰减施放时发出警报。",
 	deaden_message = "正在施放 衰减！",
 	deaden_warn = "约5秒后，衰减！",
 	deaden_nextbar = "<下一衰减>",
 
 	spite = "敌意",
-	spite_desc = "当谁中了敌意发出警报。",
+	spite_desc = "当玩家中了敌意时发出警报。",
 	spite_message = "敌意：>%s<！",
 
 	scream = "灵魂尖啸",

@@ -100,23 +100,23 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "啊，不速之客。我得准备一下……",
-	engage_message = "%s 激活 - 约35秒后 消失！",
+	engage_message = "%s 激活 - 约35秒后，消失！",
 
 	vanish = "消失",
-	vanish_desc = "消失 预计冷却计时条。",
-	vanish_message = "消失！约35秒后再次消失！",
+	vanish_desc = "消失预计冷却计时条。",
+	vanish_message = "消失！约35秒后，再次消失！",
 	vanish_warning = "即将 消失！",
 	vanish_bar = "<消失 冷却>",
 
 	garrote = "锁喉",
-	garrote_desc = "当队员受到锁喉时发送警告。",
+	garrote_desc = "当玩家受到锁喉时发送警告。",
 	garrote_message = "锁喉：>%s<！",
 
 	icon = "标记",
-	icon_desc = "当队员受到锁喉时标上团队标记。(需要权限)",
+	icon_desc = "当队员受到锁喉时标上团队标记。（需要权限）",
 
-	enrage_message = "激怒！",
-	enrage_warning = "即将 激怒！",
+	enrage_message = "狂暴！",
+	enrage_warning = "即将 狂暴！",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

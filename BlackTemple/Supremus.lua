@@ -145,7 +145,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段",
-	phase_desc = "不同阶段警报。",
+	phase_desc = "当不同阶段时发出警报。",
 	normal_phase_message = "木桩战！",
 	normal_phase_trigger = "苏普雷姆斯愤怒地击打着地面！",
 	kite_phase_message = "%s 释放！",
@@ -159,13 +159,13 @@ L:RegisterTranslations("zhCN", function() return {
 	punch_bar = "<可能 熔岩打击>",
 
 	target = "目标",
-	target_desc = "当谁能被凝视发出警报并被打上团队标记。",
+	target_desc = "当玩家被凝视时发出警报并被打上团队标记。",
 	target_message = "凝视：>%s <！",
 	target_you = ">你< 被凝视！",
 	target_message_nounit = "新目标！",
 
 	icon = "团队标记",
-	icon_desc = "给被凝视的玩家打上团队标记。(需要权限)",
+	icon_desc = "给被凝视的玩家打上团队标记。（需要权限）",
 } end )
 
 ----------------------------------

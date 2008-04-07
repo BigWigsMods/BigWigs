@@ -118,14 +118,14 @@ L:RegisterTranslations("zhCN", function() return {
 	--engage_trigger = "Ah, more lambs to the slaughter!",
 
 	burn = "燃烧",
-	burn_desc = "当你或队员中了燃烧发出警报，和下一次燃烧通知。",
-	burn_you = "燃烧：>你<！",
+	burn_desc = "当玩家受到燃烧发出警报及下一次燃烧通知。",
+	burn_you = ">你< 燃烧！",
 	burn_other = "燃烧：>%s<！",
 	burn_bar = "<下一燃烧>",
 	burn_message = "5秒后，燃烧！",
 
 	burnresist = "燃烧抵抗",
-	burnresist_desc = "当队员抵抗燃烧攻击发出警报。",
+	burnresist_desc = "当玩家抵抗燃烧攻击发出警报。",
 	burn_resist = "燃烧抵抗：>%s<！",
 
 	meteor = "流星猛击",--Meteor Slash
@@ -133,7 +133,7 @@ L:RegisterTranslations("zhCN", function() return {
 	meteor_bar = "<下一流星猛击>",
 
 	stomp = "践踏",
-	stomp_desc = "践踏警报和记时条。",
+	stomp_desc = "当施放践踏时发出警报及记时条。",
 	stomp_warning = "5秒后，践踏！",
 	stomp_message = "践踏：>%s<！",
 	stomp_bar = "<下一践踏>",

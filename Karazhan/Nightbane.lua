@@ -139,19 +139,19 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	fear = "恐惧警报",
-	fear_desc = "低沉咆哮警报。",
-	fear_message = "2秒后 恐惧",
-	fear_warning = "即将恐惧！",
+	fear = "恐惧",
+	fear_desc = "当施放低沉咆哮时发出警报。",
+	fear_message = "2秒后，恐惧！",
+	fear_warning = "即将 恐惧！",
 	fear_bar = "<恐惧>",
 	fear_nextbar = "<恐惧 冷却>",
 
-	charr = "灼烧土地警报",
-	charr_desc = "当你中了灼烧土地发出警报。",
+	charr = "灼烧土地",
+	charr_desc = "当你受到灼烧土地发出警报。",
 	charr_message = ">你< 灼烧土地！",
 
 	phase = "阶段警报",
-	phase_desc = "当夜之魇进入下阶段发送预警。",
+	phase_desc = "当进入下阶段时发出警报。",
 	airphase_trigger = "可怜的渣滓。我要腾空而起，让你尝尝毁灭的滋味！",
 	landphase_trigger1 = "够了！我要落下来把你们打得粉碎！",
 	landphase_trigger2 = "没用的虫子！让你们见识一下我的力量吧！",
@@ -160,12 +160,12 @@ L:RegisterTranslations("zhCN", function() return {
 	summon_trigger = "一个远古的生物在远处被唤醒了……",
 
 	engage = "激活",
-	engage_desc = "进入战斗后发出警报。",
+	engage_desc = "当进入战斗后发出警报。",
 	engage_trigger = "愚蠢的家伙！我会很快终结你们的痛苦！",
-	engage_message = "%s 激活",
+	engage_message = "%s 激活！",
 
 	bones = "白骨之雨",
-	bones_desc = "当团队中了白骨之雨后发出警报。",
+	bones_desc = "当玩家受到白骨之雨时发出警报。",
 	bones_message = "白骨之雨",
 } end )
 

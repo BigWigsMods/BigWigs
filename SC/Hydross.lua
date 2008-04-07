@@ -129,22 +129,22 @@ L:RegisterTranslations("zhCN", function() return {
 	mark_desc = "显示印记警报及计数。",
 
 	stance = "形态改变",
-	stance_desc = "海度斯毒性改变。",
+	stance_desc = "当毒性改变时发出警报。",
 	poison_stance = "毒形态！",
 	water_stance = "水形态！",
 
 	sludge = "肮脏的淤泥怪",
-	sludge_desc = "当临近的队友变成肮脏的淤泥怪发出警报。",
+	sludge_desc = "当玩家变成肮脏的淤泥怪时发出警报。",
 	sludge_message = "肮脏的淤泥怪：>%s<！",
 
 	tomb = "水之墓",
-	tomb_desc = "当临近队友成为水之墓发出警报。",
+	tomb_desc = "当玩家成为水之墓时发出警报。",
 	tomb_message = "水之墓：>%s<！",
 
 	icon = "肮脏的淤泥怪标记",
-	icon_desc = "为受到肮脏的淤泥怪的队友打上标记。(需要权限)",
+	icon_desc = "为受到肮脏的淤泥怪的玩家打上标记。（需要权限）",
 
-	debuff_warn = "印记施放于 %s%%!",
+	debuff_warn = "印记施放于 %s%%！",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

@@ -126,17 +126,17 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	engage_warning = "%s 激活 - 90秒后可能下潜",
+	engage_warning = "%s 激活！90秒后，可能下潜！",
 
 	dive = "下潜",
 	dive_desc = "鱼斯拉下潜计时。",
-	dive_warning = "可能 %d秒后下潜！",
+	dive_warning = "约%d秒后，下潜！",
 	dive_bar = "<下潜>",
-	dive_message = "下潜 - 60秒后重新出现",
+	dive_message = "下潜！60秒后，重新出现。",
 
 	spout = "喷涌",
 	spout_desc = "喷涌计时条。",
-	spout_message = "快喷了! 啊~~......",
+	spout_message = "快喷了！啊～～...",
 	spout_warning = "约3秒后，可能喷涌！",
 	spout_bar = "<可能喷涌>",
 
@@ -144,8 +144,8 @@ L:RegisterTranslations("zhCN", function() return {
 	whirl_desc = "旋风计时条。",
 	whirl_bar = "<可能旋风>",
 
-	emerge_warning = "%d后出现",
-	emerge_message = "出现 - 90秒后再次下潜",
+	emerge_warning = "%d后出现！",
+	emerge_message = "出现！90秒后，再次下潜！",
 	emerge_bar = "<出现>",
 
 	["Coilfang Guardian"] = "盘牙守护者",

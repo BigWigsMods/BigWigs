@@ -102,17 +102,17 @@ L:RegisterTranslations("zhCN", function() return {
 
 	sacrifice = "牺牲",
 	sacrifice_desc = "当玩家受到牺牲时发出警报。",
-	sacrifice_message = ">%s< 牺牲！ - 注意停手！",
+	sacrifice_message = ">%s< 牺牲！- 注意停手！",
 	sacrifice_bar = "<牺牲：%s>",
 	sacrifice_soon = "即将 牺牲！",
 	sacrifice_soonbar = "<可能 牺牲>",
 
 	icon = "团队标记",
-	icon_desc = "受到牺牲效果的队友打上标记。(需要权限)",
+	icon_desc = "受到牺牲效果的队友打上标记。（需要权限）",
 
 	weak = "虚弱",
-	weak_desc = "虚弱阶段发出警报。",
-	weak_message = "进入虚弱状态！约45秒",
+	weak_desc = "当虚弱阶段时发出警报。",
+	weak_message = "进入虚弱状态！约45秒。",
 	weak_warning1 = "约5秒后，虚弱状态结束！",
 	weak_warning2 = "虚弱结束！",
 	weak_bar = "<虚弱>",

@@ -111,7 +111,7 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "在利爪与尖牙面前，下跪吧，祈祷吧，颤栗吧！",
 
 	totem = "图腾",
-	totem_desc = "当哈尔拉兹施放一闪电图腾时发出警报。",
+	totem_desc = "当施放闪电图腾时发出警报。",
 	totem_message = "即将 闪电图腾！",
 
 	phase = "阶段",
@@ -119,7 +119,7 @@ L:RegisterTranslations("zhCN", function() return {
 	phase_spirit = "狂野的灵魂与我同在……",
 	phase_normal = "灵魂，到我这里来！",
 	normal_message = "正常阶段！",
-	spirit_message = "%d%% 生命值！ - 灵魂阶段！",
+	spirit_message = "%d%% 生命值！- 灵魂阶段！",
 	spirit_soon = "即将灵魂阶段！",
 	spirit_bar = "<可能 正常阶段>",
 
@@ -129,11 +129,11 @@ L:RegisterTranslations("zhCN", function() return {
 	frenzy_message = "哈尔拉玆 狂乱！",
 
 	flame = "烈焰震击",
-	flame_desc = "当玩家受到烈焰震击发出警报。",
+	flame_desc = "当玩家受到烈焰震击时发出警报。",
 	flame_message = "烈焰震击：>%s<！",
 
 	icon = "团队标记",
-	icon_desc = "使用团队标记标出受烈焰震击的玩家。(需要权限)",
+	icon_desc = "使用团队标记标出受烈焰震击的玩家。（需要权限）",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

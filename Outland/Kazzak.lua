@@ -102,19 +102,19 @@ L:RegisterTranslations("zhCN", function() return {
 	engage_trigger2 = "所有的凡人都将灭亡！",
 
 	enrage_trigger = "%s变得愤怒了！",
-	enrage_warning1 = "%s 激活 - 50-60秒后 激怒",
-	enrage_warning2 = "即将激怒！",
+	enrage_warning1 = "%s 激活 - 50-60秒后，激怒！",
+	enrage_warning2 = "即将 激怒！",
 	enrage_message = "10秒后，激怒！",
-	enrage_finished = "激活结束 - 50-60秒后再次发动",
+	enrage_finished = "激活结束！50-60秒后，再次发动。",
 	enrage_bar = "<激怒>",
 	enraged_bar = "<已激怒>",
 
 	mark = "印记",
-	mark_desc = "当你受到卡扎克的印记发出警报。",
+	mark_desc = "当你受到卡扎克的印记时发出警报。",
 	mark_message = ">你< 卡扎克的印记！",
 
 	twist = "扭曲反射",
-	twist_desc = "当队友受到扭曲反射发出警报。",
+	twist_desc = "当玩家受到扭曲反射时发出警报。",
 	twist_message = "扭曲反射：>%s<！",
 } end)
 

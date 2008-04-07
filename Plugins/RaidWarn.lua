@@ -60,8 +60,8 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	["RaidWarning"] = "团队通知",
 
-	["Broadcast over RaidWarning"] = "通过团队通知(RW)发送警报信息。",
-	["Broadcast"] = "广播(RW)",
+	["Broadcast over RaidWarning"] = "通过团队通知（RW）发送警报信息。",
+	["Broadcast"] = "广播（RW）",
 	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = "在 Raid 空闲时，通过团队警报频道发送您的 BigWigs 信息。\n\n备注：若你不想看到这些信息，只需禁用\"信息阻止\"。",
 
 	["Whisper"] = "密语",
@@ -74,7 +74,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Broadcast to chat"] = "广播到聊天频道",
 	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "通过广播 Boss 信息到每个队伍或者团队频道代替团队警告频道\n\n同样；若你不想看到这些信息，只需禁用\"信息阻止\"。",
 
-	desc = "设置除本地输出之外的，BigWigs 发送的 Boss 预警信息。",
+	desc = "设置除本地输出之外的，BigWigs 发送的首领预警信息。",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

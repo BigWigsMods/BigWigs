@@ -230,12 +230,12 @@ L:RegisterTranslations("zhCN", function() return {
 	berserk_trigger = "你们这是自寻死路！",
 
 	parasite = "寄生暗影魔",
-	parasite_desc = "当队员中寄生暗影魔时发出警告。",
+	parasite_desc = "当玩家中寄生暗影魔时发出警告。",
 	parasite_you = ">你< 寄生暗影魔！",
 	parasite_other = "寄生暗影魔：>%s<！",
 
 	icon = "团队标记",
-	icon_desc = "为中了寄生暗影魔的队员打上团队标记。(需要权限)",
+	icon_desc = "为中了寄生暗影魔的队员打上团队标记。（需要权限）",
 
 	barrage = "黑暗壁垒",
 	barrage_desc = "当玩家中了黑暗壁垒时发出警报。",
@@ -250,22 +250,22 @@ L:RegisterTranslations("zhCN", function() return {
 	eyeblast_message = "魔眼冲击！",
 
 	shear = "剪切",
-	shear_desc = "剪切玩家警报。",
+	shear_desc = "当剪切玩家时发出警报。",
 	shear_message = "剪切：>%s<！",
 	shear_bar = "<剪切：%s>",
 
 	flame = "苦痛之焰",
-	flame_desc = "当中了苦痛之焰时发出警报。",
+	flame_desc = "当玩家中了苦痛之焰时发出警报。",
 	flame_message = "苦痛之焰：>%s<！",
 
 	demons = "影魔",
-	demons_desc = "当伊利丹召唤影魔时发出警报。",
+	demons_desc = "当召唤影魔时发出警报。",
 	demons_message = "影魔！",
 	demons_warn = "即将 影魔！",
 
 	phase = "阶段",
-	phase_desc = "当伊利丹进入不同阶段发出警报。",
-	phase2_soon_message = "即将 -  第二阶段！",
+	phase_desc = "当进入不同阶段发出警报。",
+	phase2_soon_message = "即将 - 第二阶段！",
 	phase2_message = "第二阶段 - 埃辛诺斯双刃！",
 	phase3_message = "第三阶段！",
 	demon_phase_trigger = "感受我体内的恶魔之力吧！",
@@ -279,11 +279,11 @@ L:RegisterTranslations("zhCN", function() return {
 	phase4_message = "第四阶段 - 玛维·影歌来临！",
 
 	burst = "烈焰爆击",
-	burst_desc = "当伊利丹使用烈焰爆击发出警报",
-	burst_message = "烈焰爆击!",
+	burst_desc = "当施放烈焰爆击发出警报。",
+	burst_message = "烈焰爆击！",
 	burst_cooldown_bar = "烈焰爆击 冷却",
-	burst_cooldown_warn = "即将 烈焰爆击!",
-	burst_warn = "5秒后 烈焰爆击!",
+	burst_cooldown_warn = "即将 烈焰爆击！",
+	burst_warn = "5秒后，烈焰爆击！",
 
 	enrage_trigger = "感受一万年的仇恨吧！",
 	enrage_message = "狂暴！",
