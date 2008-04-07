@@ -7,6 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local pName = UnitName("player")
 local db = nil
+local beingCrushed = {}
 
 ----------------------------
 --      Localization      --
@@ -28,6 +29,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Icon on players with Shadow of Death.",
+
+	crush = "Crushing Shadows",
+	crush_desc = "Warn who gets crushing shadows.",
+	crush_warn = "Crushed: %s",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -44,6 +49,10 @@ L:RegisterTranslations("deDE", function() return {
 
 	icon = "Schlachtzug Symbol",
 	icon_desc = "Plaziert ein Schlachtzug Icon auf dem Spieler mit Schatten des Todes (benötigt Assistent oder höher).",
+
+	--crush = "Crushing Shadows",
+	--crush_desc = "Warn who gets crushing shadows.",
+	--crush_warn = "Crushed: %s",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -60,6 +69,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	icon = "전술 표시",
 	icon_desc = "죽음의 어둠에 걸린 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
+
+	--crush = "Crushing Shadows",
+	--crush_desc = "Warn who gets crushing shadows.",
+	--crush_warn = "Crushed: %s",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -76,6 +89,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Ombre de la mort (nécessite d'être promu ou mieux).",
+
+	--crush = "Crushing Shadows",
+	--crush_desc = "Warn who gets crushing shadows.",
+	--crush_warn = "Crushed: %s",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -92,6 +109,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	icon = "团队标记",
 	icon_desc = "给中了死亡之影的玩家打上团队标记。（需要权限）",
+
+	--crush = "Crushing Shadows",
+	--crush_desc = "Warn who gets crushing shadows.",
+	--crush_warn = "Crushed: %s",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -108,6 +129,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	icon = "團隊標記",
 	icon_desc = "給中了死亡之影的玩家打上團隊標記",
+
+	--crush = "Crushing Shadows",
+	--crush_desc = "Warn who gets crushing shadows.",
+	--crush_warn = "Crushed: %s",
 } end )
 
 ----------------------------------
@@ -117,7 +142,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Black Temple"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"shadow", "ghost", "icon", "bosskill"}
+mod.toggleoptions = {"shadow", "ghost", "icon", "crush", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -126,11 +151,13 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Shadow", 40251)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Crushed", 40243)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	db = self.db.profile
+	for k in pairs(beingCrushed) do beingCrushed[k] = nil end
 end
 
 ------------------------------
@@ -154,5 +181,26 @@ end
 
 function mod:Ghost(player)
 	self:Bar(L["ghost_bar"]:format(player), 60, "Ability_Druid_Dreamstate")
+end
+
+function mod:Crushed(player, spellID, _, _, spellName)
+	if self.db.profile.crush then
+		beingCrushed[player] = true
+		self:ScheduleEvent("BWTeronCrushWarn", self.CrushWarn, 0.3, self)
+		self:Bar(spellName, 15, spellID)
+	end
+end
+
+function mod:CrushWarn()
+	local msg = nil
+	for k in pairs(beingCrushed) do
+		if not msg then
+			msg = k
+		else
+			msg = msg .. ", " .. k
+		end
+	end
+	self:IfMessage(L["crush_warn"]:format(msg), "Important", 40243, "Alert")
+	for k in pairs(beingCrushed) do beingCrushed[k] = nil end
 end
 
