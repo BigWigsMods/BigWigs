@@ -127,12 +127,12 @@ L:RegisterTranslations("zhCN", function() return {
 
 	bolts = "灵魂之箭",
 	bolts_desc = "当玛拉卡斯开始引导灵魂之箭时发出警报。",
-	bolts_message = "即将 - 灵魂之箭！",
-	bolts_warning = "5秒后 灵魂之箭！",
+	bolts_message = "即将 灵魂之箭！",
+	bolts_warning = "5秒后，灵魂之箭！",
 	bolts_nextbar = "<下一灵魂之箭>",
 
 	soul = "灵魂虹吸",
-	soul_desc = "受到灵魂虹吸时发出警报。",
+	soul_desc = "当受到灵魂虹吸时发出警报。",
 	soul_message = "灵魂虹吸：>%s<！",
 
 	totem = "图腾",
@@ -143,10 +143,10 @@ L:RegisterTranslations("zhCN", function() return {
 	heal_desc = "当妖术领主玛拉卡斯施放治疗发出警报。",
 	heal_message = "正在施放治疗！打断！",
 
-	--consecration = "Consecration",
-	--consecration_desc = "Warn when Consecration is cast.",
-	--consecration_bar = "Consecration (%d)",
-	--consecration_warn = "Casted Consecration!",
+	consecration = "奉献",
+	consecration_desc = "当施放奉献时发出警报。",
+	consecration_bar = "<奉献：%d>",
+	consecration_warn = "已施放 奉献！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
