@@ -55,7 +55,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	encaps = "压缩",--Encapsulate
 	encaps_desc = "当受到压缩时发出警报。",
-	--encaps_warning = "Encapsulate in ~5 Seconds!",
+	encaps_warning = "约5秒后，压缩！",
 	encaps_message = "压缩：>%s<！",
 
 	gas = "毒气新星",--Gas Nova
@@ -63,11 +63,11 @@ L:RegisterTranslations("zhCN", function() return {
 	gas_message = "正在施放毒气新星！",
 	gas_bar = "<毒气新星冷却>",
 	
-	--takeoff = "Takeoff",
-	--takeoff_message = "Taking off in 5 Seconds!",
+	takeoff = "起飞",
+	takeoff_message = "5秒后，起飞！",
 	
-	--landing = "Landing",
-	--landing_message = "Landing in 10 Seconds!",
+	landing = "降落",
+	landing_message = "10秒后，降落！",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
