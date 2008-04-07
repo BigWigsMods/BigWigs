@@ -179,7 +179,7 @@ L:RegisterTranslations("zhCN", function() return {
 	wipe_bar = "重置计时器",
 
 	portal = "传送",
-	portal_desc = "当鬼魂冲击冷却时发出警报。",--Spectral Blast
+	portal_desc = "当灵魂冲击冷却时发出警报。",
 	portal_bar = "<下一传送>",
 	portal_message = "5秒后，可能发动传送！",
 
