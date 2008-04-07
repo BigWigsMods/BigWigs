@@ -89,10 +89,10 @@ L:RegisterTranslations("koKR", function() return {
 	heal_desc = "말라크라스의 치유 마법 시전을 알립니다.",
 	heal_message = "치유 마법 시전!",
 
-	--consecration = "Consecration",
-	--consecration_desc = "Warn when Consecration is cast.",
-	--consecration_bar = "Consecration (%d)",
-	--consecration_warn = "Casted Consecration!",
+	consecration = "신성화",
+	consecration_desc = "신성화 시전에 대해 알립니다.",
+	consecration_bar = "신성화 (%d)",
+	consecration_warn = "신성화!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
