@@ -104,10 +104,10 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage_trigger = "%s变得愤怒了！",
 	enrage_warning1 = "%s 激活 - 50-60秒后 激怒",
 	enrage_warning2 = "即将激怒！",
-	enrage_message = "10秒后 激怒",
+	enrage_message = "10秒后，激怒！",
 	enrage_finished = "激活结束 - 50-60秒后再次发动",
-	enrage_bar = "<狂怒>",
-	enraged_bar = "<已狂怒>",
+	enrage_bar = "<激怒>",
+	enraged_bar = "<已激怒>",
 
 	mark = "印记",
 	mark_desc = "当你受到卡扎克的印记发出警报。",

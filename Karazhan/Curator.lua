@@ -112,9 +112,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 	weaktime = "虚弱提示",
 	weaktime_desc = "显示计时条预计下一次虚弱的时间。",
-	weaktime_message1 = "唤醒  大约10秒后",
-	weaktime_message2 = "唤醒  大约30秒后",
-	weaktime_message3 = "唤醒  大约70秒后",
+	weaktime_message1 = "唤醒 约10秒后",
+	weaktime_message2 = "唤醒 约30秒后",
+	weaktime_message3 = "唤醒 约70秒后",
 	weaktime_bar = "<虚弱>",
 } end )
 

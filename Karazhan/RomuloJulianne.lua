@@ -133,8 +133,8 @@ L:RegisterTranslations("zhCN", function() return {
 	heal_desc = "当朱丽叶施放治疗时警报。",
 	heal_message = "%s 施放治疗！",
 
-	buff = "自身 Buff 警报",
-	buff_desc = "当罗密欧与朱丽叶获得 Buff 发出警报",
+	buff = "自身增益警报",
+	buff_desc = "当罗密欧与朱丽叶获得增益发出警报",
 	buff1_message = "%s 获得 卤莽！",
 	buff2_message = "%s 获得 虔诚光环！",
 } end)

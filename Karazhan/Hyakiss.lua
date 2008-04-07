@@ -43,7 +43,7 @@ L:RegisterTranslations("zhCN", function() return {
 	web = "希亚其斯之网",
 	web_desc = "当队员受到希亚其斯之网时发出警告。",
 	web_message = "希亚其斯之网：>%s<！",
-	web_bar = "<希亚其斯之网: %s>",
+	web_bar = "<希亚其斯之网：%s>",
 } end )
 
 ----------------------------------

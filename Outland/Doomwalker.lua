@@ -135,7 +135,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "停止前进。否则你们将被消灭。",
-	engage_message = "末日行者激活 30秒后发动地震术！",
+	engage_message = "末日行者激活 约30秒后发动地震术！",
 
 	overrun = "泛滥",
 	overrun_desc = "当末日行者使用泛滥技能时发出警报。",
@@ -147,7 +147,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	earthquake = "地震术",
 	earthquake_desc = "当末日行者施放地震术时发出警告。",
-	earthquake_message = "地震术！~70秒后再次发动！",
+	earthquake_message = "地震术！约70秒后再次发动！",
 	earthquake_bar = "<地震术 冷却>",
 	earthquake_trigger1 = "地面破坏程序启动。",
 	earthquake_trigger2 = "范围确认。释放。",

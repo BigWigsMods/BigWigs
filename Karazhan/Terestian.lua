@@ -112,8 +112,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	weak = "虚弱",
 	weak_desc = "虚弱阶段发出警报。",
-	weak_message = "进入虚弱状态！ ~45秒",
-	weak_warning1 = "~5秒后 虚弱状态结束！",
+	weak_message = "进入虚弱状态！约45秒",
+	weak_warning1 = "约5秒后，虚弱状态结束！",
 	weak_warning2 = "虚弱结束！",
 	weak_bar = "<虚弱>",
 } end )

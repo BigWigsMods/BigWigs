@@ -362,13 +362,13 @@ L:RegisterTranslations("zhCN", function() return {
 	rebirth_desc = "凤凰复生计时条。",
 	rebirth_trigger1 = "Anar'anel belore!",
 	rebirth_trigger2 = "以太阳之名！",
-	rebirth_warning = "~5秒后 凤凰复生！",
+	rebirth_warning = "约5秒后，凤凰复生！",
 	rebirth_bar = "<凤凰重生>",
 
 	pyro = "炎爆术",
 	pyro_desc = "显示60秒的炎爆术记时条。",
 	pyro_trigger = "%s开始施放炎爆术！",
-	pyro_warning = "5秒后 炎爆术！",
+	pyro_warning = "5秒后，炎爆术！",
 	pyro_message = "正在施放 炎爆术！",
 
 	toyall = "遥控玩具",

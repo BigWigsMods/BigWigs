@@ -166,21 +166,21 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
-	["%s mod enabled"] = "%s 模块已启用",
-	["%s has been defeated"] = "%s 被击败了!",     -- "<boss> has been defeated"
-	["%s have been defeated"] = "%s 被击败了!",    -- "<bosses> have been defeated"
+	["%s mod enabled"] = "%s 模块已启用。",
+	["%s has been defeated"] = "%s 被击败了！",     -- "<boss> has been defeated"
+	["%s have been defeated"] = "%s 被击败了！",    -- "<bosses> have been defeated"
 
-	["Debug enabled, output routed to %s."] = "调试功能启用,输出到%s。",
+	["Debug enabled, output routed to %s."] = "调试功能启用，输出到%s。",
 	["Debug disabled."] = "调试禁用。",
 
 	-- AceConsole strings
 	["Bosses"] = "首领模块",
 	["Options for bosses in %s."] = "%s首领模块设置。", -- "Options for bosses in <zone>"
-	["Options for %s (r%d)."] = "%s首领模块版本 (r%d)。",     -- "Options for <boss> (<revision>)"
+	["Options for %s (r%d)."] = "%s首领模块版本（r%d）。",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "综合设置",
 	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "他们是 BigWigs 最关键的核心 - 比如信息显示，记时条以及其他必要的功能。",
 	["Extras"] = "附加功能",
-	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "附加功能是第三方插件,是 BigWigs 功能的一个增强。",
+	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "附加功能是第三方插件，是 BigWigs 功能的一个增强。",
 	["Active"] = "激活",
 	["Activate or deactivate this module."] = "激活或关闭此模块。",
 	["Reboot"] = "重置",

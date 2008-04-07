@@ -152,7 +152,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	fear = "恐惧",
 	fear_desc = "恐惧计时。",
-	fear_message = "恐惧！ ~42秒后再次发动",
+	fear_message = "恐惧！ 约42秒后再次发动",
 	fear_bar = "<恐惧 冷却>",
 	fear_warning = "恐惧冷却结束 - 即将发动！",
 
@@ -163,7 +163,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	burstsay = "空气爆裂(说)",
 	burstsay_desc = "当你为空气爆裂目标时警报周围,以帮助附近的队友远离。",
-	burstsay_message = "我中了 空气爆裂！ 离开我......",
+	burstsay_message = "我中了空气爆裂！离开我...",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

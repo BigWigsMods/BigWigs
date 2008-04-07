@@ -123,7 +123,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	swarm = "腐臭虫群",
 	swarm_desc = "腐臭虫群冷却计时。",
-	swarm_message = "虫群！ ~11秒后下一波",
+	swarm_message = "虫群！ 约11秒后下一波",
 	swarm_bar = "<虫群 冷却>",
 } end )
 

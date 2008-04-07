@@ -151,7 +151,7 @@ L:RegisterTranslations("zhCN", function() return {
 	kite_phase_message = "%s 释放！",
 	kite_phase_trigger = "地面崩裂了！",
 	next_phase_bar = "<下一阶段>",
-	next_phase_message = "10秒后 阶段改变！",
+	next_phase_message = "10秒后，阶段改变！",
 
 	punch = "熔岩打击",
 	punch_desc = "当施放熔岩打击时发出警报并显示冷却记时条。",

@@ -149,7 +149,7 @@ L:RegisterTranslations("zhCN", function() return {
 	murloc_bar = "<鱼群 冷却>",
 	murloc_message = "鱼群 来临！",
 	murloc_soon_message = "即将出现 鱼群！",
-	murloc_engaged = "%s 激活, ~40秒后 鱼群 出现",
+	murloc_engaged = "%s激活！约40秒后，鱼群出现！",
 
 	globules = "水泡",
 	globules_desc = "水泡来临报警。",

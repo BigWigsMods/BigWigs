@@ -137,7 +137,7 @@ L:RegisterTranslations("zhCN", function() return {
 	spout = "喷涌",
 	spout_desc = "喷涌计时条。",
 	spout_message = "快喷了! 啊~~......",
-	spout_warning = "~3秒后 可能喷涌！",
+	spout_warning = "约3秒后，可能喷涌！",
 	spout_bar = "<可能喷涌>",
 
 	whirl = "旋风",

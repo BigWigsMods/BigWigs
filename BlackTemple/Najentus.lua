@@ -118,7 +118,7 @@ L:RegisterTranslations("zhCN", function() return {
 	shield_desc = "当纳因图斯获得海潮之盾后计时。",
 	shield_nextbar = "<下一海潮之盾>",
 	shield_warn = "海潮之盾！",
-	shield_soon_warn = "海潮之盾 ~10秒 后发动！",
+	shield_soon_warn = "海潮之盾 约10秒后发动！",
 	shield_fade = "海潮之盾 消失！",
 
 	icon = "团队标记",
@@ -140,7 +140,7 @@ L:RegisterTranslations("zhTW", function() return {
 	shield_desc = "潮汐之盾計時",
 	shield_nextbar = "下一次潮汐之盾",
 	shield_warn = "潮汐之盾!",
-	shield_soon_warn = "潮汐之盾在 ~10秒內施放!",
+	shield_soon_warn = "潮汐之盾在 约10秒內施放!",
 	shield_fade = "潮汐之盾消失!",
 
 	icon = "團隊標記",

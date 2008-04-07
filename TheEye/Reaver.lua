@@ -158,7 +158,7 @@ L:RegisterTranslations("zhCN", function() return {
 	knock = "击退",
 	knock_desc = "击退冷却计时条。",
 	knock_bar = "<击退 冷却>",
-	--knock_message = "Knock Away: %s",
+	knock_message = "击退：>%s<！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

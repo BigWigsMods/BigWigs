@@ -113,7 +113,7 @@ L:RegisterTranslations("zhCN", function() return {
 	bomb = "火焰炸弹",
 	bomb_desc = "显示火焰炸弹记时条。",
 	bomb_trigger = "烧死你们！",
-	bomb_message = "即将 - 火焰炸弹！",
+	bomb_message = "即将 火焰炸弹！",
 
 	adds = "援兵",
 	adds_desc = "援兵即将到来时发出警报。",

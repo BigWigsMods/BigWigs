@@ -217,8 +217,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["Wave %d! %d %s, %d %s, %d %s"] = "第%d波：%d个%s，%d个%s，%d个%s！", --3 sets of mobs
 	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "第%d波：%d个%s，%d个%s，%d个%s，%d个%s！", --4 sets of mobs
 	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "第%d波：%d个%s，%d个%s，%d个%s，%d个%s，%d个%s！", --5 sets of mobs
-	["%s in ~%d sec!"] = "%s 在%d秒后来临！",
-	["Wave %d in ~%d sec!"] = "第%d波！将在%d秒后来临！",
+	["%s in ~%d sec!"] = "%s 在约%d秒后来临！",
+	["Wave %d in ~%d sec!"] = "第%d波！将在约%d秒后来临！",
 
 	["Boss"] = "首领",
 	["Thrall"] = "萨尔",

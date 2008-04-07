@@ -177,12 +177,12 @@ L:RegisterTranslations("zhCN", function() return {
 
 	grow = "成长",
 	grow_desc = "计算并当屠龙者格鲁尔成长时发出警告。",
-	grow_message = "成长： >%d<！",
-	grow_bar = "<成长 (%d)》",
+	grow_message = "成长：>%d<！",
+	grow_bar = "<成长：%d>",
 
 	grasp = "碎裂",
 	grasp_desc = "碎裂警报计时条。",
-	grasp_message = "大地冲击 - 10秒后破碎！",
+	grasp_message = "大地冲击 - 约10秒后破碎！",
 	grasp_warning = "大地冲击 即将发动",
 	grasp_bar = "<大地冲击 冷却>",
 

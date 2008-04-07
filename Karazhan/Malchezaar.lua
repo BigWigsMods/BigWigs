@@ -174,7 +174,7 @@ L:RegisterTranslations("zhCN", function() return {
 	phase1_trigger = "疯狂将你们带到我的面前，而我将以死亡终结你们！",
 	phase2_trigger = "愚蠢的家伙！时间就是吞噬你躯体的烈焰！",
 	phase3_trigger = "你如何抵挡这无坚不摧的力量？",
-	phase1_message = "第一阶段 - 地狱火将在 ~40秒后发动！",
+	phase1_message = "第一阶段 - 地狱火将 约40秒后发动！",
 	phase2_message = "60% - 第二阶段",
 	phase3_message = "30% - 第三阶段",
 

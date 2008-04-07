@@ -103,8 +103,8 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	meteor = "俯冲轰炸",
 	meteor_desc = "俯冲轰炸记时条。",
-	meteor_warning = "5秒后 可能 俯冲轰炸",
-	meteor_message = "俯冲轰炸！ ~52秒后再次发动",
+	meteor_warning = "约5秒后，俯冲轰炸！",
+	meteor_message = "俯冲轰炸！约52秒后再次发动",
 	meteor_nextbar = "<下一俯冲轰炸>",
 
 	flamepatch = "烈焰之地(你)",

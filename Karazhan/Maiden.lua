@@ -92,18 +92,18 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "你们的行为是不可饶恕的。",
-	engage_message = "战斗开始！ ~33秒释放 悔改！",
+	engage_message = "战斗开始！ 约33秒释放 悔改！",
 
 	repentance = "悔改",
 	repentance_desc = "悔改冷却时间提醒。",
-	repentance_message = "悔改! ~33秒后发动",
+	repentance_message = "悔改！约33秒后发动",
 	repentance_warning = "悔改 冷却结束 - 即将发动！",
 	repentance_bar = "<悔改>",
 	repentance_nextbar = "悔改 冷却！",
 
 	holyfire = "神圣之火",
 	holyfire_desc = "当受到神圣之火影响时发出警报。",
-	holyfire_message = "神圣之火： >%s<！",
+	holyfire_message = "神圣之火：>%s<！",
 
 	icon = "团队标记",
 	icon_desc = "标记受到神圣之火的队员。(需要权限)",

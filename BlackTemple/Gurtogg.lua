@@ -177,8 +177,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	phase = "阶段计时",
 	phase_desc = "普通或邪能狂怒状态转换阶段计时。",
-	phase_rage_warning = "邪能狂怒 ~5秒后发动",
-	phase_normal_warning = "邪能狂怒 ~5秒后结束",
+	phase_rage_warning = "邪能狂怒 约5秒后发动",
+	phase_normal_warning = "邪能狂怒 约5秒后结束",
 	phase_normal = "邪能狂怒 阶段结束",
 	phase_normal_bar = "<下一邪能狂怒>",
 	phase_rage_bar = "<下一普通阶段>",

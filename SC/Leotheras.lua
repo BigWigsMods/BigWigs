@@ -184,7 +184,7 @@ L:RegisterTranslations("zhCN", function() return {
 	phase_trigger = "滚开吧，脆弱的精灵。现在我说了算！",
 	phase_demon = "恶魔形态 - 60秒",
 	phase_demonsoon = "5秒后 恶魔形态！",
-	phase_normalsoon = "5秒后 正常形态",
+	phase_normalsoon = "5秒后 正常形态！",
 	phase_normal = "正常形态！",
 	demon_bar = "<恶魔形态>",
 	demon_nextbar = "<下一恶魔阶段>",

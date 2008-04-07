@@ -203,7 +203,7 @@ L:RegisterTranslations("zhCN", function() return {
 	whirlwind_message = "莫加尔 - 旋风斩 - 15秒",
 	whirlwind_bar = "<旋风斩>",
 	whirlwind_nextbar = "<旋风斩 冷却>",
-	whirlwind_warning1 = "莫加尔 激活 - ~50秒后旋风斩",
+	whirlwind_warning1 = "莫加尔 激活 - 约50秒后旋风斩",
 	whirlwind_warning2 = "即将旋风斩！",
 
 	flurry = "乱舞",

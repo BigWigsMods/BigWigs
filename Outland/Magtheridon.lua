@@ -248,7 +248,7 @@ L:RegisterTranslations("zhCN", function() return {
 	banish = "放逐术",
 	banish_desc = "当你放逐玛瑟里顿发出警报。",
 	banish_trigger = "不！不！！",
-	banish_message = "放逐成功 - 10秒 ",
+	banish_message = "放逐成功 - 约10秒 ",
 	banish_over_message = "放逐消失！",
 	banish_bar = "<放逐中>",
 

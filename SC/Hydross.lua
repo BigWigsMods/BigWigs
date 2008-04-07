@@ -130,8 +130,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 	stance = "形态改变",
 	stance_desc = "海度斯毒性改变。",
-	poison_stance = "毒形态!",
-	water_stance = "水形态!",
+	poison_stance = "毒形态！",
+	water_stance = "水形态！",
 
 	sludge = "肮脏的淤泥怪",
 	sludge_desc = "当临近的队友变成肮脏的淤泥怪发出警报。",
