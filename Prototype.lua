@@ -236,10 +236,14 @@ function BigWigs.modulePrototype:IsBossModule()
 	return self.zonename and self.enabletrigger and true
 end
 
-function BigWigs.modulePrototype:GenericBossDeath(msg)
+function BigWigs.modulePrototype:GenericBossDeath(msg, multi)
 	local b = self:ToString()
 	if msg == b then
-		self:Sync("BossDeath " .. b)
+		if multi then
+			self:Sync("MultiBossDeath " .. b)
+		else
+			self:Sync("BossDeath " .. b)
+		end
 	end
 end
 
