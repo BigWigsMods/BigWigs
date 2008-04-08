@@ -59,7 +59,7 @@ L:RegisterTranslations("koKR", function() return {
 	start_trigger = "복수는 나의 것이다!",
 
 	shadow = "죽음의 어둠",
-	shadow_desc = "죽음의 어둠에 걸린 사람을 알립니다.",
+	shadow_desc = "죽음의 어둠에 걸린 플레이어를 알립니다.",
 	shadow_other = "어둠: %s!",
 	shadow_you = "당신에 죽음의 어둠!",
 
@@ -70,9 +70,9 @@ L:RegisterTranslations("koKR", function() return {
 	icon = "전술 표시",
 	icon_desc = "죽음의 어둠에 걸린 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
 
-	--crush = "Crushing Shadows",
-	--crush_desc = "Warn who gets crushing shadows.",
-	--crush_warn = "Crushed: %s",
+	crush = "밀어닥치는 어둠",
+	crush_desc = "밀어닥치는 어둠에 걸린 플레이어를 알립니다..",
+	crush_warn = "밀어닥치는 어둠: %s",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
