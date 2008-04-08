@@ -37,8 +37,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	infernals = "Infernals",
 	infernals_desc = "Show cooldown timer for Infernal summons.",
-	infernal_trigger1 = "You face not Malchezaar alone, but the legions I command!",
-	infernal_trigger2 = "All realities, all dimensions are open to me!",
 	infernal_bar = "Incoming Infernal",
 	infernal_warning = "Infernal incoming in 17sec!",
 	infernal_message = "Infernal Landed! Hellfire in 5sec!",
@@ -84,8 +82,6 @@ L:RegisterTranslations("deDE", function() return {
 	enfeeble_you = "Ihr seid von Entkr\195\164ften betroffen.",
 	enfeeble_warnyou = "Entkr\195\164ften auf DIR!",
 
-	infernal_trigger1 = "Ihr steht nicht nur vor Malchezzar allein, sondern vor den Legionen, die ich befehlige!",
-	infernal_trigger2 = "Alle Realit\195\164ten, alle Dimensionen stehen mir offen!",
 	infernal_bar = "Infernos",
 	infernal_warning = "Infernos in 17 Sek!",
 	infernal_message = "Infernos in 5 Sek!",
@@ -118,8 +114,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	infernals = "Infernaux",
 	infernals_desc = "Affiche le temps de recharge des invocations d'infernaux.",
-	infernal_trigger1 = "Vous n'affrontez pas seulement Malchezaar, mais aussi les légions que je commande !",
-	infernal_trigger2 = "Toutes les réalités, toutes les dimensions me sont ouvertes !",
 	infernal_bar = "Arrivée d'un infernal",
 	infernal_warning = "Arrivée d'un infernal dans 17 sec. !",
 	infernal_message = "Infernal ! Flammes infernales dans 5 sec. !",
@@ -159,8 +153,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	infernals = "불지옥",
 	infernals_desc = "불지옥 소환에 대한 재사용 대기시간을 표시합니다.",
-	infernal_trigger1 = "이 말체자르님은 혼자가 아니시다. 너희는 나의 군대와 맞서야 한다!",
-	infernal_trigger2 = "모든 차원과 실체가 나를 향해 열려 있노라!",
 	infernal_bar = "불지옥 등장",
 	infernal_warning = "17초 이내 불지옥 등장!",
 	infernal_message = "불지옥 등장! 5초 이내 지옥불!",
@@ -200,8 +192,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	infernals = "地狱火警报",
 	infernals_desc = "显示召唤地狱火冷却时间计时条。",
-	infernal_trigger1 = "你面对的不仅仅是玛克扎尔，还有我所号令的军团！",
-	infernal_trigger2 = "所有的世界都向我敞开大门！",
 	infernal_bar = "<即将 地狱火>",
 	infernal_warning = "17秒后，地狱火！",
 	infernal_message = "地狱火出现！5秒后发动，地狱烈焰！",
@@ -242,8 +232,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	infernals = "地獄火警告",
 	infernals_desc = "顯示召喚地獄火計時條",
-	infernal_trigger1 = "你挑戰的不只是莫克札，而是我所率領的整個軍隊!",
-	infernal_trigger2 = "所有的實體，所有的空間對我來說都是開放的!",
 	infernal_bar = "地獄火",
 	infernal_warning = "17 秒後召喚地獄火",
 	infernal_message = "5 秒後召喚地獄火",
@@ -260,7 +248,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	wipe_bar = "Respawn",
+	--wipe_bar = "Respawn",
 
 	phase = "Activado",
 	phase_desc = "Alerta cuando cambia de fase.",
@@ -283,8 +271,6 @@ L:RegisterTranslations("esES", function() return {
 
 	infernals = "Infernales",
 	infernals_desc = "Muestra temporizadores para la invocaci\195\179n de Infernales.",
-	infernal_trigger1 = "\194\161No solo os enfrent\195\161is a Malchezaar, sino a todas las legiones bajo mi mando!",
-	infernal_trigger2 = "\194\161Todas las realidades, todas las dimensiones est\195\161n abiertas a m\195\173!",
 	infernal_bar = "Llega Infernal",
 	infernal_warning = "\194\161Infernal llega en 17seg!",
 	infernal_message = "\194\161Aterriz\195\179 Infernal! \194\161Hellfire in 5seg!",
@@ -313,15 +299,18 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 --      Initialization      --
 ------------------------------
+
 local wipe = nil
 function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Enfeeble", 30843)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SelfEnfeeble", 30843)
 	self:AddCombatListener("SPELL_CAST_START", "Nova", 30852)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Infernal", 30834)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+
 	if wipe and BigWigs:IsModuleActive(boss) then
 		self:Bar(L["wipe_bar"], 60, 44670)
 		wipe = nil
@@ -363,16 +352,19 @@ function mod:Nova(_, spellID)
 	end
 end
 
+function mod:Infernal()
+	if self.db.profile.infernals then
+		self:Message(L["infernal_warning"], "Positive")
+		self:DelayedMessage(12, L["infernal_message"], "Urgent", nil, "Alert")
+		self:Bar(L["infernal_bar"], 17, "INV_Stone_05")
+	end
+	if not self.db.profile.despawn then
+		self:ScheduleEvent("BWInfernalDespawn", self.DespawnTimer, 17, self)
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["infernal_trigger1"] or msg == L["infernal_trigger2"] then
-		if self.db.profile.infernals then
-			self:Message(L["infernal_warning"], "Positive")
-			self:NextInfernal()
-		end
-		if not self.db.profile.despawn then
-			self:ScheduleEvent("BWInfernalDespawn", self.DespawnTimer, 17, self)
-		end
-	elseif msg == L["phase1_trigger"] then
+	if msg == L["phase1_trigger"] then
 		nova = true
 		count = 1
 		wipe = true
@@ -395,11 +387,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_StopBar", self, L["enfeeble_nextbar"])
 		nova = nil
 	end
-end
-
-function mod:NextInfernal()
-	self:DelayedMessage(12, L["infernal_message"], "Urgent", nil, "Alert")
-	self:Bar(L["infernal_bar"], 17, "INV_Stone_05")
 end
 
 function mod:DespawnTimer()
