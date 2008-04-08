@@ -170,23 +170,23 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	engage_trigger = "啊！我不再是马里苟斯的奴隶了！来吧，你将会被彻底毁灭！",-- not confirmed on Simp-Chinese client.
+	engage_trigger = "啊！我不再是玛利苟斯的奴隶了！所有挑战我的人都要被消灭！",
 	wipe_bar = "重置计时器",
 
 	portal = "传送",
 	portal_desc = "当灵魂冲击冷却时发出警报。",
-	portal_bar = "<下一传送> (%d)",
+	portal_bar = "<下一传送：%d>",
 	portal_message = "5秒后，可能发动传送！",
 
-	realm = "灵魂世界",--Spectral Realm
+	realm = "灵魂世界",
 	realm_desc = "当玩家在灵魂世界中发出警报.",
 	realm_message = "灵魂世界：>%s<！（%d 小队）",
 
-	curse = "无边苦痛诅咒",--Curse of Boundless Agony
+	curse = "无边苦痛诅咒",
 	curse_desc = "当玩家受到无边苦痛诅咒时发出警报。",
 	curse_bar = "<诅咒：%s>",
 
-	magichealing = "狂野魔法（治疗加成）",--Wild Magic
+	magichealing = "狂野魔法（治疗加成）",
 	magichealing_desc = "当你从狂野魔法中获得治疗加成时发出警报。",
 	magichealing_you = "狂野魔法 - 治疗效果加成！",
 
@@ -209,7 +209,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	enrage_warning = "即将狂暴！",
 	enrage_message = "10% - 狂暴！",
-	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",-- not confirmed on Simp-Chinese client.
+	enrage_trigger = "萨索瓦尔将卡雷苟斯逼得狂暴不已！",-- not confirmed (flashbang my eyes)
 
 	strike = "堕落打击",--Corrupting Strike
 	strike_desc = "当玩家受到堕落打击时发出警报。",
