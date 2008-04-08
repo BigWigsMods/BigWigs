@@ -143,25 +143,25 @@ L:RegisterTranslations("frFR", function() return {
 	gas_message = "Nova de gaz en incantation !",
 	gas_bar = "~Cooldown Nova de gaz",
 
-	--phase = "Phases",
-	--phase_desc = "Warn for takeoff and landing phases.",
-	--airphase_trigger = "I am stronger than ever before!",
+	phase = "Phases",
+	phase_desc = "Préviens quand Gangrebrume décolle et atterit.",
+	airphase_trigger = "Je suis plus forte que jamais !", -- à vérifier
 	takeoff_bar = "Décollage",
 	takeoff_message = "Décollage dans 5 sec. !",
 	landing_bar = "Atterrissage",
 	landing_message = "Atterrissage dans 10 sec. !",
 
-	--breath = "Deep Breath",
-	--breath_desc = "Deep Breath warnings.",
-	--breath_trigger = "%s takes a deep breath.",
-	--breath_nextbar = "~Breath Cooldown (%d)",
-	--breath_warn = "Inc Breath (%d)!",
+	breath = "Grande inspiration",
+	breath_desc = "Préviens quand Gangrebrume inspire profondément.",
+	breath_trigger = "%s inspire profondément.", -- à vérifier
+	breath_nextbar = "~Cooldown Souffle (%d)",
+	breath_warn = "Souffle (%d) !",
 
-	--dispel = "Mass Dispel Results",
-	--dispel_desc = "If you're a priest, will print in /say who your mass dispel failed and worked on.",
-	--dispel_pass = "Dispelled: ",
-	--dispel_fail = "Failed: ",
-	--dispel_none = "none",
+	dispel = "Infos Dissipation de masse",
+	dispel_desc = "Si vous êtes prêtre, ceci affichera en /dire les échecs et les réussites de votre Dissipation de masse.",
+	dispel_pass = "Dissipés : ",
+	dispel_fail = "Échec : ",
+	dispel_none = "aucun",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
