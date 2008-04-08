@@ -111,25 +111,25 @@ L:RegisterTranslations("koKR", function() return {
 	gas_message = "가스 회오리 시전!",
 	gas_bar = "~가스 회오리 대기시간",
 
-	--phase = "Phases",
-	--phase_desc = "Warn for takeoff and landing phases.",
-	--airphase_trigger = "I am stronger than ever before!",
+	phase = "단계",
+	phase_desc = "이륙과 착지 단계에 대해 알립니다.",
+	airphase_trigger = "나는 어느 때보다도 강하다!",
 	takeoff_bar = "이륙",
 	takeoff_message = "5초 이내 이륙!",
 	landing_bar = "착지",
 	landing_message = "10초 이내 착지!",
 
-	--breath = "Deep Breath",
-	--breath_desc = "Deep Breath warnings.",
-	--breath_trigger = "%s takes a deep breath.",
-	--breath_nextbar = "~Breath Cooldown (%d)",
-	--breath_warn = "Inc Breath (%d)!",
+	breath = "깊은 숨결",
+	breath_desc = "깊은 숨결를 알립니다.",
+	breath_trigger = "%s|1이;가; 숨을 깊게 들이마십니다.",
+	breath_nextbar = "~숨결 대기시간 (%d)",
+	breath_warn = "깊은 숨결 (%d)!",
 
-	--dispel = "Mass Dispel Results",
-	--dispel_desc = "If you're a priest, will print in /say who your mass dispel failed and worked on.",
-	--dispel_pass = "Dispelled: ",
-	--dispel_fail = "Failed: ",
-	--dispel_none = "none",
+	dispel = "대규모 무효화 결과",
+	dispel_desc = "당신이 사제인 경우, 대규모 무효화 효과의 실패등을 일반 대화창으로 출력합니다.",
+	dispel_pass = "해제: ",
+	dispel_fail = "실패: ",
+	dispel_none = "없음",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
