@@ -107,7 +107,7 @@ L:RegisterTranslations("koKR", function() return {
 	encaps_message = "가두기: %s",
 
 	gas = "가스 회오리",
-	gas_desc = "가스 회오리의 시전에 대해 알립니다..",
+	gas_desc = "가스 회오리의 시전에 대해 알립니다.",
 	gas_message = "가스 회오리 시전!",
 	gas_bar = "~가스 회오리 대기시간",
 
