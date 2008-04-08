@@ -79,25 +79,25 @@ L:RegisterTranslations("zhCN", function() return {
 	gas_message = "正在施放毒气新星！",
 	gas_bar = "<毒气新星 冷却>",
 
-	--phase = "Phases",
-	--phase_desc = "Warn for takeoff and landing phases.",
-	--airphase_trigger = "I am stronger than ever before!",
+	phase = "阶段警报",
+	phase_desc = "当升空或降落阶段时发出警报。",
+	airphase_trigger = "",--need combatlog
 	takeoff_bar = "升空",
 	takeoff_message = "5秒后，升空！",
 	landing_bar = "降落",
 	landing_message = "10秒后，降落！",
 
-	--breath = "Deep Breath",
-	--breath_desc = "Deep Breath warnings.",
-	--breath_trigger = "%s takes a deep breath.",
-	--breath_nextbar = "~Breath Cooldown (%d)",
-	--breath_warn = "Inc Breath (%d)!",
+	breath = "深呼吸",
+	breath_desc = "当施放深呼吸时发出警报。",
+	breath_trigger = "%s深深地吸了一口气。",--need combatlog
+	breath_nextbar = "<下一深呼吸：%d>",
+	breath_warn = "深呼吸：>%d<！",
 
-	--dispel = "Mass Dispel Results",
-	--dispel_desc = "If you're a priest, will print in /say who your mass dispel failed and worked on.",
-	--dispel_pass = "Dispelled: ",
-	--dispel_fail = "Failed: ",
-	--dispel_none = "none",
+	dispel = "群体驱散结果",
+	dispel_desc = "如果你是牧师，将在 /say 提示谁处于群体驱散范围内。",
+	dispel_pass = "驱散范围内：",
+	dispel_fail = "距离过远：",
+	dispel_none = "无",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
