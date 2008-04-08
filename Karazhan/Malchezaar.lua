@@ -14,6 +14,8 @@ local count = 1
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Malchezaar",
 
+	wipe_bar = "Respawn",
+
 	phase = "Engage",
 	phase_desc = "Alert when changing phases.",
 	phase1_trigger = "Madness has brought you here to me. I shall be your undoing!",
@@ -38,7 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 	infernal_trigger1 = "You face not Malchezaar alone, but the legions I command!",
 	infernal_trigger2 = "All realities, all dimensions are open to me!",
 	infernal_bar = "Incoming Infernal",
-	infernal_warning = "Infernal incoming in 20sec!",
+	infernal_warning = "Infernal incoming in 17sec!",
 	infernal_message = "Infernal Landed! Hellfire in 5sec!",
 
 	nova = "Shadow Nova",
@@ -53,6 +55,8 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	wipe_bar = "Wiederbeleben",
+
 	phase = "Engage",
 	phase_desc = "Warnt wenn eine neue Phase beginnt",
 
@@ -83,7 +87,7 @@ L:RegisterTranslations("deDE", function() return {
 	infernal_trigger1 = "Ihr steht nicht nur vor Malchezzar allein, sondern vor den Legionen, die ich befehlige!",
 	infernal_trigger2 = "Alle Realit\195\164ten, alle Dimensionen stehen mir offen!",
 	infernal_bar = "Infernos",
-	infernal_warning = "Infernos in 20 Sek!",
+	infernal_warning = "Infernos in 17 Sek!",
 	infernal_message = "Infernos in 5 Sek!",
 
 	nova_message = "Schattennova!",
@@ -91,6 +95,8 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	wipe_bar = "Réapparition",
+
 	phase = "Engagement",
 	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
 	phase1_trigger = "La folie vous a fait venir ici, devant moi. Et je serai votre perte !",
@@ -115,7 +121,7 @@ L:RegisterTranslations("frFR", function() return {
 	infernal_trigger1 = "Vous n'affrontez pas seulement Malchezaar, mais aussi les légions que je commande !",
 	infernal_trigger2 = "Toutes les réalités, toutes les dimensions me sont ouvertes !",
 	infernal_bar = "Arrivée d'un infernal",
-	infernal_warning = "Arrivée d'un infernal dans 20 sec. !",
+	infernal_warning = "Arrivée d'un infernal dans 17 sec. !",
 	infernal_message = "Infernal ! Flammes infernales dans 5 sec. !",
 
 	nova = "Nova de l'ombre",
@@ -130,6 +136,8 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	wipe_bar = "재생성 시간",
+
 	phase = "단계",
 	phase_desc = "단계 변화 시 알립니다.",
 	phase1_trigger = "여기까지 오다니 정신이 나간 놈들이 분명하구나. 소원이라면 파멸을 시켜주마!",
@@ -154,7 +162,7 @@ L:RegisterTranslations("koKR", function() return {
 	infernal_trigger1 = "이 말체자르님은 혼자가 아니시다. 너희는 나의 군대와 맞서야 한다!",
 	infernal_trigger2 = "모든 차원과 실체가 나를 향해 열려 있노라!",
 	infernal_bar = "불지옥 등장",
-	infernal_warning = "20초 이내 불지옥 등장!",
+	infernal_warning = "17초 이내 불지옥 등장!",
 	infernal_message = "불지옥 등장! 5초 이내 지옥불!",
 
 	nova = "암흑 회오리",
@@ -169,6 +177,8 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	wipe_bar = "重置计时器",
+
 	phase = "阶段提示",
 	phase_desc = "进入战斗及每阶段的提示。",
 	phase1_trigger = "疯狂将你们带到我的面前，而我将以死亡终结你们！",
@@ -193,7 +203,7 @@ L:RegisterTranslations("zhCN", function() return {
 	infernal_trigger1 = "你面对的不仅仅是玛克扎尔，还有我所号令的军团！",
 	infernal_trigger2 = "所有的世界都向我敞开大门！",
 	infernal_bar = "<即将 地狱火>",
-	infernal_warning = "20秒后，地狱火！",
+	infernal_warning = "17秒后，地狱火！",
 	infernal_message = "地狱火出现！5秒后发动，地狱烈焰！",
 
 	nova = "暗影新星",
@@ -209,6 +219,8 @@ L:RegisterTranslations("zhCN", function() return {
 
 
 L:RegisterTranslations("zhTW", function() return {
+	wipe_bar = "重生計時",
+
 	phase = "階段提示",
 	phase_desc = "進入戰鬥及每一階段時發送警告",
 	phase1_trigger = "瘋狂把你帶到我的面前。我會成為你失敗的原因!",
@@ -233,7 +245,7 @@ L:RegisterTranslations("zhTW", function() return {
 	infernal_trigger1 = "你挑戰的不只是莫克札，而是我所率領的整個軍隊!",
 	infernal_trigger2 = "所有的實體，所有的空間對我來說都是開放的!",
 	infernal_bar = "地獄火",
-	infernal_warning = "20 秒後召喚地獄火",
+	infernal_warning = "17 秒後召喚地獄火",
 	infernal_message = "5 秒後召喚地獄火",
 
 	nova = "暗影新星警告",
@@ -248,6 +260,8 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
+	wipe_bar = "Respawn",
+
 	phase = "Activado",
 	phase_desc = "Alerta cuando cambia de fase.",
 	phase1_trigger = "La locura os ha tra\195\173do ante mi. \194\161Ser\195\169 vuestro fin!",
@@ -272,7 +286,7 @@ L:RegisterTranslations("esES", function() return {
 	infernal_trigger1 = "\194\161No solo os enfrent\195\161is a Malchezaar, sino a todas las legiones bajo mi mando!",
 	infernal_trigger2 = "\194\161Todas las realidades, todas las dimensiones est\195\161n abiertas a m\195\173!",
 	infernal_bar = "Llega Infernal",
-	infernal_warning = "\194\161Infernal llega en 20seg!",
+	infernal_warning = "\194\161Infernal llega en 17seg!",
 	infernal_message = "\194\161Aterriz\195\179 Infernal! \194\161Hellfire in 5seg!",
 
 	nova = "Nova de las sombras",
@@ -299,7 +313,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 --      Initialization      --
 ------------------------------
-
+local wipe = nil
 function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Enfeeble", 30843)
@@ -307,6 +321,11 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Nova", 30852)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	if wipe and BigWigs:IsModuleActive(boss) then
+		self:Bar(L["wipe_bar"], 60, 44670)
+		wipe = nil
+	end
 end
 
 ------------------------------
@@ -351,11 +370,12 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:NextInfernal()
 		end
 		if not self.db.profile.despawn then
-			self:ScheduleEvent("BWInfernalDespawn", self.DespawnTimer, 20, self)
+			self:ScheduleEvent("BWInfernalDespawn", self.DespawnTimer, 17, self)
 		end
 	elseif msg == L["phase1_trigger"] then
 		nova = true
 		count = 1
+		wipe = true
 
 		if self.db.profile.phase then
 			self:Message(L["phase1_message"], "Positive")
@@ -378,8 +398,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:NextInfernal()
-	self:DelayedMessage(15, L["infernal_message"], "Urgent", nil, "Alert")
-	self:Bar(L["infernal_bar"], 20, "INV_Stone_05")
+	self:DelayedMessage(12, L["infernal_message"], "Urgent", nil, "Alert")
+	self:Bar(L["infernal_bar"], 17, "INV_Stone_05")
 end
 
 function mod:DespawnTimer()
