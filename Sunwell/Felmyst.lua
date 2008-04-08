@@ -12,6 +12,9 @@ local IsItemInRange = IsItemInRange
 local UnitName = UnitName
 local fmt = string.format
 local db = nil
+local count = 1
+local pass = {}
+local fail = {}
 local bandages = {
 	[21991] = true, -- Heavy Netherweave Bandage
 	[21990] = true, -- Netherweave Bandage
@@ -43,16 +46,29 @@ L:RegisterTranslations("enUS", function() return {
 	gas_desc = "Warn for Gas Nova being cast.",
 	gas_message = "Casting Gas Nova!",
 	gas_bar = "~Gas Nova Cooldown",
-	
-	takeoff = "Takeoff",
+
+	phase = "Phases",
+	phase_desc = "Warn for takeoff and landing phases.",
+	airphase_trigger = "I am stronger than ever before!",
+	takeoff_bar = "Takeoff",
 	takeoff_message = "Taking off in 5 Seconds!",
-	
-	landing = "Landing",
+	landing_bar = "Landing",
 	landing_message = "Landing in 10 Seconds!",
+
+	breath = "Deep Breath",
+	breath_desc = "Deep Breath warnings.",
+	breath_trigger = "%s takes a deep breath.",
+	breath_nextbar = "~Breath Cooldown (%d)",
+	breath_warn = "Inc Breath (%d)!",
+
+	dispel = "Mass Dispel Results",
+	dispel_desc = "If you're a priest, will print in /say who your mass dispel failed and worked on.",
+	dispel_pass = "Dispelled: ",
+	dispel_fail = "Failed: ",
+	dispel_none = "none",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-
 	encaps = "压缩",--Encapsulate
 	encaps_desc = "当玩家受到压缩时发出警报。",
 	encaps_warning = "约5秒后，压缩！",
@@ -62,12 +78,26 @@ L:RegisterTranslations("zhCN", function() return {
 	gas_desc = "当施放毒气新星时发出警报。",
 	gas_message = "正在施放毒气新星！",
 	gas_bar = "<毒气新星 冷却>",
-	
-	takeoff = "升空",
+
+	--phase = "Phases",
+	--phase_desc = "Warn for takeoff and landing phases.",
+	--airphase_trigger = "I am stronger than ever before!",
+	takeoff_bar = "升空",
 	takeoff_message = "5秒后，升空！",
-	
-	landing = "降落",
+	landing_bar = "降落",
 	landing_message = "10秒后，降落！",
+
+	--breath = "Deep Breath",
+	--breath_desc = "Deep Breath warnings.",
+	--breath_trigger = "%s takes a deep breath.",
+	--breath_nextbar = "~Breath Cooldown (%d)",
+	--breath_warn = "Inc Breath (%d)!",
+
+	--dispel = "Mass Dispel Results",
+	--dispel_desc = "If you're a priest, will print in /say who your mass dispel failed and worked on.",
+	--dispel_pass = "Dispelled: ",
+	--dispel_fail = "Failed: ",
+	--dispel_none = "none",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -80,12 +110,26 @@ L:RegisterTranslations("koKR", function() return {
 	gas_desc = "가스 회오리의 시전에 대해 알립니다..",
 	gas_message = "가스 회오리 시전!",
 	gas_bar = "~가스 회오리 대기시간",
-	
-	takeoff = "이륙",
+
+	--phase = "Phases",
+	--phase_desc = "Warn for takeoff and landing phases.",
+	--airphase_trigger = "I am stronger than ever before!",
+	takeoff_bar = "이륙",
 	takeoff_message = "5초 이내 이륙!",
-	
-	landing = "착지",
+	landing_bar = "착지",
 	landing_message = "10초 이내 착지!",
+
+	--breath = "Deep Breath",
+	--breath_desc = "Deep Breath warnings.",
+	--breath_trigger = "%s takes a deep breath.",
+	--breath_nextbar = "~Breath Cooldown (%d)",
+	--breath_warn = "Inc Breath (%d)!",
+
+	--dispel = "Mass Dispel Results",
+	--dispel_desc = "If you're a priest, will print in /say who your mass dispel failed and worked on.",
+	--dispel_pass = "Dispelled: ",
+	--dispel_fail = "Failed: ",
+	--dispel_none = "none",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -99,11 +143,25 @@ L:RegisterTranslations("frFR", function() return {
 	gas_message = "Nova de gaz en incantation !",
 	gas_bar = "~Cooldown Nova de gaz",
 
-	takeoff = "Décollage",
+	--phase = "Phases",
+	--phase_desc = "Warn for takeoff and landing phases.",
+	--airphase_trigger = "I am stronger than ever before!",
+	takeoff_bar = "Décollage",
 	takeoff_message = "Décollage dans 5 sec. !",
-
-	landing = "Atterrissage",
+	landing_bar = "Atterrissage",
 	landing_message = "Atterrissage dans 10 sec. !",
+
+	--breath = "Deep Breath",
+	--breath_desc = "Deep Breath warnings.",
+	--breath_trigger = "%s takes a deep breath.",
+	--breath_nextbar = "~Breath Cooldown (%d)",
+	--breath_warn = "Inc Breath (%d)!",
+
+	--dispel = "Mass Dispel Results",
+	--dispel_desc = "If you're a priest, will print in /say who your mass dispel failed and worked on.",
+	--dispel_pass = "Dispelled: ",
+	--dispel_fail = "Failed: ",
+	--dispel_none = "none",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -116,12 +174,26 @@ L:RegisterTranslations("zhTW", function() return {
 	gas_desc = "當毒氣新星準備施放時警示。",
 	gas_message = "毒氣新星施放中！",
 	gas_bar = "毒氣新星冷卻計時",
-	
-	--takeoff = "Takeoff",
+
+	--phase = "Phases",
+	--phase_desc = "Warn for takeoff and landing phases.",
+	--airphase_trigger = "I am stronger than ever before!",
+	--takeoff_bar = "Takeoff",
 	--takeoff_message = "Taking off in 5 Seconds!",
-	
-	--landing = "Landing",
+	--landing_bar = "Landing",
 	--landing_message = "Landing in 10 Seconds!",
+
+	--breath = "Deep Breath",
+	--breath_desc = "Deep Breath warnings.",
+	--breath_trigger = "%s takes a deep breath.",
+	--breath_nextbar = "~Breath Cooldown (%d)",
+	--breath_warn = "Inc Breath (%d)!",
+
+	--dispel = "Mass Dispel Results",
+	--dispel_desc = "If you're a priest, will print in /say who your mass dispel failed and worked on.",
+	--dispel_pass = "Dispelled: ",
+	--dispel_fail = "Failed: ",
+	--dispel_none = "none",
 } end )
 
 ----------------------------------
@@ -131,7 +203,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"encaps", "gas", "enrage", "proximity", "bosskill"}
+mod.toggleoptions = {"phase", "breath", -1, "encaps", "gas", "dispel", "enrage", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) 
 	for k, v in pairs( bandages ) do
@@ -151,11 +223,18 @@ function mod:OnEnable()
 	started = nil
 
 	self:AddCombatListener("SPELL_CAST_START", "Gas", 45855)
-	--self:AddCombatListener("SPELL_DAMAGE", "Encapsulate", 45662)
+	--self:AddCombatListener("SPELL_AURA_APPLIED", "Encapsulate", 45662) --Maybe one day
+	local _, class = UnitClass("player")
+	if class == "PRIEST" then
+		self:AddCombatListener("SPELL_AURA_DISPELLED", "Dispel", 32375) --Mass Dispel catcher
+		self:AddCombatListener("SPELL_DISPEL_FAILED", "DispelFail", 32375) --Mass Dispel catcher
+	end
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 
@@ -169,8 +248,44 @@ end
 function mod:Gas(_, spellID)
 	if db.gas then
 		self:IfMessage(L["gas_message"], "Attention", spellID, "Alert")
-		self:Bar(L["gas_bar"], 20, spellID)
+		self:Bar(L["gas_bar"], 22, spellID)
 	end
+end
+
+function mod:Dispel(player, _, source)
+	if UnitIsUnit(source, "player") and db.dispel then
+		pass[player] = true
+		self:ScheduleEvent("BWFelmystDispelWarn", self.DispelWarn, 0.3, self)
+	end
+end
+
+function mod:DispelFail(player, _, source)
+	if UnitIsUnit(source, "player") and db.dispel then
+		fail[player] = true
+		self:ScheduleEvent("BWFelmystDispelWarn", self.DispelWarn, 0.3, self)
+	end
+end
+
+function mod:DispelWarn()
+	local one = nil
+	for k in pairs(pass) do
+		if not one then
+			one = k or L["dispel_none"]
+		else
+			one = one .. ", " .. k
+		end
+	end
+	local two = nil
+	for k in pairs(fail) do
+		if not two then
+			two = k or L["dispel_none"]
+		else
+			two = two .. ", " .. k
+		end
+	end
+	SendChatMessage(("%s%s %s%s"):format(L["dispel_pass"], one or L["dispel_none"], L["dispel_fail"], two or L["dispel_none"]), "SAY")
+	for k in pairs(pass) do pass[k] = nil end
+	for k in pairs(fail) do fail[k] = nil end
 end
 
 local active = nil
@@ -205,11 +320,15 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
+		for k in pairs(pass) do pass[k] = nil end
+		for k in pairs(fail) do fail[k] = nil end
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		self:PhaseOne()
-		self:ScheduleRepeatingEvent("BWEncapsScan", self.Encapsulate, 1, self)
+		if db.encaps then
+			self:ScheduleRepeatingEvent("BWEncapsScan", self.Encapsulate, 0.5, self)
+		end
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 		if db.enrage then
 			self:Enrage(600)
@@ -217,19 +336,41 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function mod:PhaseOne()
-	self:Bar(L["takeoff"], 60, 31550)
-	self:DelayedMessage(55, L["takeoff_message"], "Attention")
-
-	self:Bar(L["encaps"], 30, 45661)
-	self:DelayedMessage(25, L["encaps_warning"], Attention)
-
-	self:ScheduleEvent("BWFelmystStage", self.PhaseTwo, 60, self)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+	if db.breath and msg == L["breath_trigger"] then
+		--19879 track dragonkin, looks like a dragon breathing 'deep breath' :)
+		self:IfMessage(L["breath_warn"]:format(count), "Attention", 19879)
+		self:Bar(L["breath_warn"]:format(count), 4, 19879)
+		count = count + 1
+		if count < 4 then
+			self:Bar(L["breath_nextbar"]:format(count), 17, 19879)
+		end
+	end
 end
 
-function mod:PhaseTwo()
-	self:Bar(L["landing"], 100, 31550)
-	self:DelayedMessage(90, L["landing_message"], Attention)
-	self:ScheduleEvent("BWFelmystStage", self.PhaseOne, 100, self)
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["airphase_trigger"] then
+		if db.phase then
+			self:Bar(L["landing_bar"], 100, 31550)
+			self:DelayedMessage(90, L["landing_message"], Attention)
+			self:ScheduleEvent("BWFelmystStage", self.PhaseOne, 100, self)
+		end
+		if db.breath then
+			count = 1
+			self:Bar(L["breath_nextbar"]:format(count), 40.5, 19879)
+		end
+	end
+end
+
+function mod:PhaseOne()
+	if db.phase then
+		self:Bar(L["takeoff_bar"], 60, 31550)
+		self:DelayedMessage(55, L["takeoff_message"], "Attention")
+	end
+
+	if db.encaps then
+		self:Bar(L["encaps"], 30, 45661)
+		self:DelayedMessage(25, L["encaps_warning"], "Attention")
+	end
 end
 
