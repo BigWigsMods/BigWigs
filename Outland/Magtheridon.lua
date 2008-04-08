@@ -325,7 +325,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Magtheridon's Lair"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = {channeler, boss}
-mod.toggleoptions = {"escape", "abyssal", "heal", -1, "nova", "banish", -1, "debris", "debrisinc", -1, "exhaust", "bosskill"}
+mod.toggleoptions = {"escape", "abyssal", "heal", -1, "nova", "banish", -1, "debris", "debrisinc", -1, "exhaust", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -412,6 +412,9 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.nova then
 			self:Bar(L["nova_bar"], 58, "Spell_Fire_SealOfFire")
 			self:DelayedMessage(56, L["nova_warning"], "Urgent")
+		end
+		if db.enrage then
+			self:Enrage(1200, nil, true)
 		end
 	elseif msg == L["banish_trigger"] then
 		if db.banish then
