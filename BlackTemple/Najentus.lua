@@ -196,7 +196,7 @@ end
 
 function mod:ImpalingSpine(player, spellID)
 	if db.spine then
-		if db.spinesay and player == UnitName("player") then
+		if UnitIsUnit(player, "player") and db.spinesay then
 			SendChatMessage(L["spinesay_message"], "SAY")
 		end
 		self:IfMessage(fmt(L["spine_message"], player), "Important", spellID, "Alert")
