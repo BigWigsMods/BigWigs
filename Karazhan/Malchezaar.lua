@@ -177,8 +177,8 @@ L:RegisterTranslations("zhCN", function() return {
 	phase2_trigger = "愚蠢的家伙！时间就是吞噬你躯体的烈焰！",
 	phase3_trigger = "你如何抵挡这无坚不摧的力量？",
 	phase1_message = "第一阶段 - 约40秒后，地狱火！",
-	phase2_message = "60% - 第二阶段",
-	phase3_message = "30% - 第三阶段",
+	phase2_message = "60% - 第二阶段！",
+	phase3_message = "30% - 第三阶段！",
 
 	enfeeble = "能量衰弱警报",
 	enfeeble_desc = "显示能量衰弱冷却计时条。",
@@ -204,7 +204,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	despawn = "禁用地狱火重生",
 	despawn_desc = "地狱火重生计时条。",
-	despawn_bar = "<地狱火(%d) 重生！>",
+	despawn_bar = "<地狱火重生：%d>",
 } end )
 
 
