@@ -205,7 +205,7 @@ function mod:OnEnable()
 
 	db = self.db.profile
 	if wipe and BigWigs:IsModuleActive(boss) then
-		self:Bar(L["wipe_bar"], 90, 44670)
+		self:Bar(L["wipe_bar"], 30, 44670)
 		wipe = nil
 	end
 	started = nil
