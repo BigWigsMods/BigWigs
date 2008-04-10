@@ -218,7 +218,7 @@ mod.proximitySilent = true
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Grip", 31972)
-	self:AddCombatListener("SPELL_AURA_DISPELLED", "GripRemoved", 31972)
+	self:AddCombatListener("SPELL_AURA_DISPELLED", "GripRemoved")
 	self:AddCombatListener("SPELL_CAST_START", "Burst", 32014)
 	self:AddCombatListener("SPELL_CAST_START", "Fear", 31970)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
@@ -247,9 +247,11 @@ function mod:Grip(player, spellID)
 	end
 end
 
-function mod:GripRemoved(player)
-	if db.grip then
-		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["grip_other"], player))
+function mod:GripRemoved(player, _, _, spellID)
+	if spellID and spellID == 31972 then
+		if db.grip then
+			self:TriggerEvent("BigWigs_StopBar", self, fmt(L["grip_other"], player))
+		end
 	end
 end
 
