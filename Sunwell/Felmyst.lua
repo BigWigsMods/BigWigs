@@ -381,7 +381,6 @@ function mod:PhaseOne()
 	if db.encaps then
 		self:Bar(L["encaps"], 30, 45661)
 		self:DelayedMessage(25, L["encaps_warning"], "Attention")
-		active = nil
 		self:ScheduleRepeatingEvent("BWEncapsScan", self.Encapsulate, 0.5, self)
 	end
 end
