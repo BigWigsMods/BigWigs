@@ -6,11 +6,9 @@ local boss = BB["Felmyst"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local started = nil
-local pName = UnitName("player")
-local GetNumRaidMembers = GetNumRaidMembers
 local IsItemInRange = IsItemInRange
 local UnitName = UnitName
-local fmt = string.format
+local UnitExists = UnitExists
 local db = nil
 local count = 1
 local pass = {}
@@ -66,6 +64,8 @@ L:RegisterTranslations("enUS", function() return {
 	dispel_pass = "Dispelled: ",
 	dispel_fail = "Failed: ",
 	dispel_none = "none",
+
+	warning = "WARNING\n--\nFor Encapsulate scanning to work properly you need to have your Main Tank in the Blizzard Main Tank list!!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -98,6 +98,8 @@ L:RegisterTranslations("zhCN", function() return {
 	dispel_pass = "驱散范围内：",
 	dispel_fail = "距离过远：",
 	dispel_none = "无",
+
+	--warning = "WARNING\n--\nFor Encapsulate scanning to work properly you need to have your Main Tank in the Blizzard Main Tank list!!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -130,6 +132,8 @@ L:RegisterTranslations("koKR", function() return {
 	dispel_pass = "해제: ",
 	dispel_fail = "실패: ",
 	dispel_none = "없음",
+
+	--warning = "WARNING\n--\nFor Encapsulate scanning to work properly you need to have your Main Tank in the Blizzard Main Tank list!!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -162,6 +166,8 @@ L:RegisterTranslations("frFR", function() return {
 	dispel_pass = "Dissipés : ",
 	dispel_fail = "Échec : ",
 	dispel_none = "aucun",
+
+	--warning = "WARNING\n--\nFor Encapsulate scanning to work properly you need to have your Main Tank in the Blizzard Main Tank list!!",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -194,6 +200,8 @@ L:RegisterTranslations("zhTW", function() return {
 	--dispel_pass = "Dispelled: ",
 	--dispel_fail = "Failed: ",
 	--dispel_none = "none",
+
+	--warning = "WARNING\n--\nFor Encapsulate scanning to work properly you need to have your Main Tank in the Blizzard Main Tank list!!",
 } end )
 
 ----------------------------------
@@ -219,6 +227,7 @@ mod.proximitySilent = true
 --      Initialization      --
 ------------------------------
 
+local warn = true
 function mod:OnEnable()
 	started = nil
 
@@ -239,6 +248,10 @@ function mod:OnEnable()
 	self:RegisterEvent("BigWigs_RecvSync")
 
 	db = self.db.profile
+	if warn then
+		BigWigs:Print(L["warning"])
+		warn = nil
+	end
 end
 
 ------------------------------
@@ -288,31 +301,27 @@ function mod:DispelWarn()
 	for k in pairs(fail) do fail[k] = nil end
 end
 
-local active = nil
-local function killTime()
-	active = nil
-end
-
-local encaps = GetSpellInfo(45665)
-function mod:Encapsulate()
-	if active then return end
-
-	if db.encaps then
-		for i = 1, GetNumRaidMembers() do
-			local id = fmt("%s%d", "raid", i)
-			local c = 1
-			while UnitDebuff(id, c) do
-				if UnitDebuff(id, c) == encaps then
-					local player = UnitName(id)
-					local msg = fmt(L["encaps_message"], player)
-					self:IfMessage(msg, "Important", spellID)
-					self:Bar(msg, 6, 45665)
-					self:Icon(player)
-					active = true
-					self:ScheduleEvent("BWFelmystAllowScan", killTime, 8)
-				end
-				c = c + 1
+do
+	local cachedId = nil
+	local lastTarget = nil
+	function mod:Encapsulate()
+		local found = nil
+		if cachedId and UnitExists(cachedId) and UnitName(cachedId) == boss then found = true end
+		if not found then
+			cachedId = self:Scan()
+			if cachedId then found = true end
+		end
+		if not found then return end
+		local target = UnitName(cachedId .. "target")
+		if target and target ~= lastTarget and UnitExists(target) then
+			if not GetPartyAssignment("maintank", target) then
+				local player = UnitName(target)
+				local msg = L["encaps_message"]:format(player)
+				self:IfMessage(msg, "Important", 45665)
+				self:Bar(msg, 6, 45665)
+				self:Icon(player)
 			end
+			lastTarget = target
 		end
 	end
 end
