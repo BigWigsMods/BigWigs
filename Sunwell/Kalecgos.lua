@@ -13,6 +13,7 @@ local counter = 1
 
 local fmt = string.format
 local GetNumRaidMembers = GetNumRaidMembers
+local CheckInteractDistance = CheckInteractDistance
 local pName = UnitName("player")
 local UnitBuff = UnitBuff
 local UnitPowerType = UnitPowerType
