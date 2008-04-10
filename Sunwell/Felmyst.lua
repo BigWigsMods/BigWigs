@@ -353,12 +353,13 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if db.phase then
 			self:Bar(L["landing_bar"], 100, 31550)
 			self:DelayedMessage(90, L["landing_message"], Attention)
-			self:ScheduleEvent("BWFelmystStage", self.PhaseOne, 100, self)
 		end
+		self:ScheduleEvent("BWFelmystStage", self.PhaseOne, 100, self)
 		if db.breath then
 			count = 1
 			self:Bar(L["breath_nextbar"]:format(count), 40.5, 19879)
 		end
+		self:CancelScheduledEvent("BWEncapsScan")
 	end
 end
 
@@ -371,6 +372,8 @@ function mod:PhaseOne()
 	if db.encaps then
 		self:Bar(L["encaps"], 30, 45661)
 		self:DelayedMessage(25, L["encaps_warning"], "Attention")
+		active = nil
+		self:ScheduleRepeatingEvent("BWEncapsScan", self.Encapsulate, 0.5, self)
 	end
 end
 
