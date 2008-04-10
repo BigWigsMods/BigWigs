@@ -230,8 +230,8 @@ end
 function mod:Stomp(player, spellID)
 	if db.stomp then
 		self:Message(L["stomp_message"]:format(player), "Urgent", nil, nil, nil, spellID)
-		self:DelayedMessage(25, L["stomp_warning"], "Attention")
-		self:Bar(L["stomp_bar"], 30, spellID)
+		self:DelayedMessage(25.5, L["stomp_warning"], "Attention")
+		self:Bar(L["stomp_bar"], 30.5, spellID)
 	end
 end
 
