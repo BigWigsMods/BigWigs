@@ -122,7 +122,7 @@ L:RegisterTranslations("koKR", function() return {
 	landing_message = "10초 이내 착지!",
 
 	breath = "깊은 숨결",
-	breath_desc = "깊은 숨결를 알립니다.",
+	breath_desc = "깊은 숨결을 알립니다.",
 	breath_trigger = "%s|1이;가; 숨을 깊게 들이마십니다.",
 	breath_nextbar = "~숨결 대기시간 (%d)",
 	breath_warn = "깊은 숨결 (%d)!",
@@ -133,7 +133,7 @@ L:RegisterTranslations("koKR", function() return {
 	dispel_fail = "실패: ",
 	dispel_none = "없음",
 
-	--warning = "WARNING\n--\nFor Encapsulate scanning to work properly you need to have your Main Tank in the Blizzard Main Tank list!!",
+	warning = "경고\n--\n가두기에 대한 검색이 제대로 작동하려면, 당신이 필요로 하는 메인 탱커가 블리자드 메인 탱커 목록에 있어야 합니다!!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
