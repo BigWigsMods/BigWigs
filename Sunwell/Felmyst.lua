@@ -167,7 +167,7 @@ L:RegisterTranslations("frFR", function() return {
 	dispel_fail = "Échec : ",
 	dispel_none = "aucun",
 
-	--warning = "WARNING\n--\nFor Encapsulate scanning to work properly you need to have your Main Tank in the Blizzard Main Tank list!!",
+	warning = "ATTENTION\n--\nPour que l'analyse des Enfermer fonctionne correctement, vous devez indiquer votre tank dans la liste des tanks principaux de Blizzard !",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

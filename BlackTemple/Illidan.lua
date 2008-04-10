@@ -154,7 +154,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	["Flame of Azzinoth"] = "Flamme d'Azzinoth",
 
-	--very first yell to start engage timer
+	--very first yell to start engage timer (à vérifer, + dans un futur patch "tes frères" à la place de "ton frère" (sans doute) http://forums.wow-europe.com/thread.html?topicId=3404772373&sid=2)
 	illi_start = "Akama. Ta duplicité n'est pas très étonnante. J'aurai dû vous massacrer depuis longtemps, toi et ton frère déformé.",
 } end )
 
