@@ -183,7 +183,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = {lady, lock}
-mod.toggleoptions = {"nova", "conflag", "icon", -1, "pyro", -1, "blow", "blades", "bosskill"}
+mod.toggleoptions = {"nova", "conflag", "icon", -1, "pyro", -1, "blow", "blades", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 mod.proximitySilent = true
@@ -273,6 +273,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		if db.enrage then
+			self:Enrage(360)
 		end
 	end
 end
