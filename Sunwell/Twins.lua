@@ -248,11 +248,19 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)
 	if unit == lady and db.nova then
-		self:Message(L["nova_message"]:format(player), "Urgent", nil, nil, nil, 45329)
+		if player == pName then
+			self:LocalMessage(L["nova_message"]:format(player), "Personal", 45329, "Long")
+		else
+			self:Message(L["nova_message"]:format(player), "Urgent", nil, nil, nil, 45329)
+		end
 		self:Bar(L["nova_bar"], 30.5, 45329)
 		self:Icon(player, "icon")
 	elseif unit == lock and db.conflag then
-		self:Message(L["conflag_message"]:format(player), "Attention", nil, nil, nil, 45333)
+		if player == pName then
+			self:LocalMessage(L["conflag_message"]:format(player), "Personal", 45333, "Long")
+		else
+			self:Message(L["conflag_message"]:format(player), "Attention", nil, nil, nil, 45333)
+		end
 		self:Bar(L["conflag_bar"], 32, 45333)
 		self:Icon(player, "icon")
 	end
@@ -268,4 +276,3 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	end
 end
-
