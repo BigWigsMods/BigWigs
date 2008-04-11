@@ -91,8 +91,8 @@ L:RegisterTranslations("zhCN", function() return {
 	breath_warn = "深呼吸：>%d<！",
 
 	dispel = "群体驱散结果",
-	--dispel_desc = "If you're a priest, will print in /say who your mass dispel failed on.",
-	--dispel_fail = "Mass Dispel failed: ",
+	dispel_desc = "如果你是牧师，将在 /say 提示谁处于群体驱散范围内。",
+	dispel_fail = "距离过远：",
 
 	--warning = "WARNING\n--\nFor Encapsulate scanning to work properly you need to have your Main Tank in the Blizzard Main Tank list!!",
 } end )
