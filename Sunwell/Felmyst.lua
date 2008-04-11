@@ -11,7 +11,6 @@ local UnitName = UnitName
 local UnitExists = UnitExists
 local db = nil
 local count = 1
-local pass = {}
 local fail = {}
 local bandages = {
 	[21991] = true, -- Heavy Netherweave Bandage
@@ -60,10 +59,8 @@ L:RegisterTranslations("enUS", function() return {
 	breath_warn = "Inc Breath (%d)!",
 
 	dispel = "Mass Dispel Results",
-	dispel_desc = "If you're a priest, will print in /say who your mass dispel failed and worked on.",
-	dispel_pass = "Dispelled: ",
-	dispel_fail = "Failed: ",
-	dispel_none = "none",
+	dispel_desc = "If you're a priest, will print in /say who your mass dispel failed on.",
+	dispel_fail = "Mass Dispel failed: ",
 
 	warning = "WARNING\n--\nFor Encapsulate scanning to work properly you need to have your Main Tank in the Blizzard Main Tank list!!",
 } end )
@@ -94,10 +91,8 @@ L:RegisterTranslations("zhCN", function() return {
 	breath_warn = "深呼吸：>%d<！",
 
 	dispel = "群体驱散结果",
-	dispel_desc = "如果你是牧师，将在 /say 提示谁处于群体驱散范围内。",
-	dispel_pass = "驱散范围内：",
-	dispel_fail = "距离过远：",
-	dispel_none = "无",
+	--dispel_desc = "If you're a priest, will print in /say who your mass dispel failed on.",
+	--dispel_fail = "Mass Dispel failed: ",
 
 	--warning = "WARNING\n--\nFor Encapsulate scanning to work properly you need to have your Main Tank in the Blizzard Main Tank list!!",
 } end )
@@ -128,10 +123,8 @@ L:RegisterTranslations("koKR", function() return {
 	breath_warn = "깊은 숨결 (%d)!",
 
 	dispel = "대규모 무효화 결과",
-	dispel_desc = "당신이 사제인 경우, 대규모 무효화 효과의 실패등을 일반 대화창으로 출력합니다.",
-	dispel_pass = "해제: ",
-	dispel_fail = "실패: ",
-	dispel_none = "없음",
+	--dispel_desc = "If you're a priest, will print in /say who your mass dispel failed on.",
+	--dispel_fail = "Mass Dispel failed: ",
 
 	warning = "경고\n--\n가두기에 대한 검색이 제대로 작동하려면, 당신이 필요로 하는 메인 탱커가 블리자드 메인 탱커 목록에 있어야 합니다!!",
 } end )
@@ -162,10 +155,8 @@ L:RegisterTranslations("frFR", function() return {
 	breath_warn = "Souffle (%d) !",
 
 	dispel = "Infos Dissipation de masse",
-	dispel_desc = "Si vous êtes prêtre, ceci affichera en /dire les échecs et les réussites de votre Dissipation de masse.",
-	dispel_pass = "Dissipés : ",
-	dispel_fail = "Échec : ",
-	dispel_none = "aucun",
+	--dispel_desc = "If you're a priest, will print in /say who your mass dispel failed on.",
+	--dispel_fail = "Mass Dispel failed: ",
 
 	warning = "ATTENTION\n--\nPour que l'analyse des Enfermer fonctionne correctement, vous devez indiquer votre tank dans la liste des tanks principaux de Blizzard !",
 } end )
@@ -196,10 +187,8 @@ L:RegisterTranslations("zhTW", function() return {
 	--breath_warn = "Inc Breath (%d)!",
 
 	--dispel = "Mass Dispel Results",
-	--dispel_desc = "If you're a priest, will print in /say who your mass dispel failed and worked on.",
-	--dispel_pass = "Dispelled: ",
-	--dispel_fail = "Failed: ",
-	--dispel_none = "none",
+	--dispel_desc = "If you're a priest, will print in /say who your mass dispel failed on.",
+	--dispel_fail = "Mass Dispel failed: ",
 
 	--warning = "WARNING\n--\nFor Encapsulate scanning to work properly you need to have your Main Tank in the Blizzard Main Tank list!!",
 } end )
@@ -235,7 +224,6 @@ function mod:OnEnable()
 	--self:AddCombatListener("SPELL_AURA_APPLIED", "Encapsulate", 45662) --Maybe one day
 	local _, class = UnitClass("player")
 	if class == "PRIEST" then
-		self:AddCombatListener("SPELL_AURA_DISPELLED", "Dispel", 32375) --Mass Dispel catcher
 		self:AddCombatListener("SPELL_DISPEL_FAILED", "DispelFail", 32375) --Mass Dispel catcher
 	end
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
@@ -260,15 +248,8 @@ end
 
 function mod:Gas(_, spellID)
 	if db.gas then
-		self:IfMessage(L["gas_message"], "Attention", spellID, "Alert")
+		self:IfMessage(L["gas_message"], "Attention", spellID)
 		self:Bar(L["gas_bar"], 22, spellID)
-	end
-end
-
-function mod:Dispel(player, _, source)
-	if UnitIsUnit(source, "player") and db.dispel then
-		pass[player] = true
-		self:ScheduleEvent("BWFelmystDispelWarn", self.DispelWarn, 0.3, self)
 	end
 end
 
@@ -280,24 +261,15 @@ function mod:DispelFail(player, _, source)
 end
 
 function mod:DispelWarn()
-	local one = nil
-	for k in pairs(pass) do
-		if not one then
-			one = k or L["dispel_none"]
-		else
-			one = one .. ", " .. k
-		end
-	end
-	local two = nil
+	local msg = nil
 	for k in pairs(fail) do
-		if not two then
-			two = k or L["dispel_none"]
+		if not msg then
+			msg = k
 		else
-			two = two .. ", " .. k
+			msg = msg .. ", " .. k
 		end
 	end
-	SendChatMessage(("%s%s %s%s"):format(L["dispel_pass"], one or L["dispel_none"], L["dispel_fail"], two or L["dispel_none"]), "SAY")
-	for k in pairs(pass) do pass[k] = nil end
+	SendChatMessage(L["dispel_fail"]..msg, "SAY")
 	for k in pairs(fail) do fail[k] = nil end
 end
 
@@ -317,7 +289,7 @@ do
 			if not GetPartyAssignment("maintank", target) then
 				local player = UnitName(target)
 				local msg = L["encaps_message"]:format(player)
-				self:IfMessage(msg, "Important", 45665)
+				self:IfMessage(msg, "Important", 45665, "Alert")
 				self:Bar(msg, 6, 45665)
 				self:Icon(player)
 			end
@@ -329,7 +301,6 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
-		for k in pairs(pass) do pass[k] = nil end
 		for k in pairs(fail) do fail[k] = nil end
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
