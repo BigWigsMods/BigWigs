@@ -166,7 +166,7 @@ L:RegisterTranslations("frFR", function() return {
 	enrage_trigger = "Sathrovarr déchaîne la rage de Kalecgos !",
 
 	strike = "Frappe corruptrice",
-	strike_desc = "Préviens quand un joueur subit les effets de la Frappe corruptrice.",
+	strike_desc = "Préviens quand quelqu'un subit les effets de la Frappe corruptrice.",
 	strike_message = "%s : Frappe corruptrice",
 } end )
 

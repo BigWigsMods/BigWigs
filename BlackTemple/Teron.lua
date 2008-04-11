@@ -92,7 +92,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	crush = "Ombres écrasantes",
 	crush_desc = "Préviens quand un joueur subit les effets des Ombres écrasantes.",
-	crush_warn = "Écrasé : %s",
+	crush_warn = "Écrasé(s) : %s",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

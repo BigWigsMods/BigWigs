@@ -155,8 +155,8 @@ L:RegisterTranslations("frFR", function() return {
 	breath_warn = "Souffle (%d) !",
 
 	dispel = "Infos Dissipation de masse",
-	--dispel_desc = "If you're a priest, will print in /say who your mass dispel failed on.",
-	--dispel_fail = "Mass Dispel failed: ",
+	dispel_desc = "Si vous êtes prêtre, ceci affichera en /dire les échecs de votre Dissipation de masse.",
+	dispel_fail = "Échec(s) de la Dissipation de masse : ",
 
 	warning = "ATTENTION\n--\nPour que l'analyse des Enfermer fonctionne correctement, vous devez indiquer votre tank dans la liste des tanks principaux de Blizzard !",
 } end )
