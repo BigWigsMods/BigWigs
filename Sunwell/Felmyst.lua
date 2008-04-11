@@ -123,8 +123,8 @@ L:RegisterTranslations("koKR", function() return {
 	breath_warn = "깊은 숨결 (%d)!",
 
 	dispel = "대규모 무효화 결과",
-	--dispel_desc = "If you're a priest, will print in /say who your mass dispel failed on.",
-	--dispel_fail = "Mass Dispel failed: ",
+	dispel_desc = "당신이 사제인 경우, 대규모 무효화가 실패한 플레이어를 일반 대화창으로 알립니다.",
+	dispel_fail = "대규모 무효화 실패: ",
 
 	warning = "경고\n--\n가두기에 대한 검색이 제대로 작동하려면, 당신이 필요로 하는 메인 탱커가 블리자드 메인 탱커 목록에 있어야 합니다!!",
 } end )
