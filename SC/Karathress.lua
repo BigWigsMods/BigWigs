@@ -131,8 +131,8 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_START", "Heal", 43548, 38330)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Totem", 38236)
+	self:AddCombatListener("SPELL_CAST_START", "Heal", 38330)
+	self:AddCombatListener("SPELL_SUMMON", "Totem", 38236)
 	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -151,10 +151,10 @@ function mod:Heal()
 	end
 end
 
-function mod:Totem(unit, spellID)
+function mod:Totem(_, spellID, source)
 	if not db.totem then return end
 
-	if unit == boss then
+	if source == boss then
 		self:IfMessage(L["totem_message2"], "Urgent", spellID, "Alarm")
 	else
 		self:IfMessage(L["totem_message1"], "Attention", spellID)
