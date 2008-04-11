@@ -249,7 +249,7 @@ end
 function mod:Gas(_, spellID)
 	if db.gas then
 		self:IfMessage(L["gas_message"], "Attention", spellID)
-		self:Bar(L["gas_bar"], 22, spellID)
+		self:Bar(L["gas_bar"], 20, spellID)
 	end
 end
 
