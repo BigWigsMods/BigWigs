@@ -78,15 +78,15 @@ L:RegisterTranslations("koKR", function() return {
 	next_phase_bar = "다음 형상",
 	next_phase_message = "10초 이내 형상 변경!",
 
-	punch = "화산 폭발",
-	punch_desc = "화산 폭발 시 경고와 쿨다운 타이머바를 표시합니다.",
-	punch_message = "화산 폭발!",
-	punch_bar = "~폭발 가능!",
+	punch = "이글거리는 주먹",
+	punch_desc = "이글거리는 주먹의 경고와 대기시간 바를 표시합니다.",
+	punch_message = "이글거리는 주먹!",
+	punch_bar = "~주먹 가능!",
 
 	target = "대상",
 	target_desc = "솔개 형상에서 대상을 알리고 전술 표시를 지정합니다.",
 	target_message = "%s 추적 중!",
-	target_you = "당신은 추적 중!",
+	target_you = "당신을 추적 중!",
 	target_message_nounit = "새로운 대상!",
 
 	icon = "전술 표시",

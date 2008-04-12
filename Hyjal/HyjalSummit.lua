@@ -102,8 +102,8 @@ L:RegisterTranslations("koKR", function() return {
 
 	["My companions and I are with you, Lady Proudmoore."] = "제 동료와 저는 프라우드무어님, 당신과 함께 하겠습니다.", -- Rage Winterchill
 	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "아키몬드가 어떤 군대를 보내던 우리는 준비가 되어 있습니다, 프라우드무어 님.", -- Anatheron
-	["I am with you, Thrall."] = "당신과 함께 하겠습니다, 대족장님.", -- Kaz'Rogal
-	["We have nothing to fear."] = "두려워할 것은 아무것도 없습니다.", -- Az'Galor
+	["I am with you, Thrall."] = "당신과 함께 하겠"..(UnitSex("player") == 3 and "어요" or "습니다")..", 대족장님.", -- Kaz'Rogal
+	["We have nothing to fear."] = "두려워할 것은 아무것도 없"..(UnitSex("player") == 3 and "어요" or "습니다")..".", -- Az'Galor
 	
 	["Please remove BigWigs_WaveTimers, it is deprecated."] = "BigWigs_WaveTimers를 반대하므로, 이것을 제거하십시요.",
 
