@@ -10,6 +10,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local db = nil
 local wipe = nil
 local started = nil
+local deaths = 0
 
 local pName = UnitName("player")
 local CheckInteractDistance = CheckInteractDistance
@@ -198,13 +199,12 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_DISPELLED", "PyroRemove")
 	self:AddCombatListener("SPELL_DAMAGE", "Blow", 45256)
 	self:AddCombatListener("SPELL_CAST_START", "Blades", 45248)
+	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("BigWigs_RecvSync")
-
-	--self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
 
 	db = self.db.profile
 	if wipe and BigWigs:IsModuleActive(boss) then
@@ -212,6 +212,7 @@ function mod:OnEnable()
 		wipe = nil
 	end
 	started = nil
+	deaths = 0
 end
 
 ------------------------------
@@ -243,6 +244,15 @@ end
 function mod:Blades()
 	if db.blades then
 		self:Bar(L["blades_bar"], 10, 45248)
+	end
+end
+
+function mod:Deaths(unit)
+	if unit == lock or unit == lady then
+		deaths = deaths + 1
+	end
+	if deaths == 2 then
+		self:GenericBossDeath(boss)
 	end
 end
 
