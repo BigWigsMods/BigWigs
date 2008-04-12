@@ -86,15 +86,15 @@ L:RegisterTranslations("zhCN", function() return {
 
 	breath = "深呼吸",
 	breath_desc = "当施放深呼吸时发出警报。",
-	breath_trigger = "%s深深地吸了一口气。",--need combatlog
+	breath_trigger = "%s深深地吸了一口气。",
 	breath_nextbar = "<下一深呼吸：%d>",
 	breath_warn = "深呼吸：>%d<！",
 
 	dispel = "群体驱散结果",
-	dispel_desc = "如果你是牧师，将在 /say 提示谁处于群体驱散范围内。",
+	dispel_desc = "如果你是牧师，将在 /say 提示谁不在群体驱散范围内。",
 	dispel_fail = "距离过远：",
 
-	--warning = "WARNING\n--\nFor Encapsulate scanning to work properly you need to have your Main Tank in the Blizzard Main Tank list!!",
+	warning = "注意\n--\n需要 MT 处于暴雪默认 MT 名单下压缩扫描才能正常使用！",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
