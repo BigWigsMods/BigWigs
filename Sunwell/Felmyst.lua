@@ -65,6 +65,40 @@ L:RegisterTranslations("enUS", function() return {
 	warning = "WARNING\n--\nFor Encapsulate scanning to work properly you need to have your Main Tank in the Blizzard Main Tank list!!",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	cmd = "Teufelsruch",
+
+	encaps = "Einschließen",
+	encaps_desc = "Opfer des Einschließens ankündigen.",
+	encaps_warning = "Einschließen in ~5 Sekunden!",
+	encaps_message = "Einschließen: %s",
+
+	gas = "Gasnova",
+	gas_desc = "Gasnova ankündigen.",
+	gas_message = "Wirkt Gasnova!",
+	gas_bar = "~Gasnova-Cooldown",
+
+	phase = "Phasen",
+	phase_desc = "Abheben und Landung ankündigen.",
+	airphase_trigger = "Ich bin stärker als je zuvor!",
+	takeoff_bar = "Abheben",
+	takeoff_message = "Abheben in 5 Sekunden!",
+	landing_bar = "Landung",
+	landing_message = "Landung in 10 Sekunden!",
+
+	breath = "Tiefer Atem",
+	breath_desc = "Warnung für Tiefen Atem.",
+	breath_trigger = "%s holt tief Luft.",
+	breath_nextbar = "~Atem-Cooldown (%d)",
+	breath_warn = "Atem in Kürze (%d)!",
+
+	dispel = "Ergebnis der Massenbannung",
+	dispel_desc = "Wenn Du Priester bist, wird eine Nachricht im sag-Chat ausgegeben, bei wem Deine Massenbannung fehlgeschlagen ist.",
+	dispel_fail = "Massenbannung fehlgeschlagen: ",
+
+	warning = "WARNUNG\n--\nDamit die Einschließen-Detektion korrekt funtkioniert, muss der Maintank in der Blizzard-Maintank-Liste eingestellt sein.",
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 	encaps = "压缩",--Encapsulate
 	encaps_desc = "当玩家受到压缩时发出警报。",
