@@ -252,7 +252,7 @@ function mod:Deaths(unit)
 		deaths = deaths + 1
 	end
 	if deaths == 2 then
-		self:GenericBossDeath(boss)
+		self:GenericBossDeath(boss, true)
 	end
 end
 
