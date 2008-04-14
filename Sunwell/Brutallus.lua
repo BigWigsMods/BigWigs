@@ -115,10 +115,10 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	--engage_trigger = "Ah, more lambs to the slaughter!",
+	engage_trigger = "啊，又来了一群小绵羊！",
 
 	burn = "燃烧",
-	burn_desc = "当玩家受到燃烧发出警报及下一次燃烧通知。",
+	burn_desc = "当玩家受到燃烧时发出警报及下一次燃烧通知。",
 	burn_you = ">你< 燃烧！",
 	burn_other = "燃烧：>%s<！",
 	burn_bar = "<下一燃烧>",
@@ -128,7 +128,7 @@ L:RegisterTranslations("zhCN", function() return {
 	burnresist_desc = "当玩家抵抗燃烧攻击发出警报。",
 	burn_resist = "燃烧抵抗：>%s<！",
 
-	meteor = "流星猛击",--Meteor Slash
+	meteor = "流星猛击",
 	meteor_desc = "显示流星猛击记时条。",
 	meteor_bar = "<下一流星猛击>",
 
