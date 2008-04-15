@@ -101,9 +101,9 @@ L:RegisterTranslations("koKR", function() return {
 	icon_desc = "암흑 회오리와 거대한 불길의 대상이된 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
 
 	pyro = "발열",
-	pyro_desc = "플레이어에게 발열이 걸리거나 사라지는 것을 알립니다.",
+	pyro_desc = "발열을 누가 획득하고 제거하는지 알립니다.",
 	pyro_gain = "%s 발열",
-	pyro_remove = "%s 발열 사라짐",
+	pyro_remove = "%s 발열 제거",
 
 	blow = "혼란의 강타",
 	blow_desc = "혼란의 강타에 대한 타이머 바를 표시합니다.",

@@ -74,7 +74,7 @@ L:RegisterTranslations("koKR", function() return {
 	desire_warn = "30초 후 마나 0!",
 
 	runeshield = "룬 보호막",
-	runeshield_desc = "욕망의 정수가 룬 보호막을 얻을 떄에 대한 타이머 입니다.",
+	runeshield_desc = "욕망의 정수가 룬 보호막 획득에 대한 타이머 입니다.",
 	runeshield_message = "룬 보호막!",
 	runeshield_nextbar = "다음 룬 보호막",
 	runeshield_warn = "약 3초 후 룬 보호막",
