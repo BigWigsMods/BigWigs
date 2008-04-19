@@ -114,22 +114,22 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	encaps = "压缩",--Encapsulate
+	encaps = "压缩",
 	encaps_desc = "当玩家受到压缩时发出警报。",
 	encaps_warning = "约5秒后，压缩！",
 	encaps_message = "压缩：>%s<！",
 
-	gas = "毒气新星",--Gas Nova
+	gas = "毒气新星",
 	gas_desc = "当施放毒气新星时发出警报。",
 	gas_message = "正在施放毒气新星！",
 	gas_bar = "<毒气新星 冷却>",
 
-	--vapor = "Demonic Vapor",
-	--vapor_desc = "Warn who gets Demonic Vapor.",
-	--vapor_message = "Vapor: %s",
+	vapor = "恶魔蒸汽",
+	vapor_desc = "当玩家受到恶魔蒸汽时发出警报。",
+	vapor_message = "恶魔蒸汽：>%s<！",
 
-	--icon = "Icon",
-	--icon_desc = "Place a Raid Target Icon on players with Encapsulate or Demonic Vapor. (requires promoted or higher)",
+	icon = "团队标记",
+	icon_desc = "为中了压缩或恶魔蒸汽的玩家打上团队标记。（需要权限）",
 
 	phase = "阶段警报",
 	phase_desc = "当升空或降落阶段时发出警报。",
