@@ -44,6 +44,13 @@ L:RegisterTranslations("enUS", function() return {
 	gas_message = "Casting Gas Nova!",
 	gas_bar = "~Gas Nova Cooldown",
 
+	vapor = "Demonic Vapor",
+	vapor_desc = "Warn who gets Demonic Vapor.",
+	vapor_message = "Vapor: %s",
+
+	icon = "Icon",
+	icon_desc = "Place a Raid Target Icon on players with Encapsulate or Demonic Vapor. (requires promoted or higher)",
+
 	phase = "Phases",
 	phase_desc = "Warn for takeoff and landing phases.",
 	airphase_trigger = "I am stronger than ever before!",
@@ -78,6 +85,13 @@ L:RegisterTranslations("deDE", function() return {
 	gas_message = "Wirkt Gasnova!",
 	gas_bar = "~Gasnova-Cooldown",
 
+	--vapor = "Demonic Vapor",
+	--vapor_desc = "Warn who gets Demonic Vapor.",
+	--vapor_message = "Vapor: %s",
+
+	--icon = "Icon",
+	--icon_desc = "Place a Raid Target Icon on players with Encapsulate or Demonic Vapor. (requires promoted or higher)",
+
 	phase = "Phasen",
 	phase_desc = "Abheben und Landung ankündigen.",
 	airphase_trigger = "Ich bin stärker als je zuvor!",
@@ -109,6 +123,13 @@ L:RegisterTranslations("zhCN", function() return {
 	gas_desc = "当施放毒气新星时发出警报。",
 	gas_message = "正在施放毒气新星！",
 	gas_bar = "<毒气新星 冷却>",
+
+	--vapor = "Demonic Vapor",
+	--vapor_desc = "Warn who gets Demonic Vapor.",
+	--vapor_message = "Vapor: %s",
+
+	--icon = "Icon",
+	--icon_desc = "Place a Raid Target Icon on players with Encapsulate or Demonic Vapor. (requires promoted or higher)",
 
 	phase = "阶段警报",
 	phase_desc = "当升空或降落阶段时发出警报。",
@@ -142,6 +163,13 @@ L:RegisterTranslations("koKR", function() return {
 	gas_message = "가스 회오리 시전!",
 	gas_bar = "~가스 회오리 대기시간",
 
+	--vapor = "Demonic Vapor",
+	--vapor_desc = "Warn who gets Demonic Vapor.",
+	--vapor_message = "Vapor: %s",
+
+	--icon = "Icon",
+	--icon_desc = "Place a Raid Target Icon on players with Encapsulate or Demonic Vapor. (requires promoted or higher)",
+
 	phase = "단계",
 	phase_desc = "이륙과 착지 단계에 대해 알립니다.",
 	airphase_trigger = "나는 어느 때보다도 강하다!",
@@ -173,6 +201,13 @@ L:RegisterTranslations("frFR", function() return {
 	gas_desc = "Préviens quand la Nova de gaz est incanté.",
 	gas_message = "Nova de gaz en incantation !",
 	gas_bar = "~Cooldown Nova de gaz",
+
+	--vapor = "Demonic Vapor",
+	--vapor_desc = "Warn who gets Demonic Vapor.",
+	--vapor_message = "Vapor: %s",
+
+	--icon = "Icon",
+	--icon_desc = "Place a Raid Target Icon on players with Encapsulate or Demonic Vapor. (requires promoted or higher)",
 
 	phase = "Phases",
 	phase_desc = "Préviens quand Gangrebrume décolle et atterit.",
@@ -206,6 +241,13 @@ L:RegisterTranslations("zhTW", function() return {
 	gas_message = "毒氣新星施放中！",
 	gas_bar = "毒氣新星冷卻計時",
 
+	--vapor = "Demonic Vapor",
+	--vapor_desc = "Warn who gets Demonic Vapor.",
+	--vapor_message = "Vapor: %s",
+
+	--icon = "Icon",
+	--icon_desc = "Place a Raid Target Icon on players with Encapsulate or Demonic Vapor. (requires promoted or higher)",
+
 	--phase = "Phases",
 	--phase_desc = "Warn for takeoff and landing phases.",
 	--airphase_trigger = "I am stronger than ever before!",
@@ -234,7 +276,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", "breath", -1, "encaps", "gas", "dispel", "enrage", "proximity", "bosskill"}
+mod.toggleoptions = {"phase", "breath", "vapor", "icon", -1, "encaps", "gas", "dispel", "enrage", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) 
 	for k, v in pairs( bandages ) do
@@ -255,6 +297,7 @@ function mod:OnEnable()
 	started = nil
 
 	self:AddCombatListener("SPELL_CAST_START", "Gas", 45855)
+	self:AddCombatListener("SPELL_SUMMON", "Vapor", 45392)
 	--self:AddCombatListener("SPELL_AURA_APPLIED", "Encapsulate", 45662) --Maybe one day
 	local _, class = UnitClass("player")
 	if class == "PRIEST" then
@@ -284,6 +327,15 @@ function mod:Gas(_, spellID)
 	if db.gas then
 		self:IfMessage(L["gas_message"], "Attention", spellID)
 		self:Bar(L["gas_bar"], 20, spellID)
+	end
+end
+
+function mod:Vapor(_, _, source)
+	if db.vapor then
+		local msg = L["vapor_message"]:format(source)
+		self:IfMessage(msg, "Urgent", 45402)
+		self:Bar(msg, 10, 45402)
+		self:Icon(source, "icon")
 	end
 end
 
@@ -325,7 +377,7 @@ do
 				local msg = L["encaps_message"]:format(player)
 				self:IfMessage(msg, "Important", 45665, "Alert")
 				self:Bar(msg, 6, 45665)
-				self:Icon(player)
+				self:Icon(player, "icon")
 			end
 			lastTarget = target
 		end
