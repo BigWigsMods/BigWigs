@@ -198,16 +198,16 @@ L:RegisterTranslations("frFR", function() return {
 	encaps_message = "Enfermer : %s",
 
 	gas = "Nova de gaz",
-	gas_desc = "Préviens quand la Nova de gaz est incanté.",
+	gas_desc = "Préviens quand la Nova de gaz est incantée.",
 	gas_message = "Nova de gaz en incantation !",
 	gas_bar = "~Cooldown Nova de gaz",
 
-	--vapor = "Demonic Vapor",
-	--vapor_desc = "Warn who gets Demonic Vapor.",
-	--vapor_message = "Vapor: %s",
+	vapor = "Vapeur démoniaque",
+	vapor_desc = "Préviens quand un joueur subit les effets de la Vapeur démoniaque.",
+	vapor_message = "Vapeur : %s",
 
-	--icon = "Icon",
-	--icon_desc = "Place a Raid Target Icon on players with Encapsulate or Demonic Vapor. (requires promoted or higher)",
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur la dernière personne affectée par Enfermer ou Vapeur démoniaque (nécessite d'être promu ou mieux).",
 
 	phase = "Phases",
 	phase_desc = "Préviens quand Gangrebrume décolle et atterit.",
@@ -223,9 +223,9 @@ L:RegisterTranslations("frFR", function() return {
 	breath_nextbar = "~Cooldown Souffle (%d)",
 	breath_warn = "Souffle (%d) !",
 
-	dispel = "Infos Dissipation de masse",
+	dispel = "Échecs Dissipation de masse",
 	dispel_desc = "Si vous êtes prêtre, ceci affichera en /dire les échecs de votre Dissipation de masse.",
-	dispel_fail = "Échec(s) de la Dissipation de masse : ",
+	dispel_fail = "Échec(s) Dissipation de masse : ",
 
 	warning = "ATTENTION\n--\nPour que l'analyse des Enfermer fonctionne correctement, vous devez indiquer votre tank dans la liste des tanks principaux de Blizzard !",
 } end )
