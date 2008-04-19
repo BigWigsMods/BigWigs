@@ -177,6 +177,37 @@ L:RegisterTranslations("zhTW", function() return {
 	blades_bar = "下一次暗影之刃",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	engage_trigger = "",
+	wipe_bar = "Wiederbelebung",
+
+	nova = "Schattennova",
+	nova_desc = "Warnt wenn Schattennova gewirkt wird.",
+	nova_message = "Schattennova auf %s",
+	nova_bar = "~Nova Cooldown",
+
+	conflag = "Großbrand",
+	conflag_desc = "Warnt wenn Großbrand gewirkt wird.",
+	conflag_message = "Großbrand auf %s",
+	conflag_bar = "Nächster Großbrand",
+
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Plaziert ein Schlachtzug Symbol auf Spielern auf die Schattennova und Großbrand gewirkt wird.",
+
+	pyro = "Pyrogen",
+	pyro_desc = "Warnt wer Pyrogen bekommt und wer es verliehrt.",
+	pyro_gain = "%s bekommt Pyrogen",
+	pyro_remove = "%s verliehrt Pyrogen",
+
+	blow = "Verwirrender Schlag",
+	blow_desc = "Zeigt einen Zeitbalken für Verwirrender Schlag.",
+	blow_bar = "Nächster Schlag",
+
+	blades = "Schattenklingen",
+	blades_desc = "Zeigt einen Zeitbalken für Schattenklingen.",
+	blades_bar = "Nächste Klingen",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
