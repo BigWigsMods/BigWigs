@@ -61,7 +61,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	breath = "Deep Breath",
 	breath_desc = "Deep Breath warnings.",
-	breath_trigger = "%s takes a deep breath.",
 	breath_nextbar = "~Breath Cooldown (%d)",
 	breath_warn = "Inc Breath (%d)!",
 
@@ -102,7 +101,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	breath = "Tiefer Atem",
 	breath_desc = "Warnung für Tiefen Atem.",
-	breath_trigger = "%s holt tief Luft.",
 	breath_nextbar = "~Atem-Cooldown (%d)",
 	breath_warn = "Atem in Kürze (%d)!",
 
@@ -141,7 +139,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	breath = "深呼吸",
 	breath_desc = "当施放深呼吸时发出警报。",
-	breath_trigger = "%s深深地吸了一口气。",
 	breath_nextbar = "<下一深呼吸：%d>",
 	breath_warn = "深呼吸：>%d<！",
 
@@ -180,7 +177,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	breath = "깊은 숨결",
 	breath_desc = "깊은 숨결을 알립니다.",
-	breath_trigger = "%s|1이;가; 숨을 깊게 들이마십니다.",
 	breath_nextbar = "~숨결 대기시간 (%d)",
 	breath_warn = "깊은 숨결 (%d)!",
 
@@ -219,7 +215,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	breath = "Grande inspiration",
 	breath_desc = "Préviens quand Gangrebrume inspire profondément.",
-	breath_trigger = "%s inspire profondément.", -- à vérifier
 	breath_nextbar = "~Cooldown Souffle (%d)",
 	breath_warn = "Souffle (%d) !",
 
@@ -258,7 +253,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	--breath = "Deep Breath",
 	--breath_desc = "Deep Breath warnings.",
-	--breath_trigger = "%s takes a deep breath.",
 	--breath_nextbar = "~Breath Cooldown (%d)",
 	--breath_warn = "Inc Breath (%d)!",
 
@@ -402,8 +396,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
-	if db.breath and msg == L["breath_trigger"] then
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit)
+	if db.breath and unit == boss then
 		--19879 track dragonkin, looks like a dragon breathing 'deep breath' :)
 		self:IfMessage(L["breath_warn"]:format(count), "Attention", 19879)
 		self:Bar(L["breath_warn"]:format(count), 4, 19879)
