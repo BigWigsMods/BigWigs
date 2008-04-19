@@ -367,8 +367,7 @@ do
 		local target = UnitName(cachedId .. "target")
 		if target and target ~= lastTarget and UnitExists(target) then
 			if not GetPartyAssignment("maintank", target) then
-				local player = UnitName(target)
-				local msg = L["encaps_message"]:format(player)
+				local msg = L["encaps_message"]:format(target)
 				self:IfMessage(msg, "Important", 45665, "Alert")
 				self:Bar(msg, 6, 45665)
 				self:Icon(player, "icon")
