@@ -295,8 +295,8 @@ function mod:Shield(_, spellID)
 	end
 end
 
-function mod:SpellShield(_, spellID)
-	if db.spellshield then
+function mod:SpellShield(unit, spellID)
+	if unit == mage and db.spellshield then
 		self:IfMessage(L["spellshield_message"], "Attention", spellID, "Info")
 		self:Bar(L["spellshield_bar"], 30, spellID)
 	end
