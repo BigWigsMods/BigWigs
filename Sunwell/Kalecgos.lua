@@ -70,8 +70,6 @@ L:RegisterTranslations("enUS", function() return {
 	strike = "Corrupting Strike",
 	strike_desc = "Warn who gets Corrupting Strike.",
 	strike_message = "%s: Corrupting Strike",
-
-	["Portal warnings were recently moved to a new addon, BigWigs_KalecgosPortals (files.wowace.com), it will show a box with people in the portal, please test it. :)"] = true,
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -119,8 +117,6 @@ L:RegisterTranslations("koKR", function() return {
 	strike = "타락의 일격",
 	strike_desc = "타락의 일격에 걸린 플레이어를 알립니다.",
 	strike_message = "%s: 타락의 일격",
-
-	["Portal warnings were recently moved to a new addon, BigWigs_KalecgosPortals (files.wowace.com), it will show a box with people in the portal, please test it. :)"] = "차원문 경고는 최근 새로운 애드온인 BigWigs_KalecgosPortals (files.wowace.com)로 이동하였으며, 이 것은 차원문 내부에 있는 플레이어가 상자에 표시됩니다. 테스트를 부탁드립니다. :)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -327,7 +323,6 @@ mod.proximitySilent = true
 --      Initialization      --
 ------------------------------
 
-local temp = true --remove sometime
 function mod:OnEnable()
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
@@ -353,10 +348,6 @@ function mod:OnEnable()
 	if wipe and BigWigs:IsModuleActive(boss) then
 		self:Bar(L["wipe_bar"], 30, 44670)
 		wipe = nil
-	end
-	if temp then
-		BigWigs:Print(L["Portal warnings were recently moved to a new addon, BigWigs_KalecgosPortals (files.wowace.com), it will show a box with people in the portal, please test it. :)"])
-		temp = nil
 	end
 	counter = 1
 end
