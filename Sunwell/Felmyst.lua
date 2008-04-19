@@ -163,12 +163,12 @@ L:RegisterTranslations("koKR", function() return {
 	gas_message = "가스 회오리 시전!",
 	gas_bar = "~가스 회오리 대기시간",
 
-	--vapor = "Demonic Vapor",
-	--vapor_desc = "Warn who gets Demonic Vapor.",
-	--vapor_message = "Vapor: %s",
+	vapor = "악령의 증기",
+	vapor_desc = "악령의 증기에 걸린 플레이어를 알립니다.",
+	vapor_message = "증기: %s",
 
-	--icon = "Icon",
-	--icon_desc = "Place a Raid Target Icon on players with Encapsulate or Demonic Vapor. (requires promoted or higher)",
+	icon = "전술 표시",
+	icon_desc = "가두기 또는 악령의 증기에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	phase = "단계",
 	phase_desc = "이륙과 착지 단계에 대해 알립니다.",
@@ -188,7 +188,7 @@ L:RegisterTranslations("koKR", function() return {
 	dispel_desc = "당신이 사제인 경우, 대규모 무효화가 실패한 플레이어를 일반 대화창으로 알립니다.",
 	dispel_fail = "대규모 무효화 실패: ",
 
-	warning = "경고\n--\n가두기에 대한 검색이 제대로 작동하려면, 당신이 필요로 하는 메인 탱커가 블리자드 메인 탱커 목록에 있어야 합니다!!",
+	warning = "경고\n--\n블리자드 메인 탱커 목록에 필요한 메인 탱커가 있어야지만 가두기에 대한 검색이 제대로 작동합니다!!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
