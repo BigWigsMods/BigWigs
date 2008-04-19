@@ -257,7 +257,7 @@ function mod:Deaths(unit)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)
-	if unit == lady and db.nova then
+	if ((unit == lady and deaths == 0) or (unit == lock and deaths == 1)) and db.nova then
 		if player == pName then
 			self:LocalMessage(L["nova_message"]:format(player), "Personal", 45329, "Long")
 		else
@@ -265,7 +265,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)
 		end
 		self:Bar(L["nova_bar"], 30.5, 45329)
 		self:Icon(player, "icon")
-	elseif unit == lock and db.conflag then
+	elseif ((unit == lock and deaths == 0) or (unit == lady and deaths == 1)) and db.conflag then
 		if player == pName then
 			self:LocalMessage(L["conflag_message"]:format(player), "Personal", 45333, "Long")
 		else
@@ -280,6 +280,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		wipe = true
+		deaths = 0
 		self:TriggerEvent("BigWigs_ShowProximity", self)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
