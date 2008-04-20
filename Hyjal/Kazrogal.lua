@@ -83,10 +83,10 @@ L:RegisterTranslations("zhCN", function() return {
 	range = "范围检测",
 	range_desc = "当你低法力以及中了卡兹洛加印记，显示范围检测列表。",
 
-	--mark = "Mark of Kaz'rogal",
-	--mark_desc = "Show a Mark of Kaz'rogal timer bar.",
-	--mark_bar = "Next Mark (%d)",
-	--mark_warn = "Mark in 5 sec!",
+	mark = "卡兹洛加印记",
+	mark_desc = "显示卡兹洛加印记计时条。",
+	mark_bar = "<下一印记：%d>",
+	mark_warn = "5秒后，印记！",
 } end )
 
 ----------------------------------
