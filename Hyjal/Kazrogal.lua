@@ -5,6 +5,8 @@
 local boss = BB["Kaz'rogal"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local db = nil
+local started = nil
+local count = 1
 
 local bandages = {
 	[21991] = true, -- Heavy Netherweave Bandage
@@ -30,31 +32,61 @@ L:RegisterTranslations("enUS", function() return {
 
 	range = "Range Check",
 	range_desc = "Show the proximity box when you are low on mana and have the Mark of Kaz'rogal.",
+
+	mark = "Mark of Kaz'rogal",
+	mark_desc = "Show a Mark of Kaz'rogal timer bar.",
+	mark_bar = "Next Mark (%d)",
+	mark_warn = "Mark in 5 sec!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
 	range = "Reichweite Überprüfen",
 	range_desc = "Aktiviert die Nähe Anzeige wenn du wenig Mana und das Mal von Kaz'rogal hast.",
+
+	--mark = "Mark of Kaz'rogal",
+	--mark_desc = "Show a Mark of Kaz'rogal timer bar.",
+	--mark_bar = "Next Mark (%d)",
+	--mark_warn = "Mark in 5 sec!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
 	range = "Vérification de portée",
 	range_desc = "Affiche la fenêtre de proximité quand votre mana est faible et que vous avez la Marque de Kaz'rogal.",
+
+	--mark = "Mark of Kaz'rogal",
+	--mark_desc = "Show a Mark of Kaz'rogal timer bar.",
+	--mark_bar = "Next Mark (%d)",
+	--mark_warn = "Mark in 5 sec!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
 	range = "거리 확인",
 	range_desc = "카즈로갈의 징표가 걸렸을 때 마나가 낮은 상태가 되면 접근 경고창을 띄웁니다.",
+
+	--mark = "Mark of Kaz'rogal",
+	--mark_desc = "Show a Mark of Kaz'rogal timer bar.",
+	--mark_bar = "Next Mark (%d)",
+	--mark_warn = "Mark in 5 sec!",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
 	range = "距離檢查",
 	range_desc = "當你低量法力且受到卡茲洛加的印記時顯示距離框",
+
+	--mark = "Mark of Kaz'rogal",
+	--mark_desc = "Show a Mark of Kaz'rogal timer bar.",
+	--mark_bar = "Next Mark (%d)",
+	--mark_warn = "Mark in 5 sec!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
 	range = "范围检测",
 	range_desc = "当你低法力以及中了卡兹洛加印记，显示范围检测列表。",
+
+	--mark = "Mark of Kaz'rogal",
+	--mark_desc = "Show a Mark of Kaz'rogal timer bar.",
+	--mark_bar = "Next Mark (%d)",
+	--mark_warn = "Mark in 5 sec!",
 } end )
 
 ----------------------------------
@@ -64,7 +96,7 @@ L:RegisterTranslations("zhCN", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Hyjal Summit"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"range", "proximity", "bosskill"}
+mod.toggleoptions = {"mark", "range", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit )
 	for k, v in pairs( bandages ) do
@@ -80,7 +112,16 @@ end
 ------------------------------
 
 function mod:OnEnable()
-	local class = select(2, UnitClass("player"))
+	self:AddCombatListener("SPELL_CAST_START", "MarkCast", 31447)
+
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("BigWigs_RecvSync")
+
+	started = nil
+	count = 1
+
+	local _, class = UnitClass("player")
 	if class ~= "WARRIOR" and class ~= "ROGUE" then
 		self:AddCombatListener("SPELL_AURA_APPLIED", "Mark", 31447)
 		self:AddCombatListener("SPELL_AURA_REMOVED", "MarkRemoved", 31447)
@@ -94,6 +135,31 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:MarkCast(_, spellID, _, _, spellName)
+	if db.mark then
+		local time = 45 - (count * 5)
+		if time < 5 then time = 5 end
+		self:IfMessage(("%s (%d)"):format(spellName, count), "Attention")
+		count = count + 1
+		self:Bar(L["mark_bar"]:format(count), time, spellID)
+		self:DelayedMessage(time - 5, L["mark_warn"], "Positive")
+	end
+end
+
+function mod:BigWigs_RecvSync(sync, rest, nick)
+	if self:ValidateEngageSync(sync, rest) and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		if db.mark then
+			count = 1
+			self:Bar(L["mark_bar"]:format(count), 45, 31447)
+			self:DelayedMessage(40, L["mark_warn"], "Positive")
+		end
+	end
+end
 
 function mod:Mark(player)
 	if UnitIsUnit(player, "player") and db.range and UnitMana("player") < 4000 then
