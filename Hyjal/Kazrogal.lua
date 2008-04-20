@@ -53,10 +53,10 @@ L:RegisterTranslations("frFR", function() return {
 	range = "Vérification de portée",
 	range_desc = "Affiche la fenêtre de proximité quand votre mana est faible et que vous avez la Marque de Kaz'rogal.",
 
-	--mark = "Mark of Kaz'rogal",
-	--mark_desc = "Show a Mark of Kaz'rogal timer bar.",
-	--mark_bar = "Next Mark (%d)",
-	--mark_warn = "Mark in 5 sec!",
+	mark = "Marque de Kaz'rogal",
+	mark_desc = "Affiche une barre temporelle pour les Marques de Kaz'rogal.",
+	mark_bar = "Prochaine marque (%d)",
+	mark_warn = "Marque dans 5 sec. !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
