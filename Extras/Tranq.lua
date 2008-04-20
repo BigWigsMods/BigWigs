@@ -112,14 +112,14 @@ end
 
 function mod:Tranq(_, spellID, source)
 	if self.db.profile.bars then
-		self:TriggerEvent("BigWigs_StartBar", self, L["Tranq - %s"]:format(source), 20, spellID, true, 0, 1, 0)
+		self:Bar(L["Tranq - %s"]:format(source), 20, spellID, true, 0, 1, 0)
 	end
 end
 
 function mod:TranqFail(_, spellID, source)
 	if self.db.profile.bars then
-		self:TriggerEvent("BigWigs_StartBar", self, L["Tranq - %s"]:format(source), 20, spellID, true, 0, 0, 1)
-		self:TriggerEvent("BigWigs_Message", L["%s's Tranq failed!"]:format(source), "Important", nil, "Alarm", nil, spellID)
+		self:Bar(L["Tranq - %s"]:format(source), 20, spellID, true, 0, 0, 1)
+		self:IfMessage(L["%s's Tranq failed!"]:format(source), "Attention", spellID, "Alarm")
 	end
 end
 
