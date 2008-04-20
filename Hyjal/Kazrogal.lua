@@ -63,10 +63,10 @@ L:RegisterTranslations("koKR", function() return {
 	range = "거리 확인",
 	range_desc = "카즈로갈의 징표가 걸렸을 때 마나가 낮은 상태가 되면 접근 경고창을 띄웁니다.",
 
-	--mark = "Mark of Kaz'rogal",
-	--mark_desc = "Show a Mark of Kaz'rogal timer bar.",
-	--mark_bar = "Next Mark (%d)",
-	--mark_warn = "Mark in 5 sec!",
+	mark = "카즈로갈의 징표",
+	mark_desc = "카즈로갈의 징표 타이머 바를 표시합니다.",
+	mark_bar = "다음 징표 (%d)",
+	mark_warn = "5초 이내 징표!",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
