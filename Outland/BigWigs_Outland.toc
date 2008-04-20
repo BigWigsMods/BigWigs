@@ -1,4 +1,4 @@
-﻿## Interface: 20400
+## Interface: 20400
 
 ## Title: Big Wigs [|cffeda55fOutland|r]
 ## Title-frFR: Big Wigs [|cffeda55fOutreterre|r]

@@ -1,4 +1,4 @@
-﻿## Interface: 20400
+## Interface: 20400
 
 ## Title: Big Wigs [|cffeda55fBlack Temple|r]
 ## Title-zhCN: Big Wigs [|cffeda55f黑暗神殿|r]

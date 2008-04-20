@@ -1,4 +1,4 @@
-﻿## Interface: 20400
+## Interface: 20400
 
 ## Title: Big Wigs |cff7fff7f -Ace2-|r
 ## Title-zhCN: |cff7fff7f-Ace2-|r Big Wigs
