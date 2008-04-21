@@ -19,7 +19,7 @@
 <Script file="Libs\FuBarPlugin-2.0\FuBarPlugin-2.0.lua"/>
 <Script file="Libs\PaintChips-2.0\PaintChips-2.0.lua"/>
 <Script file="Libs\CandyBar-2.0\CandyBar-2.0.lua"/>
-<Include file="Libs\LibSharedMedia-2.0\lib.xml"/>
+<Include file="Libs\LibSharedMedia-3.0\lib.xml"/>
 <Script file="Libs\Waterfall-1.0\Waterfall-1.0.lua"/>
 <Script file="Libs\Sink-1.0\Sink-1.0.lua"/>
 
