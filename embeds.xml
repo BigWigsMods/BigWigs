@@ -2,6 +2,7 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="Libs\LibStub\LibStub.lua"/>
+<Include file="Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml" /> 
 <Script file="Libs\AceLibrary\AceLibrary.lua"/>
 <Script file="Libs\AceOO-2.0\AceOO-2.0.lua"/>
 <Script file="Libs\AceAddon-2.0\AceAddon-2.0.lua"/>
