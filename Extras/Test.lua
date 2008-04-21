@@ -159,7 +159,7 @@ end
 function plugin:BigWigs_RecvSync(sync)
 	if sync == "TestSync" then
 		self:Message(L["Testing Sync"], "Positive")
-		self:Bar(L["Testing Sync"], 10, "Spell_Frost_FrostShock", true, "Green", "Blue", "Yellow", "Red")
+		self:Bar(L["Testing Sync"], 10, "Spell_Frost_FrostShock", true, 0, 0, 1)
 	end
 end
 
@@ -173,6 +173,6 @@ function plugin:BigWigs_Test()
 
 	self:Bar(fmt("%s%d", L["Test Bar "], 3), 20, 27006)
 	self:Bar(fmt("%s%d", L["Test Bar "], 2), 10, 7903)
-	self:Bar(fmt("%s%d", L["Test Bar "], 1), 5, 25596, true, "red")
+	self:Bar(fmt("%s%d", L["Test Bar "], 1), 5, 25596, true, 1, 0, 0)
 end
 
