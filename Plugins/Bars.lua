@@ -6,7 +6,7 @@
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsBars")
 
-local media = LibStub("LibSharedMedia-2.0")
+local media = LibStub("LibSharedMedia-3.0")
 local mType = media.MediaType and media.MediaType.STATUSBAR or "statusbar"
 local dew = AceLibrary("Dewdrop-2.0")
 local count = 1

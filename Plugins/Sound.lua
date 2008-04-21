@@ -5,7 +5,7 @@
 ------------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsSound")
-local media = LibStub("LibSharedMedia-2.0")
+local media = LibStub("LibSharedMedia-3.0")
 local mType = media.MediaType and media.MediaType.SOUND or "sound"
 local db = nil
 
