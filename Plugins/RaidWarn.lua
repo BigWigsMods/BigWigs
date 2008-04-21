@@ -5,13 +5,9 @@
 ------------------------------
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsRaidWarn")
-local sentWhispers = nil
 
-local UnitInRaid = UnitInRaid
-local IsRaidLeader = IsRaidLeader
-local IsRaidOfficer = IsRaidOfficer
-local SendChatMessage = SendChatMessage
-local GetNumPartyMembers = GetNumPartyMembers
+local sentWhispers = nil
+local output = "*** %s ***"
 
 ----------------------------
 --      Localization      --
@@ -161,7 +157,7 @@ L:RegisterTranslations("esES", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:NewModule("RaidWarning", "AceHook-2.1")
+local plugin = BigWigs:NewModule("RaidWarning")
 plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
 	whisper = false,
@@ -206,33 +202,38 @@ plugin.consoleOptions = {
 --      Initialization      --
 ------------------------------
 
+local function filter()
+	if not plugin.db.profile.showwhispers and sentWhispers[arg1] then
+		BigWigs:Debug("Suppressing self-sent whisper.", event, arg1)
+		return true
+	end
+end
+
 function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_Message")
 	self:RegisterEvent("BigWigs_SendTell")
 
 	sentWhispers = {}
-
-	self:Hook("ChatFrame_MessageEventHandler", "WhisperHandler", true)
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", filter)
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER_INFORM", filter)
 end
 
 function plugin:BigWigs_Message(msg, color, noraidsay)
-	if not self.db.profile.broadcast or not msg or noraidsay then
-		return
-	end
+	if not msg or noraidsay or not self.db.profile.broadcast then return end
+
+	local inRaid = UnitInRaid("player")
 	-- In a 5-man group, everyone can use the raid warning channel.
-	if UnitInRaid("player") and not IsRaidLeader() and not IsRaidOfficer() then
+	if inRaid and not IsRaidLeader() and not IsRaidOfficer() then
 		return
-	elseif GetNumPartyMembers() == 0 and not UnitInRaid("player") then
+	elseif GetNumPartyMembers() == 0 and not inRaid then
 		return
 	end
+
+	local o = output:format(msg)
 	if self.db.profile.useraidchannel then
-		if UnitInRaid("player") then
-			SendChatMessage("*** "..msg.." ***", "RAID")
-		else
-			SendChatMessage("*** "..msg.." ***", "PARTY")
-		end
+		SendChatMessage(o, inRaid and "RAID" or "PARTY")
 	else
-		SendChatMessage("*** "..msg.." ***", "RAID_WARNING")
+		SendChatMessage(o, "RAID_WARNING")
 	end
 end
 
@@ -241,13 +242,5 @@ function plugin:BigWigs_SendTell(player, msg)
 	if UnitInRaid("player") and not IsRaidLeader() and not IsRaidOfficer() then return end
 	sentWhispers[msg] = true
 	SendChatMessage(msg, "WHISPER", nil, player)
-end
-
-function plugin:WhisperHandler(event)
-	if not self.db.profile.showwhispers and sentWhispers[arg1] then
-		BigWigs:Debug("Suppressing self-sent whisper.", event, arg1)
-		return
-	end
-	return self.hooks["ChatFrame_MessageEventHandler"](event)
 end
 
