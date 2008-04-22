@@ -204,6 +204,7 @@ function mod:Burn(player, spellID)
 			self:Message(other, "Attention", nil, nil, true)
 		else
 			self:Message(other, "Attention", nil, nil, nil, spellID)
+			self:Whisper(player, L["burn_you"])
 		end
 		self:Bar(other, 60, spellID)
 	end

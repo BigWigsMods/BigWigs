@@ -33,6 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 	conflag = "Conflagration",
 	conflag_desc = "Warn for Conflagration being cast.",
 	conflag_message = "Conflag on %s",
+	conflag_you = "Conflag on YOU!",
 	conflag_bar = "Next Conflag",
 
 	icon = "Raid Icon",
@@ -301,6 +302,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit, _, _, player)
 			self:LocalMessage(L["conflag_message"]:format(player), "Personal", 45333, "Long")
 		else
 			self:Message(L["conflag_message"]:format(player), "Attention", nil, nil, nil, 45333)
+			self:Whisper(player, L["conflag_you"])
 		end
 		self:Bar(L["conflag_bar"], 32, 45333)
 		self:Icon(player, "icon")
