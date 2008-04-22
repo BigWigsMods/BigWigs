@@ -195,9 +195,9 @@ L:RegisterTranslations("deDE", function() return {
 	icon_desc = "Plaziert ein Schlachtzug Symbol auf Spielern auf die Schattennova und Großbrand gewirkt wird.",
 
 	pyro = "Pyrogen",
-	pyro_desc = "Warnt wer Pyrogen bekommt und wer es verliehrt.",
+	pyro_desc = "Warnt wer Pyrogen bekommt und wer es verliert.",
 	pyro_gain = "%s bekommt Pyrogen",
-	pyro_remove = "%s verliehrt Pyrogen",
+	pyro_remove = "%s verliert Pyrogen",
 
 	blow = "Verwirrender Schlag",
 	blow_desc = "Zeigt einen Zeitbalken für Verwirrender Schlag.",
