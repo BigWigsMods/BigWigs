@@ -259,10 +259,6 @@ local plugin = BigWigs:NewModule("Version Query")
 plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.external = true
 
-local function disabled()
-	return not BigWigs:HasModule("Comm")
-end
-
 plugin.consoleCmd = L["Version"]
 plugin.consoleOptions = {
 	type = "group",
@@ -276,14 +272,12 @@ plugin.consoleOptions = {
 			desc = L["Runs a version query on the BigWigs core."],
 			passValue = "BigWigs",
 			func = "QueryVersion",
-			disabled = disabled,
 		},
 		[L["current"]] = {
 			type = "execute",
 			name = L["Current zone"],
 			desc = L["Runs a version query on your current zone."],
 			func = "QueryVersion",
-			disabled = disabled,
 		},
 		[L["zone"]] = {
 			type = "text",
@@ -292,7 +286,6 @@ plugin.consoleOptions = {
 			usage = L["<zone>"],
 			get = false,
 			set = "QueryVersion",
-			disabled = disabled,
 		},
 	}
 }
