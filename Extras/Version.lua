@@ -488,10 +488,6 @@ function plugin:QueryVersion(zone)
 
 	if not tablet then
 		tablet = AceLibrary:HasInstance("Tablet-2.0") and AceLibrary("Tablet-2.0") or nil
-		if not tablet then
-			error("You need a copy of the Tablet-2.0 library to be able to *run* a version check right now. This should be fixed shortly.")
-			return
-		end
 	end
 
 	if type(zone) ~= "string" or zone == "" then zone = GetRealZoneText() end
