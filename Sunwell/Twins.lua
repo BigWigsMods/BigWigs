@@ -65,6 +65,7 @@ L:RegisterTranslations("frFR", function() return {
 	conflag = "Déflagration",
 	conflag_desc = "Préviens quand une Déflagration est incantée.",
 	conflag_message = "Déflagration sur %s",
+	--conflag_you = "Conflag on YOU!",
 	conflag_bar = "Prochaine Déflagration",
 
 	icon = "Icône",
@@ -96,6 +97,7 @@ L:RegisterTranslations("koKR", function() return {
 	conflag = "거대한 불길",
 	conflag_desc = "거대한 불길의 시전에 대해 알립니다.",
 	conflag_message = "%s 거대한 불길",
+	--conflag_you = "Conflag on YOU!",
 	conflag_bar = "다음 거대한 불길",
 
 	icon = "전술 표시",
@@ -128,6 +130,7 @@ L:RegisterTranslations("zhCN", function() return {
 	conflag = "燃烧",--Conflagration
 	conflag_desc = "当施放燃烧时发出警报。",
 	conflag_message = "燃烧：>%s<！",
+	conflag_you = ">你< 燃烧！",
 	conflag_bar = "<下一燃烧>",
 
 	icon = "团队标记",
@@ -159,6 +162,7 @@ L:RegisterTranslations("zhTW", function() return {
 	conflag = "燃燒衝擊",
 	conflag_desc = "當燃燒衝擊施放時警示。",
 	conflag_message = "燃燒衝擊目標：[%s]",
+	--conflag_you = "Conflag on YOU!",
 	conflag_bar = "下一次燃燒衝擊",
 
 	icon = "團隊標記",
@@ -190,6 +194,7 @@ L:RegisterTranslations("deDE", function() return {
 	conflag = "Großbrand",
 	conflag_desc = "Warnt wenn Großbrand gewirkt wird.",
 	conflag_message = "Großbrand auf %s",
+	--conflag_you = "Conflag on YOU!",
 	conflag_bar = "Nächster Großbrand",
 
 	icon = "Schlachtzug Symbol",
