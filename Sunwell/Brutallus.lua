@@ -90,7 +90,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	--engage_trigger = "Ah, more lambs to the slaughter!",
+	engage_trigger = "Ah, mehr Lämmer zum Schlachten!",
 
 	burn = "Brand",
 	burn_desc = "Sagt dir wer von Brand betroffen ist und wann der nächste Brand zu erwarten ist.",
@@ -103,8 +103,8 @@ L:RegisterTranslations("deDE", function() return {
 	burnresist_desc = "Warnt wer Brand weiderstanden hat.",
 	burn_resist = "%s hat Brand wiederstanden",
 
-	meteor = "Meteor Slash",
-	meteor_desc = "Zeigt einen Meteor Slash Zeitbalken an.",
+	meteor = "Meteorschlag",
+	meteor_desc = "Zeigt einen Meteorschlag Zeitbalken an.",
 	meteor_bar = "Nächster Meteor Slash",
 
 	stomp = "Stampfen",

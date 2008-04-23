@@ -302,9 +302,9 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_message = "10% - Wütend!",
 	enrage_trigger = "Sathrovarr treibt Kalecgos in eine wahnsinnige Wut!",
 
-	--strike = "Corrupting Strike",
-	--strike_desc = "Warn who gets Corrupting Strike.",
-	--strike_message = "%s: Corrupting Strike",
+	strike = "Stoß der Verderbnis",
+	strike_desc = "Warnt wer Stoß der Verderbnis bekommt.",
+	strike_message = "%s: Stoß der Verderbnis",
 } end )
 
 ----------------------------------
