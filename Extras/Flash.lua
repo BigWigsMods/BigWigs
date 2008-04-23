@@ -225,9 +225,27 @@ function mod:BigWigs_Message(msg, color)
 				flasher:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
 				flasher:SetBackdropColor(0,0,1,0.55)
 				flasher:SetAllPoints( UIParent)
+				flasher:SetScript("OnShow", function (self)
+					self.elapsed = 0
+					self:SetAlpha(0)
+				end)
+				flasher:SetScript("OnUpdate", function (self, elapsed)
+					elapsed = self.elapsed + elapsed
+					if elapsed >= 0.8 then
+						self:Hide()
+						self:SetAlpha(0)
+						return
+					end
+					local alpha = elapsed % 0.4
+					if elapsed > 0.2 then
+						alpha = 0.4 - alpha
+					end
+					self:SetAlpha(alpha * 5)
+					self.elapsed = elapsed
+				end)
 				flasher:Hide()
 			end
-			UIFrameFlash(BWFlash, 0.2, 0.2, 0.8, false)
+			flasher:Show()
 		end
 
 		if self.db.profile.shake then
