@@ -97,7 +97,7 @@ L:RegisterTranslations("koKR", function() return {
 	conflag = "거대한 불길",
 	conflag_desc = "거대한 불길의 시전에 대해 알립니다.",
 	conflag_message = "%s 거대한 불길",
-	--conflag_you = "Conflag on YOU!",
+	conflag_you = "당신은 거대한 불길!",
 	conflag_bar = "다음 거대한 불길",
 
 	icon = "전술 표시",
