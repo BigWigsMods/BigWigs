@@ -61,11 +61,11 @@ L:RegisterTranslations("frFR", function() return {
 } end)
 
 L:RegisterTranslations("esES", function() return {
-	["Tranq - %s"] = "Tranq - %s",
-	["%s's Tranq failed!"] = "Tranq de %s fallado!",
+	["Tranq - %s"] = "Disparo tranquilizante - %s",
+	["%s's Tranq failed!"] = "¡Disparo tranquilizante de %s fallado!",
 
-	["Options for the tranq module."] = "Opciones para el modulo de tranq.",
-	["Toggle tranq bars on or off."] = "Mostrar barras de tranq.",
+	["Options for the tranq module."] = "Opciones para el módulo de Disparo tranquilizante.",
+	["Toggle tranq bars on or off."] = "Mostrar barras de Disparo tranquilizante.",
 	["Bars"] = "Barras",
 } end)
 
