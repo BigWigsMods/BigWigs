@@ -43,6 +43,33 @@ L:RegisterTranslations("enUS", function() return {
 	["Coilfang Ambusher"] = true,
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_warning = "%s Activado - Se sumerge en ~90seg",
+
+	dive = "Sumergida (Dive)",
+	dive_desc = "Temporizadores para cuando El Rondador de abajo se sumerge.",
+	dive_warning = "Se sumerge en ~%dseg",
+	dive_bar = "~Se sumerge",
+	dive_message = "Se sumerge - Vuelve en 60sec",
+
+	spout = "Chorro (Spout)",
+	spout_desc = "Temporizadores para Chorro, puede no ser del todo preciso.",
+	spout_message = "¡Lanzando Chorro!",
+	spout_warning = "Posible Chorro en ~3seg",
+	spout_bar = "~Chorro",
+
+	whirl = "Giro (Whirl)",
+	whirl_desc = "Temporizadores para Giro.",
+	whirl_bar = "Posible Giro",
+
+	emerge_warning = "Vuelve en %dseg",
+	emerge_message = "Vuelve - Se sumerge en ~90sec",
+	emerge_bar = "~Vuelve a superficie",
+
+	["Coilfang Guardian"] = "Guardián Colmillo Torcido",
+	["Coilfang Ambusher"] = "Emboscadora Colmillo Torcido",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	engage_warning = "%s 전투 시작 - 90초 이내 잠수",
 

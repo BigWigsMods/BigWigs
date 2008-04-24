@@ -29,6 +29,23 @@ L:RegisterTranslations("enUS", function() return {
 	["Fathom-Guard Caribdis"] = true, --priest
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	enrage_trigger = "¡Guardias, atención! Tenemos visita...",
+
+	totem = "Tótem escupefuego (Spitfire Totem)",
+	totem_desc = "Avisar sobre Tótem escupefuego y sobre quién lo lanza.",
+	totem_message1 = "Mareavess: Tótem escupefuego",
+	totem_message2 = "Karathress: Tótem escupefuego",
+
+	heal = "Ola de sanación (Healing Wave)",
+	heal_desc = "Avisar cuando Caribdis lanza Ola de sanación.",
+	heal_message = "¡Caribdis - Ola de sanación!",
+
+	["Fathom-Guard Sharkkis"] = "Guardia de las profundidades Tiburkkis", --hunter
+	["Fathom-Guard Tidalvess"] = "Guardia de las profundidades Mareavess", --shaman
+	["Fathom-Guard Caribdis"] = "Guardia de las profundidades Caribdis", --priest
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	totem = "Feuerspuckendes Totem",
 	totem_desc = "Warnt vor dem Feuerspuckenden Totem und wer es aufstellt.",

@@ -45,6 +45,31 @@ L:RegisterTranslations("enUS", function() return {
 	debuff_warn = "Mark at %s%%!",
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	start_trigger = "¡No puedo permitir que interferáis!",
+
+	mark = "Marca de Hydross",
+	mark_desc = "Mostrar avisos y contadores de Marca de Hydross.",
+
+	stance = "Cambios de Actitud",
+	stance_desc = "Avisar cuando Hydross cambia de actitud. (Corrupto/Purificado)",
+	poison_stance = "¡Hydross - Actitud corrupta!",
+	water_stance = "¡Hydross - Actitud purificada!",
+
+	sludge = "Fango vil (Vile Sludge)",
+	sludge_desc = "Avisar quién tiene Fango vil.",
+	sludge_message = "Fango vil: %s",
+
+	tomb = "Tumba de agua (Water Tomb)",
+	tomb_desc = "Avisar quién tiene Tumba de agua.",
+	tomb_message = "Tumba de agua: %s",
+
+	icon = "Icono para Fango vil",
+	icon_desc = "Poner un icono de banda sobre jugadores afectados por Fango vil. (Requiere derechos de banda)",
+
+	debuff_warn = "¡Marca - %s%%!",
+} end)
+
 L:RegisterTranslations("deDE", function() return {
 	start_trigger = "Ich kann nicht zulassen, dass Ihr Euch einmischt!",
 

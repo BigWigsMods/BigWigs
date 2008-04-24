@@ -72,6 +72,59 @@ L:RegisterTranslations("enUS", function() return {
 	loot_update = "Core on > %s",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	["Tainted Elemental"] = "Elemental máculo",
+
+	engage_trigger1 = "No quería rebajarme y tener contacto con vuestra clase, pero no me dejáis elección...",
+	engage_trigger2 = "¡Os desprecio, desechos de la superficie!",
+	engage_trigger3 = "¡Victoria para Lord Illidan!",
+	engage_trigger4 = "¡Os partiré de cabo a rabo!",
+	engage_trigger5 = "¡Muerte para los intrusos!",
+	engage_message = "Entrando en fase 1",
+
+	phase = "Fases",
+	phase_desc = "Avisar sobre cambios de fase.",
+	phase2_trigger = "¡Ha llegado el momento! ¡Que no quede ni uno en pie!",
+	phase2_soon_message = "Fase 2 en breve",
+	phase2_message = "¡Fase 2 - Entran refuerzos!",
+	phase3_trigger = "Os vendrá bien cubriros.",
+	phase3_message = "¡Fase 3 - Enfurecer en 4min!",
+
+	static = "Carga estática (Static Charge)",
+	static_desc = "Avisar quién tiene Carga estática.",
+	static_charge_message = "¡Carga estática en %s!",
+	static_fade = "Carga estática acaba de desvanecerse.",
+	static_warnyou = "¡Carga estática en TÍ!",
+
+	icon = "Icono",
+	icon_desc = "Poner un icono sobre jugadores afectados por Carga estática y sobre aquellos que despojan núcleos.",
+
+	elemental = "Elementales máculos (Tainted Elemental)",
+	elemental_desc = "Avisar cuando aparecen Elementales máculos durante la fase 2.",
+	elemental_bar = "~Elementales máculos",
+	elemental_soon_message = "Elementales máculos en breve",
+
+	strider = "Zancudos Colmillo Torcido (Coilfang Striders)",
+	strider_desc = "Avisar cuando aparecen Zancudos Colmillo Torcido durante la fase 2.",
+	strider_bar = "~Zancudo",
+	strider_soon_message = "Zancudo Colmillo Torcido en breve",
+
+	naga = "Élite Colmillo Torcido (Coilfang Elite)",
+	naga_desc = "Avisar cuando aparecen Élites Colmillo Torcido durante la fase 2.",
+	naga_bar = "~Élite Naga",
+	naga_soon_message = "Élite Colmillo Torcido en breve",
+
+	barrier = "Caída de Barreras mágicas",
+	barrier_desc = "Avisar cuand caen las Barreras mágicas.",
+	barrier_down_message = "¡Barrera %d/4 caída!",
+	barrier_fades_trigger = "Barrera mágica se desvanece de Lady Vashj.",
+
+	loot = "Núcleos máculos (Tainted Cores)",
+	loot_desc = "Avisar quién despoja Núcleos máculos.",
+	loot_message = "¡%s despoja un Núcleo máculo!",
+	loot_update = "Núcleo en > %s",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	["Tainted Elemental"] = "오염된 정령",
 

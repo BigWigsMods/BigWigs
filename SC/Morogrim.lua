@@ -44,6 +44,35 @@ L:RegisterTranslations("enUS", function() return {
 	globules_bar = "Globules Despawn",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "¡Que las profundidades os arrastren!",
+
+	tidal = "Maremoto (Tidal Wave)",
+	tidal_desc = "Avisar cuando Morogrim lanza Maremoto.",
+	tidal_message = "¡Maremoto!",
+
+	grave = "Sepultura de agua (Watery Grave)",
+	grave_desc = "Avisa quién tiene Sepultura de agua y su duración.",
+	grave_message = "Sepultura de agua: %s",
+	grave_bar = "<Sepultura de agua> ",
+	grave_nextbar = "~Sepultura de agua",
+
+	murloc = "Múrlocs",
+	murloc_desc = "Avisar de Múrlocs entrantes.",
+	murloc_bar = "~Múrlocs",
+	murloc_message = "¡Vienen los Múrlocs!",
+	murloc_soon_message = "Múrlocs en breve",
+	murloc_engaged = "%s Activado, Múrlocs en ~40seg",
+
+	globules = "Glóbulos",
+	globules_desc = "Avisar cuando aparecen glóbulos de agua.",
+	globules_trigger1 = "Pronto acabará.",
+	globules_trigger2 = "¡No os podéis esconder!",
+	globules_message = "¡Glóbulos!",
+	globules_warning = "Glóbulos en breve",
+	globules_bar = "<Glóbulos>",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Die Fluten der Tiefen werden euch verschlingen!",
 

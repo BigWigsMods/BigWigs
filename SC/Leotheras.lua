@@ -54,6 +54,44 @@ L:RegisterTranslations("enUS", function() return {
 	whisper_soon = "~Demons Cooldown",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	enrage_trigger = "¡Al fin acaba mi destierro!",
+
+	whirlwind = "Torbellino (Whirlwind)",
+	whirlwind_desc = "Temporizadores de Torbellino.",
+	whirlwind_gain = "Torbellino durante 12 seg",
+	whirlwind_fade = "Fin Torbellino",
+	whirlwind_bar = "<Torbellino>",
+	whirlwind_bar2 = "~Torbellino",
+	whirlwind_warn = "Posible Torbellino",
+
+	phase = "Fase demonio",
+	phase_desc = "Tiempos estimados para fase demonio.",
+	phase_trigger = "¡Desaparece, elfo pusilánime. ¡Yo mando ahora!",
+	phase_demon = "Fase demonio durante 60 seg",
+	phase_demonsoon = "¡Fase demonio en 5 seg!",
+	phase_normalsoon = "Fase normal en 5 seg",
+	phase_normal = "¡Fase normal!",
+	demon_bar = "<Fase demonio>",
+	demon_nextbar = "~Fase demonio",
+
+	mindcontrol = "Control mental (Mind Control)",
+	mindcontrol_desc = "Avisar qué jugadores están siendo controlados mentalmente.",
+	mindcontrol_warning = "Control mental: %s",
+
+	image = "Imagen",
+	image_desc = "Alertas de división de imagen al 15%.",
+	image_trigger = "¡No... no! ¿Qué has hecho? ¡Yo soy el maestro! ¿Me oyes? ¡Yo... ahggg! No...puedo contenerme.",
+	image_message = "¡15% - Imagen creada!",
+	image_warning = "Imagen en breve",
+
+	whisper = "Silbido insidioso (Insidious Whisper)",
+	whisper_desc = "Avisar quién tiene Silbido insidioso.",
+	whisper_message = "Demonio: %s",
+	whisper_bar = "<Demonios desaparecen>",
+	whisper_soon = "~Demonios",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	enrage_trigger = "드디어, 내가 풀려났도다!",
 
