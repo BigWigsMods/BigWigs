@@ -34,6 +34,24 @@ L:RegisterTranslations("enUS", function() return {
 	humanoid_soon = "Humanoids in 5sec!",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	darkness = "Oscuridad (Darkness)",
+	darkness_desc = "Avisar quién tiene Oscuridad.",
+	darkness_message = "Oscuridad: %s",
+	darkness_next = "~Oscuridad",
+	darkness_soon = "Oscuridad en 5 seg",
+
+	void = "Centinela del vacío (Void Sentinel)",
+	void_desc = "Avisar cuando aparece un centinela del vacío.",
+	void_next = "~Centinela",
+	void_soon = "Centinela en 5 seg",
+
+	humanoid = "Añadidos humanoides",
+	humanoid_desc = "Avisar cuando aparecen los humanoides.",
+	humanoid_next = "~Humanoides",
+	humanoid_soon = "Humanoides en 5 seg",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	darkness = "Ténèbres",
 	darkness_desc = "Préviens quand un joueur subit les effets des Ténèbres.",

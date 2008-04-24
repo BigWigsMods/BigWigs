@@ -39,6 +39,31 @@ L:RegisterTranslations("enUS", function() return {
 	stomp_bar = "Next Stomp",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "¡Ah, más corderos al matadero!",
+
+	burn = "Quemar (Burn)",
+	burn_desc = "Avisar quién recibe Quemar y cuándo es el próximo.",
+	burn_you = "¡Quemar en TÍ!",
+	burn_other = "¡Quemar en %s!",
+	burn_bar = "~Quemar",
+	burn_message = "Quemar en 5 segundos",
+
+	burnresist = "Quemar resistido",
+	burnresist_desc = "Avisar quién resiste Quemar.",
+	burn_resist = "Quemar resistido por %s",
+
+	meteor = "Tajo meteórico (Meteor Slash)",
+	meteor_desc = "Mostrar una barra de tiempo para Tajo meteórico.",
+	meteor_bar = "~Tajo meteórico",
+
+	stomp = "Pisotón (Stomp)",
+	stomp_desc = "Avisar sobre Pisotón y mostrar una barra de tiempo.",
+	stomp_warning = "Pisotón en 5 seg",
+	stomp_message = "Pisotón: %s",
+	stomp_bar = "~Pisotón",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "하, 새끼 양이 잔뜩 몰려오는구나!",
 

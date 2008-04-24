@@ -71,6 +71,44 @@ L:RegisterTranslations("enUS", function() return {
 	warning = "WARNING\n--\nFor Encapsulate scanning to work properly you need to have your Main Tank in the Blizzard Main Tank list!!",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	encaps = "Encapsular (Encapsulate)",
+	encaps_desc = "Avisar quién tiene Encapsular.",
+	encaps_warning = "¡Encapsular en ~5 Seg!",
+	encaps_message = "Encapsular: %s",
+
+	gas = "Nova de gas (Gas Nova)",
+	gas_desc = "Avisar cuando se lanza Nova de gas.",
+	gas_message = "¡Lanzando Nova de gas!",
+	gas_bar = "~Nova de gas",
+
+	vapor = "Vapor demoníaco (Demonic Vapor)",
+	vapor_desc = "Avisar quién tiene Vapor demoníaco.",
+	vapor_message = "Vapor: %s",
+
+	icon = "Icono",
+	icon_desc = "Poner un icono de banda sobre jugadores afectados por Encapsular o Vapor demoníaco. (Requiere derechos de banda)",
+
+	phase = "Fases",
+	phase_desc = "Avisar sobre las fases de suelo y aire.",
+	airphase_trigger = "¡Soy más fuerte que nunca!",
+	takeoff_bar = "Vuela",
+	takeoff_message = "¡Vuela en 5 Seg!",
+	landing_bar = "Aterriza",
+	landing_message = "¡Aterriza en 10 Seg!",
+
+	breath = "Respira hondo (Deep Breath)",
+	breath_desc = "Avisar cuando respira hondo.",
+	breath_nextbar = "~Respira hondo (%d)",
+	breath_warn = "¡Respira hondo (%d)!",
+	
+	dispel = "Resultados de Disipación en masa",
+	dispel_desc = "Si eres un sacerdote, enviará al canal Decir a quién le ha fallado tu Disipación en masa.",
+	dispel_fail = "Disipación en masa falla: ",
+
+	warning = "AVISO\n--\n¡¡Para que funcione la comprobación de Encapsular debes tener a tu tanque principal en la lista original del juego de tanques principales!!",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	cmd = "Teufelsruch",
 

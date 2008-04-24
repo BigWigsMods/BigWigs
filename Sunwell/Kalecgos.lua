@@ -72,6 +72,53 @@ L:RegisterTranslations("enUS", function() return {
 	strike_message = "%s: Corrupting Strike",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "¡Aggh! ¡Ya no seré un esclavo de Malygos! ¡Retadme y seréis destruidos!",
+	wipe_bar = "Reaparición",
+
+	portal = "Portal",
+	portal_desc = "Avisar cuando puede utilizar Explosión espectral.",
+	portal_bar = "Portal (%d)",
+	portal_message = "Posible portal en 5 seg",
+
+	realm = "Reino espectral (Spectral Realm)",
+	realm_desc = "Avisa quién está en el Reino espectral.",
+	realm_message = "Reino espectral: %s (Grupo %d)",
+
+	curse = "Agonía ilimitada (Boundless Agony)",
+	curse_desc = "Avisa quién tiene Maldición de agonía ilimitada.",
+	curse_bar = "Maldición: %s",
+
+	magichealing = "Magia salvaje - Curación",
+	magichealing_desc = "Te avisa cuando haces curaciones aumentadas por Magia salvaje.",
+	magichealing_you = "¡Magia salvaje - Curación aumentada!",
+
+	magiccast = "Magia salvaje - Tiempo lanzamiento",
+	magiccast_desc = "Te avisa cuando un sanador tiene el tiempo de lanzamiento aumentado por Magia salvaje.",
+	magiccast_you = "¡Magia salvaje - Tiempo lanzamiento aumentado en TÍ!",
+	magiccast_other = "¡Magia salvaje - Tiempo lanzamiento aumentado en %s!",
+
+	magichit = "Magia salvaje - Prob. golpe",
+	magichit_desc = "Avisa cuando la probabilidad de golpe de un tanque se ve reducida por Magia salvaje.",
+	magichit_you = "¡Magia salvaje - Prob. golpe reducida en TÍ!",
+	magichit_other = "¡Magia salvaje - Prob. golpe reducida en %s!",
+
+	magicthreat = "Magia salvaje - Amenaza",
+	magicthreat_desc = "Avisa cuando generas más amenaza por Magia salvaje.",
+	magicthreat_you = "¡Magia salvaje - Amenaza generada aumentada!",
+
+	buffet = "Sacudida Arcana (Arcane Buffet)",
+	buffet_desc = "Muestra una barra de tiempo para Sacudida Arcana.",
+
+	enrage_warning = "¡Enfurecer en breve!",
+	enrage_message = "¡10% - Enfurecido!",
+	enrage_trigger = "¡Sathrovarr induce a Kalecgos a un estado de ira enloquecida!",
+
+	strike = "Golpe corruptor (Corrupting Strike)",
+	strike_desc = "Avisa quién tiene Golpe corruptor.",
+	strike_message = "%s: Golpe corruptor",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "으아!! 난 이제 말리고스의 노예가 아니다! 덤벼라, 끝장을 내주마!",
 	wipe_bar = "재생성 시간",

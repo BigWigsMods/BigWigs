@@ -53,6 +53,38 @@ L:RegisterTranslations("enUS", function() return {
 	blades_bar = "Next Blades",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "",
+	wipe_bar = "Reaparición",
+
+	nova = "Nova de las Sombras (Shadow Nova)",
+	nova_desc = "Avisar cuando se empieza a lanzar Nova de las Sombras.",
+	nova_message = "Nova de las Sombras en %s",
+	nova_bar = "~Nova de las Sombras",
+
+	conflag = "Conflagración (Conflagration)",
+	conflag_desc = "Avisar cuando se lanza Conflagración.",
+	conflag_message = "Conflagración en %s",
+	conflag_you = "¡Conflagración en TÍ!",
+	conflag_bar = "~Conflagración",
+
+	icon = "Icono de banda",
+	icon_desc = "Poner un icono de banda sobre los jugadores sobre los que se lanza Nova de las Sombras y/o Conflagración.",
+
+	pyro = "Pirogénica (Pyrogenics)",
+	pyro_desc = "Avisar quien gana y quita Pirogénica.",
+	pyro_gain = "%s gana Pirogénica",
+	pyro_remove = "%s quita Pirogénica",
+
+	blow = "Arremetida desconcertante (Confounding Blow)",
+	blow_desc = "Mostrar una barra de tiempo para Arremetida desconcertante.",
+	blow_bar = "~Arremetida desconcertante",
+
+	blades = "Hojas de las Sombras (Shadow Blades)",
+	blades_desc = "Mostrar una barra de tiempo para Hojas de las Sombras.",
+	blades_bar = "~Hojas de las Sombras",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "",
 	wipe_bar = "Réapparition",
