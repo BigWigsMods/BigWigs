@@ -3,6 +3,7 @@
 ## Title: Big Wigs [|cffeda55fPlugins|r]
 ## Notes: Big Wigs Core Plugins
 ## Notes-frFR: Plugins du noyau de Big Wigs.
+## Notes-esES: Plugins del núcleo de Big Wigs.
 ## Title-zhCN: Big Wigs [|cffeda55f综合设置|r]
 ## Notes-zhCN: Big Wigs 综合设置模块
 ## Title-zhTW: Big Wigs [|cffeda55f附加元件|r]

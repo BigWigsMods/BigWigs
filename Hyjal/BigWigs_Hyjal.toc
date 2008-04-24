@@ -4,6 +4,7 @@
 ## Title-zhCN: Big Wigs [|cffeda55f海加尔山|r]
 ## Notes: Big Wigs Hyjal Modules
 ## Notes-frFR: Modules Big Wigs concernant Hyjal.
+## Notes-esES: Módulos de Big Wigs para Hyjal.
 ## Notes-koKR: Big Wigs 하이잘 경고
 ## Notes-zhCN: Big Wigs 海加尔山模块
 ## Author: Funkydude, Rabbit

@@ -3,6 +3,7 @@
 ## Title: Big Wigs [|cffeda55fZul'Aman|r]
 ## Notes: Big Wigs Zul'Aman Modules
 ## Notes-frFR: Modules Big Wigs concernant Zul'Aman.
+## Notes-esES: Módulos de Big Wigs para Zul'Aman.
 ## Title-zhCN: Big Wigs [|cffeda55f祖阿曼|r]
 ## Notes-zhCN: Big Wigs 祖阿曼模块
 ## Author: Funkydude

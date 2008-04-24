@@ -2,9 +2,11 @@
 
 ## Title: Big Wigs [|cffeda55fSunwell|r]
 ## Title-frFR: Big Wigs [|cffeda55fPuits de soleil|r]
+## Title-esES: Big Wigs [|cffeda55fFuente del Sol|r]
 ## Title-zhCN: Big Wigs [|cffeda55f太阳之井|r]
 ## Notes: Big Wigs Sunwell Modules
 ## Notes-frFR: Modules Big Wigs concernant le Puits de soleil.
+## Notes-esES: Módulos Big Wigs para La Fuente del Sol.
 ## Notes-zhCN: Big Wigs 太阳之井模块
 ## Author: Funkydude
 ## X-Credits: Timewasted, Nevcairiel
