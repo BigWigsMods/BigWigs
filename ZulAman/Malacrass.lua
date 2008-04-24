@@ -177,30 +177,30 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	engage_trigger = "Las sombras caer\195\161n sobre vosotros...",
+	engage_trigger = "Las sombras caerán sobre vosotros...",
 
-	bolts = "Descargas de esp\195\173ritu",
-	bolts_desc = "Avisa cuando Malacrass comienza a canalizar Descargas de esp\195\173ritu.",
-	bolts_message = "\194\161Descargas de esp\195\173ritu!",
-	bolts_warning = "Descargas de esp\195\173ritu en 5 seg!",
-	bolts_nextbar = "Descargas de esp\195\173ritu siguientes",
+	bolts = "Descargas de espíritu (Spirit Bolts)",
+	bolts_desc = "Avisar cuando Malacrass canaliza Descargas de espíritu.",
+	bolts_message = "¡Descargas de espíritu!",
+	bolts_warning = "Descargas de espíritu en 5 seg",
+	bolts_nextbar = "~Descargas de espíritu",
 
-	soul = "Succionar alma",
-	soul_desc = "Avisa quien est\195\161 afectado por Succionar alma.",
-	soul_message = "Succionar: %s",
+	soul = "Succionar alma (Siphon Soul)",
+	soul_desc = "Avisar quién tiene Succionar alma.",
+	soul_message = "Succionar alma: %s",
 
-	totem = "T\195\179tem",
-	totem_desc = "Avisa cuando un T\195\179tem de Nova de Fuego es lanzado.",
-	totem_message = "\194\161T\195\179tem de Nova de Fuego!",
+	totem = "Tótem Nova de Fuego (Fire Nova Totem)",
+	totem_desc = "Avisar cuando lanza Tótem Nova de Fuego.",
+	totem_message = "¡Tótem Nova de Fuego!",
 
-	heal = "Curaci\195\179n",
-	heal_desc = "Avisa cuando Malacrass lanza una curaci\195\179n.",
-	heal_message = "\194\161Lanzando cura!",
+	heal = "Sanación",
+	heal_desc = "Avisar cuando Malacrass lanza una sanación.",
+	heal_message = "¡Lanzando sanación!",
 
-	--consecration = "Consecration",
-	--consecration_desc = "Warn when Consecration is cast.",
-	--consecration_bar = "Consecration (%d)",
-	--consecration_warn = "Casted Consecration!",
+	consecration = "Consagración (Consecration)",
+	consecration_desc = "Avisar cuando se lanza Consagración.",
+	consecration_bar = "Consagración (%d)",
+	consecration_warn = "¡Consagración lanzada!",
 } end )
 
 ----------------------------------

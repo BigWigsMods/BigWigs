@@ -166,32 +166,32 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	engage_trigger = "\194\161Arrodillaos... ante la garra y el colmillo!",
+	engage_trigger = "¡Arrodillaos... ante la garra y el colmillo!",
 
-	totem = "T\195\179tem",
-	totem_desc = "Avisa cuando Halazzi lanza un T\195\179tem de rel\195\161mpagos.",
-	totem_message = "\194\161T\195\179tem de rel\195\161mpagos!",
+	totem = "Tótem de relámpagos (Lightning Totem)",
+	totem_desc = "Avisar cuando Halazzi lanza Tótem de relámpagos.",
+	totem_message = "¡Tótem de relámpagos!",
 
 	phase = "Fases",
-	phase_desc = "Avis los cambios de fase.",
-	phase_spirit = "Lucho con libertad de esp\195\173ritu...",
-	phase_normal = "\194\161Esp\195\173ritu, vuelve a m\195\173!",
-	normal_message = "\194\161Fase Normal!",
-	spirit_message = "\194\161%d%% PV! - Fase Espirit\195\186!",
-	spirit_soon = "\194\161Fase Espirit\195\186 pronto!",
-	spirit_bar = "~Posible Fase Normal",
+	phase_desc = "Avisar sobre cambios de fase.",
+	phase_spirit = "Lucho con libertad de espíritu...",
+	phase_normal = "¡Espíritu, vuelve a mí!",
+	normal_message = "¡Fase normal!",
+	spirit_message = "¡%d%% vida - Fase Espíritu!",
+	spirit_soon = "Fase Espíritu en breve",
+	spirit_bar = "~Fase normal",
 
-	--frenzy = "Frenzy",
-	--frenzy_desc = "Frenzy alert.",
-	--frenzy_trigger = "Halazzi gains Frenzy.",
-	--frenzy_message = "Frenzy!",
+	frenzy = "Frenesí (Frenzy)",
+	frenzy_desc = "Alerta de Frenesí.",
+	frenzy_trigger = "¡%s entra en frenesí asesino!",
+	frenzy_message = "¡Frenesí!",
 
-	--flame = "Flame Shock",
-	--flame_desc = "Warn for players with Flame Shock.",
-	--flame_message = "Flame Shock: %s",
+	flame = "Choque de llamas (Flame Shock)",
+	flame_desc = "Avisar quién tiene Choque de llamas.",
+	flame_message = "Choque de llamas: %s",
 
-	--icon = "Raid Icon",
-	--icon_desc = "Place a Raid Target Icon on the player with Flame Shock. (requires promoted or higher)",
+	icon = "Icono de banda",
+	icon_desc = "Poner un icono de banda sobre jugadores afectados por Choque de llamas. (Requiere derechos de banda)",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

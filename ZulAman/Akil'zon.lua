@@ -123,21 +123,21 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	engage_trigger = "\194\161Yo soy el depredador! Vosotros la presa...",
-	engage_message = "\194\161%s Activado - Tormenta en ~55seg!",
+	engage_trigger = "¡Yo soy el depredador! Vosotros la presa...",
+	engage_message = "¡%s Activado - Tormenta en ~55seg!",
 
-	elec = "Tormenta el\195\169ctrica",
-	elec_desc = "Avisa quien Tormenta el\195\169ctrica.",
-	elec_bar = "~Regeneraci\195\179n de Tormenta",
-	elec_message = "Tormenta en %s!",
-	elec_warning = "\194\161Tormenta pronto!",
+	elec = "Tormenta eléctrica (Electrical Storm)",
+	elec_desc = "Avisa quién tiene Tormenta eléctrica.",
+	elec_bar = "~Tormenta eléctrica",
+	elec_message = "¡Tormenta en %s!",
+	elec_warning = "Tormenta en breve",
 
-	ping = "Ping",
-	ping_desc = "Se\195\177ala tu posici\195\179n actual si sufres Tormenta el\195\169ctrica.",
-	ping_message = "\194\161Tormenta - Se\195\177alando tu posici\195\179n!",
+	ping = "Señalar posición",
+	ping_desc = "Señala tu posición actual si sufres Tormenta eléctrica.",
+	ping_message = "¡Tormenta - Señalando tu posición!",
 
 	icon = "Icono de banda",
-	icon_desc = "Coloca un icono de banda en el jugador conTormenta el\195\169ctrica. (requiere asistente o superior)",
+	icon_desc = "Pone un icono de banda en el jugador con Tormenta eléctrica. (Requiere derechos de banda)",
 } end )
 
 ----------------------------------

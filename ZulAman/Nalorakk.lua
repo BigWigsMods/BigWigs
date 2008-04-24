@@ -121,19 +121,19 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	engage_trigger = "\194\161Morir\195\169is pronto!",
-	engage_message = "\194\161%s Activado - Forma de Oso en 45seg!",
+	engage_trigger = "¡Moriréis pronto!",
+	engage_message = "¡%s Activado - Forma de Oso en 45seg!",
 
 	phase = "Fases",
 	phase_desc = "Avisos para los cambios de fases.",
-	phase_bear = "\194\161Si llamáis a la bestia, vais a recibir más de lo que esperáis!",
-	phase_normal = "\194\161Dejad paso al Nalorakk!",
-	normal_message = "\194\161Fase Normal!",
-	normal_bar = "Siguiente fase de Oso",
+	phase_bear = "¡Si llamáis a la bestia, vais a recibir más de lo que esperáis!",
+	phase_normal = "¡Dejad paso al Nalorakk!",
+	normal_message = "¡Fase Normal!",
+	normal_bar = "~Fase de Oso",
 	normal_soon = "Fase Normal en 10seg",
 	normal_warning = "Fase Normal en 5seg",
-	bear_message = "\194\161Fase de Oso!",
-	bear_bar = "Siguiente Fase Normal",
+	bear_message = "¡Fase de Oso!",
+	bear_bar = "~Fase Normal",
 	bear_soon = "Fase de Oso en 10seg",
 	bear_warning = "Fase de Oso en 5seg",
 } end )
