@@ -140,24 +140,24 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	engage_trigger = "Ah, justo a tiempo. \194\161Los rituales van a empezar!",
+	engage_trigger = "Ah, justo a tiempo. ¡Los rituales van a empezar!",
 
 	sacrifice = "Sacrificio",
 	sacrifice_desc = "Avisa del Sacrificio de los jugadores.",
-	sacrifice_message = "\164\161%s esta siendo sacrificado!",
+	sacrifice_message = "¡%s esta siendo sacrificado!",
 	sacrifice_bar = "Sacrificio: %s",
-	sacrifice_soon = "\194\161Sacrificio Pronto!",
+	sacrifice_soon = "¡Sacrificio Pronto!",
 	sacrifice_soonbar = "~Posible Sacrificio",
 
-	icon = "Icono de Raid",
-	icon_desc = "Pone un icono de raid en el jugador sacrificado (requiere promoted o mayor).",
+	icon = "Icono de banda",
+	icon_desc = "Pone un icono de banda en el jugador sacrificado. (Requiere derechos de banda)",
 
-	weak = "Debilitado",
+	weak = "Debilidad",
 	weak_desc = "Avisa de estado de debilidad.",
-	weak_message = "\194\161Debilitado por ~45seg!",
-	weak_warning1 = "Debilitado finaliza en ~5seg!",
-	weak_warning2 = "\194\161Debilidad finalizado!",
-	weak_bar = "~Debilidad desaparece",
+	weak_message = "¡Debilidad durante ~45seg!",
+	weak_warning1 = "¡Debilidad finaliza en ~5seg!",
+	weak_warning2 = "¡Debilidad finalizada!",
+	weak_bar = "~Debilidad finaliza",
 } end )
 
 ----------------------------------

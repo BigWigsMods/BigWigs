@@ -128,22 +128,22 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("esES", function() return {
-	engage_trigger = "No se tolerar\195\161 tu comportamiento.",
-	engage_message = "Doncella Activa! Arrepentimiento en ~33sec",
+	engage_trigger = "No se tolerará tu comportamiento.",
+	engage_message = "¡Doncella en combate! Arrepentimiento en ~33 seg",
 
-	repentance = "Arrepentimiento",
-	repentance_desc = "Tiempo estimado al Arrepentimiento.",
-	repentance_message = "Pr\195\179ximo Arrepentimiento! en ~33sec",
-	repentance_warning = "Fin del Enfriamiento de Arrepentimiento - Lanzamiento pr\195\179ximo!",
-	repentance_bar = "Arrepentimiento",
-	repentance_nextbar = "Enfriamiento de Arrepentimiento",
+	repentance = "Arrepentimiento (Repentance)",
+	repentance_desc = "Tiempo estimado de Arrepentimiento.",
+	repentance_message = "Sig. Arrepentimiento en ~33 seg",
+	repentance_warning = "¡Arrepentimiento en breve!",
+	repentance_bar = "<Arrepentimiento>",
+	repentance_nextbar = "~Arrepentimiento",
 
-	holyfire = "Fuego Sagrado",
-	holyfire_desc = "Avisa cuando alguien sufre Fuego Sagrado.",
+	holyfire = "Fuego Sagrado (Holy Fire)",
+	holyfire_desc = "Avisar quién tiene Fuego Sagrado.",
 	holyfire_message = "Fuego Sagrado: %s",
 
-	icon = "Icono de Raid",
-	icon_desc = "Pone un icono de raid en el jugador afectado por Fuego Sagrado(requiere promoted o mayor).",
+	icon = "Icono de banda",
+	icon_desc = "Pone un icono de banda sobre jugadores afectados por Fuego Sagrado. (Requiere derechos de banda)",
 } end)
 
 ----------------------------------

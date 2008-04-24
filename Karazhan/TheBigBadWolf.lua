@@ -104,18 +104,18 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	youriding = "Caperucita Roja (Tu)",
+	youriding = "Caperucita Roja (Tú)",
 	youriding_desc = "Avisa cuando eres Caperucita Roja.",
-	riding_youwarn = "Eres Caperucita Roja!",
+	riding_youwarn = "¡Eres Caperucita Roja!",
 
 	elseriding = "Caperucita Roja (Otros)",
 	elseriding_desc = "Avisa cuando otros son Caperucita Roja.",
-	riding_otherwarn = "%s es Caperucita Roja!",
+	riding_otherwarn = "¡%s es Caperucita Roja!",
 
 	riding_bar = "%s Corriendo",
 
-	icon = "Icono de Raid",
-	icon_desc = "Pone un icono de raid en la persoan que es Caperucita Roja (Requiere promoted or mayor).",
+	icon = "Icono de banda",
+	icon_desc = "Pone un icono de banda en la persoan que es Caperucita Roja. (Requiere derechos de banda)",
 } end )
 
 ----------------------------------

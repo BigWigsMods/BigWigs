@@ -46,6 +46,12 @@ L:RegisterTranslations("zhCN", function() return {
 	web_bar = "<希亚其斯之网：%s>",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	web = "Red de Hyakiss (Hyakiss' Web)",
+	web_desc = "Avisar quién tiene Red de Hyakiss.",
+	web_message = "¡%s tiene Red de Hyakiss!",
+	web_bar = "Red de Hyakiss: %s",
+} end )
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

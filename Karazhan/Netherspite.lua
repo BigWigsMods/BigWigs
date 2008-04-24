@@ -132,21 +132,21 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("esES", function() return {
 	phase = "Fases",
-	phase_desc = "Avisa cuando Rencor abisal cambia de fase.",
+	phase_desc = "Avisar cuando Rencor abisal cambia de fase.",
 	phase1_message = "Retirada - Aliento abisal terminado",
-	phase1_bar = "~Posible Retirada",
-	phase1_trigger = "%s grita en retirada, abriendo las puertas al vac\195\173o..",
-	phase2_message = "C\195\179lera - Aliento abisal en breve!",
-	phase2_bar = "~Posible c\195\179lera",
-	phase2_trigger = "%s \194\161Rencor abisal monta en c\195\179lera alimentada por el vac\195\173o!",
+	phase1_bar = "~Retirada",
+	phase1_trigger = "%s grita en retirada, abriendo las puertas al vacío.",
+	phase2_message = "Cólera - ¡Aliento abisal en breve!",
+	phase2_bar = "~Cólera",
+	phase2_trigger = "¡%s monta en cólera alimentada por el vacío!",
 
-	voidzone = "Zonas de vac\195\173o",
-	voidzone_desc = "Avisa de Zonas de vac\195\173o.",
-	voidzone_warn = "\194\161Zona de vac\195\173o (%d)!",
+	voidzone = "Zonas de vacío",
+	voidzone_desc = "Avisa de Zonas de vacío.",
+	voidzone_warn = "¡Zona de vacío (%d)!",
 
-	netherbreath = "Aliento abisal",
+	netherbreath = "Aliento abisal (Netherbreath)",
 	netherbreath_desc = "Avisa de Aliento abisal.",
-	netherbreath_warn = "\194\161Llegada de Aliento abisal!",
+	netherbreath_warn = "¡Aliento abisal!",
 } end )
 
 ----------------------------------

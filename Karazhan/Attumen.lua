@@ -93,16 +93,16 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("esES", function() return {
-	phase = "Fase",
-	phase_desc = "Aviso cuando entra en una nueva Fase.",
-	phase2_trigger = "%s llama a su maestro!",
+	phase = "Fases",
+	phase_desc = "Avisar sobre cambios de fase.",
+	phase2_trigger = "¡%s llama a su maestro!",
 	phase2_message = "Fase 2 - %s & Attumen",
-	phase3_trigger = "Vamos, Medianoche, dispersemos esta muchedumbre insignificante!",
+	phase3_trigger = "¡Ven, Medianoche, vamos a dispersar a estos pusilánimes!",
 	phase3_message = "Fase 3 - %s",
 
-	curse = "Tanques Malditos",
-	curse_desc = "Avisa cuando un guerrero o un druida es afectado por Presencia intangible.",
-	curse_message = "Tanque Maldito - %s",
+	curse = "Presencia intangible (Intangible Presence)",
+	curse_desc = "Avisar cuando un guerrero o un druida tiene Presencia intangible.",
+	curse_message = "Presencia intangible - %s",
 } end)
 
 ----------------------------------

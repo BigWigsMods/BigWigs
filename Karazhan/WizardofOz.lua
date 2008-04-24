@@ -99,16 +99,16 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("esES", function() return {
-	engage_trigger = "^Oh, Tito, tenemos que encontrar la forma de volver a casa!",
+	engage_trigger = "^¡Oh, Tito, solo tenemos que buscar la manera de volver a casa!",
 
-	spawns = "Timers de Activacion",
-	spawns_desc = "Timers para cuando los persoanjes se activan.",
-	spawns_bar = "%s attacks!",
-	spawns_warning = "%s en 5 sec",
+	spawns = "Activación",
+	spawns_desc = "Contadores para cuando los persoanjes se activan.",
+	spawns_bar = "¡%s ataca!",
+	spawns_warning = "¡%s en 5 sec!",
 
-	light = "Cadena de Relampagos",
-	light_desc = "Avisa del casteo de Cadena de Relampagos.",
-	light_message = "Cadena de Relampagos!",
+	light = "Cadena de relámpagos (Chain Lightning)",
+	light_desc = "Avisa del lanzamiento de Cadena de relámpagos.",
+	light_message = "¡Cadena de relámpagos!",
 } end)
 
 ----------------------------------

@@ -166,25 +166,25 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("esES", function() return {
 	phase = "Fases",
 	phase_desc = "Avisa cuando entra en una nueva fase.",
-	phase1_trigger = "Qué demonio sois que os atrevéis a atormentarme de esta guisa?",
+	phase1_trigger = "¿Qué demonio sois que me atormentáis de questa manera?",
 	phase1_message = "Acto I - %s",
-	phase2_trigger = "Qué bien resurge mi consuelo esto!",
+	phase2_trigger = "¿Me provocáis? ¡Mi carga recibiréis pues!",
 	phase2_message = "Acto II - %s",
-	phase3_trigger = "Ven, dulce noche; y devuélveme a mi Romulo!",
+	phase3_trigger = "Adelante, gentil noche, ¡devuélveme a mi Romulo!",
 	phase3_message = "Acto III - Ambos",
 
 	poison = "Veneno",
-	poison_desc = "Avisa del jugador envenenado.",
+	poison_desc = "Avisa sobre jugadores envenenados.",
 	poison_message = "Envenenado: %s",
 
-	heal = "Curacion",
+	heal = "Curación",
 	heal_desc = "Avisa cuando Julianne lanza Afección eterna.",
-	heal_message = "%s Lanzando Curacion!",
+	heal_message = "¡%s lanzando curación!",
 
-	buff = "Alerta de Auto-Buff",
-	buff_desc = "Avisa cuando Romulo y Julianne reciben un self-buff.",
-	buff1_message = "%s gana Arrojo!",
-	buff2_message = "%s gana Devoción.",
+	buff = "Auto-Beneficio",
+	buff_desc = "Avisa cuando Romulo y Julianne reciben activan su propio beneficio.",
+	buff1_message = "¡%s gana Arrojo!",
+	buff2_message = "¡%s gana Devoción!",
 } end)
 
 ----------------------------------

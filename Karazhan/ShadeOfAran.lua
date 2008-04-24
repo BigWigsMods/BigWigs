@@ -190,31 +190,31 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("esES", function() return {
 	adds = "Elementales",
-	adds_desc = "Avisa de la aparaci\195\179n de los elementales de agua.",
-	adds_message = "\194\161Llegada de Elementales!",
+	adds_desc = "Avisa de la aparación de los elementales de agua.",
+	adds_message = "¡Llegada de Elementales!",
 	adds_warning = "Elementales Pronto",
-	adds_bar = "Duraci\195\179n Elementales",
+	adds_bar = "<Elementales>",
 
 	drink = "Beber",
-	drink_desc = "Avisa de cuando comienza a beber Aran.",
-	drink_warning = "Man\195\161 bajo - Beber pronto!",
-	drink_message = "Bebiendo - Polimorfia de \195\161rea!",
-	drink_bar = "Super Pyroblast Incoming",
+	drink_desc = "Avisa de cuando Aran comienza a beber.",
+	drink_warning = "¡Maná bajo - Beber pronto!",
+	drink_message = "¡Bebiendo - Polimorfia de área!",
+	drink_bar = "~Piroexplosión",
 
 	blizzard = "Ventisca",
-	blizzard_desc = "Avisa de cuando ventisca est\195\161 siendo lanzada.",
-	blizzard_message = "\194\161Ventisca!",
+	blizzard_desc = "Avisa de cuando ventisca está siendo lanzada.",
+	blizzard_message = "¡Ventisca!",
 
-	pull = "Pull/Super AE",
-	pull_desc = "Warn for the magnetic pull and Super Arcane Explosion.",
-	pull_message = "Arcane Explosion!",
-	pull_bar = "Deflagraci\195\179n Arcana",
+	pull = "Atracción/Deflagración Arcana",
+	pull_desc = "Avisar de la atracción y la Deflagración Arcana.",
+	pull_message = "¡Deflagración Arcana!",
+	pull_bar = "<Deflagración Arcana>",
 
 	flame = "Corona de llamas",
-	flame_desc = "Avisa de cuando Coronna de llamas est\195\161 siendo lanzada.",
-	flame_warning = "\194\161Lanzando: Corona de llamas!",
-	flame_message = "\194\161Corona de Llamas! %s",
-	flame_bar = "Corona de Llamas",
+	flame_desc = "Avisa de cuando Coronna de llamas está siendo lanzada.",
+	flame_warning = "¡Lanzando: Corona de llamas!",
+	flame_message = "¡Corona de Llamas! %s",
+	flame_bar = "<Corona de Llamas>",
 } end )
 
 ----------------------------------

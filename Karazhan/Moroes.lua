@@ -141,24 +141,24 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("esES", function() return {
-	engage_trigger = "Mm, visitantes inesperados. Hay que hacer preparativos...",
-	engage_message = "%s Activado - Vanish en ~35sec!",
+	engage_trigger = "Mm, visita inesperada. Hay que hacer los preparativos...",
+	engage_message = "%s Activado - Desvanecer en ~35sec!",
 
-	vanish = "Vanish",
-	vanish_desc = "Timers estimados para el Vanish.",
-	vanish_message = "Vanished! Siguiente en ~35sec!",
-	vanish_warning = "Vanish Pronto!",
-	vanish_bar = "~Enfriamiento de Vanish",
+	vanish = "Desvanecer (Vanish)",
+	vanish_desc = "Temporizadores estimados para cuando Moroes se desvanece.",
+	vanish_message = "¡Desvanecer! ¡Siguiente en ~35sec!",
+	vanish_warning = "¡Desvanecer en breve!",
+	vanish_bar = "~Desvanecer",
 
 	garrote = "Garrote",
-	garrote_desc = "Notifica que jugador ha sido afectado por Garrote.",
+	garrote_desc = "Notifica qué jugador ha sido afectado por Garrote.",
 	garrote_message = "Garrote: %s",
 
 	icon = "Icono",
-	icon_desc = "Pone un icono de Raid en el jugador afectado por Garrote(requiere promoted o mas alto).",
+	icon_desc = "Pone un icono de banda en el jugador afectado por Garrote. (Requiere derechos de banda).",
 
-	enrage_message = "Enfurecido!",
-	enrage_warning = "Enfurecimiento Pronto!",
+	enrage_message = "¡Enfurecido!",
+	enrage_warning = "¡Enfurecimiento en breve!",
 } end)
 
 ----------------------------------

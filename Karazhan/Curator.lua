@@ -140,24 +140,24 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	berserk_trigger = "La colecci\195\179n es solo para los invitados.",
+	berserk_trigger = "La colección es solo para los invitados.",
 
-	enrage_message = "\194\161Enfurecido!",
-	enrage_warning = "\194\161Enfurecimiento pronto!",
+	enrage_message = "¡Enfurecimiento!",
+	enrage_warning = "¡Enfurecimiento en breve!",
 
-	weaken = "Debilidad",
-	weaken_desc = "Aviso del estado de debilidad.",
-	weaken_message = "\194\161Evocaci\195\179n - Debilidad durante 20sec!",
-	weaken_bar = "Evocaci\195\179n",
-	weaken_fade_message = "\194\161Evocaci\195\179n Finalizada - Debilidad desaparecida!",
-	weaken_fade_warning = "\194\161Evocaci\195\179n en unos 5sec!",
+	weaken = "Evocación (Evocation)",
+	weaken_desc = "Avisar del estado de debilidad.",
+	weaken_message = "¡Evocación - Debilidad durante 20sec!",
+	weaken_bar = "Evocación",
+	weaken_fade_message = "¡Evocación Finalizada - Debilidad desaparecida!",
+	weaken_fade_warning = "¡Evocación en ~5 seg!",
 
-	weaktime = "Cuenta atras de Debilidad",
-	weaktime_desc = "Barra de cuenta atras hasta la proxima debilidad.",
-	weaktime_message1 = "Evocaci\195\179n en ~10 segundos",
-	weaktime_message2 = "Evocaci\195\179n en ~30 segundos",
-	weaktime_message3 = "Evocaci\195\179n en ~70 segundos",
-	weaktime_bar = "~Enfriamiento de Evocaci\195\179n",
+	weaktime = "Cuenta atrás de Evocación",
+	weaktime_desc = "Barra de cuenta atrás hasta la proxima debilidad.",
+	weaktime_message1 = "Evocación en ~10 segundos",
+	weaktime_message2 = "Evocación en ~30 segundos",
+	weaktime_message3 = "Evocación en ~70 segundos",
+	weaktime_bar = "~Evocación",
 } end )
 
 ----------------------------------
