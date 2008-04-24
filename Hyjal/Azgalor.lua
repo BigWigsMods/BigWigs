@@ -34,6 +34,26 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a Raid Icon on the player afflicted by Doom (requires promoted or higher).",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	doom = "Condena (Doom)",
+	doom_desc = "Avisar sobre Condena.",
+	doom_other = "Condena en %s",
+	doom_you = "¡Condena en TÍ!",
+
+	howl = "Aullido de Azgalor (Howl of Azgalor)",
+	howl_desc = "Avisar de Aullido de Azgalor.",
+	howl_bar = "~Aullido (Silencio)",
+	howl_message = "Silencio de área",
+	howl_warning = "¡Silencio de área en breve!",
+
+	fire = "Lluvia de Fuego",
+	fire_desc = "Avisar cuando te afecta Lluvia de Fuego.",
+	fire_you = "¡Lluvia de Fuego en TÍ!",
+
+	icon = "Icono",
+	icon_desc = "Poner un icono de banda sobre los jugadores afectados por Condena. (Requiere derechos de banda)",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	doom = "Destin funeste",
 	doom_desc = "Préviens quand un joueur subit les effets du Destin funeste.",

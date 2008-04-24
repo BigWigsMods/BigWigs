@@ -89,6 +89,16 @@ L:RegisterTranslations("zhCN", function() return {
 	mark_warn = "5秒后，印记！",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	range = "Comprobar rango",
+	range_desc = "Mostrar la ventana de proximidad cuando estás bajo de maná y tienes la Marca de Kaz'rogal.",
+
+	mark = "Marca de Kaz'rogal (Mark of Kaz'rogal)",
+	mark_desc = "Mostrar una barra de tiempo para Marca de Kaz'rogal.",
+	mark_bar = "~Marca (%d)",
+	mark_warn = "Marca en 5 seg",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

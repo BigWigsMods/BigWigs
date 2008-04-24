@@ -58,6 +58,33 @@ L:RegisterTranslations("enUS", function() return {
 	burstsay_message = "Air Burst on me!",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "Vuestra resistencia es insignificante.",
+
+	grip = "Apretón de la Legión (Grip of the Legion)",
+	grip_desc = "Avisar quién tiene Apretón de la Legión.",
+	grip_you = "¡Apretón de la Legión en TÍ!",
+	grip_other = "¡Apretón en %s!",
+
+	icon = "Icono de banda",
+	icon_desc = "Poner un icono de banda sobre jugadores afectados por Apretón de la Legión. (Requiere derechos de banda)",
+
+	fear = "Miedo (Fear)",
+	fear_desc = "Contadores para Miedo.",
+	fear_message = "Miedo, sig. en ~ 42seg!",
+	fear_bar = "~Miedo",
+	fear_warning = "¡Miedo en breve!",
+
+	burst = "Ráfaga de aire (Air Burst)",
+	burst_desc = "Avisar quién tiene Ráfaga de aire.",
+	burst_other = "Ráfaga de aire en -%s-",
+	burst_you = "¡Ráfaga de aire en TÍ!",
+
+	burstsay = "Decir Ráfaga de aire",
+	burstsay_desc = "Alertar en el canal Decir cuando eres el objetivo de Ráfaga de aire, puede ayudar a compañeros cercanos con bocadillos de chat activos.",
+	burstsay_message = "¡Ráfaga de aire en mí!",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Votre résistance est futile.",
 

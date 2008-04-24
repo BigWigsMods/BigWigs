@@ -25,6 +25,19 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a Raid Target Icon on the player afflicted by Icebolt (requires promoted or higher).",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	decay = "Muerte y descomposición (Death & Decay)",
+	decay_desc = "Avisar sobre Muerte y descomposición en tí.",
+	decay_message = "¡Muerte y descomposición en TÍ!",
+
+	icebolt = "Descarga de hielo (Icebolt)",
+	icebolt_desc = "Avisos de Descarga de hielo.",
+	icebolt_message = "¡Descarga de hielo en %s!",
+
+	icon = "Icono de banda",
+	icon_desc = "Poner un icono de banda sobre los jugadores afectados por Descarga de hielo. (Requiere derechos de banda)",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	decay = "Mort & décomposition sur vous",
 	decay_desc = "Préviens quand la Mort & décomposition est sur vous.",

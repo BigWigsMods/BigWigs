@@ -78,6 +78,48 @@ L:RegisterTranslations("enUS", function() return {
 	["Ghoul"] = true,
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	waves = "Oleadas",
+	waves_desc = "Avisos aproximados para cada oleada.",
+
+	detail = "Avisos detallados",
+	detail_desc = "Mostrar avisos detallados sobre los enemigos que vienen.",
+
+	["~%s spawn"] = "~%s aparece",
+	["~Wave %d spawn"] = "~Oleada %d aparece",
+	["Wave %d incoming!"] = "¡Oleada %d viene!",
+	["Wave %d! %d %s"] = "¡Oleada %d! %d %s", --1 set of mobs
+	["Wave %d! %d %s, %d %s"] = "¡Oleada %d! %d %s, %d %s", --2 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s"] = "¡Oleada %d! %d %s, %d %s, %d %s", --3 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "¡Oleada %d! %d %s, %d %s, %d %s, %d %s", --4 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "¡Oleada %d! %d %s, %d %s, %d %s, %d %s, %d %s", --5 sets of mobs
+	["%s in ~%d sec!"] = "¡%s en ~%d seg!",
+	["Wave %d in ~%d sec!"] = "¡Oleada %d en ~%d seg!",
+
+	["Boss"] = "Jefe",
+	["Thrall"] = "Thrall",
+	["Lady Jaina Proudmoore"] = "Lady Jaina Valiente",
+
+	["My companions and I are with you, Lady Proudmoore."] = "Mis compañeros y yo estamos contigo, Lady Valiente.", -- Rage Winterchill
+	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "Estamos listos para cualquier cosa que Archimonde nos mande, lady Valiente.", -- Anatheron
+	["I am with you, Thrall."] = "Estoy contigo, Thrall.", -- Kaz'Rogal
+	["We have nothing to fear."] = "No tenemos nada que temer.", -- Az'Galor
+
+	["Please remove BigWigs_WaveTimers, it is deprecated."] = "Por favor, elimina BigWigs_WaveTimers, es obsoleto.",
+
+	["Ghouls"] = "Necrófagos",
+	["Crypt Fiends"] = "Malignos de cripta",
+	["Abominations"] = "Abominación",
+	["Necromancers"] = "Nigromantes",
+	["Banshees"] = "Almas en pena",
+	["Gargoyles"] = "Gárgolas",
+	["Frost Wyrm"] = "Vermis de escarcha",
+	["Fel Stalkers"] = "Acechador vil",
+	["Infernals"] = "Infernales",
+
+	["Ghoul"] = "Necrófago",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	waves = "공격 경고",
 	waves_desc = "다음 공격에 대한 접근 경고 메세지를 알립니다.",

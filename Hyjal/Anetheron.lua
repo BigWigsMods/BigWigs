@@ -32,6 +32,25 @@ L:RegisterTranslations("enUS", function() return {
 	swarm_bar = "~Swarm Cooldown",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "¡Sois defensores de un mundo condenado! ¡Huid y quizá prolonguéis vuestras patéticas vidas!",
+
+	inferno = "Averno (Inferno)",
+	inferno_desc = "Contadores aproximados de Averno.",
+	inferno_message = "¡Lanzando Averno en %s!",
+	inferno_you = "¡Lanzando Averno en TÍ!",
+	inferno_warning = "Averno en breve",
+	inferno_bar = "~Averno",
+
+	icon = "Icono de banda",
+	icon_desc = "Poner un icono de banda sobre los jugadores que reciben Averno. (Requiere derechos de banda)",
+
+	swarm = "Enjambre de carroña (Carrion Swarm)",
+	swarm_desc = "Contadores aproximados para Enjambre de carroña.",
+	swarm_message = "¡Enjambre! - Sig. en ~11sec",
+	swarm_bar = "~Enjambre",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Vous défendez un monde condamné ! Fuyez si vous voulez avoir une chance de faire durer vos vies pathétiques !",
 
