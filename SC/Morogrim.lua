@@ -198,24 +198,24 @@ L:RegisterTranslations("zhTW", function() return {
 
 	grave = "水之墓",
 	grave_desc = "當玩家受到水之墓時通知團隊",
-	grave_message = "水之墓：[%s]",
-	grave_bar = "水之墓計時",
-	grave_nextbar = "水之墓冷卻",
+	grave_message = "水之墓: [%s]",
+	grave_bar = "<水之墓計時>",
+	grave_nextbar = "<水之墓冷卻>",
 
 	murloc = "魚人警示",
 	murloc_desc = "魚人來臨時警示",
-	murloc_bar = "魚人冷卻",
-	murloc_message = "魚人出現！",
-	murloc_soon_message = "魚人即將出現，準備 AE！",
-	murloc_engaged = "%s 開戰 - 魚人在 40 秒內出現！",
+	murloc_bar = "<魚人冷卻>",
+	murloc_message = "魚人出現!",
+	murloc_soon_message = "魚人即將出現，準備 AE!",
+	murloc_engaged = "%s 開戰 - 魚人在 40 秒內出現!",
 
 	globules = "水珠警示",
 	globules_desc = "當水珠來臨時警示",
 	globules_trigger1 = "很快，這一切都將結束!",
 	globules_trigger2 = "這裡是無處可躲的!",
-	globules_message = "水珠出現！避開水球！",
-	globules_warning = "水珠即將出現！",
-	globules_bar = "水珠消失",
+	globules_message = "水珠出現!避開水球!",
+	globules_warning = "水珠即將出現!",
+	globules_bar = "<水珠消失>",
 } end )
 
 ----------------------------------

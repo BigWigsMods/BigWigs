@@ -73,10 +73,10 @@ L:RegisterTranslations("zhTW", function() return {
 	range = "距離檢查",
 	range_desc = "當你低量法力且受到卡茲洛加的印記時顯示距離框",
 
-	--mark = "Mark of Kaz'rogal",
-	--mark_desc = "Show a Mark of Kaz'rogal timer bar.",
-	--mark_bar = "Next Mark (%d)",
-	--mark_warn = "Mark in 5 sec!",
+	mark = "卡茲洛加印記",
+	mark_desc = "顯示卡茲洛加印記計時條",
+	mark_bar = "<下一次印記: %d>",
+	mark_warn = "約 5 秒後，施放印記!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

@@ -139,20 +139,20 @@ L:RegisterTranslations("zhTW", function() return {
 	start_trigger = "我要復仇﹗",
 
 	shadow = "死亡之影",
-	shadow_desc = "當誰中了死亡之影將告訴你",
-	shadow_other = "死亡之影：[%s]",
+	shadow_desc = "警報誰中了死亡之影",
+	shadow_other = "死亡之影: [%s]",
 	shadow_you = "你 中了死亡之影!",
 
 	ghost = "鬼魂",
 	ghost_desc = "鬼魂計時器",
-	ghost_bar = "鬼魂：[%s]",
+	ghost_bar = "鬼魂: [%s]",
 
 	icon = "團隊標記",
 	icon_desc = "給中了死亡之影的玩家打上團隊標記",
 
-	--crush = "Crushing Shadows",
-	--crush_desc = "Warn who gets crushing shadows.",
-	--crush_warn = "Crushed: %s",
+	crush = "暗影魄力",
+	crush_desc = "警報誰中了暗影魄力",
+	crush_warn = "暗影魄力: [%s]",
 } end )
 
 ----------------------------------

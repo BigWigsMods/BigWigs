@@ -232,16 +232,16 @@ L:RegisterTranslations("zhTW", function() return {
 
 	phase = "階段警告",
 	phase_desc = "當階段轉換時警告",
-	phase1_message = "第一階段 - 50 秒內分身！",
-	phase2_warning = "即將進入第二階段！",
+	phase1_message = "第一階段 - 50 秒內分身!",
+	phase2_warning = "即將進入第二階段!",
 	phase2_trigger = "夠了!現在我要呼喚宇宙中失衡的能量。",
-	phase2_message = "20% - 第二階段！",
+	phase2_message = "20% - 第二階段!",
 
 	wrath = "星術師之怒施放",
 	wrath_desc = "警報隊友受到星術師之怒。",
 	wrath_fade = "星術師之怒效果從你身上消失了。",
-	wrath_other = "星術師之怒：[%s]",
-	wrath_you = "你中了星術師之怒！快跑！",
+	wrath_other = "星術師之怒: [%s]",
+	wrath_you = "你中了星術師之怒!快跑!",
 
 	whisper = "發送密語",
 	whisper_desc = "發送密語給受到星術師之怒的玩家（需要權限）",
@@ -250,16 +250,16 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "當隊友受到星術師之怒時設置標記（需要權限）",
 
 	split = "分身警告",
-	split_desc = "當分身與小兵出現時警示。",
+	split_desc = "當分身與小兵出現時警示",
 	split_trigger1 = "我會粉碎你那偉大的夢想!",
 	split_trigger2 = "我的實力遠勝於你!",
-	split_bar = "下一次分身",
-	split_warning = "7 秒內分身來臨！",
+	split_bar = "<下一次分身>",
+	split_warning = "7 秒內分身來臨!",
 
-	agent_warning = "分身！ - 6 秒內密探出現！",
+	agent_warning = "分身! - 6 秒內密探出現!",
 	agent_bar = "密探計時",
-	priest_warning = "5 秒內牧師、星術師出現！",
-	priest_bar = "牧師、星術師計時",
+	priest_warning = "5 秒內牧師、星術師出現!",
+	priest_bar = "<牧師, 星術師計時>",
 } end )
 
 ----------------------------------

@@ -205,22 +205,22 @@ L:RegisterTranslations("zhTW", function() return {
 
 	throw = "嚴重擲傷",
 	throw_desc = "警告誰受到了嚴重擲傷.",
-	throw_message = "嚴重擲傷：[%s]",
+	throw_message = "嚴重擲傷: [%s]",
 
 	icon = "標記圖示",
 	icon_desc = "為被嚴重擲傷的玩家設置團隊標記（需要權限）",
 
 	paralyze = "慢性麻痹",
 	paralyze_desc = "警示慢性麻痺及隨之而來的癱瘓效果。",
-	paralyze_warning = "慢性麻痺 - 5 秒內癱瘓！",
-	paralyze_message = "癱瘓！",
-	paralyze_bar = "慢性麻痺計時",
-	paralyze_warnbar = "下一次慢性麻痺",
-	paralyze_soon = "5 秒內慢性麻痺！",
+	paralyze_warning = "慢性麻痺 - 5 秒內癱瘓!",
+	paralyze_message = "癱瘓!",
+	paralyze_bar = "<慢性麻痺計時>",
+	paralyze_warnbar = "<下一次慢性麻痺>",
+	paralyze_soon = "5 秒內慢性麻痺!",
 
 	claw = "利爪之怒",
 	claw_desc = "警告誰受到利爪之怒",
-	claw_message = "利爪之怒：[%s]",
+	claw_message = "利爪之怒: [%s]",
 } end )
 
 L:RegisterTranslations("esES", function() return {

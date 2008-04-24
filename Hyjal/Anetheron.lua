@@ -116,7 +116,7 @@ L:RegisterTranslations("zhTW", function() return {
 	inferno_message = "地獄火: [%s]",
 	inferno_you = "你中了地獄火!",
 	inferno_warning = "地獄火即將到來!",
-	inferno_bar = "~地獄火 Cooldown",
+	inferno_bar = "<地獄火冷卻>",
 
 	icon = "團隊標記",
 	icon_desc = "在受到地獄火的隊友頭上標記 (需要權限)",
@@ -124,7 +124,7 @@ L:RegisterTranslations("zhTW", function() return {
 	swarm = "腐肉成群",
 	swarm_desc = "腐肉成群冷卻計時器",
 	swarm_message = "腐肉成群! - 11 秒後下一次",
-	swarm_bar = "~腐肉成群冷卻",
+	swarm_bar = "<腐肉成群冷卻>",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

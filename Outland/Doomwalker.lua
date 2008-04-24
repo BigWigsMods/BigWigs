@@ -135,26 +135,26 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "別在繼續下去。你將會被消除的。",
-	engage_message = "與厄運行者進入戰鬥，30 秒後發動地震！",
+	engage_message = "與厄運行者進入戰鬥，30 秒後發動地震!",
 
 	overrun = "超越",
 	overrun_desc = "當厄運行者發動 超越 技能時發出警報",
 	overrun_trigger1 = "啟用最大速度。",
 	overrun_trigger2 = "軌道鎖定。",
-	overrun_message = "發動超越！",
-	overrun_soon_message = "即將發動超越！",
-	overrun_bar = "超越冷卻",
+	overrun_message = "發動超越!",
+	overrun_soon_message = "即將發動超越!",
+	overrun_bar = "<超越冷卻>",
 
 	earthquake = "地震術",
 	earthquake_desc = "當厄運行者發動地震術時發出警報",
-	earthquake_message = "地震術！ 70 秒後再次發動！",
-	earthquake_bar = "地震術 冷卻",
+	earthquake_message = "地震術! 70 秒後再次發動!",
+	earthquake_bar = "<地震術冷卻>",
 	earthquake_trigger1 = "構造瓦解開始。",
 	earthquake_trigger2 = "強度設定。卸除。",
 
-	enrage_soon_message = "即將狂怒！",
+	enrage_soon_message = "即將狂怒!",
 	enrage_trigger = "%s變得憤怒了!",
-	enrage_message = "狂怒！",
+	enrage_message = "狂怒!",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

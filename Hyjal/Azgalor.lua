@@ -122,7 +122,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	howl = "亞茲加洛之吼",
 	howl_desc = "亞茲加洛之吼警報",
-	howl_bar = "~亞茲加洛之吼冷卻",
+	howl_bar = "<亞茲加洛之吼冷卻>",
 	howl_message = "群體沉默",
 	howl_warning = "即將發動群體沉默!",
 

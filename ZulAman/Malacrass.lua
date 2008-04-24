@@ -155,12 +155,12 @@ L:RegisterTranslations("zhTW", function() return {
 	bolts = "靈魂箭",
 	bolts_desc = "警告瑪拉克雷斯施放靈魂箭",
 	bolts_message = "靈魂箭即將來臨",
-	bolts_warning = "5 秒後靈魂箭!",
+	bolts_warning = "約 5 秒後靈魂箭!",
 	bolts_nextbar = "下次靈魂箭",
 
 	soul = "虹吸靈魂",
 	soul_desc = "警告誰受到虹吸靈魂",
-	soul_message = "虹吸靈魂：[%s]",
+	soul_message = "虹吸靈魂: [%s]",
 
 	totem = "圖騰",
 	totem_desc = "警告火焰新星圖騰被施放了",
@@ -170,10 +170,10 @@ L:RegisterTranslations("zhTW", function() return {
 	heal_desc = "警告瑪拉克雷斯施放治療",
 	heal_message = "施放治療! - 快中斷",
 
-	--consecration = "Consecration",
-	--consecration_desc = "Warn when Consecration is cast.",
-	--consecration_bar = "Consecration (%d)",
-	--consecration_warn = "Casted Consecration!",
+	consecration = "奉獻",
+	consecration_desc = "當施放奉獻時發出警報",
+	consecration_bar = "<奉獻: %d>",
+	consecration_warn = "已施放奉獻!",
 } end )
 
 L:RegisterTranslations("esES", function() return {

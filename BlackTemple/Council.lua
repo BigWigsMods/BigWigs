@@ -273,7 +273,7 @@ L:RegisterTranslations("zhTW", function() return {
 	engage_trigger1 = "你們要考驗我嗎?",
 	engage_trigger2 = "通用語...多麼粗俗的語言。",
 	engage_trigger3 = "我還有更重要的事情要做……",
-	engage_trigger4 = "Flee, or die!",
+	engage_trigger4 = "不逃走就受死吧!",
 
 	vanish = "消失",
 	vanish_desc = "消失計時條.",
@@ -295,11 +295,11 @@ L:RegisterTranslations("zhTW", function() return {
 
 	poison = "致命毒藥",
 	poison_desc = "當玩家受到致命毒藥時警告",
-	poison_other = "致命毒藥：[%s]",
+	poison_other = "致命毒藥: [%s]",
 	poison_you = "致命毒藥在你身上!",
 
 	icon = "團隊標記",
-	icon_desc = "為中了致命毒藥的隊員打上團隊標記.",
+	icon_desc = "為中了致命毒藥的隊員打上團隊標記 (需要權限)",
 
 	circle = "治療之環",
 	circle_desc = "當瑪蘭黛女士開始施放治療之環時警告",
@@ -307,16 +307,16 @@ L:RegisterTranslations("zhTW", function() return {
 	circle_message = "正在施放治療之環!",
 	circle_heal_message = "被治療了! - 下一次 ~20秒",
 	circle_fail_message = "%s 中斷了! - 下一次 ~12秒",
-	circle_bar = "~治療之環冷卻",
+	circle_bar = "<治療之環冷卻>",
 
 	res = "多重抗性光環",
 	res_desc = "警告當粉碎者高希歐獲得了多重抗性光環的效果。",
 	res_message = "粉碎者高希歐: 多重抗性光環 30 秒!",
 	res_bar = "多重抗性光環",
 
-	--blizzard = "Blizzard on You",
-	--blizzard_desc = "Warn when you are in a Blizzard.",
-	--blizzard_message = "Blizzard on YOU!",
+	blizzard = "暴風雪",
+	blizzard_desc = "當你中了暴風雪時發出警報",
+	blizzard_message = "暴風雪: [你]!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

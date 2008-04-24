@@ -301,8 +301,8 @@ L:RegisterTranslations("zhTW", function() return {
 	["Wave %d! %d %s, %d %s, %d %s"] = "第 %d 波：%d %s、%d %s、%d %s！", --3 sets of mobs
 	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "第 %d 波：%d %s、%d %s、%d %s、%d %s！", --4 sets of mobs
 	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "第 %d 波：%d %s、%d %s、%d %s、%d %s、%d %s！", --5 sets of mobs
-	["%s in ~%d sec!"] = "%s 約 %d 秒後來臨！",
-	["Wave %d in ~%d sec!"] = "第 %d 波約 %d 秒後來臨！",
+	["%s in ~%d sec!"] = "%s 約 %d 秒後來臨!",
+	["Wave %d in ~%d sec!"] = "第 %d 波約 %d 秒後來臨!",
 
 	["Boss"] = "首領",
 	["Thrall"] = "索爾",

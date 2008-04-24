@@ -126,7 +126,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	flame = "火息術",
 	flame_desc = "警告賈納雷施放火息術",
-	flame_message = "火息術：[%s] - 散開",
+	flame_message = "火息術: [%s] - 散開",
 
 	icon = "標記圖示",
 	icon_desc = "為被火息術的玩家設置團隊標記（需要權限）",

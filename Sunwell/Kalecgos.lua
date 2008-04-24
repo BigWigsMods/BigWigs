@@ -265,46 +265,46 @@ L:RegisterTranslations("zhTW", function() return {
 	wipe_bar = "重生計時",
 
 	portal = "傳送門",
-	portal_desc = "當鬼靈衝擊冷卻結束時警示。",
-	portal_bar = "下一次傳送門 (%d)",
-	portal_message = "傳送門於 5 秒內可能出現！",
+	portal_desc = "當鬼靈衝擊冷卻結束時發出警報",
+	portal_bar = "<下一次傳送門 (%d)>",
+	portal_message = "約 5 秒內出現傳送門!",
 
 	realm = "鬼靈國度",
-	realm_desc = "提示你誰進入了鬼靈國度。",
-	realm_message = "鬼靈國度：[%s] - 小隊 %d！",
+	realm_desc = "提示你誰進入了鬼靈國度",
+	realm_message = "鬼靈國度: [%s] - 小隊 %d!",
 
 	curse = "無盡痛苦詛咒",
-	curse_desc = "提示你誰受到了無盡痛苦詛咒。",
-	curse_bar = "無盡痛苦詛咒：[%s]",
+	curse_desc = "提示你誰受到了無盡痛苦詛咒",
+	curse_bar = "<無盡痛苦詛咒: [%s]>",
 
-	magichealing = "野性魔法(治療加成)",
-	magichealing_desc = "當你獲得野性魔法(治療加成)時提示。",
-	magichealing_you = "野性魔法 - 治療效果加成！",
+	magichealing = "野性魔法 (治療加成)",
+	magichealing_desc = "當你獲得野性魔法 (治療加成) 時提示",
+	magichealing_you = "野性魔法 - 治療效果加成!",
 
-	magiccast = "野性魔法(施法時間延長)",
-	magiccast_desc = "當治療職受到野性魔法(施法時間延長)時警示。",
-	magiccast_you = "野性魔法 - 你的施法時間延長！",
-	magiccast_other = "野性魔法 - 施法時間延長：[%s]",
+	magiccast = "野性魔法 (施法時間延長)",
+	magiccast_desc = "當治療職受到野性魔法 (施法時間延長) 時提示",
+	magiccast_you = "野性魔法 - 你的施法時間延長!",
+	magiccast_other = "野性魔法 - 施法時間延長: [%s]",
 
-	magichit = "野性魔法(命中下降)",
-	magichit_desc = "當坦克受到野性魔法(命中下降)時警示。",
-	magichit_you = "野性魔法 - 你的命中率下降！",
-	magichit_other = "野性魔法 - 命中率下降：[%s]",
+	magichit = "野性魔法 (命中下降)",
+	magichit_desc = "當坦克受到野性魔法 (命中下降) 時提示",
+	magichit_you = "野性魔法 - 你的命中率下降!",
+	magichit_other = "野性魔法 - 命中率下降: [%s]",
 
-	magicthreat = "野性魔法(仇恨增加)",
-	magicthreat_desc = "當你獲得野性魔法(仇恨增加)時警示。",
-	magicthreat_you = "野性魔法 - 你的仇恨值增加！",
+	magicthreat = "野性魔法 (仇恨增加)",
+	magicthreat_desc = "當你獲得野性魔法 (仇恨增加) 時提示",
+	magicthreat_you = "野性魔法 - 你的仇恨值增加!",
 
 	buffet = "秘法之擊",
 	buffet_desc = "顯示秘法之擊計時條",
 
-	enrage_warning = "即將狂怒！",
-	enrage_message = "10% - 狂怒狀態！",
+	enrage_warning = "即將狂怒!",
+	enrage_message = "10% - 狂怒狀態!",
 	enrage_trigger = "塞斯諾瓦將卡雷苟斯逼入了瘋狂的暴怒中!",
 
 	strike = "腐蝕之擊",
-	strike_desc = "警示誰受到腐蝕之擊。",
-	strike_message = "腐蝕之擊：[%s]",
+	strike_desc = "警報誰受到腐蝕之擊",
+	strike_message = "腐蝕之擊: [%s]",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

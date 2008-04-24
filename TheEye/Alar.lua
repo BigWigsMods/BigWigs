@@ -104,17 +104,17 @@ L:RegisterTranslations("zhTW", function() return {
 	meteor = "隕石術",
 	meteor_desc = "隕石計時",
 	meteor_warning = "隕石術可能在 5 秒內施放。",
-	meteor_message = "隕石術！- 下一次約 52 秒。",
+	meteor_message = "隕石術!- 下一次約 52 秒。",
 	meteor_nextbar = "下一次隕石術",
 
 	flamepatch = "烈焰助長",
 	flamepatch_desc = "當你受到烈焰助長時警告",
-	flamepatch_message = "烈焰助長：[你]",
+	flamepatch_message = "烈焰助長: [你]",
 
 	armor = "熔化護甲",
 	armor_desc = "當某人受到熔化護甲時提示",
-	armor_other = "熔化護甲：[%s]",
-	armor_you = "熔化護甲：[你]",
+	armor_other = "熔化護甲: [%s]",
+	armor_you = "熔化護甲: [你]",
 
 	icon = "團隊標記",
 	icon_desc = "對受到熔化護甲的目標設置團隊標記（需要權限）",

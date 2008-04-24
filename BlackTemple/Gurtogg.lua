@@ -180,24 +180,24 @@ L:RegisterTranslations("zhTW", function() return {
 	phase_rage_warning = "5 秒後惡魔之怒階段",
 	phase_normal_warning = "5 秒後結束惡魔之怒",
 	phase_normal = "惡魔之怒階段結束",
-	phase_normal_bar = "~即將惡魔之怒階段",
-	phase_rage_bar = "下一個普通階段",
+	phase_normal_bar = "<即將惡魔之怒階段>",
+	phase_rage_bar = "<下一個普通階段>",
 
 	bloodboil = "血液沸騰",
 	bloodboil_desc = "警告並計算血液沸騰.",
-	bloodboil_message = "血液沸騰(%d)",
+	bloodboil_message = "血液沸騰 (%d)",
 
 	rage = "惡魔之怒",
 	rage_desc = "提示誰受到惡魔之怒",
 	rage_you = "你受到惡魔之怒!!",
-	rage_other = "惡魔之怒：[%s]",
+	rage_other = "惡魔之怒: [%s]",
 
 	whisper = "發送密語",
 	whisper_desc = "發送密語給受到惡魔之怒的玩家 (需要權限)",
 
 	acid = "魔化酸液噴吐",
 	acid_desc = "提示誰受到魔化酸液噴吐",
-	acid_message = "魔化酸液噴吐：[%s]",
+	acid_message = "魔化酸液噴吐: [%s]",
 
 	icon = "團隊標記",
 	icon_desc = "放置團隊標記在受到魔化酸液噴吐的隊友頭上 (需要權限)",

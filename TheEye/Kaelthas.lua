@@ -483,47 +483,47 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	engage_trigger = "魔法，能量，我的人民陷入其中不能自拔……自從太陽之井被摧毀之後就是如此。歡迎來到未來。真遺憾，你們無法阻止什麼。沒有人可以阻止我了﹗",
-	engage_message = "第一階段 - 四顧問！",
+	engage_trigger = "能量。力量。我的人民陷入其中不能自拔……自從太陽之井被摧毀之後就顯得更加明顯。歡迎來到未來。真遺憾，你們無法阻止什麼。沒有人可以阻止我了﹗(薩拉斯語)為了人民的正義!",
+	engage_message = "第一階段 - 四顧問!",
 
 	conflag = "燃燒",
-	conflag_desc = "當玩家受到燃燒時警告。",
+	conflag_desc = "當玩家受到燃燒時發出警告",
 	conflag_spell = "燃燒",
-	conflag_message = "燃燒：%s",
+	conflag_message = "燃燒: [%s]",
 
 	gaze = "凝視",
-	gaze_desc = "當目標受到凝視時警示",
+	gaze_desc = "警報誰受到凝視",
 	gaze_trigger = "凝視著([^%s]+)!$",
-	gaze_message = "凝視：[%s] - 快跑！",
-	gaze_bar = "凝視冷卻",
+	gaze_message = "凝視: [%s] - 快跑!",
+	gaze_bar = "<凝視冷卻>",
 	gaze_you = "凝視著你!",
 
 	icon = "團隊標記",
-	icon_desc = "當目標受到凝視時設置骷髏標記",
+	icon_desc = "當目標受到凝視時設置骷髏標記 (需要權限)",
 
 	fear = "恐懼",
 	fear_desc = "低沉咆哮警示",
-	fear_soon_message = "即將恐懼！",
-	fear_message = "恐懼！",
-	fear_bar = "恐懼冷卻",
+	fear_soon_message = "即將恐懼!",
+	fear_message = "恐懼!",
+	fear_bar = "<恐懼冷卻>",
 	fear_spell = "低沉咆哮",
 
 	rebirth = "鳳凰復生",
 	rebirth_desc = "顯示鳳凰復生的計時",
 	rebirth_trigger1 = "(薩拉斯語)以太陽之名!",
 	rebirth_trigger2 = "(薩拉斯語)以太陽之名!",
-	rebirth_warning = "五秒內鳳凰可能復生！",
-	rebirth_bar = "大略復生時間",
+	rebirth_warning = "約 5 秒內鳳凰可能復生!",
+	rebirth_bar = "<估計復生時間>",
 
 	pyro = "炎爆術",
 	pyro_desc = "顯示一個 60 秒的炎爆術計時",
 	pyro_trigger = "開始施放炎爆術",
-	pyro_warning = "五秒內施放炎爆術！",
-	pyro_message = "炎爆術！",
+	pyro_warning = "約 5 秒內施放炎爆術!",
+	pyro_message = "炎爆術!",
 
 	toyall = "遙控玩具",
 	toyall_desc = "當玩家受到遙控玩具影響時警示，僅作用在第二階段，避免洗頻",
-	toyall_message = "遙控玩具：[%s]",
+	toyall_message = "遙控玩具: [%s]",
 
 	phase = "階段警示",
 	phase_desc = "開啟各階段警示",
@@ -540,19 +540,19 @@ L:RegisterTranslations("zhTW", function() return {
 	gravity_trigger2 = "站不住腳了嗎?",
 	gravity_bar = "下一次重力流逝",
 	gravity_message = "重力流逝！",
-	flying_message = "第五階段 - 1 分鐘內重力流逝！",
+	flying_message = "第五階段 - 1 分鐘內重力流逝!",
 
-	weapons_inc_message = "第二階段 - 武器即將出現！",
-	phase3_message = "第三階段 - 顧問群重生！",
-	phase4_message = "第四階段 - 王子來臨！",
-	phase4_bar = "凱爾薩斯來臨",
+	weapons_inc_message = "第二階段 - 武器即將出現!",
+	phase3_message = "第三階段 - 顧問群重生!",
+	phase4_message = "第四階段 - 王子來臨!",
+	phase4_bar = "<凱爾薩斯來臨>",
 
 	mc = "精神控制",
-	mc_desc = "精神控制警示",
-	mc_message = "精神控制：[%s]",
+	mc_desc = "精神控制警報",
+	mc_message = "精神控制: [%s]",
 
 	revive_bar = "顧問重生",
-	revive_warning = "顧問在五秒內活動！Tank、Healer 準備就位！",
+	revive_warning = "顧問在 5 秒內活動! 坦克、治療準備就位!",
 } end )
 
 ----------------------------------

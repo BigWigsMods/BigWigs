@@ -194,27 +194,27 @@ L:RegisterTranslations("zhTW", function() return {
 
 	orbyou = "秘法寶珠瞄準你",
 	orbyou_desc = "當秘法寶珠目標為你時警告",
-	orb_you = "秘法寶珠在你身上！",
+	orb_you = "秘法寶珠在你身上!",
 
 	orbsay = "以 Say 通知秘法寶珠",
-	orbsay_desc = "當秘法寶珠目標為你時，以 Say 通知周圍隊員。",
-	orb_say = "秘法寶珠瞄準我！請避開！",
+	orbsay_desc = "當秘法寶珠目標為你時，以 Say 通知周圍隊員",
+	orb_say = "秘法寶珠瞄準我!請避開!",
 
 	orbother = "秘法寶珠瞄準其他人",
-	orbother_desc = "當秘法寶珠在團員身上時警示。",
-	orb_other = "寶珠目標：[%s]",
+	orbother_desc = "當秘法寶珠在團員身上時警示",
+	orb_other = "寶珠目標: [%s]",
 
 	icon = "團隊標記",
 	icon_desc = "當團員為秘法寶珠目標時，設置團隊標記（需要權限）",
 
 	pounding = "猛擊",
-	pounding_desc = "顯示猛擊計時條。",
-	pounding_nextbar = "猛擊冷卻",
+	pounding_desc = "顯示猛擊計時條",
+	pounding_nextbar = "<猛擊冷卻>",
 
 	knock = "擊退",
-	knock_desc = "擊退冷卻計時條。",
-	knock_bar = "~擊退冷卻計時",
-	--knock_message = "Knock Away: %s",
+	knock_desc = "擊退冷卻計時條",
+	knock_bar = "<擊退冷卻計時>",
+	knock_message = "擊退: [%s]",
 } end )
 
 ----------------------------------

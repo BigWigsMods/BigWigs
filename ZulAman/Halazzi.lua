@@ -150,7 +150,7 @@ L:RegisterTranslations("zhTW", function() return {
 	normal_message = "普通階段!",
 	spirit_message = "%d%% HP! - 靈魂階段!",
 	spirit_soon = "靈魂階段即將來臨!",
-	spirit_bar = "~可能普通階段",
+	spirit_bar = "<可能普通階段>",
 
 	frenzy = "狂亂",
 	frenzy_desc = "狂亂警報",

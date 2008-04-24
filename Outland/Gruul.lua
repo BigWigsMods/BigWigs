@@ -149,14 +149,14 @@ L:RegisterTranslations("zhTW", function() return {
 
 	grow = "成長警告",
 	grow_desc = "計算並當戈魯爾成長時發送警告",
-	grow_message = "成長 : (%d)",
+	grow_message = "成長: (%d)",
 	grow_bar = "成長 (%d)",
 
 	grasp = "破碎警告",
 	grasp_desc = "當戈魯爾施放大地猛擊跟破碎時發送警告並顯示計時條",
 	grasp_message = "大地猛擊 - 10 秒內破碎",
-	grasp_warning = "大地猛擊即將來臨！",
-	grasp_bar = "大地猛擊",
+	grasp_warning = "大地猛擊即將來臨!",
+	grasp_bar = "<大地猛擊>",
 
 	cavein = "塌下警告",
 	cavein_desc = "當你在塌下的範圍時發送警告",
@@ -166,7 +166,7 @@ L:RegisterTranslations("zhTW", function() return {
 	silence_desc = "當戈魯爾施放範圍沉默時發送警告 (迴響)",
 	silence_message = "迴響 - 範圍沉默",
 	silence_warning = "戈魯爾即將施放迴響",
-	silence_bar = "迴響",
+	silence_bar = "<迴響>",
 
 	shatter_message = "破碎",
 } end)

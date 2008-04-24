@@ -102,20 +102,20 @@ L:RegisterTranslations("zhTW", function() return {
 	engage_trigger2 = "所有的凡人都將死亡!",
 
 	enrage_trigger = "%s變得憤怒了!",
-	enrage_warning1 = "與 %s 進入戰鬥！ 50-60 秒後狂怒！",
-	enrage_warning2 = "即將狂怒！",
-	enrage_message = "狂怒狀態 10 秒！",
-	enrage_finished = "狂怒結束！ 50-60 秒後再次狂怒！",
-	enrage_bar = "狂怒",
+	enrage_warning1 = "與 %s 進入戰鬥! 50-60 秒後狂怒!",
+	enrage_warning2 = "即將狂怒!",
+	enrage_message = "狂怒狀態 10 秒!",
+	enrage_finished = "狂怒結束! 50-60 秒後再次狂怒!",
+	enrage_bar = "<狂怒>",
 	enraged_bar = "<已狂怒>",
 
 	mark = "印記",
 	mark_desc = "當你受到卡札克的印記時發出警報",
-	mark_message = "你受到卡札克的印記！",
+	mark_message = "你受到卡札克的印記!",
 
 	twist = "扭曲反射",
 	twist_desc = "當隊友受到扭曲反射時發出警報",
-	twist_message = "扭曲反射：[%s]",
+	twist_message = "扭曲反射: [%s]",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

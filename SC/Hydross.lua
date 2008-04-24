@@ -180,16 +180,16 @@ L:RegisterTranslations("zhTW", function() return {
 
 	stance = "形態改變",
 	stance_desc = "當 不穩定者海卓司 改變型態時發出警報",
-	poison_stance = "海卓司轉為毒型態！",
-	water_stance = "海卓司轉為水狀態！",
+	poison_stance = "海卓司轉為毒型態!",
+	water_stance = "海卓司轉為水狀態!",
 
 	sludge = "混濁污泥",
-	sludge_desc = "當隊友受到混濁污泥時提示。",
-	sludge_message = "混濁污泥：[%s]",
+	sludge_desc = "當隊友受到混濁污泥時提示",
+	sludge_message = "混濁污泥: [%s]",
 
 	tomb = "水之墳",
 	tomb_desc = "通報玩家受到水之墳",
-	tomb_message = "水之墳：[%s]",
+	tomb_message = "水之墳: [%s]",
 
 	icon = "混濁污泥標記",
 	icon_desc = "對受到混濁污泥的目標設置標記（需要權限）",

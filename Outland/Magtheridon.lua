@@ -322,15 +322,15 @@ L:RegisterTranslations("zhTW", function() return {
 	escape_desc = "倒數計時，直到 瑪瑟里頓 獲得自由",
 	escape_trigger1 = "束縛開始變弱",
 	escape_trigger2 = "我……被……釋放了!",
-	escape_warning1 = "與 %s 進入戰鬥 - 2 分鐘後獲得自由！",
-	escape_warning2 = "1 分鐘後獲得自由！",
-	escape_warning3 = "30 秒後獲得自由！",
-	escape_warning4 = "10 秒後獲得自由！",
-	escape_warning5 = "3 秒後獲得自由！",
-	escape_bar = "被釋放...",
-	escape_message = "%s 被釋放了！",
+	escape_warning1 = "與 %s 進入戰鬥 - 2 分鐘後獲得自由!",
+	escape_warning2 = "1 分鐘後獲得自由!",
+	escape_warning3 = "30 秒後獲得自由!",
+	escape_warning4 = "10 秒後獲得自由!",
+	escape_warning5 = "3 秒後獲得自由!",
+	escape_bar = "<被釋放>",
+	escape_message = "%s 被釋放了!",
 
-	abyssal = "燃燒的冥淵火", --智缺迪偷改了名字
+	abyssal = "燃燒的冥淵火",
 	abyssal_desc = "當地獄火導魔師創造燃燒的冥淵火時發出警報",
 	abyssal_message = "燃燒的冥淵火已創造 (%d)",
 
@@ -340,9 +340,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 	nova = "衝擊新星",
 	nova_desc = "衝擊新星計時",
-	nova_ = "衝擊新星!", --！改成!
-	nova_bar = "衝擊新星冷卻",
-	nova_warning = "即將施放衝擊新星！",
+	nova_ = "衝擊新星!",
+	nova_bar = "<衝擊新星冷卻>",
+	nova_warning = "即將施放衝擊新星!",
 	nova_cast = "開始施放衝擊新星!",
 
 	banish = "驅逐",
@@ -350,18 +350,18 @@ L:RegisterTranslations("zhTW", function() return {
 	banish_trigger = "別再來了!別再來了……",
 	banish_message = "驅逐成功 - 衝擊新星巳中斷",
 	banish_over_message = "驅逐效果消失!",
-	banish_bar = "驅逐中",
+	banish_bar = "<驅逐中>",
 
 	exhaust = "關閉心靈耗損計時條",
 	exhaust_desc = "玩家中心靈耗損時計時器",
-	exhaust_bar = "心靈耗損：[%s]",
+	exhaust_bar = "心靈耗損: [%s]",
 
 	debris = "你中了殘骸",
 	debris_desc = "當你中了殘骸時發出警報",
 	debris_message = "你中了殘骸!",
 
 	debrisinc = "殘骸",
-	debrisinc_desc = "當王血量30%時殘骸即將開始警報",
+	debrisinc_desc = "當王血量 30% 時殘骸即將開始警報",
 	debrisinc_trigger = "我不會這麼輕易就被擊敗!讓這座監獄的牆壁震顫……然後崩塌!",
 	debrisinc_message = "30% - 殘骸來臨!",
 	debrisinc_warning = "殘骸即將來臨!",

@@ -111,11 +111,11 @@ L:RegisterTranslations("zhTW", function() return {
 	phase_bear = "你們既然將野獸召喚出來，就將付出更多的代價!",
 	phase_normal = "沒有人可以擋在納羅拉克的面前!",
 	normal_message = "普通型態!",
-	normal_bar = "下一次熊型態",
+	normal_bar = "<下一次熊型態>",
 	normal_soon = "10 秒後普通型態!",
 	normal_warning = "5 秒後普通型態!",
 	bear_message = "熊型態!",
-	bear_bar = "下一次普通型態",
+	bear_bar = "<下一次普通型態>",
 	bear_soon = "10 秒後熊型態!",
 	bear_warning = "5 秒後熊型態!",
 } end )

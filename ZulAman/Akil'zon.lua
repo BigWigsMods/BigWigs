@@ -110,8 +110,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	elec = "電荷風暴",
 	elec_desc = "警告誰受到電荷風暴",
-	elec_bar = "~電荷風暴冷卻",
-	elec_message = "電荷風暴：[%s]",
+	elec_bar = "<電荷風暴冷卻>",
+	elec_message = "電荷風暴: [%s]",
 	elec_warning = "電荷風暴即將來臨!",
 
 	ping = "點擊",

@@ -81,10 +81,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	attraction = "致命的吸引力",
 	attraction_desc = "當玩家中致命的吸引力發出警報",
-	attraction_message = "致命的吸引力：%s",
+	attraction_message = "致命的吸引力: [%s]",
 
 	debuff = "Debuff 計時",
-	debuff_desc = "顯示debuff直到下一個計時",
+	debuff_desc = "顯示 debuff 直到下一個計時",
 
 	enrage_warning = "即將狂怒!",
 	enrage_message = "10% - 狂怒",

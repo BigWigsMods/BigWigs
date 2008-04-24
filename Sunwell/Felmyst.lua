@@ -265,40 +265,40 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	encaps = "封印",
-	encaps_desc = "警示誰受到封印效果。",
-	--encaps_warning = "Encapsulate in ~5 Seconds!",
-	encaps_message = "封印：[%s]",
+	encaps_desc = "隊友受到封印效果時發出警報",
+	encaps_warning = "約 5 秒後! 施放封印!",
+	encaps_message = "封印: [%s]",
 
 	gas = "毒氣新星",
-	gas_desc = "當毒氣新星準備施放時警示。",
-	gas_message = "毒氣新星施放中！",
+	gas_desc = "當毒氣新星準備施放時發出警報",
+	gas_message = "毒氣新星施放中!",
 	gas_bar = "毒氣新星冷卻計時",
 
-	--vapor = "Demonic Vapor",
-	--vapor_desc = "Warn who gets Demonic Vapor.",
-	--vapor_message = "Vapor: %s",
+	vapor = "惡魔煙霧",
+	vapor_desc = "隊友受到惡魔煙霧時發出警報",
+	vapor_message = "惡魔煙霧: [%s]",
 
-	--icon = "Icon",
-	--icon_desc = "Place a Raid Target Icon on players with Encapsulate or Demonic Vapor. (requires promoted or higher)",
+	icon = "團隊標記",
+	icon_desc = "為中了封印或惡魔煙霧的隊友標上團隊標記（需要權限）",
 
-	--phase = "Phases",
-	--phase_desc = "Warn for takeoff and landing phases.",
-	--airphase_trigger = "I am stronger than ever before!",
-	--takeoff_bar = "Takeoff",
-	--takeoff_message = "Taking off in 5 Seconds!",
-	--landing_bar = "Landing",
-	--landing_message = "Landing in 10 Seconds!",
+	phase = "階段警報",
+	phase_desc = "當升空或降落階段時發出警報",
+	airphase_trigger = "",--need combatlog
+	takeoff_bar = "升空",
+	takeoff_message = "約 5 秒後，升空!",
+	landing_bar = "降落",
+	landing_message = "約 10 秒後，降落!",
 
-	--breath = "Deep Breath",
-	--breath_desc = "Deep Breath warnings.",
-	--breath_nextbar = "~Breath Cooldown (%d)",
-	--breath_warn = "Inc Breath (%d)!",
+	breath = "深呼吸",
+	breath_desc = "當施放深呼吸時發出警報",
+	breath_nextbar = "<下次深呼吸: %d>",
+	breath_warn = "深呼吸: >%d<!",
 
-	--dispel = "Mass Dispel Results",
-	--dispel_desc = "If you're a priest, will print in /say who your mass dispel failed on.",
-	--dispel_fail = "Mass Dispel failed: ",
+	dispel = "群體驅魔結果",
+	dispel_desc = "如果你是牧師，將在 /say 提示誰不在群體驅魔範圍內",
+	dispel_fail = "距離過遠: ",
 
-	--warning = "WARNING\n--\nFor Encapsulate scanning to work properly you need to have your Main Tank in the Blizzard Main Tank list!!",
+	warning = "注意\n--\n需要 MT 處於暴風雪預設 MT 名單下封印掃描才能正常使用!",
 } end )
 
 ----------------------------------

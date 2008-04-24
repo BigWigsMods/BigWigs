@@ -156,12 +156,12 @@ L:RegisterTranslations("zhTW", function() return {
 	punch = "熔火之擊",
 	punch_desc = "警報在施放熔火之擊，顯示冷卻條",
 	punch_message = "熔火之擊!",
-	punch_bar = "~可能施放熔火之擊!",
+	punch_bar = "<熔火之擊冷卻>",
 
 	target = "目標",
-	target_desc = "警報在風箏階段誰是主要目標，並在他頭上放團隊標記。",
-	target_message = "被盯上：[%s]",
-	target_you = "被盯上：[你]",
+	target_desc = "警報在風箏階段誰是主要目標，並在他頭上放團隊標記。 (需要權限)",
+	target_message = "被盯上: [%s]",
+	target_you = "被盯上: [你]",
 	target_message_nounit = "新目標!",
 
 	icon = "目標標記",

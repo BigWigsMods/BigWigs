@@ -168,25 +168,25 @@ L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "啊，更多待宰的小羊們!",
 
 	burn = "燃燒",
-	burn_desc = "警示誰中了燃燒及下一次燃燒來臨通知。",
-	burn_you = "你中了燃燒！",
-	burn_other = "燃燒：[%s]",
-	burn_bar = "下一次燃燒",
-	burn_message = "5 秒內燃燒！",
+	burn_desc = "警報誰中了燃燒及下一次燃燒來臨通知",
+	burn_you = "你中了燃燒!",
+	burn_other = "燃燒: [%s]",
+	burn_bar = "<下一次燃燒>",
+	burn_message = "約 5 秒內施放燃燒!",
 
 	burnresist = "燃燒抵抗",
-	burnresist_desc = "警示誰抵抗了燃燒。",
-	burn_resist = "燃燒抵抗：[%s]",
+	burnresist_desc = "警報誰抵抗了燃燒",
+	burn_resist = "燃燒抵抗: [%s]",
 
 	meteor = "隕石斬",
-	meteor_desc = "顯示隕石斬計時條。",
-	meteor_bar = "下一次隕石斬",
+	meteor_desc = "顯示隕石斬計時條",
+	meteor_bar = "<下一次隕石斬>",
 
 	stomp = "踐踏",
-	stomp_desc = "警示踐踏及顯示踐踏計時條。",
-	stomp_warning = "5 秒內踐踏！",
-	stomp_message = "踐踏：[%s]",
-	stomp_bar = "下一次踐踏",
+	stomp_desc = "警報踐踏及顯示踐踏計時條",
+	stomp_warning = "約 5 秒內踐踏!",
+	stomp_message = "踐踏: [%s]",
+	stomp_bar = "<下一次踐踏>",
 } end )
 
 ----------------------------------

@@ -260,7 +260,7 @@ L:RegisterTranslations("zhTW", function() return {
 	heal = "治療警告",
 	heal_desc = "當先知盲眼開始施放治療時發送警告",
 	heal_message = "先知盲眼施放群體治療 - 請中斷",
-	heal_bar = "治療",
+	heal_bar = "<治療>",
 
 	shield = "真言術:盾警告",
 	shield_desc = "當先知盲眼開始施放強效真言術:盾時發送警告",
@@ -269,18 +269,18 @@ L:RegisterTranslations("zhTW", function() return {
 	spellshield = "法術護盾警告",
 	spellshield_desc = "當克羅斯·火手施放法術護盾時發送警告",
 	spellshield_message = "火手施放法術護盾 - 法師偷取！",
-	spellshield_bar = "法術護盾",
+	spellshield_bar = "<法術護盾>",
 
 	summon = "召喚警告",
 	summon_desc = "當召喚者歐莫開始施放召喚野生地獄獵犬時發送警告",
 	summon_message = "野生地獄獵犬要出來咬人嚕",
-	summon_bar = "召喚倒數",
+	summon_bar = "<召喚倒數>",
 
 	whirlwind = "旋風斬警告",
 	whirlwind_desc = "當大君王莫卡爾獲得旋風斬時發送警告",
 	whirlwind_message = "大君王莫卡爾 - 旋風斬 15 秒",
-	whirlwind_bar = "旋風斬",
-	whirlwind_nextbar = "旋風斬倒數",
+	whirlwind_bar = "<旋風斬>",
+	whirlwind_nextbar = "<下一次旋風斬>",
 	whirlwind_warning1 = "進入戰鬥 - 50 秒後施放旋風斬",
 	whirlwind_warning2 = "大君王莫卡爾即將施放旋風斬",
 
@@ -291,7 +291,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	smash = "圓弧斬提示",
 	smash_desc = "顯示圓弧斬倒數計時條",
-	smash_bar = "圓弧斬",
+	smash_bar = "<圓弧斬>",
 } end)
 
 ----------------------------------

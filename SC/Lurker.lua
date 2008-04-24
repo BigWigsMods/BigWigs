@@ -184,23 +184,23 @@ L:RegisterTranslations("zhTW", function() return {
 
 	dive = "潛水",
 	dive_desc = "海底潛伏者下潛計時器",
-	dive_warning = "大約%d秒後下潛!",
-	dive_bar = "~下潛",
+	dive_warning = "大約 %d 秒後下潛!",
+	dive_bar = "<下潛>",
 	dive_message = "潛水! 請就位打小兵 (60秒後王再次出現)",
 
 	spout = "噴射",
-	spout_desc = "噴射計時器, 僅供參考, 不一定準確。",
-	spout_message = "噴射開始！注意閃避！",
-	spout_warning = "約3秒後噴射！",
-	spout_bar = "噴射",
+	spout_desc = "噴射計時器，僅供參考，不一定準確。",
+	spout_message = "噴射開始!注意閃避!",
+	spout_warning = "約 3 秒後噴射!",
+	spout_bar = "<噴射>",
 
 	whirl = "旋風",
 	whirl_desc = "旋風計時器",
-	whirl_bar = "旋風",
+	whirl_bar = "<旋風>",
 
-	emerge_warning = "%d秒後浮現",
-	emerge_message = "浮現 - 近戰請等旋風結束上前 (再約90秒後下潛)",
-	emerge_bar = "浮現",
+	emerge_warning = "%d 秒後浮現",
+	emerge_message = "浮現 - 近戰請等旋風結束上前 (約 90 秒後下潛)",
+	emerge_bar = "<浮現>",
 
 	["Coilfang Guardian"] = "盤牙護衛",
 	["Coilfang Ambusher"] = "盤牙伏擊者",

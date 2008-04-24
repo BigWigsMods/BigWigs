@@ -245,17 +245,17 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	engage_trigger = "等待你們的只有痛苦與折磨﹗",
 
-	enrage_start = "憤怒在 ~47sec",
-	enrage_message = "憤怒 15 秒!",
+	enrage_start = "約 47 秒後憤怒!",
+	enrage_message = "憤怒! 持續 15 秒!",
 	enrage_bar = "<憤怒>",
-	enrage_next = "憤怒結束 - 下一次 ~32秒",
-	enrage_nextbar = "下一次憤怒",
-	enrage_warning = "憤怒在 5 秒內!",
+	enrage_next = "憤怒結束 - 約 32 秒後下一次!",
+	enrage_nextbar = "<下一次憤怒>",
+	enrage_warning = "約 5 秒內憤怒!",
 
 	desire_trigger  = "你可以得到任何你想要的東西……只要付得起代價。",
 	desire_cot = "[惡魔語] Zennshinagas", -- 語言詛咒觸發
 	desire_start = "慾望精華 - 160 秒內沒魔",
-	desire_bar = "沒魔",
+	desire_bar = "<沒魔>",
 	desire_warn = "30 秒內沒魔!",
 
 	runeshield = "符文護盾",
@@ -265,18 +265,18 @@ L:RegisterTranslations("zhTW", function() return {
 	runeshield_warn = "3 秒內符文護盾",
 
 	deaden = "麻木",
-	deaden_desc = "當麻木開始施放時警告",
+	deaden_desc = "當麻木開始施放時警報",
 	deaden_message = "正在施放麻木!",
-	deaden_warn = "5 秒內麻木",
-	deaden_nextbar = "下一次麻木",
+	deaden_warn = "約 5 秒內施放麻木",
+	deaden_nextbar = "<下一次麻木>",
 
 	spite = "惡意",
-	spite_desc = "警告誰有惡意",
-	spite_message = "惡意：[%s]",
+	spite_desc = "警告誰中了惡意",
+	spite_message = "惡意: [%s]",
 
 	scream = "靈魂尖嘯",
 	scream_desc = "顯示靈魂尖嘯冷卻條",
-	scream_bar = "~靈魂尖嘯冷卻",
+	scream_bar = "<靈魂尖嘯冷卻>",
 } end )
 
 ----------------------------------
