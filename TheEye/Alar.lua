@@ -40,6 +40,26 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a Raid Icon on the player with Melt Armor(requires promoted or higher).",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	meteor = "Soltar bomba (Dive Bomb)",
+	meteor_desc = "Temporizadores estimados de Soltar bomba.",
+	meteor_warning = "Posible Soltar bomba en ~5seg",
+	meteor_message = "¡Soltar bomba! Sig. en ~52seg",
+	meteor_nextbar = "~Soltar bomba",
+
+	flamepatch = "Anillo de llamas (Flame Patch) en TÍ",
+	flamepatch_desc = "Avisar sobre Flame Patch en tí.",
+	flamepatch_message = "¡Anillo de llamas en TÍ!",
+
+	armor = "Fundir armadura (Melt Armor)",
+	armor_desc = "Avisar quién tiene Fundir armadura.",
+	armor_other = "Fundir armadura: %s",
+	armor_you = "¡Fundir armadura en TÍ!",
+
+	icon = "Icono de banda",
+	icon_desc = "Poner un icono de banda sobre jugadores afectados por Fundir armadura. (Requiere derechos de banda)",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	meteor = "Bombardement en piqué",
 	meteor_desc = "Délais estimés entre les Bombardements en piqué.",

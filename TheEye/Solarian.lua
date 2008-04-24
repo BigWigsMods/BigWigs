@@ -52,6 +52,41 @@ L:RegisterTranslations("enUS", function() return {
 	priest_bar = "Priests/Solarian",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "¡Tal anu'men no sin'dorei!",
+
+	phase = "Fases",
+	phase_desc = "Avisar sobre cambios de fase.",
+	phase1_message = "Fase 1 - División en ~50seg",
+	phase2_warning = "¡Fase 2 en breve!",
+	phase2_trigger = "^Me FUNDO",
+	phase2_message = "20% - Fase 2",
+
+	wrath = "Cólera de la astromántica (Wrath Debuff)",
+	wrath_desc = "Avisar quién tiene Cólera de la astromántica.",
+	wrath_fade = "Cólera de la astromántica acaba de desvanecerse.",
+	wrath_other = "Cólera en %s",
+	wrath_you = "¡Cólera en TÍ!",
+
+	whisper = "Susurrar",
+	whisper_desc = "Susurrar a jugadores afectados por Cólera de la astromántica. (Requiere derechos de banda)",
+
+	icon = "Icono de banda",
+	icon_desc = "Poner un icono sobre jugadores afectados por Cólera de la astromántica. (Requiere derechos de banda)",
+
+	split = "División",
+	split_desc = "Avisar sobre la división y aparición de añadidos.",
+	split_trigger1 = "¡Aplastaré vuestros delirios de grandeza!",
+	split_trigger2 = "¡Os superamos con creces!",
+	split_bar = "~División",
+	split_warning = "División en ~7 seg",
+
+	agent_warning = "¡División! - Agentes en 6 seg",
+	agent_bar = "Agentes",
+	priest_warning = "Sacerdotes/Solarian en 3 seg",
+	priest_bar = "Sacerdotes/Solarian",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Tal anu'men no sin'dorei!",
 

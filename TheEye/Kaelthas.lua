@@ -106,6 +106,81 @@ L:RegisterTranslations("enUS", function() return {
 	dead_message = "%s dies",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "^Energía. Poder.",
+	engage_message = "Fase 1",
+
+	conflag = "Conflagración (Conflagration)",
+	conflag_desc = "Avisar quién tiene Conflagración.",
+	conflag_spell = "Conflagración",
+	conflag_message = "¡Conflagración en %s!",
+
+	gaze = "Mirada (Gaze)",
+	gaze_desc = "Avisar cuando Thaladred mira a un jugador.",
+	gaze_trigger = "mira a (%S+)!$",
+	gaze_message = "¡Mirada en %s!",
+	gaze_bar = "~Mirada",
+	gaze_you = "¡Mirada en TÍ!",
+
+	icon = "Icono de banda",
+	icon_desc = "Poner un icono de banda sobre jugadores que reciben la mirada de Thaladred.",
+
+	fear = "Miedo (Fear)",
+	fear_desc = "Avisar cuando se lanza Rugido bramante.",
+	fear_soon_message = "¡Miedo en breve!",
+	fear_message = "¡Miedo!",
+	fear_bar = "~Miedo",
+	fear_spell = "Rugido bramante",
+
+	rebirth = "Renacer del Fénix",
+	rebirth_desc = "Temporizadores aproximados para el Renacer del Fénix.",
+	rebirth_trigger1 = "¡Anar'anel belore!",
+	rebirth_trigger2 = "¡Por el poder del Sol!",
+	rebirth_warning = "Posible Renacer en ~5seg",
+	rebirth_bar = "~Posible Renacer",
+
+	pyro = "Piroexplosión (Pyroblast)",
+	pyro_desc = "Mostrar un temporizador de 60 seg. para Piroexplosión.",
+	pyro_trigger = "%s lanza una piroexplosión",
+	pyro_warning = "Piroexplosión en 5seg",
+	pyro_message = "¡Lanzando Piroexplosión!",
+
+	toyall = "Juguete remoto (Remote Toy)",
+	toyall_desc = "Avisar cuando un jugador tiene Juguete remoto. Solo en Fase 2 para prevenir spam.",
+	toyall_message = "Juguete: %s",
+
+	phase = "Fases",
+	phase_desc = "Avisar sobre las distintas fases del encuentro.",
+	thaladred_inc_trigger = "¡Veamos cómo aguantan vuestros nervios contra el Ensombrecedor, Thaladred!",
+	sanguinar_inc_trigger = "Habéis sobrevivido a algunos de mis mejores consejeros... pero nadie puede resistir el poder del Martillo de Sangre. ¡He aquí Lord Sanguinar!",
+	capernian_inc_trigger = "Capernian se encargará de que vuestra visita sea breve.",
+	telonicus_inc_trigger = "Bien hecho. Parecéis dignos de probar vuestras habilidades con mi maestro ingeniero Telonicus.",
+	weapons_inc_trigger = "Como veis, dispongo de un amplio arsenal...",
+	phase3_trigger = "Quizás os subestimé. Sería injusto que os enfrentarais a los cuatro consejeros al mismo tiempo, pero... nunca se le ha brindado un trato justo a mi gente. Así que os devuelvo el favor.",
+	phase4_trigger = "Desafortunadamente hay veces en las que tienes que hacer las cosas con tus propias manos. ¡Balamore shanal!",
+
+	flying_trigger = "¡No he llegado hasta aquí para que me detengáis! ¡El futuro que he planeado no se pondrá en peligro! ¡Vais a probar el verdadero poder!",
+	gravity_trigger1 = "Veamos cómo os sienta tener el mundo al revés.",
+	gravity_trigger2 = "Hay que andar con pies de plomo.",
+	gravity_bar = "~Gravedad cero",
+	gravity_message = "¡Gravedad cero!",
+	flying_message = "Fase 5 - Gravedad cero en 1min",
+
+	weapons_inc_message = "¡Fase 2 - Armas!",
+	phase3_message = "¡Fase 3 - Consejeros y Armas!",
+	phase4_message = "¡Fase 4 - Kael'thas!",
+	phase4_bar = "Kael'thas entra",
+
+	mc = "Control mental (Mind Control)",
+	mc_desc = "Avisar quién tiene Control mental.",
+	mc_message = "Control mental: %s",
+
+	revive_bar = "Añadidos revividos",
+	revive_warning = "¡Añadidos reviven en 5seg!",
+
+	dead_message = "%s muere",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "^나의 백성은",
 	engage_message = "1 단계",

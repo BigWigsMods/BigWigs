@@ -49,6 +49,34 @@ L:RegisterTranslations("enUS", function() return {
 	knock_message = "Knock Away: %s",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "¡Alerta! Estáis marcados para exterminación.",
+
+	orbyou = "Orbe Arcano en tí",
+	orbyou_desc = "Avisar cuando tienes Orbe Arcano.",
+	orb_you = "¡Orbe en TÍ!",
+
+	orbsay = "Orbe Arcano - Decir",
+	orbsay_desc = "Avisar en el canal Decir cuando eres el objetivo de un Orbe Arcano, puede ayudar a jugadores cercanos con bocadillos de chat activos.",
+	orb_say = "¡Orbe en MÍ!",
+
+	orbother = "Orbe Arcano en otros",
+	orbother_desc = "Avisar sobre Orbe Arcano en otros.",
+	orb_other = "Orbe(%s)",
+
+	icon = "Icono de banda",
+	icon_desc = "Poner un icono de banda sobre jugadores objetivo de Orbe Arcano. (Requiere derechos de banda)",
+
+	pounding = "Aporreo (Pounding)",
+	pounding_desc = "Mostrar barras de tiempo para Aporreo.",
+	pounding_nextbar = "~Aporreo",
+
+	knock = "Empujar (Knock Away)",
+	knock_desc = "Mostrar una barra de tiempo para Empujar.",
+	knock_bar = "~Empujar",
+	knock_message = "Empujar: %s",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Alarm! Eliminierung eingeleitet!",
 
