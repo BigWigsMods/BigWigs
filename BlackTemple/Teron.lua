@@ -35,6 +35,26 @@ L:RegisterTranslations("enUS", function() return {
 	crush_warn = "Crushed: %s",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	start_trigger = "¡La venganza es mía!",
+
+	shadow = "Sombra de muerte (Shadow of Death)",
+	shadow_desc = "Avisar quién tiene Sombra de muerte.",
+	shadow_other = "Sombra de muerte: ¡%s!",
+	shadow_you = "¡Tienes Sombra de muerte!",
+
+	ghost = "Fantasma",
+	ghost_desc = "Temporizadores para Fantasma.",
+	ghost_bar = "Fantasma: %s",
+
+	icon = "Icono de banda",
+	icon_desc = "Poner un icono de banda sobre jugadores con Sombra de muerte.",
+
+	crush = "Sombras aplastantes (Crushing Shadows)",
+	crush_desc = "Avisar quién tiene Sombras aplastantes.",
+	crush_warn = "Sombras aplastantes: %s",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	start_trigger = "Die Rache ist mein!",
 

@@ -48,6 +48,20 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_message = "10% - Enraged",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "Y bien... ¿negocios o placer?",
+
+	attraction = "Atracción fatal (Fatal Attraction)",
+	attraction_desc = "Avisar quién tiene Atracción fatal.",
+	attraction_message = "Atracción: %s",
+
+	debuff = "Contadores de perjuicios",
+	debuff_desc = "Mostrar el perjuicio actual y el tiempo hasta el siguiente.",
+
+	enrage_warning = "¡Enfurecer en breve!",
+	enrage_message = "10% - Se enfurece",
+} end )
+
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "是办正事还是找乐子呢？",
 

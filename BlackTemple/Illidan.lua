@@ -90,6 +90,74 @@ L:RegisterTranslations("enUS", function() return {
 	illi_start = "Akama. Your duplicity is hardly surprising. I should have slaughtered you and your malformed brethren long ago.",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	berserk_trigger = "¡NO estáis preparados!",
+
+	parasite = "Maligno de las Sombras parasitario (Parasitic Shadowfiend)",
+	parasite_desc = "Avisar quién tiene Maligno de las Sombras parasitario.",
+	parasite_you = "¡Tienes un parasitario!",
+	parasite_other = "¡%s tiene un parasitario!",
+
+	icon = "Icono de banda",
+	icon_desc = "Poner un icono de banda sobre jugadores con Malignos de las Sombras parasitarios.",
+
+	barrage = "Tromba oscura (Dark Barrage)",
+	barrage_desc = "Avisar quién tiene Tromba oscura.",
+	barrage_message = "¡%s tiene Tromba oscura!",
+	barrage_warn = "¡Tromba oscura en breve!",
+	barrage_warn_bar = "~Tromba oscura",
+	barrage_bar = "Tromba oscura: %s",
+
+	eyeblast = "Explosión ocular (Eye Blast)",
+	eyeblast_desc = "Avisar cuando se lanza Explosión ocular.",
+	eyeblast_trigger = "¡Mirad a los ojos del Traidor!",
+	eyeblast_message = "¡Explosión ocular!",
+
+	shear = "Cortar (Shear)",
+	shear_desc = "Avisar quién tiene Cortar.",
+	shear_message = "¡Cortar en %s!",
+	shear_bar = "Cortar: %s",
+
+	flame = "Llamas agonizantes (Agonizing Flames)",
+	flame_desc = "Avisar quién tiene Llamas agonizantes.",
+	flame_message = "¡%s tiene Llamas agonizantes!",
+
+	demons = "Demonios de las Sombras (Shadow Demons)",
+	demons_desc = "Avisar cuando Illidan invoca demonios de las Sombras.",
+	demons_message = "¡Demonios de las Sombras!",
+	demons_warn = "¡Demonios en breve!",
+
+	phase = "Fases",
+	phase_desc = "Avisar cuando Illidan cambia de fase.",
+	phase2_soon_message = "Fase 2 en breve",
+	phase2_message = "¡Fase 2 - Hojas de Azzinoth!",
+	phase3_message = "¡Fase 3!",
+	demon_phase_trigger = "¡Observad el poder...del demonio interior!",
+	demon_phase_message = "¡Forma demoníaca!",
+	demon_bar = "~Fase normal",
+	demon_warning = "¡Forma demoníaca termina en ~ 5 seg!",
+	normal_bar = "~Fase demoníaca",
+	normal_warning = "¡Posible fase demoníaca en ~5 seg!",
+	phase4_trigger = "¿Esto es todo, mortales? ¿Es esta toda la furia qué podéis reunir?",
+	phase4_soon_message = "Fase 4 en breve",
+	phase4_message = "¡Fase 4 - Maiev entra!",
+
+	burst = "Ráfaga de llamas (Flame Burst)",
+	burst_desc = "Avisa cuando Illidan lanza Ráfaga de llamas",
+	burst_message = "¡Ráfaga de llamas!",
+	burst_cooldown_bar = "~Ráfaga de llamas",
+	burst_cooldown_warn = "¡Ráfaga de llamas en breve!",
+	burst_warn = "¡Ráfaga de llamas en 5 seg!",
+
+	enrage_trigger = "¡Sentid el odio de diez mil años!",
+	enrage_message = "¡Se enfurece!",
+
+	["Flame of Azzinoth"] = "Llama de Azzinoth",
+
+	--very first yell to start engage timer
+	illi_start = "Akama. Tu hipocresía no me sorprende. Debí acabar contigo y con tus malogrados hermanos hace tiempo.",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	berserk_trigger = "Vous n'êtes pas prêts !",
 

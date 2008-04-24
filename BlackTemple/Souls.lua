@@ -57,6 +57,43 @@ L:RegisterTranslations("enUS", function() return {
 	scream_bar = "~Soul Scream Cooldown",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "¡Solo os esperan dolor y sufrimiento!",
+
+	enrage_start = "Enfurecer en ~47 seg",
+	enrage_message = "¡Enfurecido durante 15 seg!",
+	enrage_bar = "<Enfurecido>",
+	enrage_next = "Fin Enfurecer - Sig. en ~32 seg",
+	enrage_nextbar = "Siguiente Enfurecer",
+	enrage_warning = "¡Enfurecer en 5 seg!",
+
+	desire_trigger  = "Puedes tener todo lo que desees... pagando su precio.",
+	desire_cot = "Shi shi rikk rukadare shi tichar kar x gular ", --Curse of Tongues trigger
+	desire_start = "Esencia de Deseo - Sin maná en 160 seg",
+	desire_bar = "Sin maná",
+	desire_warn = "¡Sin maná en 30 seg!",
+
+	runeshield = "Escudo de runa (Rune Shield)",
+	runeshield_desc = "Contadores para saber cuándo Esencia de Deseo ganará Escudo de runa.",
+	runeshield_message = "¡Escudo de runa!",
+	runeshield_nextbar = "~Escudo de runa",
+	runeshield_warn = "Escudo de runa en ~3 seg",
+
+	deaden = "Embotado (Deaden)",
+	deaden_desc = "Avisar cuando se va a lanzar Embotado.",
+	deaden_message = "¡Lanzando Embotado!",
+	deaden_warn = "Embotado en ~5 seg.",
+	deaden_nextbar = "~Embotado.",
+
+	spite = "Maldad (Spite)",
+	spite_desc = "Avisar quién tiene Maldad.",
+	spite_message = "Maldad en %s",
+
+	scream = "Alarido del alma (Soul Scream)",
+	scream_desc = "Mostrar una barra de reutilización de Alarido del alma.",
+	scream_bar = "~Alarido del alma",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "너희를 기다리는 건 고통과 슬픔뿐이야!",
 

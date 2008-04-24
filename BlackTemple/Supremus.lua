@@ -43,6 +43,31 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a Raid Target Icon on the player being chased(requires promoted or higher).",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	phase = "Fases",
+	phase_desc = "Avisar sobre cambios de fase.",
+	normal_phase_message = "¡Fase de tanqueo!",
+	normal_phase_trigger = "¡Supremus golpea el suelo enfadado!",
+	kite_phase_message = "¡%s, escápate!",
+	kite_phase_trigger = "El suelo comienza a abrirse.",
+	next_phase_bar = "~Siguiente fase",
+	next_phase_message = "Cambio de fase en 10 seg",
+
+	punch = "Puñetazo de arrabio (Molten Punch)",
+	punch_desc = "Avisar cuando lanza Puñetazo de arrabio y mostrar una barra de reutilización.",
+	punch_message = "¡Puñetazo de arrabio!",
+	punch_bar = "~Puñetazo de arrabio",
+
+	target = "Objetivo",
+	target_desc = "Avisar a quién selecciona durante la fase de persecución y poner un icono sobre su cabeza.",
+	target_message = "¡Persiguiendo a %s!",
+	target_you = "¡Te está persiguiendo a TÍ!",
+	target_message_nounit = "¡Nuevo objetivo!",
+
+	icon = "Icono de banda",
+	icon_desc = "Poner un icono sobre el jugador que está siendo perseguido. (Requiere derechos de banda).",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	phase = "Phasen",
 	phase_desc = "Warnung wenn Supremus zwischen Tank und Kitephase wechselt.",

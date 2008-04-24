@@ -69,6 +69,56 @@ L:RegisterTranslations("enUS", function() return {
 	blizzard_message = "Blizzard on YOU!",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger1 = "¿Deseáis ponerme a prueba?",
+	engage_trigger2 = "¡Lengua común... qué lenguaje tan ordinario! ¡Bandal!",
+	engage_trigger3 = "Tengo cosas mejores que hacer...",
+	engage_trigger4 = "¡Huid o morid!",
+
+	vanish = "Esfumarse (Vanish)",
+	vanish_desc = "Contadores estimados para Esfumarse.",
+	vanish_message = "Veras: ¡Esfumarse! Vuelve en ~30seg",
+	vanish_warning = "Esfumarse finalizado - ¡%s ha vuelto!",
+	vanish_bar = "Veras entra en sigilo",
+
+	immune = "Aviso Inmunidad",
+	immune_desc = "Avisar cuando Malande se vuelve inmune a hechizos y ataques cuerpo a cuerpo.",
+	immune_message = "Malande: ¡%s Inmune durante 15 seg!",
+	immune_bar = "¡%s Inmune!",
+
+	spell = "Hechizo",
+	melee = "Cuerpo a cuerpo",
+
+	shield = "Escudo reflectante (Reflective Shield)",
+	shield_desc = "Avisar cuando Malande gana Escudo reflectante.",
+	shield_message = "¡Escudo reflectante en Malande!",
+
+	poison = "Veneno mortal (Deadly Poison)",
+	poison_desc = "Avisar Veneno mortal sobre jugadores.",
+	poison_other = "¡%s tiene Veneno mortal!",
+	poison_you = "¡Veneno mortal en TI!",
+
+	icon = "Icono de banda",
+	icon_desc = "Poner icono de banda en jugadores con Veneno mortal.",
+
+	circle = "Círculo de sanación (Circle of Healing)",
+	circle_desc = "Avisar cuando Malande empiece a lanzar Círculo de sanación.",
+	circle_trigger = "Lady Malande empieza a lanzar Círculo de sanación.",
+	circle_message = "¡Lanzando Círculo de sanación!",
+	circle_heal_message = "¡Se ha curado! - Prox. en ~20seg",
+	circle_fail_message = "¡%s Interrumpido! - Prox. en ~12seg",
+	circle_bar = "~Círculo de sanación",
+
+	res = "Aura de Resistencia cromática (Chromatic Resistance Aura)",
+	res_desc = "Avisar cuando Gathios el Despedazador gana Aura de Resistencia cromática.",
+	res_message = "Gathios: ¡Resistencia durante 30 seg!",
+	res_bar = "Aura de Resistencia cromática",
+
+	blizzard = "Ventisca (Blizzard)",
+	blizzard_desc = "Avisar cuando estás en una Ventisca.",
+	blizzard_message = "¡Ventisca en TI!",
+} end )
+
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger1 = "Vous voulez me tester ?",
 	engage_trigger2 = "Allons donc... quelle grossièreté. Bandal !", -- à vérifier

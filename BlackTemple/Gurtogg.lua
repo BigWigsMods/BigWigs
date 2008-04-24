@@ -48,6 +48,37 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a Raid Icon on who Fel-Acid Breath and Fel Rage is being cast on (requires promoted or higher).",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "La Horda...os aplastará",
+
+	phase = "Contadores de fase",
+	phase_desc = "Contadores para cambio entre fase normal y fase de Ira vil (Fel Rage).",
+	phase_rage_warning = "Fase Ira vil en ~5 seg",
+	phase_normal_warning = "Fase Ira vil acaba en ~5 seg",
+	phase_normal = "Fase Ira vil finalizada",
+	phase_normal_bar = "~Fase Ira vil",
+	phase_rage_bar = "~Fase normal",
+
+	bloodboil = "Sangre Hirviente (Bloodboil)",
+	bloodboil_desc = "Avisos y contadores para Sangre Hirviente.",
+	bloodboil_message = "Sangre Hirviente(%d)",
+
+	rage = "Ira vil (Fel Rage)",
+	rage_desc = "Avisar quién tiene Ira vil.",
+	rage_you = "¡¡Tienes Ira vil!!",
+	rage_other = "¡%s tiene Ira vil!",
+
+	whisper = "Susurrar",
+	whisper_desc = "Susurrar a jugadores con Ira vil (requiere derechos de banda).",
+
+	acid = "Aliento de ácido vil (Fel-Acid Breath)",
+	acid_desc = "Avisar sobre quién se va a lanzar Aliento de ácido vil.",
+	acid_message = "Lanzando Aliento de ácido vil en: %s",
+
+	icon = "Icono de banda",
+	icon_desc = "Poner un icono de banda sobre los que van a recibir Aliento de ácido vil o Ira vil (requiere derechos de banda).",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "호드가... 박살내주마.",
 

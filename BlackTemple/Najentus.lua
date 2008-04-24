@@ -37,6 +37,28 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Put an icon on players with Impaling Spine.",
 } end )
 
+L:RegisterTranslations("esES", function() return {
+	start_trigger = "¡Moriréis en el nombre de Lady Vashj!",
+
+	spine = "Espinazo empalador (Impaling Spine)",
+	spine_desc = "Avisar quién tiene Espinazo empalador.",
+	spine_message = "¡Espinazo empalador en %s!",
+
+	spinesay = "Decir Espinazo",
+	spinesay_desc = "Escribe en el canal 'decir' cuando tienes un Espinazo, puede ayudar a compañeros cercanos con bocadillos de chat activados.",
+	spinesay_message = "¡Tengo Espinazo!",
+
+	shield = "Escudo de marea (Tidal Shield)",
+	shield_desc = "Contadores para saber cuándo Naj'entus ganará Escudo de marea.",
+	shield_nextbar = "~Escudo de marea",
+	shield_warn = "¡Escudo de marea!",
+	shield_soon_warn = "Escudo de marea en ~10 seg",
+	shield_fade = "¡Fin Escudo de marea!",
+
+	icon = "Icono",
+	icon_desc = "Poner un icono sobre los jugadores con Espinazo empalador.",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	start_trigger = "Im Namen Lady Vashjs werdet Ihr sterben!",
 
