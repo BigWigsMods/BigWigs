@@ -59,6 +59,46 @@ L:RegisterTranslations("enUS", function() return {
 	smash_bar = "~Arcing Smash",
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "¡Los Gronn son el auténtico poder de Terrallende!",
+
+	heal = "Rezo de sanación (Prayer of Healing)",
+	heal_desc = "Avisar cuando Ciego el Vidente empieza a lanzar una curación.",
+	heal_message = "¡Ciego lanzando Rezo de sanación!",
+	heal_bar = "Rezo de sanación",
+
+	shield = "Escudo (Shield)",
+	shield_desc = "Avisar cuando Ciego el Vidente gana Palabra de poder superior: escudo.",
+	shield_message = "¡Escudo en Ciego el Vidente!",
+
+	spellshield = "Escudo contra hechizos (Spell Shield)",
+	spellshield_desc = "Avisar cuando Krosh Manofuego gana Escudo contra hechizos.",
+	spellshield_message = "¡Escudo hechizos en Krosh!",
+	spellshield_bar = "Escudo hechizos",
+
+	summon = "Invocar a manáfago salvaje",
+	summon_desc = "Avisar cuando Olm el Invocador empieza a lanzar Invocar a manáfago salvaje.",
+	summon_message = "¡Invocando manáfago!",
+	summon_bar = "~Manáfago",
+
+	whirlwind = "Torbellino (Whirlwind)",
+	whirlwind_desc = "Avisar cuando Maulgar gana Torbellino.",
+	whirlwind_message = "¡Maulgar - Torbellino durante 15seg!",
+	whirlwind_bar = "<Torbellino>",
+	whirlwind_nextbar = "~Torbellino",
+	whirlwind_warning1 = "¡Maulgar Activado - Torbellino en ~50seg!",
+	whirlwind_warning2 = "Torbellino en breve",
+
+	flurry = "Aluvión (Flurry)",
+	flurry_desc = "Avisar cuando Maulgar gana Aluvión.",
+	flurry_message = "¡50% - Aluvión!",
+	flurry_warning = "Aluvión en breve",
+
+	smash = "Machaque arqueado (Arcing Smash)",
+	smash_desc = "Mostrar una barra para el tiempo estimado de Machaque arqueado.",
+	smash_bar = "~Machaque arqueado",
+} end)
+
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Les gronns sont la seule vraie puissance de l'Outreterre !",
 

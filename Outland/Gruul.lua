@@ -200,31 +200,31 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 L:RegisterTranslations("esES", function() return {
-	engage_trigger = "Venid… y morid.",
-	engage_message = "%s Activado!",
+	engage_trigger = "Venid... y morid.",
+	engage_message = "¡%s Activado!",
 
-	grow = "Crecimiento",
+	grow = "Crecimiento (Grow)",
 	grow_desc = "Cuenta y avisa de los crecimientos de Gruul",
 	grow_message = "Crece: (%d)",
-	grow_bar = "Crecimiento (%d)",
+	grow_bar = "~Crecimiento (%d)",
 
-	grasp = "Rujido",
-	grasp_desc = "Rujidos avisos y timers.",
-	grasp_message = "Patadon al suelo - Congelacion  en ~10sec!",
-	grasp_warning = "Patadon al suelo pronto",
-	grasp_bar = "~Cooldown de Patadon al suelo",
+	grasp = "Embate en el suelo (Ground Slam)",
+	grasp_desc = "Avisos de Embate en el suelo y trizar (Shatter).",
+	grasp_message = "¡Embate en el suelo! - Trizar en ~10seg",
+	grasp_warning = "Posible Embate",
+	grasp_bar = "~Embate",
 
-	cavein = "Cueva en ti",
-	cavein_desc = "Avisa de la caida de la cueva en ti.",
-	cavein_message = "Sepultado!",
+	cavein = "Sepultar (Cave In)",
+	cavein_desc = "Avisa cuando Gruul utiliza Sepultar.",
+	cavein_message = "¡Sepultar!",
 
-	silence = "Silencio",
-	silence_desc = "Avisa cuando Gruul castea silencio (Reverberacion).",
-	silence_message = "AOE Silencio",
-	silence_warning = "AOE Silencio pronto!",
-	silence_bar = "~Silence Cooldown",
+	silence = "Reverberación (Silencio área)",
+	silence_desc = "Avisa cuando Gruul lanza silencio de área. (Reverberación)",
+	silence_message = "¡Reverberación - Silencio de área!",
+	silence_warning = "Posible Reverberación",
+	silence_bar = "~Reverberación",
 
-	shatter_message = "Petrificacion!",
+	shatter_message = "Trizar",
 } end)
 
 ----------------------------------

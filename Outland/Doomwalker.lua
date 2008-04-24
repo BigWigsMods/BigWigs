@@ -38,6 +38,30 @@ L:RegisterTranslations("enUS", function() return {
 	enrage_message = "Enrage!",
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger = "No continuéis. Seréis eliminados.",
+	engage_message = "¡Caminante del Destino en combate, Terremoto en ~30 seg!",
+
+	overrun = "Infestar (Overrun)",
+	overrun_desc = "Avisar cuando Caminante del Destino utiliza Infestar.",
+	overrun_trigger1 = "Velocidad máxima.",
+	overrun_trigger2 = "Trayectoria fijada.",
+	overrun_message = "¡Infestar!",
+	overrun_soon_message = "Infestar en breve",
+	overrun_bar = "~Infestar",
+
+	earthquake = "Terremoto (Earthquake)",
+	earthquake_desc = "Avisar cuando Caminante del Destino utiliza Terremoto.",
+	earthquake_message = "¡Terremoto! ¡Sig. en ~70 seg!",
+	earthquake_bar = "~Terremoto",
+	earthquake_trigger1 = "Iniciando perturbación tectónica.",
+	earthquake_trigger2 = "Magnitud ajustada. Liberar.",
+
+	enrage_soon_message = "¡Enfurecer en breve!",
+	enrage_trigger = "%s se enfurece.",
+	enrage_message = "¡Enfurecimiento!",
+} end)
+
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Cessez toute activité. Vous allez être éliminés.",
 	engage_message = "Marche-funeste engagé, Séisme dans ~30 sec. !",

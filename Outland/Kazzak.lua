@@ -34,6 +34,27 @@ L:RegisterTranslations("enUS", function() return {
 	twist_message = "Twisted Reflection: %s",
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	engage_trigger1 = "¡La Legión lo conquistará todo!",
+	engage_trigger2 = "¡Todo mortal perecerá!",
+
+	enrage_trigger = "%s se enfurece.",
+	enrage_warning1 = "%s Activado - Enfurecer en 50-60seg",
+	enrage_warning2 = "¡Enfurecer en breve!",
+	enrage_message = "¡Efurecido durante 10seg!",
+	enrage_finished = "Fin enfurecer - Próx. en 50-60seg",
+	enrage_bar = "~Enfurecer",
+	enraged_bar = "<Enfurecido>",
+
+	mark = "Marca de Kazzak (Mark)",
+	mark_desc = "Avisar sobre Marca de Kazzak en tí.",
+	mark_message = "Marca de Kazzak en TÍ",
+
+	twist = "Reflejo retorcido (Twisted Reflection)",
+	twist_desc = "Avisar quién tiene Reflejo retorcido.",
+	twist_message = "Reflejo retorcido: %s",
+} end)
+
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger1 = "La Légion envahira l'univers !",
 	engage_trigger2 = "Que les mortels périssent tous !",

@@ -67,6 +67,56 @@ L:RegisterTranslations("enUS", function() return {
 	debrisinc_warning = "Debris Soon!",
 } end)
 
+L:RegisterTranslations("esES", function() return {
+	escape = "Libreación",
+	escape_desc = "Cuenta atrás hasta la liberación de Magtheridon..",
+	escape_trigger1 = "¡Las cuerdas de %%s empiezan a aflojarse!",
+	escape_trigger2 = "¡He... sido... liberado!",
+	escape_warning1 = "¡%s Activado - Liberado en 2min!",
+	escape_warning2 = "¡Liberado en 1min!",
+	escape_warning3 = "¡Liberado en 30sec!",
+	escape_warning4 = "¡Liberado en 10sec!",
+	escape_warning5 = "¡Liberado en 3sec!",
+	escape_bar = "Liberado en...",
+	escape_message = "¡%s Liberado!",
+
+	abyssal = "Abisal ardiente (Burning Abyssal)",
+	abyssal_desc = "Avisar cuando se crea un Abisal ardiente.",
+	abyssal_message = "Abisal ardiente creado (%d)",
+
+	heal = "Curación",
+	heal_desc = "Avisar cuando Canalizador Fuego Infernal empieza a curar.",
+	heal_message = "¡Curando!",
+
+	nova = "Nova explosiva (Blast Nova)",
+	nova_desc = "Temporizadores estimados de Nova explosiva.",
+	nova_ = "Nova explosiva!", -- The start exclamation symbol '¡' is missing because this message is used as a trigger, must be left in esES without the symbol. Whon't work otherwise.
+	nova_bar = "~Nova explosiva",
+	nova_warning = "Posible Nova explosiva",
+	nova_cast = "¡Lanzando Nova!",
+
+	banish = "Desterrar (Banish)",
+	banish_desc = "Avisar cuando destierras a Magtheridon.",
+	banish_trigger = "¡No... otra vez, no!",
+	banish_message = "Desterrado por ~10seg",
+	banish_over_message = "¡Desterrar se desvanece!",
+	banish_bar = "Desterrado",
+
+	exhaust = "Extenuación mental (Mind Exhaustion)",
+	exhaust_desc = "Temporizadores para Extenuación mental en jugadores.",
+	exhaust_bar = "[%s] Extenuación mental",
+
+	debris = "Escombros en tí (Debris)",
+	debris_desc = "Avisar sobre Escombros en tí.",
+	debris_message = "¡Escombros en TÍ!",
+
+	debrisinc = "Escombros (Debris)",
+	debrisinc_desc = "Avisar sobre Escombros al 30%.",
+	debrisinc_trigger = "¡No me dejaré encerrar tan fácilmente! ¡Que tiemblen las paredes de esta prisión... y se derrumben!",
+	debrisinc_message = "¡30% - Escombros!",
+	debrisinc_warning = "Escombros en breve",
+} end)
+
 L:RegisterTranslations("deDE", function() return {
 	escape = "Ausbruch",
 	escape_desc = "Countdown bis Magtheridon ausbricht",
