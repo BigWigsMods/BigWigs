@@ -118,20 +118,20 @@ commonWords:RegisterTranslations("frFR", function() return {
 } end )
 
 commonWords:RegisterTranslations("esES", function() return {
-	you = "Tu",
-	are = "estas",
+	you = "Tú",
+	are = "estás",
 
-	enrage_start = "%s Activado - Furor en %dmin",
+	enrage_start = "%s Iniciado - Enfurecimiento en %d min",
 	enrage_end = "%s Enfurecido",
 	enrage_min = "Enfurecimiento en %d min",
-	enrage_sec = "Enfurecimiento en %d sec",
-	enrage = "Enfurecimiento",
+	enrage_sec = "Enfurecimiento en %d seg",
+	enrage = "Enfurecer",
 
-	--berserk_start = "%s Engaged - Berserk in %d min",
-	--berserk_end = "%s goes Berserk",
-	--berserk_min = "Berserk in %d min",
-	--berserk_sec = "Berserk in %d sec",
-	--berserk = "Berserk",
+	berserk_start = "%s Iniciado - Rabia en %d min",
+	berserk_end = "%s entra en Rabia",
+	berserk_min = "Rabia en %d min",
+	berserk_sec = "Rabia en %d seg",
+	berserk = "Rabia",
 } end)
 
 function BigWigs.modulePrototype:OnInitialize()

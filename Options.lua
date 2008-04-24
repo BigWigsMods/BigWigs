@@ -97,16 +97,16 @@ L:RegisterTranslations("deDE", function() return {
 } end)
 
 L:RegisterTranslations("esES", function() return {
-	["|cff00ff00Module running|r"] = "|cff00ff00Modulo activo|r",
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55fClic|r para resetear los modulos activos. |cffeda55fAlt+Clic|r para desactivarlos. |cffeda55fCtrl-Alt+Clic|r para desactivar por completo Big Wigs.",
+	["|cff00ff00Module running|r"] = "|cff00ff00Módulo activo|r",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55fClic|r para reiniciar los módulos activos.|n|cffeda55fAlt+Clic|r para desactivarlos.|n|cffeda55fCtrl-Alt+Clic|r para desactivar por completo BigWigs.|n",
 	["|cffeda55fClick|r to enable."] = "|cffeda55fClic|r para activar.",
-	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Clic|r para abrir la ventana de configuracion.",
-	["Big Wigs is currently disabled."] = "Big Wigs esta desactivado.",
-	["Active boss modules:"] = "Modulos de boss activos :",
-	["All running modules have been reset."] = "Todos los modulos activos han sido reseteados.",
-	["All running modules have been disabled."] = "Todos los modulos activos han sido desactivados.",
-	["Menu"] = "Menu",
-	["Menu options."] = "Opciones del menu.",
+	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Clic|r para abrir la ventana de configuración.",
+	["Big Wigs is currently disabled."] = "Big Wigs está desactivado.",
+	["Active boss modules:"] = "Módulos de jefe activos :",
+	["All running modules have been reset."] = "Todos los módulos activos han sido reiniciados.",
+	["All running modules have been disabled."] = "Todos los módulos activos han sido desactivados.",
+	["Menu"] = "Menú",
+	["Menu options."] = "Opciones del menú.",
 } end)
 
 ----------------------------

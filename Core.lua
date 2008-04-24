@@ -238,37 +238,39 @@ L:RegisterTranslations("zhTW", function() return {
 } end)
 
 L:RegisterTranslations("esES", function() return {
-	["%s mod enabled"] = "Modulo %s activado",
-	["%s has been defeated"] = "%s Ha sido derrotado",     -- "<boss> has been defeated"
-	["%s have been defeated"] = "%s Han sido derrotados",    -- "<bosses> have been defeated"
+	["%s mod enabled"] = "Módulo %s activado",
+	["%s has been defeated"] = "%s ha sido derrotado",     -- "<boss> has been defeated"
+	["%s have been defeated"] = "%s han sido derrotados",    -- "<bosses> have been defeated"
 
-	["Debug enabled, output routed to %s."] = "Depuracion activa, salida redirigida a %s.",
-	["Debug disabled."] = "Depuracion desactivado.",
+	["Debug enabled, output routed to %s."] = "Depuración activa, salida redirigida a %s.",
+	["Debug disabled."] = "Depuración desactivada.",
 
 	-- AceConsole strings
-	["Bosses"] = "Boss",
-	["Options for bosses in %s."] = "Opciones relacionadas con el boss %s.", -- "Options for bosses in <zone>"
+	["Bosses"] = "Jefes",
+	["Options for bosses in %s."] = "Opciones para jefes de %s.", -- "Options for bosses in <zone>"
 	["Options for %s (r%d)."] = "Opciones para %s (r%d).",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "Plugins",
+	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Los plugins administran las características de BigWigs sobre cómo mostrar mensajes, barras de tiempo y otras características esenciales.",
 	["Extras"] = "Extras",
+	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "Extras son utilidades y plugins de terceros. BigWigs puede funcionar con o sin ellos.",
 	["Active"] = "Activo",
-	["Activate or deactivate this module."] = "Activa o desactiva este modulo.",
+	["Activate or deactivate this module."] = "Activa o desactiva este módulo.",
 	["Reboot"] = "Reiniciar",
-	["Reboot this module."] = "Reiniciar el modulo.",
-	["Debugging"] = "Depuracion",
-	["Show debug messages."] = "Mostrar mensajes de depuracion.",
+	["Reboot this module."] = "Reiniciar el módulo.",
+	["Debugging"] = "Depuración",
+	["Show debug messages."] = "Mostrar mensajes de depuración.",
 	["Options"] = "Opciones",
 
-	bosskill = "Derrota del boss",
-	bosskill_desc = "Avisa de la derrota del boss.",
-	enrage = "Enfurecimiento",
-	enrage_desc = "Avisa cuando el boss gana enfurecimiento.",
-	--berserk = "Berserk",
-	--berserk_desc = "Warn when the boss goes Berserk.",
+	bosskill = "Derrota del jefe",
+	bosskill_desc = "Avisa cuando el jefe ha sido derrotado.",
+	enrage = "Enfurecer (Enrage)",
+	enrage_desc = "Avisa cuando el jefe entra en un estado enfurecido.",
+	berserk = "Rabia (Berserk)",
+	berserk_desc = "Avisa cuando el jefe entra en un estado rabioso.",
 
 	["Load"] = "Cargar",
 	["Load All"] = "Cargar todo",
-	["Load all %s modules."] = "Cargar todos los modulos \"%s\".",
+	["Load all %s modules."] = "Cargar todos los módulos de %s.",
 } end)
 
 ---------------------------------
