@@ -121,13 +121,13 @@ L:RegisterTranslations("esES", function() return {
 	["Options for sounds."] = "Opciones de los sonidos",
 
 	["Alarm"] = "Alarma",
-	["Info"] = "Informaci\195\179n",
+	["Info"] = "Información",
 	["Alert"] = "Alerta",
 	["Long"] = "Largo",
 	["Victory"] = "Victoria",
 
-	["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Establece el sonido a usar para %q (Ctrl-Click en un sonido para escucharlo)",
-	["Toggle all sounds on or off."] = "Activa o desactiva todos los sonidos",
+	["Set the sound to use for %q.\n\nCtrl-Click a sound to preview."] = "Establece el sonido a usar para %q (Ctrl-Click en un sonido para escucharlo).",
+	["Toggle all sounds on or off."] = "Activa o desactiva todos los sonidos.",
 	["Default only"] = "Solo por defecto",
 	["Use only the default sound."] = "Usar solo el sonido por defecto",
 } end)

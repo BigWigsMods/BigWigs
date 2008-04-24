@@ -161,25 +161,25 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	["Raid Icons"] = "Iconos de Banda",
-	["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "Configura que \195\173conos deber\195\173a usar BigWigs al colocarlos sobre jugadores en importantes habilidades del jefe tipo 'Bomba'",
+	["Raid Icons"] = "Iconos de banda",
+	["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "Configura qué iconos colocará BigWigs sobre jugadores afectados por habilidades de Jefe tipo 'Bomba' u otras.",
 
 	["RaidIcon"] = "Icono de banda",
 
 	["Place"] = "Colocar",
-	["Place Raid Icons"] = "Colocar \195\173conos de banda",
-	["Toggle placing of Raid Icons on players."] = "Activa colocar iconos de banda sobre jugadores",
+	["Place Raid Icons"] = "Activar iconos en jugadores",
+	["Toggle placing of Raid Icons on players."] = "Activa la colocación de iconos de banda sobre jugadores.",
 
 	["Icon"] = "Icono",
-	["Set Icon"] = "Establecer Icono",
-	["Set which icon to place on players."] = "Establece que Icono colocar sobre los jugadores",
+	["Set Icon"] = "Establecer icono",
+	["Set which icon to place on players."] = "Establece qué icono se colocará sobre los jugadores.",
 
-	["Use the %q icon when automatically placing raid icons for boss abilities."] = "Usar el \195\173cono %q cuando coloque automaticamente \195\173conos de banda para habilidades de Jefes",
+	["Use the %q icon when automatically placing raid icons for boss abilities."] = "Usar el icono %q al colocar automáticamente iconos de banda para habilidades de Jefes.",
 
 	["Star"] = "Estrella",
-	["Circle"] = "Circulo",
+	["Circle"] = "Círculo",
 	["Diamond"] = "Diamante",
-	["Triangle"] = "Triangulo",
+	["Triangle"] = "Triángulo",
 	["Moon"] = "Luna",
 	["Square"] = "Cuadrado",
 	["Cross"] = "Cruz",

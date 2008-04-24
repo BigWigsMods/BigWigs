@@ -134,23 +134,23 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	["RaidWarning"] = "Aviso de Banda",
+	["RaidWarning"] = "Aviso de banda",
 
-	["Broadcast over RaidWarning"] = "Difundir por encima de Aviso de Banda",
-	["Broadcast"] = "Difundir",
-	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = "Activa difundir los mensajes de BigWigs sobre el canal de aviso de banda al resto de la banda.\n\nNotar que no ver\195\161s estas difusiones propias si no has desactivado los Bloques de Jefes",
+	["Broadcast over RaidWarning"] = "Emitir en Aviso de Banda",
+	["Broadcast"] = "Emitir en Aviso de banda",
+	["Toggle broadcasting your BigWigs messages over the raid warning channel to the rest of the raid.\n\nNote that you will not see these broadcasts yourself unless you've disabled BossBlock."] = "Activa la emisión de tus mensajes BigWigs a través del canal de Aviso de banda para el resto de la banda.\n\nTen en cuenta que no verás estos mensajes si tienes activado el plugin de Ocultar mensajes.",
 
 	["Whisper"] = "Susurrar",
 	["Whisper warnings"] = "Susurrar avisos",
-	["Toggle whispering warnings to players."] = "Activa los susurros de avisos a los jugadores",
+	["Toggle whispering warnings to players."] = "Activa el susurro de avisos a los jugadores.",
 
 	["Show whispers"] = "Mostrar susurros",
-	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "Ativa mostrar los susurros que manda BigWigs localmente, por ejemplo cuando los jugadores tienen la plaga y similares",
+	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "Ativa el mostrar los susurros que manda BigWigs localmente, por ejemplo cuando los jugadores tienen la plaga y similares.",
 
-	["Broadcast to chat"] = "Difusi\195\179n en chat",
-	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "Activa la difusi\195\179n de mensajes en la ventana de chat de grupo o banda en vez de avisos de banda para los mensajes de los Jefes.\n\nIgual aqu\195\173; no ver\195\161s tus propios mensajes hasta que Bloques de JEfes est\195\169 desactivado.",
+	["Broadcast to chat"] = "Emitir en chat",
+	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "Activa la emisión de mensajes en el chat de grupo o banda en lugar de en Aviso de banda para mensajes de Jefes.\n\nTen en cuenta que no verás estos mensajes si tienes activado el plugin de Ocultar mensajes.",
 
-	desc = "Configura donde deber\195\173a mandar BigWigs sus mensajes de Jefes adem\195\161s de la salida local",
+	desc = "Te permite configurar dónde enviará BigWigs los mensajes de jefes además de en local.",
 } end )
 
 ----------------------------------

@@ -316,44 +316,44 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("esES", function() return {
 	["Bars"] = "Barras",
-	["Emphasized Bars"] = "Barras Enfatizadas",
+	["Emphasized Bars"] = "Destacadas",
 
-	["Options for the timer bars."] = "Opciones para las barras temporizadoras",
+	["Options for the timer bars."] = "Opciones para las barras temporizadoras.",
 
 	["Show anchor"] = "Mostrar ancla",
-	["Show the bar anchor frame."] = "Mostrar el ancla de la ventana de la barra",
+	["Show the bar anchor frame."] = "Muestra una ventana que representa dónde se anclan las barras.",
 
-	["Enable menu"] = "Activar menu",
-	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "Muestra el menu de configuraci\195\179n en Alt-Cilck dcho.\n\nCuando esta opci\195\179n est\195\161 activada no puedes Alt-Click los objetos por debajo de las barras",
+	["Enable menu"] = "Activar menú",
+	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "Muestra el menú de configuración de barra con Alt-Clic derecho.\n\nActivar esta opción no te permitirá hacer Alt-Clic sobre elementos del mundo de juego que aparezcan detrás de una barra.",
 
 	["Scale"] = "Escala",
-	["Set the bar scale."] = "Establece la escala de las barras",
+	["Set the bar scale."] = "Establece la escala de las barras.",
 
 	["Grow upwards"] = "Crecer hacia arriba",
-	["Toggle bars grow upwards/downwards from anchor."] = "Muestra las barras hacia arriba/abajo desde el ancla",
+	["Toggle bars grow upwards/downwards from anchor."] = "Muestra las barras hacia arriba/abajo desde el ancla.",
 
 	["Texture"] = "Textura",
-	["Set the texture for the timer bars."] = "Establece la textura para las barras temporizadoras",
+	["Set the texture for the timer bars."] = "Establece la textura para las barras temporizadoras.",
 
 	["Test"] = "Probar",
 	["Close"] = "Cerrar",
 
-	["Emphasize"] = "Emfatizar",
-	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "Enfatiza las barras que est\195\161n a punto de completarse (<10 seg). Las barras que empezados a menos de 15 seg tambi\195\169 ser\195\161n enfatizadas",
+	["Emphasize"] = "Barras destacadas",
+	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "Destaca las barras que están a punto de finalizar (<10seg). Las barras iniciadas con un tiempo inferior a 15 segundos se destacan desde el principio.",
 
 	["Enable"] = "Activar",
-	["Enables emphasizing bars."] = "Activa las barras enfatizadas",
+	["Enables emphasizing bars."] = "Activa las barras destacadas.",
 	["Flash"] = "Destelleo",
-	["Flashes the background red for bars that are emphasized."] = "Destellea el fondo en rojo para las barras que son enfatizadas",
+	["Flashes the background red for bars that are emphasized."] = "Destellea el fondo en rojo para las barras destacadas.",
 	["Move"] = "Mover",
-	["Move bars that are emphasized to a second anchor."] = "Mueve las barras que son enfatizadas a un segundo ancla",
-	["Set the scale for emphasized bars."] = "Establece la escala para las barras enfatizadas",
+	["Move bars that are emphasized to a second anchor."] = "Mueve las barras destacadas a otro punto de anclaje.",
+	["Set the scale for emphasized bars."] = "Establece la escala para las barras destacadas.",
 
-	["Reset position"] = "Resetear posici\195\179n",
-	["Reset the anchor position, moving it to the center of your screen."] = "Resetea la posici\195\179n del ancla, moviendola al centro de la pantalla",
+	["Reset position"] = "Reiniciar posición",
+	["Reset the anchor position, moving it to the center of your screen."] = "Reinicia la posición del ancla, moviéndola al centro de la pantalla.",
 
 	["Reverse"] = "Invertir",
-	["Toggles if bars are reversed (fill up instead of emptying)."] = "Muestra las barras invirtiendolas (se llenan en vez de vaciarse).",
+	["Toggles if bars are reversed (fill up instead of emptying)."] = "Invierte la dirección de llenado de las barras (se llenan en vez de vaciarse).",
 	
 	font = "Fonts\\FRIZQT__.TTF",
 } end)
