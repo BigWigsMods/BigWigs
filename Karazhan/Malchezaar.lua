@@ -267,7 +267,7 @@ L:RegisterTranslations("esES", function() return {
 	enfeeble_bar = "<Socavar>",
 	enfeeble_nextbar = "~Socavar",
 	enfeeble_you = "Sufres de Socavar.",
-	enfeeble_warnyou = "¡Socavar en TÍ!",
+	enfeeble_warnyou = "¡Socavar en TI!",
 
 	infernals = "Infernales",
 	infernals_desc = "Muestra temporizadores para la invocación de Infernales.",

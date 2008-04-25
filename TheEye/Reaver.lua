@@ -52,9 +52,9 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("esES", function() return {
 	engage_trigger = "¡Alerta! Estáis marcados para exterminación.",
 
-	orbyou = "Orbe Arcano en tí",
+	orbyou = "Orbe Arcano en ti",
 	orbyou_desc = "Avisar cuando tienes Orbe Arcano.",
-	orb_you = "¡Orbe en TÍ!",
+	orb_you = "¡Orbe en TI!",
 
 	orbsay = "Orbe Arcano - Decir",
 	orbsay_desc = "Avisar en el canal Decir cuando eres el objetivo de un Orbe Arcano, puede ayudar a jugadores cercanos con bocadillos de chat activos.",

@@ -95,12 +95,12 @@ L:RegisterTranslations("esES", function() return {
 
 	magiccast = "Magia salvaje - Tiempo lanzamiento",
 	magiccast_desc = "Te avisa cuando un sanador tiene el tiempo de lanzamiento aumentado por Magia salvaje.",
-	magiccast_you = "¡Magia salvaje - Tiempo lanzamiento aumentado en TÍ!",
+	magiccast_you = "¡Magia salvaje - Tiempo lanzamiento aumentado en TI!",
 	magiccast_other = "¡Magia salvaje - Tiempo lanzamiento aumentado en %s!",
 
 	magichit = "Magia salvaje - Prob. golpe",
 	magichit_desc = "Avisa cuando la probabilidad de golpe de un tanque se ve reducida por Magia salvaje.",
-	magichit_you = "¡Magia salvaje - Prob. golpe reducida en TÍ!",
+	magichit_you = "¡Magia salvaje - Prob. golpe reducida en TI!",
 	magichit_other = "¡Magia salvaje - Prob. golpe reducida en %s!",
 
 	magicthreat = "Magia salvaje - Amenaza",

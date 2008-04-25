@@ -120,7 +120,7 @@ L:RegisterTranslations("esES", function() return {
 	gaze_trigger = "mira a (%S+)!$",
 	gaze_message = "¡Mirada en %s!",
 	gaze_bar = "~Mirada",
-	gaze_you = "¡Mirada en TÍ!",
+	gaze_you = "¡Mirada en TI!",
 
 	icon = "Icono de banda",
 	icon_desc = "Poner un icono de banda sobre jugadores que reciben la mirada de Thaladred.",

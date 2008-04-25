@@ -65,7 +65,7 @@ L:RegisterTranslations("esES", function() return {
 	conflag = "Conflagración (Conflagration)",
 	conflag_desc = "Avisar cuando se lanza Conflagración.",
 	conflag_message = "Conflagración en %s",
-	conflag_you = "¡Conflagración en TÍ!",
+	conflag_you = "¡Conflagración en TI!",
 	conflag_bar = "~Conflagración",
 
 	icon = "Icono de banda",

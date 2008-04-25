@@ -47,8 +47,8 @@ L:RegisterTranslations("esES", function() return {
 	enraged_bar = "<Enfurecido>",
 
 	mark = "Marca de Kazzak (Mark)",
-	mark_desc = "Avisar sobre Marca de Kazzak en tí.",
-	mark_message = "Marca de Kazzak en TÍ",
+	mark_desc = "Avisar sobre Marca de Kazzak en ti.",
+	mark_message = "Marca de Kazzak en TI",
 
 	twist = "Reflejo retorcido (Twisted Reflection)",
 	twist_desc = "Avisar quién tiene Reflejo retorcido.",

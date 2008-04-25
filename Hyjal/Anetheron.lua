@@ -38,7 +38,7 @@ L:RegisterTranslations("esES", function() return {
 	inferno = "Averno (Inferno)",
 	inferno_desc = "Contadores aproximados de Averno.",
 	inferno_message = "¡Lanzando Averno en %s!",
-	inferno_you = "¡Lanzando Averno en TÍ!",
+	inferno_you = "¡Lanzando Averno en TI!",
 	inferno_warning = "Averno en breve",
 	inferno_bar = "~Averno",
 

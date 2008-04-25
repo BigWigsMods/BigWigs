@@ -66,7 +66,7 @@ L:RegisterTranslations("esES", function() return {
 	wrath_desc = "Avisar quién tiene Cólera de la astromántica.",
 	wrath_fade = "Cólera de la astromántica acaba de desvanecerse.",
 	wrath_other = "Cólera en %s",
-	wrath_you = "¡Cólera en TÍ!",
+	wrath_you = "¡Cólera en TI!",
 
 	whisper = "Susurrar",
 	whisper_desc = "Susurrar a jugadores afectados por Cólera de la astromántica. (Requiere derechos de banda)",

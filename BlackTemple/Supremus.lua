@@ -61,7 +61,7 @@ L:RegisterTranslations("esES", function() return {
 	target = "Objetivo",
 	target_desc = "Avisar a quién selecciona durante la fase de persecución y poner un icono sobre su cabeza.",
 	target_message = "¡Persiguiendo a %s!",
-	target_you = "¡Te está persiguiendo a TÍ!",
+	target_you = "¡Te está persiguiendo a TI!",
 	target_message_nounit = "¡Nuevo objetivo!",
 
 	icon = "Icono de banda",

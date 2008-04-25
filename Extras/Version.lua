@@ -246,7 +246,7 @@ L:RegisterTranslations("esES", function() return {
 	["Runs a version query on the BigWigs core."] = "Realiza un interrogatorio de versión de núcleo de BigWigs",
 	["Replies"] = "Respuestas",
 	["Ancient"] = "Antigua",
-	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "Parece que hay una nueva versión de Big Wigs disponible para tí, por favor actualízala",
+	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "Parece que hay una nueva versión de Big Wigs disponible para ti, por favor actualízala",
 	["Notify people with older versions that there is a new version available."] = "Notificar a gente con versiones antiguas que hay una nueva versión disponible",
 } end )
 

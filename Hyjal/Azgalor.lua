@@ -38,7 +38,7 @@ L:RegisterTranslations("esES", function() return {
 	doom = "Condena (Doom)",
 	doom_desc = "Avisar sobre Condena.",
 	doom_other = "Condena en %s",
-	doom_you = "¡Condena en TÍ!",
+	doom_you = "¡Condena en TI!",
 
 	howl = "Aullido de Azgalor (Howl of Azgalor)",
 	howl_desc = "Avisar de Aullido de Azgalor.",
@@ -48,7 +48,7 @@ L:RegisterTranslations("esES", function() return {
 
 	fire = "Lluvia de Fuego",
 	fire_desc = "Avisar cuando te afecta Lluvia de Fuego.",
-	fire_you = "¡Lluvia de Fuego en TÍ!",
+	fire_you = "¡Lluvia de Fuego en TI!",
 
 	icon = "Icono",
 	icon_desc = "Poner un icono de banda sobre los jugadores afectados por Condena. (Requiere derechos de banda)",

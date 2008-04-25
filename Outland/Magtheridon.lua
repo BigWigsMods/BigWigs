@@ -106,9 +106,9 @@ L:RegisterTranslations("esES", function() return {
 	exhaust_desc = "Temporizadores para Extenuación mental en jugadores.",
 	exhaust_bar = "[%s] Extenuación mental",
 
-	debris = "Escombros en tí (Debris)",
-	debris_desc = "Avisar sobre Escombros en tí.",
-	debris_message = "¡Escombros en TÍ!",
+	debris = "Escombros en ti (Debris)",
+	debris_desc = "Avisar sobre Escombros en ti.",
+	debris_message = "¡Escombros en TI!",
 
 	debrisinc = "Escombros (Debris)",
 	debrisinc_desc = "Avisar sobre Escombros al 30%.",

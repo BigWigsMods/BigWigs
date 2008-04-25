@@ -27,8 +27,8 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("esES", function() return {
 	decay = "Muerte y descomposición (Death & Decay)",
-	decay_desc = "Avisar sobre Muerte y descomposición en tí.",
-	decay_message = "¡Muerte y descomposición en TÍ!",
+	decay_desc = "Avisar sobre Muerte y descomposición en ti.",
+	decay_message = "¡Muerte y descomposición en TI!",
 
 	icebolt = "Descarga de hielo (Icebolt)",
 	icebolt_desc = "Avisos de Descarga de hielo.",

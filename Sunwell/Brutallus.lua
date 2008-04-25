@@ -44,7 +44,7 @@ L:RegisterTranslations("esES", function() return {
 
 	burn = "Quemar (Burn)",
 	burn_desc = "Avisar quién recibe Quemar y cuándo es el próximo.",
-	burn_you = "¡Quemar en TÍ!",
+	burn_you = "¡Quemar en TI!",
 	burn_other = "¡Quemar en %s!",
 	burn_bar = "~Quemar",
 	burn_message = "Quemar en 5 segundos",

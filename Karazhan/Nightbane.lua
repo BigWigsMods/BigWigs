@@ -208,9 +208,9 @@ L:RegisterTranslations("esES", function() return {
 	fear_bar = "¡Miedo!",
 	fear_nextbar = "~Miedo",
 
-	charr = "Tierra carbonizada en tí",
+	charr = "Tierra carbonizada en ti",
 	charr_desc = "Avisa cuando estás en Tierra carbonizada.",
-	charr_message = "¡Tierra carbonizada en tí!",
+	charr_message = "¡Tierra carbonizada en ti!",
 
 	phase = "Fases",
 	phase_desc = "Avisa cuando Nocturno cambia de fase.",

@@ -94,7 +94,7 @@ L:RegisterTranslations("esES", function() return {
 	static_desc = "Avisar quién tiene Carga estática.",
 	static_charge_message = "¡Carga estática en %s!",
 	static_fade = "Carga estática acaba de desvanecerse.",
-	static_warnyou = "¡Carga estática en TÍ!",
+	static_warnyou = "¡Carga estática en TI!",
 
 	icon = "Icono",
 	icon_desc = "Poner un icono sobre jugadores afectados por Carga estática y sobre aquellos que despojan núcleos.",

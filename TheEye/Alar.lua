@@ -47,14 +47,14 @@ L:RegisterTranslations("esES", function() return {
 	meteor_message = "¡Soltar bomba! Sig. en ~52seg",
 	meteor_nextbar = "~Soltar bomba",
 
-	flamepatch = "Anillo de llamas (Flame Patch) en TÍ",
-	flamepatch_desc = "Avisar sobre Flame Patch en tí.",
-	flamepatch_message = "¡Anillo de llamas en TÍ!",
+	flamepatch = "Anillo de llamas (Flame Patch) en TI",
+	flamepatch_desc = "Avisar sobre Flame Patch en ti.",
+	flamepatch_message = "¡Anillo de llamas en TI!",
 
 	armor = "Fundir armadura (Melt Armor)",
 	armor_desc = "Avisar quién tiene Fundir armadura.",
 	armor_other = "Fundir armadura: %s",
-	armor_you = "¡Fundir armadura en TÍ!",
+	armor_you = "¡Fundir armadura en TI!",
 
 	icon = "Icono de banda",
 	icon_desc = "Poner un icono de banda sobre jugadores afectados por Fundir armadura. (Requiere derechos de banda)",

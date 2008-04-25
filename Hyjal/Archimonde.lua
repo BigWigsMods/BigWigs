@@ -63,7 +63,7 @@ L:RegisterTranslations("esES", function() return {
 
 	grip = "Apretón de la Legión (Grip of the Legion)",
 	grip_desc = "Avisar quién tiene Apretón de la Legión.",
-	grip_you = "¡Apretón de la Legión en TÍ!",
+	grip_you = "¡Apretón de la Legión en TI!",
 	grip_other = "¡Apretón en %s!",
 
 	icon = "Icono de banda",
@@ -78,7 +78,7 @@ L:RegisterTranslations("esES", function() return {
 	burst = "Ráfaga de aire (Air Burst)",
 	burst_desc = "Avisar quién tiene Ráfaga de aire.",
 	burst_other = "Ráfaga de aire en -%s-",
-	burst_you = "¡Ráfaga de aire en TÍ!",
+	burst_you = "¡Ráfaga de aire en TI!",
 
 	burstsay = "Decir Ráfaga de aire",
 	burstsay_desc = "Alertar en el canal Decir cuando eres el objetivo de Ráfaga de aire, puede ayudar a compañeros cercanos con bocadillos de chat activos.",
