@@ -96,9 +96,9 @@ L:RegisterTranslations("zhTW", function() return {
 	["Place Raid Icons"] = "標記團隊圖示",
 	["Toggle placing of Raid Icons on players."] = "切換是否在玩家身上標記團隊圖示",
 
-	["Icon"] = "圖標",
-	["Set Icon"] = "設置圖示",
-	["Set which icon to place on players."] = "設置玩家身上標記的圖示。",
+	["Icon"] = "圖示",
+	["Set Icon"] = "設定圖示",
+	["Set which icon to place on players."] = "設定玩家身上標記的圖示",
 
 	["Star"] = "星星",
 	["Circle"] = "圓圈",

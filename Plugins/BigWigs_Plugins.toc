@@ -1,12 +1,12 @@
 ## Interface: 20400
 
 ## Title: Big Wigs [|cffeda55fPlugins|r]
+## Title-zhCN: Big Wigs [|cffeda55f综合设置|r]
+## Title-zhTW: Big Wigs [|cffeda55f附加元件|r]
 ## Notes: Big Wigs Core Plugins
 ## Notes-frFR: Plugins du noyau de Big Wigs.
 ## Notes-esES: Plugins del núcleo de Big Wigs.
-## Title-zhCN: Big Wigs [|cffeda55f综合设置|r]
 ## Notes-zhCN: Big Wigs 综合设置模块
-## Title-zhTW: Big Wigs [|cffeda55f附加元件|r]
 ## Notes-zhTW: Big Wigs 附加元件模組
 ## Notes-koKR: Big Wigs 플러그인
 ## Author: Ammo, Rabbit

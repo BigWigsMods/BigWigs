@@ -4,11 +4,13 @@
 ## Title-frFR: Big Wigs [|cffeda55fOutreterre|r]
 ## Title-esES: Big Wigs [|cffeda55fTerrallende|r]
 ## Title-zhCN: Big Wigs [|cffeda55f外域|r]
+## Title-zhTW: Big Wigs [|cffeda55f外域|r]
 ## Notes: Big Wigs Outland Modules
 ## Notes-frFR: Modules Big Wigs concernant l'Outreterre.
 ## Notes-esES: Módulos de Big Wigs para Terrallende.
 ## Notes-koKR: Big Wigs 아웃랜드 경고
 ## Notes-zhCN: Big Wigs 外域模块
+## Notes-zhTW: Big Wigs 外域模組
 ## Author: Funkydude, Ammo, Rabbit
 ## X-Credits: Tekkub Stoutwrithe(founding author) & Others
 ## Version: 2.0

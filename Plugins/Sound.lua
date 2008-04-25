@@ -68,7 +68,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["Sounds"] = "聲音",
-	["Options for sounds."] = "聲音的選項",
+	["Options for sounds."] = "聲音選項",
 
 	["Alarm"] = "鬧鈴",
 	["Info"] = "資訊",
@@ -77,8 +77,8 @@ L:RegisterTranslations("zhTW", function() return {
 	["Victory"] = "勝利",
 
 	["Use sounds"] = "使用聲音",
-	["Toggle all sounds on or off."] = "切換是否使用聲音。",
-	["Default only"] = "只用預設",
+	["Toggle all sounds on or off."] = "切換是否使用聲音",
+	["Default only"] = "僅用預設",
 	["Use only the default sound."] = "只用預設聲音",
 } end)
 

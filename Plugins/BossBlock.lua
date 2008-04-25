@@ -101,7 +101,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["BossBlock"] = "訊息阻擋",
-	desc = "阻擋其他玩家的首領插件發送的訊息。",
+	desc = "阻擋其他玩家的首領插件發送的訊息",
 
 	["Boss emotes"] = "首領表情",
 	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = "阻擋首領的表情訊息，只阻擋目前已知的部分，並且不會阻擋在聊天紀錄上的訊息。",
@@ -110,20 +110,20 @@ L:RegisterTranslations("zhTW", function() return {
 	["Suppress messages sent to raid chat."] = "阻擋團隊頻道中的訊息",
 
 	["Raid warning chat messages"] = "阻擋團隊警告聊天",
-	["Suppress raid warning messages from the chat window."] = "阻擋聊天窗體中的團隊警告訊息",
+	["Suppress raid warning messages from the chat window."] = "阻擋聊天視窗中的團隊警告訊息",
 
 	["Raid warning messages"] = "阻擋團隊警告",
 	["Suppress raid warning messages from the raid message window."] = "阻擋團隊警告中的訊息",
 
 	["Raid say"] = "阻擋團隊助手訊息",
-	["Suppress RaidSay popup messages."] = "阻擋團隊助手(CTRA)的RS訊息",
+	["Suppress RaidSay popup messages."] = "阻擋團隊助手 (CTRA) 的 RS 訊息",
 
 	["Whispers"] = "阻擋密語",
 	["Suppress whispered messages."] = "阻擋密語中的訊息",
 
 	["Suppressing Chatframe"] = "正在阻擋聊天訊息",
-	["Suppressing RaidWarningFrame"] = "正在阻擋團隊警告訊息(RW)",
-	["Suppressing CT_RAMessageFrame"] = "正在阻擋團隊助手訊息(RS)",
+	["Suppressing RaidWarningFrame"] = "正在阻擋團隊警告訊息 (RW)",
+	["Suppressing CT_RAMessageFrame"] = "正在阻擋團隊助手訊息 (RS)",
 	["Suppressing RaidBossEmoteFrame"] = "正在阻擋首領表情訊息",
 
 	["Suppressed"] = "阻擋",

@@ -1,11 +1,12 @@
 ## Interface: 20400
 
 ## Title: Big Wigs [|cffeda55fKarazhan|r]
-## Notes: Big Wigs Karazhan Modules
 ## Title-zhCN: Big Wigs [|cffeda55f卡拉赞|r]
+## Title-zhTW: Big Wigs [|cffeda55f卡拉贊|r]
+## Notes: Big Wigs Karazhan Modules
 ## Notes-frFR: Modules Big Wigs concernant Karazhan.
 ## Notes-esES: Módulos de Big Wigs para Karazhan.
-## Notes-zhTW: BigWigs 卡拉贊
+## Notes-zhTW: BigWigs 卡拉贊模組
 ## Notes-koKR: Big Wigs 카라잔 경고
 ## Notes-zhCN: Big Wigs 卡拉赞模块
 ## Author: Ammo, Rabbit, Funkydude

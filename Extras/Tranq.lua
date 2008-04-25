@@ -35,11 +35,11 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["Tranq - %s"] = "寧神射擊 - %s",
-	["%s's Tranq failed!"] = "%s的寧神射擊失敗了！",
+	["%s's Tranq failed!"] = "%s 的寧神射擊失敗了!",
 
-	["Options for the tranq module."] = "寧神射擊模組選項.",
-	["Toggle tranq bars on or off."] = "開啟或禁用寧神射擊計時條.",
-	["Bars"] = "寧神射擊計時條",
+	["Options for the tranq module."] = "寧神射擊模組選項",
+	["Toggle tranq bars on or off."] = "開啟或關閉寧神射擊計時條",
+	["Bars"] = "<寧神射擊計時條>",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

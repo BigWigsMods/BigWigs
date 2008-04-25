@@ -124,29 +124,29 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	["Messages"] = "訊息",
-	["Options for message display."] = "訊息框架設置。",
+	["Options for message display."] = "訊息框架選項",
 
 	["BigWigs Anchor"] = "BigWigs 錨點",
 	["Output Settings"] = "輸出設定",
 
 	["Show anchor"] = "顯示錨點",
-	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "顯示訊息訊息框架錨點。",
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "顯示訊息框架錨點",
 
 	["Use colors"] = "發送彩色訊息",
-	["Toggles white only messages ignoring coloring."] = "切換是否只發送單色訊息。",
+	["Toggles white only messages ignoring coloring."] = "切換是否只發送單色訊息",
 
 	["Scale"] = "縮放",
-	["Set the message frame scale."] = "設置訊息框架縮放比例",
+	["Set the message frame scale."] = "設定訊息框架縮放比例",
 
-	--["Use icons"] = "",
-	--["Show icons next to messages, only works for Raid Warning."] = "",
+	["Use icons"] = "使用圖示",
+	["Show icons next to messages, only works for Raid Warning."] = "顯示圖示，目前只能使用在團隊警告頻道。",
 
 	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000顏|cffff00ff色|r",
 	["White"] = "白色",
 
 	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "除了選擇的顯示位置外，也顯示在聊天頻道上。",
 
-	["Chat frame"] = "聊天頻道",
+	["Chat frame"] = "聊天框架",
 
 	["Test"] = "測試",
 	["Close"] = "關閉",
