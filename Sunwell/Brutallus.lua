@@ -93,14 +93,14 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Ah, encore des agneaux pour l'abattoir !",
 
 	burn = "Brûler",
-	burn_desc = "Préviens quand un joueur subit les effets de Brûler et quand arrivera le prochain.",
-	burn_you = "Brûler sur VOUS !",
-	burn_other = "Brûler sur %s !",
+	burn_desc = "Prévient quand un joueur subit les effets de Brûler et quand arrivera le prochain.",
+	burn_you = "Brûler sur VOUS !",
+	burn_other = "Brûler sur %s !",
 	burn_bar = "Prochain Brûler",
-	burn_message = "Prochain Brûler dans 5 sec. !",
+	burn_message = "Prochain Brûler dans 5 sec. !",
 
 	burnresist = "Résistances à Brûler",
-	burnresist_desc = "Préviens quand un joueur a résisté à Brûler.",
+	burnresist_desc = "Prévient quand un joueur a résisté à Brûler.",
 	burn_resist = "%s a résisté à Brûler",
 
 	meteor = "Attaque météorique",
@@ -108,9 +108,9 @@ L:RegisterTranslations("frFR", function() return {
 	meteor_bar = "Proch. Attaque météorique",
 
 	stomp = "Piétinement",
-	stomp_desc = "Préviens l'arrivée des Piétinements et affiche une barre.",
+	stomp_desc = "Prévient l'arrivée des Piétinements et affiche une barre.",
 	stomp_warning = "Piétinement dans 5 sec.",
-	stomp_message = "Piétinement : %s",
+	stomp_message = "Piétinement : %s",
 	stomp_bar = "Prochain Piétinement",
 } end )
 

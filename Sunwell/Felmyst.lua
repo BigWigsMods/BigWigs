@@ -227,38 +227,38 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	encaps = "Enfermer",
-	encaps_desc = "Préviens quand un joueur subit les effets d'Enfermer.",
-	encaps_warning = "Enfermer dans ~5 sec. !",
+	encaps_desc = "Prévient quand un joueur subit les effets d'Enfermer.",
+	encaps_warning = "Enfermer dans ~5 sec. !",
 	encaps_message = "Enfermer : %s",
 
 	gas = "Nova de gaz",
-	gas_desc = "Préviens quand la Nova de gaz est incantée.",
-	gas_message = "Nova de gaz en incantation !",
-	gas_bar = "~Cooldown Nova de gaz",
+	gas_desc = "Prévient quand la Nova de gaz est incantée.",
+	gas_message = "Nova de gaz en incantation !",
+	gas_bar = "~Recharge Nova de gaz",
 
 	vapor = "Vapeur démoniaque",
-	vapor_desc = "Préviens quand un joueur subit les effets de la Vapeur démoniaque.",
-	vapor_message = "Vapeur : %s",
+	vapor_desc = "Prévient quand un joueur subit les effets de la Vapeur démoniaque.",
+	vapor_message = "Vapeur : %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur la dernière personne affectée par Enfermer ou Vapeur démoniaque (nécessite d'être promu ou mieux).",
 
 	phase = "Phases",
-	phase_desc = "Préviens quand Gangrebrume décolle et atterit.",
+	phase_desc = "Prévient quand Gangrebrume décolle et atterit.",
 	airphase_trigger = "Je suis plus forte que jamais !", -- à vérifier
 	takeoff_bar = "Décollage",
-	takeoff_message = "Décollage dans 5 sec. !",
+	takeoff_message = "Décollage dans 5 sec. !",
 	landing_bar = "Atterrissage",
-	landing_message = "Atterrissage dans 10 sec. !",
+	landing_message = "Atterrissage dans 10 sec. !",
 
 	breath = "Grande inspiration",
-	breath_desc = "Préviens quand Gangrebrume inspire profondément.",
-	breath_nextbar = "~Cooldown Souffle (%d)",
-	breath_warn = "Souffle (%d) !",
+	breath_desc = "Prévient quand Gangrebrume inspire profondément.",
+	breath_nextbar = "~Recharge Souffle (%d)",
+	breath_warn = "Souffle (%d) !",
 
 	dispel = "Échecs Dissipation de masse",
 	dispel_desc = "Si vous êtes prêtre, ceci affichera en /dire les échecs de votre Dissipation de masse.",
-	dispel_fail = "Échec(s) Dissipation de masse : ",
+	dispel_fail = "Échec(s) Dissipation de masse : ",
 
 	warning = "ATTENTION\n--\nPour que l'analyse des Enfermer fonctionne correctement, vous devez indiquer votre tank dans la liste des tanks principaux de Blizzard !",
 } end )

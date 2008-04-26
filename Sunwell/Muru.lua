@@ -54,20 +54,20 @@ L:RegisterTranslations("esES", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	darkness = "Ténèbres",
-	darkness_desc = "Préviens quand un joueur subit les effets des Ténèbres.",
-	darkness_message = "Ténèbres : %s",
+	darkness_desc = "Prévient quand un joueur subit les effets des Ténèbres.",
+	darkness_message = "Ténèbres : %s",
 	darkness_next = "Prochaines Ténèbres",
-	darkness_soon = "Ténèbres dans 5 sec. !",
+	darkness_soon = "Ténèbres dans 5 sec. !",
 
 	void = "Sentinelles du Vide",
-	void_desc = "Préviens quand les Sentinelles du Vide apparaissent.",
+	void_desc = "Prévient quand les Sentinelles du Vide apparaissent.",
 	void_next = "Prochaine Sentinelle",
-	void_soon = "Sentinelle dans 5 sec. !",
+	void_soon = "Sentinelle dans 5 sec. !",
 
 	humanoid = "Renforts humanoïdes",
-	humanoid_desc = "Préviens quand les renforts humanoïdes apparaissent.",
+	humanoid_desc = "Prévient quand les renforts humanoïdes apparaissent.",
 	humanoid_next = "Prochains humanoïdes",
-	humanoid_soon = "Humanoïdes dans 5 sec. !",
+	humanoid_soon = "Humanoïdes dans 5 sec. !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

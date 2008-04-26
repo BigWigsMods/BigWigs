@@ -90,21 +90,21 @@ L:RegisterTranslations("frFR", function() return {
 	wipe_bar = "Réapparition",
 
 	nova = "Nova de l'ombre",
-	nova_desc = "Préviens quand une Nova de l'ombre est incantée.",
+	nova_desc = "Prévient quand une Nova de l'ombre est incantée.",
 	nova_message = "Nova de l'ombre sur %s",
-	nova_bar = "~Cooldown Nova",
+	nova_bar = "~Recharge Nova",
 
 	conflag = "Déflagration",
-	conflag_desc = "Préviens quand une Déflagration est incantée.",
+	conflag_desc = "Prévient quand une Déflagration est incantée.",
 	conflag_message = "Déflagration sur %s",
-	--conflag_you = "Conflag on YOU!",
+	conflag_you = "Déflagration sur VOUS !",
 	conflag_bar = "Prochaine Déflagration",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur sur lequel Nova de l'ombre ou Déflagration est incantée.",
 
 	pyro = "Pyrogénie",
-	pyro_desc = "Préviens qui gagne et qui enlève Pyrogénie.",
+	pyro_desc = "Prévient qui gagne et qui enlève Pyrogénie.",
 	pyro_gain = "%s a gagné Pyrogénie",
 	pyro_remove = "%s a enlevé Pyrogénie",
 

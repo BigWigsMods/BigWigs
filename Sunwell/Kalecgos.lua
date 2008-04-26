@@ -171,46 +171,46 @@ L:RegisterTranslations("frFR", function() return {
 	wipe_bar = "Réapparition",
 
 	portal = "Portail",
-	portal_desc = "Préviens quand le temps de recharge de la Déflagration spectrale est terminé.",
+	portal_desc = "Prévient quand le temps de recharge de la Déflagration spectrale est terminé.",
 	portal_bar = "Prochain portail (%d)",
-	portal_message = "Portail probable dans 5 sec. !",
+	portal_message = "Portail probable dans 5 sec. !",
 
 	realm = "Royaume spectral",
-	realm_desc = "Préviens quand un joueur est dans le Royaume spectral.",
-	realm_message = "Royaume spectral : %s (Groupe %d)",
+	realm_desc = "Prévient quand un joueur est dans le Royaume spectral.",
+	realm_message = "Royaume spectral : %s (Groupe %d)",
 
 	curse = "Malédiction d'agonie infinie",
-	curse_desc = "Préviens quand un joueur subit les effets de la Malédiction d'agonie infinie.",
-	curse_bar = "Malédiction : %s",
+	curse_desc = "Prévient quand un joueur subit les effets de la Malédiction d'agonie infinie.",
+	curse_bar = "Malédiction : %s",
 
 	magichealing = "Magie sauvage (Soins prodigués augmentés)",
 	magichealing_desc = "Préviens quand les effets de vos soins sont augmentés par la Magie sauvage.",
-	magichealing_you = "Magie sauvage - Effets des soins augmentés !",
+	magichealing_you = "Magie sauvage - Effets des soins augmentés !",
 
 	magiccast = "Magie sauvage (Temps d'incantation augmenté)",
 	magiccast_desc = "Préviens quand un soigneur a son temps d'incantation augmenté par la Magie sauvage.",
-	magiccast_you = "Magie sauvage - Temps d'incantation augmenté pour VOUS !",
-	magiccast_other = "Magie sauvage - Temps d'incantation augmenté pour %s !",
+	magiccast_you = "Magie sauvage - Temps d'incantation augmenté pour VOUS !",
+	magiccast_other = "Magie sauvage - Temps d'incantation augmenté pour %s !",
 
 	magichit = "Magie sauvage (Chances de toucher réduites)",
 	magichit_desc = "Préviens quand les chances de toucher d'un tank sont réduites par la Magie sauvage.",
-	magichit_you = "Magie sauvage - Chances de toucher réduites pour VOUS !",
-	magichit_other = "Magie sauvage - Chances de toucher réduites pour %s !",
+	magichit_you = "Magie sauvage - Chances de toucher réduites pour VOUS !",
+	magichit_other = "Magie sauvage - Chances de toucher réduites pour %s !",
 
 	magicthreat = "Magie sauvage (Menace générée augmentée)",
 	magicthreat_desc = "Préviens quand la menace que vous générez est augmentée par la Magie sauvage.",
-	magicthreat_you = "Magie sauvage - Menace générée augmentée !",
+	magicthreat_you = "Magie sauvage - Menace générée augmentée !",
 
 	buffet = "Rafale des arcanes",
 	buffet_desc = "Affiche une barre temporelle pour la Rafale des arcanes.",
 
-	enrage_warning = "Enrager imminent !",
-	enrage_message = "10% - Enragé !",
+	enrage_warning = "Enrager imminent !",
+	enrage_message = "10% - Enragé !",
 	enrage_trigger = "Sathrovarr déchaîne la rage de Kalecgos !",
 
 	strike = "Frappe corruptrice",
-	strike_desc = "Préviens quand quelqu'un subit les effets de la Frappe corruptrice.",
-	strike_message = "%s : Frappe corruptrice",
+	strike_desc = "Prévient quand quelqu'un subit les effets de la Frappe corruptrice.",
+	strike_message = "%s : Frappe corruptrice",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
