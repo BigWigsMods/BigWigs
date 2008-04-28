@@ -108,18 +108,18 @@ L:RegisterTranslations("frFR", function() return {
 
 	spine = "Epine de perforation",
 	spine_desc = "Préviens quand un joueur subit les effets de l'Epine de perforation.",
-	spine_message = "Epine de perforation sur %s !",
+	spine_message = "Epine de perforation sur %s !",
 
 	spinesay = "Dire - Epine de perforation",
 	spinesay_desc = "Fais dire à votre personnage qu'il a une épine quand c'est le cas afin d'aider les membres proches.",
-	spinesay_message = "Épine sur moi !",
+	spinesay_message = "Épine sur moi !",
 
 	shield = "Bouclier de flots",
 	shield_desc = "Délais concernant le Bouclier de flots de Naj'entus.",
 	shield_nextbar = "Prochain Bouclier de flots",
-	shield_warn = "Bouclier de flots !",
-	shield_soon_warn = "Bouclier de flots dans ~10 sec. !",
-	shield_fade = "Bouclier dissipé !",
+	shield_warn = "Bouclier de flots !",
+	shield_soon_warn = "Bouclier de flots dans ~10 sec. !",
+	shield_fade = "Bouclier dissipé !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Epine de perforation (nécessite d'être promu ou mieux).",

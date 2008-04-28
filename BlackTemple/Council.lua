@@ -127,26 +127,26 @@ L:RegisterTranslations("frFR", function() return {
 
 	vanish = "Disparition",
 	vanish_desc = "Délais estimés concernant la Disparition de Veras.",
-	vanish_message = "Veras : Disparu ! De retour dans ~30 sec.",
-	vanish_warning = "Fin de la Disparition - %s est de retour !",
+	vanish_message = "Veras : disparu ! De retour dans ~30 sec.",
+	vanish_warning = "Fin de la Disparition - %s est de retour !",
 	vanish_bar = "Veras camouflé",
 
 	immune = "Immunité",
 	immune_desc = "Préviens quand Malande devient insensible aux sorts ou aux attaques de mêlée.",
-	immune_message = "Malande : insensible %s pendant 15 sec. !",
-	immune_bar = "Insensible %s !",
+	immune_message = "Malande : insensible %s pendant 15 sec. !",
+	immune_bar = "Insensible %s !",
 
 	spell = "aux sorts",
 	melee = "en mêlée",
 
 	shield = "Bouclier réflecteur",
 	shield_desc = "Préviens quand Malande gagne son Bouclier réflecteur.",
-	shield_message = "Bouclier réflecteur sur Malande !",
+	shield_message = "Bouclier réflecteur sur Malande !",
 
 	poison = "Poison mortel",
 	poison_desc = "Préviens quand un joueur subit les effets du Poison mortel.",
-	poison_other = "%s a le Poison mortel !",
-	poison_you = "Poison mortel sur VOUS !",
+	poison_other = "%s a le Poison mortel !",
+	poison_you = "Poison mortel sur VOUS !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Poison mortel (nécessite d'être promu ou mieux).",
@@ -154,19 +154,19 @@ L:RegisterTranslations("frFR", function() return {
 	circle = "Cercle de soins",
 	circle_desc = "Préviens quand Malande commence à lancer son Cercle de soins.",
 	circle_trigger = "Dame Malande commence à lancer Cercle de soins.",
-	circle_message = "Cercle de soins en incantation !",
-	circle_heal_message = "Soigné ! - Prochain dans ~20 sec.",
-	circle_fail_message = "Interrompu par %s ! - Prochain dans ~12 sec.",
+	circle_message = "Cercle de soins en incantation !",
+	circle_heal_message = "Soigné ! - Prochain dans ~20 sec.",
+	circle_fail_message = "Interrompu par %s ! - Prochain dans ~12 sec.",
 	circle_bar = "~Cooldown Cercle de soins",
 
 	res = "Aura de résistance",
 	res_desc = "Préviens quand Gathios le Briseur gagne son Aura de résistance chromatique.",
-	res_message = "Gathios : Résistance pendant 30 sec. !",
+	res_message = "Gathios : résistance pendant 30 sec. !",
 	res_bar = "Aura de résistance",
 
 	blizzard = "Blizzard sur vous",
 	blizzard_desc = "Préviens quand vous êtes dans un Blizzard.",
-	blizzard_message = "Blizzard sur VOUS !",
+	blizzard_message = "Blizzard sur VOUS !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

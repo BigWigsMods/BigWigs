@@ -158,15 +158,15 @@ L:RegisterTranslations("frFR", function() return {
 
 	rage = "Gangrerage",
 	rage_desc = "Préviens quand un joueur subit les effets de la Gangrerage.",
-	rage_you = "Vous avez la Gangrerage !",
-	rage_other = "%s a la Gangrerage !",
+	rage_you = "Vous avez la Gangrerage !",
+	rage_other = "%s a la Gangrerage !",
 
 	whisper = "Chuchoter",
 	whisper_desc = "Chuchote au dernier joueur affecté par la Gangrerage (nécessite d'être promu ou mieux).",
 
 	acid = "Souffle d'acide gangrené",
 	acid_desc = "Préviens sur qui le Souffle d'acide gangrené est incanté.",
-	acid_message = "Souffle d'acide gangrené incanté sur : %s",
+	acid_message = "Souffle d'acide gangrené incanté sur : %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le joueur sur qui le Souffle d'acide gangrené est incanté (nécessite d'être promu ou mieux).",

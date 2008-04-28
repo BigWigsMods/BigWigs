@@ -163,67 +163,67 @@ L:RegisterTranslations("frFR", function() return {
 
 	parasite = "Ombrefiel parasite",
 	parasite_desc = "Préviens quand un joueur subit les effets de l'Ombrefiel parasite.",
-	parasite_you = "Vous avez un parasite !",
-	parasite_other = "%s a un parasite !",
+	parasite_you = "Vous avez un parasite !",
+	parasite_other = "%s a un parasite !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Ombrefiel parasite (nécessite d'être promu ou mieux).",
 
 	barrage = "Barrage noir",
 	barrage_desc = "Préviens quand un joueur subit les effets du Barrage noir.",
-	barrage_message = "%s subit le Barrage !",
-	barrage_warn = "Barrage imminent !",
+	barrage_message = "%s subit le Barrage !",
+	barrage_warn = "Barrage imminent !",
 	barrage_warn_bar = "~Prochain Barrage",
-	barrage_bar = "Barrage : %s",
+	barrage_bar = "Barrage : %s",
 
 	eyeblast = "Energie oculaire",
 	eyeblast_desc = "Préviens quand l'Energie oculaire est incanté.",
 	eyeblast_trigger = "Soutenez le regard du Traître !",
-	eyeblast_message = "Energie oculaire !",
+	eyeblast_message = "Energie oculaire !",
 
 	shear = "Tonte",
 	shear_desc = "Préviens quand un joueur subit les effets de la Tonte.",
-	shear_message = "Tonte sur %s !",
-	shear_bar = "Tonte : %s",
+	shear_message = "Tonte sur %s !",
+	shear_bar = "Tonte : %s",
 
 	flame = "Flammes déchirantes",
 	flame_desc = "Préviens quand un joueur subit les effets des Flammes déchirantes.",
-	flame_message = "%s a les Flammes déchirantes !",
+	flame_message = "%s a les Flammes déchirantes !",
 
 	demons = "Démons des ombres",
 	demons_desc = "Préviens quand Illidan invoque des démons des ombres.",
-	demons_message = "Démons des ombres !",
-	demons_warn = "Démons imminent !",
+	demons_message = "Démons des ombres !",
+	demons_warn = "Démons imminent !",
 
 	phase = "Phases",
 	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
-	phase2_soon_message = "Phase 2 imminente !",
-	phase2_message = "Phase 2 - Lames d'Azzinoth !",
-	phase3_message = "Phase 3 !",
+	phase2_soon_message = "Phase 2 imminente !",
+	phase2_message = "Phase 2 - Lames d'Azzinoth !",
+	phase3_message = "Phase 3 !",
 	demon_phase_trigger = "Contemplez la puissance... du démon intérieur !",
-	demon_phase_message = "Forme de démon !",
+	demon_phase_message = "Forme de démon !",
 	demon_bar = "Prochaine phase normale",
-	demon_warning = "Fin du démon dans ~5 sec. !",
+	demon_warning = "Fin du démon dans ~5 sec. !",
 	normal_bar = "~Phase démon probable",
-	normal_warning = "Phase démon probablement dans ~5 sec. !",
+	normal_warning = "Phase démon probablement dans ~5 sec. !",
 	phase4_trigger = "C'est tout, mortels ? Est-ce là toute la fureur que vous pouvez évoquer ?",
-	phase4_soon_message = "Phase 4 imminente !",
-	phase4_message = "Phase 4 - Arrivée de Maiev !",
+	phase4_soon_message = "Phase 4 imminente !",
+	phase4_message = "Phase 4 - Arrivée de Maiev !",
 
 	burst = "Explosion de flammes",
 	burst_desc = "Préviens quand Illidan utilise son Explosion de flammes.",
-	burst_message = "Explosion de flammes !",
+	burst_message = "Explosion de flammes !",
 	burst_cooldown_bar = "~Cooldown Explosion",
-	burst_cooldown_warn = "Explosion de flammes imminente !",
-	burst_warn = "Explosion de flammes dans 5 sec. !",
+	burst_cooldown_warn = "Explosion de flammes imminente !",
+	burst_warn = "Explosion de flammes dans 5 sec. !",
 
 	enrage_trigger = "Goûtez à dix mille ans de haine !",
-	enrage_message = "Enragé !",
+	enrage_message = "Enragé !",
 
 	["Flame of Azzinoth"] = "Flamme d'Azzinoth",
 
-	--very first yell to start engage timer (à vérifer, + dans un futur patch "tes frères" à la place de "ton frère" (sans doute) http://forums.wow-europe.com/thread.html?topicId=3404772373&sid=2)
-	illi_start = "Akama. Ta duplicité n'est pas très étonnante. J'aurai dû vous massacrer depuis longtemps, toi et ton frère déformé.",
+	--very first yell to start engage timer (dans un futur patch "tes frères" à la place de "ton frère" (sans doute) http://forums.wow-europe.com/thread.html?topicId=3404772373&sid=2)
+	illi_start = "Akama. Ta duplicité n'est pas très étonnante. J'aurais dû vous massacrer depuis longtemps, toi et ton frère déformé.",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

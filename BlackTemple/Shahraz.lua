@@ -109,12 +109,12 @@ L:RegisterTranslations("frFR", function() return {
 
 	attraction = "Liaison fatale",
 	attraction_desc = "Préviens quand un joueur subit les effets de la Liaison fatale.",
-	attraction_message = "Liaison : %s",
+	attraction_message = "Liaison : %s",
 
 	debuff = "Affaiblissements",
 	debuff_desc = "Affiche l'affaiblissement actuel et le délai avant le prochain.",
 
-	enrage_warning = "Enrager imminent !",
+	enrage_warning = "Enrager imminent !",
 	enrage_message = "10% - Enragée",
 } end )
 

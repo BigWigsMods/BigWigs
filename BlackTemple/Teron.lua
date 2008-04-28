@@ -100,19 +100,19 @@ L:RegisterTranslations("frFR", function() return {
 
 	shadow = "Ombre de la mort",
 	shadow_desc = "Préviens quand un joueur subit les effets de l'Ombre de la mort.",
-	shadow_other = "Ombre : %s !",
-	shadow_you = "Ombre de la mort sur VOUS !",
+	shadow_other = "Ombre : %s !",
+	shadow_you = "Ombre de la mort sur VOUS !",
 
 	ghost = "Fantôme",
 	ghost_desc = "Indique la durée restante de la forme fantôme de chaque joueur.",
-	ghost_bar = "Fantôme : %s",
+	ghost_bar = "Fantôme : %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Ombre de la mort (nécessite d'être promu ou mieux).",
 
 	crush = "Ombres écrasantes",
 	crush_desc = "Préviens quand un joueur subit les effets des Ombres écrasantes.",
-	crush_warn = "Écrasé(s) : %s",
+	crush_warn = "Écrasé(s) : %s",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

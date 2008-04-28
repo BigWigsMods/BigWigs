@@ -135,27 +135,27 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Douleur et souffrance, voilà tout ce qui vous attend !",
 
 	enrage_start = "Enrager dans ~47 sec.",
-	enrage_message = "Enragé pendant 15 sec. !",
+	enrage_message = "Enragé pendant 15 sec. !",
 	enrage_bar = "<Enragé>",
 	enrage_next = "Fin de l'Enrager - Prochain dans ~32 sec.",
 	enrage_nextbar = "Prochain Enrager",
-	enrage_warning = "Enrager dans 5 sec. !",
+	enrage_warning = "Enrager dans 5 sec. !",
 
 	desire_trigger = "Vous pouvez avoir tout ce que vous désirez... en y mettant le prix.",
 	desire_cot = "Maev revola refir veni re daz maev azrathu il o kieldaz no veni ", --Curse of Tongues trigger
 	desire_start = "Essence du désir - Zéro mana dans 160 sec.",
 	desire_bar = "Zéro mana",
-	desire_warn = "Zéro mana dans 30 sec. !",
+	desire_warn = "Zéro mana dans 30 sec. !",
 
 	runeshield = "Bouclier runique",
 	runeshield_desc = "Délais concernant le Bouclier runique de l'Essence du désir.",
-	runeshield_message = "Bouclier runique !",
+	runeshield_message = "Bouclier runique !",
 	runeshield_nextbar = "Prochain Bouclier runique",
 	runeshield_warn = "Bouclier runique dans ~3 sec.",
 
 	deaden = "Emousser",
 	deaden_desc = "Préviens quand Emousser est incanté.",
-	deaden_message = "Emousser en incantation !",
+	deaden_message = "Emousser en incantation !",
 	deaden_warn = "Emousser dans ~5 sec.",
 	deaden_nextbar = "Prochain Emousser",
 
