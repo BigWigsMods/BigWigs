@@ -122,12 +122,12 @@ L:RegisterTranslations("deDE", function() return {
 	gas_message = "Wirkt Gasnova!",
 	gas_bar = "~Gasnova-Cooldown",
 
-	--vapor = "Demonic Vapor",
-	--vapor_desc = "Warn who gets Demonic Vapor.",
-	--vapor_message = "Vapor: %s",
+	vapor = "Dämonischer Dampf",
+	vapor_desc = "Warnt wer von Dämonischer Dampf betroffen ist.",
+	vapor_message = "Dampf: %s",
 
-	--icon = "Icon",
-	--icon_desc = "Place a Raid Target Icon on players with Encapsulate or Demonic Vapor. (requires promoted or higher)",
+	icon = "Schlachtzug Symbol",
+	icon_desc = "Plaziert ein Schlachtzug Symbol auf Spielern die von Einschließen oder Demonic Vapor betroffen sind (benötigt Assistent oder höher)",
 
 	phase = "Phasen",
 	phase_desc = "Abheben und Landung ankündigen.",
