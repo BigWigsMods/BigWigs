@@ -10,6 +10,7 @@ local playerName = nil
 local coreSyncs = {
 	BossEngaged = 5,
 	BossDeath = 5,
+	MultiBossDeath = 5,
 }
 
 ----------------------------------
