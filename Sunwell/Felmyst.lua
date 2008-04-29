@@ -169,7 +169,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	phase = "阶段警报",
 	phase_desc = "当升空或降落阶段时发出警报。",
-	airphase_trigger = "",--need combatlog
+	airphase_trigger = "我比以前更强大了！",
 	takeoff_bar = "升空",
 	takeoff_message = "5秒后，升空！",
 	landing_bar = "降落",
