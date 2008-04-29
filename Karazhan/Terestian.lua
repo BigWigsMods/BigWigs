@@ -59,20 +59,20 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "^Ah, vous arrivez juste à temps.",
 
 	sacrifice = "Sacrifice",
-	sacrifice_desc = "Préviens quand un joueur est sacrifié.",
-	sacrifice_message = "%s est sacrifié !",
-	sacrifice_bar = "Sacrifice : %s",
-	sacrifice_soon = "Sacrifice imminent !",
+	sacrifice_desc = "Prévient quand un joueur est sacrifié.",
+	sacrifice_message = "%s est sacrifié !",
+	sacrifice_bar = "Sacrifice : %s",
+	sacrifice_soon = "Sacrifice imminent !",
 	sacrifice_soonbar = "~Sacrifice probable",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le joueur sacrifié (nécessite d'être promu ou mieux).",
 
 	weak = "Affaibli",
-	weak_desc = "Préviens quand Terestian est affaibli.",
-	weak_message = "Affaibli pendant ~45 sec. !",
-	weak_warning1 = "Fin de l'Affaiblissement dans ~5 sec. !",
-	weak_warning2 = "Affaiblissement terminé !",
+	weak_desc = "Prévient quand Terestian est affaibli.",
+	weak_message = "Affaibli pendant ~45 sec. !",
+	weak_warning1 = "Fin de l'Affaiblissement dans ~5 sec. !",
+	weak_warning2 = "Affaiblissement terminé !",
 	weak_bar = "~Fin Affaiblissement",
 } end )
 

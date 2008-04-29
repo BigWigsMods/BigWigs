@@ -56,19 +56,19 @@ L:RegisterTranslations("esES", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	doom = "Destin funeste",
-	doom_desc = "Préviens quand un joueur subit les effets du Destin funeste.",
+	doom_desc = "Prévient quand un joueur subit les effets du Destin funeste.",
 	doom_other = "Destin funeste sur %s",
-	doom_you = "Destin funeste sur VOUS !",
+	doom_you = "Destin funeste sur VOUS !",
 
 	howl = "Hurlement d'Azgalor",
-	howl_desc = "Préviens de l'arrivée des Hurlements d'Azgalor.",
-	howl_bar = "~Cooldown Hurlement",
+	howl_desc = "Prévient de l'arrivée des Hurlements d'Azgalor.",
+	howl_bar = "~Recharge Hurlement",
 	howl_message = "Silence de zone",
-	howl_warning = "Silence de zone imminent !",
+	howl_warning = "Silence de zone imminent !",
 
 	fire = "Pluie de feu",
-	fire_desc = "Préviens quand la Pluie de feu est sur vous.",
-	fire_you = "Pluie de feu sur VOUS !",
+	fire_desc = "Prévient quand la Pluie de feu est sur vous.",
+	fire_you = "Pluie de feu sur VOUS !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Destin funeste (nécessite d'être promu ou mieux).",

@@ -54,18 +54,18 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Votre comportement est inacceptable.",
-	engage_message = "Damoiselle engagée ! Repentir dans ~33 sec.",
+	engage_message = "Damoiselle engagée ! Repentir dans ~33 sec.",
 
 	repentance = "Repentir",
-	repentance_desc = "Préviens quand la Damoiselle de vertu est susceptible d'utiliser son Repentir.",
-	repentance_message = "Repentir ! Prochain pas avant ~33 sec.",
-	repentance_warning = "Fin du cooldown Repentir - Imminent !",
+	repentance_desc = "Prévient quand la Damoiselle de vertu est susceptible d'utiliser son Repentir.",
+	repentance_message = "Repentir ! Prochain pas avant ~33 sec.",
+	repentance_warning = "Fin du temps de recharge de Repentir - Imminent !",
 	repentance_bar = "Repentir",
-	repentance_nextbar = "~Cooldown Repentir",
+	repentance_nextbar = "~Recharge Repentir",
 
 	holyfire = "Flammes sacrées",
-	holyfire_desc = "Préviens quand un joueur subit les effets des Flammes sacrées.",
-	holyfire_message = "Flammes sacrées : %s",
+	holyfire_desc = "Prévient quand un joueur subit les effets des Flammes sacrées.",
+	holyfire_message = "Flammes sacrées : %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par les Flammes sacrées (nécessite d'être promu ou mieux).",

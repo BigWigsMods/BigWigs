@@ -37,22 +37,22 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("frFR", function() return {
 	berserk_trigger = "L'accès à la Ménagerie est réservé aux invités.",
 
-	enrage_message = "Enragé !",
-	enrage_warning = "Bientôt enragé !",
+	enrage_message = "Enrager !",
+	enrage_warning = "Enrager imminent !",
 
 	weaken = "Affaiblissement",
-	weaken_desc = "Préviens quand le Conservateur est affaibli.",
-	weaken_message = "Evocation - Affaibli pendant 20 sec. !",
+	weaken_desc = "Prévient quand le Conservateur est affaibli.",
+	weaken_message = "Evocation - Affaibli pendant 20 sec. !",
 	weaken_bar = "Evocation",
-	weaken_fade_message = "Evocation terminée - Fin de l'Affaiblissement !",
-	weaken_fade_warning = "Evocation terminée dans 5 sec. !",
+	weaken_fade_message = "Evocation terminée - Fin de l'Affaiblissement !",
+	weaken_fade_warning = "Evocation terminée dans 5 sec. !",
 
 	weaktime = "Compte à rebours Affaiblissement",
 	weaktime_desc = "Affiche des avertissements et une barre temporelle indiquant le prochain Affaiblissement.",
 	weaktime_message1 = "Evocation dans ~10 sec.",
 	weaktime_message2 = "Evocation dans ~30 sec.",
 	weaktime_message3 = "Evocation dans ~70 sec.",
-	weaktime_bar = "~Cooldown Evocation",
+	weaktime_bar = "~Recharge Evocation",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

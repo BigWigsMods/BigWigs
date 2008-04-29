@@ -229,7 +229,7 @@ L:RegisterTranslations("frFR", function() return {
 	encaps = "Enfermer",
 	encaps_desc = "Prévient quand un joueur subit les effets d'Enfermer.",
 	encaps_warning = "Enfermer dans ~5 sec. !",
-	encaps_message = "Enfermer : %s",
+	encaps_message = "Enfermer : %s",
 
 	gas = "Nova de gaz",
 	gas_desc = "Prévient quand la Nova de gaz est incantée.",
@@ -260,7 +260,7 @@ L:RegisterTranslations("frFR", function() return {
 	dispel_desc = "Si vous êtes prêtre, ceci affichera en /dire les échecs de votre Dissipation de masse.",
 	dispel_fail = "Échec(s) Dissipation de masse : ",
 
-	warning = "ATTENTION\n--\nPour que l'analyse des Enfermer fonctionne correctement, vous devez indiquer votre tank dans la liste des tanks principaux de Blizzard !",
+	warning = "ATTENTION\n--\nPour que l'analyse des Enfermer fonctionne correctement, vous devez indiquer votre tank dans la liste des tanks principaux de Blizzard !",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

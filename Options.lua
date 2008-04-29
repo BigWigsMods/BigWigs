@@ -37,7 +37,7 @@ L:RegisterTranslations("frFR", function() return {
 	["|cffeda55fClick|r to enable."] = "|cffeda55fClic|r pour activer.",
 	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Clic|r pour ouvrir la fenêtre de configuration.",
 	["Big Wigs is currently disabled."] = "Big Wigs est actuellement désactivé.",
-	["Active boss modules:"] = "Modules de boss actifs :",
+	["Active boss modules:"] = "Modules de boss actifs :",
 	["All running modules have been reset."] = "Tous les modules actifs ont été réinitialisés.",
 	["All running modules have been disabled."] = "Tous les modules actifs ont été désactivés.",
 	["Menu"] = "Menu",

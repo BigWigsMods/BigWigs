@@ -40,8 +40,8 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Les esprits du vent, ils vont être votre fin !",
 
 	flame = "Souffle de flammes",
-	flame_desc = "Préviens sur qui Jan'alai incante son Souffle de flammes.",
-	flame_message = "Souffle de flammes sur %s !",
+	flame_desc = "Prévient sur qui Jan'alai incante son Souffle de flammes.",
+	flame_message = "Souffle de flammes sur %s !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Souffle de flammes (nécessite d'être promu ou mieux).",
@@ -49,12 +49,12 @@ L:RegisterTranslations("frFR", function() return {
 	bomb = "Bombes incendiaires",
 	bomb_desc = "Affiche les délais concernant les bombes incendiaires.",
 	bomb_trigger = "J'vais vous cramer !",
-	bomb_message = "Arrivée des bombes incendiaires !",
+	bomb_message = "Arrivée des bombes incendiaires !",
 
 	adds = "Perce-coques",
-	adds_desc = "Préviens de l'arrivée des perce-coques.",
+	adds_desc = "Prévient de l'arrivée des perce-coques.",
 	adds_trigger = "Sont où mes perce-coque ? Au boulot ! Faut qu'ça éclose !",
-	adds_message = "Arrivée des perce-coques !",
+	adds_message = "Arrivée des perce-coques !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

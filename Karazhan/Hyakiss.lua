@@ -27,9 +27,9 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	web = "Rets",
-	web_desc = "Préviens quand un joueur se fait piégé par les Rets.",
-	web_message = "%s a été piégé par les Rets !",
-	web_bar = "Rets : %s",
+	web_desc = "Prévient quand un joueur se fait piégé par les Rets.",
+	web_message = "%s a été piégé par les Rets !",
+	web_bar = "Rets : %s",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

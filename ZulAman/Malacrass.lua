@@ -99,27 +99,27 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "L'ombre, elle va vous tomber dessus.",
 
 	bolts = "Eclairs spirituels",
-	bolts_desc = "Préviens quand Malacrass commence à canaliser ses Eclairs spirituels.",
-	bolts_message = "Arrivée des Eclairs spirituels !",
-	bolts_warning = "Eclairs spirituels dans 5 sec. !",
+	bolts_desc = "Prévient quand Malacrass commence à canaliser ses Eclairs spirituels.",
+	bolts_message = "Arrivée des Eclairs spirituels !",
+	bolts_warning = "Eclairs spirituels dans 5 sec. !",
 	bolts_nextbar = "Prochains Eclairs spirituels",
 
 	soul = "Siphonner l'âme",
-	soul_desc = "Préviens quand un joueur subit les effets de Siphonner l'âme.",
-	soul_message = "Siphon : %s",
+	soul_desc = "Prévient quand un joueur subit les effets de Siphonner l'âme.",
+	soul_message = "Siphon : %s",
 
 	totem = "Totem",
-	totem_desc = "Préviens quand un Totem Nova de feu est incanté.",
-	totem_message = "Totem Nova de feu !",
+	totem_desc = "Prévient quand un Totem Nova de feu est incanté.",
+	totem_message = "Totem Nova de feu !",
 
 	heal = "Soin",
-	heal_desc = "Préviens quand Malacrass incante un soin.",
-	heal_message = "Incante un soin !",
+	heal_desc = "Prévient quand Malacrass incante un soin.",
+	heal_message = "Incante un soin !",
 
 	consecration = "Consécration",
-	consecration_desc = "Préviens quand la Consécration est incantée.",
+	consecration_desc = "Prévient quand la Consécration est incantée.",
 	consecration_bar = "Consécration (%d)",
-	consecration_warn = "Consécration incantée !",
+	consecration_warn = "Consécration incantée !",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

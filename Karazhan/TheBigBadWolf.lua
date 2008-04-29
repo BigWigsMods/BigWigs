@@ -45,14 +45,14 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	youriding = "Chaperon Rouge (vous)",
-	youriding_desc = "Préviens quand vous êtes le Chaperon Rouge.",
-	riding_youwarn = "Vous êtes le Chaperon Rouge !",
+	youriding_desc = "Prévient quand vous êtes le Chaperon Rouge.",
+	riding_youwarn = "Vous êtes le Chaperon Rouge !",
 
 	elseriding = "Chaperon Rouge (les autres)",
-	elseriding_desc = "Préviens quand les autres sont le Chaperon Rouge.",
-	riding_otherwarn = "%s est le Chaperon Rouge !",
+	elseriding_desc = "Prévient quand les autres sont le Chaperon Rouge.",
+	riding_otherwarn = "%s est le Chaperon Rouge !",
 
-	riding_bar = "Chaperon : %s",
+	riding_bar = "Chaperon : %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur la personne qui est le Chaperon Rouge (nécessite d'être promu ou mieux).",

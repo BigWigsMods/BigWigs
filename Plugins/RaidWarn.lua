@@ -128,7 +128,7 @@ L:RegisterTranslations("frFR", function() return {
 	["Toggle showing whispers sent by BigWigs locally, for example when players have things like the plague and similar."] = "Affiche ou non localement les chuchotements envoyés par BigWigs, par exemple quand les joueurs sont affectés par des choses telles que la peste ou similaire.",
 
 	["Broadcast to chat"] = "Diffuser sur le canal",
-	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "Diffuse ou non les messages soit sur le canal Groupe, soit sur le canal Raid au lieu de l'Avertissement Raid.\n\nMême chose ici : vous ne verrez pas vos propres messages à moins que Bloquer BossMods ne soit désactivé.",
+	["Toggle broadcasting messages to either party or raid chat instead of the raid warning channel for boss messages.\n\nSame thing here; you will not see your own messages unless BossBlock is disabled."] = "Diffuse ou non les messages soit sur le canal Groupe, soit sur le canal Raid au lieu de l'Avertissement Raid.\n\nMême chose ici : vous ne verrez pas vos propres messages à moins que Bloquer BossMods ne soit désactivé.",
 
 	desc = "Vous permet de déterminer où BigWigs doit envoyer ses messages en plus de ses messages locaux.",
 } end )

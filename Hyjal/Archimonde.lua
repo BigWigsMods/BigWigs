@@ -89,27 +89,27 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Votre résistance est futile.",
 
 	grip = "Poigne de la Légion",
-	grip_desc = "Préviens quand un joueur subit les effets de la Poigne de la Légion.",
-	grip_you = "Poigne sur VOUS !",
-	grip_other = "Poigne sur %s !",
+	grip_desc = "Prévient quand un joueur subit les effets de la Poigne de la Légion.",
+	grip_you = "Poigne sur VOUS !",
+	grip_other = "Poigne sur %s !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par la Poigne de la Légion.",
 
 	fear = "Peur",
 	fear_desc = "Délais concernant les Peurs.",
-	fear_message = "Peur, prochain dans ~42 sec. !",
-	fear_bar = "~Cooldown Peur",
-	fear_warning = "Fin du cooldown Peur - Imminent !",
+	fear_message = "Peur, prochain dans ~42 sec. !",
+	fear_bar = "~Recharge Peur",
+	fear_warning = "Fin du temps de recharge de Peur - Imminent !",
 
 	burst = "Jaillissement d'air",
-	burst_desc = "Préviens sur qui le Jaillissement d'air est incanté.",
+	burst_desc = "Prévient sur qui le Jaillissement d'air est incanté.",
 	burst_other = "Jaillissement d'air sur -%s-",
-	burst_you = "Jaillissement d'air sur VOUS !",
+	burst_you = "Jaillissement d'air sur VOUS !",
 
 	burstsay = "Dire - Jaillissement d'air",
-	burstsay_desc = "Fais dire à votre personnage que vous êtes ciblé par le Jaillissement d'air quand c'est le cas, afin d'aider les membres proches ayant les bulles de dialogue d'activés.",
-	burstsay_message = "Jaillissement d'air sur moi !",
+	burstsay_desc = "Fait dire à votre personnage que vous êtes ciblé par le Jaillissement d'air quand c'est le cas, afin d'aider les membres proches ayant les bulles de dialogue d'activés.",
+	burstsay_message = "Jaillissement d'air sur moi !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

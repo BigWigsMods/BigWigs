@@ -35,23 +35,23 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Hum. Des visiteurs imprévus. Il va falloir se préparer.",
-	engage_message = "Moroes engagé - Disparition dans ~35 sec. !",
+	engage_message = "Moroes engagé - Disparition dans ~35 sec. !",
 
 	vanish = "Disparition",
-	vanish_desc = "Préviens quand Moroes est susceptible de disparaître.",
-	vanish_message = "Disparu ! Prochain dans ~35 sec. !",
-	vanish_warning = "Disparition imminente !",
-	vanish_bar = "~Cooldown Disparition",
+	vanish_desc = "Prévient quand Moroes est susceptible de disparaître.",
+	vanish_message = "Disparu ! Prochain dans ~35 sec. !",
+	vanish_warning = "Disparition imminente !",
+	vanish_bar = "~Recharge Disparition",
 
 	garrote = "Garrot",
-	garrote_desc = "Préviens quand un joueur subit les effets du Garrot.",
-	garrote_message = "Garrot : %s",
+	garrote_desc = "Prévient quand un joueur subit les effets du Garrot.",
+	garrote_message = "Garrot : %s",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Garrot (nécessite d'être promu ou mieux).",
 
-	enrage_message = "Enragé !",
-	enrage_warning = "Bientôt enragé !",
+	enrage_message = "Enrager !",
+	enrage_warning = "Enrager imminent !",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

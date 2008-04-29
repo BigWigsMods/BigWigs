@@ -88,33 +88,33 @@ L:RegisterTranslations("frFR", function() return {
 	engage_message = "Phase 1 - Forme trolle",
 
 	form = "Changement de forme",
-	form_desc = "Préviens quand Zul'jin change de forme.",
+	form_desc = "Prévient quand Zul'jin change de forme.",
 	form_bear_trigger = "J'ai des nouveaux tours… comme mon frère ours…",
-	form_bear_message = "80% Phase 2 - Forme d'ours !",
+	form_bear_message = "80% Phase 2 - Forme d'ours !",
 	form_eagle_trigger = "L'aigle, il vous trouvera partout !",
-	form_eagle_message = "60% Phase 3 - Forme d'aigle !",
+	form_eagle_message = "60% Phase 3 - Forme d'aigle !",
 	form_lynx_trigger = "J'vous présente mes nouveaux frères : griffe et croc !",
-	form_lynx_message = "40% Phase 4 - Forme de lynx !",
+	form_lynx_message = "40% Phase 4 - Forme de lynx !",
 	form_dragonhawk_trigger = "Pas besoin d'lever les yeux au ciel pour voir l'faucon-dragon !",
-	form_dragonhawk_message = "20% Phase 5 - Forme de faucon-dragon !",
+	form_dragonhawk_message = "20% Phase 5 - Forme de faucon-dragon !",
 
 	throw = "Lancer effroyable",
-	throw_desc = "Préviens quand un joueur subit les effets du Lancer effroyable.",
+	throw_desc = "Prévient quand un joueur subit les effets du Lancer effroyable.",
 	throw_message = "%s a le Lancer effroyable",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par le Lancer effroyable ou la Rage de griffes (nécessite d'être promu ou mieux).",
 
 	paralyze = "Paralysie",
-	paralyze_desc = "Préviens de l'arrivée de la Paralysie progressive et de la Paralysie qui s'en suit.",
-	paralyze_warning = "Paralysie progressive - Paralysie totale dans 5 sec. !",
-	paralyze_message = "Paralysés !",
+	paralyze_desc = "Prévient de l'arrivée de la Paralysie progressive et de la Paralysie qui s'en suit.",
+	paralyze_warning = "Paralysie progressive - Paralysie totale dans 5 sec. !",
+	paralyze_message = "Paralysés !",
 	paralyze_bar = "Paralysie effective",
 	paralyze_warnbar = "Prochaine Paralysie",
 	paralyze_soon = "Paralysie progressive dans 5 sec.",
 
 	claw = "Rage de griffes",
-	claw_desc = "Préviens quand un joueur subit les effets de la Rage de griffes.",
+	claw_desc = "Prévient quand un joueur subit les effets de la Rage de griffes.",
 	claw_message = "Rage de griffes sur %s",
 } end )
 

@@ -61,30 +61,30 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Venez… mourir.",
-	engage_message = "%s engagé !",
+	engage_message = "%s engagé !",
 
 	grow = "Croissance",
-	grow_desc = "Compte les croissances de Grull et préviens de ses arrivées.",
-	grow_message = "Croissance : (%d)",
+	grow_desc = "Compte les croissances de Grull et prévient de ses arrivées.",
+	grow_message = "Croissance : (%d)",
 	grow_bar = "Croissance (%d)",
 
 	grasp = "Emprise",
 	grasp_desc = "Avertissements et délais pour Emprise du seigneur gronn.",
-	grasp_message = "Heurt terrestre - Emprise dans ~10 sec !",
+	grasp_message = "Heurt terrestre - Emprise dans ~10 sec !",
 	grasp_warning = "Heurt terrestre imminent",
 	grasp_bar = "~Cooldown Heurt terrestre",
 
 	cavein = "Eboulement sur vous",
-	cavein_desc = "Préviens quand vous êtes sous un éboulement.",
-	cavein_message = "Eboulement sur VOUS !",
+	cavein_desc = "Prévient quand vous subissez les effets de l'Eboulement.",
+	cavein_message = "Eboulement sur VOUS !",
 
 	silence = "Silence",
-	silence_desc = "Préviens quand Gruul lance son Silence de zone (Réverbération).",
+	silence_desc = "Prévient quand Gruul lance son Silence de zone (Réverbération).",
 	silence_message = "Silence de zone",
-	silence_warning = "Silence de zone imminent !",
-	silence_bar = "~Cooldown Silence",
+	silence_warning = "Silence de zone imminent !",
+	silence_bar = "~Recharge Silence",
 
-	shatter_message = "Fracasser !",
+	shatter_message = "Fracasser !",
 } end)
 
 L:RegisterTranslations("deDE", function() return {

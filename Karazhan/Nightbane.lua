@@ -78,33 +78,33 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	fear = "Rugissement",
-	fear_desc = "Préviens quand Plaie-de-nuit lance son Rugissement puissant.",
-	fear_message = "Rugissement dans 2 sec. !",
+	fear_desc = "Prévient quand Plaie-de-nuit lance son Rugissement puissant.",
+	fear_message = "Rugissement dans 2 sec. !",
 	fear_warning = "Rugissement imminent",
-	fear_bar = "Rugissement !",
-	fear_nextbar = "~Cooldown Rugissement",
+	fear_bar = "Rugissement !",
+	fear_nextbar = "~Recharge Rugissement",
 
 	charr = "Terre calcinée sur vous",
-	charr_desc = "Préviens quand vous êtes dans la Terre calcinée.",
-	charr_message = "Terre calcinée sur VOUS !",
+	charr_desc = "Prévient quand vous êtes dans la Terre calcinée.",
+	charr_message = "Terre calcinée sur VOUS !",
 
 	phase = "Phases",
-	phase_desc = "Préviens quand Plaie-de-nuit passe d'une phase à l'autre.",
+	phase_desc = "Prévient quand Plaie-de-nuit passe d'une phase à l'autre.",
 	airphase_trigger = "Misérable vermine. Je vais vous exterminer des airs !",
 	landphase_trigger1 = "Assez ! Je vais atterrir et vous écraser moi-même !",
 	landphase_trigger2 = "Insectes ! Je vais vous montrer de quel bois je me chauffe !",
-	airphase_message = "Décollage !",
-	landphase_message = "Atterrissage !",
+	airphase_message = "Décollage !",
+	landphase_message = "Atterrissage !",
 	summon_trigger = "Dans le lointain, un être ancien s'éveille…",
 
 	engage = "Engagement",
-	engage_desc = "Préviens quand Plaie-de-nuit est engagé.",
+	engage_desc = "Prévient quand Plaie-de-nuit est engagé.",
 	engage_trigger = "Fous ! Je vais mettre un terme rapide à vos souffrances !",
 	engage_message = "%s engagé",
 
 	bones = "Pluie d'os",
-	bones_desc = "Préviens quand la Pluie d'os est canalisée.",
-	bones_message = "Pluie d'os de zone !",
+	bones_desc = "Prévient quand la Pluie d'os est canalisée.",
+	bones_message = "Pluie d'os de zone !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

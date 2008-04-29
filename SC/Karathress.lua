@@ -86,13 +86,13 @@ L:RegisterTranslations("frFR", function() return {
 	enrage_trigger = "Gardes, en position ! Nous avons de la visite…",
 
 	totem = "Totem crache-feu",
-	totem_desc = "Préviens quand un Totem crache-feu est posé et indique son possesseur.",
-	totem_message1 = "Marevess : Totem crache-feu",
-	totem_message2 = "Karathress : Totem crache-feu",
+	totem_desc = "Prévient quand un Totem crache-feu est posé et indique son possesseur.",
+	totem_message1 = "Marevess : Totem crache-feu",
+	totem_message2 = "Karathress : Totem crache-feu",
 
 	heal = "Soins",
-	heal_desc = "Préviens quand Caribdis incante un soin.",
-	heal_message = "Caribdis incante un soin !",
+	heal_desc = "Prévient quand Caribdis incante un soin.",
+	heal_message = "Caribdis incante un soin !",
 
 	["Fathom-Guard Sharkkis"] = "Garde-fonds Squallis", --hunter
 	["Fathom-Guard Tidalvess"] = "Garde-fonds Marevess", --shaman

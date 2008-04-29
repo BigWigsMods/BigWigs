@@ -51,12 +51,12 @@ L:RegisterTranslations("frFR", function() return {
 
 	spawns = "Délais d'activité",
 	spawns_desc = "Affiche plusieurs barres indiquant quand les différents personnages passent à l'action.",
-	spawns_bar = "%s attaque !",
+	spawns_bar = "%s attaque !",
 	spawns_warning = "%s dans 5 sec.",
 
 	light = "Chaîne d'éclairs",
-	light_desc = "Préviens quand la Chaîne d'éclairs est incantée.",
-	light_message = "Chaîne d'éclairs !",
+	light_desc = "Prévient quand la Chaîne d'éclairs est incantée.",
+	light_message = "Chaîne d'éclairs !",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

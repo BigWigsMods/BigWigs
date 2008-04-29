@@ -129,22 +129,22 @@ L:RegisterTranslations("frFR", function() return {
 	mark_desc = "Affiche les alertes et les compteurs des marques.",
 
 	stance = "Changements d'état",
-	stance_desc = "Préviens quand Hydross l'Instable change d'état.",
-	poison_stance = "Hydross est maintenant empoisonné !",
-	water_stance = "Hydross est de nouveau sain !",
+	stance_desc = "Prévient quand Hydross l'Instable change d'état.",
+	poison_stance = "Hydross est maintenant empoisonné !",
+	water_stance = "Hydross est de nouveau sain !",
 
 	sludge = "Vase abominable",
-	sludge_desc = "Préviens quand un joueur est affecté par la Vase abominable.",
-	sludge_message = "Vase abominable : %s",
+	sludge_desc = "Prévient quand un joueur est affecté par la Vase abominable.",
+	sludge_message = "Vase abominable : %s",
 
 	tomb = "Tombe aquatique",
-	tomb_desc = "Préviens quand des joueurs sont affectés par la Tombe aquatique.",
-	tomb_message = "Tombe aquatique : %s",
+	tomb_desc = "Prévient quand des joueurs sont affectés par la Tombe aquatique.",
+	tomb_message = "Tombe aquatique : %s",
 
 	icon = "Icône Vase abominable",
 	icon_desc = "Place une icône de raid sur le joueur affecté par la Vase abominable (nécessite d'être promu ou mieux).",
 
-	debuff_warn = "Marque à %s%% !",
+	debuff_warn = "Marque à %s%% !",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

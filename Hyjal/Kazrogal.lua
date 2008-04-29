@@ -56,7 +56,7 @@ L:RegisterTranslations("frFR", function() return {
 	mark = "Marque de Kaz'rogal",
 	mark_desc = "Affiche une barre temporelle pour les Marques de Kaz'rogal.",
 	mark_bar = "Prochaine marque (%d)",
-	mark_warn = "Marque dans 5 sec. !",
+	mark_warn = "Marque dans 5 sec. !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

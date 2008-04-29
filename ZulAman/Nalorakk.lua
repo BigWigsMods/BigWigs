@@ -32,17 +32,17 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Vous s'rez mort bien vite !",
-	engage_message = "%s engagé - Forme d'ours dans 45 sec. !",
+	engage_message = "%s engagé - Forme d'ours dans 45 sec. !",
 
 	phase = "Phase",
-	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
+	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	phase_bear = "Vous d'mandez la bête, j'vais vous donner la bête !",
 	phase_normal = "Place, voilà le Nalorakk !",
-	normal_message = "Phase normale !",
+	normal_message = "Phase normale !",
 	normal_bar = "Prochaine phase ours",
 	normal_soon = "Phase normale dans 10 sec.",
 	normal_warning = "Phase normale dans 5 sec.",
-	bear_message = "Phase ours !",
+	bear_message = "Phase ours !",
 	bear_bar = "Prochaine phase normale",
 	bear_soon = "Phase ours dans 10 sec.",
 	bear_warning = "Phase ours dans 5 sec.",

@@ -121,9 +121,9 @@ L:RegisterTranslations("esES", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger1 = "Vous voulez me tester ?",
-	engage_trigger2 = "Allons donc... quelle grossièreté. Bandal !", -- à vérifier
-	engage_trigger3 = "J'ai mieux à faire...", -- à vérifier
-	engage_trigger4 = "Fuyez ou mourez !", -- à vérifier
+	engage_trigger2 = "Allons donc... quelle grossièreté. Bandal !",
+	engage_trigger3 = "J'ai mieux à faire...",
+	engage_trigger4 = "Fuyez ou mourez !",
 
 	vanish = "Disparition",
 	vanish_desc = "Délais estimés concernant la Disparition de Veras.",

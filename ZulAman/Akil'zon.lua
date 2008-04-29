@@ -52,17 +52,17 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Moi, chuis le prédateur ! Vous, z'êtes la proie…",
-	engage_message = "%s engagé - Orage dans ~55 sec. !",
+	engage_message = "%s engagé - Orage dans ~55 sec. !",
 
 	elec = "Orage électrique",
-	elec_desc = "Préviens quand un joueur subit les effets de l'Orage électrique.",
-	elec_bar = "~Cooldown Orage",
-	elec_message = "Orage sur %s !",
-	elec_warning = "Orage imminent !",
+	elec_desc = "Prévient quand un joueur subit les effets de l'Orage électrique.",
+	elec_bar = "~Recharge Orage",
+	elec_message = "Orage sur %s !",
+	elec_warning = "Orage imminent !",
 
 	ping = "Ping",
 	ping_desc = "Indique votre position actuelle sur la minicarte si vous subissez les effets de l'Orage électrique.",
-	ping_message = "Orage - Position signalée sur la minicarte !",
+	ping_message = "Orage - Position signalée sur la minicarte !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Orage électrique (nécessite d'être promu ou mieux).",

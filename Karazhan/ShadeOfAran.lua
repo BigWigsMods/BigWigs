@@ -74,30 +74,30 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	adds = "Elémentaires",
-	adds_desc = "Préviens quand les élémentaires d'eau apparaissent.",
-	adds_message = "Arrivée des élémentaires !",
+	adds_desc = "Prévient quand les élémentaires d'eau apparaissent.",
+	adds_message = "Arrivée des élémentaires !",
 	adds_warning = "Elémentaires imminent",
 	adds_bar = "Fin des élémentaires",
 
 	drink = "Boisson",
-	drink_desc = "Préviens quand l'Ombre d'Aran commence à boire.",
-	drink_warning = "Mana faible - Boisson imminente !",
-	drink_message = "Boisson - Polymorphisme de zone !",
+	drink_desc = "Prévient quand l'Ombre d'Aran commence à boire.",
+	drink_warning = "Mana faible - Boisson imminente !",
+	drink_message = "Boisson - Polymorphisme de zone !",
 	drink_bar = "Super Explosion pyro.",
 
 	blizzard = "Blizzard",
-	blizzard_desc = "Préviens quand Blizzard est incanté.",
-	blizzard_message = "Blizzard !",
+	blizzard_desc = "Prévient quand Blizzard est incanté.",
+	blizzard_message = "Blizzard !",
 
 	pull = "Attraction/Sort de zone",
-	pull_desc = "Préviens de l'attraction magnétique et de l'explosion des arcanes.",
-	pull_message = "Explosion des arcanes !",
+	pull_desc = "Prévient de l'attraction magnétique et de l'explosion des arcanes.",
+	pull_message = "Explosion des arcanes !",
 	pull_bar = "Explosion des arcanes",
 
 	flame = "Couronne de flammes",
-	flame_desc = "Préviens quand Couronne de flammes est incanté.",
-	flame_warning = "Incante : Couronne de flammes !",
-	flame_message = "Couronne de flammes ! %s",
+	flame_desc = "Prévient quand Couronne de flammes est incanté.",
+	flame_warning = "Incante : Couronne de flammes !",
+	flame_message = "Couronne de flammes ! %s",
 	flame_bar = "Couronne de flammes",
 } end )
 

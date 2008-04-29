@@ -109,15 +109,15 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Alerte ! Vous êtes désigné pour extermination.",
 
 	orbyou = "Orbe des arcanes sur vous",
-	orbyou_desc = "Préviens quand vous êtes ciblé par l'Orbe des arcanes.",
-	orb_you = "Orbe des arcanes sur VOUS !",
+	orbyou_desc = "Prévient quand vous êtes ciblé par l'Orbe des arcanes.",
+	orb_you = "Orbe des arcanes sur VOUS !",
 
 	orbsay = "Dire - Orbe des arcanes",
 	orbsay_desc = "Fais dire à votre personnage qu'il est ciblé par l'Orbe des arcanes quand c'est le cas, afin d'aider les membres proches ayant les bulles de dialogue d'activés.",
-	orb_say = "Orbe sur moi !",
+	orb_say = "Orbe sur moi !",
 
 	orbother = "Orbe des arcanes sur les autres",
-	orbother_desc = "Préviens quand les autres sont ciblés par l'Orbe des arcanes.",
+	orbother_desc = "Prévient quand les autres sont ciblés par l'Orbe des arcanes.",
 	orb_other = "Orbe(%s)",
 
 	icon = "Icône",
@@ -125,12 +125,12 @@ L:RegisterTranslations("frFR", function() return {
 
 	pounding = "Martèlement",
 	pounding_desc = "Affiche des barres temporelles pour les Martèlements.",
-	pounding_nextbar = "~Cooldown Martèlement",
+	pounding_nextbar = "~Recharge Martèlement",
 
 	knock = "Repousser au loin",
 	knock_desc = "Affiche une barre temporelle indiquant quand le Saccageur du Vide est suceptible d'utiliser son Repousser au loin.",
-	knock_bar = "~Cooldown Repousser au loin",
-	knock_message = "Repousser au loin : %s",
+	knock_bar = "~Recharge Repousser au loin",
+	knock_message = "Repousser au loin : %s",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

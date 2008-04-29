@@ -41,14 +41,14 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	phase = "Phase",
-	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
+	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	phase2_trigger = "%s appelle son maître !",
 	phase2_message = "Phase 2 - %s & Attumen",
 	phase3_trigger = "Viens, Minuit, allons disperser cette insignifiante racaille !",
 	phase3_message = "Phase 3 - %s",
 
 	curse = "Tanks maudits",
-	curse_desc = "Préviens quand un tank est maudit par la Présence immatérielle.",
+	curse_desc = "Prévient quand un tank est maudit par la Présence immatérielle.",
 	curse_message = "Tank maudit - %s",
 } end)
 

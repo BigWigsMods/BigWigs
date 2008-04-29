@@ -61,19 +61,19 @@ L:RegisterTranslations("frFR", function() return {
 
 	enrage_trigger = "%s devient fou furieux !",
 	enrage_warning1 = "%s engagé - Enrager dans 50-60 sec.",
-	enrage_warning2 = "Enrager imminent !",
-	enrage_message = "Enragé pendant 10 sec. !",
+	enrage_warning2 = "Enrager imminent !",
+	enrage_message = "Enragé pendant 10 sec. !",
 	enrage_finished = "Fin de l'Enrager - Prochain dans 50-60 sec.",
 	enrage_bar = "~Enrager",
 	enraged_bar = "<Enragé>",
 
 	mark = "Marque",
-	mark_desc = "Préviens quand vous avez la Marque de Kazzak.",
+	mark_desc = "Prévient quand vous avez la Marque de Kazzak.",
 	mark_message = "Marque de Kazzak sur VOUS",
 
 	twist = "Reflet tordu",
-	twist_desc = "Préviens quand quelqu'un subit les effets de Reflet tordu.",
-	twist_message = "Reflet tordu : %s",
+	twist_desc = "Prévient quand quelqu'un subit les effets de Reflet tordu.",
+	twist_message = "Reflet tordu : %s",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

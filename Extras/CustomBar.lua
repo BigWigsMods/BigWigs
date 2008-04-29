@@ -73,8 +73,8 @@ L:RegisterTranslations("frFR", function() return {
 	["Global"] = "Globale",
 	["<time> <bar text>"] = "<durée> <texte de la barre>",
 	["Starts a custom bar with the given parameters."] = "Démarre une barre personnalisée avec les paramètres indiqués.",
-	["%s: Timer [%s] finished."] = "%s: Délai [%s] terminé.",
-	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Durée invalide (|cffff0000%q|r) ou texte de barre manquant dans une barre personnalisée lancée par |cffd9d919%s|r. <durée> peut être soit un nombre en secondes, soit au format M:S, ou encore au format Mm. Par exemple : 5, 1:20 ou 2m.",
+	["%s: Timer [%s] finished."] = "%s : Délai [%s] terminé.",
+	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Durée invalide (|cffff0000%q|r) ou texte de barre manquant dans une barre personnalisée lancée par |cffd9d919%s|r. <durée> peut être soit un nombre en secondes, soit au format M:S, ou encore au format Mm. Par exemple : 5, 1:20 ou 2m.",
 } end)
 
 L:RegisterTranslations("esES", function() return {

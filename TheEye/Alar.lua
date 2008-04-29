@@ -64,17 +64,17 @@ L:RegisterTranslations("frFR", function() return {
 	meteor = "Bombardement en piqué",
 	meteor_desc = "Délais estimés entre les Bombardements en piqué.",
 	meteor_warning = "Bombardement en piqué probable dans ~5 sec.",
-	meteor_message = "Bombardement en piqué ! Prochain dans ~52 sec.",
+	meteor_message = "Bombardement en piqué ! Prochain dans ~52 sec.",
 	meteor_nextbar = "Prochain Bombardement",
 
 	flamepatch = "Gerbe de flammes sur vous",
-	flamepatch_desc = "Préviens quand une Gerbe de flammes est sur vous.",
-	flamepatch_message = "Gerbe de flammes sur VOUS !",
+	flamepatch_desc = "Prévient quand une Gerbe de flammes est sur vous.",
+	flamepatch_message = "Gerbe de flammes sur VOUS !",
 
 	armor = "Fondre armure",
-	armor_desc = "Préviens quand un joueur est affecté par Fondre armure.",
-	armor_other = "Fondre armure : %s",
-	armor_you = "Fondre armure sur VOUS !",
+	armor_desc = "Prévient quand un joueur est affecté par Fondre armure.",
+	armor_other = "Fondre armure : %s",
+	armor_you = "Fondre armure sur VOUS !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur la personne affectée par Fondre armure (nécessite d'être promu ou mieux).",

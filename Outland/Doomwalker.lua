@@ -64,26 +64,26 @@ L:RegisterTranslations("esES", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Cessez toute activité. Vous allez être éliminés.",
-	engage_message = "Marche-funeste engagé, Séisme dans ~30 sec. !",
+	engage_message = "Marche-funeste engagé, Séisme dans ~30 sec. !",
 
 	overrun = "Renversement",
-	overrun_desc = "Préviens quand Marche-funeste utilise sa capacité Renversement.",
+	overrun_desc = "Prévient quand Marche-funeste utilise sa capacité Renversement.",
 	overrun_trigger1 = "Vitesse maximale enclenchée.",
 	overrun_trigger2 = "Trajectoire verrouillée.",
-	overrun_message = "Renversement !",
-	overrun_soon_message = "Renversement imminent !",
-	overrun_bar = "~Cooldown Renversement",
+	overrun_message = "Renversement !",
+	overrun_soon_message = "Renversement imminent !",
+	overrun_bar = "~Recharge Renversement",
 
 	earthquake = "Séisme",
-	earthquake_desc = "Préviens quand Marche-funeste utilise sa capacité Séisme.",
-	earthquake_message = "Séisme ! Prochain dans ~70 sec. !",
-	earthquake_bar = "~Cooldown Séisme",
+	earthquake_desc = "Prévient quand Marche-funeste utilise sa capacité Séisme.",
+	earthquake_message = "Séisme ! Prochain dans ~70 sec. !",
+	earthquake_bar = "~Recharge Séisme",
 	earthquake_trigger1 = "Début de la perturbation tectonique.",
 	earthquake_trigger2 = "Magnitude réglée. Déclenchement.",
 
-	enrage_soon_message = "Enrager imminent !",
+	enrage_soon_message = "Enrager imminent !",
 	enrage_trigger = "%s devient fou furieux !",
-	enrage_message = "Enrager !",
+	enrage_message = "Enrager !",
 } end)
 
 L:RegisterTranslations("koKR", function() return {

@@ -103,14 +103,14 @@ L:RegisterTranslations("frFR", function() return {
 
 	dive = "Plongées",
 	dive_desc = "Délais avant que Le Rôdeur d'En-bas ne plonge.",
-	dive_warning = "Plongée probable dans %d sec. !",
+	dive_warning = "Plongée probable dans %d sec. !",
 	dive_bar = "~Plongée",
 	dive_message = "Plongée - De retour dans 60 sec.",
 
 	spout = "Jet",
 	spout_desc = "Délais concernant les Jets. Pas toujours précis.",
-	spout_message = "Incante un Jet !",
-	spout_warning = "Jet probable dans ~3 sec. !",
+	spout_message = "Incante un Jet !",
+	spout_warning = "Jet probable dans ~3 sec. !",
 	spout_bar = "Jet probable",
 
 	whirl = "Tourbillonnement",

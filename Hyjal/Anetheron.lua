@@ -56,18 +56,18 @@ L:RegisterTranslations("frFR", function() return {
 
 	inferno = "Inferno",
 	inferno_desc = "Temps de recharge approximatif pour l'Inferno.",
-	inferno_message = "Incante un inferno sur %s !",
-	inferno_you = "Incante un inferno sur VOUS !",
-	inferno_warning = "Inferno imminent !",
-	inferno_bar = "~Cooldown Inferno",
+	inferno_message = "Incante un inferno sur %s !",
+	inferno_you = "Incante un inferno sur VOUS !",
+	inferno_warning = "Inferno imminent !",
+	inferno_bar = "~Recharge Inferno",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur sur qui un inferno est incanté (nécessite d'être promu ou mieux).",
 
 	swarm = "Vol de charognards",
 	swarm_desc = "Temps de recharge approximatif pour le Vol de charognards.",
-	swarm_message = "Essaim ! - Prochain dans ~11 sec.",
-	swarm_bar = "~Cooldown Essaim",
+	swarm_message = "Essaim ! - Prochain dans ~11 sec.",
+	swarm_bar = "~Recharge Essaim",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

@@ -69,7 +69,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	phase = "Phases",
-	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
+	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	phase1_trigger = "Quel démon es-tu pour me tourmenter ainsi ?",
  	phase1_message = "Acte I - %s",
 	phase2_trigger = "Tu veux donc me provoquer ? Eh bien, à toi, enfant.",
@@ -78,17 +78,17 @@ L:RegisterTranslations("frFR", function() return {
 	phase3_message = "Acte III - Les deux",
 
 	poison = "Poison",
-	poison_desc = "Préviens quand un joueur est empoisonné.",
-	poison_message = "Empoisonné : %s",
+	poison_desc = "Prévient quand un joueur est empoisonné.",
+	poison_message = "Empoisonné : %s",
 
 	heal = "Soin",
-	heal_desc = "Préviens quand Julianne lance Amour éternel.",
-	heal_message = "%s incante un soin !",
+	heal_desc = "Prévient quand Julianne lance Amour éternel.",
+	heal_message = "%s incante un soin !",
 
 	buff = "Buff",
-	buff_desc = "Préviens quand Romulo et Julianne gagnent leurs buffs.",
-	buff1_message = "Romulo gagne Hardiesse !",
-	buff2_message = "Julianne gagne Dévotion !",
+	buff_desc = "Prévient quand Romulo et Julianne gagnent leurs buffs.",
+	buff1_message = "Romulo gagne Hardiesse !",
+	buff2_message = "Julianne gagne Dévotion !",
 } end)
 
 L:RegisterTranslations("koKR", function() return {
