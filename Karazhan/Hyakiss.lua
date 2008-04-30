@@ -35,7 +35,7 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("koKR", function() return {
 	web = "거미줄",
 	web_desc = "거미줄에 걸린 플레이어를 알립니다.",
-	web_message = "%s님이 거미줄에 걸렸습니다!",
+	web_message = "%s|1이;가; 거미줄에 걸렸습니다!",
 	web_bar = "거미줄: %s",
 } end )
 

@@ -138,10 +138,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	orbyou = "자신의 비전 보주",
 	orbyou_desc = "자신의 비전 보주를 알립니다.",
-	orb_you = "당신에 비전 보주!",
+	orb_you = "당신은 비전 보주!",
 
 	orbsay = "비전 보주 대화",
-	orbsay_desc = "당신이 비전 보주의 대상이 되었을 때 대화를 출력합니다.",
+	orbsay_desc = "자신이 비전 보주의 대상이 되었을 때 일반 대화로 출력합니다.",
 	orb_say = "나에게 보주!",
 
 	orbother = "타인의 비전 보주",
@@ -149,7 +149,7 @@ L:RegisterTranslations("koKR", function() return {
 	orb_other = "보주(%s)",
 
 	icon = "전술 표시",
-	icon_desc = "비전 보주 대상이된 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
+	icon_desc = "비전 보주 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	pounding = "울림",
 	pounding_desc = "울림에 대한 타이머 바를 표시합니다.",

@@ -77,8 +77,8 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("koKR", function() return {
 	doom = "파멸",
 	doom_desc = "파멸에 대한 경고입니다.",
-	doom_other = "%s에 파멸",
-	doom_you = "당신에 파멸!",
+	doom_other = "%s 파멸",
+	doom_you = "당신은 파멸!",
 
 	 howl = "아즈갈로의 울부짖음",
 	 howl_desc = "아즈갈로의 울부짖음을 경보합니다.",
@@ -88,10 +88,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	 fire = "불의 비",
 	 fire_desc = "자신에게 불의 비가 내릴때를 알림니다.",
-	 fire_you = "당신에 불의 비!",
+	 fire_you = "당신은 불의 비!",
 
 	icon = "전술 표시",
-	icon_desc = "파멸에 걸린 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 요구).",
+	icon_desc = "파멸에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 요구)",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

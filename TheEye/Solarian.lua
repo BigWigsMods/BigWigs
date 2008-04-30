@@ -133,16 +133,16 @@ L:RegisterTranslations("koKR", function() return {
 	phase2_message = "20% - 2 단계",
 
 	wrath = "분노 디버프",
-	wrath_desc = "점성술사의 분노에 걸린 사람을 알립니다.",
+	wrath_desc = "점성술사의 분노에 걸린 플레이어를 알립니다.",
 	wrath_fade = "당신의 몸에서 점성술사의 분노 효과가 사라졌습니다.",
-	wrath_other = "%s에 분노",
-	wrath_you = "당신에 분노!",
+	wrath_other = "%s 분노",
+	wrath_you = "당신은 분노!",
 
 	whisper = "귓속말",
-	whisper_desc = "분노 디버프에 걸린 플레이어에게 귓속말을 보냅니다 (승급자 이상 권한 요구).",
+	whisper_desc = "분노 디버프에 걸린 플레이어에게 귓속말을 보냅니다. (승급자 이상 권한 요구)",
 
 	icon = "전술 표시",
-	icon_desc = "점성술사의 분노에 걸린 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
+	icon_desc = "점성술사의 분노에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 요구)",
 
 	split = "분리",
 	split_desc = "분리와 소환에 대한 경고입니다.",

@@ -110,7 +110,7 @@ L:RegisterTranslations("koKR", function() return {
 	tidal_message = "해일!",
 
 	grave = "수중 무덤",
-	grave_desc = "수중 무덤에 걸린 사람과 지속시간을 알림니다.",
+	grave_desc = "수중 무덤에 걸린 사람과 지속시간을 알립니다.",
 	grave_message = "수중 무덤: %s",
 	grave_bar = "수중 무덤",
 	grave_nextbar = "~무덤 대기시간",

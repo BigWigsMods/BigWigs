@@ -195,10 +195,10 @@ L:RegisterTranslations("koKR", function() return {
 	gaze_trigger = "([^%s]+)|1을;를; 노려봅니다!$",
 	gaze_message = "%s 주시!",
 	gaze_bar = "~주시 대기 시간",
-	gaze_you = "당신에 주시!",
+	gaze_you = "당신을 주시!",
 
 	icon = "전술 표시",
-	icon_desc = "탈라드레드의 주시 대상이된 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
+	icon_desc = "탈라드레드의 주시 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	fear = "공포",
 	fear_desc = "우레와 같은 울부짖음에 대한 경고입니다.",
@@ -247,7 +247,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase4_bar = "잠시 후 캘타스",
 
 	mc = "정신 지배",
-	mc_desc = "정신 지배에 걸린 사람을 알립니다.",
+	mc_desc = "정신 지배에 걸린 플레이어를 알립니다.",
 	mc_message = "정신 지배: %s",
 
 	revive_bar = "조언가 부활",

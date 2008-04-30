@@ -147,10 +147,10 @@ L:RegisterTranslations("koKR", function() return {
 	static_desc = "전하 충전에 걸린 플레이어를 알립니다.",
 	static_charge_message = "%s 전하 충전!",
 	static_fade = "당신의 전하 충전 사라짐.",
-	static_warnyou = "당신에 전하 충전!",
+	static_warnyou = "당신은 전하 충전!",
 
 	icon = "전술 표시",
-	icon_desc = "전하 충전에 걸린 플레이어와 핵을 획득한 플레이어에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
+	icon_desc = "전하 충전에 걸린 플레이어와 핵을 획득한 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 요구)",
 
 	elemental = "오염된 정령 등장",
 	elemental_desc = "2 단계에서 오염된 정령 등장 시 경고합니다.",

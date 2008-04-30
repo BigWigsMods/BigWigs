@@ -94,8 +94,8 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	phase = "형상",
-	phase_desc = "다른 형상에 대한 경고입니다.",
+	phase = "단계",
+	phase_desc = "다른 단계에 대한 경고입니다.",
 	normal_phase_message = "탱킹'n'딜링!",
 	normal_phase_trigger =  "궁극의 심연이 분노하여 땅을 내리찍습니다!",
 	kite_phase_message = "%s 풀려남!",
@@ -115,7 +115,7 @@ L:RegisterTranslations("koKR", function() return {
 	target_message_nounit = "새로운 대상!",
 
 	icon = "전술 표시",
-	icon_desc = "추적 중인 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
+	icon_desc = "추적 중인 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 요구)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

@@ -52,8 +52,8 @@ L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "저승으로 보내주마!",
 	engage_message = "%s 전투 시작 - 45초후 곰 변신!",
 
-	phase = "상태",
-	phase_desc = "상태 변환에 대해 경고합니다.",
+	phase = "단계",
+	phase_desc = "단계 변화에 대해 알립니다.",
 	phase_bear = "너희들이 짐승을 불러냈다. 놀랄 준비나 해라!",
 	phase_normal = "날로라크 나가신다!",
 	normal_message = "보통 상태!",

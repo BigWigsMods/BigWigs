@@ -231,15 +231,15 @@ L:RegisterTranslations("koKR", function() return {
 
 	parasite = "어둠의 흡혈마귀",
 	parasite_desc = "어둠의 흡혈마귀에 걸린 플레이어를 알립니다.",
-	parasite_you = "당신에 흡혈마귀!",
-	parasite_other = "%s에 흡혈마귀!",
+	parasite_you = "당신은 흡혈마귀!",
+	parasite_other = "%s 흡혈마귀!",
 
 	icon = "전술 표시",
-	icon_desc = "어둠의 흡혈마귀에 걸린 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
+	icon_desc = "어둠의 흡혈마귀에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	barrage = "암흑의 보호막",
 	barrage_desc = "암흑의 보호막에 걸린 플레이어를 알립니다.",
-	barrage_message = "%s에 집중포화!",
+	barrage_message = "%s 집중포화!",
 	barrage_warn = "잠시 후 집중포화!",
 	barrage_warn_bar = "집중포화 대기시간",
 	barrage_bar = "집중포화: %s",
@@ -251,12 +251,12 @@ L:RegisterTranslations("koKR", function() return {
 
 	shear = "베어내기",
 	shear_desc = "베어내기에 걸린 플레이어를 알립니다.",
-	shear_message = "%s에 베어내기!",
+	shear_message = "%s 베어내기!",
 	shear_bar = "베어내기: %s",
 
 	flame = "고뇌의 불꽃",
 	flame_desc = "고뇌의 불꽃에 걸린 플레이어를 알립니다.",
-	flame_message = "%s에 고뇌의 불꽃!",
+	flame_message = "%s 고뇌의 불꽃!",
 
 	demons = "어둠의 악마",
 	demons_desc = "어둠의 악마 소환 시 알립니다.",

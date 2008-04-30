@@ -195,11 +195,11 @@ L:RegisterTranslations("koKR", function() return {
 
 	poison = "맹독",
 	poison_desc = "맹독에 걸린 플레이어를 알립니다.",
-	poison_other = "%s에 맹독!",
-	poison_you = "당신에 맹독!",
+	poison_other = "%s 맹독!",
+	poison_you = "당신은 맹독!",
 
 	icon = "전술 표시",
-	icon_desc = "맹독에 걸린 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
+	icon_desc = "맹독에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	circle = "치유의 마법진",
 	circle_desc = "말란데가 치유의 마법진 시전 시 알립니다.",
@@ -214,9 +214,9 @@ L:RegisterTranslations("koKR", function() return {
 	res_message = "가디오스: 30초간 저항!",
 	res_bar = "저항의 오라",
 
-	blizzard = "당신에 눈보라",
-	blizzard_desc = "당신이 눈보라에 걸렸을 때 알립니다.",
-	blizzard_message = "당신에 눈보라!",
+	blizzard = "자신의 눈보라",
+	blizzard_desc = "자신이 눈보라에 걸렸을 때 알립니다.",
+	blizzard_message = "당신은 눈보라!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

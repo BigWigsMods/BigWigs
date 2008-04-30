@@ -115,9 +115,9 @@ L:RegisterTranslations("koKR", function() return {
 	fear_bar = "공포!",
 	fear_nextbar = "~공포 대기시간",
 
-	charr = "당신에 불타버린 대지",
-	charr_desc = "당신이 불타버린 대지에 걸렸을 때 알립니다.",
-	charr_message = "당신에 불타버린 대지!",
+	charr = "자신의 불타버린 대지",
+	charr_desc = "자신이 불타버린 대지에 걸렸을 때 알립니다.",
+	charr_message = "당신은 불타버린 대지!",
 
 	phase = "단계",
 	phase_desc = "파멸의 어둠의 단계 변경 시 알립니다.",

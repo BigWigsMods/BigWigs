@@ -95,19 +95,19 @@ L:RegisterTranslations("koKR", function() return {
 	bloodboil_message = "끓어오르는 피(%d)",
 
 	rage = "마의 분노",
-	rage_desc = "마의 분노에 걸린 사람을 알립니다.",
+	rage_desc = "마의 분노에 걸린 플레이어를 알립니다.",
 	rage_you = "당신은 마의 분노!!",
 	rage_other = "%s 마의 분노!",
 
 	whisper = "귓속말",
-	whisper_desc = "마의 분노에 걸린 플레이어에게 귓속말을 보냅니다 (승급자 이상 권한 요구).",
+	whisper_desc = "마의 분노에 걸린 플레이어에게 귓속말을 보냅니다. (승급자 이상 권한 요구)",
 
 	acid = "지옥 산성 숨결",
 	acid_desc = "지옥 산성 숨결의 시전 대상을 알립니다.",
-	acid_message = "지옥 산성 숨결 시전 중 : %s",
+	acid_message = "지옥 산성 시전 : %s",
 
 	icon = "전술 표시",
-	icon_desc = "지옥 산성 숨결의 시전 대상에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
+	icon_desc = "지옥 산성 숨결의 시전 대상에게 전술 표시를 지정합니다. (승급자 이상 권한 요구)",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

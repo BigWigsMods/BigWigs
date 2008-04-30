@@ -149,7 +149,7 @@ L:RegisterTranslations("koKR", function() return {
 	enfeeble_bar = "쇠약",
 	enfeeble_nextbar = "다음 쇠약",
 	enfeeble_you = "당신은 쇠약에 걸렸습니다.",
-	enfeeble_warnyou = "당신에 쇠약!",
+	enfeeble_warnyou = "당신은 쇠약!",
 
 	infernals = "불지옥",
 	infernals_desc = "불지옥 소환에 대한 재사용 대기시간을 표시합니다.",

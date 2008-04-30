@@ -75,13 +75,13 @@ L:RegisterTranslations("koKR", function() return {
 
 	inferno = "불지옥",
 	inferno_desc = "대략적인 불지옥 대기시간 타이머입니다.",
-	inferno_message = "%s에 불지옥 시전 중!",
-	inferno_you = "당신에 불지옥 시전 중!",
+	inferno_message = "%s에게 불지옥 시전 중!",
+	inferno_you = "당신에게 불지옥 시전 중!",
 	inferno_warning = "잠시 후 불지옥!",
 	inferno_bar = "~불지옥 대기시간",
 
 	icon = "전술 표시",
-	icon_desc = "불지옥의 시전 대상의 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
+	icon_desc = "불지옥의 시전 대상의 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 요구)",
 
 	swarm = "흡혈박쥐 떼",
 	swarm_desc = "대략적인 흡혈박쥐 떼 대기시간 타이머입니다.",

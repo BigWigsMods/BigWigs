@@ -130,8 +130,8 @@ L:RegisterTranslations("koKR", function() return {
 	grasp_warning = "잠시 후 땅 울리기",
 	grasp_bar = "~땅 울리기 대기시간",
 
-	cavein = "당신의 함몰",
-	cavein_desc = "당신의 함몰에 대한 경고입니다.",
+	cavein = "자신의 함몰",
+	cavein_desc = "자신이 함몰에 걸렸을 때 알립니다.",
 	cavein_message = "당신은 함몰!",
 
 	silence = "침묵 경고",

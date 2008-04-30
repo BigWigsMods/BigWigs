@@ -86,21 +86,21 @@ L:RegisterTranslations("koKR", function() return {
 
 	spine = "꿰뚫는 돌기",
 	spine_desc = "꿰뚫는 돌기에 걸린 사람을 알립니다.",
-	spine_message = "%s에게 꿰뚫는 돌기!",
+	spine_message = "%s 꿰뚫는 돌기!",
 
 	spinesay = "돌기 알림",
-	spinesay_desc = "꿰뚫는 돌기에 걸렸을 때, 주변 아군에게 돌기에 걸렸음을 일반 대화로 알립니다.",
+	spinesay_desc = "꿰뚫는 돌기에 걸렸을 때, 주변 아군에게 일반 대화로 알립니다.",
 	spinesay_message = "저 돌기! 살려주세요!!",
 
 	shield = "해일의 보호막",
-	shield_desc = "대장군 나젠투스가 해일의 보호막을 얻을 떄에 대한 타이머 입니다.",
+	shield_desc = "대장군 나젠투스가 해일의 보호막 획득에 대한 타이머 입니다.",
 	shield_nextbar = "다음 해일의 보호막",
 	shield_warn = "해일의 보호막!",
 	shield_soon_warn = "약 10초 이내 해일의 보호막!",
 	shield_fade = "보호막 사라짐!",
 
 	icon = "전술 표시",
-	icon_desc = "꿰뚫는 돌기에 걸린 플레이어에게 전술 표시를 지정합니다.",
+	icon_desc = "꿰뚫는 돌기에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

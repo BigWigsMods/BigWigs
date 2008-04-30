@@ -59,18 +59,18 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	youriding = "자신의 빨간 두건을 알립니다.",
-	youriding_desc = "자신이 빨간 두건에 걸리면 알림",
+	youriding = "자신의 빨간 두건",
+	youriding_desc = "자신이 빨간 두건에 걸리면 알립니다.",
 	riding_youwarn = "당신은 빨간 두건입니다!",
 
-	elseriding = "타인의 빨간 두건을 알립니다.",
-	elseriding_desc = "타인이 빨간 두건에 걸리면 알림",
-	riding_otherwarn = "%s님이 빨간 두건입니다!",
+	elseriding = "타인의 빨간 두건",
+	elseriding_desc = "타인이 빨간 두건에 걸리면 알립니다.",
+	riding_otherwarn = "%s|1이;가; 빨간 두건입니다!",
 
 	riding_bar = "빨간 두건 - %s",
 
 	icon = "전술 표시",
-	icon_desc = "빨간 두건인 사람에게 전술 표시를 지정합니다 (승급자 이상의 권한 필요).",
+	icon_desc = "빨간 두건인 플레이어에게 전술 표시를 지정합니다. (승급자 이상의 권한 필요)",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

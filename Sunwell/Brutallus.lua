@@ -70,7 +70,7 @@ L:RegisterTranslations("koKR", function() return {
 	burn = "불사르기",
 	burn_desc = "불사르기에 적중된 플레이어와 다음 불사르기에 대해 알립니다.",
 	burn_you = "당신은 불사르기!",
-	burn_other = "%s에게 불사르기!",
+	burn_other = "%s 불사르기!",
 	burn_bar = "다음 불사르기",
 	burn_message = "다음 불사르기 5초전!",
 	

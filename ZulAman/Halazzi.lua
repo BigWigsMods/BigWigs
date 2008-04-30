@@ -75,7 +75,7 @@ L:RegisterTranslations("koKR", function() return {
 	flame_message = "화염 충격: %s",
 
 	icon = "전술 표시",
-	icon_desc = "화염 충격의 대상이된 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+	icon_desc = "화염 충격의 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

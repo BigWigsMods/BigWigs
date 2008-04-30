@@ -65,7 +65,7 @@ L:RegisterTranslations("koKR", function() return {
 	flame_message = "%s에 화염 숨결!",
 
 	icon = "전술 표시",
-	icon_desc = "화염 숨결 대상이된 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+	icon_desc = "화염 숨결 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	bomb = "불폭탄",
 	bomb_desc = "불폭탄에 대한 타이머를 표시합니다.",

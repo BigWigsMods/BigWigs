@@ -61,9 +61,9 @@ L:RegisterTranslations("koKR", function() return {
 	phase3_trigger = "이랴! 이 오합지졸을 데리고 실컷 놀아보자!",
 	phase3_message = "3 단계 - %s",
 
-	curse = "저주 걸린 전사",
+	curse = "탱커 저주",
 	curse_desc = "탱커가 무형의 저주에 걸렸을 때 경고합니다.",
-	curse_message = "저주 걸린 전사 - %s",
+	curse_message = "탱커 저주 - %s",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

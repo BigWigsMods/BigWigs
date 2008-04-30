@@ -133,7 +133,7 @@ L:RegisterTranslations("koKR", function() return {
 	conflag_bar = "다음 거대한 불길",
 
 	icon = "전술 표시",
-	icon_desc = "암흑 회오리와 거대한 불길의 대상이된 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
+	icon_desc = "암흑 회오리와 거대한 불길의 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	pyro = "발열",
 	pyro_desc = "발열을 누가 획득하고 제거하는지 알립니다.",

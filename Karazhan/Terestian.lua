@@ -87,7 +87,7 @@ L:RegisterTranslations("koKR", function() return {
 	sacrifice_soonbar = "~희생 대기시간",
 
 	icon = "전술 표시",
-	icon_desc = "희생에 걸린 플레이어에게 전술 표시를 지정합니다 (승급자 이상 요구).",
+	icon_desc = "희생에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 요구)",
 
 	weak = "약화",
 	weak_desc = "약화 상태에 대한 경고입니다.",

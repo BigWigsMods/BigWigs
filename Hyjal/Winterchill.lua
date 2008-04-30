@@ -52,16 +52,16 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	decay = "당신에 죽음과 부패",
-	decay_desc = "당신에 걸린 죽음과 부패를 알립니다.",
-	decay_message = "당신에 죽음과 부패!",
+	decay = "자신의 죽음과 부패",
+	decay_desc = "자신이 죽음과 부패에 걸렸을 때 알립니다.",
+	decay_message = "당신은 죽음과 부패!",
 
 	icebolt = "얼음 화살",
 	icebolt_desc = "얼음 화살 경고.",
-	icebolt_message = "%s에 얼음 화살!",
+	icebolt_message = "%s 얼음 화살!",
 
 	icon = "전술 표시",
-	icon_desc = "얼음 화살에 걸린 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
+	icon_desc = "얼음 화살에 걸린 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 요구)",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

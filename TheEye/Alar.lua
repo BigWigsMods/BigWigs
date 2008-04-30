@@ -87,17 +87,17 @@ L:RegisterTranslations("koKR", function() return {
 	meteor_message = "급강하 폭격! 다음은 약 52초 이내",
 	meteor_nextbar = "다음 급강하 폭격",
 
-	flamepatch = "당신에 화염 파편",
-	flamepatch_desc = "당신에 화염 파편에 대한 경고입니다.",
-	flamepatch_message = "당신에 화염 파편!",
+	flamepatch = "자신의 화염 파편",
+	flamepatch_desc = "자신이 화염 파편에 걸렸을 때 알립니다.",
+	flamepatch_message = "당신은 화염 파편!",
 
 	armor = "방어구 녹이기",
-	armor_desc = "방어구 녹이기에 걸린 사람에 대한 경고입니다.",
+	armor_desc = "방어구 녹이기에 걸린 플레이어를 알립니다.",
 	armor_other = "방어구 녹이기: %s",
-	armor_you = "당신에 방어구 녹이기!",
+	armor_you = "당신은 방어구 녹이기!",
 
 	icon = "전술 표시",
-	icon_desc = "방어구 녹이기에 걸린 플레이어에에게 전술 표시를 지정합니다 (승급자 이상 권한 요구).",
+	icon_desc = "방어구 녹이기에 걸린 플레이어에에게 전술 표시를 지정합니다. (승급자 이상 권한 요구)",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

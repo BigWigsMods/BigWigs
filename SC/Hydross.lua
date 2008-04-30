@@ -117,7 +117,7 @@ L:RegisterTranslations("koKR", function() return {
 	tomb_message = "수중 무덤: %s",
 
 	icon = "전술 표시",
-	icon_desc = "타락의 진흙에 걸린 플레이어에 전술 표시를 지정합니다 (승급자 이상 권한 필요).",
+	icon_desc = "타락의 진흙에 걸린 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 
 	debuff_warn = "징표 - %s%%!",
 } end)

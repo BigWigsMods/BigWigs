@@ -88,11 +88,11 @@ L:RegisterTranslations("koKR", function() return {
 	vanish_bar = "~소멸 대기시간",
 
 	garrote = "목조르기",
-	garrote_desc = "목조르기에 걸린 사람을 알립니다.",
+	garrote_desc = "목조르기에 걸린 플레이어를 알립니다.",
 	garrote_message = "목조르기: %s",
 
 	icon = "전술 표시",
-	icon_desc = "목조르기에 걸린 사람에게 전술 표시를 지정합니다 (승급자 이상의 권한 필요).",
+	icon_desc = "목조르기에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상의 권한 필요)",
 
 	enrage_message = "격노!",
 	enrage_warning = "잠시 후 격노!",

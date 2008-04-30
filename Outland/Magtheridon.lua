@@ -239,7 +239,7 @@ L:RegisterTranslations("koKR", function() return {
 	heal_message = "치유 시전!",
 
 	nova = "파열의 회오리",
-	nova_desc = "파열의 회오리 지속시간에 대한 바입니다.",
+	nova_desc = "파열의 회오리에 대한 예측 타이머입니다.",
 	nova_ = "파열의 회오리",
 	nova_bar = "~파열의 회오리 대기시간",
 	nova_warning = "곧 파열의 회오리",
@@ -256,9 +256,9 @@ L:RegisterTranslations("koKR", function() return {
 	exhaust_desc = "정신 방출에 걸린 플레이어에 대한 타이머 바입니다.",
 	exhaust_bar = "[%s] 정신 방출",
 
-	debris = "당신에 파편",
-	debris_desc = "당신이 파편에 걸렸을때 알립니다.",
-	debris_message = "당신에 파편!",
+	debris = "자신의 파편",
+	debris_desc = "자신이 파편에 걸렸을 때 알립니다.",
+	debris_message = "당신은 파편!",
 
 	debrisinc = "파편",
 	debrisinc_desc = "30%일 때 파편에 대한 경고입니다.",

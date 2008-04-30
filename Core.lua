@@ -131,8 +131,8 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["%s mod enabled"] = "%s 모듈 시작",
-	["%s has been defeated"] = "<%s> 물리쳤습니다.",     -- "<boss> has been defeated"
-	["%s have been defeated"] = "<%s> 물리쳤습니다.",    -- "<bosses> have been defeated"
+	["%s has been defeated"] = "%s|1을;를; 물리쳤습니다.",     -- "<boss> has been defeated"
+	["%s have been defeated"] = "%s|1을;를; 물리쳤습니다.",    -- "<bosses> have been defeated"
 	
 	["Debug enabled, output routed to %s."] = "디버그 사용, %s에 루트를 출력합니다.",
 	["Debug disabled."] = "디버그 사용안함.",

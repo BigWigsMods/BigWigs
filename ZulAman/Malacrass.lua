@@ -78,7 +78,7 @@ L:RegisterTranslations("koKR", function() return {
 	bolts_nextbar = "다음 영혼의 화살",
 
 	soul = "영혼 착취",
-	soul_desc = "누가 영혼 착취에 걸렸는지 알립니다.",
+	soul_desc = "영혼 착취에 걸린 플레이어를 알립니다.",
 	soul_message = "착취: %s",
 
 	totem = "토템",

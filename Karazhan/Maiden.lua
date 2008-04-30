@@ -76,18 +76,18 @@ L:RegisterTranslations("koKR", function() return {
 	engage_message = "고결의 여신 전투 개시! 약 33초 후 참회",
 
 	repentance = "참회",
-	repentance_desc = "참회 예상 시간입니다.",
+	repentance_desc = "참회에 대한 예측 타이머입니다.",
 	repentance_message = "참회! 다음은 약 33초 후!",
 	repentance_warning = "참회 쿨다운 종료 - 잠시후 시전!",
 	repentance_bar = "참회",
 	repentance_nextbar = "참회 쿨다운",
 
 	holyfire = "신성한 불꽃",
-	holyfire_desc = "신성한 불꽃에 걸린 사람에 대한 경고입니다.",
+	holyfire_desc = "신성한 불꽃에 걸린 플레이어를 알립니다.",
 	holyfire_message = "신성한 불꽃: %s",
 
 	icon = "전술 표시",
-	icon_desc = "신성한 불꽃에 걸린 사람에게 전술 표시를 지정합니다 (승급자 이상의 권한 필요).",
+	icon_desc = "신성한 불꽃에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상의 권한 필요)",
 } end)
 
 L:RegisterTranslations("zhCN", function() return {

@@ -117,11 +117,11 @@ L:RegisterTranslations("koKR", function() return {
 
 	grip = "군단의 손아귀",
 	grip_desc = "군단의 손아귀에 걸린 사람을 알립니다.",
-	grip_you = "당신에 손아귀!",
-	grip_other = "%s에 손아귀!",
+	grip_you = "당신은 손아귀!",
+	grip_other = "%s 손아귀!",
 
 	icon = "전술 표시",
-	icon_desc = "군단의 손아귀에 걸린 플레이어에 전술 표시를 지정합니다.",
+	icon_desc = "군단의 손아귀에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 요구)",
 
 	fear = "공포",
 	fear_desc = "공포 타이머입니다.",
@@ -132,7 +132,7 @@ L:RegisterTranslations("koKR", function() return {
 	burst = "대기 파열",
 	burst_desc = "대기 파열 시전 대상을 알립니다.",
 	burst_other = "-%s- 대기 파열",
-	burst_you = "당신에 대기 파열!",
+	burst_you = "당신은 대기 파열!",
 
 	burstsay = "대기 파열 알림",
 	burstsay_desc = "자신이 대기 파열의 대상이 되었을 때 일반 대화로 알립니다.",

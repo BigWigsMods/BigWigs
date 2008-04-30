@@ -43,11 +43,11 @@ L:RegisterTranslations("koKR", function() return {
 	elec_warning = "잠시후 전하 폭풍!",
 
 	ping = "미니맵 표시",
-	ping_desc = "당신이 전하 폭풍에 걸렸을때 현재 위치를 미니맵에 표시합니다.",
-	ping_message = "폭풍 - 현재 위치 미니맵에 찍는 중!",
+	ping_desc = "자신이 전하 폭풍에 걸렸을 때 현재 위치를 미니맵에 표시합니다.",
+	ping_message = "폭풍 - 현재 위치 미니맵에 표시 중!",
 
 	icon = "전술 표시",
-	icon_desc = "전하 폭풍 대상이된 플레이어에 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+	icon_desc = "전하 폭풍 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
