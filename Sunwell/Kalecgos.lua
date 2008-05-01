@@ -130,7 +130,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	realm = "정신 세계",
 	realm_desc = "정신 세계에 들어간 플레이어를 알립니다.",
-	realm_message = "정신 세계: %s (%d)",
+	realm_message = "정신 세계: %s (%d 파티)",
 
 	curse = "무한한 고통의 저주",
 	curse_desc = "무한한 고통의 저주에 걸린 플레이어를 알립니다.",
