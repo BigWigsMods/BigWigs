@@ -283,7 +283,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	phase = "階段警報",
 	phase_desc = "當升空或降落階段時發出警報",
-	airphase_trigger = "",--need combatlog
+	airphase_trigger = "我比以前更強大了!",--need combatlog
 	takeoff_bar = "升空",
 	takeoff_message = "約 5 秒後，升空!",
 	landing_bar = "降落",
