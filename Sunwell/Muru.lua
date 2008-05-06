@@ -158,7 +158,7 @@ function mod:Darkness(player, spellID)
 	if not db.darkness then return end
 
 	if player == boss then
-		self:Bar(L["darkness_message"], 20, spellID)
+		self:Bar(L["darkness"], 20, spellID)
 		self:IfMessage(L["darkness_message"]:format(player), "Urgent", spellID)
 		self:Bar(L["darkness_next"], 45, spellID)
 		self:DelayedMessage(40, L["darkness_soon"], "Attention")
