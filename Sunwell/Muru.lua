@@ -2,6 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
+local entropius = BB["Entropius"]
 local boss = BB["M'uru"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
@@ -75,7 +76,7 @@ L:RegisterTranslations("koKR", function() return {
 	darkness_desc = "어둠에 걸린 플레이어를 알립니다.",
 	darkness_message = "어둠: %s",
 	darkness_next = "다음 어둠",
-	darkness_soon = "5초 이내 어둠!",
+	darkness_soon = "5초 후 어둠!",
 
 	void = "공허의 파수병",
 	void_desc = "공허의 파수병의 소환을 알립니다.",
@@ -180,6 +181,22 @@ function mod:DarkWarn()
 	self:IfMessage(L["darkness_message"]:format(msg), "Urgent", 45996)
 end
 
+function mod:RepeatVoid()
+	if db.void then
+		self:Bar(L["void_next"], 35, 46087)
+		self:ScheduleEvent("VoidWarn", "BigWigs_Message", 30, L["void_soon"], "Attention")
+	end
+	self:ScheduleEvent("Void", self.RepeatVoid, 35, self)
+end
+
+function mod:RepeatHumanoid()
+	if db.humanoid then
+		self:Bar(L["humanoid_next"], 70, 46087)
+		self:ScheduleEvent("HumanoidWarn", "BigWigs_Message", 65, L["humanoid_soon"], "Attention")
+	end
+	self:ScheduleEvent("Humanoid", self.RepeatHumanoid, 70, self)
+end
+
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
@@ -191,14 +208,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Bar(L["darkness_next"], 45, 45996)
 			self:DelayedMessage(40, L["darkness_soon"], "Attention")
 		end
-		if db.void then
-			self:Bar(L["void_next"], 35, 46087)
-			self:DelayedMessage(30, L["void_soon"], "Positive")
-		end
-		if db.humanoid then
-			self:Bar(L["humanoid_next"], 70, 46087)
-			self:DelayedMessage(65, L["void_soon"], "Positive")
-		end
+		self:RepeatVoid()
+		self:RepeatHumanoid()
 	end
 end
-
