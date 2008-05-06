@@ -135,7 +135,7 @@ L:RegisterTranslations("koKR", function() return {
 	wrath = "분노 디버프",
 	wrath_desc = "점성술사의 분노에 걸린 플레이어를 알립니다.",
 	wrath_fade = "당신의 몸에서 점성술사의 분노 효과가 사라졌습니다.",
-	wrath_other = "%s 분노",
+	wrath_other = "%s 분노!",
 	wrath_you = "당신은 분노!",
 
 	whisper = "귓속말",

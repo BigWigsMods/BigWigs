@@ -65,7 +65,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	elseriding = "타인의 빨간 두건",
 	elseriding_desc = "타인이 빨간 두건에 걸리면 알립니다.",
-	riding_otherwarn = "%s|1이;가; 빨간 두건입니다!",
+	riding_otherwarn = "%s 빨간 두건!",
 
 	riding_bar = "빨간 두건 - %s",
 

@@ -123,12 +123,12 @@ L:RegisterTranslations("koKR", function() return {
 
 	nova = "암흑 회오리",
 	nova_desc = "암흑 회오리의 시전에 대해 알립니다.",
-	nova_message = "%s 암흑 회오리",
+	nova_message = "%s 암흑 회오리!",
 	nova_bar = "~회오리 대기시간",
 
 	conflag = "거대한 불길",
 	conflag_desc = "거대한 불길의 시전에 대해 알립니다.",
-	conflag_message = "%s 거대한 불길",
+	conflag_message = "%s 거대한 불길!",
 	conflag_you = "당신은 거대한 불길!",
 	conflag_bar = "다음 거대한 불길",
 

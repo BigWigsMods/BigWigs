@@ -39,7 +39,7 @@ L:RegisterTranslations("koKR", function() return {
 	elec = "전하 폭풍",
 	elec_desc = "전하 폭풍에 걸린 플레이어를 알립니다.",
 	elec_bar = "~폭풍 대기 시간",
-	elec_message = "%s에 전하 폭풍!",
+	elec_message = "%s 전하 폭풍!",
 	elec_warning = "잠시후 전하 폭풍!",
 
 	ping = "미니맵 표시",

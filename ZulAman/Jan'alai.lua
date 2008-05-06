@@ -62,7 +62,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	flame = "화염 숨결",
 	flame_desc = "잔알라이가 대상자방향으로 화염 숨결을 시전하는지 알립니다.",
-	flame_message = "%s에 화염 숨결!",
+	flame_message = "%s에게 화염 숨결!",
 
 	icon = "전술 표시",
 	icon_desc = "화염 숨결 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",

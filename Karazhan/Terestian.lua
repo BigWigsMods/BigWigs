@@ -81,7 +81,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	sacrifice = "희생",
 	sacrifice_desc = "플레이어의 희생에 대한 경고입니다.",
-	sacrifice_message = "%s님이 희생되었습니다!",
+	sacrifice_message = "%s 희생됨!",
 	sacrifice_bar = "희생: %s",
 	sacrifice_soon = "잠시 후 희생!",
 	sacrifice_soonbar = "~희생 대기시간",
