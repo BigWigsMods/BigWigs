@@ -191,10 +191,10 @@ end
 
 function mod:RepeatHumanoid()
 	if db.humanoid then
-		self:Bar(L["humanoid_next"], 70, 46087)
-		self:ScheduleEvent("HumanoidWarn", "BigWigs_Message", 65, L["humanoid_soon"], "Attention")
+		self:Bar(L["humanoid_next"], 60, 46087)
+		self:ScheduleEvent("HumanoidWarn", "BigWigs_Message", 55, L["humanoid_soon"], "Attention")
 	end
-	self:ScheduleEvent("Humanoid", self.RepeatHumanoid, 70, self)
+	self:ScheduleEvent("Humanoid", self.RepeatHumanoid, 60, self)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
@@ -209,6 +209,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:DelayedMessage(40, L["darkness_soon"], "Attention")
 		end
 		self:RepeatVoid()
-		self:RepeatHumanoid()
+		self:Bar(L["humanoid_next"], 10, 46087) 
+		self:ScheduleEvent("Humanoid", self.RepeatHumanoid, 10, self) 
 	end
 end
