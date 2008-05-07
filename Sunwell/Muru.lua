@@ -141,7 +141,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Darkness", 45996)
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -166,6 +166,12 @@ function mod:Darkness(player, spellID)
 	else
 		inDark[player] = true
 		self:ScheduleEvent("BWMuruDark", self.DarkWarn, 0.4, self)
+	end
+end
+
+function mod:Deaths(unit)
+	if unit == entropius then
+		self:GenericBossDeath(boss)
 	end
 end
 
