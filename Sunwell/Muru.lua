@@ -8,6 +8,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local db = nil
 local started = nil
+local p2 = nil
 local pName = UnitName("player")
 local inDark = {}
 
@@ -37,6 +38,10 @@ L:RegisterTranslations("enUS", function() return {
 	fiends = "Dark Fiends",
 	fiends_desc = "Warn for Dark Fiends spawning.",
 	fiends_message = "Dark Fiends Inc!",
+	
+	phase = "Phases",
+	phase_desc = "Warn for phase changes.",
+	phase2_soon_message = "Phase 2 soon!",
 } end )
 
 L:RegisterTranslations("esES", function() return {
@@ -59,6 +64,10 @@ L:RegisterTranslations("esES", function() return {
 	--fiends = "Dark Fiends",
 	--fiends_desc = "Warn for Dark Fiends spawning.",
 	--fiends_message = "Dark Fiends Inc!",
+	
+	--phase = "Phases",
+	--phase_desc = "Warn for phase changes.",
+	--phase2_soon_message = "Phase 2 soon!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -81,6 +90,10 @@ L:RegisterTranslations("frFR", function() return {
 	--fiends = "Dark Fiends",
 	--fiends_desc = "Warn for Dark Fiends spawning.",
 	--fiends_message = "Dark Fiends Inc!",
+	
+	--phase = "Phases",
+	--phase_desc = "Warn for phase changes.",
+	--phase2_soon_message = "Phase 2 soon!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -96,13 +109,17 @@ L:RegisterTranslations("koKR", function() return {
 	void_soon = "5초 이내 파수병!",
 
 	humanoid = "타락한 엘프",
-	humanoid_desc = "타락한 엘프 소환을 알립니다.",
+	humanoid_desc = "타락한 엘프 등장을 알립니다.",
 	humanoid_next = "다음 타락한 엘프",
 	humanoid_soon = "5초 이내 타락한 엘프!",
 
-	--fiends = "Dark Fiends",
-	--fiends_desc = "Warn for Dark Fiends spawning.",
-	--fiends_message = "Dark Fiends Inc!",
+	fiends = "어둠 마귀",
+	fiends_desc = "어둠 마귀 소환을 알립니다.",
+	fiends_message = "잠시 후 어둠 마귀!",
+	
+	phase = "단계",
+	phase_desc = "단계 변경을 알립니다.",
+	phase2_soon_message = "잠시 후 2단계!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -125,6 +142,10 @@ L:RegisterTranslations("zhCN", function() return {
 	--fiends = "Dark Fiends",
 	--fiends_desc = "Warn for Dark Fiends spawning.",
 	--fiends_message = "Dark Fiends Inc!",
+	
+	--phase = "Phases",
+	--phase_desc = "Warn for phase changes.",
+	--phase2_soon_message = "Phase 2 soon!",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -147,6 +168,10 @@ L:RegisterTranslations("zhTW", function() return {
 	--fiends = "Dark Fiends",
 	--fiends_desc = "Warn for Dark Fiends spawning.",
 	--fiends_message = "Dark Fiends Inc!",
+	
+	--phase = "Phases",
+	--phase_desc = "Warn for phase changes.",
+	--phase2_soon_message = "Phase 2 soon!",
 } end )
 
 ----------------------------------
@@ -156,7 +181,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"darkness", "void", "humanoid", "fiends", "bosskill"}
+mod.toggleoptions = {"phase", -1, "darkness", "void", "humanoid", "fiends", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -171,6 +196,7 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
+	self:RegisterEvent("UNIT_HEALTH")
 
 	db = self.db.profile
 	started = nil
@@ -187,7 +213,7 @@ function mod:Darkness(player, spellID)
 		self:Bar(L["darkness"], 20, spellID)
 		self:IfMessage(L["darkness_message"]:format(player), "Urgent", spellID)
 		self:Bar(L["darkness_next"], 45, spellID)
-		self:DelayedMessage(40, L["darkness_soon"], "Attention")
+		self:ScheduleEvent("DarknessWarn", "BigWigs_Message", 40, L["darkness_soon"], "Attention")
 	else
 		inDark[player] = true
 		self:ScheduleEvent("BWMuruDark", self.DarkWarn, 0.4, self)
@@ -225,10 +251,10 @@ end
 
 function mod:RepeatVoid()
 	if db.void then
-		self:Bar(L["void_next"], 35, 46087)
-		self:ScheduleEvent("VoidWarn", "BigWigs_Message", 30, L["void_soon"], "Attention")
+		self:Bar(L["void_next"], 30, 46087)
+		self:ScheduleEvent("VoidWarn", "BigWigs_Message", 25, L["void_soon"], "Attention")
 	end
-	self:ScheduleEvent("Void", self.RepeatVoid, 35, self)
+	self:ScheduleEvent("Void", self.RepeatVoid, 30, self)
 end
 
 function mod:RepeatHumanoid()
@@ -239,9 +265,32 @@ function mod:RepeatHumanoid()
 	self:ScheduleEvent("Humanoid", self.RepeatHumanoid, 60, self)
 end
 
+function mod:UNIT_HEALTH(msg)
+	if not db.phase then return end
+	if UnitName(msg) == boss then
+		local hp = UnitHealth(msg)
+		if hp < 2 and not p2 then
+			self:Message(L["phase2_soon_message"], "Attention")
+			p2 = true
+			
+			self:CancelScheduledEvent("VoidWarn")
+			self:CancelScheduledEvent("HumanoidWarn")
+			self:CancelScheduledEvent("Void")
+			self:CancelScheduledEvent("Humanoid")
+			self:CancelScheduledEvent("DarknessWarn")
+			self:TriggerEvent("BigWigs_StopBar", self, L["void_next"])
+			self:TriggerEvent("BigWigs_StopBar", self, L["humanoid_next"])
+			self:TriggerEvent("BigWigs_StopBar", self, L["darkness_next"])
+		elseif hp > 4 and p2 then
+			p2 = false
+		end
+	end
+end
+
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
+		p2 = nil
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
@@ -250,8 +299,14 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Bar(L["darkness_next"], 45, 45996)
 			self:DelayedMessage(40, L["darkness_soon"], "Attention")
 		end
-		self:RepeatVoid()
-		self:Bar(L["humanoid_next"], 10, 46087) 
-		self:ScheduleEvent("Humanoid", self.RepeatHumanoid, 10, self) 
+		if db.void then
+			self:Bar(L["void_next"], 34, 46087)
+			self:DelayedMessage(29, L["void_soon"], "Attention")
+		end
+		if db.humanoid then
+			self:Bar(L["humanoid_next"], 7, 46087)
+		end
+		self:ScheduleEvent("Void", self.RepeatVoid, 34, self)
+		self:ScheduleEvent("Humanoid", self.RepeatHumanoid, 7, self)
 	end
 end
