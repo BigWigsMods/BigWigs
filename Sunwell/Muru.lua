@@ -200,7 +200,7 @@ function mod:Fiends()
 	if (time - last) > 5 then
 		last = time
 		if db.fiends then
-			self:Message(L["fieds_message"], "Urgent", true, nil, nil, 45934)
+			self:Message(L["fiends_message"], "Urgent", true, nil, nil, 45934)
 		end
 	end
 end
