@@ -38,7 +38,7 @@ L:RegisterTranslations("enUS", function() return {
 	fiends = "Dark Fiends",
 	fiends_desc = "Warn for Dark Fiends spawning.",
 	fiends_message = "Dark Fiends Inc!",
-	
+
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
 	phase2_soon_message = "Phase 2 soon!",
@@ -64,7 +64,7 @@ L:RegisterTranslations("esES", function() return {
 	--fiends = "Dark Fiends",
 	--fiends_desc = "Warn for Dark Fiends spawning.",
 	--fiends_message = "Dark Fiends Inc!",
-	
+
 	--phase = "Phases",
 	--phase_desc = "Warn for phase changes.",
 	--phase2_soon_message = "Phase 2 soon!",
@@ -90,7 +90,7 @@ L:RegisterTranslations("frFR", function() return {
 	--fiends = "Dark Fiends",
 	--fiends_desc = "Warn for Dark Fiends spawning.",
 	--fiends_message = "Dark Fiends Inc!",
-	
+
 	--phase = "Phases",
 	--phase_desc = "Warn for phase changes.",
 	--phase2_soon_message = "Phase 2 soon!",
@@ -116,7 +116,7 @@ L:RegisterTranslations("koKR", function() return {
 	fiends = "어둠 마귀",
 	fiends_desc = "어둠 마귀 소환을 알립니다.",
 	fiends_message = "잠시 후 어둠 마귀!",
-	
+
 	phase = "단계",
 	phase_desc = "단계 변경을 알립니다.",
 	phase2_soon_message = "잠시 후 2단계!",
@@ -142,7 +142,7 @@ L:RegisterTranslations("zhCN", function() return {
 	--fiends = "Dark Fiends",
 	--fiends_desc = "Warn for Dark Fiends spawning.",
 	--fiends_message = "Dark Fiends Inc!",
-	
+
 	--phase = "Phases",
 	--phase_desc = "Warn for phase changes.",
 	--phase2_soon_message = "Phase 2 soon!",
@@ -168,7 +168,7 @@ L:RegisterTranslations("zhTW", function() return {
 	--fiends = "Dark Fiends",
 	--fiends_desc = "Warn for Dark Fiends spawning.",
 	--fiends_message = "Dark Fiends Inc!",
-	
+
 	--phase = "Phases",
 	--phase_desc = "Warn for phase changes.",
 	--phase2_soon_message = "Phase 2 soon!",
@@ -250,18 +250,14 @@ function mod:DarkWarn()
 end
 
 function mod:RepeatVoid()
-	if db.void then
-		self:Bar(L["void_next"], 30, 46087)
-		self:ScheduleEvent("VoidWarn", "BigWigs_Message", 25, L["void_soon"], "Attention")
-	end
+	self:Bar(L["void_next"], 30, 46087)
+	self:ScheduleEvent("VoidWarn", "BigWigs_Message", 25, L["void_soon"], "Attention")
 	self:ScheduleEvent("Void", self.RepeatVoid, 30, self)
 end
 
 function mod:RepeatHumanoid()
-	if db.humanoid then
-		self:Bar(L["humanoid_next"], 60, 46087)
-		self:ScheduleEvent("HumanoidWarn", "BigWigs_Message", 55, L["humanoid_soon"], "Attention")
-	end
+	self:Bar(L["humanoid_next"], 60, 46087)
+	self:ScheduleEvent("HumanoidWarn", "BigWigs_Message", 55, L["humanoid_soon"], "Attention")
 	self:ScheduleEvent("Humanoid", self.RepeatHumanoid, 60, self)
 end
 
@@ -272,7 +268,6 @@ function mod:UNIT_HEALTH(msg)
 		if hp < 2 and not p2 then
 			self:Message(L["phase2_soon_message"], "Attention")
 			p2 = true
-			
 			self:CancelScheduledEvent("VoidWarn")
 			self:CancelScheduledEvent("HumanoidWarn")
 			self:CancelScheduledEvent("Void")
@@ -302,11 +297,11 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if db.void then
 			self:Bar(L["void_next"], 34, 46087)
 			self:DelayedMessage(29, L["void_soon"], "Attention")
+			self:ScheduleEvent("Void", self.RepeatVoid, 34, self)
 		end
 		if db.humanoid then
-			self:Bar(L["humanoid_next"], 7, 46087)
+			self:Bar(L["humanoid_next"], 10, 46087)
+			self:ScheduleEvent("Humanoid", self.RepeatHumanoid, 10, self)
 		end
-		self:ScheduleEvent("Void", self.RepeatVoid, 34, self)
-		self:ScheduleEvent("Humanoid", self.RepeatHumanoid, 7, self)
 	end
 end
