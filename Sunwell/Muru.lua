@@ -33,6 +33,10 @@ L:RegisterTranslations("enUS", function() return {
 	humanoid_desc = "Warn when the Humanoid Adds spawn.",
 	humanoid_next = "Next Humanoids",
 	humanoid_soon = "Humanoids in 5sec!",
+
+	fiends = "Dark Fiends",
+	fiends_desc = "Warn for Dark Fiends spawning.",
+	fiends_message = "Dark Fiends Inc!",
 } end )
 
 L:RegisterTranslations("esES", function() return {
@@ -51,6 +55,10 @@ L:RegisterTranslations("esES", function() return {
 	humanoid_desc = "Avisar cuando aparecen los humanoides.",
 	humanoid_next = "~Humanoides",
 	humanoid_soon = "Humanoides en 5 seg",
+
+	--fiends = "Dark Fiends",
+	--fiends_desc = "Warn for Dark Fiends spawning.",
+	--fiends_message = "Dark Fiends Inc!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -69,6 +77,10 @@ L:RegisterTranslations("frFR", function() return {
 	humanoid_desc = "Prévient quand les renforts humanoïdes apparaissent.",
 	humanoid_next = "Prochains humanoïdes",
 	humanoid_soon = "Humanoïdes dans 5 sec. !",
+
+	--fiends = "Dark Fiends",
+	--fiends_desc = "Warn for Dark Fiends spawning.",
+	--fiends_message = "Dark Fiends Inc!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -87,6 +99,10 @@ L:RegisterTranslations("koKR", function() return {
 	humanoid_desc = "타락한 엘프 소환을 알립니다.",
 	humanoid_next = "다음 타락한 엘프",
 	humanoid_soon = "5초 이내 타락한 엘프!",
+
+	--fiends = "Dark Fiends",
+	--fiends_desc = "Warn for Dark Fiends spawning.",
+	--fiends_message = "Dark Fiends Inc!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -105,6 +121,10 @@ L:RegisterTranslations("zhCN", function() return {
 	humanoid_desc = "人型生物刷新时发出警报。",
 	humanoid_next = "<下一人型生物>",
 	humanoid_soon = "5秒后，人型生物刷新！",
+
+	--fiends = "Dark Fiends",
+	--fiends_desc = "Warn for Dark Fiends spawning.",
+	--fiends_message = "Dark Fiends Inc!",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -123,6 +143,10 @@ L:RegisterTranslations("zhTW", function() return {
 	humanoid_desc = "當虛無哨兵召喚者出現時發出警報",
 	humanoid_next = "下一波召喚者",
 	humanoid_soon = "約 5 秒內召喚者出現!",
+
+	--fiends = "Dark Fiends",
+	--fiends_desc = "Warn for Dark Fiends spawning.",
+	--fiends_message = "Dark Fiends Inc!",
 } end )
 
 ----------------------------------
@@ -132,7 +156,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"darkness", "void", "humanoid", "bosskill"}
+mod.toggleoptions = {"darkness", "void", "humanoid", "fiends", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -141,6 +165,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Darkness", 45996)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Fiends", 45934)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -166,6 +191,17 @@ function mod:Darkness(player, spellID)
 	else
 		inDark[player] = true
 		self:ScheduleEvent("BWMuruDark", self.DarkWarn, 0.4, self)
+	end
+end
+
+local last = 0
+function mod:Fiends()
+	local time = GetTime()
+	if (time - last) > 5 then
+		last = time
+		if db.fiends then
+			self:Message(L["fieds_message"], "Urgent", true, nil, nil, 45934)
+		end
 	end
 end
 
