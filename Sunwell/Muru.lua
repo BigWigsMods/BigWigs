@@ -139,13 +139,13 @@ L:RegisterTranslations("zhCN", function() return {
 	humanoid_next = "<下一人型生物>",
 	humanoid_soon = "5秒后，人型生物刷新！",
 
-	--fiends = "Dark Fiends",
-	--fiends_desc = "Warn for Dark Fiends spawning.",
-	--fiends_message = "Dark Fiends Inc!",
+	fiends = "暗影魔",--Dark Fiends
+	fiends_desc = "暗影魔刷新时发出警报。",
+	fiends_message = "暗影魔 出现！",
 
-	--phase = "Phases",
-	--phase_desc = "Warn for phase changes.",
-	--phase2_soon_message = "Phase 2 soon!",
+	phase = "阶段",
+	phase_desc = "当进入不同阶段发出警报。",
+	phase2_soon_message = "即将 - 第二阶段！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
