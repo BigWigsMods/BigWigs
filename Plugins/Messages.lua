@@ -48,7 +48,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	["Reset position"] = true,
 	["Reset the anchor position, moving it to the center of your screen."] = true,
-	
+
 	Font = "Fonts\\FRIZQT__.TTF",
 } end)
 
@@ -90,7 +90,7 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	["Messages"] = "信息提示",
 	["Options for message display."] = "信息显示模式及相关设置。",
-	
+
 	["BigWigs Anchor"] = "BigWigs 锚点",
 	["Output Settings"] = "输出设置",
 
@@ -275,7 +275,6 @@ plugin.defaultDB = {
 	posx = nil,
 	posy = -150,
 	chat = nil,
-	twothree = nil,
 	useicons = true,
 }
 plugin.consoleCmd = L["Messages"]
@@ -380,7 +379,7 @@ function plugin:OnRegister()
 	self:SetSinkStorage(self.db.profile)
 
 	self:RegisterSink("BigWigs", "BigWigs", nil, "Print")
-	
+
 	self.consoleOptions.args.output = self:GetSinkAce2OptionsDataTable().output
 	self.consoleOptions.args.output.order = 100
 end
@@ -400,11 +399,6 @@ function plugin:OnEnable()
 		testModule = BigWigs:GetModule("Test")
 	else
 		testModule = nil
-	end
-
-	if type(RaidNotice_AddMessage) == "function" and not plugin.db.profile.twothree then
-		plugin.db.profile.sink20OutputSink = "RaidWarning"
-		plugin.db.profile.twothree = true
 	end
 end
 
