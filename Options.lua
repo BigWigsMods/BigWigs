@@ -132,7 +132,6 @@ function BigWigsOptions:OnInitialize()
 	self.hasNoColor = true
 	self.hasIcon = "Interface\\AddOns\\BigWigs\\Icons\\core-enabled"
 	self.defaultMinimapPosition = 180
-	self.clickableTooltip = true
 	self.hideWithoutStandby = true
 	self.hideMenuTitle = true
 	self.OnMenuRequest = BigWigs.cmdtable

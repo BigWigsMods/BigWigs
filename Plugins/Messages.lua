@@ -263,11 +263,13 @@ L:RegisterTranslations("esES", function() return {
 --      Module Declaration      --
 ----------------------------------
 
-local plugin = BigWigs:NewModule("Messages", "Sink-1.0")
+local plugin = BigWigs:NewModule("Messages")
+local sink = LibStub("LibSink-2.0")
+sink:Embed(plugin)
 
 plugin.revision = tonumber(("$Revision$"):sub(12, -3))
 plugin.defaultDB = {
-	sink10OutputSink = "RaidWarning",
+	sink20OutputSink = "RaidWarning",
 	usecolors = true,
 	scale = 1.0,
 	posx = nil,
@@ -279,7 +281,7 @@ plugin.defaultDB = {
 plugin.consoleCmd = L["Messages"]
 
 local function bwAnchorDisabled()
-	return plugin.db.profile.sink10OutputSink ~= "BigWigs"
+	return plugin.db.profile.sink20OutputSink ~= "BigWigs"
 end
 
 plugin.consoleOptions = {
@@ -375,8 +377,11 @@ plugin.consoleOptions = {
 ------------------------------
 
 function plugin:OnRegister()
+	self:SetSinkStorage(self.db.profile)
+
 	self:RegisterSink("BigWigs", "BigWigs", nil, "Print")
-	self.consoleOptions.args.output = AceLibrary("Sink-1.0"):GetAceOptionsDataTable(self).output
+	
+	self.consoleOptions.args.output = self:GetSinkAce2OptionsDataTable().output
 	self.consoleOptions.args.output.order = 100
 end
 
@@ -398,7 +403,7 @@ function plugin:OnEnable()
 	end
 
 	if type(RaidNotice_AddMessage) == "function" and not plugin.db.profile.twothree then
-		plugin.db.profile.sink10OutputSink = "RaidWarning"
+		plugin.db.profile.sink20OutputSink = "RaidWarning"
 		plugin.db.profile.twothree = true
 	end
 end
