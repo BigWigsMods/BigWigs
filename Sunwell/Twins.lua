@@ -22,7 +22,6 @@ local CheckInteractDistance = CheckInteractDistance
 L:RegisterTranslations("enUS", function() return {
 	cmd = "EredarTwins",
 
-	engage_trigger = "",
 	wipe_bar = "Respawn",
 
 	nova = "Shadow Nova",
@@ -54,7 +53,6 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("esES", function() return {
-	engage_trigger = "",
 	wipe_bar = "Reaparición",
 
 	nova = "Nova de las Sombras (Shadow Nova)",
@@ -86,7 +84,6 @@ L:RegisterTranslations("esES", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	engage_trigger = "",
 	wipe_bar = "Réapparition",
 
 	nova = "Nova de l'ombre",
@@ -118,7 +115,6 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "",
 	wipe_bar = "재생성 시간",
 
 	nova = "암흑 회오리",
@@ -150,8 +146,6 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-
-	engage_trigger = "",
 	wipe_bar = "重置计时器",
 
 	nova = "暗影新星",--Shadow Nova
@@ -183,7 +177,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	engage_trigger = "",
 	wipe_bar = "重生計時",
 
 	nova = "暗影新星",
@@ -215,7 +208,6 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	engage_trigger = "",
 	wipe_bar = "Wiederbelebung",
 
 	nova = "Schattennova",

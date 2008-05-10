@@ -181,7 +181,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", -1, "darkness", "void", "humanoid", "fiends", "bosskill"}
+mod.toggleoptions = {"phase", -1, "darkness", "void", "humanoid", "fiends", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -302,6 +302,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if db.humanoid then
 			self:Bar(L["humanoid_next"], 10, 46087)
 			self:ScheduleEvent("Humanoid", self.RepeatHumanoid, 10, self)
+		end
+		if db.enrage then
+			self:Enrage(600)
 		end
 	end
 end
