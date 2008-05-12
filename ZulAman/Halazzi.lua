@@ -125,7 +125,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	frenzy = "狂乱",
 	frenzy_desc = "当狂乱时发出警报。",
-	frenzy_trigger = ""%s变得极为狂暴！",
+	frenzy_trigger = "%s变得极为狂暴！",
 	frenzy_message = "哈尔拉玆 狂乱！- 凝神射击！",
 
 	flame = "烈焰震击",
