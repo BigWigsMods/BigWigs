@@ -115,7 +115,7 @@ L:RegisterTranslations("zhCN", function() return {
 	totem_message = "即将 闪电图腾！",
 
 	phase = "阶段",
-	phase_desc = "阶段变化警报。",
+	phase_desc = "当阶段变化时发出警报。",
 	phase_spirit = "狂野的灵魂与我同在……",
 	phase_normal = "灵魂，到我这里来！",
 	normal_message = "正常阶段！",
@@ -124,9 +124,9 @@ L:RegisterTranslations("zhCN", function() return {
 	spirit_bar = "<可能 正常阶段>",
 
 	frenzy = "狂乱",
-	frenzy_desc = "狂乱警报。",
-	frenzy_trigger = "%s获得了狂乱的效果。",
-	frenzy_message = "哈尔拉玆 狂乱！",
+	frenzy_desc = "当狂乱时发出警报。",
+	frenzy_trigger = ""%s变得极为狂暴！",
+	frenzy_message = "哈尔拉玆 狂乱！- 凝神射击！",
 
 	flame = "烈焰震击",
 	flame_desc = "当玩家受到烈焰震击时发出警报。",
