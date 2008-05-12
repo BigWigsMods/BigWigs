@@ -61,13 +61,13 @@ L:RegisterTranslations("esES", function() return {
 	humanoid_next = "~Humanoides",
 	humanoid_soon = "Humanoides en 5 seg",
 
-	--fiends = "Dark Fiends",
-	--fiends_desc = "Warn for Dark Fiends spawning.",
-	--fiends_message = "Dark Fiends Inc!",
+	fiends = "Malignos oscuros (Dark Fiends)",
+	fiends_desc = "Avisar cuando aparecen Malignos oscuros.",
+	fiends_message = "¡Malignos oscuros!",
 
-	--phase = "Phases",
-	--phase_desc = "Warn for phase changes.",
-	--phase2_soon_message = "Phase 2 soon!",
+	phase = "Fases",
+	phase_desc = "Avisar sobre las distintas fases del encuentro.",
+	phase2_soon_message = "¡Fase 2 pronto!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
