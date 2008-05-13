@@ -142,7 +142,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	phase = "阶段",
 	phase_desc = "当进入不同阶段发出警报。",
-	phase2_message = "即将 - 第二阶段！",
+	phase2_message = "第二阶段！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
