@@ -8,7 +8,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local db = nil
 local started = nil
-local p2 = nil
 local pName = UnitName("player")
 local inDark = {}
 
@@ -41,7 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
-	phase2_soon_message = "Phase 2 soon!",
+	phase2_message = "Phase 2",
 } end )
 
 L:RegisterTranslations("esES", function() return {
@@ -67,7 +66,7 @@ L:RegisterTranslations("esES", function() return {
 
 	phase = "Fases",
 	phase_desc = "Avisar sobre las distintas fases del encuentro.",
-	phase2_soon_message = "¡Fase 2 pronto!",
+	phase2_message = "¡Fase 2!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -93,7 +92,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
-	phase2_soon_message = "Phase 2 imminente !",
+	phase2_message = "Phase 2 !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -119,7 +118,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	phase = "단계",
 	phase_desc = "단계 변경을 알립니다.",
-	phase2_soon_message = "잠시 후 2단계!",
+	phase2_message = "잠시 후 2단계!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -145,7 +144,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	phase = "阶段",
 	phase_desc = "当进入不同阶段发出警报。",
-	phase2_soon_message = "即将 - 第二阶段！",
+	phase2_message = "即将 - 第二阶段！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -171,7 +170,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	--phase = "Phases",
 	--phase_desc = "Warn for phase changes.",
-	--phase2_soon_message = "Phase 2 soon!",
+	--phase2_message = "Phase 2!",
 } end )
 
 ----------------------------------
@@ -191,6 +190,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Darkness", 45996)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Fiends", 45934)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Portals", 46177)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -231,6 +231,20 @@ function mod:Fiends()
 	end
 end
 
+function mod:Portals()
+	if not db.phase then return end
+
+	self:Message(L["phase2_message"], "Attention")
+	self:CancelScheduledEvent("VoidWarn")
+	self:CancelScheduledEvent("HumanoidWarn")
+	self:CancelScheduledEvent("Void")
+	self:CancelScheduledEvent("Humanoid")
+	self:CancelScheduledEvent("DarknessWarn")
+	self:TriggerEvent("BigWigs_StopBar", self, L["void_next"])
+	self:TriggerEvent("BigWigs_StopBar", self, L["humanoid_next"])
+	self:TriggerEvent("BigWigs_StopBar", self, L["darkness_next"])
+end
+
 function mod:Deaths(unit)
 	if unit == entropius then
 		self:GenericBossDeath(boss)
@@ -261,31 +275,9 @@ function mod:RepeatHumanoid()
 	self:ScheduleEvent("Humanoid", self.RepeatHumanoid, 60, self)
 end
 
-function mod:UNIT_HEALTH(msg)
-	if not db.phase then return end
-	if UnitName(msg) == boss then
-		local hp = UnitHealth(msg)
-		if hp < 2 and not p2 then
-			self:Message(L["phase2_soon_message"], "Attention")
-			p2 = true
-			self:CancelScheduledEvent("VoidWarn")
-			self:CancelScheduledEvent("HumanoidWarn")
-			self:CancelScheduledEvent("Void")
-			self:CancelScheduledEvent("Humanoid")
-			self:CancelScheduledEvent("DarknessWarn")
-			self:TriggerEvent("BigWigs_StopBar", self, L["void_next"])
-			self:TriggerEvent("BigWigs_StopBar", self, L["humanoid_next"])
-			self:TriggerEvent("BigWigs_StopBar", self, L["darkness_next"])
-		elseif hp > 4 and p2 then
-			p2 = false
-		end
-	end
-end
-
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
-		p2 = nil
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
