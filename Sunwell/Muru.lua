@@ -206,9 +206,9 @@ end
 function mod:Darkness(unit, spellID)
 	if unit == boss and db.darkness then
 		self:Bar(L["darkness"], 20, spellID)
-		self:IfMessage(L["darkness_message"]:format(unit), "Urgent", spellID)
+		self:IfMessage(L["darkness_message"]:format(unit), "Positive", spellID)
 		self:Bar(L["darkness_next"], 45, spellID)
-		self:ScheduleEvent("DarknessWarn", "BigWigs_Message", 40, L["darkness_soon"], "Attention")
+		self:ScheduleEvent("DarknessWarn", "BigWigs_Message", 40, L["darkness_soon"], "Positive")
 	end
 end
 
@@ -218,7 +218,7 @@ function mod:Fiends()
 	if (time - last) > 5 then
 		last = time
 		if db.fiends then
-			self:Message(L["fiends_message"], "Urgent", true, nil, nil, 45934)
+			self:Message(L["fiends_message"], "Important", true, nil, nil, 45934)
 		end
 	end
 end
@@ -251,7 +251,7 @@ end
 
 function mod:RepeatHumanoid()
 	self:Bar(L["humanoid_next"], 60, 46087)
-	self:ScheduleEvent("HumanoidWarn", "BigWigs_Message", 55, L["humanoid_soon"], "Attention")
+	self:ScheduleEvent("HumanoidWarn", "BigWigs_Message", 55, L["humanoid_soon"], "Urgent")
 	self:ScheduleEvent("Humanoid", self.RepeatHumanoid, 60, self)
 end
 
@@ -264,12 +264,12 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		for k in pairs(inDark) do inDark[k] = nil end
 		if db.darkness then
 			self:Bar(L["darkness_next"], 45, 45996)
-			self:DelayedMessage(40, L["darkness_soon"], "Attention")
+			self:DelayedMessage(40, L["darkness_soon"], "Positive")
 		end
 		if db.void then
-			self:Bar(L["void_next"], 34, 46087)
-			self:DelayedMessage(29, L["void_soon"], "Attention")
-			self:ScheduleEvent("Void", self.RepeatVoid, 34, self)
+			self:Bar(L["void_next"], 30, 46087)
+			self:DelayedMessage(25, L["void_soon"], "Attention")
+			self:ScheduleEvent("Void", self.RepeatVoid, 30, self)
 		end
 		if db.humanoid then
 			self:Bar(L["humanoid_next"], 10, 46087)
