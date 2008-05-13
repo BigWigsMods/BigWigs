@@ -8,8 +8,6 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local db = nil
 local started = nil
-local pName = UnitName("player")
-local inDark = {}
 
 ----------------------------
 --      Localization      --
@@ -196,7 +194,6 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
-	self:RegisterEvent("UNIT_HEALTH")
 
 	db = self.db.profile
 	started = nil
@@ -206,17 +203,12 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:Darkness(player, spellID)
-	if not db.darkness then return end
-
-	if player == boss then
+function mod:Darkness(unit, spellID)
+	if unit == boss and db.darkness then
 		self:Bar(L["darkness"], 20, spellID)
-		self:IfMessage(L["darkness_message"]:format(player), "Urgent", spellID)
+		self:IfMessage(L["darkness_message"]:format(unit), "Urgent", spellID)
 		self:Bar(L["darkness_next"], 45, spellID)
 		self:ScheduleEvent("DarknessWarn", "BigWigs_Message", 40, L["darkness_soon"], "Attention")
-	else
-		inDark[player] = true
-		self:ScheduleEvent("BWMuruDark", self.DarkWarn, 0.4, self)
 	end
 end
 
@@ -249,18 +241,6 @@ function mod:Deaths(unit)
 	if unit == entropius then
 		self:GenericBossDeath(boss)
 	end
-end
-
-function mod:DarkWarn()
-	local msg = nil
-	for k in pairs(inDark) do
-		if not msg then
-			msg = k
-		else
-			msg = msg .. ", " .. k
-		end
-	end
-	self:IfMessage(L["darkness_message"]:format(msg), "Urgent", 45996)
 end
 
 function mod:RepeatVoid()
