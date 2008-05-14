@@ -261,7 +261,6 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		for k in pairs(inDark) do inDark[k] = nil end
 		if db.darkness then
 			self:Bar(L["darkness_next"], 45, 45996)
 			self:DelayedMessage(40, L["darkness_soon"], "Positive")
