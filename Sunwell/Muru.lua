@@ -171,6 +171,32 @@ L:RegisterTranslations("zhTW", function() return {
 	--phase2_message = "Phase 2!",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	darkness = "Dunkelheit",
+	darkness_desc = "Warnung wer von Dunkelheit betroffen ist.",
+	darkness_message = "Dunkelheit: %s",
+	darkness_next = "Nächste Dunkelheit",
+	darkness_soon = "Dunkelheit in 5sek!",
+
+	void = "Leerenwache",
+	void_desc = "Warnung wenn eine Leerenwache erscheint.",
+	void_next = "Nächste Leerenwache",
+	void_soon = "Leerenwache in 5 sek!",
+
+	humanoid = "Menschliche Wache",
+	humanoid_desc = "Warnung wenn Menschliche Wachen erscheinen.",
+	humanoid_next = "Nächste Wachen",
+	humanoid_soon = "Wachen in 5sec!",
+
+	fiends = "Finsteres Scheusal",
+	fiends_desc = "Warnung wenn Finsteres Scheusale erscheinen.",
+	fiends_message = "Finsteres Scheusale Inc!",
+
+	phase = "Phasen",
+	phase_desc = "Warnung bei Phasenänderrungen.",
+	phase2_message = "Phase 2",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
