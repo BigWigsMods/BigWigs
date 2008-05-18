@@ -116,7 +116,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	phase = "단계",
 	phase_desc = "단계 변경을 알립니다.",
-	phase2_message = "잠시 후 2단계!",
+	phase2_message = "2 단계!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
