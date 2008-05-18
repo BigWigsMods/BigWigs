@@ -624,10 +624,15 @@ function mod:FearCast()
 	end
 end
 
+local last = 0
 function mod:Fear(_, spellID)
-	if db.fear then
-		self:IfMessage(L["fear_message"], "Attention", spellID)
-		self:Bar(L["fear_bar"], 30, spellID)
+	local time = GetTime()
+	if (time - last) > 5 then
+		last = time
+		if db.fear then
+			self:IfMessage(L["fear_message"], "Attention", spellID)
+			self:Bar(L["fear_bar"], 30, spellID)
+		end
 	end
 end
 
