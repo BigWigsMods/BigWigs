@@ -222,7 +222,7 @@ L:RegisterTranslations("koKR", function() return {
 	dispel_desc = "당신이 사제인 경우, 대규모 무효화가 실패한 플레이어를 일반 대화창으로 알립니다.",
 	dispel_fail = "대규모 무효화 실패: ",
 
-	warning = "경고\n--\n블리자드 메인 탱커 목록에 필요한 메인 탱커가 있어야지만 가두기에 대한 검색이 제대로 작동합니다!!",
+	warning = "경고\n--\n블리자드의 방어 전담에 필요한 방어 전담 탱커가 등록되어야 가두기에 대한 검색이 제대로 작동합니다!!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
