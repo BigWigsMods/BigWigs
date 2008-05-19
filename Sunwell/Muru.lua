@@ -84,13 +84,13 @@ L:RegisterTranslations("frFR", function() return {
 	humanoid_next = "Prochains humanoïdes",
 	humanoid_soon = "Humanoïdes dans 5 sec. !",
 
-	fiends = "Fiels sombres",
-	fiends_desc = "Prévient quand les Fiels sombres apparaissent.",
-	fiends_message = "Arrivée des Fiels sombres !",
+	fiends = "Sombres fiels",
+	fiends_desc = "Prévient quand les Sombres fiels apparaissent.",
+	fiends_message = "Arrivée des Sombres fiels !",
 
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
-	phase2_message = "Phase 2 !",
+	phase2_message = "Phase 2 !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

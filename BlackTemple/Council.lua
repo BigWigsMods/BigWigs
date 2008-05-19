@@ -157,7 +157,7 @@ L:RegisterTranslations("frFR", function() return {
 	circle_message = "Cercle de soins en incantation !",
 	circle_heal_message = "Soigné ! - Prochain dans ~20 sec.",
 	circle_fail_message = "Interrompu par %s ! - Prochain dans ~12 sec.",
-	circle_bar = "~Cooldown Cercle de soins",
+	circle_bar = "~Recharge Cercle de soins",
 
 	res = "Aura de résistance",
 	res_desc = "Préviens quand Gathios le Briseur gagne son Aura de résistance chromatique.",

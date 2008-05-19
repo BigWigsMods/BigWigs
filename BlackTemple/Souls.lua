@@ -164,7 +164,7 @@ L:RegisterTranslations("frFR", function() return {
 	spite_message = "Dépit sur %s",
 
 	scream = "Cri de l'âme",
-	scream_desc = "Affiche une barre de cooldown pour le Cri de l'âme.",
+	scream_desc = "Affiche une barre pour le temps de recharge du Cri de l'âme.",
 	scream_bar = "~Cooldown Cri de l'âme",
 } end )
 

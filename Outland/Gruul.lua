@@ -64,15 +64,15 @@ L:RegisterTranslations("frFR", function() return {
 	engage_message = "%s engagé !",
 
 	grow = "Croissance",
-	grow_desc = "Compte les croissances de Grull et prévient de ses arrivées.",
+	grow_desc = "Compte les Croissances de Grull et prévient de leurs arrivées.",
 	grow_message = "Croissance : (%d)",
 	grow_bar = "Croissance (%d)",
 
 	grasp = "Emprise",
-	grasp_desc = "Avertissements et délais pour Emprise du seigneur gronn.",
-	grasp_message = "Heurt terrestre - Emprise dans ~10 sec !",
+	grasp_desc = "Avertissements et délais pour l'Emprise du seigneur gronn.",
+	grasp_message = "Heurt terrestre - Fracasser dans ~10 sec !",
 	grasp_warning = "Heurt terrestre imminent",
-	grasp_bar = "~Cooldown Heurt terrestre",
+	grasp_bar = "~Recharge Heurt terrestre",
 
 	cavein = "Eboulement sur vous",
 	cavein_desc = "Prévient quand vous subissez les effets de l'Eboulement.",
