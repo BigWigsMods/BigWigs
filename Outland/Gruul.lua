@@ -279,7 +279,12 @@ function mod:Grow(_, spellID)
 	if db.grow then
 		self:IfMessage(L["grow_message"]:format(growcount), "Important", spellID)
 		growcount = growcount + 1
-		self:Bar(L["grow_bar"]:format(growcount), 30, spellID)
+		if growcount < 31 then
+			self:Bar(L["grow_bar"]:format(growcount), 30, spellID)
+		else
+			growcount = 1
+			self:Bar(L["grow_bar"]:format(growcount), 300, spellID)
+		end
 	end
 end
 
