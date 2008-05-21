@@ -245,7 +245,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	phase = "Phases",
 	phase_desc = "Prévient quand Gangrebrume décolle et atterit.",
-	airphase_trigger = "Je suis plus forte que jamais !", -- à vérifier
+	airphase_trigger = "Je suis plus forte que jamais !",
 	takeoff_bar = "Décollage",
 	takeoff_message = "Décollage dans 5 sec. !",
 	landing_bar = "Atterrissage",

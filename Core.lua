@@ -82,11 +82,11 @@ L:RegisterTranslations("frFR", function() return {
 	["Options"] = "Options",
 
 	bosskill = "Défaite du boss",
-	bosskill_desc = "Préviens quand le boss est vaincu.",
+	bosskill_desc = "Prévient quand le boss est vaincu.",
 	enrage = "Enrager",
-	enrage_desc = "Préviens quand le boss devient enragé.",
+	enrage_desc = "Prévient quand le boss devient enragé.",
 	berserk = "Berserk",
-	berserk_desc = "Préviens quand le boss passe en berserk.",
+	berserk_desc = "Prévient quand le boss passe en berserk.",
 
 	["Load"] = "Charger",
 	["Load All"] = "Tout charger",
