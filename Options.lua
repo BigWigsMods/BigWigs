@@ -113,7 +113,8 @@ L:RegisterTranslations("esES", function() return {
 --      FuBar Plugin      --
 ----------------------------
 
-local BigWigsOptions = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDB-2.0", "FuBarPlugin-2.0")
+BigWigsOptions = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDB-2.0", "FuBarPlugin-2.0")
+local BigWigsOptions = BigWigsOptions
 
 BigWigsOptions.hasIcon = true
 
