@@ -21,6 +21,10 @@ L:RegisterTranslations("enUS", function() return {
 	bomb_cast = "Incoming Big Bomb!",
 	bomb_bar = "Explosion!",
 
+	orb = "Shield Orb",
+	orb_desc = "Warn when a Shield Orb is shadowbolting.",
+	orb_shooting = "Orb Alive - Shooting People!",
+
 	shield_up = "Shield is UP!",
 
 	deceiver_dies = "Deciever #%d Killed",
@@ -31,10 +35,11 @@ L:RegisterTranslations("enUS", function() return {
 --      Module Declaration      --
 ----------------------------------
 
+local deceiver = L["Hand of the Deceiver"]
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
-mod.enabletrigger = {L["Hand of the Deceiver"], boss}
-mod.toggleoptions = {"bomb", "bosskill"}
+mod.enabletrigger = {deceiver, boss}
+mod.toggleoptions = {"bomb", "orb", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -43,6 +48,8 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Shield", 45848)
+	self:AddCombatListener("SPELL_DAMAGE", "Orb", 45680)
+	self:AddCombatListener("SPELL_MISSED", "Orb", 45680)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
@@ -64,8 +71,19 @@ function mod:Shield()
 	self:IfMessage(L["shield_up"], "Urgent", 45848)
 end
 
+local last = 0
+function mod:Orb()
+	local time = GetTime()
+	if (time - last) > 10 then
+		last = time
+		if db.orb then
+			self:IfMessage(L["orb_shooting"], "Attention", 45680)
+		end
+	end
+end
+
 function mod:Deaths(unit)
-	if unit == L["Hand of the Deceiver"] then
+	if unit == deceiver then
 		deaths = deaths + 1
 		self:IfMessage(L["deceiver_dies"]:format(deaths), "Positive")
 		if deaths == 3 then
@@ -79,7 +97,7 @@ end
 function mod:CHAT_MSG_MONSTER_EMOTE(_, unit)
 	if unit == boss and db.bomb then
 		self:Bar(L["bomb_bar"], 8, "Spell_Shadow_BlackPlague")
-		self:IfMessage(L["bomb_cast"], "Important")
+		self:IfMessage(L["bomb_cast"], "Positive")
 	end
 end
 
