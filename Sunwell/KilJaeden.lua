@@ -20,6 +20,9 @@ L:RegisterTranslations("enUS", function() return {
 	bomb_desc = "Warn when Darkness of a Thousand Souls is being cast.",
 	bomb_cast = "Incoming Big Bomb!",
 	bomb_bar = "Explosion!",
+	bomb_nextbar = "~Possible Bomb",
+	bomb_warning = "Possible bomb in ~10sec",
+	kalec_yell = "I will channel my powers into the orbs! Be ready!",
 
 	orb = "Shield Orb",
 	orb_desc = "Warn when a Shield Orb is shadowbolting.",
@@ -53,6 +56,7 @@ function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -94,10 +98,19 @@ function mod:Deaths(unit)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_EMOTE(_, unit)
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit)
 	if unit == boss and db.bomb then
 		self:Bar(L["bomb_bar"], 8, "Spell_Shadow_BlackPlague")
 		self:IfMessage(L["bomb_cast"], "Positive")
+		self:Bar(L["bomb_nextbar"], 46, "Spell_Shadow_BlackPlague")
+		self:DelayedMessage(36, L["bomb_warning"], "Attention")
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["kalec_yell"] and db.bomb then
+		self:Bar(L["bomb_nextbar"], 40, "Spell_Shadow_BlackPlague")
+		self:DelayedMessage(30, L["bomb_warning"], "Attention")
 	end
 end
 
