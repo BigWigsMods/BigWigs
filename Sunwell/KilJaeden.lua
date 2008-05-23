@@ -38,6 +38,29 @@ L:RegisterTranslations("enUS", function() return {
 	["Hand of the Deceiver"] = true,
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	bomb = "무수한 어둠의 영혼",
+	bomb_desc = "무수한 어둠의 영혼 시전 시 알립니다.",
+	bomb_cast = "잠시후 큰 폭탄!",
+	bomb_bar = "폭발!",
+	bomb_nextbar = "~폭탄 가능",
+	bomb_warning = "약 10초 이내 폭탄 가능!",
+	kalec_yell = "수정구에 힘을 쏟겠습니다! 준비하세요!",	--check
+
+	orb = "보호막 보주",
+	orb_desc = "보호막 보주의 어둠의 화살을 알립니다.",
+	orb_shooting = "보주 활동 - 사람들 공격!",
+
+	bloom = "화염 불꽃",
+	bloom_desc = "화염 불꽃 임박을 알립니다.",
+	bloom_message = "잠시 후 화염 불꽃!",
+
+	shield_up = "푸른용의 보호막!",
+
+	deceiver_dies = "심복 #%d 처치",
+	["Hand of the Deceiver"] = "책략가의 심복",	--check
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
