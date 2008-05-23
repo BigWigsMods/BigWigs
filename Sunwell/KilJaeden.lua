@@ -132,7 +132,7 @@ function mod:Orb()
 	if (time - last) > 10 then
 		last = time
 		if db.orb then
-			self:IfMessage(L["orb_shooting"], "Attention", 45680)
+			self:IfMessage(L["orb_shooting"], "Attention", 45680, "Alert")
 		end
 	end
 end
