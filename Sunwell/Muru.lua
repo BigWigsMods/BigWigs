@@ -69,7 +69,7 @@ L:RegisterTranslations("esES", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	darkness = "Ténèbres",
-	darkness_desc = "Prévient quand un joueur subit les effets des Ténèbres.",
+	darkness_desc = "Prévient quand quelqu'un subit les effets des Ténèbres.",
 	darkness_message = "Ténèbres : %s",
 	darkness_next = "Prochaines Ténèbres",
 	darkness_soon = "Ténèbres dans 5 sec. !",

@@ -61,6 +61,29 @@ L:RegisterTranslations("koKR", function() return {
 	["Hand of the Deceiver"] = "책략가의 심복",	--check
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	bomb = "Ténèbres des mille âmes",
+	bomb_desc = "Prévient quand les Ténèbres des mille âmes sont incantés.",
+	bomb_cast = "Arrivée d'une énorme bombe !",
+	bomb_bar = "Explosion !",
+	bomb_nextbar = "~Bombe probable",
+	bomb_warning = "Bombe probable dans ~10 sec.",
+	kalec_yell = "Je vais canaliser mon énergie vers les orbes ! Préparez-vous !", -- à vérifier
+
+	orb = "Orbe bouclier",
+	orb_desc = "Prévient quand une Orbe bouclier lance des Traits de l'ombre.",
+	orb_shooting = "Orbe en vie !",
+
+	bloom = "Fleur du feu",
+	bloom_desc = "Prévient de l'arrivée des Fleurs du feu.",
+	bloom_message = "Arrivée d'une Fleur du feu !",
+
+	shield_up = "Bouclier ACTIF !",
+
+	deceiver_dies = "Trompeur #%d tué",
+	["Hand of the Deceiver"] = "Main du Trompeur", -- à vérifier
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
