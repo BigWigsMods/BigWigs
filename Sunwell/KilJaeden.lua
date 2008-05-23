@@ -28,6 +28,10 @@ L:RegisterTranslations("enUS", function() return {
 	orb_desc = "Warn when a Shield Orb is shadowbolting.",
 	orb_shooting = "Orb Alive - Shooting People!",
 
+	bloom = "Fire Bloom",
+	bloom_desc = "Warn for incoming Fire Bloom.",
+	bloom_message = "Inc Bloom!",
+
 	shield_up = "Shield is UP!",
 
 	deceiver_dies = "Deciever #%d Killed",
@@ -42,7 +46,7 @@ local deceiver = L["Hand of the Deceiver"]
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = {deceiver, boss}
-mod.toggleoptions = {"bomb", "orb", "bosskill"}
+mod.toggleoptions = {"bomb", "orb", "bloom", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -53,6 +57,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Shield", 45848)
 	self:AddCombatListener("SPELL_DAMAGE", "Orb", 45680)
 	self:AddCombatListener("SPELL_MISSED", "Orb", 45680)
+	self:AddCombatListener("SPELL_CAST_START", "Bloom", 45641)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
@@ -83,6 +88,13 @@ function mod:Orb()
 		if db.orb then
 			self:IfMessage(L["orb_shooting"], "Attention", 45680)
 		end
+	end
+end
+
+function mod:Bloom()
+	--some kind of  timer on this thing that doesn't suck?
+	if db.bloom then
+		self:IfMessage(L["bloom_message"], "Important", 45641)
 	end
 end
 
