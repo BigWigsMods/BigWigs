@@ -11,7 +11,7 @@
 ## Notes-zhCN: Big Wigs 太阳之井模块
 ## Notes-zhTW: Big Wigs 太陽之井高地模組
 ## Author: Funkydude
-## X-Credits: Timewasted, Nevcairiel
+## X-Credits: Timewasted, Nevcairiel, Dartanius, Subkiller20
 ## Version: 2.0
 ## LoadOnDemand: 1
 
