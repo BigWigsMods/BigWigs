@@ -43,6 +43,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	bloomwhisper = "Fire Bloom Whisper",
 	bloomwhisper_desc = "Whisper players with Fire Bloom.",
+	bloom_you = "Fire Bloom on YOU!",
 
 	icons = "Bloom Icons",
 	icons_desc = "Place random Raid Icons on players with Fire Bloom (requires promoted or higher)",
@@ -70,7 +71,7 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	bomb = "무수한 어둠의 영혼",
+	bomb = "어둠의 영혼",
 	bomb_desc = "무수한 어둠의 영혼 시전 시 알립니다.",
 	bomb_cast = "잠시 후 큰 폭탄!",
 	bomb_bar = "폭발!",
@@ -83,8 +84,37 @@ L:RegisterTranslations("koKR", function() return {
 	orb_shooting = "보주 활동 - 어활 공격!",
 
 	bloom = "화염 불꽃",
-	bloom_desc = "화염 불꽃 임박을 알립니다.",
-	bloom_message = "잠시 후 화염 불꽃!",
+	bloom_desc = "화염 불꽃에 걸린 플레이어를 알립니다.",
+	bloom_other = "%s 화염 불꽃!",
+	bloom_bar = "화염 불꽃",
+	bloom_message = "5초 후 다음 화염 불꽃!",
+	
+	bloomsay = "화염 불꽃 대화",
+	bloomsay_desc = "자신이 화염 불꽃이 걸렸을시 일반 대화로 출력합니다.",
+	bloom_say = "나에게 화염 불꽃!",
+
+	bloomwhisper = "화염 불꽃 귓속말",
+	bloomwhisper_desc = "화염 불꽃에 걸린 플레이어에게 귓속말로 알립니다.",
+	bloom_you = "당신은 화염 불꽃!",
+	
+	icons = "불꽃 전술 표시",
+	icons_desc = "화염 불꽃에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+
+	shadow = "어둠의 쐐기",
+	shadow_desc = "어둠의 쐐기에 대하여 공격대에 알립니다.",
+	shadow_message = "잠시 후 28초간 어둠의 쐐기! 조심하세요!",
+	shadow_bar = "어둠의 쐐기 종료",
+	shadow_warning = "5초 후 어둠의 쐐기 종료!",
+	shadow_debuff_bar = "%s 치유효과 감소",
+	
+	flame = "불꽃 화살",
+	flame_desc = "불꽃 화살 타이머 바를 표시합니다.",
+	flame_bar = "다음 불꽃 화살",
+	flame_message = "5초 후 다음 불꽃 화살!",
+
+	sinister = "사악한 환영 복제",
+	sinister_desc = "사악한 환영 복제를 알립니다.",
+	sinister_message = "사악한 환영 복제!",
 
 	shield_up = "푸른용의 보호막!",
 
@@ -259,4 +289,3 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	end
 end
-
