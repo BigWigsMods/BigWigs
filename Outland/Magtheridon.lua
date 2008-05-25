@@ -6,10 +6,12 @@ local boss = BB["Magtheridon"]
 local channeler = BB["Hellfire Channeler"]
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
-local abycount
-local debwarn
+local abycount = 0
+local debwarn = nil
 local pName = UnitName("player")
 local db = nil
+local started = nil
+local deaths = 0
 
 ----------------------------
 --      Localization      --
@@ -388,7 +390,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_SUMMON", "Abyssal", 30511)
 	self:AddCombatListener("SPELL_CAST_START", "Heal", 30528)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "BanishRemoved", 30168)
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -396,8 +398,10 @@ function mod:OnEnable()
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
+	started = nil
 	abycount = 1
 	debwarn = nil
+	deaths = 0
 	db = self.db.profile
 end
 
@@ -438,6 +442,32 @@ function mod:BanishRemoved()
 	end
 end
 
+function mod:Deaths(unit)
+	if unit == channeler then
+		deaths = deaths + 1
+		if deaths == 5 then
+			self:Start()
+		end
+	elseif unit == boss then
+		self:GenericBossDeath(unit)
+	end
+end
+
+function mod:Start()
+	if started then return end
+	started = true
+	if db.escape then
+		self:Message(L["escape_message"]:format(boss), "Important", nil, "Alert")
+	end
+	if db.nova then
+		self:Bar(L["nova_bar"], 58, "Spell_Fire_SealOfFire")
+		self:DelayedMessage(56, L["nova_warning"], "Urgent")
+	end
+	if db.enrage then
+		self:Enrage(1200, nil, true)
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
 	if msg:find(L["escape_trigger1"]) then
 		abycount = 1
@@ -456,16 +486,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg == L["escape_trigger2"] then
-		if db.escape then
-			self:Message(L["escape_message"]:format(boss), "Important", nil, "Alert")
-		end
-		if db.nova then
-			self:Bar(L["nova_bar"], 58, "Spell_Fire_SealOfFire")
-			self:DelayedMessage(56, L["nova_warning"], "Urgent")
-		end
-		if db.enrage then
-			self:Enrage(1200, nil, true)
-		end
+		self:Start()
 	elseif msg == L["banish_trigger"] then
 		if db.banish then
 			self:Message(L["banish_message"], "Important", nil, "Info", nil, 30168)
