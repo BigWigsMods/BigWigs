@@ -108,7 +108,7 @@ L:RegisterTranslations("frFR", function() return {
 	burst_you = "Jaillissement d'air sur VOUS !",
 
 	burstsay = "Dire - Jaillissement d'air",
-	burstsay_desc = "Fait dire à votre personnage que vous êtes ciblé par le Jaillissement d'air quand c'est le cas, afin d'aider les membres proches ayant les bulles de dialogue d'activés.",
+	burstsay_desc = "Fait dire à votre personnage que vous êtes ciblé par le Jaillissement d'air quand c'est le cas, afin d'aider les membres proches ayant les bulles de dialogue activées.",
 	burstsay_message = "Jaillissement d'air sur moi !",
 } end )
 

@@ -136,8 +136,37 @@ L:RegisterTranslations("frFR", function() return {
 	orb_shooting = "Orbe en vie !",
 
 	bloom = "Fleur du feu",
-	bloom_desc = "Prévient de l'arrivée des Fleurs du feu.",
-	bloom_message = "Arrivée d'une Fleur du feu !",
+	bloom_desc = "Prévient quand des joueurs subissent les effets de la Fleur du feu.",
+	bloom_other = "Fleur du feu sur %s !",
+	bloom_bar = "Fleurs du feu",
+	bloom_message = "Prochaine Fleur du feu dans 5 sec. !",
+
+	bloomsay = "Dire - Fleur du feu",
+	bloomsay_desc = "Fait dire à votre personnage qu'il est ciblé par la Fleur du feu quand c'est le cas, afin d'aider les membres proches ayant les bulles de dialogue activées.",
+	bloom_say = "Fleur du feu sur MOI !",
+
+	bloomwhisper = "Chuchoter",
+	bloomwhisper_desc = "Prévient par chuchotement les derniers joueurs affectés par la Fleur du feu (nécessite d'être promu ou mieux).",
+	bloom_you = "Fleur du feu sur VOUS !",
+
+	icons = "Icônes",
+	icons_desc = "Place une icône de raid sur les derniers joueurs affectés par la Fleur du feu (nécessite d'être promu ou mieux).",
+
+	shadow = "Pointe de l'ombre",
+	shadow_desc = "Prévient quand les Pointes de l'ombre sont incantées.",
+	shadow_message = "Pointes de l'ombre pendant 28 sec. !",
+	shadow_bar = "Fin des Pointes",
+	shadow_warning = "Pointes de l'ombre terminées dans 5 sec. !",
+	shadow_debuff_bar = "Soins réduits sur %s",
+
+	flame = "Fléchette des flammes",
+	flame_desc = "Affiche une barre temporelle pour la Flèchette des flammes.",
+	flame_bar = "Prochaine Fléchette",
+	flame_message = "Prochaine Fléchette des flammes dans 5 sec. !",
+
+	sinister = "Reflet sinistre",
+	sinister_desc = "Prévient quand les Reflets sinistres apparaissent.",
+	sinister_message = "Reflets sinistres actifs !",
 
 	shield_up = "Bouclier ACTIF !",
 

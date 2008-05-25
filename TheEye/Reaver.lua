@@ -113,7 +113,7 @@ L:RegisterTranslations("frFR", function() return {
 	orb_you = "Orbe des arcanes sur VOUS !",
 
 	orbsay = "Dire - Orbe des arcanes",
-	orbsay_desc = "Fais dire à votre personnage qu'il est ciblé par l'Orbe des arcanes quand c'est le cas, afin d'aider les membres proches ayant les bulles de dialogue d'activés.",
+	orbsay_desc = "Fait dire à votre personnage qu'il est ciblé par l'Orbe des arcanes quand c'est le cas, afin d'aider les membres proches ayant les bulles de dialogue activées.",
 	orb_say = "Orbe sur moi !",
 
 	orbother = "Orbe des arcanes sur les autres",
