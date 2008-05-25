@@ -408,7 +408,7 @@ do
 				local msg = L["encaps_message"]:format(target)
 				self:IfMessage(msg, "Important", 45665, "Alert")
 				self:Bar(msg, 6, 45665)
-				self:Icon(player, "icon")
+				self:Icon(target, "icon")
 			end
 			lastTarget = target
 		end
