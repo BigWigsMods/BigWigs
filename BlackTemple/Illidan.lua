@@ -31,7 +31,7 @@ L:RegisterTranslations("enUS", function() return {
 	parasite_other = "%s has a Parasite!",
 
 	icon = "Raid Icon",
-	icon_desc = "Place a Raid Icon on the player with Parasitic Shadowfiend.",
+	icon_desc = "Place a Raid Icon on the player with Parasitic Shadowfiend or Dark Barrage.",
 
 	barrage = "Dark Barrage",
 	barrage_desc = "Warn who has Dark Barrage.",
@@ -581,6 +581,7 @@ function mod:Barrage(player, spellID)
 	if db.barrage then
 		self:IfMessage(fmt(L["barrage_message"], player), "Important", spellID, "Alert")
 		self:Bar(fmt(L["barrage_bar"], player), 10, spellID)
+		self:Icon(player, "icon")
 
 		self:Bar(L["barrage_warn_bar"], 50, spellID)
 		self:ScheduleEvent("BarrageWarn", "BigWigs_Message", 47, L["barrage_warn"], "Important")
