@@ -215,7 +215,7 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "啊！我不再是玛利苟斯的奴隶了！所有挑战我的人都要被消灭！",
-	wipe_bar = "重置计时器",
+	wipe_bar = "重置计时",
 
 	portal = "传送",
 	portal_desc = "当灵魂冲击冷却时发出警报。",
@@ -253,9 +253,9 @@ L:RegisterTranslations("zhCN", function() return {
 
 	enrage_warning = "即将狂暴！",
 	enrage_message = "10% - 狂暴！",
-	enrage_trigger = "萨索瓦尔将卡雷苟斯逼得狂暴不已！",-- not confirmed (flashbang my eyes)
+	enrage_trigger = "萨索瓦尔将卡雷苟斯逼得狂暴不已！",
 
-	strike = "堕落打击",--Corrupting Strike
+	strike = "堕落打击",
 	strike_desc = "当玩家受到堕落打击时发出警报。",
 	strike_message = "堕落打击：>%s<！",
 } end )

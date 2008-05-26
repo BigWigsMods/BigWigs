@@ -146,28 +146,28 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	wipe_bar = "重置计时器",
+	wipe_bar = "重置计时",
 
-	nova = "暗影新星",--Shadow Nova
+	nova = "暗影新星",
 	nova_desc = "当施放暗影新星时发出警报。",
 	nova_message = "暗影新星：>%s<！",
 	nova_bar = "<暗影新星 冷却>",
 
-	conflag = "燃烧",--Conflagration
+	conflag = "燃烧",
 	conflag_desc = "当施放燃烧时发出警报。",
 	conflag_message = "燃烧：>%s<！",
 	conflag_you = ">你< 燃烧！",
 	conflag_bar = "<下一燃烧>",
 
 	icon = "团队标记",
-	icon_desc = "给暗影新星和燃烧目标玩家团队标记。",
+	icon_desc = "给中了暗影新星和燃烧目标玩家打上团队标记。（需要权限）",
 
-	pyro = "高热",--Pyrogenics
+	pyro = "高热",
 	pyro_desc = "当玩家获得或移除高热时发出警报。",
 	pyro_gain = "获得 高热：>%s<！",
 	pyro_remove = "移除 高热：>%s<！",
 
-	blow = "混乱重击",--Conflagration Blow
+	blow = "混乱重击",
 	blow_desc = "显示混乱重击记时条。",
 	blow_bar = "<下一重击>",
 

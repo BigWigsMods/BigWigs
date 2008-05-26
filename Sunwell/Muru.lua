@@ -120,24 +120,24 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	darkness = "黑暗",--Darkness
+	darkness = "黑暗",
 	darkness_desc = "当玩家受到黑暗时发出警报。",
 	darkness_message = "黑暗：>%s<！ ",
 	darkness_next = "<下一黑暗>",
 	darkness_soon = "5秒后，黑暗！",
 
-	void = "虚空戒卫",--Void Sentinel
+	void = "虚空戒卫",
 	void_desc = "当虚空戒卫刷新时发出警报。",
 	void_next = "<下一虚空戒卫>",
 	void_soon = "5秒后，虚空戒卫刷新！",
 
-	humanoid = "人型生物",--Humanoids
-	humanoid_desc = "人型生物刷新时发出警报。",
-	humanoid_next = "<下一人型生物>",
-	humanoid_soon = "5秒后，人型生物刷新！",
+	humanoid = "暗誓精灵",
+	humanoid_desc = "当暗誓精灵刷新时发出警报。",
+	humanoid_next = "<下一暗誓精灵>",
+	humanoid_soon = "5秒后，暗誓精灵刷新！",
 
 	fiends = "黑暗魔",
-	fiends_desc = "黑暗魔刷新时发出警报。",
+	fiends_desc = "当黑暗魔刷新时发出警报。",
 	fiends_message = "黑暗魔 出现！",
 
 	phase = "阶段",
