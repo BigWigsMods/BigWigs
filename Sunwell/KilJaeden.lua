@@ -174,6 +174,58 @@ L:RegisterTranslations("frFR", function() return {
 	["Hand of the Deceiver"] = "Main du Trompeur", -- à vérifier
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	bomb = "黑暗",
+	bomb_desc = "当千魂的黑暗开始施法时发出警报",--Darkness of a Thousand Souls
+	bomb_cast = "即将 大炸弹!",
+	bomb_bar = "爆炸!",
+	bomb_nextbar = "~可能 炸弹",
+	bomb_warning = "~可能 10秒后 炸弹",
+	kalec_yell = "I will channel my powers into the orbs! Be ready!",--need check
+
+	orb = "盾牌宝珠",--Shield Orb
+	orb_desc = "当盾牌宝珠施放暗影箭时发出警报.",
+	orb_shooting = "宝珠 - 暗影箭!",
+
+	bloom = "火焰之花",
+	bloom_desc = "告诉你谁中了火焰之花",
+	bloom_other = "火焰之花 > %s <!",
+	bloom_bar = "火焰之花",
+	bloom_message = "5秒后 火焰之花!",
+
+	bloomsay = "火焰之花提醒",
+	bloomsay_desc = "当你中了火焰之花后通知周围的队友",
+	bloom_say = "> 我 <中了火焰之花!",
+
+	bloomwhisper = "火焰之花密语",
+	bloomwhisper_desc = "当队员中了火焰之花,密语提示他离开",
+	bloom_you = "> 你 < 中了火焰之花.!",
+
+	icons = "标记",
+	icons_desc = "给中了火焰之花的队员随机一个团队标记",
+
+	shadow = "暗影尖刺",
+	shadow_desc = "当施放暗影尖刺时发出警报",
+	shadow_message = "28秒后 暗影之刺!  当心!",
+	shadow_bar = "暗影之刺 死",
+	shadow_warning = "5秒后 暗影之刺!",
+	shadow_debuff_bar = "> %s < 降低治疗",
+
+	flame = "烈焰之刺",
+	flame_desc = "显示烈焰之刺记时条",
+	flame_bar = "下一个 烈焰之刺",
+	flame_message = "5秒后 烈焰之刺!",
+
+	sinister = "邪恶镜像",
+	sinister_desc = "邪恶镜像警报",
+	sinister_message = "邪恶镜像 出现!",
+
+	shield_up = "盾 起!",
+
+	deceiver_dies = "Deciever #%d 已杀死.",
+	["Hand of the Deceiver"] = "",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
