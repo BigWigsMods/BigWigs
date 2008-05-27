@@ -39,6 +39,11 @@ L:RegisterTranslations("enUS", function() return {
 	phase = "Phases",
 	phase_desc = "Warn for phase changes.",
 	phase2_message = "Phase 2",
+
+	gravity = "Gravity Balls",
+	gravity_desc = "Warn for Gravity Balls.",
+	gravity_next = "Next Gravity Ball Timer",
+	gravity_soon = "Gravity Ball soon!",
 } end )
 
 L:RegisterTranslations("esES", function() return {
@@ -204,7 +209,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = boss
-mod.toggleoptions = {"phase", -1, "darkness", "void", "humanoid", "fiends", "enrage", "bosskill"}
+mod.toggleoptions = {"phase", -1, "darkness", "void", "humanoid", "fiends", "gravity", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -215,6 +220,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Darkness", 45996)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Fiends", 45934)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Portals", 46177)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "GravityBall", 46282)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -261,11 +267,20 @@ function mod:Portals()
 	self:TriggerEvent("BigWigs_StopBar", self, L["void_next"])
 	self:TriggerEvent("BigWigs_StopBar", self, L["humanoid_next"])
 	self:TriggerEvent("BigWigs_StopBar", self, L["darkness_next"])
+
 end
 
 function mod:Deaths(unit)
 	if unit == entropius then
 		self:GenericBossDeath(boss)
+	end
+end
+
+function mod:GravityBall()
+	self:Bar(L["gravity_next"], 10, 46282)
+	if db.gravity then
+		self:Bar(L["gravity_next"], 15, 46282)
+		self:ScheduleEvent("Gravity", self.RepeatGravityBall, 25, self)
 	end
 end
 
@@ -279,6 +294,11 @@ function mod:RepeatHumanoid()
 	self:Bar(L["humanoid_next"], 60, 46087)
 	self:ScheduleEvent("HumanoidWarn", "BigWigs_Message", 55, L["humanoid_soon"], "Urgent")
 	self:ScheduleEvent("Humanoid", self.RepeatHumanoid, 60, self)
+end
+
+function mod:RepeatGravityBall()
+	self:ScheduleEvent("GravityWarn", "BigWigs_Message", 15, L["gravity_soon"], "Urgent")
+	self:ScheduleEvent("Gravity", self.RepeatGravityBall, 15, self)
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
