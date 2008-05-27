@@ -87,16 +87,16 @@ commonWords:RegisterTranslations("zhTW", function() return {
 	you = "你",
 	are = "到了",
 
-	enrage_start = "%s 進入戰鬥 - %d 分後狂怒",
+	enrage_start = "%s 開戰 - %d 分後狂怒",
 	enrage_end = "%s 已狂怒",
-	enrage_min = "%d 分後狂怒！",
-	enrage_sec = "%d 秒後狂怒！",
+	enrage_min = "%d 分後狂怒!",
+	enrage_sec = "%d 秒後狂怒!",
 	enrage = "狂怒",
 
-	berserk_start = "%s 進入戰鬥 - %d 分後狂暴",
+	berserk_start = "%s 開戰 - %d 分後狂暴",
 	berserk_end = "%s 已狂暴",
-	berserk_min = "%d 分後狂暴！",
-	berserk_sec = "%d 秒後狂暴！",
+	berserk_min = "%d 分後狂暴!",
+	berserk_sec = "%d 秒後狂暴!",
 	berserk = "狂暴",
 } end )
 
