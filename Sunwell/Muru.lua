@@ -70,6 +70,11 @@ L:RegisterTranslations("esES", function() return {
 	phase = "Fases",
 	phase_desc = "Avisar sobre las distintas fases del encuentro.",
 	phase2_message = "¡Fase 2!",
+
+	--gravity = "Gravity Balls",
+	--gravity_desc = "Warn for Gravity Balls.",
+	--gravity_next = "Next Gravity Ball Timer",
+	--gravity_soon = "Gravity Ball soon!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -96,6 +101,11 @@ L:RegisterTranslations("frFR", function() return {
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	phase2_message = "Phase 2 !",
+
+	--gravity = "Gravity Balls",
+	--gravity_desc = "Warn for Gravity Balls.",
+	--gravity_next = "Next Gravity Ball Timer",
+	--gravity_soon = "Gravity Ball soon!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -122,6 +132,11 @@ L:RegisterTranslations("koKR", function() return {
 	phase = "단계",
 	phase_desc = "단계 변경을 알립니다.",
 	phase2_message = "2 단계!",
+
+	--gravity = "Gravity Balls",
+	--gravity_desc = "Warn for Gravity Balls.",
+	--gravity_next = "Next Gravity Ball Timer",
+	--gravity_soon = "Gravity Ball soon!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -148,6 +163,11 @@ L:RegisterTranslations("zhCN", function() return {
 	phase = "阶段",
 	phase_desc = "当进入不同阶段发出警报。",
 	phase2_message = "第二阶段！",
+
+	gravity = "重力球",
+	gravity_desc = "当施放重力球时发出警报。",
+	gravity_next = "<下一重力球>",
+	gravity_soon = "即将 重力球！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -174,6 +194,11 @@ L:RegisterTranslations("zhTW", function() return {
 	--phase = "Phases",
 	--phase_desc = "Warn for phase changes.",
 	--phase2_message = "Phase 2!",
+
+	--gravity = "Gravity Balls",
+	--gravity_desc = "Warn for Gravity Balls.",
+	--gravity_next = "Next Gravity Ball Timer",
+	--gravity_soon = "Gravity Ball soon!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -200,6 +225,11 @@ L:RegisterTranslations("deDE", function() return {
 	phase = "Phasen",
 	phase_desc = "Warnung bei Phasenänderrungen.",
 	phase2_message = "Phase 2",
+
+	--gravity = "Gravity Balls",
+	--gravity_desc = "Warn for Gravity Balls.",
+	--gravity_next = "Next Gravity Ball Timer",
+	--gravity_soon = "Gravity Ball soon!",
 } end )
 
 ----------------------------------
