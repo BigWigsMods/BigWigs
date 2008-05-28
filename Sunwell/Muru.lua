@@ -8,6 +8,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local db = nil
 local started = nil
+local phase = nil
 
 ----------------------------
 --      Localization      --
@@ -133,10 +134,10 @@ L:RegisterTranslations("koKR", function() return {
 	phase_desc = "단계 변경을 알립니다.",
 	phase2_message = "2 단계!",
 
-	--gravity = "Gravity Balls",
-	--gravity_desc = "Warn for Gravity Balls.",
-	--gravity_next = "Next Gravity Ball Timer",
-	--gravity_soon = "Gravity Ball soon!",
+	gravity = "중력 구체",
+	gravity_desc = "중력 구체를 알립니다.",
+	gravity_next = "다음 중력 구체",
+	gravity_soon = "잠시 후 중력 구체!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -259,6 +260,7 @@ function mod:OnEnable()
 
 	db = self.db.profile
 	started = nil
+	phase = 0
 end
 
 ------------------------------
@@ -276,19 +278,22 @@ end
 
 local last = 0
 function mod:Fiends()
-	local time = GetTime()
-	if (time - last) > 5 then
-		last = time
-		if db.fiends then
+	if db.fiends then
+		if phase == 1 then
+			local time = GetTime()
+			if (time - last) > 5 then
+				last = time
+				self:Message(L["fiends_message"], "Important", true, nil, nil, 45934)
+			end
+		elseif phase == 2 then
 			self:Message(L["fiends_message"], "Important", true, nil, nil, 45934)
 		end
 	end
 end
 
 function mod:Portals()
-	if not db.phase then return end
+	phase = 2
 
-	self:Message(L["phase2_message"], "Attention")
 	self:CancelScheduledEvent("VoidWarn")
 	self:CancelScheduledEvent("HumanoidWarn")
 	self:CancelScheduledEvent("Void")
@@ -297,7 +302,13 @@ function mod:Portals()
 	self:TriggerEvent("BigWigs_StopBar", self, L["void_next"])
 	self:TriggerEvent("BigWigs_StopBar", self, L["humanoid_next"])
 	self:TriggerEvent("BigWigs_StopBar", self, L["darkness_next"])
-
+	if db.phase then
+		self:Message(L["phase2_message"], "Attention")
+		self:Bar(entropius, 12, 46087)
+	end
+	if db.gravity then
+		self:Bar(L["gravity_next"], 27, 44218)
+	end
 end
 
 function mod:Deaths(unit)
@@ -307,10 +318,10 @@ function mod:Deaths(unit)
 end
 
 function mod:GravityBall()
-	self:Bar(L["gravity_next"], 10, 46282)
 	if db.gravity then
-		self:Bar(L["gravity_next"], 15, 46282)
-		self:ScheduleEvent("Gravity", self.RepeatGravityBall, 25, self)
+		--44218 , looks like a Gravity Balls :p
+		self:Bar(L["gravity_next"], 15, 44218)
+		self:DelayedMessage(5, L["gravity_soon"], "Urgent")
 	end
 end
 
@@ -326,14 +337,10 @@ function mod:RepeatHumanoid()
 	self:ScheduleEvent("Humanoid", self.RepeatHumanoid, 60, self)
 end
 
-function mod:RepeatGravityBall()
-	self:ScheduleEvent("GravityWarn", "BigWigs_Message", 15, L["gravity_soon"], "Urgent")
-	self:ScheduleEvent("Gravity", self.RepeatGravityBall, 15, self)
-end
-
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
+		phase = 1
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
