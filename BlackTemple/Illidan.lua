@@ -99,7 +99,7 @@ L:RegisterTranslations("esES", function() return {
 	parasite_other = "¡%s tiene un parasitario!",
 
 	icon = "Icono de banda",
-	icon_desc = "Poner un icono de banda sobre jugadores con Malignos de las Sombras parasitarios.",
+	icon_desc = "Poner un icono de banda sobre jugadores con Malignos de las Sombras parasitarios o Tromba oscura.",
 
 	barrage = "Tromba oscura (Dark Barrage)",
 	barrage_desc = "Avisar quién tiene Tromba oscura.",
