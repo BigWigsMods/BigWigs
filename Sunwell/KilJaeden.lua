@@ -133,7 +133,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	orb = "Orbe bouclier",
 	orb_desc = "Prévient quand une Orbe bouclier lance des Traits de l'ombre.",
-	orb_shooting = "Orbe en vie !",
+	orb_shooting = "Orbe en vie - Bombardement de traits !",
 
 	bloom = "Fleur du feu",
 	bloom_desc = "Prévient quand des joueurs subissent les effets de la Fleur du feu.",

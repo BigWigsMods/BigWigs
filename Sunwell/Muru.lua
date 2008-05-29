@@ -103,10 +103,10 @@ L:RegisterTranslations("frFR", function() return {
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	phase2_message = "Phase 2 !",
 
-	--gravity = "Gravity Balls",
-	--gravity_desc = "Warn for Gravity Balls.",
-	--gravity_next = "Next Gravity Ball Timer",
-	--gravity_soon = "Gravity Ball soon!",
+	gravity = "Trou noir",
+	gravity_desc = "Prévient de l'arrivée des Trous noirs.",
+	gravity_next = "Prochain Trou noir",
+	gravity_soon = "Trou noir imminent !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
