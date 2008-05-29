@@ -181,7 +181,7 @@ L:RegisterTranslations("zhCN", function() return {
 	bomb_bar = "爆炸！",
 	bomb_nextbar = "<可能 炸弹>",
 	bomb_warning = "约10秒后，可能炸弹！",
-	kalec_yell = "",--need check
+	kalec_yell = "我会将我的力量导入宝珠中！准备好！",
 
 	orb = "护盾宝珠",--Shield Orb 
 	orb_desc = "当护盾宝珠施放暗影箭时发出警报。",
