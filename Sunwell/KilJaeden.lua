@@ -337,6 +337,7 @@ function mod:Bloom(player)
 		self:Whisper(player, L["bloom_you"], "bloomwhisper")
 		self:ScheduleEvent("BWBloomWarn", self.BloomWarn, 0.4, self)
 		if player == pName and db.bloomsay then
+			self:LocalMessage(L["bloom_you"], "Personal", 45641, "Long")
 			SendChatMessage(L["bloom_say"], "SAY")
 		end
 	end
