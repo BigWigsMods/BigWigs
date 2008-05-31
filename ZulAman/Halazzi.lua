@@ -258,7 +258,7 @@ end
 
 function mod:Totem()
 	if db.totem then
-		self:Message(L["totem_message"], "Attention", 43302)
+		self:IfMessage(L["totem_message"], "Attention", 43302)
 	end
 end
 
