@@ -11,6 +11,7 @@ local started = nil
 local deaths = 0
 local pName = UnitName("player")
 local bloomed = {}
+local enrageWarn = nil
 
 ----------------------------
 --      Localization      --
@@ -40,7 +41,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	bloomsay = "Fire Bloom Say",
 	bloomsay_desc = "Place a msg in say notifying that you have Fire Bloom",
-	bloom_say = "Fire Bloom on ME!",
+	bloom_say = "Fire Bloom on "..strupper(pName).."!",
 
 	bloomwhisper = "Fire Bloom Whisper",
 	bloomwhisper_desc = "Whisper players with Fire Bloom.",
@@ -69,6 +70,10 @@ L:RegisterTranslations("enUS", function() return {
 
 	deceiver_dies = "Deciever #%d Killed",
 	["Hand of the Deceiver"] = true,
+
+	enrage_yell = "Ragh! The powers of the Sunwell turn against me! What have you done? What have you done?!",
+	enrage_warning = "Enrage soon!",
+	enrage_message = "10% - Enraged",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -122,6 +127,10 @@ L:RegisterTranslations("koKR", function() return {
 
 	deceiver_dies = "심복 #%d 처치",
 	["Hand of the Deceiver"] = "기만자의 심복",
+
+	--enrage_yell = "Ragh! The powers of the Sunwell turn against me! What have you done? What have you done?!",
+	--enrage_warning = "Enrage soon!",
+	--enrage_message = "10% - Enraged",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -175,6 +184,10 @@ L:RegisterTranslations("frFR", function() return {
 
 	deceiver_dies = "Trompeur #%d tué",
 	["Hand of the Deceiver"] = "Main du Trompeur", -- à vérifier
+
+	--enrage_yell = "Ragh! The powers of the Sunwell turn against me! What have you done? What have you done?!",
+	--enrage_warning = "Enrage soon!",
+	--enrage_message = "10% - Enraged",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -228,6 +241,10 @@ L:RegisterTranslations("zhCN", function() return {
 
 	deceiver_dies = "已杀死欺诈者之手#%d",
 	["Hand of the Deceiver"] = "欺诈者之手",--need confirm
+
+	--enrage_yell = "Ragh! The powers of the Sunwell turn against me! What have you done? What have you done?!",
+	--enrage_warning = "Enrage soon!",
+	--enrage_message = "10% - Enraged",
 } end )
 
 ----------------------------------
@@ -238,7 +255,7 @@ local deceiver = L["Hand of the Deceiver"]
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = {deceiver, boss}
-mod.toggleoptions = {"bomb", "orb", "flame", -1, "bloom", "bloomwhisper","bloomsay", "icons", -1, "sinister", "shadow", "bosskill"}
+mod.toggleoptions = {"bomb", "orb", "flame", -1, "bloom", "bloomwhisper","bloomsay", "icons", -1, "sinister", "shadow", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 mod.proximitySilent = true
@@ -258,6 +275,7 @@ function mod:OnEnable()
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("UNIT_HEALTH")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -324,6 +342,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if (msg == L["kalec_yell"] or msg == L["kalec_yell2"]) and db.bomb then
 		self:Bar(L["bomb_nextbar"], 40, "Spell_Shadow_BlackPlague")
 		self:DelayedMessage(30, L["bomb_warning"], "Attention")
+	elseif msg == L["enrage_yell"] then
+		self:IfMessage(L["enrage_message"], "Attention")
 	end
 end
 
@@ -365,6 +385,19 @@ function mod:BloomWarn()
 	self:IfMessage(L["bloom_other"]:format(msg), "Important", 45641, "Alert")
 	self:Bar(L["bloom_bar"], 20, 45641)
 	for i = 1, #bloomed do bloomed[i] = nil end
+end
+
+function mod:UNIT_HEALTH(msg)
+	if not db.enrage then return end
+	if UnitName(msg) == boss then
+		local health = UnitHealth(msg)
+		if health > 12 and health <= 14 and not enrageWarn then
+			self:Message(L["enrage_warning"], "Positive")
+			enrageWarn = true
+		elseif health > 50 and enrageWarn then
+			enrageWarn = false
+		end
+	end
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
