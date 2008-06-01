@@ -28,6 +28,7 @@ L:RegisterTranslations("enUS", function() return {
 	bomb_warning = "Possible bomb in ~10sec",
 	kalec_yell = "I will channel my powers into the orbs! Be ready!",
 	kalec_yell2 = "Another orb is ready! Make haste!",
+	kalec_yell3 = "I have channeled all I can! The power is in your hands!",
 
 	orb = "Shield Orb",
 	orb_desc = "Warn when a Shield Orb is shadowbolting.",
@@ -85,6 +86,7 @@ L:RegisterTranslations("koKR", function() return {
 	bomb_warning = "약 10초 이내 폭탄 가능!",
 	kalec_yell = "수정구에 힘을 쏟겠습니다! 준비하세요!",	--check
 	--kalec_yell2 = "Another orb is ready! Make haste!",
+	--kalec_yell3 = "I have channeled all I can! The power is in your hands!",
 
 	orb = "보호막 보주",
 	orb_desc = "보호막 보주의 어둠의 화살을 알립니다.",
@@ -142,6 +144,7 @@ L:RegisterTranslations("frFR", function() return {
 	bomb_warning = "Bombe probable dans ~10 sec.",
 	kalec_yell = "Je vais canaliser mon énergie vers les orbes ! Préparez-vous !", -- à vérifier
 	--kalec_yell2 = "Another orb is ready! Make haste!",
+	--kalec_yell3 = "I have channeled all I can! The power is in your hands!",
 
 	orb = "Orbe bouclier",
 	orb_desc = "Prévient quand une Orbe bouclier lance des Traits de l'ombre.",
@@ -199,6 +202,7 @@ L:RegisterTranslations("zhCN", function() return {
 	bomb_warning = "约10秒后，可能炸弹！",
 	kalec_yell = "我会将我的力量导入宝珠中！准备好！",
 	--kalec_yell2 = "Another orb is ready! Make haste!",
+	--kalec_yell3 = "I have channeled all I can! The power is in your hands!",
 
 	orb = "护盾宝珠",--Shield Orb 
 	orb_desc = "当护盾宝珠施放暗影箭时发出警报。",
@@ -339,7 +343,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if (msg == L["kalec_yell"] or msg == L["kalec_yell2"]) and db.bomb then
+	if (msg == L["kalec_yell"] or msg == L["kalec_yell2"] or msg == L["kalec_yell3"]) and db.bomb then
 		self:Bar(L["bomb_nextbar"], 40, "Spell_Shadow_BlackPlague")
 		self:DelayedMessage(30, L["bomb_warning"], "Attention")
 	elseif msg == L["enrage_yell"] then
