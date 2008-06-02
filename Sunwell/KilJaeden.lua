@@ -201,8 +201,8 @@ L:RegisterTranslations("zhCN", function() return {
 	bomb_nextbar = "<可能 炸弹>",
 	bomb_warning = "约10秒后，可能炸弹！",
 	kalec_yell = "我会将我的力量导入宝珠中！准备好！",
-	--kalec_yell2 = "Another orb is ready! Make haste!",
-	--kalec_yell3 = "I have channeled all I can! The power is in your hands!",
+	kalec_yell2 = "又有一颗宝珠准备好了！快点行动！",
+	kalec_yell3 = "这是我所能做的一切了！力量现在掌握在你们的手中！",--possible not the orb warning.(another choice:我又将能量灌入了另一颗宝珠！快去使用它！)
 
 	orb = "护盾宝珠",--Shield Orb 
 	orb_desc = "当护盾宝珠施放暗影箭时发出警报。",
@@ -246,9 +246,9 @@ L:RegisterTranslations("zhCN", function() return {
 	deceiver_dies = "已杀死欺诈者之手#%d",
 	["Hand of the Deceiver"] = "欺诈者之手",--need confirm
 
-	--enrage_yell = "Ragh! The powers of the Sunwell turn against me! What have you done? What have you done?!",
-	--enrage_warning = "Enrage soon!",
-	--enrage_message = "10% - Enraged",
+	enrage_yell = "呃！太阳之井的能量开始对抗我！你们都做了些什么？你们都做了些什么？！",--not confirm
+	enrage_warning = "即将 激怒！",
+	enrage_message = "10% - 激怒",
 } end )
 
 ----------------------------------
