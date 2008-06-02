@@ -85,12 +85,12 @@ L:RegisterTranslations("koKR", function() return {
 	bomb_nextbar = "~폭탄 가능",
 	bomb_warning = "약 10초 이내 폭탄 가능!",
 	kalec_yell = "수정구에 힘을 쏟겠습니다! 준비하세요!",	--check
-	--kalec_yell2 = "Another orb is ready! Make haste!",
-	--kalec_yell3 = "I have channeled all I can! The power is in your hands!",
+	kalec_yell2 = "다른 수정구가 준비됐습니다! 서두르세요!",	--check
+	kalec_yell3 = "모든 힘을 수정구에 실었습니다! 이제 그대들의 몫입니다!",	--check
 
-	orb = "보호막 보주",
-	orb_desc = "보호막 보주의 어둠의 화살을 알립니다.",
-	orb_shooting = "보주 활동 - 어활 공격!",
+	orb = "보호의 구슬",
+	orb_desc = "보호의 구슬의 어둠 화살을 알립니다.",
+	orb_shooting = "구슬 활동 - 어활 공격!",
 
 	bloom = "화염 불꽃",
 	bloom_desc = "화염 불꽃에 걸린 플레이어를 알립니다.",
@@ -121,18 +121,18 @@ L:RegisterTranslations("koKR", function() return {
 	flame_bar = "다음 불꽃 화살",
 	flame_message = "5초 후 다음 불꽃 화살!",
 
-	sinister = "사악한 환영 복제",
-	sinister_desc = "사악한 환영 복제를 알립니다.",
-	sinister_message = "사악한 환영 복제!",
+	sinister = "사악한 환영",
+	sinister_desc = "사악한 환영 생성을 알립니다.",
+	sinister_message = "사악한 환영!",
 
 	shield_up = "푸른용의 보호막!",
 
 	deceiver_dies = "심복 #%d 처치",
 	["Hand of the Deceiver"] = "기만자의 심복",
 
-	--enrage_yell = "Ragh! The powers of the Sunwell turn against me! What have you done? What have you done?!",
-	--enrage_warning = "Enrage soon!",
-	--enrage_message = "10% - Enraged",
+	enrage_yell = "으악! 태양샘의 마력이 나를 거부한다! 무슨 짓을 한거지? 무슨 짓을 한거야?!",	--check
+	enrage_warning = "잠시후 격노!",
+	enrage_message = "10% - 격노",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -388,6 +388,7 @@ function mod:BloomWarn()
 
 	self:IfMessage(L["bloom_other"]:format(msg), "Important", 45641, "Alert")
 	self:Bar(L["bloom_bar"], 20, 45641)
+	self:DelayedMessage(15, L["bloom_message"], "Attention")
 	for i = 1, #bloomed do bloomed[i] = nil end
 end
 
