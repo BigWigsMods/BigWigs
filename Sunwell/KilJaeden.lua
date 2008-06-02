@@ -143,8 +143,8 @@ L:RegisterTranslations("frFR", function() return {
 	bomb_nextbar = "~Bombe probable",
 	bomb_warning = "Bombe probable dans ~10 sec.",
 	kalec_yell = "Je vais canaliser mon énergie vers les orbes ! Préparez-vous !", -- à vérifier
-	--kalec_yell2 = "Another orb is ready! Make haste!",
-	--kalec_yell3 = "I have channeled all I can! The power is in your hands!",
+	kalec_yell2 = "Un autre orbe est prêt ! Hâtez-vous !", -- à vérifier
+	kalec_yell3 = "J'ai envoyé tout ce que je pouvais ! La puissance est entre vos mains !", -- à vérifier
 
 	orb = "Orbe bouclier",
 	orb_desc = "Prévient quand une Orbe bouclier lance des Traits de l'ombre.",
@@ -158,7 +158,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	bloomsay = "Dire - Fleur du feu",
 	bloomsay_desc = "Fait dire à votre personnage qu'il est ciblé par la Fleur du feu quand c'est le cas, afin d'aider les membres proches ayant les bulles de dialogue activées.",
-	bloom_say = "Fleur du feu sur MOI !",
+	bloom_say = "Fleur du feu sur "..strupper(pName).." !",
 
 	bloomwhisper = "Chuchoter",
 	bloomwhisper_desc = "Prévient par chuchotement les derniers joueurs affectés par la Fleur du feu (nécessite d'être promu ou mieux).",
@@ -179,7 +179,7 @@ L:RegisterTranslations("frFR", function() return {
 	flame_bar = "Prochaine Fléchette",
 	flame_message = "Prochaine Fléchette des flammes dans 5 sec. !",
 
-	sinister = "Reflet sinistre",
+	sinister = "Reflets sinistres",
 	sinister_desc = "Prévient quand les Reflets sinistres apparaissent.",
 	sinister_message = "Reflets sinistres actifs !",
 
@@ -188,9 +188,9 @@ L:RegisterTranslations("frFR", function() return {
 	deceiver_dies = "Trompeur #%d tué",
 	["Hand of the Deceiver"] = "Main du Trompeur", -- à vérifier
 
-	--enrage_yell = "Ragh! The powers of the Sunwell turn against me! What have you done? What have you done?!",
-	--enrage_warning = "Enrage soon!",
-	--enrage_message = "10% - Enraged",
+	enrage_yell = "Nooon ! Les pouvoirs du Puits de soleil se retournent contre moi ! Qu'avez-vous fait ? Qu'avez-vous fait ?!", -- à vérifier
+	enrage_warning = "Enrager imminent !",
+	enrage_message = "10% - Enragé",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

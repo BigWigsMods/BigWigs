@@ -204,8 +204,8 @@ L:RegisterTranslations("frFR", function() return {
 	banish_over_message = "Fin du ban !",
 	banish_bar = "Banni",
 
-	exhaust = "Désactiver les barres d'Epuisement",
-	exhaust_desc = "Barre temporelles pour l'Epuisement d'esprit des joueurs",
+	exhaust = "Désactiver Epuisement",
+	exhaust_desc = "Barre temporelles pour l'Epuisement d'esprit des joueurs.",
 	exhaust_bar = "[%s] épuisé",
 
 	debris = "Débris sur vous",
