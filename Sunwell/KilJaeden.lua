@@ -216,7 +216,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	bloomsay = "火焰之花提醒",
 	bloomsay_desc = "当你中了火焰之花时通知周围的玩家。",
-	bloom_say = ">我< 中了火焰之花！",
+	bloom_say = ">"..strupper(pName).."< 中了火焰之花！",
 
 	bloomwhisper = "火焰之花密语",
 	bloomwhisper_desc = "当玩家中了火焰之花时密语提示他离开。",
@@ -244,7 +244,7 @@ L:RegisterTranslations("zhCN", function() return {
 	shield_up = ">蓝龙之盾< 启用！",
 
 	deceiver_dies = "已杀死欺诈者之手#%d",
-	["Hand of the Deceiver"] = "欺诈者之手",--need confirm
+	["Hand of the Deceiver"] = "欺诈者之手",
 
 	enrage_yell = "呃！太阳之井的能量开始对抗我！你们都做了些什么？你们都做了些什么？！",--not confirm
 	enrage_warning = "即将 激怒！",
