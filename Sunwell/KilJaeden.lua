@@ -9,9 +9,12 @@ local CheckInteractDistance = CheckInteractDistance
 local db = nil
 local started = nil
 local deaths = 0
+local bcount = 0
 local pName = UnitName("player")
 local bloomed = {}
-local enrageWarn = nil
+local phase = nil
+local sinister1 = nil
+local sinister2 = nil
 
 ----------------------------
 --      Localization      --
@@ -26,6 +29,7 @@ L:RegisterTranslations("enUS", function() return {
 	bomb_bar = "Explosion!",
 	bomb_nextbar = "~Possible Bomb",
 	bomb_warning = "Possible bomb in ~10sec",
+	blueorb_message = "Blue Dragonflight Orb ready!",
 	kalec_yell = "I will channel my powers into the orbs! Be ready!",
 	kalec_yell2 = "I have empowered another orb! Use it quickly!",
 	kalec_yell3 = "Another orb is ready! Make haste!",
@@ -66,16 +70,23 @@ L:RegisterTranslations("enUS", function() return {
 
 	sinister = "Sinister Reflections",
 	sinister_desc = "Warns on Sinister Reflection spawns.",
+	sinister_warning = "Sinister Reflections Soon!",
 	sinister_message = "Sinister Reflections Up!",
 
 	shield_up = "Shield is UP!",
 
 	deceiver_dies = "Deciever #%d Killed",
 	["Hand of the Deceiver"] = true,
-
-	enrage_yell = "Ragh! The powers of the Sunwell turn against me! What have you done? What have you done?!",
-	enrage_warning = "Enrage soon!",
-	enrage_message = "10% - Enraged",
+	
+	phase = "Phase",
+	phase_desc = "Warn for phase changes.",
+	phase2_message = "Phase 2 - Kil'jaeden incoming!",
+	phase3_trigger = "I will not be denied! This world shall fall!",
+	phase3_message = "Phase 3 - add Darkness",
+	phase4_trigger = "Do not harbor false hope. You cannot win!",
+	phase4_message = "Phase 4 - add Meteor",
+	phase5_trigger = "Ragh! The powers of the Sunwell turn against me! What have you done? What have you done?!",
+	phase5_message = "Phase 5 - Sacrifice of Anveena",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -85,6 +96,7 @@ L:RegisterTranslations("koKR", function() return {
 	bomb_bar = "폭발!",
 	bomb_nextbar = "~폭탄 가능",
 	bomb_warning = "약 10초 이내 폭탄 가능!",
+	blueorb_message = "푸른용군단의 수정구 준비됨!",
 	kalec_yell = "수정구에 힘을 쏟겠습니다! 준비하세요!",
 	kalec_yell2 = "다른 수정구에 힘을 불어넣었습니다! 어서요!",
 	kalec_yell3 = "다른 수정구가 준비됐습니다! 서두르세요!",	--check
@@ -125,6 +137,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	sinister = "사악한 환영",
 	sinister_desc = "사악한 환영 생성을 알립니다.",
+	sinister_warning = "잠시 후 사악한 환영!",
 	sinister_message = "사악한 환영!",
 
 	shield_up = "푸른용의 보호막!",
@@ -132,9 +145,15 @@ L:RegisterTranslations("koKR", function() return {
 	deceiver_dies = "심복 #%d 처치",
 	["Hand of the Deceiver"] = "기만자의 심복",
 
-	enrage_yell = "으아! 태양샘의 마력이... 나를... 거부한다! 무슨 짓을 한 거지? 무슨 짓을 한 거냐???",
-	enrage_warning = "잠시후 격노!",
-	enrage_message = "10% - 격노",
+	phase = "단계",
+	phase_desc = "단계 변경을 알립니다.",
+	phase2_message = "2 단계- 킬제덴!",
+	phase3_trigger = "나를 부정할 수는 없다! 이 세계는 멸망하리라!",
+	phase3_message = "3 단계 - 어둠의 영혼 추가",
+	phase4_trigger = "헛된 꿈을 꾸고 있구나! 너흰 이길 수 없어!",
+	phase4_message = "4 단계 - 유성 추가",
+	phase5_trigger = "으아! 태양샘의 마력이... 나를... 거부한다! 무슨 짓을 한 거지? 무슨 짓을 한 거냐???",
+	phase5_message = "5 단계 - 안비나의 희생",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -144,13 +163,14 @@ L:RegisterTranslations("frFR", function() return {
 	bomb_bar = "Explosion !",
 	bomb_nextbar = "~Bombe probable",
 	bomb_warning = "Bombe probable dans ~10 sec.",
+	--blueorb_message = "Blue Dragonflight Orb ready!",
 	kalec_yell = "Je vais canaliser mon énergie vers les orbes ! Préparez-vous !", -- à vérifier
 	kalec_yell2 = "J'ai chargé un autre orbe ! Utilisez-le vite !", -- à vérifier
 	kalec_yell3 = "Un autre orbe est prêt ! Hâtez-vous !", -- à vérifier
 	kalec_yell4 = "J'ai envoyé tout ce que je pouvais ! La puissance est entre vos mains !", -- à vérifier
 
 	orb = "Orbe bouclier",
-	orb_desc = "Prévient quand un Orbe bouclier lance des Traits de l'ombre.",
+	orb_desc = "Prévient quand une Orbe bouclier lance des Traits de l'ombre.",
 	orb_shooting = "Orbe en vie - Bombardement de traits !",
 
 	bloom = "Fleur du feu",
@@ -184,6 +204,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	sinister = "Reflets sinistres",
 	sinister_desc = "Prévient quand les Reflets sinistres apparaissent.",
+	--sinister_warning = "Sinister Reflections Soon!",
 	sinister_message = "Reflets sinistres actifs !",
 
 	shield_up = "Bouclier ACTIF !",
@@ -191,9 +212,15 @@ L:RegisterTranslations("frFR", function() return {
 	deceiver_dies = "Trompeur #%d tué",
 	["Hand of the Deceiver"] = "Main du Trompeur", -- à vérifier
 
-	enrage_yell = "Nooon ! Les pouvoirs du Puits de soleil se retournent contre moi ! Qu'avez-vous fait ? Qu'avez-vous fait ?!", -- à vérifier
-	enrage_warning = "Enrager imminent !",
-	enrage_message = "10% - Enragé",
+	--phase = "Phase",
+	--phase_desc = "Warn for phase changes.",
+	--phase2_message = "Phase 2 - Kil'jaeden incoming!",
+	--phase3_trigger = "I will not be denied! This world shall fall!",
+	--phase3_message = "Phase 3 - add Darkness",
+	--phase4_trigger = "Do not harbor false hope. You cannot win!",
+	--phase4_message = "Phase 4 - add Meteor",
+	phase5_trigger = "Nooon ! Les pouvoirs du Puits de soleil se retournent contre moi ! Qu'avez-vous fait ? Qu'avez-vous fait ?!", -- à vérifier
+	--phase5_message = "Phase 5 - Sacrifice of Anveena",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -203,6 +230,7 @@ L:RegisterTranslations("zhCN", function() return {
 	bomb_bar = "爆炸！",
 	bomb_nextbar = "<可能 炸弹>",
 	bomb_warning = "约10秒后，可能炸弹！",
+	--blueorb_message = "Blue Dragonflight Orb ready!",
 	kalec_yell = "我会将我的力量导入宝珠中！准备好！",
 	--kalec_yell2 = "I have empowered another orb! Use it quickly!",
 	kalec_yell3 = "又有一颗宝珠准备好了！快点行动！",
@@ -243,16 +271,23 @@ L:RegisterTranslations("zhCN", function() return {
 
 	sinister = "邪恶镜像",
 	sinister_desc = "当邪恶镜像时发出警报。",
+	--sinister_warning = "Sinister Reflections Soon!",
 	sinister_message = "邪恶镜像 出现！",
 
 	shield_up = ">蓝龙之盾< 启用！",
 
 	deceiver_dies = "已杀死欺诈者之手#%d",
 	["Hand of the Deceiver"] = "欺诈者之手",
-
-	enrage_yell = "呃！太阳之井的能量开始对抗我！你们都做了些什么？你们都做了些什么？！",--not confirm
-	enrage_warning = "即将 激怒！",
-	enrage_message = "10% - 激怒",
+	
+	--phase = "Phase",
+	--phase_desc = "Warn for phase changes.",
+	--phase2_message = "Phase 2 - Kil'jaeden incoming!",
+	--phase3_trigger = "I will not be denied! This world shall fall!",
+	--phase3_message = "Phase 3 - add Darkness",
+	--phase4_trigger = "Do not harbor false hope. You cannot win!",
+	--phase4_message = "Phase 4 - add Meteor",
+	phase5_trigger = "呃！太阳之井的能量开始对抗我！你们都做了些什么？你们都做了些什么？！",--not confirm
+	--phase5_message = "Phase 5 - Sacrifice of Anveena",
 } end )
 
 ----------------------------------
@@ -263,7 +298,7 @@ local deceiver = L["Hand of the Deceiver"]
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = {deceiver, boss}
-mod.toggleoptions = {"bomb", "orb", "flame", -1, "bloom", "bloomwhisper","bloomsay", "icons", -1, "sinister", "shadow", -1, "proximity", "enrage", "bosskill"}
+mod.toggleoptions = {"phase", -1, "bomb", "orb", "flame", -1, "bloom", "bloomwhisper","bloomsay", "icons", -1, "sinister", "shadow", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 mod.proximitySilent = true
@@ -292,6 +327,7 @@ function mod:OnEnable()
 	db = self.db.profile
 	started = nil
 	deaths = 0
+	phase = 0
 	for i = 1, #bloomed do bloomed[i] = nil end
 end
 
@@ -329,6 +365,8 @@ function mod:Deaths(unit)
 		deaths = deaths + 1
 		self:IfMessage(L["deceiver_dies"]:format(deaths), "Positive")
 		if deaths == 3 then
+			phase = 2
+			self:Message(L["phase2_message"], "Attention")
 			self:Bar(boss, 10, "Spell_Shadow_Charm")
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 		end
@@ -341,17 +379,38 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit)
 	if unit == boss and db.bomb then
 		self:Bar(L["bomb_bar"], 8, "Spell_Shadow_BlackPlague")
 		self:IfMessage(L["bomb_cast"], "Positive")
-		self:Bar(L["bomb_nextbar"], 46, "Spell_Shadow_BlackPlague")
-		self:DelayedMessage(36, L["bomb_warning"], "Attention")
+		if phase == 3 or phase == 4 then
+			bCount = bCount + 1
+			if bCount < 2 then -- only do two times before next Orbs yell
+				self:Bar(L["bomb_nextbar"], 46, "Spell_Shadow_BlackPlague")
+				self:DelayedMessage(36, L["bomb_warning"], "Attention")
+			end
+		elseif phase == 5 then
+			self:Bar(L["bomb_nextbar"], 25, "Spell_Shadow_BlackPlague")
+			self:DelayedMessage(15, L["bomb_warning"], "Attention")
+		end
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if (msg == L["kalec_yell"] or msg == L["kalec_yell2"] or msg == L["kalec_yell3"]) and db.bomb then
+		bCount = 0
+		self:IfMessage(L["blueorb_message"], "Attention")
 		self:Bar(L["bomb_nextbar"], 40, "Spell_Shadow_BlackPlague")
 		self:DelayedMessage(30, L["bomb_warning"], "Attention")
-	elseif msg == L["enrage_yell"] then
-		self:IfMessage(L["enrage_message"], "Attention")
+	elseif msg == L["kalec_yell4"] and db.bomb then
+		self:IfMessage(L["blueorb_message"], "Attention")
+		self:Bar(L["bomb_nextbar"], 13, "Spell_Shadow_BlackPlague")
+		self:DelayedMessage(3, L["bomb_warning"], "Attention")
+	elseif msg == L["phase3_trigger"] then
+		phase = 3
+		self:IfMessage(L["phase3_message"], "Attention")
+	elseif msg == L["phase4_trigger"] then
+		phase = 4
+		self:IfMessage(L["phase4_message"], "Attention")
+	elseif msg == L["phase5_trigger"] then
+		phase = 5
+		self:IfMessage(L["phase5_message"], "Attention")
 	end
 end
 
@@ -397,14 +456,14 @@ function mod:BloomWarn()
 end
 
 function mod:UNIT_HEALTH(msg)
-	if not db.enrage then return end
-	if UnitName(msg) == boss then
+	if UnitName(msg) == boss and db.sinister then
 		local health = UnitHealth(msg)
-		if health > 12 and health <= 14 and not enrageWarn then
-			self:Message(L["enrage_warning"], "Positive")
-			enrageWarn = true
-		elseif health > 50 and enrageWarn then
-			enrageWarn = false
+		if not sinister1 and health > 86 and health <= 88 then
+			sinister1 = true
+			self:Message(L["sinister_warning"], "Attention")
+		elseif not sinister2 and health > 56 and health <= 58 then
+			sinister2 = true
+			self:Message(L["sinister_warning"], "Attention")
 		end
 	end
 end
@@ -412,6 +471,9 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
+		phase = 1
+		sinister1 = nil
+		sinister2 = nil
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
