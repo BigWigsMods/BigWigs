@@ -15,6 +15,7 @@ local bloomed = {}
 local phase = nil
 local sinister1 = nil
 local sinister2 = nil
+local sinister3 = nil
 
 ----------------------------
 --      Localization      --
@@ -463,6 +464,9 @@ function mod:UNIT_HEALTH(msg)
 			self:Message(L["sinister_warning"], "Attention")
 		elseif not sinister2 and health > 56 and health <= 58 then
 			sinister2 = true
+			self:Message(L["sinister_warning"], "Attention")
+		elseif not sinister3 and health > 26 and health <= 28 then
+			sinister3 = true
 			self:Message(L["sinister_warning"], "Attention")
 		end
 	end
