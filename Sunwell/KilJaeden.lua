@@ -224,18 +224,19 @@ L:RegisterTranslations("frFR", function() return {
 	--phase5_message = "Phase 5 - Sacrifice of Anveena",
 } end )
 
+--zhCN some yell triggers not confirmed
 L:RegisterTranslations("zhCN", function() return {
-	bomb = "黑暗",
+	bomb = "千魂之暗",
 	bomb_desc = "当千魂之暗开始施法时发出警报。",
-	bomb_cast = "即将 大炸弹！",
-	bomb_bar = "爆炸！",
-	bomb_nextbar = "<可能 炸弹>",
-	bomb_warning = "约10秒后，可能炸弹！",
-	--blueorb_message = "Blue Dragonflight Orb ready!",
+	bomb_cast = "即将 千魂之暗！",
+	bomb_bar = "千魂之暗 - 暗影箭！",
+	bomb_nextbar = "<可能 千魂之暗>",
+	bomb_warning = "约10秒后，可能千魂之暗！",
+	blueorb_message = "蓝龙宝珠已准备好！",
 	kalec_yell = "我会将我的力量导入宝珠中！准备好！",
-	--kalec_yell2 = "I have empowered another orb! Use it quickly!",
+	kalec_yell2 = "我又将能量灌入了另一颗宝珠！快去使用它！",
 	kalec_yell3 = "又有一颗宝珠准备好了！快点行动！",
-	kalec_yell4 = "这是我所能做的一切了！力量现在掌握在你们的手中！",--possible not the orb warning.(another choice:我又将能量灌入了另一颗宝珠！快去使用它！)
+	kalec_yell4 = "这是我所能做的一切了！力量现在掌握在你们的手中！",
 
 	orb = "护盾宝珠",--Shield Orb 
 	orb_desc = "当护盾宝珠施放暗影箭时发出警报。",
@@ -272,7 +273,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	sinister = "邪恶镜像",
 	sinister_desc = "当邪恶镜像时发出警报。",
-	--sinister_warning = "Sinister Reflections Soon!",
+	sinister_warning = "即将 邪恶镜像！",
 	sinister_message = "邪恶镜像 出现！",
 
 	shield_up = ">蓝龙之盾< 启用！",
@@ -280,15 +281,15 @@ L:RegisterTranslations("zhCN", function() return {
 	deceiver_dies = "已杀死欺诈者之手#%d",
 	["Hand of the Deceiver"] = "欺诈者之手",
 	
-	--phase = "Phase",
-	--phase_desc = "Warn for phase changes.",
-	--phase2_message = "Phase 2 - Kil'jaeden incoming!",
-	--phase3_trigger = "I will not be denied! This world shall fall!",
-	--phase3_message = "Phase 3 - add Darkness",
-	--phase4_trigger = "Do not harbor false hope. You cannot win!",
-	--phase4_message = "Phase 4 - add Meteor",
+	phase = "阶段",
+	phase_desc = "当进入不同阶段发出警报。",
+	phase2_message = "第二阶段 - 基尔加丹来临！",
+	phase3_trigger = "我是不会失败的！这个世界注定要毁灭！",
+	phase3_message = "第三阶段 - 注意千魂之暗！",
+	phase4_trigger = "别再抱有幻想了。你们不可能赢！",
+	phase4_message = "第四阶段 - 注意流星！",
 	phase5_trigger = "呃！太阳之井的能量开始对抗我！你们都做了些什么？你们都做了些什么？！",--not confirm
-	--phase5_message = "Phase 5 - Sacrifice of Anveena",
+	phase5_message = "第五阶段 - 牺牲安薇娜！",
 } end )
 
 ----------------------------------
