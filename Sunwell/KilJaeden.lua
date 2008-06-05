@@ -145,12 +145,12 @@ L:RegisterTranslations("frFR", function() return {
 	bomb_nextbar = "~Bombe probable",
 	bomb_warning = "Bombe probable dans ~10 sec.",
 	kalec_yell = "Je vais canaliser mon énergie vers les orbes ! Préparez-vous !", -- à vérifier
-	--kalec_yell2 = "I have empowered another orb! Use it quickly!",
+	kalec_yell2 = "J'ai chargé un autre orbe ! Utilisez-le vite !", -- à vérifier
 	kalec_yell3 = "Un autre orbe est prêt ! Hâtez-vous !", -- à vérifier
 	kalec_yell4 = "J'ai envoyé tout ce que je pouvais ! La puissance est entre vos mains !", -- à vérifier
 
 	orb = "Orbe bouclier",
-	orb_desc = "Prévient quand une Orbe bouclier lance des Traits de l'ombre.",
+	orb_desc = "Prévient quand un Orbe bouclier lance des Traits de l'ombre.",
 	orb_shooting = "Orbe en vie - Bombardement de traits !",
 
 	bloom = "Fleur du feu",
