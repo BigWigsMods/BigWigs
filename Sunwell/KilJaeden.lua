@@ -27,8 +27,9 @@ L:RegisterTranslations("enUS", function() return {
 	bomb_nextbar = "~Possible Bomb",
 	bomb_warning = "Possible bomb in ~10sec",
 	kalec_yell = "I will channel my powers into the orbs! Be ready!",
-	kalec_yell2 = "Another orb is ready! Make haste!",
-	kalec_yell3 = "I have channeled all I can! The power is in your hands!",
+	kalec_yell2 = "I have empowered another orb! Use it quickly!",
+	kalec_yell3 = "Another orb is ready! Make haste!",
+	kalec_yell4 = "I have channeled all I can! The power is in your hands!",
 
 	orb = "Shield Orb",
 	orb_desc = "Warn when a Shield Orb is shadowbolting.",
@@ -84,9 +85,10 @@ L:RegisterTranslations("koKR", function() return {
 	bomb_bar = "폭발!",
 	bomb_nextbar = "~폭탄 가능",
 	bomb_warning = "약 10초 이내 폭탄 가능!",
-	kalec_yell = "수정구에 힘을 쏟겠습니다! 준비하세요!",	--check
-	kalec_yell2 = "다른 수정구가 준비됐습니다! 서두르세요!",	--check
-	kalec_yell3 = "모든 힘을 수정구에 실었습니다! 이제 그대들의 몫입니다!",	--check
+	kalec_yell = "수정구에 힘을 쏟겠습니다! 준비하세요!",
+	kalec_yell2 = "다른 수정구에 힘을 불어넣었습니다! 어서요!",
+	kalec_yell3 = "다른 수정구가 준비됐습니다! 서두르세요!",	--check
+	kalec_yell4 = "모든 힘을 수정구에 실었습니다! 이제 그대들의 몫입니다!",
 
 	orb = "보호의 구슬",
 	orb_desc = "보호의 구슬의 어둠 화살을 알립니다.",
@@ -100,7 +102,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	bloomsay = "화염 불꽃 대화",
 	bloomsay_desc = "자신이 화염 불꽃이 걸렸을시 일반 대화로 출력합니다.",
-	bloom_say = "나에게 화염 불꽃!",
+	bloom_say = ""..strupper(pName).." 화염 불꽃!",
 
 	bloomwhisper = "화염 불꽃 귓속말",
 	bloomwhisper_desc = "화염 불꽃에 걸린 플레이어에게 귓속말로 알립니다.",
@@ -130,7 +132,7 @@ L:RegisterTranslations("koKR", function() return {
 	deceiver_dies = "심복 #%d 처치",
 	["Hand of the Deceiver"] = "기만자의 심복",
 
-	enrage_yell = "으악! 태양샘의 마력이 나를 거부한다! 무슨 짓을 한거지? 무슨 짓을 한거야?!",	--check
+	enrage_yell = "으아! 태양샘의 마력이... 나를... 거부한다! 무슨 짓을 한 거지? 무슨 짓을 한 거냐???",
 	enrage_warning = "잠시후 격노!",
 	enrage_message = "10% - 격노",
 } end )
@@ -143,8 +145,9 @@ L:RegisterTranslations("frFR", function() return {
 	bomb_nextbar = "~Bombe probable",
 	bomb_warning = "Bombe probable dans ~10 sec.",
 	kalec_yell = "Je vais canaliser mon énergie vers les orbes ! Préparez-vous !", -- à vérifier
-	kalec_yell2 = "Un autre orbe est prêt ! Hâtez-vous !", -- à vérifier
-	kalec_yell3 = "J'ai envoyé tout ce que je pouvais ! La puissance est entre vos mains !", -- à vérifier
+	--kalec_yell2 = "I have empowered another orb! Use it quickly!",
+	kalec_yell3 = "Un autre orbe est prêt ! Hâtez-vous !", -- à vérifier
+	kalec_yell4 = "J'ai envoyé tout ce que je pouvais ! La puissance est entre vos mains !", -- à vérifier
 
 	orb = "Orbe bouclier",
 	orb_desc = "Prévient quand une Orbe bouclier lance des Traits de l'ombre.",
@@ -201,8 +204,9 @@ L:RegisterTranslations("zhCN", function() return {
 	bomb_nextbar = "<可能 炸弹>",
 	bomb_warning = "约10秒后，可能炸弹！",
 	kalec_yell = "我会将我的力量导入宝珠中！准备好！",
-	kalec_yell2 = "又有一颗宝珠准备好了！快点行动！",
-	kalec_yell3 = "这是我所能做的一切了！力量现在掌握在你们的手中！",--possible not the orb warning.(another choice:我又将能量灌入了另一颗宝珠！快去使用它！)
+	--kalec_yell2 = "I have empowered another orb! Use it quickly!",
+	kalec_yell3 = "又有一颗宝珠准备好了！快点行动！",
+	kalec_yell4 = "这是我所能做的一切了！力量现在掌握在你们的手中！",--possible not the orb warning.(another choice:我又将能量灌入了另一颗宝珠！快去使用它！)
 
 	orb = "护盾宝珠",--Shield Orb 
 	orb_desc = "当护盾宝珠施放暗影箭时发出警报。",
