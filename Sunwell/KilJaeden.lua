@@ -164,24 +164,24 @@ L:RegisterTranslations("frFR", function() return {
 	bomb_bar = "Explosion !",
 	bomb_nextbar = "~Bombe probable",
 	bomb_warning = "Bombe probable dans ~10 sec.",
-	--blueorb_message = "Blue Dragonflight Orb ready!",
+	blueorb_message = "Orbe du Vol bleu prêt !",
 	kalec_yell = "Je vais canaliser mon énergie vers les orbes ! Préparez-vous !", -- à vérifier
 	kalec_yell2 = "J'ai chargé un autre orbe ! Utilisez-le vite !", -- à vérifier
 	kalec_yell3 = "Un autre orbe est prêt ! Hâtez-vous !", -- à vérifier
 	kalec_yell4 = "J'ai envoyé tout ce que je pouvais ! La puissance est entre vos mains !", -- à vérifier
 
 	orb = "Orbe bouclier",
-	orb_desc = "Prévient quand une Orbe bouclier lance des Traits de l'ombre.",
+	orb_desc = "Prévient quand un Orbe bouclier lance des Traits de l'ombre.",
 	orb_shooting = "Orbe en vie - Bombardement de traits !",
 
-	bloom = "Fleur du feu",
+	bloom = "Fleurs du feu",
 	bloom_desc = "Prévient quand des joueurs subissent les effets de la Fleur du feu.",
 	bloom_other = "Fleur du feu sur %s !",
 	bloom_bar = "Fleurs du feu",
-	bloom_message = "Prochaine Fleur du feu dans 5 sec. !",
+	bloom_message = "Prochaines Fleurs du feu dans 5 sec. !",
 
 	bloomsay = "Dire - Fleur du feu",
-	bloomsay_desc = "Fait dire à votre personnage qu'il est ciblé par la Fleur du feu quand c'est le cas, afin d'aider les membres proches ayant les bulles de dialogue activées.",
+	bloomsay_desc = "Fait dire à votre personnage qu'il subit les effets de la Fleur du feu quand c'est le cas, afin d'aider les membres proches ayant les bulles de dialogue activées.",
 	bloom_say = "Fleur du feu sur "..strupper(pName).." !",
 
 	bloomwhisper = "Chuchoter",
@@ -191,21 +191,21 @@ L:RegisterTranslations("frFR", function() return {
 	icons = "Icônes",
 	icons_desc = "Place une icône de raid sur les derniers joueurs affectés par la Fleur du feu (nécessite d'être promu ou mieux).",
 
-	shadow = "Pointe de l'ombre",
+	shadow = "Pointes de l'ombre",
 	shadow_desc = "Prévient quand les Pointes de l'ombre sont incantées.",
 	shadow_message = "Pointes de l'ombre pendant 28 sec. !",
 	shadow_bar = "Fin des Pointes",
 	shadow_warning = "Pointes de l'ombre terminées dans 5 sec. !",
 	shadow_debuff_bar = "Soins réduits sur %s",
 
-	flame = "Fléchette des flammes",
-	flame_desc = "Affiche une barre temporelle pour la Flèchette des flammes.",
-	flame_bar = "Prochaine Fléchette",
-	flame_message = "Prochaine Fléchette des flammes dans 5 sec. !",
+	flame = "Fléchettes des flammes",
+	flame_desc = "Affiche une barre temporelle pour les Flèchettes des flammes.",
+	flame_bar = "Prochaines Fléchettes",
+	flame_message = "Prochaines Fléchettes des flammes dans 5 sec. !",
 
 	sinister = "Reflets sinistres",
 	sinister_desc = "Prévient quand les Reflets sinistres apparaissent.",
-	--sinister_warning = "Sinister Reflections Soon!",
+	sinister_warning = "Reflets sinistres imminents !",
 	sinister_message = "Reflets sinistres actifs !",
 
 	shield_up = "Bouclier ACTIF !",
@@ -213,15 +213,15 @@ L:RegisterTranslations("frFR", function() return {
 	deceiver_dies = "Trompeur #%d tué",
 	["Hand of the Deceiver"] = "Main du Trompeur", -- à vérifier
 
-	--phase = "Phase",
-	--phase_desc = "Warn for phase changes.",
-	--phase2_message = "Phase 2 - Kil'jaeden incoming!",
-	--phase3_trigger = "I will not be denied! This world shall fall!",
-	--phase3_message = "Phase 3 - add Darkness",
-	--phase4_trigger = "Do not harbor false hope. You cannot win!",
-	--phase4_message = "Phase 4 - add Meteor",
+	phase = "Phases",
+	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
+	phase2_message = "Phase 2 - Arrivée de Kil'jaeden !",
+	phase3_trigger = "Rien ne m'arrêtera ! Ce monde va tomber !", -- à vérifier
+	phase3_message = "Phase 3 - Ajout des Ténèbres des mille âmes",
+	phase4_trigger = "Assez de faux espoirs. Vous ne pouvez pas gagner !", -- à vérifier
+	phase4_message = "Phase 4 - Ajout des Météores",
 	phase5_trigger = "Nooon ! Les pouvoirs du Puits de soleil se retournent contre moi ! Qu'avez-vous fait ? Qu'avez-vous fait ?!", -- à vérifier
-	--phase5_message = "Phase 5 - Sacrifice of Anveena",
+	phase5_message = "Phase 5 - Sacrifice d'Anveena",
 } end )
 
 --zhCN some yell triggers not confirmed
