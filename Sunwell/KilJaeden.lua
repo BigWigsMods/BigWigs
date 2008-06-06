@@ -315,7 +315,8 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_DAMAGE", "Orb", 45680)
 	self:AddCombatListener("SPELL_MISSED", "Orb", 45680)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Bloom", 45641)
-	self:AddCombatListener("SPELL_CAST_START", "Shadow", 45885)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Shadow", 45885)
+	self:AddCombatListener("SPELL_CAST_START", "ShadowCast", 46680)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
@@ -416,11 +417,17 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:Shadow(_, spellID)
+function mod:ShadowCast(_, spellID)
 	if db.shadow then
-		self:Bar(L["shadow_bar"], 28, spellID)
+		self:Bar(L["shadow_bar"], 28.7, spellID)
 		self:IfMessage(L["shadow_message"], "Attention", spellID)
-		self:DelayedMessage(23, L["shadow_warning"], "Attention")
+		self:DelayedMessage(23.7, L["shadow_warning"], "Attention")
+	end
+end
+
+function mod:Shadow(player, spellId)
+	if db.shadow then
+		self:Bar(L["shadow_debuff_bar"]:format(player), 10, spellId) 
 	end
 end
 
