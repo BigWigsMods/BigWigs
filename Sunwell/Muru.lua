@@ -304,7 +304,7 @@ function mod:Portals()
 	self:TriggerEvent("BigWigs_StopBar", self, L["darkness_next"])
 	if db.phase then
 		self:Message(L["phase2_message"], "Attention")
-		self:Bar(entropius, 12, 46087)
+		self:Bar(entropius, 10, 46087)
 	end
 	if db.gravity then
 		self:Bar(L["gravity_next"], 27, 44218)
