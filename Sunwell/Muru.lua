@@ -227,10 +227,10 @@ L:RegisterTranslations("deDE", function() return {
 	phase_desc = "Warnung bei Phasenänderrungen.",
 	phase2_message = "Phase 2",
 
-	--gravity = "Gravity Balls",
-	--gravity_desc = "Warn for Gravity Balls.",
-	--gravity_next = "Next Gravity Ball Timer",
-	--gravity_soon = "Gravity Ball soon!",
+	gravity = "Schwerkraftkugel",
+	gravity_desc = "Warnung wann die Schwerkraftkugel erscheint.",
+	gravity_next = "Nächste Schwerkraftkugel",
+	gravity_soon = "Schwerkraftkugel bald!",
 } end )
 
 ----------------------------------
