@@ -224,12 +224,11 @@ L:RegisterTranslations("frFR", function() return {
 	phase5_message = "Phase 5 - Sacrifice d'Anveena",
 } end )
 
---zhCN some yell triggers not confirmed
 L:RegisterTranslations("zhCN", function() return {
 	bomb = "千魂之暗",
-	bomb_desc = "当千魂之暗开始施法时发出警报。",
+	bomb_desc = "当千魂之暗开始施放时发出警报。",
 	bomb_cast = "即将 千魂之暗！",
-	bomb_bar = "千魂之暗 - 暗影箭！",
+	bomb_bar = "<千魂之暗>",
 	bomb_nextbar = "<可能 千魂之暗>",
 	bomb_warning = "约10秒后，可能千魂之暗！",
 	blueorb_message = "蓝龙宝珠已准备好！",
@@ -238,7 +237,7 @@ L:RegisterTranslations("zhCN", function() return {
 	kalec_yell3 = "又有一颗宝珠准备好了！快点行动！",
 	kalec_yell4 = "这是我所能做的一切了！力量现在掌握在你们的手中！",
 
-	orb = "护盾宝珠",--Shield Orb 
+	orb = "护盾宝珠",
 	orb_desc = "当护盾宝珠施放暗影箭时发出警报。",
 	orb_shooting = "护盾宝珠 - 暗影箭！",
 
@@ -259,9 +258,9 @@ L:RegisterTranslations("zhCN", function() return {
 	icons = "团队标记",
 	icons_desc = "为中了火焰之花的玩家随机打上一个团队标记。（需要权限）",
 
-	shadow = "暗影尖刺",
-	shadow_desc = "当施放暗影尖刺时发出警报。",
-	shadow_message = "28秒后，.暗影之刺<！当心！",
+	shadow = "暗影之刺",
+	shadow_desc = "当施放暗影之刺时发出警报。",
+	shadow_message = "28秒后，>暗影之刺<！当心！",
 	shadow_bar = "<暗影之刺>",
 	shadow_warning = "5秒后，暗影之刺！",
 	shadow_debuff_bar = "<降低治疗：%s>",
@@ -278,17 +277,17 @@ L:RegisterTranslations("zhCN", function() return {
 
 	shield_up = ">蓝龙之盾< 启用！",
 
-	deceiver_dies = "已杀死欺诈者之手#%d",
-	["Hand of the Deceiver"] = "欺诈者之手",
+	deceiver_dies = "已杀死基尔加丹之手#%d",
+	["Hand of the Deceiver"] = "基尔加丹之手",
 	
 	phase = "阶段",
-	phase_desc = "当进入不同阶段发出警报。",
+	phase_desc = "当进入不同阶段时发出警报。",
 	phase2_message = "第二阶段 - 基尔加丹来临！",
 	phase3_trigger = "我是不会失败的！这个世界注定要毁灭！",
 	phase3_message = "第三阶段 - 注意千魂之暗！",
-	phase4_trigger = "别再抱有幻想了。你们不可能赢！",
+	phase4_trigger = "别再抱有幻想了！你们不可能赢！",
 	phase4_message = "第四阶段 - 注意流星！",
-	phase5_trigger = "呃！太阳之井的能量开始对抗我！你们都做了些什么？你们都做了些什么？！",--not confirm
+	phase5_trigger = "啊啊啊！太阳之井的能量……开始……对抗我！你们都做了些什么？你们都做了些什么？？",
 	phase5_message = "第五阶段 - 牺牲安薇娜！",
 } end )
 
