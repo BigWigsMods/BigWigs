@@ -64,6 +64,9 @@ L:RegisterTranslations("enUS", function() return {
 	shadow_warning = "Shadow Spikes Done in 5 sec!",
 	shadow_debuff_bar = "Reduced Healing on %s",
 
+	shadowdebuff = "Disable Shadow Bars",
+	shadowdebuff_message = "Timer bars for players affected by the Shadow Debuff",
+
 	flame = "Flame Dart",
 	flame_desc = "Show Flame Dart timer bar.",
 	flame_bar = "Next Flame Dart",
@@ -78,7 +81,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	deceiver_dies = "Deciever #%d Killed",
 	["Hand of the Deceiver"] = true,
-	
+
 	phase = "Phase",
 	phase_desc = "Warn for phase changes.",
 	phase2_message = "Phase 2 - Kil'jaeden incoming!",
@@ -130,6 +133,9 @@ L:RegisterTranslations("koKR", function() return {
 	shadow_bar = "어둠의 쐐기 종료",
 	shadow_warning = "5초 후 어둠의 쐐기 종료!",
 	shadow_debuff_bar = "%s 치유효과 감소",
+
+	--shadowdebuff = "Disable Shadow Bars",
+	--shadowdebuff_message = "Timer bars for players affected by the Shadow Debuff",
 
 	flame = "불꽃 화살",
 	flame_desc = "불꽃 화살 타이머 바를 표시합니다.",
@@ -198,6 +204,9 @@ L:RegisterTranslations("frFR", function() return {
 	shadow_warning = "Pointes de l'ombre terminées dans 5 sec. !",
 	shadow_debuff_bar = "Soins réduits sur %s",
 
+	--shadowdebuff = "Disable Shadow Bars",
+	--shadowdebuff_message = "Timer bars for players affected by the Shadow Debuff",
+
 	flame = "Fléchettes des flammes",
 	flame_desc = "Affiche une barre temporelle pour les Flèchettes des flammes.",
 	flame_bar = "Prochaines Fléchettes",
@@ -265,6 +274,9 @@ L:RegisterTranslations("zhCN", function() return {
 	shadow_warning = "5秒后，暗影之刺！",
 	shadow_debuff_bar = "<降低治疗：%s>",
 
+	--shadowdebuff = "Disable Shadow Bars",
+	--shadowdebuff_message = "Timer bars for players affected by the Shadow Debuff",
+
 	flame = "烈焰之刺",
 	flame_desc = "显示烈焰之刺记时条。",
 	flame_bar = "<下一烈焰之刺>",
@@ -279,7 +291,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	deceiver_dies = "已杀死基尔加丹之手#%d",
 	["Hand of the Deceiver"] = "基尔加丹之手",
-	
+
 	phase = "阶段",
 	phase_desc = "当进入不同阶段时发出警报。",
 	phase2_message = "第二阶段 - 基尔加丹来临！",
@@ -299,7 +311,7 @@ local deceiver = L["Hand of the Deceiver"]
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = {deceiver, boss}
-mod.toggleoptions = {"phase", -1, "bomb", "orb", "flame", -1, "bloom", "bloomwhisper","bloomsay", "icons", -1, "sinister", "shadow", "proximity", "bosskill"}
+mod.toggleoptions = {"phase", -1, "bomb", "orb", "flame", -1, "bloom", "bloomwhisper", "bloomsay", "icons", -1, "sinister", "shadow", "shadowdebuff", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
 mod.proximitySilent = true
@@ -425,7 +437,7 @@ function mod:ShadowCast(_, spellID)
 end
 
 function mod:Shadow(player, spellId)
-	if db.shadow then
+	if not db.shadowdebuff then
 		self:Bar(L["shadow_debuff_bar"]:format(player), 10, spellId) 
 	end
 end
