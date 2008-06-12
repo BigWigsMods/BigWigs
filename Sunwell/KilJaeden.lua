@@ -65,7 +65,7 @@ L:RegisterTranslations("enUS", function() return {
 	shadow_debuff_bar = "Reduced Healing on %s",
 
 	shadowdebuff = "Disable Shadow Bars",
-	shadowdebuff_message = "Timer bars for players affected by the Shadow Debuff",
+	shadowdebuff_desc = "Timer bars for players affected by the Shadow Debuff",
 
 	flame = "Flame Dart",
 	flame_desc = "Show Flame Dart timer bar.",
@@ -135,7 +135,7 @@ L:RegisterTranslations("koKR", function() return {
 	shadow_debuff_bar = "%s 치유효과 감소",
 
 	--shadowdebuff = "Disable Shadow Bars",
-	--shadowdebuff_message = "Timer bars for players affected by the Shadow Debuff",
+	--shadowdebuff_desc = "Timer bars for players affected by the Shadow Debuff",
 
 	flame = "불꽃 화살",
 	flame_desc = "불꽃 화살 타이머 바를 표시합니다.",
@@ -204,8 +204,8 @@ L:RegisterTranslations("frFR", function() return {
 	shadow_warning = "Pointes de l'ombre terminées dans 5 sec. !",
 	shadow_debuff_bar = "Soins réduits sur %s",
 
-	--shadowdebuff = "Disable Shadow Bars",
-	--shadowdebuff_message = "Timer bars for players affected by the Shadow Debuff",
+	shadowdebuff = "Pas de barres des Pointes",
+	shadowdebuff_desc = "Désactive les barres temporelles des joueurs affectés par les Pointe de l'ombre si coché.",
 
 	flame = "Fléchettes des flammes",
 	flame_desc = "Affiche une barre temporelle pour les Flèchettes des flammes.",
@@ -275,7 +275,7 @@ L:RegisterTranslations("zhCN", function() return {
 	shadow_debuff_bar = "<降低治疗：%s>",
 
 	--shadowdebuff = "Disable Shadow Bars",
-	--shadowdebuff_message = "Timer bars for players affected by the Shadow Debuff",
+	--shadowdebuff_desc = "Timer bars for players affected by the Shadow Debuff",
 
 	flame = "烈焰之刺",
 	flame_desc = "显示烈焰之刺记时条。",
