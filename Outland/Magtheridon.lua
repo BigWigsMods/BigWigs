@@ -377,6 +377,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Magtheridon's Lair"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = {channeler, boss}
+mod.guid = 17257
 mod.toggleoptions = {"escape", "abyssal", "heal", -1, "nova", "banish", -1, "debris", "debrisinc", -1, "exhaust", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -442,14 +443,14 @@ function mod:BanishRemoved()
 	end
 end
 
-function mod:Deaths(unit)
+function mod:Deaths(unit, guid)
 	if unit == channeler then
 		deaths = deaths + 1
 		if deaths == 5 then
 			self:Start()
 		end
-	elseif unit == boss then
-		self:GenericBossDeath(unit)
+	else
+		self:BossDeath(nil, guid)
 	end
 end
 

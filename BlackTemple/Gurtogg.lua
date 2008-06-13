@@ -241,6 +241,7 @@ L:RegisterTranslations("zhCN", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Black Temple"]
 mod.enabletrigger = boss
+mod.guid = 22948
 mod.toggleoptions = {"phase", "bloodboil", -1, "rage", "whisper", -1, "acid", "icon", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -253,7 +254,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Rage", 40604)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "FelRageRemoved", 40594)
 	self:AddCombatListener("SPELL_CAST_START", "Acid", 40508)
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

@@ -505,6 +505,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Black Temple"]
 mod.enabletrigger = boss
+mod.guid = 22917
 mod.toggleoptions = {"berserk", "phase", "parasite", "shear", "eyeblast", "barrage", "flame", "demons", "burst", "enrage", "proximity", "bosskill"}
 mod.wipemobs = {L["Flame of Azzinoth"]}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
@@ -689,7 +690,7 @@ function mod:Deaths(unit)
 			self:TriggerEvent("BigWigs_ShowProximity", self) -- Proximity Warning
 		end
 	elseif unit == boss then
-		self:GenericBossDeath(unit)
+		self:BossDeath(nil, self.guid)
 	end
 end
 

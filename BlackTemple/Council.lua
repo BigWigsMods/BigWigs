@@ -376,6 +376,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Black Temple"]
 mod.enabletrigger = {malande, gathios, zerevor, veras}
+mod.guid = 22951
 mod.toggleoptions = {"immune", "res", "shield", -1, "vanish", "circle", -1, "poison", "icon", -1, "blizzard", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -395,7 +396,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Healed", 41455)
 	self:AddCombatListener("SPELL_INTERRUPT", "HealingFailed")
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Blizzard", 41482)
-	self:AddCombatListener("UNIT_DIED", "Deaths")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -439,12 +440,6 @@ function mod:Poison(player, spellID)
 			self:IfMessage(other, "Attention", spellID)
 		end
 		self:Icon(player, "icon")
-	end
-end
-
-function mod:Deaths(unit)
-	if unit == malande then
-		self:GenericBossDeath(boss)
 	end
 end
 

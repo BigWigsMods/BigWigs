@@ -139,6 +139,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Black Temple"]
 mod.enabletrigger = boss
+mod.guid = 22947
 mod.toggleoptions = {"attraction", "debuff", "berserk", "enrage", "bosskill"}
 mod.revision = tonumber(sub("$Revision$", 12, -3))
 
@@ -147,7 +148,7 @@ mod.revision = tonumber(sub("$Revision$", 12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Attraction", 41001)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

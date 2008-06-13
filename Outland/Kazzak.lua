@@ -147,6 +147,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Hellfire Peninsula"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = boss
+mod.guid = 18728
 mod.toggleoptions = {"enrage", "mark", "twist", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -157,7 +158,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Mark", 32960)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Twisted", 21063)
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")

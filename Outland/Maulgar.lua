@@ -302,6 +302,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Gruul's Lair"]
 mod.otherMenu = "Outland"
 mod.enabletrigger = {boss, mage, lock, priest, shaman}
+mod.guid = 18831
 mod.toggleoptions = {"shield", "spellshield", "heal", -1, "summon", -1, "whirlwind", "flurry", "smash", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -317,7 +318,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Prayer", 33152)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Smash", 39144)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Flurry", 33232)
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("UNIT_HEALTH")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

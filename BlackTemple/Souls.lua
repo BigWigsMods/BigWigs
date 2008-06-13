@@ -286,6 +286,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Black Temple"]
 mod.enabletrigger = {desire, suffering, anger}
+mod.guid = 23420
 mod.toggleoptions = {"enrage", "runeshield", "deaden", -1, "spite", "scream", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -299,7 +300,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Shield", 41431)
 	self:AddCombatListener("SPELL_CAST_START", "Deaden", 41410)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Scream", 41545)
-	self:AddCombatListener("UNIT_DIED", "Deaths")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
@@ -368,12 +369,6 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Bar(L["deaden_nextbar"], 28, "Spell_Shadow_SoulLeech_1")
 			self:DelayedMessage(23, L["deaden_warn"], "Urgent")
 		end
-	end
-end
-
-function mod:Deaths(unit)
-	if unit == anger then
-		self:GenericBossDeath(boss)
 	end
 end
 
