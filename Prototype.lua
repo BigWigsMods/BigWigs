@@ -153,10 +153,14 @@ local function transmitSync(self, token, arguments, ...)
 	end
 end
 
-function BigWigs.modulePrototype:COMBAT_LOG_EVENT_UNFILTERED(_, event, _, source, _, _, player, _, spellId, spellName, _, secSpellId)
+function BigWigs.modulePrototype:COMBAT_LOG_EVENT_UNFILTERED(_, event, _, source, _, guid, player, _, spellId, spellName, _, secSpellId)
 	local m = self.combatLogEventMap and self.combatLogEventMap[event]
 	if m and (m[spellId] or m["*"]) then
-		self[m[spellId] or m["*"]](self, player, spellId, source, secSpellId, spellName, event)
+		if event == "UNIT_DIED" then
+			self[m["*"]](self, player, guid)
+		else
+			self[m[spellId] or m["*"]](self, player, spellId, source, secSpellId, spellName, event)
+		end
 	end
 	local s = self.syncEventMap and self.syncEventMap[event]
 	if s then
@@ -243,6 +247,19 @@ function BigWigs.modulePrototype:GenericBossDeath(msg, multi)
 			self:Sync("MultiBossDeath " .. b)
 		else
 			self:Sync("BossDeath " .. b)
+		end
+	end
+end
+
+function BigWigs.modulePrototype:BossDeath(_, guid, multi)
+	local b = self:ToString()
+	guid = tonumber((guid):sub(-12,-7),16)
+
+	if guid == self.guid then
+		if multi then
+			self:Sync("BWMultiBossDeath " .. b)
+		else
+			self:Sync("BWBossDeath " .. b)
 		end
 	end
 end
