@@ -274,8 +274,8 @@ L:RegisterTranslations("zhCN", function() return {
 	shadow_warning = "5秒后，暗影之刺！",
 	shadow_debuff_bar = "<降低治疗：%s>",
 
-	--shadowdebuff = "Disable Shadow Bars",
-	--shadowdebuff_desc = "Timer bars for players affected by the Shadow Debuff",
+	shadowdebuff = "禁用暗影减益计时条",
+	shadowdebuff_desc = "玩家中了暗影减益效果计时条。",
 
 	flame = "烈焰之刺",
 	flame_desc = "显示烈焰之刺记时条。",
