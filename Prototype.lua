@@ -253,7 +253,9 @@ end
 
 function BigWigs.modulePrototype:BossDeath(_, guid, multi)
 	local b = self:ToString()
-	guid = tonumber((guid):sub(-12,-7),16)
+	if type(guid) == "string" then
+		guid = tonumber((guid):sub(-12,-7),16)
+	end
 
 	if guid == self.guid then
 		if multi then
