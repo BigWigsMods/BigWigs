@@ -469,7 +469,7 @@ end
 
 function mod:Deaths(unit)
 	if unit == boss then
-		self:BossDeath(nil, mod.guid)
+		self:BossDeath(nil, self.guid)
 	elseif unit == L["Tainted Elemental"] and db.elemental then
 		self:Bar(L["elemental_bar"], 53, "Spell_Nature_ElementalShields")
 		self:ScheduleEvent("ElemWarn", "BigWigs_Message", 48, L["elemental_soon_message"], "Important")

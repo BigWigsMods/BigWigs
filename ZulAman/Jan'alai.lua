@@ -170,6 +170,7 @@ L:RegisterTranslations("esES", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Zul'Aman"]
 mod.enabletrigger = boss
+mod.guid = 23578
 mod.toggleoptions = {"bomb", "adds", -1, "flame", "icon", "enrage", "berserk", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -179,7 +180,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "FlameBreath", 43140)
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

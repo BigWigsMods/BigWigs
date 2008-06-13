@@ -106,6 +106,7 @@ L:RegisterTranslations("esES", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Hyjal Summit"]
 mod.enabletrigger = boss
+mod.guid = 17888
 mod.toggleoptions = {"mark", "range", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit )
@@ -137,7 +138,7 @@ function mod:OnEnable()
 		self:AddCombatListener("SPELL_AURA_REMOVED", "MarkRemoved", 31447)
 	end
 
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	db = self.db.profile
 end

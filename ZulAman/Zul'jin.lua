@@ -266,6 +266,7 @@ L:RegisterTranslations("esES", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Zul'Aman"]
 mod.enabletrigger = boss
+mod.guid = 23863
 mod.toggleoptions = {"form", "paralyze", -1, "throw", "claw", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -277,7 +278,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Throw", 43093)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Paralyze", 43095)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "ClawRage", 43150)
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 

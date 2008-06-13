@@ -225,7 +225,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Serpentshrine Cavern"]
 mod.enabletrigger = boss
-mod.id = 21213
+mod.guid = 21213
 mod.toggleoptions = {"tidal", "grave", "murloc", "globules", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 

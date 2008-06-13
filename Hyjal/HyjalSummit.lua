@@ -427,7 +427,7 @@ function mod:BigWigs_RecvSync( sync, rest )
 		elseif rest == "AzGalor" then
 			nextBoss = azgalor
 		end
-	elseif sync == "BossDeath" and rest then
+	elseif sync == "BWBossDeath" and rest then
 		if rest == "Rage Winterchill" then
 			nextBoss = anetheron
 		elseif rest == "Anetheron" then

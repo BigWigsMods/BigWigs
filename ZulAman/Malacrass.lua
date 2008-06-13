@@ -210,6 +210,7 @@ L:RegisterTranslations("esES", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Zul'Aman"]
 mod.enabletrigger = boss
+mod.guid = 24363
 mod.toggleoptions = {"bolts", "soul", "totem", "heal", "consecration", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -223,7 +224,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_SUMMON", "Totem", 43436)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Bolts", 43383)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Consecration", 43429)
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
