@@ -311,6 +311,7 @@ local deceiver = L["Hand of the Deceiver"]
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = {deceiver, boss}
+mod.guid = 25315
 mod.toggleoptions = {"phase", -1, "bomb", "orb", "flame", -1, "bloom", "bloomwhisper", "bloomsay", "icons", -1, "sinister", "shadow", "shadowdebuff", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
@@ -374,7 +375,7 @@ function mod:Orb()
 	end
 end
 
-function mod:Deaths(unit)
+function mod:Deaths(unit, guid)
 	if unit == deceiver then
 		deaths = deaths + 1
 		self:IfMessage(L["deceiver_dies"]:format(deaths), "Positive")
@@ -384,8 +385,8 @@ function mod:Deaths(unit)
 			self:Bar(boss, 10, "Spell_Shadow_Charm")
 			self:TriggerEvent("BigWigs_ShowProximity", self)
 		end
-	elseif unit == boss then
-		self:GenericBossDeath(unit)
+	else
+		self:BossDeath(nil, guid)
 	end
 end
 

@@ -240,6 +240,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = boss
+mod.guid = 25840
 mod.toggleoptions = {"phase", -1, "darkness", "void", "humanoid", "fiends", "gravity", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -252,7 +253,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Fiends", 45934)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Portals", 46177)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "GravityBall", 46282)
-	self:AddCombatListener("UNIT_DIED", "Deaths")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
@@ -308,12 +309,6 @@ function mod:Portals()
 	end
 	if db.gravity then
 		self:Bar(L["gravity_next"], 27, 44218)
-	end
-end
-
-function mod:Deaths(unit)
-	if unit == entropius then
-		self:GenericBossDeath(boss)
 	end
 end
 

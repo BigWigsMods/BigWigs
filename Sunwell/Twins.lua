@@ -245,6 +245,7 @@ L:RegisterTranslations("deDE", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = {lady, lock}
+mod.guid = 25166
 mod.toggleoptions = {"nova", "conflag", "icon", -1, "pyro", -1, "blow", "blades", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
@@ -308,12 +309,13 @@ function mod:Blades()
 	end
 end
 
-function mod:Deaths(unit)
-	if unit == lock or unit == lady then
+function mod:Deaths(_, guid)
+	guid = tonumber((guid):sub(-12,-7),16)
+	if guid == self.guid or guid == 25165 then
 		deaths = deaths + 1
 	end
 	if deaths == 2 then
-		self:GenericBossDeath(boss, true)
+		self:BossDeath(nil, self.guid, true)
 	end
 end
 

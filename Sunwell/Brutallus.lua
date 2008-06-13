@@ -196,6 +196,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
 mod.enabletrigger = boss
+mod.guid = 24882
 mod.toggleoptions = {"burn", "burnresist", "meteor", "stomp", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -209,7 +210,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Burn", 46394)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "BurnRemove", 46394)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Stomp", 45185)
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
