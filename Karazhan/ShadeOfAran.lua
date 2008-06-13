@@ -224,6 +224,7 @@ L:RegisterTranslations("esES", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Karazhan"]
 mod.enabletrigger = boss
+mod.guid = 16524
 mod.toggleoptions = {"adds", "drink", -1, "blizzard", "pull", "flame", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -238,7 +239,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Drinking", 29963) --Mass Polymorph
 	self:AddCombatListener("SPELL_SUMMON", "Elementals", 29962)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Pull", 29979) --Arcane Explosion
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("UNIT_MANA")
 	self:RegisterEvent("UNIT_HEALTH")

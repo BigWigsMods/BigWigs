@@ -293,6 +293,7 @@ L:RegisterTranslations("esES", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Karazhan"]
 mod.enabletrigger = boss
+mod.guid = 15690
 mod.toggleoptions = {"phase", "enfeeble", "nova", -1, "infernals", "despawn", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -302,7 +303,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 local wipe = nil
 function mod:OnEnable()
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Enfeeble", 30843)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "SelfEnfeeble", 30843)
 	self:AddCombatListener("SPELL_CAST_START", "Nova", 30852)

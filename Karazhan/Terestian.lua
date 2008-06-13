@@ -167,6 +167,7 @@ L:RegisterTranslations("esES", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Karazhan"]
 mod.enabletrigger = boss
+mod.guid = 15688
 mod.toggleoptions = {"weak", "enrage", -1, "sacrifice", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -179,7 +180,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Weakened", 30065)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "WeakenedRemoved", 30065)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "SacrificeRemoved", 30115)
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

@@ -156,6 +156,7 @@ L:RegisterTranslations("esES", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Karazhan"]
 mod.enabletrigger = boss
+mod.guid = 15689
 mod.toggleoptions = {"voidzone", "netherbreath", "phase", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -166,7 +167,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "VoidZone", 37063)
 	self:AddCombatListener("SPELL_CAST_START", "Netherbreath", 38523)
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("BigWigs_RecvSync")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
