@@ -270,6 +270,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = boss
+mod.guid = 18805
 mod.toggleoptions = {"phase", "split", -1, "wrath", "whisper", "icon", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
@@ -317,7 +318,7 @@ end
 
 function mod:Deaths(unit)
 	if unit == boss then
-		self:GenericBossDeath(unit)
+		self:BossDeath(nil, self.guid)
 	elseif unit == pName then
 		self:TriggerEvent("BigWigs_HideProximity", self) --safety, someone might die with wrath
 	end

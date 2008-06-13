@@ -213,6 +213,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Serpentshrine Cavern"]
 mod.enabletrigger = boss
+mod.guid = 21217
 mod.wipemobs = {L["Coilfang Guardian"], L["Coilfang Ambusher"]}
 mod.toggleoptions = {"dive", "spout", "whirl", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
@@ -226,7 +227,7 @@ mod.proximitySilent = true
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_DAMAGE", "Whirl", 37363)
 	self:AddCombatListener("SPELL_MISSED", "Whirl", 37363)
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")

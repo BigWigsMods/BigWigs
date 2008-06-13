@@ -204,6 +204,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Serpentshrine Cavern"]
 mod.enabletrigger = boss
+mod.guid = 21216
 mod.toggleoptions = {"stance", "mark", "enrage", -1, "sludge", "icon", "tomb", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
@@ -221,7 +222,7 @@ function mod:OnEnable()
 		38219, 38220, 38221, 38222, 38230, 40583 --Mark of Corruption - 10, 25, 50, 100, 250, 500
 	)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Stance", 25035)
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	for k in pairs(inTomb) do inTomb[k] = nil end
 	curPerc = 10

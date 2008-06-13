@@ -563,6 +563,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Tempest Keep"]
 mod.otherMenu = "The Eye"
 mod.enabletrigger = { boss, capernian, sanguinar, telonicus, thaladred }
+mod.guid = 19622
 mod.wipemobs = { axe, mace, dagger, staff, sword, bow, shield }
 mod.toggleoptions = { "phase", -1, "conflag", "mc", "toyall", "gaze", "icon", "fear", "pyro", "rebirth", "proximity", "bosskill" }
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
@@ -640,7 +641,7 @@ function mod:Deaths(unit)
 	if unit == axe or unit == mace or unit == dagger or unit == staff or unit == sword or unit == bow or unit == shield then
 		self:Message(fmt(L["dead_message"], unit), "Attention")
 	elseif unit == boss then
-		self:GenericBossDeath(unit)
+		self:BossDeath(nil, self.guid)
 	end
 end
 

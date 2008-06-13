@@ -289,6 +289,7 @@ L:RegisterTranslations("zhTW", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Serpentshrine Cavern"]
 mod.enabletrigger = boss
+mod.guid = 21215
 mod.toggleoptions = {"enrage", "whirlwind", "phase", "image", "whisper", "mindcontrol", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -300,7 +301,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Whirlwind", 37640)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Whisper", 37676)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Madness", 37749)
-	self:AddCombatListener("UNIT_DIED", "GenericBossDeath")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
