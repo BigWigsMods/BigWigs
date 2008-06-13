@@ -134,8 +134,8 @@ L:RegisterTranslations("koKR", function() return {
 	shadow_warning = "5초 후 어둠의 쐐기 종료!",
 	shadow_debuff_bar = "%s 치유효과 감소",
 
-	--shadowdebuff = "Disable Shadow Bars",
-	--shadowdebuff_desc = "Timer bars for players affected by the Shadow Debuff",
+	shadowdebuff = "치유 감소바 비활성",
+	shadowdebuff_desc = "치유효과 감소 디버프가 걸린 플레이어의 타이머바를 사용하지 않습니다.",
 
 	flame = "불꽃 화살",
 	flame_desc = "불꽃 화살 타이머 바를 표시합니다.",
@@ -497,6 +497,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		phase = 1
 		sinister1 = nil
 		sinister2 = nil
+		sinister3 = nil
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
