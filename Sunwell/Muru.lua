@@ -169,11 +169,11 @@ L:RegisterTranslations("zhCN", function() return {
 	phase_desc = "当进入不同阶段发出警报。",
 	phase2_message = "第二阶段！",
 
-	gravity = "重力球",
-	gravity_desc = "当施放重力球时发出警报。",
-	gravity_next = "<下一重力球>",
-	gravity_soon = "即将 重力球！",
-	--gravity_spawned = "Gravity Ball spawned!",
+	gravity = "黑洞",
+	gravity_desc = "当施放黑洞时发出警报。",
+	gravity_next = "<下一黑洞>",
+	gravity_soon = "即将 黑洞！",
+	gravity_spawned = "黑洞 出现！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
