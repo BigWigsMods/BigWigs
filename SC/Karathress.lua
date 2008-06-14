@@ -75,7 +75,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	heal = "치유",
 	heal_desc = "카리브디스의 치유 시전을 경고합니다.",
-	heal_message = "칼리브디스 치유 시전!",
+	heal_message = "카리브디스 치유 시전!",
 
 	["Fathom-Guard Sharkkis"] = "심연의 경비병 샤르키스", --hunter
 	["Fathom-Guard Tidalvess"] = "심연의 경비병 타이달베스", --shaman

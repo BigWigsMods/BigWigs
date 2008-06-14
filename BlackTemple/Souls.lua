@@ -97,7 +97,7 @@ L:RegisterTranslations("esES", function() return {
 L:RegisterTranslations("koKR", function() return {
 	engage_trigger = "너희를 기다리는 건 고통과 슬픔뿐이야!",
 
-	enrage_start = "약 47초 후 격노",
+	enrage_start = "고뇌의 정수 - 약 47초 후 격노",
 	enrage_message = "15초 동안 격노!",
 	enrage_bar = "<격노>",
 	enrage_next = "격노 종료 - 다음은 약 32초 후",

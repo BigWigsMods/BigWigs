@@ -139,7 +139,7 @@ L:RegisterTranslations("koKR", function() return {
 	phase_desc = "바쉬가 다음 단계로 변경 시 알림니다.",
 	phase2_trigger = "때가 왔다! 한 놈도 살려두지 마라!",
  	phase2_soon_message = "잠시 후 2 단계!",
-	phase2_message = "2 단계, 애드 주의!",
+	phase2_message = "2 단계, 4 종류의 몹 등장!",
 	phase3_trigger = "숨을 곳이나 마련해 둬라!",
 	phase3_message = "3 단계 - 4분 이내 격노!",
 
