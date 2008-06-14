@@ -105,11 +105,11 @@ L:RegisterTranslations("frFR", function() return {
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	phase2_message = "Phase 2 !",
 
-	gravity = "Trou noir",
-	gravity_desc = "Prévient de l'arrivée des Trous noirs.",
-	gravity_next = "Prochain Trou noir",
-	gravity_soon = "Trou noir imminent !",
-	--gravity_spawned = "Gravity Ball spawned!",
+	gravity = "Singularité",
+	gravity_desc = "Prévient de l'arrivée des Singularités.",
+	gravity_next = "Prochaine Singularité",
+	gravity_soon = "Singularité imminente !",
+	gravity_spawned = "Singularité apparue !",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
