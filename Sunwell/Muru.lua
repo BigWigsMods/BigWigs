@@ -141,7 +141,7 @@ L:RegisterTranslations("koKR", function() return {
 	gravity_desc = "중력 구체를 알립니다.",
 	gravity_next = "다음 중력 구체",
 	gravity_soon = "잠시 후 중력 구체!",
-	--gravity_spawned = "Gravity Ball spawned!",
+	gravity_spawned = "중력 구체 소환!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
