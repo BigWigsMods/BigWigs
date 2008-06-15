@@ -9,6 +9,8 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local db = nil
 local started = nil
 local phase = nil
+local voidcount = 1
+local humanoidcount = 1
 
 ----------------------------
 --      Localization      --
@@ -25,13 +27,13 @@ L:RegisterTranslations("enUS", function() return {
 
 	void = "Void Sentinel",
 	void_desc = "Warn when the Void Sentinel spawns.",
-	void_next = "Next Void Sentinel",
-	void_soon = "Sentinel in 5 sec!",
+	void_next = "Next Void Sentinel (%d)",
+	void_soon = "Sentinel (%d) in 5 sec!",
 
 	humanoid = "Humanoid Adds",
 	humanoid_desc = "Warn when the Humanoid Adds spawn.",
-	humanoid_next = "Next Humanoids",
-	humanoid_soon = "Humanoids in 5sec!",
+	humanoid_next = "Next Humanoids (%d)",
+	humanoid_soon = "Humanoids (%d) in 5sec!",
 
 	fiends = "Dark Fiends",
 	fiends_desc = "Warn for Dark Fiends spawning.",
@@ -57,13 +59,13 @@ L:RegisterTranslations("esES", function() return {
 
 	void = "Centinela del vacío (Void Sentinel)",
 	void_desc = "Avisar cuando aparece un centinela del vacío.",
-	void_next = "~Centinela",
-	void_soon = "Centinela en 5 seg",
+	void_next = "~Centinela (%d)",
+	void_soon = "Centinela (%d) en 5 seg",
 
 	humanoid = "Añadidos humanoides",
 	humanoid_desc = "Avisar cuando aparecen los humanoides.",
-	humanoid_next = "~Humanoides",
-	humanoid_soon = "Humanoides en 5 seg",
+	humanoid_next = "~Humanoides (%d)",
+	humanoid_soon = "Humanoides (%d) en 5 seg",
 
 	fiends = "Malignos oscuros (Dark Fiends)",
 	fiends_desc = "Avisar cuando aparecen Malignos oscuros.",
@@ -89,13 +91,13 @@ L:RegisterTranslations("frFR", function() return {
 
 	void = "Sentinelles du Vide",
 	void_desc = "Prévient quand les Sentinelles du Vide apparaissent.",
-	void_next = "Prochaine Sentinelle",
-	void_soon = "Sentinelle dans 5 sec. !",
+	void_next = "Prochaine Sentinelle (%d)",
+	void_soon = "Sentinelle (%d) dans 5 sec. !",
 
 	humanoid = "Renforts humanoïdes",
 	humanoid_desc = "Prévient quand les renforts humanoïdes apparaissent.",
-	humanoid_next = "Prochains humanoïdes",
-	humanoid_soon = "Humanoïdes dans 5 sec. !",
+	humanoid_next = "Prochains humanoïdes (%d)",
+	humanoid_soon = "Humanoïdes (%d) dans 5 sec. !",
 
 	fiends = "Sombres fiels",
 	fiends_desc = "Prévient quand les Sombres fiels apparaissent.",
@@ -121,13 +123,13 @@ L:RegisterTranslations("koKR", function() return {
 
 	void = "공허의 파수병",
 	void_desc = "공허의 파수병의 소환을 알립니다.",
-	void_next = "다음 공허의 파수병",
-	void_soon = "5초 이내 파수병!",
+	void_next = "다음 공허의 파수병(%d)",
+	void_soon = "5초 이내 파수병(%d)!",
 
 	humanoid = "타락한 엘프",
 	humanoid_desc = "타락한 엘프 등장을 알립니다.",
-	humanoid_next = "다음 타락한 엘프",
-	humanoid_soon = "5초 이내 타락한 엘프!",
+	humanoid_next = "다음 타락한 엘프(%d)",
+	humanoid_soon = "5초 이내 타락한 엘프(%d)!",
 
 	fiends = "어둠 마귀",
 	fiends_desc = "어둠 마귀 소환을 알립니다.",
@@ -153,13 +155,13 @@ L:RegisterTranslations("zhCN", function() return {
 
 	void = "虚空戒卫",
 	void_desc = "当虚空戒卫刷新时发出警报。",
-	void_next = "<下一虚空戒卫>",
-	void_soon = "5秒后，虚空戒卫刷新！",
+	void_next = "<下一虚空戒卫：%d>",
+	void_soon = "5秒后，虚空戒卫刷新：>%d<！",
 
 	humanoid = "暗誓精灵",
 	humanoid_desc = "当暗誓精灵刷新时发出警报。",
-	humanoid_next = "<下一暗誓精灵>",
-	humanoid_soon = "5秒后，暗誓精灵刷新！",
+	humanoid_next = "<下一暗誓精灵：%d>",
+	humanoid_soon = "5秒后，暗誓精灵刷新：>%d<！",
 
 	fiends = "黑暗魔",
 	fiends_desc = "当黑暗魔刷新时发出警报。",
@@ -185,13 +187,13 @@ L:RegisterTranslations("zhTW", function() return {
 
 	void = "虛無哨兵",
 	void_desc = "當虛無哨兵出現時發出警報",
-	void_next = "下一波虛無哨兵",
-	void_soon = "約 5 秒內虛無哨兵出現!",
+	void_next = "下一波虛無哨兵：%d",
+	void_soon = "約 5 秒內虛無哨兵出現：>%d<!",
 
 	humanoid = "虛無哨兵召喚者",
 	humanoid_desc = "當虛無哨兵召喚者出現時發出警報",
-	humanoid_next = "下一波召喚者",
-	humanoid_soon = "約 5 秒內召喚者出現!",
+	humanoid_next = "下一波召喚者：%d",
+	humanoid_soon = "約 5 秒內召喚者出現：>%d<!",
 
 	--fiends = "Dark Fiends",
 	--fiends_desc = "Warn for Dark Fiends spawning.",
@@ -217,13 +219,13 @@ L:RegisterTranslations("deDE", function() return {
 
 	void = "Leerenwache",
 	void_desc = "Warnung wenn eine Leerenwache erscheint.",
-	void_next = "Nächste Leerenwache",
-	void_soon = "Leerenwache in 5 sek!",
+	void_next = "Nächste Leerenwache (%d)",
+	void_soon = "Leerenwache (%d) in 5 sek!",
 
 	humanoid = "Menschliche Wache",
 	humanoid_desc = "Warnung wenn Menschliche Wachen erscheinen.",
-	humanoid_next = "Nächste Wachen",
-	humanoid_soon = "Wachen in 5sec!",
+	humanoid_next = "Nächste Wachen (%d)",
+	humanoid_soon = "Wachen (%d) in 5sec!",
 
 	fiends = "Finsteres Scheusal",
 	fiends_desc = "Warnung wenn Finsteres Scheusale erscheinen.",
@@ -329,14 +331,16 @@ function mod:GravityBall()
 end
 
 function mod:RepeatVoid()
-	self:Bar(L["void_next"], 30, 46087)
-	self:ScheduleEvent("VoidWarn", "BigWigs_Message", 25, L["void_soon"], "Attention")
+	self:Bar(L["void_next"]:format(voidcount), 30, 46087)
+	self:ScheduleEvent("VoidWarn", "BigWigs_Message", 25, L["void_soon"]:format(voidcount), "Attention")
+	voidcount = voidcount + 1
 	self:ScheduleEvent("Void", self.RepeatVoid, 30, self)
 end
 
 function mod:RepeatHumanoid()
-	self:Bar(L["humanoid_next"], 60, 46087)
-	self:ScheduleEvent("HumanoidWarn", "BigWigs_Message", 55, L["humanoid_soon"], "Urgent")
+	self:Bar(L["humanoid_next"]:format(humanoidcount), 60, 46087)
+	self:ScheduleEvent("HumanoidWarn", "BigWigs_Message", 55, L["humanoid_soon"]:format(humanoidcount), "Urgent")
+	humanoidcount = humanoidcount + 1
 	self:ScheduleEvent("Humanoid", self.RepeatHumanoid, 60, self)
 end
 
@@ -344,6 +348,8 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
 		phase = 1
+		voidcount = 1
+		humanoidcount = 1
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
@@ -352,12 +358,14 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:DelayedMessage(40, L["darkness_soon"], "Positive")
 		end
 		if db.void then
-			self:Bar(L["void_next"], 30, 46087)
-			self:DelayedMessage(25, L["void_soon"], "Attention")
+			self:Bar(L["void_next"]:format(voidcount), 30, 46087)
+			self:DelayedMessage(25, L["void_soon"]:format(voidcount), "Attention")
+			voidcount = voidcount + 1
 			self:ScheduleEvent("Void", self.RepeatVoid, 30, self)
 		end
 		if db.humanoid then
-			self:Bar(L["humanoid_next"], 10, 46087)
+			self:Bar(L["humanoid_next"]:format(humanoidcount), 10, 46087)
+			humanoidcount = humanoidcount + 1
 			self:ScheduleEvent("Humanoid", self.RepeatHumanoid, 10, self)
 		end
 		if db.enrage then
