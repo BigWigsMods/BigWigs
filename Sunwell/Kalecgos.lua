@@ -184,21 +184,21 @@ L:RegisterTranslations("frFR", function() return {
 	curse_bar = "Malédiction : %s",
 
 	magichealing = "Magie sauvage (Soins prodigués augmentés)",
-	magichealing_desc = "Préviens quand les effets de vos soins sont augmentés par la Magie sauvage.",
+	magichealing_desc = "Prévient quand les effets de vos soins sont augmentés par la Magie sauvage.",
 	magichealing_you = "Magie sauvage - Effets des soins augmentés !",
 
 	magiccast = "Magie sauvage (Temps d'incantation augmenté)",
-	magiccast_desc = "Préviens quand un soigneur a son temps d'incantation augmenté par la Magie sauvage.",
+	magiccast_desc = "Prévient quand un soigneur a son temps d'incantation augmenté par la Magie sauvage.",
 	magiccast_you = "Magie sauvage - Temps d'incantation augmenté pour VOUS !",
 	magiccast_other = "Magie sauvage - Temps d'incantation augmenté pour %s !",
 
 	magichit = "Magie sauvage (Chances de toucher réduites)",
-	magichit_desc = "Préviens quand les chances de toucher d'un tank sont réduites par la Magie sauvage.",
+	magichit_desc = "Prévient quand les chances de toucher d'un tank sont réduites par la Magie sauvage.",
 	magichit_you = "Magie sauvage - Chances de toucher réduites pour VOUS !",
 	magichit_other = "Magie sauvage - Chances de toucher réduites pour %s !",
 
 	magicthreat = "Magie sauvage (Menace générée augmentée)",
-	magicthreat_desc = "Préviens quand la menace que vous générez est augmentée par la Magie sauvage.",
+	magicthreat_desc = "Prévient quand la menace que vous générez est augmentée par la Magie sauvage.",
 	magicthreat_you = "Magie sauvage - Menace générée augmentée !",
 
 	buffet = "Rafale des arcanes",

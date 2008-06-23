@@ -33,7 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 	kalec_yell2 = "I have empowered another orb! Use it quickly!",
 	kalec_yell3 = "Another orb is ready! Make haste!",
 	kalec_yell4 = "I have channeled all I can! The power is in your hands!",
-	
+
 	orb = "Shield Orb",
 	orb_desc = "Warn when a Shield Orb is shadowbolting.",
 	orb_shooting = "Orb Alive - Shooting People!",
@@ -74,7 +74,7 @@ L:RegisterTranslations("enUS", function() return {
 	sinister_desc = "Warns on Sinister Reflection spawns.",
 	sinister_warning = "Sinister Reflections Soon!",
 	sinister_message = "Sinister Reflections Up!",
-	
+
 	blueorb = "Dragon Orb",
 	blueorb_desc = "Warns on Blue Dragonflight Orb spawns.",
 	blueorb_message = "Blue Dragonflight Orb ready!",
@@ -107,7 +107,7 @@ L:RegisterTranslations("koKR", function() return {
 	kalec_yell2 = "다른 수정구에 힘을 불어넣었습니다! 어서요!",
 	kalec_yell3 = "다른 수정구가 준비됐습니다! 서두르세요!",	--check
 	kalec_yell4 = "모든 힘을 수정구에 실었습니다! 이제 그대들의 몫입니다!",
-	
+
 	orb = "보호의 구슬",
 	orb_desc = "보호의 구슬의 어둠 화살을 알립니다.",
 	orb_shooting = "구슬 활동 - 어활 공격!",
@@ -181,7 +181,7 @@ L:RegisterTranslations("frFR", function() return {
 	kalec_yell2 = "J'ai chargé un autre orbe ! Utilisez-le vite !", -- à vérifier
 	kalec_yell3 = "Un autre orbe est prêt ! Hâtez-vous !", -- à vérifier
 	kalec_yell4 = "J'ai envoyé tout ce que je pouvais ! La puissance est entre vos mains !", -- à vérifier
-	
+
 	orb = "Orbe bouclier",
 	orb_desc = "Prévient quand un Orbe bouclier lance des Traits de l'ombre.",
 	orb_shooting = "Orbe en vie - Bombardement de traits !",
@@ -222,11 +222,11 @@ L:RegisterTranslations("frFR", function() return {
 	sinister_desc = "Prévient quand les Reflets sinistres apparaissent.",
 	sinister_warning = "Reflets sinistres imminents !",
 	sinister_message = "Reflets sinistres actifs !",
-	
-	--blueorb = "Dragon Orb",
-	--blueorb_desc = "Warns on Blue Dragonflight Orb spawns.",
+
+	blueorb = "Orbe du Vol bleu",
+	blueorb_desc = "Prévient quand un Orbe du Vol bleu est prêt.",
 	blueorb_message = "Orbe du Vol bleu prêt !",
-	--blueorb_warning = "Dragon Orb in ~5 Sec!",
+	blueorb_warning = "Orbe du Vol bleu dans ~5 sec. !",
 
 	shield_up = "Bouclier ACTIF !",
 
@@ -255,7 +255,7 @@ L:RegisterTranslations("zhCN", function() return {
 	kalec_yell2 = "我又将能量灌入了另一颗宝珠！快去使用它！",
 	kalec_yell3 = "又有一颗宝珠准备好了！快点行动！",
 	kalec_yell4 = "这是我所能做的一切了！力量现在掌握在你们的手中！",
-	
+
 	orb = "护盾宝珠",
 	orb_desc = "当护盾宝珠施放暗影箭时发出警报。",
 	orb_shooting = "护盾宝珠 - 暗影箭！",
@@ -296,7 +296,7 @@ L:RegisterTranslations("zhCN", function() return {
 	sinister_desc = "当邪恶镜像时发出警报。",
 	sinister_warning = "即将 邪恶镜像！",
 	sinister_message = "邪恶镜像 出现！",
-	
+
 	--blueorb = "Dragon Orb",
 	--blueorb_desc = "Warns on Blue Dragonflight Orb spawns.",
 	blueorb_message = "蓝龙宝珠已准备好！",
