@@ -297,10 +297,10 @@ L:RegisterTranslations("zhCN", function() return {
 	sinister_warning = "即将 邪恶镜像！",
 	sinister_message = "邪恶镜像 出现！",
 
-	--blueorb = "Dragon Orb",
-	--blueorb_desc = "Warns on Blue Dragonflight Orb spawns.",
+	blueorb = "蓝龙宝珠",
+	blueorb_desc = "当蓝龙宝珠可用时发出警报。",
 	blueorb_message = "蓝龙宝珠已准备好！",
-	--blueorb_warning = "Dragon Orb in ~5 Sec!",
+	blueorb_warning = "约5秒后，蓝龙宝珠可以使用！",
 
 	shield_up = ">蓝龙之盾< 启用！",
 
