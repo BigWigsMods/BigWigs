@@ -22,7 +22,7 @@ L:RegisterTranslations("enUS", function() return {
 	burn_you = "Burn on YOU!",
 	burn_other = "Burn on %s!",
 	burn_bar = "Next Burn",
-	burn_message = "Next Burn in 5 seconds!",
+	burn_message = "Next Burn in ~5 seconds!",
 
 	burnresist = "Burn Resist",
 	burnresist_desc = "Warn who resists burn.",
@@ -72,7 +72,7 @@ L:RegisterTranslations("koKR", function() return {
 	burn_you = "당신은 불사르기!",
 	burn_other = "%s 불사르기!",
 	burn_bar = "다음 불사르기",
-	burn_message = "다음 불사르기 5초전!",
+	burn_message = "약 5초 후 다음 불사르기!",
 	
 	burnresist = "불사르기 저항",
 	burnresist_desc = "불사르기에 저항한 플레이어를 알립니다.",
@@ -234,6 +234,8 @@ function mod:Burn(player, spellID)
 		end
 		self:Icon(player, "icon")
 		self:Bar(other, 60, spellID)
+		self:Bar(L["burn_bar"], 20, spellID)
+		self:DelayedMessage(15, L["burn_message"], "Attention")
 	end
 end
 
@@ -277,4 +279,3 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	end
 end
-
