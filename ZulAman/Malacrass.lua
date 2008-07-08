@@ -210,7 +210,7 @@ L:RegisterTranslations("esES", function() return {
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Zul'Aman"]
 mod.enabletrigger = boss
-mod.guid = 24363
+mod.guid = 24239
 mod.toggleoptions = {"bolts", "soul", "totem", "heal", "consecration", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
