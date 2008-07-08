@@ -244,7 +244,7 @@ L:RegisterTranslations("deDE", function() return {
 
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Sunwell Plateau"]
-mod.enabletrigger = {lady, lock}
+mod.enabletrigger = {lady, lock, boss}
 mod.guid = 25166
 mod.toggleoptions = {"nova", "conflag", "icon", -1, "pyro", -1, "blow", "blades", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
