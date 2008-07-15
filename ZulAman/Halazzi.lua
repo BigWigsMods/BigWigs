@@ -242,7 +242,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_START", "Totem", 43302)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "FlameShock", 43303)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "FlameShockRemoved", 43303)
-	self:AddCombatListener("SPELL_AURA_DISPELLED", "FlameShockRemoved", 43303)
+	self:AddCombatListener("SPELL_DISPEL", "FlameShockRemoved", 43303)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")

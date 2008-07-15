@@ -246,7 +246,7 @@ mod.proximitySilent = true
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Grip", 31972)
-	self:AddCombatListener("SPELL_AURA_DISPELLED", "GripRemoved")
+	self:AddCombatListener("SPELL_DISPEL", "GripRemoved")
 	self:AddCombatListener("SPELL_CAST_START", "Burst", 32014)
 	self:AddCombatListener("SPELL_CAST_START", "Fear", 31970)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")

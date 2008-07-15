@@ -102,7 +102,7 @@ mod.consoleOptions = {
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_AURA_DISPELLED", "Tranq", 19801)
+	self:AddCombatListener("SPELL_DISPEL", "Tranq", 19801)
 	self:AddCombatListener("SPELL_DISPEL_FAILED", "TranqFail", 19801)
 end
 

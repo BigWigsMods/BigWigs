@@ -257,8 +257,8 @@ mod.proximitySilent = true
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "PyroGain", 45230)
-	self:AddCombatListener("SPELL_AURA_STOLEN", "PyroRemove")
-	self:AddCombatListener("SPELL_AURA_DISPELLED", "PyroRemove")
+	self:AddCombatListener("SPELL_STOLEN", "PyroRemove")
+	self:AddCombatListener("SPELL_DISPEL", "PyroRemove")
 	self:AddCombatListener("SPELL_DAMAGE", "Blow", 45256)
 	self:AddCombatListener("SPELL_CAST_START", "Blades", 45248)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
