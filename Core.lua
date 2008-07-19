@@ -334,7 +334,7 @@ BigWigs.cmdtable = options
 ------------------------------
 
 function BigWigs:OnInitialize()
-	self:RegisterDB("BigWigsDB", "BigWigsDBPerChar")
+	self:RegisterDB("BigWigsDB")
 
 	self:RegisterChatCommand("/bw", "/BigWigs", options, "BIGWIGS")
 
