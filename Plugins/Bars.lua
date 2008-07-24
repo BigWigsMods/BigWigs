@@ -12,6 +12,7 @@ local dew = AceLibrary("Dewdrop-2.0")
 local count = 1
 
 local colorModule = nil
+local testbutton = nil
 local testModule = nil
 local anchor = nil
 local emphasizeAnchor = nil
@@ -584,17 +585,13 @@ function plugin:OnEnable()
 	self:RegisterEvent("BigWigs_StopBar")
 	self:RegisterEvent("Ace2_AddonDisabled")
 	self:RegisterEvent("MODIFIER_STATE_CHANGED")
+	self:RegisterEvent("BigWigs_ModuleRegistered")
 
 	if BigWigs:HasModule("Colors") then
 		colorModule = BigWigs:GetModule("Colors")
-	else
-		colorModule = nil
 	end
-
 	if BigWigs:HasModule("Test") then
 		testModule = BigWigs:GetModule("Test")
-	else
-		testModule = nil
 	end
 
 	flashTimers = new()
@@ -615,6 +612,15 @@ end
 -----------------------------------------------------------------------
 --      Event Handlers
 -----------------------------------------------------------------------
+
+function plugin:BigWigs_ModuleRegistered(name)
+	if name == "Colors" then
+		colorModule = BigWigs:GetModule("Colors")
+	elseif name == "Test" then
+		testModule = BigWigs:GetModule("Test")
+		if testbutton then testbutton:Show() end
+	end
+end
 
 function plugin:Ace2_AddonDisabled(module)
 	if moduleBars[module] then
@@ -974,7 +980,7 @@ function plugin:SetupFrames(emphasize)
 	closebutton:SetPoint("CENTER", close, "CENTER")
 	closebutton:SetScript( "OnClick", function() self:BigWigs_HideAnchors() end )
 
-	local testbutton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+	testbutton = CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
 	testbutton:SetWidth(60)
 	testbutton:SetHeight(25)
 	testbutton:SetText(L["Test"])
