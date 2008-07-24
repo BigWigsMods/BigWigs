@@ -219,7 +219,7 @@ function plugin:OnEnable()
 end
 
 function plugin:BigWigs_Message(msg, color, noraidsay)
-	if not msg or noraidsay or (not self.db.profile.broadcast and not self.db.profile.useraidchannel) then return end
+	if not msg or noraidsay or not self.db.profile.broadcast then return end
 
 	local inRaid = UnitInRaid("player")
 	-- In a 5-man group, everyone can use the raid warning channel.
