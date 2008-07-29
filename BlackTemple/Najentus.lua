@@ -107,11 +107,11 @@ L:RegisterTranslations("frFR", function() return {
 	start_trigger = "Vous allez mourir, au nom de dame Vashj !",
 
 	spine = "Epine de perforation",
-	spine_desc = "Préviens quand un joueur subit les effets de l'Epine de perforation.",
+	spine_desc = "Prévient quand un joueur subit les effets de l'Epine de perforation.",
 	spine_message = "Epine de perforation sur %s !",
 
 	spinesay = "Dire - Epine de perforation",
-	spinesay_desc = "Fais dire à votre personnage qu'il a une épine quand c'est le cas afin d'aider les membres proches.",
+	spinesay_desc = "Fait dire à votre personnage qu'il a une épine quand c'est le cas afin d'aider les membres proches.",
 	spinesay_message = "Épine sur moi !",
 
 	shield = "Bouclier de flots",

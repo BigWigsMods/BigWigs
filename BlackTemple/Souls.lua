@@ -154,18 +154,18 @@ L:RegisterTranslations("frFR", function() return {
 	runeshield_warn = "Bouclier runique dans ~3 sec.",
 
 	deaden = "Emousser",
-	deaden_desc = "Préviens quand Emousser est incanté.",
+	deaden_desc = "Prévient quand Emousser est incanté.",
 	deaden_message = "Emousser en incantation !",
 	deaden_warn = "Emousser dans ~5 sec.",
 	deaden_nextbar = "Prochain Emousser",
 
 	spite = "Dépit",
-	spite_desc = "Préviens quand un joueur subit les effets du Dépit.",
+	spite_desc = "Prévient quand un joueur subit les effets du Dépit.",
 	spite_message = "Dépit sur %s",
 
 	scream = "Cri de l'âme",
 	scream_desc = "Affiche une barre pour le temps de recharge du Cri de l'âme.",
-	scream_bar = "~Cooldown Cri de l'âme",
+	scream_bar = "~Recharge Cri de l'âme",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

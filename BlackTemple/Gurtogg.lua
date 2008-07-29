@@ -157,7 +157,7 @@ L:RegisterTranslations("frFR", function() return {
 	bloodboil_message = "Fièvresang (%d)",
 
 	rage = "Gangrerage",
-	rage_desc = "Préviens quand un joueur subit les effets de la Gangrerage.",
+	rage_desc = "Prévient quand un joueur subit les effets de la Gangrerage.",
 	rage_you = "Vous avez la Gangrerage !",
 	rage_other = "%s a la Gangrerage !",
 
@@ -165,7 +165,7 @@ L:RegisterTranslations("frFR", function() return {
 	whisper_desc = "Chuchote au dernier joueur affecté par la Gangrerage (nécessite d'être promu ou mieux).",
 
 	acid = "Souffle d'acide gangrené",
-	acid_desc = "Préviens sur qui le Souffle d'acide gangrené est incanté.",
+	acid_desc = "Prévient sur qui le Souffle d'acide gangrené est incanté.",
 	acid_message = "Souffle d'acide gangrené incanté sur : %s",
 
 	icon = "Icône",

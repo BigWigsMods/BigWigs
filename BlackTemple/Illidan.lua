@@ -162,7 +162,7 @@ L:RegisterTranslations("frFR", function() return {
 	berserk_trigger = "Vous n'êtes pas prêts !",
 
 	parasite = "Ombrefiel parasite",
-	parasite_desc = "Préviens quand un joueur subit les effets de l'Ombrefiel parasite.",
+	parasite_desc = "Prévient quand un joueur subit les effets de l'Ombrefiel parasite.",
 	parasite_you = "Vous avez un parasite !",
 	parasite_other = "%s a un parasite !",
 
@@ -170,33 +170,33 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Ombrefiel parasite (nécessite d'être promu ou mieux).",
 
 	barrage = "Barrage noir",
-	barrage_desc = "Préviens quand un joueur subit les effets du Barrage noir.",
+	barrage_desc = "Prévient quand un joueur subit les effets du Barrage noir.",
 	barrage_message = "%s subit le Barrage !",
 	barrage_warn = "Barrage imminent !",
 	barrage_warn_bar = "~Prochain Barrage",
 	barrage_bar = "Barrage : %s",
 
 	eyeblast = "Energie oculaire",
-	eyeblast_desc = "Préviens quand l'Energie oculaire est incanté.",
+	eyeblast_desc = "Prévient quand l'Energie oculaire est incanté.",
 	eyeblast_trigger = "Soutenez le regard du Traître !",
 	eyeblast_message = "Energie oculaire !",
 
-	shear = "Tonte",
-	shear_desc = "Préviens quand un joueur subit les effets de la Tonte.",
+	shear = "Tonte", -- patch 3.0 (peut-être plus tôt) : "Cisaille" (http://forums.wow-europe.com/thread.html?topicId=3190832889)
+	shear_desc = "Prévient quand un joueur subit les effets de la Tonte.",
 	shear_message = "Tonte sur %s !",
 	shear_bar = "Tonte : %s",
 
 	flame = "Flammes déchirantes",
-	flame_desc = "Préviens quand un joueur subit les effets des Flammes déchirantes.",
+	flame_desc = "Prévient quand un joueur subit les effets des Flammes déchirantes.",
 	flame_message = "%s a les Flammes déchirantes !",
 
 	demons = "Démons des ombres",
-	demons_desc = "Préviens quand Illidan invoque des démons des ombres.",
+	demons_desc = "Prévient quand Illidan invoque des démons des ombres.",
 	demons_message = "Démons des ombres !",
 	demons_warn = "Démons imminent !",
 
 	phase = "Phases",
-	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
+	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	phase2_soon_message = "Phase 2 imminente !",
 	phase2_message = "Phase 2 - Lames d'Azzinoth !",
 	phase3_message = "Phase 3 !",
@@ -211,9 +211,9 @@ L:RegisterTranslations("frFR", function() return {
 	phase4_message = "Phase 4 - Arrivée de Maiev !",
 
 	burst = "Explosion de flammes",
-	burst_desc = "Préviens quand Illidan utilise son Explosion de flammes.",
+	burst_desc = "Prévient quand Illidan utilise son Explosion de flammes.",
 	burst_message = "Explosion de flammes !",
-	burst_cooldown_bar = "~Cooldown Explosion",
+	burst_cooldown_bar = "~Recharge Explosion",
 	burst_cooldown_warn = "Explosion de flammes imminente !",
 	burst_warn = "Explosion de flammes dans 5 sec. !",
 

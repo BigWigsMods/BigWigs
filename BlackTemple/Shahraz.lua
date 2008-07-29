@@ -108,7 +108,7 @@ L:RegisterTranslations("frFR", function() return {
 	engage_trigger = "Alors... Vous êtes en vacances ?",
 
 	attraction = "Liaison fatale",
-	attraction_desc = "Préviens quand un joueur subit les effets de la Liaison fatale.",
+	attraction_desc = "Prévient quand un joueur subit les effets de la Liaison fatale.",
 	attraction_message = "Liaison : %s",
 
 	debuff = "Affaiblissements",
