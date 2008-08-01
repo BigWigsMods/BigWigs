@@ -70,17 +70,17 @@ commonWords:RegisterTranslations("zhCN", function() return {
 	you = "你",
 	are = "到",
 
-	enrage_start = "%s 激活 - %d分后狂暴",
-	enrage_end = "%s 已狂暴",
-	enrage_min = "%d分后狂暴！",
-	enrage_sec = "%d秒后狂暴！",
-	enrage = "狂暴",
+	enrage_start = "%s 激活 - %d分后激怒",
+	enrage_end = "%s 已激怒",
+	enrage_min = "%d分后激怒！",
+	enrage_sec = "%d秒后激怒！",
+	enrage = "激怒",
 
-	berserk_start = "%s 激活 - 将在 %d 分后无敌",
-	berserk_end = "%s 进入 无敌",
-	berserk_min = "%d分后无敌！",
-	berserk_sec = "%d秒后无敌！",
-	berserk = "无敌",
+	berserk_start = "%s 激活 - 将在 %d 分后狂暴",
+	berserk_end = "%s 进入 狂暴",
+	berserk_min = "%d分后狂暴！",
+	berserk_sec = "%d秒后狂暴！",
+	berserk = "狂暴",
 } end )
 
 commonWords:RegisterTranslations("zhTW", function() return {

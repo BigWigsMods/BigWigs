@@ -81,7 +81,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Test"] = "测试",
 	["Perform a Flash/Shake test."] = "屏幕闪烁/震动测试。",
 
-	flash_warning = "屏幕震动失效。通常因为标示已经开启。\n关闭标示并重置 UI 或关闭 BigWigs“震动”模块。（屏幕闪烁无效）",
+	flash_warning = "屏幕震动失效。请至 界面>>名字 中关闭除 敌方玩家 之外的项目。\n关闭标示并重置 UI 或关闭 BigWigs“震动”模块。（屏幕闪烁无效）",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
