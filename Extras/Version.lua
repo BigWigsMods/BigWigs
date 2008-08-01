@@ -150,7 +150,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Runs a version query on your current zone."] = "对当前区域进行版本检测。",
 	["Closes the version query window."] = "关闭版本查询窗口。",
 	["current"] = "当前",
-	["Runs a version query on the given zone."] = "在给指定的区域进行版本查询。",
+	["Runs a version query on the given zone."] = "在指定的区域进行版本查询。",
 	["Zone"] = "区域",
 	["zone"] = "区域",
 	["N/A"] = "N/A",

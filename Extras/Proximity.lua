@@ -64,7 +64,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["Sound"] = "声音",
 	["Play sound on proximity."] = "近距离时声音提示。",
 	["Disabled"] = "禁用",
-	["Disable the proximity display for all modules that use it."] = "禁用所有首领模块使用此功能。",
+	["Disable the proximity display for all modules that use it."] = "禁止所有首领模块使用此功能。",
 	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "为%s禁用近距离显示功能，若要再次使用请设置首领模块选项。",
 
 	proximity = "近距离显示",

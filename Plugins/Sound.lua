@@ -55,7 +55,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	["Alarm"] = "警报",
 	["Info"] = "信息",
-	["Alert"] = "警惕",
+	["Alert"] = "报警",
 	["Long"] = "长计时",
 	["Victory"] = "胜利",
 
