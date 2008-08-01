@@ -230,7 +230,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	spellshield = "法术护盾",
 	spellshield_desc = "当克洛什·火拳获得法术护盾时发出警报。",
-	spellshield_message = "克洛什 法术护盾！",
+	spellshield_message = "克洛什 法术护盾！速度偷取",
 	spellshield_bar = "<下一法术护盾>",
 
 	summon = "召唤地狱犬",

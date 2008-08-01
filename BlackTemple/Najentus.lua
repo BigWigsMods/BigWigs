@@ -133,7 +133,7 @@ L:RegisterTranslations("zhCN", function() return {
 	spine_message = "穿刺之脊：>%s<！",
 
 	spinesay = "穿刺警报",
-	spinesay_desc = "当你受到穿刺时发出喊话，能帮助周围队员避让。",
+	spinesay_desc = "当你受到穿刺时发出喊话，能帮助周围队员拔除。",
 	spinesay_message = "我中了穿刺！",
 
 	shield = "海潮之盾",

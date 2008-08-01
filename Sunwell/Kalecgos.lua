@@ -251,8 +251,8 @@ L:RegisterTranslations("zhCN", function() return {
 	buffet = "奥术打击",
 	buffet_desc = "显示奥术打击记时条。",
 
-	enrage_warning = "即将狂暴！",
-	enrage_message = "10% - 狂暴！",
+	enrage_warning = "即将激怒！",
+	enrage_message = "10% - 激怒！",
 	enrage_trigger = "萨索瓦尔将卡雷苟斯逼得狂暴不已！",
 
 	strike = "堕落打击",

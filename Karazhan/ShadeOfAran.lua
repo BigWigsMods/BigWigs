@@ -147,14 +147,14 @@ L:RegisterTranslations("zhCN", function() return {
 	blizzard_desc = "当暴风雪开始施放发出警报。",
 	blizzard_message = "暴风雪！",
 
-	pull = "磁力/魔爆术",
-	pull_desc = "当释放磁力/魔爆术时发出警报。",
+	pull = "魔爆术",
+	pull_desc = "当释放魔爆术时发出警报。",
 	pull_message = "魔爆术！",
 	pull_bar = "<魔爆术>",
 
 	flame = "烈焰花环",
 	flame_desc = "当开始施放烈焰花环时发出警报。",
-	flame_warning = "施放 烈焰花环！",
+	flame_warning = "施放 烈焰花环！禁止移动！！",
 	flame_message = "烈焰花环：>%s<！",
 	flame_bar = "<烈焰花环>",
 } end )

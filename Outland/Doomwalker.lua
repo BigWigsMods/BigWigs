@@ -176,9 +176,9 @@ L:RegisterTranslations("zhCN", function() return {
 	earthquake_trigger1 = "地面破坏程序启动。",
 	earthquake_trigger2 = "范围确认。释放。",
 
-	enrage_soon_message = "即将狂怒！",
+	enrage_soon_message = "即将激怒！",
 	enrage_trigger = "%s变得愤怒了！",
-	enrage_message = "狂怒！",
+	enrage_message = "已激怒！",
 } end)
 
 ----------------------------------

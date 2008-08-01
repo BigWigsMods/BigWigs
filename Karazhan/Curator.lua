@@ -100,8 +100,8 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	berserk_trigger = "展览厅只对访客开放。",
 
-	enrage_message = "狂暴！",
-	enrage_warning = "馆长将进入狂暴！",
+	enrage_message = "激怒！",
+	enrage_warning = "馆长将进入激怒状态！",
 
 	weaken = "唤醒",
 	weaken_desc = "当馆长进入唤醒时发送警告。",

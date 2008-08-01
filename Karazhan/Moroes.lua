@@ -113,7 +113,7 @@ L:RegisterTranslations("zhCN", function() return {
 	garrote_message = "锁喉：>%s<！",
 
 	icon = "标记",
-	icon_desc = "当队员受到锁喉时标上团队标记。（需要权限）",
+	icon_desc = "标记受到锁喉的玩家。（需要权限）",
 
 	enrage_message = "激怒！",
 	enrage_warning = "即将 激怒！",

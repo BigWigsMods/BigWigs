@@ -72,8 +72,8 @@ L:RegisterTranslations("zhCN", function() return {
 	debuff = "负面效果计时",
 	debuff_desc = "显示负面效果直到下一个的计时。",
 
-	enrage_warning = "即将狂暴！",
-	enrage_message = "10% - 狂暴！",
+	enrage_warning = "即将激怒！",
+	enrage_message = "10% - 激怒！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

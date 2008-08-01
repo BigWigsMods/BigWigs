@@ -288,7 +288,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	heal = "治疗",
 	heal_desc = "当地狱火导魔者施放治疗时发出警报。",
-	heal_message = "治疗！",
+	heal_message = "黑暗愈合！",
 
 	nova = "冲击新星",
 	nova_desc = "冲击新星计时。",

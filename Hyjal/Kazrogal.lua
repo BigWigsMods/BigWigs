@@ -80,8 +80,8 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	range = "范围检测",
-	range_desc = "当你低法力以及中了卡兹洛加印记，显示范围检测列表。",
+	range = "距离检查",
+	range_desc = "当你低法力以及中了卡兹洛加印记，显示距离你过近的玩家。",
 
 	mark = "卡兹洛加印记",
 	mark_desc = "显示卡兹洛加印记计时条。",

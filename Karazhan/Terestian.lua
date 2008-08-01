@@ -100,12 +100,12 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	engage_trigger = "啊，你们来的正是时候。仪式就要开始了！",
 
-	sacrifice = "牺牲",
-	sacrifice_desc = "当玩家受到牺牲时发出警报。",
-	sacrifice_message = ">%s< 牺牲！- 注意停手！",
-	sacrifice_bar = "<牺牲：%s>",
-	sacrifice_soon = "即将 牺牲！",
-	sacrifice_soonbar = "<可能 牺牲>",
+	sacrifice = "恶魔之链",
+	sacrifice_desc = "当玩家受到恶魔之链时发出警报。",
+	sacrifice_message = ">%s< 恶魔之链！- 注意攻击！！",
+	sacrifice_bar = "<恶魔之链：%s>",
+	sacrifice_soon = "即将 恶魔之链！",
+	sacrifice_soonbar = "<可能 恶魔之链>",
 
 	icon = "团队标记",
 	icon_desc = "受到牺牲效果的队友打上标记。（需要权限）",

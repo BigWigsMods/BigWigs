@@ -421,10 +421,10 @@ L:RegisterTranslations("zhCN", function() return {
 	gaze_trigger = "凝视着(.+)！$",
 	gaze_message = "凝视：>%s<！",
 	gaze_bar = "<凝视 冷却>",
-	gaze_you = ">你< 凝视！",
+	gaze_you = "跑！凝视男看着你！",
 
 	icon = "团队标记",
-	icon_desc = "给受到凝视的队友打上团队标记。（需要权限）",
+	icon_desc = "标记凝视男的目标。（需要权限）",
 
 	fear = "恐惧",
 	fear_desc = "当施放低沉咆哮时发出警报。",

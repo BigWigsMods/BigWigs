@@ -354,7 +354,7 @@ L:RegisterTranslations("zhCN", function() return {
 	burst_warn = "5秒后，烈焰爆击！",
 
 	enrage_trigger = "感受一万年的仇恨吧！",
-	enrage_message = "狂暴！",
+	enrage_message = "激怒！",
 
 	["Flame of Azzinoth"] = "埃辛诺斯之焰",
 

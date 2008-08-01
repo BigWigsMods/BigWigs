@@ -177,7 +177,7 @@ L:RegisterTranslations("zhCN", function() return {
 	orb_other = "奥术宝珠：>%s<！",
 
 	icon = "团队标记",
-	icon_desc = "为中了奥术宝珠打上团队标记。（需要权限）",
+	icon_desc = "标记奥术宝珠的目标。（需要权限）",
 
 	pounding = "重击",
 	pounding_desc = "显示重击记时条。",
