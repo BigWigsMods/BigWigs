@@ -173,17 +173,17 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("frFR", function() return {
 	bomb = "Ténèbres des mille âmes",
 	bomb_desc = "Prévient quand les Ténèbres des mille âmes sont incantés.",
-	bomb_cast = "Arrivée d'une énorme bombe !",
+	bomb_cast = "Ténèbres des mille âmes en incantation !",
 	bomb_bar = "Explosion !",
 	bomb_nextbar = "~Bombe probable",
 	bomb_warning = "Bombe probable dans ~10 sec.",
-	kalec_yell = "Je vais canaliser mon énergie vers les orbes ! Préparez-vous !", -- à vérifier
-	kalec_yell2 = "J'ai chargé un autre orbe ! Utilisez-le vite !", -- à vérifier
-	kalec_yell3 = "Un autre orbe est prêt ! Hâtez-vous !", -- à vérifier
-	kalec_yell4 = "J'ai envoyé tout ce que je pouvais ! La puissance est entre vos mains !", -- à vérifier
+	kalec_yell = "Je vais canaliser mon énergie vers les orbes ! Préparez-vous !",
+	kalec_yell2 = "J'ai chargé un autre orbe ! Utilisez-le vite !",
+	kalec_yell3 = "Un autre orbe est prêt ! Hâtez-vous !",
+	kalec_yell4 = "J'ai envoyé tout ce que je pouvais ! La puissance est entre vos mains !",
 
-	orb = "Orbe bouclier",
-	orb_desc = "Prévient quand un Orbe bouclier lance des Traits de l'ombre.",
+	orb = "Orbe du bouclier",
+	orb_desc = "Prévient quand un Orbe du bouclier lance des Traits de l'ombre.",
 	orb_shooting = "Orbe en vie - Bombardement de traits !",
 
 	bloom = "Fleurs du feu",
@@ -230,17 +230,17 @@ L:RegisterTranslations("frFR", function() return {
 
 	shield_up = "Bouclier ACTIF !",
 
-	deceiver_dies = "Trompeur #%d tué",
-	["Hand of the Deceiver"] = "Main du Trompeur", -- à vérifier
+	deceiver_dies = "Main du Trompeur #%d tué",
+	["Hand of the Deceiver"] = "Main du Trompeur",
 
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	phase2_message = "Phase 2 - Arrivée de Kil'jaeden !",
-	phase3_trigger = "Rien ne m'arrêtera ! Ce monde va tomber !", -- à vérifier
+	phase3_trigger = "Rien ne m'arrêtera ! Ce monde va tomber !",
 	phase3_message = "Phase 3 - Ajout des Ténèbres des mille âmes",
-	phase4_trigger = "Assez de faux espoirs. Vous ne pouvez pas gagner !", -- à vérifier
+	phase4_trigger = "Assez de faux espoirs ! Vous ne pouvez pas gagner !",
 	phase4_message = "Phase 4 - Ajout des Météores",
-	phase5_trigger = "Nooon ! Les pouvoirs du Puits de soleil se retournent contre moi ! Qu'avez-vous fait ? Qu'avez-vous fait ?!", -- à vérifier
+	phase5_trigger = "Arggghhh ! Les pouvoirs du Puits de soleil… se retournent… contre moi ! Qu'avez-vous fait ? Qu'avez-vous fait ??",
 	phase5_message = "Phase 5 - Sacrifice d'Anveena",
 } end )
 
