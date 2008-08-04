@@ -42,7 +42,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	["Raid Icons"] = "공격대 아이콘",
---	["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = true,
+	["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "중요한 '폭탄'-유형의 보스 능력을 플레이어에게 사용할 경우 BigWigs에서 공격대 대상 아이콘 지정을 설정합니다.",
 
 	["Place"] = "지정",
 	["Place Raid Icons"] = "공격대 아이콘 지정",
@@ -52,7 +52,7 @@ L:RegisterTranslations("koKR", function() return {
 	["Set Icon"] = "아이콘 설정",
 	["Set which icon to place on players."] = "플레이어에 지정할 아이콘을 설정합니다.",
 
---	["Use the %q icon when automatically placing raid icons for boss abilities."] = true,
+	["Use the %q icon when automatically placing raid icons for boss abilities."] = "보스 능력에 대해 자동적으로 공격대 아이콘을 %q 로 지정하도록 합니다.",
 
 	["Star"] = "별",
 	["Circle"] = "원",
