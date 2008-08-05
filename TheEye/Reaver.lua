@@ -6,12 +6,6 @@ local boss = BB["Void Reaver"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local db = nil
-
-local UnitName = UnitName
-local UnitExists = UnitExists
-local UnitPowerType = UnitPowerType
-local UnitBuff = UnitBuff
-local UnitClass = UnitClass
 local pName = UnitName("player")
 local fmt = string.format
 
@@ -236,7 +230,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "KnockAway", 25778)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Pounding", 34162)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Orb", 34172, 34190)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Orb", 34172)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -256,73 +250,30 @@ function mod:KnockAway(player, spellID)
 	end
 end
 
-function mod:Pounding()
+function mod:Pounding(_, spellID)
 	if db.pounding then
-		self:Bar(L["pounding_nextbar"], 13, 34162)
+		self:Bar(L["pounding_nextbar"], 13, spellID)
 	end
 end
 
 function mod:Orb(player, spellID)
-	if not player then return end
-	self:Result(player)
-end
-
-function mod:CHAT_MSG_MONSTER_YELL(msg)
-	if msg == L["engage_trigger"] then
-		temp = true
-		if db.orbyou or db.orbother then
-			--self:ScheduleRepeatingEvent("BWReaverToTScan", self.OrbCheck, 0.2, self) --how often to scan the target, 0.2 seconds
-		end
-		if db.enrage then
-			self:Enrage(600)
-		end
-	end
-end
-
-do
-	local rfID = GetSpellInfo(25780)
-	local cachedId = nil
-	local lastTarget = nil
-	function mod:OrbCheck()
-		local found = nil
-		if cachedId and UnitExists(cachedId) and UnitName(cachedId) == boss then found = true end
-		if not found then
-			cachedId = self:Scan()
-			if cachedId then found = true end
-		end
-		if not found then return end
-		local target = UnitName(cachedId .. "target")
-		if target and target ~= lastTarget and UnitExists(target) and UnitPowerType(target) == 0 then
-			local _, class = UnitClass(target)
-			if class == "PALADIN" then
-				local i = 1
-				local name = UnitBuff(target, i)
-				while name do
-					if name == rfID then
-						return --kill if a paladin
-					end
-					i = i + 1
-					name = UnitBuff(target, i)
-				end
-			end
-			self:Result(target)
-			lastTarget = target
-		end
-	end
-end
-
-function mod:Result(target)
-	if target == pName and db.orbyou then
-		self:LocalMessage(L["orb_you"], "Personal", 34172, "Long")
-		self:WideMessage(fmt(L["orb_other"], target))
+	if player == pName and db.orbyou then
+		self:LocalMessage(L["orb_you"], "Personal", spellID, "Long")
+		self:WideMessage(fmt(L["orb_other"], player))
 
 		--this is handy for player with speech bubbles enabled to see if nearby players are being hit and run away from them
 		if db.orbsay then
 			SendChatMessage(L["orb_say"], "SAY")
 		end
 	elseif db.orbother then
-		self:IfMessage(fmt(L["orb_other"], target), "Attention", 34172)
+		self:IfMessage(fmt(L["orb_other"], player), "Attention", spellID)
 	end
-	self:Icon(target, "icon")
+	self:Icon(player, "icon")
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["engage_trigger"] and db.enrage then
+		self:Enrage(600)
+	end
 end
 
