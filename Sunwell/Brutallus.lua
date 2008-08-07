@@ -189,6 +189,32 @@ L:RegisterTranslations("zhTW", function() return {
 	stomp_bar = "<下一次踐踏>",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	cmd = "Brutallus",
+
+	engage_trigger = "О, а вот и новые агнцы идут на заклание!",
+
+	burn = "Burn",
+	burn_desc = "Tells you who has been hit by Burn and when the next Burn is coming.",
+	burn_you = "Burn on YOU!",
+	burn_other = "Burn on %s!",
+	burn_bar = "Next Burn",
+	burn_message = "Next Burn in ~5 seconds!",
+
+	burnresist = "Burn Resist",
+	burnresist_desc = "Warn who resists burn.",
+	burn_resist = "%s resisted burn",
+
+	meteor = "Meteor Slash",
+	meteor_desc = "Show a Meteor Slash timer bar.",
+	meteor_bar = "Next Meteor Slash",
+
+	stomp = "Stomp",
+	stomp_desc = "Warn for Stomp and show a bar.",
+	stomp_warning = "Stomp in 5 sec",
+	stomp_message = "Stomp: %s",
+	stomp_bar = "Next Stomp",
+} end )
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
