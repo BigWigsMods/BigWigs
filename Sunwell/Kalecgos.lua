@@ -354,6 +354,54 @@ L:RegisterTranslations("deDE", function() return {
 	strike_message = "%s: Stoß der Verderbnis",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+
+	engage_trigger = "Аххх! Я больше никогда не буду рабом Малигоса! Осмелься бросить мне вызов – и я уничтожу тебя!",
+	wipe_bar = "Respawn",
+
+	portal = "Portal",
+	portal_desc = "Warn when the Spectral Blast cooldown is up.",
+	portal_bar = "Next portal (%d)",
+	portal_message = "Possible portal in 5 seconds!",
+
+	realm = "Spectral Realm",
+	realm_desc = "Tells you who is in the Spectral Realm.",
+	realm_message = "Spectral Realm: %s (Group %d)",
+
+	curse = "Curse of Boundless Agony",
+	curse_desc = "Tells you who is afflicted by Curse of Boundless Agony.",
+	curse_bar = "Curse: %s",
+
+	magichealing = "Wild Magic (Increased healing)",
+	magichealing_desc = "Tells you when you get increased healing from Wild Magic.",
+	magichealing_you = "Wild Magic - Healing effects increased!",
+
+	magiccast = "Wild Magic (Increased cast time)",
+	magiccast_desc = "Tells you when a healer gets incrased cast time from Wild Magic.",
+	magiccast_you = "Wild Magic - Increased casting time on YOU!",
+	magiccast_other = "Wild Magic - Increased casting time on %s!",
+
+	magichit = "Wild Magic (Decreased chance to hit)",
+	magichit_desc = "Tells you when a tank's chance to hit is reduced by Wild Magic.",
+	magichit_you = "Wild Magic - Decreased chance to hit on YOU!",
+	magichit_other = "Wild Magic - Decreased chance to hit on %s!",
+
+	magicthreat = "Wild Magic (Increased threat)",
+	magicthreat_desc = "Tells you when you get increased threat from Wild Magic.",
+	magicthreat_you = "Wild Magic - Threat generation increased!",
+
+	buffet = "Arcane Buffet",
+	buffet_desc = "Show the Arcane Buffet timer bar.",
+
+	enrage_warning = "Enrage soon!",
+	enrage_message = "10% - Enraged!",
+	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",
+
+	strike = "Corrupting Strike",
+	strike_desc = "Warn who gets Corrupting Strike.",
+	strike_message = "%s: Corrupting Strike",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
