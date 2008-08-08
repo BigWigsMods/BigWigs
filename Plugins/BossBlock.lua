@@ -222,6 +222,37 @@ L:RegisterTranslations("esES", function() return {
 	["Suppressed"] = "Suprimido",
 	["Shown"] = "Mostrado",
 } end)
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	["BossBlock"] = "БлокБосс",
+	desc = "Автоматически подавлять предупреждения боссов и эмоции от игроков и других источников.",
+
+	["Boss emotes"] = "Эмоции босса",
+	["Suppress messages sent to the raid boss emote frame.\n\nOnly suppresses messages from bosses that BigWigs knows about, and only suppresses them from showing in that frame, not the chat window."] = "Подавляет сообщения посланные в рейд окно эмоции боссов.\n\nПодавляет только те от боссов которые известны BigWigsу, и подавляет их только в том фрейме, но не окно чата.",
+
+	["Raid chat"] = "Чат рейда",
+	["Suppress messages sent to raid chat."] = "Подавляет сообщения посланные в рейд чат",
+
+	["Raid warning chat messages"] = "Чат сообщения рейд объявлений",
+	["Suppress raid warning messages from the chat window."] = "Подавляет сообщения рейд объявлений в окне чата",
+
+	["Raid warning messages"] = "Сообщения рейд объявлений",
+	["Suppress raid warning messages from the raid message window."] = "Подавляет сообщения рейд объявлений в окне сообщений рейда",
+
+	["Raid say"] = "Сказать в рейде",
+	["Suppress RaidSay popup messages."] = "Подавляет сообщения сказанные в рейде.",
+
+	["Whispers"] = "Личные",
+	["Suppress whispered messages."] = "Подавляет личные сообщения.",
+
+	["Suppressing Chatframe"] = "Подавление окна чата",
+	["Suppressing RaidWarningFrame"] = "Подавление объевлений рейда",
+	["Suppressing CT_RAMessageFrame"] = "Подавление CT_RA сообщений",
+	["Suppressing RaidBossEmoteFrame"] = "Подавление рейд эмоций",
+
+	["Suppressed"] = "Подавлять",
+	["Shown"] = "Показывать",
+} end)
 
 ------------------------------
 --      Are you local?      --

@@ -258,6 +258,41 @@ L:RegisterTranslations("esES", function() return {
 	
 	Font = "Fonts\\FRIZQT__.TTF",
 } end)
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	["Messages"] = "Сообщения",
+	["Options for message display."] = "Опции отображения сообщений",
+
+	["BigWigs Anchor"] = "Якорь BigWigsа",
+	["Output Settings"] = "Настройки вывода",
+
+	["Show anchor"] = "Показать якорь",
+	["Show the message anchor frame.\n\nNote that the anchor is only usable if you select 'BigWigs' as Output."] = "Отображение якоря сообщений\n\nЗамете что якорь если вы выбрали 'BigWigs' для вывода сообщений.",
+
+	["Use colors"] = "Использовать цвета",
+	["Toggles white only messages ignoring coloring."] = "Вкл/Выкл окраску игнорируемых сообщений, отображать белыми.",
+
+	["Scale"] = "Масштаб",
+	["Set the message frame scale."] = "Настройка масштаба фрейма сообщений.",
+
+	["Use icons"] = "Использовать иконки",
+	["Show icons next to messages, only works for Raid Warning."] = "Отображать иконки сообщений, работает только для объявлений рейда.",
+
+	["|cffff0000Co|cffff00fflo|cff00ff00r|r"] = "|cffff0000Co|cffff00fflo|cff00ff00r|r",
+	["White"] = "Белый",
+
+	["Outputs all BigWigs messages to the default chat frame in addition to the display setting."] = "Выводить все сообщения BigWigs в стандартное окно чата в дополнении с настройками отображения",
+
+	["Chat frame"] = "Фрейм чата",
+
+	["Test"] = "Тест",
+	["Close"] = "Закрыть",
+
+	["Reset position"] = "Сброс",
+	["Reset the anchor position, moving it to the center of your screen."] = "Сброс позиции якоря, переместив его в центр вашего экрана.",
+
+	Font = "Fonts\\NIM_____.ttf",
+} end)
 
 ----------------------------------
 --      Module Declaration      --

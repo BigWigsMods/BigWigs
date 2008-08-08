@@ -1,11 +1,13 @@
 ## Interface: 20400
 
 ## Title: Big Wigs [|cffeda55fOutland|r]
+## Title-ruRU: Big Wigs [|cffeda55fЗапределье|r]
 ## Title-frFR: Big Wigs [|cffeda55fOutreterre|r]
 ## Title-esES: Big Wigs [|cffeda55fTerrallende|r]
 ## Title-zhCN: Big Wigs [|cffeda55f外域|r]
 ## Title-zhTW: Big Wigs [|cffeda55f外域|r]
 ## Notes: Big Wigs Outland Modules
+## Notes-ruRU: Модуль Big Wigs Запределья
 ## Notes-frFR: Modules Big Wigs concernant l'Outreterre.
 ## Notes-esES: Módulos de Big Wigs para Terrallende.
 ## Notes-koKR: Big Wigs 아웃랜드 경고

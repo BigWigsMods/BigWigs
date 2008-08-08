@@ -108,6 +108,19 @@ L:RegisterTranslations("esES", function() return {
 	["Menu"] = "Menú",
 	["Menu options."] = "Opciones del menú.",
 } end)
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	["|cff00ff00Module running|r"] = "|cff00ff00Модуль запущен|r",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "|cffeda55fКлик|r чтобы сбросить все запущенные модули. |cffeda55fAlt-Клик|r чтобы отключить их. |cffeda55fCtrl-Alt-Клик|r чтобы отключить Big Wigs полностью.",
+	["|cffeda55fClick|r to enable."] = "|cffeda55fКлик|r чтобы включить.",
+	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-Клик|r чтобы открыть окно настроек.",
+	["Big Wigs is currently disabled."] = "Big Wigs в данный момент отключен",
+	["Active boss modules:"] = "Активные модули боссов:",
+	["All running modules have been reset."] = "Все запущенные модули сброшены",
+	["All running modules have been disabled."] = "Все запущенные модули отключены",
+	["Menu"] = "Меню",
+	["Menu options."] = "Опции меню",
+} end)
 
 ----------------------------
 --      FuBar Plugin      --

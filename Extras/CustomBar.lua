@@ -89,6 +89,19 @@ L:RegisterTranslations("esES", function() return {
 	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Tiempo inv\195\161lido (|cffff0000%q|r) o texto de barra ausente en una barra personal iniciada por |cffd9d919%s|r. <tiempo> puede ser un n\195\186mero en segundos, una pareja M:S, o Mm. Por ejemplo 5, 1:20 or 2m.",
 } end)
 
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	["CustomBars"] = "Польз-киеПолосы",
+	["Custom Bars"] = "Пользовательские полосы",
+	["Start a custom bar, either local or global."] = "Запуск пользовательской полоски, Локальной или Глобальной.",
+	["Local"] = "Локальный",
+	["Global"] = "Глобальный",
+	["<time> <bar text>"] = "<время> <текст полосы>",
+	["Starts a custom bar with the given parameters."] = "Запуск пользовательской полоски с заданными параметрами.",
+	["%s: Timer [%s] finished."] = "%s: Таймер [%s] готовый.",
+	["Invalid time (|cffff0000%q|r) or missing bar text in a custom bar started by |cffd9d919%s|r. <time> can be either a number in seconds, a M:S pair, or Mm. For example 5, 1:20 or 2m."] = "Неверное время (|cffff0000%q|r) или отсутствие текста в пользовательской полосе запущенной |cffd9d919%s|r. <время> может вводится цифрами в секундах, М:С парный, или Мм. К примеру 5, 1:20 или 2м.",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

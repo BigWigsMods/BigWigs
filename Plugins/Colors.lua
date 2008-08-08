@@ -282,6 +282,45 @@ L:RegisterTranslations("esES", function() return {
 	["3rd"] = "3º",
 	["4th"] = "4º",
 } end)
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	["Colors"] = "Цвета",
+
+	["Messages"] = "Сообщения",
+	["Bars"] = "Полосы",
+	["Short"] = "Короткие",
+	["Long"] = "Длинные",
+	["Short bars"] = "Короткие полосы",
+	["Long bars"] = "Длинные полосы",
+	["Color "] = "Цвет",
+	["Number of colors"] = "Число цветов",
+	["Background"] = "Фон",
+	["Text"] = "Текст",
+	["Reset"] = "Сброс",
+
+	["Colors of messages and bars."] = "Цвета сообщений и полос",
+	["Change the color for %q messages."] = "Изменить цвет %q сообщений",
+	["Colors for short bars (< 1 minute)."] = "Цвета коротких полос (< 1 минуты)",
+	["Colors for long bars (> 1 minute)."] = "Цвета длинных полос (> 1 минуты)",
+	["Change the %s color."] = "Изменить цвет %s",
+	["Number of colors the bar has."] = "Число цветов успользуемых в полосах",
+	["Change the bar background color."] = "Изменить цвет фона полосы",
+	["Change the bar text color."] = "Изменить цвет текста полосы",
+	["Resets all colors to defaults."] = "Сброс всех цветов на стандартные значения",
+
+	["Important"] = "Важные",
+	["Personal"] = "Личные",
+	["Urgent"] = "Экстренные",
+	["Attention"] = "Внимание",
+	["Positive"] = "Позитивные",
+	["Bosskill"] = "Убийство Босса",
+	["Core"] = "Ядро",
+
+	["1st"] = "1й",
+	["2nd"] = "2ой",
+	["3rd"] = "3тий",
+	["4th"] = "4тый",
+} end)
 
 ----------------------------------
 --      Module Declaration      --

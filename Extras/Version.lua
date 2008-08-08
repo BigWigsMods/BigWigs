@@ -249,6 +249,36 @@ L:RegisterTranslations("esES", function() return {
 	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "Parece que hay una nueva versión de Big Wigs disponible para ti, por favor actualízala",
 	["Notify people with older versions that there is a new version available."] = "Notificar a gente con versiones antiguas que hay una nueva versión disponible",
 } end )
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	["Version Query"] = "Запрос версии",
+	["Commands for querying the raid for Big Wigs versions."] = "Команда для проверки версии Big Wigsа у игроков рейда",
+	["Query already running, please wait 5 seconds before trying again."] = "Запрос уже запущен, пожалуйста подожди 5 секунд вперёд новой попыткой.",
+	["Querying versions for "] = "Запрос версии ",
+	["Big Wigs Version Query"] = "Запрос версии Big Wigsа",
+	["Close window"] = "Закрыть окно", -- I know, it's really a Tablet.
+	["Showing version for "] = "Отображение версии ",
+	["Green versions are newer than yours, red are older, and white are the same."] = "Зеленая версия Более новая чем ваша, красная более старая, а белая такая же как и ваша.",
+	["Player"] = "Игрок",
+	["Version"] = "Версия",
+	["Current zone"] = "Текущая зона",
+	["<zone>"] = "<зона>",
+	["Version query done."] = "Запрос версий завершон.",
+	["Runs a version query on your current zone."] = "Запуск запроса версии на вашей текущей зоне.",
+	["Closes the version query window."] = "Закрыть окно запроса.",
+	["current"] = "текущая",
+	["Runs a version query on the given zone."] = "Запуск запроса версии на заданной зоне.",
+	["Zone"] = "Зона",
+	["zone"] = "зона",
+	["N/A"] = "нет данных",
+	["Not loaded"] = "Не загружен",
+	["BigWigs"] = "BigWigs",
+	["Runs a version query on the BigWigs core."] = "Запуск запроса версии ядра BigWigsа",
+	["Replies"] = "Отклик",
+	["Ancient"] = "Старый",
+	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "Чтото подсказывает, что вышла более новая версия Big Wigsа чем ваша, пожалуйста обновите",
+	["Notify people with older versions that there is a new version available."] = "Уведомить людей со старыми версиями что уже есть более новая версия и можно обновиться.",
+} end )
 
 ---------------------------------
 --      Addon Declaration      --

@@ -132,6 +132,25 @@ L:RegisterTranslations("esES", function() return {
 
 	flash_warning = "Temblor de pantalla fallido. Suele ocurrir cuando las placas de nombre están activadas.\nDesactiva las placas de nombre y reinicia la interfaz o desactiva la función 'Temblor' de BigWigs. (la función de Destello NO se ve afectada)",
 } end)
+
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	["FlashNShake"] = "МерцаниеИСотрясение",
+	["Flash'N'Shake"] = "Мерцание и Сотрясение",
+	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "Сотрясение и/или Мерцание экрана когда чтото важное случается непосредственно с вами",
+
+	["Flash"] = "Мерцание"
+	["Toggle Flash on or off."] = "Вкл/Выкл мерцание экрана",
+
+	["Shake"] = "Сотрясение",
+	["Toggle Shake on or off."] = "Вкл/Выкл сотрясение экрана",
+
+	["Test"] = "Тест",
+	["Perform a Flash/Shake test."] = "Тест Мерцание/Сотрясение.",
+
+	flash_warning = "Мерцание экрана неудалась. Это обычно бывает когда таблица с именами включена.\nСократите таблицу и перезагрузите UI или отключите BigWigs 'Сотрясение'. (Мерцание НЕ затронуто)",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

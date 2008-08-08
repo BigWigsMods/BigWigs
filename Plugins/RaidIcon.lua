@@ -185,6 +185,32 @@ L:RegisterTranslations("esES", function() return {
 	["Cross"] = "Cruz",
 	["Skull"] = "Calavera",
 } end )
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	["Raid Icons"] = "Иконки рейда",
+	["Configure which icon Big Wigs should use when placing raid target icons on players for important 'bomb'-type boss abilities."] = "Настройка иконки Big Wigsа, какая должна быть поставлена на игрока при выполненных важных способностей боссов, к примеру 'бомба'.",
+
+	["RaidIcon"] = "ИконкиРейда",
+
+	["Place"] = "Ставить",
+	["Place Raid Icons"] = "Ставить иконку рейда",
+	["Toggle placing of Raid Icons on players."] = "Вкл/Выкл размещение рейдовых иконок на игроках",
+
+	["Icon"] = "Иконка",
+	["Set Icon"] = "Установка иконки",
+	["Set which icon to place on players."] = "Установите какая иконка будет ставиться на игроках",
+
+	["Use the %q icon when automatically placing raid icons for boss abilities."] = "Использует иконку %q которая автоматически ставится на игрока при выполненных способностей босса.",
+
+	["Star"] = "Звезда",
+	["Circle"] = "Круг",
+	["Diamond"] = "Ромб",
+	["Triangle"] = "Треугольник",
+	["Moon"] = "Луна",
+	["Square"] = "Квадрат",
+	["Cross"] = "Крест",
+	["Skull"] = "Череп",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

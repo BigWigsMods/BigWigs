@@ -1,11 +1,13 @@
 ## Interface: 20400
 
 ## Title: Big Wigs [|cffeda55fThe Eye|r]
+## Title-ruRU: Big Wigs [|cffeda55fОко|r]
 ## Title-frFR: Big Wigs [|cffeda55fL'Œil|r]
 ## Title-esES: Big Wigs [|cffeda55fEl Ojo|r]
 ## Title-zhCN: Big Wigs [|cffeda55f风暴要塞|r]
 ## Title-zhTW: Big Wigs [|cffeda55f風暴要塞|r]
 ## Notes: Big Wigs The Eye Modules
+## Notes-ruRU: Модуль Big Wigs Ока
 ## Notes-frFR: Modules Big Wigs concernant L'Œil.
 ## Notes-esES: Módulos Big Wigs para El Ojo.
 ## Notes-koKR: Big Wigs 폭풍의 눈 경고

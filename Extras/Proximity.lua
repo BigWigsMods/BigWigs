@@ -172,6 +172,26 @@ L:RegisterTranslations("esES", function() return {
 
 	font = "Fonts\\FRIZQT__.TTF",
 } end)
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	["Proximity"] = "Близость",
+	["Close Players"] = "Близкие Игроки",
+	["Options for the Proximity Display."] = "Опции отображения близости",
+	["|cff777777Nobody|r"] = "|cff777777Некого|r",
+	["Sound"] = "Звук",
+	["Play sound on proximity."] = "Проиграть звук при приближении играков",
+	["Disabled"] = "Отключить",
+	["Disable the proximity display for all modules that use it."] = "Отключить отображение окна сближения для всех модулей использующих его.",
+	["The proximity display has been disabled for %s, please use the boss modules options to enable it again."] = "Отображение модуля сближения отключен в %s, пожалуйста воспользуйтесь опциями босс-модуля, для того чтобы включить его.",
+
+	proximity = "Отображение близости",
+	proximity_desc = "Показывать окно близости при соответствующей схватке, выводя список игроков которые стоят слишком близко к вам.",
+
+	font = "Fonts\\NIM_____.ttf",
+
+	["Test"] = "Тест",
+	["Perform a Proximity test."] = "Тест близость",
+} end)
 
 -----------------------------------------------------------------------
 --      Module Declaration

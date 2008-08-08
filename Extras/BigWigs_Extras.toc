@@ -1,7 +1,9 @@
 ## Interface: 20400
 
 ## Title: Big Wigs [|cffeda55fExtras|r]
+## Title-ruRU: Big Wigs [|cffeda55fДополнение|r]
 ## Notes: Big Wigs Extra Plugins
+## Notes-ruRU: Дополнительные плагины Big Wigsа
 ## Title-zhCN: Big Wigs [|cffeda55f增强|r]
 ## Notes-zhCN: Big Wigs 附加插件
 ## Title-zhTW: Big Wigs [|cffeda55f額外|r]

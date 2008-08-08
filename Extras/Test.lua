@@ -112,6 +112,21 @@ L:RegisterTranslations("esES", function() return {
 	["Perform a sync test of BigWigs."] = "Realiza una prueba de sincronización de BigWigs.",
 	["Testing Sync"] = "Probando sinc.",
 } end)
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	["Test"] = "Тест",
+	["Test Bar "] = "Тестовая полоса",
+	["Testing"] = "Тестирование",
+	["OMG Bear!"] = "Не может быть!",
+	["*RAWR*"] = "*МДЯ*",
+	["Victory!"] = "Победа!",
+	["Commands for testing bars, messages and synchronization."] = "Команды для тестирования полос, сообщений и синхронизации.",
+	["Local test"] = "Локальный тест",
+	["Perform a local test of BigWigs."] = "Локальный тест BigWigsа",
+	["Sync test"] = "Синх тест",
+	["Perform a sync test of BigWigs."] = "Синх тест BigWigsа",
+	["Testing Sync"] = "Тестирование синхр",
+} end)
 
 ----------------------------------
 --      Module Declaration      --

@@ -358,6 +358,50 @@ L:RegisterTranslations("esES", function() return {
 	
 	font = "Fonts\\FRIZQT__.TTF",
 } end)
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	["Bars"] = "Полосы",
+	["Emphasized Bars"] = "Увеличенные полосы",
+
+	["Options for the timer bars."] = "Опции полос времени",
+
+	["Show anchor"] = "Якорь",
+	["Show the bar anchor frame."] = "Отображать якорь полос",
+
+	["Enable menu"] = "Включить меню",
+	["Show the bar configuration menu on Alt-Rightclick.\n\nNote that when this option is enabled, you can no longer Alt-Click game world items beneath the bars."] = "Отображать меню настройки полосы по Alt-ПКМ\n\nЗамете что при включенной опции, вы больше не сможите нажимать Alt-Клик по игровым предметам ниже полос",
+
+	["Scale"] = "Масштаб",
+	["Set the bar scale."] = "Настройка масштаба полос",
+
+	["Grow upwards"] = "Рост вверх",
+	["Toggle bars grow upwards/downwards from anchor."] = "Преключение роста полос от якоря вверх или вниз.",
+
+	["Texture"] = "Текстуры",
+	["Set the texture for the timer bars."] = "Установка текстур для полос времени.",
+
+	["Test"] = "Тест",
+	["Close"] = "Закрыть",
+
+	["Emphasize"] = "Увеличение",
+	["Emphasize bars that are close to completion (<10sec). Also note that bars started at less than 15 seconds initially will be emphasized right away."] = "Увеличение полос которые близятся к завершению (<10сек). Так же имейте ввиду что полосы продолжительностью менее 15 секунд буду увеличенные сразу.",
+
+	["Enable"] = "Включить",
+	["Enables emphasizing bars."] = "Включить увеличение полос.",
+	["Flash"] = "Мерцание",
+	["Flashes the background red for bars that are emphasized."] = "Мерцание фона красным увеличенных полос",
+	["Move"] = "Перемещение",
+	["Move bars that are emphasized to a second anchor."] = "Перемещение увеличенных полос второго якоря",
+	["Set the scale for emphasized bars."] = "Установка масштаба увеличенных полос.",
+
+	["Reset position"] = "Сброс позиции",
+	["Reset the anchor position, moving it to the center of your screen."] = "Сброс позиции якоря, переместив его в центр вашего экрана.",
+
+	["Reverse"] = "Перевернуть",
+	["Toggles if bars are reversed (fill up instead of emptying)."] = "Переворачивает полосы (полосы заполняются вместо того чтобы пустеть).",
+	
+	font = "Fonts\\NIM_____.ttf",
+} end)
 
 -----------------------------------------------------------------------
 --      Module Declaration

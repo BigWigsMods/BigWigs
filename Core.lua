@@ -273,6 +273,43 @@ L:RegisterTranslations("esES", function() return {
 	["Load all %s modules."] = "Cargar todos los módulos de %s.",
 } end)
 
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	["%s mod enabled"] = "%s модуль включен",
+	["%s has been defeated"] = "%s был побежден",     -- "<boss> has been defeated"
+	["%s have been defeated"] = "%s были побеждены",    -- "<bosses> have been defeated"
+
+	["Debug enabled, output routed to %s."] = "Отладка включена, вывод сообщений перемещен в %s.",
+	["Debug disabled."] = "Отладка отключена.",
+
+	-- AceConsole strings
+	["Bosses"] = "Боссы",
+	["Options for bosses in %s."] = "Опции для боссов в %s.", -- "Options for bosses in <zone>"
+	["Options for %s (r%d)."] = "Опции для %s (r%d).",     -- "Options for <boss> (<revision>)"
+	["Plugins"] = "Плагины",
+	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Плагины это основная особенность Big Wigsf - они показывают сообщения, время на барах, и другие важные особенности на боссах.",
+	["Extras"] = "Дополнение",
+	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "Дополнительные настройки для рейдов без которых  Big Wigs не будет должным образом работать",
+	["Active"] = "Активен",
+	["Activate or deactivate this module."] = "Активация или деактивация модуля",
+	["Reboot"] = "Перезагрузка",
+	["Reboot this module."] = "Перезагрузка данного модуля",
+	["Debugging"] = "Отладка",
+	["Show debug messages."] = "Показывает сообщения отладки",
+	["Options"] = "Опции",
+
+	bosskill = "Смерть босса",
+	bosskill_desc = "Объявляет что босс побежден.",
+	enrage = "Исступление",
+	enrage_desc = "Предупреждает когда босс входит в состояние Исступления.",
+	berserk = "Берсерк",
+	berserk_desc = "Предупреждет когда Босс входит в состояние Берсерк.",
+
+	["Load"] = "Загрузить",
+	["Load All"] = "Загрузить все",
+	["Load all %s modules."] = "Загружает все %s модули.",
+} end)
+
 ---------------------------------
 --      Addon Declaration      --
 ---------------------------------

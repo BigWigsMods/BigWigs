@@ -1,9 +1,11 @@
 ## Interface: 20400
 
 ## Title: Big Wigs [|cffeda55fPlugins|r]
+## Title-ruRU: Big Wigs [|cffeda55fПлагины|r]
 ## Title-zhCN: Big Wigs [|cffeda55f综合设置|r]
 ## Title-zhTW: Big Wigs [|cffeda55f附加元件|r]
 ## Notes: Big Wigs Core Plugins
+## Notes-ruRU: Модуль Big Wigs Плагины
 ## Notes-frFR: Plugins du noyau de Big Wigs.
 ## Notes-esES: Plugins del núcleo de Big Wigs.
 ## Notes-zhCN: Big Wigs 综合设置模块

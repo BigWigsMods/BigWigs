@@ -1,11 +1,13 @@
 ## Interface: 20400
 
 ## Title: Big Wigs [|cffeda55fSunwell|r]
+## Title-ruRU: Big Wigs [|cffeda55fСолнечный Колодец|r]
 ## Title-frFR: Big Wigs [|cffeda55fPuits de soleil|r]
 ## Title-esES: Big Wigs [|cffeda55fFuente del Sol|r]
 ## Title-zhCN: Big Wigs [|cffeda55f太阳之井|r]
 ## Title-zhTW: Big Wigs [|cffeda55f太陽之井高地|r]
 ## Notes: Big Wigs Sunwell Modules
+## Notes-ruRU: Модуль Big Wigs Солнечного Колодца
 ## Notes-frFR: Modules Big Wigs concernant le Puits de soleil.
 ## Notes-esES: Módulos Big Wigs para La Fuente del Sol.
 ## Notes-zhCN: Big Wigs 太阳之井模块

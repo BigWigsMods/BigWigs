@@ -133,6 +133,23 @@ commonWords:RegisterTranslations("esES", function() return {
 	berserk_sec = "Rabia en %d seg",
 	berserk = "Rabia",
 } end)
+-- Translated by wow.playhard.ru translators
+commonWords:RegisterTranslations("ruRU", function() return {
+	you = "Вы",
+	are = "",
+
+	enrage_start = "%s Исступление - Исступление за %d мин",
+	enrage_end = "%s вошел в состояние Исступления",
+	enrage_min = "Исступление за %d мин",
+	enrage_sec = "Исступление за %d сек",
+	enrage = "Исступление",
+
+	berserk_start = "%s Исступление - Берсерк за %d мин",
+	berserk_end = "%s вошел в состояние Берсерка",
+	berserk_min = "Берсерк за %d мин",
+	berserk_sec = "Берсерк за %d сек",
+	berserk = "Берсерк",
+} end)
 
 function BigWigs.modulePrototype:OnInitialize()
 	-- Unconditionally register, this shouldn't happen from any other place
