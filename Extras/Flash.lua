@@ -139,7 +139,7 @@ L:RegisterTranslations("ruRU", function() return {
 	["Flash'N'Shake"] = "Мерцание и Сотрясение",
 	["Shake and/or Flash the screen blue when something important happens that directly affects you."] = "Сотрясение и/или Мерцание экрана когда чтото важное случается непосредственно с вами",
 
-	["Flash"] = "Мерцание"
+	["Flash"] = "Мерцание",
 	["Toggle Flash on or off."] = "Вкл/Выкл мерцание экрана",
 
 	["Shake"] = "Сотрясение",
