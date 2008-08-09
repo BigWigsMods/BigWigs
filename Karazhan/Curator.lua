@@ -159,6 +159,27 @@ L:RegisterTranslations("esES", function() return {
 	weaktime_message3 = "Evocación en ~70 segundos",
 	weaktime_bar = "~Evocación",
 } end )
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	berserk_trigger = "Галерея только для гостей.",
+
+	enrage_message = "Исступление!",
+	enrage_warning = "Приблежается Исступление!",
+
+	weaken = "Ослабление",
+	weaken_desc = "Предупреждать о стадии ослаблени.",
+	weaken_message = "Прилив сил - Ослабление на 20сек!",
+	weaken_bar = "Прилив сил",
+	weaken_fade_message = "Прилив сил закончился - Ослабление рассеялось!",
+	weaken_fade_warning = "Прилив сил заканчивается через 5сек!",
+
+	weaktime = "Перезарядка Ослабления",
+	weaktime_desc = "Полоса перезарядки до следующего ослабления.",
+	weaktime_message1 = "Прилив сил за ~10 секунд",
+	weaktime_message2 = "Прилив сил за ~30 секунд",
+	weaktime_message3 = "Прилив сил за ~70 секунд",
+	weaktime_bar = "~Перезарядка Прилива сил",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

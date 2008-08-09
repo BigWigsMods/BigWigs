@@ -160,6 +160,27 @@ L:RegisterTranslations("esES", function() return {
 	enrage_message = "¡Enfurecido!",
 	enrage_warning = "¡Enfurecimiento en breve!",
 } end)
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "Хмм, неожиданные посетители. Нужно подготовиться…",
+	engage_message = "%s Engaged - Исчезновение за ~35сек!",
+
+	vanish = "Исчезновение",
+	vanish_desc = "Estimated timers for when Moroes next vanishes.",
+	vanish_message = "Исчез! Следующее через ~35сек!",
+	vanish_warning = "Скоро Исчезновение!",
+	vanish_bar = "~перезарядка Исчезновения",
+
+	garrote = "Гаррота",
+	garrote_desc = "Notify of players afflicted by Garrote.",
+	garrote_message = "Гаррота: %s",
+
+	icon = "Рейдовая иконка",
+	icon_desc = "Помечать рейдовой иконкой человека пораженного Гарротом (Необходимо иметь доступ).",
+
+	enrage_message = "Enrage!",
+	enrage_warning = "Enrage Soon!",
+} end)
 
 ----------------------------------
 --      Module Declaration      --

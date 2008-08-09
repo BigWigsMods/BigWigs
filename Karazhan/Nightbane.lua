@@ -230,6 +230,37 @@ L:RegisterTranslations("esES", function() return {
 	bones_desc = "Avisa de cuando se canaliza Lluvia de huesos.",
 	bones_message = "¡Canalizando Lluvia de huesos!",
 } end )
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	fear = "Fear Alert",
+	fear_desc = "Warn for Bellowing Roar.",
+	fear_message = "Fear in 2 sec!",
+	fear_warning = "Fear Soon",
+	fear_bar = "Fear!",
+	fear_nextbar = "~Fear Cooldown",
+
+	charr = "Charred Earth on You",
+	charr_desc = "Warn when you are on Charred Earth.",
+	charr_message = "Charred Earth on YOU!",
+
+	phase = "Фазы",
+	phase_desc = "Warn when Nightbane switches between phases.",
+	airphase_trigger = "Жалкий гнус! Я изгоню тебя из воздуха!",
+	landphase_trigger1 = "Довольно! Я сойду на землю и сам раздавлю тебя!",
+	landphase_trigger2 = "Ничтожества! Я вам покажу мою силу поближе!",
+	airphase_message = "Flying!",
+	landphase_message = "Landing!",
+	summon_trigger = "An ancient being awakens in the distance...",
+
+	engage = "Engage",
+	engage_desc = "Engage alert.",
+	engage_trigger = "Ну и глупцы! Я быстро покончу с вашими страданиями!",
+	engage_message = "%s Engaged",
+
+	bones = "Rain of Bones",
+	bones_desc = "Warn when Rain of Bones is being channeled.",
+	bones_message = "AoE Rain of Bones!",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

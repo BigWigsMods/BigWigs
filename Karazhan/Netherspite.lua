@@ -148,6 +148,25 @@ L:RegisterTranslations("esES", function() return {
 	netherbreath_desc = "Avisa de Aliento abisal.",
 	netherbreath_warn = "¡Aliento abisal!",
 } end )
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	phase = "Фазы",
+	phase_desc = "Warns when Netherspite changes from one phase to another.",
+	phase1_message = "Withdrawal - Netherbreaths Over",
+	phase1_bar = "~Possible Withdrawal",
+	phase1_trigger = "%s издает крик, отступая, открывая путь Пустоте.",
+	phase2_message = "Rage - Incoming Netherbreaths!",
+	phase2_bar = "~Possible Rage",
+	phase2_trigger = "%s впадает в предельную ярость!",
+
+	voidzone = "Порталы Бездны",
+	voidzone_desc = "Предупреждать о Порталах Бездны.",
+	voidzone_warn = "Портал Бездны (%d)!",
+
+	netherbreath = "Дыхание Хаоса",
+	netherbreath_desc = "Предупреждать о Дыхании Хаоса.",
+	netherbreath_warn = "Надвигается Дыхание Хаоса!",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

@@ -159,6 +159,27 @@ L:RegisterTranslations("esES", function() return {
 	weak_warning2 = "¡Debilidad finalizada!",
 	weak_bar = "~Debilidad finaliza",
 } end )
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "^А, вы как раз вовремя!.",
+
+	sacrifice = "Sacrifice",
+	sacrifice_desc = "Warn for Sacrifice of players.",
+	sacrifice_message = "%s is being Sacrificed!",
+	sacrifice_bar = "Sacrifice: %s",
+	sacrifice_soon = "Sacrifice soon!",
+	sacrifice_soonbar = "~Possible Sacrifice",
+
+	icon = "Raid Icon",
+	icon_desc = "Place a raid icon on the sacrificed player(requires promoted or higher).",
+
+	weak = "Weakened",
+	weak_desc = "Warn for weakened state.",
+	weak_message = "Weakened for ~45sec!",
+	weak_warning1 = "Weakened over in ~5sec!",
+	weak_warning2 = "Weakened over!",
+	weak_bar = "~Weakened Fades",
+} end )
 
 ----------------------------------
 --      Module Declaration      --
