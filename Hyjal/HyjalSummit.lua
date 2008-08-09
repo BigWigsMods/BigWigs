@@ -169,16 +169,16 @@ L:RegisterTranslations("frFR", function() return {
 	detail = "Avertissements détaillés",
 	detail_desc = "Affiche des avertissements détaillés indiquant les monstres en approche.",
 
-	["~%s spawn"] = "~Apparition %s",
-	["~Wave %d spawn"] = "~Apparition vague %d",
-	["Wave %d incoming!"] = "Arrivée de la vague %d !",
-	["Wave %d! %d %s"] = "Vague %d ! %d %s", --1 set of mobs
-	["Wave %d! %d %s, %d %s"] = "Vague %d ! %d %s, %d %s", --2 sets of mobs
-	["Wave %d! %d %s, %d %s, %d %s"] = "Vague %d ! %d %s, %d %s, %d %s", --3 sets of mobs
-	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "Vague %d ! %d %s, %d %s, %d %s, %d %s", --4 sets of mobs
-	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "Vague %d ! %d %s, %d %s, %d %s, %d %s, %d %s", --5 sets of mobs
+	["~%s spawn"] = "~Arrivée %s",
+	["~Wave %d spawn"] = "~Arrivée %d|4ère:ème; vague",
+	["Wave %d incoming!"] = "Arrivée de la %d|4ère:ème; vague !",
+	["Wave %d! %d %s"] = "%d|4ère:ème; vague ! %d %s", --1 set of mobs
+	["Wave %d! %d %s, %d %s"] = "%d|4ère:ème; vague ! %d %s, %d %s", --2 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s"] = "%d|4ère:ème; vague ! %d %s, %d %s, %d %s", --3 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "%d|4ère:ème; vague ! %d %s, %d %s, %d %s, %d %s", --4 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "%d|4ère:ème; vague ! %d %s, %d %s, %d %s, %d %s, %d %s", --5 sets of mobs
 	["%s in ~%d sec!"] = "%s dans ~%d sec. !",
-	["Wave %d in ~%d sec!"] = "Vague %d dans ~%d sec. !",
+	["Wave %d in ~%d sec!"] = "%d|4ère:ème; vague dans ~%d sec. !",
 
 	["Boss"] = "Boss",
 	["Thrall"] = "Thrall",
