@@ -49,7 +49,7 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	engage_trigger = "저승으로 보내주마!",
+	engage_trigger = "저승으로 보내 주마!",
 	engage_message = "%s 전투 시작 - 45초후 곰 변신!",
 
 	phase = "단계",
