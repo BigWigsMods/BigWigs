@@ -227,6 +227,34 @@ L:RegisterTranslations("esES", function() return {
 	shatter_message = "Trizar",
 } end)
 
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "Иди… и умри.",
+	engage_message = "%s Engaged!",
+
+	grow = "Grow",
+	grow_desc = "Count and warn for Grull's grow.",
+	grow_message = "Grows: (%d)",
+	grow_bar = "Grow (%d)",
+
+	grasp = "Grasp",
+	grasp_desc = "Grasp warnings and timers.",
+	grasp_message = "Ground Slam - Shatter in ~10sec!",
+	grasp_warning = "Ground Slam Soon",
+	grasp_bar = "~Ground Slam Cooldown",
+
+	cavein = "Cave In on You",
+	cavein_desc = "Warn for a Cave In on You.",
+	cavein_message = "Cave In on YOU!",
+
+	silence = "Silence",
+	silence_desc = "Warn when Gruul casts AOE Silence (Reverberation).",
+	silence_message = "AOE Silence",
+	silence_warning = "AOE Silence soon!",
+	silence_bar = "~Silence Cooldown",
+
+	shatter_message = "Shatter!",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

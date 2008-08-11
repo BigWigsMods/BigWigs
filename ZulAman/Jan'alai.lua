@@ -163,6 +163,27 @@ L:RegisterTranslations("esES", function() return {
 	adds_message = "¡Vienen añadidos!",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "Да покарают вас духи ветра!",
+
+	flame = "Flame Breath",
+	flame_desc = "Warn who Jan'alai casts Flame Strike on.",
+	flame_message = "Flame Breath on %s!",
+
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Target Icon on the player targetted by Flame Breath. (requires promoted or higher)",
+
+	bomb = "Fire Bomb",
+	bomb_desc = "Show timers for Fire Bomb.",
+	bomb_trigger = "Сгиньте в огне!",
+	bomb_message = "Incoming Fire Bombs!",
+
+	adds = "Adds",
+	adds_desc = "Warn for Incoming Adds.",
+	adds_trigger = "Где мои Наседки? Пора за яйца приниматься!",
+	adds_message = "Incoming Adds!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

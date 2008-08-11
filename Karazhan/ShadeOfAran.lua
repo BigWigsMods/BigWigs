@@ -217,6 +217,35 @@ L:RegisterTranslations("esES", function() return {
 	flame_bar = "<Corona de Llamas>",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	adds = "Elementals",
+	adds_desc = "Warn about the water elemental adds spawning.",
+	adds_message = "Elementals Incoming!",
+	adds_warning = "Elementals Soon",
+	adds_bar = "Elementals despawn",
+
+	drink = "Drinking",
+	drink_desc = "Warn when Aran starts to drink.",
+	drink_warning = "Low Mana - Drinking Soon!",
+	drink_message = "Drinking - AoE Polymorph!",
+	drink_bar = "Super Pyroblast Incoming",
+
+	blizzard = "Blizzard",
+	blizzard_desc = "Warn when Blizzard is being cast.",
+	blizzard_message = "Blizzard!",
+
+	pull = "Pull/Super AE",
+	pull_desc = "Warn for the magnetic pull and Super Arcane Explosion.",
+	pull_message = "Arcane Explosion!",
+	pull_bar = "Arcane Explosion",
+
+	flame = "Flame Wreath",
+	flame_desc = "Warn when Flame Wreath is being cast.",
+	flame_warning = "Casting: Flame Wreath!",
+	flame_message = "Flame Wreath! %s",
+	flame_bar = "Flame Wreath",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

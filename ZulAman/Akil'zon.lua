@@ -140,6 +140,24 @@ L:RegisterTranslations("esES", function() return {
 	icon_desc = "Pone un icono de banda en el jugador con Tormenta eléctrica. (Requiere derechos de banda)",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "Я хищник! Ты – моя добыча!",
+	engage_message = "%s Engaged - Storm in ~55sec!",
+
+	elec = "Electrical Storm",
+	elec_desc = "Warn who has Electrical Storm.",
+	elec_bar = "~Storm Cooldown",
+	elec_message = "Storm on %s!",
+	elec_warning = "Storm soon!",
+
+	ping = "Ping",
+	ping_desc = "Ping your current location if you are afflicted by Electrical Storm.",
+	ping_message = "Storm - Pinging your location!",
+
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Target Icon on the player with Electrical Storm. (requires promoted or higher)",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

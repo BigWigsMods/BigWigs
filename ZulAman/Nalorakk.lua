@@ -138,6 +138,24 @@ L:RegisterTranslations("esES", function() return {
 	bear_warning = "Fase de Oso en 5seg",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "Недолго вам осталось!",
+	engage_message = "%s Engaged - Bear Form in 45sec!",
+
+	phase = "Phases",
+	phase_desc = "Warn for phase changes.",
+	phase_bear = "Если вызвать чудище, то мало не покажется, точно говорю!",
+	phase_normal = "Пропустите Налоракка!",
+	normal_message = "Normal Phase!",
+	normal_bar = "Next Bear Phase",
+	normal_soon = "Normal Phase in 10sec",
+	normal_warning = "Normal Phase in 5sec",
+	bear_message = "Bear Phase!",
+	bear_bar = "Next Normal Phase",
+	bear_soon = "Bear Phase in 10sec",
+	bear_warning = "Bear Phase in 5sec",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

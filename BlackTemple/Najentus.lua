@@ -169,6 +169,28 @@ L:RegisterTranslations("zhTW", function() return {
 	icon_desc = "在受到尖刺脊椎的隊友頭上標記。 (需要權限)",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	start_trigger = "Вы умрете во имя леди Вайш!",
+
+	spine = "Impaling Spine",
+	spine_desc = "Tells you who gets impaled.",
+	spine_message = "Impaling Spine on %s!",
+
+	spinesay = "Spine Say",
+	spinesay_desc = "Print in say when you have a Spine, can help nearby members with speech bubbles on.",
+	spinesay_message = "Spine on me!",
+
+	shield = "Tidal Shield",
+	shield_desc = "Timers for when Naj'entus will gain tidal shield.",
+	shield_nextbar = "Next Tidal Shield",
+	shield_warn = "Tidal Shield!",
+	shield_soon_warn = "Tidal Shield in ~10sec!",
+	shield_fade = "Shield Faded!",
+
+	icon = "Icon",
+	icon_desc = "Put an icon on players with Impaling Spine.",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------

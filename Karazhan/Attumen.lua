@@ -105,6 +105,19 @@ L:RegisterTranslations("esES", function() return {
 	curse_message = "Presencia intangible - %s",
 } end)
 
+L:RegisterTranslations("ruRU", function() return {
+	phase = "Фаза",
+	phase_desc = "Warn when entering a new Phase.",
+	phase2_trigger = "%s зовет своего господина!",
+	phase2_message = "Фаза 2 - %s & Аттумен",
+	phase3_trigger = "Давай, Полночь, разгоним этот сброд!",
+	phase3_message = "Фаза 3 - %s",
+
+	curse = "Cursed Tanks",
+	curse_desc = "Warn when a tank is cursed by Intangible Presence.",
+	curse_message = "Танк Проклят - %s",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

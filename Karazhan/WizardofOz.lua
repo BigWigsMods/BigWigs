@@ -111,6 +111,19 @@ L:RegisterTranslations("esES", function() return {
 	light_message = "¡Cadena de relámpagos!",
 } end)
 
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "^О, Тито, нам просто надо найти дорогу домой!",
+
+	spawns = "Spawn Timers",
+	spawns_desc = "Timers for when the characters become active.",
+	spawns_bar = "%s attacks!",
+	spawns_warning = "%s in 5 sec",
+
+	light = "Chain Lightning",
+	light_desc = "Warn for Chain Lightning being cast.",
+	light_message = "Chain Lightning!",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

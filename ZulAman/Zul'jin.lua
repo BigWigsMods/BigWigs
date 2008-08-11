@@ -258,6 +258,41 @@ L:RegisterTranslations("esES", function() return {
 	claw_message = "Ira de zarpa: %s",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "Нет никого сильнее меня!",
+	engage_message = "Phase 1 - Human Phase",
+
+	form = "Form Shift",
+	form_desc = "Warn when Zul'jin changes form.",
+	form_bear_trigger = "Выучил новый фокус… прямо как братишка-медведь…",
+	form_bear_message = "80% Phase 2 - Bear Form!",
+	form_eagle_trigger = "От орла нигде не скрыться!",
+	form_eagle_message = "60% Phase 3 - Eagle Form!",
+	form_lynx_trigger = "Позвольте представить моих двух братцев: клык и коготь!",
+	form_lynx_message = "40% Phase 4 - Lynx Form!",
+	form_dragonhawk_trigger = "Для того чтобы увидеть дракондора, в небо смотреть необязательно!",
+	form_dragonhawk_message = "20% Phase 5 - Dragonhawk Form!",
+
+	throw = "Grievous Throw",
+	throw_desc = "Warn who is afflicted by Grievous Throw.",
+	throw_message = "%s has Grievous Throw",
+
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Target Icon on the player afflicted by Grievous Throw or Claw Rage. (requires promoted or higher)",
+
+	paralyze = "Paralyze",
+	paralyze_desc = "Warn for Creeping Paralysis and the impending Paralyze after effect.",
+	paralyze_warning = "Creeping Paralysis - Paralyze in 5 sec!",
+	paralyze_message = "Paralyzed!",
+	paralyze_bar = "Inc Paralyze",
+	paralyze_warnbar = "Next Paralyze",
+	paralyze_soon = "Creeping Paralysis in 5 sec",
+
+	claw = "Claw Rage",
+	claw_desc = "Warn for who gets Claw Rage.",
+	claw_message = "Claw Rage on %s",
+} end )
+
 
 ----------------------------------
 --      Module Declaration      --

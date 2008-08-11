@@ -294,6 +294,46 @@ L:RegisterTranslations("zhTW", function() return {
 	smash_bar = "<圓弧斬>",
 } end)
 
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "Гронны – настоящая сила в Запределье!",
+
+	heal = "Heal",
+	heal_desc = "Warn when Blindeye the Seer begins to cast a Heal.",
+	heal_message = "Blindeye casting Prayer of Healing!",
+	heal_bar = "Healing",
+
+	shield = "Shield",
+	shield_desc = "Warn when Blindeye the Seer gains Greater Power Word: Shield.",
+	shield_message = "Shield on Blindeye!",
+
+	spellshield = "Spell Shield",
+	spellshield_desc = "Warn when Krosh Firehand gains Spell Shield.",
+	spellshield_message = "Spell Shield on Krosh!",
+	spellshield_bar = "Next Spell Shield",
+
+	summon = "Summon Wild Felhunter",
+	summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter.",
+	summon_message = "Felhunter being summoned!",
+	summon_bar = "~Felhunter Cooldown",
+
+	whirlwind = "Whirlwind",
+	whirlwind_desc = "Warn when Maulgar gains Whirlwind.",
+	whirlwind_message = "Maulgar - Whirlwind for 15sec!",
+	whirlwind_bar = "Whirlwind",
+	whirlwind_nextbar = "~Whirlwind Cooldown",
+	whirlwind_warning1 = "Maulgar Engaged - Whirlwind in ~50sec!",
+	whirlwind_warning2 = "Whirlwind Soon!",
+
+	flurry = "Flurry",
+	flurry_desc = "Warn when Maulgar is close to Flurry and gains Flurry.",
+	flurry_message = "50% - Flurry!",
+	flurry_warning = "Flurry Soon!",
+
+	smash = "Arcing Smash",
+	smash_desc = "Show a bar for estimated Arcing Smash.",
+	smash_bar = "~Arcing Smash",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

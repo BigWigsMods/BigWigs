@@ -250,7 +250,7 @@ L:RegisterTranslations("ruRU", function() return {
 	landphase_trigger2 = "Ничтожества! Я вам покажу мою силу поближе!",
 	airphase_message = "Flying!",
 	landphase_message = "Landing!",
-	summon_trigger = "An ancient being awakens in the distance...",
+	summon_trigger = "Древнее существо пробуждается вдалеке…",
 
 	engage = "Engage",
 	engage_desc = "Engage alert.",

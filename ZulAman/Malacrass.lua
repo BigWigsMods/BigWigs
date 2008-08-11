@@ -203,6 +203,33 @@ L:RegisterTranslations("esES", function() return {
 	consecration_warn = "¡Consagración lanzada!",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "На вас падет тень…",
+
+	bolts = "Spirit Bolts",
+	bolts_desc = "Warn when Malacrass starts channelling Spirit Bolts.",
+	bolts_message = "Incoming Spirit Bolts!",
+	bolts_warning = "Spirit Bolts in 5 sec!",
+	bolts_nextbar = "Next Spirit Bolts",
+
+	soul = "Siphon Soul",
+	soul_desc = "Warn who is afflicted by Siphon Soul.",
+	soul_message = "Siphon: %s",
+
+	totem = "Totem",
+	totem_desc = "Warn when a Fire Nova Totem is casted.",
+	totem_message = "Fire Nova Totem!",
+
+	heal = "Heal",
+	heal_desc = "Warn when Malacrass casts a heal.",
+	heal_message = "Casting Heal!",
+
+	consecration = "Consecration",
+	consecration_desc = "Warn when Consecration is cast.",
+	consecration_bar = "Consecration (%d)",
+	consecration_warn = "Casted Consecration!",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

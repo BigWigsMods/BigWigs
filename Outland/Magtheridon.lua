@@ -369,6 +369,56 @@ L:RegisterTranslations("zhTW", function() return {
 	debrisinc_warning = "殘骸即將來臨!",
 } end)
 
+L:RegisterTranslations("ruRU", function() return {
+	escape = "Escape",
+	escape_desc = "Countdown until Magtheridon breaks free.",
+	escape_trigger1 = "Сдерживающая сила %%sа начинает ослабевать!",
+	escape_trigger2 = "Я… освобожден!",
+	escape_warning1 = "%s Engaged - Breaks free in 2min!",
+	escape_warning2 = "Breaks free in 1min!",
+	escape_warning3 = "Breaks free in 30sec!",
+	escape_warning4 = "Breaks free in 10sec!",
+	escape_warning5 = "Breaks free in 3sec!",
+	escape_bar = "Released...",
+	escape_message = "%s Released!",
+
+	abyssal = "Burning Abyssal",
+	abyssal_desc = "Warn when a Burning Abyssal is created.",
+	abyssal_message = "Burning Abyssal Created (%d)",
+
+	heal = "Heal",
+	heal_desc = "Warn when a Hellfire Channeler starts to heal.",
+	heal_message = "Healing!",
+
+	nova = "Blast Nova",
+	nova_desc = "Estimated Blast Nova timers.",
+	nova_ = "Blast Nova!",
+	nova_bar = "~Blast Nova Cooldown",
+	nova_warning = "Blast Nova Soon",
+	nova_cast = "Casting Blast Nova!",
+
+	banish = "Banish",
+	banish_desc = "Warn when you Banish Magtheridon.",
+	banish_trigger = "Только не опять! Не опять!",
+	banish_message = "Banished for ~10sec",
+	banish_over_message = "Banish Fades!",
+	banish_bar = "Banished",
+
+	exhaust = "Disable Exhaustion Bars",
+	exhaust_desc = "Timer bars for Mind Exhaustion on players.",
+	exhaust_bar = "[%s] Exhausted",
+
+	debris = "Debris on You",
+	debris_desc = "Warn for Debris on You.",
+	debris_message = "Debris on YOU!",
+
+	debrisinc = "Debris",
+	debrisinc_desc = "Warn for incoming debris at 30%.",
+	debrisinc_trigger = "Let the walls of this prison tremble", --need translate
+	debrisinc_message = "30% - Incoming Debris!",
+	debrisinc_warning = "Debris Soon!",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
