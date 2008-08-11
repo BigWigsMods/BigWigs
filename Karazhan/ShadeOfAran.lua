@@ -216,34 +216,34 @@ L:RegisterTranslations("esES", function() return {
 	flame_message = "¡Corona de Llamas! %s",
 	flame_bar = "<Corona de Llamas>",
 } end )
-
+-- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
-	adds = "Elementals",
-	adds_desc = "Warn about the water elemental adds spawning.",
-	adds_message = "Elementals Incoming!",
-	adds_warning = "Elementals Soon",
-	adds_bar = "Elementals despawn",
+	adds = "Элементали",
+	adds_desc = "Предупреждать о появлении водных элементалей.",
+	adds_message = "Надвигаются Элементали!",
+	adds_warning = "Скоро Элементали",
+	adds_bar = "Исчезновение Элементалей",
 
-	drink = "Drinking",
-	drink_desc = "Warn when Aran starts to drink.",
-	drink_warning = "Low Mana - Drinking Soon!",
-	drink_message = "Drinking - AoE Polymorph!",
-	drink_bar = "Super Pyroblast Incoming",
+	drink = "Выпивание",
+	drink_desc = "Предупреждать когда Аран начинает Выпивание.",
+	drink_warning = "Мало маны - Скоро Выпивание!",
+	drink_message = "Выпивание - Масс Превращение",
+	drink_bar = "Надвигается Огненная глыба",
 
-	blizzard = "Blizzard",
-	blizzard_desc = "Warn when Blizzard is being cast.",
-	blizzard_message = "Blizzard!",
+	blizzard = "Снежная буря",
+	blizzard_desc = "Предупреждать о начале появления снежной бури.",
+	blizzard_message = "Снежная буря!",
 
-	pull = "Pull/Super AE",
-	pull_desc = "Warn for the magnetic pull and Super Arcane Explosion.",
-	pull_message = "Arcane Explosion!",
-	pull_bar = "Arcane Explosion",
+	pull = "Тяга/Супер ВВ",
+	pull_desc = "Предупреждать о магнитном притягивании и Супер Волшебном взрыве.",
+	pull_message = "Волшебный взрыв!",
+	pull_bar = "Волшебный взрыв",
 
-	flame = "Flame Wreath",
-	flame_desc = "Warn when Flame Wreath is being cast.",
-	flame_warning = "Casting: Flame Wreath!",
-	flame_message = "Flame Wreath! %s",
-	flame_bar = "Flame Wreath",
+	flame = "Венец Пламени",
+	flame_desc = "Предупреждать о начале применения Венца Пламени.",
+	flame_warning = "Чтение: Венец Пламени!",
+	flame_message = "Венец Пламени! %s",
+	flame_bar = "Венец Пламени",
 } end )
 
 ----------------------------------

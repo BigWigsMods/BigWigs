@@ -107,14 +107,14 @@ L:RegisterTranslations("esES", function() return {
 
 L:RegisterTranslations("ruRU", function() return {
 	phase = "Фаза",
-	phase_desc = "Warn when entering a new Phase.",
+	phase_desc = "Предупреждать о смене фаз.",
 	phase2_trigger = "%s зовет своего господина!",
-	phase2_message = "Фаза 2 - %s & Аттумен",
+	phase2_message = "Фаза 2 - %s и Аттумен",
 	phase3_trigger = "Давай, Полночь, разгоним этот сброд!",
 	phase3_message = "Фаза 3 - %s",
 
-	curse = "Cursed Tanks",
-	curse_desc = "Warn when a tank is cursed by Intangible Presence.",
+	curse = "Проклятье на Танке",
+	curse_desc = "Предупреждать когда танк проклят Незримым присутствием.",
 	curse_message = "Танк Проклят - %s",
 } end)
 

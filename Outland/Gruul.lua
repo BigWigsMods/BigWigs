@@ -226,33 +226,33 @@ L:RegisterTranslations("esES", function() return {
 
 	shatter_message = "Trizar",
 } end)
-
+-- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Иди… и умри.",
-	engage_message = "%s Engaged!",
+	engage_message = "Контакт с %s!",
 
-	grow = "Grow",
+	grow = "Расти!",
 	grow_desc = "Count and warn for Grull's grow.",
-	grow_message = "Grows: (%d)",
-	grow_bar = "Grow (%d)",
+	grow_message = "Раста: (%d)",
+	grow_bar = "Расти! (%d)",
 
-	grasp = "Grasp",
+	grasp = "Хватка",
 	grasp_desc = "Grasp warnings and timers.",
-	grasp_message = "Ground Slam - Shatter in ~10sec!",
-	grasp_warning = "Ground Slam Soon",
-	grasp_bar = "~Ground Slam Cooldown",
+	grasp_message = "Прах земной - Раскалывание за ~10сек!",
+	grasp_warning = "Скоро Прах земной",
+	grasp_bar = "~Прах земной",
 
-	cavein = "Cave In on You",
+	cavein = "Вы под Завалом",
 	cavein_desc = "Warn for a Cave In on You.",
-	cavein_message = "Cave In on YOU!",
+	cavein_message = "Вы под Завалом!",
 
-	silence = "Silence",
+	silence = "Молчание",
 	silence_desc = "Warn when Gruul casts AOE Silence (Reverberation).",
-	silence_message = "AOE Silence",
-	silence_warning = "AOE Silence soon!",
-	silence_bar = "~Silence Cooldown",
+	silence_message = "Массовое Молчание",
+	silence_warning = "Скоро Массовое Молчание!",
+	silence_bar = "~Молчание",
 
-	shatter_message = "Shatter!",
+	shatter_message = "Раскалывание!",
 } end)
 
 ----------------------------------

@@ -117,20 +117,20 @@ L:RegisterTranslations("esES", function() return {
 	icon = "Icono de banda",
 	icon_desc = "Pone un icono de banda en la persoan que es Caperucita Roja. (Requiere derechos de banda)",
 } end )
-
+-- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
-	youriding = "Red Riding Hood(You)",
-	youriding_desc = "Warn when you are Red Riding Hood.",
-	riding_youwarn = "You are Red Riding Hood!",
+	youriding = "Красная Шапочка(Вы)",
+	youriding_desc = "Предупреждать когда вы превращены Красная Шапочка.",
+	riding_youwarn = "Вы Красная Шапочка!",
 
-	elseriding = "Red Riding Hood(Other)",
-	elseriding_desc = "Warn when others are Red Riding Hood.",
-	riding_otherwarn = "%s is Red Riding Hood!",
+	elseriding = "Красная Шапочка(Другие)",
+	elseriding_desc = "Предупреждать когда другие превращены Красная Шапочка.",
+	riding_otherwarn = "%s - Красная Шапочка!",
 
-	riding_bar = "%s Running",
+	riding_bar = "%s БЕГИ!!!",
 
-	icon = "Raid Icon",
-	icon_desc = "Put a Raid Icon on the person who's Red Riding Hood. (Requires promoted or higher).",
+	icon = "Иконка Рейда",
+	icon_desc = "Помечает иконкой рейда персонажа превращенного в красную шапочку. (Для этого требуются права в руйде).",
 } end )
 
 ----------------------------------

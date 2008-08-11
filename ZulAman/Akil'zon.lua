@@ -139,16 +139,16 @@ L:RegisterTranslations("esES", function() return {
 	icon = "Icono de banda",
 	icon_desc = "Pone un icono de banda en el jugador con Tormenta eléctrica. (Requiere derechos de banda)",
 } end )
-
+-- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Я хищник! Ты – моя добыча!",
-	engage_message = "%s Engaged - Storm in ~55sec!",
+	engage_message = "Контакт с %s - Буря за ~55сек!",
 
-	elec = "Electrical Storm",
+	elec = "Электрическая буря",
 	elec_desc = "Warn who has Electrical Storm.",
-	elec_bar = "~Storm Cooldown",
-	elec_message = "Storm on %s!",
-	elec_warning = "Storm soon!",
+	elec_bar = "~перезарядка Бури",
+	elec_message = "Буря на %s!",
+	elec_warning = "Скоро Буря!",
 
 	ping = "Ping",
 	ping_desc = "Ping your current location if you are afflicted by Electrical Storm.",

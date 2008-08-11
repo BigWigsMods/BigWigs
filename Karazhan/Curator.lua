@@ -164,7 +164,7 @@ L:RegisterTranslations("ruRU", function() return {
 	berserk_trigger = "Галерея только для гостей.",
 
 	enrage_message = "Исступление!",
-	enrage_warning = "Приблежается Исступление!",
+	enrage_warning = "Скоро Исступление!",
 
 	weaken = "Ослабление",
 	weaken_desc = "Предупреждать о стадии ослаблени.",

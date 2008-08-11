@@ -148,7 +148,7 @@ L:RegisterTranslations("esES", function() return {
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Ваше поведение нестерпимо.",
-	engage_message = "Пресветлая дева Engaged! Покаяние за ~33сек",
+	engage_message = "Контакт с Пресветлой девой! Покаяние за ~33сек",
 
 	repentance = "Покаяние",
 	repentance_desc = "Таймер отсчета до Покаяния.",

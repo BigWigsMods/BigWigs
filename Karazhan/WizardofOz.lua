@@ -114,14 +114,14 @@ L:RegisterTranslations("esES", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "^О, Тито, нам просто надо найти дорогу домой!",
 
-	spawns = "Spawn Timers",
-	spawns_desc = "Timers for when the characters become active.",
-	spawns_bar = "%s attacks!",
-	spawns_warning = "%s in 5 sec",
+	spawns = "Таймер появления",
+	spawns_desc = "Таймеры активации персонажей.",
+	spawns_bar = "%s атакован!",
+	spawns_warning = "%s за 5 сек",
 
-	light = "Chain Lightning",
-	light_desc = "Warn for Chain Lightning being cast.",
-	light_message = "Chain Lightning!",
+	light = "Цепная молния",
+	light_desc = "Предупреждать о выполнении Цепной молния.",
+	light_message = "Цепная молния!",
 } end)
 
 ----------------------------------

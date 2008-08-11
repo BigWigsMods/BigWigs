@@ -281,6 +281,44 @@ L:RegisterTranslations("zhTW", function() return {
 	whisper_bar = "<內心的惡靈消失計時>",
 	whisper_soon = "內心的惡靈冷卻",
 } end )
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	enrage_trigger = "Наконец-то завершается мое изгнание!",
+
+	whirlwind = "Вихрь",
+	whirlwind_desc = "Таймеры Вихрz.",
+	whirlwind_gain = "Вихрь в течении 12 сек",
+	whirlwind_fade = "Вихрь закончился",
+	whirlwind_bar = "Вихрь",
+	whirlwind_bar2 = "~перезарядка Вихря",
+	whirlwind_warn = "Вихрь заряжен-Скоро закружит",
+
+	phase = "Фаза Демона",
+	phase_desc = "Примерные таймеры Фазы Демона.",
+	phase_trigger = "Уйди, эльфийская мелюзга. Я теперь контролирую ситуацию!",
+	phase_demon = "Фаза демона в течении 60 сек",
+	phase_demonsoon = "Фаза демона за 5 сек!",
+	phase_normalsoon = "Нормальная Фаза за 5 сек",
+	phase_normal = "Нормальная Фаза!",
+	demon_bar = "Фаза Демона",
+	demon_nextbar = "След. Фаза Демона",
+
+	mindcontrol = "Контроль над разумом",
+	mindcontrol_desc = "Предупреждать о том у кого законтролирован разум.",
+	mindcontrol_warning = "Контроль разума: %s",
+
+	image = "Изображение",
+	image_desc = "Тревога на 15%  при расколе изображения.",
+	image_trigger = "Нет… нет! Что ты делаешь? Я господин! Ты меня слышишь? Я… а! Не могу… его сдержать.",
+	image_message = "15% - Изображение Создано!",
+	image_warning = "Скоро Изображение!",
+
+	whisper = "Коварный шепот",
+	whisper_desc = "Предупреждать когда игроку получает Коварный шепот.",
+	whisper_message = "Демон: %s",
+	whisper_bar = "Исчезновение Демонов",
+	whisper_soon = "~перезарядка Демона",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

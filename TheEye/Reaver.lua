@@ -210,6 +210,34 @@ L:RegisterTranslations("zhTW", function() return {
 	knock_bar = "<擊退冷卻計時>",
 	knock_message = "擊退: [%s]",
 } end )
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "Тревога! Ты отмечен для уничтожения.",
+
+	orbyou = "Чародейский шар на вас",
+	orbyou_desc = "Warn for Arcane Orb on you.",
+	orb_you = "Чародейский шар на ВАС!",
+
+	orbsay = "Сказать о Чародейском шаре",
+	orbsay_desc = "Print in say when you are targeted for arcane orb, can help nearby members with speech bubbles on.",
+	orb_say = "Шар на Мнеe!",
+
+	orbother = "Чародейский шар на других",
+	orbother_desc = "Warn for Arcane Orb on others",
+	orb_other = "Шар на (%s)",
+
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Icon on the player targeted for Arcane Orb(requires promoted or higher).",
+
+	pounding = "Тяжкий удар",
+	pounding_desc = "Show Pounding timer bars.",
+	pounding_nextbar = "~ Тяжкий удар",
+
+	knock = "Отталкивание",
+	knock_desc = "Knock Away cooldown bar.",
+	knock_bar = "~Отталкивание",
+	knock_message = "Отталкивание: %s",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

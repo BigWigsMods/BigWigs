@@ -287,9 +287,9 @@ L:RegisterTranslations("esES", function() return {
 } end )
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
-	wipe_bar = "Respawn",
+	wipe_bar = "Возрождение",
 
-	phase = "Engage",
+	phase = "Контакт",
 	phase_desc = "Сообщать о смене фаз.",
 	phase1_trigger = "Безумие привело вас сюда, ко мне. Я стану вашей погибелью!",
 	phase2_trigger = "Простофили! Время – это пламя, в котором вы сгорите!",
@@ -298,26 +298,26 @@ L:RegisterTranslations("ruRU", function() return {
 	phase2_message = "60% - Фаза 2",
 	phase3_message = "30% - Фаза 3 ",
 
-	enfeeble = "Enfeeble",
-	enfeeble_desc = "Show cooldown timer for enfeeble.",
-	enfeeble_message = "Enfeeble! next in 30sec",
-	enfeeble_warning1 = "Enfeeble in 5sec!",
-	enfeeble_warning2 = "Enfeeble in 10sec!",
-	enfeeble_bar = "Enfeeble",
-	enfeeble_nextbar = "Next Enfeeble",
-	enfeeble_you = "You are afflicted by Enfeeble.",
-	enfeeble_warnyou = "Enfeeble on YOU!",
+	enfeeble = "Ослабление",
+	enfeeble_desc = "Показывает перерывы для слабости.",
+	enfeeble_message = "Ослабление! следующие 30сек",
+	enfeeble_warning1 = "Ослабление за 5сек!",
+	enfeeble_warning2 = "Ослабление за 10сек!",
+	enfeeble_bar = "Ослабление",
+	enfeeble_nextbar = "Следующее Ослабление",
+	enfeeble_you = "Вы поражены Ослаблением.",
+	enfeeble_warnyou = "Ослабление на ВАС!",
 
 	infernals = "Инферналы",
-	infernals_desc = "Show cooldown timer for Infernal summons.",
+	infernals_desc = "Показывает таймеры призыва Инферналов.",
 	infernal_bar = "Появление Инфернала",
 	infernal_warning = "Появление Инфернала через 17сек!",
 	infernal_message = "Появление Инфернала! Адское Пламя через 5сек!",
 
 	nova = "Кольцо Тьмы",
-	nova_desc = "Estimated Shadow Nova timers.",
+	nova_desc = "Таймеры Кольца Тьмы.",
 	nova_message = "Кольцо Тьмы!",
-	nova_bar = "~Nova Cooldown",
+	nova_bar = "~перезарядка Кольца",
 	nova_soon = "Скоро Кольцо Тьмы",
 
 	despawn = "Disable Infernal Despawn Timers",

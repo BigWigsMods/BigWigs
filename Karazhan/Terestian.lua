@@ -163,22 +163,22 @@ L:RegisterTranslations("esES", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "^А, вы как раз вовремя!.",
 
-	sacrifice = "Sacrifice",
-	sacrifice_desc = "Warn for Sacrifice of players.",
-	sacrifice_message = "%s is being Sacrificed!",
-	sacrifice_bar = "Sacrifice: %s",
-	sacrifice_soon = "Sacrifice soon!",
-	sacrifice_soonbar = "~Possible Sacrifice",
+	sacrifice = "Жертвоприношение",
+	sacrifice_desc = "Предупреждать если игрока принесут в жертву.",
+	sacrifice_message = "%s Жертва!",
+	sacrifice_bar = "Жертвоприношение: %s",
+	sacrifice_soon = "Скоро Жертвоприношение!",
+	sacrifice_soonbar = "~Жертвоприношение",
 
-	icon = "Raid Icon",
-	icon_desc = "Place a raid icon on the sacrificed player(requires promoted or higher).",
+	icon = "Рейд Иконка",
+	icon_desc = "Помечать рейдовой иконкой человека ставшим жертвой (только помощники или рейд лидеры).",
 
-	weak = "Weakened",
-	weak_desc = "Warn for weakened state.",
-	weak_message = "Weakened for ~45sec!",
-	weak_warning1 = "Weakened over in ~5sec!",
-	weak_warning2 = "Weakened over!",
-	weak_bar = "~Weakened Fades",
+	weak = "Ослабление",
+	weak_desc = "Предупреждение о Ослабление статов.",
+	weak_message = "Ослабление на ~45сек!",
+	weak_warning1 = "Ослабление исчезнет за ~5сек!",
+	weak_warning2 = "Ослабление прошло!",
+	weak_bar = "~Ослабление исчезает",
 } end )
 
 ----------------------------------

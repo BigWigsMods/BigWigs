@@ -186,6 +186,30 @@ L:RegisterTranslations("esES", function() return {
 	buff1_message = "¡%s gana Arrojo!",
 	buff2_message = "¡%s gana Devoción!",
 } end)
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	phase = "Фазы",
+	phase_desc = "Преудпреждают о начале новой фазы.",
+	phase1_trigger = "What devil art thou, that dost torment me thus?",
+	phase1_message = "Акт I - %s",
+	phase2_trigger = "Wilt thou provoke me? Then have at thee, boy!",
+	phase2_message = "Акт II - %s",
+	phase3_trigger = "Come, gentle night; and give me back my Romulo!",
+	phase3_message = "Акт III - Вместе",
+
+	poison = "Яд",
+	poison_desc = "Предупреждатьо отровлении игроков.",
+	poison_message = "Отравлен: %s",
+
+	heal = "Исцеление",
+	heal_desc = "Предупреждать когда Джульенна применяет Вечную привязанность.",
+	heal_message = "%s выполняет Исцеление!",
+
+	buff = "Сигнал о баффах",
+	buff_desc = "Предупреждать когда Ромуло и Джульенна наносят положительные заклинания на себя.",
+	buff1_message = "%s получил(а) Бесстрашие!",
+	buff2_message = "%s получил(а) Преданность!",
+} end)
 
 ----------------------------------
 --      Module Declaration      --

@@ -232,34 +232,34 @@ L:RegisterTranslations("esES", function() return {
 } end )
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
-	fear = "Fear Alert",
-	fear_desc = "Warn for Bellowing Roar.",
-	fear_message = "Fear in 2 sec!",
-	fear_warning = "Fear Soon",
-	fear_bar = "Fear!",
-	fear_nextbar = "~Fear Cooldown",
+	fear = "Предупреждать о Страхе",
+	fear_desc = "Сообщает о Раскатистом реве.",
+	fear_message = "Страх через 2 сек!",
+	fear_warning = "Скоро Страх",
+	fear_bar = "Страх!",
+	fear_nextbar = "~перезарядка Страха",
 
-	charr = "Charred Earth on You",
-	charr_desc = "Warn when you are on Charred Earth.",
-	charr_message = "Charred Earth on YOU!",
+	charr = "Вы на Опаленной земле",
+	charr_desc = "Предупреждает что Вы на Опаленной земле.",
+	charr_message = "ВЫ на Опаленной земле!",
 
 	phase = "Фазы",
-	phase_desc = "Warn when Nightbane switches between phases.",
+	phase_desc = "Предупреждает о переключениях фаз Ночной Погибели.",
 	airphase_trigger = "Жалкий гнус! Я изгоню тебя из воздуха!",
 	landphase_trigger1 = "Довольно! Я сойду на землю и сам раздавлю тебя!",
 	landphase_trigger2 = "Ничтожества! Я вам покажу мою силу поближе!",
-	airphase_message = "Flying!",
-	landphase_message = "Landing!",
+	airphase_message = "Полет!",
+	landphase_message = "Приземление!",
 	summon_trigger = "Древнее существо пробуждается вдалеке…",
 
-	engage = "Engage",
-	engage_desc = "Engage alert.",
+	engage = "Контакт",
+	engage_desc = "Предупреждать о кантакте с боссом."
 	engage_trigger = "Ну и глупцы! Я быстро покончу с вашими страданиями!",
-	engage_message = "%s Engaged",
+	engage_message = "Контакт с %s",
 
-	bones = "Rain of Bones",
-	bones_desc = "Warn when Rain of Bones is being channeled.",
-	bones_message = "AoE Rain of Bones!",
+	bones = "Костяной Дождь",
+	bones_desc = "Предупреждать куда направляеться Костяной Дождь.",
+	bones_message = "Массоввый Костяной Дождь!",
 } end )
 
 ----------------------------------
