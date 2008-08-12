@@ -193,6 +193,31 @@ L:RegisterTranslations("zhCN", function() return {
 	icon_desc = "给被凝视的玩家打上团队标记。（需要权限）",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	phase = "Phases",
+	phase_desc = "Warn about the different phases.",
+	normal_phase_message = "Tank'n'spank!",
+	normal_phase_trigger = "Супремус в гневе ударяет по земле!",
+	kite_phase_message = "%s loose!",
+	kite_phase_trigger = "Земля начинает раскалываться!",
+	next_phase_bar = "Next phase",
+	next_phase_message = "Phase change in 10sec!",
+
+	punch = "Molten Punch",
+	punch_desc = "Alert when he does Molten Punch, and display a countdown bar.",
+	punch_message = "Molten Punch!",
+	punch_bar = "~Possible Punch!",
+
+	target = "Target",
+	target_desc = "Warn who he targets during the kite phase, and put a raid icon on them.",
+	target_message = "%s being chased!",
+	target_you = "YOU are being chased!",
+	target_message_nounit = "New target!",
+
+	icon = "Raid Target Icon",
+	icon_desc = "Place a Raid Target Icon on the player being chased(requires promoted or higher).",
+} end )
+
 ----------------------------------
 --    Module Declaration   --
 ----------------------------------

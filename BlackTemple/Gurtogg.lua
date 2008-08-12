@@ -234,6 +234,37 @@ L:RegisterTranslations("zhCN", function() return {
 	icon_desc = "给中了邪酸吐息的队员打上团队标记。（需要权限）",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "Орда тебя… сокрушит.",
+
+	phase = "Phase Timers",
+	phase_desc = "Timers for switching between normal and Fel Rage phases.",
+	phase_rage_warning = "Fel Rage Phase in ~5 sec",
+	phase_normal_warning = "Fel Rage over in ~5 sec",
+	phase_normal = "Fel Rage Phase Over",
+	phase_normal_bar = "~Approximate Rage Phase",
+	phase_rage_bar = "Next Normal Phase",
+
+	bloodboil = "Bloodboil",
+	bloodboil_desc = "Warnings and counter for Bloodboil.",
+	bloodboil_message = "Bloodboil(%d)",
+
+	rage = "Fel Rage",
+	rage_desc = "Warn who gets Fel Rage.",
+	rage_you = "You have Fel Rage!!",
+	rage_other = "%s has Fel Rage!",
+
+	whisper = "Whisper",
+	whisper_desc = "Whisper the player with Fel Rage (requires promoted or higher).",
+
+	acid = "Fel-Acid Breath",
+	acid_desc = "Warn who Fel-Acid Breath is being cast on.",
+	acid_message = "Fel-Acid Casting on: %s",
+
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Icon on who Fel-Acid Breath and Fel Rage is being cast on (requires promoted or higher).",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

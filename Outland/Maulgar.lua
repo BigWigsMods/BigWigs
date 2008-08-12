@@ -297,10 +297,10 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Гронны – настоящая сила в Запределье!",
 
-	heal = "Исциление",
+	heal = "Исцеление",
 	heal_desc = "Warn when Blindeye the Seer begins to cast a Heal.",
 	heal_message = "Слепоглаз выполняет Молитву исцеления!",
-	heal_bar = "Исциление",
+	heal_bar = "Исцеление",
 
 	shield = "Щит",
 	shield_desc = "Warn when Blindeye the Seer gains Greater Power Word: Shield.",

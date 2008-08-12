@@ -181,6 +181,30 @@ L:RegisterTranslations("zhCN", function() return {
 	enrage_message = "已激怒！",
 } end)
 
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "Не продолжайте. Вы будете уничтожены.",
+	engage_message = "Doomwalker engaged, Earthquake in ~30sec!",
+
+	overrun = "Overrun",
+	overrun_desc = "Alert when Doomwalker uses his Overrun ability.",
+	overrun_trigger1 = "Engage maximum speed.",
+	overrun_trigger2 = "Trajectory locked.",
+	overrun_message = "Overrun!",
+	overrun_soon_message = "Possible Overrun soon!",
+	overrun_bar = "~Overrun Cooldown",
+
+	earthquake = "Earthquake",
+	earthquake_desc = "Alert when Doomwalker uses his Earthquake ability.",
+	earthquake_message = "Earthquake! ~70sec to next!",
+	earthquake_bar = "~Earthquake Cooldown",
+	earthquake_trigger1 = "Tectonic disruption commencing.",
+	earthquake_trigger2 = "Magnitude set. Release.",
+
+	enrage_soon_message = "Enrage soon!",
+	enrage_trigger = "%s becomes enraged!",
+	enrage_message = "Enrage!",
+} end)
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
