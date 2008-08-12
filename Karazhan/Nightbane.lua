@@ -253,7 +253,7 @@ L:RegisterTranslations("ruRU", function() return {
 	summon_trigger = "Древнее существо пробуждается вдалеке…",
 
 	engage = "Контакт",
-	engage_desc = "Предупреждать о кантакте с боссом."
+	engage_desc = "Предупреждать о кантакте с боссом.",
 	engage_trigger = "Ну и глупцы! Я быстро покончу с вашими страданиями!",
 	engage_message = "Контакт с %s",
 
