@@ -372,7 +372,7 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger1 = "Желаешь проверить меня?",
 	engage_trigger2 = "Общий - такой грубый язык... Вандаль!",
-	engage_trigger3 = "Я полна неожиданностей!", -- check it
+	engage_trigger3 = "I have better things to do...", -- need translate, wrong previous trigger
 	engage_trigger4 = "Убегай или умри!",
 
 	vanish = "Исчезновение",

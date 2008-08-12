@@ -279,6 +279,43 @@ L:RegisterTranslations("zhTW", function() return {
 	scream_bar = "<靈魂尖嘯冷卻>",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "Лишь боль и страдания ждут тебя!",
+
+	enrage_start = "Enrage in ~47sec",
+	enrage_message = "Enraged for 15sec!",
+	enrage_bar = "<Enraged>",
+	enrage_next = "Enrage Over - Next in ~32sec",
+	enrage_nextbar = "Next Enrage",
+	enrage_warning = "Enrage in 5 sec!",
+
+	desire_trigger  = "Можешь взять все, что желаешь… но не даром.",
+	desire_cot = "Zennshinagas r buras zennshin ", --Curse of Tongues trigger
+	desire_start = "Essence of Desire - Zero mana in 160 sec",
+	desire_bar = "Zero Mana",
+	desire_warn = "Zero Mana in 30sec!",
+
+	runeshield = "Rune Shield",
+	runeshield_desc = "Timers for when Essence of Desire will gain rune shield.",
+	runeshield_message = "Rune Shield!",
+	runeshield_nextbar = "Next Rune Shield",
+	runeshield_warn = "Rune Shield in ~3sec.",
+
+	deaden = "Deaden",
+	deaden_desc = "Warns you when Deaden is being cast.",
+	deaden_message = "Casting Deaden!",
+	deaden_warn = "Deaden in ~5sec.",
+	deaden_nextbar = "Next Deaden.",
+
+	spite = "Spite",
+	spite_desc = "Warn who has Spite.",
+	spite_message = "Spite on %s",
+
+	scream = "Soul Scream",
+	scream_desc = "Show a cooldown bar for Soul Scream.",
+	scream_bar = "~Soul Scream Cooldown",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
