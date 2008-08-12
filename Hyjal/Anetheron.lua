@@ -145,6 +145,25 @@ L:RegisterTranslations("zhCN", function() return {
 	swarm_message = "腐臭虫群！ 约11秒后下一波。",
 	swarm_bar = "<虫群 冷却>",
 } end )
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "Вы защищаете давно обреченный мир! Бегите сейчас - и получите возможность немного продлить свои жалкие жизни!",
+
+	inferno = "Инфернал",
+	inferno_desc = "Таймеры перезарядки Инферналов.",
+	inferno_message = "На %s применяется Инфернал!",
+	inferno_you = "На ВАС применяется Инфернал!",
+	inferno_warning = "Скоро Инфернал!",
+	inferno_bar = "~перезарядка Инфернала",
+
+	icon = "Рейдовая иконка",
+	icon_desc = "PПомечать рейдовой иконкой человека на которого будет применяться Инфернал (Необходимо иметь прова доступа).",
+
+	swarm = "Темная стая",
+	swarm_desc = "Таймеры перезарядки Темной стаи.",
+	swarm_message = "Стая! - След. за ~11сек",
+	swarm_bar = "~перезарядка Стаи",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

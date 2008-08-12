@@ -104,7 +104,7 @@ L:RegisterTranslations("esES", function() return {
 	curse_desc = "Avisar cuando un guerrero o un druida tiene Presencia intangible.",
 	curse_message = "Presencia intangible - %s",
 } end)
-
+-- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	phase = "Фаза",
 	phase_desc = "Предупреждать о смене фаз.",
