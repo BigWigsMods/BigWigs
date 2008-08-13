@@ -131,19 +131,19 @@ L:RegisterTranslations("deDE", function() return {
 	enrage_warning = "Wütend bald!",
 	enrage_message = "10% - Wütend",
 } end )
-
+-- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Итак… дела или удовольствие?",
 
-	attraction = "Fatal Attraction",
-	attraction_desc = "Warn who has Fatal Attraction.",
-	attraction_message = "Attraction: %s",
+	attraction = "Смертельное притяжение",
+	attraction_desc = "Предупредить на кого Смертельное притяжение.",
+	attraction_message = "Притяжение: %s",
 
-	debuff = "Debuff Timers",
-	debuff_desc = "Show the current debuff and the time until the next one.",
+	debuff = "Таймеры ослоблений",
+	debuff_desc = "Отображение текущих отрицательных эффектов и время до следующего.",
 
-	enrage_warning = "Enrage soon!",
-	enrage_message = "10% - Enraged",
+	enrage_warning = "Скоро Исступление!",
+	enrage_message = "10% - Исступление",
 } end )
 
 ----------------------------------

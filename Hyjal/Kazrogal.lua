@@ -98,6 +98,16 @@ L:RegisterTranslations("esES", function() return {
 	mark_bar = "~Marca (%d)",
 	mark_warn = "Marca en 5 seg",
 } end )
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	range = "Проверка досегаемости",
+	range_desc = "Отображения панели близости когда у вас мало маны и вы с Меткой Каз'рогала.",
+
+	mark = "Метка Каз'рогала ",
+	mark_desc = "Отображения таймера Метки Каз'рогала.",
+	mark_bar = "След Матка (%d)",
+	mark_warn = "Метка за 5 сек!",
+} end )
 
 ----------------------------------
 --      Module Declaration      --

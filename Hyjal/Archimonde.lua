@@ -219,6 +219,33 @@ L:RegisterTranslations("zhTW", function() return {
 	burstsay_desc = "當你為空氣爆裂目標時警報周圍，以幫助附近的隊友遠離。",
 	burstsay_message = "空氣炸裂在我身上!",
 } end )
+-- Translated by wow.playhard.ru translators
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "Ваше сопротивление нас не остановит.",
+
+	grip = "Хватка Легиона",
+	grip_desc = "Предупреждать на ком Хватка Легиона.",
+	grip_you = "Хватка на вас!",
+	grip_other = "Хватка на %s!",
+
+	icon = "Иконка Рейда",
+	icon_desc = "Помечает иконкой рейда персонажа с Хваткой Легиона.",
+
+	fear = "Страх",
+	fear_desc = "таймеры страха.",
+	fear_message = "Страх, след. за ~ 42сек!",
+	fear_bar = "~перезарядка Страха",
+	fear_warning = "Презарядка закончена - Скоро Страх!",
+
+	burst = "Воздушный натиск",
+	burst_desc = "Предупреждать на кого применяется Воздушный натиск.",
+	burst_other = "Воздушный натиск на -%s-",
+	burst_you = "Воздушный натиск на ВАС!",
+
+	burstsay = "Сказать о Воздушном натиске",
+	burstsay_desc = "Сказать когда на вас будет нацелен Воздушный натиск, может помочь соседним игрокам.",
+	burstsay_message = "Воздушный натиск на мне!",
+} end )
 
 ----------------------------------
 --      Module Declaration      --
