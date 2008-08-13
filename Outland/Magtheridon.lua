@@ -374,11 +374,11 @@ L:RegisterTranslations("ruRU", function() return {
 	escape_desc = "Отсчёт времени до освобождения Магтеридона.",
 	escape_trigger1 = "Сдерживающая сила Магтеридона начинает ослабевать!",
 	escape_trigger2 = "Я… освобожден!",
-	escape_warning1 = "Контакт с %sом - Освободится за 2мин!",
-	escape_warning2 = "Освободится за 1мин!",
-	escape_warning3 = "Освободится за 30сек!",
-	escape_warning4 = "Освободится за 10сек!",
-	escape_warning5 = "Освободится за 3сек!",
+	escape_warning1 = "Контакт с %sом - Освободится через 2мин!",
+	escape_warning2 = "Освободится через 1мин!",
+	escape_warning3 = "Освободится через 30сек!",
+	escape_warning4 = "Освободится через 10сек!",
+	escape_warning5 = "Освободится через 3сек!",
 	escape_bar = "Освободился...",
 	escape_message = "%s освободился!",
 
@@ -387,7 +387,7 @@ L:RegisterTranslations("ruRU", function() return {
 	abyssal_message = "Горящий дух Бездны (%d)",
 
 	heal = "Исцеление",
-	heal_desc = "Предупреждать когда Чаротворецы начинают Исцелять.",
+	heal_desc = "Предупреждать когда Чаротворцы начинают Исцелять.",
 	heal_message = "Исцеление!",
 
 	nova = "Вспышка Огненной звезды",
@@ -413,7 +413,7 @@ L:RegisterTranslations("ruRU", function() return {
 	debris_message = "Обломок на ВАС!",
 
 	debrisinc = "Обломок на Вас",
-	debrisinc_desc = "Предепреждать о надвигающемся Обломоке на 30%.",
+	debrisinc_desc = "Предупреждать о надвигающемся Обломке на 30%.",
 	debrisinc_trigger = "Let the walls of this prison tremble", --need translate
 	debrisinc_message = "30% - надвигается Обломок!",
 	debrisinc_warning = "Скоро Обломок!",
