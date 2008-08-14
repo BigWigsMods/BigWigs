@@ -152,11 +152,11 @@ L:RegisterTranslations("esES", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	phase = "Фазы",
 	phase_desc = "Предупреждать о изменении фаз Хаотиана Злобного.",
-	phase1_message = "Назад - Дыхания Хаоса закончелись",
-	phase1_bar = "~мозможен отвод",
+	phase1_message = "Назад - Дыхания Хаоса закончелось",
+	phase1_bar = "~возможен отвод",
 	phase1_trigger = "%s издает крик, отступая, открывая путь Пустоте.",
 	phase2_message = "Ярость - скоро Дыхание Хаоса!",
-	phase2_bar = "~мозможная Ярость",
+	phase2_bar = "~возможная Ярость",
 	phase2_trigger = "%s впадает в предельную ярость!",
 
 	voidzone = "Порталы Бездны",

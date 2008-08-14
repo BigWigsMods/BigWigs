@@ -100,7 +100,7 @@ L:RegisterTranslations("esES", function() return {
 } end )
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
-	range = "Проверка досегаемости",
+	range = "Проверка досягаемости",
 	range_desc = "Отображения панели близости когда у вас мало маны и вы с Меткой Каз'рогала.",
 
 	mark = "Метка Каз'рогала ",

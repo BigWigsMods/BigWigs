@@ -215,26 +215,26 @@ L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Тревога! Ты отмечен для уничтожения.",
 
 	orbyou = "Чародейский шар на вас",
-	orbyou_desc = "Warn for Arcane Orb on you.",
+	orbyou_desc = "Предупреждать если на вас Чародейский шар.",
 	orb_you = "Чародейский шар на ВАС!",
 
 	orbsay = "Сказать о Чародейском шаре",
-	orbsay_desc = "Print in say when you are targeted for arcane orb, can help nearby members with speech bubbles on.",
-	orb_say = "Шар на Мнеe!",
+	orbsay_desc = "Сказать в чат если на вас нацеливается Чародейский шар, может помочь другим игрокам в дальнейших действиях.",
+	orb_say = "Шар на Мне!",
 
 	orbother = "Чародейский шар на других",
-	orbother_desc = "Warn for Arcane Orb on others",
+	orbother_desc = "Предупреждать если на других Чародейский шар",
 	orb_other = "Шар на (%s)",
 
-	icon = "Raid Icon",
-	icon_desc = "Place a Raid Icon on the player targeted for Arcane Orb(requires promoted or higher).",
+	icon = "Иконка Рейда",
+	icon_desc = "Помечает иконкой рейда персонажа на которого нацелен Чародейский шар(требуются права в рейде).",
 
 	pounding = "Тяжкий удар",
 	pounding_desc = "Show Pounding timer bars.",
 	pounding_nextbar = "~ Тяжкий удар",
 
 	knock = "Отталкивание",
-	knock_desc = "Knock Away cooldown bar.",
+	knock_desc = "Перезарядка Отталкивание.",
 	knock_bar = "~Отталкивание",
 	knock_message = "Отталкивание: %s",
 } end )

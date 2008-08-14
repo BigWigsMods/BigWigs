@@ -189,7 +189,7 @@ L:RegisterTranslations("esES", function() return {
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	phase = "Фазы",
-	phase_desc = "Преудпреждают о начале новой фазы.",
+	phase_desc = "Предупреждать о начале новой фазы.",
 	phase1_trigger = "What devil art thou, that dost torment me thus?",
 	phase1_message = "Акт I - %s",
 	phase2_trigger = "Wilt thou provoke me? Then have at thee, boy!",
@@ -198,7 +198,7 @@ L:RegisterTranslations("ruRU", function() return {
 	phase3_message = "Акт III - Вместе",
 
 	poison = "Яд",
-	poison_desc = "Предупреждатьо отровлении игроков.",
+	poison_desc = "Предупреждать о отравлении игроков.",
 	poison_message = "Отравлен: %s",
 
 	heal = "Исцеление",

@@ -167,7 +167,7 @@ L:RegisterTranslations("ruRU", function() return {
 	enrage_warning = "Скоро Исступление!",
 
 	weaken = "Ослабление",
-	weaken_desc = "Предупреждать о стадии ослаблени.",
+	weaken_desc = "Предупреждать о стадии ослабления.",
 	weaken_message = "Прилив сил - Ослабление на 20сек!",
 	weaken_bar = "Прилив сил",
 	weaken_fade_message = "Прилив сил закончился - Ослабление рассеялось!",
