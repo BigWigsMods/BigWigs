@@ -158,7 +158,7 @@ L:RegisterTranslations("ruRU", function() return {
 	repentance_nextbar = "Перезарядка Покаяния",
 
 	holyfire = "Священный огонь",
-	holyfire_desc = "Предупреждать о зарашении игроков Священным огонем.",
+	holyfire_desc = "Предупреждать о заражении игроков Священным огонем.",
 	holyfire_message = "Священный огонь: %s",
 
 	icon = "Рейдовая иконка",

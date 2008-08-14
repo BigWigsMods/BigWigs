@@ -372,7 +372,7 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	escape = "Бегство",
 	escape_desc = "Отсчёт времени до освобождения Магтеридона.",
-	escape_trigger1 = "Сдерживающая сила Магтеридона начинает ослабевать!",
+	escape_trigger1 = "начинает ослабевать!",
 	escape_trigger2 = "Я… освобожден!",
 	escape_warning1 = "Контакт с %sом - Освободится через 2мин!",
 	escape_warning2 = "Освободится через 1мин!",
@@ -392,7 +392,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	nova = "Вспышка Огненной звезды",
 	nova_desc = "Таймеры Вспышки Огненной звезды.",
-	nova_ = "Вспышка Огненной звезды!",
+	nova_ = "Вспышка Огненной звезды",
 	nova_bar = "~перезарядка Вспышки",
 	nova_warning = "Скоро Вспышка Огненной звезды",
 	nova_cast = "Применяется Вспышка Огненной звезды!",
@@ -414,7 +414,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	debrisinc = "Обломок на Вас",
 	debrisinc_desc = "Предупреждать о надвигающемся Обломке на 30%.",
-	debrisinc_trigger = "Let the walls of this prison tremble", --need translate
+	debrisinc_trigger = "Меня так просто не возьмешь! Да задрожат стены этой тюрьмы... и да падут!", --need translate
 	debrisinc_message = "30% - надвигается Обломок!",
 	debrisinc_warning = "Скоро Обломок!",
 } end)
