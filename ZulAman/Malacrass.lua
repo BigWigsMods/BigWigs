@@ -202,32 +202,32 @@ L:RegisterTranslations("esES", function() return {
 	consecration_bar = "Consagración (%d)",
 	consecration_warn = "¡Consagración lanzada!",
 } end )
-
+-- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "На вас падет тень…",
 
-	bolts = "Spirit Bolts",
-	bolts_desc = "Warn when Malacrass starts channelling Spirit Bolts.",
-	bolts_message = "Incoming Spirit Bolts!",
-	bolts_warning = "Spirit Bolts in 5 sec!",
-	bolts_nextbar = "Next Spirit Bolts",
+	bolts = "Духовные молнии",
+	bolts_desc = "Предупреждать когда Малакрасс начинает напровлять Духовные молнии.",
+	bolts_message = "Надвиг.Духовные молнии!",
+	bolts_warning = "Духовные молнии за 5 сек!",
+	bolts_nextbar = "След.Духовные молнии",
 
-	soul = "Siphon Soul",
-	soul_desc = "Warn who is afflicted by Siphon Soul.",
-	soul_message = "Siphon: %s",
+	soul = "Вытягивание души",
+	soul_desc = "Предупреждать кто поражен Вытягиванием души.",
+	soul_message = "Вытягивание: %s",
 
-	totem = "Totem",
-	totem_desc = "Warn when a Fire Nova Totem is casted.",
-	totem_message = "Fire Nova Totem!",
+	totem = "Тотем",
+	totem_desc = "Предупреждать когда ставится Тотем кольца огня.",
+	totem_message = "Тотем кольца огня!",
 
-	heal = "Heal",
-	heal_desc = "Warn when Malacrass casts a heal.",
-	heal_message = "Casting Heal!",
+	heal = "Исцеление",
+	heal_desc = "Предупреждать когда Малакрасс применяет Исцеление.",
+	heal_message = "Применяется Исцеление!",
 
-	consecration = "Consecration",
-	consecration_desc = "Warn when Consecration is cast.",
-	consecration_bar = "Consecration (%d)",
-	consecration_warn = "Casted Consecration!",
+	consecration = "Освящение",
+	consecration_desc = "Предупреждать когда Освящение применено.",
+	consecration_bar = "Освящение (%d)",
+	consecration_warn = "Применено Освящение!",
 } end )
 
 ----------------------------------

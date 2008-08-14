@@ -137,23 +137,23 @@ L:RegisterTranslations("esES", function() return {
 	bear_soon = "Fase de Oso en 10seg",
 	bear_warning = "Fase de Oso en 5seg",
 } end )
-
+-- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Недолго вам осталось!",
-	engage_message = "%s Engaged - Bear Form in 45sec!",
+	engage_message = "Контакт с %s - Облик медведя за 45сек!",
 
-	phase = "Phases",
-	phase_desc = "Warn for phase changes.",
+	phase = "Фазы",
+	phase_desc = "Предупреждать о смене фаз.",
 	phase_bear = "Если вызвать чудище, то мало не покажется, точно говорю!",
 	phase_normal = "Пропустите Налоракка!",
-	normal_message = "Normal Phase!",
-	normal_bar = "Next Bear Phase",
-	normal_soon = "Normal Phase in 10sec",
-	normal_warning = "Normal Phase in 5sec",
-	bear_message = "Bear Phase!",
-	bear_bar = "Next Normal Phase",
-	bear_soon = "Bear Phase in 10sec",
-	bear_warning = "Bear Phase in 5sec",
+	normal_message = "Нормальная фаза!",
+	normal_bar = "След.фаза медведя",
+	normal_soon = "Нормальная фаза за 10сек",
+	normal_warning = "Нормальная фаза за 5сек",
+	bear_message = "Фаза медведя!",
+	bear_bar = "След.нормальная фаза",
+	bear_soon = "Фаза медведя за 10сек",
+	bear_warning = "Фаза медведя за 5сек",
 } end )
 
 ----------------------------------

@@ -257,40 +257,40 @@ L:RegisterTranslations("esES", function() return {
 	claw_desc = "Avisar quién tiene Ira de zarpa.",
 	claw_message = "Ira de zarpa: %s",
 } end )
-
+-- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Нет никого сильнее меня!",
-	engage_message = "Phase 1 - Human Phase",
+	engage_message = "Фаза 1 - Фаза человека",
 
-	form = "Form Shift",
-	form_desc = "Warn when Zul'jin changes form.",
+	form = "Смена облика",
+	form_desc = "Предупреждать когда Зулджин сменяет облик.",
 	form_bear_trigger = "Выучил новый фокус… прямо как братишка-медведь…",
-	form_bear_message = "80% Phase 2 - Bear Form!",
+	form_bear_message = "80% Фаза 2 - Облик медведя!",
 	form_eagle_trigger = "От орла нигде не скрыться!",
-	form_eagle_message = "60% Phase 3 - Eagle Form!",
+	form_eagle_message = "60% Фаза 3 - Облик орла!",
 	form_lynx_trigger = "Позвольте представить моих двух братцев: клык и коготь!",
-	form_lynx_message = "40% Phase 4 - Lynx Form!",
+	form_lynx_message = "40% Фаза 4 - Облик рыси!",
 	form_dragonhawk_trigger = "Для того чтобы увидеть дракондора, в небо смотреть необязательно!",
-	form_dragonhawk_message = "20% Phase 5 - Dragonhawk Form!",
+	form_dragonhawk_message = "20% Фаза 5 - Облик дракондора!",
 
-	throw = "Grievous Throw",
-	throw_desc = "Warn who is afflicted by Grievous Throw.",
-	throw_message = "%s has Grievous Throw",
+	throw = "Горестный бросок",
+	throw_desc = "Предупреждать кто поражен Горестным броском.",
+	throw_message = "%s получил Горестный бросок",
 
-	icon = "Raid Icon",
-	icon_desc = "Place a Raid Target Icon on the player afflicted by Grievous Throw or Claw Rage. (requires promoted or higher)",
+	icon = "Иконка Рейда",
+	icon_desc = "Помечает иконкой рейда персонажа пораженного Горестным броском или Яростными когтями. (Для этого требуются права в рейде)",
 
-	paralyze = "Paralyze",
-	paralyze_desc = "Warn for Creeping Paralysis and the impending Paralyze after effect.",
-	paralyze_warning = "Creeping Paralysis - Paralyze in 5 sec!",
-	paralyze_message = "Paralyzed!",
-	paralyze_bar = "Inc Paralyze",
-	paralyze_warnbar = "Next Paralyze",
-	paralyze_soon = "Creeping Paralysis in 5 sec",
+	paralyze = "Парализация",
+	paralyze_desc = "Предупреждать о Ползучем параличе и грядущей парализации.",
+	paralyze_warning = "Ползучий паралич - паралич за 5 сек!",
+	paralyze_message = "Парализован!",
+	paralyze_bar = "Наступ. Паралич",
+	paralyze_warnbar = "След Паралич",
+	paralyze_soon = "Ползучий паралич за 5 сек",
 
-	claw = "Claw Rage",
-	claw_desc = "Warn for who gets Claw Rage.",
-	claw_message = "Claw Rage on %s",
+	claw = "Яростные когти",
+	claw_desc = "Предупреждать кто получил Яростными когтями.",
+	claw_message = "%s получил Яростными когтями",
 } end )
 
 

@@ -222,34 +222,34 @@ L:RegisterTranslations("deDE", function() return {
 	icon = "Schlachtzug Symbol",
 	icon_desc = "Platziere ein Schlachtzugsymbol auf dem Spieler, der von Flammenschock betroffen ist (benötigt Assistent oder höher).",
 } end )
-
+-- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Встаньте на колени и поклонитесь клыку и когтю!",
 
-	totem = "Totem",
-	totem_desc = "Warn when Halazzi casts a Lightning Totem.",
-	totem_message = "Incoming Lightning Totem!",
+	totem = "Тотем",
+	totem_desc = "Предупреждать когда Халаззи ставит Тотем молний.",
+	totem_message = "Надвигается Тотем молний!",
 
-	phase = "Phases",
-	phase_desc = "Warn for phase changes.",
+	phase = "Фазы",
+	phase_desc = "Предупреждать о смене фаз.",
 	phase_spirit = "Со мною дикий дух…",
 	phase_normal = "О дух, вернись ко мне!",
-	normal_message = "Normal Phase!",
-	spirit_message = "%d%% HP! - Spirit Phase!",
-	spirit_soon = "Spirit Phase soon!",
-	spirit_bar = "~Possible Normal Phase",
+	normal_message = "Нормальная фаза!",
+	spirit_message = "%d%% ЗД! - Фаза духа!",
+	spirit_soon = "Скоро фаза духа!",
+	spirit_bar = "~нормальная фаза",
 
-	frenzy = "Frenzy",
-	frenzy_desc = "Frenzy alert.",
+	frenzy = "Бешенство",
+	frenzy_desc = "Предупреждать о Бешенстве.",
 	frenzy_trigger = "%s впадает в убийственную ярость!",
-	frenzy_message = "Frenzy!",
+	frenzy_message = "Бешенство!",
 
-	flame = "Flame Shock",
-	flame_desc = "Warn for players with Flame Shock.",
-	flame_message = "Flame Shock: %s",
+	flame = "Огненный шок",
+	flame_desc = "Предупреждать о игроках с Огненным шоком.",
+	flame_message = "Огненный шок на: %s",
 
-	icon = "Raid Icon",
-	icon_desc = "Place a Raid Target Icon on the player with Flame Shock. (requires promoted or higher)",
+	icon = "Иконка Рейда",
+	icon_desc = "Помечает иконкой рейда персонажа с Огненным шоком. (требуются права в рейде)",
 } end )
 
 ----------------------------------

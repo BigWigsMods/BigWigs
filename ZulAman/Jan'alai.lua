@@ -162,26 +162,26 @@ L:RegisterTranslations("esES", function() return {
 	adds_trigger = "¿Dónde está mi criador? ¡A por los huevos!",
 	adds_message = "¡Vienen añadidos!",
 } end )
-
+-- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Да покарают вас духи ветра!",
 
-	flame = "Flame Breath",
-	flame_desc = "Warn who Jan'alai casts Flame Strike on.",
-	flame_message = "Flame Breath on %s!",
+	flame = "Пламенное дыхание",
+	flame_desc = "Предупреждать когда Джаналайя применяет Поражение пламенем.",
+	flame_message = "Пламенное дыхание в %s!",
 
-	icon = "Raid Icon",
-	icon_desc = "Place a Raid Target Icon on the player targetted by Flame Breath. (requires promoted or higher)",
+	icon = "Иконка Рейда",
+	icon_desc = "Помечает иконкой рейда персонажа попавшего под цель Пламенного дыхания. (требуются права в рейде)",
 
-	bomb = "Fire Bomb",
-	bomb_desc = "Show timers for Fire Bomb.",
+	bomb = "Огненная бомба",
+	bomb_desc = "Таймеры Огненной бомбы.",
 	bomb_trigger = "Сгиньте в огне!",
-	bomb_message = "Incoming Fire Bombs!",
+	bomb_message = "Надвигается Огненная бомба!",
 
-	adds = "Adds",
-	adds_desc = "Warn for Incoming Adds.",
+	adds = "Прибавление",
+	adds_desc = "Предупреждать о надвигающимся прибавлении.",
 	adds_trigger = "Где мои Наседки? Пора за яйца приниматься!",
-	adds_message = "Incoming Adds!",
+	adds_message = "Надвигается прибавление!",
 } end )
 
 ----------------------------------
