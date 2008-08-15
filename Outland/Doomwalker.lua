@@ -111,26 +111,28 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("deDE", function() return {
-	overrun = "\195\156berrennen",
+	
+	--engage_trigger = "",
+	engage_message = "Verdammniswandler angegriffen, Erdbeben in ~30sek!",
+	
+	overrun = "Überrennen",
 	overrun_desc = "Warnt, wenn Verdammniswandler \195\156berrennen benutzt.",
-
+	--overrun_trigger1 = "",
+	--overrun_trigger2 = "",
+	overrun_message = "Überrennen!",
+	overrun_soon_message = "Überrennen bald!",
+	overrun_bar = "~\195\156berrennen",
+	
 	earthquake = "Erdbeben",
-	earthquake_desc = "Warnt, wenn Verdammniswandler Erdbeben benutzt.",
-
-	engage_message = "Verdammniswandler angegriffen, Erdbeben in ~30sec!",
-	enrage_soon_message = "Wutanfall bald!",
-
+	earthquake_desc = "Warnt wenn Verdammniswandler Erdbeben benutzt.",
+	earthquake_message = "N\195\164chstes Erdbeben in ~70sek",
+	earthquake_bar = "~Erdbeben Cooldown",
 	--earthquake_trigger1 = "",
 	--earthquake_trigger2 = "",
 
-	earthquake_message = "Erdbeben! ~70sec to next!",
-	earthquake_bar = "~Erdbeben Cooldown",
-
-	--overrun_trigger1 = "",
-	--overrun_trigger2 = "",
-	overrun_message = "\195\156berrennen!",
-	overrun_soon_message = "M\195\182gliches \195\156berrennen bald!",
-	overrun_bar = "~\195\156berrennen Cooldown",
+	enrage_soon_message = "Enrage bald!",
+	enrage_trigger = "%s bekommt Wutanfall!",
+	enrage_message = "Enrage!",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

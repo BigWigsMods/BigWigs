@@ -81,10 +81,10 @@ L:RegisterTranslations("deDE", function() return {
 	punch = "Glühender Hieb",
 	punch_desc = "Warnt, wenn Supremus Glühender Hieb benutzt und zeigt einen Countdown an.",
 	punch_message = "Glühender Hieb!",
-	punch_bar = "~Möglicher Hieb!",
+	punch_bar = "~Möglicher Glühender Hieb!",
 
 	target = "Verfolgtes Ziel",
-	target_desc = "Warnt wer wärend der Kitephase verfolgt wird.",
+	target_desc = "Warnt wer während der Kitephase verfolgt wird.",
 	target_message = "%s wird verfolgt!",
 	target_you = "DU wirst verfolgt!",
 	target_message_nounit = "Neues Ziel!",

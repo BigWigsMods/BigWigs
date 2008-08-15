@@ -327,26 +327,26 @@ L:RegisterTranslations("deDE", function() return {
 
 	vanish = "Verschwinden",
 	vanish_desc = "Geschäzte Timer für das Verschwinden von Veras Schwarzschatten.",
-	vanish_message = "Veras: Verschwunden! Zurrück in ~30sek",
-	vanish_warning = "Verschwinden vorbei - %s zurrück!",
-	vanish_bar = "Veras getarnt",
+	vanish_message = "Veras: Verschwunden! Zurück in ~30sek",
+	vanish_warning = "Verschwinden vorbei - %s zurück!",
+	vanish_bar = "Veras: Verschwunden",
 
 	immune = "Immunitäts Warnung",
 	immune_desc = "Warnen wenn Malande immun gegen Zauber oder Nahkampfangriffe wird.",
-	immune_message = "Malande: %s Immun für 15sec!",
-	immune_bar = "%s Immun!",
+	immune_message = "Malande: %s immun für 15sec!",
+	immune_bar = "Malande: %s immun!",
 
 	spell = "Zauber",
 	melee = "Nahkampf",
 
 	shield = "Reflektierender Schild",
 	shield_desc = "Warnt wenn Malande Reflektierender Schild bekommt.",
-	shield_message = "Reflektierender Schild auf Malande!",
+	shield_message = "Malande: Reflektierender Schild!",
 
 	poison = "Tödliches Gift",
 	poison_desc = "Warnt wenn Tödliches Gift auf Spielern ist .",
-	poison_other = "%s hat Tödliches Gift!",
-	poison_you = "Tödliches Gift on DIR!",
+	poison_other = "Tödliches Gift: %s",
+	poison_you = "Tödliches Gift auf DIR!",
 
 	icon = "Schlachtzug Symbol",
 	icon_desc = "Plaziert ein Schlachtgruppen Symbol auf Spielern mit Tödliches Gift (benötigt Assistent oder höher).",
@@ -354,19 +354,19 @@ L:RegisterTranslations("deDE", function() return {
 	circle = "Kreis der Heilung",
 	circle_desc = "Warnt wenn Malande anfängt Kreis der Heilung zu zaubern.",
 	circle_trigger = "Lady Malande beginnt Kreis der Heilung zu wirken.",
-	circle_message = "Zaubert Kreis der Heilung!",
+	circle_message = "Malande: Kreis der Heilung!",
 	circle_heal_message = "Geheilt! - Nächster in ~20sek",
-	circle_fail_message = "%s Unterbrochen! - Nächster in ~12sek",
-	circle_bar = "~Kreis der Heilung Cooldown",
+	circle_fail_message = "%s unterbrochen! - Nächster in ~12sek",
+	circle_bar = "Malande: Kreis der Heilung",
 
 	res = "Resistenz Aura",
 	res_desc = "Warnt wenn Gathios der Zerschmetterer die Aura des chromatischen Widerstands bekommt.",
-	res_message = "Gathios: Resistenz für 30 sek!",
-	res_bar = "Resistenz Aura",
+	res_message = "Gathios: Resistenz für 30sek!",
+	res_bar = "Gathios: Resistenz Aura",
 
-	--blizzard = "Blizzard on You",
-	--blizzard_desc = "Warn when you are in a Blizzard.",
-	--blizzard_message = "Blizzard on YOU!",
+	blizzard = "Blizzard",
+	blizzard_desc = "Warnt wenn du im Blizzard stehst.",
+	blizzard_message = "Blizzard auf DIR!",
 } end )
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {

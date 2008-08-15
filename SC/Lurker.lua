@@ -126,26 +126,26 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	engage_warning = "%s Engaged - M\195\182gliches abtauchen in 90sek",
+	engage_warning = "%s Engaged - M\195\182gliches Abtauchen in 90sek",
 
-	dive = "Tauchen",
+	dive = "Abtauchen",
 	dive_desc = "Zeitanzeige wann Das Grauen aus der Tiefe taucht.",
-	dive_warning = "M\195\182gliches abtauchen in %dsek!",
-	dive_bar = "~Tauchen",
+	dive_warning = "M\195\182gliches Abtauchen in %dsek!",
+	dive_bar = "~Abtauchen",
 	dive_message = "Abgetaucht - Zur\195\188ck in 60sek",
 
 	spout = "Schwall",
-	spout_desc = "Zeitanzeige f\195\188r Schwall, m\195\182glicherweise nicht sehr akkurat.",
+	spout_desc = "Gesch\195\164tzte Zeitanzeige f\195\188r Schwall.",
 	spout_message = "Wirkt Schwall!",
 	spout_warning = "M\195\182glicher Schwall in ~3sek!",
 	spout_bar = "M\195\182glicher Schwall",
 
 	whirl = "Wirbel",
 	whirl_desc = "Zeitanzeige f\195\188r Wirbel.",
-	whirl_bar = "M\195\182glicher wirbel",
+	whirl_bar = "M\195\182glicher Wirbel",
 
 	emerge_warning = "Zur\195\188ck in %dsek",
-	emerge_message = "Aufgetaucht - M\195\182glicher Schwall in 90sek",
+	emerge_message = "Aufgetaucht - M\195\182gliches Abtauchen in 90sek",
 	emerge_bar = "Auftauchen",
 
 	["Coilfang Guardian"] = "W\195\164chter des Echsenkessels",

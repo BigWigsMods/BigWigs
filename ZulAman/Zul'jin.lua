@@ -65,22 +65,22 @@ L:RegisterTranslations("deDE", function() return {
 
 	throw = "Schrecklicher Wurf",
 	throw_desc = "Warnen wer von Schrecklicher Wurf betroffen ist.",
-	throw_message = "%s hat Schrecklicher Wurf",
+	throw_message = "Schrecklicher Wurf: %s",
 
 	icon = "Schlachtzugsymbol",
 	icon_desc = "Platziere ein Schlachtzugsymbol auf dem Spieler, der von Schrecklicher Wurf oder Klauenwut betroffen ist (benötigt Assistent oder höher).",
 
 	paralyze = "Schleichende Paralyse",
 	paralyze_desc = "Warnen wer von der Schleichende Paralyse und der daraus folgenden direkten Paralyse betroffen ist.",
-	paralyze_warning = "Schleichende Paralyse - Paralyse in 5 sek!",
+	paralyze_warning = "Schleichende Paralyse - Paralyse in 5sek!",
 	paralyze_message = "Paralysiert!",
-	paralyze_bar = "Inc Paralyse",
+	paralyze_bar = "Paralyse!",
 	paralyze_warnbar = "Nächste Paralyse",
-	paralyze_soon = "Schleichende Paralyse in 5 sek",
+	paralyze_soon = "Schleichende Paralyse in 5sek",
 
 	claw = "Klauenwut",
 	claw_desc = "Warnen wer von Klauenwut betroffen ist.",
-	claw_message = "Klauenwut auf %s",
+	claw_message = "Klauenwut: %s",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

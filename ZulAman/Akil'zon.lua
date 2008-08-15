@@ -73,8 +73,8 @@ L:RegisterTranslations("deDE", function() return {
 	engage_message = "%s angegriffen - Sturm in ~55sec!",
 
 	elec = "Elektrischer Sturm",
-	elec_desc = "Gib Warnung mit dem Spielernamen des Ziels von Elektrischer Sturm aus.",
-	elec_bar = "~Sturm Cooldown",
+	elec_desc = "Warnt wer Ziel von Elektrischer Sturm ist.",
+	elec_bar = "~Sturm",
 	elec_message = "Sturm auf %s!",
 	elec_warning = "Sturm bald!",
 

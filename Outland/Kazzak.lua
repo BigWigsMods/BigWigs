@@ -34,6 +34,28 @@ L:RegisterTranslations("enUS", function() return {
 	twist_message = "Twisted Reflection: %s",
 } end)
 
+L:RegisterTranslations("deDE", function() return {
+	
+	engage_trigger1 = "Die Legion wird alles erobern!",
+	engage_trigger2 = "Alle Sterblichen werden zu Grunde gehen!",
+
+	enrage_trigger = "%s bekommt Wutanfall!",
+	enrage_warning1 = "%s angegriffen - Enrage in ~60sek",
+	enrage_warning2 = "Enrage bald!",
+	enrage_message = "Enrage!",
+	enrage_finished = "Enrage vorbei - N\195\188chster in ~60sek",
+	enrage_bar = "~Enrage",
+	enraged_bar = "Enrage!",
+
+	mark = "Mal von Kazzak",
+	mark_desc = "Warnt wenn du das Mal von Kazzak bekommst.",
+	mark_message = "Mal von Kazzak auf DIR!",
+
+	twist = "Verdrehte Reflexion",
+	twist_desc = "Warnt wer Verdrehte Reflexion bekommt.",
+	twist_message = "Verdrehte Reflexion: %s",
+} end)
+
 L:RegisterTranslations("esES", function() return {
 	engage_trigger1 = "¡La Legión lo conquistará todo!",
 	engage_trigger2 = "¡Todo mortal perecerá!",

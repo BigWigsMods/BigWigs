@@ -68,20 +68,20 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Ihr sterbt noch schnell genug!",
-	engage_message = "%s Gepullt - Bär Form in 45seK!",
+	engage_message = "%s gepullt - B\195\164r Form in 45sek!",
 
 	phase = "Phasen",
-	phase_desc = "Warnt vor Phasen Änderrungen.",
+	phase_desc = "Warnt vor Phasenwechsel.",
 	phase_bear = "Ihr provoziert die Bestie, jetzt werdet Ihr sie kennenlernen!",
 	phase_normal = "Macht Platz für Nalorakk!",
 	normal_message = "Normale Phase!",
-	normal_bar = "Nächste Bär Phase",
+	normal_bar = "N\195\164chste B\195\164r Phase",
 	normal_soon = "Normale Phase in 10sek",
 	normal_warning = "Normale Phase in 5sek",
-	bear_message = "Bär Phase!",
-	bear_bar = "Nächste Normale Phase",
-	bear_soon = "Bär Phase in 10sek",
-	bear_warning = "Bär Phase in 5sek",
+	bear_message = "B\195\164r Phase!",
+	bear_bar = "N\195\164chste Normale Phase",
+	bear_soon = "B\195\164r Phase in 10sek",
+	bear_warning = "B\195\164r Phase in 5sek",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

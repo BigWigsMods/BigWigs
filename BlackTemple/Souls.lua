@@ -171,38 +171,38 @@ L:RegisterTranslations("frFR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Auf Euch warten nur Schmerz und Leid!",
 
-	enrage_start = "Wutanfall in ~47sec",
+	enrage_start = "Wutanfall in ~47sek",
 	enrage_message = "Wutanfall für 15sek!",
-	enrage_bar = "<Wutanfall>",
-	enrage_next = "Wutanfall Vorbei - Nächster in ~32sec",
+	enrage_bar = "Wutanfall!",
+	enrage_next = "Wutanfall vorbei - Nächster in ~32sek",
 	enrage_nextbar = "Nächster Wutanfall",
-	enrage_warning = "Wutanfall in 5 sek!",
+	enrage_warning = "Wutanfall in 5sek!",
 
 	desire_trigger  = "Ihr könnt alles haben, was Ihr wollt... doch es hat einen Preis.",
 	desire_cot = "Maz archim zekul refir daz Maz soran maez me ruk buras Zekul", --Curse of Tongues trigger
-	desire_start = "Essenz der Begierde - Null Mana in 160 sek",
-	desire_bar = "Null Mana",
-	desire_warn = "Null Mana in 30sek!",
+	desire_start = "Essenz der Begierde - Kein Mana in 160sec",
+	desire_bar = "Kein Mana",
+	desire_warn = "Kein Mana in 30sek!",
 
 	runeshield = "Runenschild",
-	runeshield_desc = "Timer wann Essenz der Begierde das Runenschild bekommen wird.",
+	runeshield_desc = "Warnt vor dem Runenschild der Essenz der Begierde.",
 	runeshield_message = "Runenschild!",
 	runeshield_nextbar = "Nächstes Runenschild",
-	runeshield_warn = "Runenschild in ~3sek.",
+	runeshield_warn = "Runenschild in ~3sek!",
 
 	deaden = "Abstumpfen",
 	deaden_desc = "Warnt dich wenn Abstumpfen gezaubert wird.",
-	deaden_message = "Zaubert Abstumpfen!",
-	deaden_warn = "Abstumpfen in ~5sek.",
-	deaden_nextbar = "Nächstes Abstumpfen.",
+	deaden_message = "Abstumpfen!",
+	deaden_warn = "Abstumpfen in ~5sek!",
+	deaden_nextbar = "Nächstes Abstumpfen",
 
 	spite = "Bosheit",
 	spite_desc = "Warnt wer Bosheit hat.",
-	spite_message = "Bosheit: [%s]",
+	spite_message = "Bosheit: %s",
 
 	scream = "Seelenschrei",
-	scream_desc = "Zeige eine Cooldownleiste für Seelenschrei.",
-	scream_bar = "~Seelenschrei Cooldown",
+	scream_desc = "Warnt vor Seelenschrei.",
+	scream_bar = "~Seelenschrei",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

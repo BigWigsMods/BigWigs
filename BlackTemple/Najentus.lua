@@ -64,7 +64,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	spine = "Aufspießender Stachel",
 	spine_desc = "Sagt euch, wer aufgespießt wird.",
-	spine_message = "Aufspießender Stachel auf %s!",
+	spine_message = "Aufspießender Stachel: %s!",
 
 	spinesay = "Stachel Sagen",
 	spinesay_desc = "Schreibe in /sagen wenn du das Ziel vom Aufspießender Stachel bist, dies kann angrenzenden Membern mit aktivierten Sprechblasen helfen.",

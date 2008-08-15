@@ -82,21 +82,21 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Die Geister der Winde besiegeln Euer Schicksal!",
 
 	flame = "Flammenatem",
-	flame_desc = "Warnt auf wen Flammenatem von Jan'alai gewirkt wird.",
+	flame_desc = "Warnt auf wen Flammenatem gewirkt wird.",
 	flame_message = "Flammenatem auf %s!",
 
 	icon = "Schlachtzug Symbol",
-	icon_desc = "Plaziert ein Schlachtgruppen Symbol auf Spielern auf die Flammenatem gewirkt wird(benötigt Assistent oder höher).",
+	icon_desc = "Plaziert ein Schlachtgruppen Symbol auf Spielern auf die Flammenatem gewirkt wird (benötigt Assistent oder höher).",
 
 	bomb = "Feuerbombe",
 	bomb_desc = "Zeigt Timer für Feuerbomben an.",
 	bomb_trigger = "Jetzt sollt Ihr brennen!",
-	bomb_message = "Neue Feuerbomben!",
+	bomb_message = "Feuerbomben!",
 
 	adds = "Brutwächter",
 	adds_desc = "Warnt wenn Brutwächter gerufen werden.",
 	adds_trigger = "Wo is' meine Brut? Was ist mit den Eiern?",
-	adds_message = "Brutwächter wurden gerufen!",
+	adds_message = "Brutwächter!",
 } end )
 
 

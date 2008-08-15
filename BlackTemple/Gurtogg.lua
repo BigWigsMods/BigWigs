@@ -113,12 +113,12 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "Horde... wird Euch zerschmettern.",
 
-	phase = "Phasen Timer",
+	phase = "Phasen",
 	phase_desc = "Timer für den Wechsel zwischen normaler und Teufelswut Phase.",
-	phase_rage_warning = "Teufelswut Phase in ~5 sec",
-	phase_normal_warning = "Teufelswut vorbei in ~5 sec",
-	phase_normal = "Teufelswut Phase vorbei",
-	phase_normal_bar = "Nächste Teufelswut Phase",
+	phase_rage_warning = "Teufelswut in ~5sek!",
+	phase_normal_warning = "Teufelswut vorbei in ~5sek",
+	phase_normal = "Teufelswut vorbei!",
+	phase_normal_bar = "Nächste Teufelswut",
 	phase_rage_bar = "Nächste Normale Phase",
 
 	bloodboil = "Siedeblut",
@@ -127,15 +127,15 @@ L:RegisterTranslations("deDE", function() return {
 
 	rage = "Teufelswut",
 	rage_desc = "Warnt, wer Teufelswut bekommt.",
-	rage_you = "Du hast Teufelswut!!",
-	rage_other = "%s hat Teufelswut!",
+	rage_you = "DU hast Teufelswut!",
+	rage_other = "Teufelswut: %s!",
 
 	whisper = "Flüstern",
 	whisper_desc = "Flüstert dem Spieler mit Teufelswut (benötigt Assistent oder höher).",
 
 	acid = "Teufelssäureatem",
 	acid_desc = "Warnt auf wen Teufelssäureatem gezaubert wird.",
-	acid_message = "Teufelssäureatem auf: %s",
+	acid_message = "Teufelssäureatem: %s",
 
 	icon = "Schlachtzug Symbol",
 	icon_desc = "Plaziert ein Schlachtzug Symbol auf dem Spieler, der Teufelssäureatem abbekommt (benötigt Assistent oder höher).",
