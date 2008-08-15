@@ -414,7 +414,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	debrisinc = "Обломок на Вас",
 	debrisinc_desc = "Предупреждать о надвигающемся Обломке на 30%.",
-	debrisinc_trigger = "Меня так просто не возьмешь! Да задрожат стены этой тюрьмы... и да падут!", --need translate
+	debrisinc_trigger = "Меня так просто не возьмешь! Да задрожат стены этой тюрьмы… и да падут!", --need translate
 	debrisinc_message = "30% - надвигается Обломок!",
 	debrisinc_warning = "Скоро Обломок!",
 } end)

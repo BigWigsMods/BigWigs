@@ -498,6 +498,74 @@ L:RegisterTranslations("zhTW", function() return {
 	illi_start = "阿卡瑪。你的謊言真是老套。我很久前就該殺了你和你那些畸形的同胞。",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	berserk_trigger = "Вы не готовы!",
+
+	parasite = "Parasitic Shadowfiend",
+	parasite_desc = "Warn who has Parasitic Shadowfiend.",
+	parasite_you = "You have a Parasite!",
+	parasite_other = "%s has a Parasite!",
+
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Icon on the player with Parasitic Shadowfiend or Dark Barrage.",
+
+	barrage = "Dark Barrage",
+	barrage_desc = "Warn who has Dark Barrage.",
+	barrage_message = "%s is being Barraged!",
+	barrage_warn = "Barrage Soon!",
+	barrage_warn_bar = "~Next Barrage",
+	barrage_bar = "Barrage: %s",
+
+	eyeblast = "Eye Blast",
+	eyeblast_desc = "Warn when Eye Blast is cast.",
+	eyeblast_trigger = "Stare into the eyes of the Betrayer!",
+	eyeblast_message = "Eye Blast!",
+
+	shear = "Shear",
+	shear_desc = "Warn about Shear on players.",
+	shear_message = "Shear on %s!",
+	shear_bar = "Shear: %s",
+
+	flame = "Agonizing Flames",
+	flame_desc = "Warn who has Agonizing Flames.",
+	flame_message = "%s has Agonizing Flames!",
+
+	demons = "Shadow Demons",
+	demons_desc = "Warn when Illidan is summoning Shadow Demons.",
+	demons_message = "Shadow Demons!",
+	demons_warn = "Demons Soon!",
+
+	phase = "Phases",
+	phase_desc = "Warns when Illidan goes into different stages.",
+	phase2_soon_message = "Phase 2 soon!",
+	phase2_message = "Phase 2 - Blades of Azzinoth!",
+	phase3_message = "Phase 3!",
+	demon_phase_trigger = "Узрите мощь демона!",
+	demon_phase_message = "Demon Form!",
+	demon_bar = "Next Normal Phase",
+	demon_warning = "Demon over in ~ 5 sec!",
+	normal_bar = "~Possible Demon Phase",
+	normal_warning = "Possible Demon Phase in ~5 sec!",
+	phase4_trigger = "Is this it, mortals? Is this all the fury you can muster?", --need translate
+	phase4_soon_message = "Phase 4 soon!",
+	phase4_message = "Phase 4 - Maiev Incoming!",
+
+	burst = "Flame Burst",
+	burst_desc = "Warns when Illidan will use Flame Burst",
+	burst_message = "Flame Burst!",
+	burst_cooldown_bar = "Flame Burst cooldown",
+	burst_cooldown_warn = "Flame Burst soon!",
+	burst_warn = "Flame Burst in 5sec!",
+
+	enrage_trigger = "Feel the hatred of ten thousand years!", --need translate
+	enrage_message = "Enraged!",
+
+	["Flame of Azzinoth"] = "Flame of Azzinoth",
+
+	--very first yell to start engage timer
+	illi_start = "Акама! Твое двуличие меня не удивляет. Мне давным-давно стоило уничтожить тебя и твоих уродливых собратьев.",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

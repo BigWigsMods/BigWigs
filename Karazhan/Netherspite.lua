@@ -151,8 +151,8 @@ L:RegisterTranslations("esES", function() return {
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	phase = "Фазы",
-	phase_desc = "Предупреждать о изменении фаз Хаотиана Злобного.",
-	phase1_message = "Назад - Дыхания Хаоса закончелось",
+	phase_desc = "Предупреждать о изменении фаз Пустогнева.",
+	phase1_message = "Назад - Дыхания Хаоса закончилось",
 	phase1_bar = "~возможен отвод",
 	phase1_trigger = "%s издает крик, отступая, открывая путь Пустоте.",
 	phase2_message = "Ярость - скоро Дыхание Хаоса!",

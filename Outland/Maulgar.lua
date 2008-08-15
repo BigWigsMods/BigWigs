@@ -309,7 +309,7 @@ L:RegisterTranslations("ruRU", function() return {
 	spellshield = "Щит заклятий",
 	spellshield_desc = "Warn when Krosh Firehand gains Spell Shield.",
 	spellshield_message = "Щит заклятий на Кроше!",
-	spellshield_bar = "След Щит заклятий",
+	spellshield_bar = "След. Щит заклятий",
 
 	summon = "Призвание дикого Охотника Скверны",
 	summon_desc = "Warn when Olm the Summoner begins to cast Summon Wild Felhunter.",

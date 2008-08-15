@@ -286,7 +286,7 @@ L:RegisterTranslations("ruRU", function() return {
 	enrage_trigger = "Наконец-то завершается мое изгнание!",
 
 	whirlwind = "Вихрь",
-	whirlwind_desc = "Таймеры Вихрz.",
+	whirlwind_desc = "Таймеры Вихря.",
 	whirlwind_gain = "Вихрь в течении 12 сек",
 	whirlwind_fade = "Вихрь закончился",
 	whirlwind_bar = "Вихрь",
@@ -314,7 +314,7 @@ L:RegisterTranslations("ruRU", function() return {
 	image_warning = "Скоро Изображение!",
 
 	whisper = "Коварный шепот",
-	whisper_desc = "Предупреждать когда игроку получает Коварный шепот.",
+	whisper_desc = "Предупреждать когда игрок получает Коварный шепот.",
 	whisper_message = "Демон: %s",
 	whisper_bar = "Исчезновение Демонов",
 	whisper_soon = "~перезарядка Демона",
