@@ -92,7 +92,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	phase = "Phasen",
 	phase_desc = "Warnung bei Phasenwechsel.",
-	phase1_message = "Phase 1 - Spaltung in ~50sec",
+	phase1_message = "Phase 1 - Spaltung in ~50sek",
 	phase2_warning = "Phase 2 bald!",
 	phase2_trigger = "^Ich werde",
 	phase2_message = "20% - Phase 2",
@@ -104,21 +104,21 @@ L:RegisterTranslations("deDE", function() return {
 	wrath_you = "Zorn auf DIR!",
 
 	whisper = "Flüstern",
-	whisper_desc = "Warnung an Spieler mit Zorn Debuff flüstern(benötigt Asssitent oder höher).",
+	whisper_desc = "Warnung an Spieler flüstern die von Zorn des Astromanten betroffen sind (benötigt Asssitent oder höher).",
 
 	icon = "Schlachtzug Symbol",
-	icon_desc = "Plaziere ein Schlachtzug Symbol auf dem Spieler, der von Zorn des Astromanten betroffen ist.",
+	icon_desc = "Plaziere ein Schlachtzug Symbol auf dem Spieler der von Zorn des Astromanten betroffen ist.",
 
 	split = "Spaltung",
 	split_desc = "Warnt vor Spaltung & Add Spawn.",
 	split_trigger1 = "Ich werde Euch Euren Hochmut austreiben!",
 	split_trigger2 = "Ihr seid eindeutig in der Unterzahl!",
 	split_bar = "~Nächste Spaltung",
-	split_warning = "Spaltung in ~7 sek",
+	split_warning = "Spaltung in ~7sek",
 
-	agent_warning = "Splittung! - Agenten in 6 sek",
+	agent_warning = "Splittung! - Agenten in 6sek",
 	agent_bar = "Agenten",
-	priest_warning = "Priester/Solarian in 3 sek",
+	priest_warning = "Priester/Solarian in 3sek",
 	priest_bar = "Priester/Solarian",
 } end )
 

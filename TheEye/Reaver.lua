@@ -80,23 +80,23 @@ L:RegisterTranslations("deDE", function() return {
 
 	orbsay = "Arkane Kugel Ansage",
 	orbsay_desc = "Schreibt im Say, wenn eine Arkane Kugel auf deine Position fliegt, kann nahen Partymember mit aktivierten Sprechblasen helfen.",
-	orb_say = "Kugel auf Mir!",
+	orb_say = "Arkane Kugel auf mir!",
 
-	orbother = "Arkane Kugel auf Anderen",
+	orbother = "Arkane Kugel auf anderen",
 	orbother_desc = "Warnt vor Arkane Kugel auf anderen Spielern.",
-	orb_other = "Kugel(%s)",
+	orb_other = "Arkane Kugel (%s)",
 
 	icon = "Schlachtzug Symbol",
-	icon_desc = "Plaziert ein Schlachtzug Symbol auf dem Spieler auf den Arkane Kugel zufliegt (benötigt Assistent oder höher)",
+	icon_desc = "Plaziert ein Schlachtzug Symbol auf dem Spieler auf den Arkane Kugel zufliegt (benötigt Assistent oder höher).",
 
 	pounding = "Hämmern",
-	pounding_desc = "Timer Balken für Hämmern",
-	pounding_nextbar = "~Hämmern Cooldown",
+	pounding_desc = "Warnt vor Hämmern.",
+	pounding_nextbar = "~Nächstes Hämmern",
 
 	knock = "Wegschlagen",
 	knock_desc = "Warnt vor Wegschlagen.",
-	knock_bar = "~Wegschlagen Cooldown",
-	--knock_message = "Knock Away: %s",
+	knock_bar = "~Nächstes Wegschlagen",
+	knock_message = "Wegschlagen: %s",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

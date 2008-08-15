@@ -335,50 +335,47 @@ L:RegisterTranslations("deDE", function() return {
 	engage_trigger = "^Energie. Kraft.",
 	engage_message = "Phase 1",
 
-	phase = "Phasen",
-	phase_desc = "Warnt vor den verschiedenen Phasen des Encounters...",
-
 	conflag = "Großbrand",
-	conflag_desc = "Warnt vor Großbrand auf einem Spieler.",
+	conflag_desc = "Warnt vor Großbrand auf Spielern.",
 	conflag_spell = "Großbrand",
 	conflag_message = "Großbrand auf %s!",
 
 	gaze = "Blick",
-	gaze_desc = "Warnt, wenn Thaladred sich auf einen Spieler fokussiert.",
+	gaze_desc = "Warnt, wenn Thaladred einen Spieler fokussiert.",
 	gaze_trigger = "behält ([^%s]+) im Blickfeld!$",
 	gaze_message = "Blick auf %s!",
-	gaze_bar = "Blick Cooldown",
+	gaze_bar = "~Nächster Blick",
 	gaze_you = "Blick auf DIR!",
 
 	icon = "Schlachtzug Symbol",
-	icon_desc = "Plaziert ein Schlachtzug Symbol auf dem Spieler, den Thaladred im Blick behält.",
+	icon_desc = "Plaziert ein Schlachtzug Symbol auf dem Spieler den Thaladred im Blick behält (benötigt Assistent oder höher).",
 
 	fear = "Furcht",
 	fear_desc = "Warnt vor Dröhnendem Gebrüll.",
 	fear_soon_message = "Furcht bald!",
 	fear_message = "Furcht!",
-	fear_bar = "Furcht Cooldown",
+	fear_bar = "~Nächste Furcht",
 	fear_spell = "Dröhnendes Gebrüll",
 
 	rebirth = "Phönix Wiedergeburt",
 	rebirth_desc = "Warnt vor Wiedergeburt der Phönix Eier.",
 	rebirth_trigger1 = "Anar'anel belore!",
 	rebirth_trigger2 = "Bei der Macht der Sonne!",
-	rebirth_warning = "Phönix Wiedergeburt in 5sec!",
+	rebirth_warning = "Phönix Wiedergeburt in 5sek!",
 	rebirth_bar = "~Mögliche Wiedergeburt",
 
 	pyro = "Pyroschlag",
 	pyro_desc = "Zeigt einen 60 Sekunden Timer f\195\188r Pyroschlag.",
 	pyro_trigger = "%s beginnt, Pyroschlag zu wirken!",
-	pyro_warning = "Pyroschlag in 5sec!",
+	pyro_warning = "Pyroschlag in 5sek!",
 	pyro_message = "Pyroschlag!",
 
 	toyall = "Ferngesteuertes Spielzeug",
-	toyall_desc = "Warnt,wenn ein Spieler ein Ferngesteuertes Spielzeug ist.",
+	toyall_desc = "Warnt wenn ein Spieler ein Ferngesteuertes Spielzeug ist.",
 	toyall_message = "Spielzeug: %s",
 
-	phase = "Phasen Warnungen",
-	phase_desc = "Warnt vor den verschiedenen Phasen des Encounters.",
+	phase = "Phasen",
+	phase_desc = "Warnt vor den verschiedenen Phasen.",
 	thaladred_inc_trigger = "Eindrucksvoll. Aber werdet Ihr auch mit Thaladred, dem Verfinsterer fertig?",
 	sanguinar_inc_trigger = "Ihr habt gegen einige meiner besten Berater bestanden... aber niemand kommt gegen die Macht des Bluthammers an. Zittert vor Fürst Blutdurst!",
 	capernian_inc_trigger = "Capernian wird dafür sorgen, dass Euer Aufenthalt hier nicht lange währt.",
@@ -403,8 +400,10 @@ L:RegisterTranslations("deDE", function() return {
 	mc_desc = "Warnt wer von Gedankenkontrolle betroffen ist.",
 	mc_message = "Gedankenkontrolle: %s",
 
-	revive_bar = "Berater Wiederbelebung",
-	revive_warning = "Berater wiederbelebt in 5sec!",
+	revive_bar = "Berater wiederbeleben",
+	revive_warning = "Wiederbeleben der Berater in 5sek!",
+	
+	dead_message = "%s stirbt",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

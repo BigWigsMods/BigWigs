@@ -97,15 +97,15 @@ L:RegisterTranslations("deDE", function() return {
 	inferno_message = "zaubert Inferno auf %s!",
 	inferno_you = "Zaubert Inferno auf DICH!",
 	inferno_warning = "Inferno bald!",
-	inferno_bar = "~Inferno Cooldown",
+	inferno_bar = "~Nächstes Inferno",
 
 	icon = "Schlachtzug Symbol",
 	icon_desc = "Plaziere ein Schlachtzug Symbol auf Spielern die von Inferno betroffen sind (benötigt Assistent oder höher).",
 
 	swarm = "Aasschwarm",
 	swarm_desc = "Geschätzter Aasschwarm Cooldown Timer.",
-	swarm_message = "Aasschwarm! - Nächster in ~11sec",
-	swarm_bar = "~Aasschwarm Cooldown",
+	swarm_message = "Aasschwarm! - Nächster in ~11sek",
+	swarm_bar = "~Nächster Aasschwarm",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

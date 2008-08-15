@@ -142,12 +142,12 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	meteor = "Meteor",
-	meteor_desc = "Geschätzte Meteor Timer.",
+	meteor_desc = "Geschätzter Meteor Timer.",
 	meteor_warning = "Möglicher Meteor in ~5sek",
 	meteor_message = "Meteor! Nächster in ~52sek",
 	meteor_nextbar = "Nächster Meteor",
 
-	flamepatch = "Flammenfeld auf Dir",
+	flamepatch = "Flammenfeld",
 	flamepatch_desc = "Warnt vor Flammenfeld auf Dir.",
 	flamepatch_message = "Flammenfeld auf DIR!",
 
@@ -157,7 +157,7 @@ L:RegisterTranslations("deDE", function() return {
 	armor_you = "Rüstungsschmelze auf DIR!",
 
 	icon = "Schlachtzug Symbol",
-	icon_desc = "Plaziert ein Schlachtzug Symbol auf Spielern mit Rüstungsschmelze(benötigt Assistent oder höher).",
+	icon_desc = "Plaziert ein Schlachtzug Symbol auf Spielern die von Rüstungsschmelze betroffen sind (benötigt Assistent oder höher).",
 } end )
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {

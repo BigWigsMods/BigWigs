@@ -148,21 +148,21 @@ L:RegisterTranslations("deDE", function() return {
 	grip_other = "Würgegriff auf %s!",
 
 	icon = "Schlachtzug Symbol",
-	icon_desc = "Plaziert ein Schlachtzug Symbol auf Spielern mit Würgegriff der Legion Debuff.",
+	icon_desc = "Plaziert ein Schlachtzug Symbol auf Spielern die von Würgegriff der Legion betroffen sind (benötigt Assistent oder höher).",
 
 	fear = "Furcht",
-	fear_desc = "Furcht Timer.",
-	fear_message = "Furcht, nächster in ~ 42sek!",
-	fear_bar = "~Furcht Cooldown",
-	fear_warning = "Furcht Cooldown Vorbei - Neue Furcht Bald!",
+	fear_desc = "Zeigt einen Furcht Timer an.",
+	fear_message = "Furcht, nächste in ~42sek!",
+	fear_bar = "~Nächste Furcht",
+	fear_warning = "Furcht Cooldown vorbei - Neue Furcht bald!",
 
 	burst = "Windbö",
 	burst_desc = "Warnt auf wen Windbö gezaubert wird.",
-	burst_other = "Windbö auf -%s-",
+	burst_other = "Windbö auf %s",
 	burst_you = "Windbö auf DIR!",
 
 	burstsay = "Windbö Sagen",
-	burstsay_desc = "Schreibe in /sagen wenn du das Ziel von Windbö bist, dies kann angrenzenden Membern mit aktivierten Sprechblasen helfen.",
+	burstsay_desc = "Schreibe in /sagen wenn du das Ziel von Windbö bist, dies kann angrenzenden Mitspielern mit aktivierten Sprechblasen helfen.",
 	burstsay_message = "Windbö auf mir!",
 } end )
 

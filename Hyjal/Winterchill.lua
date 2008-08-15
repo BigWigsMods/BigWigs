@@ -65,8 +65,8 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	decay = "Tod & Verfall auf dir",
-	decay_desc = "Warnt vor Tod & Verfall auf dir.",
+	decay = "Tod & Verfall",
+	decay_desc = "Warnt vor Tod & Verfall auf Dir.",
 	decay_message = "Tod & Verfall auf DIR!",
 
 	icebolt = "Eisblitz",
