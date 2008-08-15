@@ -384,7 +384,7 @@ L:RegisterTranslations("ruRU", function() return {
 	immune = "Невосприимчивость",
 	immune_desc = "Предупреждать когда Маланда становится невосприимчива к заклинаниям и физическим атакам.",
 	immune_message = "Маланда: Невосприимчива к %s на 15сек!",
-	immune_bar = "%s Невосприимчива!",
+	immune_bar = "Невосприимчива к %s!",
 
 	spell = "Заклинаниям",
 	melee = "Физическим атакам",
@@ -406,7 +406,7 @@ L:RegisterTranslations("ruRU", function() return {
 	circle_trigger = "Леди Маланда начинает выполнять заклинание Исцеляющего круга.",
 	circle_message = "Выполнение Исцеляющего круга!",
 	circle_heal_message = "Исцелен! - Следующее за ~20сек",
-	circle_fail_message = "%s прервано! - Следующее за ~12sec",
+	circle_fail_message = "Прервал %s! - Следующее за ~12sec",
 	circle_bar = "~перезарядка Исцеляющего круга",
 
 	res = "Аура сопротивления",

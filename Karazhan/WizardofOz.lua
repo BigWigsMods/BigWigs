@@ -120,7 +120,7 @@ L:RegisterTranslations("ruRU", function() return {
 	spawns_warning = "%s за 5 сек",
 
 	light = "Цепная молния",
-	light_desc = "Предупреждать о выполнении Цепной молния.",
+	light_desc = "Предупреждать о выполнении Цепной молнии.",
 	light_message = "Цепная молния!",
 } end)
 
