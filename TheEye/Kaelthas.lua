@@ -216,7 +216,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	pyro = "불덩이 작렬",
 	pyro_desc = "불덩이 작렬에 대한 60초 타이머를 표시합니다.",
-	pyro_trigger = "%s|1이;가; 불덩이 작렬을 시전합니다!$",
+	pyro_trigger = "%s|1이;가; 불덩이 작렬을 시전합니다!",
 	pyro_warning = "약 5초 이내 불덩이 작렬!",
 	pyro_message = "불덩이 작렬 시전!",
 
@@ -575,12 +575,12 @@ mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) en
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Conflag", 37018)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Toy", 37027)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "ToyRemove", 37027)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "MC", 36797)
 	self:AddCombatListener("SPELL_CAST_START", "FearCast", 44863)
 	self:AddCombatListener("SPELL_MISSED", "Fear", 44863)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Fear", 44863)
 	self:AddCombatListener("UNIT_DIED", "Deaths")
-
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
@@ -608,6 +608,12 @@ function mod:Toy(player, spellID)
 		local msg = fmt(L["toyall_message"], player)
 		self:IfMessage(msg, "Attention", spellID)
 		self:Bar(msg, 60, spellID)
+	end
+end
+
+function mod:ToyRemove(player)
+	if db.toyall then
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["toyall_message"], player))
 	end
 end
 
@@ -702,6 +708,8 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:TriggerEvent("BigWigs_StopBar", self, L["phase4_bar"])
 	elseif msg == L["flying_trigger"] then
 		phase = 5
+		self:CancelScheduledEvent("PyroWarn")
+		self:TriggerEvent("BigWigs_StopBar", self, L["pyro"])
 		self:Message(L["flying_message"], "Attention")
 		self:Bar(L["gravity_bar"], 60, "Spell_Nature_UnrelentingStorm")
 	elseif msg == L["gravity_trigger1"] or msg == L["gravity_trigger2"] then
@@ -718,7 +726,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
 	if db.pyro and msg == L["pyro_trigger"] then
 		self:Bar(L["pyro"], 60, "Spell_Fire_Fireball02")
 		self:Message(L["pyro_message"], "Positive")
-		self:DelayedMessage(55, L["pyro_warning"], "Attention")
+		self:ScheduleEvent("PyroWarn", "BigWigs_Message", 55, L["pyro_warning"], "Attention")
 	end
 end
 
