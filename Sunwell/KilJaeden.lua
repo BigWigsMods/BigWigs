@@ -82,7 +82,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	shield_up = "Shield is UP!",
 
-	deceiver_dies = "Deciever #%d Killed",
+	deceiver_dies = "Deceiver #%d Killed",
 	["Hand of the Deceiver"] = true,
 
 	phase = "Phase",
@@ -403,7 +403,7 @@ function mod:Orb()
 end
 
 function mod:Deaths(unit, guid)
-	if unit == deceiver then
+	if type(guid) == "string" and tonumber((guid):sub(-12,-7),16) == 25588 then --Hand of the Deceiver
 		deaths = deaths + 1
 		self:IfMessage(L["deceiver_dies"]:format(deaths), "Positive")
 		if deaths == 3 then
@@ -414,9 +414,10 @@ function mod:Deaths(unit, guid)
 				self:Message(L["phase2_message"], "Important", nil, "Alarm")
 			end
 		end
-	else
-		self:BossDeath(nil, guid)
+		return
 	end
+
+	self:BossDeath(nil, guid)
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, unit)
