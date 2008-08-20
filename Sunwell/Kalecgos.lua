@@ -489,7 +489,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:DelayedMessage(15, L["portal_message"], "Urgent", nil, "Alert")
 		end
 		if db.realm then
-			local groupNo = self:GetGroupNumber(rest)
+			local groupNo = self:GetGroupNumber(rest) or 0
 			self:IfMessage(fmt(L["realm_message"], rest, groupNo), "Urgent", 44866, "Alert")
 		end
 	elseif sync == "KalecgosCurse" and rest and db.curse then
