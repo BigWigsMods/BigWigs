@@ -337,7 +337,7 @@ L:RegisterTranslations("ruRU", function() return {
 	["~Wave %d spawn"] = "~Волна %d порождение",
 	["Wave %d incoming!"] = "Надвигается %d Волна!",
 	["Wave %d! %d %s"] = "Волна %d! %d %s", --1 set of mobs
-	["Wave %d! %d %s, %d %s"] = "Волна %d! %d %s, %d %s"], --2 sets of mobs
+	["Wave %d! %d %s, %d %s"] = "Волна %d! %d %s, %d %s", --2 sets of mobs
 	["Wave %d! %d %s, %d %s, %d %s"] = "Волна %d! %d %s, %d %s, %d %s", --3 sets of mobs
 	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "Волна %d! %d %s, %d %s, %d %s, %d %s", --4 sets of mobs
 	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "Волна %d! %d %s, %d %s, %d %s, %d %s, %d %s", --5 sets of mobs
