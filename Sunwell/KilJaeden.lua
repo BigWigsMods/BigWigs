@@ -319,8 +319,6 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	cmd = "KilJaeden",
-
 	bomb = "Разрушение",
 	bomb_desc = "Предупреждать когда будет выполняться Тьма Тысячи Душ.",
 	bomb_cast = "Incoming Big Bomb!",
@@ -383,15 +381,15 @@ L:RegisterTranslations("ruRU", function() return {
 	deceiver_dies = "Deciever #%d Killed",
 	["Hand of the Deceiver"] = true,
 
-	phase = "Phase",
+	phase = "Фазы",
 	phase_desc = "Warn for phase changes.",
-	phase2_message = "Phase 2 - Kil'jaeden incoming!",
+	phase2_message = "Фаза 2 - Kil'jaeden incoming!",
 	phase3_trigger = "Меня не остановить! Этот мир падет!",
-	phase3_message = "Phase 3 - add Darkness",
+	phase3_message = "Фаза 3 - add Darkness",
 	phase4_trigger = "Do not harbor false hope. You cannot win!",
-	phase4_message = "Phase 4 - add Meteor",
+	phase4_message = "Фаза 4 - add Meteor",
 	phase5_trigger = "Ragh! The powers of the Sunwell turn against me! What have you done? What have you done?!",
-	phase5_message = "Phase 5 - Sacrifice of Anveena",
+	phase5_message = "Фаза 5 - Sacrifice of Anveena",
 } end )
 
 ----------------------------------
