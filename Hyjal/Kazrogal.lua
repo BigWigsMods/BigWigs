@@ -45,7 +45,7 @@ L:RegisterTranslations("deDE", function() return {
 
 	mark = "Mal von Kaz'rogal",
 	mark_desc = "Zeigt einen Timer für das Mal von Kaz'rogal.",
-	mark_bar = "Nächstes Mal von Kaz'rogal (%d)",
+	mark_bar = "Mal von Kaz'rogal (%d)",
 	mark_warn = "Mal von Kaz'rogal in 5sek!",
 } end )
 

@@ -206,9 +206,9 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	waves = "Wellen",
-	waves_desc = "Ausgeben von Warnungs Nachrichten für die nächste Welle.",
+	waves_desc = "Zeigt Warnungen für die nächste Welle an.",
 
-	detail = "Detaillierte Warnungen",
+	detail = "Detaillierte Wellen",
 	detail_desc = "Zeigt detaillierte Warnungen, welche Monster als nächstes kommen.",
 
 	["~%s spawn"] = "~%s spawnt.",

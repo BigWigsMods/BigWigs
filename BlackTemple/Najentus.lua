@@ -63,11 +63,11 @@ L:RegisterTranslations("deDE", function() return {
 	start_trigger = "Im Namen Lady Vashjs werdet Ihr sterben!",
 
 	spine = "Aufspießender Stachel",
-	spine_desc = "Sagt euch, wer aufgespießt wird.",
+	spine_desc = "Zeigt an, wer aufgespießt wird.",
 	spine_message = "Aufspießender Stachel: %s!",
 
 	spinesay = "Stachel Sagen",
-	spinesay_desc = "Schreibe in /sagen wenn du das Ziel vom Aufspießender Stachel bist, dies kann angrenzenden Membern mit aktivierten Sprechblasen helfen.",
+	spinesay_desc = "Schreibt in /sagen, wenn du das Ziel von Aufspießender Stachel bist, dies kann angrenzenden Mitspielern mit aktivierten Sprechblasen helfen.",
 	spinesay_message = "Stachel auf mir!",
 
 	shield = "Gezeitenschild",
