@@ -154,25 +154,25 @@ L:RegisterTranslations("zhTW", function() return {
 	crush_desc = "警報誰中了暗影魄力",
 	crush_warn = "暗影魄力: [%s]",
 } end )
-
+-- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	start_trigger = "Мне отмщение!",
 
-	shadow = "Shadow of Death",
-	shadow_desc = "Tells you who has Shadow of Death.",
-	shadow_other = "Shadow: %s!",
-	shadow_you = "Shadow of Death on YOU!",
+	shadow = "Тень смерти",
+	shadow_desc = "Сообщить, на ком Тень Смерти.",
+	shadow_other = "Тень смерти: %s!",
+	shadow_you = "Тень Смерти на ТЕБЕ!",
 
-	ghost = "Ghost",
-	ghost_desc = "Ghost timers.",
-	ghost_bar = "Ghost: %s",
+	ghost = "Призрак",
+	ghost_desc = "Таймер Призрака.",
+	ghost_bar = "Призрак: %s",
 
-	icon = "Raid Icon",
-	icon_desc = "Place a Raid Icon on players with Shadow of Death.",
+	icon = "Рейдовая Иконка",
+	icon_desc = "Поместить рейдовую иконку на игрока под действием Тени смерти.",
 
-	crush = "Crushing Shadows",
-	crush_desc = "Warn who gets crushing shadows.",
-	crush_warn = "Crushed: %s",
+	crush = "Сокрушающие тени",
+	crush_desc = "Предупреждать кто получил Сокрушающие тени.",
+	crush_warn = "Сокрушен: %s",
 } end )
 
 ----------------------------------

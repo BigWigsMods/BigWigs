@@ -318,6 +318,82 @@ L:RegisterTranslations("zhCN", function() return {
 	phase5_message = "第五阶段 - 牺牲安薇娜！",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	cmd = "KilJaeden",
+
+	bomb = "Разрушение",
+	bomb_desc = "Предупреждать когда будет выполняться Тьма Тысячи Душ.",
+	bomb_cast = "Incoming Big Bomb!",
+	bomb_bar = "Explosion!",
+	bomb_nextbar = "~Possible Bomb",
+	bomb_warning = "Possible bomb in ~10sec",
+	kalec_yell = "Я направлю силу в сферы! Приготовься!",
+	kalec_yell2 = "I have empowered another orb! Use it quickly!",
+	kalec_yell3 = "Another orb is ready! Make haste!",
+	kalec_yell4 = "I have channeled all I can! The power is in your hands!",
+
+	orb = "Shield Orb",
+	orb_desc = "Warn when a Shield Orb is shadowbolting.",
+	orb_shooting = "Orb Alive - Shooting People!",
+
+	bloom = "Fire Bloom",
+	bloom_desc = "Tells you who has been hit by Fire Bloom.",
+	bloom_other = "Fire Bloom on %s!",
+	bloom_bar = "Fire Blooms",
+	bloom_message = "Next Fire Bloom in 5 seconds!",
+
+	bloomsay = "Fire Bloom Say",
+	bloomsay_desc = "Place a msg in say notifying that you have Fire Bloom",
+	bloom_say = "Fire Bloom on "..strupper(pName).."!",
+
+	bloomwhisper = "Fire Bloom Whisper",
+	bloomwhisper_desc = "Whisper players with Fire Bloom.",
+	bloom_you = "Fire Bloom on YOU!",
+
+	icons = "Bloom Icons",
+	icons_desc = "Place random Raid Icons on players with Fire Bloom (requires promoted or higher)",
+
+	shadow = "Shadow Spike",
+	shadow_desc = "Raid warn of casting of Shadow Spike.",
+	shadow_message = "Shadow Spikes Inc For 28sec! WATCH OUT!",
+	shadow_bar = "Shadow Spikes Expire",
+	shadow_warning = "Shadow Spikes Done in 5 sec!",
+	shadow_debuff_bar = "Reduced Healing on %s",
+
+	shadowdebuff = "Disable Shadow Bars",
+	shadowdebuff_desc = "Timer bars for players affected by the Shadow Debuff",
+
+	flame = "Flame Dart",
+	flame_desc = "Show Flame Dart timer bar.",
+	flame_bar = "Next Flame Dart",
+	flame_message = "Next Flame Dart in 5 seconds!",
+
+	sinister = "Sinister Reflections",
+	sinister_desc = "Warns on Sinister Reflection spawns.",
+	sinister_warning = "Sinister Reflections Soon!",
+	sinister_message = "Sinister Reflections Up!",
+
+	blueorb = "Dragon Orb",
+	blueorb_desc = "Warns on Blue Dragonflight Orb spawns.",
+	blueorb_message = "Blue Dragonflight Orb ready!",
+	blueorb_warning = "Dragon Orb in ~5 Sec!",
+
+	shield_up = "Shield is UP!",
+
+	deceiver_dies = "Deciever #%d Killed",
+	["Hand of the Deceiver"] = true,
+
+	phase = "Phase",
+	phase_desc = "Warn for phase changes.",
+	phase2_message = "Phase 2 - Kil'jaeden incoming!",
+	phase3_trigger = "Меня не остановить! Этот мир падет!",
+	phase3_message = "Phase 3 - add Darkness",
+	phase4_trigger = "Do not harbor false hope. You cannot win!",
+	phase4_message = "Phase 4 - add Meteor",
+	phase5_trigger = "Ragh! The powers of the Sunwell turn against me! What have you done? What have you done?!",
+	phase5_message = "Phase 5 - Sacrifice of Anveena",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
