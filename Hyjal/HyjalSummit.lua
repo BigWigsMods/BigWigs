@@ -333,37 +333,37 @@ L:RegisterTranslations("ruRU", function() return {
 	detail = "Detailed Warnings",
 	detail_desc = "Show detailed warnings of what mobs are incoming.",
 
-	["~%s spawn"] = "~%s порождение",
-	["~Wave %d spawn"] = "~Волна %d порождение",
-	["Wave %d incoming!"] = "Надвигается %d Волна!",
-	["Wave %d! %d %s"] = "Волна %d! %d %s", --1 set of mobs
-	["Wave %d! %d %s, %d %s"] = "Волна %d! %d %s, %d %s", --2 sets of mobs
-	["Wave %d! %d %s, %d %s, %d %s"] = "Волна %d! %d %s, %d %s, %d %s", --3 sets of mobs
-	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "Волна %d! %d %s, %d %s, %d %s, %d %s", --4 sets of mobs
-	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "Волна %d! %d %s, %d %s, %d %s, %d %s, %d %s", --5 sets of mobs
-	["%s in ~%d sec!"] = "%s за ~%d сек!",
-	["Wave %d in ~%d sec!"] = "Волна %d за ~%d сек!",
+	["~%s spawn"] = "~до прихода %s",
+	["~Wave %d spawn"] = "~до прихода %d волны",
+	["Wave %d incoming!"] = "Идет %d волна!",
+	["Wave %d! %d %s"] = "%d волна! %d %s", --1 set of mobs
+	["Wave %d! %d %s, %d %s"] = "%d волна! %d %s, %d %s", --2 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s"] = "%d волна! %d %s, %d %s, %d %s", --3 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s"] = "%d волна! %d %s, %d %s, %d %s, %d %s", --4 sets of mobs
+	["Wave %d! %d %s, %d %s, %d %s, %d %s, %d %s"] = "%d волна! %d %s, %d %s, %d %s, %d %s, %d %s", --5 sets of mobs
+	["%s in ~%d sec!"] = "%s через ~%d сек!",
+	["Wave %d in ~%d sec!"] = "%d волна через ~%d сек!",
 
 	["Boss"] = "Босс",
 	["Thrall"] = "Тралл",
 	["Lady Jaina Proudmoore"] = "Леди Джайна Праудмур",
 
-	["My companions and I are with you, Lady Proudmoore."] = "My companions and I are with you, Lady Proudmoore.", -- Rage Winterchill
-	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "We are ready for whatever Archimonde might send our way, Lady Proudmoore.", -- Anatheron
-	["I am with you, Thrall."] = "I am with you, Thrall.", -- Kaz'Rogal
-	["We have nothing to fear."] = "We have nothing to fear.", -- Az'Galor
+	["My companions and I are with you, Lady Proudmoore."] = "Мои спутники и я – с вами, леди Праудмур.", -- Rage Winterchill
+	["We are ready for whatever Archimonde might send our way, Lady Proudmoore."] = "Мы готовы встретить любого, кого пошлет Архимонд, леди Праудмур.", -- Anatheron
+	["I am with you, Thrall."] = "Я с тобой, Тралл.", -- Kaz'Rogal
+	["We have nothing to fear."] = "Нам нечего бояться.", -- Az'Galor
 
 	["Please remove BigWigs_WaveTimers, it is deprecated."] = "Please remove BigWigs_WaveTimers, it is deprecated.",
 
-	["Ghouls"] = "Вурдалаки",
-	["Crypt Fiends"] = "Некрорахниды",
-	["Abominations"] = "Поганище",
-	["Necromancers"] = "Некроманты",
+	["Ghouls"] = "Вурдалаков",
+	["Crypt Fiends"] = "Некрорахнидов",
+	["Abominations"] = "Поганищ",
+	["Necromancers"] = "Мрачных некроманта", -- 6 некромантов, но 2 некроманта
 	["Banshees"] = "Банши",
-	["Gargoyles"] = "Горгулии",
-	["Frost Wyrm"] = "Ледяные змеи",
-	["Fel Stalkers"] = "Ловчии Скверны",
-	["Infernals"] = "Инферналы",
+	["Gargoyles"] = "Горгулии", -- не используем "и" краткую, а потому без разницы, 10 гаргулии или 2 гаргулии
+	["Frost Wyrm"] = "Ледяная змея", -- она всегда одна!
+	["Fel Stalkers"] = "Ловчих Скверны", -- 2,4,6 ловчих скверны
+	["Infernals"] = "Инферналов", -- в 3,4,7 волнах по 8 инферналов
 
 	["Ghoul"] = "Вурдалак",
 } end )
@@ -513,7 +513,6 @@ function mod:BigWigs_RecvSync( sync, rest )
 					wyrm = L["Frost Wyrm"]
 					fel = L["Fel Stalkers"]
 					infernal = L["Infernals"]
-
 					one = L["Wave %d! %d %s"]
 					two = L["Wave %d! %d %s, %d %s"]
 					three = L["Wave %d! %d %s, %d %s, %d %s"]

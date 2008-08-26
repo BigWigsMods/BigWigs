@@ -106,7 +106,7 @@ L:RegisterTranslations("ruRU", function() return {
 	mark = "Метка Каз'рогала ",
 	mark_desc = "Отображения таймера Метки Каз'рогала.",
 	mark_bar = "След Матка (%d)",
-	mark_warn = "Метка за 5 сек!",
+	mark_warn = "Метка через 5 сек!",
 } end )
 
 ----------------------------------

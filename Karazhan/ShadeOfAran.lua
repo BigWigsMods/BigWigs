@@ -221,7 +221,7 @@ L:RegisterTranslations("ruRU", function() return {
 	adds = "Элементали",
 	adds_desc = "Предупреждать о появлении водных элементалей.",
 	adds_message = "Надвигаются Элементали!",
-	adds_warning = "Скоро Элементали",
+	adds_warning = "Скоро Элементали!",
 	adds_bar = "Исчезновение Элементалей",
 
 	drink = "Выпивание",

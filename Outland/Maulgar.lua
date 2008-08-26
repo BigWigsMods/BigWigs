@@ -318,10 +318,10 @@ L:RegisterTranslations("ruRU", function() return {
 
 	whirlwind = "Вихрь",
 	whirlwind_desc = "Warn when Maulgar gains Whirlwind.",
-	whirlwind_message = "Молгар - Вихрь за 15сек!",
+	whirlwind_message = "Молгар - Вихрь через 15сек!",
 	whirlwind_bar = "Вихрь",
 	whirlwind_nextbar = "~перезарядка Вихря",
-	whirlwind_warning1 = "Контакт с Молгаром - Вихрь за ~50сек!",
+	whirlwind_warning1 = "Контакт с Молгаром - Вихрь через ~50сек!",
 	whirlwind_warning2 = "Скоро Вихрь!",
 
 	flurry = "Шквал",

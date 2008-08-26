@@ -140,7 +140,7 @@ L:RegisterTranslations("esES", function() return {
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Недолго вам осталось!",
-	engage_message = "Контакт с %s - Облик медведя за 45сек!",
+	engage_message = "Контакт с %s - Облик медведя через 45сек!",
 
 	phase = "Фазы",
 	phase_desc = "Предупреждать о смене фаз.",
@@ -148,12 +148,12 @@ L:RegisterTranslations("ruRU", function() return {
 	phase_normal = "Пропустите Налоракка!",
 	normal_message = "Нормальная фаза!",
 	normal_bar = "След.фаза медведя",
-	normal_soon = "Нормальная фаза за 10сек",
-	normal_warning = "Нормальная фаза за 5сек",
+	normal_soon = "Нормальная фаза через 10сек",
+	normal_warning = "Нормальная фаза через 5сек",
 	bear_message = "Фаза медведя!",
 	bear_bar = "След.нормальная фаза",
-	bear_soon = "Фаза медведя за 10сек",
-	bear_warning = "Фаза медведя за 5сек",
+	bear_soon = "Фаза медведя через 10сек",
+	bear_warning = "Фаза медведя через 5сек",
 } end )
 
 ----------------------------------

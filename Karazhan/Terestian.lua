@@ -176,7 +176,7 @@ L:RegisterTranslations("ruRU", function() return {
 	weak = "Ослабление",
 	weak_desc = "Предупреждение о Ослабление статов.",
 	weak_message = "Ослабление на ~45сек!",
-	weak_warning1 = "Ослабление исчезнет за ~5сек!",
+	weak_warning1 = "Ослабление исчезнет через ~5сек!",
 	weak_warning2 = "Ослабление прошло!",
 	weak_bar = "~Ослабление исчезает",
 } end )

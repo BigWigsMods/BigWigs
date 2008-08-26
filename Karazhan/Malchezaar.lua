@@ -300,7 +300,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	enfeeble = "Ослабление",
 	enfeeble_desc = "Показывает перерывы для слабости.",
-	enfeeble_message = "Ослабление! следующие 30сек",
+	enfeeble_message = "Ослабление! следующие через 30сек",
 	enfeeble_warning1 = "Ослабление за 5сек!",
 	enfeeble_warning2 = "Ослабление за 10сек!",
 	enfeeble_bar = "Ослабление",

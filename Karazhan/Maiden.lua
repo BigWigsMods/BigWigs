@@ -152,7 +152,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	repentance = "Покаяние",
 	repentance_desc = "Таймер отсчета до Покаяния.",
-	repentance_message = "Покаяние! Следующее за ~33сек",
+	repentance_message = "Покаяние! Следующее через ~33сек",
 	repentance_warning = "Покаяние перезарядилось - скоро будет!",
 	repentance_bar = "Покаяние",
 	repentance_nextbar = "Перезарядка Покаяния",

@@ -233,7 +233,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	fear = "Страх",
 	fear_desc = "таймеры страха.",
-	fear_message = "Страх, след. за ~ 42сек!",
+	fear_message = "Страх! Следующий через ~ 42сек!",
 	fear_bar = "~перезарядка Страха",
 	fear_warning = "Перезарядка закончена - Скоро Страх!",
 

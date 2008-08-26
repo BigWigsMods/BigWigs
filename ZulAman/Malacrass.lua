@@ -209,7 +209,7 @@ L:RegisterTranslations("ruRU", function() return {
 	bolts = "Духовные молнии",
 	bolts_desc = "Предупреждать когда Малакрасс начинает направлять Духовные молнии.",
 	bolts_message = "Надвиг.Духовные молнии!",
-	bolts_warning = "Духовные молнии за 5 сек!",
+	bolts_warning = "Духовные молнии через 5 сек!",
 	bolts_nextbar = "След.Духовные молнии",
 
 	soul = "Вытягивание души",

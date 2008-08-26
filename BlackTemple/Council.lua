@@ -377,7 +377,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	vanish = "Исчезновение",
 	vanish_desc = "Таймеры для исчезновения.",
-	vanish_message = "Верас: Исчез! Возврат за ~30сек",
+	vanish_message = "Верас: Исчез! Возврат через ~30сек",
 	vanish_warning = "Исчезновение закончено - %s вернулся!",
 	vanish_bar = "Незаметность Вераса",
 
@@ -405,8 +405,8 @@ L:RegisterTranslations("ruRU", function() return {
 	circle_desc = "Предупреждать когда Маланда начинает выполнение Исцеляющего круга.",
 	circle_trigger = "Леди Маланда начинает выполнять заклинание Исцеляющего круга.",
 	circle_message = "Выполнение Исцеляющего круга!",
-	circle_heal_message = "Исцелен! - Следующее за ~20сек",
-	circle_fail_message = "Прервал %s! - Следующее за ~12sec",
+	circle_heal_message = "Исцелен! - Следующее через ~20сек",
+	circle_fail_message = "Прервал %s! - Следующее через ~12sec",
 	circle_bar = "~перезарядка Исцеляющего круга",
 
 	res = "Аура сопротивления",

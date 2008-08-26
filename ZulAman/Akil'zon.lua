@@ -142,7 +142,7 @@ L:RegisterTranslations("esES", function() return {
 -- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	engage_trigger = "Я хищник! Ты – моя добыча!",
-	engage_message = "Контакт с %s - Буря за ~55сек!",
+	engage_message = "Контакт с %s - Буря через ~55сек!",
 
 	elec = "Электрическая буря",
 	elec_desc = "Предупреждать на ком Электрическая буря.",

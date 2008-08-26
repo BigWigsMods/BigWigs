@@ -161,7 +161,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	swarm = "Темная стая",
 	swarm_desc = "Таймеры перезарядки Темной стаи.",
-	swarm_message = "Стая! - След. за ~11сек",
+	swarm_message = "Стая! - Следущая через ~11сек",
 	swarm_bar = "~перезарядка Стаи",
 } end )
 

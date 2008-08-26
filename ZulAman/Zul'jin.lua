@@ -282,11 +282,11 @@ L:RegisterTranslations("ruRU", function() return {
 
 	paralyze = "Парализация",
 	paralyze_desc = "Предупреждать о Ползучем параличе и грядущей парализации.",
-	paralyze_warning = "Ползучий паралич - паралич за 5 сек!",
+	paralyze_warning = "Ползучий паралич - паралич через 5 сек!",
 	paralyze_message = "Парализован!",
 	paralyze_bar = "Наступ. Паралич",
 	paralyze_warnbar = "След Паралич",
-	paralyze_soon = "Ползучий паралич за 5 сек",
+	paralyze_soon = "Ползучий паралич через 5 сек",
 
 	claw = "Яростные когти",
 	claw_desc = "Предупреждать кто получил Яростными когтями.",

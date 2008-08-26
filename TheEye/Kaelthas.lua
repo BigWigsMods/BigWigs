@@ -554,6 +554,81 @@ L:RegisterTranslations("zhTW", function() return {
 	revive_warning = "顧問在 5 秒內活動! 坦克、治療準備就位!",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	engage_trigger = "^^Сила. Могущество",
+	engage_message = "Phase 1",
+
+	conflag = "Conflagration",
+	conflag_desc = "Warn about Conflagration on a player.",
+	conflag_spell = "Conflagration",
+	conflag_message = "Conflag on %s!",
+
+	gaze = "Gaze",
+	gaze_desc = "Warn when Thaladred focuses on a player.",
+	gaze_trigger = "sets eyes on (%S+)!$",
+	gaze_message = "Gaze on %s!",
+	gaze_bar = "~Gaze cooldown",
+	gaze_you = "Gaze on YOU!",
+
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Icon over the player that Thaladred sets eyes on.",
+
+	fear = "Fear",
+	fear_desc = "Warn when about Bellowing Roar.",
+	fear_soon_message = "Fear soon!",
+	fear_message = "Fear!",
+	fear_bar = "~Fear Cooldown",
+	fear_spell = "Bellowing Roar",
+
+	rebirth = "Phoenix Rebirth",
+	rebirth_desc = "Approximate Phoenix Rebirth timers.",
+	rebirth_trigger1 = "Anar'anel belore!",
+	rebirth_trigger2 = "By the power of the sun!",
+	rebirth_warning = "Possible Rebirth in ~5sec!",
+	rebirth_bar = "~Possible Rebirth",
+
+	pyro = "Pyroblast",
+	pyro_desc = "Show a 60 second timer for Pyroblast",
+	pyro_trigger = "%s begins to cast Pyroblast!",
+	pyro_warning = "Pyroblast in 5sec!",
+	pyro_message = "Casting Pyroblast!",
+
+	toyall = "Remote Toy",
+	toyall_desc = "Warn when a player has Remote Toy. Only counts in Phase 2 to prevent spam.",
+	toyall_message = "Toy: %s",
+
+	phase = "Phase warnings",
+	phase_desc = "Warn about the various phases of the encounter.",
+	thaladred_inc_trigger = "Посмотрим, как выдержат ваши нервы протви Затемнителя, Таладред!",
+	sanguinar_inc_trigger = "Вы сумели противостоять кое-кому из моих лучших советников... но никто не может выдержать мощи Молота Кров. Узрите же лорда Сангвинара!",
+	capernian_inc_trigger = "Каперниан позаботится о том, чтобы ваше пребывание здесь было кратковременным.",
+	telonicus_inc_trigger = "Well done, you have proven worthy to test your skills against my master engineer, Telonicus.",
+	weapons_inc_trigger = "Как видите, у меня в арсенале много оружия.",
+	phase3_trigger = "Возможно, я недооценил вас. Было бы нечестно заставлять вас драться со всеми четырьмя советниками одновременно, но... по отношению к моему народу никто и никогда не поступал честно. Так что я лишь возвращаю должок.",
+	phase4_trigger = "Увы, иногда приходится решать проблемы самостоятельно. Баламоре шаналь!",
+
+	flying_trigger = "I have not come this far to be stopped! The future I have planned will not be jeopardized! Now you will taste true power!!",
+	gravity_trigger1 = "Let us see how you fare when your world is turned upside down.",
+	gravity_trigger2 = "Having trouble staying grounded?",
+	gravity_bar = "Next Gravity Lapse",
+	gravity_message = "Gravity Lapse!",
+	flying_message = "Phase 5 - Gravity Lapse in 1min",
+
+	weapons_inc_message = "Phase 2 - Weapons incoming!",
+	phase3_message = "Phase 3 - Advisors and Weapons!",
+	phase4_message = "Phase 4 - Kael'thas incoming!",
+	phase4_bar = "Kael'thas incoming",
+
+	mc = "Mind Control",
+	mc_desc = "Warn who has Mind Control.",
+	mc_message = "Mind Control: %s",
+
+	revive_bar = "Adds Revived",
+	revive_warning = "Adds Revived in 5sec!",
+
+	dead_message = "%s dies",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

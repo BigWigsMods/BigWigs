@@ -238,7 +238,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	grasp = "Хватка",
 	grasp_desc = "Grasp warnings and timers.",
-	grasp_message = "Прах земной - Раскалывание за ~10сек!",
+	grasp_message = "Прах земной - Раскалывание через ~10сек!",
 	grasp_warning = "Скоро Прах земной",
 	grasp_bar = "~Прах земной",
 
