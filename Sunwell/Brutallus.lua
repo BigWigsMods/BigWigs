@@ -190,30 +190,28 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	cmd = "Brutallus",
-
 	engage_trigger = "О, а вот и новые агнцы идут на заклание!",
 
-	burn = "Burn",
-	burn_desc = "Tells you who has been hit by Burn and when the next Burn is coming.",
-	burn_you = "Burn on YOU!",
-	burn_other = "Burn on %s!",
-	burn_bar = "Next Burn",
-	burn_message = "Next Burn in ~5 seconds!",
+	burn = "Палящее Пламя",
+	burn_desc = "Предупреждать о людях, пораженных  Палящим Пламенем и оказывать полоску таймера.",
+	burn_you = "Вы объяты пламенем!",
+	burn_other = "%s объят Пламенем!",
+	burn_bar = "Палящее Пламя.",
+	burn_message = "Палящее Пламя через 5 секунд!",
 
-	burnresist = "Burn Resist",
-	burnresist_desc = "Warn who resists burn.",
-	burn_resist = "%s resisted burn",
+	burnresist = "Сопротивление Палящему Пламени",
+	burnresist_desc = "Предупреждать Вас о тех, кто сопротивлении Палящему Пламени.",
+	burn_resist = "%s сопротивляется Палящему Пламени",
 
-	meteor = "Meteor Slash",
-	meteor_desc = "Show a Meteor Slash timer bar.",
-	meteor_bar = "Next Meteor Slash",
+	meteor = "Метеоритный Дождь",
+	meteor_desc = "Показывать таймер Метеоритного Дождя.",
+	meteor_bar = "Метеоритный Дождь",
 
-	stomp = "Stomp",
-	stomp_desc = "Warn for Stomp and show a bar.",
-	stomp_warning = "Stomp in 5 sec",
-	stomp_message = "Stomp: %s",
-	stomp_bar = "Next Stomp",
+	stomp = "Топот",
+	stomp_desc = "Предупреждать о Топоте и показывать полоску таймера.",
+	stomp_warning = "Топот через 5 секунд",
+	stomp_message = "%s попадает под Топот",
+	stomp_bar = "Приближается Топот",
 } end )
 ----------------------------------
 --      Module Declaration      --

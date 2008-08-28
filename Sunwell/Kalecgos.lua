@@ -355,51 +355,50 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-
 	engage_trigger = "Аххх! Я больше никогда не буду рабом Малигоса! Осмелься бросить мне вызов – и я уничтожу тебя!",
-	wipe_bar = "Respawn",
+	wipe_bar = "Возрождение",
 
-	portal = "Portal",
-	portal_desc = "Warn when the Spectral Blast cooldown is up.",
-	portal_bar = "Next portal (%d)",
-	portal_message = "Possible portal in 5 seconds!",
+	portal = "Порталы",
+	portal_desc = "Предупреждать Вас о Спектральной Вспышке.",
+	portal_bar = "Приближается %d-й Портал",
+	portal_message = "Через 5 секунд возможен Портал!",
 
-	realm = "Spectral Realm",
-	realm_desc = "Tells you who is in the Spectral Realm.",
-	realm_message = "Spectral Realm: %s (Group %d)",
+	realm = "Спектральная Реальность",
+	realm_desc = "Показывать Вам игроков, затянутых в Спектральную Реальность.",
+	realm_message = "%s из %d-й группы получает Спектральную Вспышку!",
 
-	curse = "Curse of Boundless Agony",
-	curse_desc = "Tells you who is afflicted by Curse of Boundless Agony.",
-	curse_bar = "Curse: %s",
+	curse = "Проклятье Безграничной агонии",
+	curse_desc = "Предупреждать Вас о людях, пораженных Проклятьем Безграничной агонии.",
+	curse_bar = "Проклятье на %s",
 
-	magichealing = "Wild Magic (Increased healing)",
-	magichealing_desc = "Tells you when you get increased healing from Wild Magic.",
-	magichealing_you = "Wild Magic - Healing effects increased!",
+	magichealing = "Дикая Магия (Увеличение Исцеления)",
+	magichealing_desc = "Предупреждать, когда Вы получите эффект Увеличения Исцеления от Дикой Магии.",
+	magichealing_you = "Еффекты лечения увеличены!",
 
-	magiccast = "Wild Magic (Increased cast time)",
-	magiccast_desc = "Tells you when a healer gets incrased cast time from Wild Magic.",
-	magiccast_you = "Wild Magic - Increased casting time on YOU!",
-	magiccast_other = "Wild Magic - Increased casting time on %s!",
+	magiccast = "Дикая Магия (Замедление заклинаний)",
+	magiccast_desc = "Предупреждать когда ваши целители получают Эффект Замедления от  Дикой Магии.",
+	magiccast_you = "Дикая Магия - Ваши заклинания замедленны!",
+	magiccast_other = "%s замедляет чтение заклинаний!",
 
-	magichit = "Wild Magic (Decreased chance to hit)",
-	magichit_desc = "Tells you when a tank's chance to hit is reduced by Wild Magic.",
-	magichit_you = "Wild Magic - Decreased chance to hit on YOU!",
-	magichit_other = "Wild Magic - Decreased chance to hit on %s!",
+	magichit = "Дикая Магия (Понижен шанс попадания)",
+	magichit_desc = "Предупреждать когда у танка понижается шанс попадания от Дикой Магии.",
+	magichit_you = "Ваш шанс попадания понижен!",
+	magichit_other = "%s начинает промахиваться по цели!",
 
-	magicthreat = "Wild Magic (Increased threat)",
-	magicthreat_desc = "Tells you when you get increased threat from Wild Magic.",
-	magicthreat_you = "Wild Magic - Threat generation increased!",
+	magicthreat = "Дикая Магия (Увеличенная угроза)",
+	magicthreat_desc = "Предупреждать когда Ваша угроза повышается от Дикой Магии.",
+	magicthreat_you = "ВНИМАНИЕ! - Вы создаете повышенную угрозу!",
 
-	buffet = "Arcane Buffet",
-	buffet_desc = "Show the Arcane Buffet timer bar.",
+	buffet = "Борьба Чар",
+	buffet_desc = "Показывать таймер Борьбы Чар.",
 
-	enrage_warning = "Enrage soon!",
-	enrage_message = "10% - Enraged!",
-	enrage_trigger = "Sathrovarr drives Kalecgos into a crazed rage!",
+	enrage_warning = "Приближается Исступление!",
+	enrage_message = "10% - Исступление!",
+	enrage_trigger = "Сатроварр приводит Калесгоса в бешеную ярость!",
 
-	strike = "Corrupting Strike",
-	strike_desc = "Warn who gets Corrupting Strike.",
-	strike_message = "%s: Corrupting Strike",
+	strike = "Сокрушающий удар",
+	strike_desc = "Показывать кто получает Сокрушающий Удар.",
+	strike_message = "%s получает Сокрушающий Удар!",
 } end )
 
 ----------------------------------
