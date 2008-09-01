@@ -518,7 +518,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	eyeblast = "Eye Blast",
 	eyeblast_desc = "Warn when Eye Blast is cast.",
-	eyeblast_trigger = "Stare into the eyes of the Betrayer!",
+	eyeblast_trigger = "Посмотри в глаза Предателя!",
 	eyeblast_message = "Eye Blast!",
 
 	shear = "Shear",
@@ -546,7 +546,7 @@ L:RegisterTranslations("ruRU", function() return {
 	demon_warning = "Demon over in ~ 5 sec!",
 	normal_bar = "~Possible Demon Phase",
 	normal_warning = "Possible Demon Phase in ~5 sec!",
-	phase4_trigger = "Is this it, mortals? Is this all the fury you can muster?", --need translate
+	phase4_trigger = "Это все, смертные? Это и есть вся ваша ярость?",
 	phase4_soon_message = "Phase 4 soon!",
 	phase4_message = "Phase 4 - Maiev Incoming!",
 
@@ -557,10 +557,10 @@ L:RegisterTranslations("ruRU", function() return {
 	burst_cooldown_warn = "Flame Burst soon!",
 	burst_warn = "Flame Burst in 5sec!",
 
-	enrage_trigger = "Feel the hatred of ten thousand years!", --need translate
+	enrage_trigger = "Почувствуй ненависть, накопленную за десять тысяч лет!",
 	enrage_message = "Enraged!",
 
-	["Flame of Azzinoth"] = "Flame of Azzinoth",
+	["Flame of Azzinoth"] = "Пламя Аззинота",
 
 	--very first yell to start engage timer
 	illi_start = "Акама! Твое двуличие меня не удивляет. Мне давным-давно стоило уничтожить тебя и твоих уродливых собратьев.",
