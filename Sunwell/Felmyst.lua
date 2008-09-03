@@ -26,6 +26,7 @@ local bandages = {
 	[2581] = true, -- Heavy Linen Bandage
 	[1251] = true, -- Linen Bandage
 }
+local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -47,6 +48,7 @@ L:RegisterTranslations("enUS", function() return {
 	vapor = "Demonic Vapor",
 	vapor_desc = "Warn who gets Demonic Vapor.",
 	vapor_message = "Vapor: %s",
+	vapor_you = "Vapor on You!",
 
 	icon = "Icon",
 	icon_desc = "Place a Raid Target Icon on players with Encapsulate or Demonic Vapor. (requires promoted or higher)",
@@ -403,9 +405,14 @@ end
 
 function mod:Vapor(_, _, source)
 	if db.vapor then
-		local msg = L["vapor_message"]:format(source)
-		self:IfMessage(msg, "Urgent", 45402)
-		self:Bar(msg, 10, 45402)
+		local other = L["vapor_message"]:format(source)
+		if source == pName then
+			self:LocalMessage(L["vapor_you"], "Personal", nil, "Long")
+			self:WideMessage(other)
+		else
+			self:IfMessage(other, "Urgent", 45402)
+		end
+		self:Bar(other, 10, 45402)
 		self:Icon(source, "icon")
 	end
 end
