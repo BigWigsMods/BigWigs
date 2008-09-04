@@ -204,6 +204,7 @@ L:RegisterTranslations("koKR", function() return {
 	vapor = "악령의 증기",
 	vapor_desc = "악령의 증기에 걸린 플레이어를 알립니다.",
 	vapor_message = "증기: %s",
+	vapor_you = "당신은 증기!",
 
 	icon = "전술 표시",
 	icon_desc = "가두기 또는 악령의 증기에 걸린 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
