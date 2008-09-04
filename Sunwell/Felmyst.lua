@@ -165,6 +165,7 @@ L:RegisterTranslations("zhCN", function() return {
 	vapor = "恶魔蒸汽",
 	vapor_desc = "当玩家受到恶魔蒸汽时发出警报。",
 	vapor_message = "恶魔蒸汽：>%s<！",
+	vapor_you = ">你< 恶魔蒸汽！",
 
 	icon = "团队标记",
 	icon_desc = "为中了压缩或恶魔蒸汽的玩家打上团队标记。（需要权限）",
@@ -279,6 +280,7 @@ L:RegisterTranslations("zhTW", function() return {
 	vapor = "惡魔煙霧",
 	vapor_desc = "隊友受到惡魔煙霧時發出警報",
 	vapor_message = "惡魔煙霧: [%s]",
+	vapor_you = "[你]:惡魔煙霧!",
 
 	icon = "團隊標記",
 	icon_desc = "為中了封印或惡魔煙霧的隊友標上團隊標記（需要權限）",
