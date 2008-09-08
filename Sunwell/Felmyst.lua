@@ -243,6 +243,7 @@ L:RegisterTranslations("frFR", function() return {
 	vapor = "Vapeur démoniaque",
 	vapor_desc = "Prévient quand un joueur subit les effets de la Vapeur démoniaque.",
 	vapor_message = "Vapeur : %s",
+	vapor_you = "Vapeur sur VOUS !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur la dernière personne affectée par Enfermer ou Vapeur démoniaque (nécessite d'être promu ou mieux).",
