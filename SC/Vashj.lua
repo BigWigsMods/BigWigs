@@ -390,6 +390,59 @@ L:RegisterTranslations("zhTW", function() return {
 	loot_update = "拿到受污染的核心: [%s]",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+    ["Tainted Elemental"] = "Нечистый элементаль",
+
+    engage_trigger1 = "I did not wish to lower myself by engaging your kind, but you leave me little choice...",
+    engage_trigger2 = "Да плевать я на тебя хотела, мразь!",
+    engage_trigger3 = "Победа владыки Иллидана! ",
+    engage_trigger4 = "Да я тебя развалю от носа до кормы!",
+    engage_trigger5 = "Смерть непосвященным!",
+    engage_message = "Начинается фаза 1",
+
+    phase = "Предупреждение о фазах",
+    phase_desc = "Предупреждать о переходе Вайш в различные фазы.",
+    phase2_trigger = "Время пришло! Не оставляйте никого в живых!",
+    phase2_soon_message = "Скоро фаза 2!",
+    phase2_message = "Фаза 2, спавн мобов!",
+    phase3_trigger = "Вам может потребоваться укрытие. ",
+    phase3_message = "Фаза 3 - исступление через 4 мин!",
+
+    static = "Статический разряд",
+    static_desc = "Предупреждать о статическом разряде на игроках.",
+    static_charge_message = "Статический разряд на %s!",
+    static_fade = "Статический разряд спадает.",
+    static_warnyou = "На ТЕБЕ статический разряд!",
+
+    icon = "Значек",
+    icon_desc = "Вешать значек на игроков с статическим разрядом и игроков получивших магму.",
+
+    elemental = "Появление нечистого элементаля",
+    elemental_desc = "Предупреждать о появлении нечистого элементаля во время фазы 2.",
+    elemental_bar = "Нечистый элементаль появляется",
+    elemental_soon_message = "Скоро Нечистый элементаль!",
+
+    strider = "Появление страйдеров",
+    strider_desc = "Предупреждать о появлении Страйдеров в фазе 2.",
+    strider_bar = "Страйдер появляется",
+    strider_soon_message = "Скоро Страйдер!",
+
+    naga = "Появление элитных Наг",
+    naga_desc = "Предупреждать о появлении элитных Наг в фазе 2.",
+    naga_bar = "Нага появляется",
+    naga_soon_message = "Скоро Нага!",
+
+    barrier = "Разрушение барьера",
+    barrier_desc = "Предупреждать о разрушении барьеров.",
+    barrier_down_message = "Барьер %d/4 разрушен!",
+    barrier_fades_trigger = "Магический барьер спадает с Леди Вайш.",
+
+    loot = "Порченая магма",
+    loot_desc = "Показывать, кто взял Порченую магму.",
+    loot_message = "%s получил магму!",
+    loot_update = "Магма у > %s",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
