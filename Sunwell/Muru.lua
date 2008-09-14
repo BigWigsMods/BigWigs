@@ -239,7 +239,7 @@ L:RegisterTranslations("deDE", function() return {
 	gravity_desc = "Warnung wann die Schwerkraftkugel erscheint.",
 	gravity_next = "Nächste Schwerkraftkugel",
 	gravity_soon = "Schwerkraftkugel bald!",
-	--gravity_spawned = "Schwerkraftkugel spawned!",
+	gravity_spawned = "Schwerkraftkugel erschienen!",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {

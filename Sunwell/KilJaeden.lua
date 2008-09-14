@@ -392,6 +392,80 @@ L:RegisterTranslations("ruRU", function() return {
 	phase5_message = "Фаза 5 - жертва Анвины",
 } end )
 
+L:RegisterTranslations("deDE", function() return {
+	bomb = "Dunkelheit",
+	bomb_desc = "Warnt wenn Dunkelheit der tausend Seelen gewirkt wird.",
+	bomb_cast = "Eingehende Große Bombe!",
+	bomb_bar = "Explosion!",
+	bomb_nextbar = "~Mögliche Bombe",
+	bomb_warning = "Mögliche Bombe in ~10sek",
+	kalec_yell = "I will channel my powers into the orbs! Be ready!",
+	kalec_yell2 = "I have empowered another orb! Use it quickly!",
+	kalec_yell3 = "Another orb is ready! Make haste!",
+	kalec_yell4 = "I have channeled all I can! The power is in your hands!",
+
+	orb = "Schildkugel",
+	orb_desc = "Warnt wenn eine Schildkugel Schattenblitze schleudert.",
+	orb_shooting = "Kugel Lebend - Schiessen Leute!",
+
+	bloom = "Feuerblüte",
+	bloom_desc = "Sagt dir wer von Feuerblüte getroffen wird.",
+	bloom_other = "Feuerblüte auf %s!",
+	bloom_bar = "Feuerblüten",
+	bloom_message = "Nächste Feuerblüten in 5 Sekunden!",
+
+	bloomsay = "Feuerblüten Ansagen",
+	bloomsay_desc = "Gibt eine Nachricht im Sagen Kanal aus, die Mitspieler darüber informiert das du von einer Feuerblüte betroffen bist",
+	bloom_say = "Feuerblüte auf "..strupper(pName).."!",
+
+	bloomwhisper = "Feuerblüte Flüstern",
+	bloomwhisper_desc = "Flüstere Spieler an die von einer Feuerblüte betroffen sind.",
+	bloom_you = "Feuerblüte auf DIR!",
+
+	icons = "Feuerblüte Symbole",
+	icons_desc = "Place random Raid Icons on players with Fire Bloom (requires promoted or higher)",
+
+	shadow = "Schattenstachel",
+	shadow_desc = "Schlachtgruppenwarnung wenn Schattenstachel gezaubert wird.",
+	shadow_message = "Schattenstachel gewirkt für 28sek! PASST AUF!",
+	shadow_bar = "Schattenstacheldauer",
+	shadow_warning = "Schattenstachel beendet in 5 sek!",
+	shadow_debuff_bar = "Verringerte Heilung auf %s",
+
+	shadowdebuff = "Deaktiviere Schatten Balken",
+	shadowdebuff_desc = "Zeitbalken für Spieler die vom Schattendebuff betroffen sind.",
+
+	flame = "Feuerpfeil",
+	flame_desc = "anzeigen eines Feuerpfeil Intervall Zeitbalken.",
+	flame_bar = "Nächster Feuerpfeil",
+	flame_message = "Nächster Feuerpfeil in 5 Sekunden!",
+
+	sinister = "Finstere Spiegelung",
+	sinister_desc = "Warnt wenn Finstere Spiegelungen erscheinen.",
+	sinister_warning = "Finstere Spiegelungen Bald!",
+	sinister_message = "Finstere Spiegelungen erschienen!",
+
+	blueorb = "Drachenkugel",
+	blueorb_desc = "Warnt wenn eine Blaue Drachenschwarm Kugel erscheint.",
+	blueorb_message = "Blaue Drachenschwarm Kugel Bereit!",
+	blueorb_warning = "Drachenkugel in ~5 Sek!",
+
+	shield_up = "Schild ist Oben!",
+
+	deceiver_dies = "Betrüger #%d getötet",
+	["Hand of the Deceiver"] = "Hand des Betrügers",
+
+	phase = "Phasen",
+	phase_desc = "Warnen bei Phasenänderrungen.",
+	phase2_message = "Phase 2 - Kil'jaeden kommt!",
+	phase3_trigger = "I will not be denied! This world shall fall!",
+	phase3_message = "Phase 3 - dazu Dunkelheit",
+	phase4_trigger = "Do not harbor false hope. You cannot win!",
+	phase4_message = "Phase 4 - dazu Meteor",
+	phase5_trigger = "Ragh! The powers of the Sunwell turn against me! What have you done? What have you done?!",
+	phase5_message = "Phase 5 - Opferrung von Anveena",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
