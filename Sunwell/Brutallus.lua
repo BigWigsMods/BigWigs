@@ -7,6 +7,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local pName = UnitName("player")
 local db = nil
+local meteorCounter = 1
 
 ----------------------------
 --      Localization      --
@@ -21,22 +22,22 @@ L:RegisterTranslations("enUS", function() return {
 	burn_desc = "Tells you who has been hit by Burn and when the next Burn is coming.",
 	burn_you = "Burn on YOU!",
 	burn_other = "Burn on %s!",
-	burn_bar = "Next Burn",
-	burn_message = "Next Burn in ~5 seconds!",
+	burn_bar = "Burn",
+	burn_message = "Burn in ~5sec!",
 
 	burnresist = "Burn Resist",
 	burnresist_desc = "Warn who resists burn.",
-	burn_resist = "%s resisted burn",
+	burn_resist = "%s resisted Burn",
 
 	meteor = "Meteor Slash",
 	meteor_desc = "Show a Meteor Slash timer bar.",
-	meteor_bar = "Next Meteor Slash",
+	meteor_bar = "Meteor Slash #%d",
 
 	stomp = "Stomp",
 	stomp_desc = "Warn for Stomp and show a bar.",
-	stomp_warning = "Stomp in 5 sec",
+	stomp_warning = "Stomp in 5sec!",
 	stomp_message = "Stomp: %s",
-	stomp_bar = "Next Stomp",
+	stomp_bar = "Stomp",
 } end )
 
 L:RegisterTranslations("esES", function() return {
@@ -55,7 +56,7 @@ L:RegisterTranslations("esES", function() return {
 
 	meteor = "Tajo meteórico (Meteor Slash)",
 	meteor_desc = "Mostrar una barra de tiempo para Tajo meteórico.",
-	meteor_bar = "~Tajo meteórico",
+	meteor_bar = "~Tajo meteórico #%d",
 
 	stomp = "Pisotón (Stomp)",
 	stomp_desc = "Avisar sobre Pisotón y mostrar una barra de tiempo.",
@@ -80,7 +81,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	meteor = "유성 베기",
 	meteor_desc = "유성 베기 타이머 바를 표시합니다.",
-	meteor_bar = "다음 유성 베기",
+	meteor_bar = "#%d 다음 유성 베기",
 
 	stomp = "발 구르기",
 	stomp_desc = "발 구르기에 대한 알림과 바를 표시합니다.",
@@ -105,7 +106,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	meteor = "Attaque météorique",
 	meteor_desc = "Affiche une barre temporelle pour l'Attaque météorique.",
-	meteor_bar = "Proch. Attaque météorique",
+	meteor_bar = "Proch. Attaque météorique #%d",
 
 	stomp = "Piétinement",
 	stomp_desc = "Prévient l'arrivée des Piétinements et affiche une barre.",
@@ -130,13 +131,13 @@ L:RegisterTranslations("deDE", function() return {
 
 	meteor = "Meteorschlag",
 	meteor_desc = "Zeigt einen Meteorschlag Zeitbalken an.",
-	meteor_bar = "Nächster Meteor Slash",
+	meteor_bar = "Meteor Slash #%d",
 
 	stomp = "Stampfen",
 	stomp_desc = "Warnt vor Stampfen und zeigt einen Balken an.",
 	stomp_warning = "Stampfen in 5 sek",
 	stomp_message = "Stampfen: %s",
-	stomp_bar = "Nächstes Stampfen",
+	stomp_bar = "Stampfen",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -155,7 +156,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 	meteor = "流星猛击",
 	meteor_desc = "显示流星猛击记时条。",
-	meteor_bar = "<下一流星猛击>",
+	meteor_bar = "<下一流星猛击> #%d",
 
 	stomp = "践踏",
 	stomp_desc = "当施放践踏时发出警报及记时条。",
@@ -180,7 +181,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 	meteor = "隕石斬",
 	meteor_desc = "顯示隕石斬計時條",
-	meteor_bar = "<下一次隕石斬>",
+	meteor_bar = "<下一次隕石斬> #%d",
 
 	stomp = "踐踏",
 	stomp_desc = "警報踐踏及顯示踐踏計時條",
@@ -205,7 +206,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	meteor = "Метеоритный Дождь",
 	meteor_desc = "Показывать таймер Метеоритного Дождя.",
-	meteor_bar = "Метеоритный Дождь",
+	meteor_bar = "Метеоритный Дождь #%d",
 
 	stomp = "Топот",
 	stomp_desc = "Предупреждать о Топоте и показывать полоску таймера.",
@@ -240,6 +241,7 @@ function mod:OnEnable()
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	db = self.db.profile
+	meteorCounter = 1
 end
 
 ------------------------------
@@ -264,8 +266,9 @@ function mod:Burn(player, spellID)
 end
 
 function mod:Meteor()
+	meteorCounter = meteorCounter + 1
 	if db.meteor then
-		self:Bar(L["meteor_bar"], 12, 45150)
+		self:Bar(L["meteor_bar"]:format(meteorCounter), 12, 45150)
 	end
 end
 
@@ -303,3 +306,4 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		end
 	end
 end
+

@@ -37,7 +37,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	encaps = "Encapsulate",
 	encaps_desc = "Warn who has Encapsulate.",
-	encaps_warning = "Encapsulate in ~5 Seconds!",
+	encaps_warning = "Encapsulate in ~5sec!",
 	encaps_message = "Encapsulate: %s",
 
 	gas = "Gas Nova",
@@ -57,9 +57,9 @@ L:RegisterTranslations("enUS", function() return {
 	phase_desc = "Warn for takeoff and landing phases.",
 	airphase_trigger = "I am stronger than ever before!",
 	takeoff_bar = "Takeoff",
-	takeoff_message = "Taking off in 5 Seconds!",
+	takeoff_message = "Taking off in 5sec!",
 	landing_bar = "Landing",
-	landing_message = "Landing in 10 Seconds!",
+	landing_message = "Landing in 10sec!",
 
 	breath = "Deep Breath",
 	breath_desc = "Deep Breath warnings.",

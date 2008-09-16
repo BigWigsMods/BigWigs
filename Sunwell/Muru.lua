@@ -22,17 +22,17 @@ L:RegisterTranslations("enUS", function() return {
 	darkness = "Darkness",
 	darkness_desc = "Warn who has Darkness.",
 	darkness_message = "Darkness: %s",
-	darkness_next = "Next Darkness",
+	darkness_next = "Darkness",
 	darkness_soon = "Darkness in 5sec!",
 
 	void = "Void Sentinel",
 	void_desc = "Warn when the Void Sentinel spawns.",
-	void_next = "Next Void Sentinel (%d)",
-	void_soon = "Sentinel (%d) in 5 sec!",
+	void_next = "Sentinel (%d)",
+	void_soon = "Sentinel (%d) in 5sec!",
 
 	humanoid = "Humanoid Adds",
 	humanoid_desc = "Warn when the Humanoid Adds spawn.",
-	humanoid_next = "Next Humanoids (%d)",
+	humanoid_next = "Humanoids (%d)",
 	humanoid_soon = "Humanoids (%d) in 5sec!",
 
 	fiends = "Dark Fiends",
@@ -45,7 +45,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	gravity = "Gravity Balls",
 	gravity_desc = "Warn for Gravity Balls.",
-	gravity_next = "Next Gravity Ball Timer",
+	gravity_next = "Gravity Ball",
 	gravity_soon = "Gravity Ball soon!",
 	gravity_spawned = "Gravity Ball spawned!",
 } end )

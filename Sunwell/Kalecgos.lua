@@ -32,7 +32,7 @@ L:RegisterTranslations("enUS", function() return {
 	portal = "Portal",
 	portal_desc = "Warn when the Spectral Blast cooldown is up.",
 	portal_bar = "Next portal (%d)",
-	portal_message = "Possible portal in 5 seconds!",
+	portal_message = "Possible portal in 5sec!",
 
 	realm = "Spectral Realm",
 	realm_desc = "Tells you who is in the Spectral Realm.",
@@ -69,7 +69,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	strike = "Corrupting Strike",
 	strike_desc = "Warn who gets Corrupting Strike.",
-	strike_message = "%s: Corrupting Strike",
+	strike_message = "Corrupting Strike: %s",
 } end )
 
 L:RegisterTranslations("esES", function() return {
@@ -411,7 +411,7 @@ mod.enabletrigger = { boss, sath }
 mod.guid = 24892
 mod.toggleoptions = {"portal", "buffet", "realm", "curse", "strike", -1, "magichealing", "magiccast", "magichit", "magicthreat", "enrage", "proximity", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
-mod.proximityCheck = function( unit ) return CheckInteractDistance( unit, 3 ) end
+mod.proximityCheck = function(unit) return CheckInteractDistance(unit, 3) end
 mod.proximitySilent = true
 
 ------------------------------

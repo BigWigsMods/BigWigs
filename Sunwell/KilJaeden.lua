@@ -42,7 +42,7 @@ L:RegisterTranslations("enUS", function() return {
 	bloom_desc = "Tells you who has been hit by Fire Bloom.",
 	bloom_other = "Fire Bloom on %s!",
 	bloom_bar = "Fire Blooms",
-	bloom_message = "Next Fire Bloom in 5 seconds!",
+	bloom_message = "Fire Bloom in 5sec!",
 
 	bloomsay = "Fire Bloom Say",
 	bloomsay_desc = "Place a msg in say notifying that you have Fire Bloom",
@@ -57,9 +57,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	shadow = "Shadow Spike",
 	shadow_desc = "Raid warn of casting of Shadow Spike.",
-	shadow_message = "Shadow Spikes Inc For 28sec! WATCH OUT!",
+	shadow_message = "Shadow Spikes for 28sec!",
 	shadow_bar = "Shadow Spikes Expire",
-	shadow_warning = "Shadow Spikes Done in 5 sec!",
+	shadow_warning = "Shadow Spikes done in 5sec!",
 	shadow_debuff_bar = "Reduced Healing on %s",
 
 	shadowdebuff = "Disable Shadow Bars",
@@ -67,8 +67,8 @@ L:RegisterTranslations("enUS", function() return {
 
 	flame = "Flame Dart",
 	flame_desc = "Show Flame Dart timer bar.",
-	flame_bar = "Next Flame Dart",
-	flame_message = "Next Flame Dart in 5 seconds!",
+	flame_bar = "Flame Dart",
+	flame_message = "Flame Dart in 5sec!",
 
 	sinister = "Sinister Reflections",
 	sinister_desc = "Warns on Sinister Reflection spawns.",
@@ -78,7 +78,7 @@ L:RegisterTranslations("enUS", function() return {
 	blueorb = "Dragon Orb",
 	blueorb_desc = "Warns on Blue Dragonflight Orb spawns.",
 	blueorb_message = "Blue Dragonflight Orb ready!",
-	blueorb_warning = "Dragon Orb in ~5 Sec!",
+	blueorb_warning = "Dragon Orb in ~5sec!",
 
 	shield_up = "Shield is UP!",
 

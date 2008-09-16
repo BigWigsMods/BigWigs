@@ -33,7 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 	conflag_desc = "Warn for Conflagration being cast.",
 	conflag_message = "Conflag on %s",
 	conflag_you = "Conflag on YOU!",
-	conflag_bar = "Next Conflag",
+	conflag_bar = "Conflag",
 
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Target Icon on the player that Shadow Nova and Conflagration is being cast on.",
@@ -45,11 +45,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	blow = "Confounding Blow",
 	blow_desc = "Show a timer bar for Confounding Blow.",
-	blow_bar = "Next Blow",
+	blow_bar = "Confounding Blow",
 
 	blades = "Shadow Blades",
 	blades_desc = "Show a timer bar for Shadow Blades.",
-	blades_bar = "Next Blades",
+	blades_bar = "Shadow Blades",
 } end )
 
 L:RegisterTranslations("esES", function() return {
