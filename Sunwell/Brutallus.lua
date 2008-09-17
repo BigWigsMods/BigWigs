@@ -97,8 +97,8 @@ L:RegisterTranslations("frFR", function() return {
 	burn_desc = "Prévient quand un joueur subit les effets de Brûler et quand arrivera le prochain.",
 	burn_you = "Brûler sur VOUS !",
 	burn_other = "Brûler sur %s !",
-	burn_bar = "Prochain Brûler",
-	burn_message = "Prochain Brûler dans 5 sec. !",
+	burn_bar = "Brûler",
+	burn_message = "Brûler dans 5 sec. !",
 
 	burnresist = "Résistances à Brûler",
 	burnresist_desc = "Prévient quand un joueur a résisté à Brûler.",
@@ -106,13 +106,13 @@ L:RegisterTranslations("frFR", function() return {
 
 	meteor = "Attaque météorique",
 	meteor_desc = "Affiche une barre temporelle pour l'Attaque météorique.",
-	meteor_bar = "Proch. Attaque météorique #%d",
+	meteor_bar = "Attaque météorique #%d",
 
 	stomp = "Piétinement",
 	stomp_desc = "Prévient l'arrivée des Piétinements et affiche une barre.",
 	stomp_warning = "Piétinement dans 5 sec.",
 	stomp_message = "Piétinement : %s",
-	stomp_bar = "Prochain Piétinement",
+	stomp_bar = "Piétinement",
 } end )
 
 L:RegisterTranslations("deDE", function() return {

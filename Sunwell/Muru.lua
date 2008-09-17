@@ -86,17 +86,17 @@ L:RegisterTranslations("frFR", function() return {
 	darkness = "Ténèbres",
 	darkness_desc = "Prévient quand quelqu'un subit les effets des Ténèbres.",
 	darkness_message = "Ténèbres : %s",
-	darkness_next = "Prochaines Ténèbres",
+	darkness_next = "Ténèbres",
 	darkness_soon = "Ténèbres dans 5 sec. !",
 
 	void = "Sentinelles du Vide",
 	void_desc = "Prévient quand les Sentinelles du Vide apparaissent.",
-	void_next = "Prochaine Sentinelle (%d)",
+	void_next = "Sentinelle (%d)",
 	void_soon = "Sentinelle (%d) dans 5 sec. !",
 
 	humanoid = "Renforts humanoïdes",
 	humanoid_desc = "Prévient quand les renforts humanoïdes apparaissent.",
-	humanoid_next = "Prochains humanoïdes (%d)",
+	humanoid_next = "Humanoïdes (%d)",
 	humanoid_soon = "Humanoïdes (%d) dans 5 sec. !",
 
 	fiends = "Sombres fiels",
@@ -109,7 +109,7 @@ L:RegisterTranslations("frFR", function() return {
 
 	gravity = "Singularité",
 	gravity_desc = "Prévient de l'arrivée des Singularités.",
-	gravity_next = "Prochaine Singularité",
+	gravity_next = "Singularité",
 	gravity_soon = "Singularité imminente !",
 	gravity_spawned = "Singularité apparue !",
 } end )

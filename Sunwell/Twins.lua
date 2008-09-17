@@ -95,7 +95,7 @@ L:RegisterTranslations("frFR", function() return {
 	conflag_desc = "Prévient quand une Déflagration est incantée.",
 	conflag_message = "Déflagration sur %s",
 	conflag_you = "Déflagration sur VOUS !",
-	conflag_bar = "Prochaine Déflagration",
+	conflag_bar = "Déflagration",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur sur lequel Nova de l'ombre ou Déflagration est incantée.",
@@ -107,11 +107,11 @@ L:RegisterTranslations("frFR", function() return {
 
 	blow = "Coup déconcertant",
 	blow_desc = "Affiche une barre temporelle pour le Coup déconcertant.",
-	blow_bar = "Prochain Coup",
+	blow_bar = "Coup déconcertant",
 
 	blades = "Lames de l'ombre",
 	blades_desc = "Affiche une barre temporelle pour les Lames de l'ombre.",
-	blades_bar = "Prochaines Lames",
+	blades_bar = "Lames de l'ombre",
 } end )
 
 L:RegisterTranslations("koKR", function() return {

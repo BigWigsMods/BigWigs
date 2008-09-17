@@ -190,7 +190,7 @@ L:RegisterTranslations("frFR", function() return {
 	bloom_desc = "Prévient quand des joueurs subissent les effets de la Fleur du feu.",
 	bloom_other = "Fleur du feu sur %s !",
 	bloom_bar = "Fleurs du feu",
-	bloom_message = "Prochaines Fleurs du feu dans 5 sec. !",
+	bloom_message = "Fleurs du feu dans 5 sec. !",
 
 	bloomsay = "Dire - Fleur du feu",
 	bloomsay_desc = "Fait dire à votre personnage qu'il subit les effets de la Fleur du feu quand c'est le cas, afin d'aider les membres proches ayant les bulles de dialogue activées.",
@@ -215,8 +215,8 @@ L:RegisterTranslations("frFR", function() return {
 
 	flame = "Fléchettes des flammes",
 	flame_desc = "Affiche une barre temporelle pour les Flèchettes des flammes.",
-	flame_bar = "Prochaines Fléchettes",
-	flame_message = "Prochaines Fléchettes des flammes dans 5 sec. !",
+	flame_bar = "Fléchettes des flammes",
+	flame_message = "Fléchettes des flammes dans 5 sec. !",
 
 	sinister = "Reflets sinistres",
 	sinister_desc = "Prévient quand les Reflets sinistres apparaissent.",
@@ -361,7 +361,7 @@ L:RegisterTranslations("ruRU", function() return {
 	shadowdebuff = "Убрать таймер Теневых Шипов",
 	shadowdebuff_desc = "Таймер для игроков под воздействием Теневых Шипов",
 
-      flame = "Пламенный дротик",
+	flame = "Пламенный дротик",
 	flame_desc = "Показывать таймер на Пламенный Дротик",
 	flame_bar = "Следующий Пламенный Дротик",
 	flame_message = "Следующий Пламенный Дротик через 5 секунд!",
