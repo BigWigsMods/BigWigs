@@ -170,20 +170,20 @@ local function transmitSync(self, token, arguments, ...)
 	end
 end
 
-function BigWigs.modulePrototype:COMBAT_LOG_EVENT_UNFILTERED(_, event, _, source, _, guid, player, _, spellId, spellName, _, secSpellId)
+function BigWigs.modulePrototype:COMBAT_LOG_EVENT_UNFILTERED(_, event, _, source, sFlags, dGUID, player, dFlags, spellId, spellName, _, secSpellId)
 	local m = self.combatLogEventMap and self.combatLogEventMap[event]
 	if m and (m[spellId] or m["*"]) then
 		if event == "UNIT_DIED" then
-			self[m["*"]](self, player, guid)
+			self[m["*"]](self, player, dGUID)
 		else
-			self[m[spellId] or m["*"]](self, player, spellId, source, secSpellId, spellName, event)
+			self[m[spellId] or m["*"]](self, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags)
 		end
 	end
 	local s = self.syncEventMap and self.syncEventMap[event]
 	if s then
 		for token, data in pairs(s) do
 			if data.spellIds[spellId] then
-				transmitSync(self, token, data.argumentList, player, spellId, source, secSpellId, spellName, event)
+				transmitSync(self, token, data.argumentList, player, spellId, source, secSpellId, spellName, event, sFlags, dFlags)
 			end
 		end
 	end
