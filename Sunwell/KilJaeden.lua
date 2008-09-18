@@ -240,7 +240,7 @@ L:RegisterTranslations("frFR", function() return {
 	phase3_message = "Phase 3 - Ajout des Ténèbres des mille âmes",
 	phase4_trigger = "Assez de faux espoirs ! Vous ne pouvez pas gagner !",
 	phase4_message = "Phase 4 - Ajout des Météores",
-	phase5_trigger = "Arggghhh ! Les pouvoirs du Puits de soleil… se retournent… contre moi ! Qu'avez-vous fait ? Qu'avez-vous fait ??",
+	phase5_trigger = "Arggghhh ! Les pouvoirs du Puits de soleil... se retournent... contre moi ! Qu'avez-vous fait ? Qu'avez-vous fait ??",
 	phase5_message = "Phase 5 - Sacrifice d'Anveena",
 } end )
 
