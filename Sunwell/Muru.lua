@@ -118,17 +118,17 @@ L:RegisterTranslations("koKR", function() return {
 	darkness = "어둠",
 	darkness_desc = "어둠에 걸린 플레이어를 알립니다.",
 	darkness_message = "어둠: %s",
-	darkness_next = "다음 어둠",
+	darkness_next = "어둠",
 	darkness_soon = "5초 후 어둠!",
 
 	void = "공허의 파수병",
 	void_desc = "공허의 파수병의 소환을 알립니다.",
-	void_next = "다음 공허의 파수병(%d)",
+	void_next = "공허의 파수병(%d)",
 	void_soon = "5초 이내 파수병(%d)!",
 
 	humanoid = "타락한 엘프",
 	humanoid_desc = "타락한 엘프 등장을 알립니다.",
-	humanoid_next = "다음 타락한 엘프(%d)",
+	humanoid_next = "타락한 엘프(%d)",
 	humanoid_soon = "5초 이내 타락한 엘프(%d)!",
 
 	fiends = "어둠 마귀",
@@ -141,7 +141,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	gravity = "중력 구체",
 	gravity_desc = "중력 구체를 알립니다.",
-	gravity_next = "다음 중력 구체",
+	gravity_next = "중력 구체",
 	gravity_soon = "잠시 후 중력 구체!",
 	gravity_spawned = "중력 구체 소환!",
 } end )

@@ -126,7 +126,7 @@ L:RegisterTranslations("koKR", function() return {
 	conflag_desc = "거대한 불길의 시전에 대해 알립니다.",
 	conflag_message = "%s 거대한 불길!",
 	conflag_you = "당신에게 거대한 불길!",
-	conflag_bar = "다음 거대한 불길",
+	conflag_bar = "거대한 불길",
 
 	icon = "전술 표시",
 	icon_desc = "암흑 회오리와 거대한 불길의 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
@@ -138,11 +138,11 @@ L:RegisterTranslations("koKR", function() return {
 
 	blow = "혼란의 강타",
 	blow_desc = "혼란의 강타에 대한 타이머 바를 표시합니다.",
-	blow_bar = "다음 강타",
+	blow_bar = "혼란의 강타",
 
 	blades = "어둠의 칼날",
 	blades_desc = "어둠의 칼날에 대한 타이머 바를 표시합니다.",
-	blades_bar = "다음 칼날",
+	blades_bar = "어둠의 칼날",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {

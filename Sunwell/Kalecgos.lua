@@ -163,7 +163,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	strike = "타락의 일격",
 	strike_desc = "타락의 일격에 걸린 플레이어를 알립니다.",
-	strike_message = "%s: 타락의 일격",
+	strike_message = "타락의 일격: %s",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

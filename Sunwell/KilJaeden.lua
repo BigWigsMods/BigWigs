@@ -131,7 +131,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	shadow = "어둠의 쐐기",
 	shadow_desc = "어둠의 쐐기에 대하여 공격대에 알립니다.",
-	shadow_message = "잠시 후 28초간 어둠의 쐐기! 조심하세요!",
+	shadow_message = "28초간 어둠의 쐐기!",
 	shadow_bar = "어둠의 쐐기 종료",
 	shadow_warning = "5초 후 어둠의 쐐기 종료!",
 	shadow_debuff_bar = "%s 치유효과 감소",
@@ -141,7 +141,7 @@ L:RegisterTranslations("koKR", function() return {
 
 	flame = "불꽃 화살",
 	flame_desc = "불꽃 화살 타이머 바를 표시합니다.",
-	flame_bar = "다음 불꽃 화살",
+	flame_bar = "불꽃 화살",
 	flame_message = "5초 이내 다음 불꽃 화살!",
 
 	sinister = "사악한 환영",

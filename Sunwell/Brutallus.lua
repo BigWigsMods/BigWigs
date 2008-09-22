@@ -72,8 +72,8 @@ L:RegisterTranslations("koKR", function() return {
 	burn_desc = "불사르기에 적중된 플레이어와 다음 불사르기에 대해 알립니다.",
 	burn_you = "당신은 불사르기!",
 	burn_other = "%s 불사르기!",
-	burn_bar = "다음 불사르기",
-	burn_message = "약 5초 후 다음 불사르기!",
+	burn_bar = "불사르기",
+	burn_message = "약 5초 후 불사르기!",
 	
 	burnresist = "불사르기 저항",
 	burnresist_desc = "불사르기에 저항한 플레이어를 알립니다.",
@@ -81,13 +81,13 @@ L:RegisterTranslations("koKR", function() return {
 
 	meteor = "유성 베기",
 	meteor_desc = "유성 베기 타이머 바를 표시합니다.",
-	meteor_bar = "#%d 다음 유성 베기",
+	meteor_bar = "#%d 유성 베기",
 
 	stomp = "발 구르기",
 	stomp_desc = "발 구르기에 대한 알림과 바를 표시합니다.",
 	stomp_warning = "5초 이내 발 구르기",
 	stomp_message = "발 구르기: %s",
-	stomp_bar = "다음 발 구르기",
+	stomp_bar = "발 구르기",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
