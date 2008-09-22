@@ -335,8 +335,18 @@ plugin.consoleOptions = {
 --      Event Handlers      --
 ------------------------------
 
+local function filter()
+	if plugin:IsChannelSuppressed(event) and plugin:IsSpam(arg1) then
+		BigWigs:Debug(L["Suppressing Chatframe"], event, arg1)
+		return true
+	end
+end
+
 function plugin:OnEnable()
-	self:Hook("ChatFrame_MessageEventHandler", true)
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_WHISPER", filter)
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID", filter)
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_WARNING", filter)
+	ChatFrame_AddMessageEventFilter("CHAT_MSG_RAID_LEADER", filter)
 
 	self:Hook("RaidNotice_AddMessage", "RWAddMessage", true)
 
@@ -348,15 +358,6 @@ function plugin:OnEnable()
 	self:RegisterEvent("Ace2_AddonDisabled", "BossModEnableDisable")
 
 	db = self.db.profile
-end
-
-
-function plugin:ChatFrame_MessageEventHandler(event)
-	if self:IsChannelSuppressed(event) and self:IsSpam(arg1) then
-		BigWigs:Debug(L["Suppressing Chatframe"], event, arg1)
-		return
-	end
-	return self.hooks["ChatFrame_MessageEventHandler"](event)
 end
 
 do
