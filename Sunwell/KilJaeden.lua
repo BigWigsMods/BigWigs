@@ -116,7 +116,7 @@ L:RegisterTranslations("koKR", function() return {
 	bloom_desc = "화염 불꽃에 걸린 플레이어를 알립니다.",
 	bloom_other = "%s 화염 불꽃!",
 	bloom_bar = "화염 불꽃",
-	bloom_message = "5초 후 다음 화염 불꽃!",
+	bloom_message = "5초 후 화염 불꽃!",
 
 	bloomsay = "화염 불꽃 대화",
 	bloomsay_desc = "자신이 화염 불꽃에 걸렸을시 일반 대화로 출력합니다.",
@@ -142,7 +142,7 @@ L:RegisterTranslations("koKR", function() return {
 	flame = "불꽃 화살",
 	flame_desc = "불꽃 화살 타이머 바를 표시합니다.",
 	flame_bar = "불꽃 화살",
-	flame_message = "5초 이내 다음 불꽃 화살!",
+	flame_message = "5초 이내 불꽃 화살!",
 
 	sinister = "사악한 환영",
 	sinister_desc = "사악한 환영 생성을 알립니다.",
