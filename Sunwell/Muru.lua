@@ -180,34 +180,34 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	darkness = "黑暗",
-	darkness_desc = "警報誰受到黑暗效果",
-	darkness_message = "黑暗: [%s]",
+	darkness_desc = "當玩家受到黑暗效果時發出警報",
+	darkness_message = "黑暗：%s",
 	darkness_next = "下一次黑暗",
-	darkness_soon = "約 5 秒內施放黑暗!",
+	darkness_soon = "5秒後施放黑暗",
 
 	void = "虛無哨兵",
 	void_desc = "當虛無哨兵出現時發出警報",
 	void_next = "下一波虛無哨兵：%d",
-	void_soon = "約 5 秒內虛無哨兵出現：>%d<!",
+	void_soon = "5秒後，虛無哨兵出現：%d",
 
-	humanoid = "虛無哨兵召喚者",
-	humanoid_desc = "當虛無哨兵召喚者出現時發出警報",
-	humanoid_next = "下一波召喚者：%d",
-	humanoid_soon = "約 5 秒內召喚者出現：>%d<!",
+	humanoid = "影劍怒法師和影劍狂戰士",
+	humanoid_desc = "當影劍怒法師和影劍狂戰士出現時發出警報",
+	humanoid_next = "下一波影劍怒法師和影劍狂戰士：%d",
+	humanoid_soon = "5秒後，影劍怒法師和影劍狂戰士出現：%d",
 
-	--fiends = "Dark Fiends",
-	--fiends_desc = "Warn for Dark Fiends spawning.",
-	--fiends_message = "Dark Fiends Inc!",
+	fiends = "暗魔",
+	fiends_desc = "當暗魔出現時發出警報",
+	fiends_message = "暗魔出現",
 
-	--phase = "Phases",
-	--phase_desc = "Warn for phase changes.",
-	--phase2_message = "Phase 2!",
+	phase = "階段",
+	phase_desc = "當進入不同階段時發出警報",
+	phase2_message = "第二階段",
 
-	--gravity = "Gravity Balls",
-	--gravity_desc = "Warn for Gravity Balls.",
-	--gravity_next = "Next Gravity Ball Timer",
-	--gravity_soon = "Gravity Ball soon!",
-	--gravity_spawned = "Gravity Ball spawned!",
+	gravity = "黑洞",
+	gravity_desc = "當施放黑洞時發出警報",
+	gravity_next = "下一波黑洞",
+	gravity_soon = "即將出現黑洞",
+	gravity_spawned = "黑洞出現",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
