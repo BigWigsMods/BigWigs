@@ -96,6 +96,80 @@ L:RegisterTranslations("enUS", function() return {
 	phase5_message = "Phase 5 - Sacrifice of Anveena",
 } end )
 
+L:RegisterTranslations("zhTW", function() return {
+	bomb = "千魂之暗",
+	bomb_desc = "當千魂之暗開始施放時發出警報",
+	bomb_cast = "即將施放千魂之暗",
+	bomb_bar = "千魂之暗",
+	bomb_nextbar = "可能施放千魂之暗",
+	bomb_warning = "約10秒後，可能施放千魂之暗",
+	kalec_yell = "我會將我的力量導入寶珠中！準備好！", --check
+	kalec_yell2 = "我又將能量灌入了另一顆寶珠！快去使用它！", --check
+	kalec_yell3 = "又有一顆寶珠準備好了！快點行動！", --check
+	kalec_yell4 = "這是我所能做的一切了！力量現在掌握在你們的手中！", --check
+
+	orb = "盾之寶珠",
+	orb_desc = "當盾之寶珠施放暗影箭時發出警報",
+	orb_shooting = "盾之寶珠開始施放暗影箭",
+
+	bloom = "火焰之花",
+	bloom_desc = "當玩家中了火焰之花時發出警報",
+	bloom_other = "火焰之花：%s",
+	bloom_bar = "火焰之花",
+	bloom_message = "5秒後，火焰之花",
+
+	bloomsay = "火焰之花提醒",
+	bloomsay_desc = "當你中了火焰之花時通知周圍的玩家",
+	bloom_say = ""..strupper(pName).." 中了火焰之花",
+
+	bloomwhisper = "火焰之花密語",
+	bloomwhisper_desc = "當玩家中了火焰之花時密語提示他離開",
+	bloom_you = "你中了火焰之花",
+
+	icons = "團隊標記",
+	icons_desc = "為中了火焰之花的玩家隨機打上一個團隊標記。（需要許可權）",
+
+	shadow = "暗影釘刺",
+	shadow_desc = "當施放暗影釘刺時發出警報",
+	shadow_message = "注意！28秒後，暗影釘刺",
+	shadow_bar = "暗影釘刺",
+	shadow_warning = "5秒後，暗影釘刺",
+	shadow_debuff_bar = "降低治療：%s",
+
+	shadowdebuff = "禁用暗影減益計時條",
+	shadowdebuff_desc = "玩家中了暗影減益效果計時條",
+	
+	flame = "燃焰之矢",
+	flame_desc = "顯示燃焰之矢計時條",
+	flame_bar = "下一波燃焰之矢",
+	flame_message = "5秒後，燃焰之矢",
+
+	sinister = "邪惡倒影",
+	sinister_desc = "當施放邪惡倒影時發出警報",
+	sinister_warning = "即將施放邪惡倒影",
+	sinister_message = "邪惡倒影出現",
+
+	blueorb = "藍龍寶珠 ",
+	blueorb_desc = "當可以使用藍龍寶珠時發出警報",
+	blueorb_message = "藍龍寶珠已準備好",
+	blueorb_warning = "約5秒後，藍龍寶珠可以使用",
+
+	shield_up = "藍龍之盾啟用",
+
+	deceiver_dies = "已殺死基爾加丹之手#%d",
+	["Hand of the Deceiver"] = "基爾加丹之手",
+
+	phase = "階段",
+	phase_desc = "當進入不同階段時發出警報",
+	phase2_message = "第二階段 - 基爾加丹出現",
+	phase3_trigger = "我是不會失敗的！這個世界註定要毀滅！", --check
+	phase3_message = "第三階段 - 注意千魂之暗",
+	phase4_trigger = "別再抱有幻想了！你們不可能贏！", --check
+	phase4_message = "第四階段 - 注意隕石",
+	phase5_trigger = "啊啊啊！太陽之井的能量……開始……對抗我！你們都做了些什麼？你們都做了些什麼？？", --check
+	phase5_message = "第五階段 - 安薇娜的犧牲",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	bomb = "어둠의 영혼",
 	bomb_desc = "무수한 어둠의 영혼 시전 시 알립니다.",
