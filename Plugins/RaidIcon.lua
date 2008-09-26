@@ -102,10 +102,10 @@ L:RegisterTranslations("zhTW", function() return {
 
 	["Star"] = "星星",
 	["Circle"] = "圓圈",
-	["Diamond"] = "方塊",
+	["Diamond"] = "菱形",
 	["Triangle"] = "三角",
 	["Moon"] = "月亮",
-	["Square"] = "方形",
+	["Square"] = "方塊",
 	["Cross"] = "十字",
 	["Skull"] = "骷髏",
 } end )
