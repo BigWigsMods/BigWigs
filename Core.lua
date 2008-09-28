@@ -227,8 +227,8 @@ L:RegisterTranslations("zhTW", function() return {
 
 	bosskill = "首領死亡",
 	bosskill_desc = "首領被擊敗時發出提示",
-	enrage = "憤怒",
-	enrage_desc = "當首領憤怒時發出警報",
+	enrage = "狂怒",
+	enrage_desc = "當首領狂怒時發出警報",
 	berserk = "狂暴",
 	berserk_desc = "當首領狂暴時發出警報",
 
