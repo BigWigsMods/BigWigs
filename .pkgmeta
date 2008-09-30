@@ -1,24 +1,24 @@
 package-as: BigWigs
 
 externals:
-    AceAddon-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceAddon-2.0
-    AceConsole-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceConsole-2.0
-    AceDB-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceDB-2.0
-    AceDebug-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceDebug-2.0
-    AceEvent-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceEvent-2.0
-    AceHook-2.1: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceHook-2.1
-    AceLibrary: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceLibrary
-    AceLocale-2.2: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceLocale-2.2
-    AceModuleCore-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceModuleCore-2.0
-    AceOO-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceOO-2.0
-    CallbackHandler-1.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/CallbackHandler-1.0
-    CandyBar-2.0: svn://svn.wowace.com/wow/candy-bar/mainline/trunk/CandyBar-2.0
-    Dewdrop-2.0: svn://svn.wowace.com/wow/wowace-dewdrop-lib/mainline/trunk/Dewdrop-2.0
-    FuBarPlugin-2.0: svn://svn.wowace.com/wow/fu-bar-plugin-2-0/mainline/trunk/FuBarPlugin-2.0
-    LibBabble-Boss-3.0: svn://svn.wowace.com/wow/lib-babble-boss-3-0/mainline/trunk
-    LibBabble-Zone-3.0: svn://svn.wowace.com/wow/lib-babble-zone-3-0/mainline/trunk
-    LibSharedMedia-3.0: svn://svn.wowace.com/wow/lib-shared-media-3-0/mainline/trunk/LibSharedMedia-3.0
-    LibSink-2.0: svn://svn.wowace.com/wow/lib-sink-2-0/mainline/trunk/LibSink-2.0
-    LibStub: svn://svn.wowace.com/wow/libstub/mainline/tags/1.0
-    PaintChips-2.0: svn://svn.wowace.com/wow/paint-chips-lib/mainline/trunk/PaintChips-2.0
-    Waterfall-1.0: svn://svn.wowace.com/wow/waterfall-1-0/mainline/trunk/Waterfall-1.0
+    Libs/AceAddon-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceAddon-2.0
+    Libs/AceConsole-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceConsole-2.0
+    Libs/AceDB-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceDB-2.0
+    Libs/AceDebug-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceDebug-2.0
+    Libs/AceEvent-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceEvent-2.0
+    Libs/AceHook-2.1: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceHook-2.1
+    Libs/AceLibrary: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceLibrary
+    Libs/AceLocale-2.2: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceLocale-2.2
+    Libs/AceModuleCore-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceModuleCore-2.0
+    Libs/AceOO-2.0: svn://svn.wowace.com/wow/ace2/mainline/trunk/AceOO-2.0
+    Libs/CallbackHandler-1.0: svn://svn.wowace.com/wow/ace3/mainline/trunk/CallbackHandler-1.0
+    Libs/CandyBar-2.0: svn://svn.wowace.com/wow/candy-bar/mainline/trunk/CandyBar-2.0
+    Libs/Dewdrop-2.0: svn://svn.wowace.com/wow/wowace-dewdrop-lib/mainline/trunk/Dewdrop-2.0
+    Libs/FuBarPlugin-2.0: svn://svn.wowace.com/wow/fu-bar-plugin-2-0/mainline/trunk/FuBarPlugin-2.0
+    Libs/LibBabble-Boss-3.0: svn://svn.wowace.com/wow/lib-babble-boss-3-0/mainline/trunk
+    Libs/LibBabble-Zone-3.0: svn://svn.wowace.com/wow/lib-babble-zone-3-0/mainline/trunk
+    Libs/LibSharedMedia-3.0: svn://svn.wowace.com/wow/lib-shared-media-3-0/mainline/trunk/LibSharedMedia-3.0
+    Libs/LibSink-2.0: svn://svn.wowace.com/wow/lib-sink-2-0/mainline/trunk/LibSink-2.0
+    Libs/LibStub: svn://svn.wowace.com/wow/libstub/mainline/tags/1.0
+    Libs/PaintChips-2.0: svn://svn.wowace.com/wow/paint-chips-lib/mainline/trunk/PaintChips-2.0
+    Libs/Waterfall-1.0: svn://svn.wowace.com/wow/waterfall-1-0/mainline/trunk/Waterfall-1.0
