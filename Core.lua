@@ -26,9 +26,6 @@ L:RegisterTranslations("enUS", function() return {
 	["%s has been defeated"] = true,     -- "<boss> has been defeated"
 	["%s have been defeated"] = true,    -- "<bosses> have been defeated"
 
-	["Debug enabled, output routed to %s."] = true,
-	["Debug disabled."] = true,
-
 	-- AceConsole strings
 	["Bosses"] = true,
 	["Options for bosses in %s."] = true, -- "Options for bosses in <zone>"
@@ -41,8 +38,6 @@ L:RegisterTranslations("enUS", function() return {
 	["Activate or deactivate this module."] = true,
 	["Reboot"] = true,
 	["Reboot this module."] = true,
-	["Debugging"] = true,
-	["Show debug messages."] = true,
 	["Options"] = true,
 
 	bosskill = "Boss death",
@@ -62,9 +57,6 @@ L:RegisterTranslations("frFR", function() return {
 	["%s has been defeated"] = "%s a été vaincu(e)",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s ont été vaincu(e)s",    -- "<bosses> have been defeated"
 
-	["Debug enabled, output routed to %s."] = "Déboguage activé, sortie dirigée vers %s.",
-	["Debug disabled."] = "Déboguage désactivé.",
-
 	-- AceConsole strings
 	["Bosses"] = "Boss",
 	["Options for bosses in %s."] = "Options concernant les boss dans %s.", -- "Options for bosses in <zone>"
@@ -77,8 +69,6 @@ L:RegisterTranslations("frFR", function() return {
 	["Activate or deactivate this module."] = "Active ou désactive ce module.",
 	["Reboot"] = "Redémarrer",
 	["Reboot this module."] = "Redémarre ce module.",
-	["Debugging"] = "Déboguage",
-	["Show debug messages."] = "Affiche les messages de déboguage.",
 	["Options"] = "Options",
 
 	bosskill = "Défaite du boss",
@@ -98,9 +88,6 @@ L:RegisterTranslations("deDE", function() return {
 	["%s has been defeated"] = "%s wurde besiegt",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s wurden besiegt",    -- "<bosses> have been defeated"
 
-	["Debug enabled, output routed to %s."] = "Debuggen aktiviert, Ausgabe umgeleitet zu %s.",
-	["Debug disabled."] = "DEbuggen Deaktiviert.",
-
 	-- AceConsole strings
 	["Bosses"] = "Bosse",
 	["Options for bosses in %s."] = "Optionen für Bosse in %s.", -- "Options for bosses in <zone>"
@@ -113,8 +100,6 @@ L:RegisterTranslations("deDE", function() return {
 	["Activate or deactivate this module."] = "Aktiviert oder deaktiviert dieses Modul.",
 	["Reboot"] = "Neustarten",
 	["Reboot this module."] = "Startet dieses Modul neu.",
-	["Debugging"] = "Debugging",
-	["Show debug messages."] = "Zeige Debug Nachrichten.",
 	["Options"] = "Optionen",
 
 	bosskill = "Boss besiegt",
@@ -133,9 +118,6 @@ L:RegisterTranslations("koKR", function() return {
 	["%s mod enabled"] = "%s 모듈 시작",
 	["%s has been defeated"] = "%s 물리침",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s 물리침",    -- "<bosses> have been defeated"
-	
-	["Debug enabled, output routed to %s."] = "디버그 사용, %s에 루트를 출력합니다.",
-	["Debug disabled."] = "디버그 사용안함.",
 
 	-- AceConsole strings
 	["Bosses"] = "보스",
@@ -149,8 +131,6 @@ L:RegisterTranslations("koKR", function() return {
 	["Activate or deactivate this module."] = "해당 모듈을 활성화하거나 비활성화합니다.",
 	["Reboot"] = "재시작",
 	["Reboot this module."] = "해당 모듈을 재시작합니다.",
-	["Debugging"] = "디버깅",
-	["Show debug messages."] = "디버그 메세지를 표시합니다.",
 	["Options"] = "설정",
 
 	bosskill = "보스 사망",
@@ -170,9 +150,6 @@ L:RegisterTranslations("zhCN", function() return {
 	["%s has been defeated"] = "%s 被击败了！",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s 被击败了！",    -- "<bosses> have been defeated"
 
-	["Debug enabled, output routed to %s."] = "调试功能启用，输出到%s。",
-	["Debug disabled."] = "调试禁用。",
-
 	-- AceConsole strings
 	["Bosses"] = "首领模块",
 	["Options for bosses in %s."] = "%s首领模块设置。", -- "Options for bosses in <zone>"
@@ -185,8 +162,6 @@ L:RegisterTranslations("zhCN", function() return {
 	["Activate or deactivate this module."] = "激活或关闭此模块。",
 	["Reboot"] = "重置",
 	["Reboot this module."] = "重置此模块。",
-	["Debugging"] = "调试",
-	["Show debug messages."] = "显示调试信息。",
 	["Options"] = "设置",
 
 	bosskill = "首领死亡",
@@ -206,9 +181,6 @@ L:RegisterTranslations("zhTW", function() return {
 	["%s has been defeated"] = "%s被擊敗了",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s被擊敗了",    -- "<bosses> have been defeated"
 
-	["Debug enabled, output routed to %s."] = "啟用除錯模式，輸出到%s",
-	["Debug disabled."] = "關閉除錯模式",
-
 	-- AceConsole strings
 	["Bosses"] = "首領模組",
 	["Options for bosses in %s."] = "%s首領模組選項", -- "Options for bosses in <zone>"
@@ -221,8 +193,6 @@ L:RegisterTranslations("zhTW", function() return {
 	["Activate or deactivate this module."] = "開啟或關閉此模組",
 	["Reboot"] = "重啟",
 	["Reboot this module."] = "重啟此模組",
-	["Debugging"] = "除錯",
-	["Show debug messages."] = "顯示除錯訊息",
 	["Options"] = "選項",
 
 	bosskill = "首領死亡",
@@ -242,9 +212,6 @@ L:RegisterTranslations("esES", function() return {
 	["%s has been defeated"] = "%s ha sido derrotado",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s han sido derrotados",    -- "<bosses> have been defeated"
 
-	["Debug enabled, output routed to %s."] = "Depuración activa, salida redirigida a %s.",
-	["Debug disabled."] = "Depuración desactivada.",
-
 	-- AceConsole strings
 	["Bosses"] = "Jefes",
 	["Options for bosses in %s."] = "Opciones para jefes de %s.", -- "Options for bosses in <zone>"
@@ -257,8 +224,6 @@ L:RegisterTranslations("esES", function() return {
 	["Activate or deactivate this module."] = "Activa o desactiva este módulo.",
 	["Reboot"] = "Reiniciar",
 	["Reboot this module."] = "Reiniciar el módulo.",
-	["Debugging"] = "Depuración",
-	["Show debug messages."] = "Mostrar mensajes de depuración.",
 	["Options"] = "Opciones",
 
 	bosskill = "Derrota del jefe",
@@ -279,9 +244,6 @@ L:RegisterTranslations("ruRU", function() return {
 	["%s has been defeated"] = "%s был побежден",     -- "<boss> has been defeated"
 	["%s have been defeated"] = "%s были побеждены",    -- "<bosses> have been defeated"
 
-	["Debug enabled, output routed to %s."] = "Отладка включена, вывод сообщений перемещен в %s.",
-	["Debug disabled."] = "Отладка отключена.",
-
 	-- AceConsole strings
 	["Bosses"] = "Боссы",
 	["Options for bosses in %s."] = "Опции для боссов в %s.", -- "Options for bosses in <zone>"
@@ -294,8 +256,6 @@ L:RegisterTranslations("ruRU", function() return {
 	["Activate or deactivate this module."] = "Активация или деактивация модуля",
 	["Reboot"] = "Перезагрузка",
 	["Reboot this module."] = "Перезагрузка данного модуля",
-	["Debugging"] = "Отладка",
-	["Show debug messages."] = "Показывает сообщения отладки",
 	["Options"] = "Опции",
 
 	bosskill = "Смерть босса",
@@ -316,7 +276,6 @@ L:RegisterTranslations("ruRU", function() return {
 
 BigWigs = AceLibrary("AceAddon-2.0"):new(
 	"AceEvent-2.0",
-	"AceDebug-2.0",
 	"AceModuleCore-2.0",
 	"AceConsole-2.0",
 	"AceDB-2.0"
@@ -413,27 +372,9 @@ function BigWigs:OnDisable()
 	self:TriggerEvent("BigWigs_CoreDisabled")
 end
 
-function BigWigs:OnDebugEnable() self:ToggleModuleDebugging(true) end
-function BigWigs:OnDebugDisable() self:ToggleModuleDebugging(false) end
-
 -------------------------------
 --      API                  --
 -------------------------------
-
-function BigWigs:ToggleModuleDebugging(enable)
-	local frame = self.debugFrame or ChatFrame5
-	if enable then
-		self:Print(L["Debug enabled, output routed to %s."]:format(frame:GetName()))
-	else
-		self:Print(L["Debug disabled."])
-	end
-	for name, module in self:IterateModules() do
-		if type(module.SetDebugging) == "function" then
-			module:SetDebugging( enable )
-			module.debugFrame = frame
-		end
-	end
-end
 
 function BigWigs:RegisterBossOption(key, name, desc, func)
 	if customBossOptions[key] then
@@ -638,9 +579,6 @@ function BigWigs:BigWigs_RecvSync(sync, module)
 			end
 		end
 		mod:TriggerEvent("BigWigs_RemoveRaidIcon")
-		if self:IsDebugging() then
-			self:Debug(mod, "Boss dead, disabling.")
-		end
 		self:ToggleModuleActive(mod, false)
 	end
 end

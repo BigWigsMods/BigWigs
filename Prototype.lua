@@ -358,9 +358,6 @@ end
 function BigWigs.modulePrototype:CheckForEngage()
 	local go = self:Scan()
 	if go then
-		if BigWigs:IsDebugging() then
-			BigWigs:Debug(self, "Scan returned true, engaging.")
-		end
 		local mod = self:ToString()
 		local moduleName = BBR[mod] or mod
 		self:Sync(self:GetEngageSync().." "..moduleName)
@@ -373,9 +370,6 @@ function BigWigs.modulePrototype:CheckForWipe()
 	if not UnitIsFeignDeath("player") then
 		local go = self:Scan()
 		if not go then
-			if BigWigs:IsDebugging() then
-				BigWigs:Debug(self, "Rebooting module.")
-			end
 			self:TriggerEvent("BigWigs_RemoveRaidIcon")
 			self:TriggerEvent("BigWigs_RebootModule", self)
 			return

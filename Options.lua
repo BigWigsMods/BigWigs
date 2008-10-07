@@ -8,7 +8,7 @@ assert(BigWigs, "BigWigs not found!")
 local LC = AceLibrary("AceLocale-2.2"):new("BigWigs")
 local L = AceLibrary("AceLocale-2.2"):new("BigWigsOptions")
 local waterfall = AceLibrary:HasInstance("Waterfall-1.0") and AceLibrary("Waterfall-1.0") or nil
-local FuBar = AceLibrary("FuBarPlugin-2.0")
+local dew = AceLibrary("Dewdrop-2.0")
 local BigWigs = BigWigs
 
 local hint = nil
@@ -126,44 +126,23 @@ L:RegisterTranslations("ruRU", function() return {
 --      FuBar Plugin      --
 ----------------------------
 
-BigWigsOptions = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0", "AceDB-2.0", "FuBarPlugin-2.0")
-local BigWigsOptions = BigWigsOptions
+local ldb = LibStub("LibDataBroker-1.1"):NewDataObject("BigWigs", {
+	type = "data source",
+	text = "Big Wigs",
+	icon = "Interface\\AddOns\\BigWigs\\Icons\\core-enabled",
+})
 
-BigWigsOptions.hasIcon = true
+BigWigsOptions = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0")
+local BigWigsOptions = BigWigsOptions
 
 -----------------------------
 --      Menu Handling      --
 -----------------------------
 
 function BigWigsOptions:OnInitialize()
-	self:RegisterDB("BigWigsFubarDB")
-
 	hint = L["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."]
 	if waterfall then
 		hint = hint .. " " .. L["|cffeda55fShift-Click|r to open configuration window."]
-	end
-
-	self.hasNoColor = true
-	self.hasIcon = "Interface\\AddOns\\BigWigs\\Icons\\core-enabled"
-	self.defaultMinimapPosition = 180
-	self.hideWithoutStandby = true
-	self.hideMenuTitle = true
-	self.OnMenuRequest = BigWigs.cmdtable
-	self.blizzardTooltip = true
-	self.cannotDetachTooltip = true
-
-	BigWigs.hideMenuTitle = true
-
-	-- XXX Total hack :(
-	local args = FuBar:GetAceOptionsDataTable(self)
-	if not BigWigsOptions.OnMenuRequest.args[L["Menu"]] then
-		BigWigsOptions.OnMenuRequest.args[L["Menu"]] = {
-			type = "group",
-			name = L["Menu"],
-			desc = L["Menu options."],
-			args = args,
-			order = 300,
-		}
 	end
 
 	-- Register with waterfall if it's available.
@@ -190,12 +169,10 @@ end
 
 function BigWigsOptions:CoreState()
 	if BigWigs:IsActive() then
-		self:SetIcon("Interface\\AddOns\\BigWigs\\Icons\\core-enabled")
+		ldb.icon = "Interface\\AddOns\\BigWigs\\Icons\\core-enabled"
 	else
-		self:SetIcon("Interface\\AddOns\\BigWigs\\Icons\\core-disabled")
+		ldb.icon = "Interface\\AddOns\\BigWigs\\Icons\\core-disabled"
 	end
-
-	self:UpdateTooltip()
 end
 
 -----------------------------
@@ -205,62 +182,67 @@ end
 -- God, blizzard sucks some times.
 local zoneFunctions = {"GetRealZoneText", "GetZoneText"}
 
-function BigWigsOptions:OnClick()
-	if BigWigs:IsActive() then
-		if IsAltKeyDown() then
-			if IsControlKeyDown() then
-				BigWigs:ToggleActive(false)
-				self:UpdateTooltip()
+function ldb.OnClick(self, button)
+	if button == "RightButton" then
+		dew:Open(self,
+			"children", function()
+				dew:FeedAceOptionsTable(BigWigs.cmdtable)
+			end
+		)
+	else
+		if BigWigs:IsActive() then
+			if IsAltKeyDown() then
+				if IsControlKeyDown() then
+					BigWigs:ToggleActive(false)
+				else
+					for name, module in BigWigs:IterateModules() do
+						if module:IsBossModule() and BigWigs:IsModuleActive(module) then
+							BigWigs:ToggleModuleActive(module, false)
+						end
+					end
+					BigWigs:Print(L["All running modules have been disabled."])
+				end
+			elseif IsShiftKeyDown() and waterfall then
+				local subGroup = nil
+				for i = 1, #zoneFunctions do
+					local zone = _G[zoneFunctions[i]]()
+					if zone and self.OnMenuRequest.args[zone] then
+						subGroup = zone
+						break
+					end
+				end
+				waterfall:Open("BigWigs", subGroup)
 			else
 				for name, module in BigWigs:IterateModules() do
 					if module:IsBossModule() and BigWigs:IsModuleActive(module) then
-						BigWigs:ToggleModuleActive(module, false)
+						BigWigs:BigWigs_RebootModule(module)
 					end
 				end
-				BigWigs:Print(L["All running modules have been disabled."])
+				BigWigs:Print(L["All running modules have been reset."])
 			end
-		elseif IsShiftKeyDown() and waterfall then
-			local subGroup = nil
-			for i = 1, #zoneFunctions do
-				local zone = _G[zoneFunctions[i]]()
-				if zone and self.OnMenuRequest.args[zone] then
-					subGroup = zone
-					break
-				end
-			end
-			waterfall:Open("BigWigs", subGroup)
 		else
-			for name, module in BigWigs:IterateModules() do
-				if module:IsBossModule() and BigWigs:IsModuleActive(module) then
-					BigWigs:BigWigs_RebootModule(module)
-				end
-			end
-			BigWigs:Print(L["All running modules have been reset."])
+			BigWigs:ToggleActive(true)
 		end
-	else
-		BigWigs:ToggleActive(true)
 	end
-
-	self:UpdateTooltip()
 end
 
-function BigWigsOptions:OnTooltipUpdate()
-	GameTooltip:AddLine("Big Wigs")
+function ldb.OnTooltipShow(tt)
+	tt:AddLine("Big Wigs")
 	if BigWigs:IsActive() then
 		local added = nil
 		for name, module in BigWigs:IterateModules() do
 			if module:IsBossModule() and BigWigs:IsModuleActive(module) then
 				if not added then
-					GameTooltip:AddLine(L["Active boss modules:"], 1, 1, 1)
+					tt:AddLine(L["Active boss modules:"], 1, 1, 1)
 					added = true
 				end
-				GameTooltip:AddLine(name)
+				tt:AddLine(name)
 			end
 		end
-		GameTooltip:AddLine(hint, 0.2, 1, 0.2, 1)
+		tt:AddLine(hint, 0.2, 1, 0.2, 1)
 	else
-		GameTooltip:AddLine(L["Big Wigs is currently disabled."])
-		GameTooltip:AddLine(L["|cffeda55fClick|r to enable."], 0.2, 1, 0.2)
+		tt:AddLine(L["Big Wigs is currently disabled."])
+		tt:AddLine(L["|cffeda55fClick|r to enable."], 0.2, 1, 0.2)
 	end
 end
 
