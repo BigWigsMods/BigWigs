@@ -337,7 +337,7 @@ plugin.consoleOptions = {
 
 local function filter()
 	if plugin:IsChannelSuppressed(event) and plugin:IsSpam(arg1) then
-		BigWigs:Debug(L["Suppressing Chatframe"], event, arg1)
+		--BigWigs:Debug(L["Suppressing Chatframe"], event, arg1)
 		return true
 	end
 end
@@ -380,10 +380,10 @@ do
 		local rbe = _G.RaidBossEmoteFrame
 		function plugin:RWAddMessage(frame, message, colorInfo)
 			if frame == rwf and db.rw and self:IsSpam(message) then
-				BigWigs:Debug(L["Suppressing RaidWarningFrame"], message)
+				--BigWigs:Debug(L["Suppressing RaidWarningFrame"], message)
 				return
 			elseif frame == rbe and db.boss and type(arg2) == "string" and bossmobs[arg2] then
-				BigWigs:Debug(L["Suppressing RaidBossEmoteFrame"], message)
+				--BigWigs:Debug(L["Suppressing RaidBossEmoteFrame"], message)
 				return
 			end
 			self.hooks["RaidNotice_AddMessage"](frame, message, colorInfo)
@@ -392,7 +392,7 @@ do
 
 	function plugin:RBEAddMessage(frame, message, r, g, b, a, t)
 		if type(arg2) == "string" and bossmobs[arg2] and db.boss then
-			BigWigs:Debug(L["Suppressing RaidBossEmoteFrame"], message)
+			--BigWigs:Debug(L["Suppressing RaidBossEmoteFrame"], message)
 			return
 		end
 		self.hooks[RaidBossEmoteFrame].AddMessage(frame, message, r, g, b, a, t)
@@ -401,7 +401,7 @@ end
 
 function plugin:CTRA_AddMessage(obj, text, r, g, b, a, t)
 	if self:IsSpam(text) and db.rs then
-		BigWigs:Debug(L["Suppressing CT_RAMessageFrame"], text)
+		--BigWigs:Debug(L["Suppressing CT_RAMessageFrame"], text)
 		return
 	end
 	self.hooks[obj].AddMessage(obj, text, r, g, b, a, t)
