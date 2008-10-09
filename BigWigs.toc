@@ -25,6 +25,7 @@
 ## SavedVariables: BigWigsDB, BigWigsFubarDB
 
 embeds.xml
+libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 
 LoadOnDemand.lua
 Core.lua
