@@ -224,7 +224,7 @@ plugin.consoleOptions = {
 
 local function filter()
 	if not plugin.db.profile.showwhispers and sentWhispers[arg1] then
-		BigWigs:Debug("Suppressing self-sent whisper.", event, arg1)
+		--BigWigs:Debug("Suppressing self-sent whisper.", event, arg1)
 		return true
 	end
 end
