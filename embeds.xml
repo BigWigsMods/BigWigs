@@ -9,7 +9,6 @@
 <Script file="Libs\AceConsole-2.0\AceConsole-2.0.lua"/>
 <Script file="Libs\AceHook-2.1\AceHook-2.1.lua"/>
 <Script file="Libs\AceDB-2.0\AceDB-2.0.lua"/>
-<Script file="Libs\AceDebug-2.0\AceDebug-2.0.lua"/>
 <Script file="Libs\AceEvent-2.0\AceEvent-2.0.lua"/>
 <Script file="Libs\AceLocale-2.2\AceLocale-2.2.lua"/>
 <Script file="Libs\AceModuleCore-2.0\AceModuleCore-2.0.lua"/>
