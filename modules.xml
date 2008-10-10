@@ -1,6 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
-
+<!--@debug@-->
 <Script file="Plugins\Comm.lua"/>
 <Script file="Plugins\Colors.lua"/>
 <Script file="Plugins\TargetMonitor.lua"/>
@@ -79,5 +79,5 @@
 <Script file="Sunwell\Twins.lua"/>
 <Script file="Sunwell\Muru.lua"/>
 <Script file="Sunwell\KilJaeden.lua"/>
-
+<!--@end-debug@-->
 </Ui>

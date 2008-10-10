@@ -20,11 +20,12 @@
 ## X-License: See license.txt
 
 ## OptionalDeps: Ace2, CandyBar, LibSharedMedia-3.0, LibBabble-Zone-3.0, LibBabble-Boss-3.0, LibSink-2.0
-## X-Embeds: Ace2, CandyBar, DewdropLib, PaintChipsLib, LibSharedMedia-3.0, Waterfall-1.0, LibSink-2.0, LibBabble-Zone-3.0, LibBabble-Boss-3.0
 
 ## SavedVariables: BigWigsDB, BigWigsFubarDB
 
+#@no-lib-strip@
 embeds.xml
+#@end-no-lib-strip@
 libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 
 LoadOnDemand.lua
