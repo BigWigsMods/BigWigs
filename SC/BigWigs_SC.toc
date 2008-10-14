@@ -1,4 +1,4 @@
-## Interface: 20400
+## Interface: 30000
 
 ## Title: Big Wigs [|cffeda55fSerpentshrine Cavern|r]
 ## Title-ruRU: Big Wigs [|cffeda55fЗмеиное святилище|r]
@@ -18,12 +18,8 @@
 ## Version: 2.0
 ## LoadOnDemand: 1
 
-## X-Website: http://www.wowace.com/index.php/BigWigs
+## X-Website: http://www.wowwiki.com/BigWigs
 ## X-Category: Raid
-## X-RelSite-WoWI: 5086
-## X-RelSite-Curse: 3299
-## X-AceForum: 4870
-
 
 ## X-BigWigs-LoadInZone: Serpentshrine Cavern
 

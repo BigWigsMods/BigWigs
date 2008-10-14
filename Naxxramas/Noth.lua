@@ -1,0 +1,341 @@
+﻿------------------------------
+--      Are you local?      --
+------------------------------
+
+local boss = BB["Noth the Plaguebringer"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+
+local timeroom = 90
+local timebalcony = 70
+local cursetime = 55
+local wave1time = 10
+local wave2time = 41
+
+----------------------------
+--      Localization      --
+----------------------------
+
+L:RegisterTranslations("enUS", function() return {
+	cmd = "Noth",
+
+	starttrigger1 = "Die, trespasser!",
+	starttrigger2 = "Glory to the master!",
+	starttrigger3 = "Your life is forfeit!",
+	startwarn = "Noth the Plaguebringer engaged! 90 seconds till teleport",
+
+	blink = "Blink",
+	blink_desc = "Warnings when Noth blinks.",
+	blinkwarn = "Blink!",
+	blinkwarn2 = "Blink in ~5 seconds!",
+	blinkbar = "Blink",
+
+	teleport = "Teleport",
+	teleport_desc = "Warnings and bars for teleport.",
+	teleportbar = "Teleport!",
+	backbar = "Back in room!",
+	teleportwarn = "Teleport! He's on the balcony!",
+	teleportwarn2 = "Teleport in 10 seconds!",
+	backwarn = "He's back in the room for %d seconds!",
+	backwarn2 = "10 seconds until he's back in the room!",
+
+	curse = "Curse",
+	curse_desc = "Warn when Noth casts Curse of the Plaguebringer.",
+	curseexplosion = "Curse explosion!",
+	cursewarn = "Curse! next in ~55 seconds",
+	curse10secwarn = "Curse in ~10 seconds",
+	cursebar = "Next Curse",
+
+	wave = "Waves",
+	wave_desc = "Alerts for the different waves.",
+	addtrigger = "Rise, my soldiers! Rise and fight once more!",
+	wave1bar = "Wave 1",
+	wave2bar = "Wave 2",
+	wave2_message = "Wave 2 in 10sec",
+} end )
+
+L:RegisterTranslations("deDE", function() return {
+	starttrigger1 = "Sterbt, Eindringling!",
+	starttrigger2 = "Ehre unserem Meister!",
+	starttrigger3 = "Euer Leben ist verwirkt!",
+	startwarn = "Noth der Seuchenf\195\188rst angegriffen! Teleport in 90 Sekunden!",
+
+	blink = "Blinzeln",
+	blink_desc = "Warnung, wenn Noth Blinzeln wirkt.",
+	blinkwarn = "Blinzeln!",
+	blinkwarn2 = "Blinzeln in ~5 Sekunden!",
+	blinkbar = "Blinzeln",
+
+	teleport = "Teleport",
+	teleport_desc = "Warnung vor Teleport.",
+	teleportwarn = "Teleport! Noth auf dem Balkon!",
+	teleportwarn2 = "Teleport in 10 Sekunden!",
+	teleportbar = "Teleport",
+	backbar = "R\195\188ckteleport",
+	backwarn = "Noth zur\195\188ck im Raum f\195\188r %d Sekunden.",
+	backwarn2 = "R\195\188ckteleport in 10 Sekunden!",
+
+	curse = "Fluch",
+	curse_desc = "Warnung, wenn Noth Fluch des Seuchenf\195\188rsten wirkt.",
+	--curseexplosion = "Curse explosion!",
+	cursewarn = "Fluch! N\195\164chster in ~55 Sekunden",
+	curse10secwarn = "Fluch in ~10 Sekunden",
+	cursebar = "N\195\164chster Fluch",
+
+	wave = "Wellen",
+	wave_desc = "Warnung vor den ankommenden Gegner Wellen.",
+	addtrigger = "Erhebt euch, Soldaten! Erhebt euch und k\195\164mpft erneut!",
+	wave1bar = "Welle 1",
+	wave2bar = "Welle 2",
+	wave2_message = "Welle 2 in 10 Sekunden!",
+} end )
+
+
+L:RegisterTranslations("koKR", function() return {
+	starttrigger1 = "죽어라, 침입자들아!",
+	starttrigger2 = "주인님께 영광을!",
+	starttrigger3 = "너희 생명은 끝이다!",
+	startwarn = "역병술사 노스와 전투 시작! 90초 후 순간이동",
+
+	blink = "점멸",
+	blink_desc = "점멸을 알립니다.",
+	blinkwarn = "점멸! 어그로 초기화, 공격 금지!",
+	blinkwarn2 = "약 5초 이내 점멸!",
+	blinkbar = "점멸",
+
+	teleport = "순간이동",
+	teleport_desc = "순간이동을 알립니다.",
+	teleportwarn = "발코니로 순간이동!",
+	teleportwarn2 = "10초 후 순간이동!",
+	teleportbar = "순간이동!",
+	backbar = "방으로 복귀!",
+	backwarn = "방으로 복귀! %d 초간 최대한 공격!",
+	backwarn2 = "10초 후 방으로 복귀!",
+
+	curse = "저주",
+	curse_desc = "저주를 알립니다.",
+	curseexplosion = "역병술사의 저주!",
+	cursewarn = "저주! 다음 저주 약 55초 이내",
+	curse10secwarn = "약 10초 이내 저주",
+	cursebar = "다음 저주",
+
+	wave = "웨이브",
+	wave_desc = "웨이브를 알립니다.",
+	addtrigger = "일어나라,병사들이여! 다시 일어나 싸워라!",
+	wave1bar = "웨이브 1",
+	wave2bar = "웨이브 2",
+	wave2_message = "10초 이내 웨이브 2",
+} end )
+
+L:RegisterTranslations("zhCN", function() return {
+	starttrigger1 = "死吧，入侵者！",
+	starttrigger2 = "荣耀归于我主！",
+	starttrigger3 = "我要没收你的生命！",
+	startwarn = "瘟疫使者诺斯已激活 - 90秒后传送",
+
+	blink = "闪现术警报",
+	blink_desc = "闪现术警报",
+	blinkwarn = "闪现术！停止攻击！",
+	blinkwarn2 = "~5秒后发动闪现术！",
+	blinkbar = "闪现术",
+
+	teleport = "传送警报",
+	teleport_desc = "传送警报",
+	teleportwarn = "传送发动！",
+	teleportwarn2 = "10秒后发动传送！",
+	teleportbar = "传送！",
+	backbar = "回到房间！",
+	curseexplosion = "AOE诅咒发动！",
+	backwarn = "诺斯回到房间 - %d后再次传送",
+	backwarn2 = "10秒后诺斯回到房间！",
+
+	curse = "诅咒警报",
+	curse_desc = "诅咒警报",
+	--curseexplosion = "Curse explosion!",
+	cursewarn = "诅咒 - ~55秒后再次发动",
+	curse10secwarn = "~10秒后发动诅咒！",
+	cursebar = "下一次诅咒",
+
+	wave = "骷髅警报",
+	wave_desc = "召唤骷髅时发出警报",
+	addtrigger = "起来吧，我的战士们！起来，再为主人尽忠一次！",
+	wave1bar = "第一波",
+	wave2bar = "第二波",
+	wave2_message = "10秒后第二波",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	starttrigger1 = "死吧，入侵者！",
+	starttrigger2 = "榮耀歸於我主！",
+	starttrigger3 = "我要沒收你的生命！",
+	startwarn = "瘟疫者諾斯已進入戰動 - 90 秒後傳送",
+
+	blink = "閃現術警報",
+	blink_desc = "閃現術警報",
+	blinkwarn = "閃現術！停止攻擊！",
+	blinkwarn2 = "5 秒後發動閃現術！",
+	blinkbar = "閃現術",
+
+	teleport = "傳送警報",
+	teleport_desc = "傳送警報",
+	teleportwarn = "傳送發動！",
+	teleportwarn2 = "10 秒後發動傳送！",
+	teleportbar = "傳送！",
+	backbar = "回到房間！",
+	backwarn = "諾斯回到房間 - %d後再次傳送",
+	backwarn2 = "10 秒後諾斯回到房間！",
+
+	curse = "詛咒警報",
+	curse_desc = "詛咒警報",
+	--curseexplosion = "Curse explosion!",
+	cursewarn = "詛咒 - 55秒後再次發動",
+	curse10secwarn = "10 秒後發動詛咒！",
+	cursebar = "下一次詛咒",
+
+	wave = "小骷髏警報",
+	wave_desc = "警報數波小骷髏",
+	addtrigger = "起來吧，我的戰士們！起來，再為主人盡忠一次！",
+	wave1bar = "第一波",
+	wave2bar = "第二波",
+	wave2_message = "10 秒後第二波",
+} end )
+
+L:RegisterTranslations("frFR", function() return {
+	starttrigger1 = "Mourez, intrus !",
+	starttrigger2 = "Gloire au maître !",
+	starttrigger3 = "Vos vies ne valent plus rien !",
+	startwarn = "Noth le Porte-peste engagé ! 90 sec. avant téléportation",
+
+	blink = "Transfert",
+	blink_desc = "Préviens quand Noth utilise son Transfert.",
+	blinkwarn = "Transfert !",
+	blinkwarn2 = "Transfert dans ~5 sec. !",
+	blinkbar = "Transfert",
+
+	teleport = "Téléportation",
+	teleport_desc = "Préviens quand Noth se téléporte.",
+	teleportwarn = "Téléportation ! Il est sur le balcon !",
+	teleportwarn2 = "Télportation dans 10 sec. !",
+	teleportbar = "Téléportation",
+	backbar = "De retour dans la salle",
+	curseexplosion = "Curse explosion !",
+	backwarn = "De retour dans la salle pendant %d sec. !",
+	backwarn2 = "10 sec. avant son retour dans la salle !",
+
+	curse = "Malédiction",
+	curse_desc = "Préviens quand Noth lance ses malédictions.",
+	--curseexplosion = "Curse explosion!",
+	cursewarn = "Malédiction ! Prochaine dans ~55 sec.",
+	curse10secwarn = "Malédiction dans ~10 sec.",
+	cursebar = "Prochaine malédiction",
+
+	wave = "Vagues",
+	wave_desc = "Préviens de l'arrivée des vagues.",
+	addtrigger = "Levez-vous, soldats ! Levez-vous et combattez une fois encore !",
+	wave1bar = "Vague 1",
+	wave2bar = "Vague 2",
+	wave2_message = "Vague 2 dans 10 sec.",
+} end )
+
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+local mod = BigWigs:NewModule(boss)
+mod.zonename = BZ["Naxxramas"]
+mod.enabletrigger = boss
+mod.guid = 15954
+mod.toggleoptions = {"blink", "teleport", "curse", "wave", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function mod:OnEnable()
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Curse", 29213)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Blink", 29209)
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
+
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+end
+
+------------------------------
+--      Event Handlers      --
+------------------------------
+
+function mod:Curse(_, spellID)
+	if self.db.profile.curse then
+		self:IfMessage(L["cursewarn"], "Important", spellID, "Alarm")
+		self:ScheduleEvent("bwnothcurse", "BigWigs_Message", cursetime - 10, L["curse10secwarn"], "Urgent")
+		self:Bar(L["cursebar"], cursetime, spellID)
+		self:Bar(L["curseexplosion"], 10, spellID)
+	end
+end
+
+function mod:Blink(_, spellID)
+	if self.db.profile.blink then
+		self:IfMessage(L["blinkwarn"], "Important", spellID)
+		self:ScheduleEvent("bwnothblink", "BigWigs_Message", 25, L["blinkwarn2"], "Attention")
+		self:Bar(L["blinkbar"], 30, spellID)
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	if msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] then
+		timeroom = 90
+		timebalcony = 70
+		cursetime = 55
+		wave1time = 10
+		wave2time = 41
+
+		if self.db.profile.teleport then
+			self:Message(L["startwarn"], "Important")
+			self:DelayedMessage(timeroom - 10, L["teleportwarn2"], "Urgent")
+			self:Bar(L["teleportbar"], timeroom, "Spell_Magic_LesserInvisibilty")
+		end
+		self:ScheduleEvent("bwnothtobalcony", self.teleportToBalcony, timeroom, self)
+	end
+end
+
+function mod:teleportToBalcony()
+	if timeroom == 90 then
+		timeroom = 110
+	elseif timeroom == 110 then
+		timeroom = 180
+	end
+
+	self:CancelScheduledEvent("bwnothblink")
+	self:CancelScheduledEvent("bwnothcurse")
+	self:TriggerEvent("BigWigs_StopBar", self, L["blinkbar"])
+	self:TriggerEvent("BigWigs_StopBar", self, L["cursebar"])
+
+	if self.db.profile.teleport then 
+		self:Message(L["teleportwarn"], "Important")
+		self:Bar(L["backbar"], timebalcony, "Spell_Magic_LesserInvisibilty")
+		self:ScheduleEvent("bwnothback", "BigWigs_Message", timebalcony - 10, L["backwarn2"], "Urgent")
+	end
+	if self.db.profile.wave then
+		self:Bar(L["wave1bar"], wave1time, "Spell_ChargePositive")
+		self:Bar(L["wave2bar"], wave2time, "Spell_ChargePositive")
+		self:ScheduleEvent("bwnothwave2inc", "BigWigs_Message", wave2time - 10, L["wave2_message"], "Urgent")
+	end
+	self:ScheduleEvent("bwnothtoroom", self.teleportToRoom, timebalcony, self)
+	wave2time = wave2time + 15
+end
+
+function mod:teleportToRoom()
+	if timebalcony == 70 then
+		timebalcony = 95
+	elseif timebalcony == 95 then
+		timebalcony = 120
+	end
+
+	if self.db.profile.teleport then
+		self:Message(L["backwarn"]:format(timeroom), "Important")
+		self:Bar(L["teleportbar"], timeroom, "Spell_Magic_LesserInvisibilty")
+		self:ScheduleEvent("bwnothteleport", "BigWigs_Message", timeroom - 10, L["teleportwarn2"], "Urgent")
+	end
+	self:ScheduleEvent("bwnothtobalcony", self.teleportToBalcony, timeroom, self)
+end
+

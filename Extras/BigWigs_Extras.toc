@@ -1,4 +1,4 @@
-## Interface: 20400
+## Interface: 30000
 
 ## Title: Big Wigs [|cffeda55fExtras|r]
 ## Title-ruRU: Big Wigs [|cffeda55fДополнение|r]
@@ -11,16 +11,13 @@
 ## Notes-koKR: Big Wigs 추가 플러그인
 ## Notes-frFR: Plugins supplémentaires de Big Wigs.
 ## Notes-esES: Plugins extras para Big Wigs.
-## Author: Ammo, Rabbit
-## X-Credits: Tekkub Stoutwrithe(founding author), Shyva, Funkydude & Others
+## Author: Ammo, Rabbit, Funkydude
+## X-Credits: Tekkub Stoutwrithe(founding author), Shyva & Others
 ## Version: 2.0
 ## LoadOnDemand: 1
 
-## X-Website: http://www.wowace.com/index.php/BigWigs
+## X-Website: http://www.wowwiki.com/BigWigs
 ## X-Category: Raid
-## X-RelSite-WoWI: 5086
-## X-RelSite-Curse: 3299
-## X-AceForum: 1762
 
 ## X-BigWigs-LoadWithCore: 1
 

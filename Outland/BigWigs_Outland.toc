@@ -1,4 +1,4 @@
-## Interface: 20400
+## Interface: 30000
 
 ## Title: Big Wigs [|cffeda55fOutland|r]
 ## Title-ruRU: Big Wigs [|cffeda55fЗапределье|r]
@@ -18,11 +18,8 @@
 ## Version: 2.0
 ## LoadOnDemand: 1
 
-## X-Website: http://www.wowace.com/index.php/BigWigs
+## X-Website: http://www.wowwiki.com/BigWigs
 ## X-Category: Raid
-## X-RelSite-WoWI: 5086
-## X-RelSite-Curse: 3299
-## X-AceForum: 4688
 
 ## X-BigWigs-Menu: Outland
 ## X-BigWigs-LoadInZone: Hellfire Peninsula, Gruul's Lair, Magtheridon's Lair, Shadowmoon Valley

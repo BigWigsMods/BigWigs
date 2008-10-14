@@ -1,4 +1,4 @@
-## Interface: 20400
+## Interface: 30000
 
 ## Title: Big Wigs |cff7fff7f -Ace2-|r
 ## Title-zhCN: |cff7fff7f-Ace2-|r Big Wigs
@@ -12,11 +12,8 @@
 ## Author: Ammo, Rabbit, Funkydude
 ## X-Credits: Pettigrow (frFR), Gamefaq (deDE), Kyopaxa (esES), Daemona, wolftankk@cwdg (zhCN), Tekkub Stoutwrithe (BigWigs 1) & More
 ## Version: 2.0
-## X-Website: http://wowace.com/wiki/BigWigs
+## X-Website: http://www.wowwiki.com/BigWigs
 ## X-Category: Raid
-## X-RelSite-WoWI: 5086
-## X-RelSite-Curse: 3299
-## X-AceForum: 1762
 ## X-License: See license.txt
 
 ## OptionalDeps: Ace2, CandyBar, LibSharedMedia-3.0, LibBabble-Zone-3.0, LibBabble-Boss-3.0, LibSink-2.0

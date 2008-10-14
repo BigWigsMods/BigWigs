@@ -238,7 +238,6 @@ L:RegisterTranslations("esES", function() return {
 	["Load all %s modules."] = "Cargar todos los módulos de %s.",
 } end)
 
--- Translated by wow.playhard.ru translators
 L:RegisterTranslations("ruRU", function() return {
 	["%s mod enabled"] = "%s модуль включен",
 	["%s has been defeated"] = "%s был побежден",     -- "<boss> has been defeated"
