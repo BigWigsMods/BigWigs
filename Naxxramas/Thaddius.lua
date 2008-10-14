@@ -52,7 +52,7 @@ L:RegisterTranslations("enUS", function() return {
 	chargetrigger = "You are afflicted by (%w+) Charge.",
 
 	startwarn = "Thaddius Phase 1",
-	startwarn2 = "Thaddius Phase 2, Enrage in 5 minutes!",
+	startwarn2 = "Thaddius Phase 2, Enrage in 6 minutes!",
 	addsdownwarn = "Thaddius incoming in 10-20sec!",
 	thaddiusincoming = "Thaddius incoming in 3 sec!",
 	pswarn1 = "Thaddius begins to cast Polarity Shift!",
@@ -376,7 +376,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(L["startwarn2"], "Important")
 		end
 		if self.db.profile.enrage then
-			self:Enrage(300, nil, true)
+			self:Enrage(360, nil, true)
 		end
 	end
 end

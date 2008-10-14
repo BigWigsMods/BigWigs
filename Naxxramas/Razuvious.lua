@@ -26,6 +26,8 @@ L:RegisterTranslations("enUS", function() return {
 	shoutwarn = "Disrupting Shout!",
 	shoutbar = "Next shout",
 
+	taunt = "Taunt Timer",
+	taunt_desc = "Show timer for taunt",
 	shieldwall = "Shield Wall Timer",
 	shieldwall_desc = "Show timer for shieldwall.",
 } end )
@@ -128,7 +130,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = {boss, understudy}
 mod.guid = 16061
-mod.toggleoptions = {"shout", "shieldwall", "bosskill"}
+mod.toggleoptions = {"shieldwall", "bosskill", "taunt"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -137,25 +139,14 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Shout", 29107)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "ShieldWall", 29061)
 
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Taunt", 29060)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "ShieldWall", 29061)
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
-
-function mod:Shout()
-	if self.db.profile.shout then
-		--spellID is a question mark so we use a different one 1160
-		self:IfMessage(L["shoutwarn"], "Urgent", 1160, "Alarm")
-		self:DelayedMessage(18, L["shout7secwarn"], "Attention")
-		self:DelayedMessage(22, L["shout3secwarn"], "Urgent", nil, "Alert")
-		self:Bar(L["shoutbar"], 25, 1160)
-	end
-end
 
 function mod:ShieldWall(_, spellID, _, _, spellName)
 	if self.db.profile.shieldwall then
@@ -163,15 +154,10 @@ function mod:ShieldWall(_, spellID, _, _, spellName)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL( msg )
-	if msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"] then
-		if self.db.profile.shout then
-			--spellID is a question mark so we use a different one 1160
-			self:Message(L["startwarn"], "Urgent", 1160, "Alarm")
-			self:DelayedMessage(18, L["shout7secwarn"], "Attention")
-			self:DelayedMessage(22, L["shout3secwarn"], "Urgent", nil, "Alert")
-			self:Bar(L["shoutbar"], 25, 1160)
-		end
+function mod:Taunt(_, spellID, _, _, spellName)
+	if self.db.profile.taunt then
+		self:Bar(spellName, 20, spellID)
 	end
 end
+
 
