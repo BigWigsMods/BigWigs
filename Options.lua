@@ -127,7 +127,7 @@ L:RegisterTranslations("ruRU", function() return {
 ----------------------------
 
 local ldb = LibStub("LibDataBroker-1.1"):NewDataObject("BigWigs", {
-	type = "data source",
+	type = "launcher",
 	text = "Big Wigs",
 	icon = "Interface\\AddOns\\BigWigs\\Icons\\core-enabled",
 })
