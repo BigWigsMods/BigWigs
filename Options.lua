@@ -203,15 +203,7 @@ function ldb.OnClick(self, button)
 					BigWigs:Print(L["All running modules have been disabled."])
 				end
 			elseif IsShiftKeyDown() and waterfall then
-				local subGroup = nil
-				for i = 1, #zoneFunctions do
-					local zone = _G[zoneFunctions[i]]()
-					if zone and self.OnMenuRequest.args[zone] then
-						subGroup = zone
-						break
-					end
-				end
-				waterfall:Open("BigWigs", subGroup)
+				waterfall:Open("BigWigs")
 			else
 				for name, module in BigWigs:IterateModules() do
 					if module:IsBossModule() and BigWigs:IsModuleActive(module) then

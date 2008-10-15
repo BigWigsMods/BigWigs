@@ -16,7 +16,7 @@ _G.BB = bboss:GetLookupTable()
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
 
 local customBossOptions = {}
-
+local waterfall = AceLibrary:HasInstance("Waterfall-1.0") and AceLibrary("Waterfall-1.0") or nil
 ----------------------------
 --      Localization      --
 ----------------------------
@@ -318,6 +318,13 @@ local options = {
 			args = {},
 			disabled = "~IsActive",
 			order = 203,
+		},
+		["GUI"] = waterfall and {
+			type = "execute",
+			name = "GUI",
+			desc = "Open the waterfall GUI.",
+			func = function() waterfall:Open("BigWigs") end,
+			order = 204,
 		},
 	},
 }
