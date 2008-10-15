@@ -149,21 +149,19 @@ L:RegisterTranslations("deDE", function() return {
 	inroombartext = "Im Raum",
 } end )
 
---Chinese Translate by 月色狼影@CWDG
---CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
-	room = "进入房间警报",
-	room_desc = "当收割者戈提克进入房间时发出警报",
+	room = "进入房间",
+	room_desc = "当收割者戈提克进入房间时发出警报。",
 
-	add = "增援警报",
-	add_desc = "增援警报",
+	add = "增援",
+	add_desc = "当增援时发出警报。",
 	
-	adddeath = "小怪计时及死亡通告",
-	adddeath_desc = "小怪计时及死亡通告",
+	adddeath = "增援死亡",
+	adddeath_desc = "当增援死亡时发出警报。",
 
 	starttrigger1 = "你们这些蠢货已经主动步入了陷阱。",
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
-	startwarn = "收割者戈提克已激活 - 4:30后进入房间",
+	startwarn = "收割者戈提克已激活 - 4:30后，进入房间！",
 
 	rider = "冷酷的骑兵",
 	spectral_rider = "骑兵",
@@ -194,7 +192,7 @@ L:RegisterTranslations("zhCN", function() return {
 	inroomtrigger = "我已经等待很久了。现在你们将面对灵魂的收割者。",
 	inroomwarn = "收割者戈提克进入了房间！",
 
-	inroombartext = "进入房间",
+	inroombartext = "<进入房间>",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

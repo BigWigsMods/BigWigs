@@ -113,34 +113,34 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	mark = "标记警报",
-	mark_desc = "标记警报",
-	markbar = "标记 %d",
-	markwarn1 = "标记(%d)！",
-	markwarn2 = "5秒后 —— 标记(%d)",
+	mark = "印记",
+	mark_desc = "当施放印记时发出警报。",
+	markbar = "<标记:%d>",
+	markwarn1 = "印记 %d！",
+	markwarn2 = "5秒后，印记 %d！",
 
-	shieldwall = "盾墙警报",
-	shieldwall_desc = "盾墙警报",
-	shieldwallbar = "%s - 盾墙",
-	shieldwallwarn = "%s - 20秒盾墙效果",
-	shieldwallwarn2 = "%s - 盾墙消失了！",
+	shieldwall = "盾墙",
+	shieldwall_desc = "当施放盾墙时发出警报。",
+	shieldwallbar = "<盾墙：%s>",
+	shieldwallwarn = ">%s< - 20秒盾墙效果！",
+	shieldwallwarn2 = "<盾墙消失：%s>",
 
-	void = "虚空领域警报",
-	void_desc = "当施放虚空领域时警报",
-	voidwarn = "5秒后虚空领域 - 注意躲好黑水",
-	voidbar = "虚空领域",
+	void = "虚空领域",
+	void_desc = "当施放虚空领域时发出警报。",
+	voidwarn = "5秒后，虚空领域！",
+	voidbar = "<虚空领域>",
 
-	meteor = "流星警报",
-	meteor_desc = "库尔塔兹领主的流星警报",
-	meteorwarn = "流星 - 注意集中",
-	meteorbar = "流星",
+	meteor = "流星",
+	meteor_desc = "当施放流星时发出警报。",
+	meteorwarn = "流星！",
+	meteorbar = "<流星>",
 
-	wrath = "神圣之怒警报",
-	wrath_desc = "瑟里耶克爵士的神圣之怒警报",
-	wrathwarn = "神圣之怒 - 注意加好战士的血",
-	wrathbar = "神圣之怒",
+	wrath = "神圣之怒",
+	wrath_desc = "当施放神圣之怒时发出警报。",
+	wrathwarn = "神圣之怒！",
+	wrathbar = "<神圣之怒>",
 
-	startwarn = "四骑士已激活 - ~17秒后标记",
+	startwarn = "四骑士已激活 - 约17秒后印记！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

@@ -147,13 +147,13 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["%s mod enabled"] = "%s 模块已启用。",
-	["%s has been defeated"] = "%s 被击败了！",     -- "<boss> has been defeated"
-	["%s have been defeated"] = "%s 被击败了！",    -- "<bosses> have been defeated"
+	["%s has been defeated"] = "%s被击败了！",
+	["%s have been defeated"] = "%s被击败了！",
 
 	-- AceConsole strings
 	["Bosses"] = "首领模块",
-	["Options for bosses in %s."] = "%s首领模块设置。", -- "Options for bosses in <zone>"
-	["Options for %s (r%d)."] = "%s首领模块版本（r%d）。",     -- "Options for <boss> (<revision>)"
+	["Options for bosses in %s."] = "%s首领模块设置。",
+	["Options for %s (r%d)."] = "%s首领模块版本（r%d）。",
 	["Plugins"] = "综合设置",
 	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "他们是 BigWigs 最关键的核心 - 比如信息显示，记时条以及其他必要的功能。",
 	["Extras"] = "附加功能",

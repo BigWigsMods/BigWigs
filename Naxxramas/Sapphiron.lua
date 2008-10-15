@@ -80,24 +80,24 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	deepbreath = "寒冰炸弹警报",
-	deepbreath_desc = "萨菲隆开始施放深呼吸时发出警报",
-	deepbreath_incoming_message = "寒冰炸弹~23秒后施放！",
-	deepbreath_incoming_soon_message = "寒冰炸弹~5秒后施放！",
-	deepbreath_incoming_bar = "寒冰炸弹",
+	deepbreath = "寒冰炸弹",
+	deepbreath_desc = "当施放寒冰炸弹时发出警报。",
+	deepbreath_incoming_message = "约23秒后，寒冰炸弹！",
+	deepbreath_incoming_soon_message = "约5秒后，寒冰炸弹！",
+	deepbreath_incoming_bar = "<寒冰炸弹>",
 	deepbreath_trigger = "%s深深地吸了一口气……", 
-	deepbreath_warning = "深呼吸发动，注意躲避！",
-	deepbreath_bar = "寒冰炸弹",
+	deepbreath_warning = "即将 寒冰炸弹！",
+	deepbreath_bar = "<寒冰炸弹>",
 
-	lifedrain = "生命吸取警报",
-	lifedrain_desc = "生命吸取诅咒时候发出警报",
-	lifedrain_message = "生命吸取，~24秒后再次施放!",
-	lifedrain_warn1 = "5秒后生命吸取！",
-	lifedrain_bar = "生命吸取",
+	lifedrain = "生命吸取",
+	lifedrain_desc = "当施放生命吸取时候发出警报。",
+	lifedrain_message = "约24秒后，生命吸取！",
+	lifedrain_warn1 = "5秒后，生命吸取！",
+	lifedrain_bar = "<生命吸取>",
 
-	icebolt = "寒冰箭大喊",
-	icebolt_desc = "受到寒冰屏障效果后大喊",
-	icebolt_yell = "我是寒冰屏障！快躲到我后面! -%s-"
+	icebolt = "寒冰箭",
+	icebolt_desc = "当玩家受到寒冰屏障效果后大喊。",
+	icebolt_yell = "我是寒冰屏障！快躲到我后面！>%s<"
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

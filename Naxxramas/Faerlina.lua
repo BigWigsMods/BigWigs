@@ -79,8 +79,8 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	silence = "沉默警报",
-	silence_desc = "沉默警报",
+	silence = "沉默",
+	silence_desc = "当施放沉默时发出警报。",
 
 	starttrigger1 = "跪下求饶吧，懦夫！",
 	starttrigger2 = "以主人之名，杀了他们！",
@@ -90,12 +90,12 @@ L:RegisterTranslations("zhCN", function() return {
 	startwarn = "黑女巫法琳娜已激活 - 60秒后激怒！",
 	enragewarn15sec = "15秒后激怒！",
 	enragewarn = "激怒！",
-	enrageremovewarn = "激怒已移除 - %d后再次激怒",
+	enrageremovewarn = "激怒已移除 - %d后激怒！",
 	silencewarn = "沉默！延缓了激怒！",
 	silencewarnnodelay = "沉默！",
 	silencewarn5sec = "5秒后沉默结束！",
 
-	silencebar = "沉默",
+	silencebar = "<沉默>",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

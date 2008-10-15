@@ -162,20 +162,20 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	phase = "阶段警报",
-	phase_desc = "阶段转换时发出警报",
+	phase = "阶段",
+	phase_desc = "当进入不同阶段发出警报。",
 
-	polarity = "极性转换警报",
-	polarity_desc = "极性转换警报",
+	polarity = "极性转换",
+	polarity_desc = "当施放极性转换时发出警报。",
 
-	power = "力量振荡警报",
-	power_desc = "力量振荡警报",
+	power = "力量振荡",
+	power_desc = "当施放力量振荡时发出警报。",
 
-	charge = "电荷警报",
-	charge_desc = "你身上的电荷效果发生变化时发出警报",
+	charge = "电荷",
+	charge_desc = "当你身上的电荷效果发生变化时发出警报。",
 
-	throw = "投掷警报",
-	throw_desc = "当MT被扔到强上时报警.",
+	throw = "投掷",
+	throw_desc = "当 MT 被投掷到对面平台时发出警报。",
 
 	enragetrigger = "%s变得极度狂暴而愤怒！",
 	starttrigger = "斯塔拉格要碾碎你！",
@@ -184,30 +184,30 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger3 = "打……烂……你！",
 	starttrigger4 = "杀……",
 
-	adddeath = "%s死了。",--%s死了。
+	adddeath = "%s死了。",
 	teslaoverload = "%s超载了！",
 
 	pstrigger = "你感受到痛苦的滋味了吧……",
 	chargetrigger = "你受到了(.+)电荷",
 
-	startwarn = "塔迪乌斯第一阶段",
-	startwarn2 = "塔迪乌斯第二阶段，5分钟后激怒！",
-	addsdownwarn = "10-20秒后塔迪乌斯出现！",
-	thaddiusincoming = "3秒后塔迪乌斯出现！",
+	startwarn = "第一阶段",
+	startwarn2 = "第二阶段 - 5分钟后激怒！",
+	addsdownwarn = "10-20秒后，塔迪乌斯出现！",
+	thaddiusincoming = "3秒后，塔迪乌斯出现！",
 	pswarn1 = "塔迪乌斯开始施放极性转化！",
-	pswarn2 = "30秒后发动极性转化！",
-	pswarn3 = "3秒后发动极性转化！",
+	pswarn2 = "30秒后，极性转化！",
+	pswarn3 = "3秒后，极性转化！",
 	poswarn = "你是正电荷！",
 	negwarn = "你是负电荷！",
 	nochange = "你的电荷没有改变！",
 	polaritytickbar = "极性标记",
-	stalaggwarn = "力量振荡 - 加大对坦克的治疗！",
-	powersurgebar = "力量振荡",
+	stalaggwarn = "力量振荡！",
+	powersurgebar = "<力量振荡>",
 
-	bar1text = "极性转化",
+	bar1text = "<极性转化>",
 
-	throwbar = "空中飞人",
-	throwwarn = "~5秒空中飞人！MT注意！",
+	throwbar = "<投掷>",
+	throwwarn = "约5秒，投掷！",
 
 } end )
 

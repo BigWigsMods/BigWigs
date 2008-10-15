@@ -86,26 +86,26 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	startwarn = "洛欧塞布已激活 - 2分钟后发动必然的厄运！",
+	startwarn = "洛欧塞布已激活 - 2分钟后，必然的厄运！",
 
-	doom = "必然的厄运警报",
-	doom_desc = "必然的厄运警报",
-	doombar = "必然的厄运 %d",
-	doomwarn = "必然的厄运 %d! - %d秒后再次发动",
-	doomwarn5sec = "5秒后发动必然的厄运%d！",
-	doomtimerbar = "每隔15秒发动必然的厄运",
-	doomtimerwarn = "必然的厄运计时%s秒后改变！",
+	doom = "必然的厄运",
+	doom_desc = "当施放必然的厄运时发出警报。",
+	doombar = "<必然的厄运：%d>",
+	doomwarn = "%d秒后，必然的厄运 %d！",
+	doomwarn5sec = "5秒后，必然的厄运%d！",
+	doomtimerbar = "<每隔15秒 必然的厄运>",
+	doomtimerwarn = "%s秒后改变必然的厄运发动频率！",
 	doomtimerwarnnow = "必然的厄运现在每隔15秒发动一次！",
 
-	spore = "孢子警报",
-	spore_desc = "孢子警报",
-	sporewarn = "%d 孢子出现",
-	sporebar = "召唤孢子 %d",
+	spore = "孢子",
+	spore_desc = "当孢子出现时发出警报。",
+	sporewarn = "%d 孢子出现！",
+	sporebar = "<孢子 %d>",
 
-	curse = "诅咒驱散警报",
-	curse_desc = "洛欧塞布驱散了一个诅咒效果时发出警报",
-	removecursewarn = "洛欧塞布驱散了一个诅咒效果",
-	removecursebar = "驱散诅咒",
+	curse = "移除诅咒",
+	curse_desc = "当驱散了诅咒效果时发出警报。",
+	removecursewarn = "洛欧塞布驱散了一个诅咒效果！",
+	removecursebar = "<移除诅咒>",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

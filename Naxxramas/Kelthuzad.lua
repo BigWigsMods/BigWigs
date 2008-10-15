@@ -169,57 +169,55 @@ L:RegisterTranslations("deDE", function() return {
 	icon_desc = "Plaziert ein Icon auf Spielern mit Detonierendes Mana.",
 } end )
 
---Chinese Translate by 月色狼影@CWDG
---CWDG site: http://Cwowaddon.com
 L:RegisterTranslations("zhCN", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "克尔苏加德的大厅",
 	
 	start_trigger = "仆从们，侍卫们，隶属于黑暗与寒冷的战士们！听从克尔苏加德的召唤！",
 	start_warning = "克尔苏加德之战开始，他将在~5分钟后激活！",
-	start_bar = "第二阶段",
+	start_bar = "<第二阶段>",
 
-	phase = "每阶段警报",
-	phase_desc = "每阶段警报.",
+	phase = "阶段",
+	phase_desc = "当进入不同阶段发出警报。",
 	phase2_trigger1 = "祈祷我的慈悲吧！",
 	phase2_trigger2 = "呼出你的最后一口气！",
 	phase2_trigger3 = "你的末日临近了！",
 	phase2_warning = "第二阶段，克尔苏加德来了！！",
 	phase2_bar = "克尔苏加德激活！",
-	phase3_soon_warning = "第三阶段 即将来临！",
+	phase3_soon_warning = "即将 - 第三阶段！",
 	phase3_trigger = "主人，我需要帮助！",
-	phase3_warning = "进入第三阶段，~15秒后寒冰皇冠卫士出现！",
+	phase3_warning = "第三阶段 - 约15秒后，寒冰皇冠卫士出现！",
 
-	mc = "精神控制警报",
-	--mc_desc = "Tells you who has been Mind Control and when the next Mind Control is coming.",
-	--mc_message = "Mind Control: %s",
-	--mc_warning = "Mind Control Cooldown Over - Inc Soon!",
-	--mc_nextbar = "~Mind Control Cooldown",
+	mc = "克尔苏加德锁链",
+	mc_desc = "当玩家受到克尔苏加德锁链时发出警报。",
+	mc_message = ">%s< 克尔苏加德锁链！",
+	mc_warning = "即将 克尔苏加德锁链！",
+	mc_nextbar = "<下一克尔苏加德锁链>",
 
-	fissure = "暗影裂隙警报",
-	fissure_desc = "暗影裂隙即将来临时发出警报。",
-	fissure_warning = "暗影裂隙！-注意查看脚下！",
+	fissure = "暗影裂隙",
+	fissure_desc = "当施放暗影裂隙时发出警报。",
+	fissure_warning = "暗影裂隙！",
 
-	frostblast = "冰霜冲击警报",
-	frostblast_desc = "当玩家受到冰霜冲击时发出警报。",
-	frostblast_bar = "可能冰霜冲击！",
-	frostblast_warning = "冰霜冲击！- 注意治疗冰冻人！",
-	frostblast_soon_message = "~5秒后可能受到冰霜冲击！",
+	frostblast = "冰霜冲击",
+	frostblast_desc = "当玩家受到冰霜冲击效果时发出警报。",
+	frostblast_bar = "<可能 冰霜冲击>",
+	frostblast_warning = "冰霜冲击！",
+	frostblast_soon_message = "约5秒后，可能冰霜冲击！",
 
-	detonate = "自爆法力警报",
-	detonate_desc = "自爆法力即将发动时发出警报。",
-	--detonate_you = "Detonate Mana on YOU!",
-	detonate_other = "自爆法力 - %s",
-	detonate_possible_bar = "可能自爆法力",
-	--detonate_warning = "Next Detonate in 5 seconds!",
+	detonate = "自爆法力",
+	detonate_desc = "当玩家受到自爆法力效果时发出警报。",
+	detonate_you = ">你< 自爆法力！",
+	detonate_other = ">%s< 自爆法力！",
+	detonate_possible_bar = "<可能 自爆法力>",
+	detonate_warning = "约5秒后，自爆法力！",
 
-	guardians = "寒冰皇冠卫士警报",
-	guardians_desc = "第三阶段召唤寒冰皇冠卫士发出警报。",
+	guardians = "寒冰皇冠卫士",
+	guardians_desc = "第三阶段召唤寒冰皇冠卫士时发出警报。",
 	guardians_trigger = "很好，冰荒废土的战士们，起来吧！我命令你们为主人而战斗，杀戮，直到死亡！一个活口都不要留！",
-	guardians_warning = "寒冰皇冠卫士~10秒后出现！",
-	guardians_bar = "寒冰皇冠卫士出现了！",
+	guardians_warning = "约10秒后，寒冰皇冠卫士出现！",
+	guardians_bar = "<寒冰皇冠卫士出现>",
 
-	icon = "标记自爆法力",
-	icon_desc = "使用团队图标标记将自爆法力德玩家。",
+	icon = "团队标记",
+	icon_desc = "为中了自爆法力的队员打上团队标记。（需要权限）",
 } end )
 
 

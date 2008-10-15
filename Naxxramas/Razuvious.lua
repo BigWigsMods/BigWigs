@@ -69,21 +69,23 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	startwarn = "教官拉苏维奥斯已激活！ ~25秒后瓦解怒吼",
+	startwarn = "教官拉苏维奥斯已激活 - 约25秒后瓦解怒吼！",
 	starttrigger1 = "练习时间到此为止！都拿出真本事来！",
 	starttrigger2 = "绊腿……有什么问题么？",
 	starttrigger3 = "仁慈无用！",
 	starttrigger4 = "按我教导的去做！",
 
-	shout = "怒吼警报",
-	shout_desc = "瓦解怒吼警报",
-	shout7secwarn = "7秒后发动瓦解怒吼",
-	shout3secwarn = "3秒后发动瓦解怒吼！",
+	shout = "瓦解怒吼",
+	shout_desc = "当施放瓦解怒吼时发出警报。",
+	shout7secwarn = "7秒后，瓦解怒吼！",
+	shout3secwarn = "3秒后，瓦解怒吼！",
 	shoutwarn = "瓦解怒吼！",
-	shoutbar = "瓦解怒吼",
+	shoutbar = "<瓦解怒吼>",
 
+	taunt = "嘲讽计时器",
+	taunt_desc = "显示嘲讽计时器。",
 	shieldwall = "盾墙计时器",
-	shieldwall_desc = "盾墙计时器",
+	shieldwall_desc = "显示盾墙计时器。",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

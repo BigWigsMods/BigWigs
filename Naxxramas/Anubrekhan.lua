@@ -66,21 +66,21 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	locust = "虫群警报",
-	locust_desc = "虫群警报",
+	locust = "虫群风暴",
+	locust_desc = "当施放虫群风暴时发出警报。",
 
 	starttrigger1 = "一些小点心……",
 	starttrigger2 = "对，跑吧！那样伤口出血就更多了！",
 	starttrigger3 = "你们逃不掉的。",
-	engagewarn = "阿努布雷坎已激活 - ~90秒后出现第一波虫群",
+	engagewarn = "阿努布雷坎已激活 - 约90秒后，虫群风暴！",
 
 	gainendwarn = "虫群风暴结束了！",
-	gainnextwarn = "~85秒后出现下一波虫群。",
-	gainwarn10sec = "~10秒后出现下一波虫群。",
-	gainincbar = "下一波虫群",
-	gainbar = "虫群风暴",
+	gainnextwarn = "约85秒后，下一波虫群风暴。",
+	gainwarn10sec = "约10秒后，下一波虫群风暴。",
+	gainincbar = "<下一虫群风暴>",
+	gainbar = "<虫群风暴>",
 
-	castwarn = "虫群风暴 - 3秒后发动！MT立刻开始走位",
+	castwarn = "虫群风暴！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

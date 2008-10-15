@@ -104,22 +104,22 @@ L:RegisterTranslations("zhCN", function() return {
 
 	engage = "激怒警报",
 	engage_desc = "激怒警报.",
-	engage_message = "希尔盖已激活 - 90秒后传送",
+	engage_message = "希尔盖已激活 - 90秒后传送！",
 	
-	teleport = "传送警报",
-	teleport_desc = "传送警报",
+	teleport = "传送",
+	teleport_desc = "当传送时发出警报。",
 	teleport_1min_message = "1分钟后传送",
 	teleport_30sec_message = "30秒后传送",
-	teleport_10sec_message = "10秒后传送",
+	teleport_10sec_message = "10秒后传送！",
 	teleport_trigger = "你的生命正走向终结。",
-	on_platform_message = "传送发动！ 45秒后希尔盖出现！",
+	on_platform_message = "传送发动！45秒后希尔盖出现！",
 
 	to_floor_30sec_message = "30秒后返回",
-	to_floor_10sec_message = "10秒后返回",
-	on_floor_message = "返回＾秒后再次传送！",
+	to_floor_10sec_message = "10秒后返回！",
+	on_floor_message = "返回！约90秒后再次传送！",
 
-	teleport_bar = "传送！",
-	back_bar = "出现！",
+	teleport_bar = "<传送>",
+	back_bar = "<出现>",
 
 	["Eye Stalk"] = "眼柄",
 	["Rotting Maggot"] = "腐烂之蛆",

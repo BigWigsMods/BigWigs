@@ -73,23 +73,23 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	startwarn = "格拉斯已激活 - ~105秒后僵尸出现！",
+	startwarn = "格拉斯已激活 - 约105秒后，僵尸出现！",
 
 	fear = "恐惧警报",
-	fear_desc = "恐惧警报",
-	fear_warning = "5秒后发动群体恐惧！",
-	fear_message = "群体恐惧 - 20秒后再次发动",
-	fear_bar = "群体恐惧",
+	fear_desc = "当施放恐惧时发出警报。",
+	fear_warning = "5秒后，群体恐惧！",
+	fear_message = "20秒后，群体恐惧！",
+	fear_bar = "<群体恐惧>",
 
-	frenzy = "狂暴警报",
-	frenzy_desc = "狂暴警报",
-	frenzy_message = "狂暴警报 - 猎人立刻使用宁神射击！",
+	frenzy = "狂暴",
+	frenzy_desc = "当狂暴时发出警报。",
+	frenzy_message = "狂暴 - 猎人立刻使用宁神射击！",
 
-	decimate = "吞噬警报",
-	decimate_desc = "吞噬警报",
-	decimatesoonwarn = "吞噬来临！",
-	decimatewarn = "吞噬 - 所有僵尸！",
-	decimatebartext = "吞噬僵尸",
+	decimate = "残杀",
+	decimate_desc = "当施放残杀时发出警报。",
+	decimatesoonwarn = "即将 吞噬！",
+	decimatewarn = "残杀！",
+	decimatebartext = "<残杀>",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

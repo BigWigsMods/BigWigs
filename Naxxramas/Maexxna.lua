@@ -88,27 +88,27 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	spray = "蛛网喷射警报",
-	spray_desc = "蛛网喷射警报",
+	spray = "蛛网喷射",
+	spray_desc = "当施放蛛网喷射时发出警报。",
 
-	cocoon = "蛛网裹体警报",
-	cocoon_desc = "对被蛛网裹体的玩家发出警报",
+	cocoon = "蛛网裹体",
+	cocoon_desc = "当玩家受到蛛网裹体效果时发出警报。",
 
-	cocoonwarn = "%s被蛛网裹体了！",
+	cocoonwarn = ">%s< 被蛛网裹体了！",
 
-	enragetrigger = "%s变得愤怒了！",--gains enrage
+	enragetrigger = "%s变得愤怒了！",
 
-	webspraywarn30sec = "10秒后发动墙茧",
-	webspraywarn20sec = "墙茧 - 10秒后蜘蛛出现！",
-	webspraywarn10sec = "蜘蛛出现 - 10秒后蛛网喷射！",
-	webspraywarn5sec = "蛛网裹体5秒！",
-	webspraywarn = "蛛网裹体 -  40秒后再次发动",
-	enragewarn = "激怒 - 全力攻击！",
-	enragesoonwarn = "即将激怒 - 做好准备！",
+	webspraywarn30sec = "10秒后，蛛网裹体！",
+	webspraywarn20sec = "蛛网裹体！10秒后蜘蛛出现！",
+	webspraywarn10sec = "蜘蛛出现！10秒后蛛网喷射！",
+	webspraywarn5sec = "蛛网喷射5秒！",
+	webspraywarn = "40秒后，蛛网裹体！",
+	enragewarn = "激怒！",
+	enragesoonwarn = "即将激怒！",
 
-	webspraybar = "蛛网喷射",
-	cocoonbar = "墙茧",
-	spiderbar = "小蜘蛛出现",
+	webspraybar = "<蛛网喷射>",
+	cocoonbar = "<蛛网裹体>",
+	spiderbar = "<出现 小蜘蛛>",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {

@@ -67,21 +67,21 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	youinjected = "玩家变异注射警报",
-	youinjected_desc = "你中了变异注射时发出警报",
-	bomb_message_you = "你中变异注射了！",
+	youinjected = "玩家变异注射",
+	youinjected_desc = "当你中了变异注射时发出警报。",
+	bomb_message_you = ">你< 变异注射！",
 
-	otherinjected = "队友变异注射警报",
-	otherinjected_desc = "队友中了变异注射时发出警报",
-	bomb_message_other = "%s中变异注射了！",
+	otherinjected = "队友变异注射",
+	otherinjected_desc = "队友中了变异注射时发出警报。",
+	bomb_message_other = ">%s< - 变异注射！",
 
-	icon = "标记图标",
-	icon_desc = "在中了变异注射的队友头上标记骷髅图标（需要助理或领袖权限）",
+	icon = "团队标记",
+	icon_desc = "为中了变异注射的队员打上团队标记。（需要权限）",
 
 	cloud = "毒性云雾",
-	cloud_desc = "毒性云雾警报",
-	cloud_warn = "~15 秒后施放毒性云雾！",
-	cloud_bar = "毒性云雾",
+	cloud_desc = "当施放毒性云雾时发出警报。",
+	cloud_warn = "约15秒后，毒性云雾！",
+	cloud_bar = "<毒性云雾>",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
