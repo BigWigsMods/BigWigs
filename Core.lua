@@ -2,6 +2,8 @@
 --      Are you local?      --
 ------------------------------
 
+_G.BigWigsFubarDB = nil --temp, expire after XX time
+
 local bboss = LibStub("LibBabble-Boss-3.0")
 local bzone = LibStub("LibBabble-Zone-3.0")
 
@@ -14,6 +16,7 @@ _G.BZ = bzone:GetLookupTable()
 _G.BB = bboss:GetLookupTable()
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
+local icon = LibStub("LibDBIcon-1.0")
 
 local customBossOptions = {}
 local waterfall = AceLibrary:HasInstance("Waterfall-1.0") and AceLibrary("Waterfall-1.0") or nil
@@ -341,6 +344,22 @@ local options = {
 			desc = L["Open the waterfall GUI."],
 			func = function() waterfall:Open("BigWigs") end,
 			order = 204,
+		},
+		["Minimap"] = {
+			type = "toggle",
+			name = "Minimap Icon",
+			desc = "Toggle show/hide of the minimap icon.",
+			get = function() return not _G.BigWigsDB.minimap.hide end,
+			set = function(key, v)
+				if v then
+					_G.BigWigsDB.minimap.hide = nil
+					icon:Show("BigWigs")
+				else
+					_G.BigWigsDB.minimap.hide = true
+					icon:Hide("BigWigs")
+				end
+			end,
+			order = 205,
 		},
 	},
 }

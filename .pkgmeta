@@ -20,6 +20,7 @@ externals:
     Libs/LibStub: svn://svn.wowace.com/wow/libstub/mainline/tags/1.0
     Libs/PaintChips-2.0: svn://svn.wowace.com/wow/paintchipslib/mainline/trunk/PaintChips-2.0
     Libs/Waterfall-1.0: svn://svn.wowace.com/wow/waterfall-1-0/mainline/trunk/Waterfall-1.0
+    Libs/LibDBIcon-1.0: svn://svn.wowace.com/wow/libdbicon-1-0/mainline/trunk/LibDBIcon-1.0
     
 move-folders:
     BigWigs/BlackTemple: BigWigs_BlackTemple
