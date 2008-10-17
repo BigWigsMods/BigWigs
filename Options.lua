@@ -134,7 +134,7 @@ local ldb = LibStub("LibDataBroker-1.1"):NewDataObject("BigWigs", {
 
 BigWigsOptions = AceLibrary("AceAddon-2.0"):new("AceEvent-2.0")
 local BigWigsOptions = BigWigsOptions
-local icon = LibStub("LibDBIcon-1.0")
+local icon = LibStub("LibDBIcon-1.0", true)
 
 -----------------------------
 --      Menu Handling      --
@@ -156,8 +156,10 @@ function BigWigsOptions:OnInitialize()
 		)
 	end
 
-	_G.BigWigsDB.minimap = _G.BigWigsDB.minimap or {}
-	icon:Register("BigWigs", ldb, _G.BigWigsDB.minimap)
+	if icon then
+		_G.BigWigsDB.minimap = _G.BigWigsDB.minimap or {}
+		icon:Register("BigWigs", ldb, _G.BigWigsDB.minimap)
+	end
 end
 
 -----------------------------

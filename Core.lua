@@ -16,7 +16,7 @@ _G.BZ = bzone:GetLookupTable()
 _G.BB = bboss:GetLookupTable()
 
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs")
-local icon = LibStub("LibDBIcon-1.0")
+local icon = LibStub("LibDBIcon-1.0", true)
 
 local customBossOptions = {}
 local waterfall = AceLibrary:HasInstance("Waterfall-1.0") and AceLibrary("Waterfall-1.0") or nil
@@ -362,6 +362,7 @@ local options = {
 				end
 			end,
 			order = 205,
+			disabled = function() return not icon end,
 		},
 	},
 }
