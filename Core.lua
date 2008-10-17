@@ -44,6 +44,8 @@ L:RegisterTranslations("enUS", function() return {
 	["Reboot"] = true,
 	["Reboot this module."] = true,
 	["Options"] = true,
+	["Minimap icon"] = true,
+	["Toggle show/hide of the minimap icon."] = true,
 
 	bosskill = "Boss death",
 	bosskill_desc = "Announce when the boss has been defeated.",
@@ -347,10 +349,10 @@ local options = {
 		},
 		["Minimap"] = {
 			type = "toggle",
-			name = "Minimap Icon",
-			desc = "Toggle show/hide of the minimap icon.",
+			name = L["Minimap icon"],
+			desc = L["Toggle show/hide of the minimap icon."],
 			get = function() return not _G.BigWigsDB.minimap.hide end,
-			set = function(key, v)
+			set = function(v)
 				if v then
 					_G.BigWigsDB.minimap.hide = nil
 					icon:Show("BigWigs")
