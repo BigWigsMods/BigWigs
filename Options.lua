@@ -157,6 +157,7 @@ function BigWigsOptions:OnInitialize()
 	end
 
 	_G.BigWigsDB.minimap = _G.BigWigsDB.minimap or {}
+	icon:Register("BigWigs", ldb, _G.BigWigsDB.minimap)
 end
 
 -----------------------------
@@ -168,7 +169,6 @@ function BigWigsOptions:OnEnable()
 	self:RegisterEvent("BigWigs_CoreDisabled", "CoreState")
 
 	self:CoreState()
-	icon:Register("BigWigs", ldb, _G.BigWigsDB.minimap)
 end
 
 function BigWigsOptions:CoreState()

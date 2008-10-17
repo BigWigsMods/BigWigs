@@ -21,6 +21,7 @@
 <Include file="Libs\LibSharedMedia-3.0\lib.xml"/>
 <Script file="Libs\Waterfall-1.0\Waterfall-1.0.lua"/>
 <Include file="Libs\LibSink-2.0\lib.xml"/>
+<Script file="Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua"/>
 <!--@end-no-lib-strip@-->
 <Script file="Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua"/>
 
