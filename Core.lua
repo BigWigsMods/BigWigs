@@ -362,7 +362,7 @@ local options = {
 				end
 			end,
 			order = 205,
-			disabled = function() return not icon end,
+			hidden = function() return not icon end,
 		},
 	},
 }
