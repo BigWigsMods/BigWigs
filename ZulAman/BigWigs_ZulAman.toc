@@ -4,6 +4,7 @@
 ## Title-ruRU: Big Wigs [|cffeda55fЗул'Аман|r]
 ## Title-zhCN: Big Wigs [|cffeda55f祖阿曼|r]
 ## Title-zhTW: Big Wigs [|cffeda55f祖阿曼|r]
+## Title-koKR: Big Wigs [|cffeda55f줄아만|r]
 ## Notes: Big Wigs Zul'Aman Modules
 ## Notes-ruRU: Модуль Big Wigs Зул'Амана
 ## Notes-frFR: Modules Big Wigs concernant Zul'Aman.

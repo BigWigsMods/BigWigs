@@ -6,6 +6,7 @@
 ## Title-esES: Big Wigs [|cffeda55fTerrallende|r]
 ## Title-zhCN: Big Wigs [|cffeda55f外域|r]
 ## Title-zhTW: Big Wigs [|cffeda55f外域|r]
+## Title-koKR: Big Wigs [|cffeda55f아웃랜드|r]
 ## Notes: Big Wigs Outland Modules
 ## Notes-ruRU: Модуль Big Wigs Запределья
 ## Notes-frFR: Modules Big Wigs concernant l'Outreterre.

@@ -4,6 +4,7 @@
 ## Title-ruRU: Big Wigs [|cffeda55fХиджал|r]
 ## Title-zhCN: Big Wigs [|cffeda55f海加尔山|r]
 ## Title-zhTW: Big Wigs [|cffeda55f海加爾山|r]
+## Title-koKR: Big Wigs [|cffeda55f하이잘|r]
 ## Notes: Big Wigs Hyjal Modules
 ## Notes-ruRU: Модуль Big Wigs Хиджала
 ## Notes-frFR: Modules Big Wigs concernant Hyjal.

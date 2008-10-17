@@ -66,7 +66,7 @@ L:RegisterTranslations("koKR", function() return {
 	void = "공허의 지대",
 	void_desc = "여군주 블라미우스의 공허의 지대 시전을 알립니다.",
 	voidwarn = "공허의 지대 생성!",
-	voidbar = "공허의 지대",
+	voidbar = "다음 공허의 지대",
 
 	meteor = "유성",
 	meteor_desc = "영주 코스아즈의 유성 시전을 알립니다.",

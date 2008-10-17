@@ -64,6 +64,8 @@ L:RegisterTranslations("koKR", function() return {
 	shoutwarn = "분열의 외침!",
 	shoutbar = "분열의 외침",
 
+	taunt = "도발 타이머",
+	taunt_desc = "도발 타이머를 표시합니다.",
 	shieldwall = "방패의 벽 타이머",
 	shieldwall_desc = "방패의 벽에 대한 타이머 표시",
 } end )

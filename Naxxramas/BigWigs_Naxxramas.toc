@@ -7,6 +7,8 @@
 ## Title-zhTW: Big Wigs [|cffeda55f納克薩瑪斯|r]
 ## Notes-zhTW: Big Wigs 納克薩瑪斯模組
 ## Notes-frFR: Modules Big Wigs concernant Naxxramas.
+## Title-koKR: Big Wigs [|cffeda55f낙스라마스|r]
+## Notes-koKR: Big Wigs 낙스라마스 경고
 ## Author: Ammo, Rabbit, Funkydude
 ## X-Credits: Tekkub Stoutwrithe(founding author), Shyva & Others
 ## Version: 2.0

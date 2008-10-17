@@ -69,14 +69,14 @@ L:RegisterTranslations("koKR", function() return {
 
 	starttrigger1 = "어리석은 것들, 스스로 죽음을 자초하다니!",
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun", -- CHECK
-	startwarn = "영혼의 착취자 고딕 전투 시작! 4:30 후 고딕 등장.",
+	startwarn = "영혼 착취자 고딕 전투 시작! 4:30 후 고딕 등장.",
 
 	rider = "무자비한 죽음의 기병",
 	spectral_rider = "기병 망령",
 	deathknight = "무자비한 죽음의 기사",
 	spectral_deathknight = "죽음의 기사 망령",
-	trainee = "무자비한 훈련생",
-	spectral_trainee = "훈련생 유령",
+	trainee = "무자비한 수습생",
+	spectral_trainee = "수습생 유령",
 
 	riderdiewarn = "기병 죽음! 무덤조 긴장하세요!",
 	dkdiewarn = "죽음의 기사 죽음!",
@@ -89,15 +89,15 @@ L:RegisterTranslations("koKR", function() return {
 
 	wave = "%d/26: ",
 
-	trawarn = "훈련생 3초 후 등장",
+	trawarn = "수습생 3초 후 등장",
 	dkwarn = "죽음의 기사 3초 후 등장",
 	riderwarn = "기병 3초 후 등장",
 
-	trabar = "훈련병 - %d",
+	trabar = "수습생 - %d",
 	dkbar = "죽음의 기사 - %d",
 	riderbar = "기병 - %d",
 
-	inroomtrigger = "오랫동안 기다렸다. 이제 영혼의 착취자를 만날 차례다.", -- by overmind
+	inroomtrigger = "오랫동안 기다렸다. 이제 영혼 착취자를 만날 차례다.",
 	inroomwarn = "고딕 등장!!",
 
 	inroombartext = "고딕 등장",

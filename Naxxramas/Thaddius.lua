@@ -101,7 +101,7 @@ L:RegisterTranslations("koKR", function() return {
 	chargetrigger = "(%w+)전하에 걸렸습니다.",
 
 	startwarn = "타디우스 1 단계",
-	startwarn2 = "타디우스 2 단계, 5분 후 격노!",
+	startwarn2 = "타디우스 2 단계, 6분 후 격노!",
 	addsdownwarn = "10~20초 이내 2단계 시작!",
 	thaddiusincoming = "3초 이내 2단계 시작!",
 	pswarn1 = "타디우스 극성 변환 시전!",

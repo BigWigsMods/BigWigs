@@ -8,6 +8,7 @@
 ## Notes-zhCN: Big Wigs 附加插件
 ## Title-zhTW: Big Wigs [|cffeda55f額外|r]
 ## Notes-zhTW: Big Wigs 額外的模組
+## Title-koKR: Big Wigs [|cffeda55f추가 플러그인|r]
 ## Notes-koKR: Big Wigs 추가 플러그인
 ## Notes-frFR: Plugins supplémentaires de Big Wigs.
 ## Notes-esES: Plugins extras para Big Wigs.

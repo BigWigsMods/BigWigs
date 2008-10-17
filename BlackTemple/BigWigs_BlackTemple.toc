@@ -6,6 +6,7 @@
 ## Title-zhTW: Big Wigs [|cffeda55f黑暗神廟|r]
 ## Title-frFR: Big Wigs [|cffeda55fTemple noir|r]
 ## Title-esES: Big Wigs [|cffeda55fTemplo Oscuro|r]
+## Title-koKR: Big Wigs [|cffeda55f검은 사원|r]
 ## Notes: Big Wigs Black Temple Modules
 ## Notes-ruRU: Модуль Big Wigs Черного храма
 ## Notes-zhCN: Big Wigs 黑暗神殿模块

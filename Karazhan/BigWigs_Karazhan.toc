@@ -4,6 +4,7 @@
 ## Title-ruRU: Big Wigs [|cffeda55fКаражан|r]
 ## Title-zhCN: Big Wigs [|cffeda55f卡拉赞|r]
 ## Title-zhTW: Big Wigs [|cffeda55f卡拉贊|r]
+## Title-koKR: Big Wigs [|cffeda55f카라잔|r]
 ## Notes: Big Wigs Karazhan Modules
 ## Notes-ruRU: Модуль Big Wigs Каражана
 ## Notes-frFR: Modules Big Wigs concernant Karazhan.

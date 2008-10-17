@@ -88,7 +88,7 @@ L:RegisterTranslations("koKR", function() return {
 	mc = "정신 지배",
 	mc_desc = "정신 지배에 걸린 플레이어와 다음 정신 지배에 대해 알립니다.",
 	mc_message = "정신 지배: %s",
-	mc_warning = "정신 지배 대기시간 종료 - 잠시후 시전!",
+	mc_warning = "정신 지배 대기시간 종료 - 곧 사용!!",
 	mc_nextbar = "~정배 대기 시간",
 
 	fissure = "어둠의 균열",
@@ -99,7 +99,7 @@ L:RegisterTranslations("koKR", function() return {
 	frostblast_desc = "냉기 작렬을 알립니다.",
 	frostblast_bar = "냉기 작렬 가능",
 	frostblast_warning = "냉기 작렬!",
-	frostblast_soon_message = "냉기 작렬 가능 - 약 5초 이내!",
+	frostblast_soon_message = "약 5초 이내 냉기 작렬 가능!",
 
 	detonate = "마나 폭발",
 	detonate_desc = "마나 폭발을 알립니다.",
