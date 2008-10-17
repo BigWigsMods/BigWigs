@@ -443,6 +443,15 @@ function mod:DispelWarn()
 end
 
 do
+	local function isMT(player)
+		if GetPartyAssignment("maintank", player) then return true end
+		if oRA and oRA.maintanktable then
+			for i, t in ipairs(oRA.maintanktable) do
+				if t == player then return true end
+			end
+		end
+	end
+
 	local cachedId = nil
 	local lastTarget = nil
 	function mod:Encapsulate()
@@ -455,7 +464,7 @@ do
 		if not found then return end
 		local target = UnitName(cachedId .. "target")
 		if target and target ~= lastTarget and UnitExists(target) then
-			if not GetPartyAssignment("maintank", target) then
+			if not isMT(target) then
 				local msg = L["encaps_message"]:format(target)
 				self:IfMessage(msg, "Important", 45665, "Alert")
 				self:Bar(msg, 6, 45665)

@@ -214,18 +214,16 @@ function mod:StartBar(bar, nick, localOnly)
 end
 
 -- For easy use in macros.
-local function BWCB(seconds, message)
-	if message then seconds = fmt("%s %s", seconds, message) end
+local function BWCB(input)
 	local t = GetTime()
-	if not times[seconds] or (times[seconds] and (times[seconds] + 2) < t) then
-		times[seconds] = t
-		mod:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..seconds)
+	if not times[input] or (times[input] and (times[input] + 2) < t) then
+		times[input] = t
+		mod:TriggerEvent("BigWigs_SendSync", "BWCustomBar "..input)
 	end
 end
 
-local function BWLCB(seconds, message)
-	if message then seconds = fmt("%s %s", seconds, message) end
-	mod:StartBar(seconds, nil, true)
+local function BWLCB(input)
+	mod:StartBar(input, nil, true)
 end
 
 -- Shorthand slashcommand
