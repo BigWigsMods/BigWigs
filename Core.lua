@@ -141,10 +141,12 @@ L:RegisterTranslations("koKR", function() return {
 	["GUI"] = "GUI",
 	["Open the waterfall GUI."] = "waterfall GUI 설정창을 엽니다.",
 	["Active"] = "활성화",
-	["Activate or deactivate this module."] = "해당 모듈을 활성화하거나 비활성화합니다.",
+	["Activate or deactivate this module."] = "해당 모듈을 활성화/비활성화 합니다.",
 	["Reboot"] = "재시작",
 	["Reboot this module."] = "해당 모듈을 재시작합니다.",
 	["Options"] = "설정",
+	["Minimap icon"] = "미니맵 아이콘",
+	["Toggle show/hide of the minimap icon."] = "미니맵 아이콘을 표시/숨김으로 전환합니다.",
 
 	bosskill = "보스 사망",
 	bosskill_desc = "보스를 물리쳤을 때 알림니다.",
