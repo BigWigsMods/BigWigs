@@ -59,15 +59,15 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["|cff00ff00Module running|r"] = "|cff00ff00首领模块运行中|r",
-	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "你可以|cffeda55f点击|r图标重置所有运行中的模块；\n或者|cffeda55fAlt-点击|r可以禁用所有首领模块；\n或者 |cffeda55fCtrl-Alt-点击|r 可以禁用 BigWigs 所有功能。",
+	["|cffeda55fClick|r to reset all running modules. |cffeda55fAlt-Click|r to disable them. |cffeda55fCtrl-Alt-Click|r to disable Big Wigs completely."] = "你可以|cffeda55f点击|r图标重置所有运行中的模块；\n或者|cffeda55fAlt-点击|r可以禁用所有首领模块；\n或者 |cffeda55fCtrl-Alt-点击|r 可以禁用 Big Wigs 所有功能。",
 	["|cffeda55fClick|r to enable."] = "|cffeda55f点击|r启用。",
-	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-点击|r打开设置面板。",
-	["Big Wigs is currently disabled."] = "BigWigs 当前已被禁用。",
+	["|cffeda55fShift-Click|r to open configuration window."] = "|cffeda55fShift-点击|r打开配置面板。",
+	["Big Wigs is currently disabled."] = "Big Wigs 当前已被禁用。",
 	["Active boss modules:"] = "激活首领模块：",
 	["All running modules have been reset."] = "所有运行中的模块都已重置。",
 	["All running modules have been disabled."] = "所有运行中的模块都已禁用。",
 	["Menu"] = "目录",
-	["Menu options."] = "目录设置。",
+	["Menu options."] = "目录选项。",
 } end)
 
 L:RegisterTranslations("zhTW", function() return {

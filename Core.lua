@@ -161,25 +161,27 @@ L:RegisterTranslations("koKR", function() return {
 } end)
 
 L:RegisterTranslations("zhCN", function() return {
-	["%s mod enabled"] = "%s 模块已启用。",
+	["%s mod enabled"] = "%s模块已启用。",
 	["%s has been defeated"] = "%s被击败了！",
 	["%s have been defeated"] = "%s被击败了！",
 
 	-- AceConsole strings
 	["Bosses"] = "首领模块",
-	["Options for bosses in %s."] = "%s首领模块设置。",
+	["Options for bosses in %s."] = "%s首领模块选项。",
 	["Options for %s (r%d)."] = "%s首领模块版本（r%d）。",
-	["Plugins"] = "综合设置",
-	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "他们是 BigWigs 最关键的核心 - 比如信息显示，记时条以及其他必要的功能。",
+	["Plugins"] = "插件",
+	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "插件是 Big Wigs 最关键的核心 - 比如信息显示，记时条以及其他必要的功能。",
 	["Extras"] = "附加功能",
-	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "附加功能是第三方插件，是 BigWigs 功能的一个增强。",
+	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "附加功能是第三方捆绑插件，是 Big Wigs 功能的一个增强。",
 	["GUI"] = "图形界面",
 	["Open the waterfall GUI."] = "打开 Waterfall 图形界面。",
 	["Active"] = "激活",
 	["Activate or deactivate this module."] = "激活或关闭此模块。",
 	["Reboot"] = "重置",
 	["Reboot this module."] = "重置此模块。",
-	["Options"] = "设置",
+	["Options"] = "选项",
+	["Minimap icon"] = "小地图图标",
+	["Toggle show/hide of the minimap icon."] = "开/关小地图图标。",
 
 	bosskill = "首领死亡",
 	bosskill_desc = "首领被击杀时显示提示信息。",

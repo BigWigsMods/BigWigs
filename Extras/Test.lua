@@ -45,7 +45,7 @@ L:RegisterTranslations("zhCN", function() return {
 	["OMG Bear!"] = "OMG! Bear!",
 	["*RAWR*"] = "*团队通知*",
 	["Victory!"] = "胜利！",
-	["Commands for testing bars, messages and synchronization."] = "设置测试计时条、信息及同步选项。",
+	["Commands for testing bars, messages and synchronization."] = "测试计时条、信息及同步指令。",
 	["Local test"] = "本地测试",
 	["Perform a local test of BigWigs."] = "执行 BigWigs 本地测试。",
 	["Sync test"] = "同步测试",

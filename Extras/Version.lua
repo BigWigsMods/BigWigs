@@ -135,10 +135,10 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	["Version Query"] = "版本检测",
-	["Commands for querying the raid for Big Wigs versions."] = "BigWigs 版本检测参数。",
+	["Commands for querying the raid for Big Wigs versions."] = "Big Wigs 版本检测参数。",
 	["Query already running, please wait 5 seconds before trying again."] = "正在查询中，请等待5秒后再次尝试。",
-	["Querying versions for "] = "正在检测版本",
-	["Big Wigs Version Query"] = "BigWigs 版本检测",
+	["Querying versions for "] = "正在检测版本：",
+	["Big Wigs Version Query"] = "Big Wigs 版本检测",
 	["Close window"] = "关闭窗口",
 	["Showing version for "] = "显示版本：",
 	["Green versions are newer than yours, red are older, and white are the same."] = "绿色版本比您的新，红色比您的低，白色与您的版本相同。",
@@ -158,8 +158,8 @@ L:RegisterTranslations("zhCN", function() return {
 	["Runs a version query on the BigWigs core."] = "在 BigWigs 核心部分运行版本查询。",
 	["Replies"] = "回应人数",
 	["Ancient"] = "旧版本",
-	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "发现 BigWigs 新版本，请升级！",
-	["Notify people with older versions that there is a new version available."] = "通知使用旧版本的用户请升级到最新。",
+	["There seems to be a newer version of Big Wigs available for you, please upgrade."] = "发现 Big Wigs 新版本，请升级。",
+	["Notify people with older versions that there is a new version available."] = "通知使用旧版本的用户请升级到最新版本。",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
