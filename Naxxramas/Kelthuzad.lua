@@ -88,7 +88,7 @@ L:RegisterTranslations("koKR", function() return {
 	mc = "정신 지배",
 	mc_desc = "정신 지배에 걸린 플레이어와 다음 정신 지배에 대해 알립니다.",
 	mc_message = "정신 지배: %s",
-	mc_warning = "정신 지배 대기시간 종료 - 곧 사용!!",
+	mc_warning = "정신 지배 대기시간 종료 - 곧 사용!",
 	mc_nextbar = "~정배 대기 시간",
 
 	fissure = "어둠의 균열",

@@ -34,9 +34,17 @@ L:RegisterTranslations("enUS", function() return {
 	lifedrain_warn1 = "Life Drain in ~5sec!",
 	lifedrain_bar = "~Possible Life Drain",
 
-	icebolt = "Icebolt Yell",
+	icebolt = "Icebolt",
 	icebolt_desc = "Yell when you are an Icebolt.",
-	icebolt_yell = "I'm a Block! -%s-"
+	icebolt_other = "Block: %s",
+	icebolt_yell = "I'm a Block! -%s-",
+	
+	ping = "Ping",
+	ping_desc = "Ping your current location if you are afflicted by Icebolt.",
+	ping_message = "Block - Pinging your location!",
+
+	icon = "Raid Icon",
+	icon_desc = "Place a Raid Target Icon on the player with Icebolt. (requires promoted or higher)",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -55,9 +63,17 @@ L:RegisterTranslations("koKR", function() return {
 	lifedrain_warn1 = "약 5초 이내 생명력 흡수!",
 	lifedrain_bar = "~생명력 흡수 가능",
 
-	icebolt = "얼음 화살 알림",
+	icebolt = "얼음 화살",
 	icebolt_desc = "얼음 화살에 얼렸을때 외침으로 알립니다.",
-	icebolt_yell = "저 방패에요! -%s-"
+	icebolt_other = "방패: %s",
+	icebolt_yell = "-%s- 저 방패에요!",
+	
+	ping = "미니맵 표시",
+	ping_desc = "자신이 얼음 화살에 걸렸을 때 현재 위치를 미니맵에 표시합니다.",
+	ping_message = "방패 - 현재 위치 미니맵에 표시 중!",
+
+	icon = "전술 표시",
+	icon_desc = "얼음 화살 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -77,6 +93,18 @@ L:RegisterTranslations("deDE", function() return {
 	deepbreath_trigger = "%s atmet tief ein...",
 	deepbreath_warning = "Frostatem kommt!",
 	deepbreath_bar = "Frostatem!",
+	
+	--icebolt = "Icebolt",
+	--icebolt_desc = "Yell when you are an Icebolt.",
+	--icebolt_other = "Block: %s",
+	--icebolt_yell = "I'm a Block! -%s-",
+	
+	--ping = "Ping",
+	--ping_desc = "Ping your current location if you are afflicted by Icebolt.",
+	--ping_message = "Block - Pinging your location!",
+
+	--icon = "Raid Icon",
+	--icon_desc = "Place a Raid Target Icon on the player with Icebolt. (requires promoted or higher)",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -97,7 +125,16 @@ L:RegisterTranslations("zhCN", function() return {
 
 	icebolt = "寒冰箭",
 	icebolt_desc = "当玩家受到寒冰屏障效果后大喊。",
+	--icebolt_other = "Block: %s",
 	icebolt_yell = "我是寒冰屏障！快躲到我后面！>%s<"
+	
+	--ping = "Ping",
+	--ping_desc = "Ping your current location if you are afflicted by Icebolt.",
+	--ping_message = "Block - Pinging your location!",
+
+	--icon = "Raid Icon",
+	--icon_desc = "Place a Raid Target Icon on the player with Icebolt. (requires promoted or higher)",
+	
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -117,6 +154,18 @@ L:RegisterTranslations("zhTW", function() return {
 	deepbreath_trigger = "%s深深地吸了一口氣……",
 	deepbreath_warning = "寒冰炸彈即將著地！",
 	deepbreath_bar = "寒冰炸彈",
+	
+	--icebolt = "Icebolt",
+	--icebolt_desc = "Yell when you are an Icebolt.",
+	--icebolt_other = "Block: %s",
+	--icebolt_yell = "I'm a Block! -%s-",
+	
+	--ping = "Ping",
+	--ping_desc = "Ping your current location if you are afflicted by Icebolt.",
+	--ping_message = "Block - Pinging your location!",
+
+	--icon = "Raid Icon",
+	--icon_desc = "Place a Raid Target Icon on the player with Icebolt. (requires promoted or higher)",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -137,7 +186,15 @@ L:RegisterTranslations("frFR", function() return {
 
 	icebolt = "Crier - Eclair de glace",
 	icebolt_desc = "Fais crier votre personnage qu'il est un bloc de glace quand c'est le cas.",
+	--icebolt_other = "Block: %s",
 	icebolt_yell = "Je suis un bloc ! -%s-"
+		
+	--ping = "Ping",
+	--ping_desc = "Ping your current location if you are afflicted by Icebolt.",
+	--ping_message = "Block - Pinging your location!",
+
+	--icon = "Raid Icon",
+	--icon_desc = "Place a Raid Target Icon on the player with Icebolt. (requires promoted or higher)",
 } end )
 
 ----------------------------------
@@ -148,7 +205,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15989
-mod.toggleoptions = {"enrage", "icebolt", "lifedrain", "deepbreath", "bosskill"}
+mod.toggleoptions = {"enrage", "lifedrain", "deepbreath", -1, "icebolt", "ping", "icon", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -158,6 +215,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Drain", 28542)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Icebolt", 28522)
+	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveIcon", 28522)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	cachedUnitId = nil
@@ -177,16 +235,29 @@ end
 
 function mod:Drain(_, spellID)
 	if self.db.profile.lifedrain then
+		self:TriggerEvent("BigWigs_StopBar", self, L["lifedrain_bar"])
 		self:IfMessage(L["lifedrain_message"], "Urgent", spellID)
 		self:Bar(L["lifedrain_bar"], 24, spellID)
-		self:DelayedMessage(19, L["lifedrain_warn1"], "Important")
+		self:ScheduleEvent("Lifedrain", "BigWigs_Message", 19, L["lifedrain_warn1"], "Important")
 	end
 end
 
-function mod:Icebolt(player)
-	if self.db.profile.icebolt and player == pName then
-		SendChatMessage(L["icebolt_yell"]:format(pName), "YELL")
+function mod:Icebolt(player, spellID)
+	if player == pName and self.db.profile.icebolt then
+		self:WideMessage(fmt(L["icebolt_other"], player))
+		SendChatMessage(L["icebolt_yell"], "YELL")
+		if UnitIsUnit(player, "player") and self.db.profile.ping then
+		Minimap:PingLocation()
+		BigWigs:Print(L["ping_message"])
+		end
+	elseif db.orbother then
+		self:IfMessage(fmt(L["icebolt_other"], player), "Attention", spellID)
 	end
+	self:Icon(player, "icon")
+end
+
+function mod:RemoveIcon()
+	self:TriggerEvent("BigWigs_RemoveRaidIcon")
 end
 
 function mod:BigWigs_RecvSync(sync, rest, nick)
@@ -291,6 +362,8 @@ function mod:RepeatedTargetScanner()
 
 	-- He's in flight! (I hope)
 	self:CancelScheduledEvent("bwsapphtargetscanner")
+	self:CancelScheduledEvent("Lifedrain")
+	self:TriggerEvent("BigWigs_StopBar", self, L["lifedrain_bar"])
 
 	if self.db.profile.deepbreath then
 		self:CancelScheduledEvent("bwsapphtargetscanner")
