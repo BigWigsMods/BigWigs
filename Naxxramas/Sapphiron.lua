@@ -244,14 +244,14 @@ end
 
 function mod:Icebolt(player, spellID)
 	if player == pName and self.db.profile.icebolt then
-		self:WideMessage(fmt(L["icebolt_other"], player))
+		self:WideMessage(format(L["icebolt_other"], player))
 		SendChatMessage(L["icebolt_yell"], "YELL")
 		if UnitIsUnit(player, "player") and self.db.profile.ping then
 		Minimap:PingLocation()
 		BigWigs:Print(L["ping_message"])
 		end
-	elseif db.orbother then
-		self:IfMessage(fmt(L["icebolt_other"], player), "Attention", spellID)
+	elseif self.db.profile.orbother then
+		self:IfMessage(format(L["icebolt_other"], player), "Attention", spellID)
 	end
 	self:Icon(player, "icon")
 end
