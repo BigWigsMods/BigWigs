@@ -47,6 +47,35 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a Raid Target Icon on the player with Icebolt. (requires promoted or higher)",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	deepbreath = "Ледяная бомба",
+	deepbreath_desc = "Предупреждать о ледяной бомбе Сапфирона",
+	deepbreath_incoming_message = "Ледяная бомба через 23 секунды!",
+	deepbreath_incoming_soon_message = "Ледяная бомба через 5 секунд!",
+	deepbreath_incoming_bar = "Каст ледяной бомбы",
+	deepbreath_trigger = "%s takes in a deep breath...",  --correct this
+	deepbreath_warning = "Появляется ледяная бомба!",
+	deepbreath_bar = "Приземляется ледяная бомба!",
+
+	lifedrain = "Похищение жизни",
+	lifedrain_desc = "Предупреждать о похищении жизни",
+	lifedrain_message = "Похищение жизни! Следующее через 24 секунды!",
+	lifedrain_warn1 = "Похищение жизни через 5 секунд!",
+	lifedrain_bar = "~Возможное похищение жизни",
+
+	icebolt = "Морозная стрела",
+	icebolt_desc = "Предупреждать о морозной стреле на Вас.",
+	icebolt_other = "Глыба: %s",	
+	icebolt_yell = "Я в глыбе! -%s-",
+	
+	ping = "Пинг",
+	ping_desc = "Отмечать ваше текущеее положение пингов, если вы находитесь в глыбе после морозной стрелы.",
+	ping_message = "Глыба - отмечаю положение!",
+
+	icon = "Отмечать икнокой",
+	icon_desc = "Отмечать рейдовой иконой игрока, попавшего в глыбу после морозной стрелы (необходимо быть лидером группы или рейда)",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	deepbreath = "얼음 폭탄",
 	deepbreath_desc = "사피론 의 얼음 폭탄 시전을 알립니다.",

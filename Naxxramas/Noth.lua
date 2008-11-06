@@ -53,6 +53,42 @@ L:RegisterTranslations("enUS", function() return {
 	wave2_message = "Wave 2 in 10sec",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	starttrigger1 = "Die, trespasser!",  --correct this
+	starttrigger2 = "Glory to the master!",  --correct this
+	starttrigger3 = "Your life is forfeit!",  --correct this
+	startwarn = "Нот Чумной разъярён! 90 секунд до телепорта",
+
+	blink = "Опасность скачка",
+	blink_desc = "Предупреждать, когда Нот использует скачок",
+	blinkwarn = "Скачок!",
+	blinkwarn2 = "Скачок через 5 секунд!",
+	blinkbar = "Скачок",
+
+    teleport = "Телепорт",
+	teleport_desc = "Предупреждать о телепорте.",
+	teleportbar = "Телепорт!",
+	backbar = "Назад в Команту!",
+	teleportwarn = "Телепорт! Он на балконе!",
+	teleportwarn2 = "Телепорт через 10 секунд!",
+	backwarn = "Он вернётся в комнату через %d секунд!",
+	backwarn2 = "10 секунд до возвращения в комнату!",
+
+	curse = "Проклятие Чумного",
+	curse_desc = "Сообщать когда Нот накладывает проклятие.",
+	curseexplosion = "Проклятый взрыв!",
+	cursewarn = "Проклятие! через ~55 секунд",
+	curse10secwarn = "Проклятие через ~10 секунд",
+	cursebar = "Следующее проклятие",
+
+	wave = "Волны",
+	wave_desc = "Сообщать о волнах",
+	addtrigger = "Вставайте, мои солдаты! Вставайте и деритесь!",  --correct this
+	wave1bar = "Волна 1",
+	wave2bar = "Волна 2",
+	wave2_message = "Волна 2 через 10 сек",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	starttrigger1 = "Sterbt, Eindringling!",
 	starttrigger2 = "Ehre unserem Meister!",

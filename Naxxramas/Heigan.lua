@@ -39,6 +39,34 @@ L:RegisterTranslations("enUS", function() return {
 	["Rotting Maggot"] = true,
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	starttrigger = "Вы новая мина!",  --check this
+	starttrigger2 = "Ты... следующий!",  --check this
+	starttrigger3 = "Я наблюдаю за тобой...",  --check this
+
+	engage = "Ярость",
+	engage_desc = "Предупреждать, когда Хейган впадает в ярость.",
+	engage_message = "Хейган в ярости! 90 секунд до телепорта!",
+
+	teleport = "Телепорт",
+	teleport_desc = "Предупреждать о телепорте.",
+	teleport_trigger = "Закончится на вас.",  --correct this
+	teleport_1min_message = "Телепорт через 1 минуту",
+	teleport_30sec_message = "Телепорт через 30 секунд",
+	teleport_10sec_message = "Телепорт через 10 секунд!",
+	on_platform_message = "Телепорт! На платформу через 45 секунд!",
+
+	to_floor_30sec_message = "Возвращение через 30 секунд",
+	to_floor_10sec_message = "Возвращение через 10 секунд!",
+	on_floor_message = "Возвращение на этаж! 90 секунд до следующего телепорта!",
+
+	teleport_bar = "Телепорт!",
+	back_bar = "Возвращение на этаж!",
+
+	["Eye Stalk"] = "Глазной стебелек",
+	["Rotting Maggot"] = "Гнилой червь",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	starttrigger = "이제 넌 내 것이다.",
 	starttrigger2 = "다음은... 너다.",

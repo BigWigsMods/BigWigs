@@ -39,6 +39,30 @@ L:RegisterTranslations("enUS", function() return {
 	spiderbar = "Spiders",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	spray = "Летящая паутина",
+	spray_desc = "Предупреждать о паутине и пауках",
+
+	cocoon = "Кокон",
+	cocoon_desc = "Предупреждать о коконах",
+
+	cocoonwarn = "%s попал в кокон!",
+
+	enragetrigger = "%s приходит в ярость!",
+
+	webspraywarn30sec = "Стена коконов через 10 секунд",
+	webspraywarn20sec = "Стена коконов! 10 Секунд до появления пауков!",
+	webspraywarn10sec = "Появляются пауки. 10 секунд до паутины!",
+	webspraywarn5sec = "Паутина через 5 секунд!",
+	webspraywarn = "Паутина! 40 секунд до следующей!",
+	enragewarn = "Ярость - ХЛЮП ХЛЮП ХЛЮП!",
+	enragesoonwarn = "Скоро ярость - Bugsquatters out!",
+
+	webspraybar = "Летящая паутина",
+	cocoonbar = "Коконы",
+	spiderbar = "Пауки",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	spray = "Gespinstschauer",
 	spray_desc = "Warnung vor Gespinstschauer und Spinnen.",

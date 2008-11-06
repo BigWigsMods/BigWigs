@@ -9,6 +9,8 @@
 ## Notes-frFR: Modules Big Wigs concernant Naxxramas.
 ## Title-koKR: Big Wigs [|cffeda55f낙스라마스|r]
 ## Notes-koKR: Big Wigs 낙스라마스 경고
+## Title-ruRU: Big Wigs [|cffeda55fНаксрамас|r]
+## Notes-ruRU: Модуль Big Wigs - Наксрамас
 ## Author: Ammo, Rabbit, Funkydude
 ## X-Credits: Tekkub Stoutwrithe(founding author), Shyva & Others
 ## Version: 2.0

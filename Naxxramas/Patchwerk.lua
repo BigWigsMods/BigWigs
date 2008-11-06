@@ -47,6 +47,12 @@ L:RegisterTranslations("frFR", function() return {
 	starttrigger2 = "R'cousu avatar de guerre pour Kel'Thuzad !",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	enragewarn = "5% - Ярость!",
+	starttrigger1 = "Лоскутик входит в игру",  --correct this
+	starttrigger2 = "Кел'Тузад создаёт Лоскутика аватара войны!!", --correct this
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

@@ -126,6 +126,26 @@ L:RegisterTranslations("frFR", function() return {
 	shieldwall_desc = "Affiche la durée des Murs protecteur.",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	startwarn = "Инструктор Разувиус разъярён! ~25 секунд до крика!",
+	starttrigger1 = "Время тренировки закончено! Покажите чему вы научились!",  --correct this
+	starttrigger2 = "Так вы притащили с собой нубо мага... теперь вам точно не сдобровать.",  --correct this
+	starttrigger3 = "Я вам покажу кузькину мать!!",  --correct this
+	starttrigger4 = "Вы правда смешны для меня!",  --correct this
+
+	shout = "Разрушительный крик",
+	shout_desc = "сообщать о разрушительном крике.",
+	shout7secwarn = "7 секунд до разрушительного крика",
+	shout3secwarn = "3 секунд до разрушительного крика!",
+	shoutwarn = "Разрушительный крик!",
+	shoutbar = "Следующий разрушительный крик",
+
+	taunt = "Таймер провокации",
+	taunt_desc = "Показывать таймер для провокации",
+	shieldwall = "Таймер глухой обороны",
+	shieldwall_desc = "Показывать таймер для глухой обороны.",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

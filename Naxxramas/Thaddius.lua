@@ -71,6 +71,55 @@ L:RegisterTranslations("enUS", function() return {
 	throwwarn = "Throw in ~5 seconds!",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	phase = "Фазы",
+	phase_desc = "Сообщать о фазах боя",
+
+	polarity = "Сдвиг полярности",
+	polarity_desc = "Предупреждать о сдвиге полярности",
+
+	power = "Волна силы",
+	power_desc = "Предупреждать о волне силы",
+
+	charge = "Заряды",
+	charge_desc = "Сообщать о положительном/отрицательном заряде только для Вас.",
+
+	throw = "Бросока",
+	throw_desc = "Предупреждать об обменах платформы резервуара.",
+
+	enragetrigger = "%s впадает в Ярость берсерка!",  --correct this
+	starttrigger = "Stalagg ломает тебя!",  --correct this
+	starttrigger1 = "Мастер хочеш съесть тебя =P !!",  --correct this
+	starttrigger2 = "Ем... твои... кости...",  --correct this
+	starttrigger3 = "Сломаю... тебя!!",  --correct this
+	starttrigger4 = "убит...",  --correct this
+
+	adddeath = "%s умер.",
+	teslaoverload = "%s перегружен!",
+
+	pstrigger = "Ты почувствует новую боль...",  --correct this
+	chargetrigger = "Ваш заряд - (%w+).",
+
+	startwarn = "Таддиус фаза 1",
+	startwarn2 = "Таддиус фаза 2, ярость через 5 минут!",
+	addsdownwarn = "Таддиус появится через 10-20 секунд!",
+	thaddiusincoming = "Таддиус появится через 3 секунды!",
+	pswarn1 = "Таддиус сдвигает полярность!",
+	pswarn2 = "30 секунд до сдвига полярности!",
+	pswarn3 = "3 секунды до сдвига полярности!",
+	poswarn = "Ваш заряд - положительный!",
+	negwarn = "Ваш заряд - отрицательный!",
+	nochange = "Ваш дебафф не изменился!",
+	polaritytickbar = "Тик полярности",
+	stalaggwarn = "Волна силы на Сталагге!",
+	powersurgebar = "Волна силы",
+
+	bar1text = "Сдвиг полярности",
+
+	throwbar = "Бросок",
+	throwwarn = "Бросок через 5 секунд!",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	phase = "단계 변경",
 	phase_desc = "단계 변경을 알립니다.",

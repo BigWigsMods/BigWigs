@@ -38,6 +38,26 @@ L:RegisterTranslations("enUS", function() return {
 	silencebar = "Silence",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	silence = "Безмолвие",
+	silence_desc = "Предупреждать о безмолвии",
+
+	starttrigger1 = "Стань на колени, червь!",  --check this
+	starttrigger2 = "Убейте  их во имя меня!!",  --check this
+	starttrigger3 = "Вы не можете скрыться от меня!!",  --check this
+	starttrigger4 = "Бегите пока ещё можете!",  --check this
+
+	startwarn = "Великая вдова Фарлина злится, 60 секунд до ярости!",
+	enragewarn15sec = "15 секунд до ярости!",
+	enragewarn = "ЯРОСТЬ!",
+	enrageremovewarn = "Ярость спала! %d секунд до следующей!",
+	silencewarn = "Безмолвие! Задержка ярости!",
+	silencewarnnodelay = "Безмолвие!",
+	silencewarn5sec = "Безмолвие закончится через 5 секунд",
+
+	silencebar = "Безмолвие",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	silence = "Stille",
 	silence_desc = "Warnung vor Stille",

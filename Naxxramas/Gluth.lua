@@ -32,6 +32,26 @@ L:RegisterTranslations("enUS", function() return {
 	decimatebartext = "Decimate Zombies",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	startwarn = "Глут в ярости! ~105 cекунд до появления зомби!",
+
+	fear = "Страх",
+	fear_desc = "Показывать таймеры ужасающего рёва и массового страха.",
+	fear_warning = "5 секунд до массового страха!",
+	fear_message = "Массовый страх - 20 секунд до следующей волны!",
+	fear_bar = "С.Т.Р.А.Х.",
+
+	frenzy = "Бешенство",
+	frenzy_desc = "Предупреждать о бешенстве.",
+	frenzy_message = "Опасность бешенства!",
+
+	decimate = "Истребление",
+	decimate_desc = "Предупреждать об истреблении.",
+	decimatesoonwarn = "Скоро истребление!",
+	decimatewarn = "Истребление!",
+	decimatebartext = "Истребление",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	startwarn = "글루스 전투 시작! 약 105초 후 좀비 척살!",
 

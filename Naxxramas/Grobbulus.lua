@@ -30,6 +30,24 @@ L:RegisterTranslations("enUS", function() return {
 	cloud_bar = "Next Poison Cloud",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	youinjected = "Вам сдедали укол",
+	youinjected_desc = "Предупреждать об уколе.",
+	bomb_message_you = "Вам сделали укол! Бегите от рейда!!",
+
+	otherinjected = "Укололи другого",
+	otherinjected_desc = "Сообщать, когда босс делает укол участнику рейда",
+	bomb_message_other = "%s сделали укол! Бегите от него! ",
+
+	icon = "Помечать иконкой",
+	icon_desc = "Помечать рейдовой иконкой игрока, которому был сделан укол (необходимо быть лидером группы или рейда).",
+
+	cloud = "Ядовитое облако",
+	cloud_desc = "Сообщать о ядовитом облаке.",
+	cloud_warn = "Ядовитое облако! Следующее - через ~15 секунд!",
+	cloud_bar = "Следующее ядовитое облако",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	youinjected = "Du bist verseucht",
 	youinjected_desc = "Warnung, wenn Du von Mutagene Injektion betroffen bist.",

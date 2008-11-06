@@ -50,6 +50,37 @@ L:RegisterTranslations("enUS", function() return {
 	startwarn = "The Four Horsemen Engaged! Mark in ~17 sec",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	mark = "Знак Бломе",
+	mark_desc = "Предупреждать о знаке Бломе.",
+	markbar = "Знак %d",
+	markwarn1 = "Знак %d!",
+	markwarn2 = "Знак %d через 5 секунд",
+
+	shieldwall = "Глухая оборона",
+	shieldwall_desc = "Предупреждать о глухой обороне.",
+	shieldwallbar = "%s - Глухая оборона!",
+	shieldwallwarn = "%s - Глухая оборона через 20 секунд",
+	shieldwallwarn2 = "%s - Глухая оборона спадает!",
+
+	void = "Портал Бездны",
+	void_desc = "предупреждать когда Леди Бломе создаёт портал Бездны.",
+	voidwarn = "Портал Бездны появляется",
+	voidbar = "Следующий портал Бездны",
+
+	meteor = "Метеор",
+	meteor_desc = "Сообщать когда Тан Кортазз кастует метеор.",
+	meteorwarn = "Метеор!",
+	meteorbar = "Метеор",
+
+	wrath = "Гнев небес",
+	wrath_desc = "Сообщать когда Сэр Зелиек кастует гнев небес.",
+	wrathwarn = "Гнев небес!",
+	wrathbar = "Гнев небес",
+
+	startwarn = "Четверо всадников вступили в бой! Знак Бломе на ~17 секунд",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	mark = "징표",
 	mark_desc = "징표를 알립니다.",

@@ -273,11 +273,11 @@ L:RegisterTranslations("ruRU", function() return {
 	["Options for bosses in %s."] = "Опции для боссов в %s.", -- "Options for bosses in <zone>"
 	["Options for %s (r%d)."] = "Опции для %s (r%d).",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "Плагины",
-	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Плагины это основная особенность Big Wigsf - они показывают сообщения, время на барах, и другие важные особенности на боссах.",
-	--["GUI"] = true,
-	--["Open the waterfall GUI."] = true,
-	["Extras"] = "Дополнение",
-	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "Дополнительные настройки для рейдов без которых  Big Wigs не будет должным образом работать",
+	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "Плагины - это основная особенность Big Wigs,они показывают сообщения, время на барах и другие важные моменты при битве с боссами.",
+	["GUI"] = "Настройки",
+	["Open the waterfall GUI."] = "Открыть окно настроек",
+	["Extras"] = "Дополнения",
+	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "Дополнительные настройки для рейдов без которых Big Wigs не будет должным образом работать",
 	["Active"] = "Активен",
 	["Activate or deactivate this module."] = "Активация или деактивация модуля",
 	["Reboot"] = "Перезагрузка",
@@ -285,15 +285,15 @@ L:RegisterTranslations("ruRU", function() return {
 	["Options"] = "Опции",
 
 	bosskill = "Смерть босса",
-	bosskill_desc = "Объявляет что босс побежден.",
+	bosskill_desc = "Объявлять о смерти босса.",
 	enrage = "Исступление",
-	enrage_desc = "Предупреждает когда босс входит в состояние Исступления.",
+	enrage_desc = "Предупреждать, когда босс входит в состояние исступления.",
 	berserk = "Берсерк",
-	berserk_desc = "Предупреждет когда Босс входит в состояние Берсерк.",
+	berserk_desc = "Предупреждать, когда босс входит в состояние берсерк.",
 
 	["Load"] = "Загрузить",
 	["Load All"] = "Загрузить все",
-	["Load all %s modules."] = "Загружает все %s модули.",
+	["Load all %s modules."] = "Загрузить все модули %s.",
 } end)
 
 ---------------------------------

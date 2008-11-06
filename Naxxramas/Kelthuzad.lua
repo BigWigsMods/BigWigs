@@ -67,6 +67,57 @@ L:RegisterTranslations("enUS", function() return {
 	icon_desc = "Place a raid icon on people with Detonate Mana.",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Покои Кел'Тузадa",
+	
+	start_trigger = "Миньёны, служители, солдаты  ледяной тьмы! Повинуйтесь Кел'Тузаду!", -- correct this
+	start_warning = "Бой с Кел'Тузадом начинается! ~5 минут до окончания активности! !", --correct this
+	start_bar = "Фаза 2",
+
+	phase = "Фазы",
+	phase_desc = "Предупреждать когда босс входит в новую фазу.",
+	phase2_trigger1 = "Просите милосердия!",  --correct this
+	phase2_trigger2 = "Кричите! Вы чуствуете дыхание вашей смерти ?!",  --correct this
+	phase2_trigger3 = "Вам конец!",  --correct this
+	phase2_warning = "Фаза 2, Кел'Тузад просыпается!",
+	phase2_bar = "Kel'Thuzad активен!",
+	phase3_soon_warning = "Скоро Фаза 3!",
+	phase3_trigger = "Мастер, Я требую помощи!",--correct this
+	phase3_warning = "Фаза 3, защитники через ~15 секунд!",
+
+	mc = "Контроль Разума",
+	mc_desc = "Предупреждать когда Кел'Тузад начинает контролировать чей то разум.",
+	mc_message = "Контроль Разума: %s",
+	mc_warning = "Скоро контроль разума!",
+	mc_nextbar = "~Контроль Разума: Восстановлени",
+
+	fissure = "Расщелина тьмы",
+	fissure_desc = "Сообщать, когда появляется расщелина тьмы.",
+	fissure_warning = "Расщелина тьмы!",
+
+	frostblast = "Опасность ледяного взрыва",
+	frostblast_desc = "Сообщать, когда ледяной взрыв добирается до игроков.",
+	frostblast_bar = "Возможен ледяной взрыв",
+	frostblast_warning = "Ледяной взрыв!",
+	frostblast_soon_message = "Возможный ледяной взрыв через 15 секунд!",
+
+	detonate = "Опасность взрыва маны",
+	detonate_desc = "Сообщать о взрыве маны.",
+	detonate_you = "Взрыв маны на Вас!",
+	detonate_other = "Взрыв маны - %s",
+	detonate_possible_bar = "Возможен взрыв маны",
+	detonate_warning = "Следующий взрыв маны через 5 секунд!",
+
+	guardians = "Появление стражей",
+	guardians_desc = "Сообщать о появлении стражей ледяной короны в третьей фазе.",
+	guardians_trigger = "Очень хорошо. Воины ледяной воды, встаньте! Я командую вашим боем, Убивайте для вашего господина! Пусть ничего не выживет!",  --correct this
+	guardians_warning = "Стражи появятся через 15 секунд!",
+	guardians_bar = "Появляются стражи!",
+	
+	icon = "Помечать иконкой",
+	icon_desc = "Помечать рейдовой иконкой игрока, на которого наложен эффект взрыва маны (необходимо быть лидером группы или рейда).",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "켈투자드의 방",
 	

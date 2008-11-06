@@ -57,6 +57,52 @@ L:RegisterTranslations("enUS", function() return {
 	inroombartext = "In Room",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	room = "Прибытие Готика",
+	room_desc = "Сообщать о прибытии Готика",
+
+	add = "Появление помощников",
+	add_desc = "Сообщать о появлении помощников",
+
+	adddeath = "Помощник уничтожен",
+	adddeath_desc = "Сообщать о смерти аддов.",
+
+	starttrigger1 = "Добро пожаловать в страну дураков таких же, как вы.",  --check this
+	starttrigger2 = "Я очень долго ждал. Положите свою душу в мой комбайн и будем вам дерево с золотыми монетами.",  --check this
+	startwarn = "Готик в ярости! 4:30 до входа в комнату.",
+
+	rider = "Неодолимый всадник",
+	spectral_rider = "Призрачный всадник",
+	deathknight = "Безжалостный Рыцарь Смерти",
+	spectral_deathknight = "Призрачный рыцарь Смерти",
+	trainee = "Жестокий новобранец",
+	spectral_trainee = "Призрачный ученик",
+
+	riderdiewarn = "Всадник мёртв!",
+	dkdiewarn = "Рыцарь смерти мёртв!",
+
+	warn1 = "В комнате через 3 минуты",
+	warn2 = "В комнате через 90 секунд",
+	warn3 = "В комнате через 60 секунд",
+	warn4 = "В комнате через 30 секунд",
+	warn5 = "Готик появится через 10 секунд",
+
+	wave = "%d/26: ",
+	
+	trawarn = "Ученик через 3 секунды",
+	dkwarn = "Рыцарь Смерти через 3 секунды",
+	riderwarn = "Всадник через 3 секунды",
+
+	trabar = "Ученик - %d",
+	dkbar = "Рыцарь Смерти - %d",
+	riderbar = "Всадник - %d",
+
+	inroomtrigger = "Я очень долго ждал. Положите свою душу в мой комбайн и будем вам дерево с золотыми.",  --check this
+	inroomwarn = "Он в комнате!!",
+
+	inroombartext = "В комнате",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	room = "고딕 등장 알림",
 	room_desc = "고딕 등장을 알립니다.",

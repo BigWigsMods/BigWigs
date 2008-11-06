@@ -29,6 +29,24 @@ L:RegisterTranslations("enUS", function() return {
 	castwarn = "Incoming Locust Swarm!",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	locust = "Жуки-трупоеды",
+	locust_desc = "Предупреждать о появлении жуков.",
+
+	starttrigger1 = "Хм выхода нет ребята.", --check this
+	starttrigger2 = "Я только начинаю входить во вкус.!",  --check this
+	starttrigger3 = "Да зомби!я заставлю тебя попотеть.",  --correct this
+	engagewarn = "Ануб'Рекан в ярости! Первая волна жуков через ~90 секунд",
+
+	gainendwarn = "Жуки исчезают!",
+	gainnextwarn = "Следующая волна жуков через ~85 секунд",
+	gainwarn10sec = "~10 до исчезновения жуков",
+	gainincbar = "Следующая волна жуков",
+	gainbar = "Жуки-трупоеды",
+
+	castwarn = "ПОЯВЛЯЕТСЯ ВОЛНА ЖУКОВ!",
+} end )
+
 L:RegisterTranslations("deDE", function() return {
 	locust = "Heuschreckenschwarm",
 	locust_desc = "Warnung, wenn Anub'Rekhan Heuschreckenschwarm wirkt.",

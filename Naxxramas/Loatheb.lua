@@ -39,6 +39,30 @@ L:RegisterTranslations("enUS", function() return {
 	removecursebar = "Remove Curse",
 } end )
 
+L:RegisterTranslations("ruRU", function() return {
+	startwarn = "Мерзот в ярости, 2 минуты до неотвратимого рока!",
+
+	doom = "Неотвратимый рок",
+	doom_desc = "Предупрежлать о неотвратимом роке",
+	doombar = "Неотвратимый рок %d",
+	doomwarn = "Неотвратимый рок %d! %d секунд до следующего!",
+	doomwarn5sec = "Неотвратимый рок %d через 5 секунд!",
+	doomtimerbar = "Рок каждые 15 секунд",
+	doomtimerwarn = "Рок теперь каждые %s секунд!",
+	doomtimerwarnnow = "Неотвратимый рок теперь накладывается каждые 15 секунд!",
+
+	spore = "Появление спор",
+	spore_desc = "Сообщать о появлении спор",
+	sporewarn = "Споры %d появляются",
+	sporebar = "Призваны споры %d",
+
+	curse = "Снятие проклятья",
+	curse_desc = "Сообщать о снятии проклятий с Мерзота",
+
+	removecursewarn = "С Мерзота сняты проклятия",
+	removecursebar = "Снятие проклятья",
+} end )
+
 L:RegisterTranslations("koKR", function() return {
 	startwarn = "로데브 전투시작!, 2분 후 피할 수 없는 파멸!",
 
