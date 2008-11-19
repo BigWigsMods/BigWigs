@@ -79,5 +79,21 @@
 <Script file="Sunwell\Twins.lua"/>
 <Script file="Sunwell\Muru.lua"/>
 <Script file="Sunwell\KilJaeden.lua"/>
+
+<Script file="Naxxramas\Anubrekhan.lua"/>
+<Script file="Naxxramas\Faerlina.lua"/>
+<Script file="Naxxramas\Gluth.lua"/>
+<Script file="Naxxramas\Gothik.lua"/>
+<Script file="Naxxramas\Grobbulus.lua"/>
+<Script file="Naxxramas\Heigan.lua"/>
+<Script file="Naxxramas\Horsemen.lua"/>
+<Script file="Naxxramas\Kelthuzad.lua"/>
+<Script file="Naxxramas\Loatheb.lua"/>
+<Script file="Naxxramas\Maexxna.lua"/>
+<Script file="Naxxramas\Noth.lua"/>
+<Script file="Naxxramas\Patchwerk.lua"/>
+<Script file="Naxxramas\Razuvious.lua"/>
+<Script file="Naxxramas\Sapphiron.lua"/>
+<Script file="Naxxramas\Thaddius.lua"/>
 <!--@end-debug@-->
 </Ui>
