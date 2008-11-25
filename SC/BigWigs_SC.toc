@@ -6,6 +6,7 @@
 ## Title-esES: Big Wigs [|cffeda55fCaverna Santuario Serpiente|r]
 ## Title-zhCN: Big Wigs [|cffeda55f毒蛇神殿|r]
 ## Title-zhTW: Big Wigs [|cffeda55f毒蛇神殿洞穴|r]
+## Title-koKR: Big Wigs [|cffeda55f불뱀 제단|r]
 ## Notes: Big Wigs Serpentshrine Cavern Modules
 ## Notes-ruRU: Модуль Big Wigs Змеиного святилищя
 ## Notes-frFR: Modules Big Wigs concernant la Caverne du sanctuaire du Serpent.
