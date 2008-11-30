@@ -21,15 +21,20 @@ L:RegisterTranslations("enUS", function() return {
 
 	shout = "Disrupting Shout",
 	shout_desc = "Warn for Disrupting Shout.",
-	shout7secwarn = "7 sec to Disrupting Shout",
-	shout3secwarn = "3 sec to Disrupting Shout!",
-	shoutwarn = "Disrupting Shout!",
+	shoutwarn = "Disrupting Shout in ~5sec!",
 	shoutbar = "Next shout",
+	
+	knife = "Jagged Knife",
+	knife_desc = "Warn who has Jagged Knife.",
+	knife_message = "%s: Jagged Knife",
 
-	taunt = "Taunt Timer",
-	taunt_desc = "Show timer for taunt",
-	shieldwall = "Shield Wall Timer",
-	shieldwall_desc = "Show timer for shieldwall.",
+	taunt = "Taunt",
+	taunt_desc = "Warn for taunt.",
+	taunt_message = "%s - taunt",
+	
+	shieldwall = "Shield Wall",
+	shieldwall_desc = "Warn for shieldwall.",
+	shieldwall_message = "%s - Shield Wall",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -41,17 +46,24 @@ L:RegisterTranslations("deDE", function() return {
 
 	shout = "Unterbrechungsruf",
 	shout_desc = "Warnung, wenn Instruktor Razuvious Unterbrechungsruf wirkt.",
-	shout7secwarn = "Unterbrechungsruf in 7 Sekunden!",
-	shout3secwarn = "Unterbrechungsruf in 3 Sekunden!",
-	shoutwarn = "Unterbrechungsruf!",
-	shoutbar = "Unterbrechungsruf",
+	--shoutwarn = "Disrupting Shout in ~5sec!",
+	--shoutbar = "Next shout",
+	
+	--knife = "Jagged Knife",
+	--knife_desc = "Warn who has Jagged Knife.",
+	--knife_message = "%s: Jagged Knife",
+	
+	--taunt = "Taunt",
+	--taunt_desc = "Warn for taunt.",
+	--taunt_message = "%s - taunt",
 
-	shieldwall = "Schildwall",
-	shieldwall_desc = "Timer f\195\188r Schildwall.",
+	--shieldwall = "Shield Wall",
+	--shieldwall_desc = "Warn for shieldwall.",
+	--shieldwall_message = "%s - Shield Wall",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	startwarn = "훈련교관 라주비어스 전투 시작! 약 25초 이내 외침!",
+	startwarn = "훈련교관 라주비어스 전투 시작! 약 16초 이내 외침!",
 	starttrigger1 = "훈련은 끝났다! 배운 걸 보여줘라!",
 	starttrigger2 = "다리를 후려 차라! 무슨 문제 있나?",
 	starttrigger3 = "절대 봐주지 마라!",
@@ -59,15 +71,20 @@ L:RegisterTranslations("koKR", function() return {
 
 	shout = "분열의 외침",
 	shout_desc = "분열의 외침을 알립니다.",
-	shout7secwarn = "7초 후 분열의 외침!",
-	shout3secwarn = "3초 후 분열의 외침!",
-	shoutwarn = "분열의 외침!",
-	shoutbar = "분열의 외침",
+	shoutwarn = "약 5초 후 분열의 외침!",
+	shoutbar = "다음 분열의 외침",
+	
+	knife = "뾰족한 나이프",
+	knife_desc = "뾰족한 나이프에 걸린 플레이어를 알립니다.",
+	knife_message = "뾰족한 나이프: %s",
 
-	taunt = "도발 타이머",
-	taunt_desc = "도발 타이머를 표시합니다.",
-	shieldwall = "방패의 벽 타이머",
-	shieldwall_desc = "방패의 벽에 대한 타이머 표시",
+	taunt = "도발",
+	taunt_desc = "도발에 대하여 알립니다.",
+	taunt_message = "%s - 도발",
+	
+	shieldwall = "방패의 벽",
+	shieldwall_desc = "방패의 벽에 대하여 알립니다",
+	shieldwall_message = "%s - 방패의 벽",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -79,15 +96,20 @@ L:RegisterTranslations("zhCN", function() return {
 
 	shout = "瓦解怒吼",
 	shout_desc = "当施放瓦解怒吼时发出警报。",
-	shout7secwarn = "7秒后，瓦解怒吼！",
-	shout3secwarn = "3秒后，瓦解怒吼！",
-	shoutwarn = "瓦解怒吼！",
-	shoutbar = "<瓦解怒吼>",
+	--shoutwarn = "Disrupting Shout in ~5sec!",
+	--shoutbar = "Next shout",
+	
+	--knife = "Jagged Knife",
+	--knife_desc = "Warn who has Jagged Knife.",
+	--knife_message = "%s: Jagged Knife",
 
-	taunt = "嘲讽计时器",
-	taunt_desc = "显示嘲讽计时器。",
-	shieldwall = "盾墙计时器",
-	shieldwall_desc = "显示盾墙计时器。",
+	--taunt = "Taunt",
+	--taunt_desc = "Warn for taunt.",
+	--taunt_message = "%s - taunt",
+	
+	--shieldwall = "Shield Wall",
+	--shieldwall_desc = "Warn for shieldwall.",
+	--shieldwall_message = "%s - Shield Wall",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -99,13 +121,20 @@ L:RegisterTranslations("zhTW", function() return {
 
 	shout = "怒吼警報",
 	shout_desc = "混亂怒吼警報",
-	shout7secwarn = "7秒後發動混亂怒吼",
-	shout3secwarn = "3秒後發動混亂怒吼！",
-	shoutwarn = "混亂怒吼！",
-	shoutbar = "混亂怒吼",
+	--shoutwarn = "Disrupting Shout in ~5sec!",
+	--shoutbar = "Next shout",
+	
+	--knife = "Jagged Knife",
+	--knife_desc = "Warn who has Jagged Knife.",
+	--knife_message = "%s: Jagged Knife",
+	
+	--taunt = "Taunt",
+	--taunt_desc = "Warn for taunt.",
+	--taunt_message = "%s - taunt",
 
-	shieldwall = "盾牆計時器",
-	shieldwall_desc = "學員盾牆計時器",
+	--shieldwall = "Shield Wall",
+	--shieldwall_desc = "Warn for shieldwall.",
+	--shieldwall_message = "%s - Shield Wall",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -117,13 +146,20 @@ L:RegisterTranslations("frFR", function() return {
 
 	shout = "Cri",
 	shout_desc = "Préviens de l'arrivée des Cris perturbant.",
-	shout7secwarn = "7 sec. avant Cri perturbant !",
-	shout3secwarn = "3 sec. avant Cri perturbant !",
-	shoutwarn = "Cri perturbant !",
-	shoutbar = "Cri perturbant",
+	--shoutwarn = "Disrupting Shout in ~5sec!",
+	--shoutbar = "Next shout",
+	
+	--knife = "Jagged Knife",
+	--knife_desc = "Warn who has Jagged Knife.",
+	--knife_message = "%s: Jagged Knife",
+	
+	--taunt = "Taunt",
+	--taunt_desc = "Warn for taunt.",
+	--taunt_message = "%s - taunt",
 
-	shieldwall = "Mur protecteur",
-	shieldwall_desc = "Affiche la durée des Murs protecteur.",
+	--shieldwall = "Shield Wall",
+	--shieldwall_desc = "Warn for shieldwall.",
+	--shieldwall_message = "%s - Shield Wall",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -135,15 +171,20 @@ L:RegisterTranslations("ruRU", function() return {
 
 	shout = "Разрушительный крик",
 	shout_desc = "сообщать о разрушительном крике.",
-	shout7secwarn = "7 секунд до разрушительного крика",
-	shout3secwarn = "3 секунд до разрушительного крика!",
-	shoutwarn = "Разрушительный крик!",
-	shoutbar = "Следующий разрушительный крик",
+	--shoutwarn = "Disrupting Shout in ~5sec!",
+	--shoutbar = "Next shout",
+	
+	--knife = "Jagged Knife",
+	--knife_desc = "Warn who has Jagged Knife.",
+	--knife_message = "%s: Jagged Knife",
 
-	taunt = "Таймер провокации",
-	taunt_desc = "Показывать таймер для провокации",
-	shieldwall = "Таймер глухой обороны",
-	shieldwall_desc = "Показывать таймер для глухой обороны.",
+	--taunt = "Taunt",
+	--taunt_desc = "Warn for taunt.",
+	--taunt_message = "%s - taunt",
+	
+	--shieldwall = "Shield Wall",
+	--shieldwall_desc = "Warn for shieldwall.",
+	--shieldwall_message = "%s - Shield Wall",
 } end )
 
 ----------------------------------
@@ -154,7 +195,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = {boss, understudy}
 mod.guid = 16061
-mod.toggleoptions = {"shieldwall", "bosskill", "taunt"}
+mod.toggleoptions = {"shout", "knife", -1, "shieldwall", "taunt", "bosskill",}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -162,26 +203,51 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
-
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Shout", 29107, 55543)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Taunt", 29060)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Knife", 55550)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "ShieldWall", 29061)
+	
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:AddCombatListener("UNIT_DIED", "BossDeath")
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
-function mod:ShieldWall(_, spellID, _, _, spellName)
-	if self.db.profile.shieldwall then
-		self:Bar(spellName, 20, spellID)
+function mod:Shout(_, spellID, _, _, spellName)
+	if self.db.profile.shout then
+		self:IfMessage(spellName, "Attention", spellID)
+		self:Bar(L[shoutbar], 16, spellID)
+		self:DelayedMessage(11, L["shoutwarn"], "Attention")
 	end
 end
 
-function mod:Taunt(_, spellID, _, _, spellName)
-	if self.db.profile.taunt then
-		self:Bar(spellName, 20, spellID)
+function mod:ShieldWall(unit, spellID)
+	if unit == understudy and self.db.profile.shieldwall then
+		self:Message(L["shieldwall_message"]:format(unit), "Positive", nil, nil, nil, spellID)
+		self:Bar(L["shieldwall_message"]:format(unit), 20, spellID)
 	end
 end
 
+function mod:Taunt(unit, spellID)
+	if unit == understudy and self.db.profile.taunt then
+		self:Message(L["taunt_message"]:format(unit), "Positive", nil, nil, nil, spellID)
+		self:Bar(L["taunt_message"]:format(unit), 20, spellID)
+	end
+end
 
+function mod:Knife(unit, spellID)
+	if self.db.profile.knife then
+		self:Message(L["knife_message"]:format(unit), "Important", nil, nil, nil, spellID)
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+	self:IfMessage(L[startwarn], "Attention")
+	if self.db.profile.shout and (msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"]) then
+		self:Bar(L[shoutbar], 16, spellID)
+		self:DelayedMessage(11, L["shoutwarn"], "Attention")
+	end
+end

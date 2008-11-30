@@ -153,8 +153,8 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_AURA_APPLIED", "GainSwarm", 28785)
-	self:AddCombatListener("SPELL_CAST_START", "Swarm", 28785)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "GainSwarm", 28785, 54021)
+	self:AddCombatListener("SPELL_CAST_START", "Swarm", 28785, 54021)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")

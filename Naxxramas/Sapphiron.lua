@@ -242,7 +242,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Drain", 28542)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Drain", 28542, 55665)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Icebolt", 28522)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveIcon", 28522)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
@@ -266,8 +266,8 @@ function mod:Drain(_, spellID)
 	if self.db.profile.lifedrain then
 		self:TriggerEvent("BigWigs_StopBar", self, L["lifedrain_bar"])
 		self:IfMessage(L["lifedrain_message"], "Urgent", spellID)
-		self:Bar(L["lifedrain_bar"], 24, spellID)
-		self:ScheduleEvent("Lifedrain", "BigWigs_Message", 19, L["lifedrain_warn1"], "Important")
+		self:Bar(L["lifedrain_bar"], 23, spellID)
+		self:ScheduleEvent("Lifedrain", "BigWigs_Message", 18, L["lifedrain_warn1"], "Important")
 	end
 end
 

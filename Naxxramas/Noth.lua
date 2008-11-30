@@ -287,7 +287,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Curse", 29213)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Curse", 29213, 54835)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Blink", 29209)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 

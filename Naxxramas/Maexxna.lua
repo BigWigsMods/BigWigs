@@ -200,7 +200,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Cocoon", 28622)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spray", 29484)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spray", 29484, 54125)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")

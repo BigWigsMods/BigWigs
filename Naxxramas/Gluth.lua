@@ -168,10 +168,10 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Frenzy", 28371)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Frenzy", 28371, 54427)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Fear", 29685)
-	self:AddCombatListener("SPELL_DAMAGE", "Decimate", 28375)
-	self:AddCombatListener("SPELL_MISSED", "Decimate", 28375)
+	self:AddCombatListener("SPELL_DAMAGE", "Decimate", 28375, 54426)
+	self:AddCombatListener("SPELL_MISSED", "Decimate", 28375, 54426)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
@@ -218,7 +218,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		if self.db.profile.decimate then
 			self:Message(L["startwarn"], "Attention")
-			self:Bar(L["decimatebartext"], 105, 28375)
+			self:Bar(L["decimatebartext"], 105, 54426)
 			self:DelayedMessage(100, L["decimatesoonwarn"], "Urgent")
 		end
 		if self.db.profile.enrage then
