@@ -245,9 +245,11 @@ function mod:Knife(unit, spellID)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
-	self:IfMessage(L[startwarn], "Attention")
-	if self.db.profile.shout and (msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"]) then
-		self:Bar(L[shoutbar], 16, spellID)
-		self:DelayedMessage(11, L["shoutwarn"], "Attention")
+	if (msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"]) then
+		self:IfMessage(L[startwarn], "Attention")
+		if self.db.profile.shout then
+			self:Bar(L[shoutbar], 16, spellID)
+			self:DelayedMessage(11, L["shoutwarn"], "Attention")
+		end
 	end
 end
