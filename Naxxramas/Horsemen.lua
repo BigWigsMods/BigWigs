@@ -3,7 +3,7 @@
 ------------------------------
 
 local thane = BB["Thane Korth'azz"]
-local mograine = BB["Highlord Mograine"]
+local rivendare = BB["Baron Rivendare"]
 local zeliek = BB["Sir Zeliek"]
 local blaumeux = BB["Lady Blaumeux"]
 local boss = BB["The Four Horsemen"]
@@ -243,7 +243,7 @@ L:RegisterTranslations("frFR", function() return {
 
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
-mod.enabletrigger = {thane, mograine, zeliek, blaumeux, boss}
+mod.enabletrigger = {thane, rivendare, zeliek, blaumeux, boss}
 mod.guid = 16065
 mod.toggleoptions = {"mark", "shieldwall", -1, "meteor", "void", "wrath", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
