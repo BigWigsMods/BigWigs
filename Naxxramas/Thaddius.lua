@@ -477,9 +477,9 @@ function mod:PLAYER_AURAS_CHANGED(msg)
 		if previousCharge and previousCharge == chargetype then
 			self:Message(L["nochange"], "Urgent", true, "Alarm")
 		elseif chargetype == plus then
-			self:Message(L["poswarn"], "Positive", true, "Alarm")
+			self:Message(L["poswarn"], "Personal", true, "Alarm")
 		elseif chargetype == minus then
-			self:Message(L["negwarn"], "Important", true, "Alarm")
+			self:Message(L["negwarn"], "Personal", true, "Alarm")
 		end
 		self:TriggerEvent("BigWigs_StartBar", self, L["polaritytickbar"], 6, chargetype, "Important")
 	end
