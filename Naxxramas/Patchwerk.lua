@@ -88,7 +88,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if self.db.profile.berserk and (msg == L["starttrigger1"] or msg == L["starttrigger2"]) then
-		self:Enrage(420, true)
+		self:Enrage(360, true)
 	end
 end
 
