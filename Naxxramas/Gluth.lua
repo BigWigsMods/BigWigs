@@ -222,7 +222,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:DelayedMessage(100, L["decimatesoonwarn"], "Urgent")
 		end
 		if self.db.profile.enrage then
-			self:Enrage(360, nil, true)
+			self:Enrage(480, nil, true)
 		end
 	end
 end
