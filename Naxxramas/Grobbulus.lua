@@ -180,7 +180,7 @@ function mod:Inject(player, spellID)
 		self:Whisper(rest, L["bomb_message_you"])
 		self:Bar(other, 10, spellID)
 	end
-	self:Icon(player, "other")
+	self:Icon(player, "icon")
 end
 
 function mod:Cloud(_, spellID)
