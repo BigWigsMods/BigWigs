@@ -170,28 +170,28 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	mark = "Marques",
-	mark_desc = "Préviens de l'arrivée des marques.",
+	mark = "Marque",
+	mark_desc = "Prévient de l'arrivée des marques.",
 	markbar = "Marque %d",
-	markwarn1 = "Marque %d !",
+	markwarn1 = "Marque %d !",
 	markwarn2 = "Marque %d dans 5 sec.",
 
 	void = "Zone de vide",
-	void_desc = "Préviens quand Dame Blaumeux incante une Zone de vide.",
-	voidwarn = "Zone de vide imminent",
-	voidbar = "Zone de vide",
+	void_desc = "Prévient quand Dame Blaumeux incante une Zone de vide.",
+	voidwarn = "Arrivée d'une Zone de vide",
+	voidbar = "Prochaine Zone de vide",
 
 	meteor = "Météore",
-	meteor_desc = "Préviens quand Thane incante un météore.",
-	meteorwarn = "Météore !",
+	meteor_desc = "Prévient quand Thane incante un météore.",
+	meteorwarn = "Météore !",
 	meteorbar = "Météore",
 
 	wrath = "Colère divine",
-	wrath_desc = "Préviens quand Zeliek incante sa Colère divine.",
-	wrathwarn = "Colère divine !",
+	wrath_desc = "Prévient quand Zeliek incante sa Colère divine.",
+	wrathwarn = "Colère divine !",
 	wrathbar = "Colère divine",
 
-	startwarn = "Les 4 cavaliers engagés ! Marque dans ~17 sec.",
+	startwarn = "Les 4 cavaliers engagés ! Marque dans ~17 sec.",
 } end )
 
 

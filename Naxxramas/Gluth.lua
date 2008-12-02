@@ -97,17 +97,17 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	startwarn = "Gluth engagé ! ~105 sec. avant les zombies !",
+	startwarn = "Gluth engagé ! ~105 sec. avant Décimer !",
 
 	frenzy = "Frénésie",
-	frenzy_desc = "Préviens quand Gluth entre en frénésie.",
-	frenzy_message = "Frénésie !",
+	frenzy_desc = "Prévient quand Gluth entre en frénésie.",
+	frenzy_message = "Frénésie !",
 
 	decimate = "Décimer",
-	decimate_desc = "Préviens quand Gluth utilise son Décimer.",
-	decimatesoonwarn = "Décimer imminent !",
-	decimatewarn = "Décimer !",
-	decimatebartext = "Décimation des zombies",
+	decimate_desc = "Prévient de l'arrivé des Décimer.",
+	decimatesoonwarn = "Décimer imminent !",
+	decimatewarn = "Décimer !",
+	decimatebartext = "~Décimer",
 } end )
 
 ----------------------------------

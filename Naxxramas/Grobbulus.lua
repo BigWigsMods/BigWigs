@@ -122,20 +122,20 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	youinjected = "Injection mutante sur vous",
-	youinjected_desc = "Préviens quand vous subissez les effets de l'Injection mutante.",
-	bomb_message_you = "Tu es injecté !",
+	youinjected_desc = "Prévient quand vous subissez les effets de l'Injection mutante.",
+	bomb_message_you = "Vous êtes injecté !",
 
 	otherinjected = "Injection mutante sur les autres",
-	otherinjected_desc = "Préviens quand un joueur subit les effets de l'Injection mutante.",
-	bomb_message_other = "%s est injecté !",
+	otherinjected_desc = "Prévient quand un joueur subit les effets de l'Injection mutante.",
+	bomb_message_other = "%s est injecté  !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Injection mutante (nécessite d'être promu ou mieux).",
 
 	cloud = "Nuage empoisonné",
-	cloud_desc = "Préviens quand Globbulus lance ses nuages empoisonnés.",
-	cloud_warn = "Nuage empoisonné ! Prochain dans ~15 sec. !",
-	cloud_bar = "Nuage empoisonné",
+	cloud_desc = "Prévient quand Globbulus lance ses nuages empoisonnés.",
+	cloud_warn = "Nuage empoisonné ! Prochain dans ~15 sec. !",
+	cloud_bar = "Prochain Nuage",
 } end )
 
 ----------------------------------
@@ -146,7 +146,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15931
-mod.toggleoptions = {"youinjected", "otherinjected", "icon", "cloud", -1, "enrage", "bosskill"}
+mod.toggleoptions = {"youinjected", "otherinjected", "icon", "cloud", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------

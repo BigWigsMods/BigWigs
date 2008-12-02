@@ -311,19 +311,19 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	phase = "Phases",
-	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
+	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 
 	polarity = "Changement de polarité",
-	polarity_desc = "Préviens quand les polarités sont changées.",
+	polarity_desc = "Prévient quand un Changement de polarité est incanté.",
 
 	power = "Vague de puissance",
-	power_desc = "Préviens quand Stalagg utilise sa Vague de puissance.",
+	power_desc = "Prévient quand Stalagg utilise sa Vague de puissance.",
 
 	charge = "Charge",
-	charge_desc = "Préviens si vous changez de charge ou non.",
+	charge_desc = "Prévient si vous changez de charge ou non (uniquement pour vous).",
 
 	throw = "Lancer",
-	throw_desc = "Préviens quand les tanks sont lancés d'une plateforme à l'autre.",
+	throw_desc = "Prévient quand les tanks sont lancés d'une plate-forme à l'autre.",
 
 	enragetrigger = "%s entre dans une rage démente !",
 	starttrigger = "Stalagg écraser toi !",
@@ -338,24 +338,24 @@ L:RegisterTranslations("frFR", function() return {
 	pstrigger = "Maintenant toi sentir douleur...",
 	chargetrigger = "Vous subissez les effets .* Charge (%w+)",
 
-	startwarn = "Thaddius Phase 1",
-	startwarn2 = "Thaddius Phase 2, Enrager dans 5 min. !",
-	addsdownwarn = "Thaddius arrive dans 10-20 sec. !",
-	thaddiusincoming = "Thaddius arrive dans 3 sec. !",
-	pswarn1 = "Thaddius commence à lancer Changement de polarité !",
-	pswarn2 = "30 sec. avant Changement de polarité !",
-	pswarn3 = "3 sec. avant Changement de polarité !",
-	poswarn = "Vous avez maintenant une charge positive !",
-	negwarn = "Vous avez maintenant une charge négative !",
-	nochange = "Votre charge n'a pas changé !",
+	startwarn = "Thaddius - Phase 1",
+	startwarn2 = "Thaddius - Phase 2, Enrager dans 5 min. !",
+	addsdownwarn = "Arrivée de Thaddius dans 10-20 sec. !",
+	thaddiusincoming = "Arrivée de Thaddius dans 3 sec. !",
+	pswarn1 = "Thaddius commence à incanter un Changement de polarité !",
+	pswarn2 = "30 sec. avant Changement de polarité !",
+	pswarn3 = "3 sec. avant Changement de polarité !",
+	poswarn = "Vous avez maintenant une charge positive !",
+	negwarn = "Vous avez maintenant une charge négative !",
+	nochange = "Votre charge n'a pas changé !",
 	polaritytickbar = "Tick de polarité",
-	stalaggwarn = "Vague de puissance sur Stalagg !",
+	stalaggwarn = "Vague de puissance sur Stalagg !",
 	powersurgebar = "Vague de puissance",
 
 	bar1text = "Changement de polarité",
 
 	throwbar = "Lancer",
-	throwwarn = "Lancer dans ~5 sec. !",
+	throwwarn = "Lancer dans ~5 sec. !",
 } end )
 
 ----------------------------------

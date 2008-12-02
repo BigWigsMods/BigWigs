@@ -121,20 +121,20 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	locust = "Nuée de sauterelles",
-	locust_desc = "Préviens quand Anub'Rekhan invoque ses Nuées de sauterelles.",
+	locust_desc = "Prévient de l'arrivée des Nuées de sauterelles.",
 
 	starttrigger1 = "Rien qu'une petite bouchée…",
 	starttrigger2 = "Oui, courez ! Faites circuler le sang !",
 	starttrigger3 = "Nulle part pour s'enfuir.",
-	engagewarn = "Anub'Rekhan engagé. Première Nuée dans ~90 sec.",
+	engagewarn = "Anub'Rekhan engagé ! Nuée de sauterelles dans ~90 sec.",
 
-	gainendwarn = "Fin de la Nuée de sauterelles !",
+	gainendwarn = "Fin de la Nuée de sauterelles !",
 	gainnextwarn = "Prochaine Nuée de sauterelles dans ~85 sec.",
 	gainwarn10sec = "~10 sec. avant la Nuée de sauterelles",
-	gainincbar = "Prochaine Nuée",
+	gainincbar = "~Prochaine Nuée",
 	gainbar = "Nuée de sauterelles",
 
-	castwarn = "Nuée de sauterelles imminente !",
+	castwarn = "Arrivée d'une Nuée de sauterelles !",
 } end )
 
 ----------------------------------

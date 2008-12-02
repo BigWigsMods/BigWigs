@@ -161,22 +161,22 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	spray = "Jet de rets",
-	spray_desc = "Préviens de l'arrivée des Jet de rets et des araignées.",
+	spray_desc = "Prévient de l'arrivée des Jet de rets et des araignées.",
 
 	cocoon = "Entoilage",
-	cocoon_desc = "Préviens quand un joueur subit les effets de l'Entoilage.",
+	cocoon_desc = "Prévient quand un joueur subit les effets de l'Entoilage.",
 
-	cocoonwarn = "%s entoilés !",
+	cocoonwarn = "%s entoilé(s) !",
 
 	enragetrigger = "%s devient folle furieuse !",
 
 	webspraywarn30sec = "Entoilage dans 10 sec.",
-	webspraywarn20sec = "Entoilage ! 10 sec. avant les araignées !",
-	webspraywarn10sec = "Araignées écloses. 10 sec. avant Jet de rets !",
-	webspraywarn5sec = "Jet de rets dans 5 sec. !",
-	webspraywarn = "Jet de rets ! 40 sec. avant le suivant !",
-	enragewarn = "Enragée - SQUISH SQUISH SQUISH !",
-	enragesoonwarn = "Enrager imminent - Bugsquatters out !",
+	webspraywarn20sec = "Entoilage ! 10 sec. avant les araignées !",
+	webspraywarn10sec = "Araignées écloses. 10 sec. avant Jet de rets !",
+	webspraywarn5sec = "Jet de rets dans 5 sec. !",
+	webspraywarn = "Jet de rets ! 40 sec. avant le suivant !",
+	enragewarn = "Enrager !",
+	enragesoonwarn = "Enrager imminent !",
 
 	webspraybar = "Jet de rets",
 	cocoonbar = "Entoilage",

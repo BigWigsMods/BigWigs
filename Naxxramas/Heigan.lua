@@ -172,23 +172,23 @@ L:RegisterTranslations("frFR", function() return {
 	starttrigger3 = "Je vous vois…",
 
 	engage = "Engagement",
-	engage_desc = "Préviens quand Heigan est engagé.",
-	engage_message = "Heigan l'Impur engagé ! 90 sec. avant téléportation !",
+	engage_desc = "Prévient quand Heigan est engagé.",
+	engage_message = "Heigan l'Impur engagé ! 90 sec. avant téléportation !",
 
 	teleport = "Téléportation",
-	teleport_desc = "Préviens quand Heigan se téléporte.",
+	teleport_desc = "Prévient quand Heigan se téléporte.",
 	teleport_trigger = "Votre fin est venue.",
 	teleport_1min_message = "Téléportation dans 1 min.",
 	teleport_30sec_message = "Téléportation dans 30 sec.",
-	teleport_10sec_message = "Téléportation dans 10 sec. !",
-	on_platform_message = "Téléportation ! Sur la plate-forme pendant 45 sec. !",
+	teleport_10sec_message = "Téléportation dans 10 sec. !",
+	on_platform_message = "Téléportation ! Sur la plate-forme pendant 45 sec. !",
 
 	to_floor_30sec_message = "De retour dans 30 sec.",
-	to_floor_10sec_message = "De retour dans 10 sec. !",
-	on_floor_message = "De retour sur le sol ! 90 sec. avant téléportation !",
+	to_floor_10sec_message = "De retour dans 10 sec. !",
+	on_floor_message = "De retour sur le sol ! 90 sec. avant téléportation !",
 
-	teleport_bar = "Téléportation",
-	back_bar = "Retour sur le sol",
+	teleport_bar = "Téléportation !",
+	back_bar = "Retour sur le sol !",
 } end )
 
 ----------------------------------

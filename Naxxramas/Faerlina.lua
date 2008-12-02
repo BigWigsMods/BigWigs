@@ -132,20 +132,20 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	silence = "Silence",
-	silence_desc = "Préviens de l'arrivée des Silences.",
+	silence_desc = "Prévient de l'arrivée des silences.",
 
 	starttrigger1 = "À genoux, vermisseau !",
 	starttrigger2 = "Tuez-les au nom du maître !",
 	starttrigger3 = "Vous ne pouvez pas m'échapper !",
 	starttrigger4 = "Fuyez tant que vous le pouvez !",
 
-	startwarn = "Grande veuve Faerlina engagée, 60 sec. avant Enrager !",
-	enragewarn15sec = "15 sec. avant Enrager !",
-	enragewarn = "Enragée !",
-	enrageremovewarn = "Enrager enlevé ! ~60 sec. avant le suivant !",
-	silencewarn = "Silence ! Enrager retardé !",
-	silencewarn5sec = "Silence dans 5 sec.",
+	startwarn = "Grande veuve Faerlina engagée, 60 sec. avant Frénésie !",
+	enragewarn15sec = "15 sec. avant Frénésie !",
+	enragewarn = "Frénésie !",
+	enrageremovewarn = "Frénésie enlevée ! %d sec. avant la suivante !",
 
+	silencewarn = "Réduite au silence !",
+	silencewarn5sec = "Fin du silence dans 5 sec.",
 	silencebar = "Silence",
 } end )
 

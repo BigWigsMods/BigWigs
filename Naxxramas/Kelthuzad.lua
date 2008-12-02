@@ -324,50 +324,50 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Chambre de Kel'Thuzad",
-	
-	start_trigger = "Serviteurs, valets et soldats des ténèbres glaciales ! Répondez à l'appel de Kel'Thuzad !", -- à vérifier
-	start_warning = "Kel'Thuzad engagé ! ~5 min. avant qu'il ne soit actif !",
+	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Appartements de Kel'Thuzad",
+
+	start_trigger = "Serviteurs, valets et soldats des ténèbres glaciales ! Répondez à l'appel de Kel'Thuzad !",
+	start_warning = "Kel'Thuzad engagé ! ~5 min. avant qu'il ne soit actif !",
 	start_bar = "Phase 2",
 
 	phase = "Phases",
-	phase_desc = "Préviens quand la rencontre entre dans une nouvelle phase.",
-	phase2_trigger1 = "Faites vos prières !", -- à vérifier
-	phase2_trigger2 = "Hurlez et expirez !", -- à vérifier
-	phase2_trigger3 = "Votre fin est proche !", -- à vérifier
-	phase2_warning = "Phase 2, Kel'Thuzad arrive !",
-	phase2_bar = "Kel'Thuzad Actif !",
-	phase3_soon_warning = "Phase 3 imminente !",
-	phase3_trigger = "Maître, j'ai besoin d'aide !", -- à vérifier
-	phase3_warning = "Phase 3, Guardiens dans ~15 sec. !",
+	phase_desc = "Prévienr quand la rencontre entre dans une nouvelle phase.",
+	phase2_trigger1 = "Faites vos prières !",
+	phase2_trigger2 = "Hurlez et expirez !",
+	phase2_trigger3 = "Votre fin est proche !",
+	phase2_warning = "Phase 2, arrivée de Kel'Thuzad !",
+	phase2_bar = "Kel'Thuzad actif !",
+	phase3_soon_warning = "Phase 3 imminente !",
+	phase3_trigger = "Maître, j'ai besoin d'aide !",
+	phase3_warning = "Phase 3, gardiens dans ~15 sec. !",
 
 	mc = "Contrôle mental",
-	--mc_desc = "Tells you who has been Mind Control and when the next Mind Control is coming.",
-	--mc_message = "Mind Control: %s",
-	--mc_warning = "Mind Control Cooldown Over - Inc Soon!",
-	--mc_nextbar = "~Mind Control Cooldown",
+	mc_desc = "Prévient qui subit les effets du Contrôle mentale et quand aura lieu le prochain.",
+	mc_message = "Contrôle mental : %s",
+	mc_warning = "Fin du temps de recharge du Contrôle mental - Imminent !",
+	mc_nextbar = "~Recharge Contrôle mental",
 
 	fissure = "Fissure d'ombre",
-	fissure_desc = "Préviens de l'arrivée des Fissures d'ombre.",
-	fissure_warning = "Fissure d'ombre !",
+	fissure_desc = "Prévient de l'arrivée des Fissures d'ombre.",
+	fissure_warning = "Fissure d'ombre !",
 
 	frostblast = "Trait de glace",
-	frostblast_desc = "Préviens Alerts when people get Frost Blasted.",
+	frostblast_desc = "Prévient quand des joueurs subissent les effets du Trait de glace.",
 	frostblast_bar = "Trait de givre probable",
-	frostblast_warning = "Trait de givre !",
-	frostblast_soon_message = "Trait de givre probable dans ~5 sec. !",
+	frostblast_warning = "Trait de givre !",
+	frostblast_soon_message = "Trait de givre probable dans ~5 sec. !",
 
-	detonate = "Mana détonant",
-	detonate_desc = "Préviens quand un joueur subit les effets de Faire détoner mana.",
-	--detonate_you = "Detonate Mana on YOU!",
-	detonate_other = "Mana détonant - %s",
-	detonate_possible_bar = "Détonation probable",
-	--detonate_warning = "Next Detonate in 5 seconds!",
+	detonate = "Faire détoner mana",
+	detonate_desc = "Prévient quand un joueur subit les effets de Faire détoner mana.",
+	detonate_you = "Faire détoner mana sur VOUS !",
+	detonate_other = "Faire détoner mana - %s",
+	detonate_possible_bar = "~Prochain détoner mana",
+	detonate_warning = "Prochain Faire détoner mana dans 5 sec. !",
 
 	guardians = "Apparition des gardiens",
-	guardians_desc = "Préviens de l'arrivée des gardiens en phase 3.",
-	guardians_trigger = "Très bien. Guerriers des terres gelées, relevez-vous ! Je vous ordonne de combattre, de tuer et de mourir pour votre maître ! N'en épargnez aucun !", -- à vérifier
-	guardians_warning = "Arrivée des gardiens dans 10 sec. !",
+	guardians_desc = "Prévient de l'arrivée des gardiens en phase 3.",
+	guardians_trigger = "Très bien. Guerriers des terres gelées, relevez-vous ! Je vous ordonne de combattre, de tuer et de mourir pour votre maître ! N'épargnez personne !",
+	guardians_warning = "Arrivée des gardiens dans 10 sec. !",
 	guardians_bar = "Arrivée des gardiens",
 
 	icon = "Icône",

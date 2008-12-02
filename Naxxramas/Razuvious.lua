@@ -83,17 +83,17 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	--knife = "Jagged Knife",
-	--knife_desc = "Warn who has Jagged Knife.",
-	--knife_message = "%s: Jagged Knife",
-	
-	--taunt = "Taunt",
-	--taunt_desc = "Warn for taunt.",
-	--taunt_message = "%s - taunt",
+	knife = "Couteau dentelé",
+	knife_desc = "Prévient quand un joueur subit les effets du Couteau dentelé.",
+	knife_message = "%s : Couteau dentelé",
 
-	--shieldwall = "Shield Wall",
-	--shieldwall_desc = "Warn for shieldwall.",
-	--shieldwall_message = "%s - Shield Wall",
+	taunt = "Provocation",
+	taunt_desc = "Prévient de l'arrivée des Provocations.",
+	taunt_message = "%s - Provocation",
+
+	shieldwall = "Mur protecteur",
+	shieldwall_desc = "Prévient de l'arrivée des Murs protecteurs.",
+	shieldwall_message = "%s - Mur protecteur",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {

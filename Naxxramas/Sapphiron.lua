@@ -195,31 +195,31 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	deepbreath = "Bombe de glace",
-	deepbreath_desc = "Préviens quand Saphiron commence à lancer sa Bombe de glace.",
-	deepbreath_incoming_message = "Bombe de glace incantée dans ~23 sec. !",
-	deepbreath_incoming_soon_message = "Bombe de glace incantée dans ~5 sec. !",
-	deepbreath_incoming_bar = "Incantation : Bombe de glace",
+	deepbreath_desc = "Prévient quand Saphiron commence à lancer sa Bombe de glace.",
+	deepbreath_incoming_message = "Incantation d'une Bombe de glace dans ~23 sec. !",
+	deepbreath_incoming_soon_message = "Incantation d'une Bombe de glace dans ~5 sec. !",
+	deepbreath_incoming_bar = "Bombe de glace en incantation",
 	deepbreath_trigger = "%s prend une grande inspiration…",
-	deepbreath_warning = "Bombe de glace imminente !",
-	deepbreath_bar = "Impact Bombe de glace",
+	deepbreath_warning = "Arrivée d'une Bombe de glace !",
+	deepbreath_bar = "Impact Bombe de glace ",
 
 	lifedrain = "Drain de vie",
-	lifedrain_desc = "Préviens quand le raid est affecté par le Drain de vie.",
-	lifedrain_message = "Drain de vie ! Suivant possible dans ~24 sec. !",
-	lifedrain_warn1 = "Drain de vie dans 5 sec. !",
+	lifedrain_desc = "Prévient quand le raid est affecté par le Drain de vie.",
+	lifedrain_message = "Drain de vie ! Prochain dans ~24 sec. !",
+	lifedrain_warn1 = "Drain de vie dans 5 sec. !",
 	lifedrain_bar = "Drain de vie",
 
-	icebolt = "Crier - Eclair de glace",
-	icebolt_desc = "Fais crier votre personnage qu'il est un bloc de glace quand c'est le cas.",
-	--icebolt_other = "Block: %s",
-	icebolt_yell = "Je suis un bloc !"
-		
-	--ping = "Ping",
-	--ping_desc = "Ping your current location if you are afflicted by Icebolt.",
-	--ping_message = "Block - Pinging your location!",
+	icebolt = "Eclair de glace",
+	icebolt_desc = "Fait crier à votre personnage qu'il est un bloc de glace quand c'est le cas.",
+	icebolt_other = "Bloc : %s",
+	icebolt_yell = "Je suis un bloc ! -%s-",
 
-	--icon = "Raid Icon",
-	--icon_desc = "Place a Raid Target Icon on the player with Icebolt. (requires promoted or higher)",
+	ping = "Ping",
+	ping_desc = "Pinge votre position actuelle si vous subissez les effets de l'Eclair de glace.",
+	ping_message = "Bloc - Pingage de votre position !",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur la dernière personne affectée par l'Eclair de glace (nécessite d'être promu ou mieux).",
 } end )
 
 ----------------------------------

@@ -125,19 +125,19 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	startwarn = "Horreb engagé, 2 min. avant Malédiction inévitable !",
+	startwarn = "Horreb engagé, 2 min. avant Malédiction inévitable !",
 
 	doom = "Malédiction inévitable",
-	doom_desc = "Préviens de l'arrivée des Warn Malédictions inévitables.",
+	doom_desc = "Prévient de l'arrivée des Malédictions inévitables.",
 	doombar = "Malédiction inévitable %d",
-	doomwarn = "Malédiction inévitable %d! Prochaine dans %d sec. !",
-	doomwarn5sec = "Malédiction inévitable %d dans 5 sec. !",
+	doomwarn = "Malédiction inévitable %d ! Prochaine dans %d sec. !",
+	doomwarn5sec = "Malédiction inévitable %d dans 5 sec. !",
 	doomtimerbar = "Malé. toutes les 15 sec.",
-	doomtimerwarn = "Doom timerchange dans %s sec. !",
-	doomtimerwarnnow = "Malédiction inévitable désormais toutes les 15 sec. !",
+	doomtimerwarn = "Changement du délai des malédictions dans %s sec. !",
+	doomtimerwarnnow = "La Malédiction inévitable arrive désormais toutes les 15 sec. !",
 
 	spore = "Invocation de spore",
-	spore_desc = "Préviens quand une spore est invoquée.",
+	spore_desc = "Prévient quand une spore est invoquée.",
 	sporewarn = "Spore %d invoquée",
 	sporebar = "Invocation de spore %d",
 } end )

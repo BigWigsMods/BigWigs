@@ -287,17 +287,17 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	room = "Arrivée dans la salle",
-	room_desc = "Préviens régulièrement quand Gothik arrive.",
+	room_desc = "Prévient quand Gothik arrive dans la salle.",
 
-	add = "Arrivée des adds",
-	add_desc = "Préviens quand un add se joint au combat.",
+	add = "Arrivée des renforts",
+	add_desc = "Prévient quand des renforts se joignent au combat.",
 
-	adddeath = "Mort des adds",
-	adddeath_desc = "Préviens quand un add meurt.",
+	adddeath = "Mort des renforts",
+	adddeath_desc = "Prévient quand un des renforts meurt.",
 
 	starttrigger1 = "Dans votre folie, vous avez provoqué votre propre mort.",
 	starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun",
-	startwarn = "Gothik le moissonneur engagé ! 4:30 avant son arrivée dans la salle.",
+	startwarn = "Gothik le moissonneur engagé ! 4:30 avant son arrivée dans la salle.",
 
 	rider = "Cavalier tenace",
 	spectral_rider = "Cavalier spectral",
@@ -306,14 +306,16 @@ L:RegisterTranslations("frFR", function() return {
 	trainee = "Jeune recrue tenace",
 	spectral_trainee = "Jeune recrue spectral",
 
-	riderdiewarn = "Cavalier mort !",
-	dkdiewarn = "Chevalier mort !",
+	riderdiewarn = "Cavalier mort !",
+	dkdiewarn = "Chevalier mort !",
 
 	warn1 = "Dans la salle dans 3 min.",
 	warn2 = "Dans la salle dans 90 sec.",
 	warn3 = "Dans la salle dans 60 sec.",
 	warn4 = "Dans la salle dans 30 sec.",
 	warn5 = "Arrivée de Gothik dans 10 sec.",
+
+	wave = "%d/26 : ",
 
 	trawarn = "Jeune recrue dans 3 sec.",
 	dkwarn = "Chevalier de la mort dans 3 sec.",
@@ -324,7 +326,7 @@ L:RegisterTranslations("frFR", function() return {
 	riderbar = "Cavalier - %d",
 
 	inroomtrigger = "J'ai attendu assez longtemps. Maintenant, vous affrontez le moissonneur d'âmes.",
-	inroomwarn = "Il est dans la salle !",
+	inroomwarn = "Il est dans la salle !",
 
 	inroombartext = "Dans la salle",
 } end )
