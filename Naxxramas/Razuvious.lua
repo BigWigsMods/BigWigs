@@ -219,7 +219,7 @@ end
 function mod:Shout(_, spellID, _, _, spellName)
 	if self.db.profile.shout then
 		self:IfMessage(spellName, "Attention", spellID)
-		self:Bar(L[shoutbar], 16, spellID)
+		self:Bar(L["shoutbar"], 16, spellID)
 		self:DelayedMessage(11, L["shoutwarn"], "Attention")
 	end
 end
@@ -246,9 +246,9 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if (msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"]) then
-		self:IfMessage(L[startwarn], "Attention")
+		self:IfMessage(L["startwarn"], "Attention")
 		if self.db.profile.shout then
-			self:Bar(L[shoutbar], 16, spellID)
+			self:Bar(L["shoutbar"], 16, spellID)
 			self:DelayedMessage(11, L["shoutwarn"], "Attention")
 		end
 	end
