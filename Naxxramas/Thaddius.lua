@@ -56,8 +56,8 @@ L:RegisterTranslations("enUS", function() return {
 	addsdownwarn = "Thaddius incoming in 10-20sec!",
 	thaddiusincoming = "Thaddius incoming in 3 sec!",
 	pswarn1 = "Thaddius begins to cast Polarity Shift!",
-	pswarn2 = "30 seconds to Polarity Shift!",
-	pswarn3 = "3 seconds to Polarity Shift!",
+	pswarn2 = "30 sec to Polarity Shift!",
+	pswarn3 = "3 sec to Polarity Shift!",
 	poswarn = "You changed to a Positive Charge!",
 	negwarn = "You changed to a Negative Charge!",
 	nochange = "Your debuff did not change!",
@@ -68,7 +68,7 @@ L:RegisterTranslations("enUS", function() return {
 	bar1text = "Polarity Shift",
 
 	throwbar = "Throw",
-	throwwarn = "Throw in ~5 seconds!",
+	throwwarn = "Throw in ~5 sec!",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -374,7 +374,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
-	self:AddSyncListener("SPELL_CAST_SUCCESS", 28134, "StalaggPower")
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "StalaggPower", 28134)
 	self:AddCombatListener("SPELL_CAST_START", "Shift", 28089)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
@@ -387,16 +387,20 @@ function mod:OnEnable()
 	minus = "Interface\\Icons\\Spell_ChargeNegative"
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
-
-	self:RegisterEvent("BigWigs_RecvSync")
-	self:Throttle(4, "StalaggPower")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:StalaggPower()
+	if self.db.profile.power then
+		self:IfMessage(L["stalaggwarn"], "Important", 28134)
+		self:Bar(L["powersurgebar"], 10, 28134)
+	end
+end
 
 function mod:Shift()
 	if self.db.profile.polarity then
@@ -419,7 +423,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		previousCharge = ""
 		stage1warn = true
 		self:Throw()
-		self:ScheduleRepeatingEvent( "bwthaddiusthrow", self.Throw, 21, self )
+		self:ScheduleRepeatingEvent("bwthaddiusthrow", self.Throw, 21, self)
 	elseif msg:find(L["starttrigger2"]) or msg:find(L["starttrigger3"]) or msg:find(L["starttrigger4"]) then
 		if self.db.profile.phase then
 			self:Message(L["startwarn2"], "Important")
@@ -481,16 +485,9 @@ function mod:PLAYER_AURAS_CHANGED(msg)
 		elseif chargetype == minus then
 			self:Message(L["negwarn"], "Personal", true, "Alarm")
 		end
-		self:TriggerEvent("BigWigs_StartBar", self, L["polaritytickbar"], 6, chargetype, "Important")
+		self:Bar(L["polaritytickbar"], 6, chargetype)
 	end
 	previousCharge = chargetype
-end
-
-function mod:BigWigs_RecvSync(sync)
-	if sync == "StalaggPower" and self.db.profile.power then
-		self:IfMessage(L["stalaggwarn"], "Important", 28134)
-		self:Bar(L["powersurgebar"], 10, 28134)
-	end
 end
 
 function mod:Throw()

@@ -5,11 +5,7 @@
 local boss = BB["Sapphiron"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
-local cachedUnitId
-local lastTarget
-local started
-local UnitExists = UnitExists
-local UnitName = UnitName
+local started = nil
 local pName = UnitName("player")
 
 ----------------------------
@@ -37,7 +33,7 @@ L:RegisterTranslations("enUS", function() return {
 	icebolt = "Icebolt",
 	icebolt_desc = "Yell when you are an Icebolt.",
 	icebolt_other = "Block: %s",
-	icebolt_yell = "I'm a Block! -%s-",
+	icebolt_yell = "I'm a Block!",
 	
 	ping = "Ping",
 	ping_desc = "Ping your current location if you are afflicted by Icebolt.",
@@ -66,7 +62,7 @@ L:RegisterTranslations("ruRU", function() return {
 	icebolt = "Морозная стрела",
 	icebolt_desc = "Предупреждать о морозной стреле на Вас.",
 	icebolt_other = "Глыба: %s",	
-	icebolt_yell = "Я в глыбе! -%s-",
+	icebolt_yell = "Я в глыбе!",
 	
 	ping = "Пинг",
 	ping_desc = "Отмечать ваше текущеее положение пингов, если вы находитесь в глыбе после морозной стрелы.",
@@ -95,7 +91,7 @@ L:RegisterTranslations("koKR", function() return {
 	icebolt = "얼음 화살",
 	icebolt_desc = "얼음 화살에 얼렸을때 외침으로 알립니다.",
 	icebolt_other = "방패: %s",
-	icebolt_yell = "-%s- 저 방패에요!",
+	icebolt_yell = "저 방패에요!",
 	
 	ping = "미니맵 표시",
 	ping_desc = "자신이 얼음 화살에 걸렸을 때 현재 위치를 미니맵에 표시합니다.",
@@ -155,7 +151,7 @@ L:RegisterTranslations("zhCN", function() return {
 	icebolt = "寒冰箭",
 	icebolt_desc = "当玩家受到寒冰屏障效果后大喊。",
 	--icebolt_other = "Block: %s",
-	icebolt_yell = "我是寒冰屏障！快躲到我后面！>%s<"
+	icebolt_yell = "我是寒冰屏障！快躲到我后面！"
 	
 	--ping = "Ping",
 	--ping_desc = "Ping your current location if you are afflicted by Icebolt.",
@@ -216,7 +212,7 @@ L:RegisterTranslations("frFR", function() return {
 	icebolt = "Crier - Eclair de glace",
 	icebolt_desc = "Fais crier votre personnage qu'il est un bloc de glace quand c'est le cas.",
 	--icebolt_other = "Block: %s",
-	icebolt_yell = "Je suis un bloc ! -%s-"
+	icebolt_yell = "Je suis un bloc !"
 		
 	--ping = "Ping",
 	--ping_desc = "Ping your current location if you are afflicted by Icebolt.",
@@ -243,15 +239,13 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Drain", 28542, 55665)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Breath", 28524, 29318)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Icebolt", 28522)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveIcon", 28522)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
-	cachedUnitId = nil
-	lastTarget = nil
 	started = nil
 
-	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
@@ -262,9 +256,14 @@ end
 --      Event Handlers      --
 ------------------------------
 
+function mod:Breath(_, spellId)
+	if self.db.profile.deepbreath then
+		self:IfMessage(L["deepbreath_warning"], "Important", spellId)
+	end
+end
+
 function mod:Drain(_, spellID)
 	if self.db.profile.lifedrain then
-		self:TriggerEvent("BigWigs_StopBar", self, L["lifedrain_bar"])
 		self:IfMessage(L["lifedrain_message"], "Urgent", spellID)
 		self:Bar(L["lifedrain_bar"], 23, spellID)
 		self:ScheduleEvent("Lifedrain", "BigWigs_Message", 18, L["lifedrain_warn1"], "Important")
@@ -276,13 +275,15 @@ function mod:Icebolt(player, spellID)
 		self:WideMessage(format(L["icebolt_other"], player))
 		SendChatMessage(L["icebolt_yell"], "YELL")
 		if UnitIsUnit(player, "player") and self.db.profile.ping then
-		Minimap:PingLocation()
-		BigWigs:Print(L["ping_message"])
+			Minimap:PingLocation()
+			BigWigs:Print(L["ping_message"])
 		end
 	elseif self.db.profile.orbother then
 		self:IfMessage(format(L["icebolt_other"], player), "Attention", spellID)
 	end
-	self:Icon(player, "icon")
+	if self.db.profile.icon then
+		self:Icon(player, "icon")
+	end
 end
 
 function mod:RemoveIcon()
@@ -295,114 +296,9 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
-		self:CancelScheduledEvent("bwsapphtargetscanner")
-		self:CancelScheduledEvent("bwsapphdelayed")
 		if self.db.profile.enrage then
 			self:Enrage(900)
 		end
-		if self.db.profile.deepbreath then
-			self:ScheduleEvent("besapphdelayed", self.StartTargetScanner, 5, self) --5sec raid security delay
-		end
-	end
-end
-
-function mod:CHAT_MSG_MONSTER_EMOTE(msg)
-	if msg == L["deepbreath_trigger"] then
-		if self.db.profile.deepbreath then
-			self:Message(L["deepbreath_warning"], "Important")
-			self:Bar(L["deepbreath_bar"], 7, "Spell_Frost_FrostShock")
-		end
-		if self.db.profile.lifedrain then
-			self:Bar(L["lifedrain_bar"], 14, "Spell_Shadow_LifeDrain02")
-		end
-	end
-end
-
-------------------------------
---      Target Scanning     --
-------------------------------
-
-function mod:StartTargetScanner()
-	if self:IsEventScheduled("bwsapphtargetscanner") or not started then return end
-
-	-- Start a repeating event that scans the raid for targets every 1 second.
-	self:ScheduleRepeatingEvent("bwsapphtargetscanner", self.RepeatedTargetScanner, 1, self)
-end
-
-function mod:RepeatedTargetScanner()
-	if not started then return end
-	local found = nil
-
-	-- If we have a cached unit (which we will if we found someone with the boss
-	-- as target), then check if he still has the same target
-	if cachedUnitId and UnitExists(cachedUnitId) and UnitName(cachedUnitId) == boss then
-		found = true
-	end
-
-	-- Check the players target
-	if not found and UnitExists("target") and UnitName("target") == boss then
-		cachedUnitId = "target"
-		found = true
-	end
-
-	if not found and UnitExists("focus") and UnitName("focus") == boss then
-		cachedUnitId = "focus"
-		found = true
-	end
-
-	-- Loop the raid roster
-	if not found then
-		local num = GetNumRaidMembers()
-		for i = 1, num do
-			local unit = "raid" .. i .. "target"
-			if UnitExists(unit) and UnitName(unit) == boss then
-				cachedUnitId = unit
-				found = true
-				break
-			end
-		end
-	end
-
-	-- We've checked everything. If nothing was found, just return home.
-	-- We basically shouldn't return here, because someone should always have
-	-- him targetted.
-	if not found then return end
-
-	local inFlight = nil
-
-	-- Alright, we've got a valid unitId with the boss as target, now check if
-	-- the boss had a target on the last iteration or not - if he didn't, and
-	-- still doesn't, then we fire the "in air" warning.
-	if not UnitExists(cachedUnitId.."target") then
-		-- Okay, the boss doesn't have a target.
-		if not lastTarget then
-			-- He didn't have a target last time either
-			inFlight = true
-		end
-		lastTarget = nil
-	else
-		-- This should always be set before we hit the time when he actually
-		-- loses his target, hence we can check |if not lastTarget| above.
-		lastTarget = true
-	end
-
-	-- He's not flying, so we're just going to continue scanning.
-	if not inFlight then return end
-
-	-- He's in flight! (I hope)
-	self:CancelScheduledEvent("bwsapphtargetscanner")
-	self:CancelScheduledEvent("Lifedrain")
-	self:TriggerEvent("BigWigs_StopBar", self, L["lifedrain_bar"])
-
-	if self.db.profile.deepbreath then
-		self:CancelScheduledEvent("bwsapphtargetscanner")
-		self:CancelScheduledEvent("bwsapphdelayed")
-		self:Message(L["deepbreath_incoming_message"], "Urgent")
-		self:DelayedMessage(18, L["deepbreath_incoming_soon_message"], "Attention")
-		self:Bar(L["deepbreath_incoming_bar"], 23, "Spell_Arcane_PortalIronForge")
-		lastTarget = nil
-		cachedUnitId = nil
-		self:ScheduleEvent("besapphdelayed", self.StartTargetScanner, 50, self)
 	end
 end
 

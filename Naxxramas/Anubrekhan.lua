@@ -18,12 +18,12 @@ L:RegisterTranslations("enUS", function() return {
 	starttrigger1 = "Just a little taste...",
 	starttrigger2 = "Yes, run! It makes the blood pump faster!",
 	starttrigger3 = "There is no way out.",
-	engagewarn = "Anub'Rekhan engaged. First Locust Swarm in ~90 sec",
+	engagewarn = "Anub'Rekhan engaged! Locust Swarm in ~90 sec",
 
 	gainendwarn = "Locust Swarm ended!",
 	gainnextwarn = "Next Locust Swarm in ~85 sec",
-	gainwarn10sec = "~10 Seconds until Locust Swarm",
-	gainincbar = "Next Locust Swarm",
+	gainwarn10sec = "~10 sec until Locust Swarm",
+	gainincbar = "~Next Locust Swarm",
 	gainbar = "Locust Swarm",
 
 	castwarn = "Incoming Locust Swarm!",
@@ -168,7 +168,7 @@ function mod:GainSwarm(unit, spellID)
 	if unit == boss and self.db.profile.locust then
 		self:DelayedMessage(20, L["gainendwarn"], "Important")
 		self:Bar(L["gainbar"], 20, spellID)
-		self:IfMessage(L["gainnextwarn"], "Urgent", spellID)
+		--self:IfMessage(L["gainnextwarn"], "Urgent", spellID)
 		self:DelayedMessage(75, L["gainwarn10sec"], "Important")
 		self:Bar(L["gainincbar"], 85, spellID)
 	end

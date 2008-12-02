@@ -34,9 +34,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	teleport_bar = "Teleport!",
 	back_bar = "Back on the floor!",
-
-	["Eye Stalk"] = true,
-	["Rotting Maggot"] = true,
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -62,9 +59,6 @@ L:RegisterTranslations("ruRU", function() return {
 
 	teleport_bar = "Телепорт!",
 	back_bar = "Возвращение на этаж!",
-
-	["Eye Stalk"] = "Глазной стебелек",
-	["Rotting Maggot"] = "Гнилой червь",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -90,9 +84,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	teleport_bar = "순간이동!",
 	back_bar = "단상으로 이동!",
-
-	["Eye Stalk"] = "추적자의 눈",
-	["Rotting Maggot"] = "썩어가는 구더기",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -120,9 +111,6 @@ L:RegisterTranslations("deDE", function() return {
 
 	teleport_bar = "Teleport!",
 	back_bar = "R\195\188ckteleport!",
-
-	["Eye Stalk"] = "Augenstrunk",
-	["Rotting Maggot"] = "Faulende Made",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -148,9 +136,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	teleport_bar = "<传送>",
 	back_bar = "<出现>",
-
-	["Eye Stalk"] = "眼柄",
-	["Rotting Maggot"] = "腐烂之蛆",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -179,10 +164,6 @@ L:RegisterTranslations("zhTW", function() return {
 	-- [[ Bars ]]--
 	teleport_bar = "傳送！",
 	back_bar = "出現！",
-
-	-- [[ Dream Room Mobs ]] --
-	["Eye Stalk"] = "眼柄",
-	["Rotting Maggot"] = "腐爛的蛆蟲",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -208,9 +189,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	teleport_bar = "Téléportation",
 	back_bar = "Retour sur le sol",
-
-	["Eye Stalk"] = "Oeil pédonculé",
-	["Rotting Maggot"] = "Asticot pourrissant",
 } end )
 
 ----------------------------------
@@ -221,7 +199,6 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15936
-mod.wipemobs = {L["Eye Stalk"], L["Rotting Maggot"]}
 mod.toggleoptions = {"engage", "teleport", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
@@ -270,3 +247,4 @@ function mod:BackToRoom()
 		self:Bar(L["teleport_bar"], 90, "Spell_Arcane_Blink")
 	end
 end
+

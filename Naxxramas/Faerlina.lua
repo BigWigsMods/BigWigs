@@ -6,11 +6,9 @@ local boss = BB["Grand Widow Faerlina"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local started = nil
-local enragetime = 60
-local enrageTimerStarted = 0
-local silencetime = 30
 local enraged = nil
-local enrageName = GetSpellInfo(5228)
+local enrageName = GetSpellInfo(28798)
+local enrageMessageId = nil
 
 ----------------------------
 --      Localization      --
@@ -27,14 +25,13 @@ L:RegisterTranslations("enUS", function() return {
 	starttrigger3 = "You cannot hide from me!",
 	starttrigger4 = "Run while you still can!",
 
-	startwarn = "Grand Widow Faerlina engaged, 60 seconds to enrage!",
-	enragewarn15sec = "15 seconds until enrage!",
-	enragewarn = "Enrage!",
-	enrageremovewarn = "Enrage removed! %d seconds until next!",
-	silencewarn = "Silence! Delaying Enrage!",
-	silencewarnnodelay = "Silence!",
-	silencewarn5sec = "Silence ends in 5 sec",
+	startwarn = "Faerlina engaged, 60 sec to frenzy!",
+	enragewarn15sec = "15 sec to frenzy!",
+	enragewarn = "Frenzied!",
+	enrageremovewarn = "Frenzy removed! ~60 sec until next!",
 
+	silencewarn = "Silenced!",
+	silencewarn5sec = "Silence ends in 5 sec",
 	silencebar = "Silence",
 } end )
 
@@ -50,9 +47,8 @@ L:RegisterTranslations("ruRU", function() return {
 	startwarn = "Великая вдова Фарлина злится, 60 секунд до ярости!",
 	enragewarn15sec = "15 секунд до ярости!",
 	enragewarn = "ЯРОСТЬ!",
-	enrageremovewarn = "Ярость спала! %d секунд до следующей!",
+	enrageremovewarn = "Ярость спала! ~60 секунд до следующей!",
 	silencewarn = "Безмолвие! Задержка ярости!",
-	silencewarnnodelay = "Безмолвие!",
 	silencewarn5sec = "Безмолвие закончится через 5 секунд",
 
 	silencebar = "Безмолвие",
@@ -70,9 +66,8 @@ L:RegisterTranslations("deDE", function() return {
 	startwarn = "Gro\195\159witwe Faerlina angegriffen! Wutanfall in 60 Sekunden!",
 	enragewarn15sec = "Wutanfall in 15 Sekunden!",
 	enragewarn = "Wutanfall!",
-	enrageremovewarn = "Wutanfall vorbei! N\195\164chster in %d Sekunden!",
+	enrageremovewarn = "Wutanfall vorbei! N\195\164chster in ~60 Sekunden!",
 	silencewarn = "Stille! Wutanfall verz\195\182gert!",
-	silencewarnnodelay = "Stille!",
 	silencewarn5sec = "Stille endet in 5 Sekunden",
 
 	silencebar = "Stille",
@@ -90,9 +85,8 @@ L:RegisterTranslations("koKR", function() return {
 	startwarn = "귀부인 팰리나 전투 시작! 60초 후 격노!",
 	enragewarn15sec = "15초 후 격노!",
 	enragewarn = "격노!",
-	enrageremovewarn = "격노 사라짐! 약 %d초 후 다음 격노",
+	enrageremovewarn = "격노 사라짐! 약 ~60초 후 다음 격노",
 	silencewarn = "침묵! 격노 지연!",
-	silencewarnnodelay = "침묵!",
 	silencewarn5sec = "5초 후 침묵 종료!",
 
 	silencebar = "침묵",
@@ -110,9 +104,8 @@ L:RegisterTranslations("zhCN", function() return {
 	startwarn = "黑女巫法琳娜已激活 - 60秒后激怒！",
 	enragewarn15sec = "15秒后激怒！",
 	enragewarn = "激怒！",
-	enrageremovewarn = "激怒已移除 - %d后激怒！",
+	enrageremovewarn = "激怒已移除 - ~60后激怒！",
 	silencewarn = "沉默！延缓了激怒！",
-	silencewarnnodelay = "沉默！",
 	silencewarn5sec = "5秒后沉默结束！",
 
 	silencebar = "<沉默>",
@@ -130,9 +123,8 @@ L:RegisterTranslations("zhTW", function() return {
 	startwarn = "大寡婦費琳娜已進入戰鬥 - 60 秒後狂怒！",
 	enragewarn15sec = "15 秒後狂怒！",
 	enragewarn = "狂怒！",
-	enrageremovewarn = "狂怒已移除 - %d 秒後再次狂怒",
+	enrageremovewarn = "狂怒已移除 - ~60 秒後再次狂怒",
 	silencewarn = "沉默！延緩了狂怒！",
-	silencewarnnodelay = "沉默！",
 	silencewarn5sec = "5 秒後沉默結束！",
 
 	silencebar = "沉默",
@@ -150,9 +142,8 @@ L:RegisterTranslations("frFR", function() return {
 	startwarn = "Grande veuve Faerlina engagée, 60 sec. avant Enrager !",
 	enragewarn15sec = "15 sec. avant Enrager !",
 	enragewarn = "Enragée !",
-	enrageremovewarn = "Enrager enlevé ! %d sec. avant le suivant !",
+	enrageremovewarn = "Enrager enlevé ! ~60 sec. avant le suivant !",
 	silencewarn = "Silence ! Enrager retardé !",
-	silencewarnnodelay = "Silence !",
 	silencewarn5sec = "Silence dans 5 sec.",
 
 	silencebar = "Silence",
@@ -178,10 +169,6 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Enrage", 28798, 54100)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
-	enragetime = 60
-	enrageTimerStarted = 0
-	silencetime = 30
-	enraged = nil
 	started = nil
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -194,42 +181,23 @@ end
 
 function mod:Silence(unit, spellID)
 	if not UnitIsUnit(unit, boss) then return end
-
-	if not enraged then -- preemptive, 30s silence
-
-		--[[ The enrage timer should only be reset if it's less than 30sec
-		to her next enrage, because if you silence her when there's 30+
-		sec to the enrage, it won't actually stop her from enraging. ]]
-
-		local currentTime = GetTime()
-
+	if not enraged then
+		-- preemptive, 30s silence
 		if self.db.profile.silence then
-			if (enrageTimerStarted + 30) < currentTime then
-				self:IfMessage(L["silencewarnnodelay"], "Urgent", spellID)
-			else
-				self:IfMessage(L["silencewarn"], "Urgent", spellID)
-			end
-			self:Bar(L["silencebar"], silencetime, spellID)
-			self:ScheduleEvent("bwfaerlinasilence5", "BigWigs_Message", silencetime -5, L["silencewarn5sec"], "Urgent")
+			self:IfMessage(L["silencewarn"], "Positive", spellID)
+			self:Bar(L["silencebar"], 30, spellID)
+			self:DelayedMessage(25, L["silencewarn5sec"], "Urgent")
 		end
-		if (enrageTimerStarted + 30) < currentTime then
-			if self.db.profile.enrage then
-				-- We SHOULD reset the enrage timer, since it's more than 30
-				-- sec since enrage started. This is only visuals ofcourse.
-				self:TriggerEvent("BigWigs_StopBar", self, enrageName)
-				self:CancelScheduledEvent("bwfaerlinaenrage15")
-				self:ScheduleEvent("bwfaerlinaenrage15", "BigWigs_Message", silencetime - 15, L["enragewarn15sec"], "Important")
-				self:Bar(enrageName, silencetime, spellID)
-			end
-			enrageTimerStarted = currentTime
-		end
-	else -- Reactive enrage removed
+	else
+		-- Reactive enrage removed
 		if self.db.profile.enrage then
-			self:Message(L["enrageremovewarn"]:format(enragetime), "Urgent")
+			self:Message(L["enrageremovewarn"], "Positive")
+			enrageMessageId = self:DelayedMessage(45, L["enragewarn"], "Important")
+			self:Bar(enrageName, 60, 28798)
 		end
 		if self.db.profile.silence then
-			self:Bar(L["silencebar"], silencetime, spellID)
-			self:ScheduleEvent("bwfaerlinasilence5", "BigWigs_Message", silencetime -5, L["silencewarn5sec"], "Urgent")
+			self:Bar(L["silencebar"], 30, spellID)
+			self:DelayedMessage(25, L["silencewarn5sec"], "Urgent")
  		end
 		enraged = nil
 	end
@@ -237,35 +205,25 @@ end
 
 function mod:Enrage(unit, spellID, _, _, spellName)
 	if not UnitIsUnit(unit, boss) then return end
-	if spellName ~= enrageName then return end
 	BigWigs:Print("Post this on forums: "..spellID)
-
 	if self.db.profile.enrage then
 		self:IfMessage(L["enragewarn"], "Urgent", spellID)
 	end
 	self:TriggerEvent("BigWigs_StopBar", self, enrageName)
-	self:CancelScheduledEvent("bwfaerlinaenrage15") 
-	if self.db.profile.enrage then
-		self:Bar(enrageName, enragetime, spellID)
-		self:ScheduleEvent("bwfaerlinaenrage15", "BigWigs_Message", enragetime - 15, L["enragewarn15sec"], "Important")
-	end
-	enrageTimerStarted = GetTime()
+	self:CancelScheduledEvent(enrageMessageId) 
 	enraged = true
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if not started and (msg == L["starttrigger1"] or msg == L["starttrigger2"] or msg == L["starttrigger3"] or msg == L["starttrigger4"]) then
-		enragetime = 60
-		enrageTimerStarted = 0
-		silencetime = 30
-		enraged = nil
 		self:Message(L["startwarn"], "Urgent")
 		if self.db.profile.enrage then
-			self:ScheduleEvent("bwfaerlinaenrage15", "BigWigs_Message", enragetime - 15, L["enragewarn15sec"], "Important")
-			self:Bar(enrageName, enragetime, "Spell_Shadow_UnholyFrenzy")
+			enrageMessageId = self:DelayedMessage(45, L["enragewarn"], "Important")
+			self:Bar(enrageName, 60, 28798)
 		end
-		enrageTimerStarted = GetTime()
 		started = true --If I remember right, we need this as she sometimes uses an engage trigger mid-fight
+		enraged = nil
 	end
 end
+
 

@@ -6,8 +6,8 @@ local boss = BB["Maexxna"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local inCocoon = {}
-local started
-local enrageannounced
+local started = nil
+local enrageannounced = nil
 
 ----------------------------
 --      Localization      --
@@ -26,11 +26,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	enragetrigger = "%s becomes enraged!",
 
-	webspraywarn30sec = "Wall Cocoons in 10 seconds",
-	webspraywarn20sec = "Wall Cocoons! 10 seconds until Spiders spawn!",
-	webspraywarn10sec = "Spiders Spawn. 10 seconds until Web Spray!",
+	webspraywarn30sec = "Cocoons in 10 sec",
+	webspraywarn20sec = "Cocoons! Spiders in 10 sec!",
+	webspraywarn10sec = "Spiders! Spray in 10 sec!",
 	webspraywarn5sec = "WEB SPRAY in 5 seconds!",
-	webspraywarn = "Web Spray! 40 seconds until next!",
+	webspraywarn = "Web Spray! 40 sec until next!",
 	enragewarn = "Enrage - SQUISH SQUISH SQUISH!",
 	enragesoonwarn = "Enrage Soon - Bugsquatters out!",
 

@@ -13,13 +13,7 @@ local started = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Gluth",
 
-	startwarn = "Gluth Engaged! ~105 seconds till Zombies!",
-
-	fear = "Fear",
-	fear_desc = "Show Terrifying Roar timers and warnings.",
-	fear_warning = "5 second until AoE Fear!",
-	fear_message = "AoE Fear alert - 20 seconds till next!",
-	fear_bar = "AoE Fear",
+	startwarn = "Gluth Engaged! ~105 sec to decimate",
 
 	frenzy = "Frenzy",
 	frenzy_desc = "Warn for frenzy.",
@@ -29,17 +23,11 @@ L:RegisterTranslations("enUS", function() return {
 	decimate_desc = "Decimate warnings.",
 	decimatesoonwarn = "Decimate Soon!",
 	decimatewarn = "Decimate!",
-	decimatebartext = "Decimate Zombies",
+	decimatebartext = "~Decimate Zombies",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
 	startwarn = "Глут в ярости! ~105 cекунд до появления зомби!",
-
-	fear = "Страх",
-	fear_desc = "Показывать таймеры ужасающего рёва и массового страха.",
-	fear_warning = "5 секунд до массового страха!",
-	fear_message = "Массовый страх - 20 секунд до следующей волны!",
-	fear_bar = "С.Т.Р.А.Х.",
 
 	frenzy = "Бешенство",
 	frenzy_desc = "Предупреждать о бешенстве.",
@@ -55,12 +43,6 @@ L:RegisterTranslations("ruRU", function() return {
 L:RegisterTranslations("koKR", function() return {
 	startwarn = "글루스 전투 시작! 약 105초 후 좀비 척살!",
 
-	fear = "공포",
-	fear_desc = "공포를 알립니다.",
-	fear_warning = "5초 이내 광역 공포!",
-	fear_message = "광역 공포 - 다음은 20초 후!",
-	fear_bar = "광역 공포",
-
 	frenzy = "광기",
 	frenzy_desc = "광기를 알립니다.",
 	frenzy_message = "광기 경고!",
@@ -74,12 +56,6 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	startwarn = "Gluth angegriffen! Zombies in ~105 Sekunden!",
-
-	fear = "Furcht",
-	fear_desc = "Warnung vor AoE Furcht.",
-	fear_warning = "AoE Furcht in 5 Sekunden!",
-	fear_message = "AoE Furcht! N\195\164chste in 20 Sekunden!",
-	fear_bar = "Furcht",
 
 	frenzy = "Raserei",
 	frenzy_desc = "Warnung, wenn Gluth in Raserei ger\195\164t.",
@@ -95,12 +71,6 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	startwarn = "格拉斯已激活 - 约105秒后，僵尸出现！",
 
-	fear = "恐惧警报",
-	fear_desc = "当施放恐惧时发出警报。",
-	fear_warning = "5秒后，群体恐惧！",
-	fear_message = "20秒后，群体恐惧！",
-	fear_bar = "<群体恐惧>",
-
 	frenzy = "狂暴",
 	frenzy_desc = "当狂暴时发出警报。",
 	frenzy_message = "狂暴 - 猎人立刻使用宁神射击！",
@@ -115,12 +85,6 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	startwarn = "古魯斯已進入戰鬥 - 105 秒後殭屍出現！",
 
-	fear = "恐嚇咆哮警報",
-	fear_desc = "當古魯斯施放恐嚇咆哮時發出警報",
-	fear_warning = "5 秒後發動恐嚇咆哮！",
-	fear_message = "恐嚇咆哮 - 20 秒後再次發動",
-	fear_bar = "恐嚇咆哮",
-
 	frenzy = "狂暴警報",
 	frenzy_desc = "當古魯斯狂暴時發出警報",
 	frenzy_message = "狂暴警報 - 獵人立刻使用寧神射擊！",
@@ -134,12 +98,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 L:RegisterTranslations("frFR", function() return {
 	startwarn = "Gluth engagé ! ~105 sec. avant les zombies !",
-
-	fear = "Peur",
-	fear_desc = "Préviens quand Gluth utilise sa peur de zone.",
-	fear_warning = "5 sec. avant peur de zone !",
-	fear_message = "Peur de zone - 20 sec. avant la suivante !",
-	fear_bar = "Peur de zone",
 
 	frenzy = "Frénésie",
 	frenzy_desc = "Préviens quand Gluth entre en frénésie.",
@@ -160,7 +118,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15932
-mod.toggleoptions = {"enrage", "frenzy", "fear", "decimate", "bosskill"}
+mod.toggleoptions = {"enrage", "frenzy", "decimate", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -169,7 +127,6 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Frenzy", 28371, 54427)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "Fear", 29685)
 	self:AddCombatListener("SPELL_DAMAGE", "Decimate", 28375, 54426)
 	self:AddCombatListener("SPELL_MISSED", "Decimate", 28375, 54426)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
@@ -188,14 +145,6 @@ end
 function mod:Frenzy()
 	if self.db.profile.frenzy then
 		self:IfMessage(L["frenzy_message"], "Important", 28371)
-	end
-end
-
-function mod:Fear(_, spellID)
-	if self.db.profile.fear then
-		self:IfMessage(L["fear_message"], "Important", spellID)
-		self:Bar(L["fear_bar"], 20, spellID)
-		self:DelayedMessage(15, L["fear_warning"], "Urgent")
 	end
 end
 
@@ -218,7 +167,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then self:UnregisterEvent("PLAYER_REGEN_DISABLED") end
 		if self.db.profile.decimate then
 			self:Message(L["startwarn"], "Attention")
-			self:Bar(L["decimatebartext"], 105, 54426)
+			self:Bar(L["decimatebartext"], 105, 16590)
 			self:DelayedMessage(100, L["decimatesoonwarn"], "Urgent")
 		end
 		if self.db.profile.enrage then

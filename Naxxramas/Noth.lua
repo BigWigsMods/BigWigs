@@ -21,12 +21,12 @@ L:RegisterTranslations("enUS", function() return {
 	starttrigger1 = "Die, trespasser!",
 	starttrigger2 = "Glory to the master!",
 	starttrigger3 = "Your life is forfeit!",
-	startwarn = "Noth the Plaguebringer engaged! 90 seconds till teleport",
+	startwarn = "Noth the Plaguebringer engaged! 90 sec till teleport",
 
 	blink = "Blink",
 	blink_desc = "Warnings when Noth blinks.",
 	blinkwarn = "Blink!",
-	blinkwarn2 = "Blink in ~5 seconds!",
+	blinkwarn2 = "Blink in ~5 sec!",
 	blinkbar = "Blink",
 
 	teleport = "Teleport",
@@ -34,15 +34,15 @@ L:RegisterTranslations("enUS", function() return {
 	teleportbar = "Teleport!",
 	backbar = "Back in room!",
 	teleportwarn = "Teleport! He's on the balcony!",
-	teleportwarn2 = "Teleport in 10 seconds!",
-	backwarn = "He's back in the room for %d seconds!",
-	backwarn2 = "10 seconds until he's back in the room!",
+	teleportwarn2 = "Teleport in 10 sec!",
+	backwarn = "He's back in the room for %d sec!",
+	backwarn2 = "10 sec until he's back in the room!",
 
 	curse = "Curse",
 	curse_desc = "Warn when Noth casts Curse of the Plaguebringer.",
 	curseexplosion = "Curse explosion!",
-	cursewarn = "Curse! next in ~55 seconds",
-	curse10secwarn = "Curse in ~10 seconds",
+	cursewarn = "Curse! next in ~55 sec",
+	curse10secwarn = "Curse in ~10 sec",
 	cursebar = "Next Curse",
 
 	wave = "Waves",
@@ -50,7 +50,7 @@ L:RegisterTranslations("enUS", function() return {
 	addtrigger = "Rise, my soldiers! Rise and fight once more!",
 	wave1bar = "Wave 1",
 	wave2bar = "Wave 2",
-	wave2_message = "Wave 2 in 10sec",
+	wave2_message = "Wave 2 in 10 sec",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {

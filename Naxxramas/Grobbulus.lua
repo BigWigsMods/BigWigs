@@ -26,7 +26,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	cloud = "Poison Cloud",
 	cloud_desc = "Warn for Poison Clouds.",
-	cloud_warn = "Poison Cloud! Next in ~15 seconds!",
+	cloud_warn = "Poison Cloud! Next in ~15 sec!",
 	cloud_bar = "Next Poison Cloud",
 } end )
 

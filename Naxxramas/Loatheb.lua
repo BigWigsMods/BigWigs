@@ -26,17 +26,12 @@ L:RegisterTranslations("enUS", function() return {
 	doomwarn5sec = "Inevitable Doom %d in 5 sec!",
 	doomtimerbar = "Doom every 15sec",
 	doomtimerwarn = "Doom timerchange in %s sec!",
-	doomtimerwarnnow = "Inevitable Doom now happens every 15sec!",
+	doomtimerwarnnow = "Doom now happens every 15 sec!",
 
 	spore = "Spore Spawning",
 	spore_desc = "Warn when a spore spawns",
 	sporewarn = "Spore %d Spawned",
 	sporebar = "Summon Spore %d",
-
-	curse = "Remove Curse",
-	curse_desc = "Warn when curses are removed from Loatheb",
-	removecursewarn = "Curses removed on Loatheb",
-	removecursebar = "Remove Curse",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -55,12 +50,6 @@ L:RegisterTranslations("ruRU", function() return {
 	spore_desc = "Сообщать о появлении спор",
 	sporewarn = "Споры %d появляются",
 	sporebar = "Призваны споры %d",
-
-	curse = "Снятие проклятья",
-	curse_desc = "Сообщать о снятии проклятий с Мерзота",
-
-	removecursewarn = "С Мерзота сняты проклятия",
-	removecursebar = "Снятие проклятья",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -79,11 +68,6 @@ L:RegisterTranslations("koKR", function() return {
 	spore_desc = "포자 소환을 알립니다.",
 	sporewarn = "포자 %d 소환됨!",
 	sporebar = "포자 소환! %d",
-
-	curse = "저주 해제",
-	curse_desc = "로데브의 저주 해제를 알립니다.",
-	removecursewarn = "로데브 저주 해제 시전!",
-	removecursebar = "저주 해제",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -102,11 +86,6 @@ L:RegisterTranslations("deDE", function() return {
 	spore_desc = "Warnung wenn Sporen auftauchen",
 	sporewarn = "Spore %d aufgetaucht",
 	sporebar = "Spore beschw\195\182ren %d",
-
-	curse = "Fluch-Aufhebungs Warnung",
-	curse_desc = "Warnung wenn Fl\195\188che bei Loatheb aufgehoben wurden",
-	removecursewarn = "Fl\195\188che bei Loatheb aufgehoben",
-	removecursebar = "Fluch aufheben",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -125,11 +104,6 @@ L:RegisterTranslations("zhCN", function() return {
 	spore_desc = "当孢子出现时发出警报。",
 	sporewarn = "%d 孢子出现！",
 	sporebar = "<孢子 %d>",
-
-	curse = "移除诅咒",
-	curse_desc = "当驱散了诅咒效果时发出警报。",
-	removecursewarn = "洛欧塞布驱散了一个诅咒效果！",
-	removecursebar = "<移除诅咒>",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -148,11 +122,6 @@ L:RegisterTranslations("zhTW", function() return {
 	spore_desc = "孢子警報",
 	sporewarn = "孢子出現",
 	sporebar = "召喚孢子",
-
-	curse = "詛咒驅散警報",
-	curse_desc = "洛斯伯驅散了一個詛咒效果時發出警報",
-	removecursewarn = "洛斯伯消除了一個詛咒效果",
-	removecursebar = "消除詛咒",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -171,12 +140,6 @@ L:RegisterTranslations("frFR", function() return {
 	spore_desc = "Préviens quand une spore est invoquée.",
 	sporewarn = "Spore %d invoquée",
 	sporebar = "Invocation de spore %d",
-
-	curse = "Délivrance des malé.",
-	curse_desc = "Préviens quand Horreb enlève les malédictions qui l'affectent.",
-
-	removecursewarn = "Malédictions enlevées sur Loatheb",
-	removecursebar = "Délivrance des malé.",
 } end )
 
 ----------------------------------
@@ -187,7 +150,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 16011
-mod.toggleoptions = {"doom", "spore", "curse", "bosskill"}
+mod.toggleoptions = {"doom", "spore", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -247,6 +210,9 @@ end
 function mod:BigWigs_RecvSync(sync, rest, nick)
 	if self:ValidateEngageSync(sync, rest) and not started then
 		started = true
+		doomTime = 30
+		sporeCount = 1
+		doomCount = 1
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end

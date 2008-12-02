@@ -32,13 +32,13 @@ L:RegisterTranslations("enUS", function() return {
 	phase2_bar = "Kel'Thuzad Active!",
 	phase3_soon_warning = "Phase 3 soon!",
 	phase3_trigger = "Master, I require aid!",
-	phase3_warning = "Phase 3, Guardians in ~15sec!",
+	phase3_warning = "Phase 3, Guardians in ~15 sec!",
 
 	mc = "Mind Control",
 	mc_desc = "Tells you who has been Mind Control and when the next Mind Control is coming.",
 	mc_message = "Mind Control: %s",
-	mc_warning = "Mind Control Cooldown Over - Inc Soon!",
-	mc_nextbar = "~MC Cooldown",
+	mc_warning = "Mind controls soon!",
+	mc_nextbar = "~Mind Controls",
 
 	fissure = "Shadow Fissure",
 	fissure_desc = "Alerts about incoming Shadow Fizzures.",
@@ -48,14 +48,14 @@ L:RegisterTranslations("enUS", function() return {
 	frostblast_desc = "Alerts when people get Frost Blasted.",
 	frostblast_bar = "Possible Frost Blast",
 	frostblast_warning = "Frost Blast!",
-	frostblast_soon_message = "Possible Frost Blast in ~5sec!",
+	frostblast_soon_message = "Possible Frost Blast in ~5 sec!",
 
 	detonate = "Detonate Mana",
 	detonate_desc = "Warns about Detonate Mana soon.",
 	detonate_you = "Detonate Mana on YOU!",
-	detonate_other = "Detonate Mana - %s",
+	detonate_other = "Detonate - %s",
 	detonate_possible_bar = "Possible Detonate",
-	detonate_warning = "Next Detonate in 5 seconds!",
+	detonate_warning = "Next Detonate in 5 sec!",
 
 	guardians = "Guardian Spawns",
 	guardians_desc = "Warn for incoming Icecrown Guardians in phase 3.",
@@ -518,3 +518,4 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		self:Bar(L["guardians_bar"], 10, 28866)
 	end
 end
+

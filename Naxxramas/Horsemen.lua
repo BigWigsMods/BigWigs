@@ -26,12 +26,6 @@ L:RegisterTranslations("enUS", function() return {
 	markwarn1 = "Mark %d!",
 	markwarn2 = "Mark %d in 5 sec",
 
-	shieldwall = "Shieldwall",
-	shieldwall_desc = "Warn for shieldwall.",
-	shieldwallbar = "%s - Shield Wall!",
-	shieldwallwarn = "%s - Shield Wall for 20 sec",
-	shieldwallwarn2 = "%s - Shield Wall GONE!",
-
 	void = "Void Zone",
 	void_desc = "Warn when Lady Blaumeux casts a Void Zone.",
 	voidwarn = "Void Zone Incoming",
@@ -56,12 +50,6 @@ L:RegisterTranslations("ruRU", function() return {
 	markbar = "Знак %d",
 	markwarn1 = "Знак %d!",
 	markwarn2 = "Знак %d через 5 секунд",
-
-	shieldwall = "Глухая оборона",
-	shieldwall_desc = "Предупреждать о глухой обороне.",
-	shieldwallbar = "%s - Глухая оборона!",
-	shieldwallwarn = "%s - Глухая оборона через 20 секунд",
-	shieldwallwarn2 = "%s - Глухая оборона спадает!",
 
 	void = "Портал Бездны",
 	void_desc = "предупреждать когда Леди Бломе создаёт портал Бездны.",
@@ -88,12 +76,6 @@ L:RegisterTranslations("koKR", function() return {
 	markwarn1 = "징표(%d)!",
 	markwarn2 = "5초 후 징표(%d)",
 
-	shieldwall = "방패의 벽",
-	shieldwall_desc = "방패의벽을 알립니다.",
-	shieldwallbar = "%s - 방패의 벽",
-	shieldwallwarn = "%s - 20초간 방패의 벽",
-	shieldwallwarn2 = "%s - 방패의 벽 사라짐!",
-
 	void = "공허의 지대",
 	void_desc = "여군주 블라미우스의 공허의 지대 시전을 알립니다.",
 	voidwarn = "공허의 지대 생성!",
@@ -118,12 +100,6 @@ L:RegisterTranslations("deDE", function() return {
 	markbar = "Mal",
 	markwarn1 = "Mal (%d)!",
 	markwarn2 = "Mal (%d) - 5 Sekunden",
-
-	shieldwall = "Schildwall",
-	shieldwall_desc = "Warnung vor Schildwall.",
-	shieldwallbar = "%s - Schildwall",
-	shieldwallwarn = "%s - Schildwall f\195\188r 20 Sekunden",
-	shieldwallwarn2 = "%s - Schildwall Vorbei!",
 
 	void = "Zone der Leere Warnung",
 	void_desc = "Warnt, wenn Lady Blaumeux Zone der Leere zaubert.",
@@ -150,12 +126,6 @@ L:RegisterTranslations("zhCN", function() return {
 	markwarn1 = "印记 %d！",
 	markwarn2 = "5秒后，印记 %d！",
 
-	shieldwall = "盾墙",
-	shieldwall_desc = "当施放盾墙时发出警报。",
-	shieldwallbar = "<盾墙：%s>",
-	shieldwallwarn = ">%s< - 20秒盾墙效果！",
-	shieldwallwarn2 = "<盾墙消失：%s>",
-
 	void = "虚空领域",
 	void_desc = "当施放虚空领域时发出警报。",
 	voidwarn = "5秒后，虚空领域！",
@@ -181,12 +151,6 @@ L:RegisterTranslations("zhTW", function() return {
 	markwarn1 = "印記(%d)！",
 	markwarn2 = "印記(%d) - 5秒",
 
-	shieldwall = "盾牆警報",
-	shieldwall_desc = "盾牆警報",
-	shieldwallbar = "%s - 盾牆",
-	shieldwallwarn = "%s - 20秒盾牆效果",
-	shieldwallwarn2 = "%s - 盾牆消失了！",
-
 	void = "虛空地區警報",
 	void_desc = "當布洛莫斯爵士施放虛空地區時警報",
 	voidwarn = "5秒後虛空地區",
@@ -211,12 +175,6 @@ L:RegisterTranslations("frFR", function() return {
 	markbar = "Marque %d",
 	markwarn1 = "Marque %d !",
 	markwarn2 = "Marque %d dans 5 sec.",
-
-	shieldwall = "Mur protecteur",
-	shieldwall_desc = "Préviens et affiche la durée des Murs protecteur.",
-	shieldwallbar = "%s - Mur protecteur !",
-	shieldwallwarn = "%s - Mur protecteur pendant 20 sec.",
-	shieldwallwarn2 = "%s - Mur protecteur TERMINÉ !",
 
 	void = "Zone de vide",
 	void_desc = "Préviens quand Dame Blaumeux incante une Zone de vide.",
@@ -245,7 +203,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = {thane, rivendare, zeliek, blaumeux, boss}
 mod.guid = 16065
-mod.toggleoptions = {"mark", "shieldwall", -1, "meteor", "void", "wrath", "bosskill"}
+mod.toggleoptions = {"mark", -1, "meteor", "void", "wrath", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -256,7 +214,6 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "VoidZone", 28863, 57463)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Meteor", 28884, 57467)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Wrath", 28883, 57466)
-	self:AddCombatListener("SPELL_CAST_SUCCESS", "ShieldWall", 29061)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Mark", 28832, 28833, 28834, 28835) --Mark of Korth'azz, Mark of Blaumeux, Mark of Mograine, Mark of Zeliek
 	self:AddCombatListener("UNIT_DIED", "Deaths")
 
@@ -292,16 +249,6 @@ function mod:Wrath(_, spellID)
 	if self.db.profile.wrath then
 		self:IfMessage(L["wrathwarn"], "Important", spellID)
 		self:Bar(L["wrathbar"], 12, spellID)
-	end
-end
-
-function mod:ShieldWall(_, spellID, unit)
-	if self.db.profile.shieldwall then
-		if UnitIsUnit(unit, thane) or UnitIsUnit(unit, mograine) or UnitIsUnit(unit, zeliek) or UnitIsUnit(unit, blaumeux) then
-			self:IfMessage(L["shieldwallwarn"]:format(unit), "Attention", spellID)
-			self:DelayedMessage(20, L["shieldwallwarn2"]:format(unit), "Positive")
-			self:Bar(L["shieldwallbar"]:format(unit), 20, spellID)
-		end
 	end
 end
 
