@@ -95,6 +95,44 @@ L:RegisterTranslations("koKR", function() return {
 	log = "|cffff0000"..boss.."|r:\n 해당 보스에 대한 대화 멘트, 전투로그등을 필요로 합니다. 섬게이트,인벤의 BigWigs Bossmods 안건에 /대화기록, /전투기록을 한 로그나 기타 스샷, 잘못된 타이머등 오류를 제보 부탁드립니다. 윈드러너 서버:백서향으로 바로 문의 주시면 조금 빠른 수정 업데이트가 됩니다 @_@;",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	sparks = "Etincelle de puissance",
+	sparks_desc = "Prévient quand une Etincelle de puissance apparait.",
+	sparks_message = "Etincelle de puissance apparue !",
+	sparks_warning = "Etincelle de puissance dans ~5sec !",
+
+	vortex = "Vortex",
+	vortex_desc = "Prévient de l'arrivée des Vortex.",
+	vortex_message = "Vortex !",
+	vortex_warning = "Vortex probable dans ~5sec !",
+	vortex_next = "Recharge Vortex",
+
+	breath = "Inspiration profonde",
+	breath_desc = "Prévient quand Malygos inspire profondément.",
+	breath_message = "Inspiration profonde !",
+	breath_warning = "Inspiration profonde dans ~5sec !",
+
+	surge = "Vague de puissance",
+	surge_desc = "Prévient quand un joueur subit les effets de la Vague de puissance.",
+	surge_message = "Vague de puissance : %s",
+	surge_you = "Vague de puissance sur VOUS !",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur la personne sur laquelle la Vague de puissance est incantée (nécessite d'être promu ou mieux).",
+
+	phase = "Phases",
+	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
+	phase2_warning = "Phase 2 imminente !",
+	phase2_trigger = "Je pensais mettre fin rapidement à", -- à vérifier
+	phase2_message = "Phase 2 - Seigneurs du Nexus & Scions de l'Éternité !",
+	phase2_end_trigger = "ASSEZ ! Si c'est la magie d'Azeroth que vous voulez", -- à vérifier
+	phase3_warning = "Phase 3 imminente !",
+	phase3_trigger = "Vos bienfaiteurs font enfin leur entrée", -- à vérifier
+	phase3_message = "Phase 3 !",
+
+	log = "|cffff0000"..boss.."|r :\n Ce boss a besoin de données, merci d'activer votre /combatlog ou l'addon Transcriptor et de nous transmettre les logs.",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
@@ -103,7 +141,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["The Eye of Eternity"]
 mod.enabletrigger = boss
 mod.guid = 28859
-mod.toggleoptions = {"phase", -1, "sparks", "vortex", "breath", "surge", -1, "icon", "bosskill"}
+mod.toggleoptions = {"phase", -1, "sparks", "vortex", "breath", "surge", -1, "icon", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
