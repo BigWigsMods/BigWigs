@@ -166,7 +166,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Silence", 28732, 54097)
-	self:AddCombatListener("SPELL_AURA_APPLIED", "Enrage", 28798, 54100)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Enrage", 54100)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
 
 	started = nil
@@ -205,7 +205,6 @@ end
 
 function mod:Enrage(unit, spellID, _, _, spellName)
 	if not UnitIsUnit(unit, boss) then return end
-	BigWigs:Print("Post this on forums: "..spellID)
 	if self.db.profile.enrage then
 		self:IfMessage(L["enragewarn"], "Urgent", spellID)
 	end
