@@ -133,14 +133,14 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	deepbreath = "寒冰炸弹",
-	deepbreath_desc = "当施放寒冰炸弹时发出警报。",
-	deepbreath_incoming_message = "约23秒后，寒冰炸弹！",
-	deepbreath_incoming_soon_message = "约5秒后，寒冰炸弹！",
-	deepbreath_incoming_bar = "<寒冰炸弹>",
+	deepbreath = "冰霜吐息",
+	deepbreath_desc = "当施放冰霜吐息时发出警报。",
+	deepbreath_incoming_message = "约23秒后，冰霜吐息！",
+	deepbreath_incoming_soon_message = "约5秒后，冰霜吐息！",
+	deepbreath_incoming_bar = "<施放 冰霜吐息>",
 	deepbreath_trigger = "%s深深地吸了一口气……", 
-	deepbreath_warning = "即将 寒冰炸弹！",
-	deepbreath_bar = "<寒冰炸弹>",
+	deepbreath_warning = "即将 冰霜吐息！",
+	deepbreath_bar = "<冰霜吐息 落地>",
 
 	lifedrain = "生命吸取",
 	lifedrain_desc = "当施放生命吸取时候发出警报。",
@@ -148,9 +148,9 @@ L:RegisterTranslations("zhCN", function() return {
 	lifedrain_warn1 = "5秒后，生命吸取！",
 	lifedrain_bar = "<生命吸取>",
 
-	icebolt = "寒冰箭",
-	icebolt_desc = "当玩家受到寒冰屏障效果后大喊。",
-	--icebolt_other = "Block: %s",
+	icebolt = "寒冰屏障",
+	icebolt_desc = "当玩家中了寒冰屏障时发出大喊警报。",
+	icebolt_other = "寒冰屏障：>%s<！",
 	icebolt_yell = "我是寒冰屏障！快躲到我后面！"
 	
 	--ping = "Ping",
@@ -163,23 +163,21 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	deepbreath = "深呼吸警報",
-	deepbreath_desc = "薩菲隆開始施放深呼吸時發出警報",
-
-	lifedrain = "生命吸取警報",
-	lifedrain_desc = "生命吸取詛咒時候發出警報",
-
-	lifedrain_message = "生命吸取 24 秒後再次施放！",
-	lifedrain_warn1 = "5 秒後生命吸取！",
-	lifedrain_bar = "生命吸取",
-
-	deepbreath_incoming_message = "寒冰炸彈23 秒後施放！",
-	deepbreath_incoming_soon_message = "寒冰炸彈 5 秒後施放！",
-	deepbreath_incoming_bar = "寒冰炸彈",
+	deepbreath = "冰息術",
+	deepbreath_desc = "當施放冰息術時發出警報。",
+	deepbreath_incoming_message = "約23秒後，冰息術！",
+	deepbreath_incoming_soon_message = "約5秒後，冰息術！",
+	deepbreath_incoming_bar = "<施放 冰息術>",
 	deepbreath_trigger = "%s深深地吸了一口氣……",
-	deepbreath_warning = "寒冰炸彈即將著地！",
-	deepbreath_bar = "寒冰炸彈",
-	
+	deepbreath_warning = "即將 冰息術！",
+	deepbreath_bar = "<冰息術 落地>",
+
+	lifedrain = "生命吸取",
+	lifedrain_desc = "當施放生命吸取時發出警報。",
+	lifedrain_message = "約24秒後，生命吸取！",
+	lifedrain_warn1 = "5秒後，生命吸取！",
+	lifedrain_bar = "<生命吸取>",
+
 	--icebolt = "Icebolt",
 	--icebolt_desc = "Yell when you are an Icebolt.",
 	--icebolt_other = "Block: %s",
