@@ -95,5 +95,7 @@
 <Script file="Naxxramas\Razuvious.lua"/>
 <Script file="Naxxramas\Sapphiron.lua"/>
 <Script file="Naxxramas\Thaddius.lua"/>
+
+<Script file="EyeOfEternity\Malygos.lua"/>
 <!--@end-debug@-->
 </Ui>

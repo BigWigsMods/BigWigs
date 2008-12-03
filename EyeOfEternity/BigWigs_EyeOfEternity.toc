@@ -1,0 +1,19 @@
+## Interface: 30000
+
+## Title: Big Wigs [|cffeda55fEye Of Eternity|r]
+## Title-koKR: Big Wigs [|cffeda55f영원의 눈|r]
+## Notes: Big Wigs Eye Of Eternity Modules
+## Notes-koKR: Big Wigs 영원의 눈 경고
+## Author: Funkydude, Rabbit
+## X-Credits: 7destiny
+## Version: 2.0
+## LoadOnDemand: 1
+
+## X-Website: http://www.wowwiki.com/BigWigs
+## X-Category: Raid
+
+## X-BigWigs-LoadInZone: The Eye of Eternity
+
+## Dependencies: BigWigs
+
+Malygos.lua
