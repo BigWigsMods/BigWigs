@@ -240,7 +240,7 @@ L:RegisterTranslations("zhCN", function() return {
 	chargetrigger = "你受到了(.+)电荷",
 
 	startwarn = "第一阶段",
-	startwarn2 = "第二阶段 - 5分钟后激怒！",
+	startwarn2 = "第二阶段 - 6分钟后激怒！",
 	addsdownwarn = "10-20秒后，塔迪乌斯出现！",
 	thaddiusincoming = "3秒后，塔迪乌斯出现！",
 	pswarn1 = "塔迪乌斯开始施放极性转化！",
@@ -249,7 +249,7 @@ L:RegisterTranslations("zhCN", function() return {
 	poswarn = "你是正电荷！",
 	negwarn = "你是负电荷！",
 	nochange = "你的电荷没有改变！",
-	polaritytickbar = "极性标记",
+	polaritytickbar = "<极性标记>",
 	stalaggwarn = "力量振荡！",
 	powersurgebar = "<力量振荡>",
 
@@ -261,20 +261,20 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	phase = "階段警報",
-	phase_desc = "階段轉換時發出警報",
+	phase = "階段",
+	phase_desc = "當進入不同階段時發出警報。",
 
-	polarity = "極性轉換警報",
-	polarity_desc = "極性轉換警報",
+	polarity = "極性轉換",
+	polarity_desc = "當施放極性轉換時發出警報。",
 
-	power = "力量澎湃警報",
-	power_desc = "力量澎湃警報",
+	power = "力量澎湃",
+	power_desc = "當施放力量澎湃時發出警報。",
 
-	charge = "電荷警報",
-	charge_desc = "你身上的電荷效果發生變化時發出警報",
+	charge = "電荷",
+	charge_desc = "當你身上的電荷效果發生變化時發出警報",
 
-	throw = "投擲警報",
-	throw_desc = "主坦克轉換平台時發出警報",
+	throw = "投擲",
+	throw_desc = "當主坦克被投擲到對面平台時發出警報。",
 
 	enragetrigger = "變得極度狂暴而憤怒！",
 	starttrigger = "斯塔拉格要碾碎你！",
@@ -289,24 +289,24 @@ L:RegisterTranslations("zhTW", function() return {
 	pstrigger = "你感受到痛苦的滋味了吧……",
 	chargetrigger = "^(.+)受到(.+)(.+)電荷",
 
-	startwarn = "泰迪斯第一階段",
-	startwarn2 = "泰迪斯第二階段 - 5 分鍾後狂怒！",
-	addsdownwarn = "10-20秒後泰迪斯出現！",
-	thaddiusincoming = "3 秒後泰迪斯出現！",
+	startwarn = "第一階段",
+	startwarn2 = "第二階段 - 6分鍾後狂怒！",
+	addsdownwarn = "10-20秒後，泰迪斯出現！",
+	thaddiusincoming = "3秒後，泰迪斯出現！",
 	pswarn1 = "泰迪斯開始施放兩極移形！",
-	pswarn2 = "30 秒後發動兩極移形！",
-	pswarn3 = "3 秒後發動兩極移形！",
+	pswarn2 = "30秒後，兩極移形！",
+	pswarn3 = "3秒後，兩極移形！",
 	poswarn = "你是正電荷！",
 	negwarn = "你是負電荷！",
 	nochange = "你的電荷沒有改變！",
-	polaritytickbar = "極性狀態",
+	polaritytickbar = "<極性狀態>",
 	stalaggwarn = "力量澎湃！加大對坦克的治療！",
-	powersurgebar = "力量澎湃",
+	powersurgebar = "<力量澎湃>",
 
-	bar1text = "兩極移形",
+	bar1text = "<兩極移形>",
 
-	throwbar = "投擲",
-	throwwarn = "~5 秒後投擲 MT！",
+	throwbar = "<投擲>",
+	throwwarn = "約5秒後，投擲！",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

@@ -83,17 +83,17 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	startwarn = "古魯斯已進入戰鬥 - 105 秒後殭屍出現！",
+	startwarn = "古魯斯已進入戰鬥 - 105秒後，殭屍出現！",
 
-	frenzy = "狂暴警報",
-	frenzy_desc = "當古魯斯狂暴時發出警報",
+	frenzy = "狂暴",
+	frenzy_desc = "當狂暴時發出警報。",
 	frenzy_message = "狂暴警報 - 獵人立刻使用寧神射擊！",
 
-	decimate = "殘殺警報",
-	decimate_desc = "當古魯斯發動殘殺時發出警報",
-	decimatesoonwarn = "殘殺來臨！",
-	decimatewarn = "殘殺 - AE殭屍！",
-	decimatebartext = "殘殺",
+	decimate = "殘殺",
+	decimate_desc = "當施放殘殺時發出警報",
+	decimatesoonwarn = "即將 殘殺！",
+	decimatewarn = "殘殺！",
+	decimatebartext = "<殘殺>",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

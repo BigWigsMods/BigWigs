@@ -102,21 +102,21 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	locust = "蝗蟲風暴警告",
-	locust_desc = "蝗蟲風暴的警報",
+	locust = "蝗蟲風暴",
+	locust_desc = "當施放蝗蟲風暴時發出警報。",
 
 	starttrigger1 = "一些小點心……",
 	starttrigger2 = "對，跑吧！那樣傷口出血就更多了！",
 	starttrigger3 = "你們逃不掉的。",
-	engagewarn = "阿努比瑞克漢已進入戰鬥 - 90 秒後出現第一波蝗蟲風暴！",
+	engagewarn = "阿努比瑞克漢已進入戰鬥 - 90秒後，蝗蟲風暴！",
 
 	gainendwarn = "蝗蟲風暴結束了！",
-	gainnextwarn = "85 秒後出現下一波蝗蟲風暴！",
-	gainwarn10sec = "10 秒後出現下一波蝗蟲風暴！",
-	gainincbar = "下一波蝗蟲風暴",
-	gainbar = "蝗蟲風暴",
+	gainnextwarn = "85秒後，下一波蝗蟲風暴！",
+	gainwarn10sec = "10秒後，下一波蝗蟲風暴！",
+	gainincbar = "<下一蝗蟲風暴>",
+	gainbar = "<蝗蟲風暴>",
 
-	castwarn = "蝗蟲風暴來了！",
+	castwarn = "蝗蟲風暴！",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

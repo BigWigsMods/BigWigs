@@ -225,7 +225,7 @@ L:RegisterTranslations("zhCN", function() return {
 	warn4 = "30秒后进入房间",
 	warn5 = "收割者戈提克10秒后进入房间！",
 	
-	wave = "%d/26: ",
+	wave = "%d/26：",
 
 	trawarn = "3秒后学徒出现",
 	dkwarn = "3秒后死亡骑士出现",
@@ -243,17 +243,17 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	room = "進入房間警報",
-	room_desc = "收割者高希進入房間時發出警報",
+	room_desc = "當收割者高希進入房間時發出警報。",
 
 	add = "增援警報",
-	add_desc = "增援警報",
+	add_desc = "當增援時發出警報。",
 
-	adddeath = "小怪計時及死亡通告",
-	adddeath_desc = "小怪計時及死亡通告",
+	adddeath = "增援死亡",
+	adddeath_desc = "當增援死亡時發出警報。",
 
 	starttrigger1 = "你們這些蠢貨已經主動步入了陷阱。",
 	starttrigger2 = "我已經等待很久了。現在你們將面對靈魂的收割者。", --?
-	startwarn = "收割者高希已進入戰鬥 - 4:30 後進入房間",
+	startwarn = "收割者高希已進入戰鬥 - 4:30後，進入房間！",
 
 	rider = "無情的騎兵",
 	spectral_rider = "騎兵",
@@ -265,15 +265,17 @@ L:RegisterTranslations("zhTW", function() return {
 	riderdiewarn = "騎兵已死亡！",
 	dkdiewarn = "死亡騎士已死亡！",
 
-	warn1 = "3 分鐘後進入房間！",
-	warn2 = "90 秒後進入房間！",
-	warn3 = "60 秒後進入房間！",
-	warn4 = "30 秒後進入房間！",
-	warn5 = "10 秒後進入房間！",
+	warn1 = "3分鐘後進入房間！",
+	warn2 = "90秒後進入房間！",
+	warn3 = "60秒後進入房間！",
+	warn4 = "30秒後進入房間！",
+	warn5 = "10秒後進入房間！",
+	
+	wave = "%d/26：",
 
-	trawarn = "3 秒後訓練師出現！",
-	dkwarn = "3 秒後死亡騎士出現！",
-	riderwarn = "3 秒後騎兵出現！",
+	trawarn = "3秒後訓練師出現",
+	dkwarn = "3秒後死亡騎士出現",
+	riderwarn = "3秒後騎兵出現",
 
 	trabar = "訓練師 - %d",
 	dkbar = "死亡騎士 - %d",
@@ -282,7 +284,7 @@ L:RegisterTranslations("zhTW", function() return {
 	inroomtrigger = "我已經等待很久了。現在你們將面對靈魂的收割者。",
 	inroomwarn = "收割者高希進入了房間！",
 
-	inroombartext = "進入房間",
+	inroombartext = "<進入房間>",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

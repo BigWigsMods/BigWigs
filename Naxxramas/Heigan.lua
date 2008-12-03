@@ -118,9 +118,9 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger2 = "你……就是下一个。",
 	starttrigger3 = "我看到你了……",
 
-	engage = "激怒警报",
-	engage_desc = "激怒警报.",
-	engage_message = "希尔盖已激活 - 90秒后传送！",
+	engage = "激活",
+	engage_desc = "当激活时发出警报。",
+	engage_message = "希尔盖已激活 - 90秒后，传送！",
 	
 	teleport = "传送",
 	teleport_desc = "当传送时发出警报。",
@@ -128,42 +128,39 @@ L:RegisterTranslations("zhCN", function() return {
 	teleport_30sec_message = "30秒后传送",
 	teleport_10sec_message = "10秒后传送！",
 	teleport_trigger = "你的生命正走向终结。",
-	on_platform_message = "传送发动！45秒后希尔盖出现！",
+	on_platform_message = "传送！45秒后希尔盖出现！",
 
 	to_floor_30sec_message = "30秒后返回",
 	to_floor_10sec_message = "10秒后返回！",
-	on_floor_message = "返回！约90秒后再次传送！",
+	on_floor_message = "返回！90秒后，传送！",
 
 	teleport_bar = "<传送>",
 	back_bar = "<出现>",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	teleport = "傳送警報",
-	teleport_desc = "傳送警報",
-
-	engage = "進入戰鬥警報",
-	engage_desc = "海根進入戰鬥警告",
-
-	-- [[ Triggers ]]--
 	starttrigger = "你是我的了。",
 	starttrigger2 = "你……就是下一個。",
 	starttrigger3 = "我看到你了……",
+
+	engage = "進入戰鬥",
+	engage_desc = "當海根進入戰鬥時發出警報。",
+	engage_message = "海根已進入戰鬥 - 90秒後，傳送！",
+
+	teleport = "傳送",
+	teleport_desc = "當傳送時發出警報。",
+	teleport_1min_message = "1分鐘後傳送",
+	teleport_30sec_message = "30秒後傳送",
+	teleport_10sec_message = "10秒後傳送！",
 	teleport_trigger = "你的生命正走向終結。",
+	on_platform_message = "傳送！ - 45秒後海根出現！",
 
-	-- [[ Warnings ]]--
-	engage_message = "海根已進入戰鬥 - 90 秒後傳送",
-	teleport_1min_message = "1 分鐘後傳送",
-	teleport_30sec_message = "30 秒後傳送",
-	teleport_10sec_message = "10 秒後傳送",
-	on_floor_message = "海根出現 - 90 秒後再次傳送",
-	to_floor_30sec_message = "30 秒後海根出現",
-	to_floor_10sec_message = "10 秒後海根出現",
-	on_platform_message = "傳送發動！ - 45 秒後海根出現！",
+	to_floor_30sec_message = "30 秒後返回",
+	to_floor_10sec_message = "10 秒後返回！",
+	on_floor_message = "返回！90秒後，傳送！",
 
-	-- [[ Bars ]]--
-	teleport_bar = "傳送！",
-	back_bar = "出現！",
+	teleport_bar = "<傳送>",
+	back_bar = "<出現>",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

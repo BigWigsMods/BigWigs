@@ -55,31 +55,31 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	--knife = "Jagged Knife",
-	--knife_desc = "Warn who has Jagged Knife.",
-	--knife_message = "%s: Jagged Knife",
+	knife = "裂纹小刀",
+	knife_desc = "当玩家中了裂纹小刀时发出警报。",
+	knife_message = ">%s<：裂纹小刀！",
 
-	--taunt = "Taunt",
-	--taunt_desc = "Warn for taunt.",
-	--taunt_message = "%s - taunt",
+	taunt = "嘲讽",
+	taunt_desc = "当见习死亡骑士施放嘲讽时发出警报。",
+	taunt_message = "%s - 嘲讽！",
 	
-	--shieldwall = "Shield Wall",
-	--shieldwall_desc = "Warn for shieldwall.",
-	--shieldwall_message = "%s - Shield Wall",
+	shieldwall = "白骨屏障",
+	shieldwall_desc = "当见习死亡骑士施放白骨屏障时发出警报。",
+	shieldwall_message = "%s - 白骨屏障！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	--knife = "Jagged Knife",
-	--knife_desc = "Warn who has Jagged Knife.",
-	--knife_message = "%s: Jagged Knife",
-	
-	--taunt = "Taunt",
-	--taunt_desc = "Warn for taunt.",
-	--taunt_message = "%s - taunt",
+	knife = "鋸齒刀",
+	knife_desc = "當玩家中了鋸齒刀時發出警報。",
+	knife_message = ">%s<：鋸齒刀！",
 
-	--shieldwall = "Shield Wall",
-	--shieldwall_desc = "Warn for shieldwall.",
-	--shieldwall_message = "%s - Shield Wall",
+	taunt = "嘲諷",
+	taunt_desc = "當死亡騎士實習者施放嘲諷時發出警報。",
+	taunt_message = "%s - 嘲諷！",
+	
+	shieldwall = "骸骨屏障",
+	shieldwall_desc = "當死亡騎士實習者施放骸骨屏障時發出警報。",
+	shieldwall_message = "%s - 骸骨屏障！",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

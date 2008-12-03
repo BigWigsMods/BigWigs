@@ -94,7 +94,7 @@ L:RegisterTranslations("zhCN", function() return {
 	doom = "必然的厄运",
 	doom_desc = "当施放必然的厄运时发出警报。",
 	doombar = "<必然的厄运：%d>",
-	doomwarn = "%d秒后，必然的厄运 %d！",
+	doomwarn = "必然的厄运%d，%d秒后！",
 	doomwarn5sec = "5秒后，必然的厄运%d！",
 	doomtimerbar = "<每隔15秒 必然的厄运>",
 	doomtimerwarn = "%s秒后改变必然的厄运发动频率！",
@@ -102,26 +102,26 @@ L:RegisterTranslations("zhCN", function() return {
 
 	spore = "孢子",
 	spore_desc = "当孢子出现时发出警报。",
-	sporewarn = "%d 孢子出现！",
-	sporebar = "<孢子 %d>",
+	sporewarn = "%d孢子出现！",
+	sporebar = "<孢子：%d>",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	startwarn = "洛斯伯已進入戰鬥 - 2 分鐘後發動無可避免的末日！",
+	startwarn = "洛斯伯已進入戰鬥 - 2分鐘後，無可避免的末日！",
 
-	doom = "無可避免的末日警報",
-	doom_desc = "無可避免的末日警報",
-	doombar = "無可避免的末日",
-	doomwarn = "無可避免的末日 - %s 秒後再次發動",
-	doomwarn5sec = "5 秒後發動無可避免的末日！",
-	doomtimerbar = "每隔 15 秒發動無可避免的末日",
-	doomtimerwarn = "無可避免的末日計時 %s 秒後改變！",
-	doomtimerwarnnow = "無可避免的末日現在每隔 15 秒發動一次！",
+	doom = "無可避免的末日",
+	doom_desc = "當施放無可避免的末日時發出警報。",
+	doombar = "<無可避免的末日：%d>",
+	doomwarn = "無可避免的末日%d，%s秒後！",
+	doomwarn5sec = "5秒後，無可避免的末日%d！",
+	doomtimerbar = "<每隔15秒 無可避免的末日>",
+	doomtimerwarn = "%s秒後改變無可避免的末日發動頻率！",
+	doomtimerwarnnow = "無可避免的末日現在每隔15秒發動一次！",
 
-	spore = "孢子警報",
-	spore_desc = "孢子警報",
-	sporewarn = "孢子出現",
-	sporebar = "召喚孢子",
+	spore = "孢子",
+	spore_desc = "當孢子出現時發出警報。",
+	sporewarn = "%d孢子出現！",
+	sporebar = "<孢子：%d>",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

@@ -101,10 +101,10 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger3 = "休想从我面前逃掉！",
 	starttrigger4 = "逃啊！有本事就逃啊！",
 
-	startwarn = "黑女巫法琳娜已激活 - 60秒后激怒！",
-	enragewarn15sec = "15秒后激怒！",
+	startwarn = "黑女巫法琳娜已激活 - 60秒后，激怒！",
+	enragewarn15sec = "15秒后，激怒！",
 	enragewarn = "激怒！",
-	enrageremovewarn = "激怒已移除 - ~60后激怒！",
+	enrageremovewarn = "激怒已移除 - 约60后，激怒！",
 	silencewarn = "沉默！延缓了激怒！",
 	silencewarn5sec = "5秒后沉默结束！",
 
@@ -112,22 +112,22 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	silence = "沉默警報",
-	silence_desc = "沉默警報",
+	silence = "沉默",
+	silence_desc = "當施放沉默時發出警報。",
 
 	starttrigger1 = "跪下求饒吧，懦夫！",
 	starttrigger2 = "以主人之名，殺了他們！",
 	starttrigger3 = "休想從我面前逃掉！",
 	starttrigger4 = "逃啊！有本事就逃啊！",
 
-	startwarn = "大寡婦費琳娜已進入戰鬥 - 60 秒後狂怒！",
-	enragewarn15sec = "15 秒後狂怒！",
+	startwarn = "大寡婦費琳娜已進入戰鬥 - 60秒後，狂怒！",
+	enragewarn15sec = "15秒後，狂怒！",
 	enragewarn = "狂怒！",
-	enrageremovewarn = "狂怒已移除 - ~60 秒後再次狂怒",
+	enrageremovewarn = "狂怒已移除 - 約60秒後，狂怒！",
 	silencewarn = "沉默！延緩了狂怒！",
-	silencewarn5sec = "5 秒後沉默結束！",
+	silencewarn5sec = "5秒後沉默結束！",
 
-	silencebar = "沉默",
+	silencebar = "<沉默>",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

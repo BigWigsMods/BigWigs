@@ -85,16 +85,16 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	youinjected = "玩家变异注射",
+	youinjected = "自身变异注射",
 	youinjected_desc = "当你中了变异注射时发出警报。",
 	bomb_message_you = ">你< 变异注射！",
 
-	otherinjected = "队友变异注射",
-	otherinjected_desc = "队友中了变异注射时发出警报。",
-	bomb_message_other = ">%s< - 变异注射！",
+	otherinjected = "玩家变异注射",
+	otherinjected_desc = "玩家中了变异注射时发出警报。",
+	bomb_message_other = ">%s< 变异注射！",
 
 	icon = "团队标记",
-	icon_desc = "为中了变异注射的队员打上团队标记。（需要权限）",
+	icon_desc = "为中了变异注射的玩家打上团队标记。（需要权限）",
 
 	cloud = "毒性云雾",
 	cloud_desc = "当施放毒性云雾时发出警报。",
@@ -103,21 +103,21 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	youinjected = "突變注射警報",
-	youinjected_desc = "你中了突變注射時發出警報",
-	bomb_message_you = "你中突變注射了！",
+	youinjected = "自身突變注射警報",
+	youinjected_desc = "當你中了突變注射時發出警報。",
+	bomb_message_you = ">你< 突變注射！",
 
-	otherinjected = "隊友突變注射警報",
-	otherinjected_desc = "隊友中了突變注射時發出警報",
-	bomb_message_other = "%s 中突變注射了！",
+	otherinjected = "玩家突變注射警報",
+	otherinjected_desc = "玩家中了突變注射時發出警報。",
+	bomb_message_other = ">%s< 突變注射！",
 
-	icon = "標記突變注射",
-	icon_desc = "在中了突變注射的隊友頭上標記骷髏標記（需要助理或領隊權限）",
+	icon = "團隊標記",
+	icon_desc = "為中了突變注射的玩家打上團隊標記。（需要權限）",
 
 	cloud = "毒雲術",
-	cloud_desc = "當施放毒雲術時發出警報",
-	cloud_warn = "15 秒後再次施放毒雲！",
-	cloud_bar = "毒雲術",
+	cloud_desc = "當施放毒雲術時發出警報。",
+	cloud_warn = "約15秒後，毒雲術！",
+	cloud_bar = "<毒雲術>",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

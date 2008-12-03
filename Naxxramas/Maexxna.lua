@@ -113,22 +113,22 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	spray = "蛛网喷射",
-	spray_desc = "当施放蛛网喷射时发出警报。",
+	spray_desc = "当施放蛛网喷射及小蜘蛛出现时发出警报。",
 
 	cocoon = "蛛网裹体",
-	cocoon_desc = "当玩家受到蛛网裹体效果时发出警报。",
+	cocoon_desc = "当玩家中了蛛网裹体时发出警报。",
 
-	cocoonwarn = ">%s< 被蛛网裹体了！",
+	cocoonwarn = ">%s< 蛛网裹体！",
 
 	enragetrigger = "%s变得愤怒了！",
 
 	webspraywarn30sec = "10秒后，蛛网裹体！",
-	webspraywarn20sec = "蛛网裹体！10秒后蜘蛛出现！",
-	webspraywarn10sec = "蜘蛛出现！10秒后蛛网喷射！",
+	webspraywarn20sec = "蛛网裹体！10秒后小蜘蛛出现！",
+	webspraywarn10sec = "小蜘蛛出现！10秒后蛛网喷射！",
 	webspraywarn5sec = "蛛网喷射5秒！",
 	webspraywarn = "40秒后，蛛网裹体！",
 	enragewarn = "激怒！",
-	enragesoonwarn = "即将激怒！",
+	enragesoonwarn = "即将 激怒！",
 
 	webspraybar = "<蛛网喷射>",
 	cocoonbar = "<蛛网裹体>",
@@ -136,27 +136,27 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	spray = "撒網警報",
-	spray_desc = "當梅克絲娜撒網及小蜘蛛出現時發出警報",
+	spray = "撒網",
+	spray_desc = "當施放撒網及小蜘蛛出現時發出警報。",
 
-	cocoon = "纏繞的蜘蛛網警報",
-	cocoon_desc = "玩家受到蜘蛛網纏繞發出警報",
+	cocoon = "纏繞之網",
+	cocoon_desc = "玩家中了纏繞之網時發出警報。",
 
-	cocoonwarn = "%s 被蛛網纏繞了！",
+	cocoonwarn = ">%s< 纏繞之網！",
 
-	enragetrigger = "變得憤怒了！",
+	enragetrigger = "%s變得憤怒了！",
 
-	webspraywarn30sec = "10 秒後發動纏繞的蜘蛛網",
-	webspraywarn20sec = "纏繞的蜘蛛網！ 10 秒後小蜘蛛出現！",
-	webspraywarn10sec = "小蜘蛛出現！ 10 秒後撒網！",
-	webspraywarn5sec = "5 秒後撒網！",
-	webspraywarn = "撒網！ 40 秒後再次發動",
-	enragewarn = "狂怒！全力攻擊！",
-	enragesoonwarn = "即將狂怒！",
+	webspraywarn30sec = "10秒後，纏繞之網！",
+	webspraywarn20sec = "纏繞之網！10秒後小蜘蛛出現！",
+	webspraywarn10sec = "小蜘蛛出現！10秒後撒網！",
+	webspraywarn5sec = "撒網5秒！",
+	webspraywarn = "40秒後 撒網！",
+	enragewarn = "狂怒！",
+	enragesoonwarn = "即將 狂怒！",
 
-	webspraybar = "撒網",
-	cocoonbar = "纏繞的蜘蛛網",
-	spiderbar = "小蜘蛛",
+	webspraybar = "<撒網>",
+	cocoonbar = "<纏繞之網>",
+	spiderbar = "<出現 小蜘蛛>",
 } end )
 
 L:RegisterTranslations("frFR", function() return {

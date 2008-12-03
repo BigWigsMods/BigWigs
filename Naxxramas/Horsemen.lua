@@ -122,51 +122,51 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	mark = "印记",
 	mark_desc = "当施放印记时发出警报。",
-	markbar = "<标记:%d>",
-	markwarn1 = "印记 %d！",
-	markwarn2 = "5秒后，印记 %d！",
+	markbar = "<标记：%d>",
+	markwarn1 = "印记%d！",
+	markwarn2 = "5秒后，印记%d！",
 
 	void = "虚空领域",
-	void_desc = "当施放虚空领域时发出警报。",
+	void_desc = "当女公爵布劳缪克丝施放虚空领域时发出警报。",
 	voidwarn = "5秒后，虚空领域！",
 	voidbar = "<虚空领域>",
 
 	meteor = "流星",
-	meteor_desc = "当施放流星时发出警报。",
+	meteor_desc = "当库尔塔兹领主施放流星时发出警报。",
 	meteorwarn = "流星！",
 	meteorbar = "<流星>",
 
-	wrath = "神圣之怒",
-	wrath_desc = "当施放神圣之怒时发出警报。",
-	wrathwarn = "神圣之怒！",
-	wrathbar = "<神圣之怒>",
+	wrath = "神圣愤怒",
+	wrath_desc = "当瑟里耶克爵士施放神圣愤怒时发出警报。",
+	wrathwarn = "神圣愤怒！",
+	wrathbar = "<神圣愤怒>",
 
-	startwarn = "四骑士已激活 - 约17秒后印记！",
+	startwarn = "四骑士已激活 - 约17秒后，印记！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	mark = "標記警報",
-	mark_desc = "標記警報",
-	markbar = "印記 %d",
-	markwarn1 = "印記(%d)！",
-	markwarn2 = "印記(%d) - 5秒",
+	mark = "印記",
+	mark_desc = "當施放印記時發出警報。",
+	markbar = "<印記：%d>",
+	markwarn1 = "印記%d！",
+	markwarn2 = "5秒后，印記%d！",
 
-	void = "虛空地區警報",
-	void_desc = "當布洛莫斯爵士施放虛空地區時警報",
-	voidwarn = "5秒後虛空地區",
-	voidbar = "虛空地區",
+	void = "虛無區域",
+	void_desc = "當布洛莫斯女士施放虛無區域時警報。",
+	voidwarn = "5秒後，虛無區域！",
+	voidbar = "<虛無區域>",
 
-	meteor = "隕石術警報",
-	meteor_desc = "寇斯艾茲族長的隕石術警報",
-	meteorwarn = "隕石術",
-	meteorbar = "隕石術",
+	meteor = "隕石術",
+	meteor_desc = "當寇斯艾茲族長施放隕石術時發出警報。",
+	meteorwarn = "隕石術！",
+	meteorbar = "<隕石術>",
 
-	wrath = "神聖憤怒警報",
-	wrath_desc = "札里克爵士的神聖憤怒警報",
+	wrath = "神聖憤怒",
+	wrath_desc = "當札里克爵士施放神聖憤怒時發出警報。",
 	wrathwarn = "神聖憤怒",
 	wrathbar = "神聖憤怒",
 
-	startwarn = "四騎士已進入戰鬥 - 17秒後印記",
+	startwarn = "四騎士已進入戰鬥 - 約17秒後，印記！",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
