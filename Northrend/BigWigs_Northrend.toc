@@ -5,7 +5,7 @@
 ## Title-frFR: Big Wigs [|cffeda55fNorfendre|r]
 ## Title-zhCN: Big Wigs [|cffeda55f诺森德|r]
 ## Title-zhTW: Big Wigs [|cffeda55f北裂境|r]
-## Notes: Big Wigs Eye Of Eternity Modules
+## Notes: Big Wigs Northrend Modules
 ## Notes-koKR: Big Wigs 노스렌드 경고
 ## Notes-frFR: Modules BigWigs concernant l'Norfendre.
 ## Notes-zhCN: Big Wigs 诺森德模块
