@@ -178,17 +178,17 @@ L:RegisterTranslations("zhTW", function() return {
 	lifedrain_warn1 = "5秒後，生命吸取！",
 	lifedrain_bar = "<生命吸取>",
 
-	--icebolt = "Icebolt",
-	--icebolt_desc = "Yell when you are an Icebolt.",
-	--icebolt_other = "Block: %s",
-	--icebolt_yell = "I'm a Block! -%s-",
+	icebolt = "寒冰凍體",
+	icebolt_desc = "當玩家中了寒冰凍體時發出大喊警報。",
+	icebolt_other = "寒冰凍體：>%s<！",
+	icebolt_yell = "我是寒冰凍體！快躲到我後面！",
 	
 	--ping = "Ping",
 	--ping_desc = "Ping your current location if you are afflicted by Icebolt.",
 	--ping_message = "Block - Pinging your location!",
 
-	--icon = "Raid Icon",
-	--icon_desc = "Place a Raid Target Icon on the player with Icebolt. (requires promoted or higher)",
+	icon = "團隊標記",
+	icon_desc = "為中了寒冰凍體的玩家打上團隊標記。（需要權限）",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
