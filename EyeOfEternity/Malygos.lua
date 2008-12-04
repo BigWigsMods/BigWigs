@@ -133,6 +133,82 @@ L:RegisterTranslations("frFR", function() return {
 	log = "|cffff0000"..boss.."|r :\n Ce boss a besoin de données, merci d'activer votre /combatlog ou l'addon Transcriptor et de nous transmettre les logs.",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	sparks = "能量火花",
+	sparks_desc = "当能量火花出现时发出警报。",
+	sparks_message = "出现 能量火花！",
+	sparks_warning = "约5秒后，能量火花！",
+
+	vortex = "漩涡",
+	vortex_desc = "当施放漩涡是发出警报及显示计时条。",
+	vortex_message = "漩涡！",
+	vortex_warning = "约5秒后，可能漩涡！",
+	vortex_next = "<漩涡 冷却>",
+
+	breath = "深呼吸",
+	breath_desc = "当施放深呼吸时发出警报。",
+	breath_message = "深呼吸！",
+	breath_warning = "约5秒后，深呼吸！",
+
+	surge = "能量涌动",
+	surge_desc = "当玩家中了能量涌动时发出警报。",
+	surge_message = "能量涌动：>%s<！",
+	surge_you = ">你< 能量涌动！",
+
+	icon = "团队标记",
+	icon_desc = "为中了能量涌动的玩家打上团队标记。（需要权限）",
+
+	phase = "阶段",
+	phase_desc = "当进入不同阶段时发出警报。",
+	phase2_warning = "即将 第二阶段！",
+	phase2_trigger = "I had hoped to end your lives quickly", -- yell required
+	phase2_message = "第二阶段 - 魔枢领主与永恒子嗣!",
+	phase2_end_trigger = "ENOUGH! If you intend to reclaim Azeroth's magic", -- yell required
+	phase3_warning = "即将 第三阶段！",
+	phase3_trigger = "Now your benefactors make their", -- yell required
+	phase3_message = "第三阶段！",
+
+	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	sparks = "力量火花",
+	sparks_desc = "當力量火花出現時發出警報。",
+	sparks_message = "出現 力量火花！",
+	sparks_warning = "約5秒后，力量火花！",
+
+	vortex = "漩渦",
+	vortex_desc = "當施放漩渦時發出警報及顯示計時條。",
+	vortex_message = "漩渦！",
+	vortex_warning = "約5秒后，可能漩渦！",
+	vortex_next = "<漩渦 冷卻>",
+
+	breath = "深呼吸",
+	breath_desc = "當施放深呼吸時發出警報。",
+	breath_message = "深呼吸！",
+	breath_warning = "約5秒后，深呼吸！",
+
+	surge = "力量奔騰",
+	surge_desc = "當玩家中了力量奔騰時發出警報。",
+	surge_message = "力量奔騰：>%s<！",
+	surge_you = ">你< 力量奔騰！",
+
+	icon = "團隊標記",
+	icon_desc = "為中了力量奔騰的玩家打上團隊標記。（需要權限）",
+
+	phase = "階段",
+	phase_desc = "當進入不同階段時發出警報。",
+	phase2_warning = "即將 第二階段！",
+	phase2_trigger = "I had hoped to end your lives quickly", -- yell required
+	phase2_message = "第二階段 - 奧核領主與永恆之裔！",
+	phase2_end_trigger = "ENOUGH! If you intend to reclaim Azeroth's magic", -- yell required
+	phase3_warning = "即將 第三階段！",
+	phase3_trigger = "Now your benefactors make their", -- yell required
+	phase3_message = "第三階段！",
+
+	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
