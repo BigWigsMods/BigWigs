@@ -1,0 +1,26 @@
+## Interface: 30000
+
+## Title: Big Wigs [|cffeda55fNorthrend|r]
+## Title-koKR: Big Wigs [|cffeda55f노스렌드|r]
+## Title-frFR: Big Wigs [|cffeda55fNorfendre|r]
+## Title-zhCN: Big Wigs [|cffeda55f诺森德|r]
+## Title-zhTW: Big Wigs [|cffeda55f北裂境|r]
+## Notes: Big Wigs Eye Of Eternity Modules
+## Notes-koKR: Big Wigs 노스렌드 경고
+## Notes-frFR: Modules BigWigs concernant l'Norfendre.
+## Notes-zhCN: Big Wigs 诺森德模块
+## Notes-zhTW: Big Wigs 北裂境模組
+## Author: Funkydude, Rabbit
+## X-Credits: 7destiny
+## Version: 2.0
+## LoadOnDemand: 1
+
+## X-Website: http://www.wowwiki.com/BigWigs
+## X-Category: Raid
+
+## X-BigWigs-Menu: Northrend
+## X-BigWigs-LoadInZone: The Eye of Eternity
+
+## Dependencies: BigWigs
+
+Malygos.lua

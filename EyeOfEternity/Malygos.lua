@@ -215,6 +215,7 @@ L:RegisterTranslations("zhTW", function() return {
 
 local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["The Eye of Eternity"]
+mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 28859
 mod.toggleoptions = {"phase", -1, "sparks", "vortex", "breath", "surge", -1, "icon", "enrage", "bosskill"}
