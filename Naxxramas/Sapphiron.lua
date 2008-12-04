@@ -151,15 +151,14 @@ L:RegisterTranslations("zhCN", function() return {
 	icebolt = "寒冰屏障",
 	icebolt_desc = "当玩家中了寒冰屏障时发出大喊警报。",
 	icebolt_other = "寒冰屏障：>%s<！",
-	icebolt_yell = "我是寒冰屏障！快躲到我后面！"
+	icebolt_yell = "我是寒冰屏障！快躲到我后面！",
 	
-	--ping = "Ping",
-	--ping_desc = "Ping your current location if you are afflicted by Icebolt.",
-	--ping_message = "Block - Pinging your location!",
+	ping = "点击",
+	ping_desc = "当你中了寒冰屏障时点击当前所在位置。",
+	ping_message = "寒冰屏障 - 点击你的位置！",
 
-	--icon = "Raid Icon",
-	--icon_desc = "Place a Raid Target Icon on the player with Icebolt. (requires promoted or higher)",
-	
+	icon = "团队标记",
+	icon_desc = "为中了寒冰屏障的玩家打上团队标记。（需要权限）",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -183,9 +182,9 @@ L:RegisterTranslations("zhTW", function() return {
 	icebolt_other = "寒冰凍體：>%s<！",
 	icebolt_yell = "我是寒冰凍體！快躲到我後面！",
 	
-	--ping = "Ping",
-	--ping_desc = "Ping your current location if you are afflicted by Icebolt.",
-	--ping_message = "Block - Pinging your location!",
+	ping = "點擊",
+	ping_desc = "當你中了寒冰凍體時點擊當前所在位置。",
+	ping_message = "寒冰凍體 - 點擊你的位置！",
 
 	icon = "團隊標記",
 	icon_desc = "為中了寒冰凍體的玩家打上團隊標記。（需要權限）",
