@@ -295,10 +295,12 @@ function mod:SurgeCheck()
 		local time = GetTime()
 		if (time - last) > 4 then
 			last = time
-			if UnitIsUnit(target, "player") then
-				self:LocalMessage(L["surge_you"], "Personal", 31299, "Long")
+			local other = fmt(L["surge_message"], target)
+			if target == pName then
+				self:LocalMessage(L["surge_you"], "Personal", nil, "Alarm")
+				self:WideMessage(other)
 			else
-				self:IfMessage(fmt(L["surge_message"], target), "Important", 31299, "Alert")
+				self:Message(other, "Attention")
 			end
 			self:Icon(target, "icon")
 		end
