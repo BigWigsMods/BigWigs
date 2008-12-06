@@ -199,11 +199,11 @@ L:RegisterTranslations("zhTW", function() return {
 	phase = "階段",
 	phase_desc = "當進入不同階段時發出警報。",
 	phase2_warning = "即將 第二階段！",
-	phase2_trigger = "I had hoped to end your lives quickly", -- yell required
+	phase2_trigger = "我原本只是想盡快結束你們的生命",
 	phase2_message = "第二階段 - 奧核領主與永恆之裔！",
-	phase2_end_trigger = "ENOUGH! If you intend to reclaim Azeroth's magic", -- yell required
+	phase2_end_trigger = "夠了!既然你們這麼想奪回艾澤拉斯的魔法，我就給你們!",
 	phase3_warning = "即將 第三階段！",
-	phase3_trigger = "Now your benefactors make their", -- yell required
+	phase3_trigger = "現在你們幕後的主使終於出現",
 	phase3_message = "第三階段！",
 
 	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
