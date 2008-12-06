@@ -99,18 +99,18 @@ L:RegisterTranslations("frFR", function() return {
 	sparks = "Etincelle de puissance",
 	sparks_desc = "Prévient quand une Etincelle de puissance apparait.",
 	sparks_message = "Etincelle de puissance apparue !",
-	sparks_warning = "Etincelle de puissance dans ~5sec !",
+	sparks_warning = "Etincelle de puissance dans ~5 sec. !",
 
 	vortex = "Vortex",
 	vortex_desc = "Prévient de l'arrivée des Vortex.",
 	vortex_message = "Vortex !",
-	vortex_warning = "Vortex probable dans ~5sec !",
+	vortex_warning = "Vortex probable dans ~5 sec. !",
 	vortex_next = "Recharge Vortex",
 
 	breath = "Inspiration profonde",
 	breath_desc = "Prévient quand Malygos inspire profondément.",
 	breath_message = "Inspiration profonde !",
-	breath_warning = "Inspiration profonde dans ~5sec !",
+	breath_warning = "Inspiration profonde dans ~5 sec. !",
 
 	surge = "Vague de puissance",
 	surge_desc = "Prévient quand un joueur subit les effets de la Vague de puissance.",
@@ -123,11 +123,11 @@ L:RegisterTranslations("frFR", function() return {
 	phase = "Phases",
 	phase_desc = "Prévient quand la rencontre entre dans une nouvelle phase.",
 	phase2_warning = "Phase 2 imminente !",
-	phase2_trigger = "Je pensais mettre fin rapidement à", -- à vérifier
+	phase2_trigger = "Je pensais mettre rapidement fin à vos existences",
 	phase2_message = "Phase 2 - Seigneurs du Nexus & Scions de l'Éternité !",
-	phase2_end_trigger = "ASSEZ ! Si c'est la magie d'Azeroth que vous voulez", -- à vérifier
+	phase2_end_trigger = "ASSEZ ! Si c'est la magie d'Azeroth que vous voulez, alors vous l'aurez !",
 	phase3_warning = "Phase 3 imminente !",
-	phase3_trigger = "Vos bienfaiteurs font enfin leur entrée", -- à vérifier
+	phase3_trigger = "Vos bienfaiteurs font enfin leur entrée, mais ils arrivent trop tard !",
 	phase3_message = "Phase 3 !",
 
 	log = "|cffff0000"..boss.."|r :\n Ce boss a besoin de données, merci d'activer votre /combatlog ou l'addon Transcriptor et de nous transmettre les logs.",
@@ -218,7 +218,7 @@ mod.zonename = BZ["The Eye of Eternity"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 28859
-mod.toggleoptions = {"phase", -1, "sparks", "vortex", "breath", "surge", -1, "icon", "enrage", "bosskill"}
+mod.toggleoptions = {"phase", -1, "sparks", "vortex", "breath", "surge", -1, "icon", "berserk", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -370,7 +370,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if db.enrage then
-			self:Enrage(600)
+			self:Enrage(600, true)
 		end
 	end
 end

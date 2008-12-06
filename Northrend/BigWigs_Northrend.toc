@@ -7,7 +7,7 @@
 ## Title-zhTW: Big Wigs [|cffeda55f北裂境|r]
 ## Notes: Big Wigs Northrend Modules
 ## Notes-koKR: Big Wigs 노스렌드 경고
-## Notes-frFR: Modules BigWigs concernant l'Norfendre.
+## Notes-frFR: Modules BigWigs concernant le Norfendre.
 ## Notes-zhCN: Big Wigs 诺森德模块
 ## Notes-zhTW: Big Wigs 北裂境模組
 ## Author: Funkydude, Rabbit
