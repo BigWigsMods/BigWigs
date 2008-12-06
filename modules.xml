@@ -96,6 +96,7 @@
 <Script file="Naxxramas\Sapphiron.lua"/>
 <Script file="Naxxramas\Thaddius.lua"/>
 
+<Script file="Northrend\Archavon.lua"/>
 <Script file="Northrend\Malygos.lua"/>
 <!--@end-debug@-->
 </Ui>

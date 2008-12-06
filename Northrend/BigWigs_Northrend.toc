@@ -19,8 +19,9 @@
 ## X-Category: Raid
 
 ## X-BigWigs-Menu: Northrend
-## X-BigWigs-LoadInZone: The Eye of Eternity
+## X-BigWigs-LoadInZone: The Eye of Eternity, Vault of Archavon
 
 ## Dependencies: BigWigs
 
+Archavon.lua
 Malygos.lua
