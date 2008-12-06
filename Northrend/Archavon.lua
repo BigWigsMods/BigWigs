@@ -16,25 +16,25 @@ local fmt = string.format
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Archavon",
-	
+
 	stomp = "Stomp",
 	stomp_desc = "Stomp warnings and timers.",
 	stomp_message = "Stomp - Charge Inc!",
 	stomp_warning = "Possible Stomp in ~5sec!",
 	stomp_bar = "~Stomp Cooldown",
-	
+
 	cloud = "Choking Cloud on You",
 	cloud_desc = "Warn when you are in a Choking Cloud.",
 	cloud_message = "Choking Cloud on YOU!",
-	
+
 	charge = "Charge",
 	charge_desc = "Warn about Charge on players.",
 	charge_message = "Charge on %s",
-	
+
 	shards = "Rock Shards",
 	shards_desc = "Warn who Archavon casts Rock Shards on.",
 	shards_message = "Rock Shards on %s!",
-	
+
 	icon = "Raid Icon",
 	icon_desc = "Place a Raid Target Icon on the player targetted by Rock Shards. (requires promoted or higher)",
 } end )
@@ -45,21 +45,44 @@ L:RegisterTranslations("koKR", function() return {
 	stomp_message = "발 구르기 - 곧 돌진!",
 	stomp_warning = "약 5초 후 발구르기 가능!",
 	stomp_bar = "~발 구르기 대기시간",
-	
+
 	cloud = "자신의 숨막히는 구름",
 	cloud_desc = "자신이 숨막히는 구름에 걸렸을 때 알립니다.",
 	cloud_message = "당신은 숨막히는 구름!",
-	
+
 	charge = "돌진",
 	charge_desc = "돌진의 대상인 플레이어를 알립니다.",
 	charge_message = "돌진: %s",
-	
+
 	shards = "바위 조각",
 	shards_desc = "아카본의 바위 조각 시전이 어떤 플레이어 방향인지 알립니다.",
 	shards_message = "%s에게 바위 조각!",
-	
+
 	icon = "전술 표시",
 	icon_desc = "바위 조각 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
+} end )
+
+L:RegisterTranslations("frFR", function() return {
+	stomp = "Piétinement",
+	stomp_desc = "Prévient de l'arrivée des Piétinements.",
+	stomp_message = "Piétinement - Charge imminente !",
+	stomp_warning = "Piétinement probable dans ~5 sec. !",
+	stomp_bar = "~Recharge Piétinement",
+
+	cloud = "Nuage asphyxiant sur vous",
+	cloud_desc = "Prévient quand vous vous trouvez dans un Nuage asphyxiant.",
+	cloud_message = "Nuage asphyxiant sur VOUS !",
+
+	charge = "Charge",
+	charge_desc = "Prévient quand Archavon charge un joueur.",
+	charge_message = "Charge sur %s",
+
+	shards = "Eclats de pierre",
+	shards_desc = "Prévient sur qui Archavon incante ses Eclats de pierre.",
+	shards_message = "Eclats de pierre sur %s !",
+
+	icon = "Icône",
+	icon_desc = "Place une icône de raid sur le dernier joueur ciblé par les Eclats de pierre (nécessite d'être promu ou mieux).",
 } end )
 
 ----------------------------------
