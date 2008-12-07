@@ -98,5 +98,6 @@
 
 <Script file="Northrend\Archavon.lua"/>
 <Script file="Northrend\Malygos.lua"/>
+<Script file="Northrend\Sartharion.lua"/>
 <!--@end-debug@-->
 </Ui>

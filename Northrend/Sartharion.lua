@@ -1,0 +1,233 @@
+﻿------------------------------
+--      Are you local?      --
+------------------------------
+
+local boss = BB["Sartharion"]
+local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
+
+local db = nil
+local started = nil
+local enrage_warned = nil
+local drakes = nil
+local fmt = string.format
+
+----------------------------
+--      Localization      --
+----------------------------
+
+L:RegisterTranslations("enUS", function() return {
+	cmd = "Sartharion",
+
+	tsunami = "Flame Tsunami",
+	tsunami_desc = "Warn for churning lava and show a bar.",
+	tsunami_warning = "Flame Tsunami in ~5sec!",
+	tsunami_message = "Flame Tsunami!",
+	tsunami_cooldown = "Flame Tsunami Cooldown",
+	tsunami_trigger = "The lava surrounding %s churns!",
+
+	breath = "Flame Breath",
+	breath_desc = "Warn for Flame Breath casting.",
+	breath_warning = "Flame Breath in ~5sec!",
+	breath_message = "Flame Breath!",
+	breath_cooldown = "Flame Breath Cooldown",
+
+	drakes = "Drake Adds",
+	drakes_desc = "Warn when each drake add will join the fight.",
+	drakes_incomingbar = "%s incoming",
+	drakes_incomingsoon = "%s incoming in ~5sec!",
+	drakes_incoming = "%s incoming!",
+	drakes_activebar = "%s active",
+	drakes_active = "%s is active!",
+
+	vesperon = "Vesperon",
+	vesperon_trigger = "Vesperon, the clutch is in danger! Assist me!",
+
+	shadron = "Shadron",
+	shadron_trigger = "Shadron! Come to me! All is at risk!",
+
+	tenebron = "Tenebron",
+	tenebron_trigger = "Tenebron! The eggs are yours to protect as well!",
+
+	drakedeath = "Drake Death",
+	drakedeath_desc = "Warn when one of the drake adds die.",
+	drakedeath_message = "%s died!",
+
+	enrage = "Enrage",
+	enrage_warning = "Enrage soon!",
+	enrage_message = "Enraged!",
+
+	log = "|cffff0000"..boss.."|r:\n This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
+} end )
+
+----------------------------------
+--      Module Declaration      --
+----------------------------------
+
+local mod = BigWigs:NewModule(boss)
+mod.zonename = BZ["The Obsidian Sanctum"]
+mod.otherMenu = "Northrend"
+mod.enabletrigger = boss
+mod.guid = 28860
+mod.toggleoptions = {"tsunami", "breath", -1, "drakes", -1, "enrage", "bosskill"}
+mod.revision = tonumber(("$Revision$"):sub(12, -3))
+
+------------------------------
+--      Initialization      --
+------------------------------
+
+function mod:OnEnable()
+	self:AddCombatListener("SPELL_AURA_APPLIED", "DrakeCheck", 58105, 61248, 61251)
+	self:AddCombatListener("SPELL_AURA_APPLIED", "Enraged", 61632)
+	self:AddCombatListener("SPELL_CAST_START", "Breath", 58956)
+	self:AddCombatListener("UNIT_DIED", "Deaths")
+--	self:AddCombatListener("UNIT_DIED", "BossDeath")
+
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("UNIT_HEALTH")
+	
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("BigWigs_RecvSync")
+
+--	BigWigs:Print(L["log"])
+	started = nil
+	db = self.db.profile
+	enrage_warned = false
+	drakes = {
+		[30449] = {["name"] = L["vesperon"], ["alive"] = true,},
+		[30451] = {["name"] = L["shadron"], ["alive"] = true,},
+		[30452] = {["name"] = L["tenebron"], ["alive"] = true,},
+	}
+end
+
+------------------------------
+--      Event Handlers      --
+------------------------------
+
+function mod:DrakeCheck(_, spellID)
+--	58105 = Shadron
+--	61248 = Tenebron
+--	61251 = Vesperon
+
+--	Tenebron called in roughly 15s after engage
+--	Shadron called in roughly 60s after engage
+--	Vesperon called in roughly 105s after engage
+	if not db.drakes then return end
+	if spellID == 58105 then
+		self:CancelScheduledEvent("ShadronWarn")
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["drakes_incomingbar"], L["shadron"]))
+		self:Bar(fmt(L["drakes_incomingbar"], L["shadron"]), 15, 58105)
+		self:ScheduleEvent("ShadronWarn", "BigWigs_Message", 10, fmt(L["drakes_incomingsoon"], L["shadron"]), "Attention")
+	elseif spellID == 61248 then
+		self:CancelScheduledEvent("TenebronWarn")
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["drakes_incomingbar"], L["tenebron"]))
+		self:Bar(fmt(L["drakes_incomingbar"], L["tenebron"]), 60, 61248)
+		self:ScheduleEvent("TenebronWarn", "BigWigs_Message", 55, fmt(L["drakes_incomingsoon"], L["tenebron"]), "Attention")
+	elseif spellID == 61251 then
+		self:CancelScheduledEvent("VesperonWarn")
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["drakes_incomingbar"], L["vesperon"]))
+		self:Bar(fmt(L["drakes_incomingbar"], L["vesperon"]), 105, 61251)
+		self:ScheduleEvent("VesperonWarn", "BigWigs_Message", 100, fmt(L["drakes_incomingsoon"], L["vesperon"]), "Attention")
+	end
+end
+
+function mod:Enraged(_, spellID)
+	if db.enrage then
+		self:IfMessage(L["enrage_message"], "Attention", spellID, "Alarm")
+	end
+end
+
+function mod:Breath(_, spellID)
+	if db.breath then
+		self:CancelScheduledEvent("BreathWarn")
+		self:TriggerEvent("BigWigs_StopBar", self, L["breath_cooldown"])
+		self:Bar(L["breath_cooldown"], 12, 57491)
+--		A warning message seems more annoying than helpful
+--		self:ScheduleEvent("BreathWarn", "BigWigs_Message", 7, L["breath_warning"], "Attention")
+	end
+end
+
+function mod:Deaths(_, guid)
+--	This is pretty ugly, and probably not needed.  The alternative is to check for yells, or SPELL_CAST_SUCCESS for Twilight Revenge (60639)
+	guid = tonumber((guid):sub(-12,-7),16)
+	if guid == self.guid then
+		self:BossDeath(nil, self.guid, true)
+	elseif guid == 30449 or guid == 30451 or guid == 30452 then
+		if not started then
+			-- The drake died before engaging Sartharion, so it will not add during the fight.
+			drakes[guid]["alive"] = false
+		else
+			-- The drake died while fighting Sartharion, so warn about the death, but don't mark as dead incase of a wipe.
+			self:Message(fmt(L["drakedeath_message"], drakes[guid]["name"]), "Attention")
+		end
+	end
+end
+
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+	if msg == L["tsunami_trigger"] and db.tsunami then
+		self:CancelScheduledEvent("TsunamiWarn")
+		self:TriggerEvent("BigWigs_StopBar", self, L["tsunami_cooldown"])
+		self:Message(L["tsunami_message"], "Important", 57491, "Alert")
+		self:Bar(L["tsunami_cooldown"], 30, 57491)
+		self:ScheduleEvent("TsunamiWarn", "BigWigs_Message", 25, L["tsunami_warning"], "Attention")
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(msg)
+--	Roughly 12s after the yell, the drakes actually become active
+	if not db.drakes then return end
+	if msg:find(L["vesperon_trigger"]) then
+		self:Message(fmt(L["drakes_incoming"], L["vesperon"]), "Attention")
+		self:CancelScheduledEvent("VesperonWarn")
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["drakes_activebar"], L["vesperon"]))
+		self:Bar(fmt(L["drakes_activebar"], L["vesperon"]), 12, 61251)
+		self:ScheduleEvent("VesperonWarn", "BigWigs_Message", 12, fmt(L["drakes_active"], L["vesperon"]), "Attention")
+	elseif msg:find(L["shadron_trigger"]) then
+		self:Message(fmt(L["drakes_incoming"], L["shadron"]), "Attention")
+		self:CancelScheduledEvent("ShadronWarn")
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["drakes_activebar"], L["shadron"]))
+		self:Bar(fmt(L["drakes_activebar"], L["shadron"]), 12, 58105)
+		self:ScheduleEvent("ShadronWarn", "BigWigs_Message", 12, fmt(L["drakes_active"], L["shadron"]), "Attention")
+	elseif msg:find(L["tenebron_trigger"]) then
+		self:Message(fmt(L["drakes_incoming"], L["tenebron"]), "Attention")
+		self:CancelScheduledEvent("TenebronWarn")
+		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["drakes_activebar"], L["tenebron"]))
+		self:Bar(fmt(L["drakes_activebar"], L["tenebron"]), 12, 61248)
+		self:ScheduleEvent("TenebronWarn", "BigWigs_Message", 12, fmt(L["drakes_active"], L["tenebron"]), "Attention")
+	end
+end
+
+function mod:UNIT_HEALTH(msg)
+	if not db.enrage then return end
+	if UnitName(msg) == boss then
+		local hp = UnitHealth(msg)
+		if hp > 11 and hp <= 14 and not enrage_warned then
+			self:Message(L["enrage_warning"], "Attention")
+			enrage_warned = true
+		end
+	end
+end	
+
+function mod:BigWigs_RecvSync(sync, rest, nick)
+	if self:ValidateEngageSync(sync, rest) and not started then
+		started = true
+		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+		end
+		if db.tsunami then
+			self:CancelScheduledEvent("TsunamiWarn")
+			self:TriggerEvent("BigWigs_StopBar", self, L["tsunami_cooldown"])
+			self:Bar(L["tsunami_cooldown"], 30, 57491)
+			self:ScheduleEvent("TsunamiWarn", "BigWigs_Message", 25, L["tsunami_warning"], "Attention")
+		end
+--[[
+		if db.breath then
+			self:CancelScheduledEvent("BreathWarn")
+			self:TriggerEvent("BigWigs_StopBar", self, L["breath_cooldown"])
+			self:Bar(L["breath_cooldown"], 12, 57491)
+			self:ScheduleEvent("BreathWarn", "BigWigs_Message", 7, L["breath_warning"], "Attention")
+		end
+]]
+	end
+end

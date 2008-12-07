@@ -11,7 +11,7 @@
 ## Notes-zhCN: Big Wigs 诺森德模块
 ## Notes-zhTW: Big Wigs 北裂境模組
 ## Author: Funkydude, Rabbit
-## X-Credits: 7destiny
+## X-Credits: 7destiny, Timewasted
 ## Version: 2.0
 ## LoadOnDemand: 1
 
@@ -19,9 +19,10 @@
 ## X-Category: Raid
 
 ## X-BigWigs-Menu: Northrend
-## X-BigWigs-LoadInZone: The Eye of Eternity, Vault of Archavon
+## X-BigWigs-LoadInZone: The Eye of Eternity, Vault of Archavon, The Obsidian Sanctum
 
 ## Dependencies: BigWigs
 
 Archavon.lua
 Malygos.lua
+Sartharion.lua
