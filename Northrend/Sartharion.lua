@@ -59,6 +59,48 @@ L:RegisterTranslations("enUS", function() return {
 	log = "|cffff0000"..boss.."|r:\n This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
 } end )
 
+L:RegisterTranslations("koKR", function() return {
+	tsunami = "용암 파도",
+	tsunami_desc = "용암파도에 바와 알림입니다.",
+	tsunami_warning = "약 5초 후 용암 파도!",
+	tsunami_message = "용암 파도!",
+	tsunami_cooldown = "용암 파도 대기시간",
+	tsunami_trigger = "%s을 둘러싼 용암이 끓어오릅니다!",
+
+	breath = "화염 숨결",
+	breath_desc = "화염 숨결 시전을 알립니다.",
+	breath_warning = "약 5초 후 화염 숨결!",
+	breath_message = "화염 숨결!",
+	breath_cooldown = "화염 숨결 대기시간",
+
+	drakes = "비룡 추가",
+	drakes_desc = "각 비룡이 전투에 추가되는 것을 알립니다.",
+	drakes_incomingbar = "잠시 후 %s 출현",
+	drakes_incomingsoon = "약 5초 후 %s 출현!",
+	drakes_incoming = "%s 출현!",
+	drakes_activebar = "%s 활동",
+	drakes_active = "%s 활동!",
+
+	vesperon = "베스페론",
+	vesperon_trigger = "베스페론, 알이 위험하다! 날 도와라!",
+
+	shadron = "샤드론",
+	shadron_trigger = "샤드론! 이리 와라! 위험한 상황이다!",
+
+	tenebron = "테네브론",
+	tenebron_trigger = "테네브론! 너도 알을 지킬 책임이 있어!",
+
+	drakedeath = "비룡 죽음",
+	drakedeath_desc = "비룡의 죽음에 대해 알립니다.",
+	drakedeath_message = "%s 죽음!",
+
+	enrage = "격노",
+	enrage_warning = "잠시 후 격노!",
+	enrage_message = "격노!",
+
+	log = "|cffff0000"..boss.."|r:\n 해당 보스에 대한 대화 멘트, 전투로그등을 필요로 합니다. 섬게이트,인벤의 BigWigs Bossmods 안건에 /대화기록, /전투기록을 한 로그나 기타 스샷, 잘못된 타이머등 오류를 제보 부탁드립니다. 윈드러너 서버:백서향으로 바로 문의 주시면 조금 빠른 수정 업데이트가 됩니다 @_@;",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
