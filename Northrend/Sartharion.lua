@@ -101,6 +101,90 @@ L:RegisterTranslations("koKR", function() return {
 	log = "|cffff0000"..boss.."|r:\n 해당 보스에 대한 대화 멘트, 전투로그등을 필요로 합니다. 섬게이트,인벤의 BigWigs Bossmods 안건에 /대화기록, /전투기록을 한 로그나 기타 스샷, 잘못된 타이머등 오류를 제보 부탁드립니다. 윈드러너 서버:백서향으로 바로 문의 주시면 조금 빠른 수정 업데이트가 됩니다 @_@;",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	tsunami = "烈焰之啸",
+	tsunami_desc = "当熔岩搅动时显示计时条。",
+	tsunami_warning = "约5秒，烈焰之啸！",
+	tsunami_message = "烈焰之啸！",
+	tsunami_cooldown = "烈焰之啸冷却！",
+	tsunami_trigger = "The lava surrounding %s churns!",
+
+	breath = "烈焰吐息",
+	breath_desc = "当正在施放烈焰吐息时发出警报。",
+	breath_warning = "约5秒，烈焰吐息！",
+	breath_message = "烈焰吐息！",
+	breath_cooldown = "烈焰吐息冷却！",
+
+	drakes = "幼龙增援",
+	drakes_desc = "当每只幼龙增援加入战斗时发出警报。",
+	drakes_incomingbar = "<%s：即将到来>",
+	drakes_incomingsoon = "约5秒后，%s即将到来！",
+	drakes_incoming = "%s即将到来！",
+	drakes_activebar = "<%s：已激活>",
+	drakes_active = "%s - 已激活！",
+
+	vesperon = "维斯匹隆",
+	vesperon_trigger = "Vesperon, the clutch is in danger! Assist me!",
+
+	shadron = "沙德隆",
+	shadron_trigger = "Shadron! Come to me! All is at risk!",
+
+	tenebron = "塔尼布隆",
+	tenebron_trigger = "Tenebron! The eggs are yours to protect as well!",
+
+	drakedeath = "幼龙死亡",
+	drakedeath_desc = "当增援幼龙死亡时发出警报。",
+	drakedeath_message = "%s死亡！",
+
+	enrage = "狂暴",
+	enrage_warning = "即将 狂暴！",
+	enrage_message = "狂暴！",
+
+	log = "|cffff0000"..boss.."|r：缺乏数据，请考虑开启战斗记录（/combatlog）或 Transcriptor 记录并提交战斗记录，谢谢！",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	tsunami = "炎嘯",
+	tsunami_desc = "當熔岩攪動時發出警報及顯示計時條。",
+	tsunami_warning = "約5秒，炎嘯！",
+	tsunami_message = "炎嘯！",
+	tsunami_cooldown = "炎嘯冷卻！",
+	tsunami_trigger = "The lava surrounding %s churns!",
+
+	breath = "火息術",
+	breath_desc = "當正在施放火息術時發出警報。",
+	breath_warning = "約5秒，火息術！",
+	breath_message = "火息術！",
+	breath_cooldown = "火息術冷卻！",
+
+	drakes = "飛龍增援",
+	drakes_desc = "當每只飛龍增援加入戰斗時發出警報。",
+	drakes_incomingbar = "<%s：即將到來>",
+	drakes_incomingsoon = "約5秒后。%s即將到來！",
+	drakes_incoming = "%s即將到來！",
+	drakes_activebar = "<%s：已激活>",
+	drakes_active = "%s已激活！",
+
+	vesperon = "維斯佩朗",
+	vesperon_trigger = "Vesperon, the clutch is in danger! Assist me!",
+
+	shadron = "夏德朗",
+	shadron_trigger = "Shadron! Come to me! All is at risk!",
+
+	tenebron = "坦納伯朗",
+	tenebron_trigger = "Tenebron! The eggs are yours to protect as well!",
+
+	drakedeath = "飛龍死亡",
+	drakedeath_desc = "當增援飛龍死亡時發出警報。",
+	drakedeath_message = "%s死亡！",
+
+	enrage = "狂暴",
+	enrage_warning = "即將 狂暴！",
+	enrage_message = "狂暴！",
+
+	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------

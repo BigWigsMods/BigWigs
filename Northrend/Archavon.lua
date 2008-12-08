@@ -85,6 +85,52 @@ L:RegisterTranslations("frFR", function() return {
 	icon_desc = "Place une icône de raid sur le dernier joueur ciblé par les Eclats de pierre (nécessite d'être promu ou mieux).",
 } end )
 
+L:RegisterTranslations("zhCN", function() return {
+	stomp = "践踏",
+	stomp_desc = "当施放践踏时发出警报及显示计时条。",
+	stomp_message = "践踏 - 即将 冲锋！",
+	stomp_warning = "约5秒后，可能践踏！",
+	stomp_bar = "<践踏 冷却>",
+	
+	cloud = "自身窒息云雾",
+	cloud_desc = "当你中了窒息云雾时发出警报。",
+	cloud_message = ">你< 窒息云雾！",
+	
+	charge = "冲锋",
+	charge_desc = "当玩家中了冲锋时发出警报。",
+	charge_message = "冲锋：>%s<！",
+	
+	shards = "岩石碎片",
+	shards_desc = "当阿尔卡冯施放岩石碎片时发出警报。",
+	shards_message = "岩石碎片：>%s<！",
+	
+	icon = "团队标记",
+	icon_desc = "为中了岩石碎片的玩家打上团队标记。（需要权限）",
+} end )
+
+L:RegisterTranslations("zhTW", function() return {
+	stomp = "踐踏",
+	stomp_desc = "當施放踐踏時發出警報及顯示計時條。",
+	stomp_message = "踐踏 - 即將 沖鋒！",
+	stomp_warning = "約5秒后，可能踐踏！",
+	stomp_bar = "<踐踏 冷卻>",
+	
+	cloud = "自身窒息之雲",
+	cloud_desc = "當你中了窒息之雲時發出警報。",
+	cloud_message = ">你< 窒息之雲！",
+	
+	charge = "沖鋒",
+	charge_desc = "當玩家中了沖鋒時發出警報。",
+	charge_message = "沖鋒：>%s<！",
+	
+	shards = "岩石裂片",
+	shards_desc = "當亞夏梵施放岩石裂片時發出警報。",
+	shards_message = "岩石裂片：>%s<！",
+	
+	icon = "團隊標記",
+	icon_desc = "為中了岩石裂片的玩家打上團隊標記。（需要權限）",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
