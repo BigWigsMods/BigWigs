@@ -38,7 +38,6 @@ L:RegisterTranslations("enUS", function() return {
 
 	surge = "Surge of Power",
 	surge_desc = "Warn who has Surge of Power.",
-	surge_message = "Surge of Power: %s",
 	surge_you = "Surge of Power on YOU!",
 
 	icon = "Raid Target Icon",
@@ -76,7 +75,6 @@ L:RegisterTranslations("koKR", function() return {
 
 	surge = "마력의 쇄도",
 	surge_desc = "마력의 쇄도의 대상을 알립니다.",
-	surge_message = "마력의 쇄도: %s",
 	surge_you = "당신에게 마력의 쇄도!",
 
 	icon = "전술 표시",
@@ -114,7 +112,6 @@ L:RegisterTranslations("frFR", function() return {
 
 	surge = "Vague de puissance",
 	surge_desc = "Prévient quand un joueur subit les effets de la Vague de puissance.",
-	surge_message = "Vague de puissance : %s",
 	surge_you = "Vague de puissance sur VOUS !",
 
 	icon = "Icône",
@@ -152,7 +149,6 @@ L:RegisterTranslations("zhCN", function() return {
 
 	surge = "能量涌动",
 	surge_desc = "当玩家中了能量涌动时发出警报。",
-	surge_message = "能量涌动：>%s<！",
 	surge_you = ">你< 能量涌动！",
 
 	icon = "团队标记",
@@ -190,7 +186,6 @@ L:RegisterTranslations("zhTW", function() return {
 
 	surge = "力量奔騰",
 	surge_desc = "當玩家中了力量奔騰時發出警報。",
-	surge_message = "力量奔騰：>%s<！",
 	surge_you = ">你< 力量奔騰！",
 
 	icon = "團隊標記",
@@ -254,6 +249,8 @@ end
 
 function mod:Vortex(_, spellID)
 	if db.vortex then
+		self:CancelScheduledEvent("VortexWarn")
+		self:TriggerEvent("BigWigs_StopBar", self, L["vortex_next"])
 		self:Bar(L["vortex"], 10, 56105)
 		self:IfMessage(L["vortex_message"], "Attention", spellID)
 		self:Bar(L["vortex_next"], 59, 56105)
@@ -270,8 +267,10 @@ end
 local cachedId = nil
 
 function mod:Surge()
-	if db.surge then
-		self:ScheduleRepeatingEvent("BWMalygosToTScan", self.SurgeCheck, 0.5, self)
+	if phase == 3 then
+		if db.surge then
+			self:ScheduleRepeatingEvent("BWMalygosToTScan", self.SurgeCheck, 0.3, self)
+		end
 	end
 end
 
@@ -295,36 +294,30 @@ function mod:SurgeCheck()
 		local time = GetTime()
 		if (time - last) > 4 then
 			last = time
-			local other = fmt(L["surge_message"], target)
 			if target == pName then
 				self:LocalMessage(L["surge_you"], "Personal", nil, "Alarm")
-				self:WideMessage(other)
-			else
-				self:Message(other, "Attention")
 			end
 			self:Icon(target, "icon")
 		end
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg, unit)
-	if unit == boss then
-		if phase == 1 then
-			if db.sparks then
-				-- 44780, looks like a Power Spark :)
-				self:CancelScheduledEvent("SparkWarn")
-				self:TriggerEvent("BigWigs_StopBar", self, L["sparks"])
-				self:Message(L["sparks_message"], "Important", 44780, "Alert")
-				self:Bar(L["sparks"], 30, 44780)
-				self:ScheduleEvent("SparkWarn", "BigWigs_Message", 25, L["sparks_warning"], "Attention")
-			end
-		elseif phase == 2 then
-			if db.breath then
-				--19879 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
-				self:Message(L["breath_message"], "Important", 43810, "Alert")
-				self:Bar(L["breath"], 59, 43810)
-				self:ScheduleEvent("BreathWarn", "BigWigs_Message", 54, L["breath_warning"], "Attention")
-			end
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+	if phase == 1 then
+		if db.sparks then
+			-- 44780, looks like a Power Spark :)
+			self:CancelScheduledEvent("SparkWarn")
+			self:TriggerEvent("BigWigs_StopBar", self, L["sparks"])
+			self:Message(L["sparks_message"], "Important", 44780, "Alert")
+			self:Bar(L["sparks"], 30, 44780)
+			self:ScheduleEvent("SparkWarn", "BigWigs_Message", 25, L["sparks_warning"], "Attention")
+		end
+	elseif phase == 2 then
+		if db.breath then
+			--19879 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
+			self:Message(L["breath_message"], "Important", 43810, "Alert")
+			self:Bar(L["breath"], 59, 43810)
+			self:ScheduleEvent("BreathWarn", "BigWigs_Message", 54, L["breath_warning"], "Attention")
 		end
 	end
 end
@@ -371,9 +364,16 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		if self:IsEventRegistered("PLAYER_REGEN_DISABLED") then
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
+		if db.vortex then
+		self:Bar(L["vortex_next"], 29, 56105)
+		self:ScheduleEvent("VortexWarn", "BigWigs_Message", 24, L["vortex_warning"], "Attention")
+		end
+		if db.sparks then
+			self:Bar(L["sparks"], 25, 44780)
+			self:ScheduleEvent("SparkWarn", "BigWigs_Message", 20, L["sparks_warning"], "Attention")
+		end
 		if db.enrage then
 			self:Enrage(600, true)
 		end
 	end
 end
-
