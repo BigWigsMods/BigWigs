@@ -140,7 +140,7 @@ mod.zonename = BZ["Vault of Archavon"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 31125
-mod.toggleoptions = {"stomp", "charge", "shards", -1, "icon", "enrage", "bosskill"}
+mod.toggleoptions = {"stomp", "charge", "shards", "cloud", -1, "icon", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
