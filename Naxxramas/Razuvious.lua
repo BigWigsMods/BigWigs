@@ -19,11 +19,11 @@ L:RegisterTranslations("enUS", function() return {
 
 	taunt = "Taunt",
 	taunt_desc = "Warn for taunt.",
-	taunt_message = "%s - taunt",
+	taunt_warning = "Taunt done in 5sec!",
 	
 	shieldwall = "Shield Wall",
 	shieldwall_desc = "Warn for shieldwall.",
-	shieldwall_message = "%s - Shield Wall",
+	shieldwall_warning = "Shield Wall done in 5sec!",
 } end )
 
 L:RegisterTranslations("deDE", function() return {
@@ -33,11 +33,11 @@ L:RegisterTranslations("deDE", function() return {
 	
 	--taunt = "Taunt",
 	--taunt_desc = "Warn for taunt.",
-	--taunt_message = "%s - taunt",
+	--taunt_warning = "Taunt done in 5sec!",
 
 	--shieldwall = "Shield Wall",
 	--shieldwall_desc = "Warn for shieldwall.",
-	--shieldwall_message = "%s - Shield Wall",
+	--shieldwall_warning = "Shield Wall done in 5sec!",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
@@ -47,11 +47,11 @@ L:RegisterTranslations("koKR", function() return {
 
 	taunt = "도발",
 	taunt_desc = "도발에 대하여 알립니다.",
-	taunt_message = "%s - 도발",
+	taunt_warning = "5초 후 도발 종료!",
 	
 	shieldwall = "방패의 벽",
 	shieldwall_desc = "방패의 벽에 대하여 알립니다",
-	shieldwall_message = "%s - 방패의 벽",
+	shieldwall_warning = "5초 후 방패의 벽 종료!",
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
@@ -61,11 +61,11 @@ L:RegisterTranslations("zhCN", function() return {
 
 	taunt = "嘲讽",
 	taunt_desc = "当见习死亡骑士施放嘲讽时发出警报。",
-	taunt_message = "%s - 嘲讽！",
+	--taunt_warning = "Taunt done in 5sec!",
 	
 	shieldwall = "白骨屏障",
 	shieldwall_desc = "当见习死亡骑士施放白骨屏障时发出警报。",
-	shieldwall_message = "%s - 白骨屏障！",
+	--shieldwall_warning = "Shield Wall done in 5sec!",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -75,11 +75,11 @@ L:RegisterTranslations("zhTW", function() return {
 
 	taunt = "嘲諷",
 	taunt_desc = "當死亡騎士實習者施放嘲諷時發出警報。",
-	taunt_message = "%s - 嘲諷！",
+	--taunt_warning = "Taunt done in 5sec!",
 	
 	shieldwall = "骸骨屏障",
 	shieldwall_desc = "當死亡騎士實習者施放骸骨屏障時發出警報。",
-	shieldwall_message = "%s - 骸骨屏障！",
+	--shieldwall_warning = "Shield Wall done in 5sec!",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
@@ -89,11 +89,11 @@ L:RegisterTranslations("frFR", function() return {
 
 	taunt = "Provocation",
 	taunt_desc = "Prévient de l'arrivée des Provocations.",
-	taunt_message = "%s - Provocation",
+	--taunt_warning = "Taunt done in 5sec!",
 
 	shieldwall = "Mur protecteur",
 	shieldwall_desc = "Prévient de l'arrivée des Murs protecteurs.",
-	shieldwall_message = "%s - Mur protecteur",
+	--shieldwall_warning = "Shield Wall done in 5sec!",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
@@ -103,11 +103,11 @@ L:RegisterTranslations("ruRU", function() return {
 
 	--taunt = "Taunt",
 	--taunt_desc = "Warn for taunt.",
-	--taunt_message = "%s - taunt",
+	--taunt_warning = "Taunt done in 5sec!",
 	
 	--shieldwall = "Shield Wall",
 	--shieldwall_desc = "Warn for shieldwall.",
-	--shieldwall_message = "%s - Shield Wall",
+	--shieldwall_warning = "Shield Wall done in 5sec!",
 } end )
 
 ----------------------------------
@@ -136,17 +136,19 @@ end
 --      Event Handlers      --
 ------------------------------
 
-function mod:ShieldWall(unit, spellID)
-	if unit == understudy and self.db.profile.shieldwall then
-		self:Message(L["shieldwall_message"]:format(unit), "Positive", nil, nil, nil, spellID)
-		self:Bar(L["shieldwall_message"]:format(unit), 20, spellID)
+function mod:ShieldWall(_, spellID, _, _, spellName)
+	if self.db.profile.shieldwall then
+		self:Message(spellName, "Positive", nil, nil, nil, spellID)
+		self:Bar(spellName, 20, spellID)
+		self:DelayedMessage(15, L["taunt_warning"], "Attention")
 	end
 end
 
-function mod:Taunt(unit, spellID)
-	if unit == understudy and self.db.profile.taunt then
-		self:Message(L["taunt_message"]:format(unit), "Positive", nil, nil, nil, spellID)
-		self:Bar(L["taunt_message"]:format(unit), 20, spellID)
+function mod:Taunt(_, spellID, _, _, spellName)
+	if self.db.profile.taunt then
+		self:Message(spellName, "Positive", nil, nil, nil, spellID)
+		self:Bar(spellName, 20, spellID)
+		self:DelayedMessage(15, L["shieldwall_warning"], "Attention")
 	end
 end
 
@@ -155,4 +157,3 @@ function mod:Knife(unit, spellID)
 		self:Message(L["knife_message"]:format(unit), "Important", nil, nil, nil, spellID)
 	end
 end
-
