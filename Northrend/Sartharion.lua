@@ -243,13 +243,13 @@ function mod:DrakeCheck(_, spellID)
 	if spellID == 58105 then
 		self:CancelScheduledEvent("ShadronWarn")
 		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["drakes_incomingbar"], L["shadron"]))
-		self:Bar(fmt(L["drakes_incomingbar"], L["shadron"]), 15, 58105)
-		self:ScheduleEvent("ShadronWarn", "BigWigs_Message", 10, fmt(L["drakes_incomingsoon"], L["shadron"]), "Attention")
+		self:Bar(fmt(L["drakes_incomingbar"], L["shadron"]), 60, 58105)
+		self:ScheduleEvent("ShadronWarn", "BigWigs_Message", 55, fmt(L["drakes_incomingsoon"], L["shadron"]), "Attention")
 	elseif spellID == 61248 then
 		self:CancelScheduledEvent("TenebronWarn")
 		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["drakes_incomingbar"], L["tenebron"]))
-		self:Bar(fmt(L["drakes_incomingbar"], L["tenebron"]), 60, 61248)
-		self:ScheduleEvent("TenebronWarn", "BigWigs_Message", 55, fmt(L["drakes_incomingsoon"], L["tenebron"]), "Attention")
+		self:Bar(fmt(L["drakes_incomingbar"], L["tenebron"]), 15, 61248)
+		self:ScheduleEvent("TenebronWarn", "BigWigs_Message", 10, fmt(L["drakes_incomingsoon"], L["tenebron"]), "Attention")
 	elseif spellID == 61251 then
 		self:CancelScheduledEvent("VesperonWarn")
 		self:TriggerEvent("BigWigs_StopBar", self, fmt(L["drakes_incomingbar"], L["vesperon"]))
