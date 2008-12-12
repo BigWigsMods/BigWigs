@@ -17,7 +17,7 @@ local frostBlastTime
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Kelthuzad",
 
-	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzad Chamber",
+	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzad's Chamber",
 	
 	start_trigger = "Minions, servants, soldiers of the cold dark! Obey the call of Kel'Thuzad!",
 	start_warning = "Kel'Thuzad encounter started! ~5min till he is active!",
