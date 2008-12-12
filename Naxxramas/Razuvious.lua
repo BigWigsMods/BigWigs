@@ -61,11 +61,11 @@ L:RegisterTranslations("zhCN", function() return {
 
 	taunt = "嘲讽",
 	taunt_desc = "当见习死亡骑士施放嘲讽时发出警报。",
-	--taunt_warning = "Taunt done in 5sec!",
+	taunt_warning = "5秒后，可以嘲讽！",
 	
 	shieldwall = "白骨屏障",
 	shieldwall_desc = "当见习死亡骑士施放白骨屏障时发出警报。",
-	--shieldwall_warning = "Shield Wall done in 5sec!",
+	shieldwall_warning = "5秒后，可以白骨屏障！",
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
@@ -75,11 +75,11 @@ L:RegisterTranslations("zhTW", function() return {
 
 	taunt = "嘲諷",
 	taunt_desc = "當死亡騎士實習者施放嘲諷時發出警報。",
-	--taunt_warning = "Taunt done in 5sec!",
+	taunt_warning = "5秒后，可以嘲諷！",
 	
 	shieldwall = "骸骨屏障",
 	shieldwall_desc = "當死亡騎士實習者施放骸骨屏障時發出警報。",
-	--shieldwall_warning = "Shield Wall done in 5sec!",
+	shieldwall_warning = "5秒后，可以骸骨屏障！",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
