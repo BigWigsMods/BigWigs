@@ -68,21 +68,21 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Покои Кел'Тузадa",
+	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Зал Кел'Тузада",
 	
-	start_trigger = "Миньёны, служители, солдаты  ледяной тьмы! Повинуйтесь Кел'Тузаду!", -- correct this
-	start_warning = "Бой с Кел'Тузадом начинается! ~5 минут до окончания активности! !", --correct this
+	start_trigger = "Соратники, слуги, солдаты холодной тьмы! Повинуйтесь зову Кел-Тузада!", 
+	start_warning = "Бой с Кел'Тузадом начинается! ~5 минут до выхода босса!", 
 	start_bar = "Фаза 2",
 
 	phase = "Фазы",
 	phase_desc = "Предупреждать когда босс входит в новую фазу.",
-	phase2_trigger1 = "Просите милосердия!",  --correct this
+	phase2_trigger1 = "Молите о пощаде!",  
 	phase2_trigger2 = "Кричите! Вы чуствуете дыхание вашей смерти ?!",  --correct this
 	phase2_trigger3 = "Вам конец!",  --correct this
 	phase2_warning = "Фаза 2, Кел'Тузад просыпается!",
-	phase2_bar = "Kel'Thuzad активен!",
+	phase2_bar = "Кел'Тузад активен!",
 	phase3_soon_warning = "Скоро Фаза 3!",
-	phase3_trigger = "Мастер, Я требую помощи!",--correct this
+	phase3_trigger = "Господин, мне нужна помощь!",
 	phase3_warning = "Фаза 3, защитники через ~15 секунд!",
 
 	mc = "Контроль Разума",
@@ -110,7 +110,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 	guardians = "Появление стражей",
 	guardians_desc = "Сообщать о появлении стражей ледяной короны в третьей фазе.",
-	guardians_trigger = "Очень хорошо. Воины ледяной воды, встаньте! Я командую вашим боем, Убивайте для вашего господина! Пусть ничего не выживет!",  --correct this
+	guardians_trigger = "Хорошо. Воины ледяных пустошей, восстаньте! Повелеваю вам сражаться, убивать и умирать во имя своего повелителя! Не щадить никого!",
 	guardians_warning = "Стражи появятся через 15 секунд!",
 	guardians_bar = "Появляются стражи!",
 	
