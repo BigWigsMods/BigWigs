@@ -185,6 +185,48 @@ L:RegisterTranslations("zhTW", function() return {
 	log = "|cffff0000"..boss.."|r：缺乏數據，請考慮開啟戰斗記錄（/combatlog）或 Transcriptor 記錄并提交戰斗記錄，謝謝！",
 } end )
 
+L:RegisterTranslations("frFR", function() return {
+	tsunami = "Tsunami de flammes",
+	tsunami_desc = "Prévient de l'arrivée des Tsunami de flammes.",
+	tsunami_warning = "Tsunami de flammes dans ~5sec !",
+	tsunami_message = "Tsunami de flammes !",
+	tsunami_cooldown = "Recharge Tsunami de flammes",
+	tsunami_trigger = "La lave qui entoure %s bouillonne !",
+
+	breath = "Souffle de flammes",
+	breath_desc = "Prévient quand un Souffle de flammes est incanté.",
+	breath_warning = "Souffle de flammes dans ~5sec !",
+	breath_message = "Souffle de flammes !",
+	breath_cooldown = "Recharge Souffle de flammes",
+
+	drakes = "Arrivée des drakes",
+	drakes_desc = "Prévient quand chaque drake se joint au combat.",
+	drakes_incomingbar = "Arrivée |2 %s",
+	drakes_incomingsoon = "Arrivée |2 %s dans ~5 sec. !",
+	drakes_incoming = "Arrivée |2 %s !",
+	drakes_activebar = "%s actif",
+	drakes_active = "%s est actif !",
+
+	vesperon = "Vespéron",
+	vesperon_trigger = "Vespéron, la portée est en danger ! À moi !", -- à vérifier
+
+	shadron = "Obscuron",
+	shadron_trigger = "Obscuron ! Viens à moi ! Nous risquons de tout perdre !", -- à vérifier
+
+	tenebron = "Ténébron",
+	tenebron_trigger = "Ténébron ! Toi aussi, tu dois protéger les oeufs !", -- à vérifier
+
+	drakedeath = "Mort des drakes",
+	drakedeath_desc = "Prévient quand un des drakes arrivé en renfort meurt.",
+	drakedeath_message = "%s est mort !",
+
+	enrage = "Enrager",
+	enrage_warning = "Enrager imminent !",
+	enrage_message = "Enragé !",
+
+	log = "|cffff0000"..boss.."|r:\n This boss needs data, please consider turning on your /combatlog or transcriptor and submit the logs.",
+} end )
+
 ----------------------------------
 --      Module Declaration      --
 ----------------------------------
@@ -194,7 +236,7 @@ mod.zonename = BZ["The Obsidian Sanctum"]
 mod.otherMenu = "Northrend"
 mod.enabletrigger = boss
 mod.guid = 28860
-mod.toggleoptions = {"tsunami", "breath", -1, "drakes", -1, "enrage", "bosskill"}
+mod.toggleoptions = {"tsunami", "breath", -1, "drakes", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -211,7 +253,7 @@ function mod:OnEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterEvent("UNIT_HEALTH")
-	
+
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 	self:RegisterEvent("BigWigs_RecvSync")
