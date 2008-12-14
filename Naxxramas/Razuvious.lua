@@ -89,11 +89,11 @@ L:RegisterTranslations("frFR", function() return {
 
 	taunt = "Provocation",
 	taunt_desc = "Prévient de l'arrivée des Provocations.",
-	--taunt_warning = "Taunt done in 5sec!",
+	taunt_warning = "Provocation terminée dans 5 sec. !",
 
 	shieldwall = "Mur protecteur",
 	shieldwall_desc = "Prévient de l'arrivée des Murs protecteurs.",
-	--shieldwall_warning = "Shield Wall done in 5sec!",
+	shieldwall_warning = "Mur protecteur terminé dans 5 sec. !",
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
