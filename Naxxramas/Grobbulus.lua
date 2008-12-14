@@ -104,10 +104,10 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	--inject = "Injection mutante sur vous",
-	--inject_desc = "Prévient quand vous subissez les effets de l'Injection mutante.",
+	inject = "Injection mutante",
+	inject_desc = "Prévient quand un joueur subit les effets de l'Injection mutante.",
 	bomb_message_you = "Vous êtes injecté !",
-	bomb_message_other = "%s est injecté  !",
+	bomb_message_other = "%s est injecté !",
 
 	icon = "Icône",
 	icon_desc = "Place une icône de raid sur le dernier joueur affecté par l'Injection mutante (nécessite d'être promu ou mieux).",
@@ -126,7 +126,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15931
-mod.toggleoptions = {"inject", "icon", "cloud", "enrage", "bosskill"}
+mod.toggleoptions = {"inject", "icon", "cloud", "berserk", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -180,7 +180,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.enrage then
-			self:Enrage(720)
+			self:Enrage(720, true)
 		end
 	end
 end

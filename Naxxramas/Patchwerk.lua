@@ -42,7 +42,7 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	enragewarn = "5% - Enrager !",
+	enragewarn = "5% - Frénésie !",
 	starttrigger1 = "R'cousu veut jouer !",
 	starttrigger2 = "R'cousu avatar de guerre pour Kel'Thuzad !",
 } end )

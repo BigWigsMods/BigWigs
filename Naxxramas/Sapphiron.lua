@@ -34,7 +34,7 @@ L:RegisterTranslations("enUS", function() return {
 	icebolt_desc = "Yell when you are an Icebolt.",
 	icebolt_other = "Block: %s",
 	icebolt_yell = "I'm a Block!",
-	
+
 	ping = "Ping",
 	ping_desc = "Ping your current location if you are afflicted by Icebolt.",
 	ping_message = "Block - Pinging your location!",
@@ -61,9 +61,9 @@ L:RegisterTranslations("ruRU", function() return {
 
 	icebolt = "Морозная стрела",
 	icebolt_desc = "Предупреждать о морозной стреле на Вас.",
-	icebolt_other = "Глыба: %s",	
+	icebolt_other = "Глыба: %s",
 	icebolt_yell = "Я в глыбе!",
-	
+
 	ping = "Пинг",
 	ping_desc = "Отмечать ваше текущеее положение пингов, если вы находитесь в глыбе после морозной стрелы.",
 	ping_message = "Глыба - отмечаю положение!",
@@ -92,7 +92,7 @@ L:RegisterTranslations("koKR", function() return {
 	icebolt_desc = "얼음 화살에 얼렸을때 외침으로 알립니다.",
 	icebolt_other = "방패: %s",
 	icebolt_yell = "저 방패에요!",
-	
+
 	ping = "미니맵 표시",
 	ping_desc = "자신이 얼음 화살에 걸렸을 때 현재 위치를 미니맵에 표시합니다.",
 	ping_message = "방패 - 현재 위치 미니맵에 표시 중!",
@@ -118,12 +118,12 @@ L:RegisterTranslations("deDE", function() return {
 	deepbreath_trigger = "%s atmet tief ein...",
 	deepbreath_warning = "Frostatem kommt!",
 	deepbreath_bar = "Frostatem!",
-	
+
 	--icebolt = "Icebolt",
 	--icebolt_desc = "Yell when you are an Icebolt.",
 	--icebolt_other = "Block: %s",
 	--icebolt_yell = "I'm a Block! -%s-",
-	
+
 	--ping = "Ping",
 	--ping_desc = "Ping your current location if you are afflicted by Icebolt.",
 	--ping_message = "Block - Pinging your location!",
@@ -152,7 +152,7 @@ L:RegisterTranslations("zhCN", function() return {
 	icebolt_desc = "当玩家中了寒冰屏障时发出大喊警报。",
 	icebolt_other = "寒冰屏障：>%s<！",
 	icebolt_yell = "我是寒冰屏障！快躲到我后面！",
-	
+
 	ping = "点击",
 	ping_desc = "当你中了寒冰屏障时点击当前所在位置。",
 	ping_message = "寒冰屏障 - 点击你的位置！",
@@ -181,7 +181,7 @@ L:RegisterTranslations("zhTW", function() return {
 	icebolt_desc = "當玩家中了寒冰凍體時發出大喊警報。",
 	icebolt_other = "寒冰凍體：>%s<！",
 	icebolt_yell = "我是寒冰凍體！快躲到我後面！",
-	
+
 	ping = "點擊",
 	ping_desc = "當你中了寒冰凍體時點擊當前所在位置。",
 	ping_message = "寒冰凍體 - 點擊你的位置！",
@@ -227,7 +227,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15989
-mod.toggleoptions = {"enrage", "lifedrain", "deepbreath", -1, "icebolt", "ping", "icon", "bosskill"}
+mod.toggleoptions = {"lifedrain", "deepbreath", -1, "icebolt", "ping", "icon", "berserk", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -294,7 +294,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 		end
 		if self.db.profile.enrage then
-			self:Enrage(900)
+			self:Enrage(900, true)
 		end
 	end
 end

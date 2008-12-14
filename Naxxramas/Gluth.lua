@@ -118,7 +118,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15932
-mod.toggleoptions = {"enrage", "frenzy", "decimate", "bosskill"}
+mod.toggleoptions = {"frenzy", "decimate", "berserk", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -171,7 +171,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:DelayedMessage(100, L["decimatesoonwarn"], "Urgent")
 		end
 		if self.db.profile.enrage then
-			self:Enrage(480, nil, true)
+			self:Enrage(480, true, true)
 		end
 	end
 end

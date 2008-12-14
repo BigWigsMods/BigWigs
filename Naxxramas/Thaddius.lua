@@ -366,7 +366,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = {boss, feugen, stalagg}
 mod.guid = 15928
-mod.toggleoptions = {"enrage", "charge", "polarity", -1, "power", "throw", "phase", "bosskill"}
+mod.toggleoptions = {"charge", "polarity", -1, "power", "throw", "phase", "berserk", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -429,7 +429,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 			self:Message(L["startwarn2"], "Important")
 		end
 		if self.db.profile.enrage then
-			self:Enrage(360, nil, true)
+			self:Enrage(360, true, true)
 		end
 	end
 end

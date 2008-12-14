@@ -19,7 +19,7 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Kelthuzad",
 
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzad's Chamber",
-	
+
 	start_trigger = "Minions, servants, soldiers of the cold dark! Obey the call of Kel'Thuzad!",
 	start_warning = "Kel'Thuzad encounter started! ~5min till he is active!",
 	start_bar = "Phase 2",
@@ -70,7 +70,7 @@ L:RegisterTranslations("enUS", function() return {
 
 L:RegisterTranslations("ruRU", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Зал Кел'Тузада",
-	
+
 	start_trigger = "Соратники, слуги, солдаты холодной тьмы! Повинуйтесь зову Кел-Тузада!", 
 	start_warning = "Бой с Кел'Тузадом начинается! ~5 минут до выхода босса!", 
 	start_bar = "Фаза 2",
@@ -114,14 +114,14 @@ L:RegisterTranslations("ruRU", function() return {
 	guardians_trigger = "Хорошо. Воины ледяных пустошей, восстаньте! Повелеваю вам сражаться, убивать и умирать во имя своего повелителя! Не щадить никого!",
 	guardians_warning = "Стражи появятся через 15 секунд!",
 	guardians_bar = "Появляются стражи!",
-	
+
 	icon = "Помечать иконкой",
 	icon_desc = "Помечать рейдовой иконкой игрока, на которого наложен эффект взрыва маны (необходимо быть лидером группы или рейда).",
 } end )
 
 L:RegisterTranslations("koKR", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "켈투자드의 방",
-	
+
 	start_trigger = "어둠의 문지기와 하수인, 그리고 병사들이여! 나 켈투자드가 부르니 명을 받들라!",
 	start_warning = "켈투자드 전투 시작! 약 5분 후 활동!",
 	start_bar = "2 단계",
@@ -172,7 +172,7 @@ L:RegisterTranslations("koKR", function() return {
 
 L:RegisterTranslations("deDE", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gem\195\164cher",
-	
+
 	start_trigger = "Diener, J\195\188nger, Soldaten der eisigen Finsternis! Folgt dem Ruf von Kel'Thuzad!",
 	start_warning = "Kel'Thuzad Encounter gestarted! ~5min bis er aktiv wird!",
 	start_bar = "Phase 2",
@@ -223,7 +223,7 @@ L:RegisterTranslations("deDE", function() return {
 
 L:RegisterTranslations("zhCN", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "克尔苏加德的大厅",
-	
+
 	start_trigger = "仆从们，侍卫们，隶属于黑暗与寒冷的战士们！听从克尔苏加德的召唤！",
 	start_warning = "战斗开始，约5分钟后，克尔苏加德激活！",
 	start_bar = "<第二阶段>",
@@ -275,7 +275,7 @@ L:RegisterTranslations("zhCN", function() return {
 
 L:RegisterTranslations("zhTW", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "科爾蘇加德的大廳",
-	
+
 	start_trigger = "僕從們，侍衛們，隸屬於黑暗與寒冷的戰士！聽從科爾蘇加德的召換！",
 	start_warning = "戰斗開始，約5分鐘後，科爾蘇加德進入戰鬥！",
 	start_bar = "<第二階段>",
@@ -352,10 +352,10 @@ L:RegisterTranslations("frFR", function() return {
 	fissure_desc = "Prévient de l'arrivée des Fissures d'ombre.",
 	fissure_warning = "Fissure d'ombre !",
 
-	frostblast = "Trait de glace",
-	frostblast_desc = "Prévient quand des joueurs subissent les effets du Trait de glace.",
+	frostblast = "Trait de givre",
+	frostblast_desc = "Prévient quand des joueurs subissent les effets du Trait de givre.",
 	frostblast_bar = "Trait de givre probable",
-	--frostblast_message = "%s : Frost Blast",
+	frostblast_message = "%s : Trait de givre",
 	frostblast_soon_message = "Trait de givre probable dans ~5 sec. !",
 
 	detonate = "Faire détoner mana",

@@ -40,7 +40,7 @@ L:RegisterTranslations("enUS", function() return {
 	wrath_desc = "Warn when Zeliek casts Holy Wrath.",
 	wrathwarn = "Holy Wrath!",
 	wrathbar = "Holy Wrath",
-	
+
 	dies = "#%d Killed",
 
 	startwarn = "The Four Horsemen Engaged! Mark in ~17 sec",
@@ -67,7 +67,7 @@ L:RegisterTranslations("ruRU", function() return {
 	wrath_desc = "Сообщать когда Сэр Зелиек кастует гнев небес.",
 	wrathwarn = "Гнев небес!",
 	wrathbar = "Гнев небес",
-	
+
 	--dies = "#%d Killed",
 
 	startwarn = "Четверо всадников вступили в бой! Знак Бломе на ~17 секунд",
@@ -94,7 +94,7 @@ L:RegisterTranslations("koKR", function() return {
 	wrath_desc = "젤리에크 경의 신성한 격노 시전을 알립니다.",
 	wrathwarn = "신의 격노!",
 	wrathbar = "신의 격노",
-	
+
 	dies = "기사 #%d 처치",
 
 	startwarn = "4인의 기병대 전투 시작! 약 17초 이내 징표",
@@ -121,7 +121,7 @@ L:RegisterTranslations("deDE", function() return {
 	wrath_desc = "Warnt, wenn Sire Zeliek Heiliger Zorn zaubert.",
 	wrathwarn = "Heiliger Zorn!",
 	wrathbar = "Heiliger Zorn",
-	
+
 	--dies = "#%d Killed",
 
 	startwarn = "Die Vier Reiter angegriffen! Mal in ~17 Sekunden",
@@ -148,7 +148,7 @@ L:RegisterTranslations("zhCN", function() return {
 	wrath_desc = "当瑟里耶克爵士施放神圣愤怒时发出警报。",
 	wrathwarn = "神圣愤怒！",
 	wrathbar = "<神圣愤怒>",
-	
+
 	--dies = "#%d Killed",
 
 	startwarn = "四骑士已激活 - 约17秒后，印记！",
@@ -175,7 +175,7 @@ L:RegisterTranslations("zhTW", function() return {
 	wrath_desc = "當札里克爵士施放神聖憤怒時發出警報。",
 	wrathwarn = "神聖憤怒",
 	wrathbar = "神聖憤怒",
-	
+
 	--dies = "#%d Killed",
 
 	startwarn = "四騎士已進入戰鬥 - 約17秒後，印記！",
@@ -202,8 +202,8 @@ L:RegisterTranslations("frFR", function() return {
 	wrath_desc = "Prévient quand Zeliek incante sa Colère divine.",
 	wrathwarn = "Colère divine !",
 	wrathbar = "Colère divine",
-	
-	--dies = "#%d Killed",
+
+	dies = "#%d tué(e)",
 
 	startwarn = "Les 4 cavaliers engagés ! Marque dans ~17 sec.",
 } end )

@@ -175,8 +175,8 @@ L:RegisterTranslations("frFR", function() return {
 	webspraywarn10sec = "Araignées écloses. 10 sec. avant Jet de rets !",
 	webspraywarn5sec = "Jet de rets dans 5 sec. !",
 	webspraywarn = "Jet de rets ! 40 sec. avant le suivant !",
-	enragewarn = "Enrager !",
-	enragesoonwarn = "Enrager imminent !",
+	enragewarn = "Frénésie !",
+	enragesoonwarn = "Frénésie imminente !",
 
 	webspraybar = "Jet de rets",
 	cocoonbar = "Entoilage",

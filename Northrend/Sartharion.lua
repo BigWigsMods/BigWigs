@@ -188,14 +188,14 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("frFR", function() return {
 	tsunami = "Tsunami de flammes",
 	tsunami_desc = "Prévient de l'arrivée des Tsunami de flammes.",
-	tsunami_warning = "Tsunami de flammes dans ~5sec !",
+	tsunami_warning = "Tsunami de flammes dans ~5 sec. !",
 	tsunami_message = "Tsunami de flammes !",
 	tsunami_cooldown = "Recharge Tsunami de flammes",
 	tsunami_trigger = "La lave qui entoure %s bouillonne !",
 
 	breath = "Souffle de flammes",
 	breath_desc = "Prévient quand un Souffle de flammes est incanté.",
-	breath_warning = "Souffle de flammes dans ~5sec !",
+	breath_warning = "Souffle de flammes dans ~5 sec. !",
 	breath_message = "Souffle de flammes !",
 	breath_cooldown = "Recharge Souffle de flammes",
 
