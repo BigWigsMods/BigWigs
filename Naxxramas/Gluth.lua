@@ -15,9 +15,9 @@ L:RegisterTranslations("enUS", function() return {
 
 	startwarn = "Gluth Engaged! ~105 sec to decimate",
 
-	frenzy = "Frenzy",
-	frenzy_desc = "Warn for frenzy.",
-	frenzy_message = "Frenzy Alert!",
+	frenzy = "Enrage",
+	frenzy_desc = "Warn for enrage.",
+	frenzy_message = "Enraged!",
 
 	decimate = "Decimate",
 	decimate_desc = "Decimate warnings.",
@@ -99,9 +99,9 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("frFR", function() return {
 	startwarn = "Gluth engagé ! ~105 sec. avant Décimer !",
 
-	frenzy = "Frénésie",
-	frenzy_desc = "Prévient quand Gluth entre en frénésie.",
-	frenzy_message = "Frénésie !",
+	frenzy = "Enrager",
+	frenzy_desc = "Prévient quand Gluth devient enragé.",
+	frenzy_message = "Enragé !",
 
 	decimate = "Décimer",
 	decimate_desc = "Prévient de l'arrivé des Décimer.",
