@@ -37,9 +37,9 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	starttrigger = "Вы новая мина!",  --check this
+	starttrigger = "Теперь вы принадлежите мне!",  
 	starttrigger2 = "Ты... следующий!",  --check this
-	starttrigger3 = "Я наблюдаю за тобой...",  --check this
+	starttrigger3 = "Я вижу вас...", 
 
 	engage = "Ярость",
 	engage_desc = "Предупреждать, когда Хейган впадает в ярость.",

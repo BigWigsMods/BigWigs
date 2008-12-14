@@ -49,7 +49,7 @@ L:RegisterTranslations("ruRU", function() return {
 	deepbreath_incoming_message = "Ледяная бомба через 23 секунды!",
 	deepbreath_incoming_soon_message = "Ледяная бомба через 5 секунд!",
 	deepbreath_incoming_bar = "Каст ледяной бомбы",
-	deepbreath_trigger = "%s takes in a deep breath...",  --correct this
+	deepbreath_trigger = "%s глубоко вздыхает.",  
 	deepbreath_warning = "Появляется ледяная бомба!",
 	deepbreath_bar = "Приземляется ледяная бомба!",
 

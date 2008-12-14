@@ -49,8 +49,8 @@ L:RegisterTranslations("frFR", function() return {
 
 L:RegisterTranslations("ruRU", function() return {
 	enragewarn = "5% - Ярость!",
-	starttrigger1 = "Лоскутик входит в игру",  --correct this
-	starttrigger2 = "Кел'Тузад создаёт Лоскутика аватара войны!!", --correct this
+	starttrigger1 = "Лоскутик хочет поиграть!",  --corrected 12.13.2008
+	starttrigger2 = "Кел'Тузад объявил Лоскутика воплощением войны!", --corrected 12.13.2008
 } end )
 
 ----------------------------------

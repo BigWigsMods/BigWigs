@@ -67,7 +67,7 @@ L:RegisterTranslations("ruRU", function() return {
 	adddeath = "Помощник уничтожен",
 	adddeath_desc = "Сообщать о смерти аддов.",
 
-	starttrigger1 = "Добро пожаловать в страну дураков таких же, как вы.",  --check this
+	starttrigger1 = "Глупо было искать свою смерть.",  
 	starttrigger2 = "Я очень долго ждал. Положите свою душу в мой комбайн и будем вам дерево с золотыми монетами.",  --check this
 	startwarn = "Готик в ярости! 4:30 до входа в комнату.",
 
@@ -97,7 +97,7 @@ L:RegisterTranslations("ruRU", function() return {
 	dkbar = "Рыцарь Смерти - %d",
 	riderbar = "Всадник - %d",
 
-	inroomtrigger = "Я очень долго ждал. Положите свою душу в мой комбайн и будем вам дерево с золотыми.",  --check this
+	inroomtrigger = "Я ждал слишком долго. Сейчас вы предстанете пред ликом Жнеца душ.",
 	inroomwarn = "Он в комнате!!",
 
 	inroombartext = "В комнате",

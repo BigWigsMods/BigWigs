@@ -90,14 +90,14 @@ L:RegisterTranslations("ruRU", function() return {
 	enragetrigger = "%s впадает в Ярость берсерка!",  --correct this
 	starttrigger = "Stalagg ломает тебя!",  --correct this
 	starttrigger1 = "Мастер хочеш съесть тебя =P !!",  --correct this
-	starttrigger2 = "Ем... твои... кости...",  --correct this
+	starttrigger2 = "Я сожру… ваши… кости…",  
 	starttrigger3 = "Сломаю... тебя!!",  --correct this
 	starttrigger4 = "убит...",  --correct this
 
-	adddeath = "%s умер.",
-	teslaoverload = "%s перегружен!",
+	adddeath = "%s умирает.", 
+	teslaoverload = "%s перезагружается!", 
 
-	pstrigger = "Ты почувствует новую боль...",  --correct this
+	pstrigger = "Познайте же боль…",  
 	chargetrigger = "Ваш заряд - (%w+).",
 
 	startwarn = "Таддиус фаза 1",
@@ -109,7 +109,7 @@ L:RegisterTranslations("ruRU", function() return {
 	pswarn3 = "3 секунды до сдвига полярности!",
 	poswarn = "Ваш заряд - положительный!",
 	negwarn = "Ваш заряд - отрицательный!",
-	nochange = "Ваш дебафф не изменился!",
+	nochange = "Ваш заряд не изменился!",
 	polaritytickbar = "Тик полярности",
 	stalaggwarn = "Волна силы на Сталагге!",
 	powersurgebar = "Волна силы",
