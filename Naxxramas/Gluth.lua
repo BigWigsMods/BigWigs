@@ -170,7 +170,7 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 			self:Bar(L["decimatebartext"], 105, 16590)
 			self:DelayedMessage(100, L["decimatesoonwarn"], "Urgent")
 		end
-		if self.db.profile.enrage then
+		if self.db.profile.berserk then
 			self:Enrage(480, true, true)
 		end
 	end

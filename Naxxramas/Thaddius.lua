@@ -428,7 +428,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 		if self.db.profile.phase then
 			self:Message(L["startwarn2"], "Important")
 		end
-		if self.db.profile.enrage then
+		if self.db.profile.berserk then
 			self:Enrage(360, true, true)
 		end
 	end
