@@ -5,6 +5,7 @@
 local boss = BB["Grobbulus"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 local started = nil
+local pName = UnitName("player")
 
 ----------------------------
 --      Localization      --
@@ -13,12 +14,9 @@ local started = nil
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Grobbulus",
 
-	youinjected = "You're injected",
-	youinjected_desc = "Warn when you're injected.",
+	inject = "You're injected",
+	inject_desc = "Warn when injected.",
 	bomb_message_you = "You are injected!",
-
-	otherinjected = "Others injected",
-	otherinjected_desc = "Warn when others are injected.",
 	bomb_message_other = "%s is injected!",
 
 	icon = "Place Icon",
@@ -31,12 +29,9 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
-	youinjected = "Вам сдедали укол",
-	youinjected_desc = "Предупреждать об уколе.",
+	--inject = "Вам сдедали укол",
+	--inject_desc = "Предупреждать об уколе.",
 	bomb_message_you = "Вам сделали укол! Бегите от рейда!!",
-
-	otherinjected = "Укололи другого",
-	otherinjected_desc = "Сообщать, когда босс делает укол участнику рейда",
 	bomb_message_other = "%s сделали укол! Бегите от него! ",
 
 	icon = "Помечать иконкой",
@@ -49,12 +44,9 @@ L:RegisterTranslations("ruRU", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
-	youinjected = "Du bist verseucht",
-	youinjected_desc = "Warnung, wenn Du von Mutagene Injektion betroffen bist.",
+	--inject = "Du bist verseucht",
+	--inject_desc = "Warnung, wenn Du von Mutagene Injektion betroffen bist.",
 	bomb_message_you = "Du bist verseucht!",
-
-	otherinjected = "X ist verseucht",
-	otherinjected_desc = "Warnung, wenn andere Spieler von Mutagene Injektion betroffen sind.",
 	bomb_message_other = "%s ist verseucht!",
 
 	icon = "Symbol",
@@ -67,13 +59,10 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	youinjected = "자신의 돌연변이",
-	youinjected_desc = "자신의 돌연변이를 알립니다.",
+	inject = "돌연변이",
+	inject_desc = "돌연변이를 알립니다.",
 	bomb_message_you = "당신은 돌연변이 유발!",
-
-	otherinjected = "타인의 돌연변이",
-	otherinjected_desc = "타인의 돌연변이를 알립니다.",
-	bomb_message_other = "%s 돌연변이 유발!",
+	bomb_message_other = "돌연변이 유발: %s!",
 
 	icon = "전술 표시",
 	icon_desc = "돌연변이 유발 대상이된 플레이어에게 전술 표시를 지정합니다. (승급자 이상 권한 필요)",
@@ -85,12 +74,9 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	youinjected = "自身变异注射",
-	youinjected_desc = "当你中了变异注射时发出警报。",
+	--inject = "自身变异注射",
+	--inject_desc = "当你中了变异注射时发出警报。",
 	bomb_message_you = ">你< 变异注射！",
-
-	otherinjected = "玩家变异注射",
-	otherinjected_desc = "玩家中了变异注射时发出警报。",
 	bomb_message_other = ">%s< 变异注射！",
 
 	icon = "团队标记",
@@ -103,12 +89,9 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	youinjected = "自身突變注射警報",
-	youinjected_desc = "當你中了突變注射時發出警報。",
+	--inject = "自身突變注射警報",
+	--inject_desc = "當你中了突變注射時發出警報。",
 	bomb_message_you = ">你< 突變注射！",
-
-	otherinjected = "玩家突變注射警報",
-	otherinjected_desc = "玩家中了突變注射時發出警報。",
 	bomb_message_other = ">%s< 突變注射！",
 
 	icon = "團隊標記",
@@ -121,12 +104,9 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	youinjected = "Injection mutante sur vous",
-	youinjected_desc = "Prévient quand vous subissez les effets de l'Injection mutante.",
+	--inject = "Injection mutante sur vous",
+	--inject_desc = "Prévient quand vous subissez les effets de l'Injection mutante.",
 	bomb_message_you = "Vous êtes injecté !",
-
-	otherinjected = "Injection mutante sur les autres",
-	otherinjected_desc = "Prévient quand un joueur subit les effets de l'Injection mutante.",
 	bomb_message_other = "%s est injecté  !",
 
 	icon = "Icône",
@@ -146,7 +126,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 15931
-mod.toggleoptions = {"youinjected", "otherinjected", "icon", "cloud", "enrage", "bosskill"}
+mod.toggleoptions = {"inject", "icon", "cloud", "enrage", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -170,17 +150,20 @@ end
 ------------------------------
 
 function mod:Inject(player, spellID)
-	local other = L["bomb_message_other"]:format(player)
-	if self.db.profile.youinjected and UnitIsUnit(player, "player") then
-		self:LocalMessage(L["bomb_message_you"], "Personal", spellID, "Alarm")
-		self:WideMessage(other)
+	if self.db.profile.inject then
+		local other = L["bomb_message_other"]:format(player)
+		if player == pName then
+			self:Message(L["bomb_message_you"], "Personal", true, "Alert", nil, spellID)
+			self:Message(other, "Attention", nil, nil, true)
+		else
+			self:Message(other, "Attention", nil, nil, nil, spellID)
+			self:Whisper(player, L["bomb_message_you"])
+		end
 		self:Bar(other, 10, spellID)
-	elseif self.db.profile.otherinjected then
-		self:IfMessage(other, "Attention", spellID)
-		self:Whisper(rest, L["bomb_message_you"])
-		self:Bar(other, 10, spellID)
+		if self.db.profile.icon then
+			self:Icon(player, "icon")
+		end
 	end
-	self:Icon(player, "icon")
 end
 
 function mod:Cloud(_, spellID)

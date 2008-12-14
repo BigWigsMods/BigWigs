@@ -94,7 +94,7 @@ L:RegisterTranslations("koKR", function() return {
 	cocoon = "거미줄 감싸기",
 	cocoon_desc = "거미줄 감싸기에 걸린 플레이어를 알립니다.",
 
-	cocoonwarn = "%s 거미줄 감싸기!",
+	cocoonwarn = "거미줄 감싸기: %s!",
 
 	enragetrigger = "%s|1이;가; 분노에 휩싸입니다!",
 

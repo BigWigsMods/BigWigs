@@ -193,7 +193,7 @@ function mod:Spore()
 	--spellID is a question mark, so we use our own: 38755
 	self:IfMessage(L["sporewarn"]:format(sporeCount), "Important", 38755)
 	sporeCount = sporeCount + 1
-	self:Bar(L["sporebar"]:format(sporeCount), 12, 38755)
+	self:Bar(L["sporebar"]:format(sporeCount), 36, 38755)
 end
 
 function mod:Decurse(_, spellID)

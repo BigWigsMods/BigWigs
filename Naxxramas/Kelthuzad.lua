@@ -6,6 +6,7 @@ local boss = BB["Kel'Thuzad"]
 local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 local MCd = {}
+local FBd = {}
 local fmt = string.format
 local pName = UnitName("player")
 local frostBlastTime
@@ -47,7 +48,7 @@ L:RegisterTranslations("enUS", function() return {
 	frostblast = "Frost Blast",
 	frostblast_desc = "Alerts when people get Frost Blasted.",
 	frostblast_bar = "Possible Frost Blast",
-	frostblast_warning = "Frost Blast!",
+	frostblast_message = "%s : Frost Blast",
 	frostblast_soon_message = "Possible Frost Blast in ~5 sec!",
 
 	detonate = "Detonate Mana",
@@ -98,7 +99,7 @@ L:RegisterTranslations("ruRU", function() return {
 	frostblast = "Опасность ледяного взрыва",
 	frostblast_desc = "Сообщать, когда ледяной взрыв добирается до игроков.",
 	frostblast_bar = "Возможен ледяной взрыв",
-	frostblast_warning = "Ледяной взрыв!",
+	--frostblast_message = "%s : Frost Blast",
 	frostblast_soon_message = "Возможный ледяной взрыв через 15 секунд!",
 
 	detonate = "Опасность взрыва маны",
@@ -121,7 +122,7 @@ L:RegisterTranslations("ruRU", function() return {
 L:RegisterTranslations("koKR", function() return {
 	KELTHUZADCHAMBERLOCALIZEDLOLHAX = "켈투자드의 방",
 	
-	start_trigger = "어둠의 문지기와 하수인, 그리고 병사들이여, 나 켈투자드가 부르니 명을 받들라!",
+	start_trigger = "어둠의 문지기와 하수인, 그리고 병사들이여! 나 켈투자드가 부르니 명을 받들라!",
 	start_warning = "켈투자드 전투 시작! 약 5분 후 활동!",
 	start_bar = "2 단계",
 
@@ -149,7 +150,7 @@ L:RegisterTranslations("koKR", function() return {
 	frostblast = "냉기 작렬",
 	frostblast_desc = "냉기 작렬을 알립니다.",
 	frostblast_bar = "냉기 작렬 가능",
-	frostblast_warning = "냉기 작렬!",
+	frostblast_message = "냉기 작렬: %s",
 	frostblast_soon_message = "약 5초 이내 냉기 작렬 가능!",
 
 	detonate = "마나 폭발",
@@ -157,11 +158,11 @@ L:RegisterTranslations("koKR", function() return {
 	detonate_you = "당신은 마나 폭발!",
 	detonate_other = "마나 폭발 - %s",
 	detonate_possible_bar = "폭발 가능",
-	detonate_warning = "5초 이내 다음 마나 폭발!",
+	detonate_warning = "약 5초 이내 마나 폭발!",
 
 	guardians = "수호자 생성",
 	guardians_desc = "3 단계의 수호자 소환을 알립니다.",
-	guardians_trigger = "좋다. 얼어붙은 땅의 전사들이여, 일어나 싸워라! 쓰러질 때까지! 나를 위해! 한 놈도 살려두지 마라.",
+	guardians_trigger = "좋다. 얼어붙은 땅의 전사들이여, 일어나라! 너희에게 싸울 것을 명하노라. 날 위해 죽고, 날 위해 죽여라! 한 놈도 살려두지 마라!",
 	guardians_warning = "10초 이내 수호자 등장!",
 	guardians_bar = "수호자 등장!",
 
@@ -200,7 +201,7 @@ L:RegisterTranslations("deDE", function() return {
 	frostblast = "Frostschlag Warnung",
 	frostblast_desc = "Warnt wenn Leute Frostschlag bekommen.",
 	--frostblast_bar = "Possible Frost Blast",
-	frostblast_warning = "Frostschlag!",
+	--frostblast_message = "%s : Frost Blast",
 	--frostblast_soon_message = "Possible Frost Blast in ~5sec!",
 
 	detonate = "Detonierendes Mana Warnung",
@@ -251,7 +252,7 @@ L:RegisterTranslations("zhCN", function() return {
 	frostblast = "冰霜冲击",
 	frostblast_desc = "当玩家中了冰霜冲击时发出警报。",
 	frostblast_bar = "<可能 冰霜冲击>",
-	frostblast_warning = "冰霜冲击！",
+	--frostblast_message = "%s : Frost Blast",
 	frostblast_soon_message = "约5秒后，可能冰霜冲击！",
 
 	detonate = "自爆法力",
@@ -303,7 +304,7 @@ L:RegisterTranslations("zhTW", function() return {
 	frostblast = "冰霜衝擊",
 	frostblast_desc = "當玩家中了冰霜衝擊時發出警報。",
 	frostblast_bar = "<可能 冰霜衝擊>",
-	frostblast_warning = "冰霜沖擊！",
+	--frostblast_message = "%s : Frost Blast",
 	frostblast_soon_message = "約5秒後，可能冰霜衝擊！",
 
 	detonate = "爆裂法力",
@@ -354,7 +355,7 @@ L:RegisterTranslations("frFR", function() return {
 	frostblast = "Trait de glace",
 	frostblast_desc = "Prévient quand des joueurs subissent les effets du Trait de glace.",
 	frostblast_bar = "Trait de givre probable",
-	frostblast_warning = "Trait de givre !",
+	--frostblast_message = "%s : Frost Blast",
 	frostblast_soon_message = "Trait de givre probable dans ~5 sec. !",
 
 	detonate = "Faire détoner mana",
@@ -430,15 +431,29 @@ function mod:Fizzure(_, spellID)
 	end
 end
 
-function mod:FrostBlast(_, spellID)
+function mod:FrostBlast(player, spellID)
 	if self.db.profile.frostblast then
 		if not frostBlastTime or (frostBlastTime + 2) < GetTime() then
-			self:Message(L["frostblast_warning"], "Attention")
+			FBd[player] = true
+			self:ScheduleEvent("FBCheck", self.FBWarn, 0.5, self)
 			self:ScheduleEvent("bwktfbwarn", "BigWigs_Message", 20, L["frostblast_soon_message"])
 			self:Bar(L["frostblast_bar"], 25, spellID)
 			frostBlastTime = GetTime()
 		end
 	end
+end
+
+function mod:FBWarn()
+	local msg = nil
+	for k in pairs(FBd) do
+		if not msg then
+			msg = k
+		else
+			msg = msg .. ", " .. k
+		end
+	end
+	self:IfMessage(fmt(L["frostblast_message"], msg), "Important", 27808, "Alert")
+	for k in pairs(FBd) do FBd[k] = nil end
 end
 
 function mod:Detonate(player, spellID)
