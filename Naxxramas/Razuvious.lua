@@ -12,7 +12,7 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Razuvious",
-	
+
 	shout = "Disrupting Shout",
 	shout_desc = "Warn for Disrupting Shout.",
 	shout_warning = "Disrupting Shout in 5sec!",
@@ -25,7 +25,7 @@ L:RegisterTranslations("enUS", function() return {
 	taunt = "Taunt",
 	taunt_desc = "Warn for taunt.",
 	taunt_warning = "Taunt done in 5sec!",
-	
+
 	shieldwall = "Shield Wall",
 	shieldwall_desc = "Warn for shieldwall.",
 	shieldwall_warning = "Shield Wall done in 5sec!",
@@ -36,7 +36,7 @@ L:RegisterTranslations("deDE", function() return {
 	--shout_desc = "Warn for Disrupting Shout.",
 	--shout_warning = "Disrupting Shout in 5sec!",
 	--shout_next = "Shout Cooldown",
-	
+
 	--knife = "Jagged Knife",
 	--knife_desc = "Warn who has Jagged Knife.",
 	--knife_message = "%s: Jagged Knife",
@@ -63,7 +63,7 @@ L:RegisterTranslations("koKR", function() return {
 	taunt = "도발",
 	taunt_desc = "도발에 대하여 알립니다.",
 	taunt_warning = "5초 후 도발 종료!",
-	
+
 	shieldwall = "방패의 벽",
 	shieldwall_desc = "방패의 벽에 대하여 알립니다",
 	shieldwall_warning = "5초 후 방패의 벽 종료!",
@@ -74,7 +74,7 @@ L:RegisterTranslations("zhCN", function() return {
 	--shout_desc = "Warn for Disrupting Shout.",
 	--shout_warning = "Disrupting Shout in 5sec!",
 	--shout_next = "Shout Cooldown",
-	
+
 	knife = "裂纹小刀",
 	knife_desc = "当玩家中了裂纹小刀时发出警报。",
 	knife_message = ">%s<：裂纹小刀！",
@@ -93,7 +93,7 @@ L:RegisterTranslations("zhTW", function() return {
 	--shout_desc = "Warn for Disrupting Shout.",
 	--shout_warning = "Disrupting Shout in 5sec!",
 	--shout_next = "Shout Cooldown",
-	
+
 	knife = "鋸齒刀",
 	knife_desc = "當玩家中了鋸齒刀時發出警報。",
 	knife_message = ">%s<：鋸齒刀！",
@@ -101,18 +101,18 @@ L:RegisterTranslations("zhTW", function() return {
 	taunt = "嘲諷",
 	taunt_desc = "當死亡騎士實習者施放嘲諷時發出警報。",
 	taunt_warning = "5秒后，可以嘲諷！",
-	
+
 	shieldwall = "骸骨屏障",
 	shieldwall_desc = "當死亡騎士實習者施放骸骨屏障時發出警報。",
 	shieldwall_warning = "5秒后，可以骸骨屏障！",
 } end )
 
 L:RegisterTranslations("frFR", function() return {
-	--shout = "Disrupting Shout",
-	--shout_desc = "Warn for Disrupting Shout.",
-	--shout_warning = "Disrupting Shout in 5sec!",
-	--shout_next = "Shout Cooldown",
-	
+	shout = "Cri perturbant",
+	shout_desc = "Prévient de l'arrivée des Cris perturbant.",
+	shout_warning = "Cri perturbant dans 5 sec. !",
+	shout_next = "Recharge Cri",
+
 	knife = "Couteau dentelé",
 	knife_desc = "Prévient quand un joueur subit les effets du Couteau dentelé.",
 	knife_message = "%s : Couteau dentelé",
@@ -131,7 +131,7 @@ L:RegisterTranslations("ruRU", function() return {
 	--shout_desc = "Warn for Disrupting Shout.",
 	--shout_warning = "Disrupting Shout in 5sec!",
 	--shout_next = "Shout Cooldown",
-	
+
 	--knife = "Jagged Knife",
 	--knife_desc = "Warn who has Jagged Knife.",
 	--knife_message = "%s: Jagged Knife",
@@ -139,7 +139,7 @@ L:RegisterTranslations("ruRU", function() return {
 	--taunt = "Taunt",
 	--taunt_desc = "Warn for taunt.",
 	--taunt_warning = "Taunt done in 5sec!",
-	
+
 	--shieldwall = "Shield Wall",
 	--shieldwall_desc = "Warn for shieldwall.",
 	--shieldwall_warning = "Shield Wall done in 5sec!",

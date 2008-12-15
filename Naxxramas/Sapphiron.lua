@@ -199,7 +199,7 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("frFR", function() return {
 	deepbreath = "Bombe de glace",
 	deepbreath_desc = "Prévient quand Saphiron commence à lancer sa Bombe de glace.",
-	--airphase_trigger = "%s lifts off into the air!",
+	airphase_trigger = "%s s'envole !",
 	deepbreath_incoming_message = "Incantation d'une Bombe de glace dans ~23 sec. !",
 	deepbreath_incoming_soon_message = "Incantation d'une Bombe de glace dans ~5 sec. !",
 	deepbreath_incoming_bar = "Bombe de glace en incantation",
@@ -247,7 +247,7 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Icebolt", 28522)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveIcon", 28522)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
-	
+
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")

@@ -18,12 +18,12 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Loatheb",
 
 	startwarn = "Loatheb engaged, 2 minutes to Inevitable Doom!",
-	
+
 	aura = "Necrotic Aura",
 	aura_desc = "Warn for Necrotic Aura",
 	aura_message = "Necrotic Aura - Duration 17 sec!",
 	aura_warning = "Necrotic Aura Fade in 3 sec!",
-	
+
 	deathbloom = "Deathbloom",
 	deathbloom_desc = "Warn for Deathbloom",
 	deathbloom_warning = "Deathbloom in 5 sec!",
@@ -50,11 +50,11 @@ L:RegisterTranslations("ruRU", function() return {
 	--aura_desc = "Warn for Necrotic Aura",
 	--aura_message = "Necrotic Aura - Duration 17 sec!",
 	--aura_warning = "Necrotic Aura Fade in 3 sec!",
-	
+
 	--deathbloom = "Deathbloom",
 	--deathbloom_desc = "Warn for Deathbloom",
 	--deathbloom_warning = "Deathbloom in 5 sec!",
-	
+
 	doom = "Неотвратимый рок",
 	doom_desc = "Предупрежлать о неотвратимом роке",
 	doombar = "Неотвратимый рок %d",
@@ -72,7 +72,7 @@ L:RegisterTranslations("ruRU", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	startwarn = "로데브 전투시작!, 2분 후 피할 수 없는 파멸!",
-	
+
 	aura = "강령술의 오라",
 	aura_desc = "강령술의 오라를 알립니다.",
 	aura_message = "강령술의 오라 - 17초 지속!",
@@ -81,7 +81,7 @@ L:RegisterTranslations("koKR", function() return {
 	deathbloom = "죽음의 꽃",
 	deathbloom_desc = "죽음의 꽃을 알립니다.",
 	deathbloom_warning = "5초 후 죽음의 꽃!",
-	
+
 	doom = "파멸",
 	doom_desc = "피할 수 없는 파멸을 알립니다.",
 	doombar = "피할 수 없는 파멸 %d",
@@ -104,11 +104,11 @@ L:RegisterTranslations("deDE", function() return {
 	--aura_desc = "Warn for Necrotic Aura",
 	--aura_message = "Necrotic Aura - Duration 17 sec!",
 	--aura_warning = "Necrotic Aura Fade in 3 sec!",
-	
+
 	--deathbloom = "Deathbloom",
 	--deathbloom_desc = "Warn for Deathbloom",
 	--deathbloom_warning = "Deathbloom in 5 sec!",
-	
+
 	doom = "Unausweichliches Schicksal",
 	doom_desc = "Warnung f\195\188r Unausweichliches Schicksal.",
 	doombar = "Unausweichliches Schicksal %d",
@@ -131,11 +131,11 @@ L:RegisterTranslations("zhCN", function() return {
 	--aura_desc = "Warn for Necrotic Aura",
 	--aura_message = "Necrotic Aura - Duration 17 sec!",
 	--aura_warning = "Necrotic Aura Fade in 3 sec!",
-	
+
 	--deathbloom = "Deathbloom",
 	--deathbloom_desc = "Warn for Deathbloom",
 	--deathbloom_warning = "Deathbloom in 5 sec!",
-	
+
 	doom = "必然的厄运",
 	doom_desc = "当施放必然的厄运时发出警报。",
 	doombar = "<必然的厄运：%d>",
@@ -158,11 +158,11 @@ L:RegisterTranslations("zhTW", function() return {
 	--aura_desc = "Warn for Necrotic Aura",
 	--aura_message = "Necrotic Aura - Duration 17 sec!",
 	--aura_warning = "Necrotic Aura Fade in 3 sec!",
-	
+
 	--deathbloom = "Deathbloom",
 	--deathbloom_desc = "Warn for Deathbloom",
 	--deathbloom_warning = "Deathbloom in 5 sec!",
-	
+
 	doom = "無可避免的末日",
 	doom_desc = "當施放無可避免的末日時發出警報。",
 	doombar = "<無可避免的末日：%d>",
@@ -181,15 +181,15 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("frFR", function() return {
 	startwarn = "Horreb engagé, 2 min. avant Malédiction inévitable !",
 
-	--aura = "Necrotic Aura",
-	--aura_desc = "Warn for Necrotic Aura",
-	--aura_message = "Necrotic Aura - Duration 17 sec!",
-	--aura_warning = "Necrotic Aura Fade in 3 sec!",
-	
-	--deathbloom = "Deathbloom",
-	--deathbloom_desc = "Warn for Deathbloom",
-	--deathbloom_warning = "Deathbloom in 5 sec!",
-	
+	aura = "Aura nécrotique",
+	aura_desc = "Prévient de l'arrivée des Auras nécrotiques.",
+	aura_message = "Aura nécrotique - Durée de 17 sec. !",
+	aura_warning = "Fin de l'Aura nécrotique dans 3 sec. !",
+
+	deathbloom = "Mortelle floraison",
+	deathbloom_desc = "Prévient de l'arrivée des Mortelles floraisons.",
+	deathbloom_warning = "Mortelle floraison dans 5 sec. !",
+
 	doom = "Malédiction inévitable",
 	doom_desc = "Prévient de l'arrivée des Malédictions inévitables.",
 	doombar = "Malédiction inévitable %d",
