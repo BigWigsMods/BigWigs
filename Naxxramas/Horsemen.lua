@@ -298,7 +298,7 @@ end
 
 function mod:Deaths(_, guid)
 	guid = tonumber((guid):sub(-12,-7),16)
-	if guid == self.guid or guid == 16062 or guid == 16063 or guid == 16064 then
+	if guid == self.guid or guid == 30549 or guid == 16063 or guid == 16064 then
 		deaths = deaths + 1
 		self:IfMessage(L["dies"]:format(deaths), "Positive")
 	end

@@ -43,9 +43,9 @@ L:RegisterTranslations("ruRU", function() return {
 L:RegisterTranslations("koKR", function() return {
 	startwarn = "글루스 전투 시작! 약 105초 후 좀비 척살!",
 
-	frenzy = "광기",
-	frenzy_desc = "광기를 알립니다.",
-	frenzy_message = "광기 경고!",
+	frenzy = "격노",
+	frenzy_desc = "격노를 알립니다.",
+	frenzy_message = "격노!",
 
 	decimate = "척살",
 	decimate_desc = "척살을 알립니다.",

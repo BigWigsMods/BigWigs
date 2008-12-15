@@ -38,7 +38,6 @@ L:RegisterTranslations("enUS", function() return {
 	throw = "Throw",
 	throw_desc = "Warn about tank platform swaps.",
 
-	enragetrigger = "%s goes into a berserker rage!",
 	starttrigger = "Stalagg crush you!",
 	starttrigger1 = "Feed you to master!",
 	starttrigger2 = "Eat... your... bones...",
@@ -56,7 +55,7 @@ L:RegisterTranslations("enUS", function() return {
 	addsdownwarn = "Thaddius incoming in 10-20sec!",
 	thaddiusincoming = "Thaddius incoming in 3 sec!",
 	pswarn1 = "Thaddius begins to cast Polarity Shift!",
-	pswarn2 = "30 sec to Polarity Shift!",
+	pswarn2 = "28 sec to Polarity Shift!",
 	pswarn3 = "3 sec to Polarity Shift!",
 	poswarn = "You changed to a Positive Charge!",
 	negwarn = "You changed to a Negative Charge!",
@@ -87,7 +86,6 @@ L:RegisterTranslations("ruRU", function() return {
 	throw = "Бросока",
 	throw_desc = "Предупреждать об обменах платформы резервуара.",
 
-	enragetrigger = "%s впадает в Ярость берсерка!",  --correct this
 	starttrigger = "Stalagg ломает тебя!",  --correct this
 	starttrigger1 = "Мастер хочеш съесть тебя =P !!",  --correct this
 	starttrigger2 = "Я сожру… ваши… кости…",  
@@ -105,7 +103,7 @@ L:RegisterTranslations("ruRU", function() return {
 	addsdownwarn = "Таддиус появится через 10-20 секунд!",
 	thaddiusincoming = "Таддиус появится через 3 секунды!",
 	pswarn1 = "Таддиус сдвигает полярность!",
-	pswarn2 = "30 секунд до сдвига полярности!",
+	pswarn2 = "28 секунд до сдвига полярности!",
 	pswarn3 = "3 секунды до сдвига полярности!",
 	poswarn = "Ваш заряд - положительный!",
 	negwarn = "Ваш заряд - отрицательный!",
@@ -136,15 +134,14 @@ L:RegisterTranslations("koKR", function() return {
 	throw = "던지기",
 	throw_desc = "탱커 위치 교체를 알립니다.",
 
-	enragetrigger = "%s|1이;가; 광폭해집니다!",
 	starttrigger = "스탈라그, 박살낸다!",
 	starttrigger1 = "너 주인님께 바칠꺼야!",
 	starttrigger2 = "잡아... 먹어주마...",
 	starttrigger3 = "박살을 내주겠다!",
 	starttrigger4 = "죽여주마...",
 
-	adddeath = "%s|1이;가; 죽습니다.",
-	teslaoverload = "%s|1이;가; 과부하 상태가 됩니다.",
+	adddeath = "가 죽습니다.",
+	teslaoverload = "테슬라 코일가 과부하 상태가 됩니다.",
 
 	pstrigger = "자, 고통을 느껴봐라...",
 	chargetrigger = "(%w+)전하에 걸렸습니다.",
@@ -154,7 +151,7 @@ L:RegisterTranslations("koKR", function() return {
 	addsdownwarn = "10~20초 이내 2단계 시작!",
 	thaddiusincoming = "3초 이내 2단계 시작!",
 	pswarn1 = "타디우스 극성 변환 시전!",
-	pswarn2 = "30초 이내 극성 변환!",
+	pswarn2 = "28초 이내 극성 변환!",
 	pswarn3 = "3초 이내 극성 변환!",
 	poswarn = "양전하로 변환!! 반대로 이동!",
 	negwarn = "음전하로 변환!! 반대로 이동!",
@@ -182,7 +179,6 @@ L:RegisterTranslations("deDE", function() return {
 	charge = "Ladungs-Warnung",
 	charge_desc = "Warnung bei positiver/negativer Aufladung bei euch selbst.",
 
-	enragetrigger = "verf\195\164llt in Berserkerwut",
 	starttrigger = "Stalagg zerquetschen!",
 	starttrigger1 = "Verf\195\188ttere euch an Meister!",
 	starttrigger2 = "Eure... Knochen... zermalmen...",
@@ -200,7 +196,7 @@ L:RegisterTranslations("deDE", function() return {
 	addsdownwarn = "Thaddius kommt frei in 10-20s!",
 	thaddiusincoming = "Thaddius kommt frei in 3s!",
 	pswarn1 = "Thaddius beginnt Polarit\195\164tsver\195\164nderung zu wirken!",
-	pswarn2 = "30 Sekunden bis Polarit\195\164tsver\195\164nderung!",
+	pswarn2 = "28 Sekunden bis Polarit\195\164tsver\195\164nderung!",
 	pswarn3 = "3 Sekunden bis Polarit\195\164tsver\195\164nderung!",
 	poswarn = "Ihr seid eine positive Ladung!",
 	negwarn = "Ihr seid eine negative Ladung!",
@@ -226,7 +222,6 @@ L:RegisterTranslations("zhCN", function() return {
 	throw = "投掷",
 	throw_desc = "当 MT 被投掷到对面平台时发出警报。",
 
-	enragetrigger = "%s变得极度狂暴而愤怒！",
 	starttrigger = "斯塔拉格要碾碎你！",
 	starttrigger1 = "主人要吃了你！",
 	starttrigger2 = "咬碎……你的……骨头……",
@@ -244,7 +239,7 @@ L:RegisterTranslations("zhCN", function() return {
 	addsdownwarn = "10-20秒后，塔迪乌斯出现！",
 	thaddiusincoming = "3秒后，塔迪乌斯出现！",
 	pswarn1 = "塔迪乌斯开始施放极性转化！",
-	pswarn2 = "30秒后，极性转化！",
+	pswarn2 = "28秒后，极性转化！",
 	pswarn3 = "3秒后，极性转化！",
 	poswarn = "你是正电荷！",
 	negwarn = "你是负电荷！",
@@ -276,7 +271,6 @@ L:RegisterTranslations("zhTW", function() return {
 	throw = "投擲",
 	throw_desc = "當主坦克被投擲到對面平台時發出警報。",
 
-	enragetrigger = "變得極度狂暴而憤怒！",
 	starttrigger = "斯塔拉格要碾碎你！",
 	starttrigger1 = "主人要吃了你！",
 	starttrigger2 = "咬碎……你的……骨頭……",
@@ -294,7 +288,7 @@ L:RegisterTranslations("zhTW", function() return {
 	addsdownwarn = "10-20秒後，泰迪斯出現！",
 	thaddiusincoming = "3秒後，泰迪斯出現！",
 	pswarn1 = "泰迪斯開始施放兩極移形！",
-	pswarn2 = "30秒後，兩極移形！",
+	pswarn2 = "28秒後，兩極移形！",
 	pswarn3 = "3秒後，兩極移形！",
 	poswarn = "你是正電荷！",
 	negwarn = "你是負電荷！",
@@ -325,7 +319,6 @@ L:RegisterTranslations("frFR", function() return {
 	throw = "Lancer",
 	throw_desc = "Prévient quand les tanks sont lancés d'une plate-forme à l'autre.",
 
-	enragetrigger = "%s entre dans une rage démente !",
 	starttrigger = "Stalagg écraser toi !",
 	starttrigger1 = "À manger pour maître !",
 	starttrigger2 = "Manger… tes… os…",
@@ -343,7 +336,7 @@ L:RegisterTranslations("frFR", function() return {
 	addsdownwarn = "Arrivée de Thaddius dans 10-20 sec. !",
 	thaddiusincoming = "Arrivée de Thaddius dans 3 sec. !",
 	pswarn1 = "Thaddius commence à incanter un Changement de polarité !",
-	pswarn2 = "30 sec. avant Changement de polarité !",
+	pswarn2 = "28 sec. avant Changement de polarité !",
 	pswarn3 = "3 sec. avant Changement de polarité !",
 	poswarn = "Vous avez maintenant une charge positive !",
 	negwarn = "Vous avez maintenant une charge négative !",
@@ -411,8 +404,8 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(msg)
 	if msg:find(L["pstrigger"]) and self.db.profile.polarity then
 		self:RegisterEvent("PLAYER_AURAS_CHANGED")
-		self:DelayedMessage(27, L["pswarn3"], "Important")
-		self:Bar(L["bar1text"], 30, "Spell_Nature_Lightning")
+		self:DelayedMessage(25, L["pswarn3"], "Important")
+		self:Bar(L["bar1text"], 28, "Spell_Nature_Lightning")
 	elseif msg == L["starttrigger"] or msg == L["starttrigger1"] then
 		if self.db.profile.phase and not stage1warn then
 			self:Message(L["startwarn"], "Important")
@@ -435,11 +428,7 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
-	if msg == L["enragetrigger"] then
-		if self.db.profile.enrage then
-			self:Message(L2["enrage_end"]:format(boss), "Attention", nil, "Alarm")
-		end
-	elseif msg == L["adddeath"] then
+	if msg:find(L["adddeath"]) then
 		addsdead = addsdead + 1
 		if addsdead == 2 then
 			if self.db.profile.phase then

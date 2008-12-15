@@ -12,6 +12,11 @@ local L = AceLibrary("AceLocale-2.2"):new("BigWigs"..boss)
 
 L:RegisterTranslations("enUS", function() return {
 	cmd = "Razuvious",
+	
+	shout = "Disrupting Shout",
+	shout_desc = "Warn for Disrupting Shout.",
+	shout_warning = "Disrupting Shout in 5sec!",
+	shout_next = "Shout Cooldown",
 
 	knife = "Jagged Knife",
 	knife_desc = "Warn who has Jagged Knife.",
@@ -27,6 +32,11 @@ L:RegisterTranslations("enUS", function() return {
 } end )
 
 L:RegisterTranslations("deDE", function() return {
+	--shout = "Disrupting Shout",
+	--shout_desc = "Warn for Disrupting Shout.",
+	--shout_warning = "Disrupting Shout in 5sec!",
+	--shout_next = "Shout Cooldown",
+	
 	--knife = "Jagged Knife",
 	--knife_desc = "Warn who has Jagged Knife.",
 	--knife_message = "%s: Jagged Knife",
@@ -41,6 +51,11 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
+	shout = "분열의 외침",
+	shout_desc = "분열의 외침을 알립니다.",
+	shout_warning = "5초 후 분열의 외침!",
+	shout_next = "분열 대기시간",
+
 	knife = "뾰족한 나이프",
 	knife_desc = "뾰족한 나이프에 걸린 플레이어를 알립니다.",
 	knife_message = "뾰족한 나이프: %s",
@@ -55,6 +70,11 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
+	--shout = "Disrupting Shout",
+	--shout_desc = "Warn for Disrupting Shout.",
+	--shout_warning = "Disrupting Shout in 5sec!",
+	--shout_next = "Shout Cooldown",
+	
 	knife = "裂纹小刀",
 	knife_desc = "当玩家中了裂纹小刀时发出警报。",
 	knife_message = ">%s<：裂纹小刀！",
@@ -69,6 +89,11 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
+	--shout = "Disrupting Shout",
+	--shout_desc = "Warn for Disrupting Shout.",
+	--shout_warning = "Disrupting Shout in 5sec!",
+	--shout_next = "Shout Cooldown",
+	
 	knife = "鋸齒刀",
 	knife_desc = "當玩家中了鋸齒刀時發出警報。",
 	knife_message = ">%s<：鋸齒刀！",
@@ -83,6 +108,11 @@ L:RegisterTranslations("zhTW", function() return {
 } end )
 
 L:RegisterTranslations("frFR", function() return {
+	--shout = "Disrupting Shout",
+	--shout_desc = "Warn for Disrupting Shout.",
+	--shout_warning = "Disrupting Shout in 5sec!",
+	--shout_next = "Shout Cooldown",
+	
 	knife = "Couteau dentelé",
 	knife_desc = "Prévient quand un joueur subit les effets du Couteau dentelé.",
 	knife_message = "%s : Couteau dentelé",
@@ -97,6 +127,11 @@ L:RegisterTranslations("frFR", function() return {
 } end )
 
 L:RegisterTranslations("ruRU", function() return {
+	--shout = "Disrupting Shout",
+	--shout_desc = "Warn for Disrupting Shout.",
+	--shout_warning = "Disrupting Shout in 5sec!",
+	--shout_next = "Shout Cooldown",
+	
 	--knife = "Jagged Knife",
 	--knife_desc = "Warn who has Jagged Knife.",
 	--knife_message = "%s: Jagged Knife",
@@ -118,7 +153,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = {boss, understudy}
 mod.guid = 16061
-mod.toggleoptions = {"knife", -1, "shieldwall", "taunt", "bosskill",}
+mod.toggleoptions = {"shout", "knife", -1, "shieldwall", "taunt", "bosskill",}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -126,6 +161,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Shout", 29107, 55543)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Taunt", 29060)
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Knife", 55550)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "ShieldWall", 29061)
@@ -135,6 +171,14 @@ end
 ------------------------------
 --      Event Handlers      --
 ------------------------------
+
+function mod:Shout(_, spellID)
+	if self.db.profile.shout then
+		self:Message(L["shout"], "Important", spellID, "Alert")
+		self:Bar(L["shout_next"], 15, spellID)
+		self:DelayedMessage(12, L["shout_warning"], "Attention")
+	end
+end
 
 function mod:ShieldWall(_, spellID, _, _, spellName)
 	if self.db.profile.shieldwall then

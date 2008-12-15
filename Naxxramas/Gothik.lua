@@ -399,7 +399,11 @@ end
 
 function mod:WaveWarn(message, L, color)
 	self.wave = self.wave + 1
-	if self.db.profile.add then self:Message(L["wave"]:format(self.wave) .. message, color) end
+	if self.wave < 26 then
+		if self.db.profile.add then 
+			self:Message(L["wave"]:format(self.wave) .. message, color) 
+		end
+	end
 end
 
 function mod:Trainee()

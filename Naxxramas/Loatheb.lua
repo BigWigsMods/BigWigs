@@ -18,6 +18,15 @@ L:RegisterTranslations("enUS", function() return {
 	cmd = "Loatheb",
 
 	startwarn = "Loatheb engaged, 2 minutes to Inevitable Doom!",
+	
+	aura = "Necrotic Aura",
+	aura_desc = "Warn for Necrotic Aura",
+	aura_message = "Necrotic Aura - Duration 17 sec!",
+	aura_warning = "Necrotic Aura Fade in 3 sec!",
+	
+	deathbloom = "Deathbloom",
+	deathbloom_desc = "Warn for Deathbloom",
+	deathbloom_warning = "Deathbloom in 5 sec!",
 
 	doom = "Inevitable Doom",
 	doom_desc = "Warn for Inevitable Doom",
@@ -37,6 +46,15 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	startwarn = "Мерзот в ярости, 2 минуты до неотвратимого рока!",
 
+	--aura = "Necrotic Aura",
+	--aura_desc = "Warn for Necrotic Aura",
+	--aura_message = "Necrotic Aura - Duration 17 sec!",
+	--aura_warning = "Necrotic Aura Fade in 3 sec!",
+	
+	--deathbloom = "Deathbloom",
+	--deathbloom_desc = "Warn for Deathbloom",
+	--deathbloom_warning = "Deathbloom in 5 sec!",
+	
 	doom = "Неотвратимый рок",
 	doom_desc = "Предупрежлать о неотвратимом роке",
 	doombar = "Неотвратимый рок %d",
@@ -54,12 +72,21 @@ L:RegisterTranslations("ruRU", function() return {
 
 L:RegisterTranslations("koKR", function() return {
 	startwarn = "로데브 전투시작!, 2분 후 피할 수 없는 파멸!",
+	
+	aura = "강령술의 오라",
+	aura_desc = "강령술의 오라를 알립니다.",
+	aura_message = "강령술의 오라 - 17초 지속!",
+	aura_warning = "3초 후 강령술의 오라 사라짐!",
 
+	deathbloom = "죽음의 꽃",
+	deathbloom_desc = "죽음의 꽃을 알립니다.",
+	deathbloom_warning = "5초 후 죽음의 꽃!",
+	
 	doom = "파멸",
 	doom_desc = "피할 수 없는 파멸을 알립니다.",
 	doombar = "피할 수 없는 파멸 %d",
 	doomwarn = "피할 수 없는 파멸 %d! 다음은 %d초 후!",
-	doomwarn5sec = "5초 후 피할 수 없는 파멸!",
+	doomwarn5sec = "5초 후 피할 수 없는 파멸 %d!",
 	doomtimerbar = "파멸 - 매 15초",
 	doomtimerwarn = "%s초 후로 피할 수 없는 파멸의 시간변경!",
 	doomtimerwarnnow = "피할 수 없는 파멸! 지금부터 매 15초마다.",
@@ -73,6 +100,15 @@ L:RegisterTranslations("koKR", function() return {
 L:RegisterTranslations("deDE", function() return {
 	startwarn = "Loatheb angegriffen! 2 Minuten bis Unausweichliches Schicksal!",
 
+	--aura = "Necrotic Aura",
+	--aura_desc = "Warn for Necrotic Aura",
+	--aura_message = "Necrotic Aura - Duration 17 sec!",
+	--aura_warning = "Necrotic Aura Fade in 3 sec!",
+	
+	--deathbloom = "Deathbloom",
+	--deathbloom_desc = "Warn for Deathbloom",
+	--deathbloom_warning = "Deathbloom in 5 sec!",
+	
 	doom = "Unausweichliches Schicksal",
 	doom_desc = "Warnung f\195\188r Unausweichliches Schicksal.",
 	doombar = "Unausweichliches Schicksal %d",
@@ -91,6 +127,15 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	startwarn = "洛欧塞布已激活 - 2分钟后，必然的厄运！",
 
+	--aura = "Necrotic Aura",
+	--aura_desc = "Warn for Necrotic Aura",
+	--aura_message = "Necrotic Aura - Duration 17 sec!",
+	--aura_warning = "Necrotic Aura Fade in 3 sec!",
+	
+	--deathbloom = "Deathbloom",
+	--deathbloom_desc = "Warn for Deathbloom",
+	--deathbloom_warning = "Deathbloom in 5 sec!",
+	
 	doom = "必然的厄运",
 	doom_desc = "当施放必然的厄运时发出警报。",
 	doombar = "<必然的厄运：%d>",
@@ -109,6 +154,15 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	startwarn = "洛斯伯已進入戰鬥 - 2分鐘後，無可避免的末日！",
 
+	--aura = "Necrotic Aura",
+	--aura_desc = "Warn for Necrotic Aura",
+	--aura_message = "Necrotic Aura - Duration 17 sec!",
+	--aura_warning = "Necrotic Aura Fade in 3 sec!",
+	
+	--deathbloom = "Deathbloom",
+	--deathbloom_desc = "Warn for Deathbloom",
+	--deathbloom_warning = "Deathbloom in 5 sec!",
+	
 	doom = "無可避免的末日",
 	doom_desc = "當施放無可避免的末日時發出警報。",
 	doombar = "<無可避免的末日：%d>",
@@ -127,6 +181,15 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("frFR", function() return {
 	startwarn = "Horreb engagé, 2 min. avant Malédiction inévitable !",
 
+	--aura = "Necrotic Aura",
+	--aura_desc = "Warn for Necrotic Aura",
+	--aura_message = "Necrotic Aura - Duration 17 sec!",
+	--aura_warning = "Necrotic Aura Fade in 3 sec!",
+	
+	--deathbloom = "Deathbloom",
+	--deathbloom_desc = "Warn for Deathbloom",
+	--deathbloom_warning = "Deathbloom in 5 sec!",
+	
 	doom = "Malédiction inévitable",
 	doom_desc = "Prévient de l'arrivée des Malédictions inévitables.",
 	doombar = "Malédiction inévitable %d",
@@ -150,7 +213,7 @@ local mod = BigWigs:NewModule(boss)
 mod.zonename = BZ["Naxxramas"]
 mod.enabletrigger = boss
 mod.guid = 16011
-mod.toggleoptions = {"doom", "spore", "bosskill"}
+mod.toggleoptions = {"aura", "doom", "spore", "bosskill"}
 mod.revision = tonumber(("$Revision$"):sub(12, -3))
 
 ------------------------------
@@ -158,6 +221,8 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 ------------------------------
 
 function mod:OnEnable()
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Aura", 55593)
+	self:AddCombatListener("SPELL_CAST_SUCCESS", "Deathbloom", 29865, 55053)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Doom", 29204, 55052)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Spore", 29234)
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "Decurse", 30281)
@@ -178,6 +243,22 @@ end
 --      Event Handlers      --
 ------------------------------
 
+function mod:Aura(_, spellID)
+	if self.db.profile.aura then
+		self:Message(L["aura_message"], "Important", spellID, "Alert")
+		self:Bar(L["aura"], 17, spellID)
+		self:DelayedMessage(14, L["aura_warning"], "Attention", spellID)
+	end
+end
+
+function mod:Deathbloom(_, spellID)
+	if self.db.profile.deathbloom then
+		self:Message(L["deathbloom"], "Important", spellID)
+		self:Bar(L["deathbloom"], 30, spellID)
+		self:DelayedMessage(15, L["deathbloom_warning"], "Attention", spellID)
+	end
+end
+
 function mod:Doom(_, spellID)
 	if not self.db.profile.doom then return end
 
@@ -193,14 +274,7 @@ function mod:Spore()
 	--spellID is a question mark, so we use our own: 38755
 	self:IfMessage(L["sporewarn"]:format(sporeCount), "Important", 38755)
 	sporeCount = sporeCount + 1
-	self:Bar(L["sporebar"]:format(sporeCount), 36, 38755)
-end
-
-function mod:Decurse(_, spellID)
-	if self.db.profile.curse then
-		self:IfMessage(L["removecursewarn"], "Positive", spellID)
-		self:Bar(L["removecursebar"], 30, spellID)
-	end
+	self:Bar(L["sporebar"]:format(sporeCount), 15, 38755) --Heroic mode base
 end
 
 local function swapTime()

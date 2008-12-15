@@ -425,9 +425,9 @@ function mod:ZONE_CHANGED_INDOORS(msg)
 	BigWigs:EnableModule(boss)
 end
 
-function mod:Fizzure(_, spellID)
+function mod:Fizzure()
 	if self.db.profile.fissure then
-		self:Message(L["fissure_warning"], "Important", spellID)
+		self:Message(L["fissure_warning"], "Important", 27810)
 	end
 end
 

@@ -17,6 +17,7 @@ L:RegisterTranslations("enUS", function() return {
 
 	deepbreath = "Ice Bomb",
 	deepbreath_desc = "Warn when Sapphiron begins to cast Ice Bomb.",
+	airphase_trigger = "%s lifts off into the air!",
 	deepbreath_incoming_message = "Ice Bomb casting in ~23sec!",
 	deepbreath_incoming_soon_message = "Ice Bomb casting in ~5sec!",
 	deepbreath_incoming_bar = "Ice Bomb Cast",
@@ -46,6 +47,7 @@ L:RegisterTranslations("enUS", function() return {
 L:RegisterTranslations("ruRU", function() return {
 	deepbreath = "Ледяная бомба",
 	deepbreath_desc = "Предупреждать о ледяной бомбе Сапфирона",
+	--airphase_trigger = "%s lifts off into the air!",
 	deepbreath_incoming_message = "Ледяная бомба через 23 секунды!",
 	deepbreath_incoming_soon_message = "Ледяная бомба через 5 секунд!",
 	deepbreath_incoming_bar = "Каст ледяной бомбы",
@@ -75,6 +77,7 @@ L:RegisterTranslations("ruRU", function() return {
 L:RegisterTranslations("koKR", function() return {
 	deepbreath = "얼음 폭탄",
 	deepbreath_desc = "사피론 의 얼음 폭탄 시전을 알립니다.",
+	airphase_trigger = "사피론이 공중으로 떠오릅니다!",
 	deepbreath_incoming_message = "약 23초 이내 얼음 폭탄 시전!",
 	deepbreath_incoming_soon_message = "약 5초 이내 얼음 폭탄 시전!",
 	deepbreath_incoming_bar = "얼음 폭탄 시전",
@@ -112,6 +115,7 @@ L:RegisterTranslations("deDE", function() return {
 	lifedrain_warn1 = "Lebenssauger in 5sek!",
 	lifedrain_bar = "Lebenssauger",
 
+	--airphase_trigger = "%s lifts off into the air!",
 	deepbreath_incoming_message = "Frostatem in ~23sek!",
 	deepbreath_incoming_soon_message = "Frostatem in ~5sek!",
 	deepbreath_incoming_bar = "Frostatem",
@@ -135,6 +139,7 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	deepbreath = "冰霜吐息",
 	deepbreath_desc = "当施放冰霜吐息时发出警报。",
+	--airphase_trigger = "%s lifts off into the air!",
 	deepbreath_incoming_message = "约23秒后，冰霜吐息！",
 	deepbreath_incoming_soon_message = "约5秒后，冰霜吐息！",
 	deepbreath_incoming_bar = "<施放 冰霜吐息>",
@@ -164,6 +169,7 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	deepbreath = "冰息術",
 	deepbreath_desc = "當施放冰息術時發出警報。",
+	--airphase_trigger = "%s lifts off into the air!",
 	deepbreath_incoming_message = "約23秒後，冰息術！",
 	deepbreath_incoming_soon_message = "約5秒後，冰息術！",
 	deepbreath_incoming_bar = "<施放 冰息術>",
@@ -193,6 +199,7 @@ L:RegisterTranslations("zhTW", function() return {
 L:RegisterTranslations("frFR", function() return {
 	deepbreath = "Bombe de glace",
 	deepbreath_desc = "Prévient quand Saphiron commence à lancer sa Bombe de glace.",
+	--airphase_trigger = "%s lifts off into the air!",
 	deepbreath_incoming_message = "Incantation d'une Bombe de glace dans ~23 sec. !",
 	deepbreath_incoming_soon_message = "Incantation d'une Bombe de glace dans ~5 sec. !",
 	deepbreath_incoming_bar = "Bombe de glace en incantation",
@@ -240,22 +247,42 @@ function mod:OnEnable()
 	self:AddCombatListener("SPELL_AURA_APPLIED", "Icebolt", 28522)
 	self:AddCombatListener("SPELL_AURA_REMOVED", "RemoveIcon", 28522)
 	self:AddCombatListener("UNIT_DIED", "BossDeath")
-
-	started = nil
+	
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 
 	self:RegisterEvent("BigWigs_RecvSync")
+	
+	started = nil
 end
 
 ------------------------------
 --      Event Handlers      --
 ------------------------------
 
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(msg)
+	if msg == L["airphase_trigger"] then
+		self:CancelScheduledEvent("Lifedrain")
+		self:TriggerEvent("BigWigs_StopBar", self, L["lifedrain_bar"])
+		if self.db.profile.deepbreath then
+			--43810 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
+			self:IfMessage(L["deepbreath_incoming_message"], "Attention")
+			self:Bar(L["deepbreath_incoming_bar"], 23, 43810)
+			self:DelayedMessage(18, L["deepbreath_incoming_soon_message"], "Attention")
+		end
+	elseif msg == L["deepbreath_trigger"] then
+		if self.db.profile.deepbreath then
+			self:IfMessage(L["deepbreath_warning"], "Attention")
+			self:Bar(L["deepbreath_bar"], 10, 29318)
+		end
+	end
+end
+
 function mod:Breath(_, spellId)
 	if self.db.profile.deepbreath then
-		self:IfMessage(L["deepbreath_warning"], "Important", spellId)
+		self:IfMessage(L["deepbreath"], "Important", spellId)
 	end
 end
 
@@ -275,7 +302,7 @@ function mod:Icebolt(player, spellID)
 			Minimap:PingLocation()
 			BigWigs:Print(L["ping_message"])
 		end
-	elseif self.db.profile.orbother then
+	elseif self.db.profile.icebolt then
 		self:IfMessage(format(L["icebolt_other"], player), "Attention", spellID)
 	end
 	if self.db.profile.icon then
@@ -298,4 +325,3 @@ function mod:BigWigs_RecvSync(sync, rest, nick)
 		end
 	end
 end
-

@@ -24,7 +24,7 @@ L:RegisterTranslations("deDE", function() return {
 } end )
 
 L:RegisterTranslations("koKR", function() return {
-	enragewarn = "5% - 격노!",
+	enragewarn = "5% - 광기!",
 	starttrigger1 = "패치워크랑 놀아줘!",
 	starttrigger2 = "켈투자드님이 패치워크 싸움꾼으로 만들었다.",
 } end )
