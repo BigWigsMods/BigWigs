@@ -1,4 +1,4 @@
-﻿------------------------------
+﻿-------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -44,7 +44,6 @@ L:RegisterTranslations("enUS", function() return {
 	starttrigger3 = "Break... you!!",
 	starttrigger4 = "Kill...",
 
-	adddeath = "%s dies.",
 	teslaoverload = "%s overloads!",
 
 	pstrigger = "Now you feel pain...",
@@ -92,7 +91,6 @@ L:RegisterTranslations("ruRU", function() return {
 	starttrigger3 = "Сломаю... тебя!!",  --correct this
 	starttrigger4 = "убит...",  --correct this
 
-	adddeath = "%s умирает.", 
 	teslaoverload = "%s перезагружается!", 
 
 	pstrigger = "Познайте же боль…",  
@@ -140,7 +138,6 @@ L:RegisterTranslations("koKR", function() return {
 	starttrigger3 = "박살을 내주겠다!",
 	starttrigger4 = "죽여주마...",
 
-	adddeath = "가 죽습니다.",
 	teslaoverload = "테슬라 코일가 과부하 상태가 됩니다.",
 
 	pstrigger = "자, 고통을 느껴봐라...",
@@ -185,7 +182,6 @@ L:RegisterTranslations("deDE", function() return {
 	starttrigger3 = "Euch... zerquetschen!",
 	starttrigger4 = "T\195\182ten...",
 
-	adddeath = "stirbt.",
 	teslaoverload = "\195\188berl\195\164dt!",
 
 	pstrigger = "Jetzt sp\195\188rt ihr den Schmerz",
@@ -228,7 +224,6 @@ L:RegisterTranslations("zhCN", function() return {
 	starttrigger3 = "打……烂……你！",
 	starttrigger4 = "杀……",
 
-	adddeath = "%s死了。",
 	teslaoverload = "%s超载了！",
 
 	pstrigger = "你感受到痛苦的滋味了吧……",
@@ -277,7 +272,6 @@ L:RegisterTranslations("zhTW", function() return {
 	starttrigger3 = "打……爛……你！",
 	starttrigger4 = "殺……",
 
-	adddeath = "%s死亡了。",
 	teslaoverload = "%s超負荷！",
 
 	pstrigger = "你感受到痛苦的滋味了吧……",
@@ -325,7 +319,6 @@ L:RegisterTranslations("frFR", function() return {
 	starttrigger3 = "Casser... toi !",
 	starttrigger4 = "Tuer…",
 
-	adddeath = "%s meurt.",
 	teslaoverload = "%s entre en surcharge !",
 
 	pstrigger = "Maintenant toi sentir douleur...",
@@ -369,7 +362,7 @@ mod.revision = tonumber(("$Revision$"):sub(12, -3))
 function mod:OnEnable()
 	self:AddCombatListener("SPELL_CAST_SUCCESS", "StalaggPower", 28134)
 	self:AddCombatListener("SPELL_CAST_START", "Shift", 28089)
-	self:AddCombatListener("UNIT_DIED", "BossDeath")
+	self:AddCombatListener("UNIT_DIED", "Deaths")
 
 	enrageStarted = nil
 	addsdead = 0
@@ -427,17 +420,25 @@ function mod:CHAT_MSG_MONSTER_YELL(msg)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_EMOTE(msg)
-	if msg:find(L["adddeath"]) then
-		addsdead = addsdead + 1
-		if addsdead == 2 then
+function mod:Deaths(unit, guid)
+	guid = tonumber((guid):sub(-12,-7),16)
+	if guid == self.guid or guid == 15929 or guid == 15930 then
+		deaths = deaths + 1
+		if deaths == 2 then
+			self:CancelScheduledEvent("bwthaddiusthrow")
+			self:CancelScheduledEvent("bwthaddiusthrowwarn")
 			if self.db.profile.phase then
 				self:Message(L["addsdownwarn"], "Attention")
 			end
-			self:CancelScheduledEvent("bwthaddiusthrow")
-			self:CancelScheduledEvent("bwthaddiusthrowwarn")
 		end
-	elseif msg == L["teslaoverload"] and self.db.profile.phase and not teslawarn then
+		return
+	end
+
+	self:BossDeath(nil, self.guid)
+end
+
+function mod:CHAT_MSG_MONSTER_EMOTE(msg)
+	if msg == L["teslaoverload"] and self.db.profile.phase and not teslawarn then
 		teslawarn = true
 		self:Message(L["thaddiusincoming"], "Important")
 	end
@@ -485,4 +486,3 @@ function mod:Throw()
 		self:ScheduleEvent("bwthaddiusthrowwarn", "BigWigs_Message", 15, L["throwwarn"], "Urgent")
 	end
 end
-
