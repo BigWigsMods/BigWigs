@@ -198,36 +198,36 @@ L:RegisterTranslations("zhCN", function() return {
 } end)
 
 L:RegisterTranslations("zhTW", function() return {
-	["%s mod enabled"] = "%s模組已啟用",
-	["%s has been defeated"] = "%s被擊敗了",     -- "<boss> has been defeated"
-	["%s have been defeated"] = "%s被擊敗了",    -- "<bosses> have been defeated"
+	["%s mod enabled"] = "%s模組已啟用。",
+	["%s has been defeated"] = "%s被擊敗了！",     -- "<boss> has been defeated"
+	["%s have been defeated"] = "%s被擊敗了！",    -- "<bosses> have been defeated"
 
 	-- AceConsole strings
 	["Bosses"] = "首領模組",
-	["Options for bosses in %s."] = "%s首領模組選項", -- "Options for bosses in <zone>"
-	["Options for %s (r%d)."] = "%s模組選項 版本(r%d)",     -- "Options for <boss> (<revision>)"
+	["Options for bosses in %s."] = "%s首領模組選項。", -- "Options for bosses in <zone>"
+	["Options for %s (r%d)."] = "%s模組選項版本（r%d）。",     -- "Options for <boss> (<revision>)"
 	["Plugins"] = "插件",
-	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "插件是 Big Wigs 的核心功能 - 如訊息顯示、計時條以及其他必要的功能",
+	["Plugins handle the core features of Big Wigs - like displaying messages, timer bars, and other essential features."] = "插件是 Big Wigs 的核心功能 - 如訊息顯示、計時條以及其他必要的功能。",
 	["Extras"] = "附加功能",
-	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "附加功能是第三方插件，增強 Big Wigs 的功能",
-	--["GUI"] = true,
-	--["Open the waterfall GUI."] = true,
+	["Extras are 3rd party and bundled plugins that Big Wigs will function properly without."] = "附加功能是第三方插件，增強 Big Wigs 的功能。",
+	["GUI"] = "圖形介面",
+	["Open the waterfall GUI."] = "打開 Waterfall 圖形介面。",
 	["Active"] = "啟動",
-	["Activate or deactivate this module."] = "開啟或關閉此模組",
+	["Activate or deactivate this module."] = "開啟或關閉此模組。",
 	["Reboot"] = "重啟",
-	["Reboot this module."] = "重啟此模組",
+	["Reboot this module."] = "重啟此模組。",
 	["Options"] = "選項",
 
 	bosskill = "首領死亡",
-	bosskill_desc = "首領被擊敗時發出提示",
+	bosskill_desc = "首領被擊敗時發出提示。",
 	enrage = "狂怒",
-	enrage_desc = "當首領狂怒時發出警報",
+	enrage_desc = "當首領狂怒時發出警報。",
 	berserk = "狂暴",
-	berserk_desc = "當首領狂暴時發出警報",
+	berserk_desc = "當首領狂暴時發出警報。",
 
 	["Load"] = "載入",
 	["Load All"] = "載入全部",
-	["Load all %s modules."] = "載入全部%s模組",
+	["Load all %s modules."] = "載入全部%s模組。",
 } end)
 
 L:RegisterTranslations("esES", function() return {

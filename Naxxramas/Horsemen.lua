@@ -149,7 +149,7 @@ L:RegisterTranslations("zhCN", function() return {
 	wrathwarn = "神圣愤怒！",
 	wrathbar = "<神圣愤怒>",
 
-	--dies = "#%d Killed",
+	dies = "#%d死亡！",
 
 	startwarn = "四骑士已激活 - 约17秒后，印记！",
 } end )
@@ -176,7 +176,7 @@ L:RegisterTranslations("zhTW", function() return {
 	wrathwarn = "神聖憤怒",
 	wrathbar = "神聖憤怒",
 
-	--dies = "#%d Killed",
+	dies = "#%d死亡！",
 
 	startwarn = "四騎士已進入戰鬥 - 約17秒後，印記！",
 } end )

@@ -74,10 +74,10 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	--inject = "自身变异注射",
-	--inject_desc = "当你中了变异注射时发出警报。",
+	inject = "自身变异注射",
+	inject_desc = "当玩家中了变异注射时发出警报。",
 	bomb_message_you = ">你< 变异注射！",
-	bomb_message_other = ">%s< 变异注射！",
+	bomb_message_other = "变异注射：>%s<！",
 
 	icon = "团队标记",
 	icon_desc = "为中了变异注射的玩家打上团队标记。（需要权限）",
@@ -89,10 +89,10 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	--inject = "自身突變注射警報",
-	--inject_desc = "當你中了突變注射時發出警報。",
+	inject = "自身突變注射警報",
+	inject_desc = "當玩家中了突變注射時發出警報。",
 	bomb_message_you = ">你< 突變注射！",
-	bomb_message_other = ">%s< 突變注射！",
+	bomb_message_other = "突變注射：>%s<！",
 
 	icon = "團隊標記",
 	icon_desc = "為中了突變注射的玩家打上團隊標記。（需要權限）",

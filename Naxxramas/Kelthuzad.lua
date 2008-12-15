@@ -252,7 +252,7 @@ L:RegisterTranslations("zhCN", function() return {
 	frostblast = "冰霜冲击",
 	frostblast_desc = "当玩家中了冰霜冲击时发出警报。",
 	frostblast_bar = "<可能 冰霜冲击>",
-	--frostblast_message = "%s : Frost Blast",
+	frostblast_message = "冰霜冲击：>%s<！",
 	frostblast_soon_message = "约5秒后，可能冰霜冲击！",
 
 	detonate = "自爆法力",
@@ -304,7 +304,7 @@ L:RegisterTranslations("zhTW", function() return {
 	frostblast = "冰霜衝擊",
 	frostblast_desc = "當玩家中了冰霜衝擊時發出警報。",
 	frostblast_bar = "<可能 冰霜衝擊>",
-	--frostblast_message = "%s : Frost Blast",
+	frostblast_message = "冰霜衝擊：>%s<！",
 	frostblast_soon_message = "約5秒後，可能冰霜衝擊！",
 
 	detonate = "爆裂法力",
