@@ -70,14 +70,14 @@ L:RegisterTranslations("koKR", function() return {
 } end )
 
 L:RegisterTranslations("zhCN", function() return {
-	--shout = "Disrupting Shout",
-	--shout_desc = "Warn for Disrupting Shout.",
-	--shout_warning = "Disrupting Shout in 5sec!",
-	--shout_next = "Shout Cooldown",
+	shout = "瓦解怒吼",
+	shout_desc = "当施放瓦解怒吼时发出警报。",
+	shout_warning = "5秒后，瓦解怒吼！",
+	shout_next = "瓦解怒吼冷却！",
 
 	knife = "裂纹小刀",
 	knife_desc = "当玩家中了裂纹小刀时发出警报。",
-	knife_message = ">%s<：裂纹小刀！",
+	knife_message = "裂纹小刀：>%s<！",
 
 	taunt = "嘲讽",
 	taunt_desc = "当见习死亡骑士施放嘲讽时发出警报。",
@@ -89,14 +89,14 @@ L:RegisterTranslations("zhCN", function() return {
 } end )
 
 L:RegisterTranslations("zhTW", function() return {
-	--shout = "Disrupting Shout",
-	--shout_desc = "Warn for Disrupting Shout.",
-	--shout_warning = "Disrupting Shout in 5sec!",
-	--shout_next = "Shout Cooldown",
+	shout = "混亂怒吼",
+	shout_desc = "當施放混亂怒吼時發出警報。",
+	shout_warning = "5秒后，混亂怒吼！",
+	shout_next = "混亂怒吼冷卻！",
 
 	knife = "鋸齒刀",
 	knife_desc = "當玩家中了鋸齒刀時發出警報。",
-	knife_message = ">%s<：鋸齒刀！",
+	knife_message = "鋸齒刀：>%s<！",
 
 	taunt = "嘲諷",
 	taunt_desc = "當死亡騎士實習者施放嘲諷時發出警報。",

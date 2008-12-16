@@ -127,14 +127,14 @@ L:RegisterTranslations("deDE", function() return {
 L:RegisterTranslations("zhCN", function() return {
 	startwarn = "洛欧塞布已激活 - 2分钟后，必然的厄运！",
 
-	--aura = "Necrotic Aura",
-	--aura_desc = "Warn for Necrotic Aura",
-	--aura_message = "Necrotic Aura - Duration 17 sec!",
-	--aura_warning = "Necrotic Aura Fade in 3 sec!",
+	aura = "死灵光环",
+	aura_desc = "当施放死灵光环时发出警报。",
+	aura_message = "死灵光环 - 持续17秒！",
+	aura_warning = "3秒后，死灵光环消失！",
 
-	--deathbloom = "Deathbloom",
-	--deathbloom_desc = "Warn for Deathbloom",
-	--deathbloom_warning = "Deathbloom in 5 sec!",
+	deathbloom = "死亡之花",
+	deathbloom_desc = "当施放死亡之花时发出警报。",
+	deathbloom_warning = "5秒后，死亡之花!",
 
 	doom = "必然的厄运",
 	doom_desc = "当施放必然的厄运时发出警报。",
@@ -154,14 +154,14 @@ L:RegisterTranslations("zhCN", function() return {
 L:RegisterTranslations("zhTW", function() return {
 	startwarn = "洛斯伯已進入戰鬥 - 2分鐘後，無可避免的末日！",
 
-	--aura = "Necrotic Aura",
-	--aura_desc = "Warn for Necrotic Aura",
-	--aura_message = "Necrotic Aura - Duration 17 sec!",
-	--aura_warning = "Necrotic Aura Fade in 3 sec!",
+	aura = "亡域光環",
+	aura_desc = "當施放亡域光環時發出警報。",
+	aura_message = "亡域光環 - 持續17秒！",
+	aura_warning = "3秒后，亡域光環消失！",
 
-	--deathbloom = "Deathbloom",
-	--deathbloom_desc = "Warn for Deathbloom",
-	--deathbloom_warning = "Deathbloom in 5 sec!",
+	deathbloom = "死亡之花",
+	deathbloom_desc = "當施放死亡之花時發出警報。",
+	deathbloom_warning = "5秒后，死亡之花！",
 
 	doom = "無可避免的末日",
 	doom_desc = "當施放無可避免的末日時發出警報。",
