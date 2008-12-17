@@ -1,4 +1,4 @@
-﻿-------------------------------
+﻿------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -422,7 +422,7 @@ end
 
 function mod:Deaths(unit, guid)
 	guid = tonumber((guid):sub(-12,-7),16)
-	if guid == self.guid or guid == 15929 or guid == 15930 then
+	if guid == 15929 or guid == 15930 then
 		deaths = deaths + 1
 		if deaths == 2 then
 			self:CancelScheduledEvent("bwthaddiusthrow")
@@ -434,7 +434,7 @@ function mod:Deaths(unit, guid)
 		return
 	end
 
-	self:BossDeath(nil, self.guid)
+	self:BossDeath(nil, guid)
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(msg)
